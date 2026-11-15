@@ -28,6 +28,13 @@ export type ClientFailureCode =
   | "NOT_FOUND"
   | "HTTP_ERROR";
 
+export interface LocalUnderstandingSummary {
+  readonly rootCause?: string;
+  readonly rewriteMayHelp?: boolean;
+  readonly taxonomyClass?: string;
+  readonly failureDimension?: string;
+}
+
 export interface ClientFailureContract {
   readonly kind: "network" | "http";
   readonly code: ClientFailureCode;
@@ -35,6 +42,7 @@ export interface ClientFailureContract {
   readonly message: string;
   /** Lời giải thích của máy chủ khi tuyến cục bộ chưa đọc hết đề (phần nào chưa hiểu) — đã là tiếng Việt sạch. */
   readonly learnerDetail?: string;
+  readonly localUnderstanding?: LocalUnderstandingSummary;
 }
 
 export class AxoClientError extends Error implements ClientFailureContract {
@@ -45,6 +53,7 @@ export class AxoClientError extends Error implements ClientFailureContract {
   /** `reason_code` máy đọc của máy chủ (vd `LIVE_AI_DISABLED`) — CHỈ để chọn lời báo, KHÔNG BAO GIỜ hiển thị. */
   readonly reasonCode?: string;
   readonly learnerDetail?: string;
+  readonly localUnderstanding?: LocalUnderstandingSummary;
 
   constructor(opts: {
     kind: "network" | "http";
@@ -54,6 +63,7 @@ export class AxoClientError extends Error implements ClientFailureContract {
     transient?: boolean;
     reasonCode?: string;
     learnerDetail?: string;
+    localUnderstanding?: LocalUnderstandingSummary;
   }) {
     super(opts.message);
     this.name = "AxoClientError";
@@ -63,6 +73,7 @@ export class AxoClientError extends Error implements ClientFailureContract {
     this.transient = opts.transient;
     this.reasonCode = opts.reasonCode;
     this.learnerDetail = opts.learnerDetail;
+    this.localUnderstanding = opts.localUnderstanding;
   }
 
   toContract(): ClientFailureContract {
@@ -72,6 +83,7 @@ export class AxoClientError extends Error implements ClientFailureContract {
       status: this.status,
       message: this.message,
       learnerDetail: this.learnerDetail,
+      ...(this.localUnderstanding ? { localUnderstanding: this.localUnderstanding } : {}),
     };
   }
 }
@@ -149,6 +161,21 @@ async function postJson<T>(
       typeof rawMsg === "string" && rawMsg.trim().length > 0
         ? rawMsg
         : `Máy chủ trả lỗi HTTP ${res.status}.`;
+    const luRaw =
+      rec?.local_understanding && typeof rec.local_understanding === "object"
+        ? (rec.local_understanding as Record<string, unknown>)
+        : null;
+    const localUnderstanding: LocalUnderstandingSummary | undefined = luRaw
+      ? {
+          rootCause: typeof luRaw.root_cause === "string" ? luRaw.root_cause : undefined,
+          rewriteMayHelp:
+            typeof luRaw.rewrite_may_help === "boolean" ? luRaw.rewrite_may_help : undefined,
+          taxonomyClass:
+            typeof luRaw.taxonomy_class === "string" ? luRaw.taxonomy_class : undefined,
+          failureDimension:
+            typeof luRaw.failure_dimension === "string" ? luRaw.failure_dimension : undefined,
+        }
+      : undefined;
     throw new AxoClientError({
       kind: "http",
       code: classifyHttpFailureCode(res.status, rec),
@@ -158,6 +185,7 @@ async function postJson<T>(
       reasonCode: typeof rec?.reason_code === "string" ? rec.reason_code : undefined,
       // the server says which part of the problem the local route did not read (only when it ran on the problem)
       learnerDetail: rec?.local_understanding && typeof rawMsg === "string" ? rawMsg : undefined,
+      localUnderstanding,
     });
   }
   return body as T;

@@ -904,6 +904,14 @@ def _bridge(p: TypedFactNextPayload, section_fact, version: str, v2: bool) -> di
         elif k == "face_area":
             f = {"kind": "polygon_area", "points": _refs(a["polygon"]), "value": str(a["value"]),
                  **({"shape": str(a["shape"])} if a.get("shape") and a.get("shape") != "polygon" else {})}
+        elif k == "solid_volume":
+            sid = a.get("solid") or prem.solid_id
+            sol = solids.get(sid or "")
+            if sol is None and sid is None and len(poly_solids) == 1:
+                sol = poly_solids[0]
+            f = {"kind": "solid_volume",
+                 "solid": curved_sym.get(sol.solid_id, sol.notation) if sol else sid,
+                 "value": str(a["value"])}
         elif k == "segment_ratio":
             f = {"kind": "segment_ratio", "points_a": _refs(a["segment_a"]), "points_b": _refs(a["segment_b"]),
                  "value": str(a["ratio"])}
@@ -1047,3 +1055,46 @@ def _bridge(p: TypedFactNextPayload, section_fact, version: str, v2: bool) -> di
                                        "declared_plane_names": {s.section_id: _ten_mat_khai(s) for s in p.derived_sections},
                                        "output_policies": _output_policies_from_payload(p),
                                        "problem_text": p.problem_text}}
+
+
+def quantity_premise_provenance(p: Any) -> list[dict[str, Any]]:
+    """Extract `SOURCE_QUANTITY` dimension & span provenance for all quantity premises in `p` without rewriting premises."""
+    from app.simulation.geometry.expression import FactRole, parse_quantity_expr
+    from .typed_fact_next import parse_typed_fact_next_v2, premise_slot_dimension
+
+    if isinstance(p, dict):
+        p = parse_typed_fact_next_v2(p)
+
+    records: list[dict[str, Any]] = []
+    text = p.problem_text or ""
+    for idx, prem in enumerate(p.premises, 1):
+        fid = f"p{idx}"
+        q_pos = text.find(prem.quote)
+        for field_name in ("value", "side", "ratio"):
+            if field_name not in prem.args or prem.args[field_name] is None:
+                continue
+            slot_dim = premise_slot_dimension(prem.kind, field_name)
+            if slot_dim is None:
+                continue
+            raw_val = str(prem.args[field_name])
+            in_q = prem.quote.rfind(raw_val)
+            base_off = (q_pos + in_q) if (q_pos >= 0 and in_q >= 0) else 0
+            qexpr = parse_quantity_expr(
+                raw_val,
+                base_offset=base_off,
+                allow_signed=False,
+                allow_unit=False,
+                role=FactRole.SOURCE_QUANTITY,
+            )
+            records.append({
+                "premise_id": fid,
+                "kind": prem.kind,
+                "field": field_name,
+                "slot_dimension": slot_dim.name,
+                "role": qexpr.provenance.role.value,
+                "original_expr": qexpr.provenance.original_expr,
+                "normalized_expr": qexpr.provenance.normalized_expr,
+                "source_span": list(qexpr.provenance.source_span),
+                "operand_spans": [[k, s, e] for k, s, e in qexpr.provenance.operand_spans],
+            })
+    return records

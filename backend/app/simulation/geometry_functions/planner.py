@@ -101,6 +101,7 @@ FactKind = Annotated[
         "line_line_angle",
         "vertex_angle",
         "polygon_area",
+        "solid_volume",
         "segment_ratio",
     ],
     WithJsonSchema({"enum": list(FLAT_FACT_KINDS), "type": "string"}),
@@ -290,7 +291,7 @@ _CAN = {"solid": ("solid", "solid_type"), "polygon_shape": ("points", "shape"), 
         "line_plane_angle": ("points_a", "points_b", "value"), "plane_plane_angle": ("points_a", "points_b", "value"),
         "dihedral_angle": ("point", "points", "at", "value"), "line_line_angle": ("points_a", "points_b", "value"),
         "vertex_angle": ("at", "points", "value"),
-        "polygon_area": ("points", "value"), "segment_ratio": ("points_a", "points_b", "value"),
+        "polygon_area": ("points", "value"), "solid_volume": ("value",), "segment_ratio": ("points_a", "points_b", "value"),
         "question": ("quantity",), "unsupported": ("reason",)}
 _DA_GIAC_DEU = {"equilateral_triangle": 3, "square": 4, "regular_hexagon": 6, "regular_polygon": None}
 
@@ -642,7 +643,7 @@ def lap_ke_hoach(raw: Any, problem_text: str = "") -> KeHoach:
         return c
 
     def khoi_cua(s: str | None, f: TypedFact) -> _Khoi:
-        if not s and (f.kind == "altitude" or (f.kind == "length" and f.measure == "height")):
+        if not s and (f.kind in ("altitude", "solid_volume") or (f.kind == "length" and f.measure == "height")):
             if len(k.solids) == 1:
                 return next(iter(k.solids.values()))
             if len(k.solids) > 1:
@@ -721,7 +722,7 @@ def lap_ke_hoach(raw: Any, problem_text: str = "") -> KeHoach:
                 c['fn'] + json.dumps(c['args'],sort_keys=True,ensure_ascii=False))
         if khoa not in gon:
             gon[khoa] = c
-        elif c["fn"] not in ("segment_length", "height", "line_plane_angle", "plane_plane_angle", "dihedral_angle", "line_line_angle", "vertex_angle", "polygon_area", "segment_ratio"):
+        elif c["fn"] not in ("segment_length", "height", "line_plane_angle", "plane_plane_angle", "dihedral_angle", "line_line_angle", "vertex_angle", "polygon_area", "solid_volume", "segment_ratio"):
             gon[khoa]["source"]["quotes"] = list(dict.fromkeys(gon[khoa]["source"]["quotes"] + c["source"]["quotes"]))
     k.calls = list(gon.values())
     for c in k.calls:
@@ -1070,6 +1071,7 @@ def _sap_xep_phu_thuoc_loi_goi(k: KeHoach) -> None:
                 "segment_length",
                 "equal_length",
                 "polygon_area",
+                "solid_volume",
                 "segment_ratio",
                 "parallel_lines",
                 "parallel_planes",
@@ -1286,6 +1288,13 @@ def _anh_xa(f: TypedFact, k: KeHoach, ten: dict, deu: dict, khoi_cua, phat) -> d
             f.id, "polygon_area",
             {"polygon": f.points, "value": f.value, **({"shape": f.shape} if f.shape in ("square", "equilateral_triangle", "rectangle") else {})},
             q, "polygon_area",
+        )
+    if f.kind == "solid_volume":
+        kh = khoi_cua(f.solid, f)
+        return phat(
+            f.id, "solid_volume",
+            {"solid": kh.ten, "value": f.value},
+            q, "solid_volume",
         )
     if f.kind == "segment_ratio":
         return phat(

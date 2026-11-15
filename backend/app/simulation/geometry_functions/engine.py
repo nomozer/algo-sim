@@ -33,12 +33,55 @@ from typing import Any
 
 from app.simulation.geometry import metric as _metric
 from app.simulation.geometry.exact import GeometryError, Line3, Plane3, Vec3
+from app.simulation.geometry.expression import (
+    AREA,
+    LENGTH,
+    VOLUME,
+    DerivedQuantityRecord,
+    ExprDimensionError,
+    ExprDomainError,
+    ExprParseError,
+    SymbolEnvironment,
+    parse_quantity_expr,
+)
 from app.simulation.geometry import kernel as K
 from app.simulation.geometry.predicates import parallel_planes, point_on_line, point_on_plane, parallel_line_plane, line_in_plane
 from app.simulation.semantic_program import ir_builders as P
 
-from .registry import MAT_SONG_SONG, MAT_HAI_DUONG, MAT_VUONG_DUONG, MAT_RANG_BUOC, LoiGoi, TuChoi, binh_phuong, doc_ke_hoach, doc_khang_dinh_loai_hinh, doc_so, kiem_nguon, nhan_cua_de, nhom_mat_nguon
-from .registry import DINH_CAT_CANH, _cum_hoi
+from .registry import (
+    DINH_CAT_CANH,
+    MAT_HAI_DUONG,
+    MAT_RANG_BUOC,
+    MAT_SONG_SONG,
+    MAT_VUONG_DUONG,
+    LoiGoi,
+    TuChoi,
+    _BAC_HAM_HOI_TAT_CA,
+    _cum_hoi,
+    _muc_dai_luong_cua_goi,
+    binh_phuong,
+    doc_ke_hoach,
+    doc_khang_dinh_loai_hinh,
+    doc_so,
+    kiem_nguon,
+    nhan_cua_de,
+    nhom_mat_nguon,
+)
+from .trig_construction_certificates import (
+    ID_ADJ_FROM_HYP_COS,
+    ID_ADJ_FROM_OPP_COT,
+    ID_HYP_FROM_ADJ_COS,
+    ID_HYP_FROM_OPP_SIN,
+    ID_OPP_FROM_ADJ_TAN,
+    ID_OPP_FROM_HYP_SIN,
+    ID_PYTH_EQUAL_LEGS,
+    ID_PYTH_HYP_FROM_LEGS,
+    ID_PYTH_LEG_FROM_HYP,
+    ID_PYTH_LEG_RATIO,
+    ID_RHOMBUS_HALF_DIAG_COS,
+    TrigCertificateError,
+    build_trig_construction_certificate,
+)
 
 #: /6 (run `goal-directed-function-composition`): `ask_angle_lines` IR + independent line–line Gram verifier.
 #: /7 (run `geometry-capability-expansion`): ratio points, right-angle-chain base, prism lateral vector, ⊥-line plane check.
@@ -490,7 +533,64 @@ class _Dung:
         self.curved_certificates: dict[str, dict[str, Any]] = {}
         self.tangent_records: list[dict[str, Any]] = []
         self.relation_certificates: list[dict[str, Any]] = []
+        self.derived_quantities: list[dict[str, Any]] = []
+        self._derived_seen: set[tuple[str, str]] = set()
+        self.trig_certificate_specs: list[dict[str, Any]] = []
+        self._trig_cert_seen: set[tuple[Any, ...]] = set()
         self.khoi_cong_ir: dict[str, tuple[str, Any, Fraction, V3, str, str | None]] = {}
+
+    def _ghi_chung_chi_luong_giac(self, spec: dict[str, Any]) -> None:
+        tri = tuple(spec["derived_right_triangle"])
+        key = (spec["trig_identity"], spec["derived_role"], tri)
+        if key in self._trig_cert_seen:
+            return
+        if any(
+            cid == SCALE_UNIT_ID
+            for grp in ("perpendicularity_calls", "angle_witness_calls", "extra_premise_calls")
+            for cid in spec.get(grp, ())
+        ):
+            return
+        self._trig_cert_seen.add(key)
+        self.trig_certificate_specs.append(spec)
+
+    def _ghi_dan_xuat(
+        self,
+        rule_id: str,
+        target_object: str,
+        target_dim: Any,
+        value_sq: Fraction,
+        premise_call_ids: tuple[str, ...],
+        certificate: str,
+    ) -> None:
+        key = (rule_id, target_object)
+        if key in self._derived_seen:
+            return
+        self._derived_seen.add(key)
+        clean_ids = tuple(c for c in dict.fromkeys(premise_call_ids) if c != SCALE_UNIT_ID)
+        rec = DerivedQuantityRecord(
+            rule_id=rule_id,
+            target_entity=target_object,
+            target_dimension=target_dim,
+            premise_call_ids=clean_ids,
+            value_sq_unit=value_sq,
+            symbolic_unit=self.ky_hieu,
+            positivity_certified=True,
+        )
+        rec_d = rec.to_dict()
+        rec_d["certificate"] = certificate
+        self.derived_quantities.append(rec_d)
+        self.trace.append(
+            {
+                "step": "derive_quantity",
+                "object": target_object,
+                "rule": rule_id,
+                "calls": list(clean_ids),
+                "value_sq": str(value_sq),
+                "provenance": "VERIFIED_DERIVED_QUANTITY",
+                "fact_role": "VERIFIED_DERIVED_QUANTITY",
+                "certificate": certificate,
+            }
+        )
 
     def of(self, *fns: str) -> list[LoiGoi]:
         return [c for c in self.calls if c.fn in fns]
@@ -514,7 +614,7 @@ class _Dung:
                 self.khoi[k.name] = k
         if not self.khoi:
             raise TuChoi("NO_SOLID", "bản này chỉ dựng khối chóp / lăng trụ; kế hoạch không có khối nào")
-        for c in self.of("height", "ask_volume"):
+        for c in self.of("height", "solid_volume", "ask_volume"):
             if c.args.solid not in self.khoi:
                 raise TuChoi("UNKNOWN_SOLID", f"{c.id}: khối {c.args.solid} chưa được dựng bằng lời gọi nào", (c.id,))
         cong_by_name: dict[str, LoiGoi] = {}
@@ -609,6 +709,14 @@ class _Dung:
                             f"diện tích hình vuông {c.args.value!r} không cho cạnh² hữu tỉ dương",
                             (c.id,),
                         )
+                    self._ghi_dan_xuat(
+                        "SQUARE_AREA_TO_SIDE",
+                        "".join(sorted(s)),
+                        LENGTH,
+                        s2_sq,
+                        (c.id, *chuoi),
+                        "certified_square_polygon_and_positive_length_domain",
+                    )
                     ra.append((s2_sq, (c.id, *chuoi)))
                 elif c.args.shape == "equilateral_triangle" or (
                     np == 3
@@ -624,6 +732,14 @@ class _Dung:
                             f"diện tích tam giác đều {c.args.value!r} không cho cạnh² hữu tỉ dương",
                             (c.id,),
                         )
+                    self._ghi_dan_xuat(
+                        "EQUILATERAL_TRIANGLE_AREA_TO_SIDE",
+                        "".join(sorted(s)),
+                        LENGTH,
+                        s2_eq,
+                        (c.id, *chuoi),
+                        "certified_equilateral_triangle_and_positive_length_domain",
+                    )
                     ra.append((s2_eq, (c.id, *chuoi)))
                 elif _suy and np == 4 and (
                     c.args.shape == "rectangle"
@@ -654,11 +770,135 @@ class _Dung:
                     if s in e1_p:
                         adj = self.do_dai(*sorted(e2_p[0]), _suy=False) or self.do_dai(*sorted(e2_p[1]), _suy=False)
                         if adj:
-                            ra.append((binh_phuong(c.args.value) / adj[0][0], (c.id, *adj[0][1], *chuoi)))
+                            adj_sq = binh_phuong(c.args.value) / adj[0][0]
+                            self._ghi_dan_xuat(
+                                "RECTANGLE_AREA_AND_SIDE_TO_ADJACENT_SIDE",
+                                "".join(sorted(s)),
+                                LENGTH,
+                                adj_sq,
+                                (c.id, *adj[0][1], *chuoi),
+                                "certified_rectangle_and_known_adjacent_side",
+                            )
+                            ra.append((adj_sq, (c.id, *adj[0][1], *chuoi)))
                     elif s in e2_p:
                         adj = self.do_dai(*sorted(e1_p[0]), _suy=False) or self.do_dai(*sorted(e1_p[1]), _suy=False)
                         if adj:
-                            ra.append((binh_phuong(c.args.value) / adj[0][0], (c.id, *adj[0][1], *chuoi)))
+                            adj_sq = binh_phuong(c.args.value) / adj[0][0]
+                            self._ghi_dan_xuat(
+                                "RECTANGLE_AREA_AND_SIDE_TO_ADJACENT_SIDE",
+                                "".join(sorted(s)),
+                                LENGTH,
+                                adj_sq,
+                                (c.id, *adj[0][1], *chuoi),
+                                "certified_rectangle_and_known_adjacent_side",
+                            )
+                            ra.append((adj_sq, (c.id, *adj[0][1], *chuoi)))
+                elif _suy and np == 3:
+                    for rv in vp:
+                        r_others = [p for p in vp if p != rv]
+                        e_l1 = frozenset((rv, r_others[0]))
+                        e_l2 = frozenset((rv, r_others[1]))
+                        if s not in (e_l1, e_l2):
+                            continue
+                        r_cid = next(
+                            (
+                                cr.id
+                                for cr in self.calls
+                                if (cr.fn == "right_angle" and cr.args.vertex == rv and set(cr.args.rays) == set(r_others))
+                                or (cr.fn == "perpendicular_lines" and {frozenset(cr.args.line1), frozenset(cr.args.line2)} == {e_l1, e_l2})
+                                or (
+                                    cr.fn == "perpendicular_line_plane"
+                                    and (
+                                        (frozenset(cr.args.line) == e_l1 and e_l2 <= frozenset(cr.args.plane))
+                                        or (frozenset(cr.args.line) == e_l2 and e_l1 <= frozenset(cr.args.plane))
+                                    )
+                                )
+                            ),
+                            None,
+                        )
+                        if r_cid is None:
+                            continue
+                        other_leg = e_l2 if s == e_l1 else e_l1
+                        area2 = binh_phuong(c.args.value)
+                        known_leg = self.do_dai(*sorted(other_leg), _suy=False)
+                        if known_leg:
+                            leg_sq = Fraction(4, 1) * area2 / known_leg[0][0]
+                            self._ghi_dan_xuat(
+                                "RIGHT_TRIANGLE_AREA_TO_LEG",
+                                "".join(sorted(s)),
+                                LENGTH,
+                                leg_sq,
+                                (c.id, r_cid, *known_leg[0][1], *chuoi),
+                                "certified_right_triangle_and_known_other_leg",
+                            )
+                            ra.append((leg_sq, (c.id, r_cid, *known_leg[0][1], *chuoi)))
+                        else:
+                            eq_ids = next((ids for seg_eq, ids in self._lop_bang(s) if seg_eq == other_leg), None)
+                            if eq_ids is not None:
+                                leg_sq = _sqrt_q(Fraction(4, 1) * area2)
+                                if leg_sq is None or leg_sq <= 0:
+                                    raise TuChoi(
+                                        "EXACT_DOMAIN_EXCEEDED",
+                                        f"diện tích tam giác vuông cân {c.args.value!r} không cho cạnh góc vuông² hữu tỉ dương",
+                                        (c.id, r_cid),
+                                    )
+                                self._ghi_dan_xuat(
+                                    "RIGHT_TRIANGLE_AREA_TO_LEG",
+                                    "".join(sorted(s)),
+                                    LENGTH,
+                                    leg_sq,
+                                    (c.id, r_cid, *eq_ids, *chuoi),
+                                    "certified_isosceles_right_triangle_and_positive_length_domain",
+                                )
+                                ra.append((leg_sq, (c.id, r_cid, *eq_ids, *chuoi)))
+            if _suy:
+                for cv in self.of("solid_volume"):
+                    kv = self.khoi.get(cv.args.solid)
+                    if kv is None:
+                        continue
+                    vb = kv.base
+                    nb = len(vb)
+                    if nb not in (3, 4) or s not in [frozenset((vb[i], vb[(i + 1) % nb])) for i in range(nb)]:
+                        continue
+                    reg_b = next(
+                        (cr for cr in self.calls if cr.fn == "regular_polygon" and frozenset(cr.args.vertices) == frozenset(vb)),
+                        None,
+                    )
+                    if reg_b is None:
+                        continue
+                    h_cands: list[tuple[Fraction, tuple[str, ...]]] = [
+                        (binh_phuong(ch.args.value), (ch.id,)) for ch in self.of("height") if ch.args.solid == kv.name
+                    ]
+                    if kv.kind == "pyramid":
+                        for cp in self.of("perpendicular_line_plane"):
+                            if kv.apex in cp.args.line and frozenset(cp.args.plane) <= frozenset(vb):
+                                foot_v = cp.args.line[1] if cp.args.line[0] == kv.apex else cp.args.line[0]
+                                if foot_v in vb:
+                                    h_cands += [(d, (cp.id, *ids)) for d, ids in self.do_dai(kv.apex, foot_v, _suy=False)]
+                    elif kv.kind == "prism" and kv.right:
+                        for b_v, t_v in zip(kv.base, kv.top):
+                            h_cands += self.do_dai(b_v, t_v, _suy=False)
+                    if not h_cands:
+                        continue
+                    h_sq, h_ids = sorted(h_cands)[0]
+                    vol_sq = binh_phuong(cv.args.value)
+                    base_area_sq = (Fraction(9, 1) if kv.kind == "pyramid" else Fraction(1, 1)) * vol_sq / h_sq
+                    side_sq = _sqrt_q(base_area_sq if nb == 4 else Fraction(16, 3) * base_area_sq)
+                    if side_sq is None or side_sq <= 0:
+                        raise TuChoi(
+                            "EXACT_DOMAIN_EXCEEDED",
+                            f"thể tích {cv.args.value!r} và chiều cao không cho cạnh đáy² hữu tỉ dương",
+                            (cv.id, reg_b.id, *h_ids),
+                        )
+                    self._ghi_dan_xuat(
+                        "SOLID_VOLUME_AND_HEIGHT_TO_BASE_SIDE",
+                        "".join(sorted(s)),
+                        LENGTH,
+                        side_sq,
+                        (cv.id, reg_b.id, *h_ids, *chuoi),
+                        "certified_solid_volume_regular_base_and_height",
+                    )
+                    ra.append((side_sq, (cv.id, reg_b.id, *h_ids, *chuoi)))
             a, b = sorted(s)
             if a in self.pts and b in self.pts and (self.h2 is not None or self.pts[a][2] == self.pts[b][2]):
                 ra.append((self.d2(a, b), chuoi))
@@ -688,6 +928,74 @@ class _Dung:
                     elif frozenset((x, y)) == e2:
                         ra += [(d, (c.id, *ids)) for d, ids in self.do_dai(*sorted(e1), _suy=False)]
             ra += self._suy_do_dai_day_tu_goc(x, y)
+            # Off-base or in-plane right-isosceles leg deduction when hypotenuse is directly given:
+            # if |xy| == |vz| with shared right-angle vertex v and hypotenuse |other_leg_end - z|² known.
+            seg_xy = frozenset((x, y))
+            for seg_eq, eq_ids in self._lop_bang(seg_xy):
+                if seg_eq == seg_xy or not (seg_eq & seg_xy):
+                    continue
+                v_rt = next(iter(seg_eq & seg_xy))
+                o1 = next(iter(seg_xy - {v_rt}))
+                o2 = next(iter(seg_eq - {v_rt}))
+                hyp_cands = self.do_dai(o1, o2, _suy=False)
+                if not hyp_cands:
+                    continue
+                p_info: tuple[str, str] | None = next(
+                    (
+                        ("explicit_right_angle", cr.id)
+                        for cr in self.of("right_angle")
+                        if cr.args.vertex == v_rt and set(cr.args.rays) == {o1, o2}
+                    ),
+                    None,
+                )
+                if p_info is None:
+                    p_info = next(
+                        (
+                            ("explicit_perpendicular_lines", cp.id)
+                            for cp in self.of("perpendicular_lines")
+                            if {frozenset(cp.args.line1), frozenset(cp.args.line2)} == {seg_xy, seg_eq}
+                        ),
+                        None,
+                    )
+                if p_info is None:
+                    p_info = next(
+                        (
+                            ("line_perpendicular_to_plane", cp.id)
+                            for cp in self.of("perpendicular_line_plane")
+                            if (frozenset(cp.args.line) == seg_xy and seg_eq <= frozenset(cp.args.plane))
+                            or (frozenset(cp.args.line) == seg_eq and seg_xy <= frozenset(cp.args.plane))
+                        ),
+                        None,
+                    )
+                if p_info is not None:
+                    p_rule_rt, p_cid_rt = p_info
+                    leg_sq_rt = hyp_cands[0][0] * Fraction(1, 2)
+                    self._ghi_dan_xuat(
+                        "RIGHT_ISOSCELES_HYPOTENUSE_TO_LEGS",
+                        "".join(sorted(seg_xy)),
+                        LENGTH,
+                        leg_sq_rt,
+                        (p_cid_rt, *eq_ids, *hyp_cands[0][1]),
+                        "certified_right_isosceles_triangle_hypotenuse_to_legs",
+                    )
+                    self._ghi_chung_chi_luong_giac({
+                        "derived_role": "both_legs",
+                        "derived_right_triangle": (v_rt, o1, o2),
+                        "perpendicularity_rule": p_rule_rt,
+                        "perpendicularity_calls": (p_cid_rt,),
+                        "angle_witness_kind": "equal_legs_witness",
+                        "angle_witness_calls": tuple(eq_ids),
+                        "sin_sq": Fraction(1, 2),
+                        "cos_sq": Fraction(1, 2),
+                        "angle_unit": "deg",
+                        "angle_raw_value": "45",
+                        "trig_identity": ID_PYTH_EQUAL_LEGS,
+                        "known_side_roles": ("hypotenuse",),
+                        "non_side_input_role": "equal_legs",
+                        "non_side_input_dimension": "SCALAR",
+                        "extra_premise_calls": tuple(hyp_cands[0][1]),
+                    })
+                    ra.append((leg_sq_rt, (p_cid_rt, *eq_ids, *hyp_cands[0][1])))
         if len({d for d, _ in ra}) > 1:
             raise TuChoi("INCONSISTENT_FACTS", f"đoạn {x}{y} nhận hai độ dài khác nhau từ các dữ kiện",
                          tuple(sorted({i for _, ids in ra for i in ids})))
@@ -721,17 +1029,25 @@ class _Dung:
                 raise TuChoi("EXACT_DOMAIN_EXCEEDED", f"góc {value}° ngoài tập lượng giác hữu tỉ chính xác", calls)
             return table[deg]
         if unit == "sin":
+            if val2 <= 0:
+                raise TuChoi("NON_POSITIVE_LENGTH", f"sin = {value} phải dương", calls)
             if val2 > 1:
                 raise TuChoi("INCONSISTENT_FACTS", f"sin = {value} vượt quá 1", calls)
             c2 = Fraction(1) - val2
             return val2, c2, (0 if c2 == 0 else (None if allow_obtuse else 1))
         if unit == "cos":
+            if val2 < 0:
+                raise TuChoi("NON_POSITIVE_LENGTH", f"cos = {value} không hợp lệ", calls)
             if val2 > 1:
                 raise TuChoi("INCONSISTENT_FACTS", f"cos = {value} vượt quá 1", calls)
             return Fraction(1) - val2, val2, (0 if val2 == 0 else 1)
         if unit == "tan":
+            if val2 <= 0:
+                raise TuChoi("NON_POSITIVE_LENGTH", f"tan = {value} phải dương", calls)
             return val2 / (1 + val2), Fraction(1) / (1 + val2), 1
         if unit == "cot":
+            if val2 <= 0:
+                raise TuChoi("NON_POSITIVE_LENGTH", f"cot = {value} phải dương", calls)
             return Fraction(1) / (1 + val2), val2 / (1 + val2), 1
         raise TuChoi("SCHEMA_INVALID", f"đơn vị góc {unit!r} không được hỗ trợ", calls)
 
@@ -760,23 +1076,63 @@ class _Dung:
             solids_s = [k.name for k in self.khoi.values() if k.apex == apex and frozenset(k.base) == base_set]
             h2_cands = list(self.do_dai(apex, foot, _suy=False)) + [
                 (binh_phuong(ch.args.value), (ch.id,)) for ch in self.of("height") if ch.args.solid in solids_s
-            ]
+            ] + self._chieu_cao_tu_the_tich(solids_s)
             slant_cands = self.do_dai(apex, other, _suy=False)
             for c_ang in self.of("line_plane_angle"):
                 if frozenset(c_ang.args.line) == frozenset((apex, other)) and frozenset(c_ang.args.plane) <= base_set:
                     sin2, cos2, _ = self._goc_tham_so(c_ang.args.value, c_ang.args.unit, allow_obtuse=False, calls=(c_ang.id,))
+                    if cos2 == 0:
+                        raise TuChoi(
+                            "INCONSISTENT_FACTS",
+                            f"{c_ang.id}: đường {apex}{other} qua điểm {other} khác chân vuông góc {foot} không thể tạo góc 90° với đáy",
+                            (c_p.id, c_ang.id),
+                        )
                     if 0 < sin2 < 1:
                         for h2_v, h_ids in h2_cands:
                             out.append((h2_v * cos2 / sin2, (c_p.id, c_ang.id, *h_ids)))
+                            self._ghi_chung_chi_luong_giac({
+                                "derived_role": "adjacent_leg",
+                                "derived_right_triangle": (foot, other, apex),
+                                "perpendicularity_rule": "line_perpendicular_to_plane",
+                                "perpendicularity_calls": (c_p.id,),
+                                "angle_witness_kind": "line_plane_angle",
+                                "angle_witness_calls": (c_ang.id,),
+                                "sin_sq": sin2,
+                                "cos_sq": cos2,
+                                "angle_unit": c_ang.args.unit,
+                                "angle_raw_value": c_ang.args.value,
+                                "trig_identity": ID_ADJ_FROM_OPP_COT,
+                                "known_side_roles": ("opposite_leg",),
+                                "non_side_input_role": "angle",
+                                "non_side_input_dimension": "ANGLE",
+                                "extra_premise_calls": tuple(h_ids),
+                            })
                         for sl2_v, sl_ids in slant_cands:
                             out.append((sl2_v * cos2, (c_p.id, c_ang.id, *sl_ids)))
+                            self._ghi_chung_chi_luong_giac({
+                                "derived_role": "adjacent_leg",
+                                "derived_right_triangle": (foot, other, apex),
+                                "perpendicularity_rule": "line_perpendicular_to_plane",
+                                "perpendicularity_calls": (c_p.id,),
+                                "angle_witness_kind": "line_plane_angle",
+                                "angle_witness_calls": (c_ang.id,),
+                                "sin_sq": sin2,
+                                "cos_sq": cos2,
+                                "angle_unit": c_ang.args.unit,
+                                "angle_raw_value": c_ang.args.value,
+                                "trig_identity": ID_ADJ_FROM_HYP_COS,
+                                "known_side_roles": ("hypotenuse",),
+                                "non_side_input_role": "angle",
+                                "non_side_input_dimension": "ANGLE",
+                                "extra_premise_calls": tuple(sl_ids),
+                            })
         # 2) Right prism on root base (`top[i]` projects orthogonally to `base[i]`)
         for k in self.khoi.values():
             if k.kind != "prism" or not k.right or frozenset(k.base) != base_set:
                 continue
             h2_prism: list[tuple[Fraction, tuple[str, ...]]] = [
                 (binh_phuong(ch.args.value), (ch.id,)) for ch in self.of("height") if ch.args.solid == k.name
-            ]
+            ] + self._chieu_cao_tu_the_tich([k.name])
             for b_v, t_v in zip(k.base, k.top):
                 h2_prism += self.do_dai(b_v, t_v, _suy=False)
             for b_i, t_i in zip(k.base, k.top):
@@ -787,12 +1143,223 @@ class _Dung:
                 for c_ang in self.of("line_plane_angle"):
                     if frozenset(c_ang.args.line) == frozenset((other, t_i)) and frozenset(c_ang.args.plane) <= base_set:
                         sin2, cos2, _ = self._goc_tham_so(c_ang.args.value, c_ang.args.unit, allow_obtuse=False, calls=(c_ang.id,))
+                        if cos2 == 0:
+                            raise TuChoi(
+                                "INCONSISTENT_FACTS",
+                                f"{c_ang.id}: đường chéo {other}{t_i} không thể tạo góc 90° với đáy lăng trụ đứng",
+                                (k.call, c_ang.id),
+                            )
                         if 0 < sin2 < 1:
                             for h2_v, h_ids in h2_prism:
                                 out.append((h2_v * cos2 / sin2, (k.call, c_ang.id, *h_ids)))
+                                self._ghi_chung_chi_luong_giac({
+                                    "derived_role": "adjacent_leg",
+                                    "derived_right_triangle": (b_i, other, t_i),
+                                    "perpendicularity_rule": "line_perpendicular_to_plane",
+                                    "perpendicularity_calls": (k.call,),
+                                    "angle_witness_kind": "line_plane_angle",
+                                    "angle_witness_calls": (c_ang.id,),
+                                    "sin_sq": sin2,
+                                    "cos_sq": cos2,
+                                    "angle_unit": c_ang.args.unit,
+                                    "angle_raw_value": c_ang.args.value,
+                                    "trig_identity": ID_ADJ_FROM_OPP_COT,
+                                    "known_side_roles": ("opposite_leg",),
+                                    "non_side_input_role": "angle",
+                                    "non_side_input_dimension": "ANGLE",
+                                    "extra_premise_calls": tuple(h_ids),
+                                })
                             for sl2_v, sl_ids in slant_cands:
                                 out.append((sl2_v * cos2, (k.call, c_ang.id, *sl_ids)))
+                                self._ghi_chung_chi_luong_giac({
+                                    "derived_role": "adjacent_leg",
+                                    "derived_right_triangle": (b_i, other, t_i),
+                                    "perpendicularity_rule": "line_perpendicular_to_plane",
+                                    "perpendicularity_calls": (k.call,),
+                                    "angle_witness_kind": "line_plane_angle",
+                                    "angle_witness_calls": (c_ang.id,),
+                                    "sin_sq": sin2,
+                                    "cos_sq": cos2,
+                                    "angle_unit": c_ang.args.unit,
+                                    "angle_raw_value": c_ang.args.value,
+                                    "trig_identity": ID_ADJ_FROM_HYP_COS,
+                                    "known_side_roles": ("hypotenuse",),
+                                    "non_side_input_role": "angle",
+                                    "non_side_input_dimension": "ANGLE",
+                                    "extra_premise_calls": tuple(sl_ids),
+                                })
         return out
+
+    def _suy_canh_day_chop_deu(self, reg_call: LoiGoi, vong: tuple[str, ...]) -> tuple[Fraction, set[str]] | None:
+        """Deduce regular `n`-gon base side² `s²` on a `regular_pyramid` when height or lateral edge + angle is given."""
+        n_v = len(vong)
+        if n_v not in (3, 4, 6):
+            return None
+        base_set = frozenset(vong)
+        k_R_map = {3: Fraction(1, 3), 4: Fraction(1, 2), 6: Fraction(1, 1)}
+        k_in_map = {3: Fraction(1, 12), 4: Fraction(1, 4), 6: Fraction(3, 4)}
+        k_R, k_in = k_R_map[n_v], k_in_map[n_v]
+        for k_reg in sorted(self.khoi.values(), key=lambda kk: kk.name):
+            if k_reg.kind != "pyramid" or not k_reg.regular or frozenset(k_reg.base) != base_set or not k_reg.apex:
+                continue
+            apex = k_reg.apex
+            h2_cands: list[tuple[Fraction, tuple[str, ...]]] = [
+                (binh_phuong(ch.args.value), (ch.id,)) for ch in self.of("height") if ch.args.solid == k_reg.name
+            ] + self._chieu_cao_tu_the_tich([k_reg.name])
+            for c_p, (pa, pb), mp, _luat, chan_khai in self._rang_buoc_vuong():
+                if set(mp) <= base_set and apex in (pa, pb):
+                    foot_c = chan_khai or (pa if pb == apex else pb)
+                    if foot_c not in base_set:
+                        h2_cands += [(d, (c_p.id, *ids)) for d, ids in self.do_dai(apex, foot_c, _suy=False)]
+            lat_cands: list[tuple[Fraction, tuple[str, ...], str]] = [
+                (d, ids, vb) for vb in vong for d, ids in self.do_dai(apex, vb, _suy=False)
+            ]
+            # 1) Lateral edge `line_plane_angle` with base
+            for c_ang in self.of("line_plane_angle"):
+                if apex in c_ang.args.line and frozenset(c_ang.args.plane) <= base_set:
+                    vb = c_ang.args.line[1] if c_ang.args.line[0] == apex else c_ang.args.line[0]
+                    if vb not in base_set:
+                        continue
+                    sin2, cos2, _ = self._goc_tham_so(c_ang.args.value, c_ang.args.unit, allow_obtuse=False, calls=(c_ang.id,))
+                    if cos2 == 0:
+                        raise TuChoi(
+                            "INCONSISTENT_FACTS",
+                            f"{c_ang.id}: cạnh bên {apex}{vb} của chóp đều không thể vuông góc với mặt đáy",
+                            (k_reg.call, c_ang.id),
+                        )
+                    if 0 < sin2 < 1:
+                        if h2_cands:
+                            h2_v, h_ids = sorted(h2_cands)[0]
+                            s2_val = (h2_v * cos2 / sin2) / k_R
+                            deps = (reg_call.id, k_reg.call, c_ang.id, *h_ids)
+                            self._ghi_dan_xuat(
+                                "REGULAR_PYRAMID_ANGLE_TO_BASE_SIDE",
+                                f"{vong[0]}{vong[1]}",
+                                LENGTH,
+                                s2_val,
+                                deps,
+                                "certified_regular_pyramid_height_and_lateral_edge_angle",
+                            )
+                            self._ghi_chung_chi_luong_giac({
+                                "derived_role": "adjacent_leg",
+                                "derived_right_triangle": ("__regular_base_center__", vb, apex),
+                                "perpendicularity_rule": "line_perpendicular_to_plane",
+                                "perpendicularity_calls": (k_reg.call,),
+                                "angle_witness_kind": "line_plane_angle",
+                                "angle_witness_calls": (c_ang.id,),
+                                "sin_sq": sin2,
+                                "cos_sq": cos2,
+                                "angle_unit": c_ang.args.unit,
+                                "angle_raw_value": c_ang.args.value,
+                                "trig_identity": ID_ADJ_FROM_OPP_COT,
+                                "known_side_roles": ("opposite_leg",),
+                                "non_side_input_role": "angle",
+                                "non_side_input_dimension": "ANGLE",
+                                "extra_premise_calls": (reg_call.id, *h_ids),
+                            })
+                            return s2_val, set(deps)
+                        if lat_cands:
+                            l2_v, l_ids, _vb0 = sorted(lat_cands)[0]
+                            s2_val = (l2_v * cos2) / k_R
+                            deps = (reg_call.id, k_reg.call, c_ang.id, *l_ids)
+                            self._ghi_dan_xuat(
+                                "REGULAR_PYRAMID_ANGLE_TO_BASE_SIDE",
+                                f"{vong[0]}{vong[1]}",
+                                LENGTH,
+                                s2_val,
+                                deps,
+                                "certified_regular_pyramid_slant_edge_and_angle",
+                            )
+                            self._ghi_chung_chi_luong_giac({
+                                "derived_role": "adjacent_leg",
+                                "derived_right_triangle": ("__regular_base_center__", vb, apex),
+                                "perpendicularity_rule": "line_perpendicular_to_plane",
+                                "perpendicularity_calls": (k_reg.call,),
+                                "angle_witness_kind": "line_plane_angle",
+                                "angle_witness_calls": (c_ang.id,),
+                                "sin_sq": sin2,
+                                "cos_sq": cos2,
+                                "angle_unit": c_ang.args.unit,
+                                "angle_raw_value": c_ang.args.value,
+                                "trig_identity": ID_ADJ_FROM_HYP_COS,
+                                "known_side_roles": ("hypotenuse",),
+                                "non_side_input_role": "angle",
+                                "non_side_input_dimension": "ANGLE",
+                                "extra_premise_calls": (reg_call.id, *l_ids),
+                            })
+                            return s2_val, set(deps)
+            # 2) Lateral face `plane_plane_angle` / `dihedral_angle` with base
+            base_edges = [frozenset((vong[i], vong[(i + 1) % n_v])) for i in range(n_v)]
+            for c_ang in self.of("plane_plane_angle", "dihedral_angle"):
+                edge_pair: tuple[str, str] | None = None
+                if c_ang.fn == "dihedral_angle":
+                    e_set = frozenset(c_ang.args.edge)
+                    pts_ab = {c_ang.args.point_a, c_ang.args.point_b}
+                    if e_set in base_edges and apex in pts_ab and (pts_ab - {apex}) <= base_set:
+                        edge_pair = tuple(c_ang.args.edge)
+                else:
+                    p1, p2 = frozenset(c_ang.args.plane1), frozenset(c_ang.args.plane2)
+                    for pf, pb_s in ((p1, p2), (p2, p1)):
+                        if pb_s <= base_set and apex in pf and (pf - {apex}) in base_edges:
+                            edge_pair = tuple(v for v in vong if v in (pf - {apex}))
+                            break
+                if edge_pair is None:
+                    continue
+                allow_obt = c_ang.fn == "dihedral_angle"
+                sin2, cos2, cos_sign = self._goc_tham_so(c_ang.args.value, c_ang.args.unit, allow_obtuse=allow_obt, calls=(c_ang.id,))
+                if cos_sign is not None and cos_sign <= 0:
+                    raise TuChoi(
+                        "INCONSISTENT_FACTS",
+                        f"{c_ang.id}: góc giữa mặt bên chóp đều và mặt đáy phải nhọn (< 90°)",
+                        (k_reg.call, c_ang.id),
+                    )
+                if 0 < sin2 < 1 and cos2 > 0:
+                    if h2_cands:
+                        h2_v, h_ids = sorted(h2_cands)[0]
+                        s2_val = (h2_v * cos2 / sin2) / k_in
+                        deps = (reg_call.id, k_reg.call, c_ang.id, *h_ids)
+                        self._ghi_dan_xuat(
+                            "REGULAR_PYRAMID_ANGLE_TO_BASE_SIDE",
+                            f"{vong[0]}{vong[1]}",
+                            LENGTH,
+                            s2_val,
+                            deps,
+                            "certified_regular_pyramid_height_and_dihedral_angle",
+                        )
+                        aux_mid = next(lbl for lbl in ("_aux_edge_mid", "_aux_reg_mid") if lbl not in self.text_labels)
+                        self._ghi_chung_chi_luong_giac({
+                            "derived_role": "adjacent_leg",
+                            "derived_right_triangle": ("__regular_base_center__", aux_mid, apex),
+                            "perpendicularity_rule": "line_perpendicular_to_plane",
+                            "perpendicularity_calls": (k_reg.call,),
+                            "angle_witness_kind": "dihedral_angle",
+                            "angle_witness_calls": (c_ang.id,),
+                            "sin_sq": sin2,
+                            "cos_sq": cos2,
+                            "angle_unit": c_ang.args.unit,
+                            "angle_raw_value": c_ang.args.value,
+                            "trig_identity": ID_ADJ_FROM_OPP_COT,
+                            "known_side_roles": ("opposite_leg",),
+                            "non_side_input_role": "angle",
+                            "non_side_input_dimension": "ANGLE",
+                            "extra_premise_calls": (reg_call.id, *h_ids),
+                            "deferred_midpoint_aux": (aux_mid, edge_pair[0], edge_pair[1]),
+                        })
+                        return s2_val, set(deps)
+                    if lat_cands:
+                        l2_v, l_ids, _vb0 = sorted(lat_cands)[0]
+                        s2_val = l2_v / (k_in / cos2 + Fraction(1, 4))
+                        deps = (reg_call.id, k_reg.call, c_ang.id, *l_ids)
+                        self._ghi_dan_xuat(
+                            "REGULAR_PYRAMID_ANGLE_TO_BASE_SIDE",
+                            f"{vong[0]}{vong[1]}",
+                            LENGTH,
+                            s2_val,
+                            deps,
+                            "certified_regular_pyramid_slant_edge_and_dihedral_angle",
+                        )
+                        return s2_val, set(deps)
+        return None
 
     # ── đáy ─────────────────────────────────────────────────────────────────
     def bo_cuc_day(self) -> None:
@@ -809,9 +1376,57 @@ class _Dung:
                 s2, dung = binh_phuong(c.args.side), {c.id}
             else:
                 ung = sorted((d, ids) for i in range(len(vong)) for d, ids in self.do_dai(vong[i], vong[(i + 1) % len(vong)]))
-                if not ung:
+                if ung:
+                    s2, dung = ung[0][0], {c.id, *ung[0][1]}
+                elif len(vong) == 4 and (
+                    (d_02 := sorted(self.do_dai(vong[0], vong[2])))
+                    or (d_13 := sorted(self.do_dai(vong[1], vong[3])))
+                ):
+                    d_02 = sorted(self.do_dai(vong[0], vong[2]))
+                    d_13 = sorted(self.do_dai(vong[1], vong[3]))
+                    if d_02 and d_13 and d_02[0][0] != d_13[0][0]:
+                        raise TuChoi(
+                            "INCONSISTENT_FACTS",
+                            "hai đường chéo hình vuông nhận hai độ dài khác nhau",
+                            (c.id, *d_02[0][1], *d_13[0][1]),
+                        )
+                    if d_02:
+                        diag_sq, diag_ids = d_02[0]
+                        tri_sq = (vong[1], vong[0], vong[2])
+                    else:
+                        diag_sq, diag_ids = d_13[0]
+                        tri_sq = (vong[0], vong[1], vong[3])
+                    s2 = diag_sq * Fraction(1, 2)
+                    dung = {c.id, *diag_ids}
+                    self._ghi_dan_xuat(
+                        "SQUARE_DIAGONAL_TO_SIDE",
+                        f"{vong[0]}{vong[1]}",
+                        LENGTH,
+                        s2,
+                        (c.id, *diag_ids),
+                        "certified_square_diagonal_right_isosceles",
+                    )
+                    self._ghi_chung_chi_luong_giac({
+                        "derived_role": "both_legs",
+                        "derived_right_triangle": tri_sq,
+                        "perpendicularity_rule": "explicit_right_angle",
+                        "perpendicularity_calls": (c.id,),
+                        "angle_witness_kind": "equal_legs_witness",
+                        "angle_witness_calls": (c.id,),
+                        "sin_sq": Fraction(1, 2),
+                        "cos_sq": Fraction(1, 2),
+                        "angle_unit": "deg",
+                        "angle_raw_value": "45",
+                        "trig_identity": ID_PYTH_EQUAL_LEGS,
+                        "known_side_roles": ("hypotenuse",),
+                        "non_side_input_role": "equal_legs",
+                        "non_side_input_dimension": "SCALAR",
+                        "extra_premise_calls": tuple(diag_ids),
+                    })
+                elif (reg_pyr_side := self._suy_canh_day_chop_deu(c, vong)) is not None:
+                    s2, dung = reg_pyr_side
+                else:
                     raise TuChoi("MISSING_DIMENSION", "đa giác đều đáy chưa có độ dài cạnh", (c.id,))
-                s2, dung = ung[0][0], {c.id, *ung[0][1]}
             khung, G2 = regular_polygon_chart(len(vong), s2)
             luat = "regular_polygon_chart"
         elif rect:
@@ -910,6 +1525,104 @@ class _Dung:
                     a2 = b2 = (d_ac[0][0] + d_bd[0][0]) / 4
                     m_val = (d_ac[0][0] - d_bd[0][0]) / 4
                     dung |= set(d_ac[0][1]) | set(d_bd[0][1])
+                elif d_ac or d_bd:
+                    # Single diagonal + right_angle or vertex_angle on rhombus uniquely fixes side² and Gram inner product:
+                    # |v2 - v0|² = 2·s²·(1 + c0), |v3 - v1|² = 2·s²·(1 - c0) where c0 = cos(∠v0) ∈ ℚ ∩ (-1, 1).
+                    for cr in self.of("right_angle"):
+                        if cr.args.vertex in vong:
+                            kr = vong.index(cr.args.vertex)
+                            if frozenset(cr.args.rays) == frozenset((vong[(kr - 1) % 4], vong[(kr + 1) % 4])):
+                                diag_sq, diag_ids = d_ac[0] if d_ac else d_bd[0]
+                                a2 = b2 = diag_sq * Fraction(1, 2)
+                                m_val = Z
+                                dung |= {cr.id, *diag_ids}
+                                self._ghi_dan_xuat(
+                                    "RHOMBUS_DIAGONAL_AND_ANGLE_TO_SIDE",
+                                    f"{vong[0]}{vong[1]}",
+                                    LENGTH,
+                                    a2,
+                                    (c.id, cr.id, *diag_ids),
+                                    "certified_rhombus_diagonal_and_right_angle",
+                                )
+                                break
+                    if a2 is None:
+                        for ca_v in self.of("vertex_angle"):
+                            if ca_v.args.vertex not in vong:
+                                continue
+                            kv = vong.index(ca_v.args.vertex)
+                            if frozenset(ca_v.args.rays) != frozenset((vong[(kv - 1) % 4], vong[(kv + 1) % 4])):
+                                continue
+                            _sin2, cos2, cos_sign = self._goc_tham_so(
+                                ca_v.args.value, ca_v.args.unit, allow_obtuse=True, calls=(ca_v.id,)
+                            )
+                            if cos_sign is None:
+                                raise TuChoi(
+                                    "AMBIGUOUS_FACT",
+                                    "góc đỉnh hình thoi từ sin chưa phân biệt nhọn hay tù",
+                                    (ca_v.id,),
+                                )
+                            if cos2 == 0:
+                                c0 = Z
+                            else:
+                                cos_abs = _sqrt_q(cos2)
+                                if cos_abs is None:
+                                    raise TuChoi(
+                                        "EXACT_DOMAIN_EXCEEDED",
+                                        "cos của góc đỉnh hình thoi chứa căn ngoài miền Gram hữu tỉ ℚ",
+                                        (c.id, ca_v.id),
+                                    )
+                                cos_k = cos_abs if cos_sign > 0 else -cos_abs
+                                c0 = cos_k if kv in (0, 2) else -cos_k
+                            if d_ac:
+                                diag_sq, diag_ids = d_ac[0]
+                                s2_rh = diag_sq / (2 * (Fraction(1) + c0))
+                                known_half_role = "adjacent_leg"
+                            else:
+                                diag_sq, diag_ids = d_bd[0]
+                                s2_rh = diag_sq / (2 * (Fraction(1) - c0))
+                                known_half_role = "opposite_leg"
+                            a2 = b2 = s2_rh
+                            m_val = s2_rh * c0
+                            dung |= {ca_v.id, *diag_ids}
+                            self._ghi_dan_xuat(
+                                "RHOMBUS_DIAGONAL_AND_ANGLE_TO_SIDE",
+                                f"{vong[0]}{vong[1]}",
+                                LENGTH,
+                                s2_rh,
+                                (c.id, ca_v.id, *diag_ids),
+                                "certified_rhombus_diagonal_and_vertex_angle",
+                            )
+                            aux_lbl = next(
+                                lbl for lbl in ("_aux_diag_mid", "_aux_rhom_mid") if lbl not in self.text_labels
+                            )
+                            half_cos2 = (Fraction(1) + c0) * Fraction(1, 2)
+                            half_sin2 = (Fraction(1) - c0) * Fraction(1, 2)
+                            self._ghi_chung_chi_luong_giac({
+                                "derived_role": "hypotenuse",
+                                "derived_right_triangle": (aux_lbl, vong[0], vong[1]),
+                                "perpendicularity_rule": "rhombus_perpendicular_diagonals",
+                                "perpendicularity_calls": (c.id,),
+                                "angle_witness_kind": "rhombus_bisected_vertex_angle",
+                                "angle_witness_calls": (ca_v.id, c.id),
+                                "sin_sq": half_sin2,
+                                "cos_sq": half_cos2,
+                                "angle_unit": ca_v.args.unit,
+                                "angle_raw_value": ca_v.args.value,
+                                "trig_identity": ID_RHOMBUS_HALF_DIAG_COS,
+                                "known_side_roles": (known_half_role,),
+                                "non_side_input_role": "angle",
+                                "non_side_input_dimension": "ANGLE",
+                                "extra_premise_calls": tuple(diag_ids),
+                                "auxiliary_witness_points": {
+                                    aux_lbl: {
+                                        "rule": "segment_midpoint",
+                                        "endpoints": [vong[0], vong[2]],
+                                        "coincident_midpoint_of": [vong[1], vong[3]],
+                                        "xyz": (Fraction(1, 2), Fraction(1, 2), Z),
+                                    }
+                                },
+                            })
+                            break
             if a2 is None or b2 is None:
                 if self._co_the_dung_affine_minh_hoa():
                     self.free_affine_for.add(self.root.name)
@@ -1138,22 +1851,36 @@ class _Dung:
         return None
 
     def _tam_giac(self, vong: tuple[str, ...]):
-        """Ba cạnh² từ độ dài + góc vuông (Pythagore) + đường cao tam giác cân + định lý cos SAS (hữu tỉ trong ℚ)."""
+        """Ba cạnh² từ độ dài + góc vuông (Pythagore / lượng giác nhọn / tỉ số cạnh) + đường cao tam giác cân + định lý cos SAS."""
         canh = {frozenset(p): None for p in ((vong[0], vong[1]), (vong[0], vong[2]), (vong[1], vong[2]))}
+        edge_ids: dict[frozenset[str], tuple[str, ...]] = {e: () for e in canh}
         dung: set[str] = set()
         for e in canh:
             if l := sorted(self.do_dai(*sorted(e))):
                 canh[e] = l[0][0]
+                edge_ids[e] = tuple(l[0][1])
                 dung |= set(l[0][1])
-        goc = [(c.args.vertex, *c.args.rays, c.id) for c in self.of("right_angle")]
-        goc += [(V, *sorted(set(c.args.line1) ^ set(c.args.line2)), c.id) for c in self.of("perpendicular_lines")
-                if len(set(c.args.line1) | set(c.args.line2)) == 3 for V in set(c.args.line1) & set(c.args.line2)]
-        for V, X, Y, cid in goc:
+        goc: list[tuple[str, str, str, str, str]] = [
+            (c.args.vertex, *c.args.rays, c.id, "explicit_right_angle") for c in self.of("right_angle")
+        ]
+        goc += [
+            (V, *sorted(set(c.args.line1) ^ set(c.args.line2)), c.id, "explicit_perpendicular_lines")
+            for c in self.of("perpendicular_lines")
+            if len(set(c.args.line1) | set(c.args.line2)) == 3
+            for V in set(c.args.line1) & set(c.args.line2)
+        ]
+        for cv90 in self.of("vertex_angle"):
+            if {cv90.args.vertex, *cv90.args.rays} == set(vong):
+                _s90, c90, _cs90 = self._goc_tham_so(cv90.args.value, cv90.args.unit, allow_obtuse=True, calls=(cv90.id,))
+                if c90 == 0:
+                    goc.append((cv90.args.vertex, *cv90.args.rays, cv90.id, "explicit_right_angle"))
+        for V, X, Y, cid, p_rule in goc:
             hy = frozenset((X, Y))
             if V not in vong and hy in canh:
                 la, lb = sorted(self.do_dai(V, X)), sorted(self.do_dai(V, Y))
                 if la and lb and canh[hy] is None:
                     canh[hy] = la[0][0] + lb[0][0]
+                    edge_ids[hy] = (cid, *la[0][1], *lb[0][1])
                     dung |= {cid, *la[0][1], *lb[0][1]}
                 elif la and lb and canh[hy] != la[0][0] + lb[0][0]:
                     raise TuChoi("INCONSISTENT_FACTS", f"{X}{Y}² ≠ {V}{X}² + {V}{Y}² dù {V}{X} ⊥ {V}{Y}",
@@ -1164,14 +1891,221 @@ class _Dung:
             l1, l2 = frozenset((V, X)), frozenset((V, Y))
             if canh[hy] is None and canh[l1] is not None and canh[l2] is not None:
                 canh[hy] = canh[l1] + canh[l2]
+                edge_ids[hy] = (cid, *edge_ids[l1], *edge_ids[l2])
                 dung.add(cid)
+                self._ghi_chung_chi_luong_giac({
+                    "derived_role": "hypotenuse",
+                    "derived_right_triangle": (V, X, Y),
+                    "perpendicularity_rule": p_rule,
+                    "perpendicularity_calls": (cid,),
+                    "angle_witness_kind": "pythagorean_lengths",
+                    "angle_witness_calls": (),
+                    "sin_sq": canh[l2] / canh[hy],
+                    "cos_sq": canh[l1] / canh[hy],
+                    "angle_unit": "sin",
+                    "angle_raw_value": None,
+                    "trig_identity": ID_PYTH_HYP_FROM_LEGS,
+                    "known_side_roles": ("adjacent_leg", "opposite_leg"),
+                    "non_side_input_role": None,
+                    "extra_premise_calls": (*edge_ids[l1], *edge_ids[l2]),
+                })
             elif canh[hy] is not None and (canh[l1] is None) != (canh[l2] is None):
                 biet = l1 if canh[l1] is not None else l2
                 con = canh[hy] - canh[biet]
                 if con <= 0:
                     raise TuChoi("INCONSISTENT_FACTS", "cạnh huyền không dài hơn cạnh góc vuông", (cid,))
-                canh[l2 if biet == l1 else l1] = con
+                target_e = l2 if biet == l1 else l1
+                canh[target_e] = con
+                edge_ids[target_e] = (cid, *edge_ids[hy], *edge_ids[biet])
                 dung.add(cid)
+                self._ghi_chung_chi_luong_giac({
+                    "derived_role": "opposite_leg" if biet == l1 else "adjacent_leg",
+                    "derived_right_triangle": (V, X, Y),
+                    "perpendicularity_rule": p_rule,
+                    "perpendicularity_calls": (cid,),
+                    "angle_witness_kind": "pythagorean_lengths",
+                    "angle_witness_calls": (),
+                    "sin_sq": canh[l2] / canh[hy],
+                    "cos_sq": canh[l1] / canh[hy],
+                    "angle_unit": "sin",
+                    "angle_raw_value": None,
+                    "trig_identity": ID_PYTH_LEG_FROM_HYP,
+                    "known_side_roles": ("hypotenuse", "adjacent_leg") if biet == l1 else ("hypotenuse", "opposite_leg"),
+                    "non_side_input_role": None,
+                    "extra_premise_calls": (*edge_ids[hy], *edge_ids[biet]),
+                })
+            elif canh[hy] is not None and canh[l1] is None and canh[l2] is None:
+                eq_ids = next((ids for seg_eq, ids in self._lop_bang(l1) if seg_eq == l2), None)
+                if eq_ids is not None:
+                    leg_sq = canh[hy] * Fraction(1, 2)
+                    canh[l1] = canh[l2] = leg_sq
+                    edge_ids[l1] = edge_ids[l2] = (cid, *eq_ids, *edge_ids[hy])
+                    dung |= {cid, *eq_ids}
+                    self._ghi_dan_xuat(
+                        "RIGHT_ISOSCELES_HYPOTENUSE_TO_LEGS",
+                        f"{V}{X}",
+                        LENGTH,
+                        leg_sq,
+                        (cid, *eq_ids, *edge_ids[hy]),
+                        "certified_right_isosceles_triangle_hypotenuse_to_legs",
+                    )
+                    self._ghi_chung_chi_luong_giac({
+                        "derived_role": "both_legs",
+                        "derived_right_triangle": (V, X, Y),
+                        "perpendicularity_rule": p_rule,
+                        "perpendicularity_calls": (cid,),
+                        "angle_witness_kind": "equal_legs_witness",
+                        "angle_witness_calls": tuple(eq_ids),
+                        "sin_sq": Fraction(1, 2),
+                        "cos_sq": Fraction(1, 2),
+                        "angle_unit": "deg",
+                        "angle_raw_value": "45",
+                        "trig_identity": ID_PYTH_EQUAL_LEGS,
+                        "known_side_roles": ("hypotenuse",),
+                        "non_side_input_role": "equal_legs",
+                        "non_side_input_dimension": "SCALAR",
+                        "extra_premise_calls": tuple(edge_ids[hy]),
+                    })
+                else:
+                    for csr in self.of("segment_ratio"):
+                        sa, sb = frozenset(csr.args.segment_a), frozenset(csr.args.segment_b)
+                        if {sa, sb} != {l1, l2}:
+                            continue
+                        r2 = binh_phuong(csr.args.ratio)
+                        if sa == l2 and sb == l1:
+                            sin_r, cos_r = r2 / (Fraction(1) + r2), Fraction(1) / (Fraction(1) + r2)
+                        else:
+                            sin_r, cos_r = Fraction(1) / (Fraction(1) + r2), r2 / (Fraction(1) + r2)
+                        canh[l1] = canh[hy] * cos_r
+                        canh[l2] = canh[hy] * sin_r
+                        edge_ids[l1] = edge_ids[l2] = (cid, csr.id, *edge_ids[hy])
+                        dung |= {cid, csr.id}
+                        self._ghi_dan_xuat(
+                            "RIGHT_TRIANGLE_RATIO_HYPOTENUSE_TO_LEGS",
+                            f"{V}{X}",
+                            LENGTH,
+                            canh[l1],
+                            (cid, csr.id, *edge_ids[hy]),
+                            "certified_right_triangle_leg_ratio_and_hypotenuse",
+                        )
+                        self._ghi_chung_chi_luong_giac({
+                            "derived_role": "both_legs",
+                            "derived_right_triangle": (V, X, Y),
+                            "perpendicularity_rule": p_rule,
+                            "perpendicularity_calls": (cid,),
+                            "angle_witness_kind": "leg_ratio_witness",
+                            "angle_witness_calls": (csr.id,),
+                            "sin_sq": sin_r,
+                            "cos_sq": cos_r,
+                            "angle_unit": "tan",
+                            "angle_raw_value": csr.args.ratio if sa == l2 else None,
+                            "trig_identity": ID_PYTH_LEG_RATIO,
+                            "known_side_roles": ("hypotenuse",),
+                            "non_side_input_role": "leg_ratio",
+                            "non_side_input_dimension": "SCALAR",
+                            "extra_premise_calls": tuple(edge_ids[hy]),
+                        })
+                        break
+            # Acute `vertex_angle` at a non-right vertex + ANY one known side fixes all three sides exactly in ℚ_{>0}
+            for cva in self.of("vertex_angle"):
+                if {cva.args.vertex, *cva.args.rays} != set(vong) or cva.args.vertex == V:
+                    continue
+                v_adj = cva.args.vertex
+                v_opp = Y if v_adj == X else X
+                sin2, cos2, cos_sign = self._goc_tham_so(cva.args.value, cva.args.unit, allow_obtuse=True, calls=(cva.id,))
+                if cos_sign is not None and cos_sign <= 0:
+                    raise TuChoi(
+                        "INCONSISTENT_FACTS",
+                        f"{cva.id}: góc tại đỉnh {v_adj} của tam giác vuông tại {V} phải nhọn (< 90°)",
+                        (cid, cva.id),
+                    )
+                if not (0 < sin2 < 1 and 0 < cos2 < 1):
+                    continue
+                e_adj = frozenset((V, v_adj))
+                e_opp = frozenset((V, v_opp))
+                e_hyp = frozenset((v_adj, v_opp))
+                common_spec = {
+                    "derived_right_triangle": (V, v_adj, v_opp),
+                    "perpendicularity_rule": p_rule,
+                    "perpendicularity_calls": (cid,),
+                    "angle_witness_kind": "vertex_angle",
+                    "angle_witness_calls": (cva.id,),
+                    "sin_sq": sin2,
+                    "cos_sq": cos2,
+                    "angle_unit": cva.args.unit,
+                    "angle_raw_value": cva.args.value,
+                    "non_side_input_role": "angle",
+                    "non_side_input_dimension": "ANGLE",
+                }
+                if canh[e_hyp] is not None and (canh[e_adj] is None or canh[e_opp] is None):
+                    src_ids = edge_ids[e_hyp]
+                    if canh[e_adj] is None:
+                        canh[e_adj] = canh[e_hyp] * cos2
+                        edge_ids[e_adj] = (cid, cva.id, *src_ids)
+                        self._ghi_chung_chi_luong_giac({
+                            **common_spec,
+                            "derived_role": "adjacent_leg",
+                            "trig_identity": ID_ADJ_FROM_HYP_COS,
+                            "known_side_roles": ("hypotenuse",),
+                            "extra_premise_calls": src_ids,
+                        })
+                    if canh[e_opp] is None:
+                        canh[e_opp] = canh[e_hyp] * sin2
+                        edge_ids[e_opp] = (cid, cva.id, *src_ids)
+                        self._ghi_chung_chi_luong_giac({
+                            **common_spec,
+                            "derived_role": "opposite_leg",
+                            "trig_identity": ID_OPP_FROM_HYP_SIN,
+                            "known_side_roles": ("hypotenuse",),
+                            "extra_premise_calls": src_ids,
+                        })
+                    dung |= {cid, cva.id}
+                elif canh[e_adj] is not None and (canh[e_opp] is None or canh[e_hyp] is None):
+                    src_ids = edge_ids[e_adj]
+                    if canh[e_opp] is None:
+                        canh[e_opp] = canh[e_adj] * sin2 / cos2
+                        edge_ids[e_opp] = (cid, cva.id, *src_ids)
+                        self._ghi_chung_chi_luong_giac({
+                            **common_spec,
+                            "derived_role": "opposite_leg",
+                            "trig_identity": ID_OPP_FROM_ADJ_TAN,
+                            "known_side_roles": ("adjacent_leg",),
+                            "extra_premise_calls": src_ids,
+                        })
+                    if canh[e_hyp] is None:
+                        canh[e_hyp] = canh[e_adj] / cos2
+                        edge_ids[e_hyp] = (cid, cva.id, *src_ids)
+                        self._ghi_chung_chi_luong_giac({
+                            **common_spec,
+                            "derived_role": "hypotenuse",
+                            "trig_identity": ID_HYP_FROM_ADJ_COS,
+                            "known_side_roles": ("adjacent_leg",),
+                            "extra_premise_calls": src_ids,
+                        })
+                    dung |= {cid, cva.id}
+                elif canh[e_opp] is not None and (canh[e_adj] is None or canh[e_hyp] is None):
+                    src_ids = edge_ids[e_opp]
+                    if canh[e_adj] is None:
+                        canh[e_adj] = canh[e_opp] * cos2 / sin2
+                        edge_ids[e_adj] = (cid, cva.id, *src_ids)
+                        self._ghi_chung_chi_luong_giac({
+                            **common_spec,
+                            "derived_role": "adjacent_leg",
+                            "trig_identity": ID_ADJ_FROM_OPP_COT,
+                            "known_side_roles": ("opposite_leg",),
+                            "extra_premise_calls": src_ids,
+                        })
+                    if canh[e_hyp] is None:
+                        canh[e_hyp] = canh[e_opp] / sin2
+                        edge_ids[e_hyp] = (cid, cva.id, *src_ids)
+                        self._ghi_chung_chi_luong_giac({
+                            **common_spec,
+                            "derived_role": "hypotenuse",
+                            "trig_identity": ID_HYP_FROM_OPP_SIN,
+                            "known_side_roles": ("opposite_leg",),
+                            "extra_premise_calls": src_ids,
+                        })
+                    dung |= {cid, cva.id}
         # Isosceles triangle altitude propagation (`orthogonal_projection_line` / `midpoint` foot H on opposite side XY)
         for V in vong:
             X, Y = [p for p in vong if p != V]
@@ -1231,7 +2165,7 @@ class _Dung:
         ):
             hp_cands: list[tuple[Fraction, tuple[str, ...]]] = [
                 (binh_phuong(ch.args.value), (ch.id,)) for ch in self.of("height") if ch.args.solid == self.root.name
-            ]
+            ] + self._chieu_cao_tu_the_tich([self.root.name])
             for b_v, t_v in zip(self.root.base, self.root.top):
                 hp_cands += self.do_dai(b_v, t_v)
             if hp_cands:
@@ -1266,7 +2200,7 @@ class _Dung:
                                 canh[e_vx] = canh[e_vy] = leg2
                                 dung |= {cla.id, *eq_chain, *h_ids}
                                 break
-                            for r_v, r_x, r_y, r_cid in goc:
+                            for r_v, r_x, r_y, r_cid, _r_rule in goc:
                                 if {r_v, r_x, r_y} == set(vong) and r_v in (X, Y):
                                     X_perp, Y_other = (X, Y) if r_v == X else (Y, X)
                                     e_perp = frozenset((V, X_perp))
@@ -1327,7 +2261,61 @@ class _Dung:
             )
         )
 
-    def _chieu_cao(self, dinh: str, chan: str, khoi_ten: list[str]) -> tuple[Fraction | None, set[str]]:
+    def _dien_tich2_day(self, base: tuple[str, ...]) -> tuple[Fraction, tuple[str, ...]] | None:
+        """Exact squared area of polygon `base` from either a `polygon_area` premise or the placed planar Gram metric `G2`."""
+        for c_pa in self.of("polygon_area"):
+            if frozenset(c_pa.args.polygon) == frozenset(base):
+                return binh_phuong(c_pa.args.value), (c_pa.id,)
+        if len(base) >= 3 and all(p in self.pts and self.pts[p][2] == 0 for p in base) and self.G2 != ((Z, Z), (Z, Z)):
+            u = tuple(self.pts[base[1]][i] - self.pts[base[0]][i] for i in range(3))
+            v = tuple(self.pts[base[2]][i] - self.pts[base[0]][i] for i in range(3))
+            det_ij = u[0] * v[1] - u[1] * v[0]
+            if det_ij != 0:
+                proj = sum(
+                    self.pts[a][0] * self.pts[b][1] - self.pts[a][1] * self.pts[b][0]
+                    for a, b in zip(base, (*base[1:], base[0]))
+                )
+                scale = proj / det_ij
+                area2 = (self.g(u, u) * self.g(v, v) - self.g(u, v) ** 2) * scale ** 2 / 4
+                if area2 > 0:
+                    return area2, ()
+        return None
+
+    def _chieu_cao_tu_the_tich(self, khoi_ten: list[str]) -> list[tuple[Fraction, tuple[str, ...]]]:
+        """Derive `h²` of solid(s) in `khoi_ten` from `solid_volume` and certified base area (`SOLID_VOLUME_AND_BASE_AREA_TO_HEIGHT`)."""
+        out: list[tuple[Fraction, tuple[str, ...]]] = []
+        for cv in self.of("solid_volume"):
+            if cv.args.solid not in khoi_ten:
+                continue
+            kv = self.khoi.get(cv.args.solid)
+            if kv is None:
+                continue
+            ba = self._dien_tich2_day(kv.base)
+            if ba is None or ba[0] <= 0:
+                continue
+            vol_sq = binh_phuong(cv.args.value)
+            h2_val = (Fraction(9, 1) if kv.kind == "pyramid" else Fraction(1, 1)) * vol_sq / ba[0]
+            deps = (cv.id, *ba[1])
+            self._ghi_dan_xuat(
+                "SOLID_VOLUME_AND_BASE_AREA_TO_HEIGHT",
+                f"height({kv.name})",
+                LENGTH,
+                h2_val,
+                deps,
+                "certified_solid_volume_and_base_area",
+            )
+            out.append((h2_val, deps))
+        return out
+
+    def _chieu_cao(
+        self,
+        dinh: str,
+        chan: str,
+        khoi_ten: list[str],
+        *,
+        perp_calls: tuple[str, ...] = (),
+        perp_rule: str = "line_perpendicular_to_plane",
+    ) -> tuple[Fraction | None, set[str]]:
         """h² của đỉnh `dinh` có chân `chan` trong đáy — (a) độ dài đoạn đỉnh–chân, (b) chiều cao khối, (c) độ dài
         đỉnh tới một điểm khác trong đáy (Pythagore trong G), (d) góc đường `dinh-x` với mặt đáy, hoặc hoãn giải đa thức
         h² nếu đề cho ràng buộc góc/chéo phụ thuộc đỉnh. Thiếu tất cả ⇒ MISSING_DIMENSION."""
@@ -1335,16 +2323,74 @@ class _Dung:
             return l[0][0], set(l[0][1])
         if h := sorted((binh_phuong(c.args.value), c.id) for c in self.of("height") if c.args.solid in khoi_ten):
             return h[0][0], {h[0][1]}
+        if hv := sorted(self._chieu_cao_tu_the_tich(khoi_ten)):
+            return hv[0][0], set(hv[0][1])
+        base_set = frozenset(self.root.base)
         for x in sorted(p for p in self.pts if self.trong_day(p) and p != chan):
             if l := sorted(self.do_dai(dinh, x)):
                 u = tuple(self.pts[x][i] - self.pts[chan][i] for i in range(3))
-                h2 = l[0][0] - self.g(u, u)
+                proj2 = self.g(u, u)
+                h2 = l[0][0] - proj2
                 if h2 <= 0:
                     raise TuChoi("INCONSISTENT_FACTS", f"{dinh}{x} không dài hơn khoảng cách từ chân {chan} tới {x}",
                                  tuple(l[0][1]))
-                return h2, set(l[0][1])
+                used_cids = set(l[0][1])
+                if isinstance(chan, str) and proj2 > 0 and perp_calls:
+                    ang_on_slant = next(
+                        (
+                            ca
+                            for ca in self.of("line_plane_angle")
+                            if frozenset(ca.args.line) == frozenset((dinh, x))
+                            and frozenset(ca.args.plane) <= base_set
+                            and ca.id in self.dung
+                        ),
+                        None,
+                    )
+                    if ang_on_slant is not None:
+                        sin2_s, cos2_s, _ = self._goc_tham_so(
+                            ang_on_slant.args.value,
+                            ang_on_slant.args.unit,
+                            allow_obtuse=False,
+                            calls=(ang_on_slant.id,),
+                        )
+                        used_cids.add(ang_on_slant.id)
+                        self._ghi_chung_chi_luong_giac({
+                            "derived_role": "opposite_leg",
+                            "derived_right_triangle": (chan, x, dinh),
+                            "perpendicularity_rule": perp_rule,
+                            "perpendicularity_calls": perp_calls,
+                            "angle_witness_kind": "line_plane_angle",
+                            "angle_witness_calls": (ang_on_slant.id,),
+                            "sin_sq": sin2_s,
+                            "cos_sq": cos2_s,
+                            "angle_unit": ang_on_slant.args.unit,
+                            "angle_raw_value": ang_on_slant.args.value,
+                            "trig_identity": ID_OPP_FROM_HYP_SIN,
+                            "known_side_roles": ("hypotenuse",),
+                            "non_side_input_role": "angle",
+                            "non_side_input_dimension": "ANGLE",
+                            "extra_premise_calls": tuple(l[0][1]),
+                        })
+                    else:
+                        base_cids = tuple(sorted(cid for cid in self.dung if cid != SCALE_UNIT_ID))
+                        self._ghi_chung_chi_luong_giac({
+                            "derived_role": "opposite_leg",
+                            "derived_right_triangle": (chan, x, dinh),
+                            "perpendicularity_rule": perp_rule,
+                            "perpendicularity_calls": perp_calls,
+                            "angle_witness_kind": "pythagorean_lengths",
+                            "angle_witness_calls": (),
+                            "sin_sq": h2 / l[0][0],
+                            "cos_sq": proj2 / l[0][0],
+                            "angle_unit": "sin",
+                            "angle_raw_value": None,
+                            "trig_identity": ID_PYTH_LEG_FROM_HYP,
+                            "known_side_roles": ("hypotenuse", "adjacent_leg"),
+                            "non_side_input_role": None,
+                            "extra_premise_calls": (*l[0][1], *base_cids),
+                        })
+                return h2, used_cids
         f_xy = self.pts[chan] if isinstance(chan, str) else chan
-        base_set = frozenset(self.root.base)
         for c_ang in self.of("line_plane_angle"):
             if dinh in c_ang.args.line and frozenset(c_ang.args.plane) <= base_set:
                 other = c_ang.args.line[1] if c_ang.args.line[0] == dinh else c_ang.args.line[0]
@@ -1352,8 +2398,40 @@ class _Dung:
                     u_proj = (self.pts[other][0] - f_xy[0], self.pts[other][1] - f_xy[1], Z)
                     proj2 = self.g(u_proj, u_proj)
                     sin2, cos2, _ = self._goc_tham_so(c_ang.args.value, c_ang.args.unit, allow_obtuse=False, calls=(c_ang.id,))
+                    if proj2 > 0 and cos2 == 0:
+                        raise TuChoi(
+                            "INCONSISTENT_FACTS",
+                            f"{c_ang.id}: đường {dinh}{other} qua điểm {other} khác chân vuông góc không thể tạo góc 90° với đáy",
+                            (*perp_calls, c_ang.id),
+                        )
+                    if proj2 == 0 and cos2 != 0:
+                        raise TuChoi(
+                            "INCONSISTENT_FACTS",
+                            f"{c_ang.id}: đường vuông góc {dinh}{other} phải tạo góc 90° với đáy",
+                            (*perp_calls, c_ang.id),
+                        )
                     if proj2 > 0 and 0 < sin2 < 1:
-                        return proj2 * sin2 / cos2, {c_ang.id}
+                        h2_res = proj2 * sin2 / cos2
+                        if isinstance(chan, str) and perp_calls:
+                            base_cids = tuple(sorted(cid for cid in self.dung if cid != SCALE_UNIT_ID))
+                            self._ghi_chung_chi_luong_giac({
+                                "derived_role": "opposite_leg",
+                                "derived_right_triangle": (chan, other, dinh),
+                                "perpendicularity_rule": perp_rule,
+                                "perpendicularity_calls": perp_calls,
+                                "angle_witness_kind": "line_plane_angle",
+                                "angle_witness_calls": (c_ang.id,),
+                                "sin_sq": sin2,
+                                "cos_sq": cos2,
+                                "angle_unit": c_ang.args.unit,
+                                "angle_raw_value": c_ang.args.value,
+                                "trig_identity": ID_OPP_FROM_ADJ_TAN,
+                                "known_side_roles": ("adjacent_leg",),
+                                "non_side_input_role": "angle",
+                                "non_side_input_dimension": "ANGLE",
+                                "extra_premise_calls": base_cids,
+                            })
+                        return h2_res, {c_ang.id}
         if self._co_the_hoan_h2():
             return None, set()
         if self._free_h2_sample is not None:
@@ -1515,7 +2593,13 @@ class _Dung:
                     self._dat(self.tam, tuple(sum(self.pts[v][i] for v in k.base) / n for i in range(3)),
                               "center_of_regular_base", {k.call, reg[0].id}, "DERIVED")
                     self.trace[-1]["dependencies"] = list(k.base)
-                h2, cs = self._chieu_cao(k.apex, self.tam, [k.name])
+                h2, cs = self._chieu_cao(
+                    k.apex,
+                    self.tam,
+                    [k.name],
+                    perp_calls=(k.call,),
+                    perp_rule="line_perpendicular_to_plane",
+                )
                 self._dat_ngoai_day(k.apex, self.tam, h2, "apex_over_center", {k.call, reg[0].id} | cs)
                 return True
         for c in self.of("centroid"):
@@ -1564,7 +2648,13 @@ class _Dung:
                         raise TuChoi("FOOT_NOT_DETERMINED", f"{c.id}: không đầu nào của {a}{b} nằm trên mặt đáy", (c.id,))
                     continue                                   # chân chưa dựng (vd trung điểm chưa có) ⇒ đợi
             ten_khoi = [k.name for k in self.khoi.values() if k.apex == dinh and frozenset(k.base) == frozenset(self.root.base)]
-            h2, cs = self._chieu_cao(dinh, chan, ten_khoi)
+            h2, cs = self._chieu_cao(
+                dinh,
+                chan,
+                ten_khoi,
+                perp_calls=(c.id,),
+                perp_rule="line_perpendicular_to_plane",
+            )
             self._dat_ngoai_day(dinh, chan, h2, luat + chan, {c.id} | cs)
             return True
         if self._hai_duong_cat_nhau():
@@ -1917,8 +3007,115 @@ class _Dung:
                 "provenance": "DERIVED",
                 "h2": str(self.h2),
             })
+            self._ghi_chung_chi_chieu_cao_hoan(c)
             return True
         return False
+
+    def _ghi_chung_chi_chieu_cao_hoan(self, c: LoiGoi) -> None:
+        """Emit a `trig-construction-certificate/1` spec when `_thu_giai_h2` resolves `h²` via dihedral / plane-plane angle."""
+        if c.fn not in ("dihedral_angle", "plane_plane_angle") or not self.off_base_anchors:
+            return
+        apex_h = self.off_base_anchors[0]
+        if apex_h not in self.pts or self.pts[apex_h][2] not in (Fraction(1), Fraction(-1)):
+            return
+        foot_h = next(
+            (
+                lbl
+                for lbl, xyz in self.pts.items()
+                if xyz == (self.pts[apex_h][0], self.pts[apex_h][1], Z)
+            ),
+            None,
+        )
+        if foot_h is None:
+            return
+        perp_cids: tuple[str, ...] = ()
+        for c_p, (pa, pb), _mp, _luat, chan_khai in self._rang_buoc_vuong():
+            f_c = chan_khai or (pa if self.trong_day(pa) else (pb if self.trong_day(pb) else None))
+            a_c = (pa if pb == f_c else pb) if f_c else None
+            if f_c == foot_h and a_c == apex_h:
+                perp_cids = (c_p.id,)
+                break
+        if not perp_cids:
+            for k_s in self.khoi.values():
+                if k_s.kind == "pyramid" and k_s.regular and k_s.apex == apex_h and foot_h == self.tam:
+                    perp_cids = (k_s.call,)
+                    break
+                if k_s.kind == "prism" and k_s.right and (foot_h, apex_h) in zip(k_s.base, k_s.top):
+                    perp_cids = (k_s.call,)
+                    break
+        if not perp_cids:
+            return
+        if c.fn == "dihedral_angle":
+            pl_a = [*c.args.edge, c.args.point_a]
+            pl_b = [*c.args.edge, c.args.point_b]
+            shared = list(c.args.edge)
+        else:
+            pl_a = list(c.args.plane1)
+            pl_b = list(c.args.plane2)
+            shared = [x for x in pl_a if x in set(pl_b)]
+        if len(shared) < 2 or not all(self.trong_day(v) for v in shared[:2]):
+            return
+        if all(self.trong_day(v) for v in pl_a) and apex_h in pl_b:
+            pass
+        elif all(self.trong_day(v) for v in pl_b) and apex_h in pl_a:
+            pass
+        else:
+            return
+        try:
+            sin2_d, cos2_d, _ = self._goc_tham_so(c.args.value, c.args.unit, allow_obtuse=False, calls=(c.id,))
+        except TuChoi:
+            return
+        if not (0 < sin2_d < 1 and 0 < cos2_d < 1):
+            return
+        e0, e1 = shared[0], shared[1]
+        ev_vec = self._vec(e0, e1)
+        ee = self.g(ev_vec, ev_vec)
+        if ee <= 0:
+            return
+        t_proj = self.g(self._vec(e0, foot_h), ev_vec) / ee
+        h_xyz = tuple(self.pts[e0][k] + t_proj * ev_vec[k] for k in range(3))
+        if h_xyz == self.pts[foot_h]:
+            return
+        # Verify that the solved h² matches |foot_h - H_e|² * tan²α (not an overhanging obtuse supplement)
+        adj_vec = tuple(self.pts[foot_h][k] - h_xyz[k] for k in range(3))
+        adj_sq = self.g(adj_vec, adj_vec)
+        if self.h2 != adj_sq * sin2_d / cos2_d:
+            return
+        real_match = next((lbl for lbl, xyz in self.pts.items() if xyz == h_xyz), None)
+        aux_pts_d: dict[str, Any] | None = None
+        if real_match is not None:
+            v_adj_d = real_match
+        else:
+            v_adj_d = next(lbl for lbl in ("_aux_dih_foot", "_aux_edge_foot") if lbl not in self.text_labels)
+            aux_pts_d = {
+                v_adj_d: {
+                    "rule": "orthogonal_projection_foot_on_line",
+                    "from_point": foot_h,
+                    "line": [e0, e1],
+                    "xyz": h_xyz,
+                }
+            }
+        base_cids = tuple(sorted(cid for cid in self.dung if cid != SCALE_UNIT_ID and cid != c.id))
+        spec_d: dict[str, Any] = {
+            "derived_role": "opposite_leg",
+            "derived_right_triangle": (foot_h, v_adj_d, apex_h),
+            "perpendicularity_rule": "line_perpendicular_to_plane",
+            "perpendicularity_calls": perp_cids,
+            "angle_witness_kind": "dihedral_angle",
+            "angle_witness_calls": (c.id,),
+            "sin_sq": sin2_d,
+            "cos_sq": cos2_d,
+            "angle_unit": c.args.unit,
+            "angle_raw_value": c.args.value,
+            "trig_identity": ID_OPP_FROM_ADJ_TAN,
+            "known_side_roles": ("adjacent_leg",),
+            "non_side_input_role": "angle",
+            "non_side_input_dimension": "ANGLE",
+            "extra_premise_calls": base_cids,
+        }
+        if aux_pts_d:
+            spec_d["auxiliary_witness_points"] = aux_pts_d
+        self._ghi_chung_chi_luong_giac(spec_d)
 
     def _dinh_tu_ba_canh_ben(self) -> bool:
         """LAST rule: the apex of a pyramid on the root base, when nothing else placed it, from its distances to three
@@ -1990,8 +3187,13 @@ class _Dung:
             for q, ds in sorted(theo_chan.items()):
                 for (d1, c1), (d2, c2) in combinations(ds, 2):
                     if d1[0] * d2[1] - d1[1] * d2[0] != 0:
-                        h2, cs = self._chieu_cao(p, q, [k.name for k in self.khoi.values()
-                                                        if k.apex == p and frozenset(k.base) == frozenset(self.root.base)])
+                        h2, cs = self._chieu_cao(
+                            p,
+                            q,
+                            [k.name for k in self.khoi.values() if k.apex == p and frozenset(k.base) == frozenset(self.root.base)],
+                            perp_calls=(c1, c2),
+                            perp_rule="deductive_two_lines_in_plane",
+                        )
                         self._dat_ngoai_day(p, q, h2, "line_perpendicular_to_two_intersecting_lines_foot_at_" + q,
                                             {c1, c2} | cs)
                         return True
@@ -2042,6 +3244,126 @@ class _Dung:
         for b, t in sorted(zip(k.base, k.top)):
             if l := sorted(self.do_dai(b, t)):
                 return l[0][0], set(l[0][1])
+        if k.right and (hv := sorted(self._chieu_cao_tu_the_tich([k.name]))):
+            return hv[0][0], set(hv[0][1])
+        if k.right:
+            base_set = frozenset(k.base)
+            # Face/space diagonal length `|b_i t_j|²` (`i != j`) on right prism
+            for i_b, b_i in enumerate(k.base):
+                for j_t, (b_j, t_j) in enumerate(zip(k.base, k.top)):
+                    if i_b == j_t:
+                        continue
+                    if l_diag := sorted(self.do_dai(b_i, t_j)):
+                        proj2 = self.d2(b_i, b_j)
+                        h2_p = l_diag[0][0] - proj2
+                        if h2_p <= 0:
+                            raise TuChoi(
+                                "INCONSISTENT_FACTS",
+                                f"{b_i}{t_j} không dài hơn hình chiếu {b_i}{b_j} trên đáy lăng trụ đứng",
+                                (k.call, *l_diag[0][1]),
+                            )
+                        used_p = set(l_diag[0][1])
+                        ang_on_diag = next(
+                            (
+                                ca
+                                for ca in self.of("line_plane_angle")
+                                if frozenset(ca.args.line) == frozenset((b_i, t_j))
+                                and frozenset(ca.args.plane) <= base_set
+                                and ca.id in self.dung
+                            ),
+                            None,
+                        )
+                        if ang_on_diag is not None:
+                            sin2_p, cos2_p, _ = self._goc_tham_so(
+                                ang_on_diag.args.value,
+                                ang_on_diag.args.unit,
+                                allow_obtuse=False,
+                                calls=(ang_on_diag.id,),
+                            )
+                            used_p.add(ang_on_diag.id)
+                            self._ghi_chung_chi_luong_giac({
+                                "derived_role": "opposite_leg",
+                                "derived_right_triangle": (b_j, b_i, t_j),
+                                "perpendicularity_rule": "line_perpendicular_to_plane",
+                                "perpendicularity_calls": (k.call,),
+                                "angle_witness_kind": "line_plane_angle",
+                                "angle_witness_calls": (ang_on_diag.id,),
+                                "sin_sq": sin2_p,
+                                "cos_sq": cos2_p,
+                                "angle_unit": ang_on_diag.args.unit,
+                                "angle_raw_value": ang_on_diag.args.value,
+                                "trig_identity": ID_OPP_FROM_HYP_SIN,
+                                "known_side_roles": ("hypotenuse",),
+                                "non_side_input_role": "angle",
+                                "non_side_input_dimension": "ANGLE",
+                                "extra_premise_calls": tuple(l_diag[0][1]),
+                            })
+                        else:
+                            base_cids = tuple(sorted(cid for cid in self.dung if cid != SCALE_UNIT_ID))
+                            self._ghi_chung_chi_luong_giac({
+                                "derived_role": "opposite_leg",
+                                "derived_right_triangle": (b_j, b_i, t_j),
+                                "perpendicularity_rule": "line_perpendicular_to_plane",
+                                "perpendicularity_calls": (k.call,),
+                                "angle_witness_kind": "pythagorean_lengths",
+                                "angle_witness_calls": (),
+                                "sin_sq": h2_p / l_diag[0][0],
+                                "cos_sq": proj2 / l_diag[0][0],
+                                "angle_unit": "sin",
+                                "angle_raw_value": None,
+                                "trig_identity": ID_PYTH_LEG_FROM_HYP,
+                                "known_side_roles": ("hypotenuse", "adjacent_leg"),
+                                "non_side_input_role": None,
+                                "extra_premise_calls": (*l_diag[0][1], *base_cids),
+                            })
+                        return h2_p, used_p
+            # Face/space diagonal `line_plane_angle` `[b_i, t_j]` with base on right prism -> `h = p * tan(α)`
+            for c_ang in self.of("line_plane_angle"):
+                if not (frozenset(c_ang.args.plane) <= base_set):
+                    continue
+                for i_b, b_i in enumerate(k.base):
+                    for j_t, (b_j, t_j) in enumerate(zip(k.base, k.top)):
+                        if frozenset(c_ang.args.line) != frozenset((b_i, t_j)):
+                            continue
+                        sin2_p, cos2_p, _ = self._goc_tham_so(
+                            c_ang.args.value, c_ang.args.unit, allow_obtuse=False, calls=(c_ang.id,)
+                        )
+                        if i_b == j_t:
+                            if cos2_p != 0:
+                                raise TuChoi(
+                                    "INCONSISTENT_FACTS",
+                                    f"{c_ang.id}: cạnh bên đứng {b_i}{t_j} phải tạo góc 90° với đáy",
+                                    (k.call, c_ang.id),
+                                )
+                            continue
+                        if cos2_p == 0:
+                            raise TuChoi(
+                                "INCONSISTENT_FACTS",
+                                f"{c_ang.id}: đường chéo {b_i}{t_j} không thể tạo góc 90° với đáy lăng trụ đứng",
+                                (k.call, c_ang.id),
+                            )
+                        proj2 = self.d2(b_i, b_j)
+                        if proj2 > 0 and 0 < sin2_p < 1:
+                            h2_p = proj2 * sin2_p / cos2_p
+                            base_cids = tuple(sorted(cid for cid in self.dung if cid != SCALE_UNIT_ID))
+                            self._ghi_chung_chi_luong_giac({
+                                "derived_role": "opposite_leg",
+                                "derived_right_triangle": (b_j, b_i, t_j),
+                                "perpendicularity_rule": "line_perpendicular_to_plane",
+                                "perpendicularity_calls": (k.call,),
+                                "angle_witness_kind": "line_plane_angle",
+                                "angle_witness_calls": (c_ang.id,),
+                                "sin_sq": sin2_p,
+                                "cos_sq": cos2_p,
+                                "angle_unit": c_ang.args.unit,
+                                "angle_raw_value": c_ang.args.value,
+                                "trig_identity": ID_OPP_FROM_ADJ_TAN,
+                                "known_side_roles": ("adjacent_leg",),
+                                "non_side_input_role": "angle",
+                                "non_side_input_dimension": "ANGLE",
+                                "extra_premise_calls": base_cids,
+                            })
+                            return h2_p, {c_ang.id}
         if self._co_the_hoan_h2():
             return None, set()
         if self._free_h2_sample is not None:
@@ -3203,6 +4525,8 @@ class _Dung:
             except GeometryError:
                 return False
             return self._dt2_da_giac([Vec3(*self.pts[p]) for p in a.polygon], (c.id,)) == binh_phuong(a.value)
+        if c.fn == "solid_volume":
+            return self._the_tich2_khoi(self.khoi[a.solid]) == binh_phuong(a.value)
         if c.fn == "perpendicular_lines":
             u, w = self._vec(*a.line1), self._vec(*a.line2)
             return self.g(u, u) > 0 and self.g(w, w) > 0 and self.g(u, w) == 0
@@ -4518,16 +5842,32 @@ def _kiem_tren_hinh(dung: "_Dung"):
 
 
 def _don_vi(calls: tuple[LoiGoi, ...]) -> str | None:
-    """Độ dài ký hiệu: TẤT CẢ độ dài đề cho cùng theo a (đồng bậc 1) ⇒ "a"; tất cả là số ⇒ None; trộn ⇒ từ chối — hình
-    khi ấy KHÔNG đồng dạng khi a đổi, nên không có một bố cục chung nào đúng cho mọi a (không gán a một giá trị)."""
-    loai = {doc_so(getattr(c.args, f))[1] for c in calls for f in c.spec.value_fields if getattr(c.args, f) is not None}
-    for c in calls:
-        if c.fn == "polygon_area":
-            loai.add(doc_so(c.args.value)[1])
-    if len(loai) > 1:
-        raise TuChoi("NON_HOMOGENEOUS_LENGTHS", "đề trộn độ dài theo a với độ dài là số — chưa dựng được một hình chung cho mọi a",
-                     tuple(sorted(c.id for c in calls if any(getattr(c.args, f) is not None for f in c.spec.value_fields) or c.fn == "polygon_area")))
-    return "a" if loai == {True} else None
+    """Độ dài ký hiệu theo ngữ cảnh thứ nguyên: mọi đại lượng có thứ nguyên quy về duy nhất một tham số độ dài L¹
+    (ví dụ `a`, `x`) ⇒ trả ký hiệu đó; tất cả là số ⇒ `None`; trộn số với ký hiệu hoặc xung đột thứ nguyên ⇒ từ chối."""
+    entries = _muc_dai_luong_cua_goi(calls)
+    if not entries:
+        return None
+    try:
+        plan = SymbolEnvironment.bind_slots(entries, allow_unit=False)
+        goal_degs = [_BAC_HAM_HOI_TAT_CA[c.fn] for c in calls if c.fn in _BAC_HAM_HOI_TAT_CA]
+        if goal_degs:
+            plan.check_goal_admissibility(goal_degs, target_invariant=all(d == 0 for d in goal_degs))
+    except ExprDimensionError as e:
+        raise TuChoi("INCONSISTENT_FACTS", e.message, tuple(sorted({it.call_id for it in entries}))) from None
+    except ExprDomainError as e:
+        cids = tuple(sorted({it.call_id for it in entries}))
+        if e.code == "NON_HOMOGENEOUS_LENGTHS":
+            raise TuChoi("NON_HOMOGENEOUS_LENGTHS", e.message, cids) from None
+        if e.code == "EXACT_DOMAIN_EXCEEDED":
+            raise TuChoi("EXACT_DOMAIN_EXCEEDED", e.message, cids) from None
+        if e.code == "UNGROUNDED_SYMBOL":
+            raise TuChoi("UNGROUNDED_VALUE", e.message, cids) from None
+        if e.code == "NON_POSITIVE_QUANTITY":
+            raise TuChoi("NON_POSITIVE_LENGTH", e.message, cids) from None
+        raise TuChoi("INCONSISTENT_FACTS", e.message, cids) from None
+    except ExprParseError as e:
+        raise TuChoi("SCHEMA_INVALID", e.message, tuple(sorted({it.call_id for it in entries}))) from None
+    return plan.length_unit_symbol
 
 
 def _hien_thi_ky_hieu(x: Any, bac: int, ky_hieu: str) -> str:
@@ -4568,7 +5908,7 @@ def _kich_thuoc_cong(k: LoiGoi, segs: list[LoiGoi], kc: Any) -> tuple[Fraction, 
         eqs.append((role, doc_so(s.args.value), s.id))
     if len({has_a for _r, (_v, has_a), _i in eqs}) > 1:
         raise TuChoi("NON_HOMOGENEOUS_LENGTHS", "độ dài vừa có vừa không có ký hiệu a", tuple(i for *_x, i in eqs))
-    unit = "a" if eqs and eqs[0][1][1] else None
+    unit = eqs[0][1][1][0][0] if eqs and eqs[0][1][1] else None
     r2 = next((v for (x, y), (v, _a), _i in eqs if (x, y) == (1, 0)), None)
     h2 = next((v for (x, y), (v, _a), _i in eqs if (x, y) == (0, 1)), None)
     steps = []
@@ -4681,7 +6021,7 @@ def _dung_phan_cong(k: LoiGoi, kc: Any, secs: list[LoiGoi], subs: list[LoiGoi], 
                 z = Fraction(0)
             else:
                 d2, has_a = doc_so(s.distance)
-                if (unit == "a") != has_a:
+                if (((unit, 1),) != (has_a or ()) if unit else bool(has_a)):
                     raise TuChoi("NON_HOMOGENEOUS_LENGTHS", f"{c.id}: khoảng cách và kích thước khối khác đơn vị", (c.id,))
                 z = sqrt_rational(d2)
                 if not isinstance(z, Fraction):
@@ -4704,7 +6044,7 @@ def _dung_phan_cong(k: LoiGoi, kc: Any, secs: list[LoiGoi], subs: list[LoiGoi], 
             continue
         if s.kind == "parallel_to_base_at_distance":
             d2, has_a = doc_so(s.distance)
-            if (unit == "a") != has_a:
+            if (((unit, 1),) != (has_a or ()) if unit else bool(has_a)):
                 raise TuChoi("NON_HOMOGENEOUS_LENGTHS", f"{c.id}: khoảng cách và kích thước khối khác đơn vị", (c.id,))
             z = sqrt_rational(d2)
             if not isinstance(z, Fraction):
@@ -5023,6 +6363,9 @@ def _gan_dieu_kien_vet(trace: list[dict[str, Any]], *, kernel_checked: bool,
         elif st == "formation_budget":
             pre = [f"declarations({s['declarations']})>limit({s['limit']})"]
             post = ["verified_ir_preserved_unexpanded"]
+        elif st == "derive_quantity":
+            pre = [*calls, f"certified_rule({s.get('rule')})"]
+            post = [f"{obj}_sq=={s.get('value_sq')}", f"{obj}_sq>0", "role(VERIFIED_DERIVED_QUANTITY)"]
         else:
             pre = [*deps, *parts, *calls] or [f"step_ready({st})"]
             post = [f"step_completed({st})"]
@@ -5564,7 +6907,16 @@ _SCALE_WITNESS_UNITS = (Fraction(2), Fraction(5))
 
 
 def _gia_tri_so(v: Any) -> bool:
-    return isinstance(v, str) and bool(re.search(r"\d|(?<![A-Za-z])a(?![A-Za-z])", v))
+    if not isinstance(v, str):
+        return False
+    s = v.strip()
+    if not s or re.fullmatch(r"[A-Z][0-9]*'?", s):
+        return False
+    try:
+        parse_quantity_expr(s, allow_signed=False, allow_unit=False)
+        return True
+    except ExprParseError:
+        return False
 
 
 def _thu_chuan_hoa_ty_le(problem_text: str, plan: Any, auxiliary: tuple[dict, ...], read_quotes: tuple[str, ...],
@@ -5594,7 +6946,7 @@ def _thu_chuan_hoa_ty_le(problem_text: str, plan: Any, auxiliary: tuple[dict, ..
               detail="mục tiêu không bất biến qua phép đồng dạng (độ dài, diện tích hay thể tích tuyệt đối)")
         return None
     co_do_dai = [c.id for c in calls if not c.fn.startswith("ask_") and c.fn not in _SCALE_FREE_VALUED
-                 and any(_gia_tri_so(v) for v in c.args.model_dump().values())]
+                 and bool(_muc_dai_luong_cua_goi((c,)))]
     if co_do_dai:
         audit(certified=False, failed_obligation="PO-1_SCALE_FREE_PREMISES",
               detail=f"đề cho số đo có thứ nguyên ({', '.join(co_do_dai)}): không có tự do tỉ lệ để chuẩn hoá")
@@ -5645,6 +6997,7 @@ def _thu_chuan_hoa_ty_le(problem_text: str, plan: Any, auxiliary: tuple[dict, ..
         "source_length_supplied": False, "illustrative_unit_segment": seg, "invariance_certificate": cert}}
     res.trace = [*res.trace, {"step": "certify_similarity_scale", "rule": "homothety_invariant_premises_unique_up_to_scale",
                               "object": "".join(seg), "provenance": "INTERNAL_CONSTRUCTION_CONVENTION",
+                              "fact_role": "ILLUSTRATIVE_CONSTRUCTION_QUANTITY",
                               "note": ("đề không cho độ dài nào; mọi giả thiết và mục tiêu bất biến qua phép đồng dạng, "
                                        "cố định một đoạn làm đơn vị cho đúng một hình — độ dài trên hình chỉ minh họa")}]
     return res
@@ -5728,6 +7081,7 @@ def _thu_bat_bien_muc_tieu(problem_text: str, plan: Any, auxiliary: tuple[dict, 
                                    "goals": certs, "witnesses": witnesses}}}
     res.trace = [*res.trace, {"step": "certify_target_invariance", "rule": "synthetic_angle_proof_bound_to_kernel_value",
                               "object": [c["goal_id"] for c in certs], "provenance": "INTERNAL_CONSTRUCTION_CONVENTION",
+                              "fact_role": "ILLUSTRATIVE_CONSTRUCTION_QUANTITY",
                               "note": ("đề không xác định duy nhất hình; góc đề hỏi đã được chứng minh bằng một tam giác có "
                                        "hình dạng cố định — hình vẽ chỉ là một hình minh họa")}]
     return res
@@ -5770,8 +7124,13 @@ def _dung_mot_nhanh(
                      _scale_unit=_scale_unit, _shape_units=_shape_units)
         if ky_hieu:
             dung.trace.append({"step": "choose_unit", "object": ky_hieu, "rule": "symbolic_length_unit",
-                               "calls": sorted(c.id for c in calls for f in c.spec.value_fields if getattr(c.args, f)),
+                               "calls": sorted(
+                                   c.id for c in calls
+                                   if any(getattr(c.args, f, None) is not None for f in c.spec.value_fields)
+                                   or c.fn in ("polygon_area", "solid_volume")
+                               ),
                                "provenance": "LAYOUT_DERIVED",
+                               "fact_role": "ILLUSTRATIVE_CONSTRUCTION_QUANTITY",
                                "note": f"mọi độ dài đề cho tỉ lệ với {ky_hieu} ⇒ hình đồng dạng với hình tại {ky_hieu} = 1; "
                                        f"dựng ở {ky_hieu} = 1 (đơn vị, không phải dữ kiện), đáp số = hệ số · {ky_hieu}^bậc"})
         dung.thu_khoi()
@@ -6090,13 +7449,75 @@ def _dung_mot_nhanh(
                                  for c in calls])
         if dung.free_height_for:
             res.details = {"free_height_for": sorted(dung.free_height_for), "free_h2_sample": str(_free_h2_sample)}
+        if dung.derived_quantities:
+            res.details = {**(res.details or {}), "derived_quantities": list(dung.derived_quantities)}
+        if (
+            dung.trig_certificate_specs
+            and _scale_unit is None
+            and _free_h2_sample is None
+            and not _shape_units
+            and not dung.free_height_for
+        ):
+            trig_certs: list[dict[str, Any]] = []
+            for spec_raw in dung.trig_certificate_specs:
+                tri_resolved = [
+                    (dung.tam if v == "__regular_base_center__" else v)
+                    for v in spec_raw["derived_right_triangle"]
+                ]
+                if any(v is None for v in tri_resolved):
+                    continue
+                aux_map: dict[str, dict[str, Any]] = dict(spec_raw.get("auxiliary_witness_points") or {})
+                if "deferred_midpoint_aux" in spec_raw:
+                    aux_lbl, ep_a, ep_b = spec_raw["deferred_midpoint_aux"]
+                    if ep_a not in dung.pts or ep_b not in dung.pts:
+                        continue
+                    mid_xyz = tuple((dung.pts[ep_a][k] + dung.pts[ep_b][k]) * Fraction(1, 2) for k in range(3))
+                    aux_map[aux_lbl] = {
+                        "rule": "segment_midpoint",
+                        "endpoints": [ep_a, ep_b],
+                        "xyz": mid_xyz,
+                    }
+                if any(v not in dung.pts and v not in aux_map for v in tri_resolved):
+                    continue
+                try:
+                    tcert = build_trig_construction_certificate(
+                        certificate_id=f"trig_cert_{len(trig_certs) + 1}",
+                        derived_role=spec_raw["derived_role"],
+                        derived_right_triangle=tuple(tri_resolved),
+                        perpendicularity_rule=spec_raw["perpendicularity_rule"],
+                        perpendicularity_calls=spec_raw["perpendicularity_calls"],
+                        angle_witness_kind=spec_raw["angle_witness_kind"],
+                        angle_witness_calls=spec_raw["angle_witness_calls"],
+                        sin_sq=spec_raw["sin_sq"],
+                        cos_sq=spec_raw["cos_sq"],
+                        angle_unit=spec_raw.get("angle_unit", "deg"),
+                        angle_raw_value=spec_raw.get("angle_raw_value"),
+                        trig_identity=spec_raw["trig_identity"],
+                        known_side_roles=spec_raw["known_side_roles"],
+                        non_side_input_role=spec_raw.get("non_side_input_role"),
+                        non_side_input_dimension=spec_raw.get("non_side_input_dimension", "ANGLE"),
+                        calls=res.calls,
+                        points_by_label=dung.pts,
+                        chart_metric=G,
+                        length_unit=ky_hieu,
+                        auxiliary_witness_points=aux_map or None,
+                        extra_premise_calls=spec_raw.get("extra_premise_calls", ()),
+                    )
+                except TrigCertificateError as exc:
+                    raise TuChoi("ENGINE_SELF_CHECK_FAILED", f"chứng chỉ lượng giác không qua tự kiểm: {exc}") from None
+                trig_certs.append(tcert)
+            if trig_certs:
+                res.details = {**(res.details or {}), "trig_construction_certificates": trig_certs}
         if _out_dung is not None:
             _out_dung.append(dung)
         return res, tuple(dung.off_base_anchors), dung.trace
     except TuChoi as e:
         vet = _gan_dieu_kien_vet(dung.trace, kernel_checked=False) if dung else []
         anchors = tuple(dung.off_base_anchors) if dung else ()
-        return KetQuaTuyen("REFUSED", e.code, e.reason, e.calls, trace=vet, details=e.data), anchors, vet
+        det_data = dict(e.data or {})
+        if dung is not None and "consumed_call_ids" not in det_data:
+            det_data["consumed_call_ids"] = sorted(dung.dung)
+        return KetQuaTuyen("REFUSED", e.code, e.reason, e.calls, trace=vet, details=det_data), anchors, vet
 
 
 def dung_tu_loi_goi(problem_text: str, plan: Any, auxiliary: tuple[dict, ...] = (),
@@ -6138,6 +7559,19 @@ def dung_tu_loi_goi(problem_text: str, plan: Any, auxiliary: tuple[dict, ...] = 
                 return sc
             if scale_sink:
                 res0.details = {**(res0.details or {}), "similarity_scale_audit": scale_sink}
+    if (
+        res0.status == "REFUSED"
+        and not _exploring_mirrors
+        and not _flip_apices
+        and (len(anchors0) < 2 or res0.code not in _MIRROR_RETRY_CODES)
+        and res0.code in ("MISSING_DIMENSION", "UNDERDETERMINED_POINT", "FOOT_NOT_DETERMINED", "PLANE_NOT_UNIQUE", "FIGURE_NOT_UNIQUE")
+    ):
+        from .determinacy_audit import audit_determinacy
+
+        res0.details = {
+            **(res0.details or {}),
+            "determinacy_audit": audit_determinacy(problem_text, plan, auxiliary, read_quotes, res0),
+        }
     if _exploring_mirrors or len(anchors0) < 2:
         return res0
     if res0.status != "SERVED" and res0.code not in _MIRROR_RETRY_CODES:

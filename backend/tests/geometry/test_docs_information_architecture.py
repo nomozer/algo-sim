@@ -222,7 +222,8 @@ def test_inv_20_candidate_and_cache_verify_only():
     # 136 -> 137 (proof-soundness-generalized-angle-invariance): chứng chỉ bất biến /2 gắn mục tiêu, giá trị và cảnh ⇒ row 136:route-d phải MISS.
     # 137 -> 138 (scene3d-causal-pedagogical-integrity): cờ phụ trợ thừa theo mục tiêu đề, dữ kiện nguồn ngoài tiên quyết trực quan, góc vuông hai mặt / chéo nhau được dựng, ràng buộc loại góc vuông ⇒ row 137:route-d phải MISS.
     # 138 -> 139 (grounded-vietnamese-geometry-understanding): bộ đọc đề đổi quyết định phục vụ/từ chối (đáy không tên, cạnh bên chóp đều, lăng trụ viết liền, tam giác cân suy ra, diện tích đáy, giá trị chưa đọc) ⇒ row 138:route-d phải MISS.
-    assert str(CACHE_VERSION) == "139"
+    # 139 -> 140 (dimension-aware-verified-construction): đại số thứ nguyên + đại lượng suy ra đã chứng minh + dựng hình lượng giác có chứng chỉ `trig-construction-certificate/1` đổi quyết định phục vụ/từ chối và envelope ⇒ row 139:route-d phải MISS.
+    assert str(CACHE_VERSION) == "140"
 
 
 def test_inv_21_favicon_not_in_staged_changes():

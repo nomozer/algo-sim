@@ -20,11 +20,11 @@ import re
 # Thông điệp ĐÓNG — chọn theo failure_category/error_code CÓ CẤU TRÚC,
 # tuyệt đối không string-match message kỹ thuật.
 _MSG_CAPABILITY_GAP = (
-    "Bài này cần một cơ chế mà AlgoSim chưa mô phỏng chính xác được, nên hệ "
-    "thống từ chối trung thực thay vì dựng một mô phỏng gần đúng. Bạn có thể "
-    "thử một bài thuộc các chủ đề đang hỗ trợ: tìm kiếm, sắp xếp, quét dãy, "
-    "số nhị phân, cổng logic, định tuyến gói tin, đóng gói dữ liệu qua các "
-    "tầng mạng."
+    "Bài này cần một phép dựng hoặc quan hệ mà AlgoSim chưa mô phỏng chính xác "
+    "được, nên hệ thống từ chối trung thực thay vì dựng một mô phỏng gần đúng. "
+    "Bạn có thể thử một bài hình học không gian thuộc các dạng đang hỗ trợ: "
+    "giao tuyến, thiết diện, quan hệ song song – vuông góc, góc, khoảng cách "
+    "hoặc thể tích."
 )
 _MSG_NOT_IN_CATALOG = (
     "Bài này chưa có mô phỏng phù hợp trong danh mục hiện tại. Danh mục sẽ "
@@ -32,9 +32,9 @@ _MSG_NOT_IN_CATALOG = (
     "hỗ trợ."
 )
 _MSG_INSUFFICIENT = (
-    "Đề chưa cung cấp đủ dữ kiện để mô phỏng (ví dụ: cấu trúc cụ thể của cây — "
-    "các nút và quan hệ con trái/con phải). Hãy mô tả rõ hơn rồi thử lại — hệ "
-    "không tự bịa dữ liệu thay bạn."
+    "Đề chưa cung cấp đủ dữ kiện để xác định duy nhất hình không gian cần dựng "
+    "(ví dụ: số đo cạnh đáy hoặc chiều cao của khối). Hãy bổ sung dữ kiện còn "
+    "thiếu rồi thử lại — hệ không tự bịa số liệu thay bạn."
 )
 _MSG_INCOMPLETE = (
     "Đề đang hỏi nhiều thao tác cùng lúc, nhưng mỗi lần mô phỏng chỉ trình bày "

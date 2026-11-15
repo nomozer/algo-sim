@@ -149,11 +149,14 @@ def test_the_gate_grounds_the_legs_only_with_the_right_angle_call():
 def test_the_area_of_the_unnamed_base_is_read():
     assert _served("Cho hình chóp tứ giác đều S.ABCD có cạnh bên bằng 3 và diện tích đáy bằng 4. "
                    "Tính thể tích khối chóp S.ABCD.")["answers"]["q1"] == "4√7/3"
+    assert _served("Cho hình chóp tứ giác đều S.ABCD có cạnh bên bằng a và diện tích đáy bằng a². "
+                   "Tính khoảng cách từ A đến mặt phẳng (SBC).")["answers"]["q1"] == "a√6/3"
 
 
 @pytest.mark.parametrize("text", [
     "Cho hình chóp tứ giác đều S.ABCD có cạnh bên bằng 3 và chu vi đáy bằng 8. Tính thể tích khối chóp S.ABCD.",
-    "Cho hình chóp tứ giác đều S.ABCD có cạnh bên bằng a và diện tích đáy bằng a². Tính khoảng cách từ A đến mặt phẳng (SBC).",
+    "Cho hình chóp tứ giác đều S.ABCD có cạnh bên bằng a và diện tích xung quanh bằng 2a². Tính khoảng cách từ A đến mặt phẳng (SBC).",
+    "Cho hình chóp tứ giác đều S.ABCD có cạnh bên bằng a và diện tích đáy bằng a²ln2. Tính khoảng cách từ A đến mặt phẳng (SBC).",
 ])
 def test_a_premise_value_no_item_reads_is_never_silently_dropped(text):
     lp = parse_geometry_problem_locally(text, use_cache=False)

@@ -29,6 +29,7 @@ Implements the deterministic routing architecture across text, document, image, 
 """
 from __future__ import annotations
 
+from copy import deepcopy
 from dataclasses import dataclass, field
 from hashlib import sha256
 import json
@@ -39,6 +40,7 @@ from typing import Any, Callable, Literal, Sequence
 
 from app.ai.adapter4_route import ADAPTER_V4_VERSION, ROUTE_D_SIMULATION_V4_SCHEMA_VERSION
 from app.ai.hybrid_offline import HybridOfflineResult, hybrid_offline_policy, run_hybrid_offline
+from app.ai.hybrid_preview import RefusalClass, classify_refusal
 from app.ai.local_failure_diagnostics import diagnose
 from app.ai.local_geometry_parser import (
     LOCAL_GEOMETRY_PARSER_VERSION,
@@ -59,6 +61,7 @@ from app.ai.typed_fact_next_extraction import (
 )
 from app.simulation.error_codes import ErrorCode
 from app.simulation.geometry_functions import engine, planner, registry
+from app.simulation.geometry_functions.determinacy_audit import audit_determinacy_from_typed_facts
 from app.simulation.geometry_functions.typed_fact_next import TYPED_FACT_NEXT_V2_SCHEMA_VERSION
 
 ADAPTIVE_INPUT_ROUTER_VERSION = "adaptive-input-router/1"
@@ -263,6 +266,7 @@ def route_text_input(
     *,
     fallback_extractor: Extractor | None = None,
     allow_live_ai: bool | None = None,
+    fallback_unavailable_code: str | None = None,
     input_kind: InputKind = "text",
     previous_vision_calls: int = 0,
     previous_vision_ms: float = 0.0,
@@ -336,6 +340,7 @@ def route_text_input(
         total_ms = (time.perf_counter() - t_total0) * 1000.0 + previous_vision_ms
 
         route_d_raw = hyb_out.response.get("route_d") or {}
+        status_str = str(route_d_raw.get("status") or "REFUSED")
         refusal_raw = route_d_raw.get("refusal") or {}
         env_raw = hyb_out.response.get("envelope") or {}
         ref_code = str(
@@ -344,25 +349,91 @@ def route_text_input(
             or env_raw.get("reason_code")
             or ""
         )
+
+        det_audit: dict[str, Any] | None = None
+        diag: dict[str, Any] | None = None
+        reclassified_env: dict[str, Any] | None = None
+        reclassified_group: str | None = None
+
+        if status_str != "SERVED":
+            raw_det = hyb_out.receipt.get("determinacy_audit")
+            if isinstance(raw_det, dict):
+                det_audit = deepcopy(raw_det)
+            unresolved_items = list((local_res.payload or {}).get("unresolved") or [])
+            unresolved_kinds = [str(u.get("kind") or "") for u in unresolved_items if isinstance(u, dict)]
+            only_dim_missing = bool(unresolved_items) and all(
+                isinstance(u, dict)
+                and u.get("kind") == "missing_operand"
+                and list(u.get("missing_roles") or []) == ["dimension"]
+                for u in unresolved_items
+            )
+            if det_audit is None and (
+                ref_code in ("MISSING_DIMENSION", "UNDERDETERMINED_POINT", "FOOT_NOT_DETERMINED", "PLANE_NOT_UNIQUE", "FIGURE_NOT_UNIQUE")
+                or (local_res.status == LOCAL_PARSE_AMBIGUOUS and only_dim_missing)
+            ):
+                det_audit = audit_determinacy_from_typed_facts(
+                    norm_text,
+                    local_res.payload,
+                    terminal_code=ref_code or "AMBIGUOUS_FACT",
+                )
+            diag = diagnose(
+                parse_status=local_res.status,
+                parse_reason=local_res.reason_code,
+                fallback_reason=local_res.fallback_reason,
+                source_coverage=local_res.source_coverage.to_dict(),
+                terminal_code=ref_code or None,
+                fallback_allowed=is_fallback_allowed,
+                planner=route_d_raw.get("planner"),
+                unresolved_kinds=unresolved_kinds,
+                determinacy_audit=det_audit,
+            )
+            if hyb_out.receipt.get("failure_stage") != "adapter4" and ref_code:
+                if diag.get("root_cause") == "UNSUPPORTED_GOAL_KIND":
+                    kind = RefusalClass(
+                        "CAPABILITY",
+                        "capability_gap",
+                        "UNKNOWN",
+                        "Hệ chưa hỗ trợ yêu cầu chứng minh hình học; hiện chỉ dựng hình và tính các đại lượng hình học không gian.",
+                    )
+                else:
+                    is_proven_local_complete = (
+                        local_res.status == LOCAL_PARSE_COMPLETE
+                        or (
+                            local_res.status == LOCAL_PARSE_AMBIGUOUS
+                            and only_dim_missing
+                            and (det_audit or {}).get("status") == "PROVED_UNDERDETERMINED"
+                        )
+                    )
+                    kind = classify_refusal(
+                        ref_code,
+                        route_d_raw.get("planner"),
+                        problem_text=norm_text,
+                        details={"determinacy_audit": det_audit} if det_audit is not None else None,
+                        local_complete=is_proven_local_complete,
+                    )
+                reclassified_env = {
+                    "status": "unsupported",
+                    "reason_code": ref_code,
+                    "reason": kind.message,
+                    "learner_reason": kind.message,
+                    "failure_category": kind.failure_category,
+                    "refusal_cause": kind.refusal_cause,
+                }
+                if hyb_out.receipt.get("failure_kind") != "TECHNICAL_FAILURE":
+                    reclassified_group = kind.group
+
+        eff_env = reclassified_env or env_raw
         fail_cat = str(
             refusal_raw.get("failure_category")
-            or env_raw.get("failure_category")
+            or eff_env.get("failure_category")
             or ""
         )
         is_clarification_or_missing = (
-            local_res.status == LOCAL_PARSE_AMBIGUOUS
-            or fail_cat == "insufficient_specification"
-            or ref_code
-            in {
-                "MISSING_DIMENSION",
-                "UNDERDETERMINED_POINT",
-                "PLANE_NOT_UNIQUE",
-                "FOOT_NOT_DETERMINED",
-                "AMBIGUOUS_FACT",
-                "AMBIGUOUS_REFERENCE",
-                "SECTION_NOT_CLOSED_ON_LATERAL_EDGES",
-                "FACT_INCOMPLETE",
-            }
+            fail_cat == "insufficient_specification"
+            or (
+                local_res.status == LOCAL_PARSE_AMBIGUOUS
+                and (diag or {}).get("taxonomy_class") != "CAPABILITY_UNSUPPORTED"
+            )
         )
         chosen_route: ChosenRoute = (
             "VISION_THEN_LOCAL_DETERMINISTIC"
@@ -398,24 +469,25 @@ def route_text_input(
             cache_key_metadata=cache_meta,
         )
         response = dict(hyb_out.response)
+        if reclassified_env is not None:
+            response["envelope"] = reclassified_env
         route_d = dict(response.get("route_d") or {})
         route_d["extraction_mode"] = "LOCAL_DETERMINISTIC_PARSER"
         route_d["local_parser_version"] = LOCAL_GEOMETRY_PARSER_VERSION
         route_d["adaptive_router_version"] = ADAPTIVE_INPUT_ROUTER_VERSION
         route_d["adaptive_telemetry"] = telemetry.to_dict()
+        if det_audit is not None:
+            route_d["determinacy_audit"] = det_audit
+        if diag is not None:
+            # root cause ≠ terminal reason (run `semantic-failure-safe-image-segmentation`); refusals are never cached
+            route_d["local_diagnostics"] = diag
         response["route_d"] = route_d
         receipt = {
             **hyb_out.receipt,
+            **({"failure_kind": reclassified_group} if reclassified_group is not None else {}),
+            **({"determinacy_audit": deepcopy(det_audit)} if det_audit is not None else {}),
             "adaptive_telemetry": telemetry.to_dict(),
         }
-        if str(route_d.get("status") or "REFUSED") != "SERVED":
-            # root cause ≠ terminal reason (run `semantic-failure-safe-image-segmentation`); refusals are never cached
-            route_d["local_diagnostics"] = diagnose(
-                parse_status=local_res.status, parse_reason=local_res.reason_code, fallback_reason=local_res.fallback_reason,
-                source_coverage=local_res.source_coverage.to_dict(), terminal_code=ref_code or None,
-                fallback_allowed=is_fallback_allowed, planner=route_d.get("planner"),
-                unresolved_kinds=[u.get("kind") for u in (local_res.payload or {}).get("unresolved") or []])
-        status_str = str(route_d.get("status") or "REFUSED")
         return AdaptiveRouteOutcome(
             status=status_str,
             response=response,
@@ -486,7 +558,12 @@ def route_text_input(
         )
 
     # Case 4: Fail-closed when ALLOW_LIVE_AI=0 or no fallback extractor is configured
-    fail_code = "LIVE_AI_DISABLED" if not is_fallback_allowed else (local_res.reason_code or "LOCAL_PARSE_FALLBACK_REQUIRED")
+    fail_code = (
+        "LIVE_AI_DISABLED"
+        if not is_fallback_allowed
+        else (fallback_unavailable_code or local_res.reason_code or "LOCAL_PARSE_FALLBACK_REQUIRED")
+    )
+    is_infra_block = fail_code in ("LIVE_AI_DISABLED", "MISSING_API_KEY")
     total_ms = (time.perf_counter() - t_total0) * 1000.0 + previous_vision_ms
     _, cache_meta = build_local_first_cache_identity(
         norm_text,
@@ -536,14 +613,14 @@ def route_text_input(
         "envelope": {
             "status": "refused",
             "reason_code": fail_code,
-            "failure_kind": "INFRASTRUCTURE_FAILURE" if fail_code == "LIVE_AI_DISABLED" else "EXTRACTION_FALLBACK_REQUIRED",
+            "failure_kind": "INFRASTRUCTURE_FAILURE" if is_infra_block else "EXTRACTION_FALLBACK_REQUIRED",
         },
     }
     receipt = {
         "schema": "adaptive-input-route-receipt/1",
         "status": "REFUSED",
         "code": fail_code,
-        "failure_kind": "TECHNICAL_FAILURE" if fail_code == "LIVE_AI_DISABLED" else "EXTRACTION_FAILURE",
+        "failure_kind": "TECHNICAL_FAILURE" if is_infra_block else "EXTRACTION_FAILURE",
         "adaptive_telemetry": telemetry.to_dict(),
     }
     return AdaptiveRouteOutcome(

@@ -195,7 +195,9 @@ def test_khai_bao_ham_gemini_dung_tap_con_openapi():
         "line_plane_angle", "plane_plane_angle", "dihedral_angle", "line_line_angle", "vertex_angle",
         "parallelogram", "rhombus", "trapezoid", "isosceles_trapezoid",
         # formal-correctness-real-world-acceptance: planner-only, route A provider surface unchanged
-        "polygon_area", "segment_ratio", "ask_length_ratio", "ask_area_ratio"}
+        "polygon_area", "segment_ratio", "ask_length_ratio", "ask_area_ratio",
+        # dimension-aware-verified-construction: planner-only, route A provider surface unchanged
+        "solid_volume"}
     txt = json.dumps(decl)
     for cam in ('"$ref"', '"$defs"', '"anyOf"', '"title"', '"additionalProperties"', '"xyz"', '"coord'):
         assert cam not in txt, cam

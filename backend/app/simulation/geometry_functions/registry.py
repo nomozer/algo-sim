@@ -33,7 +33,25 @@ from dataclasses import dataclass, replace
 from fractions import Fraction
 from typing import Annotated, Any, Literal
 
-from pydantic import BaseModel, BeforeValidator, ConfigDict, Field, ValidationError, model_validator
+from pydantic import AfterValidator, BaseModel, BeforeValidator, ConfigDict, Field, ValidationError, WithJsonSchema, model_validator
+
+from ..geometry.expression import (
+    ANGLE,
+    AREA,
+    LENGTH,
+    SCALAR,
+    VOLUME,
+    ExprDimensionError,
+    ExprDomainError,
+    ExprParseError,
+    MeasurementUnit,
+    SlotQuantityEntry,
+    SymbolEnvironment,
+    evaluate_quantity,
+    parse_measurement_unit,
+    parse_quantity_expr,
+    validate_unit_consistency,
+)
 
 #: /7 (run `goal-directed-function-composition`): `ask_angle_lines`, the `centroid` producer contract, angle goal contracts.
 #: /8 (run `geometry-capability-expansion`): `divide_segment` + ratio grammar, `MAT_VUONG_DUONG`, `POINT_PRODUCERS`.
@@ -106,46 +124,136 @@ SolidName = Annotated[str, BeforeValidator(_nhan),
                       Field(pattern=SOLID_NAME_PATTERN, description="ký hiệu khối, vd S.ABC hoặc ABC.A'B'C'")]
 #: Exported for provider response schemas (Schema-Contract v3), so the model is told the same value grammar the validator checks.
 NUMBER_PATTERN = r"^(?:\d+(?:[.,]\d+)?(?:/\d+)?a?(?:√\d+)?(?:/\d+)?|a(?:√\d+)?(?:/\d+)?|√\d+(?:/\d+)?)$"
-ExactNumber = Annotated[str, BeforeValidator(_nhan),
-                        Field(pattern=NUMBER_PATTERN,
-                              description="độ dài CHÉP từ đề: số dương (4, 2/3, √3, 3√3/4) hoặc theo ký hiệu a (a, 2a, a√3, a√3/2)")]
+_EXACT_NUMBER_DESC = "độ dài CHÉP từ đề: số dương (4, 2/3, √3, 3√3/4) hoặc theo ký hiệu a (a, 2a, a√3, a√3/2)"
+
+
+def _kiem_chuoi_bieu_thuc(v: str) -> str:
+    try:
+        parse_quantity_expr(v, allow_signed=False, allow_unit=False)
+    except ExprParseError as e:
+        raise ValueError(f"chuỗi giá trị không hợp lệ: {v!r} ({e.message})") from None
+    return v
+
+
+ExactNumber = Annotated[
+    str,
+    BeforeValidator(_nhan),
+    AfterValidator(_kiem_chuoi_bieu_thuc),
+    WithJsonSchema({"description": _EXACT_NUMBER_DESC, "type": "string"}),
+]
 Seg = Annotated[list[Label], Field(min_length=2, max_length=2)]
 Poly = Annotated[list[Label], Field(min_length=3)]
 
-#: Một số chính xác trong văn bản: hệ số · (a) · √căn / mẫu. Không dính chữ/nhãn hai bên (`A1`, `bằng` không tính).
-_SO = re.compile(r"(?<![\w'^])(?P<he>\d+(?:[.,]\d+)?(?:/\d+)?)?(?P<sym>a)?(?:√(?P<can>\d+)(?P<sym2>a)?)?(?:/(?P<mau>\d+))?(?![\w'])")
+_W_NO_SUP = r"[^\W²³']"
+_PREV_QTY_CHAR = r"(?:(?<=[0-9a-z²³)]\s)|(?<=\())"
+_AFTER_EQ_WORD = r"(?:(?<==\s)|(?<==)|(?<=bằng\s)|(?<=cạnh\s)|(?<=là\s)|(?<=đáy\s)|(?<=bên\s)|(?<=cao\s))"
+_PAREN_UNIT_RE = r"\s*(?:(?-i:cm|dm|mm|km|m)|(?i:đvđd|đvdt|đvtt))(?:\s*(?:[²³]|\^\s*[23]|[23]))?\s*\)"
+_ATTACHED_UNIT_RE = r"(?=(?:(?-i:cm|dm|mm|km|m)(?:\s*(?:[²³]|\^\s*[23]|[23]))?|(?i:đvđd|đvdt|đvtt))(?!" + _W_NO_SUP + r")(?![²³^0-9]))"
+_EXPR_END_BOUND = r"(?:(?<=[0-9²³)])" + _ATTACHED_UNIT_RE + r"|(?!" + _W_NO_SUP + r")(?![²³^]))(?![.,]\d)"
+_SO_ATOM_CORE = (
+    r"(?:"
+    r"\d+(?:[.,]\d+(?![.,]\d))?"
+    r"|(?:√|(?-i:sqrt))\s*(?:\((?!" + _PAREN_UNIT_RE + r")(?-i:[0-9a-z.,+\-*/^²³√\s]+)\)|\d+(?:[.,]\d+(?![.,]\d))?|(?-i:[a-z])(?!" + _W_NO_SUP + r"))"
+    r"|\((?!" + _PAREN_UNIT_RE + r")(?=(?-i:[0-9a-z.,+\-*/^²³√\s]*[0-9√²³^+\-*/]))(?-i:[0-9a-z.,+\-*/^²³√\s]+)\)"
+    r"|\((?-i:[a-z])\)(?=\s*(?:[²³]|\^\s*[23]))"
+    r"|(?-i:a)(?!" + _W_NO_SUP + r")(?!\s*=|\s+la\s+so\b)"
+    r"|(?!(?:" + _PREV_QTY_CHAR + r")(?-i:m)(?:[²³]|\^\s*[23])?(?!" + _W_NO_SUP + r"))(?-i:[b-z])(?!" + _W_NO_SUP + r")(?=\s*(?:[²³√*/]|\^\s*[23]))"
+    r"|" + _AFTER_EQ_WORD + r"(?-i:[b-z])(?!" + _W_NO_SUP + r")(?!\s*=)"
+    r")(?:\s*(?:[²³]|\^\s*[23]))?"
+)
+_SO_CONT_ATOM = (
+    r"(?:"
+    r"\d+(?:[.,]\d+(?![.,]\d))?"
+    r"|(?:√|(?-i:sqrt))\s*(?:\((?!" + _PAREN_UNIT_RE + r")(?-i:[0-9a-z.,+\-*/^²³√\s]+)\)|\d+(?:[.,]\d+(?![.,]\d))?|(?-i:[a-z])(?!" + _W_NO_SUP + r"))"
+    r"|\((?!" + _PAREN_UNIT_RE + r")(?=(?-i:[0-9a-z.,+\-*/^²³√\s]*[0-9√²³^+\-*/]))(?-i:[0-9a-z.,+\-*/^²³√\s]+)\)"
+    r"|\((?-i:[a-z])\)(?=\s*(?:[²³]|\^\s*[23]))"
+    r"|(?-i:[a-z])(?!" + _W_NO_SUP + r")"
+    r")(?:\s*(?:[²³]|\^\s*[23]))?"
+)
+_SO_SLOT_EXPR = (
+    r"(?:"
+    r"\d+(?:[.,]\d+(?![.,]\d))?"
+    r"|(?:√|(?-i:sqrt))\s*(?:\((?!" + _PAREN_UNIT_RE + r")(?-i:[0-9a-z.,+\-*/^²³√\s]+)\)|\d+(?:[.,]\d+(?![.,]\d))?|(?-i:[a-z])(?!" + _W_NO_SUP + r"))"
+    r"|\((?!" + _PAREN_UNIT_RE + r")(?=(?-i:[0-9a-z.,+\-*/^²³√\s]*[0-9√²³^+\-*/]))(?-i:[0-9a-z.,+\-*/^²³√\s]+)\)"
+    r"|\((?-i:[a-z])\)(?=\s*(?:[²³]|\^\s*[23]))"
+    r"|(?-i:[a-z])(?!" + _W_NO_SUP + r")"
+    r")(?:\s*(?:[²³]|\^\s*[23]))?"
+    + r"(?:(?:\s*[*/]\s*|(?=[√]|(?:\((?!" + _PAREN_UNIT_RE + r"))|(?-i:[a-ln-z])(?!" + _W_NO_SUP + r")))" + _SO_CONT_ATOM
+    + r"|(?:\s*[+\-]\s*)" + _SO_CONT_ATOM + r")*"
+    + _EXPR_END_BOUND
+)
+#: Một biểu thức số / ký hiệu chính xác trong văn bản: không nhóm bắt tên, không khớp rỗng, phân biệt hoa-thường trên ký hiệu.
+_SO = re.compile(
+    r"(?<![\w'^])(?<!\d[.,])"
+    + _SO_ATOM_CORE
+    + r"(?:(?:\s*[*/]\s*|(?=[√]|(?:\((?!" + _PAREN_UNIT_RE + r"))|(?-i:[a-ln-z])(?!" + _W_NO_SUP + r")))" + _SO_CONT_ATOM
+    + r"|(?:\s*[+\-]\s*)" + _SO_CONT_ATOM + r")*"
+    + _EXPR_END_BOUND,
+    re.UNICODE,
+)
+
+SymbolicTag = bool | tuple[tuple[str, int], ...]
 
 
-def _doc(m: re.Match) -> tuple[Fraction, bool] | None:
-    if not (m["he"] or m["sym"] or m["can"]) or (m["sym"] and m["sym2"]):
-        return None
+def _doc_bieu_thuc(s: str, *, strict: bool) -> tuple[Fraction, SymbolicTag] | None:
+    txt = chuan_hoa(s)
     try:
-        he = Fraction((m["he"] or "1").replace(",", ".")) / int(m["mau"] or 1)
-    except ZeroDivisionError:            # "1/0" matches the grammar but is no number: refuse (doc_so), never crash
+        qexpr = parse_quantity_expr(txt, allow_signed=False, allow_unit=False)
+    except ExprParseError as e:
+        if strict:
+            raise TuChoi("SCHEMA_INVALID", f"không phải số chính xác: {s!r} ({e.message})") from None
         return None
-    return he * he * int(m["can"] or 1), bool(m["sym"] or m["sym2"])
-
-
-def doc_so(s: str) -> tuple[Fraction, bool]:
-    """Số chính xác (dạng `ExactNumber`) → (hệ số², có ký hiệu a). Không float: `1,5` đọc thành 3/2."""
-    m = _SO.fullmatch(chuan_hoa(s))
-    if not m or (r := _doc(m)) is None:
-        raise TuChoi("SCHEMA_INVALID", f"không phải số chính xác: {s!r}")
-    if r[0] == 0:
-        # Văn phạm nhận `0`, `√0`, `0/5`, `0a`; mọi trường dùng bộ đọc này là ĐỘ DÀI (`ExactNumber`: "số dương"). Để lọt
-        # xuống engine thì chiều cao 0 bị bố cục thay bằng 1 rồi mới bị tự kiểm bắt, trả nhầm mã lỗi nội bộ
-        # (run `hybrid-pre-main-hardening`). Mã chung với tuyến C và thông điệp người học.
+    syms = qexpr.referenced_symbols
+    try:
+        ev = evaluate_quantity(
+            qexpr,
+            symbol_dims={sym: LENGTH for sym in syms},
+            certified_positive_symbols=frozenset(syms),
+            require_positive=False,
+        )
+    except ExprDomainError as e:
+        if not strict:
+            return None
+        if e.code == "ZERO_DIVISOR":
+            if re.search(r"/\s*0(?![0-9.,])", txt):
+                raise TuChoi("SCHEMA_INVALID", f"không phải số chính xác: {s!r}") from None
+            raise TuChoi("INCONSISTENT_FACTS", e.message) from None
+        if e.code == "EXACT_DOMAIN_EXCEEDED":
+            raise TuChoi("EXACT_DOMAIN_EXCEEDED", e.message) from None
+        raise TuChoi("INCONSISTENT_FACTS", e.message) from None
+    except ExprDimensionError as e:
+        if not strict:
+            return None
+        raise TuChoi("INCONSISTENT_FACTS", e.message) from None
+    if ev.sign < 0:
+        if not strict:
+            return None
+        raise TuChoi("NON_POSITIVE_LENGTH", f"đại lượng âm ({s!r}): không hợp lệ")
+    if strict and ev.coeff_sq == 0:
+        # Văn phạm nhận `0`, `√0`, `0/5`, `0a`; mọi trường dùng bộ đọc này là ĐỘ ĐO DƯƠNG (`ExactNumber`: "số dương").
         raise TuChoi("NON_POSITIVE_LENGTH", f"độ dài bằng 0 ({s!r}): hình suy biến, không dựng hay tính được")
+    return ev.coeff_sq, (False if not ev.symbols else ev.symbols)
+
+
+def _doc(m: re.Match) -> tuple[Fraction, SymbolicTag] | None:
+    raw = m["number"] if "number" in m.groupdict() and m["number"] is not None else m.group(0)
+    return _doc_bieu_thuc(raw, strict=False)
+
+
+def doc_so(s: str) -> tuple[Fraction, SymbolicTag]:
+    """Biểu thức số chính xác (`ExactNumber`) → `(hệ số², False | ((sym, exp), ...))`. Không float: `1,5` đọc thành 3/2."""
+    r = _doc_bieu_thuc(s, strict=True)
+    assert r is not None
     return r
 
 
 def binh_phuong(s: str) -> Fraction:
-    """Hệ số² của một độ dài (với độ dài ký hiệu: hệ số² theo đơn vị a)."""
+    """Hệ số² của một đại lượng (theo đơn vị ký hiệu tương ứng)."""
     return doc_so(s)[0]
 
 
-def so_trong(quote: str) -> list[tuple[int, Fraction, bool]]:
-    """(vị trí, giá trị², có a) của các số trong một đoạn đề; chữ số dính nhãn (A1) không tính."""
+def so_trong(quote: str) -> list[tuple[int, Fraction, SymbolicTag]]:
+    """(vị trí, giá trị², thông tin ký hiệu) của các biểu thức số trong một đoạn đề; chữ số dính nhãn (A1) không tính."""
     return [(m.start(), *r) for m in _SO.finditer(chuan_hoa(quote)) if (r := _doc(m)) is not None]
 
 
@@ -375,6 +483,11 @@ class PolygonAreaArgs(_Args):
         if self.shape == "equilateral_triangle" and len(self.polygon) != 3:
             raise ValueError("polygon_area: equilateral_triangle cần đúng 3 đỉnh")
         return self
+
+
+class SolidVolumeArgs(_Args):
+    solid: SolidName
+    value: ExactNumber
 
 
 class SegmentRatioArgs(_Args):
@@ -970,19 +1083,19 @@ REGISTRY: dict[str, FunctionSpec] = {s.name: s for s in (
     # Exact angle-premise family (`unified-angle-geometry-verified-image-to-3d`): planner-only, Route A provider surface unchanged.
     _F("line_plane_angle", LinePlaneAngleArgs, "fact",
        "Góc giữa đường thẳng và mặt phẳng trong [0°, 90°] do đề cho.",
-       (("góc", "tạo với", "hợp với"),), plane_fields=("plane",), provider_offered=False),
+       (("góc", "tạo với", "hợp với", r"re:(?<!\w)(?:sin|cos|côsin|cosin|tan|tang|tg|cot|côtang|cotang|cotg)(?!\w)"),), plane_fields=("plane",), provider_offered=False),
     _F("plane_plane_angle", PlanePlaneAngleArgs, "fact",
        "Góc giữa hai mặt phẳng không định hướng trong [0°, 90°] do đề cho.",
-       (("góc", "tạo với", "hợp với"),), plane_fields=("plane1", "plane2"), provider_offered=False),
+       (("góc", "tạo với", "hợp với", r"re:(?<!\w)(?:sin|cos|côsin|cosin|tan|tang|tg|cot|côtang|cotang|cotg)(?!\w)"),), plane_fields=("plane1", "plane2"), provider_offered=False),
     _F("dihedral_angle", DihedralAngleArgs, "fact",
        "Góc nhị diện [P, cạnh, Q] có chọn hai nửa mặt phẳng trong (0°, 180°) do đề cho.",
        (("nhị diện",),), segment_fields=("edge",), provider_offered=False),
     _F("line_line_angle", LineLineAngleArgs, "fact",
        "Góc giữa hai đường thẳng trong [0°, 90°] do đề cho.",
-       (("góc", "tạo với", "hợp với"),), segment_fields=("line1", "line2"), provider_offered=False),
+       (("góc", "tạo với", "hợp với", r"re:(?<!\w)(?:sin|cos|côsin|cosin|tan|tang|tg|cot|côtang|cotang|cotg)(?!\w)"),), segment_fields=("line1", "line2"), provider_offered=False),
     _F("vertex_angle", VertexAngleArgs, "fact",
        "Góc có hướng trong (0°, 180°) tại một đỉnh đa giác / tam giác do đề cho.",
-       (("góc", "∠", "^", r"re:(?<![\w'])(?:[ÂÊÎÔÛĈĜĤĴŜŴŶẐ]|[A-Z][0-9]*'?\u0302|\\hat\{\s*[A-Z][0-9]*'?\s*\})\s*(?:=|bằng|là)"),), provider_offered=False),
+       (("góc", "∠", "^", r"re:(?<!\w)(?:sin|cos|côsin|cosin|tan|tang|tg|cot|côtang|cotang|cotg)(?!\w)", r"re:(?<![\w'])(?:[ÂÊÎÔÛĈĜĤĴŜŴŶẐ]|[A-Z][0-9]*'?\u0302|\\hat\{\s*[A-Z][0-9]*'?\s*\})\s*(?:=|bằng|là)"),), provider_offered=False),
     # Reusable base-geometry primitives (`unified-angle-geometry-verified-image-to-3d`): planner-only, Route A surface unchanged.
     _F("parallelogram", ParallelogramArgs, "fact",
        "Hình bình hành với bốn đỉnh theo vòng.",
@@ -999,6 +1112,9 @@ REGISTRY: dict[str, FunctionSpec] = {s.name: s for s in (
     _F("polygon_area", PolygonAreaArgs, "fact",
        "Diện tích của một đa giác / mặt có tên do đề cho.",
        (("diện tích",),), provider_offered=False),
+    _F("solid_volume", SolidVolumeArgs, "fact",
+       "Thể tích của một khối đa diện do đề cho.",
+       (("thể tích", r"re:(?-i:V)\s*(?:_|\()"),), provider_offered=False),
     _F("segment_ratio", SegmentRatioArgs, "fact",
        "Tỉ số hoặc hệ thức bội số độ dài giữa hai đoạn thẳng có tên.",
        (("=", "bằng", "gấp", "nửa", "tỉ số", "tỷ số"),), segment_fields=("segment_a", "segment_b"), provider_offered=False),
@@ -1236,7 +1352,8 @@ _CURVED_SOLID_ARG_FNS = frozenset({
 def nhan_cua_loi_goi(c: LoiGoi) -> set[str]:
     ra: set[str] = set()
     for key, v in c.args.model_dump().items():
-        if key in ("line_ref", "section", "derived", "first", "second", "unit", "value", "shape", "ratio"):   # opaque IDs / scalars, never point labels
+        if key in ("line_ref", "section", "derived", "first", "second", "unit", "value", "shape", "ratio",
+                   "side", "radius", "height", "generatrix", "distance", "center_distance"):   # opaque IDs / scalars, never point labels
             continue
         if key == "solid" and c.fn in _CURVED_SOLID_ARG_FNS:
             continue
@@ -1478,11 +1595,21 @@ _THAM_KHAO_HINH = (
     r"\(\s*(?:(?:hình\s+)?minh\s+h[ọo]a(?:\s+như)?|tham\s+khảo|như|xem)"
     r"\s+hình(?:\s+vẽ)?(?:\s+bên(?:\s+dưới|\s+trên)?)?\s*\)"
 )
-_DUOI_BANG = re.compile(rf"\s*(?:(?:cm|dm|mm|m|đvđd)(?![\w'])|đơn vị(?:\s+độ dài)?(?!\w)|\((?:cm|dm|mm|m|đvđd|đơn vị[^()]*)\)|{_THAM_KHAO_HINH})?"
-                        # A clause that opens right after the value also closes it, even when the source omits the comma or
-                        # full stop: "biết …" (a new given) or a capitalised word starting a new sentence ("… = 2 Khoảng cách
-                        # …"). Case-sensitive, so a point label ("2 BC", a multiple) never counts as a sentence start.
-                        r"\s*(?:[.?!](?=\s|$)|[,;:)]|$|và(?!\w)|biết(?!\w)|(?-i:(?<=\s)[A-ZĐ][a-zđà-ỹ]))", re.IGNORECASE)
+_DON_VI_MET_CO_SO = r"(?:mm|cm|dm|km|(?-i:m))"
+_KHONG_DON_VI_SAI_DAI = (
+    rf"(?!\s*\(?\s*(?:{_DON_VI_MET_CO_SO}\s*(?:²|\^2|2|³|\^3|3)(?![^\W0-9_]|[²³^0-9'])"
+    rf"|(?:đvdt|đvtt|độ|radian|rad)(?![^\W0-9_])|°))"
+)
+_DUOI_BANG = re.compile(
+    rf"\s*(?:(?:{_DON_VI_MET_CO_SO}|đvđd)(?![^\W0-9_]|[²³^0-9'])|đơn vị(?:\s+độ dài)?(?!\w)"
+    rf"|\(\s*(?:{_DON_VI_MET_CO_SO}|đvđd|đơn vị(?:\s+độ dài)?(?:\s*:?\s*(?:{_DON_VI_MET_CO_SO}|đvđd))?)\s*\)|{_THAM_KHAO_HINH})?"
+    rf"{_KHONG_DON_VI_SAI_DAI}"
+    # A clause that opens right after the value also closes it, even when the source omits the comma or
+    # full stop: "biết …" (a new given) or a capitalised word starting a new sentence ("… = 2 Khoảng cách
+    # …"). Case-sensitive, so a point label ("2 BC", a multiple) never counts as a sentence start.
+    r"\s*(?:[.?!](?=\s|$)|[,;:)]|$|và(?!\w)|biết(?!\w)|(?-i:(?<=\s)[A-ZĐ][a-zđà-ỹ]))",
+    re.IGNORECASE,
+)
 
 
 def _gia_tri_la_phep_bang(de: str, vts: list[tuple[int, int]], seg: list[str]) -> bool:
@@ -1510,12 +1637,19 @@ _L1 = r"(?-i:[A-Z][0-9]*'?)"
 _NHAN = rf"{_L1}+"
 
 
+def _so_bieu_thuc(g: str) -> str:
+    """Unit-free expression capture with group name `g`."""
+    return f"(?P<{g}>{_SO_SLOT_EXPR})"
+
+
 def _so_nhom(g: str) -> str:
-    """The number grammar with group names of its own (one per clause) and an optional length unit."""
-    # never empty, and case-sensitive: the parameter is "a", never the label "A" (the clauses are case-insensitive)
-    return (f"(?P<{g}>(?=[0-9√]|(?-i:a)(?![\\w']))(?-i:" + _SO.pattern.replace("(?P<", f"(?P<{g}_") + "))"
-            r"(?:\s*(?:cm|dm|mm|m|đvđd)(?![\w']))?"
-            r"(?:\s*\((?:đơn\s+vị[^()]*|cm|dm|mm|m|đvđd)\))?")
+    """Length-dimension (`L^1`) expression capture with optional length unit and negative lookahead against area/volume/angle units."""
+    return (
+        f"(?P<{g}>{_SO_SLOT_EXPR})"
+        rf"(?:\s*(?:{_DON_VI_MET_CO_SO}|đvđd)(?![^\W0-9_]|[²³^0-9']))?"
+        rf"(?:\s*\(\s*(?:đơn\s+vị(?:\s+độ\s+dài)?(?:\s*:?\s*(?:{_DON_VI_MET_CO_SO}|đvđd))?|{_DON_VI_MET_CO_SO}|đvđd)\s*\))?"
+        rf"{_KHONG_DON_VI_SAI_DAI}"
+    )
 
 
 _AT_TRI_2D = rf"(?:\s+(?:tại|ở)\s+{_L1})?"
@@ -1551,7 +1685,7 @@ def _km_khoi(m: re.Match[str]) -> str:
 _C_DAY = re.compile(rf"(?:(?:có|với)\s+)?(?:(?:mặt|tứ\s+giác|tam\s+giác)\s+)?đáy(?:\s+(?P<d>{_NHAN}))?\s+(?:là\s+(?:một\s+)?{_HINH}(?:\s+(?P<d2>{_NHAN}))?(?:\s+vuông(?:\s+cân)?\s+(?:tại|ở)\s+{_L1})?|đều|vuông(?:\s+cân)?\s+(?:tại|ở)\s+{_L1})(?![\w'])"
                     rf"(?:(?:\s*,\s*|\s+)(?:(?:và|với)\s+)?(?:có\s+)?(?:(?:các|mọi|mỗi)\s+)?(?:độ\s+dài\s+)?cạnh\s*(?:(?:bằng|=|là)\s*)?{_so_nhom('ds')})?"
                     rf"(?:\s*(?:,\s*)?(?:có\s+)?tâm\s+(?:là\s+)?{_L1}(?![\w']))?", re.IGNORECASE)
-_C_VAI = re.compile(rf"(?:(?:có|với)\s+)?(?:(?:các|mọi|mỗi)\s+)?(?:độ\s+dài\s+(?:(?:các|mọi|mỗi)\s+)?)?(?P<vai>cạnh\s+đáy|cạnh\s+bên|chiều\s+cao|đường\s+cao|cạnh)(?:\s+(?:của\s+(?:(?:hình|khối)\s+)?|(?:hình|khối)\s+|(?=tứ\s+diện))"
+_C_VAI = re.compile(rf"(?:(?:có|với)\s+)?(?:(?:các|mọi|mỗi)\s+)?(?:độ\s+dài\s+(?:của\s+)?(?:(?:các|mọi|mỗi)\s+)?)?(?P<vai>cạnh\s+đáy|cạnh\s+bên|chiều\s+cao|đường\s+cao|cạnh)(?:\s+(?:của\s+(?:(?:hình|khối)\s+)?|(?:hình|khối)\s+|(?=tứ\s+diện))"
                     rf"(?P<qn>chóp|lăng\s+trụ|hộp(?:\s+chữ\s+nhật)?|lập\s+phương|tứ\s+diện)(?:\s+(?P<ql>{_NHAN}(?:\.{_NHAN})?))?)?"
                     rf"\s*(?:(?:có\s+)?độ\s+dài\s*)?(?:(?:=|bằng|là)\s*)?{_so_nhom('vs')}", re.IGNORECASE)
 #: "của <solid>" names the role's owner: its noun must be the bound solid's kind, its label (if any) the bound solid's
@@ -1584,17 +1718,33 @@ _C_VUONG = re.compile(rf"(?:(?:có|với|biết)\s+)?(?:(?:cạnh\s+bên|cạnh|
                       rf"(?:mặt\s+phẳng\s+|mp\s*)?(?:\({_NHAN}\)|{_L1}{_L1}\s+và\s+{_L1}{_L1}(?![\w'])(?!\s*(?:=|bằng))|{_NHAN}(?![\w'])"
                       rf"|(?:mặt\s+(?:phẳng\s+)?)?đáy(?!\w))", re.IGNORECASE)
 _GOC_MP_DICH = rf"(?:mặt\s+phẳng\s+|mặt\s+|mp\s*)?(?:\({_NHAN}\)|{_NHAN}(?![\w'])|(?:mặt\s+(?:phẳng\s+)?)?đáy(?:\s*\(?{_NHAN}\)?)?(?!\w))"
+_KHONG_DON_VI_VO_HUONG = (
+    rf"(?!\s*\(?\s*(?:{_DON_VI_MET_CO_SO}(?:\s*(?:²|\^2|2|³|\^3|3))?(?![^\W0-9_]|[²³^0-9'])"
+    rf"|(?:đvđd|đvdt|đvtt|độ|radian|rad)(?![^\W0-9_])|°))"
+)
+_SO_TISO_SCALAR = f"{_SO_SLOT_EXPR}{_KHONG_DON_VI_VO_HUONG}"
+_TRIG_FN_KW = r"(?:sin|cos|côsin|cosin|tan|tang|tg|cot|côtang|cotang|cotg)"
 _C_GOC = re.compile(
     rf"(?:(?:có|với|biết(?:\s+rằng)?)\s+)?(?:"
-    rf"(?:số\s+đo\s+)?góc\s+nhị\s+diện\s+\[\s*{_L1}\s*,\s*{_L1}{_L1}\s*,\s*{_L1}\s*\]\s*(?:=|bằng|là)\s*{_so_nhom('gd')}\s*(?:°|độ(?!\w))"
+    rf"(?:số\s+đo\s+)?góc\s+nhị\s+diện\s+\[\s*{_L1}\s*,\s*{_L1}{_L1}\s*,\s*{_L1}\s*\]\s*(?:=|bằng|là)\s*{_so_bieu_thuc('gd')}\s*(?:°|độ(?!\w))"
     rf"|(?:số\s+đo\s+)?góc\s+(?:giữa|tạo\s+bởi|hợp\s+bởi)\s+(?:hai\s+(?:đường\s+thẳng|mặt\s+phẳng)\s+)?"
     rf"(?:(?:đường\s+thẳng|cạnh\s+bên|cạnh|đoạn(?:\s+thẳng)?|mặt\s+phẳng|mặt\s+bên|mp)\s*)?\(?{_NHAN}\)?\s+(?:và|với)\s+"
-    rf"(?:{_GOC_MP_DICH}|(?:đường\s+thẳng|cạnh|đoạn(?:\s+thẳng)?)\s+{_L1}{_L1}|{_L1}{_L1}(?![\w']))\s*(?:=|bằng|là)\s*{_so_nhom('gg')}\s*(?:°|độ(?!\w))"
+    rf"(?:{_GOC_MP_DICH}|(?:đường\s+thẳng|cạnh|đoạn(?:\s+thẳng)?)\s+{_L1}{_L1}|{_L1}{_L1}(?![\w']))\s*(?:=|bằng|là)\s*{_so_bieu_thuc('gg')}\s*(?:°|độ(?!\w))"
     rf"|(?:(?:các\s+)?cạnh\s+bên(?:\s+{_L1}{_L1}(?:\s*,\s*{_L1}{_L1})*)?|(?:đường\s+thẳng|cạnh\s+bên|cạnh|đoạn(?:\s+thẳng)?)\s+{_L1}{_L1}|{_L1}{_L1}"
     rf"|(?:mặt\s+bên|mặt\s+phẳng|mp)\s*\(?{_L1}{_L1}{_NHAN}\)?|\({_L1}{_L1}{_NHAN}\))\s+(?:cùng\s+)?(?:tạo|hợp)\s+với\s+"
-    rf"(?:{_GOC_MP_DICH}|(?:đường\s+thẳng|cạnh)\s+{_L1}{_L1}|{_L1}{_L1}(?![\w']))\s+(?:một\s+)?góc(?:\s+(?:bằng|là|=))?\s*{_so_nhom('gt')}\s*(?:°|độ(?!\w))"
-    rf"|(?:(?:góc(?:\s+ở\s+đỉnh)?|[∠^])\s*{_L1}(?:{_L1}{_L1})?(?![\w']))\s*(?:=|bằng|là)\s*{_so_nhom('gv')}\s*(?:°|độ(?!\w))"
-    rf"|(?:(?<![\w'])(?:[ÂÊÎÔÛĈĜĤĴŜŴŶẐ]|{_L1}\u0302|\\hat\{{\s*{_L1}\s*\}})(?![\w']))\s*(?:=|bằng|là)\s*{_so_nhom('gh')}\s*(?:°|độ(?!\w))"
+    rf"(?:{_GOC_MP_DICH}|(?:đường\s+thẳng|cạnh)\s+{_L1}{_L1}|{_L1}{_L1}(?![\w']))\s+(?:một\s+)?góc(?:\s+(?:bằng|là|=))?\s*{_so_bieu_thuc('gt')}\s*(?:°|độ(?!\w))"
+    rf"|(?:(?:góc(?:\s+ở\s+đỉnh)?|[∠^])\s*{_L1}(?:{_L1}{_L1})?(?![\w']))\s*(?:=|bằng|là)\s*{_so_bieu_thuc('gv')}\s*(?:°|độ(?!\w))"
+    rf"|(?:(?<![\w'])(?:[ÂÊÎÔÛĈĜĤĴŜŴŶẐ]|{_L1}\u0302|\\hat\{{\s*{_L1}\s*\}})(?![\w']))\s*(?:=|bằng|là)\s*{_so_bieu_thuc('gh')}\s*(?:°|độ(?!\w))"
+    rf"|{_TRIG_FN_KW}\s+(?:của\s+)?(?:số\s+đo\s+)?góc\s+nhị\s+diện\s+\[\s*{_L1}\s*,\s*{_L1}{_L1}\s*,\s*{_L1}\s*\]\s*(?:=|bằng|là)\s*(?P<gtd>{_SO_TISO_SCALAR})"
+    rf"|góc\s+nhị\s+diện\s+\[\s*{_L1}\s*,\s*{_L1}{_L1}\s*,\s*{_L1}\s*\]\s+có\s+{_TRIG_FN_KW}\s*(?:=|bằng|là)\s*(?P<gtd2>{_SO_TISO_SCALAR})"
+    rf"|{_TRIG_FN_KW}\s+(?:của\s+)?(?:số\s+đo\s+)?góc\s+(?:giữa|tạo\s+bởi|hợp\s+bởi)\s+(?:hai\s+(?:đường\s+thẳng|mặt\s+phẳng)\s+)?"
+    rf"(?:(?:đường\s+thẳng|cạnh\s+bên|cạnh|đoạn(?:\s+thẳng)?|mặt\s+phẳng|mặt\s+bên|mp)\s*)?\(?{_NHAN}\)?\s+(?:và|với)\s+"
+    rf"(?:{_GOC_MP_DICH}|(?:đường\s+thẳng|cạnh|đoạn(?:\s+thẳng)?)\s+{_L1}{_L1}|{_L1}{_L1}(?![\w']))\s*(?:=|bằng|là)\s*(?P<gtg>{_SO_TISO_SCALAR})"
+    rf"|(?:góc\s+(?:giữa|tạo\s+bởi|hợp\s+bởi)\s+(?:hai\s+(?:đường\s+thẳng|mặt\s+phẳng)\s+)?(?:(?:đường\s+thẳng|cạnh\s+bên|cạnh|đoạn(?:\s+thẳng)?|mặt\s+phẳng|mặt\s+bên|mp)\s*)?\(?{_NHAN}\)?\s+(?:và|với)\s+(?:{_GOC_MP_DICH}|(?:đường\s+thẳng|cạnh|đoạn(?:\s+thẳng)?)\s+{_L1}{_L1}|{_L1}{_L1}(?![\w']))"
+    rf"|(?:(?:đường\s+thẳng|cạnh\s+bên|cạnh|đoạn(?:\s+thẳng)?)\s+{_L1}{_L1}|{_L1}{_L1}|(?:mặt\s+bên|mặt\s+phẳng|mp)\s*\(?{_L1}{_L1}{_NHAN}\)?|\({_L1}{_L1}{_NHAN}\))\s+(?:tạo|hợp)\s+với\s+(?:{_GOC_MP_DICH}|(?:đường\s+thẳng|cạnh)\s+{_L1}{_L1}|{_L1}{_L1}(?![\w']))\s+(?:một\s+)?góc)\s+có\s+{_TRIG_FN_KW}\s*(?:=|bằng|là)\s*(?P<gtg2>{_SO_TISO_SCALAR})"
+    rf"|{_TRIG_FN_KW}\s*(?:\(\s*)?(?:(?:của\s+)?(?:góc(?:\s+ở\s+đỉnh)?|[∠^])\s*{_L1}(?:{_L1}{_L1})?(?![\w'])|(?<![\w']){_L1}{_L1}{_L1}(?![\w']))(?:\s*\))?\s*(?:=|bằng|là)\s*(?P<gtv>{_SO_TISO_SCALAR})"
+    rf"|(?:(?:góc(?:\s+ở\s+đỉnh)?|[∠^])\s*{_L1}(?:{_L1}{_L1})?(?![\w']))\s+có\s+{_TRIG_FN_KW}\s*(?:=|bằng|là)\s*(?P<gtv2>{_SO_TISO_SCALAR})"
+    rf"|{_TRIG_FN_KW}\s*(?:\(\s*)?(?:(?:của\s+)?(?<![\w'])(?:[ÂÊÎÔÛĈĜĤĴŜŴŶẐ]|{_L1}\u0302|\\hat\{{\s*{_L1}\s*\}})(?![\w']))(?:\s*\))?\s*(?:=|bằng|là)\s*(?P<gth>{_SO_TISO_SCALAR})"
     rf")",
     re.IGNORECASE,
 )
@@ -1606,17 +1756,70 @@ _C_SONG = re.compile(
     rf")",
     re.IGNORECASE,
 )
-_SO_TISO_SCALAR = r"(?:\d+(?:[.,]\d+)?(?:/\d+)?(?:√\d+)?(?:/\d+)?|√\d+(?:/\d+)?)"
+_SO_TISO_HE_SO = (
+    r"(?:\d+(?:[.,]\d+(?![.,]\d))?(?:\s*√\s*(?:\(\s*\d+\s*\)|\d+))?|√\s*(?:\(\s*\d+\s*\)|\d+))"
+    r"(?:\s*/\s*(?:\d+(?:[.,]\d+(?![.,]\d))?|√\s*(?:\(\s*\d+\s*\)|\d+)))?"
+    r"(?!\d|[.,]\d|(?-i:[a-z])|[²³^])"
+)
 _C_TISO_DOAN = re.compile(
-    rf"(?:(?:có|với|biết)\s+)?(?:độ\s+dài\s+)?(?P<ra>{_L1}{_L1})\s*(?:=|bằng)\s*(?P<rk>{_SO_TISO_SCALAR})\s*(?:lần\s+|\.\s*|\*\s*)?(?P<rb>{_L1}{_L1})(?![\w'])",
+    rf"(?:(?:có|với|biết)\s+)?(?:"
+    rf"(?:độ\s+dài\s+)?(?P<ra>{_L1}{_L1})\s*(?:=|bằng)\s*(?P<rk>{_SO_TISO_HE_SO})\s*(?:lần\s+|\.\s*|\*\s*)?(?P<rb>{_L1}{_L1})(?![\w'])"
+    rf"|(?P<ra2>{_L1}{_L1})\s*=\s*(?P<rb2>{_L1}{_L1})\s*/\s*(?P<rk2>\d+)(?![\w'])"
+    rf"|(?P<ra3>{_L1}{_L1})\s*/\s*(?P<rb3>{_L1}{_L1})\s*(?:=|bằng)\s*(?P<rk3>{_SO_TISO_SCALAR})(?![\w'])"
+    rf"|(?:tỉ|tỷ)\s+số(?:\s+độ\s+dài)?(?:\s+(?:giữa|của))?(?:\s+hai)?(?:\s+(?:cạnh|đoạn(?:\s+thẳng)?))?\s+(?P<ra4>{_L1}{_L1})\s+(?:và|với)\s+(?P<rb4>{_L1}{_L1})\s*(?:=|bằng|là)\s*(?P<rk4>{_SO_TISO_SCALAR})"
+    rf"|(?:tỉ|tỷ)\s+số(?:\s+độ\s+dài)?(?:\s+(?:giữa|của))?\s+(?P<rv1>cạnh\s+bên|cạnh\s+đáy)\s+(?:và|với)\s+(?P<rv2>cạnh\s+đáy|cạnh\s+bên)\s*(?:=|bằng|là)\s*(?P<rk5>{_SO_TISO_SCALAR})"
+    rf")",
     re.IGNORECASE,
 )
+_DON_VI_DT_DUOI = (
+    rf"(?:\s*(?:\(\s*(?:đơn\s+vị(?:\s+diện\s+tích)?\s*:?\s*)?(?:{_DON_VI_MET_CO_SO}\s*(?:²|\^2|2)|đvdt)\s*\)"
+    rf"|(?:{_DON_VI_MET_CO_SO}\s*(?:²|\^2|2)|đvdt)(?![^\W0-9_]|[²³^0-9'])))?"
+)
+_KHONG_DON_VI_SAI_DT = (
+    rf"(?!\s*\(?\s*(?:{_DON_VI_MET_CO_SO}\s*(?:³|\^3|3)(?![^\W0-9_]|[²³^0-9'])"
+    rf"|{_DON_VI_MET_CO_SO}(?![^\W0-9_]|[²³^0-9']|\s*(?:²|\^2|2))"
+    rf"|(?:đvđd|đvtt|độ|radian|rad)(?![^\W0-9_])|°))"
+)
+
+
+def _so_nhom_dt(g: str) -> str:
+    """Area-dimension (`L^2`) expression capture with optional area unit and negative lookahead against length/volume/angle units."""
+    return f"(?P<{g}>{_SO_SLOT_EXPR}){_DON_VI_DT_DUOI}{_KHONG_DON_VI_SAI_DT}"
+
+
 _C_DIENTICH = re.compile(
-    rf"(?:(?:có|với|biết)\s+)?(?:diện\s+tích(?:\s+của)?(?:\s+(?:mặt\s+bên|mặt\s+đáy|đáy|mặt|{_HINH}))?\s+\(?(?P<dp>{_L1}{_L1}{_NHAN})\)?\s*(?:=|bằng|là)\s*{_so_nhom('dv')}"
-    rf"|(?:mặt\s+bên|mặt\s+đáy|đáy|mặt|{_HINH})\s+\(?(?P<dp2>{_L1}{_L1}{_NHAN})\)?\s+có\s+diện\s+tích(?:\s+(?:=|bằng|là))?\s*{_so_nhom('dv2')}"
+    rf"(?:(?:có|với|biết)\s+)?(?:diện\s+tích(?:\s+của)?(?:\s+(?:mặt\s+bên|mặt\s+đáy|đáy|mặt|{_HINH}))?\s+\(?(?P<dp>{_L1}{_L1}{_NHAN})\)?\s*(?:=|bằng|là)\s*{_so_nhom_dt('dv')}"
+    rf"|(?:mặt\s+bên|mặt\s+đáy|đáy|mặt|{_HINH})\s+\(?(?P<dp2>{_L1}{_L1}{_NHAN})\)?\s+có\s+diện\s+tích(?:\s+(?:=|bằng|là))?\s*{_so_nhom_dt('dv2')}"
+    rf"|(?-i:S)\s*(?:_|\()\s*\{{?\s*(?P<dp3>{_L1}{_L1}{_NHAN})\s*\}}?\s*\)?\s*(?:=|bằng)\s*{_so_nhom_dt('dv4')}"
     # the base of the sentence's solid, unnamed ("diện tích đáy bằng a²"): number-bearing, binds no role
-    rf"|diện\s+tích(?:\s+của)?\s+(?:mặt\s+)?đáy\s*(?:=|bằng|là)\s*{_so_nhom('dv3')})"
-    rf"(?:\s*(?:\(\s*)?(?:cm|dm|mm|m)?(?:²|\^2|2)?(?:\s*\))?)?",
+    rf"|diện\s+tích(?:\s+của)?\s+(?:mặt\s+)?đáy\s*(?:=|bằng|là)\s*{_so_nhom_dt('dv3')})",
+    re.IGNORECASE,
+)
+_DON_VI_TT_DUOI = (
+    rf"(?:\s*(?:\(\s*(?:đơn\s+vị(?:\s+thể\s+tích)?\s*:?\s*)?(?:{_DON_VI_MET_CO_SO}\s*(?:³|\^3|3)|đvtt)\s*\)"
+    rf"|(?:{_DON_VI_MET_CO_SO}\s*(?:³|\^3|3)|đvtt)(?![^\W0-9_]|[²³^0-9'])))?"
+)
+_KHONG_DON_VI_SAI_TT = (
+    rf"(?!\s*\(?\s*(?:{_DON_VI_MET_CO_SO}\s*(?:²|\^2|2)(?![^\W0-9_]|[²³^0-9'])"
+    rf"|{_DON_VI_MET_CO_SO}(?![^\W0-9_]|[²³^0-9']|\s*(?:³|\^3|3))"
+    rf"|(?:đvđd|đvdt|độ|radian|rad)(?![^\W0-9_])|°))"
+)
+
+
+def _so_nhom_tt(g: str) -> str:
+    """Volume-dimension (`L^3`) expression capture with optional volume unit and negative lookahead against length/area/angle units."""
+    return f"(?P<{g}>{_SO_SLOT_EXPR}){_DON_VI_TT_DUOI}{_KHONG_DON_VI_SAI_TT}"
+
+
+_KHOI_DANH_TT = r"(?:chóp|lăng\s+trụ|hộp(?:\s+chữ\s+nhật)?|lập\s+phương|tứ\s+diện)(?:\s+(?:đứng|đều|xiên|tam\s+giác|tứ\s+giác|ngũ\s+giác|lục\s+giác|chữ\s+nhật))*"
+_C_THETICH = re.compile(
+    rf"(?:(?:có|với|biết)\s+)?(?:"
+    rf"thể\s+tích(?:\s+của)?(?:\s+(?:(?:hình|khối)\s+)?(?P<tkn>{_KHOI_DANH_TT})(?:\s+(?P<tk>{_NHAN}(?:\.{_NHAN})?)(?![\w']))?"
+    rf"|\s+(?P<tk0>{_NHAN}\.{_NHAN})(?![\w']))?\s*(?:=|bằng|là)\s*{_so_nhom_tt('tv')}"
+    rf"|(?:(?:hình|khối)\s+)?(?P<tkn2>{_KHOI_DANH_TT})\s+(?P<tk2>{_NHAN}(?:\.{_NHAN})?)(?![\w'])\s+có\s+thể\s+tích(?:\s+(?:=|bằng|là))?\s*{_so_nhom_tt('tv2')}"
+    rf"|(?-i:V)\s*(?:_|\()\s*\{{\s*(?P<tk3>{_NHAN}(?:\.{_NHAN})?)\s*\}}\s*(?:=|bằng)\s*{_so_nhom_tt('tv3')}"
+    rf"|(?-i:V)\s*(?:_|\()\s*(?P<tk4>{_NHAN}(?:\.{_NHAN})?)\s*\)?\s*(?:=|bằng)\s*{_so_nhom_tt('tv4')}"
+    rf")",
     re.IGNORECASE,
 )
 #: "cạnh CD" (a named edge) continues its clause; only a role "cạnh" ("… cạnh 2", "… cạnh bên") opens a new one
@@ -1743,7 +1946,7 @@ def _phan_tich_cau(s: str) -> list[tuple[str, re.Match | None]] | None:
             return out if not any(_doc(x) is not None for x in _SO.finditer(s, q.end())) else None
         for kind, rx in (("khoi", _C_KHOI), ("day", _C_DAY), ("dagiac", _C_DAGIAC), ("dcao", _C_DCAO), ("mpdn", _C_MPDN), ("diem", _C_DIEM),
                          ("chieu", _C_CHIEU), ("mat", _C_MAT), ("vuong", _C_VUONG), ("song", _C_SONG),
-                         ("tiso_doan", _C_TISO_DOAN), ("dientich", _C_DIENTICH), ("goc", _C_GOC), ("doan", _C_DOAN), ("vai", _C_VAI)):
+                         ("tiso_doan", _C_TISO_DOAN), ("dientich", _C_DIENTICH), ("thetich", _C_THETICH), ("goc", _C_GOC), ("doan", _C_DOAN), ("vai", _C_VAI)):
             if m := rx.match(s, p):
                 out.append((kind, m))
                 p = m.end()
@@ -2736,7 +2939,7 @@ _HOI_SAU = re.compile(r"bao\s+nhiêu|(?<!\w)mấy(?!\w)|\?", re.IGNORECASE)
 _HOI_CUOI_DE = re.compile(
     # "… theo a bằng" (multiple choice, in terms of the length parameter) asks exactly like "… bằng"; `_SAU_HOP_LE`
     # already reads "theo a" as a closed tail. One single-letter parameter only; a value after "bằng" still fails.
-    r"(?:(?:(?<!\w)(?:đã\s+cho|đó|này|trên)\s+)*(?:(?<!\w)theo\s+[a-z](?![\w'])\s+)?(?<!\w)(?:bằng|là)\s*:?\s*"
+    r"(?:(?:(?<!\w)(?:đã\s+cho|đó|này|trên)\s+)*(?:(?<!\w)theo\s+(?-i:[a-z])(?![\w'])\s+)?(?<!\w)(?:bằng|là)\s*:?\s*"
     r"|\(\s*(?:kết\s+quả\s+)?làm\s+tròn(?:\s+kết\s+quả)?(?:\s+(?:đến|tới)\s+[^()]*)?\)\s*)"
     r"[.]?\s*$",
     re.IGNORECASE,
@@ -2752,7 +2955,7 @@ _DUNG_GAN = re.compile(r"(?<!\w)(?:biết|với|(?<!đã )cho|khi|nếu|trong đ
                        re.IGNORECASE)
 #: Giữa động từ hỏi và đối tượng (hay ngay sau đối tượng): đối tượng KHÔNG còn là tân ngữ được hỏi — nó là tham chiếu
 #: ("theo", "tỉ số giữa … và …"), điều kiện cực trị ("sao cho … nhỏ nhất"), hay chú thích ("ở đây", "trong đó", "gấp").
-_CHAN_TAN_NGU = re.compile(r"(?<!\w)(?:theo(?!\s+[a-z](?![\w']))|tỉ số|tỷ số|tổng|hiệu|sao cho|ở đây|trong đó|gấp|lớn hơn|nhỏ hơn|bé hơn"
+_CHAN_TAN_NGU = re.compile(r"(?<!\w)(?:theo(?!\s+(?-i:[a-z])(?![\w']))|tỉ số|tỷ số|tổng|hiệu|sao cho|ở đây|trong đó|gấp|lớn hơn|nhỏ hơn|bé hơn"
                            r"|lớn nhất|nhỏ nhất|bé nhất)(?!\w)", re.IGNORECASE)
 
 
@@ -3003,6 +3206,7 @@ def _kiem_nguon(calls: tuple[LoiGoi, ...], text: str, auxiliary: tuple[dict, ...
     _KHOI_MO_TA.set({})
     de = chuan_hoa(text)
     nhan = nhan_cua_de(de)
+    _kiem_don_vi_dai_luong_nguon(de)
     don_vi_de = _don_vi_met_cua_de(de)
     if len(don_vi_de) > 1:
         raise TuChoi("QUESTION_CONTEXT_UNSUPPORTED", "đơn vị độ dài trong đề không đồng nhất; chưa hỗ trợ đổi đơn vị")
@@ -3096,7 +3300,10 @@ def _kiem_nguon(calls: tuple[LoiGoi, ...], text: str, auxiliary: tuple[dict, ...
         for f in c.spec.plane_fields:
             if not _co_mat(c.quotes, getattr(c.args, f), cho_day=f != "face"):
                 raise TuChoi("PLANE_NOT_IN_QUOTE", f"{c.id}: mặt phẳng {getattr(c.args, f)} không được nhắc trong {c.quote!r}", (c.id,))
-        if not vuong_can_eq and not tri_alt_proj:
+        role_seg_ratio = c.fn == "segment_ratio" and any(
+            m["rv1"] for q in c.quotes for m in _TI_SO_DOAN_RE.finditer(chuan_hoa(q))
+        )
+        if not vuong_can_eq and not tri_alt_proj and not role_seg_ratio:
             for f in c.spec.segment_fields:
                 if not _co_doan(c.quotes, getattr(c.args, f)):
                     raise TuChoi("ROLE_NOT_IN_QUOTE", f"{c.id}: đoạn {''.join(getattr(c.args, f))} không được nhắc trong {c.quote!r}", (c.id,))
@@ -3120,6 +3327,8 @@ def _kiem_nguon(calls: tuple[LoiGoi, ...], text: str, auxiliary: tuple[dict, ...
             _kiem_goc_dung_nguon(c, de, calls)
         if c.fn == "polygon_area":
             _kiem_dien_tich_da_giac_dung_nguon(c, de, calls)
+        if c.fn == "solid_volume":
+            _kiem_the_tich_khoi_dung_nguon(c, de, calls)
         if c.fn == "segment_ratio":
             _kiem_ti_so_doan_dung_nguon(c, de, calls)
         if c.fn in ("section", "ask_section_area", "intersection_line") and not mat_cat_dung_nguon(c, calls):
@@ -3133,7 +3342,7 @@ def _kiem_nguon(calls: tuple[LoiGoi, ...], text: str, auxiliary: tuple[dict, ...
             if any(k.fn == 'prism' and ((set(c.args.plane) == set(k.args.base) and c.args.image in k.args.top)
                     or (set(c.args.plane) == set(k.args.top) and c.args.image in k.args.base)) for k in calls):
                 raise TuChoi('INCONSISTENT_FACTS', f'{c.id}: chân chiếu thuộc mặt đối diện của lăng trụ, không nằm trên mặt nhận chiếu', (c.id,))
-        if c.fn in ("polygon_area", "segment_ratio"):
+        if c.fn in ("polygon_area", "solid_volume", "segment_ratio"):
             continue
         for f in c.spec.value_fields:
             if (v := getattr(c.args, f)) is None:
@@ -3165,6 +3374,7 @@ def _kiem_nguon(calls: tuple[LoiGoi, ...], text: str, auxiliary: tuple[dict, ...
             if gt != so[0]:
                 raise TuChoi("UNGROUNDED_VALUE", f"{c.id}: giá trị {v} không phải số trong {c.quote!r}", (c.id,))
 
+    _kiem_chieu_va_dong_bac(calls, phu)
     _kiem_du_kien_cau_hoi(calls, de, read_quotes, phu, don_vi_de, tuple(buoc))
     return ten_mat_phu
 
@@ -3643,7 +3853,7 @@ def _kiem_vung_tien_de(calls: tuple[LoiGoi, ...], de: str, het: int, read_quotes
     rang: list[tuple[int, int, tuple, tuple[int, str]]] = []  # range, value, owning call field
     for ci, c in enumerate(calls):
         gt = [(f, doc_so(v)) for f in c.spec.value_fields if (v := getattr(c.args, f, None))]
-        if c.fn in ("line_plane_angle", "plane_plane_angle", "dihedral_angle", "line_line_angle", "vertex_angle", "polygon_area"):
+        if c.fn in ("line_plane_angle", "plane_plane_angle", "dihedral_angle", "line_line_angle", "vertex_angle", "polygon_area", "solid_volume"):
             gt = [("value", doc_so(c.args.value))]
         if c.fn == "segment_ratio":
             r_val, r_a = doc_so(c.args.ratio)
@@ -4851,7 +5061,7 @@ _MO_MUC_TIEU = re.compile(r"[\s,;:]*(?:" + "|".join(map(re.escape, _MUC_TIEU)) +
 _PHUONG_PHAP = re.compile(r"\s*(?:dùng|áp dụng|sử dụng)\s+(?:công thức|định lí|định lý|hệ thức)[\sA-Za-z0-9=+\-*/^().,²³√]*",
                           re.IGNORECASE)
 #: Giữa động từ hỏi và cụm (sau khi xoá các cụm hỏi khác): chỉ từ nối.
-_GIUA_HOP_LE = re.compile(r"[\s,:]*(?:(?:(?:và|cùng|lần lượt|hãy|các)(?!\w)|theo\s+[a-z](?![\w']))[\s,:]*)*", re.IGNORECASE)
+_GIUA_HOP_LE = re.compile(r"[\s,:]*(?:(?:(?:và|cùng|lần lượt|hãy|các)(?!\w)|theo\s+(?-i:[a-z])(?![\w']))[\s,:]*)*", re.IGNORECASE)
 #: Phần còn lại của một câu hỏi sau khi mọi vùng đã đọc được xoá: chỉ dấu câu, từ nối, lời mở đầu câu và đánh mục.
 _DAN_CAU_HOI = re.compile(
     rf"[\s,;:.?!]*(?:(?:{_THAM_KHAO_HINH}|(?:\(?(?:[a-z]|\d{{1,2}})\)|(?:câu|ý|phần)\s+(?:[a-z]|\d{{1,2}})|hơn nữa|ngoài ra|khi đó|từ đó|sau đó|tiếp theo|tiếp đó"
@@ -4862,7 +5072,7 @@ _HOI_CHI_DUNG = re.compile(
     r"(?:đó|này|trên|vừa\s+dựng(?:\s+được)?)(?!\w)",
     re.IGNORECASE,
 )
-_DON_VI_MET = r"(?:cm|dm|mm|(?-i:m))"
+_DON_VI_MET = r"(?:mm|cm|dm|km|(?-i:m))"
 _DON_VI = (rf"(?:{_DON_VI_MET}(?:2|\^2|²)|đvdt"
            rf"|{_DON_VI_MET}(?:3|\^3|³)|đvtt"
            rf"|{_DON_VI_MET}|đvđd|độ|radian)")
@@ -4880,7 +5090,7 @@ _SAU_HOP_LE = re.compile(
     r"|(?:đồng\s+thời|hãy|tính|tìm|xác\s+định)(?!\w)"
     r"|(?:bằng|là)\s*(?:[?:]|(?=\s*(?:[.]\s*)?$))"                            # đề trắc nghiệm "… bằng?", "… bằng", "… là:"
     # ngoặc chỉ là LỜI DẶN (làm tròn, đơn vị) hoặc tham khảo hình bên — "(sau khi cắt bỏ …)" không lọt (review S1)
-    rf"|theo\s+(?:{_DON_VI}(?![\w'])|[a-z](?![\w'])|đơn vị(?:\s+{_LOAI_DON_VI})?\s+{_DON_VI}(?![\w']))|{_GHI_CHU_NGOAC}|{_THAM_KHAO_HINH}|{_LAM_TRON}(?![\w'])"
+    rf"|theo\s+(?:{_DON_VI}(?![\w'])|(?-i:[a-z])(?![\w'])|đơn vị(?:\s+{_LOAI_DON_VI})?\s+{_DON_VI}(?![\w']))|{_GHI_CHU_NGOAC}|{_THAM_KHAO_HINH}|{_LAM_TRON}(?![\w'])"
     r"|(?:đã cho|đó|này|trên)(?!\w)"
     r"|của\s+(?:hình|khối)\s+(?:chóp|lăng trụ|lập phương|hộp|tứ diện)(?:\s+(?-i:[A-Z][0-9]*'?)+(?:\.(?-i:[A-Z][0-9]*'?)+)?)?)*"
     # kết: dấu câu THẬT (sau nó là khoảng trắng / hết đề — "SC.SA" không kết), dữ kiện, việc kế tiếp, lời dặn làm tròn
@@ -4890,17 +5100,25 @@ _V_DINH_NGHIA = re.compile(r"(?<![\w'])(?-i:V)\s*(?:là|=|\()", re.IGNORECASE)
 
 _CHIEU_HAM_HOI = {
     "ask_length": "length",
+    "ask_radius": "length",
+    "ask_curved_section_radius": "length",
     "ask_distance_point_plane": "length",
     "ask_distance_lines": "length",
     "ask_distance_line_plane": "length",
     "ask_distance_planes": "length",
     "ask_area": "area",
     "ask_section_area": "area",
+    "ask_lateral_area": "area",
+    "ask_surface_area": "area",
+    "ask_curved_section_area": "area",
     "ask_volume": "volume",
+    "ask_curved_volume": "volume",
     "ask_volume_ratio": "ratio",
+    "ask_curved_volume_ratio": "ratio",
     "ask_length_ratio": "ratio",
     "ask_area_ratio": "ratio",
     "ask_residual_volume": "volume",
+    "ask_curved_residual_volume": "volume",
     "ask_angle_line_plane": "angle",
     "ask_angle_plane_plane": "angle",
     "ask_angle_lines": "angle",
@@ -4912,22 +5130,252 @@ _LOAI_DON_VI_MAP = {
     "góc": "angle",
 }
 _DON_VI_MET_GIVEN_RE = re.compile(
-    rf"(?:{_SO.pattern}\s*(?:\(\s*(?:đơn vị(?:\s+(?:độ dài|diện tích|thể tích))?\s*:?\s*)?)?(?P<u1>{_DON_VI_MET})(?:(?:2|\^2|²|3|\^3|³)\s*\)?)?"
+    rf"(?:{_SO.pattern}\s*(?:\(\s*(?:đơn vị(?:\s+(?:độ dài|diện tích|thể tích))?\s*:?\s*)?)?(?P<u1>{_DON_VI_MET})(?:\s*(?:2|\^2|²|3|\^3|³)\s*\)?)?"
     rf"|đơn vị\s+độ dài\s+là\s+(?P<u2>{_DON_VI_MET}))(?![\w'²³23^])",
+    re.IGNORECASE,
+)
+_DON_VI_DINH_KEM_NGUON = (
+    rf"\s*(?:\(\s*(?:đơn\s+vị(?:\s+(?:độ\s+dài|diện\s+tích|thể\s+tích|góc))?\s*:?\s*)?"
+    rf"(?P<up>{_DON_VI_MET}\s*(?:²|\^2|2|³|\^3|3)?|đvđd|đvdt|đvtt|°|độ|radian|rad)\s*\)"
+    rf"|(?P<ub>{_DON_VI_MET}(?:\s*(?:²|\^2|2|³|\^3|3))?|đvđd|đvdt|đvtt|°|độ|radian|rad)(?![^\W0-9_]|[²³^0-9']))"
+)
+_DOI_TUONG_MP_GOC_NGUON = (
+    rf"(?:(?:mặt\s+phẳng|mặt\s+bên|mặt|mp)\s*\({_L1}{_L1}{_NHAN}\)"
+    rf"|\({_L1}{_L1}{_NHAN}\)"
+    rf"|(?:mặt\s+phẳng|mặt\s+bên|mặt|mp)\s+{_L1}{_L1}{_NHAN}(?![\w'])"
+    rf"|(?:mặt\s+phẳng\s+đáy|mặt\s+đáy|đáy)(?:\s*\(?{_L1}{_L1}{_NHAN}\)?)?(?!\w)"
+    rf"|(?:(?:mặt\s+phẳng|mp)\s*)?\((?:[A-Z]|[α-ω])'?\))"
+)
+_DOI_TUONG_DT_GOC_NGUON = (
+    rf"(?:(?:(?:đường\s+thẳng|cạnh(?:\s+bên|\s+đáy)?|đoạn(?:\s+thẳng)?|tia|đường\s+cao|đường\s+chéo|đường\s+sinh|trục)\s+)?{_L1}{_L1}(?![\w'])"
+    rf"|(?:cạnh\s+bên|cạnh\s+đáy|đường\s+cao|chiều\s+cao|đường\s+sinh|trục)(?!\w)"
+    rf"|đường\s+thẳng\s+\(?(?-i:[a-zΔ∆])'?\)?(?![\w']))"
+)
+_DOI_TUONG_GOC_NGUON = rf"(?:{_DOI_TUONG_MP_GOC_NGUON}|{_DOI_TUONG_DT_GOC_NGUON})"
+_CHU_NGU_TAO_GOC_NGUON = (
+    rf"(?:các\s+cạnh\s+bên(?:\s+{_L1}{_L1}(?:\s*(?:,\s*|\s+và\s+){_L1}{_L1})*)?|{_DOI_TUONG_GOC_NGUON})"
+    rf"\s+(?:cùng\s+)?(?:tạo|hợp)\s+với\s+{_DOI_TUONG_GOC_NGUON}\s+(?:một\s+)?(?<!vuông\s)góc"
+)
+_CHU_NGU_GOC_TRUC_TIEP = (
+    rf"(?:(?:số\s+đo\s+)?(?<!vuông\s)(?<!\w)góc\s+nhị\s+diện\s+(?:\[\s*{_L1}\s*,\s*{_L1}{_L1}\s*,\s*{_L1}\s*\]|(?:theo\s+)?cạnh\s+{_L1}{_L1}(?![\w']))(?:\s+có\s+số\s+đo)?"
+    rf"|(?:số\s+đo\s+)?\[\s*{_L1}\s*,\s*{_L1}{_L1}\s*,\s*{_L1}\s*\](?:\s+có\s+số\s+đo)?"
+    rf"|(?:số\s+đo\s+)?(?<!vuông\s)(?<!\w)góc\s+(?:giữa|tạo\s+bởi|hợp\s+bởi)\s+(?:hai\s+(?:đường\s+thẳng|mặt\s+phẳng|cạnh(?:\s+bên|\s+đáy)?|mặt\s+bên)\s+)?{_DOI_TUONG_GOC_NGUON}\s+(?:và|với)\s+{_DOI_TUONG_GOC_NGUON}(?:\s+có\s+số\s+đo)?"
+    rf"|(?:số\s+đo\s+)?(?<!vuông\s)(?<!\w)(?:góc\s+)?\(\s*{_DOI_TUONG_GOC_NGUON}\s*,\s*{_DOI_TUONG_GOC_NGUON}\s*\)(?:\s+có\s+số\s+đo)?"
+    rf"|{_CHU_NGU_TAO_GOC_NGUON}(?:\s+có\s+số\s+đo)?"
+    rf"|(?:(?:số\s+đo\s+)?(?<!vuông\s)(?<!\w)góc(?:\s+ở\s+đỉnh)?\s+|[∠^]\s*){_NHAN}(?![\w'])(?:\s+có\s+số\s+đo)?"
+    rf"|(?:\\hat\s*\{{\s*{_L1}\s*\}}|(?<![\w'.])(?:[\u00C2\u00CA\u00D4][0-9]*'?|{_L1}(?:\u0302|\s*\^)))(?![\w'])(?:\s+có\s+số\s+đo)?"
+    rf"|có\s+một\s+góc)"
+)
+_MAU_DON_VI_TIEN_DE = (
+    (
+        AREA,
+        re.compile(
+            rf"(?:diện\s+tích(?:\s+của)?(?:\s+(?:mặt\s+bên|mặt\s+đáy|đáy|mặt|{_HINH}))?(?:\s+\(?{_NHAN}\)?)?\s*(?:=|bằng|là)"
+            rf"|(?:mặt\s+bên|mặt\s+đáy|đáy|mặt|{_HINH})\s+\(?{_NHAN}\)?\s+có\s+diện\s+tích(?:\s+(?:=|bằng|là))?"
+            rf"|(?<![\w'.])(?-i:S)\s*(?:_|\()\s*\{{?\s*{_NHAN}\s*\}}?\s*\)?\s*(?:=|bằng))"
+            rf"\s*(?:-\s*)?{_SO_SLOT_EXPR}{_DON_VI_DINH_KEM_NGUON}",
+            re.IGNORECASE,
+        ),
+    ),
+    (
+        VOLUME,
+        re.compile(
+            rf"(?:thể\s+tích(?:\s+của)?(?:\s+(?:(?:hình|khối)\s+)?{_KHOI_DANH_TT}(?:\s+{_NHAN}(?:\.{_NHAN})?(?![\w']))?|\s+{_NHAN}\.{_NHAN}(?![\w']))?\s*(?:=|bằng|là)"
+            rf"|(?:(?:hình|khối)\s+)?{_KHOI_DANH_TT}\s+{_NHAN}(?:\.{_NHAN})?(?![\w'])\s+có\s+thể\s+tích(?:\s+(?:=|bằng|là))?"
+            rf"|(?<![\w'.])(?-i:V)\s*(?:_|\()\s*\{{?\s*{_NHAN}(?:\.{_NHAN})?\s*\}}?\s*\)?\s*(?:=|bằng))"
+            rf"\s*(?:-\s*)?{_SO_SLOT_EXPR}{_DON_VI_DINH_KEM_NGUON}",
+            re.IGNORECASE,
+        ),
+    ),
+    (
+        LENGTH,
+        re.compile(
+            rf"(?:(?:cạnh\s+đáy|cạnh\s+bên|chiều\s+cao|đường\s+cao|bán\s+kính|đường\s+sinh)"
+            rf"(?:\s+(?:của\s+(?:(?:hình|khối)\s+)?|(?:hình|khối)\s+|(?=tứ\s+diện))"
+            rf"(?:chóp|lăng\s+trụ|hộp(?:\s+chữ\s+nhật)?|lập\s+phương|tứ\s+diện|nón|trụ|mặt\s+cầu|khối\s+cầu)(?:\s+{_NHAN}(?:\.{_NHAN})?)?)?"
+            rf"\s*(?:(?:có\s+)?độ\s+dài\s*)?(?:(?:đều\s+)?(?:=|bằng|là)\s*)"
+            rf"|(?<!\w)cạnh\s+(?:(?:bằng|là|=)\s*)?"
+            rf"|(?<!\bgóc\s)(?<!\bcung\s)(?<![∠^])(?<![\w'./]){_L1}{_L1}(?![\w'])(?:\s*=\s*{_L1}{_L1}(?![\w']))*\s*(?:=|bằng|(?:có\s+)?độ\s+dài(?:\s+bằng)?)\s*)"
+            rf"(?:-\s*)?{_SO_SLOT_EXPR}{_DON_VI_DINH_KEM_NGUON}",
+            re.IGNORECASE,
+        ),
+    ),
+    (
+        SCALAR,
+        re.compile(
+            rf"(?:(?:tỉ|tỷ)\s+số(?:\s+độ\s+dài)?(?:\s+(?:giữa|của))?(?:\s+hai)?(?:\s+(?:cạnh|đoạn(?:\s+thẳng)?))?"
+            rf"(?:\s+(?:(?:cạnh|đoạn(?:\s+thẳng)?)\s+)?(?:{_L1}{_L1}|cạnh\s+bên|cạnh\s+đáy)\s+(?:và|với)\s+(?:(?:cạnh|đoạn(?:\s+thẳng)?)\s+)?(?:{_L1}{_L1}|cạnh\s+đáy|cạnh\s+bên))?\s*(?:=|bằng|là)"
+            rf"|(?<![\w'./]){_L1}{_L1}\s*/\s*{_L1}{_L1}\s*(?:=|bằng)"
+            rf"|(?<![\w']){_TRIG_FN_KW}(?!\w)\s*(?:\(\s*)?(?:của\s+)?(?:số\s+đo\s+)?(?:{_CHU_NGU_GOC_TRUC_TIEP}|(?<![\w'.]){_L1}(?:{_L1}{_L1})?(?![\w'])|[α-ω](?![\w']))(?:\s*\))?\s*(?:=|(?<!\w)(?:bằng|là)(?!\w))"
+            rf"|(?<![\w']){_TRIG_FN_KW}(?!\w)\s*\(\s*{_DOI_TUONG_GOC_NGUON}\s*,\s*{_DOI_TUONG_GOC_NGUON}\s*\)(?:\s+có\s+số\s+đo)?\s*(?:=|(?<!\w)(?:bằng|là)(?!\w))"
+            rf"|{_CHU_NGU_GOC_TRUC_TIEP}\s+có\s+{_TRIG_FN_KW}(?!\w)\s*(?:=|(?<!\w)(?:bằng|là)(?!\w)))"
+            rf"\s*(?:-\s*)?{_SO_SLOT_EXPR}{_DON_VI_DINH_KEM_NGUON}",
+            re.IGNORECASE,
+        ),
+    ),
+    (
+        ANGLE,
+        re.compile(
+            rf"(?:{_CHU_NGU_GOC_TRUC_TIEP}\s*(?:=|(?<!\w)(?:bằng|là)(?!\w))"
+            rf"|{_CHU_NGU_TAO_GOC_NGUON})"
+            rf"\s*(?:-\s*)?{_SO_SLOT_EXPR}{_DON_VI_DINH_KEM_NGUON}",
+            re.IGNORECASE,
+        ),
+    ),
+)
+
+
+_TRIG_TRUOC_CHU_NGU_GOC_RE = re.compile(
+    rf"(?<![\w']){_TRIG_FN_KW}(?!\w)\s*(?:\(\s*)?(?:của\s+)?(?:số\s+đo\s+)?$",
+    re.IGNORECASE,
+)
+_NGAT_MENH_DE_GAN_RE = re.compile(
+    r"[,.;:\n?!]|(?<!\w)(?:và|có|biết(?:\s+rằng)?|với|thỏa\s+mãn|sao\s+cho|khi|mà|trong\s+đó|giả\s+sử)(?!\w)",
+    re.IGNORECASE,
+)
+_PHEP_GAN_RHS_CO_NHAN_TU_RE = re.compile(r"(?:=|(?<!\w)(?:bằng|là)(?!\w))\s*\S", re.IGNORECASE)
+_TIEN_TO_TOAN_HANG_GOC_TISO_RE = re.compile(
+    rf"(?:(?<!vuông\s)(?<!\w)góc\s+(?:giữa|tạo\s+bởi|hợp\s+bởi)\s+"
+    rf"(?:hai\s+(?:đường\s+thẳng|mặt\s+phẳng|cạnh(?:\s+bên|\s+đáy)?|mặt\s+bên)\s+)?"
+    rf"{_DOI_TUONG_GOC_NGUON}\s+(?:và|với)\s+"
+    rf"(?:(?:đường\s+thẳng|cạnh(?:\s+bên|\s+đáy)?|đoạn(?:\s+thẳng)?|tia|đường\s+cao|đường\s+chéo|đường\s+sinh)\s+)?"
+    rf"|(?<!vuông\s)(?<!\w)góc\s+nhị\s+diện\s+(?:theo\s+)?cạnh\s+"
+    rf"|(?:tỉ|tỷ)\s+số(?:\s+độ\s+dài)?(?:\s+(?:giữa|của))?(?:\s+hai)?(?:\s+(?:cạnh|đoạn(?:\s+thẳng)?))?\s+"
+    rf"(?:(?:cạnh|đoạn(?:\s+thẳng)?)\s+)?(?:{_L1}{_L1}|cạnh\s+bên|cạnh\s+đáy)\s+(?:và|với)\s+(?:(?:cạnh|đoạn(?:\s+thẳng)?)\s+)?)\s*$",
     re.IGNORECASE,
 )
 
 
+def _kiem_don_vi_dai_luong_nguon(de: str) -> None:
+    """Enforce premise unit-vs-quantity dimension agreement and single metric base scale (`INCONSISTENT_FACTS`)."""
+    given_units: list[MeasurementUnit] = []
+    for m in _DON_VI_MET_GIVEN_RE.finditer(de):
+        if m["u1"] and _vai_tro_tai(de, m.start()) not in ("QUESTION", "GOAL"):
+            if (u := parse_measurement_unit(m["u1"])) is not None:
+                given_units.append(u)
+    try:
+        validate_unit_consistency(given_units)
+        for expected_dim, pat in _MAU_DON_VI_TIEN_DE:
+            for m in pat.finditer(de):
+                if _vai_tro_tai(de, m.start()) in ("QUESTION", "GOAL"):
+                    continue
+                prefix = de[: m.start()]
+                if expected_dim == LENGTH and _TIEN_TO_TOAN_HANG_GOC_TISO_RE.search(prefix):
+                    continue
+                if expected_dim == SCALAR:
+                    if _PHEP_GAN_RHS_CO_NHAN_TU_RE.search(_NGAT_MENH_DE_GAN_RE.split(prefix)[-1]):
+                        continue
+                if expected_dim == ANGLE and _TRIG_TRUOC_CHU_NGU_GOC_RE.search(prefix):
+                    continue
+                u_raw = m["up"] or m["ub"]
+                if (u := parse_measurement_unit(u_raw)) is not None:
+                    validate_unit_consistency([u], expected_dim=expected_dim)
+    except ExprDimensionError as e:
+        raise TuChoi("INCONSISTENT_FACTS", e.message) from None
+
+
 def _don_vi_met_cua_de(de: str) -> set[str]:
-    """Explicit metric length base scales (`cm`, `dm`, `mm`, `m`) stated on given quantities in `de`."""
+    """Explicit metric length base scales (`mm`, `cm`, `dm`, `km`, `m`) stated on given quantities in `de`."""
     return {(m["u1"] or m["u2"]).lower() for m in _DON_VI_MET_GIVEN_RE.finditer(de)}
 
 
+_BAC_HAM_HOI_TAT_CA = {
+    "ask_length": 1,
+    "ask_distance_point_plane": 1,
+    "ask_distance_lines": 1,
+    "ask_distance_line_plane": 1,
+    "ask_distance_planes": 1,
+    "ask_area": 2,
+    "ask_section_area": 2,
+    "ask_volume": 3,
+    "ask_volume_ratio": 0,
+    "ask_length_ratio": 0,
+    "ask_area_ratio": 0,
+    "ask_residual_volume": 3,
+    "ask_angle_line_plane": 0,
+    "ask_angle_plane_plane": 0,
+    "ask_angle_lines": 0,
+    "ask_curved_volume": 3,
+    "ask_lateral_area": 2,
+    "ask_surface_area": 2,
+    "ask_radius": 1,
+    "ask_curved_section_area": 2,
+    "ask_curved_section_radius": 1,
+    "ask_curved_volume_ratio": 0,
+    "ask_curved_residual_volume": 3,
+}
+
+
+def _muc_dai_luong_cua_goi(calls: tuple[LoiGoi, ...], phu: set[str] = frozenset()) -> list[SlotQuantityEntry]:
+    """Collect typed `SlotQuantityEntry` items across all non-auxiliary quantity-carrying calls."""
+    entries: list[SlotQuantityEntry] = []
+    for c in calls:
+        if c.id in phu:
+            continue
+        for f in c.spec.value_fields:
+            if (v := getattr(c.args, f, None)) is not None:
+                entries.append(SlotQuantityEntry(c.id, f, v, LENGTH))
+        if c.fn == "curved_solid":
+            for f in ("radius", "height", "generatrix"):
+                if (v := getattr(c.args, f, None)) is not None:
+                    entries.append(SlotQuantityEntry(c.id, f, v, LENGTH))
+        elif c.fn == "curved_section":
+            for f in ("distance", "center_distance"):
+                if (v := getattr(c.args, f, None)) is not None:
+                    entries.append(SlotQuantityEntry(c.id, f, v, LENGTH))
+        elif c.fn == "polygon_area":
+            entries.append(SlotQuantityEntry(c.id, "value", c.args.value, AREA))
+        elif c.fn == "solid_volume":
+            entries.append(SlotQuantityEntry(c.id, "value", c.args.value, VOLUME))
+        elif c.fn == "segment_ratio":
+            entries.append(SlotQuantityEntry(c.id, "ratio", c.args.ratio, SCALAR))
+        elif c.fn in ("line_plane_angle", "plane_plane_angle", "dihedral_angle", "line_line_angle", "vertex_angle"):
+            entries.append(SlotQuantityEntry(c.id, "value", c.args.value, ANGLE if c.args.unit == "deg" else SCALAR))
+    return entries
+
+
+def _kiem_chieu_va_dong_bac(calls: tuple[LoiGoi, ...], phu: set[str] = frozenset()) -> None:
+    """Enforce context-driven symbol dimension consistency, domain positivity, and scale homogeneity at Source Gate."""
+    if any(c.fn == "unsupported" for c in calls):
+        return
+    entries = _muc_dai_luong_cua_goi(calls, phu)
+    if not entries:
+        return
+    try:
+        plan = SymbolEnvironment.bind_slots(entries, allow_unit=False)
+        goal_degs = [_BAC_HAM_HOI_TAT_CA[c.fn] for c in calls if c.fn in _BAC_HAM_HOI_TAT_CA]
+        if goal_degs:
+            plan.check_goal_admissibility(goal_degs, target_invariant=all(d == 0 for d in goal_degs))
+    except ExprDimensionError as e:
+        raise TuChoi("INCONSISTENT_FACTS", e.message) from None
+    except ExprDomainError as e:
+        if e.code == "NON_HOMOGENEOUS_LENGTHS":
+            raise TuChoi("NON_HOMOGENEOUS_LENGTHS", e.message) from None
+        if e.code == "UNGROUNDED_SYMBOL":
+            raise TuChoi("UNGROUNDED_VALUE", e.message) from None
+        if e.code == "EXACT_DOMAIN_EXCEEDED":
+            raise TuChoi("EXACT_DOMAIN_EXCEEDED", e.message) from None
+        if e.code == "NON_POSITIVE_QUANTITY":
+            raise TuChoi("NON_POSITIVE_LENGTH", e.message) from None
+        raise TuChoi("INCONSISTENT_FACTS", e.message) from None
+    except ExprParseError as e:
+        raise TuChoi("SCHEMA_INVALID", e.message) from None
+
+
+def _tham_so_do_dai(calls: tuple[LoiGoi, ...]) -> str | None:
+    """Return the unique `LENGTH` (`L^1`) symbolic scale parameter bound across `calls`, or `None`."""
+    entries = _muc_dai_luong_cua_goi(calls)
+    if not entries:
+        return None
+    try:
+        return SymbolEnvironment.bind_slots(entries, allow_unit=False).length_unit_symbol
+    except (ExprDimensionError, ExprDomainError, ExprParseError):
+        return None
+
+
 def _co_tham_so_a(calls: tuple[LoiGoi, ...]) -> bool:
-    """True when all value-carrying calls declare symbolic parameter `a` (same authority as `engine._don_vi`)."""
-    co_a = [doc_so(v)[1] for c in calls for f in c.spec.value_fields if (v := getattr(c.args, f, None)) is not None]
-    co_a += [doc_so(c.args.value)[1] for c in calls if c.fn == "polygon_area"]
-    return bool(co_a) and all(co_a)
+    """True when all metric value-carrying calls share a single symbolic `L^1` parameter (same authority as `engine._don_vi`)."""
+    return _tham_so_do_dai(calls) is not None
 
 
 def _phan_loai_don_vi(u: str) -> tuple[str, str | None]:
@@ -4940,7 +5388,7 @@ def _phan_loai_don_vi(u: str) -> tuple[str, str | None]:
         return "area", None
     if u == "đvtt":
         return "volume", None
-    m = re.fullmatch(r"(cm|dm|mm|m)(?:(2|\^2|²)|(3|\^3|³))?", u)
+    m = re.fullmatch(r"(mm|cm|dm|km|m)(?:(2|\^2|²)|(3|\^3|³))?", u)
     if not m:
         return "unknown", None
     if m[2]:
@@ -5012,9 +5460,10 @@ def _kiem_don_vi_hoi(fn: str, de: str, a: int, b: int, don_vi_de: set[str],
     allow_round = bool(pol and pol.get("rounding") is not None)
     if chieu == "angle" and re.match(r"số\s+đo\b", de[a:b], re.IGNORECASE) and not allow_deg:
         return False
+    sym_len = _tham_so_do_dai(calls)
     giua_raw = _bo_cum(de[vung[0]:a])
-    for m_g in re.finditer(r"theo\s+(?P<sym>[a-z])(?![\w'])", giua_raw, re.IGNORECASE):
-        if chieu not in ("length", "area", "volume") or m_g["sym"].lower() != "a" or not _co_tham_so_a(calls):
+    for m_g in re.finditer(r"theo\s+(?P<sym>(?-i:[a-z]))(?![\w'])", giua_raw, re.IGNORECASE):
+        if chieu not in ("length", "area", "volume") or not sym_len or m_g["sym"] != sym_len:
             return False
     duoi_raw = de[b:vung[1]]
     patterns = _mau_hoi_tat_ca()
@@ -5022,7 +5471,7 @@ def _kiem_don_vi_hoi(fn: str, de: str, a: int, b: int, don_vi_de: set[str],
     before_next = duoi_raw[:other[0][0]] if other else duoi_raw
     after_last = duoi_raw[max(y for _x, y in other):] if other else ""
     has_unit_re = re.compile(
-        rf"theo\s+(?:{_DON_VI}|[a-z]|đơn vị)\b|{_LAM_TRON}|\(\s*(?:[^()]*\bđơn vị\b|[^()]*\b{_DON_VI}(?![\w']))",
+        rf"theo\s+(?:{_DON_VI}|(?-i:[a-z])|đơn vị)\b|{_LAM_TRON}|\(\s*(?:[^()]*\bđơn vị\b|[^()]*\b{_DON_VI}(?![\w']))",
         re.IGNORECASE,
     )
     seg = before_next if (not other or has_unit_re.search(before_next)) else after_last
@@ -5030,7 +5479,7 @@ def _kiem_don_vi_hoi(fn: str, de: str, a: int, b: int, don_vi_de: set[str],
         return False
     bases: set[str] = set()
     for m in re.finditer(
-        rf"theo\s+(?:đơn vị(?:\s+(?P<kind>{_LOAI_DON_VI}))?\s+(?P<u>{_DON_VI})|(?P<ub>{_DON_VI})|(?P<sym>[a-z]))(?![\w'])",
+        rf"theo\s+(?:đơn vị(?:\s+(?P<kind>{_LOAI_DON_VI}))?\s+(?P<u>{_DON_VI})|(?P<ub>{_DON_VI})|(?P<sym>(?-i:[a-z])))(?![\w'])",
         seg,
         re.IGNORECASE,
     ):
@@ -5056,7 +5505,7 @@ def _kiem_don_vi_hoi(fn: str, de: str, a: int, b: int, don_vi_de: set[str],
                 return False
             bases.add(base)
         elif m["sym"]:
-            if m["sym"].lower() != "a" or not _co_tham_so_a(calls) or chieu not in ("length", "area", "volume"):
+            if not sym_len or m["sym"].lower() != sym_len or chieu not in ("length", "area", "volume"):
                 return False
     for ngoac in re.finditer(r"\(([^()]*)\)", seg):
         for muc in re.split(r"\s*(?:;|,(?!\d))\s*", ngoac[1].strip()):
@@ -7290,14 +7739,21 @@ def function_declarations() -> list[dict[str, Any]]:
     return ra
 
 
-def _doc_nhom(s: str | None) -> tuple[Fraction, bool] | None:
-    m = _SO.fullmatch(chuan_hoa(s)) if s else None
-    return _doc(m) if m else None
+def _doc_nhom(s: str | None) -> tuple[Fraction, SymbolicTag] | None:
+    return _doc_bieu_thuc(s, strict=False) if s else None
 
 
 _DIHEDRAL_BRACKET_RE = re.compile(
     rf"\[\s*(?P<pa>{_P1})\s*,\s*(?P<edge>{_P1}{_P1})\s*,\s*(?P<pb>{_P1})\s*\]"
 )
+
+
+_TRIG_UNIT_QUOTE_RE: dict[str, re.Pattern[str]] = {
+    "sin": re.compile(r"(?<!\w)sin(?!\w)", re.IGNORECASE),
+    "cos": re.compile(r"(?<!\w)(?:cos|côsin|cosin)(?!\w)", re.IGNORECASE),
+    "tan": re.compile(r"(?<!\w)(?:tan|tang|tg)(?!\w)", re.IGNORECASE),
+    "cot": re.compile(r"(?<!\w)(?:cot|côtang|cotang|cotg)(?!\w)", re.IGNORECASE),
+}
 
 
 def _kiem_goc_dung_nguon(c: LoiGoi, de: str, calls: tuple[LoiGoi, ...]) -> None:
@@ -7395,19 +7851,25 @@ def _kiem_goc_dung_nguon(c: LoiGoi, de: str, calls: tuple[LoiGoi, ...]) -> None:
         if len(set(deg_vals)) > 1:
             raise TuChoi("AMBIGUOUS_VALUE_QUOTE", f"{c.id}: quote chứa nhiều số đo góc khác nhau trong {c.quote!r}", (c.id,))
     else:
-        if not any(re.search(rf"(?<!\w){re.escape(a.unit)}(?!\w)", q, re.IGNORECASE) for q in c.quotes):
+        trig_rx = _TRIG_UNIT_QUOTE_RE.get(a.unit)
+        if trig_rx is None or not any(trig_rx.search(chuan_hoa(q)) for q in c.quotes):
             raise TuChoi("PREDICATE_NOT_IN_QUOTE", f"{c.id}: hàm lượng giác {a.unit!r} không có trong {c.quote!r}", (c.id,))
-        so_vals = [(x, s) for q in c.quotes for _vt, x, s in so_trong(q)]
+        so_vals = [
+            v
+            for q in c.quotes
+            for ms in re.finditer(rf"(?:=|bằng|là)\s*(?P<sv>{_SO_TISO_SCALAR})", chuan_hoa(q), re.IGNORECASE)
+            if (v := _doc_nhom(ms.group("sv"))) is not None
+        ]
         if want not in so_vals:
             raise TuChoi("UNGROUNDED_VALUE", f"{c.id}: giá trị {a.unit}={a.value} không khớp số đo nguồn trong {c.quote!r}", (c.id,))
 
 
 _DIEN_TICH_PREMISE_RE = re.compile(
     rf"(?:"
-    rf"diện\s+tích(?:\s+của)?(?:\s+(?P<role1>mặt\s+bên|mặt\s+đáy|đáy|mặt))?(?:\s+(?P<sh1>{_HINH}))?\s+\(?(?P<p1>{_NHOM_NHAN})\)?\s*(?:=|bằng|là)\s*{_so_nhom('v1')}"
-    rf"|(?:(?P<role2>mặt\s+bên|mặt\s+đáy|đáy|mặt)\s+)?(?P<sh2>{_HINH})?\s*\(?(?P<p2>{_NHOM_NHAN})\)?\s+có\s+diện\s+tích(?:\s+(?:=|bằng|là))?\s*{_so_nhom('v2')}"
-    rf"|(?-i:S)\s*(?:_|\()\s*(?P<p3>{_NHOM_NHAN})\s*\)?\s*(?:=|bằng)\s*{_so_nhom('v3')}"
-    rf")(?:\s*(?:\(\s*)?(?:cm|dm|mm|m)?(?:²|\^2|2)?(?:\s*\))?)?",
+    rf"diện\s+tích(?:\s+của)?(?:\s+(?P<role1>mặt\s+bên|mặt\s+đáy|đáy|mặt))?(?:\s+(?P<sh1>{_HINH}))?\s+\(?(?P<p1>{_NHOM_NHAN})\)?\s*(?:=|bằng|là)\s*{_so_nhom_dt('v1')}"
+    rf"|(?:(?P<role2>mặt\s+bên|mặt\s+đáy|đáy|mặt)\s+)?(?P<sh2>{_HINH})?\s*\(?(?P<p2>{_NHOM_NHAN})\)?\s+có\s+diện\s+tích(?:\s+(?:=|bằng|là))?\s*{_so_nhom_dt('v2')}"
+    rf"|(?-i:S)\s*(?:_|\()\s*(?P<p3>{_NHOM_NHAN})\s*\)?\s*(?:=|bằng)\s*{_so_nhom_dt('v3')}"
+    rf")",
     re.IGNORECASE,
 )
 
@@ -7416,25 +7878,25 @@ def _kiem_dien_tich_da_giac_dung_nguon(c: LoiGoi, de: str, calls: tuple[LoiGoi, 
     """Source Gate grounding for `polygon_area`: verifies polygon labels, optional shape/face role, and exact area value."""
     a = c.args
     poly = list(a.polygon)
-    # Run `grounded-vietnamese-geometry-understanding`: "diện tích (mặt) đáy bằng V" names the base of the ONLY declared
-    # solid ("đáy": the base of the unique solid, as `_mat_cua` reads it) — the polygon must be exactly that base.
-    day = _khoi_cua_loi_goi(calls)
-    if len(day) == 1 and set(next(iter(day.values()))) == set(poly):
-        for q in c.quotes:
-            for m in re.finditer(rf"diện\s+tích(?:\s+của)?\s+(?:mặt\s+)?đáy\s*(?:=|bằng|là)\s*{_so_nhom('v')}", chuan_hoa(q),
-                                 re.IGNORECASE):
-                if _doc_nhom(m["v"]) == doc_so(a.value):
-                    return
-        if any(re.search(r"diện\s+tích(?:\s+của)?\s+(?:mặt\s+)?đáy\s*(?:=|bằng|là)", chuan_hoa(q), re.IGNORECASE) for q in c.quotes):
-            raise TuChoi("UNGROUNDED_VALUE", f"{c.id}: diện tích {a.value} không khớp số đo nguồn của đáy trong {c.quote!r}", (c.id,))
-    if not any(_cung_da_giac(p, poly) for q in c.quotes for _x, _y, phan in _tu_nhan(q) for p in phan):
-        raise TuChoi("OBJECT_NOT_IN_QUOTE", f"{c.id}: đa giác {''.join(poly)} không được gọi tên trong {c.quote!r}", (c.id,))
     if a.shape == "square" and not any(re.search(r"hình\s+vuông", q, re.IGNORECASE) for q in c.quotes):
         raise TuChoi("PREDICATE_NOT_IN_QUOTE", f"{c.id}: polygon_area(shape='square') thiếu từ khóa 'hình vuông' trong {c.quote!r}", (c.id,))
     if a.shape == "rectangle" and not any(re.search(r"hình\s+chữ\s+nhật", q, re.IGNORECASE) for q in c.quotes):
         raise TuChoi("PREDICATE_NOT_IN_QUOTE", f"{c.id}: polygon_area(shape='rectangle') thiếu từ khóa 'hình chữ nhật' trong {c.quote!r}", (c.id,))
     if a.shape == "equilateral_triangle" and not any(re.search(r"tam\s+giác\s+đều", q, re.IGNORECASE) for q in c.quotes):
         raise TuChoi("PREDICATE_NOT_IN_QUOTE", f"{c.id}: polygon_area(shape='equilateral_triangle') thiếu từ khóa 'tam giác đều' trong {c.quote!r}", (c.id,))
+    # Run `grounded-vietnamese-geometry-understanding`: "diện tích (mặt) đáy bằng V" names the base of the ONLY declared
+    # solid ("đáy": the base of the unique solid, as `_mat_cua` reads it) — the polygon must be exactly that base.
+    day = _khoi_cua_loi_goi(calls)
+    if len(day) == 1 and _cung_da_giac(list(next(iter(day.values()))), poly):
+        for q in c.quotes:
+            for m in re.finditer(rf"diện\s+tích(?:\s+của)?\s+(?:mặt\s+)?đáy\s*(?:=|bằng|là)\s*{_so_nhom_dt('v')}",
+                                 chuan_hoa(q), re.IGNORECASE):
+                if _doc_nhom(m["v"]) == doc_so(a.value):
+                    return
+        if any(re.search(r"diện\s+tích(?:\s+của)?\s+(?:mặt\s+)?đáy\s*(?:=|bằng|là)", chuan_hoa(q), re.IGNORECASE) for q in c.quotes):
+            raise TuChoi("UNGROUNDED_VALUE", f"{c.id}: diện tích {a.value} không khớp số đo nguồn của đáy trong {c.quote!r}", (c.id,))
+    if not any(_cung_da_giac(p, poly) for q in c.quotes for _x, _y, phan in _tu_nhan(q) for p in phan):
+        raise TuChoi("OBJECT_NOT_IN_QUOTE", f"{c.id}: đa giác {''.join(poly)} không được gọi tên trong {c.quote!r}", (c.id,))
 
     want = doc_so(a.value)
     matched_poly = False
@@ -7462,12 +7924,82 @@ def _kiem_dien_tich_da_giac_dung_nguon(c: LoiGoi, de: str, calls: tuple[LoiGoi, 
         raise TuChoi("UNGROUNDED_VALUE", f"{c.id}: diện tích {a.value} không khớp số đo nguồn của {''.join(poly)} trong {c.quote!r}", (c.id,))
 
 
+_THE_TICH_PREMISE_RE = re.compile(
+    rf"(?:"
+    rf"thể\s+tích(?:\s+của)?(?:\s+(?:(?:hình|khối)\s+)?(?P<tkn>{_KHOI_DANH_TT})(?:\s+(?P<tk>{_NHAN}(?:\.{_NHAN})?)(?![\w']))?"
+    rf"|\s+(?P<tk0>{_NHAN}\.{_NHAN})(?![\w']))?\s*(?:=|bằng|là)\s*{_so_nhom_tt('tv')}"
+    rf"|(?:(?:hình|khối)\s+)?(?P<tkn2>{_KHOI_DANH_TT})\s+(?P<tk2>{_NHAN}(?:\.{_NHAN})?)(?![\w'])\s+có\s+thể\s+tích(?:\s+(?:=|bằng|là))?\s*{_so_nhom_tt('tv2')}"
+    rf"|(?-i:V)\s*(?:_|\()\s*\{{\s*(?P<tk3>{_NHAN}(?:\.{_NHAN})?)\s*\}}\s*(?:=|bằng)\s*{_so_nhom_tt('tv3')}"
+    rf"|(?-i:V)\s*(?:_|\()\s*(?P<tk4>{_NHAN}(?:\.{_NHAN})?)\s*\)?\s*(?:=|bằng)\s*{_so_nhom_tt('tv4')}"
+    rf")",
+    re.IGNORECASE,
+)
+
+
+def _kiem_the_tich_khoi_dung_nguon(c: LoiGoi, de: str, calls: tuple[LoiGoi, ...]) -> None:
+    """Source Gate grounding for `solid_volume`: verifies solid identity, kind modifiers, and exact volume value."""
+    a = c.args
+    khoi_goi = [k for k in calls if k.fn in _KHOI_FN]
+    target_k = next((k for k in khoi_goi if _khop_ky_hieu_khoi(k, a.solid)), None)
+    if target_k is None:
+        raise TuChoi("SOURCE_OBJECT_MISMATCH", f"{c.id}: khối {a.solid} không khớp khối đa diện nào đã khai báo", (c.id,))
+    want = doc_so(a.value)
+    matched_solid = False
+    matched_val = False
+    saw_other_label = False
+    for q in c.quotes:
+        qn = chuan_hoa(q)
+        for m in _THE_TICH_PREMISE_RE.finditer(qn):
+            if re.search(r"(?:hãy\s+)?(?:tính|tìm|xác\s+định|hỏi)\b", qn[:m.start()], re.IGNORECASE):
+                continue
+            tk_str = m["tk"] or m["tk0"] or m["tk2"] or m["tk3"] or m["tk4"]
+            tkn_str = (m["tkn"] or m["tkn2"] or "").strip()
+            tv_str = m["tv"] or m["tv2"] or m["tv3"] or m["tv4"]
+            if tk_str:
+                if not _khop_ky_hieu_khoi(target_k, tk_str):
+                    saw_other_label = True
+                    continue
+            elif len(khoi_goi) != 1:
+                raise TuChoi("SOURCE_OBJECT_MISMATCH", f"{c.id}: thể tích không nêu nhãn khối khi đề có nhiều khối", (c.id,))
+            if tkn_str and not _loai_cum_dung(tkn_str, _ten_khoi_goi(target_k), calls=calls):
+                raise TuChoi("SOURCE_OBJECT_MISMATCH", f"{c.id}: loại khối {tkn_str!r} không khớp {a.solid}", (c.id,))
+            matched_solid = True
+            if _doc_nhom(tv_str) == want:
+                matched_val = True
+    if not matched_solid:
+        if saw_other_label:
+            raise TuChoi("OBJECT_NOT_IN_QUOTE", f"{c.id}: khối {a.solid} không được gọi tên trong {c.quote!r}", (c.id,))
+        raise TuChoi("SOURCE_OBJECT_MISMATCH", f"{c.id}: nguồn không gán thể tích cho khối {a.solid} trong {c.quote!r}", (c.id,))
+    if not matched_val:
+        raise TuChoi("UNGROUNDED_VALUE", f"{c.id}: thể tích {a.value} không khớp số đo nguồn của {a.solid} trong {c.quote!r}", (c.id,))
+
+
+def _canh_vai_tro_tiso(vai: str, khoi: LoiGoi | None, calls: tuple[LoiGoi, ...]) -> set[frozenset[str]] | None:
+    """Return the certified equal-length edge family for role `vai` ('cạnh bên' or 'cạnh đáy') on unique solid `khoi`."""
+    if khoi is None:
+        return None
+    vai_n = re.sub(r"\s+", " ", vai.lower().strip())
+    if vai_n == "cạnh bên":
+        if khoi.fn == "regular_pyramid":
+            return {frozenset((khoi.args.apex, x)) for x in khoi.args.base}
+        if khoi.fn == "prism":
+            return {frozenset(p) for p in zip(khoi.args.base, khoi.args.top)}
+        return None
+    if vai_n == "cạnh đáy":
+        deu = {frozenset(d.args.vertices) for d in calls if d.fn in ("regular_polygon", "rhombus")}
+        if frozenset(khoi.args.base) in deu:
+            return _canh_cua(khoi.args.base)
+    return None
+
+
 _TI_SO_DOAN_RE = re.compile(
     rf"(?:"
-    rf"(?P<a1>{_P1}{_P1})\s*(?:=|bằng)\s*(?P<k1>{_SO_TISO_SCALAR})\s*(?:lần\s+|\.\s*|\*\s*)?(?P<b1>{_P1}{_P1})(?![\w'])"
+    rf"(?P<a1>{_P1}{_P1})\s*(?:=|bằng)\s*(?P<k1>{_SO_TISO_HE_SO})\s*(?:lần\s+|\.\s*|\*\s*)?(?P<b1>{_P1}{_P1})(?![\w'])"
     rf"|(?P<a2>{_P1}{_P1})\s*=\s*(?P<b2>{_P1}{_P1})\s*/\s*(?P<k2>\d+)(?![\w'])"
     rf"|(?P<a3>{_P1}{_P1})\s*/\s*(?P<b3>{_P1}{_P1})\s*(?:=|bằng)\s*(?P<k3>{_SO_TISO_SCALAR})(?![\w'])"
     rf"|(?P<a4>{_P1}{_P1})\s+(?:(?:=|bằng|là)\s+)?(?P<w4>gấp\s+(?:đôi|ba)|một\s+nửa|nửa)\s+(?P<b4>{_P1}{_P1})(?![\w'])"
+    rf"|(?:tỉ|tỷ)\s+số(?:\s+độ\s+dài)?(?:\s+(?:giữa|của))?(?:\s+hai)?(?:\s+(?:cạnh|đoạn(?:\s+thẳng)?))?\s+(?P<a5>{_P1}{_P1})\s+(?:và|với)\s+(?P<b5>{_P1}{_P1})\s*(?:=|bằng|là)\s*(?P<k5>{_SO_TISO_SCALAR})"
+    rf"|(?:tỉ|tỷ)\s+số(?:\s+độ\s+dài)?(?:\s+(?:giữa|của))?\s+(?P<rv1>cạnh\s+bên|cạnh\s+đáy)\s+(?:và|với)\s+(?P<rv2>cạnh\s+đáy|cạnh\s+bên)\s*(?:=|bằng|là)\s*(?P<k6>{_SO_TISO_SCALAR})"
     rf")",
     re.IGNORECASE,
 )
@@ -7479,12 +8011,32 @@ def _kiem_ti_so_doan_dung_nguon(c: LoiGoi, de: str, calls: tuple[LoiGoi, ...]) -
     sa, sb = set(a.segment_a), set(a.segment_b)
     want_sq, want_sym = doc_so(a.ratio)
     if want_sym:
-        raise TuChoi("UNGROUNDED_VALUE", f"{c.id}: tỉ số độ dài {a.ratio!r} là đại lượng vô thứ nguyên, không mang tham số a", (c.id,))
+        raise TuChoi("UNGROUNDED_VALUE", f"{c.id}: tỉ số độ dài {a.ratio!r} là đại lượng vô thứ nguyên, không mang tham số ký hiệu", (c.id,))
+    khoi_goi = [k for k in calls if k.fn in _KHOI_FN]
+    khoi_duy_nhat = khoi_goi[0] if len(khoi_goi) == 1 else None
     matched_pair = False
     matched_val = False
     for q in c.quotes:
         qn = chuan_hoa(q)
         for m in _TI_SO_DOAN_RE.finditer(qn):
+            if m["rv1"]:
+                r1_n = re.sub(r"\s+", " ", m["rv1"].lower())
+                r2_n = re.sub(r"\s+", " ", m["rv2"].lower())
+                fam1 = _canh_vai_tro_tiso(r1_n, khoi_duy_nhat, calls)
+                fam2 = _canh_vai_tro_tiso(r2_n, khoi_duy_nhat, calls)
+                kv = _doc_nhom(m["k6"])
+                if r1_n == r2_n or fam1 is None or fam2 is None or kv is None or kv[1]:
+                    continue
+                k_sq = kv[0]
+                if frozenset(sa) in fam1 and frozenset(sb) in fam2:
+                    matched_pair = True
+                    if k_sq == want_sq:
+                        matched_val = True
+                elif frozenset(sa) in fam2 and frozenset(sb) in fam1 and k_sq != 0:
+                    matched_pair = True
+                    if Fraction(1, 1) / k_sq == want_sq:
+                        matched_val = True
+                continue
             if m["a1"]:
                 s1, s2 = set(_nhan_cum(m["a1"])), set(_nhan_cum(m["b1"]))
                 kv = _doc_nhom(m["k1"])
@@ -7500,6 +8052,12 @@ def _kiem_ti_so_doan_dung_nguon(c: LoiGoi, de: str, calls: tuple[LoiGoi, ...]) -
             elif m["a3"]:
                 s1, s2 = set(_nhan_cum(m["a3"])), set(_nhan_cum(m["b3"]))
                 kv = _doc_nhom(m["k3"])
+                if kv is None or kv[1]:
+                    continue
+                k_sq = kv[0]
+            elif m["a5"]:
+                s1, s2 = set(_nhan_cum(m["a5"])), set(_nhan_cum(m["b5"]))
+                kv = _doc_nhom(m["k5"])
                 if kv is None or kv[1]:
                     continue
                 k_sq = kv[0]
@@ -7712,7 +8270,14 @@ def _cau_tien_de_dong_hop_le(s: str, s_start: int, de: str, calls: tuple[LoiGoi,
                     for d in calls):
                 return False
         elif kind == "goc":
-            g_str = m["gd"] or m["gg"] or m["gt"] or m["gv"] or m.groupdict().get("gh")
+            g_str = (
+                m["gd"] or m["gg"] or m["gt"] or m["gv"]
+                or m.groupdict().get("gh")
+                or m.groupdict().get("gtd") or m.groupdict().get("gtd2")
+                or m.groupdict().get("gtg") or m.groupdict().get("gtg2")
+                or m.groupdict().get("gtv") or m.groupdict().get("gtv2")
+                or m.groupdict().get("gth")
+            )
             want = _doc_nhom(g_str)
             if want is None:
                 return False
@@ -7738,26 +8303,57 @@ def _cau_tien_de_dong_hop_le(s: str, s_start: int, de: str, calls: tuple[LoiGoi,
             ):
                 return False
         elif kind == "tiso_doan":
-            sa = set(re.findall(_L1, m["ra"]))
-            sb = set(re.findall(_L1, m["rb"]))
-            want = _doc_nhom(m["rk"])
-            if len(sa) != 2 or len(sb) != 2 or want is None or want[1]:
-                return False
-            ratio_calls = [
-                d for d in calls
-                if d.fn == "segment_ratio" and {frozenset(d.args.segment_a), frozenset(d.args.segment_b)} == {frozenset(sa), frozenset(sb)}
-            ]
-            if not ratio_calls:
-                return False
-            if not any(
-                (set(d.args.segment_a) == sa and set(d.args.segment_b) == sb and doc_so(d.args.ratio) == want)
-                or (set(d.args.segment_b) == sa and set(d.args.segment_a) == sb and want[0] != 0 and doc_so(d.args.ratio) == (Fraction(1, 1) / want[0], False))
-                for d in ratio_calls
-            ):
-                raise TuChoi("UNGROUNDED_VALUE", f"{ratio_calls[0].id}: tỉ số đoạn không khớp mệnh đề nguồn", (ratio_calls[0].id,))
+            if m.groupdict().get("rv1"):
+                r1_n = re.sub(r"\s+", " ", m["rv1"].lower())
+                r2_n = re.sub(r"\s+", " ", m["rv2"].lower())
+                fam1 = _canh_vai_tro_tiso(r1_n, khoi, calls)
+                fam2 = _canh_vai_tro_tiso(r2_n, khoi, calls)
+                want = _doc_nhom(m["rk5"])
+                if r1_n == r2_n or fam1 is None or fam2 is None or want is None or want[1]:
+                    return False
+                ratio_calls = [
+                    d for d in calls
+                    if d.fn == "segment_ratio"
+                    and ((frozenset(d.args.segment_a) in fam1 and frozenset(d.args.segment_b) in fam2)
+                         or (frozenset(d.args.segment_a) in fam2 and frozenset(d.args.segment_b) in fam1))
+                ]
+                if not ratio_calls:
+                    return False
+                if not any(
+                    (frozenset(d.args.segment_a) in fam1 and frozenset(d.args.segment_b) in fam2 and doc_so(d.args.ratio) == want)
+                    or (frozenset(d.args.segment_a) in fam2 and frozenset(d.args.segment_b) in fam1 and want[0] != 0 and doc_so(d.args.ratio) == (Fraction(1, 1) / want[0], False))
+                    for d in ratio_calls
+                ):
+                    raise TuChoi("UNGROUNDED_VALUE", f"{ratio_calls[0].id}: tỉ số vai trò không khớp mệnh đề nguồn", (ratio_calls[0].id,))
+            else:
+                ra_str = m["ra"] or m.groupdict().get("ra2") or m.groupdict().get("ra3") or m.groupdict().get("ra4") or ""
+                rb_str = m["rb"] or m.groupdict().get("rb2") or m.groupdict().get("rb3") or m.groupdict().get("rb4") or ""
+                sa = set(re.findall(_L1, ra_str))
+                sb = set(re.findall(_L1, rb_str))
+                if m.groupdict().get("rk2"):
+                    d_int = int(m["rk2"])
+                    want = (Fraction(1, d_int * d_int), False) if d_int != 0 else None
+                else:
+                    rk_str = m["rk"] or m.groupdict().get("rk3") or m.groupdict().get("rk4")
+                    want = _doc_nhom(rk_str)
+                if len(sa) != 2 or len(sb) != 2 or want is None or want[1]:
+                    return False
+                ratio_calls = [
+                    d for d in calls
+                    if d.fn == "segment_ratio" and {frozenset(d.args.segment_a), frozenset(d.args.segment_b)} == {frozenset(sa), frozenset(sb)}
+                ]
+                if not ratio_calls:
+                    return False
+                if not any(
+                    (set(d.args.segment_a) == sa and set(d.args.segment_b) == sb and doc_so(d.args.ratio) == want)
+                    or (set(d.args.segment_b) == sa and set(d.args.segment_a) == sb and want[0] != 0 and doc_so(d.args.ratio) == (Fraction(1, 1) / want[0], False))
+                    for d in ratio_calls
+                ):
+                    raise TuChoi("UNGROUNDED_VALUE", f"{ratio_calls[0].id}: tỉ số đoạn không khớp mệnh đề nguồn", (ratio_calls[0].id,))
         elif kind == "dientich":
-            poly = re.findall(_L1, m["dp"] or m["dp2"])
-            want = _doc_nhom(m["dv"] or m["dv2"])
+            dp_str = m["dp"] or m["dp2"]
+            poly = re.findall(_L1, dp_str) if dp_str else (list(khoi.args.base) if khoi is not None else [])
+            want = _doc_nhom(m["dv"] or m["dv2"] or m.groupdict().get("dv3"))
             if len(poly) < 3 or want is None:
                 return False
             area_calls = [d for d in calls if d.fn == "polygon_area" and _cung_da_giac(list(d.args.polygon), poly)]
@@ -7765,6 +8361,25 @@ def _cau_tien_de_dong_hop_le(s: str, s_start: int, de: str, calls: tuple[LoiGoi,
                 return False
             if not any(doc_so(d.args.value) == want for d in area_calls):
                 raise TuChoi("UNGROUNDED_VALUE", f"{area_calls[0].id}: diện tích đa giác không khớp mệnh đề nguồn", (area_calls[0].id,))
+        elif kind == "thetich":
+            tk_str = m["tk"] or m.groupdict().get("tk0") or m.groupdict().get("tk2") or m.groupdict().get("tk3") or m.groupdict().get("tk4")
+            tkn_str = (m["tkn"] or m.groupdict().get("tkn2") or "").strip()
+            tv_str = m["tv"] or m.groupdict().get("tv2") or m.groupdict().get("tv3") or m.groupdict().get("tv4")
+            if tk_str:
+                khop = [k for k in khoi_goi if _khop_ky_hieu_khoi(k, tk_str)]
+                target_k = khop[0] if len(khop) == 1 else None
+            else:
+                target_k = khoi
+            want = _doc_nhom(tv_str)
+            if target_k is None or want is None:
+                return False
+            if tkn_str and not _loai_cum_dung(tkn_str, _ten_khoi_goi(target_k), calls=calls):
+                return False
+            vol_calls = [d for d in calls if d.fn == "solid_volume" and _khop_ky_hieu_khoi(target_k, d.args.solid)]
+            if not vol_calls:
+                return False
+            if not any(doc_so(d.args.value) == want for d in vol_calls):
+                raise TuChoi("UNGROUNDED_VALUE", f"{vol_calls[0].id}: thể tích khối không khớp mệnh đề nguồn", (vol_calls[0].id,))
         else:
             return False
     return True
@@ -7835,7 +8450,7 @@ def _kiem_nguon_dong(calls, de, phu, read_quotes):
                     length=_DO_DAI_CUC_BO.search(s)
                     prefix=s[:length.start()] if length else s
                     if (length is None or not re.fullmatch(r'(?:cho|biết|độ dài|cạnh bên|chiều cao|cạnh|\s)*',prefix,re.I)
-                            or not re.fullmatch(r'\s*(?:cm|dm|mm|m|đvđd)?[.\s]*',s[length.end():],re.I)):
+                            or not re.fullmatch(r'\s*(?:mm|cm|dm|km|(?-i:m)|đvđd)?[.\s]*',s[length.end():],re.I)):
                         raise TuChoi('SOURCE_PREMISE_UNREAD','quote độ dài có phần chưa được đọc trên lát hai đường',(c.id,))
                 if c.spec.kind != 'ask' and c.fn not in ('perpendicular_line_plane','segment_length'):
                     # Closed syntax only: existing source checks below still bind every operand/value and role.

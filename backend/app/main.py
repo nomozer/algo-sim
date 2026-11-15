@@ -926,7 +926,12 @@ MISSING_KEY_MSG = (
 #       chấm, "tam giác XYZ cân" có góc vuông đã chứng minh, diện tích đáy không tên; một giá trị tiền đề không trích dẫn
 #       nào đọc ⇒ không còn COMPLETE. Khoá Route D không đổi ⇒ mọi row `138:route-d` phải MISS
 #       (`tests/test_cache_grounded_understanding_invalidation.py`).
-CACHE_VERSION = "139"
+# 140 — 2026-11-15 (dimension-aware-verified-construction): đại số thứ nguyên chính xác (`expression.py`), tiền đề diện
+#       tích / thể tích / lượng giác tiếng Việt (`local-geometry-parser/2`), dựng hình lượng giác & tam giác vuông có chứng
+#       chỉ kiểm máy (`trig-construction-certificate/1`) gắn vào `route_d` và kiểm tại `adapter4_route.py`, cùng mở rộng
+#       vân tay ngữ nghĩa `hybrid_surface`. Mọi row `139:route-d` phải MISS
+#       (`tests/test_cache_dimension_trig_invalidation.py`).
+CACHE_VERSION = "140"
 
 #: Hai chế độ hợp lệ của kiến trúc chính thức Hybrid `/4` do máy chủ sở hữu:
 #: - `live` (mặc định): trích xuất có cấu trúc qua Gemini (`typed-fact-next/2`) khi cấu hình `GEMINI_API_KEY`.
@@ -1231,14 +1236,36 @@ def _hybrid_infra_error(code: str, local: dict | None = None) -> JSONResponse:
         status, msg = 502, "Dịch vụ trích xuất đề bài đang gặp sự cố kết nối hoặc phản hồi chưa hợp lệ. Em hãy thử gửi lại sau ít phút."
     else:
         status, msg = 503, "Hệ thống gặp sự cố kỹ thuật tạm thời khi xử lý đề bài. Em hãy thử gửi lại sau."
-    content: dict[str, Any] = {"error": msg, "reason_code": code, "failure_kind": "INFRASTRUCTURE_FAILURE"}
-    summary = (local or {}).get("learner_summary") if code == "LIVE_AI_DISABLED" else None
-    if summary:
+    content: dict[str, Any] = {
+        "error": msg,
+        "reason_code": code,
+        "failure_kind": "INFRASTRUCTURE_FAILURE",
+        "failure_dimension": "INFRASTRUCTURE_AVAILABILITY",
+        "taxonomy_class": "INFRASTRUCTURE_UNAVAILABLE",
+    }
+    summary = (local or {}).get("learner_summary") if code in ("LIVE_AI_DISABLED", "MISSING_API_KEY") else None
+    if summary and isinstance(local, dict):
         seen = "".join(f" Phần chưa đọc được: «{t}»." for t in summary["unread_excerpts"])
-        tail = (" Máy chủ đang tắt chế độ đọc đề bằng AI nên chưa đọc thêm được; em có thể viết phần đó rõ hơn rồi gửi lại."
-                if summary.get("rewrite_may_help") else " Máy chủ đang tắt chế độ đọc đề bằng AI nên chưa xử lý thêm được bài này.")
+        if code == "MISSING_API_KEY":
+            tail = (
+                " Máy chủ chưa bật kết nối đọc đề bằng AI nên chưa đọc thêm được; em có thể viết phần đó rõ hơn rồi gửi lại."
+                if summary.get("rewrite_may_help")
+                else " Máy chủ chưa bật kết nối đọc đề bằng AI nên chưa xử lý thêm được bài này."
+            )
+        else:
+            tail = (
+                " Máy chủ đang tắt chế độ đọc đề bằng AI nên chưa đọc thêm được; em có thể viết phần đó rõ hơn rồi gửi lại."
+                if summary.get("rewrite_may_help")
+                else " Máy chủ đang tắt chế độ đọc đề bằng AI nên chưa xử lý thêm được bài này."
+            )
         content["error"] = f"{summary['message']}{seen}{tail}"
-        content["local_understanding"] = {"root_cause": local.get("root_cause"), **summary}
+        content["local_understanding"] = {
+            "root_cause": local.get("root_cause"),
+            "failure_dimension": local.get("failure_dimension"),
+            "taxonomy_class": local.get("taxonomy_class"),
+            "determinacy_status": local.get("determinacy_status"),
+            **summary,
+        }
     return JSONResponse(status_code=status, headers=headers, content=content)
 
 
@@ -1247,7 +1274,8 @@ async def _analyze_hybrid_route(text: str, mode: str, api_key: str | None, algos
     Tuyệt đối không còn bất kỳ nhánh hay fallback nào về `LLM_ONLY`."""
     if mode not in HYBRID_ROUTE_MODES:
         return _hybrid_infra_error("INVALID_HYBRID_ROUTE_MODE")
-    if mode == "live" and os.getenv("ALLOW_LIVE_AI") == "0":
+    use_local_first = mode == "local-first" or (mode == "live" and os.getenv("HYBRID_LOCAL_FIRST") == "1")
+    if mode == "live" and not use_local_first and os.getenv("ALLOW_LIVE_AI") == "0":
         return _hybrid_infra_error("LIVE_AI_DISABLED")
 
     from starlette.concurrency import run_in_threadpool
@@ -1260,7 +1288,6 @@ async def _analyze_hybrid_route(text: str, mode: str, api_key: str | None, algos
         resolve_hybrid_gemini_model,
     )
 
-    use_local_first = mode == "local-first" or os.getenv("HYBRID_LOCAL_FIRST") == "1"
     if mode == "staging-replay":
         corpus_path = os.getenv("HYBRID_REPLAY_CORPUS", "")
         plan = await run_in_threadpool(prepare_staging_replay, text, corpus_path)

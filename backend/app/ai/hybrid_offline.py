@@ -6,6 +6,7 @@ cached by `main` under `ROUTE_D_CACHE_POLICY` (`prepare_live_hybrid(...).cache_k
 """
 from __future__ import annotations
 
+from copy import deepcopy
 from dataclasses import dataclass, replace
 from hashlib import sha256
 import json
@@ -190,11 +191,18 @@ def _run_hybrid_offline(problem_text: str, extractor: Extractor, policy: RoutePo
     if result.status != 'SERVED':
         from app.ai.hybrid_preview import classify_refusal
 
+        det_audit = result.details.get('determinacy_audit') if isinstance(result.details, dict) else None
+        if isinstance(det_audit, dict):
+            receipt['determinacy_audit'] = deepcopy(det_audit)
         technical = (result.code or '').endswith('_INTERNAL_ERROR') or result.code in {
             'ENGINE_EXECUTION_FAILED', 'ENGINE_SELF_CHECK_FAILED', 'ENGINE_IR_INVALID', 'SCENE_BUILD_FAILED',
             'SECTION_CONSTRUCTION_INTERNAL_FAILURE'}
-        receipt.update(failure_stage='deterministic_route',
-                       failure_kind='TECHNICAL_FAILURE' if technical else classify_refusal(result.code or '').group)
+        receipt.update(
+            failure_stage='deterministic_route',
+            failure_kind='TECHNICAL_FAILURE' if technical else classify_refusal(
+                result.code or '', result.planner, problem_text=source, details=result.details
+            ).group,
+        )
     stopped = interruption('adapter4')
     return stopped if stopped is not None else outcome
 
@@ -471,7 +479,8 @@ class LocalFirstHybridRun:
         outcome = route_text_input(
             self.problem_text,
             fallback_extractor=fallback_ext,
-            allow_live_ai=allow_live_ai and bool(api_key),
+            allow_live_ai=allow_live_ai,
+            fallback_unavailable_code=("MISSING_API_KEY" if allow_live_ai and not api_key else None),
             input_kind='text',
             model=self.model,
             policy=self.policy,

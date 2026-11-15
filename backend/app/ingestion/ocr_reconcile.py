@@ -36,10 +36,11 @@ _SHARED_CORRUPTION_RE = re.compile(
     r"(?:[0-9a-z][Vv]\d|=\s*[Vv]\d|^[Vv]\d"  # √ đọc thành V
     r"|^[A-Z],[A-Z]{3,6}$|^[A-Z]{3,6}-[A-Z]{3,6}$"  # S,ABCD · ABC-ABC
     r"|\d{3,}°"  # 600° (° đọc thành 0)
+    r"|(?<![^\W\d_])[a-z][23”\"](?![^\W_])"  # a2 · a3 · 2a2 · 27√13a3/2 · a” (mất số mũ trên)
     r"|[€#!§¢£¥©®™«»„“”Œ]"  # ký tự rác
     r"|\.\.\.)"
 )
-_MATH_CHAR_RE = re.compile(r"[0-9√°⊥∥∠△'′=+<>^/\[\]π]")
+_MATH_CHAR_RE = re.compile(r"[0-9√°⊥∥∠△'′=+<>^/\[\]π²³]")
 _LABELISH_RE = re.compile(r"^[A-Z][A-Z0-9'′.;,]*$")
 _VAR_RE = re.compile(r"^[abchxyzkr][.,;:]?$")
 _DIAGRAM_LABEL_LINE_RE = re.compile(r"^(?:[A-Z][0-9]?['′]{0,2}\s*){1,3}$")
@@ -79,9 +80,9 @@ def norm_math(tok: str) -> str:
         t = t.replace(a, "'")
     t = t.replace("º", "°").replace("˚", "°").replace("∘", "°")
     t = re.sub(r"\s+", "", t)
-    # Đơn vị diện tích/thể tích: chỉ số trên bị đọc thành chữ số thường (cm2 ↔ cm²) — chuẩn hoá về dạng chỉ số trên.
-    t = re.sub(r"(?<![A-Za-z])([cdk]?m)2(?![0-9])", r"\1²", t)
-    t = re.sub(r"(?<![A-Za-z])([cdk]?m)3(?![0-9])", r"\1³", t)
+    # Đơn vị diện tích/thể tích: chỉ số trên bị đọc thành chữ số thường (cm2 ↔ cm², mm2 ↔ mm²) — chuẩn hoá về dạng chỉ số trên.
+    t = re.sub(r"(?<![^\W\d_])([cdkm]?m)2(?![0-9])", r"\1²", t)
+    t = re.sub(r"(?<![^\W\d_])([cdkm]?m)3(?![0-9])", r"\1³", t)
     return t.strip(_PUNCT_EDGE)
 
 
@@ -299,6 +300,8 @@ def _classify_math_disagreement(values: list[str]) -> str:
         return "DEGREE_SYMBOL_DISAGREEMENT"
     if any("√" in v for v in values) and not all("√" in v for v in values):
         return "RADICAL_DISAGREEMENT"
+    if any(re.search(r"[²³^]", v) for v in values) and len({(v.count("²"), v.count("³"), v.count("^")) for v in values}) > 1:
+        return "EXPONENT_SUPERSCRIPT_DISAGREEMENT"
     if any("'" in v for v in values) and len({v.count("'") for v in values}) > 1:
         return "PRIME_DISAGREEMENT"
     if re.search(r"[⊥∥]", joined):

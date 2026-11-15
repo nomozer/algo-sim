@@ -203,6 +203,10 @@ def _phong_bi(r: KetQuaTuyen) -> dict[str, Any]:
         # Present only when a source goal's NUMBER is not answered although its object is constructed (cos/tan of an angle).
         **({"source_goal_completion": deepcopy(sgc)}
            if served and (sgc := (r.details or {}).get("source_goal_completion")) else {}),
+        # Present only when trigonometric / right-triangle length deductions were certified during construction.
+        **({"trig_construction_certificates": deepcopy(list(tcerts))}
+           if served and (tcerts := getattr(r, "trig_certificates", None)
+                          or (r.details or {}).get("trig_construction_certificates")) else {}),
     }
 
 
@@ -252,7 +256,13 @@ def build_adapter4_response(result: KetQuaTuyen, problem_text: str) -> dict[str,
                 "contract_version": TYPED_FACT_NEXT_V2_SCHEMA_VERSION}
 
     def refuse(code: str, *, adapter: bool = False) -> dict[str, Any]:
-        kind = classify_refusal(code, result.planner, adapter=adapter, problem_text=problem_text)
+        kind = classify_refusal(
+            code,
+            result.planner,
+            adapter=adapter,
+            problem_text=problem_text,
+            details=result.details if code == result.code else None,
+        )
         return {"schema_version": ROUTE_D_SIMULATION_V4_SCHEMA_VERSION,
                 "envelope": {"status": "unsupported", "reason_code": code, "reason": kind.message,
                              "learner_reason": kind.message, "failure_category": kind.failure_category,
@@ -363,6 +373,26 @@ def build_adapter4_response(result: KetQuaTuyen, problem_text: str) -> dict[str,
             raise PreviewInvalid("PREVIEW_RESULT_INVALID")
         if route.get("source_goal_completion") != _phong_bi(result).get("source_goal_completion"):
             raise PreviewInvalid("RESULT_BINDING_UNVERIFIED")
+        if route.get("trig_construction_certificates") != _phong_bi(result).get("trig_construction_certificates"):
+            raise PreviewInvalid("RESULT_BINDING_UNVERIFIED")
+        if tcerts := route.get("trig_construction_certificates"):
+            from app.simulation.geometry_functions.trig_construction_certificates import (
+                TrigCertificateError,
+                verify_trig_construction_certificate,
+            )
+            if not isinstance(tcerts, list):
+                raise PreviewInvalid("RESULT_BINDING_UNVERIFIED")
+            for tcert in tcerts:
+                try:
+                    verify_trig_construction_certificate(
+                        tcert,
+                        calls=result.calls,
+                        scene_objects=objects,
+                        chart_metric=metric,
+                        length_unit=result.length_unit,
+                    )
+                except TrigCertificateError:
+                    raise PreviewInvalid("RESULT_BINDING_UNVERIFIED") from None
         for rcert in route.get("relation_certificates") or ():
             if not isinstance(rcert, dict):
                 raise PreviewInvalid("PREVIEW_RESULT_INVALID")

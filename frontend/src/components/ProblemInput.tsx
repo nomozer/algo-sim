@@ -53,20 +53,34 @@ const MISSING_PREMISE_CODES = new Set([
   "GIVEN_VALUE_NOT_IN_SOURCE",
   "ASSUMPTION_DETERMINES_ANSWER",
   "MISSING_CURVED_DIMENSION",
+  "MISSING_DIMENSION",
   "UNDERDETERMINED_POINT",
+  "FOOT_NOT_DETERMINED",
+  "PLANE_NOT_UNIQUE",
+  "FIGURE_NOT_UNIQUE",
 ]);
 
 const INCONSISTENT_PREMISE_CODES = new Set([
   "INCONSISTENT_FACTS",
   "SOURCE_SHAPE_CONTRADICTS_COORDINATES",
+  "QUESTION_LOCAL_GIVEN_CONFLICT",
+  "SKEW_CLAIM_CONTRADICTED",
 ]);
 
 const SOURCE_CONFLICT_CODES = new Set([
-  "NON_POSITIVE_LENGTH",
   "PLANE_DOES_NOT_CUT",
+  "PARALLEL_NO_INTERSECTION",
+  "SKEW_NO_INTERSECTION",
+  "LINE_PARALLEL_TO_PLANE",
   "PLANE_OVERDETERMINED",
   "COLLINEAR_PLANE",
   "CONCURRENT_BASE",
+  "DEGENERATE_SOLID",
+  "DEGENERATE_POINTS",
+  "COLLINEAR_POINTS",
+  "NON_COPLANAR_POINTS",
+  "NO_CIRCUMSCRIBED_SPHERE",
+  "NO_INSCRIBED_SPHERE",
 ]);
 
 function normalizeDisplayBrand(text: string): string {
@@ -96,21 +110,31 @@ export function describeHomeRefusal(
   const cat = rec.failure_category ?? "";
   const errCode = rec.error_code ?? "";
   const reasonCode = rec.reason_code ?? "";
+  const code = errCode || reasonCode;
   const cause = rec.refusal_cause;
 
   const isOutOfScope =
     cat === "out_of_scope" || errCode === "OUT_OF_SCOPE" || reasonCode === "not_geometry";
-  const isMissingPremise =
-    cat === "insufficient_specification" || MISSING_PREMISE_CODES.has(errCode);
-  const isInconsistentPremise =
-    INCONSISTENT_PREMISE_CODES.has(errCode) ||
-    (cause === "SOURCE" && SOURCE_CONFLICT_CODES.has(errCode));
   const isCapabilityGap =
     cat === "capability_gap" ||
     cat === "not_simulation_suitable" ||
     errCode === "UNSUPPORTED" ||
     reasonCode === "not_simulation_suitable" ||
     reasonCode === "requested_operation_uncovered";
+  // HFOI-F6: Only invite the learner to add missing premises when backend certified `refusal_cause === "SOURCE"`.
+  const isMissingPremise =
+    !isCapabilityGap &&
+    cause === "SOURCE" &&
+    (cat === "insufficient_specification" || MISSING_PREMISE_CODES.has(code));
+  const isUnverifiedInsufficient =
+    !isCapabilityGap &&
+    cause !== "SOURCE" &&
+    (cat === "insufficient_specification" || (!cat && MISSING_PREMISE_CODES.has(code)));
+  const isNonPositiveLength = cause === "SOURCE" && code === "NON_POSITIVE_LENGTH";
+  const isInconsistentPremise =
+    INCONSISTENT_PREMISE_CODES.has(errCode) ||
+    (cause === "SOURCE" &&
+      (INCONSISTENT_PREMISE_CODES.has(code) || SOURCE_CONFLICT_CODES.has(code)));
 
   let title = "Đề bài chưa được hỗ trợ";
   let hint = "Bạn có thể thử các bài về thiết diện, khoảng cách, góc hoặc thể tích.";
@@ -120,6 +144,11 @@ export function describeHomeRefusal(
   } else if (isMissingPremise) {
     title = "Đề bài chưa đủ dữ kiện để dựng hình";
     hint = "Bạn có thể bổ sung dữ kiện còn thiếu ngay trên ô nhập rồi nhấn Dựng hình.";
+  } else if (isUnverifiedInsufficient) {
+    title = "Hệ thống chưa xác định được duy nhất hình";
+  } else if (isNonPositiveLength) {
+    title = "Số đo độ dài trong đề cần lớn hơn 0";
+    hint = "Bạn có thể kiểm tra lại số đo độ dài dương trong đề ngay trên ô nhập.";
   } else if (isInconsistentPremise) {
     title = "Dữ kiện đề bài chưa nhất quán";
     hint = "Bạn có thể kiểm tra lại số liệu và quan hệ trong đề ngay trên ô nhập.";
@@ -196,7 +225,10 @@ export function describeComposerError(
         if (clientFailure.learnerDetail) {
           return {
             tone: "info",
-            title: "Hệ thống chưa hiểu hết đề bài",
+            title:
+              clientFailure.localUnderstanding?.rewriteMayHelp === false
+                ? "Đề bài dùng dữ kiện hệ thống chưa hỗ trợ xử lý cục bộ"
+                : "Hệ thống chưa hiểu hết đề bài",
             description: normalizeDisplayBrand(clientFailure.learnerDetail),
           };
         }

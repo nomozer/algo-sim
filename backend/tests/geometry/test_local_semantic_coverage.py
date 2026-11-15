@@ -81,9 +81,15 @@ def test_contradicting_lateral_edge_is_refused_not_served():
 
 
 def test_unsupported_dimension_word_still_fails_closed():
-    r = _parse("Cho hình chóp tứ giác đều S.ABCD có cạnh bên bằng a và diện tích đáy bằng a². "
-               "Tính khoảng cách từ A đến mặt phẳng (SBC).")
-    assert r.status != LOCAL_PARSE_COMPLETE
+    assert _parse("Cho hình chóp tứ giác đều S.ABCD có cạnh bên bằng a và diện tích đáy bằng a². "
+                  "Tính khoảng cách từ A đến mặt phẳng (SBC).").status == LOCAL_PARSE_COMPLETE
+    for unsupported in (
+        "Cho hình chóp tứ giác đều S.ABCD có cạnh bên bằng a và diện tích xung quanh bằng 2a². "
+        "Tính khoảng cách từ A đến mặt phẳng (SBC).",
+        "Cho hình chóp tứ giác đều S.ABCD có cạnh bên bằng a và diện tích đáy bằng a²ln2. "
+        "Tính khoảng cách từ A đến mặt phẳng (SBC).",
+    ):
+        assert _parse(unsupported).status != LOCAL_PARSE_COMPLETE
 
 
 # ── Bare segment equality ───────────────────────────────────────────────────────────────────────────────────────────

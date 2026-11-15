@@ -8,7 +8,7 @@ from __future__ import annotations
 import re
 from typing import Annotated, Any, ClassVar, Literal
 
-from pydantic import BaseModel, ConfigDict, Field, StringConstraints, model_validator
+from pydantic import BaseModel, ConfigDict, Field, StringConstraints, WithJsonSchema, model_validator
 
 from app.simulation.geometry_functions.registry import Label
 from app.simulation.semantic_program.measure_contract import NGHIA_VU_DO
@@ -400,6 +400,7 @@ _ARGS_LOI = {
     "trapezoid": {"vertices": "refs4=", "base_a": "refs2=", "base_b": "refs2="},
     "isosceles_trapezoid": {"vertices": "refs4=", "base_a": "refs2=", "base_b": "refs2="},
     "face_area": {"polygon": "refs3", "value": "value", "shape": "id?"},
+    "solid_volume": {"value": "value", "solid": "id?"},
     "segment_ratio": {"segment_a": "refs2=", "segment_b": "refs2=", "ratio": "value"},
 }
 for _alias, _goc in (("base_is_square", "regular_polygon"), ("base_is_equilateral_triangle", "regular_polygon"),
@@ -413,6 +414,31 @@ for _alias, _goc in (("base_is_square", "regular_polygon"), ("base_is_equilatera
 _ARGS_GOC_VUONG = ({"vertices": "refs3=", "right_at": "ref"}, {"vertex": "ref", "rays": "refs2="})
 
 
+def premise_slot_dimension(kind: str, field_name: str = "value"):
+    """Return the exact `Dimension` expected by a `PremiseSpec` quantity field (`None` for non-quantity fields)."""
+    from app.simulation.geometry.expression import ANGLE, AREA, LENGTH, SCALAR, VOLUME
+
+    canon = {
+        "base_is_square": "regular_polygon",
+        "base_is_equilateral_triangle": "regular_polygon",
+        "base_is_regular_polygon": "regular_polygon",
+        "point_divides_segment": "divide_segment",
+    }.get(kind, kind)
+    if canon in ("regular_polygon", "rhombus") and field_name == "side":
+        return LENGTH
+    if canon in ("segment_length", "height") and field_name == "value":
+        return LENGTH
+    if canon == "face_area" and field_name == "value":
+        return AREA
+    if canon == "solid_volume" and field_name == "value":
+        return VOLUME
+    if canon in ("segment_ratio", "divide_segment") and field_name == "ratio":
+        return SCALAR
+    if canon in ("line_plane_angle", "plane_plane_angle", "dihedral_angle", "line_line_angle", "vertex_angle") and field_name == "value":
+        return ANGLE
+    return None
+
+
 def _hinh_dung(value: Any, shape: str) -> bool:
     if shape == "ref":      # a described ref passes here; the payload checks it is declared and where it stands (R-1)
         return isinstance(value, str) and (_QUALIFIED_REF_RE.match(value.strip()) is not None or is_described_ref(value))
@@ -422,7 +448,7 @@ def _hinh_dung(value: Any, shape: str) -> bool:
                 and (len(value) == n if exact else len(value) >= n))
     if shape == "value":
         return isinstance(value, int) and not isinstance(value, bool) or isinstance(value, str) and bool(value.strip())
-    return isinstance(value, str) and re.fullmatch(r"[A-Za-z0-9_.:-]+", value) is not None      # "id"
+    return isinstance(value, str) and re.fullmatch(r"[A-Za-z0-9_.:'-]+", value) is not None      # "id"
 
 
 def _kiem_args(kind: str, args: dict[str, Any]) -> None:
@@ -948,13 +974,20 @@ class DerivedObjectIdentity(ClosedNextModel):
     provenance: dict[str, Any] = Field(default_factory=dict)
 
 
+LengthUnitSymbol = Annotated[
+    str,
+    StringConstraints(strip_whitespace=True, pattern=r"^(?:1|[a-z])$"),
+    WithJsonSchema({"enum": ["1", "a"], "type": "string"}),
+]
+
+
 class TypedFactNextPayload(ClosedNextModel):
     """Top-level `typed-fact-next/1` simulation-first contract payload."""
 
     _VERSION: ClassVar[str] = TYPED_FACT_NEXT_SCHEMA_VERSION
     schema_version: str
     problem_text: NonEmptyText
-    length_unit: Literal["1", "a"] | None = None
+    length_unit: LengthUnitSymbol | None = None
     solids: tuple[SolidSpec, ...] = ()
     premises: tuple[PremiseSpec, ...] = ()
     derived_sections: tuple[DerivedPlaneSectionSpec, ...] = ()
