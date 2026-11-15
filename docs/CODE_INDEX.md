@@ -1,5 +1,11 @@
 # CODE_INDEX.md — Chỉ mục module + BỘ NHỚ KIẾN TRÚC
 
+## Attachment PDF preview
+
+`frontend/src/components/PdfPreview.tsx` renders the first PDF page locally with PDF.js, reports the parsed page count, provides download and cancels the document task when the preview closes. The input and submission pipeline remains in `ProblemInput.tsx` and `llm/input.ts`.
+
+`frontend/scripts/attachment-resize.node-test.mjs` exercises attachment draft preservation and proportional scroll control across a desktop-to-mobile viewport resize against a running local Axo server.
+
 ## Single-Instance Workspace Navigation & Projected Tab Bar (2026-11-14)
 
 | Path | Owns | Locked by |
@@ -1964,6 +1970,17 @@ Tests: `photo-problem-panel.test.tsx`.
 Hộp thoại chụp ảnh đề bài tối giản (`#photo-camera-dialog`, Camera-First UX): mở thẳng `PhotoCameraView`, không có màn khoanh vùng thủ công,
 xoay ảnh hay xác nhận nhiều bước. Chụp xong 1 ảnh ⇒ dừng `MediaStream`, đính kèm ảnh thành chip trong `#composer-files-wrap` và đóng hộp thoại ngay;
 bẫy Tab, đóng bằng Escape / nút đóng / bấm nền, trả focus về nút mở. Tests: `photo-problem-panel.test.tsx`; trình duyệt: `photo-problem-browser-check.mjs`.
+
+### `components/ScreenCaptureDialog.tsx` · Change impact: offline
+Chụp màn hình đề bài tĩnh trên Desktop/Laptop (`#menu-item-screen-capture`, `#screen-capture-dialog`) và phân giải khả năng Upload Menu theo thiết bị thực tế (`resolveUploadMenuCapabilities`):
+gọi `navigator.mediaDevices.getDisplayMedia({ video: true, audio: false })`, trích đúng 1 khung hình tĩnh PNG (`captureScreenStillFrame`) rồi dừng ngay lập tức toàn bộ `MediaStreamTrack` (`stopAllMediaStreamTracks` trong `finally`),
+hiển thị hộp thoại Light Mode xem trước ảnh khi chụp thành công (`Xem trước ảnh chụp màn hình`: Hủy / Chụp lại / Đính kèm vào khung nhập, không tự động gửi); đóng im lặng không mở modal khi người dùng chủ động hủy hộp thoại chọn nguồn (`code: "cancelled"`), và chuyển các lỗi trình duyệt chưa hỗ trợ / hệ thống chặn quyền / không đọc được nguồn sang toast nhỏ Light Mode qua `useToastStore`. Tests: `components/__tests__/v942-claude-menu-capture.test.tsx`, `components/__tests__/v943-ux-lifecycle-sidebar.test.tsx`.
+
+### `components/LeftSidebar.tsx` · Change impact: visual / presentation
+Thanh bên trái 3 trạng thái (`expanded` · `collapsed` · `mobile drawer`, `#left-sidebar`, `#sb-collapsed-trigger-zone`) và hộp thoại tìm kiếm (`#axo-search-modal`): điều hướng chính (`#nav-item-new-problem` mở Composer trống trên `/app` mà không tạo bản ghi rỗng, `#nav-item-library`), danh sách `BÀI TOÁN` chỉ hiển thị bài toán hợp lệ ở trạng thái `READY` (qua `buildUnifiedProblemList`), gắn biểu tượng nhóm hình học (`GeometryFamilyIcon` qua `data-geometry-family`), menu thao tác (`#sb-problem-action-menu`: Ghim / Đổi tên / Xóa) và chân trang tài khoản đồng bộ theo vai trò (`Guest` / `Student` / `Teacher` / `Admin`). Tests: `components/__tests__/LeftSidebar.v9_2.test.tsx`, `components/__tests__/v943-ux-lifecycle-sidebar.test.tsx`.
+
+### `components/LandingView.tsx` · Change impact: visual / presentation
+Trang giới thiệu công khai “Axo Spatial Story” tại `/` và `/gioi-thieu` (`#view-landing.axo-sp-root`) tách biệt với không gian làm việc `/app`: gồm header kính nổi `components/landing/LandingHeader.tsx` (`#landing-header`, thanh chọn `#landing-nav`, ngăn kéo di động), khung 3D Three.js + fallback SVG `components/landing/LandingHeroScene3D.tsx` (`SpatialSceneCanvas`, phân biệt nét liền/khuất theo mặt hướng camera, mặt cắt giới hạn gọn, nhãn đỉnh 2D kẹp an toàn và dọn GPU khi unmount), mạch kể chuyện 4 chặng theo cuộn `components/landing/LandingStorytelling.tsx` (`#cach-hoat-dong`), khu trải nghiệm 3D tương tác `components/landing/LandingInteractiveDemo.tsx` (`#trai-nghiem` / `#landing-product-showcase` đổi mẫu chóp/lập phương, xoay/kéo không khóa cuộn trang, mở thẳng Xưởng 3D), dữ liệu tọa độ chuẩn hóa & điều hướng từ `geometry-samples` trong `components/landing/landing-geometry-data.ts` (`chop-thiet-dien-ba-diem`, `lap-phuong-thiet-dien-bat-ky`, `enterAxoWorkspace`, `openLibraryFromLanding`, `openSampleInWorkspace`) và bộ kiểu cô lập phạm vi `components/landing/landing.css` (nạp từ `main.tsx`). Tests: `components/phase-b-views.test.tsx`, `components/__tests__/landing-spatial-story.test.tsx`.
 
 ### `components/PhotoCameraView.tsx` · Change impact: offline
 Khung ngắm máy ảnh trực tiếp tối giản qua `getUserMedia` (chỉ khởi động khi người học bấm “Chụp ảnh đề bài”):

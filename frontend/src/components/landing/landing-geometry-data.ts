@@ -1,0 +1,586 @@
+import { GEOMETRY_SAMPLES, geometrySampleById, type GeometrySample } from "../../data/geometry-samples";
+import { useAppStore } from "../../state/store";
+
+export type Vec3Tuple = readonly [number, number, number];
+
+export interface LandingPointSpec {
+  readonly id: string;
+  readonly label: string;
+  readonly role: "vertex" | "base_center" | "seed" | "intersection";
+  readonly domainXyz: Vec3Tuple;
+  readonly pos: Vec3Tuple;
+}
+
+export interface LandingEdgeSpec {
+  readonly from: string;
+  readonly to: string;
+  readonly kind: "solid_edge" | "altitude" | "section_edge" | "guide";
+}
+
+export interface LandingStageMilestone {
+  readonly id: string;
+  readonly stepNumber: string;
+  readonly tag: string;
+  readonly title: string;
+  readonly summary: string;
+  readonly mathFact: string;
+  readonly visiblePoints: readonly string[];
+  readonly activePoints: readonly string[];
+  readonly visibleSolidEdges: readonly string[];
+  readonly showGuideEdges: boolean;
+  readonly planeOpacity: number;
+  readonly sectionProgress: number;
+  readonly sectionFillOpacity: number;
+  readonly cameraPos: Vec3Tuple;
+  readonly lookAt: Vec3Tuple;
+}
+
+export interface LandingSampleSpec {
+  readonly id: string;
+  readonly shortName: string;
+  readonly categoryLabel: string;
+  readonly title: string;
+  readonly problemText: string;
+  readonly equationText: string;
+  readonly answerBadge: string;
+  readonly points: readonly LandingPointSpec[];
+  readonly pointMap: Readonly<Record<string, LandingPointSpec>>;
+  readonly solidEdges: readonly LandingEdgeSpec[];
+  readonly guideEdges: readonly LandingEdgeSpec[];
+  readonly solidFaces: readonly (readonly string[])[];
+  readonly sectionLoop: readonly string[];
+  readonly planeQuad: readonly Vec3Tuple[];
+  readonly basePolygon: readonly string[];
+  readonly altitudePair?: readonly [string, string];
+  readonly radiusBound: number;
+  readonly defaultCamera: Vec3Tuple;
+  readonly defaultLookAt: Vec3Tuple;
+  readonly milestones: readonly LandingStageMilestone[];
+}
+
+function parseExactNumber(raw: string | number): number {
+  if (typeof raw === "number") return Number.isFinite(raw) ? raw : 0;
+  const trimmed = raw.trim();
+  if (trimmed.includes("/")) {
+    const [num, den] = trimmed.split("/");
+    const n = Number(num);
+    const d = Number(den);
+    if (Number.isFinite(n) && Number.isFinite(d) && Math.abs(d) > 1e-12) {
+      return n / d;
+    }
+  }
+  const parsed = Number(trimmed);
+  return Number.isFinite(parsed) ? parsed : 0;
+}
+
+function toThreeVec(xyz: Vec3Tuple, center: Vec3Tuple): Vec3Tuple {
+  return [
+    Number((xyz[0] - center[0]).toFixed(5)),
+    Number((xyz[2] - center[2]).toFixed(5)),
+    Number((-(xyz[1] - center[1])).toFixed(5)),
+  ];
+}
+
+interface RawSceneObject {
+  id: string;
+  notation?: string;
+  type?: string;
+  xyz?: readonly (string | number)[];
+  value?: string;
+}
+
+function extractPointsFromSample(
+  sample: GeometrySample | undefined,
+  fallbackPoints: readonly { id: string; label: string; xyz: Vec3Tuple }[],
+): readonly { id: string; label: string; xyz: Vec3Tuple }[] {
+  const objects = (
+    sample?.envelope as { scene3d?: { objects?: readonly RawSceneObject[] } } | undefined
+  )?.scene3d?.objects;
+
+  if (!Array.isArray(objects)) return fallbackPoints;
+
+  const extracted: { id: string; label: string; xyz: Vec3Tuple }[] = [];
+  for (const obj of objects) {
+    if (obj.type === "point3" && Array.isArray(obj.xyz) && obj.xyz.length === 3) {
+      extracted.push({
+        id: obj.id,
+        label: obj.notation || obj.id,
+        xyz: [
+          parseExactNumber(obj.xyz[0]),
+          parseExactNumber(obj.xyz[1]),
+          parseExactNumber(obj.xyz[2]),
+        ],
+      });
+    }
+  }
+  return extracted.length >= fallbackPoints.length ? extracted : fallbackPoints;
+}
+
+function computeBoundedPlaneQuad(
+  sectionWorldPts: readonly Vec3Tuple[],
+  normal: Vec3Tuple,
+  margin = 0.72,
+): readonly Vec3Tuple[] {
+  let cx = 0;
+  let cy = 0;
+  let cz = 0;
+  for (const p of sectionWorldPts) {
+    cx += p[0];
+    cy += p[1];
+    cz += p[2];
+  }
+  const count = Math.max(1, sectionWorldPts.length);
+  cx /= count;
+  cy /= count;
+  cz /= count;
+
+  const nLen = Math.hypot(normal[0], normal[1], normal[2]) || 1;
+  const nx = normal[0] / nLen;
+  const ny = normal[1] / nLen;
+  const nz = normal[2] / nLen;
+
+  // Pick a stable orthonormal tangent frame (u, v) in the plane
+  const seed: Vec3Tuple = Math.abs(ny) < 0.85 ? [0, 1, 0] : [1, 0, 0];
+  let ux = ny * seed[2] - nz * seed[1];
+  let uy = nz * seed[0] - nx * seed[2];
+  let uz = nx * seed[1] - ny * seed[0];
+  const uLen = Math.hypot(ux, uy, uz) || 1;
+  ux /= uLen;
+  uy /= uLen;
+  uz /= uLen;
+
+  const vx = ny * uz - nz * uy;
+  const vy = nz * ux - nx * uz;
+  const vz = nx * uy - ny * ux;
+
+  let minU = Infinity;
+  let maxU = -Infinity;
+  let minV = Infinity;
+  let maxV = -Infinity;
+  for (const p of sectionWorldPts) {
+    const dx = p[0] - cx;
+    const dy = p[1] - cy;
+    const dz = p[2] - cz;
+    const pu = dx * ux + dy * uy + dz * uz;
+    const pv = dx * vx + dy * vy + dz * vz;
+    if (pu < minU) minU = pu;
+    if (pu > maxU) maxU = pu;
+    if (pv < minV) minV = pv;
+    if (pv > maxV) maxV = pv;
+  }
+
+  minU -= margin;
+  maxU += margin;
+  minV -= margin * 0.88;
+  maxV += margin * 0.88;
+
+  const corner = (u: number, v: number): Vec3Tuple => [
+    cx + ux * u + vx * v,
+    cy + uy * u + vy * v,
+    cz + uz * u + vz * v,
+  ];
+
+  return [
+    corner(minU, minV),
+    corner(maxU, minV),
+    corner(maxU, maxV),
+    corner(minU, maxV),
+  ];
+}
+
+function buildPyramidSample(): LandingSampleSpec {
+  const sampleId = "chop-thiet-dien-ba-diem";
+  const rawSample = geometrySampleById(sampleId);
+  const center: Vec3Tuple = [2, 2, 2.65];
+
+  const rawPoints = extractPointsFromSample(rawSample, [
+    { id: "A", label: "A", xyz: [0, 0, 0] },
+    { id: "B", label: "B", xyz: [4, 0, 0] },
+    { id: "C", label: "C", xyz: [4, 4, 0] },
+    { id: "D", label: "D", xyz: [0, 4, 0] },
+    { id: "S", label: "S", xyz: [0, 0, 6] },
+    { id: "O", label: "O", xyz: [2, 2, 0] },
+    { id: "M", label: "M", xyz: [0, 0, 3] },
+    { id: "N", label: "N", xyz: [4, 2, 0] },
+    { id: "P", label: "P", xyz: [2, 4, 0] },
+    { id: "E", label: "E", xyz: [3, 0, 1.5] },
+    { id: "F", label: "F", xyz: [0, 3, 1.5] },
+  ]);
+
+  const roleMap: Record<string, LandingPointSpec["role"]> = {
+    A: "vertex",
+    B: "vertex",
+    C: "vertex",
+    D: "vertex",
+    S: "vertex",
+    O: "base_center",
+    M: "seed",
+    N: "seed",
+    P: "seed",
+    E: "intersection",
+    F: "intersection",
+  };
+
+  const points: LandingPointSpec[] = rawPoints.map((p) => ({
+    id: p.id,
+    label: p.label,
+    role: roleMap[p.id] ?? "vertex",
+    domainXyz: p.xyz,
+    pos: toThreeVec(p.xyz, center),
+  }));
+
+  const pointMap = Object.fromEntries(points.map((p) => [p.id, p]));
+  const sectionLoop = ["M", "E", "N", "P", "F"] as const;
+  const sectionWorld = sectionLoop.map((id) => pointMap[id].pos);
+  // Domain plane x + y + 2z = 6 => normal in domain = (1, 1, 2) => Three.js (1, 2, -1)
+  const planeQuad = computeBoundedPlaneQuad(sectionWorld, [1, 2, -1], 0.4);
+
+  const solidEdges: readonly LandingEdgeSpec[] = [
+    { from: "A", to: "B", kind: "solid_edge" },
+    { from: "B", to: "C", kind: "solid_edge" },
+    { from: "C", to: "D", kind: "solid_edge" },
+    { from: "D", to: "A", kind: "solid_edge" },
+    { from: "S", to: "A", kind: "altitude" },
+    { from: "S", to: "B", kind: "solid_edge" },
+    { from: "S", to: "C", kind: "solid_edge" },
+    { from: "S", to: "D", kind: "solid_edge" },
+  ];
+
+  const guideEdges: readonly LandingEdgeSpec[] = [
+    { from: "A", to: "C", kind: "guide" },
+    { from: "B", to: "D", kind: "guide" },
+  ];
+
+  return {
+    id: sampleId,
+    shortName: "Hình chóp S.ABCD",
+    categoryLabel: "Thiết diện phẳng",
+    title:
+      (rawSample?.envelope?.title as string | undefined) ||
+      "Thiết diện hình chóp S.ABCD cắt bởi mặt phẳng (MNP)",
+    problemText:
+      rawSample?.problemText ||
+      "Cho hình chóp S.ABCD có đáy ABCD là hình vuông tâm O cạnh bằng 4, cạnh bên SA vuông góc với đáy (ABCD) và SA = 6. M, N, P lần lượt là trung điểm của SA, BC và CD. Mặt phẳng (MNP) cắt SB tại E, SD tại F tạo thành thiết diện MENPF.",
+    equationText: "x + y + 2z = 6",
+    answerBadge: "S(MENPF) = 6√6 · V(S.ABCD) = 32",
+    points,
+    pointMap,
+    solidEdges,
+    guideEdges,
+    solidFaces: [
+      ["A", "B", "C", "D"],
+      ["S", "A", "B"],
+      ["S", "B", "C"],
+      ["S", "C", "D"],
+      ["S", "D", "A"],
+    ],
+    sectionLoop,
+    planeQuad,
+    basePolygon: ["A", "B", "C", "D"],
+    altitudePair: ["S", "A"],
+    radiusBound: 4.5,
+    defaultCamera: [13.5, 7.6, -7.5],
+    defaultLookAt: [0, 0.05, 0],
+    milestones: [
+      {
+        id: "stage-problem",
+        stepNumber: "01",
+        tag: "Đề bài & khối chóp",
+        title: "Biến câu chữ thành tọa độ xác thực",
+        summary:
+          "Khởi tạo hình chóp S.ABCD với đáy hình vuông cạnh 4 tâm O, đường cao SA = 6 vuông góc đáy và ba trung điểm gốc M, N, P.",
+        mathFact: "S(0; 0; 6) · SA ⊥ (ABCD) · M(0; 0; 3), N(4; 2; 0), P(2; 4; 0)",
+        visiblePoints: ["A", "B", "C", "D", "S", "O", "M", "N", "P"],
+        activePoints: ["S", "A", "M", "N", "P"],
+        visibleSolidEdges: ["AB", "BC", "CD", "DA", "SA", "SB", "SC", "SD"],
+        showGuideEdges: true,
+        planeOpacity: 0,
+        sectionProgress: 0,
+        sectionFillOpacity: 0,
+        cameraPos: [12.4, 7.2, -6.2],
+        lookAt: [0, 0.25, 0],
+      },
+      {
+        id: "stage-structure",
+        stepNumber: "02",
+        tag: "Hình thành cấu trúc",
+        title: "Xác lập mặt phẳng cắt (MNP)",
+        summary:
+          "Từ ba điểm không thẳng hàng M, N, P, hệ dựng mặt phẳng chuẩn x + y + 2z = 6 với khung giới hạn gọn quanh hình chóp.",
+        mathFact: "Mặt phẳng (MNP): x + y + 2z = 6 · Vectơ pháp tuyến n = (1; 1; 2)",
+        visiblePoints: ["A", "B", "C", "D", "S", "O", "M", "N", "P"],
+        activePoints: ["M", "N", "P"],
+        visibleSolidEdges: ["AB", "BC", "CD", "DA", "SA", "SB", "SC", "SD"],
+        showGuideEdges: false,
+        planeOpacity: 0.72,
+        sectionProgress: 0.2,
+        sectionFillOpacity: 0,
+        cameraPos: [11.2, 7.8, -7.6],
+        lookAt: [0, 0.22, 0],
+      },
+      {
+        id: "stage-relations",
+        stepNumber: "03",
+        tag: "Khám phá quan hệ",
+        title: "Giao tuyến cắt cạnh bên tại E và F",
+        summary:
+          "Giao (MNP) với các mặt bên tạo thành các đoạn NP, PF, FM, ME, EN, xác định đúng hai giao điểm E trên SB và F trên SD.",
+        mathFact: "E = (MNP) ∩ SB = (3; 0; 3/2) · F = (MNP) ∩ SD = (0; 3; 3/2)",
+        visiblePoints: ["A", "B", "C", "D", "S", "O", "M", "N", "P", "E", "F"],
+        activePoints: ["E", "F"],
+        visibleSolidEdges: ["AB", "BC", "CD", "DA", "SA", "SB", "SC", "SD"],
+        showGuideEdges: false,
+        planeOpacity: 0.78,
+        sectionProgress: 0.85,
+        sectionFillOpacity: 0.22,
+        cameraPos: [12.6, 6.5, -5.4],
+        lookAt: [0, 0.22, 0],
+      },
+      {
+        id: "stage-result",
+        stepNumber: "04",
+        tag: "Kết quả trực quan",
+        title: "Thiết diện ngũ giác MENPF khép kín",
+        summary:
+          "Toàn bộ thiết diện ngũ giác hiện rõ cả hình khối lẫn đại lượng chính xác, sẵn sàng để xoay tự do hoặc mở vào Xưởng 3D.",
+        mathFact: "Thiết diện ngũ giác MENPF · Diện tích S = 6√6 · Thể tích V = 32",
+        visiblePoints: ["A", "B", "C", "D", "S", "O", "M", "N", "P", "E", "F"],
+        activePoints: ["M", "E", "N", "P", "F"],
+        visibleSolidEdges: ["AB", "BC", "CD", "DA", "SA", "SB", "SC", "SD"],
+        showGuideEdges: false,
+        planeOpacity: 0.56,
+        sectionProgress: 1,
+        sectionFillOpacity: 0.88,
+        cameraPos: [11.9, 7.1, -6.9],
+        lookAt: [0, 0.25, 0],
+      },
+    ],
+  };
+}
+
+function buildCubeSample(): LandingSampleSpec {
+  const sampleId = "lap-phuong-thiet-dien-bat-ky";
+  const rawSample = geometrySampleById(sampleId);
+  const center: Vec3Tuple = [2, 2, 2];
+
+  const rawPoints = extractPointsFromSample(rawSample, [
+    { id: "A", label: "A", xyz: [0, 0, 0] },
+    { id: "B", label: "B", xyz: [4, 0, 0] },
+    { id: "C", label: "C", xyz: [4, 4, 0] },
+    { id: "D", label: "D", xyz: [0, 4, 0] },
+    { id: "A_prime", label: "A′", xyz: [0, 0, 4] },
+    { id: "B_prime", label: "B′", xyz: [4, 0, 4] },
+    { id: "C_prime", label: "C′", xyz: [4, 4, 4] },
+    { id: "D_prime", label: "D′", xyz: [0, 4, 4] },
+    { id: "M", label: "M", xyz: [0, 2, 0] },
+    { id: "N", label: "N", xyz: [2, 4, 0] },
+    { id: "P", label: "P", xyz: [4, 2, 4] },
+    { id: "E", label: "E", xyz: [4, 4, 2] },
+    { id: "F", label: "F", xyz: [2, 0, 4] },
+    { id: "Q", label: "Q", xyz: [0, 0, 2] },
+  ]);
+
+  const roleMap: Record<string, LandingPointSpec["role"]> = {
+    M: "seed",
+    N: "seed",
+    P: "seed",
+    E: "intersection",
+    F: "intersection",
+    Q: "intersection",
+  };
+
+  const points: LandingPointSpec[] = rawPoints.map((p) => ({
+    id: p.id,
+    label: p.label,
+    role: roleMap[p.id] ?? "vertex",
+    domainXyz: p.xyz,
+    pos: toThreeVec(p.xyz, center),
+  }));
+
+  const pointMap = Object.fromEntries(points.map((p) => [p.id, p]));
+  const sectionLoop = ["M", "N", "E", "P", "F", "Q"] as const;
+  const sectionWorld = sectionLoop.map((id) => pointMap[id].pos);
+  // Domain plane -x + y + z = 2 => normal (-1, 1, 1) => Three.js (-1, 1, -1)
+  const planeQuad = computeBoundedPlaneQuad(sectionWorld, [-1, 1, -1], 0.36);
+
+  const solidEdges: readonly LandingEdgeSpec[] = [
+    { from: "A", to: "B", kind: "solid_edge" },
+    { from: "B", to: "C", kind: "solid_edge" },
+    { from: "C", to: "D", kind: "solid_edge" },
+    { from: "D", to: "A", kind: "solid_edge" },
+    { from: "A_prime", to: "B_prime", kind: "solid_edge" },
+    { from: "B_prime", to: "C_prime", kind: "solid_edge" },
+    { from: "C_prime", to: "D_prime", kind: "solid_edge" },
+    { from: "D_prime", to: "A_prime", kind: "solid_edge" },
+    { from: "A", to: "A_prime", kind: "solid_edge" },
+    { from: "B", to: "B_prime", kind: "solid_edge" },
+    { from: "C", to: "C_prime", kind: "solid_edge" },
+    { from: "D", to: "D_prime", kind: "solid_edge" },
+  ];
+
+  const allEdgeKeys = solidEdges.map((e) => `${e.from}-${e.to}`);
+
+  return {
+    id: sampleId,
+    shortName: "Lập phương ABCD.A′B′C′D′",
+    categoryLabel: "Lục giác đều",
+    title:
+      (rawSample?.envelope?.title as string | undefined) ||
+      "Thiết diện lục giác đều của hình lập phương ABCD.A′B′C′D′",
+    problemText:
+      rawSample?.problemText ||
+      "Cho hình lập phương ABCD.A′B′C′D′ có cạnh bằng 4. M, N, P là trung điểm AD, CD và B′C′. Mặt phẳng (MNP) cắt CC′, A′B′, AA′ tại E, F, Q tạo thành thiết diện lục giác đều MNEPFQ.",
+    equationText: "-x + y + z = 2",
+    answerBadge: "d(M, N) = 2√2 · S(MNEPFQ) = 12√3",
+    points,
+    pointMap,
+    solidEdges,
+    guideEdges: [],
+    solidFaces: [
+      ["A", "B", "C", "D"],
+      ["A_prime", "B_prime", "C_prime", "D_prime"],
+      ["A", "B", "B_prime", "A_prime"],
+      ["B", "C", "C_prime", "B_prime"],
+      ["C", "D", "D_prime", "C_prime"],
+      ["D", "A", "A_prime", "D_prime"],
+    ],
+    sectionLoop,
+    planeQuad,
+    basePolygon: ["A", "B", "C", "D"],
+    radiusBound: 4.1,
+    defaultCamera: [9.6, 6.1, -6.8],
+    defaultLookAt: [0, 0, 0],
+    milestones: [
+      {
+        id: "cube-1",
+        stepNumber: "01",
+        tag: "Khối lập phương",
+        title: "Khởi tạo hình lập phương cạnh 4",
+        summary:
+          "Đặt hai đáy ABCD, A′B′C′D′ cùng ba trung điểm gốc M ∈ AD, N ∈ CD, P ∈ B′C′.",
+        mathFact: "Cạnh a = 4 · M(0; 2; 0), N(2; 4; 0), P(4; 2; 4)",
+        visiblePoints: [
+          "A",
+          "B",
+          "C",
+          "D",
+          "A_prime",
+          "B_prime",
+          "C_prime",
+          "D_prime",
+          "M",
+          "N",
+          "P",
+        ],
+        activePoints: ["M", "N", "P"],
+        visibleSolidEdges: allEdgeKeys,
+        showGuideEdges: false,
+        planeOpacity: 0,
+        sectionProgress: 0,
+        sectionFillOpacity: 0,
+        cameraPos: [9.9, 6.3, -6.2],
+        lookAt: [0, 0, 0],
+      },
+      {
+        id: "cube-2",
+        stepNumber: "02",
+        tag: "Mặt cắt phẳng",
+        title: "Xác định mặt phẳng (MNP)",
+        summary:
+          "Mặt phẳng đi qua ba trung điểm đối xứng có phương trình -x + y + z = 2, cắt sáu cạnh lập phương.",
+        mathFact: "(MNP): -x + y + z = 2",
+        visiblePoints: [
+          "A",
+          "B",
+          "C",
+          "D",
+          "A_prime",
+          "B_prime",
+          "C_prime",
+          "D_prime",
+          "M",
+          "N",
+          "P",
+        ],
+        activePoints: ["M", "N", "P"],
+        visibleSolidEdges: allEdgeKeys,
+        showGuideEdges: false,
+        planeOpacity: 0.72,
+        sectionProgress: 0.17,
+        sectionFillOpacity: 0,
+        cameraPos: [9.1, 6.8, -7.2],
+        lookAt: [0, 0, 0],
+      },
+      {
+        id: "cube-3",
+        stepNumber: "03",
+        tag: "Sáu giao điểm",
+        title: "Tìm E ∈ CC′, F ∈ A′B′, Q ∈ AA′",
+        summary:
+          "Các giao điểm lần lượt nằm đúng tại trung điểm ba cạnh còn lại, chia mỗi cặp cạnh song song thành các đoạn bằng nhau 2√2.",
+        mathFact: "E(4; 4; 2) · F(2; 0; 4) · Q(0; 0; 2)",
+        visiblePoints: points.map((p) => p.id),
+        activePoints: ["E", "F", "Q"],
+        visibleSolidEdges: allEdgeKeys,
+        showGuideEdges: false,
+        planeOpacity: 0.75,
+        sectionProgress: 0.83,
+        sectionFillOpacity: 0.25,
+        cameraPos: [10.1, 5.7, -5.8],
+        lookAt: [0, 0, 0],
+      },
+      {
+        id: "cube-4",
+        stepNumber: "04",
+        tag: "Lục giác đều",
+        title: "Khép kín thiết diện MNEPFQ",
+        summary:
+          "Sáu cạnh đều bằng 2√2 tạo thành lục giác đều hoàn chỉnh có diện tích 12√3.",
+        mathFact: "S(MNEPFQ) = 12√3 · Cạnh lục giác = 2√2",
+        visiblePoints: points.map((p) => p.id),
+        activePoints: ["M", "N", "E", "P", "F", "Q"],
+        visibleSolidEdges: allEdgeKeys,
+        showGuideEdges: false,
+        planeOpacity: 0.56,
+        sectionProgress: 1,
+        sectionFillOpacity: 0.88,
+        cameraPos: [9.6, 6.1, -6.8],
+        lookAt: [0, 0, 0],
+      },
+    ],
+  };
+}
+
+export const LANDING_PYRAMID_SAMPLE: LandingSampleSpec = buildPyramidSample();
+export const LANDING_CUBE_SAMPLE: LandingSampleSpec = buildCubeSample();
+export const LANDING_SHOWCASE_SAMPLES: readonly LandingSampleSpec[] = [
+  LANDING_PYRAMID_SAMPLE,
+  LANDING_CUBE_SAMPLE,
+];
+
+export function landingSampleById(id: string): LandingSampleSpec {
+  return LANDING_SHOWCASE_SAMPLES.find((s) => s.id === id) ?? LANDING_PYRAMID_SAMPLE;
+}
+
+export function enterAxoWorkspace(): void {
+  const store = useAppStore.getState();
+  store.setGuestEnteredApp(true);
+  store.goHome();
+}
+
+export function openLibraryFromLanding(): void {
+  const store = useAppStore.getState();
+  store.setGuestEnteredApp(true);
+  store.openLibrary();
+}
+
+export function openSampleInWorkspace(sampleId: string): void {
+  const store = useAppStore.getState();
+  store.setGuestEnteredApp(true);
+  const sample = geometrySampleById(sampleId) ?? GEOMETRY_SAMPLES[0];
+  if (sample) {
+    store.loadEnvelope(sample.envelope, sample.id, sample.problemText);
+  } else {
+    store.openLibrary();
+  }
+}
