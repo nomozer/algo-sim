@@ -5,7 +5,7 @@ import { afterEach, describe, expect, it } from "vitest";
 import { useAuthStore, type AuthUser } from "../../state/auth";
 import { useAppStore } from "../../state/store";
 import { LandingHeader } from "../landing/LandingHeader";
-import { enterAxoWorkspace } from "../landing/landing-geometry-data";
+import { enterAxoWorkspace, openLandingLogin } from "../landing/landing-geometry-data";
 
 const SAMPLE_STUDENT: AuthUser = {
   id: 11,
@@ -53,6 +53,8 @@ describe("AXO Landing Page V1.2 — Header Auth Awareness, Guest Freedom & Acces
 
     expect(html).toContain('id="btn-landing-header-start"');
     expect(html).toContain("Bắt đầu");
+    expect(html).toContain('id="btn-landing-header-login"');
+    expect(html).toContain("Đăng nhập");
     expect(html).toContain('id="btn-landing-header-library"');
     expect(html).toContain("Thư viện");
     expect(html).not.toContain('id="header-user-actions"');
@@ -60,6 +62,11 @@ describe("AXO Landing Page V1.2 — Header Auth Awareness, Guest Freedom & Acces
     useAppStore.getState().setView("landing");
     enterAxoWorkspace();
     expect(useAppStore.getState().view).toBe("home");
+    expect(useAppStore.getState().guestEnteredApp).toBe(true);
+
+    useAppStore.getState().setView("landing");
+    openLandingLogin();
+    expect(useAppStore.getState().view).toBe("login");
     expect(useAppStore.getState().guestEnteredApp).toBe(true);
   });
 
@@ -86,5 +93,29 @@ describe("AXO Landing Page V1.2 — Header Auth Awareness, Guest Freedom & Acces
     expect(headerSrc).toContain('e.key === "Tab"');
     expect(headerSrc).toContain("e.shiftKey");
     expect(headerSrc).toContain('id="landing-mobile-account"');
+  });
+
+  it("V1.2.1: eliminates duplicate CTAs in mobile header/drawer and styles pointer vs keyboard focus cleanly", () => {
+    const headerSrc = fs.readFileSync(
+      path.resolve(__dirname, "../landing/LandingHeader.tsx"),
+      "utf8",
+    );
+    const cssSrc = fs.readFileSync(
+      path.resolve(__dirname, "../landing/landing.css"),
+      "utf8",
+    );
+
+    // Open mobile header omits top-bar CTA/account so drawer and header never duplicate "Vào ứng dụng"
+    expect(headerSrc).toContain("{!mobileOpen && (");
+    expect(headerSrc).toContain('id="btn-landing-drawer-primary"');
+    expect(headerSrc).toContain("openedViaKeyboardRef");
+    expect(headerSrc).toContain("drawerRef.current?.focus()");
+
+    // Distinct default / hover / active / pressed / focus-visible states in tokens, no default black focus ring
+    expect(cssSrc).toContain(".axo-sp-mobile-link.is-active");
+    expect(cssSrc).toContain(".axo-sp-mobile-link:active");
+    expect(cssSrc).toContain(".axo-sp-mobile-link:focus:not(:focus-visible)");
+    expect(cssSrc).toContain(".axo-sp-mobile-link:focus-visible");
+    expect(cssSrc).toContain(".axo-sp-header-account");
   });
 });

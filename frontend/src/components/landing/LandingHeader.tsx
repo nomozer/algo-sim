@@ -2,7 +2,7 @@ import { useCallback, useEffect, useRef, useState } from "react";
 import { IconAxoLogo } from "../icons";
 import { TopNavAccount } from "../TopNav";
 import { useAuthStore } from "../../state/auth";
-import { enterAxoWorkspace, openLibraryFromLanding } from "./landing-geometry-data";
+import { enterAxoWorkspace, openLandingLogin, openLibraryFromLanding } from "./landing-geometry-data";
 
 export interface LandingSectionNavItem {
   readonly id: string;
@@ -39,6 +39,7 @@ export function LandingHeader() {
   const drawerRef = useRef<HTMLDivElement | null>(null);
   const firstDrawerActionRef = useRef<HTMLAnchorElement | null>(null);
   const prevMobileOpenRef = useRef(false);
+  const openedViaKeyboardRef = useRef(false);
   const clickLockUntilRef = useRef<number>(0);
 
   const displayId = hoveredId ?? activeId;
@@ -134,11 +135,20 @@ export function LandingHeader() {
     const prevOverflow = document.body.style.overflow;
     if (mobileOpen) {
       document.body.style.overflow = "hidden";
+      const focusFromKeyboard = openedViaKeyboardRef.current;
+      openedViaKeyboardRef.current = false;
       window.requestAnimationFrame(() => {
-        firstDrawerActionRef.current?.focus();
+        if (focusFromKeyboard) {
+          firstDrawerActionRef.current?.focus();
+        } else {
+          drawerRef.current?.focus();
+        }
       });
     } else if (prevMobileOpenRef.current) {
-      mobileBtnRef.current?.focus();
+      if (openedViaKeyboardRef.current) {
+        mobileBtnRef.current?.focus();
+      }
+      openedViaKeyboardRef.current = false;
     }
     prevMobileOpenRef.current = mobileOpen;
 
@@ -255,26 +265,40 @@ export function LandingHeader() {
         </nav>
 
         <div className="axo-sp-header-actions">
-          <button
-            id="btn-landing-header-library"
-            type="button"
-            className="axo-sp-btn-ghost"
-            onClick={openLibraryFromLanding}
-          >
-            Thư viện
-          </button>
-          <button
-            id="btn-landing-header-start"
-            type="button"
-            className="axo-sp-btn-primary"
-            onClick={enterAxoWorkspace}
-          >
-            {user ? "Vào ứng dụng" : "Bắt đầu"}
-          </button>
-          {user && (
-            <div className="axo-sp-header-account">
-              <TopNavAccount />
-            </div>
+          {!mobileOpen && (
+            <>
+              <button
+                id="btn-landing-header-library"
+                type="button"
+                className="axo-sp-btn-ghost"
+                onClick={openLibraryFromLanding}
+              >
+                Thư viện
+              </button>
+              {!user && (
+                <button
+                  id="btn-landing-header-login"
+                  type="button"
+                  className="axo-sp-btn-ghost"
+                  onClick={openLandingLogin}
+                >
+                  Đăng nhập
+                </button>
+              )}
+              <button
+                id="btn-landing-header-start"
+                type="button"
+                className="axo-sp-btn-primary"
+                onClick={enterAxoWorkspace}
+              >
+                {user ? "Vào ứng dụng" : "Bắt đầu"}
+              </button>
+              {user && (
+                <div className="axo-sp-header-account">
+                  <TopNavAccount />
+                </div>
+              )}
+            </>
           )}
 
           <button
@@ -285,9 +309,17 @@ export function LandingHeader() {
             aria-expanded={mobileOpen}
             aria-controls="landing-mobile-drawer"
             aria-label={mobileOpen ? "Đóng điều hướng" : "Mở điều hướng"}
+            onPointerDown={() => {
+              openedViaKeyboardRef.current = false;
+            }}
+            onKeyDown={(e) => {
+              if (e.key === "Enter" || e.key === " ") {
+                openedViaKeyboardRef.current = true;
+              }
+            }}
             onClick={() => setMobileOpen((v) => !v)}
           >
-            <svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="currentColor" strokeWidth="1.75" strokeLinecap="round">
+            <svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="currentColor" strokeWidth="1.75" strokeLinecap="round" aria-hidden="true">
               {mobileOpen ? (
                 <>
                   <path d="M5 5l10 10" />
@@ -319,6 +351,7 @@ export function LandingHeader() {
             role="dialog"
             aria-modal="true"
             aria-label="Điều hướng di động Axo"
+            tabIndex={-1}
           >
             {user && (
               <div className="axo-sp-mobile-account" id="landing-mobile-account">
@@ -331,8 +364,10 @@ export function LandingHeader() {
                 <a
                   key={item.id}
                   ref={idx === 0 ? firstDrawerActionRef : undefined}
+                  id={`drawer-nav-${item.id}`}
                   href={`#${item.id}`}
                   className={`axo-sp-mobile-link${activeId === item.id ? " is-active" : ""}`}
+                  aria-current={activeId === item.id ? "location" : undefined}
                   onClick={(e) => {
                     e.preventDefault();
                     scrollToSection(item.id);
@@ -341,21 +376,24 @@ export function LandingHeader() {
                   {item.label}
                 </a>
               ))}
-            </nav>
-            <div className="axo-sp-mobile-cta-row">
               <button
+                id="btn-landing-drawer-library"
                 type="button"
-                className="axo-sp-btn-secondary"
+                className="axo-sp-mobile-link axo-sp-mobile-link-btn"
                 onClick={() => {
                   setMobileOpen(false);
                   openLibraryFromLanding();
                 }}
               >
-                Khám phá thư viện
+                <span>Thư viện mẫu</span>
+                <span className="axo-sp-mobile-link-meta" aria-hidden="true">↗</span>
               </button>
+            </nav>
+            <div className="axo-sp-mobile-cta-row">
               <button
+                id="btn-landing-drawer-primary"
                 type="button"
-                className="axo-sp-btn-primary"
+                className="axo-sp-btn-primary axo-sp-btn-full"
                 onClick={() => {
                   setMobileOpen(false);
                   enterAxoWorkspace();
@@ -363,6 +401,19 @@ export function LandingHeader() {
               >
                 {user ? "Vào ứng dụng" : "Bắt đầu dựng hình"}
               </button>
+              {!user && (
+                <button
+                  id="btn-landing-drawer-login"
+                  type="button"
+                  className="axo-sp-btn-ghost axo-sp-btn-full"
+                  onClick={() => {
+                    setMobileOpen(false);
+                    openLandingLogin();
+                  }}
+                >
+                  Đăng nhập tài khoản
+                </button>
+              )}
             </div>
           </div>
         </>
