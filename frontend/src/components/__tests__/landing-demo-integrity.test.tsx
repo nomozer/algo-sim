@@ -5,7 +5,7 @@ import { LandingInteractiveDemo } from "../landing/LandingInteractiveDemo";
 import { LandingStorytelling } from "../landing/LandingStorytelling";
 import {
   LANDING_CUBE_SAMPLE,
-  LANDING_PYRAMID_SAMPLE,
+  LANDING_PRISM_STORY_SPEC,
 } from "../landing/landing-geometry-data";
 
 describe("AXO Landing Page V1.1 — Mathematical Demo & Navigation Integrity", () => {
@@ -22,20 +22,22 @@ describe("AXO Landing Page V1.1 — Mathematical Demo & Navigation Integrity", (
     expect(html).not.toContain('id="landing-mobile-drawer"');
   });
 
-  it("keeps Storytelling distinct from Hero artwork and uses exact S.ABCD geometry", () => {
+  it("keeps Storytelling distinct from Hero artwork and uses exact ABC.A′B′C′ prism geometry", () => {
     const html = renderToString(<LandingStorytelling />);
     expect(html).toContain("axo-sp-story-runway");
     expect(html).toContain("axo-sp-story-sticky");
     expect(html).toContain("axo-sp-story-math-disclosure");
-    expect(html).toContain("S.ABCD");
-    for (const m of LANDING_PYRAMID_SAMPLE.milestones) {
+    expect(html).toContain("ABC.A′B′C′");
+    expect(html).toContain("MNPQ");
+    expect(html).toContain("3√7");
+    for (const m of LANDING_PRISM_STORY_SPEC.milestones) {
       expect(html).toContain(m.tag.replace(/&/g, "&amp;"));
     }
 
-    // Plane (MNP) must remain coplanar inside the normalized coordinates across MENPF
-    const M = LANDING_PYRAMID_SAMPLE.pointMap["M"].pos;
-    const N = LANDING_PYRAMID_SAMPLE.pointMap["N"].pos;
-    const P = LANDING_PYRAMID_SAMPLE.pointMap["P"].pos;
+    // Plane (MNP) must remain coplanar inside the normalized coordinates across MNPQ
+    const M = LANDING_PRISM_STORY_SPEC.pointMap["M"].pos;
+    const N = LANDING_PRISM_STORY_SPEC.pointMap["N"].pos;
+    const P = LANDING_PRISM_STORY_SPEC.pointMap["P"].pos;
     const ux = N[0] - M[0];
     const uy = N[1] - M[1];
     const uz = N[2] - M[2];
@@ -45,21 +47,25 @@ describe("AXO Landing Page V1.1 — Mathematical Demo & Navigation Integrity", (
     const nx = uy * vz - uz * vy;
     const ny = uz * vx - ux * vz;
     const nz = ux * vy - uy * vx;
-    for (const id of LANDING_PYRAMID_SAMPLE.sectionLoop) {
-      const Q = LANDING_PYRAMID_SAMPLE.pointMap[id].pos;
+    for (const id of LANDING_PRISM_STORY_SPEC.sectionLoop) {
+      const Q = LANDING_PRISM_STORY_SPEC.pointMap[id].pos;
       const coplanarity = (Q[0] - M[0]) * nx + (Q[1] - M[1]) * ny + (Q[2] - M[2]) * nz;
       expect(coplanarity).toBeCloseTo(0, 4);
     }
   });
 
-  it("keeps Interactive Demo focused with workbench controls and both sample slugs", () => {
+  it("keeps Interactive Demo focused with contextual reset, separated metrics, and no duplicate prev/next clutter", () => {
     const html = renderToString(<LandingInteractiveDemo />);
     expect(html).toContain('id="landing-product-showcase"');
     expect(html).toContain('id="btn-landing-sample-chop-thiet-dien-ba-diem"');
     expect(html).toContain('id="btn-landing-sample-lap-phuong-thiet-dien-bat-ky"');
     expect(html).toContain('id="btn-landing-demo-reset"');
-    expect(html).toContain('id="btn-landing-demo-prev"');
-    expect(html).toContain('id="btn-landing-demo-next"');
+    expect(html).toContain('data-visible="false"');
+    expect(html).not.toContain('id="btn-landing-demo-prev"');
+    expect(html).not.toContain('id="btn-landing-demo-next"');
+    expect(html).toContain("axo-sp-demo-metric-chip");
+    expect(html).toContain("6√6");
+    expect(html).toContain("32");
     expect(html).toContain('id="btn-landing-open-showcase-3d"');
     expect(html).toContain("axo-sp-demo-problem-disclosure");
 
