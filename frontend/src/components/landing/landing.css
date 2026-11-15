@@ -2498,3 +2498,137 @@
     transition: none;
   }
 }
+
+/* ══ AXO LANDING V1.4 — EXPRESSIVE GEOMETRY TYPOGRAPHY ═════════════════════════════════════════ */
+.axo-v14-anno {
+  position: relative;
+  display: inline-block;
+  white-space: nowrap;
+  isolation: isolate;
+}
+
+.axo-v14-anno-circle {
+  padding: 0 0.12em;
+}
+
+.axo-v14-anno-underline,
+.axo-v14-anno-highlight {
+  padding: 0 0.08em;
+}
+
+.axo-v14-anno-text {
+  position: relative;
+  z-index: 1;
+}
+
+.axo-v14-anno-svg {
+  position: absolute;
+  pointer-events: none;
+  overflow: visible;
+  z-index: 0;
+}
+
+.axo-v14-anno-svg-circle {
+  left: -10%;
+  top: -22%;
+  width: 120%;
+  height: 146%;
+}
+
+.axo-v14-anno-svg-underline {
+  left: -2%;
+  bottom: -0.22em;
+  width: 104%;
+  height: 0.44em;
+}
+
+.axo-v14-anno-svg-highlight {
+  left: -4%;
+  top: -6%;
+  width: 108%;
+  height: 114%;
+}
+
+.axo-v14-anno-path {
+  fill: none;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  vector-effect: non-scaling-stroke;
+  stroke-dasharray: 1;
+  stroke-dashoffset: 1;
+}
+
+.axo-v14-anno-path-circle {
+  stroke: var(--axo-sp-amber);
+  stroke-width: 2.6px;
+}
+
+.axo-v14-anno-path-underline {
+  stroke: var(--axo-sp-accent);
+  stroke-width: 2.2px;
+}
+
+.axo-v14-anno-path-highlight {
+  stroke: var(--axo-sp-accent);
+  stroke-opacity: 0.44;
+  stroke-width: 1.35px;
+}
+
+.axo-v14-anno-node {
+  fill: none;
+  stroke: var(--axo-sp-accent);
+  stroke-width: 1.8px;
+  vector-effect: non-scaling-stroke;
+  opacity: 0.72;
+}
+
+.axo-v14-anno-plane {
+  fill: var(--axo-sp-accent-tint);
+  fill-opacity: 0.68;
+  stroke: none;
+  transition: opacity 0.45s var(--axo-sp-ease);
+}
+
+.axo-v14-anno.is-pending .axo-v14-anno-plane {
+  opacity: 0;
+}
+
+.axo-v14-anno.is-active .axo-v14-anno-plane {
+  opacity: 1;
+}
+
+.axo-v14-anno.is-active .axo-v14-anno-path-circle {
+  animation: axo-v14-draw 1.15s var(--axo-sp-ease) 0.24s forwards;
+}
+
+.axo-v14-anno.is-active .axo-v14-anno-path-underline {
+  animation: axo-v14-draw 0.85s var(--axo-sp-ease) 0.18s forwards;
+}
+
+.axo-v14-anno.is-active .axo-v14-anno-path-highlight {
+  animation: axo-v14-draw 0.72s var(--axo-sp-ease) 0.12s forwards;
+}
+
+.axo-v14-anno.is-pending .axo-v14-anno-path {
+  animation: none;
+  stroke-dashoffset: 1;
+}
+
+@keyframes axo-v14-draw {
+  from {
+    stroke-dashoffset: 1;
+  }
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .axo-v14-anno.is-active .axo-v14-anno-path {
+    animation: none;
+    stroke-dashoffset: 0;
+  }
+  .axo-v14-anno-plane {
+    transition: none;
+  }
+}
