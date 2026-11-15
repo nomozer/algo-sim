@@ -178,7 +178,8 @@ describe("AXO V9.4.11 — Icon System Consistency & Optical Alignment", () => {
       const strokeWidth = 1.75;
       expect(Number(rwStr)).toBeCloseTo(15.5, 2);
       expect(rectH).toBeCloseTo(13.5, 2);
-      expect(radius).toBeGreaterThanOrEqual(2.5);
+      expect(radius).toBeGreaterThanOrEqual(1.6);
+      expect(radius).toBeLessThanOrEqual(2.1);
 
       const pathMatch = panelHtml.match(
         /<path[^>]*d="M([\d.]+)\s+([\d.]+)v([\d.]+)"/,

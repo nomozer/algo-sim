@@ -412,7 +412,7 @@ export const IconCameraOff = (p: IconProps) => (
 export function IconSidebarPanel() {
   return (
     <svg className="sb-toggle-layout-icon" viewBox="0 0 20 20" fill="none" stroke="currentColor" strokeWidth="1.75" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-      <rect x="2.25" y="3.25" width="15.5" height="13.5" rx="3" />
+      <rect x="2.25" y="3.25" width="15.5" height="13.5" rx="1.85" />
       <path d="M6.25 6.75v6.5" />
     </svg>
   );
