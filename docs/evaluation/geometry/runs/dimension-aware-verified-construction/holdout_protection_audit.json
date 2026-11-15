@@ -77,5 +77,22 @@
   "verdict": "PASS",
   "start_product_commit": "d222e6d9b582d54fc42397a9593f52eb6fd77f18",
   "start_measured_system_hash": "c25f9695828888987db2ab7990c4ff135da4d01c6b9d968f898c36728a0ae436",
-  "start_cache_version": "139"
+  "start_cache_version": "139",
+  "final_stage4a_tool_scan": {
+    "head_at_scan": "35053da80ea125582d15eda71cd70f7dbcb85165",
+    "tools_scanned": [
+      "compositional_dev_corpus.py",
+      "evaluate_step26_wave3b.py",
+      "isolated_perf_study.py",
+      "refresh_pending_templates.py",
+      "resource_cleanup_audit.py",
+      "run_full_regression.py",
+      "scene3d_browser_e2e.mjs"
+    ],
+    "holdout_data_files_referenced": {},
+    "sealed_h1_rows_opened": 0,
+    "locked_w2_w3_rows_read": 0,
+    "live_ai_calls": 0,
+    "verdict": "PASS"
+  }
 }

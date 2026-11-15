@@ -1,0 +1,57 @@
+{
+  "schema_version": "candidate-freeze-receipt/2",
+  "run_id": "dimension-aware-verified-construction",
+  "generated_at_utc": "2026-11-15T16:58:49.871270+00:00",
+  "product_commit": "32bdaa1df3dd7606b59b8c3cd8411578c4206d54",
+  "product_commits": [
+    "0c9d4a2f0",
+    "32bdaa1df"
+  ],
+  "product_commits_full": [
+    "0c9d4a2f0c892ac13fcd6e47b919e87bfb141479",
+    "32bdaa1df3dd7606b59b8c3cd8411578c4206d54"
+  ],
+  "candidate_freeze_commit": "3c65266ba0181ff27f31513af280aa2d9d3d71e7",
+  "prior_pre_remediation_freeze_commit": "2343d3cc02143dc2e2832d01ef7e9f516ed75a9a",
+  "measured_system": "b1403b91fd81410f9586c5676f541911540b4bc4bb0d7bf40204d17538623e59",
+  "measured_system_hash": "b1403b91fd81410f9586c5676f541911540b4bc4bb0d7bf40204d17538623e59",
+  "cache_version": "140",
+  "dataset_partition": "DEVELOPMENT_AND_GOVERNANCE_ONLY (full offline pytest/vitest/replay/docs/publication/freeze gates; sealed H-1 and locked W2/W3 untouched)",
+  "environment": {
+    "ALLOW_LIVE_AI": "0",
+    "GEMINI_API_KEY": "EMPTY",
+    "HYBRID_ROUTE_MODE": "local-first",
+    "live_ai_calls": 0
+  },
+  "head": "35053da80ea125582d15eda71cd70f7dbcb85165",
+  "freeze_stored_in": "3c65266ba0181ff27f31513af280aa2d9d3d71e7",
+  "commit_field": "72d61087b863abc6efe74cbc14b5564cc11f3b88",
+  "clean_tree": true,
+  "measured_files": 120,
+  "cache_version_bumped": "139 → 140",
+  "cache_lock_semantic_environment_hash": "6233c43c395c9b493d31d3dbb5d0ca952604730f6185cf541d2f179c077f955b",
+  "candidate_manifest_sha256_lf": "4790a409c5081d97a0231b85f237dd4886ddfe863c8012e936774f264efa83c9",
+  "freeze_verify_in_regression": "PASS",
+  "templates_rebound": "pending_template_refresh_post_fix.json (metadata only, still PENDING_OWNER_DECISION)",
+  "test_command": "python -B backend/scripts/freeze_evaluation_candidate.py --verify && python -B backend/scripts/lock_cache_identity.py --verify",
+  "expected_behavior": "EVALUATION_CANDIDATE.json frozen on a 100% clean working tree (cay_lam_viec_sach == true) with cache_version == 140, product_commit_sha == 32bdaa1df3dd7606b59b8c3cd8411578c4206d54, 120 measured files, tree_hash == b1403b91fd81410f9586c5676f541911540b4bc4bb0d7bf40204d17538623e59, and pending owner-approval templates re-bound with PENDING_OWNER_DECISION.",
+  "actual_behavior": {
+    "cay_lam_viec_sach": true,
+    "product_commit_sha": "32bdaa1df3dd7606b59b8c3cd8411578c4206d54",
+    "cache_version": "140",
+    "measured_files": 120,
+    "tree_hash": "b1403b91fd81410f9586c5676f541911540b4bc4bb0d7bf40204d17538623e59",
+    "freeze_verify_exit_code": 0,
+    "cache_lock_verify_exit_code": 0,
+    "templates_owner_decision": "PENDING_OWNER_DECISION",
+    "templates_paid_project_confirmed": false
+  },
+  "mathematical_oracle": "SHA-256 content tree hash over LF-normalized MEASURED_SYSTEM_PATHS (120 files) and semantic_environment_fingerprint() cache lock.",
+  "source_provenance": {
+    "candidate_manifest": "docs/evaluation/semantic-benchmark/EVALUATION_CANDIDATE.json",
+    "cache_lock": "backend/cache_identity.lock.json",
+    "template_refresh_receipt": "docs/evaluation/geometry/runs/dimension-aware-verified-construction/pending_template_refresh_post_fix.json",
+    "freeze_verify_log": "docs/evaluation/geometry/runs/dimension-aware-verified-construction/logs/final-freeze_verify.json"
+  },
+  "verdict": "PASS"
+}
