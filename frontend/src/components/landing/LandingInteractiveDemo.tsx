@@ -115,8 +115,9 @@ export function LandingInteractiveDemo() {
               interactiveOrbit={true}
               orbitResetNonce={orbitResetNonce}
               onUserOrbit={() => setHasCameraMoved(true)}
-              bottomCaption={activeStage.mathFact}
-              bottomHint="Kéo để xoay 3D · Phím mũi tên để đổi góc"
+              bottomHint={
+                hasCameraMoved ? undefined : "Kéo để xoay 3D · Phím mũi tên để đổi góc"
+              }
               ariaLabel={`Mô hình 3D tương tác: ${sample.title}`}
             />
           </div>

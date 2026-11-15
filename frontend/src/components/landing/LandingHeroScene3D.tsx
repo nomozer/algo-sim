@@ -1136,10 +1136,6 @@ export function SpatialSceneCanvas({
   };
 
   const activeSet = useMemo(() => new Set(activePoints), [activePoints]);
-  const visibleSet = useMemo(
-    () => new Set(visiblePoints ?? sample.points.map((p) => p.id)),
-    [sample.points, visiblePoints],
-  );
 
   return (
     <div
@@ -1220,29 +1216,44 @@ export function SpatialSceneCanvas({
               );
             })}
 
-          {svgFallback.visibleList.map((pt) => (
-            <circle
-              key={`svg-dot-${pt.id}`}
-              cx={pt.x}
-              cy={pt.y}
-              r={pt.role === "intersection" ? 5.2 : pt.role === "seed" ? 4.4 : 3.4}
-              fill={
-                pt.role === "intersection"
-                  ? "#dd5b00"
-                  : pt.role === "seed"
-                    ? "#0075de"
-                    : "#1b1b19"
-              }
-            />
-          ))}
+          {svgFallback.visibleList.map((pt) => {
+            const labelText =
+              "label" in pt && typeof pt.label === "string"
+                ? pt.label
+                : pt.id.replace("_prime", "′");
+            const fillColor =
+              pt.role === "intersection"
+                ? "#dd5b00"
+                : pt.role === "seed"
+                  ? "#0075de"
+                  : "#1b1b19";
+            return (
+              <g key={`svg-dot-${pt.id}`}>
+                <circle
+                  cx={pt.x}
+                  cy={pt.y}
+                  r={pt.role === "intersection" ? 5.2 : pt.role === "seed" ? 4.4 : 3.4}
+                  fill={fillColor}
+                />
+                <text
+                  x={pt.x + 8}
+                  y={pt.y - 7}
+                  fontSize="11"
+                  fontWeight="700"
+                  fontFamily="JetBrains Mono, ui-monospace, monospace"
+                  fill={fillColor}
+                >
+                  {labelText}
+                </text>
+              </g>
+            );
+          })}
         </svg>
       )}
 
       {/* Projected 2D point badges keyed per sample+point to eliminate carryover on sample switch */}
       <div className="axo-sp-scene-labels" aria-hidden="true">
         {sample.points.map((pt) => {
-          const fb = svgFallback.labelCoords[pt.id];
-          const isVisible = visibleSet.has(pt.id);
           const isActive = activeSet.has(pt.id);
           const roleClass =
             pt.role === "seed"
@@ -1267,13 +1278,7 @@ export function SpatialSceneCanvas({
               style={
                 webglReady
                   ? undefined
-                  : fb
-                    ? {
-                        left: `${((fb.x / svgFallback.w) * 100).toFixed(2)}%`,
-                        top: `${((fb.y / svgFallback.h) * 100).toFixed(2)}%`,
-                        opacity: isVisible ? 1 : 0,
-                      }
-                    : { opacity: 0 }
+                  : { opacity: 0 }
               }
             >
               {pt.label}

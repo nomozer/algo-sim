@@ -64,10 +64,19 @@ describe("AXO Landing Page V1.1 — Mathematical Demo & Navigation Integrity", (
     expect(html).not.toContain('id="btn-landing-demo-prev"');
     expect(html).not.toContain('id="btn-landing-demo-next"');
     expect(html).toContain("axo-sp-demo-metric-chip");
-    expect(html).toContain("6√6");
-    expect(html).toContain("32");
+    expect(html).toContain("S(MENPF) = 6√6");
+    expect(html).toContain("V(S.ABCD) = 32");
+    expect(html).not.toContain("axo-sp-scene-pill");
+    expect(html).not.toContain("left:");
     expect(html).toContain('id="btn-landing-open-showcase-3d"');
     expect(html).toContain("axo-sp-demo-problem-disclosure");
+
+    const cubeValues = LANDING_CUBE_SAMPLE.verifiedMetrics.map((m) => m.value);
+    expect(cubeValues).toContain("S(MNEPFQ) = 12√3");
+    expect(cubeValues).toContain("MN = 2√2");
+    expect(LANDING_CUBE_SAMPLE.sectionLoop).toEqual(["M", "N", "E", "P", "F", "Q"]);
+    const cubePointIds = LANDING_CUBE_SAMPLE.points.map((p) => p.id);
+    expect(cubePointIds).toEqual(expect.arrayContaining(["M", "N", "E", "P", "F", "Q"]));
 
     // Regular hexagon points in cube sample lie strictly on domain plane -x + y + z = 2
     for (const id of LANDING_CUBE_SAMPLE.sectionLoop) {
