@@ -39,13 +39,61 @@ interface ProjectedPoint2D {
   readonly depth: number;
 }
 
+export interface LabelCandidate {
+  id: string;
+  x: number;
+  y: number;
+}
+
+export function separateLabelPositions(
+  items: LabelCandidate[],
+  width: number,
+  height: number,
+  minDist = 26,
+  padX = 24,
+  padTop = 26,
+  padBottom = 46,
+): void {
+  const maxX = Math.max(padX + 1, width - padX);
+  const maxY = Math.max(padTop + 1, height - padBottom);
+  const clampAll = () => {
+    for (const item of items) {
+      item.x = Math.max(padX, Math.min(maxX, item.x));
+      item.y = Math.max(padTop, Math.min(maxY, item.y));
+    }
+  };
+
+  clampAll();
+  for (let pass = 0; pass < 2; pass++) {
+    for (let i = 0; i < items.length; i++) {
+      for (let j = i + 1; j < items.length; j++) {
+        const a = items[i];
+        const b = items[j];
+        const dx = b.x - a.x;
+        const dy = b.y - a.y;
+        const dist = Math.hypot(dx, dy);
+        if (dist < minDist) {
+          const nx = dist > 1e-3 ? dx / dist : 0;
+          const ny = dist > 1e-3 ? dy / dist : -1;
+          const push = (minDist - dist) * 0.52;
+          a.x -= nx * push;
+          a.y -= ny * push;
+          b.x += nx * push;
+          b.y += ny * push;
+        }
+      }
+    }
+    clampAll();
+  }
+}
+
 function projectToSvgViewport(
   point: Vec3Tuple,
   cameraPos: Vec3Tuple,
   lookAt: Vec3Tuple,
   width: number,
   height: number,
-  fovDeg = 36,
+  fovDeg = 35,
 ): { x: number; y: number; depth: number } {
   const fx = lookAt[0] - cameraPos[0];
   const fy = lookAt[1] - cameraPos[1];
@@ -89,7 +137,6 @@ function computeOutwardFaceNormals(
   sample: LandingSampleSpec,
 ): readonly { vertices: readonly string[]; center: THREE.Vector3; normal: THREE.Vector3 }[] {
   const solidCentroid = new THREE.Vector3();
-  const baseCount = Math.max(1, sample.solidFaces.length);
   let vertexTally = 0;
   for (const face of sample.solidFaces) {
     for (const id of face) {
@@ -102,7 +149,6 @@ function computeOutwardFaceNormals(
   }
   if (vertexTally > 0) solidCentroid.divideScalar(vertexTally);
 
-  void baseCount;
   return sample.solidFaces.map((face) => {
     const coords = face.map((id) => sample.pointMap[id]?.pos ?? [0, 0, 0]);
     const p0 = new THREE.Vector3(...coords[0]);
@@ -112,7 +158,10 @@ function computeOutwardFaceNormals(
     for (const c of coords) center.add(new THREE.Vector3(...c));
     center.divideScalar(Math.max(1, coords.length));
 
-    const normal = new THREE.Vector3().subVectors(p1, p0).cross(new THREE.Vector3().subVectors(p2, p0)).normalize();
+    const normal = new THREE.Vector3()
+      .subVectors(p1, p0)
+      .cross(new THREE.Vector3().subVectors(p2, p0))
+      .normalize();
     if (normal.dot(new THREE.Vector3().subVectors(center, solidCentroid)) < 0) {
       normal.negate();
     }
@@ -128,6 +177,285 @@ function edgeBelongsToFace(a: string, b: string, face: readonly string[]): boole
     if ((u === a && v === b) || (u === b && v === a)) return true;
   }
   return false;
+}
+
+interface ActiveSampleRig {
+  sampleId: string;
+  sample: LandingSampleSpec;
+  group: THREE.Group;
+  disposables: { dispose: () => void }[];
+  solidFacesMeta: readonly { vertices: readonly string[]; center: THREE.Vector3; normal: THREE.Vector3 }[];
+  edgeObjects: { edge: LandingSampleSpec["solidEdges"][number]; solidLine: THREE.Line; dashedLine: THREE.Line }[];
+  guideLines: { line: THREE.Line; mat: THREE.LineDashedMaterial }[];
+  planeMesh: THREE.Mesh;
+  planeFillMat: THREE.MeshBasicMaterial;
+  planeBorderLine: THREE.Line;
+  planeBorderMat: THREE.LineBasicMaterial;
+  secFillMesh: THREE.Mesh;
+  secFillMat: THREE.MeshBasicMaterial;
+  sectionSegments: { p1: THREE.Vector3; p2: THREE.Vector3; geo: THREE.BufferGeometry; line: THREE.Line }[];
+  pointMeshes: { pt: LandingPointSpec; mesh: THREE.Mesh }[];
+}
+
+function buildSampleRig(sample: LandingSampleSpec): ActiveSampleRig {
+  const group = new THREE.Group();
+  const disposables: { dispose: () => void }[] = [];
+  const track = <T extends { dispose: () => void }>(item: T): T => {
+    disposables.push(item);
+    return item;
+  };
+
+  // Datum reference ring under solid
+  const minY = Math.min(...sample.points.map((p) => p.pos[1]));
+  const ringGeo = track(new THREE.RingGeometry(2.65, 2.68, 64));
+  ringGeo.rotateX(-Math.PI / 2);
+  const ringMat = track(
+    new THREE.MeshBasicMaterial({
+      color: 0x111110,
+      transparent: true,
+      opacity: 0.08,
+      side: THREE.DoubleSide,
+    }),
+  );
+  const ringMesh = new THREE.Mesh(ringGeo, ringMat);
+  ringMesh.position.y = minY - 0.04;
+  group.add(ringMesh);
+
+  // Lightweight translucent solid faces (no heavy PBR shader compile stalls)
+  const solidFacesMeta = computeOutwardFaceNormals(sample);
+  const baseFaceMat = track(
+    new THREE.MeshBasicMaterial({
+      color: 0xeef3f8,
+      transparent: true,
+      opacity: 0.24,
+      side: THREE.DoubleSide,
+      depthWrite: false,
+    }),
+  );
+  const sideFaceMat = track(
+    new THREE.MeshBasicMaterial({
+      color: 0xf4f6f9,
+      transparent: true,
+      opacity: 0.14,
+      side: THREE.DoubleSide,
+      depthWrite: false,
+    }),
+  );
+
+  for (let fIdx = 0; fIdx < sample.solidFaces.length; fIdx++) {
+    const face = sample.solidFaces[fIdx];
+    if (face.length < 3) continue;
+    const verts: number[] = [];
+    const p0 = sample.pointMap[face[0]].pos;
+    for (let i = 1; i < face.length - 1; i++) {
+      const p1 = sample.pointMap[face[i]].pos;
+      const p2 = sample.pointMap[face[i + 1]].pos;
+      verts.push(...p0, ...p1, ...p2);
+    }
+    const faceGeo = track(new THREE.BufferGeometry());
+    faceGeo.setAttribute("position", new THREE.Float32BufferAttribute(verts, 3));
+    const mesh = new THREE.Mesh(faceGeo, fIdx === 0 ? baseFaceMat : sideFaceMat);
+    mesh.renderOrder = 1;
+    group.add(mesh);
+  }
+
+  // Dual front-solid / back-dashed materials for every solid edge
+  const edgeObjects = sample.solidEdges.map((edge) => {
+    const a = sample.pointMap[edge.from].pos;
+    const b = sample.pointMap[edge.to].pos;
+
+    const solidGeo = track(new THREE.BufferGeometry());
+    solidGeo.setAttribute("position", new THREE.Float32BufferAttribute([...a, ...b], 3));
+    const solidMat = track(
+      new THREE.LineBasicMaterial({
+        color: edge.kind === "altitude" ? 0x005bab : 0x1b1b19,
+        transparent: true,
+        opacity: 0.9,
+      }),
+    );
+    const solidLine = new THREE.Line(solidGeo, solidMat);
+    solidLine.renderOrder = 3;
+
+    const dashedGeo = track(new THREE.BufferGeometry());
+    dashedGeo.setAttribute("position", new THREE.Float32BufferAttribute([...a, ...b], 3));
+    const dashedMat = track(
+      new THREE.LineDashedMaterial({
+        color: 0x6b7280,
+        dashSize: 0.18,
+        gapSize: 0.13,
+        transparent: true,
+        opacity: 0.72,
+      }),
+    );
+    const dashedLine = new THREE.Line(dashedGeo, dashedMat);
+    dashedLine.computeLineDistances();
+    dashedLine.renderOrder = 2;
+
+    group.add(solidLine);
+    group.add(dashedLine);
+    return { edge, solidLine, dashedLine };
+  });
+
+  // Base diagonals / construction guides
+  const guideLines = sample.guideEdges.map((edge) => {
+    const a = sample.pointMap[edge.from].pos;
+    const b = sample.pointMap[edge.to].pos;
+    const geo = track(new THREE.BufferGeometry());
+    geo.setAttribute("position", new THREE.Float32BufferAttribute([...a, ...b], 3));
+    const mat = track(
+      new THREE.LineDashedMaterial({
+        color: 0x8a857e,
+        dashSize: 0.16,
+        gapSize: 0.16,
+        transparent: true,
+        opacity: 0,
+      }),
+    );
+    const line = new THREE.Line(geo, mat);
+    line.computeLineDistances();
+    line.renderOrder = 2;
+    group.add(line);
+    return { line, mat };
+  });
+
+  // Right-angle altitude symbol (e.g. SA ⊥ (ABCD))
+  if (sample.altitudePair && sample.basePolygon.length >= 2) {
+    const footId = sample.altitudePair[1];
+    const topId = sample.altitudePair[0];
+    const foot = new THREE.Vector3(...sample.pointMap[footId].pos);
+    const upDir = new THREE.Vector3(...sample.pointMap[topId].pos).sub(foot).normalize();
+    const bId = sample.basePolygon.find((id) => id !== footId) ?? "B";
+    const dId = [...sample.basePolygon].reverse().find((id) => id !== footId) ?? "D";
+    const createTick = (dirPointId: string) => {
+      const dir = new THREE.Vector3(...sample.pointMap[dirPointId].pos).sub(foot).normalize();
+      const s = 0.34;
+      const pA = foot.clone().addScaledVector(dir, s);
+      const pCorner = foot.clone().addScaledVector(dir, s).addScaledVector(upDir, s);
+      const pB = foot.clone().addScaledVector(upDir, s);
+      const geo = track(new THREE.BufferGeometry().setFromPoints([pA, pCorner, pB]));
+      const mat = track(
+        new THREE.LineBasicMaterial({ color: 0x0075de, transparent: true, opacity: 0.72 }),
+      );
+      group.add(new THREE.Line(geo, mat));
+    };
+    createTick(bId);
+    createTick(dId);
+  }
+
+  // Bounded cutting plane (MNP)
+  const pq = sample.planeQuad;
+  const planeGeo = track(new THREE.BufferGeometry());
+  planeGeo.setAttribute(
+    "position",
+    new THREE.Float32BufferAttribute(
+      [...pq[0], ...pq[1], ...pq[2], ...pq[0], ...pq[2], ...pq[3]],
+      3,
+    ),
+  );
+  const planeFillMat = track(
+    new THREE.MeshBasicMaterial({
+      color: 0x0075de,
+      transparent: true,
+      opacity: 0.14,
+      side: THREE.DoubleSide,
+      depthWrite: false,
+    }),
+  );
+  const planeMesh = new THREE.Mesh(planeGeo, planeFillMat);
+  planeMesh.renderOrder = 4;
+  group.add(planeMesh);
+
+  const planeBorderGeo = track(new THREE.BufferGeometry());
+  planeBorderGeo.setAttribute(
+    "position",
+    new THREE.Float32BufferAttribute([...pq[0], ...pq[1], ...pq[2], ...pq[3], ...pq[0]], 3),
+  );
+  const planeBorderMat = track(
+    new THREE.LineBasicMaterial({
+      color: 0x0075de,
+      transparent: true,
+      opacity: 0.45,
+    }),
+  );
+  const planeBorderLine = new THREE.Line(planeBorderGeo, planeBorderMat);
+  planeBorderLine.renderOrder = 5;
+  group.add(planeBorderLine);
+
+  // Cross-section polygon fill
+  const secPositions: number[] = [];
+  const secLoopPts = sample.sectionLoop.map((id) => sample.pointMap[id].pos);
+  for (let i = 1; i < secLoopPts.length - 1; i++) {
+    secPositions.push(...secLoopPts[0], ...secLoopPts[i], ...secLoopPts[i + 1]);
+  }
+  const secFillGeo = track(new THREE.BufferGeometry());
+  secFillGeo.setAttribute("position", new THREE.Float32BufferAttribute(secPositions, 3));
+  const secFillMat = track(
+    new THREE.MeshBasicMaterial({
+      color: 0xdd5b00,
+      transparent: true,
+      opacity: 0.24,
+      side: THREE.DoubleSide,
+      depthWrite: false,
+    }),
+  );
+  const secFillMesh = new THREE.Mesh(secFillGeo, secFillMat);
+  secFillMesh.renderOrder = 6;
+  group.add(secFillMesh);
+
+  // Progressive section perimeter edges
+  const sectionSegments = sample.sectionLoop.map((id, idx) => {
+    const nextId = sample.sectionLoop[(idx + 1) % sample.sectionLoop.length];
+    const p1 = new THREE.Vector3(...sample.pointMap[id].pos);
+    const p2 = new THREE.Vector3(...sample.pointMap[nextId].pos);
+    const geo = track(new THREE.BufferGeometry().setFromPoints([p1, p1.clone()]));
+    const mat = track(
+      new THREE.LineBasicMaterial({
+        color: 0xc2550a,
+        transparent: true,
+        opacity: 0.96,
+      }),
+    );
+    const line = new THREE.Line(geo, mat);
+    line.renderOrder = 7;
+    group.add(line);
+    return { p1, p2, geo, line };
+  });
+
+  // Shared sphere geometries per role radius (deduplicated resources)
+  const geoVertex = track(new THREE.SphereGeometry(0.068, 16, 16));
+  const geoSeed = track(new THREE.SphereGeometry(0.095, 16, 16));
+  const geoInter = track(new THREE.SphereGeometry(0.11, 16, 16));
+  const matVertex = track(new THREE.MeshBasicMaterial({ color: 0x1b1b19 }));
+  const matSeed = track(new THREE.MeshBasicMaterial({ color: 0x0075de }));
+  const matInter = track(new THREE.MeshBasicMaterial({ color: 0xdd5b00 }));
+
+  const pointMeshes = sample.points.map((pt) => {
+    const geo = pt.role === "intersection" ? geoInter : pt.role === "seed" ? geoSeed : geoVertex;
+    const mat = pt.role === "intersection" ? matInter : pt.role === "seed" ? matSeed : matVertex;
+    const mesh = new THREE.Mesh(geo, mat);
+    mesh.position.set(pt.pos[0], pt.pos[1], pt.pos[2]);
+    mesh.renderOrder = 8;
+    group.add(mesh);
+    return { pt, mesh };
+  });
+
+  return {
+    sampleId: sample.id,
+    sample,
+    group,
+    disposables,
+    solidFacesMeta,
+    edgeObjects,
+    guideLines,
+    planeMesh,
+    planeFillMat,
+    planeBorderLine,
+    planeBorderMat,
+    secFillMesh,
+    secFillMat,
+    sectionSegments,
+    pointMeshes,
+  };
 }
 
 export function SpatialSceneCanvas({
@@ -161,11 +489,14 @@ export function SpatialSceneCanvas({
 
   const [webglReady, setWebglReady] = useState(false);
   const [shouldMountWebgl, setShouldMountWebgl] = useState(false);
+
   const wakeRenderRef = useRef<() => void>(() => {});
+  const syncSampleRigRef = useRef<(nextSample: LandingSampleSpec) => void>(() => {});
   const onUserOrbitRef = useRef(onUserOrbit);
   onUserOrbitRef.current = onUserOrbit;
 
   const propsRef = useRef({
+    sample,
     visiblePoints,
     activePoints,
     showGuideEdges,
@@ -178,6 +509,7 @@ export function SpatialSceneCanvas({
     subtlePointerParallax,
   });
   propsRef.current = {
+    sample,
     visiblePoints,
     activePoints,
     showGuideEdges,
@@ -201,6 +533,489 @@ export function SpatialSceneCanvas({
     wakeRenderRef.current();
   }, [orbitResetNonce, sample.id]);
 
+  // Pre-warm Demo WebGL lazily when approaching Demo viewport (preserves Hero initial load = 1 WebGL context)
+  useEffect(() => {
+    const shell = shellRef.current;
+    if (!shell || typeof window === "undefined") return;
+    if (shouldMountWebgl) return;
+
+    let fallbackTimer = 0;
+    const triggerMount = () => setShouldMountWebgl(true);
+
+    const mountObserver =
+      typeof IntersectionObserver !== "undefined"
+        ? new IntersectionObserver(
+            (entries) => {
+              if (entries.some((entry) => entry.isIntersecting)) {
+                triggerMount();
+                mountObserver?.disconnect();
+              }
+            },
+            { rootMargin: "320px 0px", threshold: 0.01 },
+          )
+        : null;
+    mountObserver?.observe(shell);
+
+    if (!mountObserver) {
+      fallbackTimer = window.setTimeout(triggerMount, 1800);
+    }
+
+    return () => {
+      mountObserver?.disconnect();
+      if (fallbackTimer) window.clearTimeout(fallbackTimer);
+    };
+  }, [shouldMountWebgl]);
+
+  // Persistent single WebGLRenderer per component mount (0 extra contexts created on sample switches)
+  useEffect(() => {
+    if (!shouldMountWebgl) return;
+    const shell = shellRef.current;
+    const host = hostRef.current;
+    if (!shell || !host || typeof window === "undefined") return;
+
+    const reducedMotion =
+      typeof window.matchMedia === "function" &&
+      window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+    let cancelled = false;
+    let cleanupInner: (() => void) | null = null;
+    let mountTimer = 0;
+
+    const initPersistentRenderer = () => {
+      if (cancelled) return;
+
+      let renderer: THREE.WebGLRenderer | null = null;
+      try {
+        renderer = new THREE.WebGLRenderer({
+          antialias: true,
+          alpha: true,
+          powerPreference: "high-performance",
+        });
+      } catch {
+        setWebglReady(false);
+        return;
+      }
+
+      const activeRenderer = renderer;
+      const maxDpr = window.innerWidth <= 820 ? 1.25 : 1.5;
+      activeRenderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, maxDpr));
+      activeRenderer.setClearColor(0x000000, 0);
+      activeRenderer.outputColorSpace = THREE.SRGBColorSpace;
+      host.appendChild(activeRenderer.domElement);
+
+      const scene = new THREE.Scene();
+      const camera = new THREE.PerspectiveCamera(35, 1.33, 0.1, 100);
+      let activeRig: ActiveSampleRig | null = null;
+
+      let rafId = 0;
+      let isDisposed = false;
+      let isInView = true;
+      let scrollPausedUntil = 0;
+      let scrollResumeTimer = 0;
+      let hasPaintedOnce = false;
+
+      const curCam = new THREE.Vector3(...propsRef.current.targetCamera);
+      const curLook = new THREE.Vector3(...propsRef.current.targetLookAt);
+      let curPlaneOp = propsRef.current.planeOpacity;
+      let curSecProg = propsRef.current.sectionProgress;
+      let curSecFill = propsRef.current.sectionFillOpacity;
+      let curParallaxX = 0;
+      let curParallaxY = 0;
+      let targetParallaxX = 0;
+      let targetParallaxY = 0;
+      let isDragging = false;
+      let lastPtrX = 0;
+      let lastPtrY = 0;
+
+      const tempVec = new THREE.Vector3();
+      const baseVec = new THREE.Vector3();
+      const desiredLookVec = new THREE.Vector3();
+      const sph = new THREE.Spherical();
+
+      const syncSize = () => {
+        const rect = shell.getBoundingClientRect();
+        const width = Math.max(120, Math.floor(rect.width));
+        const height = Math.max(120, Math.floor(rect.height));
+        activeRenderer.setSize(width, height, false);
+        camera.aspect = width / height;
+        camera.updateProjectionMatrix();
+        return { width, height };
+      };
+      let viewportSize = syncSize();
+
+      const disposeActiveRig = () => {
+        if (!activeRig) return;
+        scene.remove(activeRig.group);
+        for (const d of activeRig.disposables) d.dispose();
+        activeRig = null;
+      };
+
+      const swapSample = (nextSample: LandingSampleSpec) => {
+        if (activeRig && activeRig.sampleId === nextSample.id) return;
+        disposeActiveRig();
+        activeRig = buildSampleRig(nextSample);
+        scene.add(activeRig.group);
+        curCam.set(...(propsRef.current.targetCamera));
+        curLook.set(...(propsRef.current.targetLookAt));
+        curPlaneOp = propsRef.current.planeOpacity;
+        curSecProg = propsRef.current.sectionProgress;
+        curSecFill = propsRef.current.sectionFillOpacity;
+      };
+
+      const renderFrame = () => {
+        if (isDisposed || !activeRig) return;
+        if (!isInView || document.hidden) {
+          rafId = 0;
+          return;
+        }
+        const now = typeof performance !== "undefined" ? performance.now() : Date.now();
+        if (hasPaintedOnce && !isDragging && now < scrollPausedUntil) {
+          rafId = 0;
+          if (!scrollResumeTimer) {
+            scrollResumeTimer = window.setTimeout(() => {
+              scrollResumeTimer = 0;
+              wakeRender();
+            }, 130);
+          }
+          return;
+        }
+
+        const p = propsRef.current;
+        if (activeRig.sampleId !== p.sample.id) {
+          swapSample(p.sample);
+        }
+        const rig = activeRig;
+        const damp = reducedMotion ? 1 : 0.14;
+
+        baseVec.set(...p.targetCamera).sub(desiredLookVec.set(...p.targetLookAt));
+        sph.setFromVector3(baseVec);
+        sph.theta += sphericalOffsetRef.current.theta;
+        sph.phi = Math.max(
+          0.28,
+          Math.min(Math.PI * 0.48, sph.phi + sphericalOffsetRef.current.phi),
+        );
+        sph.radius *= sphericalOffsetRef.current.radiusScale;
+
+        const desiredPos = new THREE.Vector3().setFromSpherical(sph).add(desiredLookVec);
+        curParallaxX += (targetParallaxX - curParallaxX) * damp;
+        curParallaxY += (targetParallaxY - curParallaxY) * damp;
+        desiredPos.x += curParallaxX;
+        desiredPos.y -= curParallaxY;
+
+        curCam.lerp(desiredPos, damp);
+        curLook.lerp(desiredLookVec, damp);
+        camera.position.copy(curCam);
+        camera.lookAt(curLook);
+        camera.updateMatrixWorld();
+
+        curPlaneOp += (p.planeOpacity - curPlaneOp) * damp;
+        curSecProg += (p.sectionProgress - curSecProg) * damp;
+        curSecFill += (p.sectionFillOpacity - curSecFill) * damp;
+
+        rig.planeMesh.visible = curPlaneOp > 0.02;
+        rig.planeBorderLine.visible = curPlaneOp > 0.02;
+        rig.planeFillMat.opacity = curPlaneOp * 0.16;
+        rig.planeBorderMat.opacity = curPlaneOp * 0.56;
+
+        rig.secFillMesh.visible = curSecFill > 0.02;
+        rig.secFillMat.opacity = curSecFill * 0.25;
+
+        const totalSegs = rig.sectionSegments.length;
+        const scaled = Math.max(0, Math.min(1, curSecProg)) * totalSegs;
+        for (let i = 0; i < totalSegs; i++) {
+          const seg = rig.sectionSegments[i];
+          const segT = Math.max(0, Math.min(1, scaled - i));
+          seg.line.visible = segT > 0.01;
+          if (seg.line.visible) {
+            const endPt = new THREE.Vector3().lerpVectors(seg.p1, seg.p2, segT);
+            const posAttr = seg.geo.getAttribute("position") as THREE.BufferAttribute;
+            posAttr.setXYZ(1, endPt.x, endPt.y, endPt.z);
+            posAttr.needsUpdate = true;
+          }
+        }
+
+        for (const g of rig.guideLines) {
+          g.mat.opacity = p.showGuideEdges ? 0.52 : 0;
+          g.line.visible = p.showGuideEdges;
+        }
+
+        for (const item of rig.edgeObjects) {
+          const adjacent = rig.solidFacesMeta.filter((f) =>
+            edgeBelongsToFace(item.edge.from, item.edge.to, f.vertices),
+          );
+          const front =
+            adjacent.length === 0 ||
+            adjacent.some((f) => {
+              const viewVec = new THREE.Vector3().subVectors(camera.position, f.center).normalize();
+              return f.normal.dot(viewVec) > 0.015;
+            });
+          item.solidLine.visible = front;
+          item.dashedLine.visible = !front;
+        }
+
+        const visSet = new Set(p.visiblePoints ?? rig.sample.points.map((pt) => pt.id));
+        const actSet = new Set(p.activePoints);
+
+        let projCx = 0;
+        let projCy = 0;
+        let projCount = 0;
+        const projectedMap: Record<string, { x: number; y: number; visible: boolean }> = {};
+
+        for (const pm of rig.pointMeshes) {
+          const isVis = visSet.has(pm.pt.id);
+          pm.mesh.visible = isVis;
+          pm.mesh.scale.setScalar(actSet.has(pm.pt.id) ? 1.32 : 1);
+
+          tempVec.copy(pm.mesh.position).project(camera);
+          const sx = (tempVec.x * 0.5 + 0.5) * viewportSize.width;
+          const sy = (-tempVec.y * 0.5 + 0.5) * viewportSize.height;
+          projectedMap[pm.pt.id] = { x: sx, y: sy, visible: isVis };
+          if (isVis) {
+            projCx += sx;
+            projCy += sy;
+            projCount++;
+          }
+        }
+
+        const avgCx = projCx / Math.max(1, projCount);
+        const avgCy = projCy / Math.max(1, projCount);
+        const visibleCandidates: LabelCandidate[] = [];
+
+        for (const pm of rig.pointMeshes) {
+          const refKey = `${rig.sampleId}:${pm.pt.id}`;
+          const tag = labelRefs.current[refKey];
+          const pr = projectedMap[pm.pt.id];
+          if (!tag || !pr) continue;
+          if (!pr.visible) {
+            tag.style.opacity = "0";
+            continue;
+          }
+          const vx = pr.x - avgCx;
+          const vy = pr.y - avgCy;
+          const vLen = Math.hypot(vx, vy) || 1;
+          const pushDist = pm.pt.role === "base_center" ? 13 : 16;
+          visibleCandidates.push({
+            id: pm.pt.id,
+            x: pr.x + (vx / vLen) * pushDist,
+            y: pr.y + (vy / vLen) * pushDist,
+          });
+        }
+
+        // 2-pass 2D label collision repulsion prevents overlapping labels (e.g. Cube M/N/E/A)
+        separateLabelPositions(visibleCandidates, viewportSize.width, viewportSize.height);
+        for (const cand of visibleCandidates) {
+          const tag = labelRefs.current[`${rig.sampleId}:${cand.id}`];
+          if (!tag) continue;
+          tag.style.opacity = "1";
+          tag.style.transform = `translate3d(${cand.x.toFixed(1)}px, ${cand.y.toFixed(1)}px, 0) translate(-50%, -50%)`;
+        }
+
+        activeRenderer.render(scene, camera);
+        hasPaintedOnce = true;
+
+        const settled =
+          !isDragging &&
+          curCam.distanceTo(desiredPos) < 0.0008 &&
+          curLook.distanceTo(desiredLookVec) < 0.0008 &&
+          Math.abs(p.planeOpacity - curPlaneOp) < 0.0008 &&
+          Math.abs(p.sectionProgress - curSecProg) < 0.0008 &&
+          Math.abs(p.sectionFillOpacity - curSecFill) < 0.0008 &&
+          Math.abs(targetParallaxX - curParallaxX) < 0.0008 &&
+          Math.abs(targetParallaxY - curParallaxY) < 0.0008;
+
+        if (!settled && !reducedMotion) {
+          rafId = window.requestAnimationFrame(renderFrame);
+        } else {
+          rafId = 0;
+        }
+      };
+
+      const wakeRender = () => {
+        if (isDisposed || !isInView || document.hidden) return;
+        if (reducedMotion) {
+          renderFrame();
+          return;
+        }
+        const now = typeof performance !== "undefined" ? performance.now() : Date.now();
+        if (hasPaintedOnce && !isDragging && now < scrollPausedUntil) {
+          if (!scrollResumeTimer) {
+            scrollResumeTimer = window.setTimeout(() => {
+              scrollResumeTimer = 0;
+              wakeRender();
+            }, 130);
+          }
+          return;
+        }
+        if (rafId === 0) {
+          rafId = window.requestAnimationFrame(renderFrame);
+        }
+      };
+
+      wakeRenderRef.current = wakeRender;
+      syncSampleRigRef.current = (nextSample: LandingSampleSpec) => {
+        swapSample(nextSample);
+        renderFrame();
+      };
+
+      const onPointerDown = (e: PointerEvent) => {
+        if (!propsRef.current.interactiveOrbit) return;
+        isDragging = true;
+        lastPtrX = e.clientX;
+        lastPtrY = e.clientY;
+        shell.setPointerCapture?.(e.pointerId);
+        onUserOrbitRef.current?.();
+        wakeRender();
+      };
+
+      const onPointerMove = (e: PointerEvent) => {
+        if (isDragging && propsRef.current.interactiveOrbit) {
+          const dx = e.clientX - lastPtrX;
+          const dy = e.clientY - lastPtrY;
+          lastPtrX = e.clientX;
+          lastPtrY = e.clientY;
+          sphericalOffsetRef.current.theta -= dx * 0.009;
+          sphericalOffsetRef.current.phi = Math.max(
+            -0.65,
+            Math.min(0.65, sphericalOffsetRef.current.phi - dy * 0.007),
+          );
+          wakeRender();
+        } else if (propsRef.current.subtlePointerParallax && !reducedMotion) {
+          const rect = shell.getBoundingClientRect();
+          if (rect.width > 0 && rect.height > 0) {
+            targetParallaxX = ((e.clientX - rect.left) / rect.width - 0.5) * 0.55;
+            targetParallaxY = ((e.clientY - rect.top) / rect.height - 0.5) * 0.35;
+            wakeRender();
+          }
+        }
+      };
+
+      const onPointerUp = (e: PointerEvent) => {
+        if (isDragging) {
+          isDragging = false;
+          shell.releasePointerCapture?.(e.pointerId);
+          wakeRender();
+        }
+      };
+
+      const onPointerLeave = () => {
+        targetParallaxX = 0;
+        targetParallaxY = 0;
+        wakeRender();
+      };
+
+      shell.addEventListener("pointerdown", onPointerDown);
+      shell.addEventListener("pointermove", onPointerMove);
+      shell.addEventListener("pointerup", onPointerUp);
+      shell.addEventListener("pointercancel", onPointerUp);
+      shell.addEventListener("pointerleave", onPointerLeave);
+
+      const ro =
+        typeof ResizeObserver !== "undefined"
+          ? new ResizeObserver(() => {
+              viewportSize = syncSize();
+              wakeRender();
+            })
+          : null;
+      ro?.observe(shell);
+
+      const io =
+        typeof IntersectionObserver !== "undefined"
+          ? new IntersectionObserver(
+              (entries) => {
+                const visible = entries.some((entry) => entry.isIntersecting);
+                isInView = visible;
+                if (visible) {
+                  wakeRender();
+                } else if (rafId !== 0) {
+                  window.cancelAnimationFrame(rafId);
+                  rafId = 0;
+                }
+              },
+              { threshold: 0.02 },
+            )
+          : null;
+      io?.observe(shell);
+
+      const onVisibilityChange = () => {
+        if (document.hidden) {
+          if (rafId !== 0) {
+            window.cancelAnimationFrame(rafId);
+            rafId = 0;
+          }
+        } else {
+          wakeRender();
+        }
+      };
+      const onWindowScroll = () => {
+        scrollPausedUntil = (typeof performance !== "undefined" ? performance.now() : Date.now()) + 120;
+      };
+      window.addEventListener("scroll", onWindowScroll, { passive: true });
+      document.addEventListener("visibilitychange", onVisibilityChange);
+
+      const onContextLost = (ev: Event) => {
+        ev.preventDefault();
+        if (rafId !== 0) {
+          window.cancelAnimationFrame(rafId);
+          rafId = 0;
+        }
+        setWebglReady(false);
+      };
+      activeRenderer.domElement.addEventListener("webglcontextlost", onContextLost);
+
+      swapSample(propsRef.current.sample);
+      setWebglReady(true);
+      renderFrame();
+
+      cleanupInner = () => {
+        isDisposed = true;
+        wakeRenderRef.current = () => {};
+        syncSampleRigRef.current = () => {};
+        if (rafId !== 0) window.cancelAnimationFrame(rafId);
+        if (scrollResumeTimer) window.clearTimeout(scrollResumeTimer);
+        ro?.disconnect();
+        io?.disconnect();
+        shell.removeEventListener("pointerdown", onPointerDown);
+        shell.removeEventListener("pointermove", onPointerMove);
+        shell.removeEventListener("pointerup", onPointerUp);
+        shell.removeEventListener("pointercancel", onPointerUp);
+        shell.removeEventListener("pointerleave", onPointerLeave);
+        window.removeEventListener("scroll", onWindowScroll);
+        document.removeEventListener("visibilitychange", onVisibilityChange);
+        activeRenderer.domElement.removeEventListener("webglcontextlost", onContextLost);
+        disposeActiveRig();
+        activeRenderer.dispose();
+        if (activeRenderer.domElement.parentNode === host) {
+          host.removeChild(activeRenderer.domElement);
+        }
+        setWebglReady(false);
+      };
+    };
+
+    const mountRaf =
+      typeof window.requestAnimationFrame === "function"
+        ? window.requestAnimationFrame(initPersistentRenderer)
+        : 0;
+    if (mountRaf === 0) {
+      mountTimer = window.setTimeout(initPersistentRenderer, 0);
+    }
+
+    return () => {
+      cancelled = true;
+      if (mountRaf !== 0 && typeof window.cancelAnimationFrame === "function") {
+        window.cancelAnimationFrame(mountRaf);
+      }
+      if (mountTimer !== 0) window.clearTimeout(mountTimer);
+      cleanupInner?.();
+    };
+  }, [shouldMountWebgl]);
+
+  // Swap Three.js sample group inside persistent WebGLRenderer (0 new WebGL contexts)
+  useEffect(() => {
+    if (webglReady) {
+      syncSampleRigRef.current(sample);
+    }
+  }, [sample, webglReady]);
+
   // Wake sleeping demand-based RAF whenever stage props or camera targets change
   useEffect(() => {
     wakeRenderRef.current();
@@ -217,32 +1032,29 @@ export function SpatialSceneCanvas({
     subtlePointerParallax,
   ]);
 
-  // Lazy-mount WebGLRenderer only once the canvas approaches or enters the viewport
-  useEffect(() => {
-    const shell = shellRef.current;
-    if (!shell || typeof window === "undefined") return;
-    if (shouldMountWebgl) return;
-    if (typeof IntersectionObserver === "undefined") {
-      setShouldMountWebgl(true);
-      return;
-    }
-    const mountObserver = new IntersectionObserver(
-      (entries) => {
-        if (entries.some((entry) => entry.isIntersecting)) {
-          setShouldMountWebgl(true);
-          mountObserver.disconnect();
-        }
-      },
-      { rootMargin: "280px 0px", threshold: 0.01 },
-    );
-    mountObserver.observe(shell);
-    return () => mountObserver.disconnect();
-  }, [shouldMountWebgl]);
-
-  // Precompute fallback SVG geometry using the exact same 3D points & projection math
+  // Skip expensive fallback 3D math completely once WebGL is live
   const svgFallback = useMemo(() => {
     const w = 560;
     const h = 420;
+    if (webglReady) {
+      return {
+        w,
+        h,
+        labelCoords: {} as Record<string, { x: number; y: number }>,
+        solidSegments: [] as {
+          from: string;
+          to: string;
+          kind: LandingSampleSpec["solidEdges"][number]["kind"];
+          p1: ProjectedPoint2D;
+          p2: ProjectedPoint2D;
+          front: boolean;
+        }[],
+        planePts: [] as { x: number; y: number; depth: number }[],
+        sectionPts: [] as ProjectedPoint2D[],
+        visibleList: [] as ProjectedPoint2D[],
+      };
+    }
+
     const visSet = new Set(visiblePoints ?? sample.points.map((p) => p.id));
     const faces = computeOutwardFaceNormals(sample);
     const camVec = new THREE.Vector3(...targetCamera);
@@ -280,629 +1092,22 @@ export function SpatialSceneCanvas({
       projectToSvgViewport(v, targetCamera, targetLookAt, w, h, 35),
     );
     const sectionPts = sample.sectionLoop.map((id) => projPoints[id]).filter(Boolean);
-
     const visibleList = sample.points.filter((p) => visSet.has(p.id)).map((p) => projPoints[p.id]);
-    const cx =
-      visibleList.reduce((acc, p) => acc + p.x, 0) / Math.max(1, visibleList.length);
-    const cy =
-      visibleList.reduce((acc, p) => acc + p.y, 0) / Math.max(1, visibleList.length);
+    const cx = visibleList.reduce((acc, p) => acc + p.x, 0) / Math.max(1, visibleList.length);
+    const cy = visibleList.reduce((acc, p) => acc + p.y, 0) / Math.max(1, visibleList.length);
 
-    return { w, h, projPoints, solidSegments, planePts, sectionPts, visibleList, cx, cy };
-  }, [sample, targetCamera, targetLookAt, visiblePoints]);
-
-  useEffect(() => {
-    if (!shouldMountWebgl) return;
-    const shell = shellRef.current;
-    const host = hostRef.current;
-    if (!shell || !host || typeof window === "undefined") return;
-
-    const reducedMotion =
-      typeof window.matchMedia === "function" &&
-      window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-
-    let renderer: THREE.WebGLRenderer | null = null;
-    let rafId = 0;
-    let isDisposed = false;
-    let isInView = true;
-
-    const disposables: { dispose: () => void }[] = [];
-    const track = <T extends { dispose: () => void }>(item: T): T => {
-      disposables.push(item);
-      return item;
-    };
-
-    try {
-      renderer = new THREE.WebGLRenderer({
-        antialias: true,
-        alpha: true,
-        powerPreference: "high-performance",
-      });
-    } catch {
-      setWebglReady(false);
-      return;
-    }
-
-    const activeRenderer = renderer;
-    const maxDpr = window.innerWidth <= 820 ? 1.5 : 2;
-    activeRenderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, maxDpr));
-    activeRenderer.setClearColor(0x000000, 0);
-    activeRenderer.outputColorSpace = THREE.SRGBColorSpace;
-    host.appendChild(activeRenderer.domElement);
-
-    const scene = new THREE.Scene();
-    const camera = new THREE.PerspectiveCamera(35, 1.33, 0.1, 100);
-
-    // Subtle studio lighting on clean porcelain/alabaster surfaces
-    scene.add(new THREE.AmbientLight(0xffffff, 1.25));
-    const keyLight = new THREE.DirectionalLight(0xfffbf4, 1.45);
-    keyLight.position.set(7, 11, -5);
-    scene.add(keyLight);
-    const rimLight = new THREE.DirectionalLight(0xd9ecff, 0.72);
-    rimLight.position.set(-7, 4, 6);
-    scene.add(rimLight);
-
-    // Subtle base grid circle datum underneath solid
-    const minY = Math.min(...sample.points.map((p) => p.pos[1]));
-    const datumGroup = new THREE.Group();
-    const ringGeo = track(new THREE.RingGeometry(2.65, 2.68, 72));
-    ringGeo.rotateX(-Math.PI / 2);
-    const ringMat = track(
-      new THREE.MeshBasicMaterial({
-        color: 0x111110,
-        transparent: true,
-        opacity: 0.08,
-        side: THREE.DoubleSide,
-      }),
-    );
-    const ringMesh = new THREE.Mesh(ringGeo, ringMat);
-    ringMesh.position.y = minY - 0.04;
-    datumGroup.add(ringMesh);
-    scene.add(datumGroup);
-
-    // Translucent solid faces
-    const solidFacesMeta = computeOutwardFaceNormals(sample);
-    const baseFaceMat = track(
-      new THREE.MeshPhysicalMaterial({
-        color: 0xeef3f8,
-        transparent: true,
-        opacity: 0.24,
-        roughness: 0.45,
-        metalness: 0.0,
-        side: THREE.DoubleSide,
-        depthWrite: false,
-      }),
-    );
-    const sideFaceMat = track(
-      new THREE.MeshPhysicalMaterial({
-        color: 0xf7f8fa,
-        transparent: true,
-        opacity: 0.14,
-        roughness: 0.35,
-        metalness: 0.0,
-        side: THREE.DoubleSide,
-        depthWrite: false,
-      }),
-    );
-
-    for (let fIdx = 0; fIdx < sample.solidFaces.length; fIdx++) {
-      const face = sample.solidFaces[fIdx];
-      if (face.length < 3) continue;
-      const verts: number[] = [];
-      const p0 = sample.pointMap[face[0]].pos;
-      for (let i = 1; i < face.length - 1; i++) {
-        const p1 = sample.pointMap[face[i]].pos;
-        const p2 = sample.pointMap[face[i + 1]].pos;
-        verts.push(...p0, ...p1, ...p2);
-      }
-      const faceGeo = track(new THREE.BufferGeometry());
-      faceGeo.setAttribute("position", new THREE.Float32BufferAttribute(verts, 3));
-      faceGeo.computeVertexNormals();
-      const mesh = new THREE.Mesh(faceGeo, fIdx === 0 ? baseFaceMat : sideFaceMat);
-      mesh.renderOrder = 1;
-      scene.add(mesh);
-    }
-
-    // Dual front-solid / back-dashed materials for every solid edge
-    const edgeObjects = sample.solidEdges.map((edge) => {
-      const a = sample.pointMap[edge.from].pos;
-      const b = sample.pointMap[edge.to].pos;
-
-      const solidGeo = track(new THREE.BufferGeometry());
-      solidGeo.setAttribute("position", new THREE.Float32BufferAttribute([...a, ...b], 3));
-      const solidMat = track(
-        new THREE.LineBasicMaterial({
-          color: edge.kind === "altitude" ? 0x005bab : 0x1b1b19,
-          transparent: true,
-          opacity: 0.88,
-        }),
-      );
-      const solidLine = new THREE.Line(solidGeo, solidMat);
-      solidLine.renderOrder = 3;
-
-      const dashedGeo = track(new THREE.BufferGeometry());
-      dashedGeo.setAttribute("position", new THREE.Float32BufferAttribute([...a, ...b], 3));
-      const dashedMat = track(
-        new THREE.LineDashedMaterial({
-          color: 0x6b7280,
-          dashSize: 0.18,
-          gapSize: 0.13,
-          transparent: true,
-          opacity: 0.7,
-        }),
-      );
-      const dashedLine = new THREE.Line(dashedGeo, dashedMat);
-      dashedLine.computeLineDistances();
-      dashedLine.renderOrder = 2;
-
-      scene.add(solidLine);
-      scene.add(dashedLine);
-      return { edge, solidLine, dashedLine };
+    const candidates: LabelCandidate[] = visibleList.map((pt) => {
+      const vx = pt.x - cx;
+      const vy = pt.y - cy;
+      const len = Math.hypot(vx, vy) || 1;
+      const push = pt.role === "base_center" ? 13 : 16;
+      return { id: pt.id, x: pt.x + (vx / len) * push, y: pt.y + (vy / len) * push };
     });
+    separateLabelPositions(candidates, w, h);
+    const labelCoords = Object.fromEntries(candidates.map((c) => [c.id, { x: c.x, y: c.y }]));
 
-    // Optional base diagonals / construction guides
-    const guideLines = sample.guideEdges.map((edge) => {
-      const a = sample.pointMap[edge.from].pos;
-      const b = sample.pointMap[edge.to].pos;
-      const geo = track(new THREE.BufferGeometry());
-      geo.setAttribute("position", new THREE.Float32BufferAttribute([...a, ...b], 3));
-      const mat = track(
-        new THREE.LineDashedMaterial({
-          color: 0x8a857e,
-          dashSize: 0.16,
-          gapSize: 0.16,
-          transparent: true,
-          opacity: 0,
-        }),
-      );
-      const line = new THREE.Line(geo, mat);
-      line.computeLineDistances();
-      line.renderOrder = 2;
-      scene.add(line);
-      return { line, mat };
-    });
-
-    // Orthogonal right-angle tick for altitude SA ⊥ (ABCD)
-    if (sample.altitudePair && sample.basePolygon.length >= 2) {
-      const footId = sample.altitudePair[1];
-      const topId = sample.altitudePair[0];
-      const foot = new THREE.Vector3(...sample.pointMap[footId].pos);
-      const upDir = new THREE.Vector3(...sample.pointMap[topId].pos).sub(foot).normalize();
-      const bId = sample.basePolygon.find((id) => id !== footId) ?? "B";
-      const dId = [...sample.basePolygon].reverse().find((id) => id !== footId) ?? "D";
-      const createTick = (dirPointId: string) => {
-        const dir = new THREE.Vector3(...sample.pointMap[dirPointId].pos).sub(foot).normalize();
-        const s = 0.34;
-        const pA = foot.clone().addScaledVector(dir, s);
-        const pCorner = foot.clone().addScaledVector(dir, s).addScaledVector(upDir, s);
-        const pB = foot.clone().addScaledVector(upDir, s);
-        const geo = track(
-          new THREE.BufferGeometry().setFromPoints([pA, pCorner, pB]),
-        );
-        const mat = track(
-          new THREE.LineBasicMaterial({ color: 0x0075de, transparent: true, opacity: 0.72 }),
-        );
-        scene.add(new THREE.Line(geo, mat));
-      };
-      createTick(bId);
-      createTick(dId);
-    }
-
-    // Bounded Cutting Plane (MNP)
-    const pq = sample.planeQuad;
-    const planeGeo = track(new THREE.BufferGeometry());
-    planeGeo.setAttribute(
-      "position",
-      new THREE.Float32BufferAttribute(
-        [...pq[0], ...pq[1], ...pq[2], ...pq[0], ...pq[2], ...pq[3]],
-        3,
-      ),
-    );
-    planeGeo.computeVertexNormals();
-    const planeFillMat = track(
-      new THREE.MeshBasicMaterial({
-        color: 0x0075de,
-        transparent: true,
-        opacity: 0.14,
-        side: THREE.DoubleSide,
-        depthWrite: false,
-      }),
-    );
-    const planeMesh = new THREE.Mesh(planeGeo, planeFillMat);
-    planeMesh.renderOrder = 4;
-    scene.add(planeMesh);
-
-    const planeBorderGeo = track(new THREE.BufferGeometry());
-    planeBorderGeo.setAttribute(
-      "position",
-      new THREE.Float32BufferAttribute([...pq[0], ...pq[1], ...pq[2], ...pq[3], ...pq[0]], 3),
-    );
-    const planeBorderMat = track(
-      new THREE.LineBasicMaterial({
-        color: 0x0075de,
-        transparent: true,
-        opacity: 0.45,
-      }),
-    );
-    const planeBorderLine = new THREE.Line(planeBorderGeo, planeBorderMat);
-    planeBorderLine.renderOrder = 5;
-    scene.add(planeBorderLine);
-
-    // Cross-Section Polygon Fill (MENPF / MNEPFQ)
-    const secPositions: number[] = [];
-    const secLoopPts = sample.sectionLoop.map((id) => sample.pointMap[id].pos);
-    for (let i = 1; i < secLoopPts.length - 1; i++) {
-      secPositions.push(...secLoopPts[0], ...secLoopPts[i], ...secLoopPts[i + 1]);
-    }
-    const secFillGeo = track(new THREE.BufferGeometry());
-    secFillGeo.setAttribute("position", new THREE.Float32BufferAttribute(secPositions, 3));
-    const secFillMat = track(
-      new THREE.MeshBasicMaterial({
-        color: 0xd96b18,
-        transparent: true,
-        opacity: 0.24,
-        side: THREE.DoubleSide,
-        depthWrite: false,
-      }),
-    );
-    const secFillMesh = new THREE.Mesh(secFillGeo, secFillMat);
-    secFillMesh.renderOrder = 6;
-    scene.add(secFillMesh);
-
-    // Progressive Section Perimeter Edges
-    const sectionSegments = sample.sectionLoop.map((id, idx) => {
-      const nextId = sample.sectionLoop[(idx + 1) % sample.sectionLoop.length];
-      const p1 = new THREE.Vector3(...sample.pointMap[id].pos);
-      const p2 = new THREE.Vector3(...sample.pointMap[nextId].pos);
-      const geo = track(new THREE.BufferGeometry().setFromPoints([p1, p1.clone()]));
-      const mat = track(
-        new THREE.LineBasicMaterial({
-          color: 0xc2550a,
-          transparent: true,
-          opacity: 0.96,
-        }),
-      );
-      const line = new THREE.Line(geo, mat);
-      line.renderOrder = 7;
-      scene.add(line);
-      return { p1, p2, geo, line, mat };
-    });
-
-    // Vertex Spheres
-    const pointMeshes = sample.points.map((pt) => {
-      const radius =
-        pt.role === "intersection" ? 0.11 : pt.role === "seed" ? 0.095 : 0.07;
-      const color =
-        pt.role === "intersection"
-          ? 0xc2550a
-          : pt.role === "seed"
-            ? 0x0075de
-            : 0x1b1b19;
-      const geo = track(new THREE.SphereGeometry(radius, 20, 20));
-      const mat = track(
-        new THREE.MeshBasicMaterial({
-          color,
-          transparent: true,
-          opacity: 1,
-        }),
-      );
-      const mesh = new THREE.Mesh(geo, mat);
-      mesh.position.set(pt.pos[0], pt.pos[1], pt.pos[2]);
-      mesh.renderOrder = 8;
-      scene.add(mesh);
-      return { pt, mesh, mat };
-    });
-
-    // Smoothed camera & visual state
-    const curCam = new THREE.Vector3(...propsRef.current.targetCamera);
-    const curLook = new THREE.Vector3(...propsRef.current.targetLookAt);
-    let curPlaneOp = propsRef.current.planeOpacity;
-    let curSecProg = propsRef.current.sectionProgress;
-    let curSecFill = propsRef.current.sectionFillOpacity;
-    let curParallaxX = 0;
-    let curParallaxY = 0;
-    let targetParallaxX = 0;
-    let targetParallaxY = 0;
-
-    // Interactive orbit pointer handling (never steals wheel vertical scroll)
-    let isDragging = false;
-    let lastPtrX = 0;
-    let lastPtrY = 0;
-
-    const wakeRender = () => {
-      if (isDisposed || !isInView || document.hidden) return;
-      if (rafId === 0) {
-        rafId = window.requestAnimationFrame(renderFrame);
-      }
-    };
-    wakeRenderRef.current = wakeRender;
-
-    const onPointerDown = (e: PointerEvent) => {
-      if (!propsRef.current.interactiveOrbit) return;
-      isDragging = true;
-      lastPtrX = e.clientX;
-      lastPtrY = e.clientY;
-      shell.setPointerCapture?.(e.pointerId);
-      onUserOrbitRef.current?.();
-      wakeRender();
-    };
-
-    const onPointerMove = (e: PointerEvent) => {
-      if (isDragging && propsRef.current.interactiveOrbit) {
-        const dx = e.clientX - lastPtrX;
-        const dy = e.clientY - lastPtrY;
-        lastPtrX = e.clientX;
-        lastPtrY = e.clientY;
-        sphericalOffsetRef.current.theta -= dx * 0.009;
-        sphericalOffsetRef.current.phi = Math.max(
-          -0.65,
-          Math.min(0.65, sphericalOffsetRef.current.phi - dy * 0.007),
-        );
-        wakeRender();
-      } else if (propsRef.current.subtlePointerParallax && !reducedMotion) {
-        const rect = shell.getBoundingClientRect();
-        if (rect.width > 0 && rect.height > 0) {
-          targetParallaxX = ((e.clientX - rect.left) / rect.width - 0.5) * 0.55;
-          targetParallaxY = ((e.clientY - rect.top) / rect.height - 0.5) * 0.35;
-          wakeRender();
-        }
-      }
-    };
-
-    const onPointerUp = (e: PointerEvent) => {
-      if (isDragging) {
-        isDragging = false;
-        shell.releasePointerCapture?.(e.pointerId);
-        wakeRender();
-      }
-    };
-
-    const onPointerLeave = () => {
-      targetParallaxX = 0;
-      targetParallaxY = 0;
-      wakeRender();
-    };
-
-    shell.addEventListener("pointerdown", onPointerDown);
-    shell.addEventListener("pointermove", onPointerMove);
-    shell.addEventListener("pointerup", onPointerUp);
-    shell.addEventListener("pointercancel", onPointerUp);
-    shell.addEventListener("pointerleave", onPointerLeave);
-
-    const syncSize = () => {
-      const rect = shell.getBoundingClientRect();
-      const width = Math.max(120, Math.floor(rect.width));
-      const height = Math.max(120, Math.floor(rect.height));
-      activeRenderer.setSize(width, height, false);
-      camera.aspect = width / height;
-      camera.updateProjectionMatrix();
-      return { width, height };
-    };
-
-    let viewportSize = syncSize();
-    const ro =
-      typeof ResizeObserver !== "undefined"
-        ? new ResizeObserver(() => {
-            viewportSize = syncSize();
-            wakeRender();
-          })
-        : null;
-    ro?.observe(shell);
-
-    const io =
-      typeof IntersectionObserver !== "undefined"
-        ? new IntersectionObserver(
-            (entries) => {
-              const visible = entries.some((entry) => entry.isIntersecting);
-              isInView = visible;
-              if (visible) {
-                wakeRender();
-              } else if (rafId !== 0) {
-                window.cancelAnimationFrame(rafId);
-                rafId = 0;
-              }
-            },
-            { threshold: 0.02 },
-          )
-        : null;
-    io?.observe(shell);
-
-    const onVisibilityChange = () => {
-      if (document.hidden) {
-        if (rafId !== 0) {
-          window.cancelAnimationFrame(rafId);
-          rafId = 0;
-        }
-      } else {
-        wakeRender();
-      }
-    };
-    document.addEventListener("visibilitychange", onVisibilityChange);
-
-    const onContextLost = (ev: Event) => {
-      ev.preventDefault();
-      if (rafId !== 0) {
-        window.cancelAnimationFrame(rafId);
-        rafId = 0;
-      }
-      setWebglReady(false);
-    };
-    activeRenderer.domElement.addEventListener("webglcontextlost", onContextLost);
-
-    const tempVec = new THREE.Vector3();
-    const baseVec = new THREE.Vector3();
-    const desiredLookVec = new THREE.Vector3();
-    const sph = new THREE.Spherical();
-
-    function renderFrame() {
-      if (isDisposed) return;
-      if (!isInView || document.hidden) {
-        rafId = 0;
-        return;
-      }
-
-      const p = propsRef.current;
-      const damp = reducedMotion ? 1 : 0.14;
-
-      baseVec.set(...p.targetCamera).sub(desiredLookVec.set(...p.targetLookAt));
-      sph.setFromVector3(baseVec);
-      sph.theta += sphericalOffsetRef.current.theta;
-      sph.phi = Math.max(0.28, Math.min(Math.PI * 0.48, sph.phi + sphericalOffsetRef.current.phi));
-      sph.radius *= sphericalOffsetRef.current.radiusScale;
-
-      const desiredPos = new THREE.Vector3().setFromSpherical(sph).add(desiredLookVec);
-      curParallaxX += (targetParallaxX - curParallaxX) * damp;
-      curParallaxY += (targetParallaxY - curParallaxY) * damp;
-      desiredPos.x += curParallaxX;
-      desiredPos.y -= curParallaxY;
-
-      curCam.lerp(desiredPos, damp);
-      curLook.lerp(desiredLookVec, damp);
-      camera.position.copy(curCam);
-      camera.lookAt(curLook);
-      camera.updateMatrixWorld();
-
-      curPlaneOp += (p.planeOpacity - curPlaneOp) * damp;
-      curSecProg += (p.sectionProgress - curSecProg) * damp;
-      curSecFill += (p.sectionFillOpacity - curSecFill) * damp;
-
-      planeMesh.visible = curPlaneOp > 0.02;
-      planeBorderLine.visible = curPlaneOp > 0.02;
-      planeFillMat.opacity = curPlaneOp * 0.16;
-      planeBorderMat.opacity = curPlaneOp * 0.56;
-
-      secFillMesh.visible = curSecFill > 0.02;
-      secFillMat.opacity = curSecFill * 0.25;
-
-      // Progressive cross-section segment reveal
-      const totalSegs = sectionSegments.length;
-      const scaled = Math.max(0, Math.min(1, curSecProg)) * totalSegs;
-      for (let i = 0; i < totalSegs; i++) {
-        const seg = sectionSegments[i];
-        const segT = Math.max(0, Math.min(1, scaled - i));
-        seg.line.visible = segT > 0.01;
-        if (seg.line.visible) {
-          const endPt = new THREE.Vector3().lerpVectors(seg.p1, seg.p2, segT);
-          const posAttr = seg.geo.getAttribute("position") as THREE.BufferAttribute;
-          posAttr.setXYZ(1, endPt.x, endPt.y, endPt.z);
-          posAttr.needsUpdate = true;
-        }
-      }
-
-      // Guide diagonals visibility
-      for (const g of guideLines) {
-        g.mat.opacity = p.showGuideEdges ? 0.52 : 0;
-        g.line.visible = p.showGuideEdges;
-      }
-
-      // Depth-correct solid/dashed visibility for every solid edge
-      for (const item of edgeObjects) {
-        const adjacent = solidFacesMeta.filter((f) =>
-          edgeBelongsToFace(item.edge.from, item.edge.to, f.vertices),
-        );
-        const front =
-          adjacent.length === 0 ||
-          adjacent.some((f) => {
-            const viewVec = new THREE.Vector3().subVectors(camera.position, f.center).normalize();
-            return f.normal.dot(viewVec) > 0.015;
-          });
-        item.solidLine.visible = front;
-        item.dashedLine.visible = !front;
-      }
-
-      const visSet = new Set(p.visiblePoints ?? sample.points.map((pt) => pt.id));
-      const actSet = new Set(p.activePoints);
-
-      // Update vertex spheres + projected 2D labels outside silhouette center
-      let projCx = 0;
-      let projCy = 0;
-      let projCount = 0;
-      const projectedMap: Record<string, { x: number; y: number; visible: boolean }> = {};
-
-      for (const pm of pointMeshes) {
-        const isVis = visSet.has(pm.pt.id);
-        pm.mesh.visible = isVis;
-        const isAct = actSet.has(pm.pt.id);
-        const scale = isAct ? 1.32 : 1;
-        pm.mesh.scale.setScalar(scale);
-
-        tempVec.copy(pm.mesh.position).project(camera);
-        const sx = (tempVec.x * 0.5 + 0.5) * viewportSize.width;
-        const sy = (-tempVec.y * 0.5 + 0.5) * viewportSize.height;
-        projectedMap[pm.pt.id] = { x: sx, y: sy, visible: isVis };
-        if (isVis) {
-          projCx += sx;
-          projCy += sy;
-          projCount++;
-        }
-      }
-
-      const avgCx = projCx / Math.max(1, projCount);
-      const avgCy = projCy / Math.max(1, projCount);
-
-      for (const pm of pointMeshes) {
-        const tag = labelRefs.current[pm.pt.id];
-        const pr = projectedMap[pm.pt.id];
-        if (!tag || !pr) continue;
-        if (!pr.visible) {
-          tag.style.opacity = "0";
-          continue;
-        }
-        const vx = pr.x - avgCx;
-        const vy = pr.y - avgCy;
-        const vLen = Math.hypot(vx, vy) || 1;
-        const pushDist = pm.pt.role === "base_center" ? 13 : 16;
-        const lx = Math.max(22, Math.min(viewportSize.width - 22, pr.x + (vx / vLen) * pushDist));
-        const ly = Math.max(44, Math.min(viewportSize.height - 44, pr.y + (vy / vLen) * pushDist));
-        tag.style.opacity = "1";
-        tag.style.transform = `translate3d(${lx.toFixed(1)}px, ${ly.toFixed(1)}px, 0) translate(-50%, -50%)`;
-      }
-
-      activeRenderer.render(scene, camera);
-
-      const settled =
-        !isDragging &&
-        curCam.distanceTo(desiredPos) < 0.0008 &&
-        curLook.distanceTo(desiredLookVec) < 0.0008 &&
-        Math.abs(p.planeOpacity - curPlaneOp) < 0.0008 &&
-        Math.abs(p.sectionProgress - curSecProg) < 0.0008 &&
-        Math.abs(p.sectionFillOpacity - curSecFill) < 0.0008 &&
-        Math.abs(targetParallaxX - curParallaxX) < 0.0008 &&
-        Math.abs(targetParallaxY - curParallaxY) < 0.0008;
-
-      if (!settled && !reducedMotion) {
-        rafId = window.requestAnimationFrame(renderFrame);
-      } else {
-        rafId = 0;
-      }
-    }
-
-    setWebglReady(true);
-    renderFrame();
-    if (!reducedMotion) {
-      wakeRender();
-    }
-
-    return () => {
-      isDisposed = true;
-      wakeRenderRef.current = () => {};
-      if (rafId !== 0) window.cancelAnimationFrame(rafId);
-      ro?.disconnect();
-      io?.disconnect();
-      shell.removeEventListener("pointerdown", onPointerDown);
-      shell.removeEventListener("pointermove", onPointerMove);
-      shell.removeEventListener("pointerup", onPointerUp);
-      shell.removeEventListener("pointercancel", onPointerUp);
-      shell.removeEventListener("pointerleave", onPointerLeave);
-      document.removeEventListener("visibilitychange", onVisibilityChange);
-      activeRenderer.domElement.removeEventListener("webglcontextlost", onContextLost);
-      for (const d of disposables) d.dispose();
-      activeRenderer.dispose();
-      if (activeRenderer.domElement.parentNode === host) {
-        host.removeChild(activeRenderer.domElement);
-      }
-      setWebglReady(false);
-    };
-  }, [sample, shouldMountWebgl]);
+    return { w, h, labelCoords, solidSegments, planePts, sectionPts, visibleList };
+  }, [webglReady, sample, targetCamera, targetLookAt, visiblePoints]);
 
   const handleKeyDown = (e: React.KeyboardEvent<HTMLDivElement>) => {
     if (!interactiveOrbit) return;
@@ -947,9 +1152,12 @@ export function SpatialSceneCanvas({
       onKeyDown={handleKeyDown}
     >
       <div className="axo-sp-scene-grid" aria-hidden="true" />
-      <div ref={hostRef} className="axo-sp-scene-canvas-host" />
+      <div
+        ref={hostRef}
+        className="axo-sp-scene-canvas-host"
+        style={{ visibility: webglReady ? "visible" : "hidden" }}
+      />
 
-      {/* Geometrically faithful SVG fallback (rendered only before WebGL or when WebGL is unavailable) */}
       {!webglReady && (
         <svg
           className="axo-sp-scene-svg"
@@ -957,7 +1165,6 @@ export function SpatialSceneCanvas({
           preserveAspectRatio="xMidYMid meet"
           aria-hidden="true"
         >
-          {/* Cutting plane (MNP) */}
           {planeOpacity > 0.02 && (
             <polygon
               points={svgFallback.planePts.map((p) => `${p.x.toFixed(1)},${p.y.toFixed(1)}`).join(" ")}
@@ -969,7 +1176,6 @@ export function SpatialSceneCanvas({
             />
           )}
 
-          {/* Solid & dashed edges */}
           {svgFallback.solidSegments.map((seg) => (
             <line
               key={`${seg.from}-${seg.to}`}
@@ -984,16 +1190,14 @@ export function SpatialSceneCanvas({
             />
           ))}
 
-          {/* Section fill */}
           {sectionFillOpacity > 0.02 && (
             <polygon
               points={svgFallback.sectionPts.map((p) => `${p.x.toFixed(1)},${p.y.toFixed(1)}`).join(" ")}
-              fill="#d96b18"
+              fill="#dd5b00"
               fillOpacity={(sectionFillOpacity * 0.24).toFixed(3)}
             />
           )}
 
-          {/* Progressive section edges */}
           {sectionProgress > 0.02 &&
             svgFallback.sectionPts.map((pt, idx) => {
               const nextPt = svgFallback.sectionPts[(idx + 1) % svgFallback.sectionPts.length];
@@ -1016,7 +1220,6 @@ export function SpatialSceneCanvas({
               );
             })}
 
-          {/* Point markers */}
           {svgFallback.visibleList.map((pt) => (
             <circle
               key={`svg-dot-${pt.id}`}
@@ -1025,7 +1228,7 @@ export function SpatialSceneCanvas({
               r={pt.role === "intersection" ? 5.2 : pt.role === "seed" ? 4.4 : 3.4}
               fill={
                 pt.role === "intersection"
-                  ? "#c2550a"
+                  ? "#dd5b00"
                   : pt.role === "seed"
                     ? "#0075de"
                     : "#1b1b19"
@@ -1035,16 +1238,10 @@ export function SpatialSceneCanvas({
         </svg>
       )}
 
-      {/* Projected 2D point badges (synced cleanly by WebGL loop or computed SVG fallback) */}
+      {/* Projected 2D point badges keyed per sample+point to eliminate carryover on sample switch */}
       <div className="axo-sp-scene-labels" aria-hidden="true">
         {sample.points.map((pt) => {
-          const fb = svgFallback.projPoints[pt.id];
-          const vx = fb.x - svgFallback.cx;
-          const vy = fb.y - svgFallback.cy;
-          const len = Math.hypot(vx, vy) || 1;
-          const push = pt.role === "base_center" ? 13 : 16;
-          const pctX = ((fb.x + (vx / len) * push) / svgFallback.w) * 100;
-          const pctY = ((fb.y + (vy / len) * push) / svgFallback.h) * 100;
+          const fb = svgFallback.labelCoords[pt.id];
           const isVisible = visibleSet.has(pt.id);
           const isActive = activeSet.has(pt.id);
           const roleClass =
@@ -1053,21 +1250,30 @@ export function SpatialSceneCanvas({
               : pt.role === "intersection"
                 ? " is-intersection"
                 : "";
+          const refKey = `${sample.id}:${pt.id}`;
           return (
             <span
-              key={pt.id}
+              key={refKey}
+              data-point-id={pt.id}
+              data-sample-id={sample.id}
               ref={(el) => {
-                labelRefs.current[pt.id] = el;
+                if (el) {
+                  labelRefs.current[refKey] = el;
+                } else {
+                  delete labelRefs.current[refKey];
+                }
               }}
               className={`axo-sp-point-tag${roleClass}${isActive ? " is-active" : ""}`}
               style={
                 webglReady
                   ? undefined
-                  : {
-                      left: `${pctX.toFixed(2)}%`,
-                      top: `${pctY.toFixed(2)}%`,
-                      opacity: isVisible ? 1 : 0,
-                    }
+                  : fb
+                    ? {
+                        left: `${((fb.x / svgFallback.w) * 100).toFixed(2)}%`,
+                        top: `${((fb.y / svgFallback.h) * 100).toFixed(2)}%`,
+                        opacity: isVisible ? 1 : 0,
+                      }
+                    : { opacity: 0 }
               }
             >
               {pt.label}
