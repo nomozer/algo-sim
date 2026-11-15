@@ -2,6 +2,7 @@ import { IconAxoLogo } from "./icons";
 import { LandingClosingSculpture } from "./landing/LandingClosingSculpture";
 import { LandingHeader } from "./landing/LandingHeader";
 import { LandingHeroSculpture3D } from "./landing/LandingHeroSculpture3D";
+import { FinalCtaCornerAccent } from "./landing/LandingIllustrationAccents";
 import { LandingInteractiveDemo } from "./landing/LandingInteractiveDemo";
 import { LandingStorytelling } from "./landing/LandingStorytelling";
 import { enterAxoWorkspace, openLibraryFromLanding } from "./landing/landing-geometry-data";
@@ -66,6 +67,7 @@ export function LandingView() {
         <section id="landing-final-cta" className="axo-sp-final-cta" aria-labelledby="landing-final-title">
           <div className="axo-sp-container">
             <div className="axo-sp-final-cta-band">
+              <FinalCtaCornerAccent />
               <div className="axo-sp-final-cta-copy">
                 <p className="axo-sp-eyebrow">Sẵn sàng bắt đầu</p>
                 <h2 id="landing-final-title" className="axo-sp-final-title">

@@ -28,6 +28,21 @@ describe("AXO Landing Page V1.2 — Option A Vector Storytelling & Math Proof", 
     expect(html).toContain("PQ = 4");
     expect(html).toContain("MQ = NP = 2√2");
     expect(html).toContain("S(MNPQ) = 3√7");
+    expect(html).toContain('id="btn-landing-story-autoplay"');
+    expect(html).toContain("axo-sp-story-active-card");
+  });
+
+  it("V1.2.1: renders 4-scene animated explainer scenes without Workspace screen recording", () => {
+    const explainerSrc = fs.readFileSync(
+      path.resolve(__dirname, "../landing/LandingExplainerAnimation.tsx"),
+      "utf8",
+    );
+    expect(explainerSrc).toContain("Đề bài xuất hiện");
+    expect(explainerSrc).toContain("Hình thành không gian");
+    expect(explainerSrc).toContain("Khám phá quan hệ");
+    expect(explainerSrc).toContain("Kết quả trực quan");
+    expect(explainerSrc).not.toContain("<video");
+    expect(explainerSrc).not.toContain("<canvas");
   });
 
   it("proves exact Regular Triangular Prism ABC.A'B'C' isosceles trapezoid MNPQ metrics from domain coordinates", () => {
