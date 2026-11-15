@@ -1,276 +1,302 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import { IconAxoLogo } from "../icons";
-import { useAuthStore } from "../../state/auth";
-import { useAppStore } from "../../state/store";
-import { enterAxoWorkspace } from "./landing-geometry-data";
+import { enterAxoWorkspace, openLibraryFromLanding } from "./landing-geometry-data";
 
-export type LandingSectionId = "gioi-thieu" | "cach-hoat-dong" | "trai-nghiem";
-
-interface NavItem {
-  readonly id: LandingSectionId;
+export interface LandingSectionNavItem {
+  readonly id: string;
   readonly label: string;
 }
 
-const NAV_ITEMS: readonly NavItem[] = [
-  { id: "gioi-thieu", label: "Giới thiệu" },
+const LANDING_NAV_ITEMS: readonly LandingSectionNavItem[] = [
+  { id: "landing-hero", label: "Giới thiệu" },
   { id: "cach-hoat-dong", label: "Cách hoạt động" },
   { id: "trai-nghiem", label: "Trải nghiệm" },
 ];
 
-function prefersReducedMotion(): boolean {
-  if (typeof window === "undefined" || typeof window.matchMedia !== "function") {
-    return false;
-  }
-  return window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-}
-
 export function LandingHeader() {
-  const user = useAuthStore((s) => s.user);
-  const setView = useAppStore((s) => s.setView);
-
-  const [activeSection, setActiveSection] = useState<LandingSectionId>("gioi-thieu");
-  const [hoveredSection, setHoveredSection] = useState<LandingSectionId | null>(null);
-  const [focusedSection, setFocusedSection] = useState<LandingSectionId | null>(null);
-  const [isScrolled, setIsScrolled] = useState(false);
-  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-  const [pillStyle, setPillStyle] = useState<{ left: number; width: number; ready: boolean }>({
+  const [scrolled, setScrolled] = useState(false);
+  const [activeId, setActiveId] = useState<string>("landing-hero");
+  const [hoveredId, setHoveredId] = useState<string | null>(null);
+  const [mobileOpen, setMobileOpen] = useState(false);
+  const [pillRect, setPillRect] = useState<{ left: number; width: number; opacity: number }>({
     left: 0,
     width: 0,
-    ready: false,
+    opacity: 0,
   });
 
   const navRef = useRef<HTMLElement | null>(null);
-  const linkRefs = useRef<Partial<Record<LandingSectionId, HTMLButtonElement | null>>>({});
+  const linkRefs = useRef<Record<string, HTMLAnchorElement | null>>({});
+  const mobileBtnRef = useRef<HTMLButtonElement | null>(null);
+  const firstDrawerActionRef = useRef<HTMLAnchorElement | null>(null);
+  const prevMobileOpenRef = useRef(false);
   const clickLockUntilRef = useRef<number>(0);
 
-  const targetPillId = hoveredSection ?? focusedSection ?? activeSection;
+  const displayId = hoveredId ?? activeId;
 
-  const measurePill = useCallback((id: LandingSectionId) => {
-    const btn = linkRefs.current[id];
+  const updatePillGeometry = useCallback((targetId: string) => {
     const navEl = navRef.current;
-    if (!btn || !navEl) return;
-    const width = btn.offsetWidth;
-    if (width <= 0) return;
-    setPillStyle({
-      left: btn.offsetLeft,
-      width,
-      ready: true,
+    const linkEl = linkRefs.current[targetId];
+    if (!navEl || !linkEl) return;
+    const navBox = navEl.getBoundingClientRect();
+    const linkBox = linkEl.getBoundingClientRect();
+    setPillRect({
+      left: linkBox.left - navBox.left,
+      width: linkBox.width,
+      opacity: linkBox.width > 0 ? 1 : 0,
     });
   }, []);
 
   useEffect(() => {
-    measurePill(targetPillId);
-  }, [measurePill, targetPillId]);
+    updatePillGeometry(displayId);
+  }, [displayId, updatePillGeometry]);
 
   useEffect(() => {
-    const navEl = navRef.current;
-    if (!navEl || typeof ResizeObserver === "undefined") return;
-    const ro = new ResizeObserver(() => {
-      measurePill(targetPillId);
-    });
-    ro.observe(navEl);
-    for (const item of NAV_ITEMS) {
-      const btn = linkRefs.current[item.id];
-      if (btn) ro.observe(btn);
-    }
-    return () => ro.disconnect();
-  }, [measurePill, targetPillId]);
+    if (typeof window === "undefined") return;
 
-  useEffect(() => {
-    if (typeof window === "undefined" || typeof document === "undefined") return;
-
-    let rafId = 0;
-    const syncScrollAndActive = () => {
-      rafId = 0;
+    const onScroll = () => {
       const y = window.scrollY || window.pageYOffset || 0;
-      setIsScrolled(y > 16);
+      setScrolled(y > 16);
 
       if (Date.now() < clickLockUntilRef.current) return;
 
-      const anchorLine = Math.min(280, window.innerHeight * 0.34);
-      let current: LandingSectionId = "gioi-thieu";
-      for (const item of NAV_ITEMS) {
+      const probeY = y + 180;
+      let nextActive = LANDING_NAV_ITEMS[0].id;
+      for (const item of LANDING_NAV_ITEMS) {
         const el = document.getElementById(item.id);
-        if (!el) continue;
-        const rect = el.getBoundingClientRect();
-        if (rect.top <= anchorLine) {
-          current = item.id;
+        if (el) {
+          const top = el.getBoundingClientRect().top + y;
+          if (probeY >= top) {
+            nextActive = item.id;
+          }
         }
       }
-      setActiveSection(current);
+      setActiveId(nextActive);
     };
 
-    const scheduleSync = () => {
-      if (rafId !== 0) return;
-      rafId = window.requestAnimationFrame(syncScrollAndActive);
+    const onResize = () => {
+      updatePillGeometry(displayId);
+      if (window.innerWidth > 920) {
+        setMobileOpen(false);
+      }
     };
 
-    syncScrollAndActive();
-    window.addEventListener("scroll", scheduleSync, { passive: true });
-    window.addEventListener("resize", scheduleSync, { passive: true });
+    onScroll();
+    window.addEventListener("scroll", onScroll, { passive: true });
+    window.addEventListener("resize", onResize, { passive: true });
     return () => {
-      if (rafId !== 0) window.cancelAnimationFrame(rafId);
-      window.removeEventListener("scroll", scheduleSync);
-      window.removeEventListener("resize", scheduleSync);
+      window.removeEventListener("scroll", onScroll);
+      window.removeEventListener("resize", onResize);
     };
-  }, []);
+  }, [displayId, updatePillGeometry]);
 
+  // Body scroll lock, Escape handling, and focus management for mobile drawer
   useEffect(() => {
-    if (!mobileMenuOpen || typeof window === "undefined") return;
+    if (typeof document === "undefined") return;
+
+    const prevOverflow = document.body.style.overflow;
+    if (mobileOpen) {
+      document.body.style.overflow = "hidden";
+      window.requestAnimationFrame(() => {
+        firstDrawerActionRef.current?.focus();
+      });
+    } else if (prevMobileOpenRef.current) {
+      mobileBtnRef.current?.focus();
+    }
+    prevMobileOpenRef.current = mobileOpen;
+
+    if (!mobileOpen) {
+      return () => {
+        document.body.style.overflow = prevOverflow;
+      };
+    }
+
     const onKeyDown = (e: KeyboardEvent) => {
-      if (e.key === "Escape") setMobileMenuOpen(false);
+      if (e.key === "Escape") {
+        setMobileOpen(false);
+      }
     };
     window.addEventListener("keydown", onKeyDown);
-    return () => window.removeEventListener("keydown", onKeyDown);
-  }, [mobileMenuOpen]);
+    return () => {
+      window.removeEventListener("keydown", onKeyDown);
+      document.body.style.overflow = prevOverflow;
+    };
+  }, [mobileOpen]);
 
-  const scrollToSection = useCallback((id: LandingSectionId) => {
-    setActiveSection(id);
-    setHoveredSection(null);
-    setMobileMenuOpen(false);
-    clickLockUntilRef.current = Date.now() + 750;
-
-    if (typeof document === "undefined" || typeof window === "undefined") return;
-    const target = document.getElementById(id);
-    if (target) {
-      const headerOffset = 68;
-      const top = Math.max(0, target.getBoundingClientRect().top + window.scrollY - headerOffset);
-      window.scrollTo({
-        top: id === "gioi-thieu" ? 0 : top,
-        behavior: prefersReducedMotion() ? "auto" : "smooth",
-      });
-    }
-  }, []);
+  const scrollToSection = (sectionId: string) => {
+    setActiveId(sectionId);
+    setHoveredId(null);
+    clickLockUntilRef.current = Date.now() + 900;
+    setMobileOpen(false);
+    if (typeof document === "undefined") return;
+    const target = document.getElementById(sectionId);
+    target?.scrollIntoView({ behavior: "smooth", block: "start" });
+  };
 
   return (
-    <>
-      <header
-        id="landing-header"
-        className={`axo-sp-header${isScrolled ? " is-scrolled" : ""}`}
-        data-scrolled={isScrolled ? "true" : "false"}
-      >
-        <div className="axo-sp-container axo-sp-header-inner">
+    <header
+      id="landing-header"
+      className={`axo-sp-header${scrolled ? " is-scrolled" : ""}${mobileOpen ? " is-menu-open" : ""}`}
+    >
+      <div className="axo-sp-header-inner">
+        <a
+          id="btn-landing-logo"
+          href="#landing-hero"
+          className="axo-sp-logo"
+          aria-label="Axo — Về đầu trang giới thiệu"
+          onClick={(e) => {
+            e.preventDefault();
+            scrollToSection("landing-hero");
+          }}
+        >
+          <span className="axo-sp-logo-mark" aria-hidden="true">
+            <IconAxoLogo />
+          </span>
+          <span className="axo-sp-logo-name">Axo</span>
+        </a>
+
+        <nav
+          id="landing-nav"
+          ref={navRef}
+          className="axo-sp-nav"
+          aria-label="Điều hướng trang giới thiệu"
+          onMouseLeave={() => setHoveredId(null)}
+        >
+          <span
+            className="axo-sp-nav-pill"
+            aria-hidden="true"
+            style={{
+              width: `${pillRect.width}px`,
+              transform: `translate3d(${pillRect.left}px, 0, 0)`,
+              opacity: pillRect.opacity,
+            }}
+          />
+          {LANDING_NAV_ITEMS.map((item) => {
+            const isCurrent = displayId === item.id;
+            return (
+              <a
+                key={item.id}
+                ref={(el) => {
+                  linkRefs.current[item.id] = el;
+                }}
+                id={`nav-landing-${item.id}`}
+                href={`#${item.id}`}
+                className={`axo-sp-nav-link${isCurrent ? " is-active" : ""}`}
+                aria-current={activeId === item.id ? "location" : undefined}
+                onMouseEnter={() => setHoveredId(item.id)}
+                onFocus={() => setHoveredId(item.id)}
+                onBlur={() => setHoveredId(null)}
+                onClick={(e) => {
+                  e.preventDefault();
+                  scrollToSection(item.id);
+                }}
+              >
+                {item.label}
+              </a>
+            );
+          })}
+        </nav>
+
+        <div className="axo-sp-header-actions">
           <button
+            id="btn-landing-header-library"
             type="button"
-            className="axo-sp-brand"
-            onClick={() => scrollToSection("gioi-thieu")}
-            aria-label="Axo — Về đầu trang"
+            className="axo-sp-btn-ghost"
+            onClick={openLibraryFromLanding}
           >
-            <IconAxoLogo size={26} />
-            <span className="axo-sp-brand-name">Axo</span>
+            Thư viện
+          </button>
+          <button
+            id="btn-landing-header-start"
+            type="button"
+            className="axo-sp-btn-primary"
+            onClick={enterAxoWorkspace}
+          >
+            Bắt đầu
           </button>
 
-          <div className="axo-sp-nav-wrap">
-            <nav
-              id="landing-nav"
-              ref={navRef}
-              className="axo-sp-nav"
-              aria-label="Điều hướng giới thiệu"
-              onMouseLeave={() => setHoveredSection(null)}
-              onBlur={(e) => {
-                if (!e.currentTarget.contains(e.relatedTarget as Node | null)) {
-                  setFocusedSection(null);
-                }
-              }}
-            >
-              <span
-                className="axo-sp-nav-pill"
-                aria-hidden="true"
-                style={{
-                  transform: `translate3d(${pillStyle.left}px, 0, 0)`,
-                  width: `${pillStyle.width}px`,
-                  opacity: pillStyle.ready ? 1 : 0,
-                }}
-              />
-              {NAV_ITEMS.map((item) => {
-                const isActive = activeSection === item.id;
-                return (
-                  <button
-                    key={item.id}
-                    ref={(el) => {
-                      linkRefs.current[item.id] = el;
-                    }}
-                    type="button"
-                    id={`landing-nav-${item.id}`}
-                    className={`axo-sp-nav-link${isActive ? " is-active" : ""}`}
-                    aria-current={isActive ? "page" : undefined}
-                    onMouseEnter={() => setHoveredSection(item.id)}
-                    onFocus={() => setFocusedSection(item.id)}
-                    onClick={() => scrollToSection(item.id)}
-                  >
-                    {item.label}
-                  </button>
-                );
-              })}
+          <button
+            ref={mobileBtnRef}
+            id="btn-landing-mobile-menu"
+            type="button"
+            className="axo-sp-mobile-toggle"
+            aria-expanded={mobileOpen}
+            aria-controls="landing-mobile-drawer"
+            aria-label={mobileOpen ? "Đóng điều hướng" : "Mở điều hướng"}
+            onClick={() => setMobileOpen((v) => !v)}
+          >
+            <svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="currentColor" strokeWidth="1.75" strokeLinecap="round">
+              {mobileOpen ? (
+                <>
+                  <path d="M5 5l10 10" />
+                  <path d="M15 5L5 15" />
+                </>
+              ) : (
+                <>
+                  <path d="M3.5 6h13" />
+                  <path d="M3.5 10h13" />
+                  <path d="M3.5 14h13" />
+                </>
+              )}
+            </svg>
+          </button>
+        </div>
+      </div>
+
+      {mobileOpen && (
+        <>
+          <div
+            className="axo-sp-mobile-backdrop"
+            aria-hidden="true"
+            onClick={() => setMobileOpen(false)}
+          />
+          <div
+            id="landing-mobile-drawer"
+            className="axo-sp-mobile-drawer"
+            role="dialog"
+            aria-modal="true"
+            aria-label="Điều hướng di động Axo"
+          >
+            <nav className="axo-sp-mobile-links" aria-label="Mục trang giới thiệu">
+              {LANDING_NAV_ITEMS.map((item, idx) => (
+                <a
+                  key={item.id}
+                  ref={idx === 0 ? firstDrawerActionRef : undefined}
+                  href={`#${item.id}`}
+                  className={`axo-sp-mobile-link${activeId === item.id ? " is-active" : ""}`}
+                  onClick={(e) => {
+                    e.preventDefault();
+                    scrollToSection(item.id);
+                  }}
+                >
+                  {item.label}
+                </a>
+              ))}
             </nav>
-          </div>
-
-          <div className="axo-sp-header-actions">
-            <button
-              type="button"
-              id="btn-landing-login"
-              className="axo-sp-btn-login"
-              onClick={() => {
-                if (user) {
+            <div className="axo-sp-mobile-cta-row">
+              <button
+                type="button"
+                className="axo-sp-btn-secondary"
+                onClick={() => {
+                  setMobileOpen(false);
+                  openLibraryFromLanding();
+                }}
+              >
+                Khám phá thư viện
+              </button>
+              <button
+                type="button"
+                className="axo-sp-btn-primary"
+                onClick={() => {
+                  setMobileOpen(false);
                   enterAxoWorkspace();
-                } else {
-                  setView("login");
-                }
-              }}
-            >
-              {user ? "Vào ứng dụng" : "Đăng nhập"}
-            </button>
-
-            <button
-              type="button"
-              id="btn-landing-mobile-menu"
-              className="axo-sp-mobile-toggle"
-              aria-label={mobileMenuOpen ? "Đóng menu" : "Mở menu điều hướng"}
-              aria-expanded={mobileMenuOpen}
-              aria-controls="landing-mobile-drawer"
-              onClick={() => setMobileMenuOpen((prev) => !prev)}
-            >
-              <svg width="18" height="18" viewBox="0 0 18 18" fill="none" aria-hidden="true">
-                {mobileMenuOpen ? (
-                  <path
-                    d="M4.5 4.5L13.5 13.5M13.5 4.5L4.5 13.5"
-                    stroke="currentColor"
-                    strokeWidth="1.75"
-                    strokeLinecap="round"
-                  />
-                ) : (
-                  <path
-                    d="M3 5.25H15M3 9H15M3 12.75H15"
-                    stroke="currentColor"
-                    strokeWidth="1.75"
-                    strokeLinecap="round"
-                  />
-                )}
-              </svg>
-            </button>
+                }}
+              >
+                Bắt đầu dựng hình
+              </button>
+            </div>
           </div>
-        </div>
-      </header>
-
-      {mobileMenuOpen && (
-        <div
-          id="landing-mobile-drawer"
-          className="axo-sp-mobile-drawer"
-          role="dialog"
-          aria-label="Menu điều hướng Axo"
-        >
-          {NAV_ITEMS.map((item) => (
-            <button
-              key={item.id}
-              type="button"
-              className={`axo-sp-mobile-link${activeSection === item.id ? " is-active" : ""}`}
-              onClick={() => scrollToSection(item.id)}
-            >
-              {item.label}
-            </button>
-          ))}
-        </div>
+        </>
       )}
-    </>
+    </header>
   );
 }
