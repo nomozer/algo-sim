@@ -35,6 +35,11 @@ export interface LandingStageMilestone {
   readonly lookAt: Vec3Tuple;
 }
 
+export interface LandingMetricChip {
+  readonly label: string;
+  readonly value: string;
+}
+
 export interface LandingSampleSpec {
   readonly id: string;
   readonly shortName: string;
@@ -43,6 +48,7 @@ export interface LandingSampleSpec {
   readonly problemText: string;
   readonly equationText: string;
   readonly answerBadge: string;
+  readonly verifiedMetrics: readonly LandingMetricChip[];
   readonly points: readonly LandingPointSpec[];
   readonly pointMap: Readonly<Record<string, LandingPointSpec>>;
   readonly solidEdges: readonly LandingEdgeSpec[];
@@ -89,7 +95,7 @@ interface RawSceneObject {
   value?: string;
 }
 
-function extractPointsFromSample(
+export function extractPointsFromSample(
   sample: GeometrySample | undefined,
   fallbackPoints: readonly { id: string; label: string; xyz: Vec3Tuple }[],
 ): readonly { id: string; label: string; xyz: Vec3Tuple }[] {
@@ -100,11 +106,15 @@ function extractPointsFromSample(
   if (!Array.isArray(objects)) return fallbackPoints;
 
   const extracted: { id: string; label: string; xyz: Vec3Tuple }[] = [];
+  const seenIds = new Set<string>();
   for (const obj of objects) {
     if (obj.type === "point3" && Array.isArray(obj.xyz) && obj.xyz.length === 3) {
+      const normalizedId = obj.id.trim();
+      if (!normalizedId || seenIds.has(normalizedId)) continue;
+      seenIds.add(normalizedId);
       extracted.push({
-        id: obj.id,
-        label: obj.notation || obj.id,
+        id: normalizedId,
+        label: obj.notation || normalizedId,
         xyz: [
           parseExactNumber(obj.xyz[0]),
           parseExactNumber(obj.xyz[1]),
@@ -262,7 +272,11 @@ function buildPyramidSample(): LandingSampleSpec {
       rawSample?.problemText ||
       "Cho hình chóp S.ABCD có đáy ABCD là hình vuông tâm O cạnh bằng 4, cạnh bên SA vuông góc với đáy (ABCD) và SA = 6. M, N, P lần lượt là trung điểm của SA, BC và CD. Mặt phẳng (MNP) cắt SB tại E, SD tại F tạo thành thiết diện MENPF.",
     equationText: "x + y + 2z = 6",
-    answerBadge: "S(MENPF) = 6√6 · V(S.ABCD) = 32",
+    answerBadge: "S(MENPF) = 6√6",
+    verifiedMetrics: [
+      { label: "Thiết diện MENPF", value: "S = 6√6" },
+      { label: "Thể tích chóp", value: "V = 32" },
+    ],
     points,
     pointMap,
     solidEdges,
@@ -343,7 +357,7 @@ function buildPyramidSample(): LandingSampleSpec {
         title: "Thiết diện ngũ giác MENPF khép kín",
         summary:
           "Toàn bộ thiết diện ngũ giác hiện rõ cả hình khối lẫn đại lượng chính xác, sẵn sàng để xoay tự do hoặc mở vào Xưởng 3D.",
-        mathFact: "Thiết diện ngũ giác MENPF · Diện tích S = 6√6 · Thể tích V = 32",
+        mathFact: "Ngũ giác phẳng MENPF thuộc mặt phẳng (MNP): x + y + 2z = 6",
         visiblePoints: ["A", "B", "C", "D", "S", "O", "M", "N", "P", "E", "F"],
         activePoints: ["M", "E", "N", "P", "F"],
         visibleSolidEdges: ["AB", "BC", "CD", "DA", "SA", "SB", "SC", "SD"],
@@ -431,7 +445,11 @@ function buildCubeSample(): LandingSampleSpec {
       rawSample?.problemText ||
       "Cho hình lập phương ABCD.A′B′C′D′ có cạnh bằng 4. M, N, P là trung điểm AD, CD và B′C′. Mặt phẳng (MNP) cắt CC′, A′B′, AA′ tại E, F, Q tạo thành thiết diện lục giác đều MNEPFQ.",
     equationText: "-x + y + z = 2",
-    answerBadge: "d(M, N) = 2√2 · S(MNEPFQ) = 12√3",
+    answerBadge: "S(MNEPFQ) = 12√3",
+    verifiedMetrics: [
+      { label: "Thiết diện MNEPFQ", value: "S = 12√3" },
+      { label: "Cạnh lục giác", value: "MN = 2√2" },
+    ],
     points,
     pointMap,
     solidEdges,
@@ -536,7 +554,7 @@ function buildCubeSample(): LandingSampleSpec {
         title: "Khép kín thiết diện MNEPFQ",
         summary:
           "Sáu cạnh đều bằng 2√2 tạo thành lục giác đều hoàn chỉnh có diện tích 12√3.",
-        mathFact: "S(MNEPFQ) = 12√3 · Cạnh lục giác = 2√2",
+        mathFact: "Lục giác đều 6 cạnh bằng nhau thuộc mặt phẳng (MNP): -x + y + z = 2",
         visiblePoints: points.map((p) => p.id),
         activePoints: ["M", "N", "E", "P", "F", "Q"],
         visibleSolidEdges: allEdgeKeys,
@@ -551,8 +569,160 @@ function buildCubeSample(): LandingSampleSpec {
   };
 }
 
+function buildStoryPrismSpec(): LandingSampleSpec {
+  const s3 = Math.sqrt(3);
+  const center: Vec3Tuple = [2, (2 * s3) / 3, 2];
+  const rawPoints: readonly { id: string; label: string; role: LandingPointSpec["role"]; xyz: Vec3Tuple }[] = [
+    { id: "A", label: "A", role: "vertex", xyz: [0, 0, 0] },
+    { id: "B", label: "B", role: "vertex", xyz: [4, 0, 0] },
+    { id: "C", label: "C", role: "vertex", xyz: [2, 2 * s3, 0] },
+    { id: "A_prime", label: "A′", role: "vertex", xyz: [0, 0, 4] },
+    { id: "B_prime", label: "B′", role: "vertex", xyz: [4, 0, 4] },
+    { id: "C_prime", label: "C′", role: "vertex", xyz: [2, 2 * s3, 4] },
+    { id: "M", label: "M", role: "seed", xyz: [2, 0, 0] },
+    { id: "N", label: "N", role: "seed", xyz: [1, s3, 0] },
+    { id: "P", label: "P", role: "seed", xyz: [2, 2 * s3, 2] },
+    { id: "Q", label: "Q", role: "intersection", xyz: [4, 0, 2] },
+  ];
+
+  const points: LandingPointSpec[] = rawPoints.map((p) => ({
+    id: p.id,
+    label: p.label,
+    role: p.role,
+    domainXyz: p.xyz,
+    pos: toThreeVec(p.xyz, center),
+  }));
+
+  const pointMap = Object.fromEntries(points.map((p) => [p.id, p]));
+  const sectionLoop = ["M", "N", "P", "Q"] as const;
+  const sectionWorld = sectionLoop.map((id) => pointMap[id].pos);
+  // Domain plane √3x + y - √3z = 2√3 -> Three.js normal (√3, -√3, -1)
+  const planeQuad = computeBoundedPlaneQuad(sectionWorld, [s3, -s3, -1], 0.44);
+
+  const solidEdges: readonly LandingEdgeSpec[] = [
+    { from: "A", to: "B", kind: "solid_edge" },
+    { from: "B", to: "C", kind: "solid_edge" },
+    { from: "C", to: "A", kind: "solid_edge" },
+    { from: "A_prime", to: "B_prime", kind: "solid_edge" },
+    { from: "B_prime", to: "C_prime", kind: "solid_edge" },
+    { from: "C_prime", to: "A_prime", kind: "solid_edge" },
+    { from: "A", to: "A_prime", kind: "solid_edge" },
+    { from: "B", to: "B_prime", kind: "solid_edge" },
+    { from: "C", to: "C_prime", kind: "solid_edge" },
+  ];
+  const allEdgeKeys = solidEdges.map((e) => `${e.from}-${e.to}`);
+
+  return {
+    id: "lang-tru-tam-giac-thiet-dien",
+    shortName: "Lăng trụ ABC.A′B′C′",
+    categoryLabel: "Thiết diện hình thang cân",
+    title: "Thiết diện hình thang cân của lăng trụ tam giác đều ABC.A′B′C′",
+    problemText:
+      "Cho lăng trụ tam giác đều ABC.A′B′C′ có tất cả các cạnh bằng 4. M, N, P lần lượt là trung điểm của AB, AC và CC′. Mặt phẳng (MNP) cắt BB′ tại Q tạo thành thiết diện hình thang cân MNPQ.",
+    equationText: "√3x + y − √3z = 2√3",
+    answerBadge: "S(MNPQ) = 3√7",
+    verifiedMetrics: [
+      { label: "Thiết diện", value: "Hình thang cân MNPQ" },
+      { label: "Độ dài đáy", value: "MN = 2 · PQ = 4" },
+      { label: "Diện tích", value: "S(MNPQ) = 3√7" },
+    ],
+    points,
+    pointMap,
+    solidEdges,
+    guideEdges: [{ from: "B", to: "C", kind: "guide" }],
+    solidFaces: [
+      ["A", "C", "B"],
+      ["A_prime", "B_prime", "C_prime"],
+      ["A", "B", "B_prime", "A_prime"],
+      ["B", "C", "C_prime", "B_prime"],
+      ["C", "A", "A_prime", "C_prime"],
+    ],
+    sectionLoop,
+    planeQuad,
+    basePolygon: ["A", "B", "C"],
+    radiusBound: 4.1,
+    defaultCamera: [1.8, 4.4, 9.8],
+    defaultLookAt: [0, 0.05, 0],
+    milestones: [
+      {
+        id: "story-1",
+        stepNumber: "01",
+        tag: "Đề bài",
+        title: "Từ đề bài tiếng Việt dựng khối ABC.A′B′C′",
+        summary:
+          "Axo trích xuất giả thiết lăng trụ tam giác đều cạnh 4 và ghim đúng ba trung điểm gốc M ∈ AB, N ∈ AC, P ∈ CC′.",
+        mathFact: "A(0;0;0), B(4;0;0), C(2;2√3;0) · Ba điểm gốc M, N, P",
+        visiblePoints: ["A", "B", "C", "A_prime", "B_prime", "C_prime", "M", "N", "P"],
+        activePoints: ["M", "N", "P"],
+        visibleSolidEdges: allEdgeKeys,
+        showGuideEdges: false,
+        planeOpacity: 0,
+        sectionProgress: 0,
+        sectionFillOpacity: 0,
+        cameraPos: [1.8, 4.4, 9.8],
+        lookAt: [0, 0.05, 0],
+      },
+      {
+        id: "story-2",
+        stepNumber: "02",
+        tag: "Phân tích",
+        title: "Nhận ra quan hệ song song MN // BC",
+        summary:
+          "Trong đáy (ABC), đường trung bình MN song song với BC; vì BC nằm trong mặt bên (BCC′B′), giao tuyến qua P cũng phải song song với BC.",
+        mathFact: "MN // BC (MN = ½ BC = 2) · Mặt phẳng (MNP): √3x + y − √3z = 2√3",
+        visiblePoints: ["A", "B", "C", "A_prime", "B_prime", "C_prime", "M", "N", "P"],
+        activePoints: ["M", "N", "P"],
+        visibleSolidEdges: allEdgeKeys,
+        showGuideEdges: true,
+        planeOpacity: 0.72,
+        sectionProgress: 0.25,
+        sectionFillOpacity: 0,
+        cameraPos: [1.8, 4.4, 9.8],
+        lookAt: [0, 0.05, 0],
+      },
+      {
+        id: "story-3",
+        stepNumber: "03",
+        tag: "Dựng hình",
+        title: "Vạch giao tuyến xác định Q ∈ BB′",
+        summary:
+          "Từ P ∈ CC′ kẻ tia song song BC trong mặt bên (BCC′B′), cắt cạnh BB′ đúng tại trung điểm Q và nối khép kín bốn đoạn M–N–P–Q.",
+        mathFact: "Q = (MNP) ∩ BB′ = (4; 0; 2) · Hai cạnh bên MQ = NP = 2√2",
+        visiblePoints: ["A", "B", "C", "A_prime", "B_prime", "C_prime", "M", "N", "P", "Q"],
+        activePoints: ["Q"],
+        visibleSolidEdges: allEdgeKeys,
+        showGuideEdges: true,
+        planeOpacity: 0.82,
+        sectionProgress: 0.9,
+        sectionFillOpacity: 0.2,
+        cameraPos: [1.8, 4.4, 9.8],
+        lookAt: [0, 0.05, 0],
+      },
+      {
+        id: "story-4",
+        stepNumber: "04",
+        tag: "Khám phá",
+        title: "Kiểm chứng hình thang cân MNPQ",
+        summary:
+          "Thiết diện MNPQ lộ rõ với hai đáy song song MN = 2, PQ = 4, hai cạnh bên bằng nhau 2√2 và diện tích chính xác 3√7.",
+        mathFact: "Chiều cao hình thang h = √7 · Diện tích S(MNPQ) = 3√7",
+        visiblePoints: ["A", "B", "C", "A_prime", "B_prime", "C_prime", "M", "N", "P", "Q"],
+        activePoints: ["M", "N", "P", "Q"],
+        visibleSolidEdges: allEdgeKeys,
+        showGuideEdges: false,
+        planeOpacity: 0.56,
+        sectionProgress: 1,
+        sectionFillOpacity: 0.9,
+        cameraPos: [1.8, 4.4, 9.8],
+        lookAt: [0, 0.05, 0],
+      },
+    ],
+  };
+}
+
 export const LANDING_PYRAMID_SAMPLE: LandingSampleSpec = buildPyramidSample();
 export const LANDING_CUBE_SAMPLE: LandingSampleSpec = buildCubeSample();
+export const LANDING_PRISM_STORY_SPEC: LandingSampleSpec = buildStoryPrismSpec();
 export const LANDING_SHOWCASE_SAMPLES: readonly LandingSampleSpec[] = [
   LANDING_PYRAMID_SAMPLE,
   LANDING_CUBE_SAMPLE,

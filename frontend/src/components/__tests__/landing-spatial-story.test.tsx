@@ -5,6 +5,7 @@ import { describe, expect, it } from "vitest";
 import { LandingView } from "../LandingView";
 import {
   LANDING_CUBE_SAMPLE,
+  LANDING_PRISM_STORY_SPEC,
   LANDING_PYRAMID_SAMPLE,
   enterAxoWorkspace,
   landingSampleById,
@@ -92,6 +93,32 @@ describe("AXO Landing Page V1.1 — Spatial Story & Architecture", () => {
     for (const len of edgeLengths) {
       expect(len).toBeCloseTo(edgeLengths[0], 4);
     }
+
+    // Prism ABC.A'B'C' story spec: M=(A+B)/2, N=(A+C)/2, P=(C+C')/2, Q=(B+B')/2 -> isosceles trapezoid MNPQ
+    expect(LANDING_PRISM_STORY_SPEC.milestones).toHaveLength(4);
+    const pMap = LANDING_PRISM_STORY_SPEC.pointMap;
+    const dist3 = (u: readonly number[], v: readonly number[]) =>
+      Math.hypot(u[0] - v[0], u[1] - v[1], u[2] - v[2]);
+    expect(dist3(pMap["M"].domainXyz, pMap["N"].domainXyz)).toBeCloseTo(2, 4);
+    expect(dist3(pMap["P"].domainXyz, pMap["Q"].domainXyz)).toBeCloseTo(4, 4);
+    expect(dist3(pMap["M"].domainXyz, pMap["Q"].domainXyz)).toBeCloseTo(2 * Math.SQRT2, 4);
+    expect(dist3(pMap["N"].domainXyz, pMap["P"].domainXyz)).toBeCloseTo(2 * Math.SQRT2, 4);
+
+    // Coplanarity of M, N, P, Q in normalized 3D coordinates
+    const pm = pMap["M"].pos;
+    const pn = pMap["N"].pos;
+    const pp = pMap["P"].pos;
+    const pq = pMap["Q"].pos;
+    const u1 = [pn[0] - pm[0], pn[1] - pm[1], pn[2] - pm[2]];
+    const u2 = [pp[0] - pm[0], pp[1] - pm[1], pp[2] - pm[2]];
+    const nVec = [
+      u1[1] * u2[2] - u1[2] * u2[1],
+      u1[2] * u2[0] - u1[0] * u2[2],
+      u1[0] * u2[1] - u1[1] * u2[0],
+    ];
+    expect(
+      (pq[0] - pm[0]) * nVec[0] + (pq[1] - pm[1]) * nVec[1] + (pq[2] - pm[2]) * nVec[2],
+    ).toBeCloseTo(0, 4);
 
     expect(landingSampleById("unknown-id").id).toBe(LANDING_PYRAMID_SAMPLE.id);
   });
