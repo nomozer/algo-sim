@@ -4,8 +4,10 @@ import { renderToStaticMarkup } from "react-dom/server";
 import { afterEach, describe, expect, it } from "vitest";
 import { useAuthStore, type AuthUser } from "../../state/auth";
 import {
+  buildHeroSpatialGallerySpecs,
   computeTrueShapeSection2D,
   evaluateHeroStoryboard,
+  HERO_SATELLITE_COUNT,
   HERO_SECTION_FILL_OPACITY,
   HERO_STORYBOARD_MS,
   LandingHeroV14,
@@ -59,11 +61,69 @@ describe("AXO Landing V1.4 — Hero Visual System & Lifecycle", () => {
     expect(b4.settled).toBe(true);
     expect(b4.capLift).toBe(0);
     expect(HERO_SECTION_FILL_OPACITY).toBe(0.5);
+    expect(b1.satelliteReveal).toBe(0);
+    expect(b3.satelliteReveal).toBeGreaterThan(0.5);
+    expect(b4.satelliteReveal).toBe(1);
 
     const reduced = evaluateHeroStoryboard(100, true);
     expect(reduced.settled).toBe(true);
     expect(reduced.capLift).toBe(0);
+    expect(reduced.satelliteReveal).toBe(1);
     expect(reduced.beat).toBe("section-settled");
+  });
+
+  it("constructs a mathematically grounded 3-satellite Spatial Geometry Gallery in distinct depth planes", () => {
+    const gallery = buildHeroSpatialGallerySpecs();
+    expect(gallery.satellites).toHaveLength(HERO_SATELLITE_COUNT);
+    expect(HERO_SATELLITE_COUNT).toBe(3);
+
+    // Non-collinear screen triangle (shoelace area > 1.5) and 3 distinct camera-depth planes
+    const [s0, s1, s2] = gallery.satellites;
+    const triArea =
+      0.5 *
+      Math.abs(
+        (s1.screenDx - s0.screenDx) * (s2.screenDy - s0.screenDy) -
+          (s2.screenDx - s0.screenDx) * (s1.screenDy - s0.screenDy),
+      );
+    expect(triArea).toBeGreaterThan(1.5);
+    expect(new Set([s0.screenDz, s1.screenDz, s2.screenDz]).size).toBe(3);
+
+    // Satellite 0: exact regular octahedron edges (all 12 edges = r * sqrt(2))
+    const expectedOctEdge = gallery.octahedronRadius * Math.SQRT2;
+    for (const [i, j] of gallery.octahedronEdges) {
+      const a = gallery.octahedronVertices[i];
+      const b = gallery.octahedronVertices[j];
+      const d = Math.hypot(a[0] - b[0], a[1] - b[1], a[2] - b[2]);
+      expect(Math.abs(d - expectedOctEdge)).toBeLessThan(1e-6);
+    }
+
+    // Satellite 1: extracted isometric pentagon matches computeTrueShapeSection2D() edge ratios
+    const trueShape = computeTrueShapeSection2D();
+    expect(gallery.extractedPentagonPts).toHaveLength(5);
+    const scaleRatio =
+      Math.hypot(
+        gallery.extractedPentagonPts[1][0] - gallery.extractedPentagonPts[0][0],
+        gallery.extractedPentagonPts[1][1] - gallery.extractedPentagonPts[0][1],
+      ) / trueShape.edgeLengths2D[0];
+    for (let i = 0; i < 5; i++) {
+      const j = (i + 1) % 5;
+      const d = Math.hypot(
+        gallery.extractedPentagonPts[j][0] - gallery.extractedPentagonPts[i][0],
+        gallery.extractedPentagonPts[j][1] - gallery.extractedPentagonPts[i][1],
+      );
+      expect(Math.abs(d / trueShape.edgeLengths2D[i] - scaleRatio)).toBeLessThan(1e-6);
+    }
+
+    // Satellite 2: unit cube sliced by x + y + z = 0 regular hexagon (planar + equal edges)
+    expect(gallery.cubeHexSection).toHaveLength(6);
+    const expectedHexEdge = gallery.cubeHalfSize * Math.SQRT2;
+    for (let i = 0; i < 6; i++) {
+      const pt = gallery.cubeHexSection[i];
+      expect(Math.abs(pt[0] + pt[1] + pt[2])).toBeLessThan(1e-6);
+      const next = gallery.cubeHexSection[(i + 1) % 6];
+      const d = Math.hypot(next[0] - pt[0], next[1] - pt[1], next[2] - pt[2]);
+      expect(Math.abs(d - expectedHexEdge)).toBeLessThan(1e-6);
+    }
   });
 
   it("renders guest and authenticated Hero CTAs cleanly without floating math result cards", () => {

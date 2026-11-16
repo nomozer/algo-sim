@@ -835,7 +835,7 @@ function PrismEditorialStage({
               key={`lat-${idx}`}
               className={`axo-v14-svg-prism-face ${face.toneClass}`}
               points={face.pts}
-              fillOpacity={(0.52 * scene.prismWeight).toFixed(3)}
+              fillOpacity={((face.toneClass.includes("lit") ? 0.82 : 0.44) * scene.prismWeight).toFixed(3)}
             />
           ))}
 

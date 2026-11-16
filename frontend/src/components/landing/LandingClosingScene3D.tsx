@@ -277,6 +277,79 @@ export function buildClosingCompositionData(): ClosingCompositionData {
   };
 }
 
+export interface ClosingExtractedVertex2D {
+  readonly index: number;
+  readonly x: number;
+  readonly y: number;
+}
+
+export interface ClosingExtractedHexagon2D {
+  readonly vertices: readonly ClosingExtractedVertex2D[];
+  readonly edgeLengths3D: readonly number[];
+  readonly edgeLengths2D: readonly number[];
+  readonly maxDeviation: number;
+}
+
+/**
+ * Isometric 2D projection of the oblique hexagonal section onto plane Pi.
+ * Preserves all 6 3D edge lengths without perspective foreshortening.
+ */
+export function computeClosingExtractedHexagon2D(): ClosingExtractedHexagon2D {
+  const { sectionPts, cutNormal } = buildHexPrismModel();
+  if (sectionPts.length < 3) {
+    return { vertices: [], edgeLengths3D: [], edgeLengths2D: [], maxDeviation: 0 };
+  }
+
+  const centroid = sectionPts
+    .reduce((acc, p) => acc.add(p), new THREE.Vector3())
+    .divideScalar(sectionPts.length);
+
+  const e1 = new THREE.Vector3().subVectors(sectionPts[0], centroid).normalize();
+  const e2 = new THREE.Vector3().crossVectors(cutNormal, e1).normalize();
+
+  const vertices: ClosingExtractedVertex2D[] = sectionPts.map((pt, index) => {
+    const rel = new THREE.Vector3().subVectors(pt, centroid);
+    return {
+      index,
+      x: rel.dot(e1),
+      y: rel.dot(e2),
+    };
+  });
+
+  const edgeLengths3D: number[] = [];
+  const edgeLengths2D: number[] = [];
+  let maxDeviation = 0;
+
+  for (let i = 0; i < sectionPts.length; i++) {
+    const j = (i + 1) % sectionPts.length;
+    const d3 = sectionPts[i].distanceTo(sectionPts[j]);
+    const d2 = Math.hypot(vertices[j].x - vertices[i].x, vertices[j].y - vertices[i].y);
+    edgeLengths3D.push(d3);
+    edgeLengths2D.push(d2);
+    maxDeviation = Math.max(maxDeviation, Math.abs(d3 - d2));
+  }
+
+  return { vertices, edgeLengths3D, edgeLengths2D, maxDeviation };
+}
+
+function createClosingShadowTexture(): THREE.CanvasTexture | null {
+  if (typeof document === "undefined") return null;
+  const canvas = document.createElement("canvas");
+  canvas.width = 256;
+  canvas.height = 256;
+  const ctx = canvas.getContext("2d");
+  if (!ctx) return null;
+  const grad = ctx.createRadialGradient(128, 128, 14, 128, 128, 124);
+  grad.addColorStop(0, "rgba(31, 32, 30, 0.16)");
+  grad.addColorStop(0.45, "rgba(31, 32, 30, 0.05)");
+  grad.addColorStop(1, "rgba(31, 32, 30, 0)");
+  ctx.fillStyle = grad;
+  ctx.fillRect(0, 0, 256, 256);
+  const tex = new THREE.CanvasTexture(canvas);
+  tex.needsUpdate = true;
+  return tex;
+}
+
 function buildFacesBufferGeometry(
   faces: readonly ClippedPolygonFace[],
   baseColorHex?: number,
@@ -301,10 +374,11 @@ function buildFacesBufferGeometry(
         triNormal.crossVectors(e1, e2).normalize();
         const key = Math.max(0, triNormal.dot(KEY_DIR)) * 0.28;
         const rim = Math.max(0, triNormal.dot(RIM_DIR)) * 0.12;
-        const shade = Math.min(1.06, 0.72 + key + rim);
-        const r = Math.min(1, baseColor.r * shade);
-        const g = Math.min(1, baseColor.g * shade);
-        const b = Math.min(1, baseColor.b * shade);
+        const t = clamp01(0.18 + key * 1.6 + rim * 1.2);
+        // Cool sky-slate shade -> warm porcelain lit so facets detach cleanly on stone-paper ground
+        const r = Math.min(1, baseColor.r * (0.84 + 0.16 * t));
+        const g = Math.min(1, baseColor.g * (0.88 + 0.116 * t));
+        const b = Math.min(1, baseColor.b * (0.94 + 0.048 * t));
         colors.push(r, g, b, r, g, b, r, g, b);
       }
     }
@@ -479,6 +553,21 @@ function ClosingFallbackSvg({ state }: { readonly state: ClosingStoryboardState 
       <circle className="axo-v14-svg-seed-dot" cx="380" cy="192" r="4.0" />
       <circle className="axo-v14-svg-section-dot" cx="326" cy="174" r="4.1" />
       <circle className="axo-v14-svg-seed-dot" cx="214" cy="200" r="4.0" />
+
+      {/* Companion 3: Extracted Oblique Hexagon Slice */}
+      <g opacity={(0.94 * state.sectionFillOpacity).toFixed(3)}>
+        <polygon
+          className="axo-v14-svg-section-poly"
+          points="424,90 444,60 486,60 506,90 486,120 444,120"
+          fillOpacity={0.34 * state.sectionFillOpacity}
+        />
+        <circle className="axo-v14-svg-section-dot" cx="424" cy="90" r="2.8" />
+        <circle className="axo-v14-svg-section-dot" cx="444" cy="60" r="2.8" />
+        <circle className="axo-v14-svg-section-dot" cx="486" cy="60" r="2.8" />
+        <circle className="axo-v14-svg-section-dot" cx="506" cy="90" r="2.8" />
+        <circle className="axo-v14-svg-section-dot" cx="486" cy="120" r="2.8" />
+        <circle className="axo-v14-svg-section-dot" cx="444" cy="120" r="2.8" />
+      </g>
     </svg>
   );
 }
@@ -559,6 +648,10 @@ export function LandingClosingScene3D() {
     const lookVec = new THREE.Vector3(0.08, 0.04, 0);
     const camOffset = new THREE.Vector3().subVectors(camVec, lookVec);
     const rotatedOffset = new THREE.Vector3();
+    const basisForward = camOffset.clone().negate().normalize();
+    const basisRight = new THREE.Vector3().crossVectors(basisForward, UP_AXIS).normalize();
+    const basisUp = new THREE.Vector3().crossVectors(basisRight, basisForward).normalize();
+    let curHexSpread = 1;
 
     const updateCameraFraming = (
       w: number,
@@ -567,10 +660,17 @@ export function LandingClosingScene3D() {
       tiltX: number,
       tiltY: number,
     ) => {
-      const aspect = Math.max(0.68, w / Math.max(1, h));
-      const aspectScale = aspect < 1.18 ? 1 + (1.18 - aspect) * 0.5 : 1;
-      const shortScale = h <= 290 ? 1.07 : 1;
+      const nextAspect = w / Math.max(1, h);
+      const aspect = Math.max(0.68, nextAspect);
+      const baseScale = 1.06;
+      const aspectScale = aspect < 1.18 ? baseScale + (1.18 - aspect) * 0.5 : baseScale;
+      const shortScale = h <= 290 ? 1.12 : baseScale;
       const distScale = Math.max(aspectScale, shortScale);
+      curHexSpread = aspect < 1.05 ? 0.88 : 1;
+      if (Math.abs(camera.aspect - nextAspect) > 1e-4) {
+        camera.aspect = nextAspect;
+        camera.updateProjectionMatrix();
+      }
       rotatedOffset
         .copy(camOffset)
         .multiplyScalar(distScale)
@@ -608,35 +708,24 @@ export function LandingClosingScene3D() {
     const baseY = bottomPts[0].y;
     const topY = topPts[0].y;
 
-    // 1. Ground contact AO discs + Companion 2: Circumscribed radius-R base ring & vertical plumb projections
-    const shadowOuterGeo = track(new THREE.CircleGeometry(2.65, 48));
-    shadowOuterGeo.rotateX(-Math.PI / 2);
-    const shadowOuterMat = track(
+    // 1. Soft Studio Contact Shadow + Companion 2: Circumscribed radius-R base ring
+    const shadowTex = createClosingShadowTexture();
+    if (shadowTex) track(shadowTex);
+    const closingShadowGeo = track(new THREE.PlaneGeometry(5.2, 4.8));
+    closingShadowGeo.rotateX(-Math.PI / 2);
+    const closingShadowMat = track(
       new THREE.MeshBasicMaterial({
-        color: 0x1f201e,
+        map: shadowTex ?? undefined,
+        color: shadowTex ? 0xffffff : 0x1f201e,
         transparent: true,
-        opacity: 0.036,
+        opacity: shadowTex ? 0.92 : 0.05,
         depthWrite: false,
       }),
     );
-    const shadowOuter = new THREE.Mesh(shadowOuterGeo, shadowOuterMat);
-    shadowOuter.position.set(0, baseY - 0.055, 0);
-    shadowOuter.renderOrder = 0;
-
-    const shadowInnerGeo = track(new THREE.CircleGeometry(1.78, 40));
-    shadowInnerGeo.rotateX(-Math.PI / 2);
-    const shadowInnerMat = track(
-      new THREE.MeshBasicMaterial({
-        color: 0x1f201e,
-        transparent: true,
-        opacity: 0.06,
-        depthWrite: false,
-      }),
-    );
-    const shadowInner = new THREE.Mesh(shadowInnerGeo, shadowInnerMat);
-    shadowInner.position.set(0, baseY - 0.045, 0);
-    shadowInner.renderOrder = 1;
-    root.add(shadowOuter, shadowInner);
+    const closingShadowMesh = new THREE.Mesh(closingShadowGeo, closingShadowMat);
+    closingShadowMesh.position.set(0, baseY - 0.048, 0);
+    closingShadowMesh.renderOrder = 0;
+    root.add(closingShadowMesh);
 
     const ringPts: THREE.Vector3[] = [];
     for (let i = 0; i <= 64; i++) {
@@ -657,29 +746,14 @@ export function LandingClosingScene3D() {
     baseRingLine.renderOrder = 1;
     root.add(baseRingLine);
 
-    const plumbGuides = [0, 2, 4].map((idx) => {
-      const line = createDashedEdge(
-        sectionPts[idx],
-        bottomPts[idx],
-        0xdd5b00,
-        0.34,
-        0.1,
-        0.1,
-        track,
-      );
-      line.renderOrder = 2;
-      root.add(line);
-      return line;
-    });
-
-    // 2. Sculpted Hexagonal Prism Frustum & Translucent Upper Cap
-    const lowerGeo = track(buildFacesBufferGeometry(lowerFaces, 0xf8f6f2));
+    // 2. Sculpted Hexagonal Prism Frustum & Translucent Upper Cap (porcelain white + cool sky-slate facets)
+    const lowerGeo = track(buildFacesBufferGeometry(lowerFaces, 0xffffff));
     const lowerMat = track(
       new THREE.MeshBasicMaterial({
         color: 0xffffff,
         vertexColors: true,
         transparent: true,
-        opacity: 0.72,
+        opacity: 0.92,
         side: THREE.DoubleSide,
         depthWrite: false,
       }),
@@ -688,13 +762,13 @@ export function LandingClosingScene3D() {
     lowerMesh.renderOrder = 2;
     root.add(lowerMesh);
 
-    const upperGeo = track(buildFacesBufferGeometry(upperFaces, 0xfaf9f7));
+    const upperGeo = track(buildFacesBufferGeometry(upperFaces, 0xffffff));
     const upperMat = track(
       new THREE.MeshBasicMaterial({
         color: 0xffffff,
         vertexColors: true,
         transparent: true,
-        opacity: 0.16,
+        opacity: 0.24,
         side: THREE.DoubleSide,
         depthWrite: false,
       }),
@@ -932,7 +1006,7 @@ export function LandingClosingScene3D() {
       return dot;
     });
 
-    // Companion 3: Outer azimuth orbital arc + plumb foot ticks on base vertices
+    // Companion 3: Outer azimuth orbital arc + Extracted Oblique Hexagon Slice in rear upper-right depth
     const orbitArcPts: THREE.Vector3[] = [];
     const orbitR = 2.48;
     for (let i = 0; i <= 40; i++) {
@@ -949,25 +1023,55 @@ export function LandingClosingScene3D() {
     orbitArcLine.renderOrder = 1;
     root.add(orbitArcLine);
 
-    const footRings = [0, 2, 4].map((idx) => {
-      const bPt = bottomPts[idx];
-      const uIn = new THREE.Vector3(-bPt.x, 0, -bPt.z).normalize().multiplyScalar(0.18);
-      const uUp = new THREE.Vector3(0, 0.18, 0);
-      const fGeo = track(
-        new THREE.BufferGeometry().setFromPoints([
-          bPt.clone().add(uIn),
-          bPt.clone().add(uIn).add(uUp),
-          bPt.clone().add(uUp),
-        ]),
-      );
-      const fMat = track(
-        new THREE.LineBasicMaterial({ color: 0xdd5b00, transparent: true, opacity: 0.45 }),
-      );
-      const fLine = new THREE.Line(fGeo, fMat);
-      fLine.renderOrder = 3;
-      root.add(fLine);
-      return fLine;
-    });
+    const extractedHex = computeClosingExtractedHexagon2D();
+    const extractedHexGroup = new THREE.Group();
+    const extractedHexLocalVecs = extractedHex.vertices.map(
+      (v) => new THREE.Vector3(v.x, v.y, 0),
+    );
+    const extractedHexFillGeo = track(
+      buildFacesBufferGeometry([{ pts: extractedHexLocalVecs }]),
+    );
+    const extractedHexFillMat = track(
+      new THREE.MeshBasicMaterial({
+        color: 0xed6d14,
+        transparent: true,
+        opacity: 0.34,
+        side: THREE.DoubleSide,
+        depthWrite: false,
+      }),
+    );
+    const extractedHexFillMesh = new THREE.Mesh(extractedHexFillGeo, extractedHexFillMat);
+    extractedHexFillMesh.renderOrder = 3;
+    extractedHexGroup.add(extractedHexFillMesh);
+
+    const extractedHexRimGeo = track(
+      new THREE.BufferGeometry().setFromPoints([
+        ...extractedHexLocalVecs,
+        extractedHexLocalVecs[0],
+      ]),
+    );
+    const extractedHexRimMat = track(
+      new THREE.LineBasicMaterial({
+        color: 0x793400,
+        transparent: true,
+        opacity: 0.86,
+      }),
+    );
+    const extractedHexRimLine = new THREE.Line(extractedHexRimGeo, extractedHexRimMat);
+    extractedHexRimLine.renderOrder = 4;
+    extractedHexGroup.add(extractedHexRimLine);
+
+    const extractedHexBeadGeo = track(new THREE.SphereGeometry(0.068, 12, 12));
+    const extractedHexBeadMat = track(
+      new THREE.MeshBasicMaterial({ color: 0xdd5b00, transparent: true, opacity: 0.72 }),
+    );
+    for (const pt of extractedHexLocalVecs) {
+      const bead = new THREE.Mesh(extractedHexBeadGeo, extractedHexBeadMat);
+      bead.position.copy(pt);
+      bead.renderOrder = 5;
+      extractedHexGroup.add(bead);
+    }
+    scene.add(extractedHexGroup);
 
     let disposed = false;
     let isInView = false;
@@ -982,14 +1086,14 @@ export function LandingClosingScene3D() {
     const tmpToCam = new THREE.Vector3();
 
     const applyFrame = (nowMs: number): boolean => {
-      if (!startedPlayback && !reducedMotion) {
-        const previewState = evaluateClosingStoryboard(0, false);
-        renderer.render(scene, camera);
-        return !previewState.settled;
-      }
-
       const elapsed = startedPlayback ? nowMs - startMs : 0;
       const state = evaluateClosingStoryboard(elapsed, reducedMotion);
+
+      if (!startedPlayback && !reducedMotion) {
+        extractedHexGroup.visible = false;
+        renderer.render(scene, camera);
+        return !state.settled;
+      }
 
       if (state.beat !== lastBeat) {
         lastBeat = state.beat;
@@ -1009,12 +1113,11 @@ export function LandingClosingScene3D() {
       );
 
       root.scale.setScalar(0.94 + 0.06 * state.solidReveal);
-      shadowOuterMat.opacity = 0.036 * state.solidReveal;
-      shadowInnerMat.opacity = 0.06 * state.solidReveal;
+      closingShadowMat.opacity = (shadowTex ? 0.92 : 0.05) * state.solidReveal;
       baseRingMat.opacity = 0.28 * state.solidReveal;
       orbitArcMat.opacity = 0.24 * state.solidReveal;
-      lowerMat.opacity = 0.72 * state.solidReveal;
-      upperMat.opacity = 0.16 * state.solidReveal;
+      lowerMat.opacity = 0.92 * state.solidReveal;
+      upperMat.opacity = 0.24 * state.solidReveal;
       baseVertexMat.opacity = 0.84 * state.solidReveal;
       for (const d of solidVertexDots) {
         d.visible = state.solidReveal > 0.05;
@@ -1045,16 +1148,21 @@ export function LandingClosingScene3D() {
       centroidRaLine.visible = state.planeOpacity > 0.25;
       centroidRaMat.opacity = 0.68 * state.planeOpacity;
 
-      for (const pg of plumbGuides) {
-        pg.visible = state.planeOpacity > 0.35;
-        (pg.material as THREE.LineDashedMaterial).opacity =
-          0.34 * state.planeOpacity;
-      }
-      for (const fr of footRings) {
-        fr.visible = state.planeOpacity > 0.35;
-        (fr.material as THREE.LineBasicMaterial).opacity =
-          0.45 * state.planeOpacity;
-      }
+      extractedHexGroup.visible = state.sectionFillOpacity > 0.02;
+      extractedHexGroup.scale.setScalar(0.36 * (0.86 + 0.14 * state.sectionFillOpacity));
+      extractedHexGroup.position
+        .copy(lookVec)
+        .addScaledVector(basisRight, 2.08 * curHexSpread)
+        .addScaledVector(basisUp, 1.12 - (1 - state.sectionFillOpacity) * 0.14)
+        .addScaledVector(basisForward, 1.1);
+      extractedHexGroup.rotation.set(
+        0.18 + curTiltY * 0.22,
+        -0.42 + curTiltX * 0.28,
+        0.08,
+      );
+      extractedHexFillMat.opacity = 0.34 * state.sectionFillOpacity;
+      extractedHexRimMat.opacity = 0.86 * state.sectionFillOpacity;
+      extractedHexBeadMat.opacity = 0.72 * state.sectionFillOpacity;
 
       interNodeMat.opacity = state.intersectionScale;
       for (const dot of interDots) {
@@ -1260,7 +1368,10 @@ export function LandingClosingScene3D() {
       data-closing-beat={beatLabel}
       data-section-edges="6"
       onPointerMove={(e) => {
-        if (window.matchMedia?.("(prefers-reduced-motion: reduce)")?.matches) {
+        if (
+          e.pointerType === "touch" ||
+          window.matchMedia?.("(prefers-reduced-motion: reduce)")?.matches
+        ) {
           return;
         }
         const rect = e.currentTarget.getBoundingClientRect();

@@ -4,6 +4,7 @@ import { renderToString } from "react-dom/server";
 import { describe, expect, it } from "vitest";
 import {
   buildClosingCompositionData,
+  computeClosingExtractedHexagon2D,
   LandingClosingScene3D,
 } from "../landing/LandingClosingScene3D";
 
@@ -29,6 +30,13 @@ describe("Landing CTA geometry — regular hexagonal prism exploration rig with 
     for (const rResidual of data.baseRadiusResiduals) {
       expect(rResidual).toBeLessThan(1e-6);
     }
+
+    // Companion 3: isometric 2D extracted oblique hexagon preserves all 6 section edge lengths
+    const extracted = computeClosingExtractedHexagon2D();
+    expect(extracted.vertices).toHaveLength(6);
+    expect(extracted.edgeLengths3D).toHaveLength(6);
+    expect(extracted.edgeLengths2D).toHaveLength(6);
+    expect(extracted.maxDeviation).toBeLessThan(1e-5);
   });
 
   it("renders a distinct answer-free exploration composition without duplicating the Hero pyramid", () => {

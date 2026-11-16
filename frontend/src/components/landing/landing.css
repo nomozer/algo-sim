@@ -2420,13 +2420,13 @@
 .axo-v14-hero {
   background-color: var(--axo-sp-bg);
   scroll-margin-top: 96px;
-  padding: clamp(18px, 2.2vh, 28px) clamp(20px, 4vw, 48px) clamp(38px, 5vh, 58px);
+  padding: clamp(20px, 2.6vh, 32px) clamp(20px, 4vw, 48px) clamp(40px, 5.2vh, 64px);
 }
 
 .axo-v14-hero-shell {
   width: 100%;
   max-width: 1240px;
-  min-height: min(510px, calc(100svh - 104px));
+  min-height: clamp(500px, calc(100svh - 156px), 700px);
   margin: 0 auto;
   display: grid;
   grid-template-columns: minmax(0, 0.96fr) minmax(0, 1.04fr);
@@ -2482,13 +2482,14 @@
 
 .axo-v14-hero-visual {
   position: relative;
-  height: clamp(410px, 43vw, 520px);
-  min-height: 410px;
+  height: clamp(430px, 45vw, 550px);
+  min-height: 430px;
   width: 100%;
   display: flex;
   align-items: center;
   justify-content: center;
   background-color: transparent;
+  touch-action: pan-y;
 }
 
 .axo-v14-hero-canvas-host {
@@ -2711,7 +2712,7 @@
 
 /* ══ AXO LANDING V1.4 — CONTINUOUS SCROLL-DRIVEN STORYTELLING ══════════════════════════════════ */
 .axo-v14-story {
-  background-color: var(--axo-sp-paper);
+  background-color: var(--axo-sp-bg);
   scroll-margin-top: 76px;
   padding: clamp(36px, 4.4vw, 56px) clamp(20px, 4vw, 48px);
 }
@@ -2780,7 +2781,7 @@
   gap: 10px;
   padding: clamp(14px, 2vw, 22px);
   border-radius: var(--rounded-xl);
-  background-color: var(--surface);
+  background-color: var(--axo-sp-paper);
   touch-action: pan-y;
 }
 
@@ -2931,9 +2932,10 @@
 .axo-v14-story-epistemic-box {
   margin-top: 14px;
   padding: 10px 14px;
-  border-radius: var(--rounded-lg);
-  border: 1px solid var(--hairline);
-  background-color: var(--canvas);
+  border-radius: 0 var(--rounded-md) var(--rounded-md) 0;
+  border: 0;
+  border-left: 2.5px solid var(--axo-sp-accent);
+  background-color: var(--axo-sp-paper);
   color: var(--ink);
   font-size: 0.875rem;
   font-weight: 600;
@@ -3009,7 +3011,7 @@
 }
 
 .axo-v14-svg-prism-face-shade {
-  fill: var(--hairline);
+  fill: var(--axo-sp-accent-tint);
 }
 
 .axo-v14-svg-prism-top {
@@ -3412,9 +3414,9 @@
   gap: clamp(22px, 3.2vw, 46px);
   border: 0;
   box-shadow: none;
-  border-radius: 0;
-  background-color: transparent;
-  padding: 0;
+  border-radius: var(--rounded-xl);
+  background-color: var(--axo-sp-paper);
+  padding: clamp(16px, 2.2vw, 26px);
 }
 
 .axo-sp-demo-workbench.is-v14 .axo-sp-demo-canvas-wrap {
@@ -3473,8 +3475,8 @@
   align-items: center;
   padding: 5px 12px;
   border-radius: var(--rounded-full);
-  background-color: var(--canvas);
-  border: 1px solid var(--axo-sp-border);
+  background-color: var(--axo-sp-paper);
+  border: 1px solid transparent;
   color: var(--ink-secondary);
   font-size: 0.8125rem;
   font-weight: 600;
@@ -3483,8 +3485,8 @@
 
 .axo-sp-demo-workbench.is-v14 .axo-sp-ghost-chip {
   pointer-events: auto;
-  border: 1px solid var(--axo-sp-border);
-  background-color: var(--canvas);
+  border: 1px solid transparent;
+  background-color: var(--axo-sp-paper);
   color: var(--ink);
   font-size: 0.8125rem;
   font-weight: 600;
@@ -3516,9 +3518,9 @@
 .axo-sp-demo-workbench.is-v14 .axo-sp-step-tab {
   min-height: 40px;
   padding: 0 12px;
-  border: 1px solid var(--axo-sp-border);
+  border: 1px solid transparent;
   border-radius: var(--rounded-full);
-  background-color: var(--surface);
+  background-color: var(--canvas);
   color: var(--ink-secondary);
   font-family: var(--font-family);
   font-size: 0.875rem;
@@ -3535,8 +3537,8 @@
 }
 
 .axo-sp-demo-workbench.is-v14 .axo-sp-step-tab:hover:not(.is-active) {
-  background-color: var(--axo-sp-paper);
-  border-color: var(--axo-sp-border-strong);
+  background-color: var(--axo-sp-accent-tint);
+  border-color: transparent;
   color: var(--ink);
   transform: translateY(-1px);
 }
@@ -3570,10 +3572,10 @@
 }
 
 .axo-sp-scene-shell.is-v14 {
-  background-color: var(--axo-sp-paper);
-  border: 1px solid var(--axo-sp-border);
-  border-radius: var(--rounded-xl);
-  min-height: 430px;
+  background-color: var(--canvas);
+  border: 0;
+  border-radius: var(--rounded-lg);
+  min-height: 410px;
 }
 
 .axo-sp-scene-shell.is-v14 .axo-sp-scene-grid {
@@ -3910,6 +3912,10 @@
   .axo-sp-demo-workbench.is-v14 .axo-sp-ghost-chip {
     padding: 4px 10px;
     font-size: 0.8125rem;
+  }
+
+  .axo-sp-demo-workbench.is-v14 {
+    padding: 14px;
   }
 
   .axo-sp-scene-shell.is-v14 {
