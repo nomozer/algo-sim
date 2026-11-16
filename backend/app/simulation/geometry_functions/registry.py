@@ -27,6 +27,7 @@ from __future__ import annotations
 
 import contextvars
 import functools
+import itertools
 import re
 import unicodedata
 from dataclasses import dataclass, replace
@@ -698,8 +699,8 @@ class TranslatePointArgs(_Args):
 @dataclass(frozen=True)
 class PlanningTerm:
     """Internal typed role slots; not an expression language or provider program."""
-    kind: Literal["Point", "Plane", "Line", "Foot", "AnswerDistance", "AnswerLength", "AnswerArea", "AnswerAngleLinePlane",
-                  "AnswerAngleLines", "Meet", "Normal", "PerpLine", "PerpDir"]
+    kind: Literal["Point", "Plane", "Line", "Foot", "AnswerDistance", "AnswerDistanceLinePlane", "AnswerLength",
+                  "AnswerArea", "AnswerAngleLinePlane", "AnswerAngleLines", "Meet", "Normal", "PerpLine", "PerpDir"]
     operands: tuple[str, ...]
 
 
@@ -760,24 +761,36 @@ def same_call(contract: PlanningContract, a: dict[str, Any], b: dict[str, Any]) 
     return all(norm(k, a[k]) == norm(k, b[k]) for k in a)
 
 
+def _la_desc_term(x: Any) -> bool:
+    return isinstance(x, tuple) and len(x) == 3 and x[0] == "desc" and isinstance(x[1], str) and isinstance(x[2], tuple)
+
+
+def _term_sort_key(x: Any) -> tuple:
+    if isinstance(x, str):
+        return (0, x)
+    if isinstance(x, tuple):
+        return (1, tuple(_term_sort_key(y) for y in x))
+    return (2, str(x))
+
+
 def parse_descriptor_inputs(
-    contract: PlanningContract, raw_points: list[str] | tuple[str, ...],
+    contract: PlanningContract, raw_points: list[Any] | tuple[Any, ...],
 ) -> tuple[tuple[Any, ...], list[list[str]]] | None:
-    """Parse flat `TypedFact.points` against a descriptor contract's typed `inputs` slots (`Point` / `Line` / `Plane`)."""
+    """Parse flat or nested `TypedFact.points` against a descriptor contract's typed `inputs` (`Point` / `Line` / `Plane`)."""
     pts = list(raw_points)
     kinds = [t.kind for t in contract.inputs]
     if not kinds:
         return None
     if all(k == "Point" for k in kinds):
-        if len(pts) != len(kinds) or len(set(pts)) != len(pts) or not all(isinstance(x, str) for x in pts):
+        if len(pts) != len(kinds) or not all(isinstance(x, str) or _la_desc_term(x) for x in pts) or len(set(pts)) != len(pts):
             return None
-        return tuple(sorted(pts)), []
+        return tuple(sorted(pts, key=_term_sort_key)), []
     i = 0
     out: list[Any] = []
     extra_planes: list[list[str]] = []
     for idx, k in enumerate(kinds):
         if k == "Point":
-            if i >= len(pts):
+            if i >= len(pts) or not (isinstance(pts[i], str) or _la_desc_term(pts[i])):
                 return None
             out.append(pts[i])
             i += 1
@@ -786,9 +799,10 @@ def parse_descriptor_inputs(
                 return None
             seg = pts[i:i + 2]
             i += 2
-            if not all(isinstance(x, str) for x in seg) or len(set(seg)) != 2:
+            if not all(isinstance(x, str) or _la_desc_term(x) for x in seg) or len(set(seg)) != 2:
                 return None
-            out.append(("named", tuple(sorted(seg))))
+            ordered_seg = tuple(sorted(seg, key=_term_sort_key))
+            out.append(("named", ordered_seg) if all(isinstance(x, str) for x in ordered_seg) else ("derived_line", ordered_seg))
         elif k == "Plane":
             if idx != len(kinds) - 1:
                 return None
@@ -806,7 +820,7 @@ def parse_descriptor_inputs(
     if kinds == ["Line", "Line"]:
         if out[0] == out[1]:
             return None
-        out = sorted(out)
+        out = sorted(out, key=_term_sort_key)
     elif kinds[0] == "Point" and len(kinds) == 2:
         ref_pts = out[1][1] if kinds[1] == "Line" else out[1]
         if out[0] in ref_pts:
@@ -1004,7 +1018,13 @@ REGISTRY: dict[str, FunctionSpec] = {s.name: s for s in (
     # Run `hybrid-v2-nl-certificates-e2e`: kernel/IR already measure `distance(line3, plane3)` and `distance(plane3, plane3)`
     # exactly (`measure.distance_sq_line_plane` / `distance_sq_planes`); these expose them to route B / `/4` only.
     _F("ask_distance_line_plane", AskDistanceLinePlaneArgs, "ask", "Đề hỏi khoảng cách giữa một đường thẳng và một mặt phẳng.",
-       (("khoảng cách", r"re:(?i)(?<![\w/])k/c(?![\w/])"),), provider_offered=False),
+       (("khoảng cách", r"re:(?i)(?<![\w/])k/c(?![\w/])"),), provider_offered=False,
+       planning=PlanningContract(
+           (PlanningTerm("Line", ("L",)), PlanningTerm("Plane", ("Q",))),
+           PlanningTerm("AnswerDistanceLinePlane", ("L", "Q")), "goal_answer", "distance_line_plane",
+           call=(("line", "L"), ("plane", "Q")),
+           phrase=(r"(?:khoảng cách|k/c)\s+(?:từ|giữa)\s+{L_EXPR}\s+(?:đến|tới|và|với)\s+{M}",
+                   r"(?:khoảng cách|k/c)\s+giữa\s+{M}\s+(?:và|với)\s+{L_EXPR}"))),
     _F("ask_distance_planes", AskDistancePlanesArgs, "ask", "Đề hỏi khoảng cách giữa hai mặt phẳng.",
        (("khoảng cách", r"re:(?i)(?<![\w/])k/c(?![\w/])"),), provider_offered=False),
     # Goal contracts of the angle asks (Wave 2A): the line is (described point P, named point Q), the target `{M}` a plane /
@@ -2416,9 +2436,14 @@ def _mat_nhan_hop_le(p: list[str] | tuple[str, ...]) -> bool:
     return len(p) >= 3 and len(set(p)) == len(p)
 
 
-def _cum_mo_ta_long(outer_phrase: str, inner_phrase: str) -> str:
-    inner_renamed = re.sub(r"\(\?P<(\w+)>", r"(?P<in_\1>", inner_phrase)
-    return outer_phrase.replace("(?P<op_p>{P})(?![\\w'])", f"(?:{inner_renamed})")
+def _rename_groups(pat: str, prefix: str) -> str:
+    return re.sub(r"\(\?P<(\w+)>", rf"(?P<{prefix}\1>", pat) if prefix else pat
+
+
+def _cum_mo_ta_long(outer_phrase: str, inner_phrase: str, outer_prefix: str = "", rename_inner: bool = True) -> str:
+    inner_renamed = re.sub(r"\(\?P<(\w+)>", r"(?P<in_\1>", inner_phrase) if rename_inner else inner_phrase
+    op_tok = f"(?P<{outer_prefix}op_p>{{P}})(?![\\w'])"
+    return outer_phrase.replace(op_tok, f"(?:{inner_renamed})")
 
 
 def _khop_mo_ta_nguon(dc: PlanningContract, denv: dict[str, Any], m: re.Match, khoi: dict[str, frozenset],
@@ -2464,17 +2489,36 @@ def _kiem_chung_chi_mo_ta(dc: PlanningContract, denv: dict[str, Any], op: dict[s
     )
     if got_slots != expected_slots:
         raise TuChoi("AUXILIARY_RULE_MISMATCH", "toán hạng mô tả không khớp chứng chỉ", err_ids)
-    if set(op.get("points") or ()) - nhan:
+    if {x for x in (op.get("points") or ()) if isinstance(x, str)} - nhan:
         raise TuChoi("UNKNOWN_LABEL", "toán hạng của điểm được mô tả không có trong nguồn", err_ids)
 
 
-def _dinh_nghia_trong_chuoi(d: dict[str, Any], got: list, p: Any, err_ids: tuple[str, ...]) -> tuple[PlanningContract, dict]:
+def _khop_nut_checks(checks: tuple[tuple, ...], m: re.Match, khoi: dict[str, frozenset]) -> bool:
+    for chk in checks:
+        if chk[0] == "dc":
+            _, dc, denv, pfx = chk
+            if not _khop_mo_ta_nguon(dc, denv, m, khoi, prefix=pfx):
+                return False
+        elif chk[0] == "pt":
+            _, grp, want = chk
+            if m[grp] != want:
+                return False
+        elif chk[0] == "ln":
+            _, grp, want = chk
+            if sorted(_nhan_cum(m[grp])) != sorted(want):
+                return False
+    return True
+
+
+def _dinh_nghia_trong_chuoi(d: dict[str, Any], got: list, p: Any, err_ids: tuple[str, ...],
+                            root_d: dict[str, Any] | None = None) -> tuple[PlanningContract, dict]:
     """C18: the measured point is a DEFINED point (`POINT_DEFINITIONS`): it must be the output of the chain's meet of two
     lines, each line the locus of THIS definition — through the locus point (a slot, or the chain's midpoint of the two
     slots it names) and a point a `PerpLine` contract of the chain built ⊥ the locus side. Re-derived from the bound slots,
     never trusted; the engine then checks the definition itself on the figure."""
-    defn = POINT_DEFINITIONS[(d.get('operand') or {}).get('descriptor')]
-    dd = d.get('definition') or {}
+    node = d.get('operand') if 'operand' in d else d
+    defn = POINT_DEFINITIONS[(node or {}).get('descriptor')]
+    dd = d.get('definition') or (root_d.get('definition') if root_d else None) or {}
     denv = dd.get('env') or {}
     slots = [t.operands[0] for t in defn.contract.inputs]
     meet = next((g for g in got if g[2].id == dd.get('call')), None)
@@ -2497,6 +2541,157 @@ def _dinh_nghia_trong_chuoi(d: dict[str, Any], got: list, p: Any, err_ids: tuple
     if len(set(lines)) != 2 or not set(lines) <= loci:
         raise TuChoi('AUXILIARY_RULE_MISMATCH', 'giao điểm không phải của hai quỹ tích của định nghĩa', err_ids)
     return defn.contract, denv
+
+
+def _term_val(v):                       # JSON slot value → hashable term (lists → tuples, nested)
+    return tuple(_term_val(x) for x in v) if isinstance(v, (list, tuple)) else v
+
+
+def _eff_values(t, env):
+    return tuple(_term_val(env.get(s)) for s in t.operands)
+
+
+def _pt_expr_alts(spec: Any, got: list, nhan: set[str], built_map: dict[str, tuple], err_ids: tuple[str, ...],
+                  prefix: str, expected_label: str | None = None,
+                  root_d: dict[str, Any] | None = None) -> tuple[str, tuple[tuple[str, tuple], ...]]:
+    """Resolve one Point expression (`str` label or descriptor node dict) → `(label, ((regex_pat, checks), ...))`."""
+    if isinstance(spec, str):
+        if expected_label is not None and spec != expected_label:
+            raise TuChoi('AUXILIARY_RULE_MISMATCH', 'nhãn điểm trong chuỗi không khớp toán hạng nguồn', err_ids)
+        if spec not in nhan:
+            raise TuChoi('UNKNOWN_LABEL', 'toán hạng điểm không có trong nguồn', err_ids)
+        grp = f"{prefix}p"
+        pat = rf"(?:(?:điểm|đỉnh)\s+)?(?P<{grp}>{_P1})(?![\w'])"
+        return spec, ((pat, (("pt", grp, spec),)),)
+    if isinstance(spec, dict):
+        alts = _xac_thuc_nut(spec, got, nhan, built_map, err_ids, prefix, root_d=root_d)
+        lbl = spec["label"]
+        if expected_label is not None and lbl != expected_label:
+            raise TuChoi('AUXILIARY_RULE_MISMATCH', 'điểm mô tả không khớp đầu ra chuỗi', err_ids)
+        return lbl, tuple((f"(?:{pat})", chks) for pat, chks in alts)
+    raise TuChoi('AUXILIARY_RULE_MISMATCH', 'toán hạng điểm không hợp lệ trong chứng chỉ', err_ids)
+
+
+def _line_core_alts(ep1: Any, ep2: Any, got: list, nhan: set[str], built_map: dict[str, tuple], err_ids: tuple[str, ...],
+                    prefix: str, include_noun: bool = True) -> tuple[tuple[str, str], tuple[tuple[str, tuple], ...]]:
+    """Build closed Vietnamese line regex alternatives for 2 Point specs (at least one descriptor or explicit line)."""
+    if isinstance(ep1, str) and isinstance(ep2, str):
+        if ep1 == ep2 or not ({ep1, ep2} <= nhan):
+            raise TuChoi('AUXILIARY_RULE_MISMATCH', 'đoạn thẳng trong chứng chỉ không hợp lệ', err_ids)
+        grp = f"{prefix}l"
+        pat = (rf"(?:(?:đường thẳng|đt|đoạn thẳng|đoạn)\s+)?(?<![\w'.(])(?P<{grp}>{_P1}{_P1})(?![\w'])"
+               if include_noun else rf"(?<![\w'.(])(?P<{grp}>{_P1}{_P1})(?![\w'])")
+        return (ep1, ep2), ((pat, (("ln", grp, (ep1, ep2)),)),)
+    l1, alts1 = _pt_expr_alts(ep1, got, nhan, built_map, err_ids, f"{prefix}e0_")
+    l2, alts2 = _pt_expr_alts(ep2, got, nhan, built_map, err_ids, f"{prefix}e1_")
+    if l1 == l2:
+        raise TuChoi('AUXILIARY_RULE_MISMATCH', 'hai đầu mút của đường thẳng dẫn xuất trùng nhau', err_ids)
+    out: list[tuple[str, tuple]] = []
+    noun = r"(?:(?:đường thẳng|đt|đoạn thẳng|đoạn)\s+)" if include_noun else ""
+    for a_pat, a_chk in alts1:
+        for b_pat, b_chk in alts2:
+            out.append((rf"{noun}nối\s+{a_pat}\s+(?:với|và)\s+{b_pat}", (*a_chk, *b_chk)))
+            out.append((rf"{noun}(?:đi\s+)?qua\s+{a_pat}(?:\s*,\s*|\s+(?:và|với)\s+){b_pat}", (*a_chk, *b_chk)))
+    _, r_alts1 = _pt_expr_alts(ep2, got, nhan, built_map, err_ids, f"{prefix}r0_")
+    _, r_alts2 = _pt_expr_alts(ep1, got, nhan, built_map, err_ids, f"{prefix}r1_")
+    for a_pat, a_chk in r_alts1:
+        for b_pat, b_chk in r_alts2:
+            out.append((rf"{noun}nối\s+{a_pat}\s+(?:với|và)\s+{b_pat}", (*a_chk, *b_chk)))
+            out.append((rf"{noun}(?:đi\s+)?qua\s+{a_pat}(?:\s*,\s*|\s+(?:và|với)\s+){b_pat}", (*a_chk, *b_chk)))
+    return (l1, l2), tuple(out)
+
+
+def _xac_thuc_nut(node: dict[str, Any], got: list, nhan: set[str], built_map: dict[str, tuple], err_ids: tuple[str, ...],
+                  prefix: str, root_d: dict[str, Any] | None = None) -> tuple[tuple[str, tuple], ...]:
+    """Recursively verify one descriptor node against `got` and compile closed phrase regex alternatives + slot checks."""
+    desc_name = node.get("descriptor")
+    p = node.get("label")
+    if not isinstance(desc_name, str) or not isinstance(p, str):
+        raise TuChoi('AUXILIARY_RULE_MISMATCH', 'nút mô tả thiếu nhãn hoặc loại', err_ids)
+    if desc_name in POINT_DEFINITIONS:
+        dc, denv = _dinh_nghia_trong_chuoi(node, got, p, err_ids, root_d=root_d)
+        return ((_rename_groups(dc.phrase or "", prefix).replace("{P}", _P1), (("dc", dc, denv, prefix),)),)
+    desc = [g for g in got if g[0].descriptor and g[0].descriptor == desc_name and _eff_values(g[0].effect, g[1]) == (p,)]
+    if not desc:
+        raise TuChoi('AUXILIARY_RULE_MISMATCH', 'mục tiêu không đo từ điểm được mô tả', err_ids)
+    dc, denv = desc[0][0], desc[0][1]
+    if (items := node.get("arg_items")) is not None:
+        if not isinstance(items, list):
+            raise TuChoi('AUXILIARY_RULE_MISMATCH', 'arg_items không phải danh sách', err_ids)
+        resolved_raw: list[Any] = []
+        extra_pts: set[str] = set()
+        for it in items:
+            if isinstance(it, dict):
+                lbl_s = it.get("label")
+                if not isinstance(lbl_s, str):
+                    raise TuChoi('AUXILIARY_RULE_MISMATCH', 'toán hạng con thiếu nhãn', err_ids)
+                resolved_raw.append(lbl_s)
+                extra_pts.add(lbl_s)
+            elif isinstance(it, str):
+                resolved_raw.append(it)
+            else:
+                raise TuChoi('AUXILIARY_RULE_MISMATCH', 'toán hạng arg_items không hợp lệ', err_ids)
+        _kiem_chung_chi_mo_ta(dc, denv, {"points": resolved_raw}, nhan | extra_pts, err_ids)
+        kinds = [t.kind for t in dc.inputs]
+        phrase = _rename_groups(dc.phrase or "", prefix)
+        if kinds == ["Point", "Point"] and len(items) == 2:
+            _pair, core_alts = _line_core_alts(items[0], items[1], got, nhan, built_map, err_ids, f"{prefix}ln_", include_noun=False)
+            tok = rf"(?P<{prefix}ops>{{P}}{{P}})(?![\w'])"
+            if tok not in phrase:
+                raise TuChoi('AUXILIARY_RULE_MISMATCH', 'hợp đồng midpoint không có nhóm ops', err_ids)
+            return tuple((phrase.replace(tok, f"(?:{c_pat})").replace("{P}", _P1), c_chk) for c_pat, c_chk in core_alts)
+        if len(kinds) == 2 and kinds[0] == "Point" and kinds[1] == "Plane" and isinstance(items[0], dict):
+            _lbl0, p_alts = _pt_expr_alts(items[0], got, nhan, built_map, err_ids, f"{prefix}pt_", root_d=root_d)
+            tok = rf"(?P<{prefix}op_p>{{P}})(?![\w'])"
+            return tuple((phrase.replace(tok, p_pat).replace("{P}", _P1), (("dc", dc, denv, prefix), *p_chk))
+                         for p_pat, p_chk in p_alts)
+        if kinds == ["Point", "Line"] and len(items) == 3:
+            p_opts = (_pt_expr_alts(items[0], got, nhan, built_map, err_ids, f"{prefix}pt_", root_d=root_d)[1]
+                      if isinstance(items[0], dict) else ((None, ()),))
+            l_has_desc = any(isinstance(x, dict) for x in items[1:3])
+            l_opts = (_line_core_alts(items[1], items[2], got, nhan, built_map, err_ids, f"{prefix}ln_", include_noun=False)[1]
+                      if l_has_desc else ((None, ()),))
+            tok_p = rf"(?P<{prefix}op_p>{{P}})(?![\w'])"
+            tok_l = rf"(?<![\w'.(])(?P<{prefix}op_l>(?:{{P}}){{2}})(?![\w'])"
+            out_alts = []
+            for p_pat, p_chk in p_opts:
+                for l_pat, l_chk in l_opts:
+                    pat_cur = phrase
+                    if p_pat is not None:
+                        pat_cur = pat_cur.replace(tok_p, p_pat)
+                    if l_pat is not None:
+                        pat_cur = pat_cur.replace(tok_l, f"(?:{l_pat})")
+                    out_alts.append((pat_cur.replace("{P}", _P1), (("dc", dc, denv, prefix), *p_chk, *l_chk)))
+            return tuple(out_alts)
+        if kinds == ["Line", "Plane"] and len(items) >= 5:
+            _pair, l_opts = _line_core_alts(items[0], items[1], got, nhan, built_map, err_ids, f"{prefix}ln_", include_noun=False)
+            tok_l = rf"(?<![\w'.(])(?P<{prefix}op_l>(?:{{P}}){{2}})(?![\w'])"
+            return tuple((phrase.replace(tok_l, f"(?:{l_pat})").replace("{P}", _P1), (("dc", dc, denv, prefix), *l_chk))
+                         for l_pat, l_chk in l_opts)
+        if kinds == ["Line", "Line"] and len(items) == 4:
+            tok_l1 = rf"(?<![\w'.(])(?P<{prefix}op_l1>(?:{{P}}){{2}})(?![\w'])"
+            tok_l2 = rf"(?<![\w'.(])(?P<{prefix}op_l2>(?:{{P}}){{2}})(?![\w'])"
+            out_alts = []
+            for ord_i, (a1, a2, b1, b2) in enumerate(((items[0], items[1], items[2], items[3]),
+                                                      (items[2], items[3], items[0], items[1]))):
+                _, l1_opts = _line_core_alts(a1, a2, got, nhan, built_map, err_ids, f"{prefix}o{ord_i}a_", include_noun=False)
+                _, l2_opts = _line_core_alts(b1, b2, got, nhan, built_map, err_ids, f"{prefix}o{ord_i}b_", include_noun=False)
+                for p1_s, c1 in l1_opts:
+                    for p2_s, c2 in l2_opts:
+                        out_alts.append((phrase.replace(tok_l1, f"(?:{p1_s})").replace(tok_l2, f"(?:{p2_s})").replace("{P}", _P1),
+                                         (*c1, *c2)))
+            return tuple(out_alts)
+        raise TuChoi('AUXILIARY_RULE_MISMATCH', 'cấu trúc arg_items của điểm mô tả chưa khớp hợp đồng', err_ids)
+    if (nested := node.get("nested")) is not None:
+        if not isinstance(nested, dict) or not isinstance(nested.get("label"), str):
+            raise TuChoi('AUXILIARY_RULE_MISMATCH', 'điểm mô tả lồng nhau không hợp lệ', err_ids)
+        in_alts = _xac_thuc_nut(nested, got, nhan, built_map, err_ids, f"{prefix}in_", root_d=root_d)
+        _kiem_chung_chi_mo_ta(dc, denv, node, nhan | {nested["label"]}, err_ids)
+        outer_r = _rename_groups(dc.phrase or "", prefix)
+        return tuple((_cum_mo_ta_long(outer_r, in_pat, prefix, rename_inner=False).replace("{P}", _P1), (("dc", dc, denv, prefix), *in_chk))
+                     for in_pat, in_chk in in_alts)
+    _kiem_chung_chi_mo_ta(dc, denv, node, nhan, err_ids)
+    return ((_rename_groups(dc.phrase or "", prefix).replace("{P}", _P1), (("dc", dc, denv, prefix),)),)
 
 
 def _kiem_result_binding(phu, calls, de, nhan, don_vi_de: set[str] = frozenset(), buoc=None, plane_pts=None):
@@ -2599,11 +2794,65 @@ def _kiem_result_binding(phu, calls, de, nhan, don_vi_de: set[str] = frozenset()
     seen_fresh = {}
     khoi = _khoi_cua_loi_goi(calls)
 
-    def term(v):                       # JSON slot value → hashable term (lists → tuples, nested)
-        return tuple(term(x) for x in v) if isinstance(v, (list, tuple)) else v
+    term = _term_val
+    values = _eff_values
 
-    def values(t, env):
-        return tuple(term(env.get(s)) for s in t.operands)
+    def _check_got(got, err_ids: tuple[str, ...]) -> dict[str, tuple]:
+        """Topological forward validation of every edge in `got`: each input must be in source labels or already
+        produced by an EARLIER call in the sequence (no forward references or cycles)."""
+        built_so_far: set[str] = set()
+        produced_so_far: set[tuple] = set()
+        built_map: dict[str, tuple] = {}
+        for contract, env, c, fresh in got:
+            for t in contract.inputs:
+                v = values(t, env)
+                if t.kind == 'Point' and isinstance(v[0], str):
+                    if v[0] not in nhan and ('Point', v) not in produced_so_far:
+                        raise TuChoi('UNKNOWN_LABEL', 'toán hạng điểm ngoài nguồn và không do chuỗi dựng', (c.id,))
+                elif t.kind == 'Plane':
+                    if not v[0] or set(v[0]) - nhan:
+                        raise TuChoi('UNKNOWN_LABEL', 'mặt phẳng có nhãn ngoài nguồn', (c.id,))
+                elif t.kind == 'Line' and v[0] and v[0][0] == 'named':
+                    if set(v[0][1]) - nhan - built_so_far:
+                        raise TuChoi('UNKNOWN_LABEL', 'đường thẳng có nhãn ngoài nguồn', (c.id,))
+                elif t.kind == 'Line' and v[0] and v[0][0] == 'result':
+                    producer(v[0][1])
+                elif (t.kind, v) not in produced_so_far:
+                    raise TuChoi('AUXILIARY_RULE_MISMATCH', f'đầu vào {t.kind} không có producer trong chuỗi', (c.id,))
+            if contract.fresh:
+                x = env.get(contract.effect.operands[0])
+                if fresh:
+                    if not isinstance(x, str) or x in nhan | nhan_phu_da_dung(de, contract.fresh):
+                        raise TuChoi('AUXILIARY_LABEL_COLLISION', 'điểm tươi trùng một nhãn của nguồn', (c.id,))
+                    if seen_fresh.setdefault(x, c.id) != c.id:
+                        raise TuChoi('AUXILIARY_RULE_MISMATCH', 'hai lời gọi cho một điểm tươi', (c.id,))
+                    if not c.quotes or not set(c.quotes) <= chain_quotes.get(c.id, set()):
+                        raise TuChoi('AUXILIARY_RULE_MISMATCH', 'điểm tươi mất nguồn mục tiêu', (c.id,))
+                    accepted.add(c.id)
+                    built_so_far.add(x)
+                    built_map[x] = (contract, env)
+                elif x not in nhan:
+                    raise TuChoi('UNKNOWN_LABEL', 'điểm tái dùng không có trong nguồn', (c.id,))
+            produced_so_far.add((contract.effect.kind, values(contract.effect, env)))
+        return built_map
+
+    def _verify_goal_spans(ask: LoiGoi, patterns_with_bind, buoc_list) -> None:
+        for q in ask.quotes:
+            span = _vi_tri(de, q)
+            if span is None:
+                raise TuChoi('QUOTE_NOT_IN_SOURCE', 'quote mục tiêu không có trong đề', (ask.id,))
+            found = [m for pattern, bind_fn in patterns_with_bind for m in pattern.finditer(de)
+                     if span[0] <= m.start() and m.end() <= span[1] and bind_fn(m)]
+            if not found:
+                raise TuChoi('SOURCE_OBJECT_MISMATCH', 'nguồn không hỏi đúng đối tượng được mô tả tới đúng đích', (ask.id,))
+            for m in found:
+                source_role(ask, q, m.start() - span[0])
+                if not _hoi_dung_cum(de, m.start(), m.end()) or _GAN_GIA_TRI.match(de[m.end():]):
+                    raise TuChoi('NOT_ASKED_IN_SOURCE', 'nguồn không hỏi đại lượng này', (ask.id,))
+                if not _kiem_don_vi_hoi(ask.fn, de, m.start(), m.end(), don_vi_de, calls, ask_id=ask.id):
+                    raise TuChoi('QUESTION_CONTEXT_UNSUPPORTED', 'đơn vị yêu cầu không khớp chính sách đơn vị', (ask.id,))
+                if buoc_list is not None:
+                    buoc_list.append((m.start(), m.end()))
 
     def chain(d):
         """Generic `effect-chain` certificate: a derivation tree over Registry contracts, re-checked edge by edge against
@@ -2633,70 +2882,134 @@ def _kiem_result_binding(phu, calls, de, nhan, don_vi_de: set[str] = frozenset()
         labels = [env.get(contract.effect.operands[0]) for contract, env, _c, fresh in got if fresh and contract.fresh]
         if d.get('labels') != labels or len(set(labels)) != len(labels):
             raise TuChoi('AUXILIARY_RULE_MISMATCH', 'nhãn phụ không đúng các đầu ra tươi của chuỗi', (ask.id,))
-        produced = {(g[0].effect.kind, values(g[0].effect, g[1])) for g in got}
-        # C18: in a DEFINED point's chain only, a point an earlier call built (a foot, a translate) may span a later line
-        built = ({env.get(contract.effect.operands[0]) for contract, env, _c, fresh in got if fresh and contract.fresh}
-                 if (d.get('operand') or {}).get('descriptor') in POINT_DEFINITIONS else set())
-        for contract, env, c, fresh in got:
-            for t in contract.inputs:                    # every input: a source leaf, or produced inside this chain
-                v = values(t, env)
-                if t.kind == 'Point' and isinstance(v[0], str):
-                    if v[0] not in nhan and ('Point', v) not in produced:
-                        raise TuChoi('UNKNOWN_LABEL', 'toán hạng điểm ngoài nguồn và không do chuỗi dựng', (c.id,))
-                elif t.kind == 'Plane':
-                    if not v[0] or set(v[0]) - nhan:
-                        raise TuChoi('UNKNOWN_LABEL', 'mặt phẳng có nhãn ngoài nguồn', (c.id,))
-                elif t.kind == 'Line' and v[0] and v[0][0] == 'named':
-                    if set(v[0][1]) - nhan - built:
-                        raise TuChoi('UNKNOWN_LABEL', 'đường thẳng có nhãn ngoài nguồn', (c.id,))
-                elif t.kind == 'Line' and v[0] and v[0][0] == 'result':
-                    producer(v[0][1])
-                elif (t.kind, v) not in produced:
-                    raise TuChoi('AUXILIARY_RULE_MISMATCH', f'đầu vào {t.kind} không có producer trong chuỗi', (c.id,))
-            if contract.fresh:
-                x = env.get(contract.effect.operands[0])
-                if fresh:
-                    if not isinstance(x, str) or x in nhan | nhan_phu_da_dung(de, contract.fresh):
-                        raise TuChoi('AUXILIARY_LABEL_COLLISION', 'điểm tươi trùng một nhãn của nguồn', (c.id,))
-                    if seen_fresh.setdefault(x, c.id) != c.id:
-                        raise TuChoi('AUXILIARY_RULE_MISMATCH', 'hai lời gọi cho một điểm tươi', (c.id,))
-                    if not c.quotes or not set(c.quotes) <= chain_quotes.get(c.id, set()):
-                        raise TuChoi('AUXILIARY_RULE_MISMATCH', 'điểm tươi mất nguồn mục tiêu', (c.id,))
-                    accepted.add(c.id)
-                elif x not in nhan:
-                    raise TuChoi('UNKNOWN_LABEL', 'điểm tái dùng không có trong nguồn', (c.id,))
+        built_map = _check_got(got, (ask.id,))
         if ask.quotes != qs:
             raise TuChoi('AUXILIARY_RULE_MISMATCH', 'lời hỏi không mang quote của mục tiêu', (ask.id,))
-        # the goal: the asked quantity binds the DESCRIBED point and the declared target
         ans = got[-1]
         eff_vals = values(ans[0].effect, ans[1])
+
+        if (mode := d.get('mode')) is not None:
+            gt = d.get('operand_trees') or {}
+            if not isinstance(gt, dict):
+                raise TuChoi('AUXILIARY_RULE_MISMATCH', 'operand_trees không hợp lệ', (ask.id,))
+            pats: list[tuple[re.Pattern[str], Any]] = []
+
+            def _mk_bind(chks, pl_want=None):
+                def _b(m, chks=chks, pl_want=pl_want):
+                    if not _khop_nut_checks(chks, m, khoi):
+                        return False
+                    if pl_want is not None and not _cung_mat(_mat_cua(m, 'm', khoi), pl_want):
+                        return False
+                    return True
+                return _b
+
+            if mode == 'distance_point_line':
+                if ans[0].verifier != 'distance' or len(eff_vals) != 2 or not (isinstance(eff_vals[1], tuple) and eff_vals[1][:1] == ('named',)):
+                    raise TuChoi('AUXILIARY_RULE_MISMATCH', 'hợp đồng khoảng cách điểm-đường không khớp', (ask.id,))
+                _p_lbl, p_alts = _pt_expr_alts(gt.get('point'), got, nhan, built_map, (ask.id,), 'p0_', expected_label=eff_vals[0])
+                ln_raw = gt.get('line') or ()
+                if len(ln_raw) != 2:
+                    raise TuChoi('AUXILIARY_RULE_MISMATCH', 'toán hạng đường thiếu hai đầu mút', (ask.id,))
+                ln_pair, ln_alts = _line_core_alts(ln_raw[0], ln_raw[1], got, nhan, built_map, (ask.id,), 'l0_')
+                if frozenset(ln_pair) != frozenset(eff_vals[1][1]):
+                    raise TuChoi('AUXILIARY_RULE_MISMATCH', 'đường trong chuỗi không khớp đích chứng chỉ', (ask.id,))
+                pats = [(re.compile(rf'{_KC}\s+(?:từ\s+)?{pp}\s+(?:đến|tới)\s+{lp}', re.I), _mk_bind((*pc, *lc)))
+                        for pp, pc in p_alts for lp, lc in ln_alts]
+            elif mode == 'distance_point_plane':
+                if ans[0].verifier != 'distance' or ans[0].effect.kind != 'AnswerDistance' or len(eff_vals) != 2:
+                    raise TuChoi('AUXILIARY_RULE_MISMATCH', 'hợp đồng khoảng cách điểm-mặt không khớp', (ask.id,))
+                pl = list(gt.get('plane') or ())
+                if len(pl) < 3 or set(pl) - nhan or not (isinstance(eff_vals[1], tuple) and set(eff_vals[1]) <= set(pl)):
+                    raise TuChoi('AUXILIARY_RULE_MISMATCH', 'mặt phẳng đích không khớp nguồn', (ask.id,))
+                _p_lbl, p_alts = _pt_expr_alts(gt.get('point'), got, nhan, built_map, (ask.id,), 'p0_', expected_label=eff_vals[0])
+                pats = [(re.compile(rf'{_KC}\s+(?:từ\s+)?{pp}\s+(?:đến|tới)\s+{_mat_cum("m")}', re.I), _mk_bind(pc, pl))
+                        for pp, pc in p_alts]
+            elif mode == 'distance_line_plane':
+                if ans[0].verifier != 'distance_line_plane' or ans[0].effect.kind != 'AnswerDistanceLinePlane' or len(eff_vals) != 2 or not (isinstance(eff_vals[0], tuple) and eff_vals[0][:1] == ('named',)):
+                    raise TuChoi('AUXILIARY_RULE_MISMATCH', 'hợp đồng khoảng cách đường-mặt không khớp', (ask.id,))
+                pl = list(gt.get('plane') or ())
+                if len(pl) < 3 or set(pl) - nhan or not (isinstance(eff_vals[1], tuple) and set(eff_vals[1]) <= set(pl)):
+                    raise TuChoi('AUXILIARY_RULE_MISMATCH', 'mặt phẳng đích không khớp nguồn', (ask.id,))
+                ln_raw = gt.get('line') or ()
+                if len(ln_raw) != 2:
+                    raise TuChoi('AUXILIARY_RULE_MISMATCH', 'toán hạng đường thiếu hai đầu mút', (ask.id,))
+                ln_pair, ln_alts = _line_core_alts(ln_raw[0], ln_raw[1], got, nhan, built_map, (ask.id,), 'l0_')
+                if frozenset(ln_pair) != frozenset(eff_vals[0][1]):
+                    raise TuChoi('AUXILIARY_RULE_MISMATCH', 'đường trong chuỗi không khớp chứng chỉ', (ask.id,))
+                for lp, lc in ln_alts:
+                    pats.append((re.compile(rf'{_KC}\s+(?:từ|giữa)\s+{lp}\s+(?:đến|tới|và|với)\s+{_mat_cum("m")}', re.I), _mk_bind(lc, pl)))
+                    pats.append((re.compile(rf'{_KC}\s+giữa\s+{_mat_cum("m")}\s+(?:và|với)\s+{lp}', re.I), _mk_bind(lc, pl)))
+            elif mode == 'length':
+                pts_spec = gt.get('points') or ()
+                if ans[0].goal != 'length' or len(eff_vals) != 2 or len(pts_spec) != 2:
+                    raise TuChoi('AUXILIARY_RULE_MISMATCH', 'hợp đồng độ dài không khớp', (ask.id,))
+                l0, _ = _pt_expr_alts(pts_spec[0], got, nhan, built_map, (ask.id,), 'chk0_')
+                l1, _ = _pt_expr_alts(pts_spec[1], got, nhan, built_map, (ask.id,), 'chk1_')
+                if frozenset((l0, l1)) != frozenset(eff_vals) or l0 == l1:
+                    raise TuChoi('AUXILIARY_RULE_MISMATCH', 'hai đầu mút độ dài không khớp chứng chỉ', (ask.id,))
+                for idx, (s1, s2) in enumerate(((pts_spec[0], pts_spec[1]), (pts_spec[1], pts_spec[0]))):
+                    _, a1 = _pt_expr_alts(s1, got, nhan, built_map, (ask.id,), f'g{idx}a_')
+                    _, a2 = _pt_expr_alts(s2, got, nhan, built_map, (ask.id,), f'g{idx}b_')
+                    pats.extend((re.compile(rf'độ dài\s+(?:của\s+)?đoạn(?:\s+thẳng)?\s+nối\s+{p1}{_NOI_HAI_DIEM}{p2}', re.I),
+                                 _mk_bind((*c1, *c2))) for p1, c1 in a1 for p2, c2 in a2)
+            elif mode == 'angle_line_plane':
+                if ans[0].verifier != 'angle_line_plane' or len(eff_vals) != 3:
+                    raise TuChoi('AUXILIARY_RULE_MISMATCH', 'hợp đồng góc đường-mặt không khớp', (ask.id,))
+                pl = list(gt.get('plane') or ())
+                if len(pl) < 3 or set(pl) - nhan or not (isinstance(eff_vals[2], tuple) and set(eff_vals[2]) <= set(pl)):
+                    raise TuChoi('AUXILIARY_RULE_MISMATCH', 'mặt phẳng đích không khớp nguồn', (ask.id,))
+                ln_raw = gt.get('line') or ()
+                if len(ln_raw) != 2:
+                    raise TuChoi('AUXILIARY_RULE_MISMATCH', 'toán hạng đường thiếu hai đầu mút', (ask.id,))
+                ln_pair, ln_alts = _line_core_alts(ln_raw[0], ln_raw[1], got, nhan, built_map, (ask.id,), 'l0_')
+                if frozenset(ln_pair) != frozenset(eff_vals[:2]):
+                    raise TuChoi('AUXILIARY_RULE_MISMATCH', 'đường trong chuỗi không khớp chứng chỉ', (ask.id,))
+                pats = [(re.compile(rf'góc\s+(?:giữa|tạo bởi|hợp bởi)\s+{lp}\s+(?:và|với)\s+{_mat_cum("m")}', re.I), _mk_bind(lc, pl))
+                        for lp, lc in ln_alts]
+            elif mode == 'angle_lines':
+                if ans[0].verifier != 'angle_lines' or len(eff_vals) != 3 or not (isinstance(eff_vals[2], tuple) and eff_vals[2][:1] == ('named',)):
+                    raise TuChoi('AUXILIARY_RULE_MISMATCH', 'hợp đồng góc hai đường không khớp', (ask.id,))
+                ln1_raw, ln2_raw = gt.get('line1') or (), gt.get('line2') or ()
+                if len(ln1_raw) != 2 or len(ln2_raw) != 2:
+                    raise TuChoi('AUXILIARY_RULE_MISMATCH', 'toán hạng hai đường thiếu đầu mút', (ask.id,))
+                p1_pair, _ = _line_core_alts(ln1_raw[0], ln1_raw[1], got, nhan, built_map, (ask.id,), 'c1_')
+                p2_pair, _ = _line_core_alts(ln2_raw[0], ln2_raw[1], got, nhan, built_map, (ask.id,), 'c2_')
+                if {frozenset(p1_pair), frozenset(p2_pair)} != {frozenset(eff_vals[:2]), frozenset(eff_vals[2][1])}:
+                    raise TuChoi('AUXILIARY_RULE_MISMATCH', 'hai đường góc không khớp chứng chỉ', (ask.id,))
+                for oi, (la, lb) in enumerate(((ln1_raw, ln2_raw), (ln2_raw, ln1_raw))):
+                    _, a_alts = _line_core_alts(la[0], la[1], got, nhan, built_map, (ask.id,), f'al{oi}a_')
+                    _, b_alts = _line_core_alts(lb[0], lb[1], got, nhan, built_map, (ask.id,), f'al{oi}b_')
+                    pats.extend((re.compile(rf'góc\s+(?:giữa|tạo bởi|hợp bởi)\s+(?:hai\s+đường thẳng\s+)?{pa}\s+(?:và|với)\s+{pb}', re.I),
+                                 _mk_bind((*ca, *cb))) for pa, ca in a_alts for pb, cb in b_alts)
+            elif mode == 'area':
+                poly = gt.get('polygon') or ()
+                if ans[0].goal != 'area' or len(eff_vals) != 3 or len(poly) != 3:
+                    raise TuChoi('AUXILIARY_RULE_MISMATCH', 'hợp đồng diện tích tam giác không khớp', (ask.id,))
+                lbls = [_pt_expr_alts(x, got, nhan, built_map, (ask.id,), f'ar_c{k}_')[0] for k, x in enumerate(poly)]
+                if frozenset(lbls) != frozenset(eff_vals) or len(set(lbls)) != 3:
+                    raise TuChoi('AUXILIARY_RULE_MISMATCH', 'ba đỉnh diện tích không khớp chứng chỉ', (ask.id,))
+                for pi, (s1, s2, s3) in enumerate(itertools.permutations(poly)):
+                    _, a1 = _pt_expr_alts(s1, got, nhan, built_map, (ask.id,), f'a{pi}_0_')
+                    _, a2 = _pt_expr_alts(s2, got, nhan, built_map, (ask.id,), f'a{pi}_1_')
+                    _, a3 = _pt_expr_alts(s3, got, nhan, built_map, (ask.id,), f'a{pi}_2_')
+                    pre2 = r"(?:hai\s+(?:điểm|đỉnh)\s+)?" if isinstance(s2, str) and isinstance(s3, str) else ""
+                    for p1, c1 in a1:
+                        for p2, c2 in a2:
+                            for p3, c3 in a3:
+                                pat_s = rf"diện tích\s+(?:của\s+)?tam giác\s+(?:tạo bởi|có\s+(?:ba\s+)?đỉnh(?:\s+là)?|qua)\s+{p1}{_NOI_DANH_SACH}{pre2}{p2}(?:\s*,\s*|\s+(?:và|với)\s+){p3}"
+                                pats.append((re.compile(pat_s, re.I), _mk_bind((*c1, *c2, *c3))))
+            else:
+                raise TuChoi('AUXILIARY_RULE_MISMATCH', f'chế độ operand_trees {mode!r} không hợp lệ', (ask.id,))
+            _verify_goal_spans(ask, pats, buoc)
+            accepted.add(ask.id)
+            return
+
+        # Legacy single-described-point goal path (plus nested POINT_DEFINITIONS / arg_items via `_xac_thuc_nut`)
         p, rest = eff_vals[0], eff_vals[1:]
         op, target = d.get('operand') or {}, d.get('target') or {}
-        if op.get('descriptor') in POINT_DEFINITIONS:
-            dc, denv = _dinh_nghia_trong_chuoi(d, got, p, (ask.id,))
-        else:
-            desc = [g for g in got if g[0].descriptor and g[0].descriptor == op.get('descriptor')
-                    and values(g[0].effect, g[1]) == (p,)]
-            if not desc:
-                raise TuChoi('AUXILIARY_RULE_MISMATCH', 'mục tiêu không đo từ điểm được mô tả', (ask.id,))
-            dc, denv = desc[0][0], desc[0][1]
         if op.get('label') != p:
             raise TuChoi('AUXILIARY_RULE_MISMATCH', 'mục tiêu không đo từ điểm được mô tả', (ask.id,))
-        inner_dc, inner_denv = None, {}
-        if (nested := op.get('nested')) is not None:
-            if not isinstance(nested, dict) or not isinstance(nested.get('label'), str):
-                raise TuChoi('AUXILIARY_RULE_MISMATCH', 'điểm mô tả lồng nhau không hợp lệ', (ask.id,))
-            inner_desc = [g for g in got if g[0].descriptor and g[0].descriptor == nested.get('descriptor')
-                          and values(g[0].effect, g[1]) == (nested['label'],)]
-            if not inner_desc:
-                raise TuChoi('AUXILIARY_RULE_MISMATCH', 'điểm mô tả bên trong không có trong chuỗi', (ask.id,))
-            inner_dc, inner_denv = inner_desc[0][0], inner_desc[0][1]
-            _kiem_chung_chi_mo_ta(inner_dc, inner_denv, nested, nhan, (ask.id,))
-            _kiem_chung_chi_mo_ta(dc, denv, op, nhan | {nested['label']}, (ask.id,))
-            desc_phrase = _cum_mo_ta_long(dc.phrase or '', inner_dc.phrase or '')
-        else:
-            _kiem_chung_chi_mo_ta(dc, denv, op, nhan, (ask.id,))
-            desc_phrase = dc.phrase or ''
+        desc_alts = _xac_thuc_nut(op, got, nhan, built_map, (ask.id,), '', root_d=d)
         goal_kind = ans[0].goal
         slots = goal_slots(ans[0])[1:]
         if goal_kind is not None:            # target re-read slot by slot from the contract's typed inputs (one reader)
@@ -2725,14 +3038,9 @@ def _kiem_result_binding(phu, calls, de, nhan, don_vi_de: set[str] = frozenset()
             raise TuChoi('AUXILIARY_RULE_MISMATCH', 'loại mục tiêu không hợp lệ trong chứng chỉ chuỗi', (ask.id,))
         x = rest[0]
         g = producer(x[1]) if goal_kind is None and x[0] == 'result' else None
-        # a goal contract may declare several closed wordings (operand orders): each is one exact pattern (M3)
-        patterns = (tuple(_mau_muc_tieu_mo_ta(p, desc_phrase) for p in _cac_cau(ans[0].phrase)) if goal_kind else
-                    (_mau_khoang_cach_mo_ta(desc_phrase),))
 
-        def binds(m):
-            if not _khop_mo_ta_nguon(dc, denv, m, khoi):
-                return False
-            if inner_dc is not None and not _khop_mo_ta_nguon(inner_dc, inner_denv, m, khoi, prefix="in_"):
+        def _binds_alt(m, chks):
+            if not _khop_nut_checks(chks, m, khoi):
                 return False
             if goal_kind is not None:        # wording groups by slot kind: t / t1,t2 points, m plane, l line
                 pts = [v for (_s, k), v in zip(slots, rest) if k == 'Point']
@@ -2747,12 +3055,18 @@ def _kiem_result_binding(phu, calls, de, nhan, don_vi_de: set[str] = frozenset()
                 return bool(m['l']) and sorted(_nhan_cum(m['l'])) == list(x[1])
             return bool(m['mp'] or m['mb'] or m['md']) and _cung_mat(_mat_cua(m, 'm', khoi), list(x))
 
+        # a goal contract may declare several closed wordings (operand orders): each is one exact pattern (M3)
+        patterns = [(_mau_muc_tieu_mo_ta(gp, d_pat) if goal_kind else _mau_khoang_cach_mo_ta(d_pat),
+                     lambda m, chks=d_chks: _binds_alt(m, chks))
+                    for d_pat, d_chks in desc_alts
+                    for gp in (_cac_cau(ans[0].phrase) if goal_kind else (None,))]
+
         for q in ask.quotes:
             span = _vi_tri(de, q)
             if span is None:
                 raise TuChoi('QUOTE_NOT_IN_SOURCE', 'quote mục tiêu không có trong đề', (ask.id,))
-            found = [m for pattern in patterns for m in pattern.finditer(de)
-                     if span[0] <= m.start() and m.end() <= span[1] and binds(m)]
+            found = [m for pattern, bfn in patterns for m in pattern.finditer(de)
+                     if span[0] <= m.start() and m.end() <= span[1] and bfn(m)]
             if not found:
                 raise TuChoi('SOURCE_OBJECT_MISMATCH', 'nguồn không hỏi khoảng cách từ đúng điểm được mô tả tới đúng đích',
                              (ask.id,))
@@ -2760,10 +3074,8 @@ def _kiem_result_binding(phu, calls, de, nhan, don_vi_de: set[str] = frozenset()
                 source_role(ask, q, m.start() - span[0])
                 if not _hoi_dung_cum(de, m.start(), m.end()) or _GAN_GIA_TRI.match(de[m.end():]):
                     raise TuChoi('NOT_ASKED_IN_SOURCE', 'nguồn không hỏi khoảng cách này', (ask.id,))
-                if not _kiem_don_vi_hoi(ask.fn, de, m.start(), m.end(), don_vi_de, calls):
+                if not _kiem_don_vi_hoi(ask.fn, de, m.start(), m.end(), don_vi_de, calls, ask_id=ask.id):
                     raise TuChoi('QUESTION_CONTEXT_UNSUPPORTED', 'đơn vị yêu cầu không khớp chính sách đơn vị', (ask.id,))
-                # A length goal is read like every other ask: the shared grammar above (`_hoi_dung_cum`: "Tính …",
-                # "… bằng bao nhiêu?") and request coverage (M1) for a dropped second ask — not one bare sentence form (M3).
                 if goal_kind is None and x[0] == 'result':  # complete sentence, no silently dropped target or second ask
                     form = re.compile(r'(?:(?:tính|tìm)\s+)?(?:' + m.re.pattern + r')[.?\s]*', re.IGNORECASE)
                     if not form.fullmatch(q) or not form.fullmatch(de[slice(*_bien_cau(de, m.start()))].strip()):
@@ -2788,36 +3100,13 @@ def _kiem_result_binding(phu, calls, de, nhan, don_vi_de: set[str] = frozenset()
             if not same_call(contract, render_call(contract, env), c.args.model_dump(exclude_none=True)):
                 raise TuChoi('AUXILIARY_RULE_MISMATCH', 'lời gọi điểm mặt phụ không khớp contract', (c.id,))
             got.append((contract, env, c, bool(e.get('fresh'))))
-        produced = {(g[0].effect.kind, values(g[0].effect, g[1])) for g in got}
-        for contract, env, c, fresh in got:
-            for t in contract.inputs:
-                v = values(t, env)
-                if t.kind == 'Point' and isinstance(v[0], str):
-                    if v[0] not in nhan and ('Point', v) not in produced:
-                        raise TuChoi('UNKNOWN_LABEL', 'toán hạng điểm mặt phụ ngoài nguồn', (c.id,))
-                elif t.kind == 'Plane' and (not v[0] or set(v[0]) - nhan):
-                    raise TuChoi('UNKNOWN_LABEL', 'mặt phẳng tham chiếu có nhãn ngoài nguồn', (c.id,))
-                elif t.kind == 'Line' and v[0] and v[0][0] == 'named' and (set(v[0][1]) - nhan):
-                    raise TuChoi('UNKNOWN_LABEL', 'đường thẳng tham chiếu có nhãn ngoài nguồn', (c.id,))
-            if contract.fresh:
-                x = env.get(contract.effect.operands[0])
-                if fresh:
-                    if not isinstance(x, str) or x in nhan | nhan_phu_da_dung(de, contract.fresh):
-                        raise TuChoi('AUXILIARY_LABEL_COLLISION', 'điểm tươi mặt phụ trùng nhãn nguồn', (c.id,))
-                    if seen_fresh.setdefault(x, c.id) != c.id:
-                        raise TuChoi('AUXILIARY_RULE_MISMATCH', 'hai lời gọi cho một điểm tươi', (c.id,))
-                    if not c.quotes or not set(c.quotes) <= chain_quotes.get(c.id, set()):
-                        raise TuChoi('AUXILIARY_RULE_MISMATCH', 'điểm tươi mặt phụ mất nguồn mục tiêu', (c.id,))
-                    accepted.add(c.id)
-                elif x not in nhan:
-                    raise TuChoi('UNKNOWN_LABEL', 'điểm tái dùng không có trong nguồn', (c.id,))
-        dc, denv, _c_last, _fr_last = got[-1]
-        p_out = values(dc.effect, denv)[0]
-        if not dc.descriptor or dc.descriptor != op.get('descriptor') or op.get('label') != p_out or d.get('point') != p_out:
+        built_map = _check_got(got, err_ids)
+        p_out = values(got[-1][0].effect, got[-1][1])[0]
+        if op.get('label') != p_out or d.get('point') != p_out:
             raise TuChoi('AUXILIARY_RULE_MISMATCH', 'điểm đi qua của mặt phụ không khớp chứng chỉ mô tả', err_ids)
-        _kiem_chung_chi_mo_ta(dc, denv, op, nhan, err_ids)
+        alts = _xac_thuc_nut(op, got, nhan, built_map, err_ids, '')
         if plane_pts is not None:
-            plane_pts[id(d)] = (dc, denv)
+            plane_pts[id(d)] = alts
 
     for d in phu:
         if d.get('rule') == 'effect-chain':
@@ -3898,7 +4187,7 @@ def _kiem_vung_tien_de(calls: tuple[LoiGoi, ...], de: str, het: int, read_quotes
             elif re.search(r"[.!?;]\s", de[vt[0]:vt[1]].rstrip()):
                 # a quote spanning sentences covers only what its call's own binding grammar reads in it
                 # ("(MAB) cắt hình chóp … theo một thiết diện. Tính diện tích thiết diện đó.")
-                nhip = ([(m.start(), m.end()) for mau in (*_CAT_BOI, _GIAO_TUYEN) for m in mau.finditer(de, *vt)]
+                nhip = ([(m.start(), m.end()) for mau in (*_CAT_BOI, _GIAO_TUYEN, _MAT_TEN_DIEM_RE) for m in mau.finditer(de, *vt)]
                         if c.fn in ("section", "ask_section_area", "intersection_line")
                         else [(m.start(), m.end()) for m in _DINH_NGHIA_KY_HIEU_DT.finditer(de, *vt)]
                         if c.fn == "ask_area_ratio"
@@ -4100,7 +4389,8 @@ _MAT_TEN_DIEM_RE = re.compile(
     r"(?:(?:mặt phẳng|mp)\s*)?\((?P<ten>(?-i:[A-Z][0-9]*'?)|[α-ω]'?)\)\s*(?:là\s+mặt phẳng\s+)?(?:"
     r"chứa\s+(?:đường thẳng\s+)?(?<![\w'.])(?P<l1>(?-i:[A-Z][0-9]*'?){2})(?![\w'])\s+và\s+(?:đi\s+)?qua\s+(?:điểm\s+)?(?P<z1>(?-i:[A-Z][0-9]*'?))(?![\w'])"
     r"|(?:đi\s+)?qua\s+(?:điểm\s+)?(?P<z2>(?-i:[A-Z][0-9]*'?))(?![\w'])\s+và\s+chứa\s+(?:đường thẳng\s+)?(?<![\w'.])(?P<l2>(?-i:[A-Z][0-9]*'?){2})(?![\w'])"
-    r"|chứa\s+hai\s+đường thẳng\s+(?:cắt nhau\s+)?(?<![\w'.])(?P<a>(?-i:[A-Z][0-9]*'?){2})\s+và\s+(?P<b>(?-i:[A-Z][0-9]*'?){2})(?![\w']))",
+    r"|chứa\s+hai\s+đường thẳng\s+(?:cắt nhau\s+)?(?<![\w'.])(?P<a>(?-i:[A-Z][0-9]*'?){2})\s+và\s+(?P<b>(?-i:[A-Z][0-9]*'?){2})(?![\w'])"
+    r"|(?:đi\s+)?qua\s+(?:(?:ba|3|các)\s+điểm\s+)?(?P<p1>(?-i:[A-Z][0-9]*'?))(?:\s*,\s*|\s+và\s+)(?P<p2>(?-i:[A-Z][0-9]*'?))(?:\s*,\s*|\s+và\s+)(?P<p3>(?-i:[A-Z][0-9]*'?))(?![\w'])(?!\s*(?:,|\s+và)\s*(?-i:[A-Z][0-9]*'?))(?!\s*(?:,?\s*(?:và(?:\s+đồng\s+thời)?|đồng\s+thời)\s+)?(?:vuông\s+góc|song\s+song|chứa)))",
     re.IGNORECASE)
 
 
@@ -4111,7 +4401,9 @@ def _mat_ten_diem(quotes) -> dict[str, frozenset]:
     bad: set[str] = set()
     for q in quotes:
         for m in _MAT_TEN_DIEM_RE.finditer(chuan_hoa(q)):
-            if m["a"]:
+            if m["p1"]:
+                tap = frozenset((m["p1"], m["p2"], m["p3"]))
+            elif m["a"]:
                 x, y = _nhan_cum(m["a"]), _nhan_cum(m["b"])
                 if len(set(x)) != 2 or len(set(y)) != 2 or len(set(x) & set(y)) != 1:
                     continue
@@ -4127,7 +4419,7 @@ def _mat_ten_diem(quotes) -> dict[str, frozenset]:
 
 
 #: "cắt bởi / tạo bởi / với (mặt phẳng) (P)" — a section phrase naming a plane by its single-letter name.
-_CAT_BOI_TEN = re.compile(r"thiết diện\s+(?:của\s+)?" + r"(?P<khoi>[^.;]*?)" +
+_CAT_BOI_TEN = re.compile(r"thiết diện\s+(?:của\s+)?" + r"(?P<khoi>(?:[^.;]|\.(?=[A-Z]))*?)" +
                           r"(?:(?:cắt|tạo)\s+)?(?:bởi|với)\s+(?:(?:mặt phẳng|mp)\s*)?\((?P<ten>(?-i:[A-Z][0-9]*'?)|[α-ω]'?)\)(?![\w'])",
                           re.IGNORECASE)
 #: The request of that section: "(hãy) xác định / tìm / dựng / vẽ thiết diện … cắt bởi (P)".
@@ -4897,11 +5189,16 @@ _CUM_HOI = {
         (_cum(rf"diện tích(?:\s+của)?\s+thiết diện(?:(?:\s+của|\s+(?:được\s+)?tạo bởi){_khoi_cum('k')})?\s+(?:(?:khi\s+(?:bị\s+)?|bị\s+)?(?:cắt bởi|tạo bởi)|với|và|do)\s+{_mat_cum('m')}"
               rf"(?:\s+(?:của|và|cắt){_khoi_cum('j')})?"),
          lambda m, a, k: _cung_mat(_mat_cua(m, "m", k), a.plane) and _khoi_thiet_dien(m, a, k)),
+        (_cum(rf"diện tích(?:\s+của)?\s+thiết diện(?:(?:\s+của|\s+(?:được\s+)?tạo bởi){_khoi_cum('k')})?\s+(?:(?:khi\s+(?:bị\s+)?|bị\s+)?(?:cắt bởi|tạo bởi)|với|và|do)\s+"
+              rf"(?:(?:mặt phẳng|mp)\s*)?\((?P<ten>(?-i:[A-Z][0-9]*'?)|[α-ω]'?)\)(?![\w'])(?:\s+(?:của|và|cắt){_khoi_cum('j')})?"),
+         lambda m, a, k: _mat_ten_diem([m.string]).get(m["ten"]) == frozenset(a.plane) and _khoi_thiet_dien(m, a, k)),
         # "Mặt phẳng (P) cắt hình chóp … theo một thiết diện. Tính diện tích thiết diện đó.": thiết diện đã được gọi tên
         # trước trong đề, và đề chỉ gọi tên ĐÚNG MỘT mặt cắt — chính mặt của lời gọi (review S1, I1).
         (_cum(r"diện tích(?:\s+của)?\s+thiết diện\s+(?:đó|này|trên)(?!\w)"),
-         lambda m, a, k: {frozenset(_nhan_cum(x[1] or x[2])) for mau in _CAT_BOI for x in mau.finditer(m.string)
-                          if x[1] or x[2]} == {frozenset(a.plane)})],
+         lambda m, a, k: (
+             {frozenset(_nhan_cum(x[1] or x[2])) for mau in _CAT_BOI for x in mau.finditer(m.string) if x[1] or x[2]}
+             | {tm[x["ten"]] for tm in (_mat_ten_diem([m.string]),) for x in _CAT_BOI_TEN.finditer(m.string) if x["ten"] in tm}
+         ) == {frozenset(a.plane)})],
     "ask_volume_ratio": [
         (_cum(rf"(?:tỉ|tỷ)\s+số(?:\s+giữa)?(?:\s+thể\s+tích)?(?:\s+(?:của|giữa))?"
               rf"(?:\s+(?:hai|2)\s+(?P<hk>(?:(?:hình|khối)(?:\s+(?:chóp|lăng trụ|lập phương|hộp|tứ diện|đa diện))?|(?:chóp|lăng trụ|lập phương|hộp|tứ diện|đa diện))(?:\s+(?:đứng|đều|tam giác|tứ giác|chữ nhật|lục giác))*))?"
@@ -4987,22 +5284,96 @@ def _cac_cau(phrase: str | tuple[str, ...] | None) -> tuple[str, ...]:
     return phrase if isinstance(phrase, tuple) else (phrase,) if phrase else ()
 
 
+class _GuardedPattern:
+    """Delays compilation of large composite-descriptor regexes until their cheap syntactic anchor matches."""
+
+    __slots__ = ("_guard", "_raw", "_pat")
+
+    def __init__(self, guard: re.Pattern[str], raw: Any) -> None:
+        self._guard, self._raw, self._pat = guard, raw, None
+
+    def _compiled(self) -> re.Pattern[str]:
+        if self._pat is None:
+            self._pat = self._raw() if callable(self._raw) else re.compile(self._raw, re.IGNORECASE)
+        return self._pat
+
+    def search(self, string: str, pos: int = 0, endpos: int | None = None):
+        args = (string, pos) if endpos is None else (string, pos, endpos)
+        if not self._guard.search(*args):
+            return None
+        return self._compiled().search(*args)
+
+    def finditer(self, string: str, pos: int = 0, endpos: int | None = None):
+        args = (string, pos) if endpos is None else (string, pos, endpos)
+        if not self._guard.search(*args):
+            return iter(())
+        return self._compiled().finditer(*args)
+
+
+def _goal_prefix_guard(goal_phrase: str) -> re.Pattern[str] | None:
+    pre = re.split(r"\(\?P<|\(\?:\{|\{", goal_phrase, maxsplit=1)[0].strip()
+    while pre and pre.count("(") > pre.count(")"):
+        pre = pre[: pre.rfind("(")].strip()
+    if not pre:
+        return None
+    try:
+        return re.compile(pre, re.IGNORECASE)
+    except re.error:
+        return None
+
+
 @functools.lru_cache(maxsize=None)
-def _mau_hoi_dong(desc: tuple[str, ...], goals: tuple[str, ...]) -> tuple[re.Pattern[str], ...]:
+def _mau_hoi_dong(base_desc: tuple[str, ...], goals: tuple[str, ...]) -> tuple[Any, ...]:
+    base_anon = "|".join(f"(?:{re.sub(r'\(\?P<[^>]+>', '(?:', d).replace('{P}', _P1)})" for d in base_desc)
+    nested_desc = tuple(_cum_mo_ta_long(o, f"(?:{base_anon})", rename_inner=False) for o in base_desc if "(?P<op_p>{P})" in o)
+    desc = (*base_desc, *nested_desc)
+    d_base = base_anon
+    d_nest = "|".join(f"(?:{re.sub(r'\(\?P<[^>]+>', '(?:', d).replace('{P}', _P1)})" for d in nested_desc)
+    pt_b = rf"(?:{_TEN_LOAI_DIEM}{_P1}(?![\w'])|{d_base})"
+    ln_b = rf"(?:(?:đường thẳng|đt|đoạn thẳng|đoạn)\s+)(?:nối\s+{pt_b}\s+(?:với|và)\s+{pt_b}|(?:đi\s+)?qua\s+{pt_b}(?:\s*,\s*|\s+(?:và|với)\s+){pt_b})"
+    line_pt_d = rf"(?:giao điểm\s+(?:của\s+)?{ln_b}\s+(?:và|với)\s+(?:(?:mặt phẳng|mp|mặt bên|mặt đáy)\s*)?\(?(?:{_P1}){{3,}}(?![\w'])\)?|hình chiếu(?:\s+vuông góc)?\s+của\s+{pt_b}\s+(?:lên|trên)\s+{ln_b})"
+    d_all = f"(?:{d_base}|{d_nest}|{line_pt_d})" if d_nest else f"(?:{d_base}|{line_pt_d})"
+    pt_d = rf"(?:{_TEN_LOAI_DIEM}{_P1}(?![\w'])|{d_all})"
+    ln_d = rf"(?:(?:đường thẳng|đt|đoạn thẳng|đoạn)\s+)(?:nối\s+{pt_d}\s+(?:với|và)\s+{pt_d}|(?:đi\s+)?qua\s+{pt_d}(?:\s*,\s*|\s+(?:và|với)\s+){pt_d})"
+    ln_anchor = r"(?:đường thẳng|đt|đoạn thẳng|đoạn)\s+(?:nối|(?:đi\s+)?qua)"
+    g_kc_tu = re.compile(rf"{_KC}\s+từ\s+", re.I)
+    g_kc_ln = re.compile(rf"{_KC}[\s\S]*?{ln_anchor}", re.I)
+    g_len = re.compile(r"độ dài\s+(?:của\s+)?đoạn(?:\s+thẳng)?\s+nối", re.I)
+    g_ang_1 = re.compile(rf"góc\s+(?:giữa|tạo bởi|hợp bởi)[\s\S]*?{ln_anchor}", re.I)
+    g_ang_2 = re.compile(rf"góc\s+(?:giữa|tạo bởi|hợp bởi)[\s\S]*?{ln_anchor}[\s\S]*?{ln_anchor}", re.I)
+    g_tri = re.compile(r"diện tích\s+(?:của\s+)?tam giác\s+(?:tạo bởi|có\s+(?:ba\s+)?đỉnh|qua)", re.I)
+    g_dien_tich = re.compile(r"diện tích", re.I)
+    goal_guards = {g: _goal_prefix_guard(g) for g in goals}
+    kc_pats = tuple(_GuardedPattern(g_kc_tu, lambda d=d: _mau_khoang_cach_mo_ta(d)) for d in desc)
+    mt_pats = tuple(
+        _GuardedPattern(gg, lambda g=g, d=d: _mau_muc_tieu_mo_ta(g, d))
+        if (gg := goal_guards[g]) is not None
+        else _mau_muc_tieu_mo_ta(g, d)
+        for g in goals
+        for d in desc
+    )
+    anon_extra = (
+        _GuardedPattern(g_kc_ln, rf"{_KC}\s+từ\s+{pt_d}\s+(?:đến|tới)\s+{ln_d}"),
+        _GuardedPattern(g_kc_ln, rf"{_KC}\s+(?:từ|giữa)\s+{ln_d}\s+(?:đến|tới|và|với)\s+{_mat_cum('m')}"),
+        _GuardedPattern(g_kc_ln, rf"{_KC}\s+giữa\s+{_mat_cum('m')}\s+(?:và|với)\s+{ln_d}"),
+        _GuardedPattern(g_len, rf"độ dài\s+(?:của\s+)?đoạn(?:\s+thẳng)?\s+nối\s+{pt_d}{_NOI_HAI_DIEM}{pt_d}"),
+        _GuardedPattern(g_ang_1, rf"(?:số đo\s+(?:của\s+)?)?góc\s+(?:giữa|tạo bởi|hợp bởi)\s+(?:hai\s+đường thẳng\s+)?{ln_d}\s+(?:và|với)\s+(?:{_mat_cum('m')}|{_doan_cum('l')})"),
+        _GuardedPattern(g_ang_2, rf"(?:số đo\s+(?:của\s+)?)?góc\s+(?:giữa|tạo bởi|hợp bởi)\s+(?:hai\s+đường thẳng\s+)?{ln_d}\s+(?:và|với)\s+{ln_d}"),
+        _GuardedPattern(g_ang_1, rf"(?:số đo\s+(?:của\s+)?)?góc\s+(?:giữa|tạo bởi|hợp bởi)\s+(?:hai\s+đường thẳng\s+)?{_doan_cum('l')}\s+(?:và|với)\s+{ln_d}"),
+        _GuardedPattern(g_tri, rf"diện tích\s+(?:của\s+)?tam giác\s+(?:tạo bởi|có\s+(?:ba\s+)?đỉnh(?:\s+là)?|qua)\s+{pt_d}{_NOI_DANH_SACH}(?:hai\s+(?:điểm|đỉnh)\s+)?{pt_d}(?:\s*,\s*|\s+(?:và|với)\s+){pt_d}"),
+    )
     return (*(mau for ds in _CUM_HOI.values() for mau, _b in ds), _KHOANG_CACH_DIEM_DUONG, _KHOANG_CACH_GIAO_TUYEN,
-            _CUM_HOI_THIET_DIEN_PHU, *(_mau_khoang_cach_mo_ta(d) for d in desc),
-            *(_mau_muc_tieu_mo_ta(g, d) for g in goals for d in desc))
+            _GuardedPattern(g_dien_tich, lambda: _CUM_HOI_THIET_DIEN_PHU), *kc_pats, *mt_pats, *anon_extra)
 
 
-def _mau_hoi_tat_ca() -> tuple[re.Pattern[str], ...]:
+def _mau_hoi_tat_ca() -> tuple[Any, ...]:
     """EVERY object phrase a request can name — the per-function ask grammar, the auxiliary distance phrases and the
     contract phrases of unnamed points (Registry data). One inventory for request coverage (M1): no wording list."""
     ct = [p for s in REGISTRY.values() for p in planning_contracts(s)]
-    base_desc = tuple(p.phrase for p in ct if p.descriptor and isinstance(p.phrase, str))
-    nested_desc = tuple(_cum_mo_ta_long(o, i) for o in base_desc if "(?P<op_p>{P})" in o for i in base_desc)
-    desc = (*base_desc, *nested_desc)
+    pt_defs = tuple(d.contract.phrase for d in POINT_DEFINITIONS.values() if isinstance(d.contract.phrase, str))
+    base_desc = tuple(p.phrase for p in ct if p.descriptor and isinstance(p.phrase, str)) + pt_defs
     goals = tuple(g for p in ct if p.goal for g in _cac_cau(p.phrase))
-    return _mau_hoi_dong(desc, goals)
+    return _mau_hoi_dong(base_desc, goals)
 
 
 def _cum_lon_nhat(de: str, a: int, b: int) -> list[tuple[int, int]]:
@@ -5433,7 +5804,7 @@ def _kiem_ghi_chu(note: str, calls: tuple[LoiGoi, ...], don_vi_de: set[str]) -> 
 
 
 def _kiem_don_vi_hoi(fn: str, de: str, a: int, b: int, don_vi_de: set[str],
-                     calls: tuple[LoiGoi, ...] = ()) -> bool:
+                     calls: tuple[LoiGoi, ...] = (), ask_id: str | None = None) -> bool:
     """Validate unit, parameter, and formatting annotations in the closed tail of asked object `de[a:b]`."""
     chieu = _CHIEU_HAM_HOI.get(fn)
     vung = _vung_hoi(de, a, b)
@@ -5443,8 +5814,9 @@ def _kiem_don_vi_hoi(fn: str, de: str, a: int, b: int, don_vi_de: set[str],
     pol: dict[str, Any] | None = None
     if pol_map:
         matched_asks = [c for c in calls if c.fn == fn and (a, b) in _cum_hoi(c, de, 0, len(de), calls)]
-        if matched_asks:
-            pol = pol_map.get(matched_asks[0].id)
+        target_id = matched_asks[0].id if matched_asks else ask_id
+        if target_id:
+            pol = pol_map.get(target_id)
             if pol is not None:
                 from .output_policy import verify_goal_output_policy_in_source
 
@@ -5977,7 +6349,7 @@ def mat_song_song_dung_nguon(c: LoiGoi, p: str, q: list[str], de: str, calls: tu
                              cut: dict | None = None, doc_cat: list[tuple[int, int]] | None = None,
                              khoi_dan_xuat: frozenset[str] = frozenset(),
                              hai_duong: list[list[str]] | None = None, ten_khai: str | None = None,
-                             point_desc: tuple[PlanningContract, dict] | None = None) -> bool:
+                             point_desc: Any = None) -> bool:
     """Bounded grammar binding a section to a derived plane: the plane through `p` parallel to (q) is defined in the quotes
     (named "(P)" and referred to by a section phrase, or written inside the section phrase), as a premise, not negated.
     Unknown wording is refused, not guessed. `ten_ra` receives the plane names the source gave, once bound. `cut` /
@@ -6018,25 +6390,29 @@ def mat_song_song_dung_nguon(c: LoiGoi, p: str, q: list[str], de: str, calls: tu
         return True
 
     # `duong` given: the plane is defined by a point and a LINE it is ⊥ to (`MAT_VUONG_DUONG`); `hai_duong`: ∥ two lines; else ∥ plane q.
+    kind_rel = "two_lines" if hai_duong else "perp_line" if duong else "parallel"
     if point_desc is not None:
-        cac_mau_idx = _mau_mat_phu_mo_ta(
-            point_desc[0].phrase or "",
-            "two_lines" if hai_duong else "perp_line" if duong else "parallel",
+        pts_alts = (((point_desc[0].phrase or "", (("dc", point_desc[0], point_desc[1], ""),)),)
+                    if isinstance(point_desc[0], PlanningContract) else point_desc)
+        cac_mau_chk = tuple(
+            (pat, idx, chks)
+            for phrase_str, chks in pts_alts
+            for pat, idx in _mau_mat_phu_mo_ta(phrase_str, kind_rel)
         )
     else:
-        cac_mau_idx = tuple(
-            (pat, 3) for pat in (
+        cac_mau_chk = tuple(
+            (pat, 3, ()) for pat in (
                 (_QUA_HAI_DUONG, _DIEM_TRUOC_HAI_DUONG) if hai_duong
                 else (_QUA_VUONG_DUONG, _DIEM_TRUOC_VUONG_DUONG) if duong
                 else (_QUA_SONG_SONG, _DIEM_TRUOC_SONG_SONG)
             )
         )
-    cac_mau = tuple(pat for pat, _ in cac_mau_idx)
+    cac_mau = tuple(pat for pat, _, _ in cac_mau_chk)
 
-    def khop(m, mat_idx: int = 3) -> bool:
+    def khop(m, mat_idx: int = 3, chks: tuple = ()) -> bool:
         if ten_khai is not None and m["ten"] != ten_khai:
             return False
-        if point_desc is not None and not _khop_mo_ta_nguon(point_desc[0], point_desc[1], m, khoi):
+        if point_desc is not None and not _khop_nut_checks(chks, m, khoi):
             return False
         if hai_duong:
             return {frozenset((m["a"], m["b"])), frozenset((m["c"], m["d"]))} == {frozenset(x) for x in hai_duong}
@@ -6053,9 +6429,9 @@ def mat_song_song_dung_nguon(c: LoiGoi, p: str, q: list[str], de: str, calls: tu
     valid_def_spans: set[tuple[int, int]] = set()
     gan: dict[int, int] = {}                             # vị trí (trong đề) của từ "thiết diện" → cuối cụm thiết diện
     for qn, goc, s in doan:
-        for mau, mat_idx in cac_mau_idx:
+        for mau, mat_idx, chks in cac_mau_chk:
             for m in mau.finditer(qn):
-                if (point_desc is None and m["diem"] != p) or not khop(m, mat_idx):
+                if (point_desc is None and m["diem"] != p) or not khop(m, mat_idx, chks):
                     continue
                 if point_desc is None:
                     dau_diem = m[0][:m.start("diem") - m.start()].lower()
@@ -6095,14 +6471,14 @@ def mat_song_song_dung_nguon(c: LoiGoi, p: str, q: list[str], de: str, calls: tu
         for ten_u in ung_vien:
             if not ten_u:
                 continue
-            khop_de = [(m, mat_idx) for mau, mat_idx in cac_mau_idx for m in mau.finditer(de) if m["ten"] == ten_u]
+            khop_de = [(m, mat_idx, chks) for mau, mat_idx, chks in cac_mau_chk for m in mau.finditer(de) if m["ten"] == ten_u]
             if len(khop_de) != 1:
                 continue
-            m, mat_idx = khop_de[0]
+            m, mat_idx, chks = khop_de[0]
             cs, ce = _bien_cau(de, m.start())
             if re.match(r"^\s*(?:hãy\s+)?dựng\b", de[cs:ce], re.IGNORECASE):
                 continue
-            if (point_desc is None and m["diem"] != p) or not khop(m, mat_idx):
+            if (point_desc is None and m["diem"] != p) or not khop(m, mat_idx, chks):
                 continue
             if point_desc is None:
                 dau_diem = m[0][:m.start("diem") - m.start()].lower()
@@ -6765,12 +7141,18 @@ _DIEM_TRUOC_VUONG_DUONG = re.compile(
     _DIEM_TRUOC + rf"vuông góc\s+(?:với\s+)?(?:(?:đường thẳng|đường chéo|cạnh bên|cạnh đáy|đoạn thẳng|đoạn|cạnh)\s+)?"
     rf"(?<![\w'.(])(?P<l>{_P1}{_P1})(?![\w'])",
     re.IGNORECASE)
-_DESC_DIEM_PHU_ANON = "|".join(
-    re.sub(r"\(\?P<[^>]+>", "(?:", p.phrase).replace("{P}", _P1)
-    for s in REGISTRY.values()
-    for p in planning_contracts(s)
-    if p.descriptor and isinstance(p.phrase, str)
+_BASE_DESC_DIEM_PHU = (
+    tuple(p.phrase for s in REGISTRY.values() for p in planning_contracts(s) if p.descriptor and isinstance(p.phrase, str))
+    + tuple(d.contract.phrase for d in POINT_DEFINITIONS.values() if isinstance(d.contract.phrase, str))
 )
+_BASE_DESC_DIEM_PHU_ANON = "|".join(
+    f"(?:{re.sub(r'\(\?P<[^>]+>', '(?:', ph).replace('{P}', _P1)})" for ph in _BASE_DESC_DIEM_PHU
+)
+_NESTED_DESC_DIEM_PHU_ANON = "|".join(
+    f"(?:{re.sub(r'\(\?P<[^>]+>', '(?:', _cum_mo_ta_long(o, f'(?:{_BASE_DESC_DIEM_PHU_ANON})', rename_inner=False)).replace('{P}', _P1)})"
+    for o in _BASE_DESC_DIEM_PHU if "(?P<op_p>{P})" in o
+)
+_DESC_DIEM_PHU_ANON = f"{_BASE_DESC_DIEM_PHU_ANON}|{_NESTED_DESC_DIEM_PHU_ANON}"
 _QUA_MO_TA_ANON = rf"(?:(?:đi\s+)?qua|chứa)\s+(?:điểm\s+là\s+)?(?:{_DESC_DIEM_PHU_ANON})"
 _DT_MO_TA_PRE_TEN = (
     rf"{_QUA_MO_TA_ANON}\s*,?\s*(?:ta\s+)?(?:dựng|vẽ|kẻ|xét|lấy|gọi|cho|thiết\s+lập)?\s*"

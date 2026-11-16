@@ -588,8 +588,8 @@ def test_family_d1_source_gate_rejects_mismatched_inner_or_outer_quote():
     assert env["reason_code"] == "SOURCE_OBJECT_MISMATCH"
 
 
-def test_family_d2_unsupported_nested_described_point_refuses_fail_closed():
-    """Nested DescribedPointSpec where inner kind has no direct descriptor contract (e.g. orthocenter) refuses with BRIDGE_UNSUPPORTED_DESCRIBED_POINT."""
+def test_family_d2_nested_orthocenter_projection_distance_is_served_exactly():
+    """Nested DescribedPointSpec through a POINT_DEFINITIONS point (`orthocenter(SBC) -> orthogonal_projection((ABCD)) -> distance((SAD))`) is dynamically planned and served exactly (2)."""
     base_text, premises = _pyramid_base_premises("2", "3")
     q_quote = (
         "Tính khoảng cách từ hình chiếu vuông góc của trực tâm của tam giác SBC "
@@ -625,6 +625,46 @@ def test_family_d2_unsupported_nested_described_point_refuses_fail_closed():
                 "kind": "measurement",
                 "goal_type": "distance",
                 "target": {"point": "@h1", "plane": ["S", "A", "D"]},
+                "quote": q_quote,
+                "solid_id": "s1",
+            }
+        ],
+    }
+    route, env, answers, _receipt = _run(text, payload)
+    assert route["status"] == "SERVED", env.get("reason_code")
+    assert answers == {"q1": "2"}
+    assert validate_construction_continuity(env["scene3d"]) == []
+    tel = route["planner"]["search_telemetry"]
+    assert tel["classification"] == "DISCOVERED_FUNCTION_COMPOSITION"
+
+
+def test_family_d2b_quadrilateral_area_with_described_point_refuses_fail_closed():
+    """Negative boundary: quadrilateral area goal with `@id` fails closed with BRIDGE_UNSUPPORTED_DESCRIBED_POINT."""
+    base_text, premises = _pyramid_base_premises("2", "3")
+    q_quote = "Tính diện tích tứ giác tạo bởi trọng tâm của tam giác SBC và A, B, D"
+    text = base_text + q_quote + "."
+    payload = {
+        "schema_version": "typed-fact-next/2",
+        "problem_text": text,
+        "length_unit": "1",
+        "solids": [{"solid_id": "s1", "solid_type": "pyramid", "notation": "S.ABCD", "quote": "Cho hình chóp S.ABCD"}],
+        "premises": premises,
+        "relations": [],
+        "described_points": [
+            {
+                "described_id": "g1",
+                "kind": "centroid",
+                "polygon": ["S", "B", "C"],
+                "quote": "trọng tâm của tam giác SBC",
+            },
+        ],
+        "simulation_goals": [{"goal_id": "sg1", "kind": "construct_object", "target_solid_id": "s1", "quote": "Cho hình chóp S.ABCD"}],
+        "math_goals": [
+            {
+                "goal_id": "q1",
+                "kind": "measurement",
+                "goal_type": "area",
+                "target": {"polygon": ["@g1", "A", "B", "D"]},
                 "quote": q_quote,
                 "solid_id": "s1",
             }

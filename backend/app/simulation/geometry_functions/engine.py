@@ -5567,18 +5567,48 @@ class _Dung:
             self.trace.append({'step':'construct_line','object':name,'rule':c.fn,'calls':[c.id],'provenance':'DERIVED'})
         return name
 
+    def _kiem_nut_mo_ta(self, node: dict, ask: tuple[str, ...]) -> None:
+        if isinstance(node.get("nested"), dict):
+            self._kiem_nut_mo_ta(node["nested"], ask)
+        items = node.get("arg_items")
+        resolved_pts: list[V3] = []
+        if isinstance(items, list):
+            for it in items:
+                if isinstance(it, dict):
+                    self._kiem_nut_mo_ta(it, ask)
+                    lbl_i = it.get("label")
+                else:
+                    lbl_i = it
+                if lbl_i not in self.pts:
+                    raise TuChoi("ENGINE_SELF_CHECK_FAILED", f"điểm {lbl_i} chưa được dựng", ask)
+                resolved_pts.append(self.pts[lbl_i])
+        dung = _MO_TA.get(node.get("descriptor"))
+        if dung is None:
+            raise TuChoi("UNSUPPORTED_CAPABILITY", f"không có vị từ kiểm cho mô tả {node.get('descriptor')!r}", ask)
+        x = node.get("label")
+        if x not in self.pts:
+            raise TuChoi("ENGINE_SELF_CHECK_FAILED", f"điểm {x} không phải {node.get('descriptor')}", ask)
+        if isinstance(items, list):
+            if not dung(self, self.pts[x], resolved_pts):
+                raise TuChoi("ENGINE_SELF_CHECK_FAILED", f"điểm {x} không phải {node.get('descriptor')}", ask)
+            return
+        pts = node.get("points") or []
+        if any(p not in self.pts for p in pts) or not dung(self, self.pts[x], [self.pts[p] for p in pts]):
+            raise TuChoi("ENGINE_SELF_CHECK_FAILED", f"điểm {x} không phải {node.get('descriptor')} của {''.join(pts)}", ask)
+
     def kiem_mo_ta(self, d: dict) -> None:
         """`effect-chain` (planner): the unnamed point IS what the source describes, checked on the built figure by a
         predicate keyed by the DESCRIPTION — not by whichever function the planner's contract chose to construct it."""
-        op, ask = d.get("operand") or {}, (d.get("ask"),)
-        if isinstance(op.get("nested"), dict):
-            self.kiem_mo_ta({"operand": op["nested"], "ask": d.get("ask")})
-        dung = _MO_TA.get(op.get("descriptor"))
-        if dung is None:
-            raise TuChoi("UNSUPPORTED_CAPABILITY", f"không có vị từ kiểm cho mô tả {op.get('descriptor')!r}", ask)
-        x, pts = op.get("label"), op.get("points") or []
-        if x not in self.pts or any(p not in self.pts for p in pts) or not dung(self, self.pts[x], [self.pts[p] for p in pts]):
-            raise TuChoi("ENGINE_SELF_CHECK_FAILED", f"điểm {x} không phải {op.get('descriptor')} của {''.join(pts)}", ask)
+        ask = (d.get("ask"),)
+        if d.get("mode"):
+            gt = d.get("operand_trees") or {}
+            for k in ("point", "points", "line", "line1", "line2", "polygon"):
+                val = gt.get(k)
+                for it in (val if isinstance(val, list) else ([val] if isinstance(val, dict) else ())):
+                    if isinstance(it, dict):
+                        self._kiem_nut_mo_ta(it, ask)
+            return
+        self._kiem_nut_mo_ta(d.get("operand") or {}, ask)
 
     def _dt2_tam_giac(self, p: str, q: str, r: str) -> Fraction:
         """Squared area of triangle (p, q, r) directly from Gram determinant: (g(u,u)·g(v,v) - g(u,v)²) / 4."""
@@ -5858,16 +5888,68 @@ class _Dung:
         p, t = d["operand"]["label"], d["target"]
         return self._goc_duong_mat_cos2((p, t["point"]), tuple(t["plane"][:3]))
 
+    def _kc2_khoang_cach_duong_mat(self, d: dict) -> Fraction:
+        gt = d.get("operand_trees") or {}
+        ln = [x["label"] if isinstance(x, dict) else x for x in gt.get("line") or ()]
+        return self._kc2_duong_mat(tuple(ln), tuple(gt["plane"][:3]))
+
     def kc2_dich(self, d: dict) -> Fraction:
         """Direct Gram-metric target verifier dispatched by `_KIEM_DICH` from the certified goal contract —
         independent of the chain whose measurement answered the question."""
-        from .registry import GOAL_VERIFIER_TARGET
+        from .registry import GOAL_VERIFIER_TARGET, planning_contract
+
+        ask_call = next((c for c in self.calls if c.id == d.get("ask")), None)
+        if mode := d.get("mode"):
+            _expected_verifier = {
+                "distance_point_line": "distance",
+                "distance_point_plane": "distance",
+                "distance_line_plane": "distance_line_plane",
+                "length": "length",
+                "angle_line_plane": "angle_line_plane",
+                "angle_lines": "angle_lines",
+                "area": "area",
+            }
+            verifier = _expected_verifier.get(mode)
+            if verifier is None:
+                raise TuChoi("ENGINE_SELF_CHECK_FAILED", f"không có bộ kiểm độc lập cho chế độ {mode!r}", (d.get("ask", ""),))
+            if ask_call is not None and d.get("chain"):
+                ans_entry = d["chain"][-1]
+                contract = planning_contract(ask_call.spec, ans_entry.get("effect"), ans_entry.get("descriptor"))
+                if contract is None or contract.verifier != verifier or contract.verifier not in _KIEM_DICH:
+                    raise TuChoi("ENGINE_SELF_CHECK_FAILED", "verifier của hợp đồng mục tiêu không khớp bộ kiểm độc lập",
+                                 (ask_call.id,))
+            gt = d.get("operand_trees") or {}
+            lbl = lambda v: v["label"] if isinstance(v, dict) else v  # noqa: E731
+            if mode == "distance_point_line":
+                p = lbl(gt["point"])
+                a, b = (lbl(x) for x in gt["line"])
+                o, u = self.pts[a], self._vec(a, b)
+                uu = self.g(u, u)
+                if uu == 0:
+                    raise TuChoi("DEGENERATE_LINE", "hai đầu mút của đường thẳng trùng nhau")
+                w = tuple(self.pts[p][i] - o[i] for i in range(3))
+                return self.g(w, w) - self.g(w, u) ** 2 / uu
+            if mode == "distance_point_plane":
+                return self._kc2_mat(lbl(gt["point"]), tuple(gt["plane"][:3]))
+            if mode == "distance_line_plane":
+                return self._kc2_khoang_cach_duong_mat(d)
+            if mode == "length":
+                p1, p2 = (lbl(x) for x in gt["points"])
+                w = self._vec(p1, p2)
+                return self.g(w, w)
+            if mode == "angle_line_plane":
+                a, b = (lbl(x) for x in gt["line"])
+                return self._goc_duong_mat_cos2((a, b), tuple(gt["plane"][:3]))
+            if mode == "angle_lines":
+                l1 = tuple(lbl(x) for x in gt["line1"])
+                l2 = tuple(lbl(x) for x in gt["line2"])
+                return self._goc_hai_duong_cos2(l1, l2)
+            p, q, r = (lbl(x) for x in gt["polygon"])
+            return self._dt2_tam_giac(p, q, r)
 
         # the verifier is the one whose target the certificate carries (one table with the gate); otherwise a distance
         verifier = next((v for v, keys in GOAL_VERIFIER_TARGET.items() if keys == frozenset(d["target"])), "distance")
-        ask_call = next((c for c in self.calls if c.id == d.get("ask")), None)
         if ask_call is not None and d.get("chain"):
-            from .registry import planning_contract
             ans_entry = d["chain"][-1]
             contract = planning_contract(ask_call.spec, ans_entry.get("effect"))
             if contract is None or contract.verifier != verifier or contract.verifier not in _KIEM_DICH:
@@ -5891,6 +5973,7 @@ class _Dung:
 #: Independent Gram-metric verifiers keyed by goal contract `verifier` kind.
 _KIEM_DICH = {
     "distance": _Dung._kc2_khoang_cach,
+    "distance_line_plane": _Dung._kc2_khoang_cach_duong_mat,
     "length": _Dung._kc2_do_dai,
     "area": _Dung._kc2_dien_tich,
     "angle_line_plane": _Dung._kc2_goc_duong_mat,
@@ -7384,9 +7467,16 @@ def _dung_mot_nhanh(
             raise TuChoi("ENGINE_IR_INVALID", f"IR engine sinh ra không qua thẩm định: {vr.error}")
         to_po = hop_dong_to_po_da_khai(calls)
         spec = hoan_thien_dung_hinh(vr.spec, to_po).spec
+        def _co_dinh_nghia(v: Any) -> bool:
+            if isinstance(v, dict):
+                return bool(v.get("definition")) or any(_co_dinh_nghia(val) for val in v.values())
+            if isinstance(v, list):
+                return any(_co_dinh_nghia(val) for val in v)
+            return False
+
         if (len(spec.memory_declarations) > MAX_MEMORY_DECLARATIONS
                 and (any(d.get("rule") == DINH_CAT_CANH for d in auxiliary) or bool(dung.of("curved_solid"))
-                     or any(d.get("rule") == "effect-chain" and d.get("definition") for d in auxiliary))):   # C18
+                     or any(_co_dinh_nghia(d) for d in auxiliary))):   # C18
             dung.trace.append({"step": "formation_budget", "rule": "pedagogical_expansion_skipped",
                                "declarations": len(spec.memory_declarations), "limit": MAX_MEMORY_DECLARATIONS})
             spec = vr.spec
@@ -7624,9 +7714,14 @@ def _dung_mot_nhanh(
         # CONTRACT-BE-1: what the source asks = each gate-certified ask's answer variable + the operands of its measure,
         # minus the planner's fresh auxiliary points (a foot H is a construction, not something the problem names; the
         # described point of an `effect-chain` IS named by the problem, "trung điểm của SC").
-        phu_ir = ({ir_name(x) for x in phu}
-                  - {ir_name(d["operand"]["label"]) for d in chuoi if (d.get("operand") or {}).get("label")})
-        muc_tieu: set[str] = {ir_name(d["operand"]["label"]) for d in chuoi if (d.get("operand") or {}).get("label")}
+        gt_labels = {ir_name(d["operand"]["label"]) for d in chuoi if (d.get("operand") or {}).get("label")}
+        for d in chuoi:
+            for val in (d.get("operand_trees") or {}).values():
+                for it in (val if isinstance(val, list) else [val]):
+                    if isinstance(it, dict) and it.get("label"):
+                        gt_labels.add(ir_name(it["label"]))
+        phu_ir = ({ir_name(x) for x in phu} - gt_labels)
+        muc_tieu: set[str] = set(gt_labels)
         for st in program["statements"]:
             e = st.get("expr") or {}
             if st.get("target_var") in hoi.values() and e.get("kind") == "measure":

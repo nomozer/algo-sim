@@ -288,52 +288,91 @@ def _operand(t: dict[str, Any], key: str, n: int) -> list[str] | None:
 
 def _mo_ta_phang(p: TypedFactNextPayload) -> dict[str, dict[str, Any]]:
     """R-1 (layer 1): described id → the planner's description of that unnamed point, `{"point_kind", "points"}` with the
-    labels flat in the Registry descriptor contract's input order — exactly what a route B question / section fact carries,
-    so the SAME planner, Source Gate and engine read it (no second path). A 2-level nested description (`@outer` projecting
-    `@inner` onto a plane or line) carries `point_tree` when `@inner` matches its Registry descriptor contract phrase."""
+    labels flat in the Registry descriptor contract's input order — so the SAME planner, Source Gate and engine read it
+    (no second path). Resolves topologically in DAG order (supporting any Registry descriptor or `POINT_DEFINITIONS`
+    and nested/line-endpoint `arg_items` up to depth 2)."""
+    import copy
     import re
     from .registry import PlanningContract, _P1, chuan_hoa, descriptor_contracts
 
-    declared_leaf_by_id: dict[str, Any] = {}
-    out: dict[str, dict[str, Any]] = {}
-    for d in getattr(p, "described_points", ()):
-        if any(is_described_ref(x) for x in d.point_operands()):
-            if d.kind not in ("orthogonal_projection", "orthogonal_projection_line") or not is_described_ref(d.point):
-                raise TuChoi("BRIDGE_UNSUPPORTED_DESCRIBED_POINT", f"@{d.described_id}: điểm được mô tả qua một điểm được mô "
-                             "tả khác chưa có chứng chỉ nguồn", (d.described_id,))
-            inner = declared_leaf_by_id.get(d.point.strip()[1:])
-            if inner is None or any(is_described_ref(x) for x in inner.point_operands()):
-                raise TuChoi("BRIDGE_UNSUPPORTED_DESCRIBED_POINT", f"@{d.described_id}: điểm được mô tả qua một điểm được mô "
-                             "tả khác chưa có chứng chỉ nguồn", (d.described_id,))
-            if chuan_hoa(inner.quote) not in chuan_hoa(d.quote):
-                raise TuChoi("SOURCE_OBJECT_MISMATCH", f"@{d.described_id}: cụm mô tả {inner.quote!r} không nằm trong {d.quote!r}",
+    by_id = {d.described_id: d for d in getattr(p, "described_points", ())}
+    memo: dict[str, dict[str, Any]] = {}
+
+    def _build(d_id: str, stack: set[str]) -> dict[str, Any]:
+        if d_id in memo:
+            return memo[d_id]
+        if d_id in stack or d_id not in by_id:
+            raise TuChoi("BRIDGE_UNSUPPORTED_DESCRIBED_POINT", f"@{d_id}: điểm được mô tả không hợp lệ", (d_id,))
+        d = by_id[d_id]
+        dcs = [c for c in descriptor_contracts(d.kind) if isinstance(c, PlanningContract)]
+        if not dcs:
+            raise TuChoi("UNSUPPORTED_CAPABILITY", f"@{d.described_id}: chưa có hợp đồng cho {d.kind}", (d.described_id,))
+        ops_refs = [x for x in d.point_operands() if is_described_ref(x)]
+        if not ops_refs:
+            labels = [x for k, shape in DESCRIBED_POINT_FIELDS[d.kind].items()
+                      for x in ([getattr(d, k)] if shape == "pt" else getattr(d, k))]
+            res = {"point_kind": d.kind, "points": _refs(labels), "quote": d.quote}
+            memo[d_id] = res
+            return res
+        new_stack = stack | {d_id}
+        children: dict[str, dict[str, Any]] = {}
+        for ref in ops_refs:
+            sub = _build(ref.strip()[1:], new_stack)
+            if "point_tree" in sub:
+                raise TuChoi("BRIDGE_UNSUPPORTED_DESCRIBED_POINT",
+                             f"@{d.described_id}: chỉ hỗ trợ điểm mô tả lồng tối đa 2 tầng", (d.described_id,))
+            if chuan_hoa(sub["quote"]) not in chuan_hoa(d.quote):
+                raise TuChoi("SOURCE_OBJECT_MISMATCH",
+                             f"@{d.described_id}: cụm mô tả {sub['quote']!r} không nằm trong {d.quote!r}",
                              (d.described_id,))
-            inner_dcs = [c for c in descriptor_contracts(inner.kind) if isinstance(c, PlanningContract) and c.call and isinstance(c.phrase, str)]
-            if ("c\u1ee7a" not in chuan_hoa(inner.quote).split()
-                    or not inner_dcs
-                    or not any(re.fullmatch(c.phrase.replace("{P}", _P1), chuan_hoa(inner.quote), re.I) for c in inner_dcs)):
-                raise TuChoi("BRIDGE_UNSUPPORTED_DESCRIBED_POINT", f"@{d.described_id}: điểm được mô tả qua một điểm được mô "
-                             "tả khác chưa có chứng chỉ nguồn", (d.described_id,))
-            inner_labels = [x for k, shape in DESCRIBED_POINT_FIELDS[inner.kind].items()
-                            for x in ([getattr(inner, k)] if shape == "pt" else getattr(inner, k))]
+            inner_dcs = [c for c in descriptor_contracts(sub["point_kind"])
+                         if isinstance(c, PlanningContract) and isinstance(c.phrase, str)]
+            if not inner_dcs or not any(re.fullmatch(c.phrase.replace("{P}", _P1), chuan_hoa(sub["quote"]), re.I)
+                                        for c in inner_dcs):
+                raise TuChoi("BRIDGE_UNSUPPORTED_DESCRIBED_POINT",
+                             f"@{d.described_id}: điểm được mô tả qua một điểm được mô tả khác chưa có chứng chỉ nguồn",
+                             (d.described_id,))
+            children[ref] = sub
+        if (d.kind in ("orthogonal_projection", "orthogonal_projection_line") and is_described_ref(d.point)
+                and (d.kind == "orthogonal_projection" or not any(is_described_ref(x) for x in d.line))):
+            inner = children[d.point]
             target_labels = list(d.plane if d.kind == "orthogonal_projection" else d.line)
-            out[d.described_id] = {
+            res = {
                 "point_kind": d.kind,
                 "points": _refs(target_labels),
-                "point_tree": {"point_kind": inner.kind, "points": _refs(inner_labels)},
+                "point_tree": copy.deepcopy({"point_kind": inner["point_kind"], "points": list(inner["points"])}),
                 "quote": d.quote,
             }
-            continue
-        declared_leaf_by_id[d.described_id] = d
-        labels = [x for k, shape in DESCRIBED_POINT_FIELDS[d.kind].items()
-                  for x in ([getattr(d, k)] if shape == "pt" else getattr(d, k))]
-        out[d.described_id] = {"point_kind": d.kind, "points": _refs(labels), "quote": d.quote}
-    return out
+            memo[d_id] = res
+            return res
+        arg_items: list[Any] = []
+        named_points: list[str] = []
+        for k, shape in DESCRIBED_POINT_FIELDS[d.kind].items():
+            vals = [getattr(d, k)] if shape == "pt" else list(getattr(d, k))
+            for v in vals:
+                if is_described_ref(v):
+                    sub = children[v]
+                    arg_items.append({"point_kind": sub["point_kind"], "points": list(sub["points"])})
+                else:
+                    lbl = _ref(v)
+                    arg_items.append(lbl)
+                    named_points.append(lbl)
+        res = {
+            "point_kind": d.kind,
+            "points": named_points,
+            "point_tree": {"arg_items": arg_items},
+            "quote": d.quote,
+        }
+        memo[d_id] = res
+        return res
+
+    return {d.described_id: _build(d.described_id, set()) for d in getattr(p, "described_points", ())}
 
 
 def _mo_ta_cua(ref: str, mo_ta: dict[str, dict[str, Any]], consumer_quote: str, where: str) -> dict[str, Any]:
-    """The flat description of `@id`, whose describing phrase must lie inside the quote of what uses it (provenance: the
+    """The description of `@id`, whose describing phrase must lie inside the quote of what uses it (provenance: the
     phrase the Source Gate reads in that quote is the one the extractor declared)."""
+    import copy
     from .registry import chuan_hoa
 
     d = mo_ta.get(ref.strip()[1:])
@@ -343,41 +382,79 @@ def _mo_ta_cua(ref: str, mo_ta: dict[str, dict[str, Any]], consumer_quote: str, 
         raise TuChoi("SOURCE_OBJECT_MISMATCH", f"{where}: cụm mô tả {d['quote']!r} không nằm trong câu dùng nó", (where,))
     res: dict[str, Any] = {"point_kind": d["point_kind"], "points": list(d["points"])}
     if "point_tree" in d:
-        res["point_tree"] = dict(d["point_tree"])
+        res["point_tree"] = copy.deepcopy(d["point_tree"])
     return res
 
 
 def _cau_hoi_mo_ta(g, mo_ta: dict[str, dict[str, Any]]) -> dict[str, Any] | None:
-    """A measurement goal with ONE described point operand → route B's described question (the described point first,
-    `points_a` the named partner on a line through it, `points_b` the rest), or None when no operand is described. The
-    planner's goal contracts then decide whether those operands fill a goal (`_doc_toan_hang_mo_ta`)."""
+    """A measurement goal with one or more described point operands → route B's described question (`point_kind`/
+    `point_tree` for legacy single-slot goals, or `goal_trees` for derived-line and multi-described goals)."""
     t = g.target
     used = [(k, x) for k in DESCRIBED_GOAL_KEYS if k in t
             for x in (t[k] if isinstance(t[k], (list, tuple)) else [t[k]]) if is_described_ref(x)]
     if not used:
         return None
-    if len(used) != 1:
-        raise TuChoi("BRIDGE_UNSUPPORTED_DESCRIBED_POINT", f"{g.goal_id}: hai điểm được mô tả trong một mục tiêu chưa có "
-                     "chứng chỉ nguồn", (g.goal_id,))
-    key, ref = used[0]
-    desc = _mo_ta_cua(ref, mo_ta, g.quote, g.goal_id)
-    rest = lambda k: [_ref(x) for x in t[k] if not is_described_ref(x)]      # noqa: E731
     keys = set(t) - {"solid", "solid_id"}
+    if len(used) == 1:
+        key, ref = used[0]
+        desc = _mo_ta_cua(ref, mo_ta, g.quote, g.goal_id)
+        has_arg_items = isinstance(desc.get("point_tree"), dict) and "arg_items" in desc["point_tree"]
+        if not has_arg_items and not (g.goal_type == "distance" and keys in ({"point", "line"}, {"line", "plane"}) and key == "line"):
+            rest = lambda k: [_ref(x) for x in t[k] if not is_described_ref(x)]      # noqa: E731
+            if g.goal_type == "distance" and keys == {"point", "plane"}:
+                return {"quantity": "distance", **desc, "points_b": _refs(t["plane"])}
+            if g.goal_type == "distance" and keys == {"point", "line"} and key == "point":
+                return {"quantity": "distance", **desc, "points_b": _refs(t["line"])}
+            if g.goal_type == "distance" and keys == {"segment"}:
+                return {"quantity": "length", **desc, "points_b": rest("segment")}
+            if g.goal_type == "angle" and keys == {"line", "plane"} and key == "line":
+                return {"quantity": "angle", **desc, "points_a": rest("line"), "points_b": _refs(t["plane"])}
+            if g.goal_type == "angle" and keys == {"line1", "line2"} and key in ("line1", "line2"):
+                other = "line2" if key == "line1" else "line1"
+                return {"quantity": "angle", **desc, "points_a": rest(key), "points_b": _refs(t[other])}
+            if g.goal_type == "area" and keys == {"polygon"} and len(t["polygon"]) == 3:
+                return {"quantity": "area", **desc, "points_b": rest("polygon")}
+            raise TuChoi("BRIDGE_UNSUPPORTED_DESCRIBED_POINT", f"{g.goal_id}: điểm được mô tả ở toán hạng {key!r} của "
+                         f"{g.goal_type} chưa có hợp đồng mục tiêu", (g.goal_id,))
+
+    def node_of(val: str):
+        return _mo_ta_cua(val, mo_ta, g.quote, g.goal_id) if is_described_ref(val) else _ref(val)
+
+    def plane_pts(key: str) -> list[str]:
+        raw = t.get(key)
+        if not isinstance(raw, (list, tuple)) or any(is_described_ref(x) for x in raw):
+            raise TuChoi("BRIDGE_UNSUPPORTED_DESCRIBED_POINT",
+                         f"{g.goal_id}: điểm được mô tả ở toán hạng mặt phẳng {key!r} chưa có hợp đồng", (g.goal_id,))
+        pts = _refs(raw)
+        if len(pts) < 3 or len(set(pts)) != len(pts):
+            raise TuChoi("INVALID_MATH_GOAL", f"{g.goal_id}: mặt phẳng {key!r} thiếu đỉnh phân biệt", (g.goal_id,))
+        return pts
+
+    def line_items(key: str) -> list[Any]:
+        raw = t.get(key)
+        if not isinstance(raw, (list, tuple)) or len(raw) != 2 or len({x.strip() for x in raw}) != 2:
+            raise TuChoi("INVALID_MATH_GOAL", f"{g.goal_id}: đường {key!r} cần hai đầu mút phân biệt", (g.goal_id,))
+        return [node_of(x) for x in raw]
+
+    if g.goal_type == "distance" and keys == {"point", "line"}:
+        return {"quantity": "distance", "goal_trees": {"mode": "distance_point_line", "point": node_of(t["point"]), "line": line_items("line")}}
+    if g.goal_type == "distance" and keys == {"line", "plane"}:
+        return {"quantity": "distance", "goal_trees": {"mode": "distance_line_plane", "line": line_items("line"), "plane": plane_pts("plane")}}
     if g.goal_type == "distance" and keys == {"point", "plane"}:
-        return {"quantity": "distance", **desc, "points_b": _refs(t["plane"])}
-    if g.goal_type == "distance" and keys == {"point", "line"} and key == "point":
-        return {"quantity": "distance", **desc, "points_b": _refs(t["line"])}
+        return {"quantity": "distance", "goal_trees": {"mode": "distance_point_plane", "point": node_of(t["point"]), "plane": plane_pts("plane")}}
     if g.goal_type == "distance" and keys == {"segment"}:
-        return {"quantity": "length", **desc, "points_b": rest("segment")}
-    if g.goal_type == "angle" and keys == {"line", "plane"} and key == "line":
-        return {"quantity": "angle", **desc, "points_a": rest("line"), "points_b": _refs(t["plane"])}
-    if g.goal_type == "angle" and keys == {"line1", "line2"} and key in ("line1", "line2"):
-        other = "line2" if key == "line1" else "line1"
-        return {"quantity": "angle", **desc, "points_a": rest(key), "points_b": _refs(t[other])}
+        return {"quantity": "length", "goal_trees": {"mode": "length", "points": line_items("segment")}}
+    if g.goal_type == "angle" and keys == {"line", "plane"}:
+        return {"quantity": "angle", "goal_trees": {"mode": "angle_line_plane", "line": line_items("line"), "plane": plane_pts("plane")}}
+    if g.goal_type == "angle" and keys == {"line1", "line2"}:
+        return {"quantity": "angle", "goal_trees": {"mode": "angle_lines", "line1": line_items("line1"), "line2": line_items("line2")}}
     if g.goal_type == "area" and keys == {"polygon"} and len(t["polygon"]) == 3:
-        return {"quantity": "area", **desc, "points_b": rest("polygon")}
-    raise TuChoi("BRIDGE_UNSUPPORTED_DESCRIBED_POINT", f"{g.goal_id}: điểm được mô tả ở toán hạng {key!r} của "
-                 f"{g.goal_type} chưa có hợp đồng mục tiêu", (g.goal_id,))
+        raw_poly = t["polygon"]
+        if len({x.strip() for x in raw_poly}) != 3:
+            raise TuChoi("INVALID_MATH_GOAL", f"{g.goal_id}: tam giác cần ba đỉnh phân biệt", (g.goal_id,))
+        return {"quantity": "area", "goal_trees": {"mode": "area", "polygon": [node_of(x) for x in raw_poly]}}
+    raise TuChoi("BRIDGE_UNSUPPORTED_DESCRIBED_POINT",
+                 f"{g.goal_id}: mục tiêu {g.goal_type} với điểm được mô tả chưa có hợp đồng mục tiêu", (g.goal_id,))
 
 
 def _distance_question(g) -> dict[str, Any]:
@@ -427,7 +504,7 @@ def _la_mat_qua_ba_diem(sec: DerivedPlaneSectionSpec | DerivedPlaneSectionSpecV2
 
 
 def _ten_mat_khai(sec: DerivedPlaneSectionSpec | DerivedPlaneSectionSpecV2) -> str:
-    """The plane name the scene must display: a three-point plane is named by its points, "(MNP)"."""
+    """The plane name the scene must display: a three-point plane is its three points `(MNP)`."""
     return "".join(_refs(sec.constraints[0].operands)) if _la_mat_qua_ba_diem(sec) else sec.plane_name
 
 
@@ -961,10 +1038,17 @@ def _bridge(p: TypedFactNextPayload, section_fact, version: str, v2: bool) -> di
             pa, pb = ([_ref(x) for x in pl] for pl in g.target_planes)
             facts.append({"id": g.goal_id, "kind": "intersection_line", "role": "question", "quotes": [g.quote],
                           "points_a": pa, "points_b": pb})
+    sec_area_asked: dict[str, list[str]] = {}
+    for g in p.math_goals:
+        if g.goal_type == "area" and isinstance(g.target, dict) and "section_id" in g.target:
+            sec_area_asked.setdefault(g.target["section_id"], []).append(g.quote)
     for sec in p.derived_sections:
+        sec_asked = list(asked.get(sec.section_id, []))
+        if not sec_asked and v2 and _la_mat_qua_ba_diem(sec) and "thiết diện" not in sec.quote.casefold():
+            sec_asked = list(sec_area_asked.get(sec.section_id, []))
         facts.append(
-            section_fact(sec, solids, asked.get(sec.section_id, []), p.problem_text, mo_ta)
-            if v2 else section_fact(sec, solids, asked.get(sec.section_id, []))
+            section_fact(sec, solids, sec_asked, p.problem_text, mo_ta)
+            if v2 else section_fact(sec, solids, sec_asked)
         )
 
     derived = {}
@@ -1036,8 +1120,9 @@ def _bridge(p: TypedFactNextPayload, section_fact, version: str, v2: bool) -> di
             if _la_mat_qua_ba_diem(sec):     # "diện tích thiết diện đó": the plane is named where the section is stated
                 q["quotes"] = list(dict.fromkeys([g.quote, sec.quote]))
             facts.append({**q, "quantity": "area", **{k: f[k] for k in ("solid", "point", "point_kind", "points",
-                                                                         "plane_relation", "points_b", "points_a",
-                                                                         "plane_name", "plane_constraints") if k in f}})
+                                                                         "point_tree", "plane_relation", "points_b",
+                                                                         "points_a", "plane_name",
+                                                                         "plane_constraints") if k in f}})
         elif v2 and (described := _cau_hoi_mo_ta(g, mo_ta)) is not None:
             facts.append({**q, **described})
         elif v2 and g.goal_type == "distance":

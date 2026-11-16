@@ -17,6 +17,7 @@ import pytest
 from app.ai.hybrid_offline import hybrid_offline_policy, run_hybrid_offline
 from app.ai.typed_fact_next_extraction import ReplayExtractor
 from app.simulation.geometry_functions import typed_fact_next as T
+from app.simulation.geometry_functions.construction_continuity import validate_construction_continuity
 from app.simulation.geometry_functions.typed_fact_next_bridge import _v2_plane_def_quotes
 
 RUN = Path(__file__).resolve().parents[3] / "docs/evaluation/geometry/runs/hybrid-master-backend-replacement"
@@ -66,11 +67,13 @@ def test_r1_one_described_point_shared_by_two_goals_is_built_once():
 
 
 @pytest.mark.parametrize("cid", ["D1", "D2"])
-def test_r1_nested_and_dual_described_points_are_representable_but_refused_typed(cid):
+def test_r1_nested_and_dual_described_points_are_served_exactly(cid):
     c = CASES[cid]
-    T._parse(T.TypedFactNextPayloadV2, c["payload"])                       # the contract represents them
-    route, env, _a = _run(c["text"], c["payload"])
-    assert route["status"] == "REFUSED" and env["reason_code"] == "BRIDGE_UNSUPPORTED_DESCRIBED_POINT"
+    T._parse(T.TypedFactNextPayloadV2, c["payload"])
+    route, env, answers = _run(c["text"], c["payload"])
+    assert route["status"] == "SERVED", (cid, env.get("reason_code"))
+    assert answers == c["want"]
+    assert validate_construction_continuity(env["scene3d"]) == []
 
 
 @pytest.mark.parametrize("cid", [k for k in CASES if k.startswith("X")])
@@ -253,9 +256,9 @@ def test_r1_curved_section_with_described_through_point_refuses_capability_not_q
     assert route["status"] == "REFUSED" and env["reason_code"] == "BRIDGE_UNSUPPORTED_DESCRIBED_POINT"
 
 
-def test_r1_distance_line_plane_with_described_point_refuses_capability_not_schema_invalid():
-    """Review MAJOR-1: `ask_distance_line_plane` has no goal PlanningContract, so `distance(line, plane)` with `@id` on
-    `line` must refuse `BRIDGE_UNSUPPORTED_DESCRIBED_POINT` (CAPABILITY), never leak to `planner` as `SCHEMA_INVALID`."""
+def test_r1_derived_line_distance_to_plane_is_served_exactly():
+    """Compositional planner expansion: `ask_distance_line_plane` with `@id` on `line` (C3-dist and parallel derived line)."""
+    # 1. C3-dist: distance from line connecting B and (AM ∩ (SBD)) to (ABCD) is 0 (line crosses base at B).
     c = copy.deepcopy(CASES["C3"])
     old_q = c["payload"]["math_goals"][0]["quote"]
     ask = old_q.replace("Tính góc", "Tính khoảng cách")
@@ -263,8 +266,37 @@ def test_r1_distance_line_plane_with_described_point_refuses_capability_not_sche
     p = c["payload"]
     p["problem_text"] = t
     p["math_goals"][0].update(goal_type="distance", quote=ask)
-    route, env, _a = _run(t, p)
-    assert route["status"] == "REFUSED" and env["reason_code"] == "BRIDGE_UNSUPPORTED_DESCRIBED_POINT"
+    route, env, answers = _run(t, p)
+    assert route["status"] == "SERVED", env.get("reason_code")
+    assert answers == {"q1": "0"}
+    assert validate_construction_continuity(env["scene3d"]) == []
+
+    # 2. Non-zero distance: line through midpoints of SA and SB is parallel to (ABCD) at height 1.
+    q_par = "Tính khoảng cách từ đường thẳng nối trung điểm của SA với trung điểm của SB đến mặt phẳng (ABCD)"
+    t_par = (
+        "Cho hình chóp S.ABCD có đáy ABCD là hình vuông cạnh 2, SA vuông góc với (ABCD) và SA = 2. "
+        + q_par
+        + "."
+    )
+    p_par = copy.deepcopy(CASES["D1"]["payload"])
+    p_par["problem_text"] = t_par
+    p_par["premises"] = [
+        {"kind": "regular_polygon", "args": {"vertices": ["A", "B", "C", "D"], "side": "2"}, "quote": "đáy ABCD là hình vuông cạnh 2", "solid_id": "s1"},
+        {"kind": "perpendicular_line_plane", "args": {"line": ["S", "A"], "plane": ["A", "B", "C", "D"]}, "quote": "SA vuông góc với (ABCD)", "solid_id": "s1"},
+        {"kind": "segment_length", "args": {"segment": ["S", "A"], "value": "2"}, "quote": "SA = 2", "solid_id": "s1"},
+    ]
+    p_par["described_points"] = [
+        {"described_id": "m1", "kind": "midpoint", "segment": ["S", "A"], "quote": "trung điểm của SA"},
+        {"described_id": "m2", "kind": "midpoint", "segment": ["S", "B"], "quote": "trung điểm của SB"},
+    ]
+    p_par["math_goals"] = [{
+        "goal_id": "q1", "kind": "measurement", "goal_type": "distance",
+        "target": {"line": ["@m1", "@m2"], "plane": ["A", "B", "C", "D"]}, "quote": q_par, "solid_id": "s1",
+    }]
+    r_par, e_par, a_par = _run(t_par, p_par)
+    assert r_par["status"] == "SERVED", e_par.get("reason_code")
+    assert a_par == {"q1": "1"}
+    assert validate_construction_continuity(e_par["scene3d"]) == []
 
 
 def test_r1_curved_polygon_area_goal_with_described_point_refuses_capability():

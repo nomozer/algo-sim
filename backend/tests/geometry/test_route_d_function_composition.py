@@ -235,8 +235,10 @@ def _bridge(cid):
 
 
 def test_c18_a_section_plane_through_a_defined_point_is_a_stated_boundary_refused_not_served():
-    """Out of C18 scope: the plane-point certificate (`plane_point_chain`) reads a function descriptor only."""
+    """Promoted in compositional-planner-capability-expansion: `plane_point_chain` now composes defined points
+    (`@orthocenter(SBD)`) via recursive descriptor certificates; non-triangular polygons still fail closed."""
     import json
+    from app.simulation.geometry_functions.construction_continuity import validate_construction_continuity
     c = next(c for c in json.loads((RUN / "r1-described-point-probe.json").read_text(encoding="utf-8"))["cases"]
              if c["id"] == "C6a")
     p, old, new = copy.deepcopy(c["payload"]), "trung điểm của SA", "trực tâm của tam giác SBD"
@@ -245,8 +247,15 @@ def test_c18_a_section_plane_through_a_defined_point_is_a_stated_boundary_refuse
     p["described_points"][0] = {"described_id": "m1", "kind": "orthocenter", "quote": new, "polygon": ["S", "B", "D"]}
     for x in (*p["derived_sections"], *p["math_goals"]):
         x["quote"] = x["quote"].replace(old, new)
-    route, env, _a = _run(text, p)
-    assert route["status"] == "REFUSED", env.get("reason_code")
+    route, env, answers = _run(text, p)
+    assert route["status"] == "SERVED" and answers == {"q1": "26√3/27"}, env.get("reason_code")
+    assert validate_construction_continuity(env["scene3d"]) == []
+
+    # True boundary: 4-vertex polygon on `orthocenter` remains fail-closed.
+    p_bad = copy.deepcopy(p)
+    p_bad["described_points"][0]["polygon"] = ["A", "B", "C", "D"]
+    r_bad, e_bad, _ = _run(text, p_bad)
+    assert r_bad["status"] == "REFUSED", e_bad.get("reason_code")
 
 
 def test_c18_search_is_bounded_and_exhaustion_is_typed(monkeypatch):

@@ -181,11 +181,12 @@ def test_local_parser_benchmark_corpora_zero_ai_zero_wrong_served():
                 continue
             text = r["raw_extraction"]["problem_text"]
             p_res = parse_geometry_problem_locally(text)
-            if (r["expected"]["outcome"] == "SERVED" and cid != "S2-F-S07_typo_tone") or cid == "R1-F01":
+            r1_promoted = {"R1-F01": {"length": ["√6/2"]}, "R1-F02": {"length": ["√2"]}}
+            if (r["expected"]["outcome"] == "SERVED" and cid != "S2-F-S07_typo_tone") or cid in r1_promoted:
                 assert p_res.status == LOCAL_PARSE_COMPLETE, f"{fname}:{cid} status={p_res.status}"
                 route_out = run_typed_fact_next_v2_route(p_res.payload)
                 assert route_out.status == "SERVED", f"{fname}:{cid} route={route_out.status}:{route_out.code}"
-                ans_src = r["expected"].get("expected_answers") or ({"length": ["√6/2"]} if cid == "R1-F01" else {})
+                ans_src = r["expected"].get("expected_answers") or r1_promoted.get(cid, {})
                 exp_vals = sorted(str(v).removeprefix("cos²=") for vs in ans_src.values() for v in vs)
                 got_vals = sorted(str(v).removeprefix("cos²=") for v in route_out.answers.values())
                 assert got_vals == exp_vals, f"{fname}:{cid} expected={exp_vals} got={got_vals}"

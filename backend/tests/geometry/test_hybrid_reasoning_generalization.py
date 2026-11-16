@@ -23,6 +23,7 @@ from pathlib import Path
 import pytest
 
 from app.ai.hybrid_offline import hybrid_offline_policy, run_hybrid_offline
+from app.ai.local_geometry_parser import parse_geometry_problem_locally
 from app.ai.typed_fact_next_extraction import ReplayExtractor
 from app.simulation.geometry_functions import engine, planner, typed_fact_next as TN
 from app.simulation.geometry_functions.construction_continuity import validate_construction_continuity
@@ -165,29 +166,83 @@ def test_g6_one_goal_over_budget_exhausts(monkeypatch, bound, value):
     assert route["status"] == "REFUSED" and env["reason_code"] == "PLAN_TOO_LARGE"
 
 
-# ── reproduced contract-level gaps (bridge), not fixed in this run ───────────────────────────────────────────────────
+# ── promoted compositional bridge & planner capabilities (now SERVED end-to-end on both Gold and Local Parser NL) ────
 
-_BRIDGE_GAPS = {
-    "PL5": "G2: described point inside the `line` operand of a distance goal (bridge has no goal contract for it)",
-    "PA3": "G2: described point inside the `line` operand of a line–plane distance",
-    "MG5": "G3: two described points in one goal (bridge: no source certificate)",
-    "SE3": "G4: three-point plane named by the source '(Q)' is renamed '(MNP)' by the bridge; the gate then rejects '(Q)'",
-    "RE10": "G7: a description nested through a property-defined point (bridge: no source certificate)",
-}
+_PROMOTED_COMPOSITIONAL_CASES = ("PL5", "PA3", "MG5", "SE3", "RE10")
 
 
-@pytest.mark.parametrize("cid", [pytest.param(c, marks=pytest.mark.xfail(strict=True, reason=r))
-                                 for c, r in _BRIDGE_GAPS.items()])
-def test_bridge_level_gap_reproduction(cid):
+@pytest.mark.parametrize("cid", _PROMOTED_COMPOSITIONAL_CASES)
+def test_compositional_bridge_and_planner_gaps_now_served_exactly(cid):
     _assert_oracle(cid)
-
-
-@pytest.mark.parametrize("cid", list(_BRIDGE_GAPS))
-def test_bridge_level_gaps_fail_closed_with_a_typed_refusal(cid):
     c = CASES[cid]
-    route, env, _a = _run(c["text"], c["payload"])
-    assert route["status"] == "REFUSED"
-    assert env["reason_code"] in {"BRIDGE_UNSUPPORTED_DESCRIBED_POINT", "SOURCE_OBJECT_MISMATCH"}
+    lp = parse_geometry_problem_locally(c["text"])
+    assert lp.status == "LOCAL_PARSE_COMPLETE", (cid, lp.status, lp.fallback_reason)
+    route_nl, env_nl, ans_nl = _run(c["text"], lp.payload)
+    assert route_nl["status"] == "SERVED", (cid, env_nl.get("reason_code"))
+    for g, (meas, want) in c["expect"][1].items():
+        got = Fraction(ans_nl[g]) if meas == "cos2" else RM.coef_square(ans_nl[g])
+        assert got == want, (cid, g, ans_nl[g], want)
+    assert validate_construction_continuity(env_nl["scene3d"]) == []
+
+
+def _unsupported_boundary_cases():
+    base_prefix = CASES["PL5"]["text"].split("Tính")[0]
+    # 1. Quadrilateral area goal referencing @id (bridge contract supports triangle area or 3 described points, not >=4 vertices)
+    q_quad = "Tính diện tích tứ giác tạo bởi trung điểm của SC và A, B, C"
+    t_quad = base_prefix + q_quad + "."
+    p_quad = copy.deepcopy(CASES["PL5"]["payload"])
+    p_quad["problem_text"] = t_quad
+    p_quad["described_points"] = [{"described_id": "m1", "kind": "midpoint", "segment": ["S", "C"], "quote": "trung điểm của SC"}]
+    p_quad["math_goals"] = [{
+        "goal_id": "q1", "kind": "measurement", "goal_type": "area", "solid_id": "s1",
+        "target": {"polygon": ["@m1", "A", "B", "C"]}, "quote": q_quad,
+    }]
+
+    # 2. @id inside PlaneConstraintSpec (`constrained` section operand)
+    t_pc = base_prefix + "Mặt phẳng (P) chứa AB và đi qua trung điểm của SC. Xác định thiết diện của hình chóp cắt bởi (P)."
+    p_pc = copy.deepcopy(p_quad)
+    p_pc["problem_text"] = t_pc
+    p_pc["derived_sections"] = [{
+        "section_id": "sec1", "plane_name": "P", "target_solid_id": "s1", "plane_kind": "constrained",
+        "constraints": [{"kind": "contains_line", "operands": ["A", "B"]}, {"kind": "contains_points", "operands": ["@m1"]}],
+        "stated_intersections": [], "quote": "Mặt phẳng (P) chứa AB và đi qua trung điểm của SC",
+    }]
+    p_pc["simulation_goals"] = [
+        {"goal_id": "sg1", "kind": "construct_object", "target_solid_id": "s1", "quote": CASES["PL5"]["payload"]["simulation_goals"][0]["quote"]},
+        {"goal_id": "g_sec", "kind": "construct_plane_section", "target_section_id": "sec1",
+         "quote": "Xác định thiết diện của hình chóp cắt bởi (P)"},
+    ]
+    p_pc["math_goals"] = []
+
+    # 3. Curved solid section through @id
+    t_cone = "Cho hình nón đỉnh S, tâm đáy O, bán kính đáy 3, chiều cao 4. Cắt hình nón bởi thiết diện qua trục đi qua trung điểm của SO."
+    p_cone = {
+        "schema_version": "typed-fact-next/2", "problem_text": t_cone,
+        "solids": [{"solid_id": "c1", "solid_type": "cone", "notation": "S.O", "center": "O", "apex_or_top": "S",
+                    "radius": "3", "height": "4", "quote": "Cho hình nón đỉnh S, tâm đáy O, bán kính đáy 3, chiều cao 4."}],
+        "premises": [],
+        "described_points": [{"described_id": "m1", "kind": "midpoint", "segment": ["S", "O"], "quote": "trung điểm của SO"}],
+        "derived_sections": [{
+            "section_id": "sec1", "plane_name": "α", "target_solid_id": "c1", "plane_kind": "axial_section",
+            "through_point": "@m1", "quote": "Cắt hình nón bởi thiết diện qua trục đi qua trung điểm của SO.",
+        }],
+        "simulation_goals": [{"goal_id": "sg1", "kind": "construct_object", "target_solid_id": "c1",
+                              "quote": "Cho hình nón đỉnh S, tâm đáy O, bán kính đáy 3, chiều cao 4."}],
+        "math_goals": [],
+    }
+    return [
+        ("quadrilateral_area_with_described_vertex", {"text": t_quad, "payload": p_quad}, "BRIDGE_UNSUPPORTED_DESCRIBED_POINT"),
+        # `@id` inside PlaneConstraintSpec stays a TypedFactNext /2 schema representation gap (`TYPED_FACT_REPRESENTATION_GAP`).
+        ("plane_constraint_with_described_operand", {"text": t_pc, "payload": p_pc}, "INVALID_QUALIFIED_REF"),
+        ("curved_section_with_described_point", {"text": t_cone, "payload": p_cone}, "BRIDGE_UNSUPPORTED_DESCRIBED_POINT"),
+    ]
+
+
+@pytest.mark.parametrize("name,case,expected_code", _unsupported_boundary_cases())
+def test_remaining_bridge_boundaries_fail_closed_with_typed_refusal(name, case, expected_code):
+    route, env, _a = _run(case["text"], case["payload"])
+    assert route["status"] == "REFUSED", (name, env.get("reason_code"))
+    assert env["reason_code"] == expected_code, (name, env.get("reason_code"))
 # ── Section VIII: _dinh_tu_ba_canh_ben mirror-solution equivalence across base plane ────────────────────────────────
 
 def _run_two_anchor_mirror_case(extra_calls, extra_text=""):

@@ -197,13 +197,15 @@ class TypedFact(BaseModel):
     curved_part: SkipJsonSchema[dict[str, Any] | None] = None
     # Internal only (Phase 1 dynamic composition): nested unnamed described point operand tree written by the `/2` bridge.
     point_tree: SkipJsonSchema[dict[str, Any] | None] = None
+    # Internal only (compositional expansion): multi-operand / derived-line described goal trees written by `/2` bridge.
+    goal_trees: SkipJsonSchema[dict[str, Any] | None] = None
     # Internal only (`unified-angle-geometry-verified-image-to-3d`): optional angle unit ("deg" | "sin" | "cos" | "tan" | "cot").
     angle_unit: SkipJsonSchema[Literal["deg", "sin", "cos", "tan", "cot"] | None] = None
 
 
 #: TypedFact fields only the deterministic bridge writes; a provider response carrying one is refused.
 INTERNAL_FACT_FIELDS = ("cut_edges", "cut_points", "plane_ref", "solid_refs", "derive_cuts", "boundary_edges", "curved",
-                        "curved_part", "plane_constraints", "point_tree", "angle_unit")
+                        "curved_part", "plane_constraints", "point_tree", "goal_trees", "angle_unit")
 
 
 @dataclass
@@ -349,11 +351,12 @@ def doc_du_kien(raw: Any) -> list[TypedFact]:
             if f.kind not in ("section", "question") or (f.points and f.point_kind is None) or (f.point and f.point_kind is not None):
                 raise TuChoi("SCHEMA_INVALID", f"{f.id}: plane_relation chỉ cho thiết diện, và thay cho `points`", (f.id,))
             if f.point_kind is not None:
-                required = ("solid", "point_kind", "points", "points_b") + (("quantity",) if f.kind == "question" else ())
+                has_items = isinstance(f.point_tree, dict) and "arg_items" in f.point_tree
+                required = (("solid", "point_kind", "points_b") if has_items else ("solid", "point_kind", "points", "points_b")) + (("quantity",) if f.kind == "question" else ())
                 dcs = descriptor_contracts(f.point_kind)
                 if not dcs:
                     raise TuChoi("UNSUPPORTED_CAPABILITY", f"{f.id}: không hàm nào của thư viện dựng được {f.point_kind}", (f.id,))
-                if not any(parse_descriptor_inputs(c, f.points or ()) is not None for c in dcs):
+                if _cay_mo_ta(f) is None:
                     raise TuChoi("FACT_INCOMPLETE", f"{f.id}: toán hạng của {f.point_kind} không hợp lệ", (f.id,))
             else:
                 required = ("solid", "point", "points_b") + (("quantity",) if f.kind == "question" else ())
@@ -434,21 +437,29 @@ def _doi_tac(contract) -> bool:
     return kinds[:2] == ["Point", "Point"] and any(k in ("Line", "Plane") for k in kinds[2:])
 
 
-def _cay_mo_ta(f: TypedFact) -> tuple | None:
-    def build(kind: str | None, pts: list | tuple, child: dict | None = None) -> tuple | None:
-        if not kind:
-            return None
-        raw: list[Any] = list(pts or ())
-        if child is not None:
-            sub = build(child.get("point_kind"), child.get("points") or (), child.get("point_tree"))
-            if sub is None:
-                return None
-            raw = [sub, *raw]
-        for c in descriptor_contracts(kind):
-            if (r := parse_descriptor_inputs(c, raw)) is not None:
-                return ("desc", kind, r[0])
+def _cay_tu_dict(d: dict[str, Any]) -> tuple | None:
+    kind, pts, child = d.get("point_kind"), d.get("points") or (), d.get("point_tree")
+    if not kind:
         return None
-    return build(f.point_kind, f.points or (), f.point_tree)
+    if isinstance(child, dict) and "arg_items" in child:
+        raw = [_cay_tu_dict(x) if isinstance(x, dict) else x for x in child["arg_items"]]
+        if any(x is None for x in raw):
+            return None
+    elif isinstance(child, dict):
+        sub = _cay_tu_dict(child)
+        if sub is None:
+            return None
+        raw = [sub, *pts]
+    else:
+        raw = list(pts)
+    for c in descriptor_contracts(kind):
+        if (r := parse_descriptor_inputs(c, raw)) is not None:
+            return ("desc", kind, r[0])
+    return None
+
+
+def _cay_mo_ta(f: TypedFact) -> tuple | None:
+    return _cay_tu_dict({"point_kind": f.point_kind, "points": f.points, "point_tree": f.point_tree})
 
 
 def _toan_hang_muc_tieu(f: TypedFact, contract) -> tuple | None:
@@ -1471,6 +1482,12 @@ def _cau_hoi(f: TypedFact, q: list[str], k: KeHoach, khoi_cua, phat) -> dict:
     if n == "area" and f.solid and len(f.points or []) >= 3 and hoi_td:
         return phat(f.id, "ask_section_area", {"solid": khoi_cua(f.solid, f).ten, "plane": f.points}, q,
                     "question(area of section)")
+    if f.goal_trees is not None:
+        if f.role == "prove":
+            raise TuChoi("GOAL_CLAUSE_NOT_PREMISE", f"{f.id}: điểm không tên chỉ cho câu hỏi được hỏi", (f.id,))
+        if f.negated:
+            raise TuChoi("NEGATED_CLAUSE", f"{f.id}: câu hỏi bị phủ định", (f.id,))
+        return k.resolver.goal_trees(f, k)
     entries = [c for s in REGISTRY.values() for c in planning_contracts(s) if c.goal == n]
     if entries and f.role == 'question' and not f.negated:
         if f.point_kind is not None:                  # a described operand: the goal contracts decide which slots it fills
@@ -1594,7 +1611,10 @@ def _phan_giai_diem_mat_phu(f: TypedFact, k: KeHoach) -> tuple[str, list[dict] |
     desc = _cay_mo_ta(f)
     assert desc is not None
     m, chain, p_labels = k.resolver.point(f, desc)
-    return m, chain, {"descriptor": f.point_kind, "points": list(f.points or ()), "label": m}, p_labels
+    op = k.resolver._nut_chung_chi(
+        {"point_kind": f.point_kind, "points": list(f.points or ()), "point_tree": f.point_tree}, m
+    )
+    return m, chain, op, p_labels
 
 
 def _mat_qua_diem(f: TypedFact, q: list[str], k: KeHoach, phat, khoi: str, fn: str) -> dict:
@@ -2188,8 +2208,13 @@ def _dinh_cat_canh(f: TypedFact, k: KeHoach, phat, kh: _Khoi) -> dict:
         tren_canh = next((x for x in r.facts.values() if x.kind == "point_def" and x.role == "premise" and not x.negated
                           and x.point_kind in ("midpoint", "divide_segment") and x.point == p
                           and frozenset(x.points or ()) == e), None)
-        if tren_canh is not None:
-            choices.append((0, "reuse_through_point", p, None, tren_canh.id))
+        tren_canh_id = tren_canh.id if tren_canh is not None else next(
+            (c["id"] for c in k.calls if c["fn"] in ("midpoint", "divide_segment")
+             and c["args"].get("point") == p and frozenset(c["args"].get("segment") or ()) == e),
+            None,
+        )
+        if tren_canh_id is not None:
+            choices.append((0, "reuse_through_point", p, None, tren_canh_id))
         if p in e:
             choices.append((0, "reuse_through_point", p, None, None))
         cu = next((c for c in k.calls if c["fn"] == fn and frozenset(c["args"]["line"]) == e
@@ -2308,11 +2333,11 @@ def _nguon_goc_buoc(k: KeHoach) -> dict[str, list[str]]:
 
 
 def _loai(v) -> str | None:
-    """Kind of a typed-need operand: a point (label, or `("desc", kind, operands)` for an unnamed described point), a line
-    (`("named", (X, Y))` / `("result", fact_id)`) or a plane (≥ 3 labels)."""
+    """Kind of a typed-need operand: a point (label, or `("desc", kind, operands)`), a line
+    (`("named", (X, Y))` / `("result", fact_id)` / `("derived_line", (p1, p2))`) or a plane (≥ 3 labels)."""
     if isinstance(v, str) or (isinstance(v, tuple) and v[:1] == ("desc",)):
         return "Point"
-    if isinstance(v, tuple) and len(v) == 2 and v[0] in ("named", "result"):
+    if isinstance(v, tuple) and len(v) == 2 and v[0] in ("named", "result", "derived_line"):
         return "Line"
     if isinstance(v, tuple) and len(v) >= 3 and all(isinstance(x, str) for x in v):
         return "Plane"
@@ -2338,6 +2363,8 @@ class _EffectResolver:
         self.memo = {}
         self.rejected: list[dict] = []        # C18: candidates excluded by a structural precondition, in search order
         self.definitions: dict[str, dict] = {}   # C18: defined point label → its definition binding (certificate)
+        self.emitted_terms: dict[tuple, str] = {}
+        self._term_of: dict[int, tuple] = {}
         groups = {}
         for f in facts:
             if (f.kind=='intersection_line' and f.role in ('premise','question') and not f.negated
@@ -2418,6 +2445,17 @@ class _EffectResolver:
             return _Choice(None, {})
         if kind == "Line" and operands[0][0] == "named":
             return _Choice(None, {})
+        if kind == "Line" and operands[0][0] == "derived_line":
+            ep1, ep2 = operands[0][1]
+            self.active.add(key)
+            try:
+                c1 = self._resolve("Point", (ep1,), depth)
+                c2 = self._resolve("Point", (ep2,), depth)
+            finally:
+                self.active.remove(key)
+            got = _Choice("__line_endpoints__", {"_pts": (ep1, ep2)}, [c1, c2], None, c1.cost + c2.cost, None)
+            self.memo[key] = (got, len(self.plan.calls))
+            return got
         if depth >= MAX_EFFECT_DEPTH:
             raise self._exhausted("quá trần phân rã effect", bound="depth")
         self.active.add(key)
@@ -2474,13 +2512,25 @@ class _EffectResolver:
                     check_env = dict(env)
                     can_reuse = True
                     for t_in, child in zip(contract.inputs, children):
-                        if child.fn is not None:
+                        if child.fn == "__line_endpoints__":
+                            c1, c2 = child.inputs
+                            ep1, ep2 = child.env["_pts"]
+                            if (c1.fn is not None and c1.existing is None) or (c2.fn is not None and c2.existing is None):
+                                can_reuse = False
+                                break
+                            l1 = c1.env[c1.contract.effect.operands[0]] if c1.fn is not None else ep1
+                            l2 = c2.env[c2.contract.effect.operands[0]] if c2.fn is not None else ep2
+                            if l1 == l2:
+                                can_reuse = False
+                                break
+                            check_env[t_in.operands[0]] = ("named", tuple(sorted((l1, l2))))
+                        elif child.fn is not None:
                             if child.existing is None:
                                 can_reuse = False
                                 break
                             check_env.update({s: child.env[c_op] for s, c_op in zip(t_in.operands, child.contract.effect.operands)})
                     if can_reuse and not any(
-                        isinstance(v, tuple) and v and v[0] == "desc"
+                        isinstance(v, tuple) and v and v[0] in ("desc", "derived_line")
                         for k_slot, v in check_env.items()
                         if k_slot != out
                     ):
@@ -2500,6 +2550,8 @@ class _EffectResolver:
                     raise cut
                 raise TuChoi("UNSUPPORTED_CAPABILITY", f"không effect nào giải được {kind}")
             selected = min(choices, key=lambda c: (c.cost, c.fn, _nhan_ra(c), c.existing['id'] if c.existing else ''))
+            if desc is not None:
+                self._term_of[id(selected)] = desc
             if not kind.startswith('Answer'):
                 self.memo[key] = (selected, len(self.plan.calls))
             return selected
@@ -2553,12 +2605,24 @@ class _EffectResolver:
     def _emit(self, choice, fact, under=False):
         if choice.fn is None:
             return choice.env
+        if choice.fn == "__line_endpoints__":
+            ep1, ep2 = choice.env["_pts"]
+            c1, c2 = choice.inputs
+            g1 = self._emit(c1, fact, under)
+            g2 = self._emit(c2, fact, under)
+            l1 = g1[c1.contract.effect.operands[0]] if c1.fn is not None else ep1
+            l2 = g2[c2.contract.effect.operands[0]] if c2.fn is not None else ep2
+            if l1 == l2:
+                raise TuChoi("DEGENERATE_LINE", "hai đầu mút của đường thẳng dẫn xuất trùng nhau", (fact.id,))
+            return {"_line": ("named", tuple(sorted((l1, l2))))}
         under = under or choice.definition is not None     # C18: inside a definition's regression: the declared rule
         contract = choice.contract
         env = dict(choice.env)
         for t, child in zip(contract.inputs, choice.inputs):  # an input slot takes its producer's effect, by position
             got = self._emit(child, fact, under)
-            if child.fn is not None:
+            if child.fn == "__line_endpoints__":
+                env[t.operands[0]] = got["_line"]
+            elif child.fn is not None:
                 if t.kind == "Line" and child.contract.line:  # C18: a locus line is the two points its producer spans
                     env[t.operands[0]] = ("named", tuple(sorted(got[x] for x in child.contract.line)))
                 else:
@@ -2566,6 +2630,8 @@ class _EffectResolver:
         if choice.existing:
             if not contract.effect.kind.startswith('Answer'):
                 self.reused += 1
+            if (tk := self._term_of.get(id(choice))) is not None:
+                self.emitted_terms[tk] = env[contract.effect.operands[0]]
             self._ghi(choice.existing, env, contract)
             self._dinh_nghia_ghi(choice, env, choice.existing)
             return env
@@ -2589,8 +2655,9 @@ class _EffectResolver:
         call = self.emit(cid, choice.fn, render_call(contract, env), fact.quotes, f'effect({contract.effect.kind})→{choice.fn}')
         self.plan.trace[-1]['fact'] = fact.id
         if not answer:                     # provenance at emission (C16): what put this step in the plan
-            # C18 review MAJOR-2: a step under a defined point realizes its DECLARED definition (`DINH_NGHIA_DIEM`)
-            composed = bool(contract.descriptor) and any(ch.fn is not None for ch in choice.inputs)
+            def _real(ch: _Choice) -> bool:
+                return any(_real(x) for x in ch.inputs) if ch.fn == "__line_endpoints__" else ch.fn is not None
+            composed = bool(contract.descriptor) and any(_real(ch) for ch in choice.inputs)
             self.plan.step_provenance[cid] = ('registered' if under
                                               else 'search_generated' if composed
                                               else 'source_defined' if contract.descriptor
@@ -2598,6 +2665,8 @@ class _EffectResolver:
                                               else 'search_generated')
         self._ghi(call, env, contract)
         self._dinh_nghia_ghi(choice, env, call)
+        if not answer and (tk := self._term_of.get(id(choice))) is not None:
+            self.emitted_terms[tk] = env[contract.effect.operands[0]]
         if not answer:
             choice.env.update(env)
             choice.existing, choice.cost = call, 0
@@ -2679,6 +2748,123 @@ class _EffectResolver:
                  if e['fresh'] and (pc := planning_contract(REGISTRY[e['fn']], e.get('effect'), e.get('descriptor'))) and pc.fresh]
         return out, list(self.trail), fresh
 
+    def _nut_chung_chi(self, node_spec: dict[str, Any], out_lbl: str | None = None) -> dict[str, Any]:
+        """Build recursive certificate node for a described point from emitted labels and C18 definitions."""
+        term = _cay_tu_dict(node_spec)
+        if out_lbl is None:
+            out_lbl = self.emitted_terms[term]
+        pt = node_spec.get("point_tree")
+        if isinstance(pt, dict) and "arg_items" in pt:
+            items_cert = [self._nut_chung_chi(it) if isinstance(it, dict) else it for it in pt["arg_items"]]
+            res: dict[str, Any] = {
+                "descriptor": node_spec["point_kind"],
+                "points": list(node_spec.get("points") or ()),
+                "label": out_lbl,
+                "arg_items": items_cert,
+            }
+        elif isinstance(pt, dict):
+            nested_cert = self._nut_chung_chi(pt)
+            res = {
+                "descriptor": node_spec["point_kind"],
+                "points": [nested_cert["label"], *(node_spec.get("points") or ())],
+                "label": out_lbl,
+                "nested": nested_cert,
+            }
+        else:
+            res = {
+                "descriptor": node_spec["point_kind"],
+                "points": list(node_spec.get("points") or ()),
+                "label": out_lbl,
+            }
+        if (dn := self.definitions.get(out_lbl)) and dn["descriptor"] == res["descriptor"]:
+            res["definition"] = {k: dn[k] for k in ("descriptor", "call", "env")}
+        return res
+
+    def goal_trees(self, fact, plan: KeHoach):
+        """Resolve a multi-operand or derived-line goal (`fact.goal_trees`) over Registry effects and record an
+        `effect-chain` certificate with `mode` and `operand_trees`."""
+        gt = fact.goal_trees or {}
+        mode = gt.get("mode")
+
+        def _pt(x):
+            return _cay_tu_dict(x) if isinstance(x, dict) else x
+
+        def _ln(xs):
+            t0, t1 = _pt(xs[0]), _pt(xs[1])
+            if isinstance(t0, str) and isinstance(t1, str):
+                return ("named", tuple(sorted((t0, t1))))
+            return ("derived_line", (t0, t1))
+
+        def _pl(pl, need_short: bool = False):
+            pts = list(dict.fromkeys(pl))
+            if need_short and len(pts) > 3:
+                plan.named_planes.append({"call": fact.id, "labels": pts})
+                return tuple(pts[:3])
+            return tuple(pts)
+
+        if mode == "distance_point_line":
+            need_kind, need_ops = "AnswerDistance", (_pt(gt["point"]), _ln(gt["line"]))
+        elif mode == "distance_point_plane":
+            need_kind, need_ops = "AnswerDistance", (_pt(gt["point"]), _pl(gt["plane"], need_short=True))
+        elif mode == "distance_line_plane":
+            need_kind, need_ops = "AnswerDistanceLinePlane", (_ln(gt["line"]), _pl(gt["plane"]))
+        elif mode == "length":
+            pts = gt["points"]
+            need_kind, need_ops = "AnswerLength", (_pt(pts[0]), _pt(pts[1]))
+        elif mode == "angle_line_plane":
+            ln = gt["line"]
+            need_kind, need_ops = "AnswerAngleLinePlane", (_pt(ln[0]), _pt(ln[1]), _pl(gt["plane"]))
+        elif mode == "angle_lines":
+            l1, l2 = gt["line1"], gt["line2"]
+            if all(isinstance(x, str) for x in l1) and any(isinstance(x, dict) for x in l2):
+                l1, l2 = l2, l1
+            need_kind, need_ops = "AnswerAngleLines", (_pt(l1[0]), _pt(l1[1]), _ln(l2))
+        elif mode == "area":
+            ps = gt["polygon"]
+            need_kind, need_ops = "AnswerArea", (_pt(ps[0]), _pt(ps[1]), _pt(ps[2]))
+        else:
+            raise TuChoi("UNSUPPORTED_CAPABILITY", f"{fact.id}: goal_trees mode {mode!r} chưa hỗ trợ", (fact.id,))
+
+        self.used, self.trail = True, []
+        choice = self._resolve(need_kind, need_ops)
+        self._emit(choice, fact)
+        return self._chuoi_trees(fact, gt, mode)
+
+    def _chuoi_trees(self, fact, gt: dict[str, Any], mode: str):
+        fresh = [(e, pc) for e in self.trail
+                 if e['fresh'] and (pc := planning_contract(REGISTRY[e['fn']], e.get('effect'), e.get('descriptor'))) and pc.fresh]
+        op_trees: dict[str, Any] = {}
+        for k, v in gt.items():
+            if k == "mode":
+                continue
+            if isinstance(v, list):
+                op_trees[k] = [self._nut_chung_chi(it) if isinstance(it, dict) else it for it in v]
+            elif isinstance(v, dict):
+                op_trees[k] = self._nut_chung_chi(v)
+            else:
+                op_trees[k] = v
+        cert = {
+            'rule': 'effect-chain',
+            'effect_binding': True,
+            'goal': fact.id,
+            'ask': fact.id,
+            'mode': mode,
+            'operand_trees': op_trees,
+            'chain': self.trail,
+            'labels': [e['env'][pc.effect.operands[0]] for e, pc in fresh],
+            'quotes': list(dict.fromkeys(fact.quotes)),
+            'provenance': 'DERIVED',
+            'binding': 'AUXILIARY',
+        }
+        self.plan.auxiliary.append(cert)
+        self.plan.trace.append({'fact': fact.id, 'step': 'decompose_goal', 'rule': cert['rule'],
+                                'calls': [e['call'] for e in self.trail], 'auxiliary': cert['labels'],
+                                'provenance': 'DERIVED', 'binding': 'AUXILIARY'})
+        self.plan.trace.append({'fact': fact.id, 'step': 'effect_resolution', 'selection': 'registry-effects',
+                                'new_constructions': len([e for e in self.trail if e['fresh'] and e['call'] != fact.id]),
+                                'needs': self.needs, 'candidates': self.candidates, 'depth': self.depth_max})
+        return next(c for c in self.plan.calls if c['id'] == fact.id)
+
     def _chuoi(self, fact, point, target, choice, env):
         """`effect-chain` certificate of a goal on an unnamed described point: the trail of calls with their bindings, the
         goal (description + target) and the fresh labels. The gate re-writes every call from its contract; the engine checks
@@ -2686,22 +2872,11 @@ class _EffectResolver:
         answer = choice.contract
         fresh = [(e, pc) for e in self.trail
                  if e['fresh'] and (pc := planning_contract(REGISTRY[e['fn']], e.get('effect'), e.get('descriptor'))) and pc.fresh]
-        op_cert: dict[str, Any] = {'descriptor': point[1], 'points': list(fact.points), 'label': env[answer.effect.operands[0]]}
-        if fact.point_tree:
-            outer_e = next(
-                e for e in self.trail
-                if (pc := planning_contract(REGISTRY[e['fn']], e.get('effect'), e.get('descriptor')))
-                and pc.descriptor == point[1]
-                and e['env'].get(pc.effect.operands[0]) == op_cert['label']
-            )
-            outer_pc = planning_contract(REGISTRY[outer_e['fn']], outer_e.get('effect'), outer_e.get('descriptor'))
-            in_lbl = outer_e['env'][outer_pc.inputs[0].operands[0]]
-            op_cert['points'] = [in_lbl, *fact.points]
-            op_cert['nested'] = {
-                'descriptor': fact.point_tree['point_kind'],
-                'points': list(fact.point_tree.get('points') or ()),
-                'label': in_lbl,
-            }
+        op_cert = self._nut_chung_chi(
+            {'point_kind': fact.point_kind, 'points': list(fact.points or ()), 'point_tree': fact.point_tree},
+            env[answer.effect.operands[0]],
+        )
+        top_dn = op_cert.pop('definition', None)
         cert = {'rule': 'effect-chain', 'effect_binding': True, 'goal': fact.id, 'ask': fact.id,
                 'operand': op_cert,
                 'target': (target if isinstance(target, dict) else {'point': target} if isinstance(target, str)
@@ -2714,8 +2889,8 @@ class _EffectResolver:
                 'quotes': list(dict.fromkeys(fact.quotes)), 'provenance': 'DERIVED', 'binding': 'AUXILIARY'}
         if isinstance(target, tuple) and target[0] == 'result':
             cert['line_ref'] = target[1]
-        if (dn := self.definitions.get(cert['operand']['label'])) and dn['descriptor'] == point[1]:
-            cert['definition'] = {k: dn[k] for k in ('descriptor', 'call', 'env')}
+        if top_dn is not None and (dn := self.definitions.get(cert['operand']['label'])) and dn['descriptor'] == point[1]:
+            cert['definition'] = top_dn
             cert['search'] = {'loci': dn['loci'], 'needs': self.needs, 'candidates': self.candidates, 'depth': self.depth_max}
         self.plan.auxiliary.append(cert)
         self.plan.trace.append({'fact': fact.id, 'step': 'decompose_goal', 'rule': cert['rule'],
@@ -2728,9 +2903,11 @@ class _EffectResolver:
 
 
 def _ten(v) -> str:
-    """A need operand as trace text: a label, a named line, a plane, or a description."""
+    """A need operand as trace text: a label, a named line, a derived line, a plane, or a description."""
     if isinstance(v, tuple) and v[:1] == ("desc",):
         return f"{v[1]}({','.join(_ten(x) for x in v[2])})"
+    if isinstance(v, tuple) and v[:1] == ("derived_line",):
+        return f"line({_ten(v[1][0])},{_ten(v[1][1])})"
     if isinstance(v, tuple) and v[:1] == ("named",):
         return "".join(v[1])
     return "".join(v) if isinstance(v, tuple) else str(v)
