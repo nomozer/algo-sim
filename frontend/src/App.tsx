@@ -524,6 +524,18 @@ export default function App() {
       prevHistoryState?.axoView === "workspace" &&
       Boolean(prevHistoryState?.axoTabId) &&
       prevHistoryState?.axoTabId !== resolvedAxoTabId;
+    const effectiveView = useAppStore.getState().view;
+    if (effectiveView !== view) return;
+    if (
+      effectiveView === "landing" &&
+      (currentPath === "/" ||
+        currentPath === "/gioi-thieu" ||
+        currentPath === "/landing" ||
+        currentPath === "/welcome" ||
+        currentPath === "/intro")
+    ) {
+      return;
+    }
     if (currentPath === targetPath && !sameWorkspaceTabRoute) return;
     const historyState = {
       axoView: view,

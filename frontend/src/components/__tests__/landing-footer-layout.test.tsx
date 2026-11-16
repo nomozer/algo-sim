@@ -22,7 +22,7 @@ describe("Landing Footer structure, branding, links, and navigation", () => {
     useAuthStore.setState({ user: null });
   });
 
-  it("uses the official dark-ink IconAxoLogo mark and preserves essential links without bloat or second 3D model", () => {
+  it("uses the official dark-ink IconAxoLogo mark and minimal essential footer without decorative SVG lines or redundant top button", () => {
     const html = renderToString(<LandingFooterV14 />);
     const logoSvg = renderToString(<IconAxoLogo />);
 
@@ -31,9 +31,10 @@ describe("Landing Footer structure, branding, links, and navigation", () => {
     expect(html).toContain(logoSvg);
     expect(html).not.toContain("axo-v14-footer-mark");
     expect(html).not.toContain("<canvas");
-    expect(html).toContain("axo-v14-footer-trace-svg");
+    expect(html).not.toContain("axo-v14-footer-trace-svg");
+    expect(html).not.toContain('id="btn-landing-footer-top"');
 
-    // Essential links + concise copyright + back-to-top anchor
+    // Essential links + concise copyright
     expect(html).toContain('href="#landing-hero"');
     expect(html).toContain("Giới thiệu");
     expect(html).toContain('href="#cach-hoat-dong"');
@@ -43,8 +44,6 @@ describe("Landing Footer structure, branding, links, and navigation", () => {
     expect(html).toContain('id="btn-landing-footer-library"');
     expect(html).toContain("Thư viện bài mẫu");
     expect(html).toContain("© Axo · Mô phỏng hình học không gian 3D");
-    expect(html).toContain('id="btn-landing-footer-top"');
-    expect(html).toContain("Về đầu trang");
 
     // Zero invented social/contact metadata or duplicated primary CTA inside footer
     expect(html).not.toContain('id="btn-landing-final-start"');

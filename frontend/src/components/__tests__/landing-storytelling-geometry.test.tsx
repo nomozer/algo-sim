@@ -1,59 +1,37 @@
 import { renderToString } from "react-dom/server";
 import { describe, expect, it } from "vitest";
-import { LandingPrototypeA, V13_STORY_SCENES } from "../landing/LandingPrototypeA";
-import { LandingPrototypeB } from "../landing/LandingPrototypeB";
+import { LandingStorytellingV14, STORY_STAGES_V14 } from "../landing/LandingStorytellingV14";
 import { LANDING_PRISM_STORY_SPEC } from "../landing/landing-geometry-data";
 
-describe("AXO Landing Page V1.3 — Storytelling Scene Continuity & Geometric Epistemics", () => {
-  it("defines 4 continuous Vietnamese storytelling stages with strict Stage 4 result gating", () => {
-    expect(V13_STORY_SCENES).toHaveLength(4);
-    expect(V13_STORY_SCENES.map((s) => s.stepLabel)).toEqual([
-      "Bước 1",
-      "Bước 2",
-      "Bước 3",
-      "Bước 4",
-    ]);
-    expect(V13_STORY_SCENES.map((s) => s.title)).toEqual([
-      "Đề bài xuất hiện",
-      "Hình thành không gian",
-      "Khám phá quan hệ",
-      "Kết quả trực quan",
+describe("AXO Landing — Storytelling Scene Continuity & Geometric Epistemics", () => {
+  it("defines 4 continuous Vietnamese storytelling chapters with strict Stage 4 result gating", () => {
+    expect(STORY_STAGES_V14).toHaveLength(4);
+    expect(STORY_STAGES_V14.map((s) => s.chapterHeading)).toEqual([
+      "Chặng 1: Từ đề bài",
+      "Chặng 2: Dựng không gian",
+      "Chặng 3: Xác lập quan hệ",
+      "Chặng 4: Hoàn thiện thiết diện",
     ]);
 
     for (let idx = 0; idx < 3; idx++) {
-      const chipText = V13_STORY_SCENES[idx].stageChips.map((c) => c.label).join(" | ");
-      expect(chipText).not.toContain("3√7");
-      expect(chipText).not.toContain("S(MNPQ)");
-      expect(V13_STORY_SCENES[idx].stageChips.every((c) => c.emphasis !== "result")).toBe(true);
+      expect(STORY_STAGES_V14[idx].verifiedResult).toBeUndefined();
+      expect(STORY_STAGES_V14[idx].relationNote).not.toContain("3√7");
+      expect(STORY_STAGES_V14[idx].relationNote).not.toContain("2√2");
     }
 
-    const stage4Text = V13_STORY_SCENES[3].stageChips.map((c) => c.label).join(" | ");
-    expect(stage4Text).toContain("MN = 2");
-    expect(stage4Text).toContain("PQ = 4");
-    expect(stage4Text).toContain("MQ = NP = 2√2");
-    expect(stage4Text).toContain("S(MNPQ) = 3√7");
-    expect(V13_STORY_SCENES[3].stageChips.some((c) => c.emphasis === "result")).toBe(true);
+    expect(STORY_STAGES_V14[3].relationNote).toContain("MN = 2");
+    expect(STORY_STAGES_V14[3].relationNote).toContain("PQ = 4");
+    expect(STORY_STAGES_V14[3].relationNote).toContain("MQ = NP = 2√2");
+    expect(STORY_STAGES_V14[3].verifiedResult).toBe("S(MNPQ) = 3√7");
   });
 
-  it("mounts a single storytelling stage in both Prototypes A and B without leaking Stage 4 area in Stage 0 HUD", () => {
-    for (const html of [
-      renderToString(<LandingPrototypeA onSwitchMode={() => undefined} />),
-      renderToString(<LandingPrototypeB onSwitchMode={() => undefined} />),
-    ]) {
-      const sceneMatches = html.match(/id="landing-storytelling-scene"/g) ?? [];
-      expect(sceneMatches).toHaveLength(1);
-
-      const bottomStart = html.indexOf('class="axo-sp-story-bottom-bar"');
-      const copyStart = html.indexOf('class="axo-v13-story-copy-col"');
-      expect(bottomStart).toBeGreaterThan(-1);
-      expect(copyStart).toBeGreaterThan(bottomStart);
-
-      const stage0BottomBar = html.slice(bottomStart, copyStart);
-      expect(stage0BottomBar).toContain("Giả thiết: Lăng trụ đều ABC.A′B′C′ (a = 4)");
-      expect(stage0BottomBar).not.toContain("S(MNPQ) = 3√7");
-      expect(stage0BottomBar).not.toContain("MQ = NP = 2√2");
-      expect(stage0BottomBar).not.toContain("MN = 2");
-    }
+  it("mounts a single sticky storytelling stage without leaking Stage 4 area in initial render", () => {
+    const html = renderToString(<LandingStorytellingV14 />);
+    const sceneMatches = html.match(/id="landing-storytelling-scene"/g) ?? [];
+    expect(sceneMatches).toHaveLength(1);
+    expect(html).toContain("ABC.A′B′C′");
+    expect(html).not.toContain("S(MNPQ) = 3√7");
+    expect(html).not.toContain("MQ = NP = 2√2");
   });
 
   it("verifies underlying LANDING_PRISM_STORY_SPEC coordinates satisfy MN=2, PQ=4, MQ=NP=2√2, MN∥PQ, and S(MNPQ)=3√7", () => {

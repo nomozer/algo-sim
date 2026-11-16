@@ -6,13 +6,11 @@ import { LandingHeroSculpture3D } from "./landing/LandingHeroSculpture3D";
 import { FinalCtaCornerAccent } from "./landing/LandingIllustrationAccents";
 import { LandingInteractiveDemo } from "./landing/LandingInteractiveDemo";
 import { LandingPreviewV14 } from "./landing/LandingPreviewV14";
-import { LandingPrototypeA } from "./landing/LandingPrototypeA";
-import { LandingPrototypeB } from "./landing/LandingPrototypeB";
 import { LandingStorytelling } from "./landing/LandingStorytelling";
 import { enterAxoWorkspace, openLibraryFromLanding } from "./landing/landing-geometry-data";
 import { useAuthStore } from "../state/auth";
 
-export type LandingPrototypeMode = "prod" | "a" | "b" | "v14";
+export type LandingPrototypeMode = "prod" | "v14";
 
 const PROTO_CHANGE_EVENT = "axolanding:protochange";
 
@@ -34,23 +32,17 @@ export function readLandingPrototypeMode(search?: string): LandingPrototypeMode 
   ) {
     return "v14";
   }
-  if (protoParam === "a") return "a";
-  if (protoParam === "b") return "b";
   return "prod";
 }
 
 export function switchLandingPrototype(mode: LandingPrototypeMode): void {
   if (typeof window === "undefined") return;
   const url = new URL(window.location.href);
+  url.searchParams.delete("prototype");
   if (mode === "prod") {
-    url.searchParams.delete("prototype");
     url.searchParams.delete("preview");
-  } else if (mode === "v14") {
-    url.searchParams.delete("prototype");
-    url.searchParams.set("preview", "v1.4");
   } else {
-    url.searchParams.delete("preview");
-    url.searchParams.set("prototype", mode);
+    url.searchParams.set("preview", "v1.4");
   }
   const nextUrl = `${url.pathname}${url.search}${url.hash}`;
   window.history.pushState(null, "", nextUrl);
@@ -80,14 +72,6 @@ export function LandingView() {
 
   if (protoMode === "v14") {
     return <LandingPreviewV14 />;
-  }
-
-  if (protoMode === "a") {
-    return <LandingPrototypeA onSwitchMode={switchLandingPrototype} />;
-  }
-
-  if (protoMode === "b") {
-    return <LandingPrototypeB onSwitchMode={switchLandingPrototype} />;
   }
 
   const scrollToSection = (id: string) => {

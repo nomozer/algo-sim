@@ -127,57 +127,10 @@ export function LandingFooterV14() {
           </nav>
         </div>
 
-        <div className="axo-v14-footer-horizon" aria-hidden="true">
-          <svg
-            className="axo-v14-footer-trace-svg"
-            viewBox="0 0 1200 32"
-            preserveAspectRatio="xMidYMid meet"
-          >
-            <line
-              className="axo-v14-footer-trace-axis"
-              x1="0"
-              y1="16"
-              x2="1200"
-              y2="16"
-            />
-            <polyline
-              className="axo-v14-footer-trace-ray"
-              points="180,16 390,6 640,26 890,9 1060,16"
-            />
-            <circle className="axo-v14-footer-trace-node" cx="180" cy="16" r="3.2" />
-            <circle className="axo-v14-footer-trace-node" cx="390" cy="6" r="3.2" />
-            <circle className="axo-v14-footer-trace-node-accent" cx="640" cy="26" r="3.8" />
-            <circle className="axo-v14-footer-trace-node" cx="890" cy="9" r="3.2" />
-            <circle className="axo-v14-footer-trace-node" cx="1060" cy="16" r="3.2" />
-          </svg>
-        </div>
-
         <div className="axo-v14-footer-bottom">
           <p className="axo-v14-footer-copy">
             © Axo · Mô phỏng hình học không gian 3D
           </p>
-          <button
-            id="btn-landing-footer-top"
-            type="button"
-            className="axo-v14-footer-top-btn"
-            onClick={() => scrollTo("landing-hero")}
-          >
-            <span>Về đầu trang</span>
-            <svg
-              width="14"
-              height="14"
-              viewBox="0 0 16 16"
-              fill="none"
-              stroke="currentColor"
-              strokeWidth="1.75"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              aria-hidden="true"
-            >
-              <path d="M8 13V3" />
-              <path d="M4 7l4-4 4 4" />
-            </svg>
-          </button>
         </div>
       </div>
     </footer>

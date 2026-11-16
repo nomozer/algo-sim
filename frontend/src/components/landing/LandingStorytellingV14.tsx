@@ -1,11 +1,8 @@
 import {
-  useCallback,
   useEffect,
   useMemo,
   useRef,
   useState,
-  type KeyboardEvent as ReactKeyboardEvent,
-  type TouchEvent as ReactTouchEvent,
 } from "react";
 import { AnnotatedPhrase } from "./AnnotatedHeading";
 import {
@@ -18,6 +15,7 @@ export interface StoryStageV14Spec {
   readonly shortNum: string;
   readonly desktopTag: string;
   readonly mobileShortTag: string;
+  readonly chapterHeading: string;
   readonly title: string;
   readonly summary: string;
   readonly relationNote: string;
@@ -29,6 +27,7 @@ export interface StoryStageV14Spec {
     readonly extrude: number;
     readonly planeSweep: number;
     readonly parallelCue: number;
+    readonly traceProgress: number;
     readonly sectionFill: number;
   };
 }
@@ -39,17 +38,19 @@ export const STORY_STAGES_V14: readonly StoryStageV14Spec[] = [
     shortNum: "1",
     desktopTag: "Từ đề bài",
     mobileShortTag: "Đề bài",
+    chapterHeading: "Chặng 1: Từ đề bài",
     title: "Ghim ba điểm gốc M, N, P trên đáy và cạnh bên",
     summary:
-      "Axo phân tích giả thiết lăng trụ tam giác đều ABC.A′B′C′ cạnh 4 và ghim chuẩn xác ba trung điểm M ∈ AB, N ∈ AC, P ∈ CC′ ngay từ dữ kiện đầu vào.",
-    relationNote: "M ∈ AB · N ∈ AC · P ∈ CC′",
+      "Từ giả thiết lăng trụ tam giác đều ABC.A′B′C′ cạnh a = 4, Axo ghim chuẩn xác ba trung điểm M ∈ AB, N ∈ AC và P ∈ CC′ ngay trên hệ trục tọa độ gốc.",
+    relationNote: "Giả thiết: M ∈ AB · N ∈ AC · P ∈ CC′",
     camera: {
-      yaw: -0.44,
-      pitch: 0.34,
-      zoom: 0.94,
-      extrude: 0.16,
+      yaw: -0.36,
+      pitch: 0.30,
+      zoom: 1.12,
+      extrude: 0.22,
       planeSweep: 0,
       parallelCue: 0,
+      traceProgress: 0,
       sectionFill: 0,
     },
   },
@@ -58,17 +59,19 @@ export const STORY_STAGES_V14: readonly StoryStageV14Spec[] = [
     shortNum: "2",
     desktopTag: "Dựng không gian",
     mobileShortTag: "Dựng hình",
-    title: "Mở rộng khối đứng và định vị mặt phẳng (MNP)",
+    chapterHeading: "Chặng 2: Dựng không gian",
+    title: "Hoàn chỉnh khối lăng trụ và phân lớp nét thấy — khuất",
     summary:
-      "Khối lăng trụ vươn lên nắp A′B′C′ cùng lúc mặt phẳng cắt (MNP) đi qua bộ ba điểm gốc hạ vào khối để xác định miền giao cắt.",
-    relationNote: "Mặt phẳng (MNP): √3x + y − √3z = 2√3",
+      "Ba cạnh bên AA′, BB′, CC′ vươn thẳng góc lên đáy A′B′C′ song song với ABC, đồng thời phân tách nét liền phía trước và nét đứt phía sau theo góc nhìn.",
+    relationNote: "Dựng khối: AA′, BB′, CC′ ⊥ (ABC) · Nét thấy & nét khuất",
     camera: {
-      yaw: -0.28,
-      pitch: 0.27,
-      zoom: 1.0,
+      yaw: -0.22,
+      pitch: 0.32,
+      zoom: 1.18,
       extrude: 1,
-      planeSweep: 0.68,
-      parallelCue: 0.35,
+      planeSweep: 0,
+      parallelCue: 0,
+      traceProgress: 0,
       sectionFill: 0,
     },
   },
@@ -77,18 +80,20 @@ export const STORY_STAGES_V14: readonly StoryStageV14Spec[] = [
     shortNum: "3",
     desktopTag: "Xác lập quan hệ",
     mobileShortTag: "Quan hệ",
-    title: "Kéo giao tuyến song song MN // BC để chốt điểm Q",
+    chapterHeading: "Chặng 3: Xác lập quan hệ",
+    title: "Truyền quan hệ song song MN ∥ BC để tìm Q ∈ BB′",
     summary:
-      "Đường trung bình MN song song BC trên mặt đáy. Do BC thuộc mặt bên (BCC′B′), giao tuyến qua P bắt buộc song song BC và cắt BB′ tại trung điểm Q.",
-    relationNote: "MN // BC ⇒ PQ // BC · Q là trung điểm BB′",
+      "Đường trung bình MN song song với cạnh đáy BC trong (ABC). Vì BC nằm trong mặt bên (BCC′B′), giao tuyến qua P buộc phải song song BC và cắt BB′ đúng tại trung điểm Q.",
+    relationNote: "Quan hệ: MN ∥ BC ⇒ PQ ∥ BC · Q ∈ BB′",
     camera: {
-      yaw: -0.14,
-      pitch: 0.23,
-      zoom: 1.03,
+      yaw: -0.06,
+      pitch: 0.35,
+      zoom: 1.22,
       extrude: 1,
       planeSweep: 1,
       parallelCue: 1,
-      sectionFill: 0.32,
+      traceProgress: 0.85,
+      sectionFill: 0.08,
     },
   },
   {
@@ -96,22 +101,37 @@ export const STORY_STAGES_V14: readonly StoryStageV14Spec[] = [
     shortNum: "4",
     desktopTag: "Kết quả",
     mobileShortTag: "Kết quả",
+    chapterHeading: "Chặng 4: Hoàn thiện thiết diện",
     title: "Khép kín thiết diện hình thang cân MNPQ",
     summary:
-      "Bốn đoạn MN, NP, PQ, QM nối kín tạo thành hình thang cân đối xứng hoàn chỉnh và xác nhận kết quả hình học trực tiếp trên mô hình.",
-    relationNote: "MN = 2 · PQ = 4 · MQ = NP = 2√2",
+      "Bốn đoạn MN, NP, PQ và QM khép kín trong mặt phẳng cắt (MNP), tạo thành thiết diện hình thang cân cân đối có thể đối chiếu trực tiếp từng kích thước.",
+    relationNote: "Hình thang cân MNPQ: MN = 2 · PQ = 4 · MQ = NP = 2√2",
     verifiedResult: "S(MNPQ) = 3√7",
     camera: {
-      yaw: 0.04,
-      pitch: 0.21,
-      zoom: 1.05,
+      yaw: 0.08,
+      pitch: 0.37,
+      zoom: 1.25,
       extrude: 1,
       planeSweep: 1,
-      parallelCue: 1,
+      parallelCue: 0.52,
+      traceProgress: 1,
       sectionFill: 1,
     },
   },
 ];
+
+export interface StoryInterpolatedPose {
+  readonly progress: number;
+  readonly activeStageIndex: number;
+  readonly yaw: number;
+  readonly pitch: number;
+  readonly zoom: number;
+  readonly extrude: number;
+  readonly planeSweep: number;
+  readonly parallelCue: number;
+  readonly traceProgress: number;
+  readonly sectionFill: number;
+}
 
 interface ProjectedPoint2D {
   readonly x: number;
@@ -119,10 +139,108 @@ interface ProjectedPoint2D {
   readonly z: number;
 }
 
-type PrismTweenState = StoryStageV14Spec["camera"];
+function clamp01(value: number): number {
+  if (!Number.isFinite(value)) return 0;
+  return Math.max(0, Math.min(1, value));
+}
+
+function smoothstep(edge0: number, edge1: number, x: number): number {
+  const t = clamp01((x - edge0) / Math.max(1e-6, edge1 - edge0));
+  return t * t * (3 - 2 * t);
+}
 
 function lerp(a: number, b: number, t: number): number {
   return a + (b - a) * t;
+}
+
+export function computeStoryScrollProgress(
+  firstCenterY: number,
+  lastCenterY: number,
+  viewportHeight: number,
+  isCompactStack = false,
+): number {
+  const span = lastCenterY - firstCenterY;
+  if (!Number.isFinite(span) || span <= 1) {
+    return firstCenterY <= viewportHeight * 0.45 ? 1 : 0;
+  }
+  const anchorY = viewportHeight * (isCompactStack ? 0.68 : 0.48);
+  return clamp01((anchorY - firstCenterY) / span);
+}
+
+export function stageIndexFromProgress(progress: number): number {
+  const p = clamp01(progress);
+  if (p < 0.25) return 0;
+  if (p < 0.52) return 1;
+  if (p < 0.76) return 2;
+  return 3;
+}
+
+export function interpolateStoryPose(
+  progress: number,
+  reducedMotion = false,
+): StoryInterpolatedPose {
+  const p = clamp01(progress);
+  const activeStageIndex = stageIndexFromProgress(p);
+
+  if (reducedMotion) {
+    const cam = STORY_STAGES_V14[activeStageIndex].camera;
+    return {
+      progress: p,
+      activeStageIndex,
+      ...cam,
+    };
+  }
+
+  // Smooth piecewise keyframes across normalized scroll progress [0, 1]
+  // Stops at canonical stage centers: 0.00 -> 0.34 -> 0.64 -> 0.94
+  const k = [0, 0.34, 0.64, 0.94] as const;
+  let s0 = STORY_STAGES_V14[0].camera;
+  let s1 = STORY_STAGES_V14[0].camera;
+  let u = 0;
+
+  if (p <= k[1]) {
+    s0 = STORY_STAGES_V14[0].camera;
+    s1 = STORY_STAGES_V14[1].camera;
+    u = smoothstep(k[0], k[1], p);
+  } else if (p <= k[2]) {
+    s0 = STORY_STAGES_V14[1].camera;
+    s1 = STORY_STAGES_V14[2].camera;
+    u = smoothstep(k[1], k[2], p);
+  } else {
+    s0 = STORY_STAGES_V14[2].camera;
+    s1 = STORY_STAGES_V14[3].camera;
+    u = smoothstep(k[2], k[3], p);
+  }
+
+  return {
+    progress: p,
+    activeStageIndex,
+    yaw: lerp(s0.yaw, s1.yaw, u),
+    pitch: lerp(s0.pitch, s1.pitch, u),
+    zoom: lerp(s0.zoom, s1.zoom, u),
+    extrude: lerp(s0.extrude, s1.extrude, u),
+    planeSweep: lerp(s0.planeSweep, s1.planeSweep, u),
+    parallelCue: lerp(s0.parallelCue, s1.parallelCue, u),
+    traceProgress: lerp(s0.traceProgress, s1.traceProgress, u),
+    sectionFill: lerp(s0.sectionFill, s1.sectionFill, u),
+  };
+}
+
+function rotatePointViewSpace(
+  pt: Vec3Tuple,
+  yaw: number,
+  pitch: number,
+): Vec3Tuple {
+  const cosY = Math.cos(yaw);
+  const sinY = Math.sin(yaw);
+  const x1 = pt[0] * cosY - pt[2] * sinY;
+  const z1 = pt[0] * sinY + pt[2] * cosY;
+
+  const cosP = Math.cos(pitch);
+  const sinP = Math.sin(pitch);
+  const y2 = pt[1] * cosP - z1 * sinP;
+  const z2 = pt[1] * sinP + z1 * cosP;
+  return [x1, y2, z2];
 }
 
 export function projectPrismPoint3D(
@@ -133,16 +251,7 @@ export function projectPrismPoint3D(
   cy: number,
   scale: number,
 ): ProjectedPoint2D {
-  const cosY = Math.cos(yaw);
-  const sinY = Math.sin(yaw);
-  const x1 = pt[0] * cosY - pt[2] * sinY;
-  const z1 = pt[0] * sinY + pt[2] * cosY;
-
-  const cosP = Math.cos(pitch);
-  const sinP = Math.sin(pitch);
-  const y2 = pt[1] * cosP - z1 * sinP;
-  const z2 = pt[1] * sinP + z1 * cosP;
-
+  const [x1, y2, z2] = rotatePointViewSpace(pt, yaw, pitch);
   const camDist = 11.5;
   const persp = camDist / Math.max(3, camDist - z2);
   return {
@@ -152,76 +261,55 @@ export function projectPrismPoint3D(
   };
 }
 
+function isFaceFrontFacing(
+  facePts: readonly Vec3Tuple[],
+  solidCenter: Vec3Tuple,
+  yaw: number,
+  pitch: number,
+): boolean {
+  if (facePts.length < 3) return false;
+  const v0 = rotatePointViewSpace(facePts[0], yaw, pitch);
+  const v1 = rotatePointViewSpace(facePts[1], yaw, pitch);
+  const v2 = rotatePointViewSpace(facePts[2], yaw, pitch);
+  const vc = rotatePointViewSpace(solidCenter, yaw, pitch);
+
+  const ax = v1[0] - v0[0];
+  const ay = v1[1] - v0[1];
+  const az = v1[2] - v0[2];
+  const bx = v2[0] - v0[0];
+  const by = v2[1] - v0[1];
+  const bz = v2[2] - v0[2];
+
+  let nx = ay * bz - az * by;
+  let ny = az * bx - ax * bz;
+  let nz = ax * by - ay * bx;
+
+  // Ensure normal points outward relative to solid center
+  const inX = vc[0] - v0[0];
+  const inY = vc[1] - v0[1];
+  const inZ = vc[2] - v0[2];
+  if (nx * inX + ny * inY + nz * inZ > 0) {
+    nx = -nx;
+    ny = -ny;
+    nz = -nz;
+  }
+
+  // Camera sits at (0, 0, camDist) in view space
+  const viewX = -v0[0];
+  const viewY = -v0[1];
+  const viewZ = 11.5 - v0[2];
+  return nx * viewX + ny * viewY + nz * viewZ > 0.02;
+}
+
 function PrismEditorialStage({
-  activeStage,
-  onSwipePrev,
-  onSwipeNext,
+  pose,
+  reducedMotion,
 }: {
-  readonly activeStage: number;
-  readonly onSwipePrev: () => void;
-  readonly onSwipeNext: () => void;
+  readonly pose: StoryInterpolatedPose;
+  readonly reducedMotion: boolean;
 }) {
-  const [vis, setVis] = useState<PrismTweenState>(
-    () => (STORY_STAGES_V14[activeStage] ?? STORY_STAGES_V14[0]).camera,
-  );
-  const curRef = useRef<PrismTweenState>(vis);
-  const rafRef = useRef<number>(0);
-  const touchStartXRef = useRef<number | null>(null);
-
-  useEffect(() => {
-    const nextTarget = (STORY_STAGES_V14[activeStage] ?? STORY_STAGES_V14[0]).camera;
-    const reduced =
-      typeof window !== "undefined" &&
-      Boolean(window.matchMedia?.("(prefers-reduced-motion: reduce)")?.matches);
-
-    if (typeof window === "undefined" || reduced) {
-      curRef.current = nextTarget;
-      setVis(nextTarget);
-      return;
-    }
-
-    const startState = { ...curRef.current };
-    const startMs = performance.now();
-    const durationMs = 520;
-    let alive = true;
-
-    const tick = (nowMs: number) => {
-      if (!alive) return;
-      const linear = Math.min(1, Math.max(0, (nowMs - startMs) / durationMs));
-      const eased = 1 - Math.pow(1 - linear, 3);
-      const next: PrismTweenState = {
-        yaw: lerp(startState.yaw, nextTarget.yaw, eased),
-        pitch: lerp(startState.pitch, nextTarget.pitch, eased),
-        zoom: lerp(startState.zoom, nextTarget.zoom, eased),
-        extrude: lerp(startState.extrude, nextTarget.extrude, eased),
-        planeSweep: lerp(startState.planeSweep, nextTarget.planeSweep, eased),
-        parallelCue: lerp(startState.parallelCue, nextTarget.parallelCue, eased),
-        sectionFill: lerp(startState.sectionFill, nextTarget.sectionFill, eased),
-      };
-      curRef.current = next;
-      setVis(next);
-
-      if (linear < 1) {
-        rafRef.current = window.requestAnimationFrame(tick);
-      } else {
-        rafRef.current = 0;
-      }
-    };
-
-    if (rafRef.current) {
-      window.cancelAnimationFrame(rafRef.current);
-      rafRef.current = 0;
-    }
-    rafRef.current = window.requestAnimationFrame(tick);
-
-    return () => {
-      alive = false;
-      if (rafRef.current) {
-        window.cancelAnimationFrame(rafRef.current);
-        rafRef.current = 0;
-      }
-    };
-  }, [activeStage]);
+  const activeStage =
+    STORY_STAGES_V14[pose.activeStageIndex] ?? STORY_STAGES_V14[0];
 
   const scene = useMemo(() => {
     const pMap = LANDING_PRISM_STORY_SPEC.pointMap;
@@ -231,7 +319,7 @@ function PrismEditorialStage({
       if (id === "A" || id === "B" || id === "C" || id === "M" || id === "N") {
         return p;
       }
-      return [p[0], baseY + (p[1] - baseY) * vis.extrude, p[2]];
+      return [p[0], baseY + (p[1] - baseY) * pose.extrude, p[2]];
     };
 
     const coords: Record<string, Vec3Tuple> = {};
@@ -250,13 +338,69 @@ function PrismEditorialStage({
       coords[key] = extrudeVec(key);
     }
 
-    const scale = 55 * vis.zoom;
+    const scale = 68 * pose.zoom;
     const cx = 300;
-    const cy = 220;
+    const cy = 224;
     const proj: Record<string, ProjectedPoint2D> = {};
     for (const [k, v] of Object.entries(coords)) {
-      proj[k] = projectPrismPoint3D(v, vis.yaw, vis.pitch, cx, cy, scale);
+      proj[k] = projectPrismPoint3D(v, pose.yaw, pose.pitch, cx, cy, scale);
     }
+
+    const solidCenter: Vec3Tuple = [
+      (coords["A"][0] +
+        coords["B"][0] +
+        coords["C"][0] +
+        coords["A_prime"][0] +
+        coords["B_prime"][0] +
+        coords["C_prime"][0]) /
+        6,
+      (coords["A"][1] +
+        coords["B"][1] +
+        coords["C"][1] +
+        coords["A_prime"][1] +
+        coords["B_prime"][1] +
+        coords["C_prime"][1]) /
+        6,
+      (coords["A"][2] +
+        coords["B"][2] +
+        coords["C"][2] +
+        coords["A_prime"][2] +
+        coords["B_prime"][2] +
+        coords["C_prime"][2]) /
+        6,
+    ];
+
+    const faceDefs: readonly (readonly string[])[] = [
+      ["A", "C", "B"],
+      ["A_prime", "B_prime", "C_prime"],
+      ["A", "B", "B_prime", "A_prime"],
+      ["B", "C", "C_prime", "B_prime"],
+      ["C", "A", "A_prime", "C_prime"],
+    ];
+
+    const faceFrontMap = faceDefs.map((f) =>
+      isFaceFrontFacing(
+        f.map((id) => coords[id]),
+        solidCenter,
+        pose.yaw,
+        pose.pitch,
+      ),
+    );
+
+    const edgeVisibleInSolid = (from: string, to: string): boolean => {
+      if (pose.extrude < 0.35) {
+        return from !== "C" && to !== "C";
+      }
+      let frontTouch = 0;
+      for (let i = 0; i < faceDefs.length; i++) {
+        if (!faceFrontMap[i]) continue;
+        const f = faceDefs[i];
+        const hasFrom = f.includes(from);
+        const hasTo = f.includes(to);
+        if (hasFrom && hasTo) frontTouch++;
+      }
+      return frontTouch >= 1;
+    };
 
     const centroidX =
       (proj["A"].x +
@@ -283,12 +427,12 @@ function PrismEditorialStage({
         (edge.from === "B" && edge.to === "B_prime") ||
         (edge.from === "C" && edge.to === "C_prime");
       const isTop = edge.from.includes("prime") && edge.to.includes("prime");
-      const isBack = edge.from === "C" || edge.to === "C";
-      let opacity = 0.84;
+      let opacity = 0.88;
       if (isVertical || isTop) {
-        opacity = Math.max(0.18, vis.extrude * 0.86);
+        opacity = Math.max(0.24, pose.extrude * 0.9);
       }
-      const dashed = isBack || (vis.extrude < 0.65 && (isVertical || isTop));
+      const front = edgeVisibleInSolid(edge.from, edge.to);
+      const dashed = !front || (pose.extrude < 0.65 && (isVertical || isTop));
       return {
         key: `${edge.from}-${edge.to}`,
         a,
@@ -298,12 +442,40 @@ function PrismEditorialStage({
       };
     });
 
-    const liftY = (1 - vis.planeSweep) * 0.72;
+    // Right-angle bracket at A showing AA' perp AB
+    const pA = coords["A"];
+    const pB = coords["B"];
+    const pAp = coords["A_prime"];
+    const uAB: Vec3Tuple = [pB[0] - pA[0], pB[1] - pA[1], pB[2] - pA[2]];
+    const uAAp: Vec3Tuple = [pAp[0] - pA[0], pAp[1] - pA[1], pAp[2] - pA[2]];
+    const lenAB = Math.hypot(...uAB) || 1;
+    const lenAAp = Math.hypot(...uAAp) || 1;
+    const raSize = 0.36;
+    const b1: Vec3Tuple = [
+      pA[0] + (uAB[0] / lenAB) * raSize,
+      pA[1] + (uAB[1] / lenAB) * raSize,
+      pA[2] + (uAB[2] / lenAB) * raSize,
+    ];
+    const b2: Vec3Tuple = [
+      pA[0] + (uAAp[0] / lenAAp) * raSize,
+      pA[1] + (uAAp[1] / lenAAp) * raSize,
+      pA[2] + (uAAp[2] / lenAAp) * raSize,
+    ];
+    const bc: Vec3Tuple = [
+      b1[0] + (uAAp[0] / lenAAp) * raSize,
+      b1[1] + (uAAp[1] / lenAAp) * raSize,
+      b1[2] + (uAAp[2] / lenAAp) * raSize,
+    ];
+    const raB1 = projectPrismPoint3D(b1, pose.yaw, pose.pitch, cx, cy, scale);
+    const raB2 = projectPrismPoint3D(b2, pose.yaw, pose.pitch, cx, cy, scale);
+    const raC = projectPrismPoint3D(bc, pose.yaw, pose.pitch, cx, cy, scale);
+
+    const liftY = (1 - pose.planeSweep) * 0.78;
     const planePolyPts = LANDING_PRISM_STORY_SPEC.planeQuad.map((q) =>
       projectPrismPoint3D(
         [q[0], q[1] + liftY, q[2]],
-        vis.yaw,
-        vis.pitch,
+        pose.yaw,
+        pose.pitch,
         cx,
         cy,
         scale,
@@ -312,6 +484,23 @@ function PrismEditorialStage({
 
     const fmt = (pts: readonly ProjectedPoint2D[]) =>
       pts.map((p) => `${p.x.toFixed(1)},${p.y.toFixed(1)}`).join(" ");
+
+    // Progressive traced edges around M -> N -> P -> Q
+    const loopIds = ["M", "N", "P", "Q"] as const;
+    const tracedEdges = loopIds.map((id, idx) => {
+      const nextId = loopIds[(idx + 1) % loopIds.length];
+      const u = clamp01(pose.traceProgress * loopIds.length - idx);
+      const p0 = proj[id];
+      const p1 = proj[nextId];
+      return {
+        key: `${id}-${nextId}`,
+        x1: p0.x,
+        y1: p0.y,
+        x2: lerp(p0.x, p1.x, u),
+        y2: lerp(p0.y, p1.y, u),
+        u,
+      };
+    });
 
     const visibleIds = [
       "A",
@@ -325,9 +514,9 @@ function PrismEditorialStage({
       "P",
       "Q",
     ].filter((id) => {
-      if (id === "Q") return vis.planeSweep > 0.25;
+      if (id === "Q") return pose.planeSweep > 0.38;
       if (id === "A_prime" || id === "B_prime" || id === "C_prime") {
-        return vis.extrude > 0.65;
+        return pose.extrude > 0.6;
       }
       return true;
     });
@@ -337,210 +526,327 @@ function PrismEditorialStage({
       const dx = pt.x - centroidX;
       const dy = pt.y - centroidY;
       const len = Math.max(1, Math.hypot(dx, dy));
-      const pad = 16;
+      const pad = 18;
       return {
         id,
         label: pMap[id].label,
         role: pMap[id].role,
         px: pt.x,
         py: pt.y,
-        lx: Math.min(574, Math.max(26, pt.x + (dx / len) * pad)),
+        lx: Math.min(572, Math.max(28, pt.x + (dx / len) * pad)),
         ly: Math.min(404, Math.max(24, pt.y + (dy / len) * pad + 4)),
       };
     });
 
+    const frontLateralPolys = faceDefs
+      .slice(2)
+      .filter((_, idx) => faceFrontMap[idx + 2])
+      .map((f) => fmt(f.map((id) => proj[id])));
+
     return {
       proj,
       edges,
+      frontLateralPolys,
+      rightAnglePath: `M ${raB1.x.toFixed(1)} ${raB1.y.toFixed(1)} L ${raC.x.toFixed(1)} ${raC.y.toFixed(1)} L ${raB2.x.toFixed(1)} ${raB2.y.toFixed(1)}`,
       basePts: fmt([proj["A"], proj["B"], proj["C"]]),
       topPts: fmt([proj["A_prime"], proj["B_prime"], proj["C_prime"]]),
       planePts: fmt(planePolyPts),
       sectionPts: fmt([proj["M"], proj["N"], proj["P"], proj["Q"]]),
+      tracedEdges,
       labels,
     };
-  }, [vis]);
-
-  const handleTouchStart = useCallback((e: ReactTouchEvent<HTMLDivElement>) => {
-    touchStartXRef.current = e.touches[0]?.clientX ?? null;
-  }, []);
-
-  const handleTouchEnd = useCallback(
-    (e: ReactTouchEvent<HTMLDivElement>) => {
-      const startX = touchStartXRef.current;
-      touchStartXRef.current = null;
-      const endX = e.changedTouches[0]?.clientX;
-      if (startX === null || endX === undefined) return;
-      const delta = endX - startX;
-      if (delta <= -42) {
-        onSwipeNext();
-      } else if (delta >= 42) {
-        onSwipePrev();
-      }
-    },
-    [onSwipeNext, onSwipePrev],
-  );
-
-  const stage = STORY_STAGES_V14[activeStage] ?? STORY_STAGES_V14[0];
+  }, [pose]);
 
   return (
-    <div
-      id="landing-storytelling-scene"
-      className="axo-v14-story-visual"
-      onTouchStart={handleTouchStart}
-      onTouchEnd={handleTouchEnd}
-    >
-      <svg
-        className="axo-v14-story-svg"
-        viewBox="0 0 600 430"
-        role="img"
-        aria-label={`Lăng trụ tam giác đều ABC.A′B′C′: ${stage.desktopTag}`}
+    <div className="axo-v14-story-stage-pin">
+      <div
+        id="landing-storytelling-scene"
+        className="axo-v14-story-stage"
+        data-story-stage={pose.activeStageIndex}
+        data-story-progress={pose.progress.toFixed(3)}
+        data-reduced-motion={reducedMotion ? "true" : "false"}
       >
-        <ellipse
-          className="axo-v14-svg-contact-halo"
-          cx="300"
-          cy="346"
-          rx="172"
-          ry="22"
-        />
+        <div className="axo-v14-story-stage-meta">
+          <span className="axo-v14-story-stage-counter">
+            Chặng {pose.activeStageIndex + 1} / {STORY_STAGES_V14.length} ·{" "}
+            {activeStage.desktopTag}
+          </span>
+          <div className="axo-v14-story-progress-track" aria-hidden="true">
+            <div
+              className="axo-v14-story-progress-fill"
+              style={{
+                transform: `scaleX(${Math.max(0.06, pose.progress).toFixed(4)})`,
+              }}
+            />
+          </div>
+        </div>
 
-        <polygon
-          className="axo-v14-svg-prism-base"
-          points={scene.basePts}
-        />
+        <svg
+          className="axo-v14-story-svg"
+          viewBox="0 0 600 430"
+          role="img"
+          aria-label={`Lăng trụ tam giác đều ABC.A′B′C′: ${activeStage.chapterHeading}`}
+        >
+          <ellipse
+            className="axo-v14-svg-contact-halo"
+            cx="300"
+            cy="352"
+            rx="186"
+            ry="24"
+          />
 
-        {vis.extrude > 0.35 && (
           <polygon
-            className="axo-v14-svg-prism-top"
-            points={scene.topPts}
-            fillOpacity={(0.12 * vis.extrude).toFixed(3)}
+            className="axo-v14-svg-prism-base"
+            points={scene.basePts}
           />
-        )}
 
-        {scene.edges.map((edge) => (
-          <line
-            key={edge.key}
-            className={
-              edge.dashed
-                ? "axo-v14-svg-prism-edge-back"
-                : "axo-v14-svg-prism-edge-front"
-            }
-            x1={edge.a.x}
-            y1={edge.a.y}
-            x2={edge.b.x}
-            y2={edge.b.y}
-            strokeOpacity={
-              edge.dashed
-                ? (edge.opacity * 0.56).toFixed(3)
-                : edge.opacity.toFixed(3)
-            }
-          />
-        ))}
+          {pose.extrude > 0.45 &&
+            scene.frontLateralPolys.map((pts, idx) => (
+              <polygon
+                key={`lat-${idx}`}
+                className="axo-v14-svg-prism-face"
+                points={pts}
+                fillOpacity={(0.36 * pose.extrude).toFixed(3)}
+              />
+            ))}
 
-        {vis.parallelCue > 0.04 && (
-          <g opacity={vis.parallelCue.toFixed(3)}>
-            <line
-              className="axo-v14-svg-parallel-guide"
-              x1={scene.proj["B"].x}
-              y1={scene.proj["B"].y}
-              x2={scene.proj["C"].x}
-              y2={scene.proj["C"].y}
+          {pose.extrude > 0.35 && (
+            <polygon
+              className="axo-v14-svg-prism-top"
+              points={scene.topPts}
+              fillOpacity={(0.14 * pose.extrude).toFixed(3)}
             />
+          )}
+
+          {scene.edges.map((edge) => (
             <line
-              className="axo-v14-svg-parallel-guide"
-              x1={scene.proj["M"].x}
-              y1={scene.proj["M"].y}
-              x2={scene.proj["N"].x}
-              y2={scene.proj["N"].y}
+              key={edge.key}
+              className={
+                edge.dashed
+                  ? "axo-v14-svg-prism-edge-back"
+                  : "axo-v14-svg-prism-edge-front"
+              }
+              x1={edge.a.x}
+              y1={edge.a.y}
+              x2={edge.b.x}
+              y2={edge.b.y}
+              strokeOpacity={
+                edge.dashed
+                  ? (edge.opacity * 0.56).toFixed(3)
+                  : edge.opacity.toFixed(3)
+              }
             />
-            {vis.planeSweep > 0.45 && (
+          ))}
+
+          {pose.extrude > 0.62 && (
+            <path
+              className="axo-v14-svg-edge-altitude"
+              d={scene.rightAnglePath}
+              fill="none"
+              opacity={((pose.extrude - 0.62) / 0.38).toFixed(3)}
+            />
+          )}
+
+          {pose.parallelCue > 0.04 && (
+            <g opacity={pose.parallelCue.toFixed(3)}>
               <line
                 className="axo-v14-svg-parallel-guide"
-                x1={scene.proj["P"].x}
-                y1={scene.proj["P"].y}
-                x2={scene.proj["Q"].x}
-                y2={scene.proj["Q"].y}
+                x1={scene.proj["B"].x}
+                y1={scene.proj["B"].y}
+                x2={scene.proj["C"].x}
+                y2={scene.proj["C"].y}
               />
-            )}
-          </g>
-        )}
-
-        {vis.planeSweep > 0.02 && (
-          <polygon
-            className="axo-v14-svg-cutting-plane"
-            points={scene.planePts}
-            fillOpacity={(0.36 * vis.planeSweep).toFixed(3)}
-            strokeOpacity={(0.78 * vis.planeSweep).toFixed(3)}
-          />
-        )}
-
-        {vis.sectionFill > 0.02 && (
-          <polygon
-            className="axo-v14-svg-section-poly"
-            points={scene.sectionPts}
-            fillOpacity={(0.84 * vis.sectionFill).toFixed(3)}
-            strokeOpacity={vis.sectionFill.toFixed(3)}
-          />
-        )}
-
-        {scene.labels.map((item) => {
-          const isSeed = item.role === "seed";
-          const isInter = item.role === "intersection";
-          const dotClass = isInter
-            ? "axo-v14-svg-section-dot"
-            : isSeed
-              ? "axo-v14-svg-seed-dot"
-              : "axo-v14-svg-vertex-dot";
-          const textClass = isInter
-            ? "axo-v14-svg-label-inter"
-            : isSeed
-              ? "axo-v14-svg-label-seed"
-              : "axo-v14-svg-vertex-text";
-          return (
-            <g key={item.id}>
-              <circle
-                className={dotClass}
-                cx={item.px}
-                cy={item.py}
-                r={isInter ? 4.4 : isSeed ? 3.8 : 2.9}
+              <line
+                className="axo-v14-svg-parallel-guide"
+                x1={scene.proj["M"].x}
+                y1={scene.proj["M"].y}
+                x2={scene.proj["N"].x}
+                y2={scene.proj["N"].y}
               />
-              <text className={textClass} x={item.lx} y={item.ly}>
-                {item.label}
-              </text>
+              {pose.planeSweep > 0.45 && (
+                <line
+                  className="axo-v14-svg-parallel-guide"
+                  x1={scene.proj["P"].x}
+                  y1={scene.proj["P"].y}
+                  x2={scene.proj["Q"].x}
+                  y2={scene.proj["Q"].y}
+                />
+              )}
             </g>
-          );
-        })}
-      </svg>
+          )}
+
+          {pose.planeSweep > 0.02 && (
+            <polygon
+              className="axo-v14-svg-cutting-plane"
+              points={scene.planePts}
+              fillOpacity={(0.26 * pose.planeSweep).toFixed(3)}
+              strokeOpacity={(0.76 * pose.planeSweep).toFixed(3)}
+            />
+          )}
+
+          {pose.sectionFill > 0.02 && (
+            <polygon
+              className="axo-v14-svg-section-poly"
+              points={scene.sectionPts}
+              fillOpacity={(0.48 * pose.sectionFill).toFixed(3)}
+              strokeOpacity={Math.min(0.92, pose.sectionFill).toFixed(3)}
+            />
+          )}
+
+          {scene.tracedEdges.map((seg) =>
+            seg.u > 0.01 ? (
+              <line
+                key={seg.key}
+                className="axo-v14-svg-section-trace"
+                x1={seg.x1}
+                y1={seg.y1}
+                x2={seg.x2}
+                y2={seg.y2}
+                strokeOpacity={Math.min(0.96, 0.45 + 0.51 * seg.u).toFixed(3)}
+              />
+            ) : null,
+          )}
+
+          {scene.labels.map((item) => {
+            const isSeed = item.role === "seed";
+            const isInter = item.role === "intersection";
+            const dotClass = isInter
+              ? "axo-v14-svg-section-dot"
+              : isSeed
+                ? "axo-v14-svg-seed-dot"
+                : "axo-v14-svg-vertex-dot";
+            const textClass = isInter
+              ? "axo-v14-svg-label-inter"
+              : isSeed
+                ? "axo-v14-svg-label-seed"
+                : "axo-v14-svg-vertex-text";
+            return (
+              <g key={item.id}>
+                <circle
+                  className={dotClass}
+                  cx={item.px}
+                  cy={item.py}
+                  r={isInter ? 4.6 : isSeed ? 4.0 : 3.0}
+                />
+                <text className={textClass} x={item.lx} y={item.ly}>
+                  {item.label}
+                </text>
+              </g>
+            );
+          })}
+        </svg>
+
+        <div className="axo-v14-story-stage-readout" aria-live="polite">
+          <span className="axo-v14-story-relation-text">
+            {activeStage.relationNote}
+          </span>
+          {pose.activeStageIndex === 3 && activeStage.verifiedResult ? (
+            <strong className="axo-v14-story-verified">
+              {activeStage.verifiedResult}
+            </strong>
+          ) : null}
+        </div>
+      </div>
     </div>
   );
 }
 
-export function LandingStorytellingV14() {
-  const [activeStage, setActiveStage] = useState<number>(0);
-  const current = STORY_STAGES_V14[activeStage] ?? STORY_STAGES_V14[0];
-  const isFinalStage = activeStage === STORY_STAGES_V14.length - 1;
+function readStoryProgressOverride(): number | null {
+  if (typeof window === "undefined") return null;
+  const val = new URLSearchParams(window.location.search).get("story_progress");
+  if (val === null) return null;
+  const parsed = Number(val);
+  return Number.isFinite(parsed) ? clamp01(parsed) : null;
+}
 
-  const handleStageKeyDown = useCallback(
-    (e: ReactKeyboardEvent<HTMLButtonElement>, idx: number) => {
-      if (e.key === "ArrowRight" || e.key === "ArrowDown") {
-        e.preventDefault();
-        setActiveStage(Math.min(STORY_STAGES_V14.length - 1, idx + 1));
-      } else if (e.key === "ArrowLeft" || e.key === "ArrowUp") {
-        e.preventDefault();
-        setActiveStage(Math.max(0, idx - 1));
-      } else if (e.key === "Home") {
-        e.preventDefault();
-        setActiveStage(0);
-      } else if (e.key === "End") {
-        e.preventDefault();
-        setActiveStage(STORY_STAGES_V14.length - 1);
+export function LandingStorytellingV14() {
+  const sectionRef = useRef<HTMLElement | null>(null);
+  const chapterRefs = useRef<(HTMLLIElement | null)[]>([]);
+  const [reducedMotion, setReducedMotion] = useState<boolean>(false);
+  const [scrollProgress, setScrollProgress] = useState<number>(
+    () => readStoryProgressOverride() ?? 0,
+  );
+
+  useEffect(() => {
+    if (typeof window === "undefined") return;
+
+    const mq = window.matchMedia?.("(prefers-reduced-motion: reduce)");
+    setReducedMotion(Boolean(mq?.matches));
+
+    const override = readStoryProgressOverride();
+    if (override !== null) {
+      setScrollProgress(override);
+    }
+
+    let rafId = 0;
+
+    const syncFromScroll = () => {
+      rafId = 0;
+      const firstEl = chapterRefs.current[0];
+      const lastEl = chapterRefs.current[STORY_STAGES_V14.length - 1];
+      if (!firstEl || !lastEl) return;
+      const r0 = firstEl.getBoundingClientRect();
+      const r1 = lastEl.getBoundingClientRect();
+      const next = computeStoryScrollProgress(
+        r0.top + r0.height * 0.5,
+        r1.top + r1.height * 0.5,
+        window.innerHeight || 800,
+        window.innerWidth <= 920,
+      );
+      setScrollProgress((prev) => (Math.abs(prev - next) < 0.002 ? prev : next));
+    };
+
+    const requestSync = () => {
+      if (document.hidden || rafId !== 0) return;
+      rafId = window.requestAnimationFrame(syncFromScroll);
+    };
+
+    const onMotionChange = (ev: MediaQueryListEvent) => {
+      setReducedMotion(ev.matches);
+      requestSync();
+    };
+
+    const onVisibility = () => {
+      if (!document.hidden) requestSync();
+      else if (rafId !== 0) {
+        window.cancelAnimationFrame(rafId);
+        rafId = 0;
       }
-    },
-    [],
+    };
+
+    if (override === null) {
+      syncFromScroll();
+    }
+    window.addEventListener("scroll", requestSync, { passive: true });
+    window.addEventListener("resize", requestSync, { passive: true });
+    document.addEventListener("visibilitychange", onVisibility);
+    mq?.addEventListener?.("change", onMotionChange);
+
+    const ro =
+      typeof ResizeObserver !== "undefined" && sectionRef.current
+        ? new ResizeObserver(requestSync)
+        : null;
+    if (sectionRef.current) ro?.observe(sectionRef.current);
+
+    return () => {
+      if (rafId !== 0) window.cancelAnimationFrame(rafId);
+      window.removeEventListener("scroll", requestSync);
+      window.removeEventListener("resize", requestSync);
+      document.removeEventListener("visibilitychange", onVisibility);
+      mq?.removeEventListener?.("change", onMotionChange);
+      ro?.disconnect();
+    };
+  }, []);
+
+  const pose = useMemo(
+    () => interpolateStoryPose(scrollProgress, reducedMotion),
+    [scrollProgress, reducedMotion],
   );
 
   return (
     <section
       id="cach-hoat-dong"
+      ref={sectionRef}
       className="axo-v14-story"
       aria-labelledby="landing-story-heading"
     >
@@ -554,97 +860,46 @@ export function LandingStorytellingV14() {
             .
           </h2>
           <p className="axo-v14-story-lead">
-            Một mạch dựng liên tục trên lăng trụ tam giác đều ABC.A′B′C′ (cạnh a
-            = 4): từ ba trung điểm gốc đến thiết diện hoàn chỉnh.
+            Cuộn xuống để quan sát mạch dựng liên tục trên lăng trụ tam giác đều
+            ABC.A′B′C′ (cạnh a = 4): từ ba trung điểm gốc đến thiết diện hoàn
+            chỉnh.
           </p>
         </div>
 
-        <div className="axo-v14-story-grid">
-          <div
-            className="axo-v14-story-rail"
-            role="tablist"
-            aria-label="Các chặng dựng hình lăng trụ"
+        <div className="axo-v14-story-track">
+          <PrismEditorialStage pose={pose} reducedMotion={reducedMotion} />
+
+          <ol
+            className="axo-v14-story-chapters"
+            aria-label="Các chặng dựng hình theo cuộn trang"
           >
             {STORY_STAGES_V14.map((stage, idx) => {
-              const selected = idx === activeStage;
+              const isActive = idx === pose.activeStageIndex;
               return (
-                <button
+                <li
                   key={stage.shortNum}
-                  id={`btn-landing-story-step-${idx}`}
-                  type="button"
-                  role="tab"
-                  aria-selected={selected}
+                  ref={(el) => {
+                    chapterRefs.current[idx] = el;
+                  }}
+                  data-story-chapter={idx}
+                  data-active={isActive ? "true" : "false"}
                   className={
-                    selected
-                      ? "axo-v14-story-step is-active"
-                      : "axo-v14-story-step"
+                    isActive
+                      ? "axo-v14-story-chapter is-active"
+                      : "axo-v14-story-chapter"
                   }
-                  onClick={() => setActiveStage(idx)}
-                  onKeyDown={(e) => handleStageKeyDown(e, idx)}
                 >
-                  <span className="axo-v14-story-step-dot" aria-hidden="true" />
-                  <span className="axo-v14-story-step-meta">
-                    <span className="axo-v14-story-step-num">
-                      Chặng {stage.shortNum}
-                    </span>
-                    <span className="axo-v14-story-step-desktop-name">
-                      {stage.desktopTag}
-                    </span>
-                    <span className="axo-v14-story-step-mobile-name">
-                      {stage.mobileShortTag}
-                    </span>
-                  </span>
-                </button>
+                  <div className="axo-v14-story-chapter-eyebrow">
+                    {stage.chapterHeading}
+                  </div>
+                  <h3 className="axo-v14-story-chapter-title">{stage.title}</h3>
+                  <p className="axo-v14-story-chapter-summary">
+                    {stage.summary}
+                  </p>
+                </li>
               );
             })}
-          </div>
-
-          <PrismEditorialStage
-            activeStage={activeStage}
-            onSwipePrev={() => setActiveStage((s) => Math.max(0, s - 1))}
-            onSwipeNext={() =>
-              setActiveStage((s) =>
-                Math.min(STORY_STAGES_V14.length - 1, s + 1),
-              )
-            }
-          />
-
-          <div
-            className="axo-v14-story-readout"
-            role="tabpanel"
-            aria-labelledby={`btn-landing-story-step-${activeStage}`}
-          >
-            <div className="axo-v14-story-readout-tag">
-              Chặng {current.shortNum} · {current.desktopTag}
-            </div>
-            <h3 className="axo-v14-story-readout-title">{current.title}</h3>
-            <p className="axo-v14-story-readout-summary">{current.summary}</p>
-            <div className="axo-v14-story-relation">
-              <span className="axo-v14-story-relation-text">
-                {current.relationNote}
-              </span>
-              {isFinalStage && current.verifiedResult ? (
-                <AnnotatedPhrase
-                  variant="highlight"
-                  active={isFinalStage}
-                  className="axo-v14-story-verified"
-                >
-                  {current.verifiedResult}
-                </AnnotatedPhrase>
-              ) : null}
-            </div>
-
-            <details className="axo-v14-story-proof">
-              <summary>Xem kiểm chứng tọa độ chuẩn xác</summary>
-              <p>
-                Hệ trục chuẩn tại A(0; 0; 0), B(4; 0; 0), C(2; 2√3; 0),
-                A′(0; 0; 4) cho phép xác định duy nhất mặt phẳng (MNP) với
-                {isFinalStage
-                  ? " thiết diện hình thang cân MNPQ, đáy MN = 2, PQ = 4 và diện tích S(MNPQ) = 3√7."
-                  : " bộ điểm gốc M(2; 0; 0), N(1; √3; 0), P(2; 2√3; 2)."}
-              </p>
-            </details>
-          </div>
+          </ol>
         </div>
       </div>
     </section>

@@ -36,14 +36,14 @@ describe("AXO Landing V1.4 — Responsive Layout, Unified Visual Polish & Clean 
     expect(html).not.toContain("Prototype B");
   });
 
-  it("defines dedicated illustration-first mobile responsive layout rules without runway traps", () => {
+  it("defines dedicated mobile responsive layout rules with pinned visual first in storytelling and CTA copy first in closing", () => {
     const css = readFileSync(
       resolve(__dirname, "../landing/landing.css"),
       "utf8",
     );
     expect(css).toContain("@media (max-width: 920px)");
-    expect(css).toContain('"visual"\n      "rail"\n      "readout"');
-    expect(css).toContain("grid-template-columns: repeat(4, minmax(0, 1fr))");
+    expect(css).toContain(".axo-v14-story-stage-pin");
+    expect(css).toContain("position: sticky");
     expect(css).toContain("@media (max-width: 680px)");
     expect(css).toContain("overflow-x: clip");
 

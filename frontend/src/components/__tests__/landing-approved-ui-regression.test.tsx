@@ -59,8 +59,8 @@ describe("Landing approved UI, capsule buttons, and version consolidation guard"
       "utf8",
     );
     expect(landingViewSrc).toContain('from "./landing/LandingPreviewV14"');
-    expect(landingViewSrc).toContain('from "./landing/LandingPrototypeA"');
-    expect(landingViewSrc).toContain('from "./landing/LandingPrototypeB"');
+    expect(landingViewSrc).not.toContain('from "./landing/LandingPrototypeA"');
+    expect(landingViewSrc).not.toContain('from "./landing/LandingPrototypeB"');
 
     const closingSrc = fs.readFileSync(
       path.resolve(__dirname, "../landing/LandingClosingV14.tsx"),
@@ -69,6 +69,9 @@ describe("Landing approved UI, capsule buttons, and version consolidation guard"
     expect(closingSrc).toContain('from "./LandingClosingScene3D"');
     expect(closingSrc).not.toContain("LandingClosingScene3DV15");
     expect(closingSrc).not.toContain("ClosingConstructionMotif");
+
+    const demoHtml = renderToString(<LandingInteractiveDemo presentation="v14" />);
+    expect(demoHtml).not.toContain("axo-sp-demo-problem-disclosure");
 
     const reportPath = path.resolve(
       __dirname,

@@ -181,29 +181,36 @@ export function LandingInteractiveDemo({
             </div>
 
             {/* Separated Verification / Stage Facts (final results appear strictly on the concluding stage) */}
-            <div
-              className="axo-sp-demo-metrics"
-              aria-label={isFinalVerifiedStage ? "Kết quả kiểm chứng chính xác" : `Dữ kiện bước ${activeStage.stepNumber}`}
-            >
-              {isFinalVerifiedStage ? (
-                sample.verifiedMetrics.map((metric) => (
+            {isFinalVerifiedStage ? (
+              <div
+                className="axo-sp-demo-metrics"
+                aria-label="Kết quả kiểm chứng chính xác"
+              >
+                {sample.verifiedMetrics.map((metric) => (
                   <div key={`${sample.id}-${metric.label}`} className="axo-sp-demo-metric-chip">
                     <span className="axo-sp-demo-metric-label">{metric.label}</span>
                     <span className="axo-sp-demo-metric-val">{metric.value}</span>
                   </div>
-                ))
-              ) : (
+                ))}
+              </div>
+            ) : !isV14 ? (
+              <div
+                className="axo-sp-demo-metrics"
+                aria-label={`Dữ kiện bước ${activeStage.stepNumber}`}
+              >
                 <div className="axo-sp-demo-metric-chip is-stage-note">
                   <span className="axo-sp-demo-metric-label">{activeStage.tag}</span>
                   <span className="axo-sp-demo-metric-val">{activeStage.mathFact}</span>
                 </div>
-              )}
-            </div>
+              </div>
+            ) : null}
 
-            <details className="axo-sp-demo-problem-disclosure">
-              <summary>Xem đề bài gốc</summary>
-              <p>{sample.problemText}</p>
-            </details>
+            {!isV14 && (
+              <details className="axo-sp-demo-problem-disclosure">
+                <summary>Xem đề bài gốc</summary>
+                <p>{sample.problemText}</p>
+              </details>
+            )}
 
             <div className="axo-sp-demo-footer-action">
               <button

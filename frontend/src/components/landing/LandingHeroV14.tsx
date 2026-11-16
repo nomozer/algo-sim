@@ -10,6 +10,7 @@ import {
 import * as THREE from "three";
 import { useAuthStore } from "../../state/auth";
 import { AnnotatedPhrase } from "./AnnotatedHeading";
+import { separateLabelPositions } from "./LandingHeroScene3D";
 import {
   enterAxoWorkspace,
   LANDING_PYRAMID_SAMPLE,
@@ -33,6 +34,28 @@ export interface TrueShapeProjectionResult {
   readonly maxDeviation: number;
 }
 
+export type HeroStoryboardBeat =
+  | "solid-emergence"
+  | "seed-anchors"
+  | "plane-intersection"
+  | "section-settled";
+
+export interface HeroStoryboardState {
+  readonly beat: HeroStoryboardBeat;
+  readonly progress: number;
+  readonly solidReveal: number;
+  readonly seedReveal: number;
+  readonly planeSweep: number;
+  readonly traceProgress: number;
+  readonly sectionFill: number;
+  readonly capLift: number;
+  readonly orbitOffsetRad: number;
+  readonly settled: boolean;
+}
+
+export const HERO_STORYBOARD_MS = 3600;
+export const HERO_SECTION_FILL_OPACITY = 0.5;
+
 interface ClippedPolygonFace {
   readonly pts: THREE.Vector3[];
 }
@@ -41,9 +64,73 @@ interface TrackedDisposable {
   dispose(): void;
 }
 
-const ANIMATION_DURATION_MS = 1420;
-const KEY_LIGHT_DIR = new THREE.Vector3(6.5, 10.5, 4.5).normalize();
-const RIM_LIGHT_DIR = new THREE.Vector3(-7.0, 3.8, 5.0).normalize();
+interface ProjectedCallout {
+  readonly id: string;
+  readonly label: string;
+  readonly role: "vertex" | "seed" | "intersection" | "plane";
+  readonly x: number;
+  readonly y: number;
+  readonly visible: boolean;
+}
+
+function clamp01(value: number): number {
+  if (!Number.isFinite(value)) return 0;
+  return Math.max(0, Math.min(1, value));
+}
+
+function clampPhase(value: number, start: number, end: number): number {
+  if (value <= start) return 0;
+  if (value >= end) return 1;
+  const u = (value - start) / Math.max(1e-6, end - start);
+  return 1 - Math.pow(1 - u, 3);
+}
+
+export function evaluateHeroStoryboard(
+  elapsedMs: number,
+  reducedMotion = false,
+): HeroStoryboardState {
+  if (reducedMotion || elapsedMs >= HERO_STORYBOARD_MS) {
+    return {
+      beat: "section-settled",
+      progress: 1,
+      solidReveal: 1,
+      seedReveal: 1,
+      planeSweep: 1,
+      traceProgress: 1,
+      sectionFill: 1,
+      capLift: 0.085,
+      orbitOffsetRad: 0,
+      settled: true,
+    };
+  }
+
+  const p = clamp01(elapsedMs / HERO_STORYBOARD_MS);
+  let beat: HeroStoryboardBeat = "solid-emergence";
+  if (p >= 0.76) beat = "section-settled";
+  else if (p >= 0.48) beat = "plane-intersection";
+  else if (p >= 0.24) beat = "seed-anchors";
+
+  const solidReveal = 0.35 + 0.65 * clampPhase(p, 0.0, 0.24);
+  const seedReveal = clampPhase(p, 0.2, 0.46);
+  const planeSweep = clampPhase(p, 0.44, 0.68);
+  const traceProgress = clampPhase(p, 0.52, 0.8);
+  const sectionFill = clampPhase(p, 0.74, 0.98);
+  const capLift = 0.085 * clampPhase(p, 0.76, 1.0);
+  const orbitOffsetRad = (1 - clampPhase(p, 0.0, 0.92)) * 0.14;
+
+  return {
+    beat,
+    progress: p,
+    solidReveal,
+    seedReveal,
+    planeSweep,
+    traceProgress,
+    sectionFill,
+    capLift,
+    orbitOffsetRad,
+    settled: p >= 0.999,
+  };
+}
 
 function sub3(a: Vec3Tuple, b: Vec3Tuple): Vec3Tuple {
   return [a[0] - b[0], a[1] - b[1], a[2] - b[2]];
@@ -224,45 +311,22 @@ function orientFaceOutward(
   return n.dot(inward) > 0 ? [...face].reverse() : [...face];
 }
 
-function computeStudioShade(normal: THREE.Vector3): number {
-  const key = Math.max(0, normal.dot(KEY_LIGHT_DIR)) * 0.2;
-  const rim = Math.max(0, normal.dot(RIM_LIGHT_DIR)) * 0.08;
-  return Math.min(1.04, 0.78 + key + rim);
-}
-
-function buildShadedFacesGeometry(
+function buildFacesBufferGeometry(
   faces: readonly ClippedPolygonFace[],
-  baseColorHex: number,
-  shadeFaces: boolean,
 ): THREE.BufferGeometry {
   const positions: number[] = [];
-  const colors: number[] = [];
-  const baseColor = new THREE.Color(baseColorHex);
-  const e1 = new THREE.Vector3();
-  const e2 = new THREE.Vector3();
-  const triNormal = new THREE.Vector3();
-
   for (const face of faces) {
     if (face.pts.length < 3) continue;
     const p0 = face.pts[0];
     for (let i = 1; i < face.pts.length - 1; i++) {
       const p1 = face.pts[i];
       const p2 = face.pts[i + 1];
-      e1.subVectors(p1, p0);
-      e2.subVectors(p2, p0);
-      triNormal.crossVectors(e1, e2).normalize();
-      const shade = shadeFaces ? computeStudioShade(triNormal) : 1;
-      const r = Math.min(1, baseColor.r * shade);
-      const g = Math.min(1, baseColor.g * shade);
-      const b = Math.min(1, baseColor.b * shade);
       positions.push(p0.x, p0.y, p0.z, p1.x, p1.y, p1.z, p2.x, p2.y, p2.z);
-      colors.push(r, g, b, r, g, b, r, g, b);
     }
   }
-
   const geo = new THREE.BufferGeometry();
   geo.setAttribute("position", new THREE.Float32BufferAttribute(positions, 3));
-  geo.setAttribute("color", new THREE.Float32BufferAttribute(colors, 3));
+  geo.computeVertexNormals();
   return geo;
 }
 
@@ -299,11 +363,34 @@ function createLineSegment(
   return line;
 }
 
-function clampPhase(value: number, start: number, end: number): number {
-  if (value <= start) return 0;
-  if (value >= end) return 1;
-  const u = (value - start) / (end - start);
-  return 1 - Math.pow(1 - u, 3);
+function createCylinderEdge(
+  a: THREE.Vector3,
+  b: THREE.Vector3,
+  radius: number,
+  colorHex: number,
+  opacity: number,
+  track: <T extends TrackedDisposable>(item: T) => T,
+  anchorFromStart = false,
+): THREE.Mesh {
+  const dir = new THREE.Vector3().subVectors(b, a);
+  const len = Math.max(0.001, dir.length());
+  const geo = track(new THREE.CylinderGeometry(radius, radius, len, 10, 1));
+  if (anchorFromStart) {
+    geo.translate(0, len * 0.5, 0);
+  }
+  const mat = track(
+    new THREE.MeshBasicMaterial({
+      color: colorHex,
+      transparent: true,
+      opacity,
+    }),
+  );
+  const mesh = new THREE.Mesh(geo, mat);
+  mesh.position.copy(
+    anchorFromStart ? a : new THREE.Vector3().addVectors(a, b).multiplyScalar(0.5),
+  );
+  mesh.quaternion.setFromUnitVectors(new THREE.Vector3(0, 1, 0), dir.normalize());
+  return mesh;
 }
 
 function HeroFallbackSvg() {
@@ -316,129 +403,77 @@ function HeroFallbackSvg() {
     >
       <ellipse
         className="axo-v14-svg-contact-halo"
-        cx="265"
-        cy="364"
+        cx="268"
+        cy="366"
         rx="148"
-        ry="26"
+        ry="24"
       />
       <ellipse
         className="axo-v14-svg-contact-core"
-        cx="265"
-        cy="364"
+        cx="268"
+        cy="366"
         rx="106"
-        ry="18"
+        ry="17"
       />
 
       <polygon
         className="axo-v14-svg-solid-base"
-        points="148,342 352,366 424,296 216,282"
+        points="152,340 350,368 424,296 220,282"
       />
       <polygon
         className="axo-v14-svg-solid-lower"
-        points="148,342 352,366 424,296 336,204 272,190 188,236"
+        points="152,340 350,368 424,296 338,208 268,194 188,236"
       />
       <polygon
         className="axo-v14-svg-solid-upper"
-        points="216,90 188,236 272,190 336,204"
+        points="220,86 188,236 268,194 338,208"
       />
 
-      <line
-        className="axo-v14-svg-edge-hidden"
-        x1="216"
-        y1="282"
-        x2="148"
-        y2="342"
-      />
-      <line
-        className="axo-v14-svg-edge-hidden"
-        x1="216"
-        y1="282"
-        x2="424"
-        y2="296"
-      />
-      <line
-        className="axo-v14-svg-edge-altitude"
-        x1="216"
-        y1="90"
-        x2="216"
-        y2="282"
-      />
+      <line className="axo-v14-svg-edge-hidden" x1="220" y1="282" x2="152" y2="340" />
+      <line className="axo-v14-svg-edge-hidden" x1="220" y1="282" x2="424" y2="296" />
+      <line className="axo-v14-svg-edge-altitude" x1="220" y1="86" x2="220" y2="282" />
 
-      <line
-        className="axo-v14-svg-edge-solid"
-        x1="216"
-        y1="90"
-        x2="148"
-        y2="342"
-      />
-      <line
-        className="axo-v14-svg-edge-solid"
-        x1="216"
-        y1="90"
-        x2="352"
-        y2="366"
-      />
-      <line
-        className="axo-v14-svg-edge-solid"
-        x1="216"
-        y1="90"
-        x2="424"
-        y2="296"
-      />
-      <line
-        className="axo-v14-svg-edge-solid"
-        x1="148"
-        y1="342"
-        x2="352"
-        y2="366"
-      />
-      <line
-        className="axo-v14-svg-edge-solid"
-        x1="352"
-        y1="366"
-        x2="424"
-        y2="296"
-      />
+      <line className="axo-v14-svg-edge-solid" x1="152" y1="340" x2="350" y2="368" />
+      <line className="axo-v14-svg-edge-solid" x1="350" y1="368" x2="424" y2="296" />
+      <line className="axo-v14-svg-edge-solid" x1="152" y1="340" x2="188" y2="236" />
+      <line className="axo-v14-svg-edge-solid" x1="350" y1="368" x2="268" y2="194" />
+      <line className="axo-v14-svg-edge-solid" x1="424" y1="296" x2="338" y2="208" />
 
       <polygon
         className="axo-v14-svg-cutting-plane"
-        points="106,256 372,294 436,192 174,168"
+        points="106,256 372,294 438,192 174,168"
       />
       <polygon
         className="axo-v14-svg-section-poly"
-        points="186,238 246,282 314,274 338,208 268,194"
+        points="188,236 248,284 316,274 338,208 268,194"
       />
 
-      <line
-        className="axo-v14-svg-projection-ray"
-        x1="268"
-        y1="194"
-        x2="412"
-        y2="118"
-      />
-      <line
-        className="axo-v14-svg-projection-ray"
-        x1="338"
-        y1="208"
-        x2="430"
-        y2="162"
-      />
+      <circle className="axo-v14-svg-vertex-dot" cx="220" cy="86" r="3.4" />
+      <circle className="axo-v14-svg-seed-dot" cx="188" cy="236" r="4.0" />
+      <circle className="axo-v14-svg-seed-dot" cx="316" cy="274" r="4.0" />
+      <circle className="axo-v14-svg-seed-dot" cx="338" cy="208" r="4.0" />
+      <circle className="axo-v14-svg-section-dot" cx="248" cy="284" r="4.2" />
+      <circle className="axo-v14-svg-section-dot" cx="268" cy="194" r="4.2" />
+
+      <text className="axo-v14-svg-vertex-text" x="220" y="74">S</text>
+      <text className="axo-v14-svg-label-seed" x="174" y="232">M</text>
+      <text className="axo-v14-svg-label-seed" x="320" y="294">N</text>
+      <text className="axo-v14-svg-label-seed" x="354" y="206">P</text>
+      <text className="axo-v14-svg-label-inter" x="242" y="302">E</text>
+      <text className="axo-v14-svg-label-inter" x="268" y="180">F</text>
     </svg>
   );
 }
 
-function HeroSpatialStage({
-  trueShape,
-}: {
-  readonly trueShape: TrueShapeProjectionResult;
-}) {
+function HeroSpatialStage() {
   const shellRef = useRef<HTMLDivElement | null>(null);
   const hostRef = useRef<HTMLDivElement | null>(null);
   const wakeRef = useRef<(() => void) | null>(null);
   const targetTiltRef = useRef({ x: 0, y: 0 });
   const [webglReady, setWebglReady] = useState(false);
   const [contextLost, setContextLost] = useState(false);
-  const [isSettled, setIsSettled] = useState(false);
+  const [beat, setBeat] = useState<HeroStoryboardBeat>("solid-emergence");
+  const [callouts, setCallouts] = useState<readonly ProjectedCallout[]>([]);
 
   const webglAllowed = useMemo(() => {
     if (typeof window === "undefined") return false;
@@ -446,35 +481,13 @@ function HeroSpatialStage({
   }, []);
 
   useEffect(() => {
-    const reducedMotion =
-      typeof window !== "undefined" &&
-      Boolean(window.matchMedia?.("(prefers-reduced-motion: reduce)")?.matches);
-
-    if (reducedMotion) {
-      setIsSettled(true);
-    }
+    const reducedQuery = window.matchMedia?.("(prefers-reduced-motion: reduce)");
+    let reducedMotion = Boolean(reducedQuery?.matches);
 
     const host = hostRef.current;
     if (!host || !webglAllowed) return;
 
     const canvas = document.createElement("canvas");
-    const gl =
-      canvas.getContext("webgl2", {
-        alpha: true,
-        antialias: true,
-        powerPreference: "high-performance",
-      }) ||
-      canvas.getContext("webgl", {
-        alpha: true,
-        antialias: true,
-        powerPreference: "high-performance",
-      });
-
-    if (!gl) {
-      setWebglReady(false);
-      return;
-    }
-
     let renderer: THREE.WebGLRenderer;
     try {
       renderer = new THREE.WebGLRenderer({
@@ -508,7 +521,14 @@ function HeroSpatialStage({
     const [camX, camY, camZ] = LANDING_PYRAMID_SAMPLE.defaultCamera;
     const [lookX, lookY, lookZ] = LANDING_PYRAMID_SAMPLE.defaultLookAt;
     camera.position.set(camX * 0.94, camY * 0.94, camZ * 0.94);
-    camera.lookAt(lookX, lookY, lookZ);
+    camera.lookAt(lookX, lookY + 0.16, lookZ);
+
+    const ambientLight = new THREE.AmbientLight(0xfffdf9, 2.1);
+    const keyLight = new THREE.DirectionalLight(0xfffaf0, 2.15);
+    keyLight.position.set(14, 15, -9);
+    const fillLight = new THREE.DirectionalLight(0xeef4fc, 1.05);
+    fillLight.position.set(-6, 10, -12);
+    scene.add(ambientLight, keyLight, fillLight);
 
     const root = new THREE.Group();
     scene.add(root);
@@ -524,6 +544,11 @@ function HeroSpatialStage({
     const B = vec3("B");
     const C = vec3("C");
     const D = vec3("D");
+    const M = vec3("M");
+    const N = vec3("N");
+    const P = vec3("P");
+    const E = vec3("E");
+    const F = vec3("F");
     const loopPts = LANDING_PYRAMID_SAMPLE.sectionLoop.map(vec3);
 
     const pyramidCentroid = new THREE.Vector3()
@@ -569,132 +594,156 @@ function HeroSpatialStage({
       if (hi.length >= 3) upperFaces.push({ pts: hi });
     }
 
-    // Group 1: Ground contact shadow, altitude witness SA perp (ABCD), base vertices
-    const baseGuideGroup = new THREE.Group();
-    const shadowOuterGeo = track(new THREE.CircleGeometry(2.45, 48));
+    // 1. Contact shadow & altitude SA perp (ABCD)
+    const shadowOuterGeo = track(new THREE.CircleGeometry(2.52, 48));
     shadowOuterGeo.rotateX(-Math.PI / 2);
     const shadowOuterMat = track(
       new THREE.MeshBasicMaterial({
         color: 0x191918,
         transparent: true,
-        opacity: 0.032,
+        opacity: 0.036,
         depthWrite: false,
       }),
     );
     const shadowOuterMesh = new THREE.Mesh(shadowOuterGeo, shadowOuterMat);
-    shadowOuterMesh.position.set(baseCenter.x, A.y - 0.035, baseCenter.z);
+    shadowOuterMesh.position.set(baseCenter.x, A.y - 0.04, baseCenter.z);
     shadowOuterMesh.renderOrder = 0;
-    baseGuideGroup.add(shadowOuterMesh);
+    root.add(shadowOuterMesh);
 
-    const shadowInnerGeo = track(new THREE.CircleGeometry(1.72, 40));
+    const shadowInnerGeo = track(new THREE.CircleGeometry(1.76, 40));
     shadowInnerGeo.rotateX(-Math.PI / 2);
     const shadowInnerMat = track(
       new THREE.MeshBasicMaterial({
         color: 0x191918,
         transparent: true,
-        opacity: 0.055,
+        opacity: 0.058,
         depthWrite: false,
       }),
     );
     const shadowInnerMesh = new THREE.Mesh(shadowInnerGeo, shadowInnerMat);
-    shadowInnerMesh.position.set(baseCenter.x, A.y - 0.03, baseCenter.z);
+    shadowInnerMesh.position.set(baseCenter.x, A.y - 0.032, baseCenter.z);
     shadowInnerMesh.renderOrder = 1;
-    baseGuideGroup.add(shadowInnerMesh);
+    root.add(shadowInnerMesh);
 
-    const saGuideLine = createLineSegment(S, A, 0x0075de, 0.54, true, track);
-    baseGuideGroup.add(saGuideLine);
+    const saLowerLine = createLineSegment(A, M, 0x0075de, 0.56, true, track);
+    saLowerLine.renderOrder = 2;
+    root.add(saLowerLine);
 
-    // Right-angle marker at foot A along SA and AB/AD
-    const uAB = new THREE.Vector3().subVectors(B, A).normalize().multiplyScalar(0.24);
-    const uAS = new THREE.Vector3().subVectors(S, A).normalize().multiplyScalar(0.24);
+    const uAB = new THREE.Vector3().subVectors(B, A).normalize().multiplyScalar(0.26);
+    const uAS = new THREE.Vector3().subVectors(S, A).normalize().multiplyScalar(0.26);
     const footCorner = A.clone().add(uAB).add(uAS);
-    const rightAngle1 = createLineSegment(
-      A.clone().add(uAS),
-      footCorner,
-      0x0075de,
-      0.56,
-      false,
-      track,
-    );
-    const rightAngle2 = createLineSegment(
-      A.clone().add(uAB),
-      footCorner,
-      0x0075de,
-      0.56,
-      false,
-      track,
-    );
-    baseGuideGroup.add(rightAngle1, rightAngle2);
+    const rightAngle1 = createLineSegment(A.clone().add(uAS), footCorner, 0x0075de, 0.58, false, track);
+    const rightAngle2 = createLineSegment(A.clone().add(uAB), footCorner, 0x0075de, 0.58, false, track);
+    root.add(rightAngle1, rightAngle2);
 
-    const nodeGeo = track(new THREE.SphereGeometry(0.056, 16, 16));
-    const darkNodeMat = track(
-      new THREE.MeshBasicMaterial({
-        color: 0x191918,
-        transparent: true,
-        opacity: 0.9,
-      }),
-    );
-    for (const pt of [S, A, B, C, D]) {
-      const dot = new THREE.Mesh(nodeGeo, darkNodeMat);
-      dot.position.copy(pt);
-      baseGuideGroup.add(dot);
-    }
-    root.add(baseGuideGroup);
-
-    // Group 2: Split pyramid volume (lower solid + upper translucent frustum)
-    const solidGroup = new THREE.Group();
-    const lowerGeo = track(buildShadedFacesGeometry(lowerFaces, 0xf4f3f0, true));
+    // 2. Lower Frustum Volume + Split Lower Edges (below plane x + y + 2z = 6)
+    const lowerGroup = new THREE.Group();
+    const lowerGeo = track(buildFacesBufferGeometry(lowerFaces));
     const lowerMat = track(
-      new THREE.MeshBasicMaterial({
-        vertexColors: true,
+      new THREE.MeshStandardMaterial({
+        color: 0xfaf7f2,
+        emissive: 0x38342e,
+        emissiveIntensity: 0.28,
+        roughness: 0.86,
+        metalness: 0.02,
+        flatShading: true,
         transparent: true,
-        opacity: 0.94,
+        opacity: 0.86,
         side: THREE.DoubleSide,
       }),
     );
     const lowerMesh = new THREE.Mesh(lowerGeo, lowerMat);
     lowerMesh.renderOrder = 2;
-    solidGroup.add(lowerMesh);
+    lowerGroup.add(lowerMesh);
 
-    const upperGeo = track(buildShadedFacesGeometry(upperFaces, 0xfbfaf8, true));
+    const lowerVisibleSegs: readonly [THREE.Vector3, THREE.Vector3][] = [
+      [B, E],
+      [D, F],
+      [B, N],
+      [D, P],
+    ];
+    const lowerSolidEdgeCyls: THREE.Mesh[] = [];
+    for (const [u, v] of lowerVisibleSegs) {
+      const cyl = createCylinderEdge(u, v, 0.02, 0x191918, 0.88, track);
+      cyl.renderOrder = 6;
+      lowerSolidEdgeCyls.push(cyl);
+      lowerGroup.add(cyl);
+    }
+    const hiddenBaseLines: THREE.Line[] = [
+      createLineSegment(A, B, 0x615d59, 0.46, true, track),
+      createLineSegment(A, D, 0x615d59, 0.46, true, track),
+    ];
+    for (const hl of hiddenBaseLines) {
+      hl.renderOrder = 2;
+      lowerGroup.add(hl);
+    }
+
+    const nodeGeo = track(new THREE.SphereGeometry(0.058, 16, 16));
+    const baseNodeMat = track(
+      new THREE.MeshBasicMaterial({ color: 0x191918, transparent: true, opacity: 0.9 }),
+    );
+    const hiddenNodeMat = track(
+      new THREE.MeshBasicMaterial({ color: 0x615d59, transparent: true, opacity: 0.45 }),
+    );
+    for (const pt of [B, D]) {
+      const dot = new THREE.Mesh(nodeGeo, baseNodeMat);
+      dot.position.copy(pt);
+      dot.renderOrder = 8;
+      lowerGroup.add(dot);
+    }
+    const dotA = new THREE.Mesh(nodeGeo, hiddenNodeMat);
+    dotA.position.copy(A);
+    dotA.scale.setScalar(0.84);
+    dotA.renderOrder = 3;
+    lowerGroup.add(dotA);
+    root.add(lowerGroup);
+
+    // 3. Upper Cap Volume + Split Upper Edges (moves together cleanly along cutPlaneNormal)
+    const upperGroup = new THREE.Group();
+    const upperGeo = track(buildFacesBufferGeometry(upperFaces));
     const upperMat = track(
-      new THREE.MeshBasicMaterial({
-        vertexColors: true,
+      new THREE.MeshStandardMaterial({
+        color: 0xffffff,
+        roughness: 0.78,
+        metalness: 0.02,
+        flatShading: true,
         transparent: true,
-        opacity: 0.3,
+        opacity: 0.24,
         side: THREE.DoubleSide,
         depthWrite: false,
       }),
     );
     const upperMesh = new THREE.Mesh(upperGeo, upperMat);
-    upperMesh.renderOrder = 2;
-    solidGroup.add(upperMesh);
+    upperMesh.renderOrder = 3;
+    upperGroup.add(upperMesh);
 
-    const visibleEdges: readonly [THREE.Vector3, THREE.Vector3][] = [
-      [S, B],
+    const upperEdgeLines: THREE.Line[] = [];
+    for (const [u, v] of [
+      [S, E],
+      [S, F],
       [S, C],
-      [S, D],
-      [B, C],
-      [C, D],
-    ];
-    const hiddenEdges: readonly [THREE.Vector3, THREE.Vector3][] = [
-      [A, B],
-      [A, D],
-    ];
-    const solidLines: THREE.Line[] = [];
-    for (const [u, v] of visibleEdges) {
-      const edge = createLineSegment(u, v, 0x191918, 0.78, false, track);
-      solidLines.push(edge);
-      solidGroup.add(edge);
+      [N, C],
+      [P, C],
+    ] as const) {
+      const ln = createLineSegment(u, v, 0x31302e, 0.66, false, track);
+      ln.renderOrder = 6;
+      upperEdgeLines.push(ln);
+      upperGroup.add(ln);
     }
-    for (const [u, v] of hiddenEdges) {
-      const edge = createLineSegment(u, v, 0x615d59, 0.44, true, track);
-      solidLines.push(edge);
-      solidGroup.add(edge);
-    }
-    root.add(solidGroup);
+    const saUpperLine = createLineSegment(M, S, 0x0075de, 0.48, true, track);
+    saUpperLine.renderOrder = 2;
+    upperGroup.add(saUpperLine);
 
-    // Group 3: Cutting plane (MNP)
+    const dotS = new THREE.Mesh(nodeGeo, baseNodeMat);
+    dotS.position.copy(S);
+    dotS.renderOrder = 8;
+    const dotC = new THREE.Mesh(nodeGeo, baseNodeMat);
+    dotC.position.copy(C);
+    dotC.renderOrder = 8;
+    upperGroup.add(dotS, dotC);
+    root.add(upperGroup);
+
+    // 4. Cutting Plane (MNP)
     const planeGroup = new THREE.Group();
     const planeQuadVecs = LANDING_PYRAMID_SAMPLE.planeQuad.map(
       (pt) => new THREE.Vector3(pt[0], pt[1], pt[2]),
@@ -705,149 +754,238 @@ function HeroSpatialStage({
     const localPlane = planeQuadVecs.map((v) => v.clone().sub(planeCenter));
     planeGroup.position.copy(planeCenter);
 
-    const planeGeo = track(
-      buildShadedFacesGeometry([{ pts: localPlane }], 0xdcebfa, false),
-    );
+    const planeGeo = track(buildFacesBufferGeometry([{ pts: localPlane }]));
     const planeMat = track(
       new THREE.MeshBasicMaterial({
-        vertexColors: true,
+        color: 0x62aef0,
         transparent: true,
-        opacity: 0.32,
+        opacity: 0.18,
         side: THREE.DoubleSide,
         depthWrite: false,
       }),
     );
     const planeMesh = new THREE.Mesh(planeGeo, planeMat);
-    planeMesh.renderOrder = 3;
+    planeMesh.renderOrder = 4;
     planeGroup.add(planeMesh);
 
-    const planeRimLines: THREE.Line[] = [];
+    const planeRimCyls: THREE.Mesh[] = [];
     for (let i = 0; i < localPlane.length; i++) {
-      const rim = createLineSegment(
+      const rim = createCylinderEdge(
         localPlane[i],
         localPlane[(i + 1) % localPlane.length],
+        0.015,
         0x0075de,
-        0.84,
-        false,
+        0.82,
         track,
       );
-      planeRimLines.push(rim);
+      rim.renderOrder = 6;
+      planeRimCyls.push(rim);
       planeGroup.add(rim);
     }
     root.add(planeGroup);
 
-    // Group 4: Pentagon cross-section MENPF
+    // 5. Cross-section Pentagon MENPF (balanced translucent amber 0.52 + progressive perimeter)
     const sectionGroup = new THREE.Group();
     const sectionOffsetLoop = loopPts.map((pt) =>
-      pt.clone().addScaledVector(cutPlaneNormal, 0.006),
+      pt.clone().addScaledVector(cutPlaneNormal, 0.008),
     );
-    const secGeo = track(
-      buildShadedFacesGeometry([{ pts: sectionOffsetLoop }], 0xdd5b00, false),
-    );
+    const secGeo = track(buildFacesBufferGeometry([{ pts: sectionOffsetLoop }]));
     const secMat = track(
-      new THREE.MeshBasicMaterial({
-        vertexColors: true,
+      new THREE.MeshStandardMaterial({
+        color: 0xe6620a,
+        emissive: 0x993d00,
+        emissiveIntensity: 0.18,
+        roughness: 0.62,
+        metalness: 0.04,
+        flatShading: true,
         transparent: true,
-        opacity: 0.9,
+        opacity: HERO_SECTION_FILL_OPACITY,
         side: THREE.DoubleSide,
+        depthWrite: false,
       }),
     );
     const secMesh = new THREE.Mesh(secGeo, secMat);
-    secMesh.renderOrder = 4;
+    secMesh.renderOrder = 5;
     sectionGroup.add(secMesh);
 
-    const orangeNodeMat = track(
-      new THREE.MeshBasicMaterial({
-        color: 0xdd5b00,
-        transparent: true,
-        opacity: 1,
-      }),
-    );
-    const secBorderLines: THREE.Line[] = [];
+    const secBorderCyls: THREE.Mesh[] = [];
     for (let i = 0; i < sectionOffsetLoop.length; i++) {
-      const a = sectionOffsetLoop[i];
-      const b = sectionOffsetLoop[(i + 1) % sectionOffsetLoop.length];
-      const border = createLineSegment(a, b, 0x793400, 0.96, false, track);
-      border.renderOrder = 5;
-      secBorderLines.push(border);
-      sectionGroup.add(border);
-
-      const dot = new THREE.Mesh(nodeGeo, orangeNodeMat);
-      dot.position.copy(a);
-      dot.scale.setScalar(0.84);
-      dot.renderOrder = 5;
-      sectionGroup.add(dot);
+      const seg = createCylinderEdge(
+        sectionOffsetLoop[i],
+        sectionOffsetLoop[(i + 1) % sectionOffsetLoop.length],
+        0.025,
+        0x793400,
+        0.96,
+        track,
+        true,
+      );
+      seg.renderOrder = 7;
+      secBorderCyls.push(seg);
+      sectionGroup.add(seg);
     }
+
+    const seedMat = track(
+      new THREE.MeshBasicMaterial({ color: 0x0075de, transparent: true, opacity: 1 }),
+    );
+    const interMat = track(
+      new THREE.MeshBasicMaterial({ color: 0xdd5b00, transparent: true, opacity: 1 }),
+    );
+    const seedDots = [M, N, P].map((pt) => {
+      const dot = new THREE.Mesh(nodeGeo, seedMat);
+      dot.position.copy(pt).addScaledVector(cutPlaneNormal, 0.014);
+      dot.scale.setScalar(1.06);
+      dot.renderOrder = 8;
+      root.add(dot);
+      return dot;
+    });
+    const interDots = [E, F].map((pt) => {
+      const dot = new THREE.Mesh(nodeGeo, interMat);
+      dot.position.copy(pt).addScaledVector(cutPlaneNormal, 0.015);
+      dot.scale.setScalar(1.12);
+      dot.renderOrder = 8;
+      root.add(dot);
+      return dot;
+    });
     root.add(sectionGroup);
+
+    const projectAnchors = (
+      currentBeat: HeroStoryboardState,
+    ): readonly ProjectedCallout[] => {
+      const cw = host.clientWidth || width;
+      const ch = host.clientHeight || height;
+      const tmp = new THREE.Vector3();
+      root.updateMatrixWorld(true);
+      const specs: {
+        id: string;
+        label: string;
+        role: ProjectedCallout["role"];
+        pos: THREE.Vector3;
+        lift: number;
+        visible: boolean;
+      }[] = [
+        { id: "S", label: "S", role: "vertex", pos: S, lift: currentBeat.capLift, visible: true },
+        { id: "M", label: "M", role: "seed", pos: M, lift: 0, visible: currentBeat.seedReveal > 0.25 },
+        { id: "N", label: "N", role: "seed", pos: N, lift: 0, visible: currentBeat.seedReveal > 0.25 },
+        { id: "P", label: "P", role: "seed", pos: P, lift: 0, visible: currentBeat.seedReveal > 0.25 },
+        { id: "E", label: "E", role: "intersection", pos: E, lift: 0, visible: currentBeat.planeSweep > 0.55 },
+        { id: "F", label: "F", role: "intersection", pos: F, lift: 0, visible: currentBeat.planeSweep > 0.55 },
+      ];
+      const candidates = specs.map((sp) => {
+        tmp.copy(sp.pos).addScaledVector(cutPlaneNormal, sp.lift);
+        root.localToWorld(tmp);
+        tmp.project(camera);
+        return {
+          id: sp.id,
+          x: (tmp.x * 0.5 + 0.5) * cw + 14,
+          y: (-tmp.y * 0.5 + 0.5) * ch - 10,
+        };
+      });
+      separateLabelPositions(candidates, cw, ch, 26, 18, 18, 22);
+      return specs.map((sp, i) => ({
+        id: sp.id,
+        label: sp.label,
+        role: sp.role,
+        x: candidates[i].x,
+        y: candidates[i].y,
+        visible: sp.visible,
+      }));
+    };
 
     let disposed = false;
     let isInView = true;
     let rafId = 0;
-    let settledTriggered = reducedMotion;
     const startMs = performance.now();
     let curTiltX = 0;
     let curTiltY = 0;
+    let lastBeat: HeroStoryboardBeat | null = null;
+    let calloutTick = 0;
 
     const applyState = (nowMs: number): boolean => {
-      const rawProgress = reducedMotion
-        ? 1
-        : Math.min(1, Math.max(0, (nowMs - startMs) / ANIMATION_DURATION_MS));
+      const elapsed = nowMs - startMs;
+      const state = evaluateHeroStoryboard(elapsed, reducedMotion);
 
-      const pBase = reducedMotion ? 1 : clampPhase(rawProgress, 0.0, 0.24);
-      const pSolid = reducedMotion ? 1 : clampPhase(rawProgress, 0.14, 0.48);
-      const pPlane = reducedMotion ? 1 : clampPhase(rawProgress, 0.36, 0.68);
-      const pSection = reducedMotion ? 1 : clampPhase(rawProgress, 0.56, 0.84);
-      const pSettled = reducedMotion ? 1 : clampPhase(rawProgress, 0.74, 1.0);
-
-      if (!settledTriggered && pSettled > 0.35) {
-        settledTriggered = true;
-        setIsSettled(true);
+      if (state.beat !== lastBeat) {
+        lastBeat = state.beat;
+        setBeat(state.beat);
       }
 
       const damp = reducedMotion ? 1 : 0.14;
       curTiltX += (targetTiltRef.current.x - curTiltX) * damp;
       curTiltY += (targetTiltRef.current.y - curTiltY) * damp;
 
-      shadowOuterMat.opacity = 0.032 * pBase;
-      shadowInnerMat.opacity = 0.055 * pBase;
-      darkNodeMat.opacity = 0.9 * pBase;
-      (saGuideLine.material as THREE.LineDashedMaterial).opacity = 0.54 * pBase;
-      (rightAngle1.material as THREE.LineBasicMaterial).opacity = 0.56 * pBase;
-      (rightAngle2.material as THREE.LineBasicMaterial).opacity = 0.56 * pBase;
+      shadowOuterMat.opacity = 0.036 * state.solidReveal;
+      shadowInnerMat.opacity = 0.058 * state.solidReveal;
+      baseNodeMat.opacity = 0.9 * state.solidReveal;
+      hiddenNodeMat.opacity = 0.45 * state.solidReveal;
+      (saLowerLine.material as THREE.LineDashedMaterial).opacity = 0.56 * state.solidReveal;
+      (saUpperLine.material as THREE.LineDashedMaterial).opacity = 0.48 * state.solidReveal;
+      (rightAngle1.material as THREE.LineBasicMaterial).opacity = 0.58 * state.solidReveal;
+      (rightAngle2.material as THREE.LineBasicMaterial).opacity = 0.58 * state.solidReveal;
 
-      solidGroup.scale.setScalar(0.94 + 0.06 * pSolid);
-      lowerMat.opacity = 0.94 * pSolid;
-      upperMat.opacity = 0.3 * pSolid;
-      for (const line of solidLines) {
-        (line.material as THREE.Material & { opacity: number }).opacity =
-          (line.material instanceof THREE.LineDashedMaterial ? 0.44 : 0.78) * pSolid;
+      root.scale.setScalar(0.95 + 0.05 * state.solidReveal);
+      lowerMat.opacity = 0.9 * state.solidReveal;
+      upperMat.opacity = 0.24 * state.solidReveal;
+      upperGroup.position.copy(cutPlaneNormal).multiplyScalar(state.capLift);
+
+      for (const cyl of lowerSolidEdgeCyls) {
+        (cyl.material as THREE.MeshBasicMaterial).opacity = 0.88 * state.solidReveal;
+      }
+      for (const hl of hiddenBaseLines) {
+        (hl.material as THREE.LineDashedMaterial).opacity = 0.46 * state.solidReveal;
+      }
+      for (const ul of upperEdgeLines) {
+        (ul.material as THREE.LineBasicMaterial).opacity = 0.66 * state.solidReveal;
       }
 
-      planeMat.opacity = 0.32 * pPlane;
+      seedMat.opacity = state.seedReveal;
+      for (const d of seedDots) {
+        d.visible = state.seedReveal > 0.05;
+        d.scale.setScalar(Math.max(0.05, 1.06 * state.seedReveal));
+      }
+
+      planeMat.opacity = 0.18 * state.planeSweep;
       planeGroup.position
         .copy(planeCenter)
-        .addScaledVector(cutPlaneNormal, (1 - pPlane) * 0.58);
-      for (const rim of planeRimLines) {
-        (rim.material as THREE.LineBasicMaterial).opacity = 0.84 * pPlane;
+        .addScaledVector(cutPlaneNormal, (1 - state.planeSweep) * 0.65);
+      for (const rim of planeRimCyls) {
+        (rim.material as THREE.MeshBasicMaterial).opacity = 0.82 * state.planeSweep;
       }
 
-      secMat.opacity = 0.9 * pSection;
-      orangeNodeMat.opacity = pSection;
-      for (const border of secBorderLines) {
-        (border.material as THREE.LineBasicMaterial).opacity = 0.96 * pSection;
+      interMat.opacity = state.planeSweep;
+      for (const d of interDots) {
+        d.visible = state.planeSweep > 0.35;
+        d.scale.setScalar(Math.max(0.05, 1.12 * state.planeSweep));
       }
 
-      const orbitOffset = (1 - pSolid) * 0.18;
-      root.rotation.y = 0.12 + curTiltX - orbitOffset;
+      for (let i = 0; i < secBorderCyls.length; i++) {
+        const seg = secBorderCyls[i];
+        const edgeStart = i / secBorderCyls.length;
+        const edgeEnd = (i + 1) / secBorderCyls.length;
+        const localP = clamp01((state.traceProgress - edgeStart) / (edgeEnd - edgeStart));
+        seg.visible = localP > 0.01;
+        seg.scale.set(1, Math.max(0.01, localP), 1);
+        (seg.material as THREE.MeshBasicMaterial).opacity = 0.96 * Math.min(1, localP * 2);
+      }
+
+      secMat.opacity = HERO_SECTION_FILL_OPACITY * state.sectionFill;
+      secMesh.visible = state.sectionFill > 0.01;
+
+      root.rotation.y = 0.1 - state.orbitOffsetRad + curTiltX;
       root.rotation.x = 0.02 + curTiltY;
 
       renderer.render(scene, camera);
 
-      const timelineDone = rawProgress >= 0.999;
       const tiltDone =
         Math.abs(targetTiltRef.current.x - curTiltX) < 0.0008 &&
         Math.abs(targetTiltRef.current.y - curTiltY) < 0.0008;
-      return timelineDone && tiltDone;
+      const done = state.settled && tiltDone;
+
+      if (calloutTick % 3 === 0 || done || reducedMotion) {
+        setCallouts(projectAnchors(state));
+      }
+      calloutTick++;
+
+      return done;
     };
 
     const tick = (nowMs: number) => {
@@ -896,7 +1034,12 @@ function HeroSpatialStage({
             (entries) => {
               const entry = entries[0];
               isInView = Boolean(entry?.isIntersecting);
-              if (isInView) wake();
+              if (isInView) {
+                wake();
+              } else if (rafId) {
+                window.cancelAnimationFrame(rafId);
+                rafId = 0;
+              }
             },
             { threshold: 0.06 },
           )
@@ -905,8 +1048,22 @@ function HeroSpatialStage({
 
     const onVisibility = () => {
       if (!document.hidden && isInView) wake();
+      else if (document.hidden && rafId) {
+        window.cancelAnimationFrame(rafId);
+        rafId = 0;
+      }
     };
     document.addEventListener("visibilitychange", onVisibility);
+
+    const onMotionChange = (ev: MediaQueryListEvent) => {
+      reducedMotion = ev.matches;
+      if (reducedMotion && rafId) {
+        window.cancelAnimationFrame(rafId);
+        rafId = 0;
+      }
+      wake();
+    };
+    reducedQuery?.addEventListener?.("change", onMotionChange);
 
     const onContextLost = (e: Event) => {
       e.preventDefault();
@@ -923,7 +1080,10 @@ function HeroSpatialStage({
     canvas.addEventListener("webglcontextlost", onContextLost);
     canvas.addEventListener("webglcontextrestored", onContextRestored);
 
-    wake();
+    applyState(performance.now());
+    if (!reducedMotion) {
+      wake();
+    }
 
     return () => {
       disposed = true;
@@ -934,6 +1094,7 @@ function HeroSpatialStage({
       ro?.disconnect();
       io?.disconnect();
       document.removeEventListener("visibilitychange", onVisibility);
+      reducedQuery?.removeEventListener?.("change", onMotionChange);
       canvas.removeEventListener("webglcontextlost", onContextLost);
       canvas.removeEventListener("webglcontextrestored", onContextRestored);
       for (const item of disposables) {
@@ -961,20 +1122,15 @@ function HeroSpatialStage({
     wakeRef.current?.();
   }, []);
 
-  const insetW = 160;
-  const insetH = 126;
-  const polyPoints = trueShape.vertices
-    .map((v) => `${(v.nx * insetW).toFixed(1)},${(v.ny * insetH).toFixed(1)}`)
-    .join(" ");
-
   return (
     <div
       id="landing-hero-sculpture"
       ref={shellRef}
       className="axo-v14-hero-visual"
+      data-hero-beat={beat}
       onPointerMove={handlePointerMove}
       onPointerLeave={handlePointerLeave}
-      aria-label="Minh họa khối chóp S.ABCD và thiết diện thật MENPF"
+      aria-label="Minh họa khối chóp S.ABCD và thiết diện ngũ giác MENPF"
     >
       <div
         ref={hostRef}
@@ -985,69 +1141,36 @@ function HeroSpatialStage({
         }
       />
 
-      {(!webglAllowed || !webglReady || contextLost) && <HeroFallbackSvg />}
-
-      <aside
-        className={
-          isSettled
-            ? "axo-v14-hero-trueshape is-settled"
-            : "axo-v14-hero-trueshape"
-        }
-        aria-label="Hình chiếu trực giao thiết diện MENPF"
-      >
-        <div className="axo-v14-trueshape-head">
-          <span className="axo-v14-trueshape-caption">Thiết diện thật (MNP)</span>
-          <span className="axo-v14-trueshape-formula">S(MENPF) = 6√6</span>
-        </div>
-        <svg
-          className="axo-v14-trueshape-svg"
-          viewBox={`0 0 ${insetW} ${insetH}`}
-          aria-hidden="true"
-          focusable="false"
-        >
-          <line
-            className="axo-v14-svg-projection-ray"
-            x1="10"
-            y1="108"
-            x2={(trueShape.vertices[0]?.nx ?? 0.3) * insetW}
-            y2={(trueShape.vertices[0]?.ny ?? 0.5) * insetH}
-          />
-          <polygon
-            className="axo-v14-svg-trueshape-poly"
-            points={polyPoints}
-          />
-          {trueShape.vertices.map((v) => {
-            const cx = v.nx * insetW;
-            const cy = v.ny * insetH;
-            const dx = v.nx < 0.5 ? -10 : 8;
-            const dy = v.ny < 0.48 ? -7 : 12;
-            return (
-              <g key={v.id}>
-                <circle
-                  className="axo-v14-svg-section-dot"
-                  cx={cx}
-                  cy={cy}
-                  r="3.2"
-                />
-                <text
-                  className="axo-v14-svg-vertex-text"
-                  x={cx + dx}
-                  y={cy + dy}
-                >
-                  {v.label}
-                </text>
-              </g>
-            );
-          })}
+      {webglAllowed && webglReady && !contextLost && callouts.length > 0 && (
+        <svg className="axo-v14-hero-callouts" aria-hidden="true" focusable="false">
+          {callouts.map((c) =>
+            c.visible ? (
+              <text
+                key={c.id}
+                x={c.x.toFixed(1)}
+                y={c.y.toFixed(1)}
+                className={
+                  c.role === "intersection"
+                    ? "axo-v14-svg-label-inter"
+                    : c.role === "seed"
+                      ? "axo-v14-svg-label-seed"
+                      : "axo-v14-svg-vertex-text"
+                }
+              >
+                {c.label}
+              </text>
+            ) : null,
+          )}
         </svg>
-      </aside>
+      )}
+
+      {(!webglAllowed || !webglReady || contextLost) && <HeroFallbackSvg />}
     </div>
   );
 }
 
 export function LandingHeroV14() {
   const user = useAuthStore((s) => s.user);
-  const trueShape = useMemo(() => computeTrueShapeSection2D(), []);
 
   const handleStoryScroll = useCallback((e: ReactMouseEvent<HTMLAnchorElement>) => {
     const target = document.getElementById("cach-hoat-dong");
@@ -1070,8 +1193,8 @@ export function LandingHeroV14() {
             dễ <AnnotatedPhrase variant="circle">hình dung</AnnotatedPhrase> hơn.
           </h1>
           <p className="axo-v14-hero-lead">
-            Nhập đề bài tiếng Việt để quan sát mô hình 3D chính xác, thiết diện
-            cắt và chuỗi lập luận dựng hình trên cùng một không gian trực quan.
+            Nhập đề bài tiếng Việt để quan sát khối đa diện 3D chính xác, mặt
+            phẳng cắt và từng đường giao tuyến ngay trong không gian trực quan.
           </p>
           <div className="axo-v14-hero-actions">
             <button
@@ -1093,7 +1216,7 @@ export function LandingHeroV14() {
           </div>
         </div>
 
-        <HeroSpatialStage trueShape={trueShape} />
+        <HeroSpatialStage />
       </div>
     </section>
   );

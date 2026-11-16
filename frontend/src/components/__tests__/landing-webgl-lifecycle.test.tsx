@@ -3,14 +3,14 @@ import path from "node:path";
 import { renderToString } from "react-dom/server";
 import { describe, expect, it } from "vitest";
 import {
+  buildClosingSpatialRigData,
   LandingClosingScene3D,
-  projectClosingFallbackSvg,
 } from "../landing/LandingClosingScene3D";
 import { separateLabelPositions, type LabelCandidate } from "../landing/LandingHeroScene3D";
 import { LandingHeroSculpture3D } from "../landing/LandingHeroSculpture3D";
 import { LANDING_CUBE_SAMPLE, extractPointsFromSample } from "../landing/landing-geometry-data";
 
-describe("AXO Landing Page V1.2 — WebGL Persistent Lifecycle, Deduplication & Label Collision", () => {
+describe("AXO Landing — WebGL Budget, Persistent Lifecycle, Deduplication & Label Collision", () => {
   it("deduplicates repeated point IDs in extractPointsFromSample", () => {
     const fakeSample = {
       envelope: {
@@ -70,11 +70,9 @@ describe("AXO Landing Page V1.2 — WebGL Persistent Lifecycle, Deduplication & 
 
     expect(sceneSrc).not.toContain("MeshPhysicalMaterial");
     expect(sculptureSrc).not.toContain("MeshPhysicalMaterial");
-    // Single persistent WebGLRenderer init effect with empty/shouldMountWebgl dependency, sample swap via syncSampleRigRef
     expect(sceneSrc).toContain("swapSample");
     expect(sceneSrc).toContain("syncSampleRigRef");
     expect(sceneSrc).toContain("${sample.id}:${pt.id}");
-    // Hero removes floating companions cleanly
     expect(sculptureSrc).not.toContain("sphereCompanionGroup");
     expect(sculptureSrc).not.toContain("octMesh");
   });
@@ -99,7 +97,7 @@ describe("AXO Landing Page V1.2 — WebGL Persistent Lifecycle, Deduplication & 
     expect(errExpSrc).toContain('variant === "page"');
   });
 
-  it("V1.2.1: renders Concept A transformation hero illustration by default with zero vertex tags", () => {
+  it("keeps Hero production Concept A illustration intact without vertex tags", () => {
     const html = renderToString(<LandingHeroSculpture3D />);
     expect(html).toContain('id="landing-hero-sculpture"');
     expect(html).toContain('data-hero-variant="transformation"');
@@ -110,27 +108,20 @@ describe("AXO Landing Page V1.2 — WebGL Persistent Lifecycle, Deduplication & 
     expect(altHtml).toContain('data-hero-variant="sculpture"');
   });
 
-  it("manages LandingClosingScene3D with lazy observer, single persistent WebGLRenderer, offscreen RAF pause, fallback, and disposal", () => {
+  it("keeps LandingClosingScene3D at 0 extra WebGL contexts with offscreen RAF pause and cleanup", () => {
     const closingSceneSrc = fs.readFileSync(
       path.resolve(__dirname, "../landing/LandingClosingScene3D.tsx"),
       "utf8",
     );
 
-    const rendererNews = closingSceneSrc.match(/new THREE\.WebGLRenderer\(/g) ?? [];
-    expect(rendererNews).toHaveLength(1);
+    expect(closingSceneSrc).not.toContain("WebGLRenderer");
     expect(closingSceneSrc).toContain("IntersectionObserver");
-    expect(closingSceneSrc).toContain("ResizeObserver");
     expect(closingSceneSrc).toContain('document.addEventListener("visibilitychange"');
-    expect(closingSceneSrc).toContain("webglcontextlost");
-    expect(closingSceneSrc).toContain("webglcontextrestored");
     expect(closingSceneSrc).toContain("cancelAnimationFrame");
-    expect(closingSceneSrc).toContain("renderer.dispose()");
-    expect(closingSceneSrc).toContain("item.dispose()");
-    expect(closingSceneSrc).toContain("no_webgl=1");
 
     const ssrHtml = renderToString(<LandingClosingScene3D />);
     expect(ssrHtml).toContain('id="landing-closing-scene3d"');
-    const fallbackProj = projectClosingFallbackSvg();
-    expect(Object.keys(fallbackProj.points).length).toBeGreaterThanOrEqual(11);
+    const rig = buildClosingSpatialRigData();
+    expect(rig.points.length).toBe(6);
   });
 });

@@ -4,14 +4,14 @@ import {
   evaluateClosingMotionState,
 } from "../landing/LandingClosingScene3D";
 
-describe("Landing CTA 3D continuous construction & reduced-motion states", () => {
-  it("progresses cleanly through Phases A -> B -> C -> D without abrupt jumps", () => {
+describe("Landing CTA continuous sphere-section construction & reduced-motion states", () => {
+  it("progresses smoothly through Phases A -> B -> C -> D without abrupt jumps", () => {
     const phaseA = evaluateClosingMotionState(CLOSING_CYCLE_DURATION_MS * 0.08, false);
     const phaseB = evaluateClosingMotionState(CLOSING_CYCLE_DURATION_MS * 0.30, false);
-    const phaseC = evaluateClosingMotionState(CLOSING_CYCLE_DURATION_MS * 0.58, false);
-    const phaseD = evaluateClosingMotionState(CLOSING_CYCLE_DURATION_MS * 0.80, false);
+    const phaseC = evaluateClosingMotionState(CLOSING_CYCLE_DURATION_MS * 0.56, false);
+    const phaseD = evaluateClosingMotionState(CLOSING_CYCLE_DURATION_MS * 0.78, false);
 
-    expect(phaseA.phase).toBe("base-pyramid");
+    expect(phaseA.phase).toBe("sphere-axis");
     expect(phaseA.planeProgress).toBe(0);
     expect(phaseA.traceProgress).toBe(0);
     expect(phaseA.sectionFillOpacity).toBe(0);
@@ -20,10 +20,10 @@ describe("Landing CTA 3D continuous construction & reduced-motion states", () =>
     expect(phaseB.planeProgress).toBeGreaterThan(0.35);
     expect(phaseB.traceProgress).toBe(0);
 
-    expect(phaseC.phase).toBe("section-intersection");
+    expect(phaseC.phase).toBe("circle-intersection");
     expect(phaseC.planeProgress).toBe(1);
-    expect(phaseC.traceProgress).toBeGreaterThan(0.5);
-    expect(phaseC.sectionFillOpacity).toBeGreaterThan(0);
+    expect(phaseC.traceProgress).toBeGreaterThan(0.4);
+    expect(phaseC.triangleReveal).toBeGreaterThan(0.3);
 
     expect(phaseD.phase).toBe("complete-settled");
     expect(phaseD.planeProgress).toBe(1);
@@ -56,8 +56,8 @@ describe("Landing CTA 3D continuous construction & reduced-motion states", () =>
       expect(reduced.planeProgress).toBe(1);
       expect(reduced.traceProgress).toBe(1);
       expect(reduced.sectionFillOpacity).toBe(1);
+      expect(reduced.triangleReveal).toBe(1);
       expect(reduced.orbitAngleRad).toBe(0);
-      expect(reduced.capLift).toBe(0);
     }
   });
 
@@ -65,7 +65,7 @@ describe("Landing CTA 3D continuous construction & reduced-motion states", () =>
     const mid = evaluateClosingMotionState(0, false, "mid");
     const settled = evaluateClosingMotionState(0, false, "settled");
 
-    expect(mid.phase).toBe("section-intersection");
+    expect(mid.phase).toBe("circle-intersection");
     expect(mid.traceProgress).toBeGreaterThan(0.4);
     expect(mid.traceProgress).toBeLessThan(1);
 
