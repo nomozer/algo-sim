@@ -1542,12 +1542,19 @@ async def _analyze_once(body: AnalyzeBody, algosim_session: str | None):
             content={"error": "Nội dung đề quá ngắn — hãy nhập/chọn đầy đủ bài toán."},
         )
 
+    if body.input.source_provenance is not None:
+        return await _analyze_hybrid_route(
+            text,
+            che_do_hybrid,
+            api_key,
+            algosim_session,
+            source_provenance=body.input.source_provenance,
+        )
     return await _analyze_hybrid_route(
         text,
         che_do_hybrid,
         api_key,
         algosim_session,
-        source_provenance=body.input.source_provenance,
     )
 
 

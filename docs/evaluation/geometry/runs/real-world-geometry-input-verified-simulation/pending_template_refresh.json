@@ -1,8 +1,7 @@
 {
   "classification": "CURRENT_PENDING_TEMPLATE_METADATA_REFRESH_NOT_HUMAN_APPROVAL",
-  "reason": "test_s2_student_language_pilot_runner requires C21 pending templates to bind the current runtime; real-world-geometry-input-verified-simulation updates in local_ocr_worker.py, local_ocr.py, ocr_reconcile.py, local_ocr_route.py, unified_input.py, registry.py, and main.py (CACHE_VERSION 144) updated measured_system.",
-  "runtime_identity_measured_system": "7f7724f339cb8cb92a0a650fb33302df2e26f655b56f67a61d9ab18c9b6ec71c",
-  "measured_files": 120,
+  "reason": "Refreshed pending templates to match measured_system after real-world OCR, confirmation provenance, main.py source_provenance guard, and Source Gate _cac_moc_cau (CACHE_VERSION 144).",
+  "runtime_identity_measured_system": "14fb41dbb6c5bbc032c57302be9cc6e0c09023da1f763f16f01f8df5fae28028",
   "rows": [
     {
       "study": "K-1",
@@ -12,12 +11,12 @@
         "measured_system_tree_hash": "9aa3eaa3b5bddab90d3d45f437a8e08ad7517db674755cef3fc88fd9be25e3bf"
       },
       "after": {
-        "measured_system": "7f7724f339cb8cb92a0a650fb33302df2e26f655b56f67a61d9ab18c9b6ec71c",
-        "measured_system_tree_hash": "7f7724f339cb8cb92a0a650fb33302df2e26f655b56f67a61d9ab18c9b6ec71c"
+        "measured_system": "14fb41dbb6c5bbc032c57302be9cc6e0c09023da1f763f16f01f8df5fae28028",
+        "measured_system_tree_hash": "14fb41dbb6c5bbc032c57302be9cc6e0c09023da1f763f16f01f8df5fae28028"
       },
       "original_saved_as": "logs/prior-k1-owner-approval.template.json",
       "original_sha256": "8049ab57551e99d7e151d12f279dd1ce1cb7dcd36261bc519f4a305410bf93db",
-      "new_sha256": "894e7f758b3217e42ce4964d835d575e5361dea9620832a188f29a081a6c0d2d",
+      "new_sha256": "752b2e4bbbaa4f2698992f2ea164cb539b2b85402c71c98aaca0f111eed58a1d",
       "owner_decision": "PENDING_OWNER_DECISION",
       "paid_project_confirmed": false
     },
@@ -29,12 +28,12 @@
         "measured_system_tree_hash": "9aa3eaa3b5bddab90d3d45f437a8e08ad7517db674755cef3fc88fd9be25e3bf"
       },
       "after": {
-        "measured_system": "7f7724f339cb8cb92a0a650fb33302df2e26f655b56f67a61d9ab18c9b6ec71c",
-        "measured_system_tree_hash": "7f7724f339cb8cb92a0a650fb33302df2e26f655b56f67a61d9ab18c9b6ec71c"
+        "measured_system": "14fb41dbb6c5bbc032c57302be9cc6e0c09023da1f763f16f01f8df5fae28028",
+        "measured_system_tree_hash": "14fb41dbb6c5bbc032c57302be9cc6e0c09023da1f763f16f01f8df5fae28028"
       },
       "original_saved_as": "logs/prior-s2-owner-approval.template.json",
       "original_sha256": "68542854b25825929e2febbff408a9a095479e78caff2a28e8244fa23ddc5947",
-      "new_sha256": "5a4da3802d6c570721bd8c6b53e9ec100be8db96ac121c05724f5be73b37424f",
+      "new_sha256": "3fda9fe675f81873bc5f98879212a682bfb082c5ac5223221b1f7a84b7588ba1",
       "owner_decision": "PENDING_OWNER_DECISION",
       "paid_project_confirmed": false
     },
@@ -46,12 +45,12 @@
         "measured_system_tree_hash": "9aa3eaa3b5bddab90d3d45f437a8e08ad7517db674755cef3fc88fd9be25e3bf"
       },
       "after": {
-        "measured_system": "7f7724f339cb8cb92a0a650fb33302df2e26f655b56f67a61d9ab18c9b6ec71c",
-        "measured_system_tree_hash": "7f7724f339cb8cb92a0a650fb33302df2e26f655b56f67a61d9ab18c9b6ec71c"
+        "measured_system": "14fb41dbb6c5bbc032c57302be9cc6e0c09023da1f763f16f01f8df5fae28028",
+        "measured_system_tree_hash": "14fb41dbb6c5bbc032c57302be9cc6e0c09023da1f763f16f01f8df5fae28028"
       },
       "original_saved_as": "logs/prior-r1-owner-approval.template.json",
       "original_sha256": "bbb22f8b01e61efe880847aeea5e6401ea11f09680f5467b49ee1c3ece30cfa9",
-      "new_sha256": "40573c22e549a8f063b29d0502462ff0f995465ccfc30fd086f1535ae8f9f50b",
+      "new_sha256": "c2cd372f82f48729549345963c1ccb5c08a46f68683cc0bf9122ffc0565988a1",
       "owner_decision": "PENDING_OWNER_DECISION",
       "paid_project_confirmed": false
     }
