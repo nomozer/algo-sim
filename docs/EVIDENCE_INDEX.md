@@ -1,5 +1,20 @@
 # EVIDENCE_INDEX.md — Chỉ mục bằng chứng và chuỗi đính chính (Master Evidence Index)
 
+## WAVE_ID = UNIFIED_GEOMETRY_UNDERSTANDING_OCR_AUTONOMOUS_PLANNING
+
+- `RUN_ID` = unified-geometry-understanding-ocr-autonomous-planning
+- `REPORT` = docs/evaluation/geometry/runs/unified-geometry-understanding-ocr-autonomous-planning/FINAL_MASTER_REPORT.md
+- `ARTIFACT_DIRECTORY` = docs/evaluation/geometry/runs/unified-geometry-understanding-ocr-autonomous-planning/
+- `START_BASE` = 5c1713997540de91d2b6c10fcdbd0d8724aced1c
+- `CODE_COMMIT` = 65a393212b68710ba1712f2aff431191127b78aa, fff0e63bde0e5be9f6897a1909750b8995fdd310 (frozen dbf61030357c477dc80c90adb3efc1a7342e4f1f)
+- `CLASSIFICATION` = OFFLINE_DEVELOPMENT_EVIDENCE
+- `PRODUCT_CHANGE` = YES; CACHE_VERSION = 143 (143:route-d); measured_system = 9aa3eaa3b5bddab90d3d45f437a8e08ad7517db674755cef3fc88fd9be25e3bf (120 files); NC NL 4/21 -> 21/21, NC Gold 21/21, auto neg 11/11, A4 & depth 6/6, reasoning_matrix 61/62 pos + 10/10 neg (MG9 fail-closed IR_MEMORY_BUDGET_EXCEEDED), r1_probe 13/13 + 6/6, dev37 30/37, comp112 66/112, probes39 23/39, real27_text 18/27 (0 wrong served), OCR layout-aware-ocr-reconcile/2 (glyph_topology 10/10, 4/4 rendered positive LOCAL_OCR_ACCEPT, 0 false auto-accepts across 3 adversarial neg / 27 real27 / 15 external16), Scene3D continuity errors = 0, Mode A no answer leak, backend pytest 14860 passed / 0 failed, frontend test:wave 142 files / 2062 tests passed + tsc + vite build OK
+- `MODEL_REQUEST_COUNT` = 0
+- `VERIFICATION` = run.json; UNDERSTANDING_AND_OCR_BASELINE.md; UNIFIED_IMPLEMENTATION_REPORT.md; INTEGRATION_AND_SAFETY_REPORT.md; FINAL_MASTER_REPORT.md; END_TO_END_CAPABILITY_EVALUATION.json; pending_template_refresh.json
+- `CORRECTS` = NONE
+- `CORRECTED_BY` = NONE
+- `LIMITATIONS` = INDEPENDENT_H1_VALIDATION = NOT_MEASURED (0 sealed H-1 rows opened); REAL_STUDENT_USABILITY = NOT_MEASURED; PHYSICAL_LOW_END = NOT_MEASURED; K-1/S-2/R-1 = PENDING_OWNER_DECISION (paid_project_confirmed: false); FE-2/3/4/6 = BLOCKED_OWNERSHIP (axo-geometry-library); PUBLICATION_HEAD = BLOCKED_PENDING_OWNER_REVIEW.
+
 ## WAVE_ID = PLANNER_AUTONOMOUS_COMPOSITION_AND_SEARCH_EFFICIENCY
 
 RUN_ID = planner-autonomous-composition-and-search-efficiency

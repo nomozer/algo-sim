@@ -1,0 +1,185 @@
+{
+  "schema": "axo-evaluation-run/2",
+  "run_id": "unified-geometry-understanding-ocr-autonomous-planning",
+  "created_date": "2026-11-16",
+  "branch": "feat/local-first-geometry-understanding",
+  "measurement_class": "OFFLINE_DEVELOPMENT_EVIDENCE",
+  "start_head": "5c1713997540de91d2b6c10fcdbd0d8724aced1c",
+  "product_commits": [
+    "65a393212b68710ba1712f2aff431191127b78aa",
+    "fff0e63bde0e5be9f6897a1909750b8995fdd310"
+  ],
+  "tool_and_template_commits": [
+    "b954a8e229d7a7a06296a343beccef38890228bf",
+    "a27473ef6cdd4d588ba1bde42596ddb587cfc7db"
+  ],
+  "candidate_freeze_commit": "dbf61030357c477dc80c90adb3efc1a7342e4f1f",
+  "contracts": {
+    "architecture_preserved": true,
+    "no_llm_plan_synthesis": true,
+    "no_planner_hardcoding": true,
+    "allow_live_ai": 0,
+    "live_ai_calls": 0,
+    "sealed_h1_rows_opened": 0,
+    "locked_w2_w3_rows_read": 0,
+    "cache_version": "143",
+    "route_d_cache_policy": "143:route-d",
+    "semantic_environment_hash": "6233c43c395c9b493d31d3dbb5d0ca952604730f6185cf541d2f179c077f955b",
+    "measured_system": "9aa3eaa3b5bddab90d3d45f437a8e08ad7517db674755cef3fc88fd9be25e3bf",
+    "measured_files": 120,
+    "locked_surfaces": {
+      "function_calling": "7ea511a6e3828c9adcc8402aa2d7d6b1d433e67a01ec4329c3009c46af652b25",
+      "fact_extraction_flat": "485d3834db8b18cfdb24143bfbb14deb8f5b7a9d74cb612d48db8c08252e507a",
+      "fact_extraction_v3": "4bff35bbf690a9973b2b7834019b908d507bbbb4277928e36d12dcff657e226f",
+      "typed_fact_next": "33197a45e0620d94a669047b47907479d1e7f07b1dc76e7c6abd75ada7a6df14"
+    },
+    "locked_surfaces_all_match": true
+  },
+  "metrics_summary": {
+    "stream_a": {
+      "nc_gold": "21/21",
+      "nc_gold_p50_ms": 279.296,
+      "nc_gold_p95_ms": 502.043,
+      "nc_nl": "21/21",
+      "nc_nl_before": 4,
+      "nc_nl_p50_ms": 40.487,
+      "nc_nl_p95_ms": 80.316,
+      "autonomous_negatives_refused": "11/11",
+      "autonomous_negatives_false_served": 0,
+      "a4_all_passed": true,
+      "a4_cases": 6,
+      "reasoning_matrix_positive": "61/62",
+      "reasoning_matrix_negative": "10/10",
+      "reasoning_matrix_false_served": 0,
+      "reasoning_matrix_p50_ms": 170.362,
+      "reasoning_matrix_p95_ms": 713.528,
+      "reasoning_matrix_peak_memory_p95_kib": 2038.86,
+      "mg9_planner_candidates": "33/48",
+      "mg9_planner_pruned": 21,
+      "mg9_route_status": "REFUSED",
+      "mg9_reason_code": "IR_MEMORY_BUDGET_EXCEEDED",
+      "r1_probe_positive": "13/13",
+      "r1_probe_negative": "6/6",
+      "dev37_served": "30/37",
+      "dev37_false_served": 0,
+      "comp112_served": "66/112",
+      "comp112_false_served": 0,
+      "probes39_served": "23/39",
+      "probes39_false_served": 0,
+      "real27_text_served": "18/27",
+      "real27_text_wrong_served": 0
+    },
+    "stream_b": {
+      "ocr_reconcile_version": "layout-aware-ocr-reconcile/2",
+      "raw_cache_max": 32,
+      "reread_cache_max": 64,
+      "glyph_topology": "10/10",
+      "rendered_positive_accepted": "4/4",
+      "adversarial_negative_blocked": "3/3",
+      "false_auto_accepts": 0,
+      "real27_images_evaluated": 27,
+      "real27_ocr_decisions": {
+        "LOCAL_OCR_REVIEW_REQUIRED": 27
+      },
+      "real27_median_cer": 0.0944,
+      "real27_p50_ms": 2218.54,
+      "real27_p95_ms": 3487.11,
+      "real27_auto_served_wrong": 0,
+      "external16_evaluated": 15,
+      "external16_ocr_decisions": {
+        "LOCAL_OCR_ACCEPT": 1,
+        "LOCAL_OCR_REVIEW_REQUIRED": 12,
+        "null": 2
+      },
+      "external16_auto_served_wrong": 0
+    },
+    "stream_c": {
+      "total_scene3d_continuity_errors": 0,
+      "mode_a_trig_no_answer_leak": true,
+      "max_memory_declarations": 32
+    }
+  },
+  "verdicts": {
+    "OFFLINE_DEVELOPMENT_EVIDENCE": "PASS",
+    "INDEPENDENT_H1_VALIDATION": "NOT_MEASURED",
+    "REAL_STUDENT_USABILITY": "NOT_MEASURED",
+    "PHYSICAL_LOW_END": "NOT_MEASURED",
+    "K1_S2_R1_TEMPLATES": "PENDING_OWNER_DECISION",
+    "FE_2_3_4_6": "BLOCKED_OWNERSHIP",
+    "PUBLICATION_HEAD": "BLOCKED_PENDING_OWNER_REVIEW"
+  },
+  "regression_gates": {
+    "backend_pytest_full": {
+      "commit": "dbf61030357c477dc80c90adb3efc1a7342e4f1f",
+      "command": "pytest -c backend/pytest.ini backend/tests -q",
+      "passed": 14860,
+      "skipped": 7,
+      "deselected": 3,
+      "xfailed": 12,
+      "failed": 0,
+      "duration_seconds": 792.5
+    },
+    "frontend_test_wave": {
+      "commit": "dbf61030357c477dc80c90adb3efc1a7342e4f1f",
+      "command": "npm --prefix frontend run test:wave",
+      "test_files_passed": 142,
+      "tests_passed": 2062,
+      "failed": 0,
+      "tsc_b": "PASS",
+      "vite_build": "PASS",
+      "vitest_duration_seconds": 50.31,
+      "vite_build_seconds": 3.7
+    },
+    "replay_demo_cases": "5/5 (REDUCED_CHAIN_CASES=1/1)",
+    "audit_demo_crash_surface": "6/6 (khop=true, nem=false)",
+    "hybrid_preview_fixtures_verify": "41 verified, problems=[]",
+    "freeze_evaluation_candidate_verify": "MATCH (120 files, 9aa3eaa3b5bddab90d3d45f437a8e08ad7517db674755cef3fc88fd9be25e3bf)",
+    "lock_cache_identity_verify": "MATCH (CACHE_VERSION=143, 6233c43c395c9b493d31d3dbb5d0ca952604730f6185cf541d2f179c077f955b)"
+  },
+  "artifacts": {
+    "END_TO_END_CAPABILITY_EVALUATION.json": {
+      "bytes": 214654,
+      "sha256": "6bcabf3e764b2d8e93029892f82d3c2ada6d9800a322bd3a29993c499ca90859"
+    },
+    "FINAL_MASTER_REPORT.md": {
+      "bytes": 9517,
+      "sha256": "9fd00beebfef66ce64e2d69f1e4376a5fced850ca40d83fbfe697e46bd892500"
+    },
+    "INTEGRATION_AND_SAFETY_REPORT.md": {
+      "bytes": 7917,
+      "sha256": "8b775be6b5c9193a961f1910587ff889b15046cee2cccc3ff5fba6bf452674d4"
+    },
+    "logs/prior-k1-owner-approval.template.json": {
+      "bytes": 782,
+      "sha256": "63f4ba18cc43f1c103207d0d07ebf39fc8183619cb5b6691bf915198b6a60a5c"
+    },
+    "logs/prior-r1-owner-approval.template.json": {
+      "bytes": 782,
+      "sha256": "7e1be48f34fb35b58766d35bd0520270b553da1dff37391461a9593deb6ef9c1"
+    },
+    "logs/prior-s2-owner-approval.template.json": {
+      "bytes": 782,
+      "sha256": "809bb35537768937948f1e0cdb9cbf4eebc38cd555683551a5e8d28dd5d56d7d"
+    },
+    "pending_template_refresh.json": {
+      "bytes": 3564,
+      "sha256": "bc7496529402fba7bf21cd30ce697ce4b582bf6d55c9deaf08c62ccb3005c01c"
+    },
+    "tools/evaluate_unified_campaign.py": {
+      "bytes": 43400,
+      "sha256": "f22a0f01bc85b3cf886cae2fbcc0110f7d90dbb549de682b307879ee4834023e"
+    },
+    "tools/refresh_pending_templates.py": {
+      "bytes": 3473,
+      "sha256": "3c078c4154ef9d2f61ef83c041d230a1bac6f147faf904b60966818886e6f270"
+    },
+    "UNDERSTANDING_AND_OCR_BASELINE.md": {
+      "bytes": 8136,
+      "sha256": "d7cbc4a7f4596c77b975af21f7c4c4d79300e88f093dcde8c9a4b45b1d02c674"
+    },
+    "UNIFIED_IMPLEMENTATION_REPORT.md": {
+      "bytes": 9641,
+      "sha256": "7251d270b1aef530077d5b08abbf36bfe19b4b20b7f12a5aa81e375be51e8157"
+    }
+  }
+}

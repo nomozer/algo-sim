@@ -1,5 +1,27 @@
 # CODE_INDEX.md — Chỉ mục module + BỘ NHỚ KIẾN TRÚC
 
+## Unified geometry understanding, OCR & autonomous planning (2026-11-16)
+
+| Hạng mục / Vai trò | Đường dẫn chuẩn (`dbf610303`) |
+|---|---|
+| `Local Geometry Parser /2` đệ quy, tách câu & trắc nghiệm đảo | `backend/app/ai/local_geometry_parser.py` |
+| Định tuyến đầu vào thích nghi & Mode A output policy | `backend/app/ai/adaptive_input_router.py` |
+| `TypedFactNext /2` (`PlaneConstraintSpec(contains_points)` cho `@id`) | `backend/app/simulation/geometry_functions/typed_fact_next.py` |
+| Cầu nối `bridge_v2` phân giải điểm mô tả trong `contains_points` & `plane_name` | `backend/app/simulation/geometry_functions/typed_fact_next_bridge.py` |
+| `Planner /26` (`MAT_RANG_BUOC` với `point_chains` đệ quy) | `backend/app/simulation/geometry_functions/planner.py` |
+| `Source Gate` (`_td_mat_truoc_khoi`, `constraint_point_chains`, `_THAM_KHAO_HINH`) | `backend/app/simulation/geometry_functions/registry.py` |
+| `Exact Kernel /24` (`_bien_dich_mat_cat` cho `MAT_RANG_BUOC` 3 điểm `@id`) | `backend/app/simulation/geometry_functions/engine.py` |
+| Tách cache OCR `_RAW_OCR_CACHE (32)` & `_REREAD_CACHE (64)` | `backend/app/ingestion/local_ocr.py` |
+| Worker đọc lại sạch CC biên & phân tích hình học nét chữ `glyph_topology` | `backend/app/ingestion/local_ocr_worker.py` |
+| Đối chiếu OCR hai họ `layout-aware-ocr-reconcile/2` & `CROSS_FAMILY_BASE_PLUS_GLYPH_TOPOLOGY` | `backend/app/ingestion/ocr_reconcile.py` |
+| Tuyến OCR & tổng hợp `ocr_decision` ba trạng thái | `backend/app/ingestion/local_ocr_route.py` |
+| Gộp đầu vào đa phương thức & ngưỡng quyết định OCR | `backend/app/ingestion/unified_input.py` |
+| Phiên bản cache `CACHE_VERSION = "143"` (`143:route-d`) & khóa môi trường | `backend/app/main.py` |
+| Lock identity môi trường ngữ nghĩa (`CACHE_VERSION = "143"`) | `backend/cache_identity.lock.json` |
+| Suite kiểm thử hồi quy Stream A / B / C | `backend/tests/geometry/test_unified_understanding_ocr_planning.py` |
+| Script đánh giá hợp nhất chiến dịch (Stream A/B/C, `0` live AI) | `docs/evaluation/geometry/runs/unified-geometry-understanding-ocr-autonomous-planning/tools/evaluate_unified_campaign.py` |
+| Script làm mới siêu dữ liệu mẫu chờ C21 (`PENDING_OWNER_DECISION`) | `docs/evaluation/geometry/runs/unified-geometry-understanding-ocr-autonomous-planning/tools/refresh_pending_templates.py` |
+
 ## Autonomous composition & planner search efficiency (2026-11-16)
 
 | Path | Owns | Locked by |
