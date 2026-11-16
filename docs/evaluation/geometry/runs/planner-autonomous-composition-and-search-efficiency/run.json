@@ -1,0 +1,140 @@
+{
+  "run_id": "planner-autonomous-composition-and-search-efficiency",
+  "generated_at_utc": "2026-11-16T12:06:53Z",
+  "schema": "axo-planner-autonomous-composition-and-search-efficiency-run/1",
+  "branch": "feat/local-first-geometry-understanding",
+  "start_head": "39b2f36911595b55eb8d639864a8bf8441561c23",
+  "product_commits": [
+    "8d12e93c443548d1e95acd8a94a36fa329ecffad"
+  ],
+  "evaluator_commit": "3fa23e48101095d038b592617f1df69b46fe9612",
+  "candidate_freeze_commit": "009c06df12b3612ed95ecdf7f44bbba56758c2f7",
+  "candidate_commit_field": "3fa23e48101095d038b592617f1df69b46fe9612",
+  "product_commit_sha": "8d12e93c443548d1e95acd8a94a36fa329ecffad",
+  "cay_lam_viec_sach": true,
+  "measured_system": "a9e6a372da73497b438c12e5763042ab4cab88faaacfe6a2357393b8598f88a3",
+  "measured_files": 120,
+  "cache_version": "142",
+  "semantic_environment_hash": "6233c43c395c9b493d31d3dbb5d0ca952604730f6185cf541d2f179c077f955b",
+  "environment": {
+    "ALLOW_LIVE_AI": "0",
+    "GEMINI_API_KEY": "EMPTY",
+    "HYBRID_ROUTE_MODE": "UNSET",
+    "live_ai_calls": 0
+  },
+  "dataset_partition": "DEVELOPMENT (reasoning_matrix 72 cases, r1-described-point-probe + C3-dist, 21 novel autonomous composition positives + 11 negatives, Gold vs local-geometry-parser/2 NL isolation, offline regression gates); never sealed H-1 or locked W2/W3",
+  "contracts": {
+    "local_geometry_parser": "local-geometry-parser/2",
+    "typed_fact_next": "typed-fact-next/2",
+    "planner": "geometry-fact-planner/26",
+    "registry": "geometry-functions/33",
+    "engine": "geometry-function-engine/24",
+    "envelope": "hybrid-route-d-simulation/4",
+    "output_policy": "output-policy/1",
+    "route_d_cache_policy": "142:route-d"
+  },
+  "metrics_summary": {
+    "reasoning_matrix_positive": "61/62",
+    "reasoning_matrix_negative": "10/10",
+    "reasoning_matrix_false_served": 0,
+    "reasoning_matrix_remaining_refused": [
+      "MG9"
+    ],
+    "mg9_planner_status": "PLAN_SUCCEEDED",
+    "mg9_candidate_evaluations_before_after": [
+      54,
+      33
+    ],
+    "mg9_pruned_nodes_before_after": [
+      0,
+      21
+    ],
+    "mg9_explored_states": 72,
+    "mg9_search_depth": 4,
+    "mg9_plan_cost": 13,
+    "mg9_refusal_stage": "route_ir_budget",
+    "mg9_reason_code": "IR_MEMORY_BUDGET_EXCEEDED",
+    "r1_probe_positive": "13/13",
+    "r1_probe_adversarial_refused": "6/6",
+    "novel_positive": "21/21",
+    "novel_negative_refused": "11/11",
+    "novel_latency_p50_ms": 291.702,
+    "novel_latency_p95_ms": 487.548,
+    "nl_isolation_expected_local": "4/4",
+    "euler_sibling_reuse_aux_before_after": [
+      10,
+      8
+    ],
+    "backend_pytest": "14850 passed, 7 skipped, 3 deselected, 12 xfailed, 0 failed (603.63s)",
+    "frontend_vitest": "142 files / 2062 passed (69.14s), tsc -b OK, vite build 5.53s"
+  },
+  "verdicts": {
+    "PLANNER_AUTONOMOUS_COMPOSITION_VERDICT": "PASS_WITHIN_DEVELOPMENT_BENCHMARK_AND_OFFLINE_REGRESSION",
+    "PRODUCT_TECHNICAL_VERDICT": "PASS",
+    "FULL_RELEASE_GATE": "BLOCKED_GATES_REMAIN",
+    "blocked_reasons": [
+      "INDEPENDENT_H1_VALIDATION = NOT_MEASURED",
+      "REAL_STUDENT_USABILITY = NOT_MEASURED",
+      "PHYSICAL_LOW_END = PHYSICAL_LOW_END_NOT_MEASURED",
+      "LIVE_CAMPAIGN_APPROVAL (K-1/S-2/R-1) = PENDING_OWNER_DECISION",
+      "AXO_GEOMETRY_LIBRARY (FE-2/3/4/6) = BLOCKED_OWNERSHIP",
+      "PUBLICATION_HEAD = BLOCKED_PENDING_OWNER_REVIEW"
+    ]
+  },
+  "regression_gates": {
+    "backend_pytest": "PASS",
+    "frontend_test_wave": "PASS",
+    "demo_replay": "PASS",
+    "crash_audit": "PASS",
+    "hybrid_preview_fixtures": "PASS",
+    "docs_ia": "PASS",
+    "freeze_verify": "PASS",
+    "cache_lock_verify": "PASS"
+  },
+  "artifacts": {
+    "CACHE_SEMANTIC_INTEGRITY_REPORT.md": {
+      "sha256": "a94692f30bc58a7feeffca20b6a717f48dabf508462554b63773d4253dced815",
+      "bytes": 3480
+    },
+    "FINAL_PLANNER_SEARCH_REPORT.md": {
+      "sha256": "89b361d9f3ee5371ee18048b3cff8ba83b1bdaf5e3f2f2eaf6f205bc17e83648",
+      "bytes": 8736
+    },
+    "logs/prior-k1-owner-approval.template.json": {
+      "sha256": "0e1c92dd941d5306393e3e149d0711287e925c89a1fddfda8fd15a6fa967c29c",
+      "bytes": 782
+    },
+    "logs/prior-r1-owner-approval.template.json": {
+      "sha256": "a5e02bedd510b21819ea65e7d6593c1cf50ac7b54911dd1a636741e3a80aa76a",
+      "bytes": 782
+    },
+    "logs/prior-s2-owner-approval.template.json": {
+      "sha256": "c32f2e1ac41959d8a09c91c959247e4f3518dcc3d0df4c8b34ed30e53c5623ef",
+      "bytes": 782
+    },
+    "NOVEL_COMPOSITION_EVALUATION.json": {
+      "sha256": "bd927d99168b0b46119795aded4973a970f2ba90ae2da49fc60a44c54394b18c",
+      "bytes": 227710
+    },
+    "pending_template_refresh.json": {
+      "sha256": "5b835f6c10aaec320d53cfd2068e5657452d41d48a78bd513b1cfef140b9efc5",
+      "bytes": 3399
+    },
+    "PLANNER_DISCOVERY_BASELINE.md": {
+      "sha256": "49ba75cf9f4b1b4ad2ddd732cd4773715a70f5ce22cbfd1ea022e5d52e290d3b",
+      "bytes": 5543
+    },
+    "PLANNER_SEARCH_IMPLEMENTATION_REPORT.md": {
+      "sha256": "dc2c126136b6c20c30460e8ba017d9027c17ef48be3b8f37f30b643dad933ea1",
+      "bytes": 6767
+    },
+    "tools/evaluate_autonomous_composition.py": {
+      "sha256": "b863d885bf6daf8ebb4791cc496e7fd2b8920849c3436fe06be7088f8b5c2828",
+      "bytes": 41055
+    },
+    "tools/refresh_pending_templates.py": {
+      "sha256": "6f6aec6f01adedd37a2829c8d7689cc7e40eda56a9bc4e6ef4959fc03a380388",
+      "bytes": 3294
+    }
+  }
+}

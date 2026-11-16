@@ -1,5 +1,20 @@
 # EVIDENCE_INDEX.md — Chỉ mục bằng chứng và chuỗi đính chính (Master Evidence Index)
 
+## WAVE_ID = PLANNER_AUTONOMOUS_COMPOSITION_AND_SEARCH_EFFICIENCY
+
+RUN_ID = planner-autonomous-composition-and-search-efficiency
+REPORT = docs/evaluation/geometry/runs/planner-autonomous-composition-and-search-efficiency/FINAL_PLANNER_SEARCH_REPORT.md
+ARTIFACT_DIRECTORY = docs/evaluation/geometry/runs/planner-autonomous-composition-and-search-efficiency/
+START_BASE = 39b2f3691
+CODE_COMMIT = 8d12e93c4 (autonomous distance_lines planning/kernel, sibling _pending coalescing, is_desc memo keying, cross-rule chain_quotes/reuse_through_point, precondition-first pruning, CACHE_VERSION 142); harness/pending-templates 3fa23e481; candidate freeze 009c06df1 (cay_lam_viec_sach=true, measured_system a9e6a372da73497b..., 120 files)
+CLASSIFICATION = DEVELOPMENT_EVIDENCE_ON_NOVEL_COMPOSITION_AND_OFFLINE_REGRESSION; AUTONOMOUS_COMPOSITION_AND_SEARCH_EFFICIENCY; INDEPENDENT_GENERALIZATION NOT_MEASURED; PUBLICATION BLOCKED_PENDING_OWNER_REVIEW
+PRODUCT_CHANGE = YES; registry.py, typed_fact_next_bridge.py, planner.py, engine.py, main.py (CACHE_VERSION 141 -> 142, cache_identity.lock.json 6233c43c395c9b49...); extraction surface hashes unchanged; measured files 120
+MODEL_REQUEST_COUNT = 0
+VERIFICATION = run.json; PLANNER_DISCOVERY_BASELINE.md; PLANNER_SEARCH_IMPLEMENTATION_REPORT.md; CACHE_SEMANTIC_INTEGRITY_REPORT.md; FINAL_PLANNER_SEARCH_REPORT.md; NOVEL_COMPOSITION_EVALUATION.json; pending_template_refresh.json
+CORRECTS = compositional-planner-capability-expansion (`MG9` diagnosis precision: planner failure was caused by 21 precondition-rejected candidates counting toward `MAX_EFFECT_CANDIDATES=48`; with precondition-first pruning planner succeeds `33 <= 48` and Route D fails closed at `IR_MEMORY_BUDGET_EXCEEDED` `34 > 32`)
+CORRECTED_BY = NONE
+LIMITATIONS = development benchmark (`reasoning_matrix` 72: 61/62 pos, 10/10 neg, 0 wrong, MG9 IR_MEMORY_BUDGET_EXCEEDED; r1-probe + C3-dist 13/13 + 6/6 adversarials; 21/21 novel positive cases across 4 solid families + 11/11 negative/cycle/tamper/budget cases; NL isolation 4/4 expected local cases, E1 dual-@id angle clause stays LOCAL_PARSE_PARTIAL); FE-2/3/4/6 BLOCKED_OWNERSHIP; H-1 NOT_MEASURED, W2/W3 untouched, real student study NOT_MEASURED, C21 PENDING_OWNER_DECISION, publication HEAD blocked pending owner review.
+
 ## WAVE_ID = COMPOSITIONAL_PLANNER_CAPABILITY_EXPANSION
 
 RUN_ID = compositional-planner-capability-expansion
