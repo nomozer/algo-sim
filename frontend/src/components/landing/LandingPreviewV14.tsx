@@ -7,7 +7,7 @@ import { LandingStorytellingV14 } from "./LandingStorytellingV14";
 export function LandingPreviewV14() {
   return (
     <div id="view-landing" className="axo-sp-root axo-v14-root">
-      <LandingHeader />
+      <LandingHeader presentation="v14" />
       <main id="landing-main" className="axo-sp-main axo-v14-main">
         <LandingHeroV14 />
         <LandingStorytellingV14 />

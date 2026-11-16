@@ -9,6 +9,10 @@ export interface LandingSectionNavItem {
   readonly label: string;
 }
 
+export interface LandingHeaderProps {
+  readonly presentation?: "default" | "v14";
+}
+
 const LANDING_NAV_ITEMS: readonly LandingSectionNavItem[] = [
   { id: "landing-hero", label: "Giới thiệu" },
   { id: "cach-hoat-dong", label: "Cách hoạt động" },
@@ -21,7 +25,8 @@ const ROLE_LABELS: Record<"student" | "teacher" | "admin", string> = {
   admin: "Quản trị viên",
 };
 
-export function LandingHeader() {
+export function LandingHeader({ presentation = "default" }: LandingHeaderProps = {}) {
+  const isV14 = presentation === "v14";
   const user = useAuthStore((s) => s.user);
   const [scrolled, setScrolled] = useState(false);
   const [activeId, setActiveId] = useState<string>("landing-hero");
@@ -200,14 +205,23 @@ export function LandingHeader() {
     clickLockUntilRef.current = Date.now() + 900;
     setMobileOpen(false);
     if (typeof document === "undefined") return;
+    if (typeof window !== "undefined" && sectionId === "landing-hero") {
+      const reduced = Boolean(
+        window.matchMedia?.("(prefers-reduced-motion: reduce)")?.matches,
+      );
+      window.scrollTo({ top: 0, behavior: reduced ? "auto" : "smooth" });
+      return;
+    }
     const target = document.getElementById(sectionId);
     target?.scrollIntoView({ behavior: "smooth", block: "start" });
   };
 
+  const navHoverState = hoveredId === null ? "rest" : hoveredId === activeId ? "active" : "other";
+
   return (
     <header
       id="landing-header"
-      className={`axo-sp-header${scrolled ? " is-scrolled" : ""}${mobileOpen ? " is-menu-open" : ""}`}
+      className={`axo-sp-header${isV14 ? " is-v14" : ""}${scrolled ? " is-scrolled" : ""}${mobileOpen ? " is-menu-open" : ""}`}
     >
       <div className="axo-sp-header-inner">
         <a
@@ -229,7 +243,8 @@ export function LandingHeader() {
         <nav
           id="landing-nav"
           ref={navRef}
-          className="axo-sp-nav"
+          className={`axo-sp-nav${isV14 ? " is-v14" : ""}`}
+          data-nav-hover-state={isV14 ? navHoverState : undefined}
           aria-label="Điều hướng trang giới thiệu"
           onMouseLeave={() => setHoveredId(null)}
         >
@@ -243,7 +258,9 @@ export function LandingHeader() {
             }}
           />
           {LANDING_NAV_ITEMS.map((item) => {
-            const isCurrent = displayId === item.id;
+            const isSectionActive = activeId === item.id;
+            const isHovered = hoveredId === item.id;
+            const isCurrent = isV14 ? isSectionActive : displayId === item.id;
             return (
               <a
                 key={item.id}
@@ -252,8 +269,8 @@ export function LandingHeader() {
                 }}
                 id={`nav-landing-${item.id}`}
                 href={`#${item.id}`}
-                className={`axo-sp-nav-link${isCurrent ? " is-active" : ""}`}
-                aria-current={activeId === item.id ? "location" : undefined}
+                className={`axo-sp-nav-link${isCurrent ? " is-active" : ""}${isV14 && isSectionActive ? " is-current-section" : ""}${isV14 && isHovered ? " is-hovered" : ""}`}
+                aria-current={isSectionActive ? "location" : undefined}
                 onMouseEnter={() => setHoveredId(item.id)}
                 onFocus={() => setHoveredId(item.id)}
                 onBlur={() => setHoveredId(null)}

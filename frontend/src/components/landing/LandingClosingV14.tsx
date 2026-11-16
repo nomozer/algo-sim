@@ -56,9 +56,19 @@ export function scrollToLandingSection(id: string) {
   const reduced =
     typeof window !== "undefined" &&
     Boolean(window.matchMedia?.("(prefers-reduced-motion: reduce)")?.matches);
+  const behavior: ScrollBehavior = reduced ? "auto" : "smooth";
+  if (
+    id === "landing-hero" &&
+    typeof window !== "undefined" &&
+    (window.scrollY || window.pageYOffset || 0) > 0 &&
+    typeof window.scrollTo === "function"
+  ) {
+    window.scrollTo({ top: 0, behavior });
+    return;
+  }
   document
     .getElementById(id)
-    ?.scrollIntoView({ behavior: reduced ? "auto" : "smooth", block: "start" });
+    ?.scrollIntoView({ behavior, block: "start" });
 }
 
 export function LandingFooterV14() {

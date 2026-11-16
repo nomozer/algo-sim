@@ -17,10 +17,12 @@ export interface StoryStageV14Spec {
   readonly shortNum: string;
   readonly desktopTag: string;
   readonly mobileShortTag: string;
+  readonly epistemicRole: string;
   readonly chapterHeading: string;
   readonly title: string;
   readonly summary: string;
   readonly relationNote: string;
+  readonly establishedState: string;
   readonly camera: {
     readonly yaw: number;
     readonly pitch: number;
@@ -40,17 +42,19 @@ export const STORY_STAGES_V14: readonly StoryStageV14Spec[] = [
     shortNum: "1",
     desktopTag: "Từ đề bài",
     mobileShortTag: "Đề bài",
+    epistemicRole: "Giả thiết",
     chapterHeading: "Chặng 1: Từ đề bài",
-    title: "Ghim giả thiết cạnh a = 4 và ba điểm M, N, P",
+    title: "Xác lập lăng trụ đứng và ba trung điểm M, N, P",
     summary:
-      "Từ đề bài lăng trụ tam giác đều ABC.A′B′C′ tất cả các cạnh bằng 4, Axo dựng nền khối không gian và đặt ba trung điểm gốc M ∈ AB, N ∈ AC, P ∈ CC′.",
-    relationNote: "Giả thiết gốc: ABC.A′B′C′ đều cạnh a = 4 · Trung điểm M, N, P",
+      "Từ đề bài lăng trụ tam giác đều ABC.A′B′C′ (hai đáy tam giác đều, các cạnh bên vuông góc mặt đáy), Axo dựng khung không gian và đặt ba trung điểm gốc M ∈ AB, N ∈ AC, P ∈ CC′.",
+    relationNote: "Giả thiết: Lăng trụ đứng đáy đều ABC.A′B′C′ · Trung điểm M, N, P",
+    establishedState: "ΔABC, ΔA′B′C′ đều · AA′ ⊥ (ABC) · M, N, P cố định",
     camera: {
-      yaw: -0.28,
-      pitch: 0.31,
+      yaw: -0.36,
+      pitch: 0.28,
       zoom: 1,
       extrude: 1,
-      prismBuild: 0.18,
+      prismBuild: 0.22,
       planeSweep: 0,
       parallelCue: 0,
       traceProgress: 0,
@@ -62,13 +66,15 @@ export const STORY_STAGES_V14: readonly StoryStageV14Spec[] = [
     shortNum: "2",
     desktopTag: "Dựng không gian",
     mobileShortTag: "Dựng hình",
+    epistemicRole: "Đối tượng đã dựng",
     chapterHeading: "Chặng 2: Dựng không gian",
     title: "Dựng mặt phẳng cắt (MNP) qua lòng khối lăng trụ",
     summary:
-      "Khối lăng trụ đứng hoàn chỉnh hiện lên cùng mặt phẳng cắt (MNP), nối hai giao tuyến xuất phát MN trên đáy và NP trên mặt bên (ACC′A′).",
-    relationNote: "Cấu trúc không gian: (MNP) cắt (ABC) theo MN và cắt (ACC′A′) theo NP",
+      "Khối lăng trụ đứng hoàn chỉnh hiện lên cùng mặt phẳng cắt (MNP), nối hai giao tuyến xuất phát MN trên đáy (ABC) và NP trên mặt bên (ACC′A′).",
+    relationNote: "Đối tượng đã dựng: (MNP) cắt (ABC) theo MN và cắt (ACC′A′) theo NP",
+    establishedState: "Mặt phẳng (MNP) xác định · Hai giao tuyến mở đầu MN, NP",
     camera: {
-      yaw: -0.19,
+      yaw: -0.18,
       pitch: 0.32,
       zoom: 1,
       extrude: 1,
@@ -84,14 +90,16 @@ export const STORY_STAGES_V14: readonly StoryStageV14Spec[] = [
     shortNum: "3",
     desktopTag: "Xác lập quan hệ",
     mobileShortTag: "Quan hệ",
+    epistemicRole: "Quan hệ quan sát được",
     chapterHeading: "Chặng 3: Xác lập quan hệ",
     title: "Truyền quan hệ song song MN ∥ BC để tìm Q ∈ BB′",
     summary:
-      "Đường trung bình MN song song với cạnh đáy BC trong (ABC). Vì BC nằm trong mặt bên (BCC′B′), giao tuyến qua P phải song song BC và cắt cạnh BB′ đúng tại Q.",
-    relationNote: "Quan hệ song song: MN ∥ BC ⇒ PQ ∥ BC · Khóa điểm Q ∈ BB′",
+      "Đường trung bình MN song song với cạnh đáy BC trong (ABC). Vì BC nằm trong mặt bên (BCC′B′), giao tuyến qua P phải song song BC và cắt cạnh BB′ tại trung điểm Q.",
+    relationNote: "Quan hệ quan sát được: MN ∥ BC ⇒ PQ ∥ BC · Xác định điểm Q ∈ BB′",
+    establishedState: "MN ∥ BC · (MNP) ∩ (BCC′B′) = PQ ∥ BC · Q trung điểm BB′",
     camera: {
-      yaw: -0.09,
-      pitch: 0.34,
+      yaw: 0.02,
+      pitch: 0.35,
       zoom: 1,
       extrude: 1,
       prismBuild: 1,
@@ -106,19 +114,21 @@ export const STORY_STAGES_V14: readonly StoryStageV14Spec[] = [
     shortNum: "4",
     desktopTag: "Kết quả",
     mobileShortTag: "Kết quả",
+    epistemicRole: "Kết quả xác lập",
     chapterHeading: "Chặng 4: Hoàn thiện thiết diện",
     title: "Khép kín thiết diện hình thang cân MNPQ",
     summary:
-      "Đoạn QM khép kín bốn cạnh trên mặt phẳng cắt (MNP), tạo thành thiết diện hình thang cân đối xứng sẵn sàng để kiểm chứng trực tiếp.",
-    relationNote: "Thiết diện khép kín: Hình thang cân MNPQ thuộc mặt phẳng (MNP)",
+      "Đoạn QM khép kín bốn cạnh trên mặt phẳng cắt (MNP). Hai cạnh đáy MN ∥ PQ và hai tam giác vuông △NCP ≅ △MBQ cho NP = QM, xác lập hình thang cân không phụ thuộc chiều cao lăng trụ.",
+    relationNote: "Kết quả xác lập: Thiết diện phẳng hình thang cân MNPQ trên (MNP)",
+    establishedState: "MNPQ đồng phẳng · MN ∥ PQ · NP = QM (hình thang cân)",
     camera: {
-      yaw: 0.02,
-      pitch: 0.35,
+      yaw: 0.15,
+      pitch: 0.31,
       zoom: 1,
       extrude: 1,
       prismBuild: 1,
       planeSweep: 1,
-      parallelCue: 0.45,
+      parallelCue: 0.5,
       traceProgress: 1,
       sectionFill: 1,
     },
@@ -195,50 +205,50 @@ export function computeChapterEnvelope(
     return { opacity: 1, offsetY: 0, isVisible: true };
   }
   const p = clamp01(progress);
-  const w = 0.038;
+  const w = 0.032;
 
   if (index === 0) {
-    if (p >= 0.25) return { opacity: 0, offsetY: -14, isVisible: false };
+    if (p >= 0.25) return { opacity: 0, offsetY: -16, isVisible: false };
     if (p > 0.25 - w) {
       const u = smoothstep(0.25 - w, 0.25, p);
-      return { opacity: 1 - 0.62 * u, offsetY: -14 * u, isVisible: true };
+      return { opacity: 1 - 0.42 * u, offsetY: -16 * u, isVisible: true };
     }
     return { opacity: 1, offsetY: 0, isVisible: true };
   }
 
   if (index === 1) {
-    if (p < 0.25) return { opacity: 0, offsetY: 14, isVisible: false };
-    if (p >= 0.5) return { opacity: 0, offsetY: -14, isVisible: false };
+    if (p < 0.25) return { opacity: 0, offsetY: 16, isVisible: false };
+    if (p >= 0.5) return { opacity: 0, offsetY: -16, isVisible: false };
     if (p < 0.25 + w) {
       const u = smoothstep(0.25, 0.25 + w, p);
-      return { opacity: 0.38 + 0.62 * u, offsetY: 14 * (1 - u), isVisible: true };
+      return { opacity: 0.58 + 0.42 * u, offsetY: 16 * (1 - u), isVisible: true };
     }
     if (p > 0.5 - w) {
       const u = smoothstep(0.5 - w, 0.5, p);
-      return { opacity: 1 - 0.62 * u, offsetY: -14 * u, isVisible: true };
+      return { opacity: 1 - 0.42 * u, offsetY: -16 * u, isVisible: true };
     }
     return { opacity: 1, offsetY: 0, isVisible: true };
   }
 
   if (index === 2) {
-    if (p < 0.5) return { opacity: 0, offsetY: 14, isVisible: false };
-    if (p >= 0.75) return { opacity: 0, offsetY: -14, isVisible: false };
+    if (p < 0.5) return { opacity: 0, offsetY: 16, isVisible: false };
+    if (p >= 0.75) return { opacity: 0, offsetY: -16, isVisible: false };
     if (p < 0.5 + w) {
       const u = smoothstep(0.5, 0.5 + w, p);
-      return { opacity: 0.38 + 0.62 * u, offsetY: 14 * (1 - u), isVisible: true };
+      return { opacity: 0.58 + 0.42 * u, offsetY: 16 * (1 - u), isVisible: true };
     }
     if (p > 0.75 - w) {
       const u = smoothstep(0.75 - w, 0.75, p);
-      return { opacity: 1 - 0.62 * u, offsetY: -14 * u, isVisible: true };
+      return { opacity: 1 - 0.42 * u, offsetY: -16 * u, isVisible: true };
     }
     return { opacity: 1, offsetY: 0, isVisible: true };
   }
 
   if (index === 3) {
-    if (p < 0.75) return { opacity: 0, offsetY: 14, isVisible: false };
+    if (p < 0.75) return { opacity: 0, offsetY: 16, isVisible: false };
     if (p < 0.75 + w) {
       const u = smoothstep(0.75, 0.75 + w, p);
-      return { opacity: 0.38 + 0.62 * u, offsetY: 14 * (1 - u), isVisible: true };
+      return { opacity: 0.58 + 0.42 * u, offsetY: 16 * (1 - u), isVisible: true };
     }
     return { opacity: 1, offsetY: 0, isVisible: true };
   }
@@ -262,8 +272,8 @@ export function interpolateStoryPose(
     };
   }
 
-  // Piecewise smooth keyframes aligned cleanly with chapter beats
-  const k = [0.1, 0.38, 0.65, 0.9] as const;
+  // Piecewise smooth keyframes aligned with the 4 scroll chapters [0..0.25..0.50..0.75..1]
+  const k = [0.06, 0.32, 0.58, 0.84] as const;
   let s0 = STORY_STAGES_V14[0].camera;
   let s1 = STORY_STAGES_V14[0].camera;
   let u = 0;
@@ -374,14 +384,72 @@ function isFaceFrontFacing(
 }
 
 const STORY_SVG_W = 640;
-const STORY_SVG_H = 470;
-const STORY_PLANE_QUAD = computeBoundedPlaneQuad(
-  LANDING_PRISM_STORY_SPEC.sectionLoop.map(
-    (id) => LANDING_PRISM_STORY_SPEC.pointMap[id].pos,
-  ),
-  [Math.sqrt(3), -Math.sqrt(3), -1],
-  0.34,
-);
+const STORY_SVG_H = 480;
+const PRISM_HEIGHT_SCALE = 1.16;
+
+function scaleStoryHeight(pt: Vec3Tuple, baseY: number, factor = PRISM_HEIGHT_SCALE): Vec3Tuple {
+  return [pt[0], baseY + (pt[1] - baseY) * factor, pt[2]];
+}
+
+const STORY_PLANE_QUAD = (() => {
+  const pMap = LANDING_PRISM_STORY_SPEC.pointMap;
+  const baseY = pMap["A"].pos[1];
+  const m = scaleStoryHeight(pMap["M"].pos, baseY);
+  const n = scaleStoryHeight(pMap["N"].pos, baseY);
+  const p = scaleStoryHeight(pMap["P"].pos, baseY);
+  const q = scaleStoryHeight(pMap["Q"].pos, baseY);
+  const ux = n[0] - m[0];
+  const uy = n[1] - m[1];
+  const uz = n[2] - m[2];
+  const vx = p[0] - m[0];
+  const vy = p[1] - m[1];
+  const vz = p[2] - m[2];
+  const normal: Vec3Tuple = [
+    uy * vz - uz * vy,
+    uz * vx - ux * vz,
+    ux * vy - uy * vx,
+  ];
+  return computeBoundedPlaneQuad([m, n, p, q], normal, 0.34);
+})();
+
+function buildParallelChevronD(a: ProjectedPoint2D, b: ProjectedPoint2D): string {
+  const dx = b.x - a.x;
+  const dy = b.y - a.y;
+  const len = Math.hypot(dx, dy) || 1;
+  const ux = dx / len;
+  const uy = dy / len;
+  const nx = -uy;
+  const ny = ux;
+  const mx = (a.x + b.x) * 0.5;
+  const my = (a.y + b.y) * 0.5;
+  const buildOne = (cx: number, cy: number) => {
+    const tipX = cx + ux * 3.6;
+    const tipY = cy + uy * 3.6;
+    const arm1X = cx - ux * 3.2 + nx * 3.8;
+    const arm1Y = cy - uy * 3.2 + ny * 3.8;
+    const arm2X = cx - ux * 3.2 - nx * 3.8;
+    const arm2Y = cy - uy * 3.2 - ny * 3.8;
+    return `M ${arm1X.toFixed(1)} ${arm1Y.toFixed(1)} L ${tipX.toFixed(1)} ${tipY.toFixed(1)} L ${arm2X.toFixed(1)} ${arm2Y.toFixed(1)}`;
+  };
+  return `${buildOne(mx - ux * 3.2, my - uy * 3.2)} ${buildOne(mx + ux * 3.8, my + uy * 3.8)}`;
+}
+
+function buildDoubleTickD(a: ProjectedPoint2D, b: ProjectedPoint2D): string {
+  const dx = b.x - a.x;
+  const dy = b.y - a.y;
+  const len = Math.hypot(dx, dy) || 1;
+  const ux = dx / len;
+  const uy = dy / len;
+  const nx = (-dy / len) * 4.2;
+  const ny = (dx / len) * 4.2;
+  const mx = (a.x + b.x) * 0.5;
+  const my = (a.y + b.y) * 0.5;
+  const off = 2.4;
+  return [
+    `M ${(mx - ux * off - nx).toFixed(1)} ${(my - uy * off - ny).toFixed(1)} L ${(mx - ux * off + nx).toFixed(1)} ${(my - uy * off + ny).toFixed(1)}`,
+    `M ${(mx + ux * off - nx).toFixed(1)} ${(my + uy * off - ny).toFixed(1)} L ${(mx + ux * off + nx).toFixed(1)} ${(my + uy * off + ny).toFixed(1)}`,
+  ].join(" ");
+}
 
 function PrismEditorialStage({
   pose,
@@ -401,7 +469,7 @@ function PrismEditorialStage({
       if (id === "A" || id === "B" || id === "C" || id === "M" || id === "N") {
         return p;
       }
-      return [p[0], baseY + (p[1] - baseY) * pose.extrude, p[2]];
+      return scaleStoryHeight(p, baseY, PRISM_HEIGHT_SCALE * pose.extrude);
     };
 
     const coords: Record<string, Vec3Tuple> = {};
@@ -420,9 +488,9 @@ function PrismEditorialStage({
       coords[key] = extrudeVec(key);
     }
 
-    const scale = 64 * pose.zoom;
+    const scale = 56 * pose.zoom;
     const cx = STORY_SVG_W * 0.5;
-    const cy = 226;
+    const cy = 248;
     const proj: Record<string, ProjectedPoint2D> = {};
     for (const [k, v] of Object.entries(coords)) {
       proj[k] = projectPrismPoint3D(v, pose.yaw, pose.pitch, cx, cy, scale);
@@ -641,10 +709,41 @@ function PrismEditorialStage({
       STORY_SVG_W,
       STORY_SVG_H,
       28,
-      28,
-      28,
       30,
+      22,
+      26,
     );
+
+    const makeBaseEqTick = (aId: string, bId: string, tFrac: number) => {
+      const pa = proj[aId];
+      const pb = proj[bId];
+      const mx = lerp(pa.x, pb.x, tFrac);
+      const my = lerp(pa.y, pb.y, tFrac);
+      const dx = pb.x - pa.x;
+      const dy = pb.y - pa.y;
+      const len = Math.hypot(dx, dy) || 1;
+      const nx = (-dy / len) * 4.2;
+      const ny = (dx / len) * 4.2;
+      return `M ${(mx - nx).toFixed(1)} ${(my - ny).toFixed(1)} L ${(mx + nx).toFixed(1)} ${(my + ny).toFixed(1)}`;
+    };
+    const equilateralBaseTicksD = [
+      makeBaseEqTick("A", "B", 0.3),
+      makeBaseEqTick("B", "C", 0.5),
+      makeBaseEqTick("A", "C", 0.3),
+    ].join(" ");
+
+    const parallelChevronsD = [
+      buildParallelChevronD(proj["M"], proj["N"]),
+      buildParallelChevronD(proj["B"], proj["C"]),
+      ...(pose.activeStageIndex >= 2 && (pose.parallelCue > 0.25 || pose.traceProgress > 0.56)
+        ? [buildParallelChevronD(proj["Q"], proj["P"])]
+        : []),
+    ].join(" ");
+
+    const congruenceLegsD = [
+      buildDoubleTickD(proj["N"], proj["P"]),
+      buildDoubleTickD(proj["M"], proj["Q"]),
+    ].join(" ");
 
     const labels = visibleIds.map((id, i) => ({
       id,
@@ -669,7 +768,7 @@ function PrismEditorialStage({
       }))
       .filter((item) => item.front);
 
-    const haloCy = Math.min(432, (proj["A"].y + proj["B"].y + proj["C"].y) / 3 + 26);
+    const haloCy = Math.min(444, (proj["A"].y + proj["B"].y + proj["C"].y) / 3 + 26);
 
     return {
       proj,
@@ -677,6 +776,9 @@ function PrismEditorialStage({
       edges,
       frontLateralPolys,
       midpointTicks,
+      equilateralBaseTicksD,
+      parallelChevronsD,
+      congruenceLegsD,
       haloCy,
       rightAnglePath: `M ${raB1.x.toFixed(1)} ${raB1.y.toFixed(1)} L ${raC.x.toFixed(1)} ${raC.y.toFixed(1)} L ${raB2.x.toFixed(1)} ${raB2.y.toFixed(1)}`,
       basePts: fmt([proj["A"], proj["B"], proj["C"]]),
@@ -771,6 +873,13 @@ function PrismEditorialStage({
             opacity={(0.88 * scene.prismWeight).toFixed(3)}
           />
 
+          <path
+            className="axo-v14-svg-eq-tick"
+            d={scene.equilateralBaseTicksD}
+            fill="none"
+            opacity={Math.max(0.28, 0.85 * (1 - 0.5 * pose.sectionFill)).toFixed(3)}
+          />
+
           {scene.midpointTicks.map((tick) => (
             <line
               key={tick.key}
@@ -807,6 +916,11 @@ function PrismEditorialStage({
                   y2={scene.proj["Q"].y}
                 />
               )}
+              <path
+                className="axo-v14-svg-parallel-chevron"
+                d={scene.parallelChevronsD}
+                fill="none"
+              />
             </g>
           )}
 
@@ -840,6 +954,15 @@ function PrismEditorialStage({
                 strokeOpacity={Math.min(0.96, 0.45 + 0.51 * seg.u).toFixed(3)}
               />
             ) : null,
+          )}
+
+          {pose.sectionFill > 0.35 && (
+            <path
+              className="axo-v14-svg-leg-tick"
+              d={scene.congruenceLegsD}
+              fill="none"
+              opacity={Math.min(0.92, (pose.sectionFill - 0.35) * 1.54).toFixed(3)}
+            />
           )}
 
           {scene.labels.map((item) => {
@@ -1029,8 +1152,8 @@ export function LandingStorytellingV14() {
           </h2>
           <p className="axo-v14-story-lead">
             Cuộn xuống để quan sát mạch dựng liên tục trên lăng trụ tam giác đều
-            ABC.A′B′C′ cạnh a = 4: từ ba trung điểm gốc M, N, P đến thiết diện
-            hoàn chỉnh.
+            ABC.A′B′C′: từ giả thiết ba trung điểm M, N, P đến thiết diện hoàn
+            chỉnh.
           </p>
         </div>
 
@@ -1040,6 +1163,23 @@ export function LandingStorytellingV14() {
               <PrismEditorialStage pose={pose} reducedMotion={reducedMotion} />
 
               <div className="axo-v14-story-narrative">
+                <div className="axo-v14-story-rail" aria-hidden="true">
+                  {STORY_STAGES_V14.map((s, idx) => {
+                    const stateCls =
+                      idx === pose.activeStageIndex
+                        ? " is-current"
+                        : idx < pose.activeStageIndex
+                          ? " is-done"
+                          : "";
+                    return (
+                      <div key={s.shortNum} className={`axo-v14-story-rail-item${stateCls}`}>
+                        <span className="axo-v14-story-rail-bar" />
+                        <span className="axo-v14-story-rail-label">{`0${s.shortNum} · ${s.mobileShortTag}`}</span>
+                      </div>
+                    );
+                  })}
+                </div>
+
                 <ol
                   className="axo-v14-story-chapters"
                   aria-label="Các chặng dựng hình theo cuộn trang"
@@ -1075,13 +1215,21 @@ export function LandingStorytellingV14() {
                               }
                         }
                       >
-                        <div className="axo-v14-story-chapter-index">
-                          {stage.chapterHeading}
+                        <div className="axo-v14-story-chapter-meta">
+                          <span className="axo-v14-story-epistemic-badge">
+                            {stage.epistemicRole}
+                          </span>
+                          <span className="axo-v14-story-chapter-index">
+                            {stage.chapterHeading}
+                          </span>
                         </div>
                         <h3 className="axo-v14-story-chapter-title">{stage.title}</h3>
                         <p className="axo-v14-story-chapter-summary">
                           {stage.summary}
                         </p>
+                        <div className="axo-v14-story-epistemic-box">
+                          {stage.establishedState}
+                        </div>
                       </li>
                     );
                   })}

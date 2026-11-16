@@ -100,8 +100,13 @@ describe("AXO Landing — Scroll-Driven Spatial Storytelling", () => {
       expect(html).toContain(stage.chapterHeading);
     }
 
-    // Zero pre-displayed computed answers across rendered HTML and all 4 stage specs (preserves original given premise a = 4)
-    expect(html).toContain("a = 4");
+    // Zero pre-displayed computed answers AND zero assumed lateral edge length inferred from "lăng trụ tam giác đều"
+    expect(html).not.toContain("a = 4");
+    expect(html).not.toContain("tất cả các cạnh bằng 4");
+    expect(html).toContain("Giả thiết");
+    expect(html).toContain("Đối tượng đã dựng");
+    expect(html).toContain("Quan hệ quan sát được");
+    expect(html).toContain("Kết quả xác lập");
     expect(html).not.toContain("3√7");
     expect(html).not.toContain("2√2");
     expect(html).not.toContain("MN = 2");

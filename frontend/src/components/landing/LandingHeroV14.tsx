@@ -68,7 +68,7 @@ interface TrackedDisposable {
 interface ProjectedCallout {
   readonly id: string;
   readonly label: string;
-  readonly role: "vertex" | "seed" | "intersection" | "plane";
+  readonly role: "vertex" | "seed" | "intersection" | "plane" | "aux";
   readonly x: number;
   readonly y: number;
   readonly visible: boolean;
@@ -460,12 +460,22 @@ function HeroFallbackSvg() {
         points="214,82 164.5,271 214,178 365.5,241"
       />
 
+      {/* Coplanar horizontal base grid & Three-Perpendiculars dihedral witness (fallback SVG) */}
+      <line className="axo-v14-svg-grid-line" x1="181" y1="304" x2="371" y2="332" />
+      <line className="axo-v14-svg-grid-line" x1="214" y1="274" x2="377" y2="332" />
+      <line className="axo-v14-svg-grid-line" x1="243" y1="352" x2="315" y2="284" />
+      <line className="axo-v14-svg-grid-line" x1="295" y1="361" x2="365" y2="289" />
+
       {/* Hidden back edges & base diagonals + SA altitude */}
       <line className="axo-v14-svg-edge-hidden" x1="214" y1="274" x2="148" y2="334" />
       <line className="axo-v14-svg-edge-hidden" x1="214" y1="274" x2="416" y2="294" />
       <line className="axo-v14-svg-edge-hidden" x1="214" y1="274" x2="338" y2="370" strokeOpacity="0.34" />
       <line className="axo-v14-svg-edge-hidden" x1="148" y1="334" x2="416" y2="294" strokeOpacity="0.34" />
       <line className="axo-v14-svg-edge-altitude" x1="214" y1="82" x2="214" y2="274" />
+      {/* Three-Perpendiculars theorem witness: AK perp NP, MK perp NP, dihedral arc at K */}
+      <line className="axo-v14-svg-edge-altitude" x1="214" y1="274" x2="310" y2="342" strokeOpacity="0.52" />
+      <line className="axo-v14-svg-section-trace" x1="214" y1="178" x2="310" y2="342" strokeWidth="1.45" strokeOpacity="0.68" />
+      <path className="axo-v14-svg-section-trace" d="M 284 323 A 32 32 0 0 1 294 307" fill="none" strokeWidth="1.5" strokeOpacity="0.72" />
       {/* Extended base trace along NP */}
       <line className="axo-v14-svg-edge-altitude" x1="190" y1="360" x2="424" y2="325" strokeOpacity="0.46" />
 
@@ -498,6 +508,7 @@ function HeroFallbackSvg() {
       />
 
       <circle className="axo-v14-svg-vertex-dot" cx="214" cy="82" r="3.4" />
+      <circle className="axo-v14-svg-seed-dot" cx="310" cy="342" r="2.7" />
       <circle className="axo-v14-svg-seed-dot" cx="214" cy="178" r="4.0" />
       <circle className="axo-v14-svg-seed-dot" cx="243" cy="352" r="4.0" />
       <circle className="axo-v14-svg-seed-dot" cx="377" cy="332" r="4.0" />
@@ -508,6 +519,7 @@ function HeroFallbackSvg() {
       <text className="axo-v14-svg-label-seed" x="198" y="176">M</text>
       <text className="axo-v14-svg-label-seed" x="242" y="372">N</text>
       <text className="axo-v14-svg-label-seed" x="394" y="344">P</text>
+      <text className="axo-v14-svg-label-aux" x="313" y="357">K</text>
       <text className="axo-v14-svg-label-inter" x="148" y="271">E</text>
       <text className="axo-v14-svg-label-inter" x="382" y="238">F</text>
     </svg>
@@ -569,10 +581,10 @@ function HeroSpatialStage() {
     const camera = new THREE.PerspectiveCamera(33, width / height, 0.1, 100);
     const [lookX, lookY, lookZ] = LANDING_PYRAMID_SAMPLE.defaultLookAt;
     const baseCamOffset = new THREE.Vector3(10.8, 5.9, -7.2);
-    const heroLookTarget = new THREE.Vector3(lookX, lookY + 0.14, lookZ);
+    const heroLookTarget = new THREE.Vector3(lookX, lookY + 0.28, lookZ);
     const applyHeroCameraFraming = (w: number, h: number) => {
       const aspect = Math.max(0.72, w / Math.max(1, h));
-      const scaleDist = aspect < 1.12 ? 1 + (1.12 - aspect) * 0.42 : 1;
+      const scaleDist = aspect < 1.12 ? 1 + (1.12 - aspect) * 0.46 : 1;
       camera.aspect = w / Math.max(1, h);
       camera.position.copy(heroLookTarget).addScaledVector(baseCamOffset, scaleDist);
       camera.lookAt(heroLookTarget);
@@ -688,6 +700,85 @@ function HeroSpatialStage() {
     const rightAngle1 = createLineSegment(A.clone().add(uAS), footCorner, 0x0075de, 0.58, false, track);
     const rightAngle2 = createLineSegment(A.clone().add(uAB), footCorner, 0x0075de, 0.58, false, track);
     root.add(rightAngle1, rightAngle2);
+
+    // 1b. Exact coplanar (ABCD) coordinate grid + AB perp AD corner witness
+    const baseGridLines: THREE.Line[] = [];
+    const vecAB = new THREE.Vector3().subVectors(B, A);
+    const vecAD = new THREE.Vector3().subVectors(D, A);
+    for (const frac of [0.25, 0.5, 0.75]) {
+      const p1 = A.clone().addScaledVector(vecAB, frac).setY(A.y - 0.004);
+      const p2 = D.clone().addScaledVector(vecAB, frac).setY(A.y - 0.004);
+      const g1 = createLineSegment(p1, p2, 0x615d59, 0.14, false, track);
+      g1.renderOrder = 1;
+      root.add(g1);
+      baseGridLines.push(g1);
+
+      const q1 = A.clone().addScaledVector(vecAD, frac).setY(A.y - 0.004);
+      const q2 = B.clone().addScaledVector(vecAD, frac).setY(A.y - 0.004);
+      const g2 = createLineSegment(q1, q2, 0x615d59, 0.14, false, track);
+      g2.renderOrder = 1;
+      root.add(g2);
+      baseGridLines.push(g2);
+    }
+    const uAD = new THREE.Vector3().subVectors(D, A).normalize().multiplyScalar(0.26);
+    const baseCorner = A.clone().add(uAB).add(uAD);
+    const basePerp1 = createLineSegment(A.clone().add(uAB), baseCorner, 0x615d59, 0.34, false, track);
+    const basePerp2 = createLineSegment(A.clone().add(uAD), baseCorner, 0x615d59, 0.34, false, track);
+    root.add(basePerp1, basePerp2);
+
+    // 1c. Exact Three-Perpendiculars dihedral witness:
+    // K = midpoint(N, P) = (3, 3, 0) in domain -> AK perp NP & MK perp NP -> angle MKA = ((MNP), (ABCD))
+    const K = new THREE.Vector3().addVectors(N, P).multiplyScalar(0.5);
+    const dihedralBaseAK = createLineSegment(
+      A.clone().setY(A.y + 0.006),
+      K.clone().setY(A.y + 0.006),
+      0x0075de,
+      0.52,
+      true,
+      track,
+    );
+    dihedralBaseAK.renderOrder = 2;
+    const dihedralSlopeMK = createLineSegment(
+      M,
+      K.clone().addScaledVector(cutPlaneNormal, 0.01),
+      0xdd5b00,
+      0.74,
+      false,
+      track,
+    );
+    dihedralSlopeMK.renderOrder = 6;
+    const uKA = new THREE.Vector3().subVectors(A, K).normalize();
+    const uKN = new THREE.Vector3().subVectors(N, K).normalize();
+    const uKM = new THREE.Vector3().subVectors(M, K).normalize();
+    const kPerpCorner = K.clone().addScaledVector(uKA, 0.22).addScaledVector(uKN, 0.22);
+    const kPerp1 = createLineSegment(K.clone().addScaledVector(uKA, 0.22), kPerpCorner, 0x0075de, 0.64, false, track);
+    const kPerp2 = createLineSegment(K.clone().addScaledVector(uKN, 0.22), kPerpCorner, 0x0075de, 0.64, false, track);
+    kPerp1.renderOrder = 5;
+    kPerp2.renderOrder = 5;
+
+    const dihedralArcPts: THREE.Vector3[] = [];
+    const dihedralArcRadius = 0.56;
+    const dihedralAxis = new THREE.Vector3().crossVectors(uKA, uKM).normalize();
+    const dihedralAngleRad = uKA.angleTo(uKM);
+    for (let i = 0; i <= 18; i++) {
+      const swept = uKA.clone().applyAxisAngle(dihedralAxis, dihedralAngleRad * (i / 18));
+      dihedralArcPts.push(K.clone().addScaledVector(swept, dihedralArcRadius));
+    }
+    const dihedralArcGeo = track(new THREE.BufferGeometry().setFromPoints(dihedralArcPts));
+    const dihedralArcMat = track(
+      new THREE.LineBasicMaterial({ color: 0xdd5b00, transparent: true, opacity: 0.72 }),
+    );
+    const dihedralArc = new THREE.Line(dihedralArcGeo, dihedralArcMat);
+    dihedralArc.renderOrder = 6;
+
+    const dihedralDotMat = track(
+      new THREE.MeshBasicMaterial({ color: 0x0075de, transparent: true, opacity: 0.78 }),
+    );
+    const dihedralDotK = new THREE.Mesh(track(new THREE.SphereGeometry(0.038, 12, 12)), dihedralDotMat);
+    dihedralDotK.position.copy(K);
+    dihedralDotK.renderOrder = 7;
+
+    root.add(dihedralBaseAK, dihedralSlopeMK, kPerp1, kPerp2, dihedralArc, dihedralDotK);
 
     // 2. Unified Pyramid Solid (luminous analytical face-normal shading, crisp front-solid / back-dashed edges)
     const lowerGroup = new THREE.Group();
@@ -995,7 +1086,50 @@ function HeroSpatialStage() {
     footDotF.position.copy(projF);
     footDotF.scale.setScalar(0.56);
     footDotF.renderOrder = 4;
-    root.add(projFootMesh, projFootRimLine, plumbLineE, plumbLineF, footDotE, footDotF);
+    const plumbFootE1 = createLineSegment(
+      projE.clone().add(new THREE.Vector3(-0.14, 0, 0)),
+      projE.clone().add(new THREE.Vector3(-0.14, 0.14, 0)),
+      0xdd5b00,
+      0.46,
+      false,
+      track,
+    );
+    const plumbFootE2 = createLineSegment(
+      projE.clone().add(new THREE.Vector3(0, 0.14, 0)),
+      projE.clone().add(new THREE.Vector3(-0.14, 0.14, 0)),
+      0xdd5b00,
+      0.46,
+      false,
+      track,
+    );
+    const plumbFootF1 = createLineSegment(
+      projF.clone().add(new THREE.Vector3(0, 0, 0.14)),
+      projF.clone().add(new THREE.Vector3(0, 0.14, 0.14)),
+      0xdd5b00,
+      0.46,
+      false,
+      track,
+    );
+    const plumbFootF2 = createLineSegment(
+      projF.clone().add(new THREE.Vector3(0, 0.14, 0)),
+      projF.clone().add(new THREE.Vector3(0, 0.14, 0.14)),
+      0xdd5b00,
+      0.46,
+      false,
+      track,
+    );
+    root.add(
+      projFootMesh,
+      projFootRimLine,
+      plumbLineE,
+      plumbLineF,
+      footDotE,
+      footDotF,
+      plumbFootE1,
+      plumbFootE2,
+      plumbFootF1,
+      plumbFootF2,
+    );
 
     const projectAnchors = (
       currentBeat: HeroStoryboardState,
@@ -1018,6 +1152,7 @@ function HeroSpatialStage() {
         { id: "P", label: "P", role: "seed", pos: P, lift: 0, visible: currentBeat.seedReveal > 0.25 },
         { id: "E", label: "E", role: "intersection", pos: E, lift: 0, visible: currentBeat.planeSweep > 0.55 },
         { id: "F", label: "F", role: "intersection", pos: F, lift: 0, visible: currentBeat.planeSweep > 0.55 },
+        { id: "K", label: "K", role: "aux", pos: K, lift: 0, visible: currentBeat.sectionFill > 0.35 },
       ];
       tmp.copy(pyramidCentroid);
       root.localToWorld(tmp);
@@ -1032,7 +1167,7 @@ function HeroSpatialStage() {
         const px = (tmp.x * 0.5 + 0.5) * cw;
         const py = (-tmp.y * 0.5 + 0.5) * ch;
         if (sp.id === "S") {
-          return { id: sp.id, x: px, y: py - 15 };
+          return { id: sp.id, x: px, y: py - 20 };
         }
         const dx = px - centerPx;
         const dy = py - centerPy;
@@ -1043,7 +1178,7 @@ function HeroSpatialStage() {
           y: py + (dy / len) * 18,
         };
       });
-      separateLabelPositions(candidates, cw, ch, 26, 18, 18, 22);
+      separateLabelPositions(candidates, cw, ch, 26, 18, 14, 22);
       return specs.map((sp, i) => ({
         id: sp.id,
         label: sp.label,
@@ -1086,6 +1221,24 @@ function HeroSpatialStage() {
       hiddenNodeMat.opacity = 0.45 * state.solidReveal;
       (rightAngle1.material as THREE.LineBasicMaterial).opacity = 0.58 * state.solidReveal;
       (rightAngle2.material as THREE.LineBasicMaterial).opacity = 0.58 * state.solidReveal;
+      (basePerp1.material as THREE.LineBasicMaterial).opacity = 0.34 * state.solidReveal;
+      (basePerp2.material as THREE.LineBasicMaterial).opacity = 0.34 * state.solidReveal;
+      for (const gl of baseGridLines) {
+        (gl.material as THREE.LineBasicMaterial).opacity = 0.14 * state.solidReveal;
+      }
+
+      (dihedralBaseAK.material as THREE.LineDashedMaterial).opacity = 0.52 * state.planeSweep;
+      dihedralBaseAK.visible = state.planeSweep > 0.12;
+      (kPerp1.material as THREE.LineBasicMaterial).opacity = 0.64 * state.planeSweep;
+      (kPerp2.material as THREE.LineBasicMaterial).opacity = 0.64 * state.planeSweep;
+      kPerp1.visible = state.planeSweep > 0.25;
+      kPerp2.visible = state.planeSweep > 0.25;
+      (dihedralSlopeMK.material as THREE.LineBasicMaterial).opacity = 0.74 * state.sectionFill;
+      dihedralSlopeMK.visible = state.sectionFill > 0.08;
+      dihedralArcMat.opacity = 0.72 * state.sectionFill;
+      dihedralArc.visible = state.sectionFill > 0.25;
+      dihedralDotMat.opacity = 0.78 * state.planeSweep;
+      dihedralDotK.visible = state.planeSweep > 0.18;
 
       root.scale.setScalar(0.95 + 0.05 * state.solidReveal);
       lowerMat.opacity = 0.66 * state.solidReveal;
@@ -1111,6 +1264,10 @@ function HeroSpatialStage() {
       projFootDotMat.opacity = 0.56 * state.planeSweep;
       footDotE.visible = state.planeSweep > 0.32;
       footDotF.visible = state.planeSweep > 0.32;
+      for (const pf of [plumbFootE1, plumbFootE2, plumbFootF1, plumbFootF2]) {
+        (pf.material as THREE.LineBasicMaterial).opacity = 0.46 * state.planeSweep;
+        pf.visible = state.planeSweep > 0.36;
+      }
 
       seedMat.opacity = state.seedReveal;
       for (const d of seedDots) {
@@ -1348,7 +1505,9 @@ function HeroSpatialStage() {
                     ? "axo-v14-svg-label-inter"
                     : c.role === "seed"
                       ? "axo-v14-svg-label-seed"
-                      : "axo-v14-svg-vertex-text"
+                      : c.role === "aux"
+                        ? "axo-v14-svg-label-aux"
+                        : "axo-v14-svg-vertex-text"
                 }
               >
                 {c.label}

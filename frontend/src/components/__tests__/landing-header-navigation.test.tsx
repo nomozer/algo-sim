@@ -113,4 +113,22 @@ describe("AXO Landing Page V1.2 — Header Auth Awareness, Guest Freedom & Acces
     expect(cssSrc).toContain(".axo-sp-mobile-link:focus-visible");
     expect(cssSrc).toContain(".axo-sp-header-account");
   });
+
+  it("V1.6 redesign: removes outer nav capsule wrapper in v14 mode and keeps constant glyph weight with gliding hover indicator", () => {
+    useAuthStore.setState({ user: null, resolved: true, error: null });
+    syncAuthForSSR();
+    const v14Html = renderToString(<LandingHeader presentation="v14" />);
+    const cssSrc = fs.readFileSync(
+      path.resolve(__dirname, "../landing/landing.css"),
+      "utf8",
+    );
+
+    expect(v14Html).toContain("axo-sp-nav is-v14");
+    expect(v14Html).toContain('data-nav-hover-state="rest"');
+    expect(v14Html).toContain("is-current-section");
+    expect(v14Html).not.toContain('id="btn-landing-header-login"');
+    expect(cssSrc).toContain(".axo-v14-root .axo-sp-nav.is-v14");
+    expect(cssSrc).toContain('.axo-v14-root .axo-sp-nav.is-v14[data-nav-hover-state="other"] .axo-sp-nav-pill');
+    expect(cssSrc).toContain(".axo-v14-root .axo-sp-nav.is-v14 .axo-sp-nav-link.is-current-section::after");
+  });
 });

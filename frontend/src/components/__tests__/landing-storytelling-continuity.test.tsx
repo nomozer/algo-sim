@@ -40,8 +40,11 @@ describe("AXO Landing V1.4 — Continuous Spatial Storytelling", () => {
     expect(initialHtml).toContain('data-story-chapter="0"');
     expect(initialHtml).toContain('data-story-chapter="3"');
 
-    // Zero pre-displayed math answers in Storytelling V1.4 (given premise a = 4 preserved cleanly)
-    expect(initialHtml).toContain("a = 4");
+    // Zero pre-displayed math answers and zero assumed lateral edge length in Storytelling V1.4
+    expect(initialHtml).not.toContain("a = 4");
+    expect(initialHtml).not.toContain("tất cả các cạnh bằng 4");
+    expect(initialHtml).toContain("Giả thiết");
+    expect(initialHtml).toContain("Kết quả xác lập");
     expect(initialHtml).not.toContain("3√7");
     expect(initialHtml).not.toContain("2√2");
     expect(initialHtml).not.toContain("MN = 2");

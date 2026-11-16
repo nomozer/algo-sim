@@ -26,7 +26,12 @@ describe("AXO Landing — Storytelling Scene Continuity & Geometric Epistemics",
     const sceneMatches = html.match(/id="landing-storytelling-scene"/g) ?? [];
     expect(sceneMatches).toHaveLength(1);
     expect(html).toContain("ABC.A′B′C′");
-    expect(html).toContain("a = 4");
+    expect(html).not.toContain("a = 4");
+    expect(html).not.toContain("tất cả các cạnh bằng 4");
+    expect(html).toContain("Giả thiết");
+    expect(html).toContain("Đối tượng đã dựng");
+    expect(html).toContain("Quan hệ quan sát được");
+    expect(html).toContain("Kết quả xác lập");
     expect(html).toContain("axo-v14-story-runway");
     expect(html).not.toContain("S(MNPQ) = 3√7");
     expect(html).not.toContain("MQ = NP = 2√2");

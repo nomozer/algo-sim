@@ -299,9 +299,9 @@ function buildFacesBufferGeometry(
         e1.subVectors(p1, p0);
         e2.subVectors(p2, p0);
         triNormal.crossVectors(e1, e2).normalize();
-        const key = Math.max(0, triNormal.dot(KEY_DIR)) * 0.22;
-        const rim = Math.max(0, triNormal.dot(RIM_DIR)) * 0.08;
-        const shade = Math.min(1.04, 0.8 + key + rim);
+        const key = Math.max(0, triNormal.dot(KEY_DIR)) * 0.28;
+        const rim = Math.max(0, triNormal.dot(RIM_DIR)) * 0.12;
+        const shade = Math.min(1.06, 0.72 + key + rim);
         const r = Math.min(1, baseColor.r * shade);
         const g = Math.min(1, baseColor.g * shade);
         const b = Math.min(1, baseColor.b * shade);
@@ -394,7 +394,7 @@ function ClosingFallbackSvg({ state }: { readonly state: ClosingStoryboardState 
         rx="118"
         ry="24"
       />
-      {/* Companion 1: Circumscribed radius-R ring & azimuth arc */}
+      {/* Companion 1: Circumscribed radius-R base ring & azimuth arc */}
       <ellipse
         className="axo-v14-svg-edge-altitude"
         cx="270"
@@ -404,15 +404,20 @@ function ClosingFallbackSvg({ state }: { readonly state: ClosingStoryboardState 
         fill="none"
         strokeOpacity="0.34"
       />
-      {/* Companion 2: Upper circumcircle reference around top hexagon */}
-      <ellipse
+      {/* Companion 2: Plane normal vector & perpendicular foot on Π */}
+      <line
         className="axo-v14-svg-edge-altitude"
-        cx="270"
-        cy="104"
-        rx="114"
-        ry="28"
+        x1="270"
+        y1="214"
+        x2="246"
+        y2="152"
+        strokeOpacity="0.72"
+      />
+      <path
+        className="axo-v14-svg-edge-altitude"
+        d="M 284 210 L 279 198 L 265 202"
         fill="none"
-        strokeOpacity="0.28"
+        strokeOpacity="0.65"
       />
 
       {/* Base hexagon */}
@@ -782,7 +787,26 @@ export function LandingClosingScene3D() {
       true,
     );
     normalStem.renderOrder = 7;
-    root.add(normalStem);
+
+    // Perpendicularity L-bracket proving normalStem perp Π at sectionCentroid
+    const uPlane = new THREE.Vector3()
+      .subVectors(sectionPts[0], sectionCentroid)
+      .normalize()
+      .multiplyScalar(0.24);
+    const nBracket = cutNormal.clone().multiplyScalar(0.24);
+    const centroidRaGeo = track(
+      new THREE.BufferGeometry().setFromPoints([
+        sectionCentroid.clone().add(uPlane),
+        sectionCentroid.clone().add(uPlane).add(nBracket),
+        sectionCentroid.clone().add(nBracket),
+      ]),
+    );
+    const centroidRaMat = track(
+      new THREE.LineBasicMaterial({ color: 0x0075de, transparent: true, opacity: 0.68 }),
+    );
+    const centroidRaLine = new THREE.Line(centroidRaGeo, centroidRaMat);
+    centroidRaLine.renderOrder = 7;
+    root.add(normalStem, centroidRaLine);
 
     // 4. Inclined Exploration Plane (Π)
     const planeGroup = new THREE.Group();
@@ -908,7 +932,7 @@ export function LandingClosingScene3D() {
       return dot;
     });
 
-    // Companion 3: Outer azimuth orbital arc + Top circumcircle reference
+    // Companion 3: Outer azimuth orbital arc + plumb foot ticks on base vertices
     const orbitArcPts: THREE.Vector3[] = [];
     const orbitR = 2.48;
     for (let i = 0; i <= 40; i++) {
@@ -925,21 +949,25 @@ export function LandingClosingScene3D() {
     orbitArcLine.renderOrder = 1;
     root.add(orbitArcLine);
 
-    const topRingPts: THREE.Vector3[] = [];
-    const topRingR = CLOSING_PRISM_RADIUS * 1.08;
-    for (let i = 0; i <= 64; i++) {
-      const theta = (i * Math.PI * 2) / 64;
-      topRingPts.push(
-        new THREE.Vector3(Math.cos(theta) * topRingR, topY, Math.sin(theta) * topRingR),
+    const footRings = [0, 2, 4].map((idx) => {
+      const bPt = bottomPts[idx];
+      const uIn = new THREE.Vector3(-bPt.x, 0, -bPt.z).normalize().multiplyScalar(0.18);
+      const uUp = new THREE.Vector3(0, 0.18, 0);
+      const fGeo = track(
+        new THREE.BufferGeometry().setFromPoints([
+          bPt.clone().add(uIn),
+          bPt.clone().add(uIn).add(uUp),
+          bPt.clone().add(uUp),
+        ]),
       );
-    }
-    const topRingGeo = track(new THREE.BufferGeometry().setFromPoints(topRingPts));
-    const topRingMat = track(
-      new THREE.LineBasicMaterial({ color: 0x0075de, transparent: true, opacity: 0.24 }),
-    );
-    const topRingLine = new THREE.Line(topRingGeo, topRingMat);
-    topRingLine.renderOrder = 1;
-    root.add(topRingLine);
+      const fMat = track(
+        new THREE.LineBasicMaterial({ color: 0xdd5b00, transparent: true, opacity: 0.45 }),
+      );
+      const fLine = new THREE.Line(fGeo, fMat);
+      fLine.renderOrder = 3;
+      root.add(fLine);
+      return fLine;
+    });
 
     let disposed = false;
     let isInView = false;
@@ -995,8 +1023,7 @@ export function LandingClosingScene3D() {
       raMat.opacity = 0.6 * state.solidReveal;
       (axisLine.material as THREE.LineDashedMaterial).opacity =
         0.56 * state.solidReveal;
-
-      topRingMat.opacity = 0.24 * state.solidReveal;
+      void topY;
 
       seedNodeMat.opacity = state.seedScale;
       for (const dot of seedDots) {
@@ -1015,11 +1042,18 @@ export function LandingClosingScene3D() {
       normalStem.visible = state.planeOpacity > 0.15;
       (normalStem.material as THREE.MeshBasicMaterial).opacity =
         0.72 * state.planeOpacity;
+      centroidRaLine.visible = state.planeOpacity > 0.25;
+      centroidRaMat.opacity = 0.68 * state.planeOpacity;
 
       for (const pg of plumbGuides) {
         pg.visible = state.planeOpacity > 0.35;
         (pg.material as THREE.LineDashedMaterial).opacity =
           0.34 * state.planeOpacity;
+      }
+      for (const fr of footRings) {
+        fr.visible = state.planeOpacity > 0.35;
+        (fr.material as THREE.LineBasicMaterial).opacity =
+          0.45 * state.planeOpacity;
       }
 
       interNodeMat.opacity = state.intersectionScale;
