@@ -1,0 +1,260 @@
+{
+  "schema": "axo-simulation-first-regression-summary/1",
+  "run_id": "simulation-first-mvp-stabilization",
+  "generated_at_utc": "2026-11-16T02:41:45Z",
+  "head_commit": "077e3671ac2fdaa4cb9ddb584a583e92667cda21",
+  "start_head": "9f8fc53e6b9269ec4ff0d7197096ef470e4c8532",
+  "branch": "feat/local-first-geometry-understanding",
+  "candidate_commit": "4d81be4b85e164c8596d2e9b53351b5df0a244f0",
+  "product_commit": "4d81be4b85e164c8596d2e9b53351b5df0a244f0",
+  "measured_system_hash": "beb18ce56298f1022f628fd923dffd98c0134b2d1ffd9cbc5b87efa280a408b3",
+  "measured_system_files": 120,
+  "cache_version": "141",
+  "environment": {
+    "ALLOW_LIVE_AI": "0",
+    "GEMINI_API_KEY": "EMPTY",
+    "HYBRID_ROUTE_MODE": "local-first",
+    "live_ai_calls": 0
+  },
+  "simulation_first_primary_kpis": {
+    "VERIFIED_3D_MODEL_RATE": {
+      "phase_b_family_matrix": "11/11 (100.0%)",
+      "vmmu_served_audit": "3/3 (100.0%) (r537, r460, r463)",
+      "chromium_e2e_served_runs": "14/14 (100.0%)"
+    },
+    "OBJECT_RELATION_COVERAGE": {
+      "undotted_prism_r463_before_fix": "10 objects, 0 perpendicular_witness",
+      "undotted_prism_r463_after_fix": "16/16 objects, 4/4 ENGINE_VERIFIED perpendicular_witness",
+      "dotted_vs_undotted_parity": "EXACT_PARITY (16 objects == 16 objects, 4 witnesses == 4 witnesses)"
+    },
+    "AUXILIARY_CONSTRUCTION_COMPLETENESS": {
+      "trace_section_proof_integrity": "PASS (trace_holds=true, auxiliary_points present)",
+      "trace_section_why_drawer_e2e": "PASS (gọi I là giao điểm... rendered in .geo3d-cac-buoc-vi-sao)",
+      "chromium_aux_toggle_restores": true
+    },
+    "TIMELINE_CONTINUITY_PASS_RATE": {
+      "phase_b_families": "11/11 (100.0%, 0 continuity errors, 0 premature prerequisites)",
+      "chromium_e2e_walks": "100.0% (0 premature prerequisites across all viewport runs)"
+    },
+    "PEDAGOGICAL_EXPLANATION_COVERAGE": {
+      "chromium_e2e": "100.0% (6/6 steps on r537, 4/4 steps on r463, .step-detail-sub + .geo3d-cac-buoc-vi-sao verified, 0 machine tokens)",
+      "context_inspector_and_source_binding": "point + edge + face chips -> #ctx-obj-title & #dock-prob-statement verified (0 machine tokens)"
+    },
+    "STUDENT_JOURNEY_E2E_PASS_RATE": {
+      "d1_14_step_journey": true,
+      "d2_ocr_and_multiproblem": true,
+      "d3_responsive_4_viewports": "4/4 (100.0%)",
+      "d5_zero_solver_spoiler": true,
+      "light_mode_verified": true,
+      "live_vlm_calls": 0
+    },
+    "TAXONOMY_REFUSAL_HONESTY_RATE": {
+      "chromium_e2e_refusals": "3/3 (100.0%)",
+      "capability_gap_mislabeled_as_missing_data": 0,
+      "machine_token_leaks": 0
+    },
+    "STUDENT_PERCEIVED_LATENCY_MS": {
+      "measurement_tag": "INCONCLUSIVE_SHARED_HOST_SWIFTSHADER",
+      "physical_low_end": "PHYSICAL_LOW_END_NOT_MEASURED",
+      "first_model_ms": {
+        "count": 17,
+        "median": 381,
+        "min": 245,
+        "max": 4903
+      },
+      "orbit_ms": {
+        "count": 5,
+        "median": 299.4,
+        "min": 188.9,
+        "max": 338
+      },
+      "timeline_next_ms": {
+        "count": 68,
+        "median": 123.95,
+        "min": 76.7,
+        "max": 251.7
+      }
+    }
+  },
+  "secondary_internal_sanity_metric": {
+    "SERVED_MATCHES_DATASET_KEY": {
+      "value": "3/3 (100.0%) on served VMMU audit items (r537->C: a√6/3, r460->C: a³√2/3, r463->D: 4a³√3)",
+      "tag": "INTERNAL_MATHEMATICAL_TRUTH_AUDIT_ONLY",
+      "ui_policy": "output-policy/1 Mode A hides final answers and A/B/C/D options from the student canvas and inspector"
+    }
+  },
+  "gates": [
+    {
+      "name": "backend_pytest",
+      "command": "D:\\Documents\\projects\\algo-sim\\backend\\.venv\\Scripts\\python.exe -B -m pytest -c backend/pytest.ini backend/tests -q",
+      "cwd": ".",
+      "started_at_utc": "2026-11-16T02:26:45Z",
+      "ended_at_utc": "2026-11-16T02:36:59Z",
+      "duration_seconds": 613.672,
+      "exit_code": 0,
+      "log_sha256": "a1c3b322a2020fcaba78322e477c4687f19f47c0f9cbee0529649a082f6cc218",
+      "log_bytes": 17346,
+      "log_retention": "gitignored .superpowers/offline-logs only",
+      "summary": "14829 passed, 7 skipped, 3 deselected, 17 xfailed, 1 warning in 609.96s (0:10:09)",
+      "counts": {
+        "passed": 14829,
+        "skipped": 7,
+        "deselected": 3,
+        "xfailed": 17
+      },
+      "verdict": "PASS"
+    },
+    {
+      "name": "frontend_test_wave",
+      "command": "npm.cmd run test:wave",
+      "cwd": "frontend",
+      "started_at_utc": "2026-11-16T02:36:59Z",
+      "ended_at_utc": "2026-11-16T02:37:50Z",
+      "duration_seconds": 51.406,
+      "exit_code": 0,
+      "log_sha256": "3c03d05c900b58db9ecef4de08a86f846246568faa0a5878b6fe809f487e4645",
+      "log_bytes": 195090,
+      "log_retention": "gitignored .superpowers/offline-logs only",
+      "summary_lines": [
+        "Test Files  142 passed (142)",
+        "Tests  2062 passed (2062)",
+        "Duration  46.23s (transform 4.65s, setup 1.39s, import 26.39s, tests 39.96s, environment 12ms)",
+        "✓ built in 3.47s"
+      ],
+      "typescript_errors": 0,
+      "verdict": "PASS"
+    },
+    {
+      "name": "demo_replay",
+      "command": "D:\\Documents\\projects\\algo-sim\\backend\\.venv\\Scripts\\python.exe -B backend/scripts/replay_demo_cases.py --json",
+      "cwd": ".",
+      "started_at_utc": "2026-11-16T02:37:50Z",
+      "ended_at_utc": "2026-11-16T02:37:51Z",
+      "duration_seconds": 0.609,
+      "exit_code": 0,
+      "log_sha256": "8ae893cfece9d123b600b3fac0b37b4835c9ebafef75d5d7e2abfabf3149d66b",
+      "log_bytes": 5091,
+      "log_retention": "gitignored .superpowers/offline-logs only",
+      "DEMO_CASES": 5,
+      "DEMO_REPLAY_PASS": "5/5",
+      "REDUCED_CHAIN_CASES": "1/1",
+      "verdict": "PASS"
+    },
+    {
+      "name": "crash_audit",
+      "command": "D:\\Documents\\projects\\algo-sim\\backend\\.venv\\Scripts\\python.exe -B backend/scripts/audit_demo_crash_surface.py --json",
+      "cwd": ".",
+      "started_at_utc": "2026-11-16T02:37:51Z",
+      "ended_at_utc": "2026-11-16T02:37:51Z",
+      "duration_seconds": 0.453,
+      "exit_code": 0,
+      "log_sha256": "bb09187c5fafe82b88ca74e6cfb279b0bd774ceead2c132997dda3058abc0a00",
+      "log_bytes": 3029,
+      "log_retention": "gitignored .superpowers/offline-logs only",
+      "cases": 6,
+      "passed": 6,
+      "uncaught": 0,
+      "verdict": "PASS"
+    },
+    {
+      "name": "hybrid_preview_fixtures",
+      "command": "D:\\Documents\\projects\\algo-sim\\backend\\.venv\\Scripts\\python.exe -B backend/scripts/export_hybrid_preview_fixtures.py --verify docs/evaluation/geometry/runs/dimension-aware-verified-construction/fixtures-dimension-aware",
+      "cwd": ".",
+      "started_at_utc": "2026-11-16T02:37:51Z",
+      "ended_at_utc": "2026-11-16T02:37:56Z",
+      "duration_seconds": 5.047,
+      "exit_code": 0,
+      "log_sha256": "fc4c53b1ccf182d01b66af8da8057b1f8e2cabb556448a1088de3297a4a5f514",
+      "log_bytes": 874,
+      "log_retention": "gitignored .superpowers/offline-logs only",
+      "summary": "  from starlette.testclient import TestClient as TestClient  # noqa",
+      "verdict": "PASS"
+    },
+    {
+      "name": "docs_ia",
+      "command": "D:\\Documents\\projects\\algo-sim\\backend\\.venv\\Scripts\\python.exe -B backend/scripts/audit_docs_information_architecture.py --json",
+      "cwd": ".",
+      "started_at_utc": "2026-11-16T02:37:56Z",
+      "ended_at_utc": "2026-11-16T02:37:57Z",
+      "duration_seconds": 0.468,
+      "exit_code": 0,
+      "log_sha256": "2b263e0981db2dcfbc2f4b41541af68634250e227d2c71e6a63e05e27709d680",
+      "log_bytes": 10667,
+      "log_retention": "gitignored .superpowers/offline-logs only",
+      "status": "PASS",
+      "broken_links": 0,
+      "stale_code_index_paths": 0,
+      "handoff_line_count": 300,
+      "secret_leaks": 0,
+      "verdict": "PASS"
+    },
+    {
+      "name": "publication_range",
+      "command": "D:\\Documents\\projects\\algo-sim\\backend\\.venv\\Scripts\\python.exe -B backend/scripts/check_publication_safety.py --range 9f8fc53e6b9269ec4ff0d7197096ef470e4c8532..HEAD",
+      "cwd": ".",
+      "started_at_utc": "2026-11-16T02:37:57Z",
+      "ended_at_utc": "2026-11-16T02:37:58Z",
+      "duration_seconds": 0.875,
+      "exit_code": 0,
+      "log_sha256": "57caebec759eacead62b253d176e95b0227d929588c481ab22a9c227de518e28",
+      "log_bytes": 77,
+      "log_retention": "gitignored .superpowers/offline-logs only",
+      "summary": "SUMMARY scanned=34 messages=2 violations=0 pending_exception=0 verdict=PASS",
+      "verdict": "PASS"
+    },
+    {
+      "name": "publication_head",
+      "command": "D:\\Documents\\projects\\algo-sim\\backend\\.venv\\Scripts\\python.exe -B backend/scripts/check_publication_safety.py --head",
+      "cwd": ".",
+      "started_at_utc": "2026-11-16T02:37:58Z",
+      "ended_at_utc": "2026-11-16T02:41:40Z",
+      "duration_seconds": 221.75,
+      "exit_code": 1,
+      "log_sha256": "5936299994ada2bffd8a4cbabd0e200e2ec2e4d42bfe3ede137bd0dc8c4d3e5e",
+      "log_bytes": 22481,
+      "log_retention": "gitignored .superpowers/offline-logs only",
+      "summary": "SUMMARY scanned=31883 messages=0 violations=97 pending_exception=97 verdict=BLOCKED",
+      "violations": 97,
+      "pending_exception": 97,
+      "unexcepted_violations": 0,
+      "head_gate_status": "BLOCKED_PENDING_OWNER_REVIEW",
+      "verdict": "PASS"
+    },
+    {
+      "name": "freeze_verify",
+      "command": "D:\\Documents\\projects\\algo-sim\\backend\\.venv\\Scripts\\python.exe -B backend/scripts/freeze_evaluation_candidate.py --verify",
+      "cwd": ".",
+      "started_at_utc": "2026-11-16T02:41:40Z",
+      "ended_at_utc": "2026-11-16T02:41:42Z",
+      "duration_seconds": 2.719,
+      "exit_code": 0,
+      "log_sha256": "be2967fbb0a15331be737aa748852e3ef9790875ed1123f1f7ac8b88baf458b8",
+      "log_bytes": 93,
+      "log_retention": "gitignored .superpowers/offline-logs only",
+      "summary": "Candidate khớp bản đã đóng băng (mã sản phẩm: 120 file, beb18ce56298f102…).",
+      "verdict": "PASS"
+    },
+    {
+      "name": "cache_lock_verify",
+      "command": "D:\\Documents\\projects\\algo-sim\\backend\\.venv\\Scripts\\python.exe -B backend/scripts/lock_cache_identity.py --verify",
+      "cwd": ".",
+      "started_at_utc": "2026-11-16T02:41:42Z",
+      "ended_at_utc": "2026-11-16T02:41:44Z",
+      "duration_seconds": 2.203,
+      "exit_code": 0,
+      "log_sha256": "ce4b6a976eb17b91faebde1dbef6c274797e12d07ea4a0fdede32ebcc7d309fa",
+      "log_bytes": 73,
+      "log_retention": "gitignored .superpowers/offline-logs only",
+      "summary": "Khoá khớp · CACHE_VERSION 141 · môi trường 6233c43c395c9b49…",
+      "verdict": "PASS"
+    }
+  ],
+  "zero_hardcode_scan": {
+    "scanned_files": 198,
+    "match_count": 0,
+    "matches": [],
+    "verdict": "PASS"
+  },
+  "student_pilot_e2e_verdict": "PASS",
+  "verdict": "PASS"
+}

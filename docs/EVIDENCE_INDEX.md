@@ -1,5 +1,20 @@
 # EVIDENCE_INDEX.md — Chỉ mục bằng chứng và chuỗi đính chính (Master Evidence Index)
 
+## WAVE_ID = SIMULATION_FIRST_MVP_STABILIZATION
+
+RUN_ID = simulation-first-mvp-stabilization
+REPORT = docs/evaluation/geometry/runs/simulation-first-mvp-stabilization/FINAL_STABILIZATION_REPORT.md
+ARTIFACT_DIRECTORY = docs/evaluation/geometry/runs/simulation-first-mvp-stabilization/
+START_BASE = 9f8fc53e6
+CODE_COMMIT = 4d81be4b8 (undotted primed prism topology in engine.py::hop_dong_to_po_da_khai, cache 141, pending templates metadata refresh); candidate freeze 077e3671a (commit field 4d81be4b8)
+CLASSIFICATION = SIMULATION_FIRST_STABILIZATION_AND_INTERNAL_PILOT_READINESS; AUTOMATED_BROWSER_NOT_HUMAN_STUDY; INDEPENDENT_GENERALIZATION NOT_MEASURED; PUBLICATION BLOCKED_PENDING_OWNER_REVIEW
+PRODUCT_CHANGE = YES; engine.py::hop_dong_to_po_da_khai aligned with registry._tach_lang_tru_lien (3..6 base vertices); CACHE_VERSION 140 → 141; measured files 120
+MODEL_REQUEST_COUNT = 0
+VERIFICATION = run.json; FINAL_STABILIZATION_REPORT.md; MATH_TRUTH_AUDIT.md; SIMULATION_INTEGRITY_REPORT.md; FRONTEND_HANDOFF_STATUS.md; STUDENT_PILOT_E2E.json; REGRESSION_SUMMARY.json; pending_template_refresh.json
+CORRECTS = dimension-aware-verified-construction: prose-summary transcription errors on lines 34, 205, 214, 215 of AXO_DIMENSION_AWARE_VERIFIED_CONSTRUCTION_REPORT.md (vmmu_r537, vmmu_r460, vmmu_r463); product JSON receipts and Kernel math verified 100% accurate against source VMMU images (0 Kernel/Parser errors). Historical artifacts unchanged in byte
+CORRECTED_BY = NONE
+LIMITATIONS = agent-curated/exposed VMMU items; offline synthetic multi-problem OCR sheet; FE-2/3/4/6 remain BLOCKED_OWNERSHIP on separate axo-geometry-library worktree; headless Chrome SwiftShader timing (`INCONCLUSIVE_SHARED_HOST_SWIFTSHADER`, `PHYSICAL_LOW_END_NOT_MEASURED`); H-1 NOT_MEASURED, real student study NOT_MEASURED, C21 K-1/S-2/R-1 PENDING_OWNER_DECISION, FULL_RELEASE_GATE = BLOCKED_GATES_REMAIN.
+
 ## WAVE_ID = DIMENSION_AWARE_VERIFIED_CONSTRUCTION
 
 RUN_ID = dimension-aware-verified-construction
@@ -12,7 +27,7 @@ PRODUCT_CHANGE = YES; local-geometry-parser/2, dimension-expression/1, mathemati
 MODEL_REQUEST_COUNT = 0
 VERIFICATION = run.json; full_regression_summary.json; failure_taxonomy_audit.json; mathematical_determinacy_audit.json; mathematical_expression_architecture.json; source_gate_dimension_integrity.json; proof_certificate_mutation_tests.json; real27_acceptance_before_after.json; scene3d_browser_e2e.json
 CORRECTS = grounded-vietnamese-geometry-understanding and earlier: vmmu_r460 and vmmu_r463 were labeled INSUFFICIENT_CONSTRAINTS / insufficient_specification despite being uniquely determined capability gaps (now verified SERVED); compositional_semantics_goals negative expectation for a given cos line-plane premise superseded by verified trig-construction-certificate/1. Historical receipts unchanged
-CORRECTED_BY = NONE
+CORRECTED_BY = simulation-first-mvp-stabilization
 LIMITATIONS = agent-written corpus; exposed REAL27 items; non-algebraic angles (70°/50° in r266) outside closed exact domain; 10/27 REAL27 images gated by OCR/region before span confirmation; FE-2/3/4/6 blocked on separate axo-geometry-library ownership; headless browser; shared host timing; no H-1, no students.
 
 ## WAVE_ID = GROUNDED_VIETNAMESE_GEOMETRY_UNDERSTANDING
