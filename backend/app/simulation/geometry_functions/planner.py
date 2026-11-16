@@ -2209,8 +2209,16 @@ def _dinh_cat_canh(f: TypedFact, k: KeHoach, phat, kh: _Khoi) -> dict:
                           and x.point_kind in ("midpoint", "divide_segment") and x.point == p
                           and frozenset(x.points or ()) == e), None)
         tren_canh_id = tren_canh.id if tren_canh is not None else next(
-            (c["id"] for c in k.calls if c["fn"] in ("midpoint", "divide_segment")
-             and c["args"].get("point") == p and frozenset(c["args"].get("segment") or ()) == e),
+            (c["id"] for c in k.calls if (
+                (c["fn"] in ("midpoint", "divide_segment")
+                 and c["args"].get("point") == p and frozenset(c["args"].get("segment") or ()) == e)
+                or (c["fn"] == "orthogonal_projection_line"
+                    and c["args"].get("image") == p and frozenset(c["args"].get("line") or ()) == e)
+                or (c["fn"] == "intersect_line_plane"
+                    and c["args"].get("point") == p and frozenset(c["args"].get("line") or ()) == e)
+                or (c["fn"] == "intersect_line_line" and c["args"].get("point") == p
+                    and e in (frozenset(c["args"].get("line1") or ()), frozenset(c["args"].get("line2") or ())))
+            )),
             None,
         )
         if tren_canh_id is not None:
@@ -2365,6 +2373,7 @@ class _EffectResolver:
         self.definitions: dict[str, dict] = {}   # C18: defined point label → its definition binding (certificate)
         self.emitted_terms: dict[tuple, str] = {}
         self._term_of: dict[int, tuple] = {}
+        self._pending: list[dict] = []
         groups = {}
         for f in facts:
             if (f.kind=='intersection_line' and f.role in ('premise','question') and not f.negated
@@ -2379,8 +2388,10 @@ class _EffectResolver:
                                                    "bound": bound})
 
     def _tren_duong(self, p, line) -> bool:
-        """STRUCTURE only, no coordinates: p is an endpoint of the named line, or a point structurally collinear with its
-        two endpoints (from a premise or an unnamed point description). Anything else is left to the engine's exact check."""
+        """STRUCTURE only, no coordinates: p is an endpoint of the named/derived line, or a point structurally collinear with
+        a named line's two endpoints (from a premise or an unnamed point description). The engine re-checks exact collinearity."""
+        if isinstance(line, tuple) and line[:1] == ("derived_line",):
+            return p in line[1]
         if not (isinstance(line, tuple) and line[:1] == ("named",)):
             return False
         ends = set(line[1])
@@ -2411,8 +2422,13 @@ class _EffectResolver:
         verts = _diem_tren_mat(plane, self.facts.values(), self.plan.solids.values())
         if isinstance(p, str):
             return p in verts
-        if isinstance(p, tuple) and p[:1] == ("desc",) and p[2] and all(isinstance(x, str) for x in p[2]):
-            return set(p[2]) <= verts
+        if isinstance(p, tuple) and p[:1] == ("desc",):
+            if p[2] and all(isinstance(x, str) for x in p[2]):
+                return set(p[2]) <= verts
+            if (p[1] in ("orthogonal_projection", "intersect_line_plane") and len(p[2]) == 2
+                    and isinstance(p[2][1], tuple) and len(p[2][1]) >= 3
+                    and all(isinstance(x, str) for x in p[2][1])):
+                return set(p[2][1]) <= verts
         return False
 
     def _unmet(self, contract, env) -> str | None:
@@ -2423,10 +2439,65 @@ class _EffectResolver:
                 return "precondition: the point lies on the plane"
         return None
 
+    def _pending_sig(self) -> tuple:
+        return tuple(
+            (p["fn"], tuple(sorted((k, tuple(v) if isinstance(v, list) else v) for k, v in p["args"].items())))
+            for p in self._pending
+        )
+
+    def _collect_pending(self, choice: _Choice, out: list[dict]) -> dict[str, Any]:
+        """Simulate a resolved choice into synthetic call entries so later sibling operands share fresh steps."""
+        if choice.fn is None:
+            return dict(choice.env)
+        if choice.fn == "__line_endpoints__":
+            ep1, ep2 = choice.env["_pts"]
+            c1, c2 = choice.inputs
+            g1 = self._collect_pending(c1, out)
+            g2 = self._collect_pending(c2, out)
+            l1 = g1[c1.contract.effect.operands[0]] if c1.fn is not None else ep1
+            l2 = g2[c2.contract.effect.operands[0]] if c2.fn is not None else ep2
+            return {"_line": ("named", tuple(sorted((l1, l2))))}
+        contract = choice.contract
+        env = dict(choice.env)
+        for t, child in zip(contract.inputs, choice.inputs):
+            got = self._collect_pending(child, out)
+            if child.fn == "__line_endpoints__":
+                env[t.operands[0]] = got["_line"]
+            elif child.fn is not None:
+                if t.kind == "Line" and child.contract.line:
+                    env[t.operands[0]] = ("named", tuple(sorted(got[x] for x in child.contract.line)))
+                else:
+                    eff_ops = child.contract.effect.operands
+                    env.update({s: got[c] for s, c in zip(t.operands, eff_ops)})
+        if choice.existing is not None:
+            if contract.fresh:
+                out_s = contract.effect.operands[0]
+                out_a = next(a for a, s in contract.call if s == out_s)
+                env[out_s] = choice.existing["args"][out_a]
+            return env
+        if not contract.call:
+            return env
+        answer = contract.effect.kind.startswith("Answer")
+        if contract.fresh and not answer:
+            out_s = contract.effect.operands[0]
+            out_a = next(a for a, s in contract.call if s == out_s)
+            for c in (*self.plan.calls, *out):
+                if c["fn"] == choice.fn:
+                    bound = {**env, out_s: c["args"].get(out_a)}
+                    if same_call(contract, render_call(contract, bound), c["args"]):
+                        env[out_s] = c["args"][out_a]
+                        return env
+            env[out_s] = f"__p{len(out)}__"
+        if not answer:
+            out.append({"id": f"__pending_{len(out)}__", "fn": choice.fn, "args": render_call(contract, env)})
+        return env
+
     def _resolve(self, kind, operands, depth=0):
         key = (kind, operands)
-        if not kind.startswith('Answer') and key in self.memo:
-            got, n_calls = self.memo[key]
+        is_desc = kind == "Point" and isinstance(operands[0], tuple) and operands[0][:1] == ("desc",)
+        memo_key = key if is_desc else (kind, operands, self._pending_sig())
+        if not kind.startswith('Answer') and memo_key in self.memo:
+            got, n_calls = self.memo[memo_key]
             # available producer binding only; Engine still verifies every given later. C18: an alternative that was
             # never written and was chosen before the plan grew may miss a call it could now reuse — choose again.
             if got.fn is None or got.existing is not None or n_calls == len(self.plan.calls):
@@ -2448,13 +2519,16 @@ class _EffectResolver:
         if kind == "Line" and operands[0][0] == "derived_line":
             ep1, ep2 = operands[0][1]
             self.active.add(key)
+            saved_p = list(self._pending)
             try:
                 c1 = self._resolve("Point", (ep1,), depth)
+                self._collect_pending(c1, self._pending)
                 c2 = self._resolve("Point", (ep2,), depth)
             finally:
+                self._pending = saved_p
                 self.active.remove(key)
             got = _Choice("__line_endpoints__", {"_pts": (ep1, ep2)}, [c1, c2], None, c1.cost + c2.cost, None)
-            self.memo[key] = (got, len(self.plan.calls))
+            self.memo[memo_key] = (got, len(self.plan.calls))
             return got
         if depth >= MAX_EFFECT_DEPTH:
             raise self._exhausted("quá trần phân rã effect", bound="depth")
@@ -2475,15 +2549,15 @@ class _EffectResolver:
                 typed = {t.operands[0]: t.kind for t in contract.inputs if t.kind in ('Point', 'Line', 'Plane')}
                 if any(v is not None and typed.get(s, _loai(v)) != _loai(v) for s, v in zip(contract.effect.operands, operands)):
                     continue  # an operand of the wrong kind is not a candidate; excluded before it is counted
-                self.candidates += 1
-                if self.candidates > MAX_EFFECT_CANDIDATES:
-                    raise self._exhausted("quá trần candidate")
                 if desc:
                     env.update(zip((t.operands[0] for t in contract.inputs), desc[2]))
-                if why := self._unmet(contract, env):            # C18: decided from structure, before any sub-need
+                if why := self._unmet(contract, env):            # structural precondition pruned before counting
                     self.rejected.append({"need": kind, "fn": spec.name, "reason": why,
                                           "binding": {k: _ten(v) for k, v in env.items() if v is not None}})
                     continue
+                self.candidates += 1
+                if self.candidates > MAX_EFFECT_CANDIDATES:
+                    raise self._exhausted("quá trần candidate")
                 existing = None
                 if contract.source_policy == "declared_intersection":
                     ref = env["L"][1]
@@ -2495,9 +2569,14 @@ class _EffectResolver:
                     self.lines.add(ref)
                     if len(self.lines) > MAX_RESULT_LINES:
                         raise self._exhausted("quá trần line results")
+                saved_p = list(self._pending)
                 try:
-                    children = [self._resolve(term.kind, tuple(env.get(slot) for slot in term.operands), depth+1)
-                                for term in contract.inputs]
+                    children = []
+                    for term in contract.inputs:
+                        ch = self._resolve(term.kind, tuple(env.get(slot) for slot in term.operands), depth + 1)
+                        children.append(ch)
+                        if len(contract.inputs) > 1:
+                            self._collect_pending(ch, self._pending)
                 except TuChoi as e:
                     if e.code=='UNSUPPORTED_CAPABILITY':
                         continue  # exclude incompatible symbolic candidates; never skip a geometric/source failure
@@ -2505,8 +2584,10 @@ class _EffectResolver:
                         cut = e   # C18: this alternative is too deep; a shallower one may still serve the need
                         continue
                     raise
+                finally:
+                    self._pending = saved_p
                 cost = sum(c.cost for c in children)
-                if contract.fresh:              # the source (or an earlier goal) may already hold this exact construction
+                if contract.fresh:              # the source, an earlier goal, or an earlier sibling may hold this call
                     out = contract.effect.operands[0]
                     arg = next(a for a, s in contract.call if s == out)
                     check_env = dict(env)
@@ -2543,7 +2624,37 @@ class _EffectResolver:
                                 if self.candidates > MAX_EFFECT_CANDIDATES:
                                     raise self._exhausted('quá trần available-binding candidates')
                                 choices.append(_Choice(spec.name, bound, children, c, cost, contract))
-                    cost += 1
+                    pend_matched = False
+                    if self._pending and contract.call:
+                        pend_env = dict(env)
+                        can_pend = True
+                        for t_in, child in zip(contract.inputs, children):
+                            if child.fn is not None:
+                                tmp_p = list(self._pending)
+                                got_p = self._collect_pending(child, tmp_p)
+                                if len(tmp_p) != len(self._pending):
+                                    can_pend = False
+                                    break
+                                if child.fn == "__line_endpoints__":
+                                    pend_env[t_in.operands[0]] = got_p["_line"]
+                                elif t_in.kind == "Line" and child.contract.line:
+                                    pend_env[t_in.operands[0]] = ("named", tuple(sorted(got_p[x] for x in child.contract.line)))
+                                else:
+                                    pend_env.update({s: got_p[c_op] for s, c_op in zip(t_in.operands, child.contract.effect.operands)})
+                        if can_pend and not any(
+                            isinstance(v, tuple) and v and v[0] in ("desc", "derived_line")
+                            for k_slot, v in pend_env.items()
+                            if k_slot != out
+                        ):
+                            for pc in self._pending:
+                                if pc["fn"] != spec.name:
+                                    continue
+                                bound = {**pend_env, out: pc["args"].get(arg)}
+                                if same_call(contract, render_call(contract, bound), pc["args"]):
+                                    pend_matched = True
+                                    break
+                    if not pend_matched:
+                        cost += 1
                 choices.append(_Choice(spec.name, env, children, existing, cost, contract))
             if not choices:
                 if cut is not None:
@@ -2553,7 +2664,7 @@ class _EffectResolver:
             if desc is not None:
                 self._term_of[id(selected)] = desc
             if not kind.startswith('Answer'):
-                self.memo[key] = (selected, len(self.plan.calls))
+                self.memo[memo_key] = (selected, len(self.plan.calls))
             return selected
         finally:
             self.active.remove(key)
@@ -2638,6 +2749,23 @@ class _EffectResolver:
         if not contract.call:
             raise TuChoi('UNSUPPORTED_CAPABILITY', 'producer chưa được khai trong nguồn')
         answer = contract.effect.kind.startswith('Answer')
+        if contract.fresh and not answer and contract.call:
+            out_s = contract.effect.operands[0]
+            out_a = next(a for a, s in contract.call if s == out_s)
+            for rc in self.plan.calls:
+                if rc['fn'] != choice.fn:
+                    continue
+                bound = {**env, out_s: rc['args'].get(out_a)}
+                if same_call(contract, render_call(contract, bound), rc['args']):
+                    self.reused += 1
+                    env[out_s] = rc['args'][out_a]
+                    if (tk := self._term_of.get(id(choice))) is not None:
+                        self.emitted_terms[tk] = env[out_s]
+                    self._ghi(rc, env, contract)
+                    self._dinh_nghia_ghi(choice, env, rc)
+                    choice.env.update(env)
+                    choice.existing, choice.cost = rc, 0
+                    return env
         if contract.fresh:
             self.feet += 1
             if self.feet > MAX_RESULT_FEET:
@@ -2681,13 +2809,16 @@ class _EffectResolver:
 
     def _ghi(self, call, env, contract):
         """Trail of the goal being resolved: the calls of its derivation, each with the slot bindings it was written from."""
-        if all(e['call'] != call['id'] for e in self.trail):
+        eff = contract.effect.kind if contract is not REGISTRY[call['fn']].planning else None
+        desc = contract.descriptor if contract is not REGISTRY[call['fn']].planning else None
+        already_in_trail = any(e['call'] == call['id'] for e in self.trail)
+        if all((e['call'], e.get('effect'), e.get('descriptor')) != (call['id'], eff, desc) for e in self.trail):
             self.trail.append({'call': call['id'], 'fn': call['fn'], 'env': json.loads(json.dumps(env)),
-                               'fresh': call['id'] not in self.plan.fact_ids})
-            if contract is not REGISTRY[call['fn']].planning:
-                self.trail[-1]['effect'] = contract.effect.kind
-                if contract.descriptor:
-                    self.trail[-1]['descriptor'] = contract.descriptor
+                               'fresh': call['id'] not in self.plan.fact_ids and not already_in_trail})
+            if eff is not None:
+                self.trail[-1]['effect'] = eff
+                if desc:
+                    self.trail[-1]['descriptor'] = desc
 
     def goal(self, fact, entries):
         """Typed semantic entry: quantity + the typed slots its operands fill select ONE contract effect (several ⇒
@@ -2808,6 +2939,8 @@ class _EffectResolver:
             need_kind, need_ops = "AnswerDistance", (_pt(gt["point"]), _pl(gt["plane"], need_short=True))
         elif mode == "distance_line_plane":
             need_kind, need_ops = "AnswerDistanceLinePlane", (_ln(gt["line"]), _pl(gt["plane"]))
+        elif mode == "distance_lines":
+            need_kind, need_ops = "AnswerDistanceLines", (_ln(gt["line1"]), _ln(gt["line2"]))
         elif mode == "length":
             pts = gt["points"]
             need_kind, need_ops = "AnswerLength", (_pt(pts[0]), _pt(pts[1]))

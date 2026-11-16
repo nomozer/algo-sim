@@ -699,8 +699,9 @@ class TranslatePointArgs(_Args):
 @dataclass(frozen=True)
 class PlanningTerm:
     """Internal typed role slots; not an expression language or provider program."""
-    kind: Literal["Point", "Plane", "Line", "Foot", "AnswerDistance", "AnswerDistanceLinePlane", "AnswerLength",
-                  "AnswerArea", "AnswerAngleLinePlane", "AnswerAngleLines", "Meet", "Normal", "PerpLine", "PerpDir"]
+    kind: Literal["Point", "Plane", "Line", "Foot", "AnswerDistance", "AnswerDistanceLinePlane", "AnswerDistanceLines",
+                  "AnswerLength", "AnswerArea", "AnswerAngleLinePlane", "AnswerAngleLines", "Meet", "Normal",
+                  "PerpLine", "PerpDir"]
     operands: tuple[str, ...]
 
 
@@ -952,7 +953,7 @@ REGISTRY: dict[str, FunctionSpec] = {s.name: s for s in (
            (PlanningTerm("Line", ("L1",)), PlanningTerm("Line", ("L2",))),
            PlanningTerm("Point", ("I",)), "derived_point", "intersect_line_line",
            call=(("point", "I"), ("line1", "L1"), ("line2", "L2")), fresh="I", descriptor="intersect_line_line",
-           phrase=(r"giao điểm\s+(?:của\s+)?(?:hai\s+(?:đường thẳng|đt|đường chéo|cạnh|đoạn(?:\s+thẳng)?)\s+)?"
+           phrase=(r"giao điểm\s+(?:của\s+)?(?:(?:hai\s+)?(?:đường thẳng|đt|đường chéo|cạnh|đoạn(?:\s+thẳng)?)\s+)?"
                    r"(?<![\w'.(])(?P<op_l1>(?:{P}){2})(?![\w'])\s*(?:,\s*|\s+(?:và|với)\s+)"
                    r"(?:(?:đường thẳng|đt|đường chéo|cạnh|đoạn(?:\s+thẳng)?)\s+)?(?<![\w'.(])(?P<op_l2>(?:{P}){2})(?![\w'])"))),
     _F("intersect_line_plane", IntersectionPlaneArgs, "construct", "Dựng giao điểm DUY NHẤT của đường thẳng và mặt phẳng.",
@@ -1014,7 +1015,11 @@ REGISTRY: dict[str, FunctionSpec] = {s.name: s for s in (
                                  PlanningTerm("AnswerDistance", ("P", "Q")), "distance_answer", "distance",
                                  call=(("point", "P"), ("plane", "Q")))),
     _F("ask_distance_lines", AskDistanceLinesArgs, "ask", "Đề hỏi khoảng cách giữa hai đường thẳng (chéo nhau).",
-       (("khoảng cách", r"re:(?i)(?<![\w/])k/c(?![\w/])"),)),
+       (("khoảng cách", r"re:(?i)(?<![\w/])k/c(?![\w/])"),),
+       planning=PlanningContract(
+           (PlanningTerm("Line", ("L1",)), PlanningTerm("Line", ("L2",))),
+           PlanningTerm("AnswerDistanceLines", ("L1", "L2")), "goal_answer", "distance_lines",
+           call=(("line1", "L1"), ("line2", "L2")))),
     # Run `hybrid-v2-nl-certificates-e2e`: kernel/IR already measure `distance(line3, plane3)` and `distance(plane3, plane3)`
     # exactly (`measure.distance_sq_line_plane` / `distance_sq_planes`); these expose them to route B / `/4` only.
     _F("ask_distance_line_plane", AskDistanceLinePlaneArgs, "ask", "Đề hỏi khoảng cách giữa một đường thẳng và một mặt phẳng.",
@@ -2718,12 +2723,17 @@ def _kiem_result_binding(phu, calls, de, nhan, don_vi_de: set[str] = frozenset()
             if isinstance(e, dict):
                 chain_quotes.setdefault(e.get('call'), set()).update(
                     chuan_hoa(q) for q in d.get('quotes') or () if isinstance(q, str))
-    # … and from a `distance(point,line)` decomposition that names it as its foot (one goal's foot reused by another
-    # goal's chain); that certificate is itself validated below / in `_kiem_phu`, so a forged one is still refused.
+    # … and from a `distance(point,line)` or declared derived-plane decomposition whose construct call is reused by a
+    # goal chain or second foot; those certificates are still validated below / in `_kiem_phu` (forged ones fail).
     for d in phu:
         if d.get('rule') == 'distance(point,line)':
             chain_quotes.setdefault(d.get('construct'), set()).update(
                 chuan_hoa(q) for q in d.get('quotes') or () if isinstance(q, str))
+        elif d.get('rule') in (MAT_VUONG_DUONG, MAT_RANG_BUOC, DINH_CAT_CANH):
+            qs_d = [chuan_hoa(q) for q in d.get('quotes') or () if isinstance(q, str)]
+            for cid in d.get('constructs') or ():
+                if isinstance(cid, str):
+                    chain_quotes.setdefault(cid, set()).update(qs_d)
     for c in calls:
         if getattr(c.args,'line_ref',None) and c.id not in registered:
             raise TuChoi('RESULT_BINDING_UNVERIFIED', 'line_ref chỉ qua chứng chỉ của Planner', (c.id,))
@@ -2756,9 +2766,10 @@ def _kiem_result_binding(phu, calls, de, nhan, don_vi_de: set[str] = frozenset()
         # SG-6: the intersection named only as the TARGET of a distance question ("Tính khoảng cách từ A đến giao tuyến của
         # (SCD) và (ABCD).") — accepted only when that very sentence is the quote of an ask that reads it through this
         # `line_ref`; the ask's own `derived` binding below checks the point and both planes.
-        # The point is a label or a point the Registry's own descriptor contracts describe ("trọng tâm của tam giác SAB").
+        # The point is a label or a point the Registry's own descriptor contracts / definitions describe ("trọng tâm của tam giác SAB").
+        contracts_desc = [p for s in REGISTRY.values() for p in planning_contracts(s)] + [pd.contract for pd in POINT_DEFINITIONS.values()]
         desc = [re.sub(r"\(\?P<[^>]+>", "(?:", p.phrase).replace('{P}', _P1)
-                for s in REGISTRY.values() for p in planning_contracts(s) if p.descriptor and isinstance(p.phrase, str)]
+                for p in contracts_desc if p.descriptor and isinstance(p.phrase, str)]
         inline_form = (rf'(?:(?i:tính|tìm|xác định)\s+)?(?i:{_KC}\s+từ\s+)(?:(?i:điểm\s+)?{_P1}|'
                        + '|'.join(f'(?i:{d})' for d in desc) + rf')\s*(?i:đến|tới)\s*'
                        rf'(?i:giao tuyến của)\s*{_MAT_TOAN_HANG}\s*(?i:và)\s*{_MAT_TOAN_HANG}\s*[.?]?\s*')
@@ -2831,7 +2842,7 @@ def _kiem_result_binding(phu, calls, de, nhan, don_vi_de: set[str] = frozenset()
                     accepted.add(c.id)
                     built_so_far.add(x)
                     built_map[x] = (contract, env)
-                elif x not in nhan:
+                elif x not in nhan and x not in built_so_far:
                     raise TuChoi('UNKNOWN_LABEL', 'điểm tái dùng không có trong nguồn', (c.id,))
             produced_so_far.add((contract.effect.kind, values(contract.effect, env)))
         return built_map
@@ -2952,6 +2963,26 @@ def _kiem_result_binding(phu, calls, de, nhan, don_vi_de: set[str] = frozenset()
                     _, a2 = _pt_expr_alts(s2, got, nhan, built_map, (ask.id,), f'g{idx}b_')
                     pats.extend((re.compile(rf'độ dài\s+(?:của\s+)?đoạn(?:\s+thẳng)?\s+nối\s+{p1}{_NOI_HAI_DIEM}{p2}', re.I),
                                  _mk_bind((*c1, *c2))) for p1, c1 in a1 for p2, c2 in a2)
+            elif mode == 'distance_lines':
+                if (ans[0].verifier != 'distance_lines' or ans[0].effect.kind != 'AnswerDistanceLines'
+                        or len(eff_vals) != 2
+                        or not all(isinstance(v, tuple) and v[:1] == ('named',) for v in eff_vals)):
+                    raise TuChoi('AUXILIARY_RULE_MISMATCH', 'hợp đồng khoảng cách hai đường không khớp', (ask.id,))
+                ln1_raw, ln2_raw = gt.get('line1') or (), gt.get('line2') or ()
+                if len(ln1_raw) != 2 or len(ln2_raw) != 2:
+                    raise TuChoi('AUXILIARY_RULE_MISMATCH', 'toán hạng hai đường thiếu đầu mút', (ask.id,))
+                p1_pair, _ = _line_core_alts(ln1_raw[0], ln1_raw[1], got, nhan, built_map, (ask.id,), 'dl1_')
+                p2_pair, _ = _line_core_alts(ln2_raw[0], ln2_raw[1], got, nhan, built_map, (ask.id,), 'dl2_')
+                if (frozenset(p1_pair) == frozenset(p2_pair)
+                        or {frozenset(p1_pair), frozenset(p2_pair)} != {frozenset(eff_vals[0][1]), frozenset(eff_vals[1][1])}):
+                    raise TuChoi('AUXILIARY_RULE_MISMATCH', 'hai đường khoảng cách không khớp chứng chỉ', (ask.id,))
+                for oi, (la, lb) in enumerate(((ln1_raw, ln2_raw), (ln2_raw, ln1_raw))):
+                    _, a_alts = _line_core_alts(la[0], la[1], got, nhan, built_map, (ask.id,), f'dla{oi}_')
+                    _, b_alts = _line_core_alts(lb[0], lb[1], got, nhan, built_map, (ask.id,), f'dlb{oi}_')
+                    pats.extend((
+                        re.compile(rf'{_KC}\s+giữa\s+(?:hai\s+(?:đường thẳng|đt)(?:\s+chéo nhau)?\s+)?{pa}\s+(?:và|với)\s+{pb}(?:\s+chéo nhau)?', re.I),
+                        _mk_bind((*ca, *cb)),
+                    ) for pa, ca in a_alts for pb, cb in b_alts)
             elif mode == 'angle_line_plane':
                 if ans[0].verifier != 'angle_line_plane' or len(eff_vals) != 3:
                     raise TuChoi('AUXILIARY_RULE_MISMATCH', 'hợp đồng góc đường-mặt không khớp', (ask.id,))
@@ -2964,8 +2995,9 @@ def _kiem_result_binding(phu, calls, de, nhan, don_vi_de: set[str] = frozenset()
                 ln_pair, ln_alts = _line_core_alts(ln_raw[0], ln_raw[1], got, nhan, built_map, (ask.id,), 'l0_')
                 if frozenset(ln_pair) != frozenset(eff_vals[:2]):
                     raise TuChoi('AUXILIARY_RULE_MISMATCH', 'đường trong chuỗi không khớp chứng chỉ', (ask.id,))
-                pats = [(re.compile(rf'góc\s+(?:giữa|tạo bởi|hợp bởi)\s+{lp}\s+(?:và|với)\s+{_mat_cum("m")}', re.I), _mk_bind(lc, pl))
-                        for lp, lc in ln_alts]
+                for lp, lc in ln_alts:
+                    pats.append((re.compile(rf'góc\s+(?:giữa|tạo bởi|hợp bởi)\s+{lp}\s+(?:và|với)\s+{_mat_cum("m")}', re.I), _mk_bind(lc, pl)))
+                    pats.append((re.compile(rf'góc\s+(?:giữa|tạo bởi|hợp bởi)\s+{_mat_cum("m")}\s+(?:và|với)\s+{lp}', re.I), _mk_bind(lc, pl)))
             elif mode == 'angle_lines':
                 if ans[0].verifier != 'angle_lines' or len(eff_vals) != 3 or not (isinstance(eff_vals[2], tuple) and eff_vals[2][:1] == ('named',)):
                     raise TuChoi('AUXILIARY_RULE_MISMATCH', 'hợp đồng góc hai đường không khớp', (ask.id,))
@@ -3163,8 +3195,10 @@ def _kiem_result_binding(phu, calls, de, nhan, don_vi_de: set[str] = frozenset()
             if x in seen_fresh and seen_fresh[x]!=foot.id:
                 raise TuChoi('AUXILIARY_RULE_MISMATCH','hai producer cho một chân phụ')
             seen_fresh[x]=foot.id
-            if not foot.quotes or not set(foot.quotes).issubset({q for e in phu if e.get('construct')==foot.id
-                                                             for q in e.get('quotes') or ()}):
+            allowed_foot_quotes = {
+                chuan_hoa(q) for e in phu if e.get('construct') == foot.id for q in e.get('quotes') or () if isinstance(q, str)
+            } | chain_quotes.get(foot.id, set())
+            if not foot.quotes or not {chuan_hoa(q) for q in foot.quotes} <= allowed_foot_quotes:
                 raise TuChoi('AUXILIARY_RULE_MISMATCH','chân phụ mất nguồn mục tiêu')
             accepted.add(foot.id)
         elif x not in nhan:
@@ -7053,8 +7087,14 @@ def _kiem_dinh_cat(d: dict, mats: list[dict], theo_id: dict, de: str, nhan: set[
             da_goi.add(cid)
         elif loai == "reuse_through_point":
             p = theo_id.get(v.get("producer")) if v.get("producer") else None
-            if x != mat.get("point") or (p is None and x not in e) or (p is not None and not (
-                    p.fn in ("midpoint", "divide_segment") and p.args.point == x and frozenset(p.args.segment) == e)):
+            on_edge = p is not None and (
+                (p.fn in ("midpoint", "divide_segment") and p.args.point == x and frozenset(p.args.segment) == e)
+                or (p.fn == "orthogonal_projection_line" and p.args.image == x and frozenset(p.args.line or ()) == e)
+                or (p.fn == "intersect_line_plane" and p.args.point == x and frozenset(p.args.line or ()) == e)
+                or (p.fn == "intersect_line_line" and p.args.point == x
+                    and e in (frozenset(p.args.line1 or ()), frozenset(p.args.line2 or ())))
+            )
+            if x != mat.get("point") or (p is None and x not in e) or (p is not None and not on_edge):
                 raise TuChoi("AUXILIARY_RULE_MISMATCH", f"đỉnh {x}: điểm qua của mặt không nằm trên {''.join(sorted(e))}", ids)
             if e in ten_canh and ten_canh[e] not in (None, x):
                 raise TuChoi("SOURCE_OBJECT_MISMATCH", f"đề gọi giao trên {''.join(sorted(e))} là {ten_canh[e]}, không phải {x}", ids)

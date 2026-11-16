@@ -27,7 +27,7 @@ TEXT = ("Cho hình chóp S.ABC có đáy là tam giác vuông tại B, SA vuông
 
 
 def test_version_pair():
-    assert M.CACHE_VERSION == "141" and M.ROUTE_D_CACHE_POLICY == "141:route-d"
+    assert M.CACHE_VERSION == "142" and M.ROUTE_D_CACHE_POLICY == "142:route-d"
 
 
 @pytest.fixture

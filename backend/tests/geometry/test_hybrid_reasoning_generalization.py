@@ -142,19 +142,23 @@ def test_g5_fault_injection_decomposition_certificate_with_a_wrong_quote_is_refu
     assert r.status == "REFUSED"
 
 
-# ── G6: three property-defined points in one problem — budget, NOT fixed (evidence: a second, contract bound) ───────
+# ── G6: three property-defined points in one problem — planner passes (33/48), IR memory cap remains (34 > 32) ────────
 
-@pytest.mark.xfail(strict=True, reason="G6: the effect-search candidate budget (48) is per PROBLEM; three definitions need "
-                   "≈54. A per-goal budget was tried and reverted: the plan then needs 34 IR memory declarations > "
-                   "semantic_program MAX_MEMORY_DECLARATIONS = 32 (IR_MEMORY_BUDGET_EXCEEDED) — a contract bound")
+@pytest.mark.xfail(strict=True, reason="G6: with structural precondition pruning before candidate counting, the planner "
+                   "succeeds cleanly at 33 <= 48 candidates (21 pruned), but compiled IR still requires 34 memory "
+                   "declarations > semantic_program MAX_MEMORY_DECLARATIONS = 32 (IR_MEMORY_BUDGET_EXCEEDED)")
 def test_g6_three_defined_points_in_one_problem():
     _assert_oracle("MG9")
 
 
 def test_g6_three_defined_points_fail_closed_on_the_search_budget():
     c = CASES["MG9"]
+    bridged = bridge_v2(TN._parse(TN.TypedFactNextPayloadV2, c["payload"]))
+    plan = planner.lap_ke_hoach(bridged, c["text"])
+    assert plan.search_telemetry["candidate_evaluations"] == 33 <= planner.MAX_EFFECT_CANDIDATES
+    assert plan.search_telemetry["pruned_nodes"] == 21
     route, env, _a = _run(c["text"], c["payload"])
-    assert route["status"] == "REFUSED" and env["reason_code"] == "PLAN_TOO_LARGE"
+    assert route["status"] == "REFUSED" and env["reason_code"] == "IR_MEMORY_BUDGET_EXCEEDED"
 
 
 @pytest.mark.parametrize("bound,value", [("MAX_EFFECT_CANDIDATES", 8), ("MAX_EFFECT_NEEDS", 20)])

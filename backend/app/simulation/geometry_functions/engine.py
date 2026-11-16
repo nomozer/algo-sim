@@ -5248,7 +5248,7 @@ class _Dung:
                     cur_id = (c.id,)
                     self._plane(c.args.plane1[:3])
                     self._plane(c.args.plane2[:3])
-                for c in self.of("ask_angle_lines"):              # a line through two coincident points ⇒ kernel code
+                for c in (*self.of("ask_angle_lines"), *self.of("ask_distance_lines")):  # a line through two coincident points ⇒ kernel code
                     cur_id = (c.id,)
                     self._line(c.args.line1)
                     self._line(c.args.line2)
@@ -5888,6 +5888,25 @@ class _Dung:
         p, t = d["operand"]["label"], d["target"]
         return self._goc_duong_mat_cos2((p, t["point"]), tuple(t["plane"][:3]))
 
+    def _kc2_khoang_cach_hai_duong(self, line1: tuple[str, ...], line2: tuple[str, ...]) -> Fraction:
+        """Line–line distance² directly in the chart Gram metric, independent of kernel covectors."""
+        u, v = self._vec(*line1), self._vec(*line2)
+        uu, uv, vv = self.g(u, u), self.g(u, v), self.g(v, v)
+        if uu == 0 or vv == 0:
+            raise TuChoi("DEGENERATE_LINE", "đường thẳng suy biến (hai đầu mút trùng nhau)")
+        w = self._vec(line1[0], line2[0])
+        det2 = uu * vv - uv * uv
+        if det2 == 0:
+            return self.g(w, w) - self.g(w, u) ** 2 / uu
+        return self._det_gram(u, v, w) / det2
+
+    def _kc2_duong_hai_duong(self, d: dict) -> Fraction:
+        gt = d.get("operand_trees") or {}
+        lbl = lambda x: x["label"] if isinstance(x, dict) else x  # noqa: E731
+        l1 = tuple(lbl(x) for x in gt.get("line1") or ())
+        l2 = tuple(lbl(x) for x in gt.get("line2") or ())
+        return self._kc2_khoang_cach_hai_duong(l1, l2)
+
     def _kc2_khoang_cach_duong_mat(self, d: dict) -> Fraction:
         gt = d.get("operand_trees") or {}
         ln = [x["label"] if isinstance(x, dict) else x for x in gt.get("line") or ()]
@@ -5904,6 +5923,7 @@ class _Dung:
                 "distance_point_line": "distance",
                 "distance_point_plane": "distance",
                 "distance_line_plane": "distance_line_plane",
+                "distance_lines": "distance_lines",
                 "length": "length",
                 "angle_line_plane": "angle_line_plane",
                 "angle_lines": "angle_lines",
@@ -5933,6 +5953,8 @@ class _Dung:
                 return self._kc2_mat(lbl(gt["point"]), tuple(gt["plane"][:3]))
             if mode == "distance_line_plane":
                 return self._kc2_khoang_cach_duong_mat(d)
+            if mode == "distance_lines":
+                return self._kc2_duong_hai_duong(d)
             if mode == "length":
                 p1, p2 = (lbl(x) for x in gt["points"])
                 w = self._vec(p1, p2)
@@ -5974,6 +5996,7 @@ class _Dung:
 _KIEM_DICH = {
     "distance": _Dung._kc2_khoang_cach,
     "distance_line_plane": _Dung._kc2_khoang_cach_duong_mat,
+    "distance_lines": _Dung._kc2_duong_hai_duong,
     "length": _Dung._kc2_do_dai,
     "area": _Dung._kc2_dien_tich,
     "angle_line_plane": _Dung._kc2_goc_duong_mat,

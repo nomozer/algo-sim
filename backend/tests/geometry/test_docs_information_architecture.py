@@ -224,7 +224,8 @@ def test_inv_20_candidate_and_cache_verify_only():
     # 138 -> 139 (grounded-vietnamese-geometry-understanding): bộ đọc đề đổi quyết định phục vụ/từ chối (đáy không tên, cạnh bên chóp đều, lăng trụ viết liền, tam giác cân suy ra, diện tích đáy, giá trị chưa đọc) ⇒ row 138:route-d phải MISS.
     # 139 -> 140 (dimension-aware-verified-construction): đại số thứ nguyên + đại lượng suy ra đã chứng minh + dựng hình lượng giác có chứng chỉ `trig-construction-certificate/1` đổi quyết định phục vụ/từ chối và envelope ⇒ row 139:route-d phải MISS.
     # 140 -> 141 (simulation-first-mvp-stabilization): `hop_dong_to_po_da_khai` nhận lăng trụ viết liền có dấu phẩy (`ABCA'B'C'`) ⇒ khôi phục đủ đáy/mặt trên/cạnh bên/nhân chứng vuông góc và 6 bước dựng ⇒ row 140:route-d phải MISS.
-    assert str(CACHE_VERSION) == "141"
+    # 141 -> 142 (planner-autonomous-composition-and-search-efficiency): khử trùng phép dựng đồng vai trong cùng mục tiêu (đường Euler @orthocenter/@circumcenter 10 → 8 bước phụ, loại điểm phụ trùng trong Scene3D) + `ask_distance_lines` qua đường dẫn xuất ⇒ row 141:route-d phải MISS.
+    assert str(CACHE_VERSION) == "142"
 
 
 def test_inv_21_favicon_not_in_staged_changes():

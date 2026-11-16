@@ -935,7 +935,12 @@ MISSING_KEY_MSG = (
 #       (`ABCDA'B'C'D'`, cùng quy tắc `_tach_lang_tru_lien`) nên `Scene3D` khôi phục đủ mặt đáy, mặt trên, cạnh bên kèm
 #       `perpendicular_witness` và 6 bước dựng nhân quả thay vì khung suy biến 10 đối tượng. Mọi row `140:route-d` phải MISS
 #       (`tests/geometry/test_undotted_prism_scene3d_topology.py`).
-CACHE_VERSION = "141"
+# 142 — 2026-11-16 (planner-autonomous-composition-and-search-efficiency): planner khử trùng phép dựng đồng vai trong cùng
+#       mục tiêu (vd đường Euler @orthocenter/@circumcenter giảm 10 → 8 phép phụ, loại điểm phụ trùng H4 == H trong Scene3D),
+#       siết kiểm chứng độ dài/góc trên đường dẫn xuất (`ask_distance_lines`) và nối trích dẫn tái sử dụng đa luật; khoá
+#       cache chỉ băm chuỗi phiên bản nên mọi row `141:route-d` phải MISS
+#       (`tests/geometry/test_planner_autonomous_composition.py`).
+CACHE_VERSION = "142"
 
 #: Hai chế độ hợp lệ của kiến trúc chính thức Hybrid `/4` do máy chủ sở hữu:
 #: - `live` (mặc định): trích xuất có cấu trúc qua Gemini (`typed-fact-next/2`) khi cấu hình `GEMINI_API_KEY`.

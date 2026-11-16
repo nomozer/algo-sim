@@ -399,7 +399,11 @@ def _cau_hoi_mo_ta(g, mo_ta: dict[str, dict[str, Any]]) -> dict[str, Any] | None
         key, ref = used[0]
         desc = _mo_ta_cua(ref, mo_ta, g.quote, g.goal_id)
         has_arg_items = isinstance(desc.get("point_tree"), dict) and "arg_items" in desc["point_tree"]
-        if not has_arg_items and not (g.goal_type == "distance" and keys in ({"point", "line"}, {"line", "plane"}) and key == "line"):
+        if (
+            not has_arg_items
+            and not (g.goal_type == "distance" and keys in ({"point", "line"}, {"line", "plane"}) and key == "line")
+            and not (g.goal_type == "distance" and keys == {"line1", "line2"})
+        ):
             rest = lambda k: [_ref(x) for x in t[k] if not is_described_ref(x)]      # noqa: E731
             if g.goal_type == "distance" and keys == {"point", "plane"}:
                 return {"quantity": "distance", **desc, "points_b": _refs(t["plane"])}
@@ -442,6 +446,8 @@ def _cau_hoi_mo_ta(g, mo_ta: dict[str, dict[str, Any]]) -> dict[str, Any] | None
         return {"quantity": "distance", "goal_trees": {"mode": "distance_line_plane", "line": line_items("line"), "plane": plane_pts("plane")}}
     if g.goal_type == "distance" and keys == {"point", "plane"}:
         return {"quantity": "distance", "goal_trees": {"mode": "distance_point_plane", "point": node_of(t["point"]), "plane": plane_pts("plane")}}
+    if g.goal_type == "distance" and keys == {"line1", "line2"}:
+        return {"quantity": "distance", "goal_trees": {"mode": "distance_lines", "line1": line_items("line1"), "line2": line_items("line2")}}
     if g.goal_type == "distance" and keys == {"segment"}:
         return {"quantity": "length", "goal_trees": {"mode": "length", "points": line_items("segment")}}
     if g.goal_type == "angle" and keys == {"line", "plane"}:
