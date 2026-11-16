@@ -520,8 +520,8 @@ function HeroSpatialStage() {
     const scene = new THREE.Scene();
     const camera = new THREE.PerspectiveCamera(33, width / height, 0.1, 100);
     const [lookX, lookY, lookZ] = LANDING_PYRAMID_SAMPLE.defaultLookAt;
-    camera.position.set(10.4, 6.3, -10.8);
-    camera.lookAt(lookX, lookY + 0.18, lookZ);
+    camera.position.set(9.7, 5.9, -10.1);
+    camera.lookAt(lookX, lookY + 0.14, lookZ);
 
     const ambientLight = new THREE.AmbientLight(0xfffdf9, 2.1);
     const keyLight = new THREE.DirectionalLight(0xfffaf0, 2.15);
@@ -1208,7 +1208,7 @@ export function LandingHeroV14() {
       <div className="axo-v14-hero-shell">
         <div className="axo-v14-hero-copy">
           <h1 id="axo-v14-hero-heading" className="axo-v14-hero-title">
-            <span className="axo-v14-hero-title-line">Hình học không gian,</span>
+            <span className="axo-v14-hero-title-line">Hình học không gian,{" "}</span>
             <span className="axo-v14-hero-title-line">
               dễ <AnnotatedPhrase variant="circle">hình dung</AnnotatedPhrase> hơn.
             </span>

@@ -21,7 +21,6 @@ const FORBIDDEN_ANSWERS = [
   "S(MENPF)",
   "S(MNEPFQ)",
   "S(MNPQ)",
-  "a = 4",
 ] as const;
 
 describe("AXO Landing V1.4 — Zero Pre-Displayed Answers & Product Honesty Guard", () => {
@@ -65,7 +64,7 @@ describe("AXO Landing V1.4 — Zero Pre-Displayed Answers & Product Honesty Guar
     }
 
     const closingHtml = renderToStaticMarkup(<LandingClosingV14 />);
-    expect(closingHtml).toContain('data-cta-visual="spatial-multi-solid-3d"');
+    expect(closingHtml).toContain('data-cta-visual="spatial-cube-hexagon-3d"');
     for (const pat of FORBIDDEN_ANSWERS) {
       expect(closingHtml).not.toContain(pat);
     }

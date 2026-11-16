@@ -40,15 +40,14 @@ describe("AXO Landing V1.4 — Continuous Spatial Storytelling", () => {
     expect(initialHtml).toContain('data-story-chapter="0"');
     expect(initialHtml).toContain('data-story-chapter="3"');
 
-    // Zero pre-displayed math answers or dimension measurements in Storytelling V1.4
+    // Zero pre-displayed math answers in Storytelling V1.4 (given premise a = 4 preserved cleanly)
+    expect(initialHtml).toContain("a = 4");
     expect(initialHtml).not.toContain("3√7");
     expect(initialHtml).not.toContain("2√2");
-    expect(initialHtml).not.toContain("a = 4");
     expect(initialHtml).not.toContain("MN = 2");
     expect(initialHtml).not.toContain("PQ = 4");
 
     for (const s of STORY_STAGES_V14) {
-      expect(s.summary).not.toContain("a = 4");
       expect(s.relationNote).not.toContain("3√7");
       expect(s.relationNote).not.toContain("2√2");
       expect(s.relationNote).not.toContain("MN = 2");

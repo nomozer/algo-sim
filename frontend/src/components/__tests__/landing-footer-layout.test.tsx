@@ -22,7 +22,7 @@ describe("Landing Footer structure, branding, links, and navigation", () => {
     useAuthStore.setState({ user: null });
   });
 
-  it("uses the official dark-ink IconAxoLogo mark and minimal essential footer without decorative SVG lines or redundant top button", () => {
+  it("uses the official dark-ink IconAxoLogo mark and minimal editorial footer with accessible back-to-top link", () => {
     const html = renderToString(<LandingFooterV14 />);
     const logoSvg = renderToString(<IconAxoLogo />);
 
@@ -32,7 +32,9 @@ describe("Landing Footer structure, branding, links, and navigation", () => {
     expect(html).not.toContain("axo-v14-footer-mark");
     expect(html).not.toContain("<canvas");
     expect(html).not.toContain("axo-v14-footer-trace-svg");
-    expect(html).not.toContain('id="btn-landing-footer-top"');
+    expect(html).toContain('id="btn-landing-footer-top"');
+    expect(html).toContain("Về đầu trang");
+    expect(html).toContain('href="#landing-hero"');
 
     // Essential links + concise copyright
     expect(html).toContain('href="#landing-hero"');

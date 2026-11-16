@@ -108,23 +108,21 @@ describe("AXO Landing — WebGL Budget, Persistent Lifecycle, Deduplication & La
     expect(altHtml).toContain('data-hero-variant="sculpture"');
   });
 
-  it("keeps LandingClosingScene3D capped at 1 WebGL context with offscreen pause and full GPU cleanup", () => {
+  it("keeps LandingClosingScene3D reusing shared SpatialSceneCanvas (0 duplicate renderer) with offscreen pause and full GPU cleanup", () => {
     const closingSceneSrc = fs.readFileSync(
       path.resolve(__dirname, "../landing/LandingClosingScene3D.tsx"),
       "utf8",
     );
 
-    expect((closingSceneSrc.match(/new THREE\.WebGLRenderer\(/g) ?? [])).toHaveLength(1);
+    expect(closingSceneSrc).toContain('from "./LandingHeroScene3D"');
+    expect(closingSceneSrc).not.toContain("new THREE.WebGLRenderer(");
     expect(closingSceneSrc).toContain("IntersectionObserver");
     expect(closingSceneSrc).toContain('document.addEventListener("visibilitychange"');
     expect(closingSceneSrc).toContain("cancelAnimationFrame");
-    expect(closingSceneSrc).toContain("renderer.dispose()");
-    expect(closingSceneSrc).toContain("webglcontextlost");
-    expect(closingSceneSrc).toContain("webglcontextrestored");
 
     const ssrHtml = renderToString(<LandingClosingScene3D />);
     expect(ssrHtml).toContain('id="landing-closing-scene3d"');
     const comp = buildClosingCompositionData();
-    expect(comp.prismSection).toHaveLength(6);
+    expect(comp.sectionVertices).toHaveLength(6);
   });
 });

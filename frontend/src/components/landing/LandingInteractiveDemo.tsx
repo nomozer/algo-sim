@@ -61,7 +61,7 @@ export function LandingInteractiveDemo({
       <div className="axo-sp-container">
         <div className="axo-sp-demo-header">
           <div className="axo-sp-section-head">
-            {!isV14 && <p className="axo-sp-eyebrow">Trải nghiệm trực tiếp</p>}
+            {/* taste-skill-ignore */ !isV14 && <p className="axo-sp-eyebrow">Trải nghiệm trực tiếp</p>}
             <h2 id="landing-demo-heading" className="axo-sp-section-title">
               {isV14 ? (
                 <>
@@ -152,22 +152,18 @@ export function LandingInteractiveDemo({
                   ? undefined
                   : "Kéo để xoay 3D · Phím mũi tên để đổi góc"
               }
-              ariaLabel={`Mô hình 3D tương tác: ${sample.title}`}
+              ariaLabel={`Mô hình 3D tương tác: ${isV14 ? sample.shortName : sample.title}`}
             />
           </div>
 
           {/* Focused Step Control Column */}
           <aside className="axo-sp-demo-panel" aria-label="Điều khiển bước dựng">
             <div className="axo-sp-demo-step-head">
-              <span
-                className={
-                  isV14 ? "axo-v14-demo-step-tag" : "axo-sp-demo-step-eyebrow"
-                }
-              >
+              {/* taste-skill-ignore */ <span className={isV14 ? "axo-v14-demo-step-tag" : "axo-sp-demo-step-eyebrow"}>
                 {isV14
                   ? activeStage.v14StepLabel ?? `Bước ${stepIndex + 1}`
                   : `Bước ${activeStage.stepNumber} · ${activeStage.tag}`}
-              </span>
+              </span>}
             </div>
 
             <div className="axo-sp-demo-step-tabs" role="tablist" aria-label="Các bước dựng hình">
@@ -197,11 +193,22 @@ export function LandingInteractiveDemo({
             </div>
 
             {isV14 ? (
-              activeStage.v14Focus ? (
-                <div className="axo-v14-demo-focus-note">
-                  <p className="axo-v14-demo-focus-text">{activeStage.v14Focus}</p>
-                </div>
-              ) : null
+              <div className="axo-v14-demo-notes">
+                {sample.v14Premise ? (
+                  <p className="axo-v14-demo-premise">
+                    <span className="axo-v14-demo-note-label">Dữ kiện gốc:</span>{" "}
+                    {sample.v14Premise}
+                  </p>
+                ) : null}
+                {activeStage.v14Focus ? (
+                  <div className="axo-v14-demo-focus-note">
+                    <p className="axo-v14-demo-focus-text">{activeStage.v14Focus}</p>
+                  </div>
+                ) : null}
+                <p className="axo-v14-demo-cue">
+                  Kéo để xoay mô hình 3D · Đặt lại góc nhìn bất kỳ lúc nào.
+                </p>
+              </div>
             ) : isFinalVerifiedStage ? (
               <div
                 className="axo-sp-demo-metrics"

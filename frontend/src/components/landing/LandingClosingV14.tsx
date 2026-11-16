@@ -130,6 +130,32 @@ export function LandingFooterV14() {
           <p className="axo-v14-footer-copy">
             © Axo · Mô phỏng hình học không gian 3D
           </p>
+          <a
+            id="btn-landing-footer-top"
+            href="#landing-hero"
+            className="axo-v14-footer-top-link"
+            onClick={(e) => {
+              e.preventDefault();
+              scrollTo("landing-hero");
+            }}
+          >
+            <span>Về đầu trang</span>
+            <svg
+              className="axo-v14-footer-top-icon"
+              viewBox="0 0 16 16"
+              fill="none"
+              aria-hidden="true"
+              focusable="false"
+            >
+              <path
+                d="M8 12.5V3.5M8 3.5L4.25 7.25M8 3.5L11.75 7.25"
+                stroke="currentColor"
+                strokeWidth="1.6"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              />
+            </svg>
+          </a>
         </div>
       </div>
     </footer>

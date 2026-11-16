@@ -54,6 +54,7 @@ export interface LandingSampleSpec {
   readonly categoryLabel: string;
   readonly title: string;
   readonly problemText: string;
+  readonly v14Premise?: string;
   readonly equationText: string;
   readonly answerBadge: string;
   readonly verifiedMetrics: readonly LandingMetricChip[];
@@ -279,6 +280,8 @@ function buildPyramidSample(): LandingSampleSpec {
     problemText:
       rawSample?.problemText ||
       "Cho hình chóp S.ABCD có đáy ABCD là hình vuông tâm O cạnh bằng 4, cạnh bên SA vuông góc với đáy (ABCD) và SA = 6. M, N, P lần lượt là trung điểm của SA, BC và CD. Mặt phẳng (MNP) cắt SB tại E, SD tại F tạo thành thiết diện MENPF.",
+    v14Premise:
+      "Đáy ABCD là hình vuông cạnh a = 4, đường cao SA = 6 ⊥ (ABCD); M, N, P là trung điểm SA, BC, CD.",
     equationText: "x + y + 2z = 6",
     answerBadge: "S(MENPF) = 6√6",
     verifiedMetrics: [
@@ -484,6 +487,8 @@ function buildCubeSample(): LandingSampleSpec {
     problemText:
       rawSample?.problemText ||
       "Cho hình lập phương ABCD.A′B′C′D′ có cạnh bằng 4. M, N, P là trung điểm AD, CD và B′C′. Mặt phẳng (MNP) cắt CC′, A′B′, AA′ tại E, F, Q tạo thành thiết diện lục giác đều MNEPFQ.",
+    v14Premise:
+      "Hình lập phương ABCD.A′B′C′D′ cạnh a = 4; M, N, P là trung điểm AD, CD và B′C′.",
     equationText: "-x + y + z = 2",
     answerBadge: "S(MNEPFQ) = 12√3",
     verifiedMetrics: [

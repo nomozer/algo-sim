@@ -21,6 +21,8 @@ export interface SpatialSceneCanvasProps {
   readonly orbitResetNonce?: number;
   readonly subtlePointerParallax?: boolean;
   readonly compact?: boolean;
+  readonly frameless?: boolean;
+  readonly pointTagFilter?: readonly string[];
   readonly topBadgeLeft?: string;
   readonly topBadgeRight?: string;
   readonly bottomCaption?: string;
@@ -526,6 +528,8 @@ export function SpatialSceneCanvas({
   orbitResetNonce = 0,
   subtlePointerParallax = false,
   compact = false,
+  frameless = false,
+  pointTagFilter,
   topBadgeLeft,
   topBadgeRight,
   bottomCaption,
@@ -544,6 +548,10 @@ export function SpatialSceneCanvas({
 
   const [webglReady, setWebglReady] = useState(false);
   const [shouldMountWebgl, setShouldMountWebgl] = useState(false);
+  const webglAllowed = useMemo(() => {
+    if (typeof window === "undefined") return false;
+    return !window.location.search.includes("no_webgl=1");
+  }, []);
 
   const wakeRenderRef = useRef<() => void>(() => {});
   const syncSampleRigRef = useRef<(nextSample: LandingSampleSpec) => void>(() => {});
@@ -593,7 +601,7 @@ export function SpatialSceneCanvas({
   // Pre-warm Demo WebGL lazily when approaching Demo viewport (preserves Hero initial load = 1 WebGL context)
   useEffect(() => {
     const shell = shellRef.current;
-    if (!shell || typeof window === "undefined") return;
+    if (!shell || typeof window === "undefined" || !webglAllowed) return;
     if (shouldMountWebgl) return;
 
     let fallbackTimer = 0;
@@ -625,7 +633,7 @@ export function SpatialSceneCanvas({
 
   // Persistent single WebGLRenderer per component mount (0 extra contexts created on sample switches)
   useEffect(() => {
-    if (!shouldMountWebgl) return;
+    if (!shouldMountWebgl || !webglAllowed) return;
     const shell = shellRef.current;
     const host = hostRef.current;
     if (!shell || !host || typeof window === "undefined") return;
@@ -1194,25 +1202,29 @@ export function SpatialSceneCanvas({
   };
 
   const activeSet = useMemo(() => new Set(activePoints), [activePoints]);
+  const tagFilterSet = useMemo(
+    () => (pointTagFilter ? new Set(pointTagFilter) : null),
+    [pointTagFilter],
+  );
 
   return (
     <div
       id={sceneId}
       ref={shellRef}
-      className={`axo-sp-scene-shell${interactiveOrbit ? " is-interactive" : ""}${compact ? " is-compact" : ""}${presentation === "v14" ? " is-v14" : ""}`}
+      className={`axo-sp-scene-shell${interactiveOrbit ? " is-interactive" : ""}${compact ? " is-compact" : ""}${frameless ? " is-frameless" : ""}${presentation === "v14" ? " is-v14" : ""}`}
       role={interactiveOrbit ? "application" : "img"}
       aria-label={ariaLabel}
       tabIndex={interactiveOrbit ? 0 : undefined}
       onKeyDown={handleKeyDown}
     >
-      <div className="axo-sp-scene-grid" aria-hidden="true" />
+      {!frameless && <div className="axo-sp-scene-grid" aria-hidden="true" />}
       <div
         ref={hostRef}
         className="axo-sp-scene-canvas-host"
-        style={{ visibility: webglReady ? "visible" : "hidden" }}
+        style={{ visibility: webglReady && webglAllowed ? "visible" : "hidden" }}
       />
 
-      {!webglReady && (
+      {(!webglReady || !webglAllowed) && (
         <svg
           className="axo-sp-scene-svg"
           viewBox={`0 0 ${svgFallback.w} ${svgFallback.h}`}
@@ -1279,6 +1291,7 @@ export function SpatialSceneCanvas({
               "label" in pt && typeof pt.label === "string"
                 ? pt.label
                 : pt.id.replace("_prime", "′");
+            const showLabel = !tagFilterSet || tagFilterSet.has(pt.id);
             const fillColor =
               pt.role === "intersection"
                 ? "#dd5b00"
@@ -1293,16 +1306,22 @@ export function SpatialSceneCanvas({
                   r={pt.role === "intersection" ? 5.2 : pt.role === "seed" ? 4.4 : 3.4}
                   fill={fillColor}
                 />
-                <text
-                  x={pt.x + 8}
-                  y={pt.y - 7}
-                  fontSize="11"
-                  fontWeight="700"
-                  fontFamily="JetBrains Mono, ui-monospace, monospace"
-                  fill={fillColor}
-                >
-                  {labelText}
-                </text>
+                {showLabel && (
+                  <text
+                    x={pt.x + 8}
+                    y={pt.y - 7}
+                    fontSize="11"
+                    fontWeight="700"
+                    fontFamily={
+                      presentation === "v14"
+                        ? "Inter, system-ui, sans-serif"
+                        : "JetBrains Mono, ui-monospace, monospace"
+                    }
+                    fill={fillColor}
+                  >
+                    {labelText}
+                  </text>
+                )}
               </g>
             );
           })}
@@ -1311,7 +1330,9 @@ export function SpatialSceneCanvas({
 
       {/* Projected 2D point badges keyed per sample+point to eliminate carryover on sample switch */}
       <div className="axo-sp-scene-labels" aria-hidden="true">
-        {sample.points.map((pt) => {
+        {sample.points
+          .filter((pt) => !tagFilterSet || tagFilterSet.has(pt.id))
+          .map((pt) => {
           const isActive = activeSet.has(pt.id);
           const roleClass =
             pt.role === "seed"
@@ -1334,7 +1355,7 @@ export function SpatialSceneCanvas({
               }}
               className={`axo-sp-point-tag${roleClass}${isActive ? " is-active" : ""}`}
               style={
-                webglReady
+                webglReady && webglAllowed
                   ? undefined
                   : { opacity: 0 }
               }

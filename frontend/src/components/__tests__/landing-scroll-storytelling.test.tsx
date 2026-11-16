@@ -20,13 +20,19 @@ describe("AXO Landing — Scroll-Driven Spatial Storytelling", () => {
     expect(computeStoryScrollProgress(-1200, 2000, 800)).toBe(1);
     expect(computeStoryScrollProgress(-1500, 2000, 800)).toBe(1);
 
-    // At every normalized progress step in [0, 1], at most one chapter has opacity > 0
+    // At every normalized progress step in [0, 1], EXACTLY ONE chapter has opacity > 0 (zero blink, zero overlap)
     for (let step = 0; step <= 100; step++) {
       const p = step / 100;
       const visibleCount = [0, 1, 2, 3].filter(
         (idx) => computeChapterEnvelope(p, idx, false).opacity > 0,
       ).length;
-      expect(visibleCount).toBeLessThanOrEqual(1);
+      expect(visibleCount).toBe(1);
+    }
+
+    // All 4 chapters keep consistent 3D prism height & scale (no vertical squashing or zoom pumping)
+    for (const s of STORY_STAGES_V14) {
+      expect(s.camera.extrude).toBe(1);
+      expect(s.camera.zoom).toBe(1);
     }
 
     // Reduced motion exposes all chapters statically without dissolve fade
@@ -81,10 +87,10 @@ describe("AXO Landing — Scroll-Driven Spatial Storytelling", () => {
       expect(html).toContain(stage.chapterHeading);
     }
 
-    // Zero pre-displayed answers across rendered HTML and all 4 stage specs
+    // Zero pre-displayed computed answers across rendered HTML and all 4 stage specs (preserves original given premise a = 4)
+    expect(html).toContain("a = 4");
     expect(html).not.toContain("3√7");
     expect(html).not.toContain("2√2");
-    expect(html).not.toContain("a = 4");
     expect(html).not.toContain("MN = 2");
     expect(html).not.toContain("PQ = 4");
     expect(html).not.toContain("axo-v14-story-verified");
@@ -92,7 +98,6 @@ describe("AXO Landing — Scroll-Driven Spatial Storytelling", () => {
     for (const s of STORY_STAGES_V14) {
       expect(s.summary).not.toContain("3√7");
       expect(s.summary).not.toContain("2√2");
-      expect(s.summary).not.toContain("a = 4");
       expect(s.relationNote).not.toContain("3√7");
       expect(s.relationNote).not.toContain("2√2");
       expect(s.relationNote).not.toContain("MN = 2");
