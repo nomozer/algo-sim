@@ -361,6 +361,27 @@ _PURE_PROOF_OR_INTERSECTION_SUBQ_LINE_RE = re.compile(
 )
 
 
+_MC_OPT_MARKER_RE = re.compile(r"(?:^|(?<=[\s:]))(?<![\w'])[A-D]\s*[.)](?=\s*\S)")
+_MC_FORBID_SENTENCE_RE = re.compile(
+    r"\b(?:cho|gọi|biết|giả\s+sử|tính|tìm|xác\s+định|chứng\s+minh|dựng|lấy|kẻ|hỏi|cắt|vuông\s+góc|song\s+song|trung\s+điểm|trọng\s+tâm)\b",
+    re.IGNORECASE | re.UNICODE,
+)
+
+
+def strip_mc_options_block(text: str) -> str:
+    """Strip trailing multiple-choice option tails (`A. ...`, including out-of-order/partial blocks) without touching geometry subquestions."""
+    if not text:
+        return ""
+    s = _TRAILING_MC_OPTIONS_RE.sub(r"\g<stem_end>", text)
+    s = _TRAILING_PARTIAL_MC_RE.sub(r"\g<stem_end>", s)
+    for m_start in re.finditer(r"(?P<stem_end>(?:(?<!\w)(?i:bằng|là)|[.?:)]|\n)\s*:?)\s+(?=(?<![\w'])[A-D]\s*[.)]\s*\S)", s):
+        tail = s[m_start.end("stem_end") :]
+        markers = [m.group(0).strip()[0] for m in _MC_OPT_MARKER_RE.finditer(tail)]
+        if len(set(markers)) >= 2 and not _MC_FORBID_SENTENCE_RE.search(tail):
+            return s[: m_start.end("stem_end")].strip()
+    return s
+
+
 def normalize_problem_text(problem_text: str) -> str:
     """Unicode NFC normalization preserving character alignment for standard Vietnamese text, stripping trailing MC options."""
     s = unicodedata.normalize("NFC", problem_text or "").replace("\u2032", "'")
@@ -370,11 +391,7 @@ def normalize_problem_text(problem_text: str) -> str:
     s = re.sub(r"\b([A-Z][0-9']*)\.([A-Z][0-9']*)(?=\s+(?i:là|thuộc|nằm)\b)", r"\1. \2", s)
     if _COMPUTABLE_LATER_SUBQ_RE.search(s):
         s = _PURE_PROOF_OR_INTERSECTION_SUBQ_LINE_RE.sub("", s)
-    if _TRAILING_MC_OPTIONS_RE.search(s):
-        return _TRAILING_MC_OPTIONS_RE.sub(r"\g<stem_end>", s).strip()
-    if _TRAILING_PARTIAL_MC_RE.search(s):
-        return _TRAILING_PARTIAL_MC_RE.sub(r"\g<stem_end>", s).strip()
-    return s
+    return strip_mc_options_block(s)
 
 
 def tokenize_problem_text(text: str) -> list[GeoToken]:
@@ -411,7 +428,21 @@ def split_into_Sentences(text: str) -> list[tuple[int, int, str]]:
             if prev_ch.isdigit() and next_ch.isdigit():
                 continue
             bounds.append(i + 1)
+    for m_split in re.finditer(
+        r"(?<=[0-9a-zA-Z'°²³\)])(?<!:)(?<!,)(?<!;)\s+(?=(?-i:(?:Khoảng\s+cách|Thể\s+tích|Diện\s+tích|Số\s+đo|Góc|Tính|Tìm|Xác\s+định)\b))",
+        text,
+    ):
+        before_tail = text[: m_split.start()].rstrip().lower()
+        if re.search(r"(?:^|\b(?:và|rồi|thì|nên|hãy|em|của|là|tức|về|với|theo|hoặc|biết|rằng))$", before_tail):
+            continue
+        after = text[m_split.end() :]
+        if re.match(
+            r"(?:Khoảng\s+cách\s+(?:từ|giữa)|Thể\s+tích\b|Diện\s+tích\b|Số\s+đo\b|Góc\s+(?:giữa|tạo|hợp)|(?:Tính|Tìm|Xác\s+định)\s+(?:thể|diện|khoảng|góc|độ|tỉ|tỷ|thiết))",
+            after,
+        ):
+            bounds.append(m_split.end())
     bounds.append(n)
+    bounds = sorted(set(bounds))
     out: list[tuple[int, int, str]] = []
     for a, b in zip(bounds, bounds[1:]):
         while a < b and text[a].isspace():
@@ -524,6 +555,29 @@ _NESTED_PROJ_PLANE_RE = re.compile(
 )
 
 
+def _iter_top_splits(s: str, sep_pat: str = r"\s+(?:và|với)\s+") -> list[tuple[str, int, str, int]]:
+    """Return every binary split `(left, left_off, right, right_off)` across top-level connectors in `s`."""
+    return [
+        (s[: m.start()], 0, s[m.end() :], m.end())
+        for m in re.finditer(sep_pat, s, re.IGNORECASE | re.UNICODE)
+    ]
+
+
+_TRAILING_GOAL_META_RE = re.compile(
+    r"(?:\s*(?:có\s+số\s+đo\s+|có\s+)?(?:bằng|là)\s+bao\s+nhiêu"
+    r"|\s*(?:bằng|là)\s*:?\s*[.?]?"
+    r"|\s*(?:theo|bằng)\s+(?:độ|radian|rad|đvđd|đvdt|đvtt|mm²|cm²|dm²|km²|m²|mm³|cm³|dm³|km³|m³|mm|cm|dm|km|m|a)"
+    r"|\s*\(\s*(?:(?:đơn\s+vị|kết\s+quả|làm\s+tròn)[^()]*)\s*\)"
+    r"|\s*(?:kết\s+quả\s+)?làm\s+tròn[^.;?!]*"
+    r"|\s*[.?])+\s*$",
+    re.IGNORECASE | re.UNICODE,
+)
+
+
+def _strip_trailing_goal_meta(s: str) -> str:
+    return _TRAILING_GOAL_META_RE.sub("", s).strip()
+
+
 class _AstBuilder:
     def __init__(self, raw_text: str) -> None:
         self.raw_text = raw_text
@@ -547,6 +601,26 @@ class _AstBuilder:
         self._sphere_center_map: dict[str, str] = {}
         self._area_symbol_map: dict[str, list[str]] = {}
 
+    def _snapshot(self) -> tuple[int, dict[tuple[Any, ...], str], dict[str, int]]:
+        return (len(self.described_points), dict(self._desc_by_key), dict(self._desc_counters))
+
+    def _restore(self, snap: tuple[int, dict[tuple[Any, ...], str], dict[str, int]]) -> None:
+        n_dp, by_k, ctrs = snap
+        del self.described_points[n_dp:]
+        self._desc_by_key = by_k
+        self._desc_counters = ctrs
+
+    def _subquote(self, phrase_text: str, approx_start: int) -> str:
+        s = phrase_text.strip()
+        if not s:
+            return ""
+        lo = max(0, approx_start - 8)
+        hi = min(len(self.raw_text), approx_start + len(s) + 24)
+        idx = self.raw_text.find(s, lo, hi)
+        if idx >= 0:
+            return _clean_quote(self.raw_text, idx, idx + len(s))
+        return _clean_quote(self.raw_text, approx_start, approx_start + len(s))
+
     def _alloc_desc_id(self, kind: str) -> str:
         prefix = {
             "midpoint": "m",
@@ -563,6 +637,7 @@ class _AstBuilder:
         return f"{prefix}{n}"
 
     def _register_described_point(self, spec: dict[str, Any]) -> str:
+        q_key = re.sub(r"\s+", " ", str(spec.get("quote") or "")).strip().lower()
         key = (
             spec["kind"],
             tuple(spec.get("segment") or ()),
@@ -572,6 +647,7 @@ class _AstBuilder:
             tuple(spec.get("plane") or ()),
             tuple(spec.get("line1") or ()),
             tuple(spec.get("line2") or ()),
+            q_key,
         )
         if key in self._desc_by_key:
             return f"@{self._desc_by_key[key]}"
@@ -581,42 +657,158 @@ class _AstBuilder:
         self._desc_by_key[key] = did
         return f"@{did}"
 
-    def parse_point_or_described(self, phrase: str, phrase_start_in_raw: int) -> str | None:
-        """Resolve either a single vertex label (e.g. `A` or `điểm A`) or an inline described point (`@m1`)."""
+    def parse_plane_or_base(self, phrase: str) -> list[str] | None:
         s = phrase.strip()
+        m_pl = re.fullmatch(
+            rf"(?:(?:mặt\s+phẳng|mp|mặt\s+bên|mặt\s+đáy)\s*)?\((?P<pl>{_PTS3_6})\)"
+            rf"|(?:mặt\s+phẳng|mp|mặt\s+bên|mặt\s+đáy)\s+(?P<pl_nb>{_PTS3_6})(?![\w'])"
+            rf"|(?P<pld>(?:mặt\s+phẳng\s+|mặt\s+)?đáy)(?![\w'])",
+            s,
+            re.IGNORECASE | re.UNICODE,
+        )
+        if not m_pl:
+            return None
+        if m_pl.group("pl") or m_pl.group("pl_nb"):
+            pts = _split_pts(m_pl.group("pl") or m_pl.group("pl_nb"))
+            return pts if len(set(pts)) >= 3 else None
+        return list(self._base_vertices) if len(self._base_vertices) >= 3 else None
+
+    def parse_line_or_described(self, phrase: str, phrase_start_in_raw: int, depth: int = 0) -> list[str] | None:
+        """Resolve either a named segment (`AB`, `đường thẳng SC`) or an endpoint-described line (`nối @a với @b`)."""
+        if depth > 3:
+            return None
+        lpad = len(phrase) - len(phrase.lstrip())
+        s = phrase.strip()
+        start = phrase_start_in_raw + lpad
+        m_named = re.fullmatch(
+            rf"(?:(?:đường\s+thẳng|đt|cạnh(?:\s+bên|\s+đáy)?|đoạn(?:\s+thẳng)?)\s+)?(?P<pts>{_PTS2})(?![\w'])",
+            s,
+            re.IGNORECASE | re.UNICODE,
+        )
+        if m_named:
+            pts = _split_pts(m_named.group("pts"))
+            return pts if len(pts) == 2 and len(set(pts)) == 2 else None
+        m_join = re.fullmatch(
+            r"(?:(?:đường\s+thẳng|đt|đoạn(?:\s+thẳng)?)\s+)?(?:nối|đi\s+qua)\s+(?P<body>.+)",
+            s,
+            re.IGNORECASE | re.UNICODE,
+        )
+        if m_join:
+            body = m_join.group("body")
+            body_off = start + m_join.start("body")
+            for a_s, ao, b_s, bo in _iter_top_splits(body):
+                snap = self._snapshot()
+                ra = self.parse_point_or_described(a_s, body_off + ao, depth + 1)
+                rb = self.parse_point_or_described(b_s, body_off + bo, depth + 1) if ra else None
+                if ra and rb and ra != rb:
+                    return [ra, rb]
+                self._restore(snap)
+        return None
+
+    def parse_point_or_described(self, phrase: str, phrase_start_in_raw: int, depth: int = 0) -> str | None:
+        """Resolve either a single vertex label (e.g. `A` or `điểm A`) or a composable described point (`@m1`, depth <= 3)."""
+        if depth > 3:
+            return None
+        lpad = len(phrase) - len(phrase.lstrip())
+        s = phrase.strip()
+        start = phrase_start_in_raw + lpad
         m_pt = re.fullmatch(rf"(?:điểm\s+)?(?P<p>{_PT})", s, re.IGNORECASE | re.UNICODE)
         if m_pt:
             return m_pt.group("p").replace("′", "'")
 
-        # Check depth-2 nested orthogonal projection onto plane
-        m_nest = _NESTED_PROJ_PLANE_RE.fullmatch(s)
-        if m_nest:
-            inner_str = m_nest.group("inner")
-            inner_offset = phrase.find(inner_str)
-            inner_ref = self.parse_point_or_described(
-                inner_str, phrase_start_in_raw + (inner_offset if inner_offset >= 0 else 0)
-            )
-            if inner_ref:
-                q_outer = _clean_quote(self.raw_text, phrase_start_in_raw, phrase_start_in_raw + len(phrase))
-                return self._register_described_point(
-                    {
-                        "kind": "orthogonal_projection",
-                        "point": inner_ref,
-                        "plane": _split_pts(m_nest.group("plane")),
-                        "quote": q_outer,
-                    }
-                )
+        # Recursive orthogonal projection onto plane or line (try splits right-to-left for nested descriptors)
+        if re.match(r"hình\s+chiếu\b", s, re.IGNORECASE):
+            for m_head in [re.match(r"hình\s+chiếu(?:\s+vuông\s+góc)?\s+của(?:\s+điểm)?\s+", s, re.IGNORECASE | re.UNICODE)]:
+                if not m_head:
+                    continue
+                rest = s[m_head.end() :]
+                rest_off = start + m_head.end()
+                for sp in reversed(list(re.finditer(r"\s+(?:lên|trên)\s+", rest, re.IGNORECASE | re.UNICODE))):
+                    pt_s = rest[: sp.start()]
+                    dst_s = rest[sp.end() :]
+                    dst_off = rest_off + sp.end()
+                    snap = self._snapshot()
+                    pl = self.parse_plane_or_base(dst_s)
+                    if pl:
+                        pt_ref = self.parse_point_or_described(pt_s, rest_off, depth + 1)
+                        if pt_ref:
+                            q_outer = self._subquote(s, start)
+                            return self._register_described_point(
+                                {"kind": "orthogonal_projection", "point": pt_ref, "plane": pl, "quote": q_outer}
+                            )
+                        self._restore(snap)
+                        continue
+                    ln_refs = self.parse_line_or_described(dst_s, dst_off, depth + 1)
+                    pt_ref = self.parse_point_or_described(pt_s, rest_off, depth + 1) if ln_refs else None
+                    if pt_ref and ln_refs:
+                        q_outer = self._subquote(s, start)
+                        return self._register_described_point(
+                            {"kind": "orthogonal_projection_line", "point": pt_ref, "line": ln_refs, "quote": q_outer}
+                        )
+                    self._restore(snap)
 
-        # Check depth-1 leaf described point
+        # Recursive midpoint of segment between two described/named points
+        m_mid_join = re.fullmatch(
+            r"(?:trung\s+điểm|điểm\s+chính\s+giữa)(?:\s+của)?\s+(?:đoạn\s+thẳng\s+|đoạn\s+|cạnh\s+)?(?:nối|đi\s+qua)\s+(?P<body>.+)",
+            s,
+            re.IGNORECASE | re.UNICODE,
+        )
+        if m_mid_join:
+            body = m_mid_join.group("body")
+            body_off = start + m_mid_join.start("body")
+            for a_s, ao, b_s, bo in _iter_top_splits(body):
+                snap = self._snapshot()
+                ra = self.parse_point_or_described(a_s, body_off + ao, depth + 1)
+                rb = self.parse_point_or_described(b_s, body_off + bo, depth + 1) if ra else None
+                if ra and rb and ra != rb:
+                    q_outer = self._subquote(s, start)
+                    return self._register_described_point({"kind": "midpoint", "segment": [ra, rb], "quote": q_outer})
+                self._restore(snap)
+
+        # Recursive intersection of line (possibly described) and plane, or two lines (possibly described)
+        m_int_pl = re.fullmatch(
+            rf"giao\s+điểm(?:\s+của)?\s+(?P<line>.+?)\s+(?:và|với)\s+(?:(?:mặt\s+phẳng|mp|mặt\s+bên|mặt\s+đáy)\s*)?\((?P<plane>{_PTS3_6})\)",
+            s,
+            re.IGNORECASE | re.UNICODE,
+        )
+        if m_int_pl:
+            snap = self._snapshot()
+            ln_refs = self.parse_line_or_described(m_int_pl.group("line"), start + m_int_pl.start("line"), depth + 1)
+            pl_pts = _split_pts(m_int_pl.group("plane"))
+            if ln_refs and len(set(pl_pts)) >= 3:
+                q_outer = self._subquote(s, start)
+                return self._register_described_point(
+                    {"kind": "intersect_line_plane", "line": ln_refs, "plane": pl_pts, "quote": q_outer}
+                )
+            self._restore(snap)
+
+        m_int_ll = re.fullmatch(
+            r"giao\s+điểm(?:\s+của)?(?:\s+hai\s+đường\s+thẳng)?\s+(?P<body>.+)",
+            s,
+            re.IGNORECASE | re.UNICODE,
+        )
+        if m_int_ll:
+            body = m_int_ll.group("body")
+            body_off = start + m_int_ll.start("body")
+            for l1_s, o1, l2_s, o2 in _iter_top_splits(body):
+                snap = self._snapshot()
+                l1 = self.parse_line_or_described(l1_s, body_off + o1, depth + 1)
+                l2 = self.parse_line_or_described(l2_s, body_off + o2, depth + 1) if l1 else None
+                if l1 and l2 and set(l1) != set(l2):
+                    q_outer = self._subquote(s, start)
+                    return self._register_described_point(
+                        {"kind": "intersect_line_line", "line1": l1, "line2": l2, "quote": q_outer}
+                    )
+                self._restore(snap)
+
+        # Depth-1 leaf described point patterns
         for kind, pat in _DESC_LEAF_PATTERNS:
             m = pat.fullmatch(s)
             if m:
-                q = _clean_quote(self.raw_text, phrase_start_in_raw, phrase_start_in_raw + len(phrase))
+                q = self._subquote(s, start)
                 if kind == "midpoint":
                     seg_str = m.group("seg") or m.group("seg2")
-                    return self._register_described_point(
-                        {"kind": "midpoint", "segment": _split_pts(seg_str), "quote": q}
-                    )
+                    return self._register_described_point({"kind": "midpoint", "segment": _split_pts(seg_str), "quote": q})
                 if kind in ("centroid", "orthocenter", "circumcenter"):
                     return self._register_described_point(
                         {"kind": kind, "polygon": _split_pts(m.group("poly")), "quote": q}
@@ -3272,7 +3464,7 @@ def _parse_clause_into_ast(builder: _AstBuilder, clause: ClauseSpan) -> None:
                  or m_sec_par_or_perp.group("p3"))
         thru_str = (m_sec_par_or_perp.group("thru") or m_sec_par_or_perp.group("thru2")).strip()
         # Exclude if `thru_str` is comma-separated multiple points (which belongs to constrained plane 6d)
-        if not re.fullmatch(rf"{_PT}\s*(?:,\s*{_PT})+", thru_str):
+        if not re.fullmatch(rf"{_PT}\s*(?:,\s*{_PT})+", thru_str) and "," not in thru_str:
             thru_offset = m_sec_par_or_perp.start("thru") if m_sec_par_or_perp.group("thru") else m_sec_par_or_perp.start("thru2")
             # a NAMED point defined in place (semantic-failure-safe-image-segmentation): "trung điểm M của (cạnh) SA",
             # "trọng tâm G của tam giác ABC" — the descriptor becomes its own premise with its own quote and the plane goes
@@ -3451,62 +3643,83 @@ def _parse_clause_into_ast(builder: _AstBuilder, clause: ClauseSpan) -> None:
             )
             mapped_fact = True
 
-    # 6d-0 (independent-geometry-plane-constraints). A named plane through a line and a point, or through two lines that
-    # share a named point — in both cases exactly the plane of three named points (the planner's three-point plane):
-    #   "(P) chứa (đường thẳng) AB và (đi) qua M" · "(P) (đi) qua M và chứa (đường thẳng) AB"
-    #   "(P) chứa hai đường thẳng (cắt nhau) AB và AC"   (the common label is the intersection point)
-    # The whole clause must be this definition (nothing left unread). Two lines with four distinct labels, or stated
-    # "song song", are left unparsed: no typed premise states line ∥ line, so the claim could not be checked. The engine
-    # proves the three points distinct and not collinear (a point on the line ⇒ refused).
-    m_lp = re.fullmatch(
-        rf"\s*(?:Gọi\s+\((?P<p1>{_PT}|[α-ω]'?)\)\s+là\s+mặt\s+phẳng|Mặt\s+phẳng\s+\((?P<p2>{_PT}|[α-ω]'?)\))\s+(?:"
-        rf"chứa\s+(?:đường\s+thẳng\s+)?(?P<la>{_PTS2})\s+và\s+(?:đi\s+qua|qua)\s+(?:điểm\s+)?(?P<pa>{_PT})"
-        rf"|(?:đi\s+qua|qua)\s+(?:điểm\s+)?(?P<pb>{_PT})\s+và\s+chứa\s+(?:đường\s+thẳng\s+)?(?P<lb>{_PTS2})"
-        rf"|chứa\s+hai\s+đường\s+thẳng\s+(?:cắt\s+nhau\s+)?(?P<l1>{_PTS2})\s+và\s+(?P<l2>{_PTS2}))\s*[.;]?\s*",
+    # 6d-0 & 6d (independent-geometry-plane-constraints + A4 `@id` in `contains_points`).
+    m_sec_con_hdr = re.search(
+        rf"(?:Gọi\s+\((?P<p1>{_PT}|[α-ω]'?)\)\s+là\s+mặt\s+phẳng|Mặt\s+phẳng\s+\((?P<p2>{_PT}|[α-ω]'?)\))\s+(?P<body>(?:đi\s+qua|qua|chứa)\s+.+?)(?:\s*(?:,?\s*(?:(?:và(?:\s+đồng\s+thời)?|đồng\s+thời)\s+)?(?:(?P<perp>vuông\s+góc\s+với\s+(?:mặt\s+phẳng\s+|mp\s*|mặt\s+(?:đáy|bên)\s*)?\((?P<pplane>{_PTS3_6})\))|(?P<par>song\s+song\s+với\s+(?:đường\s+thẳng\s+|cạnh\s+|đoạn(?:\s+thẳng)?\s+)?(?P<pline>{_PTS2})))))?\s*[.;]?\s*$",
         ctext_norm,
         re.IGNORECASE | re.UNICODE,
     )
-    pts_lp: list[str] = []
-    if m_lp:
-        if m_lp.group("l1"):
-            a, b = _split_pts(m_lp.group("l1")), _split_pts(m_lp.group("l2"))
-            if len(set(a)) == 2 and len(set(b)) == 2 and len(set(a) & set(b)) == 1:
-                shared = (set(a) & set(b)).pop()
-                pts_lp = [shared, *(x for x in a if x != shared), *(x for x in b if x != shared)]
-        else:
-            line = _split_pts(m_lp.group("la") or m_lp.group("lb"))
-            pt = m_lp.group("pa") or m_lp.group("pb")
-            if len(set(line)) == 2:
-                pts_lp = [*line, pt]
-    if pts_lp and len(set(pts_lp)) == 3:
-        pname = m_lp.group("p1") or m_lp.group("p2")
-        builder.derived_sections.append({
-            "section_id": "sec", "plane_name": pname, "target_solid_id": builder._primary_solid_id, "plane_kind": "constrained",
-            "constraints": [{"kind": "contains_points", "operands": pts_lp}], "stated_intersections": [],
-            "quote": _clean_quote(raw, ca + m_lp.start(), ca + m_lp.end())})
-        builder._section_by_plane_name[pname] = "sec"
-        builder._last_section_id = "sec"
-        mapped_fact = True
+    if m_sec_con_hdr and not m_sec_par_or_perp and not m_sec_two_lines:
+        pname = m_sec_con_hdr.group("p1") or m_sec_con_hdr.group("p2")
+        body_c = m_sec_con_hdr.group("body").strip()
+        body_off = ca + m_sec_con_hdr.start("body")
+        pts_con: list[str] = []
+        valid_con_body = True
+        has_dir = bool(m_sec_con_hdr.group("perp") or m_sec_con_hdr.group("par"))
 
-    # 6d. Constrained plane (`plane_kind="constrained"`):
-    # - "Mặt phẳng (Q) đi qua M, N, P"
-    # - "Mặt phẳng (P) đi qua A, B(, C)? và vuông góc với (SCD)"
-    # - "Mặt phẳng (P) chứa AB' và song song với BC"
-    m_sec_con = re.search(
-        rf"(?:Gọi\s+\((?P<p1>{_PT}|[α-ω]'?)\)\s+là\s+mặt\s+phẳng|Mặt\s+phẳng\s+\((?P<p2>{_PT}|[α-ω]'?)\))\s+(?:đi\s+qua|qua|chứa)\s+(?P<pts>{_PT}\s*(?:,\s*{_PT})+|{_PTS2})(?:\s+và\s+(?:(?P<perp>vuông\s+góc\s+với\s+(?:mặt\s+phẳng\s+|mp\s*)?\((?P<pplane>{_PTS3_6})\))|(?P<par>song\s+song\s+với\s+(?:đường\s+thẳng\s+|cạnh\s+)?(?P<pline>{_PTS2}))))?",
-        ctext_norm,
-        re.IGNORECASE | re.UNICODE,
-    )
-    if m_sec_con and not m_sec_par_or_perp and not m_sec_two_lines:
-        pname = m_sec_con.group("p1") or m_sec_con.group("p2")
-        pts_list = _split_pts(m_sec_con.group("pts"))
-        constraints: list[dict[str, Any]] = [{"kind": "contains_points", "operands": pts_list}]
-        if m_sec_con.group("perp"):
-            constraints.append({"kind": "perpendicular_to_plane", "operands": _split_pts(m_sec_con.group("pplane"))})
-        elif m_sec_con.group("par"):
-            constraints.append({"kind": "parallel_to_line", "operands": _split_pts(m_sec_con.group("pline"))})
-        if len(pts_list) >= 3 or len(constraints) >= 2:
-            q_con = _clean_quote(raw, ca + m_sec_con.start(), ca + m_sec_con.end())
+        def _parse_contains_items(txt: str, off: int) -> list[str] | None:
+            t = txt.strip()
+            t = re.sub(r"^(?:(?:đi\s+)?qua|chứa)\s+(?:(?:hai|ba|các)\s+điểm\s+)?", "", t, flags=re.IGNORECASE)
+            off += txt.find(t) if t in txt else 0
+            # First check intersecting named lines only when 3 named points result: "hai đường thẳng (cắt nhau) AB và AC"
+            m_two_l = re.fullmatch(rf"hai\s+đường\s+thẳng\s+(?:cắt\s+nhau\s+)?(?P<l1>{_PTS2})\s+và\s+(?P<l2>{_PTS2})", t, re.I)
+            if m_two_l and not has_dir:
+                a_pts, b_pts = _split_pts(m_two_l.group("l1")), _split_pts(m_two_l.group("l2"))
+                if len(set(a_pts)) == 2 and len(set(b_pts)) == 2 and len(set(a_pts) & set(b_pts)) == 1:
+                    sh = (set(a_pts) & set(b_pts)).pop()
+                    return [sh, *(x for x in a_pts if x != sh), *(x for x in b_pts if x != sh)]
+                return None
+            # Single named line only when followed by another item (contains "và (đi )?qua / chứa") or concatenated edge in `chứa AB và song song ...`
+            if re.fullmatch(rf"{_PTS2}", t) and has_dir:
+                pts_2 = _split_pts(t)
+                return pts_2 if len(pts_2) == 2 and len(set(pts_2)) == 2 else None
+            # Split across top-level connectors `, `, ` và `, ` và đi qua `, ` và chứa ` cleanly using snapshot
+            parts_raw = [m for m in re.finditer(r"(?:\s*,\s*(?:(?:đi\s+)?qua|chứa)?\s*|\s+và\s+(?:(?:đi\s+)?qua|chứa)?\s*)", t, re.I)]
+            spans_idx = [0]
+            out_items: list[str] = []
+            # Greedy left-to-right only over unambiguous item delimiters (comma or verb-carrying `và đi qua` / `và chứa` or standalone `,`/`và` where each segment resolves)
+            chunks: list[tuple[int, int, str]] = []
+            prev = 0
+            for m_sp in parts_raw:
+                seg = t[prev : m_sp.start()].strip()
+                # Do not split `và`/`với` inside `trung điểm của đoạn nối X với Y` or `giao điểm của AB và CD`
+                if m_sp.group(0).strip().lower() == "và" and re.search(r"(?:giao\s+điểm|nối|cắt\s+nhau)[^,]*$", t[prev : m_sp.start()], re.I):
+                    continue
+                if seg:
+                    l_s = t.find(seg, prev)
+                    chunks.append((off + l_s, off + l_s + len(seg), seg))
+                prev = m_sp.end()
+            last_seg = t[prev:].strip()
+            if last_seg:
+                l_s = t.find(last_seg, prev)
+                chunks.append((off + l_s, off + l_s + len(last_seg), last_seg))
+            for ch_s, _ch_e, ch_txt in chunks:
+                ch_txt_clean = re.sub(r"^(?:đường\s+thẳng|đoạn(?:\s+thẳng)?|cạnh)\s+", "", ch_txt, flags=re.I)
+                if ch_txt_clean != ch_txt or re.fullmatch(rf"{_PTS2}", ch_txt_clean):
+                    ln_p = _split_pts(ch_txt_clean)
+                    if len(ln_p) != 2 or len(set(ln_p)) != 2:
+                        return None
+                    for pt_l in ln_p:
+                        if pt_l not in out_items:
+                            out_items.append(pt_l)
+                else:
+                    snap_c = builder._snapshot()
+                    pt_r = builder.parse_point_or_described(ch_txt, ch_s)
+                    if pt_r is None:
+                        builder._restore(snap_c)
+                        return None
+                    if pt_r not in out_items:
+                        out_items.append(pt_r)
+            return out_items
+
+        parsed_pts = _parse_contains_items(body_c, body_off)
+        if parsed_pts and (len(parsed_pts) >= 3 or (len(parsed_pts) >= 1 and has_dir and len(parsed_pts) + 1 >= 3)):
+            constraints: list[dict[str, Any]] = [{"kind": "contains_points", "operands": parsed_pts}]
+            if m_sec_con_hdr.group("perp"):
+                constraints.append({"kind": "perpendicular_to_plane", "operands": _split_pts(m_sec_con_hdr.group("pplane"))})
+            elif m_sec_con_hdr.group("par"):
+                constraints.append({"kind": "parallel_to_line", "operands": _split_pts(m_sec_con_hdr.group("pline"))})
+            q_con = _clean_quote(raw, ca + m_sec_con_hdr.start(), ca + m_sec_con_hdr.end())
             sec_id = "sec"
             builder.derived_sections.append(
                 {
@@ -3572,13 +3785,14 @@ def _parse_clause_into_ast(builder: _AstBuilder, clause: ClauseSpan) -> None:
     _SOLID_WORDS = r"(?:hình|khối)\s+(?:chóp(?:\s+cụt)?|lăng\s+trụ(?:\s+đứng)?|hộp(?:\s+chữ\s+nhật)?|lập\s+phương|tứ\s+diện)"
     m_sec3 = re.search(
         rf"(?P<full>(?:(?P<area>tính\s+diện\s+tích)|(?:Xác\s+định|Dựng|Tìm|Vẽ))\s+thiết\s+diện(?:\s+của\s+{_SOLID_WORDS}"
-        rf"(?:\s+(?P<sol>{_PT}\.{_PTS3_6}|{_PTS3_6}\.{_PTS3_6}|{_PTS3_6}))?)?\s+(?:cắt\s+|tạo\s+)?bởi\s+(?:mặt\s+phẳng\s+|mp\s*)?"
-        rf"\((?P<pl>{_PTS3})\))(?![\w'])",
+        rf"(?:\s+(?P<sol>{_PT}\.{_PTS3_6}|{_PTS3_6}\.{_PTS3_6}|{_PTS3_6}))?)?\s+(?:cắt\s+|tạo\s+)?bởi\s+"
+        rf"(?:(?:mặt\s+phẳng|mp)\s*(?:\((?P<pl>{_PTS3})\)|(?:đi\s+)?qua\s+(?:(?:ba|3)\s+điểm\s+)?(?P<p1>{_PT})\s*(?:,\s*|\s+và\s+)(?P<p2>{_PT})\s*(?:,\s*|\s+và\s+)(?P<p3>{_PT}))|\((?P<pl_b>{_PTS3})\)))(?![\w'])",
         ctext_norm,
         re.IGNORECASE | re.UNICODE,
     )
     if m_sec3 and builder._primary_solid_id and not builder.derived_sections:
-        pl = _split_pts(m_sec3.group("pl"))
+        pl_raw3 = m_sec3.group("pl") or m_sec3.group("pl_b")
+        pl = _split_pts(pl_raw3) if pl_raw3 else [m_sec3.group("p1"), m_sec3.group("p2"), m_sec3.group("p3")]
         sol = m_sec3.group("sol")
         primary = next((sd for sd in builder.solids if sd.get("solid_id") == builder._primary_solid_id), {})
         if len(set(pl)) == 3 and (sol is None or sol == primary.get("notation")):
@@ -3605,15 +3819,16 @@ def _parse_clause_into_ast(builder: _AstBuilder, clause: ClauseSpan) -> None:
         rf"(?P<full>(?:Xác\s+định|Dựng|Tìm|Vẽ)\s+thiết\s+diện(?:\s+của\s+{_SOLID_WORDS}"
         rf"(?:\s+(?P<sol>{_SOL_SYM}))?)?\s+(?:(?:cắt\s+|tạo\s+)?bởi|với)\s+(?:mặt\s+phẳng\s+|mp\s*)?"
         rf"\((?P<pl>{_PT}|[α-ω]'?)\)"
+        rf"|(?:Xác\s+định|Dựng|Tìm|Vẽ)\s+thiết\s+diện\s+do\s+(?:mặt\s+phẳng\s+|mp\s*)?\((?P<pl_do>{_PT}|[α-ω]'?)\)\s+cắt(?:\s+{_SOLID_WORDS}(?:\s+(?P<sol_do>{_SOL_SYM}))?)?"
         rf"|Thiết\s+diện(?:\s+của\s+{_SOLID_WORDS}(?:\s+(?P<sol_q>{_SOL_SYM}))?)?\s+(?:(?:cắt\s+|tạo\s+)?bởi|với)\s+"
         rf"(?:mặt\s+phẳng\s+|mp\s*)?\((?P<pl_q>{_PT}|[α-ω]'?)\)\s+là\s+hình\s+gì)(?![\w'])",
         ctext_norm,
         re.IGNORECASE | re.UNICODE,
     )
-    named_pl = m_sec_named and (m_sec_named.group("pl") or m_sec_named.group("pl_q"))
+    named_pl = m_sec_named and (m_sec_named.group("pl") or m_sec_named.group("pl_q") or m_sec_named.group("pl_do"))
     if m_sec_named and named_pl in builder._section_by_plane_name and not any(
             g.get("kind") == "construct_plane_section" for g in builder.simulation_goals):
-        sol = m_sec_named.group("sol") or m_sec_named.group("sol_q")
+        sol = m_sec_named.group("sol") or m_sec_named.group("sol_q") or m_sec_named.group("sol_do")
         primary = next((sd for sd in builder.solids if sd.get("solid_id") == builder._primary_solid_id), {})
         if sol is None or sol == primary.get("notation"):
             builder.simulation_goals.append(
@@ -3621,6 +3836,60 @@ def _parse_clause_into_ast(builder: _AstBuilder, clause: ClauseSpan) -> None:
                  "target_section_id": builder._section_by_plane_name[named_pl],
                  "quote": _clean_quote(raw, ca + m_sec_named.start("full"), ca + m_sec_named.end("full"))})
             mapped_goal = True
+
+    # 7c-0c. Unnamed inline derived plane inside a section goal ("Xác định thiết diện của hình chóp cắt bởi mặt phẳng đi qua trung điểm của SA và song song với mặt đáy")
+    m_sec_anon = re.search(
+        rf"(?P<full>(?:Xác\s+định|Dựng|Tìm|Vẽ)\s+thiết\s+diện(?:\s+của\s+{_SOLID_WORDS}(?:\s+(?P<sol>{_SOL_SYM}))?)?\s+(?:(?:cắt\s+|tạo\s+)?bởi|với)\s+(?:mặt\s+phẳng|mp)\s+(?:đi\s+qua|qua|chứa)\s+(?P<thru>.+?)\s+(?:và\s+)?(?:(?P<par>song\s+song\s+với\s+(?:(?:mặt\s+phẳng|mp\s*|đáy\s*)?\((?P<pplane>{_PTS3_6})\)|(?P<pday>(?:mặt\s+phẳng\s+|mặt\s+)?đáy)(?![\w])))|(?P<perp>vuông\s+góc\s+với\s+(?:đường\s+thẳng\s+|cạnh\s+)?(?P<pline>{_PTS2}))))(?![\w'])",
+        ctext_norm,
+        re.IGNORECASE | re.UNICODE,
+    )
+    if m_sec_anon and builder._primary_solid_id and not builder.derived_sections and not m_sec_named:
+        sol_a = m_sec_anon.group("sol")
+        primary_a = next((sd for sd in builder.solids if sd.get("solid_id") == builder._primary_solid_id), {})
+        if sol_a is None or sol_a == primary_a.get("notation"):
+            thru_str_a = m_sec_anon.group("thru").strip()
+            thru_off_a = ca + m_sec_anon.start("thru")
+            m_rel_a = re.fullmatch(
+                rf"(?:điểm\s+)?(?P<dk>trung\s+điểm|trọng\s+tâm)\s+(?P<pt>{_PT})\s+của\s+(?:(?:(?:cạnh|đoạn(?:\s+thẳng)?)\s+)?(?P<seg>{_PTS2})|tam\s+giác\s+(?P<tri>{_PTS3}))",
+                thru_str_a,
+                re.IGNORECASE | re.UNICODE,
+            )
+            thru_ref_a: str | None = None
+            if m_rel_a:
+                q_rel_a = _clean_quote(raw, thru_off_a, thru_off_a + len(thru_str_a))
+                builder.premises.append(
+                    {"kind": "midpoint", "args": {"point": m_rel_a.group("pt"), "segment": _split_pts(m_rel_a.group("seg"))},
+                     "quote": q_rel_a, "solid_id": builder._primary_solid_id} if m_rel_a.group("seg") else
+                    {"kind": "centroid", "args": {"point": m_rel_a.group("pt"), "polygon": _split_pts(m_rel_a.group("tri"))},
+                     "quote": q_rel_a, "solid_id": builder._primary_solid_id}
+                )
+                thru_ref_a = m_rel_a.group("pt")
+            else:
+                thru_ref_a = builder.parse_point_or_described(thru_str_a, thru_off_a)
+            if thru_ref_a:
+                q_sa_full = _clean_quote(raw, ca + m_sec_anon.start("full"), ca + m_sec_anon.end("full"))
+                sec_entry_a: dict[str, Any] = {
+                    "section_id": "sec",
+                    "target_solid_id": builder._primary_solid_id,
+                    "through_point": thru_ref_a,
+                    "stated_intersections": [],
+                    "quote": q_sa_full,
+                }
+                if m_sec_anon.group("par"):
+                    pl_ref_a = _split_pts(m_sec_anon.group("pplane")) if m_sec_anon.group("pplane") else list(builder._base_vertices)
+                    if len(set(pl_ref_a)) >= 3:
+                        sec_entry_a["plane_kind"] = "through_point_parallel_plane"
+                        sec_entry_a["parallel_plane"] = list(dict.fromkeys(pl_ref_a))[:3]
+                elif m_sec_anon.group("perp"):
+                    sec_entry_a["plane_kind"] = "through_point_perpendicular_line"
+                    sec_entry_a["perpendicular_line"] = _split_pts(m_sec_anon.group("pline"))
+                if "plane_kind" in sec_entry_a:
+                    builder.derived_sections.append(sec_entry_a)
+                    builder._last_section_id = "sec"
+                    builder.simulation_goals.append(
+                        {"goal_id": "g_sec", "kind": "construct_plane_section", "target_section_id": "sec", "quote": q_sa_full}
+                    )
+                    mapped_goal = True
 
     # 7c-1 (verified-section-intersection-dihedral-local). The intersection line of two planes, each named by three
     # labels: "Tìm / Xác định / Dựng giao tuyến (của) (hai mặt phẳng) (SAB) và (mặt phẳng) (SCD)", "Gọi d là giao tuyến
@@ -3759,17 +4028,18 @@ def _parse_clause_into_ast(builder: _AstBuilder, clause: ClauseSpan) -> None:
         return
 
     # 7e. Section area goal:
-    # "(Xác định thiết diện của ... cắt bởi (P) và )?tính diện tích thiết diện( của ... cắt bởi (mặt phẳng )?(P)| đó)?"
+    # "(Xác định thiết diện của ... cắt bởi (P) và )?tính diện tích thiết diện( của ... cắt bởi (mặt phẳng )?(P)| do (P) cắt ...| đó)?"
     m_sec_area = re.search(
-        rf"(?P<full>(?:Xác\s+định\s+thiết\s+diện.*?và\s+)?(?P<tinh>tính\s+)?diện\s+tích\s+thiết\s+diện(?:\s+của\s+.*?cắt\s+bởi\s+(?:mặt\s+phẳng\s+|mp\s*)?\((?P<pname>{_PT}|[α-ω]'?)\)|\s+đó)?)",
+        rf"(?P<full>(?:Xác\s+định\s+thiết\s+diện.*?và\s+)?(?P<tinh>tính\s+)?diện\s+tích\s+thiết\s+diện(?:\s+(?:(?:của\s+.*?cắt\s+bởi|tạo\s+bởi)\s+(?:mặt\s+phẳng\s+|mp\s*)?\((?P<pname>{_PT}|[α-ω]'?)\)|do\s+(?:mặt\s+phẳng\s+|mp\s*)?\((?P<pname2>{_PT}|[α-ω]'?)\)\s+cắt(?:\s+[^.;?!]*)?)|\s+(?:đó|này|trên))?"
+        rf"|(?P<tinh_do>tính\s+|xác\s+định\s+)?thiết\s+diện\s+do\s+(?:mặt\s+phẳng\s+|mp\s*)?\((?P<pname_do>{_PT}|[α-ω]'?)\)\s+cắt\s+[^.;?!]*?\s+có\s+diện\s+tích(?:\s+bằng\s+bao\s+nhiêu)?)",
         ctext_norm,
         re.IGNORECASE | re.UNICODE,
     )
-    if m_sec_area and not m_sec_area.group("tinh") and not re.fullmatch(
-            r"\s*(?:bằng|là)\s*:?\s*[.?]?\s*", ctext_norm[m_sec_area.end("full"):], re.IGNORECASE):
+    if m_sec_area and not (m_sec_area.group("tinh") or m_sec_area.group("pname_do")) and not re.fullmatch(
+            r"\s*(?:có\s+)?(?:diện\s+tích\s+)?(?:bằng|là)(?:\s+bao\s+nhiêu)?\s*:?\s*[.?]?\s*", ctext_norm[m_sec_area.end("full"):], re.IGNORECASE):
         m_sec_area = None              # without "tính", only the exam stem "Diện tích thiết diện … bằng" asks — never a given
     if m_sec_area:
-        pname = m_sec_area.group("pname")
+        pname = m_sec_area.group("pname") or m_sec_area.group("pname2") or m_sec_area.group("pname_do")
         sec_id = (
             builder._section_by_plane_name.get(pname, builder._last_section_id or "sec")
             if pname
@@ -4021,134 +4291,113 @@ def _parse_clause_into_ast(builder: _AstBuilder, clause: ClauseSpan) -> None:
         builder.math_goals.append(goal_seg_entry)
         mapped_goal = True
 
-    # 7i. Distance goals:
-    # - Point/described-point to plane or line: "(Tính )?(khoảng cách|k/c) từ <src> (đến|tới) ((mặt phẳng|mp) (SBC) | (đường thẳng|cạnh) SC | đường thẳng nối A với <desc>)"
-    for m_dist_from in re.finditer(
-        rf"(?P<full>(?:tính\s+)?(?:khoảng\s+cách|k/c)\s+từ\s+(?P<src>.+?)\s+(?:đến|tới)\s+(?P<dst>(?:mặt\s+phẳng\s+|mp\s*)?\({_PTS3_6}\)|đường\s+thẳng\s+nối\s+{_PT}\s+với\s+.+|(?:đường\s+thẳng\s+|cạnh\s+)?{_PTS2}))(?![\w')])",
+    # 7i. Distance goals (fully composable over recursive point & line descriptors):
+    matched_df: tuple[str, dict[str, Any]] | None = None
+    m_dist_from = re.search(
+        r"(?P<full>(?:(?:tính|tìm|xác\s+định)\s+)?(?:khoảng\s+cách|k/c)\s+từ\s+(?P<body>.+))",
         ctext_norm,
         re.IGNORECASE | re.UNICODE,
-    ):
-        src_str = m_dist_from.group("src").strip()
-        dst_str = m_dist_from.group("dst").strip()
-        src_ref = builder.parse_point_or_described(src_str, ca + m_dist_from.start("src"))
-        if src_ref:
-            q_df = _clean_quote(raw, ca + m_dist_from.start("full"), ca + m_dist_from.end("full"))
-            if not q_df.lower().startswith("tính"):
-                q_df = _clean_quote(raw, ca, cb)
-            m_pl = re.search(rf"\((?P<pl>{_PTS3_6})\)", dst_str)
-            m_ln_desc = re.match(
-                rf"đường\s+thẳng\s+nối\s+(?P<a>{_PT})\s+với\s+(?P<b>.+)",
-                dst_str,
-                re.IGNORECASE | re.UNICODE,
+    )
+    if m_dist_from:
+        body_df = _strip_trailing_goal_meta(m_dist_from.group("body"))
+        body_df_off = ca + m_dist_from.start("body")
+        for sp in reversed(list(re.finditer(r"\s+(?:đến|tới)\s+", body_df, re.IGNORECASE | re.UNICODE))):
+            src_str = body_df[: sp.start()].strip()
+            dst_str = body_df[sp.end() :].strip()
+            src_off = body_df_off + (len(body_df[: sp.start()]) - len(body_df[: sp.start()].lstrip()))
+            dst_off = body_df_off + sp.end() + (len(body_df[sp.end() :]) - len(body_df[sp.end() :].lstrip()))
+            snap_df = builder._snapshot()
+            pl_dst = builder.parse_plane_or_base(dst_str)
+            if pl_dst:
+                src_ref = builder.parse_point_or_described(src_str, src_off)
+                if src_ref:
+                    matched_df = ("plane", {"point": src_ref, "plane": pl_dst})
+                    break
+                builder._restore(snap_df)
+                ln_src = builder.parse_line_or_described(src_str, src_off)
+                if ln_src:
+                    matched_df = ("line_plane", {"line": ln_src, "plane": pl_dst})
+                    break
+                builder._restore(snap_df)
+                continue
+            ln_dst = builder.parse_line_or_described(dst_str, dst_off)
+            src_ref = builder.parse_point_or_described(src_str, src_off) if ln_dst else None
+            if src_ref and ln_dst:
+                matched_df = ("line", {"point": src_ref, "line": ln_dst})
+                break
+            builder._restore(snap_df)
+        if matched_df is not None:
+            is_multi_df = bool(re.search(r"\bvà\b|,.*tính", ctext_norm[: m_dist_from.start("full")], re.IGNORECASE)) and not bool(m_sim_lead)
+            q_df = _clean_quote(raw, ca, cb) if (is_multi_df or not m_dist_from.group("full").lower().startswith("tính")) else _clean_quote(
+                raw, ca + m_dist_from.start("full"), ca + m_dist_from.start("body") + len(body_df)
             )
-            if m_pl:
-                builder.math_goals.append(
-                    {
-                        "goal_id": f"q{len(builder.math_goals) + 1}",
-                        "kind": "measurement",
-                        "goal_type": "distance",
-                        "target": {"point": src_ref, "plane": _split_pts(m_pl.group("pl"))},
-                        "solid_id": builder._primary_solid_id,
-                        "quote": q_df,
-                    }
-                )
-                mapped_goal = True
-            elif m_ln_desc:
-                b_str = m_ln_desc.group("b")
-                b_off = ca + m_dist_from.start("dst") + m_ln_desc.start("b")
-                b_ref = builder.parse_point_or_described(b_str, b_off)
-                if b_ref:
-                    builder.math_goals.append(
-                        {
-                            "goal_id": f"q{len(builder.math_goals) + 1}",
-                            "kind": "measurement",
-                            "goal_type": "distance",
-                            "target": {"point": src_ref, "line": [m_ln_desc.group("a"), b_ref]},
-                            "solid_id": builder._primary_solid_id,
-                            "quote": q_df,
-                        }
-                    )
-                    mapped_goal = True
-            else:
-                m_ln = re.search(rf"(?P<ln>{_PTS2})$", dst_str)
-                if m_ln:
-                    builder.math_goals.append(
-                        {
-                            "goal_id": f"q{len(builder.math_goals) + 1}",
-                            "kind": "measurement",
-                            "goal_type": "distance",
-                            "target": {"point": src_ref, "line": _split_pts(m_ln.group("ln"))},
-                            "solid_id": builder._primary_solid_id,
-                            "quote": q_df,
-                        }
-                    )
-                    mapped_goal = True
+            builder.math_goals.append(
+                {
+                    "goal_id": f"q{len(builder.math_goals) + 1}",
+                    "kind": "measurement",
+                    "goal_type": "distance",
+                    "target": matched_df[1],
+                    "solid_id": builder._primary_solid_id,
+                    "quote": q_df,
+                }
+            )
+            mapped_goal = True
 
-    # - Distance between two lines or line and plane:
-    # "(Tính )?khoảng cách giữa hai đường thẳng AB và SC"
-    # "(Tính )?khoảng cách giữa đường thẳng AD và mặt phẳng (SBC)"
-    # "(Tính )?khoảng cách giữa đường thẳng nối M với trung điểm của SC và mặt phẳng (ABCD)"
-    m_dist_between = re.search(
-        rf"(?P<full>(?:Tính\s+)?khoảng\s+cách\s+giữa\s+(?:hai\s+đường\s+thẳng\s+(?P<l1>{_PTS2})\s+và\s+(?P<l2>{_PTS2})|đường\s+thẳng\s+nối\s+(?P<la>{_PT})\s+với\s+(?P<lb>.+?)\s+và\s+(?:mặt\s+phẳng\s+|mp\s*)?\((?P<pl1>{_PTS3_6})\)|(?:đường\s+thẳng\s+)?(?P<ln>{_PTS2})\s+và\s+(?:mặt\s+phẳng\s+|mp\s*)?\((?P<pl2>{_PTS3_6})\)))",
+    m_dist_between = None if matched_df is not None else re.search(
+        r"(?P<full>(?:(?:tính|tìm|xác\s+định)\s+)?(?:khoảng\s+cách|k/c)\s+giữa\s+(?:hai\s+đường\s+thẳng(?:\s+chéo\s+nhau)?\s+|hai\s+mặt\s+phẳng\s+)?(?P<body>.+))",
         ctext_norm,
         re.IGNORECASE | re.UNICODE,
     )
     if m_dist_between:
+        body_db = _strip_trailing_goal_meta(m_dist_between.group("body"))
+        body_db_off = ca + m_dist_between.start("body")
         is_multi_db = bool(re.search(r"\bvà\b|,.*tính", ctext_norm[: m_dist_between.start("full")], re.IGNORECASE)) and not bool(m_sim_lead)
         q_db = (
             _clean_quote(raw, ca, cb)
             if (is_multi_db or not m_dist_between.group("full").lower().startswith("tính"))
-            else _clean_quote(raw, ca + m_dist_between.start("full"), ca + m_dist_between.end("full"))
+            else _clean_quote(raw, ca + m_dist_between.start("full"), ca + m_dist_between.start("body") + len(body_db))
         )
-        if m_dist_between.group("l1") and m_dist_between.group("l2"):
-            builder.math_goals.append(
-                {
-                    "goal_id": f"q{len(builder.math_goals) + 1}",
-                    "kind": "measurement",
-                    "goal_type": "distance",
-                    "target": {
-                        "line1": _split_pts(m_dist_between.group("l1")),
-                        "line2": _split_pts(m_dist_between.group("l2")),
-                    },
-                    "solid_id": builder._primary_solid_id,
-                    "quote": q_db,
-                }
-            )
-            mapped_goal = True
-        elif m_dist_between.group("la") and m_dist_between.group("lb"):
-            lb_ref = builder.parse_point_or_described(
-                m_dist_between.group("lb"), ca + m_dist_between.start("lb")
-            )
-            if lb_ref:
+        for op1_s, o1, op2_s, o2 in _iter_top_splits(body_db):
+            snap_db = builder._snapshot()
+            pl1_d = builder.parse_plane_or_base(op1_s)
+            pl2_d = builder.parse_plane_or_base(op2_s)
+            if pl1_d and pl2_d:
                 builder.math_goals.append(
-                    {
-                        "goal_id": f"q{len(builder.math_goals) + 1}",
-                        "kind": "measurement",
-                        "goal_type": "distance",
-                        "target": {
-                            "line": [m_dist_between.group("la"), lb_ref],
-                            "plane": _split_pts(m_dist_between.group("pl1")),
-                        },
-                        "solid_id": builder._primary_solid_id,
-                        "quote": q_db,
-                    }
+                    {"goal_id": f"q{len(builder.math_goals) + 1}", "kind": "measurement", "goal_type": "distance",
+                     "target": {"plane1": pl1_d, "plane2": pl2_d}, "solid_id": builder._primary_solid_id, "quote": q_db}
                 )
                 mapped_goal = True
-        elif m_dist_between.group("ln") and m_dist_between.group("pl2"):
-            builder.math_goals.append(
-                {
-                    "goal_id": f"q{len(builder.math_goals) + 1}",
-                    "kind": "measurement",
-                    "goal_type": "distance",
-                    "target": {
-                        "line": _split_pts(m_dist_between.group("ln")),
-                        "plane": _split_pts(m_dist_between.group("pl2")),
-                    },
-                    "solid_id": builder._primary_solid_id,
-                    "quote": q_db,
-                }
-            )
-            mapped_goal = True
+                break
+            if pl2_d:
+                ln1_d = builder.parse_line_or_described(op1_s, body_db_off + o1)
+                if ln1_d:
+                    builder.math_goals.append(
+                        {"goal_id": f"q{len(builder.math_goals) + 1}", "kind": "measurement", "goal_type": "distance",
+                         "target": {"line": ln1_d, "plane": pl2_d}, "solid_id": builder._primary_solid_id, "quote": q_db}
+                    )
+                    mapped_goal = True
+                    break
+                builder._restore(snap_db)
+            if pl1_d:
+                ln2_d = builder.parse_line_or_described(op2_s, body_db_off + o2)
+                if ln2_d:
+                    builder.math_goals.append(
+                        {"goal_id": f"q{len(builder.math_goals) + 1}", "kind": "measurement", "goal_type": "distance",
+                         "target": {"line": ln2_d, "plane": pl1_d}, "solid_id": builder._primary_solid_id, "quote": q_db}
+                    )
+                    mapped_goal = True
+                    break
+                builder._restore(snap_db)
+            ln1_d = builder.parse_line_or_described(op1_s, body_db_off + o1)
+            ln2_d = builder.parse_line_or_described(op2_s, body_db_off + o2) if ln1_d else None
+            if ln1_d and ln2_d:
+                builder.math_goals.append(
+                    {"goal_id": f"q{len(builder.math_goals) + 1}", "kind": "measurement", "goal_type": "distance",
+                     "target": {"line1": ln1_d, "line2": ln2_d}, "solid_id": builder._primary_solid_id, "quote": q_db}
+                )
+                mapped_goal = True
+                break
+            builder._restore(snap_db)
 
     # 7i-2. Affine Length Ratio & Polygon Area Ratio goals (`ext04`, `ext05`):
     # - "(Khi đó )?(tính|tìm) tỉ số KC/KB"
@@ -4238,38 +4487,30 @@ def _parse_clause_into_ast(builder: _AstBuilder, clause: ClauseSpan) -> None:
         clause.classification = CLAUSE_MAPPED_GOAL
         return
 
-    # - Angle between line (or line joining A with @desc) and plane or line, or between two planes:
+    # - Angle between line(s) (named or with described endpoints via A3/NC-D2_E1) and plane(s):
     m_ang = re.search(
-        rf"(?P<full>(?:Tính\s+)?(?:số\s+đo\s+(?:của\s+)?)?góc\s+(?:giữa|tạo\s+bởi|hợp\s+bởi)\s+(?:"
-        rf"(?P<cb>(?:một\s+)?cạnh\s+bên)\s+(?:và|với)\s+(?:mặt\s+phẳng\s+|mặt\s+)?đáy(?![\w])|"
-        rf"(?:hai\s+mặt\s+phẳng\s+|mặt\s+phẳng\s+)?\((?P<pl1>{_PTS3_6})\)\s+và\s+(?:(?:mặt\s+phẳng\s+|mp\s*)?\((?P<pl2>{_PTS3_6})\)|(?P<pl2d>(?:mặt\s+phẳng\s+|mặt\s+)?đáy)(?![\w]))"
-        rf"|đường\s+thẳng\s+(?:nối|đi\s+qua)\s+(?P<la>{_PT})\s+(?:với|và)\s+(?P<lb>.+?)\s+(?:và|với)\s+(?:(?P<is_pl>mặt\s+phẳng\s+|mp\s*)?\((?P<pl3>{_PTS3_6})\)|(?:đường\s+thẳng\s+|cạnh\s+)?(?P<l2_desc>{_PTS2}))"
-        rf"|(?:hai\s+đường\s+thẳng\s+|đường\s+thẳng\s+|đt\s+|cạnh\s+)?(?P<l1>{_PTS2})\s+và\s+(?:(?:mặt\s+phẳng\s+|mp\s*)?\((?P<pl4>{_PTS3_6})\)|(?P<pl4d>(?:mặt\s+phẳng\s+|mặt\s+)?đáy)(?![\w])|(?:đường\s+thẳng\s+|cạnh\s+)?(?P<l2>{_PTS2}))"
-        rf"))",
+        r"(?P<full>(?:Tính\s+)?(?:số\s+đo\s+(?:của\s+)?)?góc\s+(?:giữa|tạo\s+bởi|hợp\s+bởi)\s+(?:hai\s+(?:đường\s+thẳng|mặt\s+phẳng)\s+)?(?P<body>.+))",
         ctext_norm,
         re.IGNORECASE | re.UNICODE,
     )
     if (
         m_ang
         and not any(a <= m_ang.start("full") < b for a, b in angle_spans)
-        and not re.match(rf"\s*(?:bằng|là|=)\s*\d+(?:/\d+)?\s*(?:°|độ\b)", ctext_norm[m_ang.end("full") :], re.IGNORECASE)
+        and not re.search(rf"\b(?:bằng|là)\s*{_VAL}\s*(?:°|độ\b)|\s=\s*{_VAL}", ctext_norm[m_ang.start("body") :], re.IGNORECASE)
     ):
-        angle_spans.append((m_ang.start("full"), m_ang.end("full")))
-        q_ang = _clean_quote(raw, ca + m_ang.start("full"), ca + m_ang.end("full"))
+        body_ang = _strip_trailing_goal_meta(m_ang.group("body"))
+        body_ang_off = ca + m_ang.start("body")
+        ang_end_abs = ca + m_ang.start("body") + len(body_ang)
         req_deg = bool(
             re.search(r"\bsố\s+đo\b", m_ang.group("full"), re.IGNORECASE)
-            or re.search(r"\b(?:theo|bằng)\s+độ\b|\(\s*(?:đơn\s+vị(?:\s+góc)?\s*:?\s*)?độ\s*\)", ctext_norm[m_ang.end("full") :], re.IGNORECASE)
+            or re.search(r"\b(?:theo|bằng)\s+độ\b|\(\s*(?:đơn\s+vị(?:\s+góc)?\s*:?\s*)?độ\s*\)", ctext_norm[m_ang.start("body") + len(body_ang) :], re.IGNORECASE)
         )
         ang_extra: dict[str, Any] = {"requested_unit": "deg"} if req_deg else {}
-        # "(mặt phẳng / mặt) đáy" as a plane operand (semantic-failure-safe-image-segmentation): the declared base of the
-        # primary solid, the plane the Source Gate reads for "đáy" — read only when that base is known
         day_pts = list(builder._base_vertices) if len(builder._base_vertices) >= 3 else None
-        pl2_pts = _split_pts(m_ang.group("pl2")) if m_ang.group("pl2") else (day_pts if m_ang.group("pl2d") else None)
-        pl4_pts = _split_pts(m_ang.group("pl4")) if m_ang.group("pl4") else (day_pts if m_ang.group("pl4d") else None)
-        if m_ang.group("cb"):
-            # Run `grounded-vietnamese-geometry-understanding`: "góc giữa cạnh bên và mặt đáy" names no edge. In a REGULAR
-            # pyramid every lateral edge makes the same angle with the base (the apex projects to the centre of a regular
-            # base), so one lateral edge stands for all; in any other pyramid the phrase does not name one angle.
+
+        if re.fullmatch(r"(?:một\s+)?cạnh\s+bên\s+(?:và|với)\s+(?:mặt\s+phẳng\s+|mặt\s+)?đáy", body_ang, re.IGNORECASE):
+            q_ang = _clean_quote(raw, ca + m_ang.start("full"), ang_end_abs)
+            angle_spans.append((m_ang.start("full"), m_ang.start("body") + len(body_ang)))
             notation = str(builder._primary_notation or "")
             regular = any(p.get("kind") == "regular_pyramid" for p in builder.premises)
             if builder._primary_solid_type == "pyramid" and "." in notation and regular and day_pts:
@@ -4283,84 +4524,42 @@ def _parse_clause_into_ast(builder: _AstBuilder, clause: ClauseSpan) -> None:
                 builder.unresolved.append({"unresolved_id": f"u{len(builder.unresolved) + 1}", "kind": "ambiguous",
                                            "quote": q_ang, "missing_roles": ["goal_object"], "candidate_relations": ["angle"]})
                 mapped_goal = True
-        elif m_ang.group("pl1") and pl2_pts:
-            builder.math_goals.append(
-                {
-                    "goal_id": f"q{len(builder.math_goals) + 1}",
-                    "kind": "measurement",
-                    "goal_type": "angle",
-                    "target": {
-                        "plane1": _split_pts(m_ang.group("pl1")),
-                        "plane2": pl2_pts,
-                    },
-                    "solid_id": builder._primary_solid_id,
-                    "quote": q_ang,
-                    **ang_extra,
-                }
-            )
-            mapped_goal = True
-        elif m_ang.group("la") and m_ang.group("lb"):
-            lb_ref = builder.parse_point_or_described(m_ang.group("lb"), ca + m_ang.start("lb"))
-            if lb_ref:
-                if m_ang.group("pl3"):
-                    builder.math_goals.append(
-                        {
-                            "goal_id": f"q{len(builder.math_goals) + 1}",
-                            "kind": "measurement",
-                            "goal_type": "angle",
-                            "target": {
-                                "line": [m_ang.group("la"), lb_ref],
-                                "plane": _split_pts(m_ang.group("pl3")),
-                            },
-                            "solid_id": builder._primary_solid_id,
-                            "quote": q_ang,
-                            **ang_extra,
-                        }
-                    )
-                    mapped_goal = True
-                elif m_ang.group("l2_desc"):
-                    builder.math_goals.append(
-                        {
-                            "goal_id": f"q{len(builder.math_goals) + 1}",
-                            "kind": "measurement",
-                            "goal_type": "angle",
-                            "target": {
-                                "line1": [m_ang.group("la"), lb_ref],
-                                "line2": _split_pts(m_ang.group("l2_desc")),
-                            },
-                            "solid_id": builder._primary_solid_id,
-                            "quote": q_ang,
-                            **ang_extra,
-                        }
-                    )
-                    mapped_goal = True
-        elif m_ang.group("l1"):
-            if pl4_pts:
+        else:
+            ang_target: dict[str, Any] | None = None
+            for op1_s, o1, op2_s, o2 in _iter_top_splits(body_ang):
+                snap_a = builder._snapshot()
+                pl1_a = builder.parse_plane_or_base(op1_s)
+                pl2_a = builder.parse_plane_or_base(op2_s)
+                if pl1_a and pl2_a:
+                    ang_target = {"plane1": pl1_a, "plane2": pl2_a}
+                    break
+                if pl2_a:
+                    ln1_a = builder.parse_line_or_described(op1_s, body_ang_off + o1)
+                    if ln1_a:
+                        ang_target = {"line": ln1_a, "plane": pl2_a}
+                        break
+                    builder._restore(snap_a)
+                if pl1_a:
+                    ln2_a = builder.parse_line_or_described(op2_s, body_ang_off + o2)
+                    if ln2_a:
+                        ang_target = {"line": ln2_a, "plane": pl1_a}
+                        break
+                    builder._restore(snap_a)
+                ln1_a = builder.parse_line_or_described(op1_s, body_ang_off + o1)
+                ln2_a = builder.parse_line_or_described(op2_s, body_ang_off + o2) if ln1_a else None
+                if ln1_a and ln2_a:
+                    ang_target = {"line1": ln1_a, "line2": ln2_a}
+                    break
+                builder._restore(snap_a)
+            if ang_target is not None:
+                q_ang = _clean_quote(raw, ca + m_ang.start("full"), ang_end_abs)
+                angle_spans.append((m_ang.start("full"), m_ang.start("body") + len(body_ang)))
                 builder.math_goals.append(
                     {
                         "goal_id": f"q{len(builder.math_goals) + 1}",
                         "kind": "measurement",
                         "goal_type": "angle",
-                        "target": {
-                            "line": _split_pts(m_ang.group("l1")),
-                            "plane": pl4_pts,
-                        },
-                        "solid_id": builder._primary_solid_id,
-                        "quote": q_ang,
-                        **ang_extra,
-                    }
-                )
-                mapped_goal = True
-            elif m_ang.group("l2"):
-                builder.math_goals.append(
-                    {
-                        "goal_id": f"q{len(builder.math_goals) + 1}",
-                        "kind": "measurement",
-                        "goal_type": "angle",
-                        "target": {
-                            "line1": _split_pts(m_ang.group("l1")),
-                            "line2": _split_pts(m_ang.group("l2")),
-                        },
+                        "target": ang_target,
                         "solid_id": builder._primary_solid_id,
                         "quote": q_ang,
                         **ang_extra,

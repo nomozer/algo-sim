@@ -27,7 +27,7 @@ from typing import Any, Iterable
 
 from app.ingestion.ocr_lexicon import LEXICON_BIGRAMS, LEXICON_COUNTS, LEXICON_UNIGRAMS
 
-OCR_RECONCILE_VERSION = "layout-aware-ocr-reconcile/1"
+OCR_RECONCILE_VERSION = "layout-aware-ocr-reconcile/2"
 _SYLLABLE_RE = re.compile(r"(?:ngh|ng|gh|gi|kh|nh|ph|qu|th|tr|ch|b|c|d|g|h|k|l|m|n|p|r|s|t|v|x)?[aeiouy]{1,3}(?:ch|ng|nh|c|m|n|p|t)?")
 
 # Mẫu hỏng chung đã ghi nhận trên ảnh thật (dual_ocr_fidelity_receipt của run trước) — áp lên
@@ -35,7 +35,7 @@ _SYLLABLE_RE = re.compile(r"(?:ngh|ng|gh|gi|kh|nh|ph|qu|th|tr|ch|b|c|d|g|h|k|l|m
 _SHARED_CORRUPTION_RE = re.compile(
     r"(?:[0-9a-z][Vv]\d|=\s*[Vv]\d|^[Vv]\d"  # √ đọc thành V
     r"|^[A-Z],[A-Z]{3,6}$|^[A-Z]{3,6}-[A-Z]{3,6}$"  # S,ABCD · ABC-ABC
-    r"|\d{3,}°"  # 600° (° đọc thành 0)
+    r"|(?:[2-9]\d{2}|1[89]\d|\d{4,})°"  # >= 180°, vd 600° (° đọc thành 0); góc tù 100°..179° hợp lệ
     r"|(?<![^\W\d_])[a-z][23”\"](?![^\W_])"  # a2 · a3 · 2a2 · 27√13a3/2 · a” (mất số mũ trên)
     r"|[€#!§¢£¥©®™«»„“”Œ]"  # ký tự rác
     r"|\.\.\.)"
@@ -57,6 +57,7 @@ READER_FAMILY = {
     "rapidocr_latin_rec": "paddle",
     "tesseract": "tesseract",
     "tesseract_eng_line": "tesseract",
+    "tesseract_vie_line": "tesseract",
 }
 
 
@@ -79,6 +80,7 @@ def norm_math(tok: str) -> str:
     for a in ("′", "’", "‘", "`", "´", "ʼ"):
         t = t.replace(a, "'")
     t = t.replace("º", "°").replace("˚", "°").replace("∘", "°")
+    t = re.sub(r"(?<=[A-Z0-9'′])\s*·\s*(?=[A-Z])", ".", t)
     t = re.sub(r"\s+", "", t)
     # Đơn vị diện tích/thể tích: chỉ số trên bị đọc thành chữ số thường (cm2 ↔ cm², mm2 ↔ mm²) — chuẩn hoá về dạng chỉ số trên.
     t = re.sub(r"(?<![^\W\d_])([cdkm]?m)2(?![0-9])", r"\1²", t)
@@ -200,14 +202,48 @@ def _line_words(line: dict[str, Any], reader: str) -> list[Word]:
     return out
 
 
+def _split_glued_words(words: list[Word]) -> list[Word]:
+    """Tách từ dính trước bước đối chiếu (`phẳng(ABCD)`, `a,BC`, `2a,SA`, `AB,BC`), tuyệt đối KHÔNG tách `S,ABCD` hay `S.A8CD`."""
+    out: list[Word] = []
+    for w in words:
+        t = w.text
+        x0, y0, x1, y1 = w.bbox
+        m_pm = re.fullmatch(r"([a-zà-ỹđ]{2,})(\([A-Z][A-Z0-9'′]{1,6}\)[.,;:!?]*)", t)
+        if m_pm:
+            prose_part, math_part = m_pm.group(1), m_pm.group(2)
+            base_p = strip_marks(prose_part).lower()
+            if prose_part.lower() in LEXICON_UNIGRAMS or _SYLLABLE_RE.fullmatch(base_p):
+                split_x = x0 + max(1, min(x1 - x0 - 1, int(round((x1 - x0) * len(prose_part) / float(max(1, len(t)))))))
+                out.append(Word(prose_part, (x0, y0, split_x, y1), w.conf, w.reader))
+                out.append(Word(math_part, (split_x, y0, x1, y1), w.conf, w.reader))
+                continue
+        if not re.fullmatch(r"[A-Z],[A-Z]{3,6}[.,;:!?]*", t) and not re.fullmatch(r"\d+,\d+[.,;:!?]*", t):
+            m_cm = re.fullmatch(
+                r"((?:\d*[a-z](?:[²³]|√\d+)?|[A-Z][A-Z0-9'′]{1,6})),(\(?[A-Z][A-Z0-9'′]{1,6}\)?(?:/[A-Z0-9'′]+)?[.,;:!?]*)",
+                t,
+            )
+            if m_cm:
+                left_part, right_part = m_cm.group(1) + ",", m_cm.group(2)
+                split_x = x0 + max(1, min(x1 - x0 - 1, int(round((x1 - x0) * len(left_part) / float(max(1, len(t)))))))
+                out.append(Word(left_part, (x0, y0, split_x, y1), w.conf, w.reader))
+                out.append(Word(right_part, (split_x, y0, x1, y1), w.conf, w.reader))
+                continue
+        out.append(w)
+    return out
+
+
 def _merge_math_fragments(words: list[Word]) -> list[Word]:
-    """Gộp các mảnh token toán bị bộ phát hiện tách bởi khoảng trắng giả (`ABC.A' B'C'`, `S.A BC.`)."""
+    """Gộp các mảnh token toán bị bộ phát hiện tách bởi khoảng trắng giả (`ABC.A' B'C'`, `S.A BC.`, `ABCD· A'B'C'D'`)."""
     out: list[Word] = []
     for w in words:
         if out:
             p = out[-1]
             h = max(1, min(p.bbox[3] - p.bbox[1], w.bbox[3] - w.bbox[1]))
             gap = w.bbox[0] - p.bbox[2]
+            cdot_cont = p.text.endswith("·") and bool(re.match(r"^[A-Z]['′A-Z0-9]*", w.text)) and gap < 0.65 * h
+            if cdot_cont:
+                out[-1] = Word(p.text[:-1] + "." + w.text, _union([p.bbox, w.bbox]), p.conf, p.reader)
+                continue
             prime_cont = bool(re.search(r"['′]$", p.text)) and bool(re.match(r"^[A-Z]['′]", w.text))
             tight_caps = (
                 gap < 0.35 * h
@@ -340,6 +376,115 @@ def _slot_is_math(r_txt: str, t_txt: str) -> bool:
     return is_mathlike(src)
 
 
+def _assign_row_clusters(text_lines: list[dict[str, Any]], med_h: float) -> list[dict[str, Any]]:
+    """Nhóm các dòng theo cụm hàng bằng chồng lấn dọc `_yoverlap >= 0.35`, rồi sắp từ trên xuống dưới, trái sang phải."""
+    if not text_lines:
+        return []
+    sorted_lines = sorted(
+        text_lines,
+        key=lambda l: ((l["bbox"][1] + l["bbox"][3]) / 2.0, l["bbox"][0]),
+    )
+    clusters: list[dict[str, Any]] = []
+    for ln in sorted_lines:
+        b = ln["bbox"]
+        cy = (b[1] + b[3]) / 2.0
+        placed = False
+        for cl in clusters:
+            cb = cl["box"]
+            c_cy = (cb[1] + cb[3]) / 2.0
+            y_ov = _yoverlap(cb, b)
+            x_ov = _xoverlap(cb, b)
+            if y_ov >= 0.35 or (abs(cy - c_cy) <= 0.38 * med_h and x_ov < 0.3):
+                cl["lines"].append(ln)
+                cl["box"] = _union([cb, b]) or cb
+                placed = True
+                break
+        if not placed:
+            clusters.append({"box": b, "lines": [ln]})
+    clusters.sort(key=lambda cl: (cl["box"][1] + cl["box"][3]) / 2.0)
+    out: list[dict[str, Any]] = []
+    for row_idx, cl in enumerate(clusters):
+        row_lines = sorted(cl["lines"], key=lambda l: l["bbox"][0])
+        for ln in row_lines:
+            ln["_row"] = row_idx
+            out.append(ln)
+    return out
+
+
+def _math_unicode_richness(val: str) -> int:
+    return sum(1 for ch in val if ch in "²³√⊥∥°∠△π")
+
+
+def _verify_base_plus_glyph_topology(
+    best_val: str,
+    readings: dict[str, str],
+    r_words: list[Word],
+    meta: dict[str, Any] | None,
+) -> tuple[bool, str | None]:
+    """Xác minh tự động có kiểm chứng hình học (`CROSS_FAMILY_BASE_PLUS_GLYPH_TOPOLOGY`):
+    CHỈ bật khi có `glyph_topology` thật từ sidecar (không rõ nét/nhòe ⇒ từ chối), RapidOCR word conf ≥ 82,
+    họ Tesseract xác nhận toàn bộ ký tự ASCII nền (không xung đột mũ 2 vs 3), và hình học điểm ảnh khớp ký hiệu."""
+    if not meta or not isinstance(meta.get("glyph_topology"), dict):
+        return False, None
+    topo = meta["glyph_topology"]
+    if topo.get("blurry", True):
+        return False, None
+    if not r_words or any(w.conf is None or float(w.conf) < 82.0 for w in r_words):
+        return False, None
+    if not any(ch in best_val for ch in ("²", "³", "√", "⊥", "∥")):
+        return False, None
+    if ("²" in best_val or "³" in best_val) and not topo.get("has_superscript_cc"):
+        return False, None
+    if "³" in best_val and topo.get("superscript_digit_hint") == "2":
+        return False, None
+    if "√" in best_val and not topo.get("has_radical_stroke"):
+        return False, None
+    if "⊥" in best_val and not topo.get("has_perp_t_junction"):
+        return False, None
+    if "∥" in best_val and not topo.get("has_parallel_bars"):
+        return False, None
+
+    # Không dùng `rapidocr_latin_rec` (vốn thiếu glyph √, ⊥, ∥, ²) để phủ quyết giá trị chuẩn của `rapidocr`.
+    rap_main = norm_math(readings.get("rapidocr") or "")
+    rap_lat = norm_math(readings.get("rapidocr_latin_rec") or "")
+    if best_val not in (rap_main, rap_lat):
+        return False, None
+
+    tess_vals = [norm_math(v) for r, v in readings.items() if READER_FAMILY.get(r) == "tesseract" and norm_math(v)]
+    if not tess_vals:
+        return False, None
+
+    if best_val == "⊥":
+        if any(tv in ("⊥", "L", "T", "_", "|", "_|_", "l", "1") for tv in tess_vals):
+            return True, "CROSS_FAMILY_BASE_PLUS_GLYPH_TOPOLOGY:perp_t_junction"
+        return False, None
+    if best_val == "∥":
+        if any(tv in ("∥", "//", "||", "|") for tv in tess_vals):
+            return True, "CROSS_FAMILY_BASE_PLUS_GLYPH_TOPOLOGY:parallel_bars"
+        return False, None
+
+    # Đối chiếu phần chữ/số nền trên các biểu thức chứa ², ³, √.
+    best_with_23 = best_val.replace("²", "2").replace("³", "3").replace("√", "")
+    best_no_exp = best_val.replace("²", "").replace("³", "").replace("√", "")
+    for tv in tess_vals:
+        tv_norm = tv.replace("²", "2").replace("³", "3")
+        if "√" in best_val:
+            tv_norm = re.sub(r"(?:[Vv][\\/]?|√)(?=\d)", "", tv_norm)
+        if tv_norm == best_with_23:
+            return True, "CROSS_FAMILY_BASE_PLUS_GLYPH_TOPOLOGY:superscript_or_radical_exact_base"
+        # Cho phép Tesseract làm rơi hoặc đọc méo duy nhất ký tự chỉ số trên (`a²` -> `a`, `at`, `a'`, `aỶ`, `a?/2`, `4cm”`, `a³` -> `aŠ`/`a®`) khi không xung đột số mũ '2' vs '3'.
+        if "²" in best_val or "³" in best_val:
+            wrong_digit = "3" if "²" in best_val else "2"
+            tv_stripped = re.sub(r"[²³”’'°ŠỶ?^®]", "", tv)
+            if best_no_exp and tv_stripped == best_no_exp and not re.search(rf"{wrong_digit}(?:/|$)", tv_norm):
+                return True, "CROSS_FAMILY_BASE_PLUS_GLYPH_TOPOLOGY:superscript_cc_and_base"
+    # Khi Tesseract đọc mất cả chữ số mũ ở dạng `"a3."` / `"a."` trên `²`/`³`, kiểm thêm `rapidocr_latin_rec` nếu có xác nhận đúng chữ số mũ
+    if ("²" in best_val or "³" in best_val) and rap_lat == best_with_23:
+        if any(re.sub(r"[²³”’'°ŠỶ?^®]", "", tv) == best_no_exp for tv in tess_vals):
+            return True, "CROSS_FAMILY_BASE_PLUS_GLYPH_TOPOLOGY:superscript_base_and_latin_digit"
+    return False, None
+
+
 def reconcile_local_ocr(
     raw: dict[str, Any],
     *,
@@ -347,6 +492,7 @@ def reconcile_local_ocr(
     figure_bboxes: Iterable[tuple[int, int, int, int]] = (),
     adjudications: dict[str, dict[str, str]] | None = None,
     min_agreeing_families: int = 1,
+    adjudication_meta: dict[str, dict[str, Any]] | None = None,
 ) -> dict[str, Any]:
     """Đối chiếu RapidOCR (khung dòng/thứ tự đọc) với Tesseract (dấu tiếng Việt) theo hộp bao.
 
@@ -363,12 +509,13 @@ def reconcile_local_ocr(
         # Khối "hình" phủ quá nửa ảnh là phân khối nhầm (trang chữ viết tay dày) — không dùng để tách chữ.
         figs = [f for f in figs if (f[2] - f[0]) * (f[3] - f[1]) <= 0.5 * img_w * img_h]
     adjudications = adjudications or {}
+    adjudication_meta = adjudication_meta or {}
 
     def in_region(b) -> bool:
         return region_bbox is None or _center_in(b, region_bbox, pad=6)
 
     r_lines_all = [ln for ln in rap.get("lines") or [] if ln.get("text", "").strip() and in_region(ln["bbox"])]
-    t_words_all = [w for ln in tes.get("lines") or [] for w in _line_words(ln, "tesseract") if in_region(w.bbox)]
+    t_words_all = [w for ln in tes.get("lines") or [] for w in _split_glued_words(_line_words(ln, "tesseract")) if in_region(w.bbox)]
 
     diagram_tokens: list[dict[str, Any]] = []
     text_lines: list[dict[str, Any]] = []
@@ -384,8 +531,7 @@ def reconcile_local_ocr(
 
     heights = sorted(l["bbox"][3] - l["bbox"][1] for l in text_lines) or [20]
     med_h = heights[len(heights) // 2]
-    band = max(8.0, med_h * 0.6)
-    text_lines.sort(key=lambda l: (round(((l["bbox"][1] + l["bbox"][3]) / 2.0) / band), l["bbox"][0]))
+    text_lines = _assign_row_clusters(text_lines, med_h)
 
     # Vùng phương án trắc nghiệm: từ dòng "A. …" đầu tiên (sau ít nhất một dòng đề) tới tiêu đề câu kế tiếp.
     choice_bands: list[tuple[float, float]] = []
@@ -401,7 +547,7 @@ def reconcile_local_ocr(
 
     def in_choice(b, txt: str = "") -> bool:
         cy = (b[1] + b[3]) / 2.0
-        pad = 0.45 * med_h if (txt and len(norm_math(txt)) <= 10 and is_mathlike(txt)) else 0.0
+        pad = 0.65 * med_h if (txt and len(norm_math(txt)) <= 12 and is_mathlike(txt)) else 0.0
         return any(lo - pad <= cy <= hi for lo, hi in choice_bands)
 
     assigned: dict[int, list[Word]] = {i: [] for i in range(len(text_lines))}
@@ -485,10 +631,10 @@ def reconcile_local_ocr(
                       "FRACTION_STRUCTURE_LOSS", [frac, f"{top_t} {bot_t}"], {"rapidocr": f"{top_t} | {bot_t}"},
                       evidence="layout-fraction", line_id=line_id)
             line_records.append({"line_id": line_id, "bbox": list(rbox), "spans": [sp], "choice": choice_line,
-                                 "row": round(((rbox[1] + rbox[3]) / 2.0) / band)})
+                                 "row": line["_row"]})
             spans.append(sp)
             continue
-        r_words = _merge_math_fragments(_line_words(line, "rapidocr"))
+        r_words = _merge_math_fragments(_split_glued_words(_line_words(line, "rapidocr")))
         t_words = sorted(assigned[li], key=lambda w: w.bbox[0])
         # Gộp âm tiết văn xuôi bị RapidOCR tách đôi (vd: "M" + "t" khi Tesseract đọc "Một") hoặc lặp ký tự đầu ("t" + "trụ").
         merged_r: list[Word] = []
@@ -633,7 +779,21 @@ def reconcile_local_ocr(
                     if r_is_upper_label and nv.upper() == r_norm:
                         nv = r_norm
                     votes.setdefault(nv, set()).add(reader)
-                ranked = sorted(votes.items(), key=lambda kv: (-len(kv[1]), "rapidocr" not in kv[1]))
+                ranked = sorted(
+                    votes.items(),
+                    key=lambda kv: (
+                        not (
+                            len(kv[1]) >= 2
+                            and len({READER_FAMILY.get(r, r) for r in kv[1]}) >= min_agreeing_families
+                            and not has_shared_corruption(kv[0])
+                        ),
+                        has_shared_corruption(kv[0]),
+                        -_math_unicode_richness(kv[0]),
+                        -len({READER_FAMILY.get(r, r) for r in kv[1]}),
+                        -len(kv[1]),
+                        "rapidocr" not in kv[1],
+                    ),
+                )
                 best_val, best_readers = ranked[0]
                 families = {READER_FAMILY.get(r, r) for r in best_readers}
                 agreed = len(best_readers) >= 2 and len(families) >= min_agreeing_families
@@ -649,6 +809,11 @@ def reconcile_local_ocr(
                     and bool(re.fullmatch(r"[A-Z]{2,4}", best_val))
                     and bool(primed_votes)
                 )
+                topo_ok, topo_ev = (
+                    _verify_base_plus_glyph_topology(best_val, readings, rs, adjudication_meta.get(key))
+                    if (not agreed and not corrupt and not prime_drop_conflict and best_val)
+                    else (False, None)
+                )
                 if agreed and not tie and not corrupt and not prime_drop_conflict and best_val:
                     text_out = display if norm_math(display) == best_val else best_val + trail
                     emit(text_out, "verified", "math",
@@ -662,6 +827,9 @@ def reconcile_local_ocr(
                         and min(w.conf for w in ts) < 85.0
                     ):
                         prime_probe_slots.append({"slot_key": key, "bbox": list(box), "readings": dict(readings)})
+                elif topo_ok and topo_ev:
+                    text_out = display if norm_math(display) == best_val else best_val + trail
+                    emit(text_out, "verified", "math", evidence=topo_ev)
                 else:
                     alts = [v for v, _ in ranked if v]
                     for pv in primed_votes:
@@ -726,13 +894,13 @@ def reconcile_local_ocr(
             line_spans.append(Span(f"sp{sid}", "", "uncertain", "structure", line["bbox"], "FRACTION_STRUCTURE_LOSS",
                                    [], {"rapidocr": line["text"]}, evidence="layout", line_id=line_id))
         line_records.append({"line_id": line_id, "bbox": list(line["bbox"]), "spans": line_spans, "choice": choice_line,
-                             "row": round(((line["bbox"][1] + line["bbox"][3]) / 2.0) / band)})
+                             "row": line["_row"]})
         spans.extend(line_spans)
     # Gom mọi mảnh phương án trắc nghiệm trong cùng dải `choice_band` về hàng của phương án mở đầu ("A."/"B.").
     for lo, hi in choice_bands:
         band_recs = [
             r for r in line_records
-            if r["choice"] and lo - 0.5 * med_h <= (r["bbox"][1] + r["bbox"][3]) / 2.0 <= hi
+            if r["choice"] and lo - 0.70 * med_h <= (r["bbox"][1] + r["bbox"][3]) / 2.0 <= hi
         ]
         if band_recs:
             anchor = [r for r in band_recs if r["spans"] and _CHOICE_START_RE.match(r["spans"][0].text)]
@@ -833,6 +1001,13 @@ def reconcile_local_ocr(
     if extra_unknown:
         blocking.append("UNALIGNED_SECOND_READER_TEXT")
 
+    if "NO_TEXT_DETECTED" in blocking or len(draft.strip()) < 10:
+        ocr_decision = "LOCAL_OCR_REJECT_UNREADABLE"
+    elif not blocking:
+        ocr_decision = "LOCAL_OCR_ACCEPT"
+    else:
+        ocr_decision = "LOCAL_OCR_REVIEW_REQUIRED"
+
     return {
         "schema": OCR_RECONCILE_VERSION,
         "draft_text": draft,
@@ -858,6 +1033,7 @@ def reconcile_local_ocr(
         },
         "policy": {"min_agreeing_families": min_agreeing_families},
         "extraction_verified": not blocking,
+        "ocr_decision": ocr_decision,
         "blocking_reasons": blocking,
         "used_ground_truth": False,
     }
@@ -880,13 +1056,24 @@ def reconcile_with_adjudication(
     rr = reread_fn([d["bbox"] for d in disputes]) or {}
     readings = rr.get("readings") or []
     adj: dict[str, dict[str, str]] = {}
+    adj_meta: dict[str, dict[str, Any]] = {}
     readers_seen: set[str] = set()
     for d, rd in zip(disputes, readings):
         clean = {k: v for k, v in (rd or {}).items() if not k.endswith("_error") and isinstance(v, str)}
         readers_seen.update(clean)
         adj[d["slot_key"]] = clean
+        if isinstance(rd, dict):
+            meta_entry = {
+                k: rd[k]
+                for k in ("glyph_topology", "tesseract_eng_line_conf", "tesseract_vie_line_conf")
+                if k in rd
+            }
+            if meta_entry:
+                adj_meta[d["slot_key"]] = meta_entry
     second = reconcile_local_ocr(
-        raw, region_bbox=region_bbox, figure_bboxes=figure_bboxes, adjudications=adj, min_agreeing_families=min_agreeing_families
+        raw, region_bbox=region_bbox, figure_bboxes=figure_bboxes,
+        adjudications=adj, min_agreeing_families=min_agreeing_families,
+        adjudication_meta=adj_meta,
     )
     second["adjudication"] = {
         "requested": len(disputes),

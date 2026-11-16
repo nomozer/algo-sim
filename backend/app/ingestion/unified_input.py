@@ -380,6 +380,8 @@ def _local_ocr_outcome(
         return UnifiedPrepareOutcome(source_kind=source_kind, provenance=prov_common, metrics=metrics, **kw)
 
     if len(full_text.strip()) < 10:
+        prov_common["ocr_decision"] = "LOCAL_OCR_REJECT_UNREADABLE"
+        prov_common["input_route"] = "LOCAL_OCR_REJECTED"
         return _done(
             status="rejected",
             learner_message=REJECTION_MESSAGES["IMAGE_NOT_READABLE"],
@@ -404,6 +406,10 @@ def _local_ocr_outcome(
         base_offset = full_text.replace("\n", " ").find(chosen_text.replace("\n", " "))
     target_text = merge_supplemental_text(chosen_text, directive)
     offsets_valid = base_offset >= 0 and len(target_text) == len(chosen_text)
+    ocr_decision = rec.get("ocr_decision") or (
+        "LOCAL_OCR_ACCEPT" if rec.get("extraction_verified") else "LOCAL_OCR_REVIEW_REQUIRED"
+    )
+    prov_common["ocr_decision"] = ocr_decision
     prov_common["input_route"] = "LOCAL_OCR_VERIFIED" if rec.get("extraction_verified") else "LOCAL_OCR_NEEDS_CONFIRMATION"
     prov_common["input_text_provenance"] = (
         "LOCAL_OCR_CROSS_FAMILY_VERIFIED" if rec.get("extraction_verified") else "LOCAL_OCR_DRAFT_PENDING_STUDENT_CONFIRMATION"
@@ -534,7 +540,7 @@ async def _process_normalized_visual_page(
             source_kind=source_kind,
             learner_message=REJECTION_MESSAGES["IMAGE_NOT_READABLE"],
             reason_code="IMAGE_NOT_READABLE",
-            provenance=prov_common,
+            provenance={**prov_common, "ocr_decision": "LOCAL_OCR_REJECT_UNREADABLE"},
             metrics={
                 "vlm_calls": 0,
                 "used_vlm": False,

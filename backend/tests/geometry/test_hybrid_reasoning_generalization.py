@@ -189,6 +189,33 @@ def test_compositional_bridge_and_planner_gaps_now_served_exactly(cid):
     assert validate_construction_continuity(env_nl["scene3d"]) == []
 
 
+def _plane_constraint_contains_described_point_case():
+    base_prefix = CASES["PL5"]["text"].split("Tính")[0]
+    t_pc = base_prefix + "Mặt phẳng (P) chứa AB và đi qua trung điểm của SC. Xác định thiết diện của hình chóp cắt bởi (P)."
+    p_pc = copy.deepcopy(CASES["PL5"]["payload"])
+    p_pc["problem_text"] = t_pc
+    p_pc["described_points"] = [{"described_id": "m1", "kind": "midpoint", "segment": ["S", "C"], "quote": "trung điểm của SC"}]
+    p_pc["derived_sections"] = [{
+        "section_id": "sec1", "plane_name": "P", "target_solid_id": "s1", "plane_kind": "constrained",
+        "constraints": [{"kind": "contains_points", "operands": ["A", "B", "@m1"]}],
+        "stated_intersections": [], "quote": "Mặt phẳng (P) chứa AB và đi qua trung điểm của SC",
+    }]
+    p_pc["simulation_goals"] = [
+        {"goal_id": "sg1", "kind": "construct_object", "target_solid_id": "s1", "quote": CASES["PL5"]["payload"]["simulation_goals"][0]["quote"]},
+        {"goal_id": "g_sec", "kind": "construct_plane_section", "target_section_id": "sec1",
+         "quote": "Xác định thiết diện của hình chóp cắt bởi (P)"},
+    ]
+    p_pc["math_goals"] = []
+    return {"text": t_pc, "payload": p_pc}
+
+
+def test_plane_constraint_contains_points_described_point_now_served():
+    case = _plane_constraint_contains_described_point_case()
+    route, env, _a = _run(case["text"], case["payload"])
+    assert route["status"] == "SERVED", env.get("reason_code")
+    assert validate_construction_continuity(env["scene3d"]) == []
+
+
 def _unsupported_boundary_cases():
     base_prefix = CASES["PL5"]["text"].split("Tính")[0]
     # 1. Quadrilateral area goal referencing @id (bridge contract supports triangle area or 3 described points, not >=4 vertices)
@@ -202,14 +229,14 @@ def _unsupported_boundary_cases():
         "target": {"polygon": ["@m1", "A", "B", "C"]}, "quote": q_quad,
     }]
 
-    # 2. @id inside PlaneConstraintSpec (`constrained` section operand)
-    t_pc = base_prefix + "Mặt phẳng (P) chứa AB và đi qua trung điểm của SC. Xác định thiết diện của hình chóp cắt bởi (P)."
+    # 2. @id inside PlaneConstraintSpec non-contains_points constraint (`perpendicular_to_plane` operand)
+    t_pc = base_prefix + "Mặt phẳng (P) đi qua A và vuông góc với mặt phẳng qua S, B và trung điểm của SC. Xác định thiết diện của hình chóp cắt bởi (P)."
     p_pc = copy.deepcopy(p_quad)
     p_pc["problem_text"] = t_pc
     p_pc["derived_sections"] = [{
         "section_id": "sec1", "plane_name": "P", "target_solid_id": "s1", "plane_kind": "constrained",
-        "constraints": [{"kind": "contains_line", "operands": ["A", "B"]}, {"kind": "contains_points", "operands": ["@m1"]}],
-        "stated_intersections": [], "quote": "Mặt phẳng (P) chứa AB và đi qua trung điểm của SC",
+        "constraints": [{"kind": "contains_points", "operands": ["A"]}, {"kind": "perpendicular_to_plane", "operands": ["S", "B", "@m1"]}],
+        "stated_intersections": [], "quote": "Mặt phẳng (P) đi qua A và vuông góc với mặt phẳng qua S, B và trung điểm của SC",
     }]
     p_pc["simulation_goals"] = [
         {"goal_id": "sg1", "kind": "construct_object", "target_solid_id": "s1", "quote": CASES["PL5"]["payload"]["simulation_goals"][0]["quote"]},
@@ -236,7 +263,7 @@ def _unsupported_boundary_cases():
     }
     return [
         ("quadrilateral_area_with_described_vertex", {"text": t_quad, "payload": p_quad}, "BRIDGE_UNSUPPORTED_DESCRIBED_POINT"),
-        # `@id` inside PlaneConstraintSpec stays a TypedFactNext /2 schema representation gap (`TYPED_FACT_REPRESENTATION_GAP`).
+        # `@id` inside non-contains_points PlaneConstraintSpec remains refused (`INVALID_QUALIFIED_REF`).
         ("plane_constraint_with_described_operand", {"text": t_pc, "payload": p_pc}, "INVALID_QUALIFIED_REF"),
         ("curved_section_with_described_point", {"text": t_cone, "payload": p_cone}, "BRIDGE_UNSUPPORTED_DESCRIBED_POINT"),
     ]

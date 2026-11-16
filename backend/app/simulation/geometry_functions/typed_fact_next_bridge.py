@@ -506,7 +506,7 @@ def _la_mat_qua_ba_diem(sec: DerivedPlaneSectionSpec | DerivedPlaneSectionSpecV2
     """A `/2` plane given ONLY as "contains these three named points" — the plane (MNP), no relation to ground."""
     cs = getattr(sec, "constraints", ())
     return (sec.plane_kind == "constrained" and len(cs) == 1 and cs[0].kind == "contains_points"
-            and len(cs[0].operands) == 3)
+            and len(cs[0].operands) == 3 and not any(is_described_ref(p) for p in cs[0].operands))
 
 
 def _ten_mat_khai(sec: DerivedPlaneSectionSpec | DerivedPlaneSectionSpecV2) -> str:
@@ -515,11 +515,12 @@ def _ten_mat_khai(sec: DerivedPlaneSectionSpec | DerivedPlaneSectionSpecV2) -> s
 
 
 def _mat_fact(sec: DerivedPlaneSectionSpec | DerivedPlaneSectionSpecV2, solids: dict[str, Any],
-              asked: list[str], mo_ta: dict[str, dict[str, Any]] | None = None) -> dict[str, Any]:
+              asked: list[str], mo_ta: dict[str, dict[str, Any]] | None = None,
+              extra_quotes: tuple[str, ...] | list[str] = ()) -> dict[str, Any]:
     """The section fact's PLANE (shared by `/1` and `/2`). A described through-point (R-1) becomes route B's described
     point of a relation plane: `point_kind` + `points` instead of `point`."""
     if sec.plane_kind == "constrained":                # C17: the stated relations only — witnesses are the planner's
-        if any(is_described_ref(p) for c in sec.constraints for p in c.operands):
+        if any(is_described_ref(p) for c in sec.constraints if c.kind != "contains_points" for p in c.operands):
             raise TuChoi("BRIDGE_UNSUPPORTED_DESCRIBED_POINT", f"{sec.section_id}: điểm mô tả trong ràng buộc mặt chưa hỗ trợ",
                          (sec.section_id,))
         if _la_mat_qua_ba_diem(sec):
@@ -532,11 +533,31 @@ def _mat_fact(sec: DerivedPlaneSectionSpec | DerivedPlaneSectionSpecV2, solids: 
                              (sec.section_id,))
             return {"id": sec.section_id, "kind": "section", "role": "question" if asked else "premise",
                     "quotes": [sec.quote, *asked], "solid": solids[sec.target_solid_id].notation, "points": pts}
+        quote_ctx = "\n".join([sec.quote, *extra_quotes])
+        cs_out: list[dict[str, Any]] = []
+        for c in sec.constraints:
+            if c.kind == "contains_points" and any(is_described_ref(p) for p in c.operands):
+                items = [
+                    _mo_ta_cua(p, mo_ta or {}, quote_ctx, sec.section_id) if is_described_ref(p) else _ref(p)
+                    for p in c.operands
+                ]
+                cs_out.append({
+                    "kind": c.kind,
+                    "points": [x for x in items if isinstance(x, str)],
+                    "point_items": items,
+                })
+            else:
+                cs_out.append({"kind": c.kind, "points": _refs(c.operands)})
+        explicit_pname = (
+            getattr(sec, "plane_name", None)
+            if (not hasattr(sec, "model_fields_set") or "plane_name" in sec.model_fields_set)
+            else None
+        )
         f = {"id": sec.section_id, "kind": "section", "role": "question" if asked else "premise",
              "quotes": [sec.quote, *asked], "solid": solids[sec.target_solid_id].notation,
-             "plane_constraints": [{"kind": c.kind, "points": _refs(c.operands)} for c in sec.constraints]}
-        if sec.plane_name is not None:
-            f["plane_name"] = sec.plane_name
+             "plane_constraints": cs_out}
+        if explicit_pname is not None:
+            f["plane_name"] = explicit_pname
         return f
     rel = _PLANE_RELATION.get(sec.plane_kind)
     if rel is None:
@@ -547,17 +568,22 @@ def _mat_fact(sec: DerivedPlaneSectionSpec | DerivedPlaneSectionSpecV2, solids: 
     f: dict[str, Any] = {"id": sec.section_id, "kind": "section", "role": "question" if asked else "premise",
                          "quotes": [sec.quote, *asked], "solid": solids[sec.target_solid_id].notation,
                          **qua, "plane_relation": rel}
-    if getattr(sec, "plane_name", None) is not None:
+    explicit_pname = (
+        getattr(sec, "plane_name", None)
+        if (not hasattr(sec, "model_fields_set") or "plane_name" in sec.model_fields_set)
+        else None
+    )
+    if explicit_pname is not None:
         import re as _re
-        if not _re.fullmatch(r"(?:[A-Z][0-9]*'?|[α-ω]'?)", str(sec.plane_name)):
+        if not _re.fullmatch(r"(?:[A-Z][0-9]*'?|[α-ω]'?)", str(explicit_pname)):
             raise TuChoi("SOURCE_OBJECT_MISMATCH", f"{sec.section_id}: tên mặt đã khai không khớp mặt được Source Gate xác minh", (sec.section_id,))
-        f["plane_name"] = sec.plane_name
+        f["plane_name"] = explicit_pname
     if rel == "parallel":
         f["points_b"] = _refs(sec.parallel_plane)
     elif rel == "perpendicular":
         f["points_b"] = _refs(sec.perpendicular_line)
     else:
-        f.update(points_a=_refs(sec.parallel_line_a), points_b=_refs(sec.parallel_line_b), plane_name=sec.plane_name)
+        f.update(points_a=_refs(sec.parallel_line_a), points_b=_refs(sec.parallel_line_b))
     return f
 
 
@@ -580,6 +606,12 @@ def _v2_plane_def_quotes(sec: DerivedPlaneSectionSpec | DerivedPlaneSectionSpecV
     )
     cac_mau = (_QUA_SONG_SONG, _DIEM_TRUOC_SONG_SONG, _QUA_VUONG_DUONG, _DIEM_TRUOC_VUONG_DUONG,
                _QUA_HAI_DUONG, _DIEM_TRUOC_HAI_DUONG)
+    if getattr(sec, "plane_kind", None) == "constrained":
+        con_pat = re.compile(
+            rf"(?:(?:mặt\s+phẳng|mp)\s*)?\((?P<ten>{re.escape(str(ten))})\)\s*(?:là\s+mặt\s+phẳng\s+)?(?:(?:đi\s+)?qua|chứa)\b",
+            re.IGNORECASE,
+        )
+        cac_mau = (*cac_mau, con_pat)
     qn = chuan_hoa(sec.quote)
     if any(m["ten"] == ten for mau in cac_mau for m in mau.finditer(qn)):
         return []
@@ -613,7 +645,8 @@ def _section_fact_v2(sec: DerivedPlaneSectionSpecV2, solids: dict[str, Any], ask
                      problem_text: str | None = None, mo_ta: dict[str, dict[str, Any]] | None = None) -> dict[str, Any]:
     """`/2`: stated intersections are the stated cuts (names aligned, None = stated but unnamed); the planner may derive
     the vertex of an UNSTATED lateral edge where a closed boundary is required (D6); a declared boundary is verified."""
-    f = _mat_fact(sec, solids, asked, mo_ta)
+    extra = _v2_plane_def_quotes(sec, problem_text)
+    f = _mat_fact(sec, solids, asked, mo_ta, extra_quotes=extra)
     if _la_mat_qua_ba_diem(sec):
         # The engine derives every vertex of a three-point section; stated cuts / a declared boundary have no carrier on
         # that function yet — refused, never silently dropped.
@@ -621,7 +654,7 @@ def _section_fact_v2(sec: DerivedPlaneSectionSpecV2, solids: dict[str, Any], ask
             raise TuChoi("UNSUPPORTED_CAPABILITY", f"{sec.section_id}: giao điểm/biên khai sẵn trên mặt qua ba điểm chưa hỗ trợ",
                          (sec.section_id,))
         return f
-    if extra := _v2_plane_def_quotes(sec, problem_text):
+    if extra:
         f["quotes"] = list(dict.fromkeys([*extra, *f["quotes"]]))
     f["cut_edges"] = [_refs(s.edge) for s in sec.stated_intersections]
     if any(s.point for s in sec.stated_intersections):
@@ -1122,9 +1155,12 @@ def _bridge(p: TypedFactNextPayload, section_fact, version: str, v2: bool) -> di
                     raise TuChoi("UNKNOWN_SOLID_ID", f"{g.goal_id}: khối {g_solid!r} không có", (g.goal_id,))
                 if g_solid != sec.target_solid_id:
                     raise TuChoi("SOURCE_OBJECT_MISMATCH", f"{g.goal_id}: khối {g_solid!r} không khớp khối của thiết diện {sec.section_id!r}", (g.goal_id,))
-            f = _mat_fact(sec, solids, [], mo_ta)
-            if _la_mat_qua_ba_diem(sec):     # "diện tích thiết diện đó": the plane is named where the section is stated
-                q["quotes"] = list(dict.fromkeys([g.quote, sec.quote]))
+            extra = _v2_plane_def_quotes(sec, p.problem_text) if v2 else []
+            f = _mat_fact(sec, solids, [], mo_ta, extra_quotes=extra)
+            if _la_mat_qua_ba_diem(sec) or (
+                sec.plane_kind == "constrained" and any(is_described_ref(op) for c in sec.constraints for op in c.operands)
+            ):     # "diện tích thiết diện đó": the plane is named where the section is stated
+                q["quotes"] = list(dict.fromkeys([g.quote, sec.quote, *extra]))
             facts.append({**q, "quantity": "area", **{k: f[k] for k in ("solid", "point", "point_kind", "points",
                                                                          "point_tree", "plane_relation", "points_b",
                                                                          "points_a", "plane_name",

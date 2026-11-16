@@ -254,10 +254,10 @@ _TRAILING_MC_OPTIONS_RE = re.compile(
 
 
 def strip_trailing_multiple_choice_options(text: str) -> str:
-    """Strip trailing 4-option multiple-choice answer key lines (`A. ... B. ... C. ... D. ...`) from Vietnamese exam stems."""
-    if not text:
-        return ""
-    return _TRAILING_MC_OPTIONS_RE.sub(r"\g<stem_end>", text).strip()
+    """Strip trailing multiple-choice answer key blocks (including out-of-order OCR scan blocks)."""
+    from .local_geometry_parser import strip_mc_options_block
+
+    return strip_mc_options_block(text)
 
 
 def route_text_input(

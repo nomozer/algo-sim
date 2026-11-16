@@ -940,7 +940,7 @@ MISSING_KEY_MSG = (
 #       siết kiểm chứng độ dài/góc trên đường dẫn xuất (`ask_distance_lines`) và nối trích dẫn tái sử dụng đa luật; khoá
 #       cache chỉ băm chuỗi phiên bản nên mọi row `141:route-d` phải MISS
 #       (`tests/geometry/test_planner_autonomous_composition.py`).
-CACHE_VERSION = "142"
+CACHE_VERSION = "143"
 
 #: Hai chế độ hợp lệ của kiến trúc chính thức Hybrid `/4` do máy chủ sở hữu:
 #: - `live` (mặc định): trích xuất có cấu trúc qua Gemini (`typed-fact-next/2`) khi cấu hình `GEMINI_API_KEY`.

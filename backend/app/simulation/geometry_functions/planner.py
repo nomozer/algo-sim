@@ -2042,15 +2042,45 @@ def _phap_tuyen(q_mat: list[str], kh: _Khoi, k: KeHoach) -> dict:
 def _mat_rang_buoc(f: TypedFact, q: list[str], k: KeHoach, phat, khoi: str, fn: str) -> dict:
     """CONSTRAINT-TO-WITNESS (C17, `MAT_RANG_BUOC`): a plane the source defines only by relations. The kernel cuts a plane
     through points, so the planner must FIND witness points the source never names:
-    - points the plane contains are witnesses as they are (the first is the anchor);
+    - points the plane contains are witnesses as they are (the first is the anchor; described `@id` operands resolve via `k.resolver.point`);
     - a line it is ∥ to: the anchor translated along it;
     - a plane Q it is ⊥ to: a `Normal(Q)` subgoal (`_phap_tuyen`), then the anchor translated along that normal.
     Fewer than three witnesses ⇒ the stated relations cannot fix a plane. The engine proves the plane exists and is
     unique from EVERY stated constraint, so a redundant or contradictory constraint is checked, never ignored."""
     if f.role not in ("premise", "question") or f.negated:
         raise TuChoi("UNSUPPORTED_CAPABILITY", f"{f.id}: mặt dựng từ quan hệ chỉ cho thiết diện được yêu cầu", (f.id,))
-    cs = [{"kind": c["kind"], "points": list(c["points"])} for c in f.plane_constraints]
-    diem = list(dict.fromkeys(p for c in cs if c["kind"] == "contains_points" for p in c["points"]))
+    from types import SimpleNamespace
+
+    cs: list[dict[str, Any]] = []
+    diem: list[str] = []
+    point_chains: list[dict[str, Any]] = []
+    for c_raw in f.plane_constraints:
+        if c_raw["kind"] == "contains_points" and c_raw.get("point_items"):
+            pts_c: list[str] = []
+            for it in c_raw["point_items"]:
+                if isinstance(it, dict):
+                    desc_spec = _cay_tu_dict(it)
+                    if desc_spec is None:
+                        raise TuChoi("FACT_INCOMPLETE", f"{f.id}: toán hạng điểm mô tả không hợp lệ", (f.id,))
+                    pt_fact = SimpleNamespace(id=f"{f.id}_p{len(point_chains) + 1}", quotes=q)
+                    m_pt, p_chain, p_labels = k.resolver.point(pt_fact, desc_spec)
+                    op_cert = k.resolver._nut_chung_chi(it, m_pt)
+                    point_chains.append({
+                        "point": m_pt,
+                        "chain": p_chain,
+                        "operand": op_cert,
+                        "labels": p_labels,
+                    })
+                    pts_c.append(m_pt)
+                else:
+                    pts_c.append(it)
+        else:
+            pts_c = list(c_raw["points"])
+        cs.append({"kind": c_raw["kind"], "points": pts_c})
+        if c_raw["kind"] == "contains_points":
+            for p_lbl in pts_c:
+                if p_lbl not in diem:
+                    diem.append(p_lbl)
     khoa = (khoi, f.plane_name, "constrained", tuple((c["kind"], frozenset(c["points"])) for c in cs))
     d = k.derived_planes.get(khoa)
     if d is None:
@@ -2115,6 +2145,8 @@ def _mat_rang_buoc(f: TypedFact, q: list[str], k: KeHoach, phat, khoi: str, fn: 
                                       "rejected": t["rejected"],
                                       "selected": {key: v for key, v in t["selected"].items() if key != "contract"}}
                                      for c, t in zip([c for c in cs if c["kind"] == "perpendicular_to_plane"], tim)]}}
+        if point_chains:
+            d["point_chains"] = point_chains
         if f.plane_name is not None:
             d["plane_name"] = f.plane_name
         k.derived_planes[khoa] = d

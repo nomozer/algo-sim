@@ -296,6 +296,9 @@ def summarize_for_provenance(rec: dict[str, Any]) -> dict[str, Any]:
         "route_version": LOCAL_OCR_ROUTE_VERSION,
         "reconcile_version": OCR_RECONCILE_VERSION,
         "extraction_verified": bool(rec.get("extraction_verified")),
+        "ocr_decision": rec.get("ocr_decision") or (
+            "LOCAL_OCR_ACCEPT" if rec.get("extraction_verified") else "LOCAL_OCR_REVIEW_REQUIRED"
+        ),
         "blocking_reasons": list(rec.get("blocking_reasons") or []),
         "uncertain_blocking_count": sum(1 for s in rec.get("uncertain_spans") or [] if s.get("blocking")),
         "uncertain_ratio": rec.get("uncertain_ratio"),

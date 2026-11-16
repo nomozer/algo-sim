@@ -669,8 +669,8 @@ def test_student_mode_a_no_machine_id_leaks_and_locked_surface_fingerprints():
 # ── 5. Route D `/api/analyze` SimulationCache `141:route-d` -> `142:route-d` Invalidation ─────────────────────────────
 
 def test_stale_141_route_d_cache_row_is_invalidated_and_recomputed_under_142(monkeypatch):
-    assert M.CACHE_VERSION == "142"
-    assert M.ROUTE_D_CACHE_POLICY == "142:route-d"
+    assert M.CACHE_VERSION == "143"
+    assert M.ROUTE_D_CACHE_POLICY == "143:route-d"
 
     t_t1 = (
         "Cho hình chóp S.ABCD có đáy ABCD là hình vuông cạnh 2, SA vuông góc với (ABCD), SA = 3. "

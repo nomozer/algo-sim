@@ -29,7 +29,11 @@ from typing import Any
 LOCAL_OCR_RAW_SCHEMA = "local-ocr-raw/1"
 _WORKER_PATH = Path(__file__).with_name("local_ocr_worker.py")
 _CACHE_MAX = 16
-_CACHE: "OrderedDict[str, dict[str, Any]]" = OrderedDict()
+_RAW_OCR_CACHE_MAX = 32
+_REREAD_CACHE_MAX = 64
+_RAW_OCR_CACHE: "OrderedDict[str, dict[str, Any]]" = OrderedDict()
+_REREAD_CACHE: "OrderedDict[str, dict[str, Any]]" = OrderedDict()
+_CACHE = _RAW_OCR_CACHE
 _LOCK = threading.Lock()
 
 
@@ -136,7 +140,8 @@ atexit.register(shutdown_local_ocr)
 
 def clear_local_ocr_cache() -> None:
     with _LOCK:
-        _CACHE.clear()
+        _RAW_OCR_CACHE.clear()
+        _REREAD_CACHE.clear()
 
 
 def local_ocr_worker_pid() -> int | None:
@@ -152,9 +157,9 @@ def reread_local_ocr_regions(image_bytes: bytes, boxes: list[list[int]]) -> dict
     sha = hashlib.sha256(image_bytes).hexdigest()
     key = f"reread:{sha}:{json.dumps(boxes)}:{cfg['tessdata']}"
     with _LOCK:
-        hit = _CACHE.get(key)
+        hit = _REREAD_CACHE.get(key)
         if hit is not None:
-            _CACHE.move_to_end(key)
+            _REREAD_CACHE.move_to_end(key)
             return {**hit, "cached": True}
         if _WORKER is None or _WORKER.python != cfg["python"]:
             if _WORKER is not None:
@@ -174,9 +179,9 @@ def reread_local_ocr_regions(image_bytes: bytes, boxes: list[list[int]]) -> dict
         out = {"ok": bool(resp.get("ok")), "readings": resp.get("readings") or [], "worker_ms": resp.get("ms"),
                "total_ms": round((time.perf_counter() - t0) * 1000.0, 2), "cached": False}
         if out["ok"]:
-            _CACHE[key] = out
-            while len(_CACHE) > _CACHE_MAX * 4:
-                _CACHE.popitem(last=False)
+            _REREAD_CACHE[key] = out
+            while len(_REREAD_CACHE) > _REREAD_CACHE_MAX:
+                _REREAD_CACHE.popitem(last=False)
         return out
 
 
@@ -189,9 +194,9 @@ def run_local_ocr(image_bytes: bytes, *, engines: tuple[str, ...] = ("tesseract"
     sha = hashlib.sha256(image_bytes).hexdigest()
     key = f"{sha}:{','.join(engines)}:{cfg['tessdata']}"
     with _LOCK:
-        hit = _CACHE.get(key)
+        hit = _RAW_OCR_CACHE.get(key)
         if hit is not None:
-            _CACHE.move_to_end(key)
+            _RAW_OCR_CACHE.move_to_end(key)
             return {**hit, "cached": True, "total_ms": 0.0}
         t0 = time.perf_counter()
         cold = _WORKER is None or _WORKER.pid() is None
@@ -227,7 +232,7 @@ def run_local_ocr(image_bytes: bytes, *, engines: tuple[str, ...] = ("tesseract"
             "total_ms": round((time.perf_counter() - t0) * 1000.0, 2),
         }
         if out["ok"]:
-            _CACHE[key] = out
-            while len(_CACHE) > _CACHE_MAX:
-                _CACHE.popitem(last=False)
+            _RAW_OCR_CACHE[key] = out
+            while len(_RAW_OCR_CACHE) > _RAW_OCR_CACHE_MAX:
+                _RAW_OCR_CACHE.popitem(last=False)
         return out

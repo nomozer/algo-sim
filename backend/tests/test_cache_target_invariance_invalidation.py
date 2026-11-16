@@ -16,7 +16,7 @@ from app.persistence.db import SessionLocal, SimulationCache, init_db
 
 
 def test_version_pair():
-    assert main_module.CACHE_VERSION == "142" and main_module.ROUTE_D_CACHE_POLICY == "142:route-d"
+    assert main_module.CACHE_VERSION == "143" and main_module.ROUTE_D_CACHE_POLICY == "143:route-d"
 
 
 def test_a_row_written_under_135_misses():

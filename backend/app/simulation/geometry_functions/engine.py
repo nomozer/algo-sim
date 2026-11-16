@@ -5527,7 +5527,8 @@ class _Dung:
             ten, mp = f"td_{c.id}", f"mp_td_{c.id}"
             # A derived plane is named by its verified relation, never by the planner's auxiliary labels.
             dan = next((d for d in self.mat_phu if c.id in d["targets"]), None)
-            nhan_mat = (f"({self.ten_mat_phu.get(dan['constructs'][0]) or 'α'})" if dan
+            dan_key = ((dan.get("constructs") or []) + (dan.get("targets") or []) or [None])[0] if dan else None
+            nhan_mat = (f"({self.ten_mat_phu.get(dan_key) or dan.get('plane_name') or 'α'})" if dan
                         else "(" + "".join(c.args.plane) + ")")
             khoi_id = "khoi_" + ir_name(c.args.solid.replace(".", "_"))
             lenh.append({"kind": "construct_plane", "target_var": mp, "through": [ir_name(x) for x in self._diem_qua(c.args.plane)],

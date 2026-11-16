@@ -632,7 +632,10 @@ class PlaneConstraintSpec(ClosedNextModel):
     @model_validator(mode="after")
     def _validate_operands(self) -> "PlaneConstraintSpec":
         lo, hi = PLANE_CONSTRAINT_ARITY[self.kind]
-        refs = [parse_qualified_ref(p) for p in self.operands]
+        refs = [
+            p.strip() if (self.kind == "contains_points" and is_described_ref(p)) else parse_qualified_ref(p)
+            for p in self.operands
+        ]
         if not lo <= len(refs) <= hi or len(set(refs)) != len(refs):
             raise TypedFactNextValidationError(
                 "INVALID_DERIVED_SECTION", f"plane constraint {self.kind} needs {lo}..{hi} distinct labels")
@@ -1125,7 +1128,7 @@ def _strings(value: Any):
 
 def described_ref_uses(p: "TypedFactNextPayload") -> list[tuple[str, str]]:
     """`(consumer, described id)` of every described ref standing where one may (R-1): a measurement goal's point operand,
-    a section's `through_point`, a point operand of another described point (consumer `@id`)."""
+    a section's `through_point`, a `contains_points` constraint operand, a point operand of another described point."""
     uses: list[tuple[str, str]] = []
     for mg in p.math_goals:
         if mg.kind == "measurement":
@@ -1134,6 +1137,10 @@ def described_ref_uses(p: "TypedFactNextPayload") -> list[tuple[str, str]]:
                 uses += [(mg.goal_id, x.strip()[1:]) for x in (v if isinstance(v, (list, tuple)) else [v])
                          if is_described_ref(x)]
     uses += [(s.section_id, s.through_point.strip()[1:]) for s in p.derived_sections if is_described_ref(s.through_point)]
+    for s in p.derived_sections:
+        for c in getattr(s, "constraints", ()):
+            if c.kind == "contains_points":
+                uses += [(s.section_id, x.strip()[1:]) for x in c.operands if is_described_ref(x)]
     for d in getattr(p, "described_points", ()):
         uses += [(f"@{d.described_id}", x.strip()[1:]) for x in d.point_operands() if is_described_ref(x)]
     return uses
