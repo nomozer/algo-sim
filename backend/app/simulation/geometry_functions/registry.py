@@ -5187,10 +5187,10 @@ _CUM_HOI = {
          lambda m, a, k: len(k) == 1 and set(next(iter(k.values()))) == set(a.polygon))],
     "ask_section_area": [
         (_cum(rf"diện tích(?:\s+của)?\s+thiết diện(?:(?:\s+của|\s+(?:được\s+)?tạo bởi){_khoi_cum('k')})?\s+(?:(?:khi\s+(?:bị\s+)?|bị\s+)?(?:cắt bởi|tạo bởi)|với|và|do)\s+{_mat_cum('m')}"
-              rf"(?:\s+(?:của|và|cắt){_khoi_cum('j')})?"),
+              rf"(?:\s+(?:của|và|cắt)(?=\s+(?:{_TU_KHOI}|{_P1}+\.{_P1}+|{_P1}{{4}})(?![\w'])){_khoi_cum('j')})?"),
          lambda m, a, k: _cung_mat(_mat_cua(m, "m", k), a.plane) and _khoi_thiet_dien(m, a, k)),
         (_cum(rf"diện tích(?:\s+của)?\s+thiết diện(?:(?:\s+của|\s+(?:được\s+)?tạo bởi){_khoi_cum('k')})?\s+(?:(?:khi\s+(?:bị\s+)?|bị\s+)?(?:cắt bởi|tạo bởi)|với|và|do)\s+"
-              rf"(?:(?:mặt phẳng|mp)\s*)?\((?P<ten>(?-i:[A-Z][0-9]*'?)|[α-ω]'?)\)(?![\w'])(?:\s+(?:của|và|cắt){_khoi_cum('j')})?"),
+              rf"(?:(?:mặt phẳng|mp)\s*)?\((?P<ten>(?-i:[A-Z][0-9]*'?)|[α-ω]'?)\)(?![\w'])(?:\s+(?:của|và|cắt)(?=\s+(?:{_TU_KHOI}|{_P1}+\.{_P1}+|{_P1}{{4}})(?![\w'])){_khoi_cum('j')})?"),
          lambda m, a, k: _mat_ten_diem([m.string]).get(m["ten"]) == frozenset(a.plane) and _khoi_thiet_dien(m, a, k)),
         # "Mặt phẳng (P) cắt hình chóp … theo một thiết diện. Tính diện tích thiết diện đó.": thiết diện đã được gọi tên
         # trước trong đề, và đề chỉ gọi tên ĐÚNG MỘT mặt cắt — chính mặt của lời gọi (review S1, I1).

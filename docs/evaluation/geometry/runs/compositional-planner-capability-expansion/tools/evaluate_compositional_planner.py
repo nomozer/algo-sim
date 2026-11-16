@@ -82,23 +82,25 @@ def _evaluate_reasoning_matrix() -> dict[str, Any]:
     for c in cases:
         cid = c["id"]
         want_status = c["expect"][0]
-        want_map = c["expect"][1] if want_status == "SERVED" else c["expect"][2]
         route, env, ans, ms = _run_gold(c["text"], c["payload"])
         latencies.append(ms)
         st = route["status"]
+        code = env.get("reason_code")
+        clar = bool((route.get("refusal") or {}).get("clarification") or env.get("clarification")
+                    or (route.get("refusal") or {}).get("clarifications"))
+        scene = env.get("scene3d")
+        scene_issues = validate_construction_continuity(scene) if (st == "SERVED" and scene) else []
+        if st == "SERVED" and not scene:
+            scene_issues = ["NO_SCENE3D"]
+        cls_outcome = RM.classify(c, st, code, ans or {}, clar, scene_issues)
         tel = (route.get("planner") or {}).get("search_telemetry") or {}
         if want_status == "SERVED":
-            oracle_ok = False
-            if st == "SERVED" and ans is not None:
-                oracle_ok = all(
-                    (Fraction(ans[g]) if meas == "cos2" else RM.coef_square(ans[g])) == want
-                    for g, (meas, want) in want_map.items()
-                ) and validate_construction_continuity(env["scene3d"]) == []
             row = {
                 "id": cid,
                 "status": st,
-                "reason_code": env.get("reason_code"),
-                "oracle_exact": oracle_ok,
+                "reason_code": code,
+                "outcome": cls_outcome,
+                "oracle_exact": cls_outcome == "EXACT_SERVED",
                 "latency_ms": ms,
                 "classification": tel.get("classification"),
                 "candidate_count": tel.get("candidate_count"),
@@ -111,12 +113,14 @@ def _evaluate_reasoning_matrix() -> dict[str, Any]:
         else:
             if st == "SERVED":
                 false_served += 1
+            codes = c["expect"][2]
             neg_rows.append({
                 "id": cid,
                 "status": st,
-                "reason_code": env.get("reason_code"),
-                "expected_codes": sorted(want_map),
-                "matched": st == "REFUSED" and env.get("reason_code") in want_map,
+                "reason_code": code,
+                "outcome": cls_outcome,
+                "expected_codes": sorted(codes) if codes else ["ANY_TYPED"],
+                "matched": cls_outcome in ("CORRECT_REFUSAL", "CORRECT_CLARIFICATION"),
                 "latency_ms": ms,
             })
 
@@ -300,6 +304,7 @@ def _run_pytest_json(test_path: str) -> dict[str, Any]:
 
 def main() -> int:
     ident = runtime_identity()
+    s2_ident = S2R.runtime_identity()
     rm_eval = _evaluate_reasoning_matrix()
     r1_eval = _evaluate_r1_probe()
     nl_eval = _evaluate_gold_vs_nl_and_new_families()
@@ -317,8 +322,9 @@ def main() -> int:
         "git_head": _git_head(),
         "cache_version": CACHE_VERSION,
         "semantic_environment_hash": semantic_environment_hash(),
-        "measured_system": ident["measured_system"],
-        "s2_runner_sha256": S2R.runtime_identity()["runner_sha256"],
+        "runtime_identity": ident,
+        "measured_system": s2_ident["measured_system"],
+        "s2_runner_sha256": s2_ident["runner_sha256"],
         "reasoning_matrix_72": rm_eval,
         "r1_described_point_probe": r1_eval,
         "gold_vs_local_parser_nl_and_families": nl_eval,
@@ -333,7 +339,7 @@ def main() -> int:
         "nl_passed": f"{nl_eval['nl_passed']}/{nl_eval['nl_total']}",
         "d2": nl_eval["test_family_d2_promoted"]["status"],
         "suites_ok": report["all_focused_suites_passed"],
-        "measured_system": ident["measured_system"][:16],
+        "measured_system": s2_ident["measured_system"][:16],
     }, ensure_ascii=False))
     return 0 if report["all_focused_suites_passed"] else 1
 

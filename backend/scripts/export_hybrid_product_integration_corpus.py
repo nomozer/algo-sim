@@ -140,9 +140,11 @@ SIXTEEN_CLASSES: list[tuple[str, str, str, list[tuple[str, dict[str, Any]]]]] = 
         ("cr.cube_section_plus_inscribed_sphere", {"oracles": ["4", "4π/3"]}),
         ("cone.residual", {"oracles": ["21π/2"]}),
     ]),
-    ("09_described_points", "Described points (@id midpoint, ratio, projection, centroid)", "SERVED", [
+    ("09_described_points", "Described points (@id midpoint, ratio, projection, centroid, nested D1/D2)", "SERVED", [
         ("R1-A01", {"oracles": ["√2"]}),
         ("R1-A02", {"oracles": ["2√6/3"]}),
+        ("R1-F01", {"oracles": ["√6/2"]}),
+        ("R1-F02", {"oracles": ["√2"]}),
     ]),
     ("10_constrained_planes", "Constrained planes (MAT_RANG_BUOC)", "SERVED", [
         ("K-A01", {"oracles": ["3√2/2"], "section_category": "ENGINE_DERIVED_SECTION"}),
@@ -174,7 +176,7 @@ SIXTEEN_CLASSES: list[tuple[str, str, str, list[tuple[str, dict[str, Any]]]]] = 
     ]),
     ("16_unsupported_goals", "Unsupported goals and outside-exact-domain requests (fail-closed refusal)", "REFUSED", [
         ("S2-E-E02_truncated_pyramid", {"failure_category": "capability_gap"}),
-        ("R1-F01", {"failure_category": "capability_gap"}),
+        ("R1-F03", {"failure_category": "capability_gap"}),
         ("cylR.Stp", {"failure_category": "capability_gap"}),
     ]),
 ]
