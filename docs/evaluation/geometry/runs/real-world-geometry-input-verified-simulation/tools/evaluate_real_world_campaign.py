@@ -533,8 +533,8 @@ async def _evaluate_ocr_and_confirmation_async(baselines: dict[str, Any]) -> tup
                     InputSourceProvenance(
                         origin="local_ocr_auto_verified" if dec == "LOCAL_OCR_ACCEPT" else "local_ocr_student_confirmed",
                         raw_ocr_text_sha256=raw_sha,
-                        input_prepare_status="ready",
-                        confirmation_contract_version=prov.get("confirmation_contract_version"),
+                        prepared_region_sha256=prov.get("prepared_region_sha256"),
+                        student_edited=False,
                     ),
                 )
                 row["auto_route"] = {
@@ -566,10 +566,9 @@ async def _evaluate_ocr_and_confirmation_async(baselines: dict[str, Any]) -> tup
                     InputSourceProvenance(
                         origin="local_ocr_student_confirmed",
                         raw_ocr_text_sha256=raw_sha,
+                        prepared_region_sha256=prov.get("prepared_region_sha256"),
                         confirmed_span_count=len(prep.get("uncertain_tokens") or []),
                         student_edited=bool(sim["edits"]),
-                        input_prepare_status="needs_confirmation",
-                        confirmation_contract_version=prov.get("confirmation_contract_version"),
                     ),
                 )
                 assert p_rec is not None and p_rec["counted_as_unmodified_auto_ocr"] is False
