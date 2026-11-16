@@ -196,6 +196,41 @@ def test_stream_a_nc_nl_and_dev37_promotions_with_continuity():
     assert out_mc.response["route_d"]["answers"] == {"q1": "a³/3"}
 
 
+def test_stream_a_compound_goals_and_trailing_unit_meta_preserved():
+    # Regression guard for compound multi-distance / length clauses and trailing "theo đơn vị độ" / "theo x"
+    t_two_dist = (
+        "Cho hình chóp S.ABCD có đáy ABCD là hình vuông cạnh a, SA vuông góc với (ABCD), SA = a. "
+        "Tính khoảng cách từ B đến mặt phẳng (SAC) và khoảng cách từ A đến mặt phẳng (SBC)."
+    )
+    lp_td = parse_geometry_problem_locally(t_two_dist)
+    assert lp_td.status == LOCAL_PARSE_COMPLETE
+    assert len(lp_td.payload["math_goals"]) == 2
+    assert AIR.route_text_input(t_two_dist, allow_live_ai=False).status == "SERVED"
+
+    t_dist_len = (
+        "Cho hình chóp S.ABCD có đáy ABCD là hình vuông cạnh a, SA ⊥ (ABCD), SA = a. "
+        "Tính khoảng cách từ B đến mặt phẳng (SAC) và độ dài đoạn thẳng SC."
+    )
+    assert AIR.route_text_input(t_dist_len, allow_live_ai=False).status == "SERVED"
+
+    t_deg = (
+        "Cho hình chóp S.ABC có đáy ABC là tam giác vuông cân tại B, AC = 2a, "
+        "SA vuông góc với mặt phẳng (ABC), tam giác SAB cân. "
+        "Tính số đo góc giữa hai mặt phẳng (SBC) và (ABC) theo đơn vị độ."
+    )
+    out_deg = AIR.route_text_input(t_deg, allow_live_ai=False)
+    assert out_deg.status == "SERVED"
+    assert out_deg.response["route_d"]["answers"]["q1"] == "45°"
+
+    t_theo_x = (
+        "Cho hình chóp tứ giác đều S.ABCD có độ dài cạnh bên bằng x và diện tích đáy bằng x². "
+        "Tính khoảng cách từ A đến mặt phẳng (SBC) theo x."
+    )
+    out_x = AIR.route_text_input(t_theo_x, allow_live_ai=False)
+    assert out_x.status == "SERVED"
+    assert out_x.response["route_d"]["answers"]["q1"] == "x√6/3"
+
+
 # ── Stream B: Geometry-Aware OCR Reliability & Strict Verification ───────────────────────────────────────────────
 
 

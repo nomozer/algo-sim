@@ -564,13 +564,19 @@ def _iter_top_splits(s: str, sep_pat: str = r"\s+(?:và|với)\s+") -> list[tupl
 
 
 _TRAILING_GOAL_META_RE = re.compile(
-    r"(?:\s*(?:có\s+số\s+đo\s+|có\s+)?(?:bằng|là)\s+bao\s+nhiêu"
+    r"(?:\s*(?:có\s+(?:số\s+đo|giá\s+trị|độ\s+dài)\s+|có\s+)?(?:bằng|là)\s+bao\s+nhiêu(?:\s+(?:độ|radian|rad))?"
     r"|\s*(?:bằng|là)\s*:?\s*[.?]?"
-    r"|\s*(?:theo|bằng)\s+(?:độ|radian|rad|đvđd|đvdt|đvtt|mm²|cm²|dm²|km²|m²|mm³|cm³|dm³|km³|m³|mm|cm|dm|km|m|a)"
-    r"|\s*\(\s*(?:(?:đơn\s+vị|kết\s+quả|làm\s+tròn)[^()]*)\s*\)"
+    r"|\s*(?:theo|bằng|tính\s+bằng)\s+(?:(?:đơn\s+vị(?:\s+(?:độ\s+dài|diện\s+tích|thể\s+tích|góc))?\s+)?(?:độ|radian|rad|đvđd|đvdt|đvtt|mm²|cm²|dm²|km²|m²|mm³|cm³|dm³|km³|m³|mm|cm|dm|km|m)|(?-i:[a-z])(?![\w']))"
+    r"|\s*\(\s*(?:(?:đơn\s+vị|kết\s+quả|làm\s+tròn|(?:hình\s+)?minh\s+h[ọo]a|tham\s+khảo|như|xem|hình\s+vẽ)[^()]*)\s*\)"
     r"|\s*(?:kết\s+quả\s+)?làm\s+tròn[^.;?!]*"
     r"|\s*[.?])+\s*$",
     re.IGNORECASE | re.UNICODE,
+)
+
+_NEXT_GOAL_LOOKAHEAD = (
+    r"(?=(?:(?:\s*,\s*(?:(?:và|rồi)\s+)?|\s+(?:và|rồi)\s+)(?:(?:tính|tìm|xác\s+định)\s+)?"
+    r"(?:khoảng\s+cách|k/c|độ\s+dài|thể\s+tích|diện\s+tích|(?:số\s+đo\s+(?:của\s+)?)?góc\s+(?:giữa|tạo|hợp|nhị\s+diện)"
+    r"|(?:côsin|cosin|cos|sin|tang|tan|côtang|cotang|cot)\b|bán\s+kính|(?:tỉ|tỷ)\s+số|thiết\s+diện|giao\s+tuyến)\b)|$)"
 )
 
 
@@ -4235,15 +4241,16 @@ def _parse_clause_into_ast(builder: _AstBuilder, clause: ClauseSpan) -> None:
     # - "Tính độ dài đoạn thẳng nối <src> với <dst>"
     # - "(Tính )?độ dài (đoạn thẳng )?SC"
     m_len_join = re.search(
-        rf"(?P<full>Tính\s+độ\s+dài\s+đoạn\s+thẳng\s+nối\s+(?P<a>.+?)\s+với\s+(?P<b>.+))",
+        rf"(?P<full>Tính\s+độ\s+dài\s+đoạn\s+thẳng\s+nối\s+(?P<a>.+?)\s+với\s+(?P<b>.+?)){_NEXT_GOAL_LOOKAHEAD}",
         ctext_norm,
         re.IGNORECASE | re.UNICODE,
     )
     if m_len_join:
+        b_clean = _strip_trailing_goal_meta(m_len_join.group("b"))
         ref_a = builder.parse_point_or_described(m_len_join.group("a"), ca + m_len_join.start("a"))
-        ref_b = builder.parse_point_or_described(m_len_join.group("b"), ca + m_len_join.start("b"))
+        ref_b = builder.parse_point_or_described(b_clean, ca + m_len_join.start("b"))
         if ref_a and ref_b:
-            q_lj = _clean_quote(raw, ca + m_len_join.start("full"), ca + m_len_join.end("full"))
+            q_lj = _clean_quote(raw, ca + m_len_join.start("full"), ca + m_len_join.start("b") + len(b_clean))
             builder.math_goals.append(
                 {
                     "goal_id": f"q{len(builder.math_goals) + 1}",
@@ -4292,13 +4299,13 @@ def _parse_clause_into_ast(builder: _AstBuilder, clause: ClauseSpan) -> None:
         mapped_goal = True
 
     # 7i. Distance goals (fully composable over recursive point & line descriptors):
-    matched_df: tuple[str, dict[str, Any]] | None = None
-    m_dist_from = re.search(
-        r"(?P<full>(?:(?:tính|tìm|xác\s+định)\s+)?(?:khoảng\s+cách|k/c)\s+từ\s+(?P<body>.+))",
+    df_spans: list[tuple[int, int]] = []
+    for m_dist_from in re.finditer(
+        rf"(?P<full>(?:(?:tính|tìm|xác\s+định)\s+)?(?:khoảng\s+cách|k/c)\s+từ\s+(?P<body>.+?)){_NEXT_GOAL_LOOKAHEAD}",
         ctext_norm,
         re.IGNORECASE | re.UNICODE,
-    )
-    if m_dist_from:
+    ):
+        matched_df: tuple[str, dict[str, Any]] | None = None
         body_df = _strip_trailing_goal_meta(m_dist_from.group("body"))
         body_df_off = ca + m_dist_from.start("body")
         for sp in reversed(list(re.finditer(r"\s+(?:đến|tới)\s+", body_df, re.IGNORECASE | re.UNICODE))):
@@ -4327,10 +4334,10 @@ def _parse_clause_into_ast(builder: _AstBuilder, clause: ClauseSpan) -> None:
                 break
             builder._restore(snap_df)
         if matched_df is not None:
-            is_multi_df = bool(re.search(r"\bvà\b|,.*tính", ctext_norm[: m_dist_from.start("full")], re.IGNORECASE)) and not bool(m_sim_lead)
-            q_df = _clean_quote(raw, ca, cb) if (is_multi_df or not m_dist_from.group("full").lower().startswith("tính")) else _clean_quote(
-                raw, ca + m_dist_from.start("full"), ca + m_dist_from.start("body") + len(body_df)
-            )
+            df_spans.append((m_dist_from.start("full"), m_dist_from.end("full")))
+            q_df = _clean_quote(raw, ca + m_dist_from.start("full"), ca + m_dist_from.start("body") + len(body_df))
+            if not re.match(r"(?:tính|tìm|xác\s+định)\b", q_df, re.IGNORECASE):
+                q_df = _clean_quote(raw, ca, cb)
             builder.math_goals.append(
                 {
                     "goal_id": f"q{len(builder.math_goals) + 1}",
@@ -4343,20 +4350,18 @@ def _parse_clause_into_ast(builder: _AstBuilder, clause: ClauseSpan) -> None:
             )
             mapped_goal = True
 
-    m_dist_between = None if matched_df is not None else re.search(
-        r"(?P<full>(?:(?:tính|tìm|xác\s+định)\s+)?(?:khoảng\s+cách|k/c)\s+giữa\s+(?:hai\s+đường\s+thẳng(?:\s+chéo\s+nhau)?\s+|hai\s+mặt\s+phẳng\s+)?(?P<body>.+))",
+    for m_dist_between in re.finditer(
+        rf"(?P<full>(?:(?:tính|tìm|xác\s+định)\s+)?(?:khoảng\s+cách|k/c)\s+giữa\s+(?:hai\s+đường\s+thẳng(?:\s+chéo\s+nhau)?\s+|hai\s+mặt\s+phẳng\s+)?(?P<body>.+?)){_NEXT_GOAL_LOOKAHEAD}",
         ctext_norm,
         re.IGNORECASE | re.UNICODE,
-    )
-    if m_dist_between:
+    ):
+        if any(a <= m_dist_between.start("full") < b for a, b in df_spans):
+            continue
         body_db = _strip_trailing_goal_meta(m_dist_between.group("body"))
         body_db_off = ca + m_dist_between.start("body")
-        is_multi_db = bool(re.search(r"\bvà\b|,.*tính", ctext_norm[: m_dist_between.start("full")], re.IGNORECASE)) and not bool(m_sim_lead)
-        q_db = (
-            _clean_quote(raw, ca, cb)
-            if (is_multi_db or not m_dist_between.group("full").lower().startswith("tính"))
-            else _clean_quote(raw, ca + m_dist_between.start("full"), ca + m_dist_between.start("body") + len(body_db))
-        )
+        q_db = _clean_quote(raw, ca + m_dist_between.start("full"), ca + m_dist_between.start("body") + len(body_db))
+        if not re.match(r"(?:tính|tìm|xác\s+định)\b", q_db, re.IGNORECASE):
+            q_db = _clean_quote(raw, ca, cb)
         for op1_s, o1, op2_s, o2 in _iter_top_splits(body_db):
             snap_db = builder._snapshot()
             pl1_d = builder.parse_plane_or_base(op1_s)
@@ -4488,29 +4493,30 @@ def _parse_clause_into_ast(builder: _AstBuilder, clause: ClauseSpan) -> None:
         return
 
     # - Angle between line(s) (named or with described endpoints via A3/NC-D2_E1) and plane(s):
-    m_ang = re.search(
-        r"(?P<full>(?:Tính\s+)?(?:số\s+đo\s+(?:của\s+)?)?góc\s+(?:giữa|tạo\s+bởi|hợp\s+bởi)\s+(?:hai\s+(?:đường\s+thẳng|mặt\s+phẳng)\s+)?(?P<body>.+))",
+    for m_ang in re.finditer(
+        rf"(?P<full>(?:(?:Tính|Tìm|Xác\s+định)\s+)?(?:số\s+đo\s+(?:của\s+)?)?góc\s+(?:giữa|tạo\s+bởi|hợp\s+bởi)\s+(?:hai\s+(?:đường\s+thẳng|mặt\s+phẳng)\s+)?(?P<body>.+?)){_NEXT_GOAL_LOOKAHEAD}",
         ctext_norm,
         re.IGNORECASE | re.UNICODE,
-    )
-    if (
-        m_ang
-        and not any(a <= m_ang.start("full") < b for a, b in angle_spans)
-        and not re.search(rf"\b(?:bằng|là)\s*{_VAL}\s*(?:°|độ\b)|\s=\s*{_VAL}", ctext_norm[m_ang.start("body") :], re.IGNORECASE)
     ):
+        if any(a <= m_ang.start("full") < b for a, b in angle_spans):
+            continue
+        if re.search(rf"\b(?:bằng|là)\s*{_VAL}\s*(?:°|độ\b)|\s=\s*{_VAL}", m_ang.group("body"), re.IGNORECASE):
+            continue
         body_ang = _strip_trailing_goal_meta(m_ang.group("body"))
         body_ang_off = ca + m_ang.start("body")
         ang_end_abs = ca + m_ang.start("body") + len(body_ang)
         req_deg = bool(
             re.search(r"\bsố\s+đo\b", m_ang.group("full"), re.IGNORECASE)
-            or re.search(r"\b(?:theo|bằng)\s+độ\b|\(\s*(?:đơn\s+vị(?:\s+góc)?\s*:?\s*)?độ\s*\)", ctext_norm[m_ang.start("body") + len(body_ang) :], re.IGNORECASE)
+            or re.search(r"\b(?:theo|bằng|tính\s+bằng)\s+(?:đơn\s+vị(?:\s+góc)?\s+)?độ\b|\(\s*(?:đơn\s+vị(?:\s+góc)?\s*:?\s*)?độ\s*\)", m_ang.group("body")[len(body_ang):], re.IGNORECASE)
         )
         ang_extra: dict[str, Any] = {"requested_unit": "deg"} if req_deg else {}
         day_pts = list(builder._base_vertices) if len(builder._base_vertices) >= 3 else None
 
         if re.fullmatch(r"(?:một\s+)?cạnh\s+bên\s+(?:và|với)\s+(?:mặt\s+phẳng\s+|mặt\s+)?đáy", body_ang, re.IGNORECASE):
             q_ang = _clean_quote(raw, ca + m_ang.start("full"), ang_end_abs)
-            angle_spans.append((m_ang.start("full"), m_ang.start("body") + len(body_ang)))
+            if not re.match(r"(?:tính|tìm|xác\s+định|số\s+đo|góc)\b", q_ang, re.IGNORECASE):
+                q_ang = _clean_quote(raw, ca, cb)
+            angle_spans.append((m_ang.start("full"), m_ang.end("full")))
             notation = str(builder._primary_notation or "")
             regular = any(p.get("kind") == "regular_pyramid" for p in builder.premises)
             if builder._primary_solid_type == "pyramid" and "." in notation and regular and day_pts:
@@ -4553,7 +4559,9 @@ def _parse_clause_into_ast(builder: _AstBuilder, clause: ClauseSpan) -> None:
                 builder._restore(snap_a)
             if ang_target is not None:
                 q_ang = _clean_quote(raw, ca + m_ang.start("full"), ang_end_abs)
-                angle_spans.append((m_ang.start("full"), m_ang.start("body") + len(body_ang)))
+                if not re.match(r"(?:tính|tìm|xác\s+định|số\s+đo|góc)\b", q_ang, re.IGNORECASE):
+                    q_ang = _clean_quote(raw, ca, cb)
+                angle_spans.append((m_ang.start("full"), m_ang.end("full")))
                 builder.math_goals.append(
                     {
                         "goal_id": f"q{len(builder.math_goals) + 1}",

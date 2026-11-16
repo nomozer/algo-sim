@@ -6150,8 +6150,10 @@ def _doc_phep_dung_cau_hoi(de: str, start: int, end: int, calls: tuple[LoiGoi, .
         # "Xác định / Tìm thiết diện … cắt bởi (P)", (P) defined in the call's quotes by exactly its three points
         # (independent-geometry-plane-constraints): the request names that plane by its name, nothing else is read
         for m in _CUM_DUNG_THIET_DIEN_TEN.finditer(de, start, end):
-            if any(_mat_ten_diem(c.quotes).get(m["ten"]) == frozenset(c.args.plane)
-                   and _cum_goi_khoi("thiết diện của " + m["khoi"], c.args.solid, calls) for c in sec_calls):
+            ten_m_q = m["ten"] or m["ten2"]
+            khoi_m_q = m["khoi"] or m["khoi2"] or ""
+            if any(_mat_ten_diem(c.quotes).get(ten_m_q) == frozenset(c.args.plane)
+                   and _cum_goi_khoi("thiết diện của " + khoi_m_q, c.args.solid, calls) for c in sec_calls):
                 spans.append((m.start(), m.end()))
     if any(c.id in phu and c.fn in ("section", "ask_section_area") for c in calls):
         for pat in (_CUM_DUNG_MAT_PHU, _CUM_DUNG_THIET_DIEN_PHU):
@@ -6260,13 +6262,20 @@ _DAN_THIET_DIEN = (
     rf"thiết diện\s+(?:(?:của\s+)?{_KHOI_NGU}(?:(?:khi\s+(?:bị\s+)?|bị\s+)?(?:cắt bởi|tạo bởi)|với|bởi)\s+"
     rf"|(?:được\s+)?tạo bởi\s+{_KHOI_NGU}(?:và|với)\s+)"
 )
-def _td_mat_truoc_khoi(ten_pat: str) -> str:
-    return (
-        rf"thiết diện\s+(?:(?:được\s+)?(?:cắt bởi|tạo bởi)\s+(?:(?:mặt phẳng|mp)\s*)?\({ten_pat}\)\s+(?:với|và|của)"
-        rf"|do\s+(?:(?:mặt phẳng|mp)\s*)?\({ten_pat}\)\s+cắt)"
+def _td_mat_truoc_khoi_pats(ten_pat: str) -> tuple[str, str]:
+    tail = (
         rf"\s+(?:{_TU_KHOI}(?:\s+(?:đứng|đều|tam giác|tứ giác|chữ nhật|lục giác))*)"
         r"(?:\s+(?-i:[A-Z][0-9]*'?(?:[A-Z][0-9]*'?)*(?:\.[A-Z][0-9]*'?(?:[A-Z][0-9]*'?)*)?))?(?![\w'])"
     )
+    return (
+        rf"thiết diện\s+(?:được\s+)?(?:cắt bởi|tạo bởi)\s+(?:(?:mặt phẳng|mp)\s*)?\({ten_pat}\)\s+(?:với|và|của){tail}",
+        rf"thiết diện\s+do\s+(?:(?:mặt phẳng|mp)\s*)?\({ten_pat}\)\s+cắt{tail}",
+    )
+
+
+def _td_mat_truoc_khoi(ten_pat: str) -> str:
+    p1, p2 = _td_mat_truoc_khoi_pats(ten_pat)
+    return rf"(?:{p1}|{p2})"
 #: The definition sentence ends right after the reference plane (a real sentence end — ";" is not one), or its rest is
 #: exactly the section request on the named plane. Anything else ("… và song song với (SBC)", "; (P) vuông góc với SC",
 #: "(P) cắt SB tại N") is an unread condition on the plane — refused, not ignored.
@@ -6563,7 +6572,7 @@ def mat_song_song_dung_nguon(c: LoiGoi, p: str, q: list[str], de: str, calls: tu
             for qn, _goc, _s in doan
             for pat in (
                 rf"{_DAN_THIET_DIEN}(?:(?:mặt phẳng|mp)\s*)?\((?P<ten>{_P1}|[α-ω]'?)\)",
-                _td_mat_truoc_khoi(rf"(?P<ten>{_P1}|[α-ω]'?)"),
+                *_td_mat_truoc_khoi_pats(rf"(?P<ten>{_P1}|[α-ω]'?)"),
                 rf"\((?P<ten>{_P1}|[α-ω]'?)\)\s+cắt\s+(?:hình|khối)(?:[^.;]|\.(?=[A-Z]))*?theo\s+(?:một\s+)?thiết diện",
             )
             for m_ref in re.finditer(pat, qn, re.IGNORECASE)
