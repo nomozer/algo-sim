@@ -9619,19 +9619,33 @@ body:has(.app-root.la-tap-trung) {
   outline-offset: 1px;
 }
 
+.ws-tab-item:focus-visible {
+  outline-offset: -2px;
+}
+
 .ws-tabbar-div {
   margin: 0 2px;
 }
 
 .ws-tabbar-strip {
+  position: relative;
   display: flex;
   align-items: center;
   justify-content: flex-start;
   gap: 4px;
-  flex: 1 1 auto;
+  flex: 0 1 auto;
   min-width: 0;
+  max-width: 100%;
   overflow-x: auto;
+  overflow-y: hidden;
   scrollbar-width: none;
+  scroll-behavior: smooth;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ws-tabbar-strip {
+    scroll-behavior: auto;
+  }
 }
 
 .ws-tabbar-strip::-webkit-scrollbar {
@@ -9639,52 +9653,84 @@ body:has(.app-root.la-tap-trung) {
 }
 
 .ws-tab-item {
+  position: relative;
   display: inline-flex;
   align-items: center;
-  gap: 5px;
+  gap: 6px;
   height: var(--axo-ws-btn-h, 28px);
   min-height: var(--axo-ws-btn-h, 28px);
-  max-width: min(260px, 60vw);
-  min-width: 0;
-  padding: 0 5px 0 8px;
-  border-radius: 6px;
+  min-width: 148px;
+  max-width: 244px;
+  padding: 0 6px 0 9px;
+  border-radius: 7px;
   border: 1px solid transparent;
   background: transparent;
-  color: var(--ink-secondary);
+  color: var(--ink-muted);
   font-family: inherit;
   font-size: 12.5px;
   font-weight: 500;
   line-height: 1.2;
   cursor: pointer;
   user-select: none;
-  flex: 0 1 auto;
-  transition: background-color 0.12s ease, color 0.12s ease, border-color 0.12s ease;
+  flex: 0 0 auto;
+  overflow: hidden;
+  transition: background-color 0.12s ease, color 0.12s ease, border-color 0.12s ease, box-shadow 0.12s ease;
+}
+
+.ws-tab-item.is-library {
+  min-width: auto;
+  max-width: 184px;
+}
+
+.ws-tab-item::after {
+  content: "";
+  position: absolute;
+  left: 9px;
+  right: 9px;
+  bottom: 0;
+  height: 1.5px;
+  border-radius: 1px;
+  background: var(--ink);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.12s ease;
 }
 
 .ws-tab-item:hover:not(.is-active) {
-  background: rgba(15, 23, 42, 0.038);
+  background: rgba(15, 23, 42, 0.045);
+  border-color: rgba(15, 23, 42, 0.08);
   color: var(--ink);
 }
 
 .ws-tab-item.is-active {
-  background: rgba(15, 23, 42, 0.06);
-  border-color: rgba(15, 23, 42, 0.05);
+  background: rgba(15, 23, 42, 0.068);
+  border-color: rgba(15, 23, 42, 0.16);
   color: var(--ink);
-  font-weight: 600;
+  font-weight: 500;
+  text-shadow: 0 0 0.01px currentColor;
+}
+
+.ws-tab-item.is-active::after {
+  opacity: 0.85;
 }
 
 .ws-tab-icon {
-  width: 14px;
-  height: 14px;
+  width: 15px;
+  height: 15px;
   display: inline-flex;
   align-items: center;
   justify-content: center;
   flex-shrink: 0;
   color: var(--ink-muted);
+  transition: color 0.12s ease;
+}
+
+.ws-tab-item:hover:not(.is-active) .ws-tab-icon {
+  color: var(--ink-secondary);
 }
 
 .ws-tab-item.is-active .ws-tab-icon {
-  color: var(--ink-secondary);
+  color: var(--ink);
 }
 
 .ws-tab-icon svg {
@@ -9737,19 +9783,19 @@ body:has(.app-root.la-tap-trung) {
 .ws-tab-item.is-active .ws-tab-close-btn,
 .ws-tab-item:hover .ws-tab-close-btn,
 .ws-tab-item:focus-within .ws-tab-close-btn {
-  opacity: 0.72;
+  opacity: 0.78;
 }
 
 .ws-tab-close-btn:hover,
 .ws-tab-close-btn:focus-visible {
   opacity: 1 !important;
-  background: rgba(15, 23, 42, 0.09);
+  background: rgba(15, 23, 42, 0.1);
   color: var(--ink);
 }
 
 @media (hover: none), (max-width: 860px) {
   .ws-tab-close-btn {
-    opacity: 0.68;
+    opacity: 0.72;
   }
 }
 
@@ -9768,6 +9814,25 @@ body:has(.app-root.la-tap-trung) {
   cursor: pointer;
   flex-shrink: 0;
   transition: background-color 0.12s ease, color 0.12s ease;
+}
+
+.ws-tab-floating-tooltip {
+  position: fixed;
+  z-index: 9999;
+  pointer-events: none;
+  max-width: min(420px, calc(100vw - 20px));
+  padding: 6px 10px;
+  border-radius: var(--rounded-sm, 5px);
+  background: var(--ink, #000000);
+  color: var(--on-primary, #ffffff);
+  font-family: var(--font-family);
+  font-size: 12px;
+  font-weight: 500;
+  line-height: 1.35;
+  letter-spacing: -0.005em;
+  box-shadow: var(--shadow-elevated);
+  white-space: normal;
+  word-break: break-word;
 }
 
 .ws-axo-header .ws-tab-add-btn svg {
@@ -11955,7 +12020,7 @@ body:has(.app-root.la-tap-trung) {
 @media (max-width: 860px) {
   .axo-header.ws-axo-header {
     padding: 0 12px;
-    gap: 12px;
+    gap: 6px;
   }
 
   .study-dock {
@@ -18171,9 +18236,15 @@ body:has(.app-root.la-tap-trung) {
   }
 
   .ws-tab-item {
-    padding: 0 7px;
-    gap: 5px;
-    max-width: min(210px, 62vw);
+    min-width: 112px;
+    max-width: min(192px, 42vw);
+    padding: 0 4px 0 7px;
+    gap: 4px;
+  }
+
+  .ws-tab-item.is-library {
+    min-width: auto;
+    max-width: 164px;
   }
 
   .ws-axo-header .prob-title-top {
