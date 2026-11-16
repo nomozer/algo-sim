@@ -4,7 +4,7 @@ import { LandingStorytellingV14, STORY_STAGES_V14 } from "../landing/LandingStor
 import { LANDING_PRISM_STORY_SPEC } from "../landing/landing-geometry-data";
 
 describe("AXO Landing — Storytelling Scene Continuity & Geometric Epistemics", () => {
-  it("defines 4 continuous Vietnamese storytelling chapters with strict Stage 4 result gating", () => {
+  it("defines 4 continuous Vietnamese storytelling chapters without pre-displayed numerical answers", () => {
     expect(STORY_STAGES_V14).toHaveLength(4);
     expect(STORY_STAGES_V14.map((s) => s.chapterHeading)).toEqual([
       "Chặng 1: Từ đề bài",
@@ -13,25 +13,24 @@ describe("AXO Landing — Storytelling Scene Continuity & Geometric Epistemics",
       "Chặng 4: Hoàn thiện thiết diện",
     ]);
 
-    for (let idx = 0; idx < 3; idx++) {
-      expect(STORY_STAGES_V14[idx].verifiedResult).toBeUndefined();
-      expect(STORY_STAGES_V14[idx].relationNote).not.toContain("3√7");
-      expect(STORY_STAGES_V14[idx].relationNote).not.toContain("2√2");
+    for (const stage of STORY_STAGES_V14) {
+      expect(stage.relationNote).not.toContain("3√7");
+      expect(stage.relationNote).not.toContain("2√2");
+      expect(stage.relationNote).not.toContain("MN = 2");
+      expect(stage.relationNote).not.toContain("PQ = 4");
+      expect(stage.summary).not.toContain("a = 4");
     }
-
-    expect(STORY_STAGES_V14[3].relationNote).toContain("MN = 2");
-    expect(STORY_STAGES_V14[3].relationNote).toContain("PQ = 4");
-    expect(STORY_STAGES_V14[3].relationNote).toContain("MQ = NP = 2√2");
-    expect(STORY_STAGES_V14[3].verifiedResult).toBe("S(MNPQ) = 3√7");
   });
 
-  it("mounts a single sticky storytelling stage without leaking Stage 4 area in initial render", () => {
+  it("mounts a single sticky storytelling runway without leaking answers or extra WebGL", () => {
     const html = renderToString(<LandingStorytellingV14 />);
     const sceneMatches = html.match(/id="landing-storytelling-scene"/g) ?? [];
     expect(sceneMatches).toHaveLength(1);
     expect(html).toContain("ABC.A′B′C′");
+    expect(html).toContain("axo-v14-story-runway");
     expect(html).not.toContain("S(MNPQ) = 3√7");
     expect(html).not.toContain("MQ = NP = 2√2");
+    expect(html).not.toContain("a = 4");
   });
 
   it("verifies underlying LANDING_PRISM_STORY_SPEC coordinates satisfy MN=2, PQ=4, MQ=NP=2√2, MN∥PQ, and S(MNPQ)=3√7", () => {

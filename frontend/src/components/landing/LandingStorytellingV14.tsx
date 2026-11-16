@@ -19,7 +19,6 @@ export interface StoryStageV14Spec {
   readonly title: string;
   readonly summary: string;
   readonly relationNote: string;
-  readonly verifiedResult?: string;
   readonly camera: {
     readonly yaw: number;
     readonly pitch: number;
@@ -41,7 +40,7 @@ export const STORY_STAGES_V14: readonly StoryStageV14Spec[] = [
     chapterHeading: "Chặng 1: Từ đề bài",
     title: "Ghim ba điểm gốc M, N, P trên đáy và cạnh bên",
     summary:
-      "Từ giả thiết lăng trụ tam giác đều ABC.A′B′C′ cạnh a = 4, Axo ghim chuẩn xác ba trung điểm M ∈ AB, N ∈ AC và P ∈ CC′ ngay trên hệ trục tọa độ gốc.",
+      "Từ giả thiết lăng trụ tam giác đều ABC.A′B′C′, Axo đặt chuẩn xác ba trung điểm M ∈ AB, N ∈ AC và P ∈ CC′ trên các cạnh xuất phát.",
     relationNote: "Giả thiết: M ∈ AB · N ∈ AC · P ∈ CC′",
     camera: {
       yaw: -0.36,
@@ -104,9 +103,8 @@ export const STORY_STAGES_V14: readonly StoryStageV14Spec[] = [
     chapterHeading: "Chặng 4: Hoàn thiện thiết diện",
     title: "Khép kín thiết diện hình thang cân MNPQ",
     summary:
-      "Bốn đoạn MN, NP, PQ và QM khép kín trong mặt phẳng cắt (MNP), tạo thành thiết diện hình thang cân cân đối có thể đối chiếu trực tiếp từng kích thước.",
-    relationNote: "Hình thang cân MNPQ: MN = 2 · PQ = 4 · MQ = NP = 2√2",
-    verifiedResult: "S(MNPQ) = 3√7",
+      "Bốn đoạn giao tuyến MN, NP, PQ và QM khép kín trên mặt phẳng cắt (MNP), tạo thành thiết diện hình thang cân cân đối giữa các mặt bên.",
+    relationNote: "Quan hệ khép kín: MN ∥ PQ · MQ và NP đối xứng qua mặt trung trực",
     camera: {
       yaw: 0.08,
       pitch: 0.37,
@@ -153,26 +151,86 @@ function lerp(a: number, b: number, t: number): number {
   return a + (b - a) * t;
 }
 
+export interface StoryChapterEnvelope {
+  readonly opacity: number;
+  readonly offsetY: number;
+  readonly isVisible: boolean;
+}
+
 export function computeStoryScrollProgress(
-  firstCenterY: number,
-  lastCenterY: number,
-  viewportHeight: number,
-  isCompactStack = false,
+  runwayTop: number,
+  runwayHeight: number,
+  stickyHeight: number,
 ): number {
-  const span = lastCenterY - firstCenterY;
-  if (!Number.isFinite(span) || span <= 1) {
-    return firstCenterY <= viewportHeight * 0.45 ? 1 : 0;
-  }
-  const anchorY = viewportHeight * (isCompactStack ? 0.68 : 0.48);
-  return clamp01((anchorY - firstCenterY) / span);
+  const travel = Math.max(1, runwayHeight - stickyHeight);
+  return clamp01(-runwayTop / travel);
 }
 
 export function stageIndexFromProgress(progress: number): number {
   const p = clamp01(progress);
   if (p < 0.25) return 0;
-  if (p < 0.52) return 1;
-  if (p < 0.76) return 2;
+  if (p < 0.5) return 1;
+  if (p < 0.75) return 2;
   return 3;
+}
+
+export function computeChapterEnvelope(
+  progress: number,
+  index: number,
+  reducedMotion = false,
+): StoryChapterEnvelope {
+  if (reducedMotion) {
+    return { opacity: 1, offsetY: 0, isVisible: true };
+  }
+  const p = clamp01(progress);
+
+  if (index === 0) {
+    if (p <= 0.19) return { opacity: 1, offsetY: 0, isVisible: true };
+    if (p < 0.248) {
+      const u = smoothstep(0.19, 0.248, p);
+      return { opacity: 1 - u, offsetY: -10 * u, isVisible: 1 - u > 0.02 };
+    }
+    return { opacity: 0, offsetY: -10, isVisible: false };
+  }
+
+  if (index === 1) {
+    if (p <= 0.252) return { opacity: 0, offsetY: 10, isVisible: false };
+    if (p < 0.31) {
+      const u = smoothstep(0.252, 0.31, p);
+      return { opacity: u, offsetY: 10 * (1 - u), isVisible: u > 0.02 };
+    }
+    if (p <= 0.44) return { opacity: 1, offsetY: 0, isVisible: true };
+    if (p < 0.498) {
+      const u = smoothstep(0.44, 0.498, p);
+      return { opacity: 1 - u, offsetY: -10 * u, isVisible: 1 - u > 0.02 };
+    }
+    return { opacity: 0, offsetY: -10, isVisible: false };
+  }
+
+  if (index === 2) {
+    if (p <= 0.502) return { opacity: 0, offsetY: 10, isVisible: false };
+    if (p < 0.56) {
+      const u = smoothstep(0.502, 0.56, p);
+      return { opacity: u, offsetY: 10 * (1 - u), isVisible: u > 0.02 };
+    }
+    if (p <= 0.69) return { opacity: 1, offsetY: 0, isVisible: true };
+    if (p < 0.748) {
+      const u = smoothstep(0.69, 0.748, p);
+      return { opacity: 1 - u, offsetY: -10 * u, isVisible: 1 - u > 0.02 };
+    }
+    return { opacity: 0, offsetY: -10, isVisible: false };
+  }
+
+  if (index === 3) {
+    if (p <= 0.752) return { opacity: 0, offsetY: 10, isVisible: false };
+    if (p < 0.81) {
+      const u = smoothstep(0.752, 0.81, p);
+      return { opacity: u, offsetY: 10 * (1 - u), isVisible: u > 0.02 };
+    }
+    return { opacity: 1, offsetY: 0, isVisible: true };
+  }
+
+  return { opacity: 0, offsetY: 0, isVisible: false };
 }
 
 export function interpolateStoryPose(
@@ -338,9 +396,9 @@ function PrismEditorialStage({
       coords[key] = extrudeVec(key);
     }
 
-    const scale = 68 * pose.zoom;
+    const scale = 66 * pose.zoom;
     const cx = 300;
-    const cy = 224;
+    const cy = 236;
     const proj: Record<string, ProjectedPoint2D> = {};
     for (const [k, v] of Object.entries(coords)) {
       proj[k] = projectPrismPoint3D(v, pose.yaw, pose.pitch, cx, cy, scale);
@@ -427,9 +485,14 @@ function PrismEditorialStage({
         (edge.from === "B" && edge.to === "B_prime") ||
         (edge.from === "C" && edge.to === "C_prime");
       const isTop = edge.from.includes("prime") && edge.to.includes("prime");
+      const isNonParticipating =
+        isTop || (edge.from === "A" && edge.to === "A_prime");
       let opacity = 0.88;
       if (isVertical || isTop) {
         opacity = Math.max(0.24, pose.extrude * 0.9);
+      }
+      if (isNonParticipating && pose.parallelCue > 0.02) {
+        opacity *= 1 - 0.42 * pose.parallelCue;
       }
       const front = edgeVisibleInSolid(edge.from, edge.to);
       const dashed = !front || (pose.extrude < 0.65 && (isVertical || isTop));
@@ -740,11 +803,6 @@ function PrismEditorialStage({
           <span className="axo-v14-story-relation-text">
             {activeStage.relationNote}
           </span>
-          {pose.activeStageIndex === 3 && activeStage.verifiedResult ? (
-            <strong className="axo-v14-story-verified">
-              {activeStage.verifiedResult}
-            </strong>
-          ) : null}
         </div>
       </div>
     </div>
@@ -761,7 +819,8 @@ function readStoryProgressOverride(): number | null {
 
 export function LandingStorytellingV14() {
   const sectionRef = useRef<HTMLElement | null>(null);
-  const chapterRefs = useRef<(HTMLLIElement | null)[]>([]);
+  const runwayRef = useRef<HTMLDivElement | null>(null);
+  const stickyRef = useRef<HTMLDivElement | null>(null);
   const [reducedMotion, setReducedMotion] = useState<boolean>(false);
   const [scrollProgress, setScrollProgress] = useState<number>(
     () => readStoryProgressOverride() ?? 0,
@@ -782,16 +841,16 @@ export function LandingStorytellingV14() {
 
     const syncFromScroll = () => {
       rafId = 0;
-      const firstEl = chapterRefs.current[0];
-      const lastEl = chapterRefs.current[STORY_STAGES_V14.length - 1];
-      if (!firstEl || !lastEl) return;
-      const r0 = firstEl.getBoundingClientRect();
-      const r1 = lastEl.getBoundingClientRect();
+      if (readStoryProgressOverride() !== null) return;
+      const runwayEl = runwayRef.current;
+      const stickyEl = stickyRef.current;
+      if (!runwayEl || !stickyEl) return;
+      const runwayRect = runwayEl.getBoundingClientRect();
+      const stickyRect = stickyEl.getBoundingClientRect();
       const next = computeStoryScrollProgress(
-        r0.top + r0.height * 0.5,
-        r1.top + r1.height * 0.5,
-        window.innerHeight || 800,
-        window.innerWidth <= 920,
+        runwayRect.top,
+        runwayRect.height,
+        stickyRect.height,
       );
       setScrollProgress((prev) => (Math.abs(prev - next) < 0.002 ? prev : next));
     };
@@ -823,10 +882,11 @@ export function LandingStorytellingV14() {
     mq?.addEventListener?.("change", onMotionChange);
 
     const ro =
-      typeof ResizeObserver !== "undefined" && sectionRef.current
+      typeof ResizeObserver !== "undefined" && runwayRef.current
         ? new ResizeObserver(requestSync)
         : null;
-    if (sectionRef.current) ro?.observe(sectionRef.current);
+    if (runwayRef.current) ro?.observe(runwayRef.current);
+    if (stickyRef.current) ro?.observe(stickyRef.current);
 
     return () => {
       if (rafId !== 0) window.cancelAnimationFrame(rafId);
@@ -851,55 +911,73 @@ export function LandingStorytellingV14() {
       aria-labelledby="landing-story-heading"
     >
       <div className="axo-v14-story-shell">
-        <div className="axo-v14-story-header">
-          <h2 id="landing-story-heading" className="axo-v14-story-title">
-            Theo dõi bài toán qua{" "}
-            <AnnotatedPhrase variant="underline">
-              từng lớp không gian
-            </AnnotatedPhrase>
-            .
-          </h2>
-          <p className="axo-v14-story-lead">
-            Cuộn xuống để quan sát mạch dựng liên tục trên lăng trụ tam giác đều
-            ABC.A′B′C′ (cạnh a = 4): từ ba trung điểm gốc đến thiết diện hoàn
-            chỉnh.
-          </p>
-        </div>
+        <div ref={runwayRef} className="axo-v14-story-runway">
+          <div ref={stickyRef} className="axo-v14-story-sticky">
+            <div className="axo-v14-story-header">
+              <h2 id="landing-story-heading" className="axo-v14-story-title">
+                Theo dõi bài toán qua{" "}
+                <AnnotatedPhrase variant="underline">
+                  từng lớp không gian
+                </AnnotatedPhrase>
+                .
+              </h2>
+              <p className="axo-v14-story-lead">
+                Cuộn xuống để quan sát mạch dựng liên tục trên lăng trụ tam giác đều
+                ABC.A′B′C′: từ ba trung điểm gốc đến thiết diện hoàn chỉnh.
+              </p>
+            </div>
 
-        <div className="axo-v14-story-track">
-          <PrismEditorialStage pose={pose} reducedMotion={reducedMotion} />
+            <div className="axo-v14-story-track">
+              <PrismEditorialStage pose={pose} reducedMotion={reducedMotion} />
 
-          <ol
-            className="axo-v14-story-chapters"
-            aria-label="Các chặng dựng hình theo cuộn trang"
-          >
-            {STORY_STAGES_V14.map((stage, idx) => {
-              const isActive = idx === pose.activeStageIndex;
-              return (
-                <li
-                  key={stage.shortNum}
-                  ref={(el) => {
-                    chapterRefs.current[idx] = el;
-                  }}
-                  data-story-chapter={idx}
-                  data-active={isActive ? "true" : "false"}
-                  className={
-                    isActive
-                      ? "axo-v14-story-chapter is-active"
-                      : "axo-v14-story-chapter"
-                  }
-                >
-                  <div className="axo-v14-story-chapter-eyebrow">
-                    {stage.chapterHeading}
-                  </div>
-                  <h3 className="axo-v14-story-chapter-title">{stage.title}</h3>
-                  <p className="axo-v14-story-chapter-summary">
-                    {stage.summary}
-                  </p>
-                </li>
-              );
-            })}
-          </ol>
+              <ol
+                className="axo-v14-story-chapters"
+                aria-label="Các chặng dựng hình theo cuộn trang"
+              >
+                {STORY_STAGES_V14.map((stage, idx) => {
+                  const env = computeChapterEnvelope(
+                    pose.progress,
+                    idx,
+                    reducedMotion,
+                  );
+                  const isActive = reducedMotion
+                    ? true
+                    : idx === pose.activeStageIndex;
+                  return (
+                    <li
+                      key={stage.shortNum}
+                      data-story-chapter={idx}
+                      data-active={isActive ? "true" : "false"}
+                      data-chapter-visible={env.isVisible ? "true" : "false"}
+                      className={
+                        isActive
+                          ? "axo-v14-story-chapter is-active"
+                          : "axo-v14-story-chapter"
+                      }
+                      style={
+                        reducedMotion
+                          ? undefined
+                          : {
+                              opacity: env.opacity.toFixed(3),
+                              transform: `translate3d(0, ${env.offsetY.toFixed(1)}px, 0)`,
+                              visibility: env.isVisible ? "visible" : "hidden",
+                              pointerEvents: env.isVisible ? "auto" : "none",
+                            }
+                      }
+                    >
+                      <div className="axo-v14-story-chapter-index">
+                        {stage.chapterHeading}
+                      </div>
+                      <h3 className="axo-v14-story-chapter-title">{stage.title}</h3>
+                      <p className="axo-v14-story-chapter-summary">
+                        {stage.summary}
+                      </p>
+                    </li>
+                  );
+                })}
+              </ol>
+            </div>
+          </div>
         </div>
       </div>
     </section>

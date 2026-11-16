@@ -3,7 +3,7 @@ import path from "node:path";
 import { renderToString } from "react-dom/server";
 import { describe, expect, it } from "vitest";
 import {
-  buildClosingSpatialRigData,
+  buildClosingCompositionData,
   LandingClosingScene3D,
 } from "../landing/LandingClosingScene3D";
 import { separateLabelPositions, type LabelCandidate } from "../landing/LandingHeroScene3D";
@@ -108,20 +108,23 @@ describe("AXO Landing — WebGL Budget, Persistent Lifecycle, Deduplication & La
     expect(altHtml).toContain('data-hero-variant="sculpture"');
   });
 
-  it("keeps LandingClosingScene3D at 0 extra WebGL contexts with offscreen RAF pause and cleanup", () => {
+  it("keeps LandingClosingScene3D capped at 1 WebGL context with offscreen pause and full GPU cleanup", () => {
     const closingSceneSrc = fs.readFileSync(
       path.resolve(__dirname, "../landing/LandingClosingScene3D.tsx"),
       "utf8",
     );
 
-    expect(closingSceneSrc).not.toContain("WebGLRenderer");
+    expect((closingSceneSrc.match(/new THREE\.WebGLRenderer\(/g) ?? [])).toHaveLength(1);
     expect(closingSceneSrc).toContain("IntersectionObserver");
     expect(closingSceneSrc).toContain('document.addEventListener("visibilitychange"');
     expect(closingSceneSrc).toContain("cancelAnimationFrame");
+    expect(closingSceneSrc).toContain("renderer.dispose()");
+    expect(closingSceneSrc).toContain("webglcontextlost");
+    expect(closingSceneSrc).toContain("webglcontextrestored");
 
     const ssrHtml = renderToString(<LandingClosingScene3D />);
     expect(ssrHtml).toContain('id="landing-closing-scene3d"');
-    const rig = buildClosingSpatialRigData();
-    expect(rig.points.length).toBe(6);
+    const comp = buildClosingCompositionData();
+    expect(comp.prismSection).toHaveLength(6);
   });
 });

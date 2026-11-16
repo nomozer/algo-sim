@@ -50,16 +50,19 @@ describe("AXO Landing V1.4 — Hero Visual System & Lifecycle", () => {
 
     expect(b1.beat).toBe("solid-emergence");
     expect(b1.settled).toBe(false);
+    expect(b1.capLift).toBe(0);
     expect(b2.beat).toBe("seed-anchors");
     expect(b2.seedReveal).toBeGreaterThan(0.4);
     expect(b3.beat).toBe("plane-intersection");
     expect(b3.planeSweep).toBeGreaterThan(0.5);
     expect(b4.beat).toBe("section-settled");
     expect(b4.settled).toBe(true);
-    expect(HERO_SECTION_FILL_OPACITY).toBe(0.5);
+    expect(b4.capLift).toBe(0);
+    expect(HERO_SECTION_FILL_OPACITY).toBe(0.28);
 
     const reduced = evaluateHeroStoryboard(100, true);
     expect(reduced.settled).toBe(true);
+    expect(reduced.capLift).toBe(0);
     expect(reduced.beat).toBe("section-settled");
   });
 
@@ -98,6 +101,6 @@ describe("AXO Landing V1.4 — Hero Visual System & Lifecycle", () => {
     expect(source).toContain("renderer.dispose()");
     expect(source).toContain("cancelAnimationFrame");
     expect(source).toContain("prefers-reduced-motion: reduce");
-    expect(source).toContain("HERO_STORYBOARD_MS = 3600");
+    expect(source).toContain("HERO_STORYBOARD_MS = 3800");
   });
 });

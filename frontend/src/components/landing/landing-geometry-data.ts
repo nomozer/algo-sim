@@ -26,6 +26,10 @@ export interface LandingStageMilestone {
   readonly title: string;
   readonly summary: string;
   readonly mathFact: string;
+  readonly v14StepLabel?: string;
+  readonly v14Title?: string;
+  readonly v14Guide?: string;
+  readonly v14Focus?: string;
   readonly visiblePoints: readonly string[];
   readonly activePoints: readonly string[];
   readonly visibleSolidEdges: readonly string[];
@@ -35,6 +39,8 @@ export interface LandingStageMilestone {
   readonly sectionFillOpacity: number;
   readonly cameraPos: Vec3Tuple;
   readonly lookAt: Vec3Tuple;
+  readonly v14CameraPos?: Vec3Tuple;
+  readonly v14LookAt?: Vec3Tuple;
 }
 
 export interface LandingMetricChip {
@@ -128,7 +134,7 @@ export function extractPointsFromSample(
   return extracted.length >= fallbackPoints.length ? extracted : fallbackPoints;
 }
 
-function computeBoundedPlaneQuad(
+export function computeBoundedPlaneQuad(
   sectionWorldPts: readonly Vec3Tuple[],
   normal: Vec3Tuple,
   margin = 0.72,
@@ -315,6 +321,14 @@ function buildPyramidSample(): LandingSampleSpec {
         sectionFillOpacity: 0,
         cameraPos: [12.4, 7.2, -6.2],
         lookAt: [0, 0.25, 0],
+        v14StepLabel: "Bước 1 · Khối gốc",
+        v14Title: "Dựng khối chóp và ba điểm gốc",
+        v14Guide:
+          "Quan sát khối chóp đáy vuông, đường cao hạ từ đỉnh xuống đáy cùng ba trung điểm xuất phát trên các cạnh.",
+        v14Focus:
+          "Điểm cần chú ý: Đường cao SA vuông góc với mặt đáy ABCD và vị trí M, N, P.",
+        v14CameraPos: [13.4, 7.7, -7.2],
+        v14LookAt: [0, 0.3, 0],
       },
       {
         id: "stage-structure",
@@ -333,6 +347,14 @@ function buildPyramidSample(): LandingSampleSpec {
         sectionFillOpacity: 0,
         cameraPos: [11.2, 7.8, -7.6],
         lookAt: [0, 0.22, 0],
+        v14StepLabel: "Bước 2 · Mặt phẳng cắt",
+        v14Title: "Xác lập mặt phẳng (MNP)",
+        v14Guide:
+          "Mặt phẳng cắt đi qua ba điểm M, N, P nằm nghiêng qua lòng khối chóp và mở ra khung quan sát.",
+        v14Focus:
+          "Điểm cần chú ý: Giao tuyến NP nằm hoàn toàn trên mặt đáy ABCD.",
+        v14CameraPos: [12.2, 8.2, -8.4],
+        v14LookAt: [0, 0.28, 0],
       },
       {
         id: "stage-relations",
@@ -351,6 +373,14 @@ function buildPyramidSample(): LandingSampleSpec {
         sectionFillOpacity: 0.22,
         cameraPos: [12.6, 6.5, -5.4],
         lookAt: [0, 0.22, 0],
+        v14StepLabel: "Bước 3 · Điểm cắt cạnh bên",
+        v14Title: "Xác định các giao điểm mới",
+        v14Guide:
+          "Khi mặt phẳng cắt gặp các mặt bên, giao tuyến kéo dài từ mặt đáy sẽ cắt thêm hai cạnh bên của khối chóp.",
+        v14Focus:
+          "Điểm cần chú ý: Cách mặt phẳng tìm ra hai giao điểm E trên SB và F trên SD.",
+        v14CameraPos: [13.4, 7.1, -6.4],
+        v14LookAt: [0, 0.28, 0],
       },
       {
         id: "stage-result",
@@ -369,6 +399,14 @@ function buildPyramidSample(): LandingSampleSpec {
         sectionFillOpacity: 0.88,
         cameraPos: [11.9, 7.1, -6.9],
         lookAt: [0, 0.25, 0],
+        v14StepLabel: "Bước 4 · Thiết diện hoàn chỉnh",
+        v14Title: "Khép kín ngũ giác thiết diện",
+        v14Guide:
+          "Năm đoạn giao tuyến khép kín thành đa giác phẳng nằm trên mặt cắt. Xoay khối 3D để kiểm tra từng cạnh.",
+        v14Focus:
+          "Gợi ý quan sát: Thử xoay nhìn từ trên xuống để thấy rõ ngũ giác cắt qua năm mặt.",
+        v14CameraPos: [12.9, 7.6, -7.6],
+        v14LookAt: [0, 0.3, 0],
       },
     ],
   };
@@ -417,7 +455,7 @@ function buildCubeSample(): LandingSampleSpec {
   const sectionLoop = ["M", "N", "E", "P", "F", "Q"] as const;
   const sectionWorld = sectionLoop.map((id) => pointMap[id].pos);
   // Domain plane -x + y + z = 2 => normal (-1, 1, 1) => Three.js (-1, 1, -1)
-  const planeQuad = computeBoundedPlaneQuad(sectionWorld, [-1, 1, -1], 0.36);
+  const planeQuad = computeBoundedPlaneQuad(sectionWorld, [-1, 1, -1], 0.26);
 
   const solidEdges: readonly LandingEdgeSpec[] = [
     { from: "A", to: "B", kind: "solid_edge" },
@@ -500,6 +538,14 @@ function buildCubeSample(): LandingSampleSpec {
         sectionFillOpacity: 0,
         cameraPos: [9.9, 6.3, -6.2],
         lookAt: [0, 0, 0],
+        v14StepLabel: "Bước 1 · Khối gốc",
+        v14Title: "Dựng hình lập phương và ba trung điểm",
+        v14Guide:
+          "Hai đáy đối diện và bốn cạnh bên song song tạo thành khung đối xứng quanh tâm, với ba điểm xuất phát M, N, P.",
+        v14Focus:
+          "Điểm cần chú ý: M, N thuộc mặt đáy dưới và P nằm ở mặt đáy trên.",
+        v14CameraPos: [11.0, 7.1, -7.4],
+        v14LookAt: [0, 0.08, 0],
       },
       {
         id: "cube-2",
@@ -530,6 +576,14 @@ function buildCubeSample(): LandingSampleSpec {
         sectionFillOpacity: 0,
         cameraPos: [9.1, 6.8, -7.2],
         lookAt: [0, 0, 0],
+        v14StepLabel: "Bước 2 · Mặt phẳng cắt",
+        v14Title: "Đặt mặt phẳng chéo qua hình lập phương",
+        v14Guide:
+          "Mặt phẳng (MNP) đi nghiêng qua tâm hình lập phương, cắt qua cả hai mặt đáy trên dưới và các mặt xung quanh.",
+        v14Focus:
+          "Điểm cần chú ý: Hướng song song giữa các cặp mặt đối diện của lập phương.",
+        v14CameraPos: [10.3, 7.6, -8.2],
+        v14LookAt: [0, 0.08, 0],
       },
       {
         id: "cube-3",
@@ -548,6 +602,14 @@ function buildCubeSample(): LandingSampleSpec {
         sectionFillOpacity: 0.25,
         cameraPos: [10.1, 5.7, -5.8],
         lookAt: [0, 0, 0],
+        v14StepLabel: "Bước 3 · Mở rộng giao tuyến",
+        v14Title: "Tìm thêm giao điểm trên ba cạnh còn lại",
+        v14Guide:
+          "Lần theo từng cặp mặt song song, mặt phẳng cắt tuần tự xác định thêm ba điểm E, F, Q trên các cạnh bên và đáy trên.",
+        v14Focus:
+          "Điểm cần chú ý: Các cặp giao tuyến trên mặt đối diện luôn giữ hướng song song.",
+        v14CameraPos: [11.1, 6.7, -6.9],
+        v14LookAt: [0, 0.08, 0],
       },
       {
         id: "cube-4",
@@ -566,6 +628,14 @@ function buildCubeSample(): LandingSampleSpec {
         sectionFillOpacity: 0.88,
         cameraPos: [9.6, 6.1, -6.8],
         lookAt: [0, 0, 0],
+        v14StepLabel: "Bước 4 · Thiết diện lục giác",
+        v14Title: "Khép kín lục giác thiết diện đối xứng",
+        v14Guide:
+          "Sáu đoạn giao tuyến trên sáu mặt của hình lập phương nối kín với nhau. Xoay trực tiếp để nhìn chính diện mặt cắt.",
+        v14Focus:
+          "Gợi ý quan sát: Đặt góc nhìn trực diện vào mặt phẳng cắt để thấy hình lục giác cân đối.",
+        v14CameraPos: [10.8, 7.0, -7.8],
+        v14LookAt: [0, 0.08, 0],
       },
     ],
   };

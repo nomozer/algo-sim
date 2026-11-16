@@ -20,9 +20,12 @@ describe("AXO Landing V1.4 — Responsive Layout, Unified Visual Polish & Clean 
     expect(html).toContain('id="btn-landing-demo-reset"');
     expect(html).toContain('id="btn-landing-open-showcase-3d"');
     expect(html).toContain("Mở trong Xưởng 3D");
-    expect(html).toContain("S(MENPF) = 6√6");
+    expect(html).not.toContain("6√6");
+    expect(html).not.toContain("12√3");
+    expect(html).not.toContain("3√7");
+    expect(html).not.toContain("2√2");
     expect(html).toContain('id="landing-final-cta"');
-    expect(html).toContain("Đưa đề bài của bạn vào không gian 3D.");
+    expect(html).toContain("Đưa bài toán của bạn vào không gian 3D.");
     expect(html).toContain('id="btn-landing-final-start"');
     expect(html).toContain('id="btn-landing-hero-library"');
     expect(html).toContain('id="landing-footer"');

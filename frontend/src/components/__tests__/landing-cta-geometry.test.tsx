@@ -3,54 +3,45 @@ import path from "node:path";
 import { renderToString } from "react-dom/server";
 import { describe, expect, it } from "vitest";
 import {
-  buildClosingSpatialRigData,
-  evaluateClosingMotionState,
+  buildClosingCompositionData,
   LandingClosingScene3D,
-  projectClosingSpatialStage,
 } from "../landing/LandingClosingScene3D";
 
-describe("Landing CTA geometry — distinct sphere-plane-circle spatial rig & mathematical accuracy", () => {
-  it("satisfies x^2 + y^2 + z^2 = R^2 (R=5), z = 3, IH perp HA, and 3-4-5 right triangle", () => {
-    const rig = buildClosingSpatialRigData();
+describe("Landing CTA geometry — multi-solid hexagonal prism + companion cone spatial composition", () => {
+  it("constructs an exact planar oblique 6-gon section and spatially separated companion cone", () => {
+    const data = buildClosingCompositionData();
 
-    expect(rig.radiusR).toBe(5);
-    expect(rig.distanceD).toBe(3);
-    expect(rig.sectionRadiusR).toBe(4);
-    expect(rig.circleSamples).toHaveLength(72);
+    expect(data.prismBottom).toHaveLength(6);
+    expect(data.prismTop).toHaveLength(6);
+    expect(data.prismSection).toHaveLength(6);
+    expect(data.prismPlaneQuad).toHaveLength(4);
 
-    expect(rig.sphereMathResiduals.length).toBe(4);
-    for (const r of rig.sphereMathResiduals) {
-      expect(r).toBeLessThan(1e-6);
+    // Every oblique section vertex satisfies planar equation within 1e-6
+    for (const residual of data.prismPlanarResiduals) {
+      expect(residual).toBeLessThan(1e-6);
     }
-    expect(rig.orthoDotResidual).toBeLessThan(1e-6);
-    expect(rig.pythagoreanResidual).toBeLessThan(1e-6);
 
-    for (const pt of rig.points) {
-      if (pt.role === "circle_vertex") {
-        expect(pt.domainXyz[2]).toBe(3);
-      }
+    // All 6 section intersection vertices lie strictly interior along vertical lateral edges
+    for (let k = 0; k < 6; k++) {
+      expect(data.prismSection[k][1]).toBeGreaterThan(data.prismBottom[k][1]);
+      expect(data.prismSection[k][1]).toBeLessThan(data.prismTop[k][1]);
     }
+
+    // Companion cone horizontal section radius satisfies similar-triangle proportion R*(1 - t)
+    const t = (data.coneSectionHeightY - data.coneBaseCenter[1]) / data.coneHeight;
+    expect(data.coneSectionRadius).toBeCloseTo(data.coneRadius * (1 - t), 6);
+
+    // Hexagonal prism and companion cone remain spatially separated without solid overlap
+    expect(data.solidCenterGap).toBeGreaterThan(1.42 + data.coneRadius);
   });
 
-  it("projects a distinct sphere intersection stage without WebGL or Pyramid duplication", () => {
-    const state = evaluateClosingMotionState(0, true);
-    const proj = projectClosingSpatialStage(480, 360, state);
-
-    expect(proj.sphereCenter.rPx).toBeGreaterThan(60);
-    expect(proj.circleArcs).toHaveLength(72);
-    expect(proj.circleFrontPath.length).toBeGreaterThan(10);
-    expect(proj.equatorFrontPath.length).toBeGreaterThan(10);
-    expect(proj.planePolygonPoints.split(" ")).toHaveLength(4);
-    expect(proj.points["I"]).toBeDefined();
-    expect(proj.points["H"]).toBeDefined();
-    expect(proj.points["A"]).toBeDefined();
-
+  it("renders a single WebGL canvas host + SVG fallback without Sphere SVG or leaked math answers", () => {
     const html = renderToString(<LandingClosingScene3D />);
     expect(html).toContain('id="landing-closing-scene3d"');
-    expect(html).toContain('role="img"');
-    expect(html).toContain('data-cta-visual="analytical-3d-svg"');
-    expect(html).toContain("<path");
-    expect(html).not.toContain("<canvas");
+    expect(html).toContain('data-cta-visual="spatial-multi-solid-3d"');
+    expect(html).toContain("axo-v14-closing-canvas-host");
+    expect(html).toContain("axo-v14-closing-fallback-svg");
+    expect(html).not.toContain("axo-v14-svg-sphere");
     expect(html).not.toContain("<button");
     expect(html).not.toContain("<table");
 
@@ -58,7 +49,9 @@ describe("Landing CTA geometry — distinct sphere-plane-circle spatial rig & ma
       path.resolve(__dirname, "../landing/LandingClosingScene3D.tsx"),
       "utf8",
     );
-    expect(src).not.toContain("WebGLRenderer");
+    expect((src.match(/new THREE\.WebGLRenderer\(/g) ?? [])).toHaveLength(1);
     expect(src).not.toContain("LANDING_PYRAMID_SAMPLE");
+    expect(src).not.toContain("var(--");
+    expect(src).not.toMatch(/#[0-9a-fA-F]{3,8}\b/);
   });
 });

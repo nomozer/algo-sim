@@ -5,81 +5,48 @@ import {
   useState,
   type PointerEvent as ReactPointerEvent,
 } from "react";
-import type { Vec3Tuple } from "./landing-geometry-data";
+import * as THREE from "three";
+import { computeBoundedPlaneQuad, type Vec3Tuple } from "./landing-geometry-data";
 
-export const CLOSING_CYCLE_DURATION_MS = 9600;
+export const CLOSING_STORYBOARD_MS = 3400;
+export const CLOSING_SECTION_FILL_OPACITY = 0.28;
 
-export type ClosingMotionPhase =
-  | "sphere-axis"
+export type ClosingStoryboardBeat =
+  | "solids-emergence"
   | "plane-emergence"
-  | "circle-intersection"
-  | "complete-settled";
+  | "section-trace"
+  | "composition-settled";
 
 export interface ClosingMotionState {
-  readonly cycleProgress: number;
-  readonly phase: ClosingMotionPhase;
-  readonly sphereOpacity: number;
-  readonly axisProgress: number;
-  readonly planeProgress: number;
+  readonly progress: number;
+  readonly beat: ClosingStoryboardBeat;
+  readonly solidReveal: number;
+  readonly planeSweep: number;
   readonly traceProgress: number;
   readonly sectionFillOpacity: number;
-  readonly triangleReveal: number;
-  readonly orbitAngleRad: number;
+  readonly orbitOffsetRad: number;
+  readonly settled: boolean;
   readonly reducedMotion: boolean;
 }
 
-export interface ClosingPointSpec {
-  readonly id: string;
-  readonly label: string;
-  readonly role: "center" | "foot" | "circle_vertex";
-  readonly domainXyz: Vec3Tuple;
-  readonly pos: Vec3Tuple;
+export interface ClosingCompositionData {
+  readonly prismBottom: readonly Vec3Tuple[];
+  readonly prismTop: readonly Vec3Tuple[];
+  readonly prismSection: readonly Vec3Tuple[];
+  readonly prismPlaneNormal: Vec3Tuple;
+  readonly prismPlaneQuad: readonly Vec3Tuple[];
+  readonly prismPlanarResiduals: readonly number[];
+  readonly coneBaseCenter: Vec3Tuple;
+  readonly coneApex: Vec3Tuple;
+  readonly coneRadius: number;
+  readonly coneHeight: number;
+  readonly coneSectionHeightY: number;
+  readonly coneSectionRadius: number;
+  readonly solidCenterGap: number;
 }
 
-export interface ClosingSpatialRigData {
-  readonly radiusR: number;
-  readonly distanceD: number;
-  readonly sectionRadiusR: number;
-  readonly points: readonly ClosingPointSpec[];
-  readonly pointMap: Readonly<Record<string, ClosingPointSpec>>;
-  readonly circleSamples: readonly Vec3Tuple[];
-  readonly planeQuadWorld: readonly Vec3Tuple[];
-  readonly sphereMathResiduals: readonly number[];
-  readonly orthoDotResidual: number;
-  readonly pythagoreanResidual: number;
-}
-
-export interface ProjectedArcSegment {
-  readonly key: string;
-  readonly x1: number;
-  readonly y1: number;
-  readonly x2: number;
-  readonly y2: number;
-  readonly front: boolean;
-}
-
-export interface ProjectedClosingStage {
-  readonly width: number;
-  readonly height: number;
-  readonly sphereCenter: { readonly x: number; readonly y: number; readonly rPx: number };
-  readonly contactBase: { readonly x: number; readonly y: number; readonly rx: number; readonly ry: number };
-  readonly meridianArcs: readonly ProjectedArcSegment[];
-  readonly equatorArcs: readonly ProjectedArcSegment[];
-  readonly equatorBackPath: string;
-  readonly equatorFrontPath: string;
-  readonly meridianBackPath: string;
-  readonly meridianFrontPath: string;
-  readonly planePolygonPoints: string;
-  readonly planeLabelPos: { readonly x: number; readonly y: number };
-  readonly sectionPolygonPoints: string;
-  readonly circleArcs: readonly (ProjectedArcSegment & { readonly u: number })[];
-  readonly circleBackPath: string;
-  readonly circleFrontPath: string;
-  readonly axisIH: { readonly x1: number; readonly y1: number; readonly x2: number; readonly y2: number };
-  readonly radiusHA: { readonly x1: number; readonly y1: number; readonly x2: number; readonly y2: number };
-  readonly slantIA: { readonly x1: number; readonly y1: number; readonly x2: number; readonly y2: number };
-  readonly rightAnglePath: string;
-  readonly points: Readonly<Record<string, { readonly x: number; readonly y: number; readonly label: string }>>;
+interface TrackedDisposable {
+  dispose(): void;
 }
 
 function clamp01(value: number): number {
@@ -87,556 +54,964 @@ function clamp01(value: number): number {
   return Math.max(0, Math.min(1, value));
 }
 
-function smoothstep(edge0: number, edge1: number, x: number): number {
-  const t = clamp01((x - edge0) / Math.max(1e-6, edge1 - edge0));
-  return t * t * (3 - 2 * t);
+function clampPhase(value: number, start: number, end: number): number {
+  if (value <= start) return 0;
+  if (value >= end) return 1;
+  const u = (value - start) / Math.max(1e-6, end - start);
+  return 1 - Math.pow(1 - u, 3);
 }
 
 /**
- * Sphere (S): center I(0, 0, 0), radius R = 5 in mathematical (x, y, z) domain.
- * Plane (P): z = 3 (distance d = |IH| = 3).
- * Intersection circle center H(0, 0, 3), exact radius r = sqrt(5^2 - 3^2) = 4.
- * Cardinal section points A(4, 0, 3), B(0, 4, 3), C(-4, 0, 3), D(0, -4, 3).
- * Mapping to view coordinates (X, Y, Z): (x, z, -y) so z domain is vertical +Y.
+ * Computes exact mathematical coordinates for the Closing CTA multi-solid composition:
+ * - Upright regular hexagonal prism sliced obliquely (0.34*dx - 0.18*dz + 1.82)
+ * - Right circular cone with horizontal circular section ring and vertical altitude
  */
-function domainToView(domain: Vec3Tuple, scaleNorm = 0.42): Vec3Tuple {
-  return [
-    Number((domain[0] * scaleNorm).toFixed(5)),
-    Number((domain[2] * scaleNorm).toFixed(5)),
-    Number((-domain[1] * scaleNorm).toFixed(5)),
-  ];
-}
+export function buildClosingCompositionData(): ClosingCompositionData {
+  const cx = -1.48;
+  const cy = -1.68;
+  const cz = 0.22;
+  const hexRadius = 1.42;
+  const hexHeight = 3.5;
 
-export function buildClosingSpatialRigData(): ClosingSpatialRigData {
-  const radiusR = 5;
-  const distanceD = 3;
-  const sectionRadiusR = Math.sqrt(radiusR * radiusR - distanceD * distanceD); // exact 4
+  // Plane in prism-local frame: dy = 1.82 + 0.34*dx - 0.18*dz
+  const slopeX = 0.34;
+  const slopeZ = -0.18;
+  const intercept = 1.82;
+  const nLen = Math.hypot(-slopeX, 1, -slopeZ);
+  const prismPlaneNormal: Vec3Tuple = [-slopeX / nLen, 1 / nLen, -slopeZ / nLen];
 
-  const specs: readonly { id: string; label: string; role: ClosingPointSpec["role"]; xyz: Vec3Tuple }[] = [
-    { id: "I", label: "I", role: "center", xyz: [0, 0, 0] },
-    { id: "H", label: "H", role: "foot", xyz: [0, 0, 3] },
-    { id: "A", label: "A", role: "circle_vertex", xyz: [4, 0, 3] },
-    { id: "B", label: "B", role: "circle_vertex", xyz: [0, 4, 3] },
-    { id: "C", label: "C", role: "circle_vertex", xyz: [-4, 0, 3] },
-    { id: "D", label: "D", role: "circle_vertex", xyz: [0, -4, 3] },
-  ];
+  const prismBottom: Vec3Tuple[] = [];
+  const prismTop: Vec3Tuple[] = [];
+  const prismSection: Vec3Tuple[] = [];
 
-  const points: ClosingPointSpec[] = specs.map((sp) => ({
-    id: sp.id,
-    label: sp.label,
-    role: sp.role,
-    domainXyz: sp.xyz,
-    pos: domainToView(sp.xyz),
-  }));
-  const pointMap = Object.fromEntries(points.map((pt) => [pt.id, pt]));
-
-  const sampleCount = 72;
-  const circleSamples: Vec3Tuple[] = [];
-  for (let i = 0; i < sampleCount; i++) {
-    const theta = (i / sampleCount) * Math.PI * 2;
-    const x = sectionRadiusR * Math.cos(theta);
-    const y = sectionRadiusR * Math.sin(theta);
-    circleSamples.push(domainToView([x, y, distanceD]));
+  for (let k = 0; k < 6; k++) {
+    const theta = Math.PI / 6 + (k * Math.PI) / 3 + 0.14;
+    const dx = hexRadius * Math.cos(theta);
+    const dz = hexRadius * Math.sin(theta);
+    const dySection = intercept + slopeX * dx + slopeZ * dz;
+    prismBottom.push([cx + dx, cy, cz + dz]);
+    prismTop.push([cx + dx, cy + hexHeight, cz + dz]);
+    prismSection.push([cx + dx, cy + dySection, cz + dz]);
   }
 
-  const planeHalf = 5.45;
-  const planeQuadWorld: Vec3Tuple[] = [
-    domainToView([-planeHalf, -planeHalf, distanceD]),
-    domainToView([planeHalf, -planeHalf, distanceD]),
-    domainToView([planeHalf, planeHalf, distanceD]),
-    domainToView([-planeHalf, planeHalf, distanceD]),
-  ];
-
-  // Verify mathematical invariants in domain coordinates
-  const circleVertices = points.filter((p) => p.role === "circle_vertex");
-  const sphereMathResiduals = circleVertices.map((p) => {
-    const [x, y, z] = p.domainXyz;
-    return Math.abs(x * x + y * y + z * z - radiusR * radiusR);
+  const p0 = prismSection[0];
+  const prismPlanarResiduals = prismSection.map((pt) => {
+    const dx = pt[0] - p0[0];
+    const dy = pt[1] - p0[1];
+    const dz = pt[2] - p0[2];
+    return Math.abs(
+      dx * prismPlaneNormal[0] + dy * prismPlaneNormal[1] + dz * prismPlaneNormal[2],
+    );
   });
 
-  const vecIH: Vec3Tuple = [
-    pointMap["H"].domainXyz[0] - pointMap["I"].domainXyz[0],
-    pointMap["H"].domainXyz[1] - pointMap["I"].domainXyz[1],
-    pointMap["H"].domainXyz[2] - pointMap["I"].domainXyz[2],
-  ];
-  const vecHA: Vec3Tuple = [
-    pointMap["A"].domainXyz[0] - pointMap["H"].domainXyz[0],
-    pointMap["A"].domainXyz[1] - pointMap["H"].domainXyz[1],
-    pointMap["A"].domainXyz[2] - pointMap["H"].domainXyz[2],
-  ];
-  const vecIA: Vec3Tuple = [
-    pointMap["A"].domainXyz[0] - pointMap["I"].domainXyz[0],
-    pointMap["A"].domainXyz[1] - pointMap["I"].domainXyz[1],
-    pointMap["A"].domainXyz[2] - pointMap["I"].domainXyz[2],
-  ];
-  const orthoDotResidual = Math.abs(
-    vecIH[0] * vecHA[0] + vecIH[1] * vecHA[1] + vecIH[2] * vecHA[2],
+  const prismPlaneQuad = computeBoundedPlaneQuad(prismSection, prismPlaneNormal, 0.34);
+
+  const coneBaseCenter: Vec3Tuple = [2.16, cy, -0.22];
+  const coneRadius = 1.2;
+  const coneHeight = 3.2;
+  const coneApex: Vec3Tuple = [coneBaseCenter[0], cy + coneHeight, coneBaseCenter[2]];
+  const coneSectionHeightY = cy + 1.38;
+  const t = (coneSectionHeightY - cy) / coneHeight;
+  const coneSectionRadius = coneRadius * (1 - t);
+
+  const solidCenterGap = Math.hypot(
+    coneBaseCenter[0] - cx,
+    coneBaseCenter[2] - cz,
   );
-  const lenIH2 = vecIH[0] ** 2 + vecIH[1] ** 2 + vecIH[2] ** 2;
-  const lenHA2 = vecHA[0] ** 2 + vecHA[1] ** 2 + vecHA[2] ** 2;
-  const lenIA2 = vecIA[0] ** 2 + vecIA[1] ** 2 + vecIA[2] ** 2;
-  const pythagoreanResidual = Math.abs(lenIH2 + lenHA2 - lenIA2);
 
   return {
-    radiusR,
-    distanceD,
-    sectionRadiusR,
-    points,
-    pointMap,
-    circleSamples,
-    planeQuadWorld,
-    sphereMathResiduals,
-    orthoDotResidual,
-    pythagoreanResidual,
+    prismBottom,
+    prismTop,
+    prismSection,
+    prismPlaneNormal,
+    prismPlaneQuad,
+    prismPlanarResiduals,
+    coneBaseCenter,
+    coneApex,
+    coneRadius,
+    coneHeight,
+    coneSectionHeightY,
+    coneSectionRadius,
+    solidCenterGap,
   };
 }
 
-export function evaluateClosingMotionState(
+export function evaluateClosingStoryboard(
   elapsedMs: number,
-  reducedMotion: boolean,
-  previewOverride: "mid" | "settled" | null = null,
+  reducedMotion = false,
 ): ClosingMotionState {
-  if (reducedMotion || previewOverride === "settled") {
+  if (reducedMotion || elapsedMs >= CLOSING_STORYBOARD_MS) {
     return {
-      cycleProgress: 0.78,
-      phase: "complete-settled",
-      sphereOpacity: 1,
-      axisProgress: 1,
-      planeProgress: 1,
+      progress: 1,
+      beat: "composition-settled",
+      solidReveal: 1,
+      planeSweep: 1,
       traceProgress: 1,
       sectionFillOpacity: 1,
-      triangleReveal: 1,
-      orbitAngleRad: 0,
-      reducedMotion: Boolean(reducedMotion),
+      orbitOffsetRad: 0,
+      settled: true,
+      reducedMotion,
     };
   }
 
-  if (previewOverride === "mid") {
-    return {
-      cycleProgress: 0.56,
-      phase: "circle-intersection",
-      sphereOpacity: 1,
-      axisProgress: 1,
-      planeProgress: 1,
-      traceProgress: 0.68,
-      sectionFillOpacity: 0.42,
-      triangleReveal: 0.86,
-      orbitAngleRad: -0.06,
-      reducedMotion: false,
-    };
-  }
+  const p = clamp01(elapsedMs / CLOSING_STORYBOARD_MS);
+  let beat: ClosingStoryboardBeat = "solids-emergence";
+  if (p >= 0.74) beat = "composition-settled";
+  else if (p >= 0.48) beat = "section-trace";
+  else if (p >= 0.24) beat = "plane-emergence";
 
-  const safeMs = ((elapsedMs % CLOSING_CYCLE_DURATION_MS) + CLOSING_CYCLE_DURATION_MS) % CLOSING_CYCLE_DURATION_MS;
-  const t = safeMs / CLOSING_CYCLE_DURATION_MS;
-
-  let phase: ClosingMotionPhase = "sphere-axis";
-  if (t >= 0.68) phase = "complete-settled";
-  else if (t >= 0.44) phase = "circle-intersection";
-  else if (t >= 0.2) phase = "plane-emergence";
-
-  const resetOut = t >= 0.9 ? 1 - smoothstep(0.9, 1.0, t) : 1;
-
-  const sphereOpacity = (0.35 + 0.65 * smoothstep(0.0, 0.14, t)) * (t >= 0.9 ? 0.35 + 0.65 * resetOut : 1);
-  const axisProgress = smoothstep(0.04, 0.2, t) * resetOut;
-  const planeProgress = smoothstep(0.2, 0.42, t) * resetOut;
-  const traceProgress = smoothstep(0.44, 0.68, t) * resetOut;
-  const triangleReveal = smoothstep(0.46, 0.72, t) * resetOut;
-  const sectionFillOpacity = smoothstep(0.58, 0.76, t) * resetOut;
-  const orbitAngleRad = Math.sin(t * Math.PI * 2) * 0.14;
+  const solidReveal = 0.35 + 0.65 * clampPhase(p, 0.0, 0.28);
+  const planeSweep = clampPhase(p, 0.22, 0.54);
+  const traceProgress = clampPhase(p, 0.46, 0.8);
+  const sectionFillOpacity = clampPhase(p, 0.72, 0.98);
+  const orbitOffsetRad = (1 - clampPhase(p, 0.0, 0.9)) * 0.1;
 
   return {
-    cycleProgress: t,
-    phase,
-    sphereOpacity,
-    axisProgress,
-    planeProgress,
+    progress: p,
+    beat,
+    solidReveal,
+    planeSweep,
     traceProgress,
     sectionFillOpacity,
-    triangleReveal,
-    orbitAngleRad,
+    orbitOffsetRad,
+    settled: p >= 0.999,
     reducedMotion: false,
   };
 }
 
-function projectPoint3D(
-  pt: Vec3Tuple,
-  yaw: number,
-  pitch: number,
-  cx: number,
-  cy: number,
-  scale: number,
-): { x: number; y: number; z: number } {
-  const cosY = Math.cos(yaw);
-  const sinY = Math.sin(yaw);
-  const x1 = pt[0] * cosY - pt[2] * sinY;
-  const z1 = pt[0] * sinY + pt[2] * cosY;
-
-  const cosP = Math.cos(pitch);
-  const sinP = Math.sin(pitch);
-  const y2 = pt[1] * cosP - z1 * sinP;
-  const z2 = pt[1] * sinP + z1 * cosP;
-
-  const camDist = 11.2;
-  const persp = camDist / Math.max(3, camDist - z2);
-  return {
-    x: cx + x1 * scale * persp,
-    y: cy - y2 * scale * persp,
-    z: z2,
-  };
+function orientFaceOutward(
+  pts: readonly THREE.Vector3[],
+  centroid: THREE.Vector3,
+): THREE.Vector3[] {
+  if (pts.length < 3) return [...pts];
+  const e1 = new THREE.Vector3().subVectors(pts[1], pts[0]);
+  const e2 = new THREE.Vector3().subVectors(pts[2], pts[0]);
+  const n = new THREE.Vector3().crossVectors(e1, e2);
+  const inward = new THREE.Vector3().subVectors(centroid, pts[0]);
+  return n.dot(inward) > 0 ? [...pts].reverse() : [...pts];
 }
 
-function buildRingSegments(
-  pts: readonly Vec3Tuple[],
-  prefix: string,
-  yaw: number,
-  pitch: number,
-  cx: number,
-  cy: number,
-  scale: number,
-): ProjectedArcSegment[] {
-  const projected = pts.map((pt) => projectPoint3D(pt, yaw, pitch, cx, cy, scale));
-  const out: ProjectedArcSegment[] = [];
-  for (let i = 0; i < projected.length; i++) {
-    const a = projected[i];
-    const b = projected[(i + 1) % projected.length];
-    const midZ = (a.z + b.z) * 0.5;
-    out.push({
-      key: `${prefix}-${i}`,
-      x1: a.x,
-      y1: a.y,
-      x2: b.x,
-      y2: b.y,
-      front: midZ >= -0.02,
-    });
+function buildFacesBufferGeometry(faces: readonly (readonly THREE.Vector3[])[]): THREE.BufferGeometry {
+  const positions: number[] = [];
+  for (const pts of faces) {
+    if (pts.length < 3) continue;
+    const p0 = pts[0];
+    for (let i = 1; i < pts.length - 1; i++) {
+      const p1 = pts[i];
+      const p2 = pts[i + 1];
+      positions.push(p0.x, p0.y, p0.z, p1.x, p1.y, p1.z, p2.x, p2.y, p2.z);
+    }
   }
-  return out;
+  const geo = new THREE.BufferGeometry();
+  geo.setAttribute("position", new THREE.Float32BufferAttribute(positions, 3));
+  geo.computeVertexNormals();
+  return geo;
 }
 
-const CLOSING_RIG_SINGLETON = buildClosingSpatialRigData();
-
-function arcsToSvgPath(segs: readonly ProjectedArcSegment[]): string {
-  if (segs.length === 0) return "";
-  const parts: string[] = [];
-  let prevX = Number.NaN;
-  let prevY = Number.NaN;
-  for (const s of segs) {
-    const x1s = s.x1.toFixed(1);
-    const y1s = s.y1.toFixed(1);
-    const x2s = s.x2.toFixed(1);
-    const y2s = s.y2.toFixed(1);
-    const continuous =
-      Number.isFinite(prevX) &&
-      Math.abs(s.x1 - prevX) < 0.05 &&
-      Math.abs(s.y1 - prevY) < 0.05;
-    parts.push(continuous ? `L ${x2s} ${y2s}` : `M ${x1s} ${y1s} L ${x2s} ${y2s}`);
-    prevX = s.x2;
-    prevY = s.y2;
+function createLineSegment(
+  a: THREE.Vector3,
+  b: THREE.Vector3,
+  colorHex: number,
+  opacity: number,
+  dashed: boolean,
+  track: <T extends TrackedDisposable>(item: T) => T,
+): THREE.Line {
+  const geo = track(new THREE.BufferGeometry().setFromPoints([a, b]));
+  const mat = dashed
+    ? track(
+        new THREE.LineDashedMaterial({
+          color: colorHex,
+          dashSize: 0.13,
+          gapSize: 0.09,
+          transparent: true,
+          opacity,
+        }),
+      )
+    : track(
+        new THREE.LineBasicMaterial({
+          color: colorHex,
+          transparent: true,
+          opacity,
+        }),
+      );
+  const line = new THREE.Line(geo, mat);
+  if (dashed) {
+    line.computeLineDistances();
   }
-  return parts.join(" ");
+  return line;
 }
 
-export function projectClosingSpatialStage(
-  width = 480,
-  height = 360,
-  state: ClosingMotionState = evaluateClosingMotionState(0, true),
-  tiltX = 0,
-  tiltY = 0,
-): ProjectedClosingStage {
-  const rig = CLOSING_RIG_SINGLETON;
-  const scaleNorm = 0.42;
-  const radiusView = rig.radiusR * scaleNorm; // 2.1
-  const cx = width * 0.5;
-  const cy = height * 0.48;
-  const scale = Math.min(width, height) * 0.175;
-  const yaw = -0.34 + state.orbitAngleRad + tiltX * 0.28;
-  const pitch = 0.31 + tiltY * 0.18;
-
-  const proj = (pt: Vec3Tuple) => projectPoint3D(pt, yaw, pitch, cx, cy, scale);
-
-  const centerP = proj(rig.pointMap["I"].pos);
-  const contactP = proj(domainToView([0, 0, -rig.radiusR]));
-  const rPx = radiusView * scale * (11.2 / (11.2 - centerP.z));
-
-  // Great circle curves on sphere S(I, R)
-  const ringSteps = 64;
-  const equatorRaw: Vec3Tuple[] = [];
-  const meridianRaw: Vec3Tuple[] = [];
-  for (let i = 0; i < ringSteps; i++) {
-    const theta = (i / ringSteps) * Math.PI * 2;
-    equatorRaw.push(
-      domainToView([
-        rig.radiusR * Math.cos(theta),
-        rig.radiusR * Math.sin(theta),
-        0,
-      ]),
-    );
-    meridianRaw.push(
-      domainToView([
-        rig.radiusR * Math.sin(theta) * Math.cos(0.32),
-        rig.radiusR * Math.sin(theta) * Math.sin(0.32),
-        rig.radiusR * Math.cos(theta),
-      ]),
-    );
+function createCylinderEdge(
+  a: THREE.Vector3,
+  b: THREE.Vector3,
+  radius: number,
+  colorHex: number,
+  opacity: number,
+  track: <T extends TrackedDisposable>(item: T) => T,
+  anchorFromStart = false,
+): THREE.Mesh {
+  const dir = new THREE.Vector3().subVectors(b, a);
+  const len = Math.max(0.001, dir.length());
+  const geo = track(new THREE.CylinderGeometry(radius, radius, len, 10, 1));
+  if (anchorFromStart) {
+    geo.translate(0, len * 0.5, 0);
   }
-
-  const equatorArcs = buildRingSegments(equatorRaw, "eq", yaw, pitch, cx, cy, scale);
-  const meridianArcs = buildRingSegments(meridianRaw, "mer", yaw, pitch, cx, cy, scale);
-
-  const liftView = (1 - state.planeProgress) * 0.72;
-  const planeProj = rig.planeQuadWorld.map((pt) =>
-    proj([pt[0], pt[1] + liftView, pt[2]]),
+  const mat = track(
+    new THREE.MeshBasicMaterial({
+      color: colorHex,
+      transparent: true,
+      opacity,
+    }),
   );
-  const planePolygonPoints = planeProj
-    .map((p) => `${p.x.toFixed(1)},${p.y.toFixed(1)}`)
-    .join(" ");
-
-  const circleProj = rig.circleSamples.map((pt) => proj(pt));
-  const sectionPolygonPoints = circleProj
-    .map((p) => `${p.x.toFixed(1)},${p.y.toFixed(1)}`)
-    .join(" ");
-
-  const nCirc = rig.circleSamples.length;
-  const circleArcs = rig.circleSamples.map((pt, i) => {
-    const nextPt = rig.circleSamples[(i + 1) % nCirc];
-    const p0 = projectPoint3D(pt, yaw, pitch, cx, cy, scale);
-    const p1 = projectPoint3D(nextPt, yaw, pitch, cx, cy, scale);
-    const u = clamp01(state.traceProgress * nCirc - i);
-    const midZ = (p0.z + p1.z) * 0.5;
-    return {
-      key: `circ-${i}`,
-      x1: p0.x,
-      y1: p0.y,
-      x2: p0.x + (p1.x - p0.x) * u,
-      y2: p0.y + (p1.y - p0.y) * u,
-      front: midZ >= -0.02,
-      u,
-    };
-  });
-
-  const pI = proj(rig.pointMap["I"].pos);
-  const pH = proj(rig.pointMap["H"].pos);
-  const pA = proj(rig.pointMap["A"].pos);
-
-  // Right angle marker at H between H->I (down) and H->A (+x)
-  const bSize = 0.58;
-  const pHb1 = proj(domainToView([bSize, 0, 3]));
-  const pHb2 = proj(domainToView([0, 0, 3 - bSize]));
-  const pHbc = proj(domainToView([bSize, 0, 3 - bSize]));
-
-  const mappedPoints: Record<string, { x: number; y: number; label: string }> = {};
-  for (const pt of rig.points) {
-    const p2 = proj(pt.pos);
-    mappedPoints[pt.id] = { x: p2.x, y: p2.y, label: pt.label };
-  }
-
-  return {
-    width,
-    height,
-    sphereCenter: { x: centerP.x, y: centerP.y, rPx },
-    contactBase: {
-      x: contactP.x,
-      y: Math.min(height - 20, contactP.y + 12),
-      rx: rPx * 0.72,
-      ry: rPx * 0.14,
-    },
-    meridianArcs,
-    equatorArcs,
-    equatorBackPath: arcsToSvgPath(equatorArcs.filter((s) => !s.front)),
-    equatorFrontPath: arcsToSvgPath(equatorArcs.filter((s) => s.front)),
-    meridianBackPath: arcsToSvgPath(meridianArcs.filter((s) => !s.front)),
-    meridianFrontPath: arcsToSvgPath(meridianArcs.filter((s) => s.front)),
-    planePolygonPoints,
-    planeLabelPos: {
-      x: planeProj[2].x - 16,
-      y: planeProj[2].y - 10,
-    },
-    sectionPolygonPoints,
-    circleArcs,
-    circleBackPath: arcsToSvgPath(circleArcs.filter((s) => !s.front && s.u > 0.01)),
-    circleFrontPath: arcsToSvgPath(circleArcs.filter((s) => s.front && s.u > 0.01)),
-    axisIH: {
-      x1: pI.x,
-      y1: pI.y,
-      x2: pI.x + (pH.x - pI.x) * state.axisProgress,
-      y2: pI.y + (pH.y - pI.y) * state.axisProgress,
-    },
-    radiusHA: {
-      x1: pH.x,
-      y1: pH.y,
-      x2: pH.x + (pA.x - pH.x) * state.triangleReveal,
-      y2: pH.y + (pA.y - pH.y) * state.triangleReveal,
-    },
-    slantIA: {
-      x1: pI.x,
-      y1: pI.y,
-      x2: pI.x + (pA.x - pI.x) * state.triangleReveal,
-      y2: pI.y + (pA.y - pI.y) * state.triangleReveal,
-    },
-    rightAnglePath: `M ${pHb1.x.toFixed(1)} ${pHb1.y.toFixed(1)} L ${pHbc.x.toFixed(1)} ${pHbc.y.toFixed(1)} L ${pHb2.x.toFixed(1)} ${pHb2.y.toFixed(1)}`,
-    points: mappedPoints,
-  };
+  const mesh = new THREE.Mesh(geo, mat);
+  mesh.position.copy(
+    anchorFromStart ? a : new THREE.Vector3().addVectors(a, b).multiplyScalar(0.5),
+  );
+  mesh.quaternion.setFromUnitVectors(new THREE.Vector3(0, 1, 0), dir.normalize());
+  return mesh;
 }
 
-function readPreviewPhaseOverride(): "mid" | "settled" | null {
-  if (typeof window === "undefined") return null;
-  const val = new URLSearchParams(window.location.search)
-    .get("closing_phase")
-    ?.trim()
-    .toLowerCase();
-  if (val === "mid" || val === "settled") return val;
-  return null;
+function ClosingFallbackSvg() {
+  return (
+    <svg
+      className="axo-v14-closing-fallback-svg"
+      viewBox="0 0 600 440"
+      role="img"
+      aria-label="Minh họa lăng trụ lục giác đều có thiết diện chéo và hình nón tròn xoay"
+    >
+      <ellipse className="axo-v14-svg-contact-halo" cx="204" cy="346" rx="116" ry="20" />
+      <ellipse className="axo-v14-svg-contact-core" cx="204" cy="346" rx="80" ry="13" />
+      <ellipse className="axo-v14-svg-contact-halo" cx="446" cy="346" rx="88" ry="18" />
+      <ellipse className="axo-v14-svg-contact-core" cx="446" cy="346" rx="62" ry="12" />
+
+      {/* Hexagonal prism */}
+      <polygon
+        className="axo-v14-svg-solid-lower"
+        points="118,308 168,342 252,336 288,296 288,136 244,104 156,110 118,148"
+      />
+      <polygon
+        className="axo-v14-svg-solid-upper"
+        points="118,148 168,180 252,174 288,136 244,104 156,110"
+      />
+
+      <line className="axo-v14-svg-edge-hidden" x1="156" y1="270" x2="156" y2="110" />
+      <line className="axo-v14-svg-edge-hidden" x1="244" y1="264" x2="244" y2="104" />
+      <line className="axo-v14-svg-edge-hidden" x1="118" y1="308" x2="156" y2="270" />
+      <line className="axo-v14-svg-edge-hidden" x1="156" y1="270" x2="244" y2="264" />
+      <line className="axo-v14-svg-edge-hidden" x1="244" y1="264" x2="288" y2="296" />
+
+      <line className="axo-v14-svg-edge-solid" x1="118" y1="148" x2="118" y2="308" />
+      <line className="axo-v14-svg-edge-solid" x1="168" y1="180" x2="168" y2="342" />
+      <line className="axo-v14-svg-edge-solid" x1="252" y1="174" x2="252" y2="336" />
+      <line className="axo-v14-svg-edge-solid" x1="288" y1="136" x2="288" y2="296" />
+      <line className="axo-v14-svg-edge-solid" x1="118" y1="308" x2="168" y2="342" />
+      <line className="axo-v14-svg-edge-solid" x1="168" y1="342" x2="252" y2="336" />
+      <line className="axo-v14-svg-edge-solid" x1="252" y1="336" x2="288" y2="296" />
+      <polygon
+        className="axo-v14-svg-edge-solid"
+        fill="none"
+        points="118,148 168,180 252,174 288,136 244,104 156,110"
+      />
+
+      {/* Oblique cutting plane & amber 6-gon section */}
+      <polygon
+        className="axo-v14-svg-cutting-plane"
+        points="84,264 294,254 328,176 118,188"
+      />
+      <polygon
+        className="axo-v14-svg-section-poly"
+        points="118,242 168,262 252,240 288,200 244,186 156,204"
+      />
+
+      {/* Companion right circular cone */}
+      <polygon
+        className="axo-v14-svg-solid-upper"
+        points="446,112 374,316 518,316"
+      />
+      <ellipse className="axo-v14-svg-solid-lower" cx="446" cy="316" rx="72" ry="22" />
+      <line className="axo-v14-svg-edge-altitude" x1="446" y1="112" x2="446" y2="316" />
+      <line className="axo-v14-svg-edge-hidden" x1="446" y1="316" x2="518" y2="316" />
+      <line className="axo-v14-svg-edge-solid" x1="446" y1="112" x2="374" y2="316" />
+      <line className="axo-v14-svg-edge-solid" x1="446" y1="112" x2="518" y2="316" />
+      <path className="axo-v14-svg-edge-hidden" fill="none" d="M 374 316 A 72 22 0 0 1 518 316" />
+      <path className="axo-v14-svg-edge-solid" fill="none" d="M 374 316 A 72 22 0 0 0 518 316" />
+      <ellipse className="axo-v14-svg-section-poly" cx="446" cy="222" rx="39" ry="11" />
+    </svg>
+  );
 }
 
 export function LandingClosingScene3D() {
-  const stageRef = useRef<HTMLDivElement | null>(null);
+  const shellRef = useRef<HTMLDivElement | null>(null);
+  const hostRef = useRef<HTMLDivElement | null>(null);
   const wakeRef = useRef<(() => void) | null>(null);
   const targetTiltRef = useRef({ x: 0, y: 0 });
-  const curTiltRef = useRef({ x: 0, y: 0 });
+  const [webglReady, setWebglReady] = useState(false);
+  const [contextLost, setContextLost] = useState(false);
+  const [beat, setBeat] = useState<ClosingStoryboardBeat>("solids-emergence");
 
-  const [frameState, setFrameState] = useState<{
-    readonly motionState: ClosingMotionState;
-    readonly tilt: { readonly x: number; readonly y: number };
-  }>(() => ({
-    motionState: evaluateClosingMotionState(
-      0,
-      true,
-      readPreviewPhaseOverride() ?? "settled",
-    ),
-    tilt: { x: 0, y: 0 },
-  }));
-  const { motionState, tilt } = frameState;
+  const composition = useMemo(() => buildClosingCompositionData(), []);
+
+  const webglAllowed = useMemo(() => {
+    if (typeof window === "undefined") return false;
+    return !window.location.search.includes("no_webgl=1");
+  }, []);
 
   useEffect(() => {
-    if (typeof window === "undefined") return;
-    const stage = stageRef.current;
-    if (!stage) return;
-
-    const previewOverride = readPreviewPhaseOverride();
     const reducedQuery = window.matchMedia?.("(prefers-reduced-motion: reduce)");
     let reducedMotion = Boolean(reducedQuery?.matches);
 
-    let disposed = false;
-    let isInView = false;
-    let rafId = 0;
-    const startMs = performance.now();
+    const host = hostRef.current;
+    if (!host || !webglAllowed) return;
 
-    const stepFrame = (nowMs: number) => {
-      if (disposed) return;
-      const nextMotion = evaluateClosingMotionState(
-        nowMs - startMs,
-        reducedMotion,
-        previewOverride,
+    const canvas = document.createElement("canvas");
+    let renderer: THREE.WebGLRenderer;
+    try {
+      renderer = new THREE.WebGLRenderer({
+        canvas,
+        antialias: true,
+        alpha: true,
+        powerPreference: "high-performance",
+      });
+    } catch {
+      return;
+    }
+
+    const tracked: TrackedDisposable[] = [];
+    const track = <T extends TrackedDisposable>(item: T): T => {
+      tracked.push(item);
+      return item;
+    };
+
+    const width = Math.max(320, host.clientWidth || 560);
+    const height = Math.max(260, host.clientHeight || 420);
+    renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2));
+    renderer.setSize(width, height, false);
+    renderer.setClearColor(0x000000, 0);
+
+    const scene = new THREE.Scene();
+    const camera = new THREE.PerspectiveCamera(31, width / height, 0.1, 100);
+    camera.position.set(0.6, 4.35, 12.2);
+    camera.lookAt(0.18, -0.05, 0);
+
+    const ambientLight = new THREE.AmbientLight(0xfffdf9, 2.05);
+    const keyLight = new THREE.DirectionalLight(0xfffaf0, 2.0);
+    keyLight.position.set(8, 12, 9);
+    const fillLight = new THREE.DirectionalLight(0xeef4fc, 1.0);
+    fillLight.position.set(-7, 7, -6);
+    scene.add(ambientLight, keyLight, fillLight);
+
+    const root = new THREE.Group();
+    scene.add(root);
+
+    const botPts = composition.prismBottom.map((p) => new THREE.Vector3(...p));
+    const topPts = composition.prismTop.map((p) => new THREE.Vector3(...p));
+    const secPts = composition.prismSection.map((p) => new THREE.Vector3(...p));
+    const planeNormal = new THREE.Vector3(...composition.prismPlaneNormal);
+    const prismCentroid = [...botPts, ...topPts]
+      .reduce((acc, p) => acc.add(p), new THREE.Vector3())
+      .divideScalar(12);
+    const prismBaseCenter = botPts
+      .reduce((acc, p) => acc.add(p), new THREE.Vector3())
+      .divideScalar(6);
+
+    const coneBase = new THREE.Vector3(...composition.coneBaseCenter);
+    const coneApex = new THREE.Vector3(...composition.coneApex);
+
+    // 1. Subtle ground contact halos under each solid
+    const prismHaloGeo = track(new THREE.CircleGeometry(1.92, 48));
+    prismHaloGeo.rotateX(-Math.PI / 2);
+    const prismHaloMat = track(
+      new THREE.MeshBasicMaterial({
+        color: 0x191918,
+        transparent: true,
+        opacity: 0.032,
+        depthWrite: false,
+      }),
+    );
+    const prismHalo = new THREE.Mesh(prismHaloGeo, prismHaloMat);
+    prismHalo.position.set(prismBaseCenter.x, prismBaseCenter.y - 0.035, prismBaseCenter.z);
+    prismHalo.renderOrder = 0;
+
+    const coneHaloGeo = track(new THREE.CircleGeometry(1.56, 48));
+    coneHaloGeo.rotateX(-Math.PI / 2);
+    const coneHaloMat = track(
+      new THREE.MeshBasicMaterial({
+        color: 0x191918,
+        transparent: true,
+        opacity: 0.03,
+        depthWrite: false,
+      }),
+    );
+    const coneHalo = new THREE.Mesh(coneHaloGeo, coneHaloMat);
+    coneHalo.position.set(coneBase.x, coneBase.y - 0.035, coneBase.z);
+    coneHalo.renderOrder = 0;
+    root.add(prismHalo, coneHalo);
+
+    // 2. Primary Solid: Upright Regular Hexagonal Prism (translucent faces + dynamic front-solid / back-dashed edges)
+    const prismFacesRaw: THREE.Vector3[][] = [
+      orientFaceOutward([...botPts].reverse(), prismCentroid),
+      orientFaceOutward([...topPts], prismCentroid),
+    ];
+    for (let k = 0; k < 6; k++) {
+      const next = (k + 1) % 6;
+      prismFacesRaw.push(
+        orientFaceOutward([botPts[k], botPts[next], topPts[next], topPts[k]], prismCentroid),
+      );
+    }
+
+    const prismFaceSpecs = prismFacesRaw.map((face) => {
+      const e1 = new THREE.Vector3().subVectors(face[1], face[0]);
+      const e2 = new THREE.Vector3().subVectors(face[2], face[0]);
+      const normal = new THREE.Vector3().crossVectors(e1, e2).normalize();
+      const center = face.reduce((a, b) => a.add(b), new THREE.Vector3()).divideScalar(face.length);
+      return { normal, center };
+    });
+
+    const prismSolidMat = track(
+      new THREE.MeshStandardMaterial({
+        color: 0xf7f5f0,
+        emissive: 0x38342e,
+        emissiveIntensity: 0.2,
+        roughness: 0.86,
+        metalness: 0.02,
+        flatShading: true,
+        transparent: true,
+        opacity: 0.24,
+        side: THREE.DoubleSide,
+        depthWrite: false,
+      }),
+    );
+    const prismGeo = track(buildFacesBufferGeometry(prismFacesRaw));
+    const prismMesh = new THREE.Mesh(prismGeo, prismSolidMat);
+    prismMesh.renderOrder = 2;
+    root.add(prismMesh);
+
+    const prismEdgeDefs: { a: THREE.Vector3; b: THREE.Vector3; faces: readonly [number, number] }[] = [];
+    for (let k = 0; k < 6; k++) {
+      const next = (k + 1) % 6;
+      const sideFace = 2 + k;
+      const prevSideFace = 2 + ((k + 5) % 6);
+      prismEdgeDefs.push({ a: botPts[k], b: botPts[next], faces: [0, sideFace] });
+      prismEdgeDefs.push({ a: topPts[k], b: topPts[next], faces: [1, sideFace] });
+      prismEdgeDefs.push({ a: botPts[k], b: topPts[k], faces: [prevSideFace, sideFace] });
+    }
+
+    const prismEdgeBindings = prismEdgeDefs.map((ed) => {
+      const solid = createCylinderEdge(ed.a, ed.b, 0.0155, 0x191918, 0.88, track);
+      solid.renderOrder = 6;
+      const dashed = createLineSegment(ed.a, ed.b, 0x615d59, 0.44, true, track);
+      dashed.renderOrder = 2;
+      root.add(solid, dashed);
+      return { ...ed, solid, dashed };
+    });
+
+    // 3. Oblique Cutting Plane & 6-gon Amber Section on Hexagonal Prism
+    const planeGroup = new THREE.Group();
+    const planeQuadVecs = composition.prismPlaneQuad.map((p) => new THREE.Vector3(...p));
+    const planeCenter = planeQuadVecs
+      .reduce((acc, v) => acc.add(v), new THREE.Vector3())
+      .divideScalar(planeQuadVecs.length);
+    const localPlane = planeQuadVecs.map((v) => v.clone().sub(planeCenter));
+    planeGroup.position.copy(planeCenter);
+
+    const planeMat = track(
+      new THREE.MeshBasicMaterial({
+        color: 0x62aef0,
+        transparent: true,
+        opacity: 0.13,
+        side: THREE.DoubleSide,
+        depthWrite: false,
+      }),
+    );
+    const planeGeo = track(buildFacesBufferGeometry([localPlane]));
+    const planeMesh = new THREE.Mesh(planeGeo, planeMat);
+    planeMesh.renderOrder = 4;
+    planeGroup.add(planeMesh);
+
+    const planeRims: THREE.Mesh[] = [];
+    for (let i = 0; i < localPlane.length; i++) {
+      const rim = createCylinderEdge(
+        localPlane[i],
+        localPlane[(i + 1) % localPlane.length],
+        0.013,
+        0x0075de,
+        0.78,
+        track,
+      );
+      rim.renderOrder = 6;
+      planeRims.push(rim);
+      planeGroup.add(rim);
+    }
+    root.add(planeGroup);
+
+    const secLoop = secPts.map((pt) => pt.clone().addScaledVector(planeNormal, 0.008));
+    const secFillMat = track(
+      new THREE.MeshStandardMaterial({
+        color: 0xe6620a,
+        emissive: 0x993d00,
+        emissiveIntensity: 0.16,
+        roughness: 0.65,
+        metalness: 0.04,
+        flatShading: true,
+        transparent: true,
+        opacity: CLOSING_SECTION_FILL_OPACITY,
+        side: THREE.DoubleSide,
+        depthWrite: false,
+      }),
+    );
+    const secGeo = track(buildFacesBufferGeometry([secLoop]));
+    const secMesh = new THREE.Mesh(secGeo, secFillMat);
+    secMesh.renderOrder = 5;
+    root.add(secMesh);
+
+    const secBorders: THREE.Mesh[] = [];
+    for (let i = 0; i < secLoop.length; i++) {
+      const seg = createCylinderEdge(
+        secLoop[i],
+        secLoop[(i + 1) % secLoop.length],
+        0.022,
+        0x793400,
+        0.94,
+        track,
+        true,
+      );
+      seg.renderOrder = 7;
+      secBorders.push(seg);
+      root.add(seg);
+    }
+
+    const secNodeGeo = track(new THREE.SphereGeometry(0.042, 14, 14));
+    const secNodeMat = track(
+      new THREE.MeshBasicMaterial({ color: 0xdd5b00, transparent: true, opacity: 1 }),
+    );
+    const secNodes = secLoop.map((pt) => {
+      const dot = new THREE.Mesh(secNodeGeo, secNodeMat);
+      dot.position.copy(pt);
+      dot.renderOrder = 8;
+      root.add(dot);
+      return dot;
+    });
+
+    // 4. Companion Right Circular Cone (spatially separated)
+    const coneShellMat = track(
+      new THREE.MeshStandardMaterial({
+        color: 0xf7f5f0,
+        emissive: 0x38342e,
+        emissiveIntensity: 0.16,
+        roughness: 0.84,
+        metalness: 0.02,
+        transparent: true,
+        opacity: 0.18,
+        side: THREE.DoubleSide,
+        depthWrite: false,
+      }),
+    );
+    const coneGeo = track(
+      new THREE.ConeGeometry(composition.coneRadius, composition.coneHeight, 48, 1, true),
+    );
+    const coneMesh = new THREE.Mesh(coneGeo, coneShellMat);
+    coneMesh.position.set(
+      coneBase.x,
+      coneBase.y + composition.coneHeight * 0.5,
+      coneBase.z,
+    );
+    coneMesh.renderOrder = 3;
+
+    const coneBaseDiscGeo = track(new THREE.CircleGeometry(composition.coneRadius, 48));
+    coneBaseDiscGeo.rotateX(-Math.PI / 2);
+    const coneBaseDiscMat = track(
+      new THREE.MeshBasicMaterial({
+        color: 0xeeece6,
+        transparent: true,
+        opacity: 0.24,
+        side: THREE.DoubleSide,
+        depthWrite: false,
+      }),
+    );
+    const coneBaseDisc = new THREE.Mesh(coneBaseDiscGeo, coneBaseDiscMat);
+    coneBaseDisc.position.copy(coneBase);
+    coneBaseDisc.renderOrder = 2;
+
+    const coneAltLine = createLineSegment(coneBase, coneApex, 0x0075de, 0.62, true, track);
+    coneAltLine.renderOrder = 4;
+
+    const coneRadiusEnd = new THREE.Vector3(
+      coneBase.x + composition.coneRadius,
+      coneBase.y,
+      coneBase.z,
+    );
+    const coneRadiusLine = createLineSegment(coneBase, coneRadiusEnd, 0x615d59, 0.52, true, track);
+    coneRadiusLine.renderOrder = 4;
+
+    const coneRightAnglePts = [
+      new THREE.Vector3(coneBase.x, coneBase.y + 0.22, coneBase.z),
+      new THREE.Vector3(coneBase.x + 0.22, coneBase.y + 0.22, coneBase.z),
+      new THREE.Vector3(coneBase.x + 0.22, coneBase.y, coneBase.z),
+    ];
+    const coneRightAngleGeo = track(new THREE.BufferGeometry().setFromPoints(coneRightAnglePts));
+    const coneRightAngleMat = track(
+      new THREE.LineBasicMaterial({ color: 0x0075de, transparent: true, opacity: 0.62 }),
+    );
+    const coneRightAngle = new THREE.Line(coneRightAngleGeo, coneRightAngleMat);
+    coneRightAngle.renderOrder = 5;
+
+    // Base front/back circle arcs
+    const baseArcSegCount = 48;
+    const coneBaseSegs: { a: THREE.Vector3; b: THREE.Vector3; mid: THREE.Vector3; solid: THREE.Mesh; dashed: THREE.Line }[] = [];
+    for (let i = 0; i < baseArcSegCount; i++) {
+      const a0 = (i / baseArcSegCount) * Math.PI * 2;
+      const a1 = ((i + 1) / baseArcSegCount) * Math.PI * 2;
+      const pA = new THREE.Vector3(
+        coneBase.x + composition.coneRadius * Math.cos(a0),
+        coneBase.y,
+        coneBase.z + composition.coneRadius * Math.sin(a0),
+      );
+      const pB = new THREE.Vector3(
+        coneBase.x + composition.coneRadius * Math.cos(a1),
+        coneBase.y,
+        coneBase.z + composition.coneRadius * Math.sin(a1),
+      );
+      const solid = createCylinderEdge(pA, pB, 0.015, 0x191918, 0.86, track);
+      solid.renderOrder = 6;
+      const dashed = createLineSegment(pA, pB, 0x615d59, 0.42, true, track);
+      dashed.renderOrder = 3;
+      root.add(solid, dashed);
+      coneBaseSegs.push({
+        a: pA,
+        b: pB,
+        mid: new THREE.Vector3().addVectors(pA, pB).multiplyScalar(0.5),
+        solid,
+        dashed,
+      });
+    }
+
+    // Dynamic outer silhouette slant generators for cone (2 solid lines rotated cleanly around O-S axis)
+    const slantMat = track(
+      new THREE.MeshBasicMaterial({ color: 0x191918, transparent: true, opacity: 0.88 }),
+    );
+    const slantLeft = createCylinderEdge(coneApex, new THREE.Vector3(coneBase.x - composition.coneRadius, coneBase.y, coneBase.z), 0.0155, 0x191918, 0.88, track);
+    slantLeft.material = slantMat;
+    slantLeft.renderOrder = 6;
+    const slantRight = createCylinderEdge(coneApex, new THREE.Vector3(coneBase.x + composition.coneRadius, coneBase.y, coneBase.z), 0.0155, 0x191918, 0.88, track);
+    slantRight.material = slantMat;
+    slantRight.renderOrder = 6;
+
+    // Horizontal parallel section circle ring on cone
+    const coneSecDiscGeo = track(new THREE.CircleGeometry(composition.coneSectionRadius, 48));
+    coneSecDiscGeo.rotateX(-Math.PI / 2);
+    const coneSecDiscMat = track(
+      new THREE.MeshBasicMaterial({
+        color: 0xe6620a,
+        transparent: true,
+        opacity: 0.2,
+        side: THREE.DoubleSide,
+        depthWrite: false,
+      }),
+    );
+    const coneSecDisc = new THREE.Mesh(coneSecDiscGeo, coneSecDiscMat);
+    coneSecDisc.position.set(coneBase.x, composition.coneSectionHeightY, coneBase.z);
+    coneSecDisc.renderOrder = 5;
+
+    const coneSecRingPts: THREE.Vector3[] = [];
+    for (let i = 0; i <= 64; i++) {
+      const ang = (i / 64) * Math.PI * 2;
+      coneSecRingPts.push(
+        new THREE.Vector3(
+          coneBase.x + composition.coneSectionRadius * Math.cos(ang),
+          composition.coneSectionHeightY + 0.004,
+          coneBase.z + composition.coneSectionRadius * Math.sin(ang),
+        ),
+      );
+    }
+    const coneSecRingGeo = track(new THREE.BufferGeometry().setFromPoints(coneSecRingPts));
+    const coneSecRingMat = track(
+      new THREE.LineBasicMaterial({ color: 0x793400, transparent: true, opacity: 0.92 }),
+    );
+    const coneSecRing = new THREE.Line(coneSecRingGeo, coneSecRingMat);
+    coneSecRing.renderOrder = 7;
+
+    const dotO = new THREE.Mesh(secNodeGeo, track(new THREE.MeshBasicMaterial({ color: 0x191918, transparent: true, opacity: 0.88 })));
+    dotO.position.copy(coneBase);
+    dotO.scale.setScalar(0.88);
+    dotO.renderOrder = 8;
+
+    const dotApex = new THREE.Mesh(secNodeGeo, track(new THREE.MeshBasicMaterial({ color: 0x191918, transparent: true, opacity: 0.92 })));
+    dotApex.position.copy(coneApex);
+    dotApex.renderOrder = 8;
+
+    root.add(
+      coneMesh,
+      coneBaseDisc,
+      coneAltLine,
+      coneRadiusLine,
+      coneRightAngle,
+      slantLeft,
+      slantRight,
+      coneSecDisc,
+      coneSecRing,
+      dotO,
+      dotApex,
+    );
+
+    const updateConeSilhouette = () => {
+      const localCam = root.worldToLocal(camera.position.clone());
+      const toCamXZ = new THREE.Vector2(localCam.x - coneBase.x, localCam.z - coneBase.z);
+      const radialLen = Math.max(1e-4, toCamXZ.length());
+      toCamXZ.divideScalar(radialLen);
+      const tangentXZ = new THREE.Vector2(-toCamXZ.y, toCamXZ.x);
+
+      const pL = new THREE.Vector3(
+        coneBase.x + tangentXZ.x * composition.coneRadius,
+        coneBase.y,
+        coneBase.z + tangentXZ.y * composition.coneRadius,
+      );
+      const pR = new THREE.Vector3(
+        coneBase.x - tangentXZ.x * composition.coneRadius,
+        coneBase.y,
+        coneBase.z - tangentXZ.y * composition.coneRadius,
       );
 
+      for (const [mesh, targetPt] of [
+        [slantLeft, pL],
+        [slantRight, pR],
+      ] as const) {
+        const dir = new THREE.Vector3().subVectors(targetPt, coneApex);
+        mesh.position.copy(coneApex).add(targetPt).multiplyScalar(0.5);
+        mesh.quaternion.setFromUnitVectors(new THREE.Vector3(0, 1, 0), dir.normalize());
+      }
+
+      for (const seg of coneBaseSegs) {
+        const outward = new THREE.Vector2(seg.mid.x - coneBase.x, seg.mid.z - coneBase.z);
+        const isFront = outward.dot(toCamXZ) >= -0.04;
+        seg.solid.visible = isFront;
+        seg.dashed.visible = !isFront;
+      }
+    };
+
+    let disposed = false;
+    let isInView = true;
+    let rafId = 0;
+    const startMs = performance.now();
+    let curTiltX = 0;
+    let curTiltY = 0;
+    let lastBeat: ClosingStoryboardBeat | null = null;
+
+    const applyState = (nowMs: number): boolean => {
+      const elapsed = nowMs - startMs;
+      const state = evaluateClosingStoryboard(elapsed, reducedMotion);
+
+      if (state.beat !== lastBeat) {
+        lastBeat = state.beat;
+        setBeat(state.beat);
+      }
+
       const damp = reducedMotion ? 1 : 0.14;
-      const nx =
-        curTiltRef.current.x + (targetTiltRef.current.x - curTiltRef.current.x) * damp;
-      const ny =
-        curTiltRef.current.y + (targetTiltRef.current.y - curTiltRef.current.y) * damp;
-      curTiltRef.current = { x: nx, y: ny };
-      setFrameState({
-        motionState: nextMotion,
-        tilt: { x: nx, y: ny },
+      curTiltX += (targetTiltRef.current.x - curTiltX) * damp;
+      curTiltY += (targetTiltRef.current.y - curTiltY) * damp;
+
+      prismHaloMat.opacity = 0.032 * state.solidReveal;
+      coneHaloMat.opacity = 0.03 * state.solidReveal;
+      prismSolidMat.opacity = 0.24 * state.solidReveal;
+      coneShellMat.opacity = 0.18 * state.solidReveal;
+      coneBaseDiscMat.opacity = 0.24 * state.solidReveal;
+      slantMat.opacity = 0.88 * state.solidReveal;
+      (coneAltLine.material as THREE.LineDashedMaterial).opacity = 0.62 * state.solidReveal;
+      (coneRadiusLine.material as THREE.LineDashedMaterial).opacity = 0.52 * state.solidReveal;
+      coneRightAngleMat.opacity = 0.62 * state.solidReveal;
+      (dotO.material as THREE.MeshBasicMaterial).opacity = 0.88 * state.solidReveal;
+      (dotApex.material as THREE.MeshBasicMaterial).opacity = 0.92 * state.solidReveal;
+
+      root.scale.setScalar(0.95 + 0.05 * state.solidReveal);
+      root.rotation.y = -state.orbitOffsetRad + curTiltX;
+      root.rotation.x = 0.015 + curTiltY;
+      root.updateMatrixWorld(true);
+
+      const tmpNormal = new THREE.Vector3();
+      const tmpCenter = new THREE.Vector3();
+      const tmpToCam = new THREE.Vector3();
+      const frontFacing = prismFaceSpecs.map((fs) => {
+        tmpNormal.copy(fs.normal).transformDirection(root.matrixWorld);
+        tmpCenter.copy(fs.center).applyMatrix4(root.matrixWorld);
+        tmpToCam.copy(camera.position).sub(tmpCenter);
+        return tmpNormal.dot(tmpToCam) > 0;
+      });
+      for (const edge of prismEdgeBindings) {
+        const isFrontEdge = frontFacing[edge.faces[0]] || frontFacing[edge.faces[1]];
+        edge.solid.visible = isFrontEdge;
+        edge.dashed.visible = !isFrontEdge;
+        if (isFrontEdge) {
+          (edge.solid.material as THREE.MeshBasicMaterial).opacity = 0.88 * state.solidReveal;
+        } else {
+          (edge.dashed.material as THREE.LineDashedMaterial).opacity = 0.44 * state.solidReveal;
+        }
+      }
+
+      updateConeSilhouette();
+
+      planeMat.opacity = 0.13 * state.planeSweep;
+      planeGroup.position
+        .copy(planeCenter)
+        .addScaledVector(planeNormal, (1 - state.planeSweep) * 0.48);
+      for (const rim of planeRims) {
+        (rim.material as THREE.MeshBasicMaterial).opacity = 0.78 * state.planeSweep;
+      }
+
+      secNodeMat.opacity = state.planeSweep;
+      for (const dot of secNodes) {
+        dot.visible = state.planeSweep > 0.25;
+        dot.scale.setScalar(Math.max(0.05, state.planeSweep));
+      }
+
+      for (let i = 0; i < secBorders.length; i++) {
+        const seg = secBorders[i];
+        const edgeStart = i / secBorders.length;
+        const edgeEnd = (i + 1) / secBorders.length;
+        const localP = clamp01((state.traceProgress - edgeStart) / (edgeEnd - edgeStart));
+        seg.visible = localP > 0.01;
+        seg.scale.set(1, Math.max(0.01, localP), 1);
+        (seg.material as THREE.MeshBasicMaterial).opacity = 0.94 * Math.min(1, localP * 2);
+      }
+
+      secFillMat.opacity = CLOSING_SECTION_FILL_OPACITY * state.sectionFillOpacity;
+      secMesh.visible = state.sectionFillOpacity > 0.01;
+      coneSecDiscMat.opacity = 0.2 * state.sectionFillOpacity;
+      coneSecDisc.visible = state.sectionFillOpacity > 0.01;
+      coneSecRingMat.opacity = 0.92 * state.traceProgress;
+      coneSecRing.visible = state.traceProgress > 0.05;
+
+      renderer.render(scene, camera);
+
+      const tiltDone =
+        Math.abs(targetTiltRef.current.x - curTiltX) < 0.0008 &&
+        Math.abs(targetTiltRef.current.y - curTiltY) < 0.0008;
+      return state.settled && tiltDone;
+    };
+
+    const scheduleFrame = () => {
+      if (disposed || rafId !== 0 || !isInView || document.hidden) return;
+      rafId = window.requestAnimationFrame((now) => {
+        rafId = 0;
+        if (disposed || !isInView || document.hidden) return;
+        const idle = applyState(now);
+        if (!idle) scheduleFrame();
       });
     };
 
-    const tick = (nowMs: number) => {
-      rafId = 0;
-      if (disposed || !isInView || document.hidden) return;
-      stepFrame(nowMs);
-      const tiltMoving =
-        Math.abs(targetTiltRef.current.x - curTiltRef.current.x) > 0.001 ||
-        Math.abs(targetTiltRef.current.y - curTiltRef.current.y) > 0.001;
-      if ((!reducedMotion && previewOverride === null) || tiltMoving) {
-        rafId = window.requestAnimationFrame(tick);
-      }
-    };
-
-    const wake = () => {
-      if (disposed || !isInView || document.hidden) return;
-      if (reducedMotion || previewOverride !== null) {
-        stepFrame(performance.now());
+    wakeRef.current = () => {
+      if (disposed) return;
+      if (reducedMotion) {
+        applyState(performance.now());
         return;
       }
-      if (rafId === 0) {
-        rafId = window.requestAnimationFrame(tick);
-      }
+      scheduleFrame();
     };
 
-    wakeRef.current = wake;
+    const handleResize = () => {
+      if (disposed || !host) return;
+      const nextW = Math.max(320, host.clientWidth || 560);
+      const nextH = Math.max(260, host.clientHeight || 420);
+      camera.aspect = nextW / nextH;
+      camera.updateProjectionMatrix();
+      renderer.setSize(nextW, nextH, false);
+      applyState(performance.now());
+    };
 
-    const io =
-      typeof IntersectionObserver !== "undefined"
-        ? new IntersectionObserver(
-            (entries) => {
-              isInView = Boolean(entries[0]?.isIntersecting);
-              if (isInView) {
-                wake();
-              } else if (rafId) {
-                window.cancelAnimationFrame(rafId);
-                rafId = 0;
-              }
-            },
-            { threshold: 0.05 },
-          )
-        : null;
+    const onMotionChange = (e: MediaQueryListEvent) => {
+      reducedMotion = e.matches;
+      applyState(performance.now());
+      if (!e.matches) scheduleFrame();
+    };
 
-    if (io) {
-      io.observe(stage);
-    } else {
-      isInView = true;
-      stepFrame(performance.now());
-    }
-
-    const onVisibility = () => {
+    const onVisibilityChange = () => {
       if (document.hidden) {
-        if (rafId) {
+        if (rafId !== 0) {
           window.cancelAnimationFrame(rafId);
           rafId = 0;
         }
-      } else if (isInView) {
-        wake();
+      } else {
+        applyState(performance.now());
+        scheduleFrame();
       }
     };
-    document.addEventListener("visibilitychange", onVisibility);
 
-    const onMotionChange = (ev: MediaQueryListEvent) => {
-      reducedMotion = ev.matches;
-      if (reducedMotion && rafId) {
+    const handleContextLost = (e: Event) => {
+      e.preventDefault();
+      setContextLost(true);
+      if (rafId !== 0) {
         window.cancelAnimationFrame(rafId);
         rafId = 0;
       }
-      stepFrame(performance.now());
-      if (!reducedMotion && isInView) wake();
     };
+    const handleContextRestored = () => {
+      setContextLost(false);
+      applyState(performance.now());
+      scheduleFrame();
+    };
+
+    let io: IntersectionObserver | null = null;
+    if (typeof IntersectionObserver !== "undefined") {
+      io = new IntersectionObserver(
+        (entries) => {
+          const entry = entries[0];
+          isInView = Boolean(entry?.isIntersecting);
+          if (isInView && !document.hidden) {
+            const idle = applyState(performance.now());
+            if (!idle) scheduleFrame();
+          } else if (rafId !== 0) {
+            window.cancelAnimationFrame(rafId);
+            rafId = 0;
+          }
+        },
+        { threshold: 0.08 },
+      );
+      io.observe(host);
+    }
+
+    host.appendChild(canvas);
+    setWebglReady(true);
+    const initialIdle = applyState(performance.now());
+    if (!initialIdle && isInView && !document.hidden) {
+      scheduleFrame();
+    }
+
+    let ro: ResizeObserver | null = null;
+    if (typeof ResizeObserver !== "undefined") {
+      ro = new ResizeObserver(handleResize);
+      ro.observe(host);
+    }
+    window.addEventListener("resize", handleResize);
     reducedQuery?.addEventListener?.("change", onMotionChange);
+    document.addEventListener("visibilitychange", onVisibilityChange);
+    canvas.addEventListener("webglcontextlost", handleContextLost);
+    canvas.addEventListener("webglcontextrestored", handleContextRestored);
 
     return () => {
       disposed = true;
       wakeRef.current = null;
-      if (rafId) window.cancelAnimationFrame(rafId);
+      if (rafId !== 0) window.cancelAnimationFrame(rafId);
       io?.disconnect();
-      document.removeEventListener("visibilitychange", onVisibility);
+      ro?.disconnect();
+      window.removeEventListener("resize", handleResize);
       reducedQuery?.removeEventListener?.("change", onMotionChange);
+      document.removeEventListener("visibilitychange", onVisibilityChange);
+      canvas.removeEventListener("webglcontextlost", handleContextLost);
+      canvas.removeEventListener("webglcontextrestored", handleContextRestored);
+      for (const item of tracked) {
+        item.dispose();
+      }
+      renderer.dispose();
+      canvas.remove();
     };
-  }, []);
+  }, [composition, webglAllowed]);
 
-  const projection = useMemo(
-    () => projectClosingSpatialStage(480, 360, motionState, tilt.x, tilt.y),
-    [motionState, tilt.x, tilt.y],
-  );
-
-  const ptI = projection.points["I"];
-  const ptH = projection.points["H"];
-  const ptA = projection.points["A"];
-
-  const handlePointerMove = (event: ReactPointerEvent<HTMLDivElement>) => {
-    if (window.matchMedia?.("(prefers-reduced-motion: reduce)")?.matches) return;
-    const rect = event.currentTarget.getBoundingClientRect();
-    if (!rect.width || !rect.height) return;
-    const nx = (event.clientX - rect.left) / rect.width - 0.5;
-    const ny = (event.clientY - rect.top) / rect.height - 0.5;
-    targetTiltRef.current = { x: nx * 0.48, y: -ny * 0.28 };
+  const handlePointerMove = (e: ReactPointerEvent<HTMLDivElement>) => {
+    const shell = shellRef.current;
+    if (!shell) return;
+    const rect = shell.getBoundingClientRect();
+    if (rect.width <= 0 || rect.height <= 0) return;
+    const nx = (e.clientX - rect.left) / rect.width - 0.5;
+    const ny = (e.clientY - rect.top) / rect.height - 0.5;
+    targetTiltRef.current = { x: nx * 0.14, y: -ny * 0.08 };
     wakeRef.current?.();
   };
 
@@ -647,190 +1022,24 @@ export function LandingClosingScene3D() {
 
   return (
     <div
-      ref={stageRef}
       id="landing-closing-scene3d"
-      className="axo-v14-closing-stage"
-      role="img"
-      aria-label="Mặt cầu S tâm I bán kính R = 5 cắt bởi mặt phẳng (P) tạo đường tròn giao tuyến tâm H bán kính r = 4"
-      data-cta-visual="analytical-3d-svg"
-      data-cta-phase={motionState.phase}
+      ref={shellRef}
+      className="axo-v14-closing-visual"
+      data-cta-visual="spatial-multi-solid-3d"
+      data-closing-beat={beat}
       onPointerMove={handlePointerMove}
       onPointerLeave={handlePointerLeave}
     >
-      <svg
-        className="axo-v14-closing-svg"
-        viewBox={`0 0 ${projection.width} ${projection.height}`}
-        aria-hidden="true"
-        focusable="false"
-      >
-        <ellipse
-          className="axo-v14-svg-contact-halo"
-          cx={projection.contactBase.x}
-          cy={projection.contactBase.y}
-          rx={projection.contactBase.rx}
-          ry={projection.contactBase.ry}
-          opacity={motionState.sphereOpacity}
-        />
+      <div
+        ref={hostRef}
+        className={
+          webglAllowed && webglReady && !contextLost
+            ? "axo-v14-closing-canvas-host"
+            : "axo-v14-closing-canvas-host is-hidden"
+        }
+      />
 
-        <circle
-          className="axo-v14-svg-sphere-shell"
-          cx={projection.sphereCenter.x}
-          cy={projection.sphereCenter.y}
-          r={projection.sphereCenter.rPx}
-          opacity={motionState.sphereOpacity}
-        />
-
-        {/* Back hemisphere great-circle guides (dashed) */}
-        <g opacity={motionState.sphereOpacity}>
-          {projection.equatorBackPath ? (
-            <path
-              className="axo-v14-svg-sphere-arc-back"
-              d={projection.equatorBackPath}
-              fill="none"
-            />
-          ) : null}
-          {projection.meridianBackPath ? (
-            <path
-              className="axo-v14-svg-sphere-arc-back"
-              d={projection.meridianBackPath}
-              fill="none"
-            />
-          ) : null}
-        </g>
-
-        {/* Cutting plane (P): z = 3 */}
-        {motionState.planeProgress > 0.02 && (
-          <polygon
-            className="axo-v14-svg-cutting-plane"
-            points={projection.planePolygonPoints}
-            fillOpacity={(0.24 * motionState.planeProgress).toFixed(3)}
-            strokeOpacity={(0.76 * motionState.planeProgress).toFixed(3)}
-          />
-        )}
-
-        {/* Shaded intersection disk (C) = (S) intersect (P) */}
-        {motionState.sectionFillOpacity > 0.02 && (
-          <polygon
-            className="axo-v14-svg-sphere-section-fill"
-            points={projection.sectionPolygonPoints}
-            fillOpacity={(0.36 * motionState.sectionFillOpacity).toFixed(3)}
-          />
-        )}
-
-        {/* Back arc of intersection circle (dashed amber) */}
-        {projection.circleBackPath ? (
-          <path
-            className="axo-v14-svg-sphere-circle-back"
-            d={projection.circleBackPath}
-            fill="none"
-          />
-        ) : null}
-
-        {/* Orthogonal distance axis IH, radius HA, and sphere radius IA (3-4-5 right triangle) */}
-        {motionState.axisProgress > 0.02 && (
-          <line
-            className="axo-v14-svg-edge-altitude"
-            x1={projection.axisIH.x1}
-            y1={projection.axisIH.y1}
-            x2={projection.axisIH.x2}
-            y2={projection.axisIH.y2}
-          />
-        )}
-
-        {motionState.planeProgress > 0.7 && (
-          <path
-            className="axo-v14-svg-edge-altitude"
-            d={projection.rightAnglePath}
-            fill="none"
-            opacity={((motionState.planeProgress - 0.7) / 0.3).toFixed(3)}
-          />
-        )}
-
-        {motionState.triangleReveal > 0.02 && (
-          <g opacity={motionState.triangleReveal.toFixed(3)}>
-            <line
-              className="axo-v14-svg-sphere-radius"
-              x1={projection.radiusHA.x1}
-              y1={projection.radiusHA.y1}
-              x2={projection.radiusHA.x2}
-              y2={projection.radiusHA.y2}
-            />
-            <line
-              className="axo-v14-svg-sphere-slant"
-              x1={projection.slantIA.x1}
-              y1={projection.slantIA.y1}
-              x2={projection.slantIA.x2}
-              y2={projection.slantIA.y2}
-            />
-          </g>
-        )}
-
-        {/* Front hemisphere great-circle arcs */}
-        <g opacity={motionState.sphereOpacity}>
-          {projection.equatorFrontPath ? (
-            <path
-              className="axo-v14-svg-sphere-arc-front"
-              d={projection.equatorFrontPath}
-              fill="none"
-            />
-          ) : null}
-          {projection.meridianFrontPath ? (
-            <path
-              className="axo-v14-svg-sphere-arc-front"
-              d={projection.meridianFrontPath}
-              fill="none"
-            />
-          ) : null}
-        </g>
-
-        {/* Front arc of intersection circle (crisp amber) */}
-        {projection.circleFrontPath ? (
-          <path
-            className="axo-v14-svg-sphere-circle-front"
-            d={projection.circleFrontPath}
-            fill="none"
-          />
-        ) : null}
-
-        {/* Anchors & sparse labels: I, H, A */}
-        {ptI && (
-          <g opacity={motionState.sphereOpacity}>
-            <circle className="axo-v14-svg-vertex-dot" cx={ptI.x} cy={ptI.y} r="3.4" />
-            <text className="axo-v14-svg-vertex-text" x={ptI.x - 13} y={ptI.y + 4}>
-              I
-            </text>
-          </g>
-        )}
-
-        {ptH && motionState.axisProgress > 0.65 && (
-          <g opacity={((motionState.axisProgress - 0.65) / 0.35).toFixed(3)}>
-            <circle className="axo-v14-svg-seed-dot" cx={ptH.x} cy={ptH.y} r="4.0" />
-            <text className="axo-v14-svg-label-seed" x={ptH.x - 13} y={ptH.y - 8}>
-              H
-            </text>
-          </g>
-        )}
-
-        {ptA && motionState.triangleReveal > 0.7 && (
-          <g opacity={((motionState.triangleReveal - 0.7) / 0.3).toFixed(3)}>
-            <circle className="axo-v14-svg-section-dot" cx={ptA.x} cy={ptA.y} r="4.2" />
-            <text className="axo-v14-svg-label-inter" x={ptA.x + 13} y={ptA.y + 4}>
-              A
-            </text>
-          </g>
-        )}
-
-        {motionState.planeProgress > 0.55 && (
-          <text
-            className="axo-v14-svg-label-seed"
-            x={projection.planeLabelPos.x}
-            y={projection.planeLabelPos.y}
-            opacity={motionState.planeProgress.toFixed(3)}
-          >
-            (P)
-          </text>
-        )}
-      </svg>
+      {(!webglAllowed || !webglReady || contextLost) && <ClosingFallbackSvg />}
     </div>
   );
 }

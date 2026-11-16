@@ -20,11 +20,10 @@ export function LandingClosingV14() {
       <div className="axo-v14-closing-shell">
         <div className="axo-v14-closing-copy">
           <h2 id="landing-final-title" className="axo-v14-closing-title">
-            Đưa đề bài của bạn vào không gian 3D.
+            Đưa bài toán của bạn vào không gian 3D.
           </h2>
           <p className="axo-v14-closing-lead">
-            Nhập trực tiếp đề bài tiếng Việt hoặc mở thư viện bài mẫu để quan
-            sát khối đa diện, giao tuyến và thiết diện thật.
+            Nhập đề bài tiếng Việt hoặc khám phá các mô hình có sẵn trong thư viện.
           </p>
           <div className="axo-v14-closing-actions">
             <button

@@ -12,6 +12,7 @@ import { useAuthStore } from "../../state/auth";
 import { AnnotatedPhrase } from "./AnnotatedHeading";
 import { separateLabelPositions } from "./LandingHeroScene3D";
 import {
+  computeBoundedPlaneQuad,
   enterAxoWorkspace,
   LANDING_PYRAMID_SAMPLE,
   type LandingPointSpec,
@@ -53,8 +54,8 @@ export interface HeroStoryboardState {
   readonly settled: boolean;
 }
 
-export const HERO_STORYBOARD_MS = 3600;
-export const HERO_SECTION_FILL_OPACITY = 0.5;
+export const HERO_STORYBOARD_MS = 3800;
+export const HERO_SECTION_FILL_OPACITY = 0.28;
 
 interface ClippedPolygonFace {
   readonly pts: THREE.Vector3[];
@@ -98,7 +99,7 @@ export function evaluateHeroStoryboard(
       planeSweep: 1,
       traceProgress: 1,
       sectionFill: 1,
-      capLift: 0.085,
+      capLift: 0,
       orbitOffsetRad: 0,
       settled: true,
     };
@@ -115,7 +116,7 @@ export function evaluateHeroStoryboard(
   const planeSweep = clampPhase(p, 0.44, 0.68);
   const traceProgress = clampPhase(p, 0.52, 0.8);
   const sectionFill = clampPhase(p, 0.74, 0.98);
-  const capLift = 0.085 * clampPhase(p, 0.76, 1.0);
+  const capLift = 0;
   const orbitOffsetRad = (1 - clampPhase(p, 0.0, 0.92)) * 0.14;
 
   return {
@@ -517,11 +518,10 @@ function HeroSpatialStage() {
     renderer.setClearColor(0x000000, 0);
 
     const scene = new THREE.Scene();
-    const camera = new THREE.PerspectiveCamera(34, width / height, 0.1, 100);
-    const [camX, camY, camZ] = LANDING_PYRAMID_SAMPLE.defaultCamera;
+    const camera = new THREE.PerspectiveCamera(33, width / height, 0.1, 100);
     const [lookX, lookY, lookZ] = LANDING_PYRAMID_SAMPLE.defaultLookAt;
-    camera.position.set(camX * 0.94, camY * 0.94, camZ * 0.94);
-    camera.lookAt(lookX, lookY + 0.16, lookZ);
+    camera.position.set(10.4, 6.3, -10.8);
+    camera.lookAt(lookX, lookY + 0.18, lookZ);
 
     const ambientLight = new THREE.AmbientLight(0xfffdf9, 2.1);
     const keyLight = new THREE.DirectionalLight(0xfffaf0, 2.15);
@@ -594,40 +594,36 @@ function HeroSpatialStage() {
       if (hi.length >= 3) upperFaces.push({ pts: hi });
     }
 
-    // 1. Contact shadow & altitude SA perp (ABCD)
-    const shadowOuterGeo = track(new THREE.CircleGeometry(2.52, 48));
-    shadowOuterGeo.rotateX(-Math.PI / 2);
-    const shadowOuterMat = track(
+    // 1. Contact ground halo & altitude SA perp (ABCD)
+    const haloOuterGeo = track(new THREE.CircleGeometry(2.44, 48));
+    haloOuterGeo.rotateX(-Math.PI / 2);
+    const haloOuterMat = track(
       new THREE.MeshBasicMaterial({
         color: 0x191918,
         transparent: true,
-        opacity: 0.036,
+        opacity: 0.03,
         depthWrite: false,
       }),
     );
-    const shadowOuterMesh = new THREE.Mesh(shadowOuterGeo, shadowOuterMat);
-    shadowOuterMesh.position.set(baseCenter.x, A.y - 0.04, baseCenter.z);
-    shadowOuterMesh.renderOrder = 0;
-    root.add(shadowOuterMesh);
+    const haloOuterMesh = new THREE.Mesh(haloOuterGeo, haloOuterMat);
+    haloOuterMesh.position.set(baseCenter.x, A.y - 0.04, baseCenter.z);
+    haloOuterMesh.renderOrder = 0;
+    root.add(haloOuterMesh);
 
-    const shadowInnerGeo = track(new THREE.CircleGeometry(1.76, 40));
-    shadowInnerGeo.rotateX(-Math.PI / 2);
-    const shadowInnerMat = track(
+    const haloInnerGeo = track(new THREE.CircleGeometry(1.68, 40));
+    haloInnerGeo.rotateX(-Math.PI / 2);
+    const haloInnerMat = track(
       new THREE.MeshBasicMaterial({
         color: 0x191918,
         transparent: true,
-        opacity: 0.058,
+        opacity: 0.048,
         depthWrite: false,
       }),
     );
-    const shadowInnerMesh = new THREE.Mesh(shadowInnerGeo, shadowInnerMat);
-    shadowInnerMesh.position.set(baseCenter.x, A.y - 0.032, baseCenter.z);
-    shadowInnerMesh.renderOrder = 1;
-    root.add(shadowInnerMesh);
-
-    const saLowerLine = createLineSegment(A, M, 0x0075de, 0.56, true, track);
-    saLowerLine.renderOrder = 2;
-    root.add(saLowerLine);
+    const haloInnerMesh = new THREE.Mesh(haloInnerGeo, haloInnerMat);
+    haloInnerMesh.position.set(baseCenter.x, A.y - 0.032, baseCenter.z);
+    haloInnerMesh.renderOrder = 1;
+    root.add(haloInnerMesh);
 
     const uAB = new THREE.Vector3().subVectors(B, A).normalize().multiplyScalar(0.26);
     const uAS = new THREE.Vector3().subVectors(S, A).normalize().multiplyScalar(0.26);
@@ -636,49 +632,63 @@ function HeroSpatialStage() {
     const rightAngle2 = createLineSegment(A.clone().add(uAB), footCorner, 0x0075de, 0.58, false, track);
     root.add(rightAngle1, rightAngle2);
 
-    // 2. Lower Frustum Volume + Split Lower Edges (below plane x + y + 2z = 6)
+    // 2. Unified Pyramid Solid (controlled translucent lower & upper faces, dynamic front-solid / back-dashed edges)
     const lowerGroup = new THREE.Group();
     const lowerGeo = track(buildFacesBufferGeometry(lowerFaces));
     const lowerMat = track(
       new THREE.MeshStandardMaterial({
-        color: 0xfaf7f2,
+        color: 0xf7f5f0,
         emissive: 0x38342e,
-        emissiveIntensity: 0.28,
+        emissiveIntensity: 0.22,
         roughness: 0.86,
         metalness: 0.02,
         flatShading: true,
         transparent: true,
-        opacity: 0.86,
+        opacity: 0.3,
         side: THREE.DoubleSide,
+        depthWrite: false,
       }),
     );
     const lowerMesh = new THREE.Mesh(lowerGeo, lowerMat);
     lowerMesh.renderOrder = 2;
     lowerGroup.add(lowerMesh);
 
-    const lowerVisibleSegs: readonly [THREE.Vector3, THREE.Vector3][] = [
-      [B, E],
-      [D, F],
-      [B, N],
-      [D, P],
-    ];
-    const lowerSolidEdgeCyls: THREE.Mesh[] = [];
-    for (const [u, v] of lowerVisibleSegs) {
-      const cyl = createCylinderEdge(u, v, 0.02, 0x191918, 0.88, track);
-      cyl.renderOrder = 6;
-      lowerSolidEdgeCyls.push(cyl);
-      lowerGroup.add(cyl);
-    }
-    const hiddenBaseLines: THREE.Line[] = [
-      createLineSegment(A, B, 0x615d59, 0.46, true, track),
-      createLineSegment(A, D, 0x615d59, 0.46, true, track),
-    ];
-    for (const hl of hiddenBaseLines) {
-      hl.renderOrder = 2;
-      lowerGroup.add(hl);
-    }
+    const faceSpecs = pyramidFaces.map((face) => {
+      const e1 = new THREE.Vector3().subVectors(face[1], face[0]);
+      const e2 = new THREE.Vector3().subVectors(face[2], face[0]);
+      const normal = new THREE.Vector3().crossVectors(e1, e2).normalize();
+      const center = face
+        .reduce((acc, pt) => acc.add(pt), new THREE.Vector3())
+        .divideScalar(face.length);
+      return { normal, center };
+    });
 
-    const nodeGeo = track(new THREE.SphereGeometry(0.058, 16, 16));
+    const edgeBindings = [
+      { id: "AB", a: A, b: B, faces: [0, 1] as const, altitude: false },
+      { id: "BC", a: B, b: C, faces: [0, 2] as const, altitude: false },
+      { id: "CD", a: C, b: D, faces: [0, 3] as const, altitude: false },
+      { id: "DA", a: D, b: A, faces: [0, 4] as const, altitude: false },
+      { id: "SA", a: S, b: A, faces: [1, 4] as const, altitude: true },
+      { id: "SB", a: S, b: B, faces: [1, 2] as const, altitude: false },
+      { id: "SC", a: S, b: C, faces: [2, 3] as const, altitude: false },
+      { id: "SD", a: S, b: D, faces: [3, 4] as const, altitude: false },
+    ].map((edge) => {
+      const solid = createCylinderEdge(edge.a, edge.b, 0.0175, 0x191918, 0.88, track);
+      solid.renderOrder = 6;
+      const dashed = createLineSegment(
+        edge.a,
+        edge.b,
+        edge.altitude ? 0x0075de : 0x615d59,
+        edge.altitude ? 0.56 : 0.44,
+        true,
+        track,
+      );
+      dashed.renderOrder = 2;
+      lowerGroup.add(solid, dashed);
+      return { ...edge, solid, dashed };
+    });
+
+    const nodeGeo = track(new THREE.SphereGeometry(0.056, 16, 16));
     const baseNodeMat = track(
       new THREE.MeshBasicMaterial({ color: 0x191918, transparent: true, opacity: 0.9 }),
     );
@@ -698,7 +708,7 @@ function HeroSpatialStage() {
     lowerGroup.add(dotA);
     root.add(lowerGroup);
 
-    // 3. Upper Cap Volume + Split Upper Edges (moves together cleanly along cutPlaneNormal)
+    // 3. Upper Pyramid Shell (unified seamlessly with lower frustum, no split detachment)
     const upperGroup = new THREE.Group();
     const upperGeo = track(buildFacesBufferGeometry(upperFaces));
     const upperMat = track(
@@ -708,7 +718,7 @@ function HeroSpatialStage() {
         metalness: 0.02,
         flatShading: true,
         transparent: true,
-        opacity: 0.24,
+        opacity: 0.14,
         side: THREE.DoubleSide,
         depthWrite: false,
       }),
@@ -716,23 +726,6 @@ function HeroSpatialStage() {
     const upperMesh = new THREE.Mesh(upperGeo, upperMat);
     upperMesh.renderOrder = 3;
     upperGroup.add(upperMesh);
-
-    const upperEdgeLines: THREE.Line[] = [];
-    for (const [u, v] of [
-      [S, E],
-      [S, F],
-      [S, C],
-      [N, C],
-      [P, C],
-    ] as const) {
-      const ln = createLineSegment(u, v, 0x31302e, 0.66, false, track);
-      ln.renderOrder = 6;
-      upperEdgeLines.push(ln);
-      upperGroup.add(ln);
-    }
-    const saUpperLine = createLineSegment(M, S, 0x0075de, 0.48, true, track);
-    saUpperLine.renderOrder = 2;
-    upperGroup.add(saUpperLine);
 
     const dotS = new THREE.Mesh(nodeGeo, baseNodeMat);
     dotS.position.copy(S);
@@ -743,9 +736,10 @@ function HeroSpatialStage() {
     upperGroup.add(dotS, dotC);
     root.add(upperGroup);
 
-    // 4. Cutting Plane (MNP)
+    // 4. Cutting Plane (MNP) with tightened margin 0.26
     const planeGroup = new THREE.Group();
-    const planeQuadVecs = LANDING_PYRAMID_SAMPLE.planeQuad.map(
+    const sectionWorldPts: Vec3Tuple[] = loopPts.map((pt) => [pt.x, pt.y, pt.z]);
+    const planeQuadVecs = computeBoundedPlaneQuad(sectionWorldPts, [1, 2, -1], 0.26).map(
       (pt) => new THREE.Vector3(pt[0], pt[1], pt[2]),
     );
     const planeCenter = planeQuadVecs
@@ -759,7 +753,7 @@ function HeroSpatialStage() {
       new THREE.MeshBasicMaterial({
         color: 0x62aef0,
         transparent: true,
-        opacity: 0.18,
+        opacity: 0.14,
         side: THREE.DoubleSide,
         depthWrite: false,
       }),
@@ -870,14 +864,28 @@ function HeroSpatialStage() {
         { id: "E", label: "E", role: "intersection", pos: E, lift: 0, visible: currentBeat.planeSweep > 0.55 },
         { id: "F", label: "F", role: "intersection", pos: F, lift: 0, visible: currentBeat.planeSweep > 0.55 },
       ];
+      tmp.copy(pyramidCentroid);
+      root.localToWorld(tmp);
+      tmp.project(camera);
+      const centerPx = (tmp.x * 0.5 + 0.5) * cw;
+      const centerPy = (-tmp.y * 0.5 + 0.5) * ch;
+
       const candidates = specs.map((sp) => {
         tmp.copy(sp.pos).addScaledVector(cutPlaneNormal, sp.lift);
         root.localToWorld(tmp);
         tmp.project(camera);
+        const px = (tmp.x * 0.5 + 0.5) * cw;
+        const py = (-tmp.y * 0.5 + 0.5) * ch;
+        if (sp.id === "S") {
+          return { id: sp.id, x: px, y: py - 15 };
+        }
+        const dx = px - centerPx;
+        const dy = py - centerPy;
+        const len = Math.hypot(dx, dy) || 1;
         return {
           id: sp.id,
-          x: (tmp.x * 0.5 + 0.5) * cw + 14,
-          y: (-tmp.y * 0.5 + 0.5) * ch - 10,
+          x: px + (dx / len) * 18,
+          y: py + (dy / len) * 18,
         };
       });
       separateLabelPositions(candidates, cw, ch, 26, 18, 18, 22);
@@ -913,29 +921,21 @@ function HeroSpatialStage() {
       curTiltX += (targetTiltRef.current.x - curTiltX) * damp;
       curTiltY += (targetTiltRef.current.y - curTiltY) * damp;
 
-      shadowOuterMat.opacity = 0.036 * state.solidReveal;
-      shadowInnerMat.opacity = 0.058 * state.solidReveal;
+      const tmpNormal = new THREE.Vector3();
+      const tmpCenter = new THREE.Vector3();
+      const tmpToCam = new THREE.Vector3();
+
+      haloOuterMat.opacity = 0.03 * state.solidReveal;
+      haloInnerMat.opacity = 0.048 * state.solidReveal;
       baseNodeMat.opacity = 0.9 * state.solidReveal;
       hiddenNodeMat.opacity = 0.45 * state.solidReveal;
-      (saLowerLine.material as THREE.LineDashedMaterial).opacity = 0.56 * state.solidReveal;
-      (saUpperLine.material as THREE.LineDashedMaterial).opacity = 0.48 * state.solidReveal;
       (rightAngle1.material as THREE.LineBasicMaterial).opacity = 0.58 * state.solidReveal;
       (rightAngle2.material as THREE.LineBasicMaterial).opacity = 0.58 * state.solidReveal;
 
       root.scale.setScalar(0.95 + 0.05 * state.solidReveal);
-      lowerMat.opacity = 0.9 * state.solidReveal;
-      upperMat.opacity = 0.24 * state.solidReveal;
-      upperGroup.position.copy(cutPlaneNormal).multiplyScalar(state.capLift);
-
-      for (const cyl of lowerSolidEdgeCyls) {
-        (cyl.material as THREE.MeshBasicMaterial).opacity = 0.88 * state.solidReveal;
-      }
-      for (const hl of hiddenBaseLines) {
-        (hl.material as THREE.LineDashedMaterial).opacity = 0.46 * state.solidReveal;
-      }
-      for (const ul of upperEdgeLines) {
-        (ul.material as THREE.LineBasicMaterial).opacity = 0.66 * state.solidReveal;
-      }
+      lowerMat.opacity = 0.3 * state.solidReveal;
+      upperMat.opacity = 0.14 * state.solidReveal;
+      upperGroup.position.set(0, 0, 0);
 
       seedMat.opacity = state.seedReveal;
       for (const d of seedDots) {
@@ -943,12 +943,12 @@ function HeroSpatialStage() {
         d.scale.setScalar(Math.max(0.05, 1.06 * state.seedReveal));
       }
 
-      planeMat.opacity = 0.18 * state.planeSweep;
+      planeMat.opacity = 0.14 * state.planeSweep;
       planeGroup.position
         .copy(planeCenter)
-        .addScaledVector(cutPlaneNormal, (1 - state.planeSweep) * 0.65);
+        .addScaledVector(cutPlaneNormal, (1 - state.planeSweep) * 0.55);
       for (const rim of planeRimCyls) {
-        (rim.material as THREE.MeshBasicMaterial).opacity = 0.82 * state.planeSweep;
+        (rim.material as THREE.MeshBasicMaterial).opacity = 0.78 * state.planeSweep;
       }
 
       interMat.opacity = state.planeSweep;
@@ -970,8 +970,28 @@ function HeroSpatialStage() {
       secMat.opacity = HERO_SECTION_FILL_OPACITY * state.sectionFill;
       secMesh.visible = state.sectionFill > 0.01;
 
-      root.rotation.y = 0.1 - state.orbitOffsetRad + curTiltX;
+      root.rotation.y = 0.06 - state.orbitOffsetRad + curTiltX;
       root.rotation.x = 0.02 + curTiltY;
+      root.updateMatrixWorld(true);
+
+      const frontFacing = faceSpecs.map((fs) => {
+        tmpNormal.copy(fs.normal).transformDirection(root.matrixWorld);
+        tmpCenter.copy(fs.center).applyMatrix4(root.matrixWorld);
+        tmpToCam.copy(camera.position).sub(tmpCenter);
+        return tmpNormal.dot(tmpToCam) > 0;
+      });
+
+      for (const edge of edgeBindings) {
+        const isFrontEdge = frontFacing[edge.faces[0]] || frontFacing[edge.faces[1]];
+        edge.solid.visible = isFrontEdge;
+        edge.dashed.visible = !isFrontEdge;
+        if (isFrontEdge) {
+          (edge.solid.material as THREE.MeshBasicMaterial).opacity = 0.88 * state.solidReveal;
+        } else {
+          (edge.dashed.material as THREE.LineDashedMaterial).opacity =
+            (edge.altitude ? 0.56 : 0.44) * state.solidReveal;
+        }
+      }
 
       renderer.render(scene, camera);
 
@@ -1188,9 +1208,10 @@ export function LandingHeroV14() {
       <div className="axo-v14-hero-shell">
         <div className="axo-v14-hero-copy">
           <h1 id="axo-v14-hero-heading" className="axo-v14-hero-title">
-            Hình học không gian,
-            <br />
-            dễ <AnnotatedPhrase variant="circle">hình dung</AnnotatedPhrase> hơn.
+            <span className="axo-v14-hero-title-line">Hình học không gian,</span>
+            <span className="axo-v14-hero-title-line">
+              dễ <AnnotatedPhrase variant="circle">hình dung</AnnotatedPhrase> hơn.
+            </span>
           </h1>
           <p className="axo-v14-hero-lead">
             Nhập đề bài tiếng Việt để quan sát khối đa diện 3D chính xác, mặt

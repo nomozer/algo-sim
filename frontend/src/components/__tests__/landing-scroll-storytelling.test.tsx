@@ -3,6 +3,7 @@ import { resolve } from "node:path";
 import { renderToStaticMarkup } from "react-dom/server";
 import { describe, expect, it } from "vitest";
 import {
+  computeChapterEnvelope,
   computeStoryScrollProgress,
   interpolateStoryPose,
   LandingStorytellingV14,
@@ -11,16 +12,31 @@ import {
 } from "../landing/LandingStorytellingV14";
 
 describe("AXO Landing — Scroll-Driven Spatial Storytelling", () => {
-  it("computes monotonic normalized scroll progress across chapters forward and reverse", () => {
-    // Anchor is 0.48 * vh on desktop, 0.68 * vh in compact stacked layout
-    expect(computeStoryScrollProgress(600, 1800, 1000)).toBe(0);
-    expect(computeStoryScrollProgress(480, 1680, 1000)).toBe(0);
-    expect(computeStoryScrollProgress(-120, 1080, 1000)).toBeCloseTo(0.5, 4);
-    expect(computeStoryScrollProgress(-720, 480, 1000)).toBe(1);
-    expect(computeStoryScrollProgress(-950, 250, 1000)).toBe(1);
-    expect(computeStoryScrollProgress(680, 1880, 1000, true)).toBe(0);
-    expect(computeStoryScrollProgress(80, 1280, 1000, true)).toBeCloseTo(0.5, 4);
-    expect(computeStoryScrollProgress(-520, 680, 1000, true)).toBe(1);
+  it("computes monotonic normalized scroll progress across runway and guarantees non-overlapping chapter dissolve", () => {
+    // travel = runwayHeight - stickyHeight = 2000 - 800 = 1200
+    expect(computeStoryScrollProgress(120, 2000, 800)).toBe(0);
+    expect(computeStoryScrollProgress(0, 2000, 800)).toBe(0);
+    expect(computeStoryScrollProgress(-600, 2000, 800)).toBeCloseTo(0.5, 4);
+    expect(computeStoryScrollProgress(-1200, 2000, 800)).toBe(1);
+    expect(computeStoryScrollProgress(-1500, 2000, 800)).toBe(1);
+
+    // At every normalized progress step in [0, 1], at most one chapter has opacity > 0
+    for (let step = 0; step <= 100; step++) {
+      const p = step / 100;
+      const visibleCount = [0, 1, 2, 3].filter(
+        (idx) => computeChapterEnvelope(p, idx, false).opacity > 0,
+      ).length;
+      expect(visibleCount).toBeLessThanOrEqual(1);
+    }
+
+    // Reduced motion exposes all chapters statically without dissolve fade
+    for (const idx of [0, 1, 2, 3]) {
+      expect(computeChapterEnvelope(0.3, idx, true)).toEqual({
+        opacity: 1,
+        offsetY: 0,
+        isVisible: true,
+      });
+    }
 
     // Continuous monotonic interpolation across [0, 1]
     const samples = [0, 0.16, 0.34, 0.5, 0.64, 0.88, 1];
@@ -51,7 +67,7 @@ describe("AXO Landing — Scroll-Driven Spatial Storytelling", () => {
     expect(r3.sectionFill).toBe(1);
   });
 
-  it("removes fixed 4-button tablist UI and gates final metrics strictly to Stage 4", () => {
+  it("removes fixed 4-button tablist UI and keeps ALL 4 chapters free of numerical answers", () => {
     const html = renderToStaticMarkup(<LandingStorytellingV14 />);
 
     expect(html).toContain('id="cach-hoat-dong"');
@@ -60,22 +76,28 @@ describe("AXO Landing — Scroll-Driven Spatial Storytelling", () => {
     expect(html).not.toContain('id="btn-landing-story-step-0"');
     expect(html).not.toContain('id="btn-landing-story-step-3"');
 
-    // All 4 scroll chapters present in flow
+    // All 4 scroll chapters present in DOM
     for (const stage of STORY_STAGES_V14) {
       expect(html).toContain(stage.chapterHeading);
     }
 
-    // Strict epistemic gating: final area and edge lengths do NOT leak at initial progress = 0
+    // Zero pre-displayed answers across rendered HTML and all 4 stage specs
     expect(html).not.toContain("3√7");
-    expect(html).not.toContain("MQ = NP = 2√2");
+    expect(html).not.toContain("2√2");
+    expect(html).not.toContain("a = 4");
+    expect(html).not.toContain("MN = 2");
+    expect(html).not.toContain("PQ = 4");
+    expect(html).not.toContain("axo-v14-story-verified");
 
-    // Stage 4 alone unlocks verified result
-    for (const s of STORY_STAGES_V14.slice(0, 3)) {
-      expect(s.verifiedResult).toBeUndefined();
+    for (const s of STORY_STAGES_V14) {
+      expect(s.summary).not.toContain("3√7");
+      expect(s.summary).not.toContain("2√2");
+      expect(s.summary).not.toContain("a = 4");
+      expect(s.relationNote).not.toContain("3√7");
       expect(s.relationNote).not.toContain("2√2");
+      expect(s.relationNote).not.toContain("MN = 2");
+      expect(s.relationNote).not.toContain("PQ = 4");
     }
-    expect(STORY_STAGES_V14[3].verifiedResult).toBe("S(MNPQ) = 3√7");
-    expect(STORY_STAGES_V14[3].relationNote).toContain("MQ = NP = 2√2");
 
     const p = projectPrismPoint3D([2, 0, -1], -0.28, 0.27, 300, 220, 68);
     expect(Number.isFinite(p.x)).toBe(true);

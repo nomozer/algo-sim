@@ -29,7 +29,7 @@ describe("AXO Landing V1.4 — Continuous Spatial Storytelling", () => {
     expect(mid.planeSweep).toBeGreaterThan(0.5);
   });
 
-  it("enforces strict epistemic gating before Stage 4 without 4-button primary UI", () => {
+  it("renders pure answer-free product storytelling across all 4 chapters without 4-button primary UI", () => {
     const initialHtml = renderToStaticMarkup(<LandingStorytellingV14 />);
     expect(initialHtml).toContain('id="cach-hoat-dong"');
     expect(initialHtml).toContain("axo-v14-anno-underline");
@@ -40,17 +40,19 @@ describe("AXO Landing V1.4 — Continuous Spatial Storytelling", () => {
     expect(initialHtml).toContain('data-story-chapter="0"');
     expect(initialHtml).toContain('data-story-chapter="3"');
 
-    // Final area and edge metric ratios must NOT appear in Stage 0 initial view
+    // Zero pre-displayed math answers or dimension measurements in Storytelling V1.4
     expect(initialHtml).not.toContain("3√7");
-    expect(initialHtml).not.toContain("MQ = NP = 2√2");
+    expect(initialHtml).not.toContain("2√2");
+    expect(initialHtml).not.toContain("a = 4");
+    expect(initialHtml).not.toContain("MN = 2");
+    expect(initialHtml).not.toContain("PQ = 4");
 
-    // Stage 4 spec alone holds the verified result
-    for (const s of STORY_STAGES_V14.slice(0, 3)) {
-      expect(s.verifiedResult).toBeUndefined();
+    for (const s of STORY_STAGES_V14) {
+      expect(s.summary).not.toContain("a = 4");
+      expect(s.relationNote).not.toContain("3√7");
       expect(s.relationNote).not.toContain("2√2");
+      expect(s.relationNote).not.toContain("MN = 2");
     }
-    expect(STORY_STAGES_V14[3].verifiedResult).toBe("S(MNPQ) = 3√7");
-    expect(STORY_STAGES_V14[3].relationNote).toContain("MQ = NP = 2√2");
   });
 
   it("uses 0 WebGL contexts and preserves token hygiene", () => {

@@ -265,7 +265,7 @@ function buildSampleRig(
       color: isV14 ? 0xffffff : 0xeef3f8,
       vertexColors: isV14,
       transparent: true,
-      opacity: isV14 ? 0.56 : 0.24,
+      opacity: isV14 ? 0.3 : 0.24,
       side: THREE.DoubleSide,
       depthWrite: false,
     }),
@@ -275,7 +275,7 @@ function buildSampleRig(
       color: isV14 ? 0xffffff : 0xf4f6f9,
       vertexColors: isV14,
       transparent: true,
-      opacity: isV14 ? 0.42 : 0.14,
+      opacity: isV14 ? 0.2 : 0.14,
       side: THREE.DoubleSide,
       depthWrite: false,
     }),
@@ -772,11 +772,11 @@ export function SpatialSceneCanvas({
         const isV14Presentation = p.presentation === "v14";
         rig.planeMesh.visible = curPlaneOp > 0.02;
         rig.planeBorderLine.visible = curPlaneOp > 0.02;
-        rig.planeFillMat.opacity = curPlaneOp * (isV14Presentation ? 0.22 : 0.16);
-        rig.planeBorderMat.opacity = curPlaneOp * (isV14Presentation ? 0.72 : 0.56);
+        rig.planeFillMat.opacity = curPlaneOp * (isV14Presentation ? 0.14 : 0.16);
+        rig.planeBorderMat.opacity = curPlaneOp * (isV14Presentation ? 0.68 : 0.56);
 
         rig.secFillMesh.visible = curSecFill > 0.02;
-        rig.secFillMat.opacity = curSecFill * (isV14Presentation ? 0.34 : 0.25);
+        rig.secFillMat.opacity = curSecFill * (isV14Presentation ? 0.28 : 0.25);
 
         const totalSegs = rig.sectionSegments.length;
         const scaled = Math.max(0, Math.min(1, curSecProg)) * totalSegs;

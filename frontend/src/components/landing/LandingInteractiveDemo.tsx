@@ -109,8 +109,8 @@ export function LandingInteractiveDemo({
         >
           {/* Dominant Interactive 3D Viewport */}
           <div className="axo-sp-demo-canvas-wrap">
-            <div className="axo-sp-demo-toolbar">
-              <span className="axo-sp-demo-toolbar-title">{sample.title}</span>
+            <div className={isV14 ? "axo-sp-demo-toolbar is-v14" : "axo-sp-demo-toolbar"}>
+              {!isV14 && <span className="axo-sp-demo-toolbar-title">{sample.title}</span>}
               <button
                 id="btn-landing-demo-reset"
                 type="button"
@@ -133,14 +133,24 @@ export function LandingInteractiveDemo({
               planeOpacity={activeStage.planeOpacity}
               sectionProgress={activeStage.sectionProgress}
               sectionFillOpacity={activeStage.sectionFillOpacity}
-              cameraPos={activeStage.cameraPos}
-              lookAt={activeStage.lookAt}
+              cameraPos={
+                isV14 && activeStage.v14CameraPos
+                  ? activeStage.v14CameraPos
+                  : activeStage.cameraPos
+              }
+              lookAt={
+                isV14 && activeStage.v14LookAt
+                  ? activeStage.v14LookAt
+                  : activeStage.lookAt
+              }
               interactiveOrbit={true}
               orbitResetNonce={orbitResetNonce}
               onUserOrbit={() => setHasCameraMoved(true)}
               presentation={presentation}
               bottomHint={
-                hasCameraMoved ? undefined : "Kéo để xoay 3D · Phím mũi tên để đổi góc"
+                isV14 || hasCameraMoved
+                  ? undefined
+                  : "Kéo để xoay 3D · Phím mũi tên để đổi góc"
               }
               ariaLabel={`Mô hình 3D tương tác: ${sample.title}`}
             />
@@ -154,7 +164,9 @@ export function LandingInteractiveDemo({
                   isV14 ? "axo-v14-demo-step-tag" : "axo-sp-demo-step-eyebrow"
                 }
               >
-                Bước {activeStage.stepNumber} · {activeStage.tag}
+                {isV14
+                  ? activeStage.v14StepLabel ?? `Bước ${stepIndex + 1}`
+                  : `Bước ${activeStage.stepNumber} · ${activeStage.tag}`}
               </span>
             </div>
 
@@ -170,18 +182,27 @@ export function LandingInteractiveDemo({
                   onClick={() => setStepIndex(idx)}
                   onKeyDown={(e) => handleStepKeyDown(e, idx)}
                 >
-                  {st.stepNumber}
+                  {isV14 ? String(idx + 1) : st.stepNumber}
                 </button>
               ))}
             </div>
 
             <div className="axo-sp-demo-step-detail">
-              <h3 className="axo-sp-demo-step-title">{activeStage.title}</h3>
-              <p className="axo-sp-demo-step-desc">{activeStage.summary}</p>
+              <h3 className="axo-sp-demo-step-title">
+                {isV14 ? activeStage.v14Title ?? activeStage.title : activeStage.title}
+              </h3>
+              <p className="axo-sp-demo-step-desc">
+                {isV14 ? activeStage.v14Guide ?? activeStage.summary : activeStage.summary}
+              </p>
             </div>
 
-            {/* Separated Verification / Stage Facts (final results appear strictly on the concluding stage) */}
-            {isFinalVerifiedStage ? (
+            {isV14 ? (
+              activeStage.v14Focus ? (
+                <div className="axo-v14-demo-focus-note">
+                  <p className="axo-v14-demo-focus-text">{activeStage.v14Focus}</p>
+                </div>
+              ) : null
+            ) : isFinalVerifiedStage ? (
               <div
                 className="axo-sp-demo-metrics"
                 aria-label="Kết quả kiểm chứng chính xác"
@@ -193,7 +214,7 @@ export function LandingInteractiveDemo({
                   </div>
                 ))}
               </div>
-            ) : !isV14 ? (
+            ) : (
               <div
                 className="axo-sp-demo-metrics"
                 aria-label={`Dữ kiện bước ${activeStage.stepNumber}`}
@@ -203,7 +224,7 @@ export function LandingInteractiveDemo({
                   <span className="axo-sp-demo-metric-val">{activeStage.mathFact}</span>
                 </div>
               </div>
-            ) : null}
+            )}
 
             {!isV14 && (
               <details className="axo-sp-demo-problem-disclosure">
@@ -216,7 +237,11 @@ export function LandingInteractiveDemo({
               <button
                 id="btn-landing-open-showcase-3d"
                 type="button"
-                className="axo-sp-btn-primary axo-sp-btn-full"
+                className={
+                  isV14
+                    ? "axo-v14-btn axo-v14-btn-primary axo-sp-btn-full"
+                    : "axo-sp-btn-primary axo-sp-btn-full"
+                }
                 onClick={() => openSampleInWorkspace(sample.id)}
               >
                 Mở trong Xưởng 3D

@@ -1,76 +1,47 @@
 import { describe, expect, it } from "vitest";
 import {
-  CLOSING_CYCLE_DURATION_MS,
-  evaluateClosingMotionState,
+  CLOSING_SECTION_FILL_OPACITY,
+  CLOSING_STORYBOARD_MS,
+  evaluateClosingStoryboard,
 } from "../landing/LandingClosingScene3D";
 
-describe("Landing CTA continuous sphere-section construction & reduced-motion states", () => {
-  it("progresses smoothly through Phases A -> B -> C -> D without abrupt jumps", () => {
-    const phaseA = evaluateClosingMotionState(CLOSING_CYCLE_DURATION_MS * 0.08, false);
-    const phaseB = evaluateClosingMotionState(CLOSING_CYCLE_DURATION_MS * 0.30, false);
-    const phaseC = evaluateClosingMotionState(CLOSING_CYCLE_DURATION_MS * 0.56, false);
-    const phaseD = evaluateClosingMotionState(CLOSING_CYCLE_DURATION_MS * 0.78, false);
+describe("Landing CTA multi-solid 4-beat finite storyboard & reduced-motion states", () => {
+  it("progresses monotonically through solids -> plane -> trace -> composition-settled and halts cleanly", () => {
+    const b1 = evaluateClosingStoryboard(CLOSING_STORYBOARD_MS * 0.12, false);
+    const b2 = evaluateClosingStoryboard(CLOSING_STORYBOARD_MS * 0.34, false);
+    const b3 = evaluateClosingStoryboard(CLOSING_STORYBOARD_MS * 0.62, false);
+    const b4 = evaluateClosingStoryboard(CLOSING_STORYBOARD_MS + 10, false);
 
-    expect(phaseA.phase).toBe("sphere-axis");
-    expect(phaseA.planeProgress).toBe(0);
-    expect(phaseA.traceProgress).toBe(0);
-    expect(phaseA.sectionFillOpacity).toBe(0);
+    expect(b1.beat).toBe("solids-emergence");
+    expect(b1.settled).toBe(false);
+    expect(b1.planeSweep).toBe(0);
 
-    expect(phaseB.phase).toBe("plane-emergence");
-    expect(phaseB.planeProgress).toBeGreaterThan(0.35);
-    expect(phaseB.traceProgress).toBe(0);
+    expect(b2.beat).toBe("plane-emergence");
+    expect(b2.planeSweep).toBeGreaterThan(0.2);
+    expect(b2.sectionFillOpacity).toBe(0);
 
-    expect(phaseC.phase).toBe("circle-intersection");
-    expect(phaseC.planeProgress).toBe(1);
-    expect(phaseC.traceProgress).toBeGreaterThan(0.4);
-    expect(phaseC.triangleReveal).toBeGreaterThan(0.3);
+    expect(b3.beat).toBe("section-trace");
+    expect(b3.traceProgress).toBeGreaterThan(0.35);
 
-    expect(phaseD.phase).toBe("complete-settled");
-    expect(phaseD.planeProgress).toBe(1);
-    expect(phaseD.traceProgress).toBe(1);
-    expect(phaseD.sectionFillOpacity).toBe(1);
+    expect(b4.beat).toBe("composition-settled");
+    expect(b4.settled).toBe(true);
+    expect(b4.planeSweep).toBe(1);
+    expect(b4.traceProgress).toBe(1);
+    expect(b4.sectionFillOpacity).toBe(1);
+    expect(b4.orbitOffsetRad).toBe(0);
+    expect(CLOSING_SECTION_FILL_OPACITY).toBe(0.28);
   });
 
-  it("maintains seamless C0 periodic loop wrap at cycle boundaries", () => {
-    const start = evaluateClosingMotionState(0, false);
-    const end = evaluateClosingMotionState(CLOSING_CYCLE_DURATION_MS, false);
-    const nearEnd = evaluateClosingMotionState(CLOSING_CYCLE_DURATION_MS - 4, false);
-
-    expect(Math.abs(start.planeProgress - end.planeProgress)).toBeLessThan(1e-6);
-    expect(Math.abs(start.traceProgress - end.traceProgress)).toBeLessThan(1e-6);
-    expect(Math.abs(start.sectionFillOpacity - end.sectionFillOpacity)).toBeLessThan(1e-6);
-    expect(Math.abs(start.orbitAngleRad - end.orbitAngleRad)).toBeLessThan(1e-6);
-
-    expect(nearEnd.planeProgress).toBeLessThan(0.05);
-    expect(nearEnd.traceProgress).toBeLessThan(0.05);
-    expect(nearEnd.sectionFillOpacity).toBeLessThan(0.05);
-    expect(Math.abs(nearEnd.orbitAngleRad)).toBeLessThan(0.01);
-  });
-
-  it("locks to static complete composition when prefers-reduced-motion is active", () => {
-    const sampleTimes = [0, 1200, 4800, 7900, 9400];
-    for (const ms of sampleTimes) {
-      const reduced = evaluateClosingMotionState(ms, true);
+  it("locks immediately to final settled composition when prefers-reduced-motion is active", () => {
+    for (const ms of [0, 600, 1800, 3400]) {
+      const reduced = evaluateClosingStoryboard(ms, true);
       expect(reduced.reducedMotion).toBe(true);
-      expect(reduced.phase).toBe("complete-settled");
-      expect(reduced.planeProgress).toBe(1);
+      expect(reduced.settled).toBe(true);
+      expect(reduced.beat).toBe("composition-settled");
+      expect(reduced.planeSweep).toBe(1);
       expect(reduced.traceProgress).toBe(1);
       expect(reduced.sectionFillOpacity).toBe(1);
-      expect(reduced.triangleReveal).toBe(1);
-      expect(reduced.orbitAngleRad).toBe(0);
+      expect(reduced.orbitOffsetRad).toBe(0);
     }
-  });
-
-  it("supports deterministic mid and settled QA preview overrides", () => {
-    const mid = evaluateClosingMotionState(0, false, "mid");
-    const settled = evaluateClosingMotionState(0, false, "settled");
-
-    expect(mid.phase).toBe("circle-intersection");
-    expect(mid.traceProgress).toBeGreaterThan(0.4);
-    expect(mid.traceProgress).toBeLessThan(1);
-
-    expect(settled.phase).toBe("complete-settled");
-    expect(settled.traceProgress).toBe(1);
-    expect(settled.sectionFillOpacity).toBe(1);
   });
 });
