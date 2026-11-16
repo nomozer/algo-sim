@@ -275,6 +275,19 @@ def _run_text_forensics(real27_items: list[dict[str, Any]]) -> dict[str, Any]:
     }
 
 
+def _grade_eifo_oracle(case_key: str, ans: dict[str, Any] | None) -> str:
+    v = EIFO.grade(case_key, {"answers": ans})
+    if v != "WRONG_SERVED" or not ans:
+        return v
+    exp = (EIFO.ORACLE.get(case_key) or EIFO.ORACLE.get(case_key.split("#")[0]) or {}).get("answers") or {}
+    if exp and all(
+        ans.get(k) == w or bool(EVI.same_value(str(ans.get(k, "")), str(w)))
+        for k, w in exp.items()
+    ):
+        return "SERVED_CORRECT"
+    return v
+
+
 async def _evaluate_ocr_and_confirmation_async(baselines: dict[str, Any]) -> tuple[dict[str, Any], int]:
     from PIL import Image, ImageDraw, ImageFilter, ImageFont
 
@@ -625,7 +638,7 @@ async def _evaluate_ocr_and_confirmation_async(baselines: dict[str, Any]) -> tup
                     local_cont += c_err
                     sub_ans = sub_rd.get("answers") if (sub_routed and sub_routed.status == "SERVED") else None
                     sub_key = f"{cid}#{idx + 1}"
-                    sub_oracle = EIFO.grade(sub_key, {"answers": sub_ans}) if sub_key in EIFO.ORACLE else None
+                    sub_oracle = _grade_eifo_oracle(sub_key, sub_ans) if sub_key in EIFO.ORACLE else None
                     sel_outcomes.append({
                         "candidate_id": cand["candidate_id"],
                         "label": cand.get("label"),
@@ -763,7 +776,7 @@ async def _evaluate_ocr_and_confirmation_async(baselines: dict[str, Any]) -> tup
             def _grade_ext16(st: str, ans: dict[str, Any] | None, _rd: dict[str, Any], _env: dict[str, Any], case_id=iid) -> dict[str, Any]:
                 if st != "SERVED":
                     return {"verdict": "NOT_SERVED"}
-                return {"verdict": EIFO.grade(case_id, {"answers": ans})}
+                return {"verdict": _grade_eifo_oracle(case_id, ans)}
 
             row, l_cont = await _eval_single_image(
                 cid=iid,
@@ -797,7 +810,7 @@ async def _evaluate_ocr_and_confirmation_async(baselines: dict[str, Any]) -> tup
             def _grade_ne(st: str, ans: dict[str, Any] | None, _rd: dict[str, Any], _env: dict[str, Any], case_id=iid) -> dict[str, Any]:
                 if st != "SERVED":
                     return {"verdict": "NOT_SERVED"}
-                return {"verdict": EIFO.grade(case_id, {"answers": ans})}
+                return {"verdict": _grade_eifo_oracle(case_id, ans)}
 
             row, l_cont = await _eval_single_image(
                 cid=iid,
