@@ -4190,6 +4190,91 @@ export function planeSolidEdgeIntersections(
  *    kết hợp các điểm xuyên cạnh khối thực tế + chân vuông góc được chứng nhận để mặt phẳng luôn phủ qua vùng giao cắt.
  * Trả mảng rỗng `[]` khi mặt phẳng đã đi qua >= 3 đỉnh không thẳng hàng của khối đa diện (giữ `daGiacMatPhang` + `moRongDaGiacMatPhang`).
  */
+function getRelatedCurvedSolidsForPlane(
+  scene: Pick<Scene3D, "objects">,
+  planeObj: SceneObject,
+): SceneObject[] {
+  const allCurved: SceneObject[] = [];
+  let hasPolyhedronSolid = false;
+  for (let i = 0; i < scene.objects.length; i += 1) {
+    const o = scene.objects[i];
+    if (o.type === "curved_solid" && o.anchor) allCurved.push(o);
+    else if (o.type === "solid") hasPolyhedronSolid = true;
+  }
+  if (allCurved.length === 0) return [];
+
+  let byId: Map<string, SceneObject> | null = null;
+  const planeDependsInClosure = (curvedId: string): boolean => {
+    if (!byId) byId = new Map(scene.objects.map((o) => [o.id, o]));
+    const visited = new Set<string>();
+    const stack: string[] = [curvedId];
+    while (stack.length > 0) {
+      const curId = stack.pop()!;
+      if (visited.has(curId)) continue;
+      visited.add(curId);
+      const cur = byId.get(curId);
+      if (!cur) continue;
+      const deps = cur.depends;
+      if (deps) {
+        for (let i = 0; i < deps.length; i += 1) {
+          const depId = deps[i];
+          if (depId === planeObj.id) return true;
+          if (!visited.has(depId)) stack.push(depId);
+        }
+      }
+      const cdeps = cur.computational_depends;
+      if (cdeps) {
+        for (let i = 0; i < cdeps.length; i += 1) {
+          const depId = cdeps[i];
+          if (depId === planeObj.id) return true;
+          if (!visited.has(depId)) stack.push(depId);
+        }
+      }
+      const vdeps = cur.visible_prerequisites;
+      if (vdeps) {
+        for (let i = 0; i < vdeps.length; i += 1) {
+          const depId = vdeps[i];
+          if (depId === planeObj.id) return true;
+          if (!visited.has(depId)) stack.push(depId);
+        }
+      }
+    }
+    return false;
+  };
+
+  // Mặt cầu / khối cong phát sinh từ chính mặt phẳng (vd mặt cầu ngoại tiếp dựng từ các mặt phẳng trung trực)
+  // không được quay ngược lại quyết định kích thước tấm mặt phẳng tiền đề đó.
+  const nonDownstream = allCurved.filter((c) => !planeDependsInClosure(c.id));
+  if (nonDownstream.length === 0) return [];
+
+  if (!hasPolyhedronSolid) return nonDownstream;
+
+  if (!byId) byId = new Map(scene.objects.map((o) => [o.id, o]));
+  const conicLinkedIds = new Set<string>();
+  for (const x of scene.objects) {
+    if (
+      (x.type === "circle3" || x.type === "ellipse3" || x.type === "curved_section" || x.type === "section")
+      && (x.depends ?? []).includes(planeObj.id)
+    ) {
+      for (const depId of x.depends ?? []) {
+        const target = byId.get(depId);
+        if (target?.type === "curved_solid") conicLinkedIds.add(target.id);
+      }
+    }
+  }
+  const directPlaneDeps = new Set(planeObj.depends ?? []);
+  return nonDownstream.filter(
+    (c) => conicLinkedIds.has(c.id) || directPlaneDeps.has(c.id),
+  );
+}
+
+function isCurvedSolidRelatedPlane(
+  scene: Pick<Scene3D, "objects">,
+  planeObj: SceneObject,
+): boolean {
+  return getRelatedCurvedSolidsForPlane(scene, planeObj).length > 0;
+}
+
 export function compactPlaneAnchorPoints(
   scene: Pick<Scene3D, "objects">,
   planeObj: SceneObject,
@@ -4201,20 +4286,25 @@ export function compactPlaneAnchorPoints(
   const dn = Math.hypot(...nRaw);
   if (!(dn > 1e-9)) return [];
   const u: Vec3 = [nRaw[0] / dn, nRaw[1] / dn, nRaw[2] / dn];
-  const allFinite = diemHuuHan([...scene.objects]);
-  const zMin = allFinite.length > 0 ? Math.min(...allFinite.map((p) => p[2])) : -Infinity;
 
   // 1. Mặt phẳng cắt khối cong (mặt cầu, hình trụ, hình nón) ở cả bước trung gian lẫn bước hoàn tất
   const conicCut = scene.objects.find(
     (x) => (x.type === "circle3" || x.type === "ellipse3") && (x.depends ?? []).includes(planeObj.id),
   );
-  const curvedSolids = scene.objects.filter((x) => x.type === "curved_solid" && x.anchor);
+  const curvedSolids = getRelatedCurvedSolidsForPlane(scene, planeObj);
   if (conicCut) {
     for (const depId of conicCut.depends ?? []) {
       const s = scene.objects.find((obj) => obj.id === depId && obj.type === "curved_solid" && obj.anchor);
       if (s && !curvedSolids.some((c) => c.id === s.id)) curvedSolids.push(s);
     }
   }
+  const hasPolyhedronSolid = scene.objects.some((x) => x.type === "solid");
+  const finiteObjs =
+    hasPolyhedronSolid && curvedSolids.length === 0
+      ? scene.objects.filter((x) => x.type !== "curved_solid")
+      : [...scene.objects];
+  const allFinite = diemHuuHan(finiteObjs);
+  const zMin = allFinite.length > 0 ? Math.min(...allFinite.map((p) => p[2])) : -Infinity;
 
   for (const s of curvedSolids) {
     if (s.curved_kind !== "ball" || !s.anchor) continue;
@@ -4673,8 +4763,8 @@ export function resolveStudiedPlaneVisualStyle(
           const dn = Math.hypot(...nRaw);
           if (!(dn > 1e-9)) return false;
           const u: Vec3 = [nRaw[0] / dn, nRaw[1] / dn, nRaw[2] / dn];
-          return scene.objects.some((s) => {
-            if (s.type !== "curved_solid" || s.curved_kind !== "ball" || !s.anchor) return false;
+          return getRelatedCurvedSolidsForPlane(scene, planeObj).some((s) => {
+            if (s.curved_kind !== "ball" || !s.anchor) return false;
             const c = toVec3(s.anchor);
             const rSq = s.radius_sq ? toNumber(s.radius_sq) : 0;
             const R =
@@ -4897,8 +4987,7 @@ export function resolveAdaptivePlaneVisualization(
   if (planeObj.type !== "plane3" || !planeObj.point || !planeObj.normal) {
     return { mode: "COMPACT_PLANE_PATCH", reason: "not_a_plane3", suppressPlaneSurface: false, patchVertices: [] };
   }
-  const hasCurved =
-    visibleObjects.some((x) => x.type === "curved_solid") || scene.objects.some((x) => x.type === "curved_solid");
+  const hasCurved = isCurvedSolidRelatedPlane(scene, planeObj);
   if (hasCurved) {
     return {
       mode: "COMPACT_PLANE_PATCH",
@@ -4920,7 +5009,9 @@ export function resolveAdaptivePlaneVisualization(
     return { mode: "COMPACT_PLANE_PATCH", reason: "degenerate_normal", suppressPlaneSurface: false, patchVertices: [] };
   }
   const u: Vec3 = [nRaw[0] / dn, nRaw[1] / dn, nRaw[2] / dn];
-  const allFinite = diemHuuHan([...scene.objects]);
+  const allFinite = diemHuuHan(
+    hasSolidInScene ? scene.objects.filter((x) => x.type !== "curved_solid") : [...scene.objects],
+  );
   if (allFinite.length === 0) {
     return { mode: "COMPACT_PLANE_PATCH", reason: "empty_bounds", suppressPlaneSurface: false, patchVertices: [] };
   }
@@ -5061,10 +5152,8 @@ export function computeBoundedStudiedPlanePolygon(
   visibleObjects: readonly SceneObject[],
 ): Vec3[] {
   const decision = resolveAdaptivePlaneVisualization(scene, planeObj, visibleObjects);
-  if (decision.mode === "COMPACT_PLANE_PATCH") {
-    const hasCurved =
-      visibleObjects.some((x) => x.type === "curved_solid") || scene.objects.some((x) => x.type === "curved_solid");
-    if (hasCurved) return [];
+  if (decision.mode === "COMPACT_PLANE_PATCH" && isCurvedSolidRelatedPlane(scene, planeObj)) {
+    return [];
   }
   return decision.patchVertices;
 }
@@ -5077,7 +5166,7 @@ function computeCompactTrapezoidPlanePolygon(
   style: StudiedPlaneVisualStyle,
 ): Vec3[] {
   if (planeObj.type !== "plane3" || !planeObj.point || !planeObj.normal) return [];
-  if (visibleObjects.some((x) => x.type === "curved_solid") || scene.objects.some((x) => x.type === "curved_solid")) {
+  if (isCurvedSolidRelatedPlane(scene, planeObj)) {
     return [];
   }
   const hasSolidInScene = scene.objects.some((x) => x.type === "solid");
@@ -5088,7 +5177,9 @@ function computeCompactTrapezoidPlanePolygon(
   const dn = Math.hypot(...nRaw);
   if (!(dn > 1e-9)) return [];
   const u: Vec3 = [nRaw[0] / dn, nRaw[1] / dn, nRaw[2] / dn];
-  const allFinite = diemHuuHan([...scene.objects]);
+  const allFinite = diemHuuHan(
+    hasSolidInScene ? scene.objects.filter((x) => x.type !== "curved_solid") : [...scene.objects],
+  );
   if (allFinite.length === 0) return [];
   const zMin = Math.min(...allFinite.map((p) => p[2]));
   const zMax = Math.max(...allFinite.map((p) => p[2]));
@@ -5140,7 +5231,8 @@ function computeCompactTrapezoidPlanePolygon(
   if (hullCheck.length < 3) return [];
 
   const cutCollarScale = hasCutResult ? 0.68 : 1.0;
-  const multiScale = (style.coexistingCount >= 2 ? 0.92 : 1.0) * cutCollarScale;
+  const coexistingFactor = style.coexistingCount >= 3 ? 0.78 : style.coexistingCount >= 2 ? 0.92 : 1.0;
+  const multiScale = coexistingFactor * cutCollarScale;
   const rankDelta = style.coexistingCount >= 2 ? (style.rank % 3) * 0.022 * dk : 0;
 
   const nXY = Math.hypot(u[0], u[1]);
