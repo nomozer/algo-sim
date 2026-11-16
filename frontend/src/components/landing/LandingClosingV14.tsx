@@ -53,7 +53,12 @@ export function LandingClosingV14() {
 
 export function scrollToLandingSection(id: string) {
   if (typeof document === "undefined") return;
-  document.getElementById(id)?.scrollIntoView({ behavior: "smooth", block: "start" });
+  const reduced =
+    typeof window !== "undefined" &&
+    Boolean(window.matchMedia?.("(prefers-reduced-motion: reduce)")?.matches);
+  document
+    .getElementById(id)
+    ?.scrollIntoView({ behavior: reduced ? "auto" : "smooth", block: "start" });
 }
 
 export function LandingFooterV14() {

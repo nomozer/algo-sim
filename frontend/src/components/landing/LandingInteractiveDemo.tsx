@@ -110,7 +110,13 @@ export function LandingInteractiveDemo({
           {/* Dominant Interactive 3D Viewport */}
           <div className="axo-sp-demo-canvas-wrap">
             <div className={isV14 ? "axo-sp-demo-toolbar is-v14" : "axo-sp-demo-toolbar"}>
-              {!isV14 && <span className="axo-sp-demo-toolbar-title">{sample.title}</span>}
+              {!isV14 ? (
+                <span className="axo-sp-demo-toolbar-title">{sample.title}</span>
+              ) : (
+                <span className="axo-v14-demo-orbit-hint" aria-hidden={hasCameraMoved}>
+                  {hasCameraMoved ? "" : "Kéo để xoay 3D"}
+                </span>
+              )}
               <button
                 id="btn-landing-demo-reset"
                 type="button"
@@ -154,6 +160,29 @@ export function LandingInteractiveDemo({
               }
               ariaLabel={`Mô hình 3D tương tác: ${isV14 ? sample.shortName : sample.title}`}
             />
+
+            {isV14 && (
+              <div
+                className="axo-sp-demo-step-tabs"
+                role="tablist"
+                aria-label="Các bước dựng hình"
+              >
+                {sample.milestones.map((st, idx) => (
+                  <button
+                    key={st.id}
+                    id={`btn-landing-demo-step-${idx}`}
+                    type="button"
+                    role="tab"
+                    aria-selected={idx === stepIndex}
+                    className={`axo-sp-step-tab${idx === stepIndex ? " is-active" : ""}`}
+                    onClick={() => setStepIndex(idx)}
+                    onKeyDown={(e) => handleStepKeyDown(e, idx)}
+                  >
+                    {st.v14ShortTab ?? String(idx + 1)}
+                  </button>
+                ))}
+              </div>
+            )}
           </div>
 
           {/* Focused Step Control Column */}
@@ -166,22 +195,24 @@ export function LandingInteractiveDemo({
               </span>}
             </div>
 
-            <div className="axo-sp-demo-step-tabs" role="tablist" aria-label="Các bước dựng hình">
-              {sample.milestones.map((st, idx) => (
-                <button
-                  key={st.id}
-                  id={`btn-landing-demo-step-${idx}`}
-                  type="button"
-                  role="tab"
-                  aria-selected={idx === stepIndex}
-                  className={`axo-sp-step-tab${idx === stepIndex ? " is-active" : ""}`}
-                  onClick={() => setStepIndex(idx)}
-                  onKeyDown={(e) => handleStepKeyDown(e, idx)}
-                >
-                  {isV14 ? String(idx + 1) : st.stepNumber}
-                </button>
-              ))}
-            </div>
+            {!isV14 && (
+              <div className="axo-sp-demo-step-tabs" role="tablist" aria-label="Các bước dựng hình">
+                {sample.milestones.map((st, idx) => (
+                  <button
+                    key={st.id}
+                    id={`btn-landing-demo-step-${idx}`}
+                    type="button"
+                    role="tab"
+                    aria-selected={idx === stepIndex}
+                    className={`axo-sp-step-tab${idx === stepIndex ? " is-active" : ""}`}
+                    onClick={() => setStepIndex(idx)}
+                    onKeyDown={(e) => handleStepKeyDown(e, idx)}
+                  >
+                    {st.stepNumber}
+                  </button>
+                ))}
+              </div>
+            )}
 
             <div className="axo-sp-demo-step-detail">
               <h3 className="axo-sp-demo-step-title">
@@ -193,22 +224,11 @@ export function LandingInteractiveDemo({
             </div>
 
             {isV14 ? (
-              <div className="axo-v14-demo-notes">
-                {sample.v14Premise ? (
-                  <p className="axo-v14-demo-premise">
-                    <span className="axo-v14-demo-note-label">Dữ kiện gốc:</span>{" "}
-                    {sample.v14Premise}
-                  </p>
-                ) : null}
-                {activeStage.v14Focus ? (
-                  <div className="axo-v14-demo-focus-note">
-                    <p className="axo-v14-demo-focus-text">{activeStage.v14Focus}</p>
-                  </div>
-                ) : null}
-                <p className="axo-v14-demo-cue">
-                  Kéo để xoay mô hình 3D · Đặt lại góc nhìn bất kỳ lúc nào.
-                </p>
-              </div>
+              activeStage.v14Focus ? (
+                <div className="axo-v14-demo-focus-note">
+                  <p className="axo-v14-demo-focus-text">{activeStage.v14Focus}</p>
+                </div>
+              ) : null
             ) : isFinalVerifiedStage ? (
               <div
                 className="axo-sp-demo-metrics"
@@ -246,12 +266,29 @@ export function LandingInteractiveDemo({
                 type="button"
                 className={
                   isV14
-                    ? "axo-v14-btn axo-v14-btn-primary axo-sp-btn-full"
+                    ? "axo-v14-btn axo-v14-btn-primary"
                     : "axo-sp-btn-primary axo-sp-btn-full"
                 }
                 onClick={() => openSampleInWorkspace(sample.id)}
               >
-                Mở trong Xưởng 3D
+                <span>Mở trong Xưởng 3D</span>
+                {isV14 && (
+                  <svg
+                    className="axo-v14-btn-icon"
+                    viewBox="0 0 16 16"
+                    fill="none"
+                    aria-hidden="true"
+                    focusable="false"
+                  >
+                    <path
+                      d="M3.5 8H12.5M12.5 8L8.75 4.25M12.5 8L8.75 11.75"
+                      stroke="currentColor"
+                      strokeWidth="1.65"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                    />
+                  </svg>
+                )}
               </button>
             </div>
           </aside>

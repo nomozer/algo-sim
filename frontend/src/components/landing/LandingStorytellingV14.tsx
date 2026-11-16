@@ -26,6 +26,7 @@ export interface StoryStageV14Spec {
     readonly pitch: number;
     readonly zoom: number;
     readonly extrude: number;
+    readonly prismBuild: number;
     readonly planeSweep: number;
     readonly parallelCue: number;
     readonly traceProgress: number;
@@ -42,13 +43,14 @@ export const STORY_STAGES_V14: readonly StoryStageV14Spec[] = [
     chapterHeading: "Chặng 1: Từ đề bài",
     title: "Ghim giả thiết cạnh a = 4 và ba điểm M, N, P",
     summary:
-      "Từ đề bài lăng trụ tam giác đều ABC.A′B′C′ tất cả các cạnh bằng 4, Axo dựng đầy đủ khối không gian và đặt ba trung điểm gốc M ∈ AB, N ∈ AC, P ∈ CC′.",
+      "Từ đề bài lăng trụ tam giác đều ABC.A′B′C′ tất cả các cạnh bằng 4, Axo dựng nền khối không gian và đặt ba trung điểm gốc M ∈ AB, N ∈ AC, P ∈ CC′.",
     relationNote: "Giả thiết gốc: ABC.A′B′C′ đều cạnh a = 4 · Trung điểm M, N, P",
     camera: {
       yaw: -0.28,
       pitch: 0.31,
       zoom: 1,
       extrude: 1,
+      prismBuild: 0.18,
       planeSweep: 0,
       parallelCue: 0,
       traceProgress: 0,
@@ -63,13 +65,14 @@ export const STORY_STAGES_V14: readonly StoryStageV14Spec[] = [
     chapterHeading: "Chặng 2: Dựng không gian",
     title: "Dựng mặt phẳng cắt (MNP) qua lòng khối lăng trụ",
     summary:
-      "Từ ba trung điểm đã xác định, mặt phẳng cắt (MNP) quét vào không gian khối lăng trụ đồng thời nối hai giao tuyến xuất phát MN trên đáy và NP trên mặt bên (ACC′A′).",
+      "Khối lăng trụ đứng hoàn chỉnh hiện lên cùng mặt phẳng cắt (MNP), nối hai giao tuyến xuất phát MN trên đáy và NP trên mặt bên (ACC′A′).",
     relationNote: "Cấu trúc không gian: (MNP) cắt (ABC) theo MN và cắt (ACC′A′) theo NP",
     camera: {
       yaw: -0.19,
       pitch: 0.32,
       zoom: 1,
       extrude: 1,
+      prismBuild: 1,
       planeSweep: 1,
       parallelCue: 0,
       traceProgress: 0.5,
@@ -91,6 +94,7 @@ export const STORY_STAGES_V14: readonly StoryStageV14Spec[] = [
       pitch: 0.34,
       zoom: 1,
       extrude: 1,
+      prismBuild: 1,
       planeSweep: 1,
       parallelCue: 1,
       traceProgress: 0.78,
@@ -112,6 +116,7 @@ export const STORY_STAGES_V14: readonly StoryStageV14Spec[] = [
       pitch: 0.35,
       zoom: 1,
       extrude: 1,
+      prismBuild: 1,
       planeSweep: 1,
       parallelCue: 0.45,
       traceProgress: 1,
@@ -127,6 +132,7 @@ export interface StoryInterpolatedPose {
   readonly pitch: number;
   readonly zoom: number;
   readonly extrude: number;
+  readonly prismBuild: number;
   readonly planeSweep: number;
   readonly parallelCue: number;
   readonly traceProgress: number;
@@ -286,6 +292,7 @@ export function interpolateStoryPose(
     pitch: lerp(s0.pitch, s1.pitch, u),
     zoom: lerp(s0.zoom, s1.zoom, u),
     extrude: lerp(s0.extrude, s1.extrude, u),
+    prismBuild: lerp(s0.prismBuild, s1.prismBuild, u),
     planeSweep: lerp(s0.planeSweep, s1.planeSweep, u),
     parallelCue: lerp(s0.parallelCue, s1.parallelCue, u),
     traceProgress: lerp(s0.traceProgress, s1.traceProgress, u),
@@ -367,7 +374,7 @@ function isFaceFrontFacing(
 }
 
 const STORY_SVG_W = 640;
-const STORY_SVG_H = 490;
+const STORY_SVG_H = 520;
 const STORY_PLANE_QUAD = computeBoundedPlaneQuad(
   LANDING_PRISM_STORY_SPEC.sectionLoop.map(
     (id) => LANDING_PRISM_STORY_SPEC.pointMap[id].pos,
@@ -413,9 +420,9 @@ function PrismEditorialStage({
       coords[key] = extrudeVec(key);
     }
 
-    const scale = 55 * pose.zoom;
+    const scale = 51 * pose.zoom;
     const cx = STORY_SVG_W * 0.5;
-    const cy = 242;
+    const cy = 236;
     const proj: Record<string, ProjectedPoint2D> = {};
     for (const [k, v] of Object.entries(coords)) {
       proj[k] = projectPrismPoint3D(v, pose.yaw, pose.pitch, cx, cy, scale);
@@ -489,13 +496,19 @@ function PrismEditorialStage({
         proj["C_prime"].y) /
       6;
 
+    const prismWeight = 0.18 + 0.82 * pose.prismBuild;
     const edges = LANDING_PRISM_STORY_SPEC.solidEdges.map((edge) => {
       const a = proj[edge.from];
       const b = proj[edge.to];
       const isTop = edge.from.includes("prime") && edge.to.includes("prime");
+      const isUpperStructure =
+        edge.from.includes("prime") || edge.to.includes("prime");
       const isNonParticipating =
         isTop || (edge.from === "A" && edge.to === "A_prime");
       let opacity = 0.88;
+      if (isUpperStructure) {
+        opacity *= prismWeight;
+      }
       if (isNonParticipating && pose.parallelCue > 0.02) {
         opacity *= 1 - 0.36 * pose.parallelCue;
       }
@@ -605,7 +618,9 @@ function PrismEditorialStage({
       "P",
       "Q",
     ].filter((id) => {
-      if (id === "Q") return pose.planeSweep > 0.68 || pose.parallelCue > 0.25;
+      if (id === "Q") {
+        return pose.activeStageIndex >= 2 && (pose.parallelCue > 0.25 || pose.traceProgress > 0.56);
+      }
       return true;
     });
 
@@ -639,17 +654,26 @@ function PrismEditorialStage({
       py: proj[id].y,
       lx: labelCandidates[i].x,
       ly: labelCandidates[i].y,
+      opacity: id.includes("prime") ? prismWeight : 1,
     }));
 
     const frontLateralPolys = faceDefs
       .slice(2)
-      .filter((_, idx) => faceFrontMap[idx + 2])
-      .map((f) => fmt(f.map((id) => proj[id])));
+      .map((f, idx) => ({
+        pts: fmt(f.map((id) => proj[id])),
+        front: faceFrontMap[idx + 2],
+        toneClass:
+          idx === 0
+            ? "axo-v14-svg-prism-face-lit"
+            : "axo-v14-svg-prism-face-shade",
+      }))
+      .filter((item) => item.front);
 
-    const haloCy = Math.min(432, (proj["A"].y + proj["B"].y + proj["C"].y) / 3 + 30);
+    const haloCy = Math.min(468, (proj["A"].y + proj["B"].y + proj["C"].y) / 3 + 28);
 
     return {
       proj,
+      prismWeight,
       edges,
       frontLateralPolys,
       midpointTicks,
@@ -704,19 +728,20 @@ function PrismEditorialStage({
 
           <polygon className="axo-v14-svg-prism-base" points={scene.basePts} />
 
-          {scene.frontLateralPolys.map((pts, idx) => (
+          {scene.frontLateralPolys.map((face, idx) => (
             <polygon
               key={`lat-${idx}`}
-              className="axo-v14-svg-prism-face"
-              points={pts}
-              fillOpacity="0.34"
+              className={`axo-v14-svg-prism-face ${face.toneClass}`}
+              points={face.pts}
+              fillOpacity={(0.52 * scene.prismWeight).toFixed(3)}
             />
           ))}
 
           <polygon
             className="axo-v14-svg-prism-top"
             points={scene.topPts}
-            fillOpacity="0.14"
+            fillOpacity={(0.18 * scene.prismWeight).toFixed(3)}
+            strokeOpacity={scene.prismWeight.toFixed(3)}
           />
 
           {scene.edges.map((edge) => (
@@ -743,7 +768,7 @@ function PrismEditorialStage({
             className="axo-v14-svg-edge-altitude"
             d={scene.rightAnglePath}
             fill="none"
-            opacity="0.88"
+            opacity={(0.88 * scene.prismWeight).toFixed(3)}
           />
 
           {scene.midpointTicks.map((tick) => (
@@ -831,7 +856,7 @@ function PrismEditorialStage({
                 ? "axo-v14-svg-label-seed"
                 : "axo-v14-svg-vertex-text";
             return (
-              <g key={item.id}>
+              <g key={item.id} opacity={item.opacity.toFixed(3)}>
                 <circle
                   className={dotClass}
                   cx={item.px}
@@ -994,50 +1019,27 @@ export function LandingStorytellingV14() {
       aria-labelledby="landing-story-heading"
     >
       <div className="axo-v14-story-shell">
+        <div className="axo-v14-story-header">
+          <h2 id="landing-story-heading" className="axo-v14-story-title">
+            Theo dõi bài toán qua{" "}
+            <AnnotatedPhrase variant="underline">
+              từng lớp không gian
+            </AnnotatedPhrase>
+            .
+          </h2>
+          <p className="axo-v14-story-lead">
+            Cuộn xuống để quan sát mạch dựng liên tục trên lăng trụ tam giác đều
+            ABC.A′B′C′ cạnh a = 4: từ ba trung điểm gốc M, N, P đến thiết diện
+            hoàn chỉnh.
+          </p>
+        </div>
+
         <div ref={runwayRef} className="axo-v14-story-runway">
           <div ref={stickyRef} className="axo-v14-story-sticky">
-            <div className="axo-v14-story-header">
-              <h2 id="landing-story-heading" className="axo-v14-story-title">
-                Theo dõi bài toán qua{" "}
-                <AnnotatedPhrase variant="underline">
-                  từng lớp không gian
-                </AnnotatedPhrase>
-                .
-              </h2>
-              <p className="axo-v14-story-lead">
-                Cuộn xuống để quan sát mạch dựng liên tục trên lăng trụ tam giác đều
-                ABC.A′B′C′ cạnh a = 4: từ ba trung điểm gốc M, N, P đến thiết diện
-                hoàn chỉnh.
-              </p>
-            </div>
-
             <div className="axo-v14-story-track">
               <PrismEditorialStage pose={pose} reducedMotion={reducedMotion} />
 
               <div className="axo-v14-story-narrative">
-                {!reducedMotion && (
-                  <div className="axo-v14-story-rail" aria-hidden="true">
-                    {STORY_STAGES_V14.map((stage, idx) => {
-                      const active = idx === pose.activeStageIndex;
-                      const done = idx < pose.activeStageIndex;
-                      return (
-                        <div
-                          key={stage.shortNum}
-                          className={`axo-v14-story-rail-step${active ? " is-active" : done ? " is-done" : ""}`}
-                        >
-                          <span className="axo-v14-story-rail-dot" />
-                          <span className="axo-v14-story-rail-label axo-v14-story-rail-label-desktop">
-                            {stage.desktopTag}
-                          </span>
-                          <span className="axo-v14-story-rail-label axo-v14-story-rail-label-mobile">
-                            {stage.mobileShortTag}
-                          </span>
-                        </div>
-                      );
-                    })}
-                  </div>
-                )}
-
                 <ol
                   className="axo-v14-story-chapters"
                   aria-label="Các chặng dựng hình theo cuộn trang"

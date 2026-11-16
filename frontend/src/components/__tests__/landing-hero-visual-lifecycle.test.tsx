@@ -58,7 +58,7 @@ describe("AXO Landing V1.4 — Hero Visual System & Lifecycle", () => {
     expect(b4.beat).toBe("section-settled");
     expect(b4.settled).toBe(true);
     expect(b4.capLift).toBe(0);
-    expect(HERO_SECTION_FILL_OPACITY).toBe(0.28);
+    expect(HERO_SECTION_FILL_OPACITY).toBe(0.5);
 
     const reduced = evaluateHeroStoryboard(100, true);
     expect(reduced.settled).toBe(true);

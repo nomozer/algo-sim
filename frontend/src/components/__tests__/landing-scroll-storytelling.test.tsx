@@ -49,10 +49,23 @@ describe("AXO Landing — Scroll-Driven Spatial Storytelling", () => {
     const poses = samples.map((p) => interpolateStoryPose(p, false));
     for (let i = 1; i < poses.length; i++) {
       expect(poses[i].extrude).toBeGreaterThanOrEqual(poses[i - 1].extrude);
+      expect(poses[i].prismBuild).toBeGreaterThanOrEqual(poses[i - 1].prismBuild);
       expect(poses[i].planeSweep).toBeGreaterThanOrEqual(poses[i - 1].planeSweep);
       expect(poses[i].traceProgress).toBeGreaterThanOrEqual(poses[i - 1].traceProgress);
       expect(poses[i].sectionFill).toBeGreaterThanOrEqual(poses[i - 1].sectionFill);
     }
+
+    // Point Q stays absent during Stage 1–2 and appears only in Stage 3–4 once parallel construction begins
+    const pStage1 = interpolateStoryPose(0.1, false);
+    const pStage2Mid = interpolateStoryPose(0.38, false);
+    const pStage2Late = interpolateStoryPose(0.45, false);
+    const pStage3 = interpolateStoryPose(0.65, false);
+    const pStage4 = interpolateStoryPose(0.95, false);
+    expect(pStage1.activeStageIndex >= 2 && (pStage1.parallelCue > 0.25 || pStage1.traceProgress > 0.56)).toBe(false);
+    expect(pStage2Mid.activeStageIndex >= 2 && (pStage2Mid.parallelCue > 0.25 || pStage2Mid.traceProgress > 0.56)).toBe(false);
+    expect(pStage2Late.activeStageIndex >= 2 && (pStage2Late.parallelCue > 0.25 || pStage2Late.traceProgress > 0.56)).toBe(false);
+    expect(pStage3.activeStageIndex >= 2 && (pStage3.parallelCue > 0.25 || pStage3.traceProgress > 0.56)).toBe(true);
+    expect(pStage4.activeStageIndex >= 2 && (pStage4.parallelCue > 0.25 || pStage4.traceProgress > 0.56)).toBe(true);
 
     // Reverse scroll determinism
     const forwardMid = interpolateStoryPose(0.55, false);
