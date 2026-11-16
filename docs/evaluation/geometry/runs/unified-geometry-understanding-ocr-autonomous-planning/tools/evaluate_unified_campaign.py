@@ -114,11 +114,11 @@ EXPECTED_SURFACES = {
 }
 
 # Prior audited dev corpus expectations superseded by earlier waves + this wave:
-# - DEV37: `goal_cos_unsupported`, `goal_tan_unsupported`, `order_goal_first` superseded prior to this run (`28/37`);
-#   this run promotes `diagram_benign` and `sec_do_P_cat` -> `30/37` served, `0` false-served on genuine negatives.
+# - DEV37: `elliptical_role` (superseded in v139 to `cos²=1/8`), `goal_cos_unsupported`, `goal_tan_unsupported`,
+#   `order_goal_first` superseded prior to this run; this run promotes `diagram_benign` and `sec_do_P_cat` -> `30/37`.
 DEV37_EXPECTED_SERVED_IDS = {
     k for k, v in SDC.CORPUS.items() if v["expect"][0] == "SERVED"
-} | {"goal_cos_unsupported", "goal_tan_unsupported", "order_goal_first"}
+} | {"elliptical_role", "goal_cos_unsupported", "goal_tan_unsupported", "order_goal_first"}
 
 REAL27_KNOWN_KEY_ERRORS = {"vmmu_r537", "vmmu_r460", "vmmu_r463"}
 
