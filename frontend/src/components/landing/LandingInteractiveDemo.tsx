@@ -107,14 +107,14 @@ export function LandingInteractiveDemo({
           data-ui={isV14 ? "product-workbench" : undefined}
           className={isV14 ? "axo-sp-demo-workbench is-v14" : "axo-sp-demo-workbench"}
         >
-          {/* Dominant Interactive 3D Viewport */}
+          {/* Dominant Interactive 3D Showcase Stage */}
           <div className="axo-sp-demo-canvas-wrap">
             <div className={isV14 ? "axo-sp-demo-toolbar is-v14" : "axo-sp-demo-toolbar"}>
               {!isV14 ? (
                 <span className="axo-sp-demo-toolbar-title">{sample.title}</span>
               ) : (
                 <span className="axo-v14-demo-orbit-hint" aria-hidden={hasCameraMoved}>
-                  {hasCameraMoved ? "" : "Kéo để xoay 3D"}
+                  {hasCameraMoved ? "Góc nhìn tùy chỉnh" : "Kéo để xoay 3D"}
                 </span>
               )}
               <button
@@ -163,7 +163,7 @@ export function LandingInteractiveDemo({
 
             {isV14 && (
               <div
-                className="axo-sp-demo-step-tabs"
+                className="axo-sp-demo-step-dock"
                 role="tablist"
                 aria-label="Các bước dựng hình"
               >

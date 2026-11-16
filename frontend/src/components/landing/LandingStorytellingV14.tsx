@@ -195,50 +195,50 @@ export function computeChapterEnvelope(
     return { opacity: 1, offsetY: 0, isVisible: true };
   }
   const p = clamp01(progress);
-  const w = 0.055;
+  const w = 0.038;
 
   if (index === 0) {
-    if (p >= 0.25) return { opacity: 0, offsetY: -18, isVisible: false };
+    if (p >= 0.25) return { opacity: 0, offsetY: -14, isVisible: false };
     if (p > 0.25 - w) {
       const u = smoothstep(0.25 - w, 0.25, p);
-      return { opacity: 1 - 0.88 * u, offsetY: -18 * u, isVisible: true };
+      return { opacity: 1 - 0.62 * u, offsetY: -14 * u, isVisible: true };
     }
     return { opacity: 1, offsetY: 0, isVisible: true };
   }
 
   if (index === 1) {
-    if (p < 0.25) return { opacity: 0, offsetY: 18, isVisible: false };
-    if (p >= 0.5) return { opacity: 0, offsetY: -18, isVisible: false };
+    if (p < 0.25) return { opacity: 0, offsetY: 14, isVisible: false };
+    if (p >= 0.5) return { opacity: 0, offsetY: -14, isVisible: false };
     if (p < 0.25 + w) {
       const u = smoothstep(0.25, 0.25 + w, p);
-      return { opacity: 0.12 + 0.88 * u, offsetY: 18 * (1 - u), isVisible: true };
+      return { opacity: 0.38 + 0.62 * u, offsetY: 14 * (1 - u), isVisible: true };
     }
     if (p > 0.5 - w) {
       const u = smoothstep(0.5 - w, 0.5, p);
-      return { opacity: 1 - 0.88 * u, offsetY: -18 * u, isVisible: true };
+      return { opacity: 1 - 0.62 * u, offsetY: -14 * u, isVisible: true };
     }
     return { opacity: 1, offsetY: 0, isVisible: true };
   }
 
   if (index === 2) {
-    if (p < 0.5) return { opacity: 0, offsetY: 18, isVisible: false };
-    if (p >= 0.75) return { opacity: 0, offsetY: -18, isVisible: false };
+    if (p < 0.5) return { opacity: 0, offsetY: 14, isVisible: false };
+    if (p >= 0.75) return { opacity: 0, offsetY: -14, isVisible: false };
     if (p < 0.5 + w) {
       const u = smoothstep(0.5, 0.5 + w, p);
-      return { opacity: 0.12 + 0.88 * u, offsetY: 18 * (1 - u), isVisible: true };
+      return { opacity: 0.38 + 0.62 * u, offsetY: 14 * (1 - u), isVisible: true };
     }
     if (p > 0.75 - w) {
       const u = smoothstep(0.75 - w, 0.75, p);
-      return { opacity: 1 - 0.88 * u, offsetY: -18 * u, isVisible: true };
+      return { opacity: 1 - 0.62 * u, offsetY: -14 * u, isVisible: true };
     }
     return { opacity: 1, offsetY: 0, isVisible: true };
   }
 
   if (index === 3) {
-    if (p < 0.75) return { opacity: 0, offsetY: 18, isVisible: false };
+    if (p < 0.75) return { opacity: 0, offsetY: 14, isVisible: false };
     if (p < 0.75 + w) {
       const u = smoothstep(0.75, 0.75 + w, p);
-      return { opacity: 0.12 + 0.88 * u, offsetY: 18 * (1 - u), isVisible: true };
+      return { opacity: 0.38 + 0.62 * u, offsetY: 14 * (1 - u), isVisible: true };
     }
     return { opacity: 1, offsetY: 0, isVisible: true };
   }
@@ -374,7 +374,7 @@ function isFaceFrontFacing(
 }
 
 const STORY_SVG_W = 640;
-const STORY_SVG_H = 520;
+const STORY_SVG_H = 470;
 const STORY_PLANE_QUAD = computeBoundedPlaneQuad(
   LANDING_PRISM_STORY_SPEC.sectionLoop.map(
     (id) => LANDING_PRISM_STORY_SPEC.pointMap[id].pos,
@@ -420,9 +420,9 @@ function PrismEditorialStage({
       coords[key] = extrudeVec(key);
     }
 
-    const scale = 51 * pose.zoom;
+    const scale = 64 * pose.zoom;
     const cx = STORY_SVG_W * 0.5;
-    const cy = 236;
+    const cy = 226;
     const proj: Record<string, ProjectedPoint2D> = {};
     for (const [k, v] of Object.entries(coords)) {
       proj[k] = projectPrismPoint3D(v, pose.yaw, pose.pitch, cx, cy, scale);
@@ -640,10 +640,10 @@ function PrismEditorialStage({
       labelCandidates,
       STORY_SVG_W,
       STORY_SVG_H,
-      24,
-      24,
-      24,
       28,
+      28,
+      28,
+      30,
     );
 
     const labels = visibleIds.map((id, i) => ({
@@ -669,7 +669,7 @@ function PrismEditorialStage({
       }))
       .filter((item) => item.front);
 
-    const haloCy = Math.min(468, (proj["A"].y + proj["B"].y + proj["C"].y) / 3 + 28);
+    const haloCy = Math.min(432, (proj["A"].y + proj["B"].y + proj["C"].y) / 3 + 26);
 
     return {
       proj,

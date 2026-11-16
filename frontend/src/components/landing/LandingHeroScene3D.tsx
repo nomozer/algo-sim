@@ -752,6 +752,13 @@ export function SpatialSceneCanvas({
         const rig = activeRig;
         const damp = reducedMotion ? 1 : 0.14;
 
+        const isV14Presentation = p.presentation === "v14";
+        const stageAspect = viewportSize.width / Math.max(1, viewportSize.height);
+        const v14AspectScale =
+          isV14Presentation && stageAspect < 1.18
+            ? 1 + (1.18 - stageAspect) * 0.36
+            : 1;
+
         baseVec.set(...p.targetCamera).sub(desiredLookVec.set(...p.targetLookAt));
         sph.setFromVector3(baseVec);
         sph.theta += sphericalOffsetRef.current.theta;
@@ -759,7 +766,7 @@ export function SpatialSceneCanvas({
           0.28,
           Math.min(Math.PI * 0.48, sph.phi + sphericalOffsetRef.current.phi),
         );
-        sph.radius *= sphericalOffsetRef.current.radiusScale;
+        sph.radius *= sphericalOffsetRef.current.radiusScale * v14AspectScale;
 
         const desiredPos = new THREE.Vector3().setFromSpherical(sph).add(desiredLookVec);
         curParallaxX += (targetParallaxX - curParallaxX) * damp;
@@ -776,8 +783,6 @@ export function SpatialSceneCanvas({
         curPlaneOp += (p.planeOpacity - curPlaneOp) * damp;
         curSecProg += (p.sectionProgress - curSecProg) * damp;
         curSecFill += (p.sectionFillOpacity - curSecFill) * damp;
-
-        const isV14Presentation = p.presentation === "v14";
         rig.planeMesh.visible = curPlaneOp > 0.02;
         rig.planeBorderLine.visible = curPlaneOp > 0.02;
         rig.planeFillMat.opacity = curPlaneOp * (isV14Presentation ? 0.14 : 0.16);

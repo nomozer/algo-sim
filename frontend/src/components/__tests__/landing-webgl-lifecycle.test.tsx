@@ -125,9 +125,9 @@ describe("AXO Landing — WebGL Budget, Persistent Lifecycle, Deduplication & La
 
     const ssrHtml = renderToString(<LandingClosingScene3D />);
     expect(ssrHtml).toContain('id="landing-closing-scene3d"');
-    expect(ssrHtml).toContain('data-section-edges="5"');
+    expect(ssrHtml).toContain('data-section-edges="6"');
     const comp = buildClosingCompositionData();
-    expect(comp.sectionVertices).toHaveLength(5);
+    expect(comp.sectionVertices).toHaveLength(6);
     expect(comp.companionCount).toBe(3);
   });
 });

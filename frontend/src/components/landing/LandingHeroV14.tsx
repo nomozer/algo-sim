@@ -314,8 +314,17 @@ function orientFaceOutward(
 
 function buildFacesBufferGeometry(
   faces: readonly ClippedPolygonFace[],
+  baseColorHex?: number,
 ): THREE.BufferGeometry {
   const positions: number[] = [];
+  const colors: number[] = [];
+  const baseColor = baseColorHex !== undefined ? new THREE.Color(baseColorHex) : null;
+  const keyDir = new THREE.Vector3(6.5, 11.2, -5.0).normalize();
+  const rimDir = new THREE.Vector3(-8.0, 4.0, 7.0).normalize();
+  const e1 = new THREE.Vector3();
+  const e2 = new THREE.Vector3();
+  const triNormal = new THREE.Vector3();
+
   for (const face of faces) {
     if (face.pts.length < 3) continue;
     const p0 = face.pts[0];
@@ -323,10 +332,25 @@ function buildFacesBufferGeometry(
       const p1 = face.pts[i];
       const p2 = face.pts[i + 1];
       positions.push(p0.x, p0.y, p0.z, p1.x, p1.y, p1.z, p2.x, p2.y, p2.z);
+      if (baseColor) {
+        e1.subVectors(p1, p0);
+        e2.subVectors(p2, p0);
+        triNormal.crossVectors(e1, e2).normalize();
+        const key = Math.max(0, triNormal.dot(keyDir)) * 0.22;
+        const rim = Math.max(0, triNormal.dot(rimDir)) * 0.08;
+        const shade = Math.min(1.04, 0.8 + key + rim);
+        const r = Math.min(1, baseColor.r * shade);
+        const g = Math.min(1, baseColor.g * shade);
+        const b = Math.min(1, baseColor.b * shade);
+        colors.push(r, g, b, r, g, b, r, g, b);
+      }
     }
   }
   const geo = new THREE.BufferGeometry();
   geo.setAttribute("position", new THREE.Float32BufferAttribute(positions, 3));
+  if (baseColor) {
+    geo.setAttribute("color", new THREE.Float32BufferAttribute(colors, 3));
+  }
   geo.computeVertexNormals();
   return geo;
 }
@@ -404,23 +428,23 @@ function HeroFallbackSvg() {
     >
       <ellipse
         className="axo-v14-svg-contact-halo"
-        cx="256"
-        cy="366"
-        rx="156"
-        ry="25"
+        cx="276"
+        cy="346"
+        rx="168"
+        ry="30"
       />
       <ellipse
         className="axo-v14-svg-contact-core"
-        cx="256"
-        cy="366"
-        rx="108"
-        ry="17"
+        cx="276"
+        cy="346"
+        rx="116"
+        ry="20"
       />
       <path
         className="axo-v14-svg-edge-altitude"
-        d="M 118 378 A 178 44 0 0 0 426 352"
+        d="M 118 358 A 184 44 0 0 0 436 334"
         fill="none"
-        strokeOpacity="0.34"
+        strokeOpacity="0.32"
       />
 
       <polygon
@@ -429,53 +453,63 @@ function HeroFallbackSvg() {
       />
       <polygon
         className="axo-v14-svg-solid-lower"
-        points="148,334 338,370 416,294 336,204 264,192 182,232"
+        points="148,334 338,370 416,294 365.5,241 214,178 164.5,271"
       />
       <polygon
         className="axo-v14-svg-solid-upper"
-        points="214,82 182,232 264,192 336,204"
+        points="214,82 164.5,271 214,178 365.5,241"
       />
 
+      {/* Hidden back edges & base diagonals + SA altitude */}
       <line className="axo-v14-svg-edge-hidden" x1="214" y1="274" x2="148" y2="334" />
       <line className="axo-v14-svg-edge-hidden" x1="214" y1="274" x2="416" y2="294" />
+      <line className="axo-v14-svg-edge-hidden" x1="214" y1="274" x2="338" y2="370" strokeOpacity="0.34" />
+      <line className="axo-v14-svg-edge-hidden" x1="148" y1="334" x2="416" y2="294" strokeOpacity="0.34" />
       <line className="axo-v14-svg-edge-altitude" x1="214" y1="82" x2="214" y2="274" />
-      <line className="axo-v14-svg-edge-altitude" x1="268" y1="286" x2="388" y2="262" strokeOpacity="0.46" />
+      {/* Extended base trace along NP */}
+      <line className="axo-v14-svg-edge-altitude" x1="190" y1="360" x2="424" y2="325" strokeOpacity="0.46" />
 
+      {/* Front solid edges */}
       <line className="axo-v14-svg-edge-solid" x1="148" y1="334" x2="338" y2="370" />
       <line className="axo-v14-svg-edge-solid" x1="338" y1="370" x2="416" y2="294" />
       <line className="axo-v14-svg-edge-solid" x1="214" y1="82" x2="148" y2="334" />
       <line className="axo-v14-svg-edge-solid" x1="214" y1="82" x2="338" y2="370" />
       <line className="axo-v14-svg-edge-solid" x1="214" y1="82" x2="416" y2="294" />
 
+      {/* Cutting plane (MNP) */}
       <polygon
         className="axo-v14-svg-cutting-plane"
-        points="102,250 368,292 436,188 172,162"
+        points="116,252 380,382 436,246 178,136"
       />
+      {/* Exact vertical orthographic projection footprint A-E'-N-P-F' on (ABCD) */}
       <polygon
         className="axo-v14-svg-section-poly"
-        points="182,232 246,282 314,272 336,204 264,192"
+        points="214,274 164.5,319 243,352 377,332 365.5,289"
+        fillOpacity="0.14"
+        strokeOpacity="0.38"
       />
+      <line className="axo-v14-svg-section-trace" x1="164.5" y1="271" x2="164.5" y2="319" strokeDasharray="3 4" strokeOpacity="0.52" />
+      <line className="axo-v14-svg-section-trace" x1="365.5" y1="241" x2="365.5" y2="289" strokeDasharray="3 4" strokeOpacity="0.52" />
 
+      {/* True planar section pentagon MENPF */}
       <polygon
         className="axo-v14-svg-section-poly"
-        points="476,104 510,94 528,126 502,150 470,136"
-        fillOpacity="0.22"
-        strokeOpacity="0.68"
+        points="214,178 164.5,271 243,352 377,332 365.5,241"
       />
 
       <circle className="axo-v14-svg-vertex-dot" cx="214" cy="82" r="3.4" />
-      <circle className="axo-v14-svg-seed-dot" cx="182" cy="232" r="4.0" />
-      <circle className="axo-v14-svg-seed-dot" cx="314" cy="272" r="4.0" />
-      <circle className="axo-v14-svg-seed-dot" cx="336" cy="204" r="4.0" />
-      <circle className="axo-v14-svg-section-dot" cx="246" cy="282" r="4.2" />
-      <circle className="axo-v14-svg-section-dot" cx="264" cy="192" r="4.2" />
+      <circle className="axo-v14-svg-seed-dot" cx="214" cy="178" r="4.0" />
+      <circle className="axo-v14-svg-seed-dot" cx="243" cy="352" r="4.0" />
+      <circle className="axo-v14-svg-seed-dot" cx="377" cy="332" r="4.0" />
+      <circle className="axo-v14-svg-section-dot" cx="164.5" cy="271" r="4.2" />
+      <circle className="axo-v14-svg-section-dot" cx="365.5" cy="241" r="4.2" />
 
-      <text className="axo-v14-svg-vertex-text" x="214" y="70">S</text>
-      <text className="axo-v14-svg-label-seed" x="168" y="228">M</text>
-      <text className="axo-v14-svg-label-seed" x="318" y="292">N</text>
-      <text className="axo-v14-svg-label-seed" x="352" y="202">P</text>
-      <text className="axo-v14-svg-label-inter" x="240" y="300">E</text>
-      <text className="axo-v14-svg-label-inter" x="264" y="178">F</text>
+      <text className="axo-v14-svg-vertex-text" x="214" y="68">S</text>
+      <text className="axo-v14-svg-label-seed" x="198" y="176">M</text>
+      <text className="axo-v14-svg-label-seed" x="242" y="372">N</text>
+      <text className="axo-v14-svg-label-seed" x="394" y="344">P</text>
+      <text className="axo-v14-svg-label-inter" x="148" y="271">E</text>
+      <text className="axo-v14-svg-label-inter" x="382" y="238">F</text>
     </svg>
   );
 }
@@ -534,8 +568,17 @@ function HeroSpatialStage() {
     const scene = new THREE.Scene();
     const camera = new THREE.PerspectiveCamera(33, width / height, 0.1, 100);
     const [lookX, lookY, lookZ] = LANDING_PYRAMID_SAMPLE.defaultLookAt;
-    camera.position.set(11.6, 6.3, -7.8);
-    camera.lookAt(lookX, lookY + 0.16, lookZ);
+    const baseCamOffset = new THREE.Vector3(10.8, 5.9, -7.2);
+    const heroLookTarget = new THREE.Vector3(lookX, lookY + 0.14, lookZ);
+    const applyHeroCameraFraming = (w: number, h: number) => {
+      const aspect = Math.max(0.72, w / Math.max(1, h));
+      const scaleDist = aspect < 1.12 ? 1 + (1.12 - aspect) * 0.42 : 1;
+      camera.aspect = w / Math.max(1, h);
+      camera.position.copy(heroLookTarget).addScaledVector(baseCamOffset, scaleDist);
+      camera.lookAt(heroLookTarget);
+      camera.updateProjectionMatrix();
+    };
+    applyHeroCameraFraming(width, height);
 
     const ambientLight = new THREE.AmbientLight(0xffffff, 0.48);
     const keyLight = new THREE.DirectionalLight(0xfffaf2, 1.22);
@@ -646,17 +689,15 @@ function HeroSpatialStage() {
     const rightAngle2 = createLineSegment(A.clone().add(uAB), footCorner, 0x0075de, 0.58, false, track);
     root.add(rightAngle1, rightAngle2);
 
-    // 2. Unified Pyramid Solid (controlled translucent lower & upper faces, dynamic front-solid / back-dashed edges)
+    // 2. Unified Pyramid Solid (luminous analytical face-normal shading, crisp front-solid / back-dashed edges)
     const lowerGroup = new THREE.Group();
-    const lowerGeo = track(buildFacesBufferGeometry(lowerFaces));
+    const lowerGeo = track(buildFacesBufferGeometry(lowerFaces, 0xf8f6f2));
     const lowerMat = track(
-      new THREE.MeshStandardMaterial({
-        color: 0xf3f1ec,
-        roughness: 0.86,
-        metalness: 0.02,
-        flatShading: true,
+      new THREE.MeshBasicMaterial({
+        color: 0xffffff,
+        vertexColors: true,
         transparent: true,
-        opacity: 0.78,
+        opacity: 0.66,
         side: THREE.DoubleSide,
         depthWrite: false,
       }),
@@ -664,6 +705,12 @@ function HeroSpatialStage() {
     const lowerMesh = new THREE.Mesh(lowerGeo, lowerMat);
     lowerMesh.renderOrder = 2;
     lowerGroup.add(lowerMesh);
+
+    const baseDiagAC = createLineSegment(A, C, 0x716d69, 0.24, true, track);
+    const baseDiagBD = createLineSegment(B, D, 0x716d69, 0.24, true, track);
+    baseDiagAC.renderOrder = 2;
+    baseDiagBD.renderOrder = 2;
+    lowerGroup.add(baseDiagAC, baseDiagBD);
 
     const faceSpecs = pyramidFaces.map((face) => {
       const e1 = new THREE.Vector3().subVectors(face[1], face[0]);
@@ -722,15 +769,13 @@ function HeroSpatialStage() {
 
     // 3. Upper Pyramid Shell (unified seamlessly with lower frustum, no split detachment)
     const upperGroup = new THREE.Group();
-    const upperGeo = track(buildFacesBufferGeometry(upperFaces));
+    const upperGeo = track(buildFacesBufferGeometry(upperFaces, 0xfaf9f7));
     const upperMat = track(
-      new THREE.MeshStandardMaterial({
+      new THREE.MeshBasicMaterial({
         color: 0xffffff,
-        roughness: 0.78,
-        metalness: 0.02,
-        flatShading: true,
+        vertexColors: true,
         transparent: true,
-        opacity: 0.16,
+        opacity: 0.14,
         side: THREE.DoubleSide,
         depthWrite: false,
       }),
@@ -790,7 +835,7 @@ function HeroSpatialStage() {
     }
     root.add(planeGroup);
 
-    // 5. Cross-section Pentagon MENPF (balanced translucent amber 0.52 + progressive perimeter)
+    // 5. Cross-section Pentagon MENPF (crisp luminous orange over translucent faces)
     const sectionGroup = new THREE.Group();
     const sectionOffsetLoop = loopPts.map((pt) =>
       pt.clone().addScaledVector(cutPlaneNormal, 0.008),
@@ -798,11 +843,11 @@ function HeroSpatialStage() {
     const secGeo = track(buildFacesBufferGeometry([{ pts: sectionOffsetLoop }]));
     const secMat = track(
       new THREE.MeshStandardMaterial({
-        color: 0xe6620a,
-        emissive: 0x993d00,
-        emissiveIntensity: 0.18,
-        roughness: 0.62,
-        metalness: 0.04,
+        color: 0xed6d14,
+        emissive: 0xb24700,
+        emissiveIntensity: 0.24,
+        roughness: 0.54,
+        metalness: 0.02,
         flatShading: true,
         transparent: true,
         opacity: HERO_SECTION_FILL_OPACITY,
@@ -854,7 +899,7 @@ function HeroSpatialStage() {
     });
     root.add(sectionGroup);
 
-    // 6. Restrained Peripheral Geometric Companions (ground NP trace, spatial azimuth datum, orthographic true-shape MENPF)
+    // 6. Structurally Coupled Ground Companions (extended NP base trace, azimuth datum arc, vertical orthographic projection A-E'-N-P-F' on base (ABCD))
     const dirNP = new THREE.Vector3().subVectors(P, N).normalize();
     const extNPStart = N.clone().addScaledVector(dirNP, -0.78);
     const extNPEnd = P.clone().addScaledVector(dirNP, 0.78);
@@ -885,58 +930,72 @@ function HeroSpatialStage() {
     }
     const orbitGeo = track(new THREE.BufferGeometry().setFromPoints(orbitArcPts));
     const orbitMat = track(
-      new THREE.LineBasicMaterial({ color: 0x0075de, transparent: true, opacity: 0.26 }),
+      new THREE.LineBasicMaterial({ color: 0x0075de, transparent: true, opacity: 0.24 }),
     );
     const orbitArcLine = new THREE.Line(orbitGeo, orbitMat);
     orbitArcLine.renderOrder = 1;
     const orbitNodeMat = track(
-      new THREE.MeshBasicMaterial({ color: 0x0075de, transparent: true, opacity: 0.62 }),
+      new THREE.MeshBasicMaterial({ color: 0x0075de, transparent: true, opacity: 0.56 }),
     );
     const orbitNode = new THREE.Mesh(nodeGeo, orbitNodeMat);
     orbitNode.position.copy(orbitArcPts[orbitArcPts.length - 1]);
-    orbitNode.scale.setScalar(0.68);
+    orbitNode.scale.setScalar(0.64);
     orbitNode.renderOrder = 3;
     root.add(orbitArcLine, orbitNode);
 
-    const trueShapeData = computeTrueShapeSection2D();
-    const trueShapeGroup = new THREE.Group();
-    trueShapeGroup.position.set(baseCenter.x + 2.45, S.y - 0.74, baseCenter.z + 1.08);
-    trueShapeGroup.lookAt(camera.position);
-    const satScale = 1.15;
-    const satPts = trueShapeData.vertices.map(
-      (v) => new THREE.Vector3((v.nx - 0.5) * satScale, (0.52 - v.ny) * satScale, 0),
-    );
-    const satGeo = track(buildFacesBufferGeometry([{ pts: satPts }]));
-    const satFillMat = track(
+    // Exact vertical orthographic projection onto base plane (ABCD):
+    // M(0,0,3)->A(0,0,0), E(3,0,1.5)->E'(3,0,0) on AB, N(4,2,0), P(2,4,0), F(0,3,1.5)->F'(0,3,0) on AD
+    const projE = new THREE.Vector3(E.x, A.y + 0.008, E.z);
+    const projF = new THREE.Vector3(F.x, A.y + 0.008, F.z);
+    const projPolyPts = [
+      new THREE.Vector3(A.x, A.y + 0.008, A.z),
+      projE,
+      new THREE.Vector3(N.x, A.y + 0.008, N.z),
+      new THREE.Vector3(P.x, A.y + 0.008, P.z),
+      projF,
+    ];
+    const projFootGeo = track(buildFacesBufferGeometry([{ pts: projPolyPts }]));
+    const projFootMat = track(
       new THREE.MeshBasicMaterial({
-        color: 0xe6620a,
+        color: 0xdd5b00,
         transparent: true,
-        opacity: 0.16,
+        opacity: 0.11,
         side: THREE.DoubleSide,
         depthWrite: false,
       }),
     );
-    const satFillMesh = new THREE.Mesh(satGeo, satFillMat);
-    satFillMesh.renderOrder = 2;
-    trueShapeGroup.add(satFillMesh);
-
-    const satRimPts = [...satPts, satPts[0]];
-    const satRimGeo = track(new THREE.BufferGeometry().setFromPoints(satRimPts));
-    const satRimMat = track(
-      new THREE.LineBasicMaterial({ color: 0xdd5b00, transparent: true, opacity: 0.7 }),
+    const projFootMesh = new THREE.Mesh(projFootGeo, projFootMat);
+    projFootMesh.renderOrder = 1;
+    const projFootRimGeo = track(
+      new THREE.BufferGeometry().setFromPoints([...projPolyPts, projPolyPts[0]]),
     );
-    const satRimLine = new THREE.Line(satRimGeo, satRimMat);
-    satRimLine.renderOrder = 3;
-    trueShapeGroup.add(satRimLine);
-    root.add(trueShapeGroup);
+    const projFootRimMat = track(
+      new THREE.LineBasicMaterial({
+        color: 0xdd5b00,
+        transparent: true,
+        opacity: 0.38,
+      }),
+    );
+    const projFootRimLine = new THREE.Line(projFootRimGeo, projFootRimMat);
+    projFootRimLine.renderOrder = 2;
 
-    const satAnchorM = satPts[0].clone().applyQuaternion(trueShapeGroup.quaternion).add(trueShapeGroup.position);
-    const satAnchorF = satPts[4].clone().applyQuaternion(trueShapeGroup.quaternion).add(trueShapeGroup.position);
-    const projRayM = createLineSegment(M, satAnchorM, 0x716d69, 0.22, true, track);
-    const projRayF = createLineSegment(F, satAnchorF, 0x716d69, 0.22, true, track);
-    projRayM.renderOrder = 1;
-    projRayF.renderOrder = 1;
-    root.add(projRayM, projRayF);
+    const plumbLineE = createLineSegment(E, projE, 0xdd5b00, 0.4, true, track);
+    const plumbLineF = createLineSegment(F, projF, 0xdd5b00, 0.4, true, track);
+    plumbLineE.renderOrder = 3;
+    plumbLineF.renderOrder = 3;
+
+    const projFootDotMat = track(
+      new THREE.MeshBasicMaterial({ color: 0xdd5b00, transparent: true, opacity: 0.56 }),
+    );
+    const footDotE = new THREE.Mesh(nodeGeo, projFootDotMat);
+    footDotE.position.copy(projE);
+    footDotE.scale.setScalar(0.56);
+    footDotE.renderOrder = 4;
+    const footDotF = new THREE.Mesh(nodeGeo, projFootDotMat);
+    footDotF.position.copy(projF);
+    footDotF.scale.setScalar(0.56);
+    footDotF.renderOrder = 4;
+    root.add(projFootMesh, projFootRimLine, plumbLineE, plumbLineF, footDotE, footDotF);
 
     const projectAnchors = (
       currentBeat: HeroStoryboardState,
@@ -1029,23 +1088,29 @@ function HeroSpatialStage() {
       (rightAngle2.material as THREE.LineBasicMaterial).opacity = 0.58 * state.solidReveal;
 
       root.scale.setScalar(0.95 + 0.05 * state.solidReveal);
-      lowerMat.opacity = 0.78 * state.solidReveal;
-      upperMat.opacity = 0.16 * state.solidReveal;
+      lowerMat.opacity = 0.66 * state.solidReveal;
+      upperMat.opacity = 0.14 * state.solidReveal;
       upperGroup.position.set(0, 0, 0);
+      (baseDiagAC.material as THREE.LineDashedMaterial).opacity = 0.24 * state.solidReveal;
+      (baseDiagBD.material as THREE.LineDashedMaterial).opacity = 0.24 * state.solidReveal;
 
       (extendedTraceLine.material as THREE.LineDashedMaterial).opacity =
         0.42 * state.planeSweep;
       extendedTraceLine.visible = state.planeSweep > 0.06;
-      orbitMat.opacity = 0.26 * state.solidReveal;
-      orbitNodeMat.opacity = 0.62 * state.solidReveal;
+      orbitMat.opacity = 0.24 * state.solidReveal;
+      orbitNodeMat.opacity = 0.56 * state.solidReveal;
 
-      satFillMat.opacity = 0.16 * state.sectionFill;
-      satRimMat.opacity = 0.7 * state.sectionFill;
-      trueShapeGroup.visible = state.sectionFill > 0.04;
-      (projRayM.material as THREE.LineDashedMaterial).opacity = 0.22 * state.sectionFill;
-      (projRayF.material as THREE.LineDashedMaterial).opacity = 0.22 * state.sectionFill;
-      projRayM.visible = state.sectionFill > 0.06;
-      projRayF.visible = state.sectionFill > 0.06;
+      projFootMat.opacity = 0.11 * state.sectionFill;
+      projFootRimMat.opacity = 0.38 * state.sectionFill;
+      projFootMesh.visible = state.sectionFill > 0.04;
+      projFootRimLine.visible = state.sectionFill > 0.04;
+      (plumbLineE.material as THREE.LineDashedMaterial).opacity = 0.4 * state.planeSweep;
+      (plumbLineF.material as THREE.LineDashedMaterial).opacity = 0.4 * state.planeSweep;
+      plumbLineE.visible = state.planeSweep > 0.32;
+      plumbLineF.visible = state.planeSweep > 0.32;
+      projFootDotMat.opacity = 0.56 * state.planeSweep;
+      footDotE.visible = state.planeSweep > 0.32;
+      footDotF.visible = state.planeSweep > 0.32;
 
       seedMat.opacity = state.seedReveal;
       for (const d of seedDots) {
@@ -1150,8 +1215,7 @@ function HeroSpatialStage() {
             if (disposed || !host) return;
             const w = Math.max(260, host.clientWidth);
             const h = Math.max(240, host.clientHeight);
-            camera.aspect = w / h;
-            camera.updateProjectionMatrix();
+            applyHeroCameraFraming(w, h);
             renderer.setSize(w, h, false);
             wake();
           })

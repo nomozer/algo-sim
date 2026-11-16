@@ -1,16 +1,17 @@
 import { useEffect, useMemo, useRef, useState } from "react";
 import * as THREE from "three";
-import { computeTrueShapeSection2D } from "./LandingHeroV14";
-import { LANDING_PYRAMID_SAMPLE, type Vec3Tuple } from "./landing-geometry-data";
+import { computeBoundedPlaneQuad, type Vec3Tuple } from "./landing-geometry-data";
 
 export const CLOSING_STORYBOARD_MS = 3600;
 export const CLOSING_SECTION_FILL_OPACITY = 0.56;
+export const CLOSING_PRISM_RADIUS = 1.62;
+export const CLOSING_PRISM_HEIGHT = 2.88;
 
 export type ClosingStoryboardBeat =
-  | "pyramid-solid"
+  | "prism-emergence"
   | "cutting-plane"
   | "intersection-trace"
-  | "pentagon-settled";
+  | "exploration-settled";
 
 export interface ClosingStoryboardState {
   readonly beat: ClosingStoryboardBeat;
@@ -28,11 +29,13 @@ export interface ClosingStoryboardState {
 }
 
 export interface ClosingCompositionData {
-  readonly pyramidVertices: readonly Vec3Tuple[];
+  readonly prismBottomVertices: readonly Vec3Tuple[];
+  readonly prismTopVertices: readonly Vec3Tuple[];
   readonly sectionVertices: readonly Vec3Tuple[];
   readonly planeNormal: Vec3Tuple;
+  readonly planeOffset: number;
   readonly planarResiduals: readonly number[];
-  readonly midpointResiduals: readonly number[];
+  readonly baseRadiusResiduals: readonly number[];
   readonly lowerFrustumFaceCount: number;
   readonly upperCapFaceCount: number;
   readonly companionCount: number;
@@ -46,8 +49,11 @@ interface TrackedDisposable {
   dispose(): void;
 }
 
-const MATH_ORIGIN: Vec3Tuple = [2, 2, 2.65];
 const UP_AXIS = new THREE.Vector3(0, 1, 0);
+const PLANE_RAW_NORMAL: Vec3Tuple = [0.32, 0.91, -0.26];
+const PLANE_RAW_OFFSET = 0.12;
+const KEY_DIR = new THREE.Vector3(6.8, 11.4, -4.6).normalize();
+const RIM_DIR = new THREE.Vector3(-8.2, 4.2, 6.8).normalize();
 
 function clamp01(v: number): number {
   if (!Number.isFinite(v)) return 0;
@@ -67,7 +73,7 @@ export function evaluateClosingStoryboard(
 ): ClosingStoryboardState {
   if (reducedMotion || elapsedMs >= CLOSING_STORYBOARD_MS) {
     return {
-      beat: "pentagon-settled",
+      beat: "exploration-settled",
       progress: 1,
       solidReveal: 1,
       seedScale: 1,
@@ -84,16 +90,16 @@ export function evaluateClosingStoryboard(
 
   const p = clamp01(elapsedMs / CLOSING_STORYBOARD_MS);
   const solidReveal = easeOutCubic(p, 0, 0.24);
-  const seedScale = easeOutCubic(p, 0.08, 0.34);
-  const planeOpacity = easeOutCubic(p, 0.24, 0.56);
+  const seedScale = easeOutCubic(p, 0.1, 0.36);
+  const planeOpacity = easeOutCubic(p, 0.24, 0.54);
   const traceProgress = easeOutCubic(p, 0.44, 0.84);
   const sectionFillOpacity = easeOutCubic(p, 0.68, 0.96);
   const intersectionScale = easeOutCubic(p, 0.48, 0.78);
-  const orbitOffsetRad = (1 - Math.pow(1 - p, 2)) * 0.085 - 0.085;
+  const orbitOffsetRad = (1 - Math.pow(1 - p, 2)) * 0.095 - 0.095;
 
-  let beat: ClosingStoryboardBeat = "pyramid-solid";
+  let beat: ClosingStoryboardBeat = "prism-emergence";
   if (p >= 0.84) {
-    beat = "pentagon-settled";
+    beat = "exploration-settled";
   } else if (p >= 0.44) {
     beat = "intersection-trace";
   } else if (p >= 0.24) {
@@ -116,12 +122,35 @@ export function evaluateClosingStoryboard(
   };
 }
 
-function worldToMath(pos: Vec3Tuple): Vec3Tuple {
-  return [
-    pos[0] + MATH_ORIGIN[0],
-    -pos[2] + MATH_ORIGIN[1],
-    pos[1] + MATH_ORIGIN[2],
-  ];
+function buildHexPrismModel() {
+  const halfH = CLOSING_PRISM_HEIGHT * 0.5;
+  const angleOffset = 0.26;
+  const bottomPts: THREE.Vector3[] = [];
+  const topPts: THREE.Vector3[] = [];
+
+  for (let i = 0; i < 6; i++) {
+    const theta = angleOffset + (i * Math.PI) / 3;
+    const x = Math.cos(theta) * CLOSING_PRISM_RADIUS;
+    const z = Math.sin(theta) * CLOSING_PRISM_RADIUS;
+    bottomPts.push(new THREE.Vector3(x, -halfH, z));
+    topPts.push(new THREE.Vector3(x, halfH, z));
+  }
+
+  const cutNormal = new THREE.Vector3(...PLANE_RAW_NORMAL).normalize();
+  const normLen = Math.hypot(...PLANE_RAW_NORMAL) || 1;
+  const cutOffset = PLANE_RAW_OFFSET / normLen;
+
+  const sectionPts: THREE.Vector3[] = [];
+  for (let i = 0; i < 6; i++) {
+    const b = bottomPts[i];
+    const t = topPts[i];
+    const db = b.dot(cutNormal) - cutOffset;
+    const dt = t.dot(cutNormal) - cutOffset;
+    const u = db / (db - dt || 1);
+    sectionPts.push(new THREE.Vector3().lerpVectors(b, t, clamp01(u)));
+  }
+
+  return { bottomPts, topPts, sectionPts, cutNormal, cutOffset };
 }
 
 function clipPolygonHalfSpace(
@@ -187,91 +216,61 @@ function orientFaceOutward(
   return n.dot(inward) > 0 ? [...face].reverse() : [...face];
 }
 
-export function buildClosingCompositionData(): ClosingCompositionData {
-  const pMap = LANDING_PYRAMID_SAMPLE.pointMap;
-  const v3 = (id: string) => {
-    const p = pMap[id]?.pos ?? [0, 0, 0];
-    return new THREE.Vector3(p[0], p[1], p[2]);
-  };
-
-  const pyramidVertices: Vec3Tuple[] = ["S", "A", "B", "C", "D"].map((id) => [
-    ...(pMap[id]?.pos ?? [0, 0, 0]),
-  ]) as Vec3Tuple[];
-  const sectionIds = LANDING_PYRAMID_SAMPLE.sectionLoop;
-  const sectionVertices: Vec3Tuple[] = sectionIds.map((id) => [
-    ...(pMap[id]?.pos ?? [0, 0, 0]),
-  ]) as Vec3Tuple[];
-
-  const planarResiduals = sectionVertices.map((pos) => {
-    const [mx, my, mz] = worldToMath(pos);
-    return Math.abs(mx + my + 2 * mz - 6);
-  });
-
-  const midpointResidual = (mId: string, aId: string, bId: string): number => {
-    const m = pMap[mId].domainXyz;
-    const a = pMap[aId].domainXyz;
-    const b = pMap[bId].domainXyz;
-    return Math.hypot(
-      m[0] - (a[0] + b[0]) * 0.5,
-      m[1] - (a[1] + b[1]) * 0.5,
-      m[2] - (a[2] + b[2]) * 0.5,
+function buildHexPrismFaces(
+  bottomPts: readonly THREE.Vector3[],
+  topPts: readonly THREE.Vector3[],
+): THREE.Vector3[][] {
+  const centroid = new THREE.Vector3(0, 0, 0);
+  const rawFaces: THREE.Vector3[][] = [
+    orientFaceOutward([...bottomPts].reverse(), centroid),
+    orientFaceOutward([...topPts], centroid),
+  ];
+  for (let i = 0; i < 6; i++) {
+    const next = (i + 1) % 6;
+    rawFaces.push(
+      orientFaceOutward(
+        [bottomPts[i], bottomPts[next], topPts[next], topPts[i]],
+        centroid,
+      ),
     );
-  };
-  const midpointResiduals = [
-    midpointResidual("M", "S", "A"),
-    midpointResidual("N", "B", "C"),
-    midpointResidual("P", "C", "D"),
-  ];
+  }
+  return rawFaces;
+}
 
-  const S = v3("S");
-  const A = v3("A");
-  const B = v3("B");
-  const C = v3("C");
-  const D = v3("D");
-  const loopPts = sectionIds.map(v3);
-  const centroid = new THREE.Vector3()
-    .add(S)
-    .add(A)
-    .add(B)
-    .add(C)
-    .add(D)
-    .divideScalar(5);
+export function buildClosingCompositionData(): ClosingCompositionData {
+  const { bottomPts, topPts, sectionPts, cutNormal, cutOffset } =
+    buildHexPrismModel();
+  const prismBottomVertices: Vec3Tuple[] = bottomPts.map((v) => [v.x, v.y, v.z]);
+  const prismTopVertices: Vec3Tuple[] = topPts.map((v) => [v.x, v.y, v.z]);
+  const sectionVertices: Vec3Tuple[] = sectionPts.map((v) => [v.x, v.y, v.z]);
 
-  const rawNormal = new THREE.Vector3()
-    .subVectors(loopPts[1], loopPts[0])
-    .cross(new THREE.Vector3().subVectors(loopPts[2], loopPts[0]))
-    .normalize();
-  const cutPlaneNormal =
-    rawNormal.dot(new THREE.Vector3().subVectors(S, loopPts[0])) >= 0
-      ? rawNormal
-      : rawNormal.negate();
-  const cutPlaneOffset = cutPlaneNormal.dot(loopPts[0]);
+  const planarResiduals = sectionPts.map((pt) =>
+    Math.abs(pt.dot(cutNormal) - cutOffset),
+  );
+  const baseRadiusResiduals = bottomPts.map((pt) =>
+    Math.abs(Math.hypot(pt.x, pt.z) - CLOSING_PRISM_RADIUS),
+  );
 
-  const rawFaces = [
-    orientFaceOutward([D, C, B, A], centroid),
-    orientFaceOutward([A, B, S], centroid),
-    orientFaceOutward([B, C, S], centroid),
-    orientFaceOutward([C, D, S], centroid),
-    orientFaceOutward([D, A, S], centroid),
-  ];
-
+  const rawFaces = buildHexPrismFaces(bottomPts, topPts);
   let lowerFrustumFaceCount = 0;
   let upperCapFaceCount = 0;
   for (const face of rawFaces) {
-    if (clipPolygonHalfSpace(face, cutPlaneNormal, cutPlaneOffset, false).length >= 3) {
+    if (clipPolygonHalfSpace(face, cutNormal, cutOffset, false).length >= 3) {
       lowerFrustumFaceCount++;
     }
-    if (clipPolygonHalfSpace(face, cutPlaneNormal, cutPlaneOffset, true).length >= 3) {
+    if (clipPolygonHalfSpace(face, cutNormal, cutOffset, true).length >= 3) {
       upperCapFaceCount++;
     }
   }
 
   return {
-    pyramidVertices,
+    prismBottomVertices,
+    prismTopVertices,
     sectionVertices,
-    planeNormal: [cutPlaneNormal.x, cutPlaneNormal.y, cutPlaneNormal.z],
+    planeNormal: [cutNormal.x, cutNormal.y, cutNormal.z],
+    planeOffset: cutOffset,
     planarResiduals,
-    midpointResiduals,
+    baseRadiusResiduals,
     lowerFrustumFaceCount,
     upperCapFaceCount,
     companionCount: 3,
@@ -280,8 +279,15 @@ export function buildClosingCompositionData(): ClosingCompositionData {
 
 function buildFacesBufferGeometry(
   faces: readonly ClippedPolygonFace[],
+  baseColorHex?: number,
 ): THREE.BufferGeometry {
   const positions: number[] = [];
+  const colors: number[] = [];
+  const baseColor = baseColorHex !== undefined ? new THREE.Color(baseColorHex) : null;
+  const e1 = new THREE.Vector3();
+  const e2 = new THREE.Vector3();
+  const triNormal = new THREE.Vector3();
+
   for (const face of faces) {
     if (face.pts.length < 3) continue;
     const p0 = face.pts[0];
@@ -289,10 +295,25 @@ function buildFacesBufferGeometry(
       const p1 = face.pts[i];
       const p2 = face.pts[i + 1];
       positions.push(p0.x, p0.y, p0.z, p1.x, p1.y, p1.z, p2.x, p2.y, p2.z);
+      if (baseColor) {
+        e1.subVectors(p1, p0);
+        e2.subVectors(p2, p0);
+        triNormal.crossVectors(e1, e2).normalize();
+        const key = Math.max(0, triNormal.dot(KEY_DIR)) * 0.22;
+        const rim = Math.max(0, triNormal.dot(RIM_DIR)) * 0.08;
+        const shade = Math.min(1.04, 0.8 + key + rim);
+        const r = Math.min(1, baseColor.r * shade);
+        const g = Math.min(1, baseColor.g * shade);
+        const b = Math.min(1, baseColor.b * shade);
+        colors.push(r, g, b, r, g, b, r, g, b);
+      }
     }
   }
   const geo = new THREE.BufferGeometry();
   geo.setAttribute("position", new THREE.Float32BufferAttribute(positions, 3));
+  if (baseColor) {
+    geo.setAttribute("color", new THREE.Float32BufferAttribute(colors, 3));
+  }
   geo.computeVertexNormals();
   return geo;
 }
@@ -357,81 +378,102 @@ function ClosingFallbackSvg({ state }: { readonly state: ClosingStoryboardState 
       className="axo-v14-closing-fallback-svg"
       viewBox="0 0 540 420"
       role="img"
-      aria-label="Mô hình khối chóp S.ABCD và thiết diện ngũ giác phẳng MENPF"
+      aria-label="Mô hình không gian lăng trụ lục giác đều cắt bởi mặt phẳng nghiên cứu"
     >
       <ellipse
         className="axo-v14-svg-contact-halo"
-        cx="256"
-        cy="346"
-        rx="154"
-        ry="26"
+        cx="270"
+        cy="340"
+        rx="168"
+        ry="34"
       />
       <ellipse
         className="axo-v14-svg-contact-core"
-        cx="256"
-        cy="346"
-        rx="104"
-        ry="17"
+        cx="270"
+        cy="340"
+        rx="118"
+        ry="24"
       />
-      <path
+      {/* Companion 1: Circumscribed radius-R ring & azimuth arc */}
+      <ellipse
         className="axo-v14-svg-edge-altitude"
-        d="M 116 356 A 176 42 0 0 0 416 332"
+        cx="270"
+        cy="326"
+        rx="126"
+        ry="32"
         fill="none"
         strokeOpacity="0.34"
       />
-      <polygon
-        className="axo-v14-svg-edge-hidden"
-        points="82,118 98,94 114,118 98,142"
+      {/* Companion 2: Upper circumcircle reference around top hexagon */}
+      <ellipse
+        className="axo-v14-svg-edge-altitude"
+        cx="270"
+        cy="104"
+        rx="114"
+        ry="28"
         fill="none"
-        strokeOpacity="0.48"
+        strokeOpacity="0.28"
       />
 
+      {/* Base hexagon */}
       <polygon
         className="axo-v14-svg-solid-base"
-        points="142,318 332,350 408,278 212,258"
+        points="160,322 214,352 326,352 380,322 326,294 214,294"
       />
+      {/* Lower shaded prism frustum */}
       <polygon
         className="axo-v14-svg-solid-lower"
-        points="142,318 332,350 408,278 326,188 256,174 176,216"
+        points="160,322 214,352 326,352 380,322 380,192 326,174 214,200 160,236"
       />
+      {/* Upper translucent cap */}
       <polygon
         className="axo-v14-svg-solid-upper"
-        points="212,72 176,216 256,174 326,188"
+        points="160,236 214,200 326,174 380,192 380,104 326,76 214,76 160,104"
       />
 
-      <line className="axo-v14-svg-edge-hidden" x1="212" y1="258" x2="142" y2="318" />
-      <line className="axo-v14-svg-edge-hidden" x1="212" y1="258" x2="408" y2="278" />
-      <line className="axo-v14-svg-edge-altitude" x1="212" y1="72" x2="212" y2="258" />
+      {/* Hidden back prism edges & central symmetry axis OO' */}
+      <line className="axo-v14-svg-edge-hidden" x1="160" y1="322" x2="214" y2="294" />
+      <line className="axo-v14-svg-edge-hidden" x1="214" y1="294" x2="326" y2="294" />
+      <line className="axo-v14-svg-edge-hidden" x1="326" y1="294" x2="380" y2="322" />
+      <line className="axo-v14-svg-edge-hidden" x1="214" y1="294" x2="214" y2="76" />
+      <line className="axo-v14-svg-edge-hidden" x1="326" y1="294" x2="326" y2="76" />
+      <line className="axo-v14-svg-edge-altitude" x1="270" y1="322" x2="270" y2="104" />
 
-      <line className="axo-v14-svg-edge-solid" x1="142" y1="318" x2="332" y2="350" />
-      <line className="axo-v14-svg-edge-solid" x1="332" y1="350" x2="408" y2="278" />
-      <line className="axo-v14-svg-edge-solid" x1="212" y1="72" x2="142" y2="318" />
-      <line className="axo-v14-svg-edge-solid" x1="212" y1="72" x2="332" y2="350" />
-      <line className="axo-v14-svg-edge-solid" x1="212" y1="72" x2="408" y2="278" />
+      {/* Visible front prism edges */}
+      <line className="axo-v14-svg-edge-solid" x1="160" y1="322" x2="214" y2="352" />
+      <line className="axo-v14-svg-edge-solid" x1="214" y1="352" x2="326" y2="352" />
+      <line className="axo-v14-svg-edge-solid" x1="326" y1="352" x2="380" y2="322" />
+      <line className="axo-v14-svg-edge-solid" x1="160" y1="104" x2="214" y2="132" />
+      <line className="axo-v14-svg-edge-solid" x1="214" y1="132" x2="326" y2="132" />
+      <line className="axo-v14-svg-edge-solid" x1="326" y1="132" x2="380" y2="104" />
+      <line className="axo-v14-svg-edge-solid" x1="160" y1="104" x2="214" y2="76" />
+      <line className="axo-v14-svg-edge-solid" x1="214" y1="76" x2="326" y2="76" />
+      <line className="axo-v14-svg-edge-solid" x1="326" y1="76" x2="380" y2="104" />
+      <line className="axo-v14-svg-edge-solid" x1="160" y1="104" x2="160" y2="322" />
+      <line className="axo-v14-svg-edge-solid" x1="214" y1="132" x2="214" y2="352" />
+      <line className="axo-v14-svg-edge-solid" x1="326" y1="132" x2="326" y2="352" />
+      <line className="axo-v14-svg-edge-solid" x1="380" y1="104" x2="380" y2="322" />
 
+      {/* Exploration plane */}
       <polygon
         className="axo-v14-svg-cutting-plane"
-        points="98,236 364,274 428,176 168,150"
+        points="116,256 410,192 436,144 142,208"
         opacity={state.planeOpacity}
       />
+
+      {/* Oblique 6-vertex hexagonal section */}
       <polygon
         className="axo-v14-svg-section-poly"
-        points="176,216 238,266 306,256 326,188 256,174"
+        points="160,236 214,254 326,226 380,192 326,174 214,200"
         fillOpacity={CLOSING_SECTION_FILL_OPACITY * state.sectionFillOpacity}
       />
-      <polygon
-        className="axo-v14-svg-section-poly"
-        points="456,96 488,88 506,118 480,140 450,126"
-        fillOpacity={0.2 * state.sectionFillOpacity}
-        strokeOpacity={0.68 * state.sectionFillOpacity}
-      />
 
-      <circle className="axo-v14-svg-vertex-dot" cx="212" cy="72" r="3.4" />
-      <circle className="axo-v14-svg-seed-dot" cx="176" cy="216" r="4.0" />
-      <circle className="axo-v14-svg-seed-dot" cx="306" cy="256" r="4.0" />
-      <circle className="axo-v14-svg-seed-dot" cx="326" cy="188" r="4.0" />
-      <circle className="axo-v14-svg-section-dot" cx="238" cy="266" r="4.2" />
-      <circle className="axo-v14-svg-section-dot" cx="256" cy="174" r="4.2" />
+      <circle className="axo-v14-svg-seed-dot" cx="160" cy="236" r="4.0" />
+      <circle className="axo-v14-svg-section-dot" cx="214" cy="254" r="4.1" />
+      <circle className="axo-v14-svg-section-dot" cx="326" cy="226" r="4.1" />
+      <circle className="axo-v14-svg-seed-dot" cx="380" cy="192" r="4.0" />
+      <circle className="axo-v14-svg-section-dot" cx="326" cy="174" r="4.1" />
+      <circle className="axo-v14-svg-seed-dot" cx="214" cy="200" r="4.0" />
     </svg>
   );
 }
@@ -452,7 +494,7 @@ export function LandingClosingScene3D() {
   const [webglReady, setWebglReady] = useState(false);
   const [contextLost, setContextLost] = useState(false);
   const [beatLabel, setBeatLabel] =
-    useState<ClosingStoryboardBeat>("pyramid-solid");
+    useState<ClosingStoryboardBeat>("prism-emergence");
 
   const fallbackState = useMemo(
     () => evaluateClosingStoryboard(CLOSING_STORYBOARD_MS, true),
@@ -469,7 +511,7 @@ export function LandingClosingScene3D() {
 
     if (!shouldAttemptWebGL()) {
       setWebglAllowed(false);
-      setBeatLabel("pentagon-settled");
+      setBeatLabel("exploration-settled");
       return;
     }
 
@@ -487,7 +529,7 @@ export function LandingClosingScene3D() {
       });
     } catch {
       setWebglAllowed(false);
-      setBeatLabel("pentagon-settled");
+      setBeatLabel("exploration-settled");
       return;
     }
 
@@ -508,14 +550,8 @@ export function LandingClosingScene3D() {
 
     const scene = new THREE.Scene();
     const camera = new THREE.PerspectiveCamera(34, width / height, 0.1, 100);
-    const [baseCamX, baseCamY, baseCamZ] = LANDING_PYRAMID_SAMPLE.defaultCamera;
-    const [lookX, lookY, lookZ] = LANDING_PYRAMID_SAMPLE.defaultLookAt;
-    const camVec = new THREE.Vector3(
-      baseCamX * 0.96,
-      baseCamY * 0.86,
-      baseCamZ * 0.78,
-    );
-    const lookVec = new THREE.Vector3(lookX, lookY + 0.34, lookZ);
+    const camVec = new THREE.Vector3(6.9, 3.85, 7.6);
+    const lookVec = new THREE.Vector3(0.08, 0.04, 0);
     const camOffset = new THREE.Vector3().subVectors(camVec, lookVec);
     const rotatedOffset = new THREE.Vector3();
 
@@ -527,7 +563,7 @@ export function LandingClosingScene3D() {
       tiltY: number,
     ) => {
       const aspect = Math.max(0.68, w / Math.max(1, h));
-      const aspectScale = aspect < 1.16 ? 1 + (1.16 - aspect) * 0.55 : 1;
+      const aspectScale = aspect < 1.18 ? 1 + (1.18 - aspect) * 0.5 : 1;
       const shortScale = h <= 290 ? 1.07 : 1;
       const distScale = Math.max(aspectScale, shortScale);
       rotatedOffset
@@ -541,115 +577,104 @@ export function LandingClosingScene3D() {
 
     updateCameraFraming(width, height, 0, 0, 0);
 
-    const ambientLight = new THREE.AmbientLight(0xffffff, 0.46);
-    const keyLight = new THREE.DirectionalLight(0xfffaf2, 1.2);
-    keyLight.position.set(11, 15, -5);
+    const ambientLight = new THREE.AmbientLight(0xffffff, 0.56);
+    const keyLight = new THREE.DirectionalLight(0xfffaf2, 1.16);
+    keyLight.position.set(10, 14, 7);
     const fillLight = new THREE.DirectionalLight(0xdcebfa, 0.58);
-    fillLight.position.set(-10, 4, 10);
+    fillLight.position.set(-9, 5, -8);
     scene.add(ambientLight, keyLight, fillLight);
 
-    const pMap = LANDING_PYRAMID_SAMPLE.pointMap;
-    const vec3 = (id: string) => {
-      const p = pMap[id]?.pos ?? [0, 0, 0];
-      return new THREE.Vector3(p[0], p[1], p[2]);
-    };
-
-    const S = vec3("S");
-    const A = vec3("A");
-    const B = vec3("B");
-    const C = vec3("C");
-    const D = vec3("D");
-    const M = vec3("M");
-    const N = vec3("N");
-    const P = vec3("P");
-    const E = vec3("E");
-    const F = vec3("F");
-    const loopPts = LANDING_PYRAMID_SAMPLE.sectionLoop.map(vec3);
-
-    const pyramidCentroid = new THREE.Vector3()
-      .add(S)
-      .add(A)
-      .add(B)
-      .add(C)
-      .add(D)
-      .divideScalar(5);
-    const baseCenter = new THREE.Vector3()
-      .add(A)
-      .add(B)
-      .add(C)
-      .add(D)
-      .divideScalar(4);
-
-    const rawNormal = new THREE.Vector3()
-      .subVectors(loopPts[1], loopPts[0])
-      .cross(new THREE.Vector3().subVectors(loopPts[2], loopPts[0]))
-      .normalize();
-    const cutPlaneNormal =
-      rawNormal.dot(new THREE.Vector3().subVectors(S, loopPts[0])) >= 0
-        ? rawNormal
-        : rawNormal.negate();
-    const cutPlaneOffset = cutPlaneNormal.dot(loopPts[0]);
-
-    const rawFaces = [
-      orientFaceOutward([D, C, B, A], pyramidCentroid),
-      orientFaceOutward([A, B, S], pyramidCentroid),
-      orientFaceOutward([B, C, S], pyramidCentroid),
-      orientFaceOutward([C, D, S], pyramidCentroid),
-      orientFaceOutward([D, A, S], pyramidCentroid),
-    ];
+    const { bottomPts, topPts, sectionPts, cutNormal, cutOffset } =
+      buildHexPrismModel();
+    const rawFaces = buildHexPrismFaces(bottomPts, topPts);
 
     const lowerFaces: ClippedPolygonFace[] = [];
     const upperFaces: ClippedPolygonFace[] = [];
     for (const face of rawFaces) {
-      const lo = clipPolygonHalfSpace(face, cutPlaneNormal, cutPlaneOffset, false);
+      const lo = clipPolygonHalfSpace(face, cutNormal, cutOffset, false);
       if (lo.length >= 3) lowerFaces.push({ pts: lo });
-      const hi = clipPolygonHalfSpace(face, cutPlaneNormal, cutPlaneOffset, true);
+      const hi = clipPolygonHalfSpace(face, cutNormal, cutOffset, true);
       if (hi.length >= 3) upperFaces.push({ pts: hi });
     }
 
     const root = new THREE.Group();
     scene.add(root);
 
-    // 1. Ground contact AO discs under ABCD
-    const shadowOuterGeo = track(new THREE.CircleGeometry(2.72, 48));
+    const baseY = bottomPts[0].y;
+    const topY = topPts[0].y;
+
+    // 1. Ground contact AO discs + Companion 2: Circumscribed radius-R base ring & vertical plumb projections
+    const shadowOuterGeo = track(new THREE.CircleGeometry(2.65, 48));
     shadowOuterGeo.rotateX(-Math.PI / 2);
     const shadowOuterMat = track(
       new THREE.MeshBasicMaterial({
         color: 0x1f201e,
         transparent: true,
-        opacity: 0.04,
+        opacity: 0.036,
         depthWrite: false,
       }),
     );
     const shadowOuter = new THREE.Mesh(shadowOuterGeo, shadowOuterMat);
-    shadowOuter.position.set(baseCenter.x, A.y - 0.055, baseCenter.z);
+    shadowOuter.position.set(0, baseY - 0.055, 0);
     shadowOuter.renderOrder = 0;
 
-    const shadowInnerGeo = track(new THREE.CircleGeometry(1.86, 40));
+    const shadowInnerGeo = track(new THREE.CircleGeometry(1.78, 40));
     shadowInnerGeo.rotateX(-Math.PI / 2);
     const shadowInnerMat = track(
       new THREE.MeshBasicMaterial({
         color: 0x1f201e,
         transparent: true,
-        opacity: 0.068,
+        opacity: 0.06,
         depthWrite: false,
       }),
     );
     const shadowInner = new THREE.Mesh(shadowInnerGeo, shadowInnerMat);
-    shadowInner.position.set(baseCenter.x, A.y - 0.045, baseCenter.z);
+    shadowInner.position.set(0, baseY - 0.045, 0);
     shadowInner.renderOrder = 1;
     root.add(shadowOuter, shadowInner);
 
-    // 2. Sculpted Pyramid Volumes
-    const lowerGeo = track(buildFacesBufferGeometry(lowerFaces));
+    const ringPts: THREE.Vector3[] = [];
+    for (let i = 0; i <= 64; i++) {
+      const theta = (i * Math.PI * 2) / 64;
+      ringPts.push(
+        new THREE.Vector3(
+          Math.cos(theta) * CLOSING_PRISM_RADIUS,
+          baseY - 0.014,
+          Math.sin(theta) * CLOSING_PRISM_RADIUS,
+        ),
+      );
+    }
+    const baseRingGeo = track(new THREE.BufferGeometry().setFromPoints(ringPts));
+    const baseRingMat = track(
+      new THREE.LineBasicMaterial({ color: 0x0075de, transparent: true, opacity: 0.28 }),
+    );
+    const baseRingLine = new THREE.Line(baseRingGeo, baseRingMat);
+    baseRingLine.renderOrder = 1;
+    root.add(baseRingLine);
+
+    const plumbGuides = [0, 2, 4].map((idx) => {
+      const line = createDashedEdge(
+        sectionPts[idx],
+        bottomPts[idx],
+        0xdd5b00,
+        0.34,
+        0.1,
+        0.1,
+        track,
+      );
+      line.renderOrder = 2;
+      root.add(line);
+      return line;
+    });
+
+    // 2. Sculpted Hexagonal Prism Frustum & Translucent Upper Cap
+    const lowerGeo = track(buildFacesBufferGeometry(lowerFaces, 0xf8f6f2));
     const lowerMat = track(
-      new THREE.MeshStandardMaterial({
-        color: 0xf3f1ec,
-        roughness: 0.86,
-        metalness: 0.02,
-        flatShading: true,
+      new THREE.MeshBasicMaterial({
+        color: 0xffffff,
+        vertexColors: true,
         transparent: true,
-        opacity: 0.86,
+        opacity: 0.72,
         side: THREE.DoubleSide,
         depthWrite: false,
       }),
@@ -658,15 +683,13 @@ export function LandingClosingScene3D() {
     lowerMesh.renderOrder = 2;
     root.add(lowerMesh);
 
-    const upperGeo = track(buildFacesBufferGeometry(upperFaces));
+    const upperGeo = track(buildFacesBufferGeometry(upperFaces, 0xfaf9f7));
     const upperMat = track(
-      new THREE.MeshStandardMaterial({
+      new THREE.MeshBasicMaterial({
         color: 0xffffff,
-        roughness: 0.78,
-        metalness: 0.02,
-        flatShading: true,
+        vertexColors: true,
         transparent: true,
-        opacity: 0.2,
+        opacity: 0.16,
         side: THREE.DoubleSide,
         depthWrite: false,
       }),
@@ -675,7 +698,8 @@ export function LandingClosingScene3D() {
     upperMesh.renderOrder = 3;
     root.add(upperMesh);
 
-    // 3. Dynamic front/back solid & dashed edges
+    // 3. Dynamic Front-Solid / Back-Dashed Hexagonal Prism Edges
+    // rawFaces indices: 0 = bottom, 1 = top, 2..7 = lateral face i (between i and (i+1)%6)
     const faceSpecs = rawFaces.map((face) => {
       const e1 = new THREE.Vector3().subVectors(face[1], face[0]);
       const e2 = new THREE.Vector3().subVectors(face[2], face[0]);
@@ -686,25 +710,26 @@ export function LandingClosingScene3D() {
       return { normal, center };
     });
 
-    const edgeBindings = [
-      { a: A, b: B, faces: [0, 1] as const, altitude: false },
-      { a: B, b: C, faces: [0, 2] as const, altitude: false },
-      { a: C, b: D, faces: [0, 3] as const, altitude: false },
-      { a: D, b: A, faces: [0, 4] as const, altitude: false },
-      { a: S, b: A, faces: [1, 4] as const, altitude: true },
-      { a: S, b: B, faces: [1, 2] as const, altitude: false },
-      { a: S, b: C, faces: [2, 3] as const, altitude: false },
-      { a: S, b: D, faces: [3, 4] as const, altitude: false },
-    ].map((edge) => {
-      const solid = createCylinderEdge(edge.a, edge.b, 0.02, 0x1f201e, 0.9, track);
+    const edgeSpecs: { a: THREE.Vector3; b: THREE.Vector3; faces: readonly [number, number] }[] = [];
+    for (let i = 0; i < 6; i++) {
+      const next = (i + 1) % 6;
+      const prevLat = 2 + ((i + 5) % 6);
+      const currLat = 2 + i;
+      edgeSpecs.push({ a: bottomPts[i], b: bottomPts[next], faces: [0, currLat] });
+      edgeSpecs.push({ a: topPts[i], b: topPts[next], faces: [1, currLat] });
+      edgeSpecs.push({ a: bottomPts[i], b: topPts[i], faces: [prevLat, currLat] });
+    }
+
+    const edgeBindings = edgeSpecs.map((edge) => {
+      const solid = createCylinderEdge(edge.a, edge.b, 0.017, 0x1f201e, 0.88, track);
       solid.renderOrder = 6;
       const dashed = createDashedEdge(
         edge.a,
         edge.b,
-        edge.altitude ? 0x0075de : 0x615d59,
-        edge.altitude ? 0.56 : 0.44,
-        0.16,
-        0.12,
+        0x615d59,
+        0.42,
+        0.14,
+        0.11,
         track,
       );
       dashed.renderOrder = 2;
@@ -712,50 +737,72 @@ export function LandingClosingScene3D() {
       return { ...edge, solid, dashed };
     });
 
-    const guideLines = LANDING_PYRAMID_SAMPLE.guideEdges.map((guide) => {
-      const line = createDashedEdge(
-        vec3(guide.from),
-        vec3(guide.to),
-        0x615d59,
-        0.32,
-        0.14,
-        0.12,
-        track,
-      );
-      line.renderOrder = 2;
-      root.add(line);
-      return line;
-    });
+    // Companion 1: Central Symmetry Axis OO' + Base Perpendicular Witness + Plane Normal Vector
+    const axisBottom = new THREE.Vector3(0, baseY, 0);
+    const axisTop = new THREE.Vector3(0, topY, 0);
+    const axisLine = createDashedEdge(
+      axisBottom,
+      axisTop,
+      0x0075de,
+      0.56,
+      0.14,
+      0.1,
+      track,
+    );
+    axisLine.renderOrder = 2;
+    root.add(axisLine);
 
-    const unitB = new THREE.Vector3().subVectors(B, A).normalize().multiplyScalar(0.28);
-    const unitS = new THREE.Vector3().subVectors(S, A).normalize().multiplyScalar(0.28);
-    const raCorner = new THREE.Vector3().copy(A).add(unitB).add(unitS);
-    const raGeo1 = track(new THREE.BufferGeometry().setFromPoints([A.clone().add(unitB), raCorner]));
-    const raGeo2 = track(new THREE.BufferGeometry().setFromPoints([raCorner, A.clone().add(unitS)]));
     const raMat = track(
-      new THREE.LineBasicMaterial({ color: 0x0075de, transparent: true, opacity: 0.56 }),
+      new THREE.LineBasicMaterial({ color: 0x0075de, transparent: true, opacity: 0.6 }),
     );
-    const ra1 = new THREE.Line(raGeo1, raMat);
-    const ra2 = new THREE.Line(raGeo2, raMat);
-    ra1.renderOrder = 2;
-    ra2.renderOrder = 2;
-    root.add(ra1, ra2);
+    const dirO0 = new THREE.Vector3().subVectors(bottomPts[0], axisBottom).normalize().multiplyScalar(0.24);
+    const upSeg = new THREE.Vector3(0, 0.24, 0);
+    const raCorner = axisBottom.clone().add(dirO0).add(upSeg);
+    const raGeo = track(
+      new THREE.BufferGeometry().setFromPoints([
+        axisBottom.clone().add(dirO0),
+        raCorner,
+        axisBottom.clone().add(upSeg),
+      ]),
+    );
+    const raLine = new THREE.Line(raGeo, raMat);
+    raLine.renderOrder = 3;
+    root.add(raLine);
 
-    // 4. Cutting Plane (MNP)
-    const planeGroup = new THREE.Group();
-    const qPts = LANDING_PYRAMID_SAMPLE.planeQuad.map(
-      (v) => new THREE.Vector3(v[0], v[1], v[2]),
+    const sectionCentroid = sectionPts
+      .reduce((acc, pt) => acc.add(pt), new THREE.Vector3())
+      .divideScalar(sectionPts.length);
+    const normalStem = createCylinderEdge(
+      sectionCentroid,
+      sectionCentroid.clone().addScaledVector(cutNormal, 0.92),
+      0.015,
+      0x0075de,
+      0.72,
+      track,
+      true,
     );
-    const planeCenter = qPts
+    normalStem.renderOrder = 7;
+    root.add(normalStem);
+
+    // 4. Inclined Exploration Plane (Π)
+    const planeGroup = new THREE.Group();
+    const secTuples: Vec3Tuple[] = sectionPts.map((pt) => [pt.x, pt.y, pt.z]);
+    const planeQuad = computeBoundedPlaneQuad(
+      secTuples,
+      [cutNormal.x, cutNormal.y, cutNormal.z],
+      0.34,
+    ).map((pt) => new THREE.Vector3(pt[0], pt[1], pt[2]));
+    const planeCenter = planeQuad
       .reduce((acc, v) => acc.add(v), new THREE.Vector3())
-      .divideScalar(Math.max(1, qPts.length));
-    const localQuad = qPts.map((pt) => pt.clone().sub(planeCenter));
+      .divideScalar(planeQuad.length);
+    const localQuad = planeQuad.map((pt) => pt.clone().sub(planeCenter));
+
     const planeGeo = track(buildFacesBufferGeometry([{ pts: localQuad }]));
     const planeMat = track(
       new THREE.MeshBasicMaterial({
         color: 0x62aef0,
         transparent: true,
-        opacity: 0.22,
+        opacity: 0.16,
         side: THREE.DoubleSide,
         depthWrite: false,
       }),
@@ -769,9 +816,9 @@ export function LandingClosingScene3D() {
       const rim = createCylinderEdge(
         localQuad[i],
         localQuad[(i + 1) % localQuad.length],
-        0.015,
+        0.014,
         0x0075de,
-        0.84,
+        0.82,
         track,
       );
       rim.renderOrder = 6;
@@ -781,19 +828,19 @@ export function LandingClosingScene3D() {
     planeGroup.position.copy(planeCenter);
     root.add(planeGroup);
 
-    // 5. Cross-section Pentagon MENPF
+    // 5. Oblique 6-Edge Section Hexagon
     const sectionGroup = new THREE.Group();
-    const offsetLoop = loopPts.map((pt) =>
-      pt.clone().addScaledVector(cutPlaneNormal, 0.012),
+    const offsetLoop = sectionPts.map((pt) =>
+      pt.clone().addScaledVector(cutNormal, 0.01),
     );
     const sectionGeo = track(buildFacesBufferGeometry([{ pts: offsetLoop }]));
     const sectionMat = track(
       new THREE.MeshStandardMaterial({
-        color: 0xe6620a,
-        emissive: 0x993d00,
-        emissiveIntensity: 0.2,
-        roughness: 0.6,
-        metalness: 0.04,
+        color: 0xed6d14,
+        emissive: 0xb24700,
+        emissiveIntensity: 0.24,
+        roughness: 0.56,
+        metalness: 0.02,
         flatShading: true,
         transparent: true,
         opacity: CLOSING_SECTION_FILL_OPACITY,
@@ -810,7 +857,7 @@ export function LandingClosingScene3D() {
       const seg = createCylinderEdge(
         offsetLoop[i],
         offsetLoop[(i + 1) % offsetLoop.length],
-        0.026,
+        0.024,
         0x793400,
         0.96,
         track,
@@ -822,161 +869,77 @@ export function LandingClosingScene3D() {
     }
     root.add(sectionGroup);
 
-    // 6. Anchor Spheres (0 textbook letters)
-    const nodeGeo = track(new THREE.SphereGeometry(0.064, 16, 16));
-    const baseNodeMat = track(
-      new THREE.MeshBasicMaterial({ color: 0x1f201e, transparent: true, opacity: 0.92 }),
-    );
-    const hiddenNodeMat = track(
-      new THREE.MeshBasicMaterial({ color: 0x5c5b57, transparent: true, opacity: 0.38 }),
-    );
+    // 6. Clean Anchor Spheres (0 textbook letter tags)
+    const nodeGeo = track(new THREE.SphereGeometry(0.056, 16, 16));
     const seedNodeMat = track(
       new THREE.MeshBasicMaterial({ color: 0x0075de, transparent: true, opacity: 1 }),
     );
     const interNodeMat = track(
       new THREE.MeshBasicMaterial({ color: 0xdd5b00, transparent: true, opacity: 1 }),
     );
-
-    for (const pt of [S, B, C, D]) {
-      const dot = new THREE.Mesh(nodeGeo, baseNodeMat);
-      dot.position.copy(pt);
-      dot.renderOrder = 8;
-      root.add(dot);
-    }
-    const backDotA = new THREE.Mesh(nodeGeo, hiddenNodeMat);
-    backDotA.position.copy(A);
-    backDotA.scale.setScalar(0.84);
-    backDotA.renderOrder = 3;
-    root.add(backDotA);
-
-    const seedDots = [M, N, P].map((pt) => {
-      const dot = new THREE.Mesh(nodeGeo, seedNodeMat);
-      dot.position.copy(pt).addScaledVector(cutPlaneNormal, 0.014);
-      dot.scale.setScalar(1.06);
-      dot.renderOrder = 8;
-      root.add(dot);
-      return dot;
-    });
-    const interDots = [E, F].map((pt) => {
-      const dot = new THREE.Mesh(nodeGeo, interNodeMat);
-      dot.position.copy(pt).addScaledVector(cutPlaneNormal, 0.015);
-      dot.scale.setScalar(1.12);
-      dot.renderOrder = 8;
-      root.add(dot);
-      return dot;
-    });
-
-    // 7. Three Restrained Peripheral Geometric Companions
-    // 7a. Base spatial azimuth datum arc + radial end-ticks + extended NP trace
-    const dirNP = new THREE.Vector3().subVectors(P, N).normalize();
-    const extNP = createDashedEdge(
-      N.clone().addScaledVector(dirNP, -0.78),
-      P.clone().addScaledVector(dirNP, 0.78),
-      0x0075de,
-      0.42,
-      0.14,
-      0.1,
-      track,
+    const baseVertexMat = track(
+      new THREE.MeshBasicMaterial({ color: 0x1f201e, transparent: true, opacity: 0.84 }),
     );
-    extNP.renderOrder = 2;
-    root.add(extNP);
 
+    const solidVertexDots = [...bottomPts, ...topPts].map((pt) => {
+      const dot = new THREE.Mesh(nodeGeo, baseVertexMat);
+      dot.position.copy(pt);
+      dot.scale.setScalar(0.76);
+      dot.renderOrder = 8;
+      root.add(dot);
+      return dot;
+    });
+
+    const seedDots = [0, 3, 5].map((idx) => {
+      const dot = new THREE.Mesh(nodeGeo, seedNodeMat);
+      dot.position.copy(sectionPts[idx]).addScaledVector(cutNormal, 0.012);
+      dot.scale.setScalar(1.04);
+      dot.renderOrder = 8;
+      root.add(dot);
+      return dot;
+    });
+
+    const interDots = [1, 2, 4].map((idx) => {
+      const dot = new THREE.Mesh(nodeGeo, interNodeMat);
+      dot.position.copy(sectionPts[idx]).addScaledVector(cutNormal, 0.012);
+      dot.scale.setScalar(1.08);
+      dot.renderOrder = 8;
+      root.add(dot);
+      return dot;
+    });
+
+    // Companion 3: Outer azimuth orbital arc + Top circumcircle reference
     const orbitArcPts: THREE.Vector3[] = [];
-    const orbitRadius = 2.66;
-    for (let i = 0; i <= 32; i++) {
-      const theta = -0.44 + (1.46 * i) / 32;
+    const orbitR = 2.48;
+    for (let i = 0; i <= 40; i++) {
+      const theta = -0.35 + (2.35 * i) / 40;
       orbitArcPts.push(
-        new THREE.Vector3(
-          baseCenter.x + Math.cos(theta) * orbitRadius,
-          A.y - 0.028,
-          baseCenter.z + Math.sin(theta) * orbitRadius,
-        ),
+        new THREE.Vector3(Math.cos(theta) * orbitR, baseY - 0.02, Math.sin(theta) * orbitR),
       );
     }
     const orbitArcGeo = track(new THREE.BufferGeometry().setFromPoints(orbitArcPts));
     const orbitArcMat = track(
-      new THREE.LineBasicMaterial({ color: 0x0075de, transparent: true, opacity: 0.26 }),
+      new THREE.LineBasicMaterial({ color: 0x0075de, transparent: true, opacity: 0.24 }),
     );
-    const orbitArc = new THREE.Line(orbitArcGeo, orbitArcMat);
-    orbitArc.renderOrder = 1;
-    const orbitNodeMat = track(
-      new THREE.MeshBasicMaterial({ color: 0x0075de, transparent: true, opacity: 0.62 }),
-    );
-    const orbitNode = new THREE.Mesh(nodeGeo, orbitNodeMat);
-    orbitNode.position.copy(orbitArcPts[orbitArcPts.length - 1]);
-    orbitNode.scale.setScalar(0.66);
-    orbitNode.renderOrder = 3;
-    root.add(orbitArc, orbitNode);
+    const orbitArcLine = new THREE.Line(orbitArcGeo, orbitArcMat);
+    orbitArcLine.renderOrder = 1;
+    root.add(orbitArcLine);
 
-    // 7b. Upper-right rear orthographic true-shape MENPF satellite + subtle rays
-    const trueShape = computeTrueShapeSection2D();
-    const satGroup = new THREE.Group();
-    satGroup.position.set(baseCenter.x + 2.42, S.y - 0.72, baseCenter.z + 1.04);
-    satGroup.lookAt(camera.position);
-    const satScale = 1.12;
-    const satPts = trueShape.vertices.map(
-      (v) => new THREE.Vector3((v.nx - 0.5) * satScale, (0.52 - v.ny) * satScale, 0),
+    const topRingPts: THREE.Vector3[] = [];
+    const topRingR = CLOSING_PRISM_RADIUS * 1.08;
+    for (let i = 0; i <= 64; i++) {
+      const theta = (i * Math.PI * 2) / 64;
+      topRingPts.push(
+        new THREE.Vector3(Math.cos(theta) * topRingR, topY, Math.sin(theta) * topRingR),
+      );
+    }
+    const topRingGeo = track(new THREE.BufferGeometry().setFromPoints(topRingPts));
+    const topRingMat = track(
+      new THREE.LineBasicMaterial({ color: 0x0075de, transparent: true, opacity: 0.24 }),
     );
-    const satGeo = track(buildFacesBufferGeometry([{ pts: satPts }]));
-    const satFillMat = track(
-      new THREE.MeshBasicMaterial({
-        color: 0xe6620a,
-        transparent: true,
-        opacity: 0.16,
-        side: THREE.DoubleSide,
-        depthWrite: false,
-      }),
-    );
-    const satFill = new THREE.Mesh(satGeo, satFillMat);
-    satFill.renderOrder = 2;
-    satGroup.add(satFill);
-
-    const satRimGeo = track(
-      new THREE.BufferGeometry().setFromPoints([...satPts, satPts[0]]),
-    );
-    const satRimMat = track(
-      new THREE.LineBasicMaterial({ color: 0xdd5b00, transparent: true, opacity: 0.7 }),
-    );
-    const satRim = new THREE.Line(satRimGeo, satRimMat);
-    satRim.renderOrder = 3;
-    satGroup.add(satRim);
-    root.add(satGroup);
-
-    const satAnchorM = satPts[0]
-      .clone()
-      .applyQuaternion(satGroup.quaternion)
-      .add(satGroup.position);
-    const satAnchorF = satPts[4]
-      .clone()
-      .applyQuaternion(satGroup.quaternion)
-      .add(satGroup.position);
-    const projRayM = createDashedEdge(M, satAnchorM, 0x716d69, 0.22, 0.12, 0.12, track);
-    const projRayF = createDashedEdge(F, satAnchorF, 0x716d69, 0.22, 0.12, 0.12, track);
-    projRayM.renderOrder = 1;
-    projRayF.renderOrder = 1;
-    root.add(projRayM, projRayF);
-
-    // 7c. Upper-left mid-rear miniature wireframe octahedron companion
-    const octSolidGeo = track(new THREE.OctahedronGeometry(0.42, 0));
-    const octWireGeo = track(new THREE.EdgesGeometry(octSolidGeo));
-    const octFillMat = track(
-      new THREE.MeshBasicMaterial({
-        color: 0xdcebfa,
-        transparent: true,
-        opacity: 0.24,
-        depthWrite: false,
-      }),
-    );
-    const octWireMat = track(
-      new THREE.LineBasicMaterial({ color: 0x0075de, transparent: true, opacity: 0.48 }),
-    );
-    const octMesh = new THREE.Mesh(octSolidGeo, octFillMat);
-    const octWire = new THREE.LineSegments(octWireGeo, octWireMat);
-    const octGroup = new THREE.Group();
-    octGroup.position.set(baseCenter.x - 2.38, S.y - 1.15, baseCenter.z + 0.96);
-    octGroup.rotation.set(0.35, 0.62, 0.12);
-    octGroup.add(octMesh, octWire);
-    root.add(octGroup);
+    const topRingLine = new THREE.Line(topRingGeo, topRingMat);
+    topRingLine.renderOrder = 1;
+    root.add(topRingLine);
 
     let disposed = false;
     let isInView = false;
@@ -1017,43 +980,52 @@ export function LandingClosingScene3D() {
         curTiltY,
       );
 
-      root.scale.setScalar(0.95 + 0.05 * state.solidReveal);
-      shadowOuterMat.opacity = 0.04 * state.solidReveal;
-      shadowInnerMat.opacity = 0.068 * state.solidReveal;
-      lowerMat.opacity = 0.86 * state.solidReveal;
-      upperMat.opacity = 0.2 * state.solidReveal;
-      baseNodeMat.opacity = 0.92 * state.solidReveal;
-      hiddenNodeMat.opacity = 0.38 * state.solidReveal;
-      raMat.opacity = 0.56 * state.solidReveal;
-      for (const gl of guideLines) {
-        (gl.material as THREE.LineDashedMaterial).opacity = 0.32 * state.solidReveal;
+      root.scale.setScalar(0.94 + 0.06 * state.solidReveal);
+      shadowOuterMat.opacity = 0.036 * state.solidReveal;
+      shadowInnerMat.opacity = 0.06 * state.solidReveal;
+      baseRingMat.opacity = 0.28 * state.solidReveal;
+      orbitArcMat.opacity = 0.24 * state.solidReveal;
+      lowerMat.opacity = 0.72 * state.solidReveal;
+      upperMat.opacity = 0.16 * state.solidReveal;
+      baseVertexMat.opacity = 0.84 * state.solidReveal;
+      for (const d of solidVertexDots) {
+        d.visible = state.solidReveal > 0.05;
       }
 
-      orbitArcMat.opacity = 0.26 * state.solidReveal;
-      orbitNodeMat.opacity = 0.62 * state.solidReveal;
-      octFillMat.opacity = 0.24 * state.solidReveal;
-      octWireMat.opacity = 0.48 * state.solidReveal;
+      raMat.opacity = 0.6 * state.solidReveal;
+      (axisLine.material as THREE.LineDashedMaterial).opacity =
+        0.56 * state.solidReveal;
+
+      topRingMat.opacity = 0.24 * state.solidReveal;
 
       seedNodeMat.opacity = state.seedScale;
       for (const dot of seedDots) {
         dot.visible = state.seedScale > 0.05;
-        dot.scale.setScalar(Math.max(0.05, 1.06 * state.seedScale));
+        dot.scale.setScalar(Math.max(0.05, 1.04 * state.seedScale));
       }
 
-      planeMat.opacity = 0.22 * state.planeOpacity;
+      planeMat.opacity = 0.16 * state.planeOpacity;
       planeGroup.position
         .copy(planeCenter)
-        .addScaledVector(cutPlaneNormal, (1 - state.planeOpacity) * 0.5);
+        .addScaledVector(cutNormal, (1 - state.planeOpacity) * 0.45);
       for (const rim of planeRimCyls) {
-        (rim.material as THREE.MeshBasicMaterial).opacity = 0.84 * state.planeOpacity;
+        (rim.material as THREE.MeshBasicMaterial).opacity =
+          0.82 * state.planeOpacity;
       }
-      (extNP.material as THREE.LineDashedMaterial).opacity = 0.42 * state.planeOpacity;
-      extNP.visible = state.planeOpacity > 0.06;
+      normalStem.visible = state.planeOpacity > 0.15;
+      (normalStem.material as THREE.MeshBasicMaterial).opacity =
+        0.72 * state.planeOpacity;
+
+      for (const pg of plumbGuides) {
+        pg.visible = state.planeOpacity > 0.35;
+        (pg.material as THREE.LineDashedMaterial).opacity =
+          0.34 * state.planeOpacity;
+      }
 
       interNodeMat.opacity = state.intersectionScale;
       for (const dot of interDots) {
         dot.visible = state.intersectionScale > 0.05;
-        dot.scale.setScalar(Math.max(0.05, 1.12 * state.intersectionScale));
+        dot.scale.setScalar(Math.max(0.05, 1.08 * state.intersectionScale));
       }
 
       for (let i = 0; i < sectionBorderCyls.length; i++) {
@@ -1069,18 +1041,9 @@ export function LandingClosingScene3D() {
           0.96 * Math.min(1, localP * 2);
       }
 
-      sectionMat.opacity = CLOSING_SECTION_FILL_OPACITY * state.sectionFillOpacity;
+      sectionMat.opacity =
+        CLOSING_SECTION_FILL_OPACITY * state.sectionFillOpacity;
       sectionMesh.visible = state.sectionFillOpacity > 0.01;
-
-      satFillMat.opacity = 0.16 * state.sectionFillOpacity;
-      satRimMat.opacity = 0.7 * state.sectionFillOpacity;
-      satGroup.visible = state.sectionFillOpacity > 0.04;
-      (projRayM.material as THREE.LineDashedMaterial).opacity =
-        0.22 * state.sectionFillOpacity;
-      (projRayF.material as THREE.LineDashedMaterial).opacity =
-        0.22 * state.sectionFillOpacity;
-      projRayM.visible = state.sectionFillOpacity > 0.06;
-      projRayF.visible = state.sectionFillOpacity > 0.06;
 
       root.updateMatrixWorld(true);
       const frontFacing = faceSpecs.map((fs) => {
@@ -1097,10 +1060,10 @@ export function LandingClosingScene3D() {
         edge.dashed.visible = !isFrontEdge;
         if (isFrontEdge) {
           (edge.solid.material as THREE.MeshBasicMaterial).opacity =
-            0.9 * state.solidReveal;
+            0.88 * state.solidReveal;
         } else {
           (edge.dashed.material as THREE.LineDashedMaterial).opacity =
-            (edge.altitude ? 0.56 : 0.44) * state.solidReveal;
+            0.42 * state.solidReveal;
         }
       }
 
@@ -1256,12 +1219,12 @@ export function LandingClosingScene3D() {
       id="landing-closing-scene3d"
       className="axo-v14-closing-visual"
       role="img"
-      aria-label="Mô hình 3D hình chóp S.ABCD và thiết diện ngũ giác phẳng MENPF"
+      aria-label="Mô hình không gian lăng trụ lục giác đều cắt bởi mặt phẳng nghiên cứu"
       data-cta-visual={
-        showFallback ? "svg-fallback" : "spatial-pyramid-editorial-3d"
+        showFallback ? "svg-fallback" : "spatial-polyhedra-exploration-3d"
       }
       data-closing-beat={beatLabel}
-      data-section-edges="5"
+      data-section-edges="6"
       onPointerMove={(e) => {
         if (window.matchMedia?.("(prefers-reduced-motion: reduce)")?.matches) {
           return;

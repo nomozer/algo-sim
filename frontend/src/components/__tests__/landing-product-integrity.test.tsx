@@ -65,7 +65,7 @@ describe("AXO Landing V1.4 — Zero Pre-Displayed Answers & Product Honesty Guar
 
     const closingHtml = renderToStaticMarkup(<LandingClosingV14 />);
     expect(closingHtml).toContain('id="landing-closing-scene3d"');
-    expect(closingHtml).toContain('data-section-edges="5"');
+    expect(closingHtml).toContain('data-section-edges="6"');
     for (const pat of FORBIDDEN_ANSWERS) {
       expect(closingHtml).not.toContain(pat);
     }
