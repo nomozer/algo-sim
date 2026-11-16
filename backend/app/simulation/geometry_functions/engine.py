@@ -352,7 +352,8 @@ def hop_dong_to_po_da_khai(calls: tuple[LoiGoi, ...]) -> Any:
     """Tô-pô khối ĐỀ ĐÃ KHAI → `RequestContract(solid_topology=…)`, thẩm quyền ① của `formation.lop_khoi`.
 
     Khi câu nguồn viết ký hiệu chấm khớp lời gọi: chóp `S.ABC` (đỉnh + đáy), lăng trụ
-    `ABC.A'B'C'` (đáy + đáy trên, ′ ’ ≡ ').
+    `ABC.A'B'C'` (đáy + đáy trên, ′ ’ ≡ ') hoặc lăng trụ viết liền có dấu phẩy `ABCA'B'C'`
+    (cùng quy tắc đóng của `registry._tach_lang_tru_lien`).
     "Tứ diện ABCD" không nêu đỉnh — đỉnh trong lời gọi là lựa chọn của mô hình/planner ⇒ None, không bịa tô-pô.
     Nhiều khối trả map theo tập đỉnh IR; thiếu tô-pô trả None. Không đoán đỉnh từ bảng mặt của tứ diện.
     """
@@ -375,9 +376,16 @@ def hop_dong_to_po_da_khai(calls: tuple[LoiGoi, ...]) -> Any:
         return result or None
     a, nhan = khoi[0].args, r"A-Za-z0-9'′"
     phay = lambda s: s.replace("′", "'").replace("’", "'")    # A′, A’ and A' are the same source name
-    dau = list(a.base) if khoi[0].fn == "prism" else [a.apex]
-    sau = list(a.top) if khoi[0].fn == "prism" else list(a.base)
-    ky_hieu = "".join(map(re.escape, map(phay, dau))) + r"\s*\.\s*" + "".join(map(re.escape, map(phay, sau)))
+    dau = [phay(x) for x in (list(a.base) if khoi[0].fn == "prism" else [a.apex])]
+    sau = [phay(x) for x in (list(a.top) if khoi[0].fn == "prism" else list(a.base))]
+    lien_duoc = (
+        khoi[0].fn == "prism"
+        and 3 <= len(dau) <= 6
+        and not any(x.endswith("'") for x in dau)
+        and sau == [x + "'" for x in dau]
+    )
+    dau_cham = r"(?:\s*\.\s*)?" if lien_duoc else r"\s*\.\s*"
+    ky_hieu = "".join(map(re.escape, dau)) + dau_cham + "".join(map(re.escape, sau))
     if not any(re.search(rf"(?<![{nhan}]){ky_hieu}(?![{nhan}])", phay(q)) for q in khoi[0].quotes):
         return None
     if khoi[0].fn == "prism":     # pedagogical-construction-sequencing: base / top face / lateral edges, source-declared

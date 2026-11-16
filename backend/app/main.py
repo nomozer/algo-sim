@@ -931,7 +931,11 @@ MISSING_KEY_MSG = (
 #       chỉ kiểm máy (`trig-construction-certificate/1`) gắn vào `route_d` và kiểm tại `adapter4_route.py`, cùng mở rộng
 #       vân tay ngữ nghĩa `hybrid_surface`. Mọi row `139:route-d` phải MISS
 #       (`tests/test_cache_dimension_trig_invalidation.py`).
-CACHE_VERSION = "140"
+# 141 — 2026-11-16 (simulation-first-mvp-stabilization): `hop_dong_to_po_da_khai` nhận lăng trụ viết liền có dấu phẩy
+#       (`ABCDA'B'C'D'`, cùng quy tắc `_tach_lang_tru_lien`) nên `Scene3D` khôi phục đủ mặt đáy, mặt trên, cạnh bên kèm
+#       `perpendicular_witness` và 6 bước dựng nhân quả thay vì khung suy biến 10 đối tượng. Mọi row `140:route-d` phải MISS
+#       (`tests/geometry/test_undotted_prism_scene3d_topology.py`).
+CACHE_VERSION = "141"
 
 #: Hai chế độ hợp lệ của kiến trúc chính thức Hybrid `/4` do máy chủ sở hữu:
 #: - `live` (mặc định): trích xuất có cấu trúc qua Gemini (`typed-fact-next/2`) khi cấu hình `GEMINI_API_KEY`.

@@ -54,14 +54,14 @@ def test_route_d_cache_policy_tracks_cache_version_140_and_lockfile(monkeypatch:
     from app.runtime_identity import semantic_environment_fingerprint, semantic_environment_hash
     from app.simulation.geometry_functions import trig_construction_certificates as TCC
 
-    assert M.CACHE_VERSION == "140"
-    assert M.ROUTE_D_CACHE_POLICY == "140:route-d"
+    assert M.CACHE_VERSION == "141"
+    assert M.ROUTE_D_CACHE_POLICY == "141:route-d"
     assert _prior_policy() == "139:route-d"
 
     fp_base = semantic_environment_fingerprint()
     lock_path = Path(M.__file__).resolve().parents[1] / "cache_identity.lock.json"
     lock_doc = json.loads(lock_path.read_text(encoding="utf-8"))
-    assert lock_doc["cache_version"] == "140"
+    assert lock_doc["cache_version"] == M.CACHE_VERSION
     assert lock_doc["semantic_environment_hash"] == semantic_environment_hash()
     assert lock_doc["components"]["hybrid_route_surface"] == fp_base["hybrid_route_surface"]
 
@@ -236,6 +236,6 @@ def test_stale_139_row_misses_for_composite_rhombus_prism_trig_construction(clie
         with SessionLocal() as s:
             stored = s.query(SimulationCache).filter_by(key=prism_key).one_or_none()
             assert stored is not None
-            assert stored.policy_version == "140:route-d"
+            assert stored.policy_version == M.ROUTE_D_CACHE_POLICY
     finally:
         _delete_cache_row(prism_key)

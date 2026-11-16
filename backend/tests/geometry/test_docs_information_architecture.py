@@ -223,7 +223,8 @@ def test_inv_20_candidate_and_cache_verify_only():
     # 137 -> 138 (scene3d-causal-pedagogical-integrity): cờ phụ trợ thừa theo mục tiêu đề, dữ kiện nguồn ngoài tiên quyết trực quan, góc vuông hai mặt / chéo nhau được dựng, ràng buộc loại góc vuông ⇒ row 137:route-d phải MISS.
     # 138 -> 139 (grounded-vietnamese-geometry-understanding): bộ đọc đề đổi quyết định phục vụ/từ chối (đáy không tên, cạnh bên chóp đều, lăng trụ viết liền, tam giác cân suy ra, diện tích đáy, giá trị chưa đọc) ⇒ row 138:route-d phải MISS.
     # 139 -> 140 (dimension-aware-verified-construction): đại số thứ nguyên + đại lượng suy ra đã chứng minh + dựng hình lượng giác có chứng chỉ `trig-construction-certificate/1` đổi quyết định phục vụ/từ chối và envelope ⇒ row 139:route-d phải MISS.
-    assert str(CACHE_VERSION) == "140"
+    # 140 -> 141 (simulation-first-mvp-stabilization): `hop_dong_to_po_da_khai` nhận lăng trụ viết liền có dấu phẩy (`ABCA'B'C'`) ⇒ khôi phục đủ đáy/mặt trên/cạnh bên/nhân chứng vuông góc và 6 bước dựng ⇒ row 140:route-d phải MISS.
+    assert str(CACHE_VERSION) == "141"
 
 
 def test_inv_21_favicon_not_in_staged_changes():

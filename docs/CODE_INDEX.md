@@ -1,5 +1,12 @@
 # CODE_INDEX.md — Chỉ mục module + BỘ NHỚ KIẾN TRÚC
 
+## Simulation-first MVP stabilization (2026-11-16)
+
+| Path | Owns | Locked by |
+|---|---|---|
+| `backend/app/simulation/geometry_functions/engine.py` (`hop_dong_to_po_da_khai`) | undotted primed prism notation (`ABCDA'B'C'D'`, 3–6 base vertices matching `registry._tach_lang_tru_lien`) emits identical `solid_topology` (`day_*`, `canh_ben_*`) and `perpendicular_witness`es as dotted notation (`ABCD.A'B'C'D'`) without changing `ENGINE_VERSION` | `backend/tests/geometry/test_undotted_prism_scene3d_topology.py` |
+| `backend/app/main.py` (`CACHE_VERSION` 141) · `backend/cache_identity.lock.json` | `141:route-d` cache policy (`140:route-d` rows MISS) + locked `runtime_identity` semantic hash | `backend/tests/geometry/test_undotted_prism_scene3d_topology.py` + `backend/tests/test_cache_identity.py` |
+
 ## Dimension-aware mathematical facts & verified geometry construction (2026-11-15)
 
 | Path | Owns | Locked by |

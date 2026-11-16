@@ -31,7 +31,7 @@ NOW_REFUSED = (f"{B4}, M là trung điểm của SA, N thuộc cạnh SB, mặt 
 
 
 def test_version_pair():
-    assert M.CACHE_VERSION == "140" and M.ROUTE_D_CACHE_POLICY == "140:route-d"
+    assert M.CACHE_VERSION == "141" and M.ROUTE_D_CACHE_POLICY == "141:route-d"
 
 
 @pytest.fixture
