@@ -1,0 +1,59 @@
+{
+  "classification": "CURRENT_PENDING_TEMPLATE_METADATA_REFRESH_NOT_HUMAN_APPROVAL",
+  "reason": "test_s2_student_language_pilot_runner requires C21 pending templates to bind the current runtime; real-world-geometry-input-verified-simulation updates in local_ocr_worker.py, local_ocr.py, ocr_reconcile.py, local_ocr_route.py, unified_input.py, registry.py, and main.py (CACHE_VERSION 144) updated measured_system.",
+  "runtime_identity_measured_system": "7f7724f339cb8cb92a0a650fb33302df2e26f655b56f67a61d9ab18c9b6ec71c",
+  "measured_files": 120,
+  "rows": [
+    {
+      "study": "K-1",
+      "template": "docs/evaluation/geometry/runs/hybrid-master-backend-replacement/k1-owner-approval.template.json",
+      "before": {
+        "measured_system": "9aa3eaa3b5bddab90d3d45f437a8e08ad7517db674755cef3fc88fd9be25e3bf",
+        "measured_system_tree_hash": "9aa3eaa3b5bddab90d3d45f437a8e08ad7517db674755cef3fc88fd9be25e3bf"
+      },
+      "after": {
+        "measured_system": "7f7724f339cb8cb92a0a650fb33302df2e26f655b56f67a61d9ab18c9b6ec71c",
+        "measured_system_tree_hash": "7f7724f339cb8cb92a0a650fb33302df2e26f655b56f67a61d9ab18c9b6ec71c"
+      },
+      "original_saved_as": "logs/prior-k1-owner-approval.template.json",
+      "original_sha256": "8049ab57551e99d7e151d12f279dd1ce1cb7dcd36261bc519f4a305410bf93db",
+      "new_sha256": "894e7f758b3217e42ce4964d835d575e5361dea9620832a188f29a081a6c0d2d",
+      "owner_decision": "PENDING_OWNER_DECISION",
+      "paid_project_confirmed": false
+    },
+    {
+      "study": "S-2",
+      "template": "docs/evaluation/geometry/runs/hybrid-master-backend-replacement/s2-owner-approval.template.json",
+      "before": {
+        "measured_system": "9aa3eaa3b5bddab90d3d45f437a8e08ad7517db674755cef3fc88fd9be25e3bf",
+        "measured_system_tree_hash": "9aa3eaa3b5bddab90d3d45f437a8e08ad7517db674755cef3fc88fd9be25e3bf"
+      },
+      "after": {
+        "measured_system": "7f7724f339cb8cb92a0a650fb33302df2e26f655b56f67a61d9ab18c9b6ec71c",
+        "measured_system_tree_hash": "7f7724f339cb8cb92a0a650fb33302df2e26f655b56f67a61d9ab18c9b6ec71c"
+      },
+      "original_saved_as": "logs/prior-s2-owner-approval.template.json",
+      "original_sha256": "68542854b25825929e2febbff408a9a095479e78caff2a28e8244fa23ddc5947",
+      "new_sha256": "5a4da3802d6c570721bd8c6b53e9ec100be8db96ac121c05724f5be73b37424f",
+      "owner_decision": "PENDING_OWNER_DECISION",
+      "paid_project_confirmed": false
+    },
+    {
+      "study": "R-1",
+      "template": "docs/evaluation/geometry/runs/hybrid-master-backend-replacement/r1-owner-approval.template.json",
+      "before": {
+        "measured_system": "9aa3eaa3b5bddab90d3d45f437a8e08ad7517db674755cef3fc88fd9be25e3bf",
+        "measured_system_tree_hash": "9aa3eaa3b5bddab90d3d45f437a8e08ad7517db674755cef3fc88fd9be25e3bf"
+      },
+      "after": {
+        "measured_system": "7f7724f339cb8cb92a0a650fb33302df2e26f655b56f67a61d9ab18c9b6ec71c",
+        "measured_system_tree_hash": "7f7724f339cb8cb92a0a650fb33302df2e26f655b56f67a61d9ab18c9b6ec71c"
+      },
+      "original_saved_as": "logs/prior-r1-owner-approval.template.json",
+      "original_sha256": "bbb22f8b01e61efe880847aeea5e6401ea11f09680f5467b49ee1c3ece30cfa9",
+      "new_sha256": "40573c22e549a8f063b29d0502462ff0f995465ccfc30fd086f1535ae8f9f50b",
+      "owner_decision": "PENDING_OWNER_DECISION",
+      "paid_project_confirmed": false
+    }
+  ]
+}

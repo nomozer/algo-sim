@@ -940,7 +940,14 @@ MISSING_KEY_MSG = (
 #       siết kiểm chứng độ dài/góc trên đường dẫn xuất (`ask_distance_lines`) và nối trích dẫn tái sử dụng đa luật; khoá
 #       cache chỉ băm chuỗi phiên bản nên mọi row `141:route-d` phải MISS
 #       (`tests/geometry/test_planner_autonomous_composition.py`).
-CACHE_VERSION = "143"
+# 143 — 2026-11-16 (unified-geometry-understanding-ocr-autonomous-planning): mở rộng bộ đọc cục bộ tổ hợp
+#       đệ quy (depth<=3), tách câu ghép/trắc nghiệm, A4 chứa `@id` trong `contains_points`, và đối chiếu OCR hai họ
+#       có kiểm chứng hình học (`layout-aware-ocr-reconcile/2`).
+# 144 — 2026-11-17 (real-world-geometry-input-verified-simulation): cổng nguồn `_cac_moc_cau` đồng bộ biên câu hỏi viết
+#       hoa khuyết dấu chấm (vd `vmmu_r513`: `NOT_ASKED_IN_SOURCE` → `MISSING_DIMENSION` kèm `determinacy_audit`), OCR
+#       họ hai kênh `layout-aware-ocr-reconcile/3` / `local-ocr-route/2` / `local-ocr-worker/3`, và hợp đồng provenance
+#       `verified-input-provenance/1`; mọi row `143:route-d` phải MISS (`tests/geometry/test_real_world_input_verified_simulation.py`).
+CACHE_VERSION = "144"
 
 #: Hai chế độ hợp lệ của kiến trúc chính thức Hybrid `/4` do máy chủ sở hữu:
 #: - `live` (mặc định): trích xuất có cấu trúc qua Gemini (`typed-fact-next/2`) khi cấu hình `GEMINI_API_KEY`.
@@ -958,6 +965,62 @@ def hybrid_route_mode() -> str:
     return cleaned if cleaned in HYBRID_ROUTE_MODES else "invalid"
 
 
+class InputSourceProvenance(BaseModel):
+    """Nguồn gốc văn bản đã xác minh gửi lên `/api/analyze` — không bao giờ dùng để nới Source Gate."""
+
+    model_config = ConfigDict(extra="forbid")
+    origin: Literal[
+        "direct_text",
+        "local_ocr_auto_verified",
+        "local_ocr_student_confirmed",
+        "vision_auto_verified",
+        "vision_student_confirmed",
+        "document_extracted",
+    ] = "direct_text"
+    raw_ocr_text_sha256: str | None = Field(default=None, pattern=r"^[0-9a-fA-F]{64}$")
+    prepared_region_sha256: str | None = Field(default=None, pattern=r"^[0-9a-fA-F]{64}$")
+    student_edited: bool | None = None
+    confirmed_span_count: int | None = Field(default=None, ge=0, le=200)
+    selected_candidate_id: str | None = Field(default=None, max_length=120)
+    selected_bbox: tuple[float, float, float, float] | None = None
+
+
+def build_verified_input_provenance(
+    text: str,
+    source_provenance: InputSourceProvenance | None,
+) -> dict[str, Any] | None:
+    """Tính provenance tất định; văn bản do học sinh sửa không bao giờ được tính là auto-OCR nguyên gốc."""
+    if source_provenance is None:
+        return None
+    confirmed_sha = hashlib.sha256(text.encode("utf-8")).hexdigest()
+    raw_sha = source_provenance.raw_ocr_text_sha256.lower() if source_provenance.raw_ocr_text_sha256 else None
+    edited_from_raw_ocr = bool(raw_sha and confirmed_sha != raw_sha) or bool(source_provenance.student_edited)
+    effective_origin = source_provenance.origin
+    if edited_from_raw_ocr:
+        if effective_origin == "local_ocr_auto_verified":
+            effective_origin = "local_ocr_student_confirmed"
+        elif effective_origin == "vision_auto_verified":
+            effective_origin = "vision_student_confirmed"
+    return {
+        "contract_version": "verified-input-provenance/1",
+        "origin": effective_origin,
+        "declared_origin": source_provenance.origin,
+        "edited_from_raw_ocr": edited_from_raw_ocr,
+        "counted_as_unmodified_auto_ocr": (
+            effective_origin in ("local_ocr_auto_verified", "vision_auto_verified")
+            and not edited_from_raw_ocr
+        ),
+        "raw_ocr_text_sha256": raw_sha,
+        "confirmed_text_sha256": confirmed_sha,
+        "prepared_region_sha256": (
+            source_provenance.prepared_region_sha256.lower() if source_provenance.prepared_region_sha256 else None
+        ),
+        "confirmed_span_count": source_provenance.confirmed_span_count,
+        "selected_candidate_id": source_provenance.selected_candidate_id,
+        "selected_bbox": list(source_provenance.selected_bbox) if source_provenance.selected_bbox is not None else None,
+    }
+
+
 class InputPayload(BaseModel):
     """Đầu vào chuẩn hóa — M4 thêm document/code/image, contract không đổi."""
 
@@ -965,6 +1028,7 @@ class InputPayload(BaseModel):
     content: str
     filename: str | None = None
     mime_type: str | None = None
+    source_provenance: InputSourceProvenance | None = None
 
 
 class AnalyzeBody(BaseModel):
@@ -1278,7 +1342,13 @@ def _hybrid_infra_error(code: str, local: dict | None = None) -> JSONResponse:
     return JSONResponse(status_code=status, headers=headers, content=content)
 
 
-async def _analyze_hybrid_route(text: str, mode: str, api_key: str | None, algosim_session: str | None) -> Any:
+async def _analyze_hybrid_route(
+    text: str,
+    mode: str,
+    api_key: str | None,
+    algosim_session: str | None,
+    source_provenance: InputSourceProvenance | None = None,
+) -> Any:
     """Tuyến thực thi chính thức duy nhất của AlgoSim (`HYBRID_ROUTE_MODE` = `live` mặc định | `staging-replay`).
     Tuyệt đối không còn bất kỳ nhánh hay fallback nào về `LLM_ONLY`."""
     if mode not in HYBRID_ROUTE_MODES:
@@ -1385,7 +1455,13 @@ async def _analyze_hybrid_route(text: str, mode: str, api_key: str | None, algos
                     session.rollback()
 
     # The guest trial / daily quota of a SERVED result is charged by the usage ledger (`_analyze_counted`).
-    return JSONResponse(content=response, headers={"Cache-Control": "no-store", "X-Algosim-Cache": state})
+    verified_provenance = build_verified_input_provenance(text, source_provenance)
+    out_response = (
+        {**response, "input_provenance": verified_provenance}
+        if verified_provenance is not None and isinstance(response, dict)
+        else response
+    )
+    return JSONResponse(content=out_response, headers={"Cache-Control": "no-store", "X-Algosim-Cache": state})
 
 
 @app.post("/api/analyze")
@@ -1466,7 +1542,13 @@ async def _analyze_once(body: AnalyzeBody, algosim_session: str | None):
             content={"error": "Nội dung đề quá ngắn — hãy nhập/chọn đầy đủ bài toán."},
         )
 
-    return await _analyze_hybrid_route(text, che_do_hybrid, api_key, algosim_session)
+    return await _analyze_hybrid_route(
+        text,
+        che_do_hybrid,
+        api_key,
+        algosim_session,
+        source_provenance=body.input.source_provenance,
+    )
 
 
 @app.post("/api/image/extract")

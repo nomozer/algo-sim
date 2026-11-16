@@ -18,6 +18,7 @@ import json
 import sys
 import time
 
+LOCAL_OCR_WORKER_VERSION = "local-ocr-worker/3"
 _STATE: dict = {}
 
 
@@ -208,20 +209,27 @@ def _extract_ccs(mask: list[bool], w: int, h: int) -> list[dict]:
     return ccs
 
 
-def _strip_edge_bleed(g_crop, pad_x: int):
-    """Loại mảnh mực rò từ ô hàng xóm dính sát mép trái/phải trong vùng đệm `pad_x` (chỉ khi còn thân chữ bên trong)."""
+def _strip_edge_bleed(g_crop, pad_x: int, _pad_right: int | None = None):
+    """Loại mảnh mực rò từ ô hàng xóm dính sát mép trái/phải trong vùng đệm `pad_x` (giữ dấu phẩy trên nhỏ ở góc trên phải)."""
     w, h, raw, bg, _fg_min, mask = _estimate_crop_bg_and_mask(g_crop)
     ccs = _extract_ccs(mask, w, h)
     if len(ccs) <= 1 or w < 6:
         return g_crop
     bleed_limit = max(2, pad_x + 2)
-    bleed_ccs = [
-        c for c in ccs
-        if (
-            (c["x0"] <= 1 and c["x1"] <= bleed_limit and c["w"] < 0.25 * w)
-            or (c["x1"] >= w - 1 and c["x0"] >= w - 1 - bleed_limit and c["w"] < 0.25 * w)
+    cand_left = [c for c in ccs if c["x0"] <= 1 and c["x1"] <= bleed_limit and c["w"] < 0.25 * w]
+    cand_right = [c for c in ccs if c["x1"] >= w - 1 and c["x0"] >= w - 1 - bleed_limit and c["w"] < 0.25 * w]
+    cand_set = {id(c) for c in cand_left + cand_right}
+    core_ccs = [c for c in ccs if id(c) not in cand_set] or ccs
+    core_x1 = max(c["x1"] for c in core_ccs)
+    bleed_ccs = list(cand_left)
+    for c in cand_right:
+        is_upper_prime = (
+            c["y1"] <= int(0.55 * h)
+            and c["w"] <= max(4, int(0.16 * w))
+            and (c["x0"] - core_x1) <= max(2, int(0.10 * h))
         )
-    ]
+        if not is_upper_prime:
+            bleed_ccs.append(c)
     if not bleed_ccs or len(bleed_ccs) >= len(ccs):
         return g_crop
     buf = bytearray(raw)
@@ -378,6 +386,23 @@ def _analyze_crop_glyph_topology(g_clean) -> dict:
             has_parallel_bars = True
             break
 
+    has_equals_bars = False
+    eq_ccs = [c for c in ccs if c["area"] >= 3]
+    if len(eq_ccs) == 2:
+        a_cc, b_cc = sorted(eq_ccs, key=lambda c: c["cy"])
+        ah_bar, aw_bar = max(1, a_cc["h"]), a_cc["w"]
+        bh_bar, bw_bar = max(1, b_cc["h"]), b_cc["w"]
+        ov_x = max(0, min(a_cc["x1"], b_cc["x1"]) - max(a_cc["x0"], b_cc["x0"]))
+        v_gap = b_cc["y0"] - a_cc["y1"]
+        if (
+            aw_bar >= max(4, int(1.8 * ah_bar))
+            and bw_bar >= max(4, int(1.8 * bh_bar))
+            and 1 <= v_gap <= max(3, int(0.55 * h))
+            and ov_x / float(max(1, min(aw_bar, bw_bar))) >= 0.65
+            and min(aw_bar, bw_bar) / float(max(1, max(aw_bar, bw_bar))) >= 0.60
+        ):
+            has_equals_bars = True
+
     return {
         "blurry": blurry,
         "contrast": contrast,
@@ -389,6 +414,7 @@ def _analyze_crop_glyph_topology(g_clean) -> dict:
         "has_radical_stroke": has_radical_stroke,
         "has_perp_t_junction": has_perp_t_junction,
         "has_parallel_bars": has_parallel_bars,
+        "has_equals_bars": has_equals_bars,
     }
 
 
@@ -426,8 +452,10 @@ def _reread(img, boxes: list, tessdata: str) -> dict:
             _STATE[key_vie] = api_vie
 
     t0 = time.perf_counter()
+    crop_s = topo_s = lat_s = eng_s = vie_s = 0.0
     out = []
     for b in boxes:
+        tc0 = time.perf_counter()
         x0, y0, x1, y1 = (int(v) for v in b)
         h_box = max(1, y1 - y0)
         pad_x = max(2, min(6, int(0.06 * h_box)))
@@ -440,41 +468,72 @@ def _reread(img, boxes: list, tessdata: str) -> dict:
             min(img.height, y1 + pad_bot),
         ))
         g_clean = _strip_edge_bleed(crop.convert("L"), pad_x)
+        tc1 = time.perf_counter()
+        crop_s += tc1 - tc0
         topo = _analyze_crop_glyph_topology(g_clean)
+        tc2 = time.perf_counter()
+        topo_s += tc2 - tc1
         g_rapid = ImageOps.expand(g_clean, border=6, fill=255).convert("RGB")
         buf = _io.BytesIO()
         g_rapid.save(buf, format="PNG")
         readings: dict = {"glyph_topology": topo}
+        tl0 = time.perf_counter()
         try:
             r = lat(buf.getvalue(), use_det=False, use_cls=False, use_rec=True)
             txts = list(getattr(r, "txts", None) or ())
             readings["rapidocr_latin_rec"] = str(txts[0]).strip() if txts else ""
         except Exception as exc:  # noqa: BLE001
             readings["rapidocr_latin_rec_error"] = f"{type(exc).__name__}"
+        lat_s += time.perf_counter() - tl0
         try:
             g_pad = ImageOps.expand(g_clean, border=16, fill=255)
             g = g_pad.resize((max(1, g_pad.width * 3), max(1, g_pad.height * 3)), Image.Resampling.LANCZOS)
+            te0 = time.perf_counter()
             api.SetImage(g)
             readings["tesseract_eng_line"] = (api.GetUTF8Text() or "").strip()
             readings["tesseract_eng_line_conf"] = int(api.MeanTextConf())
+            eng_s += time.perf_counter() - te0
             if api_vie is not None:
+                tv0 = time.perf_counter()
                 api_vie.SetImage(g)
                 readings["tesseract_vie_line"] = (api_vie.GetUTF8Text() or "").strip()
                 readings["tesseract_vie_line_conf"] = int(api_vie.MeanTextConf())
+                vie_s += time.perf_counter() - tv0
         except Exception as exc:  # noqa: BLE001
             readings["tesseract_eng_line_error"] = f"{type(exc).__name__}"
         out.append(readings)
-    return {"readings": out, "ms": round((time.perf_counter() - t0) * 1000.0, 2)}
+    return {
+        "worker_version": LOCAL_OCR_WORKER_VERSION,
+        "readings": out,
+        "ms": round((time.perf_counter() - t0) * 1000.0, 2),
+        "timings": {
+            "crop_ms": round(crop_s * 1000.0, 2),
+            "topology_ms": round(topo_s * 1000.0, 2),
+            "latin_rec_ms": round(lat_s * 1000.0, 2),
+            "tess_eng_ms": round(eng_s * 1000.0, 2),
+            "tess_vie_ms": round(vie_s * 1000.0, 2),
+        },
+    }
 
 
 def _handle(req: dict) -> dict:
     from PIL import Image
 
+    td0 = time.perf_counter()
     raw = base64.b64decode(req["image_b64"])
     img = Image.open(io.BytesIO(raw)).convert("RGB")
+    decode_ms = round((time.perf_counter() - td0) * 1000.0, 2)
     if req.get("op") == "reread":
-        return {"id": req.get("id"), "ok": True, **_reread(img, req.get("boxes") or [], req["tessdata"])}
-    out: dict = {"id": req.get("id"), "ok": True, "width": img.width, "height": img.height, "engines": {}}
+        return {"id": req.get("id"), "ok": True, "decode_ms": decode_ms, **_reread(img, req.get("boxes") or [], req["tessdata"])}
+    out: dict = {
+        "id": req.get("id"),
+        "ok": True,
+        "worker_version": LOCAL_OCR_WORKER_VERSION,
+        "decode_ms": decode_ms,
+        "width": img.width,
+        "height": img.height,
+        "engines": {},
+    }
     for name in req.get("engines") or ("tesseract", "rapidocr"):
         try:
             if name == "tesseract":

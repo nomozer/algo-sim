@@ -16,7 +16,7 @@ from typing import Any
 from app.ingestion.local_ocr import local_ocr_available, reread_local_ocr_regions, run_local_ocr
 from app.ingestion.ocr_reconcile import OCR_RECONCILE_VERSION, reconcile_with_adjudication
 
-LOCAL_OCR_ROUTE_VERSION = "local-ocr-route/1"
+LOCAL_OCR_ROUTE_VERSION = "local-ocr-route/2"
 #: Hai HỌ engine (Paddle + Tesseract) phải cùng đọc ra một token toán thì token mới được coi là đã xác minh.
 #: Hiệu chuẩn trên tập phát triển External16: chỉ một họ đồng thuận để lọt token sai (`CC'` → `CC` khi khung
 #: phát hiện chung cắt mất dấu phẩy trên) — xem `fidelity_false_rejection_analysis.json`.
@@ -55,13 +55,10 @@ def _reflow(draft: str) -> str:
     return "".join(out)
 
 
-def _crop_data_url(image_bytes: bytes, bbox: list[int] | None, *, max_h: int = 72, pad: int = 6) -> str | None:
-    if not bbox:
+def _crop_data_url_img(img, bbox: list[int] | None, *, max_h: int = 72, pad: int = 6) -> str | None:
+    if img is None or not bbox:
         return None
     try:
-        from PIL import Image
-
-        img = Image.open(io.BytesIO(image_bytes)).convert("RGB")
         x0, y0, x1, y1 = (int(v) for v in bbox)
         crop = img.crop((max(0, x0 - pad), max(0, y0 - pad), min(img.width, x1 + pad), min(img.height, y1 + pad)))
         if crop.height > max_h:
@@ -69,6 +66,19 @@ def _crop_data_url(image_bytes: bytes, bbox: list[int] | None, *, max_h: int = 7
         buf = io.BytesIO()
         crop.save(buf, format="JPEG", quality=80)
         return "data:image/jpeg;base64," + base64.b64encode(buf.getvalue()).decode("ascii")
+    except Exception:  # noqa: BLE001 — ảnh xem trước không được làm hỏng tuyến
+        return None
+
+
+def _crop_data_url(image_bytes: bytes, bbox: list[int] | None, *, max_h: int = 72, pad: int = 6) -> str | None:
+    if not bbox:
+        return None
+    try:
+        from PIL import Image
+
+        with Image.open(io.BytesIO(image_bytes)) as opened:
+            img = opened.convert("RGB")
+        return _crop_data_url_img(img, bbox, max_h=max_h, pad=pad)
     except Exception:  # noqa: BLE001 — ảnh xem trước không được làm hỏng tuyến
         return None
 
@@ -228,12 +238,22 @@ def run_local_ocr_route(prepared_image_bytes: bytes, figure_bboxes) -> dict[str,
     n_block = sum(1 for s in rec["uncertain_spans"] if s.get("blocking"))
     rec["uncertain_ratio"] = round(n_block / float(max(1, n_content)), 4)
     rec["low_quality"] = rec["uncertain_ratio"] > LOW_QUALITY_UNCERTAIN_RATIO
+    adj_info = rec.get("adjudication") or {}
+    reread_ms = float(adj_info.get("ms") or 0.0)
+    reconcile_total_ms = (t_rec - t_ocr) * 1000.0
+    raw_engines = raw.get("engines") or {}
     rec["timing"] = {
+        "worker_version": raw.get("worker_version"),
         "ocr_ms": round((t_ocr - t0) * 1000.0, 2),
         "ocr_cached": bool(raw.get("cached")),
         "cold_worker": bool(raw.get("cold_worker")),
-        "reconcile_and_reread_ms": round((t_rec - t_ocr) * 1000.0, 2),
-        "reread_ms": (rec.get("adjudication") or {}).get("ms"),
+        "decode_ms": raw.get("decode_ms"),
+        "tesseract_ms": (raw_engines.get("tesseract") or {}).get("ms"),
+        "rapidocr_ms": (raw_engines.get("rapidocr") or {}).get("ms"),
+        "reconcile_and_reread_ms": round(reconcile_total_ms, 2),
+        "reconcile_only_ms": round(max(0.0, reconcile_total_ms - reread_ms), 2),
+        "reread_ms": adj_info.get("ms"),
+        "reread_breakdown": adj_info.get("timings"),
         "total_ms": round((t_rec - t0) * 1000.0, 2),
     }
     return rec
@@ -242,6 +262,18 @@ def run_local_ocr_route(prepared_image_bytes: bytes, figure_bboxes) -> dict[str,
 def review_items(rec: dict[str, Any], image_bytes: bytes, *, base_offset: int = 0, text_len: int | None = None) -> list[dict[str, Any]]:
     """Các chỗ học sinh cần kiểm tra: vị trí ký tự trong văn bản đề, ảnh cắt nguồn, phương án thay thế."""
     items: list[dict[str, Any]] = []
+    diag = rec.get("diagram") or {}
+    need_crops = bool(diag.get("blocking")) or any(s.get("blocking") for s in rec.get("uncertain_spans") or ())
+    decoded_img = None
+    if need_crops and image_bytes:
+        try:
+            from PIL import Image
+
+            with Image.open(io.BytesIO(image_bytes)) as opened:
+                decoded_img = opened.convert("RGB")
+        except Exception:  # noqa: BLE001 — ảnh xem trước không được làm hỏng tuyến
+            decoded_img = None
+
     for s in rec.get("uncertain_spans") or []:
         if not s.get("blocking"):
             continue
@@ -262,12 +294,11 @@ def review_items(rec: dict[str, Any], image_bytes: bytes, *, base_offset: int = 
             "span_id": s.get("span_id"),
             "span_start": start,
             "span_end": end,
-            "crop_data_url": _crop_data_url(image_bytes, s.get("bbox")),
+            "crop_data_url": _crop_data_url_img(decoded_img, s.get("bbox")) if decoded_img is not None else _crop_data_url(image_bytes, s.get("bbox")),
             "source": "local_ocr",
         })
         if len(items) >= MAX_REVIEW_ITEMS:
             break
-    diag = rec.get("diagram") or {}
     if diag.get("blocking"):
         fig = (diag.get("figure_bboxes") or [None])[0]
         items.append({
@@ -285,7 +316,7 @@ def review_items(rec: dict[str, Any], image_bytes: bytes, *, base_offset: int = 
             "span_id": "diagram",
             "span_start": -1,
             "span_end": -1,
-            "crop_data_url": _crop_data_url(image_bytes, fig, max_h=160) if fig else None,
+            "crop_data_url": (_crop_data_url_img(decoded_img, fig, max_h=160) if decoded_img is not None else _crop_data_url(image_bytes, fig, max_h=160)) if fig else None,
             "source": "local_ocr",
         })
     return items

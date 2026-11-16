@@ -27,7 +27,7 @@ from typing import Any, Iterable
 
 from app.ingestion.ocr_lexicon import LEXICON_BIGRAMS, LEXICON_COUNTS, LEXICON_UNIGRAMS
 
-OCR_RECONCILE_VERSION = "layout-aware-ocr-reconcile/2"
+OCR_RECONCILE_VERSION = "layout-aware-ocr-reconcile/3"
 _SYLLABLE_RE = re.compile(r"(?:ngh|ng|gh|gi|kh|nh|ph|qu|th|tr|ch|b|c|d|g|h|k|l|m|n|p|r|s|t|v|x)?[aeiouy]{1,3}(?:ch|ng|nh|c|m|n|p|t)?")
 
 # Mẫu hỏng chung đã ghi nhận trên ảnh thật (dual_ocr_fidelity_receipt của run trước) — áp lên
@@ -35,6 +35,7 @@ _SYLLABLE_RE = re.compile(r"(?:ngh|ng|gh|gi|kh|nh|ph|qu|th|tr|ch|b|c|d|g|h|k|l|m
 _SHARED_CORRUPTION_RE = re.compile(
     r"(?:[0-9a-z][Vv]\d|=\s*[Vv]\d|^[Vv]\d"  # √ đọc thành V
     r"|^[A-Z],[A-Z]{3,6}$|^[A-Z]{3,6}-[A-Z]{3,6}$"  # S,ABCD · ABC-ABC
+    r"|\([0-9][A-Z]{2,}\)|\.[0-9][A-Z]{2,}|[A-Z][0-9][A-Z]{2,}"  # (4BC) · S.4BC · S.A8CD (giữ nguyên 2BC, A1B1C1)
     r"|(?:[2-9]\d{2}|1[89]\d|\d{4,})°"  # >= 180°, vd 600° (° đọc thành 0); góc tù 100°..179° hợp lệ
     r"|(?<![^\W\d_])[a-z][23”\"](?![^\W_])"  # a2 · a3 · 2a2 · 27√13a3/2 · a” (mất số mũ trên)
     r"|[€#!§¢£¥©®™«»„“”Œ]"  # ký tự rác
@@ -45,6 +46,8 @@ _LABELISH_RE = re.compile(r"^[A-Z][A-Z0-9'′.;,]*$")
 _VAR_RE = re.compile(r"^[abchxyzkr][.,;:]?$")
 _DIAGRAM_LABEL_LINE_RE = re.compile(r"^(?:[A-Z][0-9]?['′]{0,2}\s*){1,3}$")
 _CHOICE_START_RE = re.compile(r"^\s*[AB]\s*[.):](?:\s|\S|$)")
+_OPTION_MARKER_TOKEN_RE = re.compile(r"^\s*\(?([A-D])\s*[.,):]?$")
+_OPTION_PREFIX_RE = re.compile(r"^\s*\(?[A-D]\s*[.,):]\s*(?:\S|$)")
 _HEADER_RE = re.compile(r"^\s*(?:Câu|Cau|Bài|Bai|Cu)\s*\d", re.IGNORECASE)
 _DIAGRAM_DEPENDENCY_RE = re.compile(
     r"(?:hình\s+vẽ\s+bên|như\s+hình\s+(?:vẽ|bên)|trong\s+hình\s+vẽ|ở\s+hình\s+bên|hình\s+bên"
@@ -75,6 +78,12 @@ def _base_letters(word: str) -> str:
     return "".join(c for c in strip_marks(word.lower()) if c.isalpha())
 
 
+def _format_unit_superscripts(tok: str) -> str:
+    """Chuẩn hoá hiển thị chỉ số trên cho đơn vị diện tích/thể tích (`cm2` -> `cm²`, `m3` -> `m³`), không đụng đại số (`a2`)."""
+    t = re.sub(r"(?<![^\W\d_])([cdkm]?m)2(?![0-9])", r"\1²", tok)
+    return re.sub(r"(?<![^\W\d_])([cdkm]?m)3(?![0-9])", r"\1³", t)
+
+
 def norm_math(tok: str) -> str:
     t = unicodedata.normalize("NFC", tok or "")
     for a in ("′", "’", "‘", "`", "´", "ʼ"):
@@ -83,8 +92,7 @@ def norm_math(tok: str) -> str:
     t = re.sub(r"(?<=[A-Z0-9'′])\s*·\s*(?=[A-Z])", ".", t)
     t = re.sub(r"\s+", "", t)
     # Đơn vị diện tích/thể tích: chỉ số trên bị đọc thành chữ số thường (cm2 ↔ cm², mm2 ↔ mm²) — chuẩn hoá về dạng chỉ số trên.
-    t = re.sub(r"(?<![^\W\d_])([cdkm]?m)2(?![0-9])", r"\1²", t)
-    t = re.sub(r"(?<![^\W\d_])([cdkm]?m)3(?![0-9])", r"\1³", t)
+    t = _format_unit_superscripts(t)
     return t.strip(_PUNCT_EDGE)
 
 
@@ -202,31 +210,78 @@ def _line_words(line: dict[str, Any], reader: str) -> list[Word]:
     return out
 
 
+def _split_pair(w: Word, left_part: str, right_part: str) -> list[Word]:
+    x0, y0, x1, y1 = w.bbox
+    total = max(1, len(left_part) + len(right_part))
+    split_x = x0 + max(1, min(x1 - x0 - 1, int(round((x1 - x0) * len(left_part) / float(total)))))
+    return [
+        Word(left_part, (x0, y0, split_x, y1), w.conf, w.reader),
+        Word(right_part, (split_x, y0, x1, y1), w.conf, w.reader),
+    ]
+
+
+_LEXICON_SKELETONS: frozenset[str] = frozenset(
+    sk for w in LEXICON_UNIGRAMS if (sk := skeleton(w)) and len(sk) >= 2
+)
+
+
 def _split_glued_words(words: list[Word]) -> list[Word]:
-    """Tách từ dính trước bước đối chiếu (`phẳng(ABCD)`, `a,BC`, `2a,SA`, `AB,BC`), tuyệt đối KHÔNG tách `S,ABCD` hay `S.A8CD`."""
+    """Tách từ dính trước bước đối chiếu (`phẳng(ABCD)`, `ABCD.A'B'C'D'có`, `B,SA`, `AA'=`, `⊥(ABCD)`), giữ nguyên `S,ABCD` và `S.A8CD`."""
     out: list[Word] = []
     for w in words:
         t = w.text
-        x0, y0, x1, y1 = w.bbox
+        # 1. prose+(MATH) hoặc khung phụ âm dính (MATH) (`phẳng(ABCD)`, `phng(A'BC)`).
         m_pm = re.fullmatch(r"([a-zà-ỹđ]{2,})(\([A-Z][A-Z0-9'′]{1,6}\)[.,;:!?]*)", t)
         if m_pm:
             prose_part, math_part = m_pm.group(1), m_pm.group(2)
             base_p = strip_marks(prose_part).lower()
-            if prose_part.lower() in LEXICON_UNIGRAMS or _SYLLABLE_RE.fullmatch(base_p):
-                split_x = x0 + max(1, min(x1 - x0 - 1, int(round((x1 - x0) * len(prose_part) / float(max(1, len(t)))))))
-                out.append(Word(prose_part, (x0, y0, split_x, y1), w.conf, w.reader))
-                out.append(Word(math_part, (split_x, y0, x1, y1), w.conf, w.reader))
+            if prose_part.lower() in LEXICON_UNIGRAMS or _SYLLABLE_RE.fullmatch(base_p) or base_p in _LEXICON_SKELETONS:
+                out.extend(_split_pair(w, prose_part, math_part))
                 continue
+        # 2. Nhãn khối/mặt dính từ văn xuôi (`ABCD.A'B'C'D'có`, `CA'và`).
+        m_mp = re.fullmatch(r"(\(?[A-Z][A-Z0-9'′.]{1,15}\)?)(?<!\.)([a-zà-ỹđ]{2,}[.,;:!?]*)", t)
+        if m_mp:
+            math_part, prose_part = m_mp.group(1), m_mp.group(2)
+            p_core = prose_part.rstrip(_PUNCT_EDGE).lower()
+            base_p = strip_marks(p_core)
+            has_geom_struct = (
+                "." in math_part
+                or "'" in math_part
+                or "′" in math_part
+                or len(re.findall(r"[A-Z]", math_part)) >= 2
+            )
+            if has_geom_struct and not re.search(r"\d", math_part) and (
+                p_core in LEXICON_UNIGRAMS or _SYLLABLE_RE.fullmatch(base_p)
+            ):
+                out.extend(_split_pair(w, math_part, prose_part))
+                continue
+        # 3. `⊥(ABCD)` / `∥(ABCD)` bị dính.
+        m_rel = re.fullmatch(r"([⊥∥])(\(?[A-Z][A-Z0-9'′]{1,7}\)?[.,;:!?]*)", t)
+        if m_rel:
+            out.extend(_split_pair(w, m_rel.group(1), m_rel.group(2)))
+            continue
+        # 4. `AA'=` / `54=` — chỉ tách khi bên phải là `=` (nằm trên token nguồn, không chạm reread reading).
+        m_eq = re.fullmatch(r"([A-Z0-9'′]{2,})(=.*)", t)
+        if m_eq:
+            out.extend(_split_pair(w, m_eq.group(1), m_eq.group(2)))
+            continue
+        # 5. `BC(` dính dấu ngoặc chú thích cuối.
+        m_lp = re.fullmatch(r"([A-Z][A-Z0-9'′]{1,5})(\()", t)
+        if m_lp:
+            out.extend(_split_pair(w, m_lp.group(1), m_lp.group(2)))
+            continue
+        # 6. `a,BC`, `2a,SA`, `B,SA` — bảo toàn tuyệt đối `S,ABCD` / `S,ABC` (>= 3 chữ cái sau `,`).
         if not re.fullmatch(r"[A-Z],[A-Z]{3,6}[.,;:!?]*", t) and not re.fullmatch(r"\d+,\d+[.,;:!?]*", t):
             m_cm = re.fullmatch(
                 r"((?:\d*[a-z](?:[²³]|√\d+)?|[A-Z][A-Z0-9'′]{1,6})),(\(?[A-Z][A-Z0-9'′]{1,6}\)?(?:/[A-Z0-9'′]+)?[.,;:!?]*)",
                 t,
             )
             if m_cm:
-                left_part, right_part = m_cm.group(1) + ",", m_cm.group(2)
-                split_x = x0 + max(1, min(x1 - x0 - 1, int(round((x1 - x0) * len(left_part) / float(max(1, len(t)))))))
-                out.append(Word(left_part, (x0, y0, split_x, y1), w.conf, w.reader))
-                out.append(Word(right_part, (split_x, y0, x1, y1), w.conf, w.reader))
+                out.extend(_split_pair(w, m_cm.group(1) + ",", m_cm.group(2)))
+                continue
+            m_pt_seg = re.fullmatch(r"([A-Z][0-9]?['′]?),([A-Z][0-9]?['′]?[A-Z][0-9]?['′]?[.,;:!?]*)", t)
+            if m_pt_seg:
+                out.extend(_split_pair(w, m_pt_seg.group(1) + ",", m_pt_seg.group(2)))
                 continue
         out.append(w)
     return out
@@ -280,6 +335,40 @@ def _trim_neighbour_bleed(reading: str, prev_text: str, next_text: str) -> str:
     return " ".join(parts)
 
 
+_VI_VALID_CHARS = frozenset(
+    "abcdefghijklmnopqrstuvwxyz"
+    "àáảãạăắằẳẵặâấầẩẫậèéẻẽẹêếềểễệìíỉĩịòóỏõọôốồổỗộơớờởỡợùúủũụưứừửữựỳýỷỹỵđ"
+)
+_LEXICON_ASCII_BASES: frozenset[str] = frozenset(strip_marks(w.lower()) for w in LEXICON_UNIGRAMS)
+
+
+def _compatible_horn_or_junk(r_core: str, t_core: str) -> bool:
+    """Chấp nhận `t_core` (có trong từ vựng từ Tesseract `vie`) khi `r_core` mất/biến dạng nét móc (`tir`←`từ`, `lλn`←`lần`) nhưng khớp âm đầu & vần."""
+    if not r_core or not t_core or t_core not in LEXICON_UNIGRAMS or len(t_core) < 2:
+        return False
+    r_b = strip_marks(r_core.lower())
+    t_b = strip_marks(t_core.lower())
+    if not r_b or not t_b or r_b[0] != t_b[0]:
+        return False
+    has_junk = any(ch not in _VI_VALID_CHARS for ch in r_core.lower())
+    if has_junk:
+        r_clean_sk = "".join(c for c in r_b if c in "bcdfghjklmnpqrstvwxz")
+        t_clean_sk = "".join(c for c in t_b if c in "bcdfghjklmnpqrstvwxz")
+        return r_clean_sk == t_clean_sk
+    # Trường hợp móc của `ư`/`ơ` bị RapidOCR đọc nhầm thành `r` ở cuối (`tir` vs `từ`) khi `r_core` không phải một chữ có nghĩa khác.
+    if (
+        r_core.isascii()
+        and r_b not in _LEXICON_ASCII_BASES
+        and any(ch in t_core.lower() for ch in "ưứừửữựơớờởỡợ")
+        and r_b.endswith("r")
+        and t_b[-1] in "uo"
+        and abs(len(r_b) - len(t_b)) <= 1
+        and re.sub(r"[^bcdfghjklmnpqrstvwxz]", "", r_b[:-1]) == re.sub(r"[^bcdfghjklmnpqrstvwxz]", "", t_b)
+    ):
+        return True
+    return False
+
+
 def _restore_prose(r_txt: str, t_txt: str, prev_word: str, next_word: str) -> tuple[str | None, str]:
     """Khôi phục một từ văn xuôi từ R (giữ phụ âm/chữ Latin) + T (giữ dấu). Trả (từ, bằng_chứng) hoặc (None, lý do)."""
     r_core = r_txt.lower().strip(_PUNCT_EDGE + "()")
@@ -311,6 +400,8 @@ def _restore_prose(r_txt: str, t_txt: str, prev_word: str, next_word: str) -> tu
         return t_core, "TESS_LEXICON_SKELETON_MATCH" if r_core else "TESS_LEXICON_SINGLE_READER"
     if r_ok:
         return r_core, "RAPID_LEXICON_COMPATIBLE" if t_core else "RAPID_LEXICON_SINGLE_READER"
+    if _compatible_horn_or_junk(r_core, t_core):
+        return t_core, "TESS_LEXICON_ONSET_CODA_MATCH"
     if len(cands) == 1:
         return cands[0], "LEXICON_UNIQUE_SKELETON"
     if len(cands) > 1:
@@ -373,7 +464,9 @@ def _slot_is_math(r_txt: str, t_txt: str) -> bool:
         return False
     if _is_prose_word(src):
         return False
-    return is_mathlike(src)
+    if is_mathlike(src):
+        return True
+    return bool(t_txt and not _is_prose_word(t_txt) and is_mathlike(t_txt))
 
 
 def _assign_row_clusters(text_lines: list[dict[str, Any]], med_h: float) -> list[dict[str, Any]]:
@@ -422,8 +515,8 @@ def _verify_base_plus_glyph_topology(
     meta: dict[str, Any] | None,
 ) -> tuple[bool, str | None]:
     """Xác minh tự động có kiểm chứng hình học (`CROSS_FAMILY_BASE_PLUS_GLYPH_TOPOLOGY`):
-    CHỈ bật khi có `glyph_topology` thật từ sidecar (không rõ nét/nhòe ⇒ từ chối), RapidOCR word conf ≥ 82,
-    họ Tesseract xác nhận toàn bộ ký tự ASCII nền (không xung đột mũ 2 vs 3), và hình học điểm ảnh khớp ký hiệu."""
+    CHỈ bật khi có `glyph_topology` thật từ sidecar (không nhòe ⇒ từ chối), RapidOCR word conf ≥ 82,
+    và hình học điểm ảnh khớp ký hiệu (`²`, `³`, `√`, `⊥`, `∥`, `=`) hoặc định danh chữ hoa đồng đẳng."""
     if not meta or not isinstance(meta.get("glyph_topology"), dict):
         return False, None
     topo = meta["glyph_topology"]
@@ -431,6 +524,52 @@ def _verify_base_plus_glyph_topology(
         return False, None
     if not r_words or any(w.conf is None or float(w.conf) < 82.0 for w in r_words):
         return False, None
+    rap_main = norm_math(readings.get("rapidocr") or "")
+    rap_lat = norm_math(readings.get("rapidocr_latin_rec") or "")
+    tess_raw = [v for r, v in readings.items() if READER_FAMILY.get(r) == "tesseract" and (v or "").strip()]
+    tess_vals = [norm_math(v) for v in tess_raw if norm_math(v)]
+
+    # Định danh hình học chỉ gồm chữ hoa (`^[A-Z'.()]+$`, >= 2 chữ cái, không chữ số):
+    # Cả RapidOCR chính + RapidOCR Latin rec khớp y nguyên VÀ Tesseract chỉ lệch homoglyph serif kinh điển (4↔A, 8↔B, "↔'),
+    # giữ nguyên từng dấu nháy trên và dấu chấm khối (`ABCD.A'B'C'D'`, `(ABB'A')`, `ABC`).
+    if (
+        re.fullmatch(r"[A-Z'.()]+", best_val)
+        and len(re.findall(r"[A-Z]", best_val)) >= 2
+        and not has_shared_corruption(best_val)
+        and rap_main == best_val
+        and rap_lat == best_val
+        and tess_raw
+    ):
+        for raw_tv in tess_raw:
+            t_canon = norm_math(
+                unicodedata.normalize("NFC", raw_tv)
+                .replace('"', "'")
+                .replace("”", "'")
+                .replace("“", "'")
+                .replace("4", "A")
+                .replace("8", "B")
+            )
+            if t_canon == best_val:
+                return True, "CROSS_FAMILY_UPPER_HOMOGLYPH_PARITY"
+
+    if best_val == "=":
+        if not topo.get("has_equals_bars") or rap_main != "=":
+            return False, None
+        # Nếu một bộ đọc thấy toán tử/ký tự khác incompatible (`<`, `>`, `+`, chữ cái, chữ số) ⇒ giữ review.
+        incompatible = any(
+            re.search(r"[A-Za-z0-9<>+≠≤≥⊥∥√]", v.strip())
+            for v in tess_raw
+        )
+        if incompatible:
+            return False, None
+        has_bar_tess = any(
+            bool(re.fullmatch(r"(?:=|[—–\-]{1,3}|'{1,2}|:|~_~)", v.strip()))
+            for v in tess_raw
+        )
+        if has_bar_tess or (float(min(w.conf for w in r_words)) >= 88.0 and not tess_raw):
+            return True, "CROSS_FAMILY_BASE_PLUS_GLYPH_TOPOLOGY:equals_parallel_bars"
+        return False, None
+
     if not any(ch in best_val for ch in ("²", "³", "√", "⊥", "∥")):
         return False, None
     if ("²" in best_val or "³" in best_val) and not topo.get("has_superscript_cc"):
@@ -445,17 +584,13 @@ def _verify_base_plus_glyph_topology(
         return False, None
 
     # Không dùng `rapidocr_latin_rec` (vốn thiếu glyph √, ⊥, ∥, ²) để phủ quyết giá trị chuẩn của `rapidocr`.
-    rap_main = norm_math(readings.get("rapidocr") or "")
-    rap_lat = norm_math(readings.get("rapidocr_latin_rec") or "")
     if best_val not in (rap_main, rap_lat):
         return False, None
-
-    tess_vals = [norm_math(v) for r, v in readings.items() if READER_FAMILY.get(r) == "tesseract" and norm_math(v)]
     if not tess_vals:
         return False, None
 
     if best_val == "⊥":
-        if any(tv in ("⊥", "L", "T", "_", "|", "_|_", "l", "1") for tv in tess_vals):
+        if any(tv in ("⊥", "L", "T", "_", "|", "_|_", "l", "1", "/.") for tv in tess_vals):
             return True, "CROSS_FAMILY_BASE_PLUS_GLYPH_TOPOLOGY:perp_t_junction"
         return False, None
     if best_val == "∥":
@@ -483,6 +618,61 @@ def _verify_base_plus_glyph_topology(
         if any(re.sub(r"[²³”’'°ŠỶ?^®]", "", tv) == best_no_exp for tv in tess_vals):
             return True, "CROSS_FAMILY_BASE_PLUS_GLYPH_TOPOLOGY:superscript_base_and_latin_digit"
     return False, None
+
+
+def _has_prose_words(txt: str) -> bool:
+    """Ít nhất 2 từ có chữ thường (`>=2` ký tự) — câu hỏi/đề bài thật, không bao giờ là nhãn đỉnh trên hình."""
+    return sum(1 for w in re.findall(r"[A-Za-zÀ-ỹĐđ]{2,}", txt or "") if any(ch.islower() for ch in w)) >= 2
+
+
+def _detect_choice_bands(lines: list[dict[str, Any]], med_h: float) -> list[tuple[float, float]]:
+    """Tìm dải y của phương án trắc nghiệm (A/B/C/D) sau dòng đề mở đầu, gồm cả trường hợp hộp `[A-D].` tách rời."""
+    ordered = sorted(lines, key=lambda l: ((l["bbox"][1] + l["bbox"][3]) / 2.0, l["bbox"][0]))
+    if not ordered:
+        return []
+    # Nhóm thô các hộp có cùng y để nhận diện hàng chứa ≥2 nhãn lựa chọn (`A.` + `B.` hoặc `C.` + `D.`).
+    rows: list[list[dict[str, Any]]] = []
+    for l in ordered:
+        cy = (l["bbox"][1] + l["bbox"][3]) / 2.0
+        if rows and abs(cy - ((rows[-1][0]["bbox"][1] + rows[-1][0]["bbox"][3]) / 2.0)) <= 0.70 * max(1.0, med_h):
+            rows[-1].append(l)
+        else:
+            rows.append([l])
+
+    def row_is_option(row: list[dict[str, Any]]) -> bool:
+        if any(_CHOICE_START_RE.match(str(l.get("text", ""))) for l in row):
+            return True
+        punct_cd = any(re.match(r"^\s*[CD]\s*[.):](?:\s|\S|$)", str(l.get("text", ""))) for l in row)
+        if punct_cd:
+            return True
+        letters = set()
+        for l in row:
+            tok = str(l.get("text", "")).strip()
+            head = tok.split()[0] if tok.split() else ""
+            m = re.match(r"^\s*\(?([A-D])\s*[.,):]", head)
+            if m:
+                letters.add(m.group(1))
+        return len(letters) >= 2
+
+    bands: list[tuple[float, float]] = []
+    started: float | None = None
+    seen_stem = False
+    for row in rows:
+        row_y0 = min(l["bbox"][1] for l in row)
+        row_txt = " ".join(str(l.get("text", "")).strip() for l in row)
+        if _HEADER_RE.match(row_txt):
+            if started is not None:
+                bands.append((started, row_y0 - 1))
+                started = None
+            seen_stem = True
+            continue
+        if started is None and seen_stem and row_is_option(row):
+            started = row_y0 - 4
+        if _has_prose_words(row_txt):
+            seen_stem = True
+    if started is not None:
+        bands.append((started, float("inf")))
+    return bands
 
 
 def reconcile_local_ocr(
@@ -517,43 +707,46 @@ def reconcile_local_ocr(
     r_lines_all = [ln for ln in rap.get("lines") or [] if ln.get("text", "").strip() and in_region(ln["bbox"])]
     t_words_all = [w for ln in tes.get("lines") or [] for w in _split_glued_words(_line_words(ln, "tesseract")) if in_region(w.bbox)]
 
+    all_h = sorted((ln["bbox"][3] - ln["bbox"][1]) for ln in r_lines_all if ln.get("bbox")) or [20]
+    med_h_all = all_h[len(all_h) // 2]
+    pre_choice_bands = _detect_choice_bands(r_lines_all, med_h_all)
+
+    def _in_bands(b, txt: str, bands: list[tuple[float, float]], h_ref: float) -> bool:
+        cy = (b[1] + b[3]) / 2.0
+        pad = 0.70 * h_ref if (txt and (len(norm_math(txt)) <= 12 and is_mathlike(txt) or bool(_OPTION_PREFIX_RE.match(txt)))) else 0.0
+        return any(lo - pad <= cy <= hi for lo, hi in bands)
+
     diagram_tokens: list[dict[str, Any]] = []
     text_lines: list[dict[str, Any]] = []
+    kept_in_fig_boxes: list[tuple[int, int, int, int]] = []
     for ln in r_lines_all:
         b = tuple(int(v) for v in ln["bbox"])
         txt = ln["text"].strip()
         in_fig = any(_center_in(b, f) for f in figs)
-        is_choice_line = bool(re.match(r"^[A-D]\s*[.,)]\s*\S", txt))
-        if not is_choice_line and (in_fig or (figs and _DIAGRAM_LABEL_LINE_RE.match(txt))):
+        is_choice_line = bool(_OPTION_PREFIX_RE.match(txt)) or _in_bands(b, txt, pre_choice_bands, med_h_all)
+        is_prose_line = _has_prose_words(txt)
+        if not is_choice_line and not is_prose_line and (in_fig or (figs and _DIAGRAM_LABEL_LINE_RE.match(txt))):
             diagram_tokens.append({"text": txt, "bbox": list(b), "reader": "rapidocr", "in_figure_block": in_fig})
             continue
+        if in_fig:
+            kept_in_fig_boxes.append(b)
         text_lines.append({**ln, "bbox": b})
 
     heights = sorted(l["bbox"][3] - l["bbox"][1] for l in text_lines) or [20]
     med_h = heights[len(heights) // 2]
     text_lines = _assign_row_clusters(text_lines, med_h)
 
-    # Vùng phương án trắc nghiệm: từ dòng "A. …" đầu tiên (sau ít nhất một dòng đề) tới tiêu đề câu kế tiếp.
-    choice_bands: list[tuple[float, float]] = []
-    started: float | None = None
-    for idx, l in enumerate(text_lines):
-        if started is None and idx > 0 and _CHOICE_START_RE.match(l["text"]):
-            started = l["bbox"][1] - 4
-        elif started is not None and _HEADER_RE.match(l["text"]):
-            choice_bands.append((started, l["bbox"][1] - 1))
-            started = None
-    if started is not None:
-        choice_bands.append((started, float("inf")))
+    # Vùng phương án trắc nghiệm trên các dòng đề đã tách hình (nhất quán với `pre_choice_bands`).
+    choice_bands = _detect_choice_bands(text_lines, med_h)
 
     def in_choice(b, txt: str = "") -> bool:
-        cy = (b[1] + b[3]) / 2.0
-        pad = 0.65 * med_h if (txt and len(norm_math(txt)) <= 12 and is_mathlike(txt)) else 0.0
-        return any(lo - pad <= cy <= hi for lo, hi in choice_bands)
+        return _in_bands(b, txt, choice_bands, med_h)
 
     assigned: dict[int, list[Word]] = {i: [] for i in range(len(text_lines))}
     t_unassigned: list[Word] = []
     for w in t_words_all:
-        if any(_center_in(w.bbox, f) for f in figs):
+        word_in_kept_text = any(_yoverlap(w.bbox, kb) >= 0.45 and _xoverlap(w.bbox, kb) >= 0.15 for kb in kept_in_fig_boxes) or in_choice(w.bbox, w.text)
+        if any(_center_in(w.bbox, f) for f in figs) and not word_in_kept_text:
             continue
         best, best_ov = None, 0.0
         for i, l in enumerate(text_lines):
@@ -797,7 +990,12 @@ def reconcile_local_ocr(
                 best_val, best_readers = ranked[0]
                 families = {READER_FAMILY.get(r, r) for r in best_readers}
                 agreed = len(best_readers) >= 2 and len(families) >= min_agreeing_families
-                tie = len(ranked) > 1 and len(ranked[1][1]) == len(best_readers)
+                second_families = {READER_FAMILY.get(r, r) for r in ranked[1][1]} if len(ranked) > 1 else set()
+                tie = (
+                    len(ranked) > 1
+                    and len(ranked[1][1]) == len(best_readers)
+                    and len(second_families) >= len(families)
+                )
                 corrupt = has_shared_corruption(best_val)
                 primed_votes = [
                     k for k in votes
@@ -815,7 +1013,8 @@ def reconcile_local_ocr(
                     else (False, None)
                 )
                 if agreed and not tie and not corrupt and not prime_drop_conflict and best_val:
-                    text_out = display if norm_math(display) == best_val else best_val + trail
+                    disp_fmt = _format_unit_superscripts(display)
+                    text_out = disp_fmt if norm_math(display) == best_val else best_val + trail
                     emit(text_out, "verified", "math",
                          evidence="CROSS_READER_AGREEMENT:" + "+".join(sorted(best_readers)) + "|families=" + "+".join(sorted(families)))
                     if (
@@ -828,7 +1027,8 @@ def reconcile_local_ocr(
                     ):
                         prime_probe_slots.append({"slot_key": key, "bbox": list(box), "readings": dict(readings)})
                 elif topo_ok and topo_ev:
-                    text_out = display if norm_math(display) == best_val else best_val + trail
+                    disp_fmt = _format_unit_superscripts(display)
+                    text_out = disp_fmt if norm_math(display) == best_val else best_val + trail
                     emit(text_out, "verified", "math", evidence=topo_ev)
                 else:
                     alts = [v for v, _ in ranked if v]
@@ -858,7 +1058,7 @@ def reconcile_local_ocr(
             r_clean = r_txt.lower().strip(_PUNCT_EDGE)
             t_clean = t_txt.lower().strip(_PUNCT_EDGE)
             if r_txt and t_txt and r_clean == t_clean:
-                if r_clean in LEXICON_UNIGRAMS or strip_marks(r_clean) == r_clean:
+                if r_clean in LEXICON_UNIGRAMS or strip_marks(r_clean) == r_clean or any(ord(c) > 127 for c in r_clean):
                     emit(r_txt, "verified", "prose", evidence="EXACT_TWO_READER_AGREEMENT")
                     continue
                 same_base = [w for w in LEXICON_UNIGRAMS if _base_letters(w) == _base_letters(r_clean)]
@@ -891,8 +1091,24 @@ def reconcile_local_ocr(
 
         if li in stacked and li not in fraction_of:
             sid += 1
-            line_spans.append(Span(f"sp{sid}", "", "uncertain", "structure", line["bbox"], "FRACTION_STRUCTURE_LOSS",
+            line_spans.append(Span(f"sp{sid}", "", "uncertain", "choice" if choice_line else "structure", line["bbox"], "FRACTION_STRUCTURE_LOSS",
                                    [], {"rapidocr": line["text"]}, evidence="layout", line_id=line_id))
+        # Bắt lỗi chữ số đọc nhầm từ ký hiệu góc trong ngữ cảnh `4BC = 30°` / `8BC = 60°`.
+        for si_chk, sp_chk in enumerate(line_spans):
+            m_ang = re.fullmatch(r"([0-9][A-Z]{2})[.,;:]*", sp_chk.text.strip())
+            if sp_chk.status == "verified" and m_ang and not choice_line:
+                look = [s.text.strip() for s in line_spans[si_chk + 1:si_chk + 4] if s.status != "dropped" and s.text.strip()]
+                if (
+                    len(look) >= 2
+                    and look[0].lower() in ("=", "bằng")
+                    and bool(re.match(r"^\d+(?:[.,]\d+)?[°º]", look[1]))
+                ):
+                    core_tok = m_ang.group(1)
+                    sp_chk.status = "uncertain"
+                    sp_chk.reason = "SHARED_CORRUPTION_PATTERN"
+                    sp_chk.alternatives = [f"∠{core_tok[1:]}", f"∠A{core_tok[1:]}", sp_chk.text] + [
+                        a for a in sp_chk.alternatives if a not in (sp_chk.text, f"∠{core_tok[1:]}", f"∠A{core_tok[1:]}")
+                    ]
         line_records.append({"line_id": line_id, "bbox": list(line["bbox"]), "spans": line_spans, "choice": choice_line,
                              "row": line["_row"]})
         spans.extend(line_spans)
@@ -1077,9 +1293,13 @@ def reconcile_with_adjudication(
     )
     second["adjudication"] = {
         "requested": len(disputes),
+        "unique_requested": rr.get("unique_requested", len(disputes)),
+        "cache_hits": rr.get("cache_hits", 0),
         "readers": sorted(readers_seen),
         "ok": bool(rr.get("ok")),
         "ms": rr.get("total_ms"),
+        "worker_ms": rr.get("worker_ms"),
+        "timings": rr.get("timings"),
         "resolved": len(disputes) - len(second["disputed_math_slots"]),
     }
     return second

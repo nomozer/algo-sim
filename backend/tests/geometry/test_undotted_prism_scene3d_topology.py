@@ -105,8 +105,8 @@ def client(monkeypatch: pytest.MonkeyPatch):
 
 
 def test_stale_140_undotted_prism_row_misses_and_rebuilds_under_141(client: TestClient) -> None:
-    assert M.CACHE_VERSION == "143"
-    assert M.ROUTE_D_CACHE_POLICY == "143:route-d"
+    assert M.CACHE_VERSION == "144"
+    assert M.ROUTE_D_CACHE_POLICY == "144:route-d"
 
     r_fresh = client.post("/api/analyze", json={"input": {"type": "text", "content": UNDOTTED_QUAD_PRISM}})
     assert r_fresh.status_code == 200

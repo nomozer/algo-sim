@@ -414,6 +414,10 @@ def _local_ocr_outcome(
     prov_common["input_text_provenance"] = (
         "LOCAL_OCR_CROSS_FAMILY_VERIFIED" if rec.get("extraction_verified") else "LOCAL_OCR_DRAFT_PENDING_STUDENT_CONFIRMATION"
     )
+    prov_common["confirmation_contract_version"] = "ocr-confirmation-provenance/1"
+    prov_common["raw_ocr_text_sha256"] = hashlib.sha256(full_text.encode("utf-8")).hexdigest()
+    prov_common["prepared_text_sha256"] = hashlib.sha256(target_text.encode("utf-8")).hexdigest()
+    prov_common["prepared_region_sha256"] = region_res.prepared_image.sha256
 
     if rec.get("extraction_verified"):
         if detect_domain(target_text) != DOMAIN_HINH_HOC:
@@ -834,6 +838,10 @@ async def _process_normalized_visual_page(
     prov_common["supplemental_merged"] = (
         bool(directive.supplemental_text) and target_text != assessment.problem_text
     )
+    prov_common["confirmation_contract_version"] = "ocr-confirmation-provenance/1"
+    prov_common["raw_ocr_text_sha256"] = hashlib.sha256(assessment.problem_text.encode("utf-8")).hexdigest()
+    prov_common["prepared_text_sha256"] = hashlib.sha256(target_text.encode("utf-8")).hexdigest()
+    prov_common["prepared_region_sha256"] = region_res.prepared_image.sha256
     prov_common["user_directive_applied"] = bool(
         directive.target_page
         or directive.target_problem_number

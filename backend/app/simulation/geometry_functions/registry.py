@@ -1400,12 +1400,67 @@ def _vi_tri(de: str, q: str) -> tuple[int, int] | None:
     return None if k < 0 else (goc[k], goc[k + len(qn) - 1] + 1)
 
 
+_KHUYET_CHAM_MO_CAU = re.compile(
+    r"(?<=[0-9a-zA-Z'°²³\)])\s+(?=(?-i:(?:Tính|Tìm|Xác\s+định|Hỏi)(?!\w)|"
+    r"(?:Khoảng\s+cách|Thể\s+tích|Diện\s+tích|Số\s+đo|Góc\s+(?:giữa|tạo\s+bởi|hợp\s+bởi|nhị\s+diện)"
+    r"|C[oô]\s?sin|Cos|Sin|Tang|Tan|C[oô]\s?tang|Cot)(?!\w)))"
+)
+_KHUYET_CHAM_TU_CHUI = frozenset({
+    "và", "hoặc", "hay", "thì", "nếu", "khi", "biết", "với", "cho", "có", "là", "bằng",
+    "tại", "từ", "đến", "tới", "trên", "trong", "của", "theo", "rồi", "hỏi", "tính", "tìm",
+    "không", "chưa", "phải", "nên", "mà", "nhưng", "vì", "do", "bởi", "giả", "sử",
+    "chứng", "minh", "tỏ", "cmr", "giữa", "về",
+})
+
+
+@functools.lru_cache(maxsize=256)
+def _cac_moc_cau(de: str) -> tuple[int, ...]:
+    """Vị trí bắt đầu mọi câu trong `de`: tách bởi `[.!?]\\s+` và biên câu hỏi viết hoa khuyết dấu chấm an toàn."""
+    explicit = [0] + [m.end() for m in re.finditer(r"[.!?]\s+", de)]
+    out = set(explicit)
+    for m in _KHUYET_CHAM_MO_CAU.finditer(de):
+        split_at = m.end()
+        prev_start = max((x for x in explicit if x <= m.start()), default=0)
+        next_end_m = re.search(r"[.!?](?=\s|$)", de[split_at:])
+        next_end = split_at + next_end_m.end() if next_end_m else len(de)
+        left = de[prev_start:m.start()]
+        right = de[split_at:next_end]
+        if not left.strip() or not right.strip():
+            continue
+        if len(left.strip()) < 8 or re.fullmatch(
+            r"(?:\(?[a-z0-9]{1,3}[).:]|(?:câu|bài|ý|phần)\s*[a-z0-9]{1,3}[.:)]?)",
+            left.strip(),
+            re.IGNORECASE,
+        ):
+            continue
+        last_word_m = re.search(r"([A-Za-zÀ-ỹĐđ0-9']+)$", left.rstrip())
+        if last_word_m and last_word_m.group(1).lower() in _KHUYET_CHAM_TU_CHUI:
+            continue
+        if (_DIEU_KIEN.search(left) or _THI.search(left) or _SAI.search(left)
+                or _HOI_QUAN_HE.search(left) or any(t in left.lower() for t in _MUC_TIEU)):
+            continue
+        right_is_question = (
+            bool(re.match(r"(?-i:Tính|Tìm|Xác\s+định|Hỏi)(?!\w)", right))
+            or bool(_HOI_SAU.search(right))
+            or bool(_HOI_CUOI_DE.search(right))
+        )
+        if not right_is_question:
+            continue
+        # Nếu vế phải chứa phép gán giá trị (vd: "Khoảng cách ... bằng 3") mà không có "?/bao nhiêu" sau đó ⇒ dữ kiện, không tách.
+        if (so := _GIA_TRI.search(right)) and not _HOI_SAU.search(right[:so.start()]) and not _DONG_TU_HOI.search(right):
+            continue
+        out.add(split_at)
+    return tuple(sorted(out))
+
+
 def _cau_chua(de: str, vt: int) -> int:
-    """Đầu câu chứa vị trí `vt` (câu tách bởi . ! ? theo sau là khoảng trắng — `S.ABC` không tách)."""
+    """Đầu câu chứa vị trí `vt` (tách bởi `. ! ?` hoặc biên câu hỏi viết hoa khuyết dấu chấm an toàn)."""
     dau = 0
-    for m in re.finditer(r"[.!?]\s+", de):
-        if m.end() <= vt:
-            dau = m.end()
+    for m in _cac_moc_cau(de):
+        if m <= vt:
+            dau = m
+        else:
+            break
     return dau
 
 
@@ -3333,8 +3388,14 @@ _CHAN_TAN_NGU = re.compile(r"(?<!\w)(?:theo(?!\s+(?-i:[a-z])(?![\w']))|tỉ số
 
 
 def _bien_cau(de: str, p: int) -> tuple[int, int]:
+    moc = _cac_moc_cau(de)
+    dau = _cau_chua(de, p)
+    next_implicit = next((m for m in moc if m > p), None)
     het = re.search(r"[.!?](?=\s|$)", de[p:])
-    return _cau_chua(de, p), p + het.end() if het else len(de)
+    cuoi = p + het.end() if het else len(de)
+    if next_implicit is not None and next_implicit < cuoi:
+        cuoi = next_implicit
+    return dau, cuoi
 
 
 def _bien_menh_de(de: str, p: int) -> tuple[int, int]:

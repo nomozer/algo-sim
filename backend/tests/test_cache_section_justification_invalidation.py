@@ -30,7 +30,7 @@ def _row(policy_version):
 
 
 def test_cache_version_is_131():
-    assert main_module.CACHE_VERSION == "143"
+    assert main_module.CACHE_VERSION == "144"
 
 
 def test_v130_row_misses_and_a_v131_row_hits():

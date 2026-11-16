@@ -27,10 +27,11 @@ from pathlib import Path
 from typing import Any
 
 LOCAL_OCR_RAW_SCHEMA = "local-ocr-raw/1"
+LOCAL_OCR_WORKER_VERSION = "local-ocr-worker/3"
 _WORKER_PATH = Path(__file__).with_name("local_ocr_worker.py")
 _CACHE_MAX = 16
 _RAW_OCR_CACHE_MAX = 32
-_REREAD_CACHE_MAX = 64
+_REREAD_CACHE_MAX = 512
 _RAW_OCR_CACHE: "OrderedDict[str, dict[str, Any]]" = OrderedDict()
 _REREAD_CACHE: "OrderedDict[str, dict[str, Any]]" = OrderedDict()
 _CACHE = _RAW_OCR_CACHE
@@ -149,40 +150,85 @@ def local_ocr_worker_pid() -> int | None:
 
 
 def reread_local_ocr_regions(image_bytes: bytes, boxes: list[list[int]]) -> dict[str, Any]:
-    """Đọc lại các vùng tranh chấp bằng bộ nhận dạng thứ 3/4. Không ném lỗi."""
+    """Đọc lại các vùng tranh chấp bằng bộ nhận dạng thứ 3/4, gom trùng và cache theo từng hộp bao. Không ném lỗi."""
     global _WORKER
     cfg = local_ocr_config()
     if not cfg or not cfg.get("available") or not boxes:
         return {"ok": False, "readings": [], "reason": "LOCAL_OCR_DISABLED" if not boxes else None}
     sha = hashlib.sha256(image_bytes).hexdigest()
-    key = f"reread:{sha}:{json.dumps(boxes)}:{cfg['tessdata']}"
+    norm_boxes = [[int(v) for v in b] for b in boxes]
+    box_keys = [f"reread:{LOCAL_OCR_WORKER_VERSION}:{sha}:{json.dumps(b)}:{cfg['tessdata']}" for b in norm_boxes]
+
+    readings_out: list[dict[str, Any] | None] = [None] * len(norm_boxes)
+    miss_unique: dict[str, list[int]] = {}
+    miss_indices: dict[str, list[int]] = {}
+    cache_hits = 0
+
     with _LOCK:
-        hit = _REREAD_CACHE.get(key)
-        if hit is not None:
-            _REREAD_CACHE.move_to_end(key)
-            return {**hit, "cached": True}
+        for idx, (b, bkey) in enumerate(zip(norm_boxes, box_keys)):
+            hit = _REREAD_CACHE.get(bkey)
+            if hit is not None:
+                _REREAD_CACHE.move_to_end(bkey)
+                readings_out[idx] = hit
+                cache_hits += 1
+            else:
+                if bkey not in miss_unique:
+                    miss_unique[bkey] = b
+                    miss_indices[bkey] = []
+                miss_indices[bkey].append(idx)
+
+        if not miss_unique:
+            return {
+                "ok": True,
+                "worker_version": LOCAL_OCR_WORKER_VERSION,
+                "readings": [r or {} for r in readings_out],
+                "worker_ms": 0.0,
+                "total_ms": 0.0,
+                "cached": True,
+                "cache_hits": cache_hits,
+                "unique_requested": 0,
+            }
+
         if _WORKER is None or _WORKER.python != cfg["python"]:
             if _WORKER is not None:
                 _WORKER.kill()
             _WORKER = _Worker(cfg["python"])
+        req_keys = list(miss_unique.keys())
+        req_boxes = [miss_unique[k] for k in req_keys]
         t0 = time.perf_counter()
         try:
             resp = _WORKER.request(
                 {"op": "reread", "id": sha[:12], "image_b64": base64.b64encode(image_bytes).decode("ascii"),
-                 "boxes": boxes, "tessdata": cfg["tessdata"]},
+                 "boxes": req_boxes, "tessdata": cfg["tessdata"]},
                 timeout_s=float(cfg["timeout_s"]),
             )
         except (TimeoutError, OSError, ValueError, json.JSONDecodeError) as exc:
             if _WORKER is not None:
                 _WORKER.kill()
             return {"ok": False, "readings": [], "reason": f"LOCAL_OCR_WORKER_FAILED:{type(exc).__name__}"}
-        out = {"ok": bool(resp.get("ok")), "readings": resp.get("readings") or [], "worker_ms": resp.get("ms"),
-               "total_ms": round((time.perf_counter() - t0) * 1000.0, 2), "cached": False}
-        if out["ok"]:
-            _REREAD_CACHE[key] = out
-            while len(_REREAD_CACHE) > _REREAD_CACHE_MAX:
-                _REREAD_CACHE.popitem(last=False)
-        return out
+
+        fetched = resp.get("readings") or []
+        ok = bool(resp.get("ok"))
+        for bkey, rd in zip(req_keys, fetched):
+            entry = rd if isinstance(rd, dict) else {}
+            if ok:
+                _REREAD_CACHE[bkey] = entry
+                while len(_REREAD_CACHE) > _REREAD_CACHE_MAX:
+                    _REREAD_CACHE.popitem(last=False)
+            for idx in miss_indices[bkey]:
+                readings_out[idx] = entry
+        return {
+            "ok": ok,
+            "worker_version": resp.get("worker_version") or LOCAL_OCR_WORKER_VERSION,
+            "readings": [r or {} for r in readings_out],
+            "worker_ms": resp.get("ms"),
+            "decode_ms": resp.get("decode_ms"),
+            "timings": resp.get("timings"),
+            "total_ms": round((time.perf_counter() - t0) * 1000.0, 2),
+            "cached": False,
+            "cache_hits": cache_hits,
+            "unique_requested": len(req_boxes),
+        }
 
 
 def run_local_ocr(image_bytes: bytes, *, engines: tuple[str, ...] = ("tesseract", "rapidocr")) -> dict[str, Any]:
@@ -192,7 +238,7 @@ def run_local_ocr(image_bytes: bytes, *, engines: tuple[str, ...] = ("tesseract"
     if not cfg or not cfg.get("available"):
         return {"schema": LOCAL_OCR_RAW_SCHEMA, "ok": False, "reason": (cfg or {}).get("reason", "LOCAL_OCR_DISABLED")}
     sha = hashlib.sha256(image_bytes).hexdigest()
-    key = f"{sha}:{','.join(engines)}:{cfg['tessdata']}"
+    key = f"{LOCAL_OCR_WORKER_VERSION}:{sha}:{','.join(engines)}:{cfg['tessdata']}"
     with _LOCK:
         hit = _RAW_OCR_CACHE.get(key)
         if hit is not None:
@@ -221,11 +267,13 @@ def run_local_ocr(image_bytes: bytes, *, engines: tuple[str, ...] = ("tesseract"
             return {"schema": LOCAL_OCR_RAW_SCHEMA, "ok": False, "reason": f"LOCAL_OCR_WORKER_FAILED:{type(exc).__name__}"}
         out = {
             "schema": LOCAL_OCR_RAW_SCHEMA,
+            "worker_version": resp.get("worker_version") or LOCAL_OCR_WORKER_VERSION,
             "ok": bool(resp.get("ok")),
             "reason": None if resp.get("ok") else "LOCAL_OCR_ENGINE_FAILED",
             "image_sha256": sha,
             "width": resp.get("width"),
             "height": resp.get("height"),
+            "decode_ms": resp.get("decode_ms"),
             "engines": resp.get("engines") or {},
             "cold_worker": cold,
             "cached": False,

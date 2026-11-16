@@ -25,7 +25,7 @@ TEXT = ("Cho hình chóp S.ABCD có đáy ABCD là hình vuông cạnh a, SA vu�
 
 
 def test_version_pair():
-    assert M.CACHE_VERSION == "143" and M.ROUTE_D_CACHE_POLICY == "143:route-d"
+    assert M.CACHE_VERSION == "144" and M.ROUTE_D_CACHE_POLICY == "144:route-d"
 
 
 @pytest.fixture
