@@ -1,5 +1,20 @@
 # EVIDENCE_INDEX.md — Chỉ mục bằng chứng và chuỗi đính chính (Master Evidence Index)
 
+## WAVE_ID = REAL_WORLD_GEOMETRY_INPUT_VERIFIED_SIMULATION
+
+- `RUN_ID` = real-world-geometry-input-verified-simulation
+- `REPORT` = docs/evaluation/geometry/runs/real-world-geometry-input-verified-simulation/FINAL_MASTER_REPORT.md
+- `ARTIFACT_DIRECTORY` = docs/evaluation/geometry/runs/real-world-geometry-input-verified-simulation/
+- `START_BASE` = ce280140bf89ad72e8724993f75f98edcce01e55
+- `CODE_COMMIT` = 6de23b196b711674b2610c8436ef617195947fa7, 0dcc3840a5e7ff88989911d76a14e3b17e1a4821 (frozen clean d7243a7e544b513a4c24b2c7667b0b50a5ba2943)
+- `CLASSIFICATION` = OFFLINE_DEVELOPMENT_AND_EXTERNAL_IMAGE_EVIDENCE
+- `PRODUCT_CHANGE` = YES; CACHE_VERSION = 144 (144:route-d); measured_system = 14fb41dbb6c5bbc032c57302be9cc6e0c09023da1f763f16f01f8df5fae28028 (120 files, cay_lam_viec_sach = true); local-ocr-worker/3, layout-aware-ocr-reconcile/3, local-ocr-route/2, ocr-confirmation-provenance/1, verified-input-provenance/1; glyph_topology 12/12, rendered_positive 4/4, adv_neg 3/3 (0 false auto-accepts); real27 CER 0.0944 -> 0.0492 (blocking spans 81 -> 52), 1 auto (vmmu_r559 cos²=1/12) + 10/26 confirmed served (0 wrong, 48 chars typed vs 5958), cold/warm E2E p50 2220.49 -> 209.69 ms; ext15 CER 0.0333 -> 0.0270; untouched new_external_12 confirmed 1 (cos²=1/2 == 45°) & nic8 frozen r446 (√3/3); REAL27_TEXT 18/27 (r513 MISSING_DIMENSION UNPROVED_DUE_TO_CAPABILITY_GAP); NC-* NL & Gold 21/21, RM 61/62 + 10/10, A4 6/6, r1 13/13 + 6/6, Scene3D continuity 0, Mode A 0 leak; backend pytest 14866 passed / 0 failed, frontend test:wave 142 files / 2062 passed + tsc + vite build OK
+- `MODEL_REQUEST_COUNT` = 0
+- `VERIFICATION` = run.json; REAL_WORLD_INPUT_BASELINE.md; IMPLEMENTATION_REPORT.md; SCENE3D_AND_FRONTEND_HANDOFF.md; FINAL_MASTER_REPORT.md; REAL_WORLD_END_TO_END_EVALUATION.json; pending_template_refresh.json
+- `CORRECTS` = NONE
+- `CORRECTED_BY` = NONE
+- `LIMITATIONS` = INDEPENDENT_H1_VALIDATION = NOT_MEASURED (0 sealed H-1 rows opened); INDEPENDENT_GENERALIZATION = NOT_MEASURED (W2/W3 untouched); REAL_STUDENT_USABILITY = NOT_MEASURED; PHYSICAL_LOW_END = NOT_MEASURED; K-1/S-2/R-1 = PENDING_OWNER_DECISION (paid_project_confirmed: false); FE-2/3/4/6 = BLOCKED_OWNERSHIP (axo-geometry-library); PUBLICATION_HEAD = BLOCKED_PENDING_OWNER_REVIEW.
+
 ## WAVE_ID = UNIFIED_GEOMETRY_UNDERSTANDING_OCR_AUTONOMOUS_PLANNING
 
 - `RUN_ID` = unified-geometry-understanding-ocr-autonomous-planning

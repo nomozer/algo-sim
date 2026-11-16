@@ -1,5 +1,20 @@
 # CODE_INDEX.md — Chỉ mục module + BỘ NHỚ KIẾN TRÚC
 
+## Real-world geometry input & verified simulation (2026-11-17)
+
+| Hạng mục / Vai trò | Đường dẫn chuẩn (`d7243a7e5`) |
+|---|---|
+| Worker đọc lại `local-ocr-worker/3` (`_strip_edge_bleed` nét phẩy trên phải, `has_equals_bars`, timing từng chặng) | `backend/app/ingestion/local_ocr_worker.py` |
+| Quản lý cache OCR tách biệt `_RAW_OCR_CACHE (32)` / `_REREAD_CACHE (512)` & khử trùng box | `backend/app/ingestion/local_ocr.py` |
+| Đối chiếu hai họ `layout-aware-ocr-reconcile/3` (dải chọn có dấu câu, giữ văn xuôi/đáp án khỏi hình, `=` & serif homoglyph) | `backend/app/ingestion/ocr_reconcile.py` |
+| Tuyến OCR `local-ocr-route/2` (decode crop một lần & xuất breakdown timing) | `backend/app/ingestion/local_ocr_route.py` |
+| Provenance chuẩn bị ảnh `ocr-confirmation-provenance/1` (local OCR & VLM) | `backend/app/ingestion/unified_input.py` |
+| Hợp đồng `InputSourceProvenance` / `verified-input-provenance/1` & `CACHE_VERSION = "144"` (`144:route-d`) | `backend/app/main.py` |
+| `Source Gate` `_cac_moc_cau` đồng bộ ranh giới câu hỏi khuyết dấu chấm | `backend/app/simulation/geometry_functions/registry.py` |
+| Khóa định danh môi trường ngữ nghĩa (`CACHE_VERSION = "144"`) | `backend/cache_identity.lock.json` |
+| Suite kiểm thử thực tế ảnh/xác nhận/provenance/Source Gate/`144` | `backend/tests/geometry/test_real_world_input_verified_simulation.py` |
+| Bộ đo đầu cuối toàn chiến dịch (`0` live AI, 1 event loop, tập ngoài tách biệt) | `docs/evaluation/geometry/runs/real-world-geometry-input-verified-simulation/tools/evaluate_real_world_campaign.py` |
+
 ## Unified geometry understanding, OCR & autonomous planning (2026-11-16)
 
 | Hạng mục / Vai trò | Đường dẫn chuẩn (`dbf610303`) |

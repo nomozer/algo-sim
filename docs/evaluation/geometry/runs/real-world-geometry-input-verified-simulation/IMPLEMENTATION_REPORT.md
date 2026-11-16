@@ -3,7 +3,7 @@
 - **Run ID:** `real-world-geometry-input-verified-simulation`
 - **Branch:** `feat/local-first-geometry-understanding`
 - **Product Commits:** `6de23b196b711674b2610c8436ef617195947fa7`, `0dcc3840a5e7ff88989911d76a14e3b17e1a4821` (cộng thêm điều kiện truyền `source_provenance` ở `_analyze_once` giữ tương thích 4 tham số cho stub cũ)
-- **Measured System:** `120` file đo, `measured_system = 14fb41dbb6c5bbc032c57302be9cc6e0c09023da1f763f16f01f8df5fae28028` (cây sạch trước khi đóng băng ứng viên chính thức)
+- **Frozen Candidate Commit:** `d7243a7e544b513a4c24b2c7667b0b50a5ba2943` (`120` file đo, `measured_system = 14fb41dbb6c5bbc032c57302be9cc6e0c09023da1f763f16f01f8df5fae28028`, `cay_lam_viec_sach = true`)
 - **Cache Policy:** `CACHE_VERSION = "144"` · `ROUTE_D_CACHE_POLICY = "144:route-d"` · `semantic_environment_hash = 6233c43c395c9b493d31d3dbb5d0ca952604730f6185cf541d2f179c077f955b`
 
 ---

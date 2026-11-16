@@ -1,7 +1,7 @@
 # SCENE3D_AND_FRONTEND_HANDOFF — Xác Minh Cảnh 3D, Hợp Đồng Xác Nhận & Bàn Giao Frontend
 
 - **Run ID:** `real-world-geometry-input-verified-simulation`
-- **Branch / Product:** `feat/local-first-geometry-understanding` · Product `6de23b196b711674b2610c8436ef617195947fa7`, `0dcc3840a5e7ff88989911d76a14e3b17e1a4821` · `measured_system = 14fb41dbb6c5bbc032c57302be9cc6e0c09023da1f763f16f01f8df5fae28028` (`CACHE_VERSION = 144`)
+- **Branch / Candidate:** `feat/local-first-geometry-understanding` · Product `6de23b196b711674b2610c8436ef617195947fa7`, `0dcc3840a5e7ff88989911d76a14e3b17e1a4821` · Candidate `d7243a7e544b513a4c24b2c7667b0b50a5ba2943` (`14fb41dbb6c5bbc032c57302be9cc6e0c09023da1f763f16f01f8df5fae28028`, `CACHE_VERSION = 144`)
 
 ---
 

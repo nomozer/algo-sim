@@ -1,0 +1,184 @@
+{
+  "schema": "axo-evaluation-run/2",
+  "run_id": "real-world-geometry-input-verified-simulation",
+  "created_date": "2026-11-17",
+  "branch": "feat/local-first-geometry-understanding",
+  "measurement_class": "OFFLINE_DEVELOPMENT_AND_EXTERNAL_IMAGE_EVIDENCE",
+  "start_head": "ce280140bf89ad72e8724993f75f98edcce01e55",
+  "product_commits": [
+    "6de23b196b711674b2610c8436ef617195947fa7",
+    "0dcc3840a5e7ff88989911d76a14e3b17e1a4821"
+  ],
+  "tool_and_template_commits": [
+    "5e054ce66465fd0eb81b06f8f53d19594e383f21",
+    "492b8ab29532cd597ed5fd0070486070c88aa886",
+    "45331efb1ea2c24309bc5124391c03e9fd058f91"
+  ],
+  "candidate_freeze_commit": "d7243a7e544b513a4c24b2c7667b0b50a5ba2943",
+  "candidate_clean_tree": true,
+  "contracts": {
+    "architecture_preserved": true,
+    "no_llm_plan_synthesis": true,
+    "no_planner_hardcoding": true,
+    "allow_live_ai": 0,
+    "live_ai_calls": 0,
+    "sealed_h1_rows_opened": 0,
+    "locked_w2_w3_rows_read": 0,
+    "cache_version": "144",
+    "route_d_cache_policy": "144:route-d",
+    "worker_version": "local-ocr-worker/3",
+    "ocr_reconcile_version": "layout-aware-ocr-reconcile/3",
+    "local_ocr_route_version": "local-ocr-route/2",
+    "confirmation_contract_version": "ocr-confirmation-provenance/1",
+    "verified_input_provenance_version": "verified-input-provenance/1",
+    "semantic_environment_hash": "6233c43c395c9b493d31d3dbb5d0ca952604730f6185cf541d2f179c077f955b",
+    "measured_system": "14fb41dbb6c5bbc032c57302be9cc6e0c09023da1f763f16f01f8df5fae28028",
+    "measured_files": 120,
+    "locked_surfaces": {
+      "function_calling": "7ea511a6e3828c9adcc8402aa2d7d6b1d433e67a01ec4329c3009c46af652b25",
+      "fact_extraction_flat": "485d3834db8b18cfdb24143bfbb14deb8f5b7a9d74cb612d48db8c08252e507a",
+      "fact_extraction_v3": "4bff35bbf690a9973b2b7834019b908d507bbbb4277928e36d12dcff657e226f",
+      "typed_fact_next": "33197a45e0620d94a669047b47907479d1e7f07b1dc76e7c6abd75ada7a6df14"
+    },
+    "locked_surfaces_all_match": true
+  },
+  "metrics_summary": {
+    "ocr_and_confirmation": {
+      "glyph_topology": "12/12",
+      "rendered_positive_accepted": "4/4",
+      "adversarial_negative_blocked": "3/3",
+      "false_auto_accepts": 0,
+      "real27_cer_before_median": 0.0944,
+      "real27_cer_after_median": 0.0492,
+      "real27_blocking_spans_before": 81,
+      "real27_blocking_spans_after": 52,
+      "real27_ocr_decisions": {
+        "LOCAL_OCR_REVIEW_REQUIRED": 26,
+        "LOCAL_OCR_ACCEPT": 1
+      },
+      "real27_false_auto_accepts": 0,
+      "real27_confirmed_served": "10/26",
+      "real27_confirmed_wrong_served": 0,
+      "real27_confirmation_median_actions": 2.5,
+      "real27_confirmation_chars_typed": 48,
+      "real27_confirmation_full_retype_chars": 5958,
+      "real27_cold_e2e_p50_ms": 2220.49,
+      "real27_cold_e2e_p95_ms": 4039.29,
+      "real27_warm_e2e_p50_ms": 209.69,
+      "real27_warm_e2e_p95_ms": 433.43,
+      "external15_cer_before_median": 0.0333,
+      "external15_cer_after_median": 0.027,
+      "external15_ocr_decisions": {
+        "LOCAL_OCR_ACCEPT": 1,
+        "LOCAL_OCR_REVIEW_REQUIRED": 12,
+        "null": 2
+      },
+      "external15_confirmed_served_correct": 4,
+      "new_external_12_confirmed_served_correct": 1,
+      "new_image_corpus_8_frozen_confirmed_served": 1
+    },
+    "understanding_and_planning": {
+      "nc_gold": "21/21",
+      "nc_nl": "21/21",
+      "autonomous_negatives_refused": "11/11",
+      "a4_all_passed": true,
+      "reasoning_matrix_positive": "61/62",
+      "reasoning_matrix_negative": "10/10",
+      "r1_probe_positive": "13/13",
+      "r1_probe_negative": "6/6",
+      "dev37_served": "30/37",
+      "comp112_served": "66/112",
+      "probes39_served": "23/39",
+      "real27_text_served": "18/27",
+      "real27_text_wrong_served": 0,
+      "vmmu_r513_source_gate_aligned": true
+    },
+    "safety": {
+      "total_scene3d_continuity_errors": 0,
+      "mode_a_trig_no_answer_leak": true,
+      "max_memory_declarations": 32,
+      "vision_fallback_mock_passed": true,
+      "provenance_and_cache_144_passed": true
+    }
+  },
+  "verdicts": {
+    "OFFLINE_DEVELOPMENT_AND_EXTERNAL_IMAGE_EVIDENCE": "PASS",
+    "INDEPENDENT_H1_VALIDATION": "NOT_MEASURED",
+    "INDEPENDENT_GENERALIZATION": "NOT_MEASURED",
+    "REAL_STUDENT_USABILITY": "NOT_MEASURED",
+    "PHYSICAL_LOW_END": "NOT_MEASURED",
+    "K1_S2_R1_TEMPLATES": "PENDING_OWNER_DECISION",
+    "FE_2_3_4_6": "BLOCKED_OWNERSHIP",
+    "PUBLICATION_HEAD": "BLOCKED_PENDING_OWNER_REVIEW"
+  },
+  "regression_gates": {
+    "backend_pytest_full": {
+      "commit": "d7243a7e544b513a4c24b2c7667b0b50a5ba2943",
+      "command": "pytest -c backend/pytest.ini backend/tests -q",
+      "passed": 14866,
+      "skipped": 7,
+      "deselected": 3,
+      "xfailed": 12,
+      "failed": 0,
+      "duration_seconds": 654.48
+    },
+    "frontend_test_wave": {
+      "commit": "d7243a7e544b513a4c24b2c7667b0b50a5ba2943",
+      "command": "npm --prefix frontend run test:wave",
+      "test_files_passed": 142,
+      "tests_passed": 2062,
+      "failed": 0,
+      "tsc_b": "PASS",
+      "vite_build": "PASS",
+      "vitest_duration_seconds": 69.53,
+      "vite_build_seconds": 4.7
+    },
+    "replay_demo_cases": "5/5 (REDUCED_CHAIN_CASES=1/1)",
+    "audit_demo_crash_surface": "6/6 (khop=true, nem=false)",
+    "hybrid_preview_fixtures_verify": "41 verified, problems=[]",
+    "freeze_evaluation_candidate_verify": "MATCH (120 files, 14fb41dbb6c5bbc032c57302be9cc6e0c09023da1f763f16f01f8df5fae28028, cay_lam_viec_sach=true)",
+    "lock_cache_identity_verify": "MATCH (CACHE_VERSION=144, 6233c43c395c9b493d31d3dbb5d0ca952604730f6185cf541d2f179c077f955b)"
+  },
+  "artifacts": {
+    "FINAL_MASTER_REPORT.md": {
+      "bytes": 15467,
+      "sha256": "de90a3ea3c1706dc2781fa13eddab836920515091d91037d2412004ae89aca89"
+    },
+    "IMPLEMENTATION_REPORT.md": {
+      "bytes": 7095,
+      "sha256": "b3574e99e5d865816ecda127e1767cec90a6e8c8853586dbd18bfa460fccb1f5"
+    },
+    "logs/prior-k1-owner-approval.template.json": {
+      "bytes": 782,
+      "sha256": "8049ab57551e99d7e151d12f279dd1ce1cb7dcd36261bc519f4a305410bf93db"
+    },
+    "logs/prior-r1-owner-approval.template.json": {
+      "bytes": 782,
+      "sha256": "bbb22f8b01e61efe880847aeea5e6401ea11f09680f5467b49ee1c3ece30cfa9"
+    },
+    "logs/prior-s2-owner-approval.template.json": {
+      "bytes": 782,
+      "sha256": "68542854b25825929e2febbff408a9a095479e78caff2a28e8244fa23ddc5947"
+    },
+    "pending_template_refresh.json": {
+      "bytes": 3300,
+      "sha256": "715ddaf657bb816f9b41aea680138882602e7cd9302e7972ac93504cf4d925a9"
+    },
+    "REAL_WORLD_END_TO_END_EVALUATION.json": {
+      "bytes": 504834,
+      "sha256": "b8f60a701391b1a195e1962e4342453c3ed33a3bfbf9d5d6d21788f114ce23f9"
+    },
+    "REAL_WORLD_INPUT_BASELINE.md": {
+      "bytes": 6059,
+      "sha256": "631d73cb58276db466e4b1695b7883141e04abca36b8f6166e5dda0a5d5fe60a"
+    },
+    "SCENE3D_AND_FRONTEND_HANDOFF.md": {
+      "bytes": 6159,
+      "sha256": "cd357911062615fe9e5a0850431d8d0369be587cf85b1871723a946546192836"
+    },
+    "tools/evaluate_real_world_campaign.py": {
+      "bytes": 62360,
+      "sha256": "22197267bb1aad6b1a640a1ec5a98711b3e27c93d843c48602b0b5cb77139c45"
+    }
+  }
+}
