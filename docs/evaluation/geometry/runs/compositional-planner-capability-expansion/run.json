@@ -1,0 +1,113 @@
+{
+  "run_id": "compositional-planner-capability-expansion",
+  "generated_at_utc": "2026-11-16T07:08:52Z",
+  "schema": "axo-compositional-planner-capability-expansion-run/1",
+  "branch": "feat/local-first-geometry-understanding",
+  "start_head": "c69c10fe6806012998c20245888f600ee9a1f218",
+  "product_commits": [
+    "4f302b06a5cf582f8ed424abaae87aeeb3b0e6a2",
+    "7effb76b86522d091dca6af778afecec8aef247b"
+  ],
+  "candidate_freeze_commit": "7bf744ec2c8da0c1100b462147e2bf96ef0c0ebf",
+  "candidate_commit_field": "7effb76b86522d091dca6af778afecec8aef247b",
+  "measured_system": "d1c9fb815dbae8a4088d468b7e0c96a185c4e8a294a0c2e8a6880768ebd62a9e",
+  "measured_files": 120,
+  "cache_version": "141",
+  "semantic_environment_hash": "6233c43c395c9b493d31d3dbb5d0ca952604730f6185cf541d2f179c077f955b",
+  "environment": {
+    "ALLOW_LIVE_AI": "0",
+    "GEMINI_API_KEY": "EMPTY",
+    "HYBRID_ROUTE_MODE": "UNSET",
+    "live_ai_calls": 0
+  },
+  "dataset_partition": "DEVELOPMENT (reasoning_matrix 72 cases, r1-described-point-probe + C3-dist, test_family_d2, Gold vs local-geometry-parser/2 NL isolation, offline regression gates); never sealed H-1 or locked W2/W3",
+  "contracts": {
+    "local_geometry_parser": "local-geometry-parser/2",
+    "typed_fact_next": "typed-fact-next/2",
+    "planner": "geometry-fact-planner/26",
+    "registry": "geometry-functions/33",
+    "engine": "geometry-function-engine/24",
+    "envelope": "hybrid-route-d-simulation/4",
+    "output_policy": "output-policy/1",
+    "route_d_cache_policy": "141:route-d"
+  },
+  "metrics_summary": {
+    "reasoning_matrix_positive": "61/62",
+    "reasoning_matrix_negative": "10/10",
+    "reasoning_matrix_false_served": 0,
+    "reasoning_matrix_remaining_refused": [
+      "MG9"
+    ],
+    "r1_probe_positive": "13/13",
+    "r1_probe_adversarial_refused": "6/6",
+    "nl_isolation_passed": "7/7",
+    "test_family_d2_status": "SERVED",
+    "backend_pytest": "14842 passed, 7 skipped, 3 deselected, 12 xfailed, 0 failed (695.44s)",
+    "frontend_vitest": "142 files / 2062 passed (46.26s), tsc -b OK, vite build 3.59s"
+  },
+  "verdicts": {
+    "COMPOSITIONAL_PLANNER_VERDICT": "PASS_WITHIN_DEVELOPMENT_BENCHMARK_AND_OFFLINE_REGRESSION",
+    "PRODUCT_TECHNICAL_VERDICT": "PASS",
+    "FULL_RELEASE_GATE": "BLOCKED_GATES_REMAIN",
+    "blocked_reasons": [
+      "INDEPENDENT_H1_VALIDATION = NOT_MEASURED",
+      "REAL_STUDENT_USABILITY = NOT_MEASURED",
+      "PHYSICAL_LOW_END = PHYSICAL_LOW_END_NOT_MEASURED",
+      "LIVE_CAMPAIGN_APPROVAL (K-1/S-2/R-1) = PENDING_OWNER_DECISION",
+      "AXO_GEOMETRY_LIBRARY (FE-2/3/4/6) = BLOCKED_OWNERSHIP",
+      "PUBLICATION_HEAD = BLOCKED_PENDING_OWNER_REVIEW (97 historical pending items, 0 new violations)"
+    ]
+  },
+  "regression_gates": {
+    "backend_pytest": "PASS",
+    "frontend_test_wave": "PASS",
+    "demo_replay": "PASS",
+    "crash_audit": "PASS",
+    "hybrid_preview_fixtures": "PASS",
+    "docs_ia": "PASS",
+    "freeze_verify": "PASS",
+    "cache_lock_verify": "PASS"
+  },
+  "artifacts": {
+    "COMPOSITIONAL_GENERALIZATION_EVALUATION.json": {
+      "sha256": "3de6b08b2c84b96fc92b70f77085a9e9679e53c160c62bf53a7b8c8e9093288a",
+      "bytes": 26739
+    },
+    "FINAL_PLANNER_REPORT.md": {
+      "sha256": "1f0dcdc2a100a87758413478f0c974b19aec4f8cf45eb2882c89dd762afbdb90",
+      "bytes": 9426
+    },
+    "logs/prior-k1-owner-approval.template.json": {
+      "sha256": "d32e9fcbe3def1666157872cbfee92dbc77b6fb9bad4fefb9a3eed04e4736c5b",
+      "bytes": 782
+    },
+    "logs/prior-r1-owner-approval.template.json": {
+      "sha256": "d1243adec1020855c0c8d4109f9d35b509ea248cefb2f02b3bf75c9cd7a88935",
+      "bytes": 782
+    },
+    "logs/prior-s2-owner-approval.template.json": {
+      "sha256": "d8429081055c724fc759e52b306f7900f526be07a99ff0ffd2c3a0581874ab28",
+      "bytes": 782
+    },
+    "pending_template_refresh.json": {
+      "sha256": "6eeb5f03a97d43f610d4f3bdb1e7a8536f71b42de669e1b82da5099d0d423c11",
+      "bytes": 3360
+    },
+    "PLANNER_CAPABILITY_BASELINE.md": {
+      "sha256": "bea06f497689479bf8e8d7f41c0e67240b6f9b8ea97c578947c31d613fbc384e",
+      "bytes": 6059
+    },
+    "PLANNER_IMPLEMENTATION_REPORT.md": {
+      "sha256": "647503f33f7250732571a2a9b40b9fae795373159a3bfcecccc4f64ac8375a87",
+      "bytes": 8623
+    },
+    "tools/evaluate_compositional_planner.py": {
+      "sha256": "a7fefac0482a35bfcbf1376a209ba09dee146a855b923d4d317aa4c92ab8fb4f",
+      "bytes": 17071
+    },
+    "tools/refresh_pending_templates.py": {
+      "sha256": "6cf739f4a583ca631ed1d752f087bfb7bb4723fa46c288dd648488b526ceac91",
+      "bytes": 3247
+    }
+  }
+}

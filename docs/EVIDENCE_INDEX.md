@@ -1,5 +1,20 @@
 # EVIDENCE_INDEX.md — Chỉ mục bằng chứng và chuỗi đính chính (Master Evidence Index)
 
+## WAVE_ID = COMPOSITIONAL_PLANNER_CAPABILITY_EXPANSION
+
+RUN_ID = compositional-planner-capability-expansion
+REPORT = docs/evaluation/geometry/runs/compositional-planner-capability-expansion/FINAL_PLANNER_REPORT.md
+ARTIFACT_DIRECTORY = docs/evaluation/geometry/runs/compositional-planner-capability-expansion/
+START_BASE = c69c10fe6
+CODE_COMMIT = 4f302b06a (planner/bridge/Source Gate/Kernel DAG compositional expansion, test_compositional_planner_expansion, guarded cold-start regexes), 7effb76b8 (ask_section_area solid lookahead + SIXTEEN_CLASSES R1-F01/F02 promotion and R1-F03 unsupported check); candidate freeze 7bf744ec2 (commit field 7effb76b8)
+CLASSIFICATION = DEVELOPMENT_EVIDENCE_ON_AGENT_MATRIX_AND_OFFLINE_REGRESSION; COMPOSITIONAL_PLANNER_EXPANSION; INDEPENDENT_GENERALIZATION NOT_MEASURED; PUBLICATION BLOCKED_PENDING_OWNER_REVIEW
+PRODUCT_CHANGE = YES; typed_fact_next_bridge.py, planner.py, registry.py, engine.py; schema/surface hashes and CACHE_VERSION 141 unchanged; measured files 120
+MODEL_REQUEST_COUNT = 0
+VERIFICATION = run.json; PLANNER_CAPABILITY_BASELINE.md; PLANNER_IMPLEMENTATION_REPORT.md; FINAL_PLANNER_REPORT.md; COMPOSITIONAL_GENERALIZATION_EVALUATION.json; pending_template_refresh.json
+CORRECTS = NONE
+CORRECTED_BY = NONE
+LIMITATIONS = development benchmark (reasoning_matrix 72: 61/62 pos, 10/10 neg, 0 wrong; r1-described-point-probe + C3-dist 13/13; NL isolation 7/7; test_family_d2 SERVED; MG9 remains PLAN_TOO_LARGE at MAX_MEMORY_DECLARATIONS=32); @id in PlaneConstraintSpec remains INVALID_QUALIFIED_REF; FE-2/3/4/6 BLOCKED_OWNERSHIP; H-1 NOT_MEASURED, W2/W3 untouched, real student study NOT_MEASURED, C21 PENDING_OWNER_DECISION, publication HEAD 97 historical pending items.
+
 ## WAVE_ID = SIMULATION_FIRST_MVP_STABILIZATION
 
 RUN_ID = simulation-first-mvp-stabilization

@@ -1,0 +1,944 @@
+{
+  "run_id": "compositional-planner-capability-expansion",
+  "measurement_class": "OFFLINE_DEVELOPMENT_EVIDENCE",
+  "independent_h1_validation": "NOT_MEASURED",
+  "live_ai_calls": 0,
+  "git_head": "7bf744ec2c8da0c1100b462147e2bf96ef0c0ebf",
+  "cache_version": "141",
+  "semantic_environment_hash": "6233c43c395c9b493d31d3dbb5d0ca952604730f6185cf541d2f179c077f955b",
+  "runtime_identity": {
+    "route_policy": {
+      "default_route_mode": "HYBRID",
+      "fingerprint": null
+    },
+    "hybrid_route": {
+      "mode": "live",
+      "enabled": true,
+      "simulated": false,
+      "extraction_mode": "LIVE_GEMINI_STRUCTURED",
+      "local_parser_version": "local-geometry-parser/2",
+      "adaptive_router_version": "adaptive-input-router/1",
+      "registry_version": "geometry-functions/33",
+      "planner_version": "geometry-fact-planner/26",
+      "engine_version": "geometry-function-engine/24",
+      "adapter_version": "hybrid-simulation-adapter/4",
+      "envelope_version": "hybrid-route-d-simulation/4",
+      "response_contract": "typed-fact-next/2",
+      "extraction_surface": "33197a45e0620d94a669047b47907479d1e7f07b1dc76e7c6abd75ada7a6df14",
+      "gemini_model": "gemini-2.5-flash",
+      "allow_live_ai": false,
+      "replay_corpus_configured": false
+    },
+    "hybrid_route_mode": "live",
+    "hybrid_route_d_preview": {
+      "enabled": false
+    },
+    "git_sha": "unknown",
+    "build_timestamp": "unknown",
+    "cache_version": "141",
+    "domain": "hinh_hoc",
+    "expression_count": 11,
+    "construct_statement_count": 9,
+    "measure_count": 7,
+    "obligation_count": 12,
+    "stable_capability_hash": "a2e8131eeeab638f0567b8962317c3d92c9d5a7a0b4ee9e2e74bbcb78d62751a",
+    "skills": {
+      "tren_dia": {
+        "transcribe": "b499dc7a29fec4a387074b89ccbce393970fdef69348641cff2d60ba850570d6"
+      },
+      "da_nap": {},
+      "cu": [],
+      "grammar_card": "9b8506e6883154a1f08bb90a1e7a51999ce0df6bf5a9ba4b4d61fc4757d2b750",
+      "tong": "cb272862541ae2dcdeb4ede7535c4b36f14e6abc739321ff32ae60fea592a385"
+    },
+    "semantic_telemetry": "0",
+    "gemini_model": "gemini-2.5-flash",
+    "dev_reload": "0",
+    "simulation_id": "generic.semantic_program",
+    "expressions": [
+      "divide_segment",
+      "intersect_line_line",
+      "intersect_line_plane",
+      "intersect_plane_curved",
+      "intersect_plane_curved_ellipse",
+      "intersect_plane_plane",
+      "midpoint",
+      "plane_perpendicular_to_line",
+      "project_onto",
+      "translate",
+      "vector_from_points"
+    ],
+    "construct_statements": [
+      "construct_curved_solid",
+      "construct_line",
+      "construct_plane",
+      "construct_plane_from_equation",
+      "construct_point",
+      "construct_polygon",
+      "construct_section",
+      "construct_segment",
+      "construct_solid"
+    ],
+    "measures": [
+      "angle_cos",
+      "angle_cos_sq",
+      "area",
+      "distance",
+      "lateral_area",
+      "radius",
+      "volume"
+    ]
+  },
+  "measured_system": "d1c9fb815dbae8a4088d468b7e0c96a185c4e8a294a0c2e8a6880768ebd62a9e",
+  "s2_runner_sha256": "10bc64bb4b5533c6b1136611e5d55ee3de98260e69057df6ca3641ed1f16645c",
+  "reasoning_matrix_72": {
+    "dataset": "docs/evaluation/geometry/runs/hybrid-reasoning-generalization/tools/reasoning_matrix.py (72 cases)",
+    "baseline_before": {
+      "in_scope_positive_served": 56,
+      "in_scope_positive_total": 62,
+      "negative_refused": 10,
+      "negative_total": 10,
+      "false_served": 0,
+      "bridge_or_budget_gaps": [
+        "PL5",
+        "PA3",
+        "MG5",
+        "SE3",
+        "RE10",
+        "MG9"
+      ]
+    },
+    "after": {
+      "in_scope_positive_served": 61,
+      "in_scope_positive_total": 62,
+      "negative_refused": 10,
+      "negative_total": 10,
+      "false_served": 0,
+      "remaining_refused": [
+        {
+          "id": "MG9",
+          "status": "REFUSED",
+          "reason_code": "PLAN_TOO_LARGE",
+          "note": "contract bound MAX_MEMORY_DECLARATIONS=32"
+        }
+      ],
+      "latency_p50_ms": 33.766,
+      "latency_p95_ms": 167.454
+    },
+    "promoted_from_xfail": [
+      {
+        "id": "PL5",
+        "status": "SERVED",
+        "reason_code": null,
+        "outcome": "EXACT_SERVED",
+        "oracle_exact": true,
+        "latency_ms": 481.745,
+        "classification": "REGISTERED_DECOMPOSITION",
+        "candidate_count": 3,
+        "search_depth": 3,
+        "reused_intermediates": 0
+      },
+      {
+        "id": "PA3",
+        "status": "SERVED",
+        "reason_code": null,
+        "outcome": "EXACT_SERVED",
+        "oracle_exact": true,
+        "latency_ms": 57.299,
+        "classification": "SOURCE_EXPLICIT_SEQUENCE",
+        "candidate_count": 2,
+        "search_depth": 2,
+        "reused_intermediates": 0
+      },
+      {
+        "id": "SE3",
+        "status": "SERVED",
+        "reason_code": null,
+        "outcome": "EXACT_SERVED",
+        "oracle_exact": true,
+        "latency_ms": 67.628,
+        "classification": "SOURCE_EXPLICIT_SEQUENCE",
+        "candidate_count": 0,
+        "search_depth": 0,
+        "reused_intermediates": 0
+      },
+      {
+        "id": "RE10",
+        "status": "SERVED",
+        "reason_code": null,
+        "outcome": "EXACT_SERVED",
+        "oracle_exact": true,
+        "latency_ms": 92.244,
+        "classification": "DISCOVERED_FUNCTION_COMPOSITION",
+        "candidate_count": 10,
+        "search_depth": 4,
+        "reused_intermediates": 0
+      },
+      {
+        "id": "MG5",
+        "status": "SERVED",
+        "reason_code": null,
+        "outcome": "EXACT_SERVED",
+        "oracle_exact": true,
+        "latency_ms": 34.298,
+        "classification": "SOURCE_EXPLICIT_SEQUENCE",
+        "candidate_count": 3,
+        "search_depth": 2,
+        "reused_intermediates": 0
+      }
+    ]
+  },
+  "r1_described_point_probe": {
+    "positive_rows": [
+      {
+        "id": "C1a",
+        "status": "SERVED",
+        "oracle_exact": true,
+        "answers": {
+          "q1": "3√34/5"
+        },
+        "want": {
+          "q1": "3√34/5"
+        },
+        "latency_ms": 26.988
+      },
+      {
+        "id": "C1b",
+        "status": "SERVED",
+        "oracle_exact": true,
+        "answers": {
+          "q1": "√3"
+        },
+        "want": {
+          "q1": "√3"
+        },
+        "latency_ms": 31.54
+      },
+      {
+        "id": "C2",
+        "status": "SERVED",
+        "oracle_exact": true,
+        "answers": {
+          "q1": "√2/2"
+        },
+        "want": {
+          "q1": "√2/2"
+        },
+        "latency_ms": 52.604
+      },
+      {
+        "id": "C3",
+        "status": "SERVED",
+        "oracle_exact": true,
+        "answers": {
+          "q1": "5/6"
+        },
+        "want": {
+          "q1": "5/6"
+        },
+        "latency_ms": 50.805
+      },
+      {
+        "id": "C4",
+        "status": "SERVED",
+        "oracle_exact": true,
+        "answers": {
+          "q2": "36/25",
+          "q1": "3√34/5"
+        },
+        "want": {
+          "q1": "3√34/5",
+          "q2": "36/25"
+        },
+        "latency_ms": 36.812
+      },
+      {
+        "id": "C5",
+        "status": "SERVED",
+        "oracle_exact": true,
+        "answers": {
+          "q1": "1107/250"
+        },
+        "want": {
+          "q1": "1107/250"
+        },
+        "latency_ms": 98.611
+      },
+      {
+        "id": "C6a",
+        "status": "SERVED",
+        "oracle_exact": true,
+        "answers": {
+          "q1": "√3/6"
+        },
+        "want": {
+          "q1": "√3/6"
+        },
+        "latency_ms": 69.759
+      },
+      {
+        "id": "C6b",
+        "status": "SERVED",
+        "oracle_exact": true,
+        "answers": {
+          "q1": "20√6/27"
+        },
+        "want": {
+          "q1": "20√6/27"
+        },
+        "latency_ms": 105.841
+      },
+      {
+        "id": "C7",
+        "status": "SERVED",
+        "oracle_exact": true,
+        "answers": {
+          "q1": "4√34/5"
+        },
+        "want": {
+          "q1": "4√34/5"
+        },
+        "latency_ms": 47.1
+      },
+      {
+        "id": "N1",
+        "status": "SERVED",
+        "oracle_exact": true,
+        "answers": {
+          "q1": "2√6/3"
+        },
+        "want": {
+          "q1": "2√6/3"
+        },
+        "latency_ms": 34.822
+      },
+      {
+        "id": "D1",
+        "status": "SERVED",
+        "oracle_exact": true,
+        "answers": {
+          "q1": "√2"
+        },
+        "want": {
+          "q1": "√2"
+        },
+        "latency_ms": 24.654
+      },
+      {
+        "id": "D2",
+        "status": "SERVED",
+        "oracle_exact": true,
+        "answers": {
+          "q1": "√6"
+        },
+        "want": {
+          "q1": "√6"
+        },
+        "latency_ms": 35.88
+      },
+      {
+        "id": "C3-dist",
+        "status": "SERVED",
+        "oracle_exact": true,
+        "answers": {
+          "q1": "0"
+        },
+        "want": {
+          "q1": "0"
+        },
+        "latency_ms": 65.018
+      }
+    ],
+    "positive_passed": 13,
+    "positive_total": 13,
+    "adversarial_refused": 6,
+    "adversarial_total": 6,
+    "false_served": 0
+  },
+  "gold_vs_local_parser_nl_and_families": {
+    "nl_and_gold_isolation_rows": [
+      {
+        "id": "PL5",
+        "gold_served": true,
+        "local_parse_status": "LOCAL_PARSE_COMPLETE",
+        "nl_served": true,
+        "answers_match": true,
+        "continuity_errors": 0,
+        "gold_ms": 26.203,
+        "nl_ms": 36.602,
+        "search_telemetry": {
+          "classification": "REGISTERED_DECOMPOSITION",
+          "explored_states": 9,
+          "candidate_evaluations": 3,
+          "candidate_count": 3,
+          "pruned_nodes": 0,
+          "rejection_reasons": [],
+          "search_depth": 3,
+          "reused_intermediates": 0,
+          "planner_originated_steps": [
+            "q1_aux",
+            "q1_aux2"
+          ],
+          "source_defined_steps": [
+            "q1_aux"
+          ],
+          "registered_decomposition_steps": [
+            "q1_aux2"
+          ],
+          "search_generated_steps": [],
+          "selected_functions": [
+            "pyramid",
+            "regular_polygon",
+            "perpendicular_line_plane",
+            "segment_length",
+            "midpoint",
+            "orthogonal_projection_line",
+            "ask_length"
+          ],
+          "selected_plan": [
+            "pyramid",
+            "regular_polygon",
+            "perpendicular_line_plane",
+            "segment_length",
+            "midpoint",
+            "orthogonal_projection_line",
+            "ask_length"
+          ],
+          "plan_cost": 2,
+          "available_effects": [
+            "AnswerAngleLinePlane",
+            "AnswerAngleLines",
+            "AnswerArea",
+            "AnswerDistance",
+            "AnswerDistanceLinePlane",
+            "AnswerLength",
+            "Foot",
+            "Line",
+            "Meet",
+            "Normal",
+            "PerpDir",
+            "PerpLine",
+            "Point"
+          ],
+          "search_budget": {
+            "max_depth": 4,
+            "max_needs": 96,
+            "max_candidates": 48,
+            "max_fresh_points": 16,
+            "max_calls": 64
+          }
+        }
+      },
+      {
+        "id": "PA3",
+        "gold_served": true,
+        "local_parse_status": "LOCAL_PARSE_COMPLETE",
+        "nl_served": true,
+        "answers_match": true,
+        "continuity_errors": 0,
+        "gold_ms": 24.609,
+        "nl_ms": 52.676,
+        "search_telemetry": {
+          "classification": "SOURCE_EXPLICIT_SEQUENCE",
+          "explored_states": 7,
+          "candidate_evaluations": 2,
+          "candidate_count": 2,
+          "pruned_nodes": 0,
+          "rejection_reasons": [],
+          "search_depth": 2,
+          "reused_intermediates": 0,
+          "planner_originated_steps": [
+            "q1_aux"
+          ],
+          "source_defined_steps": [
+            "q1_aux"
+          ],
+          "registered_decomposition_steps": [],
+          "search_generated_steps": [],
+          "selected_functions": [
+            "pyramid",
+            "regular_polygon",
+            "perpendicular_line_plane",
+            "segment_length",
+            "midpoint",
+            "midpoint",
+            "ask_distance_line_plane"
+          ],
+          "selected_plan": [
+            "pyramid",
+            "regular_polygon",
+            "perpendicular_line_plane",
+            "segment_length",
+            "midpoint",
+            "midpoint",
+            "ask_distance_line_plane"
+          ],
+          "plan_cost": 1,
+          "available_effects": [
+            "AnswerAngleLinePlane",
+            "AnswerAngleLines",
+            "AnswerArea",
+            "AnswerDistance",
+            "AnswerDistanceLinePlane",
+            "AnswerLength",
+            "Foot",
+            "Line",
+            "Meet",
+            "Normal",
+            "PerpDir",
+            "PerpLine",
+            "Point"
+          ],
+          "search_budget": {
+            "max_depth": 4,
+            "max_needs": 96,
+            "max_candidates": 48,
+            "max_fresh_points": 16,
+            "max_calls": 64
+          }
+        }
+      },
+      {
+        "id": "MG5",
+        "gold_served": true,
+        "local_parse_status": "LOCAL_PARSE_COMPLETE",
+        "nl_served": true,
+        "answers_match": true,
+        "continuity_errors": 0,
+        "gold_ms": 24.609,
+        "nl_ms": 46.478,
+        "search_telemetry": {
+          "classification": "SOURCE_EXPLICIT_SEQUENCE",
+          "explored_states": 7,
+          "candidate_evaluations": 3,
+          "candidate_count": 3,
+          "pruned_nodes": 0,
+          "rejection_reasons": [],
+          "search_depth": 2,
+          "reused_intermediates": 0,
+          "planner_originated_steps": [
+            "q1_aux",
+            "q1_aux2"
+          ],
+          "source_defined_steps": [
+            "q1_aux",
+            "q1_aux2"
+          ],
+          "registered_decomposition_steps": [],
+          "search_generated_steps": [],
+          "selected_functions": [
+            "pyramid",
+            "regular_polygon",
+            "perpendicular_line_plane",
+            "segment_length",
+            "midpoint",
+            "midpoint",
+            "ask_length"
+          ],
+          "selected_plan": [
+            "pyramid",
+            "regular_polygon",
+            "perpendicular_line_plane",
+            "segment_length",
+            "midpoint",
+            "midpoint",
+            "ask_length"
+          ],
+          "plan_cost": 2,
+          "available_effects": [
+            "AnswerAngleLinePlane",
+            "AnswerAngleLines",
+            "AnswerArea",
+            "AnswerDistance",
+            "AnswerDistanceLinePlane",
+            "AnswerLength",
+            "Foot",
+            "Line",
+            "Meet",
+            "Normal",
+            "PerpDir",
+            "PerpLine",
+            "Point"
+          ],
+          "search_budget": {
+            "max_depth": 4,
+            "max_needs": 96,
+            "max_candidates": 48,
+            "max_fresh_points": 16,
+            "max_calls": 64
+          }
+        }
+      },
+      {
+        "id": "SE3",
+        "gold_served": true,
+        "local_parse_status": "LOCAL_PARSE_COMPLETE",
+        "nl_served": true,
+        "answers_match": true,
+        "continuity_errors": 0,
+        "gold_ms": 55.911,
+        "nl_ms": 66.005,
+        "search_telemetry": {
+          "classification": "SOURCE_EXPLICIT_SEQUENCE",
+          "explored_states": 0,
+          "candidate_evaluations": 0,
+          "candidate_count": 0,
+          "pruned_nodes": 0,
+          "rejection_reasons": [],
+          "search_depth": 0,
+          "reused_intermediates": 0,
+          "planner_originated_steps": [],
+          "source_defined_steps": [],
+          "registered_decomposition_steps": [],
+          "search_generated_steps": [],
+          "selected_functions": [
+            "pyramid",
+            "regular_polygon",
+            "perpendicular_line_plane",
+            "segment_length",
+            "midpoint",
+            "midpoint",
+            "midpoint",
+            "section",
+            "ask_section_area"
+          ],
+          "selected_plan": [
+            "pyramid",
+            "regular_polygon",
+            "perpendicular_line_plane",
+            "segment_length",
+            "midpoint",
+            "midpoint",
+            "midpoint",
+            "section",
+            "ask_section_area"
+          ],
+          "plan_cost": 0,
+          "available_effects": [
+            "AnswerAngleLinePlane",
+            "AnswerAngleLines",
+            "AnswerArea",
+            "AnswerDistance",
+            "AnswerDistanceLinePlane",
+            "AnswerLength",
+            "Foot",
+            "Line",
+            "Meet",
+            "Normal",
+            "PerpDir",
+            "PerpLine",
+            "Point"
+          ],
+          "search_budget": {
+            "max_depth": 4,
+            "max_needs": 96,
+            "max_candidates": 48,
+            "max_fresh_points": 16,
+            "max_calls": 64
+          }
+        }
+      },
+      {
+        "id": "RE10",
+        "gold_served": true,
+        "local_parse_status": "LOCAL_PARSE_COMPLETE",
+        "nl_served": true,
+        "answers_match": true,
+        "continuity_errors": 0,
+        "gold_ms": 46.017,
+        "nl_ms": 79.526,
+        "search_telemetry": {
+          "classification": "DISCOVERED_FUNCTION_COMPOSITION",
+          "explored_states": 21,
+          "candidate_evaluations": 10,
+          "candidate_count": 10,
+          "pruned_nodes": 0,
+          "rejection_reasons": [],
+          "search_depth": 4,
+          "reused_intermediates": 0,
+          "planner_originated_steps": [
+            "q1_aux",
+            "q1_aux2",
+            "q1_aux3",
+            "q1_aux4"
+          ],
+          "source_defined_steps": [],
+          "registered_decomposition_steps": [
+            "q1_aux",
+            "q1_aux2",
+            "q1_aux3"
+          ],
+          "search_generated_steps": [
+            "q1_aux4"
+          ],
+          "selected_functions": [
+            "pyramid",
+            "regular_polygon",
+            "perpendicular_line_plane",
+            "segment_length",
+            "orthogonal_projection_line",
+            "orthogonal_projection_line",
+            "intersect_line_line",
+            "orthogonal_projection",
+            "ask_distance_point_plane"
+          ],
+          "selected_plan": [
+            "pyramid",
+            "regular_polygon",
+            "perpendicular_line_plane",
+            "segment_length",
+            "orthogonal_projection_line",
+            "orthogonal_projection_line",
+            "intersect_line_line",
+            "orthogonal_projection",
+            "ask_distance_point_plane"
+          ],
+          "plan_cost": 4,
+          "available_effects": [
+            "AnswerAngleLinePlane",
+            "AnswerAngleLines",
+            "AnswerArea",
+            "AnswerDistance",
+            "AnswerDistanceLinePlane",
+            "AnswerLength",
+            "Foot",
+            "Line",
+            "Meet",
+            "Normal",
+            "PerpDir",
+            "PerpLine",
+            "Point"
+          ],
+          "search_budget": {
+            "max_depth": 4,
+            "max_needs": 96,
+            "max_candidates": 48,
+            "max_fresh_points": 16,
+            "max_calls": 64
+          }
+        }
+      },
+      {
+        "id": "F3b_orthocenter_section",
+        "gold_served": null,
+        "local_parse_status": "LOCAL_PARSE_COMPLETE",
+        "nl_served": true,
+        "answers_match": true,
+        "continuity_errors": 0,
+        "gold_ms": null,
+        "nl_ms": 63.358,
+        "search_telemetry": {
+          "classification": "REGISTERED_DECOMPOSITION",
+          "explored_states": 22,
+          "candidate_evaluations": 16,
+          "candidate_count": 16,
+          "pruned_nodes": 6,
+          "rejection_reasons": [
+            "precondition: the point lies on the line"
+          ],
+          "search_depth": 3,
+          "reused_intermediates": 3,
+          "planner_originated_steps": [
+            "sec_aux",
+            "sec_aux2",
+            "sec_aux3",
+            "sec_plane1",
+            "sec_plane2"
+          ],
+          "source_defined_steps": [],
+          "registered_decomposition_steps": [
+            "sec_aux",
+            "sec_aux2",
+            "sec_aux3",
+            "sec_plane1",
+            "sec_plane2"
+          ],
+          "search_generated_steps": [],
+          "selected_functions": [
+            "pyramid",
+            "regular_polygon",
+            "perpendicular_line_plane",
+            "segment_length",
+            "orthogonal_projection_line",
+            "orthogonal_projection_line",
+            "intersect_line_line",
+            "translate_point",
+            "translate_point",
+            "section",
+            "ask_section_area"
+          ],
+          "selected_plan": [
+            "pyramid",
+            "regular_polygon",
+            "perpendicular_line_plane",
+            "segment_length",
+            "orthogonal_projection_line",
+            "orthogonal_projection_line",
+            "intersect_line_line",
+            "translate_point",
+            "translate_point",
+            "section",
+            "ask_section_area"
+          ],
+          "plan_cost": 5,
+          "available_effects": [
+            "AnswerAngleLinePlane",
+            "AnswerAngleLines",
+            "AnswerArea",
+            "AnswerDistance",
+            "AnswerDistanceLinePlane",
+            "AnswerLength",
+            "Foot",
+            "Line",
+            "Meet",
+            "Normal",
+            "PerpDir",
+            "PerpLine",
+            "Point"
+          ],
+          "search_budget": {
+            "max_depth": 4,
+            "max_needs": 96,
+            "max_candidates": 48,
+            "max_fresh_points": 16,
+            "max_calls": 64
+          }
+        }
+      },
+      {
+        "id": "F4c_circumcenter",
+        "gold_served": null,
+        "local_parse_status": "LOCAL_PARSE_COMPLETE",
+        "nl_served": true,
+        "answers_match": true,
+        "continuity_errors": 0,
+        "gold_ms": null,
+        "nl_ms": 40.101,
+        "search_telemetry": {
+          "classification": "REGISTERED_DECOMPOSITION",
+          "explored_states": 25,
+          "candidate_evaluations": 21,
+          "candidate_count": 21,
+          "pruned_nodes": 9,
+          "rejection_reasons": [
+            "precondition: the point lies on the line"
+          ],
+          "search_depth": 4,
+          "reused_intermediates": 0,
+          "planner_originated_steps": [
+            "q1_aux",
+            "q1_aux2",
+            "q1_aux3",
+            "q1_aux4",
+            "q1_aux5",
+            "q1_aux6",
+            "q1_aux7"
+          ],
+          "source_defined_steps": [],
+          "registered_decomposition_steps": [
+            "q1_aux",
+            "q1_aux2",
+            "q1_aux3",
+            "q1_aux4",
+            "q1_aux5",
+            "q1_aux6",
+            "q1_aux7"
+          ],
+          "search_generated_steps": [],
+          "selected_functions": [
+            "pyramid",
+            "regular_polygon",
+            "perpendicular_line_plane",
+            "segment_length",
+            "midpoint",
+            "orthogonal_projection_line",
+            "translate_point",
+            "midpoint",
+            "orthogonal_projection_line",
+            "translate_point",
+            "intersect_line_line",
+            "ask_distance_point_plane"
+          ],
+          "selected_plan": [
+            "pyramid",
+            "regular_polygon",
+            "perpendicular_line_plane",
+            "segment_length",
+            "midpoint",
+            "orthogonal_projection_line",
+            "translate_point",
+            "midpoint",
+            "orthogonal_projection_line",
+            "translate_point",
+            "intersect_line_line",
+            "ask_distance_point_plane"
+          ],
+          "plan_cost": 7,
+          "available_effects": [
+            "AnswerAngleLinePlane",
+            "AnswerAngleLines",
+            "AnswerArea",
+            "AnswerDistance",
+            "AnswerDistanceLinePlane",
+            "AnswerLength",
+            "Foot",
+            "Line",
+            "Meet",
+            "Normal",
+            "PerpDir",
+            "PerpLine",
+            "Point"
+          ],
+          "search_budget": {
+            "max_depth": 4,
+            "max_needs": 96,
+            "max_candidates": 48,
+            "max_fresh_points": 16,
+            "max_calls": 64
+          }
+        }
+      }
+    ],
+    "nl_passed": 7,
+    "nl_total": 7,
+    "test_family_d2_promoted": {
+      "status": "SERVED",
+      "answer": {
+        "q1": "2"
+      },
+      "want": {
+        "q1": "2"
+      },
+      "continuity_errors": 0,
+      "latency_ms": 33.423,
+      "fe4_three_layer_separation": {
+        "planner_constructed_aux_certs": 1,
+        "backend_emitted_scene_objects": 22,
+        "frontend_rendered_status": "BLOCKED_OWNERSHIP (axo-geometry-library; trace-only auxiliary_points deferred to Frontend owner)"
+      }
+    }
+  },
+  "focused_suite_results": [
+    {
+      "test_path": "backend/tests/geometry/test_compositional_planner_expansion.py",
+      "returncode": 0,
+      "summary": "9 passed in 5.25s"
+    },
+    {
+      "test_path": "backend/tests/geometry/test_hybrid_reasoning_generalization.py",
+      "returncode": 0,
+      "summary": "40 passed, 1 xfailed in 6.55s"
+    },
+    {
+      "test_path": "backend/tests/geometry/test_route_d4_described_points.py",
+      "returncode": 0,
+      "summary": "55 passed in 4.10s"
+    },
+    {
+      "test_path": "backend/tests/geometry/test_production_dynamic_composition.py",
+      "returncode": 0,
+      "summary": "12 passed in 2.73s"
+    }
+  ],
+  "all_focused_suites_passed": true
+}
