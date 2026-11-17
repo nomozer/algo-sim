@@ -27,7 +27,7 @@ from typing import Any, Iterable
 
 from app.ingestion.ocr_lexicon import LEXICON_BIGRAMS, LEXICON_COUNTS, LEXICON_UNIGRAMS
 
-OCR_RECONCILE_VERSION = "layout-aware-ocr-reconcile/3"
+OCR_RECONCILE_VERSION = "layout-aware-ocr-reconcile/4"
 _SYLLABLE_RE = re.compile(r"(?:ngh|ng|gh|gi|kh|nh|ph|qu|th|tr|ch|b|c|d|g|h|k|l|m|n|p|r|s|t|v|x)?[aeiouy]{1,3}(?:ch|ng|nh|c|m|n|p|t)?")
 
 # Mẫu hỏng chung đã ghi nhận trên ảnh thật (dual_ocr_fidelity_receipt của run trước) — áp lên
@@ -370,6 +370,34 @@ def _compatible_horn_or_junk(r_core: str, t_core: str) -> bool:
     return False
 
 
+_VI_MODIFIERS = frozenset("\u0302\u0306\u031b")
+_VI_TONES = frozenset("\u0300\u0301\u0303\u0309\u0323")
+
+
+def _vi_marks(word: str) -> tuple[set[str], set[str], bool]:
+    """Extract NFD vowel-modifier marks, tone marks, and 'đ' presence from a word."""
+    nfd = unicodedata.normalize("NFD", word.lower())
+    mods = {ch for ch in nfd if ch in _VI_MODIFIERS}
+    tones = {ch for ch in nfd if ch in _VI_TONES}
+    return mods, tones, ("đ" in word.lower())
+
+
+def _has_diacritic_conflict(cand: str, observed: str) -> bool:
+    """True when `observed` has explicit non-ASCII Vietnamese tone/vowel marks that `cand` contradicts."""
+    if not observed or observed.isascii():
+        return False
+    c_mods, c_tones, c_d = _vi_marks(cand)
+    o_mods, o_tones, o_d = _vi_marks(observed)
+    if o_tones and c_tones != o_tones:
+        return True
+    if o_mods and not (o_mods <= c_mods):
+        return True
+    if o_d != c_d and ("d" in cand.lower() or "đ" in cand.lower()):
+        if o_d and not c_d:
+            return True
+    return False
+
+
 def _restore_prose(r_txt: str, t_txt: str, prev_word: str, next_word: str) -> tuple[str | None, str]:
     """Khôi phục một từ văn xuôi từ R (giữ phụ âm/chữ Latin) + T (giữ dấu). Trả (từ, bằng_chứng) hoặc (None, lý do)."""
     r_core = r_txt.lower().strip(_PUNCT_EDGE + "()")
@@ -399,17 +427,20 @@ def _restore_prose(r_txt: str, t_txt: str, prev_word: str, next_word: str) -> tu
         return ctx[0], "LEXICON_BIGRAM_CONTEXT"
     if t_ok:
         return t_core, "TESS_LEXICON_SKELETON_MATCH" if r_core else "TESS_LEXICON_SINGLE_READER"
-    if r_ok:
+    if r_ok and not _has_diacritic_conflict(r_core, t_core):
         return r_core, "RAPID_LEXICON_COMPATIBLE" if t_core else "RAPID_LEXICON_SINGLE_READER"
     if _compatible_horn_or_junk(r_core, t_core):
         return t_core, "TESS_LEXICON_ONSET_CODA_MATCH"
-    if len(cands) == 1:
-        return cands[0], "LEXICON_UNIQUE_SKELETON"
-    if len(cands) > 1:
-        ranked = sorted(cands, key=lambda w: -LEXICON_COUNTS.get(w, 0))
+    compat_cands = [w for w in cands if not _has_diacritic_conflict(w, r_core) and not _has_diacritic_conflict(w, t_core)]
+    if len(compat_cands) == 1:
+        return compat_cands[0], "LEXICON_UNIQUE_SKELETON"
+    if len(compat_cands) > 1:
+        ranked = sorted(compat_cands, key=lambda w: -LEXICON_COUNTS.get(w, 0))
         top, second = LEXICON_COUNTS.get(ranked[0], 0), LEXICON_COUNTS.get(ranked[1], 0)
         if top > 0 and top >= 3 * max(1, second):
             return ranked[0], "LEXICON_FREQUENCY_PRIOR"
+        return None, "AMBIGUOUS_DIACRITIC_RESTORATION"
+    if cands:
         return None, "AMBIGUOUS_DIACRITIC_RESTORATION"
     # Ngoài từ vựng ngữ pháp: T là âm tiết tiếng Việt hợp lệ và khớp khung phụ âm của R.
     if t_core and r_core and sk_t == sk_r and _SYLLABLE_RE.fullmatch(_base_letters(t_core)) and _is_subsequence(_base_letters(r_core), _base_letters(t_core)):
@@ -767,9 +798,13 @@ def reconcile_local_ocr(
     merged_into: dict[int, int] = {}
     fraction_of: dict[int, tuple[str, str, Any]] = {}
     for i, a in enumerate(text_lines):
+        if in_choice(a["bbox"], a.get("text", "")) or _OPTION_PREFIX_RE.match(str(a.get("text", ""))):
+            continue
         ah = a["bbox"][3] - a["bbox"][1]
         for j, b in enumerate(text_lines):
             if j <= i:
+                continue
+            if in_choice(b["bbox"], b.get("text", "")) or _OPTION_PREFIX_RE.match(str(b.get("text", ""))):
                 continue
             bh = b["bbox"][3] - b["bbox"][1]
             short_a, short_b = len(norm_math(a["text"])) <= 8, len(norm_math(b["text"])) <= 8
@@ -904,9 +939,15 @@ def reconcile_local_ocr(
                     slots_by_r[k_last]["T"].append(Word(rem, r_words[k_last].bbox, tw.conf, tw.reader))
                 continue
             best_k, best_ov, total = None, 0.0, 0.0
+            tw_w = max(1, tw.bbox[2] - tw.bbox[0])
+            tw_core_len = len(tw.text.strip(_PUNCT_EDGE))
             for k, rw in enumerate(r_words):
+                rw_w = max(1, rw.bbox[2] - rw.bbox[0])
+                rw_core_len = len(rw.text.strip(_PUNCT_EDGE))
+                if rw_core_len <= 1 and tw_core_len >= 3 and rw_w < 0.55 * tw_w:
+                    continue
                 inter = max(0, min(rw.bbox[2], tw.bbox[2]) - max(rw.bbox[0], tw.bbox[0]))
-                ov = inter / float(max(1, tw.bbox[2] - tw.bbox[0]))
+                ov = inter / float(tw_w)
                 total += ov
                 if ov > best_ov:
                     best_k, best_ov = k, ov
@@ -951,15 +992,38 @@ def reconcile_local_ocr(
 
             if not rs and ts:
                 alnum = sum(ch.isalnum() for ch in t_txt)
-                core = t_txt.lower().strip(_PUNCT_EDGE + "()")
-                lexical = core in LEXICON_UNIGRAMS
-                if alnum <= 2 or (not is_mathlike(t_txt) and not lexical):
+                raw_core = t_txt.strip(_PUNCT_EDGE + "()")
+                core = raw_core.lower()
+                lexical = (core in LEXICON_UNIGRAMS) or (core in {"ở", "có", "là", "và", "từ", "tới", "bị", "do", "vì", "vẽ", "kẻ", "hạ", "nối", "độ"})
+                if lexical and not is_mathlike(t_txt):
+                    trail_p = t_txt[len(t_txt.rstrip(_PUNCT_EDGE + ")")):]
+                    lead_p = t_txt[: len(t_txt) - len(t_txt.lstrip("("))]
+                    out_lex = lead_p + (core[:1].upper() + core[1:] if raw_core[:1].isupper() else core) + trail_p
+                    emit(out_lex, "verified", "prose", evidence="TESS_LEXICON_SINGLE_READER")
+                    continue
+                reread_vals = [
+                    norm_math(v) for rname, v in readings.items()
+                    if rname != "tesseract" and str(v).strip()
+                ]
+                has_digit = any(ch.isdigit() for ch in t_txt)
+                has_non_ascii_sym = any(not ch.isascii() for ch in raw_core)
+                keep_single_math = (
+                    (is_mathlike(t_txt) and (has_digit or alnum >= 2))
+                    or alnum >= 3
+                    or (len(t_txt.strip()) >= 2 and has_non_ascii_sym and not lexical)
+                    or bool(reread_vals)
+                )
+                if not keep_single_math:
                     line_spans.append(Span(span_id, t_txt, "dropped", "noise", box, "SINGLE_READER_NOISE", readings=readings, line_id=line_id))
                     continue
-                if lexical and not is_mathlike(t_txt):
-                    emit(core, "verified", "prose", evidence="TESS_LEXICON_SINGLE_READER")
-                    continue
-                emit(t_txt, "uncertain", "math", "SINGLE_READER_TOKEN", [t_txt])
+                alt_counts: dict[str, int] = {}
+                for rv in reread_vals:
+                    if rv and not has_shared_corruption(rv):
+                        alt_counts[rv] = alt_counts.get(rv, 0) + 1
+                alts = [k for k, _cnt in sorted(alt_counts.items(), key=lambda kv: (-kv[1], kv[0]))]
+                if t_txt not in alts:
+                    alts.append(t_txt)
+                emit(t_txt, "uncertain", "math", "SINGLE_READER_TOKEN", alts[:5])
                 continue
 
             if _slot_is_math(r_txt, t_txt):
@@ -1099,9 +1163,45 @@ def reconcile_local_ocr(
             text_out = " ".join(words_out)
             if unresolved:
                 alts = [a for a in dict.fromkeys([tw for _, tw, _ in unresolved] + [rw for rw, _, _ in unresolved]) if a]
-                emit(text_out, "uncertain", "prose", unresolved[0][2], alts[:4])
+                for rw_u, tw_u, _ev_u in unresolved:
+                    for src_u in (tw_u, rw_u):
+                        u_core = src_u.lower().strip(_PUNCT_EDGE + "()")
+                        if len(u_core) >= 3 and not u_core.isascii():
+                            comp = sorted(
+                                (w for w in LEXICON_UNIGRAMS if len(u_core) < len(w) <= len(u_core) + 2 and w.startswith(u_core)),
+                                key=lambda w: -LEXICON_COUNTS.get(w, 0),
+                            )
+                            for cw in comp:
+                                if cw not in alts:
+                                    alts.insert(0, cw)
+                emit(text_out, "uncertain", "prose", unresolved[0][2], alts[:5])
             else:
                 emit(text_out, "verified", "prose", evidence="DIACRITIC_RESTORED")
+
+        # Gộp dấu phẩy/chấm mang DEGREE_SYMBOL_DISAGREEMENT vào token số đứng ngay trước ('60' + ',' → '60,').
+        coalesced_spans: list[Span] = []
+        for sp_cur in line_spans:
+            if (
+                coalesced_spans
+                and sp_cur.status == "uncertain"
+                and sp_cur.reason == "DEGREE_SYMBOL_DISAGREEMENT"
+                and sp_cur.text.strip() in (",", ".", ";", ":")
+            ):
+                sp_prev = coalesced_spans[-1]
+                num_s = sp_prev.text.strip()
+                punct_s = sp_cur.text.strip()
+                if sp_prev.status != "dropped" and re.fullmatch(r"\d+(?:[.,]\d+)?", num_s):
+                    sp_prev.text = f"{num_s}{punct_s}"
+                    sp_prev.status = "uncertain"
+                    sp_prev.kind = "choice" if choice_line else "math"
+                    sp_prev.reason = "DEGREE_SYMBOL_DISAGREEMENT"
+                    sp_prev.bbox = _union([sp_prev.bbox, sp_cur.bbox])
+                    sp_prev.alternatives = [f"{num_s}°{punct_s}", f"{num_s}°", f"{num_s}{punct_s}"]
+                    sp_prev.readings = {**sp_prev.readings, **{f"punct_{rk}": rv for rk, rv in sp_cur.readings.items()}}
+                    sp_prev.evidence = sp_cur.evidence or sp_prev.evidence
+                    continue
+            coalesced_spans.append(sp_cur)
+        line_spans = coalesced_spans
 
         if li in stacked and li not in fraction_of:
             sid += 1
@@ -1126,6 +1226,44 @@ def reconcile_local_ocr(
         line_records.append({"line_id": line_id, "bbox": list(line["bbox"]), "spans": line_spans, "choice": choice_line,
                              "row": line["_row"]})
         spans.extend(line_spans)
+    # draft_integrity_audit: rà chữ cái thường đứng một mình có khả năng là đỉnh hình học ('s' → 'S' trong 'từ s đến').
+    stem_upper_vertices = {
+        ch
+        for rec in line_records
+        if not rec["choice"]
+        for sp_u in rec["spans"]
+        if sp_u.status != "dropped" and (sp_u.kind == "math" or re.search(r"[A-Z]{2}|\([A-Z]|^[A-Z]\.", sp_u.text))
+        for ch in re.findall(r"[A-Z]", sp_u.text)
+    }
+    _GEOM_VERTEX_PREPS = frozenset({
+        "từ", "tại", "ở", "qua", "đến", "tới", "với", "bởi", "cắt", "nối", "điểm", "đỉnh", "cạnh", "đoạn", "tia",
+        "trên", "xuống", "lên", "góc",
+    })
+    prev_stem_word = ""
+    for rec in line_records:
+        if rec["choice"]:
+            continue
+        for sp_a in rec["spans"]:
+            if sp_a.status == "dropped" or (sp_a.kind == "structure" and not sp_a.text):
+                continue
+            tok = sp_a.text.strip()
+            tok_core = tok.strip(".,;:!?")
+            if (
+                sp_a.status == "verified"
+                and len(tok_core) == 1
+                and "b" <= tok_core <= "z"
+                and not tok.endswith(")")
+                and prev_stem_word not in {"câu", "ý", "phần", "theo", "và"}
+                and not re.match(r"^\d", prev_stem_word)
+                and (tok_core.upper() in stem_upper_vertices or prev_stem_word in _GEOM_VERTEX_PREPS)
+            ):
+                up = tok_core.upper() + tok[len(tok_core):]
+                sp_a.status = "uncertain"
+                sp_a.kind = "math"
+                sp_a.reason = "LOWERCASE_VERTEX_LABEL"
+                sp_a.alternatives = [up, tok]
+            if tok_core:
+                prev_stem_word = tok_core.lower()
     # Gom mọi mảnh phương án trắc nghiệm trong cùng dải `choice_band` về hàng của phương án mở đầu ("A."/"B.").
     for lo, hi in choice_bands:
         band_recs = [

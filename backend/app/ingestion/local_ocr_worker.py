@@ -18,7 +18,7 @@ import json
 import sys
 import time
 
-LOCAL_OCR_WORKER_VERSION = "local-ocr-worker/4"
+LOCAL_OCR_WORKER_VERSION = "local-ocr-worker/5"
 _STATE: dict = {}
 
 
@@ -474,13 +474,12 @@ def _reread(img, boxes: list, tessdata: str) -> dict:
         topo = _analyze_crop_glyph_topology(g_clean)
         tc2 = time.perf_counter()
         topo_s += tc2 - tc1
+        import numpy as _np
         g_rapid = ImageOps.expand(g_clean, border=6, fill=255).convert("RGB")
-        buf = _io.BytesIO()
-        g_rapid.save(buf, format="PNG")
         readings: dict = {"glyph_topology": topo}
         tl0 = time.perf_counter()
         try:
-            r = lat(buf.getvalue(), use_det=False, use_cls=False, use_rec=True)
+            r = lat(_np.asarray(g_rapid), use_det=False, use_cls=False, use_rec=True)
             txts = list(getattr(r, "txts", None) or ())
             readings["rapidocr_latin_rec"] = str(txts[0]).strip() if txts else ""
         except Exception as exc:  # noqa: BLE001

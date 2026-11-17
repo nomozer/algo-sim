@@ -43,6 +43,9 @@ INVENTORY = {**INVENTORY, 'fields': {**INVENTORY['fields'], **_EXT_VSID}}
 _EXT_DAVC = json.loads((RUNS / 'dimension-aware-verified-construction/schema-census-extension.json').read_text(encoding='utf-8'))['fields']
 assert not set(_EXT_DAVC) & set(INVENTORY['fields'])
 INVENTORY = {**INVENTORY, 'fields': {**INVENTORY['fields'], **_EXT_DAVC}}
+_EXT_SRGSIR = json.loads((RUNS / 'student-ready-geometry-simulation-input-reliability/schema-census-extension.json').read_text(encoding='utf-8'))['fields']
+assert not set(_EXT_SRGSIR) & set(INVENTORY['fields'])
+INVENTORY = {**INVENTORY, 'fields': {**INVENTORY['fields'], **_EXT_SRGSIR}}
 SUP = json.loads((RUN / 'inputs/recovery-supplementary.json').read_text(encoding='utf-8'))['control']
 A3DEV = {c['case_id']: c for c in json.loads((RUNS / 'typedfact-next-adapter3-simulation/corpus-dev.json').read_text(encoding='utf-8'))['cases']}
 SIM = {c['case_id']: c for c in json.loads((RUNS / 'simulation-coverage-visual-validation/corpus-dev.json').read_text(encoding='utf-8'))['cases']}
@@ -840,4 +843,34 @@ def test_solid_volume_premise_scope_violations_refuse(mutation, code):
             prem['args']['solid'] = 'S.ABCD'
     mutation(p)
     assert outcome(run_typed_fact_next_v2_route(p)) == ('REFUSED', code)                                # S2/S3
+
+
+def _point_reflection_scope_payload():
+    from app.ai.local_geometry_parser import parse_geometry_problem_locally
+    txt = (
+        'Cho hình chóp S.ABCD có đáy ABCD là hình vuông cạnh a, SA ⊥ (ABCD), SA = a. '
+        'Gọi E là điểm đối xứng của A qua C. Tính khoảng cách từ E đến mặt phẳng (SBC).'
+    )
+    return parse_geometry_problem_locally(txt).payload
+
+
+def test_point_reflection_premise_scope_controls_serve():
+    p = _point_reflection_scope_payload()
+    r = run_typed_fact_next_v2_route(p)
+    assert r.status == 'SERVED' and r.kernel_check is True
+
+
+@pytest.mark.parametrize('field,val,code', [
+    ('point', 'zz::T', 'SOURCE_OBJECT_MISMATCH'),
+    ('center', 's1::', 'INVALID_PREMISE_ARGS'),
+    ('center', 's1::Q', 'UNKNOWN_VERTEX_REF'),
+    ('image', 'no_solid::E', 'UNKNOWN_SOLID_ID'),
+])
+def test_point_reflection_premise_scope_violations_refuse(field, val, code):
+    p = _point_reflection_scope_payload()
+    p['solids'].append({'solid_id': 'zz', 'solid_type': 'pyramid', 'notation': 'T.ABCD', 'quote': 'Cho hình chóp T.ABCD'})
+    p['problem_text'] += ' Cho hình chóp T.ABCD.'
+    prem = next(x for x in p['premises'] if x['kind'] == 'point_reflection')
+    prem['args'][field] = val
+    assert outcome(run_typed_fact_next_v2_route(p)) == ('REFUSED', code)                                # S5/S7/S8
 

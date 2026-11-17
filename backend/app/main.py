@@ -947,7 +947,7 @@ MISSING_KEY_MSG = (
 #       hoa khuyết dấu chấm (vd `vmmu_r513`: `NOT_ASKED_IN_SOURCE` → `MISSING_DIMENSION` kèm `determinacy_audit`), OCR
 #       họ hai kênh `layout-aware-ocr-reconcile/3` / `local-ocr-route/2` / `local-ocr-worker/3`, và hợp đồng provenance
 #       `verified-input-provenance/1`; mọi row `143:route-d` phải MISS (`tests/geometry/test_real_world_input_verified_simulation.py`).
-CACHE_VERSION = "144"
+CACHE_VERSION = "145"
 
 #: Hai chế độ hợp lệ của kiến trúc chính thức Hybrid `/4` do máy chủ sở hữu:
 #: - `live` (mặc định): trích xuất có cấu trúc qua Gemini (`typed-fact-next/2`) khi cấu hình `GEMINI_API_KEY`.

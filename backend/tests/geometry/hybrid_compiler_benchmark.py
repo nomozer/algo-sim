@@ -446,6 +446,7 @@ REFUSAL_CLASS = {
     "NO_INSCRIBED_SPHERE": "contradictory",
     "COLLINEAR_POINTS": "contradictory",
     "DEGENERATE_POINTS": "contradictory",
+    "DEGENERATE_CONSTRUCTION": "contradictory",
     "NON_COPLANAR_POINTS": "contradictory",
     "PLANE_INTERSECTS_SPHERE_NOT_TANGENT": "contradictory",
     "PLANE_DOES_NOT_TOUCH_SPHERE": "contradictory",

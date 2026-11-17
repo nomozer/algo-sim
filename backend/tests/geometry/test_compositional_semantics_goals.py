@@ -190,9 +190,11 @@ def test_a_plane_definition_clause_is_closed_grammar_but_never_carries_a_number_
 # ── diagnostics: understood-but-unsupported is told apart from missing data ─────────────────────────────────────────
 @pytest.mark.parametrize("text, root", [
     (f"{B4}. Điểm M thuộc cạnh SC. Tính khoảng cách từ M đến mặt phẳng (ABCD).", "FREE_POINT_UNDERDETERMINED"),
-    (f"{B4}. Gọi E là điểm đối xứng của A qua C. Tính khoảng cách từ E đến mặt phẳng (SBC).", "UNSUPPORTED_POINT_CONSTRUCTION"),
+    # point-across-point reflection (`point_reflection`) and centroid premise projection (`premise-described-point`) now SERVE;
+    # line-reflection & orthocenter premise targets keep the capability diagnostics covered cleanly
+    (f"{B4}. Gọi E là điểm đối xứng của A qua đường thẳng BC. Tính khoảng cách từ E đến mặt phẳng (SBC).", "UNSUPPORTED_POINT_CONSTRUCTION"),
     ("Cho hình chóp S.ABC có đáy ABC là tam giác đều cạnh a, SA = a và hình chiếu vuông góc của S lên mặt phẳng (ABC) trùng "
-     "với trọng tâm của tam giác ABC. Tính khoảng cách từ S đến mặt phẳng (ABC).", "DESCRIBED_POINT_IN_PREMISE_UNSUPPORTED"),
+     "với tâm đường tròn nội tiếp của tam giác ABC. Tính khoảng cách từ S đến mặt phẳng (ABC).", "DESCRIBED_POINT_IN_PREMISE_UNSUPPORTED"),
     # a regular tetrahedron without side is now served (run `target-invariant-regular-solid-semantics`); a NON-regular
     # one keeps a shape freedom that no target-invariance proof covers
     ("Cho tứ diện ABCD. Gọi M là trung điểm của CD. Côsin của góc giữa hai đường thẳng AC và BM bằng",
@@ -201,6 +203,16 @@ def test_a_plane_definition_clause_is_closed_grammar_but_never_carries_a_number_
 def test_specific_root_causes(text, root):
     out, rd = _route(text)
     assert out.status != "SERVED" and rd["local_diagnostics"]["root_cause"] == root
+
+
+@pytest.mark.parametrize("text", [
+    f"{B4}. Gọi E là điểm đối xứng của A qua C. Tính khoảng cách từ E đến mặt phẳng (SBC).",
+    ("Cho hình chóp S.ABC có đáy ABC là tam giác đều cạnh a, SA = a và hình chiếu vuông góc của S lên mặt phẳng (ABC) trùng "
+     "với trọng tâm của tam giác ABC. Tính khoảng cách từ S đến mặt phẳng (ABC)."),
+])
+def test_promoted_reflection_and_centroid_projection_now_serve(text):
+    out, _rd = _route(text)
+    assert out.status == "SERVED"
 
 
 def test_a_named_point_on_a_segment_with_a_ratio_is_not_called_free():

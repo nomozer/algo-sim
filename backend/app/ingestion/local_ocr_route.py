@@ -16,7 +16,7 @@ from typing import Any
 from app.ingestion.local_ocr import local_ocr_available, reread_local_ocr_regions, run_local_ocr
 from app.ingestion.ocr_reconcile import OCR_RECONCILE_VERSION, reconcile_with_adjudication
 
-LOCAL_OCR_ROUTE_VERSION = "local-ocr-route/2"
+LOCAL_OCR_ROUTE_VERSION = "local-ocr-route/3"
 #: Hai HỌ engine (Paddle + Tesseract) phải cùng đọc ra một token toán thì token mới được coi là đã xác minh.
 #: Hiệu chuẩn trên tập phát triển External16: chỉ một họ đồng thuận để lọt token sai (`CC'` → `CC` khi khung
 #: phát hiện chung cắt mất dấu phẩy trên) — xem `fidelity_false_rejection_analysis.json`.
@@ -39,6 +39,8 @@ REVIEW_REASON_VI = {
     "AMBIGUOUS_DIACRITIC_RESTORATION": "Chữ tiếng Việt đọc chưa rõ dấu",
     "NOT_IN_LEXICON": "Chữ tiếng Việt đọc chưa chắc",
     "MULTIWORD_SLOT_MISMATCH": "Cụm chữ đọc chưa chắc",
+    "LOWERCASE_VERTEX_LABEL": "Tên đỉnh hình học có thể bị đọc nhầm thành chữ thường",
+    "LOW_CONFIDENCE_STEM_TOKEN": "Chữ trong đề có độ tin cậy thấp — cần kiểm tra",
 }
 
 
@@ -50,7 +52,10 @@ def _reflow(draft: str) -> str:
         if idx == 0:
             out.append(ln)
             continue
-        keep_break = bool(re.match(r"^\s*(?:(?:Câu|Bài)\s*\d|[a-dA-D]\s*[.)]|[A-D]\s*[.,:])", ln))
+        keep_break = bool(
+            re.match(r"^\s*(?:(?:Câu|Bài)\s*\d|[a-dA-D]\s*[.)]|[A-D]\s*[.,:])", ln)
+            or re.search(r"(?<![\w'])B\s*[.)]\s*\S.*(?<![\w'])C\s*[.)]\s*\S", ln)
+        )
         out.append(("\n" if keep_break else " ") + ln)
     return "".join(out)
 
@@ -197,6 +202,8 @@ def estimate_problem_signals(page_image_bytes: bytes) -> dict[str, Any] | None:
         return None
     lines = ((raw.get("engines") or {}).get("rapidocr") or {}).get("lines") or []
     groups = option_groups(raw)
+    if not lines and not groups:
+        return None
     return {"headers": sum(1 for ln in lines if _HEADER_LINE_RE.match(str(ln.get("text", "")))),
             "option_groups": len(groups), "groups": groups,
             "bands": problem_bands(raw, int(raw.get("height") or 0), int(raw.get("width") or 0) or None) if len(groups) >= 2 else None,

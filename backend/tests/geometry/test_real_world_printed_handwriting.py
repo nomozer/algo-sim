@@ -349,6 +349,11 @@ def test_real_external_missing_prism_height_refused_zero_ai_missing_dimension():
             "Cho hình lăng trụ đứng ABC.A'B'C' có đáy ABC là tam giác vuông tại B, AB = a, AA' = a√3, góc giữa đường thẳng BC' với mặt phẳng đáy bằng 60°. Tính thể tích khối lăng trụ ABC.A'B'C'.",
             "a³√3/2",
         ),
+        (
+            "ext_hd_q_7907931_c33_declarative_subpyramid_goal_solved",
+            "Câu 33: Cho hình chóp S.ABC có đáy ABC là tam giác đều cạnh a, SA ⊥ (ABC), SA = a. Gọi M, N, P lần lượt là trung điểm của BC, CA, AB. Thể tích của khối chóp S.MNP bằng?",
+            "a³√3/48",
+        ),
     ],
 )
 def test_real_external_angle_premise_problems_solved_zero_ai(
@@ -368,10 +373,6 @@ def test_real_external_angle_premise_problems_solved_zero_ai(
         (
             "ext_unparsed_incenter_distance_clause",
             "Câu 30. Cho khối lăng trụ đứng ABC.A'B'C' có đáy là tam giác đều cạnh a, AA' = √3a, tâm đường tròn nội tiếp đáy cách A' một khoảng 2a. Tính thể tích khối lăng trụ.",
-        ),
-        (
-            "ext_hd_q_7907931_c33_unparsed_declarative_subpyramid_goal",
-            "Câu 33: Cho hình chóp S.ABC có đáy ABC là tam giác đều cạnh a, SA ⊥ (ABC), SA = a. Gọi M, N, P lần lượt là trung điểm của BC, CA, AB. Thể tích của khối chóp S.MNP bằng?",
         ),
         (
             "ext_unparsed_oblique_slope_idiom_guard",

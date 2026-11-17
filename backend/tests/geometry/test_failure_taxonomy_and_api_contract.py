@@ -221,9 +221,9 @@ def test_semantic_input_incomplete_and_unread_value_subphrase():
         # Unrecognized point definition entity
         "Cho hình chóp S.ABCD có đáy ABCD là hình vuông cạnh a, SA vuông góc với mặt phẳng đáy và SA = a. "
         "Gọi M là tâm đường tròn Euler của tam giác SAB. Tính khoảng cách từ M đến (ABCD).",
-        # Unnamed described point standing as premise operand
+        # Unnamed described point outside supported centroid/orthocenter/circumcenter/midpoint standing as premise operand
         "Cho hình chóp S.ABC có đáy ABC là tam giác đều cạnh a, hình chiếu vuông góc của S lên (ABC) "
-        "trùng với trọng tâm của tam giác ABC, SA = 2a. Tính thể tích khối chóp S.ABC.",
+        "trùng với tâm đường tròn nội tiếp của tam giác ABC, SA = 2a. Tính thể tích khối chóp S.ABC.",
     ],
 )
 def test_semantic_entity_unresolved_state(text):
@@ -246,7 +246,7 @@ def test_semantic_entity_unresolved_state(text):
         (
             "unsupported_reflection_point_construction",
             "Cho hình chóp S.ABCD có đáy ABCD là hình vuông cạnh a, SA vuông góc với đáy và SA = a. "
-            "Gọi M là điểm đối xứng của A qua C. Tính khoảng cách từ M đến mặt phẳng (SBD).",
+            "Gọi M là điểm đối xứng của A qua đường thẳng BC. Tính khoảng cách từ M đến mặt phẳng (SBD).",
             "UNPROVED_DUE_TO_CAPABILITY_GAP",
         ),
         (
@@ -272,6 +272,24 @@ def test_capability_unsupported_states_and_honest_determinacy_scope(label, text,
     assert diag["learner_summary"]["rewrite_may_help"] is False
     msg = diag["learner_summary"]["message"]
     assert not any(cue in msg.lower() for cue in _BLAME_PROBLEM_WRONG_CUES), msg
+
+
+@pytest.mark.parametrize(
+    "text",
+    [
+        (
+            "Cho hình chóp S.ABC có đáy ABC là tam giác đều cạnh a, hình chiếu vuông góc của S lên (ABC) "
+            "trùng với trọng tâm của tam giác ABC, SA = 2a. Tính thể tích khối chóp S.ABC."
+        ),
+        (
+            "Cho hình chóp S.ABCD có đáy ABCD là hình vuông cạnh a, SA vuông góc với đáy và SA = a. "
+            "Gọi M là điểm đối xứng của A qua C. Tính khoảng cách từ M đến mặt phẳng (SBD)."
+        ),
+    ],
+)
+def test_promoted_centroid_and_point_reflection_now_serve(text):
+    out = route_text_input(text, allow_live_ai=False)
+    assert out.status == "SERVED"
 
 
 def test_contradictory_constraints_state_and_preview_isolation():

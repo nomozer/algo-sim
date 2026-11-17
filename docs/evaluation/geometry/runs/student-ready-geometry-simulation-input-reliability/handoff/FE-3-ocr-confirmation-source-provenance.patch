@@ -1,0 +1,208 @@
+diff --git a/frontend/src/llm/input.ts b/frontend/src/llm/input.ts
+index 65e5da9..971ad0e 100644
+--- a/frontend/src/llm/input.ts
++++ b/frontend/src/llm/input.ts
+@@ -6,11 +6,28 @@
+ 
+ export type InputKind = "text" | "code" | "document" | "image";
+ 
++export interface InputSourceProvenance {
++  origin?:
++    | "direct_text"
++    | "local_ocr_auto_verified"
++    | "local_ocr_student_confirmed"
++    | "vision_auto_verified"
++    | "vision_student_confirmed"
++    | "document_extracted";
++  raw_ocr_text_sha256?: string | null;
++  prepared_region_sha256?: string | null;
++  student_edited?: boolean | null;
++  confirmed_span_count?: number | null;
++  selected_candidate_id?: string | null;
++  selected_bbox?: [number, number, number, number] | null;
++}
++
+ export interface InputPayload {
+   type: InputKind;
+   content: string;
+   filename?: string;
+   mime_type?: string;
++  source_provenance?: InputSourceProvenance;
+ }
+ 
+ const CODE_EXTS = [".py", ".js", ".ts", ".c", ".cpp", ".java", ".pas"];
+diff --git a/frontend/src/components/photo-problem-flow.ts b/frontend/src/components/photo-problem-flow.ts
+index d8cbea2..b410cb0 100644
+--- a/frontend/src/components/photo-problem-flow.ts
++++ b/frontend/src/components/photo-problem-flow.ts
+@@ -11,6 +11,7 @@ import type {
+   UnifiedCandidateProblem,
+   UnifiedInputPrepareResponse,
+ } from "../llm/client";
++import type { InputSourceProvenance } from "../llm/input";
+ import { AxoClientError } from "../llm/client";
+ 
+ export const PHOTO_MAX_BYTES = 10 * 1024 * 1024;
+@@ -44,6 +45,10 @@ export interface UnifiedAssistState {
+   spanExtensions?: Record<string, { token: PhotoUncertainToken; value: string; absorbed: PhotoUncertainToken[]; absorbedValues: Record<string, string> }>;
+   /** Thứ tự ban đầu của các chỗ đánh dấu (tách lại trả chúng về đúng vị trí trong danh sách). */
+   tokenOrder?: Record<string, number>;
++  /** Hợp đồng xuất xứ chuẩn bị đầu vào (`ocr-confirmation-provenance/1`) để truyền tiếp sang `/api/analyze`. */
++  prepareProvenance?: Record<string, unknown>;
++  /** Đánh dấu phiên chuẩn bị đã đi qua VLM hay hoàn toàn bằng OCR cục bộ. */
++  usedVlm?: boolean;
+ }
+ 
+ /** Từ kế tiếp có thể nối vào chỗ `spanId`: khoảng cách 1–3 dấu cách, từ ấy không phải chữ văn xuôi, không sang câu mới,
+@@ -177,6 +182,8 @@ export function unifiedAssistReducer(
+           freeEdit: false,
+           spanExtensions: {},
+           tokenOrder: Object.fromEntries(r.uncertain_tokens.map((t, i) => [t.span_id ?? `#${i}`, i])),
++          prepareProvenance: r.provenance,
++          usedVlm: Boolean(r.metrics?.used_vlm),
+         };
+       }
+       return initialUnifiedAssistState;
+@@ -332,3 +339,22 @@ export function describeUncertainToken(t: PhotoUncertainToken): string {
+   const o = t.location ? ` — ở “${t.location}”` : "";
+   return `“${t.token}”${thay}${o}`;
+ }
++
++export function buildAnalyzeSourceProvenance(
++  state: UnifiedAssistState,
++  selectedCandidateId?: string | null,
++): InputSourceProvenance | undefined {
++  if (state.phase !== "needs_confirmation") return undefined;
++  const p = (state.prepareProvenance ?? {}) as Record<string, unknown>;
++  const rawSha = typeof p.raw_ocr_text_sha256 === "string" ? p.raw_ocr_text_sha256 : null;
++  const regSha = typeof p.prepared_region_sha256 === "string" ? p.prepared_region_sha256 : null;
++  const edited = state.freeEdit || assistCorrectionCount(state) > 0 || state.draftText.trim() !== state.baseText.trim();
++  return {
++    origin: state.usedVlm ? "vision_student_confirmed" : "local_ocr_student_confirmed",
++    raw_ocr_text_sha256: rawSha,
++    prepared_region_sha256: regSha,
++    student_edited: edited,
++    confirmed_span_count: reviewTokens(state.uncertainTokens).length,
++    selected_candidate_id: selectedCandidateId ?? null,
++  };
++}
+diff --git a/frontend/src/components/ProblemInput.tsx b/frontend/src/components/ProblemInput.tsx
+index df4872e..655fbbe 100644
+--- a/frontend/src/components/ProblemInput.tsx
++++ b/frontend/src/components/ProblemInput.tsx
+@@ -29,6 +29,7 @@ import {
+   splitAttachmentName,
+   validateComposerFile,
+   type ComposerAttachmentItem,
++  type InputSourceProvenance,
+ } from "../llm/input";
+ import type { AnalysisUnsupported } from "../core/types";
+ import type { SimulationEnvelope } from "../simulations/types";
+@@ -42,6 +43,7 @@ import { PhotoProblemPanel } from "./PhotoProblemPanel";
+ import { AxoScrollbar } from "./AxoScrollbar";
+ import {
+   analyzeErrorMessage,
++  buildAnalyzeSourceProvenance,
+   canConfirmAssistText,
+   initialUnifiedAssistState,
+   photoReadErrorMessage,
+@@ -350,6 +352,7 @@ export interface RunComposerSubmitOptions {
+   prepareFn?: typeof prepareUnifiedInputViaServer;
+   selectedCandidateId?: string;
+   overridePreparedText?: string;
++  sourceProvenance?: InputSourceProvenance;
+   onAssistRequired?: (response: UnifiedInputPrepareResponse) => void;
+ }
+ 
+@@ -379,6 +382,7 @@ export async function runComposerSubmit({
+   prepareFn = prepareUnifiedInputViaServer,
+   selectedCandidateId,
+   overridePreparedText,
++  sourceProvenance,
+   onAssistRequired,
+ }: RunComposerSubmitOptions): Promise<void> {
+   if (!canSubmit || lockRef.current) return;
+@@ -411,6 +415,7 @@ export async function runComposerSubmit({
+ 
+   try {
+     let finalProblemText = "";
++    let effectiveSourceProvenance: InputSourceProvenance | undefined = sourceProvenance;
+ 
+     if (typeof overridePreparedText === "string") {
+       finalProblemText = overridePreparedText.trim();
+@@ -490,6 +495,17 @@ export async function runComposerSubmit({
+       }
+ 
+       finalProblemText = prepared.problem_text.trim();
++      const prepProv = (prepared.provenance ?? {}) as Record<string, unknown>;
++      if (!effectiveSourceProvenance && prepared.source_kind === "image") {
++        effectiveSourceProvenance = {
++          origin: prepared.metrics?.used_vlm ? "vision_auto_verified" : "local_ocr_auto_verified",
++          raw_ocr_text_sha256: typeof prepProv.raw_ocr_text_sha256 === "string" ? prepProv.raw_ocr_text_sha256 : null,
++          prepared_region_sha256: typeof prepProv.prepared_region_sha256 === "string" ? prepProv.prepared_region_sha256 : null,
++          student_edited: false,
++          confirmed_span_count: 0,
++          selected_candidate_id: selectedCandidateId ?? null,
++        };
++      }
+       if (finalProblemText) {
+         store.setProblemText(finalProblemText);
+       }
+@@ -500,7 +516,11 @@ export async function runComposerSubmit({
+ 
+     stage = "analyze";
+     const result = await analyzeFn(
+-      { type: "text", content: finalProblemText },
++      {
++        type: "text",
++        content: finalProblemText,
++        ...(effectiveSourceProvenance ? { source_provenance: effectiveSourceProvenance } : {}),
++      },
+       ctl?.signal,
+       undefined,
+       attemptId,
+@@ -636,6 +656,7 @@ export function ProblemInput({
+   const filesRowRef = useRef<HTMLDivElement>(null);
+   const attachmentsRef = useRef<ComposerAttachmentItem[]>([]);
+   const submittingRef = useRef(false);
++  const assistCandidateIdRef = useRef<string | null>(null);
+   const analyzeAbortRef = useRef<AbortController | null>(null);
+   const activePrepareRequestIdRef = useRef<string | null>(null);
+   const extractedBatchRef = useRef<string | null>(null);
+@@ -967,7 +988,11 @@ export function ProblemInput({
+   async function onAnalyze(opts?: {
+     selectedCandidateId?: string;
+     overridePreparedText?: string;
++    sourceProvenance?: InputSourceProvenance;
+   }) {
++    if (!opts?.selectedCandidateId && !opts?.overridePreparedText) {
++      assistCandidateIdRef.current = null;
++    }
+     dispatchAssist({ type: "reset" });
+     await runComposerSubmit({
+       canSubmit: Boolean(opts?.overridePreparedText) || canSubmit,
+@@ -981,6 +1006,7 @@ export function ProblemInput({
+       health,
+       selectedCandidateId: opts?.selectedCandidateId,
+       overridePreparedText: opts?.overridePreparedText,
++      sourceProvenance: opts?.sourceProvenance,
+       onAssistRequired: (response) => {
+         dispatchAssist({ type: "from-prepare", response });
+       },
+@@ -988,12 +1014,15 @@ export function ProblemInput({
+   }
+ 
+   function onSelectAssistCandidate(candidateId: string) {
++    assistCandidateIdRef.current = candidateId;
+     void onAnalyze({ selectedCandidateId: candidateId });
+   }
+ 
+   function onSubmitConfirmedAssist() {
+     if (!canConfirmAssistText(assist)) return;
+-    void onAnalyze({ overridePreparedText: assist.draftText });
++    const prov = buildAnalyzeSourceProvenance(assist, assistCandidateIdRef.current);
++    assistCandidateIdRef.current = null;
++    void onAnalyze({ overridePreparedText: assist.draftText, sourceProvenance: prov });
+   }
+ 
+   const serverStatus =

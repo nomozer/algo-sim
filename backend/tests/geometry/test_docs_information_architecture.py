@@ -227,7 +227,8 @@ def test_inv_20_candidate_and_cache_verify_only():
     # 141 -> 142 (planner-autonomous-composition-and-search-efficiency): khử trùng phép dựng đồng vai trong cùng mục tiêu (đường Euler @orthocenter/@circumcenter 10 → 8 bước phụ, loại điểm phụ trùng trong Scene3D) + `ask_distance_lines` qua đường dẫn xuất ⇒ row 141:route-d phải MISS.
     # 142 -> 143 (unified-geometry-understanding-ocr-autonomous-planning): bộ đọc cục bộ mở rộng tổ hợp đệ quy + A4 chứa `@id` trong `contains_points` + khôi phục hiểu đề từ nhận diện OCR có kiểm chứng hình học ⇒ row 142:route-d phải MISS.
     # 143 -> 144 (real-world-geometry-input-verified-simulation): `_cac_moc_cau` đồng bộ biên câu hỏi viết hoa khuyết dấu chấm + `layout-aware-ocr-reconcile/3` + hợp đồng `verified-input-provenance/1` ⇒ row 143:route-d phải MISS.
-    assert str(CACHE_VERSION) == "144"
+    # 144 -> 145 (student-ready-geometry-simulation-input-reliability): `point_reflection`, `premise-described-point`, tham chiếu đỉnh phụ `@id` qua mô tả, suy biến đồng dạng tam giác vuông/đáy, `layout-aware-ocr-reconcile/4`, `local-ocr-route/3` ⇒ row 144:route-d phải MISS.
+    assert str(CACHE_VERSION) == "145"
 
 
 def test_inv_21_favicon_not_in_staged_changes():

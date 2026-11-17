@@ -230,8 +230,8 @@ def test_reread_cache_deduplication_and_worker_version_isolation(monkeypatch):
 
 
 def test_confirmation_provenance_edited_cache_key_and_144_invalidation(monkeypatch):
-    assert M.CACHE_VERSION == "144"
-    assert M.ROUTE_D_CACHE_POLICY == "144:route-d"
+    assert M.CACHE_VERSION == "145"
+    assert M.ROUTE_D_CACHE_POLICY == "145:route-d"
 
     draft_text = (
         "Cho hình chóp S.ABCD có đáy ABCD là hình vuông cạnh a, "
@@ -325,7 +325,7 @@ def test_confirmation_provenance_edited_cache_key_and_144_invalidation(monkeypat
 
 
 def test_source_gate_missing_period_alignment_and_vision_fallback_mock():
-    assert LO.LOCAL_OCR_WORKER_VERSION == "local-ocr-worker/4"
+    assert LO.LOCAL_OCR_WORKER_VERSION == "local-ocr-worker/5"
 
     # 1. vmmu_r513: missing period before 'Khoảng cách...' now aligns with Source Gate -> MISSING_DIMENSION + determinacy_audit
     r513 = (

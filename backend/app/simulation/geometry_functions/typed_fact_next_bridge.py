@@ -136,11 +136,47 @@ def _kiem_pham_vi_tien_de(p: TypedFactNextPayload, solids: dict[str, Any]) -> li
         except TypedFactNextValidationError as e:
             raise TuChoi(e.code, e.detail) from None
 
+    desc_by_id = {d.described_id: d for d in getattr(p, "described_points", ())}
+
+    def _desc_leaf_refs(ref: str, seen: set[str] | None = None) -> list[str]:
+        if not is_described_ref(ref):
+            return [ref]
+        did = ref.strip()[1:]
+        d = desc_by_id.get(did)
+        if d is None or (seen and did in seen):
+            return []
+        nxt_seen = (seen or set()) | {did}
+        raw = [*d.point_operands(), *(d.plane or ()), *(d.polygon or ())]
+        return [leaf for x in raw for leaf in _desc_leaf_refs(x, nxt_seen)]
+
     def ref_owners(ref, scope=None):
+        if is_described_ref(ref):
+            leaf_sets = [owners.get(identity(leaf, scope), set()) for leaf in _desc_leaf_refs(ref)]
+            return set.intersection(*leaf_sets) if leaf_sets and all(leaf_sets) else set()
         return owners.get(identity(ref, scope), set())
     outputs = CONSTRUCTED_OUTPUTS
     new_names = {_ref(prem.args[outputs[prem.kind]]) for prem in p.premises
-                 if prem.kind in outputs and outputs[prem.kind] in prem.args}
+                 if prem.kind in outputs and isinstance(prem.args.get(outputs[prem.kind]), str)
+                 and not is_described_ref(prem.args[outputs[prem.kind]])}
+    # A secondary vertex-subset pyramid (`B'.ACC'A'`, `A'.ABC`, `O.MNP`, `M.ABC`) borrows vertices/outputs from its host solid.
+    host_vertex_sets = {
+        sid: ({s.canonical_vertex(v) for v in s.local_vertices()} | new_names)
+        for sid, s in solids.items()
+    }
+    solid_local_canon = {sid: {s.canonical_vertex(v) for v in s.local_vertices()} for sid, s in solids.items()}
+    derived_subsolids = {
+        sid for sid, s in solids.items()
+        if s.solid_type == "pyramid" and any(
+            h_sid != sid
+            and solid_local_canon[sid] <= host_vertex_sets[h_sid]
+            and (
+                solids[h_sid].solid_type != "pyramid"
+                or len(solid_local_canon[h_sid]) > len(solid_local_canon[sid])
+                or (bool(solid_local_canon[sid] & new_names) and not (solid_local_canon[h_sid] & new_names))
+            )
+            for h_sid in solids
+        )
+    }
     anchored_spheres: dict[str, str] = {}
     for sid, s in solids.items():
         host = s.circumscribes or getattr(s, "inscribed_in", None)
@@ -172,6 +208,8 @@ def _kiem_pham_vi_tien_de(p: TypedFactNextPayload, solids: dict[str, Any]) -> li
         refs = [(key, ref) for key, shape in schema.items() if shape.startswith('ref') and key in prem.args
                 for ref in (prem.args[key] if shape.startswith('refs') else [prem.args[key]])]
         for _key, ref in refs:
+            if is_described_ref(ref):
+                continue
             explicit, label = parse_qualified_ref(ref)
             if explicit is not None and explicit not in solids:
                 raise TuChoi('UNKNOWN_SOLID_ID', f'{fid}: khối {explicit!r} chưa được khai báo', (fid,))
@@ -199,17 +237,21 @@ def _kiem_pham_vi_tien_de(p: TypedFactNextPayload, solids: dict[str, Any]) -> li
         changed = False
         for prem, _fid, sid, refs in records:
             output = outputs.get(prem.kind)
-            if not output:
+            if not output or not isinstance(prem.args.get(output), str) or is_described_ref(prem.args[output]):
                 continue
             candidates = common([(key, ref) for key, ref in refs if key != output], sid)
             if sid is not None:
                 candidates &= {sid}
             label = identity(prem.args[output], sid)
             if label in vertices:
-                # A shared-face subsolid may name a point constructed on its parent's edge (e.g. a midpoint).
-                # A projection's existing foreign foot is not a fresh point definition.
-                candidates = {s for s in candidates if s in vertices[label] or output == 'point'
-                              and any(frozenset((s, other)) in (shared_faces | circumscribed) for other in vertices[label])}
+                # A shared-face or derived vertex-subset subsolid may name a point constructed on its parent solid.
+                # An existing foreign vertex is only reused for a fresh host output when the foreign vertex lives solely on derived subsolids.
+                candidates = {
+                    s for s in candidates
+                    if s in vertices[label]
+                    or (vertices[label] <= derived_subsolids and s not in derived_subsolids)
+                    or (output == 'point' and any(frozenset((s, other)) in (shared_faces | circumscribed) for other in vertices[label]))
+                }
             before = set(owners.get(label, set()))
             owners.setdefault(label, set()).update(candidates)
             changed |= before != owners[label]
@@ -240,13 +282,17 @@ def _kiem_pham_vi_tien_de(p: TypedFactNextPayload, solids: dict[str, Any]) -> li
         if sid is None and known and not set.intersection(*known):
             raise TuChoi('SOURCE_OBJECT_MISMATCH', f'{fid}: premise trộn thực thể của nhiều khối', (fid,))
         if sid is None and len(candidates) > 1:
+            non_sub = candidates - derived_subsolids
+            if len(non_sub) == 1:
+                candidates = non_sub
+        if sid is None and len(candidates) > 1:
             named = {s for s in candidates if re.search(rf"(?<![\w']){re.escape(solids[s].notation)}(?![\w'])",
                                                        chuan_hoa(prem.quote))}
             if len(named) != 1:
                 raise TuChoi('AMBIGUOUS_REFERENCE', f'{fid}: thiếu phạm vi khối không mơ hồ', (fid,))
             candidates = named
         checked.append({'premise_id':fid,'declared_solid_id':prem.solid_id,'resolved_solid_ids':sorted({sid} if sid else candidates),
-                        'vertices':sorted({_ref(ref) for _key, ref in refs}),'quote':prem.quote})
+                        'vertices':sorted({ref.strip() if is_described_ref(ref) else _ref(ref) for _key, ref in refs}),'quote':prem.quote})
     # S8: every other scoped object of `scope_records` (sections, relation sides, simulation and measurement goals) is
     # bound by the same constructed-point ownership: an unqualified operand owned only by other solids contradicts its
     # scope. Unowned labels (unnamed section points, undeclared names) stay the routes' own refusals.
@@ -823,6 +869,26 @@ def _bridge(p: TypedFactNextPayload, section_fact, version: str, v2: bool) -> di
     curved = {s.solid_id for s in p.solids if s.solid_type not in ("pyramid", "prism")}
     poly_solids = [x for x in solids.values() if x.solid_type in ("pyramid", "prism")]
     poly_ids = {x.solid_id for x in poly_solids}
+    constructed_outs = {
+        _ref(prem.args[CONSTRUCTED_OUTPUTS[prem.kind]])
+        for prem in p.premises
+        if prem.kind in CONSTRUCTED_OUTPUTS
+        and isinstance(prem.args.get(CONSTRUCTED_OUTPUTS[prem.kind]), str)
+        and not is_described_ref(prem.args[CONSTRUCTED_OUTPUTS[prem.kind]])
+    }
+    poly_root_solids = [
+        x for x in poly_solids
+        if not (
+            x.solid_type == "pyramid"
+            and any(
+                h is not x
+                and {x.canonical_vertex(v) for v in x.local_vertices()}
+                <= ({h.canonical_vertex(v) for v in h.local_vertices()} | constructed_outs)
+                and (h.solid_type != "pyramid" or len(h.local_vertices()) > len(x.local_vertices()))
+                for h in poly_solids
+            )
+        )
+    ]
     sphere_anchor: dict[str, tuple[str, str, list[str]]] = {}
     for s in p.solids:
         if s.circumscribes is not None:
@@ -964,8 +1030,8 @@ def _bridge(p: TypedFactNextPayload, section_fact, version: str, v2: bool) -> di
         elif k == "height":
             sid = a.get("solid") or prem.solid_id
             sol = solids.get(sid or "")
-            if sol is None and sid is None and len(poly_solids) == 1:
-                sol = poly_solids[0]
+            if sol is None and sid is None and len(poly_root_solids) == 1:
+                sol = poly_root_solids[0]
             f = {"kind": "length", "measure": "height",
                  "solid": curved_sym.get(sol.solid_id, sol.notation) if sol else sid,
                  "value": str(a["value"])}
@@ -980,8 +1046,8 @@ def _bridge(p: TypedFactNextPayload, section_fact, version: str, v2: bool) -> di
         elif k == "altitude":
             sid = a.get("solid") or prem.solid_id
             sol = solids.get(sid or "")
-            if sol is None and sid is None and len(poly_solids) == 1:
-                sol = poly_solids[0]
+            if sol is None and sid is None and len(poly_root_solids) == 1:
+                sol = poly_root_solids[0]
             f = {"kind": "altitude", "points": [_ref(a["apex"]), _ref(a["foot"])],
                  "solid": sol.notation if sol else sid}
         elif k in ("midpoint", "point_is_midpoint"):
@@ -991,10 +1057,33 @@ def _bridge(p: TypedFactNextPayload, section_fact, version: str, v2: bool) -> di
                  "points": _refs(a["segment"]), "value": str(a["ratio"])}
         elif k in ("centroid", "point_is_centroid"):
             f = {"kind": "point_def", "point_kind": "centroid", "point": _ref(a["point"]), "points": _refs(a["polygon"])}
-        elif k in ("orthogonal_projection", "point_is_foot"):
-            f = {"kind": "projection", "point": _ref(a["point"]), "points": _refs(a["plane"]), "at": _ref(a["image"])}
-        elif k == "orthogonal_projection_line":
-            f = {"kind": "projection", "point": _ref(a["point"]), "points": _refs(a["line"]), "at": _ref(a["image"])}
+        elif k in ("orthogonal_projection", "point_is_foot", "orthogonal_projection_line"):
+            target_key = "line" if k == "orthogonal_projection_line" else "plane"
+            prem_slots: dict[str, Any] = {}
+            f = {"kind": "projection", "points": _refs(a[target_key])}
+            if is_described_ref(a["point"]):
+                prem_slots["point"] = mo_ta[a["point"].strip()[1:]]
+            else:
+                f["point"] = _ref(a["point"])
+            if is_described_ref(a["image"]):
+                prem_slots["image"] = mo_ta[a["image"].strip()[1:]]
+            else:
+                f["at"] = _ref(a["image"])
+            if prem_slots:
+                f["goal_trees"] = {"premise_slots": prem_slots}
+        elif k == "point_reflection":
+            prem_slots = {}
+            f = {"kind": "point_reflection", "at": _ref(a["image"])}
+            if is_described_ref(a["point"]):
+                prem_slots["point"] = mo_ta[a["point"].strip()[1:]]
+            else:
+                f["point"] = _ref(a["point"])
+            if is_described_ref(a["center"]):
+                prem_slots["center"] = mo_ta[a["center"].strip()[1:]]
+            else:
+                f["points"] = [_ref(a["center"])]
+            if prem_slots:
+                f["goal_trees"] = {"premise_slots": prem_slots}
         elif k == "intersect_line_line":
             f = {"kind": "point_def", "point_kind": "intersect_line_line", "point": _ref(a["point"]),
                  "points_a": _refs(a["line1"]), "points_b": _refs(a["line2"])}
@@ -1023,8 +1112,8 @@ def _bridge(p: TypedFactNextPayload, section_fact, version: str, v2: bool) -> di
         elif k == "solid_volume":
             sid = a.get("solid") or prem.solid_id
             sol = solids.get(sid or "")
-            if sol is None and sid is None and len(poly_solids) == 1:
-                sol = poly_solids[0]
+            if sol is None and sid is None and len(poly_root_solids) == 1:
+                sol = poly_root_solids[0]
             f = {"kind": "solid_volume",
                  "solid": curved_sym.get(sol.solid_id, sol.notation) if sol else sid,
                  "value": str(a["value"])}

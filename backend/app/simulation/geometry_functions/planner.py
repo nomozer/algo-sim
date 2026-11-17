@@ -103,6 +103,7 @@ FactKind = Annotated[
         "polygon_area",
         "solid_volume",
         "segment_ratio",
+        "point_reflection",
     ],
     WithJsonSchema({"enum": list(FLAT_FACT_KINDS), "type": "string"}),
 ]
@@ -294,6 +295,7 @@ _CAN = {"solid": ("solid", "solid_type"), "polygon_shape": ("points", "shape"), 
         "dihedral_angle": ("point", "points", "at", "value"), "line_line_angle": ("points_a", "points_b", "value"),
         "vertex_angle": ("at", "points", "value"),
         "polygon_area": ("points", "value"), "solid_volume": ("value",), "segment_ratio": ("points_a", "points_b", "value"),
+        "point_reflection": ("at",),
         "question": ("quantity",), "unsupported": ("reason",)}
 _DA_GIAC_DEU = {"equilateral_triangle": 3, "square": 4, "regular_hexagon": 6, "regular_polygon": None}
 
@@ -309,6 +311,28 @@ def doc_du_kien(raw: Any) -> list[TypedFact]:
         raise TuChoi("SCHEMA_INVALID", "id dữ kiện trùng")
     for f in facts:
         required = _CAN[f.kind]
+        if f.kind in ("projection", "point_reflection"):
+            prem_slots = (f.goal_trees or {}).get("premise_slots") if isinstance(f.goal_trees, dict) else None
+            prem_slots = prem_slots if isinstance(prem_slots, dict) else {}
+            if prem_slots:
+                for sp in prem_slots.values():
+                    pk = sp.get("point_kind") if isinstance(sp, dict) else None
+                    if not isinstance(pk, str) or not descriptor_contracts(pk) or _cay_tu_dict(sp) is None:
+                        raise TuChoi("FACT_INCOMPLETE", f"{f.id}: điểm mô tả tiền đề không hợp lệ", (f.id,))
+            if f.kind == "projection":
+                req_l = ["point"] if "point" not in prem_slots else []
+                req_l += ["at"] if "image" not in prem_slots else []
+                req_l.append("line_ref" if f.line_ref is not None and not f.points and not f.points_a and not f.points_b else "points")
+                required = tuple(req_l)
+            else:
+                req_l = ["at"]
+                if "point" not in prem_slots:
+                    req_l.append("point")
+                if "center" not in prem_slots:
+                    req_l.append("points")
+                    if f.points is not None and len(f.points) != 1:
+                        raise TuChoi("FACT_INCOMPLETE", f"{f.id}: point_reflection cần đúng một tâm", (f.id,))
+                required = tuple(req_l)
         if f.kind == "polygon_shape" and f.shape in ("trapezoid", "isosceles_trapezoid"):
             required = ("points", "shape", "points_a", "points_b")
         if f.kind == "question" and f.point_kind is not None and f.plane_relation is None:
@@ -848,7 +872,7 @@ def _sap_xep_phu_thuoc_loi_goi(k: KeHoach) -> None:
         fn, a = c["fn"], c.get("args") or {}
         if fn in POINT_PRODUCERS and isinstance(a.get("point"), str):
             raw_point_outputs.add(a["point"])
-        elif fn in ("orthogonal_projection", "orthogonal_projection_line", "translate_point") and isinstance(a.get("image"), str):
+        elif fn in ("orthogonal_projection", "orthogonal_projection_line", "translate_point", "point_reflection") and isinstance(a.get("image"), str):
             raw_point_outputs.add(a["image"])
 
     solids_list = list(k.solids.values())
@@ -858,7 +882,21 @@ def _sap_xep_phu_thuoc_loi_goi(k: KeHoach) -> None:
             for kh in solids_list
             if not ((set(kh.day) | ({kh.dinh} if kh.dinh else set()) | set(kh.tren)) & raw_point_outputs)
         ]
-        root_solids = unproduced_solids if unproduced_solids else [solids_list[0]]
+        # Exclude vertex-subset sub-pyramids (`A'.ABC`, `B'.ACC'A'`) from Tier 0 root solids when their host prism/pyramid exists
+        unproduced_roots = [
+            kh
+            for kh in unproduced_solids
+            if not (
+                kh.dinh is not None
+                and any(
+                    h is not kh
+                    and (set(kh.day) | {kh.dinh}) <= (set(h.day) | set(h.tren) | ({h.dinh} if h.dinh else set()))
+                    and (h.dinh is None or len(h.day) > len(kh.day))
+                    for h in unproduced_solids
+                )
+            )
+        ]
+        root_solids = unproduced_roots if unproduced_roots else (unproduced_solids if unproduced_solids else [solids_list[0]])
     else:
         root_solids = []
 
@@ -874,7 +912,7 @@ def _sap_xep_phu_thuoc_loi_goi(k: KeHoach) -> None:
             pt = a["point"]
             if pt not in solid_vertices:
                 explicit_point_producers.setdefault(pt, []).append(c["id"])
-        elif fn in ("orthogonal_projection_line", "translate_point") and isinstance(a.get("image"), str):
+        elif fn in ("orthogonal_projection_line", "translate_point", "point_reflection") and isinstance(a.get("image"), str):
             pt = a["image"]
             if pt not in solid_vertices:
                 explicit_point_producers.setdefault(pt, []).append(c["id"])
@@ -1228,18 +1266,47 @@ def _anh_xa(f: TypedFact, k: KeHoach, ten: dict, deu: dict, khoi_cua, phat) -> d
         return phat(f.id, "sphere_tangent_plane",
                     {"solid": f.solid, "plane": cp["plane"], **({"point": cp["point"]} if cp.get("point") else {})},
                     q, "tangent_to→sphere_tangent_plane")
+    def _giai_diem_tien_de(slot: str, explicit_val: str | None) -> str:
+        prem_slots = (f.goal_trees or {}).get("premise_slots") if isinstance(f.goal_trees, dict) else None
+        if isinstance(prem_slots, dict) and slot in prem_slots:
+            spec = prem_slots[slot]
+            desc = _cay_tu_dict(spec)
+            assert desc is not None
+            lbl, chain, p_labels = k.resolver.point(f, desc)
+            op = k.resolver._nut_chung_chi(spec, lbl)
+            k.auxiliary.append({
+                "rule": "premise-described-point",
+                "effect_binding": True,
+                "premise": f.id,
+                "goal": f.id,
+                "slot": slot,
+                "quotes": list(f.quotes),
+                "chain": chain,
+                "labels": p_labels,
+                "operand_tree": op,
+            })
+            return lbl
+        assert explicit_val is not None
+        return explicit_val
+
     if f.kind == "projection":
+        pt_lbl = _giai_diem_tien_de("point", f.point)
+        img_lbl = _giai_diem_tien_de("image", f.at)
         if f.line_ref:
             ref = k.resolver.aliases.get(f.line_ref,f.line_ref)
             k.resolver.used = True
             k.resolver.lines.add(ref)
             if len(k.resolver.lines)>MAX_RESULT_LINES:
                 raise TuChoi('PLAN_TOO_LARGE','quá trần line results')
-            return phat(f.id, "orthogonal_projection_line", {"point": f.point, "line_ref": ref, "image": f.at}, q,
+            return phat(f.id, "orthogonal_projection_line", {"point": pt_lbl, "line_ref": ref, "image": img_lbl}, q,
                         "projection(point, result line)")
         if len(f.points) == 2:
-            return phat(f.id, "orthogonal_projection_line", {"point": f.point, "line": f.points, "image": f.at}, q, "projection(point, line)")
-        return phat(f.id, "orthogonal_projection", {"point": f.point, "plane": f.points, "image": f.at}, q, "projection")
+            return phat(f.id, "orthogonal_projection_line", {"point": pt_lbl, "line": f.points, "image": img_lbl}, q, "projection(point, line)")
+        return phat(f.id, "orthogonal_projection", {"point": pt_lbl, "plane": f.points, "image": img_lbl}, q, "projection")
+    if f.kind == "point_reflection":
+        pt_lbl = _giai_diem_tien_de("point", f.point)
+        ctr_lbl = _giai_diem_tien_de("center", f.points[0] if f.points else None)
+        return phat(f.id, "point_reflection", {"point": pt_lbl, "center": ctr_lbl, "image": f.at}, q, "point_reflection")
     if f.kind == "point_def":
         if f.point_kind == "intersect_line_line":
             return phat(f.id, f.point_kind, {"point": f.point, "line1": f.points_a, "line2": f.points_b}, q, "point_def(line–line)")
@@ -3105,7 +3172,7 @@ def _bind_result_dependencies(k):
         a, fn = c['args'], c['fn']
         if fn == 'curved_solid' and isinstance(a.get('solid'), str):
             curved_by_solid[a['solid']] = c['id']
-        label = (a.get('image') if fn in ('orthogonal_projection_line','orthogonal_projection','translate_point')
+        label = (a.get('image') if fn in ('orthogonal_projection_line','orthogonal_projection','translate_point','point_reflection')
                  else a.get('point') if fn in (*POINT_PRODUCERS, 'sphere_tangent_plane')
                  else a.get('center') if fn == 'curved_solid' and a.get('center') not in solid_pts
                  else None)
@@ -3114,8 +3181,8 @@ def _bind_result_dependencies(k):
     for c in k.calls:
         a = c['args']
         points = [x for v in a.values() if isinstance(v,list) for x in v]
-        if c['fn'].startswith('orthogonal_projection') or c['fn']=='translate_point' or c['fn'].startswith('ask_'):
-            points += [a['point']] if isinstance(a.get('point'), str) else []
+        if c['fn'].startswith('orthogonal_projection') or c['fn'] in ('translate_point','point_reflection') or c['fn'].startswith('ask_'):
+            points += [a[fld] for fld in ('point', 'center') if isinstance(a.get(fld), str)]
         output = (a.get('image')
                   or (a.get('point') if c['fn'] in (*POINT_PRODUCERS, 'sphere_tangent_plane') else None)
                   or (a.get('center') if c['fn'] == 'curved_solid' else None))

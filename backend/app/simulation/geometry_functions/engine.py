@@ -661,13 +661,29 @@ class _Dung:
         self.root = next(iter(self.khoi.values()))
         self.composite = len({frozenset(k.base) for k in self.khoi.values()}) != 1 or len(self.khoi) > 1
         if self.composite:
-            # A new base is admitted only as a derived object in the SAME chart. Never lay out an independent base.
+            # A new base is admitted only as a derived object in the SAME chart (or a sub-pyramid on host+derived vertices).
             outputs = {c.args.point for c in self.of("midpoint", "centroid", "divide_segment", "intersect_line_line",
                                                     "intersect_line_plane")}
-            outputs |= {c.args.image for c in self.of("orthogonal_projection", "orthogonal_projection_line", "translate_point")}
+            outputs |= {c.args.image for c in self.of("orthogonal_projection", "orthogonal_projection_line",
+                                                      "translate_point", "point_reflection")}
             outputs |= {c.args.center for c in self.of("curved_solid") if c.args.center}
             outputs |= {c.args.point for c in self.of("sphere_tangent_plane") if c.args.point}
-            roots = [k for k in self.khoi.values() if not (set(k.base) | set(k.top) | {k.apex}) & outputs]
+            unproduced = [k for k in self.khoi.values() if not (set(k.base) | set(k.top) | {k.apex}) & outputs]
+            # Exclude sub-pyramids (`B'.ACC'A'`, `A'.ABC`, `O.MNP`) whose vertices lie wholly inside another unproduced host solid (+ derived outputs).
+            roots = [
+                k for k in unproduced
+                if not (
+                    k.kind == "pyramid"
+                    and any(
+                        h is not k
+                        and (set(k.base) | {k.apex}) <= (set(h.base) | set(h.top) | ({h.apex} if h.apex else set()) | outputs)
+                        and (h.kind != "pyramid" or len(h.base) > len(k.base))
+                        for h in unproduced
+                    )
+                )
+            ]
+            if not roots:
+                roots = unproduced
             if not roots or len({frozenset(k.base) for k in roots}) != 1:
                 raise TuChoi("UNSUPPORTED_MULTIPLE_BASES", "cần một đáy gốc; các đáy khác phải dùng đỉnh đã dựng duy nhất")
             self.root = roots[0]
@@ -2228,6 +2244,131 @@ class _Dung:
                                     canh[e_hyp] = perp2 + canh[e_xy]
                                     dung |= {cla.id, r_cid, *h_ids}
                                     break
+        # Similarity-determined triangle base scale from projected slant lateral edge (`s² = d_horiz² / u_dist²`)
+        if (
+            all(v is None for v in canh.values())
+            and getattr(self, "root", None) is not None
+            and frozenset(self.root.base) == frozenset(vong)
+        ):
+            e01, e02, e12 = frozenset((vong[0], vong[1])), frozenset((vong[0], vong[2])), frozenset((vong[1], vong[2]))
+            unit_edges: dict[frozenset[str], Fraction] | None = None
+            unit_ids: set[str] = set()
+            for cr in self.of("regular_polygon"):
+                if frozenset(cr.args.vertices) == frozenset(vong):
+                    unit_edges = {e01: Fraction(1), e02: Fraction(1), e12: Fraction(1)}
+                    unit_ids.add(cr.id)
+                    break
+            if unit_edges is None:
+                for V, X, Y, r_cid, _ in goc:
+                    if {V, X, Y} != set(vong):
+                        continue
+                    e_vx, e_vy, e_xy = frozenset((V, X)), frozenset((V, Y)), frozenset((X, Y))
+                    if any(s == e_vy for s, _ in self._lop_bang(e_vx)):
+                        eq_cids = next(ids for s, ids in self._lop_bang(e_vx) if s == e_vy)
+                        unit_edges = {e_vx: Fraction(1), e_vy: Fraction(1), e_xy: Fraction(2)}
+                        unit_ids = {r_cid, *eq_cids}
+                        break
+                    for cva in self.of("vertex_angle"):
+                        if {cva.args.vertex, *cva.args.rays} != set(vong) or cva.args.vertex == V:
+                            continue
+                        sin2, cos2, cos_sign = self._goc_tham_so(cva.args.value, cva.args.unit, allow_obtuse=True, calls=(cva.id,))
+                        if (cos_sign is not None and cos_sign <= 0) or not (0 < sin2 < 1 and 0 < cos2 < 1):
+                            continue
+                        e_adj = frozenset((V, cva.args.vertex))
+                        e_opp = frozenset((V, Y if cva.args.vertex == X else X))
+                        unit_edges = {e_xy: Fraction(1), e_adj: cos2, e_opp: sin2}
+                        unit_ids = {r_cid, cva.id}
+                        break
+                    if unit_edges is not None:
+                        break
+            if unit_edges is not None:
+                def _bary(pt: str, seen: set[str]) -> tuple[Fraction, Fraction, Fraction] | None:
+                    if pt in seen:
+                        return None
+                    if pt == vong[0]:
+                        return Fraction(1), Fraction(0), Fraction(0)
+                    if pt == vong[1]:
+                        return Fraction(0), Fraction(1), Fraction(0)
+                    if pt == vong[2]:
+                        return Fraction(0), Fraction(0), Fraction(1)
+                    nx = seen | {pt}
+                    for cm in self.of("midpoint"):
+                        if cm.args.point == pt:
+                            ba, bb = _bary(cm.args.segment[0], nx), _bary(cm.args.segment[1], nx)
+                            if ba and bb:
+                                return tuple((ba[i] + bb[i]) / 2 for i in range(3))  # type: ignore[return-value]
+                    for cc in self.of("centroid"):
+                        if cc.args.point == pt and len(cc.args.polygon) == 3:
+                            bs = [_bary(p, nx) for p in cc.args.polygon]
+                            if all(b is not None for b in bs):
+                                return tuple(sum(b[i] for b in bs) / 3 for i in range(3))  # type: ignore[return-value]
+                    for cd in self.of("divide_segment"):
+                        if cd.args.point == pt:
+                            ba, bb = _bary(cd.args.segment[0], nx), _bary(cd.args.segment[1], nx)
+                            t = Fraction(cd.args.ratio)
+                            if ba and bb:
+                                return tuple((1 - t) * ba[i] + t * bb[i] for i in range(3))  # type: ignore[return-value]
+                    return None
+
+                u01, u02, u12 = unit_edges[e01], unit_edges[e02], unit_edges[e12]
+                g00, g11, g01 = u01, u02, (u01 + u02 - u12) / 2
+                scale_cands: list[tuple[Fraction, tuple[str, ...]]] = []
+                base_set = frozenset(vong)
+                chart_map = {vong[0]: (Z, Z), vong[1]: (Fraction(1), Z), vong[2]: (Z, Fraction(1))}
+                lat_pairs = (
+                    tuple((b, self.root.apex) for b in self.root.base)
+                    if self.root.kind == "pyramid"
+                    else tuple(zip(self.root.base, self.root.top))
+                )
+                for cproj in self.of("orthogonal_projection"):
+                    if frozenset(cproj.args.plane) > base_set or len(frozenset(cproj.args.plane)) < 3:
+                        continue
+                    b_proj = next((b for b, t in lat_pairs if t == cproj.args.point), None)
+                    if b_proj is None or b_proj not in chart_map:
+                        continue
+                    wb = _bary(cproj.args.image, set())
+                    if wb is None:
+                        continue
+                    dx, dy = wb[1] - chart_map[b_proj][0], wb[2] - chart_map[b_proj][1]
+                    u_dist2 = g00 * dx * dx + 2 * g01 * dx * dy + g11 * dy * dy
+                    if u_dist2 <= 0:
+                        continue
+                    edge_len2: list[tuple[Fraction, tuple[str, ...]]] = self.do_dai(b_proj, cproj.args.point, _suy=False)
+                    if self.root.kind == "prism" and not edge_len2:
+                        for b_j, t_j in lat_pairs:
+                            edge_len2 += self.do_dai(b_j, t_j, _suy=False)
+                    if not edge_len2:
+                        continue
+                    l2_v, l_ids = sorted(edge_len2)[0]
+                    for cla in self.of("line_plane_angle"):
+                        if frozenset(cla.args.plane) > base_set or len(frozenset(cla.args.plane)) < 3:
+                            continue
+                        le = frozenset(cla.args.line)
+                        is_lat = (
+                            le == frozenset((b_proj, cproj.args.point))
+                            or (self.root.kind == "prism" and any(le == frozenset((b_j, t_j)) for b_j, t_j in lat_pairs))
+                        )
+                        if not is_lat:
+                            continue
+                        sin2_l, cos2_l, _ = self._goc_tham_so(cla.args.value, cla.args.unit, allow_obtuse=False, calls=(cla.id,))
+                        if 0 < sin2_l < 1 and cos2_l > 0:
+                            scale_cands.append(((l2_v * cos2_l) / u_dist2, (cproj.id, cla.id, *l_ids)))
+                    for ch in self.of("height"):
+                        if ch.args.solid == self.root.name:
+                            h2_v = binh_phuong(ch.args.value)
+                            dh2 = l2_v - h2_v
+                            if dh2 <= 0:
+                                raise TuChoi("INCONSISTENT_FACTS", "cạnh bên không dài hơn chiều cao khi chân chiếu xác định tỉ lệ đáy", (cproj.id, ch.id, *l_ids))
+                            scale_cands.append((dh2 / u_dist2, (cproj.id, ch.id, *l_ids)))
+                if scale_cands:
+                    s2_val = scale_cands[0][0]
+                    if any(sc != s2_val for sc, _ in scale_cands[1:]):
+                        raise TuChoi("INCONSISTENT_FACTS", "tỉ lệ cạnh đáy suy từ góc/chiều cao cạnh bên mâu thuẫn", tuple({cid for _, ids in scale_cands for cid in ids}))
+                    extra_ids = scale_cands[0][1]
+                    for e in (e01, e02, e12):
+                        canh[e] = unit_edges[e] * s2_val
+                        edge_ids[e] = (*unit_ids, *extra_ids)
+                    dung |= unit_ids | set(extra_ids)
         if any(v is None for v in canh.values()):
             raise TuChoi("MISSING_DIMENSION", "đáy tam giác chưa xác định đủ ba cạnh")
         d01, d02, d12 = (canh[frozenset((vong[0], vong[1]))], canh[frozenset((vong[0], vong[2]))],
@@ -2547,13 +2688,15 @@ class _Dung:
                                        'provenance':'DERIVED','relation_verified':verified})
                     return True
         for c in self.of("intersect_line_line", "intersect_line_plane", "orthogonal_projection_line", "orthogonal_projection",
-                         "translate_point"):
+                         "translate_point", "point_reflection"):
             if self._deferred_h2 and c.fn in ("orthogonal_projection_line", "orthogonal_projection"):
                 continue
             a = c.args
             p = a.point if c.fn.startswith("intersect") else a.image
-            if c.fn in ("orthogonal_projection", "translate_point") and a.point == a.image:
+            if c.fn in ("orthogonal_projection", "translate_point", "point_reflection") and a.point == a.image:
                 raise TuChoi("PRECONDITION_FAILED", f"{c.id}: ảnh trùng tên điểm đầu vào", (c.id,))
+            if c.fn == "point_reflection" and (a.point == a.center or a.image == a.center):
+                raise TuChoi("PRECONDITION_FAILED", f"{c.id}: đối xứng qua chính nó hoặc ảnh trùng tâm", (c.id,))
             if (p not in self.pts and all(v in self.pts for v in self._construction_dependencies(c))
                     and (not getattr(a,'line_ref',None) or a.line_ref in self.lines)):
                 xyz = self._construct(c)
@@ -3592,6 +3735,8 @@ class _Dung:
             pts = [a.point] + (a.line or [])
         elif c.fn == "translate_point":
             pts = [a.point] + a.vector
+        elif c.fn == "point_reflection":
+            pts = [a.point, a.center]
         else:
             pts = [a.point] + a.plane
         return tuple(dict.fromkeys(pts))
@@ -3689,6 +3834,10 @@ class _Dung:
             return self._line(a.line), self._plane(a.plane)
         if c.fn == "translate_point":
             return Vec3(*self.pts[a.point]), Vec3(*self.pts[a.vector[1]]) - Vec3(*self.pts[a.vector[0]])
+        if c.fn == "point_reflection":
+            if self.pts[a.point] == self.pts[a.center]:
+                raise TuChoi("DEGENERATE_CONSTRUCTION", f"{c.id}: điểm ban đầu trùng tâm đối xứng", (c.id,))
+            return Vec3(*self.pts[a.center]), Vec3(*self.pts[a.center]) - Vec3(*self.pts[a.point])
         return Vec3(*self.pts[a.point]), ((self.lines[a.line_ref] if a.line_ref else self._line(a.line))
                                         if c.fn.endswith("_line") else self._plane(a.plane))
 
@@ -3698,7 +3847,8 @@ class _Dung:
                 x, y = self._construction_objects(c)
                 fn = {"intersect_line_line": K.intersect_line_line, "intersect_line_plane": K.intersect_line_plane,
                       "orthogonal_projection_line": K.project_point_onto_line,
-                      "orthogonal_projection": K.project_point_onto_plane, "translate_point": K.translate}[c.fn]
+                      "orthogonal_projection": K.project_point_onto_plane, "translate_point": K.translate,
+                      "point_reflection": K.translate}[c.fn]
                 p = fn(x, y)
                 return p.x, p.y, p.z
         except GeometryError as e:
@@ -3714,6 +3864,11 @@ class _Dung:
                 if c.fn == "translate_point":               # hình bình hành: X + B = M + A (không lặp lại phép cộng vectơ)
                     m, u, v = (self.pts[a.point], self.pts[a.vector[0]], self.pts[a.vector[1]])
                     return all(self.pts[a.image][i] + u[i] == m[i] + v[i] for i in range(3))
+                if c.fn == "point_reflection":
+                    return (
+                        self.pts[a.point] != self.pts[a.center]
+                        and all(self.pts[a.point][i] + self.pts[a.image][i] == 2 * self.pts[a.center][i] for i in range(3))
+                    )
                 if c.fn == "intersect_line_line":
                     return (not x.direction.cross(y.direction).is_zero() and point_on_line(p, x) and point_on_line(p, y))
                 if c.fn == "intersect_line_plane":
@@ -4660,7 +4815,7 @@ class _Dung:
 
     def _dung_khong(self, c: LoiGoi) -> bool:
         a = c.args
-        if c.fn in ("intersect_line_line", "intersect_line_plane", "orthogonal_projection_line", "translate_point"):
+        if c.fn in ("intersect_line_line", "intersect_line_plane", "orthogonal_projection_line", "translate_point", "point_reflection"):
             return self._construction_relation(c)
         if c.fn == "orthogonal_projection" and c.args.point in self.pts:
             return self._construction_relation(c)
@@ -4923,6 +5078,12 @@ class _Dung:
                         "kind": "vector_from_points", "from_point": ir_name(a.vector[0]), "to_point": ir_name(a.vector[1])}})
                     khai.append(P.memory_declaration(vec, "vector3"))
                     expr = {"kind": "translate", "point": ir_name(a.point), "vector": vec}
+                elif c.fn == "point_reflection":
+                    vec = prefix + "_vec"
+                    lenh.append({"kind": "assign", "target_var": vec, "expr": {
+                        "kind": "vector_from_points", "from_point": ir_name(a.point), "to_point": ir_name(a.center)}})
+                    khai.append(P.memory_declaration(vec, "vector3"))
+                    expr = {"kind": "translate", "point": ir_name(a.center), "vector": vec}
                 else:
                     if c.fn.endswith('_line') and a.line_ref:
                         producer = next(c for c in self.calls if c.id==a.line_ref)
@@ -7463,7 +7624,8 @@ def _dung_mot_nhanh(
         }
         for s in dung.trace:                             # điểm phụ: DẪN XUẤT, không phải nhãn của đề — ghi rõ ràng buộc
             if s["step"] == "place_point" and s["object"] in phu:
-                s.update(binding="AUXILIARY", auxiliary_rule=phu[s["object"]]["rule"], goal=phu[s["object"]]["goal"])
+                s.update(binding="AUXILIARY", auxiliary_rule=phu[s["object"]]["rule"],
+                         goal=phu[s["object"]].get("goal") or phu[s["object"]].get("premise"))
         dung.mat_phu = [d for d in auxiliary if d.get("rule") in (MAT_SONG_SONG, MAT_HAI_DUONG, MAT_VUONG_DUONG, MAT_RANG_BUOC)]
         dung.ten_mat_phu = ten_mat_phu
         dung.kiem()
@@ -7481,6 +7643,9 @@ def _dung_mot_nhanh(
         chuoi = [d for d in auxiliary if d.get("rule") == "effect-chain"]
         for d in chuoi:
             dung.kiem_mo_ta(d)
+        for d in auxiliary:
+            if d.get("rule") == "premise-described-point" and isinstance(d.get("operand_tree"), dict):
+                dung.kiem_mo_ta({"operand": d["operand_tree"], "ask": d.get("premise")})
         program, hoi = dung.bien_dich()
         from app.simulation.semantic_program.validator import MAX_MEMORY_DECLARATIONS
         if (n := len(program["memory_declarations"])) > MAX_MEMORY_DECLARATIONS:   # a resource budget, typed
@@ -7500,6 +7665,8 @@ def _dung_mot_nhanh(
 
         if (len(spec.memory_declarations) > MAX_MEMORY_DECLARATIONS
                 and (any(d.get("rule") == DINH_CAT_CANH for d in auxiliary) or bool(dung.of("curved_solid"))
+                     or (dung.composite and any(k.kind == "prism" for k in dung.khoi.values()))
+                     or any(d.get("rule") == "premise-described-point" for d in auxiliary)
                      or any(_co_dinh_nghia(d) for d in auxiliary))):   # C18
             dung.trace.append({"step": "formation_budget", "rule": "pedagogical_expansion_skipped",
                                "declarations": len(spec.memory_declarations), "limit": MAX_MEMORY_DECLARATIONS})

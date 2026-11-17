@@ -191,11 +191,24 @@ _DUOI_LECH_PHEP_DUNG = (
 )
 
 
+_MACHINE_TOKEN_RE = re.compile(
+    r"(?:@[A-Za-z0-9_]+|\b[scqpfgd]\d+\b|[a-z]+_[a-z_]+|\$\.|\{|\}|Traceback|(?:Key|Value|Type|Runtime|Assertion|Geometry)Error\b|__)"
+)
+
+
+def _co_token_may(s: str) -> bool:
+    return _MACHINE_TOKEN_RE.search(s) is not None
+
+
+def _muc_hoc_sinh_sach(s: Any) -> bool:
+    return isinstance(s, str) and bool(s.strip()) and "_" not in s and not _co_token_may(s)
+
+
 def _msg_lech_phep_dung(envelope: dict) -> str:
     """`reason_subjects` = [thực thể đề nêu, thực thể chương trình dùng]: mặt phẳng `(β)` /
     `z = 3`, hoặc khối `S.ABCD`."""
     ten = [f"khối {s}" if "." in s and "=" not in s else f"mặt phẳng {s}"
-           for s in envelope.get("reason_subjects") or [] if isinstance(s, str) and s and "_" not in s]
+           for s in envelope.get("reason_subjects") or [] if _muc_hoc_sinh_sach(s)]
     if len(ten) >= 2 and ten[0].split()[0] == ten[1].split()[0]:
         cau = f"Đề bài nêu {ten[0]}, nhưng phép dựng thiết diện của AlgoSim lại dùng {ten[1]}."
     elif ten:
@@ -209,7 +222,7 @@ def _msg_lech_phep_dung_diem(envelope: dict) -> str:
     """W18 §16.4 — `reason_subjects` = các cặp [quan hệ đề nêu, quan hệ chương trình dựng], viết theo
     ký hiệu học sinh (`M là trung điểm của SA`). Nguyên nhân CONSTRUCTION: không bảo sửa đề."""
     s = [x for x in envelope.get("reason_subjects") or [] if isinstance(x, str)]
-    cap = [(a, b) for a, b in zip(s[0::2], s[1::2]) if a and b and "_" not in a + b]
+    cap = [(a, b) for a, b in zip(s[0::2], s[1::2]) if _muc_hoc_sinh_sach(a) and _muc_hoc_sinh_sach(b)]
     if cap:
         def noi(xs):
             return " và ".join(f"\"{x}\"" for x in dict.fromkeys(xs))
@@ -234,7 +247,7 @@ def _msg_toa_do_thay_dung(envelope: dict) -> str:
     toạ độ`, `được lấy trùng với điểm A`). Toạ độ có thể đúng: nói giới hạn KIỂM CHỨNG, không nói hình khác,
     không bảo sửa đề, và (cuboid-final-review) không hứa gửi lại sẽ sửa được — chưa có cơ chế bảo đảm điều ấy."""
     s = [x for x in envelope.get("reason_subjects") or [] if isinstance(x, str)]
-    cap = [(a, b) for a, b in zip(s[0::2], s[1::2]) if a and b and "_" not in a + b]
+    cap = [(a, b) for a, b in zip(s[0::2], s[1::2]) if _muc_hoc_sinh_sach(a) and _muc_hoc_sinh_sach(b)]
     quan_he = list(dict.fromkeys(a for a, _ in cap)) or ["một điểm đề bài nêu bằng quan hệ"]
     cach = " hoặc ".join(dict.fromkeys(b for _, b in cap)) or "được đặt bằng toạ độ"
     diem = "các điểm này" if len(quan_he) > 1 else "điểm này"
@@ -243,7 +256,7 @@ def _msg_toa_do_thay_dung(envelope: dict) -> str:
 
 
 def _msg_chua_doi_chieu(envelope: dict) -> str:
-    ten = [x for x in envelope.get("reason_subjects") or [] if isinstance(x, str) and x and "_" not in x]
+    ten = [x for x in envelope.get("reason_subjects") or [] if _muc_hoc_sinh_sach(x)]
     return _MSG_CHUA_DOI_CHIEU.format(diem=("điểm " + ", ".join(ten)) if ten else "một điểm trong hình")
 
 
@@ -252,9 +265,9 @@ _KY_HIEU_DIEM = re.compile(r"[A-Z]\d*′?")
 
 def _doan_hoc_sinh(envelope: dict) -> str:
     """Số liệu học sinh đọc được — `độ dài AD`, `toạ độ điểm S` — hoặc câu chung;
-    không bao giờ in thứ gì mang `_` (tên máy)."""
+    không bao giờ in thứ gì mang `_` hay mã máy."""
     ten = [s for s in (envelope.get("reason_subjects") or [])
-           if isinstance(s, str) and s and "_" not in s]
+           if _muc_hoc_sinh_sach(s)]
     diem = [s for s in ten if _KY_HIEU_DIEM.fullmatch(s)]
     doan = [s for s in ten if s not in diem]
     cum = ([f"độ dài {', '.join(doan)}"] if doan else []) \
@@ -277,7 +290,7 @@ def learner_reason(envelope: dict) -> str:
         return _msg_toa_do_thay_dung(envelope)
     theo_nn = _MSG_THEO_NGUYEN_NHAN.get(ma, {}).get(envelope.get("refusal_cause") or "")
     if theo_nn is not None:
-        mp = ", ".join(s for s in envelope.get("reason_subjects") or [] if isinstance(s, str) and "_" not in s)
+        mp = ", ".join(s for s in envelope.get("reason_subjects") or [] if _muc_hoc_sinh_sach(s))
         return theo_nn.format(doan=_doan_hoc_sinh(envelope), mp=f" {mp}" if mp else "")
     chi_tiet = _MSG_THEO_MA_CHI_TIET.get(ma)
     if chi_tiet is not None:
@@ -300,14 +313,14 @@ def learner_reason(envelope: dict) -> str:
         # M17-RC1 §C2: cổng đủ-dữ-kiện đã sinh thông điệp RIÊNG theo target
         # (`learner_prompt_template` — nêu đúng thứ đang thiếu: dãy số, số cần
         # đổi, cấu trúc cây…). Giữ nguyên vì nó hữu ích hơn câu chung; câu
-        # chung chỉ dùng khi vì lý do nào đó không có.
+        # chung chỉ dùng khi vì lý do nào đó không có hoặc dính token máy.
         reason = envelope.get("reason")
-        return reason if isinstance(reason, str) and reason else _MSG_INSUFFICIENT
+        return reason if isinstance(reason, str) and reason and not _co_token_may(reason) else _MSG_INSUFFICIENT
     if envelope.get("failure_category") == "semantic_incomplete":
         # Thông điệp của gate ĐÃ thân thiện và nêu rõ cách tách đề — giữ nguyên
         # thay vì thay bằng câu chung chung kém hữu ích hơn.
         reason = envelope.get("reason")
-        return reason if isinstance(reason, str) and reason else _MSG_INCOMPLETE
+        return reason if isinstance(reason, str) and reason and not _co_token_may(reason) else _MSG_INCOMPLETE
     return _MSG_NOT_IN_CATALOG
 
 

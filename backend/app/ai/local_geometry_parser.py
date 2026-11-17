@@ -369,16 +369,25 @@ _MC_FORBID_SENTENCE_RE = re.compile(
 
 
 def strip_mc_options_block(text: str) -> str:
-    """Strip trailing multiple-choice option tails (`A. ...`, including out-of-order/partial blocks) without touching geometry subquestions."""
+    """Strip trailing multiple-choice option tails (`A. ...`, including partial `\n`-delimited rows with dropped `A.`) without touching geometry subquestions."""
     if not text:
         return ""
     s = _TRAILING_MC_OPTIONS_RE.sub(r"\g<stem_end>", text)
     s = _TRAILING_PARTIAL_MC_RE.sub(r"\g<stem_end>", s)
+    if (nl := s.rfind("\n")) >= 0:
+        tail_line = s[nl + 1 :]
+        if (
+            re.search(r"(?<![\w'])B\s*[.)]\s*\S.*(?<![\w'])C\s*[.)]\s*\S", tail_line)
+            and not _MC_FORBID_SENTENCE_RE.search(tail_line)
+        ):
+            s = s[:nl].rstrip()
     for m_start in re.finditer(r"(?P<stem_end>(?:(?<!\w)(?i:bằng|là)|[.?:)]|\n)\s*:?)\s+(?=(?<![\w'])[A-D]\s*[.)]\s*\S)", s):
         tail = s[m_start.end("stem_end") :]
         markers = [m.group(0).strip()[0] for m in _MC_OPT_MARKER_RE.finditer(tail)]
         if len(set(markers)) >= 2 and not _MC_FORBID_SENTENCE_RE.search(tail):
-            return s[: m_start.end("stem_end")].strip()
+            s = s[: m_start.end("stem_end")].strip()
+            break
+    s = re.sub(r"\n\s*[A-D]\s*[.]\s*$", "", s).rstrip()
     return s
 
 
@@ -1131,7 +1140,6 @@ def _parse_clause_into_ast(builder: _AstBuilder, clause: ClauseSpan) -> None:
         r"|Hỏi\s+sau\s+bao\s+nhiêu\s+phút.*"
         r"|Tìm\s+tập\s+hợp\s+các\s+điểm.*"
         r"|Dựng\s+ảnh\s+của\s+.*qua\s+phép\s+tịnh\s+tiến.*"
-        r"|điểm\s+đối\s+xứng\s+với\s+[A-Z0-9']+\s+qua\s+[A-Z0-9']+"
         r"|Chứng\s+minh(?:\s+rằng)?.*)",
         ctext_norm,
         re.IGNORECASE | re.UNICODE,
@@ -2298,6 +2306,29 @@ def _parse_clause_into_ast(builder: _AstBuilder, clause: ClauseSpan) -> None:
             )
         mapped_fact = True
 
+    # 3a-bis. Right-corner tetrahedron: "tứ diện OABC vuông tại O"
+    for m_tdv in re.finditer(
+        rf"(?P<full>tứ\s+diện\s+(?P<verts>{_PTS4})\s+vuông\s+(?:tại|ở)\s+(?:đỉnh\s+)?(?P<v>{_PT}))(?![\w'])",
+        ctext_norm,
+        re.IGNORECASE | re.UNICODE,
+    ):
+        tet_vs = _split_pts(m_tdv.group("verts"))
+        v_td = m_tdv.group("v")
+        if len(tet_vs) != 4 or len(set(tet_vs)) != 4 or v_td not in tet_vs:
+            continue
+        others = [x for x in tet_vs if x != v_td]
+        q_tdv = _clean_quote(raw, ca + m_tdv.start("full"), ca + m_tdv.end("full"))
+        for la, lb in (([v_td, others[0]], [v_td, others[1]]), ([v_td, others[0]], [v_td, others[2]]), ([v_td, others[1]], [v_td, others[2]])):
+            builder.premises.append(
+                {
+                    "kind": "perpendicular_lines",
+                    "args": {"line1": la, "line2": lb},
+                    "quote": q_tdv,
+                    "solid_id": builder._primary_solid_id,
+                }
+            )
+        mapped_fact = True
+
     # 3b. Line perpendicular to plane: "(cạnh bên )?SA (vuông góc (với )?|⊥ )((mặt phẳng )?(ABCD)|mặt phẳng đáy|đáy)"
     for m_lpp in re.finditer(
         rf"(?P<full>(?:(?:Biết|Cạnh(?:\s+bên)?)\s+)?(?P<line>{_PTS2})\s*(?:vuông\s+góc(?:\s+với)?|⊥)\s*(?P<target>(?:mặt\s+phẳng\s+|mp\s*)?\((?P<plane>{_PTS3_6})\)|mặt\s+phẳng\s+đáy|mặt\s+đáy|đáy))(?![\w'])",
@@ -3299,6 +3330,85 @@ def _parse_clause_into_ast(builder: _AstBuilder, clause: ClauseSpan) -> None:
              "quote": q_full_d, "solid_id": builder._primary_solid_id})
         mapped_fact = True
 
+    # 5f-bis-u (`D-C` unnamed `@id` projection target): "Hình chiếu vuông góc của B' lên (ABC) trùng với trọng tâm của tam giác ABC"
+    for m_pr_u in re.finditer(
+        rf"(?P<full>hình\s+chiếu\s+(?:vuông\s+góc\s+)?của\s+(?:điểm\s+)?(?P<src>{_PT})\s+(?:lên|trên|xuống)\s+"
+        rf"(?:(?:mặt\s+phẳng\s+|mp\s*)?\((?P<plane>{_PTS3_6})\)|(?:mặt\s+phẳng\s+)?(?P<day>đáy))\s+(?:là|trùng\s+với)\s+"
+        rf"(?P<desc>[^.,;]+?))(?=$|[.,;])",
+        ctext_norm,
+        re.IGNORECASE | re.UNICODE,
+    ):
+        src_u = m_pr_u.group("src")
+        plane_u = _split_pts(m_pr_u.group("plane")) if m_pr_u.group("plane") else list(builder._base_vertices)
+        desc_u = m_pr_u.group("desc").strip()
+        if (not src_u[0].isupper() or len(plane_u) < 3 or src_u in plane_u
+                or re.fullmatch(rf"(?:điểm\s+)?{_PT}", desc_u)
+                or re.match(rf"(?:điểm\s+)?(?:trọng\s+tâm|trung\s+điểm)\s+{_PT}\s+của\b", desc_u, re.IGNORECASE)):
+            continue
+        d_ref = builder.parse_point_or_described(desc_u, ca + m_pr_u.start("desc"))
+        if not d_ref or not d_ref.startswith("@"):
+            continue
+        q_full_u = _clean_quote(raw, ca + m_pr_u.start("full"), ca + m_pr_u.end("full"))
+        builder.premises.append(
+            {"kind": "orthogonal_projection", "args": {"point": src_u, "image": d_ref, "plane": plane_u},
+             "quote": q_full_u, "solid_id": builder._primary_solid_id})
+        mapped_fact = True
+
+    # 5f-sym (`D-B` + `D-C` point reflection): plural `lần lượt` across midpoints (`vmmu_r277`) & singular general
+    plural_sym_spans: list[tuple[int, int]] = []
+    for m_sym_pl in re.finditer(
+        rf"(?P<full>(?:Gọi\s+)?(?P<imgs>{_PT}(?:\s*(?:,|và)\s*{_PT})+)\s+lần\s+lượt\s+là\s+(?:các\s+)?điểm\s+đối\s+xứng\s+"
+        rf"(?:với|của)\s+(?:điểm\s+|đỉnh\s+)?(?P<pt>{_PT})\s+qua\s+trung\s+điểm\s+"
+        rf"(?:(?:hai|ba|bốn|năm|sáu|\d+)\s+)?(?:các\s+)?(?:(?:cạnh|đoạn(?:\s+thẳng)?)\s+)?"
+        rf"(?P<segs>{_PTS2}(?:\s*(?:,|và)\s*{_PTS2})+)(?:\s+của\s+(?:tam\s+giác|tứ\s+giác|hình\s+\w+|đáy)\s+{_PTS3_6})?)(?![\w'])",
+        ctext_norm,
+        re.IGNORECASE | re.UNICODE,
+    ):
+        imgs = _split_pts(m_sym_pl.group("imgs"))
+        pt_s = m_sym_pl.group("pt")
+        segs = [_split_pts(sg) for sg in re.findall(_PTS2, m_sym_pl.group("segs"))]
+        if (len(imgs) != len(segs) or len(imgs) < 2 or len(set(imgs)) != len(imgs)
+                or not pt_s[0].isupper() or pt_s in imgs
+                or any(len(s) != 2 or len(set(s)) != 2 for s in segs)):
+            continue
+        q_sym = _clean_quote(raw, ca + m_sym_pl.start("full"), ca + m_sym_pl.end("full"))
+        plural_sym_spans.append((m_sym_pl.start("full"), m_sym_pl.end("full")))
+        for img_i, seg_i in zip(imgs, segs):
+            mid_ref = builder._register_described_point({"kind": "midpoint", "segment": seg_i, "quote": q_sym})
+            builder.premises.append({
+                "kind": "point_reflection",
+                "args": {"point": pt_s, "center": mid_ref, "image": img_i},
+                "quote": q_sym,
+                "solid_id": builder._primary_solid_id,
+            })
+        mapped_fact = True
+
+    for pat_sym in (
+        rf"(?P<full>(?:Gọi\s+)?(?P<img>{_PT})\s+là\s+điểm\s+đối\s+xứng\s+(?:với|của)\s+(?:điểm\s+|đỉnh\s+)?(?P<pt>{_PT})\s+qua\s+(?P<ctr>[^.,;]+?))(?=$|[.,;])",
+        rf"(?P<full>[Đđ]iểm\s+đối\s+xứng\s+(?:với|của)\s+(?:điểm\s+|đỉnh\s+)?(?P<pt>{_PT})\s+qua\s+(?P<ctr>[^.,;]+?)\s+(?:là|trùng\s+với)\s+(?:điểm\s+)?(?P<img>{_PT}))(?=$|[.,;])",
+    ):
+        for m_sym in re.finditer(pat_sym, ctext_norm, re.IGNORECASE | re.UNICODE):
+            if any(a0 <= m_sym.start("full") < b0 for a0, b0 in plural_sym_spans):
+                continue
+            img_s, pt_s, ctr_txt = m_sym.group("img"), m_sym.group("pt"), m_sym.group("ctr").strip()
+            if not img_s[0].isupper() or not pt_s[0].isupper() or img_s == pt_s:
+                continue
+            m_named_c = re.fullmatch(rf"(?:điểm\s+|đỉnh\s+)?(?P<c>{_PT})", ctr_txt, re.IGNORECASE | re.UNICODE)
+            if m_named_c and m_named_c.group("c")[0].isupper():
+                ctr_ref = m_named_c.group("c")
+            else:
+                ctr_ref = builder.parse_point_or_described(ctr_txt, ca + m_sym.start("ctr"))
+            if not ctr_ref or ctr_ref in (pt_s, img_s):
+                continue
+            q_sym = _clean_quote(raw, ca + m_sym.start("full"), ca + m_sym.end("full"))
+            builder.premises.append({
+                "kind": "point_reflection",
+                "args": {"point": pt_s, "center": ctr_ref, "image": img_s},
+                "quote": q_sym,
+                "solid_id": builder._primary_solid_id,
+            })
+            mapped_fact = True
+
     # 5f-ter (semantic-to-scene3d). A lateral face perpendicular to the base: "(mặt bên / tam giác) SAB … nằm trong mặt
     # phẳng vuông góc với (mặt phẳng) đáy" or "(SAB) ⊥ (ABCD)" / "mặt phẳng (SAB) vuông góc với mặt phẳng đáy". The face
     # is three labels of the primary solid, not the base itself; the base is the solid's base (by name or "đáy").
@@ -4147,6 +4257,39 @@ def _parse_clause_into_ast(builder: _AstBuilder, clause: ClauseSpan) -> None:
                 (s["solid_id"] for s in builder.solids if s["notation"].replace(".", "") == not_v.replace(".", "")),
                 None,
             )
+            if sid_v is None and ("chóp" in k_v or "tứ diện" in k_v) and builder.solids:
+                known_verts = {
+                    v for sd in builder.solids for v in _split_pts(str(sd.get("notation") or "").replace(".", ""))
+                }
+                for pr in builder.premises:
+                    pk_pr = pr.get("kind")
+                    pa_pr = pr.get("args") or {}
+                    out_k = {"midpoint": "point", "centroid": "point", "divide_segment": "point",
+                             "intersect_line_line": "point", "intersect_line_plane": "point",
+                             "orthogonal_projection": "image", "orthogonal_projection_line": "image",
+                             "point_reflection": "image"}.get(pk_pr)
+                    if out_k and isinstance(pa_pr.get(out_k), str) and not str(pa_pr[out_k]).startswith("@"):
+                        known_verts.add(pa_pr[out_k])
+                apex_s: str | None = None
+                base_pts: list[str] = []
+                if "." in not_v:
+                    l_part, r_part = not_v.split(".", 1)
+                    l_ps, r_ps = _split_pts(l_part), _split_pts(r_part)
+                    if len(l_ps) == 1 and 3 <= len(r_ps) <= 6:
+                        apex_s, base_pts = l_ps[0], r_ps
+                elif "tứ diện" in k_v:
+                    all_ps = _split_pts(not_v)
+                    if len(all_ps) == 4:
+                        apex_s, base_pts = all_ps[0], all_ps[1:]
+                if apex_s is not None and len({apex_s, *base_pts}) == 1 + len(base_pts) and {apex_s, *base_pts} <= known_verts:
+                    sub_not = f"{apex_s}.{''.join(base_pts)}"
+                    sid_v = f"s{len(builder.solids) + 1}"
+                    builder.solids.append({
+                        "solid_id": sid_v,
+                        "solid_type": "pyramid",
+                        "notation": sub_not,
+                        "quote": _clean_quote(raw, ca, cb),
+                    })
             if sid_v is None:
                 continue
         else:
@@ -4606,6 +4749,51 @@ def _parse_clause_into_ast(builder: _AstBuilder, clause: ClauseSpan) -> None:
                                  "quote": _clean_quote(raw, ca + m_can.start("full"), ca + m_can.end("full")),
                                  "solid_id": builder._primary_solid_id})
         mapped_fact = True
+
+    # Equal-leg bare right triangle ("đáy ABC là tam giác vuông, AB = BC = a" or "tam giác ABC vuông, AB = AC = a")
+    for m_bare_rt in re.finditer(
+        rf"(?P<full>(?:đáy(?:\s+(?P<verts>{_PTS3}))?\s+(?:là\s+tam\s+giác\s+(?:(?P<verts2>{_PTS3})\s+)?)?|tam\s+giác\s+(?P<verts3>{_PTS3})\s+)vuông)(?![\w'])(?!\s*(?:tại|ở|cân|cạnh)\b)",
+        ctext_norm,
+        re.IGNORECASE | re.UNICODE,
+    ):
+        exp_v = m_bare_rt.group("verts") or m_bare_rt.group("verts2") or m_bare_rt.group("verts3")
+        tri = _split_pts(exp_v) if exp_v else list(builder._base_vertices)
+        if len(tri) != 3 or len(set(tri)) != 3 or _right_angle_vertex(builder.premises, tri) is not None:
+            continue
+        tri_edges = [frozenset((tri[0], tri[1])), frozenset((tri[0], tri[2])), frozenset((tri[1], tri[2]))]
+        eq_pairs: list[tuple[frozenset[str], frozenset[str]]] = []
+        len_by_edge: dict[frozenset[str], set[str]] = {}
+        for pr in builder.premises:
+            pk_p, pa_p = pr.get("kind"), pr.get("args") or {}
+            if pk_p == "equal_length":
+                ea = frozenset(pa_p.get("segment_a") or ())
+                eb = frozenset(pa_p.get("segment_b") or ())
+                if ea in tri_edges and eb in tri_edges and ea != eb:
+                    eq_pairs.append((ea, eb))
+            elif pk_p == "segment_length":
+                es = frozenset(pa_p.get("segment") or ())
+                if es in tri_edges and pa_p.get("value") is not None:
+                    len_by_edge.setdefault(es, set()).add(re.sub(r"\s+", "", str(pa_p["value"])))
+        for idx_i, e1 in enumerate(tri_edges):
+            for e2 in tri_edges[idx_i + 1 :]:
+                if len_by_edge.get(e1) and len_by_edge.get(e2) and (len_by_edge[e1] & len_by_edge[e2]):
+                    eq_pairs.append((e1, e2))
+        cand_vs = {v for ea, eb in eq_pairs for v in (ea & eb) if v in tri}
+        if len(cand_vs) == 1:
+            v_rt = next(iter(cand_vs))
+            rays_rt = [x for x in tri if x != v_rt]
+            s_off = m_bare_rt.start("full")
+            if m_bare_rt.group("verts2"):
+                m_sub_rt = re.search(rf"tam\s+giác\s+{re.escape(m_bare_rt.group('verts2'))}\b", m_bare_rt.group("full"), re.IGNORECASE)
+                if m_sub_rt:
+                    s_off += m_sub_rt.start()
+            builder.premises.append({
+                "kind": "right_angle",
+                "args": {"vertex": v_rt, "rays": rays_rt},
+                "quote": _clean_quote(raw, ca + s_off, ca + m_bare_rt.end("full")),
+                "solid_id": builder._primary_solid_id,
+            })
+            mapped_fact = True
 
     # ── 7k. Intra-Sentence Integrity & Sub-Clause Coverage Guard ─────────────────────────────────────────────────
     if (mapped_fact or mapped_goal) and not builder.unresolved:

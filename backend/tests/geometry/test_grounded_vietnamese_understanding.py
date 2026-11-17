@@ -193,8 +193,8 @@ def http(monkeypatch):
 
 
 @pytest.mark.parametrize("text, root, excerpt, rewrite", [
-    (_PYR + "Gọi M là điểm đối xứng của A qua C. Tính khoảng cách từ M đến (SBD).",
-     "UNSUPPORTED_POINT_CONSTRUCTION", "Gọi M là điểm đối xứng của A qua C", False),          # unsupported construction
+    (_PYR + "Gọi M là điểm đối xứng của A qua đường thẳng BC. Tính khoảng cách từ M đến (SBD).",
+     "UNSUPPORTED_POINT_CONSTRUCTION", "Gọi M là điểm đối xứng của A qua đường thẳng BC", False),  # unsupported construction
     (_PYR + "Tính tổng bình phương các cạnh.", "UNRECOGNIZED_GOAL", "Tính tổng bình phương các cạnh", True),  # goal unknown
     ("Cho hình chóp S.ABC có SA vuông góc với đáy, tam giác ABC đều cạnh a, chu vi tam giác SAB bằng 5. "
      "Tính thể tích khối chóp S.ABC.", "UNRECOGNIZED_RELATION", "chu vi tam giác SAB bằng 5", True),       # premise unread

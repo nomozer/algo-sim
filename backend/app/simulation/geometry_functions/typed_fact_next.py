@@ -388,6 +388,7 @@ _ARGS_LOI = {
     "centroid": {"point": "ref", "polygon": "refs3"},
     "orthogonal_projection": {"point": "ref", "image": "ref", "plane": "refs3"},
     "orthogonal_projection_line": {"point": "ref", "image": "ref", "line": "refs2="},
+    "point_reflection": {"point": "ref", "center": "ref", "image": "ref"},
     "intersect_line_line": {"point": "ref", "line1": "refs2=", "line2": "refs2="},
     "intersect_line_plane": {"point": "ref", "line": "refs2=", "plane": "refs3"},
     "line_plane_angle": {"line": "refs2=", "plane": "refs3", "value": "value", "unit": "id?"},
@@ -1126,9 +1127,18 @@ def _strings(value: Any):
         yield value
 
 
+POINT_RELATION_PREMISE_DESCRIBED_SLOTS: dict[str, tuple[str, ...]] = {
+    "orthogonal_projection": ("point", "image"),
+    "point_is_foot": ("point", "image"),
+    "orthogonal_projection_line": ("point", "image"),
+    "point_reflection": ("point", "center"),
+}
+
+
 def described_ref_uses(p: "TypedFactNextPayload") -> list[tuple[str, str]]:
     """`(consumer, described id)` of every described ref standing where one may (R-1): a measurement goal's point operand,
-    a section's `through_point`, a `contains_points` constraint operand, a point operand of another described point."""
+    a section's `through_point`, a `contains_points` constraint operand, a point operand of another described point, or a
+    single-point operand of an eligible point-relation premise (`projection`, `point_reflection`)."""
     uses: list[tuple[str, str]] = []
     for mg in p.math_goals:
         if mg.kind == "measurement":
@@ -1141,6 +1151,12 @@ def described_ref_uses(p: "TypedFactNextPayload") -> list[tuple[str, str]]:
         for c in getattr(s, "constraints", ()):
             if c.kind == "contains_points":
                 uses += [(s.section_id, x.strip()[1:]) for x in c.operands if is_described_ref(x)]
+    for i, prem in enumerate(p.premises, 1):
+        if prem.kind in POINT_RELATION_PREMISE_DESCRIBED_SLOTS:
+            for slot in POINT_RELATION_PREMISE_DESCRIBED_SLOTS[prem.kind]:
+                v = prem.args.get(slot)
+                if is_described_ref(v):
+                    uses.append((f"p{i}", v.strip()[1:]))
     for d in getattr(p, "described_points", ()):
         uses += [(f"@{d.described_id}", x.strip()[1:]) for x in d.point_operands() if is_described_ref(x)]
     return uses
@@ -1177,7 +1193,8 @@ GOAL_OPERAND_KEYS = ("segment", "point", "plane", "line", "line1", "line2", "pol
 CONSTRUCTED_OUTPUTS = {"midpoint": "point", "point_is_midpoint": "point", "divide_segment": "point",
                        "point_divides_segment": "point", "centroid": "point", "point_is_centroid": "point",
                        "intersect_line_line": "point", "intersect_line_plane": "point",
-                       "orthogonal_projection": "image", "point_is_foot": "image", "orthogonal_projection_line": "image"}
+                       "orthogonal_projection": "image", "point_is_foot": "image", "orthogonal_projection_line": "image",
+                       "point_reflection": "image"}
 
 
 def split_edge_key(key: str) -> tuple[str, str]:
@@ -1230,6 +1247,7 @@ def canonical_vertex_ref(p: "TypedFactNextPayload", ref: str, scope: str | None 
 def _described_consumer_scopes(p: "TypedFactNextPayload") -> dict[str, set[str | None]]:
     consumer_scope = {mg.goal_id: measurement_scope(p, mg) for mg in p.math_goals if mg.kind == "measurement"}
     consumer_scope |= {s.section_id: s.target_solid_id for s in p.derived_sections}
+    consumer_scope |= {f"p{i}": prem.solid_id or resolve_solid_name(p, prem.args.get("solid")) for i, prem in enumerate(p.premises, 1)}
     uses = described_ref_uses(p)
     out: dict[str, set[str | None]] = {}
     for d in getattr(p, "described_points", ()):
@@ -1279,7 +1297,8 @@ def constructed_names(p: "TypedFactNextPayload") -> set[str]:
     """Labels the payload itself introduces as constructed points (premise outputs, named section points)."""
     root_labels = {v for s in p.solids for v in (*s.local_vertices(), *map(s.canonical_vertex, s.local_vertices()))}
     names = {parse_qualified_ref(prem.args[out])[1] for prem in p.premises
-             if (out := CONSTRUCTED_OUTPUTS.get(prem.kind)) and isinstance(prem.args.get(out), str)}
+             if (out := CONSTRUCTED_OUTPUTS.get(prem.kind)) and isinstance(prem.args.get(out), str)
+             and not is_described_ref(prem.args[out])}
     for sec in p.derived_sections:
         names.update(getattr(sec, "named_intersections", {}).values())
         names.update(s.point for s in getattr(sec, "stated_intersections", ()) if s.point)
@@ -1303,7 +1322,8 @@ def scope_records(p: "TypedFactNextPayload") -> list[tuple[str, str, str | None,
         else:
             shape = _ARGS_LOI.get(prem.kind, {})
         refs =[r for key, s in shape.items() if s.startswith("ref") and key in prem.args
-                for r in (prem.args[key] if s.startswith("refs") else [prem.args[key]]) if isinstance(r, str)]
+                for r in (prem.args[key] if s.startswith("refs") else [prem.args[key]])
+                if isinstance(r, str) and not is_described_ref(r)]
         recs.append(("premise", f"p{i}", prem.solid_id or resolve_solid_name(p, prem.args.get("solid")), refs, False))
     for sec in p.derived_sections:
         refs = [x for x in (sec.through_point, *(sec.parallel_plane or ()), *(sec.perpendicular_line or ()),

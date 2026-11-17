@@ -224,6 +224,7 @@ _SUPPORTED_PREMISE_FNS = frozenset(
         "intersection_line",
         "translate_point",
         "section",
+        "point_reflection",
         "line_line_angle",
         "line_plane_angle",
         "plane_plane_angle",
@@ -381,7 +382,7 @@ def certify_height_invariance_symbolic(
         # Non-solid-vertex constructed points must sit in the fixed base plane z == 0 for Euclidean metric goals
         # so their physical Euclidean position in Scene3D does not move vertically when height h varies;
         # for purely affine ratio goals (`ask_length_ratio`, `ask_area_ratio`, `ask_volume_ratio`),
-        # affine points (`midpoint`, `divide_segment`, `centroid`, `translate_point`, `intersect_line_*`) have
+        # affine points (`midpoint`, `divide_segment`, `centroid`, `translate_point`, `point_reflection`, `intersect_line_*`) have
         # constant barycentric/affine chart coordinates over all t > 0.
         all_affine_ratio_goals = (
             len(dung.khoi) == 1
@@ -398,7 +399,7 @@ def certify_height_invariance_symbolic(
                 (
                     pt_name in dung.constructions
                     and dung.constructions[pt_name].fn
-                    in ("midpoint", "divide_segment", "centroid", "translate_point", "intersect_line_line", "intersect_line_plane")
+                    in ("midpoint", "divide_segment", "centroid", "translate_point", "point_reflection", "intersect_line_line", "intersect_line_plane")
                 )
                 or pt_rule.startswith(
                     (
@@ -406,6 +407,7 @@ def certify_height_invariance_symbolic(
                         "divide_segment",
                         "centroid",
                         "translate_point",
+                        "point_reflection",
                         "intersect_line_line",
                         "intersect_line_plane",
                         "section_edge_cut",

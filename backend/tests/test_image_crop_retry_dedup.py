@@ -13,6 +13,7 @@ import asyncio
 import base64
 from contextlib import ExitStack
 from dataclasses import replace
+import os
 from pathlib import Path
 from unittest.mock import patch
 
@@ -48,6 +49,8 @@ def _run(raw: bytes, reply, *, region=None):
         return ExtractionResult(reply(img, len(calls)), img, {"vision_model_identity": "test-stub"}, cached=False)
 
     with ExitStack() as st:
+        patched_env = {k: v for k, v in os.environ.items() if k not in ("LOCAL_OCR_PYTHON", "ALLOW_LIVE_AI")}
+        st.enter_context(patch.dict(os.environ, patched_env, clear=True))
         st.enter_context(patch("app.ingestion.unified_input.extract_problem_from_image", side_effect=fake))
         if region is not None:
             st.enter_context(patch("app.ingestion.unified_input.detect_problem_regions", return_value=region))
