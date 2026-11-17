@@ -1,14 +1,14 @@
 {
   "schema": "axo-student-ready-browser-e2e/1",
   "run_id": "student-ready-geometry-simulation-input-reliability",
-  "generated_at_utc": "2026-11-17T07:24:41Z",
+  "generated_at_utc": "2026-11-17T10:14:29Z",
   "category": "AUTOMATED_BROWSER_NOT_HUMAN_STUDY",
   "frontend_integration": "BLOCKED_OWNERSHIP",
   "gate_c": "BLOCKED_OWNERSHIP",
   "provenance": {
-    "git_head_sha": "f59d94d43a282358fc868d149a09ede3f4ce5429",
-    "product_commit": "b806e359fcceb268c065013d5cf7fb2ff278f1c1",
-    "measured_system_hash": "24f6409ebfdc4b4a9529baa9457290a30a504af105f6ab987226742dedd78099",
+    "git_head_sha": "4c463d154885e99ad9bf07e3898d11c619eb63c4",
+    "product_commit": "ac0ea63dd462c92a8736b607764d1df552d29329",
+    "measured_system_hash": "8a88dbfe9ddc35e38639c7c81e8c7741b1ea1dd1cd848bc9e7dc6bf16885b0c6",
     "measured_system_file_count": 120,
     "cache_version": "145",
     "route_d_cache_policy": "145:route-d",

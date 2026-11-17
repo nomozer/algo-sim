@@ -1,5 +1,23 @@
 # CODE_INDEX.md — Chỉ mục module + BỘ NHỚ KIẾN TRÚC
 
+## Student-ready geometry simulation & input reliability (2026-11-17)
+
+| Hạng mục / Vai trò | Đường dẫn chuẩn (`4c463d154`) |
+|---|---|
+| Tách cache `local-ocr-worker/5` (`_RAW_PAGE_CACHE_MAX=32` / `_REREAD_CROP_CACHE_MAX=512`) & `local-ocr.py` | `backend/app/ingestion/local_ocr_worker.py` |
+| Đối soát `layout-aware-ocr-reconcile/4` (giữ phân số xếp chồng cạnh đáp án & miễn marker tiểu mục `[b-e].`) | `backend/app/ingestion/ocr_reconcile.py` |
+| Tuyến `local-ocr-route/3` (`ocr-confirmation-provenance/1`, `source_crop_png_base64`) | `backend/app/ingestion/local_ocr_route.py` |
+| Thông điệp sư phạm sạch token máy cho học sinh (`0` rò rỉ) | `backend/app/learner_messages.py` |
+| Phân tích đề cục bộ `local-geometry-parser/2` (`@id` premises, tham chiếu chéo câu) | `backend/app/ai/local_geometry_parser.py` |
+| `TypedFactNext /2` & `bridge_v2` (`point_reflection` giữ nguyên khóa bề mặt Gemini `33197a45…`) | `backend/app/simulation/geometry_functions/typed_fact_next_bridge.py` |
+| `Registry /33`, `Planner /26`, `Exact Kernel /24` (`height_invariance.py`, `point_reflection`, cắt tỉa tiền điều kiện) | `backend/app/simulation/geometry_functions/engine.py` |
+| Chính sách `CACHE_VERSION = "145"` (`145:route-d`) & khóa định danh môi trường ngữ nghĩa | `backend/cache_identity.lock.json` |
+| Bộ test hợp đồng student-ready & mở rộng năng lực hình học `v145` | `backend/tests/test_student_ready_contracts.py` |
+| Kiểm thử hình học student-ready (`REAL27` promotions, `NC`, `RM72`) | `backend/tests/geometry/test_student_ready_geometry.py` |
+| Đóng gói E2E & đo lường toàn chiến dịch `student-ready-geometry-simulation-input-reliability` | `docs/evaluation/geometry/runs/student-ready-geometry-simulation-input-reliability/tools/evaluate_student_ready_campaign.py` |
+| Kiểm thử trình duyệt 4 kích thước màn hình (`AUTOMATED_BROWSER_NOT_HUMAN_STUDY`) | `docs/evaluation/geometry/runs/student-ready-geometry-simulation-input-reliability/tools/student_ready_browser_e2e.mjs` |
+| Bàn giao `4` patch frontend `FE-2/3/4/6` (kiểm `git apply --check` sạch, chưa áp vào `frontend/`) | `docs/evaluation/geometry/runs/student-ready-geometry-simulation-input-reliability/handoff/README.md` |
+
 ## Real-world geometry input & verified simulation (2026-11-17)
 
 | Hạng mục / Vai trò | Đường dẫn chuẩn (`003104fd5`) |

@@ -1,5 +1,19 @@
 # EVIDENCE_INDEX.md — Chỉ mục bằng chứng và chuỗi đính chính (Master Evidence Index)
 
+## WAVE_ID = STUDENT_READY_GEOMETRY_SIMULATION_INPUT_RELIABILITY
+
+- `RUN_ID` = student-ready-geometry-simulation-input-reliability
+- `REPORT` = docs/evaluation/geometry/runs/student-ready-geometry-simulation-input-reliability/FINAL_MASTER_REPORT.md
+- `ARTIFACT_DIRECTORY` = docs/evaluation/geometry/runs/student-ready-geometry-simulation-input-reliability/
+- `START_BASE` = ce280140bf89ad72e8724993f75f98edcce01e55
+- `CODE_COMMIT` = 851aa1b2d420045b8eecaa00d3371d7eaea79b2d, ac0ea63dd462c92a8736b607764d1df552d29329 (frozen clean 4c463d154885e99ad9bf07e3898d11c619eb63c4)
+- `CLASSIFICATION` = OFFLINE_DETERMINISTIC_REPLAY
+- `PRODUCT_CHANGE` = YES; CACHE_VERSION = 145 (145:route-d); measured_system = 8a88dbfe9ddc35e38639c7c81e8c7741b1ea1dd1cd848bc9e7dc6bf16885b0c6 (120 files, cay_lam_viec_sach = true); FRONTEND_INTEGRATION = BLOCKED_OWNERSHIP (Gate C = BLOCKED_OWNERSHIP, 0 diff frontend/)
+- `MODEL_REQUEST_COUNT` = 0
+- `VERIFICATION` = run.json; STUDENT_READY_EVALUATION.json; browser_e2e_4viewports.json; historical-regression-delta.json; pending_template_refresh.json; INPUT_RELIABILITY_IMPLEMENTATION.md; STUDENT_FRONTEND_INTEGRATION.md; GEOMETRY_CAPABILITY_REPORT.md; FINAL_MASTER_REPORT.md
+- `CORRECTS` = NONE
+- `CORRECTED_BY` = NONE
+
 ## WAVE_ID = REAL_WORLD_GEOMETRY_INPUT_VERIFIED_SIMULATION
 
 - `RUN_ID` = real-world-geometry-input-verified-simulation
