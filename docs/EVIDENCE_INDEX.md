@@ -1,5 +1,20 @@
 # EVIDENCE_INDEX.md — Chỉ mục bằng chứng và chuỗi đính chính (Master Evidence Index)
 
+## WAVE_ID = SLM_LOCAL_GEOMETRY_UNDERSTANDING
+
+- `RUN_ID` = slm-local-geometry-understanding
+- `REPORT` = docs/evaluation/geometry/runs/slm-local-geometry-understanding/FINAL_MASTER_REPORT.md
+- `ARTIFACT_DIRECTORY` = docs/evaluation/geometry/runs/slm-local-geometry-understanding/
+- `START_BASE` = 69526ca6c2dc20124f49b3b707b394164d183f84
+- `CODE_COMMIT` = a182b54600752e57f3be408aad6a673bd9a0d41f (frozen clean 96791162faa46df330beee9aef2f17f82e03c868)
+- `CLASSIFICATION` = OFFLINE_LOCAL_SLM_EMPIRICAL_BENCHMARK
+- `PRODUCT_CHANGE` = YES; CACHE_VERSION = 145 (145:route-d); default HYBRID_ROUTE_MODE = live preserved (local-slm opt-in); measured_system = 771fe868279c814f9a913ab5120b8dba35c086b6f8e523112c95b4b837e2f542 (122 files, cay_lam_viec_sach = true); 4 locked Gemini surfaces unchanged; frontend 0 diff; pending C21 templates metadata refreshed (PENDING_OWNER_DECISION, paid_project_confirmed = false)
+- `MODEL_REQUEST_COUNT` = 0
+- `VERIFICATION` = run.json; SLM_MODEL_MANIFEST.json; preregistered_replacement_criteria.json; independent_slm_holdout_manifest.json; dev_calibration_16.json; SLM_BASELINE_COMPARISON.json; SLM_EXTRACTION_EVALUATION.json; SLM_RESOURCE_BENCHMARK.json; pending_template_refresh.json; SLM_ARCHITECTURE.md; SLM_RUNTIME_IMPLEMENTATION.md; SLM_FAILURE_ANALYSIS.md; SLM_REPLACEMENT_DECISION.md; FINAL_MASTER_REPORT.md
+- `CORRECTS` = NONE
+- `CORRECTED_BY` = NONE
+- `LIMITATIONS` = REPLACEMENT_VERDICT = PARTIAL_GAIN_KEEP_HYBRID_EXPERIMENTAL (zero-shot sub-1B holdout 10/28 = 35.71% < 0.85/0.65, CPU warm p95 8025.00–8480.07 ms & holdout p95 11693.69 ms, lacks derived section & multi-solid parity); frozen_unseen_vmmu20_separate (19 items, served_unverified_count = 0) strictly GROUND_TRUTH_UNVERIFIED / NOT_MEASURED; PHYSICAL_LOW_END = NOT_MEASURED (15.78 GiB host); INDEPENDENT_H1_VALIDATION = NOT_MEASURED; REAL_STUDENT_USABILITY = NOT_MEASURED.
+
 ## WAVE_ID = STUDENT_READY_GEOMETRY_SIMULATION_INPUT_RELIABILITY
 
 - `RUN_ID` = student-ready-geometry-simulation-input-reliability

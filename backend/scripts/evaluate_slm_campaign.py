@@ -796,30 +796,43 @@ def evaluate_resources_and_faults() -> dict[str, Any]:
         for th in threads_to_test:
             rt = LocalSlmRuntime(threads=th, allow_download=False)
             try:
-                cold_res = run_local_slm_extraction(probe_text, model_key=mkey, runtime=rt)
+                cold_start = time.perf_counter()
+                try:
+                    cold_res = run_local_slm_extraction(probe_text, model_key=mkey, runtime=rt)
+                    cold_load_ms = cold_res.inference.server_load_time_ms if cold_res.inference else None
+                    cold_inf_ms = cold_res.inference.inference_time_ms if cold_res.inference else None
+                except LocalSlmRuntimeError:
+                    cold_load_ms = None
+                    cold_inf_ms = round((time.perf_counter() - cold_start) * 1000.0, 2)
                 warm_times: list[float] = []
                 warm_tps: list[float] = []
                 rss_samples: list[dict[str, float | None]] = []
+                runtime_failures: list[dict[str, Any]] = []
                 for idx in range(5):
                     sample_txt = DEV_CALIBRATION_16[idx]["text"]
-                    wres = run_local_slm_extraction(sample_txt, model_key=mkey, runtime=rt)
-                    if wres.inference:
-                        warm_times.append(wres.inference.inference_time_ms)
-                        if wres.inference.completion_tokens and wres.inference.inference_time_ms > 0:
-                            warm_tps.append(round(wres.inference.completion_tokens / (wres.inference.inference_time_ms / 1000.0), 2))
-                        rss_samples.append({
-                            "python_rss_mib": wres.inference.python_rss_mib,
-                            "server_rss_mib": wres.inference.server_rss_mib,
-                            "combined_rss_mib": wres.inference.combined_rss_mib,
-                            "server_peak_rss_mib": wres.inference.server_peak_rss_mib,
-                        })
+                    try:
+                        wres = run_local_slm_extraction(sample_txt, model_key=mkey, runtime=rt)
+                        if wres.inference:
+                            warm_times.append(wres.inference.inference_time_ms)
+                            if wres.inference.completion_tokens and wres.inference.inference_time_ms > 0:
+                                warm_tps.append(round(wres.inference.completion_tokens / (wres.inference.inference_time_ms / 1000.0), 2))
+                            rss_samples.append({
+                                "python_rss_mib": wres.inference.python_rss_mib,
+                                "server_rss_mib": wres.inference.server_rss_mib,
+                                "combined_rss_mib": wres.inference.combined_rss_mib,
+                                "server_peak_rss_mib": wres.inference.server_peak_rss_mib,
+                            })
+                    except LocalSlmRuntimeError as exc:
+                        runtime_failures.append({"case_id": DEV_CALIBRATION_16[idx]["id"], "reason_code": exc.reason_code, "detail": exc.detail[:180]})
                 thread_runs[f"threads_{th}"] = {
-                    "server_load_time_ms": cold_res.inference.server_load_time_ms if cold_res.inference else None,
-                    "cold_inference_ms": cold_res.inference.inference_time_ms if cold_res.inference else None,
+                    "server_load_time_ms": cold_load_ms,
+                    "cold_inference_ms": cold_inf_ms,
                     "warm_inference_ms": _stats(warm_times),
                     "tokens_per_sec_mean": round(sum(warm_tps) / len(warm_tps), 2) if warm_tps else None,
                     "peak_combined_rss_mib": max((s["combined_rss_mib"] or 0.0) for s in rss_samples) if rss_samples else None,
                     "peak_server_rss_mib": max((s["server_peak_rss_mib"] or 0.0) for s in rss_samples) if rss_samples else None,
+                    "runtime_failures_count": len(runtime_failures),
+                    "runtime_failures": runtime_failures,
                     "rss_samples": rss_samples,
                 }
             finally:
@@ -912,7 +925,7 @@ def evaluate_resources_and_faults() -> dict[str, Any]:
 
 def main(argv: list[str] | None = None) -> int:
     parser = argparse.ArgumentParser(description="AXO HYBRID /5 SLM Campaign Evaluator")
-    parser.add_argument("--phase", choices=("calibrate", "full"), required=True)
+    parser.add_argument("--phase", choices=("calibrate", "resource", "full"), required=True)
     parser.add_argument("--strategy", default=DEFAULT_LOCAL_SLM_STRATEGY)
     args = parser.parse_args(argv)
 
@@ -922,6 +935,11 @@ def main(argv: list[str] | None = None) -> int:
         if args.phase == "calibrate":
             cal = run_calibration(runtime)
             print(json.dumps({"ok": True, "phase": "calibrate", "summary": cal["summary"], "winning_strategy": cal["winning_strategy"]}, indent=2, ensure_ascii=False))
+            return 0
+        if args.phase == "resource":
+            res_bench = evaluate_resources_and_faults()
+            (OUT_DIR / "SLM_RESOURCE_BENCHMARK.json").write_text(json.dumps(res_bench, indent=2, ensure_ascii=False), encoding="utf-8")
+            print(json.dumps({"ok": True, "phase": "resource", "fault_recovery_checks": res_bench["fault_recovery_checks"]}, indent=2, ensure_ascii=False))
             return 0
 
         # Full campaign phase

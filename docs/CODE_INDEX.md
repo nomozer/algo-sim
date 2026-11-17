@@ -1,5 +1,19 @@
 # CODE_INDEX.md — Chỉ mục module + BỘ NHỚ KIẾN TRÚC
 
+## Specialized local sub-1B SLM for Vietnamese geometry understanding (2026-11-17)
+
+| Hạng mục / Vai trò | Đường dẫn chuẩn (`96791162f` / product `a182b5460`) |
+|---|---|
+| Runtime CPU cục bộ `local-slm-runtime/1` (`llama.cpp b12470`, tải GGUF ngoài Git, `--reasoning off`, `127.0.0.1` stdlib IPC, fallback cổng `[31000..47999]`, hàng đợi có chặn, đo RSS 64-bit, tự khởi động lại sau crash/timeout) | `backend/app/ai/local_slm_runtime.py` |
+| Trích xuất ngữ nghĩa `local-slm-extractor/1` (`direct_wire` vs `minimal_ops`), cổng nguồn tất định `slm-grounding-validator/1` (chặn prompt injection, khớp mệnh đề nguyên văn, kiểm cân xứng điểm/cạnh/biểu thức ký hiệu & đối chiếu Local Parser) | `backend/app/ai/local_slm_extractor.py` |
+| Định tuyến đầu vào thích nghi (`LOCAL_SLM_FALLBACK`, `is_local_parse_semantically_complete`, `route_text_input_local_slm`: chạy Local Parser trước, 0 gọi SLM khi đã hoàn chỉnh) | `backend/app/ai/adaptive_input_router.py` |
+| Vận hành Hybrid /5 opt-in offline (`LocalSlmHybridRun`, `prepare_local_slm_hybrid`, `HYBRID_V5_LOCAL_SLM` khóa cache cô lập, mã lỗi hạ tầng `502`/`503`/`504`) | `backend/app/ai/hybrid_offline.py` |
+| Tuyến API `POST /api/analyze` (`HYBRID_ROUTE_MODE=local-slm` opt-in; giữ nguyên mặc định `"live"` & `CACHE_VERSION = "145"`) | `backend/app/main.py` |
+| CLI cài đặt & smoke-test `llama.cpp b12470` + `Qwen3-0.6B-Q4_K_M` / `Qwen2.5-0.5B-Instruct-Q4_K_M` kèm kiểm tra SHA-256 | `backend/scripts/provision_local_slm.py` |
+| Bộ đo lường offline & benchmark hiệu chuẩn, so sánh baseline, Holdout-40, tải/RSS và hồi phục lỗi | `backend/scripts/evaluate_slm_campaign.py` |
+| Suite kiểm thử đơn vị, grounding validator, fail-closed `503` thiếu model & API route + khôi phục crash/timeout CPU thật | `backend/tests/geometry/test_local_slm_understanding.py` |
+| Báo cáo nghiệm thu & quyết định thực nghiệm `PARTIAL_GAIN_KEEP_HYBRID_EXPERIMENTAL` | `docs/evaluation/geometry/runs/slm-local-geometry-understanding/FINAL_MASTER_REPORT.md` |
+
 ## Student-ready geometry simulation & input reliability (2026-11-17)
 
 | Hạng mục / Vai trò | Đường dẫn chuẩn (`4c463d154`) |
