@@ -1,0 +1,16 @@
+{
+  "focusVisibleInfo": {
+    "isActiveEl": true,
+    "matchesFocusVisible": true,
+    "opacity": "1"
+  },
+  "sample1Result": {
+    "foundStepP": {
+      "idx": "7",
+      "txt": "Xác định trung điểm P của CD"
+    },
+    "committed": true,
+    "stepsAndReadoutsNoStaleMenpf": true,
+    "has4GonUpdatedLabel": true
+  }
+}

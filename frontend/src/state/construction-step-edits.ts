@@ -47,6 +47,7 @@ export interface StepEditFeedbackItem {
 export interface PersistedStepEditSnapshot {
   sessionId: string;
   problemKey: string;
+  versionNumber?: number;
   committedScene: Scene3D | null;
   stepOverrides: Record<string, string>;
   dependencySummary?: StepEditDependencySummary | null;
@@ -55,9 +56,23 @@ export interface PersistedStepEditSnapshot {
   updatedAt: number;
 }
 
+export interface StepEditValidationResult {
+  valid?: boolean;
+  passed?: boolean;
+  exact_arithmetic?: boolean;
+  checks_passed?: string[];
+  change_classification?: string;
+  continuity?: { passed?: boolean; issues?: unknown[] } | null;
+}
+
 export interface StepEditSubmitSuccess {
   status: "committed";
   mode: string;
+  equivalence_info?: {
+    geometrically_equivalent?: boolean;
+    change_classification?: string;
+    [k: string]: unknown;
+  } | null;
   session_id: string;
   revision_id: string;
   feedback_id: string;
@@ -68,7 +83,7 @@ export interface StepEditSubmitSuccess {
   scene3d: Scene3D;
   step_overrides: Record<string, string>;
   dependency_summary: StepEditDependencySummary;
-  validation_result?: { passed?: boolean } | null;
+  validation_result?: StepEditValidationResult | null;
   stage_timings_ms: Record<string, number>;
   llm_calls: number;
   quota_charged: boolean;
@@ -85,6 +100,40 @@ export function isVerifiedRebuildScene(scene: unknown): scene is Scene3D {
   }
 }
 
+export function isVerifiedStepEditCommitResponse(data: unknown): data is StepEditSubmitSuccess {
+  if (!data || typeof data !== "object") return false;
+  const d = data as Partial<StepEditSubmitSuccess>;
+  if (d.status !== "committed" || d.feedback_status !== "GEOMETRY_VERIFIED") return false;
+  if (typeof d.version_number !== "number" || !Number.isInteger(d.version_number) || d.version_number < 1) {
+    return false;
+  }
+  if (typeof d.primary_target_id !== "string" || !d.primary_target_id.trim()) return false;
+  const val = d.validation_result;
+  if (
+    !val
+    || val.passed !== true
+    || val.valid !== true
+    || val.exact_arithmetic !== true
+    || !val.continuity
+    || val.continuity.passed !== true
+    || !Array.isArray(val.checks_passed)
+    || val.checks_passed.length === 0
+  ) {
+    return false;
+  }
+  const dep = d.dependency_summary;
+  if (
+    !dep
+    || dep.cycle_detected !== false
+    || !Array.isArray(dep.edited_target_ids)
+    || dep.edited_target_ids.length === 0
+  ) {
+    return false;
+  }
+  if (!isVerifiedRebuildScene(d.scene3d)) return false;
+  return d.scene3d.objects.some((o) => o.id === d.primary_target_id);
+}
+
 export interface StepEditSubmitRefusal {
   status: "rolled_back" | "network_error" | "duplicate_ignored";
   error_code: string;
@@ -95,7 +144,28 @@ export interface StepEditSubmitRefusal {
 
 export type StepEditSubmitResult = StepEditSubmitSuccess | StepEditSubmitRefusal;
 
-const inFlightSessions = new Set<string>();
+type InFlightAbortReason = "cancelled" | "superseded" | "timeout";
+
+interface InFlightEditEntry {
+  seq: number;
+  stepId: string;
+  stepIndex: number;
+  controller: AbortController;
+  abortReason: InFlightAbortReason | null;
+}
+
+const DEFAULT_STEP_EDIT_TIMEOUT_MS = 15_000;
+let nextSubmitSeq = 0;
+const inFlightSessions = new Map<string, InFlightEditEntry>();
+
+export function cancelInFlightStepEdit(sessionId: string): boolean {
+  const entry = inFlightSessions.get(sessionId);
+  if (!entry) return false;
+  entry.abortReason = "cancelled";
+  entry.controller.abort();
+  inFlightSessions.delete(sessionId);
+  return true;
+}
 
 function fnv1aHex(input: string): string {
   let h = 0x811c9dc5;
@@ -149,6 +219,7 @@ export function loadCachedStepEditState(sessionId: string): PersistedStepEditSna
     return {
       sessionId,
       problemKey: typeof parsed.problemKey === "string" ? parsed.problemKey : "",
+      versionNumber: typeof parsed.versionNumber === "number" ? parsed.versionNumber : undefined,
       committedScene: cachedScene,
       stepOverrides: cachedScene && parsed.stepOverrides && typeof parsed.stepOverrides === "object"
         ? parsed.stepOverrides
@@ -163,12 +234,29 @@ export function loadCachedStepEditState(sessionId: string): PersistedStepEditSna
   }
 }
 
-export function saveCachedStepEditState(sessionId: string, snapshot: PersistedStepEditSnapshot): void {
-  if (!sessionId) return;
+export function saveCachedStepEditState(sessionId: string, snapshot: PersistedStepEditSnapshot): boolean {
+  if (!sessionId) return false;
   try {
+    const existing = loadCachedStepEditState(sessionId);
+    const sameProblem =
+      !existing
+      || !existing.problemKey
+      || !snapshot.problemKey
+      || existing.problemKey === snapshot.problemKey;
+    if (
+      sameProblem
+      && existing?.committedScene
+      && existing.versionNumber !== undefined
+      && snapshot.versionNumber !== undefined
+      && snapshot.versionNumber < existing.versionNumber
+    ) {
+      return false;
+    }
     window.localStorage.setItem(`${STEP_STATE_STORAGE_PREFIX}${sessionId}`, JSON.stringify(snapshot));
+    return true;
   } catch {
     // Best-effort client persistence; server SQLite remains authoritative
+    return false;
   }
 }
 
@@ -185,12 +273,16 @@ export async function fetchStepEditSessionState(sessionId: string): Promise<Pers
     if (!res.ok) return null;
     const data = await res.json();
     if (!data?.found) return null;
+    if (data.dependency_summary && data.dependency_summary.cycle_detected !== false && Number(data.revision_count || 0) > 0) {
+      return null;
+    }
     const remoteScene = isVerifiedRebuildScene(data.committed_scene)
       ? (data.committed_scene as Scene3D)
       : null;
     const snapshot: PersistedStepEditSnapshot = {
       sessionId,
       problemKey: typeof data.problem_key === "string" ? data.problem_key : "",
+      versionNumber: typeof data.revision_count === "number" ? data.revision_count : undefined,
       committedScene: remoteScene,
       stepOverrides: remoteScene ? ((data.step_overrides as Record<string, string>) ?? {}) : {},
       dependencySummary: (data.dependency_summary as StepEditDependencySummary) ?? null,
@@ -198,7 +290,10 @@ export async function fetchStepEditSessionState(sessionId: string): Promise<Pers
       feedbackItems: Array.isArray(data.feedback_items) ? data.feedback_items : [],
       updatedAt: Date.now(),
     };
-    saveCachedStepEditState(sessionId, snapshot);
+    const saved = saveCachedStepEditState(sessionId, snapshot);
+    if (!saved) {
+      return loadCachedStepEditState(sessionId) ?? snapshot;
+    }
     return snapshot;
   } catch {
     return null;
@@ -216,23 +311,53 @@ export async function submitConstructionStepEdit(params: {
   absorbedIds: string[];
   priorStepIds?: string[];
   scene3d: Scene3D;
+  timeoutMs?: number;
+  supersedeInFlight?: boolean;
 }): Promise<StepEditSubmitResult> {
   const { sessionId } = params;
-  if (inFlightSessions.has(sessionId)) {
-    return {
-      status: "duplicate_ignored",
-      error_code: "EDIT_IN_PROGRESS",
-      failed_stage: "ui_lock",
-      learner_error: "Hệ thống đang kiểm tra và dựng lại bước vừa gửi, vui lòng chờ hoàn tất.",
-      draft_preserved: true,
-    };
+  const existingEntry = inFlightSessions.get(sessionId);
+  if (existingEntry) {
+    const sameTarget = existingEntry.stepId === params.stepId && existingEntry.stepIndex === params.stepIndex;
+    if (sameTarget && !params.supersedeInFlight) {
+      return {
+        status: "duplicate_ignored",
+        error_code: "EDIT_IN_PROGRESS",
+        failed_stage: "ui_lock",
+        learner_error: "Hệ thống đang kiểm tra và dựng lại bước vừa gửi, vui lòng chờ hoàn tất.",
+        draft_preserved: true,
+      };
+    }
+    existingEntry.abortReason = "superseded";
+    existingEntry.controller.abort();
   }
 
-  inFlightSessions.add(sessionId);
+  const controller = new AbortController();
+  const seq = ++nextSubmitSeq;
+  const entry: InFlightEditEntry = {
+    seq,
+    stepId: params.stepId,
+    stepIndex: params.stepIndex,
+    controller,
+    abortReason: null,
+  };
+  inFlightSessions.set(sessionId, entry);
+
+  const timeoutMs =
+    typeof params.timeoutMs === "number" && Number.isFinite(params.timeoutMs) && params.timeoutMs > 0
+      ? params.timeoutMs
+      : DEFAULT_STEP_EDIT_TIMEOUT_MS;
+  const timeoutTimer = setTimeout(() => {
+    if (entry.abortReason === null) {
+      entry.abortReason = "timeout";
+      controller.abort();
+    }
+  }, timeoutMs);
+
   try {
     const res = await fetch("/api/simulation/steps/edit", {
       method: "POST",
       credentials: "include",
+      signal: controller.signal,
       headers: {
         "Content-Type": "application/json",
         [AXO_CLIENT_SESSION_HEADER]: getOrCreateAxoClientSessionToken(),
@@ -251,14 +376,29 @@ export async function submitConstructionStepEdit(params: {
       }),
     });
 
+    if (entry.abortReason === "cancelled") {
+      return {
+        status: "rolled_back",
+        error_code: "EDIT_CANCELLED",
+        failed_stage: "cancelled",
+        learner_error: "Đã hủy lượt chỉnh sửa đang chạy.",
+        draft_preserved: true,
+      };
+    }
+    const isCurrentSeq = inFlightSessions.get(sessionId)?.seq === seq && entry.abortReason !== "superseded";
+    if (!isCurrentSeq) {
+      return {
+        status: "rolled_back",
+        error_code: "EDIT_SUPERSEDED",
+        failed_stage: "superseded",
+        learner_error: "Yêu cầu cũ đã được thay thế bởi lượt chỉnh sửa mới hơn.",
+        draft_preserved: true,
+      };
+    }
+
     const data = await res.json().catch(() => null);
     if (res.ok && data?.status === "committed" && data?.scene3d) {
-      const serverVerified =
-        data.feedback_status === "GEOMETRY_VERIFIED"
-        && data.validation_result?.passed !== false
-        && data.dependency_summary?.cycle_detected !== true
-        && isVerifiedRebuildScene(data.scene3d);
-      if (!serverVerified) {
+      if (!isVerifiedStepEditCommitResponse(data)) {
         return {
           status: "rolled_back",
           error_code: "UNVERIFIED_REBUILD_REJECTED",
@@ -273,6 +413,7 @@ export async function submitConstructionStepEdit(params: {
       saveCachedStepEditState(sessionId, {
         sessionId,
         problemKey: params.problemKey,
+        versionNumber: success.version_number,
         committedScene: success.scene3d,
         stepOverrides: success.step_overrides ?? {},
         dependencySummary: success.dependency_summary ?? null,
@@ -295,6 +436,33 @@ export async function submitConstructionStepEdit(params: {
       draft_preserved: true,
     };
   } catch {
+    if (entry.abortReason === "cancelled") {
+      return {
+        status: "rolled_back",
+        error_code: "EDIT_CANCELLED",
+        failed_stage: "cancelled",
+        learner_error: "Đã hủy lượt chỉnh sửa đang chạy.",
+        draft_preserved: true,
+      };
+    }
+    if (entry.abortReason === "superseded" || inFlightSessions.get(sessionId)?.seq !== seq) {
+      return {
+        status: "rolled_back",
+        error_code: "EDIT_SUPERSEDED",
+        failed_stage: "superseded",
+        learner_error: "Yêu cầu cũ đã được thay thế bởi lượt chỉnh sửa mới hơn.",
+        draft_preserved: true,
+      };
+    }
+    if (entry.abortReason === "timeout") {
+      return {
+        status: "network_error",
+        error_code: "REQUEST_TIMEOUT",
+        failed_stage: "network_timeout",
+        learner_error: "Máy chủ dựng hình phản hồi quá thời gian chờ. Trạng thái hợp lệ trước đó vẫn được giữ nguyên.",
+        draft_preserved: true,
+      };
+    }
     return {
       status: "network_error",
       error_code: "NETWORK_UNAVAILABLE",
@@ -303,7 +471,10 @@ export async function submitConstructionStepEdit(params: {
       draft_preserved: true,
     };
   } finally {
-    inFlightSessions.delete(sessionId);
+    clearTimeout(timeoutTimer);
+    if (inFlightSessions.get(sessionId)?.seq === seq) {
+      inFlightSessions.delete(sessionId);
+    }
   }
 }
 

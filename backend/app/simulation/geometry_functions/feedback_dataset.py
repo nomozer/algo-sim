@@ -95,6 +95,23 @@ def _summarize_geometry_context(scene3d: dict[str, Any] | None) -> dict[str, Any
     }
 
 
+def _is_verified_validation_and_execution(
+    validation_result: dict[str, Any] | None,
+    execution_result: dict[str, Any] | None,
+) -> bool:
+    """Require explicit positive validation, continuity, and exact arithmetic before verification credit."""
+    val = validation_result if isinstance(validation_result, dict) else {}
+    exe = execution_result if isinstance(execution_result, dict) else {}
+    continuity = val.get("continuity") if isinstance(val.get("continuity"), dict) else {}
+    return (
+        val.get("passed") is True
+        and val.get("valid") is True
+        and val.get("exact_arithmetic") is True
+        and continuity.get("passed") is True
+        and exe.get("status") == "committed"
+    )
+
+
 def record_step_feedback_attempt(
     db: Session,
     *,
@@ -113,7 +130,7 @@ def record_step_feedback_attempt(
     execution_result: dict[str, Any],
 ) -> VerifiedStepFeedbackRecord:
     """Persist structured feedback with initial GEOMETRY_VERIFIED or REJECTED status."""
-    passed = bool(validation_result.get("passed")) and execution_result.get("status") == "committed"
+    passed = _is_verified_validation_and_execution(validation_result, execution_result)
     acceptance = "GEOMETRY_VERIFIED" if passed else "REJECTED"
     row = VerifiedStepFeedbackRecord(
         feedback_id=f"fb-{uuid.uuid4().hex[:16]}",
@@ -165,7 +182,7 @@ def approve_step_feedback(
 
     val = json.loads(row.validation_result_json or "{}")
     exe = json.loads(row.execution_result_json or "{}")
-    geom_ok = bool(val.get("passed")) and exe.get("status") == "committed"
+    geom_ok = _is_verified_validation_and_execution(val, exe)
 
     if approved and not geom_ok:
         raise ValueError(

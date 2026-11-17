@@ -50,6 +50,7 @@ import {
 } from "./ConstructionStepEditor";
 import {
   buildStepEditSessionId,
+  cancelInFlightStepEdit,
   fetchStepEditSessionState,
   loadCachedStepEditState,
   submitConstructionStepEdit,
@@ -322,6 +323,12 @@ export function AxoWorkspaceV62({
   const [stepEditRunning, setStepEditRunning] = useState(false);
   const [stepEditError, setStepEditError] = useState<string | null>(null);
   const editRequestSeqRef = useRef(0);
+  const editMutationEpochRef = useRef(0);
+  const committedVersionRef = useRef<number>(
+    editedSceneState?.sessionId === activeEditSessionId
+      ? (loadCachedStepEditState(activeEditSessionId)?.versionNumber ?? 0)
+      : 0,
+  );
   const activeEditSessionIdRef = useRef(activeEditSessionId);
   activeEditSessionIdRef.current = activeEditSessionId;
   const pendingFocusTargetIdRef = useRef<string | null>(null);
@@ -329,11 +336,14 @@ export function AxoWorkspaceV62({
   useEffect(() => {
     let cancelled = false;
     editRequestSeqRef.current += 1;
+    editMutationEpochRef.current += 1;
+    const epochAtStart = editMutationEpochRef.current;
     pendingFocusTargetIdRef.current = null;
     setEditingStepIndex(null);
     setStepEditRunning(false);
     setStepEditError(null);
     const cached = loadCachedStepEditState(activeEditSessionId);
+    committedVersionRef.current = cached?.committedScene ? (cached.versionNumber ?? 0) : 0;
     if (cached?.committedScene) {
       setEditedSceneState({
         sessionId: activeEditSessionId,
@@ -344,7 +354,19 @@ export function AxoWorkspaceV62({
       setEditedSceneState(null);
     }
     void fetchStepEditSessionState(activeEditSessionId).then((remote) => {
-      if (cancelled || !remote?.committedScene) return;
+      if (
+        cancelled
+        || activeEditSessionIdRef.current !== activeEditSessionId
+        || epochAtStart !== editMutationEpochRef.current
+        || !remote?.committedScene
+      ) {
+        return;
+      }
+      const remoteVer = remote.versionNumber ?? 0;
+      if (remoteVer < committedVersionRef.current) {
+        return;
+      }
+      committedVersionRef.current = Math.max(committedVersionRef.current, remoteVer);
       setEditedSceneState({
         sessionId: activeEditSessionId,
         scene: remote.committedScene,
@@ -690,6 +712,11 @@ export function AxoWorkspaceV62({
       });
       setDangPhat(false);
       setLocateRequest(null);
+      if (webglLifecycleRef.current.phase !== "healthy" || stageWebglFailed || viewerBoundaryCrashed) {
+        setViewerMountGen((n) => n + 1);
+        setWebglLifecycle({ phase: "healthy", attempt: 0, maxAttempts: 2 });
+        setWebglStageAttempt(0);
+      }
       setStageWebglFailed(false);
       setViewerBoundaryCrashed(false);
       return;
@@ -2991,9 +3018,10 @@ export function AxoWorkspaceV62({
                           }
                         });
                       };
-                      const handleRunStepEdit = async (draft: string) => {
-                        if (stepEditRunning) return;
+                      const handleRunStepEdit = async (draft: string, supersede = false) => {
+                        if (stepEditRunning && !supersede) return;
                         const reqSeq = ++editRequestSeqRef.current;
+                        editMutationEpochRef.current += 1;
                         const sessionIdAtStart = activeEditSessionId;
                         setStepEditRunning(true);
                         setStepEditError(null);
@@ -3011,6 +3039,7 @@ export function AxoWorkspaceV62({
                           absorbedIds: absorbedHelperIds,
                           priorStepIds: priorStepIdsForEdit,
                           scene3d: sceneKhung,
+                          supersedeInFlight: supersede,
                         });
                         if (
                           reqSeq !== editRequestSeqRef.current
@@ -3019,6 +3048,13 @@ export function AxoWorkspaceV62({
                           return;
                         }
                         if (res.status === "committed") {
+                          if (res.version_number < committedVersionRef.current) {
+                            setStepEditRunning(false);
+                            return;
+                          }
+                          const tCommitStart = typeof performance !== "undefined" ? performance.now() : 0;
+                          committedVersionRef.current = res.version_number;
+                          editMutationEpochRef.current += 1;
                           const focusTargetId = res.primary_target_id || primaryTargetId;
                           pendingFocusTargetIdRef.current = focusTargetId;
                           setEditedSceneState({
@@ -3028,6 +3064,18 @@ export function AxoWorkspaceV62({
                           });
                           setEditingStepIndex(null);
                           setStepEditError(null);
+                          setStepEditRunning(false);
+                          if (typeof window !== "undefined" && typeof window.requestAnimationFrame === "function") {
+                            window.requestAnimationFrame(() => {
+                              const renderMs = typeof performance !== "undefined" ? performance.now() - tCommitStart : 0;
+                              (window as unknown as Record<string, unknown>).__AXO_LAST_STEP_EDIT_METRICS__ = {
+                                stageTimingsMs: res.stage_timings_ms,
+                                frontendCommitRenderMs: Math.round(renderMs * 1000) / 1000,
+                                versionNumber: res.version_number,
+                              };
+                            });
+                          }
+                        } else if (res.error_code === "EDIT_CANCELLED" || res.error_code === "EDIT_SUPERSEDED") {
                           setStepEditRunning(false);
                         } else {
                           setStepEditError(res.learner_error);
@@ -3062,6 +3110,12 @@ export function AxoWorkspaceV62({
                                 running={stepEditRunning}
                                 errorText={stepEditError}
                                 onCancel={(restoreFocus) => {
+                                  if (stepEditRunning) {
+                                    cancelInFlightStepEdit(activeEditSessionId);
+                                    editRequestSeqRef.current += 1;
+                                    editMutationEpochRef.current += 1;
+                                    setStepEditRunning(false);
+                                  }
                                   setEditingStepIndex(null);
                                   setStepEditError(null);
                                   if (restoreFocus) {
@@ -3116,8 +3170,13 @@ export function AxoWorkspaceV62({
                           {!isEditingThisStep && !unavailableOverride && invalidSceneReason === null && (
                             <StepEditPencilButton
                               stepNumber={b.index + 1}
-                              disabled={stepEditRunning}
                               onStartEdit={() => {
+                                if (stepEditRunning) {
+                                  cancelInFlightStepEdit(activeEditSessionId);
+                                  editRequestSeqRef.current += 1;
+                                  editMutationEpochRef.current += 1;
+                                  setStepEditRunning(false);
+                                }
                                 setEditingStepIndex(b.index);
                                 setStepEditError(null);
                               }}

@@ -92,6 +92,41 @@ class FeedbackApproveRequest(BaseModel):
     reviewer_note: str | None = Field(default=None, max_length=500)
 
 
+def _assert_verified_step_edit_result(result: dict[str, Any]) -> None:
+    """Enforce explicit positive validation, continuity, and target presence before DB commit."""
+    if result.get("status") != "committed":
+        raise StepEditRefusal("VALIDATION_INCOMPLETE", "validation", "Trạng thái dựng hình chưa ở trạng thái committed.")
+    val = result.get("validation_result")
+    dep = result.get("dependency_summary")
+    scene = result.get("scene3d")
+    primary_id = result.get("primary_target_id")
+    if not isinstance(val, dict) or not isinstance(dep, dict) or not isinstance(scene, dict):
+        raise StepEditRefusal("VALIDATION_INCOMPLETE", "validation", "Thiếu dữ liệu kiểm chứng hoặc đồ thị phụ thuộc.")
+    if (
+        val.get("passed") is not True
+        or val.get("valid") is not True
+        or val.get("exact_arithmetic") is not True
+        or not isinstance(val.get("continuity"), dict)
+        or val["continuity"].get("passed") is not True
+        or not isinstance(val.get("checks_passed"), list)
+        or len(val["checks_passed"]) == 0
+    ):
+        raise StepEditRefusal(
+            "VALIDATION_INCOMPLETE",
+            "validation",
+            "Kết quả dựng hình chưa đủ chứng chỉ kiểm chứng hình học và tính liên tục.",
+        )
+    if dep.get("cycle_detected") is not False:
+        raise StepEditRefusal("DEPENDENCY_CYCLE", "validation", "Phát hiện phụ thuộc vòng trong đồ thị dựng hình.")
+    objs = scene.get("objects")
+    steps = (scene.get("formation") or {}).get("steps")
+    if not isinstance(objs, list) or not objs or not isinstance(steps, list) or not steps:
+        raise StepEditRefusal("VALIDATION_INCOMPLETE", "validation", "Cảnh Scene3D hoặc chuỗi bước dựng bị rỗng.")
+    obj_ids = {o.get("id") for o in objs if isinstance(o, dict) and o.get("id")}
+    if not isinstance(primary_id, str) or primary_id not in obj_ids:
+        raise StepEditRefusal("VALIDATION_INCOMPLETE", "validation", "Thiếu đối tượng đích hợp lệ trong Scene3D sau dựng lại.")
+
+
 @router.post("/steps/edit")
 def edit_construction_step(
     req: StepEditRequest,
@@ -167,6 +202,7 @@ def edit_construction_step(
             step_overrides=existing_overrides,
             prior_step_ids=req.prior_step_ids,
         )
+        _assert_verified_step_edit_result(result)
     except (StepEditRefusal, GeometryError) as exc:
         if isinstance(exc, StepEditRefusal):
             error_code = exc.error_code
@@ -299,6 +335,7 @@ def edit_construction_step(
     return {
         "status": "committed",
         "mode": result["mode"],
+        "equivalence_info": result.get("equivalence_info"),
         "session_id": req.session_id,
         "owner_scope": owner_scope,
         "revision_id": revision_id,

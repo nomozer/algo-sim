@@ -250,9 +250,7 @@ export const InlineConstructionStepEditor: React.FC<InlineConstructionStepEditor
           e.stopPropagation();
           if (e.key === "Escape") {
             e.preventDefault();
-            if (!running) {
-              onCancel(true);
-            }
+            onCancel(true);
           } else if ((e.ctrlKey || e.metaKey) && e.key === "Enter") {
             e.preventDefault();
             if (!running && !trimmedEmpty) {
@@ -270,13 +268,10 @@ export const InlineConstructionStepEditor: React.FC<InlineConstructionStepEditor
         <button
           type="button"
           className="step-edit-btn step-edit-btn--cancel"
-          disabled={running}
           onClick={(e) => {
             e.preventDefault();
             e.stopPropagation();
-            if (!running) {
-              onCancel(e.detail === 0);
-            }
+            onCancel(e.detail === 0);
           }}
         >
           Hủy

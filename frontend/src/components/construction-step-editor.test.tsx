@@ -12,8 +12,10 @@ import { buildPedagogicalConstructionPlan } from "../simulations/domains/geometr
 import { buildPedagogicalStepNarration } from "../simulations/domains/geometry/scene3d-student-presentation-policy";
 import { withSubEntities } from "../simulations/domains/geometry/scene3d-subentities";
 import type { SimulationEnvelope } from "../simulations/types";
+import * as stepEditsApi from "../state/construction-step-edits";
 import {
   buildStepEditSessionId,
+  fetchStepEditSessionState,
   isVerifiedRebuildScene,
   loadCachedStepEditState,
   saveCachedStepEditState,
@@ -182,7 +184,13 @@ describe("AXO Editable Construction Steps & Reload Persistence", () => {
               skipped_unaffected_ids: ["O", "M"],
               cycle_detected: false,
             },
-            validation_result: { passed: true },
+            validation_result: {
+              valid: true,
+              passed: true,
+              exact_arithmetic: true,
+              checks_passed: ["given_points_immutable", "continuity_invariants_7_of_7"],
+              continuity: { passed: true, issues: [] },
+            },
             stage_timings_ms: { total_ms: 4.2 },
             llm_calls: 0,
             quota_charged: false,
@@ -591,5 +599,454 @@ describe("AXO Editable Construction Steps & Reload Persistence", () => {
     expect(taBlock).toContain("overflow-x: hidden");
     expect(taBlock).toContain("max-height: 144px");
     expect(taBlock).toContain("resize: none");
+  });
+});
+
+const STEP_EDITS_SRC = readFileSync(new URL("../state/construction-step-edits.ts", import.meta.url), "utf-8");
+const WORKSPACE_SRC = readFileSync(new URL("./SimulationWorkspace.tsx", import.meta.url), "utf-8");
+
+function makeVerifiedCommitResponse(opts: {
+  sessionId: string;
+  versionNumber: number;
+  scene: Scene3D;
+  overrideText: string;
+  primaryTargetId?: string;
+  validationResult?: unknown;
+  dependencySummary?: unknown;
+}) {
+  const targetId = opts.primaryTargetId ?? "mp_tt_AB";
+  return {
+    status: "committed",
+    mode: "PARTIAL_TOPOLOGICAL_REBUILD",
+    session_id: opts.sessionId,
+    revision_id: `rev-${opts.versionNumber}`,
+    feedback_id: `fb-${opts.versionNumber}`,
+    feedback_status: "GEOMETRY_VERIFIED",
+    dataset_eligibility: "INELIGIBLE",
+    version_number: opts.versionNumber,
+    primary_target_id: targetId,
+    scene3d: opts.scene,
+    step_overrides: { [targetId]: opts.overrideText },
+    dependency_summary:
+      opts.dependencySummary !== undefined
+        ? opts.dependencySummary
+        : {
+            edited_target_ids: [targetId],
+            created_ids: [],
+            reused_ids: ["ab"],
+            retired_ids: [],
+            recomputed_ids: ["truc_day", "I"],
+            skipped_unaffected_ids: ["O", "M"],
+            cycle_detected: false,
+          },
+    validation_result:
+      opts.validationResult !== undefined
+        ? opts.validationResult
+        : {
+            valid: true,
+            passed: true,
+            exact_arithmetic: true,
+            checks_passed: ["given_points_immutable", "continuity_invariants_7_of_7"],
+            continuity: { passed: true, issues: [] },
+          },
+    stage_timings_ms: { total_ms: 4.5 },
+    llm_calls: 0,
+    quota_charged: false,
+  };
+}
+
+describe("AXO Step Editor V2.2 — Reliability Hardening & Edge Cases (§5, §7)", () => {
+  beforeEach(() => {
+    installMemoryStorage();
+    __resetHistoryForTest();
+    useAppStore.getState().reset();
+    syncStoreForSSR();
+  });
+
+  afterEach(() => {
+    vi.unstubAllGlobals();
+    vi.restoreAllMocks();
+    vi.useRealTimers();
+  });
+
+  it("BUG-2 / §7 #10 (Fail-Closed Validation): rejects missing, undefined, null, or incomplete validation_result & dependency_summary", async () => {
+    // Source must NOT contain permissive !== false or !== true shortcuts
+    expect(STEP_EDITS_SRC).not.toContain("validation_result?.passed !== false");
+    expect(STEP_EDITS_SRC).not.toContain("cycle_detected !== true");
+
+    const sid = buildStepEditSessionId("sample:chop-mat-cau-ngoai-tiep", "guest");
+    const validScene = structuredClone((sample11.envelope as unknown as { scene3d: Scene3D }).scene3d);
+
+    const incompletePayloads = [
+      // Missing validation_result entirely
+      makeVerifiedCommitResponse({
+        sessionId: sid,
+        versionNumber: 1,
+        scene: validScene,
+        overrideText: "bad-1",
+        validationResult: undefined,
+      }),
+      // validation_result with passed missing (undefined)
+      makeVerifiedCommitResponse({
+        sessionId: sid,
+        versionNumber: 2,
+        scene: validScene,
+        overrideText: "bad-2",
+        validationResult: { valid: true, exact_arithmetic: true, continuity: { passed: true }, checks_passed: ["a"] },
+      }),
+      // validation_result missing continuity.passed === true
+      makeVerifiedCommitResponse({
+        sessionId: sid,
+        versionNumber: 3,
+        scene: validScene,
+        overrideText: "bad-3",
+        validationResult: { valid: true, passed: true, exact_arithmetic: true, checks_passed: ["a"] },
+      }),
+      // dependency_summary missing cycle_detected === false
+      makeVerifiedCommitResponse({
+        sessionId: sid,
+        versionNumber: 4,
+        scene: validScene,
+        overrideText: "bad-4",
+        dependencySummary: { edited_target_ids: ["mp_tt_AB"] },
+      }),
+    ];
+
+    // Strip undefined key cleanly on payload 0
+    delete (incompletePayloads[0] as Record<string, unknown>).validation_result;
+
+    for (const badBody of incompletePayloads) {
+      vi.stubGlobal(
+        "fetch",
+        vi.fn().mockResolvedValueOnce(
+          new Response(JSON.stringify(badBody), {
+            status: 200,
+            headers: { "Content-Type": "application/json" },
+          }),
+        ),
+      );
+      const res = await submitConstructionStepEdit({
+        sessionId: sid,
+        problemKey: "sample:chop-mat-cau-ngoai-tiep",
+        stepId: "mp_tt_AB",
+        stepIndex: 14,
+        previousInstruction: "Dựng mặt phẳng trung trực (α) của cạnh AB",
+        editedInstruction: `Thử payload thiếu ${String(badBody.version_number)}`,
+        targetIds: ["mp_tt_AB"],
+        absorbedIds: ["M_AB"],
+        scene3d: validScene,
+      });
+      expect(res.status).toBe("rolled_back");
+      if (res.status === "rolled_back") {
+        expect(res.error_code).toBe("UNVERIFIED_REBUILD_REJECTED");
+        expect(res.draft_preserved).toBe(true);
+      }
+      expect(loadCachedStepEditState(sid)).toBeNull();
+    }
+  });
+
+  it("BUG-3 / §7 #6, #8, #14 (Async Order Independence & Stale Response Guard): late v1 NEVER overwrites v2 across all arrival orders", async () => {
+    const sid = buildStepEditSessionId("sample:chop-mat-cau-ngoai-tiep", "guest");
+    const sceneV1 = structuredClone((sample11.envelope as unknown as { scene3d: Scene3D }).scene3d);
+    const sceneV2 = structuredClone((sample11.envelope as unknown as { scene3d: Scene3D }).scene3d);
+    const mp2 = sceneV2.objects.find((o) => o.id === "mp_tt_AB");
+    if (mp2) mp2.label = "Mặt phẳng (α) phiên bản v2";
+
+    let resolveReq1!: (res: Response) => void;
+    let resolveReq2!: (res: Response) => void;
+    let reqCount = 0;
+
+    vi.stubGlobal(
+      "fetch",
+      vi.fn().mockImplementation((_url: unknown, init?: RequestInit) => {
+        reqCount += 1;
+        const idx = reqCount;
+        return new Promise<Response>((resolve, reject) => {
+          init?.signal?.addEventListener("abort", () => {
+            reject(new DOMException("Aborted", "AbortError"));
+          });
+          if (idx === 1) resolveReq1 = resolve;
+          else resolveReq2 = resolve;
+        });
+      }),
+    );
+
+    const p1 = submitConstructionStepEdit({
+      sessionId: sid,
+      problemKey: "sample:chop-mat-cau-ngoai-tiep",
+      stepId: "mp_tt_AB",
+      stepIndex: 14,
+      previousInstruction: "Dựng mặt phẳng trung trực (α) của cạnh AB",
+      editedInstruction: "Dựng (α) lượt 1",
+      targetIds: ["mp_tt_AB"],
+      absorbedIds: ["M_AB"],
+      scene3d: sceneV1,
+    });
+
+    // §7 #8: Starting a DIFFERENT rebuild while p1 is in-flight must supersede p1 rather than ignoring p2!
+    const p2 = submitConstructionStepEdit({
+      sessionId: sid,
+      problemKey: "sample:chop-mat-cau-ngoai-tiep",
+      stepId: "mp_tt_AD",
+      stepIndex: 15,
+      previousInstruction: "Dựng mặt phẳng trung trực (β) của cạnh AD",
+      editedInstruction: "Dựng (β) lượt 2 mới hơn",
+      targetIds: ["mp_tt_AD"],
+      absorbedIds: ["M_AD"],
+      scene3d: sceneV2,
+    });
+
+    expect(reqCount).toBe(2);
+
+    // Resolve v2 FIRST, then resolve stale v1 LATER (permutation [v2, v1])
+    resolveReq2(
+      new Response(
+        JSON.stringify(
+          makeVerifiedCommitResponse({
+            sessionId: sid,
+            versionNumber: 2,
+            scene: sceneV2,
+            primaryTargetId: "mp_tt_AD",
+            overrideText: "Dựng (β) lượt 2 mới hơn",
+          }),
+        ),
+        { status: 200, headers: { "Content-Type": "application/json" } },
+      ),
+    );
+    resolveReq1(
+      new Response(
+        JSON.stringify(
+          makeVerifiedCommitResponse({
+            sessionId: sid,
+            versionNumber: 1,
+            scene: sceneV1,
+            primaryTargetId: "mp_tt_AB",
+            overrideText: "Dựng (α) lượt 1",
+          }),
+        ),
+        { status: 200, headers: { "Content-Type": "application/json" } },
+      ),
+    );
+
+    const [r1, r2] = await Promise.all([p1, p2]);
+    expect(r2.status).toBe("committed");
+    expect(r1.status).not.toBe("committed");
+    // Final cached state MUST reflect v2, NEVER overwritten by late v1!
+    const cached = loadCachedStepEditState(sid);
+    expect(cached?.versionNumber).toBe(2);
+    expect(cached?.stepOverrides.mp_tt_AD).toBe("Dựng (β) lượt 2 mới hơn");
+    expect(cached?.stepOverrides.mp_tt_AB).toBeUndefined();
+
+    // Monotonicity guard on saveCachedStepEditState + stale GET /state response:
+    saveCachedStepEditState(sid, {
+      sessionId: sid,
+      problemKey: "sample:chop-mat-cau-ngoai-tiep",
+      versionNumber: 1,
+      committedScene: sceneV1,
+      stepOverrides: { mp_tt_AB: "Stale v1" },
+      revisions: [],
+      feedbackItems: [],
+      updatedAt: Date.now(),
+    });
+    expect(loadCachedStepEditState(sid)?.versionNumber).toBe(2);
+    expect(loadCachedStepEditState(sid)?.stepOverrides.mp_tt_AD).toBe("Dựng (β) lượt 2 mới hơn");
+
+    // Stale GET /sessions/{id}/state with lower revision_count (1 < 2) must NOT overwrite v2
+    vi.stubGlobal(
+      "fetch",
+      vi.fn().mockResolvedValueOnce(
+        new Response(
+          JSON.stringify({
+            found: true,
+            session_id: sid,
+            problem_key: "sample:chop-mat-cau-ngoai-tiep",
+            revision_count: 1,
+            committed_scene: sceneV1,
+            step_overrides: { mp_tt_AB: "Stale GET v1" },
+            dependency_summary: { cycle_detected: false },
+            revisions: [],
+            feedback_items: [],
+          }),
+          { status: 200, headers: { "Content-Type": "application/json" } },
+        ),
+      ),
+    );
+    await fetchStepEditSessionState(sid);
+    expect(loadCachedStepEditState(sid)?.versionNumber).toBe(2);
+    expect(loadCachedStepEditState(sid)?.stepOverrides.mp_tt_AD).toBe("Dựng (β) lượt 2 mới hơn");
+
+    // Permutation B ([v1 resolves first, then v2 resolves second] after v2 aborted v1):
+    // Both arrival orders must converge to exact same final state (versionNumber = 3 on sidB)!
+    const sidB = `${sid}-permB`;
+    let relB1!: (r: Response) => void;
+    let relB2!: (r: Response) => void;
+    let cntB = 0;
+    vi.stubGlobal(
+      "fetch",
+      vi.fn().mockImplementation((_u: unknown, init?: RequestInit) => {
+        cntB += 1;
+        const cIdx = cntB;
+        return new Promise<Response>((res, rej) => {
+          init?.signal?.addEventListener("abort", () => rej(new DOMException("Aborted", "AbortError")));
+          if (cIdx === 1) relB1 = res;
+          else relB2 = res;
+        });
+      }),
+    );
+    const pb1 = submitConstructionStepEdit({
+      sessionId: sidB,
+      problemKey: "sample:chop-mat-cau-ngoai-tiep",
+      stepId: "mp_tt_AB",
+      stepIndex: 14,
+      previousInstruction: "Dựng mặt phẳng trung trực (α) của cạnh AB",
+      editedInstruction: "Dựng (α) B1",
+      targetIds: ["mp_tt_AB"],
+      absorbedIds: ["M_AB"],
+      scene3d: sceneV1,
+    });
+    const pb2 = submitConstructionStepEdit({
+      sessionId: sidB,
+      problemKey: "sample:chop-mat-cau-ngoai-tiep",
+      stepId: "mp_tt_AD",
+      stepIndex: 15,
+      previousInstruction: "Dựng mặt phẳng trung trực (β) của cạnh AD",
+      editedInstruction: "Dựng (β) lượt 2 mới hơn",
+      targetIds: ["mp_tt_AD"],
+      absorbedIds: ["M_AD"],
+      scene3d: sceneV2,
+    });
+    relB1(
+      new Response(
+        JSON.stringify(
+          makeVerifiedCommitResponse({
+            sessionId: sidB,
+            versionNumber: 1,
+            scene: sceneV1,
+            primaryTargetId: "mp_tt_AB",
+            overrideText: "Dựng (α) B1",
+          }),
+        ),
+        { status: 200, headers: { "Content-Type": "application/json" } },
+      ),
+    );
+    relB2(
+      new Response(
+        JSON.stringify(
+          makeVerifiedCommitResponse({
+            sessionId: sidB,
+            versionNumber: 2,
+            scene: sceneV2,
+            primaryTargetId: "mp_tt_AD",
+            overrideText: "Dựng (β) lượt 2 mới hơn",
+          }),
+        ),
+        { status: 200, headers: { "Content-Type": "application/json" } },
+      ),
+    );
+    const [rb1, rb2] = await Promise.all([pb1, pb2]);
+    expect(rb1.status).not.toBe("committed");
+    expect(rb2.status).toBe("committed");
+    expect(loadCachedStepEditState(sidB)?.versionNumber).toBe(2);
+    expect(loadCachedStepEditState(sidB)?.stepOverrides.mp_tt_AD).toBe("Dựng (β) lượt 2 mới hơn");
+    expect(loadCachedStepEditState(sidB)?.stepOverrides.mp_tt_AB).toBeUndefined();
+  });
+
+  it("BUG-3 / §7 #6 & #9 (In-Flight Cancel & Backend Timeout): cancelInFlightStepEdit cancels cleanly and timeout unlocks draft safely", async () => {
+    const sid = buildStepEditSessionId("sample:chop-mat-cau-ngoai-tiep", "guest");
+    const validScene = structuredClone((sample11.envelope as unknown as { scene3d: Scene3D }).scene3d);
+
+    // 1. Running UI must still allow clicking Hủy or pressing Escape to abort in-flight request!
+    const runningHtml = renderToString(
+      <InlineConstructionStepEditor
+        stepIndex={14}
+        initialValue="Dựng (α)"
+        running={true}
+        errorText={null}
+        onCancel={() => {}}
+        onSubmit={() => {}}
+      />,
+    );
+    const cancelBtnMatch = runningHtml.match(/<button[^>]*step-edit-btn--cancel[^>]*>/);
+    expect(cancelBtnMatch).not.toBeNull();
+    expect(cancelBtnMatch![0]).not.toContain("disabled");
+
+    // 2. cancelInFlightStepEdit must exist and abort a pending fetch cleanly
+    const cancelFn = (stepEditsApi as Record<string, unknown>).cancelInFlightStepEdit as
+      | ((sessionId: string) => boolean)
+      | undefined;
+    expect(typeof cancelFn).toBe("function");
+
+    vi.stubGlobal(
+      "fetch",
+      vi.fn().mockImplementation(
+        (_url: unknown, init?: RequestInit) =>
+          new Promise<Response>((_resolve, reject) => {
+            init?.signal?.addEventListener("abort", () => {
+              reject(new DOMException("Aborted by user", "AbortError"));
+            });
+          }),
+      ),
+    );
+    const pendingEdit = submitConstructionStepEdit({
+      sessionId: sid,
+      problemKey: "sample:chop-mat-cau-ngoai-tiep",
+      stepId: "mp_tt_AB",
+      stepIndex: 14,
+      previousInstruction: "Dựng (α)",
+      editedInstruction: "Sửa rồi nhấn Hủy",
+      targetIds: ["mp_tt_AB"],
+      absorbedIds: ["M_AB"],
+      scene3d: validScene,
+    });
+    expect(cancelFn!(sid)).toBe(true);
+    const cancelledRes = await pendingEdit;
+    expect(cancelledRes.status).toBe("rolled_back");
+    if (cancelledRes.status === "rolled_back") {
+      expect(cancelledRes.error_code).toBe("EDIT_CANCELLED");
+      expect(cancelledRes.draft_preserved).toBe(true);
+    }
+
+    // 3. Backend timeout triggers AbortController after timeoutMs and preserves draft + previous scene
+    vi.stubGlobal(
+      "fetch",
+      vi.fn().mockImplementation(
+        (_url: unknown, init?: RequestInit) =>
+          new Promise<Response>((_resolve, reject) => {
+            init?.signal?.addEventListener("abort", () => {
+              reject(new DOMException("Timed out", "AbortError"));
+            });
+          }),
+      ),
+    );
+    const timedOut = await (submitConstructionStepEdit as (p: Record<string, unknown>) => Promise<stepEditsApi.StepEditSubmitResult>)({
+      sessionId: sid,
+      problemKey: "sample:chop-mat-cau-ngoai-tiep",
+      stepId: "mp_tt_AB",
+      stepIndex: 14,
+      previousInstruction: "Dựng (α)",
+      editedInstruction: "Chạy timeout",
+      targetIds: ["mp_tt_AB"],
+      absorbedIds: ["M_AB"],
+      scene3d: validScene,
+      timeoutMs: 25,
+    });
+    expect(timedOut.status).toBe("network_error");
+    if (timedOut.status === "network_error") {
+      expect(timedOut.error_code).toBe("REQUEST_TIMEOUT");
+      expect(timedOut.draft_preserved).toBe(true);
+    }
+  });
+
+  it("BUG-8 / §7 #15, #16, #17, #18 (WebGL Context Loss Recovery & Stale GET Race Guard in Workspace): cleanly remounts damaged WebGL stage on rebuild and guards stale GET", () => {
+    // 1. Same-problem rebuild branch in SimulationWorkspace MUST remount damaged WebGL stage
+    const sameProblemBlock =
+      /if\s*\(isSameProblemRebuild\)\s*\{([\s\S]*?(?:return;\s*\r?\n\s*\}|\}\s*else\s*\{))/.exec(WORKSPACE_SRC)?.[1] ?? "";
+    expect(sameProblemBlock.length).toBeGreaterThan(20);
+    expect(sameProblemBlock).toContain("setViewerMountGen");
+    expect(sameProblemBlock).toContain("setWebglLifecycle");
+
+    // 2. fetchStepEditSessionState effect MUST check epoch/version before overwriting state
+    expect(WORKSPACE_SRC).toContain("editMutationEpochRef");
+    expect(WORKSPACE_SRC).toContain("committedVersionRef");
   });
 });
