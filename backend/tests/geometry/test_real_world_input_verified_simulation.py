@@ -115,16 +115,48 @@ def test_equals_topology_upper_homoglyph_and_negative_safety_guards():
     )
     assert rec_drop["ocr_decision"] == "LOCAL_OCR_REVIEW_REQUIRED"
 
-    # 3. Angle-hat misread '4BC = 30°' and '(4BC)' and 'S,ABCD' and '600°' MUST ALL remain blocked!
+    # 3. Angle-hat misread '4BC = 30°' and '(4BC)' and 'S,ABCD' and '600°'/'600º' MUST ALL remain blocked!
     for bad_line in (
         ["góc", "4BC", "=", "30°."],
         ["mặt", "phẳng", "(4BC)."],
         ["Cho", "chóp", "S,ABCD."],
         ["góc", "bằng", "600°."],
+        ["góc", "bằng", "600º."],
     ):
         raw_bad = _raw([_line(bad_line, 10)], [_line(bad_line, 10)])
         rec_bad = OR.reconcile_local_ocr(raw_bad, min_agreeing_families=2)
         assert rec_bad["ocr_decision"] == "LOCAL_OCR_REVIEW_REQUIRED", f"False accept on {bad_line}"
+
+    # 4. Crop-reread overvote guard: reread engines sharing a cropped artifact MUST NOT auto-verify over primary rapidocr.
+    r_ov = [_line(["đáy", "ABCD", "là"], 10)]
+    t_ov = [_line(["đáy", "4BCD", "là"], 10)]
+    adj_ov = {"L1:S2": {"rapidocr_latin_rec": "ABCE", "tesseract_eng_line": "ABCE"}}
+    rec_ov = OR.reconcile_local_ocr(_raw(r_ov, t_ov), adjudications=adj_ov, min_agreeing_families=2)
+    assert rec_ov["ocr_decision"] == "LOCAL_OCR_REVIEW_REQUIRED"
+    abcd_span = [s for s in rec_ov["spans"] if s["line_id"] == "L1" and "ABCD" in s["text"]][0]
+    assert abcd_span["status"] == "uncertain"
+    assert "ABCE" in abcd_span["alternatives"]
+
+    # 5. Prose lexicon diacritic restoration / conflict guard (without bypass for arbitrary accented words):
+    # - Uniquely matching skeleton ('khói chóp') restores cleanly to 'khối chóp';
+    # - Multi-candidate skeleton ('cậu' vs 'cầu'/'câu') stays uncertain (AMBIGUOUS_DIACRITIC_RESTORATION).
+    rec_lex = OR.reconcile_local_ocr(
+        _raw(
+            [_line(["Tính", "thể", "tích", "khói", "chóp", "S.ABC."], 10)],
+            [_line(["Tính", "thể", "tích", "khói", "chóp", "S.ABC."], 10)],
+        ),
+        min_agreeing_families=2,
+    )
+    assert "khối chóp" in rec_lex["draft_text"]
+    rec_amb = OR.reconcile_local_ocr(
+        _raw(
+            [_line(["Xét", "cậu", "SA", "=", "a."], 10)],
+            [_line(["Xét", "cậu", "SA", "=", "a."], 10)],
+        ),
+        min_agreeing_families=2,
+    )
+    assert rec_amb["ocr_decision"] == "LOCAL_OCR_REVIEW_REQUIRED"
+    assert any(s["status"] == "uncertain" and s["reason"] == "AMBIGUOUS_DIACRITIC_RESTORATION" for s in rec_amb["spans"])
 
 
 def test_worker_edge_bleed_protects_upper_prime_and_detects_equals_bars():
@@ -293,6 +325,8 @@ def test_confirmation_provenance_edited_cache_key_and_144_invalidation(monkeypat
 
 
 def test_source_gate_missing_period_alignment_and_vision_fallback_mock():
+    assert LO.LOCAL_OCR_WORKER_VERSION == "local-ocr-worker/4"
+
     # 1. vmmu_r513: missing period before 'Khoảng cách...' now aligns with Source Gate -> MISSING_DIMENSION + determinacy_audit
     r513 = (
         "Cho hình hộp chữ nhật ABCD.A'B'C'D' có AA' = 1, AB = 2 "
@@ -307,6 +341,20 @@ def test_source_gate_missing_period_alignment_and_vision_fallback_mock():
     # Conditional clause guard: 'Nếu AB = 2 Khoảng cách ...' must NOT split as an independent question!
     cond = "Cho hình hộp chữ nhật ABCD.A'B'C'D'. Nếu AB = 2 Khoảng cách từ điểm A' đến mặt phẳng ADC'B' bằng."
     assert registry._bien_cau(cond, len(cond) - 10) == (cond.index("Nếu"), len(cond))
+
+    # 1b. Bare clipped item header ("43. Cho ...") + missing space after ').' (').Tính') + ordinal degree homoglyph ('60º' -> '60°') -> SERVED,
+    # whereas ungrounded numeric end-of-sentence ("SA = 43. Cho ...") remains REFUSED (SOURCE_PREMISE_UNREAD).
+    bare_hdr = (
+        "43. Cho lăng trụ đứng ABC.A'B'C' có đáy ABC là tam giác vuông cân tại B với BC = a, "
+        "góc giữa mặt phẳng (A'BC) và (ABC) bằng 60º (tham khảo hình bên).Tính thể tích lăng trụ ABC.A'B'C'."
+    )
+    out_bare = AIR.route_text_input(bare_hdr, allow_live_ai=False)
+    assert out_bare.status == "SERVED"
+    assert out_bare.response["route_d"]["answers"] == {"q1": "a³√3/2"}
+
+    bad_num = "SA = 43. Cho hình chóp S.ABCD có đáy ABCD là hình vuông cạnh a, SA vuông góc với (ABCD). Tính thể tích khối chóp S.ABCD."
+    out_bad_num = AIR.route_text_input(bad_num, allow_live_ai=False)
+    assert out_bad_num.status == "REFUSED"
 
     # 2. Offline deterministic Vision fallback mock: OCR low_quality/review -> Vision transcript -> Local Parser -> Scene3D
     vis_prep = {

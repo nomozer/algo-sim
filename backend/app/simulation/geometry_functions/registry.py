@@ -105,6 +105,7 @@ class TuChoi(Exception):
 # ── chuẩn hoá ký hiệu ───────────────────────────────────────────────────────
 def chuan_hoa(s: str) -> str:
     s = unicodedata.normalize("NFC", s).replace("’", "'").replace("′", "'").replace("‘", "'")
+    s = re.sub(r"(?<=\d)º", "°", s)
     return re.sub(r"\s+", " ", s).strip()
 
 
@@ -1400,6 +1401,7 @@ def _vi_tri(de: str, q: str) -> tuple[int, int] | None:
     return None if k < 0 else (goc[k], goc[k + len(qn) - 1] + 1)
 
 
+_CAU_NGAT = re.compile(r"[.!?](?:\s+|(?<=[0-9a-zà-ỹ\)²³°]\.)(?=[A-ZĐÀ-Ỹ][a-zà-ỹ]))")
 _KHUYET_CHAM_MO_CAU = re.compile(
     r"(?<=[0-9a-zA-Z'°²³\)])\s+(?=(?-i:(?:Tính|Tìm|Xác\s+định|Hỏi)(?!\w)|"
     r"(?:Khoảng\s+cách|Thể\s+tích|Diện\s+tích|Số\s+đo|Góc\s+(?:giữa|tạo\s+bởi|hợp\s+bởi|nhị\s+diện)"
@@ -1415,13 +1417,13 @@ _KHUYET_CHAM_TU_CHUI = frozenset({
 
 @functools.lru_cache(maxsize=256)
 def _cac_moc_cau(de: str) -> tuple[int, ...]:
-    """Vị trí bắt đầu mọi câu trong `de`: tách bởi `[.!?]\\s+` và biên câu hỏi viết hoa khuyết dấu chấm an toàn."""
-    explicit = [0] + [m.end() for m in re.finditer(r"[.!?]\s+", de)]
+    """Vị trí bắt đầu mọi câu trong `de`: tách bởi `_CAU_NGAT` (`[.!?]\\s+` hoặc `.Tính` dính dấu câu) và biên câu hỏi viết hoa khuyết dấu chấm an toàn."""
+    explicit = [0] + [m.end() for m in _CAU_NGAT.finditer(de)]
     out = set(explicit)
     for m in _KHUYET_CHAM_MO_CAU.finditer(de):
         split_at = m.end()
         prev_start = max((x for x in explicit if x <= m.start()), default=0)
-        next_end_m = re.search(r"[.!?](?=\s|$)", de[split_at:])
+        next_end_m = re.search(r"[.!?](?=\s|$|(?<=[0-9a-zà-ỹ\)²³°]\.)[A-ZĐÀ-Ỹ][a-zà-ỹ])", de[split_at:])
         next_end = split_at + next_end_m.end() if next_end_m else len(de)
         left = de[prev_start:m.start()]
         right = de[split_at:next_end]
@@ -3391,7 +3393,7 @@ def _bien_cau(de: str, p: int) -> tuple[int, int]:
     moc = _cac_moc_cau(de)
     dau = _cau_chua(de, p)
     next_implicit = next((m for m in moc if m > p), None)
-    het = re.search(r"[.!?](?=\s|$)", de[p:])
+    het = re.search(r"[.!?](?=\s|$|(?<=[0-9a-zà-ỹ\)²³°]\.)[A-ZĐÀ-Ỹ][a-zà-ỹ])", de[p:])
     cuoi = p + het.end() if het else len(de)
     if next_implicit is not None and next_implicit < cuoi:
         cuoi = next_implicit
@@ -3966,7 +3968,7 @@ def _kiem_du_kien_cau_hoi(calls: tuple[LoiGoi, ...], de: str, read_quotes: tuple
         cd_sent = _bien_cau(de, m_cd.start())[0]
         if any(mau.search(de[cd_sent:m_cd.start()]) for mau in _mau_hoi_tat_ca()):
             first_request = min(first_request, cd_sent)
-    questions |= {_bien_cau(de, p) for p in (0, *(m.end() for m in re.finditer(r"[.!?]\s+", de)))
+    questions |= {_bien_cau(de, p) for p in (0, *(m.end() for m in _CAU_NGAT.finditer(de)))
                   if first_request <= p < len(de)}
     # Everything before the first request is premise text: it must be read too (run `source-grounding-completeness`).
     _kiem_vung_tien_de(calls, de, first_request, read_quotes, don_vi_de, phu)
@@ -4184,9 +4186,17 @@ def _kiem_du_kien_cau_hoi(calls: tuple[LoiGoi, ...], de: str, read_quotes: tuple
 #: Premise text a call need not quote: lead-ins and connectors between quoted claims (closed).
 _NOI_TIEN_DE = re.compile(rf"[\s,;:.()\-–]*(?:(?:{_THAM_KHAO_HINH}|(?:cho|gọi|biết|rằng|có|và|với|trong đó|là|của|hãy|xét|thiết\s+lập|ta|đồng thời|lần lượt"
                           r"|theo thứ tự|tại|thì|đơn vị|(?:cm|dm|mm|m)(?:\s*(?:\^\s*[23]|[²³]))?|đvđd|đvdt|đvtt)(?!\w))[\s,;:.()\-–]*)*", re.IGNORECASE)
-#: Exam scaffolding at the start of a premise segment ("Bài 3.", "Câu 2:", "a)", "1)", "Câu a:", "(1 điểm)", "Câu 32: (2,5 điểm)").
-_GIAN_DAN = re.compile(r"\s*(?:(?:(?:bài tập|bài|câu|ví dụ)\s*(?:\d+|[a-d])\s*[.:)]|(?:\d+|[a-d])\s*\)"
-                       r"|\(\s*\d+(?:[.,]\d+)?\s*điểm\s*\))\s*)+", re.IGNORECASE)
+_MO_DAU_MUC_DE = (
+    r"(?:cho|trên|trong|một|gọi|biết|xét|giả\s+sử|tính|tìm|xác\s+định|hỏi|vẽ|dựng|mô\s+phỏng|chứng\s+minh)(?!\w)"
+)
+#: Exam scaffolding at the start of a premise segment ("Bài 3.", "Câu 2:", "a)", "1)", "Câu a:", "(1 điểm)", "Câu 32: (2,5 điểm)",
+#: or bare clipped item number ("43: Cho...", "43. Cho...").
+_GIAN_DAN = re.compile(
+    rf"\s*(?:(?:(?:bài tập|bài|câu|ví dụ)\s*(?:\d+|[a-d])\s*[.:)]|(?:\d+|[a-d])\s*\)"
+    rf"|(?:\d{{1,3}}|[a-d])\s*[.:]\s+(?={_MO_DAU_MUC_DE})"
+    rf"|\(\s*\d+(?:[.,]\d+)?\s*điểm\s*\))\s*)+",
+    re.IGNORECASE,
+)
 #: Sentence-initial indefinite article directly before a solid noun ("Một hộp chữ nhật …"); "một" anywhere else (a number,
 #: "một nửa", "một cạnh") stays premise content.
 _MAO_TU_KHOI = re.compile(r"\s*một\s+(?=(?:hình|khối|hộp|lăng\s+trụ|chóp|tứ\s+diện)(?!\w))", re.IGNORECASE)
@@ -4358,12 +4368,18 @@ def _kiem_vung_tien_de(calls: tuple[LoiGoi, ...], de: str, het: int, read_quotes
     dung = {n for c in calls for n in nhan_cua_loi_goi(c)}
     da_dung: set[tuple[int, str]] = set()                 # call fields already backing a number, across all their quotes
     dau = 0
-    for m in [*re.finditer(r"(?<=[.!?;])\s+", de[:het]), None]:
+    for m in [*re.finditer(r"(?<=[.!?;])\s+|(?<=[0-9a-zà-ỹ\)²³°][.!?])(?=[A-ZĐÀ-Ỹ][a-zà-ỹ])", de[:het]), None]:
         cuoi = m.start() if m else het
         a, b = dau, cuoi
         dau = m.end() if m else het
         if not de[a:b].strip():
             continue
+        if (
+            (a == 0 or de[a - 1] == "\n")
+            and re.fullmatch(r"\s*(?:\d{1,3}|[a-d])\s*[.:]\s*", de[a:b], re.IGNORECASE)
+            and re.match(rf"\s*{_MO_DAU_MUC_DE}", de[dau:], re.IGNORECASE)
+        ):
+            continue                                     # bare item number ("43. Cho ...") clipped after prefix word
         gd = _GIAN_DAN.match(de, a, b)
         a0 = gd.end() if gd else a
         if _doc_yeu_cau_mo_phong(de, a0, b, calls) == b:

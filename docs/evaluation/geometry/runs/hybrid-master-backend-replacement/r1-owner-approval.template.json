@@ -8,9 +8,9 @@
   "input_usd_per_million": 0.3,
   "output_usd_per_million": 2.5,
   "corpus_sha256": "250466ebdf5bcb435a2b803ed9443ef30b7f37818a3ae9f7e90a40625e84b7c6",
-  "measured_system": "14fb41dbb6c5bbc032c57302be9cc6e0c09023da1f763f16f01f8df5fae28028",
+  "measured_system": "e1c6428ed558a722442e0f32b362fb41d053795a81cf92a4c267d48e2bbd7a04",
   "runner_sha256": "10bc64bb4b5533c6b1136611e5d55ee3de98260e69057df6ca3641ed1f16645c",
   "paired_harness_sha256": "73a8270a0556ba09db711b38e8c4bad81f2b95cdbee1bd632f43e0f6153d7df6",
   "scorer_sha256": "8c330bd493f9d401f579b6383f1a1df2bc9172eee2530cf187be2024801b5a2d",
-  "measured_system_tree_hash": "14fb41dbb6c5bbc032c57302be9cc6e0c09023da1f763f16f01f8df5fae28028"
+  "measured_system_tree_hash": "e1c6428ed558a722442e0f32b362fb41d053795a81cf92a4c267d48e2bbd7a04"
 }

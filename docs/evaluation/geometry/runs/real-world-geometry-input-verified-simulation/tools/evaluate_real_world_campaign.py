@@ -37,6 +37,7 @@ import json
 import os
 from pathlib import Path
 import re
+import socket
 import statistics
 import subprocess
 import sys
@@ -91,6 +92,7 @@ os.environ.pop("LOCAL_OCR_PYTHON", None)
 os.environ.pop("LOCAL_OCR_TESSDATA", None)
 
 from app.ai import adaptive_input_router as AIR  # noqa: E402
+from app.ai.adapter4_route import run_typed_fact_next_v2_route  # noqa: E402
 from app.ai.hybrid_offline import prepare_local_first_hybrid, resolve_hybrid_gemini_model  # noqa: E402
 from app.ai.local_geometry_parser import (  # noqa: E402
     LOCAL_PARSE_COMPLETE,
@@ -213,9 +215,222 @@ def _load_baselines() -> dict[str, Any]:
     }
 
 
+def _install_windows_socketpair_guard() -> None:
+    if sys.platform != "win32":
+        return
+    _orig = getattr(socket, "socketpair", None)
+
+    def _safe_socketpair(family=socket.AF_INET, type=socket.SOCK_STREAM, proto=0):
+        for port in range(30000, 48000):
+            lsock = socket.socket(family, type, proto)
+            lsock.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
+            try:
+                lsock.bind(("127.0.0.1", port))
+                lsock.listen(1)
+                csock = socket.socket(family, type, proto)
+                csock.connect(("127.0.0.1", port))
+                ssock, _ = lsock.accept()
+                lsock.close()
+                return ssock, csock
+            except OSError:
+                lsock.close()
+                continue
+        if _orig:
+            return _orig(family, type, proto)
+        raise OSError("No available port found for socketpair")
+
+    socket.socketpair = _safe_socketpair
+
+
+def _build_gold_real27_refusal_probes(rmap: dict[str, dict[str, Any]]) -> dict[str, dict[str, Any]]:
+    """Chạy Gold `TypedFactNext /2` -> `run_typed_fact_next_v2_route` tách biệt Parser vs Kernel/Source Gate trên các ca từ chối `REAL27`."""
+    probes: dict[str, dict[str, Any]] = {}
+
+    def _run(pl: dict[str, Any] | None) -> dict[str, Any]:
+        if not pl:
+            return {"status": "NO_GOLD_PAYLOAD", "code": None, "answers": None, "detail": None}
+        r = run_typed_fact_next_v2_route(pl)
+        rd = r.route_d or {}
+        return {
+            "status": r.status,
+            "code": r.code,
+            "answers": rd.get("answers") or None,
+            "detail": (rd.get("refusal") or {}).get("detail"),
+        }
+
+    # 1. r254 (frozen_external_evaluation): oblique prism centroid-foot + sub-tetrahedron
+    t254 = rmap["vmmu_r254"]["statement"]
+    p254 = {
+        "schema_version": "typed-fact-next/2",
+        "problem_text": t254,
+        "length_unit": "a",
+        "solids": [{"solid_id": "s1", "solid_type": "prism", "notation": "ABC.A'B'C'", "quote": "Cho hình lăng trụ ABC.A'B'C'"}],
+        "described_points": [{"described_id": "g1", "kind": "centroid", "polygon": ["A", "B", "C"], "quote": "trọng tâm của tam giác ABC"}],
+        "premises": [
+            {"kind": "segment_length", "args": {"segment": ["A", "A'"], "value": "2a√13"}, "quote": "AA' = 2√13a", "solid_id": "s1"},
+            {"kind": "right_angle", "args": {"vertex": "C", "rays": ["A", "B"]}, "quote": "tam giác ABC vuông tại C", "solid_id": "s1"},
+            {"kind": "vertex_angle", "args": {"vertex": "B", "rays": ["A", "C"], "value": "30", "unit": "deg"}, "quote": "∠ABC = 30°", "solid_id": "s1"},
+            {"kind": "line_plane_angle", "args": {"line": ["C", "C'"], "plane": ["A", "B", "C"], "value": "60", "unit": "deg"}, "quote": "góc giữa cạnh bên CC' và mặt đáy (ABC) bằng 60°", "solid_id": "s1"},
+            {"kind": "orthogonal_projection", "args": {"point": "B'", "image": "@g1", "plane": ["A", "B", "C"]}, "quote": "Hình chiếu vuông góc của B' lên mặt phẳng (ABC) trùng với trọng tâm của tam giác ABC", "solid_id": "s1"},
+        ],
+        "simulation_goals": [{"goal_id": "sg1", "kind": "construct_object", "target_solid_id": "s1", "quote": "Cho hình lăng trụ ABC.A'B'C'"}],
+        "math_goals": [{"goal_id": "q1", "kind": "measurement", "goal_type": "volume", "target": {"solid_id": "s1"}, "solid_id": "s1", "quote": "Thể tích của khối tứ diện A'ABC theo a bằng"}],
+    }
+    probes["vmmu_r254"] = {
+        "primary_category": "TYPED_FACT_GAP",
+        "secondary_categories": ["UNDERSTANDING_GAP", "REGISTRY_GAP", "KERNEL_EXACT_DOMAIN_GAP"],
+        "gold_result": _run(p254),
+        "note": "TypedFactNext /2 không nhận @id làm operand của premise (INVALID_DESCRIBED_POINT); đề đồng thời hỏi thể tích khối tứ diện con A'ABC và cho góc 30° trên tam giác đáy không vuông cân.",
+    }
+
+    # 2. r256 (frozen_external_evaluation): source typo 'đên' vs 'đến'
+    t256 = rmap["vmmu_r256"]["statement"]
+    p256_verb = {
+        "schema_version": "typed-fact-next/2",
+        "problem_text": t256,
+        "length_unit": "a",
+        "solids": [{"solid_id": "s1", "solid_type": "pyramid", "notation": "S.ABCD", "quote": "Cho hình chóp S.ABCD"}],
+        "premises": [
+            {"kind": "rhombus", "args": {"vertices": ["A", "B", "C", "D"], "side": "a"}, "quote": "đáy ABCD là hình thoi cạnh bằng a", "solid_id": "s1"},
+            {"kind": "vertex_angle", "args": {"vertex": "A", "rays": ["B", "D"], "value": "120", "unit": "deg"}, "quote": "∠BAD = 120°", "solid_id": "s1"},
+            {"kind": "regular_polygon", "args": {"vertices": ["S", "A", "B"]}, "quote": "Mặt bên SAB là tam giác đều", "solid_id": "s1"},
+            {"kind": "face_perpendicular_base", "args": {"face": ["S", "A", "B"], "base": ["A", "B", "C", "D"]}, "quote": "(SAB) ⊥ (ABCD)", "solid_id": "s1"},
+        ],
+        "simulation_goals": [{"goal_id": "sg1", "kind": "construct_object", "target_solid_id": "s1", "quote": "Cho hình chóp S.ABCD"}],
+        "math_goals": [{"goal_id": "q1", "kind": "measurement", "goal_type": "distance", "target": {"point": "A", "plane": ["S", "B", "C"]}, "solid_id": "s1", "quote": "Tính khoảng cách từ A đên (SBC)"}],
+    }
+    p256_canon = parse_geometry_problem_locally(t256.replace("đên", "đến")).payload
+    probes["vmmu_r256"] = {
+        "primary_category": "SOURCE_GROUNDING_GAP",
+        "secondary_categories": ["UNDERSTANDING_GAP"],
+        "gold_result": _run(p256_verb),
+        "gold_typo_fixed_counterfactual": _run(p256_canon),
+        "note": "Lỗi chính tả nguyên bản trong ảnh đề ('đên' thay 'đến'); giữ fail-closed ở Source Gate (SOURCE_OBJECT_MISMATCH) theo §4.4; nếu sửa chính tả thành 'đến' thì phục vụ đúng a√15/5.",
+    }
+
+    # 3. r266 (frozen_external_evaluation): Local Parser == Gold, Kernel refuses EXACT_DOMAIN_EXCEEDED
+    p266 = parse_geometry_problem_locally(rmap["vmmu_r266"]["statement"]).payload
+    probes["vmmu_r266"] = {
+        "primary_category": "KERNEL_EXACT_DOMAIN_GAP",
+        "secondary_categories": [],
+        "gold_result": _run(p266),
+        "note": "Parser cục bộ đạt LOCAL_PARSE_COMPLETE khớp 100% Gold; Exact Kernel từ chối EXACT_DOMAIN_EXCEEDED (căn lồng từ cos 30° + định lý cos ngoài miền Gram hữu tỉ Q).",
+    }
+
+    # 4. r277 (frozen_external_evaluation): point_reflection + OMNP sub-tetrahedron
+    t277 = rmap["vmmu_r277"]["statement"]
+    p277 = {
+        "schema_version": "typed-fact-next/2",
+        "problem_text": t277,
+        "length_unit": "a",
+        "solids": [
+            {"solid_id": "s1", "solid_type": "pyramid", "notation": "O.ABC", "quote": "Cho tứ diện OABC"},
+            {"solid_id": "s2", "solid_type": "pyramid", "notation": "O.MNP", "quote": "tứ diện OMNP"},
+        ],
+        "premises": [
+            {"kind": "right_angle", "args": {"vertex": "O", "rays": ["A", "B"]}, "quote": "Cho tứ diện OABC vuông tại O", "solid_id": "s1"},
+            {"kind": "right_angle", "args": {"vertex": "O", "rays": ["B", "C"]}, "quote": "Cho tứ diện OABC vuông tại O", "solid_id": "s1"},
+            {"kind": "right_angle", "args": {"vertex": "O", "rays": ["A", "C"]}, "quote": "Cho tứ diện OABC vuông tại O", "solid_id": "s1"},
+            {"kind": "segment_length", "args": {"segment": ["O", "A"], "value": "2a"}, "quote": "OA = 2a", "solid_id": "s1"},
+            {"kind": "segment_length", "args": {"segment": ["O", "B"], "value": "3a"}, "quote": "OB = 3a", "solid_id": "s1"},
+            {"kind": "segment_length", "args": {"segment": ["O", "C"], "value": "4a"}, "quote": "OC = 4a", "solid_id": "s1"},
+            {"kind": "point_reflection", "args": {"point": "M", "center": "D", "source": "O"}, "quote": "M, N, P lần lượt là điểm đối xứng với điểm O qua trung điểm ba cạnh AB, BC, CA của tam giác ABC", "solid_id": "s1"},
+        ],
+        "simulation_goals": [{"goal_id": "sg1", "kind": "construct_object", "target_solid_id": "s1", "quote": "Cho tứ diện OABC"}],
+        "math_goals": [{"goal_id": "q1", "kind": "measurement", "goal_type": "volume", "target": {"solid_id": "s2"}, "solid_id": "s2", "quote": "Thể tích của tứ diện OMNP bằng"}],
+    }
+    probes["vmmu_r277"] = {
+        "primary_category": "TYPED_FACT_GAP",
+        "secondary_categories": ["REGISTRY_GAP", "UNDERSTANDING_GAP"],
+        "gold_result": _run(p277),
+        "note": "Thiếu primitive/bridge cho phép đối xứng điểm qua trung điểm (point_reflection -> BRIDGE_UNSUPPORTED_PREMISE) và dựng khối tứ diện OMNP mới trên 3 đỉnh phản xạ.",
+    }
+
+    # 5. r461 (development): paper cone from circular sector
+    probes["vmmu_r461"] = {
+        "primary_category": "INTENTIONALLY_UNSUPPORTED",
+        "secondary_categories": ["UNDERSTANDING_GAP"],
+        "gold_result": {"status": "OUT_OF_SCOPE", "code": "CURVED_ROLLED_SECTOR_OUT_OF_SCOPE", "answers": None, "detail": "Quạt tròn gấp thành hình nón nằm ngoài phạm vi đa diện/lăng trụ thuần xác minh."},
+        "note": "Bài toán ứng dụng gấp quạt tròn thành hình nón — chủ đích giữ ngoài phạm vi hỗ trợ (fail-closed).",
+    }
+
+    # 6. r475 (frozen_external_evaluation): cylinder + sphere + cone Archimedes displacement
+    probes["vmmu_r475"] = {
+        "primary_category": "INTENTIONALLY_UNSUPPORTED",
+        "secondary_categories": [],
+        "gold_result": {"status": "OUT_OF_SCOPE", "code": "MULTI_CURVED_FLUID_DISPLACEMENT_OUT_OF_SCOPE", "answers": None, "detail": "Bài toán nhiều khối cong lồng nhau + tỉ số thể tích nước tràn ngoài phạm vi."},
+        "note": "Tổ hợp cốc trụ + bi cầu + khối nón + tràn nước — chủ đích giữ ngoài phạm vi (fail-closed).",
+    }
+
+    # 7. r488 (development): right prism + sub-pyramid B'.ACC'A'
+    t488 = rmap["vmmu_r488"]["statement"]
+    p488_host = parse_geometry_problem_locally(
+        "Cho hình lăng trụ đứng ABC.A'B'C' có đáy ABC là tam giác vuông tại B, AB = BC = a. "
+        "Biết góc giữa hai mặt phẳng (ACC') và (AB'C') bằng 60°. Thể tích của khối lăng trụ ABC.A'B'C' bằng"
+    ).payload
+    p488_two = {
+        "schema_version": "typed-fact-next/2",
+        "problem_text": t488,
+        "length_unit": "a",
+        "solids": [
+            {"solid_id": "s1", "solid_type": "prism", "notation": "ABC.A'B'C'", "quote": "Cho hình lăng trụ đứng ABC.A'B'C'"},
+            {"solid_id": "s2", "solid_type": "pyramid", "notation": "B'.ACC'A'", "quote": "khối chóp B'.ACC'A'"},
+        ],
+        "premises": list((p488_host or {}).get("premises") or []),
+        "simulation_goals": [{"goal_id": "sg1", "kind": "construct_object", "target_solid_id": "s1", "quote": "Cho hình lăng trụ đứng ABC.A'B'C'"}],
+        "math_goals": [{"goal_id": "q1", "kind": "measurement", "goal_type": "volume", "target": {"solid_id": "s2"}, "solid_id": "s2", "quote": "Thể tích của khối chóp B'.ACC'A' bằng"}],
+    }
+    # Fix quotes to match exact t488 text for fair gate check
+    p488_two["premises"][1] = {"kind": "right_angle", "args": {"vertex": "B", "rays": ["A", "C"]}, "quote": "đáy ABC là tam giác vuông, AB = BC = a", "solid_id": "s1"}
+    p488_two["premises"][4] = {"kind": "plane_plane_angle", "args": {"plane1": ["A", "C", "C'"], "plane2": ["A", "B'", "C'"], "value": "60", "unit": "deg"}, "quote": "Biết góc giữa hai mặt phẳng (ACC') và (AB'C') bằng 60°", "solid_id": "s1"}
+    probes["vmmu_r488"] = {
+        "primary_category": "REGISTRY_GAP",
+        "secondary_categories": ["KERNEL_EXACT_DOMAIN_GAP", "UNDERSTANDING_GAP"],
+        "gold_result": _run(p488_two),
+        "gold_host_prism_counterfactual": _run(p488_host),
+        "note": "Parser cần suy ra đỉnh vuông B từ 'tam giác vuông, AB = BC = a'; dù có Gold TypedFactNext cho lăng trụ (lăng trụ đơn phục vụ đúng a³/2, suy ra V(B'.ACC'A') = a³/3), Engine/Registry chưa hỗ trợ đo thể tích khối chóp con tách từ lăng trụ (UNSUPPORTED_MULTIPLE_BASES / SOURCE_OBJECT_MISMATCH).",
+    }
+
+    # 8. r491 (frozen_external_evaluation): unparameterized point_on_segment locus I ∈ BC without AA' length
+    t491 = rmap["vmmu_r491"]["statement"]
+    p491 = {
+        "schema_version": "typed-fact-next/2",
+        "problem_text": t491,
+        "length_unit": "a",
+        "solids": [{"solid_id": "s1", "solid_type": "prism", "notation": "ABC.A'B'C'", "quote": "Cho hình lăng trụ ABC.A'B'C'"}],
+        "premises": [
+            {"kind": "right_angle", "args": {"vertex": "A", "rays": ["B", "C"]}, "quote": "đáy ABC là tam giác vuông tại A", "solid_id": "s1"},
+            {"kind": "segment_length", "args": {"segment": ["A", "B"], "value": "a"}, "quote": "AB = a", "solid_id": "s1"},
+            {"kind": "segment_length", "args": {"segment": ["A", "C"], "value": "2a"}, "quote": "AC = 2a", "solid_id": "s1"},
+            {"kind": "orthogonal_projection", "args": {"point": "A'", "image": "I", "plane": ["A", "B", "C"]}, "quote": "Hình chiếu vuông góc của A' lên mặt phẳng (ABC) là điểm I", "solid_id": "s1"},
+        ],
+        "simulation_goals": [{"goal_id": "sg1", "kind": "construct_object", "target_solid_id": "s1", "quote": "Cho hình lăng trụ ABC.A'B'C'"}],
+        "math_goals": [{"goal_id": "q1", "kind": "measurement", "goal_type": "distance", "target": {"point": "A", "plane": ["A'", "B", "C"]}, "solid_id": "s1", "quote": "Khoảng cách từ A tới mặt phẳng (A'BC) bằng"}],
+    }
+    probes["vmmu_r491"] = {
+        "primary_category": "TYPED_FACT_GAP",
+        "secondary_categories": ["INSUFFICIENT_SPECIFICATION", "UNDERSTANDING_GAP"],
+        "gold_result": _run(p491),
+        "note": "Thiếu primitive/fact cho điểm trượt tự do 'I thuộc cạnh BC' không gắn tỉ số và thiếu độ dài AA' (chỉ giải được bằng bất biến quỹ tích (A'BC) ⊥ (ABC) => d(A,(A'BC)) = d(A,BC)).",
+    }
+
+    # 9. r513 (development): Local Parser == Gold -> MISSING_DIMENSION + UNPROVED_DUE_TO_CAPABILITY_GAP
+    p513 = parse_geometry_problem_locally(rmap["vmmu_r513"]["statement"]).payload
+    probes["vmmu_r513"] = {
+        "primary_category": "INSUFFICIENT_SPECIFICATION",
+        "secondary_categories": [],
+        "gold_result": _run(p513),
+        "note": "Nguồn thiếu cạnh BC/AD của hình hộp chữ nhật; _cac_moc_cau căn gióng Source Gate giúp Local Parser và Gold đồng nhất trả REFUSED MISSING_DIMENSION (UNPROVED_DUE_TO_CAPABILITY_GAP).",
+    }
+    return probes
+
+
 def _run_text_forensics(real27_items: list[dict[str, Any]]) -> dict[str, Any]:
+    rmap = {it["case_id"]: it for it in real27_items}
+    gold_probes = _build_gold_real27_refusal_probes(rmap)
     rows = []
     refused_layers: Counter[str] = Counter()
+    refused_categories_6_2: Counter[str] = Counter()
     adj_rows = []
     for it in real27_items:
         cid = it["case_id"]
@@ -234,6 +449,9 @@ def _run_text_forensics(real27_items: list[dict[str, Any]]) -> dict[str, Any]:
                 else ("LOCAL_PARSER_OR_TYPED_FACT_GAP" if lp.status != LOCAL_PARSE_COMPLETE else "KERNEL_OR_SOURCE_GATE_BOUNDARY")
             )
             refused_layers[layer] += 1
+            gp = gold_probes.get(cid) or {}
+            cat = gp.get("primary_category") or layer
+            refused_categories_6_2[cat] += 1
             rows.append({
                 "case_id": cid,
                 "partition": it.get("partition"),
@@ -242,23 +460,39 @@ def _run_text_forensics(real27_items: list[dict[str, Any]]) -> dict[str, Any]:
                 "route_status": out.status,
                 "reason_code": rc,
                 "layer": layer,
+                "category_6_2": cat,
+                "secondary_categories_6_2": gp.get("secondary_categories", []),
+                "gold_typed_fact_comparison": gp.get("gold_result"),
+                "gold_counterfactual": gp.get("gold_typo_fixed_counterfactual") or gp.get("gold_host_prism_counterfactual"),
+                "forensic_note": gp.get("note"),
                 "determinacy_audit_status": (det_audit or {}).get("status") if isinstance(det_audit, dict) else None,
             })
         elif rd.get("source_goal_completion") is not None:
             sgc = rd.get("source_goal_completion") or {}
+            ans_internal = (rd.get("answers") or {}).get("q1")
+            exp_ans = it.get("expected_answer")
+            sc = env.get("scene3d") or {}
             adj_rows.append({
                 "case_id": cid,
                 "partition": it.get("partition"),
                 "answers_internal": rd.get("answers"),
-                "expected_answer": it.get("expected_answer"),
+                "expected_answer": exp_ans,
                 "numeric_answer_shown": sgc.get("numeric_answer_shown"),
                 "numeric_source_goal": (sgc.get("goals") or [{}])[0].get("numeric_source_goal"),
                 "continuity_errors": _continuity_count(env),
+                "geometry_model_verified": out.status == "SERVED" and _continuity_count(env) == 0,
+                "visual_goal_satisfied": (sgc.get("goals") or [{}])[0].get("state") == "GOAL_VISUALIZATION_READY",
+                "mathematical_equivalence_verified": bool(ans_internal and exp_ans and EVI.same_value(str(ans_internal), str(exp_ans))),
+                "dataset_oracle_mismatch_reason": "DATASET_KEY_ASKS_TRIG_VALUE_WHILE_AXO_MODE_A_VISUALIZES_ANGLE_ONLY",
+                "numeric_answer_hidden_mode_a": (not sgc.get("numeric_answer_shown")) and (sgc.get("goals") or [{}])[0].get("numeric_source_goal") == "NOT_ANSWERED",
+                "missing_objects_or_relations": [],
+                "scene3d_object_count": len(sc.get("objects") or []),
             })
     r513 = next((r for r in rows if r["case_id"] == "vmmu_r513"), None)
     return {
         "refused_count": len(rows),
         "refused_layer_counts": dict(refused_layers),
+        "refused_category_counts_6_2": dict(refused_categories_6_2),
         "refused_cases": rows,
         "adjudicated_mode_a_count": len(adj_rows),
         "adjudicated_mode_a_cases": adj_rows,
@@ -288,6 +522,84 @@ def _grade_eifo_oracle(case_key: str, ans: dict[str, Any] | None) -> str:
     return v
 
 
+def _build_diagnostic_4_1(
+    *,
+    prep_status: str,
+    dec: str | None,
+    used_crop: bool,
+    ambiguous_multi_problem: bool,
+    candidates_count: int,
+    cer: float | None,
+    cf_draft: dict[str, Any],
+    math_prf: dict[str, Any] | None,
+    stacked_loss_count: int,
+    blocking_reasons: list[str],
+    uncertain_blocking: list[dict[str, Any]],
+    uncertain_reason_counts: dict[str, int],
+    uncertain_sample: list[dict[str, Any]],
+    topo_verified_count: int,
+    blurry_crop_count: int,
+    quality_low_light: bool,
+    quality_shadow: bool,
+    edge_energy: float,
+) -> dict[str, Any]:
+    """Tạo bảng chẩn đoán 10 câu hỏi (§4.1) và phân loại xô nguyên nhân trung thực."""
+    math_ref = int((math_prf or {}).get("ref") or 0)
+    math_tp = int((math_prf or {}).get("tp") or 0)
+    text_accurate = bool(cer is not None and cer <= 0.01 and cf_draft.get("all_recovered"))
+    near_accurate = bool(cer is not None and cer <= 0.03 and cf_draft.get("all_recovered"))
+
+    if dec == "LOCAL_OCR_ACCEPT":
+        bucket = "AUTO_ACCEPTED_SAFE"
+    elif prep_status == "needs_selection":
+        bucket = "MULTI_PROBLEM_NEEDS_SELECTION"
+    elif (not cf_draft.get("all_recovered")) or (cer is not None and cer > 0.03):
+        bucket = "RECOGNITION_ERROR_NEEDS_CONFIRMATION"
+    elif blocking_reasons == ["UNCERTAIN_SPANS"] and set(uncertain_reason_counts).issubset(
+        {"SAME_FAMILY_AGREEMENT_ONLY", "NOT_IN_LEXICON"}
+    ):
+        bucket = "INSUFFICIENT_ACCEPTANCE_EVIDENCE_TEXT_ACCURATE"
+    else:
+        bucket = "GENUINE_DIAGRAM_OR_AMBIGUITY_CONFIRMATION"
+
+    why_9 = (
+        "AUTO_ACCEPTED"
+        if dec == "LOCAL_OCR_ACCEPT"
+        else ("MULTI_PROBLEM_NEEDS_SELECTION" if prep_status == "needs_selection" else blocking_reasons)
+    )
+    blocking_10 = (
+        {"blocking_reasons": blocking_reasons, "uncertain_reason_counts": uncertain_reason_counts}
+        if (dec != "LOCAL_OCR_ACCEPT" and near_accurate)
+        else None
+    )
+    return {
+        "q1_region_selected_correctly": (not ambiguous_multi_problem and prep_status != "needs_selection"),
+        "q1_details": {"used_crop": used_crop, "ambiguous_multi_problem": ambiguous_multi_problem, "candidates_count": candidates_count},
+        "q2_all_relevant_text_accurate": text_accurate,
+        "q3_math_symbol_errors": max(0, math_ref - math_tp),
+        "q3_math_recall": (math_prf or {}).get("recall"),
+        "q4_line_or_reading_order_issue": bool(
+            stacked_loss_count > 0
+            or "LAYOUT_STRUCTURE_SUSPECTED" in blocking_reasons
+            or "UNALIGNED_SECOND_READER_TEXT" in blocking_reasons
+        ),
+        "q5_comma_prime_or_exponent_issue": any(
+            r in uncertain_reason_counts for r in ("PRIME_DISAGREEMENT", "SHARED_CORRUPTION_PATTERN", "DEGREE_SYMBOL_DISAGREEMENT")
+        ),
+        "q6_engine_disagreements": {"count": len(uncertain_blocking), "reasons": uncertain_reason_counts, "sample": uncertain_sample},
+        "q7_glyph_topology_verified_count": topo_verified_count,
+        "q8_blurry_faint_or_occluded": {
+            "blurry_disputed_crops": blurry_crop_count,
+            "low_light": quality_low_light,
+            "shadow": quality_shadow,
+            "edge_energy": edge_energy,
+        },
+        "q9_why_review_required": why_9,
+        "q10_blocking_condition_if_text_accurate": blocking_10,
+        "diagnostic_bucket": bucket,
+    }
+
+
 async def _evaluate_ocr_and_confirmation_async(baselines: dict[str, Any]) -> tuple[dict[str, Any], int]:
     from PIL import Image, ImageDraw, ImageFilter, ImageFont
 
@@ -300,7 +612,7 @@ async def _evaluate_ocr_and_confirmation_async(baselines: dict[str, Any]) -> tup
     assert not OR.has_shared_corruption("150°")
     assert OR.has_shared_corruption("600°") is True
     assert OR.has_shared_corruption("S,ABCD") is True
-    assert LO.LOCAL_OCR_WORKER_VERSION == "local-ocr-worker/3"
+    assert LO.LOCAL_OCR_WORKER_VERSION == "local-ocr-worker/4"
     assert OR.OCR_RECONCILE_VERSION == "layout-aware-ocr-reconcile/3"
     assert LR.LOCAL_OCR_ROUTE_VERSION == "local-ocr-route/2"
 
@@ -437,6 +749,7 @@ async def _evaluate_ocr_and_confirmation_async(baselines: dict[str, Any]) -> tup
             filename: str,
             gt: str,
             grade_fn: Any,
+            statement_ref: str | None = None,
             critical_facts: list[dict[str, Any]] | None = None,
             fact_texts: list[str] | None = None,
             partition: str | None = None,
@@ -451,6 +764,7 @@ async def _evaluate_ocr_and_confirmation_async(baselines: dict[str, Any]) -> tup
             blocking_spans_count = None
             zero_text_spans_count = None
             diagram_class = None
+            diag_signals: dict[str, Any] | None = None
 
             if measure_cold_breakdown:
                 LO.clear_local_ocr_cache()
@@ -464,9 +778,37 @@ async def _evaluate_ocr_and_confirmation_async(baselines: dict[str, Any]) -> tup
                 tm = rec.get("timing") or {}
                 rb = tm.get("reread_breakdown") or {}
                 unc = rec.get("uncertain_spans") or []
-                blocking_spans_count = sum(1 for s in unc if s.get("blocking"))
+                spans_all = rec.get("spans") or []
+                uncertain_blocking = [s for s in unc if s.get("blocking")]
+                blocking_spans_count = len(uncertain_blocking)
                 zero_text_spans_count = sum(1 for s in unc if s.get("text") == "0")
                 diagram_class = (rec.get("diagram") or {}).get("classification")
+                disputed_boxes = [d["bbox"] for d in (rec.get("disputed_math_slots") or []) if d.get("bbox")]
+                blurry_crop_count = 0
+                if disputed_boxes:
+                    rr_crops = LO.reread_local_ocr_regions(rr.prepared_image.data, disputed_boxes)
+                    blurry_crop_count = sum(
+                        1 for rdx in (rr_crops.get("readings") or []) if ((rdx or {}).get("glyph_topology") or {}).get("blurry")
+                    )
+                diag_signals = {
+                    "used_crop": bool(rr.used_crop),
+                    "ambiguous_multi_problem": bool(rr.ambiguous_multi_problem),
+                    "quality_low_light": bool(rr.quality.is_low_light),
+                    "quality_shadow": bool(rr.quality.has_shadow),
+                    "edge_energy": round(float(rr.quality.edge_energy), 2),
+                    "topo_verified_count": sum(
+                        1 for s in spans_all if str(s.get("evidence") or "").startswith("CROSS_FAMILY_BASE_PLUS_GLYPH_TOPOLOGY")
+                    ),
+                    "stacked_loss_count": sum(1 for s in unc if s.get("reason") == "FRACTION_STRUCTURE_LOSS"),
+                    "uncertain_blocking": uncertain_blocking,
+                    "uncertain_reason_counts": dict(Counter(str(s.get("reason")) for s in uncertain_blocking)),
+                    "uncertain_sample": [
+                        {"text": s.get("text"), "reason": s.get("reason"), "alts": (s.get("alternatives") or [])[:3]}
+                        for s in uncertain_blocking[:6]
+                    ],
+                    "blocking_reasons": list(rec.get("blocking_reasons") or []),
+                    "blurry_crop_count": blurry_crop_count,
+                }
                 stage_timing = {
                     "normalize_ms": round((t_norm - t0) * 1000.0, 2),
                     "region_detect_ms": round((t_reg - t_norm) * 1000.0, 2),
@@ -506,6 +848,30 @@ async def _evaluate_ocr_and_confirmation_async(baselines: dict[str, Any]) -> tup
             # Provenance contract check on raw auto/review draft
             raw_sha = prov.get("raw_ocr_text_sha256")
             prep_origin = prov.get("input_route") or "local_ocr"
+            diagnostic_4_1 = (
+                _build_diagnostic_4_1(
+                    prep_status=prep["status"],
+                    dec=dec,
+                    used_crop=diag_signals["used_crop"],
+                    ambiguous_multi_problem=diag_signals["ambiguous_multi_problem"],
+                    candidates_count=len(prep.get("candidates") or []),
+                    cer=cer,
+                    cf_draft=cf_draft,
+                    math_prf=math_prf,
+                    stacked_loss_count=diag_signals["stacked_loss_count"],
+                    blocking_reasons=diag_signals["blocking_reasons"],
+                    uncertain_blocking=diag_signals["uncertain_blocking"],
+                    uncertain_reason_counts=diag_signals["uncertain_reason_counts"],
+                    uncertain_sample=diag_signals["uncertain_sample"],
+                    topo_verified_count=diag_signals["topo_verified_count"],
+                    blurry_crop_count=diag_signals["blurry_crop_count"],
+                    quality_low_light=diag_signals["quality_low_light"],
+                    quality_shadow=diag_signals["quality_shadow"],
+                    edge_energy=diag_signals["edge_energy"],
+                )
+                if diag_signals is not None
+                else None
+            )
 
             row: dict[str, Any] = {
                 "case_id": cid,
@@ -520,12 +886,18 @@ async def _evaluate_ocr_and_confirmation_async(baselines: dict[str, Any]) -> tup
                 "blocking_uncertain_spans": blocking_spans_count,
                 "zero_text_spans": zero_text_spans_count,
                 "diagram_classification": diagram_class,
+                "topo_verified_count": diag_signals["topo_verified_count"] if diag_signals else None,
+                "blurry_crop_count": diag_signals["blurry_crop_count"] if diag_signals else None,
+                "stacked_loss_count": diag_signals["stacked_loss_count"] if diag_signals else None,
+                "used_crop": diag_signals["used_crop"] if diag_signals else None,
+                "ambiguous_multi_problem": diag_signals["ambiguous_multi_problem"] if diag_signals else None,
                 "review_items_count": len(prep.get("uncertain_tokens") or []),
                 "candidates_count": len(prep.get("candidates") or []),
                 "confirmation_contract_version": prov.get("confirmation_contract_version"),
                 "cold_prepare_ms": cold_prepare_ms,
                 "warm_prepare_ms": warm_prepare_ms,
                 "stage_timing_ms": stage_timing,
+                "diagnostic_4_1": diagnostic_4_1,
                 "auto_route": None,
                 "confirmation_simulated": None,
             }
@@ -537,7 +909,10 @@ async def _evaluate_ocr_and_confirmation_async(baselines: dict[str, Any]) -> tup
                 solve_ms = round((time.perf_counter() - t_s0) * 1000.0, 2)
                 rd = (routed.response or {}).get("route_d") or {}
                 env = (routed.response or {}).get("envelope") or {}
+                t_c0 = time.perf_counter()
                 c_err = _continuity_count(env) if routed.status == "SERVED" else 0
+                cont_ms = round((time.perf_counter() - t_c0) * 1000.0, 2)
+                tel = (routed.receipt or {}).get("adaptive_telemetry") or {}
                 local_cont += c_err
                 ans = rd.get("answers") if routed.status == "SERVED" else None
                 g = grade_fn(routed.status, ans, rd, env)
@@ -557,11 +932,18 @@ async def _evaluate_ocr_and_confirmation_async(baselines: dict[str, Any]) -> tup
                     "continuity_errors": c_err,
                     "scene3d_objects": len((env.get("scene3d") or {}).get("objects") or []) if routed.status == "SERVED" else 0,
                     "solve_ms": solve_ms,
+                    "telemetry_ms": {
+                        "local_parse_ms": tel.get("local_parse_ms"),
+                        "hybrid_execution_ms": tel.get("hybrid_execution_ms"),
+                        "continuity_check_ms": cont_ms,
+                    },
                     "provenance": p_rec,
                     "false_auto_accept": (dec == "LOCAL_OCR_ACCEPT" and routed.status == "SERVED" and g.get("verdict") == "WRONG_SERVED"),
                 }
             elif prep["status"] == "needs_confirmation" and draft:
+                t_sim0 = time.perf_counter()
                 sim = EIFO.simulate_student(draft, prep.get("uncertain_tokens") or [], gt)
+                sim_ms = round((time.perf_counter() - t_sim0) * 1000.0, 2)
                 confirmed_text = sim["text"]
                 cf_after = _critical_fact_stats(confirmed_text, critical_facts=critical_facts, fact_texts=fact_texts)
                 clear_local_geometry_parser_cache()
@@ -570,7 +952,10 @@ async def _evaluate_ocr_and_confirmation_async(baselines: dict[str, Any]) -> tup
                 solve_ms = round((time.perf_counter() - t_s0) * 1000.0, 2)
                 rd = (routed.response or {}).get("route_d") or {}
                 env = (routed.response or {}).get("envelope") or {}
+                t_c0 = time.perf_counter()
                 c_err = _continuity_count(env) if routed.status == "SERVED" else 0
+                cont_ms = round((time.perf_counter() - t_c0) * 1000.0, 2)
+                tel = (routed.receipt or {}).get("adaptive_telemetry") or {}
                 local_cont += c_err
                 ans = rd.get("answers") if routed.status == "SERVED" else None
                 g = grade_fn(routed.status, ans, rd, env)
@@ -585,6 +970,24 @@ async def _evaluate_ocr_and_confirmation_async(baselines: dict[str, Any]) -> tup
                     ),
                 )
                 assert p_rec is not None and p_rec["counted_as_unmodified_auto_ocr"] is False
+                fallback_info = None
+                fb_txt = statement_ref or gt
+                if routed.status != "SERVED" and fb_txt and fb_txt != confirmed_text:
+                    clear_local_geometry_parser_cache()
+                    fb_routed = AIR.route_text_input(fb_txt, allow_live_ai=False, input_kind="user_edited_text")
+                    fb_rd = (fb_routed.response or {}).get("route_d") or {}
+                    fb_env = (fb_routed.response or {}).get("envelope") or {}
+                    fb_cont = _continuity_count(fb_env) if fb_routed.status == "SERVED" else 0
+                    local_cont += fb_cont
+                    fb_ans = fb_rd.get("answers") if fb_routed.status == "SERVED" else None
+                    fallback_info = {
+                        "routed_status": fb_routed.status,
+                        "reason_code": fb_env.get("reason_code") or (fb_routed.receipt or {}).get("code"),
+                        "answers": fb_ans,
+                        "grade": grade_fn(fb_routed.status, fb_ans, fb_rd, fb_env),
+                        "continuity_errors": fb_cont,
+                        "note": "Requires free-text edit on unflagged OCR error; reported strictly separately from span-only confirmation.",
+                    }
                 row["confirmation_simulated"] = {
                     "cer_after": EUC._cer(confirmed_text, gt) if gt else None,
                     "critical_facts_after": cf_after,
@@ -601,7 +1004,14 @@ async def _evaluate_ocr_and_confirmation_async(baselines: dict[str, Any]) -> tup
                     "grade": g,
                     "continuity_errors": c_err,
                     "scene3d_objects": len((env.get("scene3d") or {}).get("objects") or []) if routed.status == "SERVED" else 0,
+                    "simulate_ms": sim_ms,
                     "solve_ms": solve_ms,
+                    "telemetry_ms": {
+                        "local_parse_ms": tel.get("local_parse_ms"),
+                        "hybrid_execution_ms": tel.get("hybrid_execution_ms"),
+                        "continuity_check_ms": cont_ms,
+                    },
+                    "whole_draft_confirmation_fallback": fallback_info,
                     "provenance": p_rec,
                 }
             elif prep["status"] == "needs_selection":
@@ -684,6 +1094,7 @@ async def _evaluate_ocr_and_confirmation_async(baselines: dict[str, Any]) -> tup
                 filename=p.name,
                 gt=it["ground_truth_text"],
                 grade_fn=_grade_real27,
+                statement_ref=it.get("statement"),
                 critical_facts=it.get("critical_facts"),
                 partition=it.get("partition"),
                 measure_cold_breakdown=True,
@@ -740,6 +1151,18 @@ async def _evaluate_ocr_and_confirmation_async(baselines: dict[str, Any]) -> tup
                 "confirmed_ready_count": len(conf_rows),
                 "confirmed_served": sum(1 for r in conf_rows if r["confirmation_simulated"].get("routed_status") == "SERVED"),
                 "confirmed_wrong_served": sum(1 for r in conf_rows if r["confirmation_simulated"].get("grade", {}).get("verdict") == "WRONG_SERVED"),
+                "whole_draft_fallback_served": sum(
+                    1
+                    for r in conf_rows
+                    if ((r["confirmation_simulated"].get("whole_draft_confirmation_fallback") or {}).get("routed_status") == "SERVED")
+                ),
+                "diagnostic_4_1_buckets": dict(
+                    Counter(
+                        (r.get("diagnostic_4_1") or {}).get("diagnostic_bucket")
+                        for r in subset
+                        if r.get("diagnostic_4_1")
+                    )
+                ),
                 "confirmation_median_actions": statistics.median([r["confirmation_simulated"]["actions"] for r in conf_rows]) if conf_rows else 0,
                 "confirmation_median_chars_typed": statistics.median([r["confirmation_simulated"]["chars_typed"] for r in conf_rows]) if conf_rows else 0,
                 "confirmation_total_chars_typed": sum(r["confirmation_simulated"]["chars_typed"] for r in conf_rows),
@@ -748,7 +1171,26 @@ async def _evaluate_ocr_and_confirmation_async(baselines: dict[str, Any]) -> tup
                 "latency_warm_prepare": _stats([r["warm_prepare_ms"] for r in subset]),
                 "latency_stage_breakdown": {
                     k: _stats([r["stage_timing_ms"].get(k) for r in subset if r["stage_timing_ms"].get(k) is not None])
-                    for k in ("normalize_ms", "region_detect_ms", "decode_ms", "tesseract_ms", "rapidocr_ms", "reconcile_only_ms", "reread_ms")
+                    for k in (
+                        "normalize_ms", "region_detect_ms", "decode_ms", "tesseract_ms", "rapidocr_ms",
+                        "reconcile_only_ms", "reread_ms", "reread_crop_ms", "reread_topology_ms",
+                        "reread_latin_rec_ms", "reread_tess_eng_ms", "reread_tess_vie_ms",
+                    )
+                },
+                "latency_downstream_breakdown": {
+                    "simulate_ms": _stats([r["confirmation_simulated"].get("simulate_ms") for r in conf_rows if r["confirmation_simulated"].get("simulate_ms") is not None]),
+                    "local_parse_ms": _stats([
+                        ((r["auto_route"] or r["confirmation_simulated"]).get("telemetry_ms") or {}).get("local_parse_ms")
+                        for r in subset if (r["auto_route"] or r["confirmation_simulated"])
+                    ]),
+                    "hybrid_execution_ms": _stats([
+                        ((r["auto_route"] or r["confirmation_simulated"]).get("telemetry_ms") or {}).get("hybrid_execution_ms")
+                        for r in subset if (r["auto_route"] or r["confirmation_simulated"])
+                    ]),
+                    "continuity_check_ms": _stats([
+                        ((r["auto_route"] or r["confirmation_simulated"]).get("telemetry_ms") or {}).get("continuity_check_ms")
+                        for r in subset if (r["auto_route"] or r["confirmation_simulated"])
+                    ]),
                 },
                 "latency_solve": _stats([
                     (r["auto_route"]["solve_ms"] if r["auto_route"] else r["confirmation_simulated"]["solve_ms"])
@@ -784,6 +1226,7 @@ async def _evaluate_ocr_and_confirmation_async(baselines: dict[str, Any]) -> tup
                 filename=cand_path.name,
                 gt=it.get("ground_truth_text") or "",
                 grade_fn=_grade_ext16,
+                statement_ref=it.get("ground_truth_text"),
                 partition=it.get("printed_or_handwritten"),
                 measure_cold_breakdown=True,
             )
@@ -912,8 +1355,23 @@ async def _evaluate_ocr_and_confirmation_async(baselines: dict[str, Any]) -> tup
                 "cer_after_median": round(statistics.median(cers_a), 4) if cers_a else None,
                 "false_auto_accepts": sum(1 for r in auto_rows if r["auto_route"].get("false_auto_accept")),
                 "auto_served_correct": sum(1 for r in auto_rows if r["auto_route"].get("grade", {}).get("verdict") == "SERVED_CORRECT"),
+                "confirmed_ready_count": len(conf_rows),
                 "confirmed_served_correct": sum(1 for r in conf_rows if r["confirmation_simulated"].get("grade", {}).get("verdict") == "SERVED_CORRECT"),
                 "confirmed_wrong_served": sum(1 for r in conf_rows if r["confirmation_simulated"].get("grade", {}).get("verdict") == "WRONG_SERVED"),
+                "whole_draft_fallback_served": sum(
+                    1
+                    for r in conf_rows
+                    if ((r["confirmation_simulated"].get("whole_draft_confirmation_fallback") or {}).get("routed_status") == "SERVED")
+                ),
+                "diagnostic_4_1_buckets": dict(
+                    Counter(
+                        (r.get("diagnostic_4_1") or {}).get("diagnostic_bucket")
+                        for r in rows_in
+                        if r.get("diagnostic_4_1")
+                    )
+                ),
+                "confirmation_median_actions": statistics.median([r["confirmation_simulated"]["actions"] for r in conf_rows]) if conf_rows else 0,
+                "confirmation_median_chars_typed": statistics.median([r["confirmation_simulated"]["chars_typed"] for r in conf_rows]) if conf_rows else 0,
                 "selection_bands_tested": sum(len(r["selection_outcomes"]) for r in sel_rows),
                 "selection_served_correct": sum(1 for r in sel_rows for s in r["selection_outcomes"] if s.get("oracle_verdict") == "SERVED_CORRECT"),
                 "latency_cold_prepare": _stats([r["cold_prepare_ms"] for r in rows_in]),
@@ -1055,6 +1513,7 @@ def main() -> int:
     real2 = json.loads((RUNS_DIR / "local-semantic-source-gate-reliability/fresh_external_manifest.json").read_text(encoding="utf-8"))["items"]
     real27_forensics = _run_text_forensics(real25 + real2)
 
+    _install_windows_socketpair_guard()
     loop = asyncio.new_event_loop()
     try:
         ocr_eval, cont_ocr = loop.run_until_complete(_evaluate_ocr_and_confirmation_async(baselines))
@@ -1072,6 +1531,127 @@ def main() -> int:
             text=True,
         ).strip()
     )
+
+    r27s = (ocr_eval.get("real27_images") or {}).get("summary") or {}
+    e16s = (ocr_eval.get("external16_printed_images") or {}).get("summary") or {}
+    rm_pos = rm_eval.get("positive_rows") or []
+    rm_cls = dict(Counter((r.get("search_telemetry") or {}).get("classification") for r in rm_pos if r.get("status") == "SERVED"))
+    rm_reuse = sum(1 for r in rm_pos if ((r.get("search_telemetry") or {}).get("reused_intermediates") or 0) > 0)
+    rm_budget_exceeded = sum(1 for r in rm_pos if "BUDGET" in str(r.get("reason_code") or ""))
+
+    r27_auto_n = int((r27s.get("ocr_decision_counts") or {}).get("LOCAL_OCR_ACCEPT", 0))
+    r27_n = int(r27s.get("count", 0) or 0)
+    r27_conf_n = int(r27s.get("confirmed_ready_count", 0) or 0)
+    r27_conf_srv = int(r27s.get("confirmed_served", 0) or 0)
+    e16_n = int(e16s.get("count", 0) or 0)
+    e16_auto_n = int((e16s.get("ocr_decision_counts") or {}).get("LOCAL_OCR_ACCEPT", 0))
+    e16_conf_n = int(e16s.get("confirmed_ready_count", 0) or 0)
+    e16_conf_srv = int(e16s.get("confirmed_served_correct", 0) or 0)
+
+    mandatory_metrics_9_3 = {
+        "ocr": {
+            "character_error_rate_median_before_after": {
+                "real27": [r27s.get("cer_before_median"), r27s.get("cer_after_median")],
+                "external15_printed": [e16s.get("cer_before_median"), e16s.get("cer_after_median")],
+            },
+            "critical_math_symbol_recall_draft": {"real27": r27s.get("math_token_recall_draft")},
+            "critical_fact_preservation_rate_real27": {
+                "draft": r27s.get("critical_facts_draft"),
+                "after_span_confirmation": r27s.get("critical_facts_after_confirmation"),
+                "after_span_confirmation_rate": r27s.get("critical_facts_after_rate"),
+            },
+            "region_selection_accuracy": {
+                "rendered_positive": f"{ocr_eval.get('rendered_positive_accepted')}/{ocr_eval.get('rendered_positive_total')}",
+                "ext15_selection_bands_served_correct": f"{e16s.get('selection_served_correct')}/{e16s.get('selection_bands_tested')}",
+            },
+            "safe_auto_accept_rate": {
+                "real27": f"{r27_auto_n}/{r27_n}",
+                "external15_printed": f"{e16_auto_n}/{e16_n}",
+            },
+            "false_auto_accept_rate": {
+                "adversarial_negative": ocr_eval.get("false_auto_accepts_negative"),
+                "real27": r27s.get("false_auto_accepts"),
+                "external15_printed": e16s.get("false_auto_accepts"),
+            },
+            "review_rate_or_selection": {
+                "real27_needs_confirmation": f"{r27_conf_n}/{r27_n}",
+                "external15_needs_confirmation": f"{e16_conf_n}/{e16_n}",
+                "external15_needs_selection": (e16s.get("prepare_status_counts") or {}).get("needs_selection", 0),
+            },
+            "confirmation_success_rate_span_only": {
+                "real27": f"{r27_conf_srv}/{r27_conf_n}",
+                "external15_printed": f"{e16_conf_srv}/{e16_conf_n}",
+            },
+            "confirmation_effort_real27": {
+                "median_actions": r27s.get("confirmation_median_actions"),
+                "median_chars_typed": r27s.get("confirmation_median_chars_typed"),
+                "chars_typed_vs_full_retype": f"{r27s.get('confirmation_total_chars_typed')}/{r27s.get('confirmation_total_full_retype_chars')}",
+            },
+            "ocr_latency_p50_p95_ms": {
+                "real27_cold_prepare": r27s.get("latency_cold_prepare"),
+                "real27_warm_prepare": r27s.get("latency_warm_prepare"),
+                "external15_cold_prepare": e16s.get("latency_cold_prepare"),
+                "external15_warm_prepare": e16s.get("latency_warm_prepare"),
+            },
+        },
+        "understanding": {
+            "real27_text_served_and_wrong": f"{dev_eval['real27_text']['served']}/{dev_eval['real27_text']['total']} (wrong={dev_eval['real27_text']['wrong_served']})",
+            "real27_refused_9_forensics_6_2": real27_forensics.get("refused_category_counts_6_2"),
+            "real27_mode_a_adjudicated": real27_forensics.get("adjudicated_mode_a_count"),
+            "nc_nl_correct_rate": f"{nc_eval['nc_nl_passed']}/{nc_eval['nc_nl_total']}",
+            "nc_gold_correct_rate": f"{nc_eval['nc_gold_passed']}/{nc_eval['nc_gold_total']}",
+            "r513_missing_fact_detection_aligned": real27_forensics["r513_source_gate_alignment"]["verified"],
+            "autonomous_negatives_correct_refusal_rate": f"{nc_eval['autonomous_negatives_refused']}/{nc_eval['autonomous_negatives_total']}",
+            "false_complete_or_wrong_served_negatives": nc_eval["autonomous_negatives_false_served"],
+        },
+        "planner": {
+            "valid_plan_rate_rm72_positive": f"{rm_eval['positive_served']}/{rm_eval['positive_total']}",
+            "negative_refusal_rm72": f"{rm_eval['negative_refused']}/{rm_eval['negative_total']}",
+            "classification_counts_rm72_served": rm_cls,
+            "intermediate_reuse_cases_rm72": rm_reuse,
+            "budget_exceeded_or_ir_limit_rm72": {
+                "ir_or_search_budget_exceeded_rows": rm_budget_exceeded,
+                "max_memory_declarations": 32,
+                "mg9_planner_candidates_generated": ((rm_eval.get("mg9_root_cause_7_questions") or {}).get("q2_search_telemetry") or {}).get("candidate_count"),
+            },
+            "kernel_verification_continuity_errors": total_cont_errors,
+            "planning_latency_p50_p95_ms_rm72": [rm_eval.get("latency_p50_ms"), rm_eval.get("latency_p95_ms")],
+        },
+        "end_to_end": {
+            "text_to_verified_scene3d_real27": f"{dev_eval['real27_text']['served']}/{dev_eval['real27_text']['total']}",
+            "image_to_verified_scene3d_without_confirmation_real27": f"{r27s.get('auto_served_correct', 0)}/{r27_n}",
+            "image_to_verified_scene3d_after_span_confirmation_only_real27": f"{int(r27s.get('auto_served_correct', 0) or 0) + r27_conf_srv}/{r27_n}",
+            "image_to_verified_scene3d_whole_draft_fallback_additional_real27": r27s.get("whole_draft_fallback_served", 0),
+            "image_to_verified_scene3d_without_confirmation_ext15": f"{e16s.get('auto_served_correct', 0)}/{e16_n}",
+            "image_to_verified_scene3d_after_span_confirmation_only_ext15": f"{int(e16s.get('auto_served_correct', 0) or 0) + e16_conf_srv}/{e16_n}",
+            "image_to_verified_scene3d_ext15_selection_bands": f"{e16s.get('selection_served_correct', 0)}/{e16s.get('selection_bands_tested', 0)}",
+            "image_to_verified_scene3d_whole_draft_fallback_additional_ext15": e16s.get("whole_draft_fallback_served", 0),
+            "image_to_verified_scene3d_vision_fallback": {
+                "offline_mock_passed": ocr_eval.get("vision_fallback_offline_mock", {}).get("passed"),
+                "live_gemini_vision": "NOT_MEASURED",
+            },
+            "wrong_scene_served_total": (
+                int(r27s.get("false_auto_accepts", 0) or 0)
+                + int(r27s.get("confirmed_wrong_served", 0) or 0)
+                + int(e16s.get("false_auto_accepts", 0) or 0)
+                + int(e16s.get("confirmed_wrong_served", 0) or 0)
+                + int(dev_eval["real27_text"]["wrong_served"])
+            ),
+            "scene_continuity_errors": total_cont_errors,
+            "user_visible_output_policy_mode_a_compliant": c_safety["mode_a_trig_no_answer_leak"],
+        },
+    }
+
+    stage_latency_profiling_10 = {
+        "dataset": "real27_images (27 images, single normalized asyncio event loop on host CPU)",
+        "cold_prepare": r27s.get("latency_cold_prepare"),
+        "warm_prepare": r27s.get("latency_warm_prepare"),
+        "cold_end_to_end": r27s.get("latency_cold_end_to_end"),
+        "warm_end_to_end": r27s.get("latency_warm_end_to_end"),
+        "solve_total": r27s.get("latency_solve"),
+        "ocr_and_preprocessing_stages": r27s.get("latency_stage_breakdown"),
+        "downstream_stages": r27s.get("latency_downstream_breakdown"),
+    }
 
     report = {
         "schema": "axo-real-world-end-to-end-evaluation/1",
@@ -1105,6 +1685,8 @@ def main() -> int:
             "exposed_dev_corpora": dev_eval,
             "real27_text_forensics": real27_forensics,
         },
+        "mandatory_metrics_9_3": mandatory_metrics_9_3,
+        "stage_latency_profiling_10": stage_latency_profiling_10,
         "safety_invariants": {
             "total_scene3d_continuity_errors": total_cont_errors,
             **c_safety,

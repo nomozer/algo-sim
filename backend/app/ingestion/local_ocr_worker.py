@@ -18,7 +18,7 @@ import json
 import sys
 import time
 
-LOCAL_OCR_WORKER_VERSION = "local-ocr-worker/3"
+LOCAL_OCR_WORKER_VERSION = "local-ocr-worker/4"
 _STATE: dict = {}
 
 
@@ -225,6 +225,7 @@ def _strip_edge_bleed(g_crop, pad_x: int, _pad_right: int | None = None):
     for c in cand_right:
         is_upper_prime = (
             c["y1"] <= int(0.55 * h)
+            and c["h"] <= max(4, int(0.45 * h))
             and c["w"] <= max(4, int(0.16 * w))
             and (c["x0"] - core_x1) <= max(2, int(0.10 * h))
         )
@@ -458,7 +459,7 @@ def _reread(img, boxes: list, tessdata: str) -> dict:
         tc0 = time.perf_counter()
         x0, y0, x1, y1 = (int(v) for v in b)
         h_box = max(1, y1 - y0)
-        pad_x = max(2, min(6, int(0.06 * h_box)))
+        pad_x = max(3, min(14, int(0.12 * h_box)))
         pad_top = max(3, int(0.24 * h_box))
         pad_bot = max(3, int(0.18 * h_box))
         crop = img.crop((

@@ -27,7 +27,7 @@ from pathlib import Path
 from typing import Any
 
 LOCAL_OCR_RAW_SCHEMA = "local-ocr-raw/1"
-LOCAL_OCR_WORKER_VERSION = "local-ocr-worker/3"
+LOCAL_OCR_WORKER_VERSION = "local-ocr-worker/4"
 _WORKER_PATH = Path(__file__).with_name("local_ocr_worker.py")
 _CACHE_MAX = 16
 _RAW_OCR_CACHE_MAX = 32

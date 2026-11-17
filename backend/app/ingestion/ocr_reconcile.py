@@ -36,7 +36,7 @@ _SHARED_CORRUPTION_RE = re.compile(
     r"(?:[0-9a-z][Vv]\d|=\s*[Vv]\d|^[Vv]\d"  # √ đọc thành V
     r"|^[A-Z],[A-Z]{3,6}$|^[A-Z]{3,6}-[A-Z]{3,6}$"  # S,ABCD · ABC-ABC
     r"|\([0-9][A-Z]{2,}\)|\.[0-9][A-Z]{2,}|[A-Z][0-9][A-Z]{2,}"  # (4BC) · S.4BC · S.A8CD (giữ nguyên 2BC, A1B1C1)
-    r"|(?:[2-9]\d{2}|1[89]\d|\d{4,})°"  # >= 180°, vd 600° (° đọc thành 0); góc tù 100°..179° hợp lệ
+    r"|(?:[2-9]\d{2}|1[89]\d|\d{4,})[°º]"  # >= 180°, vd 600° / 600º (° đọc thành 0); góc tù 100°..179° hợp lệ
     r"|(?<![^\W\d_])[a-z][23”\"](?![^\W_])"  # a2 · a3 · 2a2 · 27√13a3/2 · a” (mất số mũ trên)
     r"|[€#!§¢£¥©®™«»„“”Œ]"  # ký tự rác
     r"|\.\.\.)"
@@ -79,9 +79,10 @@ def _base_letters(word: str) -> str:
 
 
 def _format_unit_superscripts(tok: str) -> str:
-    """Chuẩn hoá hiển thị chỉ số trên cho đơn vị diện tích/thể tích (`cm2` -> `cm²`, `m3` -> `m³`), không đụng đại số (`a2`)."""
+    """Chuẩn hoá hiển thị chỉ số trên cho đơn vị diện tích/thể tích (`cm2` -> `cm²`, `m3` -> `m³`) và `º`->`°`, không đụng đại số (`a2`)."""
     t = re.sub(r"(?<![^\W\d_])([cdkm]?m)2(?![0-9])", r"\1²", tok)
-    return re.sub(r"(?<![^\W\d_])([cdkm]?m)3(?![0-9])", r"\1³", t)
+    t = re.sub(r"(?<![^\W\d_])([cdkm]?m)3(?![0-9])", r"\1³", t)
+    return re.sub(r"(?<=\d)º", "°", t)
 
 
 def norm_math(tok: str) -> str:
@@ -989,7 +990,10 @@ def reconcile_local_ocr(
                 )
                 best_val, best_readers = ranked[0]
                 families = {READER_FAMILY.get(r, r) for r in best_readers}
-                agreed = len(best_readers) >= 2 and len(families) >= min_agreeing_families
+                # Các lượt đọc lại (`rapidocr_latin_rec`, `tesseract_eng_line`, `tesseract_vie_line`) dùng chung một vùng cắt đơn từ;
+                # khi bản đọc chính `rapidocr` khác đi (vd `ABCD` vs `ABCE`, `AB` vs `1B`), bắt buộc phải xác nhận thay vì tự tin quá mức.
+                primary_agrees = (not r_norm) or ("rapidocr" in best_readers)
+                agreed = len(best_readers) >= 2 and len(families) >= min_agreeing_families and primary_agrees
                 second_families = {READER_FAMILY.get(r, r) for r in ranked[1][1]} if len(ranked) > 1 else set()
                 tie = (
                     len(ranked) > 1
@@ -1032,6 +1036,8 @@ def reconcile_local_ocr(
                     emit(text_out, "verified", "math", evidence=topo_ev)
                 else:
                     alts = [v for v, _ in ranked if v]
+                    if r_norm and r_norm not in alts:
+                        alts.append(r_norm)
                     for pv in primed_votes:
                         if pv not in alts:
                             alts.insert(0, pv)
@@ -1049,7 +1055,15 @@ def reconcile_local_ocr(
                         reason = "PRIME_DISAGREEMENT"
                     else:
                         reason = _classify_math_disagreement(list(votes))
-                    suggestion = _join_primes(display) if norm_math(display) == best_val or not best_val else best_val + trail
+                    if r_norm and not has_shared_corruption(r_norm) and (
+                        (not primary_agrees and not ("'" in best_val and best_val.replace("'", "") == r_norm))
+                        or (r_is_upper_label and best_val.replace("'", "") != r_norm)
+                    ):
+                        suggestion = _format_unit_superscripts(_join_primes(display))
+                        if best_val and best_val not in alts:
+                            alts.append(best_val)
+                    else:
+                        suggestion = _join_primes(display) if norm_math(display) == best_val or not best_val else best_val + trail
                     emit(suggestion, "uncertain", "math", reason, alts[:5])
                 continue
 
@@ -1058,7 +1072,7 @@ def reconcile_local_ocr(
             r_clean = r_txt.lower().strip(_PUNCT_EDGE)
             t_clean = t_txt.lower().strip(_PUNCT_EDGE)
             if r_txt and t_txt and r_clean == t_clean:
-                if r_clean in LEXICON_UNIGRAMS or strip_marks(r_clean) == r_clean or any(ord(c) > 127 for c in r_clean):
+                if r_clean in LEXICON_UNIGRAMS or strip_marks(r_clean) == r_clean:
                     emit(r_txt, "verified", "prose", evidence="EXACT_TWO_READER_AGREEMENT")
                     continue
                 same_base = [w for w in LEXICON_UNIGRAMS if _base_letters(w) == _base_letters(r_clean)]
