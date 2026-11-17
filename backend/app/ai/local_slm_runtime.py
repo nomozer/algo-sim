@@ -513,9 +513,23 @@ def get_process_memory_info(pid: int | None = None) -> dict[str, float | int] | 
 
 
 def _pick_ephemeral_port() -> int:
-    with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as sock:
-        sock.bind(("127.0.0.1", 0))
-        return int(sock.getsockname()[1])
+    """Pick a bindable loopback port, skipping Windows excluded/Hyper-V dynamic ranges (WinError 10013)."""
+    try:
+        with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as sock:
+            sock.bind(("127.0.0.1", 0))
+            return int(sock.getsockname()[1])
+    except OSError:
+        pass
+    base = 31000 + (os.getpid() % 10000)
+    for offset in range(16000):
+        candidate = 31000 + ((base - 31000 + offset) % 17000)
+        with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as sock:
+            try:
+                sock.bind(("127.0.0.1", candidate))
+                return int(candidate)
+            except OSError:
+                continue
+    raise LocalSlmRuntimeError("MODEL_RUNTIME_UNAVAILABLE", "No bindable loopback port available on 127.0.0.1.")
 
 
 def _strip_thinking_prefix(text: str) -> tuple[str, bool]:
