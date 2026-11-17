@@ -952,7 +952,7 @@ CACHE_VERSION = "145"
 #: Hai chế độ hợp lệ của kiến trúc chính thức Hybrid `/4` do máy chủ sở hữu:
 #: - `live` (mặc định): trích xuất có cấu trúc qua Gemini (`typed-fact-next/2`) khi cấu hình `GEMINI_API_KEY`.
 #: - `staging-replay`: chạy đường `/4` với kho trích xuất đã ghi (`HYBRID_REPLAY_CORPUS`), đánh dấu mô phỏng tường minh.
-HYBRID_ROUTE_MODES = ("live", "staging-replay", "local-first")
+HYBRID_ROUTE_MODES = ("live", "staging-replay", "local-first", "local-slm")
 
 
 def hybrid_route_mode() -> str:
@@ -1284,7 +1284,7 @@ _HYBRID_PROVIDER_502_CODES = frozenset({
     "PROVIDER_ERROR", "PROVIDER_BLOCKED", "PROVIDER_REFUSED", "NO_CANDIDATE",
     "PROVIDER_RESPONSE_INVALID", "MALFORMED_RESPONSE_PART", "JSON_INVALID",
     "RESPONSE_TRUNCATED", "MAX_TOKENS", "SCHEMA_VERSION_MISMATCH",
-    "REPLAY_SOURCE_IDENTITY_MISMATCH",
+    "REPLAY_SOURCE_IDENTITY_MISMATCH", "LOCAL_SLM_RESPONSE_INVALID",
 })
 
 
@@ -1295,16 +1295,18 @@ def _hybrid_infra_error(code: str, local: dict | None = None) -> JSONResponse:
     `local` (chẩn đoán của tuyến cục bộ khi nó đọc thiếu đề và lối dự phòng AI bị khoá): lời báo nói PHẦN NÀO của đề
     chưa đọc được thay vì chỉ "live AI bị khoá"; phân loại vẫn là INFRASTRUCTURE_FAILURE, mã máy ở `local_understanding`."""
     headers = {"Cache-Control": "no-store"}
-    if code == "HYBRID_DEADLINE_EXCEEDED":
+    if code in ("HYBRID_DEADLINE_EXCEEDED", "LOCAL_SLM_TIMEOUT"):
         status, msg = 504, "Quá trình trích xuất và dựng hình vượt quá thời gian cho phép. Em hãy thử gửi lại đề bài."
     elif code == "LIVE_AI_DISABLED":
         status, msg = 503, "Chế độ trích xuất trực tiếp (live AI) đang bị khoá bởi cấu hình máy chủ (ALLOW_LIVE_AI=0)."
     elif code == "INVALID_HYBRID_ROUTE_MODE":
-        status, msg = 503, "Chế độ định tuyến Hybrid trên máy chủ không hợp lệ. Chỉ chấp nhận 'live' (mặc định) hoặc 'staging-replay'."
+        status, msg = 503, "Chế độ định tuyến Hybrid trên máy chủ không hợp lệ."
     elif code == "MISSING_API_KEY":
         status, msg = 503, MISSING_KEY_MSG
     elif code == "STAGING_CORPUS_UNAVAILABLE":
         status, msg = 503, "Kho dữ liệu phát lại Hybrid (staging) chưa sẵn sàng trên máy chủ. Vui lòng kiểm tra cấu hình hoặc thử lại sau."
+    elif code in ("MODEL_RUNTIME_UNAVAILABLE", "MODEL_CHECKSUM_MISMATCH", "LOCAL_SLM_BUSY", "LOCAL_SLM_PROCESS_CRASHED", "INVALID_LOCAL_SLM_MODEL"):
+        status, msg = 503, "Mô hình ngôn ngữ cục bộ (Local SLM) chưa sẵn sàng hoặc đang quá tải trên máy chủ. Vui lòng kiểm tra provisioning hoặc thử lại sau."
     elif code in _HYBRID_PROVIDER_502_CODES:
         status, msg = 502, "Dịch vụ trích xuất đề bài đang gặp sự cố kết nối hoặc phản hồi chưa hợp lệ. Em hãy thử gửi lại sau ít phút."
     else:
@@ -1363,6 +1365,7 @@ async def _analyze_hybrid_route(
         HYBRID_INFRASTRUCTURE_CODES,
         prepare_live_hybrid,
         prepare_local_first_hybrid,
+        prepare_local_slm_hybrid,
         prepare_staging_replay,
         resolve_hybrid_gemini_model,
     )
@@ -1372,6 +1375,8 @@ async def _analyze_hybrid_route(
         plan = await run_in_threadpool(prepare_staging_replay, text, corpus_path)
         if plan is None:
             return _hybrid_infra_error("STAGING_CORPUS_UNAVAILABLE")
+    elif mode == "local-slm":
+        plan = await run_in_threadpool(prepare_local_slm_hybrid, text)
     elif use_local_first:
         model_name = resolve_hybrid_gemini_model()
         plan = await run_in_threadpool(prepare_local_first_hybrid, text, model=model_name)
@@ -1402,6 +1407,8 @@ async def _analyze_hybrid_route(
 
         if mode == "staging-replay":
             result = await run_in_threadpool(plan.run)
+        elif mode == "local-slm":
+            result = await run_in_threadpool(lambda: plan.run())
         else:
             def _finite_pos_env(env_key: str, default: float) -> float:
                 raw = os.getenv(env_key)

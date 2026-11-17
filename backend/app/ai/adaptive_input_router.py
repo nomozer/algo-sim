@@ -74,6 +74,7 @@ ChosenRoute = Literal[
     "LOCAL_AMBIGUOUS_CLARIFICATION",
     "LOCAL_OUT_OF_SCOPE_GATE",
     "AI_TYPED_FACT_FALLBACK",
+    "LOCAL_SLM_FALLBACK",
     "VISION_THEN_LOCAL_DETERMINISTIC",
     "VISION_THEN_AI_FALLBACK",
     "VISION_NEEDS_CONFIRMATION",
@@ -1526,3 +1527,265 @@ def evaluate_local_ocr_gate(
         "secondary_math_tokens": s_tokens,
         "local_parse_status": fidelity["local_parse_status"],
     }
+
+
+def is_local_parse_semantically_complete(local_res: LocalParseResult) -> bool:
+    """True when Local Parser resolved every sentence/clause and produced a validated TypedFactNext payload."""
+    return (
+        local_res.status == LOCAL_PARSE_COMPLETE
+        and local_res.payload is not None
+        and bool(local_res.source_coverage.coverage_complete)
+    )
+
+
+def route_text_input_local_slm(
+    problem_text: str,
+    *,
+    model_key: str | None = None,
+    strategy: str | None = None,
+    runtime: Any = None,
+    allow_download: bool = False,
+    input_kind: InputKind = "text",
+    previous_vision_calls: int = 0,
+    previous_vision_ms: float = 0.0,
+    policy: RoutePolicy | None = None,
+    timeout_seconds: float = 30.0,
+) -> AdaptiveRouteOutcome:
+    """Local-first router with local sub-1B SLM fallback (`external_ai_calls = 0`).
+
+    1. Runs deterministic Local Parser (`route_text_input(..., allow_live_ai=False)`).
+    2. Only invokes local CPU SLM when deterministic parsing cannot complete safely
+       (`chosen_route == "FAIL_CLOSED_LIVE_AI_DISABLED"`).
+    3. Validates SLM extraction through Source Grounding (`slm-grounding-validator/1`)
+       and feeds ONLY grounded `TypedFactNext /2` facts into Hybrid `/4`.
+    """
+    from app.ai.local_slm_extractor import (
+        LOCAL_SLM_EXTRACTOR_VERSION,
+        resolve_local_slm_strategy,
+        run_local_slm_extraction,
+    )
+    from app.ai.local_slm_runtime import (
+        LOCAL_SLM_RUNTIME_VERSION,
+        LocalSlmRuntimeError,
+        resolve_local_slm_model_spec,
+    )
+
+    spec = resolve_local_slm_model_spec(model_key)
+    eff_strategy = resolve_local_slm_strategy(strategy)
+    eff_policy = policy or hybrid_offline_policy({"HYBRID_ROUTE_D_PREVIEW": "1"})
+
+    t0 = time.perf_counter()
+    det = route_text_input(
+        problem_text,
+        allow_live_ai=False,
+        input_kind=input_kind,
+        previous_vision_calls=previous_vision_calls,
+        previous_vision_ms=previous_vision_ms,
+        model=f"local-slm:{spec.model_key}",
+        policy=eff_policy,
+        timeout_seconds=timeout_seconds,
+    )
+    if det.telemetry.chosen_route != "FAIL_CLOSED_LIVE_AI_DISABLED":
+        return det
+
+    local_res = det.local_parse_result
+    assert local_res is not None
+    norm_text = local_res.payload["problem_text"] if local_res.payload else normalize_problem_text(
+        strip_trailing_multiple_choice_options(problem_text)
+    )
+    local_ms = det.telemetry.local_parse_ms
+    cov_dict = local_res.source_coverage.to_dict()
+
+    try:
+        slm_res = run_local_slm_extraction(
+            norm_text,
+            model_key=spec.model_key,
+            strategy=eff_strategy,
+            runtime=runtime,
+            allow_download=allow_download,
+        )
+    except LocalSlmRuntimeError as exc:
+        total_ms = (time.perf_counter() - t0) * 1000.0 + previous_vision_ms
+        _, cache_meta = build_local_first_cache_identity(
+            norm_text,
+            extraction_route="LOCAL_SLM_INFRA_ERROR",
+            model=spec.model_key,
+            local_parse_status=local_res.status,
+        )
+        tel_err = AdaptiveRouteTelemetry(
+            router_version=ADAPTIVE_INPUT_ROUTER_VERSION,
+            parser_version=LOCAL_GEOMETRY_PARSER_VERSION,
+            input_kind=input_kind,
+            local_parse_status=local_res.status,
+            chosen_route="LOCAL_SLM_FALLBACK",
+            fallback_reason=local_res.fallback_reason or local_res.reason_code,
+            gemini_vision_calls=previous_vision_calls,
+            gemini_typed_fact_calls=0,
+            total_provider_calls=previous_vision_calls,
+            local_parse_ms=local_ms,
+            vision_ms=previous_vision_ms,
+            typed_fact_ai_ms=0.0,
+            hybrid_execution_ms=0.0,
+            total_ms=total_ms,
+            source_coverage=cov_dict,
+            cache_key_metadata=cache_meta,
+        )
+        resp_err = {
+            "schema_version": ROUTE_D_SIMULATION_V4_SCHEMA_VERSION,
+            "route_d": {
+                "status": "REFUSED",
+                "adapter_version": ADAPTER_V4_VERSION,
+                "schema_version": ROUTE_D_SIMULATION_V4_SCHEMA_VERSION,
+                "extraction_mode": "LOCAL_SLM_INFRA_ERROR",
+                "local_parser_version": LOCAL_GEOMETRY_PARSER_VERSION,
+                "adaptive_router_version": ADAPTIVE_INPUT_ROUTER_VERSION,
+                "adaptive_telemetry": tel_err.to_dict(),
+                "refusal": {"code": exc.reason_code, "reason_code": exc.reason_code},
+            },
+            "envelope": {
+                "status": "refused",
+                "reason_code": exc.reason_code,
+                "failure_kind": "INFRASTRUCTURE_FAILURE",
+            },
+        }
+        rec_err = {
+            "schema": "adaptive-input-route-receipt/1",
+            "status": "REFUSED",
+            "code": exc.reason_code,
+            "failure_kind": "TECHNICAL_FAILURE",
+            "adaptive_telemetry": tel_err.to_dict(),
+        }
+        return AdaptiveRouteOutcome(
+            status="REFUSED",
+            response=resp_err,
+            receipt=rec_err,
+            telemetry=tel_err,
+            local_parse_result=local_res,
+            cache_key=None,
+        )
+
+    slm_ms = float(slm_res.inference.inference_time_ms if slm_res.inference else 0.0)
+    slm_id = {
+        "route": "HYBRID_V5_LOCAL_SLM",
+        "router_version": ADAPTIVE_INPUT_ROUTER_VERSION,
+        "parser_version": LOCAL_GEOMETRY_PARSER_VERSION,
+        "runtime_version": LOCAL_SLM_RUNTIME_VERSION,
+        "extractor_version": LOCAL_SLM_EXTRACTOR_VERSION,
+        "model_key": slm_res.model_key,
+        "model_sha256": slm_res.model_sha256,
+        "strategy": slm_res.strategy,
+        "source": slm_res.norm_text,
+    }
+    slm_cache_key = sha256(json.dumps(slm_id, sort_keys=True, ensure_ascii=False).encode("utf-8")).hexdigest()
+
+    if not slm_res.ok or slm_res.canonical_payload is None:
+        total_ms = (time.perf_counter() - t0) * 1000.0 + previous_vision_ms
+        fail_code = slm_res.reason_code or "AMBIGUOUS_FACT"
+        tel_ref = AdaptiveRouteTelemetry(
+            router_version=ADAPTIVE_INPUT_ROUTER_VERSION,
+            parser_version=LOCAL_GEOMETRY_PARSER_VERSION,
+            input_kind=input_kind,
+            local_parse_status=local_res.status,
+            chosen_route="LOCAL_SLM_FALLBACK",
+            fallback_reason=local_res.fallback_reason or local_res.reason_code,
+            gemini_vision_calls=previous_vision_calls,
+            gemini_typed_fact_calls=0,
+            total_provider_calls=previous_vision_calls,
+            local_parse_ms=local_ms,
+            vision_ms=previous_vision_ms,
+            typed_fact_ai_ms=slm_ms,
+            hybrid_execution_ms=0.0,
+            total_ms=total_ms,
+            source_coverage=cov_dict,
+            cache_key_metadata=slm_id,
+        )
+        resp_ref = {
+            "schema_version": ROUTE_D_SIMULATION_V4_SCHEMA_VERSION,
+            "route_d": {
+                "status": "REFUSED",
+                "adapter_version": ADAPTER_V4_VERSION,
+                "schema_version": ROUTE_D_SIMULATION_V4_SCHEMA_VERSION,
+                "extraction_mode": "LOCAL_SLM_GROUNDING_REJECTED",
+                "local_parser_version": LOCAL_GEOMETRY_PARSER_VERSION,
+                "adaptive_router_version": ADAPTIVE_INPUT_ROUTER_VERSION,
+                "adaptive_telemetry": tel_ref.to_dict(),
+                "slm_grounding_envelope": slm_res.grounding_envelope,
+                "refusal": {
+                    "code": fail_code,
+                    "reason_code": fail_code,
+                    "failure_taxonomy": slm_res.failure_taxonomy,
+                },
+            },
+            "envelope": {
+                "status": "refused",
+                "reason_code": fail_code,
+                "failure_kind": "EXTRACTION_FALLBACK_REQUIRED",
+            },
+        }
+        rec_ref = {
+            "schema": "adaptive-input-route-receipt/1",
+            "status": "REFUSED",
+            "code": fail_code,
+            "failure_kind": "EXTRACTION_FAILURE",
+            "adaptive_telemetry": tel_ref.to_dict(),
+            "slm_grounding_envelope": slm_res.grounding_envelope,
+        }
+        return AdaptiveRouteOutcome(
+            status="REFUSED",
+            response=resp_ref,
+            receipt=rec_ref,
+            telemetry=tel_ref,
+            local_parse_result=local_res,
+            cache_key=None,
+        )
+
+    t_hyb0 = time.perf_counter()
+    hyb_out = run_hybrid_offline(
+        slm_res.norm_text,
+        ReplayExtractor({slm_res.norm_text: slm_res.canonical_payload}),
+        policy=eff_policy,
+        timeout_seconds=timeout_seconds,
+    )
+    hyb_exec_ms = (time.perf_counter() - t_hyb0) * 1000.0
+    total_ms = (time.perf_counter() - t0) * 1000.0 + previous_vision_ms
+
+    tel_ok = AdaptiveRouteTelemetry(
+        router_version=ADAPTIVE_INPUT_ROUTER_VERSION,
+        parser_version=LOCAL_GEOMETRY_PARSER_VERSION,
+        input_kind=input_kind,
+        local_parse_status=local_res.status,
+        chosen_route="LOCAL_SLM_FALLBACK",
+        fallback_reason=local_res.fallback_reason or local_res.reason_code,
+        gemini_vision_calls=previous_vision_calls,
+        gemini_typed_fact_calls=0,
+        total_provider_calls=previous_vision_calls,
+        local_parse_ms=local_ms,
+        vision_ms=previous_vision_ms,
+        typed_fact_ai_ms=slm_ms,
+        hybrid_execution_ms=hyb_exec_ms,
+        total_ms=total_ms,
+        source_coverage=cov_dict,
+        cache_key_metadata=slm_id,
+    )
+    resp_ok = dict(hyb_out.response)
+    route_d = dict(resp_ok.get("route_d") or {})
+    route_d["extraction_mode"] = "LOCAL_SLM_GROUNDED"
+    route_d["local_parser_version"] = LOCAL_GEOMETRY_PARSER_VERSION
+    route_d["adaptive_router_version"] = ADAPTIVE_INPUT_ROUTER_VERSION
+    route_d["adaptive_telemetry"] = tel_ok.to_dict()
+    route_d["slm_grounding_envelope"] = slm_res.grounding_envelope
+    resp_ok["route_d"] = route_d
+    rec_ok = {
+        **hyb_out.receipt,
+        "adaptive_telemetry": tel_ok.to_dict(),
+        "slm_grounding_envelope": slm_res.grounding_envelope,
+    }
+    status_str = str(route_d.get("status") or "REFUSED")
+    return AdaptiveRouteOutcome(
+        status=status_str,
+        response=resp_ok,
+        receipt=rec_ok,
+        telemetry=tel_ok,
+        local_parse_result=local_res,
+        cache_key=slm_cache_key if status_str == "SERVED" else None,
+    )

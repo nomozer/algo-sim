@@ -35,6 +35,9 @@ from app.simulation.geometry_functions.typed_fact_next import TYPED_FACT_NEXT_V2
 #: Surfaced as recoverable HTTP infrastructure errors (`502`/`503`/`504`), never mislabeled as mathematical refusals.
 HYBRID_INFRASTRUCTURE_CODES = frozenset({
     "LIVE_AI_DISABLED", "MISSING_API_KEY", "STAGING_CORPUS_UNAVAILABLE", "INVALID_HYBRID_ROUTE_MODE",
+    "MODEL_RUNTIME_UNAVAILABLE", "MODEL_CHECKSUM_MISMATCH", "LOCAL_SLM_BUSY",
+    "LOCAL_SLM_TIMEOUT", "LOCAL_SLM_PROCESS_CRASHED", "LOCAL_SLM_RESPONSE_INVALID",
+    "INVALID_LOCAL_SLM_MODEL",
     "PROVIDER_ERROR", "PROVIDER_BLOCKED", "PROVIDER_REFUSED", "NO_CANDIDATE",
     "PROVIDER_RESPONSE_INVALID", "MALFORMED_RESPONSE_PART", "JSON_INVALID",
     "RESPONSE_TRUNCATED", "MAX_TOKENS",
@@ -510,18 +513,83 @@ def prepare_local_first_hybrid(problem_text: str, *, model: str | None = None) -
     return LocalFirstHybridRun(problem_text, resolved_model, ext_fp, policy, key)
 
 
+@dataclass(frozen=True)
+class LocalSlmHybridRun:
+    """Selectable Local-SLM Hybrid `/5` run (`HYBRID_ROUTE_MODE=local-slm`, `external_ai_calls = 0`)."""
+    problem_text: str
+    model_key: str
+    strategy: str
+    extraction_surface: str
+    policy: RoutePolicy
+    cache_key: str
+
+    def run(
+        self,
+        *,
+        timeout_seconds: float = 30.0,
+        allow_download: bool = False,
+    ) -> HybridOfflineResult:
+        from app.ai.adaptive_input_router import route_text_input_local_slm
+
+        outcome = route_text_input_local_slm(
+            self.problem_text,
+            model_key=self.model_key,
+            strategy=self.strategy,
+            allow_download=allow_download,
+            policy=self.policy,
+            timeout_seconds=_finite_pos(timeout_seconds, 30.0),
+        )
+        return HybridOfflineResult(outcome.response, outcome.receipt)
+
+
+def prepare_local_slm_hybrid(
+    problem_text: str,
+    *,
+    model_key: str | None = None,
+    strategy: str | None = None,
+) -> LocalSlmHybridRun:
+    from app.ai.adaptive_input_router import ADAPTIVE_INPUT_ROUTER_VERSION
+    from app.ai.local_geometry_parser import LOCAL_GEOMETRY_PARSER_VERSION
+    from app.ai.local_slm_extractor import LOCAL_SLM_EXTRACTOR_VERSION, resolve_local_slm_strategy
+    from app.ai.local_slm_runtime import LOCAL_SLM_RUNTIME_VERSION, resolve_local_slm_model_spec
+
+    spec = resolve_local_slm_model_spec(model_key)
+    eff_strategy = resolve_local_slm_strategy(strategy)
+    policy = hybrid_offline_policy({'HYBRID_ROUTE_D_PREVIEW': '1'})
+    ext_fp = _tfn_extraction.typed_fact_next_surface_fingerprint()
+    identity = {
+        'route': 'HYBRID_V5_LOCAL_SLM',
+        'router_version': ADAPTIVE_INPUT_ROUTER_VERSION,
+        'parser_version': LOCAL_GEOMETRY_PARSER_VERSION,
+        'runtime_version': LOCAL_SLM_RUNTIME_VERSION,
+        'extractor_version': LOCAL_SLM_EXTRACTOR_VERSION,
+        'model_key': spec.model_key,
+        'model_sha256': spec.sha256,
+        'strategy': eff_strategy,
+        'extraction_surface': ext_fp,
+        'surface': dict(policy.preview_surface),
+        'response_contract': policy.response_contract,
+        'source': problem_text,
+    }
+    key = sha256(json.dumps(identity, sort_keys=True, ensure_ascii=False).encode('utf-8')).hexdigest()
+    return LocalSlmHybridRun(problem_text, spec.model_key, eff_strategy, ext_fp, policy, key)
+
+
 def hybrid_route_identity(mode: str, env: Mapping[str, str]) -> dict[str, Any]:
     """Diagnostics snapshot for `/api/diagnostics/runtime` (never exposes secrets)."""
     from app.ai.adaptive_input_router import ADAPTIVE_INPUT_ROUTER_VERSION
     from app.ai.local_geometry_parser import LOCAL_GEOMETRY_PARSER_VERSION
 
     surface = _surface()
-    valid = mode in ('staging-replay', 'live', 'local-first')
+    valid = mode in ('staging-replay', 'live', 'local-first', 'local-slm')
     extraction_mode = (
         'REPLAY_STAGING_SIMULATED' if mode == 'staging-replay'
         else (
-            'LOCAL_FIRST_DETERMINISTIC_WITH_AI_FALLBACK' if mode == 'local-first'
-            else ('LIVE_GEMINI_STRUCTURED' if mode == 'live' else 'INVALID_HYBRID_ROUTE_MODE')
+            'LOCAL_FIRST_SLM_GROUNDED' if mode == 'local-slm'
+            else (
+                'LOCAL_FIRST_DETERMINISTIC_WITH_AI_FALLBACK' if mode == 'local-first'
+                else ('LIVE_GEMINI_STRUCTURED' if mode == 'live' else 'INVALID_HYBRID_ROUTE_MODE')
+            )
         )
     )
     return {
