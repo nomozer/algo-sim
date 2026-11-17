@@ -3,6 +3,7 @@ import { resolve } from "node:path";
 import { renderToStaticMarkup } from "react-dom/server";
 import { afterEach, describe, expect, it } from "vitest";
 import { useAuthStore, type AuthUser } from "../../state/auth";
+import { LANDING_PYRAMID_SAMPLE } from "../landing/landing-geometry-data";
 import {
   buildHeroSpatialGallerySpecs,
   computeTrueShapeSection2D,
@@ -88,13 +89,15 @@ describe("AXO Landing V1.4 — Hero Visual System & Lifecycle", () => {
     expect(triArea).toBeGreaterThan(1.5);
     expect(new Set([s0.screenDz, s1.screenDz, s2.screenDz]).size).toBe(3);
 
-    // Satellite 0: exact regular octahedron edges (all 12 edges = r * sqrt(2))
-    const expectedOctEdge = gallery.octahedronRadius * Math.SQRT2;
-    for (const [i, j] of gallery.octahedronEdges) {
-      const a = gallery.octahedronVertices[i];
-      const b = gallery.octahedronVertices[j];
-      const d = Math.hypot(a[0] - b[0], a[1] - b[1], a[2] - b[2]);
-      expect(Math.abs(d - expectedOctEdge)).toBeLessThan(1e-6);
+    // Satellite 0: exact orthographic top-down plan projection of base square ABCD & MENPF onto z = 0
+    expect(gallery.planBaseVertices).toHaveLength(4);
+    expect(gallery.planSectionVertices).toHaveLength(5);
+    const expectedSide = 4 * gallery.planScale;
+    for (let i = 0; i < 4; i++) {
+      const a = gallery.planBaseVertices[i];
+      const b = gallery.planBaseVertices[(i + 1) % 4];
+      expect(a[2]).toBe(0);
+      expect(Math.abs(Math.hypot(b[0] - a[0], b[1] - a[1]) - expectedSide)).toBeLessThan(1e-6);
     }
 
     // Satellite 1: extracted isometric pentagon matches computeTrueShapeSection2D() edge ratios
@@ -114,15 +117,18 @@ describe("AXO Landing V1.4 — Hero Visual System & Lifecycle", () => {
       expect(Math.abs(d / trueShape.edgeLengths2D[i] - scaleRatio)).toBeLessThan(1e-6);
     }
 
-    // Satellite 2: unit cube sliced by x + y + z = 0 regular hexagon (planar + equal edges)
-    expect(gallery.cubeHexSection).toHaveLength(6);
-    const expectedHexEdge = gallery.cubeHalfSize * Math.SQRT2;
-    for (let i = 0; i < 6; i++) {
-      const pt = gallery.cubeHexSection[i];
-      expect(Math.abs(pt[0] + pt[1] + pt[2])).toBeLessThan(1e-6);
-      const next = gallery.cubeHexSection[(i + 1) % 6];
-      const d = Math.hypot(next[0] - pt[0], next[1] - pt[1], next[2] - pt[2]);
-      expect(Math.abs(d - expectedHexEdge)).toBeLessThan(1e-6);
+    // Satellite 2: detached miniature upper cap S.MENPF preserves uniform similarity scale across all edges
+    expect(gallery.detachedCapVertices).toHaveLength(6);
+    const capMap = Object.fromEntries(gallery.detachedCapVertices.map((v) => [v.id, v.pos]));
+    const pMap = LANDING_PYRAMID_SAMPLE.pointMap;
+    for (const [uId, vId] of gallery.detachedCapLateralEdges) {
+      const cu = capMap[uId];
+      const cv = capMap[vId];
+      const wu = pMap[uId].pos;
+      const wv = pMap[vId].pos;
+      const dCap = Math.hypot(cu[0] - cv[0], cu[1] - cv[1], cu[2] - cv[2]);
+      const dWorld = Math.hypot(wu[0] - wv[0], wu[1] - wv[1], wu[2] - wv[2]);
+      expect(Math.abs(dCap - dWorld * gallery.detachedCapScale)).toBeLessThan(1e-6);
     }
   });
 

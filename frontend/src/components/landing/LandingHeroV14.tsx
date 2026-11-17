@@ -60,7 +60,7 @@ export const HERO_SECTION_FILL_OPACITY = 0.5;
 export const HERO_SATELLITE_COUNT = 3;
 
 export interface HeroGallerySatelliteSpec {
-  readonly id: "octahedron" | "extractedPentagon" | "slicedCube";
+  readonly id: "orthographicPlan" | "extractedPentagon" | "detachedUpperCap";
   readonly offset: Vec3Tuple;
   readonly screenDx: number;
   readonly screenDy: number;
@@ -75,16 +75,14 @@ export interface HeroSpatialGallerySpecs {
   readonly basisRight: Vec3Tuple;
   readonly basisUp: Vec3Tuple;
   readonly basisForward: Vec3Tuple;
-  readonly octahedronRadius: number;
-  readonly octahedronVertices: readonly Vec3Tuple[];
-  readonly octahedronEdges: readonly (readonly [number, number])[];
-  readonly octahedronFaces: readonly (readonly [number, number, number])[];
-  readonly octahedronMidRing: readonly Vec3Tuple[];
+  readonly planScale: number;
+  readonly planBaseVertices: readonly Vec3Tuple[];
+  readonly planSectionVertices: readonly Vec3Tuple[];
   readonly extractedPentagonPts: readonly Vec3Tuple[];
-  readonly cubeHalfSize: number;
-  readonly cubeVertices: readonly Vec3Tuple[];
-  readonly cubeEdges: readonly (readonly [number, number])[];
-  readonly cubeHexSection: readonly Vec3Tuple[];
+  readonly detachedCapScale: number;
+  readonly detachedCapVertices: readonly { readonly id: string; readonly pos: Vec3Tuple }[];
+  readonly detachedCapLateralEdges: readonly (readonly [string, string])[];
+  readonly detachedCapSectionIds: readonly string[];
   readonly satellites: readonly HeroGallerySatelliteSpec[];
 }
 
@@ -143,12 +141,12 @@ export function evaluateHeroStoryboard(
   else if (p >= 0.48) beat = "plane-intersection";
   else if (p >= 0.24) beat = "seed-anchors";
 
-  const solidReveal = 0.45 + 0.55 * clampPhase(p, 0.0, 0.22);
-  const seedReveal = clampPhase(p, 0.12, 0.3);
-  const planeSweep = clampPhase(p, 0.18, 0.36);
-  const traceProgress = clampPhase(p, 0.22, 0.42);
-  const sectionFill = clampPhase(p, 0.26, 0.48);
-  const satelliteReveal = clampPhase(p, 0.14, 0.46);
+  const solidReveal = 0.45 + 0.55 * clampPhase(p, 0.0, 0.24);
+  const seedReveal = clampPhase(p, 0.14, 0.36);
+  const planeSweep = clampPhase(p, 0.22, 0.46);
+  const traceProgress = clampPhase(p, 0.36, 0.64);
+  const sectionFill = clampPhase(p, 0.48, 0.78);
+  const satelliteReveal = clampPhase(p, 0.38, 0.80);
   const capLift = 0;
   const orbitOffsetRad = (1 - clampPhase(p, 0.0, 0.96)) * 0.14;
 
@@ -290,8 +288,9 @@ export function computeTrueShapeSection2D(
 }
 
 /**
- * Pure Spatial Geometry Gallery specification: places 3 asymmetric, mathematically
- * grounded Axo satellites in 3D camera-basis depth around S.ABCD without overlap or collinearity.
+ * Pure Spatial Geometry Gallery specification: places 3 asymmetric companions
+ * derived strictly from canonical S.ABCD (orthographic top plan, true-shape
+ * pentagon MENPF, and detached miniature upper cap S.MENPF) in camera-basis depth.
  */
 export function buildHeroSpatialGallerySpecs(): HeroSpatialGallerySpecs {
   const [lookX, lookY, lookZ] = LANDING_PYRAMID_SAMPLE.defaultLookAt;
@@ -308,95 +307,87 @@ export function buildHeroSpatialGallerySpecs(): HeroSpatialGallerySpecs {
     lookTarget[2] + basisRight[2] * dx + basisUp[2] * dy + basisForward[2] * dz,
   ];
 
-  // Satellite 1 (rear upper-right): Regular Octahedron + horizontal equatorial square trace
-  const r = 0.44;
-  const octahedronVertices: readonly Vec3Tuple[] = [
-    [r, 0, 0],
-    [-r, 0, 0],
-    [0, r, 0],
-    [0, -r, 0],
-    [0, 0, r],
-    [0, 0, -r],
-  ];
-  const octahedronEdges: readonly (readonly [number, number])[] = [
-    [2, 0], [2, 1], [2, 4], [2, 5],
-    [3, 0], [3, 1], [3, 4], [3, 5],
-    [0, 4], [4, 1], [1, 5], [5, 0],
-  ];
-  const octahedronFaces: readonly (readonly [number, number, number])[] = [
-    [2, 0, 4], [2, 4, 1], [2, 1, 5], [2, 5, 0],
-    [3, 4, 0], [3, 1, 4], [3, 5, 1], [3, 0, 5],
-  ];
-  const hr = r * 0.5;
-  const octahedronMidRing: readonly Vec3Tuple[] = [
-    [hr, 0, hr],
-    [-hr, 0, hr],
-    [-hr, 0, -hr],
-    [hr, 0, -hr],
-  ];
+  const pMap = LANDING_PYRAMID_SAMPLE.pointMap;
 
-  // Satellite 2 (foreground lower-left): Extracted isometric true-shape pentagon MENPF plate
+  // Satellite 0 (rear upper-right): Orthographic top-down plan projection of S.ABCD + MENPF onto (ABCD)
+  const planScale = 0.23;
+  const baseCenterDom = pMap["O"]?.domainXyz ?? [2, 2, 0];
+  const projectPlan = (id: string): Vec3Tuple => {
+    const dom = pMap[id]?.domainXyz ?? [0, 0, 0];
+    return [
+      (dom[0] - baseCenterDom[0]) * planScale,
+      (dom[1] - baseCenterDom[1]) * planScale,
+      0,
+    ];
+  };
+  const planBaseVertices: readonly Vec3Tuple[] = ["A", "B", "C", "D"].map(projectPlan);
+  const planSectionVertices: readonly Vec3Tuple[] = LANDING_PYRAMID_SAMPLE.sectionLoop.map(projectPlan);
+
+  // Satellite 1 (foreground lower-left): Extracted isometric true-shape pentagon MENPF plate
   const trueShape = computeTrueShapeSection2D();
-  const pentScale = 0.185;
+  const pentScale = 0.235;
   const extractedPentagonPts: readonly Vec3Tuple[] = trueShape.vertices.map((v) => [
     v.x * pentScale,
     -v.y * pentScale,
     0,
   ]);
 
-  // Satellite 3 (midground lower-right): Unit cube sliced by x + y + z = 0 regular hexagon
-  const h = 0.34;
-  const cubeVertices: readonly Vec3Tuple[] = [
-    [-h, -h, -h],
-    [h, -h, -h],
-    [h, h, -h],
-    [-h, h, -h],
-    [-h, -h, h],
-    [h, -h, h],
-    [h, h, h],
-    [-h, h, h],
+  // Satellite 2 (midground lower-right): Miniature detached upper polyhedron cap S.MENPF
+  const detachedCapScale = 0.33;
+  const capIds = ["S", "M", "E", "N", "P", "F"] as const;
+  const capRaw = capIds.map((id) => pMap[id].pos);
+  const capCentroid: Vec3Tuple = [
+    capRaw.reduce((acc, p) => acc + p[0], 0) / capRaw.length,
+    capRaw.reduce((acc, p) => acc + p[1], 0) / capRaw.length,
+    capRaw.reduce((acc, p) => acc + p[2], 0) / capRaw.length,
   ];
-  const cubeEdges: readonly (readonly [number, number])[] = [
-    [0, 1], [1, 2], [2, 3], [3, 0],
-    [4, 5], [5, 6], [6, 7], [7, 4],
-    [0, 4], [1, 5], [2, 6], [3, 7],
+  const detachedCapVertices = capIds.map((id) => {
+    const pos = pMap[id].pos;
+    return {
+      id,
+      pos: [
+        (pos[0] - capCentroid[0]) * detachedCapScale,
+        (pos[1] - capCentroid[1]) * detachedCapScale,
+        (pos[2] - capCentroid[2]) * detachedCapScale,
+      ] as Vec3Tuple,
+    };
+  });
+  const detachedCapLateralEdges: readonly (readonly [string, string])[] = [
+    ["S", "M"],
+    ["S", "E"],
+    ["S", "N"],
+    ["S", "P"],
+    ["S", "F"],
   ];
-  const cubeHexSection: readonly Vec3Tuple[] = [
-    [h, -h, 0],
-    [h, 0, -h],
-    [0, h, -h],
-    [-h, h, 0],
-    [-h, 0, h],
-    [0, -h, h],
-  ];
+  const detachedCapSectionIds: readonly string[] = ["M", "E", "N", "P", "F"];
 
   const satellites: readonly HeroGallerySatelliteSpec[] = [
     {
-      id: "octahedron",
-      offset: placeInCameraFrame(2.36, 1.88, 1.35),
-      screenDx: 2.36,
-      screenDy: 1.88,
-      screenDz: 1.35,
-      rotation: [0.26, 0.44, -0.14],
+      id: "orthographicPlan",
+      offset: placeInCameraFrame(2.38, 1.66, 1.25),
+      screenDx: 2.38,
+      screenDy: 1.66,
+      screenDz: 1.25,
+      rotation: [0.22, -0.26, -0.14],
       parallaxFactor: 0.72,
     },
     {
       id: "extractedPentagon",
-      offset: placeInCameraFrame(-2.92, 0.58, -0.65),
-      screenDx: -2.92,
-      screenDy: 0.58,
-      screenDz: -0.65,
-      rotation: [-0.22, 0.32, 0.08],
-      parallaxFactor: 1.28,
+      offset: placeInCameraFrame(-2.78, 0.36, -0.58),
+      screenDx: -2.78,
+      screenDy: 0.36,
+      screenDz: -0.58,
+      rotation: [0.12, 0.24, 0.06],
+      parallaxFactor: 1.26,
     },
     {
-      id: "slicedCube",
-      offset: placeInCameraFrame(3.24, -0.36, -0.28),
-      screenDx: 3.24,
-      screenDy: -0.36,
-      screenDz: -0.28,
-      rotation: [0.24, -0.36, 0.12],
-      parallaxFactor: 1.12,
+      id: "detachedUpperCap",
+      offset: placeInCameraFrame(3.18, -0.56, -0.24),
+      screenDx: 3.18,
+      screenDy: -0.56,
+      screenDz: -0.24,
+      rotation: [0.18, -0.34, 0.06],
+      parallaxFactor: 1.1,
     },
   ];
 
@@ -406,16 +397,14 @@ export function buildHeroSpatialGallerySpecs(): HeroSpatialGallerySpecs {
     basisRight,
     basisUp,
     basisForward,
-    octahedronRadius: r,
-    octahedronVertices,
-    octahedronEdges,
-    octahedronFaces,
-    octahedronMidRing,
+    planScale,
+    planBaseVertices,
+    planSectionVertices,
     extractedPentagonPts,
-    cubeHalfSize: h,
-    cubeVertices,
-    cubeEdges,
-    cubeHexSection,
+    detachedCapScale,
+    detachedCapVertices,
+    detachedCapLateralEdges,
+    detachedCapSectionIds,
     satellites,
   };
 }
@@ -583,7 +572,7 @@ function createCylinderEdge(
   return mesh;
 }
 
-function createHeroShadowTexture(): THREE.CanvasTexture | null {
+function createHeroContactTexture(): THREE.CanvasTexture | null {
   if (typeof document === "undefined") return null;
   const canvas = document.createElement("canvas");
   canvas.width = 128;
@@ -625,55 +614,61 @@ function HeroFallbackSvg() {
         ry="18"
       />
 
-      {/* Satellite 1 (rear upper-right): Wireframe Octahedron + horizontal mid trace */}
-      <g opacity="0.86">
-        <polygon className="axo-v14-svg-solid-upper" points="502,74 538,108 502,144 466,108" fillOpacity="0.42" />
-        <line className="axo-v14-svg-edge-hidden" x1="466" y1="108" x2="538" y2="108" strokeOpacity="0.38" />
-        <line className="axo-v14-svg-edge-altitude" x1="484" y1="98" x2="520" y2="98" strokeOpacity="0.7" />
-        <line className="axo-v14-svg-edge-altitude" x1="520" y1="98" x2="520" y2="118" strokeOpacity="0.7" />
-        <line className="axo-v14-svg-edge-solid" x1="502" y1="74" x2="466" y2="108" strokeWidth="1.25" />
-        <line className="axo-v14-svg-edge-solid" x1="502" y1="74" x2="538" y2="108" strokeWidth="1.25" />
-        <line className="axo-v14-svg-edge-solid" x1="466" y1="108" x2="502" y2="144" strokeWidth="1.25" />
-        <line className="axo-v14-svg-edge-solid" x1="538" y1="108" x2="502" y2="144" strokeWidth="1.25" />
-        <line className="axo-v14-svg-edge-solid" x1="502" y1="74" x2="502" y2="144" strokeWidth="1.15" />
-      </g>
-
-      {/* Satellite 2 (foreground lower-left): Extracted true-shape pentagon MENPF plate */}
-      <g opacity="0.9">
-        <ellipse className="axo-v14-svg-contact-halo" cx="86" cy="296" rx="44" ry="11" />
+      {/* Satellite 0 (rear upper-right): Orthographic top plan projection (ABCD) + M'E'N'P'F' */}
+      <g opacity="0.88">
+        <polygon className="axo-v14-svg-solid-base" points="462,76 534,68 542,140 470,148" fillOpacity="0.65" />
+        <line className="axo-v14-svg-edge-hidden" x1="462" y1="76" x2="542" y2="140" strokeOpacity="0.34" />
+        <line className="axo-v14-svg-edge-hidden" x1="534" y1="68" x2="470" y2="148" strokeOpacity="0.34" />
+        <line className="axo-v14-svg-edge-solid" x1="462" y1="76" x2="534" y2="68" strokeWidth="1.2" />
+        <line className="axo-v14-svg-edge-solid" x1="534" y1="68" x2="542" y2="140" strokeWidth="1.2" />
+        <line className="axo-v14-svg-edge-solid" x1="542" y1="140" x2="470" y2="148" strokeWidth="1.2" />
+        <line className="axo-v14-svg-edge-solid" x1="470" y1="148" x2="462" y2="76" strokeWidth="1.2" />
         <polygon
           className="axo-v14-svg-section-poly"
-          points="86,216 54,244 68,280 106,276 116,240"
-          fillOpacity="0.28"
-          strokeWidth="1.65"
+          points="462,76 516,70 538,104 506,144 468,130"
+          fillOpacity="0.32"
+          strokeWidth="1.5"
         />
-        <circle className="axo-v14-svg-seed-dot" cx="86" cy="216" r="2.7" />
-        <circle className="axo-v14-svg-section-dot" cx="54" cy="244" r="2.7" />
-        <circle className="axo-v14-svg-seed-dot" cx="68" cy="280" r="2.7" />
-        <circle className="axo-v14-svg-seed-dot" cx="106" cy="276" r="2.7" />
-        <circle className="axo-v14-svg-section-dot" cx="116" cy="240" r="2.7" />
+        <circle className="axo-v14-svg-seed-dot" cx="462" cy="76" r="2.4" />
+        <circle className="axo-v14-svg-seed-dot" cx="538" cy="104" r="2.4" />
+        <circle className="axo-v14-svg-seed-dot" cx="506" cy="144" r="2.4" />
       </g>
 
-      {/* Satellite 3 (midground lower-right): Mini unit cube + oblique regular hexagon slice */}
-      <g opacity="0.9">
-        <ellipse className="axo-v14-svg-contact-halo" cx="508" cy="368" rx="46" ry="12" />
+      {/* Satellite 1 (foreground lower-left): Extracted true-shape pentagon MENPF plate */}
+      <g opacity="0.92">
+        <ellipse className="axo-v14-svg-contact-halo" cx="88" cy="306" rx="48" ry="12" />
         <polygon
-          className="axo-v14-svg-solid-base"
-          points="476,304 508,288 540,304 540,342 508,358 476,342"
-          fillOpacity="0.72"
+          className="axo-v14-svg-section-poly"
+          points="88,208 48,244 66,288 112,282 124,238"
+          fillOpacity="0.32"
+          strokeWidth="1.75"
+        />
+        <circle className="axo-v14-svg-seed-dot" cx="88" cy="208" r="2.9" />
+        <circle className="axo-v14-svg-section-dot" cx="48" cy="244" r="2.9" />
+        <circle className="axo-v14-svg-seed-dot" cx="66" cy="288" r="2.9" />
+        <circle className="axo-v14-svg-seed-dot" cx="112" cy="282" r="2.9" />
+        <circle className="axo-v14-svg-section-dot" cx="124" cy="238" r="2.9" />
+      </g>
+
+      {/* Satellite 2 (midground lower-right): Miniature detached upper cap S.MENPF */}
+      <g opacity="0.92">
+        <ellipse className="axo-v14-svg-contact-halo" cx="506" cy="378" rx="46" ry="12" />
+        <polygon
+          className="axo-v14-svg-solid-upper"
+          points="498,274 470,336 496,356 534,352 540,322"
+          fillOpacity="0.48"
         />
         <polygon
-          className="axo-v14-svg-cutting-plane"
-          points="492,296 524,296 540,323 524,350 492,350 476,323"
-          fillOpacity="0.28"
-          strokeWidth="1.25"
+          className="axo-v14-svg-section-poly"
+          points="496,314 470,336 496,356 534,352 540,322"
+          fillOpacity="0.34"
+          strokeWidth="1.45"
         />
-        <line className="axo-v14-svg-edge-solid" x1="476" y1="304" x2="508" y2="288" strokeWidth="1.25" />
-        <line className="axo-v14-svg-edge-solid" x1="508" y1="288" x2="540" y2="304" strokeWidth="1.25" />
-        <line className="axo-v14-svg-edge-solid" x1="540" y1="304" x2="540" y2="342" strokeWidth="1.25" />
-        <line className="axo-v14-svg-edge-solid" x1="540" y1="342" x2="508" y2="358" strokeWidth="1.25" />
-        <line className="axo-v14-svg-edge-solid" x1="508" y1="358" x2="476" y2="342" strokeWidth="1.25" />
-        <line className="axo-v14-svg-edge-solid" x1="476" y1="342" x2="476" y2="304" strokeWidth="1.25" />
+        <line className="axo-v14-svg-edge-altitude" x1="498" y1="274" x2="496" y2="314" strokeWidth="1.2" />
+        <line className="axo-v14-svg-edge-solid" x1="498" y1="274" x2="470" y2="336" strokeWidth="1.2" />
+        <line className="axo-v14-svg-edge-solid" x1="498" y1="274" x2="496" y2="356" strokeWidth="1.2" />
+        <line className="axo-v14-svg-edge-solid" x1="498" y1="274" x2="534" y2="352" strokeWidth="1.2" />
+        <line className="axo-v14-svg-edge-solid" x1="498" y1="274" x2="540" y2="322" strokeWidth="1.2" />
       </g>
 
       {/* Centerpiece Primary Solid: S.ABCD */}
@@ -872,24 +867,24 @@ function HeroSpatialStage() {
       if (hi.length >= 3) upperFaces.push({ pts: hi });
     }
 
-    // 1. Soft Studio Contact Shadow & Altitude SA perp (ABCD) Right-Angle Witness
-    const shadowTex = createHeroShadowTexture();
-    if (shadowTex) track(shadowTex);
-    const groundShadowGeo = track(new THREE.PlaneGeometry(4.8, 4.2));
-    groundShadowGeo.rotateX(-Math.PI / 2);
-    const groundShadowMat = track(
+    // 1. Soft Studio Contact Disc & Altitude SA perp (ABCD) Right-Angle Witness
+    const contactTex = createHeroContactTexture();
+    if (contactTex) track(contactTex);
+    const groundContactGeo = track(new THREE.PlaneGeometry(4.8, 4.2));
+    groundContactGeo.rotateX(-Math.PI / 2);
+    const groundContactMat = track(
       new THREE.MeshBasicMaterial({
-        map: shadowTex ?? undefined,
-        color: shadowTex ? 0xffffff : 0x191918,
+        map: contactTex ?? undefined,
+        color: contactTex ? 0xffffff : 0x191918,
         transparent: true,
-        opacity: shadowTex ? 0.94 : 0.06,
+        opacity: contactTex ? 0.94 : 0.06,
         depthWrite: false,
       }),
     );
-    const groundShadowMesh = new THREE.Mesh(groundShadowGeo, groundShadowMat);
-    groundShadowMesh.position.set(baseCenter.x, A.y - 0.036, baseCenter.z);
-    groundShadowMesh.renderOrder = 0;
-    root.add(groundShadowMesh);
+    const groundContactMesh = new THREE.Mesh(groundContactGeo, groundContactMat);
+    groundContactMesh.position.set(baseCenter.x, A.y - 0.036, baseCenter.z);
+    groundContactMesh.renderOrder = 0;
+    root.add(groundContactMesh);
 
     const uAB = new THREE.Vector3().subVectors(B, A).normalize().multiplyScalar(0.26);
     const uAS = new THREE.Vector3().subVectors(S, A).normalize().multiplyScalar(0.26);
@@ -1192,59 +1187,62 @@ function HeroSpatialStage() {
       0.88,
     );
 
-    // Satellite 0 (rear upper-right): Regular Octahedron + Mid-Section Square
-    const octGroup = new THREE.Group();
-    const octVecs = gallerySpecs.octahedronVertices.map(([x, y, z]) => new THREE.Vector3(x, y, z));
-    const octFaceData: ClippedPolygonFace[] = gallerySpecs.octahedronFaces.map(([i0, i1, i2]) => ({
-      pts: [octVecs[i0], octVecs[i1], octVecs[i2]],
-    }));
-    const octFaceGeo = track(buildFacesBufferGeometry(octFaceData, 0xdcebfa));
-    const octFaceMat = registerSatMaterial(
+    // Satellite 0 (rear upper-right): Orthographic top-down plan projection of (ABCD) + M'E'N'P'F'
+    const planGroup = new THREE.Group();
+    const planBaseVecs = gallerySpecs.planBaseVertices.map(([x, y, z]) => new THREE.Vector3(x, y, z));
+    const planPlateGeo = track(buildFacesBufferGeometry([{ pts: planBaseVecs }], 0xeef3f8));
+    const planPlateMat = registerSatMaterial(
       track(
         new THREE.MeshBasicMaterial({
           color: 0xffffff,
           vertexColors: true,
           transparent: true,
-          opacity: 0.22,
+          opacity: 0.72,
           side: THREE.DoubleSide,
           depthWrite: false,
         }),
       ),
-      0.22,
+      0.72,
     );
-    const octFaceMesh = new THREE.Mesh(octFaceGeo, octFaceMat);
-    octFaceMesh.renderOrder = 2;
-    octGroup.add(octFaceMesh);
-    for (const [aIdx, bIdx] of gallerySpecs.octahedronEdges) {
-      octGroup.add(createSatLine(octVecs[aIdx], octVecs[bIdx], 0x0075de, 0.56, 4));
+    const planPlateMesh = new THREE.Mesh(planPlateGeo, planPlateMat);
+    planPlateMesh.renderOrder = 2;
+    planGroup.add(planPlateMesh);
+    for (let i = 0; i < planBaseVecs.length; i++) {
+      planGroup.add(
+        createSatLine(planBaseVecs[i], planBaseVecs[(i + 1) % planBaseVecs.length], 0x191918, 0.56, 4),
+      );
     }
-    const midRingVecs = gallerySpecs.octahedronMidRing.map(([x, y, z]) => new THREE.Vector3(x, y, z));
-    const midRingFillGeo = track(buildFacesBufferGeometry([{ pts: midRingVecs }]));
-    const midRingFillMat = registerSatMaterial(
+    planGroup.add(createSatLine(planBaseVecs[0], planBaseVecs[2], 0x0075de, 0.34, 3));
+    planGroup.add(createSatLine(planBaseVecs[1], planBaseVecs[3], 0x0075de, 0.34, 3));
+
+    const planSecVecs = gallerySpecs.planSectionVertices.map(([x, y, z]) => new THREE.Vector3(x, y, z + 0.01));
+    const planSecFillGeo = track(buildFacesBufferGeometry([{ pts: planSecVecs }]));
+    const planSecFillMat = registerSatMaterial(
       track(
         new THREE.MeshBasicMaterial({
           color: 0xed6d14,
           transparent: true,
-          opacity: 0.28,
+          opacity: 0.34,
           side: THREE.DoubleSide,
           depthWrite: false,
         }),
       ),
-      0.28,
+      0.34,
     );
-    const midRingFillMesh = new THREE.Mesh(midRingFillGeo, midRingFillMat);
-    midRingFillMesh.renderOrder = 3;
-    octGroup.add(midRingFillMesh);
-    for (let i = 0; i < midRingVecs.length; i++) {
-      octGroup.add(
-        createSatLine(midRingVecs[i], midRingVecs[(i + 1) % midRingVecs.length], 0xdd5b00, 0.72, 5),
+    const planSecMesh = new THREE.Mesh(planSecFillGeo, planSecFillMat);
+    planSecMesh.renderOrder = 3;
+    planGroup.add(planSecMesh);
+    for (let i = 0; i < planSecVecs.length; i++) {
+      planGroup.add(
+        createSatLine(planSecVecs[i], planSecVecs[(i + 1) % planSecVecs.length], 0x793400, 0.82, 5),
       );
-      const dot = new THREE.Mesh(satBeadGeo, satAmberDotMat);
-      dot.position.copy(midRingVecs[i]);
+      const isSeedVertex = i === 0 || i === 2 || i === 3;
+      const dot = new THREE.Mesh(satBeadGeo, isSeedVertex ? satBlueDotMat : satAmberDotMat);
+      dot.position.copy(planSecVecs[i]);
       dot.renderOrder = 6;
-      octGroup.add(dot);
+      planGroup.add(dot);
     }
-    satellitesRoot.add(octGroup);
+    satellitesRoot.add(planGroup);
 
     // Satellite 1 (foreground lower-left): Extracted Isometric True-Shape MENPF Plate
     const pentGroup = new THREE.Group();
@@ -1257,19 +1255,19 @@ function HeroSpatialStage() {
         new THREE.MeshBasicMaterial({
           color: 0xed6d14,
           transparent: true,
-          opacity: 0.36,
+          opacity: 0.4,
           side: THREE.DoubleSide,
           depthWrite: false,
         }),
       ),
-      0.36,
+      0.4,
     );
     const pentFillMesh = new THREE.Mesh(pentFillGeo, pentFillMat);
     pentFillMesh.renderOrder = 3;
     pentGroup.add(pentFillMesh);
     for (let i = 0; i < pentVecs.length; i++) {
       pentGroup.add(
-        createSatLine(pentVecs[i], pentVecs[(i + 1) % pentVecs.length], 0x793400, 0.88, 5),
+        createSatLine(pentVecs[i], pentVecs[(i + 1) % pentVecs.length], 0x793400, 0.9, 5),
       );
       const isSeedVertex = i === 0 || i === 2 || i === 3;
       const dot = new THREE.Mesh(satBeadGeo, isSeedVertex ? satBlueDotMat : satAmberDotMat);
@@ -1277,82 +1275,130 @@ function HeroSpatialStage() {
       dot.renderOrder = 6;
       pentGroup.add(dot);
     }
-    const pentShadowGeo = track(new THREE.PlaneGeometry(0.96, 0.72));
-    pentShadowGeo.rotateX(-Math.PI / 2);
-    const pentShadowMat = registerSatMaterial(
+    const pentContactGeo = track(new THREE.PlaneGeometry(1.12, 0.84));
+    pentContactGeo.rotateX(-Math.PI / 2);
+    const pentContactMat = registerSatMaterial(
       track(
         new THREE.MeshBasicMaterial({
-          map: shadowTex ?? undefined,
-          color: shadowTex ? 0xffffff : 0x191918,
+          map: contactTex ?? undefined,
+          color: contactTex ? 0xffffff : 0x191918,
           transparent: true,
-          opacity: shadowTex ? 0.56 : 0.04,
+          opacity: contactTex ? 0.56 : 0.04,
           depthWrite: false,
         }),
       ),
-      shadowTex ? 0.56 : 0.04,
+      contactTex ? 0.56 : 0.04,
     );
-    const pentShadowMesh = new THREE.Mesh(pentShadowGeo, pentShadowMat);
-    pentShadowMesh.position.set(0, -0.44, 0);
-    pentShadowMesh.renderOrder = 0;
-    pentGroup.add(pentShadowMesh);
+    const pentContactMesh = new THREE.Mesh(pentContactGeo, pentContactMat);
+    pentContactMesh.position.set(0, -0.5, 0);
+    pentContactMesh.renderOrder = 0;
+    pentGroup.add(pentContactMesh);
     satellitesRoot.add(pentGroup);
 
-    // Satellite 2 (midground lower-right): Mini Cube Sliced by Regular Hexagon (x+y+z=0)
-    const cubeGroup = new THREE.Group();
-    const cubeVecs = gallerySpecs.cubeVertices.map(([x, y, z]) => new THREE.Vector3(x, y, z));
-    for (const [aIdx, bIdx] of gallerySpecs.cubeEdges) {
-      cubeGroup.add(createSatLine(cubeVecs[aIdx], cubeVecs[bIdx], 0x615d59, 0.48, 4));
+    // Satellite 2 (midground lower-right): Miniature Detached Upper Polyhedron Cap S.MENPF
+    const capGroup = new THREE.Group();
+    const capVertMap = Object.fromEntries(
+      gallerySpecs.detachedCapVertices.map((v) => [v.id, new THREE.Vector3(...v.pos)]),
+    );
+    const capCentroidVec = new THREE.Vector3();
+    const capFaceLoops: ClippedPolygonFace[] = [];
+    for (let i = 0; i < gallerySpecs.detachedCapSectionIds.length; i++) {
+      const idA = gallerySpecs.detachedCapSectionIds[i];
+      const idB =
+        gallerySpecs.detachedCapSectionIds[(i + 1) % gallerySpecs.detachedCapSectionIds.length];
+      capFaceLoops.push({
+        pts: orientFaceOutward([capVertMap[idA], capVertMap[idB], capVertMap["S"]], capCentroidVec),
+      });
     }
-    const hexVecs = gallerySpecs.cubeHexSection.map(([x, y, z]) => new THREE.Vector3(x, y, z));
-    const hexFillGeo = track(buildFacesBufferGeometry([{ pts: hexVecs }]));
-    const hexFillMat = registerSatMaterial(
+    const capLatGeo = track(buildFacesBufferGeometry(capFaceLoops, 0xf3f0ea));
+    const capLatMat = registerSatMaterial(
       track(
         new THREE.MeshBasicMaterial({
-          color: 0xed6d14,
+          color: 0xffffff,
+          vertexColors: true,
           transparent: true,
-          opacity: 0.38,
+          opacity: 0.72,
           side: THREE.DoubleSide,
           depthWrite: false,
         }),
       ),
-      0.38,
+      0.72,
     );
-    const hexFillMesh = new THREE.Mesh(hexFillGeo, hexFillMat);
-    hexFillMesh.renderOrder = 3;
-    cubeGroup.add(hexFillMesh);
-    for (let i = 0; i < hexVecs.length; i++) {
-      cubeGroup.add(
-        createSatLine(hexVecs[i], hexVecs[(i + 1) % hexVecs.length], 0x793400, 0.86, 5),
-      );
-      const dot = new THREE.Mesh(satBeadGeo, satAmberDotMat);
-      dot.position.copy(hexVecs[i]);
-      dot.renderOrder = 6;
-      cubeGroup.add(dot);
-    }
-    const cubeShadowGeo = track(new THREE.PlaneGeometry(1.06, 0.84));
-    cubeShadowGeo.rotateX(-Math.PI / 2);
-    const cubeShadowMat = registerSatMaterial(
+    const capLatMesh = new THREE.Mesh(capLatGeo, capLatMat);
+    capLatMesh.renderOrder = 2;
+    capGroup.add(capLatMesh);
+
+    const capBasePts = gallerySpecs.detachedCapSectionIds.map((id) => capVertMap[id]);
+    const capBaseGeo = track(buildFacesBufferGeometry([{ pts: capBasePts }]));
+    const capBaseMat = registerSatMaterial(
       track(
         new THREE.MeshBasicMaterial({
-          map: shadowTex ?? undefined,
-          color: shadowTex ? 0xffffff : 0x191918,
+          color: 0xed6d14,
           transparent: true,
-          opacity: shadowTex ? 0.52 : 0.04,
+          opacity: 0.42,
+          side: THREE.DoubleSide,
           depthWrite: false,
         }),
       ),
-      shadowTex ? 0.52 : 0.04,
+      0.42,
     );
-    const cubeShadowMesh = new THREE.Mesh(cubeShadowGeo, cubeShadowMat);
-    cubeShadowMesh.position.set(0, -0.48, 0);
-    cubeShadowMesh.renderOrder = 0;
-    cubeGroup.add(cubeShadowMesh);
-    satellitesRoot.add(cubeGroup);
+    const capBaseMesh = new THREE.Mesh(capBaseGeo, capBaseMat);
+    capBaseMesh.renderOrder = 3;
+    capGroup.add(capBaseMesh);
+
+    for (const [uId, vId] of gallerySpecs.detachedCapLateralEdges) {
+      const isAlt = uId === "S" && vId === "M";
+      capGroup.add(
+        createSatLine(capVertMap[uId], capVertMap[vId], isAlt ? 0x0075de : 0x191918, 0.78, 4),
+      );
+    }
+    for (let i = 0; i < capBasePts.length; i++) {
+      capGroup.add(
+        createSatLine(capBasePts[i], capBasePts[(i + 1) % capBasePts.length], 0x793400, 0.88, 5),
+      );
+      const id = gallerySpecs.detachedCapSectionIds[i];
+      const isSeedVertex = id === "M" || id === "N" || id === "P";
+      const dot = new THREE.Mesh(satBeadGeo, isSeedVertex ? satBlueDotMat : satAmberDotMat);
+      dot.position.copy(capBasePts[i]);
+      dot.renderOrder = 6;
+      capGroup.add(dot);
+    }
+    const apexBead = new THREE.Mesh(satBeadGeo, registerSatMaterial(track(new THREE.MeshBasicMaterial({ color: 0x191918, transparent: true, opacity: 0.9 })), 0.9));
+    apexBead.position.copy(capVertMap["S"]);
+    apexBead.renderOrder = 6;
+    capGroup.add(apexBead);
+
+    const capContactGeo = track(new THREE.PlaneGeometry(1.06, 0.84));
+    capContactGeo.rotateX(-Math.PI / 2);
+    const capContactMat = registerSatMaterial(
+      track(
+        new THREE.MeshBasicMaterial({
+          map: contactTex ?? undefined,
+          color: contactTex ? 0xffffff : 0x191918,
+          transparent: true,
+          opacity: contactTex ? 0.52 : 0.04,
+          depthWrite: false,
+        }),
+      ),
+      contactTex ? 0.52 : 0.04,
+    );
+    const capContactMesh = new THREE.Mesh(capContactGeo, capContactMat);
+    capContactMesh.position.set(0, -0.58, 0);
+    capContactMesh.renderOrder = 0;
+    capGroup.add(capContactMesh);
+    satellitesRoot.add(capGroup);
+
+    const faceCameraQuat = new THREE.Quaternion().setFromUnitVectors(
+      new THREE.Vector3(0, 0, 1),
+      basisForwardVec.clone().negate(),
+    );
+    const satTiltQuat = new THREE.Quaternion();
+    const satTiltEuler = new THREE.Euler();
 
     const satelliteEntries = [
-      { group: octGroup, spec: gallerySpecs.satellites[0] },
-      { group: pentGroup, spec: gallerySpecs.satellites[1] },
-      { group: cubeGroup, spec: gallerySpecs.satellites[2] },
+      { group: planGroup, spec: gallerySpecs.satellites[0], planar: true },
+      { group: pentGroup, spec: gallerySpecs.satellites[1], planar: true },
+      { group: capGroup, spec: gallerySpecs.satellites[2], planar: false },
     ] as const;
 
     const projectAnchors = (
@@ -1438,7 +1484,7 @@ function HeroSpatialStage() {
       const tmpCenter = new THREE.Vector3();
       const tmpToCam = new THREE.Vector3();
 
-      groundShadowMat.opacity = (shadowTex ? 0.94 : 0.06) * state.solidReveal;
+      groundContactMat.opacity = (contactTex ? 0.94 : 0.06) * state.solidReveal;
       baseNodeMat.opacity = 0.9 * state.solidReveal;
       hiddenNodeMat.opacity = 0.45 * state.solidReveal;
       (rightAngle1.material as THREE.LineBasicMaterial).opacity = 0.56 * state.solidReveal;
@@ -1471,11 +1517,21 @@ function HeroSpatialStage() {
           .addScaledVector(basisRightVec, sp.screenDx * curAspectSpread)
           .addScaledVector(basisUpVec, sp.screenDy - satDrop)
           .addScaledVector(basisForwardVec, sp.screenDz);
-        entry.group.rotation.set(
-          sp.rotation[0] + curTiltY * sp.parallaxFactor,
-          sp.rotation[1] - state.orbitOffsetRad * 0.45 + curTiltX * sp.parallaxFactor,
-          sp.rotation[2],
-        );
+        if (entry.planar) {
+          satTiltEuler.set(
+            sp.rotation[0] + curTiltY * sp.parallaxFactor,
+            sp.rotation[1] - state.orbitOffsetRad * 0.35 + curTiltX * sp.parallaxFactor,
+            sp.rotation[2],
+          );
+          satTiltQuat.setFromEuler(satTiltEuler);
+          entry.group.quaternion.copy(faceCameraQuat).multiply(satTiltQuat);
+        } else {
+          entry.group.rotation.set(
+            sp.rotation[0] + curTiltY * sp.parallaxFactor,
+            sp.rotation[1] - state.orbitOffsetRad * 0.45 + curTiltX * sp.parallaxFactor,
+            sp.rotation[2],
+          );
+        }
       }
 
       seedMat.opacity = state.seedReveal;

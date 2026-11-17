@@ -81,7 +81,7 @@ export function evaluateClosingStoryboard(
       traceProgress: 1,
       sectionFillOpacity: 1,
       intersectionScale: 1,
-      capLift: 0,
+      capLift: 0.22,
       orbitOffsetRad: 0,
       settled: true,
       reducedMotion,
@@ -95,6 +95,7 @@ export function evaluateClosingStoryboard(
   const traceProgress = easeOutCubic(p, 0.44, 0.84);
   const sectionFillOpacity = easeOutCubic(p, 0.68, 0.96);
   const intersectionScale = easeOutCubic(p, 0.48, 0.78);
+  const capLift = 0.22 * easeOutCubic(p, 0.58, 0.94);
   const orbitOffsetRad = (1 - Math.pow(1 - p, 2)) * 0.095 - 0.095;
 
   let beat: ClosingStoryboardBeat = "prism-emergence";
@@ -115,7 +116,7 @@ export function evaluateClosingStoryboard(
     traceProgress,
     sectionFillOpacity,
     intersectionScale,
-    capLift: 0,
+    capLift,
     orbitOffsetRad,
     settled: false,
     reducedMotion: false,
@@ -332,7 +333,7 @@ export function computeClosingExtractedHexagon2D(): ClosingExtractedHexagon2D {
   return { vertices, edgeLengths3D, edgeLengths2D, maxDeviation };
 }
 
-function createClosingShadowTexture(): THREE.CanvasTexture | null {
+function createClosingContactTexture(): THREE.CanvasTexture | null {
   if (typeof document === "undefined") return null;
   const canvas = document.createElement("canvas");
   canvas.width = 256;
@@ -340,7 +341,7 @@ function createClosingShadowTexture(): THREE.CanvasTexture | null {
   const ctx = canvas.getContext("2d");
   if (!ctx) return null;
   const grad = ctx.createRadialGradient(128, 128, 14, 128, 128, 124);
-  grad.addColorStop(0, "rgba(31, 32, 30, 0.16)");
+  grad.addColorStop(0, "rgba(31, 32, 30, 0.15)");
   grad.addColorStop(0.45, "rgba(31, 32, 30, 0.05)");
   grad.addColorStop(1, "rgba(31, 32, 30, 0)");
   ctx.fillStyle = grad;
@@ -447,6 +448,7 @@ function createDashedEdge(
 }
 
 function ClosingFallbackSvg({ state }: { readonly state: ClosingStoryboardState }) {
+  const dy = -12 * (state.capLift / 0.22);
   return (
     <svg
       className="axo-v14-closing-fallback-svg"
@@ -478,7 +480,49 @@ function ClosingFallbackSvg({ state }: { readonly state: ClosingStoryboardState 
         fill="none"
         strokeOpacity="0.34"
       />
-      {/* Companion 2: Plane normal vector & perpendicular foot on Π */}
+      {/* Companion 3: Coaxial base-plane orthographic projection of section hexagon */}
+      <polygon
+        className="axo-v14-svg-section-poly"
+        points="160,322 214,352 326,352 380,322 326,294 214,294"
+        fillOpacity={0.14 * state.sectionFillOpacity}
+        strokeWidth="1.25"
+        strokeOpacity={0.42 * state.sectionFillOpacity}
+      />
+
+      {/* Base hexagon */}
+      <polygon
+        className="axo-v14-svg-solid-base"
+        points="160,322 214,352 326,352 380,322 326,294 214,294"
+      />
+      {/* Lower shaded prism frustum */}
+      <polygon
+        className="axo-v14-svg-solid-lower"
+        points="160,322 214,352 326,352 380,322 380,192 326,174 214,200 160,236"
+      />
+
+      {/* Hidden back lower prism edges & central symmetry axis OO' */}
+      <line className="axo-v14-svg-edge-hidden" x1="160" y1="322" x2="214" y2="294" />
+      <line className="axo-v14-svg-edge-hidden" x1="214" y1="294" x2="326" y2="294" />
+      <line className="axo-v14-svg-edge-hidden" x1="326" y1="294" x2="380" y2="322" />
+      <line className="axo-v14-svg-edge-altitude" x1="270" y1="322" x2="270" y2="104" />
+
+      {/* Lower front prism edges */}
+      <line className="axo-v14-svg-edge-solid" x1="160" y1="322" x2="214" y2="352" />
+      <line className="axo-v14-svg-edge-solid" x1="214" y1="352" x2="326" y2="352" />
+      <line className="axo-v14-svg-edge-solid" x1="326" y1="352" x2="380" y2="322" />
+      <line className="axo-v14-svg-edge-solid" x1="160" y1="236" x2="160" y2="322" />
+      <line className="axo-v14-svg-edge-solid" x1="214" y1="254" x2="214" y2="352" />
+      <line className="axo-v14-svg-edge-solid" x1="326" y1="226" x2="326" y2="352" />
+      <line className="axo-v14-svg-edge-solid" x1="380" y1="192" x2="380" y2="322" />
+
+      {/* Exploration plane */}
+      <polygon
+        className="axo-v14-svg-cutting-plane"
+        points="116,256 410,192 436,144 142,208"
+        opacity={state.planeOpacity}
+      />
+
+      {/* Companion 2: Plane normal vector & perpendicular foot on Pi */}
       <line
         className="axo-v14-svg-edge-altitude"
         x1="270"
@@ -494,52 +538,6 @@ function ClosingFallbackSvg({ state }: { readonly state: ClosingStoryboardState 
         strokeOpacity="0.65"
       />
 
-      {/* Base hexagon */}
-      <polygon
-        className="axo-v14-svg-solid-base"
-        points="160,322 214,352 326,352 380,322 326,294 214,294"
-      />
-      {/* Lower shaded prism frustum */}
-      <polygon
-        className="axo-v14-svg-solid-lower"
-        points="160,322 214,352 326,352 380,322 380,192 326,174 214,200 160,236"
-      />
-      {/* Upper translucent cap */}
-      <polygon
-        className="axo-v14-svg-solid-upper"
-        points="160,236 214,200 326,174 380,192 380,104 326,76 214,76 160,104"
-      />
-
-      {/* Hidden back prism edges & central symmetry axis OO' */}
-      <line className="axo-v14-svg-edge-hidden" x1="160" y1="322" x2="214" y2="294" />
-      <line className="axo-v14-svg-edge-hidden" x1="214" y1="294" x2="326" y2="294" />
-      <line className="axo-v14-svg-edge-hidden" x1="326" y1="294" x2="380" y2="322" />
-      <line className="axo-v14-svg-edge-hidden" x1="214" y1="294" x2="214" y2="76" />
-      <line className="axo-v14-svg-edge-hidden" x1="326" y1="294" x2="326" y2="76" />
-      <line className="axo-v14-svg-edge-altitude" x1="270" y1="322" x2="270" y2="104" />
-
-      {/* Visible front prism edges */}
-      <line className="axo-v14-svg-edge-solid" x1="160" y1="322" x2="214" y2="352" />
-      <line className="axo-v14-svg-edge-solid" x1="214" y1="352" x2="326" y2="352" />
-      <line className="axo-v14-svg-edge-solid" x1="326" y1="352" x2="380" y2="322" />
-      <line className="axo-v14-svg-edge-solid" x1="160" y1="104" x2="214" y2="132" />
-      <line className="axo-v14-svg-edge-solid" x1="214" y1="132" x2="326" y2="132" />
-      <line className="axo-v14-svg-edge-solid" x1="326" y1="132" x2="380" y2="104" />
-      <line className="axo-v14-svg-edge-solid" x1="160" y1="104" x2="214" y2="76" />
-      <line className="axo-v14-svg-edge-solid" x1="214" y1="76" x2="326" y2="76" />
-      <line className="axo-v14-svg-edge-solid" x1="326" y1="76" x2="380" y2="104" />
-      <line className="axo-v14-svg-edge-solid" x1="160" y1="104" x2="160" y2="322" />
-      <line className="axo-v14-svg-edge-solid" x1="214" y1="132" x2="214" y2="352" />
-      <line className="axo-v14-svg-edge-solid" x1="326" y1="132" x2="326" y2="352" />
-      <line className="axo-v14-svg-edge-solid" x1="380" y1="104" x2="380" y2="322" />
-
-      {/* Exploration plane */}
-      <polygon
-        className="axo-v14-svg-cutting-plane"
-        points="116,256 410,192 436,144 142,208"
-        opacity={state.planeOpacity}
-      />
-
       {/* Oblique 6-vertex hexagonal section */}
       <polygon
         className="axo-v14-svg-section-poly"
@@ -547,27 +545,32 @@ function ClosingFallbackSvg({ state }: { readonly state: ClosingStoryboardState 
         fillOpacity={CLOSING_SECTION_FILL_OPACITY * state.sectionFillOpacity}
       />
 
+      {/* Axial lifted upper cap */}
+      <g transform={`translate(0 ${dy.toFixed(1)})`}>
+        <polygon
+          className="axo-v14-svg-solid-upper"
+          points="160,236 214,254 326,226 380,192 380,104 326,76 214,76 160,104"
+        />
+        <line className="axo-v14-svg-edge-hidden" x1="214" y1="200" x2="214" y2="76" />
+        <line className="axo-v14-svg-edge-hidden" x1="326" y1="174" x2="326" y2="76" />
+        <line className="axo-v14-svg-edge-solid" x1="160" y1="104" x2="214" y2="132" />
+        <line className="axo-v14-svg-edge-solid" x1="214" y1="132" x2="326" y2="132" />
+        <line className="axo-v14-svg-edge-solid" x1="326" y1="132" x2="380" y2="104" />
+        <line className="axo-v14-svg-edge-solid" x1="160" y1="104" x2="214" y2="76" />
+        <line className="axo-v14-svg-edge-solid" x1="214" y1="76" x2="326" y2="76" />
+        <line className="axo-v14-svg-edge-solid" x1="326" y1="76" x2="380" y2="104" />
+        <line className="axo-v14-svg-edge-solid" x1="160" y1="104" x2="160" y2="236" />
+        <line className="axo-v14-svg-edge-solid" x1="214" y1="132" x2="214" y2="254" />
+        <line className="axo-v14-svg-edge-solid" x1="326" y1="132" x2="326" y2="226" />
+        <line className="axo-v14-svg-edge-solid" x1="380" y1="104" x2="380" y2="192" />
+      </g>
+
       <circle className="axo-v14-svg-seed-dot" cx="160" cy="236" r="4.0" />
       <circle className="axo-v14-svg-section-dot" cx="214" cy="254" r="4.1" />
       <circle className="axo-v14-svg-section-dot" cx="326" cy="226" r="4.1" />
       <circle className="axo-v14-svg-seed-dot" cx="380" cy="192" r="4.0" />
       <circle className="axo-v14-svg-section-dot" cx="326" cy="174" r="4.1" />
       <circle className="axo-v14-svg-seed-dot" cx="214" cy="200" r="4.0" />
-
-      {/* Companion 3: Extracted Oblique Hexagon Slice */}
-      <g opacity={(0.94 * state.sectionFillOpacity).toFixed(3)}>
-        <polygon
-          className="axo-v14-svg-section-poly"
-          points="424,90 444,60 486,60 506,90 486,120 444,120"
-          fillOpacity={0.34 * state.sectionFillOpacity}
-        />
-        <circle className="axo-v14-svg-section-dot" cx="424" cy="90" r="2.8" />
-        <circle className="axo-v14-svg-section-dot" cx="444" cy="60" r="2.8" />
-        <circle className="axo-v14-svg-section-dot" cx="486" cy="60" r="2.8" />
-        <circle className="axo-v14-svg-section-dot" cx="506" cy="90" r="2.8" />
-        <circle className="axo-v14-svg-section-dot" cx="486" cy="120" r="2.8" />
-        <circle className="axo-v14-svg-section-dot" cx="444" cy="120" r="2.8" />
-      </g>
     </svg>
   );
 }
@@ -648,10 +651,6 @@ export function LandingClosingScene3D() {
     const lookVec = new THREE.Vector3(0.08, 0.04, 0);
     const camOffset = new THREE.Vector3().subVectors(camVec, lookVec);
     const rotatedOffset = new THREE.Vector3();
-    const basisForward = camOffset.clone().negate().normalize();
-    const basisRight = new THREE.Vector3().crossVectors(basisForward, UP_AXIS).normalize();
-    const basisUp = new THREE.Vector3().crossVectors(basisRight, basisForward).normalize();
-    let curHexSpread = 1;
 
     const updateCameraFraming = (
       w: number,
@@ -662,11 +661,10 @@ export function LandingClosingScene3D() {
     ) => {
       const nextAspect = w / Math.max(1, h);
       const aspect = Math.max(0.68, nextAspect);
-      const baseScale = 1.06;
+      const baseScale = 1.02;
       const aspectScale = aspect < 1.18 ? baseScale + (1.18 - aspect) * 0.5 : baseScale;
-      const shortScale = h <= 290 ? 1.12 : baseScale;
+      const shortScale = h <= 290 ? 1.1 : baseScale;
       const distScale = Math.max(aspectScale, shortScale);
-      curHexSpread = aspect < 1.05 ? 0.88 : 1;
       if (Math.abs(camera.aspect - nextAspect) > 1e-4) {
         camera.aspect = nextAspect;
         camera.updateProjectionMatrix();
@@ -708,24 +706,24 @@ export function LandingClosingScene3D() {
     const baseY = bottomPts[0].y;
     const topY = topPts[0].y;
 
-    // 1. Soft Studio Contact Shadow + Companion 2: Circumscribed radius-R base ring
-    const shadowTex = createClosingShadowTexture();
-    if (shadowTex) track(shadowTex);
-    const closingShadowGeo = track(new THREE.PlaneGeometry(5.2, 4.8));
-    closingShadowGeo.rotateX(-Math.PI / 2);
-    const closingShadowMat = track(
+    // 1. Soft Studio Contact Disc + Companion 2: Circumscribed radius-R base ring
+    const contactTex = createClosingContactTexture();
+    if (contactTex) track(contactTex);
+    const closingContactGeo = track(new THREE.PlaneGeometry(5.2, 4.8));
+    closingContactGeo.rotateX(-Math.PI / 2);
+    const closingContactMat = track(
       new THREE.MeshBasicMaterial({
-        map: shadowTex ?? undefined,
-        color: shadowTex ? 0xffffff : 0x1f201e,
+        map: contactTex ?? undefined,
+        color: contactTex ? 0xffffff : 0x1f201e,
         transparent: true,
-        opacity: shadowTex ? 0.92 : 0.05,
+        opacity: contactTex ? 0.92 : 0.05,
         depthWrite: false,
       }),
     );
-    const closingShadowMesh = new THREE.Mesh(closingShadowGeo, closingShadowMat);
-    closingShadowMesh.position.set(0, baseY - 0.048, 0);
-    closingShadowMesh.renderOrder = 0;
-    root.add(closingShadowMesh);
+    const closingContactMesh = new THREE.Mesh(closingContactGeo, closingContactMat);
+    closingContactMesh.position.set(0, baseY - 0.048, 0);
+    closingContactMesh.renderOrder = 0;
+    root.add(closingContactMesh);
 
     const ringPts: THREE.Vector3[] = [];
     for (let i = 0; i <= 64; i++) {
@@ -746,14 +744,14 @@ export function LandingClosingScene3D() {
     baseRingLine.renderOrder = 1;
     root.add(baseRingLine);
 
-    // 2. Sculpted Hexagonal Prism Frustum & Translucent Upper Cap (porcelain white + cool sky-slate facets)
-    const lowerGeo = track(buildFacesBufferGeometry(lowerFaces, 0xffffff));
+    // 2. Sculpted Lower Frustum & Lifted Upper Cap Group
+    const lowerGeo = track(buildFacesBufferGeometry(lowerFaces, 0xf3f0ea));
     const lowerMat = track(
       new THREE.MeshBasicMaterial({
         color: 0xffffff,
         vertexColors: true,
         transparent: true,
-        opacity: 0.92,
+        opacity: 0.9,
         side: THREE.DoubleSide,
         depthWrite: false,
       }),
@@ -762,23 +760,40 @@ export function LandingClosingScene3D() {
     lowerMesh.renderOrder = 2;
     root.add(lowerMesh);
 
-    const upperGeo = track(buildFacesBufferGeometry(upperFaces, 0xffffff));
+    const upperCapGroup = new THREE.Group();
+    const upperGeo = track(buildFacesBufferGeometry(upperFaces, 0xfaf9f7));
     const upperMat = track(
       new THREE.MeshBasicMaterial({
         color: 0xffffff,
         vertexColors: true,
         transparent: true,
-        opacity: 0.24,
+        opacity: 0.26,
         side: THREE.DoubleSide,
         depthWrite: false,
       }),
     );
     const upperMesh = new THREE.Mesh(upperGeo, upperMat);
     upperMesh.renderOrder = 3;
-    root.add(upperMesh);
+    upperCapGroup.add(upperMesh);
 
-    // 3. Dynamic Front-Solid / Back-Dashed Hexagonal Prism Edges
-    // rawFaces indices: 0 = bottom, 1 = top, 2..7 = lateral face i (between i and (i+1)%6)
+    // Subtle underside cap rim on upperCapGroup emphasizing coaxial separation
+    const capRimCyls: THREE.Mesh[] = [];
+    for (let i = 0; i < sectionPts.length; i++) {
+      const seg = createCylinderEdge(
+        sectionPts[i],
+        sectionPts[(i + 1) % sectionPts.length],
+        0.013,
+        0x9a4006,
+        0.48,
+        track,
+      );
+      seg.renderOrder = 5;
+      capRimCyls.push(seg);
+      upperCapGroup.add(seg);
+    }
+    root.add(upperCapGroup);
+
+    // 3. Split Front-Solid / Back-Dashed Hexagonal Prism Edges (lower in root, upper in upperCapGroup)
     const faceSpecs = rawFaces.map((face) => {
       const e1 = new THREE.Vector3().subVectors(face[1], face[0]);
       const e2 = new THREE.Vector3().subVectors(face[2], face[0]);
@@ -789,32 +804,37 @@ export function LandingClosingScene3D() {
       return { normal, center };
     });
 
-    const edgeSpecs: { a: THREE.Vector3; b: THREE.Vector3; faces: readonly [number, number] }[] = [];
+    interface EdgeBinding {
+      a: THREE.Vector3;
+      b: THREE.Vector3;
+      faces: readonly [number, number];
+      solid: THREE.Mesh;
+      dashed: THREE.Line;
+    }
+    const edgeBindings: EdgeBinding[] = [];
+    const registerEdge = (
+      targetGroup: THREE.Group,
+      a: THREE.Vector3,
+      b: THREE.Vector3,
+      faces: readonly [number, number],
+    ) => {
+      const solid = createCylinderEdge(a, b, 0.017, 0x1f201e, 0.88, track);
+      solid.renderOrder = 6;
+      const dashed = createDashedEdge(a, b, 0x615d59, 0.42, 0.14, 0.11, track);
+      dashed.renderOrder = 2;
+      targetGroup.add(solid, dashed);
+      edgeBindings.push({ a, b, faces, solid, dashed });
+    };
+
     for (let i = 0; i < 6; i++) {
       const next = (i + 1) % 6;
       const prevLat = 2 + ((i + 5) % 6);
       const currLat = 2 + i;
-      edgeSpecs.push({ a: bottomPts[i], b: bottomPts[next], faces: [0, currLat] });
-      edgeSpecs.push({ a: topPts[i], b: topPts[next], faces: [1, currLat] });
-      edgeSpecs.push({ a: bottomPts[i], b: topPts[i], faces: [prevLat, currLat] });
+      registerEdge(root, bottomPts[i], bottomPts[next], [0, currLat]);
+      registerEdge(root, bottomPts[i], sectionPts[i], [prevLat, currLat]);
+      registerEdge(upperCapGroup, topPts[i], topPts[next], [1, currLat]);
+      registerEdge(upperCapGroup, sectionPts[i], topPts[i], [prevLat, currLat]);
     }
-
-    const edgeBindings = edgeSpecs.map((edge) => {
-      const solid = createCylinderEdge(edge.a, edge.b, 0.017, 0x1f201e, 0.88, track);
-      solid.renderOrder = 6;
-      const dashed = createDashedEdge(
-        edge.a,
-        edge.b,
-        0x615d59,
-        0.42,
-        0.14,
-        0.11,
-        track,
-      );
-      dashed.renderOrder = 2;
-      root.add(solid, dashed);
-      return { ...edge, solid, dashed };
-    });
 
     // Companion 1: Central Symmetry Axis OO' + Base Perpendicular Witness + Plane Normal Vector
     const axisBottom = new THREE.Vector3(0, baseY, 0);
@@ -979,7 +999,7 @@ export function LandingClosingScene3D() {
       new THREE.MeshBasicMaterial({ color: 0x1f201e, transparent: true, opacity: 0.84 }),
     );
 
-    const solidVertexDots = [...bottomPts, ...topPts].map((pt) => {
+    const bottomVertexDots = bottomPts.map((pt) => {
       const dot = new THREE.Mesh(nodeGeo, baseVertexMat);
       dot.position.copy(pt);
       dot.scale.setScalar(0.76);
@@ -987,6 +1007,15 @@ export function LandingClosingScene3D() {
       root.add(dot);
       return dot;
     });
+    const topVertexDots = topPts.map((pt) => {
+      const dot = new THREE.Mesh(nodeGeo, baseVertexMat);
+      dot.position.copy(pt);
+      dot.scale.setScalar(0.76);
+      dot.renderOrder = 8;
+      upperCapGroup.add(dot);
+      return dot;
+    });
+    const solidVertexDots = [...bottomVertexDots, ...topVertexDots];
 
     const seedDots = [0, 3, 5].map((idx) => {
       const dot = new THREE.Mesh(nodeGeo, seedNodeMat);
@@ -1006,7 +1035,7 @@ export function LandingClosingScene3D() {
       return dot;
     });
 
-    // Companion 3: Outer azimuth orbital arc + Extracted Oblique Hexagon Slice in rear upper-right depth
+    // Companion 3: Outer azimuth orbital arc + Coaxial base-plane orthographic section projection
     const orbitArcPts: THREE.Vector3[] = [];
     const orbitR = 2.48;
     for (let i = 0; i <= 40; i++) {
@@ -1023,55 +1052,36 @@ export function LandingClosingScene3D() {
     orbitArcLine.renderOrder = 1;
     root.add(orbitArcLine);
 
-    const extractedHex = computeClosingExtractedHexagon2D();
-    const extractedHexGroup = new THREE.Group();
-    const extractedHexLocalVecs = extractedHex.vertices.map(
-      (v) => new THREE.Vector3(v.x, v.y, 0),
+    const floorProjPts = sectionPts.map(
+      (pt) => new THREE.Vector3(pt.x, baseY + 0.014, pt.z),
     );
-    const extractedHexFillGeo = track(
-      buildFacesBufferGeometry([{ pts: extractedHexLocalVecs }]),
-    );
-    const extractedHexFillMat = track(
+    const floorProjFillGeo = track(buildFacesBufferGeometry([{ pts: floorProjPts }]));
+    const floorProjFillMat = track(
       new THREE.MeshBasicMaterial({
         color: 0xed6d14,
         transparent: true,
-        opacity: 0.34,
+        opacity: 0.15,
         side: THREE.DoubleSide,
         depthWrite: false,
       }),
     );
-    const extractedHexFillMesh = new THREE.Mesh(extractedHexFillGeo, extractedHexFillMat);
-    extractedHexFillMesh.renderOrder = 3;
-    extractedHexGroup.add(extractedHexFillMesh);
+    const floorProjFillMesh = new THREE.Mesh(floorProjFillGeo, floorProjFillMat);
+    floorProjFillMesh.renderOrder = 2;
+    root.add(floorProjFillMesh);
 
-    const extractedHexRimGeo = track(
-      new THREE.BufferGeometry().setFromPoints([
-        ...extractedHexLocalVecs,
-        extractedHexLocalVecs[0],
-      ]),
+    const floorProjRimGeo = track(
+      new THREE.BufferGeometry().setFromPoints([...floorProjPts, floorProjPts[0]]),
     );
-    const extractedHexRimMat = track(
+    const floorProjRimMat = track(
       new THREE.LineBasicMaterial({
-        color: 0x793400,
+        color: 0x9a4006,
         transparent: true,
-        opacity: 0.86,
+        opacity: 0.44,
       }),
     );
-    const extractedHexRimLine = new THREE.Line(extractedHexRimGeo, extractedHexRimMat);
-    extractedHexRimLine.renderOrder = 4;
-    extractedHexGroup.add(extractedHexRimLine);
-
-    const extractedHexBeadGeo = track(new THREE.SphereGeometry(0.068, 12, 12));
-    const extractedHexBeadMat = track(
-      new THREE.MeshBasicMaterial({ color: 0xdd5b00, transparent: true, opacity: 0.72 }),
-    );
-    for (const pt of extractedHexLocalVecs) {
-      const bead = new THREE.Mesh(extractedHexBeadGeo, extractedHexBeadMat);
-      bead.position.copy(pt);
-      bead.renderOrder = 5;
-      extractedHexGroup.add(bead);
-    }
-    scene.add(extractedHexGroup);
+    const floorProjRimLine = new THREE.Line(floorProjRimGeo, floorProjRimMat);
+    floorProjRimLine.renderOrder = 3;
+    root.add(floorProjRimLine);
 
     let disposed = false;
     let isInView = false;
@@ -1090,7 +1100,8 @@ export function LandingClosingScene3D() {
       const state = evaluateClosingStoryboard(elapsed, reducedMotion);
 
       if (!startedPlayback && !reducedMotion) {
-        extractedHexGroup.visible = false;
+        floorProjFillMesh.visible = false;
+        floorProjRimLine.visible = false;
         renderer.render(scene, camera);
         return !state.settled;
       }
@@ -1113,11 +1124,16 @@ export function LandingClosingScene3D() {
       );
 
       root.scale.setScalar(0.94 + 0.06 * state.solidReveal);
-      closingShadowMat.opacity = (shadowTex ? 0.92 : 0.05) * state.solidReveal;
+      closingContactMat.opacity = (contactTex ? 0.92 : 0.05) * state.solidReveal;
       baseRingMat.opacity = 0.28 * state.solidReveal;
       orbitArcMat.opacity = 0.24 * state.solidReveal;
-      lowerMat.opacity = 0.92 * state.solidReveal;
-      upperMat.opacity = 0.24 * state.solidReveal;
+      lowerMat.opacity = 0.9 * state.solidReveal;
+      upperMat.opacity = 0.26 * state.solidReveal;
+      upperCapGroup.position.copy(cutNormal).multiplyScalar(state.capLift);
+      for (const rim of capRimCyls) {
+        (rim.material as THREE.MeshBasicMaterial).opacity =
+          0.48 * state.sectionFillOpacity;
+      }
       baseVertexMat.opacity = 0.84 * state.solidReveal;
       for (const d of solidVertexDots) {
         d.visible = state.solidReveal > 0.05;
@@ -1148,21 +1164,10 @@ export function LandingClosingScene3D() {
       centroidRaLine.visible = state.planeOpacity > 0.25;
       centroidRaMat.opacity = 0.68 * state.planeOpacity;
 
-      extractedHexGroup.visible = state.sectionFillOpacity > 0.02;
-      extractedHexGroup.scale.setScalar(0.36 * (0.86 + 0.14 * state.sectionFillOpacity));
-      extractedHexGroup.position
-        .copy(lookVec)
-        .addScaledVector(basisRight, 2.08 * curHexSpread)
-        .addScaledVector(basisUp, 1.12 - (1 - state.sectionFillOpacity) * 0.14)
-        .addScaledVector(basisForward, 1.1);
-      extractedHexGroup.rotation.set(
-        0.18 + curTiltY * 0.22,
-        -0.42 + curTiltX * 0.28,
-        0.08,
-      );
-      extractedHexFillMat.opacity = 0.34 * state.sectionFillOpacity;
-      extractedHexRimMat.opacity = 0.86 * state.sectionFillOpacity;
-      extractedHexBeadMat.opacity = 0.72 * state.sectionFillOpacity;
+      floorProjFillMesh.visible = state.sectionFillOpacity > 0.02;
+      floorProjRimLine.visible = state.sectionFillOpacity > 0.02;
+      floorProjFillMat.opacity = 0.15 * state.sectionFillOpacity;
+      floorProjRimMat.opacity = 0.44 * state.sectionFillOpacity;
 
       interNodeMat.opacity = state.intersectionScale;
       for (const dot of interDots) {

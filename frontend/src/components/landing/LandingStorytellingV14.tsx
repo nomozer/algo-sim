@@ -44,17 +44,17 @@ export const STORY_STAGES_V14: readonly StoryStageV14Spec[] = [
     mobileShortTag: "Đề bài",
     epistemicRole: "Giả thiết",
     chapterHeading: "Chặng 1: Từ đề bài",
-    title: "Xác lập lăng trụ đứng và ba trung điểm M, N, P",
+    title: "Dựng lăng trụ đứng và ba điểm gốc M, N, P",
     summary:
-      "Từ đề bài lăng trụ tam giác đều ABC.A′B′C′ (hai đáy tam giác đều, các cạnh bên vuông góc mặt đáy), Axo dựng khung không gian và đặt ba trung điểm gốc M ∈ AB, N ∈ AC, P ∈ CC′.",
+      "Từ giả thiết lăng trụ tam giác đều ABC.A′B′C′, Axo dựng mặt đáy đều, các cạnh bên vuông góc đáy và đặt trung điểm M ∈ AB, N ∈ AC, P ∈ CC′.",
     relationNote: "Giả thiết: Lăng trụ đứng đáy đều ABC.A′B′C′ · Trung điểm M, N, P",
-    establishedState: "ΔABC, ΔA′B′C′ đều · AA′ ⊥ (ABC) · M, N, P cố định",
+    establishedState: "ΔABC đều · AA′ ⊥ (ABC) · M, N, P là trung điểm cố định",
     camera: {
-      yaw: -0.36,
-      pitch: 0.28,
+      yaw: -0.38,
+      pitch: 0.25,
       zoom: 1,
       extrude: 1,
-      prismBuild: 0.22,
+      prismBuild: 0.35,
       planeSweep: 0,
       parallelCue: 0,
       traceProgress: 0,
@@ -68,14 +68,14 @@ export const STORY_STAGES_V14: readonly StoryStageV14Spec[] = [
     mobileShortTag: "Dựng hình",
     epistemicRole: "Đối tượng đã dựng",
     chapterHeading: "Chặng 2: Dựng không gian",
-    title: "Dựng mặt phẳng cắt (MNP) qua lòng khối lăng trụ",
+    title: "Xác lập mặt phẳng cắt (MNP) và hai giao tuyến đầu",
     summary:
-      "Khối lăng trụ đứng hoàn chỉnh hiện lên cùng mặt phẳng cắt (MNP), nối hai giao tuyến xuất phát MN trên đáy (ABC) và NP trên mặt bên (ACC′A′).",
+      "Khung lăng trụ hoàn thiện đồng thời mặt phẳng (MNP) hạ vào lòng khối, nối đoạn MN trên đáy (ABC) và đoạn NP trên mặt bên (ACC′A′).",
     relationNote: "Đối tượng đã dựng: (MNP) cắt (ABC) theo MN và cắt (ACC′A′) theo NP",
-    establishedState: "Mặt phẳng (MNP) xác định · Hai giao tuyến mở đầu MN, NP",
+    establishedState: "Mặt cắt (MNP) qua 3 điểm · Giao tuyến mở đầu MN, NP",
     camera: {
       yaw: -0.18,
-      pitch: 0.32,
+      pitch: 0.29,
       zoom: 1,
       extrude: 1,
       prismBuild: 1,
@@ -92,14 +92,14 @@ export const STORY_STAGES_V14: readonly StoryStageV14Spec[] = [
     mobileShortTag: "Quan hệ",
     epistemicRole: "Quan hệ quan sát được",
     chapterHeading: "Chặng 3: Xác lập quan hệ",
-    title: "Truyền quan hệ song song MN ∥ BC để tìm Q ∈ BB′",
+    title: "Truyền song song MN ∥ BC để xác định Q ∈ BB′",
     summary:
-      "Đường trung bình MN song song với cạnh đáy BC trong (ABC). Vì BC nằm trong mặt bên (BCC′B′), giao tuyến qua P phải song song BC và cắt cạnh BB′ tại trung điểm Q.",
-    relationNote: "Quan hệ quan sát được: MN ∥ BC ⇒ PQ ∥ BC · Xác định điểm Q ∈ BB′",
-    establishedState: "MN ∥ BC · (MNP) ∩ (BCC′B′) = PQ ∥ BC · Q trung điểm BB′",
+      "Đường trung bình MN ∥ BC dẫn tia giao tuyến qua P trên mặt bên (BCC′B′) song song với BC, cắt cạnh BB′ đúng tại điểm Q.",
+    relationNote: "Quan hệ quan sát được: MN ∥ BC ⇒ PQ ∥ BC · Xác định Q ∈ BB′",
+    establishedState: "MN ∥ BC ⇒ (MNP) ∩ (BCC′B′) = PQ ∥ BC · Q ∈ BB′",
     camera: {
-      yaw: 0.02,
-      pitch: 0.35,
+      yaw: 0.04,
+      pitch: 0.32,
       zoom: 1,
       extrude: 1,
       prismBuild: 1,
@@ -113,17 +113,17 @@ export const STORY_STAGES_V14: readonly StoryStageV14Spec[] = [
     index: 3,
     shortNum: "4",
     desktopTag: "Kết quả",
-    mobileShortTag: "Kết quả",
+    mobileShortTag: "Thiết diện",
     epistemicRole: "Kết quả xác lập",
     chapterHeading: "Chặng 4: Hoàn thiện thiết diện",
     title: "Khép kín thiết diện hình thang cân MNPQ",
     summary:
-      "Đoạn QM khép kín bốn cạnh trên mặt phẳng cắt (MNP). Hai cạnh đáy MN ∥ PQ và hai tam giác vuông △NCP ≅ △MBQ cho NP = QM, xác lập hình thang cân không phụ thuộc chiều cao lăng trụ.",
+      "Đoạn QM khép kín bốn cạnh đồng phẳng trên (MNP) với cặp đáy MN ∥ PQ và hai cạnh bên bằng nhau NP = QM.",
     relationNote: "Kết quả xác lập: Thiết diện phẳng hình thang cân MNPQ trên (MNP)",
     establishedState: "MNPQ đồng phẳng · MN ∥ PQ · NP = QM (hình thang cân)",
     camera: {
-      yaw: 0.15,
-      pitch: 0.31,
+      yaw: 0.19,
+      pitch: 0.3,
       zoom: 1,
       extrude: 1,
       prismBuild: 1,
@@ -383,8 +383,8 @@ function isFaceFrontFacing(
   return nx * viewX + ny * viewY + nz * viewZ > 0.02;
 }
 
-const STORY_SVG_W = 640;
-const STORY_SVG_H = 480;
+const STORY_SVG_W = 680;
+const STORY_SVG_H = 500;
 const PRISM_HEIGHT_SCALE = 1.16;
 
 function scaleStoryHeight(pt: Vec3Tuple, baseY: number, factor = PRISM_HEIGHT_SCALE): Vec3Tuple {
@@ -488,13 +488,25 @@ function PrismEditorialStage({
       coords[key] = extrudeVec(key);
     }
 
-    const scale = 56 * pose.zoom;
-    const cx = STORY_SVG_W * 0.5;
-    const cy = 248;
+    const insetReveal = reducedMotion
+      ? pose.activeStageIndex === 3
+        ? 1
+        : 0
+      : smoothstep(0.76, 0.92, pose.progress);
+    const scale = 72 * pose.zoom;
+    const cx = lerp(STORY_SVG_W * 0.5, STORY_SVG_W * 0.43, insetReveal);
+    const cy = 266;
     const proj: Record<string, ProjectedPoint2D> = {};
     for (const [k, v] of Object.entries(coords)) {
       proj[k] = projectPrismPoint3D(v, pose.yaw, pose.pitch, cx, cy, scale);
     }
+
+    const pillarGrow = reducedMotion
+      ? 1
+      : clamp01(0.56 + 0.44 * smoothstep(0.35, 0.72, pose.prismBuild));
+    const topGrow = reducedMotion
+      ? 1
+      : smoothstep(0.42, 0.84, pose.prismBuild);
 
     const solidCenter: Vec3Tuple = [
       (coords["A"][0] +
@@ -564,29 +576,42 @@ function PrismEditorialStage({
         proj["C_prime"].y) /
       6;
 
-    const prismWeight = 0.18 + 0.82 * pose.prismBuild;
+    const prismWeight = 0.25 + 0.75 * topGrow;
     const edges = LANDING_PRISM_STORY_SPEC.solidEdges.map((edge) => {
       const a = proj[edge.from];
-      const b = proj[edge.to];
+      const bOrig = proj[edge.to];
       const isTop = edge.from.includes("prime") && edge.to.includes("prime");
-      const isUpperStructure =
-        edge.from.includes("prime") || edge.to.includes("prime");
+      const isPillar = !edge.from.includes("prime") && edge.to.includes("prime");
+      const growFrac = isPillar ? pillarGrow : isTop ? topGrow : 1;
+      const b: ProjectedPoint2D =
+        growFrac >= 0.999
+          ? bOrig
+          : {
+              x: lerp(a.x, bOrig.x, growFrac),
+              y: lerp(a.y, bOrig.y, growFrac),
+              z: lerp(a.z, bOrig.z, growFrac),
+            };
       const isNonParticipating =
         isTop || (edge.from === "A" && edge.to === "A_prime");
-      let opacity = 0.88;
-      if (isUpperStructure) {
-        opacity *= prismWeight;
+      let opacity = 0.9;
+      if (isTop) {
+        opacity *= 0.15 + 0.85 * Math.min(1, topGrow * 1.4);
+      } else if (isPillar) {
+        opacity *= 0.8 + 0.2 * pillarGrow;
       }
       if (isNonParticipating && pose.parallelCue > 0.02) {
-        opacity *= 1 - 0.36 * pose.parallelCue;
+        opacity *= 1 - 0.42 * pose.parallelCue;
       }
       const front = edgeVisibleInSolid(edge.from, edge.to);
       return {
         key: `${edge.from}-${edge.to}`,
         a,
         b,
+        bFull: bOrig,
+        isGrowingPillar: isPillar && growFrac < 0.999,
         dashed: !front,
         opacity,
+        visible: growFrac > 0.02,
       };
     });
 
@@ -768,10 +793,65 @@ function PrismEditorialStage({
       }))
       .filter((item) => item.front);
 
-    const haloCy = Math.min(444, (proj["A"].y + proj["B"].y + proj["C"].y) / 3 + 26);
+    const haloCy = Math.min(468, (proj["A"].y + proj["B"].y + proj["C"].y) / 3 + 28);
+
+    // Exact isometric 2D true-shape trapezoid MNPQ from canonical domainXyz
+    const domM = pMap["M"].domainXyz;
+    const domN = pMap["N"].domainXyz;
+    const domP = pMap["P"].domainXyz;
+    const domQ = pMap["Q"].domainXyz;
+    const uxRaw: Vec3Tuple = [domN[0] - domM[0], domN[1] - domM[1], domN[2] - domM[2]];
+    const uLen = Math.hypot(...uxRaw) || 1;
+    const uAxis: Vec3Tuple = [uxRaw[0] / uLen, uxRaw[1] / uLen, uxRaw[2] / uLen];
+    const midTop: Vec3Tuple = [(domM[0] + domN[0]) * 0.5, (domM[1] + domN[1]) * 0.5, (domM[2] + domN[2]) * 0.5];
+    const midBot: Vec3Tuple = [(domQ[0] + domP[0]) * 0.5, (domQ[1] + domP[1]) * 0.5, (domQ[2] + domP[2]) * 0.5];
+    const vxRaw: Vec3Tuple = [midBot[0] - midTop[0], midBot[1] - midTop[1], midBot[2] - midTop[2]];
+    const vLen = Math.hypot(...vxRaw) || 1;
+    const vAxis: Vec3Tuple = [vxRaw[0] / vLen, vxRaw[1] / vLen, vxRaw[2] / vLen];
+    const trapCentroid: Vec3Tuple = [
+      (domM[0] + domN[0] + domP[0] + domQ[0]) * 0.25,
+      (domM[1] + domN[1] + domP[1] + domQ[1]) * 0.25,
+      (domM[2] + domN[2] + domP[2] + domQ[2]) * 0.25,
+    ];
+    const insetCenterX = 562;
+    const insetCenterY = 114;
+    const insetScale = 23.5;
+    const mapTrapPt = (id: string, dom: Vec3Tuple) => {
+      const rel: Vec3Tuple = [
+        dom[0] - trapCentroid[0],
+        dom[1] - trapCentroid[1],
+        dom[2] - trapCentroid[2],
+      ];
+      const u = rel[0] * uAxis[0] + rel[1] * uAxis[1] + rel[2] * uAxis[2];
+      const v = rel[0] * vAxis[0] + rel[1] * vAxis[1] + rel[2] * vAxis[2];
+      return {
+        id,
+        label: pMap[id].label,
+        role: pMap[id].role,
+        x: insetCenterX + u * insetScale,
+        y: insetCenterY + v * insetScale,
+      };
+    };
+    const trapPts = [
+      mapTrapPt("M", domM),
+      mapTrapPt("N", domN),
+      mapTrapPt("P", domP),
+      mapTrapPt("Q", domQ),
+    ];
+    const insetTicksD = [
+      buildDoubleTickD({ x: trapPts[1].x, y: trapPts[1].y, z: 0 }, { x: trapPts[2].x, y: trapPts[2].y, z: 0 }),
+      buildDoubleTickD({ x: trapPts[0].x, y: trapPts[0].y, z: 0 }, { x: trapPts[3].x, y: trapPts[3].y, z: 0 }),
+    ].join(" ");
+    const insetParallelD = [
+      buildParallelChevronD({ x: trapPts[0].x, y: trapPts[0].y, z: 0 }, { x: trapPts[1].x, y: trapPts[1].y, z: 0 }),
+      buildParallelChevronD({ x: trapPts[3].x, y: trapPts[3].y, z: 0 }, { x: trapPts[2].x, y: trapPts[2].y, z: 0 }),
+    ].join(" ");
 
     return {
       proj,
+      cx,
+      topGrow,
+      insetReveal,
       prismWeight,
       edges,
       frontLateralPolys,
@@ -785,10 +865,14 @@ function PrismEditorialStage({
       topPts: fmt([proj["A_prime"], proj["B_prime"], proj["C_prime"]]),
       planePts: fmt(planePolyPts),
       sectionPts: fmt([proj["M"], proj["N"], proj["P"], proj["Q"]]),
+      trapPts,
+      trapPolyPoints: trapPts.map((pt) => `${pt.x.toFixed(1)},${pt.y.toFixed(1)}`).join(" "),
+      insetTicksD,
+      insetParallelD,
       tracedEdges,
       labels,
     };
-  }, [pose]);
+  }, [pose, reducedMotion]);
 
   return (
     <div className="axo-v14-story-stage-pin">
@@ -799,21 +883,6 @@ function PrismEditorialStage({
         data-story-progress={pose.progress.toFixed(3)}
         data-reduced-motion={reducedMotion ? "true" : "false"}
       >
-        <div className="axo-v14-story-stage-meta">
-          <span className="axo-v14-story-stage-counter">
-            Chặng {pose.activeStageIndex + 1} / {STORY_STAGES_V14.length} ·{" "}
-            {activeStage.desktopTag}
-          </span>
-          <div className="axo-v14-story-progress-track" aria-hidden="true">
-            <div
-              className="axo-v14-story-progress-fill"
-              style={{
-                transform: `scaleX(${Math.max(0.06, pose.progress).toFixed(4)})`,
-              }}
-            />
-          </div>
-        </div>
-
         <svg
           className="axo-v14-story-svg"
           viewBox={`0 0 ${STORY_SVG_W} ${STORY_SVG_H}`}
@@ -822,10 +891,10 @@ function PrismEditorialStage({
         >
           <ellipse
             className="axo-v14-svg-contact-halo"
-            cx={STORY_SVG_W * 0.5}
+            cx={scene.cx.toFixed(1)}
             cy={scene.haloCy.toFixed(1)}
-            rx="168"
-            ry="22"
+            rx="198"
+            ry="26"
           />
 
           <polygon className="axo-v14-svg-prism-base" points={scene.basePts} />
@@ -835,42 +904,57 @@ function PrismEditorialStage({
               key={`lat-${idx}`}
               className={`axo-v14-svg-prism-face ${face.toneClass}`}
               points={face.pts}
-              fillOpacity={((face.toneClass.includes("lit") ? 0.82 : 0.44) * scene.prismWeight).toFixed(3)}
+              fillOpacity={((face.toneClass.includes("lit") ? 0.82 : 0.44) * scene.topGrow).toFixed(3)}
             />
           ))}
 
-          <polygon
-            className="axo-v14-svg-prism-top"
-            points={scene.topPts}
-            fillOpacity={(0.18 * scene.prismWeight).toFixed(3)}
-            strokeOpacity={scene.prismWeight.toFixed(3)}
-          />
-
-          {scene.edges.map((edge) => (
-            <line
-              key={edge.key}
-              className={
-                edge.dashed
-                  ? "axo-v14-svg-prism-edge-back"
-                  : "axo-v14-svg-prism-edge-front"
-              }
-              x1={edge.a.x}
-              y1={edge.a.y}
-              x2={edge.b.x}
-              y2={edge.b.y}
-              strokeOpacity={
-                edge.dashed
-                  ? (edge.opacity * 0.56).toFixed(3)
-                  : edge.opacity.toFixed(3)
-              }
+          {scene.topGrow > 0.08 && (
+            <polygon
+              className="axo-v14-svg-prism-top"
+              points={scene.topPts}
+              fillOpacity={(0.2 * scene.topGrow).toFixed(3)}
+              strokeOpacity={(0.72 * scene.topGrow).toFixed(3)}
             />
-          ))}
+          )}
+
+          {scene.edges.map((edge) =>
+            edge.visible ? (
+              <g key={edge.key}>
+                {edge.isGrowingPillar && (
+                  <line
+                    className="axo-v14-svg-prism-edge-back"
+                    x1={edge.b.x}
+                    y1={edge.b.y}
+                    x2={edge.bFull.x}
+                    y2={edge.bFull.y}
+                    strokeOpacity="0.28"
+                  />
+                )}
+                <line
+                  className={
+                    edge.dashed
+                      ? "axo-v14-svg-prism-edge-back"
+                      : "axo-v14-svg-prism-edge-front"
+                  }
+                  x1={edge.a.x}
+                  y1={edge.a.y}
+                  x2={edge.b.x}
+                  y2={edge.b.y}
+                  strokeOpacity={
+                    edge.dashed
+                      ? (edge.opacity * 0.56).toFixed(3)
+                      : edge.opacity.toFixed(3)
+                  }
+                />
+              </g>
+            ) : null,
+          )}
 
           <path
             className="axo-v14-svg-edge-altitude"
             d={scene.rightAnglePath}
             fill="none"
-            opacity={(0.88 * scene.prismWeight).toFixed(3)}
+            opacity="0.88"
           />
 
           <path
@@ -928,7 +1012,7 @@ function PrismEditorialStage({
             <polygon
               className="axo-v14-svg-cutting-plane"
               points={scene.planePts}
-              fillOpacity={(0.22 * pose.planeSweep).toFixed(3)}
+              fillOpacity={(0.2 * pose.planeSweep).toFixed(3)}
               strokeOpacity={(0.76 * pose.planeSweep).toFixed(3)}
             />
           )}
@@ -937,8 +1021,8 @@ function PrismEditorialStage({
             <polygon
               className="axo-v14-svg-section-poly"
               points={scene.sectionPts}
-              fillOpacity={(0.28 * pose.sectionFill).toFixed(3)}
-              strokeOpacity={Math.min(0.92, pose.sectionFill).toFixed(3)}
+              fillOpacity={(0.44 * pose.sectionFill).toFixed(3)}
+              strokeOpacity={Math.min(0.95, pose.sectionFill).toFixed(3)}
             />
           )}
 
@@ -984,7 +1068,7 @@ function PrismEditorialStage({
                   className={dotClass}
                   cx={item.px}
                   cy={item.py}
-                  r={isInter ? 4.6 : isSeed ? 4.1 : 3.0}
+                  r={isInter ? 4.8 : isSeed ? 4.2 : 3.1}
                 />
                 <text className={textClass} x={item.lx} y={item.ly}>
                   {item.label}
@@ -992,13 +1076,60 @@ function PrismEditorialStage({
               </g>
             );
           })}
-        </svg>
 
-        <div className="axo-v14-story-stage-readout" aria-live="polite">
-          <span className="axo-v14-story-relation-text">
-            {activeStage.relationNote}
-          </span>
-        </div>
+          {scene.insetReveal > 0.02 && (
+            <g
+              className="axo-v14-svg-trueshape-inset"
+              opacity={scene.insetReveal.toFixed(3)}
+              transform={`translate(0 ${(12 * (1 - scene.insetReveal)).toFixed(1)})`}
+            >
+              <text className="axo-v14-svg-inset-caption" x="562" y="54">
+                Hình thật (MNP)
+              </text>
+              <polygon
+                className="axo-v14-svg-section-poly"
+                points={scene.trapPolyPoints}
+                fillOpacity="0.34"
+                strokeOpacity="0.92"
+              />
+              <path
+                className="axo-v14-svg-parallel-chevron"
+                d={scene.insetParallelD}
+                fill="none"
+              />
+              <path
+                className="axo-v14-svg-leg-tick"
+                d={scene.insetTicksD}
+                fill="none"
+              />
+              {scene.trapPts.map((tp, idx) => (
+                <g key={`trap-${tp.id}`}>
+                  <circle
+                    className={
+                      tp.role === "intersection"
+                        ? "axo-v14-svg-section-dot"
+                        : "axo-v14-svg-seed-dot"
+                    }
+                    cx={tp.x.toFixed(1)}
+                    cy={tp.y.toFixed(1)}
+                    r="3.4"
+                  />
+                  <text
+                    className={
+                      tp.role === "intersection"
+                        ? "axo-v14-svg-label-inter"
+                        : "axo-v14-svg-label-seed"
+                    }
+                    x={(tp.x + (idx === 0 || idx === 3 ? -14 : 14)).toFixed(1)}
+                    y={(tp.y + (idx < 2 ? -9 : 14)).toFixed(1)}
+                  >
+                    {tp.label}
+                  </text>
+                </g>
+              ))}
+            </g>
+          )}
+        </svg>
       </div>
     </div>
   );
@@ -1151,9 +1282,7 @@ export function LandingStorytellingV14() {
             .
           </h2>
           <p className="axo-v14-story-lead">
-            Cuộn xuống để quan sát mạch dựng liên tục trên lăng trụ tam giác đều
-            ABC.A′B′C′: từ giả thiết ba trung điểm M, N, P đến thiết diện hoàn
-            chỉnh.
+            Cuộn để theo dõi mạch dựng liên tục trên lăng trụ tam giác đều ABC.A′B′C′.
           </p>
         </div>
 
@@ -1165,6 +1294,11 @@ export function LandingStorytellingV14() {
               <div className="axo-v14-story-narrative">
                 <div className="axo-v14-story-rail" aria-hidden="true">
                   {STORY_STAGES_V14.map((s, idx) => {
+                    const segFill = reducedMotion
+                      ? idx <= pose.activeStageIndex
+                        ? 1
+                        : 0
+                      : clamp01(pose.progress * STORY_STAGES_V14.length - idx);
                     const stateCls =
                       idx === pose.activeStageIndex
                         ? " is-current"
@@ -1173,7 +1307,12 @@ export function LandingStorytellingV14() {
                           : "";
                     return (
                       <div key={s.shortNum} className={`axo-v14-story-rail-item${stateCls}`}>
-                        <span className="axo-v14-story-rail-bar" />
+                        <span className="axo-v14-story-rail-bar">
+                          <span
+                            className="axo-v14-story-rail-fill"
+                            style={{ transform: `scaleX(${segFill.toFixed(4)})` }}
+                          />
+                        </span>
                         <span className="axo-v14-story-rail-label">{`0${s.shortNum} · ${s.mobileShortTag}`}</span>
                       </div>
                     );

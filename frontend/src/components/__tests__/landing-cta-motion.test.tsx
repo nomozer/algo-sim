@@ -15,10 +15,12 @@ describe("Landing CTA hexagonal-prism 4-beat finite exploration storyboard & red
     expect(b1.beat).toBe("prism-emergence");
     expect(b1.settled).toBe(false);
     expect(b1.planeOpacity).toBe(0);
+    expect(b1.capLift).toBe(0);
 
     expect(b2.beat).toBe("cutting-plane");
     expect(b2.planeOpacity).toBeGreaterThan(0.2);
     expect(b2.sectionFillOpacity).toBe(0);
+    expect(b2.capLift).toBe(0);
 
     expect(b3.beat).toBe("intersection-trace");
     expect(b3.traceProgress).toBeGreaterThan(0.35);
@@ -28,6 +30,7 @@ describe("Landing CTA hexagonal-prism 4-beat finite exploration storyboard & red
     expect(b4.planeOpacity).toBe(1);
     expect(b4.traceProgress).toBe(1);
     expect(b4.sectionFillOpacity).toBe(1);
+    expect(b4.capLift).toBeGreaterThan(0.15);
     expect(CLOSING_SECTION_FILL_OPACITY).toBe(0.56);
   });
 
@@ -40,6 +43,7 @@ describe("Landing CTA hexagonal-prism 4-beat finite exploration storyboard & red
       expect(reduced.planeOpacity).toBe(1);
       expect(reduced.traceProgress).toBe(1);
       expect(reduced.sectionFillOpacity).toBe(1);
+      expect(reduced.capLift).toBeGreaterThan(0.15);
     }
   });
 });

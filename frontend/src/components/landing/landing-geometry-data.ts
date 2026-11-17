@@ -332,8 +332,8 @@ function buildPyramidSample(): LandingSampleSpec {
           "Quan sát khối chóp đáy vuông, đường cao hạ từ đỉnh xuống đáy cùng ba trung điểm xuất phát trên các cạnh.",
         v14Focus:
           "Điểm cần chú ý: Đường cao SA vuông góc với mặt đáy ABCD và vị trí M, N, P.",
-        v14CameraPos: [13.4, 7.7, -7.2],
-        v14LookAt: [0, 0.3, 0],
+        v14CameraPos: [11.5, 6.6, -6.2],
+        v14LookAt: [0, 0.16, 0],
       },
       {
         id: "stage-structure",
@@ -359,8 +359,8 @@ function buildPyramidSample(): LandingSampleSpec {
           "Mặt phẳng cắt đi qua ba điểm M, N, P nằm nghiêng qua lòng khối chóp và mở ra khung quan sát.",
         v14Focus:
           "Điểm cần chú ý: Giao tuyến NP nằm hoàn toàn trên mặt đáy ABCD.",
-        v14CameraPos: [12.2, 8.2, -8.4],
-        v14LookAt: [0, 0.28, 0],
+        v14CameraPos: [10.5, 7.0, -7.2],
+        v14LookAt: [0, 0.16, 0],
       },
       {
         id: "stage-relations",
@@ -386,8 +386,8 @@ function buildPyramidSample(): LandingSampleSpec {
           "Khi mặt phẳng cắt gặp các mặt bên, giao tuyến kéo dài từ mặt đáy sẽ cắt thêm hai cạnh bên của khối chóp.",
         v14Focus:
           "Điểm cần chú ý: Cách mặt phẳng tìm ra hai giao điểm E trên SB và F trên SD.",
-        v14CameraPos: [13.4, 7.1, -6.4],
-        v14LookAt: [0, 0.28, 0],
+        v14CameraPos: [11.5, 6.1, -5.5],
+        v14LookAt: [0, 0.16, 0],
       },
       {
         id: "stage-result",
@@ -413,8 +413,8 @@ function buildPyramidSample(): LandingSampleSpec {
           "Năm đoạn giao tuyến khép kín thành đa giác phẳng nằm trên mặt cắt. Xoay khối 3D để kiểm tra từng cạnh.",
         v14Focus:
           "Gợi ý quan sát: Thử xoay nhìn từ trên xuống để thấy rõ ngũ giác cắt qua năm mặt.",
-        v14CameraPos: [12.9, 7.6, -7.6],
-        v14LookAt: [0, 0.3, 0],
+        v14CameraPos: [11.1, 6.5, -6.5],
+        v14LookAt: [0, 0.16, 0],
       },
     ],
   };
@@ -555,8 +555,8 @@ function buildCubeSample(): LandingSampleSpec {
           "Hai đáy đối diện và bốn cạnh bên song song tạo thành khung đối xứng quanh tâm, với ba điểm xuất phát M, N, P.",
         v14Focus:
           "Điểm cần chú ý: M, N thuộc mặt đáy dưới và P nằm ở mặt đáy trên.",
-        v14CameraPos: [11.0, 7.1, -7.4],
-        v14LookAt: [0, 0.08, 0],
+        v14CameraPos: [9.4, 6.1, -6.3],
+        v14LookAt: [0, 0.02, 0],
       },
       {
         id: "cube-2",
@@ -594,8 +594,8 @@ function buildCubeSample(): LandingSampleSpec {
           "Mặt phẳng (MNP) đi nghiêng qua tâm hình lập phương, cắt qua cả hai mặt đáy trên dưới và các mặt xung quanh.",
         v14Focus:
           "Điểm cần chú ý: Hướng song song giữa các cặp mặt đối diện của lập phương.",
-        v14CameraPos: [10.3, 7.6, -8.2],
-        v14LookAt: [0, 0.08, 0],
+        v14CameraPos: [8.8, 6.5, -7.0],
+        v14LookAt: [0, 0.02, 0],
       },
       {
         id: "cube-3",
@@ -621,8 +621,8 @@ function buildCubeSample(): LandingSampleSpec {
           "Lần theo từng cặp mặt song song, mặt phẳng cắt tuần tự xác định thêm ba điểm E, F, Q trên các cạnh bên và đáy trên.",
         v14Focus:
           "Điểm cần chú ý: Các cặp giao tuyến trên mặt đối diện luôn giữ hướng song song.",
-        v14CameraPos: [11.1, 6.7, -6.9],
-        v14LookAt: [0, 0.08, 0],
+        v14CameraPos: [9.5, 5.8, -5.9],
+        v14LookAt: [0, 0.02, 0],
       },
       {
         id: "cube-4",
@@ -648,8 +648,8 @@ function buildCubeSample(): LandingSampleSpec {
           "Sáu đoạn giao tuyến trên sáu mặt của hình lập phương nối kín với nhau. Xoay trực tiếp để nhìn chính diện mặt cắt.",
         v14Focus:
           "Gợi ý quan sát: Đặt góc nhìn trực diện vào mặt phẳng cắt để thấy hình lục giác cân đối.",
-        v14CameraPos: [10.8, 7.0, -7.8],
-        v14LookAt: [0, 0.08, 0],
+        v14CameraPos: [9.2, 6.0, -6.7],
+        v14LookAt: [0, 0.02, 0],
       },
     ],
   };

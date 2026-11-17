@@ -200,6 +200,25 @@ interface ActiveSampleRig {
   pointMeshes: { pt: LandingPointSpec; mesh: THREE.Mesh }[];
 }
 
+function createDemoContactTexture(): THREE.CanvasTexture | null {
+  if (typeof document === "undefined") return null;
+  const canvas = document.createElement("canvas");
+  canvas.width = 128;
+  canvas.height = 128;
+  const ctx = canvas.getContext("2d");
+  if (!ctx) return null;
+  const grad = ctx.createRadialGradient(64, 64, 8, 64, 64, 62);
+  grad.addColorStop(0, "rgba(25, 25, 24, 0.14)");
+  grad.addColorStop(0.55, "rgba(25, 25, 24, 0.05)");
+  grad.addColorStop(1, "rgba(25, 25, 24, 0)");
+  ctx.fillStyle = grad;
+  ctx.fillRect(0, 0, 128, 128);
+  const tex = new THREE.CanvasTexture(canvas);
+  tex.colorSpace = THREE.SRGBColorSpace;
+  tex.needsUpdate = true;
+  return tex;
+}
+
 function buildSampleRig(
   sample: LandingSampleSpec,
   presentation: "default" | "v14" = "default",
@@ -212,36 +231,25 @@ function buildSampleRig(
   };
   const isV14 = presentation === "v14";
 
-  // Datum reference ring or studio contact shadow under solid
+  // Datum reference ring or soft radial contact disc under solid
   const minY = Math.min(...sample.points.map((p) => p.pos[1]));
   if (isV14) {
-    const outerDiskGeo = track(new THREE.CircleGeometry(2.68, 48));
-    outerDiskGeo.rotateX(-Math.PI / 2);
-    const outerDiskMat = track(
+    const contactTex = createDemoContactTexture();
+    if (contactTex) track(contactTex);
+    const contactGeo = track(new THREE.PlaneGeometry(5.6, 5.2));
+    contactGeo.rotateX(-Math.PI / 2);
+    const contactMat = track(
       new THREE.MeshBasicMaterial({
-        color: 0x191918,
+        map: contactTex ?? undefined,
+        color: contactTex ? 0xffffff : 0x191918,
         transparent: true,
-        opacity: 0.028,
+        opacity: contactTex ? 0.92 : 0.05,
         depthWrite: false,
       }),
     );
-    const outerDisk = new THREE.Mesh(outerDiskGeo, outerDiskMat);
-    outerDisk.position.y = minY - 0.04;
-    group.add(outerDisk);
-
-    const innerDiskGeo = track(new THREE.CircleGeometry(1.86, 40));
-    innerDiskGeo.rotateX(-Math.PI / 2);
-    const innerDiskMat = track(
-      new THREE.MeshBasicMaterial({
-        color: 0x191918,
-        transparent: true,
-        opacity: 0.052,
-        depthWrite: false,
-      }),
-    );
-    const innerDisk = new THREE.Mesh(innerDiskGeo, innerDiskMat);
-    innerDisk.position.y = minY - 0.036;
-    group.add(innerDisk);
+    const contactDisc = new THREE.Mesh(contactGeo, contactMat);
+    contactDisc.position.y = minY - 0.04;
+    group.add(contactDisc);
   } else {
     const ringGeo = track(new THREE.RingGeometry(2.65, 2.68, 64));
     ringGeo.rotateX(-Math.PI / 2);
@@ -267,7 +275,7 @@ function buildSampleRig(
       color: isV14 ? 0xffffff : 0xeef3f8,
       vertexColors: isV14,
       transparent: true,
-      opacity: isV14 ? 0.3 : 0.24,
+      opacity: isV14 ? 0.38 : 0.24,
       side: THREE.DoubleSide,
       depthWrite: false,
     }),
@@ -277,7 +285,7 @@ function buildSampleRig(
       color: isV14 ? 0xffffff : 0xf4f6f9,
       vertexColors: isV14,
       transparent: true,
-      opacity: isV14 ? 0.2 : 0.14,
+      opacity: isV14 ? 0.24 : 0.14,
       side: THREE.DoubleSide,
       depthWrite: false,
     }),
@@ -466,7 +474,7 @@ function buildSampleRig(
     const geo = track(new THREE.BufferGeometry().setFromPoints([p1, p1.clone()]));
     const mat = track(
       new THREE.LineBasicMaterial({
-        color: 0xc2550a,
+        color: isV14 ? 0x9a4006 : 0xc2550a,
         transparent: true,
         opacity: 0.96,
       }),
@@ -756,10 +764,14 @@ export function SpatialSceneCanvas({
         const stageAspect = viewportSize.width / Math.max(1, viewportSize.height);
         const v14AspectScale =
           isV14Presentation && stageAspect < 1.18
-            ? 1 + (1.18 - stageAspect) * 0.36
+            ? 1 + (1.18 - stageAspect) * 0.78
             : 1;
 
-        baseVec.set(...p.targetCamera).sub(desiredLookVec.set(...p.targetLookAt));
+        desiredLookVec.set(...p.targetLookAt);
+        if (isV14Presentation && stageAspect < 1.08) {
+          desiredLookVec.y += (1.08 - stageAspect) * 3.4;
+        }
+        baseVec.set(...p.targetCamera).sub(desiredLookVec);
         sph.setFromVector3(baseVec);
         sph.theta += sphericalOffsetRef.current.theta;
         sph.phi = Math.max(
@@ -789,7 +801,7 @@ export function SpatialSceneCanvas({
         rig.planeBorderMat.opacity = curPlaneOp * (isV14Presentation ? 0.68 : 0.56);
 
         rig.secFillMesh.visible = curSecFill > 0.02;
-        rig.secFillMat.opacity = curSecFill * (isV14Presentation ? 0.28 : 0.25);
+        rig.secFillMat.opacity = curSecFill * (isV14Presentation ? 0.44 : 0.25);
 
         const totalSegs = rig.sectionSegments.length;
         const scaled = Math.max(0, Math.min(1, curSecProg)) * totalSegs;
