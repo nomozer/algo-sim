@@ -8,7 +8,7 @@
 - `START_BASE` = 69526ca6c2dc20124f49b3b707b394164d183f84
 - `CODE_COMMIT` = a182b54600752e57f3be408aad6a673bd9a0d41f (frozen clean 96791162faa46df330beee9aef2f17f82e03c868)
 - `CLASSIFICATION` = OFFLINE_LOCAL_SLM_EMPIRICAL_BENCHMARK
-- `PRODUCT_CHANGE` = YES; CACHE_VERSION = 145 (145:route-d); default HYBRID_ROUTE_MODE = live preserved (local-slm opt-in); measured_system = 771fe868279c814f9a913ab5120b8dba35c086b6f8e523112c95b4b837e2f542 (122 files, cay_lam_viec_sach = true); 4 locked Gemini surfaces unchanged; frontend 0 diff; pending C21 templates metadata refreshed (PENDING_OWNER_DECISION, paid_project_confirmed = false)
+- `PRODUCT_CHANGE` = YES; CACHE_VERSION = 145 (145:route-d); default HYBRID_ROUTE_MODE = live preserved (local-slm opt-in); measured_system = 771fe868279c814f9a913ab5120b8dba35c086b6f8e523112c95b4b837e2f542 (122 files, cay_lam_viec_sach = true); 4 locked Gemini surfaces unchanged; frontend 0 diff; pending C21 templates metadata refreshed (PENDING_OWNER_DECISION, paid_project_confirmed = false); clean-tree full backend pytest 14902 passed, 7 skipped, 3 deselected, 12 xfailed, 0 failed (826.81s on fb07eac0c)
 - `MODEL_REQUEST_COUNT` = 0
 - `VERIFICATION` = run.json; SLM_MODEL_MANIFEST.json; preregistered_replacement_criteria.json; independent_slm_holdout_manifest.json; dev_calibration_16.json; SLM_BASELINE_COMPARISON.json; SLM_EXTRACTION_EVALUATION.json; SLM_RESOURCE_BENCHMARK.json; pending_template_refresh.json; SLM_ARCHITECTURE.md; SLM_RUNTIME_IMPLEMENTATION.md; SLM_FAILURE_ANALYSIS.md; SLM_REPLACEMENT_DECISION.md; FINAL_MASTER_REPORT.md
 - `CORRECTS` = NONE

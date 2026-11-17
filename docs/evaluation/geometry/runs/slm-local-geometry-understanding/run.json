@@ -1,7 +1,7 @@
 {
   "schema": "axo-evaluation-run/2",
   "run_id": "slm-local-geometry-understanding",
-  "generated_at_utc": "2026-11-17T13:50:06Z",
+  "generated_at_utc": "2026-11-17T14:05:16Z",
   "classification": "OFFLINE_LOCAL_SLM_EMPIRICAL_BENCHMARK",
   "branch": "feat/local-first-geometry-understanding",
   "range_base_commit": "69526ca6c2dc20124f49b3b707b394164d183f84",
@@ -233,7 +233,19 @@
     },
     "pending_template_refresh_count": 3
   },
-  "clean_tree_full_pytest": "PENDING_CLEAN_COMMIT1_VERIFICATION",
+  "clean_tree_full_pytest": {
+    "status": "PASS",
+    "verified_on_commit": "fb07eac0ce81ebf7b2d4d9849c9dcc85117ac0e2",
+    "short_commit": "fb07eac0c",
+    "passed": 14902,
+    "skipped": 7,
+    "deselected": 3,
+    "xfailed": 12,
+    "failed": 0,
+    "warnings": 1,
+    "duration_seconds": 826.81,
+    "command": "pytest -c backend/pytest.ini backend/tests -q"
+  },
   "report": "FINAL_MASTER_REPORT.md",
   "hash_policy": "SHA-256 LF-normalized; excludes run.json",
   "artifacts": {
@@ -242,8 +254,8 @@
       "bytes_lf": 23744
     },
     "FINAL_MASTER_REPORT.md": {
-      "sha256_lf": "f2e21c633b68c983e3b2480f5f3b85cc40b87081358df9c1dddad3073cec37ff",
-      "bytes_lf": 13055
+      "sha256_lf": "a14216151804b202d4061a356cf6dbc87b5aa30e3dd8a83286382d295d20f68b",
+      "bytes_lf": 13026
     },
     "independent_slm_holdout_manifest.json": {
       "sha256_lf": "22ad1979771fe9b75f2f01f6a7b858db07244e6257a9ac62b936059396a0a4ce",
