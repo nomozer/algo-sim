@@ -385,3 +385,61 @@ def test_fe4_scene3d_auxiliary_role_metadata_distinguished_from_primary_solid():
         assert obj["display_group"] == ["construction"]
         assert obj["formation_roles"] == ["CONSTRUCT_AUXILIARY_GEOMETRY"]
     assert objs277["khoi_O_ABC"]["formation_roles"] == ["CLOSE_SOLID"]
+
+
+def test_stem_fraction_above_choice_band_and_subquestion_marker_hygiene():
+    from app.ingestion.ocr_reconcile import reconcile_local_ocr
+
+    raw_frac = {
+        "width": 2480,
+        "height": 420,
+        "engines": {
+            "rapidocr": {
+                "lines": [
+                    {"text": "Câu 26. Cho hình chóp tam giác đều S.ABC và có cạnh đáy bằng a, cạnh bên", "bbox": [137, 1, 1744, 71], "conf": 0.99},
+                    {"text": "2a", "bbox": [256, 69, 326, 126], "conf": 0.99},
+                    {"text": "bằng", "bbox": [137, 95, 253, 164], "conf": 0.98},
+                    {"text": "(tham khảo hình vẽ bên). Góc giữa cạnh bên và mặt đáy bằng", "bbox": [336, 97, 1580, 163], "conf": 0.99},
+                    {"text": "3", "bbox": [268, 139, 312, 191], "conf": 0.99},
+                    {"text": "A.90°.", "bbox": [200, 196, 356, 252], "conf": 0.99},
+                    {"text": "B.45°.", "bbox": [722, 198, 877, 252], "conf": 0.99},
+                    {"text": "√2", "bbox": [360, 260, 440, 310], "conf": 0.99},
+                    {"text": "2", "bbox": [380, 315, 420, 365], "conf": 0.99},
+                ],
+            },
+            "tesseract": {
+                "lines": [
+                    {"text": "Câu 26. Cho hình chóp tam giác đều S.ABC và có cạnh đáy bằng a, cạnh bên", "bbox": [140, 5, 1740, 70], "conf": 95},
+                    {"text": "bằng (tham khảo hình vẽ bên). Góc giữa cạnh bên và mặt đáy bằng", "bbox": [140, 96, 1575, 165], "conf": 95},
+                    {"text": "A. 90°. B. 45°.", "bbox": [200, 198, 875, 250], "conf": 95},
+                ],
+            },
+        },
+    }
+    res_frac = reconcile_local_ocr(raw_frac)
+    frac_spans = [s for s in res_frac["spans"] if s.get("reason") == "FRACTION_STRUCTURE_LOSS"]
+    assert any(s.get("text") == "2a/3" for s in frac_spans), frac_spans
+    assert not any(s.get("text") == "√2/2" for s in frac_spans), frac_spans
+
+    raw_subq = {
+        "width": 1024,
+        "height": 220,
+        "engines": {
+            "rapidocr": {
+                "lines": [
+                    {"text": "Cho hình chóp S.ABCD có đáy là hình vuông cạnh a, SA vuông góc với đáy.", "bbox": [20, 15, 980, 55], "conf": 0.99},
+                    {"text": "b. Tính khoảng cách từ điểm s đến mặt phẳng (SBD).", "bbox": [20, 85, 860, 130], "conf": 0.99},
+                ],
+            },
+            "tesseract": {
+                "lines": [
+                    {"text": "Cho hình chóp S.ABCD có đáy là hình vuông cạnh a, SA vuông góc với đáy.", "bbox": [20, 15, 980, 55], "conf": 96},
+                    {"text": "b. Tính khoảng cách từ điểm s đến mặt phẳng (SBD).", "bbox": [20, 85, 860, 130], "conf": 96},
+                ],
+            },
+        },
+    }
+    res_subq = reconcile_local_ocr(raw_subq)
+    lv_spans = [s for s in res_subq["spans"] if s.get("reason") == "LOWERCASE_VERTEX_LABEL"]
+    assert all(s.get("text") != "b." for s in lv_spans), lv_spans
+    assert any(s.get("text") == "s" and s.get("alternatives") == ["S", "s"] for s in lv_spans), lv_spans

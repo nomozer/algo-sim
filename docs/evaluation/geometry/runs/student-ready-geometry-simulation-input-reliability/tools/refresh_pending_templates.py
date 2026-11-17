@@ -37,15 +37,17 @@ def main() -> int:
         original = path.read_bytes()
         data = json.loads(original.decode("utf-8"))
         assert data["owner_decision"] == "PENDING_OWNER_DECISION" and data["paid_project_confirmed"] is False, path
-        before = {k: data.get(k) for k in KEYS}
+        saved = logs / f"prior-{path.name}"
+        if not saved.exists():
+            saved.write_bytes(original)
+        prior_bytes = saved.read_bytes()
+        prior_data = json.loads(prior_bytes.decode("utf-8"))
+        before = {k: prior_data.get(k) for k in KEYS}
         for key in KEYS:
             if key in data:
                 data[key] = ident["measured_system"]
         for key in ("runner_sha256", "paired_harness_sha256", "scorer_sha256"):
             assert data[key] == ident[key], f"{study}: {key} drift is not a measured-system refresh; stop"
-        saved = logs / f"prior-{path.name}"
-        if not saved.exists():
-            saved.write_bytes(original)
         path.write_bytes((json.dumps(data, ensure_ascii=False, indent=2) + "\n").encode("utf-8"))
         rows.append({
             "study": study,
@@ -53,7 +55,7 @@ def main() -> int:
             "before": before,
             "after": {k: data.get(k) for k in KEYS},
             "original_saved_as": saved.relative_to(RUN).as_posix(),
-            "original_sha256": hashlib.sha256(original).hexdigest(),
+            "original_sha256": hashlib.sha256(prior_bytes).hexdigest(),
             "new_sha256": hashlib.sha256(path.read_bytes()).hexdigest(),
             "owner_decision": data["owner_decision"],
             "paid_project_confirmed": data["paid_project_confirmed"],

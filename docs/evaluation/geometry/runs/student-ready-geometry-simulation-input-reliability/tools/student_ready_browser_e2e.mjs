@@ -277,22 +277,16 @@ try {
     return m ? [Number(m[1]), Number(m[2])] : null;
   };
 
-  async function registerFreshAccount(page) {
-    const status = await page.evaluate(async () => {
-      const r = await fetch('/api/auth/register', {
-        method: 'POST',
-        credentials: 'include',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          email: `sr-e2e-${Date.now()}-${Math.random().toString(36).slice(2, 8)}@example.invalid`,
-          displayName: 'StudentReadyE2E',
-          password: crypto.randomUUID(),
-        }),
-      });
-      return r.status;
+  async function registerFreshAccount(ctx) {
+    const uniq = `${Date.now()}-${Math.random().toString(36).slice(2, 8)}`;
+    const r = await ctx.request.post(`${ORIGIN}/api/auth/register`, {
+      data: {
+        email: `sr-e2e-${uniq}@example.invalid`,
+        displayName: 'StudentReadyE2E',
+        password: `SrPass!${uniq}`,
+      },
     });
-    await page.reload({ waitUntil: 'networkidle' });
-    return status;
+    return r.status();
   }
 
   async function ensureHomeComposer(page, { clearAttachments = false, clearText = false } = {}) {
@@ -409,8 +403,8 @@ try {
       }
     });
 
+    const regStatus = await registerFreshAccount(ctx);
     await page.goto(ORIGIN, { waitUntil: 'networkidle' });
-    const regStatus = await registerFreshAccount(page);
 
     // 1. Promoted vmmu_r254 + timeline walk + spoiler check
     const r254 = await loadTextAndWaitScene(page, CASES.vmmu_r254.text);

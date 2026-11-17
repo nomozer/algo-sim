@@ -798,13 +798,16 @@ def reconcile_local_ocr(
     merged_into: dict[int, int] = {}
     fraction_of: dict[int, tuple[str, str, Any]] = {}
     for i, a in enumerate(text_lines):
-        if in_choice(a["bbox"], a.get("text", "")) or _OPTION_PREFIX_RE.match(str(a.get("text", ""))):
+        a_opt_prefix = bool(_OPTION_PREFIX_RE.match(str(a.get("text", ""))))
+        if a_opt_prefix:
             continue
+        a_in_choice = in_choice(a["bbox"], a.get("text", ""))
         ah = a["bbox"][3] - a["bbox"][1]
         for j, b in enumerate(text_lines):
             if j <= i:
                 continue
-            if in_choice(b["bbox"], b.get("text", "")) or _OPTION_PREFIX_RE.match(str(b.get("text", ""))):
+            b_opt_prefix = bool(_OPTION_PREFIX_RE.match(str(b.get("text", ""))))
+            if b_opt_prefix or (a_in_choice and in_choice(b["bbox"], b.get("text", ""))):
                 continue
             bh = b["bbox"][3] - b["bbox"][1]
             short_a, short_b = len(norm_math(a["text"])) <= 8, len(norm_math(b["text"])) <= 8
@@ -1243,16 +1246,19 @@ def reconcile_local_ocr(
     for rec in line_records:
         if rec["choice"]:
             continue
+        first_in_line = True
         for sp_a in rec["spans"]:
             if sp_a.status == "dropped" or (sp_a.kind == "structure" and not sp_a.text):
                 continue
             tok = sp_a.text.strip()
             tok_core = tok.strip(".,;:!?")
+            is_subquestion_marker = first_in_line and bool(re.fullmatch(r"[b-e][.):]", tok))
             if (
                 sp_a.status == "verified"
                 and len(tok_core) == 1
                 and "b" <= tok_core <= "z"
                 and not tok.endswith(")")
+                and not is_subquestion_marker
                 and prev_stem_word not in {"câu", "ý", "phần", "theo", "và"}
                 and not re.match(r"^\d", prev_stem_word)
                 and (tok_core.upper() in stem_upper_vertices or prev_stem_word in _GEOM_VERTEX_PREPS)
@@ -1264,6 +1270,7 @@ def reconcile_local_ocr(
                 sp_a.alternatives = [up, tok]
             if tok_core:
                 prev_stem_word = tok_core.lower()
+                first_in_line = False
     # Gom mọi mảnh phương án trắc nghiệm trong cùng dải `choice_band` về hàng của phương án mở đầu ("A."/"B.").
     for lo, hi in choice_bands:
         band_recs = [
