@@ -1,7 +1,7 @@
 {
   "schema": "axo-evaluation-run/2",
   "run_id": "student-ready-geometry-simulation-input-reliability",
-  "generated_at_utc": "2026-11-17T10:26:14Z",
+  "generated_at_utc": "2026-11-17T10:56:16Z",
   "classification": "OFFLINE_DETERMINISTIC_REPLAY",
   "branch": "feat/local-first-geometry-understanding",
   "range_base_commit": "ce280140bf89ad72e8724993f75f98edcce01e55",
@@ -53,7 +53,7 @@
     "gate_d_automated_browser_e2e_4viewports": "PASS",
     "gate_e_freeze_and_cache_lock": "PASS",
     "gate_f_replay_crash_preview_fixtures": "PASS",
-    "gate_g_full_backend_pytest_clean_tree": "PENDING_EXECUTION_ON_CLEAN_TREE"
+    "gate_g_full_backend_pytest_clean_tree": "PASS"
   },
   "metrics_summary": {
     "mandatory": {
@@ -287,14 +287,15 @@
     }
   },
   "full_backend_pytest": {
-    "status": "PENDING_EXECUTION_ON_CLEAN_TREE",
-    "commit_sha": null,
-    "passed": null,
-    "skipped": null,
-    "deselected": null,
-    "xfailed": null,
-    "failed": null,
-    "duration_seconds": null
+    "status": "PASS",
+    "commit_sha": "8037ad007d24dc824fd25b3cdc3821fb440de2ed",
+    "passed": 14893,
+    "skipped": 7,
+    "deselected": 3,
+    "xfailed": 12,
+    "failed": 0,
+    "warnings": 1,
+    "duration_seconds": 626.37
   },
   "artifacts": [
     {
@@ -304,8 +305,8 @@
     },
     {
       "path": "FINAL_MASTER_REPORT.md",
-      "bytes": 7527,
-      "sha256": "2db96289413fda73fb1289581577c483b35cf6ab3b3cd2569f91abf5e2478409"
+      "bytes": 7718,
+      "sha256": "13235e1b69a5b890027e69f2aa8f4c9655e55d9072e634190aefa163204bc906"
     },
     {
       "path": "frozen_unseen_vmmu20_manifest.json",
