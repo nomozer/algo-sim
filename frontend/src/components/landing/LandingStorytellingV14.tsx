@@ -409,7 +409,7 @@ const STORY_PLANE_QUAD = (() => {
     uz * vx - ux * vz,
     ux * vy - uy * vx,
   ];
-  return computeBoundedPlaneQuad([m, n, p, q], normal, 0.34);
+  return computeBoundedPlaneQuad([m, n, p, q], normal, 0.24);
 })();
 
 function buildDoubleTickD(a: ProjectedPoint2D, b: ProjectedPoint2D): string {
@@ -658,11 +658,15 @@ function PrismEditorialStage({
       pts.map((p) => `${p.x.toFixed(1)},${p.y.toFixed(1)}`).join(" ");
 
     const loopIds = ["M", "N", "P", "Q"] as const;
+    // Host prism face index per segment: MN->base(0), NP->ACC'A'(4), PQ->BCC'B'(3), QM->ABB'A'(2)
+    const traceHostFaceIdx = [0, 4, 3, 2] as const;
     const tracedEdges = loopIds.map((id, idx) => {
       const nextId = loopIds[(idx + 1) % loopIds.length];
       const u = clamp01(pose.traceProgress * loopIds.length - idx);
       const p0 = proj[id];
       const p1 = proj[nextId];
+      const hostIdx = traceHostFaceIdx[idx] ?? 0;
+      const isFront = hostIdx === 0 ? true : Boolean(faceFrontMap[hostIdx]);
       return {
         key: `${id}-${nextId}`,
         x1: p0.x,
@@ -670,6 +674,7 @@ function PrismEditorialStage({
         x2: lerp(p0.x, p1.x, u),
         y2: lerp(p0.y, p1.y, u),
         u,
+        isFront,
       };
     });
 
@@ -991,8 +996,8 @@ function PrismEditorialStage({
             <polygon
               className="axo-v14-svg-cutting-plane"
               points={scene.planePts}
-              fillOpacity={(0.2 * pose.planeSweep).toFixed(3)}
-              strokeOpacity={(0.76 * pose.planeSweep).toFixed(3)}
+              fillOpacity={(0.13 * pose.planeSweep).toFixed(3)}
+              strokeOpacity={(0.54 * pose.planeSweep).toFixed(3)}
             />
           )}
 
@@ -1000,8 +1005,8 @@ function PrismEditorialStage({
             <polygon
               className="axo-v14-svg-section-poly"
               points={scene.sectionPts}
-              fillOpacity={(0.44 * pose.sectionFill).toFixed(3)}
-              strokeOpacity={Math.min(0.95, pose.sectionFill).toFixed(3)}
+              fillOpacity={(0.42 * pose.sectionFill).toFixed(3)}
+              stroke="none"
             />
           )}
 
@@ -1014,7 +1019,11 @@ function PrismEditorialStage({
                 y1={seg.y1}
                 x2={seg.x2}
                 y2={seg.y2}
-                strokeOpacity={Math.min(0.96, 0.45 + 0.51 * seg.u).toFixed(3)}
+                strokeDasharray={seg.isFront ? undefined : "6 4"}
+                strokeOpacity={(
+                  (seg.isFront ? 0.96 : 0.72) *
+                  Math.min(1, 0.45 + 0.55 * seg.u)
+                ).toFixed(3)}
               />
             ) : null,
           )}

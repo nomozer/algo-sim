@@ -117,10 +117,24 @@ describe("AXO Landing V1.4 — Hero Visual System & Lifecycle", () => {
       expect(Math.abs(d / trueShape.edgeLengths2D[i] - scaleRatio)).toBeLessThan(1e-6);
     }
 
-    // Satellite 2: detached miniature upper cap S.MENPF preserves uniform similarity scale across all edges
-    expect(gallery.detachedCapVertices).toHaveLength(6);
+    // Satellite 2: exact S-side half-space clipped polyhedron {S, C, M, E, N, P, F} (x + y + 2z >= 6)
+    expect(gallery.detachedCapVertices.map((v) => v.id)).toEqual([
+      "S",
+      "C",
+      "M",
+      "E",
+      "N",
+      "P",
+      "F",
+    ]);
+    expect(gallery.detachedCapVertices).toHaveLength(7);
     const capMap = Object.fromEntries(gallery.detachedCapVertices.map((v) => [v.id, v.pos]));
     const pMap = LANDING_PYRAMID_SAMPLE.pointMap;
+    for (const v of gallery.detachedCapVertices) {
+      const dom = pMap[v.id].domainXyz;
+      expect(dom[0] + dom[1] + 2 * dom[2] - 6).toBeGreaterThanOrEqual(-1e-6);
+    }
+    expect(gallery.detachedCapLateralEdges).toHaveLength(6);
     for (const [uId, vId] of gallery.detachedCapLateralEdges) {
       const cu = capMap[uId];
       const cv = capMap[vId];

@@ -188,7 +188,15 @@ interface ActiveSampleRig {
   group: THREE.Group;
   disposables: { dispose: () => void }[];
   solidFacesMeta: readonly { vertices: readonly string[]; center: THREE.Vector3; normal: THREE.Vector3 }[];
-  edgeObjects: { edge: LandingSampleSpec["solidEdges"][number]; solidLine: THREE.Line; dashedLine: THREE.Line }[];
+  secNormal: THREE.Vector3;
+  secOffset: number;
+  edgeObjects: {
+    edge: LandingSampleSpec["solidEdges"][number];
+    solidLine: THREE.Line | null;
+    posSolidLine: THREE.Line | null;
+    negSolidLine: THREE.Line | null;
+    dashedLine: THREE.Line;
+  }[];
   guideLines: { line: THREE.Line; mat: THREE.LineDashedMaterial }[];
   planeMesh: THREE.Mesh;
   planeFillMat: THREE.MeshBasicMaterial;
@@ -196,7 +204,14 @@ interface ActiveSampleRig {
   planeBorderMat: THREE.LineBasicMaterial;
   secFillMesh: THREE.Mesh;
   secFillMat: THREE.MeshBasicMaterial;
-  sectionSegments: { p1: THREE.Vector3; p2: THREE.Vector3; geo: THREE.BufferGeometry; line: THREE.Line }[];
+  sectionSegments: {
+    p1: THREE.Vector3;
+    p2: THREE.Vector3;
+    geo: THREE.BufferGeometry;
+    line: THREE.Line;
+    mat: THREE.LineBasicMaterial;
+    hostFaceIndex: number;
+  }[];
   pointMeshes: { pt: LandingPointSpec; mesh: THREE.Mesh }[];
 }
 
@@ -323,22 +338,95 @@ function buildSampleRig(
     group.add(mesh);
   }
 
-  // Dual front-solid / back-dashed materials for every solid edge
+  // Compute oriented section plane (secNormal, secOffset) for half-space V14 occlusion
+  const secLoopPts = sample.sectionLoop.map((id) => sample.pointMap[id].pos);
+  const secNormal = new THREE.Vector3(0, 1, 0);
+  let secOffset = 0;
+  if (secLoopPts.length >= 3) {
+    const sp0 = new THREE.Vector3(...secLoopPts[0]);
+    const sp1 = new THREE.Vector3(...secLoopPts[1]);
+    const sp2 = new THREE.Vector3(...secLoopPts[2]);
+    const candidate = new THREE.Vector3()
+      .subVectors(sp1, sp0)
+      .cross(new THREE.Vector3().subVectors(sp2, sp0));
+    if (candidate.lengthSq() > 1e-8) {
+      secNormal.copy(candidate.normalize());
+      secOffset = secNormal.dot(sp0);
+    }
+  }
+
+  const splitSegmentAtPlane = (
+    pA: THREE.Vector3,
+    pB: THREE.Vector3,
+  ): {
+    pos: readonly [THREE.Vector3, THREE.Vector3] | null;
+    neg: readonly [THREE.Vector3, THREE.Vector3] | null;
+  } => {
+    const da = pA.dot(secNormal) - secOffset;
+    const db = pB.dot(secNormal) - secOffset;
+    const eps = 1e-4;
+    if (da >= -eps && db >= -eps) return { pos: [pA, pB], neg: null };
+    if (da <= eps && db <= eps) return { pos: null, neg: [pA, pB] };
+    const t = Math.max(0, Math.min(1, da / (da - db)));
+    const mid = new THREE.Vector3().lerpVectors(pA, pB, t);
+    return da > 0
+      ? { pos: [pA, mid], neg: [mid, pB] }
+      : { neg: [pA, mid], pos: [mid, pB] };
+  };
+
+  // Dual front-solid / back-dashed materials (split at section plane in V14 for true 3D occlusion)
   const edgeObjects = sample.solidEdges.map((edge) => {
     const a = sample.pointMap[edge.from].pos;
     const b = sample.pointMap[edge.to].pos;
 
-    const solidGeo = track(new THREE.BufferGeometry());
-    solidGeo.setAttribute("position", new THREE.Float32BufferAttribute([...a, ...b], 3));
-    const solidMat = track(
-      new THREE.LineBasicMaterial({
-        color: edge.kind === "altitude" ? 0x005bab : 0x1b1b19,
-        transparent: true,
-        opacity: 0.9,
-      }),
-    );
-    const solidLine = new THREE.Line(solidGeo, solidMat);
-    solidLine.renderOrder = 3;
+    let solidLine: THREE.Line | null = null;
+    let posSolidLine: THREE.Line | null = null;
+    let negSolidLine: THREE.Line | null = null;
+
+    if (isV14) {
+      const aVec = new THREE.Vector3(...a);
+      const bVec = new THREE.Vector3(...b);
+      const { pos, neg } = splitSegmentAtPlane(aVec, bVec);
+      if (pos) {
+        const geo = track(new THREE.BufferGeometry().setFromPoints([pos[0], pos[1]]));
+        const mat = track(
+          new THREE.LineBasicMaterial({
+            color: edge.kind === "altitude" ? 0x005bab : 0x1b1b19,
+            transparent: true,
+            opacity: 0.9,
+          }),
+        );
+        posSolidLine = new THREE.Line(geo, mat);
+        posSolidLine.renderOrder = 8;
+        group.add(posSolidLine);
+      }
+      if (neg) {
+        const geo = track(new THREE.BufferGeometry().setFromPoints([neg[0], neg[1]]));
+        const mat = track(
+          new THREE.LineBasicMaterial({
+            color: edge.kind === "altitude" ? 0x005bab : 0x1b1b19,
+            transparent: true,
+            opacity: 0.9,
+          }),
+        );
+        negSolidLine = new THREE.Line(geo, mat);
+        negSolidLine.renderOrder = 3;
+        group.add(negSolidLine);
+      }
+    } else {
+      const solidGeo = track(new THREE.BufferGeometry());
+      solidGeo.setAttribute("position", new THREE.Float32BufferAttribute([...a, ...b], 3));
+      const solidMat = track(
+        new THREE.LineBasicMaterial({
+          color: edge.kind === "altitude" ? 0x005bab : 0x1b1b19,
+          transparent: true,
+          opacity: 0.9,
+        }),
+      );
+      solidLine = new THREE.Line(solidGeo, solidMat);
+      solidLine.renderOrder = 3;
+      group.add(solidLine);
+    }
 
     const dashedGeo = track(new THREE.BufferGeometry());
     dashedGeo.setAttribute("position", new THREE.Float32BufferAttribute([...a, ...b], 3));
@@ -355,9 +443,8 @@ function buildSampleRig(
     dashedLine.computeLineDistances();
     dashedLine.renderOrder = 2;
 
-    group.add(solidLine);
     group.add(dashedLine);
-    return { edge, solidLine, dashedLine };
+    return { edge, solidLine, posSolidLine, negSolidLine, dashedLine };
   });
 
   // Base diagonals / construction guides
@@ -447,7 +534,6 @@ function buildSampleRig(
 
   // Cross-section polygon fill
   const secPositions: number[] = [];
-  const secLoopPts = sample.sectionLoop.map((id) => sample.pointMap[id].pos);
   for (let i = 1; i < secLoopPts.length - 1; i++) {
     secPositions.push(...secLoopPts[0], ...secLoopPts[i], ...secLoopPts[i + 1]);
   }
@@ -466,11 +552,23 @@ function buildSampleRig(
   secFillMesh.renderOrder = 6;
   group.add(secFillMesh);
 
+  // Coplanar check per section segment so back-face section traces soften behind front faces in V14
+  const findHostFaceIndex = (pA: THREE.Vector3, pB: THREE.Vector3): number => {
+    for (let fIdx = 0; fIdx < solidFacesMeta.length; fIdx++) {
+      const fm = solidFacesMeta[fIdx];
+      const da = Math.abs(fm.normal.dot(new THREE.Vector3().subVectors(pA, fm.center)));
+      const db = Math.abs(fm.normal.dot(new THREE.Vector3().subVectors(pB, fm.center)));
+      if (da < 1e-3 && db < 1e-3) return fIdx;
+    }
+    return 0;
+  };
+
   // Progressive section perimeter edges
   const sectionSegments = sample.sectionLoop.map((id, idx) => {
     const nextId = sample.sectionLoop[(idx + 1) % sample.sectionLoop.length];
     const p1 = new THREE.Vector3(...sample.pointMap[id].pos);
     const p2 = new THREE.Vector3(...sample.pointMap[nextId].pos);
+    const hostFaceIndex = findHostFaceIndex(p1, p2);
     const geo = track(new THREE.BufferGeometry().setFromPoints([p1, p1.clone()]));
     const mat = track(
       new THREE.LineBasicMaterial({
@@ -482,7 +580,7 @@ function buildSampleRig(
     const line = new THREE.Line(geo, mat);
     line.renderOrder = 7;
     group.add(line);
-    return { p1, p2, geo, line };
+    return { p1, p2, geo, line, mat, hostFaceIndex };
   });
 
   // Shared sphere geometries per role radius (deduplicated resources)
@@ -498,7 +596,7 @@ function buildSampleRig(
     const mat = pt.role === "intersection" ? matInter : pt.role === "seed" ? matSeed : matVertex;
     const mesh = new THREE.Mesh(geo, mat);
     mesh.position.set(pt.pos[0], pt.pos[1], pt.pos[2]);
-    mesh.renderOrder = 8;
+    mesh.renderOrder = isV14 ? 9 : 8;
     group.add(mesh);
     return { pt, mesh };
   });
@@ -509,6 +607,8 @@ function buildSampleRig(
     group,
     disposables,
     solidFacesMeta,
+    secNormal,
+    secOffset,
     edgeObjects,
     guideLines,
     planeMesh,
@@ -801,11 +901,16 @@ export function SpatialSceneCanvas({
         curSecFill += (p.sectionFillOpacity - curSecFill) * damp;
         rig.planeMesh.visible = curPlaneOp > 0.02;
         rig.planeBorderLine.visible = curPlaneOp > 0.02;
-        rig.planeFillMat.opacity = curPlaneOp * (isV14Presentation ? 0.14 : 0.16);
-        rig.planeBorderMat.opacity = curPlaneOp * (isV14Presentation ? 0.68 : 0.56);
+        rig.planeFillMat.opacity = curPlaneOp * (isV14Presentation ? 0.13 : 0.16);
+        rig.planeBorderMat.opacity = curPlaneOp * (isV14Presentation ? 0.48 : 0.56);
 
         rig.secFillMesh.visible = curSecFill > 0.02;
         rig.secFillMat.opacity = curSecFill * (isV14Presentation ? 0.44 : 0.25);
+
+        const faceFrontFlags = rig.solidFacesMeta.map((f) => {
+          const viewVec = new THREE.Vector3().subVectors(camera.position, f.center).normalize();
+          return f.normal.dot(viewVec) > 0.015;
+        });
 
         const totalSegs = rig.sectionSegments.length;
         const scaled = Math.max(0, Math.min(1, curSecProg)) * totalSegs;
@@ -818,6 +923,11 @@ export function SpatialSceneCanvas({
             const posAttr = seg.geo.getAttribute("position") as THREE.BufferAttribute;
             posAttr.setXYZ(1, endPt.x, endPt.y, endPt.z);
             posAttr.needsUpdate = true;
+            if (isV14Presentation) {
+              const hostFront = faceFrontFlags[seg.hostFaceIndex] ?? true;
+              seg.mat.opacity = hostFront ? 0.96 : 0.48;
+              seg.line.renderOrder = hostFront ? 7 : 6;
+            }
           }
         }
 
@@ -826,17 +936,24 @@ export function SpatialSceneCanvas({
           g.line.visible = p.showGuideEdges;
         }
 
+        const camOnPosSide = rig.secNormal.dot(camera.position) >= rig.secOffset;
         for (const item of rig.edgeObjects) {
-          const adjacent = rig.solidFacesMeta.filter((f) =>
-            edgeBelongsToFace(item.edge.from, item.edge.to, f.vertices),
-          );
+          const adjacentIndices = rig.solidFacesMeta
+            .map((f, idx) => (edgeBelongsToFace(item.edge.from, item.edge.to, f.vertices) ? idx : -1))
+            .filter((idx) => idx >= 0);
           const front =
-            adjacent.length === 0 ||
-            adjacent.some((f) => {
-              const viewVec = new THREE.Vector3().subVectors(camera.position, f.center).normalize();
-              return f.normal.dot(viewVec) > 0.015;
-            });
-          item.solidLine.visible = front;
+            adjacentIndices.length === 0 || adjacentIndices.some((idx) => faceFrontFlags[idx]);
+          if (item.solidLine) {
+            item.solidLine.visible = front;
+          }
+          if (item.posSolidLine) {
+            item.posSolidLine.visible = front;
+            item.posSolidLine.renderOrder = camOnPosSide ? 8 : 3;
+          }
+          if (item.negSolidLine) {
+            item.negSolidLine.visible = front;
+            item.negSolidLine.renderOrder = camOnPosSide ? 3 : 8;
+          }
           item.dashedLine.visible = !front;
         }
 
