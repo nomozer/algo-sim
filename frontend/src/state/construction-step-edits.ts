@@ -1,4 +1,10 @@
-import type { Scene3D } from "../simulations/domains/geometry/scene3d-model";
+import { veKhongGian } from "../simulations/domains/geometry/scene3d-chart";
+import {
+  hopLeScene3D,
+  inspectScene3DPayloadIntegrity,
+  type Scene3D,
+} from "../simulations/domains/geometry/scene3d-model";
+import { verifySceneMathematicalConsistency } from "../simulations/domains/geometry/scene3d-semantic-policy";
 
 export const AXO_CLIENT_SESSION_HEADER = "X-Axo-Client-Session";
 
@@ -62,9 +68,21 @@ export interface StepEditSubmitSuccess {
   scene3d: Scene3D;
   step_overrides: Record<string, string>;
   dependency_summary: StepEditDependencySummary;
+  validation_result?: { passed?: boolean } | null;
   stage_timings_ms: Record<string, number>;
   llm_calls: number;
   quota_charged: boolean;
+}
+
+export function isVerifiedRebuildScene(scene: unknown): scene is Scene3D {
+  try {
+    if (!hopLeScene3D(scene)) return false;
+    if (!inspectScene3DPayloadIntegrity(scene).valid) return false;
+    const world = veKhongGian(scene);
+    return verifySceneMathematicalConsistency(world).valid;
+  } catch {
+    return false;
+  }
 }
 
 export interface StepEditSubmitRefusal {
@@ -125,11 +143,16 @@ export function loadCachedStepEditState(sessionId: string): PersistedStepEditSna
     if (!parsed || typeof parsed !== "object" || parsed.sessionId !== sessionId) {
       return null;
     }
+    const cachedScene = isVerifiedRebuildScene(parsed.committedScene)
+      ? parsed.committedScene
+      : null;
     return {
       sessionId,
       problemKey: typeof parsed.problemKey === "string" ? parsed.problemKey : "",
-      committedScene: parsed.committedScene ?? null,
-      stepOverrides: parsed.stepOverrides && typeof parsed.stepOverrides === "object" ? parsed.stepOverrides : {},
+      committedScene: cachedScene,
+      stepOverrides: cachedScene && parsed.stepOverrides && typeof parsed.stepOverrides === "object"
+        ? parsed.stepOverrides
+        : {},
       dependencySummary: parsed.dependencySummary ?? null,
       revisions: Array.isArray(parsed.revisions) ? parsed.revisions : [],
       feedbackItems: Array.isArray(parsed.feedbackItems) ? parsed.feedbackItems : [],
@@ -162,11 +185,14 @@ export async function fetchStepEditSessionState(sessionId: string): Promise<Pers
     if (!res.ok) return null;
     const data = await res.json();
     if (!data?.found) return null;
+    const remoteScene = isVerifiedRebuildScene(data.committed_scene)
+      ? (data.committed_scene as Scene3D)
+      : null;
     const snapshot: PersistedStepEditSnapshot = {
       sessionId,
       problemKey: typeof data.problem_key === "string" ? data.problem_key : "",
-      committedScene: (data.committed_scene as Scene3D) ?? null,
-      stepOverrides: (data.step_overrides as Record<string, string>) ?? {},
+      committedScene: remoteScene,
+      stepOverrides: remoteScene ? ((data.step_overrides as Record<string, string>) ?? {}) : {},
       dependencySummary: (data.dependency_summary as StepEditDependencySummary) ?? null,
       revisions: Array.isArray(data.revisions) ? data.revisions : [],
       feedbackItems: Array.isArray(data.feedback_items) ? data.feedback_items : [],
@@ -227,6 +253,21 @@ export async function submitConstructionStepEdit(params: {
 
     const data = await res.json().catch(() => null);
     if (res.ok && data?.status === "committed" && data?.scene3d) {
+      const serverVerified =
+        data.feedback_status === "GEOMETRY_VERIFIED"
+        && data.validation_result?.passed !== false
+        && data.dependency_summary?.cycle_detected !== true
+        && isVerifiedRebuildScene(data.scene3d);
+      if (!serverVerified) {
+        return {
+          status: "rolled_back",
+          error_code: "UNVERIFIED_REBUILD_REJECTED",
+          failed_stage: "client_verification",
+          learner_error:
+            "Mô hình dựng lại chưa vượt qua kiểm chứng hình học nên trạng thái hợp lệ trước đó được giữ nguyên.",
+          draft_preserved: true,
+        };
+      }
       const success = data as StepEditSubmitSuccess;
       const existingCache = loadCachedStepEditState(sessionId);
       saveCachedStepEditState(sessionId, {

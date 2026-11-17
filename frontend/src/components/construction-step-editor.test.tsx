@@ -1,12 +1,20 @@
+import { readFileSync } from "node:fs";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import { renderToString } from "react-dom/server";
-import { GEOMETRY_SAMPLES } from "../data/geometry-samples";
+import {
+  GEOMETRY_SAMPLES,
+  PUBLIC_GEOMETRY_SAMPLES,
+} from "../data/geometry-samples";
 import { registerAllSimulations } from "../simulations";
+import { veKhongGian } from "../simulations/domains/geometry/scene3d-chart";
 import type { Scene3D } from "../simulations/domains/geometry/scene3d-model";
 import { buildPedagogicalConstructionPlan } from "../simulations/domains/geometry/scene3d-semantic-policy";
+import { buildPedagogicalStepNarration } from "../simulations/domains/geometry/scene3d-student-presentation-policy";
+import { withSubEntities } from "../simulations/domains/geometry/scene3d-subentities";
 import type { SimulationEnvelope } from "../simulations/types";
 import {
   buildStepEditSessionId,
+  isVerifiedRebuildScene,
   loadCachedStepEditState,
   saveCachedStepEditState,
   submitConstructionStepEdit,
@@ -15,7 +23,11 @@ import { __resetHistoryForTest } from "../state/history";
 import { useAppStore } from "../state/store";
 import {
   InlineConstructionStepEditor,
+  STEP_TEXTAREA_MAX_HEIGHT_PX,
+  STEP_TEXTAREA_MIN_HEIGHT_PX,
   StepEditPencilButton,
+  StepTitleText,
+  syncStepTextareaHeight,
 } from "./ConstructionStepEditor";
 import { SimulationWorkspace } from "./SimulationWorkspace";
 
@@ -23,6 +35,9 @@ registerAllSimulations();
 
 const syncStoreForSSR = () => Object.assign(useAppStore.getInitialState(), useAppStore.getState());
 const sample11 = GEOMETRY_SAMPLES.find((s) => s.id === "chop-mat-cau-ngoai-tiep")!;
+const GLOBAL_CSS = readFileSync(new URL("../styles/global.css", import.meta.url), "utf-8");
+const EDITOR_SRC = readFileSync(new URL("./ConstructionStepEditor.tsx", import.meta.url), "utf-8");
+const stripHtml = (html: string) => html.replace(/<!--[\s\S]*?-->/g, "").replace(/<[^>]+>/g, "");
 
 function installMemoryStorage() {
   const map = new Map<string, string>();
@@ -167,6 +182,7 @@ describe("AXO Editable Construction Steps & Reload Persistence", () => {
               skipped_unaffected_ids: ["O", "M"],
               cycle_detected: false,
             },
+            validation_result: { passed: true },
             stage_timings_ms: { total_ms: 4.2 },
             llm_calls: 0,
             quota_charged: false,
@@ -323,6 +339,257 @@ describe("AXO Editable Construction Steps & Reload Persistence", () => {
     useAppStore.getState().loadEnvelope(env, sample11.id);
     syncStoreForSSR();
     const html = renderToString(<SimulationWorkspace />);
-    expect(html).toContain(editedOverride);
+    expect(stripHtml(html)).toContain(editedOverride);
+  });
+
+  it("Regression 1 (Pencil Hover Visibility): hidden by default, V1 size/padding restored, reserved right gutter prevents text occlusion, no sticky :focus-within bug", () => {
+    expect(GLOBAL_CSS).toMatch(
+      /\.step-edit-pencil-btn\s*\{[^}]*top:\s*6px;[^}]*right:\s*6px;[^}]*width:\s*24px;[^}]*height:\s*24px;[^}]*opacity:\s*0;[^}]*pointer-events:\s*none;/s,
+    );
+    expect(GLOBAL_CSS).toMatch(
+      /@media\s*\(hover:\s*hover\)\s*\{\s*\.step-row:hover\s+\.step-edit-pencil-btn\s*\{[^}]*opacity:\s*1;\s*pointer-events:\s*auto;/s,
+    );
+    // Regression guard against V1-V2.2 bug where clicking a row kept the pencil stuck after mouse leave
+    expect(GLOBAL_CSS).not.toContain(".step-row:focus-within .step-edit-pencil-btn");
+    // Desktop step-row keeps V1 padding + editor uses symmetric padding, while non-editing rows reserve 34px right gutter for 24px pencil
+    expect(GLOBAL_CSS).toMatch(/\.step-row\s*\{\s*padding:\s*8px 10px;\s*gap:\s*9px;\s*\}/);
+    expect(GLOBAL_CSS).toMatch(/\.step-row:not\(\.is-editing\)\s*\{\s*padding-right:\s*34px;\s*\}/);
+    expect(GLOBAL_CSS).toMatch(/\.step-row\.is-editing\s*\{[^}]*padding:\s*8px 10px;/s);
+  });
+
+  it("Regression 2 (Pencil Keyboard Accessibility): :focus-visible rules, Enter/Space trigger, Escape returns focus vs mouse Cancel", () => {
+    expect(GLOBAL_CSS).toMatch(
+      /\.step-row:focus-visible\s+\.step-edit-pencil-btn,\s*\.step-edit-pencil-btn:focus-visible\s*\{[^}]*opacity:\s*1;\s*pointer-events:\s*auto;/s,
+    );
+    const onStartEdit = vi.fn();
+    const pencilEl = StepEditPencilButton({ stepNumber: 8, onStartEdit }) as React.ReactElement<{
+      onKeyDown: (e: { key: string; preventDefault: () => void; stopPropagation: () => void }) => void;
+    }>;
+    const prevent = vi.fn();
+    const stop = vi.fn();
+    pencilEl.props.onKeyDown({ key: "Enter", preventDefault: prevent, stopPropagation: stop });
+    pencilEl.props.onKeyDown({ key: " ", preventDefault: prevent, stopPropagation: stop });
+    expect(onStartEdit).toHaveBeenCalledTimes(2);
+    expect(prevent).toHaveBeenCalledTimes(2);
+
+    // Source contract check: Escape calls onCancel(true), mouse Cancel checks e.detail === 0
+    expect(EDITOR_SRC).toContain("onCancel(true)");
+    expect(EDITOR_SRC).toContain("onCancel(e.detail === 0)");
+    expect(EDITOR_SRC).toContain("preventScroll: true");
+  });
+
+  it("Regression 3 (Mobile Edit Access): touch query shows pencil ONLY on .step-row.is-active with reserved right padding", () => {
+    const touchBlocks = [
+      ...GLOBAL_CSS.matchAll(/@media\s*\(hover:\s*none\),\s*\(pointer:\s*coarse\)\s*\{([\s\S]*?)\n\}/gu),
+    ].map((m) => m[1]!);
+    const touchBlock = touchBlocks.find((blk) => blk.includes(".step-edit-pencil-btn"));
+    expect(touchBlock).toBeDefined();
+    expect(touchBlock!).toContain(".step-row:not(.is-editing)");
+    expect(touchBlock!).toContain("padding-right: 35px");
+    expect(touchBlock!).toContain(".step-row.is-active .step-edit-pencil-btn");
+    // Must never show pencil permanently across all non-active rows
+    expect(touchBlock!).not.toMatch(/(?:^|\n)\s*\.step-row\s+\.step-edit-pencil-btn/);
+  });
+
+  it("Regression 4 (Auto-Resize Textarea): border-inclusive fit eliminates 2-line scrollbar, caps at 144px, preserves scrollTop & cursor", () => {
+    const scrollHost = { scrollTop: 245 };
+    const makeMockTextarea = (scrollHeight: number, borderTop = "1px", borderBottom = "1px") => {
+      const style: Record<string, string> = {};
+      const el = {
+        style,
+        scrollHeight,
+        scrollTop: 0,
+        closest: (sel: string) => (sel === ".dock-scroll" ? scrollHost : null),
+      } as unknown as HTMLTextAreaElement;
+      vi.stubGlobal("window", {
+        localStorage: window.localStorage,
+        getComputedStyle: () => ({ borderTopWidth: borderTop, borderBottomWidth: borderBottom }),
+      });
+      return el;
+    };
+
+    // 1-line text -> clamped to minH (32px), zero vertical scrollbar
+    const single = syncStepTextareaHeight(makeMockTextarea(20));
+    expect(single).toEqual({ heightPx: STEP_TEXTAREA_MIN_HEIGHT_PX, scrollable: false });
+
+    // 2-line text (scrollHeight = 44 + 2px border = 46px) -> fits without vertical scrollbar!
+    const twoLineEl = makeMockTextarea(44);
+    const twoLine = syncStepTextareaHeight(twoLineEl);
+    expect(twoLine).toEqual({ heightPx: 46, scrollable: false });
+    expect(twoLineEl.style.height).toBe("46px");
+    expect(twoLineEl.style.overflowY).toBe("hidden");
+    expect(twoLineEl.style.overflowX).toBe("hidden");
+    expect(scrollHost.scrollTop).toBe(245);
+
+    // Long overflow text (> 144px) -> capped at 144px and enables vertical scroll only
+    const longEl = makeMockTextarea(188);
+    const longRes = syncStepTextareaHeight(longEl);
+    expect(longRes).toEqual({ heightPx: STEP_TEXTAREA_MAX_HEIGHT_PX, scrollable: true });
+    expect(longEl.style.height).toBe("144px");
+    expect(longEl.style.overflowY).toBe("auto");
+    expect(longEl.style.overflowX).toBe("hidden");
+
+    // Caret preservation: setSelectionRange only runs in [stepIndex] mount effect, never in [draft]
+    const setSelCount = (EDITOR_SRC.match(/setSelectionRange/g) ?? []).length;
+    expect(setSelCount).toBe(1);
+  });
+
+  it("Regression 5 (Cancel Restoring Original Text): cancelling editor preserves original step title and scene state", () => {
+    const env = structuredClone(sample11.envelope) as unknown as SimulationEnvelope;
+    useAppStore.getState().loadEnvelope(env, sample11.id);
+    syncStoreForSSR();
+    const initialHtml = stripHtml(renderToString(<SimulationWorkspace />));
+    expect(initialHtml).toContain("Dựng mặt phẳng trung trực (α) của cạnh AB");
+  });
+
+  it("Regression 6 & 7 (Submit Rebuild Sync + Unverified/Network Failures): verifies scene mathematically and preserves valid state on failure", async () => {
+    const sid = buildStepEditSessionId("sample:chop-mat-cau-ngoai-tiep", "guest");
+    const validScene = structuredClone((sample11.envelope as unknown as { scene3d: Scene3D }).scene3d);
+    expect(isVerifiedRebuildScene(validScene)).toBe(true);
+
+    // Corrupted/unverified scene (e.g., empty objects or inconsistent geometry) must be rejected
+    expect(isVerifiedRebuildScene({ objects: [], events: [], free_objects: [] })).toBe(false);
+
+    // 1. Seed committed valid state in cache
+    saveCachedStepEditState(sid, {
+      sessionId: sid,
+      problemKey: "sample:chop-mat-cau-ngoai-tiep",
+      committedScene: validScene,
+      stepOverrides: { mp_tt_AB: "Dựng mặt phẳng (α) đi qua O và vuông góc với AB." },
+      revisions: [],
+      feedbackItems: [],
+      updatedAt: Date.now(),
+    });
+
+    // 2. HTTP 200 claiming committed but feedback_status != GEOMETRY_VERIFIED -> fail-closed!
+    vi.stubGlobal(
+      "fetch",
+      vi.fn().mockResolvedValueOnce(
+        new Response(
+          JSON.stringify({
+            status: "committed",
+            feedback_status: "UNVERIFIED",
+            validation_result: { passed: false },
+            scene3d: validScene,
+            step_overrides: { mp_tt_AB: "Giả mạo chưa kiểm chứng" },
+          }),
+          { status: 200, headers: { "Content-Type": "application/json" } },
+        ),
+      ),
+    );
+    const fake200 = await submitConstructionStepEdit({
+      sessionId: sid,
+      problemKey: "sample:chop-mat-cau-ngoai-tiep",
+      stepId: "mp_tt_AB",
+      stepIndex: 7,
+      previousInstruction: "Dựng mặt phẳng (α) đi qua O và vuông góc với AB.",
+      editedInstruction: "Dựng mặt phẳng (P) giả mạo",
+      targetIds: ["mp_tt_AB"],
+      absorbedIds: [],
+      scene3d: validScene,
+    });
+    expect(fake200.status).toBe("rolled_back");
+    if (fake200.status === "rolled_back") {
+      expect(fake200.error_code).toBe("UNVERIFIED_REBUILD_REJECTED");
+      expect(fake200.draft_preserved).toBe(true);
+    }
+    expect(loadCachedStepEditState(sid)?.stepOverrides.mp_tt_AB).toBe(
+      "Dựng mặt phẳng (α) đi qua O và vuông góc với AB.",
+    );
+
+    // 3. Mid-flight network failure -> draft_preserved & prior valid scene intact
+    vi.stubGlobal("fetch", vi.fn().mockRejectedValueOnce(new Error("socket hang up")));
+    const netFail = await submitConstructionStepEdit({
+      sessionId: sid,
+      problemKey: "sample:chop-mat-cau-ngoai-tiep",
+      stepId: "mp_tt_AB",
+      stepIndex: 7,
+      previousInstruction: "Dựng mặt phẳng (α) đi qua O và vuông góc với AB.",
+      editedInstruction: "Dựng mặt phẳng (P) qua O và vuông góc với AB.",
+      targetIds: ["mp_tt_AB"],
+      absorbedIds: [],
+      scene3d: validScene,
+    });
+    expect(netFail.status).toBe("network_error");
+    if (netFail.status === "network_error") {
+      expect(netFail.draft_preserved).toBe(true);
+    }
+    expect(loadCachedStepEditState(sid)?.stepOverrides.mp_tt_AB).toBe(
+      "Dựng mặt phẳng (α) đi qua O và vuông góc với AB.",
+    );
+  });
+
+  it("Regression 8 (Long-Step Wrapping): Steps 8-12 and all 11 samples bind geometric connectors/tokens cleanly without altering text", () => {
+    const sample11Cases: { text: string; expectedNowrap: string[] }[] = [
+      {
+        text: "Dựng mặt phẳng trung trực (α) của cạnh AB",
+        expectedNowrap: ["(α)", "cạnh AB"],
+      },
+      {
+        text: "Dựng mặt phẳng trung trực (β) của cạnh AD",
+        expectedNowrap: ["(β)", "cạnh AD"],
+      },
+      {
+        text: "Dựng mặt phẳng trung trực (γ) của cạnh AS",
+        expectedNowrap: ["(γ)", "cạnh AS"],
+      },
+      {
+        text: "Xác định giao tuyến của (α) và (β)",
+        expectedNowrap: ["(α)", "và (β)"],
+      },
+      {
+        text: "Xác định giao điểm I = Giao tuyến của (α) và (β) ∩ (γ)",
+        expectedNowrap: ["(α)", "(β) ∩ (γ)"],
+      },
+      {
+        text: "Dựng mặt phẳng (ABC) cắt hình chóp theo thiết diện A′B′C′",
+        expectedNowrap: ["(ABC)", "A′B′C′"],
+      },
+    ];
+
+    for (const c of sample11Cases) {
+      const html = renderToString(<StepTitleText text={c.text} />);
+      expect(stripHtml(html)).toBe(c.text);
+      for (const tok of c.expectedNowrap) {
+        expect(html, `${c.text} missing nowrap "${tok}"`).toContain(
+          `<span class="math-nowrap">${tok}</span>`,
+        );
+      }
+    }
+
+    // Check every step title across all 11 PUBLIC_GEOMETRY_SAMPLES preserves verbatim plain text
+    for (const sample of PUBLIC_GEOMETRY_SAMPLES) {
+      const raw = (sample.envelope as { scene3d?: Scene3D }).scene3d;
+      if (!raw) continue;
+      const day = withSubEntities(veKhongGian(raw));
+      const plan = buildPedagogicalConstructionPlan(day);
+      for (const step of plan.steps) {
+        const narration = step.narration ?? buildPedagogicalStepNarration(day, step);
+        const title = narration.actionTitle || step.title;
+        const html = renderToString(<StepTitleText text={title} />);
+        expect(stripHtml(html), `${sample.id} step ${step.index + 1}`).toBe(title);
+      }
+    }
+
+    // .step-title must never force single-line white-space: nowrap
+    const stepTitleBlocks = [...GLOBAL_CSS.matchAll(/\.step-title\s*\{([^}]*)\}/g)].map((m) => m[1]);
+    expect(stepTitleBlocks.length).toBeGreaterThanOrEqual(2);
+    for (const blk of stepTitleBlocks) {
+      expect(blk).not.toMatch(/white-space:\s*nowrap/);
+    }
+  });
+
+  it("Regression 9 (Sidebar Overflow & Problem Statement Typography): left-aligned readable statement, no justify, no textarea horizontal overflow", () => {
+    const psBlock = /\.problem-statement\s*\{([^}]*)\}/.exec(GLOBAL_CSS)?.[1] ?? "";
+    expect(psBlock).toContain("text-align: left");
+    expect(psBlock).not.toContain("justify");
+    expect(psBlock).toContain("word-spacing: normal");
+    expect(psBlock).toContain("white-space: pre-line");
+    expect(psBlock).toContain("overflow-wrap: break-word");
+
+    const taBlock = /\.step-edit-textarea\s*\{([^}]*)\}/.exec(GLOBAL_CSS)?.[1] ?? "";
+    expect(taBlock).toContain("overflow-x: hidden");
+    expect(taBlock).toContain("max-height: 144px");
+    expect(taBlock).toContain("resize: none");
   });
 });

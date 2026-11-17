@@ -1,0 +1,1035 @@
+{
+  "viewports": {
+    "1920x1080": {
+      "docOverflow": false,
+      "dockOverflow": false,
+      "problemStatement": {
+        "textAlign": "left",
+        "wordSpacing": "0px",
+        "whiteSpace": "pre-line",
+        "fontSize": "14px",
+        "lineHeight": "22.4px",
+        "scrollWidth": 327,
+        "clientWidth": 327
+      },
+      "orphanSteps": [],
+      "nowrapViolations": [],
+      "steps8to12Lines": [
+        {
+          "step": 8,
+          "lines": [
+            "Dựng mặt phẳng trung trực",
+            "(α) của cạnh AB"
+          ]
+        },
+        {
+          "step": 9,
+          "lines": [
+            "Dựng mặt phẳng trung trực",
+            "(β) của cạnh AD"
+          ]
+        },
+        {
+          "step": 10,
+          "lines": [
+            "Dựng mặt phẳng trung trực",
+            "(γ) của cạnh AS"
+          ]
+        },
+        {
+          "step": 11,
+          "lines": [
+            "Xác định giao tuyến của (α) và (β)"
+          ]
+        },
+        {
+          "step": 12,
+          "lines": [
+            "Xác định giao điểm I = Giao tuyến của",
+            "(α) và (β) ∩ (γ)"
+          ]
+        }
+      ],
+      "defaultIdlePencilsHidden": true,
+      "hoverCheck": {
+        "pencilOpacity": "1",
+        "pencilPointerEvents": "auto",
+        "pencilOverlapsText": false,
+        "maxCharRight": 1787.3125,
+        "pencilLeft": 1873,
+        "rowHeightDelta": 0,
+        "titleWidthDelta": 0,
+        "titleLeftDelta": 0,
+        "editorAutoOpened": false
+      },
+      "stickyClickCheck": {
+        "opacityAfterClickAndLeave": "0"
+      },
+      "touchTapCheck": null,
+      "step8OpenTa": {
+        "value": "Dựng mặt phẳng trung trực (α) của cạnh AB",
+        "scrollHeight": 30,
+        "clientHeight": 30,
+        "offsetHeight": 32,
+        "scrollWidth": 274,
+        "clientWidth": 274,
+        "overflowY": "hidden",
+        "overflowX": "hidden",
+        "hasInternalVScroll": false,
+        "hasInternalHScroll": false,
+        "cancelHeight": 25,
+        "runHeight": 25,
+        "formRightClipped": false
+      },
+      "step8TwoLineTa": {
+        "value": "Xác định trung điểm H của AB, dựng mặt phẳng (α) đi qua H và vuông góc với AB.",
+        "scrollHeight": 46,
+        "clientHeight": 46,
+        "offsetHeight": 48,
+        "scrollWidth": 274,
+        "clientWidth": 274,
+        "overflowY": "hidden",
+        "overflowX": "hidden",
+        "hasInternalVScroll": false,
+        "hasInternalHScroll": false,
+        "cancelHeight": 25,
+        "runHeight": 25,
+        "formRightClipped": false
+      },
+      "step8OverflowTa": {
+        "value": "Dòng 1: Dựng mặt phẳng (α) qua O vuông góc AB.\nDòng 2: Dựng mặt phẳng (α) qua O vuông góc AB.\nDòng 3: Dựng mặt phẳng (α) qua O vuông góc AB.\nDòng 4: Dựng mặt phẳng (α) qua O vuông góc AB.\nDòng 5: Dựng mặt phẳng (α) qua O vuông góc AB.\nDòng 6: Dựng mặt phẳng (α) qua O vuông góc AB.\nDòng 7: Dựng mặt phẳng (α) qua O vuông góc AB.\nDòng 8: Dựng mặt phẳng (α) qua O vuông góc AB.",
+        "scrollHeight": 301,
+        "clientHeight": 142,
+        "offsetHeight": 144,
+        "scrollWidth": 274,
+        "clientWidth": 274,
+        "overflowY": "auto",
+        "overflowX": "hidden",
+        "hasInternalVScroll": true,
+        "hasInternalHScroll": false,
+        "cancelHeight": 25,
+        "runHeight": 25,
+        "formRightClipped": false
+      },
+      "step12Ta": {
+        "value": "Xác định giao điểm I = Giao tuyến của (α) và (β) ∩ (γ)",
+        "scrollHeight": 46,
+        "clientHeight": 46,
+        "offsetHeight": 48,
+        "scrollWidth": 274,
+        "clientWidth": 274,
+        "overflowY": "hidden",
+        "overflowX": "hidden",
+        "hasInternalVScroll": false,
+        "hasInternalHScroll": false,
+        "cancelHeight": 25,
+        "runHeight": 25,
+        "formRightClipped": false
+      },
+      "caretTest": {
+        "before": 8,
+        "after": {
+          "start": 14,
+          "val": "Dựng mặt nhanh phẳng trung trực (α) của cạnh AB"
+        }
+      },
+      "afterEsc": {
+        "editorOpen": false,
+        "activeIsStep8Pencil": true,
+        "restoredTitle": "Dựng mặt phẳng trung trực (α) của cạnh AB"
+      },
+      "vpConsoleErrors": [],
+      "vpPageErrors": []
+    },
+    "1366x768": {
+      "docOverflow": false,
+      "dockOverflow": false,
+      "problemStatement": {
+        "textAlign": "left",
+        "wordSpacing": "0px",
+        "whiteSpace": "pre-line",
+        "fontSize": "14px",
+        "lineHeight": "22.4px",
+        "scrollWidth": 327,
+        "clientWidth": 327
+      },
+      "orphanSteps": [],
+      "nowrapViolations": [],
+      "steps8to12Lines": [
+        {
+          "step": 8,
+          "lines": [
+            "Dựng mặt phẳng trung trực",
+            "(α) của cạnh AB"
+          ]
+        },
+        {
+          "step": 9,
+          "lines": [
+            "Dựng mặt phẳng trung trực",
+            "(β) của cạnh AD"
+          ]
+        },
+        {
+          "step": 10,
+          "lines": [
+            "Dựng mặt phẳng trung trực",
+            "(γ) của cạnh AS"
+          ]
+        },
+        {
+          "step": 11,
+          "lines": [
+            "Xác định giao tuyến của (α) và (β)"
+          ]
+        },
+        {
+          "step": 12,
+          "lines": [
+            "Xác định giao điểm I = Giao tuyến của",
+            "(α) và (β) ∩ (γ)"
+          ]
+        }
+      ],
+      "defaultIdlePencilsHidden": true,
+      "hoverCheck": {
+        "pencilOpacity": "1",
+        "pencilPointerEvents": "auto",
+        "pencilOverlapsText": false,
+        "maxCharRight": 1233.3125,
+        "pencilLeft": 1319,
+        "rowHeightDelta": 0,
+        "titleWidthDelta": 0,
+        "titleLeftDelta": 0,
+        "editorAutoOpened": false
+      },
+      "stickyClickCheck": {
+        "opacityAfterClickAndLeave": "0"
+      },
+      "touchTapCheck": null,
+      "step8OpenTa": {
+        "value": "Dựng mặt phẳng trung trực (α) của cạnh AB",
+        "scrollHeight": 30,
+        "clientHeight": 30,
+        "offsetHeight": 32,
+        "scrollWidth": 274,
+        "clientWidth": 274,
+        "overflowY": "hidden",
+        "overflowX": "hidden",
+        "hasInternalVScroll": false,
+        "hasInternalHScroll": false,
+        "cancelHeight": 25,
+        "runHeight": 25,
+        "formRightClipped": false
+      },
+      "step8TwoLineTa": {
+        "value": "Xác định trung điểm H của AB, dựng mặt phẳng (α) đi qua H và vuông góc với AB.",
+        "scrollHeight": 46,
+        "clientHeight": 46,
+        "offsetHeight": 48,
+        "scrollWidth": 274,
+        "clientWidth": 274,
+        "overflowY": "hidden",
+        "overflowX": "hidden",
+        "hasInternalVScroll": false,
+        "hasInternalHScroll": false,
+        "cancelHeight": 25,
+        "runHeight": 25,
+        "formRightClipped": false
+      },
+      "step8OverflowTa": {
+        "value": "Dòng 1: Dựng mặt phẳng (α) qua O vuông góc AB.\nDòng 2: Dựng mặt phẳng (α) qua O vuông góc AB.\nDòng 3: Dựng mặt phẳng (α) qua O vuông góc AB.\nDòng 4: Dựng mặt phẳng (α) qua O vuông góc AB.\nDòng 5: Dựng mặt phẳng (α) qua O vuông góc AB.\nDòng 6: Dựng mặt phẳng (α) qua O vuông góc AB.\nDòng 7: Dựng mặt phẳng (α) qua O vuông góc AB.\nDòng 8: Dựng mặt phẳng (α) qua O vuông góc AB.",
+        "scrollHeight": 301,
+        "clientHeight": 142,
+        "offsetHeight": 144,
+        "scrollWidth": 274,
+        "clientWidth": 274,
+        "overflowY": "auto",
+        "overflowX": "hidden",
+        "hasInternalVScroll": true,
+        "hasInternalHScroll": false,
+        "cancelHeight": 25,
+        "runHeight": 25,
+        "formRightClipped": false
+      },
+      "step12Ta": {
+        "value": "Xác định giao điểm I = Giao tuyến của (α) và (β) ∩ (γ)",
+        "scrollHeight": 46,
+        "clientHeight": 46,
+        "offsetHeight": 48,
+        "scrollWidth": 274,
+        "clientWidth": 274,
+        "overflowY": "hidden",
+        "overflowX": "hidden",
+        "hasInternalVScroll": false,
+        "hasInternalHScroll": false,
+        "cancelHeight": 25,
+        "runHeight": 25,
+        "formRightClipped": false
+      },
+      "caretTest": {
+        "before": 8,
+        "after": {
+          "start": 14,
+          "val": "Dựng mặt nhanh phẳng trung trực (α) của cạnh AB"
+        }
+      },
+      "afterEsc": {
+        "editorOpen": false,
+        "activeIsStep8Pencil": true,
+        "restoredTitle": "Dựng mặt phẳng trung trực (α) của cạnh AB"
+      },
+      "vpConsoleErrors": [],
+      "vpPageErrors": []
+    },
+    "1024x768": {
+      "docOverflow": false,
+      "dockOverflow": false,
+      "problemStatement": {
+        "textAlign": "left",
+        "wordSpacing": "0px",
+        "whiteSpace": "pre-line",
+        "fontSize": "14px",
+        "lineHeight": "22.4px",
+        "scrollWidth": 287,
+        "clientWidth": 287
+      },
+      "orphanSteps": [],
+      "nowrapViolations": [],
+      "steps8to12Lines": [
+        {
+          "step": 8,
+          "lines": [
+            "Dựng mặt phẳng trung trực (α)",
+            "của cạnh AB"
+          ]
+        },
+        {
+          "step": 9,
+          "lines": [
+            "Dựng mặt phẳng trung trực (β)",
+            "của cạnh AD"
+          ]
+        },
+        {
+          "step": 10,
+          "lines": [
+            "Dựng mặt phẳng trung trực (γ)",
+            "của cạnh AS"
+          ]
+        },
+        {
+          "step": 11,
+          "lines": [
+            "Xác định giao tuyến của (α) và (β)"
+          ]
+        },
+        {
+          "step": 12,
+          "lines": [
+            "Xác định giao điểm I = Giao tuyến",
+            "của (α) và (β) ∩ (γ)"
+          ]
+        }
+      ],
+      "defaultIdlePencilsHidden": true,
+      "hoverCheck": {
+        "pencilOpacity": "1",
+        "pencilPointerEvents": "auto",
+        "pencilOverlapsText": false,
+        "maxCharRight": 952.4375,
+        "pencilLeft": 977,
+        "rowHeightDelta": 0,
+        "titleWidthDelta": 0,
+        "titleLeftDelta": 0,
+        "editorAutoOpened": false
+      },
+      "stickyClickCheck": {
+        "opacityAfterClickAndLeave": "0"
+      },
+      "touchTapCheck": null,
+      "step8OpenTa": {
+        "value": "Dựng mặt phẳng trung trực (α) của cạnh AB",
+        "scrollHeight": 46,
+        "clientHeight": 46,
+        "offsetHeight": 48,
+        "scrollWidth": 234,
+        "clientWidth": 234,
+        "overflowY": "hidden",
+        "overflowX": "hidden",
+        "hasInternalVScroll": false,
+        "hasInternalHScroll": false,
+        "cancelHeight": 25,
+        "runHeight": 25,
+        "formRightClipped": false
+      },
+      "step8TwoLineTa": {
+        "value": "Xác định trung điểm H của AB, dựng mặt phẳng (α) đi qua H và vuông góc với AB.",
+        "scrollHeight": 65,
+        "clientHeight": 65,
+        "offsetHeight": 67,
+        "scrollWidth": 234,
+        "clientWidth": 234,
+        "overflowY": "hidden",
+        "overflowX": "hidden",
+        "hasInternalVScroll": false,
+        "hasInternalHScroll": false,
+        "cancelHeight": 25,
+        "runHeight": 25,
+        "formRightClipped": false
+      },
+      "step8OverflowTa": {
+        "value": "Dòng 1: Dựng mặt phẳng (α) qua O vuông góc AB.\nDòng 2: Dựng mặt phẳng (α) qua O vuông góc AB.\nDòng 3: Dựng mặt phẳng (α) qua O vuông góc AB.\nDòng 4: Dựng mặt phẳng (α) qua O vuông góc AB.\nDòng 5: Dựng mặt phẳng (α) qua O vuông góc AB.\nDòng 6: Dựng mặt phẳng (α) qua O vuông góc AB.\nDòng 7: Dựng mặt phẳng (α) qua O vuông góc AB.\nDòng 8: Dựng mặt phẳng (α) qua O vuông góc AB.",
+        "scrollHeight": 301,
+        "clientHeight": 142,
+        "offsetHeight": 144,
+        "scrollWidth": 234,
+        "clientWidth": 234,
+        "overflowY": "auto",
+        "overflowX": "hidden",
+        "hasInternalVScroll": true,
+        "hasInternalHScroll": false,
+        "cancelHeight": 25,
+        "runHeight": 25,
+        "formRightClipped": false
+      },
+      "step12Ta": {
+        "value": "Xác định giao điểm I = Giao tuyến của (α) và (β) ∩ (γ)",
+        "scrollHeight": 46,
+        "clientHeight": 46,
+        "offsetHeight": 48,
+        "scrollWidth": 234,
+        "clientWidth": 234,
+        "overflowY": "hidden",
+        "overflowX": "hidden",
+        "hasInternalVScroll": false,
+        "hasInternalHScroll": false,
+        "cancelHeight": 25,
+        "runHeight": 25,
+        "formRightClipped": false
+      },
+      "caretTest": {
+        "before": 8,
+        "after": {
+          "start": 14,
+          "val": "Dựng mặt nhanh phẳng trung trực (α) của cạnh AB"
+        }
+      },
+      "afterEsc": {
+        "editorOpen": false,
+        "activeIsStep8Pencil": true,
+        "restoredTitle": "Dựng mặt phẳng trung trực (α) của cạnh AB"
+      },
+      "vpConsoleErrors": [],
+      "vpPageErrors": []
+    },
+    "768x1024": {
+      "docOverflow": false,
+      "dockOverflow": false,
+      "problemStatement": {
+        "textAlign": "left",
+        "wordSpacing": "0px",
+        "whiteSpace": "pre-line",
+        "fontSize": "13.6px",
+        "lineHeight": "21.216px",
+        "scrollWidth": 263,
+        "clientWidth": 263
+      },
+      "orphanSteps": [],
+      "nowrapViolations": [],
+      "steps8to12Lines": [
+        {
+          "step": 8,
+          "lines": [
+            "Dựng mặt phẳng trung trực (α)",
+            "của cạnh AB"
+          ]
+        },
+        {
+          "step": 9,
+          "lines": [
+            "Dựng mặt phẳng trung trực (β)",
+            "của cạnh AD"
+          ]
+        },
+        {
+          "step": 10,
+          "lines": [
+            "Dựng mặt phẳng trung trực (γ)",
+            "của cạnh AS"
+          ]
+        },
+        {
+          "step": 11,
+          "lines": [
+            "Xác định giao tuyến của",
+            "(α) và (β)"
+          ]
+        },
+        {
+          "step": 12,
+          "lines": [
+            "Xác định giao điểm I = Giao",
+            "tuyến của (α) và (β) ∩ (γ)"
+          ]
+        }
+      ],
+      "defaultIdlePencilsHidden": true,
+      "hoverCheck": null,
+      "stickyClickCheck": null,
+      "touchTapCheck": {
+        "visiblePencils": [
+          8
+        ],
+        "pencilOverlapsText": false,
+        "step8PencilSize": {
+          "w": 26,
+          "h": 26
+        }
+      },
+      "step8OpenTa": {
+        "value": "Dựng mặt phẳng trung trực (α) của cạnh AB",
+        "scrollHeight": 46,
+        "clientHeight": 46,
+        "offsetHeight": 48,
+        "scrollWidth": 210,
+        "clientWidth": 210,
+        "overflowY": "hidden",
+        "overflowX": "hidden",
+        "hasInternalVScroll": false,
+        "hasInternalHScroll": false,
+        "cancelHeight": 30,
+        "runHeight": 30,
+        "formRightClipped": false
+      },
+      "step8TwoLineTa": {
+        "value": "Xác định trung điểm H của AB, dựng mặt phẳng (α) đi qua H và vuông góc với AB.",
+        "scrollHeight": 65,
+        "clientHeight": 65,
+        "offsetHeight": 67,
+        "scrollWidth": 210,
+        "clientWidth": 210,
+        "overflowY": "hidden",
+        "overflowX": "hidden",
+        "hasInternalVScroll": false,
+        "hasInternalHScroll": false,
+        "cancelHeight": 30,
+        "runHeight": 30,
+        "formRightClipped": false
+      },
+      "step8OverflowTa": {
+        "value": "Dòng 1: Dựng mặt phẳng (α) qua O vuông góc AB.\nDòng 2: Dựng mặt phẳng (α) qua O vuông góc AB.\nDòng 3: Dựng mặt phẳng (α) qua O vuông góc AB.\nDòng 4: Dựng mặt phẳng (α) qua O vuông góc AB.\nDòng 5: Dựng mặt phẳng (α) qua O vuông góc AB.\nDòng 6: Dựng mặt phẳng (α) qua O vuông góc AB.\nDòng 7: Dựng mặt phẳng (α) qua O vuông góc AB.\nDòng 8: Dựng mặt phẳng (α) qua O vuông góc AB.",
+        "scrollHeight": 301,
+        "clientHeight": 142,
+        "offsetHeight": 144,
+        "scrollWidth": 210,
+        "clientWidth": 210,
+        "overflowY": "auto",
+        "overflowX": "hidden",
+        "hasInternalVScroll": true,
+        "hasInternalHScroll": false,
+        "cancelHeight": 30,
+        "runHeight": 30,
+        "formRightClipped": false
+      },
+      "step12Ta": {
+        "value": "Xác định giao điểm I = Giao tuyến của (α) và (β) ∩ (γ)",
+        "scrollHeight": 46,
+        "clientHeight": 46,
+        "offsetHeight": 48,
+        "scrollWidth": 210,
+        "clientWidth": 210,
+        "overflowY": "hidden",
+        "overflowX": "hidden",
+        "hasInternalVScroll": false,
+        "hasInternalHScroll": false,
+        "cancelHeight": 30,
+        "runHeight": 30,
+        "formRightClipped": false
+      },
+      "caretTest": {
+        "before": 8,
+        "after": {
+          "start": 14,
+          "val": "Dựng mặt nhanh phẳng trung trực (α) của cạnh AB"
+        }
+      },
+      "afterEsc": {
+        "editorOpen": false,
+        "activeIsStep8Pencil": true,
+        "restoredTitle": "Dựng mặt phẳng trung trực (α) của cạnh AB"
+      },
+      "vpConsoleErrors": [],
+      "vpPageErrors": []
+    },
+    "390x844": {
+      "docOverflow": false,
+      "dockOverflow": false,
+      "problemStatement": {
+        "textAlign": "left",
+        "wordSpacing": "0px",
+        "whiteSpace": "pre-line",
+        "fontSize": "13.2px",
+        "lineHeight": "19.536px",
+        "scrollWidth": 358,
+        "clientWidth": 358
+      },
+      "orphanSteps": [],
+      "nowrapViolations": [],
+      "steps8to12Lines": [
+        {
+          "step": 8,
+          "lines": [
+            "Dựng mặt phẳng trung trực (α) của cạnh AB"
+          ]
+        },
+        {
+          "step": 9,
+          "lines": [
+            "Dựng mặt phẳng trung trực (β) của cạnh AD"
+          ]
+        },
+        {
+          "step": 10,
+          "lines": [
+            "Dựng mặt phẳng trung trực (γ) của cạnh AS"
+          ]
+        },
+        {
+          "step": 11,
+          "lines": [
+            "Xác định giao tuyến của (α) và (β)"
+          ]
+        },
+        {
+          "step": 12,
+          "lines": [
+            "Xác định giao điểm I = Giao tuyến của",
+            "(α) và (β) ∩ (γ)"
+          ]
+        }
+      ],
+      "defaultIdlePencilsHidden": true,
+      "hoverCheck": null,
+      "stickyClickCheck": null,
+      "touchTapCheck": {
+        "visiblePencils": [
+          8
+        ],
+        "pencilOverlapsText": false,
+        "step8PencilSize": {
+          "w": 26,
+          "h": 26
+        }
+      },
+      "step8OpenTa": {
+        "value": "Dựng mặt phẳng trung trực (α) của cạnh AB",
+        "scrollHeight": 30,
+        "clientHeight": 30,
+        "offsetHeight": 32,
+        "scrollWidth": 305,
+        "clientWidth": 305,
+        "overflowY": "hidden",
+        "overflowX": "hidden",
+        "hasInternalVScroll": false,
+        "hasInternalHScroll": false,
+        "cancelHeight": 30,
+        "runHeight": 30,
+        "formRightClipped": false
+      },
+      "step8TwoLineTa": {
+        "value": "Xác định trung điểm H của AB, dựng mặt phẳng (α) đi qua H và vuông góc với AB.",
+        "scrollHeight": 46,
+        "clientHeight": 46,
+        "offsetHeight": 48,
+        "scrollWidth": 305,
+        "clientWidth": 305,
+        "overflowY": "hidden",
+        "overflowX": "hidden",
+        "hasInternalVScroll": false,
+        "hasInternalHScroll": false,
+        "cancelHeight": 30,
+        "runHeight": 30,
+        "formRightClipped": false
+      },
+      "step8OverflowTa": {
+        "value": "Dòng 1: Dựng mặt phẳng (α) qua O vuông góc AB.\nDòng 2: Dựng mặt phẳng (α) qua O vuông góc AB.\nDòng 3: Dựng mặt phẳng (α) qua O vuông góc AB.\nDòng 4: Dựng mặt phẳng (α) qua O vuông góc AB.\nDòng 5: Dựng mặt phẳng (α) qua O vuông góc AB.\nDòng 6: Dựng mặt phẳng (α) qua O vuông góc AB.\nDòng 7: Dựng mặt phẳng (α) qua O vuông góc AB.\nDòng 8: Dựng mặt phẳng (α) qua O vuông góc AB.",
+        "scrollHeight": 301,
+        "clientHeight": 142,
+        "offsetHeight": 144,
+        "scrollWidth": 305,
+        "clientWidth": 305,
+        "overflowY": "auto",
+        "overflowX": "hidden",
+        "hasInternalVScroll": true,
+        "hasInternalHScroll": false,
+        "cancelHeight": 30,
+        "runHeight": 30,
+        "formRightClipped": false
+      },
+      "step12Ta": {
+        "value": "Xác định giao điểm I = Giao tuyến của (α) và (β) ∩ (γ)",
+        "scrollHeight": 46,
+        "clientHeight": 46,
+        "offsetHeight": 48,
+        "scrollWidth": 305,
+        "clientWidth": 305,
+        "overflowY": "hidden",
+        "overflowX": "hidden",
+        "hasInternalVScroll": false,
+        "hasInternalHScroll": false,
+        "cancelHeight": 30,
+        "runHeight": 30,
+        "formRightClipped": false
+      },
+      "caretTest": {
+        "before": 8,
+        "after": {
+          "start": 14,
+          "val": "Dựng mặt nhanh phẳng trung trực (α) của cạnh AB"
+        }
+      },
+      "afterEsc": {
+        "editorOpen": false,
+        "activeIsStep8Pencil": true,
+        "restoredTitle": "Dựng mặt phẳng trung trực (α) của cạnh AB"
+      },
+      "vpConsoleErrors": [],
+      "vpPageErrors": []
+    },
+    "360x800": {
+      "docOverflow": false,
+      "dockOverflow": false,
+      "problemStatement": {
+        "textAlign": "left",
+        "wordSpacing": "0px",
+        "whiteSpace": "pre-line",
+        "fontSize": "13.2px",
+        "lineHeight": "19.536px",
+        "scrollWidth": 328,
+        "clientWidth": 328
+      },
+      "orphanSteps": [],
+      "nowrapViolations": [],
+      "steps8to12Lines": [
+        {
+          "step": 8,
+          "lines": [
+            "Dựng mặt phẳng trung trực",
+            "(α) của cạnh AB"
+          ]
+        },
+        {
+          "step": 9,
+          "lines": [
+            "Dựng mặt phẳng trung trực",
+            "(β) của cạnh AD"
+          ]
+        },
+        {
+          "step": 10,
+          "lines": [
+            "Dựng mặt phẳng trung trực",
+            "(γ) của cạnh AS"
+          ]
+        },
+        {
+          "step": 11,
+          "lines": [
+            "Xác định giao tuyến của (α) và (β)"
+          ]
+        },
+        {
+          "step": 12,
+          "lines": [
+            "Xác định giao điểm I = Giao tuyến của (α)",
+            "và (β) ∩ (γ)"
+          ]
+        }
+      ],
+      "defaultIdlePencilsHidden": true,
+      "hoverCheck": null,
+      "stickyClickCheck": null,
+      "touchTapCheck": {
+        "visiblePencils": [
+          8
+        ],
+        "pencilOverlapsText": false,
+        "step8PencilSize": {
+          "w": 26,
+          "h": 26
+        }
+      },
+      "step8OpenTa": {
+        "value": "Dựng mặt phẳng trung trực (α) của cạnh AB",
+        "scrollHeight": 30,
+        "clientHeight": 30,
+        "offsetHeight": 32,
+        "scrollWidth": 275,
+        "clientWidth": 275,
+        "overflowY": "hidden",
+        "overflowX": "hidden",
+        "hasInternalVScroll": false,
+        "hasInternalHScroll": false,
+        "cancelHeight": 30,
+        "runHeight": 30,
+        "formRightClipped": false
+      },
+      "step8TwoLineTa": {
+        "value": "Xác định trung điểm H của AB, dựng mặt phẳng (α) đi qua H và vuông góc với AB.",
+        "scrollHeight": 46,
+        "clientHeight": 46,
+        "offsetHeight": 48,
+        "scrollWidth": 275,
+        "clientWidth": 275,
+        "overflowY": "hidden",
+        "overflowX": "hidden",
+        "hasInternalVScroll": false,
+        "hasInternalHScroll": false,
+        "cancelHeight": 30,
+        "runHeight": 30,
+        "formRightClipped": false
+      },
+      "step8OverflowTa": {
+        "value": "Dòng 1: Dựng mặt phẳng (α) qua O vuông góc AB.\nDòng 2: Dựng mặt phẳng (α) qua O vuông góc AB.\nDòng 3: Dựng mặt phẳng (α) qua O vuông góc AB.\nDòng 4: Dựng mặt phẳng (α) qua O vuông góc AB.\nDòng 5: Dựng mặt phẳng (α) qua O vuông góc AB.\nDòng 6: Dựng mặt phẳng (α) qua O vuông góc AB.\nDòng 7: Dựng mặt phẳng (α) qua O vuông góc AB.\nDòng 8: Dựng mặt phẳng (α) qua O vuông góc AB.",
+        "scrollHeight": 301,
+        "clientHeight": 142,
+        "offsetHeight": 144,
+        "scrollWidth": 275,
+        "clientWidth": 275,
+        "overflowY": "auto",
+        "overflowX": "hidden",
+        "hasInternalVScroll": true,
+        "hasInternalHScroll": false,
+        "cancelHeight": 30,
+        "runHeight": 30,
+        "formRightClipped": false
+      },
+      "step12Ta": {
+        "value": "Xác định giao điểm I = Giao tuyến của (α) và (β) ∩ (γ)",
+        "scrollHeight": 46,
+        "clientHeight": 46,
+        "offsetHeight": 48,
+        "scrollWidth": 275,
+        "clientWidth": 275,
+        "overflowY": "hidden",
+        "overflowX": "hidden",
+        "hasInternalVScroll": false,
+        "hasInternalHScroll": false,
+        "cancelHeight": 30,
+        "runHeight": 30,
+        "formRightClipped": false
+      },
+      "caretTest": {
+        "before": 8,
+        "after": {
+          "start": 14,
+          "val": "Dựng mặt nhanh phẳng trung trực (α) của cạnh AB"
+        }
+      },
+      "afterEsc": {
+        "editorOpen": false,
+        "activeIsStep8Pencil": true,
+        "restoredTitle": "Dựng mặt phẳng trung trực (α) của cạnh AB"
+      },
+      "vpConsoleErrors": [],
+      "vpPageErrors": []
+    },
+    "320x568": {
+      "docOverflow": false,
+      "dockOverflow": false,
+      "problemStatement": {
+        "textAlign": "left",
+        "wordSpacing": "0px",
+        "whiteSpace": "pre-line",
+        "fontSize": "13.2px",
+        "lineHeight": "19.536px",
+        "scrollWidth": 288,
+        "clientWidth": 288
+      },
+      "orphanSteps": [],
+      "nowrapViolations": [],
+      "steps8to12Lines": [
+        {
+          "step": 8,
+          "lines": [
+            "Dựng mặt phẳng trung trực",
+            "(α) của cạnh AB"
+          ]
+        },
+        {
+          "step": 9,
+          "lines": [
+            "Dựng mặt phẳng trung trực",
+            "(β) của cạnh AD"
+          ]
+        },
+        {
+          "step": 10,
+          "lines": [
+            "Dựng mặt phẳng trung trực",
+            "(γ) của cạnh AS"
+          ]
+        },
+        {
+          "step": 11,
+          "lines": [
+            "Xác định giao tuyến của (α) và (β)"
+          ]
+        },
+        {
+          "step": 12,
+          "lines": [
+            "Xác định giao điểm I = Giao tuyến",
+            "của (α) và (β) ∩ (γ)"
+          ]
+        }
+      ],
+      "defaultIdlePencilsHidden": true,
+      "hoverCheck": null,
+      "stickyClickCheck": null,
+      "touchTapCheck": {
+        "visiblePencils": [
+          8
+        ],
+        "pencilOverlapsText": false,
+        "step8PencilSize": {
+          "w": 26,
+          "h": 26
+        }
+      },
+      "step8OpenTa": {
+        "value": "Dựng mặt phẳng trung trực (α) của cạnh AB",
+        "scrollHeight": 46,
+        "clientHeight": 46,
+        "offsetHeight": 48,
+        "scrollWidth": 235,
+        "clientWidth": 235,
+        "overflowY": "hidden",
+        "overflowX": "hidden",
+        "hasInternalVScroll": false,
+        "hasInternalHScroll": false,
+        "cancelHeight": 30,
+        "runHeight": 30,
+        "formRightClipped": false
+      },
+      "step8TwoLineTa": {
+        "value": "Xác định trung điểm H của AB, dựng mặt phẳng (α) đi qua H và vuông góc với AB.",
+        "scrollHeight": 65,
+        "clientHeight": 65,
+        "offsetHeight": 67,
+        "scrollWidth": 235,
+        "clientWidth": 235,
+        "overflowY": "hidden",
+        "overflowX": "hidden",
+        "hasInternalVScroll": false,
+        "hasInternalHScroll": false,
+        "cancelHeight": 30,
+        "runHeight": 30,
+        "formRightClipped": false
+      },
+      "step8OverflowTa": {
+        "value": "Dòng 1: Dựng mặt phẳng (α) qua O vuông góc AB.\nDòng 2: Dựng mặt phẳng (α) qua O vuông góc AB.\nDòng 3: Dựng mặt phẳng (α) qua O vuông góc AB.\nDòng 4: Dựng mặt phẳng (α) qua O vuông góc AB.\nDòng 5: Dựng mặt phẳng (α) qua O vuông góc AB.\nDòng 6: Dựng mặt phẳng (α) qua O vuông góc AB.\nDòng 7: Dựng mặt phẳng (α) qua O vuông góc AB.\nDòng 8: Dựng mặt phẳng (α) qua O vuông góc AB.",
+        "scrollHeight": 301,
+        "clientHeight": 142,
+        "offsetHeight": 144,
+        "scrollWidth": 235,
+        "clientWidth": 235,
+        "overflowY": "auto",
+        "overflowX": "hidden",
+        "hasInternalVScroll": true,
+        "hasInternalHScroll": false,
+        "cancelHeight": 30,
+        "runHeight": 30,
+        "formRightClipped": false
+      },
+      "step12Ta": {
+        "value": "Xác định giao điểm I = Giao tuyến của (α) và (β) ∩ (γ)",
+        "scrollHeight": 46,
+        "clientHeight": 46,
+        "offsetHeight": 48,
+        "scrollWidth": 235,
+        "clientWidth": 235,
+        "overflowY": "hidden",
+        "overflowX": "hidden",
+        "hasInternalVScroll": false,
+        "hasInternalHScroll": false,
+        "cancelHeight": 30,
+        "runHeight": 30,
+        "formRightClipped": false
+      },
+      "caretTest": {
+        "before": 8,
+        "after": {
+          "start": 14,
+          "val": "Dựng mặt nhanh phẳng trung trực (α) của cạnh AB"
+        }
+      },
+      "afterEsc": {
+        "editorOpen": false,
+        "activeIsStep8Pencil": true,
+        "restoredTitle": "Dựng mặt phẳng trung trực (α) của cạnh AB"
+      },
+      "vpConsoleErrors": [],
+      "vpPageErrors": []
+    }
+  },
+  "sample1WrapCheck": {
+    "1920x1080": {
+      "orphans": [],
+      "nowrapViolations": [],
+      "docOverflow": false
+    },
+    "390x844": {
+      "orphans": [],
+      "nowrapViolations": [],
+      "docOverflow": false
+    }
+  },
+  "geometryRebuildE2E": {
+    "validO": {
+      "httpStatus": 200,
+      "status": "committed",
+      "mode": "PARTIAL_TOPOLOGICAL_REBUILD",
+      "feedback_status": "GEOMETRY_VERIFIED",
+      "validationPassed": true,
+      "cycleDetected": false,
+      "step8TextAfter": "Dựng mặt phẳng (α) đi qua O và vuông góc với AB.",
+      "editorClosed": true,
+      "hasUpdatedBadge": false
+    },
+    "renameP": {
+      "httpStatus": 200,
+      "mode": "PARTIAL_TOPOLOGICAL_REBUILD",
+      "step8Text": "Dựng mặt phẳng (P) đi qua O và vuông góc với AB.",
+      "step11Text": "Xác định giao tuyến của (P) và (β)",
+      "step12Text": "Xác định giao điểm I = Giao tuyến của (P) và (β) ∩ (γ)"
+    },
+    "invalidM": {
+      "httpStatus": 422,
+      "errorCode": "DOWNSTREAM_CIRCUMSCRIBED_SPHERE_BROKEN",
+      "learnerErrorUI": "Phép dựng mới làm tâm ở bước sau không còn cách đều mọi đỉnh của khối đa diện, nên mặt cầu ngoại tiếp không còn hợp lệ.",
+      "draftPreservedInTextarea": "Dựng mặt phẳng (α) đi qua M và vuông góc với AB.",
+      "step11StillP": "Xác định giao tuyến của (P) và (β)"
+    },
+    "networkAbortAndRetry": {
+      "errorShown": "Không thể kết nối tới máy chủ dựng hình cục bộ. Nội dung bạn vừa gõ vẫn được giữ lại.",
+      "draftPreserved": "Dựng mặt phẳng (α) qua tâm O của hình vuông ABCD và vuông góc với AB.",
+      "retryStatus": 200,
+      "finalStep8Text": "Dựng mặt phẳng (α) qua tâm O của hình vuông ABCD và vuông góc với AB.",
+      "finalStep11Text": "Xác định giao tuyến của (α) và (β)"
+    }
+  },
+  "sidebarCollapseCheck": {
+    "collapsedPs": {
+      "textAlign": "left",
+      "scrollW": 327,
+      "clientW": 327
+    }
+  },
+  "consoleErrors": [
+    "Failed to load resource: the server responded with a status of 422 (Unprocessable Entity)",
+    "Failed to load resource: net::ERR_FAILED"
+  ],
+  "pageErrors": []
+}

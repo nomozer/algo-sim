@@ -1,0 +1,267 @@
+{
+  "commit": "d0cb1d40f71a50ac2ae227f254c3eb0d4e70fa22",
+  "stickyOpacityAfterClickAndLeave": "1",
+  "deskTextareaMetrics": {
+    "value": "Dựng mặt phẳng trung trực (α) của cạnh AB",
+    "scrollHeight": 30,
+    "clientHeight": 30,
+    "offsetHeight": 32,
+    "scrollWidth": 274,
+    "clientWidth": 274,
+    "overflowY": "auto",
+    "overflowX": "auto",
+    "hasInternalOverflow": false
+  },
+  "mobTextareaMetrics": {
+    "value": "Dựng mặt phẳng trung trực (α) của cạnh AB",
+    "scrollHeight": 30,
+    "clientHeight": 30,
+    "offsetHeight": 32,
+    "scrollWidth": 305,
+    "clientWidth": 305,
+    "overflowY": "auto",
+    "overflowX": "auto",
+    "hasInternalOverflow": false
+  },
+  "stepLineMetrics": {
+    "problemStatement": {
+      "textAlign": "start",
+      "lineHeight": "22.12px",
+      "fontSize": "14px",
+      "scrollWidth": 327,
+      "clientWidth": 327
+    },
+    "rows": [
+      {
+        "stepNumber": 1,
+        "text": "Dựng mặt đáy ABCD",
+        "lines": [
+          "Dựng mặt đáy ABCD"
+        ],
+        "rowHeight": 39,
+        "paddingRight": "30px",
+        "pencilOpacity": "0",
+        "pencilWidth": 22,
+        "pencilHeight": 22
+      },
+      {
+        "stepNumber": 2,
+        "text": "Dựng đường cao SA ⊥ (ABCD) tại A",
+        "lines": [
+          "Dựng đường cao SA ⊥ (ABCD) tại A"
+        ],
+        "rowHeight": 39,
+        "paddingRight": "30px",
+        "pencilOpacity": "0",
+        "pencilWidth": 22,
+        "pencilHeight": 22
+      },
+      {
+        "stepNumber": 3,
+        "text": "Dựng các cạnh bên SB, SC, SD",
+        "lines": [
+          "Dựng các cạnh bên SB, SC, SD"
+        ],
+        "rowHeight": 39,
+        "paddingRight": "30px",
+        "pencilOpacity": "0",
+        "pencilWidth": 22,
+        "pencilHeight": 22
+      },
+      {
+        "stepNumber": 4,
+        "text": "Hoàn thiện hình chóp S.ABCD",
+        "lines": [
+          "Hoàn thiện hình chóp S.ABCD"
+        ],
+        "rowHeight": 39,
+        "paddingRight": "30px",
+        "pencilOpacity": "0",
+        "pencilWidth": 22,
+        "pencilHeight": 22
+      },
+      {
+        "stepNumber": 5,
+        "text": "Dựng đoạn thẳng AC",
+        "lines": [
+          "Dựng đoạn thẳng AC"
+        ],
+        "rowHeight": 39,
+        "paddingRight": "30px",
+        "pencilOpacity": "0",
+        "pencilWidth": 22,
+        "pencilHeight": 22
+      },
+      {
+        "stepNumber": 6,
+        "text": "Xác định trung điểm O của AC",
+        "lines": [
+          "Xác định trung điểm O của AC"
+        ],
+        "rowHeight": 39,
+        "paddingRight": "30px",
+        "pencilOpacity": "0",
+        "pencilWidth": 22,
+        "pencilHeight": 22
+      },
+      {
+        "stepNumber": 7,
+        "text": "Xác định trung điểm M của SA",
+        "lines": [
+          "Xác định trung điểm M của SA"
+        ],
+        "rowHeight": 39,
+        "paddingRight": "30px",
+        "pencilOpacity": "0",
+        "pencilWidth": 22,
+        "pencilHeight": 22
+      },
+      {
+        "stepNumber": 8,
+        "text": "Dựng mặt phẳng trung trực (α) của cạnh AB",
+        "lines": [
+          "Dựng mặt phẳng trung trực (α) của cạnh",
+          "AB"
+        ],
+        "rowHeight": 56.875,
+        "paddingRight": "30px",
+        "pencilOpacity": "0",
+        "pencilWidth": 22,
+        "pencilHeight": 22
+      },
+      {
+        "stepNumber": 9,
+        "text": "Dựng mặt phẳng trung trực (β) của cạnh AD",
+        "lines": [
+          "Dựng mặt phẳng trung trực (β) của cạnh",
+          "AD"
+        ],
+        "rowHeight": 56.875,
+        "paddingRight": "30px",
+        "pencilOpacity": "0",
+        "pencilWidth": 22,
+        "pencilHeight": 22
+      },
+      {
+        "stepNumber": 10,
+        "text": "Dựng mặt phẳng trung trực (γ) của cạnh AS",
+        "lines": [
+          "Dựng mặt phẳng trung trực (γ) của cạnh",
+          "AS"
+        ],
+        "rowHeight": 56.875,
+        "paddingRight": "30px",
+        "pencilOpacity": "0",
+        "pencilWidth": 22,
+        "pencilHeight": 22
+      },
+      {
+        "stepNumber": 11,
+        "text": "Xác định giao tuyến của (α) và (β)",
+        "lines": [
+          "Xác định giao tuyến của (α) và (β)"
+        ],
+        "rowHeight": 39,
+        "paddingRight": "30px",
+        "pencilOpacity": "0",
+        "pencilWidth": 22,
+        "pencilHeight": 22
+      },
+      {
+        "stepNumber": 12,
+        "text": "Xác định giao điểm I = Giao tuyến của (α) và (β) ∩ (γ)",
+        "lines": [
+          "Xác định giao điểm I = Giao tuyến của (α)",
+          "và (β) ∩ (γ)"
+        ],
+        "rowHeight": 56.875,
+        "paddingRight": "30px",
+        "pencilOpacity": "0",
+        "pencilWidth": 22,
+        "pencilHeight": 22
+      },
+      {
+        "stepNumber": 13,
+        "text": "Dựng đoạn thẳng OI",
+        "lines": [
+          "Dựng đoạn thẳng OI"
+        ],
+        "rowHeight": 39,
+        "paddingRight": "30px",
+        "pencilOpacity": "0",
+        "pencilWidth": 22,
+        "pencilHeight": 22
+      },
+      {
+        "stepNumber": 14,
+        "text": "Dựng đoạn thẳng MI",
+        "lines": [
+          "Dựng đoạn thẳng MI"
+        ],
+        "rowHeight": 39,
+        "paddingRight": "30px",
+        "pencilOpacity": "0",
+        "pencilWidth": 22,
+        "pencilHeight": 22
+      },
+      {
+        "stepNumber": 15,
+        "text": "Dựng mặt cầu tâm I đi qua S",
+        "lines": [
+          "Dựng mặt cầu tâm I đi qua S"
+        ],
+        "rowHeight": 39,
+        "paddingRight": "30px",
+        "pencilOpacity": "0",
+        "pencilWidth": 22,
+        "pencilHeight": 22
+      },
+      {
+        "stepNumber": 16,
+        "text": "Nối bán kính IS của mặt cầu",
+        "lines": [
+          "Nối bán kính IS của mặt cầu"
+        ],
+        "rowHeight": 39,
+        "paddingRight": "30px",
+        "pencilOpacity": "0",
+        "pencilWidth": 22,
+        "pencilHeight": 22
+      },
+      {
+        "stepNumber": 17,
+        "text": "Nối bán kính IA của mặt cầu",
+        "lines": [
+          "Nối bán kính IA của mặt cầu"
+        ],
+        "rowHeight": 80.5625,
+        "paddingRight": "30px",
+        "pencilOpacity": "0",
+        "pencilWidth": 22,
+        "pencilHeight": 22
+      }
+    ]
+  },
+  "desk2LineTextareaMetrics": {
+    "step12Metrics": {
+      "step": 12,
+      "value": "Xác định giao điểm I = Giao tuyến của (α) và (β) ∩ (γ)",
+      "scrollHeight": 46,
+      "clientHeight": 44,
+      "offsetHeight": 46,
+      "overflowY": "auto",
+      "overflowX": "auto",
+      "hasInternalOverflow": true
+    },
+    "step8TwoLineMetrics": {
+      "step": 8,
+      "value": "Xác định trung điểm H của AB, dựng mặt phẳng (α) đi qua H và vuông góc với AB.",
+      "scrollHeight": 46,
+      "clientHeight": 44,
+      "offsetHeight": 46,
+      "overflowY": "auto",
+      "overflowX": "auto",
+      "hasInternalOverflow": true
+    }
+  }
+}

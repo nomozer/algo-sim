@@ -46,6 +46,7 @@ import { useAuthStore } from "../state/auth";
 import {
   InlineConstructionStepEditor,
   StepEditPencilButton,
+  StepTitleText,
 } from "./ConstructionStepEditor";
 import {
   buildStepEditSessionId,
@@ -2982,7 +2983,12 @@ export function AxoWorkspaceV62({
                           const btn = stepsListRef.current?.querySelector<HTMLButtonElement>(
                             `.step-row[data-step="${stepIdx}"] .step-edit-pencil-btn`,
                           );
-                          btn?.focus();
+                          if (!btn) return;
+                          try {
+                            btn.focus({ preventScroll: true });
+                          } catch {
+                            btn.focus();
+                          }
                         });
                       };
                       const handleRunStepEdit = async (draft: string) => {
@@ -3055,17 +3061,19 @@ export function AxoWorkspaceV62({
                                 initialValue={tieuDeBuoc}
                                 running={stepEditRunning}
                                 errorText={stepEditError}
-                                onCancel={() => {
+                                onCancel={(restoreFocus) => {
                                   setEditingStepIndex(null);
                                   setStepEditError(null);
-                                  restoreFocusToStepPencil(b.index);
+                                  if (restoreFocus) {
+                                    restoreFocusToStepPencil(b.index);
+                                  }
                                 }}
                                 onSubmit={handleRunStepEdit}
                               />
                             ) : (
                               <>
                                 <div className="step-title">
-                                  <MathDisplay text={tieuDeBuoc} />
+                                  <StepTitleText text={tieuDeBuoc} />
                                 </div>
                                 {(b.categoryLabel || moTa) && (
                                   <div className="step-detail-sub">

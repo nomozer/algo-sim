@@ -11308,8 +11308,14 @@ body:has(.app-root.la-tap-trung) {
 
 .problem-statement {
   font-size: 14px;
-  line-height: 1.58;
+  line-height: 1.6;
   color: var(--ink);
+  text-align: left;
+  word-spacing: normal;
+  letter-spacing: normal;
+  white-space: pre-line;
+  overflow-wrap: break-word;
+  word-break: normal;
 }
 
 .problem-statement b,
@@ -11663,7 +11669,7 @@ body:has(.app-root.la-tap-trung) {
   border: 1px solid transparent;
   background: transparent;
   border-radius: 8px;
-  padding: 7px 30px 7px 9px;
+  padding: 7px 9px;
   cursor: pointer;
   transition: background-color 0.12s ease, border-color 0.12s ease, color 0.12s ease;
   display: flex;
@@ -11730,12 +11736,12 @@ body:has(.app-root.la-tap-trung) {
 .step-edit-pencil-btn {
   position: absolute;
   top: 6px;
-  right: 5px;
-  width: 22px;
-  height: 22px;
+  right: 6px;
+  width: 24px;
+  height: 24px;
   padding: 0;
   border: 1px solid transparent;
-  border-radius: 5px;
+  border-radius: 6px;
   background: var(--surface);
   color: var(--ink-secondary);
   display: inline-flex;
@@ -11749,8 +11755,19 @@ body:has(.app-root.la-tap-trung) {
   z-index: 2;
 }
 
-.step-row:hover .step-edit-pencil-btn,
-.step-row:focus-within .step-edit-pencil-btn,
+@media (hover: hover) {
+  .step-row:hover .step-edit-pencil-btn {
+    opacity: 1;
+    pointer-events: auto;
+    border-color: var(--hairline);
+  }
+}
+
+.step-row:not(.is-editing) {
+  padding-right: 34px;
+}
+
+.step-row:focus-visible .step-edit-pencil-btn,
 .step-edit-pencil-btn:focus-visible {
   opacity: 1;
   pointer-events: auto;
@@ -11758,11 +11775,15 @@ body:has(.app-root.la-tap-trung) {
 }
 
 @media (hover: none), (pointer: coarse) {
+  .step-row:not(.is-editing) {
+    padding-right: 35px;
+  }
+
   .step-edit-pencil-btn {
     width: 26px;
     height: 26px;
     top: 5px;
-    right: 4px;
+    right: 5px;
   }
 
   .step-row.is-active .step-edit-pencil-btn {
@@ -11786,7 +11807,7 @@ body:has(.app-root.la-tap-trung) {
 .step-row.is-editing {
   background: var(--canvas-soft);
   border-color: #d5d2cc;
-  padding-right: 10px;
+  padding: 8px 10px;
   cursor: default;
 }
 
@@ -11795,13 +11816,18 @@ body:has(.app-root.la-tap-trung) {
   flex-direction: column;
   gap: 6px;
   width: 100%;
+  min-width: 0;
 }
 
 .step-edit-textarea {
+  display: block;
   width: 100%;
   min-height: 32px;
-  max-height: 112px;
+  max-height: 144px;
   resize: none;
+  overflow-x: hidden;
+  overflow-y: hidden;
+  overflow-wrap: break-word;
   padding: 5px 8px;
   border: 1px solid #d5d2cc;
   border-radius: 5px;
@@ -11915,6 +11941,9 @@ body:has(.app-root.la-tap-trung) {
   font-weight: 500;
   color: inherit;
   line-height: 1.35;
+  text-wrap: pretty;
+  overflow-wrap: break-word;
+  word-break: normal;
 }
 
 .step-row.is-active .step-title,
@@ -18008,8 +18037,14 @@ body:has(.app-root.la-tap-trung) {
 
 .problem-statement {
   font-size: 14px;
-  line-height: 1.58;
+  line-height: 1.6;
   color: var(--ink);
+  text-align: left;
+  word-spacing: normal;
+  letter-spacing: normal;
+  white-space: pre-line;
+  overflow-wrap: break-word;
+  word-break: normal;
 }
 
 .dock-steps-progress-tag {
@@ -18017,7 +18052,7 @@ body:has(.app-root.la-tap-trung) {
 }
 
 .step-row {
-  padding: 8px 30px 8px 10px;
+  padding: 8px 10px;
   gap: 9px;
 }
 

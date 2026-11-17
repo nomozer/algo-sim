@@ -1,4 +1,113 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useLayoutEffect, useRef, useState } from "react";
+import {
+  COMPACT_MATH_TOKEN_RE,
+  MathDisplay,
+} from "../simulations/domains/geometry/scene3d-view";
+
+const useIsomorphicLayoutEffect =
+  typeof window !== "undefined" ? useLayoutEffect : useEffect;
+
+export const STEP_TEXTAREA_MIN_HEIGHT_PX = 32;
+export const STEP_TEXTAREA_MAX_HEIGHT_PX = 144;
+
+const STEP_TITLE_CONNECTOR_RE_SRC =
+  "(?:cạnh|của|với|qua|tại|và|đến|thuộc|trên|bởi|đỉnh|điểm|tâm|đoạn|trục|đáy|mặt|khối|tia|góc|bán\\s+kính|hình\\s+chóp|thẳng)";
+const STEP_TITLE_SHORT_SYM_RE_SRC =
+  "(?:\\([A-ZĐα-ω0-9′'°]{1,8}\\)|[A-ZĐ][A-ZĐ0-9′']{0,5}(?:\\.[A-ZĐ0-9′']{1,6})?)";
+const STEP_TITLE_STANDALONE_SYM_RE_SRC =
+  "(?:\\([A-ZĐα-ω0-9′'°]{1,10}\\)|[A-ZĐ][A-ZĐ0-9′']*(?:[′']|\\.[A-ZĐ0-9′']+)[A-ZĐ0-9′']*|[A-ZĐ]{2,6}(?![\\p{L}\\p{N}]))";
+
+const STEP_TITLE_CHUNK_RE = new RegExp(
+  `(${COMPACT_MATH_TOKEN_RE.source}|(?<![\\p{L}\\p{N}])${STEP_TITLE_CONNECTOR_RE_SRC}\\s+${STEP_TITLE_SHORT_SYM_RE_SRC}(?=$|[,;.)])(?![ \\t]*(?:⊥|∥|∩|=|≤|≥|≠))|${STEP_TITLE_STANDALONE_SYM_RE_SRC})`,
+  "gu",
+);
+
+export function StepTitleText({ text }: { text: string }) {
+  const parts: React.ReactNode[] = [];
+  let lastIndex = 0;
+  STEP_TITLE_CHUNK_RE.lastIndex = 0;
+  let match: RegExpExecArray | null;
+  let keyIdx = 0;
+
+  while ((match = STEP_TITLE_CHUNK_RE.exec(text)) !== null) {
+    const start = match.index;
+    const token = match[0];
+    if (start > lastIndex) {
+      parts.push(
+        <MathDisplay
+          key={`txt-${keyIdx++}`}
+          text={text.slice(lastIndex, start)}
+        />,
+      );
+    }
+    const isRelational = new RegExp(`^(?:${COMPACT_MATH_TOKEN_RE.source})$`, "u").test(
+      token,
+    );
+    if (isRelational) {
+      parts.push(<MathDisplay key={`rel-${keyIdx++}`} text={token} />);
+    } else {
+      parts.push(
+        <span key={`wrap-${keyIdx++}`} className="math-nowrap">
+          <MathDisplay text={token} />
+        </span>,
+      );
+    }
+    lastIndex = start + token.length;
+  }
+
+  if (lastIndex < text.length) {
+    parts.push(<MathDisplay key={`tail-${keyIdx++}`} text={text.slice(lastIndex)} />);
+  }
+
+  return <>{parts}</>;
+}
+
+export function syncStepTextareaHeight(
+  el: HTMLTextAreaElement,
+  minH = STEP_TEXTAREA_MIN_HEIGHT_PX,
+  maxH = STEP_TEXTAREA_MAX_HEIGHT_PX,
+): { heightPx: number; scrollable: boolean } {
+  const scrollHost =
+    typeof el.closest === "function" ? el.closest<HTMLElement>(".dock-scroll") : null;
+  const savedHostScrollTop = scrollHost ? scrollHost.scrollTop : 0;
+  const savedTaScrollTop = el.scrollTop;
+
+  el.style.overflowX = "hidden";
+  el.style.overflowY = "hidden";
+  el.style.height = "auto";
+
+  // Under box-sizing: border-box, scrollHeight excludes top/bottom borders; add them
+  // so 1-2+ line content never triggers a false internal vertical scrollbar.
+  let borderV = 2;
+  if (typeof window !== "undefined" && typeof window.getComputedStyle === "function") {
+    try {
+      const cs = window.getComputedStyle(el);
+      const bt = parseFloat(cs.borderTopWidth);
+      const bb = parseFloat(cs.borderBottomWidth);
+      if (Number.isFinite(bt) || Number.isFinite(bb)) {
+        borderV = (Number.isFinite(bt) ? bt : 0) + (Number.isFinite(bb) ? bb : 0);
+      }
+    } catch {
+      borderV = 2;
+    }
+  }
+
+  const rawScrollH = el.scrollHeight;
+  const needed = rawScrollH > 0 ? Math.ceil(rawScrollH + borderV) : minH;
+  const heightPx = Math.min(maxH, Math.max(minH, needed));
+  const scrollable = needed > maxH;
+
+  el.style.height = `${heightPx}px`;
+  el.style.overflowY = scrollable ? "auto" : "hidden";
+  if (scrollable) {
+    el.scrollTop = savedTaScrollTop;
+  }
+  if (scrollHost && scrollHost.scrollTop !== savedHostScrollTop) {
+    scrollHost.scrollTop = savedHostScrollTop;
+  }
+
+  return { heightPx, scrollable };
+}
 
 export interface StepEditPencilButtonProps {
   stepNumber: number;
@@ -60,7 +169,7 @@ export interface InlineConstructionStepEditorProps {
   initialValue: string;
   running: boolean;
   errorText: string | null;
-  onCancel: () => void;
+  onCancel: (restoreKeyboardFocus?: boolean) => void;
   onSubmit: (draft: string) => void;
 }
 
@@ -79,12 +188,15 @@ export const InlineConstructionStepEditor: React.FC<InlineConstructionStepEditor
     setDraft(initialValue);
   }, [stepIndex, initialValue]);
 
-  useEffect(() => {
+  useIsomorphicLayoutEffect(() => {
     const el = textareaRef.current;
     if (!el) return;
-    el.focus();
-    el.style.height = "auto";
-    el.style.height = `${Math.min(112, Math.max(32, el.scrollHeight))}px`;
+    try {
+      el.focus({ preventScroll: true });
+    } catch {
+      el.focus();
+    }
+    syncStepTextareaHeight(el);
     const len = el.value.length;
     try {
       el.setSelectionRange(len, len);
@@ -93,12 +205,23 @@ export const InlineConstructionStepEditor: React.FC<InlineConstructionStepEditor
     }
   }, [stepIndex]);
 
-  useEffect(() => {
+  useIsomorphicLayoutEffect(() => {
     const el = textareaRef.current;
     if (!el) return;
-    el.style.height = "auto";
-    el.style.height = `${Math.min(112, Math.max(32, el.scrollHeight))}px`;
+    syncStepTextareaHeight(el);
   }, [draft]);
+
+  useEffect(() => {
+    const el = textareaRef.current;
+    if (!el || typeof ResizeObserver === "undefined") return;
+    const ro = new ResizeObserver(() => {
+      syncStepTextareaHeight(el);
+    });
+    ro.observe(el);
+    return () => {
+      ro.disconnect();
+    };
+  }, [stepIndex]);
 
   const trimmedEmpty = draft.trim().length === 0;
 
@@ -128,7 +251,7 @@ export const InlineConstructionStepEditor: React.FC<InlineConstructionStepEditor
           if (e.key === "Escape") {
             e.preventDefault();
             if (!running) {
-              onCancel();
+              onCancel(true);
             }
           } else if ((e.ctrlKey || e.metaKey) && e.key === "Enter") {
             e.preventDefault();
@@ -152,7 +275,7 @@ export const InlineConstructionStepEditor: React.FC<InlineConstructionStepEditor
             e.preventDefault();
             e.stopPropagation();
             if (!running) {
-              onCancel();
+              onCancel(e.detail === 0);
             }
           }}
         >
