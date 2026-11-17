@@ -17802,6 +17802,12 @@ export function buildPedagogicalConstructionPlan(
           && workScene.objects.some((cand) => isIntersectionLineOrSegment(cand, workScene) && (cand.depends ?? []).includes(id)),
         );
       });
+    const inlineParentTargetIds = new Set(
+      u.createdVisualIds
+        .map((id) => (byId.get(id)?.source as Record<string, unknown> | undefined)?.inline_step_parent)
+        .filter((pid): pid is string => typeof pid === "string" && pid.trim().length > 0),
+    );
+    const isInlineStepChildHelper = inlineParentTargetIds.size === 1;
     const isDisposableAux =
       !isExplicitCuttingForIntersectionLine
       && u.createdVisualIds.length > 0
@@ -17829,11 +17835,18 @@ export function buildPedagogicalConstructionPlan(
       || u.hasMeasurementOrResult
       || u.extendSectionId
       || u.closeSectionId
-      || (!isDisposableAux && !isUnlabelledCentroidHelper && !isUnlabelledSphereCenterHelper)
+      || (!isDisposableAux && !isUnlabelledCentroidHelper && !isUnlabelledSphereCenterHelper && !isInlineStepChildHelper)
     ) {
       continue;
     }
     const consumerUnits = new Set<number>();
+    if (isInlineStepChildHelper) {
+      const parentId = [...inlineParentTargetIds][0];
+      const parentUnitIdx = preCreatorOf.get(parentId);
+      if (parentUnitIdx !== undefined && parentUnitIdx !== uIdx) {
+        consumerUnits.add(parentUnitIdx);
+      }
+    }
     for (const auxId of u.createdVisualIds) {
       for (const cand of workScene.objects) {
         if (cand.type === "quantity" || !(cand.depends ?? []).includes(auxId)) continue;

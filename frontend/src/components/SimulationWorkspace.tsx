@@ -43,6 +43,16 @@ import {
   type SeenMarks,
 } from "../state/classroom-sync";
 import { useAuthStore } from "../state/auth";
+import {
+  InlineConstructionStepEditor,
+  StepEditPencilButton,
+} from "./ConstructionStepEditor";
+import {
+  buildStepEditSessionId,
+  fetchStepEditSessionState,
+  loadCachedStepEditState,
+  submitConstructionStepEdit,
+} from "../state/construction-step-edits";
 import { veKhongGian } from "../simulations/domains/geometry/scene3d-chart";
 import {
   anchorOfGeometryStep,
@@ -223,7 +233,7 @@ export function AxoViewerRecoverySurface({
 }
 
 export function AxoWorkspaceV62({
-  scene: sceneKhung,
+  scene: propSceneKhung,
   de,
   deSource,
   tieuDe,
@@ -272,6 +282,7 @@ export function AxoWorkspaceV62({
   const goHome = useAppStore((s) => s.goHome);
   const activeHistoryId = useAppStore((s) => s.activeHistoryId);
   const activeSampleId = useAppStore((s) => s.activeSampleId);
+    const authUser = useAuthStore((s) => s.user);
 
   const problemSnapshotKey = useMemo(() => {
     if (activeSampleId) return `sample:${activeSampleId}`;
@@ -280,6 +291,69 @@ export function AxoWorkspaceV62({
     const cleanStatement = (de ?? "").trim().slice(0, 80);
     return cleanTitle || cleanStatement ? `inline:${cleanTitle}|${cleanStatement}` : "";
   }, [activeSampleId, activeHistoryId, tieuDe, de]);
+
+  const activeEditSessionId = useMemo(
+    () =>
+      buildStepEditSessionId(
+        problemSnapshotKey || (tieuDe ?? "").trim() || "workspace-default",
+        authUser?.id != null ? `u${authUser.id}` : "guest",
+      ),
+    [problemSnapshotKey, tieuDe, authUser?.id],
+  );
+
+  const [editedSceneState, setEditedSceneState] = useState<{
+    sessionId: string;
+    scene: Scene3D;
+    overrides: Record<string, string>;
+  } | null>(() => {
+    const cached = loadCachedStepEditState(activeEditSessionId);
+    if (cached?.committedScene) {
+      return {
+        sessionId: activeEditSessionId,
+        scene: cached.committedScene,
+        overrides: cached.stepOverrides,
+      };
+    }
+    return null;
+  });
+
+  const [editingStepIndex, setEditingStepIndex] = useState<number | null>(null);
+  const [stepEditRunning, setStepEditRunning] = useState(false);
+  const [stepEditError, setStepEditError] = useState<string | null>(null);
+
+  useEffect(() => {
+    let cancelled = false;
+    setEditingStepIndex(null);
+    setStepEditRunning(false);
+    setStepEditError(null);
+    const cached = loadCachedStepEditState(activeEditSessionId);
+    if (cached?.committedScene) {
+      setEditedSceneState({
+        sessionId: activeEditSessionId,
+        scene: cached.committedScene,
+        overrides: cached.stepOverrides,
+      });
+    } else {
+      setEditedSceneState(null);
+    }
+    void fetchStepEditSessionState(activeEditSessionId).then((remote) => {
+      if (cancelled || !remote?.committedScene) return;
+      setEditedSceneState({
+        sessionId: activeEditSessionId,
+        scene: remote.committedScene,
+        overrides: remote.stepOverrides,
+      });
+    });
+    return () => {
+      cancelled = true;
+    };
+  }, [activeEditSessionId]);
+
+  const hasActiveEditedScene = Boolean(
+    editedSceneState && editedSceneState.sessionId === activeEditSessionId,
+  );
+  const sceneKhung = hasActiveEditedScene ? editedSceneState!.scene : propSceneKhung;
+  const activeStepOverrides = hasActiveEditedScene ? editedSceneState!.overrides : {};
 
   const preparedSceneResult = useMemo(() => {
     if (unavailableOverride) {
@@ -569,9 +643,41 @@ export function AxoWorkspaceV62({
     setStageWebglFailed(false);
   }, [problemSnapshotKey, webglStageAttempt]);
 
+  const syncedRawSourceSceneRef = useRef<Scene3D>(sceneKhung);
+  const syncedProblemKeyRef = useRef(problemSnapshotKey);
+
   useEffect(() => {
     if (isInitialSceneMountRef.current) {
       isInitialSceneMountRef.current = false;
+      syncedRawSourceSceneRef.current = sceneKhung;
+      syncedProblemKeyRef.current = problemSnapshotKey;
+      return;
+    }
+    const isSameProblemRebuild =
+      syncedProblemKeyRef.current === problemSnapshotKey
+      && hasActiveEditedScene
+      && syncedRawSourceSceneRef.current !== sceneKhung;
+    syncedRawSourceSceneRef.current = sceneKhung;
+    syncedProblemKeyRef.current = problemSnapshotKey;
+    if (isSameProblemRebuild) {
+      if (latestCameraPoseRef.current) {
+        setSavedCameraPose(latestCameraPoseRef.current);
+      }
+      const maxAnchor = dsBuoc[dsBuoc.length - 1]?.anchor ?? 0;
+      setTt((prev) => {
+        const clamped = Math.max(0, Math.min(prev.current_step, maxAnchor));
+        const selectedStillExists =
+          prev.selected_id && scene.objects.some((o) => o.id === prev.selected_id);
+        return {
+          ...prev,
+          current_step: clamped,
+          selected_id: selectedStillExists ? prev.selected_id : null,
+        };
+      });
+      setDangPhat(false);
+      setLocateRequest(null);
+      setStageWebglFailed(false);
+      setViewerBoundaryCrashed(false);
       return;
     }
     const snap = problemSnapshotKey ? loadLearnerRecoverySnapshot(problemSnapshotKey) : null;
@@ -2811,6 +2917,7 @@ export function AxoWorkspaceV62({
                   >
                     {dsBuoc.map((b) => {
                       const active = b.index === buocHinh;
+                      const isEditingThisStep = editingStepIndex === b.index;
                       const fallbackDisplay = moTaBuocDungHienThi(day, b);
                       const stepNarration =
                         b.narration
@@ -2819,11 +2926,17 @@ export function AxoWorkspaceV62({
                           title: fallbackDisplay.title,
                           subtitle: fallbackDisplay.subtitle,
                         });
-                      const tieuDeBuoc = stepNarration.actionTitle || fallbackDisplay.title;
+                      const primaryTargetId =
+                        b.targetIds.find((tid) => !tid.endsWith("__label"))
+                        ?? b.targetIds[0]
+                        ?? `step_${b.index}`;
+                      const baseTieuDeBuoc = stepNarration.actionTitle || fallbackDisplay.title;
+                      const tieuDeBuoc = activeStepOverrides[primaryTargetId] || baseTieuDeBuoc;
                       const moTa = stepNarration.conciseRationale;
                       const chungCuChiTiet = active ? stepNarration.detailedEvidence : [];
                       const isEvidenceOpen = active && expandedEvidenceStep === b.index;
                       const onSelectStepRow = () => {
+                        if (isEditingThisStep) return;
                         setDangPhat(false);
                         if (b.index !== buocHinh) {
                           setExpandedEvidenceStep(null);
@@ -2832,10 +2945,51 @@ export function AxoWorkspaceV62({
                         }
                         setStep(b.anchor);
                       };
+                      const absorbedHelperIds = (() => {
+                        const rawById = new Map(sceneKhung.objects.map((o) => [o.id, o]));
+                        const pObj = rawById.get(primaryTargetId);
+                        if (!pObj) return [] as string[];
+                        return (pObj.depends ?? []).filter((depId) => {
+                          const depObj = rawById.get(depId);
+                          return Boolean(depObj && depObj.type === "point3" && !depObj.notation?.trim());
+                        });
+                      })();
+                      const handleRunStepEdit = async (draft: string) => {
+                        if (stepEditRunning) return;
+                        setStepEditRunning(true);
+                        setStepEditError(null);
+                        if (latestCameraPoseRef.current) {
+                          setSavedCameraPose(latestCameraPoseRef.current);
+                        }
+                        const res = await submitConstructionStepEdit({
+                          sessionId: activeEditSessionId,
+                          problemKey: problemSnapshotKey || (tieuDe ?? "").trim() || "active-problem",
+                          stepId: primaryTargetId,
+                          stepIndex: b.index,
+                          previousInstruction: tieuDeBuoc,
+                          editedInstruction: draft,
+                          targetIds: b.targetIds.length > 0 ? b.targetIds : [primaryTargetId],
+                          absorbedIds: absorbedHelperIds,
+                          scene3d: sceneKhung,
+                        });
+                        if (res.status === "committed") {
+                          setEditedSceneState({
+                            sessionId: activeEditSessionId,
+                            scene: res.scene3d,
+                            overrides: res.step_overrides ?? {},
+                          });
+                          setEditingStepIndex(null);
+                          setStepEditError(null);
+                          setStepEditRunning(false);
+                        } else {
+                          setStepEditError(res.learner_error);
+                          setStepEditRunning(false);
+                        }
+                      };
                       return (
                         <li
                           key={b.index}
-                          className={`step-row${active ? " is-active" : ""}`}
+                          className={`step-row${active ? " is-active" : ""}${isEditingThisStep ? " is-editing" : ""}`}
                           data-step={b.index}
                           data-geometry-step={b.index}
                           data-step-category={b.epistemicCategory}
@@ -2844,6 +2998,7 @@ export function AxoWorkspaceV62({
                           role="button"
                           onClick={onSelectStepRow}
                           onKeyDown={(e) => {
+                            if (isEditingThisStep) return;
                             if (e.key === "Enter" || e.key === " ") {
                               e.preventDefault();
                               onSelectStepRow();
@@ -2852,45 +3007,71 @@ export function AxoWorkspaceV62({
                         >
                           <span className="step-num">{b.index + 1}</span>
                           <div className="step-content">
-                            <div className="step-title">
-                              <MathDisplay text={tieuDeBuoc} />
-                            </div>
-                            {(b.categoryLabel || moTa) && (
-                              <div className="step-detail-sub">
-                                {b.categoryLabel && (
-                                  <span className={`step-kind-badge is-${b.epistemicCategory}`}>
-                                    {b.categoryLabel}
-                                  </span>
-                                )}
-                                {moTa && <MathDisplay text={moTa} />}
-                              </div>
-                            )}
-                            {active && chungCuChiTiet.length > 0 && (
+                            {isEditingThisStep ? (
+                              <InlineConstructionStepEditor
+                                stepIndex={b.index}
+                                initialValue={tieuDeBuoc}
+                                running={stepEditRunning}
+                                errorText={stepEditError}
+                                onCancel={() => {
+                                  setEditingStepIndex(null);
+                                  setStepEditError(null);
+                                }}
+                                onSubmit={handleRunStepEdit}
+                              />
+                            ) : (
                               <>
-                                <button
-                                  type="button"
-                                  className="step-evidence-toggle"
-                                  data-step-evidence-toggle={b.index}
-                                  aria-expanded={isEvidenceOpen}
-                                  onClick={(e) => {
-                                    e.stopPropagation();
-                                    setExpandedEvidenceStep(isEvidenceOpen ? null : b.index);
-                                  }}
-                                >
-                                  {isEvidenceOpen ? "Thu gọn" : "Xem giải thích"}
-                                </button>
-                                {isEvidenceOpen && (
-                                  <div className="step-evidence-drawer">
-                                    {chungCuChiTiet.map((ld, idx) => (
-                                      <div key={idx} className="step-evidence-item geo3d-cac-buoc-vi-sao">
-                                        <MathDisplay text={ld} />
-                                      </div>
-                                    ))}
+                                <div className="step-title">
+                                  <MathDisplay text={tieuDeBuoc} />
+                                </div>
+                                {(b.categoryLabel || moTa) && (
+                                  <div className="step-detail-sub">
+                                    {b.categoryLabel && (
+                                      <span className={`step-kind-badge is-${b.epistemicCategory}`}>
+                                        {b.categoryLabel}
+                                      </span>
+                                    )}
+                                    {moTa && <MathDisplay text={moTa} />}
                                   </div>
+                                )}
+                                {active && chungCuChiTiet.length > 0 && (
+                                  <>
+                                    <button
+                                      type="button"
+                                      className="step-evidence-toggle"
+                                      data-step-evidence-toggle={b.index}
+                                      aria-expanded={isEvidenceOpen}
+                                      onClick={(e) => {
+                                        e.stopPropagation();
+                                        setExpandedEvidenceStep(isEvidenceOpen ? null : b.index);
+                                      }}
+                                    >
+                                      {isEvidenceOpen ? "Thu gọn" : "Xem giải thích"}
+                                    </button>
+                                    {isEvidenceOpen && (
+                                      <div className="step-evidence-drawer">
+                                        {chungCuChiTiet.map((ld, idx) => (
+                                          <div key={idx} className="step-evidence-item geo3d-cac-buoc-vi-sao">
+                                            <MathDisplay text={ld} />
+                                          </div>
+                                        ))}
+                                      </div>
+                                    )}
+                                  </>
                                 )}
                               </>
                             )}
                           </div>
+                          {!isEditingThisStep && !unavailableOverride && invalidSceneReason === null && (
+                            <StepEditPencilButton
+                              stepNumber={b.index + 1}
+                              disabled={stepEditRunning}
+                              onStartEdit={() => {
+                                setEditingStepIndex(b.index);
+                                setStepEditError(null);
+                              }}
+                            />
+                          )}
                         </li>
                       );
                     })}

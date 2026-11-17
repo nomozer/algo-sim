@@ -11659,6 +11659,7 @@ body:has(.app-root.la-tap-trung) {
 }
 
 .step-row {
+  position: relative;
   border: 1px solid transparent;
   background: transparent;
   border-radius: 8px;
@@ -11723,6 +11724,148 @@ body:has(.app-root.la-tap-trung) {
 .step-content {
   flex: 1 1 auto;
   min-width: 0;
+}
+
+.step-edit-pencil-btn {
+  position: absolute;
+  top: 6px;
+  right: 6px;
+  width: 24px;
+  height: 24px;
+  padding: 0;
+  border: 1px solid transparent;
+  border-radius: 6px;
+  background: var(--surface);
+  color: var(--ink-secondary);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.12s ease, background-color 0.12s ease, border-color 0.12s ease, color 0.12s ease;
+  z-index: 2;
+}
+
+.step-row:hover .step-edit-pencil-btn,
+.step-row:focus-within .step-edit-pencil-btn,
+.step-edit-pencil-btn:focus-visible {
+  opacity: 1;
+  pointer-events: auto;
+  border-color: var(--hairline);
+}
+
+@media (hover: none), (pointer: coarse) {
+  .step-row.is-active .step-edit-pencil-btn {
+    opacity: 1;
+    pointer-events: auto;
+    border-color: var(--hairline);
+  }
+}
+
+.step-edit-pencil-btn:hover:not(:disabled) {
+  background: var(--canvas-soft);
+  color: var(--ink);
+  border-color: var(--primary);
+}
+
+.step-edit-pencil-btn:focus-visible {
+  outline: 2px solid var(--primary);
+  outline-offset: 1px;
+}
+
+.step-row.is-editing {
+  background: var(--surface);
+  border-color: var(--primary);
+  cursor: default;
+}
+
+.step-edit-form {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  width: 100%;
+}
+
+.step-edit-textarea {
+  width: 100%;
+  min-height: 68px;
+  resize: vertical;
+  padding: 7px 9px;
+  border: 1px solid var(--hairline);
+  border-radius: 6px;
+  background: var(--canvas-soft);
+  color: var(--ink);
+  font-family: inherit;
+  font-size: 13px;
+  line-height: 1.45;
+  box-sizing: border-box;
+}
+
+.step-edit-textarea:focus {
+  outline: 2px solid var(--primary);
+  outline-offset: 0;
+  border-color: var(--primary);
+}
+
+.step-edit-error {
+  font-size: 12px;
+  line-height: 1.4;
+  color: #b42318;
+  background: rgba(180, 35, 24, 0.08);
+  border: 1px solid rgba(180, 35, 24, 0.28);
+  border-radius: 6px;
+  padding: 6px 8px;
+}
+
+.step-edit-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 6px;
+}
+
+.step-edit-btn {
+  border-radius: 6px;
+  padding: 4px 10px;
+  font-size: 12px;
+  font-weight: 500;
+  cursor: pointer;
+  border: 1px solid var(--hairline);
+  transition: background-color 0.12s ease, border-color 0.12s ease, opacity 0.12s ease;
+}
+
+.step-edit-btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.step-edit-btn--cancel {
+  background: transparent;
+  color: var(--ink-secondary);
+}
+
+.step-edit-btn--cancel:hover:not(:disabled) {
+  background: var(--canvas-soft);
+  color: var(--ink);
+}
+
+.step-edit-btn--run {
+  background: var(--primary);
+  border-color: var(--primary);
+  color: var(--on-primary);
+}
+
+.step-edit-btn--run:hover:not(:disabled) {
+  background: var(--primary-active);
+}
+
+.step-edit-sr-live {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
 }
 
 .step-title {

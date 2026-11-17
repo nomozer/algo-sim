@@ -6,6 +6,13 @@
 
 `frontend/scripts/attachment-resize.node-test.mjs` exercises attachment draft preservation and proportional scroll control across a desktop-to-mobile viewport resize against a running local Axo server.
 
+## Editable Construction Steps & Local Hybrid Partial Rebuild (2026-11-17)
+
+| Path | Owns | Locked by |
+|---|---|---|
+| `backend/app/persistence/step_edit_models.py` · `backend/app/simulation/geometry_functions/step_editor.py` · `backend/app/simulation/geometry_functions/feedback_dataset.py` · `backend/app/simulation/step_edit_router.py` · `backend/scripts/prepare_step_feedback_dataset.py` | Zero-LLM deterministic Vietnamese construction-step parser, object/step dependency DAG with cycle & missing-reference detection, topological partial `Scene3D` rebuild in Exact Kernel (`Fraction`, `Radical`, Gram `Metric`) with continuity validation, atomic commit/HTTP 422 rollback, SQLite persistence (`step_edit_sessions`, `step_edit_revisions`, `step_edit_feedback`), owner isolation, verified feedback curation (`MODEL_NOT_TRAINED` reported explicitly until offline training), and grouped JSONL dataset exporter | `backend/tests/geometry/test_editable_construction_steps.py` |
+| `frontend/src/state/construction-step-edits.ts` · `frontend/src/components/ConstructionStepEditor.tsx` · `frontend/src/components/SimulationWorkspace.tsx` · `frontend/src/simulations/domains/geometry/scene3d-semantic-policy.ts` · `frontend/src/simulations/domains/geometry/scene3d-view.tsx` · `frontend/src/styles/global.css` | Hover-revealed pencil edit trigger (`0px` default layout shift), inline `<textarea>` step editor (`Hủy` / `Chạy` only, `Escape` cancel, in-flight mutex, inline error keeping draft), `inline_step_parent` step coalescing, reload recovery (`localStorage` + `/api/simulation/sessions/{id}/state`), and same-problem `Scene3D` camera/display preservation across partial rebuilds | `frontend/src/components/construction-step-editor.test.tsx`, `frontend/src/code-index-sync.test.ts` |
+
 ## Single-Instance Workspace Navigation & Projected Tab Bar (2026-11-14)
 
 | Path | Owns | Locked by |

@@ -1529,3 +1529,10 @@ async def input_prepare(
 # Trợ giúp giải thích trạng thái engine của miền Tin học: người gọi duy nhất là `AIHelpPanel` (không còn gắn vào giao
 # diện từ khi gỡ Tin học, `ui-hygiene.test.ts` đã cấm nó hiện ra). Prompt `skills/explain.md` cùng các prompt legacy
 # của `LLM_ONLY` đã được gỡ hoàn toàn ở `CACHE_VERSION = "132"`. Khoá: `tests/test_api.py::test_endpoint_tutor_flow_da_xoa` (404).
+
+
+# ── Editable Construction Steps & Verified Feedback (`step_edit_router`) ─────
+from app.simulation.step_edit_router import router as step_edit_router  # noqa: E402
+
+app.include_router(step_edit_router)
+

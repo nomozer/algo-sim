@@ -6659,15 +6659,29 @@ export function Scene3DWorkspace({
         dieuKhien.reset();
         datKhungNhin(cam, dieuKhien, kn, infoTam ? { banKinhKhoi: infoTam.banKinhKhoi, tam: infoTam } : undefined);
         // A recovered pose still needs the scene's fit-derived zoom and clipping bounds, not OrbitControls' 0..Infinity.
+        // Also guard against a rebuilt bounding radius that outgrows the prior camera frustum.
         if (savedPose && hopLeCameraPose(savedPose)) {
           pendingRestoredCameraRef.current = null;
-          cam.position.set(...savedPose.position);
-          dieuKhien.target.set(...savedPose.target);
-          dieuKhien.saveState();
-          dieuKhien.reset();
-          userAdjustedCamera = true;
+          const dx = savedPose.position[0] - savedPose.target[0];
+          const dy = savedPose.position[1] - savedPose.target[1];
+          const dz = savedPose.position[2] - savedPose.target[2];
+          const poseDist = Math.hypot(dx, dy, dz);
+          const fitRadius = Math.max(0.5, infoTam?.banKinhKhoi ?? 1);
+          const framingStillValid =
+            !infoTam || (poseDist >= fitRadius * 0.65 && poseDist <= fitRadius * 18);
+          if (framingStillValid) {
+            cam.position.set(...savedPose.position);
+            dieuKhien.target.set(...savedPose.target);
+            dieuKhien.saveState();
+            dieuKhien.reset();
+            userAdjustedCamera = true;
+          }
         }
         kcKhungChuan = cam.position.clone().sub(dieuKhien.target).length();
+        if (typeof window !== "undefined") {
+          (window as Window & { __geo3d_last_rebuild_update_ms?: number }).__geo3d_last_rebuild_update_ms =
+            performance.now();
+        }
       } finally {
         dangDatKhungTuDong = false;
       }
