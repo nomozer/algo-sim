@@ -320,12 +320,29 @@ export function AxoWorkspaceV62({
   const [editingStepIndex, setEditingStepIndex] = useState<number | null>(null);
   const [stepEditRunning, setStepEditRunning] = useState(false);
   const [stepEditError, setStepEditError] = useState<string | null>(null);
+  const [justUpdatedStepTargetId, setJustUpdatedStepTargetId] = useState<string | null>(null);
+  const justUpdatedTimerRef = useRef<number | null>(null);
+  const editRequestSeqRef = useRef(0);
+  const activeEditSessionIdRef = useRef(activeEditSessionId);
+  activeEditSessionIdRef.current = activeEditSessionId;
+  const pendingFocusTargetIdRef = useRef<string | null>(null);
+
+  useEffect(() => {
+    return () => {
+      if (justUpdatedTimerRef.current !== null && typeof window !== "undefined") {
+        window.clearTimeout(justUpdatedTimerRef.current);
+      }
+    };
+  }, []);
 
   useEffect(() => {
     let cancelled = false;
+    editRequestSeqRef.current += 1;
+    pendingFocusTargetIdRef.current = null;
     setEditingStepIndex(null);
     setStepEditRunning(false);
     setStepEditError(null);
+    setJustUpdatedStepTargetId(null);
     const cached = loadCachedStepEditState(activeEditSessionId);
     if (cached?.committedScene) {
       setEditedSceneState({
@@ -663,14 +680,21 @@ export function AxoWorkspaceV62({
       if (latestCameraPoseRef.current) {
         setSavedCameraPose(latestCameraPoseRef.current);
       }
+      const focusTargetId = pendingFocusTargetIdRef.current;
+      pendingFocusTargetIdRef.current = null;
+      const focusedStep = focusTargetId
+        ? dsBuoc.find((st) => st.targetIds.includes(focusTargetId))
+        : undefined;
       const maxAnchor = dsBuoc[dsBuoc.length - 1]?.anchor ?? 0;
       setTt((prev) => {
-        const clamped = Math.max(0, Math.min(prev.current_step, maxAnchor));
+        const nextAnchor = focusedStep
+          ? focusedStep.anchor
+          : Math.max(0, Math.min(prev.current_step, maxAnchor));
         const selectedStillExists =
           prev.selected_id && scene.objects.some((o) => o.id === prev.selected_id);
         return {
           ...prev,
-          current_step: clamped,
+          current_step: nextAnchor,
           selected_id: selectedStillExists ? prev.selected_id : null,
         };
       });
@@ -2954,15 +2978,38 @@ export function AxoWorkspaceV62({
                           return Boolean(depObj && depObj.type === "point3" && !depObj.notation?.trim());
                         });
                       })();
+                      const isJustUpdated =
+                        !isEditingThisStep
+                        && justUpdatedStepTargetId !== null
+                        && (b.targetIds.includes(justUpdatedStepTargetId) || primaryTargetId === justUpdatedStepTargetId);
+                      const priorStepIdsForEdit = Array.from(
+                        new Set(
+                          dsBuoc
+                            .slice(0, b.index)
+                            .flatMap((prevStep) => [...prevStep.targetIds, ...prevStep.visibleIds])
+                            .filter((id) => Boolean(id) && !id.endsWith("__label")),
+                        ),
+                      );
+                      const restoreFocusToStepPencil = (stepIdx: number) => {
+                        if (typeof window === "undefined") return;
+                        window.requestAnimationFrame(() => {
+                          const btn = stepsListRef.current?.querySelector<HTMLButtonElement>(
+                            `.step-row[data-step="${stepIdx}"] .step-edit-pencil-btn`,
+                          );
+                          btn?.focus();
+                        });
+                      };
                       const handleRunStepEdit = async (draft: string) => {
                         if (stepEditRunning) return;
+                        const reqSeq = ++editRequestSeqRef.current;
+                        const sessionIdAtStart = activeEditSessionId;
                         setStepEditRunning(true);
                         setStepEditError(null);
                         if (latestCameraPoseRef.current) {
                           setSavedCameraPose(latestCameraPoseRef.current);
                         }
                         const res = await submitConstructionStepEdit({
-                          sessionId: activeEditSessionId,
+                          sessionId: sessionIdAtStart,
                           problemKey: problemSnapshotKey || (tieuDe ?? "").trim() || "active-problem",
                           stepId: primaryTargetId,
                           stepIndex: b.index,
@@ -2970,11 +3017,30 @@ export function AxoWorkspaceV62({
                           editedInstruction: draft,
                           targetIds: b.targetIds.length > 0 ? b.targetIds : [primaryTargetId],
                           absorbedIds: absorbedHelperIds,
+                          priorStepIds: priorStepIdsForEdit,
                           scene3d: sceneKhung,
                         });
+                        if (
+                          reqSeq !== editRequestSeqRef.current
+                          || activeEditSessionIdRef.current !== sessionIdAtStart
+                        ) {
+                          return;
+                        }
                         if (res.status === "committed") {
+                          const focusTargetId = res.primary_target_id || primaryTargetId;
+                          pendingFocusTargetIdRef.current = focusTargetId;
+                          setJustUpdatedStepTargetId(focusTargetId);
+                          if (typeof window !== "undefined") {
+                            if (justUpdatedTimerRef.current !== null) {
+                              window.clearTimeout(justUpdatedTimerRef.current);
+                            }
+                            justUpdatedTimerRef.current = window.setTimeout(() => {
+                              setJustUpdatedStepTargetId(null);
+                              justUpdatedTimerRef.current = null;
+                            }, 2400);
+                          }
                           setEditedSceneState({
-                            sessionId: activeEditSessionId,
+                            sessionId: sessionIdAtStart,
                             scene: res.scene3d,
                             overrides: res.step_overrides ?? {},
                           });
@@ -2989,7 +3055,7 @@ export function AxoWorkspaceV62({
                       return (
                         <li
                           key={b.index}
-                          className={`step-row${active ? " is-active" : ""}${isEditingThisStep ? " is-editing" : ""}`}
+                          className={`step-row${active ? " is-active" : ""}${isEditingThisStep ? " is-editing" : ""}${isJustUpdated ? " is-just-updated" : ""}`}
                           data-step={b.index}
                           data-geometry-step={b.index}
                           data-step-category={b.epistemicCategory}
@@ -3016,6 +3082,7 @@ export function AxoWorkspaceV62({
                                 onCancel={() => {
                                   setEditingStepIndex(null);
                                   setStepEditError(null);
+                                  restoreFocusToStepPencil(b.index);
                                 }}
                                 onSubmit={handleRunStepEdit}
                               />
@@ -3024,7 +3091,7 @@ export function AxoWorkspaceV62({
                                 <div className="step-title">
                                   <MathDisplay text={tieuDeBuoc} />
                                 </div>
-                                {(b.categoryLabel || moTa) && (
+                                {(b.categoryLabel || moTa || isJustUpdated) && (
                                   <div className="step-detail-sub">
                                     {b.categoryLabel && (
                                       <span className={`step-kind-badge is-${b.epistemicCategory}`}>
@@ -3032,6 +3099,11 @@ export function AxoWorkspaceV62({
                                       </span>
                                     )}
                                     {moTa && <MathDisplay text={moTa} />}
+                                    {isJustUpdated && (
+                                      <span className="step-edit-updated-pill" role="status" aria-live="polite">
+                                        Đã cập nhật
+                                      </span>
+                                    )}
                                   </div>
                                 )}
                                 {active && chungCuChiTiet.length > 0 && (

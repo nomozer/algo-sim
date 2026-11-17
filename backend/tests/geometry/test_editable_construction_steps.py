@@ -438,3 +438,261 @@ def test_local_model_adapter_benchmark_reports_not_trained():
     assert bench["case_count"] == 24
     assert bench["passed_count"] == 24, [c for c in bench["cases"] if not c["ok"]]
     assert bench["parser_baseline_accuracy"] == 1.0
+
+
+# ── AXO V2.1 Semantic Stabilization, Role Verification & Counterexamples (§2.2, §8.B) ──
+
+
+@pytest.mark.parametrize(
+    "phrasing",
+    [
+        "Dựng mặt phẳng (α) đi qua O và vuông góc với AB.",
+        "Dựng mặt phẳng (α) đi qua tâm O và vuông góc với AB.",
+        "Dựng mặt phẳng (α) qua tâm O của hình vuông ABCD và vuông góc với AB.",
+        "Dựng mặt phẳng (α) đi qua trung điểm O của AC và vuông góc với AB.",
+        "Dựng (α) đi qua O và vuông góc với AB.",
+        "Mặt phẳng (α) đi qua O và vuông góc với AB.",
+        "Dựng mặt phẳng (alpha) đi qua O và vuông góc với ab.",
+    ],
+)
+def test_v21_sample11_center_O_variants_rebuild_and_preserve_circumscribed_sphere(advanced_samples_by_id, phrasing):
+    base_scene = copy.deepcopy(advanced_samples_by_id["chop-mat-cau-ngoai-tiep"]["envelope"]["scene3d"])
+    res = execute_step_edit(
+        scene3d=base_scene,
+        step_id="mp_tt_AB",
+        step_index=7,
+        previous_instruction="Dựng mặt phẳng trung trực (α) của cạnh AB",
+        edited_instruction=phrasing,
+        target_ids=["mp_tt_AB"],
+        absorbed_ids=["M_AB"],
+    )
+    assert res["status"] == "committed"
+    assert res["mode"] == "PARTIAL_TOPOLOGICAL_REBUILD"
+    assert "M_AB" in res["dependency_summary"]["retired_ids"]
+    assert "O" in res["dependency_summary"]["reused_ids"]
+    rebuilt = res["scene3d"]
+    alpha = _find_obj(rebuilt, "mp_tt_AB")
+    assert alpha is not None
+    assert alpha["depends"] == ["O", "ab"]
+    # Exact mathematical check: (α) passes through O and is identical to perpendicular bisector of AB (point (2,2,0) & normal parallel AB -> contains M_AB (2,0,0))
+    from app.simulation.geometry import Plane3, Vec3, predicates as P
+
+    pl = Plane3(Vec3.of(*alpha["point"]), Vec3.of(*alpha["normal"]))
+    assert P.point_on_plane(Vec3.of(2, 0, 0), pl)
+    assert _find_obj(rebuilt, "I")["xyz"] == ["2", "2", "2"]
+    assert _find_obj(rebuilt, "R")["value"] == "2√3"
+
+
+def test_v21_counterexamples_reject_non_bisector_M_false_center_A_and_missing_O(advanced_samples_by_id):
+    base_scene = copy.deepcopy(advanced_samples_by_id["chop-mat-cau-ngoai-tiep"]["envelope"]["scene3d"])
+
+    # 1. Counterexample: M is midpoint of SA, NOT equidistant from A and B -> breaks downstream circumscribed sphere!
+    with pytest.raises(StepEditRefusal) as e_m:
+        execute_step_edit(
+            scene3d=copy.deepcopy(base_scene),
+            step_id="mp_tt_AB",
+            step_index=7,
+            previous_instruction="Dựng mặt phẳng trung trực (α) của cạnh AB",
+            edited_instruction="Dựng mặt phẳng (α) đi qua M và vuông góc với AB.",
+            target_ids=["mp_tt_AB"],
+            absorbed_ids=["M_AB"],
+        )
+    assert e_m.value.error_code == "DOWNSTREAM_CIRCUMSCRIBED_SPHERE_BROKEN"
+
+    # 2. Counterexample: vertex A falsely claimed to be "tâm A của hình vuông ABCD" -> refused!
+    with pytest.raises(StepEditRefusal) as e_a:
+        execute_step_edit(
+            scene3d=copy.deepcopy(base_scene),
+            step_id="mp_tt_AB",
+            step_index=7,
+            previous_instruction="Dựng mặt phẳng trung trực (α) của cạnh AB",
+            edited_instruction="Dựng mặt phẳng (α) qua tâm A của hình vuông ABCD và vuông góc với AB.",
+            target_ids=["mp_tt_AB"],
+            absorbed_ids=["M_AB"],
+        )
+    assert e_a.value.error_code == "ROLE_ASSERTION_FAILED"
+
+    # 3. Counterexample: O falsely claimed to be midpoint of AB -> refused!
+    with pytest.raises(StepEditRefusal) as e_mid:
+        execute_step_edit(
+            scene3d=copy.deepcopy(base_scene),
+            step_id="mp_tt_AB",
+            step_index=7,
+            previous_instruction="Dựng mặt phẳng trung trực (α) của cạnh AB",
+            edited_instruction="Dựng mặt phẳng (α) đi qua trung điểm O của AB và vuông góc với AB.",
+            target_ids=["mp_tt_AB"],
+            absorbed_ids=["M_AB"],
+        )
+    assert e_mid.value.error_code in {"ROLE_ASSERTION_FAILED", "SYMBOL_CONFLICT"}
+
+    # 4. Counterexample: scene where O does NOT exist before step -> missing dependency!
+    scene_without_O = copy.deepcopy(base_scene)
+    scene_without_O["objects"] = [
+        o for o in scene_without_O["objects"] if o["id"] not in ("O", "doan_OI")
+    ]
+    scene_without_O["events"] = [
+        ev for ev in scene_without_O["events"] if ev.get("object") not in ("O", "doan_OI")
+    ]
+    scene_without_O["formation"] = None
+    with pytest.raises(StepEditRefusal) as e_no_o:
+        execute_step_edit(
+            scene3d=scene_without_O,
+            step_id="mp_tt_AB",
+            step_index=7,
+            previous_instruction="Dựng mặt phẳng trung trực (α) của cạnh AB",
+            edited_instruction="Dựng mặt phẳng (α) đi qua O và vuông góc với AB.",
+            target_ids=["mp_tt_AB"],
+            absorbed_ids=["M_AB"],
+        )
+    assert e_no_o.value.error_code == "MISSING_DEPENDENCY"
+
+
+def test_v21_prior_step_ids_and_early_middle_final_chain_plus_http_rollback(advanced_samples_by_id):
+    base_scene = copy.deepcopy(advanced_samples_by_id["chop-mat-cau-ngoai-tiep"]["envelope"]["scene3d"])
+
+    # Simulate pedagogical reorder where raw event of O appears after mp_tt_AB, yet UI prior_step_ids has O
+    reordered_scene = copy.deepcopy(base_scene)
+    evs = reordered_scene["events"]
+    ev_o = next(e for e in evs if e.get("object") == "O")
+    ev_doan_oi = next(e for e in evs if e.get("object") == "doan_OI")
+    evs.remove(ev_o)
+    idx_oi = evs.index(ev_doan_oi)
+    evs.insert(idx_oi, ev_o)
+    for k, e in enumerate(evs):
+        e["step_index"] = k
+    reordered_scene["formation"] = None
+
+    # Without prior_step_ids, raw order puts O after mp_tt_AB -> CYCLE_DEPENDENCY
+    with pytest.raises(StepEditRefusal) as e_raw:
+        execute_step_edit(
+            scene3d=copy.deepcopy(reordered_scene),
+            step_id="mp_tt_AB",
+            step_index=7,
+            previous_instruction="Dựng mặt phẳng trung trực (α) của cạnh AB",
+            edited_instruction="Dựng mặt phẳng (α) đi qua O và vuông góc với AB.",
+            target_ids=["mp_tt_AB"],
+            absorbed_ids=["M_AB"],
+        )
+    assert e_raw.value.error_code == "CYCLE_DEPENDENCY"
+
+    # With prior_step_ids from UI plan -> hoists O cleanly with zero continuity errors!
+    res_hoisted = execute_step_edit(
+        scene3d=copy.deepcopy(reordered_scene),
+        step_id="mp_tt_AB",
+        step_index=7,
+        previous_instruction="Dựng mặt phẳng trung trực (α) của cạnh AB",
+        edited_instruction="Dựng mặt phẳng (α) đi qua O và vuông góc với AB.",
+        target_ids=["mp_tt_AB"],
+        absorbed_ids=["M_AB"],
+        prior_step_ids=["A", "B", "C", "D", "day_ABCD", "S", "O", "M"],
+    )
+    assert res_hoisted["status"] == "committed"
+    assert res_hoisted["validation_result"]["passed"] is True
+
+    # Early, middle, final step edits + multi-edit rollback chain over HTTP
+    client = TestClient(app)
+    sid = f"v21-chain-{uuid.uuid4().hex[:10]}"
+    hdr = {"X-Axo-Client-Session": f"v21-owner-{uuid.uuid4().hex[:8]}"}
+
+    # Step 1 (early polygon): edit day_ABCD
+    r_early = client.post(
+        "/api/simulation/steps/edit",
+        headers=hdr,
+        json={
+            "session_id": sid,
+            "problem_key": "chop-mat-cau-ngoai-tiep",
+            "step_id": "day_ABCD",
+            "step_index": 0,
+            "previous_instruction": "Dựng mặt đáy ABCD",
+            "edited_instruction": "Dựng đáy ABCD.",
+            "target_ids": ["day_ABCD"],
+            "absorbed_ids": [],
+            "scene3d": base_scene,
+        },
+    )
+    assert r_early.status_code == 200, r_early.text
+
+    # Step 8 (middle): H + perp plane
+    r_mid1 = client.post(
+        "/api/simulation/steps/edit",
+        headers=hdr,
+        json={
+            "session_id": sid,
+            "problem_key": "chop-mat-cau-ngoai-tiep",
+            "step_id": "mp_tt_AB",
+            "step_index": 7,
+            "previous_instruction": "Dựng mặt phẳng trung trực (α) của cạnh AB",
+            "edited_instruction": "Xác định trung điểm H của AB, dựng mặt phẳng (α) đi qua H và vuông góc với AB.",
+            "target_ids": ["mp_tt_AB"],
+            "absorbed_ids": ["M_AB"],
+            "prior_step_ids": ["A", "B", "C", "D", "S", "O", "M"],
+            "scene3d": r_early.json()["scene3d"],
+        },
+    )
+    assert r_mid1.status_code == 200, r_mid1.text
+
+    # Step 8 again: switch from H to O
+    r_mid2 = client.post(
+        "/api/simulation/steps/edit",
+        headers=hdr,
+        json={
+            "session_id": sid,
+            "problem_key": "chop-mat-cau-ngoai-tiep",
+            "step_id": "mp_tt_AB",
+            "step_index": 7,
+            "previous_instruction": "Xác định trung điểm H của AB, dựng mặt phẳng (α) đi qua H và vuông góc với AB.",
+            "edited_instruction": "Dựng mặt phẳng (α) đi qua O và vuông góc với AB.",
+            "target_ids": ["mp_tt_AB"],
+            "absorbed_ids": [],
+            "prior_step_ids": ["A", "B", "C", "D", "S", "O", "M"],
+            "scene3d": r_mid1.json()["scene3d"],
+        },
+    )
+    assert r_mid2.status_code == 200, r_mid2.text
+    digest_after_o = r_mid2.json()["after_scene_digest"]
+
+    # Step 8 invalid counterexample ("đi qua M") -> HTTP 422 rollback preserves O!
+    r_bad_m = client.post(
+        "/api/simulation/steps/edit",
+        headers=hdr,
+        json={
+            "session_id": sid,
+            "problem_key": "chop-mat-cau-ngoai-tiep",
+            "step_id": "mp_tt_AB",
+            "step_index": 7,
+            "previous_instruction": "Dựng mặt phẳng (α) đi qua O và vuông góc với AB.",
+            "edited_instruction": "Dựng mặt phẳng (α) đi qua M và vuông góc với AB.",
+            "target_ids": ["mp_tt_AB"],
+            "absorbed_ids": [],
+            "prior_step_ids": ["A", "B", "C", "D", "S", "O", "M"],
+            "scene3d": r_mid2.json()["scene3d"],
+        },
+    )
+    assert r_bad_m.status_code == 422
+    assert r_bad_m.json()["error_code"] == "DOWNSTREAM_CIRCUMSCRIBED_SPHERE_BROKEN"
+    assert r_bad_m.json()["preserved_scene_digest"] == digest_after_o
+
+    # Final step edit (doan_IA -> Nối đoạn thẳng IB)
+    r_late = client.post(
+        "/api/simulation/steps/edit",
+        headers=hdr,
+        json={
+            "session_id": sid,
+            "problem_key": "chop-mat-cau-ngoai-tiep",
+            "step_id": "doan_IA",
+            "step_index": 16,
+            "previous_instruction": "Nối bán kính IA của mặt cầu",
+            "edited_instruction": "Nối đoạn thẳng IB.",
+            "target_ids": ["doan_IA"],
+            "absorbed_ids": [],
+            "prior_step_ids": ["A", "B", "C", "D", "S", "O", "M", "mp_tt_AB", "I"],
+            "scene3d": r_mid2.json()["scene3d"],
+        },
+    )
+    assert r_late.status_code == 200, r_late.text
+    st = client.get(f"/api/simulation/sessions/{sid}/state", headers=hdr).json()
+    assert st["revision_count"] == 5
+    assert _find_obj(st["committed_scene"], "mp_tt_AB")["depends"] == ["O", "ab"]
+    assert st["revisions"][3]["execution_status"] == "ROLLED_BACK"
+    assert st["revisions"][4]["execution_status"] == "COMMITTED"
+

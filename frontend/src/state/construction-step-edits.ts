@@ -188,6 +188,7 @@ export async function submitConstructionStepEdit(params: {
   editedInstruction: string;
   targetIds: string[];
   absorbedIds: string[];
+  priorStepIds?: string[];
   scene3d: Scene3D;
 }): Promise<StepEditSubmitResult> {
   const { sessionId } = params;
@@ -219,6 +220,7 @@ export async function submitConstructionStepEdit(params: {
         edited_instruction: params.editedInstruction,
         target_ids: params.targetIds,
         absorbed_ids: params.absorbedIds,
+        prior_step_ids: params.priorStepIds ?? [],
         scene3d: params.scene3d,
       }),
     });

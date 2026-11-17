@@ -166,6 +166,15 @@ def _normalize_vi_math(text: str) -> str:
         .replace("∥", " // ")
         .replace("∩", " ∩ ")
     )
+    greek_aliases = (
+        ("alpha", "α"),
+        ("beta", "β"),
+        ("gamma", "γ"),
+        ("delta", "δ"),
+        ("phi", "φ"),
+    )
+    for word, sym in greek_aliases:
+        s = re.sub(rf"\(\s*{word}\s*\)", f"({sym})", s, flags=re.IGNORECASE)
     s = re.sub(r"\s+", " ", s).strip()
     return s
 
@@ -176,6 +185,99 @@ def _display_sym(sym: str) -> str:
 
 def _extract_points(token: str) -> list[str]:
     return _POINT_TOKEN_RE.findall(_normalize_vi_math(token))
+
+
+def _extract_segment_endpoints(token: str) -> list[str]:
+    """Extract 2 endpoints from `AB`, `A'B'`, or lowercase segment reference like `ab`."""
+    t = _normalize_vi_math(token).strip()
+    pts = _POINT_TOKEN_RE.findall(t)
+    if len(pts) == 2:
+        return pts
+    if re.fullmatch(r"[a-z][0-9]*'?[a-z][0-9]*'?", t):
+        up_pts = _POINT_TOKEN_RE.findall(t.upper())
+        if len(up_pts) == 2:
+            return up_pts
+    return pts
+
+
+def _parse_point_ref_phrase(raw_phrase: str) -> tuple[str, dict[str, Any] | None] | None:
+    """Parse point reference phrases such as `O`, `điểm O`, `tâm O`, `tâm O của hình vuông ABCD`,
+    `trung điểm O của AC`, or `giao điểm O của AC và BD`. Returns `(point_symbol, role_assertion)`."""
+    p = _normalize_vi_math(raw_phrase).strip(" ,.;:")
+    if not p:
+        return None
+    pt_pat = r"[A-Z][0-9]*'?"
+    # Case 1: bare point `"O"` or lowercase single letter `"o"`
+    if re.fullmatch(r"[A-Za-z][0-9]*'?", p):
+        return p.upper(), None
+    # Case 2: `"điểm O"`
+    m_pt = re.fullmatch(rf"(?:điểm|đỉnh)\s+(?P<pt>{pt_pat})", p, re.IGNORECASE)
+    if m_pt:
+        return m_pt.group("pt").upper(), None
+    # Case 3: `"tâm O"` or `"tâm O của (hình vuông|hình chữ nhật|hình bình hành|mặt đáy|đáy) (ABCD)"`
+    m_ctr_plain = re.fullmatch(rf"tâm(?:\s+(?:mặt\s+)?đáy)?\s+(?P<pt>{pt_pat})", p, re.IGNORECASE)
+    if m_ctr_plain:
+        return m_ctr_plain.group("pt").upper(), {
+            "kind": "center",
+            "pt": m_ctr_plain.group("pt").upper(),
+            "shape": None,
+            "target": None,
+        }
+    m_ctr2 = re.fullmatch(
+        rf"tâm(?:\s+(?:mặt\s+)?đáy)?\s+(?P<pt>{pt_pat})"
+        rf"\s+của\s+(?:(?P<shape>hình\s+vuông|hình\s+chữ\s+nhật|hình\s+bình\s+hành|mặt\s+đáy|đáy)\s+)?"
+        rf"\(?(?P<poly>(?:{pt_pat}){{3,}})\)?",
+        p,
+        re.IGNORECASE,
+    )
+    if m_ctr2:
+        shape_raw = (m_ctr2.group("shape") or "").strip().lower() or None
+        return m_ctr2.group("pt").upper(), {
+            "kind": "center",
+            "pt": m_ctr2.group("pt").upper(),
+            "shape": shape_raw,
+            "target": m_ctr2.group("poly").upper(),
+        }
+    # Case 4: `"trung điểm O của AC"`
+    m_mid = re.fullmatch(
+        rf"(?:trung\s+điểm|điểm\s+chính\s+giữa)\s+(?P<pt>{pt_pat})\s+(?:của\s+)?(?:cạnh\s+|đoạn\s+thẳng\s+|đoạn\s+|đường\s+chéo\s+)?(?P<seg>[A-Za-z][0-9]*'?[A-Za-z][0-9]*'?)",
+        p,
+        re.IGNORECASE,
+    )
+    if m_mid:
+        eps = _extract_segment_endpoints(m_mid.group("seg"))
+        if len(eps) == 2 and eps[0] != eps[1]:
+            return m_mid.group("pt").upper(), {
+                "kind": "midpoint",
+                "pt": m_mid.group("pt").upper(),
+                "a": eps[0],
+                "b": eps[1],
+            }
+    # Case 5: `"giao điểm O của AC và BD"`
+    m_inter = re.fullmatch(
+        rf"giao\s+điểm\s+(?P<pt>{pt_pat})\s+(?:của\s+)?(?:đường\s+thẳng\s+|đường\s+chéo\s+|hai\s+đường\s+chéo\s+|cạnh\s+)?(?P<l1>[A-Za-z][0-9]*'?[A-Za-z][0-9]*'?)\s+(?:và|với)\s+(?:đường\s+thẳng\s+|đường\s+chéo\s+|cạnh\s+)?(?P<l2>[A-Za-z][0-9]*'?[A-Za-z][0-9]*'?)",
+        p,
+        re.IGNORECASE,
+    )
+    if m_inter:
+        l1 = _extract_segment_endpoints(m_inter.group("l1"))
+        l2 = _extract_segment_endpoints(m_inter.group("l2"))
+        if len(l1) == 2 and len(l2) == 2 and l1[0] != l1[1] and l2[0] != l2[1]:
+            return m_inter.group("pt").upper(), {
+                "kind": "intersection",
+                "pt": m_inter.group("pt").upper(),
+                "line1": l1,
+                "line2": l2,
+            }
+    # Case 6: `"chân đường cao H"` / `"hình chiếu H"`
+    m_foot = re.fullmatch(
+        rf"(?:chân\s+đường\s+(?:cao|vuông\s+góc)|hình\s+chiếu(?:\s+vuông\s+góc)?)\s+(?P<pt>{pt_pat})",
+        p,
+        re.IGNORECASE,
+    )
+    if m_foot:
+        return m_foot.group("pt").upper(), None
+    return None
 
 
 def _canon_plane_name(raw: str | None) -> str | None:
@@ -424,45 +526,65 @@ def _parse_single_clause(clause: str) -> AtomicClause:
             raw_clause=clause,
         )
 
-    # 5a. Plane through H perpendicular to AB: "Dựng mặt phẳng (α) (đi) qua H (và) vuông góc với AB"
+    # 5a. Plane through point (incl. role qualifiers: "tâm O", "tâm O của hình vuông ABCD", "Dựng (α) đi qua O...") perpendicular to AB:
     m = re.fullmatch(
-        rf"(?:(?:dựng|vẽ|xác\s+định)\s+(?:mặt\s+phẳng|mp)\s*(?P<pname>{plane_pat})?|gọi\s+(?P<pname2>{plane_pat})\s+là\s+(?:mặt\s+phẳng|mp))\s+(?:đi\s+)?qua\s+(?:điểm\s+)?(?P<pt>{pt_pat})\s+(?:và\s+)?(?:vuông\s+góc\s+(?:với\s+)?|⊥\s*)(?:(?:cạnh|đoạn\s+thẳng|đoạn|đường\s+thẳng|đt)\s+)?(?P<line>{seg_pat}|[a-zΔ][0-9']*)",
+        rf"(?:(?:dựng|vẽ|xác\s+định)\s+(?:mặt\s+phẳng|mp)\s*(?P<pname>{plane_pat})?"
+        rf"|(?:dựng|vẽ|xác\s+định)\s+(?P<pname_bare>{plane_pat})"
+        rf"|(?:mặt\s+phẳng|mp)\s+(?P<pname_np>{plane_pat})"
+        rf"|gọi\s+(?P<pname2>{plane_pat})\s+là\s+(?:mặt\s+phẳng|mp))"
+        rf"\s+(?:đi\s+)?qua\s+(?P<pt_phrase>.+?)\s+(?:và|rồi|,)?\s*(?:vuông\s+góc\s+(?:với\s+)?|⊥\s*)(?:(?:cạnh|đoạn\s+thẳng|đoạn|đường\s+thẳng|đt)\s+)?(?P<line>{seg_pat}|[a-z][0-9']*'?[a-z][0-9']*'?|[a-zΔ][0-9']*)",
         c,
         re.IGNORECASE,
     )
     if m:
-        pname = _canon_plane_name(m.group("pname") or m.group("pname2"))
-        line_tok = m.group("line").strip()
-        lpts = _extract_points(line_tok)
-        if len(lpts) == 2 and lpts[0] == lpts[1]:
-            raise StepEditRefusal("INVALID_OPERAND", "parser", f"Đường thẳng '{line_tok}' cần hai điểm phân biệt.")
-        return AtomicClause(
-            op="plane_perpendicular_to_line",
-            output_symbol=pname,
-            point_inputs=(m.group("pt"), *(lpts if len(lpts) == 2 else ())),
-            line_inputs=() if len(lpts) == 2 else (line_tok,),
-            raw_clause=clause,
-        )
+        parsed_pt = _parse_point_ref_phrase(m.group("pt_phrase"))
+        if parsed_pt is not None:
+            pt_sym, role_assertion = parsed_pt
+            pname = _canon_plane_name(
+                m.group("pname") or m.group("pname_bare") or m.group("pname_np") or m.group("pname2")
+            )
+            line_tok = m.group("line").strip()
+            lpts = _extract_segment_endpoints(line_tok)
+            if len(lpts) == 2 and lpts[0] == lpts[1]:
+                raise StepEditRefusal("INVALID_OPERAND", "parser", f"Đường thẳng '{line_tok}' cần hai điểm phân biệt.")
+            params_5a: dict[str, Any] = {}
+            if role_assertion is not None:
+                params_5a["point_role_assertion"] = role_assertion
+            return AtomicClause(
+                op="plane_perpendicular_to_line",
+                output_symbol=pname,
+                point_inputs=(pt_sym, *(lpts if len(lpts) == 2 else ())),
+                line_inputs=() if len(lpts) == 2 else (line_tok,),
+                params=params_5a,
+                raw_clause=clause,
+            )
 
-    # 5b. Reverse clause order: "Dựng mặt phẳng (α) vuông góc với AB tại H" / "qua H vuông góc với AB"
+    # 5b. Reverse clause order: "Dựng mặt phẳng (α) vuông góc với AB tại H" / "qua tâm O vuông góc với AB"
     m = re.fullmatch(
-        rf"(?:dựng|vẽ|xác\s+định)\s+(?:mặt\s+phẳng|mp)\s*(?P<pname>{plane_pat})?\s*(?:vuông\s+góc\s+(?:với\s+)?|⊥\s*)(?:(?:cạnh|đoạn\s+thẳng|đoạn|đường\s+thẳng|đt)\s+)?(?P<line>{seg_pat}|[a-zΔ][0-9']*)\s+(?:tại|đi\s+qua|qua)\s+(?:điểm\s+)?(?P<pt>{pt_pat})",
+        rf"(?:(?:dựng|vẽ|xác\s+định)\s+(?:(?:mặt\s+phẳng|mp)\s*)?(?P<pname>{plane_pat})?|(?:mặt\s+phẳng|mp)\s+(?P<pname_np>{plane_pat}))\s*(?:vuông\s+góc\s+(?:với\s+)?|⊥\s*)(?:(?:cạnh|đoạn\s+thẳng|đoạn|đường\s+thẳng|đt)\s+)?(?P<line>{seg_pat}|[a-z][0-9']*'?[a-z][0-9']*'?|[a-zΔ][0-9']*)\s+(?:tại|đi\s+qua|qua)\s+(?P<pt_phrase>.+)",
         c,
         re.IGNORECASE,
     )
     if m:
-        pname = _canon_plane_name(m.group("pname"))
-        line_tok = m.group("line").strip()
-        lpts = _extract_points(line_tok)
-        if len(lpts) == 2 and lpts[0] == lpts[1]:
-            raise StepEditRefusal("INVALID_OPERAND", "parser", f"Đường thẳng '{line_tok}' cần hai điểm phân biệt.")
-        return AtomicClause(
-            op="plane_perpendicular_to_line",
-            output_symbol=pname,
-            point_inputs=(m.group("pt"), *(lpts if len(lpts) == 2 else ())),
-            line_inputs=() if len(lpts) == 2 else (line_tok,),
-            raw_clause=clause,
-        )
+        parsed_pt = _parse_point_ref_phrase(m.group("pt_phrase"))
+        if parsed_pt is not None:
+            pt_sym, role_assertion = parsed_pt
+            pname = _canon_plane_name(m.group("pname") or m.group("pname_np"))
+            line_tok = m.group("line").strip()
+            lpts = _extract_segment_endpoints(line_tok)
+            if len(lpts) == 2 and lpts[0] == lpts[1]:
+                raise StepEditRefusal("INVALID_OPERAND", "parser", f"Đường thẳng '{line_tok}' cần hai điểm phân biệt.")
+            params_5b: dict[str, Any] = {}
+            if role_assertion is not None:
+                params_5b["point_role_assertion"] = role_assertion
+            return AtomicClause(
+                op="plane_perpendicular_to_line",
+                output_symbol=pname,
+                point_inputs=(pt_sym, *(lpts if len(lpts) == 2 else ())),
+                line_inputs=() if len(lpts) == 2 else (line_tok,),
+                params=params_5b,
+                raw_clause=clause,
+            )
 
     # 6. Plane through point parallel to another plane: "Dựng mặt phẳng (α) qua M song song với (ABCD)"
     m = re.fullmatch(
@@ -1393,6 +1515,7 @@ def _symbol_index_before_step(
     *,
     allow_post_step: bool = False,
     target_step_anchor: int | None = None,
+    prior_step_ids: set[str] | None = None,
 ) -> dict[str, list[dict[str, Any]]]:
     """Map canonical math symbols (`A`, `(α)`, `AB`, `(ABCD)`, `(MNP)`) to objects eligible as inputs."""
     event_step_of = graph["event_step_of"]
@@ -1402,17 +1525,22 @@ def _symbol_index_before_step(
         if not sym:
             return
         k = _normalize_vi_math(sym).upper() if obj.get("type") == "point3" else _normalize_vi_math(sym)
-        by_sym.setdefault(k, []).append(obj)
+        lst = by_sym.setdefault(k, [])
+        if all(x.get("id") != obj.get("id") for x in lst):
+            lst.append(obj)
 
     for o in scene3d.get("objects") or ():
         oid = o.get("id")
         if not oid or oid in excluded_ids:
             continue
         if not allow_post_step and target_step_anchor is not None:
-            if o.get("origin") != "free" and event_step_of.get(oid, 0) > target_step_anchor:
+            is_prior_by_ui = prior_step_ids is not None and oid in prior_step_ids
+            if o.get("origin") != "free" and not is_prior_by_ui and event_step_of.get(oid, 0) > target_step_anchor:
                 continue
         if o.get("type") == "point3":
-            for cand in (o.get("notation"), oid if re.fullmatch(r"[A-Z][0-9]*(?:'|_prime)?", oid) else None):
+            ref_tok = o.get("reference")
+            ref_sym = ref_tok if (isinstance(ref_tok, str) and re.fullmatch(r"[A-Z][0-9]*[′']?", ref_tok.strip())) else None
+            for cand in (o.get("notation"), ref_sym, oid if re.fullmatch(r"[A-Z][0-9]*(?:'|_prime)?", oid) else None):
                 if cand:
                     _add(cand.replace("_prime", "'"), o)
         elif o.get("type") == "plane3":
@@ -1521,7 +1649,118 @@ def _resolve_plane_id(
     )
 
 
-# ── Exact Kernel verification predicates (§8) ──────────────────────────────────
+# ── Exact Kernel role & predicate verification (§2.2, §8) ────────────────────────
+def _verify_point_role_assertion(
+    assertion: dict[str, Any],
+    pt_id: str,
+    pt_val: Vec3,
+    mem: dict[str, Any],
+    by_id: dict[str, dict[str, Any]],
+    available_symbols: dict[str, list[dict[str, Any]]],
+    all_objs: list[dict[str, Any]],
+) -> None:
+    """Strictly verify role-qualified point claims (`tâm O của hình vuông ABCD`, `trung điểm O của AC`,
+    `giao điểm O của AC và BD`) against Exact Kernel coordinates without guessing by name."""
+    kind = assertion.get("kind")
+    disp = _display_sym(assertion.get("pt") or pt_id)
+
+    if kind == "midpoint":
+        a_sym, b_sym = assertion["a"], assertion["b"]
+        a_obj = next((o for o in available_symbols.get(a_sym.upper(), ()) if o.get("type") == "point3" and o["id"] in mem), None)
+        b_obj = next((o for o in available_symbols.get(b_sym.upper(), ()) if o.get("type") == "point3" and o["id"] in mem), None)
+        if a_obj is None or b_obj is None:
+            raise StepEditRefusal("MISSING_DEPENDENCY", "validation", f"Không thể kiểm chứng trung điểm {disp} của {a_sym}{b_sym} vì thiếu đầu mút.")
+        if not P.same_point(pt_val, K.midpoint(mem[a_obj["id"]], mem[b_obj["id"]])):
+            raise StepEditRefusal(
+                "ROLE_ASSERTION_FAILED",
+                "validation",
+                f"Điểm {disp} không phải là trung điểm của đoạn {a_sym}{b_sym}.",
+            )
+        return
+
+    if kind == "intersection":
+        l1_syms = assertion["line1"]
+        l2_syms = assertion["line2"]
+        pts: list[Vec3] = []
+        for psym in (*l1_syms, *l2_syms):
+            po = next((o for o in available_symbols.get(psym.upper(), ()) if o.get("type") == "point3" and o["id"] in mem), None)
+            if po is None:
+                raise StepEditRefusal("MISSING_DEPENDENCY", "validation", f"Thiếu điểm '{psym}' để kiểm chứng giao điểm {disp}.")
+            pts.append(mem[po["id"]])
+        ln1 = Line3.through(pts[0], pts[1])
+        ln2 = Line3.through(pts[2], pts[3])
+        inter = K.intersect_line_line(ln1, ln2)
+        if not P.same_point(pt_val, inter):
+            raise StepEditRefusal(
+                "ROLE_ASSERTION_FAILED",
+                "validation",
+                f"Điểm {disp} không trùng với giao điểm của {''.join(l1_syms)} và {''.join(l2_syms)}.",
+            )
+        return
+
+    if kind == "center":
+        target_poly = assertion.get("target")
+        shape = assertion.get("shape")
+        verts: list[Vec3] = []
+        if target_poly:
+            ps = _extract_points(target_poly)
+            if len(ps) != 4:
+                raise StepEditRefusal(
+                    "ROLE_ASSERTION_FAILED",
+                    "validation",
+                    f"Chỉ hỗ trợ kiểm chứng tâm hình bình hành/chữ nhật/hình vuông 4 đỉnh (nhận được '{target_poly}').",
+                )
+            for psym in ps:
+                po = next((o for o in available_symbols.get(psym.upper(), ()) if o.get("type") == "point3" and o["id"] in mem), None)
+                if po is None:
+                    raise StepEditRefusal("MISSING_DEPENDENCY", "validation", f"Thiếu đỉnh {psym} của '{target_poly}' để kiểm chứng tâm {disp}.")
+                verts.append(mem[po["id"]])
+        else:
+            poly_obj = next(
+                (
+                    o
+                    for o in all_objs
+                    if o.get("type") == "polygon3"
+                    and len(o.get("depends") or o.get("vertices") or ()) == 4
+                    and (o.get("surface_role") == "BASE_REGION" or "day" in str(o.get("id", "")).lower())
+                ),
+                None,
+            )
+            if poly_obj is None:
+                poly_obj = next(
+                    (o for o in all_objs if o.get("type") == "polygon3" and len(o.get("depends") or o.get("vertices") or ()) == 4),
+                    None,
+                )
+            if poly_obj is None:
+                raise StepEditRefusal(
+                    "ROLE_ASSERTION_FAILED",
+                    "validation",
+                    f"Không tìm thấy tứ giác đáy hợp lệ để kiểm chứng '{disp}' là tâm.",
+                )
+            deps4 = list(poly_obj.get("depends") or ())
+            if len(deps4) == 4 and all(d in mem for d in deps4):
+                verts = [mem[d] for d in deps4]
+            elif poly_obj.get("vertices") and len(poly_obj["vertices"]) == 4:
+                verts = [Vec3.of(*v) for v in poly_obj["vertices"]]
+        if len(verts) != 4:
+            raise StepEditRefusal("ROLE_ASSERTION_FAILED", "validation", f"Không xác định được 4 đỉnh để kiểm chứng tâm {disp}.")
+        mid02 = K.midpoint(verts[0], verts[2])
+        mid13 = K.midpoint(verts[1], verts[3])
+        if not (P.same_point(mid02, mid13) and P.same_point(pt_val, mid02)):
+            raise StepEditRefusal(
+                "ROLE_ASSERTION_FAILED",
+                "validation",
+                f"Điểm {disp} không phải tâm (giao điểm hai đường chéo) của tứ giác {target_poly or 'đáy'}.",
+            )
+        if shape in ("hình vuông", "hình chữ nhật"):
+            if _m.norm_sq(verts[2] - verts[0]) != _m.norm_sq(verts[3] - verts[1]):
+                raise StepEditRefusal("ROLE_ASSERTION_FAILED", "validation", f"Tứ giác {target_poly or 'đáy'} không thỏa mãn tính chất {shape}.")
+        if shape == "hình vuông":
+            if _m.norm_sq(verts[1] - verts[0]) != _m.norm_sq(verts[2] - verts[1]):
+                raise StepEditRefusal("ROLE_ASSERTION_FAILED", "validation", f"Tứ giác {target_poly or 'đáy'} không phải hình vuông.")
+        return
+
+
 def verify_rebuilt_geometry(
     scene3d: dict[str, Any],
     *,
@@ -1661,6 +1900,48 @@ def verify_rebuilt_geometry(
                     raise StepEditRefusal("DEGENERATE_CURVED_SOLID", "validation", "Bán kính khối cong không dương.")
                 checks_passed.append(f"curved_solid:{oid}")
 
+        # 2b. Verify every circumscribed sphere invariant still holds across ALL Polyhedron vertices
+        before_by_id = {o["id"]: o for o in (before_scene.get("objects") or ()) if o.get("id")}
+        before_mem: dict[str, Any] = {}
+        for bo in before_scene.get("objects") or ():
+            if bo.get("id") and bo.get("type") not in ("section", "quantity"):
+                bval = _hydrate_object_value(bo, before_mem)
+                if bval is not None:
+                    before_mem[bo["id"]] = bval
+        for bo in before_scene.get("objects") or ():
+            boid = bo.get("id")
+            if not boid or bo.get("type") != "curved_solid" or bo.get("curved_kind") != "ball":
+                continue
+            orig_ball = before_mem.get(boid)
+            rebuilt_ball = mem.get(boid)
+            if not isinstance(orig_ball, CurvedSolid) or not isinstance(rebuilt_ball, CurvedSolid):
+                continue
+            # Identify circumscribed polyhedra in the original verified scene
+            circumscribed_solids: list[str] = []
+            for so in before_scene.get("objects") or ():
+                sid = so.get("id")
+                sval = before_mem.get(sid)
+                if sid and isinstance(sval, Polyhedron) and sval.vertices:
+                    if all(_m.norm_sq(v - orig_ball.anchor) == orig_ball.radius_sq for v in sval.vertices):
+                        circumscribed_solids.append(sid)
+            if not circumscribed_solids and ("ngoai_tiep" in boid.lower() or "ngoại tiếp" in str(bo.get("label") or "").lower()):
+                circumscribed_solids = [
+                    so["id"]
+                    for so in objs
+                    if so.get("id") and isinstance(mem.get(so["id"]), Polyhedron) and mem[so["id"]].vertices
+                ]
+            for sid in circumscribed_solids:
+                rsol = mem.get(sid)
+                if isinstance(rsol, Polyhedron):
+                    for v in rsol.vertices:
+                        if _m.norm_sq(v - rebuilt_ball.anchor) != rebuilt_ball.radius_sq:
+                            raise StepEditRefusal(
+                                "DOWNSTREAM_CIRCUMSCRIBED_SPHERE_BROKEN",
+                                "validation",
+                                "Phép dựng mới làm tâm ở bước sau không còn cách đều mọi đỉnh của khối đa diện, nên mặt cầu ngoại tiếp không còn hợp lệ.",
+                            )
+                    checks_passed.append(f"circumscribed_sphere_equidistant:{boid}")
+
         # 3. Special mandatory bisector check when Step 8 defines perpendicular bisector via midpoint + perp plane
         if expected_perpendicular_bisector_for is not None:
             mid_id, a_id, b_id, pl_id = expected_perpendicular_bisector_for
@@ -1730,7 +2011,7 @@ def _semantic_equivalence_check(
             mid_dep = next((o for o in absorbed_objs if (o.get("producer") or "") == "construct_point.midpoint" and o.get("notation") is None), None)
             if mid_dep and set(mid_dep.get("depends") or ()) == set(c.point_inputs) and (c.output_symbol in (None, t_not)):
                 return True, {"mode": "existing_bisector_match"}
-        if c.op == "plane_perpendicular_to_line" and t_prod == "plane_perpendicular_to_line" and (c.output_symbol in (None, t_not)):
+        if c.op == "plane_perpendicular_to_line" and t_prod == "plane_perpendicular_to_line" and (c.output_symbol in (None, t_not)) and not c.params.get("point_role_assertion"):
             objs_by_id = {o["id"]: o for o in (scene3d.get("objects") or ()) if o.get("id")}
             tgt_deps = list(tgt.get("depends") or ())
             pt_dep = next((objs_by_id[d] for d in tgt_deps if objs_by_id.get(d, {}).get("type") == "point3"), None)
@@ -1742,11 +2023,11 @@ def _semantic_equivalence_check(
                         o
                         for o in objs_by_id.values()
                         if o.get("type") == "point3"
-                        and _normalize_vi_math(o.get("notation") or o["id"]).replace("_prime", "'").upper() == pt_sym
+                        and _normalize_vi_math(o.get("notation") or o.get("reference") or o["id"]).replace("_prime", "'").upper() == pt_sym
                     ),
                     None,
                 )
-                if cand_pt and cand_pt.get("xyz") and pt_dep.get("xyz"):
+                if cand_pt and cand_pt.get("id") == pt_dep.get("id") and cand_pt.get("xyz") and pt_dep.get("xyz"):
                     v_cand = Vec3.of(*cand_pt["xyz"])
                     v_tgt = Vec3.of(*pt_dep["xyz"])
                     if P.same_point(v_cand, v_tgt):
@@ -1775,6 +2056,7 @@ def execute_step_edit(
     target_ids: list[str] | None = None,
     absorbed_ids: list[str] | None = None,
     step_overrides: dict[str, str] | None = None,
+    prior_step_ids: list[str] | None = None,
 ) -> dict[str, Any]:
     """Parse, plan, topologically rebuild, and verify an edited construction step atomically."""
     t_start = time.perf_counter()
@@ -1845,6 +2127,7 @@ def execute_step_edit(
 
     event_step_of = graph["event_step_of"]
     primary_ev_step = max((event_step_of.get(oid, 0) for oid in (target_set | set(exclusive_helpers))), default=0)
+    prior_set = (set(prior_step_ids) - target_set - set(exclusive_helpers) - downstream_ids) if prior_step_ids else set()
     post_step_ids = {
         oid
         for oid, o in by_id.items()
@@ -1852,6 +2135,7 @@ def execute_step_edit(
         and oid not in target_set
         and oid not in exclusive_helpers
         and oid not in downstream_ids
+        and oid not in prior_set
         and event_step_of.get(oid, 0) > primary_ev_step
     }
 
@@ -1884,8 +2168,16 @@ def execute_step_edit(
     )
     if is_equiv:
         t_val = time.perf_counter()
+        equiv_scene = copy.deepcopy(before_snapshot)
+        if not (equiv_scene.get("formation") or {}).get("steps"):
+            equiv_scene["formation"] = _build_formation(
+                equiv_scene.get("objects") or [],
+                equiv_scene.get("events") or [],
+                equiv_scene.get("free_objects") or [],
+            )
+        enrich_construction_continuity(equiv_scene)
         val_res = verify_rebuilt_geometry(
-            before_snapshot,
+            equiv_scene,
             before_scene=before_snapshot,
             edited_intent=parsed_new,
             created_or_updated_ids=resolved_target_ids,
@@ -1902,7 +2194,7 @@ def execute_step_edit(
             "status": "committed",
             "mode": "NO_OP_EQUIVALENT",
             "equivalence_info": equiv_info,
-            "scene3d": before_snapshot,
+            "scene3d": equiv_scene,
             "step_overrides": next_overrides,
             "normalized_intent": parsed_new.to_dict(),
             "registry_operations": list(parsed_new.registry_operations),
@@ -1931,6 +2223,7 @@ def execute_step_edit(
         excluded_ids=target_set | set(exclusive_helpers) | downstream_ids,
         allow_post_step=False,
         target_step_anchor=primary_ev_step,
+        prior_step_ids=prior_set if prior_set else None,
     )
 
     # Seed memory with UNAFFECTED objects ONLY (reusing verified state without recomputing!)
@@ -1976,7 +2269,7 @@ def execute_step_edit(
                     norm = _normalize_vi_math(sym).upper()
                     if norm in local_objects_by_symbol and local_objects_by_symbol[norm].get("type") == "point3":
                         return local_objects_by_symbol[norm]["id"]
-                    return _resolve_point_id(sym, available_symbols, mem, by_id, downstream_ids, post_step_ids, act)
+                    return _resolve_point_id(sym, available_symbols, {}, by_id, downstream_ids, post_step_ids, act)
 
                 def _reuse_or_assign_point(pt_sym: str, coords: Vec3, producer: str, deps: list[str], label_text: str, extra_source: dict[str, Any] | None = None) -> dict[str, Any]:
                     norm = _normalize_vi_math(pt_sym).upper()
@@ -2265,7 +2558,17 @@ def execute_step_edit(
                             ln_ref_id = ln_cand
                             expected_bisector = None
 
-                    if reused_ids and pt_id not in reused_ids:
+                    if clause.params.get("point_role_assertion"):
+                        _verify_point_role_assertion(
+                            clause.params["point_role_assertion"],
+                            pt_id,
+                            mem[pt_id],
+                            mem,
+                            by_id,
+                            available_symbols,
+                            all_objs,
+                        )
+                    if pt_id not in reused_ids and pt_id not in {o["id"] for o in newly_created_objs}:
                         reused_ids.append(pt_id)
                     pl_val = K.plane_through_point_perpendicular_to(mem[pt_id], mem[ln_ref_id])
                     pname = clause.output_symbol or primary_obj.get("notation") or "(α)"
@@ -2643,6 +2946,39 @@ def execute_step_edit(
                         _sync_scene_object_from_value(primary_obj, cs_val, by_id)
                         updated_ids.append(primary_id)
 
+                elif clause.op == "construct_polygon":
+                    if primary_obj.get("type") != "polygon3":
+                        raise StepEditRefusal("STEP_TYPE_MISMATCH", "planner", "Bước đang sửa không phải bước dựng đa giác.")
+                    pt_ids = [_find_pt(s, "dựng đa giác") for s in clause.point_inputs]
+                    if len(pt_ids) < 3:
+                        raise StepEditRefusal("INSUFFICIENT_POINTS", "planner", "Đa giác cần ít nhất 3 đỉnh.")
+                    pts_vals = tuple(mem[pid] for pid in pt_ids)
+                    for idx_k in range(3, len(pts_vals)):
+                        if not P.coplanar(pts_vals[0], pts_vals[1], pts_vals[2], pts_vals[idx_k]):
+                            raise GeometryError("NON_COPLANAR_POINTS", f"Đỉnh '{pt_ids[idx_k]}' không đồng phẳng.")
+                    poly_label = clause.output_symbol or f"Đáy {''.join(pt_ids)}"
+                    primary_obj.update({
+                        "label": poly_label,
+                        "notation": "".join(pt_ids),
+                        "depends": list(pt_ids),
+                        "vertex_ids": list(pt_ids),
+                        "vertices": [_exact_xyz_list(v) for v in pts_vals],
+                    })
+                    mem[primary_id] = pts_vals
+                    updated_ids.append(primary_id)
+
+                elif clause.op == "construct_solid":
+                    if primary_obj.get("type") != "solid":
+                        raise StepEditRefusal("STEP_TYPE_MISMATCH", "planner", "Bước đang sửa không phải bước dựng khối đa diện.")
+                    pt_ids = [_find_pt(s, "dựng khối đa diện") for s in clause.point_inputs]
+                    existing_vids = list(primary_obj.get("vertex_ids") or primary_obj.get("depends") or ())
+                    if set(pt_ids) != set(existing_vids):
+                        raise StepEditRefusal("STEP_TYPE_MISMATCH", "planner", "Danh sách đỉnh khối đa diện không khớp với cấu trúc mặt của khối.")
+                    sol_val = _hydrate_object_value(primary_obj, mem)
+                    if sol_val is not None:
+                        mem[primary_id] = sol_val
+                    updated_ids.append(primary_id)
+
                 else:
                     raise StepEditRefusal(
                         "STEP_TYPE_MISMATCH",
@@ -2701,7 +3037,8 @@ def execute_step_edit(
     _attach_topology(rebuilt_scene["objects"])
     _attach_formulas(rebuilt_scene["objects"])
 
-    # Rebuild timeline events preserving step order while splicing new inline events & section edge updates
+    # Rebuild timeline events preserving step order while splicing new inline events,
+    # hoisting any existing dependencies needed earlier at `primary_id`, & updating sections.
     orig_events = copy.deepcopy(before_snapshot.get("events") or [])
     new_events: list[dict[str, Any]] = []
     retired_set = set(retired_helper_ids)
@@ -2709,10 +3046,27 @@ def execute_step_edit(
     rebuilt_sections = {oid for oid in [*updated_ids, *recomputed_ids] if by_id.get(oid, {}).get("type") == "section"}
     inserted_inline = False
     emitted_section_events: set[str] = set()
+    emitted_obj_events: set[str] = set()
+    primary_deps_closure: set[str] = set()
+    stack_pd = list(primary_obj.get("depends") or ())
+    while stack_pd:
+        d_cur = stack_pd.pop()
+        if d_cur in primary_deps_closure or d_cur in retired_set:
+            continue
+        primary_deps_closure.add(d_cur)
+        if d_cur in by_id:
+            stack_pd.extend(by_id[d_cur].get("depends") or ())
+    hoist_ev_by_obj = {
+        str(ev.get("object")): copy.deepcopy(ev)
+        for ev in orig_events
+        if ev.get("action") == "CREATE" and ev.get("object") in primary_deps_closure
+    }
 
     for ev in orig_events:
         ev_obj_id = ev.get("object")
         if ev_obj_id in retired_set:
+            continue
+        if ev.get("action") == "CREATE" and ev_obj_id in emitted_obj_events:
             continue
         if ev_obj_id in rebuilt_sections:
             if ev_obj_id not in emitted_section_events:
@@ -2745,6 +3099,11 @@ def execute_step_edit(
 
         if ev_obj_id == primary_id and not inserted_inline:
             inserted_inline = True
+            for dep_oid in graph["topo_order"]:
+                if dep_oid in primary_deps_closure and dep_oid not in emitted_obj_events and dep_oid in hoist_ev_by_obj:
+                    h_ev = hoist_ev_by_obj[dep_oid]
+                    new_events.append(h_ev)
+                    emitted_obj_events.add(dep_oid)
             for new_o in newly_created_objs:
                 new_events.append({
                     "step_index": len(new_events),
@@ -2757,7 +3116,10 @@ def execute_step_edit(
                     "details": {},
                     "learner_text": new_o.get("label") or f"Dựng {new_o.get('notation') or new_o['id']}.",
                 })
+                emitted_obj_events.add(new_o["id"])
         ev_copy = copy.deepcopy(ev)
+        if ev.get("action") == "CREATE" and ev_obj_id:
+            emitted_obj_events.add(str(ev_obj_id))
         if ev_obj_id in updated_ids or ev_obj_id in recomputed_ids:
             cur_o = next((o for o in surviving_objs if o["id"] == ev_obj_id), None)
             if cur_o is not None:

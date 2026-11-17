@@ -82,6 +82,7 @@ class StepEditRequest(BaseModel):
     edited_instruction: str
     target_ids: list[str] = Field(default_factory=list)
     absorbed_ids: list[str] = Field(default_factory=list)
+    prior_step_ids: list[str] = Field(default_factory=list)
     scene3d: dict[str, Any]
 
 
@@ -164,6 +165,7 @@ def edit_construction_step(
             target_ids=req.target_ids,
             absorbed_ids=req.absorbed_ids,
             step_overrides=existing_overrides,
+            prior_step_ids=req.prior_step_ids,
         )
     except (StepEditRefusal, GeometryError) as exc:
         if isinstance(exc, StepEditRefusal):

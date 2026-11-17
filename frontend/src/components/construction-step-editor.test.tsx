@@ -193,6 +193,7 @@ describe("AXO Editable Construction Steps & Reload Persistence", () => {
       editedInstruction: "Xác định trung điểm H của AB, dựng mặt phẳng (α) đi qua H và vuông góc với AB.",
       targetIds: ["mp_tt_AB"],
       absorbedIds: ["M_AB"],
+      priorStepIds: ["A", "B", "C", "D", "S", "O", "M"],
       scene3d: baseScene,
     });
     // Concurrent duplicate submission must be ignored cleanly without issuing a 2nd fetch!
@@ -209,6 +210,8 @@ describe("AXO Editable Construction Steps & Reload Persistence", () => {
     });
     expect(dup.status).toBe("duplicate_ignored");
     expect(fetchMock).toHaveBeenCalledTimes(1);
+    const firstReqBody = JSON.parse(String(fetchMock.mock.calls[0][1]?.body ?? "{}"));
+    expect(firstReqBody.prior_step_ids).toEqual(["A", "B", "C", "D", "S", "O", "M"]);
 
     releaseFirst();
     const okRes = await p1;

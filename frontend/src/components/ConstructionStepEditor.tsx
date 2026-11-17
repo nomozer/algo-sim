@@ -83,6 +83,8 @@ export const InlineConstructionStepEditor: React.FC<InlineConstructionStepEditor
     const el = textareaRef.current;
     if (!el) return;
     el.focus();
+    el.style.height = "auto";
+    el.style.height = `${Math.min(220, Math.max(68, el.scrollHeight))}px`;
     const len = el.value.length;
     try {
       el.setSelectionRange(len, len);
@@ -90,6 +92,13 @@ export const InlineConstructionStepEditor: React.FC<InlineConstructionStepEditor
       // Ignore selection range failures in non-browser DOM shims
     }
   }, [stepIndex]);
+
+  useEffect(() => {
+    const el = textareaRef.current;
+    if (!el) return;
+    el.style.height = "auto";
+    el.style.height = `${Math.min(220, Math.max(68, el.scrollHeight))}px`;
+  }, [draft]);
 
   const trimmedEmpty = draft.trim().length === 0;
 
