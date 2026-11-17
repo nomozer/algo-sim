@@ -2045,6 +2045,23 @@ def _semantic_equivalence_check(
     return False, None
 
 
+def _apply_notation_renames(text: str, renames: dict[str, str]) -> str:
+    """Propagate renamed mathematical notations (e.g., `(α)` -> `(P)`) cleanly across downstream step labels."""
+    out = text
+    for old_sym, new_sym in renames.items():
+        if not old_sym or old_sym == new_sym:
+            continue
+        if old_sym.startswith("(") and old_sym.endswith(")"):
+            out = out.replace(old_sym, new_sym)
+        else:
+            out = re.sub(
+                rf"(?<![A-Za-z0-9_]){re.escape(old_sym)}(?![A-Za-z0-9_])",
+                new_sym,
+                out,
+            )
+    return out
+
+
 # ── Main Entry Point: Execute Step Edit Atomically ─────────────────────────────
 def execute_step_edit(
     *,
@@ -3032,6 +3049,27 @@ def execute_step_edit(
         if not any(x["id"] == new_o["id"] for x in surviving_objs):
             surviving_objs.insert(insert_pos + offset, new_o)
 
+    before_objs_map = {o["id"]: o for o in (before_snapshot.get("objects") or ())}
+    notation_renames: dict[str, str] = {}
+    for oid in updated_ids:
+        b_obj = before_objs_map.get(oid)
+        a_obj = by_id.get(oid)
+        if not b_obj or not a_obj:
+            continue
+        old_not = b_obj.get("notation")
+        new_not = a_obj.get("notation")
+        if isinstance(old_not, str) and isinstance(new_not, str) and old_not.strip() and new_not.strip() and old_not != new_not:
+            notation_renames[old_not] = new_not
+    if notation_renames:
+        for did in recomputed_ids:
+            d_obj = by_id.get(did)
+            if not d_obj:
+                continue
+            for field_name in ("label", "display_label", "reference"):
+                val_str = d_obj.get(field_name)
+                if isinstance(val_str, str):
+                    d_obj[field_name] = _apply_notation_renames(val_str, notation_renames)
+
     rebuilt_scene = copy.deepcopy(before_snapshot)
     rebuilt_scene["objects"] = surviving_objs
     _attach_topology(rebuilt_scene["objects"])
@@ -3124,12 +3162,16 @@ def execute_step_edit(
             cur_o = next((o for o in surviving_objs if o["id"] == ev_obj_id), None)
             if cur_o is not None:
                 ev_copy["depends"] = list(cur_o.get("depends") or ())
+                if notation_renames and ev_obj_id in recomputed_ids:
+                    for ev_field in ("learner_text", "display_label", "explanation", "title"):
+                        if isinstance(ev_copy.get(ev_field), str):
+                            ev_copy[ev_field] = _apply_notation_renames(ev_copy[ev_field], notation_renames)
                 if cur_o.get("type") == "quantity" and cur_o.get("value") is not None:
                     ev_copy["learner_text"] = f"{cur_o.get('label') or cur_o['id']} bằng {cur_o['value']}."
                 elif ev_obj_id == primary_id and parsed_new.normalized_text:
                     ev_copy["learner_text"] = parsed_new.normalized_text
-                else:
-                    ev_copy["learner_text"] = cur_o.get("label") or ev_copy.get("learner_text", "")
+                elif not ev_copy.get("learner_text"):
+                    ev_copy["learner_text"] = cur_o.get("label") or ""
         new_events.append(ev_copy)
 
     for idx_e, ev in enumerate(new_events):
@@ -3168,7 +3210,6 @@ def execute_step_edit(
     timings["total_ms"] = round((time.perf_counter() - t_start) * 1000.0, 3)
 
     after_digest = _scene_digest(rebuilt_scene)
-    before_objs_map = {o["id"]: o for o in (before_snapshot.get("objects") or ())}
     changed_objects: dict[str, dict[str, Any]] = {}
     for oid in all_changed:
         after_o = next((o for o in surviving_objs if o["id"] == oid), None)
@@ -3189,6 +3230,10 @@ def execute_step_edit(
         }
 
     next_overrides = dict(existing_overrides)
+    if notation_renames:
+        for did in recomputed_ids:
+            if did in next_overrides and isinstance(next_overrides[did], str):
+                next_overrides[did] = _apply_notation_renames(next_overrides[did], notation_renames)
     next_overrides[primary_id] = parsed_new.normalized_text
 
     return {

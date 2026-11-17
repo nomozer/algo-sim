@@ -320,20 +320,10 @@ export function AxoWorkspaceV62({
   const [editingStepIndex, setEditingStepIndex] = useState<number | null>(null);
   const [stepEditRunning, setStepEditRunning] = useState(false);
   const [stepEditError, setStepEditError] = useState<string | null>(null);
-  const [justUpdatedStepTargetId, setJustUpdatedStepTargetId] = useState<string | null>(null);
-  const justUpdatedTimerRef = useRef<number | null>(null);
   const editRequestSeqRef = useRef(0);
   const activeEditSessionIdRef = useRef(activeEditSessionId);
   activeEditSessionIdRef.current = activeEditSessionId;
   const pendingFocusTargetIdRef = useRef<string | null>(null);
-
-  useEffect(() => {
-    return () => {
-      if (justUpdatedTimerRef.current !== null && typeof window !== "undefined") {
-        window.clearTimeout(justUpdatedTimerRef.current);
-      }
-    };
-  }, []);
 
   useEffect(() => {
     let cancelled = false;
@@ -342,7 +332,6 @@ export function AxoWorkspaceV62({
     setEditingStepIndex(null);
     setStepEditRunning(false);
     setStepEditError(null);
-    setJustUpdatedStepTargetId(null);
     const cached = loadCachedStepEditState(activeEditSessionId);
     if (cached?.committedScene) {
       setEditedSceneState({
@@ -2978,10 +2967,7 @@ export function AxoWorkspaceV62({
                           return Boolean(depObj && depObj.type === "point3" && !depObj.notation?.trim());
                         });
                       })();
-                      const isJustUpdated =
-                        !isEditingThisStep
-                        && justUpdatedStepTargetId !== null
-                        && (b.targetIds.includes(justUpdatedStepTargetId) || primaryTargetId === justUpdatedStepTargetId);
+
                       const priorStepIdsForEdit = Array.from(
                         new Set(
                           dsBuoc
@@ -3029,16 +3015,6 @@ export function AxoWorkspaceV62({
                         if (res.status === "committed") {
                           const focusTargetId = res.primary_target_id || primaryTargetId;
                           pendingFocusTargetIdRef.current = focusTargetId;
-                          setJustUpdatedStepTargetId(focusTargetId);
-                          if (typeof window !== "undefined") {
-                            if (justUpdatedTimerRef.current !== null) {
-                              window.clearTimeout(justUpdatedTimerRef.current);
-                            }
-                            justUpdatedTimerRef.current = window.setTimeout(() => {
-                              setJustUpdatedStepTargetId(null);
-                              justUpdatedTimerRef.current = null;
-                            }, 2400);
-                          }
                           setEditedSceneState({
                             sessionId: sessionIdAtStart,
                             scene: res.scene3d,
@@ -3055,7 +3031,7 @@ export function AxoWorkspaceV62({
                       return (
                         <li
                           key={b.index}
-                          className={`step-row${active ? " is-active" : ""}${isEditingThisStep ? " is-editing" : ""}${isJustUpdated ? " is-just-updated" : ""}`}
+                          className={`step-row${active ? " is-active" : ""}${isEditingThisStep ? " is-editing" : ""}`}
                           data-step={b.index}
                           data-geometry-step={b.index}
                           data-step-category={b.epistemicCategory}
@@ -3091,7 +3067,7 @@ export function AxoWorkspaceV62({
                                 <div className="step-title">
                                   <MathDisplay text={tieuDeBuoc} />
                                 </div>
-                                {(b.categoryLabel || moTa || isJustUpdated) && (
+                                {(b.categoryLabel || moTa) && (
                                   <div className="step-detail-sub">
                                     {b.categoryLabel && (
                                       <span className={`step-kind-badge is-${b.epistemicCategory}`}>
@@ -3099,11 +3075,6 @@ export function AxoWorkspaceV62({
                                       </span>
                                     )}
                                     {moTa && <MathDisplay text={moTa} />}
-                                    {isJustUpdated && (
-                                      <span className="step-edit-updated-pill" role="status" aria-live="polite">
-                                        Đã cập nhật
-                                      </span>
-                                    )}
                                   </div>
                                 )}
                                 {active && chungCuChiTiet.length > 0 && (

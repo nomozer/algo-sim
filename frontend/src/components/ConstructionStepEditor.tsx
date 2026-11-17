@@ -84,7 +84,7 @@ export const InlineConstructionStepEditor: React.FC<InlineConstructionStepEditor
     if (!el) return;
     el.focus();
     el.style.height = "auto";
-    el.style.height = `${Math.min(220, Math.max(68, el.scrollHeight))}px`;
+    el.style.height = `${Math.min(112, Math.max(32, el.scrollHeight))}px`;
     const len = el.value.length;
     try {
       el.setSelectionRange(len, len);
@@ -97,7 +97,7 @@ export const InlineConstructionStepEditor: React.FC<InlineConstructionStepEditor
     const el = textareaRef.current;
     if (!el) return;
     el.style.height = "auto";
-    el.style.height = `${Math.min(220, Math.max(68, el.scrollHeight))}px`;
+    el.style.height = `${Math.min(112, Math.max(32, el.scrollHeight))}px`;
   }, [draft]);
 
   const trimmedEmpty = draft.trim().length === 0;
@@ -118,7 +118,7 @@ export const InlineConstructionStepEditor: React.FC<InlineConstructionStepEditor
       <textarea
         ref={textareaRef}
         className="step-edit-textarea"
-        rows={3}
+        rows={1}
         value={draft}
         aria-label={`Nội dung bước dựng ${stepIndex + 1}`}
         disabled={running}
@@ -163,7 +163,14 @@ export const InlineConstructionStepEditor: React.FC<InlineConstructionStepEditor
           className="step-edit-btn step-edit-btn--run"
           disabled={running || trimmedEmpty}
         >
-          {running ? "Đang chạy..." : "Chạy"}
+          {running ? (
+            <>
+              <span className="step-edit-spinner" aria-hidden="true" />
+              <span>Đang chạy...</span>
+            </>
+          ) : (
+            "Chạy"
+          )}
         </button>
       </div>
       {running ? (

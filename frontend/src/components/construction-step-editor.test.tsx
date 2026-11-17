@@ -72,6 +72,9 @@ describe("AXO Editable Construction Steps & Reload Persistence", () => {
     expect(html).toContain('id="dock-steps-ul"');
     expect(html).toContain("step-edit-pencil-btn");
     expect(html).not.toContain("step-edit-textarea");
+    expect(html).not.toContain("step-edit-updated-pill");
+    expect(html).not.toContain("is-just-updated");
+    expect(html).not.toContain("Đã cập nhật");
     expect(html).not.toContain(">Lưu<");
     expect(html).not.toContain(">Huấn luyện<");
 
@@ -91,6 +94,7 @@ describe("AXO Editable Construction Steps & Reload Persistence", () => {
       />,
     );
     expect(editorHtml).toContain("<textarea");
+    expect(editorHtml).toContain('rows="1"');
     expect(editorHtml).toContain("Hủy");
     expect(editorHtml).toContain("Chạy");
     expect(editorHtml).not.toContain(">Lưu<");
@@ -107,6 +111,7 @@ describe("AXO Editable Construction Steps & Reload Persistence", () => {
       />,
     );
     expect(runningHtml).toContain("Đang chạy...");
+    expect(runningHtml).toContain("step-edit-spinner");
     expect(runningHtml).toContain('aria-live="polite"');
     expect(runningHtml).toContain("disabled");
 

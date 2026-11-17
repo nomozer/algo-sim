@@ -696,3 +696,31 @@ def test_v21_prior_step_ids_and_early_middle_final_chain_plus_http_rollback(adva
     assert st["revisions"][3]["execution_status"] == "ROLLED_BACK"
     assert st["revisions"][4]["execution_status"] == "COMMITTED"
 
+
+def test_v22_plane_notation_rename_propagates_to_downstream_steps(advanced_samples_by_id: dict[str, dict]) -> None:
+    """V2.2 C.9 / #6: Renaming (α) -> (P) at Step 8 must also update downstream step labels/events."""
+    base_scene = copy.deepcopy(advanced_samples_by_id["chop-mat-cau-ngoai-tiep"]["envelope"]["scene3d"])
+    res = execute_step_edit(
+        scene3d=base_scene,
+        step_id="mp_tt_AB",
+        step_index=7,
+        previous_instruction="Dựng mặt phẳng trung trực (α) của cạnh AB",
+        edited_instruction="Dựng mặt phẳng (P) đi qua O và vuông góc với AB.",
+        target_ids=["mp_tt_AB"],
+        absorbed_ids=["M_AB"],
+        prior_step_ids=["A", "B", "C", "D", "S", "O", "M"],
+    )
+    assert res["status"] == "committed"
+    assert res["mode"] == "PARTIAL_TOPOLOGICAL_REBUILD"
+    truc = _find_obj(res["scene3d"], "truc_day")
+    assert "(P)" in (truc.get("label") or "")
+    assert "(P)" in (truc.get("display_label") or "")
+    assert "(α)" not in (truc.get("label") or "")
+    ev_truc = next(
+        ev for ev in res["scene3d"]["events"]
+        if ev.get("object") == "truc_day" and ev.get("action") == "CREATE"
+    )
+    assert "(P)" in (ev_truc.get("learner_text") or "")
+    assert "(α)" not in (ev_truc.get("learner_text") or "")
+
+
