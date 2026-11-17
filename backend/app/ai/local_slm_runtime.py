@@ -8,6 +8,7 @@ concurrency bounds, timeout/crash recovery, and Win32 RSS measurement.
 from __future__ import annotations
 
 import atexit
+from collections import OrderedDict
 from dataclasses import asdict, dataclass
 import hashlib
 import http.client
@@ -31,12 +32,13 @@ if os.name == "nt":
     from ctypes import wintypes
 
 
-LOCAL_SLM_RUNTIME_VERSION = "local-slm-runtime/1"
+LOCAL_SLM_RUNTIME_VERSION = "local-slm-runtime/2"
+LOCAL_SLM_CACHE_NAMESPACE = "HYBRID_V6_LOCAL_SLM"
 DEFAULT_LOCAL_SLM_MODEL_KEY = "qwen3-0.6b-q4_k_m"
 COMPARATOR_LOCAL_SLM_MODEL_KEY = "qwen2.5-0.5b-instruct-q4_k_m"
 DEFAULT_LOCAL_SLM_CTX_SIZE = 2048
 DEFAULT_LOCAL_SLM_MAX_TOKENS = 512
-DEFAULT_LOCAL_SLM_THREADS = 4
+DEFAULT_LOCAL_SLM_THREADS = 6
 DEFAULT_LOCAL_SLM_REQUEST_TIMEOUT_S = 45.0
 DEFAULT_LOCAL_SLM_STARTUP_TIMEOUT_S = 45.0
 DEFAULT_LOCAL_SLM_MAX_QUEUE = 4
@@ -560,6 +562,13 @@ class LocalSlmInferenceResult:
     server_peak_rss_mib: float | None
     threads: int
     ctx_size: int
+    queue_wait_ms: float = 0.0
+    prompt_eval_ms: float | None = None
+    token_gen_ms: float | None = None
+    tokens_per_sec: float | None = None
+    cached_prompt_tokens: int | None = None
+    json_decode_ms: float = 0.0
+    cache_prompt_enabled: bool = True
 
 
 class LocalSlmRuntime:
@@ -593,6 +602,8 @@ class LocalSlmRuntime:
         self._infer_semaphore = threading.Semaphore(1)
         self._proc_lock = threading.Lock()
         self._proc: subprocess.Popen[bytes] | None = None
+        self._http_conn: http.client.HTTPConnection | None = None
+        self._http_port: int | None = None
         self._log_file: Any = None
         self._port: int | None = None
         self._active_model_key: str | None = None
@@ -633,7 +644,18 @@ class LocalSlmRuntime:
                 pass
             self._log_file = None
 
+    def _close_http_conn(self) -> None:
+        conn = self._http_conn
+        self._http_conn = None
+        self._http_port = None
+        if conn is not None:
+            try:
+                conn.close()
+            except Exception:
+                pass
+
     def _stop_server_locked(self) -> None:
+        self._close_http_conn()
         proc = self._proc
         self._proc = None
         self._port = None
@@ -660,6 +682,7 @@ class LocalSlmRuntime:
     def force_kill_server(self) -> int | None:
         """Kill active llama-server.exe immediately (for fault-recovery testing)."""
         with self._proc_lock:
+            self._close_http_conn()
             proc = self._proc
             if proc is None:
                 return None
@@ -809,6 +832,8 @@ class LocalSlmRuntime:
         messages: list[dict[str, str]],
         json_schema: dict[str, Any] | None = None,
         schema_name: str = "slm_response",
+        grammar: str | None = None,
+        cache_prompt: bool = True,
         model_key: str | None = None,
         ctx_size: int | None = None,
         max_tokens: int | None = None,
@@ -816,6 +841,7 @@ class LocalSlmRuntime:
         timeout_s: float | None = None,
         temperature: float = 0.0,
         seed: int = 42,
+        repeat_penalty: float | None = None,
         allow_download: bool | None = None,
     ) -> LocalSlmInferenceResult:
         eff_ctx = int(ctx_size or self.ctx_size)
@@ -833,12 +859,16 @@ class LocalSlmRuntime:
                 )
             self._pending_count += 1
 
+        wait_t0 = time.perf_counter()
         try:
             with self._infer_semaphore:
+                queue_wait_ms = round((time.perf_counter() - wait_t0) * 1000.0, 3)
                 return self._run_single_inference(
                     messages=messages,
                     json_schema=json_schema,
                     schema_name=schema_name,
+                    grammar=grammar,
+                    cache_prompt=bool(cache_prompt),
                     model_key=model_key,
                     ctx_size=eff_ctx,
                     max_tokens=eff_max_tokens,
@@ -846,11 +876,47 @@ class LocalSlmRuntime:
                     timeout_s=eff_timeout,
                     temperature=temperature,
                     seed=seed,
+                    repeat_penalty=repeat_penalty,
                     allow_download=eff_allow_dl,
+                    queue_wait_ms=queue_wait_ms,
                 )
         finally:
             with self._queue_lock:
                 self._pending_count = max(0, self._pending_count - 1)
+
+    def _post_completion_keepalive(self, port: int, raw_payload: bytes, timeout_s: float) -> tuple[int, bytes]:
+        """POST to llama-server reusing a keep-alive loopback socket; reconnect once on stale socket."""
+        headers = {"Content-Type": "application/json", "Connection": "keep-alive"}
+        for attempt in range(2):
+            conn = self._http_conn if (self._http_conn is not None and self._http_port == port) else None
+            if conn is None:
+                self._close_http_conn()
+                conn = http.client.HTTPConnection("127.0.0.1", port, timeout=timeout_s)
+                self._http_conn = conn
+                self._http_port = port
+            else:
+                conn.timeout = timeout_s
+                if conn.sock is not None:
+                    conn.sock.settimeout(timeout_s)
+            try:
+                conn.request("POST", "/v1/chat/completions", body=raw_payload, headers=headers)
+                resp = conn.getresponse()
+                resp_status = int(resp.status)
+                resp_bytes = resp.read()
+                if resp.will_close:
+                    self._close_http_conn()
+                return resp_status, resp_bytes
+            except (TimeoutError, socket.timeout):
+                self._close_http_conn()
+                raise
+            except (http.client.HTTPException, OSError) as exc:
+                self._close_http_conn()
+                # If the server process actually exited, fail immediately; if stale keep-alive or transient 10013, retry once
+                proc_dead = self._proc is not None and self._proc.poll() is not None
+                if attempt == 0 and not proc_dead and ("10013" in str(exc) or isinstance(exc, http.client.RemoteDisconnected) or "forcibly closed" in str(exc).lower()):
+                    time.sleep(0.05)
+                    continue
+                raise
 
     def _run_single_inference(
         self,
@@ -858,6 +924,8 @@ class LocalSlmRuntime:
         messages: list[dict[str, str]],
         json_schema: dict[str, Any] | None,
         schema_name: str,
+        grammar: str | None,
+        cache_prompt: bool,
         model_key: str | None,
         ctx_size: int,
         max_tokens: int,
@@ -865,7 +933,9 @@ class LocalSlmRuntime:
         timeout_s: float,
         temperature: float,
         seed: int,
-        allow_download: bool,
+        repeat_penalty: float | None = None,
+        allow_download: bool = False,
+        queue_wait_ms: float = 0.0,
     ) -> LocalSlmInferenceResult:
         with self._proc_lock:
             provisioned, port, load_ms, restarted = self._ensure_server_running_locked(
@@ -883,11 +953,16 @@ class LocalSlmRuntime:
             "top_p": 1.0,
             "seed": int(seed),
             "max_tokens": int(max_tokens),
+            "cache_prompt": bool(cache_prompt),
             "stream": False,
         }
+        if repeat_penalty is not None:
+            payload["repeat_penalty"] = float(repeat_penalty)
         if provisioned.model_spec.supports_thinking:
             payload["chat_template_kwargs"] = {"enable_thinking": False}
-        if json_schema is not None:
+        if grammar is not None:
+            payload["grammar"] = grammar
+        elif json_schema is not None:
             payload["response_format"] = {
                 "type": "json_schema",
                 "json_schema": {
@@ -901,18 +976,8 @@ class LocalSlmRuntime:
 
         raw_payload = json.dumps(payload, ensure_ascii=False).encode("utf-8")
         infer_start = time.perf_counter()
-        conn: http.client.HTTPConnection | None = None
         try:
-            conn = http.client.HTTPConnection("127.0.0.1", port, timeout=timeout_s)
-            conn.request(
-                "POST",
-                "/v1/chat/completions",
-                body=raw_payload,
-                headers={"Content-Type": "application/json"},
-            )
-            resp = conn.getresponse()
-            resp_status = int(resp.status)
-            resp_bytes = resp.read()
+            resp_status, resp_bytes = self._post_completion_keepalive(port, raw_payload, timeout_s)
         except (TimeoutError, socket.timeout) as exc:
             with self._proc_lock:
                 self._timeout_recovery_count += 1
@@ -932,12 +997,6 @@ class LocalSlmRuntime:
                 f"Local SLM loopback HTTP communication failed: {exc}",
                 status_code=503,
             ) from exc
-        finally:
-            if conn is not None:
-                try:
-                    conn.close()
-                except Exception:
-                    pass
 
         infer_ms = round((time.perf_counter() - infer_start) * 1000.0, 2)
         resp_text = resp_bytes.decode("utf-8", errors="replace")
@@ -948,6 +1007,7 @@ class LocalSlmRuntime:
                 status_code=502,
             )
 
+        dec_t0 = time.perf_counter()
         try:
             body = json.loads(resp_text)
             choices = body.get("choices") or []
@@ -975,6 +1035,7 @@ class LocalSlmRuntime:
                 f"Local SLM content is not valid JSON: {exc}; content={cleaned[:200]}",
                 status_code=502,
             ) from exc
+        json_decode_ms = round((time.perf_counter() - dec_t0) * 1000.0, 3)
         if not isinstance(parsed_json, dict):
             raise LocalSlmRuntimeError(
                 "LOCAL_SLM_RESPONSE_INVALID",
@@ -983,6 +1044,7 @@ class LocalSlmRuntime:
             )
 
         usage = body.get("usage") or {}
+        timings = body.get("timings") or {}
         py_mem = get_process_memory_info(None)
         srv_mem = get_process_memory_info(server_pid)
         py_rss = py_mem["working_set_mib"] if py_mem else None
@@ -1012,11 +1074,83 @@ class LocalSlmRuntime:
             server_peak_rss_mib=srv_peak,
             threads=threads,
             ctx_size=ctx_size,
+            queue_wait_ms=queue_wait_ms,
+            prompt_eval_ms=round(float(timings["prompt_ms"]), 3) if timings.get("prompt_ms") is not None else None,
+            token_gen_ms=round(float(timings["predicted_ms"]), 3) if timings.get("predicted_ms") is not None else None,
+            tokens_per_sec=round(float(timings["predicted_per_second"]), 2) if timings.get("predicted_per_second") is not None else None,
+            cached_prompt_tokens=int(timings["cache_n"]) if timings.get("cache_n") is not None else None,
+            json_decode_ms=json_decode_ms,
+            cache_prompt_enabled=bool(cache_prompt),
         )
+
+
+def build_local_slm_cache_identity(
+    *,
+    exact_input_text: str,
+    model_key: str,
+    model_sha256: str,
+    runtime_version: str = LOCAL_SLM_RUNTIME_VERSION,
+    strategy: str,
+    schema_version: str,
+    schema_sha256: str,
+    grounding_policy_version: str,
+    parser_version: str,
+    capability_identity: dict[str, Any] | str,
+    namespace: str = LOCAL_SLM_CACHE_NAMESPACE,
+) -> tuple[str, dict[str, Any]]:
+    """Compute a deterministic cache identity binding all 9 required SLM/grounding fields."""
+    input_sha256 = hashlib.sha256(exact_input_text.encode("utf-8")).hexdigest()
+    metadata: dict[str, Any] = {
+        "namespace": str(namespace),
+        "exact_input_sha256": input_sha256,
+        "model_key": str(model_key),
+        "model_sha256": str(model_sha256),
+        "runtime_version": str(runtime_version),
+        "strategy": str(strategy),
+        "schema_version": str(schema_version),
+        "schema_sha256": str(schema_sha256),
+        "grounding_policy_version": str(grounding_policy_version),
+        "parser_version": str(parser_version),
+        "capability_identity": capability_identity,
+    }
+    digest = hashlib.sha256(json.dumps(metadata, sort_keys=True, ensure_ascii=False).encode("utf-8")).hexdigest()
+    return digest, metadata
+
+
+class LocalSlmExtractionCache:
+    """Thread-safe bounded LRU cache for verified local SLM extraction results."""
+
+    def __init__(self, max_entries: int = 256) -> None:
+        self.max_entries = max(1, int(max_entries))
+        self._lock = threading.Lock()
+        self._entries: OrderedDict[str, Any] = OrderedDict()
+
+    def get(self, cache_key: str) -> Any | None:
+        with self._lock:
+            val = self._entries.get(cache_key)
+            if val is not None:
+                self._entries.move_to_end(cache_key)
+            return val
+
+    def put(self, cache_key: str, value: Any) -> None:
+        with self._lock:
+            self._entries[cache_key] = value
+            self._entries.move_to_end(cache_key)
+            while len(self._entries) > self.max_entries:
+                self._entries.popitem(last=False)
+
+    def clear(self) -> None:
+        with self._lock:
+            self._entries.clear()
+
+    def __len__(self) -> int:
+        with self._lock:
+            return len(self._entries)
 
 
 _GLOBAL_RUNTIMES_LOCK = threading.Lock()
 _GLOBAL_RUNTIME: LocalSlmRuntime | None = None
+_GLOBAL_EXTRACTION_CACHE = LocalSlmExtractionCache(max_entries=256)
 
 
 def get_shared_local_slm_runtime() -> LocalSlmRuntime:
@@ -1025,6 +1159,10 @@ def get_shared_local_slm_runtime() -> LocalSlmRuntime:
         if _GLOBAL_RUNTIME is None:
             _GLOBAL_RUNTIME = LocalSlmRuntime()
         return _GLOBAL_RUNTIME
+
+
+def get_shared_local_slm_extraction_cache() -> LocalSlmExtractionCache:
+    return _GLOBAL_EXTRACTION_CACHE
 
 
 def shutdown_global_local_slm_runtimes() -> None:
@@ -1049,16 +1187,20 @@ __all__ = [
     "DEFAULT_LOCAL_SLM_STARTUP_TIMEOUT_S",
     "DEFAULT_LOCAL_SLM_THREADS",
     "LLAMA_CPP_RUNTIME_SPEC",
+    "LOCAL_SLM_CACHE_NAMESPACE",
     "LOCAL_SLM_MODELS",
     "LOCAL_SLM_RUNTIME_VERSION",
     "LlamaCppRuntimeSpec",
+    "LocalSlmExtractionCache",
     "LocalSlmInferenceResult",
     "LocalSlmModelSpec",
     "LocalSlmRuntime",
     "LocalSlmRuntimeError",
     "ProvisionedLocalSlm",
+    "build_local_slm_cache_identity",
     "ensure_local_slm_provisioned",
     "get_process_memory_info",
+    "get_shared_local_slm_extraction_cache",
     "get_shared_local_slm_runtime",
     "resolve_default_threads",
     "resolve_local_slm_cache_dir",

@@ -1538,6 +1538,50 @@ def is_local_parse_semantically_complete(local_res: LocalParseResult) -> bool:
     )
 
 
+def _should_escalate_to_compact_slm(
+    det: AdaptiveRouteOutcome,
+    norm_text: str,
+) -> bool:
+    """True when Stage 1 deterministic routing should escalate to AXO HYBRID /6 compact SLM."""
+    if det.status == "SERVED" or det.telemetry.chosen_route == "LOCAL_OUT_OF_SCOPE_GATE":
+        return False
+    if det.telemetry.chosen_route == "FAIL_CLOSED_LIVE_AI_DISABLED":
+        return True
+
+    local_res = det.local_parse_result
+    det_rd = (det.response or {}).get("route_d") or {}
+    det_ref = det_rd.get("refusal") or {}
+    ref_code = str(det_ref.get("code") or det_ref.get("reason_code") or "")
+
+    # 1. Contrastive "thì" clause without conditional marker ("nếu" / "khi" / "giả sử")
+    if ref_code == "CONDITIONAL_CLAUSE" and re.search(r"\bthì\b", norm_text, re.IGNORECASE) and not re.search(
+        r"\b(?:nếu|khi|giả\s+sử)\b", norm_text, re.IGNORECASE
+    ):
+        return True
+
+    # 2. False LOCAL_PARSE_AMBIGUOUS where source has unconsumed scalar/dimension tokens beyond Local Parser premises
+    if local_res is not None and local_res.status == LOCAL_PARSE_AMBIGUOUS and local_res.payload is not None:
+        from app.ai.local_slm_extractor import _TOKEN_QTY_RE, _try_eval_qty
+
+        parsed_qtys: set[str] = set()
+        for p in local_res.payload.get("premises") or ():
+            args = p.get("args") or {}
+            for k in ("side", "value", "ratio", "distance"):
+                if k in args and args[k] is not None:
+                    ev = _try_eval_qty(str(args[k]))
+                    if ev is not None:
+                        parsed_qtys.add(ev)
+        source_qtys: list[str] = []
+        for qm in _TOKEN_QTY_RE.finditer(norm_text):
+            ev = _try_eval_qty(qm.group(1))
+            if ev is not None and ev not in parsed_qtys:
+                source_qtys.append(ev)
+        if source_qtys:
+            return True
+
+    return False
+
+
 def route_text_input_local_slm(
     problem_text: str,
     *,
@@ -1545,26 +1589,25 @@ def route_text_input_local_slm(
     strategy: str | None = None,
     runtime: Any = None,
     allow_download: bool = False,
+    use_verified_normalizer: bool | None = None,
+    use_cache: bool = True,
+    cache_prompt: bool = True,
     input_kind: InputKind = "text",
     previous_vision_calls: int = 0,
     previous_vision_ms: float = 0.0,
     policy: RoutePolicy | None = None,
     timeout_seconds: float = 30.0,
 ) -> AdaptiveRouteOutcome:
-    """Local-first router with local sub-1B SLM fallback (`external_ai_calls = 0`).
-
-    1. Runs deterministic Local Parser (`route_text_input(..., allow_live_ai=False)`).
-    2. Only invokes local CPU SLM when deterministic parsing cannot complete safely
-       (`chosen_route == "FAIL_CLOSED_LIVE_AI_DISABLED"`).
-    3. Validates SLM extraction through Source Grounding (`slm-grounding-validator/1`)
-       and feeds ONLY grounded `TypedFactNext /2` facts into Hybrid `/4`.
-    """
+    """Local-first router with local sub-1B SLM fallback (`external_ai_calls = 0`)."""
     from app.ai.local_slm_extractor import (
         LOCAL_SLM_EXTRACTOR_VERSION,
+        SLM_COMPACT_SCHEMA_VERSION,
+        SLM_GROUNDING_VALIDATOR_VERSION,
         resolve_local_slm_strategy,
         run_local_slm_extraction,
     )
     from app.ai.local_slm_runtime import (
+        LOCAL_SLM_CACHE_NAMESPACE,
         LOCAL_SLM_RUNTIME_VERSION,
         LocalSlmRuntimeError,
         resolve_local_slm_model_spec,
@@ -1585,14 +1628,16 @@ def route_text_input_local_slm(
         policy=eff_policy,
         timeout_seconds=timeout_seconds,
     )
-    if det.telemetry.chosen_route != "FAIL_CLOSED_LIVE_AI_DISABLED":
+    cleaned_input = normalize_problem_text(strip_trailing_multiple_choice_options(problem_text))
+    if eff_strategy in ("minimal_ops", "direct_wire"):
+        if det.telemetry.chosen_route != "FAIL_CLOSED_LIVE_AI_DISABLED":
+            return det
+    elif not _should_escalate_to_compact_slm(det, cleaned_input):
         return det
 
     local_res = det.local_parse_result
     assert local_res is not None
-    norm_text = local_res.payload["problem_text"] if local_res.payload else normalize_problem_text(
-        strip_trailing_multiple_choice_options(problem_text)
-    )
+    norm_text = local_res.payload["problem_text"] if local_res.payload else cleaned_input
     local_ms = det.telemetry.local_parse_ms
     cov_dict = local_res.source_coverage.to_dict()
 
@@ -1603,6 +1648,9 @@ def route_text_input_local_slm(
             strategy=eff_strategy,
             runtime=runtime,
             allow_download=allow_download,
+            use_verified_normalizer=use_verified_normalizer,
+            use_cache=use_cache,
+            cache_prompt=cache_prompt,
         )
     except LocalSlmRuntimeError as exc:
         total_ms = (time.perf_counter() - t0) * 1000.0 + previous_vision_ms
@@ -1665,18 +1713,22 @@ def route_text_input_local_slm(
         )
 
     slm_ms = float(slm_res.inference.inference_time_ms if slm_res.inference else 0.0)
+    is_v6_compact = eff_strategy in ("compact_clause", "compact_clause_per_clause")
     slm_id = {
-        "route": "HYBRID_V5_LOCAL_SLM",
+        "route": LOCAL_SLM_CACHE_NAMESPACE if is_v6_compact else "HYBRID_V5_LOCAL_SLM",
         "router_version": ADAPTIVE_INPUT_ROUTER_VERSION,
         "parser_version": LOCAL_GEOMETRY_PARSER_VERSION,
         "runtime_version": LOCAL_SLM_RUNTIME_VERSION,
         "extractor_version": LOCAL_SLM_EXTRACTOR_VERSION,
+        "schema_version": SLM_COMPACT_SCHEMA_VERSION if is_v6_compact else eff_strategy,
+        "grounding_validator_version": SLM_GROUNDING_VALIDATOR_VERSION,
         "model_key": slm_res.model_key,
         "model_sha256": slm_res.model_sha256,
         "strategy": slm_res.strategy,
+        "cache_key": slm_res.cache_key,
         "source": slm_res.norm_text,
     }
-    slm_cache_key = sha256(json.dumps(slm_id, sort_keys=True, ensure_ascii=False).encode("utf-8")).hexdigest()
+    slm_cache_key = slm_res.cache_key or sha256(json.dumps(slm_id, sort_keys=True, ensure_ascii=False).encode("utf-8")).hexdigest()
 
     if not slm_res.ok or slm_res.canonical_payload is None:
         total_ms = (time.perf_counter() - t0) * 1000.0 + previous_vision_ms

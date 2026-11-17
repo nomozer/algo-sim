@@ -550,19 +550,27 @@ def prepare_local_slm_hybrid(
 ) -> LocalSlmHybridRun:
     from app.ai.adaptive_input_router import ADAPTIVE_INPUT_ROUTER_VERSION
     from app.ai.local_geometry_parser import LOCAL_GEOMETRY_PARSER_VERSION
-    from app.ai.local_slm_extractor import LOCAL_SLM_EXTRACTOR_VERSION, resolve_local_slm_strategy
-    from app.ai.local_slm_runtime import LOCAL_SLM_RUNTIME_VERSION, resolve_local_slm_model_spec
+    from app.ai.local_slm_extractor import (
+        LOCAL_SLM_EXTRACTOR_VERSION,
+        SLM_COMPACT_SCHEMA_VERSION,
+        SLM_GROUNDING_VALIDATOR_VERSION,
+        resolve_local_slm_strategy,
+    )
+    from app.ai.local_slm_runtime import LOCAL_SLM_CACHE_NAMESPACE, LOCAL_SLM_RUNTIME_VERSION, resolve_local_slm_model_spec
 
     spec = resolve_local_slm_model_spec(model_key)
     eff_strategy = resolve_local_slm_strategy(strategy)
     policy = hybrid_offline_policy({'HYBRID_ROUTE_D_PREVIEW': '1'})
     ext_fp = _tfn_extraction.typed_fact_next_surface_fingerprint()
+    is_v6 = eff_strategy in ('compact_clause', 'compact_clause_per_clause')
     identity = {
-        'route': 'HYBRID_V5_LOCAL_SLM',
+        'route': LOCAL_SLM_CACHE_NAMESPACE if is_v6 else 'HYBRID_V5_LOCAL_SLM',
         'router_version': ADAPTIVE_INPUT_ROUTER_VERSION,
         'parser_version': LOCAL_GEOMETRY_PARSER_VERSION,
         'runtime_version': LOCAL_SLM_RUNTIME_VERSION,
         'extractor_version': LOCAL_SLM_EXTRACTOR_VERSION,
+        'schema_version': SLM_COMPACT_SCHEMA_VERSION if is_v6 else eff_strategy,
+        'validator_version': SLM_GROUNDING_VALIDATOR_VERSION,
         'model_key': spec.model_key,
         'model_sha256': spec.sha256,
         'strategy': eff_strategy,

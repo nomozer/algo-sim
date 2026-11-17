@@ -1,23 +1,28 @@
-"""Grounded Vietnamese geometry extraction via local sub-1B SLM (Axo Hybrid /5).
+"""Grounded Vietnamese geometry extraction via local sub-1B SLM (Axo Hybrid /5 & /6).
 
-Supports two experimental extraction strategies behind deterministic source
-grounding, schema validation, and parser-conflict checks:
-  - ``direct_wire`` (Approach A): SLM emits compact ``typed-fact-next/2`` wire
-    JSON directly under constrained decoding, then passes quote/token validation.
-  - ``minimal_ops`` (Approach B): SLM emits compact clause-indexed primitive ops
-    and goals, which a deterministic validator lowers into canonical
-    ``typed-fact-next/2`` payloads after checking verbatim tokens, quantities,
-    negations, clause roles, ambiguity, and Local Parser consistency.
+Supports three extraction strategies behind deterministic source grounding,
+schema validation, and parser-conflict checks:
+  - ``compact_clause`` (AXO HYBRID /6): Deterministic clause/entity/quantity
+    indexing + span-audited Verified Normalization + whitespace-free GBNF
+    clause-level classification and slot filling + deterministic lowering into
+    canonical ``typed-fact-next/2`` payloads.
+  - ``minimal_ops`` (AXO HYBRID /5 baseline): Clause-indexed primitive ops.
+  - ``direct_wire`` (AXO HYBRID /5 comparator): Direct wire JSON emission.
 """
 
 from __future__ import annotations
 
 from dataclasses import dataclass, field
+import hashlib
+import json
 import os
 import re
+import time
 from typing import Any
 
+from app.ai.adapter4_route import ADAPTER_V4_VERSION, ROUTE_D_SIMULATION_V4_SCHEMA_VERSION
 from app.ai.local_geometry_parser import (
+    LOCAL_GEOMETRY_PARSER_VERSION,
     _canon_val,
     normalize_problem_text,
     parse_geometry_problem_locally,
@@ -26,11 +31,20 @@ from app.ai.local_geometry_parser import (
 from app.ai.local_slm_runtime import (
     DEFAULT_LOCAL_SLM_MAX_TOKENS,
     DEFAULT_LOCAL_SLM_MODEL_KEY,
+    LOCAL_SLM_CACHE_NAMESPACE,
+    LOCAL_SLM_RUNTIME_VERSION,
     LocalSlmInferenceResult,
     LocalSlmRuntime,
     LocalSlmRuntimeError,
+    build_local_slm_cache_identity,
+    get_shared_local_slm_extraction_cache,
     get_shared_local_slm_runtime,
     resolve_local_slm_model_spec,
+)
+from app.ai.slm_verified_normalizer import (
+    SLM_VERIFIED_NORMALIZER_VERSION,
+    VerifiedNormalizationResult,
+    normalize_for_slm_grounding,
 )
 from app.ai.typed_fact_next_extraction import (
     TYPED_FACT_NEXT_V2_SCHEMA_VERSION,
@@ -38,13 +52,17 @@ from app.ai.typed_fact_next_extraction import (
     to_wire_typed_fact_next_v2,
 )
 from app.simulation.geometry.expression import ExprParseError, parse_quantity_expr
+from app.simulation.geometry_functions import engine, planner, registry
 
-LOCAL_SLM_EXTRACTOR_VERSION = "local-slm-extractor/1"
-SLM_GROUNDING_VALIDATOR_VERSION = "slm-grounding-validator/1"
-SLM_GROUNDING_ENVELOPE_VERSION = "slm-grounding-envelope/1"
+LOCAL_SLM_EXTRACTOR_VERSION = "local-slm-extractor/2"
+SLM_COMPACT_SCHEMA_VERSION = "slm-compact-clause/1"
+SLM_GROUNDING_VALIDATOR_VERSION = "slm-grounding-validator/2"
+SLM_GROUNDING_ENVELOPE_VERSION = "slm-grounding-envelope/2"
+DEFAULT_COMPACT_SLM_MAX_TOKENS = 320
+DEFAULT_COMPACT_SLM_CTX_SIZE = 2048
 
-SUPPORTED_SLM_STRATEGIES = ("minimal_ops", "direct_wire")
-DEFAULT_LOCAL_SLM_STRATEGY = "minimal_ops"
+SUPPORTED_SLM_STRATEGIES = ("compact_clause", "compact_clause_per_clause", "minimal_ops", "direct_wire")
+DEFAULT_LOCAL_SLM_STRATEGY = "compact_clause"
 
 _INJECTION_PATTERNS: tuple[re.Pattern[str], ...] = (
     re.compile(r"ignore\s+(?:all\s+)?(?:previous|above|prior)\s+instructions", re.IGNORECASE),
@@ -81,6 +99,10 @@ _GOAL_MARKERS_RE = re.compile(
     r"(?:\b(?:tính|tìm|xác\s+định|hỏi|dựng|mô\s+phỏng|vẽ|thể\s+tích|khoảng\s+cách|diện\s+tích|góc|tỉ\s+số|độ\s+dài|chiều\s+cao|bán\s+kính)\b|\?)",
     re.IGNORECASE | re.UNICODE,
 )
+_GOAL_VERB_RE = re.compile(
+    r"(?:\b(?:tính|tìm|xác\s+định|hỏi|cho\s+biết|yêu\s+cầu|bao\s+nhiêu)\b|\?)",
+    re.IGNORECASE | re.UNICODE,
+)
 
 _AMBIGUOUS_LATERAL_SINGLE_RE = re.compile(r"\bcạnh\s+bên\b", re.IGNORECASE | re.UNICODE)
 _UNIVERSAL_LATERAL_RE = re.compile(
@@ -89,7 +111,7 @@ _UNIVERSAL_LATERAL_RE = re.compile(
 )
 _AMBIGUOUS_FACE_SINGLE_RE = re.compile(r"\bmặt\s+bên\b", re.IGNORECASE | re.UNICODE)
 
-_SOLID_RE = re.compile(r"\b([A-Z][0-9]*'*)\.([A-Z][0-9']*){3,6}\b")
+_SOLID_RE = re.compile(r"(?<![A-Za-zÀ-Ỹà-ỹ0-9'])((?:[A-Z][0-9]*'*){1,6})\.((?:[A-Z][0-9]*'*){3,6})(?![A-Za-zÀ-Ỹà-ỹ0-9'])")
 _VERTEX_PAIR_OR_CHAIN_RE = re.compile(r"(?<![A-Za-zÀ-Ỹà-ỹ])([A-Z][0-9]*'*)(?=[A-Z0-9'\.)\]\s,;:/=-]|$)")
 _TOKEN_QTY_RE = re.compile(
     r"(?<![A-Za-zÀ-Ỹà-ỹ])("
@@ -333,6 +355,10 @@ class LocalSlmExtractionResult:
     failure_taxonomy: str
     grounding_envelope: dict[str, Any]
     inference: LocalSlmInferenceResult | None = None
+    stage_timings_ms: dict[str, Any] = field(default_factory=dict)
+    normalization_provenance: dict[str, Any] | None = None
+    cache_hit: bool = False
+    cache_key: str | None = None
 
 
 def resolve_local_slm_strategy(strategy: str | None = None) -> str:
@@ -1394,6 +1420,1661 @@ def _repair_direct_wire_quotes(wire: dict[str, Any], norm_text: str, all_points:
     return out, None
 
 
+# ===========================================================================
+# AXO HYBRID /6: Clause-Level Compact Extraction, GBNF & Verified Lowering
+# ===========================================================================
+
+_COMPACT_PRED_CODES = (
+    "reg_poly", "rect", "para", "rhom", "trap", "iso_trap",
+    "right_tri", "right_iso_tri", "iso_tri",
+    "perp_lp", "perp_ll", "face_perp",
+    "mid", "cent", "proj", "alt", "inter_ll", "inter_lp", "div",
+    "len", "eq_len", "height",
+    "ang_lp", "ang_pp", "dihed", "ang_ll", "ang_vtx",
+    "area", "vol", "ratio",
+)
+
+_COMPACT_TO_V5_KIND: dict[str, str] = {
+    "reg_poly": "regular_polygon",
+    "rect": "rectangle",
+    "para": "parallelogram",
+    "rhom": "rhombus",
+    "trap": "trapezoid",
+    "iso_trap": "isosceles_trapezoid",
+    "right_tri": "right_angle",
+    "right_iso_tri": "right_angle",
+    "iso_tri": "equal_length",
+    "perp_lp": "perpendicular_line_plane",
+    "perp_ll": "perpendicular_lines",
+    "face_perp": "face_perpendicular_base",
+    "mid": "midpoint",
+    "cent": "centroid",
+    "proj": "orthogonal_projection",
+    "alt": "altitude",
+    "inter_ll": "intersect_line_line",
+    "inter_lp": "intersect_line_plane",
+    "div": "divide_segment",
+    "len": "segment_length",
+    "eq_len": "equal_length",
+    "height": "height",
+    "ang_lp": "line_plane_angle",
+    "ang_pp": "plane_plane_angle",
+    "dihed": "dihedral_angle",
+    "ang_ll": "line_line_angle",
+    "ang_vtx": "vertex_angle",
+    "area": "face_area",
+    "vol": "solid_volume",
+    "ratio": "segment_ratio",
+}
+
+_COMPACT_GOAL_CODES: dict[str, str] = {
+    "vol": "volume",
+    "dist": "distance",
+    "dist_pt_plane": "distance",
+    "dist_pt_line": "distance",
+    "dist_line_line": "distance",
+    "ang": "angle",
+    "ang_lp": "angle",
+    "ang_ll": "angle",
+    "ang_pp": "angle",
+    "area": "area",
+    "len": "length",
+    "lratio": "length_ratio",
+    "aratio": "area_ratio",
+}
+
+_COMPACT_UNRES_CODES: dict[str, str] = {
+    "ambig": "ambiguous",
+    "missing": "missing_operand",
+    "unsup": "unsupported",
+    "contra": "contradictory",
+}
+
+# Whitespace-free static fallback GBNF + dynamic per-problem literal-constrained GBNF builder.
+COMPACT_CLAUSE_GBNF = r"""root ::= "{\"s\":" solidval ",\"r\":[" rellist "],\"g\":[" goallist "],\"u\":[" unreslist "]}"
+solidval ::= "null" | "[" cid "," stype "," tok "," bit "]"
+stype ::= "\"pyr\"" | "\"pri\"" | "\"cube\"" | "\"box\""
+bit ::= "0" | "1"
+cid ::= [0-9] | [1-9][0-9]
+tok ::= "\"" [A-Za-z0-9'.°√/*+-]{1,24} "\""
+relitem ::= relbaseq | relbasenq | reltript | relpair | relptsrc | relptpair | relptqty | relqty | relpairqty | relvtxqty
+relbaseq ::= "{\"c\":" cid ",\"p\":" pbaseq ",\"a\":" tok (",\"q\":" tok)? "}"
+pbaseq ::= "\"reg_poly\"" | "\"rhom\""
+relbasenq ::= "{\"c\":" cid ",\"p\":" pbasenq ",\"a\":" tok (",\"b\":" tok)? "}"
+pbasenq ::= "\"rect\"" | "\"para\"" | "\"trap\"" | "\"iso_trap\""
+reltript ::= "{\"c\":" cid ",\"p\":" ptript ",\"a\":" tok ",\"pt\":" tok "}"
+ptript ::= "\"right_tri\"" | "\"right_iso_tri\"" | "\"iso_tri\""
+relpair ::= "{\"c\":" cid ",\"p\":" ppair ",\"a\":" tok ",\"b\":" tok "}"
+ppair ::= "\"perp_lp\"" | "\"perp_ll\"" | "\"face_perp\"" | "\"eq_len\""
+relptsrc ::= "{\"c\":" cid ",\"p\":" pptsrc ",\"pt\":" tok ",\"a\":" tok "}"
+pptsrc ::= "\"mid\"" | "\"cent\""
+relptpair ::= "{\"c\":" cid ",\"p\":" pptpair ",\"pt\":" tok ",\"a\":" tok ",\"b\":" tok "}"
+pptpair ::= "\"proj\"" | "\"alt\"" | "\"inter_ll\"" | "\"inter_lp\""
+relptqty ::= "{\"c\":" cid ",\"p\":\"div\",\"pt\":" tok ",\"a\":" tok ",\"q\":" tok "}"
+relqty ::= "{\"c\":" cid ",\"p\":" pqty ",\"a\":" tok ",\"q\":" tok "}"
+pqty ::= "\"len\"" | "\"height\"" | "\"area\"" | "\"vol\""
+relpairqty ::= "{\"c\":" cid ",\"p\":" ppairqty ",\"a\":" tok ",\"b\":" tok ",\"q\":" tok "}"
+ppairqty ::= "\"ang_lp\"" | "\"ang_pp\"" | "\"dihed\"" | "\"ang_ll\"" | "\"ratio\""
+relvtxqty ::= "{\"c\":" cid ",\"p\":\"ang_vtx\",\"a\":" tok ",\"pt\":" tok ",\"q\":" tok "}"
+rellist ::= "" | relitem ("," relitem)*
+goalitem ::= goalvol | goaldistptpl | goaldistptln | goaldistll | goallen | goalarea | goalanglp | goalangpp | goalangll | goallratio | goalaratio
+goalvol ::= "{\"c\":" cid ",\"t\":\"vol\",\"tgt\":" tok "}"
+goaldistptpl ::= "{\"c\":" cid ",\"t\":\"dist_pt_plane\",\"a\":" tok ",\"b\":" tok "}"
+goaldistptln ::= "{\"c\":" cid ",\"t\":\"dist_pt_line\",\"a\":" tok ",\"b\":" tok "}"
+goaldistll ::= "{\"c\":" cid ",\"t\":\"dist_line_line\",\"a\":" tok ",\"b\":" tok "}"
+goallen ::= "{\"c\":" cid ",\"t\":\"len\",\"a\":" tok "}"
+goalarea ::= "{\"c\":" cid ",\"t\":\"area\",\"a\":" tok "}"
+goalanglp ::= "{\"c\":" cid ",\"t\":\"ang_lp\",\"a\":" tok ",\"b\":" tok "}"
+goalangpp ::= "{\"c\":" cid ",\"t\":\"ang_pp\",\"a\":" tok ",\"b\":" tok "}"
+goalangll ::= "{\"c\":" cid ",\"t\":\"ang_ll\",\"a\":" tok ",\"b\":" tok "}"
+goallratio ::= "{\"c\":" cid ",\"t\":\"lratio\",\"a\":" tok ",\"b\":" tok "}"
+goalaratio ::= "{\"c\":" cid ",\"t\":\"aratio\",\"a\":" tok ",\"b\":" tok "}"
+goallist ::= "" | goalitem ("," goalitem)*
+unresitem ::= "{\"c\":" cid ",\"k\":" ukind "}"
+ukind ::= "\"ambig\"" | "\"missing\"" | "\"unsup\"" | "\"contra\""
+unreslist ::= "" | unresitem ("," unresitem)*
+"""
+
+
+def _gbnf_str_literal(val: str) -> str:
+    esc = val.replace("\\", "\\\\").replace('"', '\\"')
+    return f'"\\"{esc}\\""'
+
+
+def _gbnf_union(items: list[str]) -> str:
+    seen: list[str] = []
+    for x in items:
+        if x not in seen:
+            seen.append(x)
+    return " | ".join(_gbnf_str_literal(x) for x in seen)
+
+
+def build_compact_grammar_for_context(ctx: "CompactClauseContext", *, clause_subset: list[IndexedClause] | None = None) -> str:
+    """Build a per-problem, clause-scoped, arity-safe whitespace-free GBNF grammar over exact source literals."""
+    active_clauses = clause_subset if clause_subset is not None else ctx.clauses
+    target_cids = [str(c.clause_id) for c in active_clauses]
+    target_cid_set = {c.clause_id for c in active_clauses}
+    cid_rule = " | ".join(f'"{c}"' for c in target_cids) or '"0"'
+
+    all_solids = [e for e in ctx.entities if e.kind == "solid"]
+    base_polys_from_solids: list[str] = []
+    for se in all_solids:
+        left_s, right_s = se.label.split(".", 1)
+        base_lbl = right_s if se.solid_subtype == "pyr" else left_s
+        if base_lbl and base_lbl not in base_polys_from_solids:
+            base_polys_from_solids.append(base_lbl)
+
+    lines: list[str] = [
+        f"cid ::= {cid_rule}",
+        'bit ::= "0" | "1"',
+    ]
+
+    # 1. Anchor each extracted solid to its valid clause_ids and deterministic subtype
+    solid_rule_names: list[str] = []
+    for idx_s, se in enumerate(all_solids):
+        scids = [str(c) for c in se.clause_ids if c in target_cid_set]
+        if not scids:
+            continue
+        scid_rule = " | ".join(f'"{c}"' for c in scids)
+        stype_val = se.solid_subtype if se.solid_subtype in ("pyr", "pri", "cube", "box") else "pyr"
+        bit_rule = '"1"' if (se.is_regular_solid or stype_val in ("cube", "box")) else '"0"'
+        rname = f"solid{idx_s}"
+        lines.append(
+            rf'{rname} ::= "[" ({scid_rule}) "," {_gbnf_str_literal(stype_val)} "," {_gbnf_str_literal(se.label)} "," {bit_rule} "]"'
+        )
+        solid_rule_names.append(rname)
+
+    if solid_rule_names:
+        lines.append("solidreq ::= " + " | ".join(solid_rule_names))
+        lines.append('solidval ::= "null" | solidreq')
+    else:
+        lines.append('solidval ::= "null"')
+
+    # 2. Clause-local relation rules (relc{cid})
+    poly_verts_len = {e.label: len(e.vertices) for e in ctx.entities if e.kind == "poly"}
+
+    rel_clause_rules: list[str] = []
+    for cl in active_clauses:
+        cid = cl.clause_id
+        clow = cl.text.lower()
+        # Exclude pure question clauses from relation rules (enforced by GOAL_CLAUSE_USED_AS_PREMISE)
+        if _PURE_QUESTION_RE.match(cl.text) and not _PREMISE_MARKERS_IN_CLAUSE_RE.search(clow):
+            continue
+
+        c_polys: list[str] = []
+        for e in ctx.entities:
+            if e.kind != "poly" or cid not in e.clause_ids:
+                continue
+            # Only include base polygons in a clause if explicitly referenced outside solid notation or "đáy" is present
+            if e.label in base_polys_from_solids and "đáy" not in clow:
+                if not re.search(rf"(?<![A-Z0-9'.]){re.escape(e.label)}(?![A-Z0-9'])", cl.text):
+                    continue
+            if e.label not in c_polys:
+                c_polys.append(e.label)
+        if "đáy" in clow:
+            for bp in base_polys_from_solids:
+                if bp not in c_polys:
+                    c_polys.append(bp)
+
+        c_tris = [p for p in c_polys if poly_verts_len.get(p, 3) == 3]
+        c_quads = [p for p in c_polys if poly_verts_len.get(p, 3) >= 4]
+        c_segs = [e.label for e in ctx.entities if e.kind == "seg" and cid in e.clause_ids]
+        c_pts = [e.label for e in ctx.entities if e.kind == "point" and cid in e.clause_ids]
+        c_len_qtys = [q.raw_token for q in ctx.quantities if cid in q.clause_ids and q.implied_unit == ""]
+        c_ratio_qtys = [
+            q.raw_token
+            for q in ctx.quantities
+            if cid in q.clause_ids and q.implied_unit == "" and "a" not in q.canon_expr.lower()
+        ]
+        c_ang_qtys = [
+            q.raw_token
+            for q in ctx.quantities
+            if cid in q.clause_ids and q.implied_unit in ("deg", "sin", "cos", "tan", "cot")
+        ]
+        c_reg_pyr = [
+            e.label
+            for e in all_solids
+            if e.is_regular_solid and e.solid_subtype == "pyr" and ("cạnh bên" in clow or cid in e.clause_ids)
+        ]
+        c_len_tgts = list(dict.fromkeys(c_segs if c_segs else c_reg_pyr))
+        c_solids = [e.label for e in all_solids if cid in e.clause_ids] or [e.label for e in all_solids]
+
+        pfx = f"rc{cid}"
+        if c_polys:
+            lines.append(f"{pfx}poly ::= {_gbnf_union(c_polys)}")
+        if c_tris:
+            lines.append(f"{pfx}tri ::= {_gbnf_union(c_tris)}")
+        if c_quads:
+            lines.append(f"{pfx}quad ::= {_gbnf_union(c_quads)}")
+        if c_segs:
+            lines.append(f"{pfx}seg ::= {_gbnf_union(c_segs)}")
+        if c_pts:
+            lines.append(f"{pfx}pt ::= {_gbnf_union(c_pts)}")
+        if c_len_qtys:
+            lines.append(f"{pfx}lqty ::= {_gbnf_union(c_len_qtys)}")
+        if c_ratio_qtys:
+            lines.append(f"{pfx}rqty ::= {_gbnf_union(c_ratio_qtys)}")
+        if c_ang_qtys:
+            lines.append(f"{pfx}aqty ::= {_gbnf_union(c_ang_qtys)}")
+        if c_len_tgts:
+            lines.append(f"{pfx}lentgt ::= {_gbnf_union(c_len_tgts)}")
+        if c_solids:
+            lines.append(f"{pfx}sol ::= {_gbnf_union(c_solids)}")
+
+        def _cue(v5_kind: str) -> bool:
+            return any(c in clow for c in _PREDICATE_LEXICAL_CUES[v5_kind])
+
+        ang_spans = [
+            sp
+            for sp in re.split(r"[,;]", cl.text)
+            if re.search(r"(?<!vuông\s)\bgóc\b|\b(?:sin|cos|tan|cot)\b|°", sp.lower())
+        ]
+
+        def _span_has_poly(sp: str) -> bool:
+            return bool(
+                any(re.search(rf"(?<![A-Z0-9'.]){re.escape(p)}(?![A-Z0-9'])", sp) for p in c_polys)
+                or ("đáy" in sp.lower() and len(c_polys) >= 1)
+            )
+
+        def _span_poly_count(sp: str) -> int:
+            hits = {p for p in c_polys if re.search(rf"(?<![A-Z0-9'.]){re.escape(p)}(?![A-Z0-9'])", sp)}
+            if "đáy" in sp.lower() and base_polys_from_solids:
+                hits.update(p for p in base_polys_from_solids if p in c_polys)
+            return len(hits)
+
+        def _span_segs(sp: str) -> list[str]:
+            return [s for s in c_segs if re.search(rf"(?<![A-Z0-9']){re.escape(s)}(?![A-Z0-9'])", sp)]
+
+        allow_ang_lp = (
+            bool(c_polys and c_segs and c_ang_qtys and _cue("line_plane_angle"))
+            and (
+                not ang_spans
+                or any(_span_has_poly(sp) and len(_span_segs(sp)) >= 1 for sp in ang_spans)
+            )
+        )
+        allow_ang_pp = (
+            bool(len(c_polys) >= 2 and c_ang_qtys and _cue("plane_plane_angle"))
+            and (
+                not ang_spans
+                or any(_span_poly_count(sp) >= 2 for sp in ang_spans)
+            )
+        )
+        allow_ang_ll = (
+            bool(len(c_segs) >= 2 and c_ang_qtys and _cue("line_line_angle"))
+            and (
+                not ang_spans
+                or any(len(_span_segs(sp)) >= 2 and not _span_has_poly(sp) for sp in ang_spans)
+            )
+        )
+        has_ratio_cue = any(w in clow for w in ("chia", "tỉ số", "tỷ số", "gấp", "nửa", "lần", "/")) or bool(
+            re.search(r"\b[A-Z][0-9']*=[0-9]+\s*\*?\s*[A-Z][0-9']*\b", cl.text)
+        )
+
+        c_rels: list[str] = []
+        has_sspair = False
+        if c_polys:
+            if _cue("regular_polygon"):
+                if c_len_qtys:
+                    lines.append(
+                        rf'{pfx}regp ::= "{{\"c\":{cid},\"p\":\"reg_poly\",\"a\":" {pfx}poly (",\"q\":" {pfx}lqty)? "}}"'
+                    )
+                else:
+                    lines.append(rf'{pfx}regp ::= "{{\"c\":{cid},\"p\":\"reg_poly\",\"a\":" {pfx}poly "}}"')
+                c_rels.append(f"{pfx}regp")
+            if c_quads:
+                if _cue("rhombus"):
+                    if c_len_qtys:
+                        lines.append(
+                            rf'{pfx}rhom ::= "{{\"c\":{cid},\"p\":\"rhom\",\"a\":" {pfx}quad (",\"q\":" {pfx}lqty)? "}}"'
+                        )
+                    else:
+                        lines.append(rf'{pfx}rhom ::= "{{\"c\":{cid},\"p\":\"rhom\",\"a\":" {pfx}quad "}}"')
+                    c_rels.append(f"{pfx}rhom")
+                quad_kinds = [
+                    name
+                    for name, vkind in (("rect", "rectangle"), ("para", "parallelogram"), ("trap", "trapezoid"), ("iso_trap", "isosceles_trapezoid"))
+                    if _cue(vkind)
+                ]
+                if quad_kinds:
+                    qk_rule = " | ".join(f'"\\"{q}\\""' for q in quad_kinds)
+                    if c_segs and any(q in ("trap", "iso_trap") for q in quad_kinds):
+                        lines.append(
+                            rf'{pfx}basenq ::= "{{\"c\":{cid},\"p\":" ({qk_rule}) ",\"a\":" {pfx}quad (",\"b\":" {pfx}seg)? "}}"'
+                        )
+                    else:
+                        lines.append(
+                            rf'{pfx}basenq ::= "{{\"c\":{cid},\"p\":" ({qk_rule}) ",\"a\":" {pfx}quad "}}"'
+                        )
+                    c_rels.append(f"{pfx}basenq")
+            if c_tris and c_pts:
+                tri_pts = [pt for pt in c_pts if any(pt in t for t in c_tris)]
+                if tri_pts:
+                    lines.append(f"{pfx}tript ::= {_gbnf_union(tri_pts)}")
+                    tri_shapes: list[str] = []
+                    if _cue("right_angle") and ("tam giác" in clow or "vuông tại" in clow or "vuông ở" in clow or "vuông cân" in clow or "90" in clow):
+                        tri_shapes.append('"\\"right_tri\\""')
+                        if "vuông cân" in clow:
+                            tri_shapes.append('"\\"right_iso_tri\\""')
+                    if _cue("equal_length") and ("cân" in clow):
+                        tri_shapes.append('"\\"iso_tri\\""')
+                    if tri_shapes:
+                        lines.append(
+                            rf'{pfx}triptr ::= "{{\"c\":{cid},\"p\":" ({" | ".join(tri_shapes)}) ",\"a\":" {pfx}tri ",\"pt\":" {pfx}tript "}}"'
+                        )
+                        c_rels.append(f"{pfx}triptr")
+                    if _cue("centroid"):
+                        lines.append(rf'{pfx}cent ::= "{{\"c\":{cid},\"p\":\"cent\",\"pt\":" {pfx}pt ",\"a\":" {pfx}tri "}}"')
+                        c_rels.append(f"{pfx}cent")
+                    if c_ang_qtys and _cue("vertex_angle"):
+                        lines.append(
+                            rf'{pfx}angvtx ::= "{{\"c\":{cid},\"p\":\"ang_vtx\",\"a\":" {pfx}tri ",\"pt\":" {pfx}tript ",\"q\":" {pfx}aqty "}}"'
+                        )
+                        c_rels.append(f"{pfx}angvtx")
+            if len(c_polys) >= 2 and (_cue("face_perpendicular_base") or allow_ang_pp):
+                if len(c_polys) <= 5:
+                    pp_alts = [rf'"\"{a}\",\"b\":\"{b}\""' for a in c_polys for b in c_polys if a != b]
+                    lines.append(f"{pfx}pppair ::= " + " | ".join(pp_alts))
+                if _cue("face_perpendicular_base"):
+                    if len(c_polys) <= 5:
+                        lines.append(rf'{pfx}facep ::= "{{\"c\":{cid},\"p\":\"face_perp\",\"a\":" {pfx}pppair "}}"')
+                    else:
+                        lines.append(rf'{pfx}facep ::= "{{\"c\":{cid},\"p\":\"face_perp\",\"a\":" {pfx}poly ",\"b\":" {pfx}poly "}}"')
+                    c_rels.append(f"{pfx}facep")
+                if allow_ang_pp:
+                    if len(c_polys) <= 5:
+                        lines.append(rf'{pfx}angpp ::= "{{\"c\":{cid},\"p\":\"ang_pp\",\"a\":" {pfx}pppair ",\"q\":" {pfx}aqty "}}"')
+                    else:
+                        lines.append(rf'{pfx}angpp ::= "{{\"c\":{cid},\"p\":\"ang_pp\",\"a\":" {pfx}poly ",\"b\":" {pfx}poly ",\"q\":" {pfx}aqty "}}"')
+                    c_rels.append(f"{pfx}angpp")
+            if c_len_qtys and _cue("face_area"):
+                lines.append(rf'{pfx}area ::= "{{\"c\":{cid},\"p\":\"area\",\"a\":" {pfx}poly ",\"q\":" {pfx}lqty "}}"')
+                c_rels.append(f"{pfx}area")
+            if len(c_segs) >= 2 and c_ang_qtys and _cue("dihedral_angle"):
+                if len(c_segs) <= 5:
+                    ss_alts = [rf'"\"{a}\",\"b\":\"{b}\""' for a in c_segs for b in c_segs if a != b]
+                    lines.append(f"{pfx}sspair ::= " + " | ".join(ss_alts))
+                    has_sspair = True
+                    lines.append(rf'{pfx}dihed ::= "{{\"c\":{cid},\"p\":\"dihed\",\"a\":" {pfx}sspair ",\"q\":" {pfx}aqty "}}"')
+                else:
+                    lines.append(rf'{pfx}dihed ::= "{{\"c\":{cid},\"p\":\"dihed\",\"a\":" {pfx}seg ",\"b\":" {pfx}seg ",\"q\":" {pfx}aqty "}}"')
+                c_rels.append(f"{pfx}dihed")
+        if c_segs:
+            if c_polys and _cue("perpendicular_line_plane"):
+                lines.append(rf'{pfx}perplp ::= "{{\"c\":{cid},\"p\":\"perp_lp\",\"a\":" {pfx}seg ",\"b\":" {pfx}poly "}}"')
+                c_rels.append(f"{pfx}perplp")
+            if len(c_segs) >= 2:
+                pair_ll_preds: list[str] = []
+                if _cue("perpendicular_lines"):
+                    pair_ll_preds.append('"\\"perp_ll\\""')
+                if _cue("equal_length"):
+                    pair_ll_preds.append('"\\"eq_len\\""')
+                if pair_ll_preds:
+                    if len(c_segs) <= 5:
+                        if not has_sspair:
+                            ss_alts = [rf'"\"{a}\",\"b\":\"{b}\""' for a in c_segs for b in c_segs if a != b]
+                            lines.append(f"{pfx}sspair ::= " + " | ".join(ss_alts))
+                            has_sspair = True
+                        lines.append(rf'{pfx}pairll ::= "{{\"c\":{cid},\"p\":" ({" | ".join(pair_ll_preds)}) ",\"a\":" {pfx}sspair "}}"')
+                    else:
+                        lines.append(rf'{pfx}pairll ::= "{{\"c\":{cid},\"p\":" ({" | ".join(pair_ll_preds)}) ",\"a\":" {pfx}seg ",\"b\":" {pfx}seg "}}"')
+                    c_rels.append(f"{pfx}pairll")
+            if c_pts:
+                if _cue("midpoint"):
+                    lines.append(rf'{pfx}mid ::= "{{\"c\":{cid},\"p\":\"mid\",\"pt\":" {pfx}pt ",\"a\":" {pfx}seg "}}"')
+                    c_rels.append(f"{pfx}mid")
+                if len(c_segs) >= 2 and _cue("intersect_line_line"):
+                    lines.append(rf'{pfx}interll ::= "{{\"c\":{cid},\"p\":\"inter_ll\",\"pt\":" {pfx}pt ",\"a\":" {pfx}seg ",\"b\":" {pfx}seg "}}"')
+                    c_rels.append(f"{pfx}interll")
+                if c_polys and _cue("intersect_line_plane"):
+                    lines.append(rf'{pfx}interlp ::= "{{\"c\":{cid},\"p\":\"inter_lp\",\"pt\":" {pfx}pt ",\"a\":" {pfx}seg ",\"b\":" {pfx}poly "}}"')
+                    c_rels.append(f"{pfx}interlp")
+                if c_ratio_qtys and has_ratio_cue:
+                    lines.append(rf'{pfx}div ::= "{{\"c\":{cid},\"p\":\"div\",\"pt\":" {pfx}pt ",\"a\":" {pfx}seg ",\"q\":" {pfx}rqty "}}"')
+                    c_rels.append(f"{pfx}div")
+            if allow_ang_lp:
+                lines.append(rf'{pfx}anglp ::= "{{\"c\":{cid},\"p\":\"ang_lp\",\"a\":" {pfx}seg ",\"b\":" {pfx}poly ",\"q\":" {pfx}aqty "}}"')
+                c_rels.append(f"{pfx}anglp")
+            if allow_ang_ll:
+                lines.append(rf'{pfx}angll ::= "{{\"c\":{cid},\"p\":\"ang_ll\",\"a\":" {pfx}seg ",\"b\":" {pfx}seg ",\"q\":" {pfx}aqty "}}"')
+                c_rels.append(f"{pfx}angll")
+            if len(c_segs) >= 2 and c_ratio_qtys and has_ratio_cue:
+                lines.append(rf'{pfx}ratio ::= "{{\"c\":{cid},\"p\":\"ratio\",\"a\":" {pfx}seg ",\"b\":" {pfx}seg ",\"q\":" {pfx}rqty "}}"')
+                c_rels.append(f"{pfx}ratio")
+        if len(c_pts) >= 2 and ("chiếu" in clow or "đường cao" in clow or "chân đường cao" in clow):
+            proj_preds = []
+            if "chiếu" in clow:
+                proj_preds.append('"\\"proj\\""')
+            if "đường cao" in clow or "chân đường cao" in clow or "vuông góc" in clow:
+                proj_preds.append('"\\"alt\\""')
+            if proj_preds:
+                p_rule = " | ".join(proj_preds)
+                if c_segs and c_polys:
+                    lines.append(rf'{pfx}projtgt ::= {pfx}seg | {pfx}poly')
+                    lines.append(rf'{pfx}proj ::= "{{\"c\":{cid},\"p\":" ({p_rule}) ",\"pt\":" {pfx}pt ",\"a\":" {pfx}pt ",\"b\":" {pfx}projtgt "}}"')
+                    c_rels.append(f"{pfx}proj")
+                elif c_segs:
+                    lines.append(rf'{pfx}proj ::= "{{\"c\":{cid},\"p\":" ({p_rule}) ",\"pt\":" {pfx}pt ",\"a\":" {pfx}pt ",\"b\":" {pfx}seg "}}"')
+                    c_rels.append(f"{pfx}proj")
+                elif c_polys:
+                    lines.append(rf'{pfx}proj ::= "{{\"c\":{cid},\"p\":" ({p_rule}) ",\"pt\":" {pfx}pt ",\"a\":" {pfx}pt ",\"b\":" {pfx}poly "}}"')
+                    c_rels.append(f"{pfx}proj")
+        if c_len_tgts and c_len_qtys and _cue("segment_length"):
+            lines.append(rf'{pfx}len ::= "{{\"c\":{cid},\"p\":\"len\",\"a\":" {pfx}lentgt ",\"q\":" {pfx}lqty "}}"')
+            c_rels.append(f"{pfx}len")
+        if c_solids and c_len_qtys:
+            solidq_preds: list[str] = []
+            if _cue("height"):
+                solidq_preds.append('"\\"height\\""')
+            if _cue("solid_volume"):
+                solidq_preds.append('"\\"vol\\""')
+            if solidq_preds:
+                lines.append(rf'{pfx}solidq ::= "{{\"c\":{cid},\"p\":" ({" | ".join(solidq_preds)}) ",\"a\":" {pfx}sol ",\"q\":" {pfx}lqty "}}"')
+                c_rels.append(f"{pfx}solidq")
+
+        if c_rels:
+            lines.append(f"relc{cid} ::= " + " | ".join(c_rels))
+            raw_qty_occ = len(_TOKEN_QTY_RE.findall(cl.text))
+            struct_cues = sum(
+                1
+                for k in (
+                    "regular_polygon", "rectangle", "parallelogram", "rhombus", "trapezoid",
+                    "right_angle", "perpendicular_line_plane", "perpendicular_lines",
+                    "face_perpendicular_base", "midpoint", "centroid", "orthogonal_projection",
+                )
+                if _cue(k)
+            )
+            k_max = min(6, max(2, raw_qty_occ + struct_cues))
+            seq_expr = f"relc{cid}"
+            for _ in range(k_max - 1):
+                seq_expr = f'relc{cid} ("," {seq_expr})?'
+            lines.append(f"rseq{cid} ::= {seq_expr}")
+            rel_clause_rules.append(f"rseq{cid}")
+
+    if rel_clause_rules:
+        if len(rel_clause_rules) == 1:
+            lines.append(f"rellistreq ::= {rel_clause_rules[0]}")
+        else:
+            lines.append(f"rtail{len(rel_clause_rules) - 1} ::= {rel_clause_rules[-1]}")
+            for i in range(len(rel_clause_rules) - 2, -1, -1):
+                cur_name = "rellistreq" if i == 0 else f"rtail{i}"
+                nxt_name = f"rtail{i + 1}"
+                lines.append(f'{cur_name} ::= {rel_clause_rules[i]} ("," {nxt_name})? | {nxt_name}')
+        lines.append('rellist ::= "" | rellistreq')
+    else:
+        lines.append('rellist ::= ""')
+
+    # 3. Goal-clause scoped goal rules (goalc{cid})
+    marked_goal_clauses = [cl for cl in active_clauses if _GOAL_VERB_RE.search(cl.text)]
+    if clause_subset is None and not marked_goal_clauses:
+        marked_goal_clauses = [cl for cl in active_clauses if _GOAL_MARKERS_RE.search(cl.text)] or list(active_clauses)
+
+    all_solid_lbls = [e.label for e in all_solids]
+    all_poly_lbls = [e.label for e in ctx.entities if e.kind == "poly"]
+    all_seg_lbls = [e.label for e in ctx.entities if e.kind == "seg"]
+    all_pt_lbls = [e.label for e in ctx.entities if e.kind == "point"]
+
+    goal_clause_rules: list[str] = []
+    for gcl in marked_goal_clauses:
+        cid = gcl.clause_id
+        glow = gcl.text.lower()
+        g_polys = [e.label for e in ctx.entities if e.kind == "poly" and cid in e.clause_ids]
+        if "đáy" in glow:
+            for bp in base_polys_from_solids:
+                if bp not in g_polys:
+                    g_polys.append(bp)
+        g_segs = [e.label for e in ctx.entities if e.kind == "seg" and cid in e.clause_ids]
+        g_pts = [e.label for e in ctx.entities if e.kind == "point" and cid in e.clause_ids]
+        if not (g_polys or g_segs or g_pts):
+            g_polys, g_segs, g_pts = all_poly_lbls, all_seg_lbls, all_pt_lbls
+
+        gpfx = f"gc{cid}"
+        if all_solid_lbls:
+            lines.append(f"{gpfx}sol ::= {_gbnf_union(all_solid_lbls)}")
+        if g_polys:
+            lines.append(f"{gpfx}poly ::= {_gbnf_union(g_polys)}")
+        if g_segs:
+            lines.append(f"{gpfx}seg ::= {_gbnf_union(g_segs)}")
+        if g_pts:
+            lines.append(f"{gpfx}pt ::= {_gbnf_union(g_pts)}")
+
+        g_alts: list[str] = []
+        if all_solid_lbls:
+            lines.append(rf'{gpfx}vol ::= "{{\"c\":{cid},\"t\":\"vol\",\"tgt\":" {gpfx}sol "}}"')
+            g_alts.append(f"{gpfx}vol")
+        if g_pts and g_polys:
+            lines.append(rf'{gpfx}dpp ::= "{{\"c\":{cid},\"t\":\"dist_pt_plane\",\"a\":" {gpfx}pt ",\"b\":" {gpfx}poly "}}"')
+            g_alts.append(f"{gpfx}dpp")
+        if g_pts and g_segs:
+            lines.append(rf'{gpfx}dpl ::= "{{\"c\":{cid},\"t\":\"dist_pt_line\",\"a\":" {gpfx}pt ",\"b\":" {gpfx}seg "}}"')
+            g_alts.append(f"{gpfx}dpl")
+        if g_segs:
+            if len(g_segs) >= 2:
+                lines.append(rf'{gpfx}pll ::= "{{\"c\":{cid},\"t\":" ("\"dist_line_line\"" | "\"ang_ll\"" | "\"lratio\"") ",\"a\":" {gpfx}seg ",\"b\":" {gpfx}seg "}}"')
+                g_alts.append(f"{gpfx}pll")
+            lines.append(rf'{gpfx}len ::= "{{\"c\":{cid},\"t\":\"len\",\"a\":" {gpfx}seg "}}"')
+            g_alts.append(f"{gpfx}len")
+            if g_polys:
+                lines.append(rf'{gpfx}alp ::= "{{\"c\":{cid},\"t\":\"ang_lp\",\"a\":" {gpfx}seg ",\"b\":" {gpfx}poly "}}"')
+                g_alts.append(f"{gpfx}alp")
+        if g_polys:
+            lines.append(rf'{gpfx}area ::= "{{\"c\":{cid},\"t\":\"area\",\"a\":" {gpfx}poly "}}"')
+            g_alts.append(f"{gpfx}area")
+            if len(g_polys) >= 2:
+                lines.append(rf'{gpfx}ppp ::= "{{\"c\":{cid},\"t\":" ("\"ang_pp\"" | "\"aratio\"") ",\"a\":" {gpfx}poly ",\"b\":" {gpfx}poly "}}"')
+                g_alts.append(f"{gpfx}ppp")
+
+        if g_alts:
+            lines.append(f"goalc{cid} ::= " + " | ".join(g_alts))
+            goal_clause_rules.append(f"goalc{cid}")
+
+    if goal_clause_rules:
+        lines.append("goalitem ::= " + " | ".join(goal_clause_rules))
+        lines.append('goallistreq ::= goalitem ("," goalitem)?')
+        lines.append('goallist ::= "" | goallistreq')
+    else:
+        lines.append('goallist ::= ""')
+
+    lines.extend([
+        r'unresitem ::= "{\"c\":" cid ",\"k\":" ukind "}"',
+        r'ukind ::= "\"ambig\"" | "\"missing\"" | "\"unsup\"" | "\"contra\""',
+        'unresreq ::= unresitem ("," unresitem)?',
+        'unreslist ::= "" | unresreq',
+    ])
+
+    if clause_subset is None:
+        if solid_rule_names and goal_clause_rules:
+            r_expr = "rellistreq" if rel_clause_rules else "rellist"
+            lines.insert(
+                0,
+                rf'root ::= "{{\"s\":" solidreq ",\"r\":[" {r_expr} "],\"g\":[" goallistreq "],\"u\":[]}}" | "{{\"s\":" solidval ",\"r\":[" rellist "],\"g\":[" goallist "],\"u\":[" unresreq "]}}"',
+            )
+        else:
+            lines.insert(0, r'root ::= "{\"s\":" solidval ",\"r\":[" rellist "],\"g\":[" goallist "],\"u\":[" unresreq "]}"')
+    else:
+        lines.insert(0, r'root ::= "{\"s\":" solidval ",\"r\":[" rellist "],\"g\":[" goallist "],\"u\":[" unreslist "]}"')
+
+    return "\n".join(lines) + "\n"
+
+
+@dataclass(frozen=True)
+class CandidateEntity:
+    entity_id: int
+    kind: str  # "solid" | "poly" | "seg" | "point"
+    label: str
+    vertices: tuple[str, ...]
+    clause_ids: tuple[int, ...]
+    solid_subtype: str = ""  # "pyr" | "pri" | "cube" | "box" | ""
+    is_regular_solid: bool = False
+
+
+@dataclass(frozen=True)
+class CandidateQuantity:
+    qty_id: int
+    raw_token: str
+    canon_expr: str
+    implied_unit: str  # "" | "deg" | "rad" | "sin" | "cos" | "tan" | "cot"
+    clause_ids: tuple[int, ...]
+
+
+@dataclass(frozen=True)
+class CompactClauseContext:
+    working_text: str
+    clauses: list[IndexedClause]
+    entities: list[CandidateEntity]
+    quantities: list[CandidateQuantity]
+    local_parser_status: str
+    local_parser_reason: str | None
+    local_parser_payload: dict[str, Any] | None
+
+    def format_entity_table(self) -> str:
+        return " ".join(
+            f"{e.entity_id}:{e.label}({e.kind[0]})" for e in self.entities
+        ) or "none"
+
+    def format_quantity_table(self) -> str:
+        return " ".join(
+            f"{q.qty_id}:{q.raw_token}" for q in self.quantities
+        ) or "none"
+
+
+def _compact_schema_sha256() -> str:
+    return hashlib.sha256(COMPACT_CLAUSE_GBNF.encode("utf-8")).hexdigest()
+
+
+def _detect_solid_subtype(text_low: str) -> tuple[str, bool]:
+    if "lập phương" in text_low:
+        return "cube", True
+    if "hộp chữ nhật" in text_low:
+        return "box", True
+    if "lăng trụ" in text_low or "hình hộp" in text_low:
+        return "pri", ("đứng" in text_low or "đều" in text_low)
+    return "pyr", bool(re.search(r"chóp\s+(?:tam\s+giác\s+|tứ\s+giác\s+)?đều|tứ\s+diện\s+đều", text_low))
+
+
+def _dedup_ordered_pts(seq: list[str]) -> tuple[str, ...]:
+    out: list[str] = []
+    for p in seq:
+        if p and p not in out:
+            out.append(p)
+    return tuple(out)
+
+
+def build_compact_clause_context(working_text: str) -> CompactClauseContext:
+    """Deterministically index clauses, geometric entities (E), and quantities (Q)."""
+    clauses = index_source_clauses(working_text)
+    local_res = parse_geometry_problem_locally(working_text)
+
+    entities: list[CandidateEntity] = []
+    ent_key_to_idx: dict[tuple[str, str], int] = {}
+
+    def _add_entity(
+        kind: str,
+        label: str,
+        verts: tuple[str, ...],
+        cid: int,
+        *,
+        solid_subtype: str = "",
+        is_reg: bool = False,
+    ) -> int:
+        key = (kind, label)
+        if key in ent_key_to_idx:
+            idx = ent_key_to_idx[key]
+            existing = entities[idx]
+            if cid not in existing.clause_ids:
+                entities[idx] = CandidateEntity(
+                    entity_id=existing.entity_id,
+                    kind=existing.kind,
+                    label=existing.label,
+                    vertices=existing.vertices,
+                    clause_ids=(*existing.clause_ids, cid),
+                    solid_subtype=existing.solid_subtype or solid_subtype,
+                    is_regular_solid=existing.is_regular_solid or is_reg,
+                )
+            return idx
+        idx = len(entities)
+        ent_key_to_idx[key] = idx
+        entities.append(
+            CandidateEntity(
+                entity_id=idx,
+                kind=kind,
+                label=label,
+                vertices=verts,
+                clause_ids=(cid,),
+                solid_subtype=solid_subtype,
+                is_regular_solid=is_reg,
+            )
+        )
+        return idx
+
+    # 1. Extract Entities per clause in textual order
+    for cl in clauses:
+        ctext = cl.text
+        clow = ctext.lower()
+        cid = cl.clause_id
+        # 1a. Dotted solids S.ABC / ABC.A'B'C'
+        for sm in _SOLID_RE.finditer(ctext):
+            s_lbl = sm.group(0)
+            subtype, is_reg = _detect_solid_subtype(clow)
+            left, right = s_lbl.split(".", 1)
+            lpts = re.findall(r"[A-Z][0-9]*'*", left)
+            rpts = re.findall(r"[A-Z][0-9]*'*", right)
+            if len(lpts) >= 3 and len(lpts) == len(rpts):
+                if subtype == "pyr":
+                    subtype = "pri"
+                all_v = tuple([*lpts, *rpts])
+                _add_entity("solid", s_lbl, all_v, cid, solid_subtype=subtype, is_reg=is_reg)
+                _add_entity("poly", left, tuple(lpts), cid)
+                _add_entity("poly", right, tuple(rpts), cid)
+                # Regular/explicit cube needs AA' lateral edge anchor if not explicitly named in text
+                if subtype == "cube" and len(lpts) >= 1 and len(rpts) >= 1:
+                    _add_entity("seg", f"{lpts[0]}{rpts[0]}", (lpts[0], rpts[0]), cid)
+            elif len(lpts) == 1 and len(rpts) >= 3:
+                all_v = tuple([*lpts, *rpts])
+                _add_entity("solid", s_lbl, all_v, cid, solid_subtype="pyr", is_reg=is_reg)
+                _add_entity("poly", right, tuple(rpts), cid)
+                if is_reg and _AMBIGUOUS_LATERAL_SINGLE_RE.search(clow):
+                    _add_entity("seg", f"{lpts[0]}{rpts[0]}", (lpts[0], rpts[0]), cid)
+
+        # 1b. Tetrahedron without dot ("tứ diện ABCD")
+        for tm in re.finditer(r"tứ\s+diện(?:\s+đều)?\s+([A-Z][0-9]*'*){4}\b", ctext, re.IGNORECASE | re.UNICODE):
+            pts = re.findall(r"[A-Z][0-9]*'*", tm.group(0))
+            if len(pts) == 4 and len(set(pts)) == 4:
+                is_reg = "đều" in tm.group(0).lower()
+                s_lbl = f"{pts[0]}.{''.join(pts[1:])}"
+                _add_entity("solid", s_lbl, tuple(pts), cid, solid_subtype="pyr", is_reg=is_reg)
+                _add_entity("poly", "".join(pts[1:]), tuple(pts[1:]), cid)
+
+        # 1c. Parenthesized planes (SBC), (ABCD) & named triangles / faces / angles
+        for pm in re.finditer(r"\(\s*((?:[A-Z][0-9]*'*){3,6})\s*\)", ctext):
+            plbl = pm.group(1)
+            pts = _dedup_ordered_pts(re.findall(r"[A-Z][0-9]*'*", plbl))
+            if len(pts) >= 3:
+                _add_entity("poly", "".join(pts), pts, cid)
+
+        for nm in re.finditer(
+            r"\b(?:đáy|mặt\s+bên|mặt\s+phẳng|tam\s+giác|tứ\s+giác|hình\s+vuông|hình\s+chữ\s+nhật|hình\s+thoi|hình\s+bình\s+hành|hình\s+thang|góc)\s+([A-Z][0-9]*'*(?:[A-Z][0-9]*'*){2,5})(?![A-Za-zÀ-Ỹà-ỹ0-9'])",
+            ctext,
+            re.IGNORECASE | re.UNICODE,
+        ):
+            plbl = nm.group(1)
+            pts = _dedup_ordered_pts(re.findall(r"[A-Z][0-9]*'*", plbl))
+            if len(pts) >= 3:
+                _add_entity("poly", "".join(pts), pts, cid)
+
+        # 1d. Standalone 2-vertex segments/lines (SA, BC, AA', CD, AH, ...)
+        for lm in re.finditer(r"(?<![A-Za-zÀ-Ỹà-ỹ0-9'])([A-Z][0-9]*'?)([A-Z][0-9]*'?)(?![A-Z0-9'a-zà-ỹ])", ctext):
+            p1, p2 = lm.group(1), lm.group(2)
+            if p1 != p2:
+                _add_entity("seg", f"{p1}{p2}", (p1, p2), cid)
+
+        # 1e. Single vertices in clause
+        for vp in sorted(extract_geometry_points(ctext), key=lambda x: (ctext.find(x), x)):
+            if re.fullmatch(r"[A-Z][0-9]*'*", vp):
+                _add_entity("point", vp, (vp,), cid)
+
+    # 2. Extract Quantities per clause in textual order
+    quantities: list[CandidateQuantity] = []
+    qty_key_to_idx: dict[tuple[str, str], int] = {}
+
+    def _add_qty(raw_tok: str, canon_expr: str, implied_unit: str, cid: int) -> int:
+        key = (raw_tok, implied_unit)
+        if key in qty_key_to_idx:
+            idx = qty_key_to_idx[key]
+            ex = quantities[idx]
+            if cid not in ex.clause_ids:
+                quantities[idx] = CandidateQuantity(
+                    qty_id=ex.qty_id,
+                    raw_token=ex.raw_token,
+                    canon_expr=ex.canon_expr,
+                    implied_unit=ex.implied_unit,
+                    clause_ids=(*ex.clause_ids, cid),
+                )
+            return idx
+        idx = len(quantities)
+        qty_key_to_idx[key] = idx
+        quantities.append(
+            CandidateQuantity(
+                qty_id=idx,
+                raw_token=raw_tok,
+                canon_expr=canon_expr,
+                implied_unit=implied_unit,
+                clause_ids=(cid,),
+            )
+        )
+        return idx
+
+    for cl in clauses:
+        ctext = cl.text
+        clow = ctext.lower()
+        cid = cl.clause_id
+        for qm in _TOKEN_QTY_RE.finditer(ctext):
+            raw_tok = qm.group(1).strip().rstrip(".,;:")
+            if not raw_tok:
+                continue
+            eval_ok = _try_eval_qty(raw_tok)
+            if eval_ok is None and not re.fullmatch(r"\d+(?:[.,]\d+)?°?", raw_tok):
+                continue
+            # Detect degree or trig context in window preceding match
+            win = clow[max(0, qm.start() - 35): qm.start()]
+            if raw_tok.endswith("°") or re.match(r"^\s*độ\b", clow[qm.end(): qm.end() + 6]):
+                u = "deg"
+                canon = raw_tok.rstrip("°").strip()
+            elif re.search(r"\b(sin|cos|tan|cot)\b", win):
+                m_trig = re.findall(r"\b(sin|cos|tan|cot)\b", win)
+                u = m_trig[-1]
+                canon = _canon_val(raw_tok)
+            else:
+                u = ""
+                canon = _canon_val(raw_tok)
+            _add_qty(raw_tok, canon, u, cid)
+
+        for wphrase, mapped in _WORD_RATIO_MAP.items():
+            if wphrase in clow:
+                _add_qty(wphrase, mapped, "", cid)
+
+    return CompactClauseContext(
+        working_text=working_text,
+        clauses=clauses,
+        entities=entities,
+        quantities=quantities,
+        local_parser_status=local_res.status,
+        local_parser_reason=local_res.reason_code,
+        local_parser_payload=local_res.payload,
+    )
+
+
+_VALUE_ROLE_KINDS = frozenset({"regular_polygon", "rhombus", "segment_length", "height"})
+_KEEP_CLAUSE_KINDS = frozenset({
+    "midpoint", "centroid", "orthogonal_projection", "orthogonal_projection_line",
+    "divide_segment", "intersect_line_line", "intersect_line_plane",
+    "right_angle", "altitude", "face_perpendicular_base",
+})
+
+
+def _select_source_gate_quote(
+    clause_text: str,
+    required_tokens: list[str],
+    working_text: str,
+    kind: str,
+    role_val: str | None = None,
+) -> str:
+    """Pick a verbatim substring that respects both clause grounding and Registry `_lien_ket_cau`."""
+    req = [t for t in required_tokens if t]
+    if kind in _KEEP_CLAUSE_KINDS and clause_text in working_text:
+        return clause_text
+
+    # On multi-value clauses (e.g. regular pyramid base side AND lateral edge), isolate sub-clause with fewest extra numbers
+    if kind in _VALUE_ROLE_KINDS and role_val:
+        pieces: list[str] = []
+        for piece in re.split(r"\s*,\s*|\s+và\s+|\s+với\s+|\s+đồng\s+thời\s+", clause_text, flags=re.IGNORECASE):
+            seg = piece.strip(" ,;:")
+            if seg and seg in working_text:
+                pieces.append(seg)
+        pieces.append(clause_text)
+        valid_cands: list[tuple[int, int, str]] = []
+        for cand in pieces:
+            cpts = extract_geometry_points(cand)
+            tok_ok = all(
+                (t in cpts or t in cand) if re.fullmatch(r"[A-Z][0-9]*'*", t) else (t.lower() in cand.lower())
+                for t in req
+            )
+            if not tok_ok:
+                continue
+            qty_hits = len(_TOKEN_QTY_RE.findall(cand))
+            # Prefer sub-clause containing role_val uniquely (fewest numbers) and tightest length
+            valid_cands.append((abs(qty_hits - 1), len(cand), cand))
+        if valid_cands:
+            valid_cands.sort()
+            return valid_cands[0][2]
+
+    return select_clean_quote(clause_text, req, working_text)
+
+
+def _expand_compact_relation(
+    rel: dict[str, Any],
+    ctx: CompactClauseContext,
+    solid_info: dict[str, Any] | None,
+) -> tuple[list[dict[str, Any]], str | None]:
+    """Validate entity/quantity indices + source cues and lower into typed-fact-next/2 premises."""
+    cid = rel.get("c")
+    pcode = str(rel.get("p") or "").strip()
+    if pcode not in _COMPACT_TO_V5_KIND:
+        return [], f"UNSUPPORTED_OP_KIND:{pcode}"
+    if not isinstance(cid, int) or cid < 0 or cid >= len(ctx.clauses):
+        return [], f"UNGROUNDED_CLAUSE_ID:{cid}"
+
+    clause = ctx.clauses[cid]
+    ctext = clause.text
+    clow = ctext.lower()
+    v5_kind = _COMPACT_TO_V5_KIND[pcode]
+
+    # Pre-check clause-level safety invariants BEFORE expanding
+    if _PURE_QUESTION_RE.match(ctext) and not _PREMISE_MARKERS_IN_CLAUSE_RE.search(clow):
+        return [], f"GOAL_CLAUSE_USED_AS_PREMISE:clause_{cid}"
+    if v5_kind not in _PREDICATE_NEGATION_EXEMPT and _NEGATED_PREDICATE_RE.search(clow):
+        return [], f"NEGATED_PREDICATE_CLAUSE:{v5_kind}"
+    if _AMBIGUOUS_LATERAL_SINGLE_RE.search(clow) and not _UNIVERSAL_LATERAL_RE.search(clow):
+        if not re.findall(r"\b[A-Z][0-9]*'*[A-Z][0-9]*'*\b", ctext):
+            return [], "AMBIGUOUS_REFERENCE:lateral_edge_not_unique"
+    if _AMBIGUOUS_FACE_SINGLE_RE.search(clow) and "(" not in ctext:
+        if not re.findall(r"\b[A-Z][0-9]*'*[A-Z][0-9]*'*[A-Z][0-9]*'*\b", ctext):
+            return [], "AMBIGUOUS_REFERENCE:lateral_face_not_unique"
+
+    def _resolve_entity(val: Any, preferred_kinds: tuple[str, ...]) -> tuple[CandidateEntity | None, str | None]:
+        if val is None or val == -1 or val == "":
+            return None, None
+        if isinstance(val, int):
+            if val < 0 or val >= len(ctx.entities):
+                return None, f"OUT_OF_RANGE_ENTITY_ID:{val}"
+            return ctx.entities[val], None
+        sval = str(val).strip()
+        for pk in preferred_kinds:
+            for e in ctx.entities:
+                if e.kind == pk and e.label == sval:
+                    return e, None
+        for e in ctx.entities:
+            if e.label == sval:
+                return e, None
+        return None, f"OUT_OF_RANGE_ENTITY_LABEL:{sval}"
+
+    _KIND_BY_SLOT: dict[tuple[str, str], tuple[str, ...]] = {
+        ("reg_poly", "a"): ("poly",), ("rhom", "a"): ("poly",),
+        ("rect", "a"): ("poly",), ("para", "a"): ("poly",),
+        ("trap", "a"): ("poly",), ("trap", "b"): ("seg",),
+        ("iso_trap", "a"): ("poly",), ("iso_trap", "b"): ("seg",),
+        ("right_tri", "a"): ("poly",), ("right_tri", "pt"): ("point",),
+        ("right_iso_tri", "a"): ("poly",), ("right_iso_tri", "pt"): ("point",),
+        ("iso_tri", "a"): ("poly",), ("iso_tri", "pt"): ("point",),
+        ("perp_lp", "a"): ("seg",), ("perp_lp", "b"): ("poly",),
+        ("perp_ll", "a"): ("seg",), ("perp_ll", "b"): ("seg",),
+        ("face_perp", "a"): ("poly",), ("face_perp", "b"): ("poly",),
+        ("mid", "pt"): ("point",), ("mid", "a"): ("seg",),
+        ("cent", "pt"): ("point",), ("cent", "a"): ("poly",),
+        ("proj", "pt"): ("point",), ("proj", "a"): ("point",), ("proj", "b"): ("seg", "poly"),
+        ("alt", "pt"): ("point",), ("alt", "a"): ("point",), ("alt", "b"): ("seg", "poly"),
+        ("inter_ll", "pt"): ("point",), ("inter_ll", "a"): ("seg",), ("inter_ll", "b"): ("seg",),
+        ("inter_lp", "pt"): ("point",), ("inter_lp", "a"): ("seg",), ("inter_lp", "b"): ("poly",),
+        ("div", "pt"): ("point",), ("div", "a"): ("seg",),
+        ("len", "a"): ("seg", "solid"),
+        ("eq_len", "a"): ("seg",), ("eq_len", "b"): ("seg",),
+        ("height", "a"): ("solid", "seg"),
+        ("ang_lp", "a"): ("seg",), ("ang_lp", "b"): ("poly",),
+        ("ang_pp", "a"): ("poly",), ("ang_pp", "b"): ("poly",),
+        ("dihed", "a"): ("seg", "point"), ("dihed", "b"): ("seg",),
+        ("ang_ll", "a"): ("seg",), ("ang_ll", "b"): ("seg",),
+        ("ang_vtx", "a"): ("poly",), ("ang_vtx", "pt"): ("point",),
+        ("area", "a"): ("poly",), ("vol", "a"): ("solid",),
+        ("ratio", "a"): ("seg",), ("ratio", "b"): ("seg",),
+    }
+
+    ea, err = _resolve_entity(rel.get("a"), _KIND_BY_SLOT.get((pcode, "a"), ("seg", "poly", "point", "solid")))
+    if err:
+        return [], err
+    eb, err = _resolve_entity(rel.get("b"), _KIND_BY_SLOT.get((pcode, "b"), ("poly", "seg", "point")))
+    if err:
+        return [], err
+    ept, err = _resolve_entity(rel.get("pt"), _KIND_BY_SLOT.get((pcode, "pt"), ("point",)))
+    if err:
+        return [], err
+
+    qty_entry: CandidateQuantity | None = None
+    q_ref = rel.get("q")
+    if q_ref is not None and q_ref != -1 and q_ref != "":
+        if isinstance(q_ref, int):
+            if q_ref < 0 or q_ref >= len(ctx.quantities):
+                return [], f"OUT_OF_RANGE_QTY_ID:q={q_ref}"
+            qty_entry = ctx.quantities[q_ref]
+        else:
+            qs = str(q_ref).strip()
+            for qe in ctx.quantities:
+                if qe.raw_token == qs or qe.canon_expr == qs:
+                    qty_entry = qe
+                    break
+            if qty_entry is None:
+                return [], f"OUT_OF_RANGE_QTY_LABEL:q={qs}"
+        ok_q, _ = is_value_grounded_in_clause(qty_entry.raw_token, ctext, allow_unit_default_a=True)
+        if not ok_q:
+            return [], f"UNGROUNDED_VALUE:{v5_kind}:{qty_entry.canon_expr}"
+
+    cues = _PREDICATE_LEXICAL_CUES[v5_kind]
+    if not any(cue in clow for cue in cues):
+        return [], f"PREDICATE_CUE_MISSING:{v5_kind}"
+
+    # Verify all referenced entity points appear grounded in working text / base context
+    cpts = extract_geometry_points(ctext)
+    bpts = set(_solid_base_vertices(solid_info))
+    all_pts = extract_geometry_points(ctx.working_text)
+    is_reg_cube_or_lat = solid_info and solid_info.get("_is_reg") and (
+        "cạnh bên" in clow or "lập phương" in ctx.working_text.lower()
+    )
+    for ent in (ea, eb, ept):
+        if ent is None:
+            continue
+        for pt in ent.vertices:
+            if pt not in all_pts:
+                return [], f"UNGROUNDED_POINT:{pt}"
+            in_base_indirect = ("đáy" in clow or "mặt đáy" in clow) and pt in bpts
+            if pt not in cpts and not in_base_indirect:
+                poly_is_implicit_base = ent.kind == "poly" and set(ent.vertices) == bpts and "đáy" in clow
+                if not (ent.kind == "solid" and solid_info is not None) and not poly_is_implicit_base and not (is_reg_cube_or_lat and ent.kind == "seg"):
+                    return [], f"UNGROUNDED_POINT:{pt}"
+
+    sid = solid_info["solid_id"] if solid_info is not None else "s1"
+    out_premises: list[dict[str, Any]] = []
+
+    def _pts(e: CandidateEntity | None) -> list[str]:
+        return list(e.vertices) if e is not None else []
+
+    if pcode == "reg_poly":
+        verts = _pts(ea)
+        if len(verts) < 3:
+            return [], "INVALID_PREMISE_ARGS:regular_polygon"
+        args: dict[str, Any] = {"vertices": verts}
+        req = list(verts)
+        rv: str | None = None
+        if qty_entry is not None:
+            args["side"] = qty_entry.canon_expr
+            req.append(qty_entry.canon_expr)
+            rv = qty_entry.canon_expr
+        q_str = _select_source_gate_quote(ctext, req, ctx.working_text, "regular_polygon", role_val=rv)
+        out_premises.append({"kind": "regular_polygon", "args": args, "quote": q_str, "solid_id": sid})
+
+    elif pcode in ("rect", "para"):
+        verts = _pts(ea)
+        if len(verts) != 4:
+            return [], f"INVALID_PREMISE_ARGS:{v5_kind}"
+        q_str = _select_source_gate_quote(ctext, verts, ctx.working_text, v5_kind)
+        out_premises.append({"kind": v5_kind, "args": {"vertices": verts}, "quote": q_str, "solid_id": sid})
+
+    elif pcode == "rhom":
+        verts = _pts(ea)
+        if len(verts) != 4:
+            return [], "INVALID_PREMISE_ARGS:rhombus"
+        args = {"vertices": verts}
+        req = list(verts)
+        rv = None
+        if qty_entry is not None:
+            args["side"] = qty_entry.canon_expr
+            req.append(qty_entry.canon_expr)
+            rv = qty_entry.canon_expr
+        q_str = _select_source_gate_quote(ctext, req, ctx.working_text, "rhombus", role_val=rv)
+        out_premises.append({"kind": "rhombus", "args": args, "quote": q_str, "solid_id": sid})
+
+    elif pcode in ("trap", "iso_trap"):
+        verts, base_a = _pts(ea), _pts(eb)
+        if len(verts) != 4 or len(base_a) != 2:
+            return [], f"INVALID_PREMISE_ARGS:{v5_kind}"
+        rem = [v for v in verts if v not in base_a]
+        if len(rem) != 2:
+            return [], f"INVALID_PREMISE_ARGS:{v5_kind}"
+        q_str = _select_source_gate_quote(ctext, verts, ctx.working_text, v5_kind)
+        out_premises.append({"kind": v5_kind, "args": {"vertices": verts, "base_a": base_a, "base_b": rem}, "quote": q_str, "solid_id": sid})
+
+    elif pcode in ("right_tri", "right_iso_tri"):
+        poly_pts = _pts(ea)
+        vtx = _pts(ept)[0] if ept and len(ept.vertices) == 1 else ""
+        if not vtx or len(poly_pts) != 3 or vtx not in poly_pts:
+            return [], f"INVALID_PREMISE_ARGS:{pcode}"
+        rays = [x for x in poly_pts if x != vtx]
+        q_str = _select_source_gate_quote(ctext, poly_pts, ctx.working_text, "right_angle")
+        out_premises.append({"kind": "right_angle", "args": {"vertex": vtx, "rays": rays}, "quote": q_str, "solid_id": sid})
+        if pcode == "right_iso_tri" or "vuông cân" in clow:
+            out_premises.append({"kind": "equal_length", "args": {"segment_a": [vtx, rays[0]], "segment_b": [vtx, rays[1]]}, "quote": q_str, "solid_id": sid})
+
+    elif pcode == "iso_tri":
+        poly_pts = _pts(ea)
+        vtx = _pts(ept)[0] if ept and len(ept.vertices) == 1 else ""
+        if not vtx or len(poly_pts) != 3 or vtx not in poly_pts:
+            return [], "INVALID_PREMISE_ARGS:iso_tri"
+        rays = [x for x in poly_pts if x != vtx]
+        q_str = _select_source_gate_quote(ctext, poly_pts, ctx.working_text, "equal_length")
+        out_premises.append({"kind": "equal_length", "args": {"segment_a": [vtx, rays[0]], "segment_b": [vtx, rays[1]]}, "quote": q_str, "solid_id": sid})
+
+    elif pcode == "perp_lp":
+        line = _pts(ea)
+        plane = _pts(eb) if eb is not None else _solid_base_vertices(solid_info)
+        if len(plane) < 3 and "đáy" in clow:
+            plane = _solid_base_vertices(solid_info)
+        if len(line) != 2 or len(plane) < 3:
+            return [], "INVALID_PREMISE_ARGS:perpendicular_line_plane"
+        q_str = _select_source_gate_quote(ctext, [*line, *plane], ctx.working_text, "perpendicular_line_plane")
+        out_premises.append({"kind": "perpendicular_line_plane", "args": {"line": line, "plane": plane}, "quote": q_str, "solid_id": sid})
+
+    elif pcode == "perp_ll":
+        l1, l2 = _pts(ea), _pts(eb)
+        if len(l1) != 2 or len(l2) != 2:
+            return [], "INVALID_PREMISE_ARGS:perpendicular_lines"
+        q_str = _select_source_gate_quote(ctext, [*l1, *l2], ctx.working_text, "perpendicular_lines")
+        out_premises.append({"kind": "perpendicular_lines", "args": {"line1": l1, "line2": l2}, "quote": q_str, "solid_id": sid})
+
+    elif pcode == "face_perp":
+        face = _pts(ea)
+        base = _pts(eb) if eb is not None else _solid_base_vertices(solid_info)
+        if len(base) < 3 and "đáy" in clow:
+            base = _solid_base_vertices(solid_info)
+        if len(face) < 3 or len(base) < 3:
+            return [], "INVALID_PREMISE_ARGS:face_perpendicular_base"
+        q_str = _select_source_gate_quote(ctext, [*face, *base], ctx.working_text, "face_perpendicular_base")
+        out_premises.append({"kind": "face_perpendicular_base", "args": {"face": face, "base": base}, "quote": q_str, "solid_id": sid})
+
+    elif pcode == "mid":
+        pt = _pts(ept)[0] if ept and len(ept.vertices) == 1 else ""
+        seg = _pts(ea)
+        if not pt or len(seg) != 2:
+            return [], "INVALID_PREMISE_ARGS:midpoint"
+        if pt in seg:
+            return [], "INVALID_PREMISE_ARGS:endpoint_cannot_divide_segment"
+        q_str = _select_source_gate_quote(ctext, [pt, *seg], ctx.working_text, "midpoint")
+        out_premises.append({"kind": "midpoint", "args": {"point": pt, "segment": seg}, "quote": q_str, "solid_id": sid})
+
+    elif pcode == "cent":
+        pt = _pts(ept)[0] if ept and len(ept.vertices) == 1 else ""
+        poly = _pts(ea)
+        if not pt or len(poly) < 3:
+            return [], "INVALID_PREMISE_ARGS:centroid"
+        q_str = _select_source_gate_quote(ctext, [pt, *poly], ctx.working_text, "centroid")
+        out_premises.append({"kind": "centroid", "args": {"point": pt, "polygon": poly}, "quote": q_str, "solid_id": sid})
+
+    elif pcode in ("proj", "alt"):
+        img = _pts(ept)[0] if ept and len(ept.vertices) == 1 else ""
+        src_p = _pts(ea)[0] if ea and len(ea.vertices) == 1 else ""
+        tgt = _pts(eb)
+        if not img or not src_p:
+            return [], f"INVALID_PREMISE_ARGS:{pcode}"
+        if len(tgt) == 2:
+            q_str = _select_source_gate_quote(ctext, [src_p, img, *tgt], ctx.working_text, "orthogonal_projection_line")
+            out_premises.append({"kind": "orthogonal_projection_line", "args": {"point": src_p, "image": img, "line": tgt}, "quote": q_str, "solid_id": sid})
+        elif len(tgt) >= 3:
+            q_str = _select_source_gate_quote(ctext, [src_p, img, *tgt], ctx.working_text, "orthogonal_projection")
+            out_premises.append({"kind": "orthogonal_projection", "args": {"point": src_p, "image": img, "plane": tgt}, "quote": q_str, "solid_id": sid})
+        elif "đáy" in clow and len(bverts := _solid_base_vertices(solid_info)) >= 3:
+            q_str = _select_source_gate_quote(ctext, [src_p, img], ctx.working_text, "orthogonal_projection")
+            out_premises.append({"kind": "orthogonal_projection", "args": {"point": src_p, "image": img, "plane": bverts}, "quote": q_str, "solid_id": sid})
+        else:
+            return [], f"INVALID_PREMISE_ARGS:{pcode}"
+
+    elif pcode == "inter_ll":
+        pt = _pts(ept)[0] if ept and len(ept.vertices) == 1 else ""
+        l1, l2 = _pts(ea), _pts(eb)
+        if not pt or len(l1) != 2 or len(l2) != 2:
+            return [], "INVALID_PREMISE_ARGS:intersect_line_line"
+        q_str = _select_source_gate_quote(ctext, [pt, *l1, *l2], ctx.working_text, "intersect_line_line")
+        out_premises.append({"kind": "intersect_line_line", "args": {"point": pt, "line1": l1, "line2": l2}, "quote": q_str, "solid_id": sid})
+
+    elif pcode == "inter_lp":
+        pt = _pts(ept)[0] if ept and len(ept.vertices) == 1 else ""
+        line, plane = _pts(ea), _pts(eb)
+        if not pt or len(line) != 2 or len(plane) < 3:
+            return [], "INVALID_PREMISE_ARGS:intersect_line_plane"
+        q_str = _select_source_gate_quote(ctext, [pt, *line, *plane], ctx.working_text, "intersect_line_plane")
+        out_premises.append({"kind": "intersect_line_plane", "args": {"point": pt, "line": line, "plane": plane}, "quote": q_str, "solid_id": sid})
+
+    elif pcode == "div":
+        pt = _pts(ept)[0] if ept and len(ept.vertices) == 1 else ""
+        seg = _pts(ea)
+        if not pt or len(seg) != 2 or qty_entry is None:
+            return [], "INVALID_PREMISE_ARGS:divide_segment"
+        if pt in seg:
+            return [], "INVALID_PREMISE_ARGS:endpoint_cannot_divide_segment"
+        q_str = _select_source_gate_quote(ctext, [pt, *seg, qty_entry.canon_expr], ctx.working_text, "divide_segment")
+        out_premises.append({"kind": "divide_segment", "args": {"point": pt, "segment": seg, "ratio": qty_entry.canon_expr}, "quote": q_str, "solid_id": sid})
+
+    elif pcode == "len":
+        seg = _pts(ea)
+        if qty_entry is None:
+            return [], "INVALID_PREMISE_ARGS:segment_length"
+        is_reg_lat = bool(solid_info and solid_info.get("_is_reg") and "cạnh bên" in clow)
+        if len(seg) != 2:
+            # Allow solid entity for regular pyramid lateral edge ("cạnh bên bằng 2a")
+            if ea is not None and ea.kind == "solid" and solid_info and solid_info.get("_is_reg") and solid_info["solid_type"] == "pyramid":
+                apex = solid_info["notation"].split(".", 1)[0]
+                b0 = _solid_base_vertices(solid_info)[0]
+                seg = [apex, b0]
+            else:
+                return [], "INVALID_PREMISE_ARGS:segment_length"
+        else:
+            seg_ab, seg_ba = f"{seg[0]}{seg[1]}", f"{seg[1]}{seg[0]}"
+            if not is_reg_lat and seg_ab not in ctext and seg_ba not in ctext:
+                return [], f"UNGROUNDED_SEGMENT_PAIR:{seg_ab}"
+            if not is_reg_lat:
+                esc_s = rf"(?:{re.escape(seg_ab)}|{re.escape(seg_ba)})"
+                m_eq = re.search(rf"(?<![A-Z0-9']){esc_s}(?![A-Z0-9'])\s*=\s*([^\s,.;!?]+)", ctext)
+                if m_eq:
+                    rhs = m_eq.group(1)
+                    if not re.fullmatch(r"(?:[A-Z][0-9']*'?){2,}", rhs) and _canon_val(rhs) != qty_entry.canon_expr:
+                        return [], f"UNGROUNDED_VALUE:segment_length_conflict:{seg_ab}:{rhs}!={qty_entry.canon_expr}"
+                esc_v = re.escape(qty_entry.canon_expr)
+                # Check within comma/conjunction sub-clauses first to avoid binding across adjacent segments
+                pieces_v = [p.strip() for p in re.split(r"[,;]|\bvà\b|\bđồng\s+thời\b", ctext, flags=re.IGNORECASE) if p.strip()]
+                seg_pat = re.compile(rf"(?<![A-Z0-9']){esc_s}(?![A-Z0-9'])")
+                val_pat = re.compile(rf"(?<![A-Za-z0-9]){esc_v}(?![A-Za-z0-9√/])")
+                same_piece_ok = any(seg_pat.search(p) and val_pat.search(p) for p in pieces_v)
+                if not same_piece_ok:
+                    # Allow explicit shared list ("AB, AC cùng bằng a") only if no scalar sits between seg and val
+                    between_pat = re.compile(
+                        rf"(?<![A-Z0-9']){esc_s}(?![A-Z0-9'])[^.;!?=]{{0,35}}(?:=|bằng|dài)\s*{esc_v}(?![A-Za-z0-9√/])",
+                        re.IGNORECASE | re.UNICODE,
+                    )
+                    if not between_pat.search(ctext):
+                        return [], f"UNGROUNDED_VALUE:segment_length_proximity:{seg_ab}:{qty_entry.canon_expr}"
+        req_len = ["cạnh bên", qty_entry.canon_expr] if is_reg_lat else [*seg, qty_entry.canon_expr]
+        q_str = _select_source_gate_quote(ctext, req_len, ctx.working_text, "segment_length", role_val=qty_entry.canon_expr)
+        out_premises.append({"kind": "segment_length", "args": {"segment": seg, "value": qty_entry.canon_expr}, "quote": q_str, "solid_id": sid})
+
+    elif pcode == "eq_len":
+        s1, s2 = _pts(ea), _pts(eb)
+        if len(s1) != 2 or len(s2) != 2:
+            return [], "INVALID_PREMISE_ARGS:equal_length"
+        q_str = _select_source_gate_quote(ctext, [*s1, *s2], ctx.working_text, "equal_length")
+        out_premises.append({"kind": "equal_length", "args": {"segment_a": s1, "segment_b": s2}, "quote": q_str, "solid_id": sid})
+
+    elif pcode == "height":
+        if qty_entry is None:
+            return [], "INVALID_PREMISE_ARGS:height"
+        q_str = _select_source_gate_quote(ctext, [qty_entry.canon_expr], ctx.working_text, "height", role_val=qty_entry.canon_expr)
+        out_premises.append({"kind": "height", "args": {"value": qty_entry.canon_expr}, "quote": q_str, "solid_id": sid})
+
+    elif pcode in ("ang_lp", "ang_pp", "dihed", "ang_ll", "ang_vtx"):
+        if qty_entry is None:
+            return [], f"INVALID_PREMISE_ARGS:{v5_kind}"
+        val_str = qty_entry.canon_expr.rstrip("°")
+        unit_str = qty_entry.implied_unit or ("deg" if "°" in qty_entry.raw_token or "độ" in clow else "")
+        a_pts = _pts(ea)
+        b_pts = _pts(eb)
+        if pcode == "ang_lp":
+            if len(b_pts) < 3 and "đáy" in clow:
+                b_pts = _solid_base_vertices(solid_info)
+            if len(a_pts) != 2 or len(b_pts) < 3:
+                return [], "INVALID_PREMISE_ARGS:line_plane_angle"
+            args = {"line": a_pts, "plane": b_pts, "value": val_str}
+            req = [*a_pts, *b_pts, val_str]
+        elif pcode == "ang_pp":
+            if len(b_pts) < 3 and "đáy" in clow:
+                b_pts = _solid_base_vertices(solid_info)
+            if len(a_pts) < 3 or len(b_pts) < 3:
+                return [], "INVALID_PREMISE_ARGS:plane_plane_angle"
+            args = {"plane1": a_pts, "plane2": b_pts, "value": val_str}
+            req = [*a_pts, *b_pts, val_str]
+        elif pcode == "dihed":
+            if len(a_pts) < 2 or len(b_pts) != 2:
+                return [], "INVALID_PREMISE_ARGS:dihedral_angle"
+            args = {"point_a": a_pts[0], "edge": b_pts, "point_b": a_pts[1], "value": val_str}
+            req = [*a_pts[:2], *b_pts, val_str]
+        elif pcode == "ang_ll":
+            if len(a_pts) != 2 or len(b_pts) != 2:
+                return [], "INVALID_PREMISE_ARGS:line_line_angle"
+            args = {"line1": a_pts, "line2": b_pts, "value": val_str}
+            req = [*a_pts, *b_pts, val_str]
+        else:
+            vtx = _pts(ept)[0] if ept and len(ept.vertices) == 1 else (a_pts[1] if len(a_pts) == 3 else "")
+            rays = [x for x in a_pts if x != vtx][:2]
+            if not vtx or len(rays) != 2:
+                return [], "INVALID_PREMISE_ARGS:vertex_angle"
+            args = {"vertex": vtx, "rays": rays, "value": val_str}
+            req = [vtx, *rays, val_str]
+        if unit_str:
+            args["unit"] = unit_str
+        q_str = _select_source_gate_quote(ctext, req, ctx.working_text, v5_kind)
+        out_premises.append({"kind": v5_kind, "args": args, "quote": q_str, "solid_id": sid})
+
+    elif pcode == "area":
+        poly = _pts(ea)
+        if len(poly) < 3 or qty_entry is None:
+            return [], "INVALID_PREMISE_ARGS:face_area"
+        q_str = _select_source_gate_quote(ctext, [*poly, qty_entry.canon_expr], ctx.working_text, "face_area")
+        out_premises.append({"kind": "face_area", "args": {"polygon": poly, "value": qty_entry.canon_expr}, "quote": q_str, "solid_id": sid})
+
+    elif pcode == "vol":
+        if qty_entry is None:
+            return [], "INVALID_PREMISE_ARGS:solid_volume"
+        q_str = _select_source_gate_quote(ctext, [qty_entry.canon_expr], ctx.working_text, "solid_volume")
+        out_premises.append({"kind": "solid_volume", "args": {"value": qty_entry.canon_expr}, "quote": q_str, "solid_id": sid})
+
+    elif pcode == "ratio":
+        s1, s2 = _pts(ea), _pts(eb)
+        if len(s1) != 2 or len(s2) != 2 or qty_entry is None:
+            return [], "INVALID_PREMISE_ARGS:segment_ratio"
+        q_str = _select_source_gate_quote(ctext, [*s1, *s2, qty_entry.canon_expr], ctx.working_text, "segment_ratio")
+        out_premises.append({"kind": "segment_ratio", "args": {"segment_a": s1, "segment_b": s2, "ratio": qty_entry.canon_expr}, "quote": q_str, "solid_id": sid})
+
+    return out_premises, None
+
+
+def _convert_compact_goal(
+    goal: dict[str, Any],
+    idx: int,
+    ctx: CompactClauseContext,
+    solid_info: dict[str, Any] | None,
+) -> tuple[dict[str, Any] | None, str | None]:
+    cid = goal.get("c")
+    gcode = str(goal.get("t") or "").strip()
+    v5_gtype = _COMPACT_GOAL_CODES.get(gcode)
+    if v5_gtype is None:
+        return None, f"UNSUPPORTED_GOAL_TYPE:{gcode}"
+
+    ordered_goal_clauses: list[IndexedClause] = []
+    if isinstance(cid, int) and 0 <= cid < len(ctx.clauses):
+        ordered_goal_clauses.append(ctx.clauses[cid])
+    for cl in ctx.clauses:
+        if cl not in ordered_goal_clauses and _GOAL_MARKERS_RE.search(cl.text):
+            ordered_goal_clauses.append(cl)
+    if not ordered_goal_clauses:
+        return None, f"UNGROUNDED_GOAL_CLAUSE_ID:{cid}"
+
+    def _ent_pts(slot: str, preferred_kinds: tuple[str, ...]) -> tuple[list[str], str | None]:
+        raw_val = goal.get(slot)
+        if raw_val is None or raw_val == -1 or raw_val == "":
+            return [], None
+        if isinstance(raw_val, int):
+            if raw_val < 0 or raw_val >= len(ctx.entities):
+                return [], f"OUT_OF_RANGE_GOAL_ENTITY:{slot}={raw_val}"
+            return list(ctx.entities[raw_val].vertices), None
+        sval = str(raw_val).strip()
+        for pk in preferred_kinds:
+            for e in ctx.entities:
+                if e.kind == pk and e.label == sval:
+                    return list(e.vertices), None
+        for e in ctx.entities:
+            if e.label == sval:
+                return list(e.vertices), None
+        return [], f"OUT_OF_RANGE_GOAL_ENTITY:{slot}={sval}"
+
+    ga, err_a = _ent_pts("tgt" if gcode == "vol" else "a", ("solid", "point", "seg", "poly"))
+    if err_a:
+        return None, err_a
+    gb, err_b = _ent_pts("b", ("poly", "seg", "point"))
+    if err_b:
+        return None, err_b
+
+    req_pts = [*ga, *gb]
+    # For solid volume / full-solid area, req_pts may be empty or solid vertices
+    if gcode == "vol":
+        req_pts = []
+    ctext = ""
+    matched_cid: int | None = None
+    for gcl in ordered_goal_clauses:
+        if not _GOAL_MARKERS_RE.search(gcl.text):
+            continue
+        gcl_pts = extract_geometry_points(gcl.text)
+        if not req_pts or all(rp in gcl_pts for rp in req_pts):
+            ctext = gcl.text
+            matched_cid = gcl.clause_id
+            break
+    if not ctext or matched_cid is None:
+        return None, f"UNGROUNDED_GOAL_CLAUSE_TOKENS:{v5_gtype}"
+
+    # Reuse _convert_goal target mapping cleanly by building normalized dict
+    goal_proxy: dict[str, Any] = {
+        "clause_id": matched_cid,
+        "goal_type": v5_gtype,
+        "a": ga,
+        "b": gb,
+    }
+    return _convert_goal(goal_proxy, idx, ctx.clauses, ctx.working_text, solid_info, extract_geometry_points(ctx.working_text))
+
+
+def validate_and_lower_compact_clause(
+    *,
+    ctx: CompactClauseContext,
+    raw_slm_json: dict[str, Any],
+) -> tuple[dict[str, Any] | None, dict[str, Any]]:
+    """Deterministically validate compact slot-filled SLM output and lower to `typed-fact-next/2`."""
+    accepted_ops: list[dict[str, Any]] = []
+    rejected_ops: list[dict[str, str]] = []
+
+    raw_unresolved = raw_slm_json.get("u") or []
+    unresolved_items: list[dict[str, Any]] = []
+    for item in raw_unresolved:
+        if not isinstance(item, dict):
+            continue
+        cid = item.get("c")
+        uk = _COMPACT_UNRES_CODES.get(str(item.get("k") or "ambig"), "ambiguous")
+        excerpt = ctx.clauses[cid].text if isinstance(cid, int) and 0 <= cid < len(ctx.clauses) else ctx.working_text
+        unresolved_items.append({"kind": uk, "excerpt": excerpt, "reason": f"SLM marked clause {cid} as {uk}."})
+
+    if unresolved_items:
+        has_contra = any(u["kind"] == "contradictory" for u in unresolved_items)
+        reason_code = "INCONSISTENT_FACTS" if has_contra else "AMBIGUOUS_FACT"
+        if any(u["kind"] == "unsupported" for u in unresolved_items) and len(unresolved_items) == 1:
+            reason_code = "OUT_OF_SCOPE"
+        return None, {
+            "validator_version": SLM_GROUNDING_VALIDATOR_VERSION,
+            "grounding_status": "SLM_REPORTED_UNRESOLVED",
+            "reason_code": reason_code,
+            "failure_taxonomy": "CONTRADICTION_OR_UNGROUNDED" if has_contra else "SLM_UNRESOLVED",
+            "accepted_ops": [],
+            "rejected_ops": [{"op": "unresolved", "reason": u["reason"]} for u in unresolved_items],
+            "unresolved": unresolved_items,
+        }
+
+    # 1. Validate solid slot [cid, stype, eid_or_label, reg]
+    solid_raw = raw_slm_json.get("s")
+    solid_info: dict[str, Any] | None = None
+    solids_list: list[dict[str, Any]] = []
+    solid_quote = ""
+    solid_subtype = ""
+    solid_reg_bit = 0
+
+    if isinstance(solid_raw, list) and len(solid_raw) >= 4:
+        scid, stype_code, sref, reg_bit = solid_raw[0], str(solid_raw[1]), solid_raw[2], int(solid_raw[3])
+        s_ent: CandidateEntity | None = None
+        if isinstance(sref, int) and 0 <= sref < len(ctx.entities):
+            s_ent = ctx.entities[sref]
+        elif isinstance(sref, str):
+            s_ent = next((e for e in ctx.entities if e.kind == "solid" and e.label == sref.strip()), None)
+        if isinstance(scid, int) and 0 <= scid < len(ctx.clauses) and s_ent is not None:
+            v5_stype = "pyramid" if stype_code == "pyr" else "prism"
+            if s_ent.kind == "solid" and _parse_solid_vertices(v5_stype, s_ent.label):
+                ctext_s = ctx.clauses[scid].text
+                cpts_s = extract_geometry_points(ctext_s)
+                if all(v in cpts_s for v in s_ent.vertices):
+                    # Preserve solid quote up through its solid symbol/qualifier
+                    solid_quote = select_clean_quote(ctext_s, list(s_ent.vertices), ctx.working_text)
+                    if stype_code == "cube" and ctext_s in ctx.working_text:
+                        solid_quote = ctext_s
+                    solid_subtype = stype_code
+                    solid_reg_bit = reg_bit
+                    solid_info = {
+                        "solid_id": "s1",
+                        "solid_type": v5_stype,
+                        "notation": s_ent.label,
+                        "quote": solid_quote,
+                        "_is_reg": bool(reg_bit or s_ent.is_regular_solid),
+                    }
+                    solids_list.append({
+                        "solid_id": "s1",
+                        "solid_type": v5_stype,
+                        "notation": s_ent.label,
+                        "quote": solid_quote,
+                    })
+                else:
+                    rejected_ops.append({"op": "solid", "reason": f"UNGROUNDED_SOLID_VERTICES:{s_ent.label}"})
+            else:
+                rejected_ops.append({"op": "solid", "reason": f"INVALID_SOLID_ENTITY:{sref}"})
+        else:
+            rejected_ops.append({"op": "solid", "reason": f"OUT_OF_RANGE_SOLID_REF:{solid_raw}"})
+
+    if not solids_list or solid_info is None:
+        return None, {
+            "validator_version": SLM_GROUNDING_VALIDATOR_VERSION,
+            "grounding_status": "REJECTED_MISSING_OR_INVALID_SOLID",
+            "reason_code": "MISSING_DIMENSION" if not rejected_ops else "SOURCE_OBJECT_MISMATCH",
+            "failure_taxonomy": "GROUNDING_REJECTED",
+            "accepted_ops": [],
+            "rejected_ops": rejected_ops or [{"op": "solid", "reason": "NO_GROUNDED_SOLID"}],
+        }
+
+    # Check Local Parser vs SLM solid conflict
+    if ctx.local_parser_payload and ctx.local_parser_payload.get("solids"):
+        lp_solid = ctx.local_parser_payload["solids"][0]
+        if lp_solid.get("notation") and lp_solid.get("notation") != solid_info["notation"]:
+            return None, {
+                "validator_version": SLM_GROUNDING_VALIDATOR_VERSION,
+                "grounding_status": "REJECTED_PARSER_SLM_CONFLICT",
+                "reason_code": "PARSER_SLM_CONFLICT",
+                "failure_taxonomy": "PARSER_SLM_CONFLICT",
+                "accepted_ops": [],
+                "rejected_ops": [{"op": "solid", "reason": f"CONFLICT_LOCAL={lp_solid.get('notation')}_SLM={solid_info['notation']}"}],
+            }
+
+    premises: list[dict[str, Any]] = []
+    ctext_s = ctx.clauses[solid_raw[0]].text
+    cs_low = ctext_s.lower()
+    if solid_info["solid_type"] == "pyramid" and _detect_solid_subtype(cs_low)[1]:
+        apex = solid_info["notation"].split(".", 1)[0]
+        base = _solid_base_vertices(solid_info)
+        premises.append({"kind": "regular_pyramid", "args": {"apex": apex, "base": base}, "quote": solid_quote, "solid_id": "s1"})
+        accepted_ops.append({"kind": "regular_pyramid", "clause_id": solid_raw[0]})
+    elif solid_info["solid_type"] == "prism" and re.search(
+        r"lăng\s+trụ\s+(?:tam\s+giác\s+|tứ\s+giác\s+)?đều|lăng\s+trụ\s+đứng|lập\s+phương|hộp\s+chữ\s+nhật",
+        cs_low,
+    ):
+        left_s, right_s = solid_info["notation"].split(".", 1)
+        b_verts = re.findall(r"[A-Z][0-9]*'*", left_s)
+        t_verts = re.findall(r"[A-Z][0-9]*'*", right_s)
+        premises.append({"kind": "right_prism", "args": {"base": b_verts, "top": t_verts}, "quote": solid_quote, "solid_id": "s1"})
+        accepted_ops.append({"kind": "right_prism", "clause_id": solid_raw[0]})
+        if solid_subtype == "box" or "hộp chữ nhật" in cs_low:
+            premises.append({"kind": "rectangle", "args": {"vertices": b_verts}, "quote": solid_quote, "solid_id": "s1"})
+            accepted_ops.append({"kind": "rectangle", "clause_id": solid_raw[0]})
+        if solid_subtype == "cube" or "lập phương" in cs_low:
+            # Find side length quantity in solid clause if any
+            c_q = [q for q in ctx.quantities if solid_raw[0] in q.clause_ids]
+            if len(c_q) == 1:
+                side_val = c_q[0].canon_expr
+                premises.append({"kind": "regular_polygon", "args": {"vertices": b_verts, "side": side_val}, "quote": ctext_s, "solid_id": "s1"})
+                premises.append({"kind": "segment_length", "args": {"segment": [b_verts[0], t_verts[0]], "value": side_val}, "quote": ctext_s, "solid_id": "s1"})
+                accepted_ops.append({"kind": "cube_expansion", "clause_id": solid_raw[0]})
+
+    # 2. Expand relations deterministically
+    lp_lengths = _local_parser_segment_lengths(ctx.local_parser_payload)
+    for rel in raw_slm_json.get("r") or ():
+        if not isinstance(rel, dict):
+            continue
+        expanded, err = _expand_compact_relation(rel, ctx, solid_info)
+        if err is not None:
+            rejected_ops.append({"op": str(rel.get("p") or "unknown"), "reason": err})
+            if err.startswith("AMBIGUOUS_REFERENCE"):
+                return None, {
+                    "validator_version": SLM_GROUNDING_VALIDATOR_VERSION,
+                    "grounding_status": "REJECTED_AMBIGUOUS_REFERENCE",
+                    "reason_code": "AMBIGUOUS_REFERENCE",
+                    "failure_taxonomy": "AMBIGUOUS_REFERENCE",
+                    "accepted_ops": accepted_ops,
+                    "rejected_ops": rejected_ops,
+                }
+            if err.startswith("NEGATED_PREDICATE_CLAUSE"):
+                return None, {
+                    "validator_version": SLM_GROUNDING_VALIDATOR_VERSION,
+                    "grounding_status": "REJECTED_NEGATED_FACT",
+                    "reason_code": "INCONSISTENT_FACTS",
+                    "failure_taxonomy": "GROUNDING_REJECTED",
+                    "accepted_ops": accepted_ops,
+                    "rejected_ops": rejected_ops,
+                }
+            if err.startswith(("OUT_OF_RANGE_", "UNGROUNDED_")):
+                return None, {
+                    "validator_version": SLM_GROUNDING_VALIDATOR_VERSION,
+                    "grounding_status": "REJECTED_UNGROUNDED_TOKEN",
+                    "reason_code": "UNGROUNDED_VALUE",
+                    "failure_taxonomy": "GROUNDING_REJECTED",
+                    "accepted_ops": accepted_ops,
+                    "rejected_ops": rejected_ops,
+                }
+            continue
+        for prem in expanded:
+            if prem["kind"] == "segment_length":
+                seg_fs = frozenset(prem["args"]["segment"])
+                slm_norm_val = _normalize_scalar_str(str(prem["args"]["value"]))
+                if seg_fs in lp_lengths and lp_lengths[seg_fs] != slm_norm_val:
+                    return None, {
+                        "validator_version": SLM_GROUNDING_VALIDATOR_VERSION,
+                        "grounding_status": "REJECTED_PARSER_SLM_CONFLICT",
+                        "reason_code": "PARSER_SLM_CONFLICT",
+                        "failure_taxonomy": "PARSER_SLM_CONFLICT",
+                        "accepted_ops": accepted_ops,
+                        "rejected_ops": [*rejected_ops, {"op": "segment_length", "reason": f"CONFLICT_LOCAL={lp_lengths[seg_fs]}_SLM={slm_norm_val}"}],
+                    }
+            if not any(ep["kind"] == prem["kind"] and ep["args"] == prem["args"] for ep in premises):
+                premises.append(prem)
+                accepted_ops.append({"kind": prem["kind"], "clause_id": rel.get("c")})
+
+    # 3. Validate goals
+    math_goals: list[dict[str, Any]] = []
+    for idx, g in enumerate(raw_slm_json.get("g") or ()):
+        if not isinstance(g, dict):
+            continue
+        mg, gerr = _convert_compact_goal(g, idx, ctx, solid_info)
+        if gerr is not None:
+            rejected_ops.append({"op": f"goal:{g.get('t')}", "reason": gerr})
+            continue
+        assert mg is not None
+        math_goals.append(mg)
+        accepted_ops.append({"kind": f"goal:{g.get('t')}", "clause_id": g.get("c")})
+
+    if not math_goals:
+        return None, {
+            "validator_version": SLM_GROUNDING_VALIDATOR_VERSION,
+            "grounding_status": "REJECTED_NO_GROUNDED_GOAL",
+            "reason_code": "AMBIGUOUS_FACT" if rejected_ops else "MISSING_DIMENSION",
+            "failure_taxonomy": "GROUNDING_REJECTED",
+            "accepted_ops": accepted_ops,
+            "rejected_ops": rejected_ops or [{"op": "goal", "reason": "NO_GROUNDED_GOAL"}],
+        }
+
+    if rejected_ops:
+        return None, {
+            "validator_version": SLM_GROUNDING_VALIDATOR_VERSION,
+            "grounding_status": "REJECTED_INVALID_COMPACT_OP",
+            "reason_code": "UNGROUNDED_VALUE",
+            "failure_taxonomy": "GROUNDING_REJECTED",
+            "accepted_ops": accepted_ops,
+            "rejected_ops": rejected_ops,
+        }
+
+    canon_payload: dict[str, Any] = {
+        "schema_version": TYPED_FACT_NEXT_V2_SCHEMA_VERSION,
+        "problem_text": ctx.working_text,
+        "length_unit": _infer_length_unit(premises),
+        "solids": solids_list,
+        "premises": premises,
+        "relations": [],
+        "derived_sections": [],
+        "simulation_goals": [
+            {"goal_id": "sg1", "kind": "construct_object", "target_solid_id": "s1", "quote": solid_quote}
+        ],
+        "math_goals": math_goals,
+    }
+    return canon_payload, {
+        "validator_version": SLM_GROUNDING_VALIDATOR_VERSION,
+        "grounding_status": "GROUNDED_AND_LOWERED",
+        "reason_code": None,
+        "failure_taxonomy": "NONE",
+        "accepted_ops": accepted_ops,
+        "rejected_ops": [],
+    }
+
+
+def _build_compact_clause_messages(ctx: CompactClauseContext, *, clause_subset: list[IndexedClause] | None = None) -> list[dict[str, str]]:
+    """Build static-prefix-cacheable prompt with typed symbol tables and worked JSON examples."""
+    target_clauses = clause_subset if clause_subset is not None else ctx.clauses
+    clause_block = "\n".join(f"[{c.clause_id}] {c.text}" for c in target_clauses)
+
+    def _lbls(kind: str) -> str:
+        vals = [e.label for e in ctx.entities if e.kind == kind]
+        return ", ".join(vals) if vals else "none"
+
+    qty_vals = ", ".join(q.raw_token for q in ctx.quantities) or "none"
+    system_prompt = (
+        "/no_think\n"
+        "Trích xuất bài toán hình học không gian tiếng Việt thành đúng 1 dòng JSON:\n"
+        "{\"s\":[cid,stype,solid,reg],\"r\":[...],\"g\":[...],\"u\":[]}\n"
+        "Quy tắc:\n"
+        "- s: [cid, \"pyr\"|\"pri\"|\"cube\"|\"box\", solid, 0|1].\n"
+        "- r: trích xuất MỌI giả thiết theo từng mệnh đề c=0,1,2... (KHÔNG bỏ sót dữ kiện):\n"
+        "  * Hình đáy/mặt: reg_poly(a,q?), rhom(a,q?), rect(a), para(a), right_tri(a,pt), right_iso_tri(a,pt), iso_tri(a,pt)\n"
+        "  * Vuông góc/điểm/chiếu: perp_lp(a,b), perp_ll(a,b), face_perp(a,b), mid(pt,a), cent(pt,a), proj(pt,a,b), div(pt,a,q)\n"
+        "  * Độ dài/góc: len(a,q), eq_len(a,b), height(a,q), ang_lp(a,b,q), ang_pp(a,b,q), ang_ll(a,b,q), ang_vtx(a,pt,q), area(a,q)\n"
+        "- g: trích xuất MỌI câu hỏi: vol(tgt), dist_pt_plane(a,b), dist_pt_line(a,b), dist_line_line(a,b), len(a), ang_lp(a,b), ang_pp(a,b), ang_ll(a,b), area(a)\n"
+        "- u: chỉ dùng [{\"c\":cid,\"k\":\"ambig|missing|contra|unsup\"}] nếu mệnh đề mơ hồ ('cạnh bên' trên chóp thường), thiếu kích thước, phủ định ('không vuông góc'), hoặc mặt cầu/nón/trụ.\n"
+        "- BẮT BUỘC dùng đúng tên hình/điểm/số của đề hiện tại.\n\n"
+        "Ví dụ 1:\n"
+        "[0] Cho hình chóp P.UVW có đáy UVW là tam giác vuông tại V, UV=a, VW=2a.\n"
+        "[1] PU vuông góc với đáy (UVW) và góc giữa PV và (UVW) bằng 45°.\n"
+        "[2] Tính khoảng cách từ U đến (PVW).\n"
+        "-> {\"s\":[0,\"pyr\",\"P.UVW\",0],\"r\":[{\"c\":0,\"p\":\"right_tri\",\"a\":\"UVW\",\"pt\":\"V\"},{\"c\":0,\"p\":\"len\",\"a\":\"UV\",\"q\":\"a\"},{\"c\":0,\"p\":\"len\",\"a\":\"VW\",\"q\":\"2a\"},{\"c\":1,\"p\":\"perp_lp\",\"a\":\"PU\",\"b\":\"UVW\"},{\"c\":1,\"p\":\"ang_lp\",\"a\":\"PV\",\"b\":\"UVW\",\"q\":\"45°\"}],\"g\":[{\"c\":2,\"t\":\"dist_pt_plane\",\"a\":\"U\",\"b\":\"PVW\"}],\"u\":[]}\n\n"
+        "Ví dụ 2:\n"
+        "[0] Cho lăng trụ đứng XYZ.X'Y'Z' có đáy XYZ là tam giác đều cạnh 2a, XX'=2a.\n"
+        "[1] Gọi M là trung điểm XZ, mặt bên XYY'X' là hình vuông và vuông góc với đáy XYZ, góc giữa (X'YZ) và (XYZ) bằng 60°.\n"
+        "[2] Tính thể tích khối lăng trụ XYZ.X'Y'Z'.\n"
+        "-> {\"s\":[0,\"pri\",\"XYZ.X'Y'Z'\",1],\"r\":[{\"c\":0,\"p\":\"reg_poly\",\"a\":\"XYZ\",\"q\":\"2a\"},{\"c\":0,\"p\":\"len\",\"a\":\"XX'\",\"q\":\"2a\"},{\"c\":1,\"p\":\"mid\",\"pt\":\"M\",\"a\":\"XZ\"},{\"c\":1,\"p\":\"reg_poly\",\"a\":\"XYY'X'\"},{\"c\":1,\"p\":\"face_perp\",\"a\":\"XYY'X'\",\"b\":\"XYZ\"},{\"c\":1,\"p\":\"ang_pp\",\"a\":\"X'YZ\",\"b\":\"XYZ\",\"q\":\"60°\"}],\"g\":[{\"c\":2,\"t\":\"vol\",\"tgt\":\"XYZ.X'Y'Z'\"}],\"u\":[]}"
+    )
+    user_prompt = (
+        f"Mệnh đề cần trích xuất:\n{clause_block}\n"
+        f"Solids: {_lbls('solid')} | Planes: {_lbls('poly')} | Segs: {_lbls('seg')} | Pts: {_lbls('point')} | Qtys: {qty_vals}\n"
+        "JSON:"
+    )
+    return [
+        {"role": "system", "content": system_prompt},
+        {"role": "user", "content": user_prompt},
+    ]
+
+
+def compute_local_slm_capability_identity() -> dict[str, str]:
+    return {
+        "registry_version": registry.REGISTRY_VERSION,
+        "planner_version": planner.PLANNER_VERSION,
+        "engine_version": engine.ENGINE_VERSION,
+        "typed_fact_next": TYPED_FACT_NEXT_V2_SCHEMA_VERSION,
+        "adapter_version": ADAPTER_V4_VERSION,
+        "envelope_version": ROUTE_D_SIMULATION_V4_SCHEMA_VERSION,
+    }
+
+
+def _compact_grounding_policy_version(use_verified_normalizer: bool) -> str:
+    return f"{SLM_GROUNDING_VALIDATOR_VERSION}|norm={SLM_VERIFIED_NORMALIZER_VERSION if use_verified_normalizer else 'none'}"
+
+
 def run_local_slm_extraction(
     problem_text: str,
     *,
@@ -1403,12 +3084,21 @@ def run_local_slm_extraction(
     allow_download: bool = False,
     threads: int | None = None,
     max_tokens: int | None = None,
+    use_verified_normalizer: bool | None = None,
+    use_cache: bool = True,
+    cache_prompt: bool = True,
 ) -> LocalSlmExtractionResult:
     """Run local SLM semantic extraction + deterministic source grounding."""
-    norm_text = normalize_problem_text(problem_text or "")
+    norm_raw = normalize_problem_text(problem_text or "")
     eff_strategy = resolve_local_slm_strategy(strategy)
     spec = resolve_local_slm_model_spec(model_key)
+    eff_use_norm = (
+        (eff_strategy in ("compact_clause", "compact_clause_per_clause"))
+        if use_verified_normalizer is None
+        else bool(use_verified_normalizer)
+    )
 
+    t_prep0 = time.perf_counter()
     inj = detect_prompt_injection(problem_text or "")
     if inj is not None:
         return LocalSlmExtractionResult(
@@ -1416,7 +3106,7 @@ def run_local_slm_extraction(
             strategy=eff_strategy,
             model_key=spec.model_key,
             model_sha256=spec.sha256,
-            norm_text=norm_text,
+            norm_text=norm_raw,
             wire_payload=None,
             canonical_payload=None,
             reason_code="UNGROUNDED_VALUE",
@@ -1432,17 +3122,52 @@ def run_local_slm_extraction(
                 "grounding_status": "REJECTED_PROMPT_INJECTION",
                 "failure_taxonomy": "PROMPT_INJECTION_REJECTED",
             },
+            stage_timings_ms={"preprocessing_ms": round((time.perf_counter() - t_prep0) * 1000.0, 3)},
         )
 
-    local_res = parse_geometry_problem_locally(norm_text)
-    clauses = index_source_clauses(norm_text)
+    # Phase C: span-audited Verified Normalization (only when enabled)
+    norm_res: VerifiedNormalizationResult | None = None
+    working_text = norm_raw
+    if eff_use_norm:
+        norm_res = normalize_for_slm_grounding(norm_raw)
+        working_text = norm_res.canonical_text
+        if norm_res.typo_detected:
+            prep_ms = round((time.perf_counter() - t_prep0) * 1000.0, 3)
+            return LocalSlmExtractionResult(
+                ok=False,
+                strategy=eff_strategy,
+                model_key=spec.model_key,
+                model_sha256=spec.sha256,
+                norm_text=working_text,
+                wire_payload=None,
+                canonical_payload=None,
+                reason_code="AMBIGUOUS_FACT",
+                reason_detail=f"Conservative ambiguity refusal on diacritic typo: {norm_res.ambiguity_flags}",
+                failure_taxonomy="TYPO_REQUIRES_CONFIRMATION",
+                grounding_envelope={
+                    "envelope_version": SLM_GROUNDING_ENVELOPE_VERSION,
+                    "validator_version": SLM_GROUNDING_VALIDATOR_VERSION,
+                    "strategy": eff_strategy,
+                    "model_key": spec.model_key,
+                    "model_sha256": spec.sha256,
+                    "slm_invoked": False,
+                    "grounding_status": "REJECTED_TYPO_AMBIGUITY",
+                    "failure_taxonomy": "TYPO_REQUIRES_CONFIRMATION",
+                    "normalization_provenance": norm_res.to_provenance_dict(),
+                },
+                stage_timings_ms={"preprocessing_ms": prep_ms},
+                normalization_provenance=norm_res.to_provenance_dict(),
+            )
+
+    local_res = parse_geometry_problem_locally(working_text)
+    clauses = index_source_clauses(working_text)
     if not clauses:
         return LocalSlmExtractionResult(
             ok=False,
             strategy=eff_strategy,
             model_key=spec.model_key,
             model_sha256=spec.sha256,
-            norm_text=norm_text,
+            norm_text=working_text,
             wire_payload=None,
             canonical_payload=None,
             reason_code="MISSING_DIMENSION",
@@ -1460,13 +3185,226 @@ def run_local_slm_extraction(
             },
         )
 
+    # Build 9-field deterministic cache identity (`§7.D3`)
+    if eff_strategy in ("compact_clause", "compact_clause_per_clause"):
+        schema_ver = SLM_COMPACT_SCHEMA_VERSION
+        schema_hash = _compact_schema_sha256()
+    elif eff_strategy == "minimal_ops":
+        schema_ver = "slm-minimal-ops/1"
+        schema_hash = hashlib.sha256(json.dumps(MINIMAL_OPS_JSON_SCHEMA, sort_keys=True).encode("utf-8")).hexdigest()
+    else:
+        schema_ver = "slm-direct-wire/1"
+        schema_hash = hashlib.sha256(json.dumps(DIRECT_WIRE_JSON_SCHEMA, sort_keys=True).encode("utf-8")).hexdigest()
+
+    cache_key, cache_meta = build_local_slm_cache_identity(
+        exact_input_text=norm_raw,
+        model_key=spec.model_key,
+        model_sha256=spec.sha256,
+        runtime_version=LOCAL_SLM_RUNTIME_VERSION,
+        strategy=eff_strategy,
+        schema_version=schema_ver,
+        schema_sha256=schema_hash,
+        grounding_policy_version=_compact_grounding_policy_version(eff_use_norm),
+        parser_version=LOCAL_GEOMETRY_PARSER_VERSION,
+        capability_identity=compute_local_slm_capability_identity(),
+        namespace=LOCAL_SLM_CACHE_NAMESPACE,
+    )
+    if use_cache and runtime is None:
+        cached_res = get_shared_local_slm_extraction_cache().get(cache_key)
+        if cached_res is not None:
+            return LocalSlmExtractionResult(
+                ok=cached_res.ok,
+                strategy=cached_res.strategy,
+                model_key=cached_res.model_key,
+                model_sha256=cached_res.model_sha256,
+                norm_text=cached_res.norm_text,
+                wire_payload=cached_res.wire_payload,
+                canonical_payload=cached_res.canonical_payload,
+                reason_code=cached_res.reason_code,
+                reason_detail=cached_res.reason_detail,
+                failure_taxonomy=cached_res.failure_taxonomy,
+                grounding_envelope={**cached_res.grounding_envelope, "cache_hit": True},
+                inference=cached_res.inference,
+                stage_timings_ms={"cache_hit_ms": round((time.perf_counter() - t_prep0) * 1000.0, 3)},
+                normalization_provenance=cached_res.normalization_provenance,
+                cache_hit=True,
+                cache_key=cache_key,
+            )
+
     eff_runtime = runtime or get_shared_local_slm_runtime()
+
+    if eff_strategy in ("compact_clause", "compact_clause_per_clause"):
+        ctx = build_compact_clause_context(working_text)
+        prep_ms = round((time.perf_counter() - t_prep0) * 1000.0, 3)
+
+        t_pb0 = time.perf_counter()
+        if eff_strategy == "compact_clause":
+            messages = _build_compact_clause_messages(ctx)
+            dyn_grammar = build_compact_grammar_for_context(ctx)
+            prompt_build_ms = round((time.perf_counter() - t_pb0) * 1000.0, 3)
+            inf_res = eff_runtime.chat_completion_json(
+                messages=messages,
+                grammar=dyn_grammar,
+                cache_prompt=cache_prompt,
+                model_key=spec.model_key,
+                ctx_size=DEFAULT_COMPACT_SLM_CTX_SIZE,
+                max_tokens=max_tokens or DEFAULT_COMPACT_SLM_MAX_TOKENS,
+                threads=threads,
+                allow_download=allow_download,
+            )
+            raw_merged = inf_res.parsed_json
+        else:
+            # Per-clause batching ablation: one call per clause, then merge s/r/g/u
+            merged: dict[str, Any] = {"s": None, "r": [], "g": [], "u": []}
+            last_inf: LocalSlmInferenceResult | None = None
+            total_infer_ms = 0.0
+            total_prompt_tok = 0
+            total_comp_tok = 0
+            for cl in ctx.clauses:
+                messages = _build_compact_clause_messages(ctx, clause_subset=[cl])
+                dyn_grammar = build_compact_grammar_for_context(ctx, clause_subset=[cl])
+                inf_i = eff_runtime.chat_completion_json(
+                    messages=messages,
+                    grammar=dyn_grammar,
+                    cache_prompt=cache_prompt,
+                    model_key=spec.model_key,
+                    ctx_size=DEFAULT_COMPACT_SLM_CTX_SIZE,
+                    max_tokens=max_tokens or DEFAULT_COMPACT_SLM_MAX_TOKENS,
+                    threads=threads,
+                    allow_download=allow_download,
+                )
+                last_inf = inf_i
+                total_infer_ms += inf_i.inference_time_ms
+                total_prompt_tok += inf_i.prompt_tokens or 0
+                total_comp_tok += inf_i.completion_tokens or 0
+                pj = inf_i.parsed_json
+                if merged["s"] is None and pj.get("s") is not None:
+                    merged["s"] = pj["s"]
+                merged["r"].extend(pj.get("r") or ())
+                merged["g"].extend(pj.get("g") or ())
+                merged["u"].extend(pj.get("u") or ())
+            prompt_build_ms = round((time.perf_counter() - t_pb0) * 1000.0, 3)
+            assert last_inf is not None
+            inf_res = LocalSlmInferenceResult(
+                raw_content=json.dumps(merged, ensure_ascii=False),
+                parsed_json=merged,
+                model_key=last_inf.model_key,
+                model_sha256=last_inf.model_sha256,
+                runtime_version=last_inf.runtime_version,
+                server_load_time_ms=last_inf.server_load_time_ms,
+                inference_time_ms=round(total_infer_ms, 2),
+                prompt_tokens=total_prompt_tok,
+                completion_tokens=total_comp_tok,
+                thinking_stripped=last_inf.thinking_stripped,
+                server_restarted=last_inf.server_restarted,
+                python_rss_mib=last_inf.python_rss_mib,
+                server_rss_mib=last_inf.server_rss_mib,
+                combined_rss_mib=last_inf.combined_rss_mib,
+                server_peak_rss_mib=last_inf.server_peak_rss_mib,
+                threads=last_inf.threads,
+                ctx_size=last_inf.ctx_size,
+                queue_wait_ms=last_inf.queue_wait_ms,
+                prompt_eval_ms=last_inf.prompt_eval_ms,
+                token_gen_ms=round(total_infer_ms, 2),
+                tokens_per_sec=last_inf.tokens_per_sec,
+                cached_prompt_tokens=last_inf.cached_prompt_tokens,
+                json_decode_ms=last_inf.json_decode_ms,
+                cache_prompt_enabled=bool(cache_prompt),
+            )
+            raw_merged = merged
+
+        t_val0 = time.perf_counter()
+        canon_payload, val_diag = validate_and_lower_compact_clause(ctx=ctx, raw_slm_json=raw_merged)
+        val_lower_ms = round((time.perf_counter() - t_val0) * 1000.0, 3)
+
+        stage_timings = {
+            "preprocessing_ms": prep_ms,
+            "prompt_build_ms": prompt_build_ms,
+            "queue_wait_ms": inf_res.queue_wait_ms,
+            "prompt_eval_ms": inf_res.prompt_eval_ms,
+            "token_gen_ms": inf_res.token_gen_ms,
+            "json_decode_ms": inf_res.json_decode_ms,
+            "grounding_and_lowering_ms": val_lower_ms,
+            "server_load_time_ms": inf_res.server_load_time_ms,
+            "slm_inference_ms": inf_res.inference_time_ms,
+            "prompt_tokens": inf_res.prompt_tokens,
+            "completion_tokens": inf_res.completion_tokens,
+            "cached_prompt_tokens": inf_res.cached_prompt_tokens,
+            "tokens_per_sec": inf_res.tokens_per_sec,
+        }
+        norm_prov = norm_res.to_provenance_dict() if norm_res is not None else None
+        envelope = {
+            "envelope_version": SLM_GROUNDING_ENVELOPE_VERSION,
+            "validator_version": SLM_GROUNDING_VALIDATOR_VERSION,
+            "schema_version": SLM_COMPACT_SCHEMA_VERSION,
+            "strategy": eff_strategy,
+            "model_key": inf_res.model_key,
+            "model_sha256": inf_res.model_sha256,
+            "slm_invoked": True,
+            "cache_hit": False,
+            "cache_key": cache_key,
+            "parser_status": local_res.status,
+            "grounding_status": val_diag.get("grounding_status"),
+            "accepted_ops": val_diag.get("accepted_ops", []),
+            "rejected_ops": val_diag.get("rejected_ops", []),
+            "failure_taxonomy": val_diag.get("failure_taxonomy", "NONE"),
+            "normalization_provenance": norm_prov,
+            "stage_timings_ms": stage_timings,
+            "server_load_time_ms": inf_res.server_load_time_ms,
+            "inference_time_ms": inf_res.inference_time_ms,
+            "combined_rss_mib": inf_res.combined_rss_mib,
+        }
+        if canon_payload is None:
+            res_out = LocalSlmExtractionResult(
+                ok=False,
+                strategy=eff_strategy,
+                model_key=inf_res.model_key,
+                model_sha256=inf_res.model_sha256,
+                norm_text=working_text,
+                wire_payload=None,
+                canonical_payload=None,
+                reason_code=val_diag.get("reason_code") or "AMBIGUOUS_FACT",
+                reason_detail=str(val_diag.get("rejected_ops") or val_diag.get("grounding_status")),
+                failure_taxonomy=str(val_diag.get("failure_taxonomy") or "GROUNDING_REJECTED"),
+                grounding_envelope=envelope,
+                inference=inf_res,
+                stage_timings_ms=stage_timings,
+                normalization_provenance=norm_prov,
+                cache_hit=False,
+                cache_key=cache_key,
+            )
+        else:
+            wire_payload = to_wire_typed_fact_next_v2(canon_payload)
+            norm_canon = _normalize_transport_payload(wire_payload)
+            res_out = LocalSlmExtractionResult(
+                ok=True,
+                strategy=eff_strategy,
+                model_key=inf_res.model_key,
+                model_sha256=inf_res.model_sha256,
+                norm_text=working_text,
+                wire_payload=wire_payload,
+                canonical_payload=norm_canon,
+                reason_code=None,
+                reason_detail=None,
+                failure_taxonomy="NONE",
+                grounding_envelope=envelope,
+                inference=inf_res,
+                stage_timings_ms=stage_timings,
+                normalization_provenance=norm_prov,
+                cache_hit=False,
+                cache_key=cache_key,
+            )
+        if use_cache and runtime is None:
+            get_shared_local_slm_extraction_cache().put(cache_key, res_out)
+        return res_out
+
+    # Legacy /5 strategies preserved verbatim for Config B & ablation reproducibility
     if eff_strategy == "direct_wire":
-        messages = _build_direct_wire_messages(norm_text)
+        messages = _build_direct_wire_messages(working_text)
         schema = DIRECT_WIRE_JSON_SCHEMA
         schema_name = "typed_fact_next_wire"
     else:
-        messages = _build_minimal_ops_messages(norm_text, clauses, local_res)
+        messages = _build_minimal_ops_messages(working_text, clauses, local_res)
         schema = MINIMAL_OPS_JSON_SCHEMA
         schema_name = "slm_minimal_ops"
 
@@ -1474,6 +3412,7 @@ def run_local_slm_extraction(
         messages=messages,
         json_schema=schema,
         schema_name=schema_name,
+        cache_prompt=cache_prompt,
         model_key=spec.model_key,
         max_tokens=max_tokens or DEFAULT_LOCAL_SLM_MAX_TOKENS,
         threads=threads,
@@ -1481,15 +3420,15 @@ def run_local_slm_extraction(
     )
 
     if eff_strategy == "direct_wire":
-        all_pts = extract_geometry_points(norm_text)
-        repaired_wire, err = _repair_direct_wire_quotes(inf_res.parsed_json, norm_text, all_pts)
+        all_pts = extract_geometry_points(working_text)
+        repaired_wire, err = _repair_direct_wire_quotes(inf_res.parsed_json, working_text, all_pts)
         if err is not None or repaired_wire is None:
             return LocalSlmExtractionResult(
                 ok=False,
                 strategy=eff_strategy,
                 model_key=inf_res.model_key,
                 model_sha256=inf_res.model_sha256,
-                norm_text=norm_text,
+                norm_text=working_text,
                 wire_payload=None,
                 canonical_payload=None,
                 reason_code="QUOTE_NOT_IN_SOURCE" if str(err).startswith("QUOTE_") else "UNGROUNDED_VALUE",
@@ -1507,6 +3446,7 @@ def run_local_slm_extraction(
                     "failure_taxonomy": "GROUNDING_REJECTED",
                 },
                 inference=inf_res,
+                cache_key=cache_key,
             )
         try:
             canon = _normalize_transport_payload(repaired_wire)
@@ -1516,7 +3456,7 @@ def run_local_slm_extraction(
                 strategy=eff_strategy,
                 model_key=inf_res.model_key,
                 model_sha256=inf_res.model_sha256,
-                norm_text=norm_text,
+                norm_text=working_text,
                 wire_payload=repaired_wire,
                 canonical_payload=None,
                 reason_code="INVALID_TYPED_FACT_NEXT",
@@ -1534,6 +3474,7 @@ def run_local_slm_extraction(
                     "failure_taxonomy": "SCHEMA_VALIDATION_ERROR",
                 },
                 inference=inf_res,
+                cache_key=cache_key,
             )
         envelope = {
             "envelope_version": SLM_GROUNDING_ENVELOPE_VERSION,
@@ -1553,7 +3494,7 @@ def run_local_slm_extraction(
             strategy=eff_strategy,
             model_key=inf_res.model_key,
             model_sha256=inf_res.model_sha256,
-            norm_text=norm_text,
+            norm_text=working_text,
             wire_payload=repaired_wire,
             canonical_payload=canon,
             reason_code=None,
@@ -1561,15 +3502,17 @@ def run_local_slm_extraction(
             failure_taxonomy="NONE",
             grounding_envelope=envelope,
             inference=inf_res,
+            cache_key=cache_key,
         )
 
     # Approach B: minimal_ops -> validate_and_lower_minimal_ops
     canon_payload, val_diag = validate_and_lower_minimal_ops(
-        norm_text=norm_text,
+        norm_text=working_text,
         clauses=clauses,
         raw_slm_json=inf_res.parsed_json,
         local_parser_payload=local_res.payload,
     )
+    norm_prov = norm_res.to_provenance_dict() if norm_res is not None else None
     envelope = {
         "envelope_version": SLM_GROUNDING_ENVELOPE_VERSION,
         "validator_version": SLM_GROUNDING_VALIDATOR_VERSION,
@@ -1582,6 +3525,7 @@ def run_local_slm_extraction(
         "accepted_ops": val_diag.get("accepted_ops", []),
         "rejected_ops": val_diag.get("rejected_ops", []),
         "failure_taxonomy": val_diag.get("failure_taxonomy", "NONE"),
+        "normalization_provenance": norm_prov,
         "server_load_time_ms": inf_res.server_load_time_ms,
         "inference_time_ms": inf_res.inference_time_ms,
         "combined_rss_mib": inf_res.combined_rss_mib,
@@ -1592,7 +3536,7 @@ def run_local_slm_extraction(
             strategy=eff_strategy,
             model_key=inf_res.model_key,
             model_sha256=inf_res.model_sha256,
-            norm_text=norm_text,
+            norm_text=working_text,
             wire_payload=None,
             canonical_payload=None,
             reason_code=val_diag.get("reason_code") or "AMBIGUOUS_FACT",
@@ -1600,6 +3544,8 @@ def run_local_slm_extraction(
             failure_taxonomy=str(val_diag.get("failure_taxonomy") or "GROUNDING_REJECTED"),
             grounding_envelope=envelope,
             inference=inf_res,
+            normalization_provenance=norm_prov,
+            cache_key=cache_key,
         )
 
     wire_payload = to_wire_typed_fact_next_v2(canon_payload)
@@ -1609,7 +3555,7 @@ def run_local_slm_extraction(
         strategy=eff_strategy,
         model_key=inf_res.model_key,
         model_sha256=inf_res.model_sha256,
-        norm_text=norm_text,
+        norm_text=working_text,
         wire_payload=wire_payload,
         canonical_payload=norm_canon,
         reason_code=None,
@@ -1617,6 +3563,8 @@ def run_local_slm_extraction(
         failure_taxonomy="NONE",
         grounding_envelope=envelope,
         inference=inf_res,
+        normalization_provenance=norm_prov,
+        cache_key=cache_key,
     )
 
 
@@ -1631,12 +3579,16 @@ class LocalSlmExtractor:
         runtime: LocalSlmRuntime | None = None,
         allow_download: bool = False,
         threads: int | None = None,
+        use_verified_normalizer: bool | None = None,
+        use_cache: bool = True,
     ) -> None:
         self.model_key = resolve_local_slm_model_spec(model_key).model_key
         self.strategy = resolve_local_slm_strategy(strategy)
         self.runtime = runtime
         self.allow_download = bool(allow_download)
         self.threads = threads
+        self.use_verified_normalizer = use_verified_normalizer
+        self.use_cache = bool(use_cache)
         self.last_result: LocalSlmExtractionResult | None = None
 
     def extract(self, source_text: str) -> dict[str, Any] | None:
@@ -1647,12 +3599,20 @@ class LocalSlmExtractor:
             runtime=self.runtime,
             allow_download=self.allow_download,
             threads=self.threads,
+            use_verified_normalizer=self.use_verified_normalizer,
+            use_cache=self.use_cache,
         )
         self.last_result = res
         return res.canonical_payload
 
 
 __all__ = [
+    "COMPACT_CLAUSE_GBNF",
+    "CandidateEntity",
+    "CandidateQuantity",
+    "CompactClauseContext",
+    "DEFAULT_COMPACT_SLM_CTX_SIZE",
+    "DEFAULT_COMPACT_SLM_MAX_TOKENS",
     "DEFAULT_LOCAL_SLM_STRATEGY",
     "DIRECT_WIRE_JSON_SCHEMA",
     "IndexedClause",
@@ -1660,9 +3620,13 @@ __all__ = [
     "LocalSlmExtractionResult",
     "LocalSlmExtractor",
     "MINIMAL_OPS_JSON_SCHEMA",
+    "SLM_COMPACT_SCHEMA_VERSION",
     "SLM_GROUNDING_ENVELOPE_VERSION",
     "SLM_GROUNDING_VALIDATOR_VERSION",
     "SUPPORTED_SLM_STRATEGIES",
+    "build_compact_clause_context",
+    "build_compact_grammar_for_context",
+    "compute_local_slm_capability_identity",
     "detect_prompt_injection",
     "extract_geometry_points",
     "index_source_clauses",
@@ -1670,5 +3634,6 @@ __all__ = [
     "resolve_local_slm_strategy",
     "run_local_slm_extraction",
     "select_clean_quote",
+    "validate_and_lower_compact_clause",
     "validate_and_lower_minimal_ops",
 ]
