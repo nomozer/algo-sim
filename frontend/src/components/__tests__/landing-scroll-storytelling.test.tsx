@@ -29,10 +29,11 @@ describe("AXO Landing — Scroll-Driven Spatial Storytelling", () => {
       expect(visibleCount).toBe(1);
     }
 
-    // All 4 chapters keep consistent 3D prism height & scale (no vertical squashing or zoom pumping)
+    // All 4 chapters keep complete prism structure, consistent height & scale (no half-broken stage 1 or zoom pumping)
     for (const s of STORY_STAGES_V14) {
       expect(s.camera.extrude).toBe(1);
       expect(s.camera.zoom).toBe(1);
+      expect(s.camera.prismBuild).toBe(1);
     }
 
     // Reduced motion exposes all chapters statically without dissolve fade
@@ -99,6 +100,7 @@ describe("AXO Landing — Scroll-Driven Spatial Storytelling", () => {
     for (const stage of STORY_STAGES_V14) {
       expect(html).toContain(stage.chapterHeading);
     }
+    expect(html).toContain("axo-v14-story-context-line");
 
     // Zero pre-displayed computed answers AND zero assumed lateral edge length inferred from "lăng trụ tam giác đều"
     expect(html).not.toContain("a = 4");
@@ -135,6 +137,8 @@ describe("AXO Landing — Scroll-Driven Spatial Storytelling", () => {
     expect(src).not.toContain("var(--");
     expect(src).not.toMatch(/#[0-9a-fA-F]{3,8}\b/);
     expect(src).not.toContain("WebGLRenderer");
+    expect(src).not.toContain("buildParallelChevronD");
+    expect(src).toContain("Hình thật thiết diện");
     expect(src).toContain('{ passive: true }');
     expect(src).toContain("cancelAnimationFrame");
     expect(src).toContain("prefers-reduced-motion: reduce");

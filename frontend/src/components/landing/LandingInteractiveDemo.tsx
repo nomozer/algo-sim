@@ -188,6 +188,7 @@ export function LandingInteractiveDemo({
           {/* Focused Step Control Column */}
           <aside className="axo-sp-demo-panel" aria-label="Điều khiển bước dựng">
             <div className="axo-sp-demo-step-head">
+              {isV14 && <span className="axo-v14-demo-model-name">{sample.shortName}</span>}
               {/* taste-skill-ignore */ <span className={isV14 ? "axo-v14-demo-step-tag" : "axo-sp-demo-step-eyebrow"}>
                 {isV14
                   ? activeStage.v14StepLabel ?? `Bước ${stepIndex + 1}`

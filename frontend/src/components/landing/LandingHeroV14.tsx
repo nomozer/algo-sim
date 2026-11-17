@@ -373,8 +373,8 @@ export function buildHeroSpatialGallerySpecs(): HeroSpatialGallerySpecs {
     },
     {
       id: "extractedPentagon",
-      offset: placeInCameraFrame(-2.78, 0.36, -0.58),
-      screenDx: -2.78,
+      offset: placeInCameraFrame(-3.16, 0.36, -0.58),
+      screenDx: -3.16,
       screenDy: 0.36,
       screenDz: -0.58,
       rotation: [0.12, 0.24, 0.06],
@@ -787,7 +787,7 @@ function HeroSpatialStage() {
     let curAspectSpread = 1;
     const applyHeroCameraFraming = (w: number, h: number) => {
       const aspect = Math.max(0.72, w / Math.max(1, h));
-      const scaleDist = aspect < 1.2 ? 1.12 + (1.2 - aspect) * 0.62 : 1.1;
+      const scaleDist = aspect < 1.2 ? 1.15 + (1.2 - aspect) * 0.62 : 1.13;
       curAspectSpread = aspect < 1.08 ? Math.max(0.84, 0.84 + (aspect - 0.72) * 0.44) : 1;
       camera.aspect = w / Math.max(1, h);
       camera.position.copy(heroLookTarget).addScaledVector(baseCamOffset, scaleDist);

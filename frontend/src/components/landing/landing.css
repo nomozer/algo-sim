@@ -2623,14 +2623,18 @@
 
 .axo-v14-svg-vertex-text {
   fill: var(--ink-secondary);
-  font-size: 11px;
+  font-size: 12.5px;
   font-weight: 700;
   text-anchor: middle;
+  paint-order: stroke;
+  stroke: var(--canvas);
+  stroke-width: 3px;
+  stroke-linejoin: round;
 }
 
 .axo-v14-svg-label-aux {
   fill: var(--ink-muted);
-  font-size: 10.5px;
+  font-size: 11px;
   font-weight: 700;
   text-anchor: middle;
 }
@@ -2719,9 +2723,9 @@
 
 /* ══ AXO LANDING V1.4 — CONTINUOUS SCROLL-DRIVEN STORYTELLING ══════════════════════════════════ */
 .axo-v14-story {
-  background-color: var(--axo-sp-bg);
+  background-color: var(--axo-sp-paper);
   scroll-margin-top: 76px;
-  padding: clamp(36px, 4.4vw, 56px) clamp(20px, 4vw, 48px);
+  padding: clamp(44px, 5vw, 68px) clamp(20px, 4vw, 48px);
 }
 
 .axo-v14-story-shell {
@@ -2731,19 +2735,19 @@
 
 .axo-v14-story-runway {
   position: relative;
-  height: 232svh;
-  margin-top: 18px;
+  height: 224svh;
+  margin-top: 12px;
 }
 
 .axo-v14-story-sticky {
   position: sticky;
-  top: 80px;
-  min-height: 0;
+  top: 76px;
+  min-height: calc(100svh - 92px);
   display: flex;
   flex-direction: column;
-  justify-content: flex-start;
+  justify-content: center;
   gap: clamp(12px, 1.8vh, 20px);
-  padding: clamp(12px, 1.8vh, 20px) 0;
+  padding: clamp(8px, 1.4vh, 16px) 0;
 }
 
 .axo-v14-story-header {
@@ -2771,8 +2775,8 @@
 
 .axo-v14-story-track {
   display: grid;
-  grid-template-columns: minmax(288px, 0.68fr) minmax(0, 1.32fr);
-  gap: clamp(24px, 3.6vw, 48px);
+  grid-template-columns: minmax(308px, 0.78fr) minmax(0, 1.22fr);
+  gap: clamp(24px, 3.5vw, 48px);
   align-items: center;
 }
 
@@ -2787,26 +2791,36 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  padding: clamp(10px, 1.4vw, 18px);
-  border-radius: var(--rounded-xl);
-  background-color: var(--axo-sp-paper);
+  padding: 0;
+  border: 0;
+  border-radius: 0;
+  background-color: transparent;
   touch-action: pan-y;
 }
 
 .axo-v14-story-svg {
   display: block;
   width: 100%;
-  max-width: 700px;
+  max-width: 720px;
   height: auto;
-  max-height: clamp(360px, 58svh, 500px);
+  max-height: clamp(390px, 64svh, 540px);
   margin-inline: auto;
+  overflow: visible;
 }
 
 .axo-v14-story-narrative {
   order: 1;
   display: flex;
   flex-direction: column;
-  gap: 18px;
+  gap: 16px;
+}
+
+.axo-v14-story-context-line {
+  margin: 0;
+  color: var(--ink-muted);
+  font-size: 0.875rem;
+  font-weight: 600;
+  letter-spacing: 0.01em;
 }
 
 .axo-v14-story-rail {
@@ -2901,7 +2915,7 @@
   border-radius: 0 var(--rounded-md) var(--rounded-md) 0;
   border: 0;
   border-left: 2.5px solid var(--axo-sp-accent);
-  background-color: var(--axo-sp-paper);
+  background-color: var(--canvas);
   color: var(--ink);
   font-size: 0.875rem;
   font-weight: 600;
@@ -2960,10 +2974,10 @@
 }
 
 .axo-v14-svg-prism-base {
-  fill: var(--axo-sp-paper);
-  fill-opacity: 0.92;
+  fill: var(--canvas);
+  fill-opacity: 0.94;
   stroke: var(--ink-secondary);
-  stroke-width: 1.5;
+  stroke-width: 1.65;
   stroke-linejoin: round;
 }
 
@@ -2983,27 +2997,40 @@
 .axo-v14-svg-prism-top {
   fill: var(--canvas);
   stroke: var(--ink-secondary);
-  stroke-width: 1.4;
-  stroke-opacity: 0.56;
+  stroke-width: 1.5;
+  stroke-opacity: 0.68;
   stroke-linejoin: round;
 }
 
 .axo-v14-svg-prism-edge-front {
   stroke: var(--ink);
-  stroke-width: 1.85;
+  stroke-width: 2;
   stroke-linecap: round;
 }
 
 .axo-v14-svg-prism-edge-back {
   stroke: var(--ink-muted);
-  stroke-width: 1.4;
+  stroke-width: 1.45;
   stroke-dasharray: 5 5;
+  stroke-linecap: round;
+}
+
+.axo-v14-svg-seed-halo {
+  fill: var(--axo-sp-accent-tint);
+  fill-opacity: 0.55;
+  stroke: var(--axo-sp-accent);
+  stroke-width: 1.4;
+}
+
+.axo-v14-svg-parallel-band {
+  stroke: var(--axo-sp-accent-tint);
+  stroke-width: 7px;
   stroke-linecap: round;
 }
 
 .axo-v14-svg-parallel-guide {
   stroke: var(--axo-sp-accent);
-  stroke-width: 2.3;
+  stroke-width: 2.5;
   stroke-dasharray: 6 4;
   stroke-linecap: round;
 }
@@ -3011,39 +3038,69 @@
 .axo-v14-svg-seed-dot {
   fill: var(--axo-sp-accent);
   stroke: var(--canvas);
-  stroke-width: 1.1;
+  stroke-width: 1.25;
 }
 
 .axo-v14-svg-vertex-dot {
   fill: var(--ink-secondary);
   stroke: var(--canvas);
-  stroke-width: 1;
+  stroke-width: 1.1;
 }
 
 .axo-v14-svg-label-inter {
   fill: var(--axo-sp-amber-deep);
-  font-size: 12px;
+  font-size: 13.5px;
   font-weight: 800;
   text-anchor: middle;
+  paint-order: stroke;
+  stroke: var(--axo-sp-paper);
+  stroke-width: 3.5px;
+  stroke-linejoin: round;
 }
 
 .axo-v14-svg-label-seed {
   fill: var(--axo-sp-accent-active);
-  font-size: 12px;
+  font-size: 13.5px;
   font-weight: 800;
   text-anchor: middle;
+  paint-order: stroke;
+  stroke: var(--axo-sp-paper);
+  stroke-width: 3.5px;
+  stroke-linejoin: round;
 }
 
 .axo-v14-svg-trueshape-inset {
   pointer-events: none;
 }
 
+.axo-v14-svg-inset-card {
+  fill: var(--canvas);
+  stroke: var(--hairline);
+  stroke-width: 1;
+}
+
 .axo-v14-svg-inset-caption {
-  fill: var(--ink-secondary);
-  font-size: 11px;
+  fill: var(--ink);
+  font-size: 13px;
   font-weight: 700;
-  letter-spacing: 0.01em;
+  letter-spacing: -0.01em;
   text-anchor: middle;
+}
+
+.axo-v14-svg-inset-subcaption {
+  fill: var(--ink-muted);
+  font-size: 11.5px;
+  font-weight: 600;
+  text-anchor: middle;
+}
+
+.axo-v14-story-svg .axo-v14-svg-vertex-text {
+  stroke: var(--axo-sp-paper);
+}
+
+.axo-v14-svg-trueshape-inset .axo-v14-svg-label-inter,
+.axo-v14-svg-trueshape-inset .axo-v14-svg-label-seed {
+  stroke: var(--canvas);
 }
 
 @media (max-width: 920px) {
@@ -3052,8 +3109,8 @@
   }
 
   .axo-v14-story-runway {
-    height: 220svh;
-    margin-top: 12px;
+    height: 215svh;
+    margin-top: 10px;
   }
 
   .axo-v14-story-sticky {
@@ -3080,17 +3137,21 @@
 
   .axo-v14-story-stage {
     gap: 0;
-    padding: 8px 10px;
+    padding: 0;
   }
 
   .axo-v14-story-svg {
-    height: clamp(208px, 31svh, 266px);
+    height: clamp(224px, 34svh, 290px);
     max-width: 480px;
   }
 
   .axo-v14-story-narrative {
     order: 0;
-    gap: 10px;
+    gap: 8px;
+  }
+
+  .axo-v14-story-context-line {
+    display: none;
   }
 
   .axo-v14-story-rail-label {
@@ -3115,7 +3176,7 @@
 
 @media (max-width: 480px) {
   .axo-v14-story-svg {
-    height: clamp(190px, 28svh, 224px);
+    height: clamp(208px, 31svh, 248px);
   }
 
   .axo-v14-story-chapter-title {
@@ -3137,11 +3198,11 @@
   }
 
   .axo-v14-story-stage {
-    padding: 6px 8px;
+    padding: 0;
   }
 
   .axo-v14-story-svg {
-    height: 158px;
+    height: 174px;
   }
 
   .axo-v14-story-chapters {
@@ -3347,7 +3408,7 @@
 }
 
 .axo-sp-demo-section.is-v14 {
-  background-color: var(--axo-sp-paper);
+  background-color: var(--axo-sp-bg);
   scroll-margin-top: 76px;
   padding: clamp(56px, 7vw, 92px) clamp(20px, 4vw, 48px);
 }
@@ -3379,11 +3440,12 @@
   gap: 4px;
   padding: 4px;
   border-radius: var(--rounded-full);
-  background-color: var(--canvas);
-  border: 1px solid var(--axo-sp-border);
+  background-color: var(--axo-sp-paper);
+  border: 1px solid var(--hairline);
 }
 
 .axo-sp-demo-section.is-v14 .axo-sp-sample-pill {
+  min-height: 40px;
   border-color: transparent;
   background-color: transparent;
   color: var(--ink-secondary);
@@ -3397,7 +3459,7 @@
 }
 
 .axo-sp-demo-section.is-v14 .axo-sp-sample-pill:hover:not(.is-active) {
-  background-color: var(--axo-sp-paper);
+  background-color: var(--canvas);
   color: var(--ink);
 }
 
@@ -3412,15 +3474,15 @@
 }
 
 .axo-sp-demo-workbench.is-v14 {
-  grid-template-columns: minmax(0, 1.62fr) minmax(276px, 0.72fr);
-  align-items: stretch;
-  gap: 0;
-  border: 1px solid var(--axo-sp-border);
-  box-shadow: var(--axo-sp-shadow-soft);
-  border-radius: var(--rounded-xl);
-  background-color: var(--canvas);
+  grid-template-columns: minmax(0, 1.48fr) minmax(300px, 0.82fr);
+  align-items: center;
+  gap: clamp(20px, 3vw, 36px);
+  border: 0;
+  box-shadow: none;
+  border-radius: 0;
+  background-color: transparent;
   padding: 0;
-  overflow: hidden;
+  overflow: visible;
 }
 
 .axo-sp-demo-workbench.is-v14 .axo-sp-demo-canvas-wrap {
@@ -3429,9 +3491,10 @@
   flex-direction: column;
   justify-content: space-between;
   gap: 10px;
-  padding: 0 0 18px;
-  border-radius: 0;
-  background-color: var(--canvas);
+  padding: 0 0 16px;
+  border: 0;
+  border-radius: var(--rounded-xl);
+  background-color: var(--axo-sp-paper);
 }
 
 .axo-sp-demo-workbench.is-v14 .axo-sp-point-tag {
@@ -3451,12 +3514,13 @@
 }
 
 .axo-sp-demo-workbench.is-v14 .axo-sp-demo-step-title {
-  font-size: 1.375rem;
-  line-height: 1.32;
+  font-size: 1.5rem;
+  line-height: 1.28;
+  letter-spacing: -0.022em;
 }
 
 .axo-sp-demo-workbench.is-v14 .axo-sp-demo-step-desc {
-  font-size: 0.96875rem;
+  font-size: 1rem;
   line-height: 1.58;
 }
 
@@ -3480,7 +3544,7 @@
   align-items: center;
   padding: 5px 12px;
   border-radius: var(--rounded-full);
-  background-color: var(--axo-sp-paper);
+  background-color: var(--canvas);
   border: 1px solid var(--hairline);
   color: var(--ink-secondary);
   font-size: 0.8125rem;
@@ -3491,7 +3555,7 @@
 .axo-sp-demo-workbench.is-v14 .axo-sp-ghost-chip {
   pointer-events: auto;
   border: 1px solid var(--hairline);
-  background-color: var(--axo-sp-paper);
+  background-color: var(--canvas);
   color: var(--ink);
   font-size: 0.8125rem;
   font-weight: 600;
@@ -3521,7 +3585,7 @@
   display: grid;
   grid-template-columns: repeat(4, minmax(0, 1fr));
   gap: 8px;
-  padding: 0 20px;
+  padding: 0 18px;
 }
 
 .axo-sp-demo-workbench.is-v14 .axo-sp-step-tab {
@@ -3529,7 +3593,7 @@
   padding: 0 12px;
   border: 1px solid var(--hairline);
   border-radius: var(--rounded-full);
-  background-color: var(--axo-sp-paper);
+  background-color: var(--canvas);
   color: var(--ink-secondary);
   font-family: var(--font-family);
   font-size: 0.875rem;
@@ -3571,14 +3635,26 @@
 
 .axo-sp-demo-workbench.is-v14 .axo-sp-demo-panel {
   border: 0;
-  border-left: 1px solid var(--hairline);
   border-radius: 0;
-  background-color: var(--canvas);
-  padding: clamp(24px, 3vw, 38px);
+  background-color: transparent;
+  padding: clamp(8px, 1.5vw, 20px) 4px;
   display: flex;
   flex-direction: column;
   justify-content: center;
-  gap: 18px;
+  gap: 16px;
+}
+
+.axo-sp-demo-workbench.is-v14 .axo-sp-demo-step-head {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 6px;
+}
+
+.axo-v14-demo-model-name {
+  color: var(--ink-muted);
+  font-size: 0.875rem;
+  font-weight: 600;
 }
 
 .axo-v14-demo-focus-note {
@@ -3596,14 +3672,14 @@
 }
 
 .axo-sp-scene-shell.is-v14 {
-  background-color: var(--canvas);
+  background-color: transparent;
   border: 0;
   border-radius: 0;
-  min-height: 462px;
+  min-height: 448px;
 }
 
 .axo-sp-scene-shell.is-v14 .axo-sp-scene-grid {
-  opacity: 0.22;
+  opacity: 0.16;
 }
 
 .axo-v14-demo-step-tag {
@@ -3614,13 +3690,13 @@
 }
 
 .axo-v14-closing {
-  background-color: var(--axo-sp-bg);
+  background-color: var(--axo-sp-paper);
   scroll-margin-top: 72px;
   padding: clamp(60px, 7.5vw, 96px) clamp(20px, 4vw, 48px);
 }
 
 .axo-v14-closing .axo-v14-btn-secondary {
-  background-color: var(--axo-sp-paper);
+  background-color: var(--canvas);
 }
 
 .axo-v14-closing .axo-v14-btn-secondary:hover {
@@ -3716,13 +3792,14 @@
 
 .axo-v14-footer {
   background-color: var(--axo-sp-paper);
-  border-top: 1px solid var(--hairline);
-  padding: clamp(36px, 4.5vw, 52px) clamp(20px, 4vw, 48px) clamp(24px, 3vw, 32px);
+  padding: 0 clamp(20px, 4vw, 48px) clamp(24px, 3vw, 32px);
 }
 
 .axo-v14-footer-shell {
   max-width: 1200px;
   margin: 0 auto;
+  border-top: 1px solid var(--hairline);
+  padding-top: clamp(28px, 3.6vw, 42px);
   display: flex;
   flex-direction: column;
   gap: 20px;
@@ -3879,18 +3956,22 @@
 
   .axo-sp-demo-workbench.is-v14 {
     grid-template-columns: minmax(0, 1fr);
-    gap: 0;
+    gap: 18px;
   }
 
   .axo-sp-demo-workbench.is-v14 .axo-sp-demo-panel {
     border-left: 0;
-    border-top: 1px solid var(--hairline);
-    padding: 20px;
-    gap: 14px;
+    border-top: 0;
+    padding: 4px 0 0;
+    gap: 12px;
   }
 
   .axo-sp-demo-step-dock {
     grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .axo-sp-demo-workbench.is-v14 .axo-sp-step-tab {
+    min-height: 44px;
   }
 
   .axo-v14-closing {
@@ -3930,8 +4011,9 @@
 
   .axo-sp-demo-section.is-v14 .axo-sp-sample-pill {
     width: auto;
-    padding: 7px 9px;
-    font-size: 0.8125rem;
+    min-height: 44px;
+    padding: 8px 12px;
+    font-size: 0.875rem;
     text-align: center;
   }
 
@@ -3943,7 +4025,7 @@
 
   .axo-v14-demo-orbit-hint,
   .axo-sp-demo-workbench.is-v14 .axo-sp-ghost-chip {
-    padding: 4px 10px;
+    padding: 5px 11px;
     font-size: 0.8125rem;
   }
 
@@ -3956,14 +4038,15 @@
   }
 
   .axo-sp-scene-shell.is-v14 {
-    min-height: 310px;
+    min-height: clamp(330px, 48svh, 390px);
   }
 
   .axo-v14-footer {
-    padding: 28px 20px 22px;
+    padding: 0 20px 22px;
   }
 
   .axo-v14-footer-shell {
+    padding-top: 24px;
     gap: 16px;
   }
 
@@ -3978,7 +4061,7 @@
   }
 }
 
-@media (max-width: 350px) {
+@media (max-width: 396px) {
   .axo-sp-demo-toolbar.is-v14 {
     top: 8px;
     left: 8px;
@@ -3986,7 +4069,7 @@
   }
 
   .axo-v14-demo-orbit-hint {
-    padding: 3px 8px;
+    padding: 4px 9px;
   }
 
   .axo-sp-demo-section.is-v14 .axo-sp-demo-samples {
@@ -4000,6 +4083,10 @@
 
   .axo-sp-demo-section.is-v14 .axo-sp-sample-pill {
     width: 100%;
+  }
+
+  .axo-sp-scene-shell.is-v14 {
+    min-height: 316px;
   }
 }
 

@@ -5,6 +5,7 @@ import { LandingInteractiveDemo } from "../landing/LandingInteractiveDemo";
 import { LandingClosingV14 } from "../landing/LandingClosingV14";
 import { STORY_STAGES_V14 } from "../landing/LandingStorytellingV14";
 import {
+  computeShowcaseCameraPreset,
   LANDING_CUBE_SAMPLE,
   LANDING_PYRAMID_SAMPLE,
 } from "../landing/landing-geometry-data";
@@ -51,10 +52,36 @@ describe("AXO Landing V1.4 — Zero Pre-Displayed Answers & Product Honesty Guar
     }
 
     const demoV14Html = renderToStaticMarkup(<LandingInteractiveDemo presentation="v14" />);
+    expect(demoV14Html).toContain("axo-v14-demo-model-name");
     expect(demoV14Html).toContain("axo-v14-demo-focus-note");
     expect(demoV14Html).toContain("axo-v14-btn-primary");
     expect(demoV14Html).not.toContain("axo-sp-demo-toolbar-title");
     expect(demoV14Html).not.toContain("axo-sp-demo-metrics");
+
+    // Bounding-box + normal-aware showcase presets show both sections clearly without edge-on grazing
+    const cubePreset = computeShowcaseCameraPreset(LANDING_CUBE_SAMPLE.points, [-1, 1, -1], {
+      azimuthBias: 0.22,
+      elevationRad: 0.46,
+      distanceScale: 3.52,
+    });
+    expect(cubePreset.normalCosine).toBeGreaterThanOrEqual(0.65);
+    expect(cubePreset.lookAt).toEqual([0, 0, 0]);
+    for (const ms of LANDING_CUBE_SAMPLE.milestones) {
+      expect(ms.v14CameraPos).toEqual(cubePreset.cameraPos);
+      expect(ms.v14LookAt).toEqual(cubePreset.lookAt);
+    }
+
+    const pyrPreset = computeShowcaseCameraPreset(LANDING_PYRAMID_SAMPLE.points, [1, 2, -1], {
+      azimuthBias: 0.14,
+      elevationRad: 0.45,
+      distanceScale: 3.55,
+    });
+    expect(pyrPreset.normalCosine).toBeGreaterThanOrEqual(0.65);
+    expect(pyrPreset.lookAt[1]).toBeCloseTo(0.35, 3);
+    for (const ms of LANDING_PYRAMID_SAMPLE.milestones) {
+      expect(ms.v14CameraPos).toEqual(pyrPreset.cameraPos);
+      expect(ms.v14LookAt).toEqual(pyrPreset.lookAt);
+    }
 
     for (const stage of STORY_STAGES_V14) {
       const text = `${stage.chapterHeading} ${stage.title} ${stage.summary} ${stage.relationNote}`;

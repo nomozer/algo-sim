@@ -697,6 +697,10 @@ export function SpatialSceneCanvas({
       let targetParallaxX = 0;
       let targetParallaxY = 0;
       let isDragging = false;
+      let gestureMode: "idle" | "pending" | "orbit" | "scroll" = "idle";
+      let ptrDownId = -1;
+      let downPtrX = 0;
+      let downPtrY = 0;
       let lastPtrX = 0;
       let lastPtrY = 0;
 
@@ -942,6 +946,21 @@ export function SpatialSceneCanvas({
 
       const onPointerDown = (e: PointerEvent) => {
         if (!propsRef.current.interactiveOrbit) return;
+        if (propsRef.current.presentation === "v14") {
+          gestureMode = "pending";
+          ptrDownId = e.pointerId;
+          downPtrX = e.clientX;
+          downPtrY = e.clientY;
+          lastPtrX = e.clientX;
+          lastPtrY = e.clientY;
+          if (e.pointerType !== "touch") {
+            isDragging = true;
+            gestureMode = "orbit";
+            shell.setPointerCapture?.(e.pointerId);
+            wakeRender();
+          }
+          return;
+        }
         isDragging = true;
         lastPtrX = e.clientX;
         lastPtrY = e.clientY;
@@ -951,6 +970,51 @@ export function SpatialSceneCanvas({
       };
 
       const onPointerMove = (e: PointerEvent) => {
+        if (propsRef.current.presentation === "v14") {
+          if (gestureMode === "pending" && e.pointerId === ptrDownId) {
+            const totalDx = Math.abs(e.clientX - downPtrX);
+            const totalDy = Math.abs(e.clientY - downPtrY);
+            if (totalDx < 5 && totalDy < 5) return;
+            if (e.pointerType === "touch" && totalDy > totalDx * 1.15) {
+              gestureMode = "scroll";
+              isDragging = false;
+              return;
+            }
+            gestureMode = "orbit";
+            isDragging = true;
+            lastPtrX = e.clientX;
+            lastPtrY = e.clientY;
+            shell.setPointerCapture?.(e.pointerId);
+            onUserOrbitRef.current?.();
+            wakeRender();
+            return;
+          }
+          if (isDragging && gestureMode === "orbit" && propsRef.current.interactiveOrbit) {
+            const dx = e.clientX - lastPtrX;
+            const dy = e.clientY - lastPtrY;
+            if (Math.hypot(e.clientX - downPtrX, e.clientY - downPtrY) >= 2) {
+              onUserOrbitRef.current?.();
+            }
+            lastPtrX = e.clientX;
+            lastPtrY = e.clientY;
+            sphericalOffsetRef.current.theta -= dx * 0.009;
+            sphericalOffsetRef.current.phi = Math.max(
+              -0.65,
+              Math.min(0.65, sphericalOffsetRef.current.phi - dy * 0.007),
+            );
+            wakeRender();
+            return;
+          }
+          if (e.pointerType !== "touch" && propsRef.current.subtlePointerParallax && !reducedMotion) {
+            const rect = shell.getBoundingClientRect();
+            if (rect.width > 0 && rect.height > 0) {
+              targetParallaxX = ((e.clientX - rect.left) / rect.width - 0.5) * 0.55;
+              targetParallaxY = ((e.clientY - rect.top) / rect.height - 0.5) * 0.35;
+              wakeRender();
+            }
+          }
+          return;
+        }
         if (isDragging && propsRef.current.interactiveOrbit) {
           const dx = e.clientX - lastPtrX;
           const dy = e.clientY - lastPtrY;
@@ -973,6 +1037,10 @@ export function SpatialSceneCanvas({
       };
 
       const onPointerUp = (e: PointerEvent) => {
+        if (e.pointerId === ptrDownId) {
+          gestureMode = "idle";
+          ptrDownId = -1;
+        }
         if (isDragging) {
           isDragging = false;
           shell.releasePointerCapture?.(e.pointerId);

@@ -745,13 +745,13 @@ export function LandingClosingScene3D() {
     root.add(baseRingLine);
 
     // 2. Sculpted Lower Frustum & Lifted Upper Cap Group
-    const lowerGeo = track(buildFacesBufferGeometry(lowerFaces, 0xf3f0ea));
+    const lowerGeo = track(buildFacesBufferGeometry(lowerFaces, 0xffffff));
     const lowerMat = track(
       new THREE.MeshBasicMaterial({
         color: 0xffffff,
         vertexColors: true,
         transparent: true,
-        opacity: 0.9,
+        opacity: 0.94,
         side: THREE.DoubleSide,
         depthWrite: false,
       }),

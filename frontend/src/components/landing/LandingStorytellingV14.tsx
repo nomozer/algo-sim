@@ -41,20 +41,20 @@ export const STORY_STAGES_V14: readonly StoryStageV14Spec[] = [
     index: 0,
     shortNum: "1",
     desktopTag: "Từ đề bài",
-    mobileShortTag: "Đề bài",
+    mobileShortTag: "Từ đề bài",
     epistemicRole: "Giả thiết",
     chapterHeading: "Chặng 1: Từ đề bài",
-    title: "Dựng lăng trụ đứng và ba điểm gốc M, N, P",
+    title: "Khởi tạo lăng trụ đứng và ba điểm gốc",
     summary:
-      "Từ giả thiết lăng trụ tam giác đều ABC.A′B′C′, Axo dựng mặt đáy đều, các cạnh bên vuông góc đáy và đặt trung điểm M ∈ AB, N ∈ AC, P ∈ CC′.",
+      "Trên lăng trụ tam giác đều ABC.A′B′C′, hệ cố định ba trung điểm xuất phát M trên AB, N trên AC và P trên cạnh bên CC′.",
     relationNote: "Giả thiết: Lăng trụ đứng đáy đều ABC.A′B′C′ · Trung điểm M, N, P",
-    establishedState: "ΔABC đều · AA′ ⊥ (ABC) · M, N, P là trung điểm cố định",
+    establishedState: "ΔABC đều · AA′ ⊥ (ABC) · M ∈ AB, N ∈ AC, P ∈ CC′",
     camera: {
-      yaw: -0.38,
-      pitch: 0.25,
+      yaw: -0.36,
+      pitch: 0.26,
       zoom: 1,
       extrude: 1,
-      prismBuild: 0.35,
+      prismBuild: 1,
       planeSweep: 0,
       parallelCue: 0,
       traceProgress: 0,
@@ -65,16 +65,16 @@ export const STORY_STAGES_V14: readonly StoryStageV14Spec[] = [
     index: 1,
     shortNum: "2",
     desktopTag: "Dựng không gian",
-    mobileShortTag: "Dựng hình",
+    mobileShortTag: "Mặt cắt",
     epistemicRole: "Đối tượng đã dựng",
     chapterHeading: "Chặng 2: Dựng không gian",
-    title: "Xác lập mặt phẳng cắt (MNP) và hai giao tuyến đầu",
+    title: "Mở mặt phẳng cắt (MNP) qua lòng khối",
     summary:
-      "Khung lăng trụ hoàn thiện đồng thời mặt phẳng (MNP) hạ vào lòng khối, nối đoạn MN trên đáy (ABC) và đoạn NP trên mặt bên (ACC′A′).",
+      "Mặt phẳng qua ba điểm gốc cắt ngay mặt đáy theo đoạn MN và cắt mặt bên (ACC′A′) theo đoạn NP.",
     relationNote: "Đối tượng đã dựng: (MNP) cắt (ABC) theo MN và cắt (ACC′A′) theo NP",
-    establishedState: "Mặt cắt (MNP) qua 3 điểm · Giao tuyến mở đầu MN, NP",
+    establishedState: "(MNP) ∩ (ABC) = MN · (MNP) ∩ (ACC′A′) = NP",
     camera: {
-      yaw: -0.18,
+      yaw: -0.16,
       pitch: 0.29,
       zoom: 1,
       extrude: 1,
@@ -89,23 +89,23 @@ export const STORY_STAGES_V14: readonly StoryStageV14Spec[] = [
     index: 2,
     shortNum: "3",
     desktopTag: "Xác lập quan hệ",
-    mobileShortTag: "Quan hệ",
+    mobileShortTag: "Song song",
     epistemicRole: "Quan hệ quan sát được",
     chapterHeading: "Chặng 3: Xác lập quan hệ",
-    title: "Truyền song song MN ∥ BC để xác định Q ∈ BB′",
+    title: "Dẫn quan hệ song song để tìm giao điểm Q",
     summary:
-      "Đường trung bình MN ∥ BC dẫn tia giao tuyến qua P trên mặt bên (BCC′B′) song song với BC, cắt cạnh BB′ đúng tại điểm Q.",
+      "Vì MN song song với BC trên mặt đáy, giao tuyến đi qua P trên mặt bên (BCC′B′) giữ phương song song với BC và cắt cạnh BB′ tại Q.",
     relationNote: "Quan hệ quan sát được: MN ∥ BC ⇒ PQ ∥ BC · Xác định Q ∈ BB′",
     establishedState: "MN ∥ BC ⇒ (MNP) ∩ (BCC′B′) = PQ ∥ BC · Q ∈ BB′",
     camera: {
       yaw: 0.04,
-      pitch: 0.32,
+      pitch: 0.31,
       zoom: 1,
       extrude: 1,
       prismBuild: 1,
       planeSweep: 1,
       parallelCue: 1,
-      traceProgress: 0.78,
+      traceProgress: 0.76,
       sectionFill: 0.08,
     },
   },
@@ -118,9 +118,9 @@ export const STORY_STAGES_V14: readonly StoryStageV14Spec[] = [
     chapterHeading: "Chặng 4: Hoàn thiện thiết diện",
     title: "Khép kín thiết diện hình thang cân MNPQ",
     summary:
-      "Đoạn QM khép kín bốn cạnh đồng phẳng trên (MNP) với cặp đáy MN ∥ PQ và hai cạnh bên bằng nhau NP = QM.",
+      "Đoạn QM nối kín bốn đỉnh đồng phẳng trên (MNP), tạo thành hình thang cân với hai đáy song song MN, PQ và hai cạnh bên bằng nhau.",
     relationNote: "Kết quả xác lập: Thiết diện phẳng hình thang cân MNPQ trên (MNP)",
-    establishedState: "MNPQ đồng phẳng · MN ∥ PQ · NP = QM (hình thang cân)",
+    establishedState: "MNPQ đồng phẳng · MN ∥ PQ · NP = QM",
     camera: {
       yaw: 0.19,
       pitch: 0.3,
@@ -128,7 +128,7 @@ export const STORY_STAGES_V14: readonly StoryStageV14Spec[] = [
       extrude: 1,
       prismBuild: 1,
       planeSweep: 1,
-      parallelCue: 0.5,
+      parallelCue: 0.55,
       traceProgress: 1,
       sectionFill: 1,
     },
@@ -205,50 +205,50 @@ export function computeChapterEnvelope(
     return { opacity: 1, offsetY: 0, isVisible: true };
   }
   const p = clamp01(progress);
-  const w = 0.032;
+  const w = 0.028;
 
   if (index === 0) {
-    if (p >= 0.25) return { opacity: 0, offsetY: -16, isVisible: false };
+    if (p >= 0.25) return { opacity: 0, offsetY: -14, isVisible: false };
     if (p > 0.25 - w) {
       const u = smoothstep(0.25 - w, 0.25, p);
-      return { opacity: 1 - 0.42 * u, offsetY: -16 * u, isVisible: true };
+      return { opacity: 1 - 0.26 * u, offsetY: -14 * u, isVisible: true };
     }
     return { opacity: 1, offsetY: 0, isVisible: true };
   }
 
   if (index === 1) {
-    if (p < 0.25) return { opacity: 0, offsetY: 16, isVisible: false };
-    if (p >= 0.5) return { opacity: 0, offsetY: -16, isVisible: false };
+    if (p < 0.25) return { opacity: 0, offsetY: 14, isVisible: false };
+    if (p >= 0.5) return { opacity: 0, offsetY: -14, isVisible: false };
     if (p < 0.25 + w) {
       const u = smoothstep(0.25, 0.25 + w, p);
-      return { opacity: 0.58 + 0.42 * u, offsetY: 16 * (1 - u), isVisible: true };
+      return { opacity: 0.74 + 0.26 * u, offsetY: 14 * (1 - u), isVisible: true };
     }
     if (p > 0.5 - w) {
       const u = smoothstep(0.5 - w, 0.5, p);
-      return { opacity: 1 - 0.42 * u, offsetY: -16 * u, isVisible: true };
+      return { opacity: 1 - 0.26 * u, offsetY: -14 * u, isVisible: true };
     }
     return { opacity: 1, offsetY: 0, isVisible: true };
   }
 
   if (index === 2) {
-    if (p < 0.5) return { opacity: 0, offsetY: 16, isVisible: false };
-    if (p >= 0.75) return { opacity: 0, offsetY: -16, isVisible: false };
+    if (p < 0.5) return { opacity: 0, offsetY: 14, isVisible: false };
+    if (p >= 0.75) return { opacity: 0, offsetY: -14, isVisible: false };
     if (p < 0.5 + w) {
       const u = smoothstep(0.5, 0.5 + w, p);
-      return { opacity: 0.58 + 0.42 * u, offsetY: 16 * (1 - u), isVisible: true };
+      return { opacity: 0.74 + 0.26 * u, offsetY: 14 * (1 - u), isVisible: true };
     }
     if (p > 0.75 - w) {
       const u = smoothstep(0.75 - w, 0.75, p);
-      return { opacity: 1 - 0.42 * u, offsetY: -16 * u, isVisible: true };
+      return { opacity: 1 - 0.26 * u, offsetY: -14 * u, isVisible: true };
     }
     return { opacity: 1, offsetY: 0, isVisible: true };
   }
 
   if (index === 3) {
-    if (p < 0.75) return { opacity: 0, offsetY: 16, isVisible: false };
+    if (p < 0.75) return { opacity: 0, offsetY: 14, isVisible: false };
     if (p < 0.75 + w) {
       const u = smoothstep(0.75, 0.75 + w, p);
-      return { opacity: 0.58 + 0.42 * u, offsetY: 16 * (1 - u), isVisible: true };
+      return { opacity: 0.74 + 0.26 * u, offsetY: 14 * (1 - u), isVisible: true };
     }
     return { opacity: 1, offsetY: 0, isVisible: true };
   }
@@ -383,7 +383,7 @@ function isFaceFrontFacing(
   return nx * viewX + ny * viewY + nz * viewZ > 0.02;
 }
 
-const STORY_SVG_W = 680;
+const STORY_SVG_W = 700;
 const STORY_SVG_H = 500;
 const PRISM_HEIGHT_SCALE = 1.16;
 
@@ -411,28 +411,6 @@ const STORY_PLANE_QUAD = (() => {
   ];
   return computeBoundedPlaneQuad([m, n, p, q], normal, 0.34);
 })();
-
-function buildParallelChevronD(a: ProjectedPoint2D, b: ProjectedPoint2D): string {
-  const dx = b.x - a.x;
-  const dy = b.y - a.y;
-  const len = Math.hypot(dx, dy) || 1;
-  const ux = dx / len;
-  const uy = dy / len;
-  const nx = -uy;
-  const ny = ux;
-  const mx = (a.x + b.x) * 0.5;
-  const my = (a.y + b.y) * 0.5;
-  const buildOne = (cx: number, cy: number) => {
-    const tipX = cx + ux * 3.6;
-    const tipY = cy + uy * 3.6;
-    const arm1X = cx - ux * 3.2 + nx * 3.8;
-    const arm1Y = cy - uy * 3.2 + ny * 3.8;
-    const arm2X = cx - ux * 3.2 - nx * 3.8;
-    const arm2Y = cy - uy * 3.2 - ny * 3.8;
-    return `M ${arm1X.toFixed(1)} ${arm1Y.toFixed(1)} L ${tipX.toFixed(1)} ${tipY.toFixed(1)} L ${arm2X.toFixed(1)} ${arm2Y.toFixed(1)}`;
-  };
-  return `${buildOne(mx - ux * 3.2, my - uy * 3.2)} ${buildOne(mx + ux * 3.8, my + uy * 3.8)}`;
-}
 
 function buildDoubleTickD(a: ProjectedPoint2D, b: ProjectedPoint2D): string {
   const dx = b.x - a.x;
@@ -492,21 +470,22 @@ function PrismEditorialStage({
       ? pose.activeStageIndex === 3
         ? 1
         : 0
-      : smoothstep(0.76, 0.92, pose.progress);
-    const scale = 72 * pose.zoom;
-    const cx = lerp(STORY_SVG_W * 0.5, STORY_SVG_W * 0.43, insetReveal);
+      : smoothstep(0.76, 0.91, pose.progress);
+    const scale = 76 * pose.zoom;
+    const cx = lerp(350, 240, insetReveal);
     const cy = 266;
     const proj: Record<string, ProjectedPoint2D> = {};
     for (const [k, v] of Object.entries(coords)) {
       proj[k] = projectPrismPoint3D(v, pose.yaw, pose.pitch, cx, cy, scale);
     }
 
-    const pillarGrow = reducedMotion
-      ? 1
-      : clamp01(0.56 + 0.44 * smoothstep(0.35, 0.72, pose.prismBuild));
-    const topGrow = reducedMotion
-      ? 1
-      : smoothstep(0.42, 0.84, pose.prismBuild);
+    const pillarGrow = 1;
+    const topGrow = 1;
+    const seedHaloStrength = reducedMotion
+      ? pose.activeStageIndex === 0
+        ? 1
+        : 0
+      : 1 - smoothstep(0.16, 0.34, pose.progress);
 
     const solidCenter: Vec3Tuple = [
       (coords["A"][0] +
@@ -576,7 +555,7 @@ function PrismEditorialStage({
         proj["C_prime"].y) /
       6;
 
-    const prismWeight = 0.25 + 0.75 * topGrow;
+    const prismWeight = 1;
     const edges = LANDING_PRISM_STORY_SPEC.solidEdges.map((edge) => {
       const a = proj[edge.from];
       const bOrig = proj[edge.to];
@@ -593,14 +572,9 @@ function PrismEditorialStage({
             };
       const isNonParticipating =
         isTop || (edge.from === "A" && edge.to === "A_prime");
-      let opacity = 0.9;
-      if (isTop) {
-        opacity *= 0.15 + 0.85 * Math.min(1, topGrow * 1.4);
-      } else if (isPillar) {
-        opacity *= 0.8 + 0.2 * pillarGrow;
-      }
+      let opacity = 0.92;
       if (isNonParticipating && pose.parallelCue > 0.02) {
-        opacity *= 1 - 0.42 * pose.parallelCue;
+        opacity *= 1 - 0.16 * pose.parallelCue;
       }
       const front = edgeVisibleInSolid(edge.from, edge.to);
       return {
@@ -608,10 +582,10 @@ function PrismEditorialStage({
         a,
         b,
         bFull: bOrig,
-        isGrowingPillar: isPillar && growFrac < 0.999,
+        isGrowingPillar: false,
         dashed: !front,
         opacity,
-        visible: growFrac > 0.02,
+        visible: true,
       };
     });
 
@@ -757,14 +731,6 @@ function PrismEditorialStage({
       makeBaseEqTick("A", "C", 0.3),
     ].join(" ");
 
-    const parallelChevronsD = [
-      buildParallelChevronD(proj["M"], proj["N"]),
-      buildParallelChevronD(proj["B"], proj["C"]),
-      ...(pose.activeStageIndex >= 2 && (pose.parallelCue > 0.25 || pose.traceProgress > 0.56)
-        ? [buildParallelChevronD(proj["Q"], proj["P"])]
-        : []),
-    ].join(" ");
-
     const congruenceLegsD = [
       buildDoubleTickD(proj["N"], proj["P"]),
       buildDoubleTickD(proj["M"], proj["Q"]),
@@ -813,9 +779,9 @@ function PrismEditorialStage({
       (domM[1] + domN[1] + domP[1] + domQ[1]) * 0.25,
       (domM[2] + domN[2] + domP[2] + domQ[2]) * 0.25,
     ];
-    const insetCenterX = 562;
-    const insetCenterY = 114;
-    const insetScale = 23.5;
+    const insetCenterX = 571;
+    const insetCenterY = 148;
+    const insetScale = 35;
     const mapTrapPt = (id: string, dom: Vec3Tuple) => {
       const rel: Vec3Tuple = [
         dom[0] - trapCentroid[0],
@@ -842,22 +808,18 @@ function PrismEditorialStage({
       buildDoubleTickD({ x: trapPts[1].x, y: trapPts[1].y, z: 0 }, { x: trapPts[2].x, y: trapPts[2].y, z: 0 }),
       buildDoubleTickD({ x: trapPts[0].x, y: trapPts[0].y, z: 0 }, { x: trapPts[3].x, y: trapPts[3].y, z: 0 }),
     ].join(" ");
-    const insetParallelD = [
-      buildParallelChevronD({ x: trapPts[0].x, y: trapPts[0].y, z: 0 }, { x: trapPts[1].x, y: trapPts[1].y, z: 0 }),
-      buildParallelChevronD({ x: trapPts[3].x, y: trapPts[3].y, z: 0 }, { x: trapPts[2].x, y: trapPts[2].y, z: 0 }),
-    ].join(" ");
 
     return {
       proj,
       cx,
       topGrow,
       insetReveal,
+      seedHaloStrength,
       prismWeight,
       edges,
       frontLateralPolys,
       midpointTicks,
       equilateralBaseTicksD,
-      parallelChevronsD,
       congruenceLegsD,
       haloCy,
       rightAnglePath: `M ${raB1.x.toFixed(1)} ${raB1.y.toFixed(1)} L ${raC.x.toFixed(1)} ${raC.y.toFixed(1)} L ${raB2.x.toFixed(1)} ${raB2.y.toFixed(1)}`,
@@ -868,7 +830,6 @@ function PrismEditorialStage({
       trapPts,
       trapPolyPoints: trapPts.map((pt) => `${pt.x.toFixed(1)},${pt.y.toFixed(1)}`).join(" "),
       insetTicksD,
-      insetParallelD,
       tracedEdges,
       labels,
     };
@@ -978,6 +939,29 @@ function PrismEditorialStage({
           {pose.parallelCue > 0.04 && (
             <g opacity={pose.parallelCue.toFixed(3)}>
               <line
+                className="axo-v14-svg-parallel-band"
+                x1={scene.proj["B"].x}
+                y1={scene.proj["B"].y}
+                x2={scene.proj["C"].x}
+                y2={scene.proj["C"].y}
+              />
+              <line
+                className="axo-v14-svg-parallel-band"
+                x1={scene.proj["M"].x}
+                y1={scene.proj["M"].y}
+                x2={scene.proj["N"].x}
+                y2={scene.proj["N"].y}
+              />
+              {pose.planeSweep > 0.45 && (
+                <line
+                  className="axo-v14-svg-parallel-band"
+                  x1={scene.proj["P"].x}
+                  y1={scene.proj["P"].y}
+                  x2={scene.proj["Q"].x}
+                  y2={scene.proj["Q"].y}
+                />
+              )}
+              <line
                 className="axo-v14-svg-parallel-guide"
                 x1={scene.proj["B"].x}
                 y1={scene.proj["B"].y}
@@ -1000,11 +984,6 @@ function PrismEditorialStage({
                   y2={scene.proj["Q"].y}
                 />
               )}
-              <path
-                className="axo-v14-svg-parallel-chevron"
-                d={scene.parallelChevronsD}
-                fill="none"
-              />
             </g>
           )}
 
@@ -1064,11 +1043,20 @@ function PrismEditorialStage({
                 : "axo-v14-svg-vertex-text";
             return (
               <g key={item.id} opacity={item.opacity.toFixed(3)}>
+                {isSeed && scene.seedHaloStrength > 0.04 && (
+                  <circle
+                    className="axo-v14-svg-seed-halo"
+                    cx={item.px}
+                    cy={item.py}
+                    r={(7.5 + 3.5 * scene.seedHaloStrength).toFixed(1)}
+                    opacity={(0.82 * scene.seedHaloStrength).toFixed(3)}
+                  />
+                )}
                 <circle
                   className={dotClass}
                   cx={item.px}
                   cy={item.py}
-                  r={isInter ? 4.8 : isSeed ? 4.2 : 3.1}
+                  r={isInter ? 4.8 : isSeed ? 4.4 : 3.2}
                 />
                 <text className={textClass} x={item.lx} y={item.ly}>
                   {item.label}
@@ -1083,19 +1071,39 @@ function PrismEditorialStage({
               opacity={scene.insetReveal.toFixed(3)}
               transform={`translate(0 ${(12 * (1 - scene.insetReveal)).toFixed(1)})`}
             >
-              <text className="axo-v14-svg-inset-caption" x="562" y="54">
-                Hình thật (MNP)
+              <rect
+                className="axo-v14-svg-inset-card"
+                x="458"
+                y="24"
+                width="226"
+                height="210"
+                rx="14"
+              />
+              <text className="axo-v14-svg-inset-caption" x="571" y="50">
+                Hình thật thiết diện
+              </text>
+              <text className="axo-v14-svg-inset-subcaption" x="571" y="68">
+                Hình thang cân MNPQ
               </text>
               <polygon
                 className="axo-v14-svg-section-poly"
                 points={scene.trapPolyPoints}
-                fillOpacity="0.34"
-                strokeOpacity="0.92"
+                fillOpacity="0.38"
+                strokeOpacity="0.94"
               />
-              <path
-                className="axo-v14-svg-parallel-chevron"
-                d={scene.insetParallelD}
-                fill="none"
+              <line
+                className="axo-v14-svg-parallel-guide"
+                x1={scene.trapPts[0].x}
+                y1={scene.trapPts[0].y}
+                x2={scene.trapPts[1].x}
+                y2={scene.trapPts[1].y}
+              />
+              <line
+                className="axo-v14-svg-parallel-guide"
+                x1={scene.trapPts[3].x}
+                y1={scene.trapPts[3].y}
+                x2={scene.trapPts[2].x}
+                y2={scene.trapPts[2].y}
               />
               <path
                 className="axo-v14-svg-leg-tick"
@@ -1112,7 +1120,7 @@ function PrismEditorialStage({
                     }
                     cx={tp.x.toFixed(1)}
                     cy={tp.y.toFixed(1)}
-                    r="3.4"
+                    r="3.8"
                   />
                   <text
                     className={
@@ -1120,8 +1128,8 @@ function PrismEditorialStage({
                         ? "axo-v14-svg-label-inter"
                         : "axo-v14-svg-label-seed"
                     }
-                    x={(tp.x + (idx === 0 || idx === 3 ? -14 : 14)).toFixed(1)}
-                    y={(tp.y + (idx < 2 ? -9 : 14)).toFixed(1)}
+                    x={(tp.x + (idx === 0 || idx === 3 ? -16 : 16)).toFixed(1)}
+                    y={(tp.y + (idx < 2 ? -10 : 16)).toFixed(1)}
                   >
                     {tp.label}
                   </text>
@@ -1292,6 +1300,9 @@ export function LandingStorytellingV14() {
               <PrismEditorialStage pose={pose} reducedMotion={reducedMotion} />
 
               <div className="axo-v14-story-narrative">
+                <p className="axo-v14-story-context-line">
+                  Mô hình: Lăng trụ tam giác đều ABC.A′B′C′
+                </p>
                 <div className="axo-v14-story-rail" aria-hidden="true">
                   {STORY_STAGES_V14.map((s, idx) => {
                     const segFill = reducedMotion
