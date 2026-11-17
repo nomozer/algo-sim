@@ -3,7 +3,7 @@
 > **Run ID:** `specialized-geometry-extraction-slm-optimization`  
 > **Branch:** `feat/local-first-geometry-understanding` (Base: `463c6b0408e192a19ff1f25a1bff2a6c94e4e75f`)  
 > **Product Commit:** `0acc07ae2a7cf8ebdb88b4876668099a1abae4f4` (`0acc07ae2`, `backend/app/ai/**` frozen bundle SHA-256: `3810c619248723b67b8f87bd634566ca4dce0ccebab23bd8390af1eb4833eca9`)  
-> **Frozen Evaluation Candidate:** `<PENDING_FREEZE_COMMIT_SHA>` (`measured_system`: `32a3014c99174dbfd85e4139dd2238dc0551ac3e2b369dcedf73680d7f1ba832`, `123` files, `cay_lam_viec_sach = true`)  
+> **Frozen Evaluation Candidate:** `732d979e1b12547deced4356d012b860d6f7a907` (`732d979e1`, `measured_system`: `32a3014c99174dbfd85e4139dd2238dc0551ac3e2b369dcedf73680d7f1ba832`, `123` files, `cay_lam_viec_sach = true`)  
 > **Cache & Surface Policy:** `CACHE_VERSION = "145"` (`145:route-d`), local SLM namespace `HYBRID_V6_LOCAL_SLM`, production default `HYBRID_ROUTE_MODE = "live"` preserved, experimental opt-in `HYBRID_ROUTE_MODE = "local-slm"`, all `4` locked Gemini extraction surfaces **100% unchanged** (`lock_cache_identity.py --verify` PASS)  
 > **Model & Runtime:** `Qwen3-0.6B-Q4_K_M.gguf` (`sha256:ac2d97712095a558e31573f62f466a3f9d93990898b0ec79d7c974c1780d524a`, `396,705,472` B, `0.6B`) on CPU-first `llama.cpp b12470` (`sha256:fc83371644b501647c253ca1e42277795eca7ed15851a218b20294275b45d67f`) · `local-slm-runtime/2` · `local-slm-extractor/2` (`slm-compact-clause/1`) · `slm-grounding-validator/2` · `slm-verified-normalizer/1`  
 > **Offline Discipline:** `ALLOW_LIVE_AI = 0`, `GEMINI_API_KEY = ""`, `external_ai_calls = 0`, `0` edits to `frontend/**`, `Planner /26`, `Registry /33`, `Exact Kernel /24`, `Source Gate`, `OCR`, `sealed H-1`, `locked W2/W3`, or frozen `/5` artifacts  
@@ -80,7 +80,7 @@ AXO HYBRID /6 diagnosed the exact bottlenecks limiting `/5` (`10/28` on `HOLDOUT
 | `B3` — Grounding Reliability | **PASS** | [`SLM_GROUNDING_RELIABILITY.json`](SLM_GROUNDING_RELIABILITY.json) (`24/24` probes PASS, `0` leaks, `0` invented premises) |
 | `B4` — Performance | **PASS** | [`SLM_LATENCY_OPTIMIZATION.json`](SLM_LATENCY_OPTIMIZATION.json) (`6T` `3204.27/5392.59 ms`, `8T` `2993.00/4452.59 ms`, cache `39.64 ms`, peak RSS `1049.30 MiB`; per-clause batch slower `4319.97 ms`) |
 | `B5` — Independent Generalization | **PASS** | [`SLM_NEW_HOLDOUT_MANIFEST.json`](SLM_NEW_HOLDOUT_MANIFEST.json) + [`SLM_NEW_HOLDOUT_EVALUATION.json`](SLM_NEW_HOLDOUT_EVALUATION.json) (`single_shot=True`, `freeze_integrity_verified=True`, `19/32` vs `13/32`, `p=0.03125`) |
-| `B6` — Safety & Regression | **PASS** | [`SLM_REGRESSION_REPORT.md`](SLM_REGRESSION_REPORT.md) (`0` regressions across 11 suites, `14/14` fault checks, `10/10` SLM pytest, pending full pytest & final docs/safety audit) |
+| `B6` — Safety & Regression | **PASS** | [`SLM_REGRESSION_REPORT.md`](SLM_REGRESSION_REPORT.md) (`0` regressions across 11 suites, `14/14` fault checks, `10/10` SLM pytest, `132/132` candidate+C21 pytest, **`14,915`** full backend pytest PASS on `732d979e1`) |
 | `B7` — Final Evidence Decision | **PASS** | [`SLM_REPLACEMENT_DECISION.md`](SLM_REPLACEMENT_DECISION.md) (`PARTIAL_GAIN_KEEP_HYBRID_EXPERIMENTAL`) + [`SLM_FINE_TUNING_DECISION.md`](SLM_FINE_TUNING_DECISION.md) |
 
 ### B. Definition of Done (`§16`)
@@ -137,5 +137,5 @@ AXO HYBRID /6 diagnosed the exact bottlenecks limiting `/5` (`10/28` on `HOLDOUT
 12. [`FINAL_MASTER_REPORT.md`](FINAL_MASTER_REPORT.md) (this report)
 13. [`pending_template_refresh.json`](pending_template_refresh.json) + [`run.json`](run.json)
 
-- **Targeted Tests (Verified Clean Pre-Commit):** `test_slm_compact_extraction.py` + `test_local_slm_understanding.py` -> **`10 passed, 0 failed` (`51.67s`)**; `lock_cache_identity.py --verify` -> **PASS (`CACHE_VERSION 145`)**.
-- **Authoritative Clean-Tree Full `pytest` on `<PENDING_FREEZE_COMMIT_SHA>`:** `<PENDING_FULL_PYTEST>`.
+- **Targeted Tests (Verified Clean Pre-Commit):** `test_slm_compact_extraction.py` + `test_local_slm_understanding.py` -> **`10 passed, 0 failed` (`51.67s`)**; `test_evaluation_candidate.py` + `test_s2_student_language_pilot_runner.py` -> **`132 passed, 0 failed` (`68.07s` on `732d979e1`)**; `lock_cache_identity.py --verify` & `freeze_evaluation_candidate.py --verify` -> **PASS (`CACHE_VERSION 145`, `123` files)**.
+- **Authoritative Clean-Tree Full `pytest` on `732d979e1b12547deced4356d012b860d6f7a907` (`732d979e1`):** **`14,915 passed, 7 skipped, 3 deselected, 12 xfailed, 0 failed`** (`1` deprecation warning in `824.32s` / `0:13:44`, `0` skipped or relaxed new tests).

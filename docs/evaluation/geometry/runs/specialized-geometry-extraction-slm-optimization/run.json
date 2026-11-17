@@ -1,7 +1,7 @@
 {
   "schema": "axo-evaluation-run/2",
   "run_id": "specialized-geometry-extraction-slm-optimization",
-  "generated_at_utc": "2026-11-17T17:46:27Z",
+  "generated_at_utc": "2026-11-17T18:03:19Z",
   "classification": "OFFLINE_LOCAL_SLM_EMPIRICAL_BENCHMARK",
   "branch": "feat/local-first-geometry-understanding",
   "range_base_commit": "463c6b0408e192a19ff1f25a1bff2a6c94e4e75f",
@@ -16,7 +16,7 @@
     "product_commits": [
       "0acc07ae2a7cf8ebdb88b4876668099a1abae4f4"
     ],
-    "freeze_commit": "PENDING_COMMIT_3_FREEZE",
+    "freeze_commit": "732d979e1b12547deced4356d012b860d6f7a907",
     "measured_system_sha256": "32a3014c99174dbfd85e4139dd2238dc0551ac3e2b369dcedf73680d7f1ba832",
     "measured_files_count": 123,
     "cache_version": "145",
@@ -2770,16 +2770,24 @@
     }
   },
   "clean_tree_full_pytest": {
-    "status": "PENDING_CLEAN_TREE_FULL_PYTEST",
-    "verified_on_commit": "PENDING_COMMIT_3_FREEZE",
-    "command": "pytest -c backend/pytest.ini backend/tests -q"
+    "status": "PASS",
+    "verified_on_commit": "732d979e1b12547deced4356d012b860d6f7a907",
+    "command": "pytest -c backend/pytest.ini backend/tests -q",
+    "short_commit": "732d979e1",
+    "passed": 14915,
+    "skipped": 7,
+    "deselected": 3,
+    "xfailed": 12,
+    "failed": 0,
+    "warnings": 1,
+    "duration_seconds": 824.32
   },
   "report": "FINAL_MASTER_REPORT.md",
   "hash_policy": "SHA-256 LF-normalized; excludes run.json",
   "artifacts": {
     "FINAL_MASTER_REPORT.md": {
-      "sha256_lf": "c3763ccf251792c65cc2ed7f313711de3df1c4af82beecda054aa6e17c83c952",
-      "bytes_lf": 22632
+      "sha256_lf": "440b72e1cc5465be0e03879c4427f253eb0b6474a47006ff1328a87af2a1af88",
+      "bytes_lf": 23042
     },
     "SLM_BOTTLENECK_ROOT_CAUSE.md": {
       "sha256_lf": "48c3829b74d868f8323763709875930b9fed4ad2351a215f581540cd3b8cf63c",
