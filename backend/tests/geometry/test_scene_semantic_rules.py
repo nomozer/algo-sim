@@ -42,9 +42,23 @@ def test_r1_projection_onto_a_named_descriptor_point(text, answer):
 
 
 def test_r1_unnamed_descriptor_is_not_given_an_invented_label():
-    status, _, _ = _run("Cho hình chóp S.ABC có đáy ABC là tam giác đều cạnh a, hình chiếu vuông góc của S lên mặt phẳng "
-                        "(ABC) trùng với trọng tâm của tam giác ABC, SA = 2a. Tính thể tích khối chóp S.ABC.")
-    assert status != "SERVED"
+    from app.ai.local_geometry_parser import parse_geometry_problem_locally
+
+    text = ("Cho hình chóp S.ABC có đáy ABC là tam giác đều cạnh a, hình chiếu vuông góc của S lên mặt phẳng "
+            "(ABC) trùng với trọng tâm của tam giác ABC, SA = 2a. Tính thể tích khối chóp S.ABC.")
+    parsed = parse_geometry_problem_locally(text)
+    assert any(
+        p.get("kind") == "orthogonal_projection" and str((p.get("args") or {}).get("image") or "").startswith("@")
+        for p in (parsed.payload.get("premises") or [])
+    )
+    status, answers, r = _run(text)
+    assert status == "SERVED" and answers == {"q1": "a³√11/12"}
+    assert r["route_d"]["planner"]["auxiliary"][0]["chain"][0]["fresh"] is True
+
+    unsupported = ("Cho hình chóp S.ABC có đáy ABC là tam giác đều cạnh a, hình chiếu vuông góc của S lên mặt phẳng "
+                   "(ABC) trùng với tâm đường tròn nội tiếp của tam giác ABC, SA = 2a. Tính thể tích khối chóp S.ABC.")
+    u_status, _, _ = _run(unsupported)
+    assert u_status != "SERVED"
 
 
 @pytest.mark.parametrize("text,answer", [
