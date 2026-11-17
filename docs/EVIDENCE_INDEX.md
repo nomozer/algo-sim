@@ -1,5 +1,20 @@
 # EVIDENCE_INDEX.md — Chỉ mục bằng chứng và chuỗi đính chính (Master Evidence Index)
 
+## WAVE_ID = SPECIALIZED_GEOMETRY_EXTRACTION_SLM_OPTIMIZATION
+
+- `RUN_ID` = specialized-geometry-extraction-slm-optimization
+- `REPORT` = docs/evaluation/geometry/runs/specialized-geometry-extraction-slm-optimization/FINAL_MASTER_REPORT.md
+- `ARTIFACT_DIRECTORY` = docs/evaluation/geometry/runs/specialized-geometry-extraction-slm-optimization/
+- `START_BASE` = 463c6b0408e192a19ff1f25a1bff2a6c94e4e75f
+- `CODE_COMMIT` = 0acc07ae2a7cf8ebdb88b4876668099a1abae4f4
+- `CLASSIFICATION` = OFFLINE_LOCAL_SLM_EMPIRICAL_BENCHMARK
+- `PRODUCT_CHANGE` = YES; CACHE_VERSION = 145 (145:route-d); cache namespace HYBRID_V6_LOCAL_SLM; default HYBRID_ROUTE_MODE = live preserved (local-slm opt-in); measured_system = 32a3014c99174dbfd85e4139dd2238dc0551ac3e2b369dcedf73680d7f1ba832 (123 files); 4 locked Gemini surfaces unchanged; frontend 0 diff; pending C21 templates metadata refreshed (PENDING_OWNER_DECISION, paid_project_confirmed = false); single-shot blind SLM_NEW_HOLDOUT_48 (32+/16-, 0 skeleton overlaps, 32/32 60-digit proofs): 19/32 (59.38%) vs /5 13/32 & Config A 13/32 (SLM rescue 6/19 vs 0/19, p=0.03125), 16/16 neg, 0 leaks, 0 continuity errors; DEV16 8/10 (p=0.03125); HOLDOUT_40 (HISTORICAL_DIAGNOSTIC) 18/28 (p=0.007812); warm CPU 6T p50/p95 3204.27/5392.59 ms (-52.1% p50 vs /5; 8T 2993.00/4452.59 ms; holdout 3837.81/5116.95 ms; cache hit 39.64 ms); 0 regressions across 11 suites; 14/14 fault checks & 24/24 grounding probes PASS; 10/10 targeted SLM pytest PASS
+- `MODEL_REQUEST_COUNT` = 0
+- `VERIFICATION` = run.json; SLM_BOTTLENECK_ROOT_CAUSE.md; SLM_GOLD_INTERVENTION_RESULTS.json; SLM_COMPACT_EXTRACTION_DESIGN.md; SLM_EXTRACTION_ABLATION.json; SLM_GROUNDING_RELIABILITY.json; SLM_LATENCY_OPTIMIZATION.json; SLM_NEW_HOLDOUT_MANIFEST.json; SLM_NEW_HOLDOUT_EVALUATION.json; SLM_REGRESSION_REPORT.md; SLM_REGRESSION_RESULTS.json; SLM_FINE_TUNING_DECISION.md; SLM_REPLACEMENT_DECISION.md; pending_template_refresh.json; FINAL_MASTER_REPORT.md
+- `CORRECTS` = NONE
+- `CORRECTED_BY` = NONE
+- `LIMITATIONS` = REPLACEMENT_VERDICT = PARTIAL_GAIN_KEEP_HYBRID_EXPERIMENTAL (blind single-shot 19/32 = 59.38% < 0.65/0.85, 6T warm p95 5392.59 ms > 5000 ms, lacks derived section & multi-solid parity; FINE_TUNING_DECISION = Hybrid Case C + Case B disjoint QLoRA next); frozen_unseen_vmmu20_separate (19 items, 0 served unverified) strictly GROUND_TRUTH_UNVERIFIED / NOT_MEASURED; PHYSICAL_LOW_END = NOT_MEASURED (15.78 GiB host); INDEPENDENT_H1_VALIDATION = NOT_MEASURED; REAL_STUDENT_USABILITY = NOT_MEASURED.
+
 ## WAVE_ID = SLM_LOCAL_GEOMETRY_UNDERSTANDING
 
 - `RUN_ID` = slm-local-geometry-understanding

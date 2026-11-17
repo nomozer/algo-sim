@@ -1,0 +1,158 @@
+{
+  "schema": "slm-regression-results/1",
+  "generated_at_utc": "2026-11-17T17:13:59.774582+00:00",
+  "external_ai_calls": 0,
+  "safety_invariants": {
+    "config_a_continuity_errors": 0,
+    "config_c_continuity_errors": 0,
+    "new_mode_a_leaks_above_config_a": 0,
+    "regression_count": 0,
+    "regressions": []
+  },
+  "suites": {
+    "REAL27_TEXT": {
+      "total": 27,
+      "config_a_served": 21,
+      "config_a_wrong_served": 0,
+      "config_c_served": 21,
+      "config_c_wrong_served": 0,
+      "slm_invoked_count": 4
+    },
+    "REAL27_IMAGES": {
+      "total": 27,
+      "config_a_served": 21,
+      "config_c_served": 21,
+      "slm_invoked_count": 4
+    },
+    "NC_GOLD": {
+      "total": 21,
+      "config_a_passed": 21,
+      "config_c_passed": 21,
+      "identical_kernel_route": true
+    },
+    "AUTONOMOUS_NEGATIVES": {
+      "total": 11,
+      "config_a_refused": 11,
+      "config_c_refused": 11,
+      "false_served": 0
+    },
+    "NC_NL": {
+      "total": 21,
+      "positive_total": 21,
+      "negative_total": 0,
+      "config_a_positive_ok": 21,
+      "config_c_positive_ok": 21,
+      "config_a_negative_refused": 0,
+      "config_c_negative_refused": 0,
+      "slm_invoked_count": 0,
+      "delta_positive_ok": 0
+    },
+    "RM72": {
+      "positive_total": 62,
+      "negative_total": 10,
+      "config_a_positive_served": 61,
+      "config_c_positive_served": 61,
+      "config_a_negative_refused": 10,
+      "config_c_negative_refused": 10,
+      "false_served": 0
+    },
+    "DEV37": {
+      "total": 37,
+      "positive_total": 30,
+      "negative_total": 7,
+      "config_a_positive_ok": 30,
+      "config_c_positive_ok": 30,
+      "config_a_negative_refused": 7,
+      "config_c_negative_refused": 7,
+      "slm_invoked_count": 3,
+      "delta_positive_ok": 0
+    },
+    "PROBES39": {
+      "total": 39,
+      "positive_total": 26,
+      "negative_total": 13,
+      "config_a_positive_ok": 23,
+      "config_c_positive_ok": 23,
+      "config_a_negative_refused": 13,
+      "config_c_negative_refused": 13,
+      "slm_invoked_count": 10,
+      "delta_positive_ok": 0
+    },
+    "S2_36": {
+      "total": 36,
+      "positive_total": 18,
+      "negative_total": 18,
+      "config_a_positive_ok": 16,
+      "config_c_positive_ok": 16,
+      "config_a_negative_refused": 18,
+      "config_c_negative_refused": 18,
+      "slm_invoked_count": 0,
+      "delta_positive_ok": 0
+    },
+    "COMP112": {
+      "total": 112,
+      "positive_total": 66,
+      "negative_total": 46,
+      "config_a_positive_ok": 66,
+      "config_c_positive_ok": 66,
+      "config_a_negative_refused": 44,
+      "config_c_negative_refused": 44,
+      "slm_invoked_count": 19,
+      "delta_positive_ok": 0,
+      "dual_reporting": {
+        "strict_frozen_labels": "66/66 pos + 44/46 neg",
+        "reconciled_historical_labels": [
+          {
+            "id": "dp_reflection",
+            "expect_serve": false,
+            "config_a_status": "SERVED",
+            "config_a_ok": false,
+            "config_a_answer": "a√2/2",
+            "config_c_status": "SERVED",
+            "config_c_ok": false,
+            "config_c_answer": "a√2/2",
+            "slm_invoked": false,
+            "ce_c": 0
+          },
+          {
+            "id": "dp_projection_unnamed_image",
+            "expect_serve": false,
+            "config_a_status": "SERVED",
+            "config_a_ok": false,
+            "config_a_answer": "a√6/3",
+            "config_c_status": "SERVED",
+            "config_c_ok": false,
+            "config_c_answer": "a√6/3",
+            "slm_invoked": false,
+            "ce_c": 0
+          }
+        ],
+        "new_mode_a_leaks_above_config_a": 0
+      }
+    },
+    "frozen_unseen_vmmu20_separate": {
+      "ground_truth_status": "GROUND_TRUTH_UNVERIFIED",
+      "excluded_from_verified_accuracy": true,
+      "count": 19,
+      "served_unverified": 0,
+      "slm_invoked_count": 0
+    }
+  },
+  "fault_checks_14": {
+    "1_missing_model_fail_closed": true,
+    "2_crash_auto_recovery": true,
+    "3_timeout_kill_and_recovery": true,
+    "4_bounded_queue_busy": true,
+    "5_prompt_injection_en": true,
+    "6_prompt_injection_vi": true,
+    "7_typo_vuog_no_slm": true,
+    "8_typo_chop_no_slm": true,
+    "9_conditional_preserved": true,
+    "10_validator_invented_vertex": true,
+    "11_validator_goal_as_premise": true,
+    "12_live_negated_perp_refused": true,
+    "13_live_ambig_lateral_refused": true,
+    "14_live_curved_refused": true
+  },
+  "all_14_fault_checks_passed": true
+}

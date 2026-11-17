@@ -1,5 +1,20 @@
 # CODE_INDEX.md — Chỉ mục module + BỘ NHỚ KIẾN TRÚC
 
+## Specialized geometry extraction & SLM bottleneck optimization (2026-11-18)
+
+| Hạng mục / Vai trò | Đường dẫn chuẩn (`0acc07ae2` / `32a3014c9917…`, `123` files) |
+|---|---|
+| Chuẩn hóa bảo toàn span `slm-verified-normalizer/1` (khóa lỗi chính tả `TYPO_REQUIRES_CONFIRMATION`, điều kiện `nếu/khi/giả sử`, phủ định) | `backend/app/ai/slm_verified_normalizer.py` |
+| Runtime CPU `/2` (`local-slm-runtime/2`: `cache_prompt` KV prefix, keep-alive IPC + `WinError 10013` retry, 9-field `LocalSlmExtractionCache`, đo micro-stage timing) | `backend/app/ai/local_slm_runtime.py` |
+| Trích xuất mệnh đề nén `local-slm-extractor/2` (`slm-compact-clause/1`, chỉ mục `E`/`Q` tất định, GBNF giới hạn theo từng câu, lowering vào `TypedFactNext /2`) | `backend/app/ai/local_slm_extractor.py` |
+| Định tuyến thích nghi `/6` (`_should_escalate_to_compact_slm`, chiến lược mặc định `"compact_clause"`, cache cô lập `HYBRID_V6_LOCAL_SLM`) | `backend/app/ai/adaptive_input_router.py`, `backend/app/ai/hybrid_offline.py` |
+| Script cô lập nguyên nhân gốc & can thiệp Gold (`Test A/B/C_raw/C_canon`) trên 39 ca | `backend/scripts/diagnose_slm_v5_bottlenecks.py` |
+| Bộ benchmark latency (`cold/4T/6T/8T/decomp/cache`), ablation (`§8.E4` slot metrics) & 24 grounding probes | `backend/scripts/benchmark_slm_v6_campaign.py` |
+| Bộ sinh kiểm chứng holdout độc lập 48 ca (`32+ / 16-`, 60-digit coord proofs, `0` skeleton overlap) & chấm single-shot | `backend/scripts/build_slm_v6_holdout.py` |
+| Bộ hồi quy 11 suite nền + 14 kiểm thử lỗi & adversarial cho `/6` | `backend/scripts/run_slm_v6_regressions.py` |
+| Kiểm thử đơn vị, GBNF, 9-field cache & live CPU compact extraction | `backend/tests/geometry/test_slm_compact_extraction.py` |
+| Báo cáo tổng hợp & quyết định `PARTIAL_GAIN_KEEP_HYBRID_EXPERIMENTAL` + khuyến nghị Case C/B | `docs/evaluation/geometry/runs/specialized-geometry-extraction-slm-optimization/FINAL_MASTER_REPORT.md` |
+
 ## Specialized local sub-1B SLM for Vietnamese geometry understanding (2026-11-17)
 
 | Hạng mục / Vai trò | Đường dẫn chuẩn (`96791162f` / product `a182b5460`) |

@@ -1,0 +1,303 @@
+{
+  "schema": "slm-grounding-reliability/1",
+  "generated_at_utc": "2026-11-17T16:37:54.260834+00:00",
+  "external_ai_calls": 0,
+  "all_probes_passed": true,
+  "summary": {
+    "unit_validator_probes_passed": "9/9",
+    "normalizer_guard_probes_passed": "6/6",
+    "live_adversarial_probes_passed": "9/9",
+    "mode_a_leaks": 0
+  },
+  "unit_validator_probes": [
+    {
+      "probe_id": "probe_invented_vertex",
+      "category": "invented_entity",
+      "expect_reject": true,
+      "rejected": true,
+      "passed": true,
+      "reason_code": "UNGROUNDED_VALUE",
+      "grounding_status": "REJECTED_UNGROUNDED_TOKEN",
+      "rejected_ops": [
+        {
+          "op": "len",
+          "reason": "OUT_OF_RANGE_ENTITY_LABEL:SZ"
+        }
+      ]
+    },
+    {
+      "probe_id": "probe_cross_clause_qty",
+      "category": "cross_clause_binding",
+      "expect_reject": true,
+      "rejected": true,
+      "passed": true,
+      "reason_code": "UNGROUNDED_VALUE",
+      "grounding_status": "REJECTED_UNGROUNDED_TOKEN",
+      "rejected_ops": [
+        {
+          "op": "len",
+          "reason": "UNGROUNDED_VALUE:segment_length:a"
+        }
+      ]
+    },
+    {
+      "probe_id": "probe_wrong_literal_qty",
+      "category": "invented_quantity",
+      "expect_reject": true,
+      "rejected": true,
+      "passed": true,
+      "reason_code": "UNGROUNDED_VALUE",
+      "grounding_status": "REJECTED_UNGROUNDED_TOKEN",
+      "rejected_ops": [
+        {
+          "op": "len",
+          "reason": "OUT_OF_RANGE_QTY_LABEL:q=5a"
+        }
+      ]
+    },
+    {
+      "probe_id": "probe_goal_used_as_premise",
+      "category": "goal_premise_leak",
+      "expect_reject": true,
+      "rejected": true,
+      "passed": true,
+      "reason_code": "UNGROUNDED_VALUE",
+      "grounding_status": "REJECTED_INVALID_COMPACT_OP",
+      "rejected_ops": [
+        {
+          "op": "reg_poly",
+          "reason": "GOAL_CLAUSE_USED_AS_PREMISE:clause_2"
+        }
+      ]
+    },
+    {
+      "probe_id": "probe_endpoint_midpoint",
+      "category": "endpoint_division",
+      "expect_reject": true,
+      "rejected": true,
+      "passed": true,
+      "reason_code": "UNGROUNDED_VALUE",
+      "grounding_status": "REJECTED_INVALID_COMPACT_OP",
+      "rejected_ops": [
+        {
+          "op": "mid",
+          "reason": "INVALID_PREMISE_ARGS:endpoint_cannot_divide_segment"
+        }
+      ]
+    },
+    {
+      "probe_id": "probe_negated_perp_forged",
+      "category": "negation_forged",
+      "expect_reject": true,
+      "rejected": true,
+      "passed": true,
+      "reason_code": "INCONSISTENT_FACTS",
+      "grounding_status": "REJECTED_NEGATED_FACT",
+      "rejected_ops": [
+        {
+          "op": "perp_lp",
+          "reason": "NEGATED_PREDICATE_CLAUSE:perpendicular_line_plane"
+        }
+      ]
+    },
+    {
+      "probe_id": "probe_ambig_lateral_forged",
+      "category": "ambiguous_reference",
+      "expect_reject": true,
+      "rejected": true,
+      "passed": true,
+      "reason_code": "AMBIGUOUS_REFERENCE",
+      "grounding_status": "REJECTED_AMBIGUOUS_REFERENCE",
+      "rejected_ops": [
+        {
+          "op": "len",
+          "reason": "AMBIGUOUS_REFERENCE:lateral_edge_not_unique"
+        }
+      ]
+    },
+    {
+      "probe_id": "probe_ambig_face_forged",
+      "category": "ambiguous_reference",
+      "expect_reject": true,
+      "rejected": true,
+      "passed": true,
+      "reason_code": "AMBIGUOUS_REFERENCE",
+      "grounding_status": "REJECTED_AMBIGUOUS_REFERENCE",
+      "rejected_ops": [
+        {
+          "op": "face_perp",
+          "reason": "AMBIGUOUS_REFERENCE:lateral_face_not_unique"
+        }
+      ]
+    },
+    {
+      "probe_id": "probe_proximity_wrong_qty",
+      "category": "wrong_quantity_binding",
+      "expect_reject": true,
+      "rejected": true,
+      "passed": true,
+      "reason_code": "UNGROUNDED_VALUE",
+      "grounding_status": "REJECTED_UNGROUNDED_TOKEN",
+      "rejected_ops": [
+        {
+          "op": "len",
+          "reason": "UNGROUNDED_VALUE:segment_length_conflict:AB:a!=3a"
+        }
+      ]
+    }
+  ],
+  "normalizer_guard_probes": [
+    {
+      "probe_id": "typo_vuog_goc",
+      "category": "typo_conservative_refusal",
+      "typo_detected": true,
+      "text_preserved_unrewritten": true,
+      "slm_invoked": false,
+      "ok": true,
+      "reason_code": "AMBIGUOUS_FACT",
+      "failure_taxonomy": "TYPO_REQUIRES_CONFIRMATION"
+    },
+    {
+      "probe_id": "typo_vuong_goc_tone",
+      "category": "typo_conservative_refusal",
+      "typo_detected": true,
+      "text_preserved_unrewritten": true,
+      "slm_invoked": false,
+      "ok": true,
+      "reason_code": "AMBIGUOUS_FACT",
+      "failure_taxonomy": "TYPO_REQUIRES_CONFIRMATION"
+    },
+    {
+      "probe_id": "typo_chop",
+      "category": "typo_conservative_refusal",
+      "typo_detected": true,
+      "text_preserved_unrewritten": true,
+      "slm_invoked": false,
+      "ok": true,
+      "reason_code": "AMBIGUOUS_FACT",
+      "failure_taxonomy": "TYPO_REQUIRES_CONFIRMATION"
+    },
+    {
+      "probe_id": "typo_trung_diem",
+      "category": "typo_conservative_refusal",
+      "typo_detected": true,
+      "text_preserved_unrewritten": true,
+      "slm_invoked": false,
+      "ok": true,
+      "reason_code": "AMBIGUOUS_FACT",
+      "failure_taxonomy": "TYPO_REQUIRES_CONFIRMATION"
+    },
+    {
+      "probe_id": "typo_lang_tru",
+      "category": "typo_conservative_refusal",
+      "typo_detected": true,
+      "text_preserved_unrewritten": true,
+      "slm_invoked": false,
+      "ok": true,
+      "reason_code": "AMBIGUOUS_FACT",
+      "failure_taxonomy": "TYPO_REQUIRES_CONFIRMATION"
+    },
+    {
+      "probe_id": "conditional_no_rewrite",
+      "category": "conditional_preservation",
+      "text_unchanged": true,
+      "ok": true,
+      "steps": [
+        {
+          "rule_id": "VN04_DAY_DEU_CANH",
+          "original_span": [
+            23,
+            41
+          ],
+          "original_excerpt": "đáy ABC đều cạnh a",
+          "normalized_excerpt": "đáy ABC là tam giác đều cạnh a",
+          "validation_result": "VALIDATED_MEANING_PRESERVING",
+          "ambiguity_status": "UNAMBIGUOUS"
+        }
+      ]
+    }
+  ],
+  "live_adversarial_probes": [
+    {
+      "probe_id": "live_inj_ignore",
+      "category": "injection",
+      "status": "REFUSED",
+      "refused": true,
+      "ok": true,
+      "refusal_code": "UNGROUNDED_VALUE",
+      "grounding_status": "REJECTED_PROMPT_INJECTION"
+    },
+    {
+      "probe_id": "live_inj_vi",
+      "category": "injection",
+      "status": "REFUSED",
+      "refused": true,
+      "ok": true,
+      "refusal_code": "UNGROUNDED_VALUE",
+      "grounding_status": "REJECTED_PROMPT_INJECTION"
+    },
+    {
+      "probe_id": "live_inj_json",
+      "category": "injection",
+      "status": "REFUSED",
+      "refused": true,
+      "ok": true,
+      "refusal_code": "UNGROUNDED_VALUE",
+      "grounding_status": "REJECTED_PROMPT_INJECTION"
+    },
+    {
+      "probe_id": "live_neg_perp",
+      "category": "negation",
+      "status": "REFUSED",
+      "refused": true,
+      "ok": true,
+      "refusal_code": "INCONSISTENT_FACTS",
+      "grounding_status": "REJECTED_NEGATED_FACT"
+    },
+    {
+      "probe_id": "live_ambig_lat",
+      "category": "ambiguous_lateral",
+      "status": "REFUSED",
+      "refused": true,
+      "ok": true,
+      "refusal_code": "AMBIGUOUS_REFERENCE",
+      "grounding_status": "REJECTED_AMBIGUOUS_REFERENCE"
+    },
+    {
+      "probe_id": "live_contra_tri",
+      "category": "contradictory_dim",
+      "status": "REFUSED",
+      "refused": true,
+      "ok": true,
+      "refusal_code": "ROLE_NOT_IN_QUOTE",
+      "grounding_status": "GROUNDED_AND_LOWERED"
+    },
+    {
+      "probe_id": "live_curved_cone",
+      "category": "out_of_scope_curved",
+      "status": "REFUSED",
+      "refused": true,
+      "ok": true,
+      "refusal_code": "AMBIGUOUS_FACT",
+      "grounding_status": "SLM_REPORTED_UNRESOLVED"
+    },
+    {
+      "probe_id": "live_curved_cyl",
+      "category": "out_of_scope_curved",
+      "status": "REFUSED",
+      "refused": true,
+      "ok": true,
+      "refusal_code": "AMBIGUOUS_FACT",
+      "grounding_status": "SLM_REPORTED_UNRESOLVED"
+    },
+    {
+      "probe_id": "live_missing_dim",
+      "category": "missing_dimension",
+      "status": "REFUSED",
+      "refused": true,
+      "ok": true,
+      "refusal_code": "MISSING_DIMENSION",
+      "grounding_status": null
+    }
+  ]
+}
