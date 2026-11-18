@@ -276,13 +276,18 @@ export async function fetchStepEditSessionState(sessionId: string): Promise<Pers
     if (data.dependency_summary && data.dependency_summary.cycle_detected !== false && Number(data.revision_count || 0) > 0) {
       return null;
     }
-    const remoteScene = isVerifiedRebuildScene(data.committed_scene)
-      ? (data.committed_scene as Scene3D)
-      : null;
+    const committedVer =
+      typeof data.committed_version === "number"
+        ? data.committed_version
+        : (typeof data.revision_count === "number" ? data.revision_count : undefined);
+    const remoteScene =
+      (committedVer === undefined || committedVer > 0) && isVerifiedRebuildScene(data.committed_scene)
+        ? (data.committed_scene as Scene3D)
+        : null;
     const snapshot: PersistedStepEditSnapshot = {
       sessionId,
       problemKey: typeof data.problem_key === "string" ? data.problem_key : "",
-      versionNumber: typeof data.revision_count === "number" ? data.revision_count : undefined,
+      versionNumber: committedVer,
       committedScene: remoteScene,
       stepOverrides: remoteScene ? ((data.step_overrides as Record<string, string>) ?? {}) : {},
       dependencySummary: (data.dependency_summary as StepEditDependencySummary) ?? null,

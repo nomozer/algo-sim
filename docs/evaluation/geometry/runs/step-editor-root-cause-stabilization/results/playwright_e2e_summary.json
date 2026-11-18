@@ -1,0 +1,110 @@
+{
+  "startedAt": "2026-11-18T04:47:27.124Z",
+  "routes": {
+    "/": {
+      "loaded": true,
+      "horizontalOverflow": false,
+      "pageErrorsCount": 0
+    },
+    "/gioi-thieu": {
+      "loaded": true,
+      "horizontalOverflow": false,
+      "pageErrorsCount": 0
+    },
+    "/library": {
+      "loaded": true,
+      "horizontalOverflow": false,
+      "pageErrorsCount": 0
+    },
+    "/simulation/pyramid-circumscribed-sphere": {
+      "loaded": true,
+      "horizontalOverflow": false,
+      "pageErrorsCount": 0
+    },
+    "/simulation/pyramid-three-point-section": {
+      "loaded": true,
+      "horizontalOverflow": false,
+      "pageErrorsCount": 0
+    }
+  },
+  "viewports": {
+    "1920x1080": {
+      "rowHeightDeltaPx": 0,
+      "titleLeftDeltaPx": 0,
+      "defaultOpacity": "0",
+      "hoverOpacity": "1",
+      "leaveOpacity": "0",
+      "focusOpacity": "0",
+      "taCheck": {
+        "clientHeight": 30,
+        "scrollHeight": 30,
+        "overflowY": "hidden",
+        "overflowX": "hidden"
+      },
+      "horizontalOverflow": false,
+      "consoleErrorsCount": 1
+    },
+    "1366x768": {
+      "horizontalOverflow": false
+    },
+    "768x1024": {
+      "horizontalOverflow": false
+    },
+    "390x844": {
+      "activePencilOpacity": "1",
+      "formRightLeWidth": true,
+      "cancelVisible": true,
+      "runVisible": true,
+      "hOverflow": false
+    },
+    "320x568": {
+      "activePencilOpacity": "1",
+      "formRightLeWidth": true,
+      "cancelVisible": true,
+      "runVisible": true,
+      "hOverflow": false
+    }
+  },
+  "rootCauseChecks": {
+    "rc5_arrowKeysIgnoredInForm": true,
+    "rc5_escapeFromCancelButtonRestoresPencilFocus": true,
+    "rc3_err422Initial": {
+      "error": "Phép dựng khối/mặt tròn xoay trong 'Vẽ mặt nón ngoại tiếp đáy' nằm ngoài phạm vi chỉnh sửa bước dựng hình phẳng/chóp hiện tại.",
+      "draft": "Vẽ mặt nón ngoại tiếp đáy."
+    },
+    "rc3_zeroStateAfterFailedReload": true,
+    "rc4_syncLive": {
+      "paTitle": "Xác định trung điểm H của AB, dựng mặt phẳng (α) qua H và vuông góc với AB.",
+      "pipAria": "Bước 8: Xác định trung điểm H của AB, dựng mặt phẳng (α) qua H và vuông góc với AB.",
+      "dockTitle": "Xác định trung điểm H của AB, dựng mặt phẳng (α) qua H và vuông góc với AB."
+    },
+    "rc4_syncAfterReload": {
+      "paTitle": "Xác định trung điểm H của AB, dựng mặt phẳng (α) qua H và vuông góc với AB.",
+      "dockTitle": "Xác định trung điểm H của AB, dựng mặt phẳng (α) qua H và vuông góc với AB."
+    }
+  },
+  "frontendCommitRenderBenchmark": {
+    "n_samples": 15,
+    "warmup": 2,
+    "frontend_commit_render_p50_ms": 1,
+    "frontend_commit_render_p95_ms": 60.51,
+    "e2e_browser_roundtrip_p50_ms": 117.958,
+    "e2e_browser_roundtrip_p95_ms": 177.433
+  },
+  "scene3dStability": {
+    "cameraPreservedAcrossRebuild": true,
+    "dockToggleWorked": true,
+    "cameraPreservedAcrossDockToggle": true,
+    "canvasStatusBeforeLoss": true,
+    "bannedTextsDuringLoss": {
+      "hasQuayLai": false,
+      "hasThuDungLaiKhungNhin": false
+    },
+    "canvasAliveAfterRebuild": true
+  },
+  "sample1CaseB": {
+    "stepIndex": 5,
+    "updated": true,
+    "canvasOk": true
+  }
+}

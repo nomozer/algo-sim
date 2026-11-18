@@ -28,9 +28,9 @@ from app.simulation.geometry_functions.feedback_dataset import (
     get_feedback_system_status,
     record_step_feedback_attempt,
 )
+from app.ai.step_edit_route import execute_step_edit
 from app.simulation.geometry_functions.step_editor import (
     StepEditRefusal,
-    execute_step_edit,
     parse_vietnamese_construction_step,
 )
 
@@ -155,7 +155,7 @@ def edit_construction_step(
             session_id=req.session_id,
             problem_key=req.problem_key[:160],
             base_scene_sha256=incoming_digest,
-            committed_scene_json=json.dumps(req.scene3d, ensure_ascii=False),
+            committed_scene_json="",
             step_overrides_json="{}",
             dependency_graph_json="{}",
             revision_count=0,
@@ -164,11 +164,14 @@ def edit_construction_step(
         )
         db.add(session_row)
         db.flush()
-    elif req.problem_key and session_row.problem_key and req.problem_key != session_row.problem_key:
-        # Caller reused session_id on a different problem -> reset committed snapshot cleanly
-        session_row.problem_key = req.problem_key[:160]
+    elif (req.problem_key and session_row.problem_key and req.problem_key != session_row.problem_key) or (
+        not session_row.committed_scene_json and session_row.base_scene_sha256 != incoming_digest
+    ):
+        # Reset snapshot cleanly when problem changes or no revision has committed yet under stale base hash;
+        # keep revision_count monotonic so step_edit_revisions unique (owner_scope, session_id, version_number) holds.
+        session_row.problem_key = (req.problem_key or session_row.problem_key or "")[:160]
         session_row.base_scene_sha256 = incoming_digest
-        session_row.committed_scene_json = json.dumps(req.scene3d, ensure_ascii=False)
+        session_row.committed_scene_json = ""
         session_row.step_overrides_json = "{}"
         session_row.dependency_graph_json = "{}"
         session_row.updated_at = _now()
@@ -176,7 +179,7 @@ def edit_construction_step(
 
     working_scene = (
         json.loads(session_row.committed_scene_json)
-        if session_row.revision_count > 0 and session_row.committed_scene_json
+        if session_row.committed_scene_json
         else req.scene3d
     )
     existing_overrides: dict[str, str] = json.loads(session_row.step_overrides_json or "{}")
@@ -331,6 +334,19 @@ def edit_construction_step(
     )
     db.commit()
 
+    committed_count = (
+        db.execute(
+            select(StepEditRevisionRecord).where(
+                StepEditRevisionRecord.owner_scope == owner_scope,
+                StepEditRevisionRecord.session_id == req.session_id,
+                StepEditRevisionRecord.execution_status == "COMMITTED",
+            )
+        )
+        .scalars()
+        .all()
+    )
+    committed_ver_num = len(committed_count)
+
     response.headers["Cache-Control"] = "no-store"
     return {
         "status": "committed",
@@ -343,6 +359,7 @@ def edit_construction_step(
         "feedback_status": fb.user_acceptance_status,
         "dataset_eligibility": fb.dataset_eligibility,
         "version_number": next_version,
+        "committed_version": committed_ver_num,
         "problem_group_key": problem_group_key,
         "primary_target_id": result["primary_target_id"],
         "scene3d": result["scene3d"],
@@ -384,6 +401,7 @@ def get_step_edit_session_state(
             "session_id": session_id,
             "owner_scope": owner_scope,
             "revision_count": 0,
+            "committed_version": 0,
             "committed_scene": None,
             "step_overrides": {},
             "dependency_summary": {},
@@ -409,6 +427,11 @@ def get_step_edit_session_state(
         .order_by(VerifiedStepFeedbackRecord.id.asc())
     ).scalars().all()
 
+    committed_ver = (
+        sum(1 for r in revisions if r.execution_status == "COMMITTED")
+        if session_row.committed_scene_json
+        else 0
+    )
     return {
         "found": True,
         "session_id": session_id,
@@ -416,7 +439,8 @@ def get_step_edit_session_state(
         "problem_key": session_row.problem_key,
         "base_scene_sha256": session_row.base_scene_sha256,
         "revision_count": session_row.revision_count,
-        "committed_scene": json.loads(session_row.committed_scene_json or "{}"),
+        "committed_version": committed_ver,
+        "committed_scene": json.loads(session_row.committed_scene_json) if session_row.committed_scene_json else None,
         "step_overrides": json.loads(session_row.step_overrides_json or "{}"),
         "dependency_summary": json.loads(session_row.dependency_graph_json or "{}"),
         "revisions": [

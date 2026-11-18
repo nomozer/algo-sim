@@ -45,10 +45,10 @@ from app.simulation.geometry_functions.feedback_dataset import (
     canonical_problem_group_key,
     export_step_feedback_dataset,
 )
+from app.ai.step_edit_route import execute_step_edit
 from app.simulation.geometry_functions.step_editor import (
     StepEditRefusal,
     build_construction_dependency_graph,
-    execute_step_edit,
     parse_vietnamese_construction_step,
 )
 

@@ -183,9 +183,13 @@ export const InlineConstructionStepEditor: React.FC<InlineConstructionStepEditor
 }) => {
   const [draft, setDraft] = useState(initialValue);
   const textareaRef = useRef<HTMLTextAreaElement | null>(null);
+  const prevStepIndexRef = useRef<number>(stepIndex);
 
   useEffect(() => {
-    setDraft(initialValue);
+    if (prevStepIndexRef.current !== stepIndex) {
+      prevStepIndexRef.current = stepIndex;
+      setDraft(initialValue);
+    }
   }, [stepIndex, initialValue]);
 
   useIsomorphicLayoutEffect(() => {
@@ -230,6 +234,17 @@ export const InlineConstructionStepEditor: React.FC<InlineConstructionStepEditor
       className="step-edit-form"
       onClick={(e) => e.stopPropagation()}
       onPointerDown={(e) => e.stopPropagation()}
+      onKeyDown={(e) => {
+        if (e.key === "Escape") {
+          e.preventDefault();
+          e.stopPropagation();
+          onCancel(true);
+          return;
+        }
+        if (["ArrowLeft", "ArrowRight", "ArrowUp", "ArrowDown", "Home", "End", " "].includes(e.key)) {
+          e.stopPropagation();
+        }
+      }}
       onSubmit={(e) => {
         e.preventDefault();
         e.stopPropagation();

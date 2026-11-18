@@ -375,6 +375,7 @@ export function AxoWorkspaceV62({
     });
     return () => {
       cancelled = true;
+      cancelInFlightStepEdit(activeEditSessionId);
     };
   }, [activeEditSessionId]);
 
@@ -444,6 +445,24 @@ export function AxoWorkspaceV62({
   const day = scene;
   const dsBuoc = pedPlan.steps;
   const tong = Math.max(1, dsBuoc.length);
+
+  const resolveStepDisplayMeta = (b: (typeof dsBuoc)[number]) => {
+    const fallbackDisplay = moTaBuocDungHienThi(day, b);
+    const stepNarration =
+      b.narration
+      ?? buildPedagogicalStepNarration(day, {
+        ...b,
+        title: fallbackDisplay.title,
+        subtitle: fallbackDisplay.subtitle,
+      });
+    const primaryTargetId =
+      b.targetIds.find((tid) => !tid.endsWith("__label"))
+      ?? b.targetIds[0]
+      ?? `step_${b.index}`;
+    const baseTieuDeBuoc = stepNarration.actionTitle || fallbackDisplay.title;
+    const tieuDeBuoc = activeStepOverrides[primaryTargetId] || baseTieuDeBuoc;
+    return { primaryTargetId, tieuDeBuoc, stepNarration };
+  };
 
   const loaiCanh = useMemo((): {
     key: "sphere" | "pyramid" | "cylinder" | "cone" | "solid";
@@ -865,23 +884,30 @@ export function AxoWorkspaceV62({
     return undefined;
   }, []);
 
-  const lastStepScrollContextRef = useRef<{ key: string | null | undefined; step: number }>({
+  const lastStepScrollContextRef = useRef<{
+    key: string | null | undefined;
+    step: number;
+    total: number;
+    sceneRef: Scene3D;
+  }>({
     key: problemSnapshotKey,
     step: buocHinh,
+    total: tong,
+    sceneRef: scene,
   });
 
-  // Cuộn mục bước đang active vào vùng nhìn thấy của Study Dock khi đổi bước dựng
+  // Cuộn mục bước đang active vào vùng nhìn thấy của Study Dock khi đổi bước dựng hoặc dựng lại cảnh
   // (giữ scrollTop = 0 khi mới mở bài để phần ĐỀ BÀI ở đầu Study Dock luôn hiển thị trọn vẹn)
   useEffect(() => {
     const prev = lastStepScrollContextRef.current;
-    lastStepScrollContextRef.current = { key: problemSnapshotKey, step: buocHinh };
+    lastStepScrollContextRef.current = { key: problemSnapshotKey, step: buocHinh, total: tong, sceneRef: scene };
     const ul = stepsListRef.current;
     const scrollArea = dockScrollRef.current ?? ul?.closest<HTMLElement>(".dock-scroll") ?? null;
     if (prev.key !== problemSnapshotKey) {
       if (scrollArea) scrollArea.scrollTop = 0;
       return;
     }
-    if (prev.step === buocHinh) return;
+    if (prev.step === buocHinh && prev.total === tong && prev.sceneRef === scene) return;
     if (!ul || !scrollArea) return;
     const activeRow = ul.querySelector<HTMLElement>(".step-row.is-active");
     if (!activeRow) return;
@@ -893,7 +919,7 @@ export function AxoWorkspaceV62({
     } else if (r.bottom > c.bottom) {
       scrollArea.scrollTop += r.bottom - c.bottom + 8;
     }
-  }, [buocHinh, problemSnapshotKey]);
+  }, [buocHinh, problemSnapshotKey, tong, scene]);
 
   // Cuộn thẻ thông tin đối tượng (.context-object-card) vào vùng nhìn thấy của Study Dock khi chọn đối tượng (nhất là trên mobile)
   useEffect(() => {
@@ -1716,7 +1742,7 @@ export function AxoWorkspaceV62({
             ) : (
               <ErrorBoundary
                 mien="scene3d-viewer"
-                resetKey={`${problemSnapshotKey}|${webglStageAttempt}`}
+                resetKey={`${problemSnapshotKey}|${viewerMountGen}|${webglStageAttempt}`}
                 autoRetryMax={2}
                 autoRetryDelayMs={180}
                 onCatch={() => {
@@ -1993,15 +2019,9 @@ export function AxoWorkspaceV62({
                 <span
                   className="pa-step-short-title"
                   id="pa-short-title"
-                  title={
-                    dsBuoc[buocHinh]
-                      ? (dsBuoc[buocHinh].narration?.actionTitle ?? moTaBuocDungHienThi(day, dsBuoc[buocHinh]).title)
-                      : undefined
-                  }
+                  title={dsBuoc[buocHinh] ? resolveStepDisplayMeta(dsBuoc[buocHinh]).tieuDeBuoc : undefined}
                 >
-                  {dsBuoc[buocHinh]
-                    ? (dsBuoc[buocHinh].narration?.actionTitle ?? moTaBuocDungHienThi(day, dsBuoc[buocHinh]).title)
-                    : ""}
+                  {dsBuoc[buocHinh] ? resolveStepDisplayMeta(dsBuoc[buocHinh]).tieuDeBuoc : ""}
                 </span>
               </div>
 
@@ -2012,7 +2032,7 @@ export function AxoWorkspaceV62({
                 aria-label="Chọn nhanh bước dựng"
               >
                 {dsBuoc.map((b) => {
-                  const nhanBuoc = b.narration?.actionTitle ?? moTaBuocDungHienThi(day, b).title;
+                  const nhanBuoc = resolveStepDisplayMeta(b).tieuDeBuoc;
                   return (
                     <button
                       key={b.index}
@@ -2959,20 +2979,7 @@ export function AxoWorkspaceV62({
                     {dsBuoc.map((b) => {
                       const active = b.index === buocHinh;
                       const isEditingThisStep = editingStepIndex === b.index;
-                      const fallbackDisplay = moTaBuocDungHienThi(day, b);
-                      const stepNarration =
-                        b.narration
-                        ?? buildPedagogicalStepNarration(day, {
-                          ...b,
-                          title: fallbackDisplay.title,
-                          subtitle: fallbackDisplay.subtitle,
-                        });
-                      const primaryTargetId =
-                        b.targetIds.find((tid) => !tid.endsWith("__label"))
-                        ?? b.targetIds[0]
-                        ?? `step_${b.index}`;
-                      const baseTieuDeBuoc = stepNarration.actionTitle || fallbackDisplay.title;
-                      const tieuDeBuoc = activeStepOverrides[primaryTargetId] || baseTieuDeBuoc;
+                      const { primaryTargetId, tieuDeBuoc, stepNarration } = resolveStepDisplayMeta(b);
                       const moTa = stepNarration.conciseRationale;
                       const chungCuChiTiet = active ? stepNarration.detailedEvidence : [];
                       const isEvidenceOpen = active && expandedEvidenceStep === b.index;

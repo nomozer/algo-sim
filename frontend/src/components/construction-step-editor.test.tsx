@@ -31,7 +31,7 @@ import {
   StepTitleText,
   syncStepTextareaHeight,
 } from "./ConstructionStepEditor";
-import { SimulationWorkspace } from "./SimulationWorkspace";
+import { AxoWorkspaceV62, SimulationWorkspace } from "./SimulationWorkspace";
 
 registerAllSimulations();
 
@@ -1048,5 +1048,117 @@ describe("AXO Step Editor V2.2 — Reliability Hardening & Edge Cases (§5, §7)
     // 2. fetchStepEditSessionState effect MUST check epoch/version before overwriting state
     expect(WORKSPACE_SRC).toContain("editMutationEpochRef");
     expect(WORKSPACE_SRC).toContain("committedVersionRef");
+  });
+
+  it("RC-3: fetchStepEditSessionState ignores empty/zero-revision scene payloads and respects committed_version", async () => {
+    const validScene = structuredClone((sample11.envelope as unknown as { scene3d: Scene3D }).scene3d);
+    const sid = buildStepEditSessionId("sample:rc3-test", "guest");
+
+    // 1. Server reports found=true, committed_version=0, committed_scene=null after failed 422 edit
+    vi.stubGlobal(
+      "fetch",
+      vi.fn().mockResolvedValue(
+        new Response(
+          JSON.stringify({
+            found: true,
+            session_id: sid,
+            problem_key: "sample:rc3-test",
+            revision_count: 0,
+            committed_version: 0,
+            committed_scene: null,
+            step_overrides: {},
+            dependency_summary: { cycle_detected: false },
+            revisions: [],
+            feedback_items: [],
+          }),
+          { status: 200, headers: { "Content-Type": "application/json" } },
+        ),
+      ),
+    );
+    const zeroSnap = await fetchStepEditSessionState(sid);
+    expect(zeroSnap).not.toBeNull();
+    expect(zeroSnap?.committedScene).toBeNull();
+    expect(zeroSnap?.versionNumber).toBe(0);
+
+    // 2. Server returns both revision_count=5 (failed attempts included) and committed_version=2
+    vi.stubGlobal(
+      "fetch",
+      vi.fn().mockResolvedValue(
+        new Response(
+          JSON.stringify({
+            found: true,
+            session_id: sid,
+            problem_key: "sample:rc3-test",
+            revision_count: 5,
+            committed_version: 2,
+            committed_scene: validScene,
+            step_overrides: { mp_tt_AB: "Bước đã sửa v2" },
+            dependency_summary: { cycle_detected: false },
+            revisions: [],
+            feedback_items: [],
+          }),
+          { status: 200, headers: { "Content-Type": "application/json" } },
+        ),
+      ),
+    );
+    const committedSnap = await fetchStepEditSessionState(sid);
+    expect(committedSnap?.committedScene).not.toBeNull();
+    expect(committedSnap?.versionNumber).toBe(2);
+  });
+
+  it("RC-4: #pa-short-title and #pa-pips-mount reflect overridden step title consistently with #dock-steps-ul", () => {
+    const env = structuredClone(sample11.envelope) as unknown as SimulationEnvelope;
+    const baseScene = structuredClone((sample11.envelope as unknown as { scene3d: Scene3D }).scene3d);
+    const sid = buildStepEditSessionId(`sample:${sample11.id}`, "guest");
+    const customTitle = "Xác định H trung điểm AB và mặt phẳng vuông góc";
+    saveCachedStepEditState(sid, {
+      sessionId: sid,
+      problemKey: `sample:${sample11.id}`,
+      versionNumber: 1,
+      committedScene: baseScene,
+      stepOverrides: { mp_tt_AB: customTitle },
+      dependencySummary: null,
+      revisions: [],
+      feedbackItems: [],
+      updatedAt: Date.now(),
+    });
+
+    const pedPlan = buildPedagogicalConstructionPlan(withSubEntities(baseScene));
+    const targetStep = pedPlan.steps.find((st) => st.targetIds.includes("mp_tt_AB"))!;
+    expect(targetStep).toBeDefined();
+
+    useAppStore.getState().loadEnvelope(env, sample11.id);
+    syncStoreForSSR();
+
+    const html = renderToString(
+      <AxoWorkspaceV62
+        scene={baseScene}
+        tieuDe={env.title}
+        de={sample11.problemText}
+        initialStep={targetStep.anchor}
+      />,
+    );
+    const paTitle = /id="pa-short-title"[^>]*>([\s\S]*?)<\/span>/.exec(html)?.[1] ?? "";
+    expect(paTitle).toContain(customTitle);
+    const pipAria = new RegExp(`data-step="${targetStep.index}"[^>]*aria-label="([^"]+)"`).exec(html)?.[1] ?? "";
+    expect(pipAria).toContain(customTitle);
+  });
+
+  it("RC-5 & RC-6 & RC-7: Escape on form cancels, draft stays isolated, cleanup aborts in-flight edit, scroll & ErrorBoundary resetKey respond to rebuilds", () => {
+    // 1. ConstructionStepEditor keeps user draft across initialValue changes on same stepIndex and cancels via form Escape
+    expect(EDITOR_SRC).toContain("prevStepIndexRef");
+    expect(EDITOR_SRC).toContain("onKeyDown=");
+
+    // 2. SimulationWorkspace aborts in-flight step edit on session switch / unmount cleanup
+    const cleanupSlice = /return\s*\(\)\s*=>\s*\{([\s\S]{0,160})\};\s*\n\s*\},\s*\[activeEditSessionId\]\)/.exec(WORKSPACE_SRC)?.[1] ?? "";
+    expect(cleanupSlice).toContain("cancelInFlightStepEdit(activeEditSessionId)");
+
+    // 3. Auto-scroll dependency array responds to rebuilds (tong / scene)
+    const scrollEffectDeps = /const lastStepScrollContextRef[\s\S]{0,1600}?\},\s*(\[[^\]]+\])\)/.exec(WORKSPACE_SRC)?.[1] ?? "";
+    expect(scrollEffectDeps).toContain("tong");
+    expect(scrollEffectDeps).toContain("scene");
+
+    // 4. ErrorBoundary resetKey includes viewerMountGen so rebuild remount clears boundary crashes
+    expect(WORKSPACE_SRC).toContain('resetKey={`${problemSnapshotKey}|${viewerMountGen}|${webglStageAttempt}`}');
   });
 });

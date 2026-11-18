@@ -35,11 +35,11 @@ from app.simulation.geometry import (  # noqa: E402
     metric as _m,
 )
 from app.simulation.geometry.radical import Radical, parse_exact, sqrt_rational  # noqa: E402
+from app.ai.step_edit_route import execute_step_edit  # noqa: E402
 from app.simulation.geometry_functions import step_editor as se  # noqa: E402
 from app.simulation.geometry_functions.step_editor import (  # noqa: E402
     StepEditRefusal,
     build_construction_dependency_graph,
-    execute_step_edit,
     parse_vietnamese_construction_step,
 )
 
@@ -486,7 +486,9 @@ def test_edge_case_10_server_gate_rejects_incomplete_validation_and_18_recovers_
     assert v1_body["dependency_summary"]["cycle_detected"] is False
 
     # 2. Simulate backend bug producing incomplete validation_result (missing passed/continuity) -> router MUST reject!
-    real_exec = se.execute_step_edit
+    from app.ai import step_edit_route  # noqa: E402
+
+    real_exec = step_edit_route.execute_step_edit
 
     def _corrupt_exec(**kwargs):
         out = real_exec(**kwargs)
