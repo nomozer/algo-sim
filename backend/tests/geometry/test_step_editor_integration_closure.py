@@ -63,6 +63,7 @@ from app.simulation.geometry.section import Polyhedron, cross_section  # noqa: E
 from app.simulation.geometry_functions import step_editor as se  # noqa: E402
 from app.simulation.geometry_functions.construction_continuity import enrich_construction_continuity  # noqa: E402
 from app.simulation.semantic_program.geometry_exec import area_of  # noqa: E402
+from tests.test_postgres_integration import pg_container  # noqa: F401, E402
 
 
 STEP_EDIT_MIGRATION_9C4D8E2B7A10 = '''"""add step edit tables
