@@ -34,4 +34,4 @@ from .exact import (  # noqa: F401
     det3,
     hf,
 )
-from .kernel import ERR_KHONG_NGOAI_TIEP, circumscribed_sphere  # noqa: F401
+from .curved import ERR_KHONG_NGOAI_TIEP, circumscribed_sphere  # noqa: F401

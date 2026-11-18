@@ -20,7 +20,7 @@ from sqlalchemy.exc import IntegrityError, OperationalError, ProgrammingError
 from sqlalchemy.orm import Session
 
 from app.accounts import service as accounts_service
-from app.persistence.db import SessionLocal, _now
+from app.persistence.db import SessionLocal, _now, sqlite_owns_schema
 from app.persistence.step_edit_models import (
     StepEditRevisionRecord,
     StepEditSessionRecord,
@@ -193,6 +193,7 @@ class StepEditRequest(BaseModel):
     scene3d: dict[str, Any]
     client_request_id: str | None = Field(default=None, max_length=80)
     client_seq: int | None = Field(default=None, ge=1)
+    expected_committed_version: int | None = Field(default=None, ge=0)
 
 
 class StepEditCancelRequest(BaseModel):
@@ -258,6 +259,23 @@ def _concurrent_conflict_response() -> JSONResponse:
     )
 
 
+def _stale_revision_conflict_response(committed_version: int) -> JSONResponse:
+    return JSONResponse(
+        status_code=409,
+        headers={"Cache-Control": "no-store"},
+        content={
+            "status": "conflict",
+            "error_code": "STALE_REVISION_CONFLICT",
+            "failed_stage": "persistence",
+            "learner_error": "Phiên làm việc đã có bản cập nhật mới hơn; vui lòng tải lại trước khi chỉnh sửa.",
+            "committed_version": committed_version,
+            "draft_preserved": True,
+            "llm_calls": 0,
+            "quota_charged": False,
+        },
+    )
+
+
 def _cancelled_or_superseded_response(error_code: str, learner_error: str) -> JSONResponse:
     return JSONResponse(
         status_code=409,
@@ -296,12 +314,13 @@ def _execute_locked_step_edit(
     db: Session,
     owner_scope: str,
 ) -> dict[str, Any] | JSONResponse:
-    session_row = db.execute(
-        select(StepEditSessionRecord).where(
-            StepEditSessionRecord.owner_scope == owner_scope,
-            StepEditSessionRecord.session_id == req.session_id,
-        )
-    ).scalar_one_or_none()
+    stmt = select(StepEditSessionRecord).where(
+        StepEditSessionRecord.owner_scope == owner_scope,
+        StepEditSessionRecord.session_id == req.session_id,
+    )
+    if db.bind is not None and not sqlite_owns_schema(db.bind):
+        stmt = stmt.with_for_update()
+    session_row = db.execute(stmt).scalar_one_or_none()
 
     incoming_digest = _scene_sha256(req.scene3d)
     if session_row is None:
@@ -331,6 +350,33 @@ def _execute_locked_step_edit(
         session_row.dependency_graph_json = "{}"
         session_row.updated_at = _now()
         db.flush()
+
+    raw_existing_dep = _parse_json_dict(session_row.dependency_graph_json)
+    persisted_seq = int(raw_existing_dep.get("_latest_client_seq") or 0)
+    current_committed_ver = (
+        len(
+            db.execute(
+                select(StepEditRevisionRecord.id).where(
+                    StepEditRevisionRecord.owner_scope == owner_scope,
+                    StepEditRevisionRecord.session_id == req.session_id,
+                    StepEditRevisionRecord.execution_status == "COMMITTED",
+                )
+            )
+            .scalars()
+            .all()
+        )
+        if session_row.committed_scene_json
+        else 0
+    )
+    if req.expected_committed_version is not None and req.expected_committed_version != current_committed_ver:
+        db.rollback()
+        return _stale_revision_conflict_response(current_committed_ver)
+    if req.client_seq is not None and persisted_seq > 0 and req.client_seq <= persisted_seq:
+        db.rollback()
+        return _cancelled_or_superseded_response(
+            "EDIT_SUPERSEDED",
+            "Yêu cầu cũ đã được thay thế bởi lượt chỉnh sửa mới hơn.",
+        )
 
     working_scene = (
         json.loads(session_row.committed_scene_json)
@@ -429,6 +475,12 @@ def _execute_locked_step_edit(
             execution_result={"status": "rolled_back", "error_code": error_code, "learner_error": learner_error},
         )
         db.commit()
+        if req.client_seq is not None:
+            seq_key = (owner_scope, req.session_id)
+            with _SESSION_LOCKS_GUARD:
+                cur = _LATEST_CLIENT_SEQ.get(seq_key, 0)
+                if req.client_seq > cur:
+                    _bounded_od_put(_LATEST_CLIENT_SEQ, seq_key, req.client_seq)
 
         return JSONResponse(
             status_code=422,
@@ -472,6 +524,8 @@ def _execute_locked_step_edit(
     dep_to_persist: dict[str, Any] = dict(clean_dep_summary)
     if req.client_request_id:
         dep_to_persist["_client_request_id"] = req.client_request_id
+    if req.client_seq is not None:
+        dep_to_persist["_latest_client_seq"] = max(persisted_seq, req.client_seq)
     dep_to_persist["_head_revision_id"] = revision_id
     dep_to_persist["_head_version_number"] = next_version
     dep_to_persist["_head_committed_version"] = committed_ver_num
@@ -549,6 +603,12 @@ def _execute_locked_step_edit(
     session_row.revision_count = next_version
     session_row.updated_at = _now()
     db.commit()
+    if req.client_seq is not None:
+        seq_key = (owner_scope, req.session_id)
+        with _SESSION_LOCKS_GUARD:
+            cur = _LATEST_CLIENT_SEQ.get(seq_key, 0)
+            if req.client_seq > cur:
+                _bounded_od_put(_LATEST_CLIENT_SEQ, seq_key, req.client_seq)
     persistence_commit_ms = round((time.perf_counter() - t_persist0) * 1000.0, 3)
 
     resp_timings = dict(result["stage_timings_ms"])
@@ -617,12 +677,13 @@ def _replay_existing_request(
 ) -> dict[str, Any] | JSONResponse | None:
     if not req.client_request_id:
         return None
-    session_row = db.execute(
-        select(StepEditSessionRecord).where(
-            StepEditSessionRecord.owner_scope == owner_scope,
-            StepEditSessionRecord.session_id == req.session_id,
-        )
-    ).scalar_one_or_none()
+    stmt = select(StepEditSessionRecord).where(
+        StepEditSessionRecord.owner_scope == owner_scope,
+        StepEditSessionRecord.session_id == req.session_id,
+    )
+    if db.bind is not None and not sqlite_owns_schema(db.bind):
+        stmt = stmt.with_for_update()
+    session_row = db.execute(stmt).scalar_one_or_none()
     if session_row is not None and session_row.committed_scene_json:
         raw_dep = _parse_json_dict(session_row.dependency_graph_json)
         if raw_dep.get("_client_request_id") == req.client_request_id:
@@ -747,7 +808,6 @@ def edit_construction_step(
                             "EDIT_SUPERSEDED",
                             "Yêu cầu cũ đã được thay thế bởi lượt chỉnh sửa mới hơn.",
                         )
-                    _bounded_od_put(_LATEST_CLIENT_SEQ, seq_key, req.client_seq)
 
             return _execute_locked_step_edit(req, response, db, owner_scope)
         except IntegrityError:

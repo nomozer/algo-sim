@@ -81,6 +81,7 @@ export interface StepEditSubmitSuccess {
   dataset_eligibility: string;
   version_number: number;
   committed_version?: number;
+  revision_version_number?: number;
   primary_target_id: string;
   scene3d: Scene3D;
   step_overrides: Record<string, string>;
@@ -376,6 +377,7 @@ export async function submitConstructionStepEdit(params: {
   timeoutMs?: number;
   supersedeInFlight?: boolean;
   clientRequestId?: string;
+  expectedCommittedVersion?: number;
 }): Promise<StepEditSubmitResult> {
   const { sessionId } = params;
   const existingEntry = inFlightSessions.get(sessionId);
@@ -450,6 +452,9 @@ export async function submitConstructionStepEdit(params: {
         scene3d: params.scene3d,
         client_request_id: clientRequestId,
         client_seq: seq,
+        ...(typeof params.expectedCommittedVersion === "number"
+          ? { expected_committed_version: params.expectedCommittedVersion }
+          : {}),
       }),
     });
 
@@ -501,7 +506,12 @@ export async function submitConstructionStepEdit(params: {
         feedbackItems: existingCache?.feedbackItems ?? [],
         updatedAt: Date.now(),
       });
-      return success;
+      return {
+        ...success,
+        revision_version_number: success.version_number,
+        version_number: effectiveVer,
+        committed_version: effectiveVer,
+      };
     }
 
     return {

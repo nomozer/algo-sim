@@ -1524,4 +1524,55 @@ describe("AXO Step Editor V2.2 — Reliability Hardening & Edge Cases (§5, §7)
       expect(postTimeoutRec.step_overrides.mp_tt_AB).toBe("Commit ngay trước timeout");
     }
   });
+
+  it("CLOSURE-FE-1: submitConstructionStepEdit normalizes version_number to effectiveVer after failed 422s and sends expected_committed_version", async () => {
+    const sid = buildStepEditSessionId("sample:closure-fe-version-norm", "guest");
+    const sceneA = structuredClone((sample11.envelope as unknown as { scene3d: Scene3D }).scene3d);
+    const postedBodies: Array<Record<string, unknown>> = [];
+
+    vi.stubGlobal(
+      "fetch",
+      vi.fn().mockImplementation(async (url: string, init?: RequestInit) => {
+        if (url === "/api/simulation/steps/edit") {
+          postedBodies.push(JSON.parse(String(init?.body || "{}")));
+          return new Response(
+            JSON.stringify({
+              ...makeVerifiedCommitResponse({
+                sessionId: sid,
+                versionNumber: 4, // Backend raw revision_count after 2 failed 422 attempts + 2 commits
+                scene: sceneA,
+                primaryTargetId: "mp_tt_AB",
+                overrideText: "Dựng (α) qua trung điểm AB",
+              }),
+              version_number: 4,
+              committed_version: 2,
+            }),
+            { status: 200, headers: { "Content-Type": "application/json" } },
+          );
+        }
+        return new Response("{}", { status: 404 });
+      }),
+    );
+
+    const res = await (submitConstructionStepEdit as unknown as (p: Record<string, unknown>) => Promise<Record<string, unknown>>)({
+      sessionId: sid,
+      problemKey: "sample:closure-fe-version-norm",
+      stepId: "mp_tt_AB",
+      stepIndex: 7,
+      previousInstruction: "Dựng (α)",
+      editedInstruction: "Dựng (α) qua trung điểm AB",
+      targetIds: ["mp_tt_AB"],
+      absorbedIds: ["M_AB"],
+      scene3d: sceneA,
+      expectedCommittedVersion: 1,
+    });
+
+    expect(postedBodies[0]?.expected_committed_version).toBe(1);
+    expect(res.status).toBe("committed");
+    if (res.status === "committed") {
+      expect(res.committed_version).toBe(2);
+      expect(res.version_number).toBe(2);
+      expect(res.revision_version_number).toBe(4);
+    }
+  });
 });

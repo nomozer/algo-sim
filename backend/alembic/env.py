@@ -21,7 +21,7 @@ from app.persistence.db import DATABASE_URL, IS_SQLITE, Base, engine
 # M18 — import VÌ TÁC DỤNG PHỤ: các model lớp học phải nạp vào `Base.metadata`
 # trước khi autogenerate đọc nó, nếu không Alembic sẽ tưởng bảng thừa và sinh
 # ra một migration XOÁ chúng. Đây là lý do dòng import "không dùng" này tồn tại.
-from app.persistence import classroom_models  # noqa: F401
+from app.persistence import classroom_models, step_edit_models  # noqa: F401
 
 config = context.config
 
