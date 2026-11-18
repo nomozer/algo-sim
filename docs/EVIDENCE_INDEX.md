@@ -1,5 +1,11 @@
 # EVIDENCE_INDEX.md — Chỉ mục bằng chứng và chuỗi đính chính (Master Evidence Index)
 
+## Correction — `axo-attachment-scroll` local screenshots
+
+CORRECTS: `docs/evaluation/geometry/runs/axo-attachment-scroll/images/after-drag-end.png` and `images/mobile-swipe.png`.
+CORRECTED_BY: `docs/evaluation/geometry/runs/axo-attachment-refinement/report.md`.
+During V9.4.7, rerunning the older local browser scripts overwrote those two untracked screenshots. Their earlier bytes are `NOT_RECOVERABLE` from the current working tree; the current files are later captures and must not be treated as the original V9.4.6 images. Other evidence has not been reclassified by this correction.
+
 **Git state / recovery update, 2026-11-07:** see [CURRENT_STATE — repository closure](CURRENT_STATE.md#repository-closure--2026-11-07).
 Retired branch names now have local `refs/archive/repository-closure/` references and a verified private self-contained bundle.
 Existing evidence and historical reports below are unchanged; no research result is reinterpreted by this Git-state update.
