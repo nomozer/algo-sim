@@ -49,6 +49,24 @@ def _run(cmd: list[str], **kw) -> subprocess.CompletedProcess:
     return subprocess.run(cmd, capture_output=True, text=True, **kw)
 
 
+def _run_pg_ctl(cmd: list[str], out_path: Path) -> tuple[int, str]:
+    """Run pg_ctl without PIPE handles so daemonized Windows postgres.exe never hangs communicate()."""
+    flags = getattr(subprocess, "CREATE_NO_WINDOW", 0) | getattr(
+        subprocess, "CREATE_NEW_PROCESS_GROUP", 0
+    )
+    with out_path.open("w", encoding="utf-8", errors="replace") as fh:
+        res = subprocess.run(
+            cmd,
+            stdin=subprocess.DEVNULL,
+            stdout=fh,
+            stderr=subprocess.STDOUT,
+            close_fds=True,
+            creationflags=flags,
+        )
+    text = out_path.read_text(encoding="utf-8", errors="replace") if out_path.exists() else ""
+    return res.returncode, text
+
+
 def _docker_ok() -> bool:
     try:
         return _run(["docker", "info"]).returncode == 0
@@ -76,18 +94,22 @@ def _local_pg_bin_dir() -> Path | None:
 def restart_pg(pg_info: dict) -> None:
     """Restart the isolated PostgreSQL 16 process across both Docker and local pg_ctl modes."""
     if pg_info.get("mode") == "local_pg_ctl":
-        res = _run([
-            pg_info["pg_ctl"],
-            "-D",
-            pg_info["pgdata"],
-            "-l",
-            pg_info["pglog"],
-            "-w",
-            "-o",
-            f"-p {pg_info['port']} -h 127.0.0.1",
-            "restart",
-        ])
-        assert res.returncode == 0, res.stderr
+        out_path = Path(pg_info["pgdata"]).parent / "pg_ctl_restart.out"
+        rc, out_txt = _run_pg_ctl(
+            [
+                pg_info["pg_ctl"],
+                "-D",
+                pg_info["pgdata"],
+                "-l",
+                pg_info["pglog"],
+                "-w",
+                "-o",
+                f"-p {pg_info['port']} -h 127.0.0.1",
+                "restart",
+            ],
+            out_path,
+        )
+        assert rc == 0, out_txt
     else:
         res = _run(["docker", "restart", pg_info["name"]])
         assert res.returncode == 0, res.stderr
@@ -159,14 +181,17 @@ def pg_container():
             shutil.rmtree(tmp_root, ignore_errors=True)
             pytest.skip(f"initdb PostgreSQL 16 thất bại: {init_res.stderr}")
         pg_ctl_bin = str(bin_dir / ("pg_ctl.exe" if (bin_dir / "pg_ctl.exe").is_file() else "pg_ctl"))
-        start_res = _run([
-            pg_ctl_bin, "-D", str(pgdata), "-l", str(pglog),
-            "-w", "-o", f"-p {port} -h 127.0.0.1", "start",
-        ])
-        if start_res.returncode != 0:
+        start_rc, start_out = _run_pg_ctl(
+            [
+                pg_ctl_bin, "-D", str(pgdata), "-l", str(pglog),
+                "-w", "-o", f"-p {port} -h 127.0.0.1", "start",
+            ],
+            tmp_root / "pg_ctl_start.out",
+        )
+        if start_rc != 0:
             log_tail = pglog.read_text(encoding="utf-8", errors="ignore") if pglog.exists() else ""
             shutil.rmtree(tmp_root, ignore_errors=True)
-            pytest.skip(f"pg_ctl start thất bại: {start_res.stderr}\n{log_tail}")
+            pytest.skip(f"pg_ctl start thất bại: {start_out}\n{log_tail}")
         try:
             if not _pg_ready(port, pw, "postgres"):
                 pytest.skip("Postgres cục bộ không sẵn sàng kịp khi khởi tạo.")
@@ -188,7 +213,10 @@ def pg_container():
                 "pglog": str(pglog),
             }
         finally:
-            _run([pg_ctl_bin, "-D", str(pgdata), "-m", "immediate", "stop"])
+            _run_pg_ctl(
+                [pg_ctl_bin, "-D", str(pgdata), "-m", "immediate", "stop"],
+                tmp_root / "pg_ctl_stop.out",
+            )
             shutil.rmtree(tmp_root, ignore_errors=True)
         return
 
