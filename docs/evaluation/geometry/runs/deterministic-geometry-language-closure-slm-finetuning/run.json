@@ -1,7 +1,7 @@
 {
   "schema": "axo-evaluation-run/2",
   "run_id": "deterministic-geometry-language-closure-slm-finetuning",
-  "generated_at_utc": "2026-11-18T16:59:08Z",
+  "generated_at_utc": "2026-11-18T17:14:57Z",
   "classification": "OFFLINE_LOCAL_SLM_EMPIRICAL_BENCHMARK",
   "branch": "feat/local-first-geometry-understanding",
   "range_base_commit": "43bef643d2c528053526d363ee578065e60e6116",
@@ -16,7 +16,7 @@
     "product_commits": [
       "6310113f2202bc3a4919406b26fad08cb09b38c9"
     ],
-    "freeze_commit": "PENDING_COMMIT_3_FREEZE",
+    "freeze_commit": "9a9352d586caa360f82052ba1b76fe9b4227f26c",
     "measured_system_sha256": "113a6a7cf6bbc15ac23119150b805437e785d2b0714b26c2157d147514c2ef67",
     "measured_files_count": 123,
     "holdout_verified_candidate_sha256": "113a6a7cf6bbc15ac23119150b805437e785d2b0714b26c2157d147514c2ef67",
@@ -4549,9 +4549,17 @@
     }
   },
   "clean_tree_full_pytest": {
-    "status": "PENDING_CLEAN_TREE_FULL_PYTEST",
-    "verified_on_commit": "PENDING_COMMIT_3_FREEZE",
-    "command": "pytest -c backend/pytest.ini backend/tests -q"
+    "status": "CLEAN_TREE_FULL_PYTEST_PASS",
+    "verified_on_commit": "9a9352d586caa360f82052ba1b76fe9b4227f26c",
+    "command": "pytest -c backend/pytest.ini backend/tests -q",
+    "short_commit": "9a9352d58",
+    "passed": 14944,
+    "skipped": 7,
+    "deselected": 3,
+    "xfailed": 12,
+    "failed": 0,
+    "warnings": 1,
+    "duration_seconds": 840.17
   },
   "report": "FINAL_MASTER_REPORT.md",
   "hash_policy": "SHA-256 LF-normalized; excludes run.json",
@@ -4561,8 +4569,8 @@
       "bytes_lf": 10353
     },
     "FINAL_MASTER_REPORT.md": {
-      "sha256_lf": "c7ae75bd2139aa82d5fa22b93596d5ae69392eb677aac89285f7485eb9092ed2",
-      "bytes_lf": 15660
+      "sha256_lf": "9ce8221eeae835c87b966c20abdb6a1324dcd0a908b3739fa37b51c5971fc293",
+      "bytes_lf": 15814
     },
     "SLM_ADAPTER_MODEL_MANIFEST.json": {
       "sha256_lf": "bc4e122ecaf81460efc6922a78cf40e994c7aa84ff2c2b26bba19a666560cab1",
