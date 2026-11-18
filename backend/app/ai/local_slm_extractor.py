@@ -23,6 +23,7 @@ from typing import Any
 from app.ai.adapter4_route import ADAPTER_V4_VERSION, ROUTE_D_SIMULATION_V4_SCHEMA_VERSION
 from app.ai.local_geometry_parser import (
     LOCAL_GEOMETRY_PARSER_VERSION,
+    LOCAL_PARSE_COMPLETE,
     _canon_val,
     normalize_problem_text,
     parse_geometry_problem_locally,
@@ -42,8 +43,11 @@ from app.ai.local_slm_runtime import (
     resolve_local_slm_model_spec,
 )
 from app.ai.slm_verified_normalizer import (
+    SLM_VERIFIED_NORMALIZER_V1_VERSION,
     SLM_VERIFIED_NORMALIZER_VERSION,
     VerifiedNormalizationResult,
+    _CONDITIONAL_MARKER_RE,
+    _NEGATED_SPAN_RE,
     normalize_for_slm_grounding,
 )
 from app.ai.typed_fact_next_extraction import (
@@ -54,15 +58,17 @@ from app.ai.typed_fact_next_extraction import (
 from app.simulation.geometry.expression import ExprParseError, parse_quantity_expr
 from app.simulation.geometry_functions import engine, planner, registry
 
-LOCAL_SLM_EXTRACTOR_VERSION = "local-slm-extractor/2"
+LOCAL_SLM_EXTRACTOR_VERSION = "local-slm-extractor/3"
 SLM_COMPACT_SCHEMA_VERSION = "slm-compact-clause/1"
-SLM_GROUNDING_VALIDATOR_VERSION = "slm-grounding-validator/2"
-SLM_GROUNDING_ENVELOPE_VERSION = "slm-grounding-envelope/2"
+SLM_GROUNDING_VALIDATOR_VERSION = "slm-grounding-validator/3"
+SLM_GROUNDING_ENVELOPE_VERSION = "slm-grounding-envelope/3"
 DEFAULT_COMPACT_SLM_MAX_TOKENS = 320
 DEFAULT_COMPACT_SLM_CTX_SIZE = 2048
 
 SUPPORTED_SLM_STRATEGIES = ("compact_clause", "compact_clause_per_clause", "minimal_ops", "direct_wire")
 DEFAULT_LOCAL_SLM_STRATEGY = "compact_clause"
+SUPPORTED_CLOSURE_MODES = ("v6", "v7")
+DEFAULT_CLOSURE_MODE = "v7"
 
 _INJECTION_PATTERNS: tuple[re.Pattern[str], ...] = (
     re.compile(r"ignore\s+(?:all\s+)?(?:previous|above|prior)\s+instructions", re.IGNORECASE),
@@ -73,12 +79,24 @@ _INJECTION_PATTERNS: tuple[re.Pattern[str], ...] = (
     re.compile(r"(?:hãy\s+)?(?:tự\s+bịa|giả\s+định\s+thêm|trả\s+về\s+kết\s+quả\s+served|output\s+the\s+following\s+json)", re.IGNORECASE),
 )
 
-_CONVERSATIONAL_PREFIX_RE = re.compile(
+_CONVERSATIONAL_PREFIX_V6_RE = re.compile(
     r"^\s*(?:"
     r"(?:em|mình|tớ|bạn|nhờ\s+(?:anh|chị|bạn|thầy|cô|axo)?|giải\s+giúp(?:\s+em|\s+mình)?|"
     r"chào\s+[^,.:;!?]+|xin\s+hỏi|cho\s+(?:em|mình)\s+hỏi|em\s+đang\s+(?:học|làm)\s+bài[^,.:;!?]*)"
     r"[\s,:;\-–]+)+",
     re.IGNORECASE | re.UNICODE,
+)
+
+# Case-safe greeting prefix regex (`v7`): NEVER match uppercase 2+ letter geometry edge labels like "EM", "MN", "CD".
+_CONVERSATIONAL_PREFIX_RE = re.compile(
+    r"^\s*(?:"
+    r"(?:(?:[Ee]m|[Mm]ình|[Tt]ớ|[Bb]ạn)\s+(?:ơi|nhé|hỏi|cần|muốn|nhờ|đang(?:\s+học|\s+làm)?|có\s+bài)|"
+    r"(?:[Ee]m|[Mm]ình|[Tt]ớ|[Bb]ạn)\s+(?=[a-zà-ỹ]{2,})|"
+    r"[Nn]hờ(?:\s+(?:anh|chị|bạn|thầy|cô|[Aa]xo))?|"
+    r"[Gg]iải\s+giúp(?:\s+em|\s+mình)?|"
+    r"[Cc]hào\s+[^,.:;!?]+|[Xx]in\s+hỏi|[Cc]ho\s+(?:em|mình)\s+hỏi)"
+    r"[\s,:;\-–]+)+",
+    re.UNICODE,
 )
 
 _NEGATED_PREDICATE_RE = re.compile(
@@ -401,20 +419,61 @@ def extract_geometry_points(text: str) -> set[str]:
     return expanded
 
 
-def _strip_conversational_prefix(span: str) -> str:
-    cleaned = _CONVERSATIONAL_PREFIX_RE.sub("", span).strip()
+def _strip_conversational_prefix(span: str, *, closure_mode: str = DEFAULT_CLOSURE_MODE) -> str:
+    rx = _CONVERSATIONAL_PREFIX_V6_RE if closure_mode == "v6" else _CONVERSATIONAL_PREFIX_RE
+    cleaned = rx.sub("", span).strip()
     return cleaned if cleaned else span
 
 
-def select_clean_quote(clause_text: str, required_tokens: list[str], norm_text: str) -> str:
-    """Pick the tightest verbatim substring of `norm_text` carrying all required tokens."""
-    req = [t for t in required_tokens if t]
-    candidates: list[str] = []
+def _cand_has_contiguous(cand: str, label: str) -> bool:
+    """True when `label` (or its 2-vertex reversal) appears contiguously at proper label boundaries inside `cand`."""
+    if "." in label:
+        return bool(re.search(rf"(?<![A-Z0-9']){re.escape(label)}(?![A-Z0-9'])", cand))
+    if re.search(rf"(?<![A-Z0-9'.]){re.escape(label)}(?![A-Z0-9'.])", cand):
+        return True
+    pts = re.findall(r"[A-Z][0-9]*'*", label)
+    if len(pts) == 2:
+        rev = f"{pts[1]}{pts[0]}"
+        return bool(re.search(rf"(?<![A-Z0-9'.]){re.escape(rev)}(?![A-Z0-9'.])", cand))
+    return False
 
-    trimmed = _strip_conversational_prefix(clause_text)
+
+def select_clean_quote(
+    clause_text: str,
+    required_tokens: list[str],
+    norm_text: str,
+    *,
+    required_contiguous: list[str] | None = None,
+    required_cues: tuple[str, ...] | None = None,
+    closure_mode: str = DEFAULT_CLOSURE_MODE,
+) -> str:
+    """Pick the tightest verbatim substring of `norm_text` carrying all required tokens."""
+    use_v7 = closure_mode != "v6"
+    req = [t for t in required_tokens if t]
+    contig_req = (
+        [
+            lbl
+            for lbl in (required_contiguous or ())
+            if lbl and _cand_has_contiguous(clause_text, lbl)
+        ]
+        if use_v7
+        else []
+    )
+    clause_low = clause_text.lower()
+    active_cues = tuple(c for c in (required_cues or ()) if c and c.lower() in clause_low) if use_v7 else ()
+
+    candidates: list[str] = []
+    trimmed = _strip_conversational_prefix(clause_text, closure_mode=closure_mode)
     if trimmed and trimmed in norm_text:
         candidates.append(trimmed)
 
+    # First split strictly on major punctuation in v7 (preserving "và" inside compound clauses),
+    # while preserving exact /6 splitting in v6 ablation mode.
+    if use_v7:
+        for piece in re.split(r"\s*[,;]\s*", trimmed):
+            seg = piece.strip(" ,;:")
+            if seg and seg in norm_text:
+                candidates.append(seg)
     for sep_pat in (r"\s*,\s*|\s+đồng\s+thời\s+|\s+và\s+|\s+còn\s+|\s+trong\s+đó\s+",):
         for piece in re.split(sep_pat, trimmed, flags=re.IGNORECASE):
             seg = piece.strip(" ,;:")
@@ -423,7 +482,7 @@ def select_clean_quote(clause_text: str, required_tokens: list[str], norm_text: 
 
     candidates.append(clause_text)
 
-    # Prefer shortest candidate containing all required vertex/scalar tokens verbatim
+    # Prefer shortest candidate containing all required vertex/scalar tokens, contiguous labels, and active cues
     valid: list[str] = []
     for cand in candidates:
         if cand not in norm_text:
@@ -438,6 +497,13 @@ def select_clean_quote(clause_text: str, required_tokens: list[str], norm_text: 
             elif tok.lower() not in cand.lower():
                 ok = False
                 break
+        if ok and contig_req:
+            if not all(_cand_has_contiguous(cand, lbl) for lbl in contig_req):
+                ok = False
+        if ok and active_cues:
+            cand_low = cand.lower()
+            if not any(cue.lower() in cand_low for cue in active_cues):
+                ok = False
         if ok:
             valid.append(cand)
     if valid:
@@ -1549,8 +1615,14 @@ def _gbnf_union(items: list[str]) -> str:
     return " | ".join(_gbnf_str_literal(x) for x in seen)
 
 
-def build_compact_grammar_for_context(ctx: "CompactClauseContext", *, clause_subset: list[IndexedClause] | None = None) -> str:
+def build_compact_grammar_for_context(
+    ctx: "CompactClauseContext",
+    *,
+    clause_subset: list[IndexedClause] | None = None,
+    closure_mode: str = DEFAULT_CLOSURE_MODE,
+) -> str:
     """Build a per-problem, clause-scoped, arity-safe whitespace-free GBNF grammar over exact source literals."""
+    use_v7 = closure_mode != "v6"
     active_clauses = clause_subset if clause_subset is not None else ctx.clauses
     target_cids = [str(c.clause_id) for c in active_clauses]
     target_cid_set = {c.clause_id for c in active_clauses}
@@ -1634,7 +1706,9 @@ def build_compact_grammar_for_context(ctx: "CompactClauseContext", *, clause_sub
         c_reg_pyr = [
             e.label
             for e in all_solids
-            if e.is_regular_solid and e.solid_subtype == "pyr" and ("cạnh bên" in clow or cid in e.clause_ids)
+            if e.is_regular_solid
+            and e.solid_subtype == "pyr"
+            and ("cạnh bên" in clow or "tứ diện đều" in clow or cid in e.clause_ids)
         ]
         c_len_tgts = list(dict.fromkeys(c_segs if c_segs else c_reg_pyr))
         c_solids = [e.label for e in all_solids if cid in e.clause_ids] or [e.label for e in all_solids]
@@ -1714,12 +1788,20 @@ def build_compact_grammar_for_context(ctx: "CompactClauseContext", *, clause_sub
         has_sspair = False
         if c_polys:
             if _cue("regular_polygon"):
+                reg_tgt = f"{pfx}poly"
+                if use_v7:
+                    has_quad_reg = any(w in clow for w in ("hình vuông", "tứ giác đều", "ngũ giác đều", "lục giác đều", "đa giác đều", "lập phương"))
+                    has_tri_reg = "tam giác đều" in clow
+                    if has_tri_reg and not has_quad_reg and c_tris:
+                        reg_tgt = f"{pfx}tri"
+                    elif has_quad_reg and not has_tri_reg and c_quads:
+                        reg_tgt = f"{pfx}quad"
                 if c_len_qtys:
                     lines.append(
-                        rf'{pfx}regp ::= "{{\"c\":{cid},\"p\":\"reg_poly\",\"a\":" {pfx}poly (",\"q\":" {pfx}lqty)? "}}"'
+                        rf'{pfx}regp ::= "{{\"c\":{cid},\"p\":\"reg_poly\",\"a\":" {reg_tgt} (",\"q\":" {pfx}lqty)? "}}"'
                     )
                 else:
-                    lines.append(rf'{pfx}regp ::= "{{\"c\":{cid},\"p\":\"reg_poly\",\"a\":" {pfx}poly "}}"')
+                    lines.append(rf'{pfx}regp ::= "{{\"c\":{cid},\"p\":\"reg_poly\",\"a\":" {reg_tgt} "}}"')
                 c_rels.append(f"{pfx}regp")
             if c_quads:
                 if _cue("rhombus"):
@@ -1799,7 +1881,12 @@ def build_compact_grammar_for_context(ctx: "CompactClauseContext", *, clause_sub
                     lines.append(rf'{pfx}dihed ::= "{{\"c\":{cid},\"p\":\"dihed\",\"a\":" {pfx}seg ",\"b\":" {pfx}seg ",\"q\":" {pfx}aqty "}}"')
                 c_rels.append(f"{pfx}dihed")
         if c_segs:
-            if c_polys and _cue("perpendicular_line_plane"):
+            perp_lp_ok = (
+                any(w in clow for w in ("vuông góc", "⊥", "đường cao", "trục"))
+                if use_v7
+                else _cue("perpendicular_line_plane")
+            )
+            if c_polys and perp_lp_ok:
                 lines.append(rf'{pfx}perplp ::= "{{\"c\":{cid},\"p\":\"perp_lp\",\"a\":" {pfx}seg ",\"b\":" {pfx}poly "}}"')
                 c_rels.append(f"{pfx}perplp")
             if len(c_segs) >= 2:
@@ -2257,11 +2344,29 @@ def _select_source_gate_quote(
     working_text: str,
     kind: str,
     role_val: str | None = None,
+    *,
+    required_contiguous: list[str] | None = None,
+    required_cues: tuple[str, ...] | None = None,
+    closure_mode: str = DEFAULT_CLOSURE_MODE,
 ) -> str:
     """Pick a verbatim substring that respects both clause grounding and Registry `_lien_ket_cau`."""
+    use_v7 = closure_mode != "v6"
     req = [t for t in required_tokens if t]
-    if kind in _KEEP_CLAUSE_KINDS and clause_text in working_text:
+    if not use_v7 and kind in _KEEP_CLAUSE_KINDS and clause_text in working_text:
         return clause_text
+
+    # In v7, for construction/shape clauses keep tightest valid comma/sentence sub-clause containing cues + contiguous labels
+    if use_v7 and kind in _KEEP_CLAUSE_KINDS and clause_text in working_text:
+        if not required_contiguous and not required_cues:
+            return clause_text
+        return select_clean_quote(
+            clause_text,
+            req,
+            working_text,
+            required_contiguous=required_contiguous,
+            required_cues=required_cues,
+            closure_mode=closure_mode,
+        )
 
     # On multi-value clauses (e.g. regular pyramid base side AND lateral edge), isolate sub-clause with fewest extra numbers
     if kind in _VALUE_ROLE_KINDS and role_val:
@@ -2271,6 +2376,11 @@ def _select_source_gate_quote(
             if seg and seg in working_text:
                 pieces.append(seg)
         pieces.append(clause_text)
+        contig_req = (
+            [lbl for lbl in (required_contiguous or ()) if lbl and _cand_has_contiguous(clause_text, lbl)]
+            if use_v7
+            else []
+        )
         valid_cands: list[tuple[int, int, str]] = []
         for cand in pieces:
             cpts = extract_geometry_points(cand)
@@ -2280,6 +2390,8 @@ def _select_source_gate_quote(
             )
             if not tok_ok:
                 continue
+            if contig_req and not all(_cand_has_contiguous(cand, lbl) for lbl in contig_req):
+                continue
             qty_hits = len(_TOKEN_QTY_RE.findall(cand))
             # Prefer sub-clause containing role_val uniquely (fewest numbers) and tightest length
             valid_cands.append((abs(qty_hits - 1), len(cand), cand))
@@ -2287,15 +2399,25 @@ def _select_source_gate_quote(
             valid_cands.sort()
             return valid_cands[0][2]
 
-    return select_clean_quote(clause_text, req, working_text)
+    return select_clean_quote(
+        clause_text,
+        req,
+        working_text,
+        required_contiguous=required_contiguous if use_v7 else None,
+        required_cues=required_cues if use_v7 else None,
+        closure_mode=closure_mode,
+    )
 
 
 def _expand_compact_relation(
     rel: dict[str, Any],
     ctx: CompactClauseContext,
     solid_info: dict[str, Any] | None,
+    *,
+    closure_mode: str = DEFAULT_CLOSURE_MODE,
 ) -> tuple[list[dict[str, Any]], str | None]:
     """Validate entity/quantity indices + source cues and lower into typed-fact-next/2 premises."""
+    use_v7 = closure_mode != "v6"
     cid = rel.get("c")
     pcode = str(rel.get("p") or "").strip()
     if pcode not in _COMPACT_TO_V5_KIND:
@@ -2405,7 +2527,7 @@ def _expand_compact_relation(
     bpts = set(_solid_base_vertices(solid_info))
     all_pts = extract_geometry_points(ctx.working_text)
     is_reg_cube_or_lat = solid_info and solid_info.get("_is_reg") and (
-        "cạnh bên" in clow or "lập phương" in ctx.working_text.lower()
+        "cạnh bên" in clow or "lập phương" in ctx.working_text.lower() or (use_v7 and "tứ diện đều" in ctx.working_text.lower())
     )
     for ent in (ea, eb, ept):
         if ent is None:
@@ -2425,10 +2547,17 @@ def _expand_compact_relation(
     def _pts(e: CandidateEntity | None) -> list[str]:
         return list(e.vertices) if e is not None else []
 
+    def _poly_contig(pts: list[str]) -> list[str]:
+        return ["".join(pts)] if use_v7 and len(pts) >= 3 else []
+
     if pcode == "reg_poly":
         verts = _pts(ea)
         if len(verts) < 3:
             return [], "INVALID_PREMISE_ARGS:regular_polygon"
+        if use_v7 and len(verts) >= 4 and "tam giác đều" in clow and not any(
+            w in clow for w in ("hình vuông", "tứ giác đều", "ngũ giác đều", "lục giác đều", "đa giác đều", "lập phương")
+        ):
+            return [], "INVALID_PREMISE_ARGS:regular_polygon_vertex_count_mismatch"
         args: dict[str, Any] = {"vertices": verts}
         req = list(verts)
         rv: str | None = None
@@ -2436,14 +2565,24 @@ def _expand_compact_relation(
             args["side"] = qty_entry.canon_expr
             req.append(qty_entry.canon_expr)
             rv = qty_entry.canon_expr
-        q_str = _select_source_gate_quote(ctext, req, ctx.working_text, "regular_polygon", role_val=rv)
+        q_str = _select_source_gate_quote(
+            ctext, req, ctx.working_text, "regular_polygon", role_val=rv,
+            required_contiguous=_poly_contig(verts),
+            required_cues=("đều", "hình vuông", "lập phương", "tứ diện đều") if use_v7 else None,
+            closure_mode=closure_mode,
+        )
         out_premises.append({"kind": "regular_polygon", "args": args, "quote": q_str, "solid_id": sid})
 
     elif pcode in ("rect", "para"):
         verts = _pts(ea)
         if len(verts) != 4:
             return [], f"INVALID_PREMISE_ARGS:{v5_kind}"
-        q_str = _select_source_gate_quote(ctext, verts, ctx.working_text, v5_kind)
+        q_str = _select_source_gate_quote(
+            ctext, verts, ctx.working_text, v5_kind,
+            required_contiguous=_poly_contig(verts),
+            required_cues=(("chữ nhật", "hcn") if pcode == "rect" else ("bình hành", "hbh")) if use_v7 else None,
+            closure_mode=closure_mode,
+        )
         out_premises.append({"kind": v5_kind, "args": {"vertices": verts}, "quote": q_str, "solid_id": sid})
 
     elif pcode == "rhom":
@@ -2457,7 +2596,12 @@ def _expand_compact_relation(
             args["side"] = qty_entry.canon_expr
             req.append(qty_entry.canon_expr)
             rv = qty_entry.canon_expr
-        q_str = _select_source_gate_quote(ctext, req, ctx.working_text, "rhombus", role_val=rv)
+        q_str = _select_source_gate_quote(
+            ctext, req, ctx.working_text, "rhombus", role_val=rv,
+            required_contiguous=_poly_contig(verts),
+            required_cues=("hình thoi",) if use_v7 else None,
+            closure_mode=closure_mode,
+        )
         out_premises.append({"kind": "rhombus", "args": args, "quote": q_str, "solid_id": sid})
 
     elif pcode in ("trap", "iso_trap"):
@@ -2467,7 +2611,12 @@ def _expand_compact_relation(
         rem = [v for v in verts if v not in base_a]
         if len(rem) != 2:
             return [], f"INVALID_PREMISE_ARGS:{v5_kind}"
-        q_str = _select_source_gate_quote(ctext, verts, ctx.working_text, v5_kind)
+        q_str = _select_source_gate_quote(
+            ctext, verts, ctx.working_text, v5_kind,
+            required_contiguous=_poly_contig(verts),
+            required_cues=("hình thang",) if use_v7 else None,
+            closure_mode=closure_mode,
+        )
         out_premises.append({"kind": v5_kind, "args": {"vertices": verts, "base_a": base_a, "base_b": rem}, "quote": q_str, "solid_id": sid})
 
     elif pcode in ("right_tri", "right_iso_tri"):
@@ -2476,7 +2625,12 @@ def _expand_compact_relation(
         if not vtx or len(poly_pts) != 3 or vtx not in poly_pts:
             return [], f"INVALID_PREMISE_ARGS:{pcode}"
         rays = [x for x in poly_pts if x != vtx]
-        q_str = _select_source_gate_quote(ctext, poly_pts, ctx.working_text, "right_angle")
+        q_str = _select_source_gate_quote(
+            ctext, poly_pts, ctx.working_text, "right_angle",
+            required_contiguous=_poly_contig(poly_pts),
+            required_cues=("vuông", "90") if use_v7 else None,
+            closure_mode=closure_mode,
+        )
         out_premises.append({"kind": "right_angle", "args": {"vertex": vtx, "rays": rays}, "quote": q_str, "solid_id": sid})
         if pcode == "right_iso_tri" or "vuông cân" in clow:
             out_premises.append({"kind": "equal_length", "args": {"segment_a": [vtx, rays[0]], "segment_b": [vtx, rays[1]]}, "quote": q_str, "solid_id": sid})
@@ -2487,7 +2641,12 @@ def _expand_compact_relation(
         if not vtx or len(poly_pts) != 3 or vtx not in poly_pts:
             return [], "INVALID_PREMISE_ARGS:iso_tri"
         rays = [x for x in poly_pts if x != vtx]
-        q_str = _select_source_gate_quote(ctext, poly_pts, ctx.working_text, "equal_length")
+        q_str = _select_source_gate_quote(
+            ctext, poly_pts, ctx.working_text, "equal_length",
+            required_contiguous=_poly_contig(poly_pts),
+            required_cues=("cân",) if use_v7 else None,
+            closure_mode=closure_mode,
+        )
         out_premises.append({"kind": "equal_length", "args": {"segment_a": [vtx, rays[0]], "segment_b": [vtx, rays[1]]}, "quote": q_str, "solid_id": sid})
 
     elif pcode == "perp_lp":
@@ -2497,14 +2656,30 @@ def _expand_compact_relation(
             plane = _solid_base_vertices(solid_info)
         if len(line) != 2 or len(plane) < 3:
             return [], "INVALID_PREMISE_ARGS:perpendicular_line_plane"
-        q_str = _select_source_gate_quote(ctext, [*line, *plane], ctx.working_text, "perpendicular_line_plane")
+        # In v7, filter out spurious right-prism lateral-edge perp_lp when clause has no explicit "vuông góc"/"⊥"
+        if use_v7 and not any(w in clow for w in ("vuông góc", "⊥", "đường cao")):
+            if set(line).issubset(set(plane)):
+                return [], "INVALID_PREMISE_ARGS:line_lies_in_plane"
+            if solid_info and solid_info.get("solid_type") == "prism" and any(w in clow for w in ("đứng", "đều", "hộp chữ nhật", "lập phương")):
+                return [], "PREDICATE_CUE_MISSING:perpendicular_line_plane"
+        q_str = _select_source_gate_quote(
+            ctext, [*line, *plane], ctx.working_text, "perpendicular_line_plane",
+            required_contiguous=["".join(line)] if use_v7 else None,
+            required_cues=("vuông góc", "⊥", "đường cao") if use_v7 else None,
+            closure_mode=closure_mode,
+        )
         out_premises.append({"kind": "perpendicular_line_plane", "args": {"line": line, "plane": plane}, "quote": q_str, "solid_id": sid})
 
     elif pcode == "perp_ll":
         l1, l2 = _pts(ea), _pts(eb)
         if len(l1) != 2 or len(l2) != 2:
             return [], "INVALID_PREMISE_ARGS:perpendicular_lines"
-        q_str = _select_source_gate_quote(ctext, [*l1, *l2], ctx.working_text, "perpendicular_lines")
+        q_str = _select_source_gate_quote(
+            ctext, [*l1, *l2], ctx.working_text, "perpendicular_lines",
+            required_contiguous=["".join(l1), "".join(l2)] if use_v7 else None,
+            required_cues=("vuông góc", "⊥") if use_v7 else None,
+            closure_mode=closure_mode,
+        )
         out_premises.append({"kind": "perpendicular_lines", "args": {"line1": l1, "line2": l2}, "quote": q_str, "solid_id": sid})
 
     elif pcode == "face_perp":
@@ -2514,7 +2689,12 @@ def _expand_compact_relation(
             base = _solid_base_vertices(solid_info)
         if len(face) < 3 or len(base) < 3:
             return [], "INVALID_PREMISE_ARGS:face_perpendicular_base"
-        q_str = _select_source_gate_quote(ctext, [*face, *base], ctx.working_text, "face_perpendicular_base")
+        q_str = _select_source_gate_quote(
+            ctext, [*face, *base], ctx.working_text, "face_perpendicular_base",
+            required_contiguous=_poly_contig(face),
+            required_cues=("vuông góc", "⊥") if use_v7 else None,
+            closure_mode=closure_mode,
+        )
         out_premises.append({"kind": "face_perpendicular_base", "args": {"face": face, "base": base}, "quote": q_str, "solid_id": sid})
 
     elif pcode == "mid":
@@ -2524,7 +2704,12 @@ def _expand_compact_relation(
             return [], "INVALID_PREMISE_ARGS:midpoint"
         if pt in seg:
             return [], "INVALID_PREMISE_ARGS:endpoint_cannot_divide_segment"
-        q_str = _select_source_gate_quote(ctext, [pt, *seg], ctx.working_text, "midpoint")
+        q_str = _select_source_gate_quote(
+            ctext, [pt, *seg], ctx.working_text, "midpoint",
+            required_contiguous=["".join(seg)] if use_v7 else None,
+            required_cues=("trung điểm", "chính giữa") if use_v7 else None,
+            closure_mode=closure_mode,
+        )
         out_premises.append({"kind": "midpoint", "args": {"point": pt, "segment": seg}, "quote": q_str, "solid_id": sid})
 
     elif pcode == "cent":
@@ -2532,7 +2717,12 @@ def _expand_compact_relation(
         poly = _pts(ea)
         if not pt or len(poly) < 3:
             return [], "INVALID_PREMISE_ARGS:centroid"
-        q_str = _select_source_gate_quote(ctext, [pt, *poly], ctx.working_text, "centroid")
+        q_str = _select_source_gate_quote(
+            ctext, [pt, *poly], ctx.working_text, "centroid",
+            required_contiguous=_poly_contig(poly),
+            required_cues=("trọng tâm",) if use_v7 else None,
+            closure_mode=closure_mode,
+        )
         out_premises.append({"kind": "centroid", "args": {"point": pt, "polygon": poly}, "quote": q_str, "solid_id": sid})
 
     elif pcode in ("proj", "alt"):
@@ -2542,13 +2732,27 @@ def _expand_compact_relation(
         if not img or not src_p:
             return [], f"INVALID_PREMISE_ARGS:{pcode}"
         if len(tgt) == 2:
-            q_str = _select_source_gate_quote(ctext, [src_p, img, *tgt], ctx.working_text, "orthogonal_projection_line")
+            q_str = _select_source_gate_quote(
+                ctext, [src_p, img, *tgt], ctx.working_text, "orthogonal_projection_line",
+                required_contiguous=["".join(tgt)] if use_v7 else None,
+                required_cues=("chiếu", "đường cao") if use_v7 else None,
+                closure_mode=closure_mode,
+            )
             out_premises.append({"kind": "orthogonal_projection_line", "args": {"point": src_p, "image": img, "line": tgt}, "quote": q_str, "solid_id": sid})
         elif len(tgt) >= 3:
-            q_str = _select_source_gate_quote(ctext, [src_p, img, *tgt], ctx.working_text, "orthogonal_projection")
+            q_str = _select_source_gate_quote(
+                ctext, [src_p, img, *tgt], ctx.working_text, "orthogonal_projection",
+                required_contiguous=_poly_contig(tgt),
+                required_cues=("chiếu", "đường cao") if use_v7 else None,
+                closure_mode=closure_mode,
+            )
             out_premises.append({"kind": "orthogonal_projection", "args": {"point": src_p, "image": img, "plane": tgt}, "quote": q_str, "solid_id": sid})
         elif "đáy" in clow and len(bverts := _solid_base_vertices(solid_info)) >= 3:
-            q_str = _select_source_gate_quote(ctext, [src_p, img], ctx.working_text, "orthogonal_projection")
+            q_str = _select_source_gate_quote(
+                ctext, [src_p, img], ctx.working_text, "orthogonal_projection",
+                required_cues=("chiếu", "đường cao") if use_v7 else None,
+                closure_mode=closure_mode,
+            )
             out_premises.append({"kind": "orthogonal_projection", "args": {"point": src_p, "image": img, "plane": bverts}, "quote": q_str, "solid_id": sid})
         else:
             return [], f"INVALID_PREMISE_ARGS:{pcode}"
@@ -2584,12 +2788,18 @@ def _expand_compact_relation(
         if qty_entry is None:
             return [], "INVALID_PREMISE_ARGS:segment_length"
         is_reg_lat = bool(solid_info and solid_info.get("_is_reg") and "cạnh bên" in clow)
+        is_reg_tet_all = bool(use_v7 and solid_info and solid_info.get("_is_reg") and "tứ diện đều" in clow)
         if len(seg) != 2:
-            # Allow solid entity for regular pyramid lateral edge ("cạnh bên bằng 2a")
+            # Allow solid entity for regular pyramid lateral edge ("cạnh bên bằng 2a") or regular tetrahedron universal edge
             if ea is not None and ea.kind == "solid" and solid_info and solid_info.get("_is_reg") and solid_info["solid_type"] == "pyramid":
                 apex = solid_info["notation"].split(".", 1)[0]
-                b0 = _solid_base_vertices(solid_info)[0]
-                seg = [apex, b0]
+                bverts = _solid_base_vertices(solid_info)
+                seg = [apex, bverts[0]]
+                if is_reg_tet_all:
+                    q_tet = ctext if ctext in ctx.working_text else _select_source_gate_quote(ctext, [*bverts, qty_entry.canon_expr], ctx.working_text, "regular_polygon", role_val=qty_entry.canon_expr, closure_mode=closure_mode)
+                    out_premises.append({"kind": "regular_polygon", "args": {"vertices": bverts, "side": qty_entry.canon_expr}, "quote": q_tet, "solid_id": sid})
+                    out_premises.append({"kind": "segment_length", "args": {"segment": seg, "value": qty_entry.canon_expr}, "quote": q_tet, "solid_id": sid})
+                    return out_premises, None
             else:
                 return [], "INVALID_PREMISE_ARGS:segment_length"
         else:
@@ -2618,20 +2828,24 @@ def _expand_compact_relation(
                     if not between_pat.search(ctext):
                         return [], f"UNGROUNDED_VALUE:segment_length_proximity:{seg_ab}:{qty_entry.canon_expr}"
         req_len = ["cạnh bên", qty_entry.canon_expr] if is_reg_lat else [*seg, qty_entry.canon_expr]
-        q_str = _select_source_gate_quote(ctext, req_len, ctx.working_text, "segment_length", role_val=qty_entry.canon_expr)
+        q_str = _select_source_gate_quote(
+            ctext, req_len, ctx.working_text, "segment_length", role_val=qty_entry.canon_expr,
+            required_contiguous=(None if (is_reg_lat or not use_v7) else ["".join(seg)]),
+            closure_mode=closure_mode,
+        )
         out_premises.append({"kind": "segment_length", "args": {"segment": seg, "value": qty_entry.canon_expr}, "quote": q_str, "solid_id": sid})
 
     elif pcode == "eq_len":
         s1, s2 = _pts(ea), _pts(eb)
         if len(s1) != 2 or len(s2) != 2:
             return [], "INVALID_PREMISE_ARGS:equal_length"
-        q_str = _select_source_gate_quote(ctext, [*s1, *s2], ctx.working_text, "equal_length")
+        q_str = _select_source_gate_quote(ctext, [*s1, *s2], ctx.working_text, "equal_length", closure_mode=closure_mode)
         out_premises.append({"kind": "equal_length", "args": {"segment_a": s1, "segment_b": s2}, "quote": q_str, "solid_id": sid})
 
     elif pcode == "height":
         if qty_entry is None:
             return [], "INVALID_PREMISE_ARGS:height"
-        q_str = _select_source_gate_quote(ctext, [qty_entry.canon_expr], ctx.working_text, "height", role_val=qty_entry.canon_expr)
+        q_str = _select_source_gate_quote(ctext, [qty_entry.canon_expr], ctx.working_text, "height", role_val=qty_entry.canon_expr, closure_mode=closure_mode)
         out_premises.append({"kind": "height", "args": {"value": qty_entry.canon_expr}, "quote": q_str, "solid_id": sid})
 
     elif pcode in ("ang_lp", "ang_pp", "dihed", "ang_ll", "ang_vtx"):
@@ -2641,6 +2855,7 @@ def _expand_compact_relation(
         unit_str = qty_entry.implied_unit or ("deg" if "°" in qty_entry.raw_token or "độ" in clow else "")
         a_pts = _pts(ea)
         b_pts = _pts(eb)
+        contig_ang: list[str] | None = None
         if pcode == "ang_lp":
             if len(b_pts) < 3 and "đáy" in clow:
                 b_pts = _solid_base_vertices(solid_info)
@@ -2648,6 +2863,7 @@ def _expand_compact_relation(
                 return [], "INVALID_PREMISE_ARGS:line_plane_angle"
             args = {"line": a_pts, "plane": b_pts, "value": val_str}
             req = [*a_pts, *b_pts, val_str]
+            contig_ang = ["".join(a_pts)] if use_v7 else None
         elif pcode == "ang_pp":
             if len(b_pts) < 3 and "đáy" in clow:
                 b_pts = _solid_base_vertices(solid_info)
@@ -2655,6 +2871,7 @@ def _expand_compact_relation(
                 return [], "INVALID_PREMISE_ARGS:plane_plane_angle"
             args = {"plane1": a_pts, "plane2": b_pts, "value": val_str}
             req = [*a_pts, *b_pts, val_str]
+            contig_ang = [x for x in ("".join(a_pts), "".join(b_pts)) if _cand_has_contiguous(ctext, x)] if use_v7 else None
         elif pcode == "dihed":
             if len(a_pts) < 2 or len(b_pts) != 2:
                 return [], "INVALID_PREMISE_ARGS:dihedral_angle"
@@ -2665,6 +2882,7 @@ def _expand_compact_relation(
                 return [], "INVALID_PREMISE_ARGS:line_line_angle"
             args = {"line1": a_pts, "line2": b_pts, "value": val_str}
             req = [*a_pts, *b_pts, val_str]
+            contig_ang = ["".join(a_pts), "".join(b_pts)] if use_v7 else None
         else:
             vtx = _pts(ept)[0] if ept and len(ept.vertices) == 1 else (a_pts[1] if len(a_pts) == 3 else "")
             rays = [x for x in a_pts if x != vtx][:2]
@@ -2674,7 +2892,12 @@ def _expand_compact_relation(
             req = [vtx, *rays, val_str]
         if unit_str:
             args["unit"] = unit_str
-        q_str = _select_source_gate_quote(ctext, req, ctx.working_text, v5_kind)
+        q_str = _select_source_gate_quote(
+            ctext, req, ctx.working_text, v5_kind,
+            required_contiguous=contig_ang,
+            required_cues=("góc", "°", "sin", "cos", "tan", "cot") if use_v7 else None,
+            closure_mode=closure_mode,
+        )
         out_premises.append({"kind": v5_kind, "args": args, "quote": q_str, "solid_id": sid})
 
     elif pcode == "area":
@@ -2773,12 +2996,30 @@ def _convert_compact_goal(
     return _convert_goal(goal_proxy, idx, ctx.clauses, ctx.working_text, solid_info, extract_geometry_points(ctx.working_text))
 
 
+def _premise_dedup_key(prem: dict[str, Any]) -> tuple[Any, ...]:
+    """Canonical signature so set-equivalent segment/polygon vertices don't duplicate."""
+    kind = str(prem.get("kind") or "")
+    args = prem.get("args") or {}
+    norm_items: list[tuple[str, Any]] = []
+    for k in sorted(args.keys()):
+        v = args[k]
+        if k in ("vertices", "base", "top", "segment", "segment_a", "segment_b", "line", "line1", "line2", "plane", "plane1", "plane2", "face", "polygon", "rays") and isinstance(v, list):
+            norm_items.append((k, tuple(sorted(str(x).strip().upper() for x in v))))
+        elif k in ("value", "side", "ratio", "distance"):
+            norm_items.append((k, _normalize_scalar_str(str(v or ""))))
+        else:
+            norm_items.append((k, str(v).strip().upper() if isinstance(v, str) else str(v)))
+    return (kind, tuple(norm_items))
+
+
 def validate_and_lower_compact_clause(
     *,
     ctx: CompactClauseContext,
     raw_slm_json: dict[str, Any],
+    closure_mode: str = DEFAULT_CLOSURE_MODE,
 ) -> tuple[dict[str, Any] | None, dict[str, Any]]:
     """Deterministically validate compact slot-filled SLM output and lower to `typed-fact-next/2`."""
+    use_v7 = closure_mode != "v6"
     accepted_ops: list[dict[str, Any]] = []
     rejected_ops: list[dict[str, str]] = []
 
@@ -2829,7 +3070,22 @@ def validate_and_lower_compact_clause(
                 cpts_s = extract_geometry_points(ctext_s)
                 if all(v in cpts_s for v in s_ent.vertices):
                     # Preserve solid quote up through its solid symbol/qualifier
-                    solid_quote = select_clean_quote(ctext_s, list(s_ent.vertices), ctx.working_text)
+                    if use_v7:
+                        s_cues = (
+                            ("lăng trụ đứng", "lăng trụ đều", "hộp chữ nhật", "lập phương", "lăng trụ", "hộp")
+                            if v5_stype == "prism"
+                            else ("tứ diện đều", "chóp", "tứ diện")
+                        )
+                        solid_quote = select_clean_quote(
+                            ctext_s,
+                            list(s_ent.vertices),
+                            ctx.working_text,
+                            required_contiguous=[s_ent.label] if s_ent.label in ctext_s else None,
+                            required_cues=s_cues,
+                            closure_mode=closure_mode,
+                        )
+                    else:
+                        solid_quote = select_clean_quote(ctext_s, list(s_ent.vertices), ctx.working_text, closure_mode=closure_mode)
                     if stype_code == "cube" and ctext_s in ctx.working_text:
                         solid_quote = ctext_s
                     solid_subtype = stype_code
@@ -2885,6 +3141,13 @@ def validate_and_lower_compact_clause(
         base = _solid_base_vertices(solid_info)
         premises.append({"kind": "regular_pyramid", "args": {"apex": apex, "base": base}, "quote": solid_quote, "solid_id": "s1"})
         accepted_ops.append({"kind": "regular_pyramid", "clause_id": solid_raw[0]})
+        if use_v7 and "tứ diện đều" in cs_low and "cạnh" in cs_low:
+            c_q_tet = [q for q in ctx.quantities if solid_raw[0] in q.clause_ids and q.implied_unit == ""]
+            if len(c_q_tet) == 1 and not _NEGATED_PREDICATE_RE.search(cs_low):
+                side_val = c_q_tet[0].canon_expr
+                premises.append({"kind": "regular_polygon", "args": {"vertices": base, "side": side_val}, "quote": ctext_s, "solid_id": "s1"})
+                premises.append({"kind": "segment_length", "args": {"segment": [apex, base[0]], "value": side_val}, "quote": ctext_s, "solid_id": "s1"})
+                accepted_ops.append({"kind": "tetrahedron_expansion", "clause_id": solid_raw[0]})
     elif solid_info["solid_type"] == "prism" and re.search(
         r"lăng\s+trụ\s+(?:tam\s+giác\s+|tứ\s+giác\s+)?đều|lăng\s+trụ\s+đứng|lập\s+phương|hộp\s+chữ\s+nhật",
         cs_low,
@@ -2911,7 +3174,7 @@ def validate_and_lower_compact_clause(
     for rel in raw_slm_json.get("r") or ():
         if not isinstance(rel, dict):
             continue
-        expanded, err = _expand_compact_relation(rel, ctx, solid_info)
+        expanded, err = _expand_compact_relation(rel, ctx, solid_info, closure_mode=closure_mode)
         if err is not None:
             rejected_ops.append({"op": str(rel.get("p") or "unknown"), "reason": err})
             if err.startswith("AMBIGUOUS_REFERENCE"):
@@ -2958,6 +3221,59 @@ def validate_and_lower_compact_clause(
             if not any(ep["kind"] == prem["kind"] and ep["args"] == prem["args"] for ep in premises):
                 premises.append(prem)
                 accepted_ops.append({"kind": prem["kind"], "clause_id": rel.get("c")})
+
+    # Reconcile verified Local Parser premises from normalized working text when full parse succeeded cleanly (`v7`)
+    if use_v7 and ctx.local_parser_status == LOCAL_PARSE_COMPLETE and ctx.local_parser_payload and not rejected_ops and not raw_slm_json.get("u"):
+        lp_prems = [dict(p) for p in (ctx.local_parser_payload.get("premises") or ()) if isinstance(p, dict)]
+        lp_keys = {_premise_dedup_key(p) for p in lp_prems}
+        if lp_prems and not _CONDITIONAL_MARKER_RE.search(ctx.working_text) and not _NEGATED_SPAN_RE.search(ctx.working_text):
+            parsed_lp_qtys: set[str] = set()
+            for lp_p in lp_prems:
+                largs = lp_p.get("args") or {}
+                for qk in ("side", "value", "ratio", "distance"):
+                    if largs.get(qk) is not None:
+                        ev = _try_eval_qty(str(largs[qk]))
+                        if ev is not None:
+                            parsed_lp_qtys.add(ev)
+            unconsumed_lp = any(
+                (ev := _try_eval_qty(qm.group(1))) is not None and ev not in parsed_lp_qtys
+                for qm in _TOKEN_QTY_RE.finditer(ctx.working_text)
+            )
+            if not unconsumed_lp:
+                # Local Parser completely parsed every clause with 0 unconsumed quantities:
+                # adopt its Source-Gate-aligned quotes for all parsed kinds, while preserving any
+                # non-overlapping valid SLM premise kinds (e.g. right_angle/equal_length on compound face_perp clauses)
+                # unless Local Parser already covers the entire clause set.
+                lp_kinds = {str(p.get("kind") or "") for p in lp_prems}
+                kept_extra: list[dict[str, Any]] = []
+                seen_extra: set[tuple[Any, ...]] = set(lp_keys)
+                for ep in premises:
+                    ek = _premise_dedup_key(ep)
+                    ekind = str(ep.get("kind") or "")
+                    if ekind not in lp_kinds and ek not in seen_extra:
+                        kept_extra.append(ep)
+                        seen_extra.add(ek)
+                premises = [*lp_prems, *kept_extra]
+                accepted_ops = [{"kind": p.get("kind"), "clause_id": "parser_reconciled"} for p in lp_prems] + [
+                    {"kind": p.get("kind"), "clause_id": "slm_preserved"} for p in kept_extra
+                ]
+            else:
+                # Upgrade matching keys to Local Parser's Source-Gate-aligned quote and append any omitted premises
+                lp_by_key = {_premise_dedup_key(p): p for p in lp_prems}
+                premises = [lp_by_key.get(_premise_dedup_key(ep), ep) for ep in premises]
+                existing_keys = {_premise_dedup_key(ep) for ep in premises}
+                for lp_k, lp_p in lp_by_key.items():
+                    if lp_k not in existing_keys:
+                        premises.append(lp_p)
+                        existing_keys.add(lp_k)
+                        accepted_ops.append({"kind": lp_p.get("kind"), "clause_id": "parser_merged"})
+        else:
+            existing_keys = {_premise_dedup_key(ep) for ep in premises}
+            for lp_p in lp_prems:
+                if _premise_dedup_key(lp_p) not in existing_keys:
+                    premises.append(lp_p)
+                    existing_keys.add(_premise_dedup_key(lp_p))
+                    accepted_ops.append({"kind": lp_p.get("kind"), "clause_id": "parser_merged"})
 
     # 3. Validate goals
     math_goals: list[dict[str, Any]] = []
@@ -3071,8 +3387,14 @@ def compute_local_slm_capability_identity() -> dict[str, str]:
     }
 
 
-def _compact_grounding_policy_version(use_verified_normalizer: bool) -> str:
-    return f"{SLM_GROUNDING_VALIDATOR_VERSION}|norm={SLM_VERIFIED_NORMALIZER_VERSION if use_verified_normalizer else 'none'}"
+def _compact_grounding_policy_version(
+    use_verified_normalizer: bool,
+    *,
+    closure_mode: str = DEFAULT_CLOSURE_MODE,
+    normalizer_version: str = "v2",
+) -> str:
+    norm_id = (SLM_VERIFIED_NORMALIZER_V1_VERSION if normalizer_version == "v1" else SLM_VERIFIED_NORMALIZER_VERSION) if use_verified_normalizer else "none"
+    return f"{SLM_GROUNDING_VALIDATOR_VERSION}|norm={norm_id}|closure={closure_mode}"
 
 
 def run_local_slm_extraction(
@@ -3085,6 +3407,8 @@ def run_local_slm_extraction(
     threads: int | None = None,
     max_tokens: int | None = None,
     use_verified_normalizer: bool | None = None,
+    closure_mode: str | None = None,
+    normalizer_version: str | None = None,
     use_cache: bool = True,
     cache_prompt: bool = True,
 ) -> LocalSlmExtractionResult:
@@ -3092,6 +3416,10 @@ def run_local_slm_extraction(
     norm_raw = normalize_problem_text(problem_text or "")
     eff_strategy = resolve_local_slm_strategy(strategy)
     spec = resolve_local_slm_model_spec(model_key)
+    eff_closure = str(closure_mode or DEFAULT_CLOSURE_MODE).strip().lower()
+    if eff_closure not in SUPPORTED_CLOSURE_MODES:
+        eff_closure = DEFAULT_CLOSURE_MODE
+    eff_norm_ver = str(normalizer_version or ("v1" if eff_closure == "v6" else "v2")).strip().lower()
     eff_use_norm = (
         (eff_strategy in ("compact_clause", "compact_clause_per_clause"))
         if use_verified_normalizer is None
@@ -3129,7 +3457,7 @@ def run_local_slm_extraction(
     norm_res: VerifiedNormalizationResult | None = None
     working_text = norm_raw
     if eff_use_norm:
-        norm_res = normalize_for_slm_grounding(norm_raw)
+        norm_res = normalize_for_slm_grounding(norm_raw, normalizer_version=eff_norm_ver)
         working_text = norm_res.canonical_text
         if norm_res.typo_detected:
             prep_ms = round((time.perf_counter() - t_prep0) * 1000.0, 3)
@@ -3204,7 +3532,11 @@ def run_local_slm_extraction(
         strategy=eff_strategy,
         schema_version=schema_ver,
         schema_sha256=schema_hash,
-        grounding_policy_version=_compact_grounding_policy_version(eff_use_norm),
+        grounding_policy_version=_compact_grounding_policy_version(
+            eff_use_norm,
+            closure_mode=eff_closure,
+            normalizer_version=eff_norm_ver,
+        ),
         parser_version=LOCAL_GEOMETRY_PARSER_VERSION,
         capability_identity=compute_local_slm_capability_identity(),
         namespace=LOCAL_SLM_CACHE_NAMESPACE,
@@ -3240,7 +3572,7 @@ def run_local_slm_extraction(
         t_pb0 = time.perf_counter()
         if eff_strategy == "compact_clause":
             messages = _build_compact_clause_messages(ctx)
-            dyn_grammar = build_compact_grammar_for_context(ctx)
+            dyn_grammar = build_compact_grammar_for_context(ctx, closure_mode=eff_closure)
             prompt_build_ms = round((time.perf_counter() - t_pb0) * 1000.0, 3)
             inf_res = eff_runtime.chat_completion_json(
                 messages=messages,
@@ -3262,7 +3594,7 @@ def run_local_slm_extraction(
             total_comp_tok = 0
             for cl in ctx.clauses:
                 messages = _build_compact_clause_messages(ctx, clause_subset=[cl])
-                dyn_grammar = build_compact_grammar_for_context(ctx, clause_subset=[cl])
+                dyn_grammar = build_compact_grammar_for_context(ctx, clause_subset=[cl], closure_mode=eff_closure)
                 inf_i = eff_runtime.chat_completion_json(
                     messages=messages,
                     grammar=dyn_grammar,
@@ -3314,7 +3646,7 @@ def run_local_slm_extraction(
             raw_merged = merged
 
         t_val0 = time.perf_counter()
-        canon_payload, val_diag = validate_and_lower_compact_clause(ctx=ctx, raw_slm_json=raw_merged)
+        canon_payload, val_diag = validate_and_lower_compact_clause(ctx=ctx, raw_slm_json=raw_merged, closure_mode=eff_closure)
         val_lower_ms = round((time.perf_counter() - t_val0) * 1000.0, 3)
 
         stage_timings = {
@@ -3338,6 +3670,8 @@ def run_local_slm_extraction(
             "validator_version": SLM_GROUNDING_VALIDATOR_VERSION,
             "schema_version": SLM_COMPACT_SCHEMA_VERSION,
             "strategy": eff_strategy,
+            "closure_mode": eff_closure,
+            "normalizer_version": eff_norm_ver if eff_use_norm else "none",
             "model_key": inf_res.model_key,
             "model_sha256": inf_res.model_sha256,
             "slm_invoked": True,
@@ -3580,6 +3914,8 @@ class LocalSlmExtractor:
         allow_download: bool = False,
         threads: int | None = None,
         use_verified_normalizer: bool | None = None,
+        closure_mode: str | None = None,
+        normalizer_version: str | None = None,
         use_cache: bool = True,
     ) -> None:
         self.model_key = resolve_local_slm_model_spec(model_key).model_key
@@ -3588,6 +3924,8 @@ class LocalSlmExtractor:
         self.allow_download = bool(allow_download)
         self.threads = threads
         self.use_verified_normalizer = use_verified_normalizer
+        self.closure_mode = closure_mode
+        self.normalizer_version = normalizer_version
         self.use_cache = bool(use_cache)
         self.last_result: LocalSlmExtractionResult | None = None
 
@@ -3600,6 +3938,8 @@ class LocalSlmExtractor:
             allow_download=self.allow_download,
             threads=self.threads,
             use_verified_normalizer=self.use_verified_normalizer,
+            closure_mode=self.closure_mode,
+            normalizer_version=self.normalizer_version,
             use_cache=self.use_cache,
         )
         self.last_result = res
@@ -3611,6 +3951,7 @@ __all__ = [
     "CandidateEntity",
     "CandidateQuantity",
     "CompactClauseContext",
+    "DEFAULT_CLOSURE_MODE",
     "DEFAULT_COMPACT_SLM_CTX_SIZE",
     "DEFAULT_COMPACT_SLM_MAX_TOKENS",
     "DEFAULT_LOCAL_SLM_STRATEGY",
@@ -3623,6 +3964,7 @@ __all__ = [
     "SLM_COMPACT_SCHEMA_VERSION",
     "SLM_GROUNDING_ENVELOPE_VERSION",
     "SLM_GROUNDING_VALIDATOR_VERSION",
+    "SUPPORTED_CLOSURE_MODES",
     "SUPPORTED_SLM_STRATEGIES",
     "build_compact_clause_context",
     "build_compact_grammar_for_context",

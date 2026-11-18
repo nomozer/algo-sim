@@ -32,9 +32,10 @@ if os.name == "nt":
     from ctypes import wintypes
 
 
-LOCAL_SLM_RUNTIME_VERSION = "local-slm-runtime/2"
-LOCAL_SLM_CACHE_NAMESPACE = "HYBRID_V6_LOCAL_SLM"
+LOCAL_SLM_RUNTIME_VERSION = "local-slm-runtime/3"
+LOCAL_SLM_CACHE_NAMESPACE = "HYBRID_V7_LOCAL_SLM"
 DEFAULT_LOCAL_SLM_MODEL_KEY = "qwen3-0.6b-q4_k_m"
+FINETUNED_LOCAL_SLM_MODEL_KEY = "qwen3-0.6b-axo-v7-q4_k_m"
 COMPARATOR_LOCAL_SLM_MODEL_KEY = "qwen2.5-0.5b-instruct-q4_k_m"
 DEFAULT_LOCAL_SLM_CTX_SIZE = 2048
 DEFAULT_LOCAL_SLM_MAX_TOKENS = 512
@@ -104,6 +105,21 @@ LOCAL_SLM_MODELS: dict[str, LocalSlmModelSpec] = {
         quantization="Q4_K_M",
         supports_thinking=True,
     ),
+    "qwen3-0.6b-axo-v7-q4_k_m": LocalSlmModelSpec(
+        model_key="qwen3-0.6b-axo-v7-q4_k_m",
+        role="finetuned",
+        repo_id="local/Qwen3-0.6B-AxoV7-LoRA-Merged",
+        revision="c1899de289a04d12100db370d81485cdf75e47ca+axo-v7-lora",
+        filename="Qwen3-0.6B-AxoV7-Q4_K_M.gguf",
+        url="",
+        size_bytes=396704736,
+        sha256="36e784d135627225e0b9c11b097c9a36222ee1e0e3f6f1d6116cc3060ac5e148",
+        license="Apache-2.0",
+        family="qwen3",
+        param_count_b=0.6,
+        quantization="Q4_K_M",
+        supports_thinking=True,
+    ),
     "qwen2.5-0.5b-instruct-q4_k_m": LocalSlmModelSpec(
         model_key="qwen2.5-0.5b-instruct-q4_k_m",
         role="comparator",
@@ -139,6 +155,8 @@ def resolve_local_slm_model_spec(model_key: str | None = None) -> LocalSlmModelS
     raw = str(model_key or os.getenv("LOCAL_SLM_MODEL") or "").strip().lower()
     if raw in {"", "default", "primary"}:
         raw = DEFAULT_LOCAL_SLM_MODEL_KEY
+    elif raw in {"finetuned", "v7", "axo-v7"}:
+        raw = FINETUNED_LOCAL_SLM_MODEL_KEY
     elif raw == "comparator":
         raw = COMPARATOR_LOCAL_SLM_MODEL_KEY
     spec = LOCAL_SLM_MODELS.get(raw)
@@ -415,7 +433,7 @@ def ensure_local_slm_provisioned(
                 model_path.unlink()
 
     if not model_path.is_file():
-        if not allow_download:
+        if not allow_download or not model_spec.url:
             raise LocalSlmRuntimeError(
                 "MODEL_RUNTIME_UNAVAILABLE",
                 f"Local SLM model {model_spec.model_key} is not provisioned at {model_path}.",
@@ -1186,6 +1204,7 @@ __all__ = [
     "DEFAULT_LOCAL_SLM_REQUEST_TIMEOUT_S",
     "DEFAULT_LOCAL_SLM_STARTUP_TIMEOUT_S",
     "DEFAULT_LOCAL_SLM_THREADS",
+    "FINETUNED_LOCAL_SLM_MODEL_KEY",
     "LLAMA_CPP_RUNTIME_SPEC",
     "LOCAL_SLM_CACHE_NAMESPACE",
     "LOCAL_SLM_MODELS",
