@@ -73,9 +73,6 @@ class Entitlement:
 
     can_run_simulation: bool
     can_persist_history: bool
-    can_join_class: bool
-    can_own_class: bool
-    can_receive_assignment: bool
     #: Còn bao nhiêu lượt thử (chỉ có nghĩa với khách). `None` = không giới hạn.
     trials_left: int | None
 
@@ -85,46 +82,17 @@ def entitlement_for(role: Role | None, *, guest_trials_used: int = 0) -> Entitle
 
     Khách được chạy MỘT mô phỏng thật — cùng pipeline production, không phải
     renderer giả — vì không ai đánh giá được sản phẩm qua ảnh chụp màn hình.
-    Nhưng khách KHÔNG có lớp, KHÔNG nhận bài, KHÔNG có lịch sử bền.
+    Nhưng khách KHÔNG có lịch sử bền.
     """
     if role is None:
         left = max(0, GUEST_TRIAL_LIMIT - guest_trials_used)
         return Entitlement(
             can_run_simulation=left > 0,
             can_persist_history=False,
-            can_join_class=False,
-            can_own_class=False,
-            can_receive_assignment=False,
             trials_left=left,
         )
     return Entitlement(
         can_run_simulation=True,
         can_persist_history=True,
-        can_join_class=role is Role.STUDENT,
-        can_own_class=role is Role.TEACHER,
-        can_receive_assignment=role is Role.STUDENT,
         trials_left=None,
     )
-
-
-def can_observe_class(*, viewer_role: Role | None, viewer_id: int | None,
-                      class_teacher_id: int) -> bool:
-    """Ai được xem bảng quan sát của một lớp: ĐÚNG giáo viên sở hữu lớp đó.
-
-    Không có "giáo viên thì xem được mọi lớp" — đó chính là lỗ mà bài kiểm
-    uỷ quyền #3 tiêm vào.
-    """
-    if viewer_role is not Role.TEACHER or viewer_id is None:
-        return False
-    return viewer_id == class_teacher_id
-
-
-def can_read_class(*, viewer_role: Role | None, viewer_id: int | None,
-                   class_teacher_id: int, member_ids: frozenset[int]) -> bool:
-    """Ai được đọc thông tin lớp: giáo viên sở hữu, hoặc học sinh ĐÃ là thành viên."""
-    if viewer_id is None:
-        return False
-    if can_observe_class(viewer_role=viewer_role, viewer_id=viewer_id,
-                         class_teacher_id=class_teacher_id):
-        return True
-    return viewer_role is Role.STUDENT and viewer_id in member_ids

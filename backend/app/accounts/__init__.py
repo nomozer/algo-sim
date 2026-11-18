@@ -13,8 +13,6 @@ from .policy import (
     Entitlement,
     Role,
     RoleEscalationError,
-    can_observe_class,
-    can_read_class,
     entitlement_for,
     resolve_signup_role,
 )
@@ -22,5 +20,5 @@ from .policy import (
 __all__ = [
     "hash_password", "verify_password", "check_password_policy", "WeakPasswordError",
     "DEFAULT_SIGNUP_ROLE", "GUEST_TRIAL_LIMIT", "Entitlement", "Role", "RoleEscalationError",
-    "can_observe_class", "can_read_class", "entitlement_for", "resolve_signup_role",
+    "entitlement_for", "resolve_signup_role",
 ]

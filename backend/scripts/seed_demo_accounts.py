@@ -34,13 +34,8 @@ from app.persistence.classroom_models import (  # noqa: E402
     AdminAnalysisTelemetry,
     AdminAuditLogEntry,
     AdminSystemSetting,
-    Assignment,
     AuthSession,
-    ClassMembership,
-    Classroom,
-    ClassroomSession,
     LearningHistoryEntry,
-    PracticeSession,
     User,
     UserAccountMeta,
 )
@@ -135,11 +130,6 @@ def seed_three_demo_accounts(
 
         # Dọn sạch các bảng phụ thuộc theo đúng thứ tự khóa ngoại trước khi ghi 3 tài khoản đại diện
         for model in (
-            PracticeSession,
-            ClassroomSession,
-            Assignment,
-            ClassMembership,
-            Classroom,
             LearningHistoryEntry,
             AuthSession,
             UserAccountMeta,

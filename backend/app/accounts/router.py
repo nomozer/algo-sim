@@ -41,12 +41,8 @@ from ..persistence.classroom_models import (
     AdminAuditLogEntry,
     AnalysisUsageLedger,
     AdminSystemSetting,
-    Assignment,
     AuthSession,
-    ClassMembership,
-    Classroom,
     LearningHistoryEntry,
-    PracticeSession,
     User,
     UserAccountMeta,
 )
@@ -56,7 +52,6 @@ from . import policy
 from .policy import (
     Role,
     RoleEscalationError,
-    can_observe_class,
     entitlement_for,
     resolve_signup_role,
 )
@@ -712,9 +707,6 @@ def _me_payload(caller: Caller, auth: AuthSession) -> dict:
         "entitlement": {
             "canRunSimulation": ent.can_run_simulation,
             "canPersistHistory": ent.can_persist_history,
-            "canJoinClass": ent.can_join_class,
-            "canOwnClass": ent.can_own_class,
-            "canReceiveAssignment": ent.can_receive_assignment,
             "trialsLeft": ent.trials_left,
         },
     }
@@ -859,128 +851,6 @@ def change_password(body: PasswordBody, caller: Caller = Depends(get_caller)):
     except WeakPasswordError as exc:
         raise HTTPException(400, str(exc)) from exc
     return {"ok": True}
-
-
-# ── LỚP ──────────────────────────────────────────────────────────────────────
-
-class CreateClassBody(BaseModel):
-    name: str = Field(min_length=1, max_length=160)
-
-
-class JoinClassBody(BaseModel):
-    code: str
-
-
-def _class_public(c: Classroom, *, include_code: bool) -> dict:
-    """Mã lớp CHỈ hiện cho giáo viên sở hữu. Học sinh đã vào lớp không cần thấy
-    mã, và không được thấy — mã là lời mời để phát tiếp, không phải thông tin lớp."""
-    out = {
-        "id": c.id, "name": c.name, "archived": bool(c.archived),
-        "createdAt": c.created_at.isoformat(),
-    }
-    if include_code:
-        out["joinCode"] = c.join_code if c.code_active else None
-        out["codeActive"] = bool(c.code_active)
-    return out
-
-
-@router.get("/classes")
-def list_classes(caller: Caller = Depends(get_caller)):
-    """Lớp của TÔI. Giáo viên: lớp mình sở hữu. Học sinh: lớp mình đã vào."""
-    user = caller.require_user()
-    if caller.role is Role.TEACHER:
-        rows = caller.db.execute(
-            select(Classroom).where(Classroom.teacher_id == user.id)
-            .order_by(Classroom.created_at.desc())
-        ).scalars().all()
-        return {"classes": [_class_public(c, include_code=True) for c in rows]}
-    rows = caller.db.execute(
-        select(Classroom).join(ClassMembership, ClassMembership.classroom_id == Classroom.id)
-        .where(ClassMembership.student_id == user.id)
-        .order_by(Classroom.created_at.desc())
-    ).scalars().all()
-    return {"classes": [_class_public(c, include_code=False) for c in rows]}
-
-
-@router.post("/classes")
-def create_class(body: CreateClassBody, caller: Caller = Depends(get_caller)):
-    teacher = caller.require_role(Role.TEACHER)
-    c = Classroom(
-        teacher_id=teacher.id,
-        name=body.name.strip()[:160],
-        join_code=service.generate_join_code(caller.db),
-    )
-    caller.db.add(c)
-    caller.db.flush()
-    return _class_public(c, include_code=True)
-
-
-@router.post("/classes/{class_id}/code")
-def regenerate_code(class_id: int, caller: Caller = Depends(get_caller)):
-    """Sinh lại mã. Mã cũ chết ngay — đó là cách xử lý khi mã bị phát tán."""
-    teacher = caller.require_role(Role.TEACHER)
-    c = caller.db.get(Classroom, class_id)
-    if c is None or c.teacher_id != teacher.id:
-        raise HTTPException(404, "Không tìm thấy lớp.")
-    c.join_code = service.generate_join_code(caller.db)
-    c.code_active = True
-    return _class_public(c, include_code=True)
-
-
-@router.delete("/classes/{class_id}/code")
-def revoke_code(class_id: int, caller: Caller = Depends(get_caller)):
-    teacher = caller.require_role(Role.TEACHER)
-    c = caller.db.get(Classroom, class_id)
-    if c is None or c.teacher_id != teacher.id:
-        raise HTTPException(404, "Không tìm thấy lớp.")
-    c.code_active = False
-    return _class_public(c, include_code=True)
-
-
-@router.post("/classes/join")
-def join_class(body: JoinClassBody, caller: Caller = Depends(get_caller)):
-    """Học sinh vào lớp bằng mã. Bốn ca hỏng đều có câu trả lời riêng (`§14`)."""
-    student = caller.require_role(Role.STUDENT)
-    code = service.normalize_join_code(body.code)
-    if not code:
-        raise HTTPException(400, "Em chưa nhập mã lớp.")
-    c = caller.db.execute(
-        select(Classroom).where(Classroom.join_code == code)
-    ).scalar_one_or_none()
-    if c is None:
-        raise HTTPException(404, "Mã lớp không đúng. Em kiểm tra lại giúp cô/thầy nhé.")
-    if not c.code_active:
-        raise HTTPException(410, "Mã lớp này đã ngừng sử dụng. Em hỏi giáo viên mã mới.")
-    if c.archived:
-        raise HTTPException(410, "Lớp này đã đóng.")
-    already = caller.db.execute(
-        select(ClassMembership).where(
-            ClassMembership.classroom_id == c.id, ClassMembership.student_id == student.id)
-    ).scalar_one_or_none()
-    if already is not None:
-        # KHÔNG phải lỗi: nói rõ đã ở trong lớp rồi và trả lớp về như thường.
-        return {"classroom": _class_public(c, include_code=False), "alreadyMember": True}
-    caller.db.add(ClassMembership(classroom_id=c.id, student_id=student.id))
-    return {"classroom": _class_public(c, include_code=False), "alreadyMember": False}
-
-
-@router.get("/classes/{class_id}/members")
-def class_members(class_id: int, caller: Caller = Depends(get_caller)):
-    """Danh sách học sinh — CHỈ giáo viên sở hữu lớp."""
-    caller.require_user()
-    c = caller.db.get(Classroom, class_id)
-    if c is None:
-        raise HTTPException(404, "Không tìm thấy lớp.")
-    if not can_observe_class(viewer_role=caller.role, viewer_id=caller.user_id,
-                             class_teacher_id=c.teacher_id):
-        raise HTTPException(403, "Bạn không quản lý lớp này.")
-    rows = caller.db.execute(
-        select(User).join(ClassMembership, ClassMembership.student_id == User.id)
-        .where(ClassMembership.classroom_id == class_id)
-        .order_by(User.display_name)
-    ).scalars().all()
-    return {"members": [
-        {"id": u.id, "displayName": u.display_name, "email": u.email} for u in rows]}
 
 
 # ── LỊCH SỬ TỰ HỌC (USER-SCOPED LEARNING HISTORY) ───────────────────────────
@@ -1498,8 +1368,6 @@ def admin_overview(caller: Caller = Depends(get_caller)):
     _ensure_admin_tables(caller.db)
     settings = _load_system_settings(caller.db)
     users = caller.db.execute(select(User).order_by(User.created_at.desc())).scalars().all()
-    classes = caller.db.execute(select(Classroom)).scalars().all()
-    sessions = caller.db.execute(select(PracticeSession)).scalars().all()
     history_rows = caller.db.execute(select(LearningHistoryEntry)).scalars().all()
     cache_rows = caller.db.execute(select(SimulationCache)).scalars().all()
     telemetry_rows = (
@@ -1597,8 +1465,6 @@ def admin_overview(caller: Caller = Depends(get_caller)):
             "studentCount": student_count,
             "teacherCount": teacher_count,
             "adminCount": admin_count,
-            "totalClasses": len(classes),
-            "totalSessions": len(sessions),
             "totalHistoryEntries": len(history_rows),
             "configuredModelId": configured_model_id,
             "totalAnalyses": len(telemetry_rows),

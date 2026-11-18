@@ -4609,7 +4609,7 @@ nên lần sau lại xảy ra.
 ⚠️ KHÔNG dùng khi thứ bị cấm không được xuất hiện **kể cả trong lời bàn** (ví
 dụ một nguyên thuỷ chiếu màn hình): ở đó quét cả chú thích mới đúng.
 
-### `frontend/src/components/LiveClassDock.tsx` · offline
+### `frontend/src/components/LiveClassDock.tsx` · offline · HISTORICAL_REMOVED
 
 Sở hữu **ba mảnh giao diện lớp trực tiếp**, đều THUẦN theo props (test SSR
 được): `LiveClassDock` (giáo viên) · `StudentLiveIndicator` · `HelpRequestButton`.
@@ -4623,7 +4623,7 @@ KHÔNG nút giả: mỗi nút hoặc gọi thật một endpoint, hoặc `disabl
 nói vì sao. Không enum kỹ thuật lọt ra bề mặt học sinh (`follow`/`free`/
 `cmd_id`) — chỉ "Đang theo cô/thầy" / "Em tự khám phá".
 
-### `frontend/src/components/LiveClassStrip.tsx` · offline
+### `frontend/src/components/LiveClassStrip.tsx` · offline · HISTORICAL_REMOVED
 
 BIÊN duy nhất nối tầng lớp học vào xưởng 3D: đọc `useClassroomStore`, phân vai
 (giáo viên → dock, học sinh → chỉ báo + giơ tay), rồi trả xuống một mẩu JSX qua
@@ -4638,7 +4638,7 @@ prop `daiLop`. `Scene3DExplorer` vì thế **không bao giờ import store lớp
 khi TIÊU ĐIỂM thật sự đổi — một `STATE_UPDATE` mỗi khung hình lúc xoay hình
 không phải đồng bộ, là bão.
 
-### `frontend/src/components/MonitorView.tsx` · `MonitorRoute.tsx` · offline
+### `frontend/src/components/MonitorView.tsx` · `MonitorRoute.tsx` · offline · HISTORICAL_REMOVED
 
 Bảng **theo dõi lớp** — một TRANG riêng, không phải cột cạnh canvas: 32 học
 sinh cạnh khung 3D thì cả hai đều không dùng được. `MonitorView` nhận
@@ -4650,7 +4650,7 @@ TRUNG TÍNH — «Chưa hoạt động gần đây» mô tả một sự kiện 
 "đang gặp khó" là một phán quyết mà bảng này không có quyền. Giơ tay lên đầu
 danh sách; sắp phần còn lại theo ĐỘ CŨ, không theo số lần bấm.
 
-### `frontend/src/state/classroom-sync.ts` · offline · **0 gọi model**
+### `frontend/src/state/classroom-sync.ts` · offline · **0 gọi model** · HISTORICAL_REMOVED
 
 Sở hữu **luật đồng bộ lớp học** dưới dạng HÀM THUẦN: `apDungPhien` ·
 `nenGuiTienDo` · `NHIP_PHIEN_MS` · `NHIP_THEO_DOI_MS` · `CHUA_THAY`.

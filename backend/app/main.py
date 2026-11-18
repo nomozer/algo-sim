@@ -74,8 +74,6 @@ from app.accounts.router import (
     set_session_cookie,
     router as accounts_router,
 )
-from app.accounts.classroom_router import router as classroom_router
-from app.accounts.session_router import router as session_router
 from app.ai.telemetry import begin_request_usage
 from app.persistence.classroom_models import User as AccountUser
 
@@ -92,10 +90,8 @@ app.add_middleware(
 
 init_db()
 
-# M18 — tầng tài khoản/lớp học. Đăng ký SAU init_db để bảng có mặt trên SQLite.
+# M18 — tầng tài khoản. Đăng ký SAU init_db để bảng có mặt trên SQLite.
 app.include_router(accounts_router)
-app.include_router(classroom_router)
-app.include_router(session_router)
 
 
 @app.middleware("http")
