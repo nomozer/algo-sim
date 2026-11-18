@@ -1549,8 +1549,8 @@ def test_postgres_real_step_editor_end_to_end_persistence_restart_and_rollback(p
 def test_phase_c2_independent_exact_geometry_invariants_across_4_problems():
     """Phase C2: Analytical Fraction/Radical geometric verification across all 4 core Axo problems."""
     from app.simulation.geometry import Line3, Point3, circumscribed_sphere
+    from app.simulation.geometry.curved import CurvedSolid, the_tich
     from app.simulation.geometry.exact import hf
-    from app.simulation.geometry.measure import sphere_volume
 
     raw = json.loads((DATA_DIR / "advanced-geometry-samples.json").read_text(encoding="utf-8"))
     items = raw if isinstance(raw, list) else raw.get("samples", raw)
@@ -1563,8 +1563,8 @@ def test_phase_c2_independent_exact_geometry_invariants_across_4_problems():
     assert r_sq == Fraction(12)
     for pt in (A, B, C, D, S):
         assert (pt - center).norm_sq() == Fraction(12)
-    vol = sphere_volume(r_sq)
-    assert vol.rad == 3 and vol.coeff == Fraction(32)  # coeff * √rad = 32√3 (× π)
+    vol = the_tich(CurvedSolid(kind="ball", anchor=center, apex_or_top=None, rim_point=A))
+    assert vol.he == Fraction(32) and vol.can == 3 and vol.mu == 1  # 32π√3
     s11 = by_slug["chop-mat-cau-ngoai-tiep"]
     mc = _find_obj(s11, "mat_cau")
     assert mc is not None and [hf(x) for x in mc["anchor"]] == [Fraction(2), Fraction(2), Fraction(2)]
