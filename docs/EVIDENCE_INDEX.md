@@ -1,5 +1,20 @@
 # EVIDENCE_INDEX.md — Chỉ mục bằng chứng và chuỗi đính chính (Master Evidence Index)
 
+## WAVE_ID = DETERMINISTIC_GEOMETRY_LANGUAGE_CLOSURE_SLM_FINETUNING
+
+- `RUN_ID` = deterministic-geometry-language-closure-slm-finetuning
+- `REPORT` = docs/evaluation/geometry/runs/deterministic-geometry-language-closure-slm-finetuning/FINAL_MASTER_REPORT.md
+- `ARTIFACT_DIRECTORY` = docs/evaluation/geometry/runs/deterministic-geometry-language-closure-slm-finetuning/
+- `START_BASE` = 43bef643d2c528053526d363ee578065e60e6116
+- `CODE_COMMIT` = 6310113f2202bc3a4919406b26fad08cb09b38c9 (frozen clean `<FREEZE_COMMIT_SHA>`)
+- `CLASSIFICATION` = OFFLINE_LOCAL_SLM_EMPIRICAL_BENCHMARK
+- `PRODUCT_CHANGE` = YES; CACHE_VERSION = 145 (145:route-d); cache namespace HYBRID_V7_LOCAL_SLM; default HYBRID_ROUTE_MODE = live preserved (local-slm opt-in); measured_system = 113a6a7cf6bbc15ac23119150b805437e785d2b0714b26c2157d147514c2ef67 (123 files, cay_lam_viec_sach = true); 4 locked Gemini surfaces unchanged; frontend 0 diff; pending C21 templates metadata refreshed (PENDING_OWNER_DECISION, paid_project_confirmed = false); clean-tree full backend pytest `<FULL_PYTEST_SUMMARY>`; LoRA SFT (train 342 / val 92 Epoch 2 on GTX 1650 -> AxoV7 Q4_K_M 36e784d135627225e0b9c11b097c9a36222ee1e0e3f6f1d6116cc3060ac5e148: val 63/68 = 92.65% + 24/24 neg, 0 wrong-served); diagnostic ablation HOLDOUT_40 25/28 C / 24/28 D, SLM_NEW_HOLDOUT_48 32/32 (100%) D (p=0.03125); single-shot blind SLM_V7_HOLDOUT_112 (80+/32-, max_4gram=0.3396, sealed H-1/W2_W3 unopened): D 69/80 (86.25%) raw / 74/80 (92.50%) audited (EVI.same_value('cos²=...') -> None on v7h_p7_06..10 across all A/B/C/D), 32/32 neg, 0 true wrong-served leaks, 0 continuity errors, H1 (B->C) +11 (p=0.000977), H2 (C->D) +16 (p=0.000031, h=0.4800); CPU warm 6T 3438.61/4870.26 ms (8T 3329.70/4519.61 ms, holdout 3727.57/4728.25 ms, cache hit 36.45/49.50 ms), peak RSS 1044.43 MiB; 0 regressions across 11 suites; 23/23 SLM pytests PASS; 14/14 fault/adversarial checks PASS (original + fine-tuned GGUF)
+- `MODEL_REQUEST_COUNT` = 0
+- `VERIFICATION` = run.json; DETERMINISTIC_LANGUAGE_CLOSURE.md; SOURCE_GATE_COMPATIBILITY_REPORT.md; SOURCE_GATE_OWNER_HANDOFF.md; SLM_POST_CLOSURE_EVALUATION.json; SLM_FINE_TUNING_READINESS.md; SLM_TRAINING_DATA_MANIFEST.json; SLM_TRAINING_IMPLEMENTATION.md; SLM_TRAINING_RUN.json; SLM_ADAPTER_MODEL_MANIFEST.json; SLM_QUANTIZATION_EVALUATION.json; SLM_V7_ABLATION.json; SLM_V7_HOLDOUT_MANIFEST.json; SLM_V7_HOLDOUT_EVALUATION.json; SLM_V7_PERFORMANCE.json; SLM_V7_REGRESSION_RESULTS.json; SLM_V7_REGRESSION_REPORT.md; SLM_REPLACEMENT_DECISION.md; pending_template_refresh.json; FINAL_MASTER_REPORT.md
+- `CORRECTS` = NONE
+- `CORRECTED_BY` = NONE
+- `LIMITATIONS` = REPLACEMENT_VERDICT = READY_AS_LOCAL_PRIMARY_WITH_CONSTRAINTS (HYBRID_ROUTE_MODE=live preserved; GEMINI_PARITY = NOT_MEASURED; derived section/multi-solid parity not yet established; SOURCE_GATE_OWNER_HANDOFF conversational wrappers v7h_p8_01..05 & Registry grammar extensions BLOCKED_OWNERSHIP); frozen_unseen_vmmu20_separate (19 items, 0 served unverified) strictly GROUND_TRUTH_UNVERIFIED / NOT_MEASURED; PHYSICAL_LOW_END = NOT_MEASURED (15.78 GiB host); INDEPENDENT_H1_VALIDATION = NOT_MEASURED; REAL_STUDENT_USABILITY = NOT_MEASURED.
+
 ## WAVE_ID = SPECIALIZED_GEOMETRY_EXTRACTION_SLM_OPTIMIZATION
 
 - `RUN_ID` = specialized-geometry-extraction-slm-optimization

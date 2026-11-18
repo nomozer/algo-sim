@@ -1,0 +1,671 @@
+{
+  "schema": "slm-v7-performance/1",
+  "generated_at_utc": "2026-11-18T16:28:05.220603+00:00",
+  "external_ai_calls": 0,
+  "physical_low_end": "NOT_MEASURED",
+  "hardware_disclosure": {
+    "host_os": "Windows-11-10.0.26100-SP0",
+    "machine": "AMD64",
+    "cpu_count": 12,
+    "physical_4_6gb_ram_verified": false,
+    "note": "Measured on Windows development host CPU (15.78 GiB RAM); physical 4-6 GiB RAM target device is NOT_MEASURED."
+  },
+  "models": {
+    "original": {
+      "model_key": "qwen3-0.6b-q4_k_m",
+      "sha256": "ac2d97712095a558e31573f62f466a3f9d93990898b0ec79d7c974c1780d524a",
+      "size_bytes": 396705472
+    },
+    "finetuned": {
+      "model_key": "qwen3-0.6b-axo-v7-q4_k_m",
+      "sha256": "36e784d135627225e0b9c11b097c9a36222ee1e0e3f6f1d6116cc3060ac5e148",
+      "size_bytes": 396704736
+    }
+  },
+  "cold_start_finetuned_n10": {
+    "sample_count": 10,
+    "server_load_time_ms": {
+      "count": 10,
+      "min": 831.38,
+      "p50": 909.96,
+      "p95": 961.05,
+      "max": 972.02,
+      "mean": 905.87
+    },
+    "slm_inference_ms": {
+      "count": 10,
+      "min": 4026.78,
+      "p50": 5085.65,
+      "p95": 5738.79,
+      "max": 6725.5,
+      "mean": 5085.42
+    },
+    "total_e2e_ms": {
+      "count": 10,
+      "min": 5005.48,
+      "p50": 6217.99,
+      "p95": 6868.18,
+      "max": 7638.61,
+      "mean": 6138.53
+    },
+    "combined_rss_mib": {
+      "count": 10,
+      "min": 1038.76,
+      "p50": 1039.74,
+      "p95": 1040.3,
+      "max": 1040.63,
+      "mean": 1039.73
+    }
+  },
+  "warm_uncached_thread_sweep": {
+    "finetuned_threads_4_n30": {
+      "model_key": "qwen3-0.6b-axo-v7-q4_k_m",
+      "threads": 4,
+      "sample_count": 30,
+      "timeout_rate": 0.0,
+      "crash_rate": 0.0,
+      "stage_stats_ms": {
+        "local_parse_ms": {
+          "count": 30,
+          "min": 2.1,
+          "p50": 3.18,
+          "p95": 11.2,
+          "max": 12.3,
+          "mean": 4.59
+        },
+        "preprocessing_ms": {
+          "count": 30,
+          "min": 0.6,
+          "p50": 12.48,
+          "p95": 14.94,
+          "max": 16.14,
+          "mean": 9.36
+        },
+        "prompt_build_ms": {
+          "count": 30,
+          "min": 0.11,
+          "p50": 0.18,
+          "p95": 0.29,
+          "max": 0.33,
+          "mean": 0.19
+        },
+        "queue_wait_ms": {
+          "count": 30,
+          "min": 0.0,
+          "p50": 0.0,
+          "p95": 0.01,
+          "max": 0.01,
+          "mean": 0.0
+        },
+        "server_load_time_ms": {
+          "count": 30,
+          "min": 0.0,
+          "p50": 0.0,
+          "p95": 0.0,
+          "max": 0.0,
+          "mean": 0.0
+        },
+        "prompt_eval_ms": {
+          "count": 30,
+          "min": 33.2,
+          "p50": 326.47,
+          "p95": 373.41,
+          "max": 384.18,
+          "mean": 314.01
+        },
+        "token_gen_ms": {
+          "count": 30,
+          "min": 2118.88,
+          "p50": 3358.54,
+          "p95": 4920.6,
+          "max": 5710.77,
+          "mean": 3425.8
+        },
+        "json_decode_ms": {
+          "count": 30,
+          "min": 0.04,
+          "p50": 0.04,
+          "p95": 0.07,
+          "max": 0.09,
+          "mean": 0.05
+        },
+        "grounding_and_lowering_ms": {
+          "count": 30,
+          "min": 0.01,
+          "p50": 1.09,
+          "p95": 2.11,
+          "max": 2.25,
+          "mean": 1.11
+        },
+        "source_gate_planner_kernel_scene_ms": {
+          "count": 30,
+          "min": 0.0,
+          "p50": 22.4,
+          "p95": 26.51,
+          "max": 27.95,
+          "mean": 20.62
+        },
+        "slm_inference_ms": {
+          "count": 30,
+          "min": 2378.12,
+          "p50": 3718.56,
+          "p95": 5297.99,
+          "max": 6084.38,
+          "mean": 3742.95
+        },
+        "total_e2e_ms": {
+          "count": 30,
+          "min": 2383.35,
+          "p50": 3762.8,
+          "p95": 5358.98,
+          "max": 6144.27,
+          "mean": 3781.04
+        }
+      },
+      "tokens": {
+        "prompt_tokens": {
+          "count": 30,
+          "min": 977.0,
+          "p50": 1005.0,
+          "p95": 1017.0,
+          "max": 1017.0,
+          "mean": 1001.4
+        },
+        "cached_prompt_tokens": {
+          "count": 30,
+          "min": 896.0,
+          "p50": 901.5,
+          "p95": 913.0,
+          "max": 990.0,
+          "mean": 903.67
+        },
+        "completion_tokens": {
+          "count": 30,
+          "min": 67.0,
+          "p50": 96.5,
+          "p95": 143.0,
+          "max": 143.0,
+          "mean": 98.3
+        },
+        "tokens_per_sec": {
+          "count": 30,
+          "min": 19.72,
+          "p50": 29.69,
+          "p95": 31.08,
+          "max": 31.23,
+          "mean": 28.72
+        }
+      },
+      "combined_rss_mib": {
+        "count": 30,
+        "min": 1039.42,
+        "p50": 1040.49,
+        "p95": 1041.84,
+        "max": 1042.11,
+        "mean": 1040.6
+      }
+    },
+    "finetuned_threads_6_n30": {
+      "model_key": "qwen3-0.6b-axo-v7-q4_k_m",
+      "threads": 6,
+      "sample_count": 30,
+      "timeout_rate": 0.0,
+      "crash_rate": 0.0,
+      "stage_stats_ms": {
+        "local_parse_ms": {
+          "count": 30,
+          "min": 2.22,
+          "p50": 3.48,
+          "p95": 12.73,
+          "max": 13.22,
+          "mean": 5.06
+        },
+        "preprocessing_ms": {
+          "count": 30,
+          "min": 0.64,
+          "p50": 13.82,
+          "p95": 18.39,
+          "max": 19.47,
+          "mean": 10.86
+        },
+        "prompt_build_ms": {
+          "count": 30,
+          "min": 0.11,
+          "p50": 0.23,
+          "p95": 0.27,
+          "max": 0.33,
+          "mean": 0.22
+        },
+        "queue_wait_ms": {
+          "count": 30,
+          "min": 0.0,
+          "p50": 0.01,
+          "p95": 0.01,
+          "max": 0.01,
+          "mean": 0.01
+        },
+        "server_load_time_ms": {
+          "count": 30,
+          "min": 0.0,
+          "p50": 0.0,
+          "p95": 0.0,
+          "max": 0.0,
+          "mean": 0.0
+        },
+        "prompt_eval_ms": {
+          "count": 30,
+          "min": 59.24,
+          "p50": 322.69,
+          "p95": 375.75,
+          "max": 408.39,
+          "mean": 308.8
+        },
+        "token_gen_ms": {
+          "count": 30,
+          "min": 1948.74,
+          "p50": 3094.61,
+          "p95": 4544.89,
+          "max": 5045.69,
+          "mean": 3182.54
+        },
+        "json_decode_ms": {
+          "count": 30,
+          "min": 0.04,
+          "p50": 0.05,
+          "p95": 0.06,
+          "max": 0.07,
+          "mean": 0.05
+        },
+        "grounding_and_lowering_ms": {
+          "count": 30,
+          "min": 0.01,
+          "p50": 1.38,
+          "p95": 2.17,
+          "max": 2.63,
+          "mean": 1.34
+        },
+        "source_gate_planner_kernel_scene_ms": {
+          "count": 30,
+          "min": 0.0,
+          "p50": 26.53,
+          "p95": 30.33,
+          "max": 32.41,
+          "mean": 24.18
+        },
+        "slm_inference_ms": {
+          "count": 30,
+          "min": 2194.69,
+          "p50": 3438.61,
+          "p95": 4870.26,
+          "max": 5394.92,
+          "mean": 3494.43
+        },
+        "total_e2e_ms": {
+          "count": 30,
+          "min": 2209.95,
+          "p50": 3483.67,
+          "p95": 4929.19,
+          "max": 5461.36,
+          "mean": 3538.55
+        }
+      },
+      "tokens": {
+        "prompt_tokens": {
+          "count": 30,
+          "min": 977.0,
+          "p50": 1005.0,
+          "p95": 1017.0,
+          "max": 1017.0,
+          "mean": 1001.4
+        },
+        "cached_prompt_tokens": {
+          "count": 30,
+          "min": 896.0,
+          "p50": 901.5,
+          "p95": 913.0,
+          "max": 990.0,
+          "mean": 903.67
+        },
+        "completion_tokens": {
+          "count": 30,
+          "min": 67.0,
+          "p50": 96.5,
+          "p95": 143.0,
+          "max": 143.0,
+          "mean": 98.3
+        },
+        "tokens_per_sec": {
+          "count": 30,
+          "min": 27.07,
+          "p50": 30.77,
+          "p95": 34.5,
+          "max": 36.29,
+          "mean": 30.95
+        }
+      },
+      "combined_rss_mib": {
+        "count": 30,
+        "min": 1040.7,
+        "p50": 1041.68,
+        "p95": 1041.96,
+        "max": 1042.01,
+        "mean": 1041.6
+      }
+    },
+    "finetuned_threads_8_n30": {
+      "model_key": "qwen3-0.6b-axo-v7-q4_k_m",
+      "threads": 8,
+      "sample_count": 30,
+      "timeout_rate": 0.0,
+      "crash_rate": 0.0,
+      "stage_stats_ms": {
+        "local_parse_ms": {
+          "count": 30,
+          "min": 2.68,
+          "p50": 3.71,
+          "p95": 13.12,
+          "max": 17.74,
+          "mean": 5.58
+        },
+        "preprocessing_ms": {
+          "count": 30,
+          "min": 0.68,
+          "p50": 14.93,
+          "p95": 21.18,
+          "max": 71.97,
+          "mean": 14.02
+        },
+        "prompt_build_ms": {
+          "count": 30,
+          "min": 0.12,
+          "p50": 0.22,
+          "p95": 0.29,
+          "max": 0.3,
+          "mean": 0.22
+        },
+        "queue_wait_ms": {
+          "count": 30,
+          "min": 0.0,
+          "p50": 0.01,
+          "p95": 0.01,
+          "max": 0.01,
+          "mean": 0.01
+        },
+        "server_load_time_ms": {
+          "count": 30,
+          "min": 0.0,
+          "p50": 0.0,
+          "p95": 0.0,
+          "max": 0.0,
+          "mean": 0.0
+        },
+        "prompt_eval_ms": {
+          "count": 30,
+          "min": 30.53,
+          "p50": 275.83,
+          "p95": 389.5,
+          "max": 519.48,
+          "mean": 275.53
+        },
+        "token_gen_ms": {
+          "count": 30,
+          "min": 1895.26,
+          "p50": 3056.58,
+          "p95": 4104.9,
+          "max": 4333.82,
+          "mean": 3023.06
+        },
+        "json_decode_ms": {
+          "count": 30,
+          "min": 0.04,
+          "p50": 0.05,
+          "p95": 0.07,
+          "max": 0.07,
+          "mean": 0.05
+        },
+        "grounding_and_lowering_ms": {
+          "count": 30,
+          "min": 0.01,
+          "p50": 1.34,
+          "p95": 2.63,
+          "max": 3.47,
+          "mean": 1.45
+        },
+        "source_gate_planner_kernel_scene_ms": {
+          "count": 30,
+          "min": 0.0,
+          "p50": 27.36,
+          "p95": 33.85,
+          "max": 41.23,
+          "mean": 25.87
+        },
+        "slm_inference_ms": {
+          "count": 30,
+          "min": 2091.68,
+          "p50": 3329.7,
+          "p95": 4519.61,
+          "max": 4625.03,
+          "mean": 3302.05
+        },
+        "total_e2e_ms": {
+          "count": 30,
+          "min": 2097.99,
+          "p50": 3412.18,
+          "p95": 4584.31,
+          "max": 4685.7,
+          "mean": 3351.79
+        }
+      },
+      "tokens": {
+        "prompt_tokens": {
+          "count": 30,
+          "min": 977.0,
+          "p50": 1005.0,
+          "p95": 1017.0,
+          "max": 1017.0,
+          "mean": 1001.4
+        },
+        "cached_prompt_tokens": {
+          "count": 30,
+          "min": 896.0,
+          "p50": 901.5,
+          "p95": 913.0,
+          "max": 990.0,
+          "mean": 903.67
+        },
+        "completion_tokens": {
+          "count": 30,
+          "min": 68.0,
+          "p50": 96.5,
+          "p95": 143.0,
+          "max": 143.0,
+          "mean": 98.4
+        },
+        "tokens_per_sec": {
+          "count": 30,
+          "min": 21.7,
+          "p50": 33.41,
+          "p95": 36.31,
+          "max": 38.9,
+          "mean": 32.44
+        }
+      },
+      "combined_rss_mib": {
+        "count": 30,
+        "min": 1042.26,
+        "p50": 1043.04,
+        "p95": 1043.19,
+        "max": 1044.19,
+        "mean": 1043.03
+      }
+    },
+    "original_threads_6_n30": {
+      "model_key": "qwen3-0.6b-q4_k_m",
+      "threads": 6,
+      "sample_count": 30,
+      "timeout_rate": 0.0,
+      "crash_rate": 0.0,
+      "stage_stats_ms": {
+        "local_parse_ms": {
+          "count": 30,
+          "min": 2.25,
+          "p50": 3.18,
+          "p95": 11.95,
+          "max": 13.65,
+          "mean": 4.94
+        },
+        "preprocessing_ms": {
+          "count": 30,
+          "min": 0.63,
+          "p50": 13.2,
+          "p95": 17.81,
+          "max": 22.31,
+          "mean": 10.29
+        },
+        "prompt_build_ms": {
+          "count": 30,
+          "min": 0.11,
+          "p50": 0.2,
+          "p95": 0.31,
+          "max": 0.41,
+          "mean": 0.21
+        },
+        "queue_wait_ms": {
+          "count": 30,
+          "min": 0.0,
+          "p50": 0.0,
+          "p95": 0.01,
+          "max": 0.02,
+          "mean": 0.01
+        },
+        "server_load_time_ms": {
+          "count": 30,
+          "min": 0.0,
+          "p50": 0.0,
+          "p95": 0.0,
+          "max": 0.0,
+          "mean": 0.0
+        },
+        "prompt_eval_ms": {
+          "count": 30,
+          "min": 26.11,
+          "p50": 323.94,
+          "p95": 348.39,
+          "max": 431.67,
+          "mean": 302.92
+        },
+        "token_gen_ms": {
+          "count": 30,
+          "min": 2628.78,
+          "p50": 3057.57,
+          "p95": 5288.6,
+          "max": 5592.76,
+          "mean": 3615.02
+        },
+        "json_decode_ms": {
+          "count": 30,
+          "min": 0.04,
+          "p50": 0.05,
+          "p95": 0.06,
+          "max": 0.09,
+          "mean": 0.05
+        },
+        "grounding_and_lowering_ms": {
+          "count": 30,
+          "min": 0.29,
+          "p50": 1.4,
+          "p95": 2.74,
+          "max": 3.63,
+          "mean": 1.52
+        },
+        "source_gate_planner_kernel_scene_ms": {
+          "count": 30,
+          "min": 0.0,
+          "p50": 24.57,
+          "p95": 30.56,
+          "max": 31.48,
+          "mean": 23.06
+        },
+        "slm_inference_ms": {
+          "count": 30,
+          "min": 2915.37,
+          "p50": 3392.39,
+          "p95": 5611.66,
+          "max": 5911.66,
+          "mean": 3921.12
+        },
+        "total_e2e_ms": {
+          "count": 30,
+          "min": 2951.74,
+          "p50": 3437.56,
+          "p95": 5671.15,
+          "max": 5965.67,
+          "mean": 3963.47
+        }
+      },
+      "tokens": {
+        "prompt_tokens": {
+          "count": 30,
+          "min": 977.0,
+          "p50": 1005.0,
+          "p95": 1017.0,
+          "max": 1017.0,
+          "mean": 1001.4
+        },
+        "cached_prompt_tokens": {
+          "count": 30,
+          "min": 896.0,
+          "p50": 901.5,
+          "p95": 913.0,
+          "max": 990.0,
+          "mean": 903.67
+        },
+        "completion_tokens": {
+          "count": 30,
+          "min": 89.0,
+          "p50": 98.5,
+          "p95": 178.0,
+          "max": 178.0,
+          "mean": 117.7
+        },
+        "tokens_per_sec": {
+          "count": 30,
+          "min": 30.36,
+          "p50": 32.29,
+          "p95": 33.48,
+          "max": 34.83,
+          "mean": 32.31
+        }
+      },
+      "combined_rss_mib": {
+        "count": 30,
+        "min": 1041.75,
+        "p50": 1042.47,
+        "p95": 1049.05,
+        "max": 1049.43,
+        "mean": 1043.97
+      }
+    }
+  },
+  "warm_cached_separate": {
+    "disclaimer": "Cached inference latencies are reported strictly separately and never merged into uncached p95.",
+    "sample_count": 30,
+    "all_cache_hits": true,
+    "total_e2e_ms": {
+      "count": 30,
+      "min": 4.75,
+      "p50": 36.45,
+      "p95": 49.5,
+      "max": 101.21,
+      "mean": 36.24
+    },
+    "hybrid_execution_ms": {
+      "count": 30,
+      "min": 0.0,
+      "p50": 21.51,
+      "p95": 24.23,
+      "max": 74.95,
+      "mean": 21.13
+    }
+  }
+}

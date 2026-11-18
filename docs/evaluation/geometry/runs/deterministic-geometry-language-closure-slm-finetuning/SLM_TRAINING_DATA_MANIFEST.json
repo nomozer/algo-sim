@@ -1,0 +1,93 @@
+{
+  "schema": "slm-training-data-manifest/1",
+  "generated_at_utc": "2026-11-18T11:24:44.642648+00:00",
+  "external_ai_calls": 0,
+  "schema_version": "slm-compact-clause/1",
+  "storage_location_outside_git": "C:\\Users\\Bunny\\AppData\\Local\\axo-slm\\training\\datasets",
+  "license_and_provenance": {
+    "source_type": "programmatically_generated_and_verified_in_repo",
+    "license": "Project internal / Apache-2.0 compatible",
+    "seed": 42,
+    "sealed_corpora_opened": false,
+    "forbidden_corpora_excluded": [
+      "DEV_CALIBRATION_16",
+      "HOLDOUT_40",
+      "SLM_NEW_HOLDOUT_48",
+      "sealed_H1_unopened",
+      "locked_W2_W3_unopened",
+      "REAL27",
+      "frozen_unseen_vmmu20",
+      "NC_NL",
+      "DEV37",
+      "PROBES39",
+      "COMP112",
+      "S2_36",
+      "RM72",
+      "AUTO_NEG"
+    ]
+  },
+  "splits": {
+    "train": {
+      "path": "C:\\Users\\Bunny\\AppData\\Local\\axo-slm\\training\\datasets\\train.jsonl",
+      "sha256": "5dbdb22f0e9354f3ccc3197fafe65b395d1ab3391a2c77cc5c428034b5ffe42c",
+      "total": 342,
+      "positives": 270,
+      "negatives": 72,
+      "families": {
+        "TR06_MIDPOINT_CENTROID_COMPOSITE": 24,
+        "TR07_PRISM_AND_CUBOID_MULTI": 24,
+        "TR02_RHOM_BASE_ANGLE_PYR": 28,
+        "TR08_TRAPEZOID_PARA_PYR": 24,
+        "TR12_NEG_CONTRA_NEGATED_IMPOSSIBLE": 24,
+        "TR03_RIGHT_ISO_TRI_FACE_PERP": 26,
+        "TR11_NEG_AMBIG_SINGULAR_AND_COND": 24,
+        "TR13_NEG_MISSING_DIM_AND_OOS": 24,
+        "TR10_RATIO_DIV_EQ_LEN": 20,
+        "TR14_CONVERSATIONAL_AND_REORDERED": 24,
+        "TR04_REG_PYR_DUAL_LEN_ANG": 24,
+        "TR05_PROJ_ONTO_EDGE_AND_FACE_ALT": 24,
+        "TR01_RECT_BASE_PERP_VOL_DIST": 28,
+        "TR09_SKEW_AND_PT_LINE_DIST_AREA": 24
+      },
+      "local_parser_status_counts": {
+        "LOCAL_PARSE_COMPLETE": 184,
+        "LOCAL_PARSE_PARTIAL": 138,
+        "LOCAL_PARSE_AMBIGUOUS": 8,
+        "LOCAL_PARSE_UNSUPPORTED": 12
+      }
+    },
+    "val": {
+      "path": "C:\\Users\\Bunny\\AppData\\Local\\axo-slm\\training\\datasets\\val.jsonl",
+      "sha256": "cb2f729b83250e1f007c0f214cb0bf72c677d85aaedd5ea699dc5d2f76050e9c",
+      "total": 92,
+      "positives": 68,
+      "negatives": 24,
+      "families": {
+        "VL01_FACE_PERP_RECT_ANG_DIST": 24,
+        "VL02_RHOM_MID_SKEW_DIST": 24,
+        "VL03_PRISM_PROJ_AREA": 20,
+        "VL04_MIXED_NEG_ADVERSARIAL": 24
+      },
+      "local_parser_status_counts": {
+        "LOCAL_PARSE_PARTIAL": 53,
+        "LOCAL_PARSE_COMPLETE": 34,
+        "LOCAL_PARSE_UNSUPPORTED": 5
+      }
+    }
+  },
+  "verification_gate": {
+    "positive_validator_and_kernel_served_rate": "100% (verified)",
+    "positive_decimal60_oracle_verified_rate": "100% (verified)",
+    "negative_safe_refusal_rate": "100% (verified)"
+  },
+  "anti_leakage_audit": {
+    "prior_corpus_entries_checked": 376,
+    "exact_normalized_overlaps_external": 0,
+    "structural_skeleton_overlaps_external": 0,
+    "max_4gram_jaccard_external": 0.3611,
+    "closest_external_pair": "tr07_159~HOLDOUT_40",
+    "train_val_family_overlaps": 0,
+    "train_val_structural_skeleton_overlaps": 0,
+    "max_4gram_jaccard_train_vs_val": 0.2885
+  }
+}

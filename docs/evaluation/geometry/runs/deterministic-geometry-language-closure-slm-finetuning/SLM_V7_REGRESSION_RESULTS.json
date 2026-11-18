@@ -1,0 +1,353 @@
+{
+  "schema": "slm-v7-regression-results/1",
+  "generated_at_utc": "2026-11-18T16:55:53.852844+00:00",
+  "external_ai_calls": 0,
+  "runtime_version": "local-slm-runtime/3",
+  "cache_namespace": "HYBRID_V7_LOCAL_SLM",
+  "models": {
+    "original": "qwen3-0.6b-q4_k_m",
+    "finetuned": "qwen3-0.6b-axo-v7-q4_k_m"
+  },
+  "safety_invariants": {
+    "config_a_continuity_errors": 0,
+    "config_c_continuity_errors": 0,
+    "config_d_continuity_errors": 0,
+    "new_mode_a_leaks_above_config_a_c": 0,
+    "new_mode_a_leaks_above_config_a_d": 0,
+    "regression_count": 0,
+    "regressions": []
+  },
+  "suites": {
+    "REAL27_TEXT": {
+      "total": 27,
+      "config_a_served": 21,
+      "config_a_wrong_served": 0,
+      "config_c_served": 21,
+      "config_c_wrong_served": 0,
+      "config_c_slm_invoked": 4,
+      "config_d_served": 21,
+      "config_d_wrong_served": 0,
+      "config_d_slm_invoked": 4
+    },
+    "REAL27_IMAGES": {
+      "total": 27,
+      "config_a_served": 21,
+      "config_c_served": 21,
+      "config_c_slm_invoked": 4,
+      "config_d_served": 21,
+      "config_d_slm_invoked": 4
+    },
+    "NC_GOLD": {
+      "total": 21,
+      "config_a_passed": 21,
+      "config_c_passed": 21,
+      "config_d_passed": 21,
+      "identical_kernel_route": true
+    },
+    "AUTONOMOUS_NEGATIVES": {
+      "total": 11,
+      "config_a_refused": 11,
+      "config_c_refused": 11,
+      "config_d_refused": 11,
+      "false_served": 0
+    },
+    "RM72": {
+      "positive_total": 62,
+      "negative_total": 10,
+      "config_a_positive_served": 61,
+      "config_c_positive_served": 61,
+      "config_d_positive_served": 61,
+      "config_a_negative_refused": 10,
+      "config_c_negative_refused": 10,
+      "config_d_negative_refused": 10,
+      "false_served": 0
+    },
+    "NC_NL": {
+      "total": 21,
+      "positive_total": 21,
+      "negative_total": 0,
+      "config_a_positive_ok": 21,
+      "config_c_positive_ok": 21,
+      "config_d_positive_ok": 21,
+      "config_a_negative_refused": 0,
+      "config_c_negative_refused": 0,
+      "config_d_negative_refused": 0,
+      "config_c_slm_invoked": 0,
+      "config_d_slm_invoked": 0,
+      "delta_c_vs_a_pos": 0,
+      "delta_d_vs_a_pos": 0
+    },
+    "DEV37": {
+      "total": 37,
+      "positive_total": 30,
+      "negative_total": 7,
+      "config_a_positive_ok": 30,
+      "config_c_positive_ok": 30,
+      "config_d_positive_ok": 30,
+      "config_a_negative_refused": 7,
+      "config_c_negative_refused": 7,
+      "config_d_negative_refused": 7,
+      "config_c_slm_invoked": 4,
+      "config_d_slm_invoked": 4,
+      "delta_c_vs_a_pos": 0,
+      "delta_d_vs_a_pos": 0
+    },
+    "PROBES39": {
+      "total": 39,
+      "positive_total": 26,
+      "negative_total": 13,
+      "config_a_positive_ok": 23,
+      "config_c_positive_ok": 23,
+      "config_d_positive_ok": 23,
+      "config_a_negative_refused": 13,
+      "config_c_negative_refused": 13,
+      "config_d_negative_refused": 13,
+      "config_c_slm_invoked": 10,
+      "config_d_slm_invoked": 10,
+      "delta_c_vs_a_pos": 0,
+      "delta_d_vs_a_pos": 0
+    },
+    "S2_36": {
+      "total": 36,
+      "positive_total": 18,
+      "negative_total": 18,
+      "config_a_positive_ok": 16,
+      "config_c_positive_ok": 16,
+      "config_d_positive_ok": 16,
+      "config_a_negative_refused": 18,
+      "config_c_negative_refused": 18,
+      "config_d_negative_refused": 18,
+      "config_c_slm_invoked": 0,
+      "config_d_slm_invoked": 0,
+      "delta_c_vs_a_pos": 0,
+      "delta_d_vs_a_pos": 0
+    },
+    "COMP112": {
+      "total": 112,
+      "positive_total": 66,
+      "negative_total": 46,
+      "config_a_positive_ok": 66,
+      "config_c_positive_ok": 66,
+      "config_d_positive_ok": 66,
+      "config_a_negative_refused": 44,
+      "config_c_negative_refused": 44,
+      "config_d_negative_refused": 44,
+      "config_c_slm_invoked": 19,
+      "config_d_slm_invoked": 19,
+      "delta_c_vs_a_pos": 0,
+      "delta_d_vs_a_pos": 0,
+      "dual_reporting": {
+        "strict_frozen_labels_c": "66/66 pos + 44/46 neg",
+        "strict_frozen_labels_d": "66/66 pos + 44/46 neg",
+        "reconciled_historical_labels": [
+          {
+            "id": "dp_reflection",
+            "config_a": {
+              "status": "SERVED",
+              "slm_invoked": false
+            },
+            "config_c": {
+              "status": "SERVED",
+              "slm_invoked": false
+            },
+            "config_d": {
+              "status": "SERVED",
+              "slm_invoked": false
+            }
+          },
+          {
+            "id": "dp_projection_unnamed_image",
+            "config_a": {
+              "status": "SERVED",
+              "slm_invoked": false
+            },
+            "config_c": {
+              "status": "SERVED",
+              "slm_invoked": false
+            },
+            "config_d": {
+              "status": "SERVED",
+              "slm_invoked": false
+            }
+          }
+        ],
+        "new_mode_a_leaks_above_config_a_c": 0,
+        "new_mode_a_leaks_above_config_a_d": 0
+      }
+    },
+    "frozen_unseen_vmmu20_separate": {
+      "ground_truth_status": "GROUND_TRUTH_UNVERIFIED",
+      "excluded_from_verified_accuracy": true,
+      "count": 19,
+      "config_c_served_unverified": 0,
+      "config_c_slm_invoked": 0,
+      "config_d_served_unverified": 0,
+      "config_d_slm_invoked": 0
+    }
+  },
+  "slm_pytest_modules": {
+    "command": "pytest -c backend/pytest.ini backend/tests/geometry/test_local_slm_understanding.py backend/tests/geometry/test_slm_compact_extraction.py backend/tests/geometry/test_slm_language_closure.py backend/tests/geometry/test_slm_finetuned_runtime.py -q",
+    "exit_code": 0,
+    "passed": true,
+    "duration_s": 49.11,
+    "summary_line": "23 passed, 1 warning in 48.12s",
+    "modules": [
+      "backend/tests/geometry/test_local_slm_understanding.py",
+      "backend/tests/geometry/test_slm_compact_extraction.py",
+      "backend/tests/geometry/test_slm_language_closure.py",
+      "backend/tests/geometry/test_slm_finetuned_runtime.py"
+    ]
+  },
+  "fault_and_adversarial_14": {
+    "1_universal_quantifier_ambiguity": {
+      "ok": true,
+      "live": {
+        "config_c_status": "REFUSED",
+        "config_d_status": "REFUSED",
+        "config_c_refusal": {
+          "code": "NEGATED_CLAUSE"
+        },
+        "config_d_refusal": {
+          "code": "INCONSISTENT_FACTS",
+          "reason_code": "INCONSISTENT_FACTS",
+          "failure_taxonomy": "CONTRADICTION_OR_UNGROUNDED"
+        }
+      },
+      "validator_rejected_nonregular_all_lateral": true
+    },
+    "2_wrong_lateral_edge_scope": {
+      "ok": true,
+      "detail": {
+        "config_c_status": "REFUSED",
+        "config_d_status": "REFUSED",
+        "config_c_refusal": {
+          "code": "AMBIGUOUS_REFERENCE",
+          "reason_code": "AMBIGUOUS_REFERENCE",
+          "failure_taxonomy": "AMBIGUOUS_REFERENCE"
+        },
+        "config_d_refusal": {
+          "code": "AMBIGUOUS_FACT",
+          "reason_code": "AMBIGUOUS_FACT",
+          "failure_taxonomy": "SLM_UNRESOLVED"
+        }
+      }
+    },
+    "3_conditional_to_fact_injection": {
+      "ok": true,
+      "preserved_if": true,
+      "detail": {
+        "config_c_status": "REFUSED",
+        "config_d_status": "REFUSED",
+        "config_c_refusal": {
+          "code": "AMBIGUOUS_FACT",
+          "reason_code": "AMBIGUOUS_FACT",
+          "failure_taxonomy": "SLM_UNRESOLVED"
+        },
+        "config_d_refusal": {
+          "code": "AMBIGUOUS_FACT",
+          "reason_code": "AMBIGUOUS_FACT",
+          "failure_taxonomy": "SLM_UNRESOLVED"
+        }
+      }
+    },
+    "4_negated_perpendicular_relation": {
+      "ok": true,
+      "detail": {
+        "config_c_status": "REFUSED",
+        "config_d_status": "REFUSED",
+        "config_c_refusal": {
+          "code": "INCONSISTENT_FACTS",
+          "reason_code": "INCONSISTENT_FACTS",
+          "failure_taxonomy": "GROUNDING_REJECTED"
+        },
+        "config_d_refusal": {
+          "code": "INCONSISTENT_FACTS",
+          "reason_code": "INCONSISTENT_FACTS",
+          "failure_taxonomy": "CONTRADICTION_OR_UNGROUNDED"
+        }
+      }
+    },
+    "5_missing_dimensions": {
+      "ok": true,
+      "detail": {
+        "config_c_status": "REFUSED",
+        "config_d_status": "REFUSED",
+        "config_c_refusal": {
+          "code": "MISSING_DIMENSION"
+        },
+        "config_d_refusal": {
+          "code": "MISSING_DIMENSION"
+        }
+      }
+    },
+    "6_conflicting_geometric_constraints": {
+      "ok": true,
+      "detail": {
+        "config_c_status": "REFUSED",
+        "config_d_status": "REFUSED",
+        "config_c_refusal": {
+          "code": "INCONSISTENT_FACTS"
+        },
+        "config_d_refusal": {
+          "code": "INCONSISTENT_FACTS"
+        }
+      }
+    },
+    "7_wrong_quantity_mapping": {
+      "ok": true
+    },
+    "8_wrong_edge_plane_binding": {
+      "ok": true
+    },
+    "9_invented_vertices": {
+      "ok": true
+    },
+    "10_prompt_injection_en_and_vi": {
+      "ok": true,
+      "en_c_tax": "PROMPT_INJECTION_REJECTED",
+      "en_d_tax": "PROMPT_INJECTION_REJECTED",
+      "vi_c_tax": "PROMPT_INJECTION_REJECTED",
+      "vi_d_tax": "PROMPT_INJECTION_REJECTED",
+      "detail": {
+        "config_c_status": "REFUSED",
+        "config_d_status": "REFUSED",
+        "config_c_refusal": {
+          "code": "UNGROUNDED_VALUE",
+          "reason_code": "UNGROUNDED_VALUE",
+          "failure_taxonomy": "PROMPT_INJECTION_REJECTED"
+        },
+        "config_d_refusal": {
+          "code": "UNGROUNDED_VALUE",
+          "reason_code": "UNGROUNDED_VALUE",
+          "failure_taxonomy": "PROMPT_INJECTION_REJECTED"
+        }
+      }
+    },
+    "11_invalid_json_typo_and_curved": {
+      "ok": true,
+      "bad_json_rejected": true,
+      "curved_refused": true
+    },
+    "12_model_timeout_and_bounded_queue": {
+      "ok": true,
+      "timeout_raised": true,
+      "recovered": true,
+      "queue_busy": true
+    },
+    "13_model_crash_and_missing_model": {
+      "ok": true,
+      "crash_recovered": true,
+      "missing_model_refused": true
+    },
+    "14_model_checksum_mismatch_and_no_cloud_fallback": {
+      "ok": true,
+      "checksum_codes": {
+        "qwen3-0.6b-q4_k_m": "MODEL_CHECKSUM_MISMATCH",
+        "qwen3-0.6b-axo-v7-q4_k_m": "MODEL_CHECKSUM_MISMATCH"
+      },
+      "http_503_status": 503,
+      "http_503_reason": "MISSING_API_KEY"
+    }
+  },
+  "all_14_fault_checks_passed": true
+}

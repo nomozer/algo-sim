@@ -1,5 +1,19 @@
 # CODE_INDEX.md — Chỉ mục module + BỘ NHỚ KIẾN TRÚC
 
+## Deterministic geometry language closure & targeted SLM fine-tuning (2026-11-18)
+
+| Hạng mục / Vai trò | Đường dẫn chuẩn (`6310113f2` / `113a6a7cf6bb…`, `123` files) |
+|---|---|
+| Chuẩn hóa bảo toàn span `slm-verified-normalizer/2` (`VN01`–`VN06` kèm chứng tích 10 trường & bảo vệ điều kiện/phủ định/chính tả) | `backend/app/ai/slm_verified_normalizer.py` |
+| Runtime CPU `/3` (`local-slm-runtime/3`, cache `HYBRID_V7_LOCAL_SLM`, pin `qwen3-0.6b-axo-v7-q4_k_m` `36e784d1…` + giữ bản gốc `ac2d9771…`) | `backend/app/ai/local_slm_runtime.py` |
+| Trích xuất & hạ tầng GBNF `local-slm-extractor/3` (`slm-grounding-validator/3`, `_cand_has_contiguous`, lọc tiền tố hội thoại phân biệt hoa/thường) | `backend/app/ai/local_slm_extractor.py` |
+| Định tuyến thích nghi `/7` (`closure_mode="v7"`, `normalizer_version="v2"`, `RuleRescue`, chọn `FINETUNED_LOCAL_SLM_MODEL_KEY`) | `backend/app/ai/adaptive_input_router.py` |
+| Bộ sinh tập huấn luyện / kiểm định tách rời (`train=342`, `val=92`, kiểm chứng Exact Kernel & Decimal-60) | `backend/scripts/build_slm_training_dataset.py` |
+| Huấn luyện LoRA FP32 completion-only trên GPU (`GTX 1650`, `score_slm_val_predictions.py`) & xuất GGUF F16/`Q4_K_M` + CLI cài đặt | `backend/scripts/train_local_slm_lora.py`, `backend/scripts/score_slm_val_predictions.py`, `backend/scripts/export_and_verify_slm_gguf.py`, `backend/scripts/evaluate_slm_quantization_val.py`, `backend/scripts/provision_local_slm.py` |
+| Sinh tập mù mới `112` ca (`80+/32-`, `0` chồng lặp), đánh giá ablation/blind-holdout/hiệu năng CPU & hồi quy + 14 fault checks | `backend/scripts/build_slm_v7_blind_holdout.py`, `backend/scripts/evaluate_slm_v7_campaign.py`, `backend/scripts/run_slm_v7_regressions.py` |
+| Kiểm thử đơn vị đóng ngôn ngữ `/7` & kiểm thử runtime/checksum/smoke cho mô hình fine-tuned (`23/23` SLM tests PASS) | `backend/tests/geometry/test_slm_language_closure.py`, `backend/tests/geometry/test_slm_finetuned_runtime.py` |
+| Báo cáo tổng hợp `/7` (`READY_AS_LOCAL_PRIMARY_WITH_CONSTRAINTS`), quyết định thay thế & handoff Source Gate | `docs/evaluation/geometry/runs/deterministic-geometry-language-closure-slm-finetuning/FINAL_MASTER_REPORT.md`, `SLM_REPLACEMENT_DECISION.md`, `SOURCE_GATE_OWNER_HANDOFF.md` |
+
 ## Specialized geometry extraction & SLM bottleneck optimization (2026-11-18)
 
 | Hạng mục / Vai trò | Đường dẫn chuẩn (`0acc07ae2` / `32a3014c9917…`, `123` files) |

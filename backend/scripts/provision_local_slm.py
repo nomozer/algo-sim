@@ -16,6 +16,7 @@ if str(BACKEND_DIR) not in sys.path:
 from app.ai.local_slm_runtime import (  # noqa: E402
     COMPARATOR_LOCAL_SLM_MODEL_KEY,
     DEFAULT_LOCAL_SLM_MODEL_KEY,
+    FINETUNED_LOCAL_SLM_MODEL_KEY,
     LocalSlmRuntime,
     LocalSlmRuntimeError,
     ensure_local_slm_provisioned,
@@ -36,8 +37,12 @@ def _resolve_model_keys(selector: str) -> list[str]:
     norm = selector.strip().lower()
     if norm == "all":
         return [DEFAULT_LOCAL_SLM_MODEL_KEY, COMPARATOR_LOCAL_SLM_MODEL_KEY]
+    if norm == "all_with_v7":
+        return [DEFAULT_LOCAL_SLM_MODEL_KEY, FINETUNED_LOCAL_SLM_MODEL_KEY, COMPARATOR_LOCAL_SLM_MODEL_KEY]
     if norm == "primary":
         return [DEFAULT_LOCAL_SLM_MODEL_KEY]
+    if norm in {"finetuned", "v7", "axo-v7"}:
+        return [FINETUNED_LOCAL_SLM_MODEL_KEY]
     if norm == "comparator":
         return [COMPARATOR_LOCAL_SLM_MODEL_KEY]
     return [selector.strip()]
