@@ -1,0 +1,25 @@
+{
+  "list_browser_targets_evidence_id": "ev_fcfecf8abccbdc7c32562992d70946b73d3cf2bc04fabf14074233e9411a19bc",
+  "target_id": "2A05B1F947A53A55240900A7304A82B5",
+  "url": "http://localhost:3001/simulation/pyramid-three-point-section",
+  "title": "Mô phỏng hình học 3D | Axo",
+  "origin": "http://localhost:3001",
+  "inspect_web_page_evidence_id": "ev_3337f7f446d9c90115ac0c2f28f4edcd4f5ebd2c687e6a3d6715840c07948b62",
+  "capture_web_screenshot_evidence_id": "ev_ca0b352db8f9126eca9fd123547061a10cdfdccfead5a888038f790dcbe08e94",
+  "screenshot_sha256": "7c6be261d76b65f48d65b08adb7e88e027ed641f879c48783dd25edfe808574e",
+  "screenshot_bytes": 133855,
+  "dom_total_nodes": 698,
+  "dropped_events": {
+    "scripts": 0,
+    "network_requests": 0,
+    "console_events": 0,
+    "websocket_connections": 0,
+    "websocket_frames": 0,
+    "webmcp_tools": 0,
+    "timeline_events": 0,
+    "total": 0
+  },
+  "script_sources_excluded_count": 115,
+  "console_events_count": 0,
+  "network_requests_count": 0
+}

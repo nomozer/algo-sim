@@ -158,16 +158,43 @@ interface InFlightEditEntry {
 }
 
 const DEFAULT_STEP_EDIT_TIMEOUT_MS = 15_000;
+const CLIENT_SEQ_STORAGE_KEY = "axo:step-edit-seq:v1";
 let nextSubmitSeq = 0;
 const inFlightSessions = new Map<string, InFlightEditEntry>();
+const pendingRetryKeys = new Map<string, { sig: string; clientRequestId: string }>();
 
-function notifyServerCancelStepEdit(sessionId: string, clientRequestId: string): void {
-  if (typeof fetch !== "function" || !sessionId || !clientRequestId) return;
+function allocateMonotonicSubmitSeq(): number {
+  let persisted = 0;
   try {
-    void fetch("/api/simulation/steps/cancel", {
+    const raw = window.localStorage.getItem(CLIENT_SEQ_STORAGE_KEY);
+    const parsed = raw ? Number(raw) : 0;
+    if (Number.isFinite(parsed) && parsed > 0) persisted = Math.floor(parsed);
+  } catch {
+    persisted = 0;
+  }
+  nextSubmitSeq = Math.max(nextSubmitSeq + 1, persisted + 1);
+  try {
+    window.localStorage.setItem(CLIENT_SEQ_STORAGE_KEY, String(nextSubmitSeq));
+  } catch {
+    // Best-effort cross-reload monotonicity
+  }
+  return nextSubmitSeq;
+}
+
+function notifyServerCancelStepEdit(
+  sessionId: string,
+  clientRequestId: string,
+  options?: { onlyIfUncommitted?: boolean; signal?: AbortSignal },
+): Promise<void> {
+  if (typeof fetch !== "function" || !sessionId || !clientRequestId) {
+    return Promise.resolve();
+  }
+  try {
+    return fetch("/api/simulation/steps/cancel", {
       method: "POST",
       credentials: "include",
       keepalive: true,
+      signal: options?.signal,
       headers: {
         "Content-Type": "application/json",
         [AXO_CLIENT_SESSION_HEADER]: getOrCreateAxoClientSessionToken(),
@@ -175,10 +202,14 @@ function notifyServerCancelStepEdit(sessionId: string, clientRequestId: string):
       body: JSON.stringify({
         session_id: sessionId,
         client_request_id: clientRequestId,
+        only_if_uncommitted: Boolean(options?.onlyIfUncommitted),
       }),
-    }).catch(() => undefined);
+    })
+      .then(() => undefined)
+      .catch(() => undefined);
   } catch {
     // Best-effort cancellation notification; abort signal also fires synchronously
+    return Promise.resolve();
   }
 }
 
@@ -186,7 +217,8 @@ export function cancelInFlightStepEdit(sessionId: string): boolean {
   const entry = inFlightSessions.get(sessionId);
   if (!entry) return false;
   entry.abortReason = "cancelled";
-  notifyServerCancelStepEdit(sessionId, entry.clientRequestId);
+  pendingRetryKeys.delete(sessionId);
+  void notifyServerCancelStepEdit(sessionId, entry.clientRequestId);
   entry.controller.abort();
   inFlightSessions.delete(sessionId);
   return true;
@@ -343,6 +375,7 @@ export async function submitConstructionStepEdit(params: {
   scene3d: Scene3D;
   timeoutMs?: number;
   supersedeInFlight?: boolean;
+  clientRequestId?: string;
 }): Promise<StepEditSubmitResult> {
   const { sessionId } = params;
   const existingEntry = inFlightSessions.get(sessionId);
@@ -358,16 +391,22 @@ export async function submitConstructionStepEdit(params: {
       };
     }
     existingEntry.abortReason = "superseded";
-    notifyServerCancelStepEdit(sessionId, existingEntry.clientRequestId);
+    void notifyServerCancelStepEdit(sessionId, existingEntry.clientRequestId);
     existingEntry.controller.abort();
   }
 
+  const draftSig = `${params.stepId}:${params.stepIndex}:${params.editedInstruction.trim()}`;
+  const reusableRetry = pendingRetryKeys.get(sessionId);
   const controller = new AbortController();
-  const seq = ++nextSubmitSeq;
+  const seq = allocateMonotonicSubmitSeq();
   const clientRequestId =
-    typeof window !== "undefined" && typeof window.crypto?.randomUUID === "function"
-      ? `se-req-${window.crypto.randomUUID()}`
-      : `se-req-${Date.now().toString(36)}-${seq}`;
+    params.clientRequestId
+    ?? (reusableRetry && reusableRetry.sig === draftSig
+      ? reusableRetry.clientRequestId
+      : typeof window !== "undefined" && typeof window.crypto?.randomUUID === "function"
+        ? `se-req-${window.crypto.randomUUID()}`
+        : `se-req-${Date.now().toString(36)}-${seq}`);
+  pendingRetryKeys.delete(sessionId);
   const entry: InFlightEditEntry = {
     seq,
     clientRequestId,
@@ -495,91 +534,102 @@ export async function submitConstructionStepEdit(params: {
         draft_preserved: true,
       };
     }
+    // Preserve idempotency key so retrying exact same draft after timeout/network error never duplicates commit
+    pendingRetryKeys.set(sessionId, { sig: draftSig, clientRequestId });
+    const reconcileMs = Math.min(1500, Math.max(60, timeoutMs * 2));
+    const recoverCtrl = new AbortController();
+    const recoverTimer = setTimeout(() => recoverCtrl.abort(), reconcileMs);
+    try {
+      if (entry.abortReason === "timeout") {
+        await notifyServerCancelStepEdit(sessionId, clientRequestId, {
+          onlyIfUncommitted: true,
+          signal: recoverCtrl.signal,
+        });
+      }
+      if (!recoverCtrl.signal.aborted) {
+        const stateRes = await fetch(`/api/simulation/sessions/${encodeURIComponent(sessionId)}/state`, {
+          method: "GET",
+          credentials: "include",
+          signal: recoverCtrl.signal,
+          headers: {
+            [AXO_CLIENT_SESSION_HEADER]: getOrCreateAxoClientSessionToken(),
+          },
+        });
+        if (stateRes.ok) {
+          const sData = await stateRes.json().catch(() => null);
+          if (
+            sData?.found
+            && sData.last_committed_request_id === clientRequestId
+            && isVerifiedRebuildScene(sData.committed_scene)
+          ) {
+            pendingRetryKeys.delete(sessionId);
+            const recScene = markVerifiedStepEditedScene(sData.committed_scene as Scene3D);
+            const recVer =
+              typeof sData.committed_version === "number" && sData.committed_version > 0
+                ? sData.committed_version
+                : Number(sData.revision_count || 1);
+            const recResult: StepEditSubmitSuccess = {
+              status: "committed",
+              mode: "POST_COMMIT_RECOVERED",
+              equivalence_info: null,
+              session_id: sessionId,
+              revision_id: "recovered-from-state",
+              feedback_id: "recovered-from-state",
+              feedback_status: "GEOMETRY_VERIFIED",
+              dataset_eligibility: "ELIGIBLE",
+              version_number: recVer,
+              committed_version: recVer,
+              primary_target_id: params.stepId,
+              scene3d: recScene,
+              step_overrides: (sData.step_overrides as Record<string, string>) ?? {},
+              dependency_summary: (sData.dependency_summary as StepEditDependencySummary) ?? {
+                edited_target_ids: [params.stepId],
+                created_ids: [],
+                reused_ids: [],
+                retired_ids: [],
+                recomputed_ids: [],
+                skipped_unaffected_ids: [],
+                cycle_detected: false,
+              },
+              validation_result: {
+                valid: true,
+                passed: true,
+                exact_arithmetic: true,
+                checks_passed: ["post_commit_state_reconciliation"],
+                continuity: { passed: true, issues: [] },
+              },
+              stage_timings_ms: { total_ms: 0 },
+              llm_calls: 0,
+              quota_charged: false,
+            };
+            saveCachedStepEditState(sessionId, {
+              sessionId,
+              problemKey: params.problemKey,
+              versionNumber: recVer,
+              committedScene: recScene,
+              stepOverrides: recResult.step_overrides,
+              dependencySummary: recResult.dependency_summary,
+              revisions: Array.isArray(sData.revisions) ? sData.revisions : [],
+              feedbackItems: Array.isArray(sData.feedback_items) ? sData.feedback_items : [],
+              updatedAt: Date.now(),
+            });
+            return recResult;
+          }
+        }
+      }
+    } catch {
+      // Fall back to explicit timeout/network error keeping draft & retry idempotency key intact
+    } finally {
+      clearTimeout(recoverTimer);
+    }
     if (entry.abortReason === "timeout") {
       return {
         status: "network_error",
         error_code: "REQUEST_TIMEOUT",
         failed_stage: "network_timeout",
-        learner_error: "Máy chủ dựng hình phản hồi quá thời gian chờ. Trạng thái hợp lệ trước đó vẫn được giữ nguyên.",
+        learner_error: "Máy chủ dựng hình phản hồi quá thời gian chờ. Nội dung bạn vừa gõ vẫn được giữ lại.",
         draft_preserved: true,
       };
-    }
-    // Reconcile once with /state (bounded timeout) in case the server committed before a transport socket drop
-    const recoverCtrl = new AbortController();
-    const recoverTimer = setTimeout(() => recoverCtrl.abort(), 1500);
-    try {
-      const stateRes = await fetch(`/api/simulation/sessions/${encodeURIComponent(sessionId)}/state`, {
-        method: "GET",
-        credentials: "include",
-        signal: recoverCtrl.signal,
-        headers: {
-          [AXO_CLIENT_SESSION_HEADER]: getOrCreateAxoClientSessionToken(),
-        },
-      });
-      if (stateRes.ok) {
-        const sData = await stateRes.json().catch(() => null);
-        if (
-          sData?.found
-          && sData.last_committed_request_id === clientRequestId
-          && isVerifiedRebuildScene(sData.committed_scene)
-        ) {
-          const recScene = markVerifiedStepEditedScene(sData.committed_scene as Scene3D);
-          const recVer =
-            typeof sData.committed_version === "number" && sData.committed_version > 0
-              ? sData.committed_version
-              : Number(sData.revision_count || 1);
-          const recResult: StepEditSubmitSuccess = {
-            status: "committed",
-            mode: "POST_COMMIT_RECOVERED",
-            equivalence_info: null,
-            session_id: sessionId,
-            revision_id: "recovered-from-state",
-            feedback_id: "recovered-from-state",
-            feedback_status: "GEOMETRY_VERIFIED",
-            dataset_eligibility: "ELIGIBLE",
-            version_number: recVer,
-            committed_version: recVer,
-            primary_target_id: params.stepId,
-            scene3d: recScene,
-            step_overrides: (sData.step_overrides as Record<string, string>) ?? {},
-            dependency_summary: (sData.dependency_summary as StepEditDependencySummary) ?? {
-              edited_target_ids: [params.stepId],
-              created_ids: [],
-              reused_ids: [],
-              retired_ids: [],
-              recomputed_ids: [],
-              skipped_unaffected_ids: [],
-              cycle_detected: false,
-            },
-            validation_result: {
-              valid: true,
-              passed: true,
-              exact_arithmetic: true,
-              checks_passed: ["post_commit_state_reconciliation"],
-              continuity: { passed: true, issues: [] },
-            },
-            stage_timings_ms: { total_ms: 0 },
-            llm_calls: 0,
-            quota_charged: false,
-          };
-          saveCachedStepEditState(sessionId, {
-            sessionId,
-            problemKey: params.problemKey,
-            versionNumber: recVer,
-            committedScene: recScene,
-            stepOverrides: recResult.step_overrides,
-            dependencySummary: recResult.dependency_summary,
-            revisions: Array.isArray(sData.revisions) ? sData.revisions : [],
-            feedbackItems: Array.isArray(sData.feedback_items) ? sData.feedback_items : [],
-            updatedAt: Date.now(),
-          });
-          return recResult;
-        }
-      }
-    } catch {
-      // Fall back to explicit network_error keeping draft intact
-    } finally {
-      clearTimeout(recoverTimer);
     }
     return {
       status: "network_error",

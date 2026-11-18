@@ -1369,4 +1369,159 @@ describe("AXO Step Editor V2.2 — Reliability Hardening & Edge Cases (§5, §7)
     await pPending;
     expect(calledUrls).toContain("/api/simulation/steps/cancel");
   });
+
+  it("IC-3 (Nhiệm vụ A): timeout before commit notifies only_if_uncommitted, timeout after server commit reconciles committed state, and retry reuses client_request_id", async () => {
+    const sid = buildStepEditSessionId("sample:ic3-timeout-closure", "guest");
+    const sceneA = structuredClone((sample11.envelope as unknown as { scene3d: Scene3D }).scene3d);
+    const mpA = sceneA.objects.find((o) => o.id === "mp_tt_AB");
+    if (mpA) mpA.label = "Mặt phẳng (α) sau timeout recovery";
+
+    // 1. Timeout BEFORE server commit -> sends cancel(only_if_uncommitted=true), sees uncommitted /state -> returns REQUEST_TIMEOUT,
+    //    AND immediate retry of exact same draft reuses the same client_request_id for idempotent server execution!
+    const sentEditReqIds: string[] = [];
+    const cancelBodies: Array<Record<string, unknown>> = [];
+    let attempt = 0;
+
+    vi.stubGlobal(
+      "fetch",
+      vi.fn().mockImplementation(async (url: string, init?: RequestInit) => {
+        if (url === "/api/simulation/steps/cancel") {
+          cancelBodies.push(JSON.parse(String(init?.body || "{}")));
+          return new Response(JSON.stringify({ cancelled: true, already_committed: false }), { status: 200 });
+        }
+        if (url === "/api/simulation/steps/edit") {
+          attempt += 1;
+          const body = JSON.parse(String(init?.body || "{}"));
+          sentEditReqIds.push(String(body.client_request_id || ""));
+          if (attempt === 1) {
+            return new Promise<Response>((_resolve, reject) => {
+              init?.signal?.addEventListener("abort", () => reject(new DOMException("Timed out", "AbortError")));
+            });
+          }
+          return new Response(
+            JSON.stringify(
+              makeVerifiedCommitResponse({
+                sessionId: sid,
+                versionNumber: 1,
+                scene: sceneA,
+                primaryTargetId: "mp_tt_AB",
+                overrideText: "Sửa timeout rồi thử lại",
+              }),
+            ),
+            { status: 200, headers: { "Content-Type": "application/json" } },
+          );
+        }
+        if (url.includes(`/api/simulation/sessions/${encodeURIComponent(sid)}/state`)) {
+          return new Response(JSON.stringify({ found: false, session_id: sid }), { status: 200 });
+        }
+        return new Response("{}", { status: 404 });
+      }),
+    );
+
+    const firstTimeout = await submitConstructionStepEdit({
+      sessionId: sid,
+      problemKey: "sample:ic3-timeout-closure",
+      stepId: "mp_tt_AB",
+      stepIndex: 7,
+      previousInstruction: "Dựng (α)",
+      editedInstruction: "Sửa timeout rồi thử lại",
+      targetIds: ["mp_tt_AB"],
+      absorbedIds: ["M_AB"],
+      scene3d: sceneA,
+      timeoutMs: 20,
+    });
+    expect(firstTimeout.status).toBe("network_error");
+    if (firstTimeout.status === "network_error") {
+      expect(firstTimeout.error_code).toBe("REQUEST_TIMEOUT");
+      expect(firstTimeout.draft_preserved).toBe(true);
+    }
+    expect(cancelBodies.length).toBeGreaterThanOrEqual(1);
+    expect(cancelBodies[0]?.only_if_uncommitted).toBe(true);
+    expect(cancelBodies[0]?.client_request_id).toBe(sentEditReqIds[0]);
+
+    const retried = await submitConstructionStepEdit({
+      sessionId: sid,
+      problemKey: "sample:ic3-timeout-closure",
+      stepId: "mp_tt_AB",
+      stepIndex: 7,
+      previousInstruction: "Dựng (α)",
+      editedInstruction: "Sửa timeout rồi thử lại",
+      targetIds: ["mp_tt_AB"],
+      absorbedIds: ["M_AB"],
+      scene3d: sceneA,
+    });
+    expect(retried.status).toBe("committed");
+    expect(sentEditReqIds.length).toBe(2);
+    expect(sentEditReqIds[1]).toBe(sentEditReqIds[0]);
+
+    // 2. Timeout AFTER server already committed -> only_if_uncommitted keeps commit intact & /state reconciliation returns committed!
+    let postCommitReqId = "";
+    const cancelPostBodies: Array<Record<string, unknown>> = [];
+    vi.stubGlobal(
+      "fetch",
+      vi.fn().mockImplementation(async (url: string, init?: RequestInit) => {
+        if (url === "/api/simulation/steps/cancel") {
+          cancelPostBodies.push(JSON.parse(String(init?.body || "{}")));
+          return new Response(
+            JSON.stringify({ cancelled: false, already_committed: true, rolled_back_commit: false }),
+            { status: 200 },
+          );
+        }
+        if (url === "/api/simulation/steps/edit") {
+          const body = JSON.parse(String(init?.body || "{}"));
+          postCommitReqId = String(body.client_request_id || "");
+          return new Promise<Response>((_resolve, reject) => {
+            init?.signal?.addEventListener("abort", () => reject(new DOMException("Timed out", "AbortError")));
+          });
+        }
+        if (url.includes(`/api/simulation/sessions/${encodeURIComponent(sid)}/state`)) {
+          return new Response(
+            JSON.stringify({
+              found: true,
+              session_id: sid,
+              problem_key: "sample:ic3-timeout-closure",
+              revision_count: 2,
+              committed_version: 2,
+              last_committed_request_id: postCommitReqId,
+              committed_scene: sceneA,
+              step_overrides: { mp_tt_AB: "Commit ngay trước timeout" },
+              dependency_summary: {
+                edited_target_ids: ["mp_tt_AB"],
+                created_ids: [],
+                reused_ids: [],
+                retired_ids: [],
+                recomputed_ids: [],
+                skipped_unaffected_ids: [],
+                cycle_detected: false,
+              },
+              revisions: [],
+              feedback_items: [],
+            }),
+            { status: 200, headers: { "Content-Type": "application/json" } },
+          );
+        }
+        return new Response("{}", { status: 404 });
+      }),
+    );
+
+    const postTimeoutRec = await submitConstructionStepEdit({
+      sessionId: sid,
+      problemKey: "sample:ic3-timeout-closure",
+      stepId: "mp_tt_AB",
+      stepIndex: 7,
+      previousInstruction: "Sửa timeout rồi thử lại",
+      editedInstruction: "Commit ngay trước timeout",
+      targetIds: ["mp_tt_AB"],
+      absorbedIds: ["M_AB"],
+      scene3d: sceneA,
+      timeoutMs: 20,
+    });
+    expect(cancelPostBodies.length).toBeGreaterThanOrEqual(1);
+    expect(cancelPostBodies[0]?.only_if_uncommitted).toBe(true);
+    expect(postTimeoutRec.status).toBe("committed");
+    if (postTimeoutRec.status === "committed") {
+      expect(postTimeoutRec.mode).toBe("POST_COMMIT_RECOVERED");
+      expect(postTimeoutRec.step_overrides.mp_tt_AB).toBe("Commit ngay trước timeout");
+    }
+  });
 });

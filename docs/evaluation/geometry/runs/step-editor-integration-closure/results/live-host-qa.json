@@ -1,0 +1,318 @@
+{
+  "baseUrl": "http://localhost:3001",
+  "backendUrl": "http://127.0.0.1:8000",
+  "startedAt": "2026-11-18T16:44:32.271Z",
+  "routes": {
+    "/": {
+      "status": 200,
+      "title": "Axo — Mô phỏng tương tác",
+      "textLen": 1907,
+      "overflowX": 0,
+      "hasMain": true
+    },
+    "/gioi-thieu": {
+      "status": 200,
+      "title": "Giới thiệu Axo | Axo",
+      "textLen": 1907,
+      "overflowX": 0,
+      "hasMain": true
+    },
+    "/gioi-thieu?preview=v1.4": {
+      "status": 200,
+      "title": "Giới thiệu Axo | Axo",
+      "textLen": 1591,
+      "overflowX": 0,
+      "hasMain": true
+    },
+    "/app": {
+      "status": 200,
+      "title": "Axo — Mô phỏng tương tác",
+      "textLen": 340,
+      "overflowX": 0,
+      "hasMain": true
+    }
+  },
+  "case1EquivalenceAndV1Ux": {
+    "alphaIdx": 7,
+    "defaultHeightPx": 56.875,
+    "hoverHeightPx": 56.875,
+    "heightDeltaPx": 0,
+    "defaultBtnOpacity": "0",
+    "hoverBtnOpacity": "1",
+    "httpStatus": 200,
+    "postsTriggered": 1,
+    "beforeAfterDiffChanged": false,
+    "committedVersion": 1,
+    "rowTextAfter": "8\nDựng mặt phẳng trung trực của AB.\nHình phụMặt phẳng (α) đi qua trung điểm của AB và vuông góc với AB"
+  },
+  "case2MutationRebuildReloadAndPostF5Edit": {
+    "httpStatus": 200,
+    "beforeAfterDiffChanged": true,
+    "changedObjectIds": [
+      "M",
+      "mp_MNP",
+      "E",
+      "F",
+      "thiet_dien",
+      "S_td"
+    ],
+    "rebuiltMCoords": [
+      "0",
+      "0",
+      "9/2"
+    ],
+    "committedVersion": 1,
+    "stageTimingsMs": {
+      "parser_ms": 1.293,
+      "typed_facts_ms": 0.016,
+      "dependency_invalidation_ms": 1.919,
+      "registry_ms": 0.002,
+      "planner_ms": 6.031,
+      "dependency_rebuild_ms": 8.418,
+      "kernel_ms": 10.71,
+      "scene3d_build_ms": 8.996,
+      "validation_ms": 9.924,
+      "total_ms": 41.025,
+      "persistence_commit_ms": 93.171
+    },
+    "frontendCommitRenderMs": 303.7,
+    "persistedTitleAfterF5": true,
+    "rowMAfterReload": "6\nLấy điểm M thuộc SA sao cho SM/SA = 1/4\nĐược dựngLấy điểm M thuộc đoạn SA theo tỉ số SM/SA = 1/4",
+    "postF5Edit": {
+      "httpStatus": 200,
+      "clientSeqBeforeF5": 6,
+      "clientSeqAfterF5": 7,
+      "monotonicAcrossReload": true,
+      "rebuiltMCoords": [
+        "0",
+        "0",
+        "4"
+      ],
+      "committedVersion": 2
+    }
+  },
+  "prismPrimeCheck": {
+    "pRowIdx": 5,
+    "httpStatus": 200,
+    "beforeAfterDiffChanged": true,
+    "hasUnicodePrime": true,
+    "hasRawUnderscorePrime": false
+  },
+  "case3InvalidDependencyRefusal": {
+    "httpStatus": 422,
+    "errorCode": "MISSING_DEPENDENCY",
+    "learnerError": "Không thể dựng mặt phẳng trung trực vì chưa xác định được điểm Z.",
+    "draftPreserved": true,
+    "rowPreserved": true
+  },
+  "case4InvalidGeometryRefusal": {
+    "skewPIdx": 8,
+    "httpStatus": 422,
+    "errorCode": "DOWNSTREAM_ORTHOGONALITY_BROKEN",
+    "learnerError": "Phép dựng mới làm mất quan hệ vuông góc bắt buộc (Côsin bình phương của góc giữa PQ và BD khác 0).",
+    "draftPreserved": true
+  },
+  "case5CancelRaceAndOfflineRetry": {
+    "inFlightCancelAndReload": {
+      "cancelPostsDelta": 1,
+      "cancelHttpStatus": 200,
+      "cancelledEditDidNotPersistAfterReload": true,
+      "rowTextAfterReload": "8\nDựng mặt phẳng trung trực của AB.\nHình phụMặt phẳng (α) đi qua trung điểm của AB và vuông góc với AB"
+    },
+    "offlineDraftRetry": {
+      "offlineErrorShown": "Không thể kết nối tới máy chủ dựng hình cục bộ. Nội dung bạn vừa gõ vẫn được giữ lại.",
+      "draftPreserved": true,
+      "reusedClientRequestIdOnRetry": true,
+      "reconnectStatus": 200,
+      "editorClosedAfterCommit": true
+    },
+    "postCommitStaleCancelAAfterB": {
+      "reqAClientRequestId": "se-req-4e99ad85-0d69-404e-9fa2-f3861d2c1c4b",
+      "reqAClientSeq": 8,
+      "cancelResponseStatus": 200,
+      "cancelResponse": {
+        "cancelled": false,
+        "already_committed": true,
+        "rolled_back_commit": false,
+        "noop_reason": "SUPERSEDED_BY_NEWER_COMMIT",
+        "session_id": "se-be5cdbf3-sample-chop-thiet-dien-ba-diem-55591bff",
+        "client_request_id": "se-req-4e99ad85-0d69-404e-9fa2-f3861d2c1c4b"
+      },
+      "bSurvivedInUiAfterF5": true,
+      "bMCoordsInServerStateAfterF5": [
+        "0",
+        "0",
+        "24/5"
+      ],
+      "bCommittedVersionInState": 4
+    }
+  },
+  "case6CloseAndReopenTabPersistence": {
+    "restoredViaGetStateCount": 2,
+    "duplicateEditPostsOnReopen": 0,
+    "totalEditPostsDeltaAfterClose": 0,
+    "restoredRowText": "6\nLấy điểm M thuộc SA sao cho SM:MA = 3:1",
+    "expectedLastRatioRestored": true
+  },
+  "keyboardAndFocus": {
+    "openMs": 69.23,
+    "editorButtons": [
+      "Hủy",
+      "Chạy"
+    ],
+    "activeTitleBeforeKeys": "Nối bán kính IA của mặt cầu",
+    "activeTitleAfterArrows": "Nối bán kính IA của mặt cầu",
+    "closedOnEscape": true
+  },
+  "touchMode": {
+    "opacityBeforeTap": "0",
+    "opacityAfterRowSelect": "1",
+    "pencilVisibleOnActiveRow": false,
+    "editorOpenedViaTap": true
+  },
+  "reducedMotion": {
+    "prefersReducedMotionMatched": true,
+    "committedCleanly": true
+  },
+  "case7Responsive8Viewports": [
+    {
+      "width": 1920,
+      "height": 1080,
+      "overflowX": 0,
+      "canvasVisible": true,
+      "canvasWidthPx": 1289,
+      "canvasHeightPx": 1042,
+      "dockVisible": true,
+      "runClipped": false,
+      "cancelClipped": false,
+      "textareaClipped": false,
+      "textareaHorizontalOverflow": false,
+      "controlsOccludeActions": false,
+      "scrollHostIndependent": true
+    },
+    {
+      "width": 1440,
+      "height": 900,
+      "overflowX": 0,
+      "canvasVisible": true,
+      "canvasWidthPx": 809,
+      "canvasHeightPx": 862,
+      "dockVisible": true,
+      "runClipped": false,
+      "cancelClipped": false,
+      "textareaClipped": false,
+      "textareaHorizontalOverflow": false,
+      "controlsOccludeActions": false,
+      "scrollHostIndependent": true
+    },
+    {
+      "width": 1366,
+      "height": 768,
+      "overflowX": 0,
+      "canvasVisible": true,
+      "canvasWidthPx": 735,
+      "canvasHeightPx": 730,
+      "dockVisible": true,
+      "runClipped": false,
+      "cancelClipped": false,
+      "textareaClipped": false,
+      "textareaHorizontalOverflow": false,
+      "controlsOccludeActions": false,
+      "scrollHostIndependent": true
+    },
+    {
+      "width": 1024,
+      "height": 768,
+      "overflowX": 0,
+      "canvasVisible": true,
+      "canvasWidthPx": 704,
+      "canvasHeightPx": 730,
+      "dockVisible": true,
+      "runClipped": false,
+      "cancelClipped": false,
+      "textareaClipped": false,
+      "textareaHorizontalOverflow": false,
+      "controlsOccludeActions": false,
+      "scrollHostIndependent": true
+    },
+    {
+      "width": 768,
+      "height": 1024,
+      "overflowX": 0,
+      "canvasVisible": true,
+      "canvasWidthPx": 472,
+      "canvasHeightPx": 986,
+      "dockVisible": true,
+      "runClipped": false,
+      "cancelClipped": false,
+      "textareaClipped": false,
+      "textareaHorizontalOverflow": false,
+      "controlsOccludeActions": false,
+      "scrollHostIndependent": true
+    },
+    {
+      "width": 390,
+      "height": 844,
+      "overflowX": 0,
+      "canvasVisible": true,
+      "canvasWidthPx": 390,
+      "canvasHeightPx": 444,
+      "dockVisible": true,
+      "runClipped": false,
+      "cancelClipped": false,
+      "textareaClipped": false,
+      "textareaHorizontalOverflow": false,
+      "controlsOccludeActions": false,
+      "scrollHostIndependent": true
+    },
+    {
+      "width": 360,
+      "height": 800,
+      "overflowX": 0,
+      "canvasVisible": true,
+      "canvasWidthPx": 360,
+      "canvasHeightPx": 420,
+      "dockVisible": true,
+      "runClipped": false,
+      "cancelClipped": false,
+      "textareaClipped": false,
+      "textareaHorizontalOverflow": false,
+      "controlsOccludeActions": false,
+      "scrollHostIndependent": true
+    },
+    {
+      "width": 320,
+      "height": 568,
+      "overflowX": 0,
+      "canvasVisible": true,
+      "canvasWidthPx": 320,
+      "canvasHeightPx": 293,
+      "dockVisible": true,
+      "runClipped": false,
+      "cancelClipped": false,
+      "textareaClipped": false,
+      "textareaHorizontalOverflow": false,
+      "controlsOccludeActions": false,
+      "scrollHostIndependent": true
+    }
+  ],
+  "case7Benchmark20Edits": {
+    "edits": 20,
+    "canvasCountFinal": 1,
+    "meanUiRoundTripMs": 374.69,
+    "p95UiRoundTripMs": 444.72,
+    "maxUiRoundTripMs": 674.88,
+    "heapStartMb": 77.63,
+    "heapEndMb": 77.63,
+    "heapDeltaMb": 0
+  },
+  "consoleErrors": [
+    "Failed to load resource: the server responded with a status of 422 (Unprocessable Entity)",
+    "Failed to load resource: the server responded with a status of 422 (Unprocessable Entity)"
+  ],
+  "pageErrors": [],
+  "failedNetworkRequests": [],
+  "unexpected5xx": [],
+  "videoPath": "C:\\Users\\Bunny\\.gemini\\antigravity\\brain\\66179be9-dccc-4012-bfc0-e6da9b37191c\\scratch\\ic-qa-videos\\page@969b799b06026ef3320805396939c131.webm",
+  "finishedAt": "2026-11-18T16:46:05.358Z"
+}
