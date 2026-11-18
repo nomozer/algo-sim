@@ -1,0 +1,1695 @@
+{
+  "schema": "slm-permissible-unseen-corpus-manifest/1",
+  "generated_at_utc": "2026-11-18T18:16:42.282442+00:00",
+  "external_corpus_access_status": "INDEPENDENT_EXTERNAL_CORPUS = BLOCKED_DATA_ACCESS (for 100-150 fresh external student/teacher target)",
+  "provenance_disclosure": "Contains 77 permissible non-sealed repository items never used in /5, /6, or /7 SLM training or calibration (C60 blind agent-authored + External17 public/homework verbatim transcriptions). Not mislabeled as a new 100-150 external real-world human pilot.",
+  "frozen_candidate_sha256": "113a6a7cf6bbc15ac23119150b805437e785d2b0714b26c2157d147514c2ef67",
+  "evaluator_version": "axo-math-evaluator/2",
+  "anti_leakage_summary": {
+    "reference_train_val_rows": 434,
+    "reference_prior_slm_holdout_rows": 200,
+    "exact_text_overlaps": 0,
+    "max_4gram_jaccard_vs_v7_train_val": 0.1505,
+    "max_4gram_jaccard_vs_prior_slm_holdouts": 0.4615,
+    "zero_leakage_vs_train_val_lt_0_25": true,
+    "zero_leakage_verified_all_lt_0_55": true
+  },
+  "counts": {
+    "total_items": 77,
+    "c60_total": 60,
+    "c60_verified_positives": 42,
+    "c60_single_req_verified": 30,
+    "c60_multi_req_verified": 12,
+    "c60_negatives": 13,
+    "c60_non_scalar_ui_construct": 5,
+    "external17_total": 17,
+    "external17_verified_positives": 12,
+    "external17_oos_unverified": 5
+  },
+  "cases": [
+    {
+      "case_id": "c60_D01",
+      "orig_id": "D01",
+      "corpus": "C60_BLIND_NLU",
+      "split": "dev",
+      "group": "A",
+      "n_source_requests": 1,
+      "gold_disposition": "answer_all",
+      "eval_role": "VERIFIED_POSITIVE",
+      "oracle_status": "VERIFIED_MATHEMATICAL_ORACLE",
+      "oracles": [
+        "√2"
+      ],
+      "text": "Cho hình chóp S.ABCD có đáy ABCD là hình vuông cạnh 2, SA vuông góc với mặt phẳng đáy và SA = 2. Tính khoảng cách từ điểm A đến mặt phẳng (SBC).",
+      "provenance": "independent-nlu-extraction-evaluation (blind subagent, ZERO repo access, 2026-10-17, never exposed in /5-/7 SLM training or calibration)",
+      "leakage_audit": {
+        "max_4gram_vs_v7_train_val": 0.1486,
+        "max_4gram_vs_prior_slm_holdouts": 0.234,
+        "exact_match": false
+      },
+      "has_gold_facts": true
+    },
+    {
+      "case_id": "c60_D02",
+      "orig_id": "D02",
+      "corpus": "C60_BLIND_NLU",
+      "split": "dev",
+      "group": "A",
+      "n_source_requests": 1,
+      "gold_disposition": "answer_all",
+      "eval_role": "VERIFIED_POSITIVE",
+      "oracle_status": "VERIFIED_MATHEMATICAL_ORACLE",
+      "oracles": [
+        "√2"
+      ],
+      "text": "Hình chóp S.ABCD đáy là hình vuông cạnh bằng 2, cạnh bên SA ⊥ (ABCD), SA = 2. Hỏi điểm A cách mặt phẳng SBC một khoảng bằng bao nhiêu?",
+      "provenance": "independent-nlu-extraction-evaluation (blind subagent, ZERO repo access, 2026-10-17, never exposed in /5-/7 SLM training or calibration)",
+      "leakage_audit": {
+        "max_4gram_vs_v7_train_val": 0.0143,
+        "max_4gram_vs_prior_slm_holdouts": 0.0435,
+        "exact_match": false
+      },
+      "has_gold_facts": true
+    },
+    {
+      "case_id": "c60_D03",
+      "orig_id": "D03",
+      "corpus": "C60_BLIND_NLU",
+      "split": "dev",
+      "group": "A",
+      "n_source_requests": 1,
+      "gold_disposition": "answer_all",
+      "eval_role": "VERIFIED_POSITIVE",
+      "oracle_status": "VERIFIED_MATHEMATICAL_ORACLE",
+      "oracles": [
+        "√2"
+      ],
+      "text": "cho chóp S.ABCD, đáy hình vuông cạnh 2, SA=2 và SA vuông góc đáy. khoảng cách từ A tới mp(SBC) là bao nhiêu vậy ạ",
+      "provenance": "independent-nlu-extraction-evaluation (blind subagent, ZERO repo access, 2026-10-17, never exposed in /5-/7 SLM training or calibration)",
+      "leakage_audit": {
+        "max_4gram_vs_v7_train_val": 0.022,
+        "max_4gram_vs_prior_slm_holdouts": 0.0357,
+        "exact_match": false
+      },
+      "has_gold_facts": true
+    },
+    {
+      "case_id": "c60_D04",
+      "orig_id": "D04",
+      "corpus": "C60_BLIND_NLU",
+      "split": "dev",
+      "group": "B",
+      "n_source_requests": 1,
+      "gold_disposition": "answer_all",
+      "eval_role": "VERIFIED_POSITIVE",
+      "oracle_status": "VERIFIED_MATHEMATICAL_ORACLE",
+      "oracles": [
+        "√6"
+      ],
+      "text": "Cho hình chóp S.ABCD có đáy ABCD là hình thang vuông tại A và D, AB = AD = 2, CD = 4. Cạnh SA vuông góc với đáy và SA = 2. Tính khoảng cách từ S đến đường thẳng BC.",
+      "provenance": "independent-nlu-extraction-evaluation (blind subagent, ZERO repo access, 2026-10-17, never exposed in /5-/7 SLM training or calibration)",
+      "leakage_audit": {
+        "max_4gram_vs_v7_train_val": 0.0619,
+        "max_4gram_vs_prior_slm_holdouts": 0.1803,
+        "exact_match": false
+      },
+      "has_gold_facts": true
+    },
+    {
+      "case_id": "c60_D05",
+      "orig_id": "D05",
+      "corpus": "C60_BLIND_NLU",
+      "split": "dev",
+      "group": "B",
+      "n_source_requests": 1,
+      "gold_disposition": "answer_all",
+      "eval_role": "VERIFIED_POSITIVE",
+      "oracle_status": "VERIFIED_MATHEMATICAL_ORACLE",
+      "oracles": [
+        "2√2"
+      ],
+      "text": "Cho hình chóp S.ABCD có đáy ABCD là hình thang vuông tại A và D, AB = AD = 2, CD = 4. Cạnh SA vuông góc với đáy và SA = 2. Tính khoảng cách từ S đến đoạn thẳng BC.",
+      "provenance": "independent-nlu-extraction-evaluation (blind subagent, ZERO repo access, 2026-10-17, never exposed in /5-/7 SLM training or calibration)",
+      "leakage_audit": {
+        "max_4gram_vs_v7_train_val": 0.0619,
+        "max_4gram_vs_prior_slm_holdouts": 0.1803,
+        "exact_match": false
+      },
+      "has_gold_facts": true
+    },
+    {
+      "case_id": "c60_D06",
+      "orig_id": "D06",
+      "corpus": "C60_BLIND_NLU",
+      "split": "dev",
+      "group": "B",
+      "n_source_requests": 1,
+      "gold_disposition": "answer_all",
+      "eval_role": "VERIFIED_POSITIVE",
+      "oracle_status": "VERIFIED_MATHEMATICAL_ORACLE",
+      "oracles": [
+        "cos²=2/3"
+      ],
+      "text": "Hình chóp S.ABCD có đáy là hình vuông cạnh 2, SA ⊥ (ABCD) và SA = 2. Tính cos² của góc giữa đường thẳng SC và mặt phẳng (ABCD).",
+      "provenance": "independent-nlu-extraction-evaluation (blind subagent, ZERO repo access, 2026-10-17, never exposed in /5-/7 SLM training or calibration)",
+      "leakage_audit": {
+        "max_4gram_vs_v7_train_val": 0.026,
+        "max_4gram_vs_prior_slm_holdouts": 0.093,
+        "exact_match": false
+      },
+      "has_gold_facts": true
+    },
+    {
+      "case_id": "c60_D07",
+      "orig_id": "D07",
+      "corpus": "C60_BLIND_NLU",
+      "split": "dev",
+      "group": "C",
+      "n_source_requests": 1,
+      "gold_disposition": "answer_all",
+      "eval_role": "VERIFIED_POSITIVE",
+      "oracle_status": "VERIFIED_MATHEMATICAL_ORACLE",
+      "oracles": [
+        "1"
+      ],
+      "text": "Cho hình chóp S.ABCD có đáy là hình vuông cạnh 2, SA vuông góc với đáy, SA = 2. Tính khoảng cách từ trung điểm của cạnh SC đến mặt phẳng (ABCD).",
+      "provenance": "independent-nlu-extraction-evaluation (blind subagent, ZERO repo access, 2026-10-17, never exposed in /5-/7 SLM training or calibration)",
+      "leakage_audit": {
+        "max_4gram_vs_v7_train_val": 0.0506,
+        "max_4gram_vs_prior_slm_holdouts": 0.1404,
+        "exact_match": false
+      },
+      "has_gold_facts": true
+    },
+    {
+      "case_id": "c60_D08",
+      "orig_id": "D08",
+      "corpus": "C60_BLIND_NLU",
+      "split": "dev",
+      "group": "C",
+      "n_source_requests": 1,
+      "gold_disposition": "answer_all",
+      "eval_role": "VERIFIED_POSITIVE",
+      "oracle_status": "VERIFIED_MATHEMATICAL_ORACLE",
+      "oracles": [
+        "3√14/7"
+      ],
+      "text": "Tứ diện OABC có OA, OB, OC đôi một vuông góc, OA = 2, OB = 3, OC = 6. Gọi H là hình chiếu vuông góc của O lên mặt phẳng (ABC). Tính độ dài OH.",
+      "provenance": "independent-nlu-extraction-evaluation (blind subagent, ZERO repo access, 2026-10-17, never exposed in /5-/7 SLM training or calibration)",
+      "leakage_audit": {
+        "max_4gram_vs_v7_train_val": 0.0581,
+        "max_4gram_vs_prior_slm_holdouts": 0.082,
+        "exact_match": false
+      },
+      "has_gold_facts": true
+    },
+    {
+      "case_id": "c60_D09",
+      "orig_id": "D09",
+      "corpus": "C60_BLIND_NLU",
+      "split": "dev",
+      "group": "C",
+      "n_source_requests": 1,
+      "gold_disposition": "answer_all",
+      "eval_role": "VERIFIED_POSITIVE",
+      "oracle_status": "VERIFIED_MATHEMATICAL_ORACLE",
+      "oracles": [
+        "4√3/3"
+      ],
+      "text": "Cho hình lập phương ABCD.A'B'C'D' cạnh 2. Tính khoảng cách từ trọng tâm tam giác A'BD đến đỉnh C'.",
+      "provenance": "independent-nlu-extraction-evaluation (blind subagent, ZERO repo access, 2026-10-17, never exposed in /5-/7 SLM training or calibration)",
+      "leakage_audit": {
+        "max_4gram_vs_v7_train_val": 0.027,
+        "max_4gram_vs_prior_slm_holdouts": 0.1875,
+        "exact_match": false
+      },
+      "has_gold_facts": true
+    },
+    {
+      "case_id": "c60_D10",
+      "orig_id": "D10",
+      "corpus": "C60_BLIND_NLU",
+      "split": "dev",
+      "group": "D",
+      "n_source_requests": 2,
+      "gold_disposition": "answer_all",
+      "eval_role": "VERIFIED_POSITIVE",
+      "oracle_status": "VERIFIED_MATHEMATICAL_ORACLE",
+      "oracles": [
+        "8",
+        "12/5"
+      ],
+      "text": "Cho hình chóp S.ABC có đáy ABC là tam giác vuông tại B, AB = 3, BC = 4, SA vuông góc với (ABC) và SA = 4. Tính thể tích khối chóp S.ABC và khoảng cách từ A đến mặt phẳng (SBC).",
+      "provenance": "independent-nlu-extraction-evaluation (blind subagent, ZERO repo access, 2026-10-17, never exposed in /5-/7 SLM training or calibration)",
+      "leakage_audit": {
+        "max_4gram_vs_v7_train_val": 0.09,
+        "max_4gram_vs_prior_slm_holdouts": 0.3462,
+        "exact_match": false
+      },
+      "has_gold_facts": true
+    },
+    {
+      "case_id": "c60_D11",
+      "orig_id": "D11",
+      "corpus": "C60_BLIND_NLU",
+      "split": "dev",
+      "group": "D",
+      "n_source_requests": 2,
+      "gold_disposition": "answer_all",
+      "eval_role": "VERIFIED_POSITIVE",
+      "oracle_status": "VERIFIED_MATHEMATICAL_ORACLE",
+      "oracles": [
+        "6√29/5"
+      ],
+      "text": "Cho lăng trụ đứng ABC.A'B'C' có đáy ABC vuông tại A, AB = 3, AC = 4, cạnh bên AA' = 6. Hãy dựng hình chiếu vuông góc của A lên đường thẳng BC, gọi điểm đó là H, sau đó tính độ dài đoạn A'H.",
+      "provenance": "independent-nlu-extraction-evaluation (blind subagent, ZERO repo access, 2026-10-17, never exposed in /5-/7 SLM training or calibration)",
+      "leakage_audit": {
+        "max_4gram_vs_v7_train_val": 0.0654,
+        "max_4gram_vs_prior_slm_holdouts": 0.1094,
+        "exact_match": false
+      },
+      "has_gold_facts": true
+    },
+    {
+      "case_id": "c60_D12",
+      "orig_id": "D12",
+      "corpus": "C60_BLIND_NLU",
+      "split": "dev",
+      "group": "D",
+      "n_source_requests": 3,
+      "gold_disposition": "answer_all",
+      "eval_role": "VERIFIED_POSITIVE",
+      "oracle_status": "VERIFIED_MATHEMATICAL_ORACLE",
+      "oracles": [
+        "a√3",
+        "cos²=1/4",
+        "a√3/3"
+      ],
+      "text": "Cho hình lập phương ABCD.A'B'C'D' có cạnh bằng a. Tính độ dài đường chéo AC'. Tính góc giữa hai đường thẳng AB' và BC'. Tính khoảng cách giữa hai đường thẳng đó.",
+      "provenance": "independent-nlu-extraction-evaluation (blind subagent, ZERO repo access, 2026-10-17, never exposed in /5-/7 SLM training or calibration)",
+      "leakage_audit": {
+        "max_4gram_vs_v7_train_val": 0.0494,
+        "max_4gram_vs_prior_slm_holdouts": 0.225,
+        "exact_match": false
+      },
+      "has_gold_facts": true
+    },
+    {
+      "case_id": "c60_D13",
+      "orig_id": "D13",
+      "corpus": "C60_BLIND_NLU",
+      "split": "dev",
+      "group": "E",
+      "n_source_requests": 1,
+      "gold_disposition": "answer_all",
+      "eval_role": "VERIFIED_POSITIVE",
+      "oracle_status": "VERIFIED_MATHEMATICAL_ORACLE",
+      "oracles": [
+        "√2"
+      ],
+      "text": "Giờ tính độ dài đoạn AH vừa dựng giúp mình.",
+      "provenance": "independent-nlu-extraction-evaluation (blind subagent, ZERO repo access, 2026-10-17, never exposed in /5-/7 SLM training or calibration)",
+      "leakage_audit": {
+        "max_4gram_vs_v7_train_val": 0.0179,
+        "max_4gram_vs_prior_slm_holdouts": 0.05,
+        "exact_match": false
+      },
+      "has_gold_facts": true
+    },
+    {
+      "case_id": "c60_D14",
+      "orig_id": "D14",
+      "corpus": "C60_BLIND_NLU",
+      "split": "dev",
+      "group": "E",
+      "n_source_requests": 1,
+      "gold_disposition": "clarification_required",
+      "eval_role": "NEGATIVE_OR_REFUSAL_EXPECTED",
+      "oracle_status": "VERIFIED_REFUSAL_DISPOSITION",
+      "oracles": [],
+      "text": "Cho điểm đó nhấp nháy để mình dễ theo dõi.",
+      "provenance": "independent-nlu-extraction-evaluation (blind subagent, ZERO repo access, 2026-10-17, never exposed in /5-/7 SLM training or calibration)",
+      "leakage_audit": {
+        "max_4gram_vs_v7_train_val": 0.0,
+        "max_4gram_vs_prior_slm_holdouts": 0.0,
+        "exact_match": false
+      },
+      "has_gold_facts": true
+    },
+    {
+      "case_id": "c60_D15",
+      "orig_id": "D15",
+      "corpus": "C60_BLIND_NLU",
+      "split": "dev",
+      "group": "F",
+      "n_source_requests": 1,
+      "gold_disposition": "refuse_contradictory",
+      "eval_role": "NEGATIVE_OR_REFUSAL_EXPECTED",
+      "oracle_status": "VERIFIED_REFUSAL_DISPOSITION",
+      "oracles": [],
+      "text": "Cho hình chóp S.ABC có đáy ABC là tam giác vuông tại A với AB = 3, AC = 4, BC = 6; SA vuông góc với đáy, SA = 2. Tính thể tích khối chóp.",
+      "provenance": "independent-nlu-extraction-evaluation (blind subagent, ZERO repo access, 2026-10-17, never exposed in /5-/7 SLM training or calibration)",
+      "leakage_audit": {
+        "max_4gram_vs_v7_train_val": 0.087,
+        "max_4gram_vs_prior_slm_holdouts": 0.3556,
+        "exact_match": false
+      },
+      "has_gold_facts": true
+    },
+    {
+      "case_id": "c60_D16",
+      "orig_id": "D16",
+      "corpus": "C60_BLIND_NLU",
+      "split": "dev",
+      "group": "F",
+      "n_source_requests": 1,
+      "gold_disposition": "refuse_missing_info",
+      "eval_role": "NEGATIVE_OR_REFUSAL_EXPECTED",
+      "oracle_status": "VERIFIED_REFUSAL_DISPOSITION",
+      "oracles": [],
+      "text": "Cho hình chóp S.ABCD có đáy là hình vuông cạnh 3 và SA vuông góc với mặt đáy. Tính thể tích khối chóp S.ABCD.",
+      "provenance": "independent-nlu-extraction-evaluation (blind subagent, ZERO repo access, 2026-10-17, never exposed in /5-/7 SLM training or calibration)",
+      "leakage_audit": {
+        "max_4gram_vs_v7_train_val": 0.0794,
+        "max_4gram_vs_prior_slm_holdouts": 0.25,
+        "exact_match": false
+      },
+      "has_gold_facts": true
+    },
+    {
+      "case_id": "c60_L01",
+      "orig_id": "L01",
+      "corpus": "C60_BLIND_NLU",
+      "split": "locked",
+      "group": "A",
+      "n_source_requests": 1,
+      "gold_disposition": "answer_all",
+      "eval_role": "VERIFIED_POSITIVE",
+      "oracle_status": "VERIFIED_MATHEMATICAL_ORACLE",
+      "oracles": [
+        "13"
+      ],
+      "text": "Cho hình hộp chữ nhật ABCD.A'B'C'D' có AB = 3, AD = 4, AA' = 12. Tính độ dài đường chéo AC'.",
+      "provenance": "independent-nlu-extraction-evaluation (blind subagent, ZERO repo access, 2026-10-17, never exposed in /5-/7 SLM training or calibration)",
+      "leakage_audit": {
+        "max_4gram_vs_v7_train_val": 0.0972,
+        "max_4gram_vs_prior_slm_holdouts": 0.2105,
+        "exact_match": false
+      },
+      "has_gold_facts": true
+    },
+    {
+      "case_id": "c60_L02",
+      "orig_id": "L02",
+      "corpus": "C60_BLIND_NLU",
+      "split": "locked",
+      "group": "A",
+      "n_source_requests": 1,
+      "gold_disposition": "answer_all",
+      "eval_role": "VERIFIED_POSITIVE",
+      "oracle_status": "VERIFIED_MATHEMATICAL_ORACLE",
+      "oracles": [
+        "13"
+      ],
+      "text": "Một hình hộp chữ nhật ABCD.A'B'C'D' có ba kích thước AB = 3, AD = 4 và AA' = 12. Đường chéo AC' dài bao nhiêu?",
+      "provenance": "independent-nlu-extraction-evaluation (blind subagent, ZERO repo access, 2026-10-17, never exposed in /5-/7 SLM training or calibration)",
+      "leakage_audit": {
+        "max_4gram_vs_v7_train_val": 0.0779,
+        "max_4gram_vs_prior_slm_holdouts": 0.1628,
+        "exact_match": false
+      },
+      "has_gold_facts": true
+    },
+    {
+      "case_id": "c60_L03",
+      "orig_id": "L03",
+      "corpus": "C60_BLIND_NLU",
+      "split": "locked",
+      "group": "A",
+      "n_source_requests": 1,
+      "gold_disposition": "answer_all",
+      "eval_role": "VERIFIED_POSITIVE",
+      "oracle_status": "VERIFIED_MATHEMATICAL_ORACLE",
+      "oracles": [
+        "13"
+      ],
+      "text": "hình hộp chữ nhật ABCD.A'B'C'D' với AB=3, AD=4, AA'=12 thì đoạn AC' bằng mấy",
+      "provenance": "independent-nlu-extraction-evaluation (blind subagent, ZERO repo access, 2026-10-17, never exposed in /5-/7 SLM training or calibration)",
+      "leakage_audit": {
+        "max_4gram_vs_v7_train_val": 0.1,
+        "max_4gram_vs_prior_slm_holdouts": 0.1579,
+        "exact_match": false
+      },
+      "has_gold_facts": true
+    },
+    {
+      "case_id": "c60_L04",
+      "orig_id": "L04",
+      "corpus": "C60_BLIND_NLU",
+      "split": "locked",
+      "group": "A",
+      "n_source_requests": 1,
+      "gold_disposition": "answer_all",
+      "eval_role": "VERIFIED_POSITIVE",
+      "oracle_status": "VERIFIED_MATHEMATICAL_ORACLE",
+      "oracles": [
+        "2√3/3"
+      ],
+      "text": "Cho hình lập phương ABCD.A'B'C'D' có cạnh bằng 2. Tính khoảng cách từ A đến mặt phẳng (A'BD).",
+      "provenance": "independent-nlu-extraction-evaluation (blind subagent, ZERO repo access, 2026-10-17, never exposed in /5-/7 SLM training or calibration)",
+      "leakage_audit": {
+        "max_4gram_vs_v7_train_val": 0.0741,
+        "max_4gram_vs_prior_slm_holdouts": 0.3214,
+        "exact_match": false
+      },
+      "has_gold_facts": true
+    },
+    {
+      "case_id": "c60_L05",
+      "orig_id": "L05",
+      "corpus": "C60_BLIND_NLU",
+      "split": "locked",
+      "group": "A",
+      "n_source_requests": 1,
+      "gold_disposition": "answer_all",
+      "eval_role": "VERIFIED_POSITIVE",
+      "oracle_status": "VERIFIED_MATHEMATICAL_ORACLE",
+      "oracles": [
+        "2√3/3"
+      ],
+      "text": "Điểm A cách mặt phẳng (A'BD) bao nhiêu, biết ABCD.A'B'C'D' là hình lập phương có cạnh 2?",
+      "provenance": "independent-nlu-extraction-evaluation (blind subagent, ZERO repo access, 2026-10-17, never exposed in /5-/7 SLM training or calibration)",
+      "leakage_audit": {
+        "max_4gram_vs_v7_train_val": 0.0263,
+        "max_4gram_vs_prior_slm_holdouts": 0.0588,
+        "exact_match": false
+      },
+      "has_gold_facts": true
+    },
+    {
+      "case_id": "c60_L06",
+      "orig_id": "L06",
+      "corpus": "C60_BLIND_NLU",
+      "split": "locked",
+      "group": "A",
+      "n_source_requests": 1,
+      "gold_disposition": "answer_all",
+      "eval_role": "VERIFIED_POSITIVE",
+      "oracle_status": "VERIFIED_MATHEMATICAL_ORACLE",
+      "oracles": [
+        "cos²=1/2"
+      ],
+      "text": "Cho hình chóp S.ABCD có đáy ABCD là hình chữ nhật, AB = 3, AD = 4. Cạnh bên SA vuông góc với đáy và SA = 5. Tính góc giữa đường thẳng SC và mặt phẳng (ABCD).",
+      "provenance": "independent-nlu-extraction-evaluation (blind subagent, ZERO repo access, 2026-10-17, never exposed in /5-/7 SLM training or calibration)",
+      "leakage_audit": {
+        "max_4gram_vs_v7_train_val": 0.0638,
+        "max_4gram_vs_prior_slm_holdouts": 0.2075,
+        "exact_match": false
+      },
+      "has_gold_facts": true
+    },
+    {
+      "case_id": "c60_L07",
+      "orig_id": "L07",
+      "corpus": "C60_BLIND_NLU",
+      "split": "locked",
+      "group": "A",
+      "n_source_requests": 1,
+      "gold_disposition": "answer_all",
+      "eval_role": "VERIFIED_POSITIVE",
+      "oracle_status": "VERIFIED_MATHEMATICAL_ORACLE",
+      "oracles": [
+        "cos²=1/2"
+      ],
+      "text": "Hình chóp S.ABCD: đáy hình chữ nhật với AB = 3, AD = 4; SA ⊥ (ABCD), SA = 5. Đường thẳng SC tạo với mặt đáy một góc bằng bao nhiêu độ?",
+      "provenance": "independent-nlu-extraction-evaluation (blind subagent, ZERO repo access, 2026-10-17, never exposed in /5-/7 SLM training or calibration)",
+      "leakage_audit": {
+        "max_4gram_vs_v7_train_val": 0.0217,
+        "max_4gram_vs_prior_slm_holdouts": 0.0294,
+        "exact_match": false
+      },
+      "has_gold_facts": true
+    },
+    {
+      "case_id": "c60_L08",
+      "orig_id": "L08",
+      "corpus": "C60_BLIND_NLU",
+      "split": "locked",
+      "group": "A",
+      "n_source_requests": 2,
+      "gold_disposition": "answer_all",
+      "eval_role": "NON_SCALAR_UI_OR_CONSTRUCT",
+      "oracle_status": "GROUND_TRUTH_UNVERIFIED_OR_NON_SCALAR",
+      "oracles": [],
+      "text": "Cho chóp S.ABCD đáy là hcn ABCD (AB = 3, AD = 4), SA = 5 và SA vuông góc mp đáy. Vẽ cho mình góc giữa SC và mặt phẳng ABCD, rồi giải thích vì sao đó chính là góc cần tìm.",
+      "provenance": "independent-nlu-extraction-evaluation (blind subagent, ZERO repo access, 2026-10-17, never exposed in /5-/7 SLM training or calibration)",
+      "leakage_audit": {
+        "max_4gram_vs_v7_train_val": 0.0,
+        "max_4gram_vs_prior_slm_holdouts": 0.0159,
+        "exact_match": false
+      },
+      "has_gold_facts": true
+    },
+    {
+      "case_id": "c60_L09",
+      "orig_id": "L09",
+      "corpus": "C60_BLIND_NLU",
+      "split": "locked",
+      "group": "B",
+      "n_source_requests": 1,
+      "gold_disposition": "answer_all",
+      "eval_role": "VERIFIED_POSITIVE",
+      "oracle_status": "VERIFIED_MATHEMATICAL_ORACLE",
+      "oracles": [
+        "5√2"
+      ],
+      "text": "Cho hình chóp S.ABCD có đáy là hình chữ nhật ABCD với AB = 3, AD = 4, SA vuông góc với đáy, SA = 5. Tính độ dài SC.",
+      "provenance": "independent-nlu-extraction-evaluation (blind subagent, ZERO repo access, 2026-10-17, never exposed in /5-/7 SLM training or calibration)",
+      "leakage_audit": {
+        "max_4gram_vs_v7_train_val": 0.0395,
+        "max_4gram_vs_prior_slm_holdouts": 0.12,
+        "exact_match": false
+      },
+      "has_gold_facts": true
+    },
+    {
+      "case_id": "c60_L10",
+      "orig_id": "L10",
+      "corpus": "C60_BLIND_NLU",
+      "split": "locked",
+      "group": "B",
+      "n_source_requests": 1,
+      "gold_disposition": "answer_all",
+      "eval_role": "VERIFIED_POSITIVE",
+      "oracle_status": "VERIFIED_MATHEMATICAL_ORACLE",
+      "oracles": [
+        "50"
+      ],
+      "text": "Cho hình chóp S.ABCD có đáy là hình chữ nhật ABCD với AB = 3, AD = 4, SA vuông góc với đáy, SA = 5. Tính SC².",
+      "provenance": "independent-nlu-extraction-evaluation (blind subagent, ZERO repo access, 2026-10-17, never exposed in /5-/7 SLM training or calibration)",
+      "leakage_audit": {
+        "max_4gram_vs_v7_train_val": 0.0405,
+        "max_4gram_vs_prior_slm_holdouts": 0.125,
+        "exact_match": false
+      },
+      "has_gold_facts": true
+    },
+    {
+      "case_id": "c60_L11",
+      "orig_id": "L11",
+      "corpus": "C60_BLIND_NLU",
+      "split": "locked",
+      "group": "B",
+      "n_source_requests": 1,
+      "gold_disposition": "answer_all",
+      "eval_role": "VERIFIED_POSITIVE",
+      "oracle_status": "VERIFIED_MATHEMATICAL_ORACLE",
+      "oracles": [
+        "√42/3"
+      ],
+      "text": "Cho hình chóp S.ABCD có đáy ABCD là hình bình hành với AB = 2, AD = √2, góc BAD = 135°; SA vuông góc với mặt phẳng đáy và SA = 1. Tính khoảng cách từ B đến đường thẳng SD.",
+      "provenance": "independent-nlu-extraction-evaluation (blind subagent, ZERO repo access, 2026-10-17, never exposed in /5-/7 SLM training or calibration)",
+      "leakage_audit": {
+        "max_4gram_vs_v7_train_val": 0.0581,
+        "max_4gram_vs_prior_slm_holdouts": 0.1964,
+        "exact_match": false
+      },
+      "has_gold_facts": true
+    },
+    {
+      "case_id": "c60_L12",
+      "orig_id": "L12",
+      "corpus": "C60_BLIND_NLU",
+      "split": "locked",
+      "group": "B",
+      "n_source_requests": 1,
+      "gold_disposition": "answer_all",
+      "eval_role": "VERIFIED_POSITIVE",
+      "oracle_status": "VERIFIED_MATHEMATICAL_ORACLE",
+      "oracles": [
+        "√5"
+      ],
+      "text": "Cho hình chóp S.ABCD có đáy ABCD là hình bình hành với AB = 2, AD = √2, góc BAD = 135°; SA vuông góc với mặt phẳng đáy và SA = 1. Tính khoảng cách từ B đến đoạn thẳng SD.",
+      "provenance": "independent-nlu-extraction-evaluation (blind subagent, ZERO repo access, 2026-10-17, never exposed in /5-/7 SLM training or calibration)",
+      "leakage_audit": {
+        "max_4gram_vs_v7_train_val": 0.0581,
+        "max_4gram_vs_prior_slm_holdouts": 0.1964,
+        "exact_match": false
+      },
+      "has_gold_facts": true
+    },
+    {
+      "case_id": "c60_L13",
+      "orig_id": "L13",
+      "corpus": "C60_BLIND_NLU",
+      "split": "locked",
+      "group": "B",
+      "n_source_requests": 1,
+      "gold_disposition": "answer_all",
+      "eval_role": "VERIFIED_POSITIVE",
+      "oracle_status": "VERIFIED_MATHEMATICAL_ORACLE",
+      "oracles": [
+        "cos²=25/169"
+      ],
+      "text": "Cho hình hộp chữ nhật ABCD.A'B'C'D' có AB = 3, AD = 4, AA' = 12. Tính cos² của góc giữa đường chéo AC' và mặt phẳng (ABCD).",
+      "provenance": "independent-nlu-extraction-evaluation (blind subagent, ZERO repo access, 2026-10-17, never exposed in /5-/7 SLM training or calibration)",
+      "leakage_audit": {
+        "max_4gram_vs_v7_train_val": 0.0897,
+        "max_4gram_vs_prior_slm_holdouts": 0.1818,
+        "exact_match": false
+      },
+      "has_gold_facts": true
+    },
+    {
+      "case_id": "c60_L14",
+      "orig_id": "L14",
+      "corpus": "C60_BLIND_NLU",
+      "split": "locked",
+      "group": "B",
+      "n_source_requests": 1,
+      "gold_disposition": "answer_all",
+      "eval_role": "VERIFIED_POSITIVE",
+      "oracle_status": "VERIFIED_MATHEMATICAL_ORACLE",
+      "oracles": [
+        "cos²=25/169"
+      ],
+      "text": "Cho hình hộp chữ nhật ABCD.A'B'C'D' có AB = 3, AD = 4, AA' = 12. Tính góc giữa đường chéo AC' và mặt phẳng (ABCD).",
+      "provenance": "independent-nlu-extraction-evaluation (blind subagent, ZERO repo access, 2026-10-17, never exposed in /5-/7 SLM training or calibration)",
+      "leakage_audit": {
+        "max_4gram_vs_v7_train_val": 0.0921,
+        "max_4gram_vs_prior_slm_holdouts": 0.1905,
+        "exact_match": false
+      },
+      "has_gold_facts": true
+    },
+    {
+      "case_id": "c60_L15",
+      "orig_id": "L15",
+      "corpus": "C60_BLIND_NLU",
+      "split": "locked",
+      "group": "B",
+      "n_source_requests": 1,
+      "gold_disposition": "answer_all",
+      "eval_role": "VERIFIED_POSITIVE",
+      "oracle_status": "VERIFIED_MATHEMATICAL_ORACLE",
+      "oracles": [
+        "√2"
+      ],
+      "text": "Cho hình lập phương ABCD.A'B'C'D' cạnh 2. Tính khoảng cách từ điểm A' đến mặt phẳng (ABC'D').",
+      "provenance": "independent-nlu-extraction-evaluation (blind subagent, ZERO repo access, 2026-10-17, never exposed in /5-/7 SLM training or calibration)",
+      "leakage_audit": {
+        "max_4gram_vs_v7_train_val": 0.0882,
+        "max_4gram_vs_prior_slm_holdouts": 0.2,
+        "exact_match": false
+      },
+      "has_gold_facts": true
+    },
+    {
+      "case_id": "c60_L16",
+      "orig_id": "L16",
+      "corpus": "C60_BLIND_NLU",
+      "split": "locked",
+      "group": "B",
+      "n_source_requests": 1,
+      "gold_disposition": "refuse_nonexistent_object",
+      "eval_role": "NEGATIVE_OR_REFUSAL_EXPECTED",
+      "oracle_status": "VERIFIED_REFUSAL_DISPOSITION",
+      "oracles": [],
+      "text": "Cho hình lập phương ABCD.A'B'C'D' cạnh 2. Tính khoảng cách từ điểm A' đến mặt phẳng (ABC'D).",
+      "provenance": "independent-nlu-extraction-evaluation (blind subagent, ZERO repo access, 2026-10-17, never exposed in /5-/7 SLM training or calibration)",
+      "leakage_audit": {
+        "max_4gram_vs_v7_train_val": 0.0882,
+        "max_4gram_vs_prior_slm_holdouts": 0.2,
+        "exact_match": false
+      },
+      "has_gold_facts": true
+    },
+    {
+      "case_id": "c60_L17",
+      "orig_id": "L17",
+      "corpus": "C60_BLIND_NLU",
+      "split": "locked",
+      "group": "B",
+      "n_source_requests": 1,
+      "gold_disposition": "answer_all",
+      "eval_role": "NON_SCALAR_UI_OR_CONSTRUCT",
+      "oracle_status": "GROUND_TRUTH_UNVERIFIED_OR_NON_SCALAR",
+      "oracles": [],
+      "text": "Cho hình chóp S.ABCD có đáy là hình chữ nhật ABCD và SA vuông góc với đáy. Tìm giao tuyến của hai mặt phẳng (SAB) và (SCD).",
+      "provenance": "independent-nlu-extraction-evaluation (blind subagent, ZERO repo access, 2026-10-17, never exposed in /5-/7 SLM training or calibration)",
+      "leakage_audit": {
+        "max_4gram_vs_v7_train_val": 0.0395,
+        "max_4gram_vs_prior_slm_holdouts": 0.12,
+        "exact_match": false
+      },
+      "has_gold_facts": true
+    },
+    {
+      "case_id": "c60_L18",
+      "orig_id": "L18",
+      "corpus": "C60_BLIND_NLU",
+      "split": "locked",
+      "group": "C",
+      "n_source_requests": 1,
+      "gold_disposition": "answer_all",
+      "eval_role": "NON_SCALAR_UI_OR_CONSTRUCT",
+      "oracle_status": "GROUND_TRUTH_UNVERIFIED_OR_NON_SCALAR",
+      "oracles": [],
+      "text": "Cho hình chóp S.ABCD có đáy là hình bình hành. Tìm giao tuyến của mặt phẳng (SAC) với mặt phẳng (SBD).",
+      "provenance": "independent-nlu-extraction-evaluation (blind subagent, ZERO repo access, 2026-10-17, never exposed in /5-/7 SLM training or calibration)",
+      "leakage_audit": {
+        "max_4gram_vs_v7_train_val": 0.0282,
+        "max_4gram_vs_prior_slm_holdouts": 0.1081,
+        "exact_match": false
+      },
+      "has_gold_facts": true
+    },
+    {
+      "case_id": "c60_L19",
+      "orig_id": "L19",
+      "corpus": "C60_BLIND_NLU",
+      "split": "locked",
+      "group": "C",
+      "n_source_requests": 1,
+      "gold_disposition": "answer_all",
+      "eval_role": "VERIFIED_POSITIVE",
+      "oracle_status": "VERIFIED_MATHEMATICAL_ORACLE",
+      "oracles": [
+        "√3"
+      ],
+      "text": "Tứ diện OABC có OA, OB, OC đôi một vuông góc và OA = OB = OC = 3. Tính khoảng cách từ O đến trọng tâm của tam giác ABC.",
+      "provenance": "independent-nlu-extraction-evaluation (blind subagent, ZERO repo access, 2026-10-17, never exposed in /5-/7 SLM training or calibration)",
+      "leakage_audit": {
+        "max_4gram_vs_v7_train_val": 0.0215,
+        "max_4gram_vs_prior_slm_holdouts": 0.0638,
+        "exact_match": false
+      },
+      "has_gold_facts": true
+    },
+    {
+      "case_id": "c60_L20",
+      "orig_id": "L20",
+      "corpus": "C60_BLIND_NLU",
+      "split": "locked",
+      "group": "C",
+      "n_source_requests": 1,
+      "gold_disposition": "answer_all",
+      "eval_role": "VERIFIED_POSITIVE",
+      "oracle_status": "VERIFIED_MATHEMATICAL_ORACLE",
+      "oracles": [
+        "3a/2"
+      ],
+      "text": "Cho hình lập phương ABCD.A'B'C'D' cạnh a. Lấy trung điểm của cạnh CC' rồi đặt tên nó là M. Tính độ dài đoạn AM.",
+      "provenance": "independent-nlu-extraction-evaluation (blind subagent, ZERO repo access, 2026-10-17, never exposed in /5-/7 SLM training or calibration)",
+      "leakage_audit": {
+        "max_4gram_vs_v7_train_val": 0.0244,
+        "max_4gram_vs_prior_slm_holdouts": 0.1667,
+        "exact_match": false
+      },
+      "has_gold_facts": true
+    },
+    {
+      "case_id": "c60_L21",
+      "orig_id": "L21",
+      "corpus": "C60_BLIND_NLU",
+      "split": "locked",
+      "group": "C",
+      "n_source_requests": 1,
+      "gold_disposition": "answer_all",
+      "eval_role": "VERIFIED_POSITIVE",
+      "oracle_status": "VERIFIED_MATHEMATICAL_ORACLE",
+      "oracles": [
+        "3"
+      ],
+      "text": "Cho lăng trụ đứng ABC.A'B'C' có đáy là tam giác vuông cân tại A, AB = AC = 2, cạnh bên AA' = 4. Tính khoảng cách từ C đến tâm của mặt bên ABB'A'.",
+      "provenance": "independent-nlu-extraction-evaluation (blind subagent, ZERO repo access, 2026-10-17, never exposed in /5-/7 SLM training or calibration)",
+      "leakage_audit": {
+        "max_4gram_vs_v7_train_val": 0.1075,
+        "max_4gram_vs_prior_slm_holdouts": 0.2034,
+        "exact_match": false
+      },
+      "has_gold_facts": true
+    },
+    {
+      "case_id": "c60_L22",
+      "orig_id": "L22",
+      "corpus": "C60_BLIND_NLU",
+      "split": "locked",
+      "group": "C",
+      "n_source_requests": 1,
+      "gold_disposition": "answer_all",
+      "eval_role": "VERIFIED_POSITIVE",
+      "oracle_status": "VERIFIED_MATHEMATICAL_ORACLE",
+      "oracles": [
+        "√2"
+      ],
+      "text": "Cho hình chóp S.ABC có SA vuông góc với mặt phẳng (ABC), tam giác ABC vuông tại B, AB = BC = 2, SA = 2. Tính độ dài đoạn nối A với chân đường vuông góc hạ từ A xuống mặt phẳng (SBC).",
+      "provenance": "independent-nlu-extraction-evaluation (blind subagent, ZERO repo access, 2026-10-17, never exposed in /5-/7 SLM training or calibration)",
+      "leakage_audit": {
+        "max_4gram_vs_v7_train_val": 0.0323,
+        "max_4gram_vs_prior_slm_holdouts": 0.1228,
+        "exact_match": false
+      },
+      "has_gold_facts": true
+    },
+    {
+      "case_id": "c60_L23",
+      "orig_id": "L23",
+      "corpus": "C60_BLIND_NLU",
+      "split": "locked",
+      "group": "D",
+      "n_source_requests": 3,
+      "gold_disposition": "answer_all",
+      "eval_role": "VERIFIED_POSITIVE",
+      "oracle_status": "VERIFIED_MATHEMATICAL_ORACLE",
+      "oracles": [
+        "2/3",
+        "√6",
+        "√6/3"
+      ],
+      "text": "Tứ diện OABC có ba cạnh OA, OB, OC đôi một vuông góc; OA = 1, OB = OC = 2. Tính thể tích tứ diện, diện tích tam giác ABC, rồi suy ra khoảng cách từ O đến (ABC).",
+      "provenance": "independent-nlu-extraction-evaluation (blind subagent, ZERO repo access, 2026-10-17, never exposed in /5-/7 SLM training or calibration)",
+      "leakage_audit": {
+        "max_4gram_vs_v7_train_val": 0.012,
+        "max_4gram_vs_prior_slm_holdouts": 0.0351,
+        "exact_match": false
+      },
+      "has_gold_facts": true
+    },
+    {
+      "case_id": "c60_L24",
+      "orig_id": "L24",
+      "corpus": "C60_BLIND_NLU",
+      "split": "locked",
+      "group": "D",
+      "n_source_requests": 2,
+      "gold_disposition": "answer_all",
+      "eval_role": "VERIFIED_POSITIVE",
+      "oracle_status": "VERIFIED_MATHEMATICAL_ORACLE",
+      "oracles": [
+        "2",
+        "cos²=1/6"
+      ],
+      "text": "Cho lăng trụ đứng ABC.A'B'C', đáy ABC là tam giác vuông tại A có AB = 1 và AC = 2, chiều cao AA' = 2. a) Tính thể tích khối lăng trụ. b) Tính góc giữa hai mặt phẳng (A'BC) và (ABC).",
+      "provenance": "independent-nlu-extraction-evaluation (blind subagent, ZERO repo access, 2026-10-17, never exposed in /5-/7 SLM training or calibration)",
+      "leakage_audit": {
+        "max_4gram_vs_v7_train_val": 0.099,
+        "max_4gram_vs_prior_slm_holdouts": 0.1525,
+        "exact_match": false
+      },
+      "has_gold_facts": true
+    },
+    {
+      "case_id": "c60_L25",
+      "orig_id": "L25",
+      "corpus": "C60_BLIND_NLU",
+      "split": "locked",
+      "group": "D",
+      "n_source_requests": 2,
+      "gold_disposition": "answer_all",
+      "eval_role": "VERIFIED_POSITIVE",
+      "oracle_status": "VERIFIED_MATHEMATICAL_ORACLE",
+      "oracles": [
+        "15√34/34"
+      ],
+      "text": "Cho hình chóp S.ABCD có đáy ABCD là hình chữ nhật, AB = 3, AD = 4, SA ⊥ (ABCD), SA = 5. Hãy dựng hình chiếu vuông góc của A trên mặt phẳng (SBC), gọi là H, rồi tính độ dài AH.",
+      "provenance": "independent-nlu-extraction-evaluation (blind subagent, ZERO repo access, 2026-10-17, never exposed in /5-/7 SLM training or calibration)",
+      "leakage_audit": {
+        "max_4gram_vs_v7_train_val": 0.0505,
+        "max_4gram_vs_prior_slm_holdouts": 0.1724,
+        "exact_match": false
+      },
+      "has_gold_facts": true
+    },
+    {
+      "case_id": "c60_L26",
+      "orig_id": "L26",
+      "corpus": "C60_BLIND_NLU",
+      "split": "locked",
+      "group": "D",
+      "n_source_requests": 2,
+      "gold_disposition": "answer_all",
+      "eval_role": "VERIFIED_POSITIVE",
+      "oracle_status": "VERIFIED_MATHEMATICAL_ORACLE",
+      "oracles": [
+        "a³/3",
+        "cos²=1/2"
+      ],
+      "text": "Cho hình chóp S.ABCD có đáy là hình vuông cạnh a, SA ⊥ đáy và SA = a. Tính thể tích khối chóp và góc giữa SB với mặt phẳng đáy.",
+      "provenance": "independent-nlu-extraction-evaluation (blind subagent, ZERO repo access, 2026-10-17, never exposed in /5-/7 SLM training or calibration)",
+      "leakage_audit": {
+        "max_4gram_vs_v7_train_val": 0.0588,
+        "max_4gram_vs_prior_slm_holdouts": 0.3,
+        "exact_match": false
+      },
+      "has_gold_facts": true
+    },
+    {
+      "case_id": "c60_L27",
+      "orig_id": "L27",
+      "corpus": "C60_BLIND_NLU",
+      "split": "locked",
+      "group": "D",
+      "n_source_requests": 3,
+      "gold_disposition": "answer_all",
+      "eval_role": "VERIFIED_POSITIVE",
+      "oracle_status": "VERIFIED_MATHEMATICAL_ORACLE",
+      "oracles": [
+        "3",
+        "4",
+        "2√5/5"
+      ],
+      "text": "Cho hình hộp chữ nhật ABCD.A'B'C'D' có AB = 1, AD = 2, AA' = 2. Tính BD', tính thể tích khối hộp, và tính khoảng cách giữa hai đường thẳng AA' và BD'.",
+      "provenance": "independent-nlu-extraction-evaluation (blind subagent, ZERO repo access, 2026-10-17, never exposed in /5-/7 SLM training or calibration)",
+      "leakage_audit": {
+        "max_4gram_vs_v7_train_val": 0.0833,
+        "max_4gram_vs_prior_slm_holdouts": 0.16,
+        "exact_match": false
+      },
+      "has_gold_facts": true
+    },
+    {
+      "case_id": "c60_L28",
+      "orig_id": "L28",
+      "corpus": "C60_BLIND_NLU",
+      "split": "locked",
+      "group": "D",
+      "n_source_requests": 2,
+      "gold_disposition": "answer_all",
+      "eval_role": "VERIFIED_POSITIVE",
+      "oracle_status": "VERIFIED_MATHEMATICAL_ORACLE",
+      "oracles": [
+        "√6",
+        "2√3"
+      ],
+      "text": "Cho hình chóp S.ABC có SA vuông góc với đáy, đáy ABC là tam giác vuông cân tại A với AB = AC = 2, SA = 2. Gọi M là trung điểm BC. Tính độ dài SM, sau đó dựa vào SM tính diện tích tam giác SBC.",
+      "provenance": "independent-nlu-extraction-evaluation (blind subagent, ZERO repo access, 2026-10-17, never exposed in /5-/7 SLM training or calibration)",
+      "leakage_audit": {
+        "max_4gram_vs_v7_train_val": 0.0392,
+        "max_4gram_vs_prior_slm_holdouts": 0.1311,
+        "exact_match": false
+      },
+      "has_gold_facts": true
+    },
+    {
+      "case_id": "c60_L29",
+      "orig_id": "L29",
+      "corpus": "C60_BLIND_NLU",
+      "split": "locked",
+      "group": "D",
+      "n_source_requests": 2,
+      "gold_disposition": "answer_all",
+      "eval_role": "VERIFIED_POSITIVE",
+      "oracle_status": "VERIFIED_MATHEMATICAL_ORACLE",
+      "oracles": [
+        "a√3/3",
+        "cos²=1/4"
+      ],
+      "text": "Cho hình lập phương ABCD.A'B'C'D' cạnh a. Tính khoảng cách giữa hai đường thẳng BD và B'C. Ngoài ra, hai đường thẳng này hợp với nhau một góc bao nhiêu?",
+      "provenance": "independent-nlu-extraction-evaluation (blind subagent, ZERO repo access, 2026-10-17, never exposed in /5-/7 SLM training or calibration)",
+      "leakage_audit": {
+        "max_4gram_vs_v7_train_val": 0.0494,
+        "max_4gram_vs_prior_slm_holdouts": 0.1395,
+        "exact_match": false
+      },
+      "has_gold_facts": true
+    },
+    {
+      "case_id": "c60_L30",
+      "orig_id": "L30",
+      "corpus": "C60_BLIND_NLU",
+      "split": "locked",
+      "group": "D",
+      "n_source_requests": 3,
+      "gold_disposition": "answer_all",
+      "eval_role": "VERIFIED_POSITIVE",
+      "oracle_status": "VERIFIED_MATHEMATICAL_ORACLE",
+      "oracles": [
+        "√41",
+        "cos²=32/41",
+        "16"
+      ],
+      "text": "Cho hình chóp S.ABCD có đáy ABCD là hình vuông cạnh 4, SA vuông góc với đáy, SA = 3. Tính SC rồi tính cos² góc giữa SC và đáy, sau đó tính thể tích khối chóp.",
+      "provenance": "independent-nlu-extraction-evaluation (blind subagent, ZERO repo access, 2026-10-17, never exposed in /5-/7 SLM training or calibration)",
+      "leakage_audit": {
+        "max_4gram_vs_v7_train_val": 0.0972,
+        "max_4gram_vs_prior_slm_holdouts": 0.2444,
+        "exact_match": false
+      },
+      "has_gold_facts": true
+    },
+    {
+      "case_id": "c60_L31",
+      "orig_id": "L31",
+      "corpus": "C60_BLIND_NLU",
+      "split": "locked",
+      "group": "E",
+      "n_source_requests": 1,
+      "gold_disposition": "answer_all",
+      "eval_role": "VERIFIED_POSITIVE",
+      "oracle_status": "VERIFIED_MATHEMATICAL_ORACLE",
+      "oracles": [
+        "1"
+      ],
+      "text": "Khoảng cách từ giao điểm ấy tới mặt đáy ABCD bằng bao nhiêu?",
+      "provenance": "independent-nlu-extraction-evaluation (blind subagent, ZERO repo access, 2026-10-17, never exposed in /5-/7 SLM training or calibration)",
+      "leakage_audit": {
+        "max_4gram_vs_v7_train_val": 0.0,
+        "max_4gram_vs_prior_slm_holdouts": 0.0233,
+        "exact_match": false
+      },
+      "has_gold_facts": true
+    },
+    {
+      "case_id": "c60_L32",
+      "orig_id": "L32",
+      "corpus": "C60_BLIND_NLU",
+      "split": "locked",
+      "group": "E",
+      "n_source_requests": 2,
+      "gold_disposition": "answer_all",
+      "eval_role": "NON_SCALAR_UI_OR_CONSTRUCT",
+      "oracle_status": "GROUND_TRUTH_UNVERIFIED_OR_NON_SCALAR",
+      "oracles": [],
+      "text": "Đổi màu đường thẳng vừa dựng sang đỏ và ẩn mặt đáy đi cho dễ nhìn.",
+      "provenance": "independent-nlu-extraction-evaluation (blind subagent, ZERO repo access, 2026-10-17, never exposed in /5-/7 SLM training or calibration)",
+      "leakage_audit": {
+        "max_4gram_vs_v7_train_val": 0.0,
+        "max_4gram_vs_prior_slm_holdouts": 0.0,
+        "exact_match": false
+      },
+      "has_gold_facts": true
+    },
+    {
+      "case_id": "c60_L33",
+      "orig_id": "L33",
+      "corpus": "C60_BLIND_NLU",
+      "split": "locked",
+      "group": "E",
+      "n_source_requests": 1,
+      "gold_disposition": "clarification_required",
+      "eval_role": "NEGATIVE_OR_REFUSAL_EXPECTED",
+      "oracle_status": "VERIFIED_REFUSAL_DISPOSITION",
+      "oracles": [],
+      "text": "Tính tiếp độ dài của đoạn mình vừa dựng ở trên nhé.",
+      "provenance": "independent-nlu-extraction-evaluation (blind subagent, ZERO repo access, 2026-10-17, never exposed in /5-/7 SLM training or calibration)",
+      "leakage_audit": {
+        "max_4gram_vs_v7_train_val": 0.0,
+        "max_4gram_vs_prior_slm_holdouts": 0.0,
+        "exact_match": false
+      },
+      "has_gold_facts": true
+    },
+    {
+      "case_id": "c60_L34",
+      "orig_id": "L34",
+      "corpus": "C60_BLIND_NLU",
+      "split": "locked",
+      "group": "E",
+      "n_source_requests": 1,
+      "gold_disposition": "clarification_required",
+      "eval_role": "NEGATIVE_OR_REFUSAL_EXPECTED",
+      "oracle_status": "VERIFIED_REFUSAL_DISPOSITION",
+      "oracles": [],
+      "text": "Làm nổi bật điểm đó giúp mình.",
+      "provenance": "independent-nlu-extraction-evaluation (blind subagent, ZERO repo access, 2026-10-17, never exposed in /5-/7 SLM training or calibration)",
+      "leakage_audit": {
+        "max_4gram_vs_v7_train_val": 0.0,
+        "max_4gram_vs_prior_slm_holdouts": 0.0,
+        "exact_match": false
+      },
+      "has_gold_facts": true
+    },
+    {
+      "case_id": "c60_L35",
+      "orig_id": "L35",
+      "corpus": "C60_BLIND_NLU",
+      "split": "locked",
+      "group": "E",
+      "n_source_requests": 1,
+      "gold_disposition": "answer_all",
+      "eval_role": "NON_SCALAR_UI_OR_CONSTRUCT",
+      "oracle_status": "GROUND_TRUTH_UNVERIFIED_OR_NON_SCALAR",
+      "oracles": [],
+      "text": "Quay hình sao cho nhìn thẳng từ trên xuống mặt (OAB) nhé.",
+      "provenance": "independent-nlu-extraction-evaluation (blind subagent, ZERO repo access, 2026-10-17, never exposed in /5-/7 SLM training or calibration)",
+      "leakage_audit": {
+        "max_4gram_vs_v7_train_val": 0.0,
+        "max_4gram_vs_prior_slm_holdouts": 0.0,
+        "exact_match": false
+      },
+      "has_gold_facts": true
+    },
+    {
+      "case_id": "c60_L36",
+      "orig_id": "L36",
+      "corpus": "C60_BLIND_NLU",
+      "split": "locked",
+      "group": "E",
+      "n_source_requests": 2,
+      "gold_disposition": "answer_all",
+      "eval_role": "VERIFIED_POSITIVE",
+      "oracle_status": "VERIFIED_MATHEMATICAL_ORACLE",
+      "oracles": [
+        "√61/2"
+      ],
+      "text": "Ẩn tên các điểm khác, chỉ giữ lại tên điểm vừa dựng; sau đó tính SM.",
+      "provenance": "independent-nlu-extraction-evaluation (blind subagent, ZERO repo access, 2026-10-17, never exposed in /5-/7 SLM training or calibration)",
+      "leakage_audit": {
+        "max_4gram_vs_v7_train_val": 0.0,
+        "max_4gram_vs_prior_slm_holdouts": 0.0,
+        "exact_match": false
+      },
+      "has_gold_facts": true
+    },
+    {
+      "case_id": "c60_L37",
+      "orig_id": "L37",
+      "corpus": "C60_BLIND_NLU",
+      "split": "locked",
+      "group": "F",
+      "n_source_requests": 1,
+      "gold_disposition": "refuse_missing_info",
+      "eval_role": "NEGATIVE_OR_REFUSAL_EXPECTED",
+      "oracle_status": "VERIFIED_REFUSAL_DISPOSITION",
+      "oracles": [],
+      "text": "Cho hình chóp S.ABCD có đáy ABCD là hình chữ nhật với AB = 2, AD = 5, SA = 4 nhưng SA không vuông góc với mặt đáy. Tính thể tích khối chóp S.ABCD.",
+      "provenance": "independent-nlu-extraction-evaluation (blind subagent, ZERO repo access, 2026-10-17, never exposed in /5-/7 SLM training or calibration)",
+      "leakage_audit": {
+        "max_4gram_vs_v7_train_val": 0.0769,
+        "max_4gram_vs_prior_slm_holdouts": 0.3111,
+        "exact_match": false
+      },
+      "has_gold_facts": true
+    },
+    {
+      "case_id": "c60_L38",
+      "orig_id": "L38",
+      "corpus": "C60_BLIND_NLU",
+      "split": "locked",
+      "group": "F",
+      "n_source_requests": 1,
+      "gold_disposition": "answer_all",
+      "eval_role": "VERIFIED_POSITIVE",
+      "oracle_status": "VERIFIED_MATHEMATICAL_ORACLE",
+      "oracles": [
+        "3√3"
+      ],
+      "text": "Cho hình lập phương ABCD.A'B'C'D'. Nếu cạnh của hình lập phương bằng 3 thì đường chéo AC' bằng bao nhiêu?",
+      "provenance": "independent-nlu-extraction-evaluation (blind subagent, ZERO repo access, 2026-10-17, never exposed in /5-/7 SLM training or calibration)",
+      "leakage_audit": {
+        "max_4gram_vs_v7_train_val": 0.0256,
+        "max_4gram_vs_prior_slm_holdouts": 0.1875,
+        "exact_match": false
+      },
+      "has_gold_facts": true
+    },
+    {
+      "case_id": "c60_L39",
+      "orig_id": "L39",
+      "corpus": "C60_BLIND_NLU",
+      "split": "locked",
+      "group": "F",
+      "n_source_requests": 1,
+      "gold_disposition": "refuse_nonexistent_object",
+      "eval_role": "NEGATIVE_OR_REFUSAL_EXPECTED",
+      "oracle_status": "VERIFIED_REFUSAL_DISPOSITION",
+      "oracles": [],
+      "text": "Cho hình hộp chữ nhật ABCD.A'B'C'D'. Tìm giao tuyến của mặt phẳng (ABCD) và mặt phẳng (A'B'C'D').",
+      "provenance": "independent-nlu-extraction-evaluation (blind subagent, ZERO repo access, 2026-10-17, never exposed in /5-/7 SLM training or calibration)",
+      "leakage_audit": {
+        "max_4gram_vs_v7_train_val": 0.0972,
+        "max_4gram_vs_prior_slm_holdouts": 0.15,
+        "exact_match": false
+      },
+      "has_gold_facts": true
+    },
+    {
+      "case_id": "c60_L40",
+      "orig_id": "L40",
+      "corpus": "C60_BLIND_NLU",
+      "split": "locked",
+      "group": "F",
+      "n_source_requests": 1,
+      "gold_disposition": "refuse_missing_info",
+      "eval_role": "NEGATIVE_OR_REFUSAL_EXPECTED",
+      "oracle_status": "VERIFIED_REFUSAL_DISPOSITION",
+      "oracles": [],
+      "text": "Cho hình chóp S.ABC có đáy ABC là tam giác đều cạnh 2, SA = SB = 3. Tính thể tích khối chóp S.ABC.",
+      "provenance": "independent-nlu-extraction-evaluation (blind subagent, ZERO repo access, 2026-10-17, never exposed in /5-/7 SLM training or calibration)",
+      "leakage_audit": {
+        "max_4gram_vs_v7_train_val": 0.1026,
+        "max_4gram_vs_prior_slm_holdouts": 0.4516,
+        "exact_match": false
+      },
+      "has_gold_facts": true
+    },
+    {
+      "case_id": "c60_L41",
+      "orig_id": "L41",
+      "corpus": "C60_BLIND_NLU",
+      "split": "locked",
+      "group": "F",
+      "n_source_requests": 2,
+      "gold_disposition": "answer_supported_part_and_flag_rest",
+      "eval_role": "NEGATIVE_OR_REFUSAL_EXPECTED",
+      "oracle_status": "VERIFIED_REFUSAL_DISPOSITION",
+      "oracles": [
+        "2√3/3"
+      ],
+      "text": "Cho hình chóp S.ABC có SA vuông góc với đáy, tam giác ABC vuông cân tại A, AB = AC = 2 và SA = 2. Gọi M là trung điểm của BC. Chứng minh BC vuông góc với mặt phẳng (SAM) và tính khoảng cách từ A đến mặt phẳng (SBC).",
+      "provenance": "independent-nlu-extraction-evaluation (blind subagent, ZERO repo access, 2026-10-17, never exposed in /5-/7 SLM training or calibration)",
+      "leakage_audit": {
+        "max_4gram_vs_v7_train_val": 0.0556,
+        "max_4gram_vs_prior_slm_holdouts": 0.125,
+        "exact_match": false
+      },
+      "has_gold_facts": true
+    },
+    {
+      "case_id": "c60_L42",
+      "orig_id": "L42",
+      "corpus": "C60_BLIND_NLU",
+      "split": "locked",
+      "group": "F",
+      "n_source_requests": 1,
+      "gold_disposition": "out_of_scope_request",
+      "eval_role": "NEGATIVE_OR_REFUSAL_EXPECTED",
+      "oracle_status": "VERIFIED_REFUSAL_DISPOSITION",
+      "oracles": [],
+      "text": "Cho hình lập phương ABCD.A'B'C'D' cạnh 1, M là điểm di động trên cạnh CD. Tìm giá trị lớn nhất của diện tích tam giác A'BM.",
+      "provenance": "independent-nlu-extraction-evaluation (blind subagent, ZERO repo access, 2026-10-17, never exposed in /5-/7 SLM training or calibration)",
+      "leakage_audit": {
+        "max_4gram_vs_v7_train_val": 0.0235,
+        "max_4gram_vs_prior_slm_holdouts": 0.1538,
+        "exact_match": false
+      },
+      "has_gold_facts": true
+    },
+    {
+      "case_id": "c60_L43",
+      "orig_id": "L43",
+      "corpus": "C60_BLIND_NLU",
+      "split": "locked",
+      "group": "F",
+      "n_source_requests": 1,
+      "gold_disposition": "refuse_ambiguous",
+      "eval_role": "NEGATIVE_OR_REFUSAL_EXPECTED",
+      "oracle_status": "VERIFIED_REFUSAL_DISPOSITION",
+      "oracles": [],
+      "text": "Cho hình chóp S.ABCD có đáy là hình chữ nhật, AB = 2, AD = 3, SA ⊥ (ABCD), SA = 4. Gọi M là trung điểm của SB và M là trung điểm của SD. Tính độ dài đoạn AM.",
+      "provenance": "independent-nlu-extraction-evaluation (blind subagent, ZERO repo access, 2026-10-17, never exposed in /5-/7 SLM training or calibration)",
+      "leakage_audit": {
+        "max_4gram_vs_v7_train_val": 0.0323,
+        "max_4gram_vs_prior_slm_holdouts": 0.1034,
+        "exact_match": false
+      },
+      "has_gold_facts": true
+    },
+    {
+      "case_id": "c60_L44",
+      "orig_id": "L44",
+      "corpus": "C60_BLIND_NLU",
+      "split": "locked",
+      "group": "F",
+      "n_source_requests": 1,
+      "gold_disposition": "refuse_contradictory",
+      "eval_role": "NEGATIVE_OR_REFUSAL_EXPECTED",
+      "oracle_status": "VERIFIED_REFUSAL_DISPOSITION",
+      "oracles": [],
+      "text": "Cho hình lập phương ABCD.A'B'C'D' có cạnh bằng 2 và đường chéo AC' = 4. Tính thể tích khối lập phương.",
+      "provenance": "independent-nlu-extraction-evaluation (blind subagent, ZERO repo access, 2026-10-17, never exposed in /5-/7 SLM training or calibration)",
+      "leakage_audit": {
+        "max_4gram_vs_v7_train_val": 0.0256,
+        "max_4gram_vs_prior_slm_holdouts": 0.4615,
+        "exact_match": false
+      },
+      "has_gold_facts": true
+    },
+    {
+      "case_id": "ext_ext_prt_01_hd_q_5259753#1",
+      "orig_id": "ext_prt_01_hd_q_5259753#1",
+      "corpus": "EXTERNAL17_REAL_TRANSCRIPTIONS",
+      "split": "A1_PRINTED_CAMERA_CAPTURED",
+      "group": "LICENSE_UNVERIFIED",
+      "n_source_requests": 1,
+      "gold_disposition": "SERVE",
+      "eval_role": "VERIFIED_POSITIVE",
+      "oracle_status": "VERIFIED_MATHEMATICAL_ORACLE",
+      "oracles": [
+        "a³√3/3"
+      ],
+      "text": "Câu 4: Cho hình chóp S.ABCD có đáy là hình vuông cạnh a, SA vuông góc với mặt đáy và SB tạo với đáy một góc 60°, G là trọng tâm tam giác SBC. Tính thể tích khối chóp S.ABCD.",
+      "provenance": "hoidap247.com (LICENSE_UNVERIFIED) via formal-correctness-real-world-acceptance",
+      "leakage_audit": {
+        "max_4gram_vs_v7_train_val": 0.0722,
+        "max_4gram_vs_prior_slm_holdouts": 0.2308,
+        "exact_match": false
+      },
+      "has_gold_facts": false
+    },
+    {
+      "case_id": "ext_ext_prt_02_hd_q_7922924#1",
+      "orig_id": "ext_prt_02_hd_q_7922924#1",
+      "corpus": "EXTERNAL17_REAL_TRANSCRIPTIONS",
+      "split": "A2_PRINTED_DIGITAL_EXAM_RENDER",
+      "group": "LICENSE_UNVERIFIED",
+      "n_source_requests": 1,
+      "gold_disposition": "SERVE",
+      "eval_role": "VERIFIED_POSITIVE",
+      "oracle_status": "VERIFIED_MATHEMATICAL_ORACLE",
+      "oracles": [
+        "6"
+      ],
+      "text": "Câu 10: Cho hình lăng trụ đứng ABC.A'B'C', có đáy là tam giác vuông cân tại B và AB = 6. Tính khoảng cách từ điểm C đến mặt phẳng (ABB'A')\nA. 3. B. 6√2. C. 3√2. D. 6.",
+      "provenance": "hoidap247.com (LICENSE_UNVERIFIED) via formal-correctness-real-world-acceptance",
+      "leakage_audit": {
+        "max_4gram_vs_v7_train_val": 0.1099,
+        "max_4gram_vs_prior_slm_holdouts": 0.1695,
+        "exact_match": false
+      },
+      "has_gold_facts": false
+    },
+    {
+      "case_id": "ext_ext_prt_03_hd_q_7907931#1",
+      "orig_id": "ext_prt_03_hd_q_7907931#1",
+      "corpus": "EXTERNAL17_REAL_TRANSCRIPTIONS",
+      "split": "A2_PRINTED_DIGITAL_EXAM_RENDER",
+      "group": "LICENSE_UNVERIFIED",
+      "n_source_requests": 1,
+      "gold_disposition": "SERVE",
+      "eval_role": "VERIFIED_POSITIVE",
+      "oracle_status": "VERIFIED_MATHEMATICAL_ORACLE",
+      "oracles": [
+        "a√2/2"
+      ],
+      "text": "Câu 32: Cho hình chóp S.ABCD có đáy ABCD là hình vuông cạnh a, SA ⊥ (ABCD). Tính khoảng cách từ điểm B đến mp(SAC).",
+      "provenance": "hoidap247.com (LICENSE_UNVERIFIED) via formal-correctness-real-world-acceptance",
+      "leakage_audit": {
+        "max_4gram_vs_v7_train_val": 0.1143,
+        "max_4gram_vs_prior_slm_holdouts": 0.2973,
+        "exact_match": false
+      },
+      "has_gold_facts": false
+    },
+    {
+      "case_id": "ext_ext_prt_03_hd_q_7907931#2",
+      "orig_id": "ext_prt_03_hd_q_7907931#2",
+      "corpus": "EXTERNAL17_REAL_TRANSCRIPTIONS",
+      "split": "A2_PRINTED_DIGITAL_EXAM_RENDER",
+      "group": "LICENSE_UNVERIFIED",
+      "n_source_requests": 1,
+      "gold_disposition": "SERVE",
+      "eval_role": "VERIFIED_POSITIVE",
+      "oracle_status": "VERIFIED_MATHEMATICAL_ORACLE",
+      "oracles": [
+        "a³/4"
+      ],
+      "text": "Câu 33: Cho hình chóp S.ABC có đáy ABC là tam giác đều cạnh a. Biết SA ⊥ (ABC) và SA = a√3. Gọi M; N; P lần lượt là trung điểm của SA; SB; SC. Tính thể tích khối chóp S.ABC.",
+      "provenance": "hoidap247.com (LICENSE_UNVERIFIED) via formal-correctness-real-world-acceptance",
+      "leakage_audit": {
+        "max_4gram_vs_v7_train_val": 0.0891,
+        "max_4gram_vs_prior_slm_holdouts": 0.3061,
+        "exact_match": false
+      },
+      "has_gold_facts": false
+    },
+    {
+      "case_id": "ext_ext_prt_04_hd_q_8436784#1",
+      "orig_id": "ext_prt_04_hd_q_8436784#1",
+      "corpus": "EXTERNAL17_REAL_TRANSCRIPTIONS",
+      "split": "A2_PRINTED_DIGITAL_EXAM_RENDER",
+      "group": "LICENSE_UNVERIFIED",
+      "n_source_requests": 1,
+      "gold_disposition": "SERVE",
+      "eval_role": "VERIFIED_POSITIVE",
+      "oracle_status": "VERIFIED_MATHEMATICAL_ORACLE",
+      "oracles": [
+        "1/2"
+      ],
+      "text": "Câu 6. Cho hình chóp S.ABCD có đáy ABCD là hình thang với AD song song BC và AD = 2BC. Gọi I là trung điểm cạnh AD. Mặt phẳng (P) qua I và song song với hai đường thẳng SA, SC. Gọi K là giao điểm của BC với (P). Khi đó tính tỉ số KC/KB.",
+      "provenance": "hoidap247.com (LICENSE_UNVERIFIED) via formal-correctness-real-world-acceptance",
+      "leakage_audit": {
+        "max_4gram_vs_v7_train_val": 0.0508,
+        "max_4gram_vs_prior_slm_holdouts": 0.1,
+        "exact_match": false
+      },
+      "has_gold_facts": false
+    },
+    {
+      "case_id": "ext_ext_prt_05_hd_q_7451806#1",
+      "orig_id": "ext_prt_05_hd_q_7451806#1",
+      "corpus": "EXTERNAL17_REAL_TRANSCRIPTIONS",
+      "split": "A2_PRINTED_DIGITAL_EXAM_RENDER",
+      "group": "LICENSE_UNVERIFIED",
+      "n_source_requests": 1,
+      "gold_disposition": "SERVE",
+      "eval_role": "VERIFIED_POSITIVE",
+      "oracle_status": "VERIFIED_MATHEMATICAL_ORACLE",
+      "oracles": [
+        "6/5"
+      ],
+      "text": "Câu 24: (2,5 điểm) Cho hình chóp S.ABCD có đáy ABCD là hình bình hành tâm O. M là trung điểm của SB. Gọi E là điểm thuộc cạnh SC sao cho SE = 3EC. Mặt phẳng (SAD) và đường thẳng ME cắt nhau tại I. Gọi S1; S2 lần lượt là diện tích tam giác SMI và tứ giác BCEM. Tính S1/S2.",
+      "provenance": "hoidap247.com (LICENSE_UNVERIFIED) via formal-correctness-real-world-acceptance",
+      "leakage_audit": {
+        "max_4gram_vs_v7_train_val": 0.0323,
+        "max_4gram_vs_prior_slm_holdouts": 0.0909,
+        "exact_match": false
+      },
+      "has_gold_facts": false
+    },
+    {
+      "case_id": "ext_ext_prt_06_hd_q_1084979#1",
+      "orig_id": "ext_prt_06_hd_q_1084979#1",
+      "corpus": "EXTERNAL17_REAL_TRANSCRIPTIONS",
+      "split": "A1_PRINTED_CAMERA_CAPTURED",
+      "group": "LICENSE_UNVERIFIED",
+      "n_source_requests": 2,
+      "gold_disposition": "SERVE",
+      "eval_role": "VERIFIED_POSITIVE",
+      "oracle_status": "VERIFIED_MATHEMATICAL_ORACLE",
+      "oracles": [
+        "a³√15/4",
+        "a√15/5"
+      ],
+      "text": "Cho hình lăng trụ đứng ABC.A'B'C' có đáy ABC là tam giác cân tại C, AB = AA' = a. Góc tạo bởi đường thẳng BC' với mặt phẳng (ABB'A') bằng 60°. Gọi M, N, P lần lượt là trung điểm của các cạnh BB', CC' và BC. Tính thể tích khối lăng trụ ABC.A'B'C' và khoảng cách giữa hai đường thẳng AM và NP theo a.",
+      "provenance": "hoidap247.com (LICENSE_UNVERIFIED) via formal-correctness-real-world-acceptance",
+      "leakage_audit": {
+        "max_4gram_vs_v7_train_val": 0.0952,
+        "max_4gram_vs_prior_slm_holdouts": 0.2338,
+        "exact_match": false
+      },
+      "has_gold_facts": false
+    },
+    {
+      "case_id": "ext_ext_prt_07_hd_q_7958052#1",
+      "orig_id": "ext_prt_07_hd_q_7958052#1",
+      "corpus": "EXTERNAL17_REAL_TRANSCRIPTIONS",
+      "split": "A1_PRINTED_CAMERA_CAPTURED",
+      "group": "LICENSE_UNVERIFIED",
+      "n_source_requests": 1,
+      "gold_disposition": "SERVE",
+      "eval_role": "VERIFIED_POSITIVE",
+      "oracle_status": "VERIFIED_MATHEMATICAL_ORACLE",
+      "oracles": [
+        "4,7"
+      ],
+      "text": "Câu 1. Cho hình lăng trụ đứng ABC.A'B'C' có AB = 5, AC = 6, Â = 60°. Khoảng cách giữa hai đường thẳng AA' và BC (làm tròn kết quả đến hàng phần mười)",
+      "provenance": "hoidap247.com (LICENSE_UNVERIFIED) via formal-correctness-real-world-acceptance",
+      "leakage_audit": {
+        "max_4gram_vs_v7_train_val": 0.0737,
+        "max_4gram_vs_prior_slm_holdouts": 0.1346,
+        "exact_match": false
+      },
+      "has_gold_facts": false
+    },
+    {
+      "case_id": "ext_ext_prt_08_hd_q_7509702#1",
+      "orig_id": "ext_prt_08_hd_q_7509702#1",
+      "corpus": "EXTERNAL17_REAL_TRANSCRIPTIONS",
+      "split": "A1_PRINTED_CAMERA_CAPTURED",
+      "group": "LICENSE_UNVERIFIED",
+      "n_source_requests": 1,
+      "gold_disposition": "OOS_REFUSE",
+      "eval_role": "OOS_OR_DIAGRAM_DEPENDENT",
+      "oracle_status": "OUT_OF_SCOPE_OR_UNVERIFIED",
+      "oracles": [],
+      "text": "Câu 10. Cho hình chóp S.ABCD có đáy là hình bình hành tâm O. Tính tổng vectơ SA + SB + SC + SD.",
+      "provenance": "hoidap247.com (LICENSE_UNVERIFIED) via formal-correctness-real-world-acceptance",
+      "leakage_audit": {
+        "max_4gram_vs_v7_train_val": 0.0282,
+        "max_4gram_vs_prior_slm_holdouts": 0.1081,
+        "exact_match": false
+      },
+      "has_gold_facts": false
+    },
+    {
+      "case_id": "ext_ext_prt_09_vmmu_page_r4#1",
+      "orig_id": "ext_prt_09_vmmu_page_r4#1",
+      "corpus": "EXTERNAL17_REAL_TRANSCRIPTIONS",
+      "split": "A3_VMMU_EXAM_SCAN_MIT",
+      "group": "MIT",
+      "n_source_requests": 1,
+      "gold_disposition": "SERVE",
+      "eval_role": "VERIFIED_POSITIVE",
+      "oracle_status": "VERIFIED_MATHEMATICAL_ORACLE",
+      "oracles": [
+        "2"
+      ],
+      "text": "Câu 14. Cho khối chóp S.ABC có đáy là tam giác vuông cân tại A, AB = 2, SA vuông góc với đáy và SA = 3 (tham khảo hình bên). Thể tích khối chóp đã cho bằng A. 12. B. 2. C. 6. D. 4.",
+      "provenance": "huggingface.co/datasets/anvo25/vmmu (MIT) via formal-correctness-real-world-acceptance",
+      "leakage_audit": {
+        "max_4gram_vs_v7_train_val": 0.0549,
+        "max_4gram_vs_prior_slm_holdouts": 0.1017,
+        "exact_match": false
+      },
+      "has_gold_facts": false
+    },
+    {
+      "case_id": "ext_ext_prt_10_vmmu_page_r7#1",
+      "orig_id": "ext_prt_10_vmmu_page_r7#1",
+      "corpus": "EXTERNAL17_REAL_TRANSCRIPTIONS",
+      "split": "A3_VMMU_EXAM_SCAN_MIT",
+      "group": "MIT",
+      "n_source_requests": 1,
+      "gold_disposition": "OOS_REFUSE",
+      "eval_role": "OOS_OR_DIAGRAM_DEPENDENT",
+      "oracle_status": "OUT_OF_SCOPE_OR_UNVERIFIED",
+      "oracles": [],
+      "text": "Câu 49: Một tấm tôn hình tam giác ABC có độ dài cạnh AB = 3; AC = 2; BC = √19. Điểm H là chân đường cao kẻ từ đỉnh A của tam giác ABC. Người ta dùng compa có tâm là A, bán kính AH vạch một cung tròn MN. Lấy phần hình quạt gò thành hình nón không có mặt đáy với đỉnh là A, cung MN thành đường tròn đáy của hình nón (như hình vẽ). Tính thể tích khối nón trên.",
+      "provenance": "huggingface.co/datasets/anvo25/vmmu (MIT) via formal-correctness-real-world-acceptance",
+      "leakage_audit": {
+        "max_4gram_vs_v7_train_val": 0.0167,
+        "max_4gram_vs_prior_slm_holdouts": 0.0198,
+        "exact_match": false
+      },
+      "has_gold_facts": false
+    },
+    {
+      "case_id": "ext_ext_prt_11_vmmu_page_r10#1",
+      "orig_id": "ext_prt_11_vmmu_page_r10#1",
+      "corpus": "EXTERNAL17_REAL_TRANSCRIPTIONS",
+      "split": "A3_VMMU_EXAM_SCAN_MIT",
+      "group": "MIT",
+      "n_source_requests": 1,
+      "gold_disposition": "SERVE",
+      "eval_role": "VERIFIED_POSITIVE",
+      "oracle_status": "VERIFIED_MATHEMATICAL_ORACLE",
+      "oracles": [
+        "cos²=3/4"
+      ],
+      "text": "Câu 30: Cho khối lăng trụ tam giác đều ABC.A'B'C' có cạnh đáy bằng 2a, chiều cao bằng a. Tính số đo góc tạo bởi hai mặt phẳng (AB'C') và (ABC)?\nA. 45°. B. 60°. C. 30°. D. 26°33'.",
+      "provenance": "huggingface.co/datasets/anvo25/vmmu (MIT) via formal-correctness-real-world-acceptance",
+      "leakage_audit": {
+        "max_4gram_vs_v7_train_val": 0.0303,
+        "max_4gram_vs_prior_slm_holdouts": 0.1091,
+        "exact_match": false
+      },
+      "has_gold_facts": false
+    },
+    {
+      "case_id": "ext_ext_prt_12_vmmu_page_r11#1",
+      "orig_id": "ext_prt_12_vmmu_page_r11#1",
+      "corpus": "EXTERNAL17_REAL_TRANSCRIPTIONS",
+      "split": "A3_VMMU_EXAM_SCAN_MIT",
+      "group": "MIT",
+      "n_source_requests": 1,
+      "gold_disposition": "SERVE",
+      "eval_role": "VERIFIED_POSITIVE",
+      "oracle_status": "VERIFIED_MATHEMATICAL_ORACLE",
+      "oracles": [
+        "2√3"
+      ],
+      "text": "Câu 39: Cho hình lăng trụ đứng ABC.A'B'C' có đáy ABC là tam giác vuông cân tại B và diện tích của hình vuông ABB'A' bằng 12(cm²). Khoảng cách từ C đến mặt phẳng (ABB'A') bằng A. 6. B. 2√3(cm). C. 2. D. 3√2(cm).",
+      "provenance": "huggingface.co/datasets/anvo25/vmmu (MIT) via formal-correctness-real-world-acceptance",
+      "leakage_audit": {
+        "max_4gram_vs_v7_train_val": 0.1354,
+        "max_4gram_vs_prior_slm_holdouts": 0.2222,
+        "exact_match": false
+      },
+      "has_gold_facts": false
+    },
+    {
+      "case_id": "ext_ext_prt_13_vmmu_page_r25#1",
+      "orig_id": "ext_prt_13_vmmu_page_r25#1",
+      "corpus": "EXTERNAL17_REAL_TRANSCRIPTIONS",
+      "split": "A3_VMMU_EXAM_SCAN_MIT",
+      "group": "MIT",
+      "n_source_requests": 1,
+      "gold_disposition": "OOS_REFUSE",
+      "eval_role": "OOS_OR_DIAGRAM_DEPENDENT",
+      "oracle_status": "OUT_OF_SCOPE_OR_UNVERIFIED",
+      "oracles": [],
+      "text": "Câu 48. Một téc nước hình trụ, đang chứa nước được đặt nằm ngang, có chiều dài 3m và đường kính đáy 1m. Hiện tại mặt nước trong téc cách phía trên đỉnh của téc 0,25m (xem hình vẽ). Tính thể tích của nước trong téc (kết quả làm tròn đến hàng phần nghìn)?",
+      "provenance": "huggingface.co/datasets/anvo25/vmmu (MIT) via formal-correctness-real-world-acceptance",
+      "leakage_audit": {
+        "max_4gram_vs_v7_train_val": 0.0092,
+        "max_4gram_vs_prior_slm_holdouts": 0.0141,
+        "exact_match": false
+      },
+      "has_gold_facts": false
+    },
+    {
+      "case_id": "ext_ext_prt_14_vmmu_page_r26#1",
+      "orig_id": "ext_prt_14_vmmu_page_r26#1",
+      "corpus": "EXTERNAL17_REAL_TRANSCRIPTIONS",
+      "split": "A3_VMMU_EXAM_SCAN_MIT",
+      "group": "MIT",
+      "n_source_requests": 1,
+      "gold_disposition": "OOS_REFUSE",
+      "eval_role": "OOS_OR_DIAGRAM_DEPENDENT",
+      "oracle_status": "OUT_OF_SCOPE_OR_UNVERIFIED",
+      "oracles": [],
+      "text": "Câu 40. Người ta xếp hai quả cầu có cùng bán kính r vào một chiếc hộp hình trụ sao cho các quả cầu đều tiếp xúc với hai đáy, đồng thời hai quả cầu tiếp xúc với nhau và mỗi quả cầu đều tiếp xúc với đường sinh của hình trụ (tham khảo hình vẽ). Biết thể tích khối trụ là 120 cm³, thể tích của mỗi khối cầu bằng",
+      "provenance": "huggingface.co/datasets/anvo25/vmmu (MIT) via formal-correctness-real-world-acceptance",
+      "leakage_audit": {
+        "max_4gram_vs_v7_train_val": 0.0,
+        "max_4gram_vs_prior_slm_holdouts": 0.0122,
+        "exact_match": false
+      },
+      "has_gold_facts": false
+    },
+    {
+      "case_id": "ext_ext_prt_15_vmmu_page_r28#1",
+      "orig_id": "ext_prt_15_vmmu_page_r28#1",
+      "corpus": "EXTERNAL17_REAL_TRANSCRIPTIONS",
+      "split": "A3_VMMU_EXAM_SCAN_MIT",
+      "group": "MIT",
+      "n_source_requests": 1,
+      "gold_disposition": "OOS_REFUSE",
+      "eval_role": "OOS_OR_DIAGRAM_DEPENDENT",
+      "oracle_status": "OUT_OF_SCOPE_OR_UNVERIFIED",
+      "oracles": [],
+      "text": "Câu 35: Một cái cột có hình dạng như hình bên (gồm một khối nón và một khối trụ ghép lại). Chiều cao đo được ghi trên hình, chu vi đáy là 20√3π cm. Thể tích của cột bằng:",
+      "provenance": "huggingface.co/datasets/anvo25/vmmu (MIT) via formal-correctness-real-world-acceptance",
+      "leakage_audit": {
+        "max_4gram_vs_v7_train_val": 0.0,
+        "max_4gram_vs_prior_slm_holdouts": 0.0,
+        "exact_match": false
+      },
+      "has_gold_facts": false
+    },
+    {
+      "case_id": "ext_ext_hw_b1_01_hd_a_6043187#1",
+      "orig_id": "ext_hw_b1_01_hd_a_6043187#1",
+      "corpus": "EXTERNAL17_REAL_TRANSCRIPTIONS",
+      "split": "B1_HANDWRITTEN_PROBLEM_STATEMENT",
+      "group": "LICENSE_UNVERIFIED",
+      "n_source_requests": 1,
+      "gold_disposition": "SERVE",
+      "eval_role": "VERIFIED_POSITIVE",
+      "oracle_status": "VERIFIED_MATHEMATICAL_ORACLE",
+      "oracles": [
+        "a³√3"
+      ],
+      "text": "Cho hình lăng trụ đứng ABC.A'B'C' có đáy ABC là tam giác vuông tại B, AB = a ; AC = a√3 , góc giữa đường thẳng BC' với mặt phẳng đáy = 60°. Tính thể tích của khối lăng trụ",
+      "provenance": "hoidap247.com (LICENSE_UNVERIFIED) via formal-correctness-real-world-acceptance",
+      "leakage_audit": {
+        "max_4gram_vs_v7_train_val": 0.1505,
+        "max_4gram_vs_prior_slm_holdouts": 0.2308,
+        "exact_match": false
+      },
+      "has_gold_facts": false
+    }
+  ]
+}

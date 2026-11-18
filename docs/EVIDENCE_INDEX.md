@@ -1,5 +1,20 @@
 # EVIDENCE_INDEX.md — Chỉ mục bằng chứng và chuỗi đính chính (Master Evidence Index)
 
+## WAVE_ID = INDEPENDENT_VALIDATION_LOCAL_AI_PRODUCTION_READINESS
+
+- `RUN_ID` = independent-validation-local-ai-production-readiness
+- `REPORT` = docs/evaluation/geometry/runs/independent-validation-local-ai-production-readiness/FINAL_MASTER_REPORT.md
+- `ARTIFACT_DIRECTORY` = docs/evaluation/geometry/runs/independent-validation-local-ai-production-readiness/
+- `START_BASE` = ae20a9a6e02a00dea19c259c4e8d02350028e4d1
+- `CODE_COMMIT` = 6ca84e5367f7dd2e21f58978ef8d4c196c7959cb (auditing frozen product 6310113f2202bc3a4919406b26fad08cb09b38c9 / 9a9352d586caa360f82052ba1b76fe9b4227f26c, 0 diffs backend/app/** & frontend/)
+- `CLASSIFICATION` = OFFLINE_INDEPENDENT_LOCAL_SLM_VALIDATION
+- `PRODUCT_CHANGE` = NO; CACHE_VERSION = 145 (145:route-d); cache namespace HYBRID_V7_LOCAL_SLM; default HYBRID_ROUTE_MODE = live preserved (opt-in local-slm); measured_system = 113a6a7cf6bbc15ac23119150b805437e785d2b0714b26c2157d147514c2ef67 (123 files); slm_math_evaluator_v2.py (56/56 pytests) reconciles /7 SLM_V7_HOLDOUT_112 Config A/B/C/D = 39/47/58/74 of 80 (92.50% Config D, 0 true wrong-served across /5–/8, 0 hidden discrepancies on /5–/6 & ablation); P2 proves v7h_p8_01..05 are MODEL_SEMANTIC_ERROR (AxoV7 omits rect(base) when "đáy" missing, Gold SERVED 5/5 through Source Gate), v7h_p5_09 is arg swap caught by Source Gate, slm_h23 is AxoV7 checkpoint over-conservatism regression, 26-category capability matrix built; P3 zero-leakage PERMISSIBLE_UNSEEN_77 (C60 60 + External17 17, 0 overlaps, max_4gram=0.1505) scores External17 12/12 (100%) + 5/5 OOS, C60_BLIND_NLU 13/42 (30.95%, C->D +0/-0 p=1.0, Source Gate rejects 6->12), combined 25/54 (46.30%), 0 wrong-served, 18/18 safe refusals; P4 Win32 host (15.78 GiB, n=100 6T mixed uncached) peak comb WS 973.29 MiB <= 2048 MiB (0 leak Q1->Q4), mixed e2e p50/p95 = 3630.08/6898.88 ms (FAIL <= 5000 ms), c=2/4 p95 = 9721.52/18580.68 ms, c=6 max_q=2 clean recovery, threads=2 p95 = 6093.38 ms (simulated); P8 scoped-local-routing-sim/1 0 wrong-served across 189 cases (4/4), 0 regressions across 11 baseline suites, 16/16 security/runtime checks PASS, 91/91 SLM+/8 pytests PASS, clean-tree full backend pytest 15026 passed, 7 skipped, 3 deselected, 12 xfailed, 0 failed (702.93s on 6ca84e536).
+- `MODEL_REQUEST_COUNT` = 0
+- `VERIFICATION` = run.json; BASELINE_INTEGRITY_REPORT.md; EVALUATOR_RECONCILIATION.json; EVALUATOR_CORRECTION_REPORT.md; SLM_FAILURE_AUDIT_TRACES.json; SLM_CAPABILITY_MATRIX.json; SLM_FAILURE_CASE_AUDIT.md; PERMISSIBLE_UNSEEN_CORPUS_MANIFEST.json; PERMISSIBLE_UNSEEN_CORPUS_EVALUATION.json; INDEPENDENT_DATASET_PROTOCOL.md; SYSTEM_RESOURCE_AND_CONCURRENCY_BENCHMARK.json; RESOURCE_READINESS_REPORT.md; SOURCE_GATE_OWNER_STATUS.md; GEMINI_PARITY_PROTOCOL.md; REAL_STUDENT_PILOT_PROTOCOL.md; SCOPED_LOCAL_ROUTING_SIMULATION.json; LOCAL_ROUTING_READINESS.md; SLM_V8_REGRESSION_RESULTS.json; SLM_V8_REGRESSION_REPORT.md; SLM_RELEASE_READINESS_DECISION.md; FINAL_MASTER_REPORT.md
+- `CORRECTS` = DETERMINISTIC_GEOMETRY_LANGUAGE_CLOSURE_SLM_FINETUNING
+- `CORRECTED_BY` = NONE
+- `LIMITATIONS` = VERDICT = EXPERIMENTAL_LOCAL (Level 1; calibrates /7 general Level 2 downward; keeps HYBRID_ROUTE_MODE=live default); INDEPENDENT_EXTERNAL_CORPUS = BLOCKED_DATA_ACCESS; PHYSICAL_LOW_END = NOT_MEASURED; GEMINI_PARITY = NOT_MEASURED; INDEPENDENT_H1_VALIDATION = NOT_MEASURED; REAL_STUDENT_USABILITY = NOT_MEASURED; SOURCE_GATE_OWNER_HANDOFF = BLOCKED_OWNERSHIP; FRONTEND_INTEGRATION = BLOCKED_OWNERSHIP.
+
 ## WAVE_ID = DETERMINISTIC_GEOMETRY_LANGUAGE_CLOSURE_SLM_FINETUNING
 
 - `RUN_ID` = deterministic-geometry-language-closure-slm-finetuning
@@ -12,7 +27,7 @@
 - `MODEL_REQUEST_COUNT` = 0
 - `VERIFICATION` = run.json; DETERMINISTIC_LANGUAGE_CLOSURE.md; SOURCE_GATE_COMPATIBILITY_REPORT.md; SOURCE_GATE_OWNER_HANDOFF.md; SLM_POST_CLOSURE_EVALUATION.json; SLM_FINE_TUNING_READINESS.md; SLM_TRAINING_DATA_MANIFEST.json; SLM_TRAINING_IMPLEMENTATION.md; SLM_TRAINING_RUN.json; SLM_ADAPTER_MODEL_MANIFEST.json; SLM_QUANTIZATION_EVALUATION.json; SLM_V7_ABLATION.json; SLM_V7_HOLDOUT_MANIFEST.json; SLM_V7_HOLDOUT_EVALUATION.json; SLM_V7_PERFORMANCE.json; SLM_V7_REGRESSION_RESULTS.json; SLM_V7_REGRESSION_REPORT.md; SLM_REPLACEMENT_DECISION.md; pending_template_refresh.json; FINAL_MASTER_REPORT.md
 - `CORRECTS` = NONE
-- `CORRECTED_BY` = NONE
+- `CORRECTED_BY` = INDEPENDENT_VALIDATION_LOCAL_AI_PRODUCTION_READINESS
 - `LIMITATIONS` = REPLACEMENT_VERDICT = READY_AS_LOCAL_PRIMARY_WITH_CONSTRAINTS (HYBRID_ROUTE_MODE=live preserved; GEMINI_PARITY = NOT_MEASURED; derived section/multi-solid parity not yet established; SOURCE_GATE_OWNER_HANDOFF conversational wrappers v7h_p8_01..05 & Registry grammar extensions BLOCKED_OWNERSHIP); frozen_unseen_vmmu20_separate (19 items, 0 served unverified) strictly GROUND_TRUTH_UNVERIFIED / NOT_MEASURED; PHYSICAL_LOW_END = NOT_MEASURED (15.78 GiB host); INDEPENDENT_H1_VALIDATION = NOT_MEASURED; REAL_STUDENT_USABILITY = NOT_MEASURED.
 
 ## WAVE_ID = SPECIALIZED_GEOMETRY_EXTRACTION_SLM_OPTIMIZATION

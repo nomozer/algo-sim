@@ -1,5 +1,17 @@
 # CODE_INDEX.md — Chỉ mục module + BỘ NHỚ KIẾN TRÚC
 
+## Independent validation & local AI production readiness (AXO HYBRID /8, 2026-11-19)
+
+| Hạng mục / Vai trò | Đường dẫn chuẩn (`6ca84e536` trên nền product `6310113f2` / `113a6a7cf6bb…`, `123` files) |
+|---|---|
+| Evaluator toán chính xác `axo-math-evaluator/2` ($\mathbb{Q}(\sqrt{k})\cdot a^{d_a}\cdot \pi^{d_\pi}$, `cos`/`cos²`/`cos(2x)`, `goal_kind`) & tái đối soát `/5–/7` | `backend/scripts/slm_math_evaluator_v2.py`, `backend/scripts/reconcile_slm_v8_historical_evaluations.py` |
+| Kiểm toán căn nguyên 13 trường (`v7h_p8_01..05`, `p5_09`, `slm_h23`) & ma trận năng lực `26` hạng mục | `backend/scripts/audit_slm_v8_failures_and_capabilities.py` |
+| Đánh giá single-shot trên kho unseen permissible `77` ca (`C60_BLIND_NLU` + `EXTERNAL17`) & chẩn đoán offline `{K-1, R-1, S-2}` | `backend/scripts/evaluate_slm_v8_unseen_corpora.py` |
+| Benchmark Win32 hệ thống (`n=100` warm uncached 3-tier, `c=1,2,4,6`, simulated `threads=2`) | `backend/scripts/benchmark_slm_v8_system_resources.py` |
+| Bộ mô phỏng định tuyến có phạm vi `scoped-local-routing-sim/1` & bộ hồi quy `/8` + `16/16` security checks | `backend/scripts/simulate_scoped_local_routing.py`, `backend/scripts/run_slm_v8_regressions.py` |
+| Bộ test đơn vị `/8` (`56` evaluator v2 + `8` Source Gate boundaries + `4` scoped routing policy = `68` test mới) | `backend/tests/geometry/test_slm_math_evaluator_v2.py`, `backend/tests/geometry/test_source_gate_handoff_boundaries.py`, `backend/tests/geometry/test_scoped_local_routing_policy.py` |
+| Bộ tạo manifest LF-SHA256 `axo-evaluation-run/2` & báo cáo toàn chiến dịch `/8` (`EXPERIMENTAL_LOCAL`) | `docs/evaluation/geometry/runs/independent-validation-local-ai-production-readiness/tools/finalize_v8_run_manifest.py`, `docs/evaluation/geometry/runs/independent-validation-local-ai-production-readiness/FINAL_MASTER_REPORT.md` |
+
 ## Deterministic geometry language closure & targeted SLM fine-tuning (2026-11-18)
 
 | Hạng mục / Vai trò | Đường dẫn chuẩn (`6310113f2` / `113a6a7cf6bb…`, `123` files) |
