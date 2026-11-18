@@ -2,6 +2,7 @@ import { veKhongGian } from "../simulations/domains/geometry/scene3d-chart";
 import {
   hopLeScene3D,
   inspectScene3DPayloadIntegrity,
+  markVerifiedStepEditedScene,
   type Scene3D,
 } from "../simulations/domains/geometry/scene3d-model";
 import { verifySceneMathematicalConsistency } from "../simulations/domains/geometry/scene3d-semantic-policy";
@@ -79,6 +80,7 @@ export interface StepEditSubmitSuccess {
   feedback_status: string;
   dataset_eligibility: string;
   version_number: number;
+  committed_version?: number;
   primary_target_id: string;
   scene3d: Scene3D;
   step_overrides: Record<string, string>;
@@ -148,6 +150,7 @@ type InFlightAbortReason = "cancelled" | "superseded" | "timeout";
 
 interface InFlightEditEntry {
   seq: number;
+  clientRequestId: string;
   stepId: string;
   stepIndex: number;
   controller: AbortController;
@@ -158,10 +161,32 @@ const DEFAULT_STEP_EDIT_TIMEOUT_MS = 15_000;
 let nextSubmitSeq = 0;
 const inFlightSessions = new Map<string, InFlightEditEntry>();
 
+function notifyServerCancelStepEdit(sessionId: string, clientRequestId: string): void {
+  if (typeof fetch !== "function" || !sessionId || !clientRequestId) return;
+  try {
+    void fetch("/api/simulation/steps/cancel", {
+      method: "POST",
+      credentials: "include",
+      keepalive: true,
+      headers: {
+        "Content-Type": "application/json",
+        [AXO_CLIENT_SESSION_HEADER]: getOrCreateAxoClientSessionToken(),
+      },
+      body: JSON.stringify({
+        session_id: sessionId,
+        client_request_id: clientRequestId,
+      }),
+    }).catch(() => undefined);
+  } catch {
+    // Best-effort cancellation notification; abort signal also fires synchronously
+  }
+}
+
 export function cancelInFlightStepEdit(sessionId: string): boolean {
   const entry = inFlightSessions.get(sessionId);
   if (!entry) return false;
   entry.abortReason = "cancelled";
+  notifyServerCancelStepEdit(sessionId, entry.clientRequestId);
   entry.controller.abort();
   inFlightSessions.delete(sessionId);
   return true;
@@ -214,7 +239,7 @@ export function loadCachedStepEditState(sessionId: string): PersistedStepEditSna
       return null;
     }
     const cachedScene = isVerifiedRebuildScene(parsed.committedScene)
-      ? parsed.committedScene
+      ? markVerifiedStepEditedScene(parsed.committedScene)
       : null;
     return {
       sessionId,
@@ -282,7 +307,7 @@ export async function fetchStepEditSessionState(sessionId: string): Promise<Pers
         : (typeof data.revision_count === "number" ? data.revision_count : undefined);
     const remoteScene =
       (committedVer === undefined || committedVer > 0) && isVerifiedRebuildScene(data.committed_scene)
-        ? (data.committed_scene as Scene3D)
+        ? markVerifiedStepEditedScene(data.committed_scene as Scene3D)
         : null;
     const snapshot: PersistedStepEditSnapshot = {
       sessionId,
@@ -333,13 +358,19 @@ export async function submitConstructionStepEdit(params: {
       };
     }
     existingEntry.abortReason = "superseded";
+    notifyServerCancelStepEdit(sessionId, existingEntry.clientRequestId);
     existingEntry.controller.abort();
   }
 
   const controller = new AbortController();
   const seq = ++nextSubmitSeq;
+  const clientRequestId =
+    typeof window !== "undefined" && typeof window.crypto?.randomUUID === "function"
+      ? `se-req-${window.crypto.randomUUID()}`
+      : `se-req-${Date.now().toString(36)}-${seq}`;
   const entry: InFlightEditEntry = {
     seq,
+    clientRequestId,
     stepId: params.stepId,
     stepIndex: params.stepIndex,
     controller,
@@ -378,6 +409,8 @@ export async function submitConstructionStepEdit(params: {
         absorbed_ids: params.absorbedIds,
         prior_step_ids: params.priorStepIds ?? [],
         scene3d: params.scene3d,
+        client_request_id: clientRequestId,
+        client_seq: seq,
       }),
     });
 
@@ -414,11 +447,14 @@ export async function submitConstructionStepEdit(params: {
         };
       }
       const success = data as StepEditSubmitSuccess;
+      markVerifiedStepEditedScene(success.scene3d);
+      const effectiveVer =
+        typeof success.committed_version === "number" ? success.committed_version : success.version_number;
       const existingCache = loadCachedStepEditState(sessionId);
       saveCachedStepEditState(sessionId, {
         sessionId,
         problemKey: params.problemKey,
-        versionNumber: success.version_number,
+        versionNumber: effectiveVer,
         committedScene: success.scene3d,
         stepOverrides: success.step_overrides ?? {},
         dependencySummary: success.dependency_summary ?? null,
@@ -467,6 +503,83 @@ export async function submitConstructionStepEdit(params: {
         learner_error: "Máy chủ dựng hình phản hồi quá thời gian chờ. Trạng thái hợp lệ trước đó vẫn được giữ nguyên.",
         draft_preserved: true,
       };
+    }
+    // Reconcile once with /state (bounded timeout) in case the server committed before a transport socket drop
+    const recoverCtrl = new AbortController();
+    const recoverTimer = setTimeout(() => recoverCtrl.abort(), 1500);
+    try {
+      const stateRes = await fetch(`/api/simulation/sessions/${encodeURIComponent(sessionId)}/state`, {
+        method: "GET",
+        credentials: "include",
+        signal: recoverCtrl.signal,
+        headers: {
+          [AXO_CLIENT_SESSION_HEADER]: getOrCreateAxoClientSessionToken(),
+        },
+      });
+      if (stateRes.ok) {
+        const sData = await stateRes.json().catch(() => null);
+        if (
+          sData?.found
+          && sData.last_committed_request_id === clientRequestId
+          && isVerifiedRebuildScene(sData.committed_scene)
+        ) {
+          const recScene = markVerifiedStepEditedScene(sData.committed_scene as Scene3D);
+          const recVer =
+            typeof sData.committed_version === "number" && sData.committed_version > 0
+              ? sData.committed_version
+              : Number(sData.revision_count || 1);
+          const recResult: StepEditSubmitSuccess = {
+            status: "committed",
+            mode: "POST_COMMIT_RECOVERED",
+            equivalence_info: null,
+            session_id: sessionId,
+            revision_id: "recovered-from-state",
+            feedback_id: "recovered-from-state",
+            feedback_status: "GEOMETRY_VERIFIED",
+            dataset_eligibility: "ELIGIBLE",
+            version_number: recVer,
+            committed_version: recVer,
+            primary_target_id: params.stepId,
+            scene3d: recScene,
+            step_overrides: (sData.step_overrides as Record<string, string>) ?? {},
+            dependency_summary: (sData.dependency_summary as StepEditDependencySummary) ?? {
+              edited_target_ids: [params.stepId],
+              created_ids: [],
+              reused_ids: [],
+              retired_ids: [],
+              recomputed_ids: [],
+              skipped_unaffected_ids: [],
+              cycle_detected: false,
+            },
+            validation_result: {
+              valid: true,
+              passed: true,
+              exact_arithmetic: true,
+              checks_passed: ["post_commit_state_reconciliation"],
+              continuity: { passed: true, issues: [] },
+            },
+            stage_timings_ms: { total_ms: 0 },
+            llm_calls: 0,
+            quota_charged: false,
+          };
+          saveCachedStepEditState(sessionId, {
+            sessionId,
+            problemKey: params.problemKey,
+            versionNumber: recVer,
+            committedScene: recScene,
+            stepOverrides: recResult.step_overrides,
+            dependencySummary: recResult.dependency_summary,
+            revisions: Array.isArray(sData.revisions) ? sData.revisions : [],
+            feedbackItems: Array.isArray(sData.feedback_items) ? sData.feedback_items : [],
+            updatedAt: Date.now(),
+          });
+          return recResult;
+        }
+      }
+    } catch {
+      // Fall back to explicit network_error keeping draft intact
+    } finally {
+      clearTimeout(recoverTimer);
     }
     return {
       status: "network_error",

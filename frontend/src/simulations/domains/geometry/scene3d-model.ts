@@ -2744,6 +2744,25 @@ export interface AttachedHybridSceneMetadata {
 const _exactSceneOrigin = new WeakMap<object, Scene3D>();
 const _worldTransformedScenes = new WeakSet<object>();
 const _hybridViewByScene = new WeakMap<object, AttachedHybridSceneMetadata>();
+const _verifiedStepEditedScenes = new WeakSet<object>();
+
+/**
+ * Đánh dấu một cảnh `Scene3D` đã qua tái dựng và kiểm chứng bởi Step Editor (`FP-4`),
+ * giúp metadata đáp số Hybrid `/4` cập nhật theo giá trị Exact Kernel mới mà không báo mâu thuẫn giả.
+ */
+export function markVerifiedStepEditedScene<T extends Pick<Scene3D, "objects">>(scene: T): T {
+  if (scene && typeof scene === "object") {
+    _verifiedStepEditedScenes.add(scene as object);
+  }
+  return scene;
+}
+
+export function isVerifiedStepEditedScene(scene: Pick<Scene3D, "objects"> | null | undefined): boolean {
+  if (!scene || typeof scene !== "object") return false;
+  if (_verifiedStepEditedScenes.has(scene as object)) return true;
+  const exact = _exactSceneOrigin.get(scene as object);
+  return Boolean(exact && _verifiedStepEditedScenes.has(exact as object));
+}
 
 /**
  * Đính kèm metadata `HybridPreviewView` đã kiểm chứng vào một cảnh mà KHÔNG sửa đổi (`mutate`) payload `envelope.scene3d`.
@@ -2758,10 +2777,31 @@ export function attachHybridViewToScene<T extends AttachedHybridSceneMetadata>(
     _hybridViewByScene.delete(scene as object);
     return;
   }
-  _hybridViewByScene.set(scene as object, view);
+  let effectiveView: T = view;
+  if (Array.isArray(view.answers) && view.answers.length > 0 && isVerifiedStepEditedScene(scene)) {
+    const exact = exactSceneOriginOf(scene);
+    const byId = new Map<string, SceneObject>();
+    for (const o of scene.objects) byId.set(o.id, o);
+    for (const o of exact.objects) byId.set(o.id, o);
+    effectiveView = {
+      ...view,
+      answers: view.answers.map((ans) => {
+        if (!ans.quantity_id) return ans;
+        const qObj = byId.get(ans.quantity_id);
+        if (!qObj || qObj.value == null) return ans;
+        const nextVal = String(qObj.value);
+        return {
+          ...ans,
+          value: nextVal,
+          ...(ans.coefficient !== undefined ? { coefficient: nextVal } : {}),
+        };
+      }),
+    };
+  }
+  _hybridViewByScene.set(scene as object, effectiveView);
   const exact = _exactSceneOrigin.get(scene as object);
   if (exact && exact !== scene) {
-    _hybridViewByScene.set(exact as object, view);
+    _hybridViewByScene.set(exact as object, effectiveView);
   }
 }
 
@@ -2787,6 +2827,9 @@ export function registerExactSceneOrigin(displayScene: Scene3D, exactScene: Scen
   if (displayScene !== exactScene) {
     const rootExact = exactSceneOriginOf(exactScene);
     _exactSceneOrigin.set(displayScene, rootExact);
+    if (_verifiedStepEditedScenes.has(exactScene as object) || _verifiedStepEditedScenes.has(rootExact as object)) {
+      _verifiedStepEditedScenes.add(displayScene as object);
+    }
     const hv = _hybridViewByScene.get(exactScene as object) ?? _hybridViewByScene.get(rootExact as object);
     if (hv) {
       _hybridViewByScene.set(displayScene as object, hv);
@@ -2826,6 +2869,10 @@ export function propagateSceneLineage(nextScene: Scene3D, prevScene: Scene3D, ex
   if (nextScene === prevScene) return nextScene;
   if (isSceneWorldTransformed(prevScene)) {
     markSceneWorldTransformed(nextScene);
+  }
+  if (isVerifiedStepEditedScene(prevScene)) {
+    markVerifiedStepEditedScene(nextScene);
+    if (exactNextOverride) markVerifiedStepEditedScene(exactNextOverride);
   }
   const prevHv = hybridViewOfScene(prevScene);
   if (prevHv) {

@@ -267,18 +267,19 @@ def _parse_point_ref_phrase(raw_phrase: str) -> tuple[str, dict[str, Any] | None
             "shape": shape_raw,
             "target": m_ctr2.group("poly").upper(),
         }
-    # Case 4: `"trung điểm O của AC"`
+    # Case 4: `"trung điểm O của AC"` or anonymous `"trung điểm của AC"`
     m_mid = re.fullmatch(
-        rf"(?:trung\s+điểm|điểm\s+chính\s+giữa)\s+(?P<pt>{pt_pat})\s+(?:của\s+)?(?:cạnh\s+|đoạn\s+thẳng\s+|đoạn\s+|đường\s+chéo\s+)?(?P<seg>[A-Za-z][0-9]*'?[A-Za-z][0-9]*'?)",
+        rf"(?:trung\s+điểm|điểm\s+chính\s+giữa)(?:\s+(?P<pt>{pt_pat}))?\s+(?:của\s+)?(?:cạnh\s+|đoạn\s+thẳng\s+|đoạn\s+|đường\s+chéo\s+)?(?P<seg>[A-Za-z][0-9]*'?[A-Za-z][0-9]*'?)",
         p,
         re.IGNORECASE,
     )
     if m_mid:
         eps = _extract_segment_endpoints(m_mid.group("seg"))
         if len(eps) == 2 and eps[0] != eps[1]:
-            return m_mid.group("pt").upper(), {
-                "kind": "midpoint",
-                "pt": m_mid.group("pt").upper(),
+            pt_tok = m_mid.group("pt").upper() if m_mid.group("pt") else "__ANON_MID__"
+            return pt_tok, {
+                "kind": "midpoint" if m_mid.group("pt") else "anon_midpoint",
+                "pt": pt_tok,
                 "a": eps[0],
                 "b": eps[1],
             }
@@ -341,10 +342,10 @@ def _split_compound_clauses(norm_text: str) -> list[str]:
     parts: list[str] = []
     pt_pat = r"[A-Z][0-9]*'?"
     seg_pat = r"[A-Z][0-9]*'?[A-Z][0-9]*'?"
-    plane_pat = r"\([^()]+\)|[A-Z][0-9]*'?(?:[A-Z][0-9]*'?){2,}|[α-ω]'?"
+    plane_pat = r"\([^()]+\)|(?-i:[A-Z][0-9]*'?(?:[A-Z][0-9]*'?){2,})|[α-ω]'?"
     inline_mid_re = re.compile(
         rf"^(?:dựng|vẽ|xác\s+định)\s+(?:mặt\s+phẳng|mp)\s*(?P<pname>{plane_pat})?\s*"
-        rf"(?:đi\s+)?qua\s+trung\s+điểm\s+(?P<pt>{pt_pat})\s+(?:của\s+)?(?:cạnh\s+|đoạn\s+thẳng\s+|đoạn\s+)?(?P<seg>{seg_pat})"
+        rf"(?:đi\s+)?qua\s+(?:trung\s+điểm|điểm\s+chính\s+giữa)(?:\s+(?P<pt>{pt_pat}))?\s+(?:của\s+)?(?:cạnh\s+|đoạn\s+thẳng\s+|đoạn\s+)?(?P<seg>{seg_pat})"
         rf"\s*(?:và|,)?\s*(?:vuông\s+góc\s+(?:với\s+)?|⊥\s*)(?:(?:cạnh|đoạn\s+thẳng|đoạn|đường\s+thẳng|đt)\s+)?(?P<line>{seg_pat}|[a-zΔ][0-9']*)$",
         re.IGNORECASE,
     )
@@ -358,9 +359,14 @@ def _split_compound_clauses(norm_text: str) -> list[str]:
             seg = m_inline.group("seg")
             pname = (m_inline.group("pname") or "").strip()
             line = m_inline.group("line").strip()
-            parts.append(f"Xác định trung điểm {pt} của {seg}")
             p_lbl = f" {pname}" if pname else ""
-            parts.append(f"Dựng mặt phẳng{p_lbl} đi qua {pt} và vuông góc với {line}")
+            if pt:
+                parts.append(f"Xác định trung điểm {pt} của {seg}")
+                parts.append(f"Dựng mặt phẳng{p_lbl} đi qua {pt} và vuông góc với {line}")
+            elif set(_extract_segment_endpoints(seg)) == set(_extract_segment_endpoints(line)):
+                parts.append(f"Dựng mặt phẳng trung trực{p_lbl} của {seg}")
+            else:
+                parts.append(p)
         else:
             parts.append(p)
     return parts
@@ -377,43 +383,29 @@ def _parse_ratio_fraction(raw: str) -> Fraction | None:
 
 
 def _resolve_divide_segment_ratio(seg_pts: tuple[str, str], pt: str, expr_rhs: str) -> tuple[str, str, Fraction]:
-    """Parse ratio equations like `SM = 1/3 SA`, `AM/AB = 2/3`, `SM = 2 MA` into `(a, b, t)` with P = (1-t)*a + t*b."""
+    """Parse ratio equations like `SM = 1/3 SA`, `AP/AB = 1/4`, `AP/PB = 1/3`, `AB/AP = 4`, `SM = 2 MA`."""
     a, b = seg_pts
     e = _normalize_vi_math(expr_rhs)
-    # Form 1: X/Y = k  (e.g. "SM/SA = 1/3", "AM/AB = 2/3")
+    # Form 1: X/Y = k  (e.g. "SM/SA = 1/3", "AP/PB = 1/3", "AB/AP = 4") -> delegate to canonical s1 = k s2
     m_div = re.fullmatch(
-        r"(?P<s1>[A-Z][0-9]*'?[A-Z][0-9]*'?)\s*/\s*(?P<s2>[A-Z][0-9]*'?[A-Z][0-9]*'?)\s*=\s*(?P<k>[\d.,/]+)",
+        r"(?P<s1>[A-Z][0-9]*'?[A-Z][0-9]*'?)\s*/\s*(?P<s2>[A-Z][0-9]*'?[A-Z][0-9]*'?)\s*=\s*(?P<k>-?[\d.,/]+)",
         e,
     )
     if m_div:
         k = _parse_ratio_fraction(m_div.group("k"))
         p1 = tuple(_extract_points(m_div.group("s1")))
         p2 = tuple(_extract_points(m_div.group("s2")))
-        if k is None or len(p1) != 2 or len(p2) != 2:
+        if k is None or k <= 0 or len(p1) != 2 or len(p2) != 2 or p1[0] == p1[1] or p2[0] == p2[1]:
             raise StepEditRefusal(
                 "INVALID_RATIO",
                 "parser",
                 f"Tỉ số chia đoạn '{e}' không đúng định dạng phân số hợp lệ.",
             )
-        if pt not in p1 or set(p2) != {a, b}:
-            raise StepEditRefusal(
-                "INVALID_RATIO",
-                "parser",
-                f"Biểu thức tỉ số '{e}' không khớp với điểm {pt} trên đoạn {a}{b}.",
-            )
-        anchor = next(x for x in p1 if x != pt)
-        other = b if anchor == a else a
-        if not (Fraction(0) < k < Fraction(1)):
-            raise StepEditRefusal(
-                "INVALID_RATIO",
-                "parser",
-                f"Tỉ số {e} cho t = {k} nằm ngoài đoạn {a}{b} (cần 0 < t < 1).",
-            )
-        return anchor, other, k
+        e = f"{m_div.group('s1')} = {k} {m_div.group('s2')}"
 
     # Form 1b: X : Y = num : den (e.g. "SM:MA = 1:2", "AM:AB = 1:3")
     m_colon = re.fullmatch(
-        r"(?P<s1>[A-Z][0-9]*'?[A-Z][0-9]*'?)\s*:\s*(?P<s2>[A-Z][0-9]*'?[A-Z][0-9]*'?)\s*=\s*(?P<num>[\d.,]+)\s*:\s*(?P<den>[\d.,]+)",
+        r"(?P<s1>[A-Z][0-9]*'?[A-Z][0-9]*'?)\s*:\s*(?P<s2>[A-Z][0-9]*'?[A-Z][0-9]*'?)\s*=\s*(?P<num>-?[\d.,]+)\s*:\s*(?P<den>-?[\d.,]+)",
         e,
     )
     if m_colon:
@@ -425,7 +417,7 @@ def _resolve_divide_segment_ratio(seg_pts: tuple[str, str], pt: str, expr_rhs: s
 
     # Form 2: seg1 = k seg2  (e.g. "SM = 1/3 SA", "SM = 2 MA", "AM = 2 MB", "MA = 2MB")
     m_eq = re.fullmatch(
-        r"(?P<s1>[A-Z][0-9]*'?[A-Z][0-9]*'?)\s*=\s*(?P<k>[\d.,/]+)?\s*\*?\s*(?P<s2>[A-Z][0-9]*'?[A-Z][0-9]*'?)",
+        r"(?P<s1>[A-Z][0-9]*'?[A-Z][0-9]*'?)\s*=\s*(?P<k>-?[\d.,/]+)?\s*\*?\s*(?P<s2>[A-Z][0-9]*'?[A-Z][0-9]*'?)",
         e,
     )
     if m_eq:
@@ -476,7 +468,7 @@ def _parse_single_clause(clause: str) -> AtomicClause:
     pt_pat = r"[A-Z][0-9]*'?"
     seg_pat = r"[A-Z][0-9]*'?[A-Z][0-9]*'?"
     seg_or_pair_pat = r"[A-Z][0-9]*'?[A-Z][0-9]*'?|[A-Z][0-9]*'?\s*(?:,|và)\s*[A-Z][0-9]*'?"
-    plane_pat = r"\([^()]+\)|[A-Z][0-9]*'?(?:[A-Z][0-9]*'?){2,}|[α-ω]'?"
+    plane_pat = r"\([^()]+\)|(?-i:[A-Z][0-9]*'?(?:[A-Z][0-9]*'?){2,})|[α-ω]'?"
 
     # 1a. Midpoint: "Xác định/Gọi/Lấy trung điểm H của AB" / "Xác định điểm chính giữa H của AB"
     m = re.fullmatch(
@@ -512,9 +504,9 @@ def _parse_single_clause(clause: str) -> AtomicClause:
             raw_clause=clause,
         )
 
-    # 2. Ratio point on segment: "Lấy điểm M thuộc/trên cạnh SA sao cho SM = 1/3 SA"
+    # 2. Ratio point on segment: "Lấy điểm M thuộc/trên cạnh SA sao cho SM = 1/3 SA" or "P thuộc AB, AP/AB = 1/3"
     m = re.fullmatch(
-        rf"(?:lấy|xác\s+định|gọi|chọn)\s+(?:điểm\s+)?(?P<pt>{pt_pat})\s+(?:thuộc|trên|nằm\s+trên)\s+(?:cạnh\s+|đoạn\s+thẳng\s+|đoạn\s+)?(?P<seg>{seg_pat})\s+(?:sao\s+cho|thỏa\s+mãn)\s+(?P<expr>.+)",
+        rf"(?:(?:lấy|xác\s+định|gọi|chọn|dựng)\s+)?(?:điểm\s+)?(?P<pt>{pt_pat})\s+(?:thuộc|trên|nằm\s+trên)\s+(?:cạnh\s+|đoạn\s+thẳng\s+|đoạn\s+)?(?P<seg>{seg_pat})(?:\s+(?:sao\s+cho|thỏa\s+mãn|với)\s+|\s*,\s*)(?P<expr>.+)",
         c,
         re.IGNORECASE,
     )
@@ -549,9 +541,9 @@ def _parse_single_clause(clause: str) -> AtomicClause:
                 raw_clause=clause,
             )
 
-    # 4. Perpendicular bisector plane: "Dựng mặt phẳng trung trực (α) của cạnh AB"
+    # 4. Perpendicular bisector plane: "Dựng mặt phẳng trung trực [(α)] của cạnh AB"
     m = re.fullmatch(
-        rf"(?:dựng|vẽ|xác\s+định|gọi)\s+(?:(?:mặt\s+phẳng|mp)\s+trung\s+trực\s+(?P<pname>{plane_pat})?|(?P<pname2>{plane_pat})\s+là\s+(?:mặt\s+phẳng|mp)\s+trung\s+trực)\s+(?:của\s+)?(?:cạnh\s+|đoạn\s+thẳng\s+|đoạn\s+)?(?P<seg>{seg_pat})",
+        rf"(?:dựng|vẽ|xác\s+định|gọi)\s+(?:(?:mặt\s+phẳng|mp)\s+trung\s+trực(?:\s+(?P<pname>{plane_pat}))?|(?P<pname2>{plane_pat})\s+là\s+(?:mặt\s+phẳng|mp)\s+trung\s+trực)\s+(?:của\s+)?(?:cạnh\s+|đoạn\s+thẳng\s+|đoạn\s+)?(?P<seg>{seg_pat})",
         c,
         re.IGNORECASE,
     )
@@ -573,7 +565,7 @@ def _parse_single_clause(clause: str) -> AtomicClause:
         rf"|(?:dựng|vẽ|xác\s+định)\s+(?P<pname_bare>{plane_pat})"
         rf"|(?:mặt\s+phẳng|mp)\s+(?P<pname_np>{plane_pat})"
         rf"|gọi\s+(?P<pname2>{plane_pat})\s+là\s+(?:mặt\s+phẳng|mp))"
-        rf"\s+(?:đi\s+)?qua\s+(?P<pt_phrase>.+?)\s+(?:và|rồi|,)?\s*(?:vuông\s+góc\s+(?:với\s+)?|⊥\s*)(?:(?:cạnh|đoạn\s+thẳng|đoạn|đường\s+thẳng|đt)\s+)?(?P<line>{seg_pat}|[a-z][0-9']*'?[a-z][0-9']*'?|[a-zΔ][0-9']*)",
+        rf"\s+(?:đi\s+)?qua\s+(?P<pt_phrase>.+?)\s+(?:và|rồi|,)?\s*(?:vuông\s+góc\s+(?:với\s+)?|⊥\s*)(?:(?:cạnh|đoạn\s+thẳng|đoạn|đường\s+thẳng|đt)\s+)?(?P<line>{seg_pat}|[a-zΔ][a-zA-Z0-9_']*)",
         c,
         re.IGNORECASE,
     )
@@ -602,7 +594,7 @@ def _parse_single_clause(clause: str) -> AtomicClause:
 
     # 5b. Reverse clause order: "Dựng mặt phẳng (α) vuông góc với AB tại H" / "qua tâm O vuông góc với AB"
     m = re.fullmatch(
-        rf"(?:(?:dựng|vẽ|xác\s+định)\s+(?:(?:mặt\s+phẳng|mp)\s*)?(?P<pname>{plane_pat})?|(?:mặt\s+phẳng|mp)\s+(?P<pname_np>{plane_pat}))\s*(?:vuông\s+góc\s+(?:với\s+)?|⊥\s*)(?:(?:cạnh|đoạn\s+thẳng|đoạn|đường\s+thẳng|đt)\s+)?(?P<line>{seg_pat}|[a-z][0-9']*'?[a-z][0-9']*'?|[a-zΔ][0-9']*)\s+(?:tại|đi\s+qua|qua)\s+(?P<pt_phrase>.+)",
+        rf"(?:(?:dựng|vẽ|xác\s+định)\s+(?:(?:mặt\s+phẳng|mp)\s*)?(?P<pname>{plane_pat})?|(?:mặt\s+phẳng|mp)\s+(?P<pname_np>{plane_pat}))\s*(?:vuông\s+góc\s+(?:với\s+)?|⊥\s*)(?:(?:cạnh|đoạn\s+thẳng|đoạn|đường\s+thẳng|đt)\s+)?(?P<line>{seg_pat}|[a-zΔ][a-zA-Z0-9_']*)\s+(?:tại|đi\s+qua|qua)\s+(?P<pt_phrase>.+)",
         c,
         re.IGNORECASE,
     )
@@ -1531,11 +1523,48 @@ def _sync_scene_object_from_value(
         obj["point"] = _exact_xyz_list(val.point)
         obj["normal"] = _exact_xyz_list(val.normal)
     elif isinstance(val, Section):
-        obj["polygon"] = [_exact_xyz_list(v) for v in val.polygon]
+        named_pts = [
+            o
+            for o in by_id.values()
+            if o.get("type") == "point3" and isinstance(o.get("notation"), str) and o["notation"].strip() and o.get("xyz")
+        ]
+        sol_id = next((d for d in (obj.get("depends") or ()) if by_id.get(d, {}).get("type") == "solid"), None)
+        sol_vids = list((by_id.get(sol_id or "") or {}).get("vertex_ids") or ())
+        poly_list = list(val.polygon)
+        vsrc_list = list(val.vertex_sources)
+        steps_list = list(val.steps)
+
+        def _match_pt(v: Vec3) -> dict[str, Any] | None:
+            return next((po for po in named_pts if P.same_point(Vec3.of(*po["xyz"]), v)), None)
+
+        matched_pts: list[dict[str, Any] | None] = [_match_pt(v) for v in poly_list]
+        prev_syms = [str(s).strip() for s in (obj.get("ordered_vertex_symbols") or ()) if isinstance(s, str) and s.strip()]
+        if (
+            prev_syms
+            and len(matched_pts) == len(poly_list)
+            and len(poly_list) >= 3
+            and all(m is not None for m in matched_pts)
+            and len({m["id"] for m in matched_pts if m}) == len(poly_list)
+        ):
+            raw_syms = [str(m["notation"]).strip() for m in matched_pts if m is not None]
+            if prev_syms[0] in raw_syms:
+                start_i = raw_syms.index(prev_syms[0])
+                n_v = len(poly_list)
+                order_idx = [(start_i + k) % n_v for k in range(n_v)]
+                rot_syms = [raw_syms[k] for k in order_idx]
+                if len(prev_syms) >= 2 and rot_syms[1] != prev_syms[1] and rot_syms[-1] == prev_syms[1]:
+                    order_idx = [order_idx[0], *reversed(order_idx[1:])]
+                    steps_list = list(reversed(steps_list))
+                poly_list = [poly_list[k] for k in order_idx]
+                matched_pts = [matched_pts[k] for k in order_idx]
+                if len(vsrc_list) == n_v:
+                    vsrc_list = [vsrc_list[k] for k in order_idx]
+
+        obj["polygon"] = [_exact_xyz_list(v) for v in poly_list]
         obj["closed"] = bool(val.is_closed)
         obj["steps"] = [
             {"face_index": s.face_index, "a": _exact_xyz_list(s.a), "b": _exact_xyz_list(s.b)}
-            for s in val.steps
+            for s in steps_list
         ]
         obj["vertex_sources"] = [
             {
@@ -1545,25 +1574,10 @@ def _sync_scene_object_from_value(
                 if vs.solid_edge_vertex_indices is not None
                 else None,
             }
-            for vs in val.vertex_sources
+            for vs in vsrc_list
         ]
-        # Recompute ordered_vertex_ids / symbols / boundary edges & labels cleanly so stale cycle names never linger
-        named_pts = [
-            o
-            for o in by_id.values()
-            if o.get("type") == "point3" and isinstance(o.get("notation"), str) and o["notation"].strip() and o.get("xyz")
-        ]
-        matched_pts: list[dict[str, Any] | None] = []
-        for v in val.polygon:
-            hit = next(
-                (po for po in named_pts if P.same_point(Vec3.of(*po["xyz"]), v)),
-                None,
-            )
-            matched_pts.append(hit)
-        sol_id = next((d for d in (obj.get("depends") or ()) if by_id.get(d, {}).get("type") == "solid"), None)
-        sol_vids = list((by_id.get(sol_id or "") or {}).get("vertex_ids") or ())
         ordered_vids: list[str] = []
-        for idx_v, (m_po, vs) in enumerate(zip(matched_pts, val.vertex_sources)):
+        for idx_v, (m_po, vs) in enumerate(zip(matched_pts, vsrc_list)):
             if m_po is not None:
                 ordered_vids.append(str(m_po["id"]))
             elif vs.kind == "SOLID_VERTEX" and vs.solid_vertex_index is not None and vs.solid_vertex_index < len(sol_vids):
@@ -1577,7 +1591,7 @@ def _sync_scene_object_from_value(
             else:
                 ordered_vids.append(f"section:{obj['id']}:v{idx_v}")
         obj["ordered_vertex_ids"] = ordered_vids
-        if len(matched_pts) == len(val.polygon) and all(m is not None for m in matched_pts) and len({m["id"] for m in matched_pts if m}) == len(val.polygon):
+        if len(matched_pts) == len(poly_list) and all(m is not None for m in matched_pts) and len({m["id"] for m in matched_pts if m}) == len(poly_list):
             syms = [str(m["notation"]).strip() for m in matched_pts if m is not None]
             cyc = "".join(syms)
             obj["ordered_vertex_symbols"] = syms
@@ -1589,7 +1603,7 @@ def _sync_scene_object_from_value(
         else:
             obj["ordered_vertex_symbols"] = [str(m["notation"]).strip() for m in matched_pts if m is not None]
             obj["ordered_boundary_edges"] = []
-            poly_desc = f"Thiết diện {len(val.polygon)} đỉnh"
+            poly_desc = f"Thiết diện {len(poly_list)} đỉnh"
             obj["notation"] = None
             obj["reference"] = poly_desc
             obj["label"] = poly_desc
@@ -1789,10 +1803,14 @@ def _symbol_index_before_step(
         elif o.get("type") == "plane3":
             for cand in (o.get("notation"), o.get("reference"), o.get("label")):
                 if cand and isinstance(cand, str):
-                    nc = _normalize_vi_math(cand).replace("_prime", "'")
+                    nc = _normalize_vi_math(cand).replace("_prime", "'").strip()
+                    if not nc:
+                        continue
                     _add(nc, o)
                     if nc.startswith("(") and nc.endswith(")"):
                         _add(nc[1:-1], o)
+                    else:
+                        _add(f"({nc})", o)
         elif o.get("type") == "line3":
             for cand in (o.get("notation"), o.get("reference"), o.get("label")):
                 if cand and isinstance(cand, str):
@@ -1876,7 +1894,14 @@ def _resolve_plane_id(
                 if pl:
                     return pl["id"]
     # Also allow matching vertex-named planes e.g. `(ABCD)` / `(SBC)` against existing prior planes or prior vertex sets
-    inner_pts = _extract_points(norm.strip("()"))
+    inner_norm = _normalize_vi_math(norm.strip("()")).strip()
+    is_vertex_plane_label = bool(
+        re.fullmatch(
+            r"(?:[A-Z][0-9]*'?(?:[\s,]+[A-Z][0-9]*'?){2,}|(?:[A-Z][0-9]*'?){3,})",
+            inner_norm,
+        )
+    )
+    inner_pts = _extract_points(inner_norm) if is_vertex_plane_label else []
     if len(inner_pts) >= 3:
         for o in all_objs_by_id.values():
             if o.get("type") != "plane3" or o["id"] in downstream_ids or o["id"] in post_step_ids:
@@ -2179,6 +2204,30 @@ def verify_rebuilt_geometry(
                     if not P.point_on_plane(pt_v, pl) or not pl.normal.cross(ref_pl.normal).is_zero():
                         raise StepEditRefusal("PARALLEL_VERIFICATION_FAILED", "validation", "Mặt phẳng không thỏa mãn đi qua điểm hoặc không song song với mặt phẳng đã nêu.")
                     checks_passed.append(f"plane_parallel_to_plane:{oid}")
+                raw_pl_not = str(o.get("notation") or "").strip()
+                if raw_pl_not.startswith("(") and raw_pl_not.endswith(")"):
+                    pl_pt_syms = _extract_points(raw_pl_not[1:-1])
+                    if len(pl_pt_syms) >= 3:
+                        for p_sym in pl_pt_syms:
+                            p_norm = _normalize_vi_math(p_sym).upper()
+                            matched_pt_obj = next(
+                                (
+                                    po
+                                    for po in objs
+                                    if po.get("type") == "point3"
+                                    and po.get("id") in mem
+                                    and isinstance(mem[po["id"]], Vec3)
+                                    and not (po.get("origin") == "derived" and "notation" in po and po.get("notation") is None)
+                                    and _normalize_vi_math(str(po.get("notation") or po["id"])).replace("_prime", "'").upper() == p_norm
+                                ),
+                                None,
+                            )
+                            if matched_pt_obj is not None and not P.point_on_plane(mem[matched_pt_obj["id"]], pl):
+                                raise StepEditRefusal(
+                                    "PLANE_VERTEX_INCIDENCE_MISMATCH",
+                                    "validation",
+                                    f"Mặt phẳng {raw_pl_not} không đi qua đỉnh {_display_sym(p_sym)} nêu trong tên mặt phẳng.",
+                                )
 
             elif o.get("type") == "line3" and isinstance(mem.get(oid), Line3):
                 ln = mem[oid]
@@ -2215,7 +2264,7 @@ def verify_rebuilt_geometry(
         before_by_id = {o["id"]: o for o in (before_scene.get("objects") or ()) if o.get("id")}
         before_mem: dict[str, Any] = {}
         for bo in before_scene.get("objects") or ():
-            if bo.get("id") and bo.get("type") not in ("section", "quantity"):
+            if bo.get("id") and bo.get("type") != "section":
                 bval = _hydrate_object_value(bo, before_mem)
                 if bval is not None:
                     before_mem[bo["id"]] = bval
@@ -2271,6 +2320,74 @@ def verify_rebuilt_geometry(
                 )
             checks_passed.append(f"perpendicular_bisector:{pl_id}")
 
+        # 3b. Enforce fixed solid altitude witness invariants & downstream orthogonality proof certificates
+        before_by_id_chk = {bo["id"]: bo for bo in (before_scene.get("objects") or ()) if bo.get("id")}
+        for bo in before_scene.get("objects") or ():
+            boid = bo.get("id")
+            if not boid:
+                continue
+            pw = bo.get("perpendicular_witness")
+            if isinstance(pw, dict) and pw.get("rule") in ("formation_construct_height", "prism_lateral_altitude"):
+                cur_seg = mem.get(boid)
+                if not isinstance(cur_seg, Segment3) or P.same_point(cur_seg.point_a, cur_seg.point_b):
+                    raise StepEditRefusal(
+                        "DOWNSTREAM_PERPENDICULAR_INVARIANT_BROKEN",
+                        "validation",
+                        f"Đoạn '{bo.get('label') or boid}' là chiều cao cố định của khối, không được làm mất tính vuông góc với mặt đáy.",
+                    )
+                pl_target: Plane3 | None = None
+                on_id = pw.get("on")
+                if isinstance(on_id, str) and isinstance(mem.get(on_id), Plane3):
+                    pl_target = mem[on_id]
+                else:
+                    pvids = list(pw.get("plane_vertex_ids") or ())
+                    p_vecs = [mem[vid] for vid in pvids if isinstance(mem.get(vid), Vec3)]
+                    if len(p_vecs) >= 3 and not P.collinear(p_vecs[0], p_vecs[1], p_vecs[2]):
+                        pl_target = Plane3.through(p_vecs[0], p_vecs[1], p_vecs[2])
+                if pl_target is not None:
+                    seg_ln = Line3.through(cur_seg.point_a, cur_seg.point_b)
+                    hits_plane = P.point_on_plane(cur_seg.point_a, pl_target) or P.point_on_plane(cur_seg.point_b, pl_target)
+                    if not (P.line_perpendicular_plane(seg_ln, pl_target) and hits_plane):
+                        raise StepEditRefusal(
+                            "DOWNSTREAM_PERPENDICULAR_INVARIANT_BROKEN",
+                            "validation",
+                            f"Phép dựng mới làm đoạn '{bo.get('label') or boid}' không còn vuông góc với mặt đáy.",
+                        )
+                    checks_passed.append(f"fixed_altitude:{boid}")
+
+            if bo.get("type") == "quantity" and bo.get("producer") == "measure.angle_cos_sq":
+                b_q = before_mem.get(boid)
+                a_q = mem.get(boid)
+                if b_q == Fraction(0) and a_q != Fraction(0):
+                    # Check whether any transitive dependency of this right-angle witness is an orthogonal construction
+                    has_orth_ancestor = False
+                    q_stack = list(bo.get("depends") or ())
+                    q_seen: set[str] = set()
+                    while q_stack:
+                        cur_qid = q_stack.pop()
+                        if cur_qid in q_seen:
+                            continue
+                        q_seen.add(cur_qid)
+                        anc = before_by_id_chk.get(cur_qid) or by_id.get(cur_qid)
+                        if not anc:
+                            continue
+                        anc_prod = anc.get("producer") or (anc.get("source") or {}).get("instruction") or ""
+                        if (
+                            anc_prod in ("construct_point.project_onto", "plane_perpendicular_to_line", "line_perpendicular_to_plane")
+                            or anc.get("perpendicular_witness")
+                            or (anc.get("source") or {}).get("segment_role") in ("altitude", "common_perpendicular")
+                        ):
+                            has_orth_ancestor = True
+                            break
+                        q_stack.extend(anc.get("depends") or ())
+                    if has_orth_ancestor:
+                        raise StepEditRefusal(
+                            "DOWNSTREAM_ORTHOGONALITY_BROKEN",
+                            "validation",
+                            f"Phép dựng mới làm mất quan hệ vuông góc bắt buộc ({bo.get('label') or boid} khác 0).",
+                        )
+                    checks_passed.append(f"orth_witness:{boid}")
+
     # 4. Continuity validation across all 7 invariants
     issues = validate_construction_continuity(scene3d)
     if issues:
@@ -2313,7 +2430,19 @@ def _exact_values_equivalent(v1: Any, v2: Any) -> bool:
             and v1.height_sq == v2.height_sq
         )
     if isinstance(v1, Section):
-        return tuple(v1.polygon) == tuple(v2.polygon) and bool(v1.is_closed) == bool(v2.is_closed)
+        if bool(v1.is_closed) != bool(v2.is_closed) or len(v1.polygon) != len(v2.polygon):
+            return False
+        n = len(v1.polygon)
+        if n == 0:
+            return True
+
+        def _cyc_eq(seq_a: tuple[Vec3, ...], seq_b: tuple[Vec3, ...]) -> bool:
+            return any(
+                all(P.same_point(seq_a[i], seq_b[(i + shift) % n]) for i in range(n))
+                for shift in range(n)
+            )
+
+        return _cyc_eq(v1.polygon, v2.polygon) or _cyc_eq(v1.polygon, tuple(reversed(v2.polygon)))
     if isinstance(v1, Polyhedron):
         return v1.vertices == v2.vertices and v1.faces == v2.faces
     return v1 == v2
@@ -2589,18 +2718,29 @@ def execute_step_edit(
         if hid in by_id and hid not in target_set:
             if set(graph["consumers_of"].get(hid, ())) <= target_set:
                 exclusive_helpers.append(hid)
-    # Also scan unnamed auxiliary midpoints/lines referenced ONLY by `primary_id`, or earlier inline sub-objects
-    for dep in list(primary_obj.get("depends") or ()):
-        if dep not in by_id or dep in target_set or dep in exclusive_helpers:
-            continue
-        dep_obj = by_id[dep]
-        dep_src = dep_obj.get("source") or {}
-        if dep_src.get("inline_step_parent") == primary_id:
-            if set(graph["consumers_of"].get(dep, ())) <= (target_set | set(exclusive_helpers)):
-                exclusive_helpers.append(dep)
-        elif dep_obj.get("type") == "point3" and dep_obj.get("origin") == "derived" and not dep_obj.get("notation"):
-            if set(graph["consumers_of"].get(dep, ())) <= (target_set | set(exclusive_helpers)):
-                exclusive_helpers.append(dep)
+    # Scan exclusive inline helpers & anonymous derived points in fixed-point closure
+    changed_helpers = True
+    while changed_helpers:
+        changed_helpers = False
+        owned_scope = target_set | set(exclusive_helpers)
+        for owner_id in list(owned_scope):
+            owner_obj = by_id.get(owner_id)
+            if owner_obj is None:
+                continue
+            for dep in list(owner_obj.get("depends") or ()):
+                if dep not in by_id or dep in target_set or dep in exclusive_helpers:
+                    continue
+                dep_obj = by_id[dep]
+                dep_src = dep_obj.get("source") or {}
+                is_inline_child = dep_src.get("inline_step_parent") == primary_id
+                is_anon_derived_pt = (
+                    dep_obj.get("type") == "point3"
+                    and dep_obj.get("origin") == "derived"
+                    and not dep_obj.get("notation")
+                )
+                if (is_inline_child or is_anon_derived_pt) and set(graph["consumers_of"].get(dep, ())) <= owned_scope:
+                    exclusive_helpers.append(dep)
+                    changed_helpers = True
 
     target_objs = [by_id[tid] for tid in resolved_target_ids]
     absorbed_objs = [by_id[hid] for hid in exclusive_helpers if hid in by_id]
@@ -3092,7 +3232,41 @@ def execute_step_edit(
                     else:
                         # plane_perpendicular_to_line(point=H, line=AB or named line)
                         pt_sym = clause.point_inputs[0]
-                        pt_id = _find_pt(pt_sym, f"dựng mặt phẳng {clause.output_symbol or primary_obj.get('notation') or ''}")
+                        is_anon_mid_role = (
+                            clause.params.get("point_role_assertion") or {}
+                        ).get("kind") == "anon_midpoint"
+                        if is_anon_mid_role:
+                            r_a = _find_pt(clause.params["point_role_assertion"]["a"], "xác định trung điểm")
+                            r_b = _find_pt(clause.params["point_role_assertion"]["b"], "xác định trung điểm")
+                            mid_val_anon = K.midpoint(mem[r_a], mem[r_b])
+                            pt_id = _next_helper_id(f"mid_{r_a}_{r_b}")
+                            anon_h_obj = {
+                                "id": pt_id,
+                                "type": "point3",
+                                "label": f"Trung điểm của {_display_sym(r_a)} và {_display_sym(r_b)}",
+                                "notation": None,
+                                "reference": f"Trung điểm của {_display_sym(r_a)} và {_display_sym(r_b)}",
+                                "role": "Điểm dựng phụ",
+                                "origin": "derived",
+                                "producer": "construct_point.midpoint",
+                                "depends": [r_a, r_b],
+                                "render": "point_marker",
+                                "display_role": "visual_owner",
+                                "display_group": ["construction"],
+                                "visual_transform": {"translate": [0, 0, 0], "scale": 1},
+                                "formation_roles": ["CONSTRUCT_AUXILIARY_GEOMETRY"],
+                                "xyz": _exact_xyz_list(mid_val_anon),
+                                "source": {
+                                    "instruction": "construct_point.midpoint",
+                                    "binding": "AUXILIARY",
+                                    "inline_step_parent": primary_id,
+                                },
+                            }
+                            mem[pt_id] = mid_val_anon
+                            by_id[pt_id] = anon_h_obj
+                            newly_created_objs.append(anon_h_obj)
+                        else:
+                            pt_id = _find_pt(pt_sym, f"dựng mặt phẳng {clause.output_symbol or primary_obj.get('notation') or ''}")
                         if len(clause.point_inputs) >= 3:
                             a_id = _find_pt(clause.point_inputs[1], "dựng mặt phẳng vuông góc")
                             b_id = _find_pt(clause.point_inputs[2], "dựng mặt phẳng vuông góc")
@@ -3169,7 +3343,7 @@ def execute_step_edit(
                             ln_ref_id = ln_cand
                             expected_bisector = None
 
-                    if clause.params.get("point_role_assertion"):
+                    if clause.params.get("point_role_assertion") and (clause.params["point_role_assertion"].get("kind") != "anon_midpoint"):
                         _verify_point_role_assertion(
                             clause.params["point_role_assertion"],
                             pt_id,
@@ -4150,23 +4324,29 @@ def execute_step_edit(
 
     after_digest = _scene_digest(rebuilt_scene)
     changed_objects: dict[str, dict[str, Any]] = {}
-    for oid in all_changed:
-        after_o = next((o for o in surviving_objs if o["id"] == oid), None)
-        before_o = before_objs_map.get(oid)
-        if after_o is None:
-            continue
-        changed_objects[oid] = {
-            "before": {
-                k: before_o.get(k)
-                for k in ("xyz", "point", "normal", "direction", "polygon", "anchor", "radius_sq", "value", "depends")
-                if before_o and k in before_o
-            } if before_o else None,
-            "after": {
-                k: after_o.get(k)
-                for k in ("xyz", "point", "normal", "direction", "polygon", "anchor", "radius_sq", "value", "depends")
-                if k in after_o
-            },
-        }
+    if not computed_equiv["geometrically_equivalent"]:
+        mutated_id_set = set(computed_equiv.get("mutated_downstream_ids") or ()) | set(resolved_target_ids)
+        for oid in all_changed:
+            if oid not in mutated_id_set and any(o["id"] == oid for o in newly_created_objs):
+                pass
+            elif oid not in mutated_id_set:
+                continue
+            after_o = next((o for o in surviving_objs if o["id"] == oid), None)
+            before_o = before_objs_map.get(oid)
+            if after_o is None:
+                continue
+            changed_objects[oid] = {
+                "before": {
+                    k: before_o.get(k)
+                    for k in ("xyz", "point", "normal", "direction", "polygon", "anchor", "radius_sq", "value", "depends")
+                    if before_o and k in before_o
+                } if before_o else None,
+                "after": {
+                    k: after_o.get(k)
+                    for k in ("xyz", "point", "normal", "direction", "polygon", "anchor", "radius_sq", "value", "depends")
+                    if k in after_o
+                },
+            }
 
     next_overrides = dict(existing_overrides)
     for mid in computed_equiv.get("mutated_downstream_ids") or ():
@@ -4196,7 +4376,7 @@ def execute_step_edit(
         },
         "validation_result": val_res,
         "before_after_diff": {
-            "changed": True,
+            "changed": not computed_equiv["geometrically_equivalent"],
             "changed_objects": changed_objects,
         },
         "before_scene_digest": before_digest,

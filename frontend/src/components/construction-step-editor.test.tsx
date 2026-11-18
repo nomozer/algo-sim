@@ -758,7 +758,10 @@ describe("AXO Step Editor V2.2 — Reliability Hardening & Edge Cases (§5, §7)
 
     vi.stubGlobal(
       "fetch",
-      vi.fn().mockImplementation((_url: unknown, init?: RequestInit) => {
+      vi.fn().mockImplementation((url: unknown, init?: RequestInit) => {
+        if (String(url) === "/api/simulation/steps/cancel") {
+          return Promise.resolve(new Response(JSON.stringify({ cancelled: true }), { status: 200 }));
+        }
         reqCount += 1;
         const idx = reqCount;
         return new Promise<Response>((resolve, reject) => {
@@ -1160,5 +1163,210 @@ describe("AXO Step Editor V2.2 — Reliability Hardening & Edge Cases (§5, §7)
 
     // 4. ErrorBoundary resetKey includes viewerMountGen so rebuild remount clears boundary crashes
     expect(WORKSPACE_SRC).toContain('resetKey={`${problemSnapshotKey}|${viewerMountGen}|${webglStageAttempt}`}');
+  });
+
+  it("FP-4: Hybrid /4 answers rebind safely on verified step-edited scenes while unedited mismatched scenes stay INVALID", async () => {
+    const modelMod = await import("../simulations/domains/geometry/scene3d-model");
+    const markFn = (modelMod as Record<string, unknown>).markVerifiedStepEditedScene as
+      | ((s: Scene3D) => Scene3D)
+      | undefined;
+    expect(typeof markFn).toBe("function");
+
+    const rawScene = structuredClone((sample11.envelope as unknown as { scene3d: Scene3D }).scene3d);
+    const radiusObj = rawScene.objects.find((o) => o.id === "R")!;
+    const mutatedUnverified = structuredClone(rawScene);
+    const qTampered = mutatedUnverified.objects.find((o) => o.id === "R")!;
+    qTampered.value = "999";
+
+    const fakeHybrid = {
+      answers: [
+        {
+          kind: "radius",
+          label: "Bán kính R",
+          value: String(radiusObj.value),
+          coefficient: String(radiusObj.value),
+          quantity_id: "R",
+        },
+      ],
+    } as unknown as Parameters<typeof modelMod.attachHybridViewToScene>[1];
+
+    // 1. Unedited tampered scene must still be classified INVALID (guard intact)
+    modelMod.attachHybridViewToScene(mutatedUnverified, fakeHybrid);
+    expect(modelMod.classifySceneEntityProvenance(mutatedUnverified, qTampered)).toBe("INVALID");
+
+    // 2. Verified step-edited scene rebinds Hybrid answer to rebuilt exact value instead of marking INVALID
+    const mutatedEdited = markFn!(structuredClone(rawScene));
+    const qEdited = mutatedEdited.objects.find((o) => o.id === "R")!;
+    qEdited.value = "4";
+    modelMod.attachHybridViewToScene(mutatedEdited, fakeHybrid);
+    expect(modelMod.classifySceneEntityProvenance(mutatedEdited, qEdited)).toBe("DERIVED_VERIFIED");
+  });
+
+  it("FP-5 & FP-6: committed_version monotonic guard, post-commit network recovery, and server cancel dispatch", async () => {
+    const sid = buildStepEditSessionId("sample:fp5-fp6-test", "guest");
+    const validScene = structuredClone((sample11.envelope as unknown as { scene3d: Scene3D }).scene3d);
+
+    // 1. After two 422 refusals then one 200 commit, version_number=3 while committed_version=1.
+    // fetchStepEditSessionState returning later committed_version=2 (with revision version_number=4) must NOT be rejected!
+    vi.stubGlobal(
+      "fetch",
+      vi.fn().mockResolvedValueOnce(
+        new Response(
+          JSON.stringify({
+            status: "committed",
+            mode: "PARTIAL_TOPOLOGICAL_REBUILD",
+            session_id: sid,
+            revision_id: "rev-1",
+            feedback_id: "fb-1",
+            feedback_status: "GEOMETRY_VERIFIED",
+            dataset_eligibility: "ELIGIBLE",
+            version_number: 3,
+            committed_version: 1,
+            primary_target_id: "mp_tt_AB",
+            scene3d: validScene,
+            step_overrides: { mp_tt_AB: "Lượt 1" },
+            dependency_summary: {
+              edited_target_ids: ["mp_tt_AB"],
+              created_ids: [],
+              reused_ids: [],
+              retired_ids: [],
+              recomputed_ids: [],
+              skipped_unaffected_ids: [],
+              cycle_detected: false,
+            },
+            validation_result: {
+              valid: true,
+              passed: true,
+              exact_arithmetic: true,
+              checks_passed: ["given_points_immutable"],
+              continuity: { passed: true, issues: [] },
+            },
+            stage_timings_ms: { total_ms: 10 },
+            llm_calls: 0,
+            quota_charged: false,
+          }),
+          { status: 200, headers: { "Content-Type": "application/json" } },
+        ),
+      ),
+    );
+    const c1 = await submitConstructionStepEdit({
+      sessionId: sid,
+      problemKey: "sample:fp5-fp6-test",
+      stepId: "mp_tt_AB",
+      stepIndex: 7,
+      previousInstruction: "Dựng (α)",
+      editedInstruction: "Lượt 1",
+      targetIds: ["mp_tt_AB"],
+      absorbedIds: ["M_AB"],
+      scene3d: validScene,
+    });
+    expect(c1.status).toBe("committed");
+
+    vi.stubGlobal(
+      "fetch",
+      vi.fn().mockResolvedValueOnce(
+        new Response(
+          JSON.stringify({
+            found: true,
+            session_id: sid,
+            problem_key: "sample:fp5-fp6-test",
+            revision_count: 4,
+            committed_version: 2,
+            committed_scene: validScene,
+            step_overrides: { mp_tt_AB: "Lượt 2 từ server" },
+            dependency_summary: { cycle_detected: false },
+            revisions: [],
+            feedback_items: [],
+          }),
+          { status: 200, headers: { "Content-Type": "application/json" } },
+        ),
+      ),
+    );
+    const snap2 = await fetchStepEditSessionState(sid);
+    expect(snap2?.versionNumber).toBe(2);
+    expect(snap2?.stepOverrides.mp_tt_AB).toBe("Lượt 2 từ server");
+
+    // 2. Post-commit network drop reconciles against GET /state via client_request_id!
+    let postedClientReqId = "";
+    const fetchMock = vi.fn().mockImplementation(async (url: string, init?: RequestInit) => {
+      if (url === "/api/simulation/steps/edit") {
+        const body = JSON.parse(String(init?.body || "{}"));
+        postedClientReqId = String(body.client_request_id || "");
+        throw new TypeError("Simulated connection drop after server commit");
+      }
+      if (url.includes(`/api/simulation/sessions/${encodeURIComponent(sid)}/state`)) {
+        return new Response(
+          JSON.stringify({
+            found: true,
+            session_id: sid,
+            problem_key: "sample:fp5-fp6-test",
+            revision_count: 5,
+            committed_version: 3,
+            last_committed_request_id: postedClientReqId,
+            committed_scene: validScene,
+            step_overrides: { mp_tt_AB: "Recovered post-commit" },
+            dependency_summary: {
+              edited_target_ids: ["mp_tt_AB"],
+              created_ids: [],
+              reused_ids: [],
+              retired_ids: [],
+              recomputed_ids: [],
+              skipped_unaffected_ids: [],
+              cycle_detected: false,
+            },
+            revisions: [],
+            feedback_items: [],
+          }),
+          { status: 200, headers: { "Content-Type": "application/json" } },
+        );
+      }
+      return new Response("{}", { status: 404 });
+    });
+    vi.stubGlobal("fetch", fetchMock);
+    const rec = await submitConstructionStepEdit({
+      sessionId: sid,
+      problemKey: "sample:fp5-fp6-test",
+      stepId: "mp_tt_AB",
+      stepIndex: 7,
+      previousInstruction: "Lượt 2",
+      editedInstruction: "Recovered post-commit",
+      targetIds: ["mp_tt_AB"],
+      absorbedIds: ["M_AB"],
+      scene3d: validScene,
+    });
+    expect(postedClientReqId.length).toBeGreaterThan(4);
+    expect(rec.status).toBe("committed");
+    if (rec.status === "committed") {
+      expect(rec.step_overrides.mp_tt_AB).toBe("Recovered post-commit");
+    }
+
+    // 3. cancelInFlightStepEdit notifies POST /api/simulation/steps/cancel
+    const calledUrls: string[] = [];
+    vi.stubGlobal(
+      "fetch",
+      vi.fn().mockImplementation((url: string, init?: RequestInit) => {
+        calledUrls.push(String(url));
+        if (url === "/api/simulation/steps/cancel") {
+          return Promise.resolve(new Response(JSON.stringify({ cancelled: true }), { status: 200 }));
+        }
+        return new Promise<Response>((_res, rej) => {
+          init?.signal?.addEventListener("abort", () => rej(new DOMException("Aborted", "AbortError")));
+        });
+      }),
+    );
+    const pPending = submitConstructionStepEdit({
+      sessionId: sid,
+      problemKey: "sample:fp5-fp6-test",
+      stepId: "mp_tt_AB",
+      stepIndex: 7,
+      previousInstruction: "Dựng (α)",
+      editedInstruction: "Đang chạy rồi hủy",
+      targetIds: ["mp_tt_AB"],
+      absorbedIds: ["M_AB"],
+      scene3d: validScene,
+    });
+    stepEditsApi.cancelInFlightStepEdit(sid);
+    await pPending;
+    expect(calledUrls).toContain("/api/simulation/steps/cancel");
   });
 });

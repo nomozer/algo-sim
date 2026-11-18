@@ -13,7 +13,7 @@ from fastapi import APIRouter, Cookie, Depends, Header, HTTPException, Response
 from fastapi.responses import JSONResponse
 from pydantic import BaseModel, Field
 from sqlalchemy import select
-from sqlalchemy.exc import IntegrityError, OperationalError
+from sqlalchemy.exc import IntegrityError, OperationalError, ProgrammingError
 from sqlalchemy.orm import Session
 
 from app.accounts import service as accounts_service
@@ -41,7 +41,18 @@ router = APIRouter(prefix="/api/simulation", tags=["simulation-step-edit"])
 
 _SESSION_LOCKS_GUARD = threading.Lock()
 _SESSION_LOCKS: OrderedDict[tuple[str, str], threading.RLock] = OrderedDict()
+_CANCELLED_REQUESTS: OrderedDict[tuple[str, str, str], bool] = OrderedDict()
+_LATEST_CLIENT_SEQ: OrderedDict[tuple[str, str], int] = OrderedDict()
+_LAST_COMMIT_SNAPSHOT: OrderedDict[tuple[str, str, str], dict[str, Any]] = OrderedDict()
 _MAX_SESSION_LOCKS = 2048
+
+
+def _bounded_od_put(od: OrderedDict[Any, Any], key: Any, value: Any) -> None:
+    if key in od:
+        od.move_to_end(key)
+    od[key] = value
+    if len(od) > _MAX_SESSION_LOCKS:
+        od.popitem(last=False)
 
 
 def _get_session_lock(owner_scope: str, session_id: str) -> threading.RLock:
@@ -61,6 +72,13 @@ def _get_session_lock(owner_scope: str, session_id: str) -> threading.RLock:
         else:
             _SESSION_LOCKS.move_to_end(key)
         return lock
+
+
+def _is_request_cancelled(owner_scope: str, session_id: str, client_request_id: str | None) -> bool:
+    if not client_request_id:
+        return False
+    with _SESSION_LOCKS_GUARD:
+        return bool(_CANCELLED_REQUESTS.get((owner_scope, session_id, client_request_id), False))
 
 
 def get_db():
@@ -110,6 +128,13 @@ class StepEditRequest(BaseModel):
     absorbed_ids: list[str] = Field(default_factory=list)
     prior_step_ids: list[str] = Field(default_factory=list)
     scene3d: dict[str, Any]
+    client_request_id: str | None = Field(default=None, max_length=80)
+    client_seq: int | None = Field(default=None, ge=1)
+
+
+class StepEditCancelRequest(BaseModel):
+    session_id: str = Field(..., min_length=1, max_length=128)
+    client_request_id: str = Field(..., min_length=1, max_length=80)
 
 
 class FeedbackApproveRequest(BaseModel):
@@ -169,6 +194,38 @@ def _concurrent_conflict_response() -> JSONResponse:
     )
 
 
+def _cancelled_or_superseded_response(error_code: str, learner_error: str) -> JSONResponse:
+    return JSONResponse(
+        status_code=409,
+        headers={"Cache-Control": "no-store"},
+        content={
+            "status": "rolled_back",
+            "error_code": error_code,
+            "failed_stage": "cancelled" if error_code == "EDIT_CANCELLED" else "superseded",
+            "learner_error": learner_error,
+            "draft_preserved": True,
+            "llm_calls": 0,
+            "quota_charged": False,
+        },
+    )
+
+
+def _persistence_unavailable_response() -> JSONResponse:
+    return JSONResponse(
+        status_code=503,
+        headers={"Cache-Control": "no-store"},
+        content={
+            "status": "persistence_error",
+            "error_code": "PERSISTENCE_UNAVAILABLE",
+            "failed_stage": "persistence",
+            "learner_error": "Không thể lưu phiên chỉnh sửa bước dựng vào cơ sở dữ liệu; trạng thái hợp lệ trước đó vẫn được giữ nguyên.",
+            "draft_preserved": True,
+            "llm_calls": 0,
+            "quota_charged": False,
+        },
+    )
+
+
 def _execute_locked_step_edit(
     req: StepEditRequest,
     response: Response,
@@ -216,6 +273,13 @@ def _execute_locked_step_edit(
         if session_row.committed_scene_json
         else req.scene3d
     )
+    pre_commit_snapshot = {
+        "problem_key": session_row.problem_key,
+        "base_scene_sha256": session_row.base_scene_sha256,
+        "committed_scene_json": session_row.committed_scene_json,
+        "step_overrides_json": session_row.step_overrides_json,
+        "dependency_graph_json": session_row.dependency_graph_json,
+    }
     existing_overrides: dict[str, str] = json.loads(session_row.step_overrides_json or "{}")
     before_digest = _scene_objects_digest(working_scene)
     next_version = session_row.revision_count + 1
@@ -251,6 +315,10 @@ def _execute_locked_step_edit(
             failed_stage = "kernel"
             learner_error = str(exc) or "Không thể dựng hình với dữ kiện đã chỉnh."
             details = {}
+
+        if _is_request_cancelled(owner_scope, req.session_id, req.client_request_id):
+            db.rollback()
+            return _cancelled_or_superseded_response("EDIT_CANCELLED", "Đã hủy lượt chỉnh sửa đang chạy.")
 
         session_row.revision_count = next_version
         session_row.updated_at = _now()
@@ -314,10 +382,17 @@ def _execute_locked_step_edit(
             },
         )
 
+    if _is_request_cancelled(owner_scope, req.session_id, req.client_request_id):
+        db.rollback()
+        return _cancelled_or_superseded_response("EDIT_CANCELLED", "Đã hủy lượt chỉnh sửa đang chạy.")
+
     # Atomic commit of rebuilt Scene3D & append-only revision/feedback logs
+    dep_to_persist = dict(result["dependency_summary"])
+    if req.client_request_id:
+        dep_to_persist["_client_request_id"] = req.client_request_id
     session_row.committed_scene_json = json.dumps(result["scene3d"], ensure_ascii=False)
     session_row.step_overrides_json = json.dumps(result["step_overrides"], ensure_ascii=False, sort_keys=True)
-    session_row.dependency_graph_json = json.dumps(result["dependency_summary"], ensure_ascii=False, sort_keys=True)
+    session_row.dependency_graph_json = json.dumps(dep_to_persist, ensure_ascii=False, sort_keys=True)
     session_row.revision_count = next_version
     session_row.updated_at = _now()
 
@@ -367,6 +442,16 @@ def _execute_locked_step_edit(
         },
     )
     db.commit()
+
+    if req.client_request_id:
+        pre_commit_snapshot["revision_id"] = revision_id
+        pre_commit_snapshot["feedback_id"] = fb.feedback_id
+        with _SESSION_LOCKS_GUARD:
+            _bounded_od_put(
+                _LAST_COMMIT_SNAPSHOT,
+                (owner_scope, req.session_id, req.client_request_id),
+                pre_commit_snapshot,
+            )
 
     committed_count = (
         db.execute(
@@ -427,11 +512,94 @@ def edit_construction_step(
     # Close any implicit read snapshot from cookie lookup before waiting on the per-session lock.
     db.rollback()
     with _get_session_lock(owner_scope, req.session_id):
+        if _is_request_cancelled(owner_scope, req.session_id, req.client_request_id):
+            return _cancelled_or_superseded_response("EDIT_CANCELLED", "Đã hủy lượt chỉnh sửa đang chạy.")
+        if req.client_seq is not None:
+            seq_key = (owner_scope, req.session_id)
+            with _SESSION_LOCKS_GUARD:
+                latest_seq = _LATEST_CLIENT_SEQ.get(seq_key)
+                if latest_seq is not None and req.client_seq < latest_seq:
+                    return _cancelled_or_superseded_response(
+                        "EDIT_SUPERSEDED",
+                        "Yêu cầu cũ đã được thay thế bởi lượt chỉnh sửa mới hơn.",
+                    )
+                _bounded_od_put(_LATEST_CLIENT_SEQ, seq_key, req.client_seq)
         try:
             return _execute_locked_step_edit(req, response, db, owner_scope)
-        except (IntegrityError, OperationalError):
+        except IntegrityError:
             db.rollback()
             return _concurrent_conflict_response()
+        except OperationalError as exc:
+            db.rollback()
+            msg = str(exc).lower()
+            if "locked" in msg or "busy" in msg:
+                return _concurrent_conflict_response()
+            return _persistence_unavailable_response()
+        except ProgrammingError:
+            db.rollback()
+            return _persistence_unavailable_response()
+
+
+@router.post("/steps/cancel")
+def cancel_construction_step_edit(
+    req: StepEditCancelRequest,
+    response: Response,
+    db: Session = Depends(get_db),
+    algosim_session: str | None = Cookie(default=None, alias=accounts_service.SESSION_COOKIE),
+    x_axo_client_session: str | None = Header(default=None, alias="X-Axo-Client-Session"),
+):
+    """Cancel an in-flight edit request or atomically roll back a just-committed cancel race."""
+    response.headers["Cache-Control"] = "no-store"
+    owner_scope = _resolve_owner_scope(db, algosim_session, x_axo_client_session)
+    db.rollback()
+    canc_key = (owner_scope, req.session_id, req.client_request_id)
+    with _SESSION_LOCKS_GUARD:
+        _bounded_od_put(_CANCELLED_REQUESTS, canc_key, True)
+    rolled_back_commit = False
+    with _get_session_lock(owner_scope, req.session_id):
+        with _SESSION_LOCKS_GUARD:
+            snap = _LAST_COMMIT_SNAPSHOT.pop(canc_key, None)
+        if snap is not None:
+            session_row = db.execute(
+                select(StepEditSessionRecord).where(
+                    StepEditSessionRecord.owner_scope == owner_scope,
+                    StepEditSessionRecord.session_id == req.session_id,
+                )
+            ).scalar_one_or_none()
+            if session_row is not None:
+                session_row.problem_key = snap["problem_key"]
+                session_row.base_scene_sha256 = snap["base_scene_sha256"]
+                session_row.committed_scene_json = snap["committed_scene_json"]
+                session_row.step_overrides_json = snap["step_overrides_json"]
+                session_row.dependency_graph_json = snap["dependency_graph_json"]
+                session_row.updated_at = _now()
+            rev_row = db.execute(
+                select(StepEditRevisionRecord).where(
+                    StepEditRevisionRecord.revision_id == snap["revision_id"],
+                )
+            ).scalar_one_or_none()
+            if rev_row is not None:
+                rev_row.validation_status = "FAILED"
+                rev_row.execution_status = "ROLLED_BACK"
+                rev_row.error_code = "EDIT_CANCELLED"
+                rev_row.learner_error = "Đã hủy lượt chỉnh sửa trước khi hoàn tất trên giao diện."
+                rev_row.after_scene_digest = None
+            fb_row = db.execute(
+                select(VerifiedStepFeedbackRecord).where(
+                    VerifiedStepFeedbackRecord.feedback_id == snap["feedback_id"],
+                )
+            ).scalar_one_or_none()
+            if fb_row is not None:
+                fb_row.user_acceptance_status = "REJECTED"
+                fb_row.dataset_eligibility = "INELIGIBLE"
+            db.commit()
+            rolled_back_commit = True
+    return {
+        "cancelled": True,
+        "rolled_back_commit": rolled_back_commit,
+        "session_id": req.session_id,
+        "client_request_id": req.client_request_id,
+    }
 
 
 @router.get("/sessions/{session_id}/state")
@@ -489,6 +657,8 @@ def get_step_edit_session_state(
         if session_row.committed_scene_json
         else 0
     )
+    raw_dep = json.loads(session_row.dependency_graph_json or "{}")
+    last_committed_request_id = raw_dep.pop("_client_request_id", None) if isinstance(raw_dep, dict) else None
     return {
         "found": True,
         "session_id": session_id,
@@ -497,9 +667,10 @@ def get_step_edit_session_state(
         "base_scene_sha256": session_row.base_scene_sha256,
         "revision_count": session_row.revision_count,
         "committed_version": committed_ver,
+        "last_committed_request_id": last_committed_request_id if session_row.committed_scene_json else None,
         "committed_scene": json.loads(session_row.committed_scene_json) if session_row.committed_scene_json else None,
         "step_overrides": json.loads(session_row.step_overrides_json or "{}"),
-        "dependency_summary": json.loads(session_row.dependency_graph_json or "{}"),
+        "dependency_summary": raw_dep,
         "revisions": [
             {
                 "revision_id": r.revision_id,
