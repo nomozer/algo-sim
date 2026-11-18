@@ -1,0 +1,167 @@
+{
+  "schema_version": "axo-closure-quality-gates/1",
+  "product_commit": "37b7460ddd6f01dc07e5999dd09e29abe3ac2486",
+  "candidate_seal_commit": "3eabbf674bfca82d19ca00b2894d2576dd87a5e5",
+  "gates": [
+    {
+      "name": "step_editor_6_backend_suites",
+      "worktree": "axo-geometry-library",
+      "exit_code": 0,
+      "passed": 82,
+      "failed": 0,
+      "deselected": 2,
+      "duration_s": 23.88,
+      "classification": "FIXED_AND_VERIFIED"
+    },
+    {
+      "name": "migration_drift",
+      "worktree": "step-editor-clean-candidate",
+      "exit_code": 0,
+      "passed": 2,
+      "failed": 0,
+      "duration_s": 5.07,
+      "classification": "FIXED_AND_VERIFIED"
+    },
+    {
+      "name": "geometry_suite_no_postgres",
+      "worktree": "step-editor-clean-candidate",
+      "exit_code": 1,
+      "passed": 11994,
+      "failed": 2,
+      "skipped": 6,
+      "deselected": 2,
+      "xfailed": 9,
+      "duration_s": 436.82,
+      "notes": "1 failure is @pytest.mark.external_evidence enabled by -m override (verified deselected by default addopts in test_evidence_identity_reconciliation.py: 6 passed, 1 deselected); 1 failure is test_inv_08_code_index_paths_exist on pre-existing/OWNERSHIP_BLOCKED CODE_INDEX.md:7 -> attachment-resize.node-test.mjs",
+      "classification": "OWNERSHIP_BLOCKED / PRE_EXISTING"
+    },
+    {
+      "name": "evidence_identity_default_addopts",
+      "worktree": "step-editor-clean-candidate",
+      "exit_code": 0,
+      "passed": 6,
+      "failed": 0,
+      "deselected": 1,
+      "duration_s": 0.98,
+      "classification": "FIXED_AND_VERIFIED"
+    },
+    {
+      "name": "semantic_program_full",
+      "worktree": "step-editor-clean-candidate",
+      "exit_code": 0,
+      "passed": 1192,
+      "failed": 0,
+      "skipped": 1,
+      "duration_s": 68.86,
+      "classification": "FIXED_AND_VERIFIED"
+    },
+    {
+      "name": "evaluation_candidate_tests",
+      "worktree": "step-editor-clean-candidate",
+      "exit_code": 0,
+      "passed": 26,
+      "failed": 0,
+      "duration_s": 33.49,
+      "classification": "FIXED_AND_VERIFIED"
+    },
+    {
+      "name": "backend_unit_api_other",
+      "worktree": "step-editor-clean-candidate",
+      "exit_code": 0,
+      "passed": 865,
+      "failed": 0,
+      "deselected": 2,
+      "duration_s": 145.43,
+      "classification": "FIXED_AND_VERIFIED"
+    },
+    {
+      "name": "postgres_live_tests",
+      "worktree": "step-editor-clean-candidate",
+      "exit_code": 0,
+      "passed": 0,
+      "failed": 0,
+      "skipped": 4,
+      "deselected": 8,
+      "notes": "docker desktop start exited 0 without opening npipe:////./pipe/dockerDesktopLinuxEngine; com.docker.service Stopped",
+      "classification": "ENVIRONMENT_BLOCKED"
+    },
+    {
+      "name": "replay_demo_cases",
+      "worktree": "step-editor-clean-candidate",
+      "exit_code": 0,
+      "passed": 5,
+      "reduced_chain": "1/1",
+      "failed": 0,
+      "classification": "FIXED_AND_VERIFIED"
+    },
+    {
+      "name": "audit_demo_crash_surface",
+      "worktree": "step-editor-clean-candidate",
+      "exit_code": 0,
+      "passed": 6,
+      "unhandled_500": 0,
+      "classification": "FIXED_AND_VERIFIED"
+    },
+    {
+      "name": "audit_docs_information_architecture",
+      "worktree": "step-editor-clean-candidate",
+      "exit_code": 1,
+      "stale_paths": 1,
+      "notes": "4 Classroom paths verified clean on HEAD; only docs/CODE_INDEX.md:7 -> attachment-resize.node-test.mjs missing due to untracked Attachment WIP",
+      "classification": "OWNERSHIP_BLOCKED / PRE_EXISTING"
+    },
+    {
+      "name": "freeze_evaluation_candidate_verify",
+      "worktree": "step-editor-clean-candidate",
+      "exit_code": 0,
+      "files": 111,
+      "tree_hash": "c1323d0a7bd9fda0e13114bfc4a03fe36124bb8d733ef472cf5430f967378b38",
+      "classification": "FIXED_AND_VERIFIED"
+    },
+    {
+      "name": "frontend_vitest_clean_candidate",
+      "worktree": "step-editor-clean-candidate",
+      "exit_code": 1,
+      "test_files_passed": 152,
+      "test_files_failed": 35,
+      "tests_passed": 2038,
+      "tests_failed": 9,
+      "tests_skipped": 3,
+      "notes": "Step Editor 22/22 passed; pre-existing committed ProblemInput.tsx/WorkspaceTabBar.tsx reference uncommitted ScreenCaptureDialog.tsx/store.ts WIP",
+      "classification": "OWNERSHIP_BLOCKED / PRE_EXISTING"
+    },
+    {
+      "name": "frontend_tsc_and_vite_clean_candidate",
+      "worktree": "step-editor-clean-candidate",
+      "exit_code": 1,
+      "notes": "Missing ./ScreenCaptureDialog and uncommitted AppState properties on clean HEAD commit",
+      "classification": "OWNERSHIP_BLOCKED / PRE_EXISTING"
+    },
+    {
+      "name": "frontend_vitest_integrated_worktree",
+      "worktree": "axo-geometry-library",
+      "exit_code": 0,
+      "test_files_passed": 192,
+      "test_files_failed": 0,
+      "tests_passed": 2272,
+      "tests_failed": 0,
+      "duration_s": 119.61,
+      "classification": "FIXED_AND_VERIFIED"
+    },
+    {
+      "name": "frontend_tsc_noEmit_integrated_worktree",
+      "worktree": "axo-geometry-library",
+      "exit_code": 0,
+      "errors": 0,
+      "classification": "FIXED_AND_VERIFIED"
+    },
+    {
+      "name": "frontend_vite_build_integrated_temp_outdir",
+      "worktree": "axo-geometry-library",
+      "exit_code": 0,
+      "modules": 129,
+      "duration_s": 11.02,
+      "classification": "FIXED_AND_VERIFIED"
+    }
+  ]
+}

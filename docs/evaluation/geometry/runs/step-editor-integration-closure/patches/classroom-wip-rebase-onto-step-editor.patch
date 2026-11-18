@@ -1,0 +1,41 @@
+# Parallel Classroom WIP Rebase Handoff onto Step Editor Migration (`9c4d8e2b7a10`)
+# Note: Neither Step Editor nor Classroom WIP files are touched cross-ownership here.
+# Once Step Editor commits `9c4d8e2b7a10_add_step_edit_tables.py` (`down_revision = "e437149641fa"`),
+# the Classroom owner should rebase `f8a2c41d9e05_remove_classroom_and_live_session_tables.py` onto `9c4d8e2b7a10`,
+# remove `classroom_models` from `backend/alembic/env.py` ONLY together with `f8a2c41d9e05`, update `AXO_HEAD` in
+# `backend/tests/test_postgres_axo_history_migration.py`, and remove the 4 deleted Classroom paths from `docs/CODE_INDEX.md`
+# (`LiveClassDock.tsx`, `LiveClassStrip.tsx`, `MonitorView.tsx`, `classroom-sync.ts`).
+
+diff --git a/backend/alembic/versions/f8a2c41d9e05_remove_classroom_and_live_session_tables.py b/backend/alembic/versions/f8a2c41d9e05_remove_classroom_and_live_session_tables.py
+--- a/backend/alembic/versions/f8a2c41d9e05_remove_classroom_and_live_session_tables.py
++++ b/backend/alembic/versions/f8a2c41d9e05_remove_classroom_and_live_session_tables.py
+@@ -7,10 +7,10 @@ ledger, and simulation cache tables and rows.
+ 
+ Revision ID: f8a2c41d9e05
+-Revises: e437149641fa
++Revises: 9c4d8e2b7a10
+ Create Date: 2026-11-11 22:15:00.000000
+ 
+ """
+ from typing import Sequence, Union
+ 
+@@ -19,7 +19,7 @@ import sqlalchemy as sa
+ 
+ # revision identifiers, used by Alembic.
+ revision: str = "f8a2c41d9e05"
+-down_revision: Union[str, Sequence[str], None] = "e437149641fa"
++down_revision: Union[str, Sequence[str], None] = "9c4d8e2b7a10"
+ branch_labels: Union[str, Sequence[str], None] = None
+ depends_on: Union[str, Sequence[str], None] = None
+ 
+diff --git a/backend/tests/test_postgres_axo_history_migration.py b/backend/tests/test_postgres_axo_history_migration.py
+--- a/backend/tests/test_postgres_axo_history_migration.py
++++ b/backend/tests/test_postgres_axo_history_migration.py
+@@ -16,9 +16,10 @@ from tests.test_postgres_integration import _alembic, pg_container  # noqa: F4
+ pytestmark = pytest.mark.postgres
+-MAIN_HEAD, AXO_HEAD = "a1c7e4b90d52", "f8a2c41d9e05"
++MAIN_HEAD, AXO_HEAD = "a1c7e4b90d52", "f8a2c41d9e05"  # Or add STEP_EDIT_TABLES:
+ AXO_TABLES = {"learning_history_entries", "user_account_meta", "admin_system_settings", "admin_audit_logs",
+-              "admin_analysis_telemetry", "analysis_usage_ledger"}
++              "admin_analysis_telemetry", "analysis_usage_ledger",
++              "step_edit_sessions", "step_edit_revisions", "step_edit_feedback"}

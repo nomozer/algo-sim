@@ -2,148 +2,54 @@
   "schema_version": "axo-evaluation-run/1",
   "run_id": "step-editor-integration-closure",
   "task_slug": "axo-step-editor-integration-closure-and-merge-gate",
-  "date": "2026-11-18",
+  "date": "2026-11-19",
   "branch": "feat/axo-geometry-library-verification",
-  "start_head": "a493d89c0d3f58c87612faf3d1b2c1840569cac8",
-  "root_causes_fixed": [
-    "IC-1",
-    "IC-2",
-    "IC-3",
-    "IC-4",
-    "IC-5"
-  ],
+  "start_head": "bae665e79d69b6b47fae34187b0ea1b02d722e50",
+  "product_commit": "37b7460ddd6f01dc07e5999dd09e29abe3ac2486",
+  "candidate_seal_commit": "3eabbf674bfca82d19ca00b2894d2576dd87a5e5",
+  "measured_system_tree_hash": "c1323d0a7bd9fda0e13114bfc4a03fe36124bb8d733ef472cf5430f967378b38",
+  "measured_system_file_count": 111,
   "statuses": {
-    "GEOMETRY_MUTATION": "PASS",
-    "DOWNSTREAM_REBUILD": "PASS",
-    "ATOMIC_COMMIT": "PASS",
-    "CANCEL_RACE_SAFETY": "PASS",
-    "PERSISTENCE_INTEGRITY": "PASS",
-    "POSTGRES_MIGRATION": "BLOCKED",
-    "POSTGRES_VERIFICATION": "NOT_VERIFIED",
-    "CONCURRENCY_SINGLE_WORKER": "PASS",
-    "CONCURRENCY_MULTI_WORKER": "NOT_SUPPORTED",
-    "STEP_EDITOR_UX": "PASS",
-    "REGRESSION_GATES": "PARTIAL",
-    "OWNERSHIP": "CLEAN",
-    "HOST_QA": "PASS",
+    "GEOMETRY_BOUNDARY_CLOSURE": "FIXED_AND_VERIFIED",
+    "CANDIDATE_SEAL_VERIFICATION": "FIXED_AND_VERIFIED",
+    "ALEMBIC_REAL_MIGRATION_CHAIN": "FIXED_AND_VERIFIED",
+    "CONCURRENCY_RETRY_AND_VERSION_CLOCK": "FIXED_AND_VERIFIED",
+    "POSTGRES_LIVE_CONTAINER": "ENVIRONMENT_BLOCKED",
+    "CLEAN_HEAD_FRONTEND_BUILD": "OWNERSHIP_BLOCKED",
+    "INTEGRATED_WORKTREE_FRONTEND_BUILD": "FIXED_AND_VERIFIED",
+    "HOST_E2E_AND_RESTART": "FIXED_AND_VERIFIED",
     "MODEL_STATUS": "MODEL_NOT_TRAINED",
-    "PHYSICAL_MOBILE": "NOT_VERIFIED",
-    "MERGE_READINESS": "CONDITIONAL",
-    "OWNER_APPROVAL": "PENDING_OWNER_REVIEW"
+    "FINAL_VERDICT": "BLOCKED"
   },
   "artifacts": {
-    "report": "report.md",
     "formal_report": "AXO-STEP-EDITOR-INTEGRATION-CLOSURE-REPORT.md",
+    "report": "report.md",
+    "pre_intervention_baseline": "results/pre-intervention-baseline.json",
+    "quality_gates_summary": "results/quality-gates-summary.json",
+    "closure_e2e_verification": "results/closure-e2e-verification.json",
+    "rea_mcp_closure_inspection": "results/rea-mcp-closure-inspection.json",
     "alembic_handoff_patch": "patches/postgres-step-edit-alembic-handoff.patch",
-    "backend_perf_comparison": "results/backend-perf-comparison.json",
-    "live_host_qa": "results/live-host-qa.json",
-    "rea_mcp_inspection": "results/rea-mcp-inspection.json",
+    "classroom_rebase_patch": "patches/classroom-wip-rebase-onto-step-editor.patch",
     "images": [
-      "images/ic-1920-state1-hover.png",
-      "images/ic-1920-state2-editing-open.png",
-      "images/ic-1920-case1-equiv.png",
-      "images/ic-1920-case2-mutated-reloaded.png",
-      "images/ic-1920-case3-missing-dep-422.png",
-      "images/ic-1920-case4-orthogonality-422.png",
-      "images/ic-1920-prism-prime-check.png",
-      "images/ic-vp-1440x900-editing.png",
-      "images/ic-vp-1366x768-editing.png",
-      "images/ic-vp-768x1024-editing.png",
-      "images/ic-vp-390x844-editing.png",
-      "images/ic-vp-360x800-editing.png",
-      "images/ic-vp-320x568-editing.png",
-      "images/ic-route-landing.png",
-      "images/ic-route-gioi-thieu.png",
-      "images/rea-mcp-cdp-screenshot.png"
+      "images/closure-1920-p1-valid-edit.png",
+      "images/closure-1920-invalid-422.png",
+      "images/closure-1920-p2-cascade-f5.png",
+      "images/closure-1920-p3-prism.png",
+      "images/closure-1920-p4-common-perp.png",
+      "images/closure-1920-post-restart.png",
+      "images/closure-vp-1920x1080.png",
+      "images/closure-vp-1440x900.png",
+      "images/closure-vp-1366x768.png",
+      "images/closure-vp-1024x768.png",
+      "images/closure-vp-768x1024.png",
+      "images/closure-vp-390x844.png",
+      "images/closure-vp-320x568.png",
+      "images/closure-rea-mcp-screenshot.png"
     ]
   },
   "rea_mcp_evidence": {
-    "list_browser_targets": "ev_fcfecf8abccbdc7c32562992d70946b73d3cf2bc04fabf14074233e9411a19bc",
-    "inspect_web_page": "ev_3337f7f446d9c90115ac0c2f28f4edcd4f5ebd2c687e6a3d6715840c07948b62",
-    "capture_web_screenshot": "ev_ca0b352db8f9126eca9fd123547061a10cdfdccfead5a888038f790dcbe08e94"
-  },
-  "tests": {
-    "integration_closure_suite": {
-      "file": "backend/tests/geometry/test_step_editor_integration_closure.py",
-      "status": "PASS",
-      "passed": 4,
-      "deselected_postgres": 1,
-      "failed": 0,
-      "duration_s": 17.85
-    },
-    "step_editor_all_8_suites": {
-      "status": "PASS",
-      "passed": 167,
-      "deselected_postgres": 1,
-      "failed": 0,
-      "duration_s": 56.02
-    },
-    "backend_geometry_all_26": {
-      "status": "PARTIAL",
-      "passed": 11976,
-      "skipped": 6,
-      "deselected": 2,
-      "xfailed": 9,
-      "failed": 15,
-      "step_editor_failures": 0,
-      "duration_s": 394.53
-    },
-    "backend_semantic_program": {
-      "ignored": [
-        "backend/tests/semantic_program/test_evaluation_candidate.py"
-      ],
-      "status": "PASS",
-      "passed": 1166,
-      "skipped": 1,
-      "failed": 0,
-      "duration_s": 6.94
-    },
-    "backend_evaluation_candidate": {
-      "status": "EXPECTED_EXCEPTION",
-      "passed": 25,
-      "failed": 1,
-      "duration_s": 31.62
-    },
-    "backend_non_geometry_non_semantic": {
-      "status": "PASS",
-      "passed": 793,
-      "deselected": 2,
-      "failed": 0,
-      "duration_s": 95.13
-    },
-    "replay_demo_cases": {
-      "demo_cases": 5,
-      "demo_replay_pass": "5/5",
-      "reduced_chain_cases": "1/1",
-      "status": "PASS"
-    },
-    "audit_demo_crash_surface": {
-      "boundary_cases_expected": "6/6",
-      "unhandled_500": 0,
-      "status": "PASS"
-    },
-    "frontend_vitest_targeted": {
-      "files": [
-        "src/components/construction-step-editor.test.tsx",
-        "src/code-index-sync.test.ts"
-      ],
-      "status": "PASS",
-      "test_files_passed": 2,
-      "tests_passed": 24,
-      "failed": 0,
-      "duration_s": 5.83
-    },
-    "frontend_vitest_full": {
-      "status": "PASS",
-      "test_files_passed": 192,
-      "tests_passed": 2271,
-      "failed": 0,
-      "duration_s": 151.86
-    },
-    "frontend_typecheck_and_build": {
-      "tsc": "0 errors",
-      "vite_build_s": 8.48,
-      "status": "PASS"
-    }
+    "list_browser_targets": "ev_ac7a48fd2be1333ae5dc89a04c04ed44cd0c0973361ae9c49d47dac78f2c94b1",
+    "capture_web_screenshot": "ev_d6aa74d328817cc0c0113e797ca739e3503cd2aade9551c613b217a9c971eaca",
+    "artifact_sha256": "7c6be261d76b65f48d65b08adb7e88e027ed641f879c48783dd25edfe808574e"
   }
 }
