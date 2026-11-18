@@ -571,23 +571,6 @@ def test_ic4_alembic_handoff_migration_upgrade_downgrade_zero_drift(tmp_path):
     ini_copy = tmp_path / "alembic.ini"
     ini_copy.write_text((BACKEND_DIR / "alembic.ini").read_text(encoding="utf-8"), encoding="utf-8")
 
-    has_f8 = (alembic_copy / "versions" / "f8a2c41d9e05_remove_classroom_and_live_session_tables.py").exists()
-    env_path = alembic_copy / "env.py"
-    env_txt = env_path.read_text(encoding="utf-8")
-    if "step_edit_models" not in env_txt:
-        env_txt = env_txt.replace(
-            "from app.persistence import classroom_models  # noqa: F401",
-            "from app.persistence import classroom_models, step_edit_models  # noqa: F401",
-        )
-        env_path.write_text(env_txt, encoding="utf-8")
-    target_down_rev = "e437149641fa"
-    if has_f8:
-        (alembic_copy / "versions" / "9c4d8e2b7a10_add_step_edit_tables.py").write_text(
-            STEP_EDIT_MIGRATION_9C4D8E2B7A10,
-            encoding="utf-8",
-        )
-        target_down_rev = "f8a2c41d9e05"
-
     db_path = tmp_path / "isolated_mig.db"
     db_url = f"sqlite:///{db_path.as_posix()}"
     env_vars = {
@@ -623,8 +606,9 @@ def test_ic4_alembic_handoff_migration_upgrade_downgrade_zero_drift(tmp_path):
     insp = inspect(mig_engine)
     table_names = set(insp.get_table_names())
     assert {"step_edit_sessions", "step_edit_revisions", "step_edit_feedback"} <= table_names
+    assert not ({"classrooms", "assignments", "classroom_sessions", "practice_sessions", "class_memberships"} & table_names)
     with mig_engine.connect() as conn:
-        assert conn.execute(text("SELECT version_num FROM alembic_version")).scalar_one() == "9c4d8e2b7a10"
+        assert conn.execute(text("SELECT version_num FROM alembic_version")).scalar_one() == "f8a2c41d9e05"
         assert conn.execute(text("SELECT COUNT(*) FROM users WHERE email = 'seed-step@algosim.edu.vn'")).scalar_one() == 1
 
     chk = _alembic("check")
@@ -669,7 +653,7 @@ def test_ic4_alembic_handoff_migration_upgrade_downgrade_zero_drift(tmp_path):
         db.commit()
         assert db.execute(select(StepEditSessionRecord)).scalar_one().session_id == "se-mig-1"
 
-    down = _alembic("downgrade", target_down_rev)
+    down = _alembic("downgrade", "e437149641fa")
     assert down.returncode == 0, down.stderr
     insp_after_down = inspect(mig_engine)
     assert not ({"step_edit_sessions", "step_edit_revisions", "step_edit_feedback"} & set(insp_after_down.get_table_names()))
@@ -684,16 +668,49 @@ def test_ic4_alembic_handoff_migration_upgrade_downgrade_zero_drift(tmp_path):
 
 
 @pytest.mark.postgres
-def test_step_edit_postgres_migration_handoff_live_container(tmp_path):
-    """Opt-in live PostgreSQL 16 verification for the handoff migration (requires Docker + psycopg2)."""
-    pytest.importorskip("psycopg2", reason="requires psycopg2 for live PostgreSQL verification")
-    from tests.test_postgres_integration import _pg_ready, _free_port  # noqa: E402
+def test_step_edit_postgres_migration_handoff_live_container(pg_container):
+    """Live PostgreSQL 16 verification for the full migration chain (e437149641fa -> 9c4d8e2b7a10 -> f8a2c41d9e05)."""
+    from tests.test_postgres_integration import _alembic, restart_pg  # noqa: E402
 
-    dock = subprocess.run(["docker", "info"], capture_output=True, text=True)
-    if dock.returncode != 0:
-        pytest.skip("Docker daemon not available for live PostgreSQL migration verification.")
-    # Delegate actual upgrade -> CRUD -> container restart -> check in isolated copy if Docker is running
-    assert callable(_pg_ready) and callable(_free_port)
+    pg_url = pg_container["url"]
+    assert _alembic(["upgrade", "head"], pg_url).returncode == 0
+    eng = create_engine(pg_url, future=True)
+    with eng.connect() as conn:
+        assert "PostgreSQL 16" in conn.execute(text("SELECT version()")).scalar_one()
+        assert conn.execute(text("SELECT version_num FROM alembic_version")).scalar_one() == "f8a2c41d9e05"
+    assert {"step_edit_sessions", "step_edit_revisions", "step_edit_feedback"} <= set(inspect(eng).get_table_names())
+
+    PgSess = sessionmaker(bind=eng, autoflush=False, autocommit=False)
+    with PgSess() as db:
+        db.add(
+            StepEditSessionRecord(
+                owner_scope="client:pghandoff",
+                session_id="se-pg-handoff-1",
+                problem_key="sample:s1",
+                base_scene_sha256="b" * 64,
+                committed_scene_json='{"objects":[]}',
+                step_overrides_json='{"M":"pg"}',
+                dependency_graph_json="{}",
+                revision_count=1,
+            )
+        )
+        db.commit()
+    eng.dispose()
+
+    restart_pg(pg_container)
+    eng2 = create_engine(pg_url, future=True)
+    with sessionmaker(bind=eng2)() as db:
+        row = db.execute(
+            select(StepEditSessionRecord).where(StepEditSessionRecord.session_id == "se-pg-handoff-1")
+        ).scalar_one()
+        assert row.revision_count == 1
+    eng2.dispose()
+
+    assert _alembic(["downgrade", "e437149641fa"], pg_url).returncode == 0
+    assert _alembic(["upgrade", "head"], pg_url).returncode == 0
+    chk = _alembic(["check"], pg_url)
+    assert chk.returncode == 0, chk.stdout + chk.stderr
+    assert "No new upgrade operations detected" in (chk.stdout + chk.stderr)
 
 
 # ── Nhiệm vụ C: Single-Worker Deployment Lock & Multi-Worker Guard ──────────
@@ -1268,27 +1285,21 @@ def test_generalized_semantic_equivalence_families_vs_hypothesis_mutation_and_re
 
 
 def test_real_repo_alembic_env_and_9c4d8e2b7a10_upgrade_downgrade_zero_drift(tmp_path):
-    """Verify ACTUAL repo backend/alembic/env.py + 9c4d8e2b7a10_add_step_edit_tables.py (replaces handoff-only coverage)."""
+    """Verify ACTUAL repo backend/alembic/env.py + unified e437149641fa -> 9c4d8e2b7a10 -> f8a2c41d9e05 chain."""
     env_file = BACKEND_DIR / "alembic" / "env.py"
     mig_file = BACKEND_DIR / "alembic" / "versions" / "9c4d8e2b7a10_add_step_edit_tables.py"
+    f8_file = BACKEND_DIR / "alembic" / "versions" / "f8a2c41d9e05_remove_classroom_and_live_session_tables.py"
     assert env_file.exists(), "backend/alembic/env.py missing"
     assert "step_edit_models" in env_file.read_text(encoding="utf-8"), (
         "backend/alembic/env.py must import app.persistence.step_edit_models"
     )
     assert mig_file.exists(), f"Committed migration missing: {mig_file}"
-    mig_text = mig_file.read_text(encoding="utf-8")
-    assert 'down_revision: Union[str, Sequence[str], None] = "e437149641fa"' in mig_text
-
-    # Exclude ONLY parallel Classroom WIP migration if present on dirty shared worktree
-    classroom_wip_name = "f8a2c41d9e05_remove_classroom_and_live_session_tables.py"
-    has_dirty_classroom_wip = (BACKEND_DIR / "alembic" / "versions" / classroom_wip_name).exists()
+    assert f8_file.exists(), f"Committed migration missing: {f8_file}"
+    assert 'down_revision: Union[str, Sequence[str], None] = "e437149641fa"' in mig_file.read_text(encoding="utf-8")
+    assert 'down_revision: Union[str, Sequence[str], None] = "9c4d8e2b7a10"' in f8_file.read_text(encoding="utf-8")
 
     alembic_copy = tmp_path / "alembic"
-    shutil.copytree(
-        BACKEND_DIR / "alembic",
-        alembic_copy,
-        ignore=lambda d, names: [classroom_wip_name] if Path(d).name == "versions" and classroom_wip_name in names else [],
-    )
+    shutil.copytree(BACKEND_DIR / "alembic", alembic_copy)
     ini_copy = tmp_path / "alembic.ini"
     ini_copy.write_text((BACKEND_DIR / "alembic.ini").read_text(encoding="utf-8"), encoding="utf-8")
 
@@ -1310,123 +1321,309 @@ def test_real_repo_alembic_env_and_9c4d8e2b7a10_upgrade_downgrade_zero_drift(tmp
     chk_eng = create_engine(db_url)
     assert {"step_edit_sessions", "step_edit_revisions", "step_edit_feedback"} <= set(inspect(chk_eng).get_table_names())
     chk = _alembic("check")
-    if has_dirty_classroom_wip:
-        # On dirty shared worktree where Classroom WIP deleted classroom_models.py, step_edit_* MUST have zero drift
-        assert "step_edit_" not in (chk.stdout + chk.stderr), chk.stdout + chk.stderr
-    else:
-        assert chk.returncode == 0, f"alembic check failed on real repo migration:\n{chk.stdout}\n{chk.stderr}"
+    assert chk.returncode == 0, f"alembic check failed on real repo migration:\n{chk.stdout}\n{chk.stderr}"
     down = _alembic("downgrade", "e437149641fa")
     assert down.returncode == 0, down.stderr
     assert not ({"step_edit_sessions", "step_edit_revisions", "step_edit_feedback"} & set(inspect(chk_eng).get_table_names()))
     reup = _alembic("upgrade", "head")
     assert reup.returncode == 0, reup.stderr
     chk2 = _alembic("check")
-    if has_dirty_classroom_wip:
-        assert "step_edit_" not in (chk2.stdout + chk2.stderr), chk2.stdout + chk2.stderr
-    else:
-        assert chk2.returncode == 0, chk2.stdout + chk2.stderr
+    assert chk2.returncode == 0, chk2.stdout + chk2.stderr
     chk_eng.dispose()
 
 
 @pytest.mark.postgres
-def test_postgres_real_step_editor_end_to_end_persistence_restart_and_rollback(tmp_path, monkeypatch):
-    """Full PostgreSQL E2E: Alembic upgrade 9c4d8e2b7a10 -> edits -> 422 rollback -> 409 OCC -> engine restart recovery -> alembic check."""
-    pytest.importorskip("psycopg2", reason="requires psycopg2 for PostgreSQL E2E")
-    from tests.test_postgres_integration import _alembic, pg_container  # noqa: E402
+def test_postgres_real_step_editor_end_to_end_persistence_restart_and_rollback(pg_container, monkeypatch):
+    """Phase B2 (1..12) on REAL PostgreSQL 16: Alembic, CRUD, 422 rollback, 409 conflicts, 503 seq safety, FOR UPDATE lock, server restart, and multi-problem isolation."""
+    from sqlalchemy.exc import OperationalError
+    from tests.test_postgres_integration import _alembic, restart_pg  # noqa: E402
 
-    dock = subprocess.run(["docker", "info"], capture_output=True, text=True)
-    if dock.returncode != 0:
-        pytest.skip("Docker daemon not available for live PostgreSQL Step Editor E2E.")
+    pg_url = pg_container["url"]
+    assert _alembic(["upgrade", "head"], pg_url).returncode == 0
+    assert _alembic(["downgrade", "e437149641fa"], pg_url).returncode == 0
+    assert _alembic(["upgrade", "9c4d8e2b7a10"], pg_url).returncode == 0
+    assert _alembic(["upgrade", "head"], pg_url).returncode == 0
+    chk_pre = _alembic(["check"], pg_url)
+    assert chk_pre.returncode == 0, chk_pre.stdout + chk_pre.stderr
 
-    with pg_container() as pg_url:
-        assert _alembic(pg_url, "upgrade", "9c4d8e2b7a10").returncode == 0
-        pg_engine = create_engine(pg_url, future=True)
-        # Confirm ensure_step_edit_tables is a true no-op on PostgreSQL
-        assert db_mod.sqlite_owns_schema(pg_engine) is False
-        ensure_step_edit_tables(pg_engine)
-        assert {"step_edit_sessions", "step_edit_revisions", "step_edit_feedback"} <= set(inspect(pg_engine).get_table_names())
+    pg_engine = create_engine(pg_url, future=True)
+    with pg_engine.connect() as conn:
+        assert "PostgreSQL 16" in conn.execute(text("SELECT version()")).scalar_one()
+    # Confirm ensure_step_edit_tables is a true no-op on PostgreSQL
+    assert db_mod.sqlite_owns_schema(pg_engine) is False
+    ensure_step_edit_tables(pg_engine)
+    assert {"step_edit_sessions", "step_edit_revisions", "step_edit_feedback"} <= set(inspect(pg_engine).get_table_names())
 
-        PgSession = sessionmaker(bind=pg_engine, autoflush=False, autocommit=False)
-        monkeypatch.setattr(db_mod, "engine", pg_engine)
-        monkeypatch.setattr(db_mod, "SessionLocal", PgSession)
-        monkeypatch.setattr(step_edit_router, "SessionLocal", PgSession)
+    PgSession = sessionmaker(bind=pg_engine, autoflush=False, autocommit=False)
+    inject_503 = {"fail_once": False}
 
-        with step_edit_router._SESSION_LOCKS_GUARD:
-            step_edit_router._SESSION_LOCKS.clear()
-            step_edit_router._CANCELLED_REQUESTS.clear()
-            step_edit_router._LATEST_CLIENT_SEQ.clear()
-            step_edit_router._LAST_COMMIT_SNAPSHOT.clear()
+    def _pg_session_factory():
+        sess = PgSession()
+        orig_commit = sess.commit
 
-        s1 = _load_sample1_scene()
-        sid = f"pg-e2e-{uuid.uuid4().hex[:8]}"
-        hdrs = {"X-Axo-Client-Session": "pg-e2e-owner"}
+        def _maybe_fail():
+            if inject_503["fail_once"]:
+                inject_503["fail_once"] = False
+                raise OperationalError("COMMIT", {}, Exception("simulated pg transient connection drop"))
+            return orig_commit()
 
-        async def _pg_phase1():
-            transport = httpx.ASGITransport(app=app)
-            async with httpx.AsyncClient(transport=transport, base_url="http://testserver") as ac:
-                r1 = await ac.post(
-                    "/api/simulation/steps/edit",
-                    headers=hdrs,
-                    json=_post_edit_payload(sid, s1, edited="Lấy điểm M thuộc SA sao cho SM/SA = 1/4", client_request_id="pg-r1", client_seq=1),
+        sess.commit = _maybe_fail  # type: ignore[method-assign]
+        return sess
+
+    monkeypatch.setattr(db_mod, "engine", pg_engine)
+    monkeypatch.setattr(db_mod, "SessionLocal", _pg_session_factory)
+    monkeypatch.setattr(step_edit_router, "SessionLocal", _pg_session_factory)
+
+    with step_edit_router._SESSION_LOCKS_GUARD:
+        step_edit_router._SESSION_LOCKS.clear()
+        step_edit_router._CANCELLED_REQUESTS.clear()
+        step_edit_router._LATEST_CLIENT_SEQ.clear()
+        step_edit_router._LAST_COMMIT_SNAPSHOT.clear()
+
+    s1 = _load_sample1_scene()
+    raw = json.loads((DATA_DIR / "advanced-geometry-samples.json").read_text(encoding="utf-8"))
+    items = raw if isinstance(raw, list) else raw.get("samples", raw)
+    s11 = copy.deepcopy(next(x["envelope"]["scene3d"] for x in items if x["id"] == "chop-mat-cau-ngoai-tiep"))
+
+    sid1 = f"pg-e2e-s1-{uuid.uuid4().hex[:8]}"
+    sid11 = f"pg-e2e-s11-{uuid.uuid4().hex[:8]}"
+    hdrs = {"X-Axo-Client-Session": "pg-e2e-owner"}
+
+    async def _pg_phase1():
+        transport = httpx.ASGITransport(app=app)
+        async with httpx.AsyncClient(transport=transport, base_url="http://testserver") as ac:
+            # 4) Commit #1 on s1
+            r1 = await ac.post(
+                "/api/simulation/steps/edit",
+                headers=hdrs,
+                json=_post_edit_payload(sid1, s1, edited="Lấy điểm M thuộc SA sao cho SM/SA = 1/4", client_request_id="pg-r1", client_seq=1),
+            )
+            assert r1.status_code == 200
+            assert r1.json()["committed_version"] == 1
+
+            # 5 & 11) Invalid edit 422 -> full rollback, committed scene & draft cleanly separated
+            r_bad = await ac.post(
+                "/api/simulation/steps/edit",
+                headers=hdrs,
+                json=_post_edit_payload(sid1, r1.json()["scene3d"], prev="Lấy điểm M thuộc SA sao cho SM/SA = 1/4", edited="Nội dung vô nghĩa xyz", client_request_id="pg-rbad", client_seq=2),
+            )
+            assert r_bad.status_code == 422
+            assert r_bad.json()["draft_preserved"] is True
+            st_mid = (await ac.get(f"/api/simulation/sessions/{sid1}/state", headers=hdrs)).json()
+            assert st_mid["committed_version"] == 1
+            assert st_mid["revision_count"] == 2
+            assert _find_obj(st_mid["committed_scene"], "M")["xyz"] == ["0", "0", "9/2"]
+            assert st_mid["step_overrides"]["M"] == "Lấy điểm M thuộc SA sao cho SM/SA = 1/4"
+
+            # 7) Interrupted commit -> 503 MUST NOT poison client_seq=3 retry -> 200
+            inject_503["fail_once"] = True
+            p2 = {
+                **_post_edit_payload(sid1, r1.json()["scene3d"], prev="Lấy điểm M thuộc SA sao cho SM/SA = 1/4", edited="Lấy điểm M thuộc SA sao cho SM/SA = 1/5", client_request_id="pg-r2", client_seq=3),
+                "expected_committed_version": 1,
+            }
+            r2_503 = await ac.post("/api/simulation/steps/edit", headers=hdrs, json=p2)
+            assert r2_503.status_code == 503
+            r2 = await ac.post("/api/simulation/steps/edit", headers=hdrs, json=p2)
+            assert r2.status_code == 200
+            assert r2.json()["committed_version"] == 2
+
+            # 6 & 8) Optimistic concurrency conflict (409 STALE_REVISION_CONFLICT) + stale seq (409 EDIT_SUPERSEDED)
+            r_stale = await ac.post(
+                "/api/simulation/steps/edit",
+                headers=hdrs,
+                json={
+                    **_post_edit_payload(sid1, r1.json()["scene3d"], prev="Lấy điểm M thuộc SA sao cho SM/SA = 1/4", edited="Lấy điểm M thuộc SA sao cho SM/SA = 1/3", client_request_id="pg-rstale", client_seq=4),
+                    "expected_committed_version": 1,
+                },
+            )
+            assert r_stale.status_code == 409
+            assert r_stale.json()["error_code"] == "STALE_REVISION_CONFLICT"
+
+            r_sup = await ac.post(
+                "/api/simulation/steps/edit",
+                headers=hdrs,
+                json=_post_edit_payload(sid1, r2.json()["scene3d"], prev="Lấy điểm M thuộc SA sao cho SM/SA = 1/5", edited="Lấy điểm M thuộc SA sao cho SM/SA = 1/6", client_request_id="pg-rsup", client_seq=2),
+            )
+            assert r_sup.status_code == 409
+            assert r_sup.json()["error_code"] == "EDIT_SUPERSEDED"
+
+            # 12) Two independent problems under the same owner must remain isolated
+            r_s11 = await ac.post(
+                "/api/simulation/steps/edit",
+                headers=hdrs,
+                json={
+                    "session_id": sid11,
+                    "problem_key": "sample:chop-mat-cau-ngoai-tiep",
+                    "step_id": "mp_tt_AB",
+                    "step_index": 7,
+                    "previous_instruction": "Dựng mặt phẳng trung trực (α) của cạnh AB",
+                    "edited_instruction": "Dựng mặt phẳng trung trực của AB.",
+                    "target_ids": ["mp_tt_AB"],
+                    "absorbed_ids": ["M_AB"],
+                    "scene3d": copy.deepcopy(s11),
+                    "client_request_id": "pg-s11-1",
+                    "client_seq": 1,
+                },
+            )
+            assert r_s11.status_code == 200
+            assert r_s11.json()["committed_version"] == 1
+
+    asyncio.run(_pg_phase1())
+
+    # 9) True two-connection PostgreSQL SELECT ... FOR UPDATE row-locking & blocking isolation
+    with pg_engine.connect() as c_lock:
+        trans = c_lock.begin()
+        row_id = c_lock.execute(
+            text("SELECT id FROM step_edit_sessions WHERE session_id = :sid FOR UPDATE"),
+            {"sid": sid1},
+        ).scalar_one()
+        assert row_id is not None
+
+        # Connection 2 FOR UPDATE NOWAIT must immediately fail with lock contention (OperationalError / LockNotAvailable)
+        with pg_engine.connect() as c_nowait:
+            with pytest.raises(OperationalError):
+                c_nowait.execute(
+                    text("SELECT id FROM step_edit_sessions WHERE session_id = :sid FOR UPDATE NOWAIT"),
+                    {"sid": sid1},
                 )
-                assert r1.status_code == 200
-                assert r1.json()["committed_version"] == 1
 
-                # Invalid edit 422 -> committed_version remains 1, scene stays at M = 1/4 SA
-                r_bad = await ac.post(
-                    "/api/simulation/steps/edit",
-                    headers=hdrs,
-                    json=_post_edit_payload(sid, r1.json()["scene3d"], prev="Lấy điểm M thuộc SA sao cho SM/SA = 1/4", edited="Nội dung vô nghĩa xyz", client_request_id="pg-rbad", client_seq=2),
-                )
-                assert r_bad.status_code == 422
+        # Blocking FOR UPDATE thread must wait until c_lock commits, then observe updated revision_count=777? Verify clean wait!
+        waiter_events: list[tuple[str, float]] = []
 
-                r2 = await ac.post(
-                    "/api/simulation/steps/edit",
-                    headers=hdrs,
-                    json={
-                        **_post_edit_payload(sid, r1.json()["scene3d"], prev="Lấy điểm M thuộc SA sao cho SM/SA = 1/4", edited="Lấy điểm M thuộc SA sao cho SM/SA = 1/5", client_request_id="pg-r2", client_seq=3),
-                        "expected_committed_version": 1,
-                    },
-                )
-                assert r2.status_code == 200
-                assert r2.json()["committed_version"] == 2
+        def _blocking_waiter():
+            with pg_engine.connect() as c_wait:
+                t_w0 = time.perf_counter()
+                w_trans = c_wait.begin()
+                w_row = c_wait.execute(
+                    text("SELECT revision_count FROM step_edit_sessions WHERE session_id = :sid FOR UPDATE"),
+                    {"sid": sid1},
+                ).scalar_one()
+                waiter_events.append((f"acquired:{w_row}", time.perf_counter() - t_w0))
+                w_trans.commit()
 
-                r_stale = await ac.post(
-                    "/api/simulation/steps/edit",
-                    headers=hdrs,
-                    json={
-                        **_post_edit_payload(sid, r1.json()["scene3d"], prev="Lấy điểm M thuộc SA sao cho SM/SA = 1/4", edited="Lấy điểm M thuộc SA sao cho SM/SA = 1/3", client_request_id="pg-rstale", client_seq=4),
-                        "expected_committed_version": 1,
-                    },
-                )
-                assert r_stale.status_code == 409
-                assert r_stale.json()["error_code"] == "STALE_REVISION_CONFLICT"
+        th = threading.Thread(target=_blocking_waiter, daemon=True)
+        th.start()
+        time.sleep(0.25)
+        assert waiter_events == [], "Waiter must remain blocked while Connection 1 holds FOR UPDATE lock!"
+        trans.commit()
+        th.join(timeout=5.0)
+        assert len(waiter_events) == 1 and waiter_events[0][0].startswith("acquired:") and waiter_events[0][1] >= 0.2
 
-        asyncio.run(_pg_phase1())
-        pg_engine.dispose()
+    pg_engine.dispose()
 
-        # Simulate worker restart with fresh PostgreSQL engine and cleared in-memory locks/seq
-        restarted_pg_engine = create_engine(pg_url, future=True)
-        RestartedPgSession = sessionmaker(bind=restarted_pg_engine, autoflush=False, autocommit=False)
-        monkeypatch.setattr(db_mod, "engine", restarted_pg_engine)
-        monkeypatch.setattr(db_mod, "SessionLocal", RestartedPgSession)
-        monkeypatch.setattr(step_edit_router, "SessionLocal", RestartedPgSession)
-        with step_edit_router._SESSION_LOCKS_GUARD:
-            step_edit_router._SESSION_LOCKS.clear()
-            step_edit_router._CANCELLED_REQUESTS.clear()
-            step_edit_router._LATEST_CLIENT_SEQ.clear()
-            step_edit_router._LAST_COMMIT_SNAPSHOT.clear()
+    # 10) Real PostgreSQL server restart (pg_ctl restart) + worker restart -> full state recovery
+    restart_pg(pg_container)
+    restarted_pg_engine = create_engine(pg_url, future=True)
+    RestartedPgSession = sessionmaker(bind=restarted_pg_engine, autoflush=False, autocommit=False)
+    monkeypatch.setattr(db_mod, "engine", restarted_pg_engine)
+    monkeypatch.setattr(db_mod, "SessionLocal", RestartedPgSession)
+    monkeypatch.setattr(step_edit_router, "SessionLocal", RestartedPgSession)
+    with step_edit_router._SESSION_LOCKS_GUARD:
+        step_edit_router._SESSION_LOCKS.clear()
+        step_edit_router._CANCELLED_REQUESTS.clear()
+        step_edit_router._LATEST_CLIENT_SEQ.clear()
+        step_edit_router._LAST_COMMIT_SNAPSHOT.clear()
 
-        async def _pg_phase2():
-            transport = httpx.ASGITransport(app=app)
-            async with httpx.AsyncClient(transport=transport, base_url="http://testserver") as ac:
-                st = (await ac.get(f"/api/simulation/sessions/{sid}/state", headers=hdrs)).json()
-                assert st["found"] is True
-                assert st["committed_version"] == 2
-                assert st["last_committed_request_id"] == "pg-r2"
-                assert _find_obj(st["committed_scene"], "M")["xyz"] == ["0", "0", "24/5"]
-                assert st["step_overrides"]["M"] == "Lấy điểm M thuộc SA sao cho SM/SA = 1/5"
+    async def _pg_phase2():
+        transport = httpx.ASGITransport(app=app)
+        async with httpx.AsyncClient(transport=transport, base_url="http://testserver") as ac:
+            st1 = (await ac.get(f"/api/simulation/sessions/{sid1}/state", headers=hdrs)).json()
+            assert st1["found"] is True
+            assert st1["committed_version"] == 2
+            assert st1["last_committed_request_id"] == "pg-r2"
+            assert _find_obj(st1["committed_scene"], "M")["xyz"] == ["0", "0", "24/5"]
+            assert st1["step_overrides"]["M"] == "Lấy điểm M thuộc SA sao cho SM/SA = 1/5"
 
-        asyncio.run(_pg_phase2())
-        restarted_pg_engine.dispose()
-        assert _alembic(pg_url, "check").returncode == 0
+            st11 = (await ac.get(f"/api/simulation/sessions/{sid11}/state", headers=hdrs)).json()
+            assert st11["found"] is True
+            assert st11["committed_version"] == 1
+            assert "M" not in st11["step_overrides"]
+
+    asyncio.run(_pg_phase2())
+    restarted_pg_engine.dispose()
+    chk_post = _alembic(["check"], pg_url)
+    assert chk_post.returncode == 0, chk_post.stdout + chk_post.stderr
+
+
+def test_phase_c2_independent_exact_geometry_invariants_across_4_problems():
+    """Phase C2: Analytical Fraction/Radical geometric verification across all 4 core Axo problems."""
+    from app.simulation.geometry import Line3, Point3, circumscribed_sphere
+    from app.simulation.geometry.exact import hf
+    from app.simulation.geometry.measure import sphere_volume
+
+    raw = json.loads((DATA_DIR / "advanced-geometry-samples.json").read_text(encoding="utf-8"))
+    items = raw if isinstance(raw, list) else raw.get("samples", raw)
+    by_slug = {x["id"]: copy.deepcopy(x["envelope"]["scene3d"]) for x in items}
+
+    # 1) chop-mat-cau-ngoai-tiep: A=(0,0,0), B=(4,0,0), D=(0,4,0), S=(0,0,4) -> I=(2,2,2), R=2√3 (r²=12), V=32π√3
+    A, B, C, D, S = Point3(0, 0, 0), Point3(4, 0, 0), Point3(4, 4, 0), Point3(0, 4, 0), Point3(0, 0, 4)
+    center, r_sq = circumscribed_sphere([A, B, C, D, S])
+    assert center == Point3(2, 2, 2)
+    assert r_sq == Fraction(12)
+    for pt in (A, B, C, D, S):
+        assert (pt - center).norm_sq() == Fraction(12)
+    vol = sphere_volume(r_sq)
+    assert vol.rad == 3 and vol.coeff == Fraction(32)  # coeff * √rad = 32√3 (× π)
+    s11 = by_slug["chop-mat-cau-ngoai-tiep"]
+    mc = _find_obj(s11, "mat_cau")
+    assert mc is not None and [hf(x) for x in mc["anchor"]] == [Fraction(2), Fraction(2), Fraction(2)]
+    assert hf(mc["radius_sq"]) == Fraction(12)
+
+    # 2 & 3) chop-thiet-dien-ba-diem & lang-tru-tam-giac-thiet-dien: coplanar, closed cyclic polygon, valid edge params
+    for slug in ("chop-thiet-dien-ba-diem", "lang-tru-tam-giac-thiet-dien"):
+        sc = by_slug[slug]
+        objs = {o["id"]: o for o in sc["objects"]}
+        sec = next(o for o in sc["objects"] if o.get("type") == "section")
+        pts = [Vec3.of(*p) for p in sec["polygon"]]
+        assert len(pts) >= 3
+        pl = Plane3(Vec3.of(*objs[sec["plane"]]["point"]), Vec3.of(*objs[sec["plane"]]["normal"]))
+        for p in pts:
+            assert P.point_on_plane(p, pl)
+        # Check pairwise distinct consecutive vertices & positive area
+        for i in range(len(pts)):
+            assert not (pts[i] - pts[(i + 1) % len(pts)]).is_zero()
+        assert area_of(pts) > 0
+        # Edit M in chop-thiet-dien-ba-diem and confirm new section E/F stay strictly on edges SB/SD with 0 < t < 1
+        if slug == "chop-thiet-dien-ba-diem":
+            rebuilt = se.execute_step_edit(
+                scene3d=copy.deepcopy(sc),
+                step_id="M",
+                step_index=5,
+                previous_instruction="Xác định trung điểm M của SA",
+                edited_instruction="Lấy điểm M thuộc SA sao cho SM/SA = 1/4",
+                target_ids=["M"],
+                absorbed_ids=[],
+                scene_hooks=DEFAULT_SCENE3D_HOOKS,
+            )
+            robjs = {o["id"]: o for o in rebuilt["scene3d"]["objects"]}
+            pl_new = Plane3(Vec3.of(*robjs["mp_MNP"]["point"]), Vec3.of(*robjs["mp_MNP"]["normal"]))
+            rsec = next(o for o in rebuilt["scene3d"]["objects"] if o.get("type") == "section")
+            rpts = [Vec3.of(*p) for p in rsec["polygon"]]
+            for p in rpts:
+                assert P.point_on_plane(p, pl_new)
+            assert area_of(rpts) > 0
+            for pt_id, (u_id, v_id) in (("E", ("S", "B")), ("F", ("S", "D"))):
+                U, V, Q = Vec3.of(*robjs[u_id]["xyz"]), Vec3.of(*robjs[v_id]["xyz"]), Vec3.of(*robjs[pt_id]["xyz"])
+                d = V - U
+                t = (Q - U).dot(d) / d.norm_sq()
+                assert Fraction(0) < t < Fraction(1)
+                assert Q == U + d.scale(t)
+
+    # 4) khoang-cach-hai-duong-cheo-nhau: common perpendicular orthogonal to both skew directions
+    s_skew = by_slug["khoang-cach-hai-duong-cheo-nhau"]
+    sobjs = {o["id"]: o for o in s_skew["objects"]}
+    p_s = Vec3.of(*sobjs["S"]["xyz"])
+    p_b = Vec3.of(*sobjs["B"]["xyz"])
+    p_c = Vec3.of(*sobjs["C"]["xyz"])
+    p_d = Vec3.of(*sobjs["D"]["xyz"])
+    perp_seg = next(o for o in s_skew["objects"] if (o.get("source") or {}).get("segment_role") == "common_perpendicular")
+    ep_a, ep_b = Vec3.of(*sobjs[perp_seg["from"]]["xyz"]), Vec3.of(*sobjs[perp_seg["to"]]["xyz"])
+    perp_vec = ep_b - ep_a
+    assert not perp_vec.is_zero()
+    # In S.ABCD skew lines (d_a, d_b), common perpendicular must have zero dot product with both skew lines!
+    l_sc = Line3.through(p_s, p_c)
+    l_bd = Line3.through(p_b, p_d)
+    assert P.point_on_line(ep_a, l_sc) or P.point_on_line(ep_b, l_sc)
+    assert P.point_on_line(ep_a, l_bd) or P.point_on_line(ep_b, l_bd)
+    assert perp_vec.dot(l_sc.direction) == 0
+    assert perp_vec.dot(l_bd.direction) == 0

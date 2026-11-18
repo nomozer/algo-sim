@@ -23,9 +23,11 @@ khởi động lại), cuối cùng `alembic check` sạch trên chính dialect 
 """
 
 import os
+import shutil
 import socket
 import subprocess
 import sys
+import tempfile
 import time
 import uuid
 from pathlib import Path
@@ -52,6 +54,45 @@ def _docker_ok() -> bool:
         return _run(["docker", "info"]).returncode == 0
     except FileNotFoundError:
         return False
+
+
+def _local_pg_bin_dir() -> Path | None:
+    """Locate isolated local PostgreSQL 16 binaries if Docker daemon is unavailable."""
+    candidates: list[Path] = []
+    env_bin = os.environ.get("ALGOSIM_PG16_BIN")
+    if env_bin:
+        candidates.append(Path(env_bin))
+    for base in Path(__file__).resolve().parents:
+        candidates.append(base / ".superpowers" / "pgsql16" / "pgsql" / "bin")
+        candidates.append(base / "algo-sim" / ".superpowers" / "pgsql16" / "pgsql" / "bin")
+    for cand in candidates:
+        if (cand / "initdb.exe").is_file() and (cand / "pg_ctl.exe").is_file():
+            return cand
+        if (cand / "initdb").is_file() and (cand / "pg_ctl").is_file():
+            return cand
+    return None
+
+
+def restart_pg(pg_info: dict) -> None:
+    """Restart the isolated PostgreSQL 16 process across both Docker and local pg_ctl modes."""
+    if pg_info.get("mode") == "local_pg_ctl":
+        res = _run([
+            pg_info["pg_ctl"],
+            "-D",
+            pg_info["pgdata"],
+            "-l",
+            pg_info["pglog"],
+            "-w",
+            "-o",
+            f"-p {pg_info['port']} -h 127.0.0.1",
+            "restart",
+        ])
+        assert res.returncode == 0, res.stderr
+    else:
+        res = _run(["docker", "restart", pg_info["name"]])
+        assert res.returncode == 0, res.stderr
+    assert _pg_ready(pg_info["port"], pg_info["pw"], pg_info["db"]), \
+        "Postgres không sẵn sàng lại sau restart"
 
 
 def _free_port() -> int:
@@ -90,9 +131,66 @@ def _alembic(args: list[str], url: str) -> subprocess.CompletedProcess:
 
 @pytest.fixture(scope="module")
 def pg_container():
-    """Container Postgres throwaway (không volume, cổng cố định) → thông tin kết nối."""
+    """Isolated throwaway PostgreSQL 16 instance (Docker container or local pg_ctl data dir)."""
     if not _docker_ok():
-        pytest.skip("Docker không khả dụng — smoke Postgres cần Docker.")
+        bin_dir = _local_pg_bin_dir()
+        if bin_dir is None:
+            pytest.skip("Docker không khả dụng và chưa có local PostgreSQL 16 binaries.")
+        pw = "algosim_test_pw"
+        dbname = "algosim_test"
+        port = str(_free_port())
+        tmp_root = Path(tempfile.mkdtemp(prefix="algosim-pg16-"))
+        pgdata = tmp_root / "data"
+        pglog = tmp_root / "postgres.log"
+        pwfile = tmp_root / "pw.txt"
+        pwfile.write_text(pw, encoding="utf-8")
+        init_cmd = [
+            str(bin_dir / ("initdb.exe" if (bin_dir / "initdb.exe").is_file() else "initdb")),
+            "-D", str(pgdata),
+            "-U", "postgres",
+            f"--pwfile={pwfile}",
+            "-A", "scram-sha-256",
+            "-E", "UTF8",
+            "--locale=C",
+        ]
+        init_res = _run(init_cmd)
+        pwfile.unlink(missing_ok=True)
+        if init_res.returncode != 0:
+            shutil.rmtree(tmp_root, ignore_errors=True)
+            pytest.skip(f"initdb PostgreSQL 16 thất bại: {init_res.stderr}")
+        pg_ctl_bin = str(bin_dir / ("pg_ctl.exe" if (bin_dir / "pg_ctl.exe").is_file() else "pg_ctl"))
+        start_res = _run([
+            pg_ctl_bin, "-D", str(pgdata), "-l", str(pglog),
+            "-w", "-o", f"-p {port} -h 127.0.0.1", "start",
+        ])
+        if start_res.returncode != 0:
+            log_tail = pglog.read_text(encoding="utf-8", errors="ignore") if pglog.exists() else ""
+            shutil.rmtree(tmp_root, ignore_errors=True)
+            pytest.skip(f"pg_ctl start thất bại: {start_res.stderr}\n{log_tail}")
+        try:
+            if not _pg_ready(port, pw, "postgres"):
+                pytest.skip("Postgres cục bộ không sẵn sàng kịp khi khởi tạo.")
+            conn = psycopg2.connect(host="127.0.0.1", port=port, user="postgres", password=pw, dbname="postgres")
+            conn.autocommit = True
+            with conn.cursor() as cur:
+                cur.execute(f"CREATE DATABASE {dbname};")
+            conn.close()
+            url = f"postgresql+psycopg2://postgres:{pw}@127.0.0.1:{port}/{dbname}"
+            yield {
+                "url": url,
+                "name": f"local-pg16-{port}",
+                "port": port,
+                "pw": pw,
+                "db": dbname,
+                "mode": "local_pg_ctl",
+                "pgdata": str(pgdata),
+                "pg_ctl": pg_ctl_bin,
+                "pglog": str(pglog),
+            }
+        finally:
+            _run([pg_ctl_bin, "-D", str(pgdata), "-m", "immediate", "stop"])
+            shutil.rmtree(tmp_root, ignore_errors=True)
+        return
 
     # Pull tường minh trước: tách độ trễ tải image (lần đầu ~vài chục giây) khỏi
     # vòng chờ readiness, tránh skip oan trên máy chưa có image sẵn.
@@ -118,7 +216,7 @@ def pg_container():
         url = f"postgresql+psycopg2://postgres:{pw}@127.0.0.1:{port}/{dbname}"
         if not _pg_ready(port, pw, dbname):
             pytest.skip("Postgres không sẵn sàng kịp khi khởi tạo.")
-        yield {"url": url, "name": name, "port": port, "pw": pw, "db": dbname}
+        yield {"url": url, "name": name, "port": port, "pw": pw, "db": dbname, "mode": "docker"}
     finally:
         removed = _run(["docker", "rm", "-f", name])
         # dọn dẹp phải thành công (không để container rác)
@@ -176,10 +274,8 @@ def test_postgres_migrate_persist_reconnect(pg_container):
         assert s.query(db.SimulationCache).filter_by(key="pgsmoke").one().hit_count == 7
     eng.dispose()
 
-    # 6. RESTART container (DB process khởi động lại) → dữ liệu vẫn bền
-    assert _run(["docker", "restart", name]).returncode == 0
-    assert _pg_ready(pg_container["port"], pg_container["pw"], pg_container["db"]), \
-        "Postgres không sẵn sàng lại sau restart"
+    # 6. RESTART PostgreSQL process (Docker hoặc local pg_ctl) → dữ liệu vẫn bền
+    restart_pg(pg_container)
 
     eng2 = create_engine(url)
     Session2 = sessionmaker(bind=eng2)
