@@ -1,0 +1,112 @@
+{
+  "schema_version": "axo-evaluation-run/1",
+  "run_id": "step-editor-independent-acceptance",
+  "task_slug": "axo-step-editor-independent-acceptance-localhost-qa",
+  "date": "2026-11-18",
+  "branch": "feat/axo-geometry-library-verification",
+  "start_head": "ba261dea555eae16b0754005c96e9bb6fdaa6e91",
+  "model_status": "MODEL_NOT_TRAINED",
+  "physical_mobile_hardware_status": "NOT_VERIFIED",
+  "step_editor_acceptance": "PASS",
+  "status": "READY_FOR_OWNER_REVIEW",
+  "owner_approval": "PENDING_OWNER_REVIEW",
+  "root_causes_fixed": [
+    "IND-1",
+    "IND-2",
+    "IND-3",
+    "IND-4",
+    "IND-5",
+    "IND-6",
+    "IND-7"
+  ],
+  "artifacts": {
+    "report": "report.md",
+    "formal_report": "AXO-STEP-EDITOR-INDEPENDENT-ACCEPTANCE-REPORT.md",
+    "backend_perf_oracle": "results/backend-perf-oracle.json",
+    "live_browser_qa": "results/live-browser-qa.json",
+    "rea_mcp_inspection": "results/rea-mcp-inspection.json",
+    "images": [
+      "images/ind-1920-state1-before-hover.png",
+      "images/ind-1920-state2-editing-open.png",
+      "images/ind-1920-state3-valid-committed.png",
+      "images/ind-1920-state4-rejected-422.png",
+      "images/ind-1920-prism-prime-check.png",
+      "images/ind-vp-1440x900-editing.png",
+      "images/ind-vp-1366x768-editing.png",
+      "images/ind-vp-768x1024-editing.png",
+      "images/ind-vp-390x844-editing.png",
+      "images/ind-vp-360x800-editing.png",
+      "images/ind-vp-320x568-editing.png",
+      "images/route-landing.png",
+      "images/route-gioi-thieu.png",
+      "images/rea-mcp-cdp-screenshot.png"
+    ]
+  },
+  "rea_mcp_evidence": {
+    "list_browser_targets": "ev_84ce90e944cb11ff6f35b0b3ec444c0c0e3b3634cfeeaebb4cbf3c7a79997c41",
+    "inspect_web_page": "ev_d3a8b4a0eced717537430c8d886c0afb8046bff87149c9df58892815dc350d05",
+    "capture_web_screenshot": "ev_d9fefa75738a91db7cc4f45fbba0c2fd68c14dda76eb8716e4b343ca0341b418"
+  },
+  "tests": {
+    "independent_acceptance_suite": {
+      "file": "backend/tests/geometry/test_step_editor_independent_acceptance.py",
+      "status": "PASS",
+      "passed": 10,
+      "failed": 0,
+      "duration_s": 4.3
+    },
+    "step_editor_and_curved_authority": {
+      "files": [
+        "backend/tests/geometry/test_center_radius_ball.py",
+        "backend/tests/geometry/test_curved_foundation.py",
+        "backend/tests/geometry/test_step_editor_independent_acceptance.py",
+        "backend/tests/geometry/test_editable_construction_steps.py",
+        "backend/tests/geometry/test_step_editor_v22_reliability.py",
+        "backend/tests/geometry/test_step_editor_root_cause_stabilization.py"
+      ],
+      "status": "PASS",
+      "passed": 149,
+      "failed": 0,
+      "duration_s": 29.59
+    },
+    "backend_static_gates_25_suites": {
+      "status": "PASS",
+      "passed": 687,
+      "failed": 0,
+      "duration_s": 38.45
+    },
+    "backend_semantic_program": {
+      "ignored": [
+        "backend/tests/semantic_program/test_evaluation_candidate.py"
+      ],
+      "status": "PASS",
+      "passed": 1166,
+      "skipped": 1,
+      "failed": 0,
+      "duration_s": 7.48
+    },
+    "backend_non_geometry_non_semantic": {
+      "status": "PASS",
+      "passed": 793,
+      "deselected": 2,
+      "failed": 0,
+      "duration_s": 144.31
+    },
+    "frontend_vitest_full": {
+      "status": "PASS",
+      "test_files_passed": 192,
+      "tests_passed": 2268,
+      "failed": 0,
+      "duration_s": 105.31
+    },
+    "frontend_typecheck_and_build": {
+      "tsc": "0 errors",
+      "vite_build_s": 6.05,
+      "status": "PASS"
+    },
+    "demo_surface_scripts": {
+      "replay_demo_cases": "5/5 + 1/1 reduced chain",
+      "audit_demo_crash_surface": "6/6 (0 unhandled)"
+    }
+  }
+}

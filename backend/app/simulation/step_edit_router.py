@@ -2,8 +2,10 @@
 """FastAPI endpoints for deterministic local step-editing, session persistence, and feedback curation."""
 from __future__ import annotations
 
+from collections import OrderedDict
 import hashlib
 import json
+import threading
 import uuid
 from typing import Any
 
@@ -11,6 +13,7 @@ from fastapi import APIRouter, Cookie, Depends, Header, HTTPException, Response
 from fastapi.responses import JSONResponse
 from pydantic import BaseModel, Field
 from sqlalchemy import select
+from sqlalchemy.exc import IntegrityError, OperationalError
 from sqlalchemy.orm import Session
 
 from app.accounts import service as accounts_service
@@ -35,6 +38,29 @@ from app.simulation.geometry_functions.step_editor import (
 )
 
 router = APIRouter(prefix="/api/simulation", tags=["simulation-step-edit"])
+
+_SESSION_LOCKS_GUARD = threading.Lock()
+_SESSION_LOCKS: OrderedDict[tuple[str, str], threading.RLock] = OrderedDict()
+_MAX_SESSION_LOCKS = 2048
+
+
+def _get_session_lock(owner_scope: str, session_id: str) -> threading.RLock:
+    """Return a bounded per-session RLock to serialize concurrent edits on one session."""
+    key = (owner_scope, session_id)
+    with _SESSION_LOCKS_GUARD:
+        lock = _SESSION_LOCKS.get(key)
+        if lock is None:
+            lock = threading.RLock()
+            _SESSION_LOCKS[key] = lock
+            if len(_SESSION_LOCKS) > _MAX_SESSION_LOCKS:
+                for old_key, old_lock in list(_SESSION_LOCKS.items()):
+                    if old_key != key and old_lock.acquire(blocking=False):
+                        old_lock.release()
+                        _SESSION_LOCKS.pop(old_key, None)
+                        break
+        else:
+            _SESSION_LOCKS.move_to_end(key)
+        return lock
 
 
 def get_db():
@@ -127,20 +153,28 @@ def _assert_verified_step_edit_result(result: dict[str, Any]) -> None:
         raise StepEditRefusal("VALIDATION_INCOMPLETE", "validation", "Thiếu đối tượng đích hợp lệ trong Scene3D sau dựng lại.")
 
 
-@router.post("/steps/edit")
-def edit_construction_step(
+def _concurrent_conflict_response() -> JSONResponse:
+    return JSONResponse(
+        status_code=409,
+        headers={"Cache-Control": "no-store"},
+        content={
+            "status": "conflict",
+            "error_code": "CONCURRENT_STEP_EDIT_CONFLICT",
+            "failed_stage": "persistence",
+            "learner_error": "Phiên đang xử lý một chỉnh sửa bước dựng khác; vui lòng thử lại sau giây lát.",
+            "draft_preserved": True,
+            "llm_calls": 0,
+            "quota_charged": False,
+        },
+    )
+
+
+def _execute_locked_step_edit(
     req: StepEditRequest,
     response: Response,
-    db: Session = Depends(get_db),
-    algosim_session: str | None = Cookie(default=None, alias=accounts_service.SESSION_COOKIE),
-    x_axo_client_session: str | None = Header(default=None, alias="X-Axo-Client-Session"),
-):
-    """Deterministically parse, validate, partially rebuild, and persist a construction-step edit.
-
-    Zero external LLM calls and zero AI analysis quota charges.
-    """
-    owner_scope = _resolve_owner_scope(db, algosim_session, x_axo_client_session)
-
+    db: Session,
+    owner_scope: str,
+) -> dict[str, Any] | JSONResponse:
     session_row = db.execute(
         select(StepEditSessionRecord).where(
             StepEditSessionRecord.owner_scope == owner_scope,
@@ -375,6 +409,29 @@ def edit_construction_step(
         "llm_calls": 0,
         "quota_charged": False,
     }
+
+
+@router.post("/steps/edit")
+def edit_construction_step(
+    req: StepEditRequest,
+    response: Response,
+    db: Session = Depends(get_db),
+    algosim_session: str | None = Cookie(default=None, alias=accounts_service.SESSION_COOKIE),
+    x_axo_client_session: str | None = Header(default=None, alias="X-Axo-Client-Session"),
+):
+    """Deterministically parse, validate, partially rebuild, and persist a construction-step edit.
+
+    Zero external LLM calls and zero AI analysis quota charges.
+    """
+    owner_scope = _resolve_owner_scope(db, algosim_session, x_axo_client_session)
+    # Close any implicit read snapshot from cookie lookup before waiting on the per-session lock.
+    db.rollback()
+    with _get_session_lock(owner_scope, req.session_id):
+        try:
+            return _execute_locked_step_edit(req, response, db, owner_scope)
+        except (IntegrityError, OperationalError):
+            db.rollback()
+            return _concurrent_conflict_response()
 
 
 @router.get("/sessions/{session_id}/state")

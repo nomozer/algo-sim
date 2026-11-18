@@ -74,6 +74,25 @@ class SceneProjectionHooks:
 
 STEP_EDITOR_VERSION = "step-editor/1"
 
+_AXISLESS_CURVED_KIND = CV.LOAI_TU_NGUON["sphere"]
+
+
+def _is_axisless_curved_kind(kind: Any) -> bool:
+    kc = CV.KHOI_CONG.get(str(kind or ""))
+    return kc is not None and not kc.co_truc
+
+
+def _is_axial_curved_kind(kind: Any) -> bool:
+    kc = CV.KHOI_CONG.get(str(kind or ""))
+    return kc is not None and kc.co_truc
+
+
+def _curved_base_disc_count(kind: Any) -> int:
+    kc = CV.KHOI_CONG.get(str(kind or ""))
+    if kc is None or not kc.co_truc:
+        return 0
+    return 1 if kc.vai_dinh == "đỉnh" else 2
+
 _POINT_TOKEN_RE = re.compile(r"[A-Z][0-9]*'?")
 _VERB_PREFIX_RE = re.compile(
     r"^(?:xác\s+định|gọi|lấy|chọn|dựng|kẻ|hạ|vẽ|nối|tìm|hoàn\s+thiện|cắt)\b",
@@ -190,7 +209,7 @@ def _normalize_vi_math(text: str) -> str:
 
 
 def _display_sym(sym: str) -> str:
-    return sym.replace("'", "′")
+    return sym.replace("_prime", "′").replace("'", "′")
 
 
 def _extract_points(token: str) -> list[str]:
@@ -643,9 +662,9 @@ def _parse_single_clause(clause: str) -> AtomicClause:
             raw_clause=clause,
         )
 
-    # 7b. Plane named by points directly: "Dựng mặt phẳng (MNP)" / "Dựng (MNP)"
+    # 7b. Plane named by points directly: "Dựng mặt phẳng (MNP)" / "Dựng mặt phẳng cắt (MNP)" / "Dựng (MNP)"
     m = re.fullmatch(
-        rf"(?:dựng|vẽ|xác\s+định)\s+(?:(?:mặt\s+phẳng|mp|mặt\s+đáy|đáy)\s+)?\((?P<pts>(?:{pt_pat}){{3,}})\)",
+        rf"(?:dựng|vẽ|xác\s+định)\s+(?:(?:(?:mặt\s+phẳng|mp)(?:\s+cắt)?|mặt\s+đáy|đáy)\s+)?\((?P<pts>(?:{pt_pat}){{3,}})\)",
         c,
         re.IGNORECASE,
     )
@@ -718,9 +737,9 @@ def _parse_single_clause(clause: str) -> AtomicClause:
                 raw_clause=clause,
             )
 
-    # 9a. Line-plane or line-line intersection: "Xác định giao điểm E của SB với (MNP)" / "Tìm giao điểm E của đường thẳng MN và đường thẳng CD"
+    # 9a. Line-plane or line-line intersection: "Xác định giao điểm E của SB với (MNP)" / "Xác định giao điểm E = SB ∩ (MNP)"
     m = re.fullmatch(
-        rf"(?:(?:xác\s+định|tìm|gọi)\s+giao\s+điểm\s+(?P<pt>{pt_pat})\s+của\s+(?:cạnh\s+|đoạn\s+|đường\s+thẳng\s+|đt\s+)?(?P<l1>{seg_pat}|[a-zΔ][0-9']*)\s+(?:và|với)\s+(?:(?P<k2>mặt\s+phẳng|mp|cạnh|đoạn|đường\s+thẳng|đt)\s+)?(?P<t2>{plane_pat}|{seg_pat}|[a-zΔ][0-9']*)|(?:gọi|xác\s+định)\s+(?P<pt_b>{pt_pat})\s*=\s*(?P<l1_b>{seg_pat}|[a-zΔ][0-9']*)\s*∩\s*(?P<t2_b>{plane_pat}|{seg_pat}|[a-zΔ][0-9']*))",
+        rf"(?:(?:xác\s+định|tìm|gọi)\s+giao\s+điểm\s+(?P<pt>{pt_pat})\s+của\s+(?:cạnh\s+|đoạn\s+|đường\s+thẳng\s+|đt\s+)?(?P<l1>{seg_pat}|[a-zΔ][0-9']*)\s+(?:và|với)\s+(?:(?P<k2>mặt\s+phẳng|mp|cạnh|đoạn|đường\s+thẳng|đt)\s+)?(?P<t2>{plane_pat}|{seg_pat}|[a-zΔ][0-9']*)|(?:gọi|xác\s+định|tìm)\s+(?:giao\s+điểm\s+)?(?P<pt_b>{pt_pat})\s*=\s*(?P<l1_b>{seg_pat}|[a-zΔ][0-9']*)\s*∩\s*(?P<t2_b>{plane_pat}|{seg_pat}|[a-zΔ][0-9']*))",
         c,
         re.IGNORECASE,
     )
@@ -789,9 +808,9 @@ def _parse_single_clause(clause: str) -> AtomicClause:
             raw_clause=clause,
         )
 
-    # 10. Base polygon / lateral edges / solid / section / sphere / segment / line
+    # 10. Base polygon / lateral edges / common perpendicular / segment / line / section / sphere / solid
     m = re.fullmatch(
-        r"(?:dựng|vẽ)\s+(?:mặt\s+)?đáy\s+(?P<poly>(?:[A-Z][0-9]*'?){3,})",
+        r"(?:dựng|vẽ|xác\s+định)\s+(?:mặt\s+)?đáy(?:\s+(?:dưới|trên|đối\s+diện))?\s+(?P<poly>(?:[A-Z][0-9]*'?){3,})(?:\s+của\s+.+)?",
         c,
         re.IGNORECASE,
     )
@@ -826,6 +845,30 @@ def _parse_single_clause(clause: str) -> AtomicClause:
             output_symbol=", ".join(segs),
             point_inputs=tuple(all_pts),
             params={"segments": pairs},
+            raw_clause=clause,
+        )
+
+    m = re.fullmatch(
+        rf"(?:dựng|vẽ|kẻ|nối|xác\s+định)\s+đoạn\s+vuông\s+góc\s+chung\s+(?P<seg>{seg_pat})\s+của\s+(?:hai\s+(?:đường\s+thẳng|cạnh|đường\s+chéo\s+nhau)\s+)?(?:(?:đường\s+thẳng|cạnh|đt)\s+)?(?P<l1>{seg_pat})\s+và\s+(?:(?:đường\s+thẳng|cạnh|đt)\s+)?(?P<l2>{seg_pat})",
+        c,
+        re.IGNORECASE,
+    )
+    if m:
+        pts = _extract_points(m.group("seg"))
+        l1_pts = _extract_points(m.group("l1"))
+        l2_pts = _extract_points(m.group("l2"))
+        if len(pts) != 2 or pts[0] == pts[1] or len(l1_pts) != 2 or l1_pts[0] == l1_pts[1] or len(l2_pts) != 2 or l2_pts[0] == l2_pts[1]:
+            raise StepEditRefusal("INVALID_OPERAND", "parser", "Đoạn vuông góc chung và hai đường thẳng cần các đầu mút phân biệt.")
+        return AtomicClause(
+            op="construct_segment",
+            output_symbol=f"{pts[0]}{pts[1]}",
+            point_inputs=(pts[0], pts[1]),
+            params={
+                "segments": [pts],
+                "segment_role": "common_perpendicular",
+                "line1_pts": l1_pts,
+                "line2_pts": l2_pts,
+            },
             raw_clause=clause,
         )
 
@@ -883,7 +926,7 @@ def _parse_single_clause(clause: str) -> AtomicClause:
         )
 
     m = re.fullmatch(
-        r"(?:dựng|vẽ)\s+(?:đường\s+thẳng|đt)\s+(?:qua\s+hai\s+điểm\s+)?(?P<seg>[A-Z][0-9]*'?[A-Z][0-9]*'?|[A-Z][0-9]*'?\s*(?:,|và)\s*[A-Z][0-9]*'?)",
+        r"(?:dựng|vẽ|kẻ|xác\s+định)\s+(?:đường\s+thẳng|đt)\s+(?:qua\s+hai\s+điểm\s+|chứa\s+(?:cạnh\s+|đoạn\s+)?)?(?P<seg>[A-Z][0-9]*'?[A-Z][0-9]*'?|[A-Z][0-9]*'?\s*(?:,|và)\s*[A-Z][0-9]*'?)",
         c,
         re.IGNORECASE,
     )
@@ -895,6 +938,20 @@ def _parse_single_clause(clause: str) -> AtomicClause:
             op="construct_line",
             output_symbol=f"{pts[0]}{pts[1]}",
             point_inputs=(pts[0], pts[1]),
+            raw_clause=clause,
+        )
+
+    m = re.fullmatch(
+        r"(?:dựng\s+các\s+giao\s+tuyến\s+và\s+)?(?:hoàn\s+thiện|dựng|vẽ|xác\s+định)\s+thiết\s+diện(?:\s+(?:tam\s+giác|tứ\s+giác|ngũ\s+giác|lục\s+giác|đa\s+giác))?\s+\(?(?P<poly>(?:[A-Z][0-9]*'?){3,})\)?",
+        c,
+        re.IGNORECASE,
+    )
+    if m:
+        pts = _extract_points(m.group("poly"))
+        return AtomicClause(
+            op="construct_section",
+            output_symbol="".join(_display_sym(p) for p in pts),
+            point_inputs=tuple(pts),
             raw_clause=clause,
         )
 
@@ -941,7 +998,7 @@ def _parse_single_clause(clause: str) -> AtomicClause:
         )
 
     m = re.fullmatch(
-        r"(?:hoàn\s+thiện|dựng)\s+(?:hình\s+chóp|lăng\s+trụ|tứ\s+diện|hình\s+lập\s+phương|hình\s+hộp)\s+(?P<solid>(?:[A-Z][0-9]*'?)+(?:\.(?:[A-Z][0-9]*'?)+)?)",
+        r"(?:hoàn\s+thiện|dựng)\s+(?:(?:hình|khối)\s+)?(?:chóp|lăng\s+trụ|tứ\s+diện|lập\s+phương|hộp)(?:\s+(?:đứng|đều|xiên|tam\s+giác|tứ\s+giác|chữ\s+nhật))*\s+(?P<solid>(?:[A-Z][0-9]*'?)+(?:\.(?:[A-Z][0-9]*'?)+)?)",
         c,
         re.IGNORECASE,
     )
@@ -1079,14 +1136,15 @@ def _hydrate_object_value(obj: dict[str, Any], mem: dict[str, Any]) -> Any:
         apex = Vec3.of(*obj["apex_or_top"]) if obj.get("apex_or_top") else None
         rim = Vec3.of(*obj["rim_point"]) if obj.get("rim_point") else None
         rsq = Fraction(obj["radius_sq"]) if obj.get("radius_sq") is not None else None
-        hsq = Fraction(obj["height_sq"]) if (obj.get("curved_kind") != "ball" and obj.get("height_sq") is not None) else None
+        is_axial = _is_axial_curved_kind(obj.get("curved_kind"))
+        hsq = Fraction(obj["height_sq"]) if (is_axial and obj.get("height_sq") is not None) else None
         return CurvedSolid(
             kind=obj["curved_kind"],
             anchor=anchor,
             apex_or_top=apex,
             rim_point=rim,
             radius_sq_khai=rsq if rim is None else None,
-            height_sq_khai=hsq if (apex is None and obj.get("curved_kind") != "ball") else None,
+            height_sq_khai=hsq if (apex is None and is_axial) else None,
         )
     if otype == "quantity":
         if obj.get("exact") is not None:
@@ -1266,9 +1324,11 @@ def _reevaluate_object(
         if not pt_deps:
             raise StepEditRefusal("MISSING_DEPENDENCY", "kernel", f"Khối cong '{obj['id']}' thiếu tâm.")
         anchor_id = pt_deps[0]
-        rim_id = pt_deps[-1] if (kind == "ball" and len(pt_deps) >= 2) else (pt_deps[1] if len(pt_deps) >= 2 and obj.get("rim_point") else None)
-        top_id = pt_deps[1] if (kind in ("cylinder", "cone") and len(pt_deps) >= 2 and obj.get("apex_or_top")) else None
-        if kind == "ball" and len(pt_deps) == 2 and obj.get("anchor"):
+        is_axisless = _is_axisless_curved_kind(kind)
+        is_axial = _is_axial_curved_kind(kind)
+        rim_id = pt_deps[-1] if (is_axisless and len(pt_deps) >= 2) else (pt_deps[1] if len(pt_deps) >= 2 and obj.get("rim_point") else None)
+        top_id = pt_deps[1] if (is_axial and len(pt_deps) >= 2 and obj.get("apex_or_top")) else None
+        if is_axisless and len(pt_deps) == 2 and obj.get("anchor"):
             # Preserve semantic distinction: in balls with `depends = [I, S]`, center matches `anchor` originally
             orig_anchor = Vec3.of(*obj["anchor"])
             for cand in pt_deps:
@@ -1292,7 +1352,7 @@ def _reevaluate_object(
             apex_or_top=mem[top_id] if top_id else None,
             rim_point=mem[rim_id] if rim_id else None,
             radius_sq_khai=rsq if rim_id is None else None,
-            height_sq_khai=Fraction(obj["height_sq"]) if (kind != "ball" and top_id is None and obj.get("height_sq") is not None) else None,
+            height_sq_khai=Fraction(obj["height_sq"]) if (is_axial and top_id is None and obj.get("height_sq") is not None) else None,
         )
 
     if prod == "intersect_plane_curved":
@@ -1361,10 +1421,11 @@ def _reevaluate_object(
             subj = next((mem[d] for d in deps if isinstance(mem.get(d), CurvedSolid)), None)
             if subj is not None:
                 lat = lateral_area_of(subj)
-                if subj.kind == "ball":
+                n_bases = _curved_base_disc_count(subj.kind)
+                if n_bases == 0:
                     return lat
                 base_disc = radical_make(subj.radius_sq, 1, 1)
-                bases = times_rational(base_disc, Fraction(1 if subj.kind == "cone" else 2))
+                bases = times_rational(base_disc, Fraction(n_bases))
                 return radical_add(lat, bases)
             q_vals = [mem[d] for d in deps if isinstance(mem.get(d), (Fraction, Radical))]
             if len(q_vals) == 2:
@@ -1415,7 +1476,7 @@ def _reevaluate_object(
                 for sub_d in by_id.get(qd, {}).get("depends") or ():
                     cs_obj = mem.get(sub_d)
                     if isinstance(cs_obj, CurvedSolid):
-                        mul = 1 if cs_obj.kind == "cone" else 2
+                        mul = _curved_base_disc_count(cs_obj.kind) or 1
                         break
             return radical_add(mem[q_deps[0]], times_rational(mem[q_deps[1]], Fraction(mul)))
         if prod == "assign.residual_volume" and len(q_deps) == 2:
@@ -1718,6 +1779,8 @@ def _symbol_index_before_step(
             if o.get("origin") != "free" and not is_prior_by_ui and event_step_of.get(oid, 0) > target_step_anchor:
                 continue
         if o.get("type") == "point3":
+            if o.get("origin") == "derived" and "notation" in o and o.get("notation") is None:
+                continue
             ref_tok = o.get("reference")
             ref_sym = ref_tok if (isinstance(ref_tok, str) and re.fullmatch(r"[A-Z][0-9]*[′']?", ref_tok.strip())) else None
             for cand in (o.get("notation"), ref_sym, oid if re.fullmatch(r"[A-Z][0-9]*(?:'|_prime)?", oid) else None):
@@ -1726,14 +1789,14 @@ def _symbol_index_before_step(
         elif o.get("type") == "plane3":
             for cand in (o.get("notation"), o.get("reference"), o.get("label")):
                 if cand and isinstance(cand, str):
-                    nc = _normalize_vi_math(cand)
+                    nc = _normalize_vi_math(cand).replace("_prime", "'")
                     _add(nc, o)
                     if nc.startswith("(") and nc.endswith(")"):
                         _add(nc[1:-1], o)
         elif o.get("type") == "line3":
             for cand in (o.get("notation"), o.get("reference"), o.get("label")):
                 if cand and isinstance(cand, str):
-                    _add(_normalize_vi_math(cand), o)
+                    _add(_normalize_vi_math(cand).replace("_prime", "'"), o)
             pts = [d for d in (o.get("depends") or ()) if by_id_lookup(scene3d, d, "point3")]
             if len(pts) == 2:
                 _add(f"{pts[0]}{pts[1]}".replace("_prime", "'"), o)
@@ -1772,6 +1835,8 @@ def _resolve_point_id(
     # Check whether it exists downstream / in a later step to report cycle / ordering error specifically
     for o in all_objs_by_id.values():
         if o.get("type") != "point3":
+            continue
+        if o.get("origin") == "derived" and "notation" in o and o.get("notation") is None:
             continue
         onorm = _normalize_vi_math(o.get("notation") or o["id"]).replace("_prime", "'").upper()
         if onorm == norm:
@@ -2156,7 +2221,7 @@ def verify_rebuilt_geometry(
                     before_mem[bo["id"]] = bval
         for bo in before_scene.get("objects") or ():
             boid = bo.get("id")
-            if not boid or bo.get("type") != "curved_solid" or bo.get("curved_kind") != "ball":
+            if not boid or bo.get("type") != "curved_solid" or not _is_axisless_curved_kind(bo.get("curved_kind")):
                 continue
             orig_ball = before_mem.get(boid)
             rebuilt_ball = mem.get(boid)
@@ -2470,9 +2535,37 @@ def execute_step_edit(
     )
     all_objs: list[dict[str, Any]] = copy.deepcopy(before_snapshot.get("objects") or [])
     by_id: dict[str, dict[str, Any]] = {o["id"]: o for o in all_objs if o.get("id")}
-    resolved_target_ids = [tid for tid in (target_ids or ()) if tid in by_id]
+    incoming_tids = [str(t).strip() for t in (target_ids or ()) if str(t).strip()]
+    resolved_target_ids: list[str] = []
+    for raw_tid in incoming_tids:
+        cand_tid = raw_tid[:-7] if raw_tid.endswith("__label") else raw_tid
+        cand_obj = by_id.get(cand_tid)
+        if cand_obj is not None and cand_obj.get("type") != "quantity" and cand_tid not in resolved_target_ids:
+            resolved_target_ids.append(cand_tid)
+    if not resolved_target_ids and incoming_tids:
+        for raw_tid in incoming_tids:
+            base_tid = raw_tid.split("__", 1)[0]
+            base_obj = by_id.get(base_tid)
+            if base_obj is not None:
+                if base_obj.get("type") == "quantity":
+                    raise StepEditRefusal(
+                        "READOUT_STEP_NOT_EDITABLE",
+                        "planner",
+                        "Bước đo đại lượng/kết quả được tính tự động từ hình đã dựng; hãy chỉnh sửa các bước dựng hình học phía trước.",
+                    )
+                if base_obj.get("type") in ("curved_solid", "circle3", "ellipse3") and not _is_axisless_curved_kind(base_obj.get("curved_kind")):
+                    raise StepEditRefusal(
+                        "UNSUPPORTED_CURVED_OR_FREEFORM_STEP",
+                        "planner",
+                        "Bước dựng khối/đường cong tròn xoay hiện chưa hỗ trợ chỉnh sửa trực tiếp.",
+                    )
+        raise StepEditRefusal(
+            "STEP_TARGET_NOT_FOUND",
+            "dependency_analysis",
+            f"Không tìm thấy đối tượng hình học tương ứng với bước cần sửa ({', '.join(incoming_tids)}).",
+        )
     if not resolved_target_ids:
-        # Fallback: locate by step_index formation created_ids
+        # Fallback only when caller omitted target_ids entirely: locate by step_index formation created_ids
         f_steps = (before_snapshot.get("formation") or {}).get("steps") or []
         if 0 <= step_index < len(f_steps):
             resolved_target_ids = [
@@ -2856,7 +2949,7 @@ def execute_step_edit(
                         mid_val,
                         "construct_point.midpoint",
                         [a_id, b_id],
-                        f"Trung điểm {_display_sym(pt_sym)} của {a_id}{b_id}",
+                        f"Trung điểm {_display_sym(pt_sym)} của {_display_sym(a_id)}{_display_sym(b_id)}",
                     )
                     if not is_final_clause:
                         created_inline_point_for_bisector = (pt_obj["id"], a_id, b_id)
@@ -2873,7 +2966,7 @@ def execute_step_edit(
                         pt_val,
                         "construct_point.divide_segment",
                         [a_id, b_id],
-                        f"Điểm {_display_sym(pt_sym)} trên {a_id}{b_id} (tỉ lệ {t_val})",
+                        f"Điểm {_display_sym(pt_sym)} trên {_display_sym(a_id)}{_display_sym(b_id)} (tỉ lệ {t_val})",
                         extra_source={"params": {"a": a_id, "b": b_id, "ratio": str(t_val)}},
                     )
 
@@ -2889,7 +2982,7 @@ def execute_step_edit(
                         c_val,
                         "construct_point.centroid",
                         [p0, p1, p2],
-                        f"Trọng tâm {_display_sym(pt_sym)} của tam giác {p0}{p1}{p2}",
+                        f"Trọng tâm {_display_sym(pt_sym)} của tam giác {_display_sym(p0)}{_display_sym(p1)}{_display_sym(p2)}",
                     )
 
                 elif clause.op in ("perpendicular_bisector_plane", "plane_perpendicular_to_line"):
@@ -2909,16 +3002,18 @@ def execute_step_edit(
                                 for hid in exclusive_helpers
                                 if by_id[hid].get("type") == "point3"
                                 and (by_id[hid].get("producer") or "") == "construct_point.midpoint"
+                                and str(hid).startswith(("M_", "mid_"))
                             ),
                             None,
                         )
+                        ab_phrase = f"Trung điểm của {_display_sym(a_id)} và {_display_sym(b_id)}"
                         if mid_helper is not None:
                             mid_helper.update({
                                 "depends": [a_id, b_id],
                                 "xyz": _exact_xyz_list(mid_val),
-                                "label": f"Trung điểm của {a_id} và {b_id}",
+                                "label": ab_phrase,
                                 "notation": None,
-                                "reference": f"Trung điểm của {a_id} và {b_id}",
+                                "reference": ab_phrase,
                                 "display_label": None,
                                 "role": "Điểm dựng phụ",
                             })
@@ -2932,9 +3027,9 @@ def execute_step_edit(
                             h_obj = {
                                 "id": mid_id,
                                 "type": "point3",
-                                "label": f"Trung điểm của {a_id} và {b_id}",
+                                "label": ab_phrase,
                                 "notation": None,
-                                "reference": f"Trung điểm của {a_id} và {b_id}",
+                                "reference": ab_phrase,
                                 "role": "Điểm dựng phụ",
                                 "origin": "derived",
                                 "producer": "construct_point.midpoint",
@@ -2969,12 +3064,13 @@ def execute_step_edit(
                         elif ln_id is None:
                             ln_id = _next_helper_id(f"line_{a_id}_{b_id}")
                             ln_val = Line3.through(mem[a_id], mem[b_id])
+                            ab_disp = f"{_display_sym(a_id)}{_display_sym(b_id)}"
                             ln_obj = {
                                 "id": ln_id,
                                 "type": "line3",
-                                "label": f"{a_id}{b_id}",
-                                "notation": f"{a_id}{b_id}",
-                                "reference": f"{a_id}{b_id}",
+                                "label": ab_disp,
+                                "notation": ab_disp,
+                                "reference": ab_disp,
                                 "role": "Đường thẳng",
                                 "origin": "derived",
                                 "producer": "construct_line",
@@ -3023,12 +3119,13 @@ def execute_step_edit(
                             else:
                                 ln_ref_id = _next_helper_id(f"line_{a_id}_{b_id}")
                                 ln_val = Line3.through(mem[a_id], mem[b_id])
+                                ab_disp = f"{_display_sym(a_id)}{_display_sym(b_id)}"
                                 ln_obj = {
                                     "id": ln_ref_id,
                                     "type": "line3",
-                                    "label": f"{a_id}{b_id}",
-                                    "notation": f"{a_id}{b_id}",
-                                    "reference": f"{a_id}{b_id}",
+                                    "label": ab_disp,
+                                    "notation": ab_disp,
+                                    "reference": ab_disp,
                                     "role": "Đường thẳng",
                                     "origin": "derived",
                                     "producer": "construct_line",
@@ -3085,10 +3182,10 @@ def execute_step_edit(
                     if pt_id not in reused_ids and pt_id not in {o["id"] for o in newly_created_objs}:
                         reused_ids.append(pt_id)
                     pl_val = K.plane_through_point_perpendicular_to(mem[pt_id], mem[ln_ref_id])
-                    pname = clause.output_symbol or primary_obj.get("notation") or "(α)"
+                    pname = _display_sym(clause.output_symbol or primary_obj.get("notation") or "(α)")
                     _assert_unique_plane_or_line_notation("plane3", pname)
-                    pt_disp = by_id[pt_id].get("notation") or pt_id
-                    ln_disp = by_id[ln_ref_id].get("notation") or ln_ref_id
+                    pt_disp = _display_sym(by_id[pt_id].get("notation") or pt_id)
+                    ln_disp = _display_sym(by_id[ln_ref_id].get("notation") or ln_ref_id)
                     new_label = f"Mặt phẳng {pname} qua {pt_disp} và vuông góc với {ln_disp}"
                     primary_obj.update({
                         "label": new_label,
@@ -3116,8 +3213,8 @@ def execute_step_edit(
                     pl_val = Plane3.through(p0, p1, p2)
                     for extra in pt_ids[3:]:
                         if not P.point_on_plane(mem[extra], pl_val):
-                            raise GeometryError("NON_COPLANAR_POINTS", f"Điểm '{extra}' không nằm trên mặt phẳng qua ba điểm đầu.")
-                    pname = clause.output_symbol or f"({''.join(pt_ids)})"
+                            raise GeometryError("NON_COPLANAR_POINTS", f"Điểm '{_display_sym(extra)}' không nằm trên mặt phẳng qua ba điểm đầu.")
+                    pname = _display_sym(clause.output_symbol or f"({''.join(_display_sym(pid) for pid in pt_ids)})")
                     _assert_unique_plane_or_line_notation("plane3", pname)
                     primary_obj.update({
                         "label": pname,
@@ -3140,10 +3237,11 @@ def execute_step_edit(
                     pt_id = _find_pt(clause.point_inputs[0], "dựng mặt phẳng song song")
                     ref_id = _resolve_pl(clause.plane_inputs[0], "dựng mặt phẳng song song")
                     pl_val = K.plane_through_point_parallel_to(mem[pt_id], mem[ref_id])
-                    pname = clause.output_symbol or primary_obj.get("notation") or "(α)"
+                    pname = _display_sym(clause.output_symbol or primary_obj.get("notation") or "(α)")
                     _assert_unique_plane_or_line_notation("plane3", pname)
-                    ref_not = by_id[ref_id].get("notation") or clause.plane_inputs[0]
-                    new_label = f"Mặt phẳng {pname} qua {by_id[pt_id].get('notation') or pt_id} và song song với {ref_not}"
+                    ref_not = _display_sym(by_id[ref_id].get("notation") or clause.plane_inputs[0])
+                    pt_disp = _display_sym(by_id[pt_id].get("notation") or pt_id)
+                    new_label = f"Mặt phẳng {pname} qua {pt_disp} và song song với {ref_not}"
                     primary_obj.update({
                         "label": new_label,
                         "notation": pname,
@@ -3219,7 +3317,7 @@ def execute_step_edit(
                             foot_val,
                             "construct_point.project_onto",
                             [src_id, pl_id],
-                            f"Hình chiếu {_display_sym(img_sym)} của {src_id} lên {clause.plane_inputs[0]}",
+                            f"Hình chiếu {_display_sym(img_sym)} của {_display_sym(src_id)} lên {_display_sym(clause.plane_inputs[0])}",
                         )
 
                 elif clause.op == "orthogonal_projection_line":
@@ -3229,6 +3327,7 @@ def execute_step_edit(
                         la = _find_pt(clause.point_inputs[1], "xác định đường thẳng chiếu")
                         lb = _find_pt(clause.point_inputs[2], "xác định đường thẳng chiếu")
                         ln_val = Line3.through(mem[la], mem[lb])
+                        ln_disp_target = f"{_display_sym(la)}{_display_sym(lb)}"
                         ln_id = next(
                             (o["id"] for o in all_objs if o.get("type") == "line3" and set(o.get("depends") or ()) == {la, lb} and o["id"] not in downstream_ids),
                             None,
@@ -3238,9 +3337,9 @@ def execute_step_edit(
                             ln_obj = {
                                 "id": ln_id,
                                 "type": "line3",
-                                "label": f"{la}{lb}",
-                                "notation": f"{la}{lb}",
-                                "reference": f"{la}{lb}",
+                                "label": ln_disp_target,
+                                "notation": ln_disp_target,
+                                "reference": ln_disp_target,
                                 "role": "Đường thẳng",
                                 "origin": "derived",
                                 "producer": "construct_line",
@@ -3262,6 +3361,7 @@ def execute_step_edit(
                         ln_id = next((o["id"] for o in available_symbols.get(ln_tok, ()) if o.get("type") == "line3"), None)
                         if ln_id is None:
                             raise StepEditRefusal("MISSING_DEPENDENCY", "planner", f"Không tìm thấy đường thẳng '{clause.line_inputs[0]}'.")
+                        ln_disp_target = _display_sym(by_id[ln_id].get("notation") or clause.line_inputs[0])
                     foot_val = K.project_point_onto_line(mem[src_id], mem[ln_id])
                     img_sym = clause.output_symbol or "H"
                     _reuse_or_assign_point(
@@ -3269,7 +3369,7 @@ def execute_step_edit(
                         foot_val,
                         "construct_point.project_onto",
                         [src_id, ln_id],
-                        f"Hình chiếu {_display_sym(img_sym)} của {src_id} lên đường thẳng",
+                        f"Hình chiếu {_display_sym(img_sym)} của {_display_sym(src_id)} lên đường thẳng {ln_disp_target}",
                     )
 
                 elif clause.op == "intersect_line_plane":
@@ -3284,12 +3384,13 @@ def execute_step_edit(
                         )
                         if ln_id is None:
                             ln_id = _next_helper_id(f"line_{la}_{lb}")
+                            ab_disp = f"{_display_sym(la)}{_display_sym(lb)}"
                             ln_obj = {
                                 "id": ln_id,
                                 "type": "line3",
-                                "label": f"{la}{lb}",
-                                "notation": f"{la}{lb}",
-                                "reference": f"{la}{lb}",
+                                "label": ab_disp,
+                                "notation": ab_disp,
+                                "reference": ab_disp,
                                 "role": "Đường thẳng",
                                 "origin": "derived",
                                 "producer": "construct_line",
@@ -3388,12 +3489,13 @@ def execute_step_edit(
                     la_id = _next_helper_id(f"line_{pts_l[0]}_{pts_l[1]}")
                     lb_id = _next_helper_id(f"line_{pts_l[2]}_{pts_l[3]}")
                     for lid, lv, p_pair in ((la_id, la_val, pts_l[:2]), (lb_id, lb_val, pts_l[2:4])):
+                        pair_disp = "".join(_display_sym(x) for x in p_pair)
                         lo = {
                             "id": lid,
                             "type": "line3",
-                            "label": "".join(p_pair),
-                            "notation": "".join(p_pair),
-                            "reference": "".join(p_pair),
+                            "label": pair_disp,
+                            "notation": pair_disp,
+                            "reference": pair_disp,
                             "role": "Đường thẳng",
                             "origin": "derived",
                             "producer": "construct_line",
@@ -3430,7 +3532,12 @@ def execute_step_edit(
                         if dir_v.is_zero():
                             raise GeometryError("ZERO_VECTOR", "Vectơ pháp tuyến suy biến.")
                         ln_val = Line3(mem[pt_id], dir_v)
+                        ln_disp = _display_sym(clause.output_symbol or primary_obj.get("notation") or "Δ")
                         primary_obj.update({
+                            "label": ln_disp,
+                            "notation": ln_disp,
+                            "reference": ln_disp,
+                            "display_label": ln_disp,
                             "producer": "line_perpendicular_to_plane",
                             "depends": [pt_id, pl_id],
                             "point": _exact_xyz_list(ln_val.point),
@@ -3441,7 +3548,12 @@ def execute_step_edit(
                         pa_id = _find_pt(clause.point_inputs[0], "dựng đường thẳng")
                         pb_id = _find_pt(clause.point_inputs[1], "dựng đường thẳng")
                         ln_val = Line3.through(mem[pa_id], mem[pb_id])
+                        ln_disp = _display_sym(clause.output_symbol or f"{_display_sym(pa_id)}{_display_sym(pb_id)}")
                         primary_obj.update({
+                            "label": ln_disp,
+                            "notation": ln_disp,
+                            "reference": ln_disp,
+                            "display_label": ln_disp,
                             "producer": "construct_line",
                             "depends": [pa_id, pb_id],
                             "point": _exact_xyz_list(ln_val.point),
@@ -3483,7 +3595,7 @@ def execute_step_edit(
                                 mem[o["id"]]
                                 for o in all_objs
                                 if o.get("type") == "curved_solid"
-                                and o.get("curved_kind") == "ball"
+                                and _is_axisless_curved_kind(o.get("curved_kind"))
                                 and isinstance(mem.get(o["id"]), CurvedSolid)
                             ]
                             if not balls:
@@ -3493,7 +3605,7 @@ def execute_step_edit(
                                 )
                                 if sol_c is not None and sol_c.vertices:
                                     c_ex, rsq_ex = circumscribed_sphere(sol_c.vertices)
-                                    balls = [CurvedSolid("ball", anchor=c_ex, apex_or_top=None, rim_point=None, radius_sq_khai=rsq_ex)]
+                                    balls = [CurvedSolid(_AXISLESS_CURVED_KIND, anchor=c_ex, apex_or_top=None, rim_point=None, radius_sq_khai=rsq_ex)]
                             if not balls:
                                 raise StepEditRefusal("MISSING_DEPENDENCY", "validation", "Chưa tìm thấy mặt cầu để kiểm chứng bán kính.")
                             matched_ball = any(
@@ -3551,13 +3663,42 @@ def execute_step_edit(
                                 "target_kind": "plane",
                                 "line_direction": _exact_xyz_list(mem[top_id] - mem[foot_id]),
                             }
+                        elif seg_role == "common_perpendicular":
+                            l1_pts = clause.params.get("line1_pts") or ()
+                            l2_pts = clause.params.get("line2_pts") or ()
+                            if len(l1_pts) != 2 or len(l2_pts) != 2:
+                                raise StepEditRefusal("INVALID_OPERAND", "parser", "Đoạn vuông góc chung cần nêu rõ hai đường thẳng.")
+                            l1a = _find_pt(l1_pts[0], "kiểm chứng đoạn vuông góc chung")
+                            l1b = _find_pt(l1_pts[1], "kiểm chứng đoạn vuông góc chung")
+                            l2a = _find_pt(l2_pts[0], "kiểm chứng đoạn vuông góc chung")
+                            l2b = _find_pt(l2_pts[1], "kiểm chứng đoạn vuông góc chung")
+                            ln1 = Line3.through(mem[l1a], mem[l1b])
+                            ln2 = Line3.through(mem[l2a], mem[l2b])
+                            if P.same_point(mem[pa_id], mem[pb_id]):
+                                raise GeometryError("DEGENERATE_SEGMENT", "Đoạn vuông góc chung có hai đầu mút trùng nhau.")
+                            dir_seg = mem[pb_id] - mem[pa_id]
+                            hits_both = (
+                                (P.point_on_line(mem[pa_id], ln1) and P.point_on_line(mem[pb_id], ln2))
+                                or (P.point_on_line(mem[pb_id], ln1) and P.point_on_line(mem[pa_id], ln2))
+                            )
+                            perp_both = (
+                                P.perpendicular_vectors(dir_seg, ln1.direction)
+                                and P.perpendicular_vectors(dir_seg, ln2.direction)
+                            )
+                            if not (hits_both and perp_both):
+                                raise StepEditRefusal(
+                                    "ROLE_ASSERTION_FAILED",
+                                    "validation",
+                                    f"Đoạn {_display_sym(pa_id)}{_display_sym(pb_id)} không phải đoạn vuông góc chung của {_display_sym(l1a)}{_display_sym(l1b)} và {_display_sym(l2a)}{_display_sym(l2b)}.",
+                                )
                         sv = Segment3.between(mem[pa_id], mem[pb_id])
                         seg_o = by_id[tid]
                         seg_o.pop("perpendicular_witness", None)
+                        seg_disp = f"{_display_sym(pa_id)}{_display_sym(pb_id)}"
                         seg_o.update({
-                            "label": f"{pa_id}{pb_id}",
-                            "notation": f"{pa_id}{pb_id}",
-                            "reference": f"{pa_id}{pb_id}",
+                            "label": seg_disp,
+                            "notation": seg_disp,
+                            "reference": seg_disp,
                             "depends": [pa_id, pb_id],
                             "endpoint_ids": [pa_id, pb_id],
                         })
@@ -3567,18 +3708,128 @@ def execute_step_edit(
                         _sync_scene_object_from_value(seg_o, sv, by_id)
                         updated_ids.append(tid)
 
-                elif clause.op == "construct_section":
-                    if primary_obj.get("type") != "section":
-                        raise StepEditRefusal("STEP_TYPE_MISMATCH", "planner", "Bước đang sửa không phải bước dựng thiết diện.")
-                    pl_id = _resolve_pl(clause.plane_inputs[0], "dựng thiết diện")
-                    sol_id = next((d for d in (primary_obj.get("depends") or ()) if by_id.get(d, {}).get("type") == "solid"), None)
-                    if sol_id is None:
-                        raise StepEditRefusal("MISSING_DEPENDENCY", "planner", "Không tìm thấy khối đa diện gốc cho thiết diện.")
-                    sec_val = cross_section(mem[sol_id], mem[pl_id])
-                    primary_obj["depends"] = [sol_id, pl_id]
-                    mem[primary_id] = sec_val
-                    _sync_scene_object_from_value(primary_obj, sec_val, by_id)
-                    updated_ids.append(primary_id)
+                elif clause.op in ("construct_section", "construct_polygon"):
+                    def _apply_polygon_target(pt_inputs_src: tuple[str, ...], label_override: str | None) -> None:
+                        if primary_obj.get("type") != "polygon3":
+                            raise StepEditRefusal("STEP_TYPE_MISMATCH", "planner", "Bước đang sửa không phải bước dựng đa giác.")
+                        pt_ids_loc = [_find_pt(s, "dựng đa giác") for s in pt_inputs_src]
+                        if len(pt_ids_loc) < 3:
+                            raise StepEditRefusal("INSUFFICIENT_POINTS", "planner", "Đa giác cần ít nhất 3 đỉnh.")
+                        if len(set(pt_ids_loc)) != len(pt_ids_loc):
+                            raise StepEditRefusal("DEGENERATE_POLYGON", "validation", "Đa giác có đỉnh bị lặp lại, không hợp lệ.")
+                        orig_vids = list(primary_obj.get("vertex_ids") or primary_obj.get("depends") or ())
+                        disp_new = "".join(_display_sym(x) for x in pt_ids_loc)
+                        disp_orig = "".join(_display_sym(x) for x in orig_vids)
+                        if len(orig_vids) >= 3 and set(pt_ids_loc) != set(orig_vids):
+                            raise StepEditRefusal(
+                                "STEP_TYPE_MISMATCH",
+                                "validation",
+                                f"Tập đỉnh đa giác mới {disp_new} không khớp với mặt đa giác ban đầu ({disp_orig}).",
+                            )
+                        pts_vals_loc = tuple(mem[pid] for pid in pt_ids_loc)
+                        n_pts_loc = len(pts_vals_loc)
+                        ref_cross = None
+                        for idx_k in range(n_pts_loc):
+                            v0 = pts_vals_loc[idx_k]
+                            v1 = pts_vals_loc[(idx_k + 1) % n_pts_loc]
+                            v2 = pts_vals_loc[(idx_k + 2) % n_pts_loc]
+                            cr = (v1 - v0).cross(v2 - v1)
+                            if cr.is_zero():
+                                raise StepEditRefusal(
+                                    "COLLINEAR_POINTS",
+                                    "validation",
+                                    f"Ba đỉnh liên tiếp trong đa giác {disp_new} thẳng hàng.",
+                                )
+                            if ref_cross is None:
+                                ref_cross = cr
+                            elif cr.dot(ref_cross) <= 0:
+                                raise StepEditRefusal(
+                                    "SELF_INTERSECTING_POLYGON",
+                                    "validation",
+                                    f"Thứ tự các đỉnh {disp_new} tạo thành đa giác tự cắt (chéo cạnh) hoặc lõm.",
+                                )
+                        for idx_k in range(3, len(pts_vals_loc)):
+                            if not P.coplanar(pts_vals_loc[0], pts_vals_loc[1], pts_vals_loc[2], pts_vals_loc[idx_k]):
+                                raise GeometryError("NON_COPLANAR_POINTS", f"Đỉnh '{_display_sym(pt_ids_loc[idx_k])}' không đồng phẳng.")
+                        poly_label = _display_sym(label_override) if label_override else f"Đáy {disp_new}"
+                        primary_obj.update({
+                            "label": poly_label,
+                            "notation": disp_new,
+                            "depends": list(pt_ids_loc),
+                            "vertex_ids": list(pt_ids_loc),
+                            "vertices": [_exact_xyz_list(v) for v in pts_vals_loc],
+                        })
+                        mem[primary_id] = pts_vals_loc
+                        updated_ids.append(primary_id)
+
+                    if clause.op == "construct_polygon":
+                        _apply_polygon_target(clause.point_inputs, clause.output_symbol)
+                    elif primary_obj.get("type") == "polygon3" and len(clause.point_inputs) >= 3:
+                        _apply_polygon_target(clause.point_inputs, clause.output_symbol)
+                    else:
+                        if primary_obj.get("type") != "section":
+                            raise StepEditRefusal("STEP_TYPE_MISMATCH", "planner", "Bước đang sửa không phải bước dựng thiết diện.")
+                        sol_id = next((d for d in (primary_obj.get("depends") or ()) if by_id.get(d, {}).get("type") == "solid"), None)
+                        if sol_id is None:
+                            raise StepEditRefusal("MISSING_DEPENDENCY", "planner", "Không tìm thấy khối đa diện gốc cho thiết diện.")
+                        if clause.plane_inputs:
+                            pl_id = _resolve_pl(clause.plane_inputs[0], "dựng thiết diện")
+                            sec_val = cross_section(mem[sol_id], mem[pl_id])
+                        else:
+                            pt_ids_sec = [_find_pt(s, "dựng thiết diện") for s in clause.point_inputs]
+                            if len(pt_ids_sec) < 3 or len(set(pt_ids_sec)) != len(pt_ids_sec):
+                                raise StepEditRefusal("DEGENERATE_POLYGON", "validation", "Đa giác thiết diện cần ít nhất 3 đỉnh phân biệt.")
+                            chosen_sec: tuple[Vec3, Vec3, Vec3] | None = None
+                            for ii in range(1, len(pt_ids_sec)):
+                                for jj in range(ii + 1, len(pt_ids_sec)):
+                                    if not P.collinear(mem[pt_ids_sec[0]], mem[pt_ids_sec[ii]], mem[pt_ids_sec[jj]]):
+                                        chosen_sec = (mem[pt_ids_sec[0]], mem[pt_ids_sec[ii]], mem[pt_ids_sec[jj]])
+                                        break
+                                if chosen_sec is not None:
+                                    break
+                            if chosen_sec is None:
+                                raise GeometryError("COLLINEAR_POINTS", "Các điểm thiết diện thẳng hàng, không xác định được mặt phẳng cắt.")
+                            pl_sec_val = Plane3.through(*chosen_sec)
+                            for pid_extra in pt_ids_sec:
+                                if not P.point_on_plane(mem[pid_extra], pl_sec_val):
+                                    raise GeometryError("NON_COPLANAR_POINTS", f"Đỉnh '{_display_sym(pid_extra)}' không đồng phẳng.")
+                            retired_now_sec = set(retired_helper_ids)
+                            preferred_deps = [d for d in (primary_obj.get("depends") or ()) if by_id.get(d, {}).get("type") == "plane3"]
+                            cand_planes = preferred_deps + [
+                                oid for oid, o in by_id.items()
+                                if oid not in preferred_deps
+                                and o.get("type") == "plane3"
+                                and oid in mem
+                                and oid not in downstream_ids
+                                and oid not in post_step_ids
+                                and oid not in retired_now_sec
+                            ]
+                            pl_id = next(
+                                (
+                                    cid for cid in cand_planes
+                                    if isinstance(mem.get(cid), Plane3)
+                                    and P.parallel_planes(pl_sec_val, mem[cid])
+                                    and P.point_on_plane(pl_sec_val.point, mem[cid])
+                                ),
+                                None,
+                            )
+                            if pl_id is None:
+                                pl_id = _materialize_face_plane(f"({''.join(_display_sym(p) for p in pt_ids_sec[:3])})", pt_ids_sec)
+                            sec_val = cross_section(mem[sol_id], mem[pl_id])
+                            disp_sec = "".join(_display_sym(p) for p in pt_ids_sec)
+                            if len(pt_ids_sec) != len(sec_val.polygon) or any(
+                                not any(P.same_point(mem[pid_s], sv_pt) for sv_pt in sec_val.polygon)
+                                for pid_s in pt_ids_sec
+                            ):
+                                raise StepEditRefusal(
+                                    "SECTION_BOUNDARY_MISMATCH",
+                                    "validation",
+                                    f"Đa giác thiết diện {disp_sec} không khớp với giao tuyến khép kín thực tế của khối và mặt phẳng cắt ({len(sec_val.polygon)} đỉnh).",
+                                )
+                        primary_obj["depends"] = [sol_id, pl_id]
+                        mem[primary_id] = sec_val
+                        _sync_scene_object_from_value(primary_obj, sec_val, by_id)
+                        updated_ids.append(primary_id)
 
                 elif clause.op in ("ball_center_rim", "circumscribed_sphere"):
                     if primary_obj.get("type") == "point3" and clause.op == "circumscribed_sphere":
@@ -3612,66 +3863,14 @@ def execute_step_edit(
                                     )
                         if r_id is None:
                             rsq = Fraction(primary_obj["radius_sq"])
-                            cs_val = CurvedSolid("ball", anchor=mem[c_id], apex_or_top=None, rim_point=None, radius_sq_khai=rsq)
+                            cs_val = CurvedSolid(_AXISLESS_CURVED_KIND, anchor=mem[c_id], apex_or_top=None, rim_point=None, radius_sq_khai=rsq)
                             primary_obj["depends"] = [c_id]
                         else:
-                            cs_val = CurvedSolid("ball", anchor=mem[c_id], apex_or_top=None, rim_point=mem[r_id])
+                            cs_val = CurvedSolid(_AXISLESS_CURVED_KIND, anchor=mem[c_id], apex_or_top=None, rim_point=mem[r_id])
                             primary_obj["depends"] = [c_id, r_id]
                         mem[primary_id] = cs_val
                         _sync_scene_object_from_value(primary_obj, cs_val, by_id)
                         updated_ids.append(primary_id)
-
-                elif clause.op == "construct_polygon":
-                    if primary_obj.get("type") != "polygon3":
-                        raise StepEditRefusal("STEP_TYPE_MISMATCH", "planner", "Bước đang sửa không phải bước dựng đa giác.")
-                    pt_ids = [_find_pt(s, "dựng đa giác") for s in clause.point_inputs]
-                    if len(pt_ids) < 3:
-                        raise StepEditRefusal("INSUFFICIENT_POINTS", "planner", "Đa giác cần ít nhất 3 đỉnh.")
-                    if len(set(pt_ids)) != len(pt_ids):
-                        raise StepEditRefusal("DEGENERATE_POLYGON", "validation", "Đa giác có đỉnh bị lặp lại, không hợp lệ.")
-                    orig_vids = list(primary_obj.get("vertex_ids") or primary_obj.get("depends") or ())
-                    if len(orig_vids) >= 3 and set(pt_ids) != set(orig_vids):
-                        raise StepEditRefusal(
-                            "STEP_TYPE_MISMATCH",
-                            "validation",
-                            f"Tập đỉnh đa giác mới {''.join(pt_ids)} không khớp với mặt đa giác ban đầu ({''.join(orig_vids)}).",
-                        )
-                    pts_vals = tuple(mem[pid] for pid in pt_ids)
-                    n_pts = len(pts_vals)
-                    # Check coplanarity + non-collinear triples + consistent convex winding (rejects bowtie like ABDC!)
-                    ref_cross = None
-                    for idx_k in range(n_pts):
-                        v0 = pts_vals[idx_k]
-                        v1 = pts_vals[(idx_k + 1) % n_pts]
-                        v2 = pts_vals[(idx_k + 2) % n_pts]
-                        cr = (v1 - v0).cross(v2 - v1)
-                        if cr.is_zero():
-                            raise StepEditRefusal(
-                                "COLLINEAR_POINTS",
-                                "validation",
-                                f"Ba đỉnh liên tiếp trong đa giác {''.join(pt_ids)} thẳng hàng.",
-                            )
-                        if ref_cross is None:
-                            ref_cross = cr
-                        elif cr.dot(ref_cross) <= 0:
-                            raise StepEditRefusal(
-                                "SELF_INTERSECTING_POLYGON",
-                                "validation",
-                                f"Thứ tự các đỉnh {''.join(pt_ids)} tạo thành đa giác tự cắt (chéo cạnh) hoặc lõm.",
-                            )
-                    for idx_k in range(3, len(pts_vals)):
-                        if not P.coplanar(pts_vals[0], pts_vals[1], pts_vals[2], pts_vals[idx_k]):
-                            raise GeometryError("NON_COPLANAR_POINTS", f"Đỉnh '{pt_ids[idx_k]}' không đồng phẳng.")
-                    poly_label = clause.output_symbol or f"Đáy {''.join(pt_ids)}"
-                    primary_obj.update({
-                        "label": poly_label,
-                        "notation": "".join(pt_ids),
-                        "depends": list(pt_ids),
-                        "vertex_ids": list(pt_ids),
-                        "vertices": [_exact_xyz_list(v) for v in pts_vals],
-                    })
-                    mem[primary_id] = pts_vals
-                    updated_ids.append(primary_id)
 
                 elif clause.op == "construct_solid":
                     if primary_obj.get("type") != "solid":
