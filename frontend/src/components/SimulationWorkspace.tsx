@@ -8,7 +8,6 @@ import {
   type ComponentType,
   type CSSProperties,
   type PointerEvent as ReactPointerEvent,
-  type ReactNode,
 } from "react";
 import { DOMAIN_BADGE, headerSubtitle } from "./header-identity";
 import { getSimulation } from "../simulations/registry";
@@ -24,24 +23,20 @@ import type {
   VisualMode,
   WorkspaceProps,
 } from "../simulations/types";
-import { useAppStore } from "../state/store";
+import {
+  resolveEffectiveWorkspaceTabs,
+  useAppStore,
+} from "../state/store";
 import { displayBrand } from "../branding";
 import { historyStore, touchServerHistory } from "../state/history";
 import { recoverCatalogScene3D } from "../data/offline-catalog";
 import { GEOMETRY_SAMPLES } from "../data/geometry-samples";
-import { AssignDialog } from "./AssignDialog";
-import { IconAxoLogo } from "./icons";
+import { HomeView } from "./HomeView";
+import { IconSidebarCollapsedTrigger } from "./LeftSidebar";
+import { WorkspaceTabBar } from "./WorkspaceTabBar";
 import { TEN_TRANG } from "./TopNav";
-import { LiveClassStrip } from "./LiveClassStrip";
 import { SimulationInspector } from "./SimulationInspector";
 import { AxoScrollbar } from "./AxoScrollbar";
-import { useClassroomStore } from "../state/classroom";
-import {
-  CHUA_THAY,
-  apDungPhien,
-  type ClassroomSession,
-  type SeenMarks,
-} from "../state/classroom-sync";
 import { useAuthStore } from "../state/auth";
 import {
   InlineConstructionStepEditor,
@@ -240,10 +235,7 @@ export function AxoWorkspaceV62({
   deSource,
   tieuDe,
   quayLai,
-  phien,
   onFocus,
-  daiLop,
-  daiLopTomTat,
   hybrid,
   routeDSimulation,
   initialStep,
@@ -261,10 +253,7 @@ export function AxoWorkspaceV62({
   deSource?: "learner" | "catalog" | "missing";
   tieuDe?: string | null;
   quayLai?: { nhan: string; onClick: () => void } | null;
-  phien?: ClassroomSession | null;
   onFocus?: (selectedId: string | null, action: string) => void;
-  daiLop?: ReactNode;
-  daiLopTomTat?: ReactNode;
   hybrid?: HybridPreviewView | null;
   routeDSimulation?: RouteDSimulationSummary | null;
   initialStep?: number;
@@ -280,11 +269,9 @@ export function AxoWorkspaceV62({
     onGoHome?: () => void;
   } | null;
 }) {
-  const setView = useAppStore((s) => s.setView);
-  const goHome = useAppStore((s) => s.goHome);
   const activeHistoryId = useAppStore((s) => s.activeHistoryId);
   const activeSampleId = useAppStore((s) => s.activeSampleId);
-    const authUser = useAuthStore((s) => s.user);
+  const authUser = useAuthStore((s) => s.user);
 
   const problemSnapshotKey = useMemo(() => {
     if (activeSampleId) return `sample:${activeSampleId}`;
@@ -586,12 +573,23 @@ export function AxoWorkspaceV62({
     current_step: resolveInitialAnchor(),
     selected_id: resolveInitialSelectedId(),
   }));
-  const [moc, setMoc] = useState<SeenMarks>(CHUA_THAY);
   const [dangPhat, setDangPhat] = useState(false);
   const [fitToken, setFitToken] = useState(0);
   const [replayNonce, setReplayNonce] = useState(0);
-  const [relationActiveForId, setRelationActiveForId] = useState<string | null>(null);
-  const [relationsExpanded, setRelationsExpanded] = useState(false);
+  const [relationActiveForId, setRelationActiveForId] = useState<string | null>(() => {
+    const initSel = resolveInitialSelectedId();
+    return initialRecoveredSnapshot?.relationActiveForId && initSel === initialRecoveredSnapshot.relationActiveForId
+      ? initialRecoveredSnapshot.relationActiveForId
+      : null;
+  });
+  const [relationsExpanded, setRelationsExpanded] = useState<boolean>(() => {
+    const initSel = resolveInitialSelectedId();
+    return Boolean(
+      initialRecoveredSnapshot?.relationsExpanded
+      && initialRecoveredSnapshot.relationActiveForId
+      && initSel === initialRecoveredSnapshot.relationActiveForId,
+    );
+  });
   const [locateRequest, setLocateRequest] = useState<{ objectId: string; nonce: number } | null>(null);
   const [restoreCameraNonce, setRestoreCameraNonce] = useState(0);
   const [canRestoreLocatedCamera, setCanRestoreLocatedCamera] = useState(false);
@@ -681,38 +679,31 @@ export function AxoWorkspaceV62({
   );
   const isInitialSceneMountRef = useRef(true);
   const isInitialResetSyncRef = useRef(true);
+  const syncedSnapshotKeyRef = useRef(problemSnapshotKey);
+  const [syncedSceneProblem, setSyncedSceneProblem] = useState<{
+    scene: Scene3D;
+    rawScene: Scene3D;
+    key: string;
+  }>(() => ({
+    scene,
+    rawScene: sceneKhung,
+    key: problemSnapshotKey,
+  }));
 
-  useEffect(() => {
-    if (isInitialResetSyncRef.current) {
-      isInitialResetSyncRef.current = false;
-      return;
-    }
-    setViewerBoundaryCrashed(false);
-    setStageWebglFailed(false);
-  }, [problemSnapshotKey, webglStageAttempt]);
-
-  const syncedRawSourceSceneRef = useRef<Scene3D>(sceneKhung);
-  const syncedProblemKeyRef = useRef(problemSnapshotKey);
-
-  useEffect(() => {
-    if (isInitialSceneMountRef.current) {
-      isInitialSceneMountRef.current = false;
-      syncedRawSourceSceneRef.current = sceneKhung;
-      syncedProblemKeyRef.current = problemSnapshotKey;
-      return;
-    }
+  if (
+    syncedSceneProblem.scene !== scene ||
+    syncedSceneProblem.key !== problemSnapshotKey
+  ) {
     const isSameProblemRebuild =
-      syncedProblemKeyRef.current === problemSnapshotKey
+      syncedSceneProblem.key === problemSnapshotKey
       && hasActiveEditedScene
-      && syncedRawSourceSceneRef.current !== sceneKhung;
-    syncedRawSourceSceneRef.current = sceneKhung;
-    syncedProblemKeyRef.current = problemSnapshotKey;
+      && syncedSceneProblem.rawScene !== sceneKhung;
+    setSyncedSceneProblem({ scene, rawScene: sceneKhung, key: problemSnapshotKey });
     if (isSameProblemRebuild) {
       if (latestCameraPoseRef.current) {
         setSavedCameraPose(latestCameraPoseRef.current);
       }
       const focusTargetId = pendingFocusTargetIdRef.current;
-      pendingFocusTargetIdRef.current = null;
       const focusedStep = focusTargetId
         ? dsBuoc.find((st) => st.targetIds.includes(focusTargetId))
         : undefined;
@@ -738,68 +729,79 @@ export function AxoWorkspaceV62({
       }
       setStageWebglFailed(false);
       setViewerBoundaryCrashed(false);
-      return;
+    } else {
+      const snap = problemSnapshotKey ? loadLearnerRecoverySnapshot(problemSnapshotKey) : null;
+      const startAnchor = resolveInitialAnchor(snap);
+      const nextSelectedId = resolveInitialSelectedId(snap, startAnchor);
+      const restoredRelationId =
+        snap?.relationActiveForId && snap.relationActiveForId === nextSelectedId
+          ? snap.relationActiveForId
+          : null;
+      setTt({
+        ...taoTrangThai(),
+        current_step: startAnchor,
+        selected_id: nextSelectedId,
+      });
+      setDangPhat(false);
+      setXray(snap?.display.xray ?? false);
+      setHinhPhu(snap?.display.auxiliaryShown ?? false);
+      setLuoi(snap?.display.gridShown ?? true);
+      setShowShell(snap?.display.showShell ?? true);
+      setShowVertexLabels(snap?.display.showVertexLabels ?? true);
+      setShowPlane(snap?.display.showPlane ?? true);
+      setShowSection(snap?.display.showSection ?? true);
+      setShowAxes(snap?.display.showAxes ?? isExplicitOxyzCoordinateScene(day));
+      setShowDimensionLabels(snap?.display.showDimensionLabels ?? true);
+      setShowRightAngles(snap?.display.showRightAngles ?? true);
+      setShowDashedHidden(snap?.display.showDashedHidden ?? true);
+      setDisplayPopOpen(false);
+      setGeoCustomOpen(false);
+      setShellOpacityPct(snap?.display.shellOpacityPct ?? 12);
+      setPlaneOpacityPct(snap?.display.planeOpacityPct ?? 8);
+      if (initialDockCollapsed === undefined && snap) {
+        setDockCollapsed(snap.dockCollapsed);
+      }
+      setSavedCameraPose(snap?.camera ?? null);
+      setGeoCustomPos(null);
+      setMoreEntitiesOpen(false);
+      setExpandedEvidenceStep(null);
+      setRelationActiveForId(restoredRelationId);
+      setRelationsExpanded(Boolean(restoredRelationId && snap?.relationsExpanded));
+      setLocateRequest(null);
+      setCanRestoreLocatedCamera(false);
+      setLocateStatusMessage(null);
+      if (webglLifecycleRef.current.phase !== "healthy" || stageWebglFailed || viewerBoundaryCrashed) {
+        setViewerMountGen((n) => n + 1);
+      }
+      setStageWebglFailed(false);
+      setViewerBoundaryCrashed(false);
+      setWebglLifecycle({ phase: "healthy", attempt: 0, maxAttempts: 2 });
+      setWebglStageAttempt(0);
     }
-    const snap = problemSnapshotKey ? loadLearnerRecoverySnapshot(problemSnapshotKey) : null;
-    const startAnchor = resolveInitialAnchor(snap);
-    setTt({
-      ...taoTrangThai(),
-      current_step: startAnchor,
-      selected_id: resolveInitialSelectedId(snap, startAnchor),
-    });
-    setDangPhat(false);
-    setXray(snap?.display.xray ?? false);
-    setHinhPhu(snap?.display.auxiliaryShown ?? false);
-    setLuoi(snap?.display.gridShown ?? true);
-    setShowShell(snap?.display.showShell ?? true);
-    setShowVertexLabels(snap?.display.showVertexLabels ?? true);
-    setShowPlane(snap?.display.showPlane ?? true);
-    setShowSection(snap?.display.showSection ?? true);
-    setShowAxes(snap?.display.showAxes ?? isExplicitOxyzCoordinateScene(day));
-    setShowDimensionLabels(snap?.display.showDimensionLabels ?? true);
-    setShowRightAngles(snap?.display.showRightAngles ?? true);
-    setShowDashedHidden(snap?.display.showDashedHidden ?? true);
-    setDisplayPopOpen(false);
-    setGeoCustomOpen(false);
-    setShellOpacityPct(snap?.display.shellOpacityPct ?? 12);
-    setPlaneOpacityPct(snap?.display.planeOpacityPct ?? 8);
-    if (initialDockCollapsed === undefined && snap) {
-      setDockCollapsed(snap.dockCollapsed);
-    }
-    setSavedCameraPose(snap?.camera ?? null);
-    latestCameraPoseRef.current = snap?.camera ?? null;
-    setGeoCustomPos(null);
-    setMoreEntitiesOpen(false);
-    setExpandedEvidenceStep(null);
-    setRelationActiveForId(null);
-    setLocateRequest(null);
-    setCanRestoreLocatedCamera(false);
-    setLocateStatusMessage(null);
-    if (webglLifecycleRef.current.phase !== "healthy" || stageWebglFailed || viewerBoundaryCrashed) {
-      setViewerMountGen((n) => n + 1);
-    }
-    setStageWebglFailed(false);
-    setViewerBoundaryCrashed(false);
-    setWebglLifecycle({ phase: "healthy", attempt: 0, maxAttempts: 2 });
-    setWebglStageAttempt(0);
-  }, [scene, problemSnapshotKey]);
-
-  const coTrongCanh = useMemo(() => {
-    const co = new Set(day.objects.map((o) => o.id));
-    return (id: string) => co.has(id);
-  }, [day]);
+  }
 
   useEffect(() => {
-    const kq = apDungPhien(tt, phien ?? null, moc, coTrongCanh);
-    if (kq.seen !== moc) setMoc(kq.seen);
-    if (!kq.applied) return;
-    const syncedAnchor = resolvePedagogicalStepAnchor(kq.next.current_step);
-    const safeSelected = isSelectableAtAnchor(kq.next.selected_id, syncedAnchor)
-      ? kq.next.selected_id
-      : null;
-    setTt({ ...kq.next, current_step: syncedAnchor, selected_id: safeSelected });
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [phien?.roundId, phien?.cmdId, phien?.syncCmdId, phien?.mode, coTrongCanh]);
+    if (isInitialResetSyncRef.current) {
+      isInitialResetSyncRef.current = false;
+      return;
+    }
+    setViewerBoundaryCrashed(false);
+    setStageWebglFailed(false);
+  }, [problemSnapshotKey, webglStageAttempt]);
+
+  useEffect(() => {
+    if (isInitialSceneMountRef.current) {
+      isInitialSceneMountRef.current = false;
+      return;
+    }
+    latestCameraPoseRef.current = savedCameraPose;
+  }, [scene, problemSnapshotKey, savedCameraPose]);
+
+  useEffect(() => {
+    if (pendingFocusTargetIdRef.current && syncedSceneProblem.scene === scene) {
+      pendingFocusTargetIdRef.current = null;
+    }
+  }, [scene, syncedSceneProblem.scene]);
 
   const prevPedagogicalAnchor = (rawStep: number): number => {
     const curIdx = timChiSoBuocSuPham(resolvePedagogicalStepAnchor(rawStep));
@@ -816,6 +818,14 @@ export function AxoWorkspaceV62({
   const dau = buocHinh <= 0;
   const cuoi = buocHinh >= tong - 1;
   const giamChuyenDong = prefersReducedMotion();
+
+  useEffect(() => {
+    const state = useAppStore.getState();
+    const { activeTabId: resolvedId } = resolveEffectiveWorkspaceTabs(state);
+    if (resolvedId && tong > 0) {
+      state.setTabStepProgress(resolvedId, buocHinh + 1, tong);
+    }
+  }, [buocHinh, tong, problemSnapshotKey]);
 
   const persistStepProgress = (anchorStep: number) => {
     if (!activeHistoryId) return;
@@ -866,23 +876,6 @@ export function AxoWorkspaceV62({
     }, PLAYBACK_INTERVAL_MS);
     return () => clearInterval(timer);
   }, [dangPhat, cuoi, giamChuyenDong, stageControlsInteractive, day, dsBuoc]);
-
-  // Đảm bảo luôn có đúng 1 thẻ <h1> hiển thị thực tế cho tiêu đề bài toán ở mọi viewport (>680px ở header, <=680px ở Study Dock mobile bar)
-  const [isCompactProbHeader, setIsCompactProbHeader] = useState<boolean>(() => {
-    if (typeof window === "undefined" || typeof window.matchMedia !== "function") return false;
-    return window.matchMedia("(max-width: 680px)").matches;
-  });
-  useEffect(() => {
-    if (typeof window === "undefined" || typeof window.matchMedia !== "function") return undefined;
-    const mql = window.matchMedia("(max-width: 680px)");
-    const onChange = () => setIsCompactProbHeader(mql.matches);
-    onChange();
-    if (typeof mql.addEventListener === "function") {
-      mql.addEventListener("change", onChange);
-      return () => mql.removeEventListener("change", onChange);
-    }
-    return undefined;
-  }, []);
 
   const lastStepScrollContextRef = useRef<{
     key: string | null | undefined;
@@ -1012,9 +1005,41 @@ export function AxoWorkspaceV62({
   const theoId = useMemo(() => new Map(day.objects.map((o) => [o.id, o])), [day]);
   const chon = (id: string | null) => {
     const safeId = id && isSelectableAtAnchor(id, buocHien) ? id : null;
+    const nextRelationId = relationActiveForId && relationActiveForId === safeId ? relationActiveForId : null;
+    const nextRelationsExpanded = Boolean(nextRelationId && relationsExpanded);
     setTt((s) => select(s, safeId));
     setLocateStatusMessage(null);
-    setRelationActiveForId((prev) => (prev && prev === safeId ? prev : null));
+    setRelationActiveForId(nextRelationId);
+    if (!nextRelationId) {
+      setRelationsExpanded(false);
+    }
+    if (problemSnapshotKey && invalidSceneReason === null && mathVerification.valid) {
+      saveLearnerRecoverySnapshot({
+        problemKey: problemSnapshotKey,
+        stepIndex: buocHinh,
+        selectedId: safeId,
+        dockCollapsed,
+        mobileViewMode: dockCollapsed ? "stage_expanded" : "dock_open",
+        display: {
+          showShell,
+          showVertexLabels,
+          showPlane,
+          showSection,
+          showAxes,
+          showDimensionLabels,
+          showRightAngles,
+          showDashedHidden,
+          auxiliaryShown: hinhPhu,
+          gridShown: luoi,
+          xray,
+          shellOpacityPct,
+          planeOpacityPct,
+        },
+        camera: latestCameraPoseRef.current,
+        relationActiveForId: nextRelationId,
+        relationsExpanded: nextRelationsExpanded,
+      });
+    }
     onFocus?.(safeId, safeId === null ? "clear" : "select");
   };
 
@@ -1032,6 +1057,15 @@ export function AxoWorkspaceV62({
     () => (isRelationViewActive && verifiedObjectRelations ? verifiedObjectRelations.relatedIds : null),
     [isRelationViewActive, verifiedObjectRelations],
   );
+  const relationResetCtxRef = useRef<{
+    key: string | null | undefined;
+    id: string | null;
+    anchor: number;
+  }>({
+    key: problemSnapshotKey,
+    id: dangChon?.id ?? null,
+    anchor: buocHien,
+  });
   useEffect(() => {
     setLocateStatusMessage(null);
     if (!dangChon) {
@@ -1042,8 +1076,16 @@ export function AxoWorkspaceV62({
   }, [dangChon?.id]);
 
   useEffect(() => {
-    setRelationsExpanded(false);
-  }, [dangChon?.id, buocHien]);
+    const prev = relationResetCtxRef.current;
+    const nextId = dangChon?.id ?? null;
+    relationResetCtxRef.current = { key: problemSnapshotKey, id: nextId, anchor: buocHien };
+    if (prev.key !== problemSnapshotKey) {
+      return;
+    }
+    if (prev.id !== nextId || prev.anchor !== buocHien) {
+      setRelationsExpanded(false);
+    }
+  }, [problemSnapshotKey, dangChon?.id, buocHien]);
 
   const phanTichToan = useMemo(
     () => phanTichToanHocCuaCanh(day, hybrid, routeDSimulation),
@@ -1068,6 +1110,10 @@ export function AxoWorkspaceV62({
   }, [xem, dapAnAn, showDimensionLabels, day, presentationPolicy]);
 
   useEffect(() => {
+    if (syncedSnapshotKeyRef.current !== problemSnapshotKey) {
+      syncedSnapshotKeyRef.current = problemSnapshotKey;
+      return;
+    }
     if (!problemSnapshotKey || invalidSceneReason !== null || !mathVerification.valid) return;
     saveLearnerRecoverySnapshot({
       problemKey: problemSnapshotKey,
@@ -1091,6 +1137,8 @@ export function AxoWorkspaceV62({
         planeOpacityPct,
       },
       camera: latestCameraPoseRef.current,
+      relationActiveForId,
+      relationsExpanded,
     });
   }, [
     problemSnapshotKey,
@@ -1111,6 +1159,8 @@ export function AxoWorkspaceV62({
     xray,
     shellOpacityPct,
     planeOpacityPct,
+    relationActiveForId,
+    relationsExpanded,
   ]);
 
   const givenParamsAtStep = useMemo(
@@ -1354,7 +1404,6 @@ export function AxoWorkspaceV62({
     setPlaneOpacityPct(8);
   };
 
-  const changeProblemTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   const toolbarDragCleanupRef = useRef<(() => void) | null>(null);
   const geoCustomDragCleanupRef = useRef<(() => void) | null>(null);
 
@@ -1369,28 +1418,8 @@ export function AxoWorkspaceV62({
     return () => {
       toolbarDragCleanupRef.current?.();
       geoCustomDragCleanupRef.current?.();
-      if (changeProblemTimerRef.current !== null) {
-        clearTimeout(changeProblemTimerRef.current);
-        changeProblemTimerRef.current = null;
-      }
     };
   }, []);
-
-  const handleChangeProblem = () => {
-    setView("home");
-    if (typeof document !== "undefined") {
-      if (changeProblemTimerRef.current !== null) {
-        clearTimeout(changeProblemTimerRef.current);
-      }
-      changeProblemTimerRef.current = setTimeout(() => {
-        changeProblemTimerRef.current = null;
-        const input = document.getElementById(
-          "home-problem-input",
-        ) as HTMLTextAreaElement | null;
-        input?.focus();
-      }, 40);
-    }
-  };
 
   const handleToolbarDragStart = (e: ReactPointerEvent<HTMLDivElement>) => {
     if (!stageRef.current || !toolbarRef.current) return;
@@ -1549,134 +1578,8 @@ export function AxoWorkspaceV62({
       aria-label={problemTitleText}
       data-back-label={quayLai?.nhan ?? "Trang chủ"}
     >
-      {/* ── WORKSPACE HEADER V2.7 ─────────────────────────────────────────── */}
-      <header className="axo-header ws-axo-header">
-        <div className="axo-brand">
-          <button
-            type="button"
-            className="axo-logo-btn nav-wordmark"
-            id="btn-brand-home"
-            title="Về trang chủ Axo"
-            aria-label="Về trang chủ Axo"
-            onClick={() => {
-              goHome();
-            }}
-          >
-            <IconAxoLogo size={22} />
-            <span className="axo-brand-name nav-wordmark-text">Axo</span>
-          </button>
-          <div className="header-div" id="header-prob-div" aria-hidden="true" />
-          {isCompactProbHeader ? (
-            <div
-              className="prob-title-top"
-              id="top-prob-title"
-              title={problemTitleText}
-            >
-              {problemTitleText}
-            </div>
-          ) : (
-            <h1
-              className="prob-title-top"
-              id="top-prob-title"
-              title={problemTitleText}
-            >
-              {problemTitleText}
-            </h1>
-          )}
-        </div>
-
-        <nav className="nav-n1-capsule axo-nav-capsule" aria-label="Điều hướng chính">
-          <button
-            type="button"
-            className="nav-n1-item axo-nav-item"
-            id="nav-home"
-            title="Trang chủ"
-            onClick={() => setView("home")}
-          >
-            <svg
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              strokeWidth="2"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              aria-hidden="true"
-            >
-              <path d="M3 10l9-7 9 7v10a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z" />
-              <polyline points="9 21 9 12 15 12 15 21" />
-            </svg>
-            <span className="topnav-label nav-text">Trang chủ</span>
-          </button>
-          <button
-            type="button"
-            className="nav-n1-item axo-nav-item"
-            id="nav-library"
-            title="Thư viện"
-            onClick={() => setView("library")}
-          >
-            <svg
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              strokeWidth="2"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              aria-hidden="true"
-            >
-              <rect x="3" y="3" width="7" height="7" rx="1.5" />
-              <rect x="14" y="3" width="7" height="7" rx="1.5" />
-              <rect x="14" y="14" width="7" height="7" rx="1.5" />
-              <rect x="3" y="14" width="7" height="7" rx="1.5" />
-            </svg>
-            <span className="topnav-label nav-text">Thư viện</span>
-          </button>
-          <button
-            type="button"
-            className="nav-n1-item axo-nav-item"
-            id="nav-history"
-            title="Lịch sử"
-            onClick={() => setView("history")}
-          >
-            <svg
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              strokeWidth="2"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              aria-hidden="true"
-            >
-              <circle cx="12" cy="12" r="9" />
-              <polyline points="12 7 12 12 15.5 14" />
-            </svg>
-            <span className="topnav-label nav-text">Lịch sử</span>
-          </button>
-        </nav>
-
-        <div className="axo-header-right">
-          {(daiLop && daiLopTomTat) ? null : null}
-          <button
-            type="button"
-            className="btn-change-prob"
-            id="btn-header-change-prob"
-            title="Đổi sang bài toán khác (Về khung nhập đề)"
-            onClick={handleChangeProblem}
-          >
-            <svg
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              strokeWidth="2"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              aria-hidden="true"
-            >
-              <path d="M12 5v14M5 12h14" />
-            </svg>
-            <span className="change-prob-text">Đổi đề toán</span>
-          </button>
-        </div>
-      </header>
+      {/* ── WORKSPACE HEADER (COMPACT TAB BAR) ────────────────────────────── */}
+      <WorkspaceTabBar fallbackTitle={problemTitleText} />
 
       {/* ── WORKSPACE BODY V6.2 (3D STAGE + UNIFIED STUDY DOCK) ───────────── */}
       <div
@@ -1825,6 +1728,8 @@ export function AxoWorkspaceV62({
                             planeOpacityPct,
                           },
                           camera: pose,
+                          relationActiveForId,
+                          relationsExpanded,
                         });
                       }
                     }}
@@ -2589,11 +2494,7 @@ export function AxoWorkspaceV62({
             >
               <path d="M12 2 4 6.5v11L12 22l8-4.5v-11L12 2Z" />
             </svg>
-            {isCompactProbHeader ? (
-              <h1 className="dock-mobile-prob-text" id="dock-mobile-prob-title">{problemTitleText}</h1>
-            ) : (
-              <span className="dock-mobile-prob-text" id="dock-mobile-prob-title">{problemTitleText}</span>
-            )}
+            <span className="dock-mobile-prob-text" id="dock-mobile-prob-title">{problemTitleText}</span>
           </div>
 
           <div className="dock-scroll-wrap">
@@ -3002,7 +2903,6 @@ export function AxoWorkspaceV62({
                           return Boolean(depObj && depObj.type === "point3" && !depObj.notation?.trim());
                         });
                       })();
-
                       const priorStepIdsForEdit = Array.from(
                         new Set(
                           dsBuoc
@@ -3846,14 +3746,38 @@ export function SimulationWorkspace() {
   const visualMode = useAppStore((s) => s.visualMode);
   const rightOpen = useAppStore((s) => s.rightOpen);
   const setSemanticFocus = useAppStore((s) => s.setSemanticFocus);
-  const session = useClassroomStore((s) => s.session);
   const setVisualMode = useAppStore((s) => s.setVisualMode);
   const returnView = useAppStore((s) => s.returnView);
-  const roiXuong = useAppStore((s) => s.roiXuong);
-  const assignment = useAppStore((s) => s.activeAssignment);
   const activeHistoryId = useAppStore((s) => s.activeHistoryId);
+  const workspaceTabs = useAppStore((s) => s.workspaceTabs);
+  const activeTabId = useAppStore((s) => s.activeTabId);
   const hasInAppNavigation = useAppStore((s) => s.hasInAppNavigation);
-  const laGiaoVien = useAuthStore((s) => s.user?.role === "teacher");
+  const leftRailMobileOpen = useAppStore((s) => s.leftRailMobileOpen);
+
+  const activeWorkspaceTab = workspaceTabs.find((t) => t.id === activeTabId) ?? null;
+  if (activeWorkspaceTab?.kind === "draft") {
+    return (
+      <section
+        className="axo-workspace-v62 axo-frame is-page-workspace is-draft-tab-workspace"
+        aria-label="Bài toán mới"
+      >
+        <button
+          type="button"
+          id="btn-mobile-open-ws"
+          className={`btn-mobile-drawer-trigger ws-draft-drawer-btn${leftRailMobileOpen ? " is-hidden-when-drawer-open" : ""}`}
+          onClick={() => useAppStore.getState().setLeftRailMobileOpen(true)}
+          aria-label="Mở điều hướng"
+          aria-hidden={leftRailMobileOpen ? "true" : undefined}
+          tabIndex={leftRailMobileOpen ? -1 : undefined}
+        >
+          <IconSidebarCollapsedTrigger />
+        </button>
+        <div className="axo-body ws-draft-body" id="ws-draft-body">
+          <HomeView />
+        </div>
+      </section>
+    );
+  }
 
   if (unsupported) {
     return (
@@ -3913,6 +3837,18 @@ export function SimulationWorkspace() {
         };
   const resolvedProblemStatement = statement.text;
 
+  const returnTargetView: "home" | "landing" | "library" | "history" =
+    hasInAppNavigation &&
+    (returnView === "home" ||
+      returnView === "landing" ||
+      returnView === "library" ||
+      returnView === "history")
+      ? returnView
+      : "home";
+  const handleReturnFromWorkspace = () => {
+    useAppStore.getState().setView(returnTargetView);
+  };
+
   if (hopLeScene3D(canh3d)) {
     const normalizedWorkspaceTitle = normalizeCylinderEnvelopeTitle(
       active.envelope.title ?? historyItem?.title,
@@ -3924,21 +3860,8 @@ export function SimulationWorkspace() {
         de={resolvedProblemStatement}
         deSource={statement.source}
         tieuDe={active.envelope.title ? normalizeCylinderEnvelopeTitle(active.envelope.title, canh3d) : (normalizedWorkspaceTitle || null)}
-        quayLai={{ nhan: TEN_TRANG[returnView] ?? "Trang chủ", onClick: roiXuong }}
-        phien={session}
+        quayLai={{ nhan: TEN_TRANG[returnTargetView] ?? "Trang chủ", onClick: handleReturnFromWorkspace }}
         onFocus={(selectedId, action) => setSemanticFocus({ selectedId, action })}
-        daiLop={(assignment || laGiaoVien) ? (
-          <>
-            {assignment && (
-              <span className="nav-assignment" title={assignment.instruction}>
-                Bài: <strong>{assignment.title}</strong>
-              </span>
-            )}
-            <AssignDialog />
-            <LiveClassStrip />
-          </>
-        ) : undefined}
-        daiLopTomTat={<LiveClassStrip tomTat />}
         hybrid={hybridViewCua(active.envelope)}
         routeDSimulation={
           (active.envelope as { route_d_simulation?: RouteDSimulationSummary | null })
@@ -3962,7 +3885,7 @@ export function SimulationWorkspace() {
         de={resolvedProblemStatement}
         deSource={statement.source}
         tieuDe={titleText}
-        quayLai={{ nhan: TEN_TRANG[returnView] ?? "Trang chủ", onClick: roiXuong }}
+        quayLai={{ nhan: TEN_TRANG[returnTargetView] ?? "Trang chủ", onClick: handleReturnFromWorkspace }}
         unavailableOverride={{
           title: "Bản ghi này chưa có dữ liệu không gian 3D hợp lệ",
           detail: `Bản ghi "${titleText}" không chứa dữ liệu mô hình 3D tương thích nên chưa thể mở trong không gian học. Em có thể quay lại trang vừa xem hoặc dựng lại đề bài trên Trang chủ.`,

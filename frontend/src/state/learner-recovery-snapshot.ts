@@ -77,6 +77,17 @@ export interface SnapshotOptions {
   ttlMs?: number;
 }
 
+const fallbackMemoryMap = new Map<string, string>();
+const fallbackMemoryStorage: SnapshotStorageLike = {
+  getItem: (key: string) => fallbackMemoryMap.get(key) ?? null,
+  setItem: (key: string, value: string) => {
+    fallbackMemoryMap.set(key, value);
+  },
+  removeItem: (key: string) => {
+    fallbackMemoryMap.delete(key);
+  },
+};
+
 function defaultSessionStorage(): SnapshotStorageLike | null {
   try {
     if (typeof window !== "undefined" && window.sessionStorage) {
@@ -85,7 +96,7 @@ function defaultSessionStorage(): SnapshotStorageLike | null {
   } catch {
     /* sessionStorage có thể bị chặn trong iframe sandbox hoặc chế độ riêng tư nghiêm ngặt */
   }
-  return null;
+  return fallbackMemoryStorage;
 }
 
 function isFiniteCoordTuple(v: unknown): v is [number, number, number] {

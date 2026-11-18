@@ -47,6 +47,12 @@ describe("AXO Error Experience & Unbreakable Escape Navigation (§7–§8)", () 
       kind: "not_found",
       requestedPath: "/khong-ton-tai",
     });
+    for (const removedClassroomPath of ["/classes", "/assignments", "/monitor", "/observe"]) {
+      expect(resolveLocationRoute(removedClassroomPath, "", "")).toEqual({
+        kind: "not_found",
+        requestedPath: removedClassroomPath,
+      });
+    }
     expect(resolveLocationRoute("/simulation/khong-co-bai-nay", "", "")).toEqual({
       kind: "not_found",
       requestedPath: "/simulation/khong-co-bai-nay",

@@ -4,9 +4,6 @@ import { renderToString } from "react-dom/server";
 import App from "../App";
 import { itemsForRole } from "./TopNav";
 import { discoverableCatalog, offlineCatalog, publicCatalog } from "../data/offline-catalog";
-
-/** Số thẻ gợi ý trên Trang chủ = 4 mẫu hình học chuẩn Axo V2.7 (`STARTER_SAMPLE_IDS`). */
-const SO_GOI_Y = 4;
 import { registerAllSimulations } from "../simulations";
 import { __resetHistoryForTest } from "../state/history";
 import { useAppStore } from "../state/store";
@@ -70,24 +67,14 @@ describe("Trang chủ KHÔNG BAO GIỜ phình theo dữ liệu", () => {
   it("không còn nút bung cả danh mục tại chỗ (đã dời sang Thư viện)", () => {
     const html = renderToString(<App />);
     expect(html).not.toContain("Xem tất cả mô phỏng mẫu");
-    expect(html).toContain("Xem tất cả thư viện");
-    // gợi ý vẫn đúng 4 mẫu chuẩn Axo V2.7 (đếm CHÍNH XÁC class)
-    expect((html.match(/class="starter-card"/g) ?? []).length).toBe(SO_GOI_Y);
+    expect(html).toContain("Thư viện mô phỏng");
+    expect((html.match(/class="starter-card"/g) ?? []).length).toBe(0);
   });
 
   /**
    * Đây là lời hứa cốt lõi của M9-UX5, nên phải chứng minh bằng render THẬT.
-   *
-   * Không dùng `useAppStore.setState()` rồi SSR được — anti-pattern #8: zustand v5
-   * SSR đọc getInitialState, tức state lúc store được TẠO. Nên phải ghi lịch sử
-   * TRƯỚC khi module store khởi tạo.
-   *
-   * THỨ TỰ IMPORT LÀ THỨ TỰ KHỞI TẠO, và có một cái bẫy: `simulations/index` kéo
-   * theo `state/store` (UI của các domain đều dùng store). Nên phải ghi lịch sử
-   * XONG rồi mới import `simulations` — import sims trước là store sinh ra với
-   * lịch sử RỖNG và test lại xanh/đỏ vì lý do sai.
    */
-  it("học dở NHIỀU bài → Trang chủ vẫn chỉ MỘT thẻ 'Tiếp tục học'", async () => {
+  it("học dở NHIỀU bài → Trang chủ luôn tối giản, danh sách Gần đây nằm gọn trong Left Sidebar", async () => {
     vi.resetModules();
 
     const history = await import("../state/history");
@@ -108,12 +95,10 @@ describe("Trang chủ KHÔNG BAO GIỜ phình theo dữ liệu", () => {
     const FreshApp = (await import("../App")).default;
     const html = renderToString(<FreshApp />);
 
-    // Đúng 1 thẻ Tiếp tục học (.resume-home-card) theo chuẩn Axo V2.7
-    expect((html.match(/class="resume-home-card"/g) ?? []).length).toBe(1);
-    expect(html).toContain("Tiếp tục học");
-    expect(html).toContain("Xem lịch sử →");
-    // và gợi ý VẪN nguyên vẹn 4 mẫu chuẩn Axo V2.7 — không bị lịch sử lấn
-    expect((html.match(/class="starter-card"/g) ?? []).length).toBe(SO_GOI_Y);
+    expect(html).toContain('id="left-sidebar"');
+    expect(html).toContain('id="sidebar-group-problems"');
+    expect(html).not.toContain("Tiếp tục học");
+    expect((html.match(/class="starter-card"/g) ?? []).length).toBe(0);
   });
 
   it("hàng chip đề mẫu AI đã gỡ — Trang chủ có ĐÚNG MỘT đường dùng AI (gõ đề)", () => {
@@ -209,21 +194,23 @@ describe("AI thôi ngang hàng với mô phỏng (R0 phản chiếu lên UI)", (
     expect(useAppStore.getState().rightOpen).toBe(false);
   });
 
-  it("CHƯA đăng nhập: header chuẩn Axo V2.7 với capsule 3 mục (Trang chủ, Thư viện, Lịch sử) và nút Đăng nhập / Đăng ký", () => {
+  it("CHƯA đăng nhập: header chuẩn Axo với capsule (Trang chủ, Thư viện) và nút Đăng nhập / Đăng ký", () => {
+    useAppStore.getState().reset();
+    useAppStore.getState().setGuestEnteredApp(true);
+    Object.assign(useAppStore.getInitialState(), useAppStore.getState());
     const html = renderToString(<App />);
     expect(html).toContain("nav-link");
     expect(html).toContain("nav-n1-capsule");
     expect(html).toContain("Trang chủ");
     expect(html).toContain("Thư viện");
-    expect(html).toContain("Lịch sử");
     expect(html).toContain("Đăng nhập");
     expect(html).toContain("Đăng ký");
   });
 
-  it("ĐÃ đăng nhập: capsule điều hướng nhất quán đúng 3 mục (Trang chủ, Thư viện, Lịch sử) theo chuẩn Axo V2.7 (P3)", () => {
+  it("ĐÃ đăng nhập: capsule điều hướng nhất quán đúng 2 mục (Trang chủ, Thư viện) cho cả Học sinh và Giáo viên", () => {
     for (const role of ["student", "teacher"] as const) {
       const labels = itemsForRole(role).map((i) => i.label);
-      expect(labels).toEqual(["Trang chủ", "Thư viện", "Lịch sử"]);
+      expect(labels).toEqual(["Trang chủ", "Thư viện"]);
     }
   });
 

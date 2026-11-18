@@ -21,6 +21,12 @@ export type LocationRouteDecision =
 const STATIC_PATH_TO_VIEW: Readonly<Record<string, Exclude<AppView, "not_found">>> = {
   "/": "home",
   "/index.html": "home",
+  "/app": "home",
+  "/home": "home",
+  "/gioi-thieu": "landing",
+  "/welcome": "landing",
+  "/intro": "landing",
+  "/landing": "landing",
   "/library": "library",
   "/history": "history",
   "/login": "login",
@@ -28,10 +34,6 @@ const STATIC_PATH_TO_VIEW: Readonly<Record<string, Exclude<AppView, "not_found">
   "/forgot": "forgot",
   "/reset": "reset",
   "/admin": "admin",
-  "/classes": "classes",
-  "/assignments": "assignments",
-  "/observe": "observe",
-  "/monitor": "monitor",
   "/account": "account",
 };
 
@@ -42,6 +44,8 @@ export function canonicalPathForView(
   switch (view) {
     case "home":
       return "/";
+    case "landing":
+      return "/gioi-thieu";
     case "library":
       return "/library";
     case "history":
@@ -58,14 +62,6 @@ export function canonicalPathForView(
       return "/reset";
     case "admin":
       return "/admin";
-    case "classes":
-      return "/classes";
-    case "assignments":
-      return "/assignments";
-    case "observe":
-      return "/observe";
-    case "monitor":
-      return "/monitor";
     case "account":
       return "/account";
     case "not_found":

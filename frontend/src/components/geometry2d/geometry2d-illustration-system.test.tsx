@@ -298,12 +298,14 @@ describe("Axo 2D Geometry Illustration System (Tier A Family Icons + Tier B Comp
     }
 
     const homeHtml = renderToString(<HomeView />);
-    expect(homeHtml).toContain('data-thumb-template="pyramid.section"');
-    expect(homeHtml).toContain('data-thumb-template="sphere.plane-section"');
-    expect(homeHtml).toContain('data-thumb-template="cube.plane-section"');
-    expect(homeHtml).toContain('data-thumb-template="cone.parallel-section"');
+    expect(homeHtml).toContain("Em muốn dựng hình nào?");
+    expect(homeHtml).not.toContain('id="home-starter-grid"');
 
     const libHtml = renderToString(<LibraryView />);
+    expect(libHtml).toContain('data-thumb-template="pyramid.section"');
+    expect(libHtml).toContain('data-thumb-template="sphere.plane-section"');
+    expect(libHtml).toContain('data-thumb-template="cube.plane-section"');
+    expect(libHtml).toContain('data-thumb-template="cone.parallel-section"');
     expect(libHtml).toContain('data-family-icon="pyramid"');
     expect(libHtml).toContain('data-family-icon="sphere"');
     expect(libHtml).toContain('data-family-icon="cylinder"');
