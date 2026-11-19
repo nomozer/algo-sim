@@ -1,0 +1,778 @@
+{
+  "schema": "axo-evaluation-run/2",
+  "run_id": "axo-construction-verified-graph-dynamic-planner-feasibility",
+  "generated_at_utc": "2026-11-19T01:07:28Z",
+  "classification": "OFFLINE_CONSTRUCTION_GRAPH_AND_DYNAMIC_PLANNER_PROTOTYPE",
+  "branch": "feat/local-first-geometry-understanding",
+  "range_base_commit": "498f354608c45ce98ba4f75a0222afbe56139ce2",
+  "baseline_run": {
+    "run_id": "independent-validation-local-ai-production-readiness",
+    "product_commit": "6310113f2202bc3a4919406b26fad08cb09b38c9",
+    "freeze_commit": "9a9352d586caa360f82052ba1b76fe9b4227f26c",
+    "base_tip_commit": "498f354608c45ce98ba4f75a0222afbe56139ce2",
+    "cache_version": "145"
+  },
+  "candidate": {
+    "product_commits": [
+      "6310113f2202bc3a4919406b26fad08cb09b38c9"
+    ],
+    "freeze_commit": "9a9352d586caa360f82052ba1b76fe9b4227f26c",
+    "product_modified_in_construction_v1": false,
+    "measured_system_sha256": "113a6a7cf6bbc15ac23119150b805437e785d2b0714b26c2157d147514c2ef67",
+    "measured_files_count": 123,
+    "cache_version": "145",
+    "route_d_cache_policy": "145:route-d",
+    "semantic_environment_hash": "6233c43c395c9b493d31d3dbb5d0ca952604730f6185cf541d2f179c077f955b",
+    "stable_capability_hash": "a2e8131eeeab638f0567b8962317c3d92c9d5a7a0b4ee9e2e74bbcb78d62751a",
+    "lock_components": {
+      "prompts": "cb272862541ae2dcdeb4ede7535c4b36f14e6abc739321ff32ae60fea592a385",
+      "grammar_card": "9b8506e6883154a1f08bb90a1e7a51999ce0df6bf5a9ba4b4d61fc4757d2b750",
+      "synthesis_schema": "6b6d0d71b84965049c47b386f102cff7dea0918434e0314961f66c86bdbfc1b0",
+      "analyze_schema": "ab7b894a3f60ff5c5baafcfddc08861ae7a4327f77f5f00d4a73ec492975463f",
+      "capability": "a2e8131eeeab638f0567b8962317c3d92c9d5a7a0b4ee9e2e74bbcb78d62751a",
+      "typed_fact_next_surface": "33197a45e0620d94a669047b47907479d1e7f07b1dc76e7c6abd75ada7a6df14",
+      "hybrid_route_surface": "1c0bd6f6d8753d803eecc886878dd67848b7ad3b02847ed9c48d8195b6a7203e"
+    }
+  },
+  "prototype_contracts": {
+    "status": "RESEARCH_PROTOTYPE_NON_PRODUCTION",
+    "proof_graph": "verified-construction-graph/1",
+    "presentation_step_graph": "presentation-step-graph/1",
+    "construction_operator": "construction-operator/1",
+    "dynamic_planner": "dynamic-construction-planner/1",
+    "exact_verifier": "construction-exact-verifier/1",
+    "scene3d_bridge": "construction-scene3d-bridge/1",
+    "model2_interface": "model2-action-interface/1",
+    "operator_count": 23
+  },
+  "environment": {
+    "ALLOW_LIVE_AI": "0",
+    "GEMINI_API_KEY": "",
+    "external_ai_calls": 0,
+    "HYBRID_ROUTE_MODE_DEFAULT": "live",
+    "test_seed": 0
+  },
+  "safety_and_scope_boundaries": {
+    "live_ai_calls": 0,
+    "fine_tuning_executed": false,
+    "model_weights_modified": false,
+    "needle3_implemented": false,
+    "backend_app_files_modified": 0,
+    "frontend_files_modified": 0,
+    "frontend_integration": "BLOCKED_OWNERSHIP",
+    "sealed_h1_rows_opened": 0,
+    "locked_w2_w3_rows_read": 0
+  },
+  "quality_gates": {
+    "E0_existing_architecture_audit": "PASS",
+    "E1_verified_construction_graph": "PASS",
+    "E2_construction_operator_library": "PASS",
+    "E3_dynamic_planner_search": "PASS",
+    "E4_exact_verification_L0_L4": "PASS",
+    "E5_degeneracy_and_contradiction_refusal": "PASS",
+    "E6_scene3d_compatibility": "PASS_ARTIFACT_ONLY",
+    "E7_model2_interface_readiness": "PASS",
+    "E8_gold_40case_and_novelty_eval": "PASS",
+    "E9_regression_and_governance": "PASS"
+  },
+  "verdict": "FEASIBLE_IN_ISOLATED_PROTOTYPE_NEEDS_INTEGRATION_WAVE",
+  "metrics_summary": {
+    "registry_summary": {
+      "total_functions": 64,
+      "by_kind": {
+        "fact": 24,
+        "ask": 23,
+        "construct": 16,
+        "escape": 1
+      },
+      "with_planning_contracts": 15,
+      "without_planning_contracts": 49,
+      "functions": [
+        {
+          "name": "altitude",
+          "kind": "fact",
+          "planning_contracts": [],
+          "has_planning_contract": false
+        },
+        {
+          "name": "ask_angle_line_plane",
+          "kind": "ask",
+          "planning_contracts": [
+            {
+              "effect": "AnswerAngleLinePlane",
+              "inputs": [
+                "Point",
+                "Point",
+                "Plane"
+              ],
+              "source_policy": "goal_answer"
+            }
+          ],
+          "has_planning_contract": true
+        },
+        {
+          "name": "ask_angle_lines",
+          "kind": "ask",
+          "planning_contracts": [
+            {
+              "effect": "AnswerAngleLines",
+              "inputs": [
+                "Point",
+                "Point",
+                "Line"
+              ],
+              "source_policy": "goal_answer"
+            }
+          ],
+          "has_planning_contract": true
+        },
+        {
+          "name": "ask_angle_plane_plane",
+          "kind": "ask",
+          "planning_contracts": [],
+          "has_planning_contract": false
+        },
+        {
+          "name": "ask_area",
+          "kind": "ask",
+          "planning_contracts": [
+            {
+              "effect": "AnswerArea",
+              "inputs": [
+                "Point",
+                "Point",
+                "Point"
+              ],
+              "source_policy": "goal_answer"
+            }
+          ],
+          "has_planning_contract": true
+        },
+        {
+          "name": "ask_area_ratio",
+          "kind": "ask",
+          "planning_contracts": [],
+          "has_planning_contract": false
+        },
+        {
+          "name": "ask_curved_residual_volume",
+          "kind": "ask",
+          "planning_contracts": [],
+          "has_planning_contract": false
+        },
+        {
+          "name": "ask_curved_section_area",
+          "kind": "ask",
+          "planning_contracts": [],
+          "has_planning_contract": false
+        },
+        {
+          "name": "ask_curved_section_radius",
+          "kind": "ask",
+          "planning_contracts": [],
+          "has_planning_contract": false
+        },
+        {
+          "name": "ask_curved_volume",
+          "kind": "ask",
+          "planning_contracts": [],
+          "has_planning_contract": false
+        },
+        {
+          "name": "ask_curved_volume_ratio",
+          "kind": "ask",
+          "planning_contracts": [],
+          "has_planning_contract": false
+        },
+        {
+          "name": "ask_distance_line_plane",
+          "kind": "ask",
+          "planning_contracts": [
+            {
+              "effect": "AnswerDistanceLinePlane",
+              "inputs": [
+                "Line",
+                "Plane"
+              ],
+              "source_policy": "goal_answer"
+            }
+          ],
+          "has_planning_contract": true
+        },
+        {
+          "name": "ask_distance_lines",
+          "kind": "ask",
+          "planning_contracts": [
+            {
+              "effect": "AnswerDistanceLines",
+              "inputs": [
+                "Line",
+                "Line"
+              ],
+              "source_policy": "goal_answer"
+            }
+          ],
+          "has_planning_contract": true
+        },
+        {
+          "name": "ask_distance_planes",
+          "kind": "ask",
+          "planning_contracts": [],
+          "has_planning_contract": false
+        },
+        {
+          "name": "ask_distance_point_plane",
+          "kind": "ask",
+          "planning_contracts": [
+            {
+              "effect": "AnswerDistance",
+              "inputs": [
+                "Point",
+                "Plane"
+              ],
+              "source_policy": "distance_answer"
+            }
+          ],
+          "has_planning_contract": true
+        },
+        {
+          "name": "ask_lateral_area",
+          "kind": "ask",
+          "planning_contracts": [],
+          "has_planning_contract": false
+        },
+        {
+          "name": "ask_length",
+          "kind": "ask",
+          "planning_contracts": [
+            {
+              "effect": "AnswerDistance",
+              "inputs": [
+                "Point",
+                "Foot"
+              ],
+              "source_policy": "distance_witness"
+            },
+            {
+              "effect": "AnswerLength",
+              "inputs": [
+                "Point",
+                "Point"
+              ],
+              "source_policy": "goal_answer"
+            }
+          ],
+          "has_planning_contract": true
+        },
+        {
+          "name": "ask_length_ratio",
+          "kind": "ask",
+          "planning_contracts": [],
+          "has_planning_contract": false
+        },
+        {
+          "name": "ask_radius",
+          "kind": "ask",
+          "planning_contracts": [],
+          "has_planning_contract": false
+        },
+        {
+          "name": "ask_residual_volume",
+          "kind": "ask",
+          "planning_contracts": [],
+          "has_planning_contract": false
+        },
+        {
+          "name": "ask_section_area",
+          "kind": "ask",
+          "planning_contracts": [],
+          "has_planning_contract": false
+        },
+        {
+          "name": "ask_surface_area",
+          "kind": "ask",
+          "planning_contracts": [],
+          "has_planning_contract": false
+        },
+        {
+          "name": "ask_volume",
+          "kind": "ask",
+          "planning_contracts": [],
+          "has_planning_contract": false
+        },
+        {
+          "name": "ask_volume_ratio",
+          "kind": "ask",
+          "planning_contracts": [],
+          "has_planning_contract": false
+        },
+        {
+          "name": "centroid",
+          "kind": "construct",
+          "planning_contracts": [
+            {
+              "effect": "Point",
+              "inputs": [
+                "Point",
+                "Point",
+                "Point"
+              ],
+              "source_policy": "derived_point"
+            }
+          ],
+          "has_planning_contract": true
+        },
+        {
+          "name": "curved_section",
+          "kind": "construct",
+          "planning_contracts": [],
+          "has_planning_contract": false
+        },
+        {
+          "name": "curved_solid",
+          "kind": "construct",
+          "planning_contracts": [],
+          "has_planning_contract": false
+        },
+        {
+          "name": "curved_subsolid",
+          "kind": "construct",
+          "planning_contracts": [],
+          "has_planning_contract": false
+        },
+        {
+          "name": "dihedral_angle",
+          "kind": "fact",
+          "planning_contracts": [],
+          "has_planning_contract": false
+        },
+        {
+          "name": "divide_segment",
+          "kind": "construct",
+          "planning_contracts": [],
+          "has_planning_contract": false
+        },
+        {
+          "name": "equal_length",
+          "kind": "fact",
+          "planning_contracts": [],
+          "has_planning_contract": false
+        },
+        {
+          "name": "face_perpendicular_base",
+          "kind": "fact",
+          "planning_contracts": [],
+          "has_planning_contract": false
+        },
+        {
+          "name": "height",
+          "kind": "fact",
+          "planning_contracts": [],
+          "has_planning_contract": false
+        },
+        {
+          "name": "intersect_line_line",
+          "kind": "construct",
+          "planning_contracts": [
+            {
+              "effect": "Point",
+              "inputs": [
+                "Line",
+                "Line"
+              ],
+              "source_policy": "derived_point"
+            }
+          ],
+          "has_planning_contract": true
+        },
+        {
+          "name": "intersect_line_plane",
+          "kind": "construct",
+          "planning_contracts": [
+            {
+              "effect": "Meet",
+              "inputs": [
+                "Line",
+                "Plane"
+              ],
+              "source_policy": "section_vertex"
+            },
+            {
+              "effect": "Point",
+              "inputs": [
+                "Line",
+                "Plane"
+              ],
+              "source_policy": "derived_point"
+            }
+          ],
+          "has_planning_contract": true
+        },
+        {
+          "name": "intersection_line",
+          "kind": "construct",
+          "planning_contracts": [
+            {
+              "effect": "Line",
+              "inputs": [
+                "Plane",
+                "Plane"
+              ],
+              "source_policy": "declared_intersection"
+            }
+          ],
+          "has_planning_contract": true
+        },
+        {
+          "name": "isosceles_trapezoid",
+          "kind": "fact",
+          "planning_contracts": [],
+          "has_planning_contract": false
+        },
+        {
+          "name": "line_line_angle",
+          "kind": "fact",
+          "planning_contracts": [],
+          "has_planning_contract": false
+        },
+        {
+          "name": "line_plane_angle",
+          "kind": "fact",
+          "planning_contracts": [],
+          "has_planning_contract": false
+        },
+        {
+          "name": "midpoint",
+          "kind": "construct",
+          "planning_contracts": [
+            {
+              "effect": "Point",
+              "inputs": [
+                "Point",
+                "Point"
+              ],
+              "source_policy": "derived_point"
+            }
+          ],
+          "has_planning_contract": true
+        },
+        {
+          "name": "orthogonal_projection",
+          "kind": "fact",
+          "planning_contracts": [
+            {
+              "effect": "Point",
+              "inputs": [
+                "Point",
+                "Plane"
+              ],
+              "source_policy": "derived_point"
+            },
+            {
+              "effect": "Normal",
+              "inputs": [
+                "Point",
+                "Plane"
+              ],
+              "source_policy": "normal_witness"
+            }
+          ],
+          "has_planning_contract": true
+        },
+        {
+          "name": "orthogonal_projection_line",
+          "kind": "construct",
+          "planning_contracts": [
+            {
+              "effect": "Foot",
+              "inputs": [
+                "Point",
+                "Line"
+              ],
+              "source_policy": "projection_foot"
+            },
+            {
+              "effect": "Point",
+              "inputs": [
+                "Point",
+                "Line"
+              ],
+              "source_policy": "derived_point"
+            },
+            {
+              "effect": "PerpLine",
+              "inputs": [
+                "Point",
+                "Line"
+              ],
+              "source_policy": "locus_witness"
+            },
+            {
+              "effect": "PerpDir",
+              "inputs": [
+                "Point",
+                "Line"
+              ],
+              "source_policy": "locus_witness"
+            }
+          ],
+          "has_planning_contract": true
+        },
+        {
+          "name": "parallelogram",
+          "kind": "fact",
+          "planning_contracts": [],
+          "has_planning_contract": false
+        },
+        {
+          "name": "perpendicular_line_plane",
+          "kind": "fact",
+          "planning_contracts": [],
+          "has_planning_contract": false
+        },
+        {
+          "name": "perpendicular_lines",
+          "kind": "fact",
+          "planning_contracts": [],
+          "has_planning_contract": false
+        },
+        {
+          "name": "plane_plane_angle",
+          "kind": "fact",
+          "planning_contracts": [],
+          "has_planning_contract": false
+        },
+        {
+          "name": "point_reflection",
+          "kind": "construct",
+          "planning_contracts": [],
+          "has_planning_contract": false
+        },
+        {
+          "name": "polygon_area",
+          "kind": "fact",
+          "planning_contracts": [],
+          "has_planning_contract": false
+        },
+        {
+          "name": "prism",
+          "kind": "construct",
+          "planning_contracts": [],
+          "has_planning_contract": false
+        },
+        {
+          "name": "pyramid",
+          "kind": "construct",
+          "planning_contracts": [],
+          "has_planning_contract": false
+        },
+        {
+          "name": "rectangle",
+          "kind": "fact",
+          "planning_contracts": [],
+          "has_planning_contract": false
+        },
+        {
+          "name": "regular_polygon",
+          "kind": "fact",
+          "planning_contracts": [],
+          "has_planning_contract": false
+        },
+        {
+          "name": "regular_pyramid",
+          "kind": "construct",
+          "planning_contracts": [],
+          "has_planning_contract": false
+        },
+        {
+          "name": "rhombus",
+          "kind": "fact",
+          "planning_contracts": [],
+          "has_planning_contract": false
+        },
+        {
+          "name": "right_angle",
+          "kind": "fact",
+          "planning_contracts": [],
+          "has_planning_contract": false
+        },
+        {
+          "name": "section",
+          "kind": "construct",
+          "planning_contracts": [],
+          "has_planning_contract": false
+        },
+        {
+          "name": "segment_length",
+          "kind": "fact",
+          "planning_contracts": [],
+          "has_planning_contract": false
+        },
+        {
+          "name": "segment_ratio",
+          "kind": "fact",
+          "planning_contracts": [],
+          "has_planning_contract": false
+        },
+        {
+          "name": "solid_volume",
+          "kind": "fact",
+          "planning_contracts": [],
+          "has_planning_contract": false
+        },
+        {
+          "name": "sphere_tangent_plane",
+          "kind": "fact",
+          "planning_contracts": [],
+          "has_planning_contract": false
+        },
+        {
+          "name": "translate_point",
+          "kind": "construct",
+          "planning_contracts": [
+            {
+              "effect": "PerpLine",
+              "inputs": [
+                "Point",
+                "PerpDir"
+              ],
+              "source_policy": "locus_witness"
+            }
+          ],
+          "has_planning_contract": true
+        },
+        {
+          "name": "trapezoid",
+          "kind": "fact",
+          "planning_contracts": [],
+          "has_planning_contract": false
+        },
+        {
+          "name": "unsupported",
+          "kind": "escape",
+          "planning_contracts": [],
+          "has_planning_contract": false
+        },
+        {
+          "name": "vertex_angle",
+          "kind": "fact",
+          "planning_contracts": [],
+          "has_planning_contract": false
+        }
+      ]
+    },
+    "gold_benchmark": {
+      "baseline_a_math_or_refusal_ok": "32/40",
+      "baseline_a_positive_served": "26/33",
+      "baseline_a_positive_with_aux_witness": "0/33",
+      "candidate_b_negative_refused_safely": "7/7",
+      "candidate_b_passed_total": "40/40",
+      "candidate_b_positive_verified": "33/33",
+      "negative_or_unsupported_cases": 7,
+      "positive_cases": 33,
+      "total_cases": 40
+    },
+    "novelty_audit": {
+      "case_a_parity": 5,
+      "case_b_dynamic_composition_verified": 28,
+      "case_c_unsupported_or_negative": 1,
+      "multi_plan_cases_verified": 5
+    },
+    "performance": {
+      "avg_baseline_a_ms": 105.534,
+      "avg_exact_verification_ms": 0.431,
+      "avg_expanded_states": 7.7,
+      "avg_final_plan_length": 2.125,
+      "avg_generated_candidates": 9.0,
+      "avg_graph_construction_ms": 9.348,
+      "avg_graph_node_count": 7.875,
+      "avg_pruned_states": 2.525,
+      "avg_search_ms": 26.096,
+      "avg_serialization_ms": 1.08,
+      "max_expanded_states": 41,
+      "max_peak_memory_kib": 335.87,
+      "max_search_ms": 155.941,
+      "search_timeout_rate": 0.0,
+      "total_cases": 40
+    },
+    "targeted_construction_pytest": "16 passed in 3.14s",
+    "targeted_combined_with_v8_pytest": "76 passed in 4.24s"
+  },
+  "full_backend_pytest": {
+    "command": "pytest -c backend/pytest.ini backend/tests -q",
+    "passed": 15046,
+    "skipped": 7,
+    "deselected": 3,
+    "xfailed": 12,
+    "failed": 0,
+    "duration_seconds": 777.24
+  },
+  "report": "FINAL_MASTER_REPORT.md",
+  "hash_policy": "SHA-256 LF-normalized; excludes run.json",
+  "artifacts": {
+    "CONSTRUCTION_CAPABILITY_INVENTORY.json": {
+      "sha256_lf": "e6dcba402e15ed8918501058c79a4a86ee01666a198914a73605fa57ab2f3414",
+      "bytes_lf": 32916
+    },
+    "CONSTRUCTION_EXACT_VERIFICATION_REPORT.md": {
+      "sha256_lf": "60d29b9ebb9cb44a40cd320afaff6f2de101d3c12f0711208638123e0be1242e",
+      "bytes_lf": 4767
+    },
+    "CONSTRUCTION_FEASIBILITY_DECISION.md": {
+      "sha256_lf": "b99666d3ac3c0e998ab5d9bd44b8b9f5f2e35e0e8311fa492a905a38200ef65d",
+      "bytes_lf": 8638
+    },
+    "CONSTRUCTION_OPERATOR_INVENTORY.json": {
+      "sha256_lf": "211cfd826f9b70f09bf7db785472cc22168157b8c31a3a88d923f2e1497ae7ac",
+      "bytes_lf": 20962
+    },
+    "CONSTRUCTION_OWNER_HANDOFF.md": {
+      "sha256_lf": "250b667a8d4e600c79867a79fe4d969619a9166cdbc3b629da5c0fd81d8ee2a4",
+      "bytes_lf": 3478
+    },
+    "CONSTRUCTION_PERFORMANCE.json": {
+      "sha256_lf": "4a09c9941ae1ec5f5844c83d42f98c8603b29d24e3365690c94348f7b5c96049",
+      "bytes_lf": 21476
+    },
+    "CONSTRUCTION_REGRESSION_REPORT.md": {
+      "sha256_lf": "5744a9ca20acfb964f360dd058c8e93272bae00b7aa58eb9207b846308d6a5fb",
+      "bytes_lf": 5055
+    },
+    "DYNAMIC_COMPOSITION_EVALUATION.json": {
+      "sha256_lf": "a81a69ee327af496b0f6838c9133cf43e4fc26d8ef678d4aeaaad94a1715b99a",
+      "bytes_lf": 27173
+    },
+    "DYNAMIC_PLANNER_SEARCH_DESIGN.md": {
+      "sha256_lf": "50c93871e123d43b955fc0a4ee7e40442dc79be147239f9b188f428a349ef6d2",
+      "bytes_lf": 5122
+    },
+    "EXISTING_CONSTRUCTION_ARCHITECTURE_AUDIT.md": {
+      "sha256_lf": "daed659457574c68bb6997d57e36fbf9d6e1c45738e284a21ebd4039932702bc",
+      "bytes_lf": 14143
+    },
+    "FINAL_MASTER_REPORT.md": {
+      "sha256_lf": "18ce85af8dd7b80cb41cd03ae5b5479e83466edcb6ddeecfb052d7cca0ff0947",
+      "bytes_lf": 9621
+    },
+    "GOLD_CONSTRUCTION_BENCHMARK_MANIFEST.json": {
+      "sha256_lf": "d311fda5e787c50a337bdac0c3960483e547f63fca38eb5f0bc79e33725d4615",
+      "bytes_lf": 95098
+    },
+    "GOLD_CONSTRUCTION_BENCHMARK_RESULTS.json": {
+      "sha256_lf": "8a3519e3f208f817d3335bf3bc117eee013a4c47755ef8fbad4bb6f702f2e57e",
+      "bytes_lf": 100875
+    },
+    "MODEL2_INTERFACE_READINESS.md": {
+      "sha256_lf": "5b7c23fefa547be4bfa17e95a781b1cbe9d56c2289f9d6312933ebb48d19cfa4",
+      "bytes_lf": 2927
+    },
+    "SCENE3D_COMPATIBILITY_REPORT.md": {
+      "sha256_lf": "dd41d0cb8f42a76a1a0c27593f8705b68f77bac16b58eea141a5a845aedc3c53",
+      "bytes_lf": 4742
+    },
+    "VERIFIED_CONSTRUCTION_GRAPH_DESIGN.md": {
+      "sha256_lf": "f6dd7e12e80b6582d371947d360ea937979ef463eb27ccddd782a3e03330e5f0",
+      "bytes_lf": 4652
+    }
+  }
+}

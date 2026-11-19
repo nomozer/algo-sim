@@ -1,0 +1,779 @@
+{
+  "schema": "construction-operator-inventory/1",
+  "count": 23,
+  "operators": [
+    {
+      "schema_version": "construction-operator/1",
+      "operator_id": "op.common_perpendicular_skew_lines",
+      "category": "segment",
+      "input_types": [
+        "line3",
+        "line3"
+      ],
+      "preconditions": [
+        "skew_lines(line1, line2)",
+        "spd_metric"
+      ],
+      "applicable_object_types": [
+        "line3"
+      ],
+      "output_types": [
+        "point3",
+        "point3",
+        "segment3",
+        "line3"
+      ],
+      "derived_relationships": [
+        "point_on_line",
+        "common_perpendicular_witness"
+      ],
+      "exact_verifier": "dot(p2 - p1, d1)==0 and dot(p2 - p1, d2)==0 in Gram metric",
+      "degeneracy_checks": [
+        "DEGENERATE_NON_SKEW_LINES"
+      ],
+      "estimated_cost": 2.0,
+      "visualization_semantics": {
+        "action_hint": "CONSTRUCT_AUXILIARY",
+        "marker": "common_perp"
+      },
+      "registry_backing": "KERNEL_PRIMITIVE_MISSING_CONTRACT"
+    },
+    {
+      "schema_version": "construction-operator/1",
+      "operator_id": "op.connect_segment",
+      "category": "segment",
+      "input_types": [
+        "point3",
+        "point3"
+      ],
+      "preconditions": [
+        "distinct_points(a, b)"
+      ],
+      "applicable_object_types": [
+        "point3"
+      ],
+      "output_types": [
+        "segment3"
+      ],
+      "derived_relationships": [],
+      "exact_verifier": "Gram norm_sq(b - a) > 0",
+      "degeneracy_checks": [
+        "DEGENERATE_COINCIDENT_POINTS",
+        "NON_POSITIVE_DIMENSION"
+      ],
+      "estimated_cost": 0.5,
+      "visualization_semantics": {
+        "action_hint": "CONSTRUCT_AUXILIARY",
+        "render": "segment"
+      },
+      "registry_backing": "PROTOTYPE_DEDUCTIVE_COMPOSITION"
+    },
+    {
+      "schema_version": "construction-operator/1",
+      "operator_id": "op.construct_dihedral_linear_angle",
+      "category": "line",
+      "input_types": [
+        "plane3",
+        "plane3",
+        "line3"
+      ],
+      "preconditions": [
+        "edge == plane1 ∩ plane2",
+        "not parallel_planes(plane1, plane2)"
+      ],
+      "applicable_object_types": [
+        "plane3",
+        "line3"
+      ],
+      "output_types": [
+        "line3",
+        "line3",
+        "plane3"
+      ],
+      "derived_relationships": [
+        "dihedral_linear_angle_witness"
+      ],
+      "exact_verifier": "ray1 ⊂ plane1, ray2 ⊂ plane2, ray1 ⟂ edge, ray2 ⟂ edge, cos_sq(ray1,ray2)==cos_sq(plane1,plane2)",
+      "degeneracy_checks": [
+        "DEGENERATE_PARALLEL_NO_INTERSECTION",
+        "IMPOSSIBLE_PERPENDICULARITY"
+      ],
+      "estimated_cost": 1.7,
+      "visualization_semantics": {
+        "action_hint": "CONSTRUCT_AUXILIARY",
+        "marker": "dihedral_angle"
+      },
+      "registry_backing": "KERNEL_PRIMITIVE_MISSING_CONTRACT"
+    },
+    {
+      "schema_version": "construction-operator/1",
+      "operator_id": "op.deduce_line_perp_plane_two_lines",
+      "category": "relation",
+      "input_types": [
+        "line3",
+        "line3",
+        "line3",
+        "plane3"
+      ],
+      "preconditions": [
+        "line ⟂ d1",
+        "line ⟂ d2",
+        "d1 ∦ d2 in plane"
+      ],
+      "applicable_object_types": [
+        "line3",
+        "plane3"
+      ],
+      "output_types": [
+        "relation"
+      ],
+      "derived_relationships": [
+        "perp_line_plane",
+        "perp_point_plane_witness"
+      ],
+      "exact_verifier": "Gram dot(line,d1)==0 and dot(line,d2)==0 and d1,d2 independent in plane",
+      "degeneracy_checks": [
+        "DEGENERATE_COLLINEAR_POINTS",
+        "IMPOSSIBLE_PERPENDICULARITY"
+      ],
+      "estimated_cost": 0.4,
+      "visualization_semantics": {
+        "action_hint": "ESTABLISH_RELATION",
+        "theorem": "perp_two_lines"
+      },
+      "registry_backing": "PROTOTYPE_DEDUCTIVE_COMPOSITION"
+    },
+    {
+      "schema_version": "construction-operator/1",
+      "operator_id": "op.deduce_parallel_line_plane_transfer",
+      "category": "relation",
+      "input_types": [
+        "line3",
+        "plane3",
+        "point3"
+      ],
+      "preconditions": [
+        "parallel_line_plane(line, plane)",
+        "point_on_line(sample_point, line)",
+        "not point_on_plane(sample_point, plane)"
+      ],
+      "applicable_object_types": [
+        "line3",
+        "plane3",
+        "point3"
+      ],
+      "output_types": [
+        "relation"
+      ],
+      "derived_relationships": [
+        "parallel_line_plane",
+        "distance_transfer_line_to_point"
+      ],
+      "exact_verifier": "normal_dot_dir==0 and sample_point off plane",
+      "degeneracy_checks": [
+        "DEGENERATE_CONTAINED_INFINITE_INTERSECTION",
+        "IMPOSSIBLE_PERPENDICULARITY"
+      ],
+      "estimated_cost": 0.5,
+      "visualization_semantics": {
+        "action_hint": "ESTABLISH_RELATION",
+        "theorem": "parallel_distance_transfer"
+      },
+      "registry_backing": "PROTOTYPE_DEDUCTIVE_COMPOSITION"
+    },
+    {
+      "schema_version": "construction-operator/1",
+      "operator_id": "op.deduce_planar_perp_from_perp_plane",
+      "category": "relation",
+      "input_types": [
+        "line3",
+        "line3",
+        "plane3"
+      ],
+      "preconditions": [
+        "perp_line_plane(perp_line, host_plane)",
+        "line_in_plane(line_in_plane, host_plane)"
+      ],
+      "applicable_object_types": [
+        "line3",
+        "plane3"
+      ],
+      "output_types": [
+        "relation"
+      ],
+      "derived_relationships": [
+        "perp_lines"
+      ],
+      "exact_verifier": "exact Gram perp_line_plane + dot(perp_line, line_in_plane)==0",
+      "degeneracy_checks": [
+        "IMPOSSIBLE_PERPENDICULARITY"
+      ],
+      "estimated_cost": 0.35,
+      "visualization_semantics": {
+        "action_hint": "ESTABLISH_RELATION",
+        "theorem": "line_perp_plane_implies_perp_line"
+      },
+      "registry_backing": "PROTOTYPE_DEDUCTIVE_COMPOSITION"
+    },
+    {
+      "schema_version": "construction-operator/1",
+      "operator_id": "op.divide_segment_ratio",
+      "category": "point",
+      "input_types": [
+        "point3",
+        "point3",
+        "ratio"
+      ],
+      "preconditions": [
+        "distinct_points(a, b)",
+        "0 < ratio < 1"
+      ],
+      "applicable_object_types": [
+        "point3"
+      ],
+      "output_types": [
+        "point3"
+      ],
+      "derived_relationships": [
+        "collinear_on_segment"
+      ],
+      "exact_verifier": "exact affine ratio (p - a == ratio * (b - a))",
+      "degeneracy_checks": [
+        "DEGENERATE_COINCIDENT_POINTS",
+        "NON_POSITIVE_DIMENSION"
+      ],
+      "estimated_cost": 1.0,
+      "visualization_semantics": {
+        "action_hint": "CONSTRUCT_DERIVED",
+        "marker": "ratio_point"
+      },
+      "registry_backing": "KERNEL_PRIMITIVE_MISSING_CONTRACT"
+    },
+    {
+      "schema_version": "construction-operator/1",
+      "operator_id": "op.intersect_coplanar_lines",
+      "category": "point",
+      "input_types": [
+        "line3",
+        "line3"
+      ],
+      "preconditions": [
+        "coplanar_non_parallel(line1, line2)"
+      ],
+      "applicable_object_types": [
+        "line3"
+      ],
+      "output_types": [
+        "point3"
+      ],
+      "derived_relationships": [
+        "point_on_line",
+        "intersecting_lines_witness"
+      ],
+      "exact_verifier": "point_on_line(pt, line1) and point_on_line(pt, line2)",
+      "degeneracy_checks": [
+        "DEGENERATE_PARALLEL_NO_INTERSECTION",
+        "DEGENERATE_SKEW_NO_INTERSECTION",
+        "DEGENERATE_CONTAINED_INFINITE_INTERSECTION"
+      ],
+      "estimated_cost": 1.1,
+      "visualization_semantics": {
+        "action_hint": "CONSTRUCT_DERIVED",
+        "marker": "intersection"
+      },
+      "registry_backing": "EXISTS_IN_REGISTRY_33"
+    },
+    {
+      "schema_version": "construction-operator/1",
+      "operator_id": "op.intersect_line_plane",
+      "category": "point",
+      "input_types": [
+        "line3",
+        "plane3"
+      ],
+      "preconditions": [
+        "not parallel_or_contained(line, plane)"
+      ],
+      "applicable_object_types": [
+        "line3",
+        "plane3"
+      ],
+      "output_types": [
+        "point3"
+      ],
+      "derived_relationships": [
+        "point_on_line",
+        "point_on_plane",
+        "line_plane_intersection_witness"
+      ],
+      "exact_verifier": "point_on_line(pt, line) and signed_eval(pt, plane)==0",
+      "degeneracy_checks": [
+        "DEGENERATE_PARALLEL_NO_INTERSECTION",
+        "DEGENERATE_CONTAINED_INFINITE_INTERSECTION"
+      ],
+      "estimated_cost": 1.1,
+      "visualization_semantics": {
+        "action_hint": "CONSTRUCT_DERIVED",
+        "marker": "intersection"
+      },
+      "registry_backing": "EXISTS_IN_REGISTRY_33"
+    },
+    {
+      "schema_version": "construction-operator/1",
+      "operator_id": "op.intersect_planes",
+      "category": "line",
+      "input_types": [
+        "plane3",
+        "plane3"
+      ],
+      "preconditions": [
+        "not parallel_planes(plane1, plane2)"
+      ],
+      "applicable_object_types": [
+        "plane3"
+      ],
+      "output_types": [
+        "line3"
+      ],
+      "derived_relationships": [
+        "line_in_plane",
+        "planes_intersection_line"
+      ],
+      "exact_verifier": "edge anchor + direction lie in both plane1 and plane2",
+      "degeneracy_checks": [
+        "DEGENERATE_PARALLEL_NO_INTERSECTION",
+        "DEGENERATE_CONTAINED_INFINITE_INTERSECTION"
+      ],
+      "estimated_cost": 1.1,
+      "visualization_semantics": {
+        "action_hint": "CONSTRUCT_DERIVED",
+        "render": "line"
+      },
+      "registry_backing": "EXISTS_IN_REGISTRY_33"
+    },
+    {
+      "schema_version": "construction-operator/1",
+      "operator_id": "op.line_parallel_through_point",
+      "category": "line",
+      "input_types": [
+        "point3",
+        "line3"
+      ],
+      "preconditions": [
+        "not point_on_line(point, line)"
+      ],
+      "applicable_object_types": [
+        "point3",
+        "line3"
+      ],
+      "output_types": [
+        "line3"
+      ],
+      "derived_relationships": [
+        "point_on_line",
+        "parallel_lines"
+      ],
+      "exact_verifier": "d_new x d_ref == 0 and point_on_line(point, new_line)",
+      "degeneracy_checks": [
+        "DEGENERATE_POINT_ALREADY_INCIDENT"
+      ],
+      "estimated_cost": 1.3,
+      "visualization_semantics": {
+        "action_hint": "CONSTRUCT_AUXILIARY",
+        "render": "line"
+      },
+      "registry_backing": "KERNEL_PRIMITIVE_MISSING_CONTRACT"
+    },
+    {
+      "schema_version": "construction-operator/1",
+      "operator_id": "op.line_through_points",
+      "category": "line",
+      "input_types": [
+        "point3",
+        "point3"
+      ],
+      "preconditions": [
+        "distinct_points(a, b)"
+      ],
+      "applicable_object_types": [
+        "point3"
+      ],
+      "output_types": [
+        "line3"
+      ],
+      "derived_relationships": [
+        "point_on_line"
+      ],
+      "exact_verifier": "distance_sq(a, line)==0 and distance_sq(b, line)==0",
+      "degeneracy_checks": [
+        "DEGENERATE_COINCIDENT_POINTS"
+      ],
+      "estimated_cost": 0.6,
+      "visualization_semantics": {
+        "action_hint": "CONSTRUCT_DERIVED",
+        "render": "line"
+      },
+      "registry_backing": "PROTOTYPE_DEDUCTIVE_COMPOSITION"
+    },
+    {
+      "schema_version": "construction-operator/1",
+      "operator_id": "op.midpoint_segment",
+      "category": "point",
+      "input_types": [
+        "point3",
+        "point3"
+      ],
+      "preconditions": [
+        "distinct_points(a, b)"
+      ],
+      "applicable_object_types": [
+        "point3"
+      ],
+      "output_types": [
+        "point3"
+      ],
+      "derived_relationships": [
+        "collinear_on_segment"
+      ],
+      "exact_verifier": "exact vector bisection (m - a == b - m) + point_on_line",
+      "degeneracy_checks": [
+        "DEGENERATE_COINCIDENT_POINTS"
+      ],
+      "estimated_cost": 1.0,
+      "visualization_semantics": {
+        "action_hint": "CONSTRUCT_DERIVED",
+        "marker": "midpoint"
+      },
+      "registry_backing": "EXISTS_IN_REGISTRY_33"
+    },
+    {
+      "schema_version": "construction-operator/1",
+      "operator_id": "op.plane_through_line_parallel_line",
+      "category": "plane",
+      "input_types": [
+        "line3",
+        "line3"
+      ],
+      "preconditions": [
+        "skew_lines(host_line, parallel_to_line)"
+      ],
+      "applicable_object_types": [
+        "line3"
+      ],
+      "output_types": [
+        "plane3"
+      ],
+      "derived_relationships": [
+        "line_in_plane",
+        "parallel_line_plane"
+      ],
+      "exact_verifier": "host_line contained in plane and parallel_line_plane(other, plane)",
+      "degeneracy_checks": [
+        "NON_UNIQUE_AUXILIARY",
+        "DEGENERATE_NON_SKEW_LINES"
+      ],
+      "estimated_cost": 1.6,
+      "visualization_semantics": {
+        "action_hint": "CONSTRUCT_AUXILIARY",
+        "render": "surface"
+      },
+      "registry_backing": "PROTOTYPE_DEDUCTIVE_COMPOSITION"
+    },
+    {
+      "schema_version": "construction-operator/1",
+      "operator_id": "op.plane_through_point_parallel_plane",
+      "category": "plane",
+      "input_types": [
+        "point3",
+        "plane3"
+      ],
+      "preconditions": [
+        "not point_on_plane(point, plane)"
+      ],
+      "applicable_object_types": [
+        "point3",
+        "plane3"
+      ],
+      "output_types": [
+        "plane3"
+      ],
+      "derived_relationships": [
+        "point_on_plane",
+        "parallel_planes"
+      ],
+      "exact_verifier": "parallel_planes(new, ref) and signed_eval(point)==0",
+      "degeneracy_checks": [
+        "DEGENERATE_POINT_ALREADY_INCIDENT"
+      ],
+      "estimated_cost": 1.4,
+      "visualization_semantics": {
+        "action_hint": "CONSTRUCT_AUXILIARY",
+        "render": "surface"
+      },
+      "registry_backing": "KERNEL_PRIMITIVE_MISSING_CONTRACT"
+    },
+    {
+      "schema_version": "construction-operator/1",
+      "operator_id": "op.plane_through_point_perp_line",
+      "category": "plane",
+      "input_types": [
+        "point3",
+        "line3"
+      ],
+      "preconditions": [
+        "non_zero_direction(line)"
+      ],
+      "applicable_object_types": [
+        "point3",
+        "line3"
+      ],
+      "output_types": [
+        "plane3"
+      ],
+      "derived_relationships": [
+        "point_on_plane",
+        "perp_line_plane"
+      ],
+      "exact_verifier": "plane_covector(line.dir) collinear with plane.normal",
+      "degeneracy_checks": [
+        "DEGENERATE_COINCIDENT_POINTS"
+      ],
+      "estimated_cost": 1.4,
+      "visualization_semantics": {
+        "action_hint": "CONSTRUCT_AUXILIARY",
+        "render": "surface"
+      },
+      "registry_backing": "KERNEL_PRIMITIVE_MISSING_CONTRACT"
+    },
+    {
+      "schema_version": "construction-operator/1",
+      "operator_id": "op.plane_through_three_points",
+      "category": "plane",
+      "input_types": [
+        "point3",
+        "point3",
+        "point3"
+      ],
+      "preconditions": [
+        "non_collinear(a, b, c)"
+      ],
+      "applicable_object_types": [
+        "point3"
+      ],
+      "output_types": [
+        "plane3"
+      ],
+      "derived_relationships": [
+        "point_on_plane"
+      ],
+      "exact_verifier": "signed_eval(a)==signed_eval(b)==signed_eval(c)==0",
+      "degeneracy_checks": [
+        "DEGENERATE_COLLINEAR_POINTS"
+      ],
+      "estimated_cost": 0.8,
+      "visualization_semantics": {
+        "action_hint": "CONSTRUCT_DERIVED",
+        "render": "surface"
+      },
+      "registry_backing": "PROTOTYPE_DEDUCTIVE_COMPOSITION"
+    },
+    {
+      "schema_version": "construction-operator/1",
+      "operator_id": "op.point_reflection",
+      "category": "point",
+      "input_types": [
+        "point3",
+        "point3"
+      ],
+      "preconditions": [
+        "distinct_points(point, center)"
+      ],
+      "applicable_object_types": [
+        "point3"
+      ],
+      "output_types": [
+        "point3"
+      ],
+      "derived_relationships": [],
+      "exact_verifier": "midpoint(point, image) == center",
+      "degeneracy_checks": [
+        "DEGENERATE_COINCIDENT_POINTS"
+      ],
+      "estimated_cost": 1.2,
+      "visualization_semantics": {
+        "action_hint": "CONSTRUCT_AUXILIARY",
+        "marker": "reflection"
+      },
+      "registry_backing": "KERNEL_PRIMITIVE_MISSING_CONTRACT"
+    },
+    {
+      "schema_version": "construction-operator/1",
+      "operator_id": "op.polyhedron_plane_section",
+      "category": "section",
+      "input_types": [
+        "solid",
+        "plane3"
+      ],
+      "preconditions": [
+        "plane_cuts_polyhedron_with_positive_area(solid, plane)"
+      ],
+      "applicable_object_types": [
+        "solid",
+        "plane3"
+      ],
+      "output_types": [
+        "section"
+      ],
+      "derived_relationships": [
+        "section_of_solid_plane"
+      ],
+      "exact_verifier": "all section vertices satisfy signed_eval==0 and closed area > 0",
+      "degeneracy_checks": [
+        "DEGENERATE_COLLINEAR_POINTS",
+        "NON_POSITIVE_DIMENSION"
+      ],
+      "estimated_cost": 1.5,
+      "visualization_semantics": {
+        "action_hint": "CONSTRUCT_DERIVED",
+        "render": "polygon"
+      },
+      "registry_backing": "KERNEL_PRIMITIVE_MISSING_CONTRACT"
+    },
+    {
+      "schema_version": "construction-operator/1",
+      "operator_id": "op.project_point_to_line",
+      "category": "point",
+      "input_types": [
+        "point3",
+        "line3"
+      ],
+      "preconditions": [
+        "not point_on_line(point, line)",
+        "spd_metric"
+      ],
+      "applicable_object_types": [
+        "point3",
+        "line3"
+      ],
+      "output_types": [
+        "point3",
+        "segment3",
+        "line3"
+      ],
+      "derived_relationships": [
+        "point_on_line",
+        "perp_lines",
+        "perp_point_line_witness"
+      ],
+      "exact_verifier": "dot(foot - point, line.dir) == 0 in Gram metric + foot on line",
+      "degeneracy_checks": [
+        "DEGENERATE_POINT_ALREADY_INCIDENT"
+      ],
+      "estimated_cost": 1.3,
+      "visualization_semantics": {
+        "action_hint": "CONSTRUCT_AUXILIARY",
+        "marker": "perp_foot"
+      },
+      "registry_backing": "EXISTS_IN_REGISTRY_33"
+    },
+    {
+      "schema_version": "construction-operator/1",
+      "operator_id": "op.project_point_to_plane",
+      "category": "point",
+      "input_types": [
+        "point3",
+        "plane3"
+      ],
+      "preconditions": [
+        "not point_on_plane(point, plane)",
+        "spd_metric"
+      ],
+      "applicable_object_types": [
+        "point3",
+        "plane3"
+      ],
+      "output_types": [
+        "point3",
+        "segment3",
+        "line3"
+      ],
+      "derived_relationships": [
+        "point_on_plane",
+        "perp_line_plane",
+        "perp_point_plane_witness"
+      ],
+      "exact_verifier": "sin_sq(line(point,foot), plane)==1 in Gram metric + signed_eval(foot)==0",
+      "degeneracy_checks": [
+        "DEGENERATE_POINT_ALREADY_INCIDENT"
+      ],
+      "estimated_cost": 1.8,
+      "visualization_semantics": {
+        "action_hint": "CONSTRUCT_AUXILIARY",
+        "marker": "altitude_foot"
+      },
+      "registry_backing": "EXISTS_IN_REGISTRY_33"
+    },
+    {
+      "schema_version": "construction-operator/1",
+      "operator_id": "op.translate_point_by_vector",
+      "category": "point",
+      "input_types": [
+        "point3",
+        "point3",
+        "point3"
+      ],
+      "preconditions": [
+        "distinct_points(vec_from, vec_to)"
+      ],
+      "applicable_object_types": [
+        "point3"
+      ],
+      "output_types": [
+        "point3"
+      ],
+      "derived_relationships": [],
+      "exact_verifier": "(image - origin) == (vec_to - vec_from)",
+      "degeneracy_checks": [
+        "DEGENERATE_COINCIDENT_POINTS"
+      ],
+      "estimated_cost": 1.2,
+      "visualization_semantics": {
+        "action_hint": "CONSTRUCT_AUXILIARY",
+        "marker": "translated_point"
+      },
+      "registry_backing": "EXISTS_IN_REGISTRY_33"
+    },
+    {
+      "schema_version": "construction-operator/1",
+      "operator_id": "op.triangle_centroid",
+      "category": "point",
+      "input_types": [
+        "point3",
+        "point3",
+        "point3"
+      ],
+      "preconditions": [
+        "non_collinear(a, b, c)"
+      ],
+      "applicable_object_types": [
+        "point3"
+      ],
+      "output_types": [
+        "point3"
+      ],
+      "derived_relationships": [
+        "point_on_plane"
+      ],
+      "exact_verifier": "(a-g)+(b-g)+(c-g)==0 + signed_eval==0",
+      "degeneracy_checks": [
+        "DEGENERATE_COLLINEAR_POINTS"
+      ],
+      "estimated_cost": 1.0,
+      "visualization_semantics": {
+        "action_hint": "CONSTRUCT_DERIVED",
+        "marker": "centroid"
+      },
+      "registry_backing": "EXISTS_IN_REGISTRY_33"
+    }
+  ]
+}
