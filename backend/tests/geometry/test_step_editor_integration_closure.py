@@ -58,7 +58,7 @@ from app.simulation.geometry import (  # noqa: E402
     measure as M,
     predicates as P,
 )
-from app.simulation.geometry.radical import display as radical_display, sqrt_rational, to_json as radical_to_json  # noqa: E402
+from app.simulation.geometry.radical import display as radical_display, sign as radical_sign, sqrt_rational, to_json as radical_to_json  # noqa: E402
 from app.simulation.geometry.section import Polyhedron, cross_section  # noqa: E402
 from app.simulation.geometry_functions import step_editor as se  # noqa: E402
 from app.simulation.geometry_functions.construction_continuity import enrich_construction_continuity  # noqa: E402
@@ -1607,7 +1607,7 @@ def test_phase_c2_independent_exact_geometry_invariants_across_4_problems():
             rpts = [Vec3.of(*p) for p in rsec["polygon"]]
             for p in rpts:
                 assert P.point_on_plane(p, pl_new)
-            assert area_of(rpts) > 0
+            assert radical_sign(area_of(rpts)) > 0
             for pt_id, (u_id, v_id) in (("E", ("S", "B")), ("F", ("S", "D"))):
                 U, V, Q = Vec3.of(*robjs[u_id]["xyz"]), Vec3.of(*robjs[v_id]["xyz"]), Vec3.of(*robjs[pt_id]["xyz"])
                 d = V - U
