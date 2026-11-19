@@ -1703,6 +1703,7 @@ export function AxoWorkspaceV62({
                     }
                   }}
                   initialCameraPose={savedCameraPose}
+                  sceneIdentityKey={problemSnapshotKey || activeEditSessionId}
                   onCameraPoseChange={(pose) => {
                       latestCameraPoseRef.current = pose;
                       if (problemSnapshotKey && invalidSceneReason === null && mathVerification.valid) {

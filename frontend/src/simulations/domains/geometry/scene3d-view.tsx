@@ -3527,6 +3527,7 @@ interface Props {
     maxAttempts: number;
   }) => void;
   initialCameraPose?: SceneCameraPose | null;
+  sceneIdentityKey?: string | null;
   onCameraPoseChange?: (pose: SceneCameraPose) => void;
   relationHighlightIds?: readonly string[] | null;
   locateRequest?: { objectId: string; nonce: number } | null;
@@ -4678,7 +4679,7 @@ export function Scene3DWorkspace({
   shellOpacityPct, planeOpacityPct,
   rightAnglesShown = true, dashedHiddenShown = true,
   webglFallbackNode, webglRecoveringNode, onWebglFailure, onWebglLifecycleChange,
-  initialCameraPose, onCameraPoseChange,
+  initialCameraPose, sceneIdentityKey = null, onCameraPoseChange,
   relationHighlightIds = null,
   locateRequest = null,
   restoreCameraNonce = 0,
@@ -4716,15 +4717,43 @@ export function Scene3DWorkspace({
   const cancelLocateTweenRef = useRef<(() => void) | null>(null);
   const prevLocateNonceRef = useRef<number>(locateRequest?.nonce ?? 0);
   const prevRestoreCameraNonceRef = useRef<number>(restoreCameraNonce);
-  const pendingRestoredCameraRef = useRef<SceneCameraPose | null>(
+  type InternalRestoredCameraPose = SceneCameraPose & {
+    offset?: [number, number];
+    fromAutoFit?: boolean;
+  };
+  const liveCameraStateRef = useRef<InternalRestoredCameraPose | null>(null);
+  const prevSceneIdentityKeyRef = useRef<string | null>(sceneIdentityKey);
+  const pendingRestoredCameraRef = useRef<InternalRestoredCameraPose | null>(
     hopLeCameraPose(initialCameraPose) ? initialCameraPose : null,
   );
   const prevSceneForCameraRef = useRef(scene);
-  if (prevSceneForCameraRef.current !== scene) {
+  if (prevSceneForCameraRef.current !== scene || prevSceneIdentityKeyRef.current !== sceneIdentityKey) {
+    const sameIdentitySceneRebuild =
+      prevSceneForCameraRef.current !== scene
+      && Boolean(sceneIdentityKey)
+      && prevSceneIdentityKeyRef.current === sceneIdentityKey;
     prevSceneForCameraRef.current = scene;
-    pendingRestoredCameraRef.current = hopLeCameraPose(initialCameraPose)
-      ? initialCameraPose
-      : null;
+    prevSceneIdentityKeyRef.current = sceneIdentityKey;
+    if (hopLeCameraPose(initialCameraPose)) {
+      pendingRestoredCameraRef.current =
+        sameIdentitySceneRebuild && liveCameraStateRef.current?.offset
+          ? { ...initialCameraPose, offset: liveCameraStateRef.current.offset }
+          : initialCameraPose;
+    } else if (
+      sameIdentitySceneRebuild
+      && liveCameraStateRef.current
+      && hopLeCameraPose(liveCameraStateRef.current)
+    ) {
+      pendingRestoredCameraRef.current = {
+        ...liveCameraStateRef.current,
+        fromAutoFit: true,
+      };
+    } else {
+      if (!sameIdentitySceneRebuild) {
+        liveCameraStateRef.current = null;
+      }
+      pendingRestoredCameraRef.current = null;
+    }
     preLocatePoseRef.current = null;
   }
   const prevFitTokenRef = useRef(fitToken);
@@ -5360,10 +5389,18 @@ export function Scene3DWorkspace({
       return Math.max(0.55, Math.min(2.2, kcKhungChuan / kcHienTai));
     };
     const baoCaoCameraPose = () => {
-      if (dangDatKhungTuDong || !onCameraPoseChangeRef.current) return;
-      const pose: SceneCameraPose = {
+      const livePose: InternalRestoredCameraPose = {
         position: [cam.position.x, cam.position.y, cam.position.z],
         target: [dieuKhien.target.x, dieuKhien.target.y, dieuKhien.target.z],
+        offset: [lechOngKinhNgang, lechOngKinhDoc],
+      };
+      if (!dangDatKhungTuDong && hopLeCameraPose(livePose)) {
+        liveCameraStateRef.current = livePose;
+      }
+      if (dangDatKhungTuDong || !onCameraPoseChangeRef.current) return;
+      const pose: SceneCameraPose = {
+        position: livePose.position,
+        target: livePose.target,
       };
       if (hopLeCameraPose(pose)) {
         onCameraPoseChangeRef.current(pose);
@@ -6594,6 +6631,11 @@ export function Scene3DWorkspace({
         chinhCo();
         cam.updateMatrixWorld(true);
         kcKhungChuan = cam.position.clone().sub(dieuKhien.target).length();
+        liveCameraStateRef.current = {
+          position: [cam.position.x, cam.position.y, cam.position.z],
+          target: [dieuKhien.target.x, dieuKhien.target.y, dieuKhien.target.z],
+          offset: [lechOngKinhNgang, lechOngKinhDoc],
+        };
       } finally {
         dangDatKhungTuDong = false;
       }
@@ -6670,14 +6712,24 @@ export function Scene3DWorkspace({
           const framingStillValid =
             !infoTam || (poseDist >= fitRadius * 0.65 && poseDist <= fitRadius * 18);
           if (framingStillValid) {
+            if (Array.isArray(savedPose.offset) && savedPose.offset.length === 2) {
+              lechOngKinhNgang = savedPose.offset[0];
+              lechOngKinhDoc = savedPose.offset[1];
+              chinhCo();
+            }
             cam.position.set(...savedPose.position);
             dieuKhien.target.set(...savedPose.target);
             dieuKhien.saveState();
             dieuKhien.reset();
-            userAdjustedCamera = true;
+            userAdjustedCamera = !savedPose.fromAutoFit;
           }
         }
         kcKhungChuan = cam.position.clone().sub(dieuKhien.target).length();
+        liveCameraStateRef.current = {
+          position: [cam.position.x, cam.position.y, cam.position.z],
+          target: [dieuKhien.target.x, dieuKhien.target.y, dieuKhien.target.z],
+          offset: [lechOngKinhNgang, lechOngKinhDoc],
+        };
         if (typeof window !== "undefined") {
           (window as Window & { __geo3d_last_rebuild_update_ms?: number }).__geo3d_last_rebuild_update_ms =
             performance.now();
@@ -8500,6 +8552,7 @@ export function Scene3DWorkspace({
     if (prevFitTokenRef.current !== fitToken) {
       prevFitTokenRef.current = fitToken;
       pendingRestoredCameraRef.current = null;
+      liveCameraStateRef.current = null;
     }
     vuaKhungRef.current?.();
   }, [scene, fitToken, daBung, webglEpoch]);
