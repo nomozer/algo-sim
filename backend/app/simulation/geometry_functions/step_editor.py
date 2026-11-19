@@ -2981,6 +2981,16 @@ def execute_step_edit(
                         materialize_face_plane=_materialize_face_plane,
                     )
 
+                def _obj_display_ref(oid: str) -> str:
+                    obj = by_id.get(oid) or {}
+                    raw_not = obj.get("notation")
+                    if isinstance(raw_not, str) and raw_not.strip():
+                        return _display_sym(raw_not.strip())
+                    raw_ref = obj.get("reference") or obj.get("label")
+                    if isinstance(raw_ref, str) and raw_ref.strip():
+                        return f"«{_display_sym(raw_ref.strip())}»"
+                    return _display_sym(oid)
+
                 # Lookup symbol in local_objects first (allows earlier clause in compound step to feed later clause!)
                 def _find_pt(sym: str, act: str) -> str:
                     norm = _normalize_vi_math(sym).upper()
@@ -3154,7 +3164,7 @@ def execute_step_edit(
                                 "label": ab_phrase,
                                 "notation": None,
                                 "reference": ab_phrase,
-                                "display_label": None,
+                                "display_label": ab_phrase,
                                 "role": "Điểm dựng phụ",
                             })
                             mem[mid_helper["id"]] = mid_val
@@ -3246,6 +3256,7 @@ def execute_step_edit(
                                 "label": f"Trung điểm của {_display_sym(r_a)} và {_display_sym(r_b)}",
                                 "notation": None,
                                 "reference": f"Trung điểm của {_display_sym(r_a)} và {_display_sym(r_b)}",
+                                "display_label": f"Trung điểm của {_display_sym(r_a)} và {_display_sym(r_b)}",
                                 "role": "Điểm dựng phụ",
                                 "origin": "derived",
                                 "producer": "construct_point.midpoint",
@@ -3358,8 +3369,8 @@ def execute_step_edit(
                     pl_val = K.plane_through_point_perpendicular_to(mem[pt_id], mem[ln_ref_id])
                     pname = _display_sym(clause.output_symbol or primary_obj.get("notation") or "(α)")
                     _assert_unique_plane_or_line_notation("plane3", pname)
-                    pt_disp = _display_sym(by_id[pt_id].get("notation") or pt_id)
-                    ln_disp = _display_sym(by_id[ln_ref_id].get("notation") or ln_ref_id)
+                    pt_disp = _obj_display_ref(pt_id)
+                    ln_disp = _obj_display_ref(ln_ref_id)
                     new_label = f"Mặt phẳng {pname} qua {pt_disp} và vuông góc với {ln_disp}"
                     primary_obj.update({
                         "label": new_label,
@@ -3414,7 +3425,7 @@ def execute_step_edit(
                     pname = _display_sym(clause.output_symbol or primary_obj.get("notation") or "(α)")
                     _assert_unique_plane_or_line_notation("plane3", pname)
                     ref_not = _display_sym(by_id[ref_id].get("notation") or clause.plane_inputs[0])
-                    pt_disp = _display_sym(by_id[pt_id].get("notation") or pt_id)
+                    pt_disp = _obj_display_ref(pt_id)
                     new_label = f"Mặt phẳng {pname} qua {pt_disp} và song song với {ref_not}"
                     primary_obj.update({
                         "label": new_label,
