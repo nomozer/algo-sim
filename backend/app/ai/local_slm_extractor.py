@@ -25,6 +25,7 @@ from app.ai.adapter4_route import ADAPTER_V4_VERSION, ROUTE_D_SIMULATION_V4_SCHE
 from app.ai.local_geometry_parser import (
     LOCAL_GEOMETRY_PARSER_VERSION,
     LOCAL_PARSE_COMPLETE,
+    _SIM_REQUEST_RE,
     _canon_val,
     normalize_problem_text,
     parse_geometry_problem_locally,
@@ -63,10 +64,15 @@ from app.simulation.geometry.expression import ExprParseError, parse_quantity_ex
 from app.simulation.geometry_functions import engine, planner, registry
 
 LOCAL_SLM_EXTRACTOR_VERSION = "local-slm-extractor/3"
-LOCAL_SLM_EXTRACTOR_V9_VERSION = "local-slm-extractor/4"
+#: /5 and validator /5 (run `axo-hybrid-simulation-intent-generalization-grounded-slm-recovery`): simulation-only GBNF
+#: branch (`g:[]`), construct_object quoted on the show request, sim-only lowering. Both feed the SLM cache key, so no
+#: extraction cached under /4 (forced metric goal) is ever replayed.
+LOCAL_SLM_EXTRACTOR_V9_VERSION = "local-slm-extractor/5"
 SLM_COMPACT_SCHEMA_VERSION = "slm-compact-clause/1"
 SLM_GROUNDING_VALIDATOR_VERSION = "slm-grounding-validator/3"
-SLM_GROUNDING_VALIDATOR_V9_VERSION = "slm-grounding-validator/4"
+SLM_GROUNDING_VALIDATOR_V9_VERSION = "slm-grounding-validator/5"
+#: /11 grammar variant (chosen by SLM_RECOVERY_ABLATION.json): in a simulation-only root, `u` non-empty only with `r:[]`.
+SIM_ONLY_UNRESOLVED_WITHOUT_FACTS = True
 SLM_GROUNDING_ENVELOPE_VERSION = "slm-grounding-envelope/3"
 SLM_GROUNDING_ENVELOPE_V9_VERSION = "slm-grounding-envelope/4"
 DEFAULT_COMPACT_SLM_MAX_TOKENS = 320
@@ -2013,7 +2019,10 @@ def build_compact_grammar_for_context(
 
     # 3. Goal-clause scoped goal rules (goalc{cid})
     marked_goal_clauses = [cl for cl in active_clauses if _GOAL_VERB_RE.search(cl.text)]
-    if clause_subset is None and not marked_goal_clauses:
+    # /11: a simulation-only source has NO goal clause (a show request is not a metric question); the root below then
+    # admits facts with `g:[]`, so the model is never forced to invent a metric goal or report the clause ambiguous.
+    sim_only = clause_subset is None and not marked_goal_clauses and is_simulation_only_source(ctx)
+    if clause_subset is None and not marked_goal_clauses and not sim_only:
         marked_goal_clauses = [cl for cl in active_clauses if _GOAL_MARKERS_RE.search(cl.text)] or list(active_clauses)
 
     all_solid_lbls = [e.label for e in all_solids]
@@ -2094,7 +2103,16 @@ def build_compact_grammar_for_context(
     ])
 
     if clause_subset is None:
-        if solid_rule_names and goal_clause_rules:
+        if solid_rule_names and sim_only:
+            r_expr = "rellistreq" if rel_clause_rules else "rellist"
+            # SIM_ONLY_UNRESOLVED_WITHOUT_FACTS: an unresolved item is admitted only with an EMPTY relation list (the model
+            # cannot extract facts and then flag the clause by habit; unread facts are still refused by the Source Gate).
+            r_unres = '""' if SIM_ONLY_UNRESOLVED_WITHOUT_FACTS else "rellist"
+            lines.insert(
+                0,
+                rf'root ::= "{{\"s\":" solidreq ",\"r\":[" {r_expr} "],\"g\":[],\"u\":[]}}" | "{{\"s\":" solidval ",\"r\":[" {r_unres} "],\"g\":[],\"u\":[" unresreq "]}}"',
+            )
+        elif solid_rule_names and goal_clause_rules:
             r_expr = "rellistreq" if rel_clause_rules else "rellist"
             lines.insert(
                 0,
@@ -2652,10 +2670,14 @@ def _expand_compact_relation(
         if not vtx or len(poly_pts) != 3 or vtx not in poly_pts:
             return [], f"INVALID_PREMISE_ARGS:{pcode}"
         rays = [x for x in poly_pts if x != vtx]
+        # /11 (Q10 of /10): "vuông" alone let the shortest piece "SA vuông góc với (ABC)" win over "đáy ABC là tam giác
+        # vuông tại A"; when the clause states the right angle AT the vertex, the quote must contain that statement.
+        at_vtx = tuple(f"vuông{c} {w} {vtx}" for c in ("", " cân") for w in ("tại", "ở"))
+        cues = at_vtx if any(c.lower() in clow for c in at_vtx) else ("vuông", "90")
         q_str = _select_source_gate_quote(
             ctext, poly_pts, ctx.working_text, "right_angle",
             required_contiguous=_poly_contig(poly_pts),
-            required_cues=("vuông", "90") if use_v7 else None,
+            required_cues=cues if use_v7 else None,
             closure_mode=closure_mode,
         )
         out_premises.append({"kind": "right_angle", "args": {"vertex": vtx, "rays": rays}, "quote": q_str, "solid_id": sid})
@@ -3073,6 +3095,29 @@ _STRICT_GOAL_ASK_RE = re.compile(
 )
 
 
+def simulation_request_span(clauses: list[IndexedClause], working_text: str) -> tuple[int, int] | None:
+    """Span in `working_text` of the show request (rule 7b grammar, `_SIM_REQUEST_RE`) of the first clause that is one,
+    else None. /11: the `construct_object` goal quotes exactly this span, as the deterministic parser does."""
+    for cl in clauses:
+        m = _SIM_REQUEST_RE.match(cl.text)
+        if m is None:
+            continue
+        sim = m.group("sim").strip()
+        p = working_text.find(sim, cl.start)
+        if p >= 0:
+            return p, p + len(sim)
+    return None
+
+
+def is_simulation_only_source(ctx: "CompactClauseContext") -> bool:
+    """/11: the source asks nothing (no ask verb / '?') and states an explicit show request. The compact GBNF then has no
+    goal clause and admits `g:[]` (before /11 it forced >= 1 metric goal or an unresolved item: AxoV9 emitted `goal:vol`
+    for 'Hãy mô phỏng hình lập phương', see SLM20_ROOT_CAUSE_AUDIT.json)."""
+    if any(_GOAL_VERB_RE.search(cl.text) for cl in ctx.clauses):
+        return False
+    return simulation_request_span(ctx.clauses, ctx.working_text) is not None
+
+
 def count_expected_source_goals(ctx: "CompactClauseContext") -> int:
     """Count distinct explicit goal clauses in `ctx`."""
     solid_cids = {c for e in ctx.entities if e.kind == "solid" for c in e.clause_ids}
@@ -3389,7 +3434,11 @@ def validate_and_lower_compact_clause(
         math_goals.append(mg)
         accepted_ops.append({"kind": f"goal:{g.get('t')}", "clause_id": g.get("c")})
 
-    if not math_goals:
+    # /11: a simulation-only source legitimately has no math goal (construct_object only); a goal the model emitted and
+    # the validator rejected still refuses.
+    sim_only = is_simulation_only_source(ctx)
+    goal_rejected = any(str(r.get("op", "")).startswith("goal") for r in rejected_ops)
+    if not math_goals and not (sim_only and not goal_rejected):
         return None, {
             "validator_version": SLM_GROUNDING_VALIDATOR_VERSION,
             "grounding_status": "REJECTED_NO_GROUNDED_GOAL",
@@ -3400,7 +3449,8 @@ def validate_and_lower_compact_clause(
         }
 
     expected_goals = count_expected_source_goals(ctx)
-    mg_status = classify_multi_goal_status(expected_goals, math_goals, unresolved_items)
+    mg_status = ("SIMULATION_ONLY" if sim_only and not math_goals
+                 else classify_multi_goal_status(expected_goals, math_goals, unresolved_items))
 
     if use_v9 and expected_goals >= 2 and len(math_goals) < expected_goals:
         return None, {
@@ -3425,6 +3475,10 @@ def validate_and_lower_compact_clause(
             "rejected_ops": rejected_ops,
         }
 
+    # /11: the construct_object goal quotes the show request itself when the source has one (the Source Gate then reads
+    # that clause as the request), exactly as rule 7b of the deterministic parser does; else the solid declaration.
+    req = simulation_request_span(ctx.clauses, ctx.working_text)
+    sim_quote = ctx.working_text[req[0]:req[1]] if req else solid_quote
     canon_payload: dict[str, Any] = {
         "schema_version": TYPED_FACT_NEXT_V2_SCHEMA_VERSION,
         "problem_text": ctx.working_text,
@@ -3434,7 +3488,7 @@ def validate_and_lower_compact_clause(
         "relations": [],
         "derived_sections": [],
         "simulation_goals": [
-            {"goal_id": "sg1", "kind": "construct_object", "target_solid_id": "s1", "quote": solid_quote}
+            {"goal_id": "sg1", "kind": "construct_object", "target_solid_id": "s1", "quote": sim_quote}
         ],
         "math_goals": math_goals,
     }

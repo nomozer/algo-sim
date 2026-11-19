@@ -197,4 +197,4 @@ def test_security_10_adversarial_and_failure_categories(monkeypatch):
     low_cube, diag_cube = validate_and_lower_compact_clause(ctx=ctx_cube, raw_slm_json=cube_raw, closure_mode=V9_CLOSURE_MODE)
     assert low_cube is not None and diag_cube["grounding_status"] == "GROUNDED_AND_LOWERED"
 
-    assert LOCAL_SLM_EXTRACTOR_V9_VERSION == "local-slm-extractor/4"
+    assert LOCAL_SLM_EXTRACTOR_V9_VERSION == "local-slm-extractor/5"   # /11 simulation-only GBNF branch
