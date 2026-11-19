@@ -1,0 +1,396 @@
+{
+  "commit": "897d70c9f9a3862ef5dcaa45a3f91ffd326e91ed",
+  "startedAt": "2026-11-19T13:56:39.325Z",
+  "baseUrl": "http://localhost:3001",
+  "backendUrl": "http://127.0.0.1:18000",
+  "hostPort8000ConflictNote": "127.0.0.1:8000 occupied by external user process PID 17696/19052 (sqlite, cache_version=145); Vite :3001 configured via scratch vite-fpa.config.mjs to proxy /api -> http://127.0.0.1:18000 (PG16 algosim_fpa_live, git_sha=897d70c9f, cache_version=132).",
+  "proxyIdentityHealth": {
+    "db": "postgresql",
+    "git_sha": "897d70c9f9a3862ef5dcaa45a3f91ffd326e91ed",
+    "cache_version": "132"
+  },
+  "routesAndWorkspaceFlows": {
+    "landingStatus": 200,
+    "landingPath": "/",
+    "appPathAfterCta": "/app",
+    "plusMenuOpened": true,
+    "attachmentRendered": true,
+    "libraryPathAfterF5": "/library",
+    "loginPathAfterF5": "/login"
+  },
+  "optionBHttp": [
+    {
+      "path": "/api/classes",
+      "status": 404,
+      "detail": "Not Found"
+    },
+    {
+      "path": "/api/assignments",
+      "status": 404,
+      "detail": "Not Found"
+    },
+    {
+      "path": "/api/classes/1/session",
+      "status": 404,
+      "detail": "Not Found"
+    }
+  ],
+  "unorbitedCameraInvariance": {
+    "status": "PASS",
+    "maxDeltaPx": 0,
+    "deltasPx": {
+      "S": 0,
+      "B": 0,
+      "C": 0,
+      "D": 0
+    }
+  },
+  "orbitedCameraInvariance": {
+    "status": "PASS",
+    "threeJsCameraPositionDelta": 0,
+    "threeJsCameraTargetDelta": 0
+  },
+  "stepEditorRenameAndZeroLeak": {
+    "status": "PASS",
+    "hoverPencilOpacity": "0 -> 1",
+    "pencilHiddenWhileEditing": true,
+    "staleAlphaRowsAfter": 0
+  },
+  "tabSwitchDuringEditDraft": {
+    "status": "PASS",
+    "draftTabActive": true,
+    "simTabCount": 2,
+    "returnedCleanly": true
+  },
+  "draftAndErrorPreservation": [
+    {
+      "case": "undefined_point_SZ",
+      "status": 422,
+      "errorCode": "MISSING_DEPENDENCY",
+      "draftPreserved": true
+    },
+    {
+      "case": "collinear_AOC",
+      "status": 422,
+      "errorCode": "COLLINEAR_POINTS",
+      "draftPreserved": true
+    },
+    {
+      "case": "unsupported_syntax",
+      "status": 422,
+      "errorCode": "UNSUPPORTED_STEP_SYNTAX",
+      "draftPreserved": true
+    }
+  ],
+  "cascadeAndE2EMetrics": {
+    "status": "PASS",
+    "f5Retained": true,
+    "dockScrollIsolated": true,
+    "committedVersion": 20,
+    "probes409": {
+      "stale": {
+        "status": 409,
+        "code": "STALE_REVISION_CONFLICT"
+      },
+      "superseded": {
+        "status": 409,
+        "code": "EDIT_SUPERSEDED"
+      }
+    },
+    "ui_interaction_open_latency_ms": {
+      "iterations": 20,
+      "p50_ms": 40.998,
+      "p95_ms": 50.079,
+      "p99_ms": 75.579,
+      "min_ms": 28.408,
+      "max_ms": 81.954,
+      "mean_ms": 41.069,
+      "iqr_ms": 9.955
+    },
+    "frontend_update_completion_ms": {
+      "iterations": 20,
+      "p50_ms": 120.57,
+      "p95_ms": 180.121,
+      "p99_ms": 219.154,
+      "min_ms": 109.976,
+      "max_ms": 228.913,
+      "mean_ms": 130.908,
+      "iqr_ms": 11.772
+    },
+    "scene3d_post_edit_render_ms": {
+      "iterations": 20,
+      "p50_ms": 37.2,
+      "p95_ms": 71.155,
+      "p99_ms": 94.791,
+      "min_ms": 32.5,
+      "max_ms": 100.7,
+      "mean_ms": 43.505,
+      "iqr_ms": 14.575
+    },
+    "e2e_step_edit_roundtrip_ms": {
+      "iterations": 20,
+      "p50_ms": 223.369,
+      "p95_ms": 313.897,
+      "p99_ms": 338.617,
+      "min_ms": 199.699,
+      "max_ms": 344.797,
+      "mean_ms": 240.664,
+      "iqr_ms": 19.389
+    }
+  },
+  "viewports": [
+    {
+      "width": 1920,
+      "height": 1080,
+      "mobileTouch": false,
+      "overflowX": 0,
+      "canvasVisible": true,
+      "runClipped": false,
+      "cancelClipped": false,
+      "runBtnHeightPx": 25,
+      "cancelBtnHeightPx": 25,
+      "textareaHeightPx": 32,
+      "textareaHorizontalOverflow": false,
+      "controlsOccludeActions": false,
+      "webglPhase": "healthy",
+      "canvasViewportHeightRatio": 0.965,
+      "clippedLabels": [],
+      "occludedSceneControls": []
+    },
+    {
+      "width": 1440,
+      "height": 900,
+      "mobileTouch": false,
+      "overflowX": 0,
+      "canvasVisible": true,
+      "runClipped": false,
+      "cancelClipped": false,
+      "runBtnHeightPx": 25,
+      "cancelBtnHeightPx": 25,
+      "textareaHeightPx": 32,
+      "textareaHorizontalOverflow": false,
+      "controlsOccludeActions": false,
+      "webglPhase": "healthy",
+      "canvasViewportHeightRatio": 0.958,
+      "clippedLabels": [],
+      "occludedSceneControls": []
+    },
+    {
+      "width": 1366,
+      "height": 768,
+      "mobileTouch": false,
+      "overflowX": 0,
+      "canvasVisible": true,
+      "runClipped": false,
+      "cancelClipped": false,
+      "runBtnHeightPx": 25,
+      "cancelBtnHeightPx": 25,
+      "textareaHeightPx": 32,
+      "textareaHorizontalOverflow": false,
+      "controlsOccludeActions": false,
+      "webglPhase": "healthy",
+      "canvasViewportHeightRatio": 0.951,
+      "clippedLabels": [],
+      "occludedSceneControls": []
+    },
+    {
+      "width": 768,
+      "height": 1024,
+      "mobileTouch": false,
+      "overflowX": 0,
+      "canvasVisible": true,
+      "runClipped": false,
+      "cancelClipped": false,
+      "runBtnHeightPx": 25,
+      "cancelBtnHeightPx": 25,
+      "textareaHeightPx": 48,
+      "textareaHorizontalOverflow": false,
+      "controlsOccludeActions": false,
+      "webglPhase": "healthy",
+      "canvasViewportHeightRatio": 0.963,
+      "clippedLabels": [],
+      "occludedSceneControls": []
+    },
+    {
+      "width": 390,
+      "height": 844,
+      "mobileTouch": true,
+      "overflowX": 0,
+      "canvasVisible": true,
+      "runClipped": false,
+      "cancelClipped": false,
+      "runBtnHeightPx": 30,
+      "cancelBtnHeightPx": 30,
+      "textareaHeightPx": 32,
+      "textareaHorizontalOverflow": false,
+      "controlsOccludeActions": false,
+      "webglPhase": "healthy",
+      "canvasViewportHeightRatio": 0.527,
+      "clippedLabels": [],
+      "occludedSceneControls": []
+    },
+    {
+      "width": 320,
+      "height": 568,
+      "mobileTouch": true,
+      "overflowX": 0,
+      "canvasVisible": true,
+      "runClipped": false,
+      "cancelClipped": false,
+      "runBtnHeightPx": 30,
+      "cancelBtnHeightPx": 30,
+      "textareaHeightPx": 48,
+      "textareaHorizontalOverflow": false,
+      "controlsOccludeActions": false,
+      "webglPhase": "healthy",
+      "canvasViewportHeightRatio": 0.515,
+      "clippedLabels": [],
+      "occludedSceneControls": []
+    }
+  ],
+  "touchAndVkb": {
+    "status": "PASS",
+    "pencilVisibleOnTouchActive": true,
+    "vkb390x460": {
+      "overflowX": 0,
+      "taInViewport": true,
+      "runInViewport": true,
+      "cancelInViewport": true
+    }
+  },
+  "screenshots": {
+    "landing": {
+      "path": "D:/Documents/projects/algo-sim/.superpowers/worktrees/final-pre-merge-acceptance/docs/evaluation/geometry/runs/final-pre-merge-acceptance/images/fpa-landing-1920.png",
+      "bytes": 389660,
+      "sha256": "80a8a5708b63e345fa021828293a78042eec7b44915e1292d6f7046e9fd956ad"
+    },
+    "workspaceApp": {
+      "path": "D:/Documents/projects/algo-sim/.superpowers/worktrees/final-pre-merge-acceptance/docs/evaluation/geometry/runs/final-pre-merge-acceptance/images/fpa-workspace-app-1920.png",
+      "bytes": 31642,
+      "sha256": "b9721a0b762d6508920171be3fba37cf70a2f4a66764c9d0558a628c9c6fe77b"
+    },
+    "beforeEdit": {
+      "path": "D:/Documents/projects/algo-sim/.superpowers/worktrees/final-pre-merge-acceptance/docs/evaluation/geometry/runs/final-pre-merge-acceptance/images/fpa-1920-before-edit.png",
+      "bytes": 183888,
+      "sha256": "2fd05c52d68fb84d8c540660317c4419f8ebbcac9ba0d66c77e7a7469d267775"
+    },
+    "sbRenameP": {
+      "path": "D:/Documents/projects/algo-sim/.superpowers/worktrees/final-pre-merge-acceptance/docs/evaluation/geometry/runs/final-pre-merge-acceptance/images/fpa-1920-sb-rename-P.png",
+      "bytes": 177005,
+      "sha256": "e4d0bcda1f4b0a2b497d845f0897b33ed535157b21a9486c8ef2c2aadd56b14a"
+    },
+    "rollback422": {
+      "path": "D:/Documents/projects/algo-sim/.superpowers/worktrees/final-pre-merge-acceptance/docs/evaluation/geometry/runs/final-pre-merge-acceptance/images/fpa-1920-422-rollback.png",
+      "bytes": 153110,
+      "sha256": "c409cec5c1ee0e57dc7d3ee05be405c0f8878d01a0788edaccb4002c7ae73c5a"
+    },
+    "cascadeF5": {
+      "path": "D:/Documents/projects/algo-sim/.superpowers/worktrees/final-pre-merge-acceptance/docs/evaluation/geometry/runs/final-pre-merge-acceptance/images/fpa-1920-cascade-f5.png",
+      "bytes": 155158,
+      "sha256": "f92e3268f5549f949a946596336d044a88bd44c48db194c6e949bc30a1abb72e"
+    },
+    "vp_1920x1080": {
+      "path": "D:/Documents/projects/algo-sim/.superpowers/worktrees/final-pre-merge-acceptance/docs/evaluation/geometry/runs/final-pre-merge-acceptance/images/fpa-vp-1920x1080.png",
+      "bytes": 180533,
+      "sha256": "1bbd91f578f16db7f31cab32d4856ea74ebbc44ed7bc8fff71c9788b30cfd0ad"
+    },
+    "vp_1440x900": {
+      "path": "D:/Documents/projects/algo-sim/.superpowers/worktrees/final-pre-merge-acceptance/docs/evaluation/geometry/runs/final-pre-merge-acceptance/images/fpa-vp-1440x900.png",
+      "bytes": 150102,
+      "sha256": "911920fac33289317dfd7691843a1b35a537c033c99d2d53750252136580c9af"
+    },
+    "vp_1366x768": {
+      "path": "D:/Documents/projects/algo-sim/.superpowers/worktrees/final-pre-merge-acceptance/docs/evaluation/geometry/runs/final-pre-merge-acceptance/images/fpa-vp-1366x768.png",
+      "bytes": 127304,
+      "sha256": "b65df4575eefb4ae655339c44f8bba91fbd70763c4d5324f4d3324ce5702447f"
+    },
+    "vp_768x1024": {
+      "path": "D:/Documents/projects/algo-sim/.superpowers/worktrees/final-pre-merge-acceptance/docs/evaluation/geometry/runs/final-pre-merge-acceptance/images/fpa-vp-768x1024.png",
+      "bytes": 115448,
+      "sha256": "30d1d4d5004a919789683ea59288c36e738afbb776724687abb36c5cb1089c96"
+    },
+    "vp_390x844": {
+      "path": "D:/Documents/projects/algo-sim/.superpowers/worktrees/final-pre-merge-acceptance/docs/evaluation/geometry/runs/final-pre-merge-acceptance/images/fpa-vp-390x844.png",
+      "bytes": 50961,
+      "sha256": "a96f9a37b5c9b193eac2b47504ebd59b3f7d8839e37593183416c590c5170f40"
+    },
+    "vp_320x568": {
+      "path": "D:/Documents/projects/algo-sim/.superpowers/worktrees/final-pre-merge-acceptance/docs/evaluation/geometry/runs/final-pre-merge-acceptance/images/fpa-vp-320x568.png",
+      "bytes": 36255,
+      "sha256": "c295f33db52e21c850232c3f635850cf2f66c4c6ff1b543f9478548685649280"
+    },
+    "vkb390x460": {
+      "path": "D:/Documents/projects/algo-sim/.superpowers/worktrees/final-pre-merge-acceptance/docs/evaluation/geometry/runs/final-pre-merge-acceptance/images/fpa-vkb-390x460.png",
+      "bytes": 31855,
+      "sha256": "43e6fe5739088fe843e8612247d54ab3e5eae626ebf3e9624ec13c71791ed622"
+    },
+    "postRestart": {
+      "path": "D:/Documents/projects/algo-sim/.superpowers/worktrees/final-pre-merge-acceptance/docs/evaluation/geometry/runs/final-pre-merge-acceptance/images/fpa-post-restart.png",
+      "bytes": 122534,
+      "sha256": "9b0d6db8524d0ff7813741501176237216f658e6a1841cca985e13a2efc0df8b"
+    }
+  },
+  "consoleErrors": [],
+  "pageErrors": [],
+  "unexpected5xx": [],
+  "finishedAt": "2026-11-19T13:57:35.445Z",
+  "postBackendRestartRecovery": {
+    "status": "PASS",
+    "sessionId": "se-be5cdbf3-sample-chop-thiet-dien-ba-diem-55591bff",
+    "restoredCommittedVersion": 20,
+    "restoredLatestClientSeq": 25,
+    "restoredMxyz": [
+      "0",
+      "0",
+      "3/2"
+    ],
+    "postRestartEditStatus": 200,
+    "postRestartCommittedVersion": 21
+  },
+  "productScopeAcceptance": {
+    "checksTotal": 48,
+    "checksPassed": 48,
+    "failures": [],
+    "consoleErrors": [],
+    "pageErrors": [],
+    "pass": true,
+    "provenanceVersion": 2,
+    "sourceFingerprint": "eda6ced6c56f0827",
+    "dirtyRelevantSources": [],
+    "head": "897d70c9f9a3862ef5dcaa45a3f91ffd326e91ed"
+  },
+  "retiredClassroomCli": {
+    "command": "node scripts/accept-live-classroom.mjs --json",
+    "exit_code": 2,
+    "status": "CLASSROOM_FEATURE_RETIRED",
+    "preserved_legacy_tables": [
+      "classrooms",
+      "class_memberships",
+      "assignments",
+      "practice_sessions",
+      "classroom_sessions"
+    ]
+  },
+  "reaMcpVerification": {
+    "status": "PASS",
+    "cdp_endpoint": "http://127.0.0.1:9342",
+    "target_id": "960B9B7E25DA33DB2A16F4F4D37302BD",
+    "target_url": "http://localhost:3001/simulation/pyramid-circumscribed-sphere",
+    "inspect_evidence_id": "ev_fa4a00ad81912b9340bdb6088d2098dacad508563e3317678be70d2e4a61a140",
+    "screenshot_evidence_id": "ev_0a6f715b5201de505a1446bda128d2b34df457b1046b60f9faf550789d0bbd8e",
+    "dom_node_count": null,
+    "rea_console_errors": 0,
+    "screenshot": "images/fpa-rea-mcp.png",
+    "rea_shot_keys": [
+      "browser",
+      "target",
+      "captured_at",
+      "viewport",
+      "artifact",
+      "completeness",
+      "limitations"
+    ],
+    "screenshot_bytes": 150135,
+    "screenshot_sha256": "6cb0d56f69c6838fc6ee537158a68be86bb02d9f384647c40b031da3d5780537"
+  }
+}

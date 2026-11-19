@@ -1,0 +1,53 @@
+{
+  "gate": "B",
+  "gate_name": "PostgreSQL 16 Backup, Restore & Rollback Verification",
+  "status": "PASS",
+  "checked_at": "2026-11-19T13:47:12.171981+00:00",
+  "backup_archive_path": "D:\\Documents\\projects\\algo-sim\\.superpowers\\db-safety-backups\\2026-11-19-final-pre-merge-acceptance\\pg16_fpa_src.snapshot.tar.gz",
+  "backup_archive_sha256": "389b65588ec219b20b80dd43d5bffd908ee113ed892e0c0417563a13e897f38b",
+  "backup_archive_bytes": 15136,
+  "restore_verification": {
+    "table_count": 20,
+    "row_sha256_100pct_parity": true,
+    "constraints_and_indexes_parity": true,
+    "fk_enforced": true,
+    "unique_enforced": true,
+    "nextval_advanced": 3,
+    "post_restore_step_edit_2_status": 200,
+    "post_restore_committed_version": 2
+  },
+  "bb046fa22_rollback_verification": {
+    "baseline_main_commit": "bb046fa22aceff47abe22aa783aa64fc65caee13",
+    "mode_a_app_only_health": true,
+    "mode_a_authed_classes_200": true,
+    "mode_b1_non_destructive_downgrade_9c4d8e2b7a10": "PASS",
+    "mode_b2_startup_downgrade_blocked": "DOWNGRADE_FORBIDDEN_AT_STARTUP",
+    "mode_b2_unapproved_destructive_blocked": "DESTRUCTIVE_DOWNGRADE_DATA_LOSS_BLOCKED",
+    "mode_b2_approved_downgrade_tables_count": 17,
+    "mode_b2_legacy_classroom_100pct_parity": true
+  },
+  "protected_legacy_sqlite_db": {
+    "protected_path": "D:\\Documents\\projects\\algo-sim\\backend\\algosim.db",
+    "sha256_before_and_after": "39D676C7B50A925975828434A00D38E3BAC3C5F50E4E2A724A695768C7C83EE3",
+    "untouched": true,
+    "isolated_copy_table_count": 16,
+    "isolated_copy_row_counts": {
+      "admin_analysis_telemetry": 5,
+      "admin_audit_logs": 0,
+      "admin_system_settings": 0,
+      "analysis_usage_ledger": 5,
+      "assignments": 10,
+      "auth_sessions": 100,
+      "class_memberships": 20,
+      "classroom_sessions": 8,
+      "classrooms": 12,
+      "learning_history_entries": 0,
+      "practice_sessions": 16,
+      "reuse_metrics": 3,
+      "simulation_cache": 2,
+      "simulation_patterns": 0,
+      "user_account_meta": 11,
+      "users": 46
+    }
+  }
+}

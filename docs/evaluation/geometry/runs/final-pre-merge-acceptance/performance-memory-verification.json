@@ -1,0 +1,318 @@
+{
+  "backend_restart_recovery_N5": {
+    "n": 5,
+    "uvicorn_boot_to_health_ms": {
+      "p50_ms": 2357.529,
+      "p95_ms": 2405.711,
+      "p99_ms": 2411.716,
+      "min_ms": 2349.472,
+      "max_ms": 2413.217,
+      "mean_ms": 2370.593,
+      "samples_ms": [
+        2413.217,
+        2375.685,
+        2357.529,
+        2357.063,
+        2349.472
+      ]
+    },
+    "first_post_restart_pg16_state_fetch_ms": {
+      "p50_ms": 47.702,
+      "p95_ms": 64.268,
+      "p99_ms": 66.715,
+      "min_ms": 37.996,
+      "max_ms": 67.327,
+      "mean_ms": 49.257,
+      "samples_ms": [
+        47.702,
+        41.231,
+        37.996,
+        67.327,
+        52.031
+      ]
+    }
+  },
+  "commit": "897d70c9f9a3862ef5dcaa45a3f91ffd326e91ed",
+  "measured_at": "2026-11-19T14:03:14.694742+00:00",
+  "prior_osr_reference_baselines": {
+    "warm_s11_ms": {
+      "p50": 10.869,
+      "p95": 13.216
+    },
+    "pg16_http_commit_ms": {
+      "p50": 56.27,
+      "p95": 89.098
+    },
+    "frontend_e2e_ms": {
+      "p50": 196.833,
+      "p95": 255.098
+    },
+    "chromium_50_cycle_heap_delta_mb": 5.501
+  },
+  "cold_edit_subprocess": {
+    "runs": [
+      {
+        "import_ms": 623.213,
+        "cold_first_call_ms": 38.121,
+        "engine_total_ms": 19.512
+      },
+      {
+        "import_ms": 560.658,
+        "cold_first_call_ms": 27.606,
+        "engine_total_ms": 15.569
+      },
+      {
+        "import_ms": 598.447,
+        "cold_first_call_ms": 29.543,
+        "engine_total_ms": 16.983
+      }
+    ],
+    "cold_first_call_ms": {
+      "n": 3,
+      "p50_ms": 29.543,
+      "p95_ms": 37.263,
+      "p99_ms": 37.949,
+      "min_ms": 27.606,
+      "max_ms": 38.121,
+      "mean_ms": 31.757,
+      "iqr_ms": 5.257
+    },
+    "engine_total_ms": {
+      "n": 3,
+      "p50_ms": 16.983,
+      "p95_ms": 19.259,
+      "p99_ms": 19.461,
+      "min_ms": 15.569,
+      "max_ms": 19.512,
+      "mean_ms": 17.355,
+      "iqr_ms": 1.972
+    }
+  },
+  "warm_kernel_engine_N120": {
+    "s11_bisector_sb_partial_ms": {
+      "n": 120,
+      "p50_ms": 11.046,
+      "p95_ms": 17.718,
+      "p99_ms": 24.233,
+      "min_ms": 9.745,
+      "max_ms": 34.227,
+      "mean_ms": 12.475,
+      "iqr_ms": 2.59
+    },
+    "s1_ratio_cascade_partial_ms": {
+      "n": 120,
+      "p50_ms": 12.613,
+      "p95_ms": 19.82,
+      "p99_ms": 22.489,
+      "min_ms": 11.652,
+      "max_ms": 25.229,
+      "mean_ms": 13.63,
+      "iqr_ms": 1.345
+    }
+  },
+  "live_pg16_http": {
+    "endpoint": "http://127.0.0.1:18000/api/simulation/steps/edit",
+    "valid_commit_N40_http_rtt_ms": {
+      "n": 40,
+      "p50_ms": 70.352,
+      "p95_ms": 97.056,
+      "p99_ms": 110.354,
+      "min_ms": 42.478,
+      "max_ms": 117.548,
+      "mean_ms": 72.112,
+      "iqr_ms": 14.026
+    },
+    "valid_commit_N40_server_engine_ms": {
+      "n": 40,
+      "p50_ms": 15.681,
+      "p95_ms": 35.842,
+      "p99_ms": 63.312,
+      "min_ms": 12.719,
+      "max_ms": 68.953,
+      "mean_ms": 19.156,
+      "iqr_ms": 5.612
+    },
+    "valid_commit_N40_pg_commit_ms": {
+      "n": 40,
+      "p50_ms": 10.994,
+      "p95_ms": 19.558,
+      "p99_ms": 20.756,
+      "min_ms": 7.655,
+      "max_ms": 21.199,
+      "mean_ms": 12.402,
+      "iqr_ms": 5.413
+    },
+    "invalid_422_N30_ms": {
+      "n": 30,
+      "p50_ms": 36.413,
+      "p95_ms": 46.901,
+      "p99_ms": 49.406,
+      "min_ms": 21.109,
+      "max_ms": 50.2,
+      "mean_ms": 35.197,
+      "iqr_ms": 16.266
+    },
+    "conflict_409_N30_ms": {
+      "n": 30,
+      "p50_ms": 22.491,
+      "p95_ms": 31.05,
+      "p99_ms": 33.25,
+      "min_ms": 7.784,
+      "max_ms": 33.606,
+      "mean_ms": 22.962,
+      "iqr_ms": 6.193
+    },
+    "state_reload_N40_ms": {
+      "n": 40,
+      "p50_ms": 32.665,
+      "p95_ms": 47.202,
+      "p99_ms": 67.942,
+      "min_ms": 16.772,
+      "max_ms": 75.447,
+      "mean_ms": 32.447,
+      "iqr_ms": 16.638
+    }
+  },
+  "python_tracemalloc_50_cycles": {
+    "cycles": 50,
+    "retained_delta_kb_after_gc": 0.8,
+    "current_traced_kb": 0.69,
+    "peak_traced_kb": 694.04
+  },
+  "frontend_browser_e2e_metrics_N20": {
+    "status": "PASS",
+    "f5Retained": true,
+    "dockScrollIsolated": true,
+    "committedVersion": 20,
+    "probes409": {
+      "stale": {
+        "status": 409,
+        "code": "STALE_REVISION_CONFLICT"
+      },
+      "superseded": {
+        "status": 409,
+        "code": "EDIT_SUPERSEDED"
+      }
+    },
+    "ui_interaction_open_latency_ms": {
+      "iterations": 20,
+      "p50_ms": 40.998,
+      "p95_ms": 50.079,
+      "p99_ms": 75.579,
+      "min_ms": 28.408,
+      "max_ms": 81.954,
+      "mean_ms": 41.069,
+      "iqr_ms": 9.955
+    },
+    "frontend_update_completion_ms": {
+      "iterations": 20,
+      "p50_ms": 120.57,
+      "p95_ms": 180.121,
+      "p99_ms": 219.154,
+      "min_ms": 109.976,
+      "max_ms": 228.913,
+      "mean_ms": 130.908,
+      "iqr_ms": 11.772
+    },
+    "scene3d_post_edit_render_ms": {
+      "iterations": 20,
+      "p50_ms": 37.2,
+      "p95_ms": 71.155,
+      "p99_ms": 94.791,
+      "min_ms": 32.5,
+      "max_ms": 100.7,
+      "mean_ms": 43.505,
+      "iqr_ms": 14.575
+    },
+    "e2e_step_edit_roundtrip_ms": {
+      "iterations": 20,
+      "p50_ms": 223.369,
+      "p95_ms": 313.897,
+      "p99_ms": 338.617,
+      "min_ms": 199.699,
+      "max_ms": 344.797,
+      "mean_ms": 240.664,
+      "iqr_ms": 19.389
+    }
+  },
+  "cdp_memory_and_resource_lifecycle": {
+    "status": "PASS",
+    "snapshots": [
+      {
+        "phase": "1_library_initial_baseline",
+        "jsHeapUsedMB": 22.265,
+        "jsHeapTotalMB": 23.012,
+        "cdpNodes": 919,
+        "cdpJsEventListeners": 200,
+        "domCanvases": 0,
+        "scene3dCanvases": 0,
+        "domNodeCount": 714,
+        "webglCreatedTotal": 0,
+        "webglAliveNotLostCount": 0
+      },
+      {
+        "phase": "2_after_5_warmup_edits",
+        "jsHeapUsedMB": 31.211,
+        "jsHeapTotalMB": 32.23,
+        "cdpNodes": 718,
+        "cdpJsEventListeners": 301,
+        "domCanvases": 1,
+        "scene3dCanvases": 1,
+        "domNodeCount": 518,
+        "webglCreatedTotal": 1,
+        "webglAliveNotLostCount": 1
+      },
+      {
+        "phase": "3_after_50_sustained_edits",
+        "jsHeapUsedMB": 33.453,
+        "jsHeapTotalMB": 35.117,
+        "cdpNodes": 718,
+        "cdpJsEventListeners": 301,
+        "domCanvases": 1,
+        "scene3dCanvases": 1,
+        "domNodeCount": 518,
+        "webglCreatedTotal": 1,
+        "webglAliveNotLostCount": 1
+      },
+      {
+        "phase": "4_after_20_tab_problem_switches",
+        "jsHeapUsedMB": 35.354,
+        "jsHeapTotalMB": 36.48,
+        "cdpNodes": 800,
+        "cdpJsEventListeners": 313,
+        "domCanvases": 1,
+        "scene3dCanvases": 1,
+        "domNodeCount": 588,
+        "webglCreatedTotal": 1,
+        "webglAliveNotLostCount": 1
+      },
+      {
+        "phase": "5_unmounted_scene3d_on_library",
+        "jsHeapUsedMB": 33.95,
+        "jsHeapTotalMB": 35.48,
+        "cdpNodes": 1631,
+        "cdpJsEventListeners": 466,
+        "domCanvases": 0,
+        "scene3dCanvases": 0,
+        "domNodeCount": 767,
+        "webglCreatedTotal": 1,
+        "webglAliveNotLostCount": 1
+      }
+    ],
+    "deltas": {
+      "heapGrowthWarmupTo50EditsMB": 2.242,
+      "heapGrowth50To20SwitchesMB": 1.901,
+      "heapAfterUnmountVsWarmupMB": 2.739,
+      "nodeDelta50Edits": 0,
+      "listenerDelta50Edits": 0,
+      "nodeDeltaAfterUnmountVs50Edits": 913,
+      "listenerDeltaAfterUnmountVs50Edits": 165
+    },
+    "lifecycleClassification": {
+      "webglRendererPooling": "Scene3DWorkspace intentionally pools 1 shared WebGLRenderer singleton across problem switches (`webglCreatedTotal` remains bounded at 1 rather than creating 20 GPU contexts); on Scene3D unmount, `renderer.renderLists.dispose()`, geometry/material disposal, ResizeObserver/MutationObserver disconnect, and event listener removal all run cleanly.",
+      "domCanvasesReleasedOnUnmount": true,
+      "webglContextsCreatedAcrossFullRun": 1,
+      "unboundedLeakDetected": false
+    }
+  }
+}
