@@ -1,0 +1,61 @@
+{
+  "schema_version": "axo-evaluation-run/1",
+  "run_id": "axo-main-integration-and-push",
+  "task_slug": "axo-main-integration-and-push",
+  "date": "2026-11-19",
+  "branch": "main",
+  "source_branch": "release/axo-main-integration-rc",
+  "source_commit": "7c9ffdc8722601f79b12beb21acc43356b222d95",
+  "verified_code_commit": "804464adedf0661b1938943aae55b03ba12db003",
+  "original_main_commit": "bb046fa22aceff47abe22aa783aa64fc65caee13",
+  "merge_commit": "f7eb7f9bf37dba7101c0955e0fdabeee67636661",
+  "rollback_tag": "pre-axo-step-editor-main-bb046fa22",
+  "product_commit_sha": "600f5105d4222cd6835cc916b34d5cb3f11610e6",
+  "measured_system_tree_hash": "78edfa1784625e9bca8f1a4cd70b60359d198ba77530986903175a57e18206a7",
+  "measured_system_file_count": 109,
+  "cache_version": "132",
+  "owner_decisions_applied": {
+    "C-Classroom": "OPTION_B_IMPLEMENTED_AND_VERIFIED",
+    "C-Landing": "TECHNICAL_BASELINE_ONLY_NOT_DESIGN_APPROVED",
+    "C-Workspace": "INCLUDED_AS_AUDITED",
+    "C-Release": "MERGED_AND_PUSHED_VERIFIED"
+  },
+  "statuses": {
+    "FINAL_STATUS": "MERGED_AND_PUSHED_VERIFIED",
+    "DOCKER_RUNTIME_GATE": "PASS",
+    "DATABASE_SAFETY_GATE": "PASS",
+    "LANDING_PAGE_STATUS": "TECHNICAL_BASELINE_ONLY",
+    "MODEL_STATUS": "MODEL_NOT_TRAINED",
+    "PRODUCTION_DEPLOYMENT_VERIFIED": "NO",
+    "INDEPENDENT_H1_VALIDATION": "NOT_MEASURED"
+  },
+  "artifacts": {
+    "formal_report": "AXO-MAIN-INTEGRATION-AND-GIT-PUSH-REPORT.md",
+    "report": "report.md",
+    "landing_backlog": "landing-page-design-backlog.md",
+    "results": [
+      "results/browser-e2e-summary.json",
+      "results/docker-runtime-verification.json",
+      "results/gates-a-to-e-verification.json",
+      "results/post-merge-verification.json",
+      "results/postgres-recovery-verification.json",
+      "results/remote-push-verification.json"
+    ],
+    "images": [
+      "images/mi-1920-422-rollback.png",
+      "images/mi-1920-before-edit.png",
+      "images/mi-1920-cascade-f5.png",
+      "images/mi-1920-sb-rename-P.png",
+      "images/mi-landing-1920.png",
+      "images/mi-post-restart.png",
+      "images/mi-vkb-390x460.png",
+      "images/mi-vp-1366x768.png",
+      "images/mi-vp-1440x900.png",
+      "images/mi-vp-1920x1080.png",
+      "images/mi-vp-320x568.png",
+      "images/mi-vp-390x844.png",
+      "images/mi-vp-768x1024.png",
+      "images/mi-workspace-app-1920.png"
+    ]
+  }
+}

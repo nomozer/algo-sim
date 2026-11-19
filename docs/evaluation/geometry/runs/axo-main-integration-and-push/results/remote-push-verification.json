@@ -1,0 +1,22 @@
+{
+  "schema_version": "axo-remote-push-verification/1",
+  "remote_url": "https://github.com/nomozer/algo-sim.git",
+  "target_branch": "main",
+  "original_main_and_origin_main_sha": "bb046fa22aceff47abe22aa783aa64fc65caee13",
+  "merge_commit_push_verification": {
+    "pushed_at": "2026-11-19T16:40:59Z",
+    "local_main_sha": "f7eb7f9bf37dba7101c0955e0fdabeee67636661",
+    "origin_main_sha": "f7eb7f9bf37dba7101c0955e0fdabeee67636661",
+    "git_ls_remote_refs_heads_main": "f7eb7f9bf37dba7101c0955e0fdabeee67636661",
+    "github_api_branches_main_sha": "f7eb7f9bf37dba7101c0955e0fdabeee67636661",
+    "three_way_sha_match": true,
+    "force_push_used": false,
+    "github_actions_workflows_total": 0,
+    "github_deployments_count": 0,
+    "github_environments_total": 0,
+    "github_check_runs_total": 0,
+    "github_pages_enabled": false,
+    "production_deploy_triggered": false
+  },
+  "documentation_sync_commit_policy": "The final report commit on top of f7eb7f9bf37dba7101c0955e0fdabeee67636661 is verified via `check_publication_safety.py --range f7eb7f9bf37dba7101c0955e0fdabeee67636661..HEAD`, pushed non-force to `origin/main`, and 3-way verified in run completion checks without modifying product code."
+}
