@@ -1,5 +1,10 @@
 # EVIDENCE_INDEX.md — Chỉ mục bằng chứng và chuỗi đính chính (Master Evidence Index)
 
+## Correction — `step-editor-main-integration-audit` raw traceback log removal
+
+CORRECTS: `docs/evaluation/geometry/runs/step-editor-main-integration-audit/logs/phase-b-migration-safety.log` (`blob=3c31f2f74f7ba2e5f4a62e31a55ab2084eb32362`, `5,074` bytes, `sha256=94990008cde3ec4c92b01a43487865a3af6406cc995a4c7223284f34b773dcfd`).
+REMOVED_FROM_HEAD_AT: pre-merge publication hygiene cleanup on `release/axo-main-integration-rc` per `AGENTS.md §4` (raw Python traceback line in tip tree). Structured non-secret audit evidence remains intact in `docs/evaluation/geometry/runs/step-editor-main-integration-audit/results/phase-b-database-safety-audit.json`.
+
 ## Correction — `axo-attachment-scroll` local screenshots
 
 CORRECTS: `docs/evaluation/geometry/runs/axo-attachment-scroll/images/after-drag-end.png` and `images/mobile-swipe.png`.

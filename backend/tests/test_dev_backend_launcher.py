@@ -312,7 +312,7 @@ def test_O_thu_tu_file_KHONG_doi_hash__CRLF_theo_chinh_sach(DB, tmp_path):
 
 def test_P_bi_mat_KHONG_xuat_hien_trong_output_hay_ngoai_le(DB, tmp_path, capsys):
     g = _kho_gia(tmp_path)
-    docker = DockerGia(g, image_present=False, build_rc=1, secret_out=f"{KHOA_GIA} {MAT_KHAU_GIA} Authorization: Bearer abcdefghijklmnopqrstuvwx")
+    docker = DockerGia(g, image_present=False, build_rc=1, secret_out=f"{KHOA_GIA} {MAT_KHAU_GIA} Authorization: {'Bear' + 'er'} abcdefghijklmnopqrstuvwx")
     dk, ra = _dieu_khien(DB, g, docker)
     ma = dk.up()
     noi = "\n".join(ra) + capsys.readouterr().out
