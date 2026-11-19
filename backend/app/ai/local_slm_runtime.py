@@ -973,6 +973,7 @@ class LocalSlmRuntime:
         headers = {"Content-Type": "application/json", "Connection": "keep-alive"}
         for attempt in range(2):
             conn = self._http_conn if (self._http_conn is not None and self._http_port == port) else None
+            reused = conn is not None
             if conn is None:
                 self._close_http_conn()
                 conn = http.client.HTTPConnection("127.0.0.1", port, timeout=timeout_s)
@@ -995,9 +996,11 @@ class LocalSlmRuntime:
                 raise
             except (http.client.HTTPException, OSError) as exc:
                 self._close_http_conn()
-                # If the server process actually exited, fail immediately; if stale keep-alive or transient 10013, retry once
+                # If the server process actually exited, fail immediately. A REUSED socket the idle server already closed
+                # (Windows: 10053 aborted / 10054 reset / broken pipe / remote disconnect) is stale, not a crash; the
+                # transient 10013 also gets one retry. Live acceptance: idle > server keep-alive (~5 s) hit 10053 every time.
                 proc_dead = self._proc is not None and self._proc.poll() is not None
-                if attempt == 0 and not proc_dead and ("10013" in str(exc) or isinstance(exc, http.client.RemoteDisconnected) or "forcibly closed" in str(exc).lower()):
+                if attempt == 0 and not proc_dead and (reused or "10013" in str(exc)):
                     time.sleep(0.05)
                     continue
                 raise
