@@ -1,0 +1,374 @@
+{
+  "commit": "804464adedf0661b1938943aae55b03ba12db003",
+  "startedAt": "2026-11-19T16:23:05.545Z",
+  "baseUrl": "http://localhost:3001",
+  "backendUrl": "http://127.0.0.1:18000",
+  "hostPort8000ConflictNote": "127.0.0.1:8000 occupied by external user process (sqlite, cache_version=145); Vite :3001 configured via scratch vite-main-int.config.mjs to proxy /api -> http://127.0.0.1:18000 (PG16 algosim_main_int_live, git_sha=804464ade, cache_version=132).",
+  "proxyIdentityHealth": {
+    "db": "postgresql",
+    "git_sha": "804464adedf0661b1938943aae55b03ba12db003",
+    "cache_version": "132"
+  },
+  "routesAndWorkspaceFlows": {
+    "landingStatus": 200,
+    "landingPath": "/",
+    "appPathAfterCta": "/app",
+    "plusMenuOpened": true,
+    "attachmentRendered": true,
+    "libraryPathAfterF5": "/library",
+    "loginPathAfterF5": "/login"
+  },
+  "optionBHttp": [
+    {
+      "path": "/api/classes",
+      "status": 404,
+      "detail": "Not Found"
+    },
+    {
+      "path": "/api/assignments",
+      "status": 404,
+      "detail": "Not Found"
+    },
+    {
+      "path": "/api/classes/1/session",
+      "status": 404,
+      "detail": "Not Found"
+    }
+  ],
+  "unorbitedCameraInvariance": {
+    "status": "PASS",
+    "maxDeltaPx": 0,
+    "deltasPx": {
+      "S": 0,
+      "B": 0,
+      "C": 0,
+      "D": 0
+    }
+  },
+  "orbitedCameraInvariance": {
+    "status": "PASS",
+    "threeJsCameraPositionDelta": 0,
+    "threeJsCameraTargetDelta": 0
+  },
+  "stepEditorRenameAndZeroLeak": {
+    "status": "PASS",
+    "hoverPencilOpacity": "0 -> 1",
+    "pencilHiddenWhileEditing": true,
+    "staleAlphaRowsAfter": 0
+  },
+  "tabSwitchDuringEditDraft": {
+    "status": "PASS",
+    "draftTabActive": true,
+    "simTabCount": 2,
+    "returnedCleanly": true
+  },
+  "draftAndErrorPreservation": [
+    {
+      "case": "undefined_point_SZ",
+      "status": 422,
+      "errorCode": "MISSING_DEPENDENCY",
+      "draftPreserved": true
+    },
+    {
+      "case": "collinear_AOC",
+      "status": 422,
+      "errorCode": "COLLINEAR_POINTS",
+      "draftPreserved": true
+    },
+    {
+      "case": "unsupported_syntax",
+      "status": 422,
+      "errorCode": "UNSUPPORTED_STEP_SYNTAX",
+      "draftPreserved": true
+    }
+  ],
+  "cascadeAndE2EMetrics": {
+    "status": "PASS",
+    "f5Retained": true,
+    "dockScrollIsolated": true,
+    "committedVersion": 20,
+    "probes409": {
+      "stale": {
+        "status": 409,
+        "code": "STALE_REVISION_CONFLICT"
+      },
+      "superseded": {
+        "status": 409,
+        "code": "EDIT_SUPERSEDED"
+      }
+    },
+    "ui_interaction_open_latency_ms": {
+      "iterations": 20,
+      "p50_ms": 36.329,
+      "p95_ms": 72.315,
+      "p99_ms": 148.332,
+      "min_ms": 24.966,
+      "max_ms": 167.336,
+      "mean_ms": 44.716,
+      "iqr_ms": 10.019
+    },
+    "frontend_update_completion_ms": {
+      "iterations": 20,
+      "p50_ms": 161.876,
+      "p95_ms": 298.408,
+      "p99_ms": 333.429,
+      "min_ms": 119.088,
+      "max_ms": 342.184,
+      "mean_ms": 190.448,
+      "iqr_ms": 81.668
+    },
+    "scene3d_post_edit_render_ms": {
+      "iterations": 20,
+      "p50_ms": 42.2,
+      "p95_ms": 65.4,
+      "p99_ms": 68.44,
+      "min_ms": 0.4,
+      "max_ms": 69.2,
+      "mean_ms": 38.9,
+      "iqr_ms": 16.425
+    },
+    "e2e_step_edit_roundtrip_ms": {
+      "iterations": 20,
+      "p50_ms": 273.417,
+      "p95_ms": 474.884,
+      "p99_ms": 498.056,
+      "min_ms": 216.312,
+      "max_ms": 503.849,
+      "mean_ms": 312.705,
+      "iqr_ms": 100.546
+    }
+  },
+  "viewports": [
+    {
+      "width": 1920,
+      "height": 1080,
+      "mobileTouch": false,
+      "overflowX": 0,
+      "canvasVisible": true,
+      "runClipped": false,
+      "cancelClipped": false,
+      "runBtnHeightPx": 25,
+      "cancelBtnHeightPx": 25,
+      "textareaHeightPx": 32,
+      "textareaHorizontalOverflow": false,
+      "controlsOccludeActions": false,
+      "webglPhase": "healthy",
+      "canvasViewportHeightRatio": 0.965,
+      "clippedLabels": [],
+      "occludedSceneControls": []
+    },
+    {
+      "width": 1440,
+      "height": 900,
+      "mobileTouch": false,
+      "overflowX": 0,
+      "canvasVisible": true,
+      "runClipped": false,
+      "cancelClipped": false,
+      "runBtnHeightPx": 25,
+      "cancelBtnHeightPx": 25,
+      "textareaHeightPx": 32,
+      "textareaHorizontalOverflow": false,
+      "controlsOccludeActions": false,
+      "webglPhase": "healthy",
+      "canvasViewportHeightRatio": 0.958,
+      "clippedLabels": [],
+      "occludedSceneControls": []
+    },
+    {
+      "width": 1366,
+      "height": 768,
+      "mobileTouch": false,
+      "overflowX": 0,
+      "canvasVisible": true,
+      "runClipped": false,
+      "cancelClipped": false,
+      "runBtnHeightPx": 25,
+      "cancelBtnHeightPx": 25,
+      "textareaHeightPx": 32,
+      "textareaHorizontalOverflow": false,
+      "controlsOccludeActions": false,
+      "webglPhase": "healthy",
+      "canvasViewportHeightRatio": 0.951,
+      "clippedLabels": [],
+      "occludedSceneControls": []
+    },
+    {
+      "width": 768,
+      "height": 1024,
+      "mobileTouch": false,
+      "overflowX": 0,
+      "canvasVisible": true,
+      "runClipped": false,
+      "cancelClipped": false,
+      "runBtnHeightPx": 25,
+      "cancelBtnHeightPx": 25,
+      "textareaHeightPx": 48,
+      "textareaHorizontalOverflow": false,
+      "controlsOccludeActions": false,
+      "webglPhase": "healthy",
+      "canvasViewportHeightRatio": 0.963,
+      "clippedLabels": [],
+      "occludedSceneControls": []
+    },
+    {
+      "width": 390,
+      "height": 844,
+      "mobileTouch": true,
+      "overflowX": 0,
+      "canvasVisible": true,
+      "runClipped": false,
+      "cancelClipped": false,
+      "runBtnHeightPx": 30,
+      "cancelBtnHeightPx": 30,
+      "textareaHeightPx": 32,
+      "textareaHorizontalOverflow": false,
+      "controlsOccludeActions": false,
+      "webglPhase": "healthy",
+      "canvasViewportHeightRatio": 0.527,
+      "clippedLabels": [],
+      "occludedSceneControls": []
+    },
+    {
+      "width": 320,
+      "height": 568,
+      "mobileTouch": true,
+      "overflowX": 0,
+      "canvasVisible": true,
+      "runClipped": false,
+      "cancelClipped": false,
+      "runBtnHeightPx": 30,
+      "cancelBtnHeightPx": 30,
+      "textareaHeightPx": 48,
+      "textareaHorizontalOverflow": false,
+      "controlsOccludeActions": false,
+      "webglPhase": "healthy",
+      "canvasViewportHeightRatio": 0.515,
+      "clippedLabels": [],
+      "occludedSceneControls": []
+    }
+  ],
+  "touchAndVkb": {
+    "status": "PASS",
+    "pencilVisibleOnTouchActive": true,
+    "vkb390x460": {
+      "overflowX": 0,
+      "taInViewport": true,
+      "runInViewport": true,
+      "cancelInViewport": true
+    }
+  },
+  "screenshots": {
+    "landing": {
+      "path": "D:/Documents/projects/algo-sim/.superpowers/worktrees/axo-main-integration/docs/evaluation/geometry/runs/axo-main-integration-and-push/images/mi-landing-1920.png",
+      "bytes": 399655,
+      "sha256": "de878121908f7e32a2f335f840879d54b4060d10688f85eb3a175e16bcc35b6a"
+    },
+    "workspaceApp": {
+      "path": "D:/Documents/projects/algo-sim/.superpowers/worktrees/axo-main-integration/docs/evaluation/geometry/runs/axo-main-integration-and-push/images/mi-workspace-app-1920.png",
+      "bytes": 31642,
+      "sha256": "b9721a0b762d6508920171be3fba37cf70a2f4a66764c9d0558a628c9c6fe77b"
+    },
+    "beforeEdit": {
+      "path": "D:/Documents/projects/algo-sim/.superpowers/worktrees/axo-main-integration/docs/evaluation/geometry/runs/axo-main-integration-and-push/images/mi-1920-before-edit.png",
+      "bytes": 183888,
+      "sha256": "2fd05c52d68fb84d8c540660317c4419f8ebbcac9ba0d66c77e7a7469d267775"
+    },
+    "sbRenameP": {
+      "path": "D:/Documents/projects/algo-sim/.superpowers/worktrees/axo-main-integration/docs/evaluation/geometry/runs/axo-main-integration-and-push/images/mi-1920-sb-rename-P.png",
+      "bytes": 177015,
+      "sha256": "378156a7554e0ab25ad77f7410836344b779bd8679386ff57c1d2ec4e52ab4c0"
+    },
+    "rollback422": {
+      "path": "D:/Documents/projects/algo-sim/.superpowers/worktrees/axo-main-integration/docs/evaluation/geometry/runs/axo-main-integration-and-push/images/mi-1920-422-rollback.png",
+      "bytes": 152788,
+      "sha256": "a55667be1374c429bb9479b34aba5937237f69ce15636a91eb68430c66a5b55f"
+    },
+    "cascadeF5": {
+      "path": "D:/Documents/projects/algo-sim/.superpowers/worktrees/axo-main-integration/docs/evaluation/geometry/runs/axo-main-integration-and-push/images/mi-1920-cascade-f5.png",
+      "bytes": 155158,
+      "sha256": "f92e3268f5549f949a946596336d044a88bd44c48db194c6e949bc30a1abb72e"
+    },
+    "vp_1920x1080": {
+      "path": "D:/Documents/projects/algo-sim/.superpowers/worktrees/axo-main-integration/docs/evaluation/geometry/runs/axo-main-integration-and-push/images/mi-vp-1920x1080.png",
+      "bytes": 180533,
+      "sha256": "1bbd91f578f16db7f31cab32d4856ea74ebbc44ed7bc8fff71c9788b30cfd0ad"
+    },
+    "vp_1440x900": {
+      "path": "D:/Documents/projects/algo-sim/.superpowers/worktrees/axo-main-integration/docs/evaluation/geometry/runs/axo-main-integration-and-push/images/mi-vp-1440x900.png",
+      "bytes": 150102,
+      "sha256": "911920fac33289317dfd7691843a1b35a537c033c99d2d53750252136580c9af"
+    },
+    "vp_1366x768": {
+      "path": "D:/Documents/projects/algo-sim/.superpowers/worktrees/axo-main-integration/docs/evaluation/geometry/runs/axo-main-integration-and-push/images/mi-vp-1366x768.png",
+      "bytes": 127304,
+      "sha256": "b65df4575eefb4ae655339c44f8bba91fbd70763c4d5324f4d3324ce5702447f"
+    },
+    "vp_768x1024": {
+      "path": "D:/Documents/projects/algo-sim/.superpowers/worktrees/axo-main-integration/docs/evaluation/geometry/runs/axo-main-integration-and-push/images/mi-vp-768x1024.png",
+      "bytes": 115448,
+      "sha256": "30d1d4d5004a919789683ea59288c36e738afbb776724687abb36c5cb1089c96"
+    },
+    "vp_390x844": {
+      "path": "D:/Documents/projects/algo-sim/.superpowers/worktrees/axo-main-integration/docs/evaluation/geometry/runs/axo-main-integration-and-push/images/mi-vp-390x844.png",
+      "bytes": 50884,
+      "sha256": "b2c255d5a024c41dda566b0649e02f454eb645880871376682e5fb33f21f7378"
+    },
+    "vp_320x568": {
+      "path": "D:/Documents/projects/algo-sim/.superpowers/worktrees/axo-main-integration/docs/evaluation/geometry/runs/axo-main-integration-and-push/images/mi-vp-320x568.png",
+      "bytes": 36255,
+      "sha256": "89851a779d4cbe84b7611225d4d8d26fe696534467ce5eae9902843eb18b5ccc"
+    },
+    "vkb390x460": {
+      "path": "D:/Documents/projects/algo-sim/.superpowers/worktrees/axo-main-integration/docs/evaluation/geometry/runs/axo-main-integration-and-push/images/mi-vkb-390x460.png",
+      "bytes": 31855,
+      "sha256": "43e6fe5739088fe843e8612247d54ab3e5eae626ebf3e9624ec13c71791ed622"
+    },
+    "postRestart": {
+      "path": "D:/Documents/projects/algo-sim/.superpowers/worktrees/axo-main-integration/docs/evaluation/geometry/runs/axo-main-integration-and-push/images/mi-post-restart.png",
+      "bytes": 122805,
+      "sha256": "a1dafe8bbc1505448405bb899694f6e7a8f468bd2f4d314985942e45d4c8fe88"
+    }
+  },
+  "consoleErrors": [],
+  "pageErrors": [],
+  "unexpected5xx": [],
+  "finishedAt": "2026-11-19T16:24:16.888Z",
+  "postBackendRestartRecovery": {
+    "status": "PASS",
+    "sessionId": "se-be5cdbf3-sample-chop-thiet-dien-ba-diem-55591bff",
+    "restoredCommittedVersion": 20,
+    "restoredLatestClientSeq": 25,
+    "restoredMxyz": [
+      "0",
+      "0",
+      "3/2"
+    ],
+    "postRestartEditStatus": 200,
+    "postRestartCommittedVersion": 21
+  },
+  "productScopeAcceptance": {
+    "checksTotal": 48,
+    "checksPassed": 48,
+    "failures": [],
+    "consoleErrors": [],
+    "pageErrors": [],
+    "pass": true,
+    "provenanceVersion": 2,
+    "sourceFingerprint": "458c2604ce42cc7a",
+    "dirtyRelevantSources": [],
+    "head": "804464adedf0661b1938943aae55b03ba12db003"
+  },
+  "retiredClassroomCli": {
+    "command": "node scripts/accept-live-classroom.mjs --json",
+    "exit_code": 2,
+    "status": "CLASSROOM_FEATURE_RETIRED",
+    "preserved_legacy_tables": [
+      "classrooms",
+      "class_memberships",
+      "assignments",
+      "practice_sessions",
+      "classroom_sessions"
+    ]
+  }
+}

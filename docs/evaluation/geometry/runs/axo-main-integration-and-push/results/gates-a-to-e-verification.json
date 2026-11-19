@@ -1,0 +1,137 @@
+{
+  "schema_version": "axo-gates-a-to-e-verification/1",
+  "checked_at": "2026-11-19T16:28:00+00:00",
+  "worktree": "D:\\Documents\\projects\\algo-sim\\.superpowers\\worktrees\\axo-main-integration",
+  "branch": "release/axo-main-integration-rc",
+  "verified_code_commit": "804464adedf0661b1938943aae55b03ba12db003",
+  "baseline_main_commit": "bb046fa22aceff47abe22aa783aa64fc65caee13",
+  "measured_system_tree_hash": "78edfa1784625e9bca8f1a4cd70b60359d198ba77530986903175a57e18206a7",
+  "measured_system_file_count": 109,
+  "product_commit_sha": "600f5105d4222cd6835cc916b34d5cb3f11610e6",
+  "cache_version": "132",
+  "alembic_head": "f8a2c41d9e05",
+  "owner_decisions_applied": {
+    "C-Classroom": "OPTION_B_IMPLEMENTED_AND_VERIFIED",
+    "C-Landing": "TECHNICAL_BASELINE_ONLY_INCLUDED_NOT_DESIGN_APPROVED",
+    "C-Workspace": "INCLUDED_AS_AUDITED",
+    "C-Release": "AUTHORIZED_UPON_ALL_GATES_PASS"
+  },
+  "gate_a_repository_integrity": {
+    "status": "PASS",
+    "working_tree_clean": true,
+    "changed_files_vs_main": 817,
+    "delta_vs_final_pre_merge_acceptance_de6fafe6d": [
+      "M\tbackend/tests/test_dev_backend_launcher.py",
+      "M\tdocs/EVIDENCE_INDEX.md",
+      "D\tdocs/evaluation/geometry/runs/step-editor-main-integration-audit/logs/phase-b-migration-safety.log",
+      "M\tfrontend/src/simulations/domains/geometry/axo-pedagogical-presentation-hardening.test.tsx"
+    ],
+    "sensitive_extension_hits": 0,
+    "publication_safety_head_unexcepted": 0,
+    "publication_safety_head_pending_historical": 96,
+    "publication_safety_range_note": "Historical intermediate commit objects in bb046fa22..804464ade retained 3 prior lines (blob 8b341b58 fake test vector + blob 3c31f2f7 deleted log); zero real secrets or credentials anywhere and 0 unexcepted findings on HEAD.",
+    "freeze_verification_exit": 0,
+    "docs_ia_audit_exit": 0
+  },
+  "gate_b_backend_and_geometry": {
+    "status": "PASS",
+    "alembic_pg16_and_sqlite_exit": 0,
+    "alembic_pg16_preflight": "SAFE_NO_DESTRUCTIVE_OPERATIONS",
+    "alembic_check": "No new upgrade operations detected.",
+    "suites": {
+      "postgres_7_modules": {
+        "exit_code": 0,
+        "passed": 8,
+        "failed": 0,
+        "skipped": 0,
+        "deselected": 33,
+        "duration_s": 149.73,
+        "duration_ms": 151561
+      },
+      "geometry": {
+        "exit_code": 0,
+        "passed": 12000,
+        "failed": 0,
+        "skipped": 6,
+        "deselected": 3,
+        "xfailed": 9,
+        "duration_s": 601.30,
+        "duration_ms": 604533
+      },
+      "semantic_program": {
+        "exit_code": 0,
+        "passed": 1192,
+        "failed": 0,
+        "skipped": 1,
+        "duration_s": 47.99,
+        "duration_ms": 49975
+      },
+      "root_non_postgres_52_files": {
+        "exit_code": 0,
+        "files": 52,
+        "passed": 815,
+        "failed": 0,
+        "skipped": 0,
+        "deselected": 8,
+        "duration_s": 282.56,
+        "duration_ms": 284448
+      }
+    },
+    "total_pytest_passed": 14015,
+    "total_pytest_failed": 0
+  },
+  "gate_c_frontend": {
+    "status": "PASS",
+    "tsc_b": {
+      "exit_code": 0,
+      "duration_ms": 8635
+    },
+    "vite_production_build": {
+      "exit_code": 0,
+      "duration_ms": 11295,
+      "vite_build_s": 7.64,
+      "modules_transformed": 129
+    },
+    "vitest_default_workers": {
+      "exit_code": 0,
+      "files_passed": 193,
+      "files_total": 193,
+      "tests_passed": 2278,
+      "tests_failed": 0,
+      "duration_s": 154.91,
+      "duration_ms": 157898,
+      "sweep_22_samples_duration_ms": 5340
+    },
+    "playwright_e2e_summary": "results/browser-e2e-summary.json",
+    "accept_product_scope": "48/48 PASS (sourceFingerprint=458c2604ce42cc7a)",
+    "accept_live_classroom": "exit 2 CLASSROOM_FEATURE_RETIRED",
+    "e2e_roundtrip_p50_ms": 273.417,
+    "e2e_roundtrip_p95_ms": 474.884,
+    "viewports_overflow_x_zero": 6,
+    "vkb_390x460_pass": true,
+    "post_restart_pg16_recovery": "PASS (committedVersion 20 -> 21, M=[0,0,3/2])"
+  },
+  "gate_d_database_safety": {
+    "status": "PASS",
+    "evidence": "results/postgres-recovery-verification.json",
+    "backup_archive_bytes": 15143,
+    "backup_archive_sha256": "552c210da51f1cefdccda79ad2d564235bac4f83585890af8805d4bca755c725",
+    "restore_tables_20_sha256_parity": true,
+    "bb046fa22_rollback_modes_a_b1_b2": "PASS",
+    "protected_algosim_db_sha256": "39D676C7B50A925975828434A00D38E3BAC3C5F50E4E2A724A695768C7C83EE3",
+    "protected_algosim_db_untouched": true
+  },
+  "gate_e_docker_runtime": {
+    "status": "PASS",
+    "evidence": "results/docker-runtime-verification.json",
+    "docker_engine": "29.9.2 (linux/x86_64, Docker Desktop 4.97.0)",
+    "pg_container": "postgres:16-alpine (16.16)",
+    "built_image_id": "sha256:c3f3219b8244993b630c03ddf31a714019192822d89878529374ca4c67ad9bf9",
+    "boot1_healthy_ms": 5460.39,
+    "boot2_restart_healthy_ms": 6213.72,
+    "fail_closed_negative_scenarios_passed": 6,
+    "official_pg_dump_bytes": 82073,
+    "official_pg_dump_sha256": "0e6e9ea6ec3a11fb4d56f473f136f2189158599ff3bb81535e372a6c2dad971d",
+    "post_restore_step_edit_2_committed_version": 2
+  }
+}
