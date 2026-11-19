@@ -1,0 +1,173 @@
+{
+  "audited_at": "2026-11-19T06:20:48.268869+00:00",
+  "docker_host_probe": {
+    "docker_cli": "C:\\Program Files\\Docker\\Docker\\resources\\bin\\docker.EXE",
+    "docker_info_exit": 1,
+    "daemon_available": false,
+    "diagnostic": "failed to connect to the docker API at npipe:////./pipe/dockerDesktopLinuxEngine; check if the path is correct and if the daemon is running: open //./pipe/dockerDesktopLinuxEngine: The system cannot find the file specified."
+  },
+  "docker_container_verification_status": "BLOCKED_ENVIRONMENT",
+  "dockerfile_static_contract": {
+    "has_startup_env": true,
+    "has_preflight_in_cmd": true,
+    "copies_alembic": true
+  },
+  "equivalent_uvicorn_pg16_startup_status": "PASS",
+  "scenarios_tested": {
+    "valid_pg16_boot_and_restart": {
+      "boot1": {
+        "started_uvicorn": true,
+        "preflight_exit_code": 0,
+        "alembic_exit_code": 0,
+        "health_status": 200,
+        "health_ok": true,
+        "health_db": "postgresql"
+      },
+      "boot2": {
+        "started_uvicorn": true,
+        "preflight_exit_code": 0,
+        "alembic_exit_code": 0,
+        "health_status": 200,
+        "health_ok": true,
+        "health_db": "postgresql"
+      }
+    },
+    "unstamped_root_copy_aborted_safely": {
+      "started_uvicorn": false,
+      "stopped_at": "migration_preflight",
+      "preflight_exit_code": 23,
+      "preflight_json": {
+        "dialect": "sqlite",
+        "direction": "upgrade",
+        "target_rev": "head",
+        "startup_mode": true,
+        "db_revisions": [],
+        "script_heads": [
+          "f8a2c41d9e05"
+        ],
+        "user_tables_count": 16,
+        "destructive_operations": [],
+        "retained_legacy_tables_present": [
+          "assignments",
+          "class_memberships",
+          "classroom_sessions",
+          "classrooms",
+          "practice_sessions"
+        ],
+        "allowed": false,
+        "reason_code": "UNSTAMPED_EXISTING_DATABASE",
+        "existing_table_row_counts": {
+          "admin_analysis_telemetry": 5,
+          "admin_audit_logs": 0,
+          "admin_system_settings": 0,
+          "analysis_usage_ledger": 5,
+          "assignments": 10,
+          "auth_sessions": 100,
+          "class_memberships": 20,
+          "classroom_sessions": 8,
+          "classrooms": 12,
+          "learning_history_entries": 0,
+          "practice_sessions": 16,
+          "reuse_metrics": 3,
+          "simulation_cache": 2,
+          "simulation_patterns": 0,
+          "user_account_meta": 11,
+          "users": 46
+        },
+        "message": "Existing non-empty schema has no alembic_version stamp. Refusing automatic alembic upgrade/stamp; back up database, inspect schema parity against migrations, and migrate under explicit operator control."
+      },
+      "sha256_preserved": true
+    },
+    "schema_drift_aborted_safely": {
+      "started_uvicorn": false,
+      "stopped_at": "migration_preflight",
+      "preflight_exit_code": 23,
+      "preflight_json": {
+        "dialect": "sqlite",
+        "direction": "upgrade",
+        "target_rev": "head",
+        "startup_mode": true,
+        "db_revisions": [
+          "f8a2c41d9e05"
+        ],
+        "script_heads": [
+          "f8a2c41d9e05"
+        ],
+        "user_tables_count": 19,
+        "destructive_operations": [],
+        "retained_legacy_tables_present": [
+          "assignments",
+          "class_memberships",
+          "classroom_sessions",
+          "classrooms",
+          "practice_sessions"
+        ],
+        "planned_revisions": [],
+        "allowed": false,
+        "reason_code": "SCHEMA_DRIFT_DETECTED",
+        "drift_details": {
+          "missing_tables": [],
+          "missing_columns": {},
+          "unexpected_columns": {
+            "reuse_metrics": [
+              "unexpected_col"
+            ]
+          }
+        },
+        "message": "Live schema drifted from Alembic history through revision 'f8a2c41d9e05': missing tables/columns or unexpected columns detected."
+      }
+    },
+    "destructive_migration_aborted_safely": {
+      "started_uvicorn": false,
+      "stopped_at": "migration_preflight",
+      "preflight_exit_code": 23,
+      "preflight_json": {
+        "dialect": "sqlite",
+        "direction": "upgrade",
+        "target_rev": "head",
+        "startup_mode": true,
+        "db_revisions": [
+          "f8a2c41d9e05"
+        ],
+        "script_heads": [
+          "deadc0de0001"
+        ],
+        "user_tables_count": 19,
+        "destructive_operations": [
+          {
+            "revision": "deadc0de0001",
+            "script": "deadc0de_bad.py",
+            "direction": "upgrade",
+            "live_row_count": 0,
+            "operation": "drop_table",
+            "table": "users",
+            "column": null,
+            "line": 7
+          }
+        ],
+        "retained_legacy_tables_present": [
+          "assignments",
+          "class_memberships",
+          "classroom_sessions",
+          "classrooms",
+          "practice_sessions"
+        ],
+        "planned_revisions": [
+          "deadc0de0001"
+        ],
+        "allowed": false,
+        "reason_code": "DESTRUCTIVE_MIGRATION_FORBIDDEN_AT_STARTUP",
+        "message": "Blocked destructive upgrade revision(s) ['deadc0de0001'] during container/app startup. Automatic `alembic upgrade head` must never execute DROP/TRUNCATE/DELETE operations."
+      }
+    }
+  },
+  "observed_vs_inferred_note": {
+    "directly_verified": [
+      "docker info exit 1 (Docker Desktop Linux engine pipe unavailable on host)",
+      "Exact shell-equivalent startup execution (`ALGOSIM_STARTUP_MODE=1` preflight -> `alembic upgrade head` -> `uvicorn`) on live PG16 and failure DBs"
+    ],
+    "inferred_from_static_and_unit_tests": [
+      "Actual multi-stage Docker image build/layer extraction (`COPY`, non-root image environment, OS signal forwarding) cannot run without Docker daemon and stays BLOCKED_ENVIRONMENT."
+    ]
+  }
+}

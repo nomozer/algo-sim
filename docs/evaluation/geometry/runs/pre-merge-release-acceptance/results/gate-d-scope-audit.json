@@ -1,0 +1,528 @@
+{
+  "audited_at": "2026-11-19T06:56:31.818492+00:00",
+  "baseline_main": "bb046fa22aceff47abe22aa783aa64fc65caee13",
+  "prior_reported_rc_aa860d7de": {
+    "commit_count": 116,
+    "file_count": 642,
+    "git_name_status_counts": {
+      "M": 92,
+      "A": 530,
+      "D": 18,
+      "R": 2
+    },
+    "file_categories": {
+      "auth_classroom_retirement": {
+        "count": 7,
+        "sample_files": [
+          "backend/app/accounts/__init__.py",
+          "backend/app/accounts/classroom_router.py",
+          "backend/app/accounts/policy.py",
+          "backend/app/accounts/router.py",
+          "backend/app/accounts/service.py",
+          "backend/app/accounts/session_router.py",
+          "backend/app/persistence/classroom_models.py"
+        ]
+      },
+      "database_migration": {
+        "count": 4,
+        "sample_files": [
+          "backend/alembic/env.py",
+          "backend/alembic/migration_preflight.py",
+          "backend/alembic/versions/9c4d8e2b7a10_add_step_edit_tables.py",
+          "backend/alembic/versions/f8a2c41d9e05_remove_classroom_and_live_session_tables.py"
+        ]
+      },
+      "geometry_kernel_scene3d_semantic": {
+        "count": 55,
+        "sample_files": [
+          "backend/app/simulation/geometry/__init__.py",
+          "backend/app/simulation/geometry/curved.py",
+          "backend/app/simulation/geometry/kernel.py",
+          "backend/app/simulation/geometry_functions/feedback_dataset.py",
+          "backend/app/simulation/semantic_program/display_names.py",
+          "frontend/src/components/geometry2d/family-icons.tsx",
+          "frontend/src/components/geometry2d/geometry2d-illustration-system.test.tsx",
+          "frontend/src/components/geometry2d/index.ts",
+          "frontend/src/components/geometry2d/primitives.tsx",
+          "frontend/src/components/geometry2d/resolver.ts",
+          "frontend/src/components/geometry2d/templates.tsx",
+          "frontend/src/data/advanced-geometry-samples.json",
+          "frontend/src/data/geometry-samples.ts",
+          "frontend/src/data/offline-catalog.ts",
+          "frontend/src/simulations/domains/geometry/Scene3DExplorer.tsx",
+          "frontend/src/simulations/domains/geometry/__fixtures__/coplanar-euclidean-sections.fixture.json",
+          "frontend/src/simulations/domains/geometry/axo-cross-family-scene3d-acceptance.test.tsx",
+          "frontend/src/simulations/domains/geometry/axo-reliability-gate.test.tsx",
+          "frontend/src/simulations/domains/geometry/backend-dynamic-scene3d-contract.test.tsx",
+          "frontend/src/simulations/domains/geometry/backend-geometry-contracts.test.ts"
+        ]
+      },
+      "landing_page_ui": {
+        "count": 17,
+        "sample_files": [
+          "frontend/src/components/LandingView.tsx",
+          "frontend/src/components/landing/AnnotatedHeading.tsx",
+          "frontend/src/components/landing/LandingClosingScene3D.tsx",
+          "frontend/src/components/landing/LandingClosingSculpture.tsx",
+          "frontend/src/components/landing/LandingClosingV14.tsx",
+          "frontend/src/components/landing/LandingExplainerAnimation.tsx",
+          "frontend/src/components/landing/LandingHeader.tsx",
+          "frontend/src/components/landing/LandingHeroScene3D.tsx",
+          "frontend/src/components/landing/LandingHeroSculpture3D.tsx",
+          "frontend/src/components/landing/LandingHeroV14.tsx",
+          "frontend/src/components/landing/LandingIllustrationAccents.tsx",
+          "frontend/src/components/landing/LandingInteractiveDemo.tsx",
+          "frontend/src/components/landing/LandingPreviewV14.tsx",
+          "frontend/src/components/landing/LandingStorytelling.tsx",
+          "frontend/src/components/landing/LandingStorytellingV14.tsx",
+          "frontend/src/components/landing/landing-geometry-data.ts",
+          "frontend/src/components/landing/landing.css"
+        ]
+      },
+      "other_config_scripts": {
+        "count": 16,
+        "sample_files": [
+          ".gitignore",
+          "GEOMETRY_VISUAL_SPEC.md",
+          "backend/scripts/build_advanced_geometry_samples.py",
+          "backend/scripts/prepare_step_feedback_dataset.py",
+          "backend/scripts/seed_classroom_fixture.py",
+          "backend/scripts/seed_demo_accounts.py",
+          "frontend/index.html",
+          "frontend/package-lock.json",
+          "frontend/package.json",
+          "frontend/public/favicon-16x16.png",
+          "frontend/public/favicon-32x32.png",
+          "frontend/public/favicon.svg",
+          "frontend/scripts/attachment-resize.node-test.mjs",
+          "frontend/src/App.tsx",
+          "frontend/src/llm/input.ts",
+          "frontend/src/main.tsx"
+        ]
+      },
+      "platform_app_wiring": {
+        "count": 2,
+        "sample_files": [
+          "backend/Dockerfile",
+          "backend/app/main.py"
+        ]
+      },
+      "step_editor_core": {
+        "count": 6,
+        "sample_files": [
+          "backend/app/ai/step_edit_route.py",
+          "backend/app/persistence/step_edit_models.py",
+          "backend/app/simulation/geometry_functions/step_editor.py",
+          "backend/app/simulation/step_edit_router.py",
+          "frontend/src/components/ConstructionStepEditor.tsx",
+          "frontend/src/state/construction-step-edits.ts"
+        ]
+      },
+      "tests_docs_eval": {
+        "count": 440,
+        "sample_files": [
+          "backend/tests/geometry/test_axo_11_advanced_samples.py",
+          "backend/tests/geometry/test_editable_construction_steps.py",
+          "backend/tests/geometry/test_step_editor_final_premerge.py",
+          "backend/tests/geometry/test_step_editor_independent_acceptance.py",
+          "backend/tests/geometry/test_step_editor_integration_closure.py",
+          "backend/tests/geometry/test_step_editor_main_release_acceptance.py",
+          "backend/tests/geometry/test_step_editor_root_cause_stabilization.py",
+          "backend/tests/geometry/test_step_editor_v22_reliability.py",
+          "backend/tests/semantic_program/test_display_names_incidence_cycle.py",
+          "backend/tests/test_auth_api.py",
+          "backend/tests/test_classroom_api.py",
+          "backend/tests/test_database_safety_closure.py",
+          "backend/tests/test_dev_backend_launcher.py",
+          "backend/tests/test_guest_trial.py",
+          "backend/tests/test_hybrid_product_integration.py",
+          "backend/tests/test_live_session_api.py",
+          "backend/tests/test_postgres_axo_history_migration.py",
+          "backend/tests/test_postgres_integration.py",
+          "docs/CLASSROOM_AUTH_CONTRACT.md",
+          "docs/CODE_INDEX.md"
+        ]
+      },
+      "workspace_attachment_ui": {
+        "count": 95,
+        "sample_files": [
+          "frontend/src/components/AssignDialog.tsx",
+          "frontend/src/components/AssignmentsView.tsx",
+          "frontend/src/components/AuthGate.tsx",
+          "frontend/src/components/AxoErrorExperience.tsx",
+          "frontend/src/components/ClassesView.tsx",
+          "frontend/src/components/ErrorBoundary.tsx",
+          "frontend/src/components/HomeView.tsx",
+          "frontend/src/components/LeftSidebar.tsx",
+          "frontend/src/components/LibraryView.tsx",
+          "frontend/src/components/LiveClassDock.tsx",
+          "frontend/src/components/LiveClassStrip.tsx",
+          "frontend/src/components/MonitorRoute.tsx",
+          "frontend/src/components/MonitorView.tsx",
+          "frontend/src/components/ObserveView.tsx",
+          "frontend/src/components/PdfPreview.tsx",
+          "frontend/src/components/PracticeReporter.tsx",
+          "frontend/src/components/ProblemInput.tsx",
+          "frontend/src/components/SamplePreview.tsx",
+          "frontend/src/components/ScreenCaptureDialog.tsx",
+          "frontend/src/components/SessionCard.tsx"
+        ]
+      }
+    },
+    "note": "aa860d7de added 35 run evidence files on top of 0fe3873a4's 115 commits / 607 files."
+  },
+  "current_acceptance_branch": {
+    "branch": "release/axo-pre-merge-final-acceptance",
+    "head": "2a44ac92125a1c2df8017dcfa909d0124365d871",
+    "commit_count_vs_main": 121,
+    "file_count_vs_main": 644,
+    "git_name_status_counts": {
+      "M": 93,
+      "A": 531,
+      "D": 18,
+      "R": 2
+    },
+    "file_categories": {
+      "auth_classroom_retirement": {
+        "count": 7,
+        "sample_files": [
+          "backend/app/accounts/__init__.py",
+          "backend/app/accounts/classroom_router.py",
+          "backend/app/accounts/policy.py",
+          "backend/app/accounts/router.py",
+          "backend/app/accounts/service.py",
+          "backend/app/accounts/session_router.py",
+          "backend/app/persistence/classroom_models.py"
+        ]
+      },
+      "database_migration": {
+        "count": 4,
+        "sample_files": [
+          "backend/alembic/env.py",
+          "backend/alembic/migration_preflight.py",
+          "backend/alembic/versions/9c4d8e2b7a10_add_step_edit_tables.py",
+          "backend/alembic/versions/f8a2c41d9e05_remove_classroom_and_live_session_tables.py"
+        ]
+      },
+      "geometry_kernel_scene3d_semantic": {
+        "count": 55,
+        "sample_files": [
+          "backend/app/simulation/geometry/__init__.py",
+          "backend/app/simulation/geometry/curved.py",
+          "backend/app/simulation/geometry/kernel.py",
+          "backend/app/simulation/geometry_functions/feedback_dataset.py",
+          "backend/app/simulation/semantic_program/display_names.py",
+          "frontend/src/components/geometry2d/family-icons.tsx",
+          "frontend/src/components/geometry2d/geometry2d-illustration-system.test.tsx",
+          "frontend/src/components/geometry2d/index.ts",
+          "frontend/src/components/geometry2d/primitives.tsx",
+          "frontend/src/components/geometry2d/resolver.ts",
+          "frontend/src/components/geometry2d/templates.tsx",
+          "frontend/src/data/advanced-geometry-samples.json",
+          "frontend/src/data/geometry-samples.ts",
+          "frontend/src/data/offline-catalog.ts",
+          "frontend/src/simulations/domains/geometry/Scene3DExplorer.tsx",
+          "frontend/src/simulations/domains/geometry/__fixtures__/coplanar-euclidean-sections.fixture.json",
+          "frontend/src/simulations/domains/geometry/axo-cross-family-scene3d-acceptance.test.tsx",
+          "frontend/src/simulations/domains/geometry/axo-reliability-gate.test.tsx",
+          "frontend/src/simulations/domains/geometry/backend-dynamic-scene3d-contract.test.tsx",
+          "frontend/src/simulations/domains/geometry/backend-geometry-contracts.test.ts"
+        ]
+      },
+      "landing_page_ui": {
+        "count": 17,
+        "sample_files": [
+          "frontend/src/components/LandingView.tsx",
+          "frontend/src/components/landing/AnnotatedHeading.tsx",
+          "frontend/src/components/landing/LandingClosingScene3D.tsx",
+          "frontend/src/components/landing/LandingClosingSculpture.tsx",
+          "frontend/src/components/landing/LandingClosingV14.tsx",
+          "frontend/src/components/landing/LandingExplainerAnimation.tsx",
+          "frontend/src/components/landing/LandingHeader.tsx",
+          "frontend/src/components/landing/LandingHeroScene3D.tsx",
+          "frontend/src/components/landing/LandingHeroSculpture3D.tsx",
+          "frontend/src/components/landing/LandingHeroV14.tsx",
+          "frontend/src/components/landing/LandingIllustrationAccents.tsx",
+          "frontend/src/components/landing/LandingInteractiveDemo.tsx",
+          "frontend/src/components/landing/LandingPreviewV14.tsx",
+          "frontend/src/components/landing/LandingStorytelling.tsx",
+          "frontend/src/components/landing/LandingStorytellingV14.tsx",
+          "frontend/src/components/landing/landing-geometry-data.ts",
+          "frontend/src/components/landing/landing.css"
+        ]
+      },
+      "other_config_scripts": {
+        "count": 17,
+        "sample_files": [
+          ".gitignore",
+          "GEOMETRY_VISUAL_SPEC.md",
+          "backend/conftest.py",
+          "backend/scripts/build_advanced_geometry_samples.py",
+          "backend/scripts/prepare_step_feedback_dataset.py",
+          "backend/scripts/seed_classroom_fixture.py",
+          "backend/scripts/seed_demo_accounts.py",
+          "frontend/index.html",
+          "frontend/package-lock.json",
+          "frontend/package.json",
+          "frontend/public/favicon-16x16.png",
+          "frontend/public/favicon-32x32.png",
+          "frontend/public/favicon.svg",
+          "frontend/scripts/attachment-resize.node-test.mjs",
+          "frontend/src/App.tsx",
+          "frontend/src/llm/input.ts",
+          "frontend/src/main.tsx"
+        ]
+      },
+      "platform_app_wiring": {
+        "count": 2,
+        "sample_files": [
+          "backend/Dockerfile",
+          "backend/app/main.py"
+        ]
+      },
+      "step_editor_core": {
+        "count": 6,
+        "sample_files": [
+          "backend/app/ai/step_edit_route.py",
+          "backend/app/persistence/step_edit_models.py",
+          "backend/app/simulation/geometry_functions/step_editor.py",
+          "backend/app/simulation/step_edit_router.py",
+          "frontend/src/components/ConstructionStepEditor.tsx",
+          "frontend/src/state/construction-step-edits.ts"
+        ]
+      },
+      "tests_docs_eval": {
+        "count": 441,
+        "sample_files": [
+          "backend/tests/geometry/test_axo_11_advanced_samples.py",
+          "backend/tests/geometry/test_editable_construction_steps.py",
+          "backend/tests/geometry/test_step_editor_final_premerge.py",
+          "backend/tests/geometry/test_step_editor_independent_acceptance.py",
+          "backend/tests/geometry/test_step_editor_integration_closure.py",
+          "backend/tests/geometry/test_step_editor_main_release_acceptance.py",
+          "backend/tests/geometry/test_step_editor_root_cause_stabilization.py",
+          "backend/tests/geometry/test_step_editor_v22_reliability.py",
+          "backend/tests/semantic_program/test_display_names_incidence_cycle.py",
+          "backend/tests/test_auth_api.py",
+          "backend/tests/test_classroom_api.py",
+          "backend/tests/test_database_safety_closure.py",
+          "backend/tests/test_dev_backend_launcher.py",
+          "backend/tests/test_guest_trial.py",
+          "backend/tests/test_hybrid_product_integration.py",
+          "backend/tests/test_live_session_api.py",
+          "backend/tests/test_postgres_axo_history_migration.py",
+          "backend/tests/test_postgres_integration.py",
+          "backend/tests/test_pre_merge_release_acceptance.py",
+          "docs/CLASSROOM_AUTH_CONTRACT.md"
+        ]
+      },
+      "workspace_attachment_ui": {
+        "count": 95,
+        "sample_files": [
+          "frontend/src/components/AssignDialog.tsx",
+          "frontend/src/components/AssignmentsView.tsx",
+          "frontend/src/components/AuthGate.tsx",
+          "frontend/src/components/AxoErrorExperience.tsx",
+          "frontend/src/components/ClassesView.tsx",
+          "frontend/src/components/ErrorBoundary.tsx",
+          "frontend/src/components/HomeView.tsx",
+          "frontend/src/components/LeftSidebar.tsx",
+          "frontend/src/components/LibraryView.tsx",
+          "frontend/src/components/LiveClassDock.tsx",
+          "frontend/src/components/LiveClassStrip.tsx",
+          "frontend/src/components/MonitorRoute.tsx",
+          "frontend/src/components/MonitorView.tsx",
+          "frontend/src/components/ObserveView.tsx",
+          "frontend/src/components/PdfPreview.tsx",
+          "frontend/src/components/PracticeReporter.tsx",
+          "frontend/src/components/ProblemInput.tsx",
+          "frontend/src/components/SamplePreview.tsx",
+          "frontend/src/components/ScreenCaptureDialog.tsx",
+          "frontend/src/components/SessionCard.tsx"
+        ]
+      }
+    },
+    "commits_since_aa860d7de": [
+      {
+        "sha": "67af0f8f94d2e9ebc60f7f181f22286c95e04441",
+        "subject": "fix(pre-merge): enforce pre-DDL drift/partial-migration guards and clear stale step-edit metadata",
+        "files": [
+          "backend/alembic/migration_preflight.py",
+          "backend/app/simulation/geometry_functions/step_editor.py",
+          "backend/tests/test_pre_merge_release_acceptance.py"
+        ]
+      },
+      {
+        "sha": "36e7c11a0c2b71242345c9c740a05374187040dc",
+        "subject": "chore(eval): refreeze evaluation candidate after pre-merge root-cause fixes",
+        "files": [
+          "docs/evaluation/semantic-benchmark/EVALUATION_CANDIDATE.json"
+        ]
+      },
+      {
+        "sha": "7259a3eca380b46776337ebcd9f69cd44037b01c",
+        "subject": "chore(seal): sync C21 pilot approval templates to refrozen measured_system",
+        "files": [
+          "docs/evaluation/geometry/runs/hybrid-master-backend-replacement/k1-owner-approval.template.json",
+          "docs/evaluation/geometry/runs/hybrid-master-backend-replacement/r1-owner-approval.template.json",
+          "docs/evaluation/geometry/runs/hybrid-master-backend-replacement/s2-owner-approval.template.json"
+        ]
+      },
+      {
+        "sha": "dbd33de2ec60f3f05d1cba12bf530e989879ba53",
+        "subject": "fix(tests): isolate pytest ephemeral SQLite DB by session nonce and dispose handles on exit",
+        "files": [
+          "backend/conftest.py",
+          "backend/tests/test_pre_merge_release_acceptance.py"
+        ]
+      },
+      {
+        "sha": "2a44ac92125a1c2df8017dcfa909d0124365d871",
+        "subject": "test(pre-merge): make 46-user unstamped SQLite migration test self-contained and portable",
+        "files": [
+          "backend/tests/test_pre_merge_release_acceptance.py"
+        ]
+      }
+    ]
+  },
+  "prior_commit_domain_counts": {
+    "attachment_composer": 9,
+    "classroom_retirement": 1,
+    "database_migration": 4,
+    "geometry_core_scene3d": 21,
+    "landing_page": 39,
+    "step_editor": 11,
+    "tests_docs_eval": 16,
+    "workspace_sidebar": 13,
+    "database_safety_closure": 1,
+    "prior_db_closure_eval_commit": 1,
+    "pre_merge_acceptance_fixes_and_seal": 5
+  },
+  "shared_product_files_coupling_matrix": {
+    "backend/app/main.py": [
+      "classroom_retirement",
+      "step_editor"
+    ],
+    "backend/app/simulation/geometry/__init__.py": [
+      "database_migration",
+      "geometry_core_scene3d"
+    ],
+    "backend/app/simulation/geometry/kernel.py": [
+      "database_migration",
+      "geometry_core_scene3d"
+    ],
+    "backend/app/simulation/geometry_functions/step_editor.py": [
+      "geometry_core_scene3d",
+      "step_editor"
+    ],
+    "backend/app/simulation/step_edit_router.py": [
+      "database_migration",
+      "step_editor"
+    ],
+    "frontend/src/App.tsx": [
+      "geometry_core_scene3d",
+      "landing_page",
+      "workspace_sidebar"
+    ],
+    "frontend/src/components/ConstructionStepEditor.tsx": [
+      "geometry_core_scene3d",
+      "step_editor"
+    ],
+    "frontend/src/components/LeftSidebar.tsx": [
+      "geometry_core_scene3d",
+      "workspace_sidebar"
+    ],
+    "frontend/src/components/LibraryView.tsx": [
+      "attachment_composer",
+      "geometry_core_scene3d",
+      "workspace_sidebar"
+    ],
+    "frontend/src/components/ProblemInput.tsx": [
+      "attachment_composer",
+      "geometry_core_scene3d",
+      "workspace_sidebar"
+    ],
+    "frontend/src/components/SamplePreview.tsx": [
+      "attachment_composer",
+      "geometry_core_scene3d",
+      "workspace_sidebar"
+    ],
+    "frontend/src/components/SimulationWorkspace.tsx": [
+      "attachment_composer",
+      "geometry_core_scene3d",
+      "step_editor",
+      "workspace_sidebar"
+    ],
+    "frontend/src/components/geometry2d/index.ts": [
+      "attachment_composer",
+      "geometry_core_scene3d"
+    ],
+    "frontend/src/components/geometry2d/primitives.tsx": [
+      "attachment_composer",
+      "geometry_core_scene3d"
+    ],
+    "frontend/src/components/geometry2d/resolver.ts": [
+      "attachment_composer",
+      "geometry_core_scene3d"
+    ],
+    "frontend/src/components/geometry2d/templates.tsx": [
+      "attachment_composer",
+      "geometry_core_scene3d"
+    ],
+    "frontend/src/data/geometry-samples.ts": [
+      "attachment_composer",
+      "geometry_core_scene3d"
+    ],
+    "frontend/src/data/offline-catalog.ts": [
+      "attachment_composer",
+      "geometry_core_scene3d"
+    ],
+    "frontend/src/simulations/domains/geometry/scene3d-edge-visibility.ts": [
+      "geometry_core_scene3d",
+      "workspace_sidebar"
+    ],
+    "frontend/src/simulations/domains/geometry/scene3d-model.ts": [
+      "geometry_core_scene3d",
+      "step_editor"
+    ],
+    "frontend/src/simulations/domains/geometry/scene3d-semantic-policy.ts": [
+      "attachment_composer",
+      "geometry_core_scene3d",
+      "step_editor"
+    ],
+    "frontend/src/simulations/domains/geometry/scene3d-view.tsx": [
+      "attachment_composer",
+      "geometry_core_scene3d",
+      "step_editor",
+      "workspace_sidebar"
+    ],
+    "frontend/src/state/construction-step-edits.ts": [
+      "database_migration",
+      "step_editor"
+    ],
+    "frontend/src/state/store.ts": [
+      "geometry_core_scene3d",
+      "workspace_sidebar"
+    ],
+    "frontend/src/styles/global.css": [
+      "attachment_composer",
+      "geometry_core_scene3d",
+      "step_editor",
+      "workspace_sidebar"
+    ]
+  },
+  "split_vs_unified_tradeoff": {
+    "naive_cherry_pick_risks": [
+      "backend/app/main.py intertwines Classroom route removal (bf1ee2a57), Step Editor router wiring, and startup auth behavior.",
+      "Alembic history is a single linear chain ending at e437149641fa -> 9c4d8e2b7a10 -> f8a2c41d9e05.",
+      "frontend/src/App.tsx, store.ts, AxoErrorExperience.tsx, SimulationWorkspace.tsx, and global.css couple LandingView ('/' -> '/app'), single-instance workspace tabs, attachment UI, and Step Editor DOM/recovery.",
+      "frontend/src/code-index-sync.test.ts and backend scripts/audit_docs_information_architecture.py enforce full-tree registration parity in docs/CODE_INDEX.md."
+    ],
+    "non_step_editor_risk_areas_requiring_owner_scope_decision": [
+      "LandingView replaces root route '/' with marketing/demo landing page and moves interactive workspace to '/app' (39 commits).",
+      "Classroom & Live Session API routes retired in bf1ee2a57 (though legacy DB tables & rows are now preserved non-destructively).",
+      "Attachment / ScreenCapture / pdfjs-dist composer & Workspace tab bar overhaul bundled on the same release train."
+    ],
+    "recommendation": "Keep unified clean branch if Landing Page V1.8 + Classroom route retirement + Attachment/Workspace are approved together by Owner; DO NOT naive cherry-pick Step Editor commits in isolation."
+  }
+}
