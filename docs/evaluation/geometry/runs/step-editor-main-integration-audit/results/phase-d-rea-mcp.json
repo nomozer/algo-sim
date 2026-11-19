@@ -1,0 +1,34 @@
+{
+  "status": "PASS",
+  "cdp_endpoint": "http://127.0.0.1:9339",
+  "target_url": "http://localhost:3001/simulation/pyramid-circumscribed-sphere",
+  "evidence_ids": {
+    "list_browser_targets": "ev_be8d658ff0823ac821d0f79b89b11855475f891cfd0f42417612b368bf9d8cfc",
+    "inspect_web_page": "ev_81951b80a15adf43055b9137a11296636e663e93f8d671f18d14ae98b26090f8",
+    "capture_web_screenshot": "ev_762ef12fc56eef118018b06afd150c91a9554ce0f1738f6f5bbc837a18a9897d"
+  },
+  "screenshot": {
+    "relative_path": "images/main-integration-rea-mcp.png",
+    "reported_sha256": "6cb0d56f69c6838fc6ee537158a68be86bb02d9f384647c40b031da3d5780537",
+    "decoded_sha256": "6cb0d56f69c6838fc6ee537158a68be86bb02d9f384647c40b031da3d5780537",
+    "sha256_match": true,
+    "reported_bytes": 150135,
+    "decoded_bytes": 150135
+  },
+  "dom_total_nodes": 783,
+  "accessibility_total_nodes": 445,
+  "console_error_count": 0,
+  "storage_key_names_only": {
+    "local_storage_keys": [
+      "algosim.processing_records.v1",
+      "<key:axo:len=24>",
+      "algosim.history.v1:h198csmj"
+    ],
+    "session_storage_keys": [
+      "algosim.processing_records.v1",
+      "<key:algosim.workspace_tabs_session.v1:len=33>",
+      "axo:learner-recovery:v1"
+    ]
+  },
+  "redaction_note": "Key names only (no storage values, no raw tokens)."
+}

@@ -1,0 +1,760 @@
+=== git fetch origin ===
+
+=== git ls-remote origin refs/heads/main ===
+bb046fa22aceff47abe22aa783aa64fc65caee13	refs/heads/main
+
+=== git worktree list ===
+D:/Documents/projects/algo-sim                                                                    bb046fa22 [axo-ui-consistency]
+D:/Documents/projects/algo-sim/.superpowers/worktrees/adaptive-local-ocr-fallback                 25a098602 [feat/adaptive-local-ocr-fallback]
+D:/Documents/projects/algo-sim/.superpowers/worktrees/algosim-local-first-image-ingestion         d79565b52 [feat/algosim-local-first-image-ingestion]
+D:/Documents/projects/algo-sim/.superpowers/worktrees/axo-pedagogical-integration                 67f780ca9 (detached HEAD)
+D:/Documents/projects/algo-sim/.superpowers/worktrees/hybrid-backend-capabilities                 ad311e043 [feat/hybrid-backend-capabilities]
+D:/Documents/projects/algo-sim/.superpowers/worktrees/hybrid-goal-driven-planner                  6dcdd6904 [feat/hybrid-goal-driven-planner]
+D:/Documents/projects/algo-sim/.superpowers/worktrees/hybrid-production-composition               fb291cba3 [feat/hybrid-production-composition]
+D:/Documents/projects/algo-sim/.superpowers/worktrees/hybrid-reasoning-generalization             756697dc7 [feat/hybrid-reasoning-generalization]
+D:/Documents/projects/algo-sim/.superpowers/worktrees/independent-geometry                        04ec8e418 [eval/independent-geometry]
+D:/Documents/projects/algo-sim/.superpowers/worktrees/local-first-geometry-understanding          a0f573913 [feat/local-first-geometry-understanding]
+D:/Documents/projects/algo-sim/.superpowers/worktrees/parallel-ingestion-reasoning                32f14b8fc [integration/parallel-ingestion-reasoning]
+D:/Documents/projects/algo-sim/.superpowers/worktrees/real-world-vision                           e872d025e [eval/real-world-vision]
+D:/Documents/projects/algo-sim/.superpowers/worktrees/release-stabilization-validation-readiness  4baf4a304 [feat/release-stabilization-validation-readiness]
+D:/Documents/projects/algo-sim/.superpowers/worktrees/step-editor-release-candidate               fdf3e5e79 (detached HEAD)
+D:/Documents/projects/algo-sim/.superpowers/worktrees/t3-common-base-d79565b5                     5f2de7ee1 (detached HEAD)
+D:/Documents/projects/algo-sim/.superpowers/worktrees/w3-f2-ratio-projection-language-grounding   15a8e1ac3 (detached HEAD)
+D:/Documents/projects/axo-geometry-library                                                        fdf3e5e79 [feat/axo-geometry-library-verification]
+
+=== git branch -vv ===
++ axo-ui-consistency                              bb046fa22 (D:/Documents/projects/algo-sim) Merge branch 'fix/axo-device-aware-camera-entry' into main
++ eval/independent-geometry                       04ec8e418 (D:/Documents/projects/algo-sim/.superpowers/worktrees/independent-geometry) chore(eval): move evaluate_geometry_workstream_b.py into run tools directory per RUN_NAMING.md
++ eval/real-world-vision                          e872d025e (D:/Documents/projects/algo-sim/.superpowers/worktrees/real-world-vision) chore(eval): move evaluate_vision_workstream_a.py into run tools directory per RUN_NAMING.md
++ feat/adaptive-local-ocr-fallback                25a098602 (D:/Documents/projects/algo-sim/.superpowers/worktrees/adaptive-local-ocr-fallback) docs(eval): record adaptive-local-ocr-fallback benchmark, gate evaluation and vision-call receipts
++ feat/algosim-local-first-image-ingestion        d79565b52 (D:/Documents/projects/algo-sim/.superpowers/worktrees/algosim-local-first-image-ingestion) chore(eval): re-freeze candidate for c7b15b23a
+* feat/axo-geometry-library-verification          fdf3e5e79 docs(eval): add independent acceptance and main release preparation report
++ feat/hybrid-backend-capabilities                ad311e043 (D:/Documents/projects/algo-sim/.superpowers/worktrees/hybrid-backend-capabilities) [origin/main: ahead 5] chore(eval): re-freeze candidate after Phase 0 validation
++ feat/hybrid-goal-driven-planner                 6dcdd6904 (D:/Documents/projects/algo-sim/.superpowers/worktrees/hybrid-goal-driven-planner) chore(eval): re-freeze candidate for 6c961c884
++ feat/hybrid-production-composition              fb291cba3 (D:/Documents/projects/algo-sim/.superpowers/worktrees/hybrid-production-composition) chore(eval): re-freeze candidate for 93b0dfcef
++ feat/hybrid-reasoning-generalization            756697dc7 (D:/Documents/projects/algo-sim/.superpowers/worktrees/hybrid-reasoning-generalization) docs(eval): record hybrid-reasoning-generalization report, receipts, and template hash sync
++ feat/local-first-geometry-understanding         a0f573913 (D:/Documents/projects/algo-sim/.superpowers/worktrees/local-first-geometry-understanding) docs(construction-v1): sync living index, ledger, state, issues, and evidence
++ feat/release-stabilization-validation-readiness 4baf4a304 (D:/Documents/projects/algo-sim/.superpowers/worktrees/release-stabilization-validation-readiness) chore(evaluation): freeze EVALUATION_CANDIDATE for release stabilization
+  integration/axo-hybrid4-reliability             c7ae69472 eval: record the final merge simulation for axo-premerge-closure
++ integration/parallel-ingestion-reasoning        32f14b8fc (D:/Documents/projects/algo-sim/.superpowers/worktrees/parallel-ingestion-reasoning) docs(eval): add independent geometry & real-world vision evaluation report and sync indexes
+  main                                            bb046fa22 [origin/main] Merge branch 'fix/axo-device-aware-camera-entry' into main
+
+=== git status ===
+root: ['?? ocr_reconcile.py']
+dev: []
+rc: []
+=== git diff --stat main..HEAD ===
+ .gitignore                                         |     2 +
+ GEOMETRY_VISUAL_SPEC.md                            |   236 +
+ backend/alembic/env.py                             |     2 +-
+ .../versions/9c4d8e2b7a10_add_step_edit_tables.py  |   120 +
+ ...e05_remove_classroom_and_live_session_tables.py |   172 +
+ backend/app/accounts/__init__.py                   |     4 +-
+ backend/app/accounts/classroom_router.py           |   332 -
+ backend/app/accounts/policy.py                     |    34 +-
+ backend/app/accounts/router.py                     |   134 -
+ backend/app/accounts/service.py                    |    37 +-
+ backend/app/accounts/session_router.py             |   486 -
+ backend/app/ai/step_edit_route.py                  |    57 +
+ backend/app/main.py                                |    13 +-
+ backend/app/persistence/classroom_models.py        |   172 -
+ backend/app/persistence/step_edit_models.py        |   129 +
+ backend/app/simulation/geometry/__init__.py        |     1 +
+ backend/app/simulation/geometry/curved.py          |    70 +-
+ backend/app/simulation/geometry/kernel.py          |     1 +
+ .../geometry_functions/feedback_dataset.py         |   548 +
+ .../simulation/geometry_functions/step_editor.py   |  4397 +++
+ .../simulation/semantic_program/display_names.py   |    68 +-
+ backend/app/simulation/step_edit_router.py         |  1079 +
+ backend/scripts/build_advanced_geometry_samples.py |  1381 +
+ backend/scripts/prepare_step_feedback_dataset.py   |    68 +
+ backend/scripts/seed_demo_accounts.py              |    10 -
+ .../tests/geometry/test_axo_11_advanced_samples.py |   148 +
+ .../geometry/test_editable_construction_steps.py   |   726 +
+ .../geometry/test_step_editor_final_premerge.py    |   843 +
+ .../test_step_editor_independent_acceptance.py     |   886 +
+ .../test_step_editor_integration_closure.py        |  1637 +
+ .../test_step_editor_main_release_acceptance.py    |   484 +
+ .../test_step_editor_root_cause_stabilization.py   |   636 +
+ .../geometry/test_step_editor_v22_reliability.py   |   526 +
+ .../test_display_names_incidence_cycle.py          |   162 +
+ backend/tests/test_auth_api.py                     |    51 +-
+ backend/tests/test_classroom_api.py                |   438 -
+ backend/tests/test_guest_trial.py                  |     8 +-
+ backend/tests/test_hybrid_product_integration.py   |    13 -
+ backend/tests/test_live_session_api.py             |   419 -
+ .../tests/test_postgres_axo_history_migration.py   |     5 +-
+ backend/tests/test_postgres_integration.py         |   138 +-
+ docs/CODE_INDEX.md                                 |    49 +-
+ docs/EVIDENCE_INDEX.md                             |     6 +
+ .../runs/axo-attachment-fidelity/capture-after.cjs |     3 +
+ .../runs/axo-attachment-fidelity/capture.cjs       |     2 +
+ .../axo-attachment-fidelity/images/after-1440.png  |   Bin 0 -> 36962 bytes
+ .../axo-attachment-fidelity/images/after-390.png   |   Bin 0 -> 20401 bytes
+ .../images/after-lightbox.png                      |   Bin 0 -> 28549 bytes
+ .../images/after-menu-1440.png                     |   Bin 0 -> 44070 bytes
+ .../images/after-menu-390.png                      |   Bin 0 -> 26874 bytes
+ .../images/after-pdf-fallback.png                  |   Bin 0 -> 44766 bytes
+ .../axo-attachment-fidelity/images/before-1440.png |   Bin 0 -> 36756 bytes
+ .../axo-attachment-fidelity/images/before-390.png  |   Bin 0 -> 19162 bytes
+ .../images/before-menu-1440.png                    |   Bin 0 -> 43296 bytes
+ .../images/before-menu-390.png                     |   Bin 0 -> 26290 bytes
+ .../images/responsive-1024.png                     |   Bin 0 -> 22493 bytes
+ .../images/responsive-1366.png                     |   Bin 0 -> 37646 bytes
+ .../images/responsive-1440.png                     |   Bin 0 -> 38481 bytes
+ .../images/responsive-1920.png                     |   Bin 0 -> 42020 bytes
+ .../images/responsive-360.png                      |   Bin 0 -> 19519 bytes
+ .../images/responsive-390.png                      |   Bin 0 -> 20895 bytes
+ .../images/responsive-768.png                      |   Bin 0 -> 23001 bytes
+ .../runs/axo-attachment-fidelity/lightbox.cjs      |     2 +
+ .../runs/axo-attachment-fidelity/pdf-check.cjs     |     2 +
+ .../runs/axo-attachment-fidelity/report.md         |    36 +
+ .../runs/axo-attachment-fidelity/responsive.cjs    |     2 +
+ .../runs/axo-attachment-refinement/after-test.cjs  |     2 +
+ .../runs/axo-attachment-refinement/drag-check.cjs  |     2 +
+ .../axo-attachment-refinement/final-current.json   |     1 +
+ .../images/after-1024.png                          |   Bin 0 -> 22330 bytes
+ .../images/after-1280.png                          |   Bin 0 -> 36414 bytes
+ .../images/after-1366.png                          |   Bin 0 -> 36631 bytes
+ .../images/after-1920.png                          |   Bin 0 -> 41082 bytes
+ .../axo-attachment-refinement/images/after-360.png |   Bin 0 -> 20048 bytes
+ .../axo-attachment-refinement/images/after-390.png |   Bin 0 -> 21998 bytes
+ .../axo-attachment-refinement/images/after-768.png |   Bin 0 -> 22151 bytes
+ .../images/after-docx.png                          |   Bin 0 -> 34046 bytes
+ .../images/after-drag-end.png                      |   Bin 0 -> 37148 bytes
+ .../images/after-hover.png                         |   Bin 0 -> 35462 bytes
+ .../images/after-image.png                         |   Bin 0 -> 23779 bytes
+ .../axo-attachment-refinement/images/after-pdf.png |   Bin 0 -> 32823 bytes
+ .../images/after-scroll.png                        |   Bin 0 -> 35572 bytes
+ .../images/before-docx.png                         |   Bin 0 -> 34150 bytes
+ .../images/before-scroll.png                       |   Bin 0 -> 35673 bytes
+ .../axo-attachment-refinement/images/end-1024.png  |   Bin 0 -> 20622 bytes
+ .../axo-attachment-refinement/images/end-1280.png  |   Bin 0 -> 34376 bytes
+ .../axo-attachment-refinement/images/end-1366.png  |   Bin 0 -> 34785 bytes
+ .../axo-attachment-refinement/images/end-1440.png  |   Bin 0 -> 35690 bytes
+ .../axo-attachment-refinement/images/end-1920.png  |   Bin 0 -> 38594 bytes
+ .../axo-attachment-refinement/images/end-360.png   |   Bin 0 -> 19054 bytes
+ .../axo-attachment-refinement/images/end-390.png   |   Bin 0 -> 19533 bytes
+ .../axo-attachment-refinement/images/end-768.png   |   Bin 0 -> 19911 bytes
+ .../images/final-docx-portrait.png                 |   Bin 0 -> 34060 bytes
+ .../images/final-docx.png                          |   Bin 0 -> 34046 bytes
+ .../images/final-image.png                         |   Bin 0 -> 21208 bytes
+ .../images/final-portrait.png                      |   Bin 0 -> 26835 bytes
+ .../images/mobile-swipe.png                        |   Bin 0 -> 19712 bytes
+ .../runs/axo-attachment-refinement/menu-check.cjs  |     1 +
+ .../runs/axo-attachment-refinement/pdf-check.cjs   |     2 +
+ .../axo-attachment-refinement/portrait-check.cjs   |     4 +
+ .../axo-attachment-refinement/preview-check.cjs    |     2 +
+ .../axo-attachment-refinement/preview-final.cjs    |     3 +
+ .../axo-attachment-refinement/remove-check.cjs     |     1 +
+ .../runs/axo-attachment-refinement/report.md       |    48 +
+ .../axo-attachment-refinement/resize-check.cjs     |     1 +
+ .../axo-attachment-refinement/responsive-final.cjs |     1 +
+ .../runs/axo-attachment-refinement/responsive.cjs  |     3 +
+ .../runs/axo-attachment-refinement/scroll-test.cjs |     1 +
+ .../runs/axo-attachment-refinement/touch-check.cjs |     2 +
+ .../runs/axo-attachment-scroll/after-check.cjs     |     3 +
+ .../runs/axo-attachment-scroll/before-check.cjs    |     2 +
+ .../runs/axo-attachment-scroll/drag-check.cjs      |     1 +
+ .../axo-attachment-scroll/images/after-1440.png    |   Bin 0 -> 35385 bytes
+ .../images/after-docx-portrait-run.png             |   Bin 0 -> 31415 bytes
+ .../axo-attachment-scroll/images/after-docx.png    |   Bin 0 -> 31427 bytes
+ .../images/after-drag-end.png                      |   Bin 0 -> 37148 bytes
+ .../images/after-image-portrait.png                |   Bin 0 -> 24451 bytes
+ .../axo-attachment-scroll/images/after-image.png   |   Bin 0 -> 13116 bytes
+ .../axo-attachment-scroll/images/after-pdf.png     |   Bin 0 -> 32234 bytes
+ .../axo-attachment-scroll/images/before-1440.png   |   Bin 0 -> 35345 bytes
+ .../runs/axo-attachment-scroll/images/end-1024.png |   Bin 0 -> 20406 bytes
+ .../runs/axo-attachment-scroll/images/end-1280.png |   Bin 0 -> 34116 bytes
+ .../runs/axo-attachment-scroll/images/end-1366.png |   Bin 0 -> 34580 bytes
+ .../runs/axo-attachment-scroll/images/end-1440.png |   Bin 0 -> 35643 bytes
+ .../runs/axo-attachment-scroll/images/end-1920.png |   Bin 0 -> 38473 bytes
+ .../runs/axo-attachment-scroll/images/end-360.png  |   Bin 0 -> 18466 bytes
+ .../runs/axo-attachment-scroll/images/end-390.png  |   Bin 0 -> 19258 bytes
+ .../runs/axo-attachment-scroll/images/end-768.png  |   Bin 0 -> 20286 bytes
+ .../runs/axo-attachment-scroll/images/hover.png    |   Bin 0 -> 39252 bytes
+ .../runs/axo-attachment-scroll/images/middle.png   |   Bin 0 -> 37029 bytes
+ .../axo-attachment-scroll/images/mobile-swipe.png  |   Bin 0 -> 19712 bytes
+ .../images/production-pdf.png                      |   Bin 0 -> 32234 bytes
+ .../runs/axo-attachment-scroll/images/start.png    |   Bin 0 -> 35416 bytes
+ .../runs/axo-attachment-scroll/pdf-corrupt.cjs     |     1 +
+ .../runs/axo-attachment-scroll/pdf-production.cjs  |     2 +
+ .../runs/axo-attachment-scroll/pdf-test.cjs        |     1 +
+ .../runs/axo-attachment-scroll/pdf-two-pages.cjs   |     1 +
+ .../runs/axo-attachment-scroll/preview-check.cjs   |     1 +
+ .../axo-attachment-scroll/preview-portrait.cjs     |     2 +
+ .../geometry/runs/axo-attachment-scroll/report.md  |    41 +
+ .../runs/axo-attachment-scroll/scroll-check.cjs    |     2 +
+ .../runs/axo-attachment-scroll/sequence-check.cjs  |     1 +
+ .../runs/axo-attachment-scroll/touch-check.cjs     |     1 +
+ .../runs/axo-attachment-scroll/verified-tests.json |     1 +
+ .../runs/axo-attachment-ux/capture-check.cjs       |     3 +
+ .../images/after-capture-simulated.png             |   Bin 0 -> 31335 bytes
+ .../runs/axo-attachment-ux/images/after-docx.png   |   Bin 0 -> 38034 bytes
+ .../axo-attachment-ux/images/after-lightbox.png    |   Bin 0 -> 28549 bytes
+ .../axo-attachment-ux/images/after-valid-pdf.png   |   Bin 0 -> 38515 bytes
+ .../axo-attachment-ux/images/responsive-1024.png   |   Bin 0 -> 22544 bytes
+ .../axo-attachment-ux/images/responsive-1280.png   |   Bin 0 -> 35004 bytes
+ .../axo-attachment-ux/images/responsive-1366.png   |   Bin 0 -> 37638 bytes
+ .../axo-attachment-ux/images/responsive-1440.png   |   Bin 0 -> 38492 bytes
+ .../axo-attachment-ux/images/responsive-1920.png   |   Bin 0 -> 42228 bytes
+ .../axo-attachment-ux/images/responsive-360.png    |   Bin 0 -> 21654 bytes
+ .../axo-attachment-ux/images/responsive-390.png    |   Bin 0 -> 23286 bytes
+ .../axo-attachment-ux/images/responsive-768.png    |   Bin 0 -> 22684 bytes
+ .../runs/axo-attachment-ux/invalid-upload.cjs      |     2 +
+ .../geometry/runs/axo-attachment-ux/lightbox.cjs   |     3 +
+ .../geometry/runs/axo-attachment-ux/pdf-check.cjs  |     2 +
+ .../runs/axo-attachment-ux/preview-check.cjs       |     3 +
+ .../geometry/runs/axo-attachment-ux/report.md      |    56 +
+ .../geometry/runs/axo-attachment-ux/responsive.cjs |     3 +
+ .../runs/axo-ui-consistency/browser-check.cjs      |    20 +
+ .../runs/axo-ui-consistency/capture-check.cjs      |     2 +
+ .../runs/axo-ui-consistency/images/after-1024.png  |   Bin 0 -> 17534 bytes
+ .../runs/axo-ui-consistency/images/after-1280.png  |   Bin 0 -> 32034 bytes
+ .../runs/axo-ui-consistency/images/after-1366.png  |   Bin 0 -> 32453 bytes
+ .../runs/axo-ui-consistency/images/after-1440.png  |   Bin 0 -> 33465 bytes
+ .../runs/axo-ui-consistency/images/after-1920.png  |   Bin 0 -> 36252 bytes
+ .../runs/axo-ui-consistency/images/after-360.png   |   Bin 0 -> 16764 bytes
+ .../runs/axo-ui-consistency/images/after-390.png   |   Bin 0 -> 17281 bytes
+ .../runs/axo-ui-consistency/images/after-768.png   |   Bin 0 -> 17632 bytes
+ .../images/after-capture-simulated.png             |   Bin 0 -> 30770 bytes
+ .../runs/axo-ui-consistency/images/after-home.png  |   Bin 0 -> 30668 bytes
+ .../images/after-mobile-drawer.png                 |   Bin 0 -> 30520 bytes
+ .../geometry/runs/axo-ui-consistency/plan.md       |    17 +
+ .../geometry/runs/axo-ui-consistency/report.md     |    47 +
+ .../backend_regression.json                        |    16 +
+ .../catalog_internal_id_scan.json                  |    11 +
+ .../catalog_regeneration_diff.json                 |   192 +
+ .../catalog_reproducibility.json                   |    10 +
+ .../display_name_cycle_reproduction.json           |    35 +
+ .../display_name_dependency_audit.json             |    16 +
+ .../display_name_symbol_resolution_tests.json      |    21 +
+ .../frontend_catalog_regression.json               |    18 +
+ .../geo_be_001_baseline.json                       |    22 +
+ .../geo_be_001_final_report.md                     |    42 +
+ .../k1-owner-approval.template.json                |    11 +-
+ .../r1-owner-approval.template.json                |    11 +-
+ .../s2-owner-approval.template.json                |    11 +-
+ .../AXO-STEP-EDITOR-FINAL-PREMERGE-REPORT.md       |   340 +
+ .../images/fp-1920-prism-prime-check.png           |   Bin 0 -> 148594 bytes
+ .../images/fp-1920-state1-before-hover.png         |   Bin 0 -> 182639 bytes
+ .../images/fp-1920-state2-editing-open.png         |   Bin 0 -> 180561 bytes
+ .../images/fp-1920-state3-group-a-equiv.png        |   Bin 0 -> 157274 bytes
+ .../fp-1920-state4-group-b-mutated-reloaded.png    |   Bin 0 -> 149600 bytes
+ .../images/fp-1920-state5-group-c-422.png          |   Bin 0 -> 167979 bytes
+ .../images/fp-1920-state5b-group-d-422.png         |   Bin 0 -> 152785 bytes
+ .../images/fp-vp-1366x768-editing.png              |   Bin 0 -> 127252 bytes
+ .../images/fp-vp-1440x900-editing.png              |   Bin 0 -> 150127 bytes
+ .../images/fp-vp-320x568-editing.png               |   Bin 0 -> 40436 bytes
+ .../images/fp-vp-360x800-editing.png               |   Bin 0 -> 56014 bytes
+ .../images/fp-vp-390x844-editing.png               |   Bin 0 -> 59450 bytes
+ .../images/fp-vp-768x1024-editing.png              |   Bin 0 -> 115495 bytes
+ .../images/rea-mcp-cdp-screenshot.png              |   Bin 0 -> 133855 bytes
+ .../images/route-gioi-thieu.png                    |   Bin 0 -> 305323 bytes
+ .../images/route-landing.png                       |   Bin 0 -> 303335 bytes
+ .../runs/step-editor-final-premerge/report.md      |    31 +
+ .../results/backend-perf-comparison.json           |  1203 +
+ .../results/live-host-qa.json                      |   245 +
+ .../results/rea-mcp-inspection.json                |  7742 ++++
+ .../runs/step-editor-final-premerge/run.json       |   108 +
+ ...XO-STEP-EDITOR-INDEPENDENT-ACCEPTANCE-REPORT.md |   302 +
+ .../images/acceptance-1920-3a-s11-valid-sb.png     |   Bin 0 -> 153504 bytes
+ .../images/acceptance-1920-3b-invalid-422-sz.png   |   Bin 0 -> 151137 bytes
+ .../images/acceptance-1920-3c-prism.png            |   Bin 0 -> 148594 bytes
+ .../images/acceptance-1920-3c-s1-f5.png            |   Bin 0 -> 149600 bytes
+ .../images/acceptance-1920-post-restart.png        |   Bin 0 -> 156517 bytes
+ .../images/acceptance-rea-mcp.png                  |   Bin 0 -> 150127 bytes
+ .../images/acceptance-touch-390x460-vkb.png        |   Bin 0 -> 31855 bytes
+ .../images/acceptance-vp-1024x768.png              |   Bin 0 -> 109291 bytes
+ .../images/acceptance-vp-1366x768.png              |   Bin 0 -> 128465 bytes
+ .../images/acceptance-vp-1440x900.png              |   Bin 0 -> 147972 bytes
+ .../images/acceptance-vp-1920x1080.png             |   Bin 0 -> 180772 bytes
+ .../images/acceptance-vp-320x568.png               |   Bin 0 -> 37862 bytes
+ .../images/acceptance-vp-390x844.png               |   Bin 0 -> 58149 bytes
+ .../images/acceptance-vp-768x1024.png              |   Bin 0 -> 116092 bytes
+ .../report.md                                      |   302 +
+ .../results/acceptance-e2e-phase1.json             |   230 +
+ .../results/acceptance-e2e-phase2.json             |    18 +
+ .../results/postgres-acceptance-audit.json         |   459 +
+ .../results/quality-gates-summary.json             |   243 +
+ .../results/rea-mcp-acceptance.json                |    50 +
+ .../run.json                                       |    74 +
+ ...XO-STEP-EDITOR-INDEPENDENT-ACCEPTANCE-REPORT.md |   251 +
+ .../images/ind-1920-prism-prime-check.png          |   Bin 0 -> 143962 bytes
+ .../images/ind-1920-state1-before-hover.png        |   Bin 0 -> 182639 bytes
+ .../images/ind-1920-state2-editing-open.png        |   Bin 0 -> 180561 bytes
+ .../images/ind-1920-state3-valid-committed.png     |   Bin 0 -> 157621 bytes
+ .../images/ind-1920-state4-rejected-422.png        |   Bin 0 -> 152685 bytes
+ .../images/ind-vp-1366x768-editing.png             |   Bin 0 -> 127252 bytes
+ .../images/ind-vp-1440x900-editing.png             |   Bin 0 -> 150127 bytes
+ .../images/ind-vp-320x568-editing.png              |   Bin 0 -> 40436 bytes
+ .../images/ind-vp-360x800-editing.png              |   Bin 0 -> 56021 bytes
+ .../images/ind-vp-390x844-editing.png              |   Bin 0 -> 59451 bytes
+ .../images/ind-vp-768x1024-editing.png             |   Bin 0 -> 115495 bytes
+ .../images/rea-mcp-cdp-screenshot.png              |   Bin 0 -> 153918 bytes
+ .../images/route-gioi-thieu.png                    |   Bin 0 -> 304648 bytes
+ .../images/route-landing.png                       |   Bin 0 -> 305319 bytes
+ .../step-editor-independent-acceptance/report.md   |   251 +
+ .../results/backend-perf-oracle.json               |  1143 +
+ .../results/live-browser-qa.json                   |   194 +
+ .../results/rea-mcp-inspection.json                |    18 +
+ .../step-editor-independent-acceptance/run.json    |   112 +
+ .../AXO-STEP-EDITOR-INTEGRATION-CLOSURE-REPORT.md  |   195 +
+ .../images/closure-1920-invalid-422.png            |   Bin 0 -> 181087 bytes
+ .../images/closure-1920-p1-valid-edit.png          |   Bin 0 -> 157274 bytes
+ .../images/closure-1920-p2-cascade-f5.png          |   Bin 0 -> 149600 bytes
+ .../images/closure-1920-p3-prism.png               |   Bin 0 -> 148594 bytes
+ .../images/closure-1920-p4-common-perp.png         |   Bin 0 -> 166195 bytes
+ .../images/closure-1920-post-restart.png           |   Bin 0 -> 156811 bytes
+ .../images/closure-rea-mcp-screenshot.png          |   Bin 0 -> 133855 bytes
+ .../images/closure-vp-1024x768.png                 |   Bin 0 -> 108373 bytes
+ .../images/closure-vp-1366x768.png                 |   Bin 0 -> 127252 bytes
+ .../images/closure-vp-1440x900.png                 |   Bin 0 -> 150127 bytes
+ .../images/closure-vp-1920x1080.png                |   Bin 0 -> 180561 bytes
+ .../images/closure-vp-320x568.png                  |   Bin 0 -> 40438 bytes
+ .../images/closure-vp-390x844.png                  |   Bin 0 -> 59452 bytes
+ .../images/closure-vp-768x1024.png                 |   Bin 0 -> 115495 bytes
+ .../images/ic-1920-case1-equiv.png                 |   Bin 0 -> 157274 bytes
+ .../images/ic-1920-case2-mutated-reloaded.png      |   Bin 0 -> 149600 bytes
+ .../images/ic-1920-case3-missing-dep-422.png       |   Bin 0 -> 152789 bytes
+ .../images/ic-1920-case4-orthogonality-422.png     |   Bin 0 -> 167973 bytes
+ .../images/ic-1920-prism-prime-check.png           |   Bin 0 -> 148594 bytes
+ .../images/ic-1920-state1-hover.png                |   Bin 0 -> 182639 bytes
+ .../images/ic-1920-state2-editing-open.png         |   Bin 0 -> 180561 bytes
+ .../images/ic-route-gioi-thieu.png                 |   Bin 0 -> 304222 bytes
+ .../images/ic-route-landing.png                    |   Bin 0 -> 305068 bytes
+ .../images/ic-vp-1366x768-editing.png              |   Bin 0 -> 127252 bytes
+ .../images/ic-vp-1440x900-editing.png              |   Bin 0 -> 150127 bytes
+ .../images/ic-vp-320x568-editing.png               |   Bin 0 -> 40436 bytes
+ .../images/ic-vp-360x800-editing.png               |   Bin 0 -> 56021 bytes
+ .../images/ic-vp-390x844-editing.png               |   Bin 0 -> 59451 bytes
+ .../images/ic-vp-768x1024-editing.png              |   Bin 0 -> 115495 bytes
+ .../images/rea-mcp-cdp-screenshot.png              |   Bin 0 -> 133855 bytes
+ .../classroom-wip-rebase-onto-step-editor.patch    |    41 +
+ .../postgres-step-edit-alembic-handoff.patch       |   148 +
+ .../runs/step-editor-integration-closure/report.md |    19 +
+ .../results/backend-perf-comparison.json           |  1380 +
+ .../results/closure-e2e-verification.json          |   229 +
+ .../results/live-host-qa.json                      |   318 +
+ .../results/pre-intervention-baseline.json         |    62 +
+ .../results/quality-gates-summary.json             |   167 +
+ .../results/rea-mcp-closure-inspection.json        |    46 +
+ .../results/rea-mcp-inspection.json                |    25 +
+ .../runs/step-editor-integration-closure/run.json  |    55 +
+ ...EDITOR-FINAL-INTEGRATION-RELEASE-GATE-REPORT.md |   243 +
+ .../images/release-gate-1920-invalid-422.png       |   Bin 0 -> 181088 bytes
+ .../images/release-gate-1920-p1-valid-edit.png     |   Bin 0 -> 157274 bytes
+ .../images/release-gate-1920-p2-cascade-f5.png     |   Bin 0 -> 149600 bytes
+ .../images/release-gate-1920-p3-prism.png          |   Bin 0 -> 148594 bytes
+ .../images/release-gate-1920-p4-common-perp.png    |   Bin 0 -> 166195 bytes
+ .../images/release-gate-1920-post-restart.png      |   Bin 0 -> 156811 bytes
+ .../images/release-gate-rea-mcp.png                |   Bin 0 -> 133855 bytes
+ .../images/release-gate-vp-1024x768.png            |   Bin 0 -> 108373 bytes
+ .../images/release-gate-vp-1366x768.png            |   Bin 0 -> 127252 bytes
+ .../images/release-gate-vp-1440x900.png            |   Bin 0 -> 150127 bytes
+ .../images/release-gate-vp-1920x1080.png           |   Bin 0 -> 180561 bytes
+ .../images/release-gate-vp-320x568.png             |   Bin 0 -> 40437 bytes
+ .../images/release-gate-vp-390x844.png             |   Bin 0 -> 59452 bytes
+ .../images/release-gate-vp-768x1024.png            |   Bin 0 -> 115495 bytes
+ .../runs/step-editor-release-gate/report.md        |    10 +
+ .../results/postgres-host-verification.json        |   151 +
+ .../results/quality-gates-summary.json             |   102 +
+ .../results/rea-mcp-release-gate.json              |    13 +
+ .../results/release-gate-e2e-phase1.json           |   172 +
+ .../results/release-gate-e2e-phase2.json           |    17 +
+ .../runs/step-editor-release-gate/run.json         |    55 +
+ .../images/rea-mcp-desktop-1920.png                |   Bin 0 -> 299820 bytes
+ .../images/stab-desktop-1366.png                   |   Bin 0 -> 150178 bytes
+ .../images/stab-desktop-1920-422-preserved.png     |   Bin 0 -> 205073 bytes
+ .../images/stab-desktop-1920-caseA-pa-sync.png     |   Bin 0 -> 186757 bytes
+ .../images/stab-desktop-1920-caseB-section.png     |   Bin 0 -> 168252 bytes
+ .../images/stab-desktop-1920-hover.png             |   Bin 0 -> 207148 bytes
+ .../images/stab-mobile-320-editor.png              |   Bin 0 -> 41058 bytes
+ .../images/stab-mobile-390-editor.png              |   Bin 0 -> 59818 bytes
+ .../images/stab-tablet-768.png                     |   Bin 0 -> 127599 bytes
+ .../step-editor-root-cause-stabilization/report.md |   187 +
+ .../results/backend_benchmark.json                 |   327 +
+ .../results/playwright_e2e_summary.json            |   110 +
+ .../step-editor-root-cause-stabilization/run.json  |    79 +
+ .../AXO-STEP-EDITOR-V1-RESTORATION-REPORT.md       |   111 +
+ .../step-editor-v1-restoration/after-metrics.json  |  1035 +
+ .../step-editor-v1-restoration/before-metrics.json |   267 +
+ .../images/after/after-desktop-1024.png            |   Bin 0 -> 96770 bytes
+ .../images/after/after-desktop-1366.png            |   Bin 0 -> 117855 bytes
+ .../after/after-desktop-1920-editor-2line.png      |   Bin 0 -> 155542 bytes
+ .../after/after-desktop-1920-error-preserved.png   |   Bin 0 -> 142412 bytes
+ .../images/after/after-desktop-1920-hover.png      |   Bin 0 -> 179032 bytes
+ .../images/after/after-desktop-1920-rebuild-P.png  |   Bin 0 -> 144564 bytes
+ .../images/after/after-desktop-1920-steps.png      |   Bin 0 -> 158066 bytes
+ .../images/after/after-mobile-320-editor.png       |   Bin 0 -> 36855 bytes
+ .../images/after/after-mobile-360-editor.png       |   Bin 0 -> 48962 bytes
+ .../images/after/after-mobile-390-editor.png       |   Bin 0 -> 53552 bytes
+ .../images/after/after-mobile-390-steps.png        |   Bin 0 -> 57262 bytes
+ .../images/after/after-tablet-768.png              |   Bin 0 -> 108977 bytes
+ .../images/after/rea-mcp-desktop-1920-step12.png   |   Bin 0 -> 143471 bytes
+ .../before-desktop-1920-editor-2line-scrollbar.png |   Bin 0 -> 176187 bytes
+ .../before-desktop-1920-editor-scrollbar.png       |   Bin 0 -> 154255 bytes
+ .../images/before/before-desktop-1920-steps.png    |   Bin 0 -> 178104 bytes
+ .../images/before/before-mobile-390-editor.png     |   Bin 0 -> 52356 bytes
+ .../images/before/before-mobile-390-steps.png      |   Bin 0 -> 61980 bytes
+ .../images/v22-desktop-1366.png                    |   Bin 0 -> 150178 bytes
+ .../images/v22-desktop-1920-error-preserved.png    |   Bin 0 -> 177547 bytes
+ .../images/v22-desktop-1920-hover.png              |   Bin 0 -> 207148 bytes
+ .../images/v22-desktop-1920-rebuild-H.png          |   Bin 0 -> 185904 bytes
+ .../v22-desktop-1920-sample1-section-rebuild.png   |   Bin 0 -> 150820 bytes
+ .../images/v22-mobile-320-editor.png               |   Bin 0 -> 41091 bytes
+ .../images/v22-mobile-390-editor.png               |   Bin 0 -> 60064 bytes
+ .../images/v22-tablet-768.png                      |   Bin 0 -> 127599 bytes
+ .../runs/step-editor-v22-reliability/report.md     |   232 +
+ .../results/backend_benchmark.json                 |   358 +
+ .../results/playwright_e2e_summary.json            |    92 +
+ .../results/playwright_followup_summary.json       |    16 +
+ .../runs/step-editor-v22-reliability/run.json      |   112 +
+ .../AXO-WORKSPACE-STEP-EDITOR-V21-REPORT.md        |   185 +
+ ...-WORKSPACE-V22-EDITABLE-STEPS-CLEANUP-REPORT.md |   126 +
+ .../AXO-LANDING-CTA-FOOTER-REFINEMENT-REPORT.md    |   266 +
+ .../landing/AXO-LANDING-DESIGN-RECOVERY-REPORT.md  |   306 +
+ .../AXO-LANDING-SPATIAL-VISUAL-SYSTEM-REPORT.md    |   124 +
+ docs/evaluation/landing/AXO-LANDING-V1.2-REPORT.md |   313 +
+ .../landing/AXO-LANDING-V1.2.1-REPORT.md           |   175 +
+ .../landing/AXO-LANDING-V1.2.2-UX-REPORT.md        |   103 +
+ .../AXO-LANDING-V1.3-CREATIVE-DIRECTION-REPORT.md  |   230 +
+ .../AXO-LANDING-V1.4-VISUAL-DIRECTION-REPORT.md    |   195 +
+ ...XO-LANDING-V1.5-DESIGN-IMPLEMENTATION-REPORT.md |   232 +
+ .../AXO-LANDING-V1.6-VISUAL-RECOVERY-REPORT.md     |   225 +
+ .../AXO-LANDING-V1.7-SPATIAL-EXPERIENCE-REPORT.md  |   142 +
+ .../AXO-LANDING-V1.7-VISUAL-ACCEPTANCE-REPORT.md   |   185 +
+ .../AXO-LANDING-V14-FINAL-REFINEMENT-REPORT.md     |   147 +
+ .../AXO-LANDING-V14-PRODUCT-RECOVERY-REPORT.md     |   230 +
+ .../AXO-LANDING-V18-VISUAL-ARCHITECTURE-REPORT.md  |   231 +
+ .../AXO-LANDING-VISUAL-MOTION-REDESIGN-REPORT.md   |   193 +
+ .../AXO-GEOMETRY-REGRESSION-TABBAR-REPORT.md       |   160 +
+ .../semantic-benchmark/EVALUATION_CANDIDATE.json   |    12 +-
+ frontend/index.html                                |     2 +
+ frontend/package-lock.json                         |   285 +-
+ frontend/package.json                              |     1 +
+ frontend/public/favicon-16x16.png                  |   Bin 0 -> 752 bytes
+ frontend/public/favicon-32x32.png                  |   Bin 0 -> 1673 bytes
+ frontend/public/favicon.svg                        |    10 +-
+ .../prototypes/axo-left-sidebar-prototype.html     |  1955 +
+ .../prototypes/axo-multi-problem-workspace.html    |  2883 ++
+ frontend/scripts/attachment-resize.node-test.mjs   |    31 +
+ frontend/src/App.tsx                               |   560 +-
+ frontend/src/components/AssignDialog.tsx           |   114 -
+ frontend/src/components/AssignmentsView.tsx        |   129 -
+ frontend/src/components/AuthGate.tsx               |    50 +-
+ frontend/src/components/AxoErrorExperience.tsx     |   136 +-
+ frontend/src/components/ClassesView.tsx            |   126 -
+ frontend/src/components/ConstructionStepEditor.tsx |   411 +
+ frontend/src/components/ErrorBoundary.tsx          |    61 +-
+ frontend/src/components/HomeView.tsx               |   120 +-
+ frontend/src/components/LandingView.tsx            |   202 +
+ frontend/src/components/LeftSidebar.tsx            |  2179 ++
+ frontend/src/components/LibraryView.tsx            |   183 +-
+ frontend/src/components/LiveClassDock.tsx          |   168 -
+ frontend/src/components/LiveClassStrip.tsx         |   171 -
+ frontend/src/components/MonitorRoute.tsx           |    46 -
+ frontend/src/components/MonitorView.tsx            |   186 -
+ frontend/src/components/ObserveView.tsx            |   141 -
+ frontend/src/components/PdfPreview.tsx             |   188 +
+ frontend/src/components/PracticeReporter.tsx       |   116 -
+ frontend/src/components/ProblemInput.tsx           |  1848 +-
+ frontend/src/components/SamplePreview.tsx          |   578 +-
+ frontend/src/components/ScreenCaptureDialog.tsx    |   427 +
+ frontend/src/components/SessionCard.tsx            |     6 +-
+ frontend/src/components/SimulationWorkspace.tsx    |  1529 +-
+ frontend/src/components/TopNav.tsx                 |    93 +-
+ frontend/src/components/WorkspaceTabBar.tsx        |   510 +
+ .../components/__tests__/LeftSidebar.v9_2.test.tsx |   191 +
+ .../__tests__/attachment-fidelity.test.tsx         |    17 +
+ .../__tests__/composer-attachment-send.test.tsx    |   208 +
+ .../geometry-toolbar-interactions.test.tsx         |   332 +
+ .../header-sidebar-icon-alignment.test.tsx         |   314 +
+ .../landing-annotated-typography.test.tsx          |    69 +
+ .../landing-approved-ui-regression.test.tsx        |    86 +
+ .../__tests__/landing-auth-navigation.test.tsx     |   211 +
+ .../__tests__/landing-auth-sync.test.tsx           |   202 +
+ .../components/__tests__/landing-cta-flow.test.tsx |   163 +
+ .../__tests__/landing-cta-geometry.test.tsx        |    61 +
+ .../__tests__/landing-cta-motion.test.tsx          |    49 +
+ .../__tests__/landing-demo-integrity.test.tsx      |    87 +
+ .../__tests__/landing-design-system.test.tsx       |    89 +
+ .../__tests__/landing-footer-layout.test.tsx       |    77 +
+ .../__tests__/landing-header-navigation.test.tsx   |   134 +
+ .../landing-hero-visual-lifecycle.test.tsx         |   186 +
+ .../__tests__/landing-mobile-drawer.test.tsx       |    83 +
+ .../landing-motion-accessibility.test.tsx          |    76 +
+ .../__tests__/landing-product-integrity.test.tsx   |   100 +
+ .../__tests__/landing-responsive-layout.test.tsx   |    69 +
+ .../__tests__/landing-scroll-storytelling.test.tsx |   146 +
+ .../__tests__/landing-spatial-story.test.tsx       |   153 +
+ .../landing-storytelling-continuity.test.tsx       |    71 +
+ .../landing-storytelling-geometry.test.tsx         |    72 +
+ .../landing-storytelling-interaction.test.tsx      |   110 +
+ .../__tests__/landing-version-lifecycle.test.ts    |    60 +
+ .../__tests__/landing-webgl-lifecycle.test.tsx     |   133 +
+ .../__tests__/sidebar-empty-state.test.tsx         |   135 +
+ .../sidebar-problem-group-header.test.tsx          |   142 +
+ .../__tests__/sidebar-toggle-icon.test.tsx         |    47 +
+ .../__tests__/v92-composer-upload.test.tsx         |   246 +
+ .../__tests__/v942-claude-menu-capture.test.tsx    |   336 +
+ .../__tests__/v943-ux-lifecycle-sidebar.test.tsx   |   427 +
+ .../__tests__/v944-screen-capture.test.ts          |    38 +
+ .../src/components/__tests__/v945-preview.test.ts  |    15 +
+ .../__tests__/workspace-tabbar-refinement.test.tsx |   288 +
+ frontend/src/components/assignment-open.test.ts    |    72 -
+ .../src/components/axo-error-experience.test.tsx   |    10 +-
+ .../axo-error-navigation-matrix.test.tsx           |    17 +-
+ .../src/components/axo-runtime-recovery.test.tsx   |    39 +-
+ .../components/construction-step-editor.test.tsx   |  1684 +
+ frontend/src/components/family-icons.tsx           |   834 +
+ .../src/components/geometry2d/family-icons.tsx     |   284 +
+ .../geometry2d-illustration-system.test.tsx        |   422 +
+ frontend/src/components/geometry2d/index.ts        |    61 +
+ frontend/src/components/geometry2d/primitives.tsx  |   875 +
+ frontend/src/components/geometry2d/resolver.ts     |  1584 +
+ frontend/src/components/geometry2d/templates.tsx   |  1312 +
+ .../components/hybrid-product-integration.test.tsx |    16 +-
+ ...st.ts => hybrid-route-analyze-contract.test.ts} |     0
+ frontend/src/components/icons.tsx                  |     8 +
+ .../src/components/landing/AnnotatedHeading.tsx    |   126 +
+ .../components/landing/LandingClosingScene3D.tsx   |  1511 +
+ .../components/landing/LandingClosingSculpture.tsx |   119 +
+ .../src/components/landing/LandingClosingV14.tsx   |   178 +
+ .../landing/LandingExplainerAnimation.tsx          |   494 +
+ frontend/src/components/landing/LandingHeader.tsx  |   434 +
+ .../src/components/landing/LandingHeroScene3D.tsx  |  1588 +
+ .../components/landing/LandingHeroSculpture3D.tsx  |   960 +
+ frontend/src/components/landing/LandingHeroV14.tsx |  1946 +
+ .../landing/LandingIllustrationAccents.tsx         |    36 +
+ .../components/landing/LandingInteractiveDemo.tsx  |   300 +
+ .../src/components/landing/LandingPreviewV14.tsx   |    20 +
+ .../src/components/landing/LandingStorytelling.tsx |   256 +
+ .../components/landing/LandingStorytellingV14.tsx  |  1403 +
+ .../components/landing/landing-geometry-data.ts    |  1125 +
+ frontend/src/components/landing/landing.css        |  4137 ++
+ frontend/src/components/live-classroom.test.tsx    |   243 -
+ .../navigation-account-and-history.test.tsx        |   292 +
+ frontend/src/components/phase-b-views.test.tsx     |  1665 +-
+ .../src/components/photo-problem-panel.test.tsx    |     9 +-
+ .../sidebar-scrollbar-refinement.test.tsx          |   484 +
+ frontend/src/components/slice1-shell.test.tsx      |    75 +-
+ frontend/src/components/slice2-composer.test.tsx   |   298 +-
+ frontend/src/components/ui-hygiene.test.ts         |    13 -
+ frontend/src/components/ux-shell.test.tsx          |    45 +-
+ ....tsx => workspace-layout-and-controls.test.tsx} |   236 +-
+ frontend/src/data/advanced-geometry-samples.json   | 38961 +++++++++++++++++++
+ frontend/src/data/geometry-samples.ts              |    38 +-
+ frontend/src/data/offline-catalog.ts               |   205 +-
+ frontend/src/llm/input.test.ts                     |     9 +
+ frontend/src/llm/input.ts                          |    27 +
+ frontend/src/main.tsx                              |     1 +
+ .../domains/geometry/Scene3DExplorer.tsx           |    64 +-
+ .../coplanar-euclidean-sections.fixture.json       | 19262 +++++++++
+ .../axo-cross-family-scene3d-acceptance.test.tsx   |    12 +-
+ .../domains/geometry/axo-reliability-gate.test.tsx |     5 +-
+ .../backend-dynamic-scene3d-contract.test.tsx      |   673 +
+ .../geometry/backend-geometry-contracts.test.ts    |   331 +
+ .../geometry/camera-locate-benchmark.test.ts       |   750 +
+ .../domains/geometry/camera-locate.test.ts         |   329 +
+ .../geometry/construction-step-visibility.test.tsx |   178 +
+ .../geometry-relationship-presentation.test.tsx    |   508 +
+ .../domains/geometry/object-relations.test.tsx     |   462 +
+ .../geometry/object-selection-and-tooltip.test.tsx |   168 +
+ .../geometry/plane-and-section-invariants.test.tsx |   564 +
+ .../plane-and-section-presentation-policy.test.tsx |   397 +
+ .../plane-extent-and-step-regression.test.tsx      |   304 +
+ .../domains/geometry/polygon-triangulate.ts        |    56 +-
+ .../domains/geometry/scene3d-annotations.ts        |     3 +
+ .../domains/geometry/scene3d-auxiliary.ts          |   166 +-
+ .../scene3d-camera-framing-readability.test.tsx    |   433 +
+ .../domains/geometry/scene3d-camera.test.ts        |    63 +
+ .../simulations/domains/geometry/scene3d-camera.ts |   881 +-
+ .../geometry/scene3d-circumsphere-fixture.json     |  2833 +-
+ .../domains/geometry/scene3d-edge-visibility.ts    |    15 +-
+ .../geometry/scene3d-final-frame-quality.test.tsx  |    73 +
+ .../domains/geometry/scene3d-focus-mode.test.tsx   |    45 +-
+ .../simulations/domains/geometry/scene3d-model.ts  |   253 +-
+ .../scene3d-pedagogical-validation.test.tsx        |     2 +-
+ .../scene3d-regression-archetypes-fixtures.json    |   197 +-
+ .../geometry/scene3d-representation-consistency.ts |  1826 +
+ .../simulations/domains/geometry/scene3d-roles.ts  |     4 +
+ .../domains/geometry/scene3d-semantic-policy.ts    |  6106 ++-
+ .../geometry/scene3d-standardization.test.tsx      |   576 +
+ .../scene3d-student-presentation-policy.ts         |    83 +-
+ .../domains/geometry/scene3d-subentities.ts        |    42 +-
+ .../domains/geometry/scene3d-tool-menu.tsx         |    49 -
+ .../simulations/domains/geometry/scene3d-view.tsx  |  1568 +-
+ .../simulations/domains/geometry/scene3d.test.tsx  |     4 +-
+ .../geometry/simulation-error-classifier.ts        |   114 +
+ .../geometry/simulation-error-recovery.test.tsx    |   425 +
+ .../step-continuity-and-scene-invariants.test.tsx  |   635 +
+ .../v9413-geometry-rendering-integrity.test.tsx    |   493 +
+ .../state/__tests__/workspace-tab-close.test.tsx   |   367 +
+ frontend/src/state/auth.ts                         |     6 -
+ frontend/src/state/classroom-sync.test.ts          |   181 -
+ frontend/src/state/classroom-sync.ts               |   160 -
+ frontend/src/state/classroom.ts                    |   367 -
+ frontend/src/state/construction-step-edits.ts      |   683 +
+ frontend/src/state/history.ts                      |   497 +-
+ frontend/src/state/learner-recovery-snapshot.ts    |    31 +-
+ frontend/src/state/store.ts                        |  3245 +-
+ frontend/src/state/view-history.test.tsx           |     3 +-
+ .../workspace-single-instance-navigation.test.tsx  |   856 +
+ frontend/src/state/workspace-tab-identity.ts       |   308 +
+ frontend/src/styles/class-coverage.test.ts         |     5 +-
+ frontend/src/styles/global.css                     |  7380 +++-
+ frontend/src/styles/scrollbar-ownership.test.ts    |     7 +-
+ frontend/src/styles/tokens.css                     |    12 +
+ frontend/src/styles/transition-semantics.test.ts   |     4 +
+ 563 files changed, 171558 insertions(+), 9579 deletions(-)
+
+=== git diff --name-status 27f2c98d2..HEAD ===
+A	docs/evaluation/geometry/runs/step-editor-independent-acceptance-main-prep/AXO-STEP-EDITOR-INDEPENDENT-ACCEPTANCE-REPORT.md
+A	docs/evaluation/geometry/runs/step-editor-independent-acceptance-main-prep/images/acceptance-1920-3a-s11-valid-sb.png
+A	docs/evaluation/geometry/runs/step-editor-independent-acceptance-main-prep/images/acceptance-1920-3b-invalid-422-sz.png
+A	docs/evaluation/geometry/runs/step-editor-independent-acceptance-main-prep/images/acceptance-1920-3c-prism.png
+A	docs/evaluation/geometry/runs/step-editor-independent-acceptance-main-prep/images/acceptance-1920-3c-s1-f5.png
+A	docs/evaluation/geometry/runs/step-editor-independent-acceptance-main-prep/images/acceptance-1920-post-restart.png
+A	docs/evaluation/geometry/runs/step-editor-independent-acceptance-main-prep/images/acceptance-rea-mcp.png
+A	docs/evaluation/geometry/runs/step-editor-independent-acceptance-main-prep/images/acceptance-touch-390x460-vkb.png
+A	docs/evaluation/geometry/runs/step-editor-independent-acceptance-main-prep/images/acceptance-vp-1024x768.png
+A	docs/evaluation/geometry/runs/step-editor-independent-acceptance-main-prep/images/acceptance-vp-1366x768.png
+A	docs/evaluation/geometry/runs/step-editor-independent-acceptance-main-prep/images/acceptance-vp-1440x900.png
+A	docs/evaluation/geometry/runs/step-editor-independent-acceptance-main-prep/images/acceptance-vp-1920x1080.png
+A	docs/evaluation/geometry/runs/step-editor-independent-acceptance-main-prep/images/acceptance-vp-320x568.png
+A	docs/evaluation/geometry/runs/step-editor-independent-acceptance-main-prep/images/acceptance-vp-390x844.png
+A	docs/evaluation/geometry/runs/step-editor-independent-acceptance-main-prep/images/acceptance-vp-768x1024.png
+A	docs/evaluation/geometry/runs/step-editor-independent-acceptance-main-prep/report.md
+A	docs/evaluation/geometry/runs/step-editor-independent-acceptance-main-prep/results/acceptance-e2e-phase1.json
+A	docs/evaluation/geometry/runs/step-editor-independent-acceptance-main-prep/results/acceptance-e2e-phase2.json
+A	docs/evaluation/geometry/runs/step-editor-independent-acceptance-main-prep/results/postgres-acceptance-audit.json
+A	docs/evaluation/geometry/runs/step-editor-independent-acceptance-main-prep/results/quality-gates-summary.json
+A	docs/evaluation/geometry/runs/step-editor-independent-acceptance-main-prep/results/rea-mcp-acceptance.json
+A	docs/evaluation/geometry/runs/step-editor-independent-acceptance-main-prep/run.json
+=== git log --oneline --decorate --graph -n 120 ===
+* fdf3e5e79 (HEAD -> feat/axo-geometry-library-verification) docs(eval): add independent acceptance and main release preparation report
+* 27f2c98d2 chore(eval): refresh evaluation candidate seal after IA-RC3
+* 2ff70ce45 fix(step-editor): clamp mobile dock and editor visibility under virtual keyboard
+* a4022c600 chore(eval): refresh evaluation candidate seal after IA-RC2
+* 2558f9fb5 fix(step-editor): keep inline step editor actions visible inside dock scroll
+* ebacab9bd chore(seal): update EVALUATION_CANDIDATE and pilot templates after IA-RC1 fix
+* 5b013d16e fix(step-editor): use helper display reference instead of raw internal id in plane labels (IA-RC1)
+* 1eaa33fbb docs(evaluation): record Step Editor release-gate verification evidence on real PostgreSQL 16
+* 194c0cca5 fix(tests): use radical.sign for Radical exact area positivity check in C2
+* 546126013 fix(tests): align C2 geometry oracle with exact sample object IDs
+* 20cc7137f fix(tests): use curved.CurvedSolid and curved.the_tich with Radical(he, can, mu) in C2 oracle
+* 35c360b83 fix(tests): expose shared pg_container fixture to step editor closure postgres tests
+* 0b58654b0 fix(tests): avoid Win32 pipe inheritance hang when spawning local pg_ctl in pytest
+* db015cb2a chore(seal): sync EVALUATION_CANDIDATE and pilot approval templates with integrated clean tree
+* 5d1da3cac test(postgres): add PostgreSQL 16 ephemeral harness, full B2 row-lock/restart suite, and C2 geometry oracle
+* a9a5d20b1 feat(workspace): integrate single-instance tab state, draft history, recovery snapshot, and shell views
+* bf1ee2a57 refactor(classroom): retire Classroom/Live Session modules and rebase f8a2c41d9e05 onto 9c4d8e2b7a10
+* 9220fc635 feat(attachment): integrate ScreenCaptureDialog, pdfjs-dist manifest, resize test, and attachment evidence
+* 0730235e6 docs(evaluation): record Step Editor integration & regression closure evidence
+* 3eabbf674 chore(evaluation): refresh EVALUATION_CANDIDATE and pilot approval templates for Step Editor seal
+* 37b7460dd fix(step-editor): close Alembic, geometry boundary, concurrency retry & version clock gaps
+* bae665e79 feat(step-editor): close post-commit cancel race, idempotency, topology guard and merge-gate verification
+* a493d89c0 fix(step-editor): harden FP-1..FP-6 geometry equivalence, invariants, cancel and pre-merge verification
+* ac8badd63 fix(step-editor): resolve IND-1..IND-7 root causes and complete independent acceptance
+* ba261dea5 fix(step-editor): stabilize root causes RC-1..RC-7 and pre-merge verification
+* 602a38db8 fix(step-editor): harden V2.2 rebuild reliability, exact oracle, fail-closed gates, async guards, and E2E evidence
+* 29cc3abe2 docs(geometry): add AXO Step Editor V1 restoration report and QA evidence
+* f3cf5fa79 fix(workspace): restore construction step editor V1 UX, fix textarea overflow & line wrapping
+* d0cb1d40f refactor(workspace): restore compact step list baseline, slim inline editor, and remove persistent update badge
+* 7607f0d6e fix(workspace): stabilize construction step editor semantic resolution, exact invariants, and UX
+* 438fa69ca feat(workspace): add editable construction steps, deterministic partial kernel rebuild, and verified feedback pipeline
+* b73c2c29f feat(landing): axo landing v1.8 spatial editorial 2.0 visual architecture and geometry redesign
+* b84e19f5c feat(landing): refine v1.7 storytelling stage, cube camera preset, and spatial editorial rhythm
+* 762402943 feat(landing): refine v1.7 spatial storytelling, showcase stage, and coupled geometry
+* aaf180072 feat(landing): spatial visual system gallery, continuous light ground, and closing hexagon polish
+* b99311d3f feat(landing): refine V1.6 header hover, spatial hero, scroll storytelling, and studio demo
+* b769a554f feat(landing): AXO Landing V1.6 visual quality recovery on isolated preview
+* 2732803e3 feat(landing): AXO Landing V1.5 spatial editorial recovery on isolated preview
+* 55d4e9e10 docs(axo): add landing v1.4 final refinement report
+* eb7448533 feat(axo): refine v1.4 landing hero, scroll storytelling, demo, closing 3d and footer
+* e39d67548 docs(axo): add landing v1.4 product recovery report
+* a7d2437a9 feat(axo): recover v1.4 landing storytelling, 3d visuals, and zero-answer ux
+* 2ddcd6f25 docs(axo): add landing design recovery and scroll storytelling report
+* d04a445a6 feat(axo): recover v1.4 landing design, scroll storytelling, and consolidate prototypes
+* 919a06111 docs(axo): add geometry regression and tab bar refinement report
+* edc87fe45 style(axo): refine workspace tab readability and active states
+* 72870daaf fix(axo): restore geometry plane framing and step consistency
+* 1bfc2bc36 docs(axo): add landing cta footer refinement report
+* 471baf39b feat(axo): upgrade v1.4 closing 3d scene and editorial footer
+* ed308d1a8 docs(axo): add v1.4 visual direction report
+* b717cebd1 style(axo): unify demo and final cta presentation
+* e34faf7d4 feat(axo): refine spatial storytelling preview
+* f97f00b1f feat(axo): redesign landing hero visual system
+* eeb12c9c6 feat(axo): add expressive geometry typography
+* aebcb1810 feat(axo): add v1.3 landing motion prototypes for owner review
+* 2cde6e6a4 fix(axo): streamline landing authentication and navigation
+* 916fa589b docs(axo): add v1.2.1 verification report
+* 59300b9b4 fix(axo): prevent storytelling mobile overflow and scene4 badge overlap
+* d75681930 fix(axo): restore mobile menu focus on Escape close
+* 9f7ff3286 style(axo): add CSS rules for explainer stage and mobile drawer button
+* 85f47feee refactor(axo): simplify interactive demo and exact math presentation
+* 2533d1442 feat(axo): add animated product explainer storytelling
+* 61f3f78f6 feat(axo): redesign hero spatial illustration
+* 5f66a2910 fix(axo): remove redundant mobile navigation actions
+* 9e2340c72 fix(axo): synchronize landing and workspace auth navigation
+* 3281b934b docs(axo): record landing v1.2 evaluation report and code index
+* fb5650d0f perf(axo): optimize landing animation lifecycle
+* 42502b9c6 refactor(axo): simplify interactive geometry showcase
+* ef5dd3d37 feat(axo): refine landing visual storytelling
+* 6712a7a50 style(axo): align landing components with design system
+* dd5d92f67 feat(axo): refine spatial storytelling, demo, and 3d rendering lifecycle
+* 56c50f3a1 feat(axo): upgrade landing hero and closing visual direction
+* 9b72a2c51 style(axo): refine sidebar toggle icon geometry
+* ed71ff6ea feat(axo): build landing page visual prototype
+* 94292eac0 fix(axo): remove redundant tab close confirmation and preserve drafts
+* c65eea956 style(axo): match sidebar toggle icon to approved reference
+* 7cca5b4b1 style(axo): restore geometry customization naming
+* 8af24a5c8 fix(axo): simplify sidebar empty state
+* c46353c78 fix(axo): restore geometry toolbar functionality
+* 333cadc4e fix(axo): stabilize simulation error handling and recovery
+* aecd3daa5 fix(axo): improve geometric relationship presentation
+* dc14cacc9 fix(axo): prevent duplicate workspace tabs
+* 9ff57ef17 fix(axo): refine sidebar scrollbar appearance and scrolling
+* aab83790c refactor(test): finalize safe test naming cleanup
+* b57df99cf fix(axo): prevent self-referential contract relation formatting
+* 72d7271db refactor(test): organize frontend tests by behavior and domain
+* 8b0c270ad fix(axo): refine geometry relationships and camera locate
+* b5810dcc3 fix(axo): integrate verified backend geometry contracts
+* af81b3db5 fix(axo): verify plane geometry and refine object interactions
+* dfc063840 fix(axo): refine geometry interaction and step visualization
+* d49763413 fix(axo): strengthen geometry step integrity and visualization
+* 3085b182e fix(axo): simplify geometry plane visualization policy
+* 312962e1d docs(eval): GEO-BE-001 receipts — reproduction, dependency audit, catalog diff, id scan, reproducibility, regression attribution
+* 5a229507b fix(display-names): resolve plane symbols before naming points that lie on them (GEO-BE-001)
+* c7a6077fd fix(axo): improve geometry scene rendering consistency
+* 78665ef5a style(axo): refine sidebar section chevron
+* b554b1c8a style(axo): refine sidebar section header and filter alignment
+* 65ffb998a style(axo): normalize icon sizing and optical alignment
+* 5bcf47f51 fix(axo): correct attachment focus and remove docx fallback preview
+* 012493f1c fix(axo): remove preview navigation and normalize scrollbar cursor
+* 998b0dd88 fix(axo): refine attachment cards, pdf preview stack, and unify composer send/stop
+* d2aeec4a8 style(header): refine main and workspace headers via shared layout container and design tokens
+* 6888b512a fix(frontend): compact Composer + popover proportions and eliminate overlap with Gợi ý khám phá
+* 1bd1fe92d perf(composer): single-commit plus popover positioning and proportion refinement
+* 15b4505bf fix(frontend): viewport-aware composer popover & scene3d pedagogical fixes
+* 81aa0e245 feat(frontend): standardize semantic geometry colors, Oxyz axes, angle markers, steps, and composer menu
+* e82fdb184 style(composer): refine plus attachment popover proportions, states, and keyboard focus
+* a6d9bebf6 fix(scene3d): fix root-cause camera framing, sphere/line/plane bounds, and label readability
+* ef9c20160 feat(axo-library): replace 11 sample problems with 11 advanced THPT 3D geometry simulations and composable 2D templates
+* 9fff0e360 feat(frontend): composable 2D geometry illustrations, compact library toolbar, and fitted composer plus menu
+* 3ce5251bc feat(frontend): implement reusable 2D geometry illustration system and library visual refinement
+* 388bb9718 feat(geometry-library): unify Scene3D thumbnail projection, exact cone orbit occlusion, and minimalist header
+* 20e4faa45 feat(geometry-library): audit 11 samples, fix Scene3D camera/visibility/labels, and sync thumbnails
+*   bb046fa22 (origin/main, origin/HEAD, main, axo-ui-consistency) Merge branch 'fix/axo-device-aware-camera-entry' into main
+|\  
+| * a8582c97e feat(frontend): show camera entry only on phone and tablet devices
+|/  
+* ea694108a chore(eval): refresh evaluation candidate seal after unified_input update
+*   88ff25730 Merge branch 'test/axo-camera-real-input-validation'
+|\  
+| * e7d157944 fix(camera,ingestion): validate real-world camera viewports and multi-image semantic assembly
+|/  
+* 44ec3f613 chore(eval): refresh evaluation candidate seal after camera fullscreen and close UX optimization
+*   0bd1e9fcd Merge branch 'fix/axo-camera-fullscreen-close-ux' into main
+|\  

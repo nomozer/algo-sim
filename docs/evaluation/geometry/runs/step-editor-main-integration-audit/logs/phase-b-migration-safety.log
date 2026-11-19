@@ -1,0 +1,60 @@
+$ alembic upgrade e437149641fa -> exit 0
+
+INFO  [alembic.runtime.migration] Context impl PostgresqlImpl.
+INFO  [alembic.runtime.migration] Will assume transactional DDL.
+INFO  [alembic.runtime.migration] Running upgrade  -> 72095b7dd318, initial schema (simulation_cache, simulation_patterns, reuse_metrics)
+INFO  [alembic.runtime.migration] Running upgrade 72095b7dd318 -> f32f9b107b77, m18 accounts and classroom
+INFO  [alembic.runtime.migration] Running upgrade f32f9b107b77 -> a1c7e4b90d52, live classroom session + semantic focus
+INFO  [alembic.runtime.migration] Running upgrade a1c7e4b90d52 -> c4e8a91b2f03, learning history entries per user
+INFO  [alembic.runtime.migration] Running upgrade c4e8a91b2f03 -> d5f9b82c3a14, admin persistence and telemetry tables
+INFO  [alembic.runtime.migration] Running upgrade d5f9b82c3a14 -> e437149641fa, analysis usage ledger
+
+$ alembic upgrade 9c4d8e2b7a10 -> exit 0
+
+INFO  [alembic.runtime.migration] Context impl PostgresqlImpl.
+INFO  [alembic.runtime.migration] Will assume transactional DDL.
+INFO  [alembic.runtime.migration] Running upgrade e437149641fa -> 9c4d8e2b7a10, add step edit tables
+
+$ alembic upgrade f8a2c41d9e05 -> exit 0
+
+INFO  [alembic.runtime.migration] Context impl PostgresqlImpl.
+INFO  [alembic.runtime.migration] Will assume transactional DDL.
+INFO  [alembic.runtime.migration] Running upgrade 9c4d8e2b7a10 -> f8a2c41d9e05, remove classroom and live session tables
+
+$ alembic check -> exit 0
+No new upgrade operations detected.
+
+INFO  [alembic.runtime.migration] Context impl PostgresqlImpl.
+INFO  [alembic.runtime.migration] Will assume transactional DDL.
+INFO  [alembic.runtime.plugins] setting up autogenerate plugin alembic.autogenerate.schemas
+INFO  [alembic.runtime.plugins] setting up autogenerate plugin alembic.autogenerate.tables
+INFO  [alembic.runtime.plugins] setting up autogenerate plugin alembic.autogenerate.types
+INFO  [alembic.runtime.plugins] setting up autogenerate plugin alembic.autogenerate.constraints
+INFO  [alembic.runtime.plugins] setting up autogenerate plugin alembic.autogenerate.defaults
+INFO  [alembic.runtime.plugins] setting up autogenerate plugin alembic.autogenerate.comments
+INFO  [alembic.ddl.postgresql] Detected sequence named 'step_edit_sessions_id_seq' as owned by integer column 'step_edit_sessions(id)', assuming SERIAL and omitting
+INFO  [alembic.ddl.postgresql] Detected sequence named 'learning_history_entries_id_seq' as owned by integer column 'learning_history_entries(id)', assuming SERIAL and omitting
+INFO  [alembic.ddl.postgresql] Detected sequence named 'auth_sessions_id_seq' as owned by integer column 'auth_sessions(id)', assuming SERIAL and omitting
+INFO  [alembic.ddl.postgresql] Detected sequence named 'admin_analysis_telemetry_id_seq' as owned by integer column 'admin_analysis_telemetry(id)', assuming SERIAL and omitting
+INFO  [alembic.ddl.postgresql] Detected sequence named 'step_edit_revisions_id_seq' as owned by integer column 'step_edit_revisions(id)', assuming SERIAL and omitting
+INFO  [alembic.ddl.postgresql] Detected sequence named 'user_account_meta_id_seq' as owned by integer column 'user_account_meta(id)', assuming SERIAL and omitting
+INFO  [alembic.ddl.postgresql] Detected sequence named 'step_edit_feedback_id_seq' as owned by integer column 'step_edit_feedback(id)', assuming SERIAL and omitting
+INFO  [alembic.ddl.postgresql] Detected sequence named 'users_id_seq' as owned by integer column 'users(id)', assuming SERIAL and omitting
+INFO  [alembic.ddl.postgresql] Detected sequence named 'analysis_usage_ledger_id_seq' as owned by integer column 'analysis_usage_ledger(id)', assuming SERIAL and omitting
+INFO  [alembic.ddl.postgresql] Detected sequence named 'admin_audit_logs_id_seq' as owned by integer column 'admin_audit_logs(id)', assuming SERIAL and omitting
+INFO  [alembic.ddl.postgresql] Detected sequence named 'simulation_patterns_id_seq' as owned by integer column 'simulation_patterns(id)', assuming SERIAL and omitting
+INFO  [alembic.ddl.postgresql] Detected sequence named 'simulation_cache_id_seq' as owned by integer column 'simulation_cache(id)', assuming SERIAL and omitting
+
+$ alembic downgrade e437149641fa -> exit 0
+
+INFO  [alembic.runtime.migration] Context impl PostgresqlImpl.
+INFO  [alembic.runtime.migration] Will assume transactional DDL.
+INFO  [alembic.runtime.migration] Running downgrade f8a2c41d9e05 -> 9c4d8e2b7a10, remove classroom and live session tables
+INFO  [alembic.runtime.migration] Running downgrade 9c4d8e2b7a10 -> e437149641fa, add step edit tables
+
+$ python scripts/seed_classroom_fixture.py -> exit 1
+
+Traceback (most recent call last):
+  File "D:\Documents\projects\algo-sim\.superpowers\worktrees\step-editor-release-candidate\backend\scripts\seed_classroom_fixture.py", line 33, in <module>
+    from app.persistence.classroom_models import (  # noqa: E402
+ImportError: cannot import name 'Assignment' from 'app.persistence.classroom_models' (D:\Documents\projects\algo-sim\.superpowers\worktrees\step-editor-release-candidate\backend\app\persistence\classroom_models.py)

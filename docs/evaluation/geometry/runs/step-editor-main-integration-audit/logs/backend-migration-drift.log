@@ -1,0 +1,12 @@
+============================= test session starts =============================
+platform win32 -- Python 3.12.10, pytest-9.1.1, pluggy-1.6.0 -- D:\Documents\projects\algo-sim\.superpowers\worktrees\step-editor-release-candidate\backend\.venv\Scripts\python.exe
+cachedir: .pytest_cache
+rootdir: D:\Documents\projects\algo-sim\.superpowers\worktrees\step-editor-release-candidate\backend
+configfile: pytest.ini
+plugins: anyio-4.14.1
+collecting ... collected 2 items
+
+tests/test_migration_drift.py::test_model_and_migration_head_have_no_drift PASSED [ 50%]
+tests/test_migration_drift.py::test_repeated_upgrade_at_head_is_noop PASSED [100%]
+
+============================== 2 passed in 5.85s ==============================

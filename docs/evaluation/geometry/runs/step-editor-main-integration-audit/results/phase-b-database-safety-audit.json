@@ -1,0 +1,195 @@
+{
+  "audited_at": "2026-11-19T03:58:20.300031+00:00",
+  "redaction_policy": "STRICT_REDACTED_NO_DSN_NO_CREDENTIALS_NO_TOKENS",
+  "database_engine": "PostgreSQL 16.6 (isolated ephemeral database algosim_migration_safety_probe, dropped after audit)",
+  "alembic_chain": [
+    "72095b7dd318",
+    "f32f9b107b77",
+    "a1c7e4b90d52",
+    "c4e8a91b2f03",
+    "d5f9b82c3a14",
+    "e437149641fa",
+    "9c4d8e2b7a10",
+    "f8a2c41d9e05"
+  ],
+  "step_1_seeded_counts_at_e437149641fa": {
+    "admin_analysis_telemetry": 0,
+    "admin_audit_logs": 0,
+    "admin_system_settings": 0,
+    "analysis_usage_ledger": 1,
+    "assignments": 2,
+    "auth_sessions": 1,
+    "class_memberships": 2,
+    "classroom_sessions": 1,
+    "classrooms": 2,
+    "learning_history_entries": 1,
+    "practice_sessions": 2,
+    "reuse_metrics": 0,
+    "simulation_cache": 1,
+    "simulation_patterns": 0,
+    "user_account_meta": 0,
+    "users": 2
+  },
+  "step_2_counts_after_9c4d8e2b7a10": {
+    "admin_analysis_telemetry": 0,
+    "admin_audit_logs": 0,
+    "admin_system_settings": 0,
+    "analysis_usage_ledger": 1,
+    "assignments": 2,
+    "auth_sessions": 1,
+    "class_memberships": 2,
+    "classroom_sessions": 1,
+    "classrooms": 2,
+    "learning_history_entries": 1,
+    "practice_sessions": 2,
+    "reuse_metrics": 0,
+    "simulation_cache": 1,
+    "simulation_patterns": 0,
+    "step_edit_feedback": 0,
+    "step_edit_revisions": 0,
+    "step_edit_sessions": 0,
+    "user_account_meta": 0,
+    "users": 2
+  },
+  "step_2_step_edit_constraints": [
+    {
+      "table": "step_edit_feedback",
+      "name": "step_edit_feedback_pkey",
+      "type": "PRIMARY KEY"
+    },
+    {
+      "table": "step_edit_revisions",
+      "name": "step_edit_revisions_pkey",
+      "type": "PRIMARY KEY"
+    },
+    {
+      "table": "step_edit_revisions",
+      "name": "uq_step_edit_revision_version",
+      "type": "UNIQUE"
+    },
+    {
+      "table": "step_edit_sessions",
+      "name": "step_edit_sessions_pkey",
+      "type": "PRIMARY KEY"
+    },
+    {
+      "table": "step_edit_sessions",
+      "name": "uq_step_edit_session_owner_sid",
+      "type": "UNIQUE"
+    }
+  ],
+  "step_2_step_edit_sql_foreign_keys": [],
+  "step_2_9c4d8e2b7a10_non_destructive_all_rows_preserved": true,
+  "step_3_tables_dropped_at_f8a2c41d9e05": [
+    "assignments",
+    "class_memberships",
+    "classroom_sessions",
+    "classrooms",
+    "practice_sessions"
+  ],
+  "step_3_surviving_counts_at_f8a2c41d9e05": {
+    "admin_analysis_telemetry": 0,
+    "admin_audit_logs": 0,
+    "admin_system_settings": 0,
+    "analysis_usage_ledger": 1,
+    "auth_sessions": 1,
+    "learning_history_entries": 1,
+    "reuse_metrics": 0,
+    "simulation_cache": 1,
+    "simulation_patterns": 0,
+    "step_edit_feedback": 0,
+    "step_edit_revisions": 0,
+    "step_edit_sessions": 0,
+    "user_account_meta": 0,
+    "users": 2
+  },
+  "step_4_counts_after_downgrade_to_e437149641fa": {
+    "admin_analysis_telemetry": 0,
+    "admin_audit_logs": 0,
+    "admin_system_settings": 0,
+    "analysis_usage_ledger": 1,
+    "assignments": 0,
+    "auth_sessions": 1,
+    "class_memberships": 0,
+    "classroom_sessions": 0,
+    "classrooms": 0,
+    "learning_history_entries": 1,
+    "practice_sessions": 0,
+    "reuse_metrics": 0,
+    "simulation_cache": 1,
+    "simulation_patterns": 0,
+    "user_account_meta": 0,
+    "users": 2
+  },
+  "empirical_row_loss_on_classroom_tables": {
+    "classrooms": {
+      "before_f8": 2,
+      "at_f8": "TABLE_DROPPED",
+      "after_downgrade": 0
+    },
+    "class_memberships": {
+      "before_f8": 2,
+      "at_f8": "TABLE_DROPPED",
+      "after_downgrade": 0
+    },
+    "assignments": {
+      "before_f8": 2,
+      "at_f8": "TABLE_DROPPED",
+      "after_downgrade": 0
+    },
+    "practice_sessions": {
+      "before_f8": 2,
+      "at_f8": "TABLE_DROPPED",
+      "after_downgrade": 0
+    },
+    "classroom_sessions": {
+      "before_f8": 1,
+      "at_f8": "TABLE_DROPPED",
+      "after_downgrade": 0
+    }
+  },
+  "alembic_check_at_head_exit": 0,
+  "dockerfile_auto_upgrade_cmd": [
+    "CMD alembic upgrade head &&     if [ \"$DEV_RELOAD\" = \"1\" ]; then       WATCHFILES_FORCE_POLLING=1 exec uvicorn app.main:app --host 0.0.0.0         --port 8000 --reload --reload-dir /app/app;     else       exec uvicorn app.main:app --host 0.0.0.0 --port 8000;     fi"
+  ],
+  "protected_root_algosim_db_readonly": {
+    "path": "D:/Documents/projects/algo-sim/backend/algosim.db",
+    "size_bytes": 413696,
+    "alembic_version_present": false,
+    "row_counts": {
+      "admin_analysis_telemetry": 5,
+      "admin_audit_logs": 0,
+      "admin_system_settings": 0,
+      "analysis_usage_ledger": 5,
+      "assignments": 10,
+      "auth_sessions": 100,
+      "class_memberships": 20,
+      "classroom_sessions": 8,
+      "classrooms": 12,
+      "learning_history_entries": 0,
+      "practice_sessions": 16,
+      "reuse_metrics": 3,
+      "simulation_cache": 2,
+      "simulation_patterns": 0,
+      "user_account_meta": 11,
+      "users": 46
+    },
+    "live_classroom_rows_at_risk": 66
+  },
+  "seed_classroom_fixture_check": {
+    "exit_code": 1,
+    "stderr_tail": [
+      "  File \"D:\\Documents\\projects\\algo-sim\\.superpowers\\worktrees\\step-editor-release-candidate\\backend\\scripts\\seed_classroom_fixture.py\", line 33, in <module>",
+      "    from app.persistence.classroom_models import (  # noqa: E402",
+      "ImportError: cannot import name 'Assignment' from 'app.persistence.classroom_models' (D:\\Documents\\projects\\algo-sim\\.superpowers\\worktrees\\step-editor-release-candidate\\backend\\app\\persistence\\classroom_models.py)"
+    ]
+  },
+  "database_safety_gate": "BLOCKED_DATABASE_SAFETY",
+  "blocking_findings": [
+    "f8a2c41d9e05_remove_classroom_and_live_session_tables.py executes unconditional op.drop_table on 5 populated Classroom tables without backup, export, row-count guard, or Owner-verified retention/restoration sign-off.",
+    "Empirically proved on PostgreSQL 16.6 that upgrade f8a2c41d9e05 -> downgrade e437149641fa destroys all rows permanently (2->0 classrooms, 2->0 class_memberships, 2->0 assignments, 2->0 practice_sessions, 1->0 classroom_sessions).",
+    "backend/Dockerfile line 53 runs `alembic upgrade head` automatically before uvicorn startup; merging & deploying would execute destructive drop_table on persistent pgdata without manual gate.",
+    "D:/Documents/projects/algo-sim/backend/algosim.db holds 66 live Classroom rows alongside 46 users.",
+    "backend/scripts/seed_classroom_fixture.py is broken (ImportError: cannot import name 'Assignment' from 'app.persistence.classroom_models')."
+  ]
+}
