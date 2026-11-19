@@ -1,0 +1,243 @@
+{
+  "schema_version": "axo-quality-gates-summary/1",
+  "run_id": "step-editor-independent-acceptance-main-prep",
+  "evaluated_at": "2026-11-19T08:31:30+07:00",
+  "branch": "feat/axo-geometry-library-verification",
+  "merge_base_main": "bb046fa22aceff47abe22aa783aa64fc65caee13",
+  "clean_candidate_commit": "27f2c98d2a0f7e9cbe4de8d23837db29e86f0aea",
+  "backend_full_suite_commit": "ebacab9bd315f7cb02a4150c6f72372bcd502c04",
+  "backend_post_seal_recheck_commit": "a4022c60076fb4b89572055e513f4ecc8fc0fbba",
+  "backend_diff_between_ebacab9bd_and_27f2c98d2": [],
+  "measured_system_tree_hash": "e0ea792d71667f12911fa7b0425bc4761aabdc337ad605491bc06c33137076a4",
+  "measured_system_file_count": 109,
+  "gates": {
+    "seal_verification": {
+      "command": "python scripts/freeze_evaluation_candidate.py --verify",
+      "commit": "27f2c98d2a0f7e9cbe4de8d23837db29e86f0aea",
+      "exit_code": 0,
+      "status": "PASS"
+    },
+    "docs_information_architecture_audit": {
+      "command": "python scripts/audit_docs_information_architecture.py",
+      "commit": "27f2c98d2a0f7e9cbe4de8d23837db29e86f0aea",
+      "exit_code": 0,
+      "status": "PASS",
+      "code_index_stale_paths": 0,
+      "broken_internal_links": 0,
+      "secret_leaks": 0,
+      "root_docs": 29,
+      "catalogued_entries": 167,
+      "unclassified": []
+    },
+    "frontend_typecheck": {
+      "command": "node ./node_modules/typescript/bin/tsc -b",
+      "commit": "27f2c98d2a0f7e9cbe4de8d23837db29e86f0aea",
+      "exit_code": 0,
+      "status": "PASS"
+    },
+    "frontend_build": {
+      "command": "node ./node_modules/vite/bin/vite.js build",
+      "commit": "27f2c98d2a0f7e9cbe4de8d23837db29e86f0aea",
+      "exit_code": 0,
+      "modules_transformed": 129,
+      "duration_s": 4.74,
+      "status": "PASS"
+    },
+    "frontend_vitest": {
+      "command": "node ./node_modules/vitest/vitest.mjs run",
+      "commit": "27f2c98d2a0f7e9cbe4de8d23837db29e86f0aea",
+      "exit_code": 0,
+      "files_passed": 192,
+      "files_total": 192,
+      "tests_passed": 2274,
+      "tests_total": 2274,
+      "duration_s": 102.23,
+      "status": "PASS"
+    },
+    "backend_geometry_suite": {
+      "command": "pytest tests/geometry -rsx -q",
+      "commit": "ebacab9bd315f7cb02a4150c6f72372bcd502c04",
+      "exit_code": 0,
+      "passed": 12000,
+      "failed": 0,
+      "skipped": 6,
+      "deselected": 3,
+      "xfailed": 9,
+      "duration_s": 338.8,
+      "status": "PASS"
+    },
+    "backend_semantic_program_suite": {
+      "command": "pytest tests/semantic_program -rsx -q",
+      "commit": "ebacab9bd315f7cb02a4150c6f72372bcd502c04",
+      "exit_code": 0,
+      "passed": 1192,
+      "failed": 0,
+      "skipped": 1,
+      "deselected": 0,
+      "xfailed": 0,
+      "duration_s": 46.57,
+      "status": "PASS"
+    },
+    "backend_other_tests": {
+      "command": "pytest tests --ignore=tests/geometry --ignore=tests/semantic_program -rsx -q",
+      "commit": "ebacab9bd315f7cb02a4150c6f72372bcd502c04",
+      "exit_code": 0,
+      "passed": 793,
+      "failed": 0,
+      "skipped": 0,
+      "deselected": 2,
+      "xfailed": 0,
+      "duration_s": 93.33,
+      "status": "PASS"
+    },
+    "backend_migration_drift_and_acceptance_recheck": {
+      "command": "pytest tests/test_migration_drift.py tests/geometry/test_step_editor_main_release_acceptance.py -v",
+      "commit": "a4022c60076fb4b89572055e513f4ecc8fc0fbba",
+      "exit_code": 0,
+      "passed": 6,
+      "failed": 0,
+      "duration_s": 7.43,
+      "status": "PASS"
+    },
+    "backend_postgres_16_suite": {
+      "command": "pytest -m postgres -v",
+      "commit": "a4022c60076fb4b89572055e513f4ecc8fc0fbba",
+      "exit_code": 0,
+      "passed": 4,
+      "failed": 0,
+      "skipped": 0,
+      "deselected": 14002,
+      "duration_s": 48.69,
+      "status": "PASS"
+    },
+    "demo_replay_and_crash_audit": {
+      "command": "python scripts/replay_demo_cases.py && python scripts/audit_demo_crash_surface.py",
+      "commit": "ebacab9bd315f7cb02a4150c6f72372bcd502c04",
+      "exit_code": 0,
+      "replay_result": "5/5 + 1/1",
+      "crash_audit_result": "6/6 (0 x 500)",
+      "status": "PASS"
+    },
+    "live_host_playwright_phase1": {
+      "commit": "27f2c98d2a0f7e9cbe4de8d23837db29e86f0aea",
+      "exit_code": 0,
+      "status": "PASS"
+    },
+    "live_host_playwright_phase2_post_restart": {
+      "commit": "27f2c98d2a0f7e9cbe4de8d23837db29e86f0aea",
+      "exit_code": 0,
+      "status": "PASS"
+    },
+    "rea_mcp_live_inspection": {
+      "commit": "27f2c98d2a0f7e9cbe4de8d23837db29e86f0aea",
+      "status": "PASS"
+    }
+  },
+  "non_pass_inventory": {
+    "xfailed_total": 9,
+    "xfailed_nodes": [
+      {
+        "node_id": "tests/geometry/test_generalized_goal_entry.py::test_length_goal_refusal[unread-second-ask]",
+        "category": "hybrid_nlu_refusal_code",
+        "reason": "Strict xfail: expected REQUEST_NOT_ANSWERED vs QUESTION_CONTEXT_UNSUPPORTED on Hybrid /4 research boundary; unrelated to Step Editor",
+        "step_editor_impact": false
+      },
+      {
+        "node_id": "tests/geometry/test_generalized_goal_entry.py::test_length_goal_refusal[contradictory-length]",
+        "category": "hybrid_nlu_refusal_code",
+        "reason": "Strict xfail: expected INCONSISTENT_FACTS vs INCONSISTENT_CONSTRAINTS on Hybrid /4 research boundary; unrelated to Step Editor",
+        "step_editor_impact": false
+      },
+      {
+        "node_id": "tests/geometry/test_hybrid_compiler_benchmark.py::test_case_outcome[B27-facts]",
+        "category": "legacy_benchmark_gap",
+        "reason": "Strict xfail GAP B27: unnamed derived operand in legacy Typed Facts v1 benchmark; unrelated to Step Editor",
+        "step_editor_impact": false
+      },
+      {
+        "node_id": "tests/geometry/test_hybrid_compiler_benchmark.py::test_case_outcome[B27-pipeline]",
+        "category": "legacy_benchmark_gap",
+        "reason": "Strict xfail GAP B27: unnamed derived operand in legacy Typed Facts v1 benchmark; unrelated to Step Editor",
+        "step_editor_impact": false
+      },
+      {
+        "node_id": "tests/geometry/test_hybrid_compiler_benchmark.py::test_case_outcome[B28-facts]",
+        "category": "legacy_benchmark_gap",
+        "reason": "Strict xfail GAP B28: 'tâm' vs 'trọng tâm' distinction in legacy Typed Facts v1 benchmark; unrelated to Step Editor",
+        "step_editor_impact": false
+      },
+      {
+        "node_id": "tests/geometry/test_hybrid_compiler_benchmark.py::test_case_outcome[B28-pipeline]",
+        "category": "legacy_benchmark_gap",
+        "reason": "Strict xfail GAP B28: 'tâm' vs 'trọng tâm' distinction in legacy Typed Facts v1 benchmark; unrelated to Step Editor",
+        "step_editor_impact": false
+      },
+      {
+        "node_id": "tests/geometry/test_hybrid_simulation_capability_probes.py::test_centre_label_exhaustion_is_a_coded_outcome",
+        "category": "kernel_exhaustion_probe",
+        "reason": "Strict xfail ISSUE-ARCH-ENGINE-CENTRE-LABEL-EXHAUSTION: synthetic exhaustion of all 26+ centre labels; unrelated to Step Editor",
+        "step_editor_impact": false
+      },
+      {
+        "node_id": "tests/geometry/test_premise_source_coverage.py::test_goal_fact_quote_does_not_cover_a_hypothesis",
+        "category": "source_gate_boundary",
+        "reason": "Strict xfail: bounded Source Gate 'và' goal-clause rule fails closed safely; unrelated to Step Editor",
+        "step_editor_impact": false
+      },
+      {
+        "node_id": "tests/geometry/test_source_grounding_reliability.py::test_targeted_case_meets_its_preregistered_label[E05-unsupported-second-quantity]",
+        "category": "source_grounding_refusal_code",
+        "reason": "Strict xfail: NOT_ASKED_IN_SOURCE refusal code label difference on E05 research boundary; unrelated to Step Editor",
+        "step_editor_impact": false
+      }
+    ],
+    "skipped_total": 7,
+    "skipped_nodes": [
+      {
+        "node_id": "tests/geometry/test_unified_solid_scope.py (6 parameterizations: A3-DEV-02 x2, A3-DEV-09 x2, demo1-pyramid-derived-section x2)",
+        "reason": "Fixture has no residual_volume goal; matrix skips non-residual_volume cases",
+        "step_editor_impact": false
+      },
+      {
+        "node_id": "tests/semantic_program/test_scalar_obligations.py:95",
+        "reason": "thiếu 'term' mặc định về identity — đã có test riêng",
+        "step_editor_impact": false
+      }
+    ],
+    "deselected_total": 5,
+    "deselected_nodes": [
+      {
+        "node_id": "tests/geometry/test_evidence_identity_reconciliation.py::test_raw_response_identity_reproduced",
+        "marker": "external_evidence",
+        "reason": "Requires private raw API archive outside Git repository",
+        "step_editor_impact": false
+      },
+      {
+        "node_id": "tests/geometry/test_step_editor_integration_closure.py::test_step_edit_postgres_migration_handoff_live_container",
+        "marker": "postgres",
+        "reason": "Excluded in default suite, PASSED (4/4) in dedicated `pytest -m postgres -v` run",
+        "step_editor_impact": false
+      },
+      {
+        "node_id": "tests/geometry/test_step_editor_integration_closure.py::test_postgres_real_step_editor_end_to_end_persistence_restart_and_rollback",
+        "marker": "postgres",
+        "reason": "Excluded in default suite, PASSED (4/4) in dedicated `pytest -m postgres -v` run",
+        "step_editor_impact": false
+      },
+      {
+        "node_id": "tests/test_postgres_axo_history_migration.py::test_axo_migrations_and_history_api_on_postgres",
+        "marker": "postgres",
+        "reason": "Excluded in non-geometry/semantic sweep, PASSED (4/4) in dedicated `pytest -m postgres -v` run",
+        "step_editor_impact": false
+      },
+      {
+        "node_id": "tests/test_postgres_integration.py::test_postgres_migrate_persist_reconnect",
+        "marker": "postgres",
+        "reason": "Excluded in non-geometry/semantic sweep, PASSED (4/4) in dedicated `pytest -m postgres -v` run",
+        "step_editor_impact": false
+      }
+    ]
+  },
+  "model_status": "MODEL_NOT_TRAINED",
+  "verdict": "READY_FOR_MERGE"
+}
