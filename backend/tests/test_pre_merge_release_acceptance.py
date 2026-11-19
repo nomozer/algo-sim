@@ -43,7 +43,6 @@ from tests.test_postgres_integration import pg_container  # noqa: F401
 BACKEND_DIR = Path(__file__).resolve().parents[1]
 WORKTREE_ROOT = BACKEND_DIR.parent
 DATA_DIR = WORKTREE_ROOT / "frontend" / "src" / "data"
-ROOT_CHECKOUT_DB = Path(r"D:\Documents\projects\algo-sim\backend\algosim.db")
 
 
 def _file_sha256(p: Path) -> str:
@@ -170,23 +169,88 @@ def test_gate_a2_schema_drift_and_partial_migration_blocked_sqlite(tmp_path: Pat
 
 
 def test_gate_a2_isolated_copy_of_46_user_66_classroom_sqlite_db_safe_upgrade(tmp_path: Path):
-    """Copy protected algo-sim/backend/algosim.db into tmp_path; verify automatic startup blocks
-    AND controlled operator stamp e437149641fa -> upgrade head preserves 100% of 46 users & 66 Classroom rows."""
-    if not ROOT_CHECKOUT_DB.is_file():
-        pytest.skip("Root algosim.db fixture not present on this host")
-
-    orig_sha = _file_sha256(ROOT_CHECKOUT_DB)
-    iso_db = tmp_path / "isolated_root_copy.db"
-    scon = sqlite3.connect(ROOT_CHECKOUT_DB.resolve().as_uri() + "?mode=ro", uri=True)
-    dcon = sqlite3.connect(str(iso_db))
-    with dcon:
-        scon.backup(dcon)
-    dcon.close()
-    scon.close()
-
-    pre_copy_sha = _file_sha256(iso_db)
+    """Build deterministic unstamped e437149641fa SQLite DB with 46 users & 66 Classroom rows;
+    verify automatic startup blocks cleanly (0 bytes changed) and controlled operator stamp+upgrade preserves 100% rows."""
+    iso_db = tmp_path / "unstamped_46u_66c.db"
     db_url = f"sqlite:///{iso_db.as_posix()}"
     work, ini, env = _stage_alembic_workspace(tmp_path, db_url, "root_copy_w")
+    assert _run_alembic(work, ini, env, "upgrade", "e437149641fa").returncode == 0
+
+    eng_seed = create_engine(db_url)
+    with eng_seed.begin() as conn:
+        user_ids: list[int] = []
+        for idx in range(46):
+            role = "teacher" if idx < 12 else "student"
+            conn.execute(
+                text(
+                    "INSERT INTO users (email, display_name, password_hash, role, must_change_password, created_at) "
+                    "VALUES (:email, :name, 'h', :role, 0, CURRENT_TIMESTAMP)"
+                ),
+                {"email": f"u{idx}@algosim.local", "name": f"User {idx}", "role": role},
+            )
+            uid = conn.execute(text("SELECT id FROM users WHERE email = :email"), {"email": f"u{idx}@algosim.local"}).scalar_one()
+            user_ids.append(int(uid))
+
+        cls_ids: list[int] = []
+        for cidx in range(12):
+            code = f"CLS{cidx:02d}"
+            conn.execute(
+                text(
+                    "INSERT INTO classrooms (teacher_id, name, join_code, code_active, archived, created_at) "
+                    "VALUES (:tid, :cname, :code, 1, 0, CURRENT_TIMESTAMP)"
+                ),
+                {"tid": user_ids[cidx], "cname": f"Class {cidx}", "code": code},
+            )
+            cid = conn.execute(text("SELECT id FROM classrooms WHERE join_code = :code"), {"code": code}).scalar_one()
+            cls_ids.append(int(cid))
+
+        for midx in range(20):
+            conn.execute(
+                text("INSERT INTO class_memberships (classroom_id, student_id, joined_at) VALUES (:cid, :sid, CURRENT_TIMESTAMP)"),
+                {"cid": cls_ids[midx % 12], "sid": user_ids[12 + (midx % 34)]},
+            )
+
+        asg_ids: list[int] = []
+        for aidx in range(10):
+            title = f"Assignment {aidx}"
+            cid = cls_ids[aidx % 12]
+            tid = user_ids[aidx % 12]
+            conn.execute(
+                text(
+                    "INSERT INTO assignments (classroom_id, created_by, title, instruction, simulation_id, envelope_json, closed, created_at) "
+                    "VALUES (:cid, :tid, :title, 'Dung hinh', 'sim.sec', :env_json, 0, CURRENT_TIMESTAMP)"
+                ),
+                {"cid": cid, "tid": tid, "title": title, "env_json": '{"ok":true}'},
+            )
+            aid = conn.execute(text("SELECT id FROM assignments WHERE title = :title"), {"title": title}).scalar_one()
+            asg_ids.append(int(aid))
+
+        for pidx in range(16):
+            conn.execute(
+                text(
+                    "INSERT INTO practice_sessions (assignment_id, student_id, simulation_id, cursor, step_count, "
+                    "explore_open, challenge_open, action_count, commitment_count, completed, started_at, updated_at, help_requested) "
+                    "VALUES (:aid, :sid, 'sim.sec', 1, 4, 1, 0, 2, 1, 0, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 0)"
+                ),
+                {"aid": asg_ids[pidx % 10], "sid": user_ids[12 + (pidx % 34)]},
+            )
+
+        for sidx in range(8):
+            cid = cls_ids[sidx % 12]
+            tid = user_ids[sidx % 12]
+            conn.execute(
+                text(
+                    "INSERT INTO classroom_sessions (classroom_id, teacher_id, round_id, cmd_id, mode, assignment_id, "
+                    "simulation_id, current_step, isolated_ids, exploded_groups, sync_cmd_id, active, started_at, updated_at) "
+                    "VALUES (:cid, :tid, :rnd, 1, 'follow', :aid, 'sim.sec', 0, '[]', '[]', 1, 1, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP)"
+                ),
+                {"cid": cid, "tid": tid, "rnd": f"rnd-{sidx}", "aid": asg_ids[sidx % 10]},
+            )
+
+        conn.execute(text("DROP TABLE alembic_version"))
+    eng_seed.dispose()
+
+    pre_copy_sha = _file_sha256(iso_db)
 
     # 1) Automatic startup MUST refuse before DDL with UNSTAMPED_EXISTING_DATABASE
     pre_auto = _run_preflight(work, ini, env, "--startup", "--json")
@@ -223,8 +287,6 @@ def test_gate_a2_isolated_copy_of_46_user_66_classroom_sqlite_db_safe_upgrade(tm
             assert _table_digest(conn, tbl) == exp, f"{tbl} changed after upgrade!"
         assert {"step_edit_sessions", "step_edit_revisions", "step_edit_feedback"} <= set(inspect(eng).get_table_names())
     eng.dispose()
-
-    assert _file_sha256(ROOT_CHECKOUT_DB) == orig_sha, "Original protected DB must remain byte-identical!"
 
 
 @pytest.mark.postgres
