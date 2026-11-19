@@ -1,0 +1,172 @@
+{
+  "startedAt": "2026-11-19T00:12:26.751Z",
+  "baseUrl": "http://127.0.0.1:3001",
+  "backendUrl": "http://127.0.0.1:8000",
+  "problems": {
+    "chop-mat-cau-ngoai-tiep": {
+      "status": "PASS",
+      "alphaIdx": 7,
+      "hoverHeightDeltaPx": 0,
+      "opacityDefault": "0",
+      "opacityHover": "1",
+      "keyboardIsolated": true,
+      "invalid422Status": 422,
+      "invalid422Code": "MISSING_DEPENDENCY",
+      "valid200Status": 200,
+      "committedVersion": 1,
+      "rawRevisionNumber": 2,
+      "equivalentGeometry": true
+    },
+    "chop-thiet-dien-ba-diem": {
+      "status": "PASS",
+      "mIdx": 5,
+      "httpStatus": 200,
+      "mXyz": [
+        "0",
+        "0",
+        "9/2"
+      ],
+      "recomputedCount": 6,
+      "recomputedIds": [
+        "mp_MNP",
+        "E",
+        "F",
+        "thiet_dien",
+        "S_td",
+        "V_chop"
+      ],
+      "persistedAfterF5": true
+    },
+    "lang-tru-tam-giac-thiet-dien": {
+      "status": "PASS",
+      "pIdx": 5,
+      "httpStatus": 200,
+      "hasUnicodePrime": true,
+      "hasUnderscorePrime": false
+    },
+    "khoang-cach-hai-duong-cheo-nhau": {
+      "status": "PASS",
+      "rowsCount": 10,
+      "stepNavigationSyncedTitle": true,
+      "skewPIdx": 8,
+      "invalidOrthStatus": 422,
+      "invalidOrthCode": "DOWNSTREAM_ORTHOGONALITY_BROKEN"
+    }
+  },
+  "scenarios": {
+    "multiTabIsolation": {
+      "status": "PASS",
+      "workspaceTabsObserved": [],
+      "s1RetainedOverride": true,
+      "zeroCrossTabLeakage": true,
+      "goBackForwardOk": true,
+      "backUrl": "http://127.0.0.1:3001/simulation/pyramid-three-point-section",
+      "fwdUrl": "http://127.0.0.1:3001/simulation/pyramid-circumscribed-sphere"
+    }
+  },
+  "viewports": [
+    {
+      "width": 1920,
+      "height": 1080,
+      "overflowX": 0,
+      "canvasVisible": true,
+      "canvasWidthPx": 1289,
+      "canvasHeightPx": 1042,
+      "runClipped": false,
+      "cancelClipped": false,
+      "textareaHorizontalOverflow": false,
+      "controlsOccludeActions": false
+    },
+    {
+      "width": 1440,
+      "height": 900,
+      "overflowX": 0,
+      "canvasVisible": true,
+      "canvasWidthPx": 809,
+      "canvasHeightPx": 862,
+      "runClipped": false,
+      "cancelClipped": false,
+      "textareaHorizontalOverflow": false,
+      "controlsOccludeActions": false
+    },
+    {
+      "width": 1366,
+      "height": 768,
+      "overflowX": 0,
+      "canvasVisible": true,
+      "canvasWidthPx": 735,
+      "canvasHeightPx": 730,
+      "runClipped": false,
+      "cancelClipped": false,
+      "textareaHorizontalOverflow": false,
+      "controlsOccludeActions": false
+    },
+    {
+      "width": 1024,
+      "height": 768,
+      "overflowX": 0,
+      "canvasVisible": true,
+      "canvasWidthPx": 704,
+      "canvasHeightPx": 730,
+      "runClipped": false,
+      "cancelClipped": false,
+      "textareaHorizontalOverflow": false,
+      "controlsOccludeActions": false
+    },
+    {
+      "width": 768,
+      "height": 1024,
+      "overflowX": 0,
+      "canvasVisible": true,
+      "canvasWidthPx": 472,
+      "canvasHeightPx": 986,
+      "runClipped": false,
+      "cancelClipped": false,
+      "textareaHorizontalOverflow": false,
+      "controlsOccludeActions": false
+    },
+    {
+      "width": 390,
+      "height": 844,
+      "overflowX": 0,
+      "canvasVisible": true,
+      "canvasWidthPx": 390,
+      "canvasHeightPx": 444,
+      "runClipped": false,
+      "cancelClipped": false,
+      "textareaHorizontalOverflow": false,
+      "controlsOccludeActions": false
+    },
+    {
+      "width": 320,
+      "height": 568,
+      "overflowX": 0,
+      "canvasVisible": true,
+      "canvasWidthPx": 320,
+      "canvasHeightPx": 293,
+      "runClipped": false,
+      "cancelClipped": false,
+      "textareaHorizontalOverflow": false,
+      "controlsOccludeActions": false
+    }
+  ],
+  "touchMode": {
+    "status": "PASS",
+    "pencilVisibleOnTap": false,
+    "editorOpenedViaTap": true
+  },
+  "layoutChecks": {
+    "initial": {
+      "stmtAlign": "start",
+      "stmtLeftAligned": true,
+      "dockScrollHeight": 840,
+      "dockClientHeight": 840,
+      "hasDivider": false
+    },
+    "resize1280Pass": true
+  },
+  "consoleErrors": [],
+  "pageErrors": [],
+  "unexpected5xx": [],
+  "finishedAt": "2026-11-19T00:13:03.961Z"
+}

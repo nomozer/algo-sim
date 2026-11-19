@@ -1,0 +1,55 @@
+{
+  "schema_version": "axo-evaluation-run/1",
+  "run_id": "step-editor-release-gate",
+  "task_slug": "axo-step-editor-final-integration-root-cause-closure-release-gate",
+  "date": "2026-11-19",
+  "branch": "feat/axo-geometry-library-verification",
+  "start_head": "0730235e6",
+  "release_candidate_commit": "194c0cca5f941b7b81dda3298f22a7092e453153",
+  "product_commit": "a9a5d20b1c2ffa85ff967240eac53c7ebcad469d",
+  "candidate_seal_commit": "db015cb2a3d3462366117d66b065c242efcdcd2b",
+  "measured_system_tree_hash": "4e2afa521df1bc98f1c6d267f3f6d5ce8eaaceee1592df9e32014c391b9eaf7b",
+  "measured_system_file_count": 109,
+  "statuses": {
+    "OWNERSHIP_DOMAIN_SPLIT": "FIXED_AND_VERIFIED",
+    "CLEAN_CANDIDATE_BACKEND_GATES": "FIXED_AND_VERIFIED",
+    "CLEAN_CANDIDATE_FRONTEND_GATES": "FIXED_AND_VERIFIED",
+    "POSTGRESQL_16_REAL_INTEGRATION": "FIXED_AND_VERIFIED",
+    "ALEMBIC_UNIFIED_CHAIN_DRIFT": "FIXED_AND_VERIFIED",
+    "CANDIDATE_SEAL_AND_DOCS_AUDIT": "FIXED_AND_VERIFIED",
+    "HOST_POSTGRES_E2E_AND_RESTART": "FIXED_AND_VERIFIED",
+    "MODEL_STATUS": "MODEL_NOT_TRAINED",
+    "FINAL_VERDICT": "READY_FOR_OWNER_REVIEW"
+  },
+  "artifacts": {
+    "formal_report": "AXO-STEP-EDITOR-FINAL-INTEGRATION-RELEASE-GATE-REPORT.md",
+    "report": "report.md",
+    "quality_gates_summary": "results/quality-gates-summary.json",
+    "release_gate_e2e_phase1": "results/release-gate-e2e-phase1.json",
+    "release_gate_e2e_phase2": "results/release-gate-e2e-phase2.json",
+    "postgres_host_verification": "results/postgres-host-verification.json",
+    "rea_mcp_release_gate": "results/rea-mcp-release-gate.json",
+    "images": [
+      "images/release-gate-1920-p1-valid-edit.png",
+      "images/release-gate-1920-invalid-422.png",
+      "images/release-gate-1920-p2-cascade-f5.png",
+      "images/release-gate-1920-p3-prism.png",
+      "images/release-gate-1920-p4-common-perp.png",
+      "images/release-gate-1920-post-restart.png",
+      "images/release-gate-vp-1920x1080.png",
+      "images/release-gate-vp-1440x900.png",
+      "images/release-gate-vp-1366x768.png",
+      "images/release-gate-vp-1024x768.png",
+      "images/release-gate-vp-768x1024.png",
+      "images/release-gate-vp-390x844.png",
+      "images/release-gate-vp-320x568.png",
+      "images/release-gate-rea-mcp.png"
+    ]
+  },
+  "rea_mcp_evidence": {
+    "list_browser_targets": "ev_b2f43d7be6215bb6faa2b9dd2cb7d8803902d3b5d3a0d8fa6dcdea372ab10809",
+    "inspect_web_page": "ev_9e1ee68f54f6739043e1a61321e20364a546c12bfdeca2cf752570c0d149e2fe",
+    "capture_web_screenshot": "ev_42192db63467f2eeaeb039d1e17c48cb4cdffe091be36e06d49f53088bc60492",
+    "artifact_sha256": "7c6be261d76b65f48d65b08adb7e88e027ed641f879c48783dd25edfe808574e"
+  }
+}
