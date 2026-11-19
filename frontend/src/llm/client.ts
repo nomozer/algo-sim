@@ -13,6 +13,16 @@ export interface ServerHealth {
   ok: boolean;
   hasKey: boolean;
   cachedProblems: number;
+  aiAvailable?: boolean;
+  localOnlyMode?: boolean;
+  localSlmReady?: boolean;
+  localSlmModel?: string | null;
+  routeMode?: string;
+}
+
+export function isAiAvailable(health: ServerHealth | null | "loading"): boolean {
+  if (health === null || health === "loading") return true;
+  return Boolean(health.aiAvailable ?? (health.hasKey || (health.localOnlyMode && health.localSlmReady)));
 }
 
 const CONNECT_HELP =

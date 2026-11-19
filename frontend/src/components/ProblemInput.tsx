@@ -14,6 +14,7 @@ import {
   AxoClientError,
   analyzeViaServer,
   fetchHealth,
+  isAiAvailable,
   prepareUnifiedInputViaServer,
   type ClientFailureContract,
   type ServerHealth,
@@ -207,7 +208,7 @@ export function describeComposerError(
           description: normalizeDisplayBrand(clientFailure.message),
         };
       case "NETWORK_UNREACHABLE":
-        if (health === null || health === "loading" || health.hasKey) {
+        if (isAiAvailable(health)) {
           return {
             tone: "error",
             title: "Không kết nối được máy chủ",
@@ -230,6 +231,14 @@ export function describeComposerError(
                 ? "Đề bài dùng dữ kiện hệ thống chưa hỗ trợ xử lý cục bộ"
                 : "Hệ thống chưa hiểu hết đề bài",
             description: normalizeDisplayBrand(clientFailure.learnerDetail),
+          };
+        }
+        // Local-only server: its 503 message is already learner Vietnamese (model missing / busy), not a cloud-key issue.
+        if (health !== null && health !== "loading" && health.localOnlyMode) {
+          return {
+            tone: "info",
+            title: "Bộ đọc đề trên máy chưa sẵn sàng",
+            description: normalizeDisplayBrand(clientFailure.message),
           };
         }
         return {
@@ -289,13 +298,13 @@ export function describeComposerError(
     /Không kết nối được máy chủ|Failed to fetch|NetworkError|Load failed/i.test(analysisError);
   const isServiceUnavailable =
     /chưa cấu hình|thiếu khóa|API key|503|chưa sẵn sàng/i.test(analysisError) ||
-    (!isNetworkOffline && health !== "loading" && health !== null && !health.hasKey);
+    (!isNetworkOffline && health !== "loading" && health !== null && !isAiAvailable(health));
   const isInputValidation =
     /Đề bài quá ngắn|tối thiểu 10 ký tự|Chế độ lưu đệm chưa hỗ trợ|Chế độ kiểm chứng không dùng mạng/i.test(
       analysisError,
     );
 
-  if (isNetworkOffline && (health === null || health === "loading" || health.hasKey)) {
+  if (isNetworkOffline && isAiAvailable(health)) {
     return {
       tone: "error",
       title: "Không kết nối được máy chủ",
@@ -1001,9 +1010,11 @@ export function ProblemInput({
       <span className="composer-sr-only">
         Máy chủ phân tích chưa chạy — vẫn dùng được các mô phỏng mẫu bên dưới
       </span>
-    ) : health !== "loading" && !health.hasKey ? (
+    ) : health !== "loading" && !isAiAvailable(health) ? (
       <span className="composer-sr-only">
-        Máy chủ thiếu khóa AI — vẫn dùng được các mô phỏng mẫu bên dưới
+        {health.localOnlyMode
+          ? "Mô hình AI cục bộ chưa sẵn sàng — vẫn dùng được các mô phỏng mẫu bên dưới"
+          : "Máy chủ thiếu khóa AI — vẫn dùng được các mô phỏng mẫu bên dưới"}
       </span>
     ) : null;
 
