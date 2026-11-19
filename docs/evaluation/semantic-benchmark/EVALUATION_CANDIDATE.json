@@ -1,9 +1,9 @@
 {
   "khai": "Danh tính của hệ tại thời điểm ĐÓNG BĂNG để đánh giá. Không sửa file này vì kết quả SEALED — SEALED chỉ được phép làm thay đổi KẾT LUẬN.",
-  "dong_bang_luc": "2026-11-19T01:11:28+00:00",
-  "commit": "2558f9fb59e147be6d2cdd1eb2744d6c004c9ae4",
-  "commit_ngan": "2558f9fb5",
-  "product_commit_sha": "2558f9fb59e147be6d2cdd1eb2744d6c004c9ae4",
+  "dong_bang_luc": "2026-11-19T01:21:15+00:00",
+  "commit": "2ff70ce455f0b298a7878880ab7eb3fee21cc572",
+  "commit_ngan": "2ff70ce45",
+  "product_commit_sha": "2ff70ce455f0b298a7878880ab7eb3fee21cc572",
   "product_commit_rule": "product-paths-excluding-test-only/1",
   "cay_lam_viec_sach": true,
   "cache_version": "132",
