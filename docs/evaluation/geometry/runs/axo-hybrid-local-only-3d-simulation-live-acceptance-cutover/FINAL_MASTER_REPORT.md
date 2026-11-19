@@ -24,7 +24,7 @@ nghiêm trọng mà benchmark backend /9 không thấy (keep-alive: cứ sau > 5
 | P4–P6 | 64 + 18 ca đóng băng (`451a59040`), 2 lượt trình duyệt đầy đủ + 15 ca chạy lại, oracle hình học độc lập, 16 kịch bản UI/runtime |
 | P7 | Bằng chứng mạng 4 lớp có cửa sổ chứng; 6 kịch bản lỗi runtime; fix keep-alive `7554e2b72` + đóng băng lại `a0f979392` |
 | P8 | Rehearsal staging bằng biến môi trường; rollback model hai chiều, cấu hình, mã |
-| P9 | Xem `SIMULATION_REGRESSION_REPORT.md` |
+| P9 | T3 `FULL_PRODUCT_GATE_PASS` tại `28badc70b` (pytest 15 102 passed, vitest 2066, build, demo) — lần chạy đầu đỏ 2 test do template chờ owner ghim candidate cũ, đã gắn lại bằng thủ tục có sẵn |
 | P10 | `PRODUCTION_CUTOVER_DECISION.md` |
 
 ## 30 câu hỏi nghiệm thu
@@ -50,7 +50,7 @@ nghiêm trọng mà benchmark backend /9 không thấy (keep-alive: cứ sau > 5
 19. **Model chạy trên thiết bị nào?** Trên máy chạy backend (llama-server cạnh backend); ở run này là máy dev Windows 11, 15.78 GiB, CPU 6 luồng. Không phải trên máy của mọi học sinh.
 20. **Thời gian thấy hình?** Lượt 2: first visible scene p50 256 ms, p95 456 ms (40 cảnh, đều đường tất định); khởi động lạnh 1455 ms. Lượt 1 (lỗi keep-alive) p95 8827 ms.
 21. **Thời gian tới khi tương tác được?** p50 1114 ms, p95 1341 ms (gồm ~0.5 s chờ của harness).
-22. **CPU/RAM toàn ứng dụng?** Xem `FULL_STACK_MEMORY_REPORT.md`.
+22. **CPU/RAM toàn ứng dụng?** Trong một phiên trình duyệt: backend ≤ 116 MB WS, llama-server ≤ 903 MB, Chromium headless ≤ 500 MB; tổng đồng thời ≤ 1519 MB. CPU toàn máy suốt lượt 2: trung bình 37%, p95 88% (máy dev đang chạy nhiều thứ khác). Chi tiết `FULL_STACK_MEMORY_REPORT.md`.
 23. **Máy 4–8 GiB đã thử thật?** Chưa (`NOT_MEASURED`).
 24. **Đề vẫn ngoài khả năng?** Cầu/nón/trụ, Oxyz, phẳng thuần, giải tích, lập trình (từ chối đúng); trong miền: câu lệnh mô phỏng ngoài mẫu 7b, "biểu diễn …", đề không dấu, "tất cả các cạnh đều bằng", tiêu đề đề thi "Câu 2 (2 điểm)." (`SOURCE_PREMISE_UNREAD`), đề thiếu kích thước, góc không cho cạnh.
 25. **Lỗi C60 / unseen /9 ảnh hưởng Scene3D thật?** Có cùng lớp: các ca hỏng ở /9 là lỗi đọc đề (không phục vụ), và trên sản phẩm thật chúng hiện thành từ chối an toàn — không thành cảnh sai. Đường SLM không đóng góp cảnh nào trong bộ này.

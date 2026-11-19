@@ -20,9 +20,19 @@ và `::test_sha256_file_and_approval_terms_are_invariant_under_windows_crlf_chec
 `measured_system`/`measured_system_tree_hash`; `owner_decision` và `paid_project_confirmed` không đổi (diff xác nhận 0 dòng chạm),
 bản cũ lưu `logs/prior-*.template.json`, bản ghi `pending_template_refresh.json`. Commit `5a07be9b4`. File test: 106/106.
 
-### Lần 2 — sau khi commit toàn bộ run
+### Lần 2 — HEAD `28badc70b`, cây làm việc sạch (toàn bộ run đã commit)
 
-Xem mục "Kết quả T3 lần 2" bên dưới (điền từ log thật).
+| Cổng con | Kết quả |
+|---|---|
+| pytest toàn bộ backend | **PASS** — 15 102 passed, 9 skipped, 3 deselected, 12 xfailed (1086.9 s) |
+| vitest toàn bộ frontend | PASS — 143 file, 2066 test |
+| typecheck + build | PASS |
+| tập demo khoá luận | PASS |
+| bề mặt sập của demo | PASS |
+
+**`FULL_PRODUCT_GATE_PASS`.** Log nằm ngoài worktree (scratchpad phiên, sha256 `75b10ab6…a5d1cfc5`), không commit theo quy ước
+(log T3 trong cây làm bẩn cây đo). T3 không chạy `frontend/scripts/*.node-test.mjs`; run không sửa script `.mjs` nào của
+`frontend/scripts/` nên không cần chạy riêng.
 
 ## Hồi quy có mục tiêu đã chạy trong run
 

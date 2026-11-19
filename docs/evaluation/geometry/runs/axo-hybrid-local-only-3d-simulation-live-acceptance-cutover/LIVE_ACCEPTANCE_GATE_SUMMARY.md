@@ -34,6 +34,6 @@ Numeric Answer Accuracy (chỉ ca có hỏi số): lượt 2 26/26 = 1.0 [0.87, 
 | H5 Keyless UX | **PASS** + 3 giới hạn UX | `LOCAL_ONLY_FRONTEND_INTEGRATION_REPORT.md` |
 | H6 Offline security | **PASS** cho `NO_EXTERNAL_AI`; `FULLY_OFFLINE_RUNTIME` không tuyên bố | `OFFLINE_NETWORK_LIVE_TEST_REPORT.md` |
 | H7 Performance & resource | **PARTIAL** — xem `END_TO_END_SIMULATION_PERFORMANCE.json`, `FULL_STACK_MEMORY_REPORT.md`; phần cứng 4–8 GiB `NOT_MEASURED` | |
-| H8 Regression | xem `SIMULATION_REGRESSION_REPORT.md` | |
+| H8 Regression | **PASS** — T3 `FULL_PRODUCT_GATE_PASS` tại `28badc70b` (pytest 15 102, vitest 2066, build, demo); lần 1 đỏ 2 test vì template chờ owner ghim candidate cũ — đã gắn lại (metadata) | `SIMULATION_REGRESSION_REPORT.md` |
 | H9 Cutover rehearsal | **PASS (staging bằng biến môi trường)**; rollback PASS; default không đổi theo owner | `CUTOVER_REHEARSAL_REPORT.md`, `ROLLBACK_VALIDATION_REPORT.md` |
-| H10 Release decision | xem `PRODUCTION_CUTOVER_DECISION.md` | |
+| H10 Release decision | `FULL_STACK_LOCAL_ONLY_VERIFIED`; `LIVE_SIMULATION_ACCEPTED = FALSE`; `SCOPED_CUTOVER_COMPLETED = FALSE` | `PRODUCTION_CUTOVER_DECISION.md` |
