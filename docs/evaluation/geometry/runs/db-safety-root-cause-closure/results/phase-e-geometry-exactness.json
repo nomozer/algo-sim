@@ -1,0 +1,204 @@
+{
+  "audited_at": "2026-11-19T05:31:23.142052+00:00",
+  "status": "PASS",
+  "families": {
+    "1_circumscribed_sphere": {
+      "status": "PASS",
+      "edited_instruction": "Dựng mặt phẳng trung trực (α) của cạnh SB",
+      "mp_label": "Mặt phẳng (α) qua «Trung điểm của S và B» và vuông góc với SB",
+      "mp_normal": [
+        "4",
+        "0",
+        "-4"
+      ],
+      "leaked_M_AB": false,
+      "I_xyz": [
+        "2",
+        "2",
+        "2"
+      ],
+      "radius_sq": "12",
+      "ball_volume_exact": "32*pi*sqrt(3)",
+      "recomputed_ids": [
+        "truc_day",
+        "I",
+        "doan_OI",
+        "doan_MI",
+        "doan_IS",
+        "doan_IA",
+        "cau_ngoai_tiep",
+        "R",
+        "V_cau"
+      ]
+    },
+    "2_pyramid_section": {
+      "status": "PASS",
+      "edits": [
+        {
+          "ratio": "1/4",
+          "M_xyz": [
+            "0",
+            "0",
+            "9/2"
+          ],
+          "section_vertex_count": 5,
+          "area_display": "5√34/2",
+          "recomputed_ids": [
+            "mp_MNP",
+            "E",
+            "F",
+            "thiet_dien",
+            "S_td",
+            "V_chop"
+          ]
+        },
+        {
+          "ratio": "3/4",
+          "M_xyz": [
+            "0",
+            "0",
+            "3/2"
+          ],
+          "section_vertex_count": 5,
+          "area_display": "99√2/10",
+          "recomputed_ids": [
+            "mp_MNP",
+            "E",
+            "F",
+            "thiet_dien",
+            "S_td",
+            "V_chop"
+          ]
+        },
+        {
+          "ratio": "1/2",
+          "M_xyz": [
+            "0",
+            "0",
+            "3"
+          ],
+          "section_vertex_count": 5,
+          "area_display": "6√6",
+          "recomputed_ids": [
+            "mp_MNP",
+            "E",
+            "F",
+            "thiet_dien",
+            "S_td",
+            "V_chop"
+          ]
+        }
+      ]
+    },
+    "3_prism_section": {
+      "status": "PASS",
+      "P_xyz": [
+        "0",
+        "4",
+        "4/3"
+      ],
+      "section_vertex_count": 5,
+      "area_display": "2√61",
+      "no_underscore_prime_leak": true,
+      "recomputed_ids": [
+        "mp_NPQ",
+        "M",
+        "E",
+        "thiet_dien",
+        "S_td",
+        "V_lt"
+      ]
+    },
+    "4_cube_section": {
+      "status": "PASS",
+      "base_section_vertices": 6,
+      "base_area_display": "12√3",
+      "upstream_m_edit": {
+        "status": "committed",
+        "M_xyz": [
+          "0",
+          "4/3",
+          "0"
+        ],
+        "section_vertex_count": 6,
+        "area_display": "71√149/42",
+        "no_underscore_prime_leak": true,
+        "recomputed_ids": [
+          "canh_MN",
+          "doan_MN",
+          "mp_MNP",
+          "E",
+          "F",
+          "Q",
+          "thiet_dien",
+          "S_td"
+        ]
+      }
+    },
+    "5_skew_lines_distance": {
+      "status": "PASS",
+      "P_xyz": [
+        "8/3",
+        "8/3",
+        "4/3"
+      ],
+      "Q_xyz": [
+        "2",
+        "2",
+        "0"
+      ],
+      "PQ_dot_SC": "0",
+      "PQ_dot_BD": "0",
+      "PQ_norm_sq_exact": "8/3",
+      "display_distance": "2√6/3"
+    }
+  },
+  "invalid_and_concurrency_classes": [
+    {
+      "case": "undefined_point_SZ",
+      "http_status": 422,
+      "error_code": "MISSING_DEPENDENCY",
+      "draft_preserved": true
+    },
+    {
+      "case": "collinear_AOC",
+      "http_status": 422,
+      "error_code": "COLLINEAR_POINTS",
+      "draft_preserved": true
+    },
+    {
+      "case": "unsupported_syntax",
+      "http_status": 422,
+      "error_code": "UNSUPPORTED_STEP_SYNTAX",
+      "draft_preserved": true
+    },
+    {
+      "case": "invalid_ratio_gt_1",
+      "http_status": 422,
+      "error_code": "INVALID_RATIO",
+      "draft_preserved": true
+    },
+    {
+      "case": "circular_self_ref",
+      "http_status": 422,
+      "error_code": "MISSING_DEPENDENCY",
+      "draft_preserved": true
+    },
+    {
+      "case": "skew_orthogonality_break",
+      "http_status": 422,
+      "error_code": "DOWNSTREAM_ORTHOGONALITY_BROKEN",
+      "draft_preserved": true
+    },
+    {
+      "case": "stale_revision_conflict",
+      "http_status": 409,
+      "error_code": "STALE_REVISION_CONFLICT"
+    },
+    {
+      "case": "edit_superseded_seq",
+      "http_status": 409,
+      "error_code": "EDIT_SUPERSEDED"
+    }
+  ]
+}

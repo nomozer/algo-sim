@@ -1,0 +1,362 @@
+{
+  "audited_at": "2026-11-19T05:01:06.824723+00:00",
+  "gate_a_status": "PASS",
+  "backup_restore_status": "PASS",
+  "pg_dump_cli_present_in_portable_bundle": false,
+  "docker_host_environment": {
+    "docker_cli_present": true,
+    "daemon_running": false,
+    "containers": [],
+    "volumes": [],
+    "daemon_note": "failed to connect to the docker API at npipe:////./pipe/dockerDesktopLinuxEngine; check if the path is correct and if the daemon is running: open //./pipe/dockerDesktopLinuxEngine: The system cannot find the file specified."
+  },
+  "databases": {
+    "protected_root_sqlite": {
+      "role": "Protected root checkout dev SQLite (axo-ui-consistency @ bb046fa22); holds 66 Classroom rows + 46 User rows requiring non-destructive preservation",
+      "sha256_before_and_after": "39d676c7b50a925975828434a00d38e3bac3c5f50e4e2a724a695768c7c83ee3",
+      "bytes": 413696,
+      "alembic_version": null,
+      "table_row_counts": {
+        "admin_analysis_telemetry": 5,
+        "admin_audit_logs": 0,
+        "admin_system_settings": 0,
+        "analysis_usage_ledger": 5,
+        "assignments": 10,
+        "auth_sessions": 100,
+        "class_memberships": 20,
+        "classroom_sessions": 8,
+        "classrooms": 12,
+        "learning_history_entries": 0,
+        "practice_sessions": 16,
+        "reuse_metrics": 3,
+        "simulation_cache": 2,
+        "simulation_patterns": 0,
+        "user_account_meta": 11,
+        "users": 46
+      },
+      "foreign_keys": {
+        "assignments": [
+          [
+            "users",
+            "created_by",
+            "id"
+          ],
+          [
+            "classrooms",
+            "classroom_id",
+            "id"
+          ]
+        ],
+        "auth_sessions": [
+          [
+            "users",
+            "user_id",
+            "id"
+          ]
+        ],
+        "class_memberships": [
+          [
+            "users",
+            "student_id",
+            "id"
+          ],
+          [
+            "classrooms",
+            "classroom_id",
+            "id"
+          ]
+        ],
+        "classroom_sessions": [
+          [
+            "assignments",
+            "assignment_id",
+            "id"
+          ],
+          [
+            "users",
+            "teacher_id",
+            "id"
+          ],
+          [
+            "classrooms",
+            "classroom_id",
+            "id"
+          ]
+        ],
+        "classrooms": [
+          [
+            "users",
+            "teacher_id",
+            "id"
+          ]
+        ],
+        "learning_history_entries": [
+          [
+            "users",
+            "user_id",
+            "id"
+          ]
+        ],
+        "practice_sessions": [
+          [
+            "users",
+            "student_id",
+            "id"
+          ],
+          [
+            "assignments",
+            "assignment_id",
+            "id"
+          ]
+        ],
+        "user_account_meta": [
+          [
+            "users",
+            "user_id",
+            "id"
+          ]
+        ]
+      },
+      "table_row_digests_sha256": {
+        "admin_analysis_telemetry": "0fdd17bd1bc846f3908cc7721be3c0b65ade756aa65f762b45355dd39e6666aa",
+        "admin_audit_logs": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "admin_system_settings": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "analysis_usage_ledger": "96baaf4b0b093da2e7d26893966c9714740ae638cbfd3164234aee1546c48fd9",
+        "assignments": "c6a5254cc14b33703d3af8aff2bc404dfed4e36355fb98c3e16bf62000a8eec6",
+        "auth_sessions": "6c59dbea12285daccd7734c6d650b8325bba6319d6ba60cf39ebf0eed8b74fe2",
+        "class_memberships": "f257168a03d5799d913409b32d8543ef8a3cb59aede1ec60985aba6476fcbae9",
+        "classroom_sessions": "36f78a974c033f5f8b2ea1ccbb3e7059d18ebbaadbca429f677bd558c2fa3de6",
+        "classrooms": "75ca351b112a6e0a93687e873c444136cb9c7d11eb67c5c2c4d9f0afc3b844f8",
+        "learning_history_entries": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "practice_sessions": "9eb209636ac38ee4002846ed1a243f76986ca9a5c80cb9b3bbea5dfdc8964e0d",
+        "reuse_metrics": "c797eed2ba8a747eb432a374677734a353c48ab1c986ce1eebd3e64a02e60395",
+        "simulation_cache": "fe2c88d9a2bc7370cb6ec40cec8f7691b9cc117fd4f1edbbcf89a38520947ac5",
+        "simulation_patterns": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "user_account_meta": "d6395cc4366aadae0132136c161295078c831e6538e318d9f27633e0561248fa",
+        "users": "01c0bb2df7f8e854f5698e7433d696cb2444ad1c4b86ea62444fcf72ea8f9270"
+      }
+    },
+    "dev_worktree_sqlite": {
+      "role": "Development worktree SQLite (axo-geometry-library); active Step Editor local state",
+      "sha256_before_and_after": "eefc81f72315869f93d1320fc60383e5e37752f95ea117b6bbffc04c63a742e6",
+      "bytes": 7757824,
+      "alembic_version": null,
+      "table_row_counts": {
+        "admin_analysis_telemetry": 7,
+        "admin_audit_logs": 0,
+        "admin_system_settings": 0,
+        "analysis_usage_ledger": 7,
+        "auth_sessions": 1116,
+        "learning_history_entries": 0,
+        "reuse_metrics": 0,
+        "simulation_cache": 0,
+        "simulation_patterns": 0,
+        "step_edit_feedback": 280,
+        "step_edit_revisions": 280,
+        "step_edit_sessions": 74,
+        "user_account_meta": 0,
+        "users": 0
+      },
+      "table_row_digests_sha256": {
+        "admin_analysis_telemetry": "50288464683d2f1f7f77fb2fb4287b36816c7349821ac22924292bf00a147e61",
+        "admin_audit_logs": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "admin_system_settings": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "analysis_usage_ledger": "226ef18a79fe9981071a9901c6c30d41f918d18cf17e049e451e8564a624359f",
+        "auth_sessions": "edd2abebe756b5bf4498dc53ae64c9aab2c33390f231067c0e97910afe7e26e9",
+        "learning_history_entries": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "reuse_metrics": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "simulation_cache": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "simulation_patterns": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "step_edit_feedback": "9c571c0a35d08b140b7362653e38eca8d1e92bb2e895520f7b72c3cab461be45",
+        "step_edit_revisions": "5fe7c11e9da844490b88ff9059f1f08ba379bdddd069cd0714bb2b4f1424f580",
+        "step_edit_sessions": "79a2f3654d8d03d2fb9dd4150135ad66a91c2d31acf3711250fa52be162988b7",
+        "user_account_meta": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "users": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    },
+    "release_candidate_sqlite": {
+      "role": "Isolated clean candidate worktree SQLite (schema only, 0 rows)",
+      "sha256": "8df9e0c22b46b90e40eba3c3ebb982315feaf78d2a027182f7613e95df740509",
+      "bytes": 151552,
+      "alembic_version": null,
+      "table_row_counts": {
+        "admin_analysis_telemetry": 0,
+        "admin_audit_logs": 0,
+        "admin_system_settings": 0,
+        "analysis_usage_ledger": 0,
+        "auth_sessions": 0,
+        "learning_history_entries": 0,
+        "reuse_metrics": 0,
+        "simulation_cache": 0,
+        "simulation_patterns": 0,
+        "user_account_meta": 0,
+        "users": 0
+      }
+    },
+    "pg16_algosim_acceptance": {
+      "role": "PostgreSQL 16.6 preview/acceptance DB on 127.0.0.1:55432 (pre-fix f8a2c41d9e05 executed on empty tables prior to hardening)",
+      "alembic_version": [
+        "f8a2c41d9e05"
+      ],
+      "table_row_counts": {
+        "admin_analysis_telemetry": 0,
+        "admin_audit_logs": 0,
+        "admin_system_settings": 0,
+        "alembic_version": 1,
+        "analysis_usage_ledger": 0,
+        "auth_sessions": 12,
+        "learning_history_entries": 0,
+        "reuse_metrics": 0,
+        "simulation_cache": 0,
+        "simulation_patterns": 0,
+        "step_edit_feedback": 9,
+        "step_edit_revisions": 9,
+        "step_edit_sessions": 4,
+        "user_account_meta": 0,
+        "users": 0
+      },
+      "table_row_digests_sha256": {
+        "admin_analysis_telemetry": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "admin_audit_logs": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "admin_system_settings": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "alembic_version": "1f42c03f09e5e9fd70f1952ddbff62bc89960e0ae5ae2f9090c86125c3e3c2ab",
+        "analysis_usage_ledger": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "auth_sessions": "610a4fa9c41bdc021c31df896eb77c7dc57ae42d77e91bfc9bc2907aa6e36cb9",
+        "learning_history_entries": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "reuse_metrics": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "simulation_cache": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "simulation_patterns": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "step_edit_feedback": "31b86ce7e41e653f7411de3b7462e63fa770cf2b5aed6acd9348aa3deb2a2c80",
+        "step_edit_revisions": "365ee76021364f3235f54899b25c1b4ed479005e6682f812e1fed8600266774d",
+        "step_edit_sessions": "9773e01a1ae6eb7e75af352abda70017538de854b12bf2c8764d9a2b57476619",
+        "user_account_meta": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "users": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    },
+    "pg16_algosim_host": {
+      "role": "PostgreSQL 16.6 host DB on 127.0.0.1:55432 (pre-fix f8a2c41d9e05 executed earlier)",
+      "alembic_version": [
+        "f8a2c41d9e05"
+      ],
+      "table_row_counts": {
+        "admin_analysis_telemetry": 0,
+        "admin_audit_logs": 0,
+        "admin_system_settings": 0,
+        "alembic_version": 1,
+        "analysis_usage_ledger": 0,
+        "auth_sessions": 12,
+        "learning_history_entries": 0,
+        "reuse_metrics": 0,
+        "simulation_cache": 0,
+        "simulation_patterns": 0,
+        "step_edit_feedback": 9,
+        "step_edit_revisions": 9,
+        "step_edit_sessions": 7,
+        "user_account_meta": 0,
+        "users": 0
+      },
+      "table_row_digests_sha256": {
+        "admin_analysis_telemetry": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "admin_audit_logs": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "admin_system_settings": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "alembic_version": "1f42c03f09e5e9fd70f1952ddbff62bc89960e0ae5ae2f9090c86125c3e3c2ab",
+        "analysis_usage_ledger": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "auth_sessions": "d0d558d93f995d44687cbfba3bd957a244cc9e37637cf3904c7083163640cd7f",
+        "learning_history_entries": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "reuse_metrics": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "simulation_cache": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "simulation_patterns": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "step_edit_feedback": "7473d171e79de54a38607c314f89e97828225a99695fb29f888119fee2ff83fb",
+        "step_edit_revisions": "83e3d01191cc153dde3b476bea3445b881226a074fd5f9af3eede6121e8e202b",
+        "step_edit_sessions": "efb472ffb2e076aa499a4a6e578208a9347a13aa0a078c3f7b4ea567cf2e297f",
+        "user_account_meta": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "users": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    }
+  },
+  "backup_manifest_path": "D:\\Documents\\projects\\algo-sim\\.superpowers\\db-safety-backups\\2026-11-19\\backup-manifest.json",
+  "backup_artifacts": {
+    "root_sqlite": {
+      "file": "D:\\Documents\\projects\\algo-sim\\.superpowers\\db-safety-backups\\2026-11-19\\root_algosim.sqlite3.bak",
+      "method": "sqlite3.Connection.backup(mode=ro)",
+      "bytes": 413696,
+      "sha256": "2b13b63d6a04136df064babaa7da269649eadf46ae14d1c2da97231401367e8a"
+    },
+    "dev_sqlite": {
+      "file": "D:\\Documents\\projects\\algo-sim\\.superpowers\\db-safety-backups\\2026-11-19\\dev_algosim.sqlite3.bak",
+      "method": "sqlite3.Connection.backup(mode=ro)",
+      "bytes": 7757824,
+      "sha256": "13beeaa713e4a001bf74e7f6acf2b0feaa55221f1f31fd0ea2e0ac3487c35b24"
+    },
+    "pg16_algosim_acceptance": {
+      "file": "D:\\Documents\\projects\\algo-sim\\.superpowers\\db-safety-backups\\2026-11-19\\pg16_algosim_acceptance.snapshot.tar.gz",
+      "method": "pg16_repeatable_read_ddl_copy_csv_tar_gz",
+      "bytes": 44590,
+      "sha256": "ffe017e1df9a93bc06df2ddb15ecc8a20d7e52fbe8b6b13d2564350617d5d8d8"
+    },
+    "pg16_algosim_host": {
+      "file": "D:\\Documents\\projects\\algo-sim\\.superpowers\\db-safety-backups\\2026-11-19\\pg16_algosim_host.snapshot.tar.gz",
+      "method": "pg16_repeatable_read_ddl_copy_csv_tar_gz",
+      "bytes": 60720,
+      "sha256": "2f92bde9484d4d05a6683b1adc7419bfe9af2827aa5ba34d7204f7057a407430"
+    }
+  },
+  "independent_restore_verification": {
+    "root_sqlite": {
+      "status": "PASS",
+      "integrity_check": "ok",
+      "foreign_key_violations": 0,
+      "table_count": 16,
+      "per_table_digest_parity": true,
+      "orm_and_join_verified": {
+        "users": 46,
+        "auth_sessions": 100,
+        "user_account_meta": 11,
+        "classrooms_joined": 12,
+        "classrooms": 12,
+        "class_memberships": 20,
+        "assignments": 10,
+        "practice_sessions": 16,
+        "classroom_sessions": 8
+      }
+    },
+    "dev_sqlite": {
+      "status": "PASS",
+      "integrity_check": "ok",
+      "foreign_key_violations": 0,
+      "table_count": 14,
+      "per_table_digest_parity": true,
+      "orm_verified": {
+        "step_edit_sessions": 74,
+        "step_edit_revisions": 280,
+        "step_edit_feedback": 280
+      }
+    },
+    "pg16_algosim_acceptance": {
+      "status": "PASS",
+      "alembic_version": [
+        "f8a2c41d9e05"
+      ],
+      "table_count": 15,
+      "per_table_digest_parity": true,
+      "orm_verified": {
+        "step_edit_sessions": 4,
+        "step_edit_revisions": 9,
+        "step_edit_feedback": 9
+      }
+    },
+    "pg16_algosim_host": {
+      "status": "PASS",
+      "alembic_version": [
+        "f8a2c41d9e05"
+      ],
+      "table_count": 15,
+      "per_table_digest_parity": true,
+      "orm_verified": {
+        "step_edit_sessions": 7,
+        "step_edit_revisions": 9,
+        "step_edit_feedback": 9
+      }
+    }
+  }
+}

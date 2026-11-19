@@ -1,0 +1,118 @@
+{
+  "audited_at": "2026-11-19T05:36:46.615526+00:00",
+  "status": "PASS",
+  "database": "algosim_acceptance (PostgreSQL 16.6, 127.0.0.1:55432, redacted)",
+  "truncated_or_deleted_preexisting_rows": false,
+  "alembic_version": [
+    "f8a2c41d9e05"
+  ],
+  "step_edit_sessions_columns": [
+    "base_scene_sha256",
+    "committed_scene_json",
+    "created_at",
+    "dependency_graph_json",
+    "id",
+    "owner_scope",
+    "problem_key",
+    "revision_count",
+    "session_id",
+    "step_overrides_json",
+    "updated_at"
+  ],
+  "all_tables_post_counts": {
+    "admin_analysis_telemetry": 0,
+    "admin_audit_logs": 0,
+    "admin_system_settings": 0,
+    "alembic_version": 1,
+    "analysis_usage_ledger": 0,
+    "auth_sessions": 23,
+    "learning_history_entries": 0,
+    "reuse_metrics": 0,
+    "simulation_cache": 0,
+    "simulation_patterns": 0,
+    "step_edit_feedback": 18,
+    "step_edit_revisions": 18,
+    "step_edit_sessions": 8,
+    "user_account_meta": 0,
+    "users": 0
+  },
+  "preexisting_survival": {
+    "step_edit_sessions": {
+      "pre_count": 4,
+      "post_count": 8,
+      "pre_ids_retained_count": 4,
+      "missing_pre_ids": [],
+      "new_rows_added": 4
+    },
+    "step_edit_revisions": {
+      "pre_count": 9,
+      "post_count": 18,
+      "pre_ids_retained_count": 9,
+      "missing_pre_ids": [],
+      "new_rows_added": 9
+    },
+    "step_edit_feedback": {
+      "pre_count": 9,
+      "post_count": 18,
+      "pre_ids_retained_count": 9,
+      "missing_pre_ids": [],
+      "new_rows_added": 9
+    },
+    "auth_sessions": {
+      "pre_count": 12,
+      "post_count": 23,
+      "pre_ids_retained_count": 12,
+      "missing_pre_ids": [],
+      "new_rows_added": 11
+    },
+    "users": {
+      "pre_count": 0,
+      "post_count": 0,
+      "pre_ids_retained_count": 0,
+      "missing_pre_ids": [],
+      "new_rows_added": 0
+    }
+  },
+  "sessions_redacted_summary": [
+    {
+      "id": 1,
+      "session_prefix": "se-be5cdbf3-…",
+      "problem_key": "sample:chop-mat-cau-ngoai-tiep"
+    },
+    {
+      "id": 2,
+      "session_prefix": "se-be5cdbf3-…",
+      "problem_key": "sample:khoang-cach-hai-duong-cheo-nhau"
+    },
+    {
+      "id": 3,
+      "session_prefix": "se-be5cdbf3-…",
+      "problem_key": "sample:chop-thiet-dien-ba-diem"
+    },
+    {
+      "id": 4,
+      "session_prefix": "se-be5cdbf3-…",
+      "problem_key": "sample:lang-tru-tam-giac-thiet-dien"
+    },
+    {
+      "id": 5,
+      "session_prefix": "se-be5cdbf3-…",
+      "problem_key": "sample:chop-mat-cau-ngoai-tiep"
+    },
+    {
+      "id": 6,
+      "session_prefix": "se-be5cdbf3-…",
+      "problem_key": "sample:khoang-cach-hai-duong-cheo-nhau"
+    },
+    {
+      "id": 7,
+      "session_prefix": "se-be5cdbf3-…",
+      "problem_key": "sample:chop-thiet-dien-ba-diem"
+    },
+    {
+      "id": 8,
+      "session_prefix": "se-be5cdbf3-…",
+      "problem_key": "sample:lang-tru-tam-giac-thiet-dien"
+    }
+  ]
+}
