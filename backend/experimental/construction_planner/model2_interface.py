@@ -11,7 +11,7 @@ from __future__ import annotations
 from dataclasses import dataclass, field
 from typing import Any
 
-from . import MODEL2_INTERFACE_SCHEMA
+from . import MODEL2_DETERMINISTIC_SELECTOR_VERSION, MODEL2_INTERFACE_SCHEMA
 from .construction_graph import (
     ConstructionProofGraph,
     PresentationStep,
@@ -184,3 +184,110 @@ def validate_model2_action(
     cand = allowed_map[action_id]
     step = next((s for s in presentation_graph.steps if s.step_id == cand.step_id), None)
     return Model2ActionDecision(True, "ACCEPTED", f"Verified step {cand.step_id!r} accepted safely.", selected_step=step)
+
+
+@dataclass(frozen=True)
+class DeterministicPresentationState:
+    """Interactive presentation state tracked by the deterministic selector baseline."""
+
+    active_plan_index: int
+    completed_step_ids: tuple[str, ...]
+    highlighted_object_ids: tuple[str, ...]
+    shown_explanations: tuple[str, ...]
+
+
+class DeterministicModel2BaselineSelector:
+    """Zero-AI deterministic baseline policy for Model 2 action selection (§19).
+
+    Future Needle 3 / Model 2 must demonstrably outperform this baseline on a stated metric
+    while passing every fail-closed `validate_model2_action` check.
+    """
+
+    selector_version: str = MODEL2_DETERMINISTIC_SELECTOR_VERSION
+
+    @staticmethod
+    def select_next_action(
+        *,
+        observation: Model2Observation,
+        presentation_graph: PresentationStepGraph,
+        interaction_state: DeterministicPresentationState,
+        available_plans_count: int = 1,
+        request_switch_plan: int | None = None,
+        request_replay_step_id: str | None = None,
+    ) -> dict[str, Any]:
+        """Select a deterministic verified UI/pedagogical action from `observation`."""
+        if request_switch_plan is not None and 0 <= request_switch_plan < available_plans_count and request_switch_plan != interaction_state.active_plan_index:
+            return {
+                "kind": "switch_plan",
+                "target_plan_index": request_switch_plan,
+                "reason": "Student requested alternative verified plan comparison.",
+            }
+        if request_replay_step_id and request_replay_step_id in observation.completed_step_ids:
+            step = next((s for s in presentation_graph.steps if s.step_id == request_replay_step_id), None)
+            return {
+                "kind": "replay_step",
+                "step_id": request_replay_step_id,
+                "highlight_object_ids": list(step.visual_emphasis if step else ()),
+                "explanation_text": step.learner_text if step else "",
+            }
+        if not observation.allowed_actions:
+            return {"kind": "complete", "reason": "All verified presentation steps completed."}
+
+        # Deterministic topological-first selection preferring INIT -> CONSTRUCT_AUXILIARY -> ESTABLISH_RELATION -> MEASURE_GOAL
+        priority = {"INIT_GIVEN": 0, "CONSTRUCT_DERIVED": 1, "CONSTRUCT_AUXILIARY": 2, "ESTABLISH_RELATION": 3, "MEASURE_GOAL": 4}
+        ordered = sorted(
+            observation.allowed_actions,
+            key=lambda a: (priority.get(a.action_type, 9), a.step_id),
+        )
+        chosen = ordered[0]
+        decision = validate_model2_action(observation, presentation_graph, {"action_id": chosen.action_id, "step_id": chosen.step_id})
+        step = decision.selected_step
+        return {
+            "kind": "reveal_step",
+            "action_id": chosen.action_id,
+            "step_id": chosen.step_id,
+            "action_type": chosen.action_type,
+            "highlight_object_ids": list(chosen.target_object_ids),
+            "explanation_text": step.learner_text if step else chosen.description,
+            "accepted": decision.accepted,
+            "reason_code": decision.reason_code,
+        }
+
+    @classmethod
+    def run_deterministic_walkthrough(
+        cls,
+        *,
+        proof_graph: ConstructionProofGraph,
+        presentation_graph: PresentationStepGraph,
+        requested_goal: dict[str, Any],
+    ) -> dict[str, Any]:
+        """Execute a full verified walkthrough from pstep_0 to goal without any AI model."""
+        completed: list[str] = []
+        trace: list[dict[str, Any]] = []
+        state = DeterministicPresentationState(active_plan_index=0, completed_step_ids=(), highlighted_object_ids=(), shown_explanations=())
+        for _ in range(len(presentation_graph.steps) + 2):
+            obs = build_model2_observation(
+                proof_graph=proof_graph,
+                presentation_graph=presentation_graph,
+                completed_step_ids=tuple(completed),
+                requested_goal=requested_goal,
+            )
+            act = cls.select_next_action(observation=obs, presentation_graph=presentation_graph, interaction_state=state)
+            trace.append(act)
+            if act["kind"] == "complete":
+                break
+            if act["kind"] == "reveal_step" and act.get("accepted"):
+                completed.append(act["step_id"])
+                state = DeterministicPresentationState(
+                    active_plan_index=state.active_plan_index,
+                    completed_step_ids=tuple(completed),
+                    highlighted_object_ids=tuple(act["highlight_object_ids"]),
+                    shown_explanations=(*state.shown_explanations, act["explanation_text"]),
+                )
+        return {
+            "selector_version": cls.selector_version,
+            "completed_all_steps": len(completed) == len(presentation_graph.steps),
+            "steps_executed": len(completed),
+            "total_steps": len(presentation_graph.steps),
+            "trace": trace,
+        }

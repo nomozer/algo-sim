@@ -1,0 +1,166 @@
+{
+  "generated_at_utc": "2026-11-19T04:30:31Z",
+  "mutations": [
+    {
+      "bypassed_v1_caught_by_v2": true,
+      "category": "MISSING_SUPPORT_NODE",
+      "description": "Remove supporting projection node while rewiring dependencies to GIVEN node (mimics skipped derivation).",
+      "mutation_id": "M01_delete_supporting_node",
+      "properly_rejected_by_v2": true,
+      "v1_verifier_failure_code": null,
+      "v1_verifier_passed": true,
+      "v2_verifier_failure_code": "MISSING_PRECONDITION",
+      "v2_verifier_failure_detail": "Input object 'H_A' of node 'n_goal_1' lacks a valid supporting node.",
+      "v2_verifier_passed": false
+    },
+    {
+      "bypassed_v1_caught_by_v2": true,
+      "category": "INPUT_OBJECT_TAMPER",
+      "description": "Swap input point A -> B on op.project_point_to_plane while keeping claimed output point H and VERIFIED status.",
+      "mutation_id": "M02_mutate_input_object_ids",
+      "properly_rejected_by_v2": true,
+      "v1_verifier_failure_code": null,
+      "v1_verifier_passed": true,
+      "v2_verifier_failure_code": "DEGENERATE_POINT_ALREADY_INCIDENT",
+      "v2_verifier_failure_detail": "Node 'n_step_1_0_project_point_to_plane' failed algebraic operator replay: [L1] DEGENERATE_POINT_ALREADY_INCIDENT: Point already lies in plane; auxiliary altitude segment is zero.",
+      "v2_verifier_passed": false
+    },
+    {
+      "bypassed_v1_caught_by_v2": true,
+      "category": "ARGUMENT_ORDER_TAMPER",
+      "description": "Reverse point and plane slots on op.project_point_to_plane.",
+      "mutation_id": "M03_reverse_projection_arguments",
+      "properly_rejected_by_v2": true,
+      "v1_verifier_failure_code": null,
+      "v1_verifier_passed": true,
+      "v2_verifier_failure_code": "UNVERIFIED_CONSTRUCTION",
+      "v2_verifier_failure_detail": "Node 'n_step_1_0_project_point_to_plane' failed algebraic operator replay: 'Vec3' object has no attribute 'signed_eval'",
+      "v2_verifier_passed": false
+    },
+    {
+      "bypassed_v1_caught_by_v2": true,
+      "category": "COORDINATE_TAMPER",
+      "description": "Shift auxiliary foot point H by (+1/5, 0, 0) while leaving node status VERIFIED.",
+      "mutation_id": "M04_perturb_foot_coordinates",
+      "properly_rejected_by_v2": true,
+      "v1_verifier_failure_code": null,
+      "v1_verifier_passed": true,
+      "v2_verifier_failure_code": "UNVERIFIED_CONSTRUCTION",
+      "v2_verifier_failure_detail": "Output object 'H_A' exact geometry or canonical key mismatches replay for op.project_point_to_plane.",
+      "v2_verifier_passed": false
+    },
+    {
+      "bypassed_v1_caught_by_v2": true,
+      "category": "RELATION_SEMANTIC_TAMPER",
+      "description": "Replace perpendicular certificate on project_point_to_plane with spoofed parallel claim.",
+      "mutation_id": "M05_replace_perp_with_parallel_evidence",
+      "properly_rejected_by_v2": true,
+      "v1_verifier_failure_code": null,
+      "v1_verifier_passed": true,
+      "v2_verifier_failure_code": "UNVERIFIED_CONSTRUCTION",
+      "v2_verifier_failure_detail": "Node 'n_step_1_0_project_point_to_plane' verification_evidence tampered/mismatches exact operator replay.",
+      "v2_verifier_passed": false
+    },
+    {
+      "bypassed_v1_caught_by_v2": true,
+      "category": "METRIC_TAMPER",
+      "description": "Alter ProofGraph chart_metric from I to 2*I while keeping Euclidean node computations.",
+      "mutation_id": "M06_tamper_chart_metric",
+      "properly_rejected_by_v2": true,
+      "v1_verifier_failure_code": null,
+      "v1_verifier_passed": true,
+      "v2_verifier_failure_code": "METRIC_MISMATCH",
+      "v2_verifier_failure_detail": "ProofGraph chart_metric (('2', '0', '0'), ('0', '2', '0'), ('0', '0', '2')) disagrees with certified Gram metric (('1', '1/2', '0'), ('1/2', '1', '0'), ('0', '0', '1')).",
+      "v2_verifier_passed": false
+    },
+    {
+      "bypassed_v1_caught_by_v2": true,
+      "category": "GOAL_ANSWER_FORGERY",
+      "description": "Forge GOAL answer (`cos²=99/100`) on VERIFIED E05 dihedral graph without recomputation.",
+      "mutation_id": "M07_tamper_goal_cos_sq_on_verified_node",
+      "properly_rejected_by_v2": true,
+      "v1_verifier_failure_code": null,
+      "v1_verifier_passed": true,
+      "v2_verifier_failure_code": "UNVERIFIED_CONSTRUCTION",
+      "v2_verifier_failure_detail": "Goal 'n_goal_1' independent L3 witness replay failed: re_eval='cos²=3/7' vs claimed='cos²=99/100'.",
+      "v2_verifier_passed": false
+    },
+    {
+      "bypassed_v1_caught_by_v2": false,
+      "category": "TOPOLOGY_REVERSAL",
+      "description": "Make earlier CONSTRUCTION node depend on GOAL node (dependency reversal/cycle).",
+      "mutation_id": "M08_inject_future_cycle_dependency",
+      "properly_rejected_by_v2": true,
+      "v1_verifier_failure_code": "CYCLIC_DEPENDENCY",
+      "v1_verifier_passed": false,
+      "v2_verifier_failure_code": "CYCLIC_DEPENDENCY",
+      "v2_verifier_failure_detail": "DAG failed: ('CYCLIC_DEPENDENCY',)",
+      "v2_verifier_passed": false
+    },
+    {
+      "bypassed_v1_caught_by_v2": true,
+      "category": "FORGED_EVIDENCE_BYPASS",
+      "description": "Replace genuine L2 certificate with arbitrary forged dict `{'forged_certificate': True}` on VERIFIED node.",
+      "mutation_id": "M09_forged_evidence_with_verified_flag",
+      "properly_rejected_by_v2": true,
+      "v1_verifier_failure_code": null,
+      "v1_verifier_passed": true,
+      "v2_verifier_failure_code": "UNVERIFIED_CONSTRUCTION",
+      "v2_verifier_failure_detail": "Node 'n_step_1_0_divide_segment_ratio' verification_evidence tampered/mismatches exact operator replay.",
+      "v2_verifier_passed": false
+    },
+    {
+      "bypassed_v1_caught_by_v2": true,
+      "category": "INTERMEDIATE_CORRUPTION",
+      "description": "Corrupt intermediate constructed point M/K while keeping final GOAL scalar readout intact.",
+      "mutation_id": "M10_corrupt_intermediate_preserve_final_answer",
+      "properly_rejected_by_v2": true,
+      "v1_verifier_failure_code": null,
+      "v1_verifier_passed": true,
+      "v2_verifier_failure_code": "UNVERIFIED_CONSTRUCTION",
+      "v2_verifier_failure_detail": "Output object 'K' exact geometry or canonical key mismatches replay for op.divide_segment_ratio.",
+      "v2_verifier_passed": false
+    },
+    {
+      "bypassed_v1_caught_by_v2": true,
+      "category": "SCENE3D_WITNESS_TAMPER",
+      "description": "Corrupt Scene3D perpendicular_witness certificate while preserving Scene3D continuity IDs.",
+      "mutation_id": "M11_scene3d_perpendicular_witness_tamper",
+      "properly_rejected_by_v2": true,
+      "v1_verifier_failure_code": null,
+      "v1_verifier_passed": true,
+      "v2_verifier_failure_code": "SCENE3D_CONTINUITY_FAILED",
+      "v2_verifier_failure_detail": "Scene3D perpendicular_witness tamper detected on 'seg_A_H': MISMATCHED_OPERANDS",
+      "v2_verifier_passed": false
+    },
+    {
+      "bypassed_v1_caught_by_v2": true,
+      "category": "PRESENTATION_INJECTION",
+      "description": "PresentationStepGraph injects phantom unverified object and leaks `op.`, `VERIFIED`, `n_step_` tokens.",
+      "mutation_id": "M12_presentation_leak_and_phantom_object",
+      "properly_rejected_by_v2": true,
+      "v1_verifier_failure_code": null,
+      "v1_verifier_passed": true,
+      "v2_verifier_failure_code": "PRESENTATION_INVARIANT_FAILED",
+      "v2_verifier_failure_detail": "pstep_1 introduces object 'PHANTOM_POINT_Z' absent from verified ProofGraph; pstep_1 learner_text leaks internal token 'VERIFIED': 'Thực thi op.project_point_to_plane VERIFIED tại n_step_1'; pstep_1 learner_text leaks internal token 'n_step_': 'Thực thi op.project_point_to_plane VERIFIED tại n_step_1'; pstep_1 learner_text leaks internal token 'op.': 'Thực thi op.project_point_to_plane VERIFIED tại n_step_1'",
+      "v2_verifier_passed": false
+    }
+  ],
+  "oracle_isolation_audit": {
+    "alt_volume_answer": "a³√3/12",
+    "ast_oracle_parameter_hits": [],
+    "c01_answer": "a√21/7",
+    "deterministic_replay_sha256_c01": "d2ba32353460872a9154b66ff1d278cf6e9ed5e32dc8b3240bc33ae24dd5431f",
+    "different_goal_same_frame_diverge": true,
+    "wrong_oracle_cannot_alter_planner_output": true,
+    "zero_oracle_params_in_planner_verifier": true
+  },
+  "schema": "axo-proof-mutation-audit/1",
+  "summary": {
+    "oracle_isolation_passed": true,
+    "total_mutation_scenarios": 12,
+    "v1_bypassed_but_v2_caught": 11,
+    "v2_rejected_count": 12,
+    "v2_rejection_rate": "12/12"
+  }
+}

@@ -29,6 +29,7 @@ from .construction_graph import (
 from .construction_objects import (
     ConstructionObject,
     _fmt_frac,
+    _json_safe,
     canonical_line_key,
     canonical_plane_key,
     canonical_point_key,
@@ -775,7 +776,13 @@ def materialize_proof_graph_from_state(
         node_type="GOAL",
         geometric_object_type="quantity",
         object_refs=(qty_id, *(goal_eval.get("witness_object_ids") or ())),
-        geometry_context={"goal_kind": goal_spec.goal_kind, "answer": goal_eval["answer"], "answer_exact": goal_eval["answer_exact"]},
+        geometry_context={
+            "goal_kind": goal_spec.goal_kind,
+            "operands": _json_safe(goal_spec.operands),
+            "length_unit": goal_spec.length_unit,
+            "answer": goal_eval["answer"],
+            "answer_exact": goal_eval["answer_exact"],
+        },
         source_fact_refs=(),
         producing_operation_id=f"goal.{goal_spec.goal_kind}",
         input_object_ids=tuple(oid for wk in (goal_eval.get("witness_keys") or ()) for oid in state.key_to_ids.get(wk, ())[:1]),
@@ -786,7 +793,7 @@ def materialize_proof_graph_from_state(
         verification_status="VERIFIED",
         verification_evidence=goal_eval,
         exact_computation_ref=f"exact_witness_eval.{goal_spec.goal_kind}",
-        scene3d_render_hints={"render": "readout", "learner_text": f"Tính/xác định kết quả mục tiêu: {goal_eval['answer']}"},
+        scene3d_render_hints={"render": "readout", "learner_text": f"Xác định giá trị đại lượng mục tiêu: {goal_eval['answer']}"},
     )
     full_objects = {**state.objects, qty_id: qty_obj}
     full_graph = ConstructionProofGraph(

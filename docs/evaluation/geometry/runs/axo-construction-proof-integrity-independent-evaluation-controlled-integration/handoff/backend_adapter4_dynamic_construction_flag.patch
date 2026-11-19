@@ -1,0 +1,15 @@
+--- a/backend/app/ai/adapter4_route.py
++++ b/backend/app/ai/adapter4_route.py
+@@ -51,6 +51,12 @@
+                             planner={"bridge": {"version": BRIDGE_V2_VERSION}})
+         else:
+             r = FR.chay_sau_cau_noi(b)
++            from experimental.construction_planner.integration_adapter import run_with_dynamic_construction_mode
++            dyn_info = run_with_dynamic_construction_mode(problem_text=source or "", raw_facts_payload=b if isinstance(b, dict) else {"schema": "typed-facts/2", "facts": []}, legacy_result=r)
++            if dyn_info.get("active") and isinstance(dyn_info.get("details_patch"), dict):
++                r.details = {**(r.details or {}), **dyn_info["details_patch"]}
++            if dyn_info.get("mode") == "experimental" and dyn_info.get("status") == "EXPERIMENTAL_SERVED" and dyn_info.get("scene3d"):
++                r.scene3d = dyn_info["scene3d"]
+     except Exception as exc:  # noqa: BLE001 — boundary record of OUR fault, typed; input errors were refused above
+         r = KetQuaTuyen("REFUSED", "ROUTE_INTERNAL_ERROR", f"{type(exc).__name__}: {exc}",
+                         planner={"bridge": {"version": BRIDGE_V2_VERSION}})

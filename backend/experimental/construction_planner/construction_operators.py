@@ -313,14 +313,20 @@ def _exec_plane_through_three_points(
     verify_point_on_plane(a, pl, chart_metric)
     verify_point_on_plane(b, pl, chart_metric)
     verify_point_on_plane(c, pl, chart_metric)
+    plk = canonical_plane_key(pl)
+    edge_rels = [
+        ("line_in_plane", (canonical_line_key(E.Line3.through(u, v)), plk), False)
+        for u, v in ((a, b), (b, c), (a, c))
+    ]
     return {
         "outputs": {"plane": pl},
-        "canonical_keys": {"plane": canonical_plane_key(pl)},
+        "canonical_keys": {"plane": plk},
         "derived_constraints": ["plane_through_noncollinear_points"],
         "relations": [
-            ("point_on_plane", (canonical_point_key(a), canonical_plane_key(pl)), False),
-            ("point_on_plane", (canonical_point_key(b), canonical_plane_key(pl)), False),
-            ("point_on_plane", (canonical_point_key(c), canonical_plane_key(pl)), False),
+            ("point_on_plane", (canonical_point_key(a), plk), False),
+            ("point_on_plane", (canonical_point_key(b), plk), False),
+            ("point_on_plane", (canonical_point_key(c), plk), False),
+            *edge_rels,
         ],
         "verification_evidence": {"three_points_signed_eval_zero": True},
         "exact_computation_ref": "exact.Plane3.through",
@@ -1152,7 +1158,7 @@ class GoalSpec:
     goal_kind: str
     # Supported kinds:
     # "distance_point_plane", "distance_point_line", "distance_line_plane",
-    # "distance_skew_lines", "angle_line_plane", "angle_lines",
+    # "distance_skew_lines", "point_distance", "angle_line_plane", "angle_lines",
     # "angle_plane_plane", "segment_length", "polygon_area",
     # "section_area", "solid_volume", "construct_point", "unsupported_goal"
     operands: dict[str, Any]
@@ -1207,10 +1213,45 @@ def evaluate_goal_if_witnessed(
         return None
 
     with M.using(chart_metric):
+        if gk == "point_distance":
+            p1 = _resolve_point(ops.get("a"))
+            p2 = _resolve_point(ops.get("b"))
+            if not p1 or not p2:
+                return None
+            if p1[1] == p2[1]:
+                pk = canonical_point_key(p1[1])
+                return {
+                    "witness_verified": True,
+                    "coincident_zero_distance": True,
+                    "witness_keys": [pk],
+                    "witness_object_ids": list(dict.fromkeys([p1[0], p2[0]])),
+                    "answer": "0",
+                    "answer_exact": {"text": "0", "coef": "0", "dim": 1, "unit": unit},
+                }
+            seg_k = canonical_segment_key(E.Segment3.between(p1[1], p2[1]))
+            if not any(canonical_segment_key(seg) == seg_k for seg in segments_by_id.values()):
+                return None
+            d2 = MS.distance_sq(p1[1], p2[1])
+            ans = format_exact_unit_answer(MS.sqrt_rational(d2), unit=unit, dim=1)
+            return {"witness_verified": True, "witness_keys": [seg_k], "answer": ans["text"], "answer_exact": ans}
+
         if gk == "segment_length":
             p1 = _resolve_point(ops.get("a"))
             p2 = _resolve_point(ops.get("b"))
             if not p1 or not p2:
+                return None
+            if p1[1] == p2[1]:
+                if ops.get("allow_zero_length") is True:
+                    pk = canonical_point_key(p1[1])
+                    return {
+                        "witness_verified": True,
+                        "coincident_zero_distance": True,
+                        "witness_keys": [pk],
+                        "witness_object_ids": list(dict.fromkeys([p1[0], p2[0]])),
+                        "answer": "0",
+                        "answer_exact": {"text": "0", "coef": "0", "dim": 1, "unit": unit},
+                    }
+                # Non-degenerate segment construction explicitly excludes coincident endpoints.
                 return None
             # Require constructed segment connecting a and b (either given solid edge or op.connect_segment)
             seg_k = canonical_segment_key(E.Segment3.between(p1[1], p2[1]))
@@ -1259,10 +1300,14 @@ def evaluate_goal_if_witnessed(
             d2_ref = MS.distance_sq_point_plane(p[1], pl)
             if d2 != d2_ref:
                 return None
+            seg_k = canonical_segment_key(E.Segment3.between(p[1], points_by_id[foot_id]))
+            witness_keys = [pk, plk, fk]
+            if any(canonical_segment_key(s) == seg_k for s in segments_by_id.values()):
+                witness_keys.append(seg_k)
             ans = format_exact_unit_answer(MS.sqrt_rational(d2), unit=unit, dim=1)
             return {
                 "witness_verified": True,
-                "witness_keys": [pk, plk, fk],
+                "witness_keys": witness_keys,
                 "witness_object_ids": [foot_id],
                 "answer": ans["text"],
                 "answer_exact": ans,
@@ -1274,6 +1319,13 @@ def evaluate_goal_if_witnessed(
             if not p or not ln:
                 return None
             pk, lnk = canonical_point_key(p[1]), canonical_line_key(ln)
+            if MS.distance_sq_point_line(p[1], ln) == 0:
+                return {
+                    "witness_verified": True,
+                    "witness_keys": [pk, lnk],
+                    "answer": "0",
+                    "answer_exact": {"text": "0", "coef": "0", "dim": 1, "unit": unit},
+                }
             feet = [rel[1][2] for rel in relations if rel[0] == "perp_point_line_witness" and rel[1][0] == pk and rel[1][1] == lnk]
             if not feet:
                 return None
@@ -1284,8 +1336,18 @@ def evaluate_goal_if_witnessed(
             d2 = MS.distance_sq(p[1], points_by_id[foot_id])
             if d2 != MS.distance_sq_point_line(p[1], ln):
                 return None
+            seg_k = canonical_segment_key(E.Segment3.between(p[1], points_by_id[foot_id]))
+            witness_keys = [pk, lnk, fk]
+            if any(canonical_segment_key(s) == seg_k for s in segments_by_id.values()):
+                witness_keys.append(seg_k)
             ans = format_exact_unit_answer(MS.sqrt_rational(d2), unit=unit, dim=1)
-            return {"witness_verified": True, "witness_keys": [pk, lnk, fk], "answer": ans["text"], "answer_exact": ans}
+            return {
+                "witness_verified": True,
+                "witness_keys": witness_keys,
+                "witness_object_ids": [foot_id],
+                "answer": ans["text"],
+                "answer_exact": ans,
+            }
 
         if gk == "distance_line_plane":
             ln = _resolve_line(ops.get("line"))
@@ -1380,10 +1442,17 @@ def evaluate_goal_if_witnessed(
                     if MS.distance_sq_point_line(points_by_id[src_id], ln) == 0:
                         proj_seg_k = canonical_segment_key(E.Segment3.between(points_by_id[meet_id], points_by_id[foot_id]))
                         proj_ln_k = canonical_line_key(E.Line3.through(points_by_id[meet_id], points_by_id[foot_id]))
-                        if any(canonical_segment_key(s) == proj_seg_k for s in segments_by_id.values()) or any(canonical_line_key(l) == proj_ln_k for l in lines_by_id.values()):
+                        matched_seg = any(canonical_segment_key(s) == proj_seg_k for s in segments_by_id.values())
+                        matched_ln = any(canonical_line_key(l) == proj_ln_k for l in lines_by_id.values())
+                        if matched_seg or matched_ln:
                             cos_sq = MS.cos_sq_line_plane(ln, pl)
                             ans = _format_angle_answer(cos_sq, mode=ops.get("output_mode", "cos_or_deg"))
-                            return {"witness_verified": True, "witness_keys": [lnk, plk, meets[0], fk], "answer": ans, "answer_exact": {"text": ans, "cos_sq": _fmt_frac(cos_sq), "dim": 0, "unit": ""}}
+                            wkeys = [lnk, plk, meets[0], fk]
+                            if matched_seg:
+                                wkeys.append(proj_seg_k)
+                            if matched_ln:
+                                wkeys.append(proj_ln_k)
+                            return {"witness_verified": True, "witness_keys": wkeys, "answer": ans, "answer_exact": {"text": ans, "cos_sq": _fmt_frac(cos_sq), "dim": 0, "unit": ""}}
             return None
 
         if gk == "angle_lines":
@@ -1485,7 +1554,11 @@ def evaluate_goal_if_witnessed(
             base_pl = _resolve_plane(ops.get("base")[:3])
             if not base_pl:
                 return None
+            if any(base_pl.signed_eval(p[1]) != 0 for p in base_pts):
+                return None
             ak, plk = canonical_point_key(apex[1]), canonical_plane_key(base_pl)
+            if base_pl.signed_eval(apex[1]) == 0:
+                return None
             # Require altitude foot witness from apex onto base plane!
             feet = [rel[1][2] for rel in relations if rel[0] == "perp_point_plane_witness" and rel[1][0] == ak and rel[1][1] == plk]
             if not feet:

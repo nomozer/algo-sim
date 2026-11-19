@@ -65,8 +65,8 @@ def _scene_object_from_construction_obj(
         # Attach endpoint IDs from point canonical matches in proof graph
         ep_ids: list[str] = []
         for target_pt in (base["point_a"], base["point_b"]):
-            for oid, o in sorted(proof_graph.objects.items()):
-                if o.object_kind == "point3" and isinstance(o.exact_value, E.Vec3) and vec3_to_rational_list(o.exact_value) == target_pt:
+            for oid, coords in sorted(points_rat_map.items()):
+                if [str(x) for x in coords] == target_pt:
                     ep_ids.append(oid)
                     if oid not in base["depends"]:
                         base["depends"].append(oid)
@@ -87,7 +87,7 @@ def _scene_object_from_construction_obj(
         base["vertices"] = [vec3_to_rational_list(v) for v in val.vertices]
         base["vertex_ids"] = v_ids or [oid for oid, o in sorted(proof_graph.objects.items()) if o.object_kind == "point3" and o.origin == "GIVEN_OBJECT"][:len(val.vertices)]
         base["faces"] = [list(f) for f in val.faces]
-        base["depends"] = [vid for vid in base["vertex_ids"] if vid in proof_graph.objects]
+        base["depends"] = [vid for vid in base["vertex_ids"] if vid in points_rat_map]
         base["shape_class"] = "PYRAMID_LIKE" if len(val.vertices) <= 5 else "PRISM_LIKE"
         base["formation_requirements"] = ["CONSTRUCT_BASE", "CONSTRUCT_LATERAL_BOUNDARY", "CLOSE_SOLID"]
     elif obj.object_kind == "section" and isinstance(val, S.Section):
@@ -119,16 +119,56 @@ def compile_proof_graph_to_scene3d(
     from fractions import Fraction
 
     points_rat_map: dict[str, list[Fraction]] = {
-        oid: [o.exact_value.x, o.exact_value.y, o.exact_value.z]
-        for oid, o in proof_graph.objects.items()
-        if o.object_kind == "point3" and isinstance(o.exact_value, E.Vec3)
+        pid: [pt.x, pt.y, pt.z]
+        for pid, pt in frame.points.items()
     }
+    for oid, o in proof_graph.objects.items():
+        if o.object_kind == "point3" and isinstance(o.exact_value, E.Vec3):
+            points_rat_map[oid] = [o.exact_value.x, o.exact_value.y, o.exact_value.z]
 
     scene_objs: list[dict[str, Any]] = []
     included_ids: set[str] = set()
-    # Emit GIVEN points and solid first, then derived/aux objects in topological node order
+    # Preserve full GIVEN solid vertices & mesh across pruned alternative plans (multi-plan Scene3D invariance)
+    for pid, pt in sorted(frame.points.items()):
+        if pid in proof_graph.objects and proof_graph.objects[pid].origin == "GIVEN_OBJECT":
+            scene_objs.append(_scene_object_from_construction_obj(proof_graph.objects[pid], proof_graph, points_rat_map))
+            included_ids.add(pid)
+        elif pid not in proof_graph.objects:
+            frame_pt_obj = ConstructionObject(
+                object_id=pid,
+                object_kind="point3",
+                origin="GIVEN_OBJECT",
+                canonical_geom_key="",
+                label=f"Điểm {pid}",
+                exact_value=pt,
+                source_fact_refs=frame.source_fact_refs.get("solid", ("s1",)),
+                supporting_node_id=None,
+            )
+            scene_objs.append(_scene_object_from_construction_obj(frame_pt_obj, proof_graph, points_rat_map))
+            included_ids.add(pid)
+
+    if frame.polyhedron is not None and "solid_main" not in included_ids:
+        if "solid_main" in proof_graph.objects and proof_graph.objects["solid_main"].origin == "GIVEN_OBJECT":
+            scene_objs.append(_scene_object_from_construction_obj(proof_graph.objects["solid_main"], proof_graph, points_rat_map))
+            included_ids.add("solid_main")
+        elif "solid_main" not in proof_graph.objects:
+            frame_solid_obj = ConstructionObject(
+                object_id="solid_main",
+                object_kind="solid",
+                origin="GIVEN_OBJECT",
+                canonical_geom_key="",
+                label="Khối đa diện",
+                exact_value=frame.polyhedron,
+                source_fact_refs=frame.source_fact_refs.get("solid", ("s1",)),
+                supporting_node_id=None,
+                metadata={"vertex_ids": sorted(frame.points.keys())},
+            )
+            scene_objs.append(_scene_object_from_construction_obj(frame_solid_obj, proof_graph, points_rat_map))
+            included_ids.add("solid_main")
+
+    # Emit remaining GIVEN objects from proof graph, then derived/aux objects in topological node order
     for oid, obj in sorted(proof_graph.objects.items()):
-        if obj.origin == "GIVEN_OBJECT" and obj.object_kind in ("point3", "solid", "segment3"):
+        if oid not in included_ids and obj.origin == "GIVEN_OBJECT" and obj.object_kind in ("point3", "solid", "segment3"):
             scene_objs.append(_scene_object_from_construction_obj(obj, proof_graph, points_rat_map))
             included_ids.add(oid)
     for node in proof_graph.nodes:

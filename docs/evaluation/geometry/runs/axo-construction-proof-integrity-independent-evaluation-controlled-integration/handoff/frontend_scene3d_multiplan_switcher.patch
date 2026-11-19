@@ -1,0 +1,27 @@
+--- a/frontend/src/simulations/domains/geometry/Scene3DExplorer.tsx
++++ b/frontend/src/simulations/domains/geometry/Scene3DExplorer.tsx
+@@ -187,7 +187,7 @@
+     );
+ 
+ export function Scene3DExplorer({
+-  scene: sceneKhung, de, tieuDe, quayLai, phien, onFocus, daiLop, daiLopTomTat, hybrid, routeDSimulation,
++  scene: sceneKhung, de, tieuDe, quayLai, phien, onFocus, daiLop, daiLopTomTat, hybrid, routeDSimulation, alternativePlans,
+ }: {
+   scene: Scene3D;
+   /** Đề bài nguyên văn. Vắng ⇒ không dựng nút «Đề bài». */
+@@ -220,9 +220,14 @@
+   hybrid?: HybridPreviewView | null;
+   /** P6/P7 — Tóm tắt kết quả và chứng chỉ kiểm chứng của Adapter /3 (offline research preview) cho Chế độ B («Phân tích toán học»). */
+   routeDSimulation?: RouteDSimulationSummary | null;
++  /** AXO CONSTRUCTION /2 handoff: optional self-contained verified alternative Scene3D plans. */
++  alternativePlans?: Array<{ rank: number; scene: Scene3D; summary?: RouteDSimulationSummary | null }> | null;
+ }) {
++  const [activePlanRank, setActivePlanRank] = useState<number>(0);
++  const activePlan = (alternativePlans ?? []).find((p) => p.rank === activePlanRank) ?? null;
++  const sceneSource = activePlan ? activePlan.scene : sceneKhung;
+   // exact-dimensions: toạ độ KHUNG → không gian Euclid MỘT lần (đồng nhất ⇒ chính cảnh cũ) — `scene3d-chart`.
+-  const scene = useMemo(() => { attachHybridViewToScene(sceneKhung, hybrid); return veKhongGian(sceneKhung); }, [sceneKhung, hybrid]);
++  const scene = useMemo(() => { attachHybridViewToScene(sceneSource, hybrid); return veKhongGian(sceneSource); }, [sceneSource, hybrid]);
+   // MẶT và CẠNH sinh MỘT LẦN cho mỗi cảnh. Bỏ bước này là bỏ luôn khả năng
+   // bấm vào một mặt — cây mất hai hạng mục và raycast chỉ còn trúng khối.
+   const day = useMemo(() => withSubEntities(scene), [scene]);

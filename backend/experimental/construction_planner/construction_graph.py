@@ -402,6 +402,53 @@ def validate_construction_graph(
     )
 
 
+def _friendly_obj_name(oid: str) -> str:
+    if oid.startswith("day_"):
+        return f"đáy ({oid[4:]})"
+    if oid.startswith("mat_"):
+        return f"mặt phẳng ({oid[4:]})"
+    if oid.startswith("pl_par_skew_"):
+        return f"mặt phẳng phụ song song #{oid.rsplit('_', 1)[-1]}"
+    if oid.startswith("pl_"):
+        return f"mặt phẳng ({oid[3:]})"
+    if oid.startswith("mp_"):
+        return f"mặt phẳng {oid[3:]}"
+    if oid.startswith("ln_"):
+        parts = oid[3:].split("_")
+        return f"đường thẳng {''.join(parts)}"
+    if oid.startswith("seg_"):
+        parts = oid[4:].split("_")
+        return f"đoạn {''.join(parts)}"
+    if oid.startswith("dt_"):
+        return f"đường thẳng ({oid[3:]})"
+    if oid.startswith("H_"):
+        return f"chân đường vuông góc {oid}"
+    if oid.startswith("M_"):
+        return f"hình chiếu {oid}"
+    if oid.startswith("K_alt_"):
+        return f"điểm dựng {oid}"
+    if oid == "delta_inter":
+        return "giao tuyến Δ"
+    return oid
+
+
+def _friendly_learner_text(node: ConstructionNode, out_objs: tuple[str, ...]) -> str:
+    raw_hint = node.scene3d_render_hints.get("learner_text")
+    if isinstance(raw_hint, str) and raw_hint.strip():
+        txt = raw_hint.strip()
+        for raw_id in sorted(set([*node.object_refs, *out_objs]), key=len, reverse=True):
+            if any(raw_id.startswith(pfx) for pfx in ("day_", "mat_", "pl_", "ln_", "seg_", "dt_", "mp_", "pl_par_skew_")):
+                txt = txt.replace(raw_id, _friendly_obj_name(raw_id))
+        if not any(tok in txt for tok in ("op.", "n_step_", "VERIFIED", "schema_version")):
+            return txt
+    names = ", ".join(_friendly_obj_name(oid) for oid in out_objs)
+    if node.node_type == "GOAL":
+        return f"Đo và xác nhận giá trị mục tiêu ({names})."
+    if node.node_type == "DERIVED_RELATION":
+        return f"Chứng minh quan hệ hình học trên {names}."
+    return f"Dựng {names} và kiểm chứng điều kiện tồn tại."
+
+
 def project_to_presentation_graph(proof_graph: ConstructionProofGraph) -> PresentationStepGraph:
     """Deterministically project a validated `ConstructionProofGraph` into `PresentationStepGraph` (§14).
 
@@ -489,10 +536,7 @@ def project_to_presentation_graph(proof_graph: ConstructionProofGraph) -> Presen
         else:
             action_type = "CONSTRUCT_DERIVED"
 
-        learner_text = str(
-            node.scene3d_render_hints.get("learner_text")
-            or f"Thực hiện bước {node.producing_operation_id or node.node_type.lower()} tạo {', '.join(out_objs)}."
-        )
+        learner_text = _friendly_learner_text(node, out_objs)
         steps.append(
             PresentationStep(
                 step_id=step_id,

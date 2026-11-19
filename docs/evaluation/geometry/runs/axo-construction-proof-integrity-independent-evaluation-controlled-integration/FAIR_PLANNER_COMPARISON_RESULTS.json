@@ -1,0 +1,2177 @@
+{
+  "arms": {
+    "Arm_A1": "Original Product Pipeline (unmodified /1 benchmark quotes via function_route.run_fact_route)",
+    "Arm_A2": "Original Product Pipeline with Source-Gate-faithful equivalent Vietnamese typed-facts/2 inputs (zero Source Gate bypass)",
+    "Arm_B": "dynamic-construction-planner/1",
+    "Arm_C": "dynamic-construction-planner/2"
+  },
+  "cases": [
+    {
+      "arm_a1_original_product": {
+        "answer": "a√2",
+        "code": null,
+        "extra_points_in_scene": [],
+        "has_auxiliary_witness_in_scene": false,
+        "latency_ms": 15.814,
+        "math_or_refusal_ok_p_metric": true,
+        "math_or_refusal_ok_p_strict": true,
+        "scene3d_valid": true,
+        "source_gate_failure": false,
+        "status": "SERVED"
+      },
+      "arm_a2_equivalent_verified_product": {
+        "answer": "a√2",
+        "code": null,
+        "extra_points_in_scene": [],
+        "has_auxiliary_witness_in_scene": false,
+        "latency_ms": 12.874,
+        "math_or_refusal_ok_p_metric": true,
+        "math_or_refusal_ok_p_strict": true,
+        "scene3d_valid": true,
+        "source_gate_failure": false,
+        "status": "SERVED"
+      },
+      "arm_b_dynamic_v1": {
+        "answer": "a√2",
+        "frame_ms": 7.019,
+        "planner_only_ms": 3.165,
+        "plans_count": 1,
+        "status": "GOAL_VERIFIED"
+      },
+      "arm_c_dynamic_v2": {
+        "answer": "a√2",
+        "bridge_accepted": true,
+        "bridge_source_gate_code": null,
+        "end_to_end_bridge_plus_plan_plus_verify_ms": 19.081,
+        "failure_code": null,
+        "l0_l4_strict_verified": true,
+        "multi_plan_valid": null,
+        "planner_only_ms": 4.841,
+        "plans_count": 1,
+        "point_distance_d02_ok": null,
+        "scene3d_valid": true,
+        "status": "GOAL_VERIFIED",
+        "strict_ok": true,
+        "witness_ok": true
+      },
+      "case_id": "A01_sb_length_right_pyramid",
+      "expected_status": "GOAL_VERIFIED",
+      "group": "Group_A"
+    },
+    {
+      "arm_a1_original_product": {
+        "answer": "a√7/2",
+        "code": null,
+        "extra_points_in_scene": [
+          "M"
+        ],
+        "has_auxiliary_witness_in_scene": false,
+        "latency_ms": 16.376,
+        "math_or_refusal_ok_p_metric": true,
+        "math_or_refusal_ok_p_strict": true,
+        "scene3d_valid": true,
+        "source_gate_failure": false,
+        "status": "SERVED"
+      },
+      "arm_a2_equivalent_verified_product": {
+        "answer": "a√7/2",
+        "code": null,
+        "extra_points_in_scene": [
+          "M"
+        ],
+        "has_auxiliary_witness_in_scene": false,
+        "latency_ms": 13.227,
+        "math_or_refusal_ok_p_metric": true,
+        "math_or_refusal_ok_p_strict": true,
+        "scene3d_valid": true,
+        "source_gate_failure": false,
+        "status": "SERVED"
+      },
+      "arm_b_dynamic_v1": {
+        "answer": "a√7/2",
+        "frame_ms": 6.413,
+        "planner_only_ms": 5.031,
+        "plans_count": 1,
+        "status": "GOAL_VERIFIED"
+      },
+      "arm_c_dynamic_v2": {
+        "answer": "a√7/2",
+        "bridge_accepted": true,
+        "bridge_source_gate_code": null,
+        "end_to_end_bridge_plus_plan_plus_verify_ms": 22.197,
+        "failure_code": null,
+        "l0_l4_strict_verified": true,
+        "multi_plan_valid": null,
+        "planner_only_ms": 7.283,
+        "plans_count": 1,
+        "point_distance_d02_ok": null,
+        "scene3d_valid": true,
+        "status": "GOAL_VERIFIED",
+        "strict_ok": true,
+        "witness_ok": true
+      },
+      "case_id": "A02_midpoint_sm_equilateral",
+      "expected_status": "GOAL_VERIFIED",
+      "group": "Group_A"
+    },
+    {
+      "arm_a1_original_product": {
+        "answer": "a√41/3",
+        "code": null,
+        "extra_points_in_scene": [
+          "G_mid_BC",
+          "G"
+        ],
+        "has_auxiliary_witness_in_scene": false,
+        "latency_ms": 17.073,
+        "math_or_refusal_ok_p_metric": true,
+        "math_or_refusal_ok_p_strict": true,
+        "scene3d_valid": true,
+        "source_gate_failure": false,
+        "status": "SERVED"
+      },
+      "arm_a2_equivalent_verified_product": {
+        "answer": "a√41/3",
+        "code": null,
+        "extra_points_in_scene": [
+          "G_mid_BC",
+          "G"
+        ],
+        "has_auxiliary_witness_in_scene": false,
+        "latency_ms": 15.243,
+        "math_or_refusal_ok_p_metric": true,
+        "math_or_refusal_ok_p_strict": true,
+        "scene3d_valid": true,
+        "source_gate_failure": false,
+        "status": "SERVED"
+      },
+      "arm_b_dynamic_v1": {
+        "answer": "a√41/3",
+        "frame_ms": 7.377,
+        "planner_only_ms": 5.89,
+        "plans_count": 1,
+        "status": "GOAL_VERIFIED"
+      },
+      "arm_c_dynamic_v2": {
+        "answer": "a√41/3",
+        "bridge_accepted": true,
+        "bridge_source_gate_code": null,
+        "end_to_end_bridge_plus_plan_plus_verify_ms": 24.055,
+        "failure_code": null,
+        "l0_l4_strict_verified": true,
+        "multi_plan_valid": null,
+        "planner_only_ms": 8.169,
+        "plans_count": 1,
+        "point_distance_d02_ok": null,
+        "scene3d_valid": true,
+        "status": "GOAL_VERIFIED",
+        "strict_ok": true,
+        "witness_ok": true
+      },
+      "case_id": "A03_centroid_sg_square_base",
+      "expected_status": "GOAL_VERIFIED",
+      "group": "Group_A"
+    },
+    {
+      "arm_a1_original_product": {
+        "answer": "a√3/2",
+        "code": null,
+        "extra_points_in_scene": [
+          "M"
+        ],
+        "has_auxiliary_witness_in_scene": false,
+        "latency_ms": 14.709,
+        "math_or_refusal_ok_p_metric": true,
+        "math_or_refusal_ok_p_strict": true,
+        "scene3d_valid": true,
+        "source_gate_failure": false,
+        "status": "SERVED"
+      },
+      "arm_a2_equivalent_verified_product": {
+        "answer": "a√3/2",
+        "code": null,
+        "extra_points_in_scene": [
+          "M"
+        ],
+        "has_auxiliary_witness_in_scene": false,
+        "latency_ms": 15.067,
+        "math_or_refusal_ok_p_metric": true,
+        "math_or_refusal_ok_p_strict": true,
+        "scene3d_valid": true,
+        "source_gate_failure": false,
+        "status": "SERVED"
+      },
+      "arm_b_dynamic_v1": {
+        "answer": "a√3/2",
+        "frame_ms": 7.042,
+        "planner_only_ms": 4.995,
+        "plans_count": 1,
+        "status": "GOAL_VERIFIED"
+      },
+      "arm_c_dynamic_v2": {
+        "answer": "a√3/2",
+        "bridge_accepted": true,
+        "bridge_source_gate_code": null,
+        "end_to_end_bridge_plus_plan_plus_verify_ms": 22.629,
+        "failure_code": null,
+        "l0_l4_strict_verified": true,
+        "multi_plan_valid": null,
+        "planner_only_ms": 7.161,
+        "plans_count": 1,
+        "point_distance_d02_ok": null,
+        "scene3d_valid": true,
+        "status": "GOAL_VERIFIED",
+        "strict_ok": true,
+        "witness_ok": true
+      },
+      "case_id": "A04_midpoint_am_right_B",
+      "expected_status": "GOAL_VERIFIED",
+      "group": "Group_A"
+    },
+    {
+      "arm_a1_original_product": {
+        "answer": "a³/3",
+        "code": null,
+        "extra_points_in_scene": [],
+        "has_auxiliary_witness_in_scene": false,
+        "latency_ms": 14.618,
+        "math_or_refusal_ok_p_metric": true,
+        "math_or_refusal_ok_p_strict": true,
+        "scene3d_valid": true,
+        "source_gate_failure": false,
+        "status": "SERVED"
+      },
+      "arm_a2_equivalent_verified_product": {
+        "answer": "a³/3",
+        "code": null,
+        "extra_points_in_scene": [],
+        "has_auxiliary_witness_in_scene": false,
+        "latency_ms": 14.085,
+        "math_or_refusal_ok_p_metric": true,
+        "math_or_refusal_ok_p_strict": true,
+        "scene3d_valid": true,
+        "source_gate_failure": false,
+        "status": "SERVED"
+      },
+      "arm_b_dynamic_v1": {
+        "answer": "a³/3",
+        "frame_ms": 7.473,
+        "planner_only_ms": 3.501,
+        "plans_count": 1,
+        "status": "GOAL_VERIFIED"
+      },
+      "arm_c_dynamic_v2": {
+        "answer": "a³/3",
+        "bridge_accepted": true,
+        "bridge_source_gate_code": null,
+        "end_to_end_bridge_plus_plan_plus_verify_ms": 22.601,
+        "failure_code": null,
+        "l0_l4_strict_verified": true,
+        "multi_plan_valid": null,
+        "planner_only_ms": 6.844,
+        "plans_count": 1,
+        "point_distance_d02_ok": null,
+        "scene3d_valid": true,
+        "status": "GOAL_VERIFIED",
+        "strict_ok": true,
+        "witness_ok": true
+      },
+      "case_id": "A05_volume_pyramid_right_B",
+      "expected_status": "GOAL_VERIFIED",
+      "group": "Group_A"
+    },
+    {
+      "arm_a1_original_product": {
+        "answer": "a³√3/4",
+        "code": null,
+        "extra_points_in_scene": [],
+        "has_auxiliary_witness_in_scene": false,
+        "latency_ms": 14.252,
+        "math_or_refusal_ok_p_metric": true,
+        "math_or_refusal_ok_p_strict": true,
+        "scene3d_valid": true,
+        "source_gate_failure": false,
+        "status": "SERVED"
+      },
+      "arm_a2_equivalent_verified_product": {
+        "answer": "a³√3/4",
+        "code": null,
+        "extra_points_in_scene": [],
+        "has_auxiliary_witness_in_scene": false,
+        "latency_ms": 14.151,
+        "math_or_refusal_ok_p_metric": true,
+        "math_or_refusal_ok_p_strict": true,
+        "scene3d_valid": true,
+        "source_gate_failure": false,
+        "status": "SERVED"
+      },
+      "arm_b_dynamic_v1": {
+        "answer": "a³√3/4",
+        "frame_ms": 7.155,
+        "planner_only_ms": 3.552,
+        "plans_count": 1,
+        "status": "GOAL_VERIFIED"
+      },
+      "arm_c_dynamic_v2": {
+        "answer": "a³√3/4",
+        "bridge_accepted": true,
+        "bridge_source_gate_code": null,
+        "end_to_end_bridge_plus_plan_plus_verify_ms": 22.629,
+        "failure_code": null,
+        "l0_l4_strict_verified": true,
+        "multi_plan_valid": null,
+        "planner_only_ms": 7.173,
+        "plans_count": 1,
+        "point_distance_d02_ok": null,
+        "scene3d_valid": true,
+        "status": "GOAL_VERIFIED",
+        "strict_ok": true,
+        "witness_ok": true
+      },
+      "case_id": "A06_volume_equilateral_pyramid",
+      "expected_status": "GOAL_VERIFIED",
+      "group": "Group_A"
+    },
+    {
+      "arm_a1_original_product": {
+        "answer": "cos²=1/3",
+        "code": null,
+        "extra_points_in_scene": [],
+        "has_auxiliary_witness_in_scene": false,
+        "latency_ms": 16.753,
+        "math_or_refusal_ok_p_metric": true,
+        "math_or_refusal_ok_p_strict": true,
+        "scene3d_valid": true,
+        "source_gate_failure": false,
+        "status": "SERVED"
+      },
+      "arm_a2_equivalent_verified_product": {
+        "answer": "cos²=1/3",
+        "code": null,
+        "extra_points_in_scene": [],
+        "has_auxiliary_witness_in_scene": false,
+        "latency_ms": 16.588,
+        "math_or_refusal_ok_p_metric": true,
+        "math_or_refusal_ok_p_strict": true,
+        "scene3d_valid": true,
+        "source_gate_failure": false,
+        "status": "SERVED"
+      },
+      "arm_b_dynamic_v1": {
+        "answer": "cos=√3/3",
+        "frame_ms": 9.501,
+        "planner_only_ms": 11.522,
+        "plans_count": 1,
+        "status": "GOAL_VERIFIED"
+      },
+      "arm_c_dynamic_v2": {
+        "answer": "cos²=1/3",
+        "bridge_accepted": true,
+        "bridge_source_gate_code": null,
+        "end_to_end_bridge_plus_plan_plus_verify_ms": 35.374,
+        "failure_code": null,
+        "l0_l4_strict_verified": true,
+        "multi_plan_valid": null,
+        "planner_only_ms": 17.508,
+        "plans_count": 1,
+        "point_distance_d02_ok": null,
+        "scene3d_valid": true,
+        "status": "GOAL_VERIFIED",
+        "strict_ok": true,
+        "witness_ok": true
+      },
+      "case_id": "A07_angle_sc_base_square",
+      "expected_status": "GOAL_VERIFIED",
+      "group": "Group_A"
+    },
+    {
+      "arm_a1_original_product": {
+        "answer": "cos²=1/2",
+        "code": null,
+        "extra_points_in_scene": [],
+        "has_auxiliary_witness_in_scene": false,
+        "latency_ms": 15.164,
+        "math_or_refusal_ok_p_metric": true,
+        "math_or_refusal_ok_p_strict": true,
+        "scene3d_valid": true,
+        "source_gate_failure": false,
+        "status": "SERVED"
+      },
+      "arm_a2_equivalent_verified_product": {
+        "answer": "cos²=1/2",
+        "code": null,
+        "extra_points_in_scene": [],
+        "has_auxiliary_witness_in_scene": false,
+        "latency_ms": 14.931,
+        "math_or_refusal_ok_p_metric": true,
+        "math_or_refusal_ok_p_strict": true,
+        "scene3d_valid": true,
+        "source_gate_failure": false,
+        "status": "SERVED"
+      },
+      "arm_b_dynamic_v1": {
+        "answer": "45°",
+        "frame_ms": 7.338,
+        "planner_only_ms": 6.568,
+        "plans_count": 1,
+        "status": "GOAL_VERIFIED"
+      },
+      "arm_c_dynamic_v2": {
+        "answer": "45°",
+        "bridge_accepted": true,
+        "bridge_source_gate_code": null,
+        "end_to_end_bridge_plus_plan_plus_verify_ms": 32.339,
+        "failure_code": null,
+        "l0_l4_strict_verified": true,
+        "multi_plan_valid": null,
+        "planner_only_ms": 14.312,
+        "plans_count": 1,
+        "point_distance_d02_ok": null,
+        "scene3d_valid": true,
+        "status": "GOAL_VERIFIED",
+        "strict_ok": true,
+        "witness_ok": true
+      },
+      "case_id": "A08_angle_sb_base_right",
+      "expected_status": "GOAL_VERIFIED",
+      "group": "Group_A"
+    },
+    {
+      "arm_a1_original_product": {
+        "answer": "a√6/2",
+        "code": null,
+        "extra_points_in_scene": [
+          "O"
+        ],
+        "has_auxiliary_witness_in_scene": false,
+        "latency_ms": 17.373,
+        "math_or_refusal_ok_p_metric": true,
+        "math_or_refusal_ok_p_strict": true,
+        "scene3d_valid": true,
+        "source_gate_failure": false,
+        "status": "SERVED"
+      },
+      "arm_a2_equivalent_verified_product": {
+        "answer": "a√6/2",
+        "code": null,
+        "extra_points_in_scene": [
+          "O"
+        ],
+        "has_auxiliary_witness_in_scene": false,
+        "latency_ms": 15.725,
+        "math_or_refusal_ok_p_metric": true,
+        "math_or_refusal_ok_p_strict": true,
+        "scene3d_valid": true,
+        "source_gate_failure": false,
+        "status": "SERVED"
+      },
+      "arm_b_dynamic_v1": {
+        "answer": "a√6/2",
+        "frame_ms": 6.704,
+        "planner_only_ms": 10.527,
+        "plans_count": 1,
+        "status": "GOAL_VERIFIED"
+      },
+      "arm_c_dynamic_v2": {
+        "answer": "a√6/2",
+        "bridge_accepted": true,
+        "bridge_source_gate_code": null,
+        "end_to_end_bridge_plus_plan_plus_verify_ms": 33.716,
+        "failure_code": null,
+        "l0_l4_strict_verified": true,
+        "multi_plan_valid": null,
+        "planner_only_ms": 17.347,
+        "plans_count": 1,
+        "point_distance_d02_ok": null,
+        "scene3d_valid": true,
+        "status": "GOAL_VERIFIED",
+        "strict_ok": true,
+        "witness_ok": true
+      },
+      "case_id": "A09_cube_face_diagonal_intersection_midpoint",
+      "expected_status": "GOAL_VERIFIED",
+      "group": "Group_A"
+    },
+    {
+      "arm_a1_original_product": {
+        "answer": null,
+        "code": "SOURCE_OBJECT_MISMATCH",
+        "extra_points_in_scene": [],
+        "has_auxiliary_witness_in_scene": false,
+        "latency_ms": 1.633,
+        "math_or_refusal_ok_p_metric": false,
+        "math_or_refusal_ok_p_strict": false,
+        "scene3d_valid": false,
+        "source_gate_failure": true,
+        "status": "REFUSED"
+      },
+      "arm_a2_equivalent_verified_product": {
+        "answer": "a²√2",
+        "code": null,
+        "extra_points_in_scene": [],
+        "has_auxiliary_witness_in_scene": false,
+        "latency_ms": 26.151,
+        "math_or_refusal_ok_p_metric": true,
+        "math_or_refusal_ok_p_strict": true,
+        "scene3d_valid": true,
+        "source_gate_failure": false,
+        "status": "SERVED"
+      },
+      "arm_b_dynamic_v1": {
+        "answer": "a²√2",
+        "frame_ms": 22.612,
+        "planner_only_ms": 11.836,
+        "plans_count": 1,
+        "status": "GOAL_VERIFIED"
+      },
+      "arm_c_dynamic_v2": {
+        "answer": "a²√2",
+        "bridge_accepted": true,
+        "bridge_source_gate_code": null,
+        "end_to_end_bridge_plus_plan_plus_verify_ms": 37.344,
+        "failure_code": null,
+        "l0_l4_strict_verified": true,
+        "multi_plan_valid": null,
+        "planner_only_ms": 17.954,
+        "plans_count": 1,
+        "point_distance_d02_ok": null,
+        "scene3d_valid": true,
+        "status": "GOAL_VERIFIED",
+        "strict_ok": true,
+        "witness_ok": true
+      },
+      "case_id": "A10_cube_section_diagonal_plane",
+      "expected_status": "GOAL_VERIFIED",
+      "group": "Group_A"
+    },
+    {
+      "arm_a1_original_product": {
+        "answer": null,
+        "code": "UNDERDETERMINED_POINT",
+        "extra_points_in_scene": [],
+        "has_auxiliary_witness_in_scene": false,
+        "latency_ms": 130.543,
+        "math_or_refusal_ok_p_metric": false,
+        "math_or_refusal_ok_p_strict": false,
+        "scene3d_valid": false,
+        "source_gate_failure": true,
+        "status": "REFUSED"
+      },
+      "arm_a2_equivalent_verified_product": {
+        "answer": "a√21/2",
+        "code": null,
+        "extra_points_in_scene": [
+          "M",
+          "K"
+        ],
+        "has_auxiliary_witness_in_scene": false,
+        "latency_ms": 18.658,
+        "math_or_refusal_ok_p_metric": true,
+        "math_or_refusal_ok_p_strict": true,
+        "scene3d_valid": true,
+        "source_gate_failure": false,
+        "status": "SERVED"
+      },
+      "arm_b_dynamic_v1": {
+        "answer": "a√21/2",
+        "frame_ms": 8.02,
+        "planner_only_ms": 7.348,
+        "plans_count": 1,
+        "status": "GOAL_VERIFIED"
+      },
+      "arm_c_dynamic_v2": {
+        "answer": "a√21/2",
+        "bridge_accepted": true,
+        "bridge_source_gate_code": null,
+        "end_to_end_bridge_plus_plan_plus_verify_ms": 30.078,
+        "failure_code": null,
+        "l0_l4_strict_verified": true,
+        "multi_plan_valid": null,
+        "planner_only_ms": 10.595,
+        "plans_count": 1,
+        "point_distance_d02_ok": null,
+        "scene3d_valid": true,
+        "status": "GOAL_VERIFIED",
+        "strict_ok": true,
+        "witness_ok": true
+      },
+      "case_id": "B01_divide_segment_ratio_length",
+      "expected_status": "GOAL_VERIFIED",
+      "group": "Group_B"
+    },
+    {
+      "arm_a1_original_product": {
+        "answer": null,
+        "code": "SOURCE_OBJECT_MISMATCH",
+        "extra_points_in_scene": [],
+        "has_auxiliary_witness_in_scene": false,
+        "latency_ms": 4.411,
+        "math_or_refusal_ok_p_metric": false,
+        "math_or_refusal_ok_p_strict": false,
+        "scene3d_valid": false,
+        "source_gate_failure": true,
+        "status": "REFUSED"
+      },
+      "arm_a2_equivalent_verified_product": {
+        "answer": "a√5",
+        "code": null,
+        "extra_points_in_scene": [
+          "P"
+        ],
+        "has_auxiliary_witness_in_scene": false,
+        "latency_ms": 16.209,
+        "math_or_refusal_ok_p_metric": true,
+        "math_or_refusal_ok_p_strict": true,
+        "scene3d_valid": true,
+        "source_gate_failure": false,
+        "status": "SERVED"
+      },
+      "arm_b_dynamic_v1": {
+        "answer": "a√5",
+        "frame_ms": 7.522,
+        "planner_only_ms": 4.859,
+        "plans_count": 1,
+        "status": "GOAL_VERIFIED"
+      },
+      "arm_c_dynamic_v2": {
+        "answer": "a√5",
+        "bridge_accepted": true,
+        "bridge_source_gate_code": null,
+        "end_to_end_bridge_plus_plan_plus_verify_ms": 22.415,
+        "failure_code": null,
+        "l0_l4_strict_verified": true,
+        "multi_plan_valid": null,
+        "planner_only_ms": 6.802,
+        "plans_count": 1,
+        "point_distance_d02_ok": null,
+        "scene3d_valid": true,
+        "status": "GOAL_VERIFIED",
+        "strict_ok": true,
+        "witness_ok": true
+      },
+      "case_id": "B02_point_reflection_distance",
+      "expected_status": "GOAL_VERIFIED",
+      "group": "Group_B"
+    },
+    {
+      "arm_a1_original_product": {
+        "answer": "cos²=3/7",
+        "code": null,
+        "extra_points_in_scene": [],
+        "has_auxiliary_witness_in_scene": false,
+        "latency_ms": 14.032,
+        "math_or_refusal_ok_p_metric": true,
+        "math_or_refusal_ok_p_strict": true,
+        "scene3d_valid": true,
+        "source_gate_failure": false,
+        "status": "SERVED"
+      },
+      "arm_a2_equivalent_verified_product": {
+        "answer": "cos²=3/7",
+        "code": null,
+        "extra_points_in_scene": [],
+        "has_auxiliary_witness_in_scene": false,
+        "latency_ms": 13.755,
+        "math_or_refusal_ok_p_metric": true,
+        "math_or_refusal_ok_p_strict": true,
+        "scene3d_valid": true,
+        "source_gate_failure": false,
+        "status": "SERVED"
+      },
+      "arm_b_dynamic_v1": {
+        "answer": "cos²=3/7",
+        "frame_ms": 6.571,
+        "planner_only_ms": 33.44,
+        "plans_count": 2,
+        "status": "GOAL_VERIFIED"
+      },
+      "arm_c_dynamic_v2": {
+        "answer": "cos²=3/7",
+        "bridge_accepted": true,
+        "bridge_source_gate_code": null,
+        "end_to_end_bridge_plus_plan_plus_verify_ms": 105.325,
+        "failure_code": null,
+        "l0_l4_strict_verified": true,
+        "multi_plan_valid": true,
+        "planner_only_ms": 80.3,
+        "plans_count": 2,
+        "point_distance_d02_ok": null,
+        "scene3d_valid": true,
+        "status": "GOAL_VERIFIED",
+        "strict_ok": true,
+        "witness_ok": true
+      },
+      "case_id": "B03_dihedral_linear_angle_equilateral",
+      "expected_status": "GOAL_VERIFIED",
+      "group": "Group_B"
+    },
+    {
+      "arm_a1_original_product": {
+        "answer": "cos²=1/3",
+        "code": null,
+        "extra_points_in_scene": [],
+        "has_auxiliary_witness_in_scene": false,
+        "latency_ms": 17.046,
+        "math_or_refusal_ok_p_metric": true,
+        "math_or_refusal_ok_p_strict": true,
+        "scene3d_valid": true,
+        "source_gate_failure": false,
+        "status": "SERVED"
+      },
+      "arm_a2_equivalent_verified_product": {
+        "answer": "cos²=1/3",
+        "code": null,
+        "extra_points_in_scene": [],
+        "has_auxiliary_witness_in_scene": false,
+        "latency_ms": 16.696,
+        "math_or_refusal_ok_p_metric": true,
+        "math_or_refusal_ok_p_strict": true,
+        "scene3d_valid": true,
+        "source_gate_failure": false,
+        "status": "SERVED"
+      },
+      "arm_b_dynamic_v1": {
+        "answer": "cos²=1/3",
+        "frame_ms": 6.916,
+        "planner_only_ms": 99.548,
+        "plans_count": 2,
+        "status": "GOAL_VERIFIED"
+      },
+      "arm_c_dynamic_v2": {
+        "answer": "cos²=1/3",
+        "bridge_accepted": true,
+        "bridge_source_gate_code": null,
+        "end_to_end_bridge_plus_plan_plus_verify_ms": 281.491,
+        "failure_code": null,
+        "l0_l4_strict_verified": true,
+        "multi_plan_valid": true,
+        "planner_only_ms": 256.546,
+        "plans_count": 2,
+        "point_distance_d02_ok": null,
+        "scene3d_valid": true,
+        "status": "GOAL_VERIFIED",
+        "strict_ok": true,
+        "witness_ok": true
+      },
+      "case_id": "B04_dihedral_linear_angle_cube",
+      "expected_status": "GOAL_VERIFIED",
+      "group": "Group_B"
+    },
+    {
+      "arm_a1_original_product": {
+        "answer": "cos²=1/4",
+        "code": null,
+        "extra_points_in_scene": [],
+        "has_auxiliary_witness_in_scene": false,
+        "latency_ms": 16.535,
+        "math_or_refusal_ok_p_metric": true,
+        "math_or_refusal_ok_p_strict": true,
+        "scene3d_valid": true,
+        "source_gate_failure": false,
+        "status": "SERVED"
+      },
+      "arm_a2_equivalent_verified_product": {
+        "answer": "cos²=1/4",
+        "code": null,
+        "extra_points_in_scene": [],
+        "has_auxiliary_witness_in_scene": false,
+        "latency_ms": 15.819,
+        "math_or_refusal_ok_p_metric": true,
+        "math_or_refusal_ok_p_strict": true,
+        "scene3d_valid": true,
+        "source_gate_failure": false,
+        "status": "SERVED"
+      },
+      "arm_b_dynamic_v1": {
+        "answer": "60°",
+        "frame_ms": 6.364,
+        "planner_only_ms": 17.811,
+        "plans_count": 2,
+        "status": "GOAL_VERIFIED"
+      },
+      "arm_c_dynamic_v2": {
+        "answer": "60°",
+        "bridge_accepted": true,
+        "bridge_source_gate_code": null,
+        "end_to_end_bridge_plus_plan_plus_verify_ms": 46.011,
+        "failure_code": null,
+        "l0_l4_strict_verified": true,
+        "multi_plan_valid": true,
+        "planner_only_ms": 27.594,
+        "plans_count": 2,
+        "point_distance_d02_ok": null,
+        "scene3d_valid": true,
+        "status": "GOAL_VERIFIED",
+        "strict_ok": true,
+        "witness_ok": true
+      },
+      "case_id": "B05_skew_angle_cube_parallel_transfer",
+      "expected_status": "GOAL_VERIFIED",
+      "group": "Group_B"
+    },
+    {
+      "arm_a1_original_product": {
+        "answer": null,
+        "code": "UNDERDETERMINED_POINT",
+        "extra_points_in_scene": [],
+        "has_auxiliary_witness_in_scene": false,
+        "latency_ms": 137.446,
+        "math_or_refusal_ok_p_metric": false,
+        "math_or_refusal_ok_p_strict": false,
+        "scene3d_valid": false,
+        "source_gate_failure": true,
+        "status": "REFUSED"
+      },
+      "arm_a2_equivalent_verified_product": {
+        "answer": "a√10/10",
+        "code": null,
+        "extra_points_in_scene": [
+          "K"
+        ],
+        "has_auxiliary_witness_in_scene": false,
+        "latency_ms": 16.359,
+        "math_or_refusal_ok_p_metric": true,
+        "math_or_refusal_ok_p_strict": true,
+        "scene3d_valid": true,
+        "source_gate_failure": false,
+        "status": "SERVED"
+      },
+      "arm_b_dynamic_v1": {
+        "answer": "a√10/10",
+        "frame_ms": 7.489,
+        "planner_only_ms": 57.51,
+        "plans_count": 3,
+        "status": "GOAL_VERIFIED"
+      },
+      "arm_c_dynamic_v2": {
+        "answer": "a√10/10",
+        "bridge_accepted": true,
+        "bridge_source_gate_code": null,
+        "end_to_end_bridge_plus_plan_plus_verify_ms": 219.207,
+        "failure_code": null,
+        "l0_l4_strict_verified": true,
+        "multi_plan_valid": true,
+        "planner_only_ms": 192.027,
+        "plans_count": 2,
+        "point_distance_d02_ok": null,
+        "scene3d_valid": true,
+        "status": "GOAL_VERIFIED",
+        "strict_ok": true,
+        "witness_ok": true
+      },
+      "case_id": "B06_divide_segment_plus_point_plane_distance",
+      "expected_status": "GOAL_VERIFIED",
+      "group": "Group_B"
+    },
+    {
+      "arm_a1_original_product": {
+        "answer": null,
+        "code": "SOURCE_OBJECT_MISMATCH",
+        "extra_points_in_scene": [],
+        "has_auxiliary_witness_in_scene": false,
+        "latency_ms": 3.795,
+        "math_or_refusal_ok_p_metric": false,
+        "math_or_refusal_ok_p_strict": false,
+        "scene3d_valid": false,
+        "source_gate_failure": true,
+        "status": "REFUSED"
+      },
+      "arm_a2_equivalent_verified_product": {
+        "answer": "a√17/3",
+        "code": null,
+        "extra_points_in_scene": [
+          "P",
+          "G_mid_BP",
+          "G"
+        ],
+        "has_auxiliary_witness_in_scene": false,
+        "latency_ms": 18.713,
+        "math_or_refusal_ok_p_metric": true,
+        "math_or_refusal_ok_p_strict": true,
+        "scene3d_valid": true,
+        "source_gate_failure": false,
+        "status": "SERVED"
+      },
+      "arm_b_dynamic_v1": {
+        "answer": "a√17/3",
+        "frame_ms": 8.233,
+        "planner_only_ms": 5.964,
+        "plans_count": 1,
+        "status": "GOAL_VERIFIED"
+      },
+      "arm_c_dynamic_v2": {
+        "answer": "a√17/3",
+        "bridge_accepted": true,
+        "bridge_source_gate_code": null,
+        "end_to_end_bridge_plus_plan_plus_verify_ms": 27.972,
+        "failure_code": null,
+        "l0_l4_strict_verified": true,
+        "multi_plan_valid": null,
+        "planner_only_ms": 8.745,
+        "plans_count": 1,
+        "point_distance_d02_ok": null,
+        "scene3d_valid": true,
+        "status": "GOAL_VERIFIED",
+        "strict_ok": true,
+        "witness_ok": true
+      },
+      "case_id": "B07_reflection_plus_centroid_length",
+      "expected_status": "GOAL_VERIFIED",
+      "group": "Group_B"
+    },
+    {
+      "arm_a1_original_product": {
+        "answer": "4a",
+        "code": null,
+        "extra_points_in_scene": [
+          "M",
+          "N",
+          "I"
+        ],
+        "has_auxiliary_witness_in_scene": false,
+        "latency_ms": 20.03,
+        "math_or_refusal_ok_p_metric": true,
+        "math_or_refusal_ok_p_strict": true,
+        "scene3d_valid": true,
+        "source_gate_failure": false,
+        "status": "SERVED"
+      },
+      "arm_a2_equivalent_verified_product": {
+        "answer": "4a",
+        "code": null,
+        "extra_points_in_scene": [
+          "M",
+          "N",
+          "I"
+        ],
+        "has_auxiliary_witness_in_scene": false,
+        "latency_ms": 19.872,
+        "math_or_refusal_ok_p_metric": true,
+        "math_or_refusal_ok_p_strict": true,
+        "scene3d_valid": true,
+        "source_gate_failure": false,
+        "status": "SERVED"
+      },
+      "arm_b_dynamic_v1": {
+        "answer": "4a",
+        "frame_ms": 7.745,
+        "planner_only_ms": 11.258,
+        "plans_count": 1,
+        "status": "GOAL_VERIFIED"
+      },
+      "arm_c_dynamic_v2": {
+        "answer": "4a",
+        "bridge_accepted": true,
+        "bridge_source_gate_code": null,
+        "end_to_end_bridge_plus_plan_plus_verify_ms": 41.022,
+        "failure_code": null,
+        "l0_l4_strict_verified": true,
+        "multi_plan_valid": null,
+        "planner_only_ms": 19.425,
+        "plans_count": 1,
+        "point_distance_d02_ok": null,
+        "scene3d_valid": true,
+        "status": "GOAL_VERIFIED",
+        "strict_ok": true,
+        "witness_ok": true
+      },
+      "case_id": "B08_intersection_point_derived_plane_prism",
+      "expected_status": "GOAL_VERIFIED",
+      "group": "Group_B"
+    },
+    {
+      "arm_a1_original_product": {
+        "answer": null,
+        "code": "IR_MEMORY_BUDGET_EXCEEDED",
+        "extra_points_in_scene": [],
+        "has_auxiliary_witness_in_scene": false,
+        "latency_ms": 58.164,
+        "math_or_refusal_ok_p_metric": false,
+        "math_or_refusal_ok_p_strict": false,
+        "scene3d_valid": false,
+        "source_gate_failure": false,
+        "status": "REFUSED"
+      },
+      "arm_a2_equivalent_verified_product": {
+        "answer": null,
+        "code": "IR_MEMORY_BUDGET_EXCEEDED",
+        "extra_points_in_scene": [],
+        "has_auxiliary_witness_in_scene": false,
+        "latency_ms": 58.126,
+        "math_or_refusal_ok_p_metric": false,
+        "math_or_refusal_ok_p_strict": false,
+        "scene3d_valid": false,
+        "source_gate_failure": false,
+        "status": "REFUSED"
+      },
+      "arm_b_dynamic_v1": {
+        "answer": "a√3/2",
+        "frame_ms": 6.403,
+        "planner_only_ms": 25.231,
+        "plans_count": 1,
+        "status": "GOAL_VERIFIED"
+      },
+      "arm_c_dynamic_v2": {
+        "answer": "a√3/2",
+        "bridge_accepted": true,
+        "bridge_source_gate_code": null,
+        "end_to_end_bridge_plus_plan_plus_verify_ms": 105.182,
+        "failure_code": null,
+        "l0_l4_strict_verified": true,
+        "multi_plan_valid": null,
+        "planner_only_ms": 41.235,
+        "plans_count": 1,
+        "point_distance_d02_ok": null,
+        "scene3d_valid": true,
+        "status": "GOAL_VERIFIED",
+        "strict_ok": true,
+        "witness_ok": true
+      },
+      "case_id": "B09_deep_19step_chain_exceeds_32_ir_slots",
+      "expected_status": "GOAL_VERIFIED",
+      "group": "Group_B"
+    },
+    {
+      "arm_a1_original_product": {
+        "answer": "a²√5/8",
+        "code": null,
+        "extra_points_in_scene": [
+          "M",
+          "N",
+          "P"
+        ],
+        "has_auxiliary_witness_in_scene": false,
+        "latency_ms": 19.083,
+        "math_or_refusal_ok_p_metric": true,
+        "math_or_refusal_ok_p_strict": true,
+        "scene3d_valid": true,
+        "source_gate_failure": false,
+        "status": "SERVED"
+      },
+      "arm_a2_equivalent_verified_product": {
+        "answer": "a²√5/8",
+        "code": null,
+        "extra_points_in_scene": [
+          "M",
+          "N",
+          "P"
+        ],
+        "has_auxiliary_witness_in_scene": false,
+        "latency_ms": 18.632,
+        "math_or_refusal_ok_p_metric": true,
+        "math_or_refusal_ok_p_strict": true,
+        "scene3d_valid": true,
+        "source_gate_failure": false,
+        "status": "SERVED"
+      },
+      "arm_b_dynamic_v1": {
+        "answer": "a²√5/8",
+        "frame_ms": 7.566,
+        "planner_only_ms": 19.828,
+        "plans_count": 1,
+        "status": "GOAL_VERIFIED"
+      },
+      "arm_c_dynamic_v2": {
+        "answer": "a²√5/8",
+        "bridge_accepted": true,
+        "bridge_source_gate_code": null,
+        "end_to_end_bridge_plus_plan_plus_verify_ms": 44.16,
+        "failure_code": null,
+        "l0_l4_strict_verified": true,
+        "multi_plan_valid": null,
+        "planner_only_ms": 23.79,
+        "plans_count": 1,
+        "point_distance_d02_ok": null,
+        "scene3d_valid": true,
+        "status": "GOAL_VERIFIED",
+        "strict_ok": true,
+        "witness_ok": true
+      },
+      "case_id": "B10_derived_polygon_area_after_ratio",
+      "expected_status": "GOAL_VERIFIED",
+      "group": "Group_B"
+    },
+    {
+      "arm_a1_original_product": {
+        "answer": "a√21/7",
+        "code": null,
+        "extra_points_in_scene": [],
+        "has_auxiliary_witness_in_scene": false,
+        "latency_ms": 12.852,
+        "math_or_refusal_ok_p_metric": true,
+        "math_or_refusal_ok_p_strict": true,
+        "scene3d_valid": true,
+        "source_gate_failure": false,
+        "status": "SERVED"
+      },
+      "arm_a2_equivalent_verified_product": {
+        "answer": "a√21/7",
+        "code": null,
+        "extra_points_in_scene": [],
+        "has_auxiliary_witness_in_scene": false,
+        "latency_ms": 13.103,
+        "math_or_refusal_ok_p_metric": true,
+        "math_or_refusal_ok_p_strict": true,
+        "scene3d_valid": true,
+        "source_gate_failure": false,
+        "status": "SERVED"
+      },
+      "arm_b_dynamic_v1": {
+        "answer": "a√21/7",
+        "frame_ms": 6.647,
+        "planner_only_ms": 160.627,
+        "plans_count": 2,
+        "status": "GOAL_VERIFIED"
+      },
+      "arm_c_dynamic_v2": {
+        "answer": "a√21/7",
+        "bridge_accepted": true,
+        "bridge_source_gate_code": null,
+        "end_to_end_bridge_plus_plan_plus_verify_ms": 230.663,
+        "failure_code": null,
+        "l0_l4_strict_verified": true,
+        "multi_plan_valid": true,
+        "planner_only_ms": 209.583,
+        "plans_count": 2,
+        "point_distance_d02_ok": null,
+        "scene3d_valid": true,
+        "status": "GOAL_VERIFIED",
+        "strict_ok": true,
+        "witness_ok": true
+      },
+      "case_id": "C01_aux_foot_d_A_SBC_equilateral",
+      "expected_status": "GOAL_VERIFIED",
+      "group": "Group_C"
+    },
+    {
+      "arm_a1_original_product": {
+        "answer": "a√3/3",
+        "code": null,
+        "extra_points_in_scene": [],
+        "has_auxiliary_witness_in_scene": false,
+        "latency_ms": 13.63,
+        "math_or_refusal_ok_p_metric": true,
+        "math_or_refusal_ok_p_strict": true,
+        "scene3d_valid": true,
+        "source_gate_failure": false,
+        "status": "SERVED"
+      },
+      "arm_a2_equivalent_verified_product": {
+        "answer": "a√3/3",
+        "code": null,
+        "extra_points_in_scene": [],
+        "has_auxiliary_witness_in_scene": false,
+        "latency_ms": 14.008,
+        "math_or_refusal_ok_p_metric": true,
+        "math_or_refusal_ok_p_strict": true,
+        "scene3d_valid": true,
+        "source_gate_failure": false,
+        "status": "SERVED"
+      },
+      "arm_b_dynamic_v1": {
+        "answer": "a√3/3",
+        "frame_ms": 7.099,
+        "planner_only_ms": 351.177,
+        "plans_count": 3,
+        "status": "GOAL_VERIFIED"
+      },
+      "arm_c_dynamic_v2": {
+        "answer": "a√3/3",
+        "bridge_accepted": true,
+        "bridge_source_gate_code": null,
+        "end_to_end_bridge_plus_plan_plus_verify_ms": 500.305,
+        "failure_code": null,
+        "l0_l4_strict_verified": true,
+        "multi_plan_valid": true,
+        "planner_only_ms": 462.422,
+        "plans_count": 3,
+        "point_distance_d02_ok": null,
+        "scene3d_valid": true,
+        "status": "GOAL_VERIFIED",
+        "strict_ok": true,
+        "witness_ok": true
+      },
+      "case_id": "C02_aux_foot_d_A_SBD_square",
+      "expected_status": "GOAL_VERIFIED",
+      "group": "Group_C"
+    },
+    {
+      "arm_a1_original_product": {
+        "answer": "a√2/2",
+        "code": null,
+        "extra_points_in_scene": [],
+        "has_auxiliary_witness_in_scene": false,
+        "latency_ms": 14.931,
+        "math_or_refusal_ok_p_metric": true,
+        "math_or_refusal_ok_p_strict": true,
+        "scene3d_valid": true,
+        "source_gate_failure": false,
+        "status": "SERVED"
+      },
+      "arm_a2_equivalent_verified_product": {
+        "answer": "a√2/2",
+        "code": null,
+        "extra_points_in_scene": [],
+        "has_auxiliary_witness_in_scene": false,
+        "latency_ms": 14.852,
+        "math_or_refusal_ok_p_metric": true,
+        "math_or_refusal_ok_p_strict": true,
+        "scene3d_valid": true,
+        "source_gate_failure": false,
+        "status": "SERVED"
+      },
+      "arm_b_dynamic_v1": {
+        "answer": "a√2/2",
+        "frame_ms": 7.053,
+        "planner_only_ms": 95.08,
+        "plans_count": 3,
+        "status": "GOAL_VERIFIED"
+      },
+      "arm_c_dynamic_v2": {
+        "answer": "a√2/2",
+        "bridge_accepted": true,
+        "bridge_source_gate_code": null,
+        "end_to_end_bridge_plus_plan_plus_verify_ms": 176.115,
+        "failure_code": null,
+        "l0_l4_strict_verified": true,
+        "multi_plan_valid": true,
+        "planner_only_ms": 147.708,
+        "plans_count": 3,
+        "point_distance_d02_ok": null,
+        "scene3d_valid": true,
+        "status": "GOAL_VERIFIED",
+        "strict_ok": true,
+        "witness_ok": true
+      },
+      "case_id": "C03_aux_parallel_line_plane_transfer",
+      "expected_status": "GOAL_VERIFIED",
+      "group": "Group_C"
+    },
+    {
+      "arm_a1_original_product": {
+        "answer": "a√3/3",
+        "code": null,
+        "extra_points_in_scene": [],
+        "has_auxiliary_witness_in_scene": false,
+        "latency_ms": 16.814,
+        "math_or_refusal_ok_p_metric": true,
+        "math_or_refusal_ok_p_strict": true,
+        "scene3d_valid": true,
+        "source_gate_failure": false,
+        "status": "SERVED"
+      },
+      "arm_a2_equivalent_verified_product": {
+        "answer": "a√3/3",
+        "code": null,
+        "extra_points_in_scene": [],
+        "has_auxiliary_witness_in_scene": false,
+        "latency_ms": 16.513,
+        "math_or_refusal_ok_p_metric": true,
+        "math_or_refusal_ok_p_strict": true,
+        "scene3d_valid": true,
+        "source_gate_failure": false,
+        "status": "SERVED"
+      },
+      "arm_b_dynamic_v1": {
+        "answer": "a√3/3",
+        "frame_ms": 6.661,
+        "planner_only_ms": 47.546,
+        "plans_count": 3,
+        "status": "GOAL_VERIFIED"
+      },
+      "arm_c_dynamic_v2": {
+        "answer": "a√3/3",
+        "bridge_accepted": true,
+        "bridge_source_gate_code": null,
+        "end_to_end_bridge_plus_plan_plus_verify_ms": 108.12,
+        "failure_code": null,
+        "l0_l4_strict_verified": true,
+        "multi_plan_valid": true,
+        "planner_only_ms": 82.787,
+        "plans_count": 3,
+        "point_distance_d02_ok": null,
+        "scene3d_valid": true,
+        "status": "GOAL_VERIFIED",
+        "strict_ok": true,
+        "witness_ok": true
+      },
+      "case_id": "C04_aux_skew_lines_cube_ABp_BCp",
+      "expected_status": "GOAL_VERIFIED",
+      "group": "Group_C"
+    },
+    {
+      "arm_a1_original_product": {
+        "answer": "a√2/2",
+        "code": null,
+        "extra_points_in_scene": [],
+        "has_auxiliary_witness_in_scene": false,
+        "latency_ms": 17.863,
+        "math_or_refusal_ok_p_metric": true,
+        "math_or_refusal_ok_p_strict": true,
+        "scene3d_valid": true,
+        "source_gate_failure": false,
+        "status": "SERVED"
+      },
+      "arm_a2_equivalent_verified_product": {
+        "answer": "a√2/2",
+        "code": null,
+        "extra_points_in_scene": [],
+        "has_auxiliary_witness_in_scene": false,
+        "latency_ms": 17.152,
+        "math_or_refusal_ok_p_metric": true,
+        "math_or_refusal_ok_p_strict": true,
+        "scene3d_valid": true,
+        "source_gate_failure": false,
+        "status": "SERVED"
+      },
+      "arm_b_dynamic_v1": {
+        "answer": "a√2/2",
+        "frame_ms": 7.723,
+        "planner_only_ms": 41.234,
+        "plans_count": 3,
+        "status": "GOAL_VERIFIED"
+      },
+      "arm_c_dynamic_v2": {
+        "answer": "a√2/2",
+        "bridge_accepted": true,
+        "bridge_source_gate_code": null,
+        "end_to_end_bridge_plus_plan_plus_verify_ms": 104.924,
+        "failure_code": null,
+        "l0_l4_strict_verified": true,
+        "multi_plan_valid": true,
+        "planner_only_ms": 78.434,
+        "plans_count": 3,
+        "point_distance_d02_ok": null,
+        "scene3d_valid": true,
+        "status": "GOAL_VERIFIED",
+        "strict_ok": true,
+        "witness_ok": true
+      },
+      "case_id": "C05_aux_skew_lines_pyramid_SA_BD",
+      "expected_status": "GOAL_VERIFIED",
+      "group": "Group_C"
+    },
+    {
+      "arm_a1_original_product": {
+        "answer": "a√6/3",
+        "code": null,
+        "extra_points_in_scene": [
+          "H"
+        ],
+        "has_auxiliary_witness_in_scene": true,
+        "latency_ms": 16.809,
+        "math_or_refusal_ok_p_metric": true,
+        "math_or_refusal_ok_p_strict": true,
+        "scene3d_valid": true,
+        "source_gate_failure": false,
+        "status": "SERVED"
+      },
+      "arm_a2_equivalent_verified_product": {
+        "answer": "a√6/3",
+        "code": null,
+        "extra_points_in_scene": [
+          "H"
+        ],
+        "has_auxiliary_witness_in_scene": true,
+        "latency_ms": 18.23,
+        "math_or_refusal_ok_p_metric": true,
+        "math_or_refusal_ok_p_strict": true,
+        "scene3d_valid": true,
+        "source_gate_failure": false,
+        "status": "SERVED"
+      },
+      "arm_b_dynamic_v1": {
+        "answer": "a√6/3",
+        "frame_ms": 7.983,
+        "planner_only_ms": 6.483,
+        "plans_count": 1,
+        "status": "GOAL_VERIFIED"
+      },
+      "arm_c_dynamic_v2": {
+        "answer": "a√6/3",
+        "bridge_accepted": true,
+        "bridge_source_gate_code": null,
+        "end_to_end_bridge_plus_plan_plus_verify_ms": 71.784,
+        "failure_code": null,
+        "l0_l4_strict_verified": true,
+        "multi_plan_valid": null,
+        "planner_only_ms": 53.224,
+        "plans_count": 1,
+        "point_distance_d02_ok": null,
+        "scene3d_valid": true,
+        "status": "GOAL_VERIFIED",
+        "strict_ok": true,
+        "witness_ok": true
+      },
+      "case_id": "C06_aux_point_to_line_foot",
+      "expected_status": "GOAL_VERIFIED",
+      "group": "Group_C"
+    },
+    {
+      "arm_a1_original_product": {
+        "answer": "cos²=9/10",
+        "code": null,
+        "extra_points_in_scene": [],
+        "has_auxiliary_witness_in_scene": false,
+        "latency_ms": 16.084,
+        "math_or_refusal_ok_p_metric": true,
+        "math_or_refusal_ok_p_strict": true,
+        "scene3d_valid": true,
+        "source_gate_failure": false,
+        "status": "SERVED"
+      },
+      "arm_a2_equivalent_verified_product": {
+        "answer": "cos²=9/10",
+        "code": null,
+        "extra_points_in_scene": [],
+        "has_auxiliary_witness_in_scene": false,
+        "latency_ms": 15.915,
+        "math_or_refusal_ok_p_metric": true,
+        "math_or_refusal_ok_p_strict": true,
+        "scene3d_valid": true,
+        "source_gate_failure": false,
+        "status": "SERVED"
+      },
+      "arm_b_dynamic_v1": {
+        "answer": "cos²=9/10",
+        "frame_ms": 7.886,
+        "planner_only_ms": 121.427,
+        "plans_count": 2,
+        "status": "GOAL_VERIFIED"
+      },
+      "arm_c_dynamic_v2": {
+        "answer": "cos²=9/10",
+        "bridge_accepted": true,
+        "bridge_source_gate_code": null,
+        "end_to_end_bridge_plus_plan_plus_verify_ms": 208.3,
+        "failure_code": null,
+        "l0_l4_strict_verified": true,
+        "multi_plan_valid": null,
+        "planner_only_ms": 189.813,
+        "plans_count": 1,
+        "point_distance_d02_ok": null,
+        "scene3d_valid": true,
+        "status": "GOAL_VERIFIED",
+        "strict_ok": true,
+        "witness_ok": true
+      },
+      "case_id": "C07_aux_angle_line_plane_SB_SAC",
+      "expected_status": "GOAL_VERIFIED",
+      "group": "Group_C"
+    },
+    {
+      "arm_a1_original_product": {
+        "answer": null,
+        "code": "SOURCE_OBJECT_MISMATCH",
+        "extra_points_in_scene": [],
+        "has_auxiliary_witness_in_scene": false,
+        "latency_ms": 3.299,
+        "math_or_refusal_ok_p_metric": false,
+        "math_or_refusal_ok_p_strict": false,
+        "scene3d_valid": false,
+        "source_gate_failure": true,
+        "status": "REFUSED"
+      },
+      "arm_a2_equivalent_verified_product": {
+        "answer": "a²√3/16",
+        "code": null,
+        "extra_points_in_scene": [
+          "M",
+          "H",
+          "H1"
+        ],
+        "has_auxiliary_witness_in_scene": true,
+        "latency_ms": 25.27,
+        "math_or_refusal_ok_p_metric": true,
+        "math_or_refusal_ok_p_strict": true,
+        "scene3d_valid": true,
+        "source_gate_failure": false,
+        "status": "SERVED"
+      },
+      "arm_b_dynamic_v1": {
+        "answer": "a²√3/16",
+        "frame_ms": 6.988,
+        "planner_only_ms": 9.138,
+        "plans_count": 1,
+        "status": "GOAL_VERIFIED"
+      },
+      "arm_c_dynamic_v2": {
+        "answer": "a²√3/16",
+        "bridge_accepted": true,
+        "bridge_source_gate_code": null,
+        "end_to_end_bridge_plus_plan_plus_verify_ms": 38.806,
+        "failure_code": null,
+        "l0_l4_strict_verified": true,
+        "multi_plan_valid": null,
+        "planner_only_ms": 16.939,
+        "plans_count": 1,
+        "point_distance_d02_ok": null,
+        "scene3d_valid": true,
+        "status": "GOAL_VERIFIED",
+        "strict_ok": true,
+        "witness_ok": true
+      },
+      "case_id": "C08_aux_parallel_plane_section_through_midpoint",
+      "expected_status": "GOAL_VERIFIED",
+      "group": "Group_C"
+    },
+    {
+      "arm_a1_original_product": {
+        "answer": null,
+        "code": "MISSING_DIMENSION",
+        "extra_points_in_scene": [],
+        "has_auxiliary_witness_in_scene": false,
+        "latency_ms": 39.689,
+        "math_or_refusal_ok_p_metric": true,
+        "math_or_refusal_ok_p_strict": true,
+        "scene3d_valid": false,
+        "source_gate_failure": false,
+        "status": "REFUSED"
+      },
+      "arm_a2_equivalent_verified_product": {
+        "answer": null,
+        "code": "MISSING_DIMENSION",
+        "extra_points_in_scene": [],
+        "has_auxiliary_witness_in_scene": false,
+        "latency_ms": 39.844,
+        "math_or_refusal_ok_p_metric": true,
+        "math_or_refusal_ok_p_strict": true,
+        "scene3d_valid": false,
+        "source_gate_failure": false,
+        "status": "REFUSED"
+      },
+      "arm_b_dynamic_v1": {
+        "answer": null,
+        "frame_ms": 14.488,
+        "planner_only_ms": 0.01,
+        "plans_count": 0,
+        "status": "MISSING_PRECONDITION"
+      },
+      "arm_c_dynamic_v2": {
+        "answer": null,
+        "bridge_accepted": true,
+        "bridge_source_gate_code": null,
+        "end_to_end_bridge_plus_plan_plus_verify_ms": 19.714,
+        "failure_code": "MISSING_PRECONDITION",
+        "l0_l4_strict_verified": false,
+        "multi_plan_valid": null,
+        "planner_only_ms": 0.01,
+        "plans_count": 0,
+        "point_distance_d02_ok": null,
+        "scene3d_valid": false,
+        "status": "MISSING_PRECONDITION",
+        "strict_ok": true,
+        "witness_ok": false
+      },
+      "case_id": "D01_missing_height_precondition",
+      "expected_status": "MISSING_PRECONDITION",
+      "group": "Group_D"
+    },
+    {
+      "arm_a1_original_product": {
+        "answer": "0a",
+        "code": null,
+        "extra_points_in_scene": [],
+        "has_auxiliary_witness_in_scene": false,
+        "latency_ms": 13.032,
+        "math_or_refusal_ok_p_metric": true,
+        "math_or_refusal_ok_p_strict": false,
+        "scene3d_valid": true,
+        "source_gate_failure": false,
+        "status": "SERVED"
+      },
+      "arm_a2_equivalent_verified_product": {
+        "answer": "0a",
+        "code": null,
+        "extra_points_in_scene": [],
+        "has_auxiliary_witness_in_scene": false,
+        "latency_ms": 12.361,
+        "math_or_refusal_ok_p_metric": true,
+        "math_or_refusal_ok_p_strict": false,
+        "scene3d_valid": true,
+        "source_gate_failure": false,
+        "status": "SERVED"
+      },
+      "arm_b_dynamic_v1": {
+        "answer": null,
+        "frame_ms": 6.939,
+        "planner_only_ms": 2.101,
+        "plans_count": 0,
+        "status": "CONTRADICTORY_CONSTRAINTS"
+      },
+      "arm_c_dynamic_v2": {
+        "answer": null,
+        "bridge_accepted": true,
+        "bridge_source_gate_code": null,
+        "end_to_end_bridge_plus_plan_plus_verify_ms": 15.991,
+        "failure_code": "DEGENERATE_COINCIDENT_POINTS",
+        "l0_l4_strict_verified": false,
+        "multi_plan_valid": null,
+        "planner_only_ms": 1.992,
+        "plans_count": 0,
+        "point_distance_d02_ok": true,
+        "scene3d_valid": false,
+        "status": "DEGENERATE_CONSTRUCTION",
+        "strict_ok": true,
+        "witness_ok": false
+      },
+      "case_id": "D02_degenerate_coincident_points",
+      "expected_status": "CONTRADICTORY_CONSTRAINTS",
+      "group": "Group_D"
+    },
+    {
+      "arm_a1_original_product": {
+        "answer": null,
+        "code": "SOURCE_OBJECT_MISMATCH",
+        "extra_points_in_scene": [],
+        "has_auxiliary_witness_in_scene": false,
+        "latency_ms": 2.601,
+        "math_or_refusal_ok_p_metric": true,
+        "math_or_refusal_ok_p_strict": true,
+        "scene3d_valid": false,
+        "source_gate_failure": true,
+        "status": "REFUSED"
+      },
+      "arm_a2_equivalent_verified_product": {
+        "answer": null,
+        "code": "SOURCE_OBJECT_MISMATCH",
+        "extra_points_in_scene": [],
+        "has_auxiliary_witness_in_scene": false,
+        "latency_ms": 2.327,
+        "math_or_refusal_ok_p_metric": true,
+        "math_or_refusal_ok_p_strict": true,
+        "scene3d_valid": false,
+        "source_gate_failure": true,
+        "status": "REFUSED"
+      },
+      "arm_b_dynamic_v1": {
+        "answer": null,
+        "frame_ms": 7.134,
+        "planner_only_ms": 2.746,
+        "plans_count": 0,
+        "status": "CONTRADICTORY_CONSTRAINTS"
+      },
+      "arm_c_dynamic_v2": {
+        "answer": null,
+        "bridge_accepted": false,
+        "bridge_source_gate_code": "SOURCE_OBJECT_MISMATCH",
+        "end_to_end_bridge_plus_plan_plus_verify_ms": 5.029,
+        "failure_code": "DEGENERATE_COLLINEAR_POINTS",
+        "l0_l4_strict_verified": false,
+        "multi_plan_valid": null,
+        "planner_only_ms": 2.585,
+        "plans_count": 0,
+        "point_distance_d02_ok": null,
+        "scene3d_valid": false,
+        "status": "DEGENERATE_CONSTRUCTION",
+        "strict_ok": true,
+        "witness_ok": false
+      },
+      "case_id": "D03_degenerate_collinear_plane",
+      "expected_status": "CONTRADICTORY_CONSTRAINTS",
+      "group": "Group_D"
+    },
+    {
+      "arm_a1_original_product": {
+        "answer": null,
+        "code": "ROLE_NOT_IN_QUOTE",
+        "extra_points_in_scene": [],
+        "has_auxiliary_witness_in_scene": false,
+        "latency_ms": 2.659,
+        "math_or_refusal_ok_p_metric": true,
+        "math_or_refusal_ok_p_strict": true,
+        "scene3d_valid": false,
+        "source_gate_failure": false,
+        "status": "REFUSED"
+      },
+      "arm_a2_equivalent_verified_product": {
+        "answer": null,
+        "code": "ROLE_NOT_IN_QUOTE",
+        "extra_points_in_scene": [],
+        "has_auxiliary_witness_in_scene": false,
+        "latency_ms": 2.359,
+        "math_or_refusal_ok_p_metric": true,
+        "math_or_refusal_ok_p_strict": true,
+        "scene3d_valid": false,
+        "source_gate_failure": false,
+        "status": "REFUSED"
+      },
+      "arm_b_dynamic_v1": {
+        "answer": null,
+        "frame_ms": 7.051,
+        "planner_only_ms": 2.979,
+        "plans_count": 0,
+        "status": "CONTRADICTORY_CONSTRAINTS"
+      },
+      "arm_c_dynamic_v2": {
+        "answer": null,
+        "bridge_accepted": false,
+        "bridge_source_gate_code": "ROLE_NOT_IN_QUOTE",
+        "end_to_end_bridge_plus_plan_plus_verify_ms": 5.198,
+        "failure_code": "DEGENERATE_PARALLEL_NO_INTERSECTION",
+        "l0_l4_strict_verified": false,
+        "multi_plan_valid": null,
+        "planner_only_ms": 2.487,
+        "plans_count": 0,
+        "point_distance_d02_ok": null,
+        "scene3d_valid": false,
+        "status": "DEGENERATE_CONSTRUCTION",
+        "strict_ok": true,
+        "witness_ok": false
+      },
+      "case_id": "D04_degenerate_parallel_no_intersection",
+      "expected_status": "CONTRADICTORY_CONSTRAINTS",
+      "group": "Group_D"
+    },
+    {
+      "arm_a1_original_product": {
+        "answer": null,
+        "code": "INCONSISTENT_FACTS",
+        "extra_points_in_scene": [],
+        "has_auxiliary_witness_in_scene": false,
+        "latency_ms": 8.387,
+        "math_or_refusal_ok_p_metric": true,
+        "math_or_refusal_ok_p_strict": true,
+        "scene3d_valid": false,
+        "source_gate_failure": false,
+        "status": "REFUSED"
+      },
+      "arm_a2_equivalent_verified_product": {
+        "answer": null,
+        "code": "INCONSISTENT_FACTS",
+        "extra_points_in_scene": [],
+        "has_auxiliary_witness_in_scene": false,
+        "latency_ms": 8.626,
+        "math_or_refusal_ok_p_metric": true,
+        "math_or_refusal_ok_p_strict": true,
+        "scene3d_valid": false,
+        "source_gate_failure": false,
+        "status": "REFUSED"
+      },
+      "arm_b_dynamic_v1": {
+        "answer": null,
+        "frame_ms": 0.095,
+        "planner_only_ms": 0.012,
+        "plans_count": 0,
+        "status": "CONTRADICTORY_CONSTRAINTS"
+      },
+      "arm_c_dynamic_v2": {
+        "answer": null,
+        "bridge_accepted": true,
+        "bridge_source_gate_code": null,
+        "end_to_end_bridge_plus_plan_plus_verify_ms": 8.273,
+        "failure_code": "CONTRADICTORY_CONSTRAINTS",
+        "l0_l4_strict_verified": false,
+        "multi_plan_valid": null,
+        "planner_only_ms": 0.012,
+        "plans_count": 0,
+        "point_distance_d02_ok": null,
+        "scene3d_valid": false,
+        "status": "CONTRADICTORY_CONSTRAINTS",
+        "strict_ok": true,
+        "witness_ok": false
+      },
+      "case_id": "D05_contradictory_triangle_inequality",
+      "expected_status": "CONTRADICTORY_CONSTRAINTS",
+      "group": "Group_D"
+    },
+    {
+      "arm_a1_original_product": {
+        "answer": null,
+        "code": "OUT_OF_SCOPE",
+        "extra_points_in_scene": [],
+        "has_auxiliary_witness_in_scene": false,
+        "latency_ms": 2.82,
+        "math_or_refusal_ok_p_metric": true,
+        "math_or_refusal_ok_p_strict": true,
+        "scene3d_valid": false,
+        "source_gate_failure": false,
+        "status": "REFUSED"
+      },
+      "arm_a2_equivalent_verified_product": {
+        "answer": null,
+        "code": "OUT_OF_SCOPE",
+        "extra_points_in_scene": [],
+        "has_auxiliary_witness_in_scene": false,
+        "latency_ms": 2.874,
+        "math_or_refusal_ok_p_metric": true,
+        "math_or_refusal_ok_p_strict": true,
+        "scene3d_valid": false,
+        "source_gate_failure": false,
+        "status": "REFUSED"
+      },
+      "arm_b_dynamic_v1": {
+        "answer": null,
+        "frame_ms": 8.266,
+        "planner_only_ms": 0.014,
+        "plans_count": 0,
+        "status": "UNSUPPORTED_OPERATOR"
+      },
+      "arm_c_dynamic_v2": {
+        "answer": null,
+        "bridge_accepted": true,
+        "bridge_source_gate_code": null,
+        "end_to_end_bridge_plus_plan_plus_verify_ms": 14.798,
+        "failure_code": "UNSUPPORTED_OPERATOR",
+        "l0_l4_strict_verified": false,
+        "multi_plan_valid": null,
+        "planner_only_ms": 0.024,
+        "plans_count": 0,
+        "point_distance_d02_ok": null,
+        "scene3d_valid": false,
+        "status": "UNSUPPORTED_OPERATOR",
+        "strict_ok": true,
+        "witness_ok": false
+      },
+      "case_id": "D06_unsupported_curved_tangent_sphere",
+      "expected_status": "UNSUPPORTED_OPERATOR",
+      "group": "Group_D"
+    },
+    {
+      "arm_a1_original_product": {
+        "answer": null,
+        "code": "MISSING_DIMENSION",
+        "extra_points_in_scene": [],
+        "has_auxiliary_witness_in_scene": false,
+        "latency_ms": 57.105,
+        "math_or_refusal_ok_p_metric": true,
+        "math_or_refusal_ok_p_strict": true,
+        "scene3d_valid": false,
+        "source_gate_failure": false,
+        "status": "REFUSED"
+      },
+      "arm_a2_equivalent_verified_product": {
+        "answer": null,
+        "code": "MISSING_DIMENSION",
+        "extra_points_in_scene": [],
+        "has_auxiliary_witness_in_scene": false,
+        "latency_ms": 45.796,
+        "math_or_refusal_ok_p_metric": true,
+        "math_or_refusal_ok_p_strict": true,
+        "scene3d_valid": false,
+        "source_gate_failure": false,
+        "status": "REFUSED"
+      },
+      "arm_b_dynamic_v1": {
+        "answer": null,
+        "frame_ms": 15.043,
+        "planner_only_ms": 0.015,
+        "plans_count": 0,
+        "status": "MISSING_PRECONDITION"
+      },
+      "arm_c_dynamic_v2": {
+        "answer": null,
+        "bridge_accepted": true,
+        "bridge_source_gate_code": null,
+        "end_to_end_bridge_plus_plan_plus_verify_ms": 17.634,
+        "failure_code": "MISSING_PRECONDITION",
+        "l0_l4_strict_verified": false,
+        "multi_plan_valid": null,
+        "planner_only_ms": 0.012,
+        "plans_count": 0,
+        "point_distance_d02_ok": null,
+        "scene3d_valid": false,
+        "status": "MISSING_PRECONDITION",
+        "strict_ok": true,
+        "witness_ok": false
+      },
+      "case_id": "D07_missing_base_right_angle_underdetermined",
+      "expected_status": "MISSING_PRECONDITION",
+      "group": "Group_D"
+    },
+    {
+      "arm_a1_original_product": {
+        "answer": "a√21/7",
+        "code": null,
+        "extra_points_in_scene": [],
+        "has_auxiliary_witness_in_scene": false,
+        "latency_ms": 13.059,
+        "math_or_refusal_ok_p_metric": true,
+        "math_or_refusal_ok_p_strict": true,
+        "scene3d_valid": true,
+        "source_gate_failure": false,
+        "status": "SERVED"
+      },
+      "arm_a2_equivalent_verified_product": {
+        "answer": "a√21/7",
+        "code": null,
+        "extra_points_in_scene": [],
+        "has_auxiliary_witness_in_scene": false,
+        "latency_ms": 13.293,
+        "math_or_refusal_ok_p_metric": true,
+        "math_or_refusal_ok_p_strict": true,
+        "scene3d_valid": true,
+        "source_gate_failure": false,
+        "status": "SERVED"
+      },
+      "arm_b_dynamic_v1": {
+        "answer": "a√21/7",
+        "frame_ms": 6.903,
+        "planner_only_ms": 166.413,
+        "plans_count": 2,
+        "status": "GOAL_VERIFIED"
+      },
+      "arm_c_dynamic_v2": {
+        "answer": "a√21/7",
+        "bridge_accepted": true,
+        "bridge_source_gate_code": null,
+        "end_to_end_bridge_plus_plan_plus_verify_ms": 236.224,
+        "failure_code": null,
+        "l0_l4_strict_verified": true,
+        "multi_plan_valid": true,
+        "planner_only_ms": 214.163,
+        "plans_count": 2,
+        "point_distance_d02_ok": null,
+        "scene3d_valid": true,
+        "status": "GOAL_VERIFIED",
+        "strict_ok": true,
+        "witness_ok": true
+      },
+      "case_id": "E01_multiplan_d_A_SBC_equilateral",
+      "expected_status": "GOAL_VERIFIED",
+      "group": "Group_E"
+    },
+    {
+      "arm_a1_original_product": {
+        "answer": "a√2/2",
+        "code": null,
+        "extra_points_in_scene": [],
+        "has_auxiliary_witness_in_scene": false,
+        "latency_ms": 15.081,
+        "math_or_refusal_ok_p_metric": true,
+        "math_or_refusal_ok_p_strict": true,
+        "scene3d_valid": true,
+        "source_gate_failure": false,
+        "status": "SERVED"
+      },
+      "arm_a2_equivalent_verified_product": {
+        "answer": "a√2/2",
+        "code": null,
+        "extra_points_in_scene": [],
+        "has_auxiliary_witness_in_scene": false,
+        "latency_ms": 14.327,
+        "math_or_refusal_ok_p_metric": true,
+        "math_or_refusal_ok_p_strict": true,
+        "scene3d_valid": true,
+        "source_gate_failure": false,
+        "status": "SERVED"
+      },
+      "arm_b_dynamic_v1": {
+        "answer": "a√2/2",
+        "frame_ms": 7.21,
+        "planner_only_ms": 96.754,
+        "plans_count": 2,
+        "status": "GOAL_VERIFIED"
+      },
+      "arm_c_dynamic_v2": {
+        "answer": "a√2/2",
+        "bridge_accepted": true,
+        "bridge_source_gate_code": null,
+        "end_to_end_bridge_plus_plan_plus_verify_ms": 230.522,
+        "failure_code": null,
+        "l0_l4_strict_verified": true,
+        "multi_plan_valid": true,
+        "planner_only_ms": 207.65,
+        "plans_count": 2,
+        "point_distance_d02_ok": null,
+        "scene3d_valid": true,
+        "status": "GOAL_VERIFIED",
+        "strict_ok": true,
+        "witness_ok": true
+      },
+      "case_id": "E02_multiplan_d_A_SBC_right_B",
+      "expected_status": "GOAL_VERIFIED",
+      "group": "Group_E"
+    },
+    {
+      "arm_a1_original_product": {
+        "answer": "a",
+        "code": null,
+        "extra_points_in_scene": [],
+        "has_auxiliary_witness_in_scene": false,
+        "latency_ms": 17.184,
+        "math_or_refusal_ok_p_metric": true,
+        "math_or_refusal_ok_p_strict": true,
+        "scene3d_valid": true,
+        "source_gate_failure": false,
+        "status": "SERVED"
+      },
+      "arm_a2_equivalent_verified_product": {
+        "answer": "a",
+        "code": null,
+        "extra_points_in_scene": [],
+        "has_auxiliary_witness_in_scene": false,
+        "latency_ms": 29.459,
+        "math_or_refusal_ok_p_metric": true,
+        "math_or_refusal_ok_p_strict": true,
+        "scene3d_valid": true,
+        "source_gate_failure": false,
+        "status": "SERVED"
+      },
+      "arm_b_dynamic_v1": {
+        "answer": "a",
+        "frame_ms": 7.068,
+        "planner_only_ms": 36.496,
+        "plans_count": 3,
+        "status": "GOAL_VERIFIED"
+      },
+      "arm_c_dynamic_v2": {
+        "answer": "a",
+        "bridge_accepted": true,
+        "bridge_source_gate_code": null,
+        "end_to_end_bridge_plus_plan_plus_verify_ms": 95.631,
+        "failure_code": null,
+        "l0_l4_strict_verified": true,
+        "multi_plan_valid": true,
+        "planner_only_ms": 71.241,
+        "plans_count": 3,
+        "point_distance_d02_ok": null,
+        "scene3d_valid": true,
+        "status": "GOAL_VERIFIED",
+        "strict_ok": true,
+        "witness_ok": true
+      },
+      "case_id": "E03_multiplan_skew_d_SA_BC",
+      "expected_status": "GOAL_VERIFIED",
+      "group": "Group_E"
+    },
+    {
+      "arm_a1_original_product": {
+        "answer": "cos²=1/4",
+        "code": null,
+        "extra_points_in_scene": [],
+        "has_auxiliary_witness_in_scene": false,
+        "latency_ms": 15.499,
+        "math_or_refusal_ok_p_metric": true,
+        "math_or_refusal_ok_p_strict": true,
+        "scene3d_valid": true,
+        "source_gate_failure": false,
+        "status": "SERVED"
+      },
+      "arm_a2_equivalent_verified_product": {
+        "answer": "cos²=1/4",
+        "code": null,
+        "extra_points_in_scene": [],
+        "has_auxiliary_witness_in_scene": false,
+        "latency_ms": 15.991,
+        "math_or_refusal_ok_p_metric": true,
+        "math_or_refusal_ok_p_strict": true,
+        "scene3d_valid": true,
+        "source_gate_failure": false,
+        "status": "SERVED"
+      },
+      "arm_b_dynamic_v1": {
+        "answer": "60°",
+        "frame_ms": 6.761,
+        "planner_only_ms": 17.491,
+        "plans_count": 2,
+        "status": "GOAL_VERIFIED"
+      },
+      "arm_c_dynamic_v2": {
+        "answer": "60°",
+        "bridge_accepted": true,
+        "bridge_source_gate_code": null,
+        "end_to_end_bridge_plus_plan_plus_verify_ms": 45.679,
+        "failure_code": null,
+        "l0_l4_strict_verified": true,
+        "multi_plan_valid": true,
+        "planner_only_ms": 26.973,
+        "plans_count": 2,
+        "point_distance_d02_ok": null,
+        "scene3d_valid": true,
+        "status": "GOAL_VERIFIED",
+        "strict_ok": true,
+        "witness_ok": true
+      },
+      "case_id": "E04_multiplan_skew_angle_cube_symmetric_anchors",
+      "expected_status": "GOAL_VERIFIED",
+      "group": "Group_E"
+    },
+    {
+      "arm_a1_original_product": {
+        "answer": "cos²=3/7",
+        "code": null,
+        "extra_points_in_scene": [],
+        "has_auxiliary_witness_in_scene": false,
+        "latency_ms": 13.71,
+        "math_or_refusal_ok_p_metric": true,
+        "math_or_refusal_ok_p_strict": true,
+        "scene3d_valid": true,
+        "source_gate_failure": false,
+        "status": "SERVED"
+      },
+      "arm_a2_equivalent_verified_product": {
+        "answer": "cos²=3/7",
+        "code": null,
+        "extra_points_in_scene": [],
+        "has_auxiliary_witness_in_scene": false,
+        "latency_ms": 13.475,
+        "math_or_refusal_ok_p_metric": true,
+        "math_or_refusal_ok_p_strict": true,
+        "scene3d_valid": true,
+        "source_gate_failure": false,
+        "status": "SERVED"
+      },
+      "arm_b_dynamic_v1": {
+        "answer": "cos²=3/7",
+        "frame_ms": 6.525,
+        "planner_only_ms": 33.411,
+        "plans_count": 2,
+        "status": "GOAL_VERIFIED"
+      },
+      "arm_c_dynamic_v2": {
+        "answer": "cos²=3/7",
+        "bridge_accepted": true,
+        "bridge_source_gate_code": null,
+        "end_to_end_bridge_plus_plan_plus_verify_ms": 97.1,
+        "failure_code": null,
+        "l0_l4_strict_verified": true,
+        "multi_plan_valid": true,
+        "planner_only_ms": 74.824,
+        "plans_count": 2,
+        "point_distance_d02_ok": null,
+        "scene3d_valid": true,
+        "status": "GOAL_VERIFIED",
+        "strict_ok": true,
+        "witness_ok": true
+      },
+      "case_id": "E05_multiplan_dihedral_linear_vs_synthetic",
+      "expected_status": "GOAL_VERIFIED",
+      "group": "Group_E"
+    }
+  ],
+  "generated_at_utc": "2026-11-19T04:30:50Z",
+  "schema": "axo-fair-planner-comparison/1",
+  "summary": {
+    "arm_a1_original_product": {
+      "avg_ms": 21.949,
+      "multi_plan_cases": "0/33",
+      "negative_ok_p_strict": "6/7",
+      "positive_ok_p_strict": "26/33",
+      "positive_with_derived_aux_witness_in_scene": "1/33",
+      "source_gate_failures_on_positive": 6,
+      "total_ok_p_metric": "33/40"
+    },
+    "arm_a2_equivalent_verified_product": {
+      "avg_ms": 17.666,
+      "multi_plan_cases": "0/33",
+      "negative_ok_p_strict": "6/7",
+      "positive_ok_p_strict": "32/33",
+      "positive_with_derived_aux_witness_in_scene": "2/33",
+      "source_gate_failures_on_positive": 0,
+      "total_ok_p_metric": "39/40"
+    },
+    "arm_b_dynamic_v1": {
+      "avg_planner_only_ms": 38.513
+    },
+    "arm_c_dynamic_v2": {
+      "avg_e2e_bridge_plus_plan_plus_verify_ms": 85.641,
+      "avg_planner_only_ms": 65.463,
+      "group_e_multi_plan_verified": "5/5",
+      "positive_strict_ok": "33/33",
+      "positive_verified_l0_l4": "33/33",
+      "positive_with_witness_ok": "33/33",
+      "total_ok_p_strict": "40/40"
+    }
+  }
+}

@@ -1,0 +1,1912 @@
+{
+  "cases": [
+    {
+      "any_plan_has_implicit_auxiliary": false,
+      "auxiliary_objects_not_explicitly_requested": [],
+      "case_id": "A01_sb_length_right_pyramid",
+      "complete_recipe_match_in_arm_a2": false,
+      "given_facts_count": 5,
+      "group": "Group_A",
+      "multi_plan_distinct_verified": false,
+      "novelty_labels": [
+        "N0_EXISTING_COMPLETE_RECIPE"
+      ],
+      "operators_across_all_plans": [
+        []
+      ],
+      "operators_best_plan": [],
+      "operators_discovered_by_search": [],
+      "operators_provided_explicitly_by_source": [],
+      "original_goal": {
+        "goal_kind": "segment_length",
+        "length_unit": "a",
+        "operands": {
+          "a": "S",
+          "b": "B"
+        }
+      },
+      "proof_l0_l4_verified": true,
+      "v1_reported_novelty_class": "CASE_A_PREDEFINED_OR_PARITY"
+    },
+    {
+      "any_plan_has_implicit_auxiliary": false,
+      "auxiliary_objects_not_explicitly_requested": [],
+      "case_id": "A02_midpoint_sm_equilateral",
+      "complete_recipe_match_in_arm_a2": false,
+      "given_facts_count": 4,
+      "group": "Group_A",
+      "multi_plan_distinct_verified": false,
+      "novelty_labels": [
+        "N1_EXPLICIT_CONSTRUCTION_SCHEDULING",
+        "N2_OPERATOR_COMPOSITION"
+      ],
+      "operators_across_all_plans": [
+        [
+          "op.midpoint_segment",
+          "op.connect_segment"
+        ]
+      ],
+      "operators_best_plan": [
+        "op.midpoint_segment",
+        "op.connect_segment"
+      ],
+      "operators_discovered_by_search": [
+        "op.connect_segment"
+      ],
+      "operators_provided_explicitly_by_source": [
+        "op.midpoint_segment"
+      ],
+      "original_goal": {
+        "goal_kind": "segment_length",
+        "length_unit": "a",
+        "operands": {
+          "a": "S",
+          "b": "M"
+        }
+      },
+      "proof_l0_l4_verified": true,
+      "v1_reported_novelty_class": "CASE_B_DYNAMIC_COMPOSITION"
+    },
+    {
+      "any_plan_has_implicit_auxiliary": false,
+      "auxiliary_objects_not_explicitly_requested": [],
+      "case_id": "A03_centroid_sg_square_base",
+      "complete_recipe_match_in_arm_a2": false,
+      "given_facts_count": 4,
+      "group": "Group_A",
+      "multi_plan_distinct_verified": false,
+      "novelty_labels": [
+        "N1_EXPLICIT_CONSTRUCTION_SCHEDULING",
+        "N2_OPERATOR_COMPOSITION"
+      ],
+      "operators_across_all_plans": [
+        [
+          "op.triangle_centroid",
+          "op.connect_segment"
+        ]
+      ],
+      "operators_best_plan": [
+        "op.triangle_centroid",
+        "op.connect_segment"
+      ],
+      "operators_discovered_by_search": [
+        "op.connect_segment"
+      ],
+      "operators_provided_explicitly_by_source": [
+        "op.triangle_centroid"
+      ],
+      "original_goal": {
+        "goal_kind": "segment_length",
+        "length_unit": "a",
+        "operands": {
+          "a": "S",
+          "b": "G"
+        }
+      },
+      "proof_l0_l4_verified": true,
+      "v1_reported_novelty_class": "CASE_B_DYNAMIC_COMPOSITION"
+    },
+    {
+      "any_plan_has_implicit_auxiliary": false,
+      "auxiliary_objects_not_explicitly_requested": [],
+      "case_id": "A04_midpoint_am_right_B",
+      "complete_recipe_match_in_arm_a2": false,
+      "given_facts_count": 5,
+      "group": "Group_A",
+      "multi_plan_distinct_verified": false,
+      "novelty_labels": [
+        "N1_EXPLICIT_CONSTRUCTION_SCHEDULING",
+        "N2_OPERATOR_COMPOSITION"
+      ],
+      "operators_across_all_plans": [
+        [
+          "op.midpoint_segment",
+          "op.connect_segment"
+        ]
+      ],
+      "operators_best_plan": [
+        "op.midpoint_segment",
+        "op.connect_segment"
+      ],
+      "operators_discovered_by_search": [
+        "op.connect_segment"
+      ],
+      "operators_provided_explicitly_by_source": [
+        "op.midpoint_segment"
+      ],
+      "original_goal": {
+        "goal_kind": "segment_length",
+        "length_unit": "a",
+        "operands": {
+          "a": "A",
+          "b": "M"
+        }
+      },
+      "proof_l0_l4_verified": true,
+      "v1_reported_novelty_class": "CASE_B_DYNAMIC_COMPOSITION"
+    },
+    {
+      "any_plan_has_implicit_auxiliary": false,
+      "auxiliary_objects_not_explicitly_requested": [],
+      "case_id": "A05_volume_pyramid_right_B",
+      "complete_recipe_match_in_arm_a2": false,
+      "given_facts_count": 5,
+      "group": "Group_A",
+      "multi_plan_distinct_verified": false,
+      "novelty_labels": [
+        "N0_EXISTING_COMPLETE_RECIPE"
+      ],
+      "operators_across_all_plans": [
+        []
+      ],
+      "operators_best_plan": [],
+      "operators_discovered_by_search": [],
+      "operators_provided_explicitly_by_source": [],
+      "original_goal": {
+        "goal_kind": "solid_volume",
+        "length_unit": "a",
+        "operands": {
+          "apex": "S",
+          "base": [
+            "A",
+            "B",
+            "C"
+          ]
+        }
+      },
+      "proof_l0_l4_verified": true,
+      "v1_reported_novelty_class": "CASE_A_PREDEFINED_OR_PARITY"
+    },
+    {
+      "any_plan_has_implicit_auxiliary": false,
+      "auxiliary_objects_not_explicitly_requested": [],
+      "case_id": "A06_volume_equilateral_pyramid",
+      "complete_recipe_match_in_arm_a2": false,
+      "given_facts_count": 4,
+      "group": "Group_A",
+      "multi_plan_distinct_verified": false,
+      "novelty_labels": [
+        "N0_EXISTING_COMPLETE_RECIPE"
+      ],
+      "operators_across_all_plans": [
+        []
+      ],
+      "operators_best_plan": [],
+      "operators_discovered_by_search": [],
+      "operators_provided_explicitly_by_source": [],
+      "original_goal": {
+        "goal_kind": "solid_volume",
+        "length_unit": "a",
+        "operands": {
+          "apex": "S",
+          "base": [
+            "A",
+            "B",
+            "C"
+          ]
+        }
+      },
+      "proof_l0_l4_verified": true,
+      "v1_reported_novelty_class": "CASE_A_PREDEFINED_OR_PARITY"
+    },
+    {
+      "any_plan_has_implicit_auxiliary": true,
+      "auxiliary_objects_not_explicitly_requested": [
+        "seg_C_A"
+      ],
+      "case_id": "A07_angle_sc_base_square",
+      "complete_recipe_match_in_arm_a2": false,
+      "given_facts_count": 4,
+      "group": "Group_A",
+      "multi_plan_distinct_verified": false,
+      "novelty_labels": [
+        "N2_OPERATOR_COMPOSITION",
+        "N3_IMPLICIT_AUXILIARY_DISCOVERY"
+      ],
+      "operators_across_all_plans": [
+        [
+          "op.intersect_line_plane",
+          "op.connect_segment"
+        ]
+      ],
+      "operators_best_plan": [
+        "op.intersect_line_plane",
+        "op.connect_segment"
+      ],
+      "operators_discovered_by_search": [
+        "op.intersect_line_plane",
+        "op.connect_segment"
+      ],
+      "operators_provided_explicitly_by_source": [],
+      "original_goal": {
+        "goal_kind": "angle_line_plane",
+        "length_unit": "a",
+        "operands": {
+          "line": [
+            "S",
+            "C"
+          ],
+          "output_mode": "cos",
+          "plane": [
+            "A",
+            "B",
+            "C",
+            "D"
+          ]
+        }
+      },
+      "proof_l0_l4_verified": true,
+      "v1_reported_novelty_class": "CASE_A_PREDEFINED_OR_PARITY"
+    },
+    {
+      "any_plan_has_implicit_auxiliary": false,
+      "auxiliary_objects_not_explicitly_requested": [],
+      "case_id": "A08_angle_sb_base_right",
+      "complete_recipe_match_in_arm_a2": false,
+      "given_facts_count": 5,
+      "group": "Group_A",
+      "multi_plan_distinct_verified": false,
+      "novelty_labels": [
+        "N0_EXISTING_COMPLETE_RECIPE"
+      ],
+      "operators_across_all_plans": [
+        [
+          "op.intersect_line_plane"
+        ]
+      ],
+      "operators_best_plan": [
+        "op.intersect_line_plane"
+      ],
+      "operators_discovered_by_search": [
+        "op.intersect_line_plane"
+      ],
+      "operators_provided_explicitly_by_source": [],
+      "original_goal": {
+        "goal_kind": "angle_line_plane",
+        "length_unit": "a",
+        "operands": {
+          "line": [
+            "S",
+            "B"
+          ],
+          "plane": [
+            "A",
+            "B",
+            "C"
+          ]
+        }
+      },
+      "proof_l0_l4_verified": true,
+      "v1_reported_novelty_class": "CASE_A_PREDEFINED_OR_PARITY"
+    },
+    {
+      "any_plan_has_implicit_auxiliary": false,
+      "auxiliary_objects_not_explicitly_requested": [],
+      "case_id": "A09_cube_face_diagonal_intersection_midpoint",
+      "complete_recipe_match_in_arm_a2": false,
+      "given_facts_count": 2,
+      "group": "Group_A",
+      "multi_plan_distinct_verified": false,
+      "novelty_labels": [
+        "N1_EXPLICIT_CONSTRUCTION_SCHEDULING",
+        "N2_OPERATOR_COMPOSITION"
+      ],
+      "operators_across_all_plans": [
+        [
+          "op.line_through_points",
+          "op.line_through_points",
+          "op.intersect_coplanar_lines",
+          "op.connect_segment"
+        ]
+      ],
+      "operators_best_plan": [
+        "op.line_through_points",
+        "op.line_through_points",
+        "op.intersect_coplanar_lines",
+        "op.connect_segment"
+      ],
+      "operators_discovered_by_search": [
+        "op.connect_segment"
+      ],
+      "operators_provided_explicitly_by_source": [
+        "op.line_through_points",
+        "op.line_through_points",
+        "op.intersect_coplanar_lines"
+      ],
+      "original_goal": {
+        "goal_kind": "segment_length",
+        "length_unit": "a",
+        "operands": {
+          "a": "A'",
+          "b": "O"
+        }
+      },
+      "proof_l0_l4_verified": true,
+      "v1_reported_novelty_class": "CASE_B_DYNAMIC_COMPOSITION"
+    },
+    {
+      "any_plan_has_implicit_auxiliary": false,
+      "auxiliary_objects_not_explicitly_requested": [],
+      "case_id": "A10_cube_section_diagonal_plane",
+      "complete_recipe_match_in_arm_a2": false,
+      "given_facts_count": 2,
+      "group": "Group_A",
+      "multi_plan_distinct_verified": false,
+      "novelty_labels": [
+        "N2_OPERATOR_COMPOSITION"
+      ],
+      "operators_across_all_plans": [
+        [
+          "op.plane_through_three_points",
+          "op.polyhedron_plane_section"
+        ]
+      ],
+      "operators_best_plan": [
+        "op.plane_through_three_points",
+        "op.polyhedron_plane_section"
+      ],
+      "operators_discovered_by_search": [
+        "op.plane_through_three_points",
+        "op.polyhedron_plane_section"
+      ],
+      "operators_provided_explicitly_by_source": [],
+      "original_goal": {
+        "goal_kind": "section_area",
+        "length_unit": "a",
+        "operands": {
+          "plane": [
+            "B",
+            "D",
+            "D'"
+          ]
+        }
+      },
+      "proof_l0_l4_verified": true,
+      "v1_reported_novelty_class": "CASE_B_DYNAMIC_COMPOSITION"
+    },
+    {
+      "any_plan_has_implicit_auxiliary": false,
+      "auxiliary_objects_not_explicitly_requested": [],
+      "case_id": "B01_divide_segment_ratio_length",
+      "complete_recipe_match_in_arm_a2": false,
+      "given_facts_count": 4,
+      "group": "Group_B",
+      "multi_plan_distinct_verified": false,
+      "novelty_labels": [
+        "N1_EXPLICIT_CONSTRUCTION_SCHEDULING",
+        "N2_OPERATOR_COMPOSITION"
+      ],
+      "operators_across_all_plans": [
+        [
+          "op.divide_segment_ratio",
+          "op.midpoint_segment",
+          "op.connect_segment"
+        ]
+      ],
+      "operators_best_plan": [
+        "op.divide_segment_ratio",
+        "op.midpoint_segment",
+        "op.connect_segment"
+      ],
+      "operators_discovered_by_search": [
+        "op.connect_segment"
+      ],
+      "operators_provided_explicitly_by_source": [
+        "op.divide_segment_ratio",
+        "op.midpoint_segment"
+      ],
+      "original_goal": {
+        "goal_kind": "segment_length",
+        "length_unit": "a",
+        "operands": {
+          "a": "K",
+          "b": "M"
+        }
+      },
+      "proof_l0_l4_verified": true,
+      "v1_reported_novelty_class": "CASE_B_DYNAMIC_COMPOSITION"
+    },
+    {
+      "any_plan_has_implicit_auxiliary": false,
+      "auxiliary_objects_not_explicitly_requested": [],
+      "case_id": "B02_point_reflection_distance",
+      "complete_recipe_match_in_arm_a2": false,
+      "given_facts_count": 5,
+      "group": "Group_B",
+      "multi_plan_distinct_verified": false,
+      "novelty_labels": [
+        "N1_EXPLICIT_CONSTRUCTION_SCHEDULING",
+        "N2_OPERATOR_COMPOSITION"
+      ],
+      "operators_across_all_plans": [
+        [
+          "op.point_reflection",
+          "op.connect_segment"
+        ]
+      ],
+      "operators_best_plan": [
+        "op.point_reflection",
+        "op.connect_segment"
+      ],
+      "operators_discovered_by_search": [
+        "op.connect_segment"
+      ],
+      "operators_provided_explicitly_by_source": [
+        "op.point_reflection"
+      ],
+      "original_goal": {
+        "goal_kind": "segment_length",
+        "length_unit": "a",
+        "operands": {
+          "a": "S",
+          "b": "P"
+        }
+      },
+      "proof_l0_l4_verified": true,
+      "v1_reported_novelty_class": "CASE_B_DYNAMIC_COMPOSITION"
+    },
+    {
+      "any_plan_has_implicit_auxiliary": true,
+      "auxiliary_objects_not_explicitly_requested": [
+        "pl_dihedral",
+        "ray_p1",
+        "ray_p2"
+      ],
+      "case_id": "B03_dihedral_linear_angle_equilateral",
+      "complete_recipe_match_in_arm_a2": false,
+      "given_facts_count": 4,
+      "group": "Group_B",
+      "multi_plan_distinct_verified": true,
+      "novelty_labels": [
+        "N3_IMPLICIT_AUXILIARY_DISCOVERY",
+        "N4_ALTERNATIVE_VERIFIED_STRATEGY"
+      ],
+      "operators_across_all_plans": [
+        [
+          "op.construct_dihedral_linear_angle"
+        ],
+        [
+          "op.intersect_planes",
+          "op.project_point_to_line",
+          "op.plane_through_three_points",
+          "op.deduce_line_perp_plane_two_lines"
+        ]
+      ],
+      "operators_best_plan": [
+        "op.construct_dihedral_linear_angle"
+      ],
+      "operators_discovered_by_search": [
+        "op.construct_dihedral_linear_angle"
+      ],
+      "operators_provided_explicitly_by_source": [],
+      "original_goal": {
+        "goal_kind": "angle_plane_plane",
+        "length_unit": "a",
+        "operands": {
+          "plane1": [
+            "S",
+            "B",
+            "C"
+          ],
+          "plane2": [
+            "A",
+            "B",
+            "C"
+          ]
+        }
+      },
+      "proof_l0_l4_verified": true,
+      "v1_reported_novelty_class": "CASE_B_DYNAMIC_COMPOSITION"
+    },
+    {
+      "any_plan_has_implicit_auxiliary": true,
+      "auxiliary_objects_not_explicitly_requested": [
+        "pl_dihedral",
+        "ray_p1",
+        "ray_p2"
+      ],
+      "case_id": "B04_dihedral_linear_angle_cube",
+      "complete_recipe_match_in_arm_a2": false,
+      "given_facts_count": 2,
+      "group": "Group_B",
+      "multi_plan_distinct_verified": true,
+      "novelty_labels": [
+        "N2_OPERATOR_COMPOSITION",
+        "N3_IMPLICIT_AUXILIARY_DISCOVERY",
+        "N4_ALTERNATIVE_VERIFIED_STRATEGY"
+      ],
+      "operators_across_all_plans": [
+        [
+          "op.plane_through_three_points",
+          "op.intersect_planes",
+          "op.construct_dihedral_linear_angle"
+        ],
+        [
+          "op.plane_through_three_points",
+          "op.intersect_planes",
+          "op.project_point_to_line",
+          "op.plane_through_three_points",
+          "op.deduce_line_perp_plane_two_lines"
+        ]
+      ],
+      "operators_best_plan": [
+        "op.plane_through_three_points",
+        "op.intersect_planes",
+        "op.construct_dihedral_linear_angle"
+      ],
+      "operators_discovered_by_search": [
+        "op.plane_through_three_points",
+        "op.intersect_planes",
+        "op.construct_dihedral_linear_angle"
+      ],
+      "operators_provided_explicitly_by_source": [],
+      "original_goal": {
+        "goal_kind": "angle_plane_plane",
+        "length_unit": "a",
+        "operands": {
+          "plane1": [
+            "B",
+            "D",
+            "A'"
+          ],
+          "plane2": [
+            "A",
+            "B",
+            "C",
+            "D"
+          ]
+        }
+      },
+      "proof_l0_l4_verified": true,
+      "v1_reported_novelty_class": "CASE_B_DYNAMIC_COMPOSITION"
+    },
+    {
+      "any_plan_has_implicit_auxiliary": true,
+      "auxiliary_objects_not_explicitly_requested": [
+        "par_dt_target_1_B"
+      ],
+      "case_id": "B05_skew_angle_cube_parallel_transfer",
+      "complete_recipe_match_in_arm_a2": false,
+      "given_facts_count": 2,
+      "group": "Group_B",
+      "multi_plan_distinct_verified": true,
+      "novelty_labels": [
+        "N2_OPERATOR_COMPOSITION",
+        "N3_IMPLICIT_AUXILIARY_DISCOVERY",
+        "N4_ALTERNATIVE_VERIFIED_STRATEGY"
+      ],
+      "operators_across_all_plans": [
+        [
+          "op.line_through_points",
+          "op.line_through_points",
+          "op.line_parallel_through_point"
+        ],
+        [
+          "op.line_through_points",
+          "op.line_through_points",
+          "op.line_parallel_through_point"
+        ]
+      ],
+      "operators_best_plan": [
+        "op.line_through_points",
+        "op.line_through_points",
+        "op.line_parallel_through_point"
+      ],
+      "operators_discovered_by_search": [
+        "op.line_through_points",
+        "op.line_through_points",
+        "op.line_parallel_through_point"
+      ],
+      "operators_provided_explicitly_by_source": [],
+      "original_goal": {
+        "goal_kind": "angle_lines",
+        "length_unit": "a",
+        "operands": {
+          "line1": [
+            "A",
+            "B'"
+          ],
+          "line2": [
+            "B",
+            "C'"
+          ]
+        }
+      },
+      "proof_l0_l4_verified": true,
+      "v1_reported_novelty_class": "CASE_B_DYNAMIC_COMPOSITION"
+    },
+    {
+      "any_plan_has_implicit_auxiliary": true,
+      "auxiliary_objects_not_explicitly_requested": [
+        "H_K",
+        "ln_K_H",
+        "seg_K_H"
+      ],
+      "case_id": "B06_divide_segment_plus_point_plane_distance",
+      "complete_recipe_match_in_arm_a2": false,
+      "given_facts_count": 4,
+      "group": "Group_B",
+      "multi_plan_distinct_verified": true,
+      "novelty_labels": [
+        "N1_EXPLICIT_CONSTRUCTION_SCHEDULING",
+        "N2_OPERATOR_COMPOSITION",
+        "N3_IMPLICIT_AUXILIARY_DISCOVERY",
+        "N4_ALTERNATIVE_VERIFIED_STRATEGY"
+      ],
+      "operators_across_all_plans": [
+        [
+          "op.divide_segment_ratio",
+          "op.project_point_to_plane"
+        ],
+        [
+          "op.divide_segment_ratio",
+          "op.project_point_to_line",
+          "op.deduce_line_perp_plane_two_lines",
+          "op.project_point_to_line",
+          "op.deduce_line_perp_plane_two_lines"
+        ]
+      ],
+      "operators_best_plan": [
+        "op.divide_segment_ratio",
+        "op.project_point_to_plane"
+      ],
+      "operators_discovered_by_search": [
+        "op.project_point_to_plane"
+      ],
+      "operators_provided_explicitly_by_source": [
+        "op.divide_segment_ratio"
+      ],
+      "original_goal": {
+        "goal_kind": "distance_point_plane",
+        "length_unit": "a",
+        "operands": {
+          "plane": [
+            "S",
+            "B",
+            "C"
+          ],
+          "point": "K"
+        }
+      },
+      "proof_l0_l4_verified": true,
+      "v1_reported_novelty_class": "CASE_B_DYNAMIC_COMPOSITION"
+    },
+    {
+      "any_plan_has_implicit_auxiliary": false,
+      "auxiliary_objects_not_explicitly_requested": [],
+      "case_id": "B07_reflection_plus_centroid_length",
+      "complete_recipe_match_in_arm_a2": false,
+      "given_facts_count": 5,
+      "group": "Group_B",
+      "multi_plan_distinct_verified": false,
+      "novelty_labels": [
+        "N1_EXPLICIT_CONSTRUCTION_SCHEDULING",
+        "N2_OPERATOR_COMPOSITION"
+      ],
+      "operators_across_all_plans": [
+        [
+          "op.point_reflection",
+          "op.triangle_centroid",
+          "op.connect_segment"
+        ]
+      ],
+      "operators_best_plan": [
+        "op.point_reflection",
+        "op.triangle_centroid",
+        "op.connect_segment"
+      ],
+      "operators_discovered_by_search": [
+        "op.connect_segment"
+      ],
+      "operators_provided_explicitly_by_source": [
+        "op.point_reflection",
+        "op.triangle_centroid"
+      ],
+      "original_goal": {
+        "goal_kind": "segment_length",
+        "length_unit": "a",
+        "operands": {
+          "a": "A",
+          "b": "G"
+        }
+      },
+      "proof_l0_l4_verified": true,
+      "v1_reported_novelty_class": "CASE_B_DYNAMIC_COMPOSITION"
+    },
+    {
+      "any_plan_has_implicit_auxiliary": false,
+      "auxiliary_objects_not_explicitly_requested": [],
+      "case_id": "B08_intersection_point_derived_plane_prism",
+      "complete_recipe_match_in_arm_a2": false,
+      "given_facts_count": 3,
+      "group": "Group_B",
+      "multi_plan_distinct_verified": false,
+      "novelty_labels": [
+        "N1_EXPLICIT_CONSTRUCTION_SCHEDULING",
+        "N2_OPERATOR_COMPOSITION"
+      ],
+      "operators_across_all_plans": [
+        [
+          "op.midpoint_segment",
+          "op.midpoint_segment",
+          "op.plane_through_three_points",
+          "op.intersect_line_plane",
+          "op.connect_segment"
+        ]
+      ],
+      "operators_best_plan": [
+        "op.midpoint_segment",
+        "op.midpoint_segment",
+        "op.plane_through_three_points",
+        "op.intersect_line_plane",
+        "op.connect_segment"
+      ],
+      "operators_discovered_by_search": [
+        "op.connect_segment"
+      ],
+      "operators_provided_explicitly_by_source": [
+        "op.midpoint_segment",
+        "op.midpoint_segment",
+        "op.plane_through_three_points",
+        "op.intersect_line_plane"
+      ],
+      "original_goal": {
+        "goal_kind": "segment_length",
+        "length_unit": "a",
+        "operands": {
+          "a": "B",
+          "b": "I"
+        }
+      },
+      "proof_l0_l4_verified": true,
+      "v1_reported_novelty_class": "CASE_B_DYNAMIC_COMPOSITION"
+    },
+    {
+      "any_plan_has_implicit_auxiliary": false,
+      "auxiliary_objects_not_explicitly_requested": [],
+      "case_id": "B09_deep_19step_chain_exceeds_32_ir_slots",
+      "complete_recipe_match_in_arm_a2": false,
+      "given_facts_count": 2,
+      "group": "Group_B",
+      "multi_plan_distinct_verified": false,
+      "novelty_labels": [
+        "N1_EXPLICIT_CONSTRUCTION_SCHEDULING",
+        "N2_OPERATOR_COMPOSITION"
+      ],
+      "operators_across_all_plans": [
+        [
+          "op.midpoint_segment",
+          "op.midpoint_segment",
+          "op.midpoint_segment",
+          "op.midpoint_segment",
+          "op.midpoint_segment",
+          "op.midpoint_segment",
+          "op.midpoint_segment",
+          "op.midpoint_segment",
+          "op.midpoint_segment",
+          "op.midpoint_segment",
+          "op.midpoint_segment",
+          "op.midpoint_segment",
+          "op.triangle_centroid",
+          "op.triangle_centroid",
+          "op.triangle_centroid",
+          "op.triangle_centroid",
+          "op.midpoint_segment",
+          "op.midpoint_segment",
+          "op.midpoint_segment",
+          "op.connect_segment"
+        ]
+      ],
+      "operators_best_plan": [
+        "op.midpoint_segment",
+        "op.midpoint_segment",
+        "op.midpoint_segment",
+        "op.midpoint_segment",
+        "op.midpoint_segment",
+        "op.midpoint_segment",
+        "op.midpoint_segment",
+        "op.midpoint_segment",
+        "op.midpoint_segment",
+        "op.midpoint_segment",
+        "op.midpoint_segment",
+        "op.midpoint_segment",
+        "op.triangle_centroid",
+        "op.triangle_centroid",
+        "op.triangle_centroid",
+        "op.triangle_centroid",
+        "op.midpoint_segment",
+        "op.midpoint_segment",
+        "op.midpoint_segment",
+        "op.connect_segment"
+      ],
+      "operators_discovered_by_search": [
+        "op.connect_segment"
+      ],
+      "operators_provided_explicitly_by_source": [
+        "op.midpoint_segment",
+        "op.midpoint_segment",
+        "op.midpoint_segment",
+        "op.midpoint_segment",
+        "op.midpoint_segment",
+        "op.midpoint_segment",
+        "op.midpoint_segment",
+        "op.midpoint_segment",
+        "op.midpoint_segment",
+        "op.midpoint_segment",
+        "op.midpoint_segment",
+        "op.midpoint_segment",
+        "op.triangle_centroid",
+        "op.triangle_centroid",
+        "op.triangle_centroid",
+        "op.triangle_centroid",
+        "op.midpoint_segment",
+        "op.midpoint_segment",
+        "op.midpoint_segment"
+      ],
+      "original_goal": {
+        "goal_kind": "segment_length",
+        "length_unit": "a",
+        "operands": {
+          "a": "A",
+          "b": "M19"
+        }
+      },
+      "proof_l0_l4_verified": true,
+      "v1_reported_novelty_class": "CASE_B_DYNAMIC_COMPOSITION"
+    },
+    {
+      "any_plan_has_implicit_auxiliary": false,
+      "auxiliary_objects_not_explicitly_requested": [],
+      "case_id": "B10_derived_polygon_area_after_ratio",
+      "complete_recipe_match_in_arm_a2": false,
+      "given_facts_count": 4,
+      "group": "Group_B",
+      "multi_plan_distinct_verified": false,
+      "novelty_labels": [
+        "N1_EXPLICIT_CONSTRUCTION_SCHEDULING",
+        "N2_OPERATOR_COMPOSITION"
+      ],
+      "operators_across_all_plans": [
+        [
+          "op.midpoint_segment",
+          "op.midpoint_segment",
+          "op.connect_segment",
+          "op.connect_segment",
+          "op.connect_segment"
+        ]
+      ],
+      "operators_best_plan": [
+        "op.midpoint_segment",
+        "op.midpoint_segment",
+        "op.connect_segment",
+        "op.connect_segment",
+        "op.connect_segment"
+      ],
+      "operators_discovered_by_search": [
+        "op.connect_segment",
+        "op.connect_segment"
+      ],
+      "operators_provided_explicitly_by_source": [
+        "op.divide_segment_ratio",
+        "op.divide_segment_ratio",
+        "op.divide_segment_ratio"
+      ],
+      "original_goal": {
+        "goal_kind": "polygon_area",
+        "length_unit": "a",
+        "operands": {
+          "points": [
+            "A",
+            "M",
+            "N"
+          ]
+        }
+      },
+      "proof_l0_l4_verified": true,
+      "v1_reported_novelty_class": "CASE_B_DYNAMIC_COMPOSITION"
+    },
+    {
+      "any_plan_has_implicit_auxiliary": true,
+      "auxiliary_objects_not_explicitly_requested": [
+        "H_A",
+        "ln_A_H",
+        "seg_A_H"
+      ],
+      "case_id": "C01_aux_foot_d_A_SBC_equilateral",
+      "complete_recipe_match_in_arm_a2": false,
+      "given_facts_count": 4,
+      "group": "Group_C",
+      "multi_plan_distinct_verified": true,
+      "novelty_labels": [
+        "N3_IMPLICIT_AUXILIARY_DISCOVERY",
+        "N4_ALTERNATIVE_VERIFIED_STRATEGY"
+      ],
+      "operators_across_all_plans": [
+        [
+          "op.project_point_to_plane"
+        ],
+        [
+          "op.project_point_to_line",
+          "op.line_through_points",
+          "op.plane_through_three_points",
+          "op.deduce_line_perp_plane_two_lines",
+          "op.project_point_to_line",
+          "op.deduce_line_perp_plane_two_lines"
+        ]
+      ],
+      "operators_best_plan": [
+        "op.project_point_to_plane"
+      ],
+      "operators_discovered_by_search": [
+        "op.project_point_to_plane"
+      ],
+      "operators_provided_explicitly_by_source": [],
+      "original_goal": {
+        "goal_kind": "distance_point_plane",
+        "length_unit": "a",
+        "operands": {
+          "plane": [
+            "S",
+            "B",
+            "C"
+          ],
+          "point": "A"
+        }
+      },
+      "proof_l0_l4_verified": true,
+      "v1_reported_novelty_class": "CASE_B_DYNAMIC_COMPOSITION"
+    },
+    {
+      "any_plan_has_implicit_auxiliary": true,
+      "auxiliary_objects_not_explicitly_requested": [
+        "H_A",
+        "ln_A_H",
+        "seg_A_H"
+      ],
+      "case_id": "C02_aux_foot_d_A_SBD_square",
+      "complete_recipe_match_in_arm_a2": false,
+      "given_facts_count": 4,
+      "group": "Group_C",
+      "multi_plan_distinct_verified": true,
+      "novelty_labels": [
+        "N2_OPERATOR_COMPOSITION",
+        "N3_IMPLICIT_AUXILIARY_DISCOVERY",
+        "N4_ALTERNATIVE_VERIFIED_STRATEGY"
+      ],
+      "operators_across_all_plans": [
+        [
+          "op.plane_through_three_points",
+          "op.project_point_to_plane"
+        ],
+        [
+          "op.plane_through_three_points",
+          "op.project_point_to_line",
+          "op.line_through_points",
+          "op.plane_through_three_points",
+          "op.deduce_line_perp_plane_two_lines",
+          "op.project_point_to_line",
+          "op.deduce_line_perp_plane_two_lines"
+        ],
+        [
+          "op.plane_through_three_points",
+          "op.project_point_to_line",
+          "op.line_through_points",
+          "op.plane_through_three_points",
+          "op.deduce_line_perp_plane_two_lines",
+          "op.project_point_to_line",
+          "op.deduce_line_perp_plane_two_lines"
+        ]
+      ],
+      "operators_best_plan": [
+        "op.plane_through_three_points",
+        "op.project_point_to_plane"
+      ],
+      "operators_discovered_by_search": [
+        "op.plane_through_three_points",
+        "op.project_point_to_plane"
+      ],
+      "operators_provided_explicitly_by_source": [],
+      "original_goal": {
+        "goal_kind": "distance_point_plane",
+        "length_unit": "a",
+        "operands": {
+          "plane": [
+            "S",
+            "B",
+            "D"
+          ],
+          "point": "A"
+        }
+      },
+      "proof_l0_l4_verified": true,
+      "v1_reported_novelty_class": "CASE_B_DYNAMIC_COMPOSITION"
+    },
+    {
+      "any_plan_has_implicit_auxiliary": true,
+      "auxiliary_objects_not_explicitly_requested": [
+        "H_A",
+        "ln_A_H",
+        "seg_A_H"
+      ],
+      "case_id": "C03_aux_parallel_line_plane_transfer",
+      "complete_recipe_match_in_arm_a2": false,
+      "given_facts_count": 4,
+      "group": "Group_C",
+      "multi_plan_distinct_verified": true,
+      "novelty_labels": [
+        "N2_OPERATOR_COMPOSITION",
+        "N3_IMPLICIT_AUXILIARY_DISCOVERY",
+        "N4_ALTERNATIVE_VERIFIED_STRATEGY"
+      ],
+      "operators_across_all_plans": [
+        [
+          "op.deduce_parallel_line_plane_transfer",
+          "op.project_point_to_plane"
+        ],
+        [
+          "op.deduce_parallel_line_plane_transfer",
+          "op.project_point_to_plane"
+        ],
+        [
+          "op.deduce_parallel_line_plane_transfer",
+          "op.deduce_line_perp_plane_two_lines",
+          "op.project_point_to_line",
+          "op.deduce_line_perp_plane_two_lines"
+        ]
+      ],
+      "operators_best_plan": [
+        "op.deduce_parallel_line_plane_transfer",
+        "op.project_point_to_plane"
+      ],
+      "operators_discovered_by_search": [
+        "op.deduce_parallel_line_plane_transfer",
+        "op.project_point_to_plane"
+      ],
+      "operators_provided_explicitly_by_source": [],
+      "original_goal": {
+        "goal_kind": "distance_line_plane",
+        "length_unit": "a",
+        "operands": {
+          "line": [
+            "A",
+            "B"
+          ],
+          "plane": [
+            "S",
+            "C",
+            "D"
+          ]
+        }
+      },
+      "proof_l0_l4_verified": true,
+      "v1_reported_novelty_class": "CASE_B_DYNAMIC_COMPOSITION"
+    },
+    {
+      "any_plan_has_implicit_auxiliary": true,
+      "auxiliary_objects_not_explicitly_requested": [
+        "P1_perp",
+        "P2_perp",
+        "ln_common_perp",
+        "seg_common_perp"
+      ],
+      "case_id": "C04_aux_skew_lines_cube_ABp_BCp",
+      "complete_recipe_match_in_arm_a2": false,
+      "given_facts_count": 2,
+      "group": "Group_C",
+      "multi_plan_distinct_verified": true,
+      "novelty_labels": [
+        "N2_OPERATOR_COMPOSITION",
+        "N3_IMPLICIT_AUXILIARY_DISCOVERY",
+        "N4_ALTERNATIVE_VERIFIED_STRATEGY"
+      ],
+      "operators_across_all_plans": [
+        [
+          "op.line_through_points",
+          "op.line_through_points",
+          "op.common_perpendicular_skew_lines"
+        ],
+        [
+          "op.line_through_points",
+          "op.line_through_points",
+          "op.plane_through_line_parallel_line",
+          "op.project_point_to_plane"
+        ],
+        [
+          "op.line_through_points",
+          "op.line_through_points",
+          "op.plane_through_line_parallel_line",
+          "op.project_point_to_plane"
+        ]
+      ],
+      "operators_best_plan": [
+        "op.line_through_points",
+        "op.line_through_points",
+        "op.common_perpendicular_skew_lines"
+      ],
+      "operators_discovered_by_search": [
+        "op.line_through_points",
+        "op.line_through_points",
+        "op.common_perpendicular_skew_lines"
+      ],
+      "operators_provided_explicitly_by_source": [],
+      "original_goal": {
+        "goal_kind": "distance_skew_lines",
+        "length_unit": "a",
+        "operands": {
+          "line1": [
+            "A",
+            "B'"
+          ],
+          "line2": [
+            "B",
+            "C'"
+          ]
+        }
+      },
+      "proof_l0_l4_verified": true,
+      "v1_reported_novelty_class": "CASE_B_DYNAMIC_COMPOSITION"
+    },
+    {
+      "any_plan_has_implicit_auxiliary": true,
+      "auxiliary_objects_not_explicitly_requested": [
+        "P2_perp",
+        "ln_common_perp",
+        "seg_common_perp"
+      ],
+      "case_id": "C05_aux_skew_lines_pyramid_SA_BD",
+      "complete_recipe_match_in_arm_a2": false,
+      "given_facts_count": 4,
+      "group": "Group_C",
+      "multi_plan_distinct_verified": true,
+      "novelty_labels": [
+        "N2_OPERATOR_COMPOSITION",
+        "N3_IMPLICIT_AUXILIARY_DISCOVERY",
+        "N4_ALTERNATIVE_VERIFIED_STRATEGY"
+      ],
+      "operators_across_all_plans": [
+        [
+          "op.line_through_points",
+          "op.common_perpendicular_skew_lines"
+        ],
+        [
+          "op.line_through_points",
+          "op.plane_through_line_parallel_line",
+          "op.project_point_to_plane"
+        ],
+        [
+          "op.line_through_points",
+          "op.plane_through_line_parallel_line",
+          "op.project_point_to_plane"
+        ]
+      ],
+      "operators_best_plan": [
+        "op.line_through_points",
+        "op.common_perpendicular_skew_lines"
+      ],
+      "operators_discovered_by_search": [
+        "op.line_through_points",
+        "op.common_perpendicular_skew_lines"
+      ],
+      "operators_provided_explicitly_by_source": [],
+      "original_goal": {
+        "goal_kind": "distance_skew_lines",
+        "length_unit": "a",
+        "operands": {
+          "line1": [
+            "S",
+            "A"
+          ],
+          "line2": [
+            "B",
+            "D"
+          ]
+        }
+      },
+      "proof_l0_l4_verified": true,
+      "v1_reported_novelty_class": "CASE_B_DYNAMIC_COMPOSITION"
+    },
+    {
+      "any_plan_has_implicit_auxiliary": true,
+      "auxiliary_objects_not_explicitly_requested": [
+        "H_A",
+        "ln_A_H",
+        "seg_A_H"
+      ],
+      "case_id": "C06_aux_point_to_line_foot",
+      "complete_recipe_match_in_arm_a2": true,
+      "given_facts_count": 5,
+      "group": "Group_C",
+      "multi_plan_distinct_verified": false,
+      "novelty_labels": [
+        "N3_IMPLICIT_AUXILIARY_DISCOVERY"
+      ],
+      "operators_across_all_plans": [
+        [
+          "op.project_point_to_line"
+        ]
+      ],
+      "operators_best_plan": [
+        "op.project_point_to_line"
+      ],
+      "operators_discovered_by_search": [
+        "op.project_point_to_line"
+      ],
+      "operators_provided_explicitly_by_source": [],
+      "original_goal": {
+        "goal_kind": "distance_point_line",
+        "length_unit": "a",
+        "operands": {
+          "line": [
+            "S",
+            "C"
+          ],
+          "point": "A"
+        }
+      },
+      "proof_l0_l4_verified": true,
+      "v1_reported_novelty_class": "CASE_B_DYNAMIC_COMPOSITION"
+    },
+    {
+      "any_plan_has_implicit_auxiliary": true,
+      "auxiliary_objects_not_explicitly_requested": [
+        "H_B",
+        "ln_B_H",
+        "seg_B_H",
+        "seg_S_H_B"
+      ],
+      "case_id": "C07_aux_angle_line_plane_SB_SAC",
+      "complete_recipe_match_in_arm_a2": false,
+      "given_facts_count": 4,
+      "group": "Group_C",
+      "multi_plan_distinct_verified": false,
+      "novelty_labels": [
+        "N2_OPERATOR_COMPOSITION",
+        "N3_IMPLICIT_AUXILIARY_DISCOVERY"
+      ],
+      "operators_across_all_plans": [
+        [
+          "op.plane_through_three_points",
+          "op.intersect_line_plane",
+          "op.project_point_to_plane",
+          "op.connect_segment"
+        ]
+      ],
+      "operators_best_plan": [
+        "op.plane_through_three_points",
+        "op.intersect_line_plane",
+        "op.project_point_to_plane",
+        "op.connect_segment"
+      ],
+      "operators_discovered_by_search": [
+        "op.plane_through_three_points",
+        "op.intersect_line_plane",
+        "op.project_point_to_plane",
+        "op.connect_segment"
+      ],
+      "operators_provided_explicitly_by_source": [],
+      "original_goal": {
+        "goal_kind": "angle_line_plane",
+        "length_unit": "a",
+        "operands": {
+          "line": [
+            "S",
+            "B"
+          ],
+          "plane": [
+            "S",
+            "A",
+            "C"
+          ]
+        }
+      },
+      "proof_l0_l4_verified": true,
+      "v1_reported_novelty_class": "CASE_B_DYNAMIC_COMPOSITION"
+    },
+    {
+      "any_plan_has_implicit_auxiliary": false,
+      "auxiliary_objects_not_explicitly_requested": [],
+      "case_id": "C08_aux_parallel_plane_section_through_midpoint",
+      "complete_recipe_match_in_arm_a2": true,
+      "given_facts_count": 4,
+      "group": "Group_C",
+      "multi_plan_distinct_verified": false,
+      "novelty_labels": [
+        "N1_EXPLICIT_CONSTRUCTION_SCHEDULING",
+        "N2_OPERATOR_COMPOSITION"
+      ],
+      "operators_across_all_plans": [
+        [
+          "op.midpoint_segment",
+          "op.plane_through_point_parallel_plane",
+          "op.polyhedron_plane_section"
+        ]
+      ],
+      "operators_best_plan": [
+        "op.midpoint_segment",
+        "op.plane_through_point_parallel_plane",
+        "op.polyhedron_plane_section"
+      ],
+      "operators_discovered_by_search": [
+        "op.polyhedron_plane_section"
+      ],
+      "operators_provided_explicitly_by_source": [
+        "op.midpoint_segment",
+        "op.plane_through_point_parallel_plane"
+      ],
+      "original_goal": {
+        "goal_kind": "section_area",
+        "length_unit": "a",
+        "operands": {
+          "plane": "pl_sec"
+        }
+      },
+      "proof_l0_l4_verified": true,
+      "v1_reported_novelty_class": "CASE_B_DYNAMIC_COMPOSITION"
+    },
+    {
+      "any_plan_has_implicit_auxiliary": false,
+      "auxiliary_objects_not_explicitly_requested": [],
+      "case_id": "D01_missing_height_precondition",
+      "complete_recipe_match_in_arm_a2": false,
+      "given_facts_count": 4,
+      "group": "Group_D",
+      "multi_plan_distinct_verified": false,
+      "novelty_labels": [
+        "NEGATIVE_REFUSAL"
+      ],
+      "operators_across_all_plans": [],
+      "operators_best_plan": [],
+      "operators_discovered_by_search": [],
+      "operators_provided_explicitly_by_source": [],
+      "original_goal": {
+        "goal_kind": "distance_point_plane",
+        "length_unit": "a",
+        "operands": {
+          "plane": [
+            "S",
+            "B",
+            "C"
+          ],
+          "point": "A"
+        }
+      },
+      "proof_l0_l4_verified": false,
+      "v1_reported_novelty_class": "NEGATIVE_REFUSAL_CASE"
+    },
+    {
+      "any_plan_has_implicit_auxiliary": false,
+      "auxiliary_objects_not_explicitly_requested": [],
+      "case_id": "D02_degenerate_coincident_points",
+      "complete_recipe_match_in_arm_a2": false,
+      "given_facts_count": 5,
+      "group": "Group_D",
+      "multi_plan_distinct_verified": false,
+      "novelty_labels": [
+        "NEGATIVE_REFUSAL"
+      ],
+      "operators_across_all_plans": [],
+      "operators_best_plan": [],
+      "operators_discovered_by_search": [],
+      "operators_provided_explicitly_by_source": [
+        "op.connect_segment"
+      ],
+      "original_goal": {
+        "goal_kind": "segment_length",
+        "length_unit": "a",
+        "operands": {
+          "a": "A",
+          "b": "A"
+        }
+      },
+      "proof_l0_l4_verified": false,
+      "v1_reported_novelty_class": "NEGATIVE_REFUSAL_CASE"
+    },
+    {
+      "any_plan_has_implicit_auxiliary": false,
+      "auxiliary_objects_not_explicitly_requested": [],
+      "case_id": "D03_degenerate_collinear_plane",
+      "complete_recipe_match_in_arm_a2": false,
+      "given_facts_count": 5,
+      "group": "Group_D",
+      "multi_plan_distinct_verified": false,
+      "novelty_labels": [
+        "NEGATIVE_REFUSAL"
+      ],
+      "operators_across_all_plans": [],
+      "operators_best_plan": [],
+      "operators_discovered_by_search": [],
+      "operators_provided_explicitly_by_source": [
+        "op.midpoint_segment",
+        "op.plane_through_three_points"
+      ],
+      "original_goal": {
+        "goal_kind": "distance_point_plane",
+        "length_unit": "a",
+        "operands": {
+          "plane": "pl_AMB",
+          "point": "S"
+        }
+      },
+      "proof_l0_l4_verified": false,
+      "v1_reported_novelty_class": "NEGATIVE_REFUSAL_CASE"
+    },
+    {
+      "any_plan_has_implicit_auxiliary": false,
+      "auxiliary_objects_not_explicitly_requested": [],
+      "case_id": "D04_degenerate_parallel_no_intersection",
+      "complete_recipe_match_in_arm_a2": false,
+      "given_facts_count": 4,
+      "group": "Group_D",
+      "multi_plan_distinct_verified": false,
+      "novelty_labels": [
+        "NEGATIVE_REFUSAL"
+      ],
+      "operators_across_all_plans": [],
+      "operators_best_plan": [],
+      "operators_discovered_by_search": [],
+      "operators_provided_explicitly_by_source": [
+        "op.intersect_line_plane"
+      ],
+      "original_goal": {
+        "goal_kind": "construct_point",
+        "length_unit": "a",
+        "operands": {
+          "target_object_id": "I"
+        }
+      },
+      "proof_l0_l4_verified": false,
+      "v1_reported_novelty_class": "NEGATIVE_REFUSAL_CASE"
+    },
+    {
+      "any_plan_has_implicit_auxiliary": false,
+      "auxiliary_objects_not_explicitly_requested": [],
+      "case_id": "D05_contradictory_triangle_inequality",
+      "complete_recipe_match_in_arm_a2": false,
+      "given_facts_count": 5,
+      "group": "Group_D",
+      "multi_plan_distinct_verified": false,
+      "novelty_labels": [
+        "NEGATIVE_REFUSAL"
+      ],
+      "operators_across_all_plans": [],
+      "operators_best_plan": [],
+      "operators_discovered_by_search": [],
+      "operators_provided_explicitly_by_source": [],
+      "original_goal": {
+        "goal_kind": "distance_point_plane",
+        "length_unit": "a",
+        "operands": {
+          "plane": [
+            "S",
+            "B",
+            "C"
+          ],
+          "point": "A"
+        }
+      },
+      "proof_l0_l4_verified": false,
+      "v1_reported_novelty_class": "NEGATIVE_REFUSAL_CASE"
+    },
+    {
+      "any_plan_has_implicit_auxiliary": false,
+      "auxiliary_objects_not_explicitly_requested": [],
+      "case_id": "D06_unsupported_curved_tangent_sphere",
+      "complete_recipe_match_in_arm_a2": false,
+      "given_facts_count": 5,
+      "group": "Group_D",
+      "multi_plan_distinct_verified": false,
+      "novelty_labels": [
+        "N5_UNSUPPORTED_CAPABILITY"
+      ],
+      "operators_across_all_plans": [],
+      "operators_best_plan": [],
+      "operators_discovered_by_search": [],
+      "operators_provided_explicitly_by_source": [],
+      "original_goal": {
+        "goal_kind": "unsupported_goal",
+        "length_unit": "a",
+        "operands": {
+          "reason": "Circumscribed tangent sphere locus construction is outside affine polyhedral operator inventory (Case C)."
+        }
+      },
+      "proof_l0_l4_verified": false,
+      "v1_reported_novelty_class": "CASE_C_UNSUPPORTED_OR_NEGATIVE"
+    },
+    {
+      "any_plan_has_implicit_auxiliary": false,
+      "auxiliary_objects_not_explicitly_requested": [],
+      "case_id": "D07_missing_base_right_angle_underdetermined",
+      "complete_recipe_match_in_arm_a2": false,
+      "given_facts_count": 2,
+      "group": "Group_D",
+      "multi_plan_distinct_verified": false,
+      "novelty_labels": [
+        "NEGATIVE_REFUSAL"
+      ],
+      "operators_across_all_plans": [],
+      "operators_best_plan": [],
+      "operators_discovered_by_search": [],
+      "operators_provided_explicitly_by_source": [],
+      "original_goal": {
+        "goal_kind": "solid_volume",
+        "length_unit": "a",
+        "operands": {
+          "apex": "S",
+          "base": [
+            "A",
+            "B",
+            "C"
+          ]
+        }
+      },
+      "proof_l0_l4_verified": false,
+      "v1_reported_novelty_class": "NEGATIVE_REFUSAL_CASE"
+    },
+    {
+      "any_plan_has_implicit_auxiliary": true,
+      "auxiliary_objects_not_explicitly_requested": [
+        "H_A",
+        "ln_A_H",
+        "seg_A_H"
+      ],
+      "case_id": "E01_multiplan_d_A_SBC_equilateral",
+      "complete_recipe_match_in_arm_a2": false,
+      "given_facts_count": 4,
+      "group": "Group_E",
+      "multi_plan_distinct_verified": true,
+      "novelty_labels": [
+        "N3_IMPLICIT_AUXILIARY_DISCOVERY",
+        "N4_ALTERNATIVE_VERIFIED_STRATEGY"
+      ],
+      "operators_across_all_plans": [
+        [
+          "op.project_point_to_plane"
+        ],
+        [
+          "op.project_point_to_line",
+          "op.line_through_points",
+          "op.plane_through_three_points",
+          "op.deduce_line_perp_plane_two_lines",
+          "op.project_point_to_line",
+          "op.deduce_line_perp_plane_two_lines"
+        ]
+      ],
+      "operators_best_plan": [
+        "op.project_point_to_plane"
+      ],
+      "operators_discovered_by_search": [
+        "op.project_point_to_plane"
+      ],
+      "operators_provided_explicitly_by_source": [],
+      "original_goal": {
+        "goal_kind": "distance_point_plane",
+        "length_unit": "a",
+        "operands": {
+          "plane": [
+            "S",
+            "B",
+            "C"
+          ],
+          "point": "A"
+        }
+      },
+      "proof_l0_l4_verified": true,
+      "v1_reported_novelty_class": "CASE_B_DYNAMIC_COMPOSITION"
+    },
+    {
+      "any_plan_has_implicit_auxiliary": true,
+      "auxiliary_objects_not_explicitly_requested": [
+        "H_A",
+        "ln_A_H",
+        "seg_A_H"
+      ],
+      "case_id": "E02_multiplan_d_A_SBC_right_B",
+      "complete_recipe_match_in_arm_a2": false,
+      "given_facts_count": 5,
+      "group": "Group_E",
+      "multi_plan_distinct_verified": true,
+      "novelty_labels": [
+        "N3_IMPLICIT_AUXILIARY_DISCOVERY",
+        "N4_ALTERNATIVE_VERIFIED_STRATEGY"
+      ],
+      "operators_across_all_plans": [
+        [
+          "op.project_point_to_plane"
+        ],
+        [
+          "op.deduce_line_perp_plane_two_lines",
+          "op.project_point_to_line",
+          "op.deduce_line_perp_plane_two_lines"
+        ]
+      ],
+      "operators_best_plan": [
+        "op.project_point_to_plane"
+      ],
+      "operators_discovered_by_search": [
+        "op.project_point_to_plane"
+      ],
+      "operators_provided_explicitly_by_source": [],
+      "original_goal": {
+        "goal_kind": "distance_point_plane",
+        "length_unit": "a",
+        "operands": {
+          "plane": [
+            "S",
+            "B",
+            "C"
+          ],
+          "point": "A"
+        }
+      },
+      "proof_l0_l4_verified": true,
+      "v1_reported_novelty_class": "CASE_B_DYNAMIC_COMPOSITION"
+    },
+    {
+      "any_plan_has_implicit_auxiliary": true,
+      "auxiliary_objects_not_explicitly_requested": [],
+      "case_id": "E03_multiplan_skew_d_SA_BC",
+      "complete_recipe_match_in_arm_a2": false,
+      "given_facts_count": 5,
+      "group": "Group_E",
+      "multi_plan_distinct_verified": true,
+      "novelty_labels": [
+        "N3_IMPLICIT_AUXILIARY_DISCOVERY",
+        "N4_ALTERNATIVE_VERIFIED_STRATEGY"
+      ],
+      "operators_across_all_plans": [
+        [
+          "op.common_perpendicular_skew_lines"
+        ],
+        [
+          "op.plane_through_line_parallel_line",
+          "op.project_point_to_plane"
+        ],
+        [
+          "op.plane_through_line_parallel_line",
+          "op.project_point_to_plane"
+        ]
+      ],
+      "operators_best_plan": [
+        "op.common_perpendicular_skew_lines"
+      ],
+      "operators_discovered_by_search": [
+        "op.common_perpendicular_skew_lines"
+      ],
+      "operators_provided_explicitly_by_source": [],
+      "original_goal": {
+        "goal_kind": "distance_skew_lines",
+        "length_unit": "a",
+        "operands": {
+          "line1": [
+            "S",
+            "A"
+          ],
+          "line2": [
+            "B",
+            "C"
+          ]
+        }
+      },
+      "proof_l0_l4_verified": true,
+      "v1_reported_novelty_class": "CASE_B_DYNAMIC_COMPOSITION"
+    },
+    {
+      "any_plan_has_implicit_auxiliary": true,
+      "auxiliary_objects_not_explicitly_requested": [
+        "par_dt_target_1_B"
+      ],
+      "case_id": "E04_multiplan_skew_angle_cube_symmetric_anchors",
+      "complete_recipe_match_in_arm_a2": false,
+      "given_facts_count": 2,
+      "group": "Group_E",
+      "multi_plan_distinct_verified": true,
+      "novelty_labels": [
+        "N2_OPERATOR_COMPOSITION",
+        "N3_IMPLICIT_AUXILIARY_DISCOVERY",
+        "N4_ALTERNATIVE_VERIFIED_STRATEGY"
+      ],
+      "operators_across_all_plans": [
+        [
+          "op.line_through_points",
+          "op.line_through_points",
+          "op.line_parallel_through_point"
+        ],
+        [
+          "op.line_through_points",
+          "op.line_through_points",
+          "op.line_parallel_through_point"
+        ]
+      ],
+      "operators_best_plan": [
+        "op.line_through_points",
+        "op.line_through_points",
+        "op.line_parallel_through_point"
+      ],
+      "operators_discovered_by_search": [
+        "op.line_through_points",
+        "op.line_through_points",
+        "op.line_parallel_through_point"
+      ],
+      "operators_provided_explicitly_by_source": [],
+      "original_goal": {
+        "goal_kind": "angle_lines",
+        "length_unit": "a",
+        "operands": {
+          "line1": [
+            "A",
+            "B'"
+          ],
+          "line2": [
+            "B",
+            "C'"
+          ]
+        }
+      },
+      "proof_l0_l4_verified": true,
+      "v1_reported_novelty_class": "CASE_B_DYNAMIC_COMPOSITION"
+    },
+    {
+      "any_plan_has_implicit_auxiliary": true,
+      "auxiliary_objects_not_explicitly_requested": [
+        "pl_dihedral",
+        "ray_p1",
+        "ray_p2"
+      ],
+      "case_id": "E05_multiplan_dihedral_linear_vs_synthetic",
+      "complete_recipe_match_in_arm_a2": false,
+      "given_facts_count": 4,
+      "group": "Group_E",
+      "multi_plan_distinct_verified": true,
+      "novelty_labels": [
+        "N3_IMPLICIT_AUXILIARY_DISCOVERY",
+        "N4_ALTERNATIVE_VERIFIED_STRATEGY"
+      ],
+      "operators_across_all_plans": [
+        [
+          "op.construct_dihedral_linear_angle"
+        ],
+        [
+          "op.intersect_planes",
+          "op.project_point_to_line",
+          "op.plane_through_three_points",
+          "op.deduce_line_perp_plane_two_lines"
+        ]
+      ],
+      "operators_best_plan": [
+        "op.construct_dihedral_linear_angle"
+      ],
+      "operators_discovered_by_search": [
+        "op.construct_dihedral_linear_angle"
+      ],
+      "operators_provided_explicitly_by_source": [],
+      "original_goal": {
+        "goal_kind": "angle_plane_plane",
+        "length_unit": "a",
+        "operands": {
+          "plane1": [
+            "S",
+            "B",
+            "C"
+          ],
+          "plane2": [
+            "A",
+            "B",
+            "C"
+          ]
+        }
+      },
+      "proof_l0_l4_verified": true,
+      "v1_reported_novelty_class": "CASE_B_DYNAMIC_COMPOSITION"
+    }
+  ],
+  "generated_at_utc": "2026-11-19T04:30:50Z",
+  "schema": "axo-construction-novelty-reclassification/1",
+  "summary_label_counts": {
+    "N0_EXISTING_COMPLETE_RECIPE": 4,
+    "N1_EXPLICIT_CONSTRUCTION_SCHEDULING": 12,
+    "N2_OPERATOR_COMPOSITION": 22,
+    "N3_IMPLICIT_AUXILIARY_DISCOVERY": 17,
+    "N4_ALTERNATIVE_VERIFIED_STRATEGY": 14,
+    "N5_UNSUPPORTED_CAPABILITY": 1,
+    "NEGATIVE_REFUSAL": 6
+  },
+  "v1_28_case_b_breakdown_summary": {
+    "n2_operator_composition_cases": [
+      "A02_midpoint_sm_equilateral",
+      "A03_centroid_sg_square_base",
+      "A04_midpoint_am_right_B",
+      "A07_angle_sc_base_square",
+      "A09_cube_face_diagonal_intersection_midpoint",
+      "A10_cube_section_diagonal_plane",
+      "B01_divide_segment_ratio_length",
+      "B02_point_reflection_distance",
+      "B04_dihedral_linear_angle_cube",
+      "B05_skew_angle_cube_parallel_transfer",
+      "B06_divide_segment_plus_point_plane_distance",
+      "B07_reflection_plus_centroid_length",
+      "B08_intersection_point_derived_plane_prism",
+      "B09_deep_19step_chain_exceeds_32_ir_slots",
+      "B10_derived_polygon_area_after_ratio",
+      "C02_aux_foot_d_A_SBD_square",
+      "C03_aux_parallel_line_plane_transfer",
+      "C04_aux_skew_lines_cube_ABp_BCp",
+      "C05_aux_skew_lines_pyramid_SA_BD",
+      "C07_aux_angle_line_plane_SB_SAC",
+      "C08_aux_parallel_plane_section_through_midpoint",
+      "E04_multiplan_skew_angle_cube_symmetric_anchors"
+    ],
+    "n3_implicit_auxiliary_discovery_cases": [
+      "A07_angle_sc_base_square",
+      "B03_dihedral_linear_angle_equilateral",
+      "B04_dihedral_linear_angle_cube",
+      "B05_skew_angle_cube_parallel_transfer",
+      "B06_divide_segment_plus_point_plane_distance",
+      "C01_aux_foot_d_A_SBC_equilateral",
+      "C02_aux_foot_d_A_SBD_square",
+      "C03_aux_parallel_line_plane_transfer",
+      "C04_aux_skew_lines_cube_ABp_BCp",
+      "C05_aux_skew_lines_pyramid_SA_BD",
+      "C06_aux_point_to_line_foot",
+      "C07_aux_angle_line_plane_SB_SAC",
+      "E01_multiplan_d_A_SBC_equilateral",
+      "E02_multiplan_d_A_SBC_right_B",
+      "E03_multiplan_skew_d_SA_BC",
+      "E04_multiplan_skew_angle_cube_symmetric_anchors",
+      "E05_multiplan_dihedral_linear_vs_synthetic"
+    ],
+    "n4_alternative_verified_strategy_cases": [
+      "B03_dihedral_linear_angle_equilateral",
+      "B04_dihedral_linear_angle_cube",
+      "B05_skew_angle_cube_parallel_transfer",
+      "B06_divide_segment_plus_point_plane_distance",
+      "C01_aux_foot_d_A_SBC_equilateral",
+      "C02_aux_foot_d_A_SBD_square",
+      "C03_aux_parallel_line_plane_transfer",
+      "C04_aux_skew_lines_cube_ABp_BCp",
+      "C05_aux_skew_lines_pyramid_SA_BD",
+      "E01_multiplan_d_A_SBC_equilateral",
+      "E02_multiplan_d_A_SBC_right_B",
+      "E03_multiplan_skew_d_SA_BC",
+      "E04_multiplan_skew_angle_cube_symmetric_anchors",
+      "E05_multiplan_dihedral_linear_vs_synthetic"
+    ],
+    "n5_unsupported_capability_cases": [
+      "D06_unsupported_curved_tangent_sphere"
+    ],
+    "strict_n1_explicit_scheduling_cases": [
+      "A02_midpoint_sm_equilateral",
+      "A03_centroid_sg_square_base",
+      "A04_midpoint_am_right_B",
+      "A09_cube_face_diagonal_intersection_midpoint",
+      "B01_divide_segment_ratio_length",
+      "B02_point_reflection_distance",
+      "B06_divide_segment_plus_point_plane_distance",
+      "B07_reflection_plus_centroid_length",
+      "B08_intersection_point_derived_plane_prism",
+      "B09_deep_19step_chain_exceeds_32_ir_slots",
+      "B10_derived_polygon_area_after_ratio",
+      "C08_aux_parallel_plane_section_through_midpoint"
+    ],
+    "v1_claimed_case_b_count": 28
+  }
+}

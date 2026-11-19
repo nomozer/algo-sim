@@ -19,7 +19,7 @@ from app.simulation.geometry import exact as E
 from app.simulation.geometry import measure as MS
 from app.simulation.geometry import metric as M
 
-from . import DYNAMIC_PLANNER_VERSION
+from . import DYNAMIC_PLANNER_V2_VERSION, DYNAMIC_PLANNER_VERSION
 from .construction_graph import (
     ConstructionNode,
     ConstructionProofGraph,
@@ -306,6 +306,8 @@ def _generate_candidates(
     state: PlannerSearchState,
     frame: InitialGeometryFrame,
     goal_spec: GoalSpec,
+    *,
+    mode: str = "v2",
 ) -> list[dict[str, Any]]:
     """Structurally enumerate valid next atomic operators from `state` and `goal_spec` (NO oracle input)."""
     pts, lns, pls, segs, secs = _collect_typed_views(state)
@@ -353,6 +355,7 @@ def _generate_candidates(
     # 2. Ensure target structural entities in GoalSpec exist in `state.objects` before geometric search
     ops = goal_spec.operands
     gk = goal_spec.goal_kind
+    seg_goal_origin = "DERIVED_OBJECT" if mode == "v2" else "AUXILIARY_CONSTRUCTION"
 
     def _ensure_point_list_plane(ref: Any, hint_lbl: str = "mp_goal") -> str | None:
         if isinstance(ref, str) and ref in pls:
@@ -396,10 +399,6 @@ def _generate_candidates(
                 )
         return None
 
-    if state.pending and len(candidates) > 0:
-        # Still allow target lines/planes to be built concurrently, then return before aux branching if pending remains
-        pass
-
     target_pl_id = _ensure_point_list_plane(ops.get("plane"), "mp_target") if "plane" in ops else None
     target_pl1_id = _ensure_point_list_plane(ops.get("plane1"), "mp_target_1") if "plane1" in ops else None
     target_pl2_id = _ensure_point_list_plane(ops.get("plane2"), "mp_target_2") if "plane2" in ops else None
@@ -410,21 +409,22 @@ def _generate_candidates(
     if gk == "solid_volume" and "base" in ops:
         target_pl_id = _ensure_point_list_plane(ops["base"], "mp_base")
 
-    if gk == "segment_length":
+    if gk in ("segment_length", "point_distance"):
         a, b = ops.get("a"), ops.get("b")
         if a in pts and b in pts:
-            if _resolve_object_by_ref(state, [a, b], "segment3") is None:
-                candidates.append(
-                    {
-                        "operator_id": "op.connect_segment",
-                        "inputs": {"a": a, "b": b},
-                        "params": {},
-                        "overrides": {"segment": f"seg_{a}_{b}" if f"seg_{a}_{b}" not in state.objects else None},
-                        "pending_id": None,
-                        "origin": "AUXILIARY_CONSTRUCTION",
-                        "hint": f"Nối đoạn thẳng {a}{b}",
-                    }
-                )
+            if gk == "segment_length" or pts[a] != pts[b]:
+                if pts[a] == pts[b] or _resolve_object_by_ref(state, [a, b], "segment3") is None:
+                    candidates.append(
+                        {
+                            "operator_id": "op.connect_segment",
+                            "inputs": {"a": a, "b": b},
+                            "params": {},
+                            "overrides": {"segment": f"seg_{a}_{b}" if f"seg_{a}_{b}" not in state.objects else None},
+                            "pending_id": None,
+                            "origin": seg_goal_origin,
+                            "hint": f"Nối đoạn thẳng {a}{b}",
+                        }
+                    )
 
     if gk == "polygon_area":
         verts = ops.get("points") or []
@@ -439,7 +439,7 @@ def _generate_candidates(
                             "params": {},
                             "overrides": {"segment": f"seg_{u}_{v}" if f"seg_{u}_{v}" not in state.objects else None},
                             "pending_id": None,
-                            "origin": "AUXILIARY_CONSTRUCTION",
+                            "origin": seg_goal_origin,
                             "hint": f"Nối cạnh đa giác {u}{v}",
                         }
                     )
@@ -491,37 +491,36 @@ def _generate_candidates(
         lnk = state.objects[target_ln_id].canonical_geom_key
         plk = state.objects[target_pl_id].canonical_geom_key
         with M.using(frame.chart_metric):
-            sin_sq = MS.sin_sq_line_plane(lns[target_ln_id], pls[target_pl_id])
-        if sin_sq in (0, 1):
-            # Boundary special case: prove parallelism or orthogonality via two lines / transfer
-            if sin_sq == 0:
-                p_on_ln = next((pid for pid, pval in sorted(pts.items()) if ("point_on_line", (canonical_point_key(pval), lnk)) in state.relations), None)
-                if p_on_ln:
-                    candidates.append(
-                        {
-                            "operator_id": "op.deduce_parallel_line_plane_transfer",
-                            "inputs": {"line": target_ln_id, "plane": target_pl_id, "sample_point": p_on_ln},
-                            "params": {},
-                            "overrides": None,
-                            "pending_id": None,
-                            "origin": "DERIVED_OBJECT",
-                            "hint": f"Chứng minh {target_ln_id} // {target_pl_id}",
-                        }
-                    )
-            else:
-                planar_lns = [lid for lid in sorted(lns) if ("line_in_plane", (state.objects[lid].canonical_geom_key, plk)) in state.relations]
-                if len(planar_lns) >= 2:
-                    candidates.append(
-                        {
-                            "operator_id": "op.deduce_line_perp_plane_two_lines",
-                            "inputs": {"line": target_ln_id, "planar_line1": planar_lns[0], "planar_line2": planar_lns[1], "plane": target_pl_id},
-                            "params": {},
-                            "overrides": None,
-                            "pending_id": None,
-                            "origin": "DERIVED_OBJECT",
-                            "hint": f"Chứng minh {target_ln_id} ⟂ {target_pl_id}",
-                        }
-                    )
+            is_par_rel = MS.parallel_line_plane(lns[target_ln_id], pls[target_pl_id])
+            is_perp_rel = M.plane_covector(lns[target_ln_id].direction).cross(pls[target_pl_id].normal).is_zero()
+        if is_par_rel:
+            p_on_ln = next((pid for pid, pval in sorted(pts.items()) if ("point_on_line", (canonical_point_key(pval), lnk)) in state.relations), None)
+            if p_on_ln:
+                candidates.append(
+                    {
+                        "operator_id": "op.deduce_parallel_line_plane_transfer",
+                        "inputs": {"line": target_ln_id, "plane": target_pl_id, "sample_point": p_on_ln},
+                        "params": {},
+                        "overrides": None,
+                        "pending_id": None,
+                        "origin": "DERIVED_OBJECT",
+                        "hint": f"Chứng minh {target_ln_id} // {target_pl_id}",
+                    }
+                )
+        elif is_perp_rel:
+            planar_lns = [lid for lid in sorted(lns) if ("line_in_plane", (state.objects[lid].canonical_geom_key, plk)) in state.relations]
+            if len(planar_lns) >= 2:
+                candidates.append(
+                    {
+                        "operator_id": "op.deduce_line_perp_plane_two_lines",
+                        "inputs": {"line": target_ln_id, "planar_line1": planar_lns[0], "planar_line2": planar_lns[1], "plane": target_pl_id},
+                        "params": {},
+                        "overrides": None,
+                        "pending_id": None,
+                        "origin": "DERIVED_OBJECT",
+                        "hint": f"Chứng minh {target_ln_id} ⟂ {target_pl_id}",
+                    }
+                )
         else:
             meets = [r[1][2] for r in state.relations if r[0] == "line_plane_intersection_witness" and r[1][0] == lnk and r[1][1] == plk]
             if not meets:
@@ -785,19 +784,123 @@ def _generate_candidates(
                                             }
                                         )
 
-    # 3b. Point-to-line projection
+    # 3b. Point-to-line projection + Three-Perpendiculars 2-step alternative (plane perp -> line foot)
     if gk == "distance_point_line" and ops.get("point") in pts and target_ln_id in lns:
-        candidates.append(
-            {
-                "operator_id": "op.project_point_to_line",
-                "inputs": {"point": ops["point"], "line": target_ln_id},
-                "params": {},
-                "overrides": {"foot": f"H_{ops['point']}", "segment": f"seg_{ops['point']}_H", "line": f"ln_{ops['point']}_H"},
-                "pending_id": None,
-                "origin": "AUXILIARY_CONSTRUCTION",
-                "hint": f"Hạ chân đường vuông góc từ {ops['point']} xuống {target_ln_id}",
-            }
-        )
+        pt_dpl = ops["point"]
+        pk_dpl = canonical_point_key(pts[pt_dpl])
+        lnk_dpl = state.objects[target_ln_id].canonical_geom_key
+        already_dpl = any(r[0] == "perp_point_line_witness" and r[1][0] == pk_dpl and r[1][1] == lnk_dpl for r in state.relations)
+        if not already_dpl:
+            candidates.append(
+                {
+                    "operator_id": "op.project_point_to_line",
+                    "inputs": {"point": pt_dpl, "line": target_ln_id},
+                    "params": {},
+                    "overrides": {"foot": f"H_{pt_dpl}", "segment": f"seg_{pt_dpl}_H", "line": f"ln_{pt_dpl}_H"},
+                    "pending_id": None,
+                    "origin": "AUXILIARY_CONSTRUCTION",
+                    "hint": f"Hạ chân đường vuông góc từ {pt_dpl} xuống {target_ln_id}",
+                }
+            )
+            if mode == "v2":
+                # Alternative Three-Perpendiculars strategy when a host plane containing `target_ln_id` admits an orthogonal foot from `pt_dpl`
+                host_pls = [
+                    plid
+                    for plid, plval in sorted(pls.items())
+                    if ("line_in_plane", (lnk_dpl, state.objects[plid].canonical_geom_key)) in state.relations
+                    and plval.signed_eval(pts[pt_dpl]) != 0
+                ]
+                for hpl_id in host_pls[:2]:
+                    hpl_k = state.objects[hpl_id].canonical_geom_key
+                    feet_pl = [r[1][2] for r in state.relations if r[0] == "perp_point_plane_witness" and r[1][0] == pk_dpl and r[1][1] == hpl_k]
+                    if not feet_pl:
+                        candidates.append(
+                            {
+                                "operator_id": "op.project_point_to_plane",
+                                "inputs": {"point": pt_dpl, "plane": hpl_id},
+                                "params": {},
+                                "overrides": {"foot": f"O_{pt_dpl}_{hpl_id}", "segment": f"seg_{pt_dpl}_O", "line": f"ln_{pt_dpl}_O"},
+                                "pending_id": None,
+                                "origin": "AUXILIARY_CONSTRUCTION",
+                                "hint": f"Hạ {pt_dpl}O vuông góc xuống {hpl_id}",
+                            }
+                        )
+                    else:
+                        foot_pl_id = (state.key_to_ids.get(feet_pl[0]) or [None])[0]
+                        if foot_pl_id and foot_pl_id != pt_dpl:
+                            with M.using(frame.chart_metric):
+                                foot_on_ln = MS.distance_sq_point_line(pts[foot_pl_id], lns[target_ln_id]) == 0
+                            if not foot_on_ln:
+                                fk2 = [r[1][2] for r in state.relations if r[0] == "perp_point_line_witness" and r[1][0] == canonical_point_key(pts[foot_pl_id]) and r[1][1] == lnk_dpl]
+                                if not fk2:
+                                    candidates.append(
+                                        {
+                                            "operator_id": "op.project_point_to_line",
+                                            "inputs": {"point": foot_pl_id, "line": target_ln_id},
+                                            "params": {},
+                                            "overrides": {"foot": f"K_{pt_dpl}_ln", "segment": f"seg_{foot_pl_id}_K", "line": f"ln_{foot_pl_id}_K"},
+                                            "pending_id": None,
+                                            "origin": "AUXILIARY_CONSTRUCTION",
+                                            "hint": f"Từ hình chiếu {foot_pl_id} kẻ vuông góc tới {target_ln_id}",
+                                        }
+                                    )
+                                else:
+                                    k_ln_id = (state.key_to_ids.get(fk2[0]) or [None])[0]
+                                    aux_pl_k_id = _resolve_object_by_ref(state, [pt_dpl, foot_pl_id, k_ln_id], "plane3") if k_ln_id else None
+                                    if k_ln_id and aux_pl_k_id is None:
+                                        candidates.append(
+                                            {
+                                                "operator_id": "op.plane_through_three_points",
+                                                "inputs": {"a": pt_dpl, "b": foot_pl_id, "c": k_ln_id},
+                                                "params": {},
+                                                "overrides": {"plane": f"pl_{pt_dpl}{foot_pl_id}{k_ln_id}"},
+                                                "pending_id": None,
+                                                "origin": "AUXILIARY_CONSTRUCTION",
+                                                "hint": f"Xác định mặt phẳng ba đường vuông góc ({pt_dpl}{foot_pl_id}{k_ln_id})",
+                                            }
+                                        )
+                                    elif k_ln_id and aux_pl_k_id:
+                                        perp_pl_ln = _resolve_object_by_ref(state, [pt_dpl, foot_pl_id], "line3")
+                                        base_ln_k = _resolve_object_by_ref(state, [foot_pl_id, k_ln_id], "line3")
+                                        pk_ln = _resolve_object_by_ref(state, [pt_dpl, k_ln_id], "line3")
+                                        if pk_ln is None:
+                                            candidates.append(
+                                                {
+                                                    "operator_id": "op.line_through_points",
+                                                    "inputs": {"a": pt_dpl, "b": k_ln_id},
+                                                    "params": {},
+                                                    "overrides": {"line": f"ln_{pt_dpl}_{k_ln_id}"},
+                                                    "pending_id": None,
+                                                    "origin": "AUXILIARY_CONSTRUCTION",
+                                                    "hint": f"Nối {pt_dpl}{k_ln_id}",
+                                                }
+                                            )
+                                        elif perp_pl_ln and base_ln_k:
+                                            aux_plk = state.objects[aux_pl_k_id].canonical_geom_key
+                                            if ("perp_line_plane", (lnk_dpl, aux_plk)) not in state.relations:
+                                                candidates.append(
+                                                    {
+                                                        "operator_id": "op.deduce_line_perp_plane_two_lines",
+                                                        "inputs": {"line": target_ln_id, "planar_line1": perp_pl_ln, "planar_line2": base_ln_k, "plane": aux_pl_k_id},
+                                                        "params": {},
+                                                        "overrides": None,
+                                                        "pending_id": None,
+                                                        "origin": "DERIVED_OBJECT",
+                                                        "hint": f"Chứng minh {target_ln_id} vuông góc mặt phẳng ({pt_dpl}{foot_pl_id}{k_ln_id})",
+                                                    }
+                                                )
+                                            else:
+                                                candidates.append(
+                                                    {
+                                                        "operator_id": "op.deduce_planar_perp_from_perp_plane",
+                                                        "inputs": {"perp_line": target_ln_id, "line_in_plane": pk_ln, "host_plane": aux_pl_k_id},
+                                                        "params": {},
+                                                        "overrides": None,
+                                                        "pending_id": None,
+                                                        "origin": "DERIVED_OBJECT",
+                                                        "hint": f"Suy ra {pt_dpl}{k_ln_id} vuông góc với {target_ln_id} (định lý ba đường vuông góc)",
+                                                    }
+                                                )
 
     # 3c. Skew/intersecting angle between lines
     if gk == "angle_lines" and target_ln1_id and target_ln2_id:
@@ -967,7 +1070,11 @@ def _compute_heuristic(state: PlannerSearchState, goal_spec: GoalSpec) -> float:
 
 
 class DynamicConstructionPlanner:
-    """Bounded dependency-aware best-first construction planner (`dynamic-construction-planner/1`)."""
+    """Bounded dependency-aware best-first construction planner (`dynamic-construction-planner/1` & `/2`)."""
+
+    def __init__(self, *, mode: str = "v2") -> None:
+        self.mode = mode if mode in ("v1", "v2") else "v2"
+        self.planner_version = DYNAMIC_PLANNER_V2_VERSION if self.mode == "v2" else DYNAMIC_PLANNER_VERSION
 
     def plan(
         self,
@@ -1000,6 +1107,7 @@ class DynamicConstructionPlanner:
             peak_kib = _stop_mem()
             return {
                 "algorithm": "bounded_best_first_dependency_aware_search",
+                "mode": self.mode,
                 "budget": cfg.to_dict(),
                 "search_ms": elapsed_ms,
                 "expanded_states": expanded_states,
@@ -1020,7 +1128,7 @@ class DynamicConstructionPlanner:
                 else "MISSING_PRECONDITION"
             )
             return DynamicPlannerResult(
-                planner_version=DYNAMIC_PLANNER_VERSION,
+                planner_version=self.planner_version,
                 status=status,
                 case_id=frame.case_id,
                 plans=(),
@@ -1031,7 +1139,7 @@ class DynamicConstructionPlanner:
 
         if goal_spec.goal_kind == "unsupported_goal":
             return DynamicPlannerResult(
-                planner_version=DYNAMIC_PLANNER_VERSION,
+                planner_version=self.planner_version,
                 status="UNSUPPORTED_OPERATOR",
                 case_id=frame.case_id,
                 plans=(),
@@ -1057,7 +1165,7 @@ class DynamicConstructionPlanner:
                 if collected_solutions:
                     break
                 return DynamicPlannerResult(
-                    planner_version=DYNAMIC_PLANNER_VERSION,
+                    planner_version=self.planner_version,
                     status="SEARCH_TIMEOUT",
                     case_id=frame.case_id,
                     plans=(),
@@ -1070,7 +1178,7 @@ class DynamicConstructionPlanner:
                 if collected_solutions:
                     break
                 return DynamicPlannerResult(
-                    planner_version=DYNAMIC_PLANNER_VERSION,
+                    planner_version=self.planner_version,
                     status="SEARCH_RESOURCE_LIMIT",
                     case_id=frame.case_id,
                     plans=(),
@@ -1082,7 +1190,7 @@ class DynamicConstructionPlanner:
                 if collected_solutions:
                     break
                 return DynamicPlannerResult(
-                    planner_version=DYNAMIC_PLANNER_VERSION,
+                    planner_version=self.planner_version,
                     status="SEARCH_RESOURCE_LIMIT",
                     case_id=frame.case_id,
                     plans=(),
@@ -1111,7 +1219,7 @@ class DynamicConstructionPlanner:
                 if g_eval is not None:
                     p_idx = len(collected_solutions) + 1
                     pg = materialize_proof_graph_from_state(frame, cur, goal_spec=goal_spec, goal_eval=g_eval, plan_index=p_idx)
-                    report = verify_full_proof_and_scene(pg, frame.chart_metric)
+                    report = verify_full_proof_and_scene(pg, frame.chart_metric, strict_node_replay=(self.mode == "v2"))
                     if report.passed:
                         pres = project_to_presentation_graph(pg)
                         # Deduplicate substantively identical plans (not permutations of independent steps!)
@@ -1142,7 +1250,6 @@ class DynamicConstructionPlanner:
                             collected_solutions.append((score_tuple, pg, pres, report, g_eval, cur.lineage))
                             if len(collected_solutions) >= cfg.max_plans:
                                 break
-                        # Note: if `cur` solved the goal via fast direct route, we still allow sibling/pending branches to complete!
                         continue
                     else:
                         last_reject_code = report.failure_code
@@ -1153,7 +1260,7 @@ class DynamicConstructionPlanner:
                 pruned_states += 1
                 continue
 
-            cands = _generate_candidates(cur, frame, goal_spec)
+            cands = _generate_candidates(cur, frame, goal_spec, mode=self.mode)
             for cand_idx, cand in enumerate(cands):
                 if candidate_ops_evaluated >= cfg.max_candidate_operators:
                     break
@@ -1205,7 +1312,7 @@ class DynamicConstructionPlanner:
                 for idx, item in enumerate(collected_solutions)
             )
             return DynamicPlannerResult(
-                planner_version=DYNAMIC_PLANNER_VERSION,
+                planner_version=self.planner_version,
                 status="GOAL_VERIFIED",
                 case_id=frame.case_id,
                 plans=ranked,
@@ -1214,9 +1321,9 @@ class DynamicConstructionPlanner:
                 telemetry=_base_telemetry(),
             )
 
-        # Map exact failure status
+        # Map exact failure status (`v2` distinguishes DEGENERATE_CONSTRUCTION vs CONTRADICTORY_CONSTRAINTS)
         if last_reject_code and last_reject_code.startswith("DEGENERATE_"):
-            term_status = "CONTRADICTORY_CONSTRAINTS"
+            term_status = "DEGENERATE_CONSTRUCTION" if self.mode == "v2" else "CONTRADICTORY_CONSTRAINTS"
         elif last_reject_code == "IMPOSSIBLE_PERPENDICULARITY":
             term_status = "VERIFICATION_FAILED"
         elif last_reject_code == "UNSUPPORTED_OPERATOR":
@@ -1225,7 +1332,7 @@ class DynamicConstructionPlanner:
             term_status = "NO_PLAN_FOUND_WITHIN_BUDGET"
 
         return DynamicPlannerResult(
-            planner_version=DYNAMIC_PLANNER_VERSION,
+            planner_version=self.planner_version,
             status=term_status,
             case_id=frame.case_id,
             plans=(),
