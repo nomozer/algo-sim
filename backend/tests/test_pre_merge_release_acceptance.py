@@ -493,3 +493,65 @@ def test_conftest_ephemeral_db_prevents_windows_pid_reuse_and_disposes_engine() 
     assert "algosim.db" not in p_same
     assert conftest.duong_dan_db_test(111) != conftest.duong_dan_db_test(222)
     assert conftest.duong_dan_db_test(111, "aaa") != conftest.duong_dan_db_test(111, "bbb")
+
+
+def test_absorbed_helper_and_hoisted_event_learner_text_sync_without_stale_operands() -> None:
+    """ISSUE-SE-ABSORBED-HELPER-AND-HOISTED-EVENT-SYNC: kept helpers & hoisted events must update learner_text."""
+    from app.simulation.geometry_functions.step_editor import execute_step_edit
+
+    samples = json.loads((DATA_DIR / "advanced-geometry-samples.json").read_text(encoding="utf-8"))
+    items = samples if isinstance(samples, list) else samples["samples"]
+    s11 = copy.deepcopy(next(x["envelope"]["scene3d"] for x in items if x["id"] == "chop-mat-cau-ngoai-tiep"))
+    ev11 = next(e for e in s11["events"] if e.get("object") == "mp_tt_AB")
+
+    # Standard edit order: M_AB CREATE event stays updated cleanly (no "Dựng trung điểm của A và B.")
+    res = execute_step_edit(
+        scene3d=copy.deepcopy(s11),
+        step_id="mp_tt_AB",
+        step_index=ev11["step_index"],
+        previous_instruction=ev11.get("learner_text") or "",
+        edited_instruction="Dựng mặt phẳng trung trực (P) của cạnh SB",
+        target_ids=["mp_tt_AB"],
+        absorbed_ids=["M_AB"],
+        scene_hooks=DEFAULT_SCENE3D_HOOKS,
+    )
+    sc = res["scene3d"]
+    ev_m_ab = next(e for e in sc["events"] if e.get("object") == "M_AB" and e.get("action") == "CREATE")
+    assert ev_m_ab["learner_text"] == "Dựng trung điểm của S và B."
+    assert ev_m_ab["explanation"] == "Trung điểm của S và B"
+    assert ev_m_ab["depends"] == ["S", "B"]
+    assert ev_m_ab["details"]["toa_do"] == ["2", "0", "2"]
+    full_dump = json.dumps(sc, ensure_ascii=False)
+    assert "(α)" not in full_dump
+    assert "trung điểm của a và b" not in full_dump.lower()
+    dep_check_ids = {"M_AB", "mp_tt_AB", "truc_day", "I", "cau_ngoai_tiep", "R", "V_cau"}
+    for obj_chk in sc["objects"]:
+        if obj_chk.get("id") in dep_check_ids:
+            assert "A và B" not in json.dumps(obj_chk, ensure_ascii=False)
+    for ev_chk in sc["events"]:
+        if ev_chk.get("object") in dep_check_ids:
+            assert "A và B" not in json.dumps(ev_chk, ensure_ascii=False)
+
+    # Hoisted dependency path: force M_AB CREATE event after mp_tt_AB so it gets hoisted before primary_id
+    s_hoist = copy.deepcopy(s11)
+    ev_m = next(e for e in s_hoist["events"] if e.get("object") == "M_AB")
+    other_evs = [e for e in s_hoist["events"] if e.get("object") != "M_AB"]
+    other_evs.insert(len(other_evs) - 1, ev_m)
+    for idx_i, e_i in enumerate(other_evs):
+        e_i["step_index"] = idx_i
+    s_hoist["events"] = other_evs
+    ev11_h = next(e for e in s_hoist["events"] if e.get("object") == "mp_tt_AB")
+    res_h = execute_step_edit(
+        scene3d=s_hoist,
+        step_id="mp_tt_AB",
+        step_index=ev11_h["step_index"],
+        previous_instruction=ev11_h.get("learner_text") or "",
+        edited_instruction="Dựng mặt phẳng trung trực (P) của cạnh SB",
+        target_ids=["mp_tt_AB"],
+        absorbed_ids=["M_AB"],
+        scene_hooks=DEFAULT_SCENE3D_HOOKS,
+    )
+    ev_m_hoisted = next(e for e in res_h["scene3d"]["events"] if e.get("object") == "M_AB" and e.get("action") == "CREATE")
+    assert ev_m_hoisted["learner_text"] == "Dựng trung điểm của S và B."
+    assert ev_m_hoisted["depends"] == ["S", "B"]
+    assert ev_m_hoisted["details"]["toa_do"] == ["2", "0", "2"]

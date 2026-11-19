@@ -4225,6 +4225,52 @@ def execute_step_edit(
         if ev.get("action") == "CREATE" and ev.get("object") in primary_deps_closure
     }
 
+    def _sync_rebuilt_event(ev_copy: dict[str, Any]) -> dict[str, Any]:
+        ev_oid = ev_copy.get("object")
+        if ev_oid in updated_ids or ev_oid in recomputed_ids or ev_oid in kept_helpers:
+            cur_o = next((o for o in surviving_objs if o["id"] == ev_oid), None)
+            if cur_o is not None:
+                ev_copy["depends"] = list(cur_o.get("depends") or ())
+                if "visible_prerequisites" in ev_copy:
+                    ev_copy["visible_prerequisites"] = list(cur_o.get("depends") or ())
+                if notation_renames and ev_oid in recomputed_ids:
+                    for ev_field in ("learner_text", "display_label", "explanation", "title", "justification_text"):
+                        if isinstance(ev_copy.get(ev_field), str):
+                            ev_copy[ev_field] = _apply_notation_renames(ev_copy[ev_field], notation_renames)
+                if cur_o.get("type") == "quantity" and cur_o.get("value") is not None:
+                    ev_copy["learner_text"] = f"{cur_o.get('label') or cur_o['id']} bằng {cur_o['value']}."
+                elif ev_oid == primary_id and parsed_new.normalized_text:
+                    ev_copy["learner_text"] = parsed_new.normalized_text
+                elif (
+                    (ev_oid in kept_helpers or ev_oid in updated_ids or (ev_oid in recomputed_ids and not cur_o.get("notation")))
+                    and ev_copy.get("action") == "CREATE"
+                    and cur_o.get("label")
+                ):
+                    lbl = str(cur_o["label"]).strip()
+                    mid_lbl = lbl[:1].lower() + lbl[1:] if lbl[:1].isupper() and lbl[1:2].islower() else lbl
+                    ev_copy["learner_text"] = f"Dựng {mid_lbl}."
+                elif not ev_copy.get("learner_text"):
+                    ev_copy["learner_text"] = cur_o.get("label") or ""
+                if ev_oid in updated_ids or ev_oid in kept_helpers or (ev_oid in recomputed_ids and not cur_o.get("notation")):
+                    ev_copy["display_label"] = cur_o.get("display_label") or cur_o.get("label") or ev_copy.get("display_label")
+                    ev_copy["explanation"] = (
+                        (parsed_new.normalized_text if ev_oid == primary_id and parsed_new.normalized_text else None)
+                        or cur_o.get("label")
+                        or ev_copy.get("explanation")
+                    )
+                ev_details = ev_copy.get("details")
+                if isinstance(ev_details, dict):
+                    if "toa_do" in ev_details and "xyz" in cur_o:
+                        ev_details["toa_do"] = list(cur_o["xyz"])
+                    if "label" in ev_details and (cur_o.get("notation") or cur_o.get("label")):
+                        ev_details["label"] = cur_o.get("notation") or cur_o.get("label")
+                    ev_val = ev_details.get("value")
+                    if isinstance(ev_val, dict):
+                        for vk in ("point", "normal", "direction"):
+                            if vk in ev_val and isinstance(cur_o.get(vk), list):
+                                ev_val[vk] = list(cur_o[vk])
+        return ev_copy
+
     for ev in orig_events:
         ev_obj_id = ev.get("object")
         if ev_obj_id in retired_set:
@@ -4269,7 +4315,7 @@ def execute_step_edit(
             inserted_inline = True
             for dep_oid in graph["topo_order"]:
                 if dep_oid in primary_deps_closure and dep_oid not in emitted_obj_events and dep_oid in hoist_ev_by_obj:
-                    h_ev = hoist_ev_by_obj[dep_oid]
+                    h_ev = _sync_rebuilt_event(copy.deepcopy(hoist_ev_by_obj[dep_oid]))
                     new_events.append(h_ev)
                     emitted_obj_events.add(dep_oid)
             for new_o in newly_created_objs:
@@ -4285,43 +4331,9 @@ def execute_step_edit(
                     "learner_text": new_o.get("label") or f"Dựng {new_o.get('notation') or new_o['id']}.",
                 })
                 emitted_obj_events.add(new_o["id"])
-        ev_copy = copy.deepcopy(ev)
+        ev_copy = _sync_rebuilt_event(copy.deepcopy(ev))
         if ev.get("action") == "CREATE" and ev_obj_id:
             emitted_obj_events.add(str(ev_obj_id))
-        if ev_obj_id in updated_ids or ev_obj_id in recomputed_ids or ev_obj_id in kept_helpers:
-            cur_o = next((o for o in surviving_objs if o["id"] == ev_obj_id), None)
-            if cur_o is not None:
-                ev_copy["depends"] = list(cur_o.get("depends") or ())
-                if "visible_prerequisites" in ev_copy:
-                    ev_copy["visible_prerequisites"] = list(cur_o.get("depends") or ())
-                if notation_renames and ev_obj_id in recomputed_ids:
-                    for ev_field in ("learner_text", "display_label", "explanation", "title"):
-                        if isinstance(ev_copy.get(ev_field), str):
-                            ev_copy[ev_field] = _apply_notation_renames(ev_copy[ev_field], notation_renames)
-                if cur_o.get("type") == "quantity" and cur_o.get("value") is not None:
-                    ev_copy["learner_text"] = f"{cur_o.get('label') or cur_o['id']} bằng {cur_o['value']}."
-                elif ev_obj_id == primary_id and parsed_new.normalized_text:
-                    ev_copy["learner_text"] = parsed_new.normalized_text
-                elif not ev_copy.get("learner_text"):
-                    ev_copy["learner_text"] = cur_o.get("label") or ""
-                if ev_obj_id in updated_ids or ev_obj_id in kept_helpers:
-                    ev_copy["display_label"] = cur_o.get("display_label") or cur_o.get("label") or ev_copy.get("display_label")
-                    ev_copy["explanation"] = (
-                        (parsed_new.normalized_text if ev_obj_id == primary_id and parsed_new.normalized_text else None)
-                        or cur_o.get("label")
-                        or ev_copy.get("explanation")
-                    )
-                ev_details = ev_copy.get("details")
-                if isinstance(ev_details, dict):
-                    if "toa_do" in ev_details and "xyz" in cur_o:
-                        ev_details["toa_do"] = list(cur_o["xyz"])
-                    if "label" in ev_details and (cur_o.get("notation") or cur_o.get("label")):
-                        ev_details["label"] = cur_o.get("notation") or cur_o.get("label")
-                    ev_val = ev_details.get("value")
-                    if isinstance(ev_val, dict):
-                        for vk in ("point", "normal", "direction"):
-                            if vk in ev_val and isinstance(cur_o.get(vk), list):
-                                ev_val[vk] = list(cur_o[vk])
         new_events.append(ev_copy)
 
     for idx_e, ev in enumerate(new_events):
