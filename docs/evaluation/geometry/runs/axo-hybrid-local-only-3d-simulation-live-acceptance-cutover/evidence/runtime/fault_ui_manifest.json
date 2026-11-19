@@ -1,0 +1,4 @@
+{"valid_cases":[
+ {"case_id":"F_DET","simulation_intent":"FAULT_PROBE","expected_behavior":"SERVE","original_input":"Cho hình chóp S.ABCD có đáy ABCD là hình vuông cạnh 3a, SA vuông góc với (ABCD), SA = 4a. Tính thể tích khối chóp S.ABCD.","gold_entities":{"solid_vertices":["S","A","B","C","D"],"auxiliary_points":[]}},
+ {"case_id":"F_SLM","simulation_intent":"FAULT_PROBE","expected_behavior":"INFRA_MESSAGE","original_input":"Cho hình hộp chữ nhật EFGH.E'F'G'H' có EF = 2, EH = 5, EE' = 4. Hãy mô phỏng hình hộp chữ nhật.","gold_entities":{"solid_vertices":[],"auxiliary_points":[]}}],
+ "negative_cases":[]}

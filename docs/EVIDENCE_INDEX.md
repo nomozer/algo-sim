@@ -1,5 +1,20 @@
 # EVIDENCE_INDEX.md — Chỉ mục bằng chứng và chuỗi đính chính (Master Evidence Index)
 
+## WAVE_ID = AXO_HYBRID_LOCAL_ONLY_3D_SIMULATION_LIVE_ACCEPTANCE_CUTOVER
+
+- `RUN_ID` = axo-hybrid-local-only-3d-simulation-live-acceptance-cutover
+- `REPORT` = docs/evaluation/geometry/runs/axo-hybrid-local-only-3d-simulation-live-acceptance-cutover/FINAL_MASTER_REPORT.md
+- `ARTIFACT_DIRECTORY` = docs/evaluation/geometry/runs/axo-hybrid-local-only-3d-simulation-live-acceptance-cutover/
+- `START_BASE` = 38c6efbdb (AXO HYBRID /9 head)
+- `CODE_COMMIT` = e10697092 (frontend keyless) · 7554e2b72 (local-slm keep-alive fix) · a0f979392 (candidate refreeze ce3e3c4b5cc9e075bc260f50e64dc5647408d1a3a614db67bd6d17a3b1d1eb6a, 123 files) · 5a07be9b4 (pending template metadata rebind)
+- `CLASSIFICATION` = LIVE_BROWSER_ACCEPTANCE_LOCAL_ONLY_SCOPED_REHEARSAL
+- `PRODUCT_CHANGE` = YES (frontend local-only UX; runtime transport fix); CACHE_VERSION = 145 unchanged; default HYBRID_ROUTE_MODE = live unchanged
+- `MODEL_REQUEST_COUNT` = 0 cloud; local AxoV9 GGUF only
+- `VERIFICATION` = ACCEPTANCE_FREEZE.json (frozen before run, 451a59040); LIVE_SIMULATION_ACCEPTANCE_RESULTS.json; SCENE3D_MATHEMATICAL_VALIDATION.json; evidence/browser/; evidence/ui4/; evidence/runtime/; evidence/egress_proxy_*.jsonl; evidence/tcp_sampler_*.jsonl
+- `CORRECTS` = NONE (adds: /9 LOCAL_ONLY_SCOPED_RELEASE_READY did not exercise idle gaps; keep-alive defect found live and fixed)
+- `CORRECTED_BY` = NONE
+- `LIMITATIONS` = author-constructed dataset (pass 2 not blind); oracle v2 amended after pass 1 (v1 output kept); LIVE_SIMULATION_ACCEPTED = FALSE (completion 0.625 < 0.85); SLM route served 0/20; FULLY_OFFLINE_RUNTIME / PHYSICAL_TARGET_HARDWARE / GEMINI_PARITY = NOT_MEASURED
+
 ## WAVE_ID = AXO_HYBRID_LOCAL_AI_REPLACEMENT_VIETNAMESE_NLU_OFFLINE_CUTOVER
 
 - `RUN_ID` = axo-hybrid-local-ai-replacement-vietnamese-nlu-offline-cutover

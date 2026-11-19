@@ -1,0 +1,1 @@
+C:\Users\Bunny\AppData\Local\Temp\claude\1b6f0b36035d01ae\a0910ca0-a4bf-4219-b9bb-3e8975dffa87\scratchpad\rollback_model_dir\models\qwen3-0.6b-axo-v7-q4_k_m\Qwen3-0.6B-AxoV7-Q4_K_M.gguf

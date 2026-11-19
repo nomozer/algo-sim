@@ -1,0 +1,292 @@
+{
+ "schema": "axo-product-scene3d-capability-matrix/1",
+ "note": "derived from LIVE_SIMULATION_ACCEPTANCE_RESULTS.json (pass2 = candidate a0f979392 unless stated)",
+ "level": "LIVE_PRODUCT (browser, local-only-scoped)",
+ "matrix": [
+  {
+   "family": "cube",
+   "intent": "QUERY_WITH_SCENE",
+   "served": 1,
+   "tried": 2,
+   "refusal_codes": {
+    "MISSING_DIMENSION": 1
+   },
+   "cases": [
+    "C06",
+    "C20"
+   ]
+  },
+  {
+   "family": "cube",
+   "intent": "SIMULATE_AND_QUERY",
+   "served": 0,
+   "tried": 1,
+   "refusal_codes": {
+    "QUESTION_CONTEXT_UNSUPPORTED": 1
+   },
+   "cases": [
+    "Q03"
+   ]
+  },
+  {
+   "family": "cube",
+   "intent": "SIMULATE_ONLY",
+   "served": 1,
+   "tried": 2,
+   "refusal_codes": {
+    "SOURCE_OBJECT_MISMATCH": 1
+   },
+   "cases": [
+    "V08",
+    "V25"
+   ]
+  },
+  {
+   "family": "cuboid",
+   "intent": "QUERY_WITH_SCENE",
+   "served": 2,
+   "tried": 2,
+   "refusal_codes": {},
+   "cases": [
+    "C07",
+    "C21"
+   ]
+  },
+  {
+   "family": "cuboid",
+   "intent": "SIMULATE_AND_QUERY",
+   "served": 0,
+   "tried": 1,
+   "refusal_codes": {
+    "QUESTION_CONTEXT_UNSUPPORTED": 1
+   },
+   "cases": [
+    "Q08"
+   ]
+  },
+  {
+   "family": "cuboid",
+   "intent": "SIMULATE_ONLY",
+   "served": 0,
+   "tried": 2,
+   "refusal_codes": {
+    "AMBIGUOUS_FACT": 1,
+    "SOURCE_OBJECT_MISMATCH": 1
+   },
+   "cases": [
+    "V09",
+    "V26"
+   ]
+  },
+  {
+   "family": "prism_tri",
+   "intent": "QUERY_WITH_SCENE",
+   "served": 2,
+   "tried": 2,
+   "refusal_codes": {},
+   "cases": [
+    "C13",
+    "C14"
+   ]
+  },
+  {
+   "family": "prism_tri",
+   "intent": "SIMULATE_AND_QUERY",
+   "served": 1,
+   "tried": 1,
+   "refusal_codes": {},
+   "cases": [
+    "Q06"
+   ]
+  },
+  {
+   "family": "prism_tri",
+   "intent": "SIMULATE_ONLY",
+   "served": 1,
+   "tried": 3,
+   "refusal_codes": {
+    "AMBIGUOUS_FACT": 1,
+    "SOURCE_OBJECT_MISMATCH": 1
+   },
+   "cases": [
+    "V10",
+    "V11",
+    "V21"
+   ]
+  },
+  {
+   "family": "pyramid_quad",
+   "intent": "QUERY_WITH_SCENE",
+   "served": 12,
+   "tried": 15,
+   "refusal_codes": {
+    "UNGROUNDED_VALUE": 1,
+    "AMBIGUOUS_FACT": 1,
+    "SOURCE_PREMISE_UNREAD": 1
+   },
+   "cases": [
+    "C01",
+    "C02",
+    "C03",
+    "C08",
+    "C09",
+    "C10",
+    "C11",
+    "C12",
+    "C15",
+    "C16",
+    "C17",
+    "C22",
+    "C23",
+    "C25",
+    "C26"
+   ]
+  },
+  {
+   "family": "pyramid_quad",
+   "intent": "SIMULATE_AND_QUERY",
+   "served": 2,
+   "tried": 4,
+   "refusal_codes": {
+    "NOT_ASKED_IN_SOURCE": 1,
+    "AMBIGUOUS_VALUE_QUOTE": 1
+   },
+   "cases": [
+    "Q01",
+    "Q04",
+    "Q05",
+    "Q07"
+   ]
+  },
+  {
+   "family": "pyramid_quad",
+   "intent": "SIMULATE_ONLY",
+   "served": 6,
+   "tried": 11,
+   "refusal_codes": {
+    "AMBIGUOUS_FACT": 2,
+    "UNGROUNDED_VALUE": 1,
+    "SOURCE_OBJECT_MISMATCH": 1,
+    "None": 1
+   },
+   "cases": [
+    "V02",
+    "V03",
+    "V05",
+    "V12",
+    "V13",
+    "V15",
+    "V16",
+    "V18",
+    "V20",
+    "V24",
+    "V27"
+   ]
+  },
+  {
+   "family": "pyramid_tri",
+   "intent": "QUERY_WITH_SCENE",
+   "served": 1,
+   "tried": 2,
+   "refusal_codes": {
+    "None": 1
+   },
+   "cases": [
+    "C05",
+    "C24"
+   ]
+  },
+  {
+   "family": "pyramid_tri",
+   "intent": "SIMULATE_AND_QUERY",
+   "served": 1,
+   "tried": 2,
+   "refusal_codes": {
+    "SOURCE_OBJECT_MISMATCH": 1
+   },
+   "cases": [
+    "Q02",
+    "Q10"
+   ]
+  },
+  {
+   "family": "pyramid_tri",
+   "intent": "SIMULATE_ONLY",
+   "served": 5,
+   "tried": 7,
+   "refusal_codes": {
+    "SOURCE_OBJECT_MISMATCH": 2
+   },
+   "cases": [
+    "V01",
+    "V04",
+    "V14",
+    "V17",
+    "V22",
+    "V23",
+    "V28"
+   ]
+  },
+  {
+   "family": "tetrahedron",
+   "intent": "QUERY_WITH_SCENE",
+   "served": 3,
+   "tried": 3,
+   "refusal_codes": {},
+   "cases": [
+    "C04",
+    "C18",
+    "C19"
+   ]
+  },
+  {
+   "family": "tetrahedron",
+   "intent": "SIMULATE_AND_QUERY",
+   "served": 1,
+   "tried": 1,
+   "refusal_codes": {},
+   "cases": [
+    "Q09"
+   ]
+  },
+  {
+   "family": "tetrahedron",
+   "intent": "SIMULATE_ONLY",
+   "served": 1,
+   "tried": 3,
+   "refusal_codes": {
+    "SOURCE_OBJECT_MISMATCH": 1,
+    "AMBIGUOUS_FACT": 1
+   },
+   "cases": [
+    "V06",
+    "V07",
+    "V19"
+   ]
+  }
+ ],
+ "out_of_scope_confirmed_refused": [
+  "sphere",
+  "cone",
+  "cylinder",
+  "Oxyz analytic",
+  "planar-only triangle",
+  "calculus",
+  "programming"
+ ],
+ "interactions_in_product": [
+  "orbit",
+  "zoom",
+  "reset view",
+  "step prev/next/play",
+  "x-ray",
+  "layer toggles incl. labels",
+  "entity selection",
+  "fullscreen"
+ ],
+ "not_in_product": [
+  "DYNAMIC_CONSTRUCTION_STEPS (Construction /2)",
+  "ILLUSTRATIVE scene for simulate-only inputs without dimensions",
+  "image/photo input in local-only (LOCAL_ONLY_CLOUD_VISION_DISABLED)"
+ ]
+}

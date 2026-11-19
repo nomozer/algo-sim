@@ -1,0 +1,123 @@
+{
+ "schema": "axo-live-smoke/1",
+ "derived_from": "pass2 browser run + runtime/UI scenarios",
+ "results": [
+  {
+   "scope": "tri_pyramid",
+   "case_id": "V01",
+   "verdict": "MATHEMATICALLY_CORRECT_VISUALLY_CORRECT",
+   "refusal_code": null
+  },
+  {
+   "scope": "quad_pyramid",
+   "case_id": "V02",
+   "verdict": "SAFE_REFUSAL_OF_VALID_INPUT",
+   "refusal_code": "AMBIGUOUS_FACT"
+  },
+  {
+   "scope": "square_base",
+   "case_id": "V15",
+   "verdict": "MATHEMATICALLY_CORRECT_VISUALLY_CORRECT",
+   "refusal_code": null
+  },
+  {
+   "scope": "rect_base",
+   "case_id": "V03",
+   "verdict": "MATHEMATICALLY_CORRECT_VISUALLY_CORRECT",
+   "refusal_code": null
+  },
+  {
+   "scope": "tetrahedron",
+   "case_id": "V07",
+   "verdict": "MATHEMATICALLY_CORRECT_VISUALLY_CORRECT",
+   "refusal_code": null
+  },
+  {
+   "scope": "prism",
+   "case_id": "V21",
+   "verdict": "MATHEMATICALLY_CORRECT_VISUALLY_CORRECT",
+   "refusal_code": null
+  },
+  {
+   "scope": "cuboid",
+   "case_id": "V09",
+   "verdict": "SAFE_REFUSAL_OF_VALID_INPUT",
+   "refusal_code": "AMBIGUOUS_FACT"
+  },
+  {
+   "scope": "cube",
+   "case_id": "V25",
+   "verdict": "MATHEMATICALLY_CORRECT_VISUALLY_CORRECT",
+   "refusal_code": null
+  },
+  {
+   "scope": "perpendicular",
+   "case_id": "V20",
+   "verdict": "MATHEMATICALLY_CORRECT_VISUALLY_CORRECT",
+   "refusal_code": null
+  },
+  {
+   "scope": "parallel",
+   "case_id": "V16",
+   "verdict": "SAFE_REFUSAL_OF_VALID_INPUT",
+   "refusal_code": "SOURCE_OBJECT_MISMATCH"
+  },
+  {
+   "scope": "simulate_only",
+   "case_id": "V15",
+   "verdict": "MATHEMATICALLY_CORRECT_VISUALLY_CORRECT",
+   "refusal_code": null
+  },
+  {
+   "scope": "simulate_and_query",
+   "case_id": "Q01",
+   "verdict": "MATHEMATICALLY_CORRECT_VISUALLY_CORRECT",
+   "refusal_code": null
+  },
+  {
+   "scope": "missing_dimension",
+   "case_id": "N01",
+   "verdict": "SAFE_REFUSAL",
+   "refusal_code": "AMBIGUOUS_FACT"
+  },
+  {
+   "scope": "contradictory",
+   "case_id": "N03",
+   "verdict": "SAFE_REFUSAL",
+   "refusal_code": "INCONSISTENT_FACTS"
+  },
+  {
+   "scope": "out_of_scope",
+   "case_id": "N06",
+   "verdict": "SAFE_REFUSAL",
+   "refusal_code": "OUT_OF_SCOPE"
+  },
+  {
+   "scope": "natural_phrasing",
+   "case_id": "V15",
+   "verdict": "MATHEMATICALLY_CORRECT_VISUALLY_CORRECT",
+   "refusal_code": null
+  },
+  {
+   "scope": "long_problem",
+   "case_id": "V16",
+   "verdict": "SAFE_REFUSAL_OF_VALID_INPUT",
+   "refusal_code": "SOURCE_OBJECT_MISMATCH"
+  },
+  {
+   "scope": "runtime_model_not_loaded",
+   "source": "evidence/runtime/u11_model_not_provisioned.jsonl + browser_records_u11.jsonl",
+   "verdict": "PASS"
+  },
+  {
+   "scope": "runtime_timeout",
+   "source": "pass 1 observed 504 LOCAL_SLM_TIMEOUT (9 cases); UI kept loading through client retries",
+   "verdict": "OBSERVED_NOT_INJECTED"
+  },
+  {
+   "scope": "two_consecutive_inputs",
+   "source": "U02",
+   "verdict": "PASS"
+  }
+ ]
+}

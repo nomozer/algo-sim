@@ -124,31 +124,48 @@ def structural(sc: Scene, case: dict) -> tuple[dict, list[str]]:
     missing = sorted(gold_all - set(sc.P))
     if missing: issues.append(f"MISSING_GOLD_POINTS {missing}")
     free_extra = sorted(p for p, o in sc.objs.items() if o["type"] == "point3" and o.get("origin") == "free" and p not in gold_all)
+    # v2 (A2): a free point that IS the centroid of a solid face is the layout centre (foot of a regular solid's
+    # height), geometrically justified — recorded as a finding, not as fabrication. Anything else stays fabricated.
+    face_centres = {tuple(sum(V[q][i] for q in f) / len(f) for i in range(3)) for f in faces}
+    layout = [p for p in free_extra if sc.P[p] in face_centres]
+    free_extra = [p for p in free_extra if p not in layout]
     if free_extra: issues.append(f"FABRICATED_FREE_POINTS {free_extra}")
+    findings = [f"UNDECLARED_LAYOUT_CENTRE {p}" + (" LABELED_GIVEN" if "given" in (sc.objs[p].get("display_group") or []) else "")
+                for p in layout]
     derived_extra = sorted(p for p, o in sc.objs.items() if o["type"] == "point3" and o.get("origin") != "free" and p not in gold_all)
     types = sorted({o["type"] for o in sc.objs.values()})
-    lacking = [t for t in case["expected_scene_object_types"] if t not in types]
+    # v2 (A3): edges/faces may be drawn from the solid's own edge ownership (tetrahedra do), so only solid + points
+    # are required object types; segment3/polygon3 are recorded, not demanded.
+    lacking = [t for t in ("solid", "point3") if t not in types]
     if lacking: issues.append(f"MISSING_OBJECT_TYPES {lacking}")
     return {"solid_found": True, "solid_id": solid["id"], "vertices": len(vids), "faces": len(faces), "edges": len(edges),
-            "derived_auxiliary_points": derived_extra, "object_types": types,
+            "derived_auxiliary_points": derived_extra, "object_types": types, "findings": findings,
             "metric_is_identity": sc.G == ((1, 0, 0), (0, 1, 0), (0, 0, 1))}, issues
 
 
 def numeric(answers: dict, exact: dict, gold: list[float]) -> dict:
     """Served answers vs gold floats (display strings like 'a√3/2', '45°', 'arctan(√2)' parsed best-effort)."""
     import math
-    vals = []
-    for k, s in (answers or {}).items():
-        t = str((exact or {}).get(k, {}).get("coef") or s)
+
+    def num(t: str) -> float:
         t = t.replace("°", "").replace("π", "*math.pi").replace("a³", "").replace("a²", "").replace("a", "")
         t = re.sub(r"(\d)√", r"\1*√", t)
         t = re.sub(r"√\(([^)]*)\)", r"math.sqrt(\1)", t)
         t = re.sub(r"√(\d+)", r"math.sqrt(\1)", t)
-        t = t.replace("arctan", "math.atan")
+        return float(eval(t, {"math": math, "__builtins__": {}}))
+
+    vals = []
+    for k, s in (answers or {}).items():
         try:
-            v = float(eval(t, {"math": math, "__builtins__": {}}))
-            if "math.atan" in t: v = math.degrees(v)
-            vals.append(v)
+            trig = re.match(r"\s*(cos|sin|tan)(²?)\s*=\s*(.+)$", str(s))   # v2 (A1): angles served as cos²=1/2 etc.
+            if trig:
+                fn, sq, rhs = trig.groups()
+                x = num(rhs) ** (0.5 if sq else 1)
+                vals.append(math.degrees({"cos": math.acos, "sin": math.asin, "tan": math.atan}[fn](x)))
+            elif str(s).startswith("arctan"):
+                vals.append(math.degrees(math.atan(num(str(s)[6:]))))
+            else:
+                vals.append(num(str((exact or {}).get(k, {}).get("coef") or s)))
         except Exception:
             vals.append(None)
     matched = sum(any(v is not None and abs(v - g) < 1e-9 * max(1, abs(g)) for v in vals) for g in gold)
@@ -207,6 +224,14 @@ def selfcheck():
     assert numeric({"q1": "a√3/2"}, {"q1": {"coef": "√3/2"}}, [0.8660254037844386])["status"] == "CORRECT"
     assert numeric({"q1": "45°"}, {}, [45.0])["status"] == "CORRECT"
     assert numeric({"q1": "a/3"}, {"q1": {"coef": "1/3"}}, [0.5])["status"] == "MISMATCH"
+    assert numeric({"q1": "cos²=1/2"}, {}, [45.0])["status"] == "CORRECT"                          # v2 A1
+    assert numeric({"q1": "cos²=1/3"}, {}, [54.735610317245346])["status"] == "CORRECT"
+    assert numeric({"q1": "cos²=1/3"}, {}, [45.0])["status"] == "MISMATCH"
+    reg = json.loads(json.dumps(sq)); reg["objects"].append({"id": "O", "type": "point3", "origin": "free", "xyz": ["1/2", "1/2", "0"],
+                                                           "depends": [], "display_group": ["given"]})
+    r = validate(case, body(reg)); assert r["scene_validation"] == "MATHEMATICALLY_VALID" and r["findings"], r  # v2 A2
+    off = json.loads(json.dumps(sq)); off["objects"].append({"id": "O", "type": "point3", "origin": "free", "xyz": ["1/3", "1/2", "0"], "depends": []})
+    assert any("FABRICATED" in i for i in validate(case, body(off))["issues"])                     # off-centre stays fabricated
     print("scene_oracle selfcheck OK")
 
 
@@ -217,7 +242,7 @@ if __name__ == "__main__":
     cases = {c["case_id"]: c for c in man["valid_cases"] + man["negative_cases"]}
     rows = [json.loads(l) for l in open(sys.argv[2], encoding="utf-8") if l.strip()]
     res = [validate(cases[r["case_id"]], r["body"]) for r in rows if r["case_id"] in cases and r.get("body")]
-    json.dump({"schema": "axo-scene3d-mathematical-validation/1", "validator": "tools/scene_oracle.py (independent; exact Fraction, Gram metric)",
+    json.dump({"schema": "axo-scene3d-mathematical-validation/1", "validator": "tools/scene_oracle.py v2 (independent; exact Fraction, Gram metric; amendments A1-A3 after pass 1)",
                "results": res}, open(sys.argv[3], "w", encoding="utf-8"), ensure_ascii=False, indent=1)
     print({k: sum(r.get("scene_validation") == k for r in res) for k in
            ("MATHEMATICALLY_VALID", "MATHEMATICALLY_INVALID", "VALIDATION_ERROR", "NOT_SERVED")})

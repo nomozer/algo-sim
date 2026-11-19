@@ -1,0 +1,211 @@
+{
+ "schema": "axo-ui-scenarios/1",
+ "browser": "151.0.7922.34",
+ "base": "http://127.0.0.1:4173",
+ "results": [
+  {
+   "scenario_id": "U01",
+   "pass": true,
+   "hasKey": false,
+   "aiAvailable": true,
+   "localOnlyMode": true,
+   "localSlmReady": true,
+   "ux_state": "READY_OFFLINE",
+   "cloud_key_text": false
+  },
+  {
+   "scenario_id": "U02",
+   "pass": true,
+   "first": [
+    "A",
+    "B",
+    "C",
+    "D",
+    "S"
+   ],
+   "second": [
+    "A",
+    "B",
+    "C",
+    "O"
+   ],
+   "gold_second": [
+    "A",
+    "B",
+    "C",
+    "O"
+   ]
+  },
+  {
+   "scenario_id": "U05",
+   "pass": true,
+   "start": {
+    "x": 150.9,
+    "y": 190.4
+   },
+   "frame_changed": true,
+   "labels_moved": 4,
+   "analyze_calls": 0,
+   "drag_started_on_measurement_chip": {
+    "x": 380.3046569824219,
+    "y": 401.1003723144531,
+    "cls": "geo3d-so-do la-net-khuat",
+    "pe": "auto",
+    "frame_changed": true
+   }
+  },
+  {
+   "scenario_id": "U06",
+   "pass": true,
+   "frame_changed": true
+  },
+  {
+   "scenario_id": "U07",
+   "pass": true,
+   "start": "Bước 5/5",
+   "after_prev": "Bước 4/5",
+   "after_next": "Bước 5/5"
+  },
+  {
+   "scenario_id": "U08",
+   "pass": false,
+   "exposed": true,
+   "frame_changed": true,
+   "idempotent": false
+  },
+  {
+   "scenario_id": "U09",
+   "pass": false,
+   "xray_changes_frame": true,
+   "xray_restores_frame": false,
+   "display_options": [
+    "Vỏ khối",
+    "Nhãn",
+    "Thông số hình học",
+    "Mặt phẳng tham chiếu / cắt",
+    "Thiết diện / Giao tuyến",
+    "Hình phụTrục vuông góc & đường phụ",
+    "Trục Oxyz",
+    "Lưới nền"
+   ],
+   "label_toggle": "PRESENT",
+   "labels_toggled": {
+    "before": [
+     "A",
+     "B",
+     "C",
+     "S"
+    ],
+    "off": [
+     "A",
+     "B",
+     "C",
+     "S"
+    ],
+    "on": [
+     "A",
+     "B",
+     "C",
+     "S"
+    ],
+    "hides": false,
+    "restores": true
+   }
+  },
+  {
+   "scenario_id": "U10",
+   "pass": true,
+   "selected_label_class": "geo3d-label la-chon",
+   "ids_after": [
+    "A",
+    "B",
+    "C",
+    "S"
+   ]
+  },
+  {
+   "scenario_id": "U03",
+   "pass": true,
+   "route": "REFUSED",
+   "canvas_left": 0,
+   "toast": "Dữ kiện đề bài chưa nhất quán\nCác dữ kiện dùng để dựng hình mâu thuẫn nhau hoặc làm hình suy biến, nên không có hình nào thoả tất cả. Axo dừng lại thay vì dựng một hình sai. Bạn có thể kiểm tra lại số"
+  },
+  {
+   "scenario_id": "U04",
+   "pass": true,
+   "labels": [
+    "A",
+    "A_prime",
+    "B",
+    "B_prime",
+    "C",
+    "C_prime"
+   ]
+  },
+  {
+   "scenario_id": "U00_console",
+   "pass": true,
+   "console_errors": []
+  },
+  {
+   "scenario_id": "U16_1920x1080",
+   "pass": true,
+   "composer_visible": true,
+   "canvas": {
+    "w": 1560,
+    "h": 1034,
+    "x": 0,
+    "y": 46
+   },
+   "overflow_x": false,
+   "labels_inside": true,
+   "canvas_viewport_share": 0.778,
+   "screenshot": "screenshots\\U16_1920x1080.png"
+  },
+  {
+   "scenario_id": "U16_1366x768",
+   "pass": true,
+   "composer_visible": true,
+   "canvas": {
+    "w": 1006,
+    "h": 722,
+    "x": 0,
+    "y": 46
+   },
+   "overflow_x": false,
+   "labels_inside": true,
+   "canvas_viewport_share": 0.692,
+   "screenshot": "screenshots\\U16_1366x768.png"
+  },
+  {
+   "scenario_id": "U16_768x1024",
+   "pass": true,
+   "composer_visible": true,
+   "canvas": {
+    "w": 472,
+    "h": 978,
+    "x": 0,
+    "y": 46
+   },
+   "overflow_x": false,
+   "labels_inside": true,
+   "canvas_viewport_share": 0.587,
+   "screenshot": "screenshots\\U16_768x1024.png"
+  },
+  {
+   "scenario_id": "U16_390x844",
+   "pass": true,
+   "composer_visible": true,
+   "canvas": {
+    "w": 390,
+    "h": 438,
+    "x": 0,
+    "y": 48
+   },
+   "overflow_x": false,
+   "labels_inside": true,
+   "canvas_viewport_share": 0.519,
+   "screenshot": "screenshots\\U16_390x844.png"
+  }
+ ]
+}

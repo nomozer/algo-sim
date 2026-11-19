@@ -1,0 +1,3533 @@
+{
+ "schema": "axo-scene3d-mathematical-validation/1",
+ "validator": "tools/scene_oracle.py v2 (independent; exact Fraction, Gram metric; amendments A1-A3 after pass 1)",
+ "results": [
+  {
+   "case_id": "V01",
+   "route_status": "SERVED",
+   "solid_found": true,
+   "solid_id": "khoi_S_ABC",
+   "vertices": 4,
+   "faces": 4,
+   "edges": 6,
+   "derived_auxiliary_points": [],
+   "object_types": [
+    "point3",
+    "polygon3",
+    "segment3",
+    "solid"
+   ],
+   "findings": [],
+   "metric_is_identity": false,
+   "relations": [
+    {
+     "relation": [
+      "perp_lp",
+      "SA",
+      "ABC"
+     ],
+     "holds": true
+    },
+    {
+     "relation": [
+      "perp_ll",
+      "BA",
+      "BC"
+     ],
+     "holds": true
+    },
+    {
+     "relation": [
+      "len2",
+      "AB",
+      "1"
+     ],
+     "holds": true
+    },
+    {
+     "relation": [
+      "len2",
+      "BC",
+      "4"
+     ],
+     "holds": true
+    },
+    {
+     "relation": [
+      "len2",
+      "SA",
+      "1"
+     ],
+     "holds": true
+    }
+   ],
+   "issues": [],
+   "scene_validation": "MATHEMATICALLY_VALID"
+  },
+  {
+   "case_id": "V02",
+   "route_status": "REFUSED",
+   "scene_validation": "NOT_SERVED"
+  },
+  {
+   "case_id": "V03",
+   "route_status": "SERVED",
+   "solid_found": true,
+   "solid_id": "khoi_S_ABCD",
+   "vertices": 5,
+   "faces": 5,
+   "edges": 8,
+   "derived_auxiliary_points": [],
+   "object_types": [
+    "point3",
+    "polygon3",
+    "segment3",
+    "solid"
+   ],
+   "findings": [],
+   "metric_is_identity": false,
+   "relations": [
+    {
+     "relation": [
+      "perp_lp",
+      "SA",
+      "ABC"
+     ],
+     "holds": true
+    },
+    {
+     "relation": [
+      "perp_ll",
+      "AB",
+      "AD"
+     ],
+     "holds": true
+    },
+    {
+     "relation": [
+      "perp_ll",
+      "BA",
+      "BC"
+     ],
+     "holds": true
+    },
+    {
+     "relation": [
+      "par_ll",
+      "AB",
+      "DC"
+     ],
+     "holds": true
+    },
+    {
+     "relation": [
+      "len2",
+      "AB",
+      "1"
+     ],
+     "holds": true
+    },
+    {
+     "relation": [
+      "len2",
+      "AD",
+      "3"
+     ],
+     "holds": true
+    },
+    {
+     "relation": [
+      "len2",
+      "SA",
+      "4"
+     ],
+     "holds": true
+    }
+   ],
+   "issues": [],
+   "scene_validation": "MATHEMATICALLY_VALID"
+  },
+  {
+   "case_id": "V04",
+   "route_status": "SERVED",
+   "solid_found": true,
+   "solid_id": "khoi_S_ABC",
+   "vertices": 4,
+   "faces": 4,
+   "edges": 6,
+   "derived_auxiliary_points": [],
+   "object_types": [
+    "point3",
+    "polygon3",
+    "segment3",
+    "solid"
+   ],
+   "findings": [
+    "UNDECLARED_LAYOUT_CENTRE O LABELED_GIVEN"
+   ],
+   "metric_is_identity": false,
+   "relations": [
+    {
+     "relation": [
+      "len2",
+      "AB",
+      "1"
+     ],
+     "holds": true
+    },
+    {
+     "relation": [
+      "len2",
+      "BC",
+      "1"
+     ],
+     "holds": true
+    },
+    {
+     "relation": [
+      "len2",
+      "CA",
+      "1"
+     ],
+     "holds": true
+    },
+    {
+     "relation": [
+      "len2",
+      "SA",
+      "4"
+     ],
+     "holds": true
+    },
+    {
+     "relation": [
+      "len2",
+      "SB",
+      "4"
+     ],
+     "holds": true
+    },
+    {
+     "relation": [
+      "len2",
+      "SC",
+      "4"
+     ],
+     "holds": true
+    }
+   ],
+   "issues": [],
+   "scene_validation": "MATHEMATICALLY_VALID"
+  },
+  {
+   "case_id": "V05",
+   "route_status": "REFUSED",
+   "scene_validation": "NOT_SERVED"
+  },
+  {
+   "case_id": "V06",
+   "route_status": "REFUSED",
+   "scene_validation": "NOT_SERVED"
+  },
+  {
+   "case_id": "V07",
+   "route_status": "SERVED",
+   "solid_found": true,
+   "solid_id": "khoi_O_ABC",
+   "vertices": 4,
+   "faces": 4,
+   "edges": 6,
+   "derived_auxiliary_points": [],
+   "object_types": [
+    "point3",
+    "solid"
+   ],
+   "findings": [],
+   "metric_is_identity": false,
+   "relations": [
+    {
+     "relation": [
+      "perp_ll",
+      "OA",
+      "OB"
+     ],
+     "holds": true
+    },
+    {
+     "relation": [
+      "perp_ll",
+      "OB",
+      "OC"
+     ],
+     "holds": true
+    },
+    {
+     "relation": [
+      "perp_ll",
+      "OA",
+      "OC"
+     ],
+     "holds": true
+    },
+    {
+     "relation": [
+      "len2",
+      "OA",
+      "1"
+     ],
+     "holds": true
+    },
+    {
+     "relation": [
+      "len2",
+      "OB",
+      "4"
+     ],
+     "holds": true
+    },
+    {
+     "relation": [
+      "len2",
+      "OC",
+      "9"
+     ],
+     "holds": true
+    }
+   ],
+   "issues": [],
+   "scene_validation": "MATHEMATICALLY_VALID"
+  },
+  {
+   "case_id": "V08",
+   "route_status": "REFUSED",
+   "scene_validation": "NOT_SERVED"
+  },
+  {
+   "case_id": "V09",
+   "route_status": "REFUSED",
+   "scene_validation": "NOT_SERVED"
+  },
+  {
+   "case_id": "V10",
+   "route_status": "REFUSED",
+   "scene_validation": "NOT_SERVED"
+  },
+  {
+   "case_id": "V11",
+   "route_status": "REFUSED",
+   "scene_validation": "NOT_SERVED"
+  },
+  {
+   "case_id": "V12",
+   "route_status": "SERVED",
+   "solid_found": true,
+   "solid_id": "khoi_S_ABCD",
+   "vertices": 5,
+   "faces": 5,
+   "edges": 8,
+   "derived_auxiliary_points": [],
+   "object_types": [
+    "point3",
+    "polygon3",
+    "segment3",
+    "solid"
+   ],
+   "findings": [],
+   "metric_is_identity": false,
+   "relations": [
+    {
+     "relation": [
+      "perp_lp",
+      "SA",
+      "ABC"
+     ],
+     "holds": true
+    },
+    {
+     "relation": [
+      "len2",
+      "AB",
+      "1"
+     ],
+     "holds": true
+    },
+    {
+     "relation": [
+      "len2",
+      "BC",
+      "1"
+     ],
+     "holds": true
+    },
+    {
+     "relation": [
+      "len2",
+      "CD",
+      "1"
+     ],
+     "holds": true
+    },
+    {
+     "relation": [
+      "len2",
+      "DA",
+      "1"
+     ],
+     "holds": true
+    },
+    {
+     "relation": [
+      "dot",
+      "AB",
+      "AD",
+      "1/2"
+     ],
+     "holds": true
+    },
+    {
+     "relation": [
+      "len2",
+      "SA",
+      "1"
+     ],
+     "holds": true
+    }
+   ],
+   "issues": [],
+   "scene_validation": "MATHEMATICALLY_VALID"
+  },
+  {
+   "case_id": "V13",
+   "route_status": "REFUSED",
+   "scene_validation": "NOT_SERVED"
+  },
+  {
+   "case_id": "V14",
+   "route_status": "REFUSED",
+   "scene_validation": "NOT_SERVED"
+  },
+  {
+   "case_id": "V15",
+   "route_status": "SERVED",
+   "solid_found": true,
+   "solid_id": "khoi_S_ABCD",
+   "vertices": 5,
+   "faces": 5,
+   "edges": 8,
+   "derived_auxiliary_points": [],
+   "object_types": [
+    "point3",
+    "polygon3",
+    "segment3",
+    "solid"
+   ],
+   "findings": [],
+   "metric_is_identity": false,
+   "relations": [
+    {
+     "relation": [
+      "perp_lp",
+      "SA",
+      "ABC"
+     ],
+     "holds": true
+    },
+    {
+     "relation": [
+      "perp_ll",
+      "AB",
+      "AD"
+     ],
+     "holds": true
+    },
+    {
+     "relation": [
+      "eq",
+      "AB",
+      "BC"
+     ],
+     "holds": true
+    },
+    {
+     "relation": [
+      "par_ll",
+      "AB",
+      "DC"
+     ],
+     "holds": true
+    },
+    {
+     "relation": [
+      "par_ll",
+      "AD",
+      "BC"
+     ],
+     "holds": true
+    },
+    {
+     "relation": [
+      "len2",
+      "AB",
+      "1"
+     ],
+     "holds": true
+    },
+    {
+     "relation": [
+      "len2",
+      "SA",
+      "2"
+     ],
+     "holds": true
+    }
+   ],
+   "issues": [],
+   "scene_validation": "MATHEMATICALLY_VALID"
+  },
+  {
+   "case_id": "V16",
+   "route_status": "REFUSED",
+   "scene_validation": "NOT_SERVED"
+  },
+  {
+   "case_id": "V17",
+   "route_status": "SERVED",
+   "solid_found": true,
+   "solid_id": "khoi_S_ABC",
+   "vertices": 4,
+   "faces": 4,
+   "edges": 6,
+   "derived_auxiliary_points": [],
+   "object_types": [
+    "point3",
+    "polygon3",
+    "segment3",
+    "solid"
+   ],
+   "findings": [],
+   "metric_is_identity": false,
+   "relations": [
+    {
+     "relation": [
+      "perp_lp",
+      "SB",
+      "ABC"
+     ],
+     "holds": true
+    },
+    {
+     "relation": [
+      "len2",
+      "AB",
+      "4"
+     ],
+     "holds": true
+    },
+    {
+     "relation": [
+      "len2",
+      "BC",
+      "4"
+     ],
+     "holds": true
+    },
+    {
+     "relation": [
+      "len2",
+      "CA",
+      "4"
+     ],
+     "holds": true
+    },
+    {
+     "relation": [
+      "len2",
+      "SB",
+      "1"
+     ],
+     "holds": true
+    }
+   ],
+   "issues": [],
+   "scene_validation": "MATHEMATICALLY_VALID"
+  },
+  {
+   "case_id": "V18",
+   "route_status": null,
+   "scene_validation": "NOT_SERVED"
+  },
+  {
+   "case_id": "V19",
+   "route_status": "REFUSED",
+   "scene_validation": "NOT_SERVED"
+  },
+  {
+   "case_id": "V20",
+   "route_status": "SERVED",
+   "solid_found": true,
+   "solid_id": "khoi_S_ABCD",
+   "vertices": 5,
+   "faces": 5,
+   "edges": 8,
+   "derived_auxiliary_points": [],
+   "object_types": [
+    "point3",
+    "polygon3",
+    "segment3",
+    "solid"
+   ],
+   "findings": [],
+   "metric_is_identity": false,
+   "relations": [
+    {
+     "relation": [
+      "perp_ll",
+      "AB",
+      "AD"
+     ],
+     "holds": true
+    },
+    {
+     "relation": [
+      "eq",
+      "AB",
+      "BC"
+     ],
+     "holds": true
+    },
+    {
+     "relation": [
+      "par_ll",
+      "AB",
+      "DC"
+     ],
+     "holds": true
+    },
+    {
+     "relation": [
+      "par_ll",
+      "AD",
+      "BC"
+     ],
+     "holds": true
+    },
+    {
+     "relation": [
+      "len2",
+      "AB",
+      "1"
+     ],
+     "holds": true
+    },
+    {
+     "relation": [
+      "len2",
+      "SA",
+      "1"
+     ],
+     "holds": true
+    },
+    {
+     "relation": [
+      "len2",
+      "SB",
+      "1"
+     ],
+     "holds": true
+    },
+    {
+     "relation": [
+      "perp_pp",
+      "SAB",
+      "ABC"
+     ],
+     "holds": true
+    }
+   ],
+   "issues": [],
+   "scene_validation": "MATHEMATICALLY_VALID"
+  },
+  {
+   "case_id": "V21",
+   "route_status": "SERVED",
+   "solid_found": true,
+   "solid_id": "khoi_ABC_A_primeB_primeC_prime",
+   "vertices": 6,
+   "faces": 5,
+   "edges": 9,
+   "derived_auxiliary_points": [],
+   "object_types": [
+    "point3",
+    "polygon3",
+    "segment3",
+    "solid"
+   ],
+   "findings": [],
+   "metric_is_identity": false,
+   "relations": [
+    {
+     "relation": [
+      "perp_lp",
+      "AA'",
+      "ABC"
+     ],
+     "holds": true
+    },
+    {
+     "relation": [
+      "len2",
+      "AB",
+      "1"
+     ],
+     "holds": true
+    },
+    {
+     "relation": [
+      "len2",
+      "BC",
+      "1"
+     ],
+     "holds": true
+    },
+    {
+     "relation": [
+      "len2",
+      "AA'",
+      "3"
+     ],
+     "holds": true
+    },
+    {
+     "relation": [
+      "mid",
+      "M",
+      "BC"
+     ],
+     "holds": true
+    }
+   ],
+   "issues": [],
+   "scene_validation": "MATHEMATICALLY_VALID"
+  },
+  {
+   "case_id": "V22",
+   "route_status": "SERVED",
+   "solid_found": true,
+   "solid_id": "khoi_S_ABC",
+   "vertices": 4,
+   "faces": 4,
+   "edges": 6,
+   "derived_auxiliary_points": [
+    "G_mid_BC"
+   ],
+   "object_types": [
+    "point3",
+    "polygon3",
+    "segment3",
+    "solid"
+   ],
+   "findings": [],
+   "metric_is_identity": false,
+   "relations": [
+    {
+     "relation": [
+      "perp_lp",
+      "SA",
+      "ABC"
+     ],
+     "holds": true
+    },
+    {
+     "relation": [
+      "len2",
+      "AB",
+      "1"
+     ],
+     "holds": true
+    },
+    {
+     "relation": [
+      "len2",
+      "BC",
+      "1"
+     ],
+     "holds": true
+    },
+    {
+     "relation": [
+      "len2",
+      "SA",
+      "1"
+     ],
+     "holds": true
+    },
+    {
+     "relation": [
+      "centroid",
+      "G",
+      "ABC"
+     ],
+     "holds": true
+    }
+   ],
+   "issues": [],
+   "scene_validation": "MATHEMATICALLY_VALID"
+  },
+  {
+   "case_id": "V23",
+   "route_status": "SERVED",
+   "solid_found": true,
+   "solid_id": "khoi_S_ABC",
+   "vertices": 4,
+   "faces": 4,
+   "edges": 6,
+   "derived_auxiliary_points": [],
+   "object_types": [
+    "line3",
+    "point3",
+    "polygon3",
+    "segment3",
+    "solid"
+   ],
+   "findings": [],
+   "metric_is_identity": true,
+   "relations": [
+    {
+     "relation": [
+      "perp_lp",
+      "SA",
+      "ABC"
+     ],
+     "holds": true
+    },
+    {
+     "relation": [
+      "perp_ll",
+      "AB",
+      "AC"
+     ],
+     "holds": true
+    },
+    {
+     "relation": [
+      "len2",
+      "AB",
+      "1"
+     ],
+     "holds": true
+    },
+    {
+     "relation": [
+      "len2",
+      "SA",
+      "1"
+     ],
+     "holds": true
+    },
+    {
+     "relation": [
+      "foot_line",
+      "H",
+      "A",
+      "SB"
+     ],
+     "holds": true
+    }
+   ],
+   "issues": [],
+   "scene_validation": "MATHEMATICALLY_VALID"
+  },
+  {
+   "case_id": "V24",
+   "route_status": "SERVED",
+   "solid_found": true,
+   "solid_id": "khoi_S_ABCD",
+   "vertices": 5,
+   "faces": 5,
+   "edges": 8,
+   "derived_auxiliary_points": [],
+   "object_types": [
+    "point3",
+    "polygon3",
+    "segment3",
+    "solid"
+   ],
+   "findings": [],
+   "metric_is_identity": true,
+   "relations": [
+    {
+     "relation": [
+      "perp_lp",
+      "SA",
+      "ABC"
+     ],
+     "holds": true
+    },
+    {
+     "relation": [
+      "perp_ll",
+      "AB",
+      "AD"
+     ],
+     "holds": true
+    },
+    {
+     "relation": [
+      "eq",
+      "AB",
+      "BC"
+     ],
+     "holds": true
+    },
+    {
+     "relation": [
+      "par_ll",
+      "AB",
+      "DC"
+     ],
+     "holds": true
+    },
+    {
+     "relation": [
+      "par_ll",
+      "AD",
+      "BC"
+     ],
+     "holds": true
+    },
+    {
+     "relation": [
+      "len2",
+      "AB",
+      "1"
+     ],
+     "holds": true
+    },
+    {
+     "relation": [
+      "len2",
+      "SA",
+      "1"
+     ],
+     "holds": true
+    },
+    {
+     "relation": [
+      "ratio",
+      "M",
+      "S",
+      "B",
+      "2/3"
+     ],
+     "holds": true
+    }
+   ],
+   "issues": [],
+   "scene_validation": "MATHEMATICALLY_VALID"
+  },
+  {
+   "case_id": "V25",
+   "route_status": "SERVED",
+   "solid_found": true,
+   "solid_id": "khoi_ABCD_EFGH",
+   "vertices": 8,
+   "faces": 6,
+   "edges": 12,
+   "derived_auxiliary_points": [],
+   "object_types": [
+    "point3",
+    "polygon3",
+    "segment3",
+    "solid"
+   ],
+   "findings": [],
+   "metric_is_identity": false,
+   "relations": [
+    {
+     "relation": [
+      "perp_lp",
+      "AE",
+      "ABC"
+     ],
+     "holds": true
+    },
+    {
+     "relation": [
+      "perp_ll",
+      "AB",
+      "AD"
+     ],
+     "holds": true
+    },
+    {
+     "relation": [
+      "eq",
+      "AB",
+      "BC"
+     ],
+     "holds": true
+    },
+    {
+     "relation": [
+      "par_ll",
+      "AB",
+      "DC"
+     ],
+     "holds": true
+    },
+    {
+     "relation": [
+      "par_ll",
+      "AD",
+      "BC"
+     ],
+     "holds": true
+    },
+    {
+     "relation": [
+      "len2",
+      "AB",
+      "9"
+     ],
+     "holds": true
+    },
+    {
+     "relation": [
+      "len2",
+      "AE",
+      "9"
+     ],
+     "holds": true
+    },
+    {
+     "relation": [
+      "par_ll",
+      "AE",
+      "CG"
+     ],
+     "holds": true
+    }
+   ],
+   "issues": [],
+   "scene_validation": "MATHEMATICALLY_VALID"
+  },
+  {
+   "case_id": "V26",
+   "route_status": "REFUSED",
+   "scene_validation": "NOT_SERVED"
+  },
+  {
+   "case_id": "V27",
+   "route_status": "SERVED",
+   "solid_found": true,
+   "solid_id": "khoi_S_ABCD",
+   "vertices": 5,
+   "faces": 5,
+   "edges": 8,
+   "derived_auxiliary_points": [],
+   "object_types": [
+    "point3",
+    "polygon3",
+    "segment3",
+    "solid"
+   ],
+   "findings": [
+    "UNDECLARED_LAYOUT_CENTRE O LABELED_GIVEN"
+   ],
+   "metric_is_identity": false,
+   "relations": [
+    {
+     "relation": [
+      "perp_ll",
+      "AB",
+      "AD"
+     ],
+     "holds": true
+    },
+    {
+     "relation": [
+      "eq",
+      "AB",
+      "BC"
+     ],
+     "holds": true
+    },
+    {
+     "relation": [
+      "par_ll",
+      "AB",
+      "DC"
+     ],
+     "holds": true
+    },
+    {
+     "relation": [
+      "par_ll",
+      "AD",
+      "BC"
+     ],
+     "holds": true
+    },
+    {
+     "relation": [
+      "len2",
+      "AB",
+      "4"
+     ],
+     "holds": true
+    },
+    {
+     "relation": [
+      "dist2",
+      "S",
+      "ABC",
+      "3"
+     ],
+     "holds": true
+    },
+    {
+     "relation": [
+      "len2",
+      "SA",
+      "5"
+     ],
+     "holds": true
+    },
+    {
+     "relation": [
+      "eq",
+      "SA",
+      "SC"
+     ],
+     "holds": true
+    }
+   ],
+   "issues": [],
+   "scene_validation": "MATHEMATICALLY_VALID"
+  },
+  {
+   "case_id": "V28",
+   "route_status": "REFUSED",
+   "scene_validation": "NOT_SERVED"
+  },
+  {
+   "case_id": "Q01",
+   "route_status": "SERVED",
+   "solid_found": true,
+   "solid_id": "khoi_S_ABCD",
+   "vertices": 5,
+   "faces": 5,
+   "edges": 8,
+   "derived_auxiliary_points": [],
+   "object_types": [
+    "plane3",
+    "point3",
+    "polygon3",
+    "quantity",
+    "segment3",
+    "solid"
+   ],
+   "findings": [],
+   "metric_is_identity": false,
+   "relations": [
+    {
+     "relation": [
+      "perp_lp",
+      "SA",
+      "ABC"
+     ],
+     "holds": true
+    },
+    {
+     "relation": [
+      "perp_ll",
+      "AB",
+      "AD"
+     ],
+     "holds": true
+    },
+    {
+     "relation": [
+      "eq",
+      "AB",
+      "BC"
+     ],
+     "holds": true
+    },
+    {
+     "relation": [
+      "par_ll",
+      "AB",
+      "DC"
+     ],
+     "holds": true
+    },
+    {
+     "relation": [
+      "par_ll",
+      "AD",
+      "BC"
+     ],
+     "holds": true
+    },
+    {
+     "relation": [
+      "len2",
+      "AB",
+      "1"
+     ],
+     "holds": true
+    },
+    {
+     "relation": [
+      "len2",
+      "SA",
+      "3"
+     ],
+     "holds": true
+    }
+   ],
+   "issues": [],
+   "scene_validation": "MATHEMATICALLY_VALID",
+   "numeric": {
+    "served": {
+     "q1": "a√3/2"
+    },
+    "parsed": [
+     0.8660254037844386
+    ],
+    "gold": [
+     0.8660254037844386
+    ],
+    "matched": 1,
+    "of": 1,
+    "status": "CORRECT"
+   }
+  },
+  {
+   "case_id": "Q02",
+   "route_status": "SERVED",
+   "solid_found": true,
+   "solid_id": "khoi_S_ABC",
+   "vertices": 4,
+   "faces": 4,
+   "edges": 6,
+   "derived_auxiliary_points": [],
+   "object_types": [
+    "point3",
+    "polygon3",
+    "quantity",
+    "segment3",
+    "solid"
+   ],
+   "findings": [],
+   "metric_is_identity": false,
+   "relations": [
+    {
+     "relation": [
+      "perp_lp",
+      "SA",
+      "ABC"
+     ],
+     "holds": true
+    },
+    {
+     "relation": [
+      "len2",
+      "AB",
+      "1"
+     ],
+     "holds": true
+    },
+    {
+     "relation": [
+      "len2",
+      "BC",
+      "1"
+     ],
+     "holds": true
+    },
+    {
+     "relation": [
+      "len2",
+      "SA",
+      "1"
+     ],
+     "holds": true
+    }
+   ],
+   "issues": [],
+   "scene_validation": "MATHEMATICALLY_VALID",
+   "numeric": {
+    "served": {
+     "q1": "a³√3/12"
+    },
+    "parsed": [
+     0.14433756729740643
+    ],
+    "gold": [
+     0.14433756729740643
+    ],
+    "matched": 1,
+    "of": 1,
+    "status": "CORRECT"
+   }
+  },
+  {
+   "case_id": "Q03",
+   "route_status": "REFUSED",
+   "scene_validation": "NOT_SERVED"
+  },
+  {
+   "case_id": "Q04",
+   "route_status": "REFUSED",
+   "scene_validation": "NOT_SERVED"
+  },
+  {
+   "case_id": "Q05",
+   "route_status": "REFUSED",
+   "scene_validation": "NOT_SERVED"
+  },
+  {
+   "case_id": "Q06",
+   "route_status": "SERVED",
+   "solid_found": true,
+   "solid_id": "khoi_ABC_A_primeB_primeC_prime",
+   "vertices": 6,
+   "faces": 5,
+   "edges": 9,
+   "derived_auxiliary_points": [],
+   "object_types": [
+    "point3",
+    "polygon3",
+    "quantity",
+    "segment3",
+    "solid"
+   ],
+   "findings": [],
+   "metric_is_identity": false,
+   "relations": [
+    {
+     "relation": [
+      "perp_lp",
+      "AA'",
+      "ABC"
+     ],
+     "holds": true
+    },
+    {
+     "relation": [
+      "perp_ll",
+      "BA",
+      "BC"
+     ],
+     "holds": true
+    },
+    {
+     "relation": [
+      "len2",
+      "AB",
+      "1"
+     ],
+     "holds": true
+    },
+    {
+     "relation": [
+      "len2",
+      "AA'",
+      "4"
+     ],
+     "holds": true
+    }
+   ],
+   "issues": [],
+   "scene_validation": "MATHEMATICALLY_VALID",
+   "numeric": {
+    "served": {
+     "q1": "a³"
+    },
+    "parsed": [
+     1.0
+    ],
+    "gold": [
+     1.0
+    ],
+    "matched": 1,
+    "of": 1,
+    "status": "CORRECT"
+   }
+  },
+  {
+   "case_id": "Q07",
+   "route_status": "SERVED",
+   "solid_found": true,
+   "solid_id": "khoi_S_ABCD",
+   "vertices": 5,
+   "faces": 5,
+   "edges": 8,
+   "derived_auxiliary_points": [],
+   "object_types": [
+    "plane3",
+    "point3",
+    "polygon3",
+    "quantity",
+    "segment3",
+    "solid"
+   ],
+   "findings": [],
+   "metric_is_identity": true,
+   "relations": [
+    {
+     "relation": [
+      "perp_lp",
+      "SA",
+      "ABC"
+     ],
+     "holds": true
+    },
+    {
+     "relation": [
+      "perp_ll",
+      "AB",
+      "AD"
+     ],
+     "holds": true
+    },
+    {
+     "relation": [
+      "eq",
+      "AB",
+      "BC"
+     ],
+     "holds": true
+    },
+    {
+     "relation": [
+      "par_ll",
+      "AB",
+      "DC"
+     ],
+     "holds": true
+    },
+    {
+     "relation": [
+      "par_ll",
+      "AD",
+      "BC"
+     ],
+     "holds": true
+    },
+    {
+     "relation": [
+      "len2",
+      "AB",
+      "1"
+     ],
+     "holds": true
+    },
+    {
+     "relation": [
+      "len2",
+      "SA",
+      "1"
+     ],
+     "holds": true
+    }
+   ],
+   "issues": [],
+   "scene_validation": "MATHEMATICALLY_VALID",
+   "numeric": {
+    "served": {
+     "q1": "cos²=1/2"
+    },
+    "parsed": [
+     45.0
+    ],
+    "gold": [
+     45.0
+    ],
+    "matched": 1,
+    "of": 1,
+    "status": "CORRECT"
+   }
+  },
+  {
+   "case_id": "Q08",
+   "route_status": "REFUSED",
+   "scene_validation": "NOT_SERVED"
+  },
+  {
+   "case_id": "Q09",
+   "route_status": "SERVED",
+   "solid_found": true,
+   "solid_id": "khoi_O_ABC",
+   "vertices": 4,
+   "faces": 4,
+   "edges": 6,
+   "derived_auxiliary_points": [],
+   "object_types": [
+    "plane3",
+    "point3",
+    "quantity",
+    "solid"
+   ],
+   "findings": [],
+   "metric_is_identity": false,
+   "relations": [
+    {
+     "relation": [
+      "perp_ll",
+      "OA",
+      "OB"
+     ],
+     "holds": true
+    },
+    {
+     "relation": [
+      "perp_ll",
+      "OB",
+      "OC"
+     ],
+     "holds": true
+    },
+    {
+     "relation": [
+      "perp_ll",
+      "OA",
+      "OC"
+     ],
+     "holds": true
+    },
+    {
+     "relation": [
+      "len2",
+      "OA",
+      "1"
+     ],
+     "holds": true
+    },
+    {
+     "relation": [
+      "dist2",
+      "O",
+      "ABC",
+      "1/3"
+     ],
+     "holds": true
+    }
+   ],
+   "issues": [],
+   "scene_validation": "MATHEMATICALLY_VALID",
+   "numeric": {
+    "served": {
+     "q1": "a√3/3"
+    },
+    "parsed": [
+     0.5773502691896257
+    ],
+    "gold": [
+     0.5773502691896258
+    ],
+    "matched": 1,
+    "of": 1,
+    "status": "CORRECT"
+   }
+  },
+  {
+   "case_id": "Q10",
+   "route_status": "REFUSED",
+   "scene_validation": "NOT_SERVED"
+  },
+  {
+   "case_id": "C01",
+   "route_status": "SERVED",
+   "solid_found": true,
+   "solid_id": "khoi_S_ABCD",
+   "vertices": 5,
+   "faces": 5,
+   "edges": 8,
+   "derived_auxiliary_points": [],
+   "object_types": [
+    "point3",
+    "polygon3",
+    "quantity",
+    "segment3",
+    "solid"
+   ],
+   "findings": [],
+   "metric_is_identity": false,
+   "relations": [
+    {
+     "relation": [
+      "perp_lp",
+      "SA",
+      "ABC"
+     ],
+     "holds": true
+    },
+    {
+     "relation": [
+      "perp_ll",
+      "AB",
+      "AD"
+     ],
+     "holds": true
+    },
+    {
+     "relation": [
+      "eq",
+      "AB",
+      "BC"
+     ],
+     "holds": true
+    },
+    {
+     "relation": [
+      "par_ll",
+      "AB",
+      "DC"
+     ],
+     "holds": true
+    },
+    {
+     "relation": [
+      "par_ll",
+      "AD",
+      "BC"
+     ],
+     "holds": true
+    },
+    {
+     "relation": [
+      "len2",
+      "AB",
+      "4"
+     ],
+     "holds": true
+    },
+    {
+     "relation": [
+      "len2",
+      "SA",
+      "3"
+     ],
+     "holds": true
+    }
+   ],
+   "issues": [],
+   "scene_validation": "MATHEMATICALLY_VALID",
+   "numeric": {
+    "served": {
+     "q1": "4a³√3/3"
+    },
+    "parsed": [
+     2.309401076758503
+    ],
+    "gold": [
+     2.309401076758503
+    ],
+    "matched": 1,
+    "of": 1,
+    "status": "CORRECT"
+   }
+  },
+  {
+   "case_id": "C02",
+   "route_status": "SERVED",
+   "solid_found": true,
+   "solid_id": "khoi_S_ABCD",
+   "vertices": 5,
+   "faces": 5,
+   "edges": 8,
+   "derived_auxiliary_points": [],
+   "object_types": [
+    "point3",
+    "polygon3",
+    "quantity",
+    "segment3",
+    "solid"
+   ],
+   "findings": [],
+   "metric_is_identity": false,
+   "relations": [
+    {
+     "relation": [
+      "perp_lp",
+      "SA",
+      "ABC"
+     ],
+     "holds": true
+    },
+    {
+     "relation": [
+      "perp_ll",
+      "AB",
+      "AD"
+     ],
+     "holds": true
+    },
+    {
+     "relation": [
+      "perp_ll",
+      "BA",
+      "BC"
+     ],
+     "holds": true
+    },
+    {
+     "relation": [
+      "par_ll",
+      "AB",
+      "DC"
+     ],
+     "holds": true
+    },
+    {
+     "relation": [
+      "len2",
+      "AD",
+      "4"
+     ],
+     "holds": true
+    },
+    {
+     "relation": [
+      "len2",
+      "SA",
+      "9"
+     ],
+     "holds": true
+    }
+   ],
+   "issues": [],
+   "scene_validation": "MATHEMATICALLY_VALID",
+   "numeric": {
+    "served": {
+     "q1": "2a³"
+    },
+    "parsed": [
+     2.0
+    ],
+    "gold": [
+     2.0
+    ],
+    "matched": 1,
+    "of": 1,
+    "status": "CORRECT"
+   }
+  },
+  {
+   "case_id": "C03",
+   "route_status": "REFUSED",
+   "scene_validation": "NOT_SERVED"
+  },
+  {
+   "case_id": "C04",
+   "route_status": "SERVED",
+   "solid_found": true,
+   "solid_id": "khoi_A_BCD",
+   "vertices": 4,
+   "faces": 4,
+   "edges": 6,
+   "derived_auxiliary_points": [],
+   "object_types": [
+    "point3",
+    "quantity",
+    "solid"
+   ],
+   "findings": [
+    "UNDECLARED_LAYOUT_CENTRE O LABELED_GIVEN"
+   ],
+   "metric_is_identity": false,
+   "relations": [
+    {
+     "relation": [
+      "len2",
+      "AB",
+      "1"
+     ],
+     "holds": true
+    },
+    {
+     "relation": [
+      "len2",
+      "AC",
+      "1"
+     ],
+     "holds": true
+    },
+    {
+     "relation": [
+      "len2",
+      "AD",
+      "1"
+     ],
+     "holds": true
+    },
+    {
+     "relation": [
+      "len2",
+      "BC",
+      "1"
+     ],
+     "holds": true
+    },
+    {
+     "relation": [
+      "len2",
+      "BD",
+      "1"
+     ],
+     "holds": true
+    },
+    {
+     "relation": [
+      "len2",
+      "CD",
+      "1"
+     ],
+     "holds": true
+    }
+   ],
+   "issues": [],
+   "scene_validation": "MATHEMATICALLY_VALID",
+   "numeric": {
+    "served": {
+     "q1": "a³√2/12"
+    },
+    "parsed": [
+     0.11785113019775793
+    ],
+    "gold": [
+     0.11785113019775792
+    ],
+    "matched": 1,
+    "of": 1,
+    "status": "CORRECT"
+   }
+  },
+  {
+   "case_id": "C05",
+   "route_status": "SERVED",
+   "solid_found": true,
+   "solid_id": "khoi_S_ABC",
+   "vertices": 4,
+   "faces": 4,
+   "edges": 6,
+   "derived_auxiliary_points": [],
+   "object_types": [
+    "point3",
+    "polygon3",
+    "quantity",
+    "segment3",
+    "solid"
+   ],
+   "findings": [
+    "UNDECLARED_LAYOUT_CENTRE O LABELED_GIVEN"
+   ],
+   "metric_is_identity": false,
+   "relations": [
+    {
+     "relation": [
+      "len2",
+      "AB",
+      "1"
+     ],
+     "holds": true
+    },
+    {
+     "relation": [
+      "len2",
+      "SA",
+      "4"
+     ],
+     "holds": true
+    },
+    {
+     "relation": [
+      "len2",
+      "SB",
+      "4"
+     ],
+     "holds": true
+    },
+    {
+     "relation": [
+      "len2",
+      "SC",
+      "4"
+     ],
+     "holds": true
+    }
+   ],
+   "issues": [],
+   "scene_validation": "MATHEMATICALLY_VALID",
+   "numeric": {
+    "served": {
+     "q1": "a³√11/12"
+    },
+    "parsed": [
+     0.2763853991962833
+    ],
+    "gold": [
+     0.27638539919628335
+    ],
+    "matched": 1,
+    "of": 1,
+    "status": "CORRECT"
+   }
+  },
+  {
+   "case_id": "C06",
+   "route_status": "SERVED",
+   "solid_found": true,
+   "solid_id": "khoi_ABCD_A_primeB_primeC_primeD_prime",
+   "vertices": 8,
+   "faces": 6,
+   "edges": 12,
+   "derived_auxiliary_points": [],
+   "object_types": [
+    "point3",
+    "polygon3",
+    "quantity",
+    "segment3",
+    "solid"
+   ],
+   "findings": [],
+   "metric_is_identity": false,
+   "relations": [
+    {
+     "relation": [
+      "perp_lp",
+      "AA'",
+      "ABC"
+     ],
+     "holds": true
+    },
+    {
+     "relation": [
+      "perp_ll",
+      "AB",
+      "AD"
+     ],
+     "holds": true
+    },
+    {
+     "relation": [
+      "par_ll",
+      "AB",
+      "C'D'"
+     ],
+     "holds": true
+    },
+    {
+     "relation": [
+      "par_ll",
+      "AA'",
+      "CC'"
+     ],
+     "holds": true
+    },
+    {
+     "relation": [
+      "perp_ll",
+      "AB",
+      "AD"
+     ],
+     "holds": true
+    },
+    {
+     "relation": [
+      "eq",
+      "AB",
+      "BC"
+     ],
+     "holds": true
+    },
+    {
+     "relation": [
+      "par_ll",
+      "AB",
+      "DC"
+     ],
+     "holds": true
+    },
+    {
+     "relation": [
+      "par_ll",
+      "AD",
+      "BC"
+     ],
+     "holds": true
+    },
+    {
+     "relation": [
+      "len2",
+      "AB",
+      "9"
+     ],
+     "holds": true
+    },
+    {
+     "relation": [
+      "len2",
+      "AA'",
+      "9"
+     ],
+     "holds": true
+    }
+   ],
+   "issues": [],
+   "scene_validation": "MATHEMATICALLY_VALID",
+   "numeric": {
+    "served": {
+     "q1": "27"
+    },
+    "parsed": [
+     27.0
+    ],
+    "gold": [
+     27.0
+    ],
+    "matched": 1,
+    "of": 1,
+    "status": "CORRECT"
+   }
+  },
+  {
+   "case_id": "C07",
+   "route_status": "SERVED",
+   "solid_found": true,
+   "solid_id": "khoi_ABCD_A_primeB_primeC_primeD_prime",
+   "vertices": 8,
+   "faces": 6,
+   "edges": 12,
+   "derived_auxiliary_points": [],
+   "object_types": [
+    "point3",
+    "polygon3",
+    "quantity",
+    "segment3",
+    "solid"
+   ],
+   "findings": [],
+   "metric_is_identity": false,
+   "relations": [
+    {
+     "relation": [
+      "perp_lp",
+      "AA'",
+      "ABC"
+     ],
+     "holds": true
+    },
+    {
+     "relation": [
+      "perp_ll",
+      "AB",
+      "AD"
+     ],
+     "holds": true
+    },
+    {
+     "relation": [
+      "par_ll",
+      "AB",
+      "C'D'"
+     ],
+     "holds": true
+    },
+    {
+     "relation": [
+      "par_ll",
+      "AA'",
+      "CC'"
+     ],
+     "holds": true
+    },
+    {
+     "relation": [
+      "perp_ll",
+      "AB",
+      "AD"
+     ],
+     "holds": true
+    },
+    {
+     "relation": [
+      "perp_ll",
+      "BA",
+      "BC"
+     ],
+     "holds": true
+    },
+    {
+     "relation": [
+      "par_ll",
+      "AB",
+      "DC"
+     ],
+     "holds": true
+    },
+    {
+     "relation": [
+      "len2",
+      "AC'",
+      "49"
+     ],
+     "holds": true
+    }
+   ],
+   "issues": [],
+   "scene_validation": "MATHEMATICALLY_VALID",
+   "numeric": {
+    "served": {
+     "q1": "7"
+    },
+    "parsed": [
+     7.0
+    ],
+    "gold": [
+     7.0
+    ],
+    "matched": 1,
+    "of": 1,
+    "status": "CORRECT"
+   }
+  },
+  {
+   "case_id": "C08",
+   "route_status": "SERVED",
+   "solid_found": true,
+   "solid_id": "khoi_S_ABCD",
+   "vertices": 5,
+   "faces": 5,
+   "edges": 8,
+   "derived_auxiliary_points": [],
+   "object_types": [
+    "plane3",
+    "point3",
+    "polygon3",
+    "quantity",
+    "segment3",
+    "solid"
+   ],
+   "findings": [],
+   "metric_is_identity": false,
+   "relations": [
+    {
+     "relation": [
+      "perp_lp",
+      "SA",
+      "ABC"
+     ],
+     "holds": true
+    },
+    {
+     "relation": [
+      "perp_ll",
+      "AB",
+      "AD"
+     ],
+     "holds": true
+    },
+    {
+     "relation": [
+      "eq",
+      "AB",
+      "BC"
+     ],
+     "holds": true
+    },
+    {
+     "relation": [
+      "par_ll",
+      "AB",
+      "DC"
+     ],
+     "holds": true
+    },
+    {
+     "relation": [
+      "par_ll",
+      "AD",
+      "BC"
+     ],
+     "holds": true
+    },
+    {
+     "relation": [
+      "len2",
+      "SA",
+      "4"
+     ],
+     "holds": true
+    },
+    {
+     "relation": [
+      "dist2",
+      "D",
+      "SAB",
+      "1"
+     ],
+     "holds": true
+    }
+   ],
+   "issues": [],
+   "scene_validation": "MATHEMATICALLY_VALID",
+   "numeric": {
+    "served": {
+     "q1": "a"
+    },
+    "parsed": [
+     1.0
+    ],
+    "gold": [
+     1.0
+    ],
+    "matched": 1,
+    "of": 1,
+    "status": "CORRECT"
+   }
+  },
+  {
+   "case_id": "C09",
+   "route_status": "SERVED",
+   "solid_found": true,
+   "solid_id": "khoi_S_ABCD",
+   "vertices": 5,
+   "faces": 5,
+   "edges": 8,
+   "derived_auxiliary_points": [],
+   "object_types": [
+    "plane3",
+    "point3",
+    "polygon3",
+    "quantity",
+    "segment3",
+    "solid"
+   ],
+   "findings": [],
+   "metric_is_identity": true,
+   "relations": [
+    {
+     "relation": [
+      "perp_lp",
+      "SA",
+      "ABC"
+     ],
+     "holds": true
+    },
+    {
+     "relation": [
+      "perp_ll",
+      "AB",
+      "AD"
+     ],
+     "holds": true
+    },
+    {
+     "relation": [
+      "eq",
+      "AB",
+      "BC"
+     ],
+     "holds": true
+    },
+    {
+     "relation": [
+      "par_ll",
+      "AB",
+      "DC"
+     ],
+     "holds": true
+    },
+    {
+     "relation": [
+      "par_ll",
+      "AD",
+      "BC"
+     ],
+     "holds": true
+    },
+    {
+     "relation": [
+      "len2",
+      "SA",
+      "1"
+     ],
+     "holds": true
+    },
+    {
+     "relation": [
+      "dist2",
+      "A",
+      "SBD",
+      "1/3"
+     ],
+     "holds": true
+    }
+   ],
+   "issues": [],
+   "scene_validation": "MATHEMATICALLY_VALID",
+   "numeric": {
+    "served": {
+     "q1": "a√3/3"
+    },
+    "parsed": [
+     0.5773502691896257
+    ],
+    "gold": [
+     0.5773502691896258
+    ],
+    "matched": 1,
+    "of": 1,
+    "status": "CORRECT"
+   }
+  },
+  {
+   "case_id": "C10",
+   "route_status": "SERVED",
+   "solid_found": true,
+   "solid_id": "khoi_S_ABCD",
+   "vertices": 5,
+   "faces": 5,
+   "edges": 8,
+   "derived_auxiliary_points": [],
+   "object_types": [
+    "line3",
+    "point3",
+    "polygon3",
+    "quantity",
+    "segment3",
+    "solid"
+   ],
+   "findings": [],
+   "metric_is_identity": true,
+   "relations": [
+    {
+     "relation": [
+      "perp_lp",
+      "SA",
+      "ABC"
+     ],
+     "holds": true
+    },
+    {
+     "relation": [
+      "perp_ll",
+      "AB",
+      "AD"
+     ],
+     "holds": true
+    },
+    {
+     "relation": [
+      "eq",
+      "AB",
+      "BC"
+     ],
+     "holds": true
+    },
+    {
+     "relation": [
+      "par_ll",
+      "AB",
+      "DC"
+     ],
+     "holds": true
+    },
+    {
+     "relation": [
+      "par_ll",
+      "AD",
+      "BC"
+     ],
+     "holds": true
+    },
+    {
+     "relation": [
+      "len2",
+      "SA",
+      "1"
+     ],
+     "holds": true
+    }
+   ],
+   "issues": [],
+   "scene_validation": "MATHEMATICALLY_VALID",
+   "numeric": {
+    "served": {
+     "q1": "a"
+    },
+    "parsed": [
+     1.0
+    ],
+    "gold": [
+     1.0
+    ],
+    "matched": 1,
+    "of": 1,
+    "status": "CORRECT"
+   }
+  },
+  {
+   "case_id": "C11",
+   "route_status": "SERVED",
+   "solid_found": true,
+   "solid_id": "khoi_S_ABCD",
+   "vertices": 5,
+   "faces": 5,
+   "edges": 8,
+   "derived_auxiliary_points": [],
+   "object_types": [
+    "line3",
+    "plane3",
+    "point3",
+    "polygon3",
+    "quantity",
+    "segment3",
+    "solid"
+   ],
+   "findings": [],
+   "metric_is_identity": false,
+   "relations": [
+    {
+     "relation": [
+      "perp_lp",
+      "SA",
+      "ABC"
+     ],
+     "holds": true
+    },
+    {
+     "relation": [
+      "perp_ll",
+      "AB",
+      "AD"
+     ],
+     "holds": true
+    },
+    {
+     "relation": [
+      "eq",
+      "AB",
+      "BC"
+     ],
+     "holds": true
+    },
+    {
+     "relation": [
+      "par_ll",
+      "AB",
+      "DC"
+     ],
+     "holds": true
+    },
+    {
+     "relation": [
+      "par_ll",
+      "AD",
+      "BC"
+     ],
+     "holds": true
+    },
+    {
+     "relation": [
+      "len2",
+      "SA",
+      "2"
+     ],
+     "holds": true
+    }
+   ],
+   "issues": [],
+   "scene_validation": "MATHEMATICALLY_VALID",
+   "numeric": {
+    "served": {
+     "q1": "cos²=1/2"
+    },
+    "parsed": [
+     45.0
+    ],
+    "gold": [
+     45.0
+    ],
+    "matched": 1,
+    "of": 1,
+    "status": "CORRECT"
+   }
+  },
+  {
+   "case_id": "C12",
+   "route_status": "SERVED",
+   "solid_found": true,
+   "solid_id": "khoi_S_ABCD",
+   "vertices": 5,
+   "faces": 5,
+   "edges": 8,
+   "derived_auxiliary_points": [],
+   "object_types": [
+    "plane3",
+    "point3",
+    "polygon3",
+    "quantity",
+    "segment3",
+    "solid"
+   ],
+   "findings": [],
+   "metric_is_identity": true,
+   "relations": [
+    {
+     "relation": [
+      "perp_lp",
+      "SA",
+      "ABC"
+     ],
+     "holds": true
+    },
+    {
+     "relation": [
+      "perp_ll",
+      "AB",
+      "AD"
+     ],
+     "holds": true
+    },
+    {
+     "relation": [
+      "eq",
+      "AB",
+      "BC"
+     ],
+     "holds": true
+    },
+    {
+     "relation": [
+      "par_ll",
+      "AB",
+      "DC"
+     ],
+     "holds": true
+    },
+    {
+     "relation": [
+      "par_ll",
+      "AD",
+      "BC"
+     ],
+     "holds": true
+    },
+    {
+     "relation": [
+      "len2",
+      "SA",
+      "1"
+     ],
+     "holds": true
+    }
+   ],
+   "issues": [],
+   "scene_validation": "MATHEMATICALLY_VALID",
+   "numeric": {
+    "served": {
+     "q1": "cos²=1/3"
+    },
+    "parsed": [
+     54.735610317245346
+    ],
+    "gold": [
+     54.735610317245346
+    ],
+    "matched": 1,
+    "of": 1,
+    "status": "CORRECT"
+   }
+  },
+  {
+   "case_id": "C13",
+   "route_status": "SERVED",
+   "solid_found": true,
+   "solid_id": "khoi_ABC_A_primeB_primeC_prime",
+   "vertices": 6,
+   "faces": 5,
+   "edges": 9,
+   "derived_auxiliary_points": [],
+   "object_types": [
+    "point3",
+    "polygon3",
+    "quantity",
+    "segment3",
+    "solid"
+   ],
+   "findings": [],
+   "metric_is_identity": false,
+   "relations": [
+    {
+     "relation": [
+      "perp_lp",
+      "AA'",
+      "ABC"
+     ],
+     "holds": true
+    },
+    {
+     "relation": [
+      "len2",
+      "AB",
+      "1"
+     ],
+     "holds": true
+    },
+    {
+     "relation": [
+      "len2",
+      "BC",
+      "1"
+     ],
+     "holds": true
+    },
+    {
+     "relation": [
+      "len2",
+      "AA'",
+      "4"
+     ],
+     "holds": true
+    }
+   ],
+   "issues": [],
+   "scene_validation": "MATHEMATICALLY_VALID",
+   "numeric": {
+    "served": {
+     "q1": "a³√3/2"
+    },
+    "parsed": [
+     0.8660254037844386
+    ],
+    "gold": [
+     0.8660254037844386
+    ],
+    "matched": 1,
+    "of": 1,
+    "status": "CORRECT"
+   }
+  },
+  {
+   "case_id": "C14",
+   "route_status": "SERVED",
+   "solid_found": true,
+   "solid_id": "khoi_ABC_A_primeB_primeC_prime",
+   "vertices": 6,
+   "faces": 5,
+   "edges": 9,
+   "derived_auxiliary_points": [],
+   "object_types": [
+    "point3",
+    "polygon3",
+    "quantity",
+    "segment3",
+    "solid"
+   ],
+   "findings": [],
+   "metric_is_identity": false,
+   "relations": [
+    {
+     "relation": [
+      "perp_lp",
+      "AA'",
+      "ABC"
+     ],
+     "holds": true
+    },
+    {
+     "relation": [
+      "perp_ll",
+      "AB",
+      "AC"
+     ],
+     "holds": true
+    },
+    {
+     "relation": [
+      "len2",
+      "AB",
+      "9"
+     ],
+     "holds": true
+    },
+    {
+     "relation": [
+      "len2",
+      "AC",
+      "16"
+     ],
+     "holds": true
+    },
+    {
+     "relation": [
+      "len2",
+      "AA'",
+      "36"
+     ],
+     "holds": true
+    }
+   ],
+   "issues": [],
+   "scene_validation": "MATHEMATICALLY_VALID",
+   "numeric": {
+    "served": {
+     "q1": "36"
+    },
+    "parsed": [
+     36.0
+    ],
+    "gold": [
+     36.0
+    ],
+    "matched": 1,
+    "of": 1,
+    "status": "CORRECT"
+   }
+  },
+  {
+   "case_id": "C15",
+   "route_status": "SERVED",
+   "solid_found": true,
+   "solid_id": "khoi_S_ABCD",
+   "vertices": 5,
+   "faces": 5,
+   "edges": 8,
+   "derived_auxiliary_points": [
+    "H"
+   ],
+   "object_types": [
+    "line3",
+    "point3",
+    "polygon3",
+    "quantity",
+    "segment3",
+    "solid"
+   ],
+   "findings": [],
+   "metric_is_identity": true,
+   "relations": [
+    {
+     "relation": [
+      "perp_lp",
+      "SA",
+      "ABC"
+     ],
+     "holds": true
+    },
+    {
+     "relation": [
+      "perp_ll",
+      "AB",
+      "AD"
+     ],
+     "holds": true
+    },
+    {
+     "relation": [
+      "eq",
+      "AB",
+      "BC"
+     ],
+     "holds": true
+    },
+    {
+     "relation": [
+      "par_ll",
+      "AB",
+      "DC"
+     ],
+     "holds": true
+    },
+    {
+     "relation": [
+      "par_ll",
+      "AD",
+      "BC"
+     ],
+     "holds": true
+    },
+    {
+     "relation": [
+      "len2",
+      "SA",
+      "1"
+     ],
+     "holds": true
+    }
+   ],
+   "issues": [],
+   "scene_validation": "MATHEMATICALLY_VALID",
+   "numeric": {
+    "served": {
+     "q1": "a√6/3"
+    },
+    "parsed": [
+     0.8164965809277259
+    ],
+    "gold": [
+     0.816496580927726
+    ],
+    "matched": 1,
+    "of": 1,
+    "status": "CORRECT"
+   }
+  },
+  {
+   "case_id": "C16",
+   "route_status": "SERVED",
+   "solid_found": true,
+   "solid_id": "khoi_S_ABCD",
+   "vertices": 5,
+   "faces": 5,
+   "edges": 8,
+   "derived_auxiliary_points": [],
+   "object_types": [
+    "plane3",
+    "point3",
+    "polygon3",
+    "quantity",
+    "segment3",
+    "solid"
+   ],
+   "findings": [
+    "UNDECLARED_LAYOUT_CENTRE O LABELED_GIVEN"
+   ],
+   "metric_is_identity": false,
+   "relations": [
+    {
+     "relation": [
+      "perp_ll",
+      "AB",
+      "AD"
+     ],
+     "holds": true
+    },
+    {
+     "relation": [
+      "eq",
+      "AB",
+      "BC"
+     ],
+     "holds": true
+    },
+    {
+     "relation": [
+      "par_ll",
+      "AB",
+      "DC"
+     ],
+     "holds": true
+    },
+    {
+     "relation": [
+      "par_ll",
+      "AD",
+      "BC"
+     ],
+     "holds": true
+    },
+    {
+     "relation": [
+      "len2",
+      "AB",
+      "4"
+     ],
+     "holds": true
+    },
+    {
+     "relation": [
+      "len2",
+      "SA",
+      "6"
+     ],
+     "holds": true
+    },
+    {
+     "relation": [
+      "dist2",
+      "S",
+      "ABC",
+      "4"
+     ],
+     "holds": true
+    }
+   ],
+   "issues": [],
+   "scene_validation": "MATHEMATICALLY_VALID",
+   "numeric": {
+    "served": {
+     "q1": "2a"
+    },
+    "parsed": [
+     2.0
+    ],
+    "gold": [
+     2.0
+    ],
+    "matched": 1,
+    "of": 1,
+    "status": "CORRECT"
+   }
+  },
+  {
+   "case_id": "C17",
+   "route_status": "SERVED",
+   "solid_found": true,
+   "solid_id": "khoi_S_ABCD",
+   "vertices": 5,
+   "faces": 5,
+   "edges": 8,
+   "derived_auxiliary_points": [],
+   "object_types": [
+    "plane3",
+    "point3",
+    "polygon3",
+    "quantity",
+    "segment3",
+    "solid"
+   ],
+   "findings": [],
+   "metric_is_identity": false,
+   "relations": [
+    {
+     "relation": [
+      "perp_lp",
+      "SA",
+      "ABC"
+     ],
+     "holds": true
+    },
+    {
+     "relation": [
+      "perp_ll",
+      "AB",
+      "AD"
+     ],
+     "holds": true
+    },
+    {
+     "relation": [
+      "perp_ll",
+      "BA",
+      "BC"
+     ],
+     "holds": true
+    },
+    {
+     "relation": [
+      "par_ll",
+      "AB",
+      "DC"
+     ],
+     "holds": true
+    },
+    {
+     "relation": [
+      "len2",
+      "AD",
+      "4"
+     ],
+     "holds": true
+    },
+    {
+     "relation": [
+      "len2",
+      "SA",
+      "4"
+     ],
+     "holds": true
+    },
+    {
+     "relation": [
+      "mid",
+      "M",
+      "SC"
+     ],
+     "holds": true
+    }
+   ],
+   "issues": [],
+   "scene_validation": "MATHEMATICALLY_VALID",
+   "numeric": {
+    "served": {
+     "q1": "a"
+    },
+    "parsed": [
+     1.0
+    ],
+    "gold": [
+     1.0
+    ],
+    "matched": 1,
+    "of": 1,
+    "status": "CORRECT"
+   }
+  },
+  {
+   "case_id": "C18",
+   "route_status": "SERVED",
+   "solid_found": true,
+   "solid_id": "khoi_O_ABC",
+   "vertices": 4,
+   "faces": 4,
+   "edges": 6,
+   "derived_auxiliary_points": [],
+   "object_types": [
+    "point3",
+    "quantity",
+    "solid"
+   ],
+   "findings": [],
+   "metric_is_identity": false,
+   "relations": [
+    {
+     "relation": [
+      "perp_ll",
+      "OA",
+      "OB"
+     ],
+     "holds": true
+    },
+    {
+     "relation": [
+      "perp_ll",
+      "OB",
+      "OC"
+     ],
+     "holds": true
+    },
+    {
+     "relation": [
+      "perp_ll",
+      "OA",
+      "OC"
+     ],
+     "holds": true
+    },
+    {
+     "relation": [
+      "len2",
+      "OC",
+      "9"
+     ],
+     "holds": true
+    }
+   ],
+   "issues": [],
+   "scene_validation": "MATHEMATICALLY_VALID",
+   "numeric": {
+    "served": {
+     "q1": "a³"
+    },
+    "parsed": [
+     1.0
+    ],
+    "gold": [
+     1.0
+    ],
+    "matched": 1,
+    "of": 1,
+    "status": "CORRECT"
+   }
+  },
+  {
+   "case_id": "C19",
+   "route_status": "SERVED",
+   "solid_found": true,
+   "solid_id": "khoi_A_BCD",
+   "vertices": 4,
+   "faces": 4,
+   "edges": 6,
+   "derived_auxiliary_points": [],
+   "object_types": [
+    "point3",
+    "quantity",
+    "solid"
+   ],
+   "findings": [
+    "UNDECLARED_LAYOUT_CENTRE O LABELED_GIVEN"
+   ],
+   "metric_is_identity": false,
+   "relations": [
+    {
+     "relation": [
+      "len2",
+      "AB",
+      "4"
+     ],
+     "holds": true
+    },
+    {
+     "relation": [
+      "len2",
+      "AC",
+      "4"
+     ],
+     "holds": true
+    },
+    {
+     "relation": [
+      "len2",
+      "AD",
+      "4"
+     ],
+     "holds": true
+    },
+    {
+     "relation": [
+      "len2",
+      "BC",
+      "4"
+     ],
+     "holds": true
+    },
+    {
+     "relation": [
+      "len2",
+      "BD",
+      "4"
+     ],
+     "holds": true
+    },
+    {
+     "relation": [
+      "len2",
+      "CD",
+      "4"
+     ],
+     "holds": true
+    }
+   ],
+   "issues": [],
+   "scene_validation": "MATHEMATICALLY_VALID",
+   "numeric": {
+    "served": {
+     "q1": "2√2/3"
+    },
+    "parsed": [
+     0.9428090415820635
+    ],
+    "gold": [
+     0.9428090415820634
+    ],
+    "matched": 1,
+    "of": 1,
+    "status": "CORRECT"
+   }
+  },
+  {
+   "case_id": "C20",
+   "route_status": "REFUSED",
+   "scene_validation": "NOT_SERVED"
+  },
+  {
+   "case_id": "C21",
+   "route_status": "SERVED",
+   "solid_found": true,
+   "solid_id": "khoi_ABCD_A_primeB_primeC_primeD_prime",
+   "vertices": 8,
+   "faces": 6,
+   "edges": 12,
+   "derived_auxiliary_points": [],
+   "object_types": [
+    "line3",
+    "plane3",
+    "point3",
+    "polygon3",
+    "quantity",
+    "segment3",
+    "solid"
+   ],
+   "findings": [],
+   "metric_is_identity": false,
+   "relations": [
+    {
+     "relation": [
+      "perp_lp",
+      "AA'",
+      "ABC"
+     ],
+     "holds": true
+    },
+    {
+     "relation": [
+      "perp_ll",
+      "AB",
+      "AD"
+     ],
+     "holds": true
+    },
+    {
+     "relation": [
+      "par_ll",
+      "AB",
+      "C'D'"
+     ],
+     "holds": true
+    },
+    {
+     "relation": [
+      "par_ll",
+      "AA'",
+      "CC'"
+     ],
+     "holds": true
+    },
+    {
+     "relation": [
+      "perp_ll",
+      "AB",
+      "AD"
+     ],
+     "holds": true
+    },
+    {
+     "relation": [
+      "eq",
+      "AB",
+      "BC"
+     ],
+     "holds": true
+    },
+    {
+     "relation": [
+      "par_ll",
+      "AB",
+      "DC"
+     ],
+     "holds": true
+    },
+    {
+     "relation": [
+      "par_ll",
+      "AD",
+      "BC"
+     ],
+     "holds": true
+    },
+    {
+     "relation": [
+      "len2",
+      "AB",
+      "1"
+     ],
+     "holds": true
+    },
+    {
+     "relation": [
+      "len2",
+      "AA'",
+      "2"
+     ],
+     "holds": true
+    }
+   ],
+   "issues": [],
+   "scene_validation": "MATHEMATICALLY_VALID",
+   "numeric": {
+    "served": {
+     "q1": "cos²=1/2"
+    },
+    "parsed": [
+     45.0
+    ],
+    "gold": [
+     45.0
+    ],
+    "matched": 1,
+    "of": 1,
+    "status": "CORRECT"
+   }
+  },
+  {
+   "case_id": "C22",
+   "route_status": "SERVED",
+   "solid_found": true,
+   "solid_id": "khoi_S_ABCD",
+   "vertices": 5,
+   "faces": 5,
+   "edges": 8,
+   "derived_auxiliary_points": [],
+   "object_types": [
+    "point3",
+    "polygon3",
+    "quantity",
+    "segment3",
+    "solid"
+   ],
+   "findings": [],
+   "metric_is_identity": false,
+   "relations": [
+    {
+     "relation": [
+      "perp_lp",
+      "SA",
+      "ABC"
+     ],
+     "holds": true
+    },
+    {
+     "relation": [
+      "len2",
+      "AB",
+      "1"
+     ],
+     "holds": true
+    },
+    {
+     "relation": [
+      "len2",
+      "AD",
+      "1"
+     ],
+     "holds": true
+    },
+    {
+     "relation": [
+      "dot",
+      "AB",
+      "AD",
+      "1/2"
+     ],
+     "holds": true
+    },
+    {
+     "relation": [
+      "len2",
+      "SA",
+      "1"
+     ],
+     "holds": true
+    }
+   ],
+   "issues": [],
+   "scene_validation": "MATHEMATICALLY_VALID",
+   "numeric": {
+    "served": {
+     "q1": "a³√3/6"
+    },
+    "parsed": [
+     0.28867513459481287
+    ],
+    "gold": [
+     0.28867513459481287
+    ],
+    "matched": 1,
+    "of": 1,
+    "status": "CORRECT"
+   }
+  },
+  {
+   "case_id": "C23",
+   "route_status": "SERVED",
+   "solid_found": true,
+   "solid_id": "khoi_S_ABCD",
+   "vertices": 5,
+   "faces": 5,
+   "edges": 8,
+   "derived_auxiliary_points": [],
+   "object_types": [
+    "point3",
+    "polygon3",
+    "quantity",
+    "segment3",
+    "solid"
+   ],
+   "findings": [],
+   "metric_is_identity": false,
+   "relations": [
+    {
+     "relation": [
+      "perp_ll",
+      "AB",
+      "AD"
+     ],
+     "holds": true
+    },
+    {
+     "relation": [
+      "eq",
+      "AB",
+      "BC"
+     ],
+     "holds": true
+    },
+    {
+     "relation": [
+      "par_ll",
+      "AB",
+      "DC"
+     ],
+     "holds": true
+    },
+    {
+     "relation": [
+      "par_ll",
+      "AD",
+      "BC"
+     ],
+     "holds": true
+    },
+    {
+     "relation": [
+      "len2",
+      "AB",
+      "1"
+     ],
+     "holds": true
+    },
+    {
+     "relation": [
+      "len2",
+      "SA",
+      "1"
+     ],
+     "holds": true
+    },
+    {
+     "relation": [
+      "len2",
+      "SB",
+      "1"
+     ],
+     "holds": true
+    },
+    {
+     "relation": [
+      "perp_pp",
+      "SAB",
+      "ABC"
+     ],
+     "holds": true
+    }
+   ],
+   "issues": [],
+   "scene_validation": "MATHEMATICALLY_VALID",
+   "numeric": {
+    "served": {
+     "q1": "a³√3/6"
+    },
+    "parsed": [
+     0.28867513459481287
+    ],
+    "gold": [
+     0.28867513459481287
+    ],
+    "matched": 1,
+    "of": 1,
+    "status": "CORRECT"
+   }
+  },
+  {
+   "case_id": "C24",
+   "route_status": null,
+   "scene_validation": "NOT_SERVED"
+  },
+  {
+   "case_id": "C25",
+   "route_status": "REFUSED",
+   "scene_validation": "NOT_SERVED"
+  },
+  {
+   "case_id": "C26",
+   "route_status": "REFUSED",
+   "scene_validation": "NOT_SERVED"
+  },
+  {
+   "case_id": "N01",
+   "route_status": "REFUSED",
+   "scene_validation": "NOT_SERVED"
+  },
+  {
+   "case_id": "N02",
+   "route_status": "REFUSED",
+   "scene_validation": "NOT_SERVED"
+  },
+  {
+   "case_id": "N03",
+   "route_status": "REFUSED",
+   "scene_validation": "NOT_SERVED"
+  },
+  {
+   "case_id": "N04",
+   "route_status": "REFUSED",
+   "scene_validation": "NOT_SERVED"
+  },
+  {
+   "case_id": "N05",
+   "route_status": "REFUSED",
+   "scene_validation": "NOT_SERVED"
+  },
+  {
+   "case_id": "N06",
+   "route_status": "REFUSED",
+   "scene_validation": "NOT_SERVED"
+  },
+  {
+   "case_id": "N07",
+   "route_status": "REFUSED",
+   "scene_validation": "NOT_SERVED"
+  },
+  {
+   "case_id": "N08",
+   "route_status": null,
+   "scene_validation": "NOT_SERVED"
+  },
+  {
+   "case_id": "N09",
+   "route_status": null,
+   "scene_validation": "NOT_SERVED"
+  },
+  {
+   "case_id": "N10",
+   "route_status": null,
+   "scene_validation": "NOT_SERVED"
+  },
+  {
+   "case_id": "N11",
+   "route_status": "REFUSED",
+   "scene_validation": "NOT_SERVED"
+  },
+  {
+   "case_id": "N12",
+   "route_status": null,
+   "scene_validation": "NOT_SERVED"
+  },
+  {
+   "case_id": "N13",
+   "route_status": "REFUSED",
+   "scene_validation": "NOT_SERVED"
+  },
+  {
+   "case_id": "N14",
+   "route_status": "REFUSED",
+   "scene_validation": "NOT_SERVED"
+  },
+  {
+   "case_id": "N15",
+   "route_status": "REFUSED",
+   "scene_validation": "NOT_SERVED"
+  },
+  {
+   "case_id": "N16",
+   "route_status": null,
+   "scene_validation": "NOT_SERVED"
+  },
+  {
+   "case_id": "N17",
+   "route_status": "REFUSED",
+   "scene_validation": "NOT_SERVED"
+  },
+  {
+   "case_id": "N18",
+   "route_status": "REFUSED",
+   "scene_validation": "NOT_SERVED"
+  }
+ ]
+}
