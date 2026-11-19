@@ -597,8 +597,51 @@ def test_ic4_alembic_handoff_migration_upgrade_downgrade_zero_drift(tmp_path):
         conn.execute(
             text(
                 "INSERT INTO users (email, display_name, password_hash, role, must_change_password, created_at) "
-                "VALUES ('seed-step@algosim.edu.vn', 'Seed User', 'hash', 'student', 0, CURRENT_TIMESTAMP)"
+                "VALUES ('seed-step@algosim.edu.vn', 'Seed User', 'hash', 'teacher', 0, CURRENT_TIMESTAMP), "
+                "('seed-stu@algosim.edu.vn', 'Seed Student', 'hash', 'student', 0, CURRENT_TIMESTAMP)"
             )
+        )
+        t_id = conn.execute(text("SELECT id FROM users WHERE email = 'seed-step@algosim.edu.vn'")).scalar_one()
+        s_id = conn.execute(text("SELECT id FROM users WHERE email = 'seed-stu@algosim.edu.vn'")).scalar_one()
+        conn.execute(
+            text(
+                "INSERT INTO classrooms (teacher_id, name, join_code, code_active, archived, created_at) "
+                "VALUES (:t_id, '11A1-ic4', 'IC4001', 1, 0, CURRENT_TIMESTAMP)"
+            ),
+            {"t_id": t_id},
+        )
+        c_id = conn.execute(text("SELECT id FROM classrooms WHERE join_code = 'IC4001'")).scalar_one()
+        conn.execute(
+            text(
+                "INSERT INTO class_memberships (classroom_id, student_id, joined_at) "
+                "VALUES (:c_id, :s_id, CURRENT_TIMESTAMP)"
+            ),
+            {"c_id": c_id, "s_id": s_id},
+        )
+        conn.execute(
+            text(
+                "INSERT INTO assignments (classroom_id, created_by, title, instruction, simulation_id, envelope_json, closed, created_at) "
+                "VALUES (:c_id, :t_id, 'Assign IC4', 'Solve', 'sim.ic4', '{}', 0, CURRENT_TIMESTAMP)"
+            ),
+            {"c_id": c_id, "t_id": t_id},
+        )
+        a_id = conn.execute(
+            text("SELECT id FROM assignments WHERE classroom_id = :c_id"),
+            {"c_id": c_id},
+        ).scalar_one()
+        conn.execute(
+            text(
+                "INSERT INTO practice_sessions (assignment_id, student_id, simulation_id, cursor, step_count, explore_open, challenge_open, action_count, commitment_count, completed, started_at, updated_at, help_requested) "
+                "VALUES (:a_id, :s_id, 'sim.ic4', 1, 3, 1, 0, 2, 1, 0, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 0)"
+            ),
+            {"a_id": a_id, "s_id": s_id},
+        )
+        conn.execute(
+            text(
+                "INSERT INTO classroom_sessions (classroom_id, teacher_id, round_id, cmd_id, mode, assignment_id, simulation_id, current_step, isolated_ids, exploded_groups, sync_cmd_id, active, started_at, updated_at) "
+                "VALUES (:c_id, :t_id, 'round-ic4', 1, 'follow', :a_id, 'sim.ic4', 1, '[]', '[]', 0, 1, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP)"
+            ),
+            {"c_id": c_id, "t_id": t_id, "a_id": a_id},
         )
 
     up_head = _alembic("upgrade", "head")
@@ -607,10 +650,12 @@ def test_ic4_alembic_handoff_migration_upgrade_downgrade_zero_drift(tmp_path):
     insp = inspect(mig_engine)
     table_names = set(insp.get_table_names())
     assert {"step_edit_sessions", "step_edit_revisions", "step_edit_feedback"} <= table_names
-    assert not ({"classrooms", "assignments", "classroom_sessions", "practice_sessions", "class_memberships"} & table_names)
+    assert {"classrooms", "assignments", "classroom_sessions", "practice_sessions", "class_memberships"} <= table_names
     with mig_engine.connect() as conn:
         assert conn.execute(text("SELECT version_num FROM alembic_version")).scalar_one() == "f8a2c41d9e05"
         assert conn.execute(text("SELECT COUNT(*) FROM users WHERE email = 'seed-step@algosim.edu.vn'")).scalar_one() == 1
+        for tbl in ("classrooms", "class_memberships", "assignments", "practice_sessions", "classroom_sessions"):
+            assert conn.execute(text(f"SELECT COUNT(*) FROM {tbl}")).scalar_one() == 1, f"{tbl} lost rows"
 
     chk = _alembic("check")
     assert chk.returncode == 0, f"alembic check failed:\n{chk.stdout}\n{chk.stderr}"
@@ -660,9 +705,14 @@ def test_ic4_alembic_handoff_migration_upgrade_downgrade_zero_drift(tmp_path):
     assert not ({"step_edit_sessions", "step_edit_revisions", "step_edit_feedback"} & set(insp_after_down.get_table_names()))
     with mig_engine.connect() as conn:
         assert conn.execute(text("SELECT COUNT(*) FROM users WHERE email = 'seed-step@algosim.edu.vn'")).scalar_one() == 1
+        for tbl in ("classrooms", "class_memberships", "assignments", "practice_sessions", "classroom_sessions"):
+            assert conn.execute(text(f"SELECT COUNT(*) FROM {tbl}")).scalar_one() == 1, f"{tbl} lost on downgrade"
 
     reup = _alembic("upgrade", "head")
     assert reup.returncode == 0, reup.stderr
+    with mig_engine.connect() as conn:
+        for tbl in ("classrooms", "class_memberships", "assignments", "practice_sessions", "classroom_sessions"):
+            assert conn.execute(text(f"SELECT COUNT(*) FROM {tbl}")).scalar_one() == 1, f"{tbl} lost on re-upgrade"
     chk2 = _alembic("check")
     assert chk2.returncode == 0, chk2.stdout + chk2.stderr
     mig_engine.dispose()

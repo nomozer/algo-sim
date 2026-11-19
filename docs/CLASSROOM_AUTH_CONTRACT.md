@@ -67,17 +67,22 @@ vào danh sách ấy là `OUT_OF_SCOPE` theo `RULES.md §3` — dừng và hỏi
 - **Quan sát là gần-thời-gian-thực (5 giây), không phải tức thời.** Repo không
   có websocket/SSE và một bảng đổi vài giây một lần không đáng dựng nó.
 
-## 4. Vận hành
+## 4. Trạng thái Retirement & Vận hành
+
+> **Cập nhật 2026-11-19 (`bf1ee2a57` + Database Safety Root-Cause Closure):**
+> - Các route Classroom/Assignment/Live-Session (`/api/classes*`, `/api/assignments*`) và các ORM model tương ứng đã được ngừng sử dụng khỏi runtime ứng dụng.
+> - Tầng **Tài khoản / Phiên máy chủ / Guest Trial / Admin / Step Editor** (`users`, `auth_sessions`, `user_account_meta`, `learning_history_entries`, `analysis_usage_ledger`, `admin_*`, `step_edit_*`) tiếp tục hoạt động bình thường.
+> - 5 bảng Classroom lịch sử (`classrooms`, `class_memberships`, `assignments`, `practice_sessions`, `classroom_sessions`) **không bị xóa tự động** trong migration `f8a2c41d9e05` để bảo toàn dữ liệu hiện hữu trên các DB cũ.
 
 ```bash
-# bảng: Postgres do Alembic sở hữu (bất biến #19)
-cd backend && .venv/Scripts/python.exe -m alembic upgrade head
+# kiểm tra an toàn migration + nâng cấp DB bền (Postgres / SQLite có alembic_version)
+cd backend && .venv/Scripts/python.exe alembic/migration_preflight.py --startup && .venv/Scripts/python.exe -m alembic upgrade head
 
 # mở đăng ký tài khoản giáo viên (không đặt = đóng)
 ALGOSIM_TEACHER_SIGNUP_CODE=<mã do trường cấp>
 
-# dữ liệu demo cho nghiệm thu (mật khẩu từ env, không có mặc định trong mã)
-ALGOSIM_FIXTURE_PASSWORD=<...> .venv/Scripts/python.exe scripts/seed_classroom_fixture.py
+# khởi tạo 3 tài khoản demo cô lập (thay thế script Classroom cũ đã ngừng)
+.venv/Scripts/python.exe scripts/seed_demo_accounts.py --db-path /tmp/axo_demo.db
 ```
 
 ⚠️ **Container Docker cũ có thể chiếm cổng 8000** và trả 404 cho mọi endpoint

@@ -2150,13 +2150,7 @@ Bốn file, bốn tầng, đi một chiều: `policy` (thuần) ← `service` (D
   target (bất biến #28). Tiến độ bị KẸP về miền hợp lệ, đếm chỉ TĂNG.
 
 ### `backend/app/persistence/classroom_models.py`
-Sáu bảng: `users` · `auth_sessions` (phục vụ cả KHÁCH — chỗ đếm lượt thử) ·
-`classrooms` · `class_memberships` (unique ở tầng DB) · `assignments` (giữ
-envelope ĐÃ VALIDATE, không giữ đề để sinh lại) · `practice_sessions` (bằng chứng
-CÓ CẤU TRÚC, không phải ảnh state của renderer).
-Đặt cạnh `db.py` chứ không nhét vào: `db.py` sở hữu ngân hàng bài. Chung `Base`
-nên Alembic thấy một metadata; `alembic/env.py` phải import file này VÌ TÁC DỤNG
-PHỤ, nếu không autogenerate sẽ sinh migration XOÁ các bảng.
+Active account, auth, history, quota ledger, and admin tables (`users`, `auth_sessions`, `learning_history_entries`, `user_account_meta`, `admin_system_settings`, `admin_audit_logs`, `analysis_usage_ledger`, `admin_analysis_telemetry`). Historical Classroom ORM tables (`classrooms`, `class_memberships`, `assignments`, `practice_sessions`, `classroom_sessions`) were retired from active code in `bf1ee2a57` while their persisted database tables/rows remain safely retained non-destructively in `f8a2c41d9e05` and excluded from `alembic check` autogenerate drift via `alembic/env.py::_include_name`.
 
 ### `state/auth.ts` · `state/classroom.ts`
 Hai store TÁCH khỏi `state/store.ts` (vốn cố ý mù domain). `auth` giữ danh tính
@@ -2625,9 +2619,13 @@ có `provenance`.
 đỏ — bài học: guard vắng-mặt phải đi kèm một guard có-mặt, nếu không nó xanh cả
 khi mù. Đã tiêm lỗi (`PRODUCT_DOMAINS += "algorithm"`) để thấy nó đỏ thật.
 
-### ackend/scripts/seed_demo_accounts.py
+### `backend/scripts/seed_demo_accounts.py`
 
-Clean 3-account demo SQLite seeder (1 Admin, 1 Teacher, 1 Student) with zero hardcoded credentials; writes generated credentials receipt only to an explicit local path outside Git when --receipt-out is passed. Also persists UserAccountMeta, AdminSystemSetting, AdminAuditLogEntry, and AdminAnalysisTelemetry in ackend/app/persistence/classroom_models.py.
+Clean 3-account demo SQLite seeder (1 Admin, 1 Teacher, 1 Student) with zero hardcoded credentials; writes generated credentials receipt only to an explicit local path outside Git when `--receipt-out` is passed, and fails closed (`RETAINED_CLASSROOM_DATA_PRESENT`) before mutating `users` if retained legacy Classroom tables contain live rows. Also persists `UserAccountMeta`, `AdminSystemSetting`, `AdminAuditLogEntry`, and `AdminAnalysisTelemetry` in `backend/app/persistence/classroom_models.py`.
+
+### `backend/alembic/migration_preflight.py` · `backend/alembic/env.py` · `backend/alembic/versions/f8a2c41d9e05_remove_classroom_and_live_session_tables.py`
+
+Startup and online Alembic migration safety guard (`evaluate_migration_safety`, `scan_revision_ast`, `BLOCK_EXIT_CODE = 23`): blocks destructive DDL/DML (`drop_table`, `drop_column`, raw `DROP`/`TRUNCATE`/`DELETE`) and unstamped populated DBs (`UNSTAMPED_EXISTING_DATABASE`), enforced in `backend/Dockerfile` (`ENV ALGOSIM_STARTUP_MODE=1`, `CMD python alembic/migration_preflight.py --startup && alembic upgrade head ...`) and `env.py::_run_online_preflight`. Revision `f8a2c41d9e05` non-destructively preserves any retained legacy Classroom tables/rows while `env.py::_include_name` keeps `alembic check` clean on both legacy-retained and fresh databases. Locked by `backend/tests/test_database_safety_closure.py` and `backend/tests/test_migration_drift.py`.
 
 ### `frontend/scripts/accept-live-classroom.mjs` · offline (cần dev + uvicorn)
 Nghiệm thu **phiên dạy trực tiếp**: BA tiến trình Chrome, ba `--user-data-dir`
@@ -2655,9 +2653,7 @@ màn hình** — nó bắt được hai bug chặn cả tính năng mà mọi te
 không có nút mở bài (⇒ không vào được xưởng, nơi dock điều khiển lớp sống).
 
 ### `backend/scripts/seed_classroom_fixture.py`
-Dữ liệu demo cho nghiệm thu: 1 giáo viên · 2 học sinh · 1 lớp · 1 bài. Mật khẩu
-đọc từ `ALGOSIM_FIXTURE_PASSWORD`, không có mặc định trong mã (`§34`) — chạy
-nhầm trên máy thật cũng không đẻ ra tài khoản ai cũng biết mật khẩu. Idempotent.
+Retired Classroom fixture entrypoint (`CLASSROOM_FEATURE_RETIRED`, exits `2`; `--help` exits `0`). Preserves clean CLI imports without removed `Classroom`/`Assignment`/`ClassMembership` ORM symbols and directs operators to `backend/scripts/seed_demo_accounts.py`. Locked by `backend/tests/test_database_safety_closure.py`.
 
 ### `frontend/scripts/evidence.mjs`
 W0 — XUẤT XỨ CỦA BẰNG CHỨNG. `provenance(tool, env)` gắn `head` (git SHA) +

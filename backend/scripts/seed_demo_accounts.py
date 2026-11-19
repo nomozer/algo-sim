@@ -21,7 +21,7 @@ import sys
 from datetime import datetime, timezone
 from pathlib import Path
 
-from sqlalchemy import create_engine, delete, select
+from sqlalchemy import create_engine, delete, inspect, select, text
 from sqlalchemy.orm import sessionmaker
 
 BACKEND_ROOT = Path(__file__).resolve().parents[1]
@@ -117,6 +117,25 @@ def seed_three_demo_accounts(
     now_dt = datetime.now(timezone.utc)
 
     with Session() as db:
+        existing_tables = set(inspect(engine).get_table_names())
+        legacy_with_rows: dict[str, int] = {}
+        for legacy_tbl in (
+            "classrooms",
+            "class_memberships",
+            "assignments",
+            "practice_sessions",
+            "classroom_sessions",
+        ):
+            if legacy_tbl in existing_tables:
+                cnt = int(db.execute(text(f'SELECT COUNT(*) FROM "{legacy_tbl}"')).scalar_one())
+                if cnt > 0:
+                    legacy_with_rows[legacy_tbl] = cnt
+        if legacy_with_rows:
+            raise RuntimeError(
+                "RETAINED_CLASSROOM_DATA_PRESENT: cơ sở dữ liệu chứa dữ liệu Classroom cần bảo toàn "
+                f"({legacy_with_rows}). Dừng an toàn để không xóa/ghi đè users liên kết."
+            )
+
         existing_users = db.execute(select(User)).scalars().all()
         unknown_users = [
             u.email for u in existing_users if not _is_known_seed_or_test_email(u.email)

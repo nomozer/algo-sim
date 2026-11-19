@@ -181,9 +181,11 @@ nghi phạm chưa chứng minh: `_windows_fixed_socketpair` trong `conftest.py` 
 có thể chờ vô hạn. Chưa dựng lại được một ca hỏng ổn định ⇒ chưa vá (sửa mù một
 treo không tái hiện được là cách đẻ ra lỗi thứ hai).
 
-**Migration (Alembic).** Trên DB bền (Postgres), schema tiến hoá qua Alembic —
-container tự chạy `alembic upgrade head` ở entrypoint trước khi phục vụ. Khi đổi
-model trong `app/persistence/db.py`:
+**Migration (Alembic) & Cổng an toàn dữ liệu (`DB-SAFETY-CLOSURE`).** Trên DB bền (Postgres), schema tiến hoá qua Alembic — container tự chạy cổng kiểm tra `python alembic/migration_preflight.py --startup` rồi mới chạy `alembic upgrade head` (và `env.py` tiếp tục khóa kiểm tra trước mọi `upgrade`/`downgrade` trực tuyến):
+- Mọi thao tác phá hủy (`op.drop_table`, `op.drop_column`, `DROP TABLE`, `TRUNCATE`, `DELETE FROM`) **bị chặn tuyệt đối lúc khởi động** (`ALGOSIM_STARTUP_MODE=1` -> exit `23`).
+- DB có dữ liệu sẵn nhưng chưa có bảng/bản ghi `alembic_version` (`UNSTAMPED_EXISTING_DATABASE`) **bị từ chối nâng cấp tự động** để tránh lệch hoặc ghi đè schema ngoài kiểm soát — bắt buộc sao lưu + kiểm chứng restore độc lập trước khi xử lý thủ công.
+- Revision `f8a2c41d9e05` giữ nguyên trạng 5 bảng Classroom cũ (`classrooms`, `class_memberships`, `assignments`, `practice_sessions`, `classroom_sessions`) nếu đã tồn tại, và `env.py` loại trừ 5 bảng di sản này khỏi phép so `alembic check`.
+Khi đổi model trong `app/persistence/`:
 
 ```bash
 cd backend

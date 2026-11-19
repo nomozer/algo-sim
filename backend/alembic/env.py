@@ -1,38 +1,72 @@
 # -*- coding: utf-8 -*-
 """Alembic environment — nguồn tiến hoá schema cho DB BỀN (Postgres deploy).
 
-Nguyên tắc chống trôi (drift): KHÔNG khai URL hay model ở đây. Tất cả lấy TỪ
-`app.persistence.db` — cùng một `DATABASE_URL` và cùng `Base.metadata` mà app
-dùng lúc chạy. Nhờ vậy `alembic revision --autogenerate` luôn so với đúng model
-thật, và migration chạy đúng DB mà app sẽ kết nối.
-
-render_as_batch cho SQLite: SQLite không ALTER trực tiếp được, batch mode tái
-tạo bảng để đổi cột — nhờ đó cùng một migration chạy được trên CẢ hai dialect.
+Nguyên tắc chống trôi (drift) + bảo vệ dữ liệu:
+- KHÔNG khai URL hay model ở đây. Tất cả lấy TỪ `app.persistence.db` và
+  `classroom_models` / `step_edit_models`.
+- Cổng an toàn migration (`migration_preflight.py`) chặn migration phá hủy và DB
+  chưa đóng dấu `alembic_version` trước mọi `upgrade` / `downgrade` trực tuyến.
+- Các bảng Classroom cũ được giữ nguyên an toàn trong cơ sở dữ liệu hiện hữu và
+  được loại trừ có chủ đích khỏi phép so drift autogenerate (`include_name`) để
+  hệ không sinh lệnh xóa bảng dữ liệu lịch sử.
 """
 
 from __future__ import annotations
 
+import importlib.util
 from logging.config import fileConfig
+from pathlib import Path
 
 from alembic import context
 
-# Import model + URL của app (db.py tự load_dotenv lúc import)
 from app.persistence.db import DATABASE_URL, IS_SQLITE, Base, engine
-# M18 — import VÌ TÁC DỤNG PHỤ: các model lớp học phải nạp vào `Base.metadata`
-# trước khi autogenerate đọc nó, nếu không Alembic sẽ tưởng bảng thừa và sinh
-# ra một migration XOÁ chúng. Đây là lý do dòng import "không dùng" này tồn tại.
 from app.persistence import classroom_models, step_edit_models  # noqa: F401
 
-config = context.config
+_PREFLIGHT_PATH = Path(__file__).resolve().with_name("migration_preflight.py")
+_PREFLIGHT_SPEC = importlib.util.spec_from_file_location("_axo_migration_preflight", _PREFLIGHT_PATH)
+if _PREFLIGHT_SPEC is None or _PREFLIGHT_SPEC.loader is None:
+    raise RuntimeError(f"Cannot load migration_preflight module from {_PREFLIGHT_PATH}")
+_preflight = importlib.util.module_from_spec(_PREFLIGHT_SPEC)
+_PREFLIGHT_SPEC.loader.exec_module(_preflight)
 
-# Ghi đè URL trong alembic.ini bằng URL thật của app (không hardcode thông tin
-# kết nối vào file cấu hình version-controlled).
+RETAINED_LEGACY_CLASSROOM_TABLES = _preflight.RETAINED_LEGACY_CLASSROOM_TABLES
+
+config = context.config
 config.set_main_option("sqlalchemy.url", DATABASE_URL)
 
 if config.config_file_name is not None:
     fileConfig(config.config_file_name)
 
 target_metadata = Base.metadata
+
+
+def _include_name(name: str | None, type_: str, parent_names: dict) -> bool:
+    """Ignore retained legacy Classroom tables during autogenerate / alembic check."""
+    if type_ == "table" and name in RETAINED_LEGACY_CLASSROOM_TABLES:
+        return False
+    return True
+
+
+def _run_online_preflight(connection) -> None:
+    """Enforce migration safety gate right before executing upgrade or downgrade."""
+    mc = context.get_context()
+    fn = mc.opts.get("fn")
+    fn_name = getattr(fn, "__name__", "")
+    if fn_name not in ("upgrade", "downgrade"):
+        return
+    if mc.environment_context is None:
+        return
+    target_rev = str(mc.environment_context.context_opts.get("destination_rev") or "head")
+    report = _preflight.evaluate_migration_safety(
+        connection,
+        config,
+        direction=fn_name,
+        target_rev=target_rev,
+    )
+    if not report["allowed"]:
+        raise RuntimeError(
+            f"MIGRATION_SAFETY_BLOCKED [{report['reason_code']}]: {report['message']}"
+        )
 
 
 def run_migrations_offline() -> None:
@@ -43,6 +77,7 @@ def run_migrations_offline() -> None:
         literal_binds=True,
         dialect_opts={"paramstyle": "named"},
         render_as_batch=IS_SQLITE,
+        include_name=_include_name,
     )
     with context.begin_transaction():
         context.run_migrations()
@@ -55,7 +90,11 @@ def run_migrations_online() -> None:
             connection=connection,
             target_metadata=target_metadata,
             render_as_batch=IS_SQLITE,
+            include_name=_include_name,
         )
+        _run_online_preflight(connection)
+        if connection.in_transaction():
+            connection.rollback()
         with context.begin_transaction():
             context.run_migrations()
 
