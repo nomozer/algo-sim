@@ -1,0 +1,23 @@
+{
+ "schema": "axo-v11-acceptance-criteria/1",
+ "registered_before_any_v11_code_change": true,
+ "branch_head_at_registration": "2f12b96b0",
+ "manifest": {"path": "V11_LIVE_ACCEPTANCE_MANIFEST.json", "sha256": "86136867a82a841f0a603c04f50fcbd9811320c28dc00bcf8472bb8a7464f961",
+              "valid": 90, "in_scope": 85, "negative": 24, "ui_scenarios": 8},
+ "primary": {"SIMULATION_COMPLETION_RATE_in_scope": ">= 0.85 (served scene that passes the exact oracle, browser render criteria and, when asked, a correct answer)"},
+ "slm_recovery": {
+   "stratum": "SLM_REQUIRED = in-scope cases whose deterministic-parser-only dry run on the FROZEN candidate is not LOCAL_PARSE_COMPLETE",
+   "SLM_VERIFIED_SCENE_RATE": ">= 0.30 AND >= 5 SLM-provenance verified scenes in the stratum",
+   "justification": "/10 measured 0/20 (Wilson upper 0.16). 0.30 with >= 5 scenes is the smallest bar whose Wilson 95% lower bound clears 0.16 at n ~ 15-30, i.e. a recovery that cannot be the /10 rate by chance; it is a recovery bar, not a release bar (release still needs the primary threshold)",
+   "provenance_rule": "a scene counts for Model 1 only if route_d.extraction_mode starts with LOCAL_SLM and the response was produced live in this run (no cache, no replay)"
+ },
+ "safety_zero_tolerance": ["WRONG_SERVED_SCENES = 0", "SOURCE_GROUNDING_VIOLATIONS = 0", "UNVERIFIED_RELATIONS_SERVED = 0",
+   "UNSUPPORTED_PREMISES_INVENTED = 0", "served numeric MISMATCH = 0", "negative served with wrong geometry = 0",
+   "fabricated math goal on SIMULATE_ONLY = 0", "external / Gemini calls = 0"],
+ "visual": "every served scene: canvas ink >= 1%, all gold labels visible inside the canvas, 0 console errors, no stale scene",
+ "interaction": "absolute: every registered orbit/zoom/step operation on every served scene passes (no PASS_WITH_NOTES)",
+ "safe_refusal": "negatives: 1.0 refused or (injection) served correctly",
+ "underdetermined": "reported separately: CLARIFY (question surfaced in UI) or ILLUSTRATIVE (disclosed); never a 'not supported' message and never a scene claimed unique",
+ "performance_scope": "this Windows dev host only; fast-path and SLM-path latencies reported separately; no threshold claimed for target hardware",
+ "external_independence": "NOT_MEASURED (author-constructed)"
+}
