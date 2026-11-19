@@ -112,6 +112,7 @@ export function syncStepTextareaHeight(
 export function ensureStepEditorFormVisible(
   formEl: HTMLElement | null,
   paddingPx = 12,
+  viewportBottomOverride?: number,
 ): boolean {
   if (!formEl || typeof formEl.closest !== "function") return false;
   const scrollHost = formEl.closest<HTMLElement>(".dock-scroll");
@@ -126,9 +127,27 @@ export function ensureStepEditorFormVisible(
   const hostRect = scrollHost.getBoundingClientRect();
   if (hostRect.height <= 0 || formRect.height <= 0) return false;
 
-  const pad = Math.min(paddingPx, Math.max(4, Math.floor(hostRect.height * 0.1)));
-  const visibleTop = hostRect.top + pad;
-  const visibleBottom = hostRect.bottom - pad;
+  const rawVpBottom =
+    typeof viewportBottomOverride === "number" &&
+    Number.isFinite(viewportBottomOverride) &&
+    viewportBottomOverride > 0
+      ? viewportBottomOverride
+      : typeof window !== "undefined"
+        ? typeof window.visualViewport?.height === "number" && window.visualViewport.height > 0
+          ? (window.visualViewport.offsetTop || 0) + window.visualViewport.height
+          : typeof window.innerHeight === "number" && window.innerHeight > 0
+            ? window.innerHeight
+            : null
+        : null;
+  const effectiveTop = rawVpBottom !== null ? Math.max(hostRect.top, 0) : hostRect.top;
+  const effectiveBottom =
+    rawVpBottom !== null ? Math.min(hostRect.bottom, rawVpBottom) : hostRect.bottom;
+  const effectiveHeight = effectiveBottom - effectiveTop;
+  if (effectiveHeight <= 0) return false;
+
+  const pad = Math.min(paddingPx, Math.max(4, Math.floor(effectiveHeight * 0.1)));
+  const visibleTop = effectiveTop + pad;
+  const visibleBottom = effectiveBottom - pad;
 
   let delta = 0;
   if (formRect.bottom > visibleBottom) {
@@ -268,17 +287,37 @@ export const InlineConstructionStepEditor: React.FC<InlineConstructionStepEditor
 
   useEffect(() => {
     const el = textareaRef.current;
-    if (!el || typeof ResizeObserver === "undefined") return;
-    const ro = new ResizeObserver(() => {
-      syncStepTextareaHeight(el);
+    if (!el) return;
+    let ro: ResizeObserver | null = null;
+    if (typeof ResizeObserver !== "undefined") {
+      ro = new ResizeObserver(() => {
+        syncStepTextareaHeight(el);
+        ensureStepEditorFormVisible(formRef.current);
+      });
+      ro.observe(el);
+      if (formRef.current) ro.observe(formRef.current);
+      const scrollHost =
+        typeof el.closest === "function" ? el.closest<HTMLElement>(".dock-scroll") : null;
+      if (scrollHost) ro.observe(scrollHost);
+    }
+    const onViewportResize = () => {
       ensureStepEditorFormVisible(formRef.current);
-    });
-    ro.observe(el);
-    if (formRef.current) ro.observe(formRef.current);
-    const scrollHost = typeof el.closest === "function" ? el.closest<HTMLElement>(".dock-scroll") : null;
-    if (scrollHost) ro.observe(scrollHost);
+    };
+    if (typeof window !== "undefined" && typeof window.addEventListener === "function") {
+      window.addEventListener("resize", onViewportResize);
+    }
+    const vv = typeof window !== "undefined" ? window.visualViewport : undefined;
+    if (vv && typeof vv.addEventListener === "function") {
+      vv.addEventListener("resize", onViewportResize);
+    }
     return () => {
-      ro.disconnect();
+      ro?.disconnect();
+      if (typeof window !== "undefined" && typeof window.removeEventListener === "function") {
+        window.removeEventListener("resize", onViewportResize);
+      }
+      if (vv && typeof vv.removeEventListener === "function") {
+        vv.removeEventListener("resize", onViewportResize);
+      }
     };
   }, [stepIndex]);
 

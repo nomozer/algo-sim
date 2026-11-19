@@ -1649,4 +1649,36 @@ describe("AXO Step Editor V2.2 — Reliability Hardening & Edge Cases (§5, §7)
     expect(ensureStepEditorFormVisible(clippedTop.form)).toBe(true);
     expect(clippedTop.host.scrollTop).toBe(68);
   });
+
+  it("IA-RC3: clamps visibility against visualViewport/innerHeight and shrinks mobile dock/stage under short virtual keyboard viewport", () => {
+    const host = {
+      scrollTop: 442,
+      scrollHeight: 1217,
+      clientHeight: 163,
+      getBoundingClientRect: () =>
+        ({
+          top: 317,
+          bottom: 480,
+          height: 163,
+        }) as DOMRect,
+    };
+    const form = {
+      closest: (sel: string) => (sel === ".dock-scroll" ? (host as unknown as HTMLElement) : null),
+      getBoundingClientRect: () =>
+        ({
+          top: 400,
+          bottom: 468,
+          height: 68,
+        }) as DOMRect,
+    } as unknown as HTMLElement;
+
+    // Even when hostRect.bottom (480) exceeds viewportBottomOverride (460), formRect.bottom (468)
+    // must scroll past 460 - 12 = 448 (+20px -> scrollTop 462).
+    expect(ensureStepEditorFormVisible(form, 12, 460)).toBe(true);
+    expect(host.scrollTop).toBe(462);
+
+    // Mobile short-viewport media query prevents .stage-3d + .study-dock from overflowing 460px height
+    expect(GLOBAL_CSS).toMatch(/@media\s*\(max-width:\s*680px\)\s*and\s*\(max-height:\s*520px\)/);
+    expect(GLOBAL_CSS).toMatch(/\.stage-3d\s*\{\s*min-height:\s*160px;/);
+  });
 });

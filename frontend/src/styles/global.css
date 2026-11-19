@@ -12525,6 +12525,21 @@ body:has(.app-root.la-tap-trung) {
   }
 }
 
+@media (max-width: 680px) and (max-height: 520px) {
+  .axo-frame.is-page-workspace.axo-workspace-v62 {
+    min-height: 0;
+  }
+
+  .stage-3d {
+    min-height: 160px;
+  }
+
+  .study-dock {
+    flex: 0 1 48%;
+    min-height: 0;
+  }
+}
+
 /* ══════════════════════════════════════════════════════════════════════════
    AXO V2.7 — PHASE D: AUTHENTICATION, ACCOUNT MODAL & ADMIN WORKSPACE
    ══════════════════════════════════════════════════════════════════════════ */
