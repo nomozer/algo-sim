@@ -1,5 +1,20 @@
 # EVIDENCE_INDEX.md — Chỉ mục bằng chứng và chuỗi đính chính (Master Evidence Index)
 
+## WAVE_ID = AXO_CONSTRUCTION_VERIFIED_GRAPH_DYNAMIC_PLANNER_FEASIBILITY
+
+- `RUN_ID` = axo-construction-verified-graph-dynamic-planner-feasibility
+- `REPORT` = docs/evaluation/geometry/runs/axo-construction-verified-graph-dynamic-planner-feasibility/FINAL_MASTER_REPORT.md
+- `ARTIFACT_DIRECTORY` = docs/evaluation/geometry/runs/axo-construction-verified-graph-dynamic-planner-feasibility/
+- `START_BASE` = 498f354608c45ce98ba4f75a0222afbe56139ce2
+- `CODE_COMMIT` = 418dd89f88aed7bcd2a2eb8dbc376077345fd37a (isolated prototype backend/experimental/construction_planner/ + scripts/ + tests/ + run artifacts; auditing unmodified frozen product 6310113f2202bc3a4919406b26fad08cb09b38c9 / 9a9352d586caa360f82052ba1b76fe9b4227f26c, 0 diffs backend/app/** & frontend/)
+- `CLASSIFICATION` = OFFLINE_CONSTRUCTION_GRAPH_AND_DYNAMIC_PLANNER_PROTOTYPE
+- `PRODUCT_CHANGE` = NO; CACHE_VERSION = 145 (145:route-d); default HYBRID_ROUTE_MODE = live preserved; measured_system = 113a6a7cf6bbc15ac23119150b805437e785d2b0714b26c2157d147514c2ef67 (123 files); Phase A audit_existing_construction_architecture.py inspects 64 Registry functions (24 fact / 23 ask / 16 construct / 1 escape; 15/64 PlanningContract; ask_distance_point_plane has_auxiliary_foot_point=false; MAX_MEMORY_DECLARATIONS=32); prototype implements verified-construction-graph/1 (16-field nodes, provenance, canonical_geom_key) + presentation-step-graph/1 + 23 construction-operator/1 operators (witness-enforced evaluate_goal_if_witnessed) + dynamic-construction-planner/1 + L0-L4 Gram SPD verifier + scene3d bridge (L4=0 issues) + read-only 5-rule fail-closed model2-action-interface/1 (0 Needle 3 dependency); 40-case Gold Typed Facts (Groups A-E, seed=0): Candidate B 40/40 (33/33 L0-L4 + oracle via axo-math-evaluator/2 + 0 Scene3D continuity errors, 7/7 safe refusals incl D02 coincident AA, 5/5 multi-plan >=2, Novelty 28 CASE_B / 5 CASE_A / 1 CASE_C D06 / 6 neg, 0.0 timeout, avg_search_ms=26.096, max=155.941, max_peak_mem=335.87 KiB) vs Baseline A 32/40 (26/33 served, 0/33 aux witness in Scene3D, B01/B06 UNDERDETERMINED_POINT, B09 IR_MEMORY_BUDGET_EXCEEDED, D02 served 0a, +4 synthetic quote misses, avg_ms=105.534); 16/16 section-19 pytests PASS (3.14s; 76/76 w/ /8); full backend pytest 15046 passed, 7 skipped, 3 deselected, 12 xfailed, 0 failed (777.24s)
+- `MODEL_REQUEST_COUNT` = 0
+- `VERIFICATION` = run.json; CONSTRUCTION_CAPABILITY_INVENTORY.json; EXISTING_CONSTRUCTION_ARCHITECTURE_AUDIT.md; VERIFIED_CONSTRUCTION_GRAPH_DESIGN.md; CONSTRUCTION_OPERATOR_INVENTORY.json; DYNAMIC_PLANNER_SEARCH_DESIGN.md; CONSTRUCTION_EXACT_VERIFICATION_REPORT.md; SCENE3D_COMPATIBILITY_REPORT.md; MODEL2_INTERFACE_READINESS.md; CONSTRUCTION_OWNER_HANDOFF.md; GOLD_CONSTRUCTION_BENCHMARK_MANIFEST.json; GOLD_CONSTRUCTION_BENCHMARK_RESULTS.json; DYNAMIC_COMPOSITION_EVALUATION.json; CONSTRUCTION_PERFORMANCE.json; CONSTRUCTION_REGRESSION_REPORT.md; CONSTRUCTION_FEASIBILITY_DECISION.md; FINAL_MASTER_REPORT.md
+- `CORRECTS` = NONE
+- `CORRECTED_BY` = NONE
+- `LIMITATIONS` = VERDICT = FEASIBLE_IN_ISOLATED_PROTOTYPE_NEEDS_INTEGRATION_WAVE (RESEARCH_PROTOTYPE_NON_PRODUCTION; HYBRID_ROUTE_MODE=live default preserved); Gate E6 = PASS_ARTIFACT_ONLY (FRONTEND_INTEGRATION = BLOCKED_OWNERSHIP under axo-geometry-library); Case C curved/higher-degree tangent (D06) UNSUPPORTED_OPERATOR; integration into backend/app/simulation/** awaits owner approval wave; PHYSICAL_LOW_END/GEMINI_PARITY/H-1/USABILITY unchanged NOT_MEASURED.
+
 ## WAVE_ID = INDEPENDENT_VALIDATION_LOCAL_AI_PRODUCTION_READINESS
 
 - `RUN_ID` = independent-validation-local-ai-production-readiness

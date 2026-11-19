@@ -1,5 +1,16 @@
 # CODE_INDEX.md — Chỉ mục module + BỘ NHỚ KIẾN TRÚC
 
+## Verified construction graph & dynamic planner feasibility (AXO CONSTRUCTION /1, 2026-11-19)
+
+| Hạng mục / Vai trò | Đường dẫn chuẩn (`418dd89f8` trên nền product đóng băng `6310113f2` / `113a6a7cf6bb…`, `123` files) |
+|---|---|
+| Nguyên mẫu gói dựng hình động cô lập (`RESEARCH_PROTOTYPE_NON_PRODUCTION`, `verified-construction-graph/1` + `presentation-step-graph/1`) | `backend/experimental/construction_planner/__init__.py`, `backend/experimental/construction_planner/construction_objects.py`, `backend/experimental/construction_planner/construction_graph.py`, `backend/experimental/construction_planner/construction_serializer.py` |
+| Bộ kiểm chứng chính xác độc lập `L0`–`L4` + Gram SPD Sylvester & thư viện `23` toán tử nguyên tử (`construction-operator/1`) | `backend/experimental/construction_planner/construction_verifier.py`, `backend/experimental/construction_planner/construction_operators.py` |
+| Trạng thái tiền đề thuần túy (`build_initial_frame`), tìm kiếm Best-First giới hạn ngân sách (`dynamic-construction-planner/1`), cầu nối `Scene3D` & giao diện chỉ đọc Model 2 | `backend/experimental/construction_planner/construction_state.py`, `backend/experimental/construction_planner/construction_search.py`, `backend/experimental/construction_planner/scene3d_bridge.py`, `backend/experimental/construction_planner/model2_interface.py` |
+| Script kiểm toán kiến trúc `Planner /26` / `Registry /33` & bộ đánh giá `40` ca Gold Typed Facts + Novelty Audit + Hiệu năng | `backend/scripts/audit_existing_construction_architecture.py`, `backend/scripts/evaluate_axo_construction_v1.py` |
+| Bộ kiểm thử 17 hạng mục §19 (`16 passed in 3.14s`) | `backend/tests/geometry/test_verified_construction_graph_and_planner.py` |
+| Báo cáo tổng kết chiến dịch `AXO CONSTRUCTION /1` (`FEASIBLE_IN_ISOLATED_PROTOTYPE_NEEDS_INTEGRATION_WAVE`) | `docs/evaluation/geometry/runs/axo-construction-verified-graph-dynamic-planner-feasibility/FINAL_MASTER_REPORT.md` |
+
 ## Independent validation & local AI production readiness (AXO HYBRID /8, 2026-11-19)
 
 | Hạng mục / Vai trò | Đường dẫn chuẩn (`6ca84e536` trên nền product `6310113f2` / `113a6a7cf6bb…`, `123` files) |
