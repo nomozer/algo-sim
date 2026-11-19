@@ -1,6 +1,6 @@
 {
   "schema": "slm-v9-regression-results/1",
-  "generated_at_utc": "2026-11-19T11:11:20.941275+00:00",
+  "generated_at_utc": "2026-11-19T11:21:37.784164+00:00",
   "external_ai_calls": 0,
   "evaluator_version": "axo-math-evaluator/2",
   "runtime_version": "local-slm-runtime/4",
@@ -282,9 +282,22 @@
       "backend/tests/semantic_program/test_evaluation_candidate.py",
       "backend/tests/geometry/test_s2_student_language_pilot_runner.py"
     ],
-    "exit_code": 1,
-    "passed": false,
-    "duration_s": 151.12,
-    "summary_line": "1 failed, 279 passed, 1 warning in 149.99s (0:02:29)"
+    "exit_code": 0,
+    "passed": true,
+    "duration_s": 146.24,
+    "summary_line": "280 passed, 1 warning in 145.13s (0:02:25)"
+  },
+  "clean_tree_full_pytest": {
+    "status": "PASS",
+    "verified_on_commit": "107fd290d00134c3ba9fa27689d5a79e04334e9e",
+    "short_commit": "107fd290d",
+    "command": "pytest -c backend/pytest.ini backend/tests -q",
+    "passed": 15099,
+    "skipped": 7,
+    "deselected": 3,
+    "xfailed": 12,
+    "failed": 0,
+    "warnings": 1,
+    "duration_seconds": 931.68
   }
 }

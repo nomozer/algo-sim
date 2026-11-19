@@ -2,12 +2,12 @@
   "schema": "axo-evaluation-run/2",
   "run_id": "axo-hybrid-local-ai-replacement-vietnamese-nlu-offline-cutover",
   "wave_id": "AXO_HYBRID_LOCAL_AI_REPLACEMENT_VIETNAMESE_NLU_OFFLINE_CUTOVER",
-  "generated_at_utc": "2026-11-19T11:16:52Z",
+  "generated_at_utc": "2026-11-19T11:38:37Z",
   "classification": "LOCAL_AI_VIETNAMESE_NLU_AND_SCOPED_LOCAL_ONLY_CUTOVER",
   "branch": "feat/local-first-geometry-understanding",
   "start_base_commit": "c73506cb23b0b365d8e475c6b5386a31176a669b",
   "product_commit_sha": "f285fcec1afc097084e3fab154f583f01620cab7",
-  "freeze_commit_sha": null,
+  "freeze_commit_sha": "189595addc5a7e6b060fd74161193add66f41e6f",
   "candidate": {
     "product_commit_sha": "f285fcec1afc097084e3fab154f583f01620cab7",
     "measured_system_sha256": "a7a6bc4157d02018d5a67e5ee408469f22795385f920444eafc39d4772fa8330",
@@ -94,7 +94,7 @@
     "G6_gemini_dependency_coverage": "PASS",
     "G7_local_only_product_route": "PASS_BACKEND_OPT_IN_DEFAULT_AND_UI_BLOCKED_OWNERSHIP",
     "G8_offline_network_isolation": "PASS",
-    "G9_regression_and_construction_freeze": "PENDING_CLEAN_TREE_PYTEST",
+    "G9_regression_and_construction_freeze": "PASS",
     "G10_cutover_decision": "LOCAL_ONLY_SCOPED_RELEASE_READY_BACKEND_OPT_IN__DEFAULT_AND_GENERAL_BLOCKED_OWNERSHIP"
   },
   "verdicts": {
@@ -216,12 +216,24 @@
           "backend/tests/semantic_program/test_evaluation_candidate.py",
           "backend/tests/geometry/test_s2_student_language_pilot_runner.py"
         ],
-        "exit_code": 1,
-        "passed": false,
-        "duration_s": 151.12,
-        "summary_line": "1 failed, 279 passed, 1 warning in 149.99s (0:02:29)"
+        "exit_code": 0,
+        "passed": true,
+        "duration_s": 146.24,
+        "summary_line": "280 passed, 1 warning in 145.13s (0:02:25)"
       },
-      "clean_tree_full_pytest": null
+      "clean_tree_full_pytest": {
+        "status": "PASS",
+        "verified_on_commit": "107fd290d00134c3ba9fa27689d5a79e04334e9e",
+        "short_commit": "107fd290d",
+        "command": "pytest -c backend/pytest.ini backend/tests -q",
+        "passed": 15099,
+        "skipped": 7,
+        "deselected": 3,
+        "xfailed": 12,
+        "failed": 0,
+        "warnings": 1,
+        "duration_seconds": 931.68
+      }
     }
   },
   "artifacts": {
@@ -250,8 +262,8 @@
       "bytes_lf": 8006
     },
     "FINAL_MASTER_REPORT.md": {
-      "sha256_lf": "575cc73b2e92e356ff4d3295eb01c5c49b1e39d81d79b533865d4b2110b48356",
-      "bytes_lf": 24136
+      "sha256_lf": "2d2a567d93a58e90cdf9474d2221d42133af0930b9cc6f549ec63e59e4ce9d86",
+      "bytes_lf": 24297
     },
     "GEMINI_DEPENDENCY_INVENTORY.json": {
       "sha256_lf": "4dcf58ce968beef7ca8a4a3b090f2e5695e4f36996ca5e2a35dd79f1892f4258",
@@ -318,12 +330,12 @@
       "bytes_lf": 1293
     },
     "SLM_V9_REGRESSION_REPORT.md": {
-      "sha256_lf": "1ab4202b7988cda3dceedd6dc245a854fed2ac0a3b8c0b08f50f363158e72907",
-      "bytes_lf": 5138
+      "sha256_lf": "d047b252a5ea89c12f20cffbe8a3e12cb2ab25e75ac980c528eef1506e96cba4",
+      "bytes_lf": 5329
     },
     "SLM_V9_REGRESSION_RESULTS.json": {
-      "sha256_lf": "91d105781d7a5bd7268c41c053e2950f94cfba2d4c9f74c7e2bfa6ce9fd16176",
-      "bytes_lf": 8310
+      "sha256_lf": "b1cef44cafb4811fcc37727ef526755734c48656129f407b79060ec06a386e18",
+      "bytes_lf": 8669
     },
     "SLM_V9_RUNTIME_PERFORMANCE.json": {
       "sha256_lf": "d12dff0450eca648b95e6c80dda13b7197c755ffd044131cd7c4357b1565511c",

@@ -7,7 +7,7 @@
 - **Product Commit:** `f285fcec1afc097084e3fab154f583f01620cab7` (`7` owned backend files modified; `0` edits to `frontend/**`, `registry.py`, `planner.py`, `engine.py`, `backend/experimental/construction_planner/**`, and all 4 locked Gemini modules)
 - **Measured System Tree Hash (`123` files):** `a7a6bc4157d02018d5a67e5ee408469f22795385f920444eafc39d4772fa8330` · **`CACHE_VERSION = "145"`** (`145:route-d`)
 - **Offline Security Invariant:** `ALLOW_LIVE_AI = "0"`, `GEMINI_API_KEY = ""`, `external_ai_calls = 0`, `gemini_invocations = 0`, `silent_cloud_fallbacks = 0`, `sealed_H1` & `locked_W2_W3` unopened
-- **Clean-Tree Freeze & Full Backend Pytest:** *PEND_CLEAN_TREE_PYTEST*
+- **Clean-Tree Freeze & Full Backend Pytest (`107fd290d`, `cay_lam_viec_sach = true`):** Targeted `14` modules **`280 passed` (`145.13s`)**; full backend **`15,099 passed, 7 skipped, 3 deselected, 12 xfailed, 0 failed` (`931.68s`)**
 - **Final Verdicts (`Goal A` vs. `Goal B`):**
   - **Goal A (Scoped Local-Only Backend Operation, Opt-In `local-only-scoped` / `offline-lab`):** **`LOCAL_ONLY_SCOPED_RELEASE_READY`** (technical readiness met; default `HYBRID_ROUTE_MODE = "live"` & frontend keyless UX switch remain **`BLOCKED_OWNERSHIP`** pending owner patch application in [`handoff/`](./handoff/))
   - **Goal B (Equivalent General Gemini Replacement):** **`NOT_EQUIVALENT_FULL_REPLACEMENT`** (`local-only-general` gated; cloud VLM OCR blocked `503 LOCAL_ONLY_CLOUD_VISION_DISABLED`; `EXTERNAL_INDEPENDENCE`, `GEMINI_PARITY`, `PHYSICAL_TARGET_HARDWARE`, `INDEPENDENT_H1_VALIDATION`, `REAL_STUDENT_USABILITY` = `NOT_MEASURED`)

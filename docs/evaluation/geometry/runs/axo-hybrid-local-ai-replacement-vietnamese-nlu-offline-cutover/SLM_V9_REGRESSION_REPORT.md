@@ -62,5 +62,5 @@ All 16 security and fault-recovery checks passed on `AxoV9-Q4_K_M` (`v9`/`v3`) a
 
 ## 5. Pytest Suites (`14` Targeted Modules + Full Clean-Tree Backend)
 
-- **Targeted `14` Modules Pre-Freeze Status:** `279 passed, 1 failed` (`task-5198` + `task-5216`), where all SLM `/5`–`/9`, Source Gate, Evaluator v2, API, S2 Pilot, and Construction `/1`–`/2` tests passed and ONLY `test_evaluation_candidate.py::test_candidate_ghi_dung_commit_va_cay_sach` failed pre-commit because `EVALUATION_CANDIDATE.json` still reflected dirty working tree `"cay_lam_viec_sach": false`.
-- **Clean-Tree Verification (Post-Commit 3 Freeze):** *PEND_CLEAN_TREE_PYTEST*
+- **Targeted `14` Modules on Clean Frozen Commit (`107fd290d`):** **`280 passed, 1 warning in 145.13s` (`0 failed`, exit code `0`)** via `run_slm_v9_regressions.py --refresh-pytest-only`, including all SLM `/5`–`/9` suites, `test_slm_v9_language_closure_and_security.py`, `test_local_only_product_and_network_isolation.py`, `test_api.py`, `test_s2_student_language_pilot_runner.py`, `test_evaluation_candidate.py`, and `AXO CONSTRUCTION /1`–`/2` suites.
+- **Full Clean-Tree Backend Pytest (`pytest -c backend/pytest.ini backend/tests -q` on `107fd290d`):** **`15,099 passed, 7 skipped, 3 deselected, 12 xfailed, 0 failed` (`1` warning) in `931.68s` (`0:15:31`, exit code `0`)**.
