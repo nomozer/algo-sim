@@ -420,3 +420,14 @@ def test_gate_e2_out_of_order_client_seq_race_and_draft_preservation(tmp_path: P
 
     asyncio.run(_run())
     test_eng.dispose()
+
+
+def test_conftest_ephemeral_db_prevents_windows_pid_reuse_and_disposes_engine() -> None:
+    """ISSUE-TEST-WINDOWS-PID-DB-REUSE: isolate ephemeral SQLite DB by session nonce & verify cleanup."""
+    import conftest
+
+    p_same = conftest.duong_dan_db_test()
+    assert p_same == conftest.duong_dan_db_test()
+    assert "algosim.db" not in p_same
+    assert conftest.duong_dan_db_test(111) != conftest.duong_dan_db_test(222)
+    assert conftest.duong_dan_db_test(111, "aaa") != conftest.duong_dan_db_test(111, "bbb")
