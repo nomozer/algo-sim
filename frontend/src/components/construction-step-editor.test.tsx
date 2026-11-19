@@ -1681,4 +1681,104 @@ describe("AXO Step Editor V2.2 — Reliability Hardening & Edge Cases (§5, §7)
     expect(GLOBAL_CSS).toMatch(/@media\s*\(max-width:\s*680px\)\s*and\s*\(max-height:\s*520px\)/);
     expect(GLOBAL_CSS).toMatch(/\.stage-3d\s*\{\s*min-height:\s*160px;/);
   });
+
+  it("RC-CLIENT-SEQ: fetchStepEditSessionState syncs server latest_client_seq across fresh storage contexts and surfaces server 409 EDIT_SUPERSEDED", async () => {
+    const validScene = structuredClone((sample11.envelope as unknown as { scene3d: Scene3D }).scene3d);
+    const sid = buildStepEditSessionId("sample:cross-ctx-seq", "guest");
+    let capturedSeq = 0;
+
+    vi.stubGlobal(
+      "fetch",
+      vi.fn().mockImplementation(async (url: string, init?: RequestInit) => {
+        if (url.includes(`/api/simulation/sessions/${encodeURIComponent(sid)}/state`)) {
+          return new Response(
+            JSON.stringify({
+              found: true,
+              session_id: sid,
+              problem_key: "sample:cross-ctx-seq",
+              revision_count: 15,
+              committed_version: 15,
+              latest_client_seq: 1000,
+              committed_scene: validScene,
+              step_overrides: {},
+              dependency_summary: { cycle_detected: false },
+              revisions: [],
+              feedback_items: [],
+            }),
+            { status: 200, headers: { "Content-Type": "application/json" } },
+          );
+        }
+        const body = JSON.parse(String(init?.body || "{}"));
+        capturedSeq = Number(body.client_seq || 0);
+        return new Response(
+          JSON.stringify(
+            makeVerifiedCommitResponse({
+              sessionId: sid,
+              versionNumber: 16,
+              scene: validScene,
+              overrideText: "Dựng mặt phẳng trung trực (P) của cạnh SB",
+            }),
+          ),
+          { status: 200, headers: { "Content-Type": "application/json" } },
+        );
+      }),
+    );
+
+    // Clear storage to simulate fresh browser context / second device
+    window.localStorage.clear();
+    const snap = await fetchStepEditSessionState(sid);
+    expect(snap?.latestClientSeq).toBe(1000);
+    expect(window.localStorage.getItem("axo:step-edit-seq:v1")).toBe("1000");
+
+    const commitRes = await submitConstructionStepEdit({
+      sessionId: sid,
+      problemKey: "sample:cross-ctx-seq",
+      stepId: "mp_tt_AB",
+      stepIndex: 14,
+      previousInstruction: "Dựng (α)",
+      editedInstruction: "Dựng mặt phẳng trung trực (P) của cạnh SB",
+      targetIds: ["mp_tt_AB"],
+      absorbedIds: ["M_AB"],
+      scene3d: validScene,
+    });
+    expect(commitRes.status).toBe("committed");
+    expect(capturedSeq).toBe(1001);
+
+    // Server-side 409 EDIT_SUPERSEDED (not local abort) sets local_abort=false and syncs latest_client_seq
+    vi.stubGlobal(
+      "fetch",
+      vi.fn().mockResolvedValueOnce(
+        new Response(
+          JSON.stringify({
+            status: "rolled_back",
+            error_code: "EDIT_SUPERSEDED",
+            failed_stage: "superseded",
+            learner_error: "Yêu cầu cũ đã được thay thế bởi lượt chỉnh sửa mới hơn.",
+            latest_client_seq: 1050,
+            draft_preserved: true,
+          }),
+          { status: 409, headers: { "Content-Type": "application/json" } },
+        ),
+      ),
+    );
+    const conflictRes = await submitConstructionStepEdit({
+      sessionId: sid,
+      problemKey: "sample:cross-ctx-seq",
+      stepId: "mp_tt_AB",
+      stepIndex: 14,
+      previousInstruction: "Dựng (α)",
+      editedInstruction: "Dựng mặt phẳng trung trực (P) của cạnh SC",
+      targetIds: ["mp_tt_AB"],
+      absorbedIds: ["M_AB"],
+      scene3d: validScene,
+    });
+    expect(conflictRes.status).toBe("rolled_back");
+    if (conflictRes.status === "rolled_back") {
+      expect(conflictRes.error_code).toBe("EDIT_SUPERSEDED");
+      expect(conflictRes.local_abort).toBe(false);
+      expect(conflictRes.latest_client_seq).toBe(1050);
+    }
+    expect(window.localStorage.getItem("axo:step-edit-seq:v1")).toBe("1050");
+    expect(WORKSPACE_SRC).toContain("res.local_abort && (res.error_code ===");
+  });
 });

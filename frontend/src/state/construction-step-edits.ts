@@ -49,6 +49,7 @@ export interface PersistedStepEditSnapshot {
   sessionId: string;
   problemKey: string;
   versionNumber?: number;
+  latestClientSeq?: number;
   committedScene: Scene3D | null;
   stepOverrides: Record<string, string>;
   dependencySummary?: StepEditDependencySummary | null;
@@ -143,6 +144,8 @@ export interface StepEditSubmitRefusal {
   failed_stage: string;
   learner_error: string;
   draft_preserved: boolean;
+  local_abort?: boolean;
+  latest_client_seq?: number;
 }
 
 export type StepEditSubmitResult = StepEditSubmitSuccess | StepEditSubmitRefusal;
@@ -161,19 +164,52 @@ interface InFlightEditEntry {
 const DEFAULT_STEP_EDIT_TIMEOUT_MS = 15_000;
 const CLIENT_SEQ_STORAGE_KEY = "axo:step-edit-seq:v1";
 let nextSubmitSeq = 0;
+const sessionSeqWatermarks = new Map<string, number>();
 const inFlightSessions = new Map<string, InFlightEditEntry>();
 const pendingRetryKeys = new Map<string, { sig: string; clientRequestId: string }>();
 
-function allocateMonotonicSubmitSeq(): number {
-  let persisted = 0;
+function _readPersistedLocalSeq(): number {
   try {
     const raw = window.localStorage.getItem(CLIENT_SEQ_STORAGE_KEY);
     const parsed = raw ? Number(raw) : 0;
-    if (Number.isFinite(parsed) && parsed > 0) persisted = Math.floor(parsed);
+    return Number.isFinite(parsed) && parsed > 0 ? Math.floor(parsed) : 0;
   } catch {
-    persisted = 0;
+    return 0;
   }
-  nextSubmitSeq = Math.max(nextSubmitSeq + 1, persisted + 1);
+}
+
+export function syncServerClientSeqWatermark(sessionId: string, serverSeq: unknown): number {
+  const parsed =
+    typeof serverSeq === "number" && Number.isFinite(serverSeq) && serverSeq > 0
+      ? Math.floor(serverSeq)
+      : 0;
+  if (parsed <= 0) return 0;
+  if (sessionId) {
+    sessionSeqWatermarks.set(
+      sessionId,
+      Math.max(sessionSeqWatermarks.get(sessionId) ?? 0, parsed),
+    );
+  }
+  nextSubmitSeq = Math.max(nextSubmitSeq, parsed);
+  try {
+    const curLocal = _readPersistedLocalSeq();
+    if (nextSubmitSeq > curLocal) {
+      window.localStorage.setItem(CLIENT_SEQ_STORAGE_KEY, String(nextSubmitSeq));
+    }
+  } catch {
+    // Best-effort cross-reload watermark sync
+  }
+  return parsed;
+}
+
+function allocateMonotonicSubmitSeq(sessionId?: string): number {
+  const persisted = _readPersistedLocalSeq();
+  const sessionFloor = sessionId ? (sessionSeqWatermarks.get(sessionId) ?? 0) : 0;
+  const cachedFloor = sessionId ? (loadCachedStepEditState(sessionId)?.latestClientSeq ?? 0) : 0;
+  nextSubmitSeq = Math.max(nextSubmitSeq + 1, persisted + 1, sessionFloor + 1, cachedFloor + 1);
+  if (sessionId) {
+    sessionSeqWatermarks.set(sessionId, Math.max(sessionFloor, nextSubmitSeq));
+  }
   try {
     window.localStorage.setItem(CLIENT_SEQ_STORAGE_KEY, String(nextSubmitSeq));
   } catch {
@@ -278,6 +314,10 @@ export function loadCachedStepEditState(sessionId: string): PersistedStepEditSna
       sessionId,
       problemKey: typeof parsed.problemKey === "string" ? parsed.problemKey : "",
       versionNumber: typeof parsed.versionNumber === "number" ? parsed.versionNumber : undefined,
+      latestClientSeq:
+        typeof parsed.latestClientSeq === "number" && Number.isFinite(parsed.latestClientSeq) && parsed.latestClientSeq > 0
+          ? Math.floor(parsed.latestClientSeq)
+          : undefined,
       committedScene: cachedScene,
       stepOverrides: cachedScene && parsed.stepOverrides && typeof parsed.stepOverrides === "object"
         ? parsed.stepOverrides
@@ -330,6 +370,7 @@ export async function fetchStepEditSessionState(sessionId: string): Promise<Pers
     });
     if (!res.ok) return null;
     const data = await res.json();
+    const serverSeq = syncServerClientSeqWatermark(sessionId, data?.latest_client_seq);
     if (!data?.found) return null;
     if (data.dependency_summary && data.dependency_summary.cycle_detected !== false && Number(data.revision_count || 0) > 0) {
       return null;
@@ -346,6 +387,7 @@ export async function fetchStepEditSessionState(sessionId: string): Promise<Pers
       sessionId,
       problemKey: typeof data.problem_key === "string" ? data.problem_key : "",
       versionNumber: committedVer,
+      latestClientSeq: serverSeq > 0 ? serverSeq : undefined,
       committedScene: remoteScene,
       stepOverrides: remoteScene ? ((data.step_overrides as Record<string, string>) ?? {}) : {},
       dependencySummary: (data.dependency_summary as StepEditDependencySummary) ?? null,
@@ -400,7 +442,7 @@ export async function submitConstructionStepEdit(params: {
   const draftSig = `${params.stepId}:${params.stepIndex}:${params.editedInstruction.trim()}`;
   const reusableRetry = pendingRetryKeys.get(sessionId);
   const controller = new AbortController();
-  const seq = allocateMonotonicSubmitSeq();
+  const seq = allocateMonotonicSubmitSeq(sessionId);
   const clientRequestId =
     params.clientRequestId
     ?? (reusableRetry && reusableRetry.sig === draftSig
@@ -465,6 +507,7 @@ export async function submitConstructionStepEdit(params: {
         failed_stage: "cancelled",
         learner_error: "Đã hủy lượt chỉnh sửa đang chạy.",
         draft_preserved: true,
+        local_abort: true,
       };
     }
     const isCurrentSeq = inFlightSessions.get(sessionId)?.seq === seq && entry.abortReason !== "superseded";
@@ -475,6 +518,7 @@ export async function submitConstructionStepEdit(params: {
         failed_stage: "superseded",
         learner_error: "Yêu cầu cũ đã được thay thế bởi lượt chỉnh sửa mới hơn.",
         draft_preserved: true,
+        local_abort: true,
       };
     }
 
@@ -499,6 +543,7 @@ export async function submitConstructionStepEdit(params: {
         sessionId,
         problemKey: params.problemKey,
         versionNumber: effectiveVer,
+        latestClientSeq: Math.max(existingCache?.latestClientSeq ?? 0, seq),
         committedScene: success.scene3d,
         stepOverrides: success.step_overrides ?? {},
         dependencySummary: success.dependency_summary ?? null,
@@ -514,6 +559,7 @@ export async function submitConstructionStepEdit(params: {
       };
     }
 
+    const syncedErrSeq = syncServerClientSeqWatermark(sessionId, data?.latest_client_seq);
     return {
       status: "rolled_back",
       error_code: String(data?.error_code || `HTTP_${res.status}`),
@@ -524,6 +570,8 @@ export async function submitConstructionStepEdit(params: {
           "Không thể dựng hình với nội dung bước vừa chỉnh. Bước dựng cũ vẫn được giữ nguyên.",
       ),
       draft_preserved: true,
+      local_abort: false,
+      ...(syncedErrSeq > 0 ? { latest_client_seq: syncedErrSeq } : {}),
     };
   } catch {
     if (entry.abortReason === "cancelled") {
@@ -533,6 +581,7 @@ export async function submitConstructionStepEdit(params: {
         failed_stage: "cancelled",
         learner_error: "Đã hủy lượt chỉnh sửa đang chạy.",
         draft_preserved: true,
+        local_abort: true,
       };
     }
     if (entry.abortReason === "superseded" || inFlightSessions.get(sessionId)?.seq !== seq) {
@@ -542,6 +591,7 @@ export async function submitConstructionStepEdit(params: {
         failed_stage: "superseded",
         learner_error: "Yêu cầu cũ đã được thay thế bởi lượt chỉnh sửa mới hơn.",
         draft_preserved: true,
+        local_abort: true,
       };
     }
     // Preserve idempotency key so retrying exact same draft after timeout/network error never duplicates commit
@@ -567,6 +617,7 @@ export async function submitConstructionStepEdit(params: {
         });
         if (stateRes.ok) {
           const sData = await stateRes.json().catch(() => null);
+          const recSeq = syncServerClientSeqWatermark(sessionId, sData?.latest_client_seq);
           if (
             sData?.found
             && sData.last_committed_request_id === clientRequestId
@@ -616,6 +667,7 @@ export async function submitConstructionStepEdit(params: {
               sessionId,
               problemKey: params.problemKey,
               versionNumber: recVer,
+              latestClientSeq: recSeq > 0 ? recSeq : seq,
               committedScene: recScene,
               stepOverrides: recResult.step_overrides,
               dependencySummary: recResult.dependency_summary,

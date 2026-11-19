@@ -2983,7 +2983,7 @@ export function AxoWorkspaceV62({
                               };
                             });
                           }
-                        } else if (res.error_code === "EDIT_CANCELLED" || res.error_code === "EDIT_SUPERSEDED") {
+                        } else if (res.local_abort && (res.error_code === "EDIT_CANCELLED" || res.error_code === "EDIT_SUPERSEDED")) {
                           setStepEditRunning(false);
                         } else {
                           setStepEditError(res.learner_error);

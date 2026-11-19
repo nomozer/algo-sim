@@ -64,6 +64,18 @@ def _strip_internal_dep_keys(raw: Any) -> dict[str, Any]:
     return {str(k): v for k, v in raw.items() if not str(k).startswith("_")}
 
 
+def _current_latest_client_seq(
+    owner_scope: str,
+    session_id: str,
+    raw_dep: dict[str, Any] | None = None,
+) -> int:
+    """Return highest client_seq watermark known across persisted DB metadata and memory."""
+    persisted_seq = int((raw_dep or {}).get("_latest_client_seq") or 0)
+    with _SESSION_LOCKS_GUARD:
+        mem_seq = int(_LATEST_CLIENT_SEQ.get((owner_scope, session_id), 0) or 0)
+    return max(persisted_seq, mem_seq)
+
+
 def _parse_json_dict(raw: str | None) -> dict[str, Any]:
     if not raw:
         return {}
@@ -276,19 +288,27 @@ def _stale_revision_conflict_response(committed_version: int) -> JSONResponse:
     )
 
 
-def _cancelled_or_superseded_response(error_code: str, learner_error: str) -> JSONResponse:
+def _cancelled_or_superseded_response(
+    error_code: str,
+    learner_error: str,
+    *,
+    latest_client_seq: int | None = None,
+) -> JSONResponse:
+    content: dict[str, Any] = {
+        "status": "rolled_back",
+        "error_code": error_code,
+        "failed_stage": "cancelled" if error_code == "EDIT_CANCELLED" else "superseded",
+        "learner_error": learner_error,
+        "draft_preserved": True,
+        "llm_calls": 0,
+        "quota_charged": False,
+    }
+    if latest_client_seq is not None:
+        content["latest_client_seq"] = latest_client_seq
     return JSONResponse(
         status_code=409,
         headers={"Cache-Control": "no-store"},
-        content={
-            "status": "rolled_back",
-            "error_code": error_code,
-            "failed_stage": "cancelled" if error_code == "EDIT_CANCELLED" else "superseded",
-            "learner_error": learner_error,
-            "draft_preserved": True,
-            "llm_calls": 0,
-            "quota_charged": False,
-        },
+        content=content,
     )
 
 
@@ -376,6 +396,7 @@ def _execute_locked_step_edit(
         return _cancelled_or_superseded_response(
             "EDIT_SUPERSEDED",
             "Yêu cầu cũ đã được thay thế bởi lượt chỉnh sửa mới hơn.",
+            latest_client_seq=_current_latest_client_seq(owner_scope, req.session_id, raw_existing_dep),
         )
 
     working_scene = (
@@ -741,9 +762,11 @@ def _replay_existing_request(
     if existing_rev is None:
         return None
     if existing_rev.execution_status == "COMMITTED":
+        replay_dep = _parse_json_dict(session_row.dependency_graph_json if session_row is not None else "{}")
         return _cancelled_or_superseded_response(
             "EDIT_SUPERSEDED",
             "Yêu cầu cũ đã được thay thế bởi lượt chỉnh sửa mới hơn.",
+            latest_client_seq=_current_latest_client_seq(owner_scope, req.session_id, replay_dep),
         )
     if existing_rev.error_code == "EDIT_CANCELLED":
         return _cancelled_or_superseded_response("EDIT_CANCELLED", "Đã hủy lượt chỉnh sửa đang chạy.")
@@ -807,6 +830,7 @@ def edit_construction_step(
                         return _cancelled_or_superseded_response(
                             "EDIT_SUPERSEDED",
                             "Yêu cầu cũ đã được thay thế bởi lượt chỉnh sửa mới hơn.",
+                            latest_client_seq=latest_seq,
                         )
 
             return _execute_locked_step_edit(req, response, db, owner_scope)
@@ -960,6 +984,7 @@ def get_step_edit_session_state(
             "owner_scope": owner_scope,
             "revision_count": 0,
             "committed_version": 0,
+            "latest_client_seq": _current_latest_client_seq(owner_scope, session_id),
             "committed_scene": None,
             "step_overrides": {},
             "dependency_summary": {},
@@ -1001,6 +1026,7 @@ def get_step_edit_session_state(
         "base_scene_sha256": session_row.base_scene_sha256,
         "revision_count": session_row.revision_count,
         "committed_version": committed_ver,
+        "latest_client_seq": _current_latest_client_seq(owner_scope, session_id, raw_dep),
         "last_committed_request_id": last_committed_request_id,
         "committed_scene": json.loads(session_row.committed_scene_json) if session_row.committed_scene_json else None,
         "step_overrides": json.loads(session_row.step_overrides_json or "{}"),

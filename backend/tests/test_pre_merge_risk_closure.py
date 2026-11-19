@@ -442,3 +442,123 @@ def test_p0_semantic_identity_multi_edit_chains_and_fraction_oracle():
                 _fvec(objs_s1["mp_MNP"]["normal"]),
                 _fsub(_fvec(objs_s1[pt_on_sec]["xyz"]), _fvec(objs_s1["mp_MNP"]["point"])),
             ) == Fraction(0)
+
+
+def test_cross_context_state_recovery_exposes_latest_client_seq_across_restart(tmp_path: Path, monkeypatch):
+    """ISSUE-SE-CROSS-CONTEXT-CLIENT-SEQ-DESYNC: GET /state and 409 expose persisted latest_client_seq across restarts."""
+    import asyncio
+    import uuid
+
+    import httpx
+    from sqlalchemy.orm import sessionmaker
+
+    from app.main import app
+    from app.persistence import db as db_mod
+    from app.persistence.step_edit_models import ensure_step_edit_tables
+    from app.simulation import step_edit_router
+
+    db_file = tmp_path / "seq_recovery.db"
+    test_eng = create_engine(f"sqlite:///{db_file.as_posix()}", connect_args={"check_same_thread": False})
+    TestSess = sessionmaker(bind=test_eng, autoflush=False, autocommit=False)
+    monkeypatch.setattr(db_mod, "engine", test_eng)
+    monkeypatch.setattr(db_mod, "SessionLocal", TestSess)
+    monkeypatch.setattr(step_edit_router, "SessionLocal", TestSess)
+    ensure_step_edit_tables(test_eng)
+    with step_edit_router._SESSION_LOCKS_GUARD:
+        step_edit_router._SESSION_LOCKS.clear()
+        step_edit_router._CANCELLED_REQUESTS.clear()
+        step_edit_router._LATEST_CLIENT_SEQ.clear()
+        step_edit_router._LAST_COMMIT_SNAPSHOT.clear()
+
+    s1 = _load_sample("chop-thiet-dien-ba-diem")
+    ev_m = next(e for e in s1["events"] if e.get("object") == "M")
+    sid = f"seq-rec-{uuid.uuid4().hex[:8]}"
+    hdr = {"X-Axo-Client-Session": "seq-recovery-owner"}
+
+    async def _run():
+        transport = httpx.ASGITransport(app=app)
+        async with httpx.AsyncClient(transport=transport, base_url="http://testserver") as ac:
+            st_empty = await ac.get(f"/api/simulation/sessions/{sid}-missing/state", headers=hdr)
+            assert st_empty.status_code == 200
+            assert st_empty.json()["found"] is False
+            assert st_empty.json()["latest_client_seq"] == 0
+
+            r1 = await ac.post(
+                "/api/simulation/steps/edit",
+                headers=hdr,
+                json={
+                    "session_id": sid,
+                    "problem_key": "sample:chop-thiet-dien-ba-diem",
+                    "step_id": "M",
+                    "step_index": ev_m["step_index"],
+                    "previous_instruction": ev_m.get("learner_text") or "Dựng M.",
+                    "edited_instruction": "Lấy điểm M thuộc SA sao cho SM/SA = 1/4",
+                    "target_ids": ["M"],
+                    "absorbed_ids": [],
+                    "scene3d": copy.deepcopy(s1),
+                    "client_request_id": "req-ctx1-20",
+                    "client_seq": 20,
+                },
+            )
+            assert r1.status_code == 200
+            assert r1.json()["committed_version"] == 1
+
+            # Simulate backend worker restart (in-memory _LATEST_CLIENT_SEQ wiped) + fresh browser context
+            with step_edit_router._SESSION_LOCKS_GUARD:
+                step_edit_router._LATEST_CLIENT_SEQ.clear()
+                step_edit_router._SESSION_LOCKS.clear()
+
+            st = await ac.get(f"/api/simulation/sessions/{sid}/state", headers=hdr)
+            assert st.status_code == 200
+            st_json = st.json()
+            assert st_json["found"] is True
+            assert st_json["committed_version"] == 1
+            assert st_json["latest_client_seq"] == 20
+
+            # Stale client_seq <= 20 returns 409 EDIT_SUPERSEDED along with server latest_client_seq
+            r_stale = await ac.post(
+                "/api/simulation/steps/edit",
+                headers=hdr,
+                json={
+                    "session_id": sid,
+                    "problem_key": "sample:chop-thiet-dien-ba-diem",
+                    "step_id": "M",
+                    "step_index": ev_m["step_index"],
+                    "previous_instruction": "Lấy điểm M thuộc SA sao cho SM/SA = 1/4",
+                    "edited_instruction": "Lấy điểm M thuộc SA sao cho SM/SA = 1/3",
+                    "target_ids": ["M"],
+                    "absorbed_ids": [],
+                    "scene3d": st_json["committed_scene"],
+                    "client_request_id": "req-ctx2-stale-1",
+                    "client_seq": 1,
+                },
+            )
+            assert r_stale.status_code == 409
+            assert r_stale.json()["error_code"] == "EDIT_SUPERSEDED"
+            assert r_stale.json()["latest_client_seq"] == 20
+
+            # Fresh browser context advancing from server latest_client_seq + 1 succeeds immediately
+            r2 = await ac.post(
+                "/api/simulation/steps/edit",
+                headers=hdr,
+                json={
+                    "session_id": sid,
+                    "problem_key": "sample:chop-thiet-dien-ba-diem",
+                    "step_id": "M",
+                    "step_index": ev_m["step_index"],
+                    "previous_instruction": "Lấy điểm M thuộc SA sao cho SM/SA = 1/4",
+                    "edited_instruction": "Lấy điểm M thuộc SA sao cho SM/SA = 1/3",
+                    "target_ids": ["M"],
+                    "absorbed_ids": [],
+                    "scene3d": st_json["committed_scene"],
+                    "client_request_id": "req-ctx2-21",
+                    "client_seq": st_json["latest_client_seq"] + 1,
+                },
+            )
+            assert r2.status_code == 200
+            assert r2.json()["committed_version"] == 2
+            m_obj = next(o for o in r2.json()["scene3d"]["objects"] if o["id"] == "M")
+            assert m_obj["xyz"] == ["0", "0", "4"]
+
+    asyncio.run(_run())
+    test_eng.dispose()
