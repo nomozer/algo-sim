@@ -1,0 +1,44 @@
+{
+  "generated_at": "2026-11-19T11:20:15.734856+00:00",
+  "source_db": "algosim_osr_live",
+  "restored_db": "algosim_osr_restored",
+  "backup_tar_path": "D:\\Documents\\projects\\algo-sim\\.superpowers\\db-safety-backups\\2026-11-19-owner-scope-resolution\\pg16_algosim_osr_live.snapshot.tar.gz",
+  "backup_tar_sha256": "fe0903cf2685162a9c967a1bea2f679df9cdfa03daf475a178d780b60e183ac8",
+  "backup_tar_bytes": 89236,
+  "pg_dump_found_on_host": false,
+  "restore_verification": {
+    "status": "PASS",
+    "table_count": 20,
+    "legacy_tables_retained": [
+      "classrooms",
+      "class_memberships",
+      "assignments",
+      "practice_sessions",
+      "classroom_sessions"
+    ],
+    "fk_enforced": true,
+    "unique_enforced": true,
+    "nextval_above_pre": 6,
+    "post_restore_step_edit_status": 200
+  },
+  "bb046fa22_rollback_verification": {
+    "status": "PASS",
+    "baseline_main_commit": "bb046fa22aceff47abe22aa783aa64fc65caee13",
+    "mode_a_app_only_rollback_health": true,
+    "mode_a_unauthed_classroom_routes": {
+      "/api/classes": 401,
+      "/api/assignments": 401
+    },
+    "mode_a_authed_classroom_routes": {
+      "/api/classes": 200,
+      "/api/assignments": 200
+    },
+    "mode_b1_non_destructive_downgrade_9c4d8e2b7a10": "PASS",
+    "mode_b2_unapproved_destructive_downgrade_blocked": "DESTRUCTIVE_DOWNGRADE_DATA_LOSS_BLOCKED",
+    "mode_b2_downgrade_target": "e437149641fa",
+    "mode_b2_tables_after_downgrade_count": 17,
+    "mode_b2_classroom_parity_100pct": true,
+    "mode_b2_main_health_after_downgrade": true,
+    "mode_b2_authed_get_classes_status": 200
+  }
+}

@@ -1,0 +1,46 @@
+{
+  "generated_at": "2026-11-19T11:44:24.004665+00:00",
+  "baseline_main_commit": "bb046fa22aceff47abe22aa783aa64fc65caee13",
+  "candidate_commit": "892e15f06fc53c623a1392f0766d69c21291436a",
+  "total_changed_files_vs_main": 761,
+  "bucket_counts": {
+    "C-Classroom_Auth_Admin": 20,
+    "C-Landing": 38,
+    "C-Workspace_Attachment_Scene3D_UI": 127,
+    "Step_Editor_Core": 15,
+    "DB_Migration_Safety": 6,
+    "Backend_Hybrid_Geometry_Ingestion": 20,
+    "Docs_And_Evaluation": 533,
+    "Root_Config_Docker": 2
+  },
+  "domain_resolutions": {
+    "C-Classroom": {
+      "decision": "OPTION_B_IMPLEMENTED_AND_VERIFIED",
+      "summary": "Classroom & Live Session UI and HTTP endpoints (18 routes) permanently retired in V1 (404 Not Found, 0 OpenAPI leaks, CLI exit 2); 5 legacy DB tables safely retained in f8a2c41d9e05 with 100% PG16 backup/restore/rollback parity."
+    },
+    "C-Landing": {
+      "decision": "PENDING_OWNER_DECISION",
+      "status": "TECHNICALLY_VERIFIED_AWAITING_OWNER_SIGN_OFF",
+      "summary": "Live `/` -> LandingView & `/app` -> Workspace verified (200 OK, 0 Informatics terms, 0 console/page errors)."
+    },
+    "C-Workspace": {
+      "decision": "PENDING_OWNER_DECISION",
+      "status": "TECHNICALLY_VERIFIED_AWAITING_OWNER_SIGN_OFF",
+      "summary": "Workspace, Composer attachment UI, and Scene3D overhaul verified via tsc/build/2278 Vitest/Playwright 6 viewports + VKB."
+    },
+    "C-Release": {
+      "decision": "PENDING_OWNER_DECISION",
+      "status": "HOLD_NO_MERGE_NO_PUSH_NO_DEPLOY",
+      "summary": "Owner sign-off required before merge to `main`, push to origin, or production deployment; Docker daemon check is ENVIRONMENT_BLOCKED on this host."
+    }
+  },
+  "pg16_cleanup": {
+    "remaining_algosim_dbs": [
+      "algosim_acceptance",
+      "algosim_host"
+    ],
+    "algosim_acceptance_tables": 15,
+    "algosim_acceptance_alembic": "f8a2c41d9e05"
+  },
+  "protected_algosim_db_sha256": "39D676C7B50A925975828434A00D38E3BAC3C5F50E4E2A724A695768C7C83EE3"
+}

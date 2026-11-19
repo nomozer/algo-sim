@@ -1,0 +1,14 @@
+{
+  "status": "CLASSROOM_FEATURE_RETIRED",
+  "decision": "Option B",
+  "reason": "Classroom and Live Session HTTP routes and UI views are permanently retired in V1.",
+  "preserved_legacy_tables": [
+    "classrooms",
+    "class_memberships",
+    "assignments",
+    "practice_sessions",
+    "classroom_sessions"
+  ],
+  "historical_evidence_note": "Frozen historical classroom acceptance artifacts under docs/evaluation/geometry/ remain read-only.",
+  "exit_code": 2
+}

@@ -1,0 +1,425 @@
+{
+  "commit": "6880a03eb295cd45152e8114a8867cfee7b2ee4c",
+  "startedAt": "2026-11-19T11:13:42.096Z",
+  "baseUrl": "http://localhost:3001",
+  "backendUrl": "http://127.0.0.1:8000",
+  "routesAndOptionB": {
+    "landingStatus": 200,
+    "appStatus": 200,
+    "fileInputCount": 3,
+    "plusMenuOpened": true,
+    "optionBHttp": [
+      {
+        "path": "/api/classes",
+        "status": 404,
+        "detail": "Not Found"
+      },
+      {
+        "path": "/api/assignments",
+        "status": 404,
+        "detail": "Not Found"
+      },
+      {
+        "path": "/api/classes/1/session",
+        "status": 404,
+        "detail": "Not Found"
+      }
+    ]
+  },
+  "unorbitedCameraInvariance": {
+    "status": "PASS",
+    "vertsBefore": {
+      "B": {
+        "x": 652.49,
+        "y": 762
+      },
+      "C": {
+        "x": 1011.38,
+        "y": 884
+      },
+      "D": {
+        "x": 1171.16,
+        "y": 696
+      },
+      "S": {
+        "x": 861.93,
+        "y": 310
+      }
+    },
+    "vertsAfter": {
+      "B": {
+        "x": 652.49,
+        "y": 762
+      },
+      "C": {
+        "x": 1011.38,
+        "y": 884
+      },
+      "D": {
+        "x": 1171.16,
+        "y": 696
+      },
+      "S": {
+        "x": 861.93,
+        "y": 310
+      }
+    },
+    "deltasPx": {
+      "S": 0,
+      "B": 0,
+      "C": 0,
+      "D": 0
+    },
+    "maxDeltaPx": 0
+  },
+  "orbitedCameraInvariance": {
+    "status": "PASS",
+    "cameraBefore": {
+      "position": [
+        13.182434691979088,
+        2.9904811876609934,
+        4.110696365448532
+      ],
+      "target": [
+        2,
+        2,
+        2
+      ]
+    },
+    "cameraAfter": {
+      "position": [
+        13.18243469197909,
+        2.9904811876609934,
+        4.110696365448532
+      ],
+      "target": [
+        2,
+        2,
+        2
+      ]
+    },
+    "threeJsCameraPositionDelta": 0,
+    "threeJsCameraTargetDelta": 0
+  },
+  "stepEditorRenameAndZeroLeak": {
+    "status": "PASS",
+    "opacityTransition": "0 -> 1",
+    "pencilHiddenWhileEditing": true,
+    "draftSurvivedDockScroll": true,
+    "dockBoundsOk": true,
+    "staleAlphaRowsAfter": 0
+  },
+  "draftAndErrorPreservation": [
+    {
+      "case": "undefined_point_SZ",
+      "status": 422,
+      "errorCode": "MISSING_DEPENDENCY",
+      "draftPreserved": true
+    },
+    {
+      "case": "collinear_AOC",
+      "status": 422,
+      "errorCode": "COLLINEAR_POINTS",
+      "draftPreserved": true
+    },
+    {
+      "case": "unsupported_syntax",
+      "status": 422,
+      "errorCode": "UNSUPPORTED_STEP_SYNTAX",
+      "draftPreserved": true
+    }
+  ],
+  "cascadeTabIsolationAndSkew": {
+    "status": "PASS",
+    "f5Retained": true,
+    "tabReopenRetained": true,
+    "dockScrollIsolated": true,
+    "sequentialS1FinalMXyz": [
+      "0",
+      "0",
+      "9/2"
+    ],
+    "committedVersion": 15,
+    "probes409": {
+      "stale": {
+        "status": 409,
+        "code": "STALE_REVISION_CONFLICT"
+      },
+      "superseded": {
+        "status": 409,
+        "code": "EDIT_SUPERSEDED"
+      }
+    }
+  },
+  "browserMetrics": {
+    "ui_interaction_open_latency_ms": {
+      "iterations": 15,
+      "p50_ms": 22.862,
+      "p95_ms": 38.56,
+      "p99_ms": 48.352,
+      "min_ms": 18.576,
+      "max_ms": 50.8,
+      "mean_ms": 25.903,
+      "iqr_ms": 7.662,
+      "samples_ms": [
+        24.794,
+        33.008,
+        50.8,
+        22.862,
+        22.434,
+        27.086,
+        19.264,
+        20.996,
+        19.719,
+        20.502,
+        19.645,
+        18.576,
+        28.319,
+        33.315,
+        27.226
+      ]
+    },
+    "frontend_update_completion_ms": {
+      "iterations": 15,
+      "p50_ms": 113.084,
+      "p95_ms": 165.748,
+      "p99_ms": 168.965,
+      "min_ms": 96.062,
+      "max_ms": 169.769,
+      "mean_ms": 119.597,
+      "iqr_ms": 14.58,
+      "samples_ms": [
+        169.769,
+        114.839,
+        124.879,
+        112.958,
+        130.32,
+        103.856,
+        107.184,
+        118.279,
+        118.034,
+        106.813,
+        107.557,
+        106.301,
+        164.024,
+        113.084,
+        96.062
+      ]
+    },
+    "scene3d_post_edit_render_ms": {
+      "iterations": 15,
+      "p50_ms": 32,
+      "p95_ms": 50.11,
+      "p99_ms": 52.742,
+      "min_ms": 2.1,
+      "max_ms": 53.4,
+      "mean_ms": 31.98,
+      "iqr_ms": 2.4,
+      "samples_ms": [
+        48.7,
+        34.5,
+        2.1,
+        32.4,
+        32.6,
+        32.5,
+        31.9,
+        29.4,
+        32,
+        30.1,
+        30.5,
+        30.2,
+        53.4,
+        32,
+        27.4
+      ]
+    },
+    "e2e_step_edit_roundtrip_ms": {
+      "iterations": 15,
+      "p50_ms": 196.833,
+      "p95_ms": 255.098,
+      "p99_ms": 261.894,
+      "min_ms": 185.204,
+      "max_ms": 263.593,
+      "mean_ms": 207.058,
+      "iqr_ms": 29.006,
+      "samples_ms": [
+        251.457,
+        211.757,
+        221.441,
+        202.294,
+        221.927,
+        192.172,
+        186.605,
+        196.799,
+        196.833,
+        189.099,
+        185.204,
+        186.617,
+        263.593,
+        212.871,
+        187.202
+      ]
+    }
+  },
+  "viewports": [
+    {
+      "width": 1920,
+      "height": 1080,
+      "mobileTouch": false,
+      "overflowX": 0,
+      "canvasVisible": true,
+      "canvasWidthPx": 1289,
+      "canvasHeightPx": 1042,
+      "runClipped": false,
+      "cancelClipped": false,
+      "runBtnHeightPx": 25,
+      "cancelBtnHeightPx": 25,
+      "textareaHeightPx": 32,
+      "textareaHorizontalOverflow": false,
+      "controlsOccludeActions": false,
+      "webglPhase": "healthy",
+      "canvasViewportHeightRatio": 0.965,
+      "visibleVertexLabels": 8,
+      "visiblePlaneLabels": 0,
+      "clippedLabels": [],
+      "occludedSceneControls": []
+    },
+    {
+      "width": 1440,
+      "height": 900,
+      "mobileTouch": false,
+      "overflowX": 0,
+      "canvasVisible": true,
+      "canvasWidthPx": 809,
+      "canvasHeightPx": 862,
+      "runClipped": false,
+      "cancelClipped": false,
+      "runBtnHeightPx": 25,
+      "cancelBtnHeightPx": 25,
+      "textareaHeightPx": 32,
+      "textareaHorizontalOverflow": false,
+      "controlsOccludeActions": false,
+      "webglPhase": "healthy",
+      "canvasViewportHeightRatio": 0.958,
+      "visibleVertexLabels": 8,
+      "visiblePlaneLabels": 0,
+      "clippedLabels": [],
+      "occludedSceneControls": []
+    },
+    {
+      "width": 1366,
+      "height": 768,
+      "mobileTouch": false,
+      "overflowX": 0,
+      "canvasVisible": true,
+      "canvasWidthPx": 735,
+      "canvasHeightPx": 730,
+      "runClipped": false,
+      "cancelClipped": false,
+      "runBtnHeightPx": 25,
+      "cancelBtnHeightPx": 25,
+      "textareaHeightPx": 32,
+      "textareaHorizontalOverflow": false,
+      "controlsOccludeActions": false,
+      "webglPhase": "healthy",
+      "canvasViewportHeightRatio": 0.951,
+      "visibleVertexLabels": 8,
+      "visiblePlaneLabels": 0,
+      "clippedLabels": [],
+      "occludedSceneControls": []
+    },
+    {
+      "width": 768,
+      "height": 1024,
+      "mobileTouch": false,
+      "overflowX": 0,
+      "canvasVisible": true,
+      "canvasWidthPx": 472,
+      "canvasHeightPx": 986,
+      "runClipped": false,
+      "cancelClipped": false,
+      "runBtnHeightPx": 25,
+      "cancelBtnHeightPx": 25,
+      "textareaHeightPx": 48,
+      "textareaHorizontalOverflow": false,
+      "controlsOccludeActions": false,
+      "webglPhase": "healthy",
+      "canvasViewportHeightRatio": 0.963,
+      "visibleVertexLabels": 8,
+      "visiblePlaneLabels": 0,
+      "clippedLabels": [],
+      "occludedSceneControls": []
+    },
+    {
+      "width": 390,
+      "height": 844,
+      "mobileTouch": true,
+      "overflowX": 0,
+      "canvasVisible": true,
+      "canvasWidthPx": 390,
+      "canvasHeightPx": 444,
+      "runClipped": false,
+      "cancelClipped": false,
+      "runBtnHeightPx": 30,
+      "cancelBtnHeightPx": 30,
+      "textareaHeightPx": 32,
+      "textareaHorizontalOverflow": false,
+      "controlsOccludeActions": false,
+      "webglPhase": "healthy",
+      "canvasViewportHeightRatio": 0.527,
+      "visibleVertexLabels": 8,
+      "visiblePlaneLabels": 0,
+      "clippedLabels": [],
+      "occludedSceneControls": []
+    },
+    {
+      "width": 320,
+      "height": 568,
+      "mobileTouch": true,
+      "overflowX": 0,
+      "canvasVisible": true,
+      "canvasWidthPx": 320,
+      "canvasHeightPx": 293,
+      "runClipped": false,
+      "cancelClipped": false,
+      "runBtnHeightPx": 30,
+      "cancelBtnHeightPx": 30,
+      "textareaHeightPx": 48,
+      "textareaHorizontalOverflow": false,
+      "controlsOccludeActions": false,
+      "webglPhase": "healthy",
+      "canvasViewportHeightRatio": 0.515,
+      "visibleVertexLabels": 8,
+      "visiblePlaneLabels": 0,
+      "clippedLabels": [],
+      "occludedSceneControls": []
+    }
+  ],
+  "touchAndVkb": {
+    "status": "PASS",
+    "pencilVisibleOnTouchActive": true,
+    "vkb390x460": {
+      "overflowX": 0,
+      "taInViewport": true,
+      "runInViewport": true,
+      "cancelInViewport": true
+    }
+  },
+  "consoleErrors": [],
+  "pageErrors": [],
+  "unexpected5xx": [],
+  "finishedAt": "2026-11-19T11:14:26.251Z",
+  "postBackendRestartRecovery": {
+    "status": "PASS",
+    "sessionId": "se-be5cdbf3-sample-chop-thiet-dien-ba-diem-55591bff",
+    "restoredCommittedVersion": 15,
+    "restoredLatestClientSeq": 20,
+    "restoredMxyz": [
+      "0",
+      "0",
+      "9/2"
+    ],
+    "postRestartEditStatus": 200,
+    "postRestartCommittedVersion": 16
+  }
+}

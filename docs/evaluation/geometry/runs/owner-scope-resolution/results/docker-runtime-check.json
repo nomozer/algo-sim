@@ -1,0 +1,15 @@
+{
+  "checked_at": "2026-11-19T11:22:02.5641536Z",
+  "status": "ENVIRONMENT_BLOCKED",
+  "reason": "Docker daemon / Linux Engine named pipe is unavailable on this host (com.docker.service is Stopped, Manual start type, requires host elevation/Desktop session start).",
+  "service_name": "com.docker.service",
+  "service_status": "Stopped",
+  "service_start_type": "Manual",
+  "docker_desktop_exe_exists": true,
+  "attempted_gui_start_60s": true,
+  "docker_version_exit_code": 1,
+  "docker_version_output": "Client:\r\n Version:           29.9.2\r\n API version:       1.56\r\n Go version:        go1.26.10\r\n Git commit:        a82e528\r\n Built:             Tue Oct 20 19:44:07 2026\r\n OS/Arch:           windows/amd64\r\n Context:           desktop-linux\r\nfailed to connect to the docker API at npipe:////./pipe/dockerDesktopLinuxEngine; check if the path is correct and if the daemon is running: open //./pipe/dockerDesktopLinuxEngine: The system cannot find the file specified.",
+  "docker_version_json_exit_code": 1,
+  "docker_version_json_raw": "{\"Client\":{\"Version\":\"29.9.2\",\"ApiVersion\":\"1.56\",\"DefaultAPIVersion\":\"1.56\",\"GitCommit\":\"a82e528\",\"GoVersion\":\"go1.26.10\",\"Os\":\"windows\",\"Arch\":\"amd64\",\"BuildTime\":\"Tue Oct 20 19:44:07 2026\",\"Context\":\"desktop-linux\"},\"Server\":null}\r\nfailed to connect to the docker API at npipe:////./pipe/dockerDesktopLinuxEngine; check if the path is correct and if the daemon is running: open //./pipe/dockerDesktopLinuxEngine: The system cannot find the file specified.",
+  "docker_info_tail": "  scout: Docker Scout (Docker Inc.)\n    Version:  v1.27.0\n    Path:     C:\\Program Files\\Docker\\cli-plugins\\docker-scout.exe\n\nServer:\nfailed to connect to the docker API at npipe:////./pipe/dockerDesktopLinuxEngine; check if the path is correct and if the daemon is running: open //./pipe/dockerDesktopLinuxEngine: The system cannot find the file specified."
+}
