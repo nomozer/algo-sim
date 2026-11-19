@@ -25,6 +25,7 @@ from app.ai.local_geometry_parser import normalize_problem_text
 
 SLM_VERIFIED_NORMALIZER_V1_VERSION = "slm-verified-normalizer/1"
 SLM_VERIFIED_NORMALIZER_VERSION = "slm-verified-normalizer/2"
+SLM_VERIFIED_NORMALIZER_V3_VERSION = "slm-verified-normalizer/3"
 
 _TYPO_CHECKS: tuple[tuple[str, re.Pattern[str]], ...] = (
     ("TYPO_VUONG_GOC_TONE", re.compile(r"\bvuôg\s+g[oóòỏõọ]c\b|\bvuông\s+goc\b", re.IGNORECASE | re.UNICODE)),
@@ -278,6 +279,641 @@ def _is_matching_prism_lateral_edge(seg: str, sentence: str) -> bool:
     return any({a, b} == {pts[0], pts[1]} for a, b in zip(lpts, rpts))
 
 
+def _unused_point_label(text: str, preferred: tuple[str, ...] = ("G", "I", "K", "P", "Q", "H", "M", "N")) -> str:
+    """Pick a single uppercase point letter guaranteed absent from `text`."""
+    used = set(re.findall(r"[A-Z][0-9]*'*", text))
+    for cand in preferred:
+        if cand not in used and not any(u.startswith(cand) for u in used):
+            return cand
+    return "P0"
+
+
+def _apply_v3_pre_closure(
+    cur: str,
+    *,
+    norm0: str,
+    pos_map: list[int],
+    steps: list[VerifiedNormalizationStep],
+) -> tuple[str, list[int]]:
+    """Pre-v2 AXO HYBRID /9 closure rules (`VN06`–`VN11`), strictly non-conditional & non-negated."""
+    cur, pos_map = _apply_safe_sub(
+        cur, norm0=norm0, pos_map=pos_map,
+        rule_id="VN06_STRIP_COURTESY_HEADER_COLON",
+        pattern=re.compile(
+            r"^(?:Thưa\s+(?:thầy|cô|bạn)[^:]{0,40}|Câu\s+hỏi[^:]{0,40}|Bài\s+(?:toán|tập)[^:]{0,30}|Nhờ\s+giải[^:]{0,30}):\s*(?=(?:Cho|Một|Hình|Lăng|Tứ)\b)",
+            re.IGNORECASE | re.UNICODE,
+        ),
+        repl="",
+        steps=steps,
+        count=1,
+        skip_if_cond_or_neg=True,
+        scope="TYPOGRAPHY",
+        evidence="strip_conversational_prefix_header",
+    )
+    # Guard whole-text safety for structural reordering (`Nếu`, negation)
+    # 1. Question-first reordering (`VN10`): "... , biết <SOLID is ...>?"
+    cur, pos_map = _apply_safe_sub(
+        cur, norm0=norm0, pos_map=pos_map,
+        rule_id="VN10_QUESTION_FIRST_DISTANCE",
+        pattern=re.compile(
+            r"^(?:Hỏi\s+)?(?:điểm\s+)?([A-Z][0-9']*'?)\s+cách\s+(?:mặt\s+phẳng\s+)?\(([A-Z0-9']{3,6})\)\s+(?:một\s+khoảng\s+)?(?:bằng\s+)?bao\s+nhiêu\s*,\s*biết\s+((?:[A-Z][0-9']*'?){3,6}\.(?:[A-Z][0-9']*'?){3,6})\s+là\s+(hình\s+lập\s+phương|hình\s+hộp\s+chữ\s+nhật)(?:\s+có)?\s+cạnh(?:\s+bằng)?\s+([^\s,.;:!?]+)\s*\??$",
+            re.IGNORECASE | re.UNICODE,
+        ),
+        repl=r"Cho \4 \3 có cạnh bằng \5. Tính khoảng cách từ điểm \1 đến mặt phẳng (\2).",
+        steps=steps,
+        count=1,
+        skip_if_cond_or_neg=True,
+        scope="CLAUSE_REORDER",
+        evidence="canonical_premise_before_question",
+    )
+
+    def _repl_q_first_general(m: re.Match[str]) -> str:
+        goal_part = m.group(1).strip().rstrip(".? ")
+        prem_part = m.group(2).strip().rstrip(".? ")
+        prem_part = re.sub(r"^(?:hãy\s+)?cho\s+", "", prem_part, flags=re.IGNORECASE | re.UNICODE)
+        if not re.match(r"^(?:Tứ\s+diện|Hình\s+|Cho\s+)", prem_part, re.IGNORECASE | re.UNICODE):
+            return m.group(0)
+        if not re.match(r"^Cho\s+", prem_part, re.IGNORECASE | re.UNICODE) and not re.match(r"^Tứ\s+diện\b", prem_part, re.IGNORECASE | re.UNICODE):
+            prem_part = f"Cho {prem_part[0].lower()}{prem_part[1:]}"
+        return f"{prem_part}. Tính {goal_part}."
+
+    cur, pos_map = _apply_safe_sub(
+        cur, norm0=norm0, pos_map=pos_map,
+        rule_id="VN10_QUESTION_FIRST_GENERAL",
+        pattern=re.compile(
+            r"^(?:Hãy\s+)?(?:tính|tìm|xác\s+định)\s+([^.?!]+?)\s*,\s*biết\s+(?:rằng\s+)?([^?!]+?(?:hình\s+chóp|lăng\s+trụ|hình\s+hộp|hình\s+lập\s+phương|tứ\s+diện)[^?!]+?)\s*[.?]?\s*$",
+            re.IGNORECASE | re.UNICODE,
+        ),
+        repl=_repl_q_first_general,
+        steps=steps,
+        count=1,
+        skip_if_cond_or_neg=True,
+        scope="CLAUSE_REORDER",
+        evidence="canonical_premise_before_question",
+    )
+
+    # 2. Casual question forms handled BEFORE v2 `VN05_SEG_BANG` eats `bằng mấy`
+    cur, pos_map = _apply_safe_sub(
+        cur, norm0=norm0, pos_map=pos_map,
+        rule_id="VN10_BANG_MAY",
+        pattern=re.compile(
+            r"(?:,\s*thì\s+|\s+thì\s+|\.\s*)(?:độ\s+dài\s+)?(?:đoạn\s+(?:thẳng\s+)?)?([A-Z][0-9']*'?[A-Z][0-9']*'?)\s+(?:dài\s+)?(?:bằng|là)\s+mấy\s*\??(?=\s*$)",
+            re.IGNORECASE | re.UNICODE,
+        ),
+        repl=r". Tính độ dài đoạn \1.",
+        steps=steps,
+        skip_if_cond_or_neg=True,
+        scope="GOAL_MARKER",
+        evidence="casual_colloquial_bang_may_to_tinh",
+    )
+    cur, pos_map = _apply_safe_sub(
+        cur, norm0=norm0, pos_map=pos_map,
+        rule_id="VN07_SEMICOLON_TO_COMMA",
+        pattern=re.compile(r"\s*;\s*(?=[A-Z]|hệ\s+|SA|OA|AB|OB|góc|cạnh|đáy)", re.UNICODE),
+        repl=", ",
+        steps=steps,
+        skip_if_cond_or_neg=True,
+        scope="TYPOGRAPHY",
+        evidence="normalize_semicolon_clause_separator",
+    )
+    cur, pos_map = _apply_safe_sub(
+        cur, norm0=norm0, pos_map=pos_map,
+        rule_id="VN10_DUONG_CHEO_DAI_BAO_NHIEU",
+        pattern=re.compile(
+            r"\bĐường\s+chéo\s+([A-Z][0-9']*'?[A-Z][0-9']*'?)\s+(?:có\s+độ\s+dài\s+)?dài\s+bao\s+nhiêu\s*\??",
+            re.IGNORECASE | re.UNICODE,
+        ),
+        repl=r"Tính độ dài đoạn \1.",
+        steps=steps,
+        skip_if_cond_or_neg=True,
+        scope="GOAL_MARKER",
+        evidence="colloquial_diagonal_length_question",
+    )
+
+    # 3. `VN06` Implicit openers & compact shorthands
+    cur, pos_map = _apply_safe_sub(
+        cur, norm0=norm0, pos_map=pos_map,
+        rule_id="VN06_IMPLICIT_MOT_HINH",
+        pattern=re.compile(
+            r"^(?:Một|Cho\s+một)\s+(hình\s+(?:chóp|lăng\s+trụ|hộp|lập\s+phương)|lăng\s+trụ(?:\s+đứng|\s+đều)?)\b",
+            re.IGNORECASE | re.UNICODE,
+        ),
+        repl=lambda m: f"Cho {m.group(1)[0].lower()}{m.group(1)[1:]}",
+        steps=steps,
+        count=1,
+        skip_if_cond_or_neg=True,
+        scope="SOLID_OPENER",
+        evidence="canonical_solid_opener_cho",
+    )
+    cur, pos_map = _apply_safe_sub(
+        cur, norm0=norm0, pos_map=pos_map,
+        rule_id="VN06_IMPLICIT_BARE_SOLID",
+        pattern=re.compile(
+            r"^(Hình\s+(?:chóp|lăng\s+trụ|hộp|lập\s+phương)|hình\s+(?:chóp|lăng\s+trụ|hộp|lập\s+phương)|Lăng\s+trụ(?:\s+đứng|\s+đều)?)\b",
+            re.UNICODE,
+        ),
+        repl=lambda m: f"Cho {m.group(1)[0].lower()}{m.group(1)[1:]}",
+        steps=steps,
+        count=1,
+        skip_if_cond_or_neg=True,
+        scope="SOLID_OPENER",
+        evidence="canonical_solid_opener_cho",
+    )
+    cur, pos_map = _apply_safe_sub(
+        cur, norm0=norm0, pos_map=pos_map,
+        rule_id="VN06_SOLID_SEP_DAY",
+        pattern=re.compile(
+            r"((?:[A-Z][0-9]*'*){1,6}\.(?:[A-Z][0-9]*'*){3,6})(?:\s*:\s*|\s+(?=đáy\b|mặt\s+đáy\b))",
+            re.UNICODE,
+        ),
+        repl=r"\1 có ",
+        steps=steps,
+        count=1,
+        skip_if_cond_or_neg=True,
+        scope="SOLID_OPENER",
+        evidence="explicit_co_connector_after_solid",
+    )
+    cur, pos_map = _apply_safe_sub(
+        cur, norm0=norm0, pos_map=pos_map,
+        rule_id="VN06_BA_KICH_THUOC",
+        pattern=re.compile(r"\bcó\s+ba\s+kích\s+thước\s+(?=[A-Z])", re.IGNORECASE | re.UNICODE),
+        repl="có ",
+        steps=steps,
+        skip_if_cond_or_neg=True,
+        scope="LOCAL_CLAUSE",
+        evidence="cuboid_three_dimensions_shorthand",
+    )
+    cur, pos_map = _apply_safe_sub(
+        cur, norm0=norm0, pos_map=pos_map,
+        rule_id="VN06_VOI_DIMENSIONS",
+        pattern=re.compile(
+            r"((?:[A-Z][0-9]*'*){3,6}\.(?:[A-Z][0-9]*'*){3,6})\s+với\s+(?=[A-Z][0-9']*'?[A-Z][0-9']*'?=)",
+            re.UNICODE,
+        ),
+        repl=r"\1 có ",
+        steps=steps,
+        skip_if_cond_or_neg=True,
+        scope="LOCAL_CLAUSE",
+        evidence="prism_dimensions_co_connector",
+    )
+
+    def _repl_chained_eq(m: re.Match[str]) -> str:
+        segs = [m.group(1), m.group(2)]
+        if m.group(3):
+            segs.append(m.group(3))
+        val = m.group(4)
+        # Reject if val looks like another 2-vertex segment (all caps >=2) rather than scalar
+        if re.fullmatch(r"(?:[A-Z][0-9']*'?){2,}", val):
+            return m.group(0)
+        return ", ".join(f"{s} = {val}" for s in segs)
+
+    cur, pos_map = _apply_safe_sub(
+        cur, norm0=norm0, pos_map=pos_map,
+        rule_id="VN06_CHAINED_SEGMENT_EQ",
+        pattern=re.compile(
+            r"(?<![A-Z0-9'])([A-Z][0-9']*'?[A-Z][0-9']*'?)\s*=\s*([A-Z][0-9']*'?[A-Z][0-9']*'?)(?:\s*=\s*([A-Z][0-9']*'?[A-Z][0-9']*'?))?\s*=\s*([^\s,.;:!?]+)",
+            re.UNICODE,
+        ),
+        repl=_repl_chained_eq,
+        steps=steps,
+        skip_if_cond_or_neg=True,
+        scope="LOCAL_ENTITY",
+        evidence="expand_chained_segment_equality",
+    )
+
+    def _repl_cube_canh(m: re.Match[str]) -> str:
+        prefix = m.group(1).strip()
+        val = m.group(2)
+        if not re.search(r"(?:\d|a|√)", val):
+            return m.group(0)
+        return f"{prefix} có cạnh bằng {val}"
+
+    cur, pos_map = _apply_safe_sub(
+        cur, norm0=norm0, pos_map=pos_map,
+        rule_id="VN06_CUBE_CANH_BANG",
+        pattern=re.compile(
+            r"((?:hình\s+lập\s+phương|hình\s+vuông|tam\s+giác\s+đều|lục\s+giác\s+đều)\s+(?:[A-Z0-9'.]+))\s+(?:có\s+)?cạnh\s+(?!bên\b|đáy\b|bằng\b|=)([^\s,.;:!?]+)(?!\s*(?:bằng|=))",
+            re.IGNORECASE | re.UNICODE,
+        ),
+        repl=_repl_cube_canh,
+        steps=steps,
+        skip_if_cond_or_neg=True,
+        scope="LOCAL_ENTITY",
+        evidence="explicit_co_canh_bang",
+    )
+
+    # 4. `VN07` clause cleanups (mp(SBC), mặt phẳng SBC, filler 'cạnh bên' before perpendicularity, semicolon split)
+    cur, pos_map = _apply_safe_sub(
+        cur, norm0=norm0, pos_map=pos_map,
+        rule_id="VN07_MP_PAREN",
+        pattern=re.compile(
+            r"(?<![A-Za-zÀ-Ỹà-ỹ])(?:mp\s*\(\s*([A-Z0-9']{3,6})\s*\)|mặt\s+phẳng\s+([A-Z0-9']{3,6}))(?![A-Za-zÀ-Ỹà-ỹ0-9'])",
+            re.IGNORECASE | re.UNICODE,
+        ),
+        repl=r"mặt phẳng (\1\2)",
+        steps=steps,
+        skip_if_cond_or_neg=True,
+        scope="ENTITY_SYNTAX",
+        evidence="canonical_parenthesized_plane",
+    )
+    cur, pos_map = _apply_safe_sub(
+        cur, norm0=norm0, pos_map=pos_map,
+        rule_id="VN07_CANH_BEN_PERP_PREFIX",
+        pattern=re.compile(
+            r",\s*cạnh\s+bên\s+([A-Z][0-9']*'?[A-Z][0-9']*'?)\s*(?:⊥|vuông\s+góc)",
+            re.UNICODE,
+        ),
+        repl=lambda m: f", {m.group(1)} vuông góc" if "⊥" not in m.group(0) else f", {m.group(1)} ⊥",
+        steps=steps,
+        skip_if_cond_or_neg=True,
+        scope="LOCAL_CLAUSE",
+        evidence="remove_redundant_canh_ben_before_perp",
+    )
+
+    def _repl_canh_ben_prism(m: re.Match[str]) -> str:
+        seg = m.group(1)
+        val = m.group(2)
+        s_a, s_b = _sentence_bounds(cur, m.start(), m.end())
+        sent = cur[s_a:s_b]
+        if re.search(r"lăng\s+trụ\s+(?:đứng|đều)|hộp\s+chữ\s+nhật|lập\s+phương", sent, re.IGNORECASE) and _is_matching_prism_lateral_edge(seg, sent):
+            return f"{seg} = {val}"
+        return m.group(0)
+
+    cur, pos_map = _apply_safe_sub(
+        cur, norm0=norm0, pos_map=pos_map,
+        rule_id="VN06_RIGHT_PRISM_CANH_BEN",
+        pattern=re.compile(r"\bcạnh\s+bên\s+([A-Z][0-9']*'?[A-Z][0-9']*'?)\s*=\s*([^\s,.;:!?]+)", re.IGNORECASE | re.UNICODE),
+        repl=_repl_canh_ben_prism,
+        steps=steps,
+        skip_if_cond_or_neg=True,
+        scope="PRISM_LATERAL_EDGE",
+        evidence="right_prism_named_lateral_edge",
+    )
+
+    # 5. `VN08` Construction imperatives ("Lấy trung điểm ...", "Hãy dựng hình chiếu ...")
+    cur, pos_map = _apply_safe_sub(
+        cur, norm0=norm0, pos_map=pos_map,
+        rule_id="VN08_LAY_PT_LA_TRUNG_DIEM",
+        pattern=re.compile(
+            r"\bLấy\s+([A-Z][0-9']*'?)\s+là\s+trung\s+điểm\b",
+            re.UNICODE,
+        ),
+        repl=r"Gọi \1 là trung điểm",
+        steps=steps,
+        skip_if_cond_or_neg=True,
+        scope="AUXILIARY_POINT",
+        evidence="imperative_lay_point_la_trung_diem_to_goi",
+    )
+    cur, pos_map = _apply_safe_sub(
+        cur, norm0=norm0, pos_map=pos_map,
+        rule_id="VN08_LAY_TRUNG_DIEM",
+        pattern=re.compile(
+            r"\bLấy\s+trung\s+điểm\s+(?:của\s+)?(?:(?:đoạn\s+thẳng|đoạn|cạnh)\s+)?([A-Z][0-9']*'?[A-Z][0-9']*'?)\s*(?:,\s*)?(?:rồi|sau\s+đó)?\s*đặt\s+tên\s+(?:nó\s+)?là\s+([A-Z][0-9']*'?)\b",
+            re.IGNORECASE | re.UNICODE,
+        ),
+        repl=r"Gọi \2 là trung điểm của cạnh \1",
+        steps=steps,
+        skip_if_cond_or_neg=True,
+        scope="AUXILIARY_POINT",
+        evidence="imperative_midpoint_to_canonical_goi",
+    )
+
+    def _repl_dung_hinh_chieu(m: re.Match[str]) -> str:
+        src_p = m.group(1)
+        tgt = m.group(2)
+        img_p = m.group(3)
+        tail = m.group(4).strip()
+        if tail:
+            tail = re.sub(r"^(?:và|rồi|sau\s+đó)\s+", "", tail, flags=re.IGNORECASE | re.UNICODE).strip()
+            tail = f" {tail[0].upper()}{tail[1:]}" if tail else ""
+        return f"Gọi {img_p} là hình chiếu vuông góc của {src_p} lên {tgt}.{tail}"
+
+    cur, pos_map = _apply_safe_sub(
+        cur, norm0=norm0, pos_map=pos_map,
+        rule_id="VN08_DUNG_HINH_CHIEU",
+        pattern=re.compile(
+            r"\b(?:Hãy\s+)?(?:dựng|kẻ|hạ)\s+hình\s+chiếu\s+vuông\s+góc\s+của\s+(?:điểm\s+)?([A-Z][0-9']*'?)\s+(?:lên|trên|xuống)\s+(đường\s+thẳng\s+[A-Z0-9']{2,4}|mặt\s+phẳng\s*\([A-Z0-9']{3,6}\))\s*,\s*gọi\s+(?:điểm\s+đó\s+)?là\s+([A-Z][0-9']*'?)(?:\s*,\s*(?:rồi|sau\s+đó)|\s+(?:rồi|sau\s+đó))?\s*(.*?)$",
+            re.IGNORECASE | re.UNICODE,
+        ),
+        repl=_repl_dung_hinh_chieu,
+        steps=steps,
+        skip_if_cond_or_neg=True,
+        scope="AUXILIARY_POINT",
+        evidence="imperative_projection_to_canonical_goi",
+    )
+    return cur, pos_map
+
+
+def _apply_v3_post_closure(
+    cur: str,
+    *,
+    norm0: str,
+    pos_map: list[int],
+    steps: list[VerifiedNormalizationStep],
+) -> tuple[str, list[int]]:
+    """Post-v2 AXO HYBRID /9 closure rules (`VN07`, `VN09`, `VN10`, `VN11`)."""
+    # Resolve remaining bare `mặt đáy` / `đáy` in perpendicularity or angle-to-base when base is unique
+    base_lbl = _implicit_solid_base_in_sentence(cur, use_v2=True)
+    m_sol_all = _SOLID_TOKEN_RE.search(cur)
+    solid_lbl = m_sol_all.group(0) if m_sol_all else None
+    if base_lbl:
+        cur, pos_map = _apply_safe_sub(
+            cur, norm0=norm0, pos_map=pos_map,
+            rule_id="VN06_IMPLICIT_BASE_LABEL_SHAPE",
+            pattern=re.compile(
+                r"\bđáy\s+(hình\s+(?:vuông|chữ\s+nhật|thoi|bình\s+hành)|tam\s+giác(?:\s+(?:vuông|đều|cân|vuông\s+cân))?)\b(?!\s+[A-Z])",
+                re.UNICODE,
+            ),
+            repl=rf"đáy {base_lbl} là \1",
+            steps=steps,
+            skip_if_cond_or_neg=True,
+            scope="SOLID_BASE",
+            evidence="bind_unique_solid_base_label_to_shape",
+        )
+        cur, pos_map = _apply_safe_sub(
+            cur, norm0=norm0, pos_map=pos_map,
+            rule_id="VN07_IMPLICIT_MAT_DAY_PERP",
+            pattern=re.compile(
+                r"(?i:\bvuông\s+góc\s+(?:với\s+)?(?:mặt\s+đáy|đáy)\b)(?!\s*\(?[A-Z])",
+                re.UNICODE,
+            ),
+            repl=f"vuông góc với ({base_lbl})",
+            steps=steps,
+            skip_if_cond_or_neg=True,
+            scope="SOLID_BASE",
+            evidence="resolve_unique_base_in_perpendicular",
+        )
+        cur, pos_map = _apply_safe_sub(
+            cur, norm0=norm0, pos_map=pos_map,
+            rule_id="VN07_IMPLICIT_MAT_DAY_GOAL",
+            pattern=re.compile(
+                r"((?i:\b(?:và|với|tạo\s+với)\s+))(?i:mặt\s+đáy|đáy)\b(?!\s*\(?[A-Z])",
+                re.UNICODE,
+            ),
+            repl=rf"\1mặt phẳng ({base_lbl})",
+            steps=steps,
+            skip_if_cond_or_neg=True,
+            scope="SOLID_BASE",
+            evidence="resolve_unique_base_in_goal_or_angle",
+        )
+    if solid_lbl:
+        cur, pos_map = _apply_safe_sub(
+            cur, norm0=norm0, pos_map=pos_map,
+            rule_id="VN06_IMPLICIT_VOLUME_SOLID",
+            pattern=re.compile(
+                r"(?i:\b(thể\s+tích\s+(?:khối\s+)?(?:chóp|lăng\s+trụ|hộp|tứ\s+diện)))(?=\s*(?:[.,;?!]|$))",
+                re.UNICODE,
+            ),
+            repl=rf"\1 {solid_lbl}",
+            steps=steps,
+            skip_if_cond_or_neg=True,
+            scope="GOAL_MARKER",
+            evidence="bind_unique_solid_notation_to_volume_goal",
+        )
+    cur, pos_map = _apply_safe_sub(
+        cur, norm0=norm0, pos_map=pos_map,
+        rule_id="VN07_DUONG_CHEO_TO_DUONG_THANG",
+        pattern=re.compile(
+            r"(?i:\bđường\s+chéo\s+)([A-Z][0-9']*'?[A-Z][0-9']*'?)(?=\s*(?:và|với)\s+(?:mặt\s+phẳng|\())",
+            re.UNICODE,
+        ),
+        repl=r"đường thẳng \1",
+        steps=steps,
+        skip_if_cond_or_neg=True,
+        scope="GOAL_MARKER",
+        evidence="diagonal_segment_between_angle_operands",
+    )
+
+    # `VN10` Colloquial goal stems & `VN11` trig goal canonicalization
+    cur, pos_map = _apply_safe_sub(
+        cur, norm0=norm0, pos_map=pos_map,
+        rule_id="VN10_HOI_CACH_MAT_PHANG",
+        pattern=re.compile(
+            r"\bHỏi\s+điểm\s+([A-Z][0-9']*'?)\s+cách\s+mặt\s+phẳng\s*\(([A-Z0-9']{3,6})\)\s+(?:một\s+khoảng\s+)?bằng\s+bao\s+nhiêu\s*\??",
+            re.IGNORECASE | re.UNICODE,
+        ),
+        repl=r"Tính khoảng cách từ điểm \1 đến mặt phẳng (\2).",
+        steps=steps,
+        skip_if_cond_or_neg=True,
+        scope="GOAL_MARKER",
+        evidence="colloquial_cach_to_khoang_cach",
+    )
+    cur, pos_map = _apply_safe_sub(
+        cur, norm0=norm0, pos_map=pos_map,
+        rule_id="VN10_KC_BAO_NHIEU_VAY_A",
+        pattern=re.compile(
+            r"\bkhoảng\s+cách\s+từ\s+([A-Z][0-9']*'?)\s+(?:tới|đến)\s+mặt\s+phẳng\s*\(([A-Z0-9']{3,6})\)\s+(?:là|bằng)\s+bao\s+nhiêu(?:\s+vậy\s+ạ)?\s*\??",
+            re.IGNORECASE | re.UNICODE,
+        ),
+        repl=r"Tính khoảng cách từ \1 đến mặt phẳng (\2).",
+        steps=steps,
+        skip_if_cond_or_neg=True,
+        scope="GOAL_MARKER",
+        evidence="colloquial_toi_bao_nhieu_to_tinh",
+    )
+    cur, pos_map = _apply_safe_sub(
+        cur, norm0=norm0, pos_map=pos_map,
+        rule_id="VN10_TAO_VOI_GOC",
+        pattern=re.compile(
+            r"\bĐường\s+thẳng\s+([A-Z][0-9']*'?[A-Z][0-9']*'?)\s+tạo\s+với\s+mặt\s+phẳng\s*\(([A-Z0-9']{3,6})\)\s+một\s+góc\s+bằng\s+bao\s+nhiêu(?:\s*độ)?\s*\??",
+            re.IGNORECASE | re.UNICODE,
+        ),
+        repl=r"Tính góc giữa đường thẳng \1 và mặt phẳng (\2).",
+        steps=steps,
+        skip_if_cond_or_neg=True,
+        scope="GOAL_MARKER",
+        evidence="colloquial_tao_voi_mot_goc_to_tinh_goc",
+    )
+    cur, pos_map = _apply_safe_sub(
+        cur, norm0=norm0, pos_map=pos_map,
+        rule_id="VN11_COS2_TO_COSIN",
+        pattern=re.compile(
+            r"\bcos(?:\s*²|\s*\^\s*2)\s+(?:của\s+)?góc\s+(?=giữa|tạo\s+bởi)",
+            re.IGNORECASE | re.UNICODE,
+        ),
+        repl="cosin góc ",
+        steps=steps,
+        skip_if_cond_or_neg=True,
+        scope="GOAL_MARKER",
+        evidence="canonical_cos2_question_to_cosin",
+    )
+    cur, pos_map = _apply_safe_sub(
+        cur, norm0=norm0, pos_map=pos_map,
+        rule_id="VN09_SPLIT_ENUM_GOALS",
+        pattern=re.compile(r"\s+[a-d]\)\s*(?=(?:Tính|Tìm|Xác\s+định)\b)", re.UNICODE),
+        repl=" ",
+        steps=steps,
+        skip_if_cond_or_neg=True,
+        scope="MULTI_GOAL",
+        evidence="drop_enumerator_before_standalone_goal",
+    )
+    cur, pos_map = _apply_safe_sub(
+        cur, norm0=norm0, pos_map=pos_map,
+        rule_id="VN09_SPLIT_COORDINATED_GOALS",
+        pattern=re.compile(
+            r"(?:,\s*(?:và|rồi(?:\s+suy\s+ra)?|sau\s+đó)?\s*|\s+(?:rồi(?:\s+suy\s+ra)?|sau\s+đó)\s+)(?=(?:tính|diện\s+tích|khoảng\s+cách|thể\s+tích|góc)\b)",
+            re.IGNORECASE | re.UNICODE,
+        ),
+        repl=lambda m: ". " if "tính" in m.group(0).lower() else ". ",
+        steps=steps,
+        skip_if_cond_or_neg=True,
+        scope="MULTI_GOAL",
+        evidence="split_coordinated_multi_goals",
+    )
+    # Ensure split sentences starting directly with `diện tích`/`khoảng cách`/`thể tích`/`góc` have `Tính `
+    # STRICT GUARD: only when sentence has NO value assignment (`là 60°`, `bằng 2`, `= 3`)!
+    cur, pos_map = _apply_safe_sub(
+        cur, norm0=norm0, pos_map=pos_map,
+        rule_id="VN09_CAPITALIZE_SPLIT_GOALS",
+        pattern=re.compile(
+            r"(\.\s+)(?:tính\s+(?=diện\s+tích|khoảng\s+cách|thể\s+tích|góc|độ\s+dài|[A-Z])|(?![^.]*?(?:\bbằng\b|\blà\b|=)\s*[^\s.]*(?:\d|°|√|\ba\b))(diện\s+tích\s+tam\s+giác|khoảng\s+cách\s+từ|thể\s+tích\s+|góc\s+giữa))",
+            re.IGNORECASE | re.UNICODE,
+        ),
+        repl=lambda m: f". Tính {m.group(2)}" if m.group(2) else ". Tính ",
+        steps=steps,
+        skip_if_cond_or_neg=True,
+        scope="MULTI_GOAL",
+        evidence="ensure_explicit_tinh_on_split_goals",
+    )
+    # Expand shorthand `Tính SC`, `Tính BD'` (protect `SC²`, `SA+SB`, etc.)
+    cur, pos_map = _apply_safe_sub(
+        cur, norm0=norm0, pos_map=pos_map,
+        rule_id="VN09_SHORTHAND_TINH_SEG",
+        pattern=re.compile(
+            r"\bTính\s+([A-Z][0-9']*'?[A-Z][0-9']*'?)(?=\s*(?:[.,;?!]|$))(?![²^0-9])",
+            re.UNICODE,
+        ),
+        repl=r"Tính độ dài đoạn \1",
+        steps=steps,
+        skip_if_cond_or_neg=True,
+        scope="GOAL_MARKER",
+        evidence="expand_shorthand_tinh_segment_to_length",
+    )
+
+    # Resolve unambiguous 2-line anaphora ("hai đường thẳng đó", "Ngoài ra, hai đường thẳng này hợp với nhau một góc bao nhiêu?")
+    m_two_lines = re.search(
+        r"hai\s+đường\s+thẳng\s+([A-Z][0-9']*'?[A-Z][0-9']*'?)\s+và\s+([A-Z][0-9']*'?[A-Z][0-9']*'?)",
+        cur,
+        re.IGNORECASE | re.UNICODE,
+    )
+    if m_two_lines:
+        l1, l2 = m_two_lines.group(1), m_two_lines.group(2)
+        cur, pos_map = _apply_safe_sub(
+            cur, norm0=norm0, pos_map=pos_map,
+            rule_id="VN09_ANAPHORA_TWO_LINES_GOALS",
+            pattern=re.compile(
+                r"(?:Ngoài\s+ra\s*,\s*)?hai\s+đường\s+thẳng\s+(?:đó|này)\s+hợp\s+với\s+nhau\s+một\s+góc\s+bao\s+nhiêu\s*\??",
+                re.IGNORECASE | re.UNICODE,
+            ),
+            repl=f"Tính góc giữa hai đường thẳng {l1} và {l2}.",
+            steps=steps,
+            skip_if_cond_or_neg=True,
+            scope="ANAPHORA_RESOLUTION",
+            evidence="unique_immediately_preceding_line_pair",
+        )
+        cur, pos_map = _apply_safe_sub(
+            cur, norm0=norm0, pos_map=pos_map,
+            rule_id="VN09_ANAPHORA_TWO_LINES_NAME",
+            pattern=re.compile(r"\bhai\s+đường\s+thẳng\s+(?:đó|này)\b", re.IGNORECASE | re.UNICODE),
+            repl=f"hai đường thẳng {l1} và {l2}",
+            steps=steps,
+            skip_if_cond_or_neg=True,
+            scope="ANAPHORA_RESOLUTION",
+            evidence="unique_immediately_preceding_line_pair",
+        )
+
+    # `VN09` Described centroid / face-center / foot-distance equivalents
+    def _repl_centroid_from_to(m: re.Match[str]) -> str:
+        tri, pt = m.group(1), m.group(2)
+        if pt in re.findall(r"[A-Z][0-9]*'*", tri):
+            return m.group(0)
+        g_lbl = _unused_point_label(cur)
+        return f"Gọi {g_lbl} là trọng tâm tam giác {tri}. Tính độ dài đoạn {g_lbl}{pt}"
+
+    def _repl_centroid_to_from(m: re.Match[str]) -> str:
+        pt, tri = m.group(1), m.group(2)
+        if pt in re.findall(r"[A-Z][0-9]*'*", tri):
+            return m.group(0)
+        g_lbl = _unused_point_label(cur)
+        return f"Gọi {g_lbl} là trọng tâm tam giác {tri}. Tính độ dài đoạn {pt}{g_lbl}"
+
+    cur, pos_map = _apply_safe_sub(
+        cur, norm0=norm0, pos_map=pos_map,
+        rule_id="VN09_CENTROID_DISTANCE_TO_NAMED",
+        pattern=re.compile(
+            r"\bTính\s+khoảng\s+cách\s+từ\s+trọng\s+tâm\s+(?:của\s+)?tam\s+giác\s+([A-Z0-9']{3,6})\s+(?:đến|tới)\s+(?:(?:đỉnh|điểm)\s+)?([A-Z][0-9']*'?)\b",
+            re.IGNORECASE | re.UNICODE,
+        ),
+        repl=_repl_centroid_from_to,
+        steps=steps,
+        skip_if_cond_or_neg=True,
+        scope="DERIVED_POINT",
+        evidence="introduce_fresh_named_centroid_for_distance",
+    )
+    cur, pos_map = _apply_safe_sub(
+        cur, norm0=norm0, pos_map=pos_map,
+        rule_id="VN09_CENTROID_DISTANCE_TO_NAMED_REV",
+        pattern=re.compile(
+            r"\bTính\s+khoảng\s+cách\s+từ\s+(?:(?:đỉnh|điểm)\s+)?([A-Z][0-9']*'?)\s+(?:đến|tới)\s+trọng\s+tâm\s+(?:của\s+)?tam\s+giác\s+([A-Z0-9']{3,6})\b",
+            re.IGNORECASE | re.UNICODE,
+        ),
+        repl=_repl_centroid_to_from,
+        steps=steps,
+        skip_if_cond_or_neg=True,
+        scope="DERIVED_POINT",
+        evidence="introduce_fresh_named_centroid_for_distance",
+    )
+
+    if re.search(r"lăng\s+trụ\s+(?:đứng|đều)|hộp\s+chữ\s+nhật|lập\s+phương", cur, re.IGNORECASE):
+        def _repl_face_center(m: re.Match[str]) -> str:
+            pt = m.group(1)
+            face = m.group(2)
+            verts = re.findall(r"[A-Z][0-9]*'*", face)
+            if len(verts) != 4:
+                return m.group(0)
+            o_lbl = _unused_point_label(cur, ("O", "I", "K", "P", "Q"))
+            return f"Gọi {o_lbl} là trung điểm của cạnh {verts[0]}{verts[2]}. Tính độ dài đoạn {pt}{o_lbl}"
+
+        cur, pos_map = _apply_safe_sub(
+            cur, norm0=norm0, pos_map=pos_map,
+            rule_id="VN09_RIGHT_PRISM_FACE_CENTER",
+            pattern=re.compile(
+                r"(?i:\bTính\s+khoảng\s+cách\s+từ\s+(?:(?:đỉnh|điểm)\s+)?)([A-Z][0-9']*'?)(?i:\s+(?:đến|tới)\s+tâm\s+(?:của\s+)?mặt\s+bên\s+)((?:[A-Z][0-9]*'*){4})(?![A-Za-zÀ-Ỹà-ỹ0-9'])",
+                re.UNICODE,
+            ),
+            repl=_repl_face_center,
+            steps=steps,
+            skip_if_cond_or_neg=True,
+            scope="DERIVED_POINT",
+            evidence="center_of_rectangular_side_face_is_diagonal_midpoint",
+        )
+
+    cur, pos_map = _apply_safe_sub(
+        cur, norm0=norm0, pos_map=pos_map,
+        rule_id="VN09_PROJECTION_FOOT_DISTANCE",
+        pattern=re.compile(
+            r"\bTính\s+độ\s+dài\s+đoạn(?:\s+thẳng)?\s+nối\s+([A-Z][0-9']*'?)\s+với\s+chân\s+đường\s+vuông\s+góc\s+hạ\s+từ\s+\1\s+(?:xuống|lên)\s+mặt\s+phẳng\s*\(([A-Z0-9']{3,6})\)",
+            re.IGNORECASE | re.UNICODE,
+        ),
+        repl=r"Tính khoảng cách từ \1 đến mặt phẳng (\2)",
+        steps=steps,
+        skip_if_cond_or_neg=True,
+        scope="GOAL_MARKER",
+        evidence="distance_to_orthogonal_foot_equals_point_plane_distance",
+    )
+    # Clean stray double punctuation like `..`
+    cur, pos_map = _apply_safe_sub(
+        cur, norm0=norm0, pos_map=pos_map,
+        rule_id="VN06_CLEAN_DOUBLE_PUNCT",
+        pattern=re.compile(r"\.\s*\."),
+        repl=".",
+        steps=steps,
+        scope="TYPOGRAPHY",
+        evidence="deduplicate_sentence_period",
+    )
+    return cur, pos_map
+
+
 def normalize_for_slm_grounding(
     raw_text: str,
     *,
@@ -285,11 +921,17 @@ def normalize_for_slm_grounding(
 ) -> VerifiedNormalizationResult:
     """Apply conservative, span-audited Vietnamese geometry surface canonicalization.
 
-    Pass ``normalizer_version="v1"`` to reproduce the frozen AXO HYBRID /6 rule table
-    exact-for-exact in ablation comparisons; defaults to ``"v2"`` (AXO HYBRID /7 closure).
+    Pass ``normalizer_version="v1"`` for frozen AXO HYBRID /6, ``"v2"`` (default)
+    for AXO HYBRID /7, or ``"v3"`` for AXO HYBRID /9 deterministic language closure.
     """
-    use_v2 = str(normalizer_version or "v2").strip().lower() not in ("v1", "1", "slm-verified-normalizer/1")
-    out_ver = SLM_VERIFIED_NORMALIZER_VERSION if use_v2 else SLM_VERIFIED_NORMALIZER_V1_VERSION
+    norm_req = str(normalizer_version or "v2").strip().lower()
+    use_v3 = norm_req in ("v3", "3", SLM_VERIFIED_NORMALIZER_V3_VERSION)
+    use_v2 = use_v3 or (norm_req not in ("v1", "1", SLM_VERIFIED_NORMALIZER_V1_VERSION))
+    out_ver = (
+        SLM_VERIFIED_NORMALIZER_V3_VERSION
+        if use_v3
+        else (SLM_VERIFIED_NORMALIZER_VERSION if use_v2 else SLM_VERIFIED_NORMALIZER_V1_VERSION)
+    )
 
     norm0 = normalize_problem_text(raw_text or "")
     steps: list[VerifiedNormalizationStep] = []
@@ -320,6 +962,9 @@ def normalize_for_slm_grounding(
 
     cur = norm0
     pos_map = list(range(len(norm0) + 1))
+
+    if use_v3:
+        cur, pos_map = _apply_v3_pre_closure(cur, norm0=norm0, pos_map=pos_map, steps=steps)
 
     # VN01: Whitespace inside parens / around punctuation / explicit degree word
     cur, pos_map = _apply_safe_sub(
@@ -922,6 +1567,9 @@ def normalize_for_slm_grounding(
         evidence="compact_goal_noun_phrase",
     )
 
+    if use_v3:
+        cur, pos_map = _apply_v3_post_closure(cur, norm0=norm0, pos_map=pos_map, steps=steps)
+
     return VerifiedNormalizationResult(
         normalizer_version=out_ver,
         original_text=raw_text or "",
@@ -935,6 +1583,7 @@ def normalize_for_slm_grounding(
 
 __all__ = [
     "SLM_VERIFIED_NORMALIZER_V1_VERSION",
+    "SLM_VERIFIED_NORMALIZER_V3_VERSION",
     "SLM_VERIFIED_NORMALIZER_VERSION",
     "VerifiedNormalizationResult",
     "VerifiedNormalizationStep",

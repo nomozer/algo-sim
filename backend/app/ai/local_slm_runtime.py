@@ -33,9 +33,12 @@ if os.name == "nt":
 
 
 LOCAL_SLM_RUNTIME_VERSION = "local-slm-runtime/3"
+LOCAL_SLM_RUNTIME_V9_VERSION = "local-slm-runtime/4"
 LOCAL_SLM_CACHE_NAMESPACE = "HYBRID_V7_LOCAL_SLM"
+LOCAL_SLM_CACHE_V9_NAMESPACE = "HYBRID_V9_LOCAL_SLM"
 DEFAULT_LOCAL_SLM_MODEL_KEY = "qwen3-0.6b-q4_k_m"
 FINETUNED_LOCAL_SLM_MODEL_KEY = "qwen3-0.6b-axo-v7-q4_k_m"
+V9_LOCAL_SLM_MODEL_KEY = "qwen3-0.6b-axo-v9-q4_k_m"
 COMPARATOR_LOCAL_SLM_MODEL_KEY = "qwen2.5-0.5b-instruct-q4_k_m"
 DEFAULT_LOCAL_SLM_CTX_SIZE = 2048
 DEFAULT_LOCAL_SLM_MAX_TOKENS = 512
@@ -120,6 +123,21 @@ LOCAL_SLM_MODELS: dict[str, LocalSlmModelSpec] = {
         quantization="Q4_K_M",
         supports_thinking=True,
     ),
+    "qwen3-0.6b-axo-v9-q4_k_m": LocalSlmModelSpec(
+        model_key="qwen3-0.6b-axo-v9-q4_k_m",
+        role="finetuned",
+        repo_id="local/Qwen3-0.6B-AxoV9-LoRA-Merged",
+        revision="c1899de289a04d12100db370d81485cdf75e47ca+axo-v9-lora",
+        filename="Qwen3-0.6B-AxoV9-Q4_K_M.gguf",
+        url="",
+        size_bytes=396704736,
+        sha256="73f1484b08b97ed2a1f44e32bcf6610210c7fda51567c4cd0a03d98dffc6cc35",
+        license="Apache-2.0",
+        family="qwen3",
+        param_count_b=0.6,
+        quantization="Q4_K_M",
+        supports_thinking=True,
+    ),
     "qwen2.5-0.5b-instruct-q4_k_m": LocalSlmModelSpec(
         model_key="qwen2.5-0.5b-instruct-q4_k_m",
         role="comparator",
@@ -151,12 +169,56 @@ class LocalSlmRuntimeError(RuntimeError):
         self.status_code = int(status_code)
 
 
+ACTIVE_MODEL_STATE_FILENAME = "active_model.json"
+
+
+def read_active_local_slm_model_key(cache_dir: str | Path | None = None) -> str | None:
+    path = resolve_local_slm_cache_dir(cache_dir) / ACTIVE_MODEL_STATE_FILENAME
+    if not path.is_file():
+        return None
+    try:
+        payload = json.loads(path.read_text(encoding="utf-8"))
+    except Exception:
+        return None
+    candidate = str(payload.get("model_key") or "").strip().lower() if isinstance(payload, dict) else ""
+    if candidate in LOCAL_SLM_MODELS:
+        return candidate
+    return None
+
+
+def write_active_local_slm_model_key(
+    model_key: str,
+    *,
+    reason: str = "",
+    cache_dir: str | Path | None = None,
+) -> Path:
+    spec = resolve_local_slm_model_spec(model_key)
+    root = resolve_local_slm_cache_dir(cache_dir)
+    root.mkdir(parents=True, exist_ok=True)
+    target = root / ACTIVE_MODEL_STATE_FILENAME
+    tmp = root / f".{ACTIVE_MODEL_STATE_FILENAME}.{os.getpid()}.tmp"
+    payload = {
+        "schema": "axo-local-slm-active-model/1",
+        "model_key": spec.model_key,
+        "sha256": spec.sha256,
+        "reason": str(reason or "").strip(),
+        "updated_at_utc": time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime()),
+    }
+    tmp.write_text(json.dumps(payload, indent=2, ensure_ascii=False) + "\n", encoding="utf-8")
+    os.replace(tmp, target)
+    return target
+
+
 def resolve_local_slm_model_spec(model_key: str | None = None) -> LocalSlmModelSpec:
     raw = str(model_key or os.getenv("LOCAL_SLM_MODEL") or "").strip().lower()
     if raw in {"", "default", "primary"}:
         raw = DEFAULT_LOCAL_SLM_MODEL_KEY
     elif raw in {"finetuned", "v7", "axo-v7"}:
         raw = FINETUNED_LOCAL_SLM_MODEL_KEY
+    elif raw in {"v9", "axo-v9", "v9-default"}:
+        raw = V9_LOCAL_SLM_MODEL_KEY
+    elif raw in {"active", "v9-active"}:
+        raw = read_active_local_slm_model_key() or V9_LOCAL_SLM_MODEL_KEY
     elif raw == "comparator":
         raw = COMPARATOR_LOCAL_SLM_MODEL_KEY
     spec = LOCAL_SLM_MODELS.get(raw)
@@ -767,6 +829,10 @@ class LocalSlmRuntime:
             str(ctx_size),
             "-t",
             str(threads),
+            "-b",
+            "512",
+            "-ub",
+            "512",
             "-np",
             "1",
             "--jinja",
@@ -1196,6 +1262,7 @@ atexit.register(shutdown_global_local_slm_runtimes)
 
 
 __all__ = [
+    "ACTIVE_MODEL_STATE_FILENAME",
     "COMPARATOR_LOCAL_SLM_MODEL_KEY",
     "DEFAULT_LOCAL_SLM_CTX_SIZE",
     "DEFAULT_LOCAL_SLM_MAX_QUEUE",
@@ -1207,8 +1274,10 @@ __all__ = [
     "FINETUNED_LOCAL_SLM_MODEL_KEY",
     "LLAMA_CPP_RUNTIME_SPEC",
     "LOCAL_SLM_CACHE_NAMESPACE",
+    "LOCAL_SLM_CACHE_V9_NAMESPACE",
     "LOCAL_SLM_MODELS",
     "LOCAL_SLM_RUNTIME_VERSION",
+    "LOCAL_SLM_RUNTIME_V9_VERSION",
     "LlamaCppRuntimeSpec",
     "LocalSlmExtractionCache",
     "LocalSlmInferenceResult",
@@ -1216,13 +1285,16 @@ __all__ = [
     "LocalSlmRuntime",
     "LocalSlmRuntimeError",
     "ProvisionedLocalSlm",
+    "V9_LOCAL_SLM_MODEL_KEY",
     "build_local_slm_cache_identity",
     "ensure_local_slm_provisioned",
     "get_process_memory_info",
     "get_shared_local_slm_extraction_cache",
     "get_shared_local_slm_runtime",
+    "read_active_local_slm_model_key",
     "resolve_default_threads",
     "resolve_local_slm_cache_dir",
     "resolve_local_slm_model_spec",
     "shutdown_global_local_slm_runtimes",
+    "write_active_local_slm_model_key",
 ]

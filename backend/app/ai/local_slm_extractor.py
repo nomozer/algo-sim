@@ -17,6 +17,7 @@ import hashlib
 import json
 import os
 import re
+import threading
 import time
 from typing import Any
 
@@ -33,6 +34,8 @@ from app.ai.local_slm_runtime import (
     DEFAULT_LOCAL_SLM_MAX_TOKENS,
     DEFAULT_LOCAL_SLM_MODEL_KEY,
     LOCAL_SLM_CACHE_NAMESPACE,
+    LOCAL_SLM_CACHE_V9_NAMESPACE,
+    LOCAL_SLM_RUNTIME_V9_VERSION,
     LOCAL_SLM_RUNTIME_VERSION,
     LocalSlmInferenceResult,
     LocalSlmRuntime,
@@ -44,6 +47,7 @@ from app.ai.local_slm_runtime import (
 )
 from app.ai.slm_verified_normalizer import (
     SLM_VERIFIED_NORMALIZER_V1_VERSION,
+    SLM_VERIFIED_NORMALIZER_V3_VERSION,
     SLM_VERIFIED_NORMALIZER_VERSION,
     VerifiedNormalizationResult,
     _CONDITIONAL_MARKER_RE,
@@ -59,15 +63,19 @@ from app.simulation.geometry.expression import ExprParseError, parse_quantity_ex
 from app.simulation.geometry_functions import engine, planner, registry
 
 LOCAL_SLM_EXTRACTOR_VERSION = "local-slm-extractor/3"
+LOCAL_SLM_EXTRACTOR_V9_VERSION = "local-slm-extractor/4"
 SLM_COMPACT_SCHEMA_VERSION = "slm-compact-clause/1"
 SLM_GROUNDING_VALIDATOR_VERSION = "slm-grounding-validator/3"
+SLM_GROUNDING_VALIDATOR_V9_VERSION = "slm-grounding-validator/4"
 SLM_GROUNDING_ENVELOPE_VERSION = "slm-grounding-envelope/3"
+SLM_GROUNDING_ENVELOPE_V9_VERSION = "slm-grounding-envelope/4"
 DEFAULT_COMPACT_SLM_MAX_TOKENS = 320
 DEFAULT_COMPACT_SLM_CTX_SIZE = 2048
 
 SUPPORTED_SLM_STRATEGIES = ("compact_clause", "compact_clause_per_clause", "minimal_ops", "direct_wire")
 DEFAULT_LOCAL_SLM_STRATEGY = "compact_clause"
-SUPPORTED_CLOSURE_MODES = ("v6", "v7")
+V9_CLOSURE_MODE = "v9"
+SUPPORTED_CLOSURE_MODES = ("v6", "v7", "v9")
 DEFAULT_CLOSURE_MODE = "v7"
 
 _INJECTION_PATTERNS: tuple[re.Pattern[str], ...] = (
@@ -118,7 +126,7 @@ _GOAL_MARKERS_RE = re.compile(
     re.IGNORECASE | re.UNICODE,
 )
 _GOAL_VERB_RE = re.compile(
-    r"(?:\b(?:tính|tìm|xác\s+định|hỏi|cho\s+biết|yêu\s+cầu|bao\s+nhiêu)\b|\?)",
+    r"(?:\b(?:tính|tìm|xác\s+định|hỏi|cho\s+biết|yêu\s+cầu|bao\s+nhiêu|bằng\s+mấy|dài\s+bao\s+nhiêu|rộng\s+bao\s+nhiêu|cao\s+bao\s+nhiêu)\b|\?)",
     re.IGNORECASE | re.UNICODE,
 )
 
@@ -449,6 +457,7 @@ def select_clean_quote(
 ) -> str:
     """Pick the tightest verbatim substring of `norm_text` carrying all required tokens."""
     use_v7 = closure_mode != "v6"
+    use_v9 = closure_mode == V9_CLOSURE_MODE
     req = [t for t in required_tokens if t]
     contig_req = (
         [
@@ -491,7 +500,11 @@ def select_clean_quote(
         ok = True
         for tok in req:
             if re.fullmatch(r"[A-Z][0-9]*'*", tok):
-                if tok not in cand_pts and tok not in cand:
+                if use_v9:
+                    if tok not in cand_pts:
+                        ok = False
+                        break
+                elif tok not in cand_pts and tok not in cand:
                     ok = False
                     break
             elif tok.lower() not in cand.lower():
@@ -984,7 +997,7 @@ def _convert_goal(
         seg = ga if gtype in ("length", "length_ratio") or (gtype == "distance" and len(ga) == 2 and not gb) else []
         line = ga if (gtype == "angle" and len(ga) == 2) or (gtype == "distance" and len(ga) == 2 and len(gb) >= 2) else (gb if gtype in ("distance", "angle") and len(gb) == 2 and len(ga) != 2 else [])
         line2 = gb if len(ga) == 2 and len(gb) == 2 else []
-        plane = gb if len(gb) >= 3 and len(ga) < 3 else (ga if gtype in ("distance", "angle") and len(ga) >= 3 and len(gb) < 3 else [])
+        plane = gb if len(gb) >= 3 and len(ga) < 3 else (ga if gtype in ("distance", "angle") and len(ga) >= 3 else [])
         plane2 = gb if len(ga) >= 3 and len(gb) >= 3 else []
         poly = ga if gtype in ("area", "area_ratio") else []
         if gtype == "angle" and len(ga) >= 3 and len(gb) == 2:
@@ -1069,13 +1082,13 @@ def _convert_goal(
         target = {}
         if len(line) == 2 and len(plane) >= 3:
             target = {"line": line, "plane": plane}
-            quote_tokens = [*line, *plane]
+            quote_tokens = [*line, *plane, "".join(line), "".join(plane)]
         elif len(line) == 2 and len(line2) == 2:
             target = {"line1": line, "line2": line2}
-            quote_tokens = [*line, *line2]
+            quote_tokens = [*line, *line2, "".join(line), "".join(line2)]
         elif len(plane) >= 3 and len(plane2) >= 3:
             target = {"plane1": plane, "plane2": plane2}
-            quote_tokens = [*plane, *plane2]
+            quote_tokens = [*plane, *plane2, "".join(plane), "".join(plane2)]
         else:
             return None, "INVALID_ANGLE_GOAL_TARGET"
         mg = {
@@ -1623,6 +1636,7 @@ def build_compact_grammar_for_context(
 ) -> str:
     """Build a per-problem, clause-scoped, arity-safe whitespace-free GBNF grammar over exact source literals."""
     use_v7 = closure_mode != "v6"
+    use_v9 = closure_mode == V9_CLOSURE_MODE
     active_clauses = clause_subset if clause_subset is not None else ctx.clauses
     target_cids = [str(c.clause_id) for c in active_clauses]
     target_cid_set = {c.clause_id for c in active_clauses}
@@ -1677,13 +1691,17 @@ def build_compact_grammar_for_context(
         for e in ctx.entities:
             if e.kind != "poly" or cid not in e.clause_ids:
                 continue
-            # Only include base polygons in a clause if explicitly referenced outside solid notation or "đáy" is present
-            if e.label in base_polys_from_solids and "đáy" not in clow:
+            # Only include base polygons in a clause if explicitly referenced outside solid notation, "đáy" is present, or v9 cube/box clause
+            allow_implicit_solid_base = (
+                "đáy" in clow
+                or (use_v9 and ("hình lập phương" in clow or "hình hộp chữ nhật" in clow))
+            )
+            if e.label in base_polys_from_solids and not allow_implicit_solid_base:
                 if not re.search(rf"(?<![A-Z0-9'.]){re.escape(e.label)}(?![A-Z0-9'])", cl.text):
                     continue
             if e.label not in c_polys:
                 c_polys.append(e.label)
-        if "đáy" in clow:
+        if "đáy" in clow or (use_v9 and ("hình lập phương" in clow or "hình hộp chữ nhật" in clow)):
             for bp in base_polys_from_solids:
                 if bp not in c_polys:
                     c_polys.append(bp)
@@ -1909,6 +1927,9 @@ def build_compact_grammar_for_context(
                 if _cue("midpoint"):
                     lines.append(rf'{pfx}mid ::= "{{\"c\":{cid},\"p\":\"mid\",\"pt\":" {pfx}pt ",\"a\":" {pfx}seg "}}"')
                     c_rels.append(f"{pfx}mid")
+                if use_v9 and c_tris and _cue("centroid"):
+                    lines.append(rf'{pfx}cent ::= "{{\"c\":{cid},\"p\":\"cent\",\"pt\":" {pfx}pt ",\"a\":" {pfx}tri "}}"')
+                    c_rels.append(f"{pfx}cent")
                 if len(c_segs) >= 2 and _cue("intersect_line_line"):
                     lines.append(rf'{pfx}interll ::= "{{\"c\":{cid},\"p\":\"inter_ll\",\"pt\":" {pfx}pt ",\"a\":" {pfx}seg ",\"b\":" {pfx}seg "}}"')
                     c_rels.append(f"{pfx}interll")
@@ -2025,13 +2046,14 @@ def build_compact_grammar_for_context(
             lines.append(f"{gpfx}pt ::= {_gbnf_union(g_pts)}")
 
         g_alts: list[str] = []
+        has_dist_cue_g = any(w in glow for w in ("khoảng cách", "cách ", "k/c"))
         if all_solid_lbls:
             lines.append(rf'{gpfx}vol ::= "{{\"c\":{cid},\"t\":\"vol\",\"tgt\":" {gpfx}sol "}}"')
             g_alts.append(f"{gpfx}vol")
-        if g_pts and g_polys:
+        if g_pts and g_polys and (not use_v9 or has_dist_cue_g):
             lines.append(rf'{gpfx}dpp ::= "{{\"c\":{cid},\"t\":\"dist_pt_plane\",\"a\":" {gpfx}pt ",\"b\":" {gpfx}poly "}}"')
             g_alts.append(f"{gpfx}dpp")
-        if g_pts and g_segs:
+        if g_pts and g_segs and (not use_v9 or has_dist_cue_g):
             lines.append(rf'{gpfx}dpl ::= "{{\"c\":{cid},\"t\":\"dist_pt_line\",\"a\":" {gpfx}pt ",\"b\":" {gpfx}seg "}}"')
             g_alts.append(f"{gpfx}dpl")
         if g_segs:
@@ -2056,7 +2078,10 @@ def build_compact_grammar_for_context(
 
     if goal_clause_rules:
         lines.append("goalitem ::= " + " | ".join(goal_clause_rules))
-        lines.append('goallistreq ::= goalitem ("," goalitem)?')
+        if use_v9:
+            lines.append('goallistreq ::= goalitem ("," goalitem ("," goalitem ("," goalitem)?)?)?')
+        else:
+            lines.append('goallistreq ::= goalitem ("," goalitem)?')
         lines.append('goallist ::= "" | goallistreq')
     else:
         lines.append('goallist ::= ""')
@@ -2223,8 +2248,8 @@ def build_compact_clause_context(working_text: str) -> CompactClauseContext:
                     _add_entity("seg", f"{lpts[0]}{rpts[0]}", (lpts[0], rpts[0]), cid)
 
         # 1b. Tetrahedron without dot ("tứ diện ABCD")
-        for tm in re.finditer(r"tứ\s+diện(?:\s+đều)?\s+([A-Z][0-9]*'*){4}\b", ctext, re.IGNORECASE | re.UNICODE):
-            pts = re.findall(r"[A-Z][0-9]*'*", tm.group(0))
+        for tm in re.finditer(r"tứ\s+diện(?:\s+đều)?\s+((?:[A-Z][0-9]*'*){4})\b", ctext, re.IGNORECASE | re.UNICODE):
+            pts = re.findall(r"[A-Z][0-9]*'*", tm.group(1))
             if len(pts) == 4 and len(set(pts)) == 4:
                 is_reg = "đều" in tm.group(0).lower()
                 s_lbl = f"{pts[0]}.{''.join(pts[1:])}"
@@ -2351,6 +2376,7 @@ def _select_source_gate_quote(
 ) -> str:
     """Pick a verbatim substring that respects both clause grounding and Registry `_lien_ket_cau`."""
     use_v7 = closure_mode != "v6"
+    use_v9 = closure_mode == V9_CLOSURE_MODE
     req = [t for t in required_tokens if t]
     if not use_v7 and kind in _KEEP_CLAUSE_KINDS and clause_text in working_text:
         return clause_text
@@ -2418,6 +2444,7 @@ def _expand_compact_relation(
 ) -> tuple[list[dict[str, Any]], str | None]:
     """Validate entity/quantity indices + source cues and lower into typed-fact-next/2 premises."""
     use_v7 = closure_mode != "v6"
+    use_v9 = closure_mode == V9_CLOSURE_MODE
     cid = rel.get("c")
     pcode = str(rel.get("p") or "").strip()
     if pcode not in _COMPACT_TO_V5_KIND:
@@ -2804,6 +2831,20 @@ def _expand_compact_relation(
                 return [], "INVALID_PREMISE_ARGS:segment_length"
         else:
             seg_ab, seg_ba = f"{seg[0]}{seg[1]}", f"{seg[1]}{seg[0]}"
+            is_v9_cube_side = bool(
+                use_v9
+                and solid_info is not None
+                and "lập phương" in clow
+                and "cạnh" in clow
+                and qty_entry.canon_expr in ctext
+                and set(seg).issubset(set(_parse_solid_vertices("prism", solid_info["notation"])))
+            )
+            if is_v9_cube_side and seg_ab not in ctext and seg_ba not in ctext:
+                q_cube = solid_info["quote"] if solid_info.get("quote") else ctext
+                b_verts = _solid_base_vertices(solid_info)
+                out_premises.append({"kind": "regular_polygon", "args": {"vertices": b_verts, "side": qty_entry.canon_expr}, "quote": q_cube, "solid_id": sid})
+                out_premises.append({"kind": "segment_length", "args": {"segment": seg, "value": qty_entry.canon_expr}, "quote": q_cube, "solid_id": sid})
+                return out_premises, None
             if not is_reg_lat and seg_ab not in ctext and seg_ba not in ctext:
                 return [], f"UNGROUNDED_SEGMENT_PAIR:{seg_ab}"
             if not is_reg_lat:
@@ -2962,10 +3003,24 @@ def _convert_compact_goal(
                 return list(e.vertices), None
         return [], f"OUT_OF_RANGE_GOAL_ENTITY:{slot}={sval}"
 
-    ga, err_a = _ent_pts("tgt" if gcode == "vol" else "a", ("solid", "point", "seg", "poly"))
+    pref_a: tuple[str, ...] = ("solid", "point", "seg", "poly")
+    pref_b: tuple[str, ...] = ("poly", "seg", "point")
+    if gcode in ("ang_pp", "area", "aratio"):
+        pref_a = ("poly", "seg", "point")
+        pref_b = ("poly", "seg", "point")
+    elif gcode in ("len", "ang_ll", "dist_line_line", "lratio"):
+        pref_a = ("seg", "poly", "point")
+        pref_b = ("seg", "poly", "point")
+    elif gcode in ("ang_lp", "dist_line_plane"):
+        pref_a = ("seg", "poly", "point")
+        pref_b = ("poly", "seg", "point")
+    elif gcode in ("dist_pt_plane", "dist_pt_line"):
+        pref_a = ("point", "seg", "poly")
+
+    ga, err_a = _ent_pts("tgt" if gcode == "vol" else "a", pref_a)
     if err_a:
         return None, err_a
-    gb, err_b = _ent_pts("b", ("poly", "seg", "point"))
+    gb, err_b = _ent_pts("b", pref_b)
     if err_b:
         return None, err_b
 
@@ -3012,6 +3067,41 @@ def _premise_dedup_key(prem: dict[str, Any]) -> tuple[Any, ...]:
     return (kind, tuple(norm_items))
 
 
+_STRICT_GOAL_ASK_RE = re.compile(
+    r"(?:\b(?:tính(?!\s+chất)|tìm|xác\s+định|hỏi|bao\s+nhiêu|bằng\s+mấy)\b|\?)",
+    re.IGNORECASE | re.UNICODE,
+)
+
+
+def count_expected_source_goals(ctx: "CompactClauseContext") -> int:
+    """Count distinct explicit goal clauses in `ctx`."""
+    solid_cids = {c for e in ctx.entities if e.kind == "solid" for c in e.clause_ids}
+    count = 0
+    for cl in ctx.clauses:
+        if not _STRICT_GOAL_ASK_RE.search(cl.text):
+            continue
+        # Only count clause containing the solid declaration if it genuinely has a question mark or trailing ask outside premise
+        if cl.clause_id in solid_cids and not _PURE_QUESTION_RE.match(cl.text) and "?" not in cl.text and not re.search(r"\b(?:tính|tìm|bao\s+nhiêu|bằng\s+mấy)\b", cl.text, re.I):
+            continue
+        count += 1
+    return count
+
+
+def classify_multi_goal_status(
+    expected_goal_count: int,
+    grounded_goals: list[dict[str, Any]],
+    unresolved_items: list[dict[str, Any]] | None = None,
+) -> str:
+    """Classify multi-goal completeness cleanly without silent partial-drop serving."""
+    if expected_goal_count <= 1:
+        return "COMPLETE_SINGLE_GOAL" if len(grounded_goals) >= 1 else "INCOMPLETE_EXTRACTION_REFUSED"
+    if len(grounded_goals) >= expected_goal_count:
+        return "COMPLETE_MULTI_GOAL"
+    if unresolved_items:
+        return "PARTIAL_UNSUPPORTED_SUBGOAL_REFUSED"
+    return "INCOMPLETE_EXTRACTION_REFUSED"
+
+
 def validate_and_lower_compact_clause(
     *,
     ctx: CompactClauseContext,
@@ -3020,6 +3110,17 @@ def validate_and_lower_compact_clause(
 ) -> tuple[dict[str, Any] | None, dict[str, Any]]:
     """Deterministically validate compact slot-filled SLM output and lower to `typed-fact-next/2`."""
     use_v7 = closure_mode != "v6"
+    use_v9 = closure_mode == V9_CLOSURE_MODE
+    val_ver = SLM_GROUNDING_VALIDATOR_V9_VERSION if use_v9 else SLM_GROUNDING_VALIDATOR_VERSION
+    if not isinstance(raw_slm_json, dict):
+        return None, {
+            "validator_version": val_ver,
+            "grounding_status": "REJECTED_INVALID_COMPACT_OP",
+            "reason_code": "INVALID_JSON_TYPE",
+            "failure_taxonomy": "GROUNDING_REJECTED",
+            "accepted_ops": [],
+            "rejected_ops": [{"op": "root", "reason": f"EXPECTED_DICT_GOT:{type(raw_slm_json).__name__}"}],
+        }
     accepted_ops: list[dict[str, Any]] = []
     rejected_ops: list[dict[str, str]] = []
 
@@ -3298,9 +3399,25 @@ def validate_and_lower_compact_clause(
             "rejected_ops": rejected_ops or [{"op": "goal", "reason": "NO_GROUNDED_GOAL"}],
         }
 
+    expected_goals = count_expected_source_goals(ctx)
+    mg_status = classify_multi_goal_status(expected_goals, math_goals, unresolved_items)
+
+    if use_v9 and expected_goals >= 2 and len(math_goals) < expected_goals:
+        return None, {
+            "validator_version": val_ver,
+            "grounding_status": "INCOMPLETE_EXTRACTION_REFUSED",
+            "reason_code": "REQUEST_NOT_ANSWERED",
+            "failure_taxonomy": "MULTI_GOAL_INCOMPLETE",
+            "multi_goal_status": mg_status,
+            "expected_goal_count": expected_goals,
+            "extracted_goal_count": len(math_goals),
+            "accepted_ops": accepted_ops,
+            "rejected_ops": rejected_ops or [{"op": "multi_goal", "reason": f"EXTRACTED_{len(math_goals)}_OF_{expected_goals}"}],
+        }
+
     if rejected_ops:
         return None, {
-            "validator_version": SLM_GROUNDING_VALIDATOR_VERSION,
+            "validator_version": val_ver,
             "grounding_status": "REJECTED_INVALID_COMPACT_OP",
             "reason_code": "UNGROUNDED_VALUE",
             "failure_taxonomy": "GROUNDING_REJECTED",
@@ -3322,10 +3439,11 @@ def validate_and_lower_compact_clause(
         "math_goals": math_goals,
     }
     return canon_payload, {
-        "validator_version": SLM_GROUNDING_VALIDATOR_VERSION,
+        "validator_version": val_ver,
         "grounding_status": "GROUNDED_AND_LOWERED",
         "reason_code": None,
         "failure_taxonomy": "NONE",
+        "multi_goal_status": mg_status,
         "accepted_ops": accepted_ops,
         "rejected_ops": [],
     }
@@ -3387,14 +3505,30 @@ def compute_local_slm_capability_identity() -> dict[str, str]:
     }
 
 
+DEFAULT_V9_SLM_MAX_TOKENS = 256
+SUPPORTED_GRAMMAR_MODES = ("gbnf", "retry_on_invalid")
+_V9_INFLIGHT_LOCK = threading.Lock()
+_V9_INFLIGHT_EVENTS: dict[str, threading.Event] = {}
+
+
 def _compact_grounding_policy_version(
     use_verified_normalizer: bool,
     *,
     closure_mode: str = DEFAULT_CLOSURE_MODE,
     normalizer_version: str = "v2",
+    grammar_mode: str = "gbnf",
 ) -> str:
-    norm_id = (SLM_VERIFIED_NORMALIZER_V1_VERSION if normalizer_version == "v1" else SLM_VERIFIED_NORMALIZER_VERSION) if use_verified_normalizer else "none"
-    return f"{SLM_GROUNDING_VALIDATOR_VERSION}|norm={norm_id}|closure={closure_mode}"
+    if not use_verified_normalizer:
+        norm_id = "none"
+    elif normalizer_version == "v1":
+        norm_id = SLM_VERIFIED_NORMALIZER_V1_VERSION
+    elif normalizer_version == "v3":
+        norm_id = SLM_VERIFIED_NORMALIZER_V3_VERSION
+    else:
+        norm_id = SLM_VERIFIED_NORMALIZER_VERSION
+    val_ver = SLM_GROUNDING_VALIDATOR_V9_VERSION if closure_mode == V9_CLOSURE_MODE else SLM_GROUNDING_VALIDATOR_VERSION
+    suffix = f"|gm={grammar_mode}" if closure_mode == V9_CLOSURE_MODE and grammar_mode != "gbnf" else ""
+    return f"{val_ver}|norm={norm_id}|closure={closure_mode}{suffix}"
 
 
 def run_local_slm_extraction(
@@ -3409,6 +3543,7 @@ def run_local_slm_extraction(
     use_verified_normalizer: bool | None = None,
     closure_mode: str | None = None,
     normalizer_version: str | None = None,
+    grammar_mode: str | None = None,
     use_cache: bool = True,
     cache_prompt: bool = True,
 ) -> LocalSlmExtractionResult:
@@ -3419,7 +3554,13 @@ def run_local_slm_extraction(
     eff_closure = str(closure_mode or DEFAULT_CLOSURE_MODE).strip().lower()
     if eff_closure not in SUPPORTED_CLOSURE_MODES:
         eff_closure = DEFAULT_CLOSURE_MODE
-    eff_norm_ver = str(normalizer_version or ("v1" if eff_closure == "v6" else "v2")).strip().lower()
+    is_v9_mode = eff_closure == V9_CLOSURE_MODE
+    eff_grammar_mode = str(grammar_mode or "gbnf").strip().lower()
+    if eff_grammar_mode not in SUPPORTED_GRAMMAR_MODES:
+        eff_grammar_mode = "gbnf"
+    eff_env_ver = SLM_GROUNDING_ENVELOPE_V9_VERSION if is_v9_mode else SLM_GROUNDING_ENVELOPE_VERSION
+    eff_val_ver = SLM_GROUNDING_VALIDATOR_V9_VERSION if is_v9_mode else SLM_GROUNDING_VALIDATOR_VERSION
+    eff_norm_ver = str(normalizer_version or ("v3" if is_v9_mode else ("v1" if eff_closure == "v6" else "v2"))).strip().lower()
     eff_use_norm = (
         (eff_strategy in ("compact_clause", "compact_clause_per_clause"))
         if use_verified_normalizer is None
@@ -3456,11 +3597,13 @@ def run_local_slm_extraction(
     # Phase C: span-audited Verified Normalization (only when enabled)
     norm_res: VerifiedNormalizationResult | None = None
     working_text = norm_raw
+    t_norm0 = time.perf_counter()
     if eff_use_norm:
         norm_res = normalize_for_slm_grounding(norm_raw, normalizer_version=eff_norm_ver)
         working_text = norm_res.canonical_text
         if norm_res.typo_detected:
             prep_ms = round((time.perf_counter() - t_prep0) * 1000.0, 3)
+            norm_ms = round((time.perf_counter() - t_norm0) * 1000.0, 3)
             return LocalSlmExtractionResult(
                 ok=False,
                 strategy=eff_strategy,
@@ -3473,9 +3616,11 @@ def run_local_slm_extraction(
                 reason_detail=f"Conservative ambiguity refusal on diacritic typo: {norm_res.ambiguity_flags}",
                 failure_taxonomy="TYPO_REQUIRES_CONFIRMATION",
                 grounding_envelope={
-                    "envelope_version": SLM_GROUNDING_ENVELOPE_VERSION,
-                    "validator_version": SLM_GROUNDING_VALIDATOR_VERSION,
+                    "envelope_version": eff_env_ver,
+                    "validator_version": eff_val_ver,
                     "strategy": eff_strategy,
+                    "closure_mode": eff_closure,
+                    "normalizer_version": eff_norm_ver,
                     "model_key": spec.model_key,
                     "model_sha256": spec.sha256,
                     "slm_invoked": False,
@@ -3483,12 +3628,15 @@ def run_local_slm_extraction(
                     "failure_taxonomy": "TYPO_REQUIRES_CONFIRMATION",
                     "normalization_provenance": norm_res.to_provenance_dict(),
                 },
-                stage_timings_ms={"preprocessing_ms": prep_ms},
+                stage_timings_ms={"preprocessing_ms": prep_ms, "normalizer_ms": norm_ms},
                 normalization_provenance=norm_res.to_provenance_dict(),
             )
+    normalizer_ms = round((time.perf_counter() - t_norm0) * 1000.0, 3)
 
+    t_lp0 = time.perf_counter()
     local_res = parse_geometry_problem_locally(working_text)
     clauses = index_source_clauses(working_text)
+    local_parser_ms = round((time.perf_counter() - t_lp0) * 1000.0, 3)
     if not clauses:
         return LocalSlmExtractionResult(
             ok=False,
@@ -3502,8 +3650,8 @@ def run_local_slm_extraction(
             reason_detail="Empty problem text after normalization.",
             failure_taxonomy="EMPTY_INPUT",
             grounding_envelope={
-                "envelope_version": SLM_GROUNDING_ENVELOPE_VERSION,
-                "validator_version": SLM_GROUNDING_VALIDATOR_VERSION,
+                "envelope_version": eff_env_ver,
+                "validator_version": eff_val_ver,
                 "strategy": eff_strategy,
                 "model_key": spec.model_key,
                 "model_sha256": spec.sha256,
@@ -3524,11 +3672,11 @@ def run_local_slm_extraction(
         schema_ver = "slm-direct-wire/1"
         schema_hash = hashlib.sha256(json.dumps(DIRECT_WIRE_JSON_SCHEMA, sort_keys=True).encode("utf-8")).hexdigest()
 
-    cache_key, cache_meta = build_local_slm_cache_identity(
+    cache_key, _cache_meta = build_local_slm_cache_identity(
         exact_input_text=norm_raw,
         model_key=spec.model_key,
         model_sha256=spec.sha256,
-        runtime_version=LOCAL_SLM_RUNTIME_VERSION,
+        runtime_version=LOCAL_SLM_RUNTIME_V9_VERSION if is_v9_mode else LOCAL_SLM_RUNTIME_VERSION,
         strategy=eff_strategy,
         schema_version=schema_ver,
         schema_sha256=schema_hash,
@@ -3536,201 +3684,306 @@ def run_local_slm_extraction(
             eff_use_norm,
             closure_mode=eff_closure,
             normalizer_version=eff_norm_ver,
+            grammar_mode=eff_grammar_mode,
         ),
         parser_version=LOCAL_GEOMETRY_PARSER_VERSION,
         capability_identity=compute_local_slm_capability_identity(),
-        namespace=LOCAL_SLM_CACHE_NAMESPACE,
+        namespace=LOCAL_SLM_CACHE_V9_NAMESPACE if is_v9_mode else LOCAL_SLM_CACHE_NAMESPACE,
     )
-    if use_cache and runtime is None:
+    cache_allowed = bool(use_cache and (is_v9_mode or runtime is None))
+
+    def _hit_result(cached_res: LocalSlmExtractionResult, lookup_ms: float) -> LocalSlmExtractionResult:
+        return LocalSlmExtractionResult(
+            ok=cached_res.ok,
+            strategy=cached_res.strategy,
+            model_key=cached_res.model_key,
+            model_sha256=cached_res.model_sha256,
+            norm_text=cached_res.norm_text,
+            wire_payload=cached_res.wire_payload,
+            canonical_payload=cached_res.canonical_payload,
+            reason_code=cached_res.reason_code,
+            reason_detail=cached_res.reason_detail,
+            failure_taxonomy=cached_res.failure_taxonomy,
+            grounding_envelope={**cached_res.grounding_envelope, "cache_hit": True},
+            inference=cached_res.inference,
+            stage_timings_ms={
+                "cache_lookup_ms": lookup_ms,
+                "cache_hit_ms": round((time.perf_counter() - t_prep0) * 1000.0, 3),
+            },
+            normalization_provenance=cached_res.normalization_provenance,
+            cache_hit=True,
+            cache_key=cache_key,
+        )
+
+    t_cl0 = time.perf_counter()
+    inflight_evt: threading.Event | None = None
+    inflight_owner = False
+    if cache_allowed:
         cached_res = get_shared_local_slm_extraction_cache().get(cache_key)
         if cached_res is not None:
-            return LocalSlmExtractionResult(
-                ok=cached_res.ok,
-                strategy=cached_res.strategy,
-                model_key=cached_res.model_key,
-                model_sha256=cached_res.model_sha256,
-                norm_text=cached_res.norm_text,
-                wire_payload=cached_res.wire_payload,
-                canonical_payload=cached_res.canonical_payload,
-                reason_code=cached_res.reason_code,
-                reason_detail=cached_res.reason_detail,
-                failure_taxonomy=cached_res.failure_taxonomy,
-                grounding_envelope={**cached_res.grounding_envelope, "cache_hit": True},
-                inference=cached_res.inference,
-                stage_timings_ms={"cache_hit_ms": round((time.perf_counter() - t_prep0) * 1000.0, 3)},
-                normalization_provenance=cached_res.normalization_provenance,
-                cache_hit=True,
-                cache_key=cache_key,
-            )
+            return _hit_result(cached_res, round((time.perf_counter() - t_cl0) * 1000.0, 3))
+        if is_v9_mode:
+            wait_evt: threading.Event | None = None
+            with _V9_INFLIGHT_LOCK:
+                wait_evt = _V9_INFLIGHT_EVENTS.get(cache_key)
+                if wait_evt is None:
+                    inflight_evt = threading.Event()
+                    _V9_INFLIGHT_EVENTS[cache_key] = inflight_evt
+                    inflight_owner = True
+            if wait_evt is not None:
+                wait_evt.wait(timeout=45.0)
+                cached_after = get_shared_local_slm_extraction_cache().get(cache_key)
+                if cached_after is not None:
+                    return _hit_result(cached_after, round((time.perf_counter() - t_cl0) * 1000.0, 3))
+                with _V9_INFLIGHT_LOCK:
+                    if _V9_INFLIGHT_EVENTS.get(cache_key) is None:
+                        inflight_evt = threading.Event()
+                        _V9_INFLIGHT_EVENTS[cache_key] = inflight_evt
+                        inflight_owner = True
+    cache_lookup_ms = round((time.perf_counter() - t_cl0) * 1000.0, 3)
 
     eff_runtime = runtime or get_shared_local_slm_runtime()
 
-    if eff_strategy in ("compact_clause", "compact_clause_per_clause"):
-        ctx = build_compact_clause_context(working_text)
-        prep_ms = round((time.perf_counter() - t_prep0) * 1000.0, 3)
+    try:
+        if eff_strategy in ("compact_clause", "compact_clause_per_clause"):
+            t_ctx0 = time.perf_counter()
+            ctx = build_compact_clause_context(working_text)
+            clause_context_ms = round((time.perf_counter() - t_ctx0) * 1000.0, 3)
+            prep_ms = round((time.perf_counter() - t_prep0) * 1000.0, 3)
+            eff_max_tok = max_tokens or (DEFAULT_V9_SLM_MAX_TOKENS if is_v9_mode else DEFAULT_COMPACT_SLM_MAX_TOKENS)
 
-        t_pb0 = time.perf_counter()
-        if eff_strategy == "compact_clause":
-            messages = _build_compact_clause_messages(ctx)
-            dyn_grammar = build_compact_grammar_for_context(ctx, closure_mode=eff_closure)
-            prompt_build_ms = round((time.perf_counter() - t_pb0) * 1000.0, 3)
-            inf_res = eff_runtime.chat_completion_json(
-                messages=messages,
-                grammar=dyn_grammar,
-                cache_prompt=cache_prompt,
-                model_key=spec.model_key,
-                ctx_size=DEFAULT_COMPACT_SLM_CTX_SIZE,
-                max_tokens=max_tokens or DEFAULT_COMPACT_SLM_MAX_TOKENS,
-                threads=threads,
-                allow_download=allow_download,
-            )
-            raw_merged = inf_res.parsed_json
-        else:
-            # Per-clause batching ablation: one call per clause, then merge s/r/g/u
-            merged: dict[str, Any] = {"s": None, "r": [], "g": [], "u": []}
-            last_inf: LocalSlmInferenceResult | None = None
-            total_infer_ms = 0.0
-            total_prompt_tok = 0
-            total_comp_tok = 0
-            for cl in ctx.clauses:
-                messages = _build_compact_clause_messages(ctx, clause_subset=[cl])
-                dyn_grammar = build_compact_grammar_for_context(ctx, clause_subset=[cl], closure_mode=eff_closure)
-                inf_i = eff_runtime.chat_completion_json(
+            t_pb0 = time.perf_counter()
+            grammar_build_ms = 0.0
+            grammar_retry_used = False
+            grammar_retry_ms = 0.0
+            if eff_strategy == "compact_clause":
+                messages = _build_compact_clause_messages(ctx)
+                prompt_build_ms = round((time.perf_counter() - t_pb0) * 1000.0, 3)
+                t_gb0 = time.perf_counter()
+                dyn_grammar = build_compact_grammar_for_context(ctx, closure_mode=eff_closure)
+                grammar_build_ms = round((time.perf_counter() - t_gb0) * 1000.0, 3)
+                if eff_grammar_mode == "retry_on_invalid":
+                    inf_res = eff_runtime.chat_completion_json(
+                        messages=messages,
+                        json_schema={"type": "object"},
+                        schema_name="compact_clause_loose",
+                        cache_prompt=cache_prompt,
+                        model_key=spec.model_key,
+                        ctx_size=DEFAULT_COMPACT_SLM_CTX_SIZE,
+                        max_tokens=eff_max_tok,
+                        threads=threads,
+                        allow_download=allow_download,
+                    )
+                    raw_merged = inf_res.parsed_json
+                else:
+                    inf_res = eff_runtime.chat_completion_json(
+                        messages=messages,
+                        grammar=dyn_grammar,
+                        cache_prompt=cache_prompt,
+                        model_key=spec.model_key,
+                        ctx_size=DEFAULT_COMPACT_SLM_CTX_SIZE,
+                        max_tokens=eff_max_tok,
+                        threads=threads,
+                        allow_download=allow_download,
+                    )
+                    raw_merged = inf_res.parsed_json
+            else:
+                # Per-clause batching ablation: one call per clause, then merge s/r/g/u
+                merged: dict[str, Any] = {"s": None, "r": [], "g": [], "u": []}
+                last_inf: LocalSlmInferenceResult | None = None
+                total_infer_ms = 0.0
+                total_prompt_tok = 0
+                total_comp_tok = 0
+                for cl in ctx.clauses:
+                    messages = _build_compact_clause_messages(ctx, clause_subset=[cl])
+                    t_gb0 = time.perf_counter()
+                    dyn_grammar = build_compact_grammar_for_context(ctx, clause_subset=[cl], closure_mode=eff_closure)
+                    grammar_build_ms += (time.perf_counter() - t_gb0) * 1000.0
+                    inf_i = eff_runtime.chat_completion_json(
+                        messages=messages,
+                        grammar=dyn_grammar,
+                        cache_prompt=cache_prompt,
+                        model_key=spec.model_key,
+                        ctx_size=DEFAULT_COMPACT_SLM_CTX_SIZE,
+                        max_tokens=eff_max_tok,
+                        threads=threads,
+                        allow_download=allow_download,
+                    )
+                    last_inf = inf_i
+                    total_infer_ms += inf_i.inference_time_ms
+                    total_prompt_tok += inf_i.prompt_tokens or 0
+                    total_comp_tok += inf_i.completion_tokens or 0
+                    pj = inf_i.parsed_json
+                    if merged["s"] is None and pj.get("s") is not None:
+                        merged["s"] = pj["s"]
+                    merged["r"].extend(pj.get("r") or ())
+                    merged["g"].extend(pj.get("g") or ())
+                    merged["u"].extend(pj.get("u") or ())
+                grammar_build_ms = round(grammar_build_ms, 3)
+                prompt_build_ms = round((time.perf_counter() - t_pb0) * 1000.0 - grammar_build_ms, 3)
+                assert last_inf is not None
+                inf_res = LocalSlmInferenceResult(
+                    raw_content=json.dumps(merged, ensure_ascii=False),
+                    parsed_json=merged,
+                    model_key=last_inf.model_key,
+                    model_sha256=last_inf.model_sha256,
+                    runtime_version=last_inf.runtime_version,
+                    server_load_time_ms=last_inf.server_load_time_ms,
+                    inference_time_ms=round(total_infer_ms, 2),
+                    prompt_tokens=total_prompt_tok,
+                    completion_tokens=total_comp_tok,
+                    thinking_stripped=last_inf.thinking_stripped,
+                    server_restarted=last_inf.server_restarted,
+                    python_rss_mib=last_inf.python_rss_mib,
+                    server_rss_mib=last_inf.server_rss_mib,
+                    combined_rss_mib=last_inf.combined_rss_mib,
+                    server_peak_rss_mib=last_inf.server_peak_rss_mib,
+                    threads=last_inf.threads,
+                    ctx_size=last_inf.ctx_size,
+                    queue_wait_ms=last_inf.queue_wait_ms,
+                    prompt_eval_ms=last_inf.prompt_eval_ms,
+                    token_gen_ms=round(total_infer_ms, 2),
+                    tokens_per_sec=last_inf.tokens_per_sec,
+                    cached_prompt_tokens=last_inf.cached_prompt_tokens,
+                    json_decode_ms=last_inf.json_decode_ms,
+                    cache_prompt_enabled=bool(cache_prompt),
+                )
+                raw_merged = merged
+
+            t_val0 = time.perf_counter()
+            canon_payload, val_diag = validate_and_lower_compact_clause(ctx=ctx, raw_slm_json=raw_merged, closure_mode=eff_closure)
+            if (
+                eff_grammar_mode == "retry_on_invalid"
+                and eff_strategy == "compact_clause"
+                and canon_payload is None
+                and val_diag.get("grounding_status") != "REFUSED_UNRESOLVABLE"
+            ):
+                t_ret0 = time.perf_counter()
+                inf_retry = eff_runtime.chat_completion_json(
                     messages=messages,
                     grammar=dyn_grammar,
                     cache_prompt=cache_prompt,
                     model_key=spec.model_key,
                     ctx_size=DEFAULT_COMPACT_SLM_CTX_SIZE,
-                    max_tokens=max_tokens or DEFAULT_COMPACT_SLM_MAX_TOKENS,
+                    max_tokens=eff_max_tok,
                     threads=threads,
                     allow_download=allow_download,
                 )
-                last_inf = inf_i
-                total_infer_ms += inf_i.inference_time_ms
-                total_prompt_tok += inf_i.prompt_tokens or 0
-                total_comp_tok += inf_i.completion_tokens or 0
-                pj = inf_i.parsed_json
-                if merged["s"] is None and pj.get("s") is not None:
-                    merged["s"] = pj["s"]
-                merged["r"].extend(pj.get("r") or ())
-                merged["g"].extend(pj.get("g") or ())
-                merged["u"].extend(pj.get("u") or ())
-            prompt_build_ms = round((time.perf_counter() - t_pb0) * 1000.0, 3)
-            assert last_inf is not None
-            inf_res = LocalSlmInferenceResult(
-                raw_content=json.dumps(merged, ensure_ascii=False),
-                parsed_json=merged,
-                model_key=last_inf.model_key,
-                model_sha256=last_inf.model_sha256,
-                runtime_version=last_inf.runtime_version,
-                server_load_time_ms=last_inf.server_load_time_ms,
-                inference_time_ms=round(total_infer_ms, 2),
-                prompt_tokens=total_prompt_tok,
-                completion_tokens=total_comp_tok,
-                thinking_stripped=last_inf.thinking_stripped,
-                server_restarted=last_inf.server_restarted,
-                python_rss_mib=last_inf.python_rss_mib,
-                server_rss_mib=last_inf.server_rss_mib,
-                combined_rss_mib=last_inf.combined_rss_mib,
-                server_peak_rss_mib=last_inf.server_peak_rss_mib,
-                threads=last_inf.threads,
-                ctx_size=last_inf.ctx_size,
-                queue_wait_ms=last_inf.queue_wait_ms,
-                prompt_eval_ms=last_inf.prompt_eval_ms,
-                token_gen_ms=round(total_infer_ms, 2),
-                tokens_per_sec=last_inf.tokens_per_sec,
-                cached_prompt_tokens=last_inf.cached_prompt_tokens,
-                json_decode_ms=last_inf.json_decode_ms,
-                cache_prompt_enabled=bool(cache_prompt),
-            )
-            raw_merged = merged
+                canon_payload, val_diag = validate_and_lower_compact_clause(
+                    ctx=ctx, raw_slm_json=inf_retry.parsed_json, closure_mode=eff_closure
+                )
+                grammar_retry_used = True
+                grammar_retry_ms = round((time.perf_counter() - t_ret0) * 1000.0, 3)
+                inf_res = inf_retry
+            val_lower_ms = round((time.perf_counter() - t_val0) * 1000.0, 3)
 
-        t_val0 = time.perf_counter()
-        canon_payload, val_diag = validate_and_lower_compact_clause(ctx=ctx, raw_slm_json=raw_merged, closure_mode=eff_closure)
-        val_lower_ms = round((time.perf_counter() - t_val0) * 1000.0, 3)
+            wire_normalize_ms = 0.0
+            if canon_payload is not None:
+                t_wn0 = time.perf_counter()
+                wire_payload = to_wire_typed_fact_next_v2(canon_payload)
+                norm_canon = _normalize_transport_payload(wire_payload)
+                wire_normalize_ms = round((time.perf_counter() - t_wn0) * 1000.0, 3)
+            else:
+                wire_payload = None
+                norm_canon = None
 
-        stage_timings = {
-            "preprocessing_ms": prep_ms,
-            "prompt_build_ms": prompt_build_ms,
-            "queue_wait_ms": inf_res.queue_wait_ms,
-            "prompt_eval_ms": inf_res.prompt_eval_ms,
-            "token_gen_ms": inf_res.token_gen_ms,
-            "json_decode_ms": inf_res.json_decode_ms,
-            "grounding_and_lowering_ms": val_lower_ms,
-            "server_load_time_ms": inf_res.server_load_time_ms,
-            "slm_inference_ms": inf_res.inference_time_ms,
-            "prompt_tokens": inf_res.prompt_tokens,
-            "completion_tokens": inf_res.completion_tokens,
-            "cached_prompt_tokens": inf_res.cached_prompt_tokens,
-            "tokens_per_sec": inf_res.tokens_per_sec,
-        }
-        norm_prov = norm_res.to_provenance_dict() if norm_res is not None else None
-        envelope = {
-            "envelope_version": SLM_GROUNDING_ENVELOPE_VERSION,
-            "validator_version": SLM_GROUNDING_VALIDATOR_VERSION,
-            "schema_version": SLM_COMPACT_SCHEMA_VERSION,
-            "strategy": eff_strategy,
-            "closure_mode": eff_closure,
-            "normalizer_version": eff_norm_ver if eff_use_norm else "none",
-            "model_key": inf_res.model_key,
-            "model_sha256": inf_res.model_sha256,
-            "slm_invoked": True,
-            "cache_hit": False,
-            "cache_key": cache_key,
-            "parser_status": local_res.status,
-            "grounding_status": val_diag.get("grounding_status"),
-            "accepted_ops": val_diag.get("accepted_ops", []),
-            "rejected_ops": val_diag.get("rejected_ops", []),
-            "failure_taxonomy": val_diag.get("failure_taxonomy", "NONE"),
-            "normalization_provenance": norm_prov,
-            "stage_timings_ms": stage_timings,
-            "server_load_time_ms": inf_res.server_load_time_ms,
-            "inference_time_ms": inf_res.inference_time_ms,
-            "combined_rss_mib": inf_res.combined_rss_mib,
-        }
-        if canon_payload is None:
-            res_out = LocalSlmExtractionResult(
-                ok=False,
-                strategy=eff_strategy,
-                model_key=inf_res.model_key,
-                model_sha256=inf_res.model_sha256,
-                norm_text=working_text,
-                wire_payload=None,
-                canonical_payload=None,
-                reason_code=val_diag.get("reason_code") or "AMBIGUOUS_FACT",
-                reason_detail=str(val_diag.get("rejected_ops") or val_diag.get("grounding_status")),
-                failure_taxonomy=str(val_diag.get("failure_taxonomy") or "GROUNDING_REJECTED"),
-                grounding_envelope=envelope,
-                inference=inf_res,
-                stage_timings_ms=stage_timings,
-                normalization_provenance=norm_prov,
-                cache_hit=False,
-                cache_key=cache_key,
-            )
-        else:
-            wire_payload = to_wire_typed_fact_next_v2(canon_payload)
-            norm_canon = _normalize_transport_payload(wire_payload)
-            res_out = LocalSlmExtractionResult(
-                ok=True,
-                strategy=eff_strategy,
-                model_key=inf_res.model_key,
-                model_sha256=inf_res.model_sha256,
-                norm_text=working_text,
-                wire_payload=wire_payload,
-                canonical_payload=norm_canon,
-                reason_code=None,
-                reason_detail=None,
-                failure_taxonomy="NONE",
-                grounding_envelope=envelope,
-                inference=inf_res,
-                stage_timings_ms=stage_timings,
-                normalization_provenance=norm_prov,
-                cache_hit=False,
-                cache_key=cache_key,
-            )
-        if use_cache and runtime is None:
-            get_shared_local_slm_extraction_cache().put(cache_key, res_out)
-        return res_out
+            stage_timings = {
+                "preprocessing_ms": prep_ms,
+                "normalizer_ms": normalizer_ms,
+                "local_parser_ms": local_parser_ms,
+                "cache_lookup_ms": cache_lookup_ms,
+                "clause_context_ms": clause_context_ms,
+                "prompt_build_ms": prompt_build_ms,
+                "grammar_build_ms": grammar_build_ms,
+                "queue_wait_ms": inf_res.queue_wait_ms,
+                "prompt_eval_ms": inf_res.prompt_eval_ms,
+                "token_gen_ms": inf_res.token_gen_ms,
+                "json_decode_ms": inf_res.json_decode_ms,
+                "grounding_and_lowering_ms": val_lower_ms,
+                "wire_normalize_ms": wire_normalize_ms,
+                "server_load_time_ms": inf_res.server_load_time_ms,
+                "slm_inference_ms": inf_res.inference_time_ms,
+                "grammar_retry_ms": grammar_retry_ms,
+                "grammar_retry_used": grammar_retry_used,
+                "prompt_tokens": inf_res.prompt_tokens,
+                "completion_tokens": inf_res.completion_tokens,
+                "cached_prompt_tokens": inf_res.cached_prompt_tokens,
+                "tokens_per_sec": inf_res.tokens_per_sec,
+            }
+            norm_prov = norm_res.to_provenance_dict() if norm_res is not None else None
+            envelope = {
+                "envelope_version": eff_env_ver,
+                "validator_version": eff_val_ver,
+                "schema_version": SLM_COMPACT_SCHEMA_VERSION,
+                "strategy": eff_strategy,
+                "closure_mode": eff_closure,
+                "grammar_mode": eff_grammar_mode,
+                "grammar_retry_used": grammar_retry_used,
+                "normalizer_version": eff_norm_ver if eff_use_norm else "none",
+                "model_key": inf_res.model_key,
+                "model_sha256": inf_res.model_sha256,
+                "slm_invoked": True,
+                "cache_hit": False,
+                "cache_key": cache_key,
+                "parser_status": local_res.status,
+                "grounding_status": val_diag.get("grounding_status"),
+                "multi_goal_status": val_diag.get("multi_goal_status"),
+                "accepted_ops": val_diag.get("accepted_ops", []),
+                "rejected_ops": val_diag.get("rejected_ops", []),
+                "failure_taxonomy": val_diag.get("failure_taxonomy", "NONE"),
+                "normalization_provenance": norm_prov,
+                "stage_timings_ms": stage_timings,
+                "server_load_time_ms": inf_res.server_load_time_ms,
+                "inference_time_ms": inf_res.inference_time_ms,
+                "combined_rss_mib": inf_res.combined_rss_mib,
+            }
+            if canon_payload is None:
+                res_out = LocalSlmExtractionResult(
+                    ok=False,
+                    strategy=eff_strategy,
+                    model_key=inf_res.model_key,
+                    model_sha256=inf_res.model_sha256,
+                    norm_text=working_text,
+                    wire_payload=None,
+                    canonical_payload=None,
+                    reason_code=val_diag.get("reason_code") or "AMBIGUOUS_FACT",
+                    reason_detail=str(val_diag.get("rejected_ops") or val_diag.get("grounding_status")),
+                    failure_taxonomy=str(val_diag.get("failure_taxonomy") or "GROUNDING_REJECTED"),
+                    grounding_envelope=envelope,
+                    inference=inf_res,
+                    stage_timings_ms=stage_timings,
+                    normalization_provenance=norm_prov,
+                    cache_hit=False,
+                    cache_key=cache_key,
+                )
+            else:
+                res_out = LocalSlmExtractionResult(
+                    ok=True,
+                    strategy=eff_strategy,
+                    model_key=inf_res.model_key,
+                    model_sha256=inf_res.model_sha256,
+                    norm_text=working_text,
+                    wire_payload=wire_payload,
+                    canonical_payload=norm_canon,
+                    reason_code=None,
+                    reason_detail=None,
+                    failure_taxonomy="NONE",
+                    grounding_envelope=envelope,
+                    inference=inf_res,
+                    stage_timings_ms=stage_timings,
+                    normalization_provenance=norm_prov,
+                    cache_hit=False,
+                    cache_key=cache_key,
+                )
+            if cache_allowed:
+                get_shared_local_slm_extraction_cache().put(cache_key, res_out)
+            return res_out
+    finally:
+        if inflight_owner and inflight_evt is not None:
+            with _V9_INFLIGHT_LOCK:
+                if _V9_INFLIGHT_EVENTS.get(cache_key) is inflight_evt:
+                    _V9_INFLIGHT_EVENTS.pop(cache_key, None)
+            inflight_evt.set()
 
     # Legacy /5 strategies preserved verbatim for Config B & ablation reproducibility
     if eff_strategy == "direct_wire":
@@ -3916,6 +4169,7 @@ class LocalSlmExtractor:
         use_verified_normalizer: bool | None = None,
         closure_mode: str | None = None,
         normalizer_version: str | None = None,
+        grammar_mode: str | None = None,
         use_cache: bool = True,
     ) -> None:
         self.model_key = resolve_local_slm_model_spec(model_key).model_key
@@ -3926,6 +4180,7 @@ class LocalSlmExtractor:
         self.use_verified_normalizer = use_verified_normalizer
         self.closure_mode = closure_mode
         self.normalizer_version = normalizer_version
+        self.grammar_mode = grammar_mode
         self.use_cache = bool(use_cache)
         self.last_result: LocalSlmExtractionResult | None = None
 
@@ -3940,6 +4195,7 @@ class LocalSlmExtractor:
             use_verified_normalizer=self.use_verified_normalizer,
             closure_mode=self.closure_mode,
             normalizer_version=self.normalizer_version,
+            grammar_mode=self.grammar_mode,
             use_cache=self.use_cache,
         )
         self.last_result = res
@@ -3954,20 +4210,27 @@ __all__ = [
     "DEFAULT_CLOSURE_MODE",
     "DEFAULT_COMPACT_SLM_CTX_SIZE",
     "DEFAULT_COMPACT_SLM_MAX_TOKENS",
+    "DEFAULT_V9_SLM_MAX_TOKENS",
     "DEFAULT_LOCAL_SLM_STRATEGY",
     "DIRECT_WIRE_JSON_SCHEMA",
     "IndexedClause",
+    "LOCAL_SLM_EXTRACTOR_V9_VERSION",
     "LOCAL_SLM_EXTRACTOR_VERSION",
     "LocalSlmExtractionResult",
     "LocalSlmExtractor",
     "MINIMAL_OPS_JSON_SCHEMA",
     "SLM_COMPACT_SCHEMA_VERSION",
+    "SLM_GROUNDING_ENVELOPE_V9_VERSION",
     "SLM_GROUNDING_ENVELOPE_VERSION",
+    "SLM_GROUNDING_VALIDATOR_V9_VERSION",
     "SLM_GROUNDING_VALIDATOR_VERSION",
     "SUPPORTED_CLOSURE_MODES",
+    "SUPPORTED_GRAMMAR_MODES",
     "SUPPORTED_SLM_STRATEGIES",
+    "V9_CLOSURE_MODE",
     "build_compact_clause_context",
     "build_compact_grammar_for_context",
+    "classify_multi_goal_status",
     "compute_local_slm_capability_identity",
     "detect_prompt_injection",
     "extract_geometry_points",

@@ -61,6 +61,10 @@ class MissingVisionKeyError(RuntimeError):
     code = "MISSING_API_KEY"
 
 
+class LocalOnlyCloudVisionDisabledError(RuntimeError):
+    code = "LOCAL_ONLY_CLOUD_VISION_DISABLED"
+
+
 @dataclass(frozen=True)
 class UnifiedCandidateItem:
     candidate_id: str
@@ -127,7 +131,11 @@ class UnifiedPrepareOutcome:
         return out
 
 
-def _require_vision_key(api_key: str | None) -> str:
+def _require_vision_key(api_key: str | None, *, local_only: bool = False) -> str:
+    if local_only:
+        raise LocalOnlyCloudVisionDisabledError(
+            "Chế độ chạy hoàn toàn trên máy không gửi ảnh lên dịch vụ đọc ảnh đám mây."
+        )
     if os.getenv("ALLOW_LIVE_AI") == "0":
         raise LiveVisionDisabledError("Chế độ trích xuất trực tiếp đang tắt (ALLOW_LIVE_AI=0).")
     if not api_key:
@@ -360,6 +368,7 @@ def _local_ocr_outcome(
     uncropped_bytes: int,
     t0: float,
     vision_allowed: bool,
+    local_only: bool = False,
 ) -> UnifiedPrepareOutcome:
     """Kết quả tuyến OCR local: `ready` (đã xác minh, 0 AI) hoặc `needs_confirmation` (học sinh xác nhận từng chỗ)."""
     from app.ingestion.local_ocr_route import review_items
@@ -471,7 +480,9 @@ def _local_ocr_outcome(
         msg = "Máy đã đọc đề từ ảnh — em kiểm tra nhanh rồi bấm Xác nhận."
         reason = "LOCAL_OCR_REVIEW_REQUIRED"
     if not vision_allowed:
-        prov_common["vision_fallback"] = "NOT_AVAILABLE_LIVE_AI_DISABLED_OR_NO_KEY"
+        prov_common["vision_fallback"] = (
+            "DISABLED_IN_LOCAL_ONLY_MODE" if local_only else "NOT_AVAILABLE_LIVE_AI_DISABLED_OR_NO_KEY"
+        )
     return _done(
         status="needs_confirmation",
         problem_text=target_text,
@@ -494,6 +505,7 @@ async def _process_normalized_visual_page(
     page_number: int | None,
     extra_provenance: dict[str, Any],
     t0: float,
+    local_only: bool = False,
 ) -> UnifiedPrepareOutcome:
     """Xử lý một trang ảnh chuẩn hóa qua phát hiện vùng CV nhẹ -> VLM khi cần -> hậu kiểm."""
     region_sel_id: str | None = None
@@ -644,7 +656,7 @@ async def _process_normalized_visual_page(
     #    và OCR local chưa xác minh được đề.
     from app.ingestion.local_ocr_route import run_local_ocr_route
 
-    vision_allowed = os.getenv("ALLOW_LIVE_AI") != "0" and bool(api_key)
+    vision_allowed = (not local_only) and os.getenv("ALLOW_LIVE_AI") != "0" and bool(api_key)
     local_rec = await run_in_threadpool(run_local_ocr_route, region_res.prepared_image.data, region_res.prepared_figure_bboxes())
     if local_rec is not None:
         if local_rec.get("ok"):
@@ -664,12 +676,13 @@ async def _process_normalized_visual_page(
                     uncropped_bytes=uncropped_bytes,
                     t0=t0,
                     vision_allowed=vision_allowed,
+                    local_only=local_only,
                 )
         else:
             prov_common["local_ocr"] = {"ok": False, "reason": local_rec.get("reason")}
 
     # 3b. Gọi VLM trên ảnh vùng đề đã chuẩn bị (có fallback tự động 1 lần về ảnh gốc nếu vùng crop bị thiếu).
-    vkey = _require_vision_key(api_key)
+    vkey = _require_vision_key(api_key, local_only=local_only)
     vlm_calls = 0
     vlm_bytes = 0
     used_fallback = region_res.used_fallback_full_image
@@ -911,6 +924,7 @@ async def _prepare_single_attachment(
     cache_version: str | None = None,
     predecoded: tuple[bytes, Literal["image", "pdf", "docx"], str] | None = None,
     prenormalized_image: NormalizedImage | None = None,
+    local_only: bool = False,
 ) -> UnifiedPrepareOutcome:
     """Xử lý chuẩn bị trên một tệp đính kèm đơn lẻ."""
     t0 = time.perf_counter()
@@ -945,6 +959,7 @@ async def _prepare_single_attachment(
             page_number=None,
             extra_provenance={"source_mime": actual_mime},
             t0=t0,
+            local_only=local_only,
         )
 
     # ── NHÁNH B & C: PDF (TEXT LAYER HOẶC SCAN) ──────────────────────────────
@@ -1094,6 +1109,7 @@ async def _prepare_single_attachment(
                 "rasterized_pages": [target_sp.page_number],
             },
             t0=t0,
+            local_only=local_only,
         )
 
     # ── NHÁNH D: DOCX (PARAGRAPH + TABLE + OMML + EMBEDDED MEDIA) ────────────
@@ -1145,6 +1161,7 @@ async def _prepare_single_attachment(
                 "docx_image_fallback": True,
             },
             t0=t0,
+            local_only=local_only,
         )
 
     if not docx_res.full_text.strip():
@@ -1577,6 +1594,7 @@ async def prepare_unified_input(
     selected_candidate_id: str | None = None,
     api_key: str | None = None,
     cache_version: str | None = None,
+    local_only: bool = False,
 ) -> UnifiedPrepareOutcome:
     """Điểm vào thống nhất cho 1 hoặc nhiều tệp đính kèm khi người học bấm "Dựng hình"."""
     t0 = time.perf_counter()
@@ -1593,6 +1611,7 @@ async def prepare_unified_input(
             selected_candidate_id=selected_candidate_id,
             api_key=api_key,
             cache_version=cache_version,
+            local_only=local_only,
         )
         return _stamp_single_outcome(single_out, attachment_id="att-1", request_id=request_id)
 
@@ -1606,6 +1625,7 @@ async def prepare_unified_input(
                 selected_candidate_id=selected_candidate_id,
                 api_key=api_key,
                 cache_version=cache_version,
+                local_only=local_only,
             )
             return _stamp_single_outcome(single_out, attachment_id="att-1", request_id=request_id)
         raise InputPrepareRejected("EMPTY_ATTACHMENT_PAYLOAD", "Danh sách tệp đính kèm trống.")
@@ -1669,6 +1689,7 @@ async def prepare_unified_input(
             api_key=api_key,
             cache_version=cache_version,
             predecoded=decoded_cache[only_id],
+            local_only=local_only,
         )
         return _stamp_single_outcome(single_out, attachment_id=only_id, request_id=request_id)
 
@@ -1732,6 +1753,7 @@ async def prepare_unified_input(
             cache_version=cache_version,
             predecoded=decoded_cache[aid],
             prenormalized_image=prenorm_img,
+            local_only=local_only,
         )
 
         m = out.metrics

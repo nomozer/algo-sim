@@ -1592,6 +1592,8 @@ def route_text_input_local_slm(
     use_verified_normalizer: bool | None = None,
     closure_mode: str | None = None,
     normalizer_version: str | None = None,
+    grammar_mode: str | None = None,
+    max_tokens: int | None = None,
     threads: int | None = None,
     use_cache: bool = True,
     cache_prompt: bool = True,
@@ -1603,9 +1605,13 @@ def route_text_input_local_slm(
 ) -> AdaptiveRouteOutcome:
     """Local-first router with local sub-1B SLM fallback (`external_ai_calls = 0`)."""
     from app.ai.local_slm_extractor import (
+        LOCAL_SLM_EXTRACTOR_V9_VERSION,
         LOCAL_SLM_EXTRACTOR_VERSION,
         SLM_COMPACT_SCHEMA_VERSION,
+        SLM_GROUNDING_VALIDATOR_V9_VERSION,
         SLM_GROUNDING_VALIDATOR_VERSION,
+        V9_CLOSURE_MODE,
+        detect_prompt_injection,
         resolve_local_slm_strategy,
         run_local_slm_extraction,
     )
@@ -1615,12 +1621,107 @@ def route_text_input_local_slm(
         LocalSlmRuntimeError,
         resolve_local_slm_model_spec,
     )
+    from app.ai.slm_verified_normalizer import normalize_for_slm_grounding
 
     spec = resolve_local_slm_model_spec(model_key)
     eff_strategy = resolve_local_slm_strategy(strategy)
     eff_policy = policy or hybrid_offline_policy({"HYBRID_ROUTE_D_PREVIEW": "1"})
+    is_v9_closure = str(closure_mode or "").strip().lower() == V9_CLOSURE_MODE or str(normalizer_version or "").strip().lower() in ("v3", "3", "slm-verified-normalizer/3")
+    eff_closure_arg = V9_CLOSURE_MODE if (is_v9_closure and not closure_mode) else closure_mode
+    eff_norm_arg = "v3" if (is_v9_closure and not normalizer_version) else normalizer_version
 
     t0 = time.perf_counter()
+    if is_v9_closure:
+        inj = detect_prompt_injection(problem_text or "")
+        if inj is not None:
+            tel_inj = AdaptiveRouteTelemetry(
+                router_version=ADAPTIVE_INPUT_ROUTER_VERSION,
+                parser_version=LOCAL_GEOMETRY_PARSER_VERSION,
+                input_kind=input_kind,
+                local_parse_status="REJECTED_PROMPT_INJECTION",
+                chosen_route="LOCAL_SLM_SECURITY_REFUSAL",
+                fallback_reason="PROMPT_INJECTION_REJECTED",
+                gemini_vision_calls=previous_vision_calls,
+                gemini_typed_fact_calls=0,
+                total_provider_calls=previous_vision_calls,
+                local_parse_ms=0.0,
+                vision_ms=previous_vision_ms,
+                typed_fact_ai_ms=0.0,
+                hybrid_execution_ms=0.0,
+                total_ms=(time.perf_counter() - t0) * 1000.0 + previous_vision_ms,
+                source_coverage={},
+                cache_key_metadata={},
+            )
+            resp_inj = {
+                "schema_version": ROUTE_D_SIMULATION_V4_SCHEMA_VERSION,
+                "route_d": {
+                    "status": "REFUSED",
+                    "adapter_version": ADAPTER_V4_VERSION,
+                    "schema_version": ROUTE_D_SIMULATION_V4_SCHEMA_VERSION,
+                    "extraction_mode": "LOCAL_SLM_SECURITY_REFUSED",
+                    "local_parser_version": LOCAL_GEOMETRY_PARSER_VERSION,
+                    "adaptive_router_version": ADAPTIVE_INPUT_ROUTER_VERSION,
+                    "adaptive_telemetry": tel_inj.to_dict(),
+                    "slm_grounding_envelope": {"grounding_status": "REJECTED_PROMPT_INJECTION", "slm_invoked": False},
+                    "refusal": {"code": "UNGROUNDED_VALUE", "reason_code": "UNGROUNDED_VALUE", "failure_taxonomy": "PROMPT_INJECTION_REJECTED"},
+                },
+                "envelope": {"status": "refused", "reason_code": "UNGROUNDED_VALUE", "failure_kind": "PROMPT_INJECTION_REJECTED"},
+            }
+            return AdaptiveRouteOutcome(
+                status="REFUSED",
+                response=resp_inj,
+                receipt={"schema": "adaptive-input-route-receipt/1", "status": "REFUSED", "code": "UNGROUNDED_VALUE", "adaptive_telemetry": tel_inj.to_dict()},
+                telemetry=tel_inj,
+                local_parse_result=None,
+                cache_key=None,
+            )
+
+    v3_norm = None
+    if is_v9_closure and use_verified_normalizer is not False:
+        v3_norm = normalize_for_slm_grounding(problem_text or "", normalizer_version=str(eff_norm_arg or "v3"))
+        if v3_norm.typo_detected:
+            tel_typo = AdaptiveRouteTelemetry(
+                router_version=ADAPTIVE_INPUT_ROUTER_VERSION,
+                parser_version=LOCAL_GEOMETRY_PARSER_VERSION,
+                input_kind=input_kind,
+                local_parse_status="REJECTED_TYPO_AMBIGUITY",
+                chosen_route="LOCAL_SLM_SECURITY_REFUSAL",
+                fallback_reason="TYPO_REQUIRES_CONFIRMATION",
+                gemini_vision_calls=previous_vision_calls,
+                gemini_typed_fact_calls=0,
+                total_provider_calls=previous_vision_calls,
+                local_parse_ms=0.0,
+                vision_ms=previous_vision_ms,
+                typed_fact_ai_ms=0.0,
+                hybrid_execution_ms=0.0,
+                total_ms=(time.perf_counter() - t0) * 1000.0 + previous_vision_ms,
+                source_coverage={},
+                cache_key_metadata={},
+            )
+            resp_typo = {
+                "schema_version": ROUTE_D_SIMULATION_V4_SCHEMA_VERSION,
+                "route_d": {
+                    "status": "REFUSED",
+                    "adapter_version": ADAPTER_V4_VERSION,
+                    "schema_version": ROUTE_D_SIMULATION_V4_SCHEMA_VERSION,
+                    "extraction_mode": "LOCAL_SLM_TYPO_REFUSED",
+                    "local_parser_version": LOCAL_GEOMETRY_PARSER_VERSION,
+                    "adaptive_router_version": ADAPTIVE_INPUT_ROUTER_VERSION,
+                    "adaptive_telemetry": tel_typo.to_dict(),
+                    "slm_grounding_envelope": {"grounding_status": "REJECTED_TYPO_AMBIGUITY", "slm_invoked": False, "normalization_provenance": v3_norm.to_provenance_dict()},
+                    "refusal": {"code": "AMBIGUOUS_FACT", "reason_code": "AMBIGUOUS_FACT", "failure_taxonomy": "TYPO_REQUIRES_CONFIRMATION"},
+                },
+                "envelope": {"status": "refused", "reason_code": "AMBIGUOUS_FACT", "failure_kind": "TYPO_REQUIRES_CONFIRMATION"},
+            }
+            return AdaptiveRouteOutcome(
+                status="REFUSED",
+                response=resp_typo,
+                receipt={"schema": "adaptive-input-route-receipt/1", "status": "REFUSED", "code": "AMBIGUOUS_FACT", "adaptive_telemetry": tel_typo.to_dict()},
+                telemetry=tel_typo,
+                local_parse_result=None,
+                cache_key=None,
+            )
+
     det = route_text_input(
         problem_text,
         allow_live_ai=False,
@@ -1638,9 +1739,29 @@ def route_text_input_local_slm(
     elif not _should_escalate_to_compact_slm(det, cleaned_input):
         return det
 
+    if is_v9_closure and v3_norm is not None and v3_norm.changed and v3_norm.canonical_text != cleaned_input:
+        det_v3 = route_text_input(
+            v3_norm.canonical_text,
+            allow_live_ai=False,
+            input_kind=input_kind,
+            previous_vision_calls=previous_vision_calls,
+            previous_vision_ms=previous_vision_ms,
+            model=f"local-slm:{spec.model_key}",
+            policy=eff_policy,
+            timeout_seconds=timeout_seconds,
+        )
+        if det_v3.telemetry.chosen_route != "FAIL_CLOSED_LIVE_AI_DISABLED" and not _should_escalate_to_compact_slm(det_v3, v3_norm.canonical_text):
+            rd_v3 = dict((det_v3.response or {}).get("route_d") or {})
+            rd_v3["normalizer_provenance"] = v3_norm.to_provenance_dict()
+            rd_v3["extraction_mode"] = "LOCAL_PARSER_AFTER_V3_NORMALIZER"
+            det_v3.response["route_d"] = rd_v3
+            if isinstance(det_v3.receipt, dict):
+                det_v3.receipt["normalizer_provenance"] = v3_norm.to_provenance_dict()
+            return det_v3
+
     local_res = det.local_parse_result
     assert local_res is not None
-    norm_text = local_res.payload["problem_text"] if local_res.payload else cleaned_input
+    norm_text = (v3_norm.canonical_text if (is_v9_closure and v3_norm is not None) else (local_res.payload["problem_text"] if local_res.payload else cleaned_input))
     local_ms = det.telemetry.local_parse_ms
     cov_dict = local_res.source_coverage.to_dict()
 
@@ -1652,9 +1773,11 @@ def route_text_input_local_slm(
             runtime=runtime,
             allow_download=allow_download,
             threads=threads,
+            max_tokens=max_tokens,
             use_verified_normalizer=use_verified_normalizer,
-            closure_mode=closure_mode,
-            normalizer_version=normalizer_version,
+            closure_mode=eff_closure_arg,
+            normalizer_version=eff_norm_arg,
+            grammar_mode=grammar_mode,
             use_cache=use_cache,
             cache_prompt=cache_prompt,
         )
@@ -1721,13 +1844,13 @@ def route_text_input_local_slm(
     slm_ms = float(slm_res.inference.inference_time_ms if slm_res.inference else 0.0)
     is_v6_compact = eff_strategy in ("compact_clause", "compact_clause_per_clause")
     slm_id = {
-        "route": LOCAL_SLM_CACHE_NAMESPACE if is_v6_compact else "HYBRID_V5_LOCAL_SLM",
+        "route": ("HYBRID_V9_LOCAL_SLM" if is_v9_closure else LOCAL_SLM_CACHE_NAMESPACE) if is_v6_compact else "HYBRID_V5_LOCAL_SLM",
         "router_version": ADAPTIVE_INPUT_ROUTER_VERSION,
         "parser_version": LOCAL_GEOMETRY_PARSER_VERSION,
         "runtime_version": LOCAL_SLM_RUNTIME_VERSION,
-        "extractor_version": LOCAL_SLM_EXTRACTOR_VERSION,
+        "extractor_version": LOCAL_SLM_EXTRACTOR_V9_VERSION if is_v9_closure else LOCAL_SLM_EXTRACTOR_VERSION,
         "schema_version": SLM_COMPACT_SCHEMA_VERSION if is_v6_compact else eff_strategy,
-        "grounding_validator_version": SLM_GROUNDING_VALIDATOR_VERSION,
+        "grounding_validator_version": SLM_GROUNDING_VALIDATOR_V9_VERSION if is_v9_closure else SLM_GROUNDING_VALIDATOR_VERSION,
         "model_key": slm_res.model_key,
         "model_sha256": slm_res.model_sha256,
         "strategy": slm_res.strategy,

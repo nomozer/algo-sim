@@ -952,7 +952,17 @@ CACHE_VERSION = "145"
 #: Hai chế độ hợp lệ của kiến trúc chính thức Hybrid `/4` do máy chủ sở hữu:
 #: - `live` (mặc định): trích xuất có cấu trúc qua Gemini (`typed-fact-next/2`) khi cấu hình `GEMINI_API_KEY`.
 #: - `staging-replay`: chạy đường `/4` với kho trích xuất đã ghi (`HYBRID_REPLAY_CORPUS`), đánh dấu mô phỏng tường minh.
-HYBRID_ROUTE_MODES = ("live", "staging-replay", "local-first", "local-slm")
+HYBRID_ROUTE_MODES = (
+    "live",
+    "staging-replay",
+    "local-first",
+    "local-slm",
+    "offline-lab",
+    "local-shadow",
+    "local-only-scoped",
+    "local-only-general",
+)
+LOCAL_ONLY_HYBRID_MODES = ("local-slm", "offline-lab", "local-only-scoped", "local-only-general")
 
 
 def hybrid_route_mode() -> str:
@@ -1114,20 +1124,44 @@ def _cache_lookup(session, key: str, policy_version: str | None = None) -> Simul
 
 @app.get("/api/health")
 def health():
+    from app.ai.hybrid_offline import build_local_ai_ux_descriptor, local_slm_ready_status
+
     with SessionLocal() as session:
         count = session.query(SimulationCache).count()
         patterns = session.query(SimulationPattern).count()
         reuse = read_metrics(session)
-    return {
+    route_mode = hybrid_route_mode()
+    local_stat = local_slm_ready_status(os.environ, route_mode)
+    has_key = bool(os.getenv("GEMINI_API_KEY"))
+    ai_available = (
+        bool(local_stat["localSlmReady"])
+        if local_stat["localOnlyMode"]
+        else (has_key and os.getenv("ALLOW_LIVE_AI") != "0")
+    )
+    payload: dict[str, Any] = {
         "ok": True,
-        "hasKey": bool(os.getenv("GEMINI_API_KEY")),
+        "hasKey": has_key,
         "cachedProblems": count,
         "patterns": patterns,
         "reuse": reuse,
         "db": db_dialect(),
         # M17-RC1 §A — danh tính runtime để phát hiện container chạy code cũ.
         "runtime": runtime_identity(),
+        "routeMode": route_mode,
+        "localOnlyMode": local_stat["localOnlyMode"],
+        "localSlmReady": local_stat["localSlmReady"],
+        "localSlmModel": local_stat["localSlmModel"],
+        "extractionBackend": local_stat["extractionBackend"],
+        "aiAvailable": ai_available,
     }
+    if local_stat["localOnlyMode"]:
+        ux_body = payload if local_stat["localSlmReady"] else {"reason_code": "MODEL_RUNTIME_UNAVAILABLE"}
+        payload["local_ai_ux"] = build_local_ai_ux_descriptor(
+            status_code=200,
+            body=ux_body,
+            local_only=True,
+        )
+    return payload
 
 
 @app.get("/api/diagnostics/runtime")
@@ -1288,7 +1322,7 @@ _HYBRID_PROVIDER_502_CODES = frozenset({
 })
 
 
-def _hybrid_infra_error(code: str, local: dict | None = None) -> JSONResponse:
+def _hybrid_infra_error(code: str, local: dict | None = None, *, local_only: bool = False) -> JSONResponse:
     """Ánh xạ sự cố hạ tầng / cấu hình / nhà cung cấp trên tuyến Hybrid sang lỗi HTTP có thể khôi phục.
     Tuyệt đối không gán nhãn thành từ chối toán học và không rò rỉ khóa API hay stack trace.
 
@@ -1301,6 +1335,10 @@ def _hybrid_infra_error(code: str, local: dict | None = None) -> JSONResponse:
         status, msg = 503, "Chế độ trích xuất trực tiếp (live AI) đang bị khoá bởi cấu hình máy chủ (ALLOW_LIVE_AI=0)."
     elif code == "INVALID_HYBRID_ROUTE_MODE":
         status, msg = 503, "Chế độ định tuyến Hybrid trên máy chủ không hợp lệ."
+    elif code == "LOCAL_ONLY_GENERAL_NOT_APPROVED":
+        status, msg = 503, "Chế độ cục bộ mở rộng toàn phần chưa được kích hoạt trên máy chủ."
+    elif code == "LOCAL_ONLY_CLOUD_VISION_DISABLED":
+        status, msg = 503, "Chế độ chạy hoàn toàn trên máy không gửi ảnh tới dịch vụ đọc ảnh đám mây. Em hãy gõ đề hoặc tải tệp DOCX/PDF có chữ."
     elif code == "MISSING_API_KEY":
         status, msg = 503, MISSING_KEY_MSG
     elif code == "STAGING_CORPUS_UNAVAILABLE":
@@ -1318,6 +1356,12 @@ def _hybrid_infra_error(code: str, local: dict | None = None) -> JSONResponse:
         "failure_dimension": "INFRASTRUCTURE_AVAILABILITY",
         "taxonomy_class": "INFRASTRUCTURE_UNAVAILABLE",
     }
+    if local_only:
+        from app.ai.hybrid_offline import build_local_ai_ux_descriptor
+
+        ux_desc = build_local_ai_ux_descriptor(status_code=status, body=content, local_only=True)
+        content["local_ai_ux"] = ux_desc
+        content["error"] = ux_desc["learner_message"]
     summary = (local or {}).get("learner_summary") if code in ("LIVE_AI_DISABLED", "MISSING_API_KEY") else None
     if summary and isinstance(local, dict):
         seen = "".join(f" Phần chưa đọc được: «{t}»." for t in summary["unread_excerpts"])
@@ -1351,21 +1395,27 @@ async def _analyze_hybrid_route(
     algosim_session: str | None,
     source_provenance: InputSourceProvenance | None = None,
 ) -> Any:
-    """Tuyến thực thi chính thức duy nhất của AlgoSim (`HYBRID_ROUTE_MODE` = `live` mặc định | `staging-replay`).
+    """Tuyến thực thi chính thức duy nhất của AlgoSim (`HYBRID_ROUTE_MODE` = `live` mặc định | `staging-replay` | local-only).
     Tuyệt đối không còn bất kỳ nhánh hay fallback nào về `LLM_ONLY`."""
     if mode not in HYBRID_ROUTE_MODES:
         return _hybrid_infra_error("INVALID_HYBRID_ROUTE_MODE")
+    is_local_only = mode in LOCAL_ONLY_HYBRID_MODES
+    if mode == "local-only-general" and os.getenv("AXO_ALLOW_GENERAL_LOCAL_CUTOVER") != "1":
+        return _hybrid_infra_error("LOCAL_ONLY_GENERAL_NOT_APPROVED", local_only=True)
     use_local_first = mode == "local-first" or (mode == "live" and os.getenv("HYBRID_LOCAL_FIRST") == "1")
-    if mode == "live" and not use_local_first and os.getenv("ALLOW_LIVE_AI") == "0":
+    if mode in ("live", "local-shadow") and not use_local_first and os.getenv("ALLOW_LIVE_AI") == "0":
         return _hybrid_infra_error("LIVE_AI_DISABLED")
 
     from starlette.concurrency import run_in_threadpool
 
     from app.ai.hybrid_offline import (
         HYBRID_INFRASTRUCTURE_CODES,
+        build_local_ai_ux_descriptor,
         prepare_live_hybrid,
         prepare_local_first_hybrid,
+        prepare_local_shadow_hybrid,
         prepare_local_slm_hybrid,
+        prepare_local_slm_v9_hybrid,
         prepare_staging_replay,
         resolve_hybrid_gemini_model,
     )
@@ -1377,6 +1427,11 @@ async def _analyze_hybrid_route(
             return _hybrid_infra_error("STAGING_CORPUS_UNAVAILABLE")
     elif mode == "local-slm":
         plan = await run_in_threadpool(prepare_local_slm_hybrid, text)
+    elif mode in ("offline-lab", "local-only-scoped", "local-only-general"):
+        plan = await run_in_threadpool(lambda: prepare_local_slm_v9_hybrid(text, mode_tag=mode))
+    elif mode == "local-shadow":
+        model_name = resolve_hybrid_gemini_model()
+        plan = await run_in_threadpool(prepare_local_shadow_hybrid, text, model=model_name)
     elif use_local_first:
         model_name = resolve_hybrid_gemini_model()
         plan = await run_in_threadpool(prepare_local_first_hybrid, text, model=model_name)
@@ -1398,16 +1453,20 @@ async def _analyze_hybrid_route(
                 state = "hit"
 
     if response is None:
-        if mode == "live" and not use_local_first and not api_key:
+        if mode in ("live", "local-shadow") and not use_local_first and not api_key:
             return _hybrid_infra_error("MISSING_API_KEY")
 
         ngoai = _ngoai_pham_vi(text)
         if ngoai is not None:
-            return JSONResponse(content=attach_learner_reason(ngoai), headers={"Cache-Control": "no-store"})
+            ngoai_body = attach_learner_reason(ngoai)
+            if is_local_only:
+                ngoai_body = {
+                    **ngoai_body,
+                    "local_ai_ux": build_local_ai_ux_descriptor(status_code=200, body=ngoai_body, local_only=True),
+                }
+            return JSONResponse(content=ngoai_body, headers={"Cache-Control": "no-store"})
 
-        if mode == "staging-replay":
-            result = await run_in_threadpool(plan.run)
-        elif mode == "local-slm":
+        if mode == "staging-replay" or is_local_only:
             result = await run_in_threadpool(lambda: plan.run())
         else:
             def _finite_pos_env(env_key: str, default: float) -> float:
@@ -1447,7 +1506,8 @@ async def _analyze_hybrid_route(
             if obs is not None:
                 obs.ket_thuc(None)
             return _hybrid_infra_error(code or "ROUTE_INTERNAL_ERROR",
-                                       ((result.response or {}).get("route_d") or {}).get("local_diagnostics"))
+                                       ((result.response or {}).get("route_d") or {}).get("local_diagnostics"),
+                                       local_only=is_local_only)
         response = result.response
         if obs is not None:
             obs.ket_thuc(response.get("envelope") if isinstance(response, dict) else None)
@@ -1468,6 +1528,11 @@ async def _analyze_hybrid_route(
         if verified_provenance is not None and isinstance(response, dict)
         else response
     )
+    if is_local_only and isinstance(out_response, dict):
+        out_response = {
+            **out_response,
+            "local_ai_ux": build_local_ai_ux_descriptor(status_code=200, body=out_response, local_only=True),
+        }
     return JSONResponse(content=out_response, headers={"Cache-Control": "no-store", "X-Algosim-Cache": state})
 
 
@@ -1529,7 +1594,10 @@ async def _analyze_once(body: AnalyzeBody, algosim_session: str | None):
             },
         )
 
-    api_key = os.getenv("GEMINI_API_KEY")
+    if che_do_hybrid == "local-only-general" and os.getenv("AXO_ALLOW_GENERAL_LOCAL_CUTOVER") != "1":
+        return _hybrid_infra_error("LOCAL_ONLY_GENERAL_NOT_APPROVED", local_only=True)
+
+    api_key = None if che_do_hybrid in LOCAL_ONLY_HYBRID_MODES else os.getenv("GEMINI_API_KEY")
     try:
         text = await ingest_to_text(
             body.input.type,
@@ -1587,6 +1655,9 @@ async def image_extract(
     except ImageRejected as err:
         return JSONResponse(status_code=400, content={"error": str(err), "reason_code": err.code})
 
+    if hybrid_route_mode() in LOCAL_ONLY_HYBRID_MODES:
+        return _hybrid_infra_error("LOCAL_ONLY_CLOUD_VISION_DISABLED", local_only=True)
+
     if os.getenv("ALLOW_LIVE_AI") == "0":   # the same emergency stop as `/api/analyze`: before cache and provider
         return _hybrid_infra_error("LIVE_AI_DISABLED")
     api_key = os.getenv("GEMINI_API_KEY")
@@ -1632,11 +1703,13 @@ async def input_prepare(
     from app.ingestion.document_reader import InputPrepareRejected
     from app.ingestion.unified_input import (
         LiveVisionDisabledError,
+        LocalOnlyCloudVisionDisabledError,
         MissingVisionKeyError,
         prepare_unified_input,
     )
 
-    api_key = os.getenv("GEMINI_API_KEY")
+    local_only = hybrid_route_mode() in LOCAL_ONLY_HYBRID_MODES
+    api_key = None if local_only else os.getenv("GEMINI_API_KEY")
     try:
         ket_qua = await prepare_unified_input(
             content=body.content,
@@ -1648,6 +1721,7 @@ async def input_prepare(
             selected_candidate_id=body.selected_candidate_id,
             api_key=api_key,
             cache_version=CACHE_VERSION,
+            local_only=local_only,
         )
     except InputPrepareRejected as err:
         err_payload: dict[str, Any] = {"error": str(err), "reason_code": err.code}
@@ -1658,6 +1732,8 @@ async def input_prepare(
             headers={"Cache-Control": "no-store"},
             content=err_payload,
         )
+    except LocalOnlyCloudVisionDisabledError:
+        return _hybrid_infra_error("LOCAL_ONLY_CLOUD_VISION_DISABLED", local_only=True)
     except LiveVisionDisabledError:
         return _hybrid_infra_error("LIVE_AI_DISABLED")
     except MissingVisionKeyError:
