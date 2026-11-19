@@ -1,0 +1,171 @@
+{
+ "schema_version": "hybrid-route-d-simulation/4",
+ "envelope": {
+  "status": "unsupported",
+  "reason_code": "AMBIGUOUS_FACT",
+  "reason": "Hệ đã đọc các giả thiết trong đề nhưng chưa có quy tắc suy diễn tất định cho tổ hợp quan hệ này, nên dừng lại thay vì dựng một hình gần đúng.",
+  "learner_reason": "Hệ đã đọc các giả thiết trong đề nhưng chưa có quy tắc suy diễn tất định cho tổ hợp quan hệ này, nên dừng lại thay vì dựng một hình gần đúng.",
+  "failure_category": "capability_gap",
+  "refusal_cause": "UNKNOWN"
+ },
+ "route_d": {
+  "schema_version": "hybrid-route-d-simulation/4",
+  "adapter_version": "hybrid-simulation-adapter/4",
+  "contract_version": "typed-fact-next/2",
+  "status": "REFUSED",
+  "refusal": {
+   "code": "AMBIGUOUS_FACT",
+   "clarification": {
+    "schema_version": "route-d-clarification/1",
+    "unresolved_id": "u1",
+    "kind": "missing_operand",
+    "nlu_class": "MISSING_DATA",
+    "quote": "S.ABC có đáy là tam giác đều",
+    "spans": [
+     [
+      13,
+      41
+     ]
+    ],
+    "subject_ref": null,
+    "missing_roles": [
+     "dimension"
+    ],
+    "candidate_relations": [],
+    "question": "Trong “S.ABC có đáy là tam giác đều”, bạn hãy nói rõ các số đo cần thiết."
+   }
+  },
+  "extraction_mode": "LOCAL_DETERMINISTIC_PARSER",
+  "local_parser_version": "local-geometry-parser/2",
+  "adaptive_router_version": "adaptive-input-router/1",
+  "adaptive_telemetry": {
+   "router_version": "adaptive-input-router/1",
+   "parser_version": "local-geometry-parser/2",
+   "input_kind": "text",
+   "local_parse_status": "LOCAL_PARSE_AMBIGUOUS",
+   "chosen_route": "LOCAL_DETERMINISTIC_HYBRID",
+   "fallback_reason": null,
+   "gemini_vision_calls": 0,
+   "gemini_typed_fact_calls": 0,
+   "total_provider_calls": 0,
+   "local_parse_ms": 1.465,
+   "vision_ms": 0,
+   "typed_fact_ai_ms": 0,
+   "hybrid_execution_ms": 1.572,
+   "total_ms": 3.126,
+   "source_coverage": {
+    "total_clauses": 1,
+    "mapped_fact_clauses": 1,
+    "mapped_goal_clauses": 0,
+    "benign_discourse_clauses": 0,
+    "unparsed_fact_candidates": [],
+    "unparsed_goal_candidates": [],
+    "unresolved_references": [],
+    "clauses": [
+     {
+      "index": 0,
+      "start": 0,
+      "end": 41,
+      "text": "Vẽ hình chóp S.ABC có đáy là tam giác đều",
+      "classification": "MAPPED_FACT"
+     }
+    ],
+    "coverage_complete": true
+   },
+   "cache_key_metadata": {
+    "route": "HYBRID_V4_LOCAL_FIRST",
+    "router_version": "adaptive-input-router/1",
+    "parser_version": "local-geometry-parser/2",
+    "extraction_route": "LOCAL_DETERMINISTIC_PARSER",
+    "local_parse_status": "LOCAL_PARSE_AMBIGUOUS",
+    "model": "none",
+    "surface": {
+     "registry_version": "geometry-functions/33",
+     "planner_version": "geometry-fact-planner/26",
+     "engine_version": "geometry-function-engine/24",
+     "response_contract": "typed-fact-next/2",
+     "adapter_version": "hybrid-simulation-adapter/4",
+     "envelope_version": "hybrid-route-d-simulation/4"
+    },
+    "source": "Vẽ hình chóp S.ABC có đáy là tam giác đều."
+   }
+  },
+  "determinacy_audit": {
+   "schema_version": "mathematical-determinacy-audit/1",
+   "status": "UNPROVED_DUE_TO_CAPABILITY_GAP",
+   "witness_kind": "NO_DIVERGING_REALIZATION_PAIR_FOUND",
+   "terminal_code": "MISSING_DIMENSION",
+   "unconsumed_constraint_ids": [
+    "p1"
+   ],
+   "unconsumed_coupling_constraint_ids": [],
+   "dimensional_premise_ids": [],
+   "positive_degree_goal_ids": [],
+   "counterexample_models": [],
+   "valid_realizations_count": 0,
+   "trials_executed": 8,
+   "scope_note": "Không tìm được cặp mô hình hợp lệ cho kết quả khác nhau; còn giả thiết chưa được suy diễn hết hoặc hệ chưa chứng minh được tính xác định duy nhất của bài toán."
+  },
+  "local_diagnostics": {
+   "diagnostics_version": "local-failure-diagnostics/1",
+   "terminal_reason": "AMBIGUOUS_FACT",
+   "parse_status": "LOCAL_PARSE_AMBIGUOUS",
+   "clauses_total": 1,
+   "clauses_recognized": 1,
+   "clauses_unrecognized": 0,
+   "clauses_dependent_on_unread": 0,
+   "clauses": [
+    {
+     "clause_id": "c0",
+     "start_offset": 0,
+     "end_offset": 41,
+     "parser_classification": "MAPPED_FACT",
+     "semantic_status": "RECOGNIZED",
+     "clause_type": "CONSTRUCTION_GOAL",
+     "clause_type_cues": [
+      "CONSTRUCTION_GOAL",
+      "GEOMETRIC_PROPERTY"
+     ],
+     "role": "GOAL",
+     "labels": [
+      "A",
+      "B",
+      "C",
+      "S"
+     ],
+     "plane_names": [],
+     "unresolved_plane_names": [],
+     "downstream_dependency": [],
+     "failure_reason": null
+    }
+   ],
+   "root_cause": "UNSUPPORTED_DEDUCTION",
+   "first_loss_layer": "NONE",
+   "detected_by": "ENGINE",
+   "unresolved_kinds": [
+    "missing_operand"
+   ],
+   "refusal_group": "CAPABILITY",
+   "failure_dimension": "IMPLEMENTATION_CAPABILITY",
+   "taxonomy_class": "CAPABILITY_UNSUPPORTED",
+   "determinacy_status": "UNPROVED_DUE_TO_CAPABILITY_GAP",
+   "determinacy_scope_note": "Không tìm được cặp mô hình hợp lệ cho kết quả khác nhau; còn giả thiết chưa được suy diễn hết hoặc hệ chưa chứng minh được tính xác định duy nhất của bài toán.",
+   "witness_kind": "NO_DIVERGING_REALIZATION_PAIR_FOUND",
+   "unconsumed_constraint_ids": [
+    "p1"
+   ],
+   "learner_summary": {
+    "message": "Hệ thống đã đọc các giả thiết của đề nhưng chưa hỗ trợ suy diễn tất định từ tổ hợp quan hệ này.",
+    "unread_excerpts": [],
+    "rewrite_may_help": false
+   },
+   "decided_by": "HYBRID_ROUTE",
+   "fallback": "NOT_REQUIRED"
+  }
+ },
+ "local_ai_ux": {
+  "ux_state": "OUT_OF_SUPPORTED_SCOPE",
+  "learner_title": "Đề bài nằm ngoài phạm vi hỗ trợ hiện tại",
+  "learner_message": "Hệ thống hiện tập trung dựng và giải hình học không gian khối đa diện bậc trung học phổ thông với các phép đo được hỗ trợ."
+ }
+}

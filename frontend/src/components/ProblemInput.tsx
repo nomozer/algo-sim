@@ -114,6 +114,18 @@ export function describeHomeRefusal(
   const code = errCode || reasonCode;
   const cause = rec.refusal_cause;
 
+  // /11: a verified `route-d-clarification/1` question (checked by the hybrid adapter, no internal ids) states what the
+  // learner must add or clarify; it wins over the category label, which can say "capability gap" for missing data.
+  const question = unsupported.clarification?.question;
+  if (question && unsupported.clarification?.kind !== "unsupported") {
+    const missing = unsupported.clarification.nlu_class === "MISSING_DATA";
+    return {
+      title: missing ? "Đề bài cần thêm dữ kiện để dựng hình" : "Đề bài có chỗ cần viết rõ hơn",
+      body: normalizeDisplayBrand(question),
+      hint: "Bạn có thể bổ sung hoặc viết rõ phần đó ngay trên ô nhập rồi nhấn Dựng hình.",
+    };
+  }
+
   const isOutOfScope =
     cat === "out_of_scope" || errCode === "OUT_OF_SCOPE" || reasonCode === "not_geometry";
   const isCapabilityGap =

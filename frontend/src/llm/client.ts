@@ -25,6 +25,17 @@ export function isAiAvailable(health: ServerHealth | null | "loading"): boolean 
   return Boolean(health.aiAvailable ?? (health.hasKey || (health.localOnlyMode && health.localSlmReady)));
 }
 
+/** Server-classified local-runtime failures (backend `local_slm_runtime` / `main._hybrid_infra_error`): retrying re-runs
+ * the same bounded inference and cannot fix the cause, so the client reports them at once. */
+const NON_RETRYABLE_REASONS = new Set([
+  "LOCAL_SLM_TIMEOUT",
+  "LOCAL_SLM_BUSY",
+  "LOCAL_SLM_RESPONSE_INVALID",
+  "MODEL_RUNTIME_UNAVAILABLE",
+  "MODEL_CHECKSUM_MISMATCH",
+  "HYBRID_DEADLINE_EXCEEDED",
+]);
+
 const CONNECT_HELP =
   "Không kết nối được máy chủ phân tích. Mở cửa sổ lệnh trong thư mục algo-sim và chạy: docker compose up -d --build";
 
@@ -186,12 +197,15 @@ async function postJson<T>(
             typeof luRaw.failure_dimension === "string" ? luRaw.failure_dimension : undefined,
         }
       : undefined;
+    const reason = typeof rec?.reason_code === "string" ? rec.reason_code : "";
     throw new AxoClientError({
       kind: "http",
       code: classifyHttpFailureCode(res.status, rec),
       status: res.status,
       message: msg,
-      transient: res.status === 502 || res.status === 504,
+      // /11: a failure the server already classified as a local-runtime timeout / busy / invalid answer is not
+      // retried (each retry re-ran a 45 s inference: ~135 s of loading in /10); bare gateway 502/504 still are.
+      transient: (res.status === 502 || res.status === 504) && !NON_RETRYABLE_REASONS.has(reason),
       reasonCode: typeof rec?.reason_code === "string" ? rec.reason_code : undefined,
       // the server says which part of the problem the local route did not read (only when it ran on the problem)
       learnerDetail: rec?.local_understanding && typeof rawMsg === "string" ? rawMsg : undefined,
