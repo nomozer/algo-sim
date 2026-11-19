@@ -910,7 +910,7 @@ inventory của chính run `repo-cleanup`; không còn consumer/test sống và 
 | Vai trò | Vị trí |
 |---|---|
 | HTTP surface | `backend/app/main.py` — `POST /api/analyze` (tuyến sản phẩm **Hybrid `/4`** mặc định: `HYBRID_ROUTE_MODE = live`, `staging-replay` cho dev/test, `CACHE_VERSION = 132`), `/api/image/extract`, `/api/health`, `/api/diagnostics/runtime`, `/api/diagnostics/semantic`, `/api/preview/hybrid` (loopback fixture preview) |
-| Router gắn thêm | `accounts/router.py` · `accounts/classroom_router.py` · `accounts/session_router.py` (`include_router` ở `main.py`) |
+| Router gắn thêm | `accounts/router.py` (`/api/auth/*`, history, admin — không còn Classroom HTTP ở V1 Option B) · `simulation/step_edit_router.py` (`/api/simulations/step-edit*`) (`include_router` ở `main.py`; `HISTORICAL_REMOVED`: `accounts/classroom_router.py`, `accounts/session_router.py`) |
 | Production pipeline (`Hybrid /4`) | `backend/app/main.py::_analyze_hybrid_route` → `backend/app/ai/hybrid_offline.py` (`prepare_live_hybrid` / `prepare_staging_replay` → `run_hybrid_offline`) → `backend/app/ai/adapter4_route.py` (`run_typed_fact_next_v2_route` / `build_adapter4_response`) |
 | Trích xuất LLM duy nhất | `backend/app/ai/typed_fact_next_extraction.py` → `backend/app/simulation/geometry_functions/typed_fact_next.py` (`typed-fact-next/2`, qua `typed_fact_next_bridge.py::bridge_v2`) — chỉ trích xuất dữ kiện, quan hệ và mục tiêu kèm trích dẫn câu đề; **không** sinh chương trình giải |
 | Cổng nguồn, lập kế hoạch & nhân hình học | `registry.py::kiem_nguon` (`geometry-functions/33`, 49 hàm) → `planner.py` (`geometry-fact-planner/26`) → `engine.py` (`geometry-function-engine/24`) → `function_route.py` + `construction_continuity.py` |
@@ -2118,16 +2118,17 @@ Tests: `extract-image.test.ts`.
 ### `test-setup.ts` · Change impact: offline
 Guard offline vitest: stub `fetch` → ném lỗi. Tests: `llm/offline-guard.test.ts`.
 
-## M18 — TẦNG TÀI KHOẢN VÀ LỚP HỌC
+## M18 — TẦNG TÀI KHOẢN (LỚP HỌC ĐÃ GỠ Ở V1 OPTION B)
 
-> Tầng này KHÔNG sở hữu sự thật mô phỏng. Engine tất định vẫn là nơi duy nhất
-> giữ state/timeline/kết quả và là bên duy nhất phán học sinh đúng hay sai
-> (bất biến #27). Lớp học chỉ ĐỌC bằng chứng có cấu trúc.
+> **Quyết định Option B (V1):** Classroom và Live Session đã được gỡ vĩnh viễn khỏi HTTP API
+> (`0` route lớp học trong OpenAPI) và giao diện frontend; 5 bảng DB lịch sử
+> (`classrooms`, `class_memberships`, `assignments`, `practice_sessions`, `classroom_sessions`)
+> được bảo toàn nguyên vẹn ở tầng DB qua migration `f8a2c41d9e05`. Tầng này hiện chỉ phục vụ
+> danh tính, lịch sử phân tích cá nhân và quản trị (`accounts/router.py`, `auth.ts`).
 
 ### `backend/app/accounts/` — DANH TÍNH, VAI TRÒ, QUYỀN
 
-Bốn file, bốn tầng, đi một chiều: `policy` (thuần) ← `service` (DB) ←
-`router`/`classroom_router` (HTTP).
+Đi một chiều: `policy` (thuần) ← `service` (DB) ← `router` (HTTP).
 
 - **`passwords.py`** — PBKDF2-HMAC-SHA256 từ thư viện chuẩn, salt riêng mỗi tài
   khoản, so constant-time. KHÔNG thêm passlib/bcrypt: cùng thuật toán, thêm một
@@ -2136,27 +2137,33 @@ Bốn file, bốn tầng, đi một chiều: `policy` (thuần) ← `service` (D
   (một exception riêng là kênh dò tài khoản).
 - **`policy.py`** — HÀM THUẦN, test được không cần FastAPI. `resolve_signup_role`
   (đăng ký thường LUÔN ra học sinh; vai trò giáo viên cần mã mời từ môi trường;
-  thiếu cấu hình ⇒ ĐÓNG), `entitlement_for` (khách: 1 lượt thử, không lớp, không
-  lịch sử bền), `can_observe_class` / `can_read_class`.
-- **`service.py`** — phiên (mở/tra/gắn user/đóng), tài khoản, mã lớp. `attach_user`
+  thiếu cấu hình ⇒ ĐÓNG), `entitlement_for`. (`HISTORICAL_REMOVED`: `can_observe_class`,
+  `can_read_class` của bề mặt Classroom HTTP đã gỡ).
+- **`service.py`** — phiên (mở/tra/gắn user/đóng) và tài khoản. `attach_user`
   GIỮ hàng phiên đang có thay vì mở phiên mới: `guest_trials_used` nằm trên hàng
-  đó, mở mới là đăng nhập-rồi-đăng-xuất lại có lượt. Mã lớp bỏ `0O1IL` vì học
-  sinh gõ tay mã đó trên bảng.
-- **`router.py`** — `/api/auth/*` + `/api/classes*`. Sai email và sai mật khẩu
-  trả CÙNG một câu (không cho dò tài khoản). Mã lớp CHỈ hiện cho giáo viên sở
-  hữu. `Caller`/`get_caller` là dependency giải danh tính dùng chung.
-- **`classroom_router.py`** — `/api/assignments*` + `/api/classes/{id}/observe`.
-  `_validated_envelope` là CỔNG: config phải qua đúng `SimSpec.validate` của
-  target (bất biến #28). Tiến độ bị KẸP về miền hợp lệ, đếm chỉ TĂNG.
+  đó, mở mới là đăng nhập-rồi-đăng-xuất lại có lượt.
+- **`router.py`** — `/api/auth/*`, lịch sử và quản trị (`/api/admin/*`). Sai email
+  và sai mật khẩu trả CÙNG một câu (không cho dò tài khoản). `Caller`/`get_caller`
+  là dependency giải danh tính dùng chung. Các route Classroom/Live Session đã gỡ hoàn
+  toàn theo Option B (trả `404 {"detail":"Not Found"}`).
+- **`HISTORICAL_REMOVED` (`accounts/classroom_router.py` · `accounts/session_router.py`):**
+  từng phục vụ `/api/classes*`, `/api/assignments*`, `/api/classes/{id}/observe`,
+  `/api/classes/{id}/session*`; đã gỡ ở `bf1ee2a57` và khóa fail-closed qua
+  `backend/tests/test_owner_scope_resolution.py` (18 endpoint trả `404`).
 
 ### `backend/app/persistence/classroom_models.py`
 Active account, auth, history, quota ledger, and admin tables (`users`, `auth_sessions`, `learning_history_entries`, `user_account_meta`, `admin_system_settings`, `admin_audit_logs`, `analysis_usage_ledger`, `admin_analysis_telemetry`). Historical Classroom ORM tables (`classrooms`, `class_memberships`, `assignments`, `practice_sessions`, `classroom_sessions`) were retired from active code in `bf1ee2a57` while their persisted database tables/rows remain safely retained non-destructively in `f8a2c41d9e05` and excluded from `alembic check` autogenerate drift via `alembic/env.py::_include_name`.
 
-### `state/auth.ts` · `state/classroom.ts`
-Hai store TÁCH khỏi `state/store.ts` (vốn cố ý mù domain). `auth` giữ danh tính
-+ quyền đọc từ `/api/auth/me`; `classroom` là BẢN CHIẾU của lớp/bài/quan sát.
-Vai trò ở client là để VẼ, không phải quyền: sửa nó trong devtools thì thấy được
-thanh điều hướng giáo viên và không gọi nổi endpoint nào. Vì thế KHÔNG lưu bền.
+### `state/auth.ts` (`HISTORICAL_REMOVED`: `state/classroom.ts`)
+Store `state/auth.ts` TÁCH khỏi `state/store.ts` (vốn cố ý mù domain), giữ danh tính
++ quyền đọc từ `/api/auth/me`. Vai trò ở client chỉ để hiển thị: server vẫn kiểm quyền
+trên mọi endpoint. `state/classroom.ts` đã gỡ khỏi workspace ở V1 Option B.
+
+### `backend/tests/test_owner_scope_resolution.py`
+Khóa quyết định **Option B** (18 endpoint Classroom/Live Session trả `404`, `0` rò rỉ
+OpenAPI, CLI đã gỡ trả `exit 2`), vết end-to-end Step Editor (`(α)->(P)`, `AB->SB`,
+`(MNP)->(Q)`, `422`, `409`, khôi phục `latest_client_seq` sau restart) và kiểm chứng
+PostgreSQL `20` bảng + bảo toàn dữ liệu bảng lịch sử (`@pytest.mark.postgres`).
 
 ### `components/TopNav.tsx`
 Điều hướng MỨC ỨNG DỤNG, chỉ có sau đăng nhập — **một hàng ngang trong
@@ -2602,22 +2609,16 @@ bước tách rời vì `route` không được import `scene3d`).
 
 ### `frontend/scripts/accept-product-scope.mjs` · offline (cần dev + uvicorn)
 
-Nghiệm thu **dọn phạm vi sản phẩm**: đi hết các đường điều hướng chính bằng hai
-tiến trình Chrome (giáo viên + học sinh), quét **TEXT ĐÃ RENDER** từng trang tìm
-nhãn miền và cụm chữ quảng bá đề Tin học. Vì sao không phải test đơn vị: một
-`publicCatalog()` sạch KHÔNG đảm bảo màn hình sạch — nhãn còn nằm trong hằng số,
-chuỗi còn nằm trong component khác. Bốn lát: bề mặt công khai · lối vào hình học
-(bấm gợi ý ⇒ xưởng 3D) · bài giáo viên giao (hồi quy §13, cả hai vai mở được) ·
-ba bề rộng. Artifact: `docs/evaluation/geometry/product-scope-acceptance.json`,
-có `provenance`.
+Nghiệm thu **dọn phạm vi sản phẩm** (cập nhật theo **Option B**): đi qua `/`, `/app`
+và `/simulation/chop-mat-cau-ngoai-tiep` bằng Playwright ở ba bề rộng
+(`1920x1080`, `1366x768`, `390x844`), kiểm tra `/api/health` (`ok === true`), xác
+nhận `/api/classes` và `/api/assignments` trả `404` (`{"detail":"Not Found"}`), quét
+**TEXT ĐÃ RENDER** tìm `0` nhãn miền/cụm quảng bá Tin học và `0` điều khiển UI Lớp
+học, đồng thời ghi JSON có `provenance` vào đường dẫn `--out` (mặc định ở thư mục
+tạm hệ thống để không chạm artifact lịch sử).
 
-⚠️ **So khớp KHÔNG phân biệt hoa–thường, và đó là điểm sống còn của guard này.**
-`innerText` trả văn bản ĐÃ RENDER, mà `.starter-group-title` mang
-`text-transform: uppercase` — nên "Thuật toán" hiện lên màn hình dưới dạng
-"THUẬT TOÁN". Bản đầu so khớp nguyên văn và mọi khẳng định "0 nhãn miền Tin học"
-đều XANH VÔ NGHĨA. Lộ ra nhờ khẳng định NGƯỢC ("Thư viện phải có nhóm Hình học")
-đỏ — bài học: guard vắng-mặt phải đi kèm một guard có-mặt, nếu không nó xanh cả
-khi mù. Đã tiêm lỗi (`PRODUCT_DOMAINS += "algorithm"`) để thấy nó đỏ thật.
+⚠️ **So khớp KHÔNG phân biệt hoa–thường** vì CSS `text-transform: uppercase` biến
+chữ hiển thị; guard vắng-mặt luôn đi kèm khẳng định có-mặt của Hình học / Xưởng 3D.
 
 ### `backend/scripts/seed_demo_accounts.py`
 
@@ -2627,30 +2628,13 @@ Clean 3-account demo SQLite seeder (1 Admin, 1 Teacher, 1 Student) with zero har
 
 Startup and online Alembic migration safety guard (`evaluate_migration_safety`, `scan_revision_ast`, `BLOCK_EXIT_CODE = 23`): blocks destructive DDL/DML (`drop_table`, `drop_column`, raw `DROP`/`TRUNCATE`/`DELETE`) and unstamped populated DBs (`UNSTAMPED_EXISTING_DATABASE`), enforced in `backend/Dockerfile` (`ENV ALGOSIM_STARTUP_MODE=1`, `CMD python alembic/migration_preflight.py --startup && alembic upgrade head ...`) and `env.py::_run_online_preflight`. Revision `f8a2c41d9e05` non-destructively preserves any retained legacy Classroom tables/rows while `env.py::_include_name` keeps `alembic check` clean on both legacy-retained and fresh databases. Locked by `backend/tests/test_database_safety_closure.py` and `backend/tests/test_migration_drift.py`.
 
-### `frontend/scripts/accept-live-classroom.mjs` · offline (cần dev + uvicorn)
-Nghiệm thu **phiên dạy trực tiếp**: BA tiến trình Chrome, ba `--user-data-dir`
-riêng ⇒ ba kho cookie thật. Đổi vai bằng cách sửa state client thì bài kiểm tự
-kiểm giả định của chính nó, nên không làm. Tám lát: bám theo · tự do (hai học
-sinh giữ tiêu điểm riêng) · gọi cả lớp về (`syncCmdId` tăng mà `mode` vẫn `free`)
-· giơ tay (bảng theo dõi thấy đúng bước + tiêu điểm, học sinh kia KHÔNG bị lây)
-· **giao diện + xưởng 3D** · uỷ quyền (bốn ca 403) · kết thúc tiết · **ba bề rộng
-phòng máy** (1920/1536/1366: không tràn ngang, điều khiển của vai không bị cắt).
-Artifact: `docs/evaluation/geometry/live-classroom-acceptance.json`, có
-`provenance` nên sửa mã sản phẩm là nó thành `STALE_SOURCE`.
-
-⚠️ **Dấu vân tay backend soi ROUTE, không soi `/api/auth/me`.** Container Docker
-cũ trên cổng 8000 cũng trả 200 cho `/auth/me`, nên bản đầu chạy tiếp rồi đỏ ở
-tận Scenario 1 với một thông điệp không liên quan. Nay hỏi thẳng
-`/api/classes/999999/session`: FastAPI trả `{"detail":"Not Found"}` khi KHÔNG có
-route, còn handler thật trả tiếng Việt của nó — **cùng mã 404, chỉ phần thân
-phân biệt được**. Và hỏi qua `:3000` (đường trình duyệt đi), vì `localhost` phân
-giải `::1` trước `127.0.0.1` trên Windows: curl vào `127.0.0.1` có thể nói
-chuyện với một tiến trình khác hẳn cái mà trang web nói chuyện.
-
-Scenario 5 tồn tại vì bốn lát đầu đi thẳng API và **không hỏi cái gì dựng lên
-màn hình** — nó bắt được hai bug chặn cả tính năng mà mọi test API vẫn xanh:
-`classroomId` bị bỏ rơi lúc mở bài (⇒ dải lớp không bao giờ dựng) và giáo viên
-không có nút mở bài (⇒ không vào được xưởng, nơi dock điều khiển lớp sống).
+### `frontend/scripts/accept-live-classroom.mjs` · `CLASSROOM_FEATURE_RETIRED`
+Entrypoint nghiệm thu Live Classroom đã gỡ vĩnh viễn theo **Option B** (V1 không có
+Classroom / Live Session trên HTTP và UI): fail-closed với mã thoát `2`
+(`CLASSROOM_FEATURE_RETIRED`, hỗ trợ `--json` và `--help` thoát `0`), không chạm
+database hay `docs/evaluation/`. Artifact lịch sử `docs/evaluation/geometry/live-classroom-acceptance.json`
+giữ nguyên đóng băng chỉ để tham chiếu lịch sử. (`HISTORICAL_REMOVED`: ba lát lớp học
+trực tiếp, `classroom_router.py`, `session_router.py`).
 
 ### `backend/scripts/seed_classroom_fixture.py`
 Retired Classroom fixture entrypoint (`CLASSROOM_FEATURE_RETIRED`, exits `2`; `--help` exits `0`). Preserves clean CLI imports without removed `Classroom`/`Assignment`/`ClassMembership` ORM symbols and directs operators to `backend/scripts/seed_demo_accounts.py`. Locked by `backend/tests/test_database_safety_closure.py`.
@@ -3959,12 +3943,12 @@ bộ ca ở hai bờ (`tests/semantic_program/test_envelope_config_gate.py`). B�
 có ở bờ Python: `bool` **là** `int`, nên `frame_lo: False` lọt thành `0` nếu
 không chặn thẳng.
 
-Ai gọi: `classroom_router._validated_envelope`. Tuyến ngữ nghĩa KHÔNG nằm trong
-`CATALOG` (nó không phải target chuyên biệt), nên cổng giao bài không dùng được
-`CATALOG[sim_id].validate` — và trước bản này nó **từ chối thẳng mọi envelope
-hình học**, tức giáo viên không giao được đúng miền mà đề tài nói về. Nhánh này
-KHÔNG chuẩn hoá config, có chủ đích: config tuyến ngữ nghĩa là artifact đã biên
-dịch, không phải tham số người dùng gõ — không có dạng chính tắc nào để quy về.
+`validate_semantic_envelope_config` được giữ lại làm hàm kiểm hình dạng envelope
+tuyến ngữ nghĩa `generic.semantic_program`. (`HISTORICAL_REMOVED`: lời gọi từ
+`classroom_router._validated_envelope` — tuyến lớp học đã gỡ ở V1 Option B). Tuyến
+ngữ nghĩa KHÔNG nằm trong `CATALOG`, nên khi từng phục vụ giao bài nó không dùng
+được `CATALOG[sim_id].validate` và cần hàm kiểm riêng không chuẩn hoá lại config
+(vì config tuyến ngữ nghĩa là artifact đã biên dịch, không có dạng chính tắc để quy về).
 
 ### `backend/app/simulation/semantic_program/obligations.py` · offline
 

@@ -85,7 +85,9 @@ ALGOSIM_TEACHER_SIGNUP_CODE=<mã do trường cấp>
 .venv/Scripts/python.exe scripts/seed_demo_accounts.py --db-path /tmp/axo_demo.db
 ```
 
-⚠️ **Container Docker cũ có thể chiếm cổng 8000** và trả 404 cho mọi endpoint
-mới, làm mọi phép nghiệm thu vô nghĩa. `accept-classroom-m18.mjs` kiểm danh
-tính backend trước khi tin kết quả; nếu chạy tay thì `docker compose stop
-backend` trước.
+⚠️ **Kiểm tra danh tính backend trước khi tin kết quả runtime:** kiểm tra
+`GET /api/health` (`git_sha`, `db`, `runtime`) trên đúng tiến trình `:8000` để bảo
+đảm không bị container Docker cũ hay tiến trình khác chiếm cổng. Theo **Option B**
+(Classroom / Live Session đã gỡ vĩnh viễn khỏi HTTP và UI ở V1),
+`frontend/scripts/accept-live-classroom.mjs` hiện fail-closed với
+`CLASSROOM_FEATURE_RETIRED` (`exit 2`).

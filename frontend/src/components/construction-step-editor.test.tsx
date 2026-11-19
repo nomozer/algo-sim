@@ -1781,4 +1781,183 @@ describe("AXO Step Editor V2.2 — Reliability Hardening & Edge Cases (§5, §7)
     expect(window.localStorage.getItem("axo:step-edit-seq:v1")).toBe("1050");
     expect(WORKSPACE_SRC).toContain("res.local_abort && (res.error_code ===");
   });
+
+  it("OSR-SCENE3D-CONSISTENCY: rebuilt (P)/SB scene propagates zero stale (α) into pedagogical plan Steps 8-12+ and Workspace SSR", () => {
+    const rebuilt = structuredClone((sample11.envelope as unknown as { scene3d: Scene3D }).scene3d);
+    const renameAlphaToP = (text: string): string =>
+      text
+        .replace(/\(α\)/g, "(P)")
+        .replace(/mặt phẳng \(α\)/gi, "mặt phẳng (P)");
+
+    rebuilt.objects = rebuilt.objects.map((obj) => {
+      if (obj.id === "M_AB") {
+        return {
+          ...obj,
+          label: "Trung điểm của S và B",
+          display_label: "Trung điểm của S và B",
+          reference: "Trung điểm của S và B",
+          xyz: ["2", "0", "2"],
+          depends: ["S", "B"],
+          computational_depends: ["S", "B"],
+          visible_prerequisites: ["S", "B"],
+          dependency_edges: [
+            { source_id: "S", relation: "topological" },
+            { source_id: "B", relation: "topological" },
+          ],
+        };
+      }
+      if (obj.id === "mp_tt_AB") {
+        return {
+          ...obj,
+          label: "Mặt phẳng (P) qua «Trung điểm của S và B» và vuông góc với SB",
+          notation: "(P)",
+          reference: "(P)",
+          display_label: "Mặt phẳng (P) qua «Trung điểm của S và B» và vuông góc với SB",
+          point: ["2", "0", "2"],
+          normal: ["4", "0", "-4"],
+          depends: ["M_AB", "line_S_B"],
+          computational_depends: ["M_AB", "line_S_B"],
+          visible_prerequisites: ["M_AB", "line_S_B"],
+          dependency_edges: [
+            { source_id: "M_AB", relation: "topological" },
+            { source_id: "line_S_B", relation: "topological" },
+          ],
+        };
+      }
+      if (obj.id === "truc_day") {
+        return {
+          ...obj,
+          label: "Giao tuyến của (P) và (β)",
+          reference: "Giao tuyến của (P) và (β)",
+          display_label: "Giao tuyến của (P) và (β)",
+          point: ["2", "2", "2"],
+          direction: ["16", "0", "16"],
+        };
+      }
+      if (obj.id === "I") {
+        return {
+          ...obj,
+          role: renameAlphaToP(String(obj.role ?? "")),
+        };
+      }
+      return obj;
+    });
+
+    if (!rebuilt.objects.some((o) => o.id === "line_S_B")) {
+      const idx = rebuilt.objects.findIndex((o) => o.id === "mp_tt_AB");
+      rebuilt.objects.splice(idx >= 0 ? idx : rebuilt.objects.length, 0, {
+        id: "line_S_B",
+        type: "line3",
+        label: "SB",
+        notation: "SB",
+        reference: "SB",
+        role: "Đường thẳng",
+        origin: "derived",
+        producer: "construct_line",
+        depends: ["S", "B"],
+        render: "line",
+        display_role: "visual_owner",
+        display_group: ["construction"],
+        visual_transform: { translate: [0, 0, 0], scale: 1 },
+        formation_roles: ["CONSTRUCT_AUXILIARY_GEOMETRY"],
+        point: ["0", "0", "4"],
+        direction: ["4", "0", "-4"],
+        source: { instruction: "construct_line", inline_step_parent: "mp_tt_AB" },
+        occludes_edges: false,
+      } as Scene3D["objects"][number]);
+    }
+
+    rebuilt.events = (rebuilt.events ?? []).map((ev) => {
+      if (ev.object === "M_AB") {
+        return {
+          ...ev,
+          learner_text: "Dựng trung điểm của S và B.",
+          explanation: "Trung điểm của S và B.",
+        };
+      }
+      if (ev.object === "mp_tt_AB") {
+        return {
+          ...ev,
+          learner_text: "Dựng mặt phẳng trung trực (P) của cạnh SB.",
+          explanation: "Mặt phẳng (P) đi qua trung điểm của S và B và vuông góc với SB.",
+          depends: ["M_AB", "line_S_B"],
+          visible_prerequisites: ["M_AB", "line_S_B"],
+        };
+      }
+      if (ev.object === "truc_day") {
+        return {
+          ...ev,
+          learner_text: "Dựng giao tuyến của (P) và (β).",
+          explanation: renameAlphaToP(String(ev.explanation ?? "")),
+          formula_text: renameAlphaToP(String(ev.formula_text ?? "")),
+          display_label: renameAlphaToP(String(ev.display_label ?? "")),
+        };
+      }
+      return {
+        ...ev,
+        learner_text: typeof ev.learner_text === "string" ? renameAlphaToP(ev.learner_text) : ev.learner_text,
+        explanation: typeof ev.explanation === "string" ? renameAlphaToP(ev.explanation) : ev.explanation,
+        formula_text: typeof ev.formula_text === "string" ? renameAlphaToP(ev.formula_text) : ev.formula_text,
+      };
+    });
+
+    if (rebuilt.formation?.steps) {
+      rebuilt.formation.steps = rebuilt.formation.steps.map((st) => ({
+        ...st,
+        label: typeof st.label === "string" ? renameAlphaToP(st.label) : st.label,
+        title: typeof st.title === "string" ? renameAlphaToP(st.title) : st.title,
+        narration: typeof st.narration === "string" ? renameAlphaToP(st.narration) : st.narration,
+      }));
+    }
+
+    expect(isVerifiedRebuildScene(rebuilt)).toBe(true);
+    const enriched = withSubEntities(rebuilt);
+    const plan = buildPedagogicalConstructionPlan(enriched);
+    expect(plan.steps.length).toBeGreaterThanOrEqual(10);
+
+    // Check construction steps around & downstream of mp_tt_AB (Steps 8-12+ / targetSteps)
+    const lateSteps = plan.steps.slice(7);
+    for (const step of lateSteps) {
+      const narration = step.narration ?? buildPedagogicalStepNarration(enriched, step);
+      const renderedTitle = stripHtml(renderToString(<StepTitleText text={narration.actionTitle || step.title} />));
+      expect(renderedTitle, `Step ${step.index + 1} title stale (α)`).not.toContain("(α)");
+      expect(narration.actionTitle, `Step ${step.index + 1} actionTitle stale (α)`).not.toContain("(α)");
+      if (step.targetIds.includes("mp_tt_AB") || step.targetIds.includes("truc_day")) {
+        expect(renderedTitle).toContain("(P)");
+      }
+    }
+
+    const sid = buildStepEditSessionId(`sample:${sample11.id}`, "guest");
+    const overrideText = "Dựng mặt phẳng trung trực (P) của cạnh SB.";
+    saveCachedStepEditState(sid, {
+      sessionId: sid,
+      problemKey: `sample:${sample11.id}`,
+      versionNumber: 1,
+      committedScene: rebuilt,
+      stepOverrides: { mp_tt_AB: overrideText },
+      dependencySummary: { cycle_detected: false },
+      revisions: [],
+      feedbackItems: [],
+      updatedAt: Date.now(),
+    });
+
+    const mpStep = plan.steps.find((st) => st.targetIds.includes("mp_tt_AB"))!;
+    expect(mpStep).toBeDefined();
+
+    const env = { ...structuredClone(sample11.envelope), scene3d: rebuilt } as unknown as SimulationEnvelope;
+    useAppStore.getState().loadEnvelope(env, sample11.id);
+    syncStoreForSSR();
+    const html = renderToString(
+      <AxoWorkspaceV62
+        scene={rebuilt}
+        tieuDe={env.title}
+        de={sample11.problemText}
+        initialStep={mpStep.anchor}
+      />,
+    );
+    const paTitle = /id="pa-short-title"[^>]*>([\s\S]*?)<\/span>/.exec(html)?.[1] ?? "";
+    expect(paTitle).toContain("(P)");
+    expect(paTitle).toContain("SB");
+    expect(paTitle).not.toContain("(α)");
+  });
 });
