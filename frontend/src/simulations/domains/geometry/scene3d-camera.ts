@@ -278,6 +278,14 @@ export interface TuyChonHuongNhin {
   matCap?: [Diem3, Diem3][];
   /** Cảnh có khối tròn xoay (nón/trụ) kết hợp mặt/tam giác trọng tâm — tránh hướng nhìn trùng khít đường sinh biên làm cạnh thiết diện đè lên đường bao khối. */
   coKhoiCong?: boolean;
+  /** Mặt phẳng tiếp xúc mặt cầu: ưu tiên góc nhìn nghiêng tiếp tuyến để tiếp điểm nằm sát vành cầu và các điểm phụ trên mặt phẳng nằm ngoài đĩa cầu. */
+  matTiepDienCau?: {
+    tamCau: Diem3;
+    banKinh: number;
+    tiepDiem: Diem3;
+    phapTuyen: Diem3;
+    diemTrenMat: Diem3[];
+  }[];
 }
 
 export function datNguong(q: ChatLuongGocNhin, tran: TranGocNhin): boolean {
@@ -371,14 +379,82 @@ function diemTachDayTru(
     if (!(h > 1e-6)) continue;
     const doc = tich(truc, d);
     const hChieu = Math.sqrt(Math.max(0, h * h - doc * doc));
-    const u: Diem3 = [truc[0] / h, truc[1] / h, truc[2] / h];
+    const uRaw: Diem3 = [truc[0] / h, truc[1] / h, truc[2] / h];
+    const u: Diem3 = uRaw[2] < 0 ? [-uRaw[0], -uRaw[1], -uRaw[2]] : uRaw;
+    const moTruc = tich(u, d);
     const banTrucNho = Math.max(0, r) * Math.abs(tich(u, d));
-    const moDay0 = Math.abs(tich(u, chuan(tru(camEst, c0))));
-    const moDay1 = Math.abs(tich(u, chuan(tru(camEst, c1))));
-    if (r > 1e-6 && (hChieu < 1.05 * banTrucNho || Math.min(moDay0, moDay1) < 0.22)) hopLe = false;
-    tong += (r > 1e-6 ? Math.min(1, hChieu / (1.35 * r)) : Math.min(1, hChieu / h)) * Math.min(1, Math.min(moDay0, moDay1) / 0.35);
+    const moDay0 = tich(u, chuan(tru(camEst, c0)));
+    const moDay1 = tich(u, chuan(tru(camEst, c1)));
+    if (r > 1e-6 && (moTruc < 0.25 || moTruc > 0.56 || hChieu < 1.75 * banTrucNho || Math.min(moDay0, moDay1) < 0.22)) hopLe = false;
+    tong += (r > 1e-6 ? Math.min(1, hChieu / (1.35 * r)) : Math.min(1, hChieu / h)) * Math.max(0, Math.min(1, Math.min(moDay0, moDay1) / 0.35));
   }
   return { hopLe, thuong: tong / capDayTru.length };
+}
+
+function diemTiepDienCau(
+  huong: Diem3,
+  matTiepDienCau: NonNullable<TuyChonHuongNhin["matTiepDienCau"]>,
+): { hopLe: boolean; thuong: number } {
+  if (matTiepDienCau.length === 0) return { hopLe: true, thuong: 0 };
+  const d = chuan(huong);
+  const phai = chuan(Math.abs(d[2]) > 0.999 ? cheo([0, 1, 0], d) : cheo([0, 0, 1], d));
+  const len = cheo(d, phai);
+  let hopLe = Math.abs(d[0]) >= 0.30 && Math.abs(d[1]) >= 0.30;
+  let tong = 0;
+  for (const item of matTiepDienCau) {
+    const R = Math.max(1e-6, item.banKinh);
+    const u = chuan(item.phapTuyen);
+    const ud = tich(u, d);
+    const nd = Math.abs(ud);
+    if (ud < 0.42 || ud > 0.58) {
+      hopLe = false;
+    }
+    let diemItem =
+      ud >= 0.42 && ud <= 0.58
+        ? 1.4 - Math.abs(nd - 0.49) / 0.10
+        : ud > 0.68 || ud < 0.18
+          ? -2.2
+          : -0.9;
+    const dirs2d: [number, number][] = [];
+    for (const pk of item.diemTrenMat) {
+      const v = tru(pk, item.tamCau);
+      const vd = tich(v, d);
+      const r2 = Math.max(0, tich(v, v) - vd * vd);
+      const rProj = Math.sqrt(r2);
+      const tiLeR = rProj / R;
+      if (tiLeR < 0.96) {
+        hopLe = false;
+      }
+      const ap = tru(pk, item.tiepDiem);
+      const apLen = Math.hypot(...ap);
+      const dotCungPhia = apLen > 1e-6 ? (-ud * tich(ap, d)) / apLen : 0;
+      const sx = tich(ap, phai);
+      const sy = tich(ap, len);
+      const sLen = Math.hypot(sx, sy);
+      if (sLen > 1e-6) {
+        dirs2d.push([sx / sLen, sy / sLen]);
+      }
+      if (tiLeR < 0.85) {
+        diemItem -= 1.6;
+      } else if (tiLeR >= 0.96) {
+        diemItem += Math.min(1.1, (tiLeR - 0.94) * 2.2);
+      }
+      if (dotCungPhia >= 0) {
+        diemItem += 0.45 * dotCungPhia;
+      } else {
+        diemItem += 0.25 * dotCungPhia;
+      }
+    }
+    if (dirs2d.length >= 2) {
+      const sinGoc = Math.abs(dirs2d[0][0] * dirs2d[1][1] - dirs2d[0][1] * dirs2d[1][0]);
+      if (sinGoc < 0.65) {
+        hopLe = false;
+      }
+      diemItem += 0.9 * sinGoc;
+    }
+    tong += diemItem;
+  }
+  return { hopLe, thuong: tong / matTiepDienCau.length };
 }
 
 /** Hướng nhìn tốt nhất trên lưới. Đạt ngưỡng trước; trong số đạt, cân diện
@@ -393,7 +469,8 @@ export function chonHuongNhin(
   const capDayTru = tuyChon?.capDayTru ?? [];
   const matCap = tuyChon?.matCap ?? [];
   const coKhoiCong = Boolean(tuyChon?.coKhoiCong);
-  const coTuyChon = matTrongTam.length > 0 || capDayTru.length > 0 || matCap.length > 0;
+  const matTiepDienCau = tuyChon?.matTiepDienCau ?? [];
+  const coTuyChon = matTrongTam.length > 0 || capDayTru.length > 0 || matCap.length > 0 || matTiepDienCau.length > 0;
 
   if (!coTuyChon) {
     let tot: { huong: Diem3; diem: number; dat: boolean } | null = null;
@@ -414,30 +491,32 @@ export function chonHuongNhin(
     const camEst = uocLuongCameraPhoiCanh(diem, d);
     const mo = doMoMatTrongTam(huong, matTrongTam, coKhoiCong);
     const truInfo = diemTachDayTru(huong, camEst, capDayTru);
+    const tiepDienInfo = diemTiepDienCau(huong, matTiepDienCau);
     const napMo = kiemMoPhoiCanhNapDaDien(camEst, matCap);
-    const datKhongDetNap = truInfo.hopLe && napMo;
+    const datKhongDetNap = truInfo.hopLe && napMo && tiepDienInfo.hopLe;
     const datCoBan = datNguong(q, tran) && datKhongDetNap;
-    const datMo = !mo.coMatDung || mo.minNghieng >= 0.55;
-    return { huong, q, mo, truInfo, datKhongDetNap, datCoBan, datDayDu: datCoBan && datMo };
+    const datMo = (!mo.coMatDung || mo.minNghieng >= 0.55) && tiepDienInfo.hopLe;
+    return { huong, q, mo, truInfo, tiepDienInfo, datKhongDetNap, datCoBan, datDayDu: datCoBan && datMo };
   });
   const coUngVienMo = danhSach.some((x) => x.datDayDu);
   const coUngVienCoBan = danhSach.some((x) => x.datCoBan);
 
   let tot: { huong: Diem3; diem: number; hang: number } | null = null;
   for (const item of danhSach) {
-    const { huong, q, mo, truInfo, datKhongDetNap, datCoBan, datDayDu } = item;
+    const { huong, q, mo, truInfo, tiepDienInfo, datKhongDetNap, datCoBan, datDayDu } = item;
     const hang = coUngVienMo
       ? (datDayDu ? 3 : datCoBan ? 2 : datKhongDetNap ? 1 : 0)
       : coUngVienCoBan
         ? (datCoBan ? 2 : datKhongDetNap ? 1 : 0)
         : (datKhongDetNap ? 1 : 0);
-    const lucKeo = mo.coMatDung ? 0.55 : LUC_KEO_SGK;
+    const lucKeo = mo.coMatDung || matTiepDienCau.length > 0 ? 0.55 : LUC_KEO_SGK;
     const diemSo = q.dienTichBao / (tran.dienTichBao || 1)
       + 2.2 * Math.min(q.khoangDinhCanhMin, 0.22)
       + Math.min(q.khoangDinhMin, 0.38)
       + 0.5 * q.doSau / (tran.doSau || 1)
       + (matTrongTam.length > 0 ? 2.6 * mo.tb : 0)
       + (capDayTru.length > 0 ? 0.45 * truInfo.thuong : 0)
+      + (matTiepDienCau.length > 0 ? 2.4 * tiepDienInfo.thuong : 0)
       - lucKeo * (1 - tich(huong, quen));
     if (!tot || hang > tot.hang || (hang === tot.hang && diemSo > tot.diem)) {
       tot = { huong, diem: diemSo, hang };
@@ -856,3 +935,783 @@ export function khungNhinQuanhTam(
     nhinVao: [tamXoay[0], tamXoay[1], tamXoay[2]],
   };
 }
+
+export interface TuyChonCanDoiTam {
+  tiLeNgang: number;
+  tiLeDoc: number;
+  dichTamNgang?: number;
+  dichTamDoc?: number;
+  bienDichTamToiDa?: { ngang?: number; doc?: number };
+}
+
+export interface KetQuaCanDoiTam {
+  vungAnToanNdc: VungAnToanNdc;
+  lechOngKinhNgang: number;
+  lechOngKinhDoc: number;
+}
+
+/**
+ * Cân đối vùng an toàn NDC và độ lệch tâm quang học (`setViewOffset`) quanh `tamXoay` cố định:
+ * - Giữ nguyên tuyệt đối `controls.target === tamXoay` để xoay Orbit 90°/180°/360° quanh đúng tâm khối.
+ * - Khi hình chiếu bất đối xứng quanh `tamXoay` (vd: đỉnh chóp S hoặc điểm trên mặt tiếp diện cao hơn phần đáy),
+ *   phân bổ dải NDC `2 × tiLeDoc` / `2 × tiLeNgang` theo tỷ lệ nhô hai phía có chặn biên an toàn, đồng thời
+ *   dịch nhẹ tâm quang học ngược dấu để hình vừa cân giữa vùng khả dụng vừa đạt kích thước mục tiêu (~55–65% cao, ≤70% rộng/cao).
+ */
+export function khungAnToanCanDoiTam(
+  diem: readonly Diem3[],
+  tamXoay: Diem3,
+  fovDo: number,
+  tiLeKhung: number,
+  huongChon: Diem3 | undefined,
+  tuyChon: TuyChonCanDoiTam,
+): KetQuaCanDoiTam {
+  const tiLeNgang = Math.max(0.20, Math.min(0.86, Number.isFinite(tuyChon.tiLeNgang) ? tuyChon.tiLeNgang : TI_LE_LAP_KHUNG));
+  const tiLeDoc = Math.max(0.20, Math.min(0.84, Number.isFinite(tuyChon.tiLeDoc) ? tuyChon.tiLeDoc : TI_LE_LAP_KHUNG));
+  const uiNgang = Number.isFinite(tuyChon.dichTamNgang) ? (tuyChon.dichTamNgang as number) : 0;
+  const uiDoc = Number.isFinite(tuyChon.dichTamDoc) ? (tuyChon.dichTamDoc as number) : 0;
+  const fallback = (): KetQuaCanDoiTam => ({
+    vungAnToanNdc: {
+      xMin: -tiLeNgang,
+      xMax: tiLeNgang,
+      yMin: -tiLeDoc,
+      yMax: tiLeDoc,
+    },
+    lechOngKinhNgang: uiNgang,
+    lechOngKinhDoc: uiDoc,
+  });
+
+  const diemHopLe = diem.filter((p) => p.every(Number.isFinite));
+  if (
+    diemHopLe.length === 0 ||
+    !tamXoay.every(Number.isFinite) ||
+    !Number.isFinite(fovDo) || fovDo <= 0 || fovDo >= 180 ||
+    !Number.isFinite(tiLeKhung) || tiLeKhung <= 0
+  ) {
+    return fallback();
+  }
+
+  const d = chuan(
+    huongChon && huongChon.every(Number.isFinite) && Math.hypot(...huongChon) > 1e-9
+      ? huongChon
+      : ([...HUONG] as Diem3),
+  );
+  const knSym = khungNhinQuanhTam(diemHopLe, tamXoay, fovDo, tiLeKhung, d, {
+    xMin: -tiLeNgang,
+    xMax: tiLeNgang,
+    yMin: -tiLeDoc,
+    yMax: tiLeDoc,
+  });
+  if (!knSym) return fallback();
+
+  const kSym = Math.hypot(
+    knSym.viTri[0] - tamXoay[0],
+    knSym.viTri[1] - tamXoay[1],
+    knSym.viTri[2] - tamXoay[2],
+  );
+  const tanDoc = Math.tan((fovDo * Math.PI) / 360);
+  const tanNgang = tanDoc * tiLeKhung;
+  if (!(kSym > 1e-6) || !(tanDoc > 0) || !(tanNgang > 0)) return fallback();
+
+  const phai = chuan(Math.abs(d[2]) > 0.999 ? cheo([0, 1, 0], d) : cheo([0, 0, 1], d));
+  const len = cheo(d, phai);
+
+  let uxMin = 0;
+  let uxMax = 0;
+  let uyMin = 0;
+  let uyMax = 0;
+  for (const p of diemHopLe) {
+    const q = tru(p, tamXoay);
+    const depth = Math.max(0.25, kSym - tich(q, d));
+    const ux = tich(q, phai) / (depth * tanNgang);
+    const uy = tich(q, len) / (depth * tanDoc);
+    if (ux < uxMin) uxMin = ux;
+    if (ux > uxMax) uxMax = ux;
+    if (uy < uyMin) uyMin = uy;
+    if (uy > uyMax) uyMax = uy;
+  }
+
+  const maxAsymX = Math.max(0, Math.min(0.16, tuyChon.bienDichTamToiDa?.ngang ?? 0.08));
+  const maxAsymY = Math.max(0, Math.min(0.18, tuyChon.bienDichTamToiDa?.doc ?? 0.10));
+  const spanX = Math.max(1e-4, uxMax - uxMin);
+  const spanY = Math.max(1e-4, uyMax - uyMin);
+  const rawCx = 0.5 * (uxMax + uxMin) * Math.min(1.5, (2 * tiLeNgang) / spanX);
+  const rawCy = 0.5 * (uyMax + uyMin) * Math.min(1.5, (2 * tiLeDoc) / spanY);
+  const cX = Math.max(-maxAsymX, Math.min(maxAsymX, rawCx));
+  const cY = Math.max(-maxAsymY, Math.min(maxAsymY, rawCy));
+
+  return {
+    vungAnToanNdc: {
+      xMin: Math.max(-0.88, Math.min(-0.18, -tiLeNgang + cX)),
+      xMax: Math.min(0.88, Math.max(0.18, tiLeNgang + cX)),
+      yMin: Math.max(-0.86, Math.min(-0.18, -tiLeDoc + cY)),
+      yMax: Math.min(0.86, Math.max(0.18, tiLeDoc + cY)),
+    },
+    lechOngKinhNgang: uiNgang - cX,
+    lechOngKinhDoc: uiDoc - cY,
+  };
+}
+
+// ─── ĐỊNH VỊ ĐỐI TƯỢNG THÔNG MINH (SMART OBJECT LOCATE — AXO V9.4.17) ─────────
+
+export type LocateObjectKind =
+  | "point"
+  | "segment"
+  | "plane"
+  | "section"
+  | "solid"
+  | "curved_surface";
+
+export interface OccluderTriangleMesh {
+  objectId: string;
+  vertices: readonly Diem3[];
+  triangles: readonly [number, number, number][];
+  isSolidFace?: boolean;
+}
+
+export interface OccluderSphereMesh {
+  objectId: string;
+  center: Diem3;
+  radius: number;
+}
+
+export interface SmartLocateInput {
+  objectId: string;
+  objectKind: LocateObjectKind;
+  objectPoints: readonly Diem3[];
+  objectNormal?: Diem3 | null;
+  contextPoints: readonly Diem3[];
+  stableCenter?: TamXoayOnDinh | null;
+  currentPosition: Diem3;
+  currentTarget: Diem3;
+  fovDeg: number;
+  aspect: number;
+  occluderMeshes?: readonly OccluderTriangleMesh[];
+  occluderSpheres?: readonly OccluderSphereMesh[];
+  objectCenter?: Diem3;
+  isInteriorOrTangent?: boolean;
+}
+
+export type SmartLocateStatus =
+  | "located"
+  | "unchanged"
+  | "fallback_unchanged";
+
+export interface SmartLocateResult {
+  status: SmartLocateStatus;
+  position: Diem3;
+  target: Diem3;
+  viewDirection: Diem3;
+  distance: number;
+  targetNdc: [number, number];
+  normalAlignment: number | null;
+  segmentForeshorteningCos: number | null;
+  occludedRatio: number;
+  minMarginToHostMesh: number;
+  reason: string;
+  message?: string;
+}
+
+function add3(a: Diem3, b: Diem3): Diem3 {
+  return [a[0] + b[0], a[1] + b[1], a[2] + b[2]];
+}
+
+function scale3(v: Diem3, s: number): Diem3 {
+  return [v[0] * s, v[1] * s, v[2] * s];
+}
+
+function lerp3(a: Diem3, b: Diem3, t: number): Diem3 {
+  return [
+    a[0] + (b[0] - a[0]) * t,
+    a[1] + (b[1] - a[1]) * t,
+    a[2] + (b[2] - a[2]) * t,
+  ];
+}
+
+function distPt(a: Diem3, b: Diem3): number {
+  return Math.hypot(a[0] - b[0], a[1] - b[1], a[2] - b[2]);
+}
+
+function meanPt(pts: readonly Diem3[]): Diem3 | null {
+  if (pts.length === 0) return null;
+  let sx = 0, sy = 0, sz = 0, cnt = 0;
+  for (const p of pts) {
+    if (!p.every(Number.isFinite)) continue;
+    sx += p[0]; sy += p[1]; sz += p[2]; cnt += 1;
+  }
+  return cnt > 0 ? [sx / cnt, sy / cnt, sz / cnt] : null;
+}
+
+function pointToTriangleDist(p: Diem3, a: Diem3, b: Diem3, c: Diem3): number {
+  const ab = tru(b, a), ac = tru(c, a), ap = tru(p, a);
+  const d1 = tich(ab, ap), d2 = tich(ac, ap);
+  if (d1 <= 0 && d2 <= 0) return distPt(p, a);
+  const bp = tru(p, b);
+  const d3 = tich(ab, bp), d4 = tich(ac, bp);
+  if (d3 >= 0 && d4 <= d3) return distPt(p, b);
+  const vc = d1 * d4 - d3 * d2;
+  if (vc <= 0 && d1 >= 0 && d3 <= 0) {
+    const v = d1 / (d1 - d3);
+    return distPt(p, add3(a, scale3(ab, v)));
+  }
+  const cp = tru(p, c);
+  const d5 = tich(ab, cp), d6 = tich(ac, cp);
+  if (d6 >= 0 && d5 <= d6) return distPt(p, c);
+  const vb = d5 * d2 - d1 * d6;
+  if (vb <= 0 && d2 >= 0 && d6 <= 0) {
+    const w = d2 / (d2 - d6);
+    return distPt(p, add3(a, scale3(ac, w)));
+  }
+  const va = d3 * d6 - d5 * d4;
+  if (va <= 0 && (d4 - d3) >= 0 && (d5 - d6) >= 0) {
+    const w = (d4 - d3) / ((d4 - d3) + (d5 - d6));
+    return distPt(p, add3(b, scale3(tru(c, b), w)));
+  }
+  const denom = 1 / Math.max(1e-18, va + vb + vc);
+  const v = vb * denom, w = vc * denom;
+  const closest = add3(a, add3(scale3(ab, v), scale3(ac, w)));
+  return distPt(p, closest);
+}
+
+function rayIntersectsTriangleParam(
+  orig: Diem3,
+  dir: Diem3,
+  maxDist: number,
+  a: Diem3,
+  b: Diem3,
+  c: Diem3,
+): number | null {
+  const e1 = tru(b, a), e2 = tru(c, a);
+  const pvec = cheo(dir, e2);
+  const det = tich(e1, pvec);
+  if (Math.abs(det) < 1e-10) return null;
+  const invDet = 1 / det;
+  const tvec = tru(orig, a);
+  const u = tich(tvec, pvec) * invDet;
+  if (u < -1e-4 || u > 1 + 1e-4) return null;
+  const qvec = cheo(tvec, e1);
+  const v = tich(dir, qvec) * invDet;
+  if (v < -1e-4 || u + v > 1 + 1e-4) return null;
+  const t = tich(e2, qvec) * invDet;
+  if (t <= 1e-5 * maxDist || t >= maxDist * (1 - 1.5e-3)) return null;
+  return t;
+}
+
+function rayIntersectsSphereParam(
+  orig: Diem3,
+  dir: Diem3,
+  maxDist: number,
+  center: Diem3,
+  radius: number,
+): number | null {
+  const oc = tru(orig, center);
+  const b = tich(oc, dir);
+  const c = tich(oc, oc) - radius * radius;
+  const disc = b * b - c;
+  if (disc <= 0) return null;
+  const sqrtD = Math.sqrt(disc);
+  const t1 = -b - sqrtD;
+  if (t1 > 1e-5 * maxDist && t1 < maxDist * (1 - 1.5e-3)) return t1;
+  const t2 = -b + sqrtD;
+  if (t2 > 1e-5 * maxDist && t2 < maxDist * (1 - 1.5e-3)) return t2;
+  return null;
+}
+
+function projectToNdc(
+  pt: Diem3,
+  camPos: Diem3,
+  camTarget: Diem3,
+  fovDeg: number,
+  aspect: number,
+): [number, number] | null {
+  const fwd = tru(camPos, camTarget);
+  const dist = Math.hypot(fwd[0], fwd[1], fwd[2]);
+  if (!(dist > 1e-9)) return null;
+  const d: Diem3 = [fwd[0] / dist, fwd[1] / dist, fwd[2] / dist];
+  const phai = chuan(Math.abs(d[2]) > 0.999 ? cheo([0, 1, 0], d) : cheo([0, 0, 1], d));
+  const len = cheo(d, phai);
+  const rel = tru(pt, camTarget);
+  const depth = dist - tich(rel, d);
+  if (!(depth > 1e-6)) return null;
+  const tanDoc = Math.tan((fovDeg * Math.PI) / 360);
+  const tanNgang = tanDoc * aspect;
+  if (!(tanDoc > 0) || !(tanNgang > 0)) return null;
+  return [
+    tich(rel, phai) / (depth * tanNgang),
+    tich(rel, len) / (depth * tanDoc),
+  ];
+}
+
+function computeOccludedRatioForView(
+  camPos: Diem3,
+  samplePts: readonly Diem3[],
+  objectId: string,
+  objectKind: LocateObjectKind,
+  meshes: readonly OccluderTriangleMesh[],
+  spheres: readonly OccluderSphereMesh[],
+): number {
+  if (samplePts.length === 0 || (meshes.length === 0 && spheres.length === 0)) return 0;
+  let occluded = 0;
+  for (const pt of samplePts) {
+    const toPt = tru(pt, camPos);
+    const rayLen = Math.hypot(toPt[0], toPt[1], toPt[2]);
+    if (!(rayLen > 1e-9)) continue;
+    const dir: Diem3 = [toPt[0] / rayLen, toPt[1] / rayLen, toPt[2] / rayLen];
+    let hit = false;
+    for (const sph of spheres) {
+      if (sph.objectId === objectId && objectKind === "curved_surface") continue;
+      if (rayIntersectsSphereParam(camPos, dir, rayLen, sph.center, sph.radius) !== null) {
+        hit = true;
+        break;
+      }
+    }
+    if (!hit) {
+      for (const m of meshes) {
+        if (m.objectId === objectId && (objectKind === "solid" || objectKind === "section" || objectKind === "plane")) {
+          continue;
+        }
+        for (const [ia, ib, ic] of m.triangles) {
+          const va = m.vertices[ia], vb = m.vertices[ib], vc = m.vertices[ic];
+          if (!va || !vb || !vc) continue;
+          if (rayIntersectsTriangleParam(camPos, dir, rayLen, va, vb, vc) !== null) {
+            hit = true;
+            break;
+          }
+        }
+        if (hit) break;
+      }
+    }
+    if (hit) occluded += 1;
+  }
+  return occluded / samplePts.length;
+}
+
+function minClearanceToMeshes(
+  camPos: Diem3,
+  meshes: readonly OccluderTriangleMesh[],
+  spheres: readonly OccluderSphereMesh[],
+): number {
+  let minDist = Infinity;
+  for (const sph of spheres) {
+    const d = distPt(camPos, sph.center) - sph.radius;
+    if (d < minDist) minDist = d;
+  }
+  for (const m of meshes) {
+    for (const [ia, ib, ic] of m.triangles) {
+      const va = m.vertices[ia], vb = m.vertices[ib], vc = m.vertices[ic];
+      if (!va || !vb || !vc) continue;
+      const d = pointToTriangleDist(camPos, va, vb, vc);
+      if (d < minDist) minDist = d;
+    }
+  }
+  return minDist;
+}
+
+/**
+ * Bộ giải vị trí camera sư phạm cho nút "Định vị":
+ * - Bảo toàn ngữ cảnh khối chủ trong khung nhìn (không zoom mù vào 1 điểm cô lập).
+ * - Mặt phẳng / thiết diện: tránh góc liếc cạnh (`|u · n̂| >= 0.42`).
+ * - Đoạn thẳng / cạnh: tránh nhìn dọc trục (`|u · d̂| <= 0.82`).
+ * - Điểm nằm trong / tiếp xúc khối: chọn hướng trong ~72 hướng ít bị che khuất nhất mà vẫn giữ camera ngoài vỏ khối.
+ */
+export function computeSmartLocateCamera(input: SmartLocateInput): SmartLocateResult {
+  const {
+    objectId,
+    objectKind,
+    objectPoints,
+    objectNormal,
+    contextPoints,
+    stableCenter,
+    currentPosition,
+    currentTarget,
+    fovDeg,
+    aspect,
+    occluderMeshes = [],
+    occluderSpheres = [],
+    objectCenter: explicitCenter,
+    isInteriorOrTangent = false,
+  } = input;
+
+  const fallback = (reason: string, message: string): SmartLocateResult => {
+    const curDir = tru(currentPosition, currentTarget);
+    const curLen = Math.hypot(curDir[0], curDir[1], curDir[2]);
+    const uCur: Diem3 = curLen > 1e-9 ? [curDir[0] / curLen, curDir[1] / curLen, curDir[2] / curLen] : chuan([...HUONG_SGK]);
+    return {
+      status: "fallback_unchanged",
+      position: [...currentPosition],
+      target: [...currentTarget],
+      viewDirection: uCur,
+      distance: curLen,
+      targetNdc: [0, 0],
+      normalAlignment: null,
+      segmentForeshorteningCos: null,
+      occludedRatio: 0,
+      minMarginToHostMesh: minClearanceToMeshes(currentPosition, occluderMeshes, occluderSpheres),
+      reason,
+      message,
+    };
+  };
+
+  const validObjPts = objectPoints.filter((p) => p.every(Number.isFinite));
+  const validCtxPts = contextPoints.filter((p) => p.every(Number.isFinite));
+  const objCenter =
+    explicitCenter && explicitCenter.every(Number.isFinite)
+      ? explicitCenter
+      : meanPt(validObjPts);
+
+  if (
+    !objCenter
+    || validObjPts.length === 0
+    || !currentPosition.every(Number.isFinite)
+    || !currentTarget.every(Number.isFinite)
+    || !Number.isFinite(fovDeg) || fovDeg <= 0 || fovDeg >= 180
+    || !Number.isFinite(aspect) || aspect <= 0
+  ) {
+    return fallback("missing_or_non_finite_coordinates", "Đối tượng chưa có tọa độ hữu hạn để định vị.");
+  }
+
+  const allScenePts = validCtxPts.length > 0 ? [...validCtxPts, ...validObjPts] : [...validObjPts];
+  const hostBox = hopBaoCuaDiem([...allScenePts]);
+  const hostDiam = hostBox
+    ? Math.hypot(
+        hostBox.max[0] - hostBox.min[0],
+        hostBox.max[1] - hostBox.min[1],
+        hostBox.max[2] - hostBox.min[2],
+      )
+    : 1;
+  const sceneScale = Math.max(hostDiam, 1e-4);
+  const hostCenter: Diem3 =
+    stableCenter && stableCenter.tamXoay.every(Number.isFinite)
+      ? stableCenter.tamXoay
+      : (meanPt(validCtxPts) ?? objCenter);
+
+  const nHat: Diem3 | null =
+    objectNormal && objectNormal.every(Number.isFinite) && Math.hypot(...objectNormal) > 1e-9
+      ? chuan(objectNormal)
+      : null;
+
+  let segDir: Diem3 | null = null;
+  if (objectKind === "segment" && validObjPts.length >= 2) {
+    const d = tru(validObjPts[1], validObjPts[0]);
+    if (Math.hypot(...d) > 1e-9) segDir = chuan(d);
+  }
+
+  const objDistFromHost = distPt(objCenter, hostCenter);
+  const hasHostSpan = validCtxPts.length >= 4 && objDistFromHost > 0.15 * sceneScale;
+  const contextBlend =
+    objectKind === "solid" || objectKind === "curved_surface"
+      ? 1.0
+      : objectKind === "point"
+        ? (hasHostSpan ? 0.45 : 0.34)
+        : objectKind === "segment"
+          ? (hasHostSpan ? 0.48 : 0.28)
+          : (hasHostSpan ? 0.32 : 0.26);
+  const desiredTarget = lerp3(objCenter, hostCenter, validCtxPts.length > 0 ? contextBlend : 0);
+
+  const curOffset = tru(currentPosition, currentTarget);
+  const curDist = Math.hypot(curOffset[0], curOffset[1], curOffset[2]);
+  const uCur: Diem3 =
+    curDist > 1e-9
+      ? [curOffset[0] / curDist, curOffset[1] / curDist, curOffset[2] / curDist]
+      : chuan([...HUONG_SGK]);
+
+  // Chuẩn bị lưới điểm kiểm chứng che khuất & căn khung
+  const samplePtsForOcclusion: Diem3[] = validObjPts.length <= 6
+    ? [...validObjPts, ...(validObjPts.length > 1 ? [objCenter] : [])]
+    : [objCenter, validObjPts[0], validObjPts[Math.floor(validObjPts.length / 3)], validObjPts[Math.floor((2 * validObjPts.length) / 3)]];
+
+  const hostFaceNormals: Diem3[] = [];
+  for (const m of occluderMeshes) {
+    if (!m.isSolidFace) continue;
+    for (const [ia, ib, ic] of m.triangles) {
+      const va = m.vertices[ia], vb = m.vertices[ib], vc = m.vertices[ic];
+      if (!va || !vb || !vc) continue;
+      const n = cheo(tru(vb, va), tru(vc, va));
+      const nLen = Math.hypot(n[0], n[1], n[2]);
+      if (!(nLen > 1e-9)) continue;
+      const nu: Diem3 = [n[0] / nLen, n[1] / nLen, n[2] / nLen];
+      if (!hostFaceNormals.some((e) => Math.abs(tich(e, nu)) > 0.995)) {
+        hostFaceNormals.push(nu);
+      }
+    }
+  }
+
+  const framingPts = validCtxPts.length > 0 ? allScenePts : validObjPts;
+  const safeNdc =
+    objectKind === "solid" || objectKind === "curved_surface"
+      ? { xMin: -0.78, xMax: 0.78, yMin: -0.78, yMax: 0.78 }
+      : { xMin: -0.84, xMax: 0.84, yMin: -0.82, yMax: 0.82 };
+
+  const computeDistanceAndClearance = (dirUnit: Diem3, camTarget: Diem3): { pos: Diem3; dist: number; margin: number } | null => {
+    const knObj = khungNhinQuanhTam(validObjPts, objCenter, fovDeg, aspect, dirUnit, {
+      xMin: -0.58,
+      xMax: 0.58,
+      yMin: -0.58,
+      yMax: 0.58,
+    });
+    const knCtx = khungNhinQuanhTam(framingPts, camTarget, fovDeg, aspect, dirUnit, safeNdc);
+    const baseDist = knCtx ? Math.max(0.2 * sceneScale, distPt(knCtx.viTri, camTarget)) : Math.max(1.5 * sceneScale, curDist);
+    const objOnlyDist = knObj ? distPt(knObj.viTri, objCenter) * 1.15 : 0;
+    const ctxFloorMult = validCtxPts.length > 0 ? (objectKind === "point" ? 1.02 : 1.06) : 0.94;
+    let dist =
+      objectKind === "point"
+        ? Math.max(baseDist * ctxFloorMult, 0.75 * sceneScale)
+        : Math.max(baseDist * ctxFloorMult, objOnlyDist, 0.5 * sceneScale);
+
+    const floorSupport = stableCenter ? Math.max(0.2 * sceneScale, khoangTuaTheoHuong(stableCenter, dirUnit) * 1.35) : 0.2 * sceneScale;
+    dist = Math.max(dist, floorSupport);
+
+    // Bảo đảm vị trí camera không cắt xuyên vào vỏ khối / mặt cầu
+    for (let step = 0; step < 5; step += 1) {
+      const candidatePos = add3(camTarget, scale3(dirUnit, dist));
+      const margin = minClearanceToMeshes(candidatePos, occluderMeshes, occluderSpheres);
+      const minSafe = 0.08 * sceneScale;
+      if (!Number.isFinite(margin) || margin >= minSafe) {
+        return { pos: candidatePos, dist, margin };
+      }
+      dist += Math.max(minSafe - margin + 0.05 * sceneScale, 0.12 * sceneScale);
+    }
+    const finalPos = add3(camTarget, scale3(dirUnit, dist));
+    return { pos: finalPos, dist, margin: minClearanceToMeshes(finalPos, occluderMeshes, occluderSpheres) };
+  };
+
+  // Kiểm tra góc nhìn hiện tại đã tối ưu chưa (unchanged)
+  const curTargetNdc = projectToNdc(objCenter, currentPosition, currentTarget, fovDeg, aspect);
+  const curObjNdcs = validObjPts.map((p) => projectToNdc(p, currentPosition, currentTarget, fovDeg, aspect));
+  const curNormalAlign = nHat ? Math.abs(tich(uCur, nHat)) : null;
+  const curSegCos = segDir ? Math.abs(tich(uCur, segDir)) : null;
+  const curOcc = computeOccludedRatioForView(currentPosition, samplePtsForOcclusion, objectId, objectKind, occluderMeshes, occluderSpheres);
+  const curMargin = minClearanceToMeshes(currentPosition, occluderMeshes, occluderSpheres);
+  const refFramed = computeDistanceAndClearance(uCur, desiredTarget);
+  const allObjInViewport =
+    curTargetNdc !== null
+    && Math.abs(curTargetNdc[0]) <= 0.58
+    && Math.abs(curTargetNdc[1]) <= 0.58
+    && curObjNdcs.every((ndc) => ndc !== null && Math.abs(ndc[0]) <= 0.78 && Math.abs(ndc[1]) <= 0.78);
+  const curPoseOptimal =
+    allObjInViewport
+    && distPt(currentTarget, desiredTarget) <= 0.22 * sceneScale
+    && (curNormalAlign === null || curNormalAlign >= 0.48)
+    && (curSegCos === null || curSegCos <= 0.76)
+    && curOcc === 0
+    && (!Number.isFinite(curMargin) || curMargin >= 0.08 * sceneScale)
+    && refFramed !== null
+    && curDist >= refFramed.dist * 0.80
+    && curDist <= refFramed.dist * 1.24;
+
+  if (curPoseOptimal) {
+    return {
+      status: "unchanged",
+      position: [...currentPosition],
+      target: [...currentTarget],
+      viewDirection: uCur,
+      distance: curDist,
+      targetNdc: curTargetNdc!,
+      normalAlignment: curNormalAlign,
+      segmentForeshorteningCos: curSegCos,
+      occludedRatio: curOcc,
+      minMarginToHostMesh: curMargin,
+      reason: "current_view_already_optimal",
+    };
+  }
+
+  // Sinh tối thiểu 72 hướng nhìn ứng viên xác định tính (camera-relative + cầu + hướng ưu tiên theo mặt/cạnh)
+  const candidates: Diem3[] = [uCur, chuan([...HUONG_SGK])];
+  const baseAz = Math.atan2(uCur[1], uCur[0]);
+  const azCount = 12;
+  const elevDegs = [16, 28, 42, 58, -14, -30];
+  for (const elDeg of elevDegs) {
+    const el = (elDeg * Math.PI) / 180;
+    const cosEl = Math.cos(el);
+    const sinEl = Math.sin(el);
+    for (let ai = 0; ai < azCount; ai += 1) {
+      const az = baseAz + (2 * Math.PI * ai) / azCount;
+      candidates.push([cosEl * Math.cos(az), cosEl * Math.sin(az), sinEl]);
+    }
+  }
+  if (nHat) {
+    const seed: Diem3 = Math.abs(nHat[2]) < 0.85 ? [0, 0, 1] : [1, 0, 0];
+    const t1 = chuan(cheo(nHat, seed));
+    const t2 = chuan(cheo(nHat, t1));
+    for (const sign of [1, -1]) {
+      for (const tilt of [0.55, 0.75, 0.90]) {
+        const perp = Math.sqrt(1 - tilt * tilt);
+        for (let k = 0; k < 4; k += 1) {
+          const th = (Math.PI * k) / 2;
+          candidates.push(chuan([
+            sign * tilt * nHat[0] + perp * (Math.cos(th) * t1[0] + Math.sin(th) * t2[0]),
+            sign * tilt * nHat[1] + perp * (Math.cos(th) * t1[1] + Math.sin(th) * t2[1]),
+            sign * tilt * nHat[2] + perp * (Math.cos(th) * t1[2] + Math.sin(th) * t2[2]),
+          ]));
+        }
+      }
+    }
+  }
+  if (segDir) {
+    const seed: Diem3 = Math.abs(segDir[2]) < 0.85 ? [0, 0, 1] : [1, 0, 0];
+    const p1 = chuan(cheo(segDir, seed));
+    const p2 = chuan(cheo(segDir, p1));
+    for (let k = 0; k < 8; k += 1) {
+      const th = (2 * Math.PI * k) / 8;
+      candidates.push(chuan([
+        0.92 * (Math.cos(th) * p1[0] + Math.sin(th) * p2[0]) + 0.38 * uCur[0],
+        0.92 * (Math.cos(th) * p1[1] + Math.sin(th) * p2[1]) + 0.38 * uCur[1],
+        0.92 * (Math.cos(th) * p1[2] + Math.sin(th) * p2[2]) + 0.38 * uCur[2],
+      ]));
+    }
+  }
+
+  let bestScore = Infinity;
+  let bestResult: SmartLocateResult | null = null;
+  let uCurCandidateScore: number | null = null;
+
+  for (let candIdx = 0; candIdx < candidates.length; candIdx += 1) {
+    const rawDir = candidates[candIdx]!;
+    if (!rawDir.every(Number.isFinite) || Math.hypot(...rawDir) <= 1e-9) continue;
+    const u = chuan(rawDir);
+    const framed = computeDistanceAndClearance(u, desiredTarget);
+    if (!framed) continue;
+
+    const targetNdc = projectToNdc(objCenter, framed.pos, desiredTarget, fovDeg, aspect);
+    if (!targetNdc || Math.abs(targetNdc[0]) > 0.88 || Math.abs(targetNdc[1]) > 0.88) continue;
+
+    const normAlign = nHat ? Math.abs(tich(u, nHat)) : null;
+    const segCos = segDir ? Math.abs(tich(u, segDir)) : null;
+    const occRatio = computeOccludedRatioForView(framed.pos, samplePtsForOcclusion, objectId, objectKind, occluderMeshes, occluderSpheres);
+
+    let penalty = 0;
+    // 1. Che khuất ưu tiên tuyệt đối (đặc biệt với điểm nằm trong khối / tiếp xúc)
+    penalty += occRatio * (isInteriorOrTangent ? 220 : 140);
+    // 2. Mặt phẳng & thiết diện: cấm nhìn liếc cạnh (|u · n̂| < 0.42) + ưu tiên diện tích hình chiếu đa giác 2D
+    if (normAlign !== null) {
+      if (normAlign < 0.42) penalty += 160 + (0.42 - normAlign) * 200;
+      else if (normAlign < 0.52) penalty += (0.52 - normAlign) * 18;
+      // Thích góc nhìn nghiêng sư phạm (0.55..0.88) hơn nhìn thẳng đứng quá dẹt
+      if (normAlign > 0.94) penalty += (normAlign - 0.94) * 12;
+    }
+    if ((objectKind === "section" || objectKind === "plane") && validObjPts.length >= 3) {
+      const poly2d: [number, number][] = [];
+      let clippedPolyPts = 0;
+      for (const p of validObjPts) {
+        const ndc = projectToNdc(p, framed.pos, desiredTarget, fovDeg, aspect);
+        if (!ndc) {
+          clippedPolyPts += 1;
+        } else {
+          if (Math.abs(ndc[0]) > 0.92 || Math.abs(ndc[1]) > 0.92) clippedPolyPts += 1;
+          poly2d.push(ndc);
+        }
+      }
+      penalty += clippedPolyPts * 22;
+      if (poly2d.length >= 3) {
+        let twiceArea = 0;
+        for (let i = 0; i < poly2d.length; i += 1) {
+          const a = poly2d[i]!;
+          const b = poly2d[(i + 1) % poly2d.length]!;
+          twiceArea += a[0] * b[1] - b[0] * a[1];
+        }
+        const polyAreaNdc = 0.5 * Math.abs(twiceArea);
+        if (polyAreaNdc < 0.015) penalty += 35;
+        else penalty -= Math.min(polyAreaNdc * 18, 8);
+      }
+    }
+    // 3. Đoạn thẳng: tránh nhìn dọc theo cạnh (|u · d̂| > 0.82)
+    if (segCos !== null) {
+      if (segCos > 0.82) penalty += 150 + (segCos - 0.82) * 200;
+      else penalty += segCos * segCos * 12;
+    }
+    // 4. Bảo toàn bối cảnh khối chủ & tránh cắt viền khung nhìn / nhìn lướt sát mặt bên của khối
+    if (validCtxPts.length > 0) {
+      let minX = Infinity, maxX = -Infinity, minY = Infinity, maxY = -Infinity;
+      let ctxClipped = 0;
+      for (const p of validCtxPts) {
+        const ndc = projectToNdc(p, framed.pos, desiredTarget, fovDeg, aspect);
+        if (!ndc || Math.abs(ndc[0]) > 0.90 || Math.abs(ndc[1]) > 0.90) {
+          ctxClipped += 1;
+        }
+        if (ndc) {
+          if (ndc[0] < minX) minX = ndc[0];
+          if (ndc[0] > maxX) maxX = ndc[0];
+          if (ndc[1] < minY) minY = ndc[1];
+          if (ndc[1] > maxY) maxY = ndc[1];
+        }
+      }
+      penalty += ctxClipped * 18;
+      if (validCtxPts.length >= 4 && Number.isFinite(minX)) {
+        const spanX = Math.min(2, Math.max(0, maxX - minX));
+        const spanY = Math.min(2, Math.max(0, maxY - minY));
+        penalty -= Math.min(spanX * spanY * 8, 6);
+      }
+    }
+    for (const fn of hostFaceNormals) {
+      const fCos = Math.abs(tich(u, fn));
+      if (fCos < 0.14) penalty += (0.14 - fCos) * 25;
+    }
+    // 5. Tránh lật ngược chiều đứng (nhìn từ dưới lên sâu quá -0.15)
+    if (u[2] < 0.08) penalty += 35 + (0.08 - u[2]) * 60;
+    else if (u[2] > 0.90) penalty += (u[2] - 0.90) * 25;
+    // 6. Giữ tâm đối tượng tương đối trung tâm trong khung nhìn & chuyển động mượt từ góc nhìn hiện tại
+    penalty += (Math.abs(targetNdc[0]) + Math.abs(targetNdc[1])) * 6;
+    if (Math.abs(targetNdc[0]) > 0.56 || Math.abs(targetNdc[1]) > 0.56) {
+      penalty += 14;
+    }
+    const rotCos = Math.max(-1, Math.min(1, tich(u, uCur)));
+    penalty += (1 - rotCos) * 4.5;
+    // 7. Rất nhẹ ưu tiên hướng 3/4 chuẩn SGK nếu nhiều hướng ngang điểm
+    const sgkCos = tich(u, chuan([...HUONG_SGK]));
+    penalty += (1 - sgkCos) * 0.4;
+    if (candIdx === 0) uCurCandidateScore = penalty;
+
+    if (penalty < bestScore) {
+      bestScore = penalty;
+      bestResult = {
+        status: "located",
+        position: framed.pos,
+        target: desiredTarget,
+        viewDirection: u,
+        distance: framed.dist,
+        targetNdc,
+        normalAlignment: normAlign,
+        segmentForeshorteningCos: segCos,
+        occludedRatio: occRatio,
+        minMarginToHostMesh: framed.margin,
+        reason: `smart_locate_${objectKind}`,
+      };
+    }
+  }
+
+  const allObjUnclipped =
+    curTargetNdc !== null
+    && Math.abs(curTargetNdc[0]) <= 0.88
+    && Math.abs(curTargetNdc[1]) <= 0.88
+    && curObjNdcs.every((ndc) => ndc !== null && Math.abs(ndc[0]) <= 0.92 && Math.abs(ndc[1]) <= 0.92);
+  if (
+    bestResult
+    && allObjUnclipped
+    && distPt(currentTarget, desiredTarget) <= 0.22 * sceneScale
+    && (curNormalAlign === null || curNormalAlign >= 0.42)
+    && (curSegCos === null || curSegCos <= 0.82)
+    && curOcc <= bestResult.occludedRatio + 1e-6
+    && (!Number.isFinite(curMargin) || curMargin >= 0.08 * sceneScale)
+    && refFramed !== null
+    && curDist >= refFramed.dist * 0.80
+    && curDist <= refFramed.dist * 1.24
+    && uCurCandidateScore !== null
+    && uCurCandidateScore <= bestScore + 5.0
+  ) {
+    return {
+      status: "unchanged",
+      position: [...currentPosition],
+      target: [...currentTarget],
+      viewDirection: uCur,
+      distance: curDist,
+      targetNdc: curTargetNdc!,
+      normalAlignment: curNormalAlign,
+      segmentForeshorteningCos: curSegCos,
+      occludedRatio: curOcc,
+      minMarginToHostMesh: curMargin,
+      reason: "current_view_already_optimal",
+    };
+  }
+
+  return bestResult ?? fallback("no_valid_locate_candidate", "Không tìm thấy hướng nhìn hợp lệ cho đối tượng.");
+}
+

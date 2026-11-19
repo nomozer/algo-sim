@@ -74,8 +74,6 @@ from app.accounts.router import (
     set_session_cookie,
     router as accounts_router,
 )
-from app.accounts.classroom_router import router as classroom_router
-from app.accounts.session_router import router as session_router
 from app.ai.telemetry import begin_request_usage
 from app.persistence.classroom_models import User as AccountUser
 
@@ -92,10 +90,8 @@ app.add_middleware(
 
 init_db()
 
-# M18 — tầng tài khoản/lớp học. Đăng ký SAU init_db để bảng có mặt trên SQLite.
+# M18 — tầng tài khoản. Đăng ký SAU init_db để bảng có mặt trên SQLite.
 app.include_router(accounts_router)
-app.include_router(classroom_router)
-app.include_router(session_router)
 
 
 @app.middleware("http")
@@ -1529,3 +1525,10 @@ async def input_prepare(
 # Trợ giúp giải thích trạng thái engine của miền Tin học: người gọi duy nhất là `AIHelpPanel` (không còn gắn vào giao
 # diện từ khi gỡ Tin học, `ui-hygiene.test.ts` đã cấm nó hiện ra). Prompt `skills/explain.md` cùng các prompt legacy
 # của `LLM_ONLY` đã được gỡ hoàn toàn ở `CACHE_VERSION = "132"`. Khoá: `tests/test_api.py::test_endpoint_tutor_flow_da_xoa` (404).
+
+
+# ── Editable Construction Steps & Verified Feedback (`step_edit_router`) ─────
+from app.simulation.step_edit_router import router as step_edit_router  # noqa: E402
+
+app.include_router(step_edit_router)
+

@@ -1,0 +1,13 @@
+{
+  "list_browser_targets_evidence_id": "ev_b2f43d7be6215bb6faa2b9dd2cb7d8803902d3b5d3a0d8fa6dcdea372ab10809",
+  "inspect_web_page_evidence_id": "ev_9e1ee68f54f6739043e1a61321e20364a546c12bfdeca2cf752570c0d149e2fe",
+  "capture_web_screenshot_evidence_id": "ev_42192db63467f2eeaeb039d1e17c48cb4cdffe091be36e06d49f53088bc60492",
+  "target_id": "9796E457FA1A0700A62A074C99AE59C3",
+  "url": "http://127.0.0.1:3001/simulation/pyramid-three-point-section",
+  "title": "Mô phỏng hình học 3D | Axo",
+  "console_count": 0,
+  "network_count": 0,
+  "screenshot_path": "images/release-gate-rea-mcp.png",
+  "screenshot_bytes": 133855,
+  "screenshot_sha256": "7c6be261d76b65f48d65b08adb7e88e027ed641f879c48783dd25edfe808574e"
+}

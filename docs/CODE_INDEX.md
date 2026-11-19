@@ -1,5 +1,30 @@
 # CODE_INDEX.md — Chỉ mục module + BỘ NHỚ KIẾN TRÚC
 
+## Attachment PDF preview
+
+`frontend/src/components/PdfPreview.tsx` renders the first PDF page locally with PDF.js, reports the parsed page count, provides download and cancels the document task when the preview closes. The input and submission pipeline remains in `ProblemInput.tsx` and `llm/input.ts`.
+
+`frontend/scripts/attachment-resize.node-test.mjs` exercises attachment draft preservation and proportional scroll control across a desktop-to-mobile viewport resize against a running local Axo server.
+
+## Editable Construction Steps & Local Hybrid Partial Rebuild (2026-11-18)
+
+| Path | Owns | Locked by |
+|---|---|---|
+| `backend/app/persistence/step_edit_models.py` · `backend/alembic/env.py` · `backend/alembic/versions/9c4d8e2b7a10_add_step_edit_tables.py` · `backend/app/simulation/geometry/curved.py` · `backend/app/simulation/geometry_functions/step_editor.py` · `backend/app/ai/step_edit_route.py` · `backend/app/simulation/geometry_functions/feedback_dataset.py` · `backend/app/simulation/step_edit_router.py` · `backend/scripts/prepare_step_feedback_dataset.py` | Zero-LLM deterministic Vietnamese construction-step parser (incl. unnamed bisector planes, `(?-i:...)` point labels, inline midpoints, comma & sub-segment ratios), object/step dependency DAG with cycle & missing-reference detection, IoC `SceneProjectionHooks` separating `step_editor.py` from `scene3d`, Exact Kernel curved-boundary separation (`circumscribed_sphere`/`ERR_KHONG_NGOAI_TIEP` in `curved.py`), topological partial/`force_full_rebuild` `Scene3D` rebuild in Exact Kernel (`Fraction`, `Radical`, Gram `Metric`, derived `vector_from_points`/`plane_parallel_to_plane`/`line_perpendicular_to_plane`/`circumscribed_sphere.center`/`measure.total_area`/`assign*`) with real geometric equivalence (`before_after_diff` + cyclic section check), global downstream orthogonality/altitude/plane-incidence invariants, continuity/equivalence/uniqueness/common-perpendicular/section-boundary role validation, `_prime` -> `′` notation hygiene, `READOUT_STEP_NOT_EDITABLE` explicit target guard, anonymized helper symbol isolation, fail-closed `UNSUPPORTED_DOWNSTREAM_RECOMPUTE` & `_assert_verified_step_edit_result` HTTP 422 rollback, per-session bounded `RLock` concurrency serialization + single-worker `UNSUPPORTED_MULTI_WORKER_TOPOLOGY` runtime guard + PostgreSQL row locking (`FOR UPDATE`), `409 STALE_REVISION_CONFLICT` (`expected_committed_version`) / `CONCURRENT_STEP_EDIT_CONFLICT` / `EDIT_CANCELLED` / `EDIT_SUPERSEDED` + `POST /api/simulation/steps/cancel` (head-verified rollback + `only_if_uncommitted`) + `client_request_id` idempotent replay & post-commit `client_seq` tracking, `503 PERSISTENCE_UNAVAILABLE`, empty-session `committed_version` guard, mutated-downstream `step_overrides` invalidation, Alembic migration `9c4d8e2b7a10` (`step_edit_sessions`, `step_edit_revisions`, `step_edit_feedback`), owner isolation, verified feedback curation (`_is_verified_validation_and_execution`, `MODEL_NOT_TRAINED` reported explicitly until offline training), and grouped JSONL dataset exporter | `backend/tests/geometry/test_editable_construction_steps.py`, `backend/tests/geometry/test_step_editor_v22_reliability.py`, `backend/tests/geometry/test_step_editor_root_cause_stabilization.py`, `backend/tests/geometry/test_step_editor_independent_acceptance.py`, `backend/tests/geometry/test_step_editor_final_premerge.py`, `backend/tests/geometry/test_step_editor_integration_closure.py` |
+| `frontend/src/state/construction-step-edits.ts` · `frontend/src/components/ConstructionStepEditor.tsx` · `frontend/src/components/SimulationWorkspace.tsx` · `frontend/src/simulations/domains/geometry/scene3d-model.ts` · `frontend/src/simulations/domains/geometry/scene3d-semantic-policy.ts` · `frontend/src/simulations/domains/geometry/scene3d-view.tsx` · `frontend/src/styles/global.css` | Hover-revealed pencil edit trigger (`0px` default layout shift), inline `<textarea>` step editor (`Hủy` / `Chạy` only, form-level `Escape` / Arrow / Space isolation & `stepIndex`-scoped draft preservation, live `Cancel` aborts in-flight request via `cancelInFlightStepEdit` + `POST /api/simulation/steps/cancel` + unmount cleanup), unified `resolveStepDisplayMeta` syncing `#dock-steps-ul`, `#pa-short-title`, and `#pa-pips-mount`, rebuild-aware active-step scroll sync (`tong`/`scene`), `markVerifiedStepEditedScene` + Hybrid answer rebinding across mutated `Scene3D`, fail-closed `isVerifiedStepEditCommitResponse` & normalized `version_number` / `committed_version` / `revision_version_number` clock guard + optional `expectedCommittedVersion`, cross-reload monotonic `allocateMonotonicSubmitSeq` & `editMutationEpochRef` stale-response guard, `AbortController` + `client_seq` supersede/timeout (`only_if_uncommitted` cancel + bounded `/state` post-commit recovery + retry `client_request_id` reuse), `inline_step_parent` step coalescing, reload recovery (`localStorage` + `/api/simulation/sessions/{id}/state`), and same-problem `Scene3D` camera/display & `ErrorBoundary` `viewerMountGen` WebGL context-loss remount recovery across partial rebuilds | `frontend/src/components/construction-step-editor.test.tsx`, `frontend/src/code-index-sync.test.ts` |
+
+## Single-Instance Workspace Navigation & Projected Tab Bar (2026-11-14)
+
+| Path | Owns | Locked by |
+|---|---|---|
+| `frontend/src/state/workspace-tab-identity.ts` · `frontend/src/components/WorkspaceTabBar.tsx` | Canonical single-instance resource identities (`LIBRARY_RESOURCE_KEY = "library"`, `problem:<canonicalId>`, `draft:new`), deduplicated tab matching (`findMatchingOpenSimulationTab`, `buildProjectedWorkspaceTabs`), and the shared `.ws-tab-bar` header (`WorkspaceTabBar`) used across `SimulationWorkspace` and `LibraryView` | `frontend/src/state/workspace-single-instance-navigation.test.tsx`, `frontend/src/components/phase-b-views.test.tsx`, `frontend/src/code-index-sync.test.ts` |
+
+## Axo Reusable 2D Geometry Illustration System & Library Visual Refinement (2026-11-09)
+
+| Path | Owns | Locked by |
+|---|---|---|
+| `frontend/src/components/geometry2d/primitives.tsx` · `frontend/src/components/geometry2d/family-icons.tsx` · `frontend/src/components/geometry2d/templates.tsx` · `frontend/src/components/geometry2d/resolver.ts` · `frontend/src/components/geometry2d/index.ts` · `frontend/src/components/SamplePreview.tsx` · `frontend/src/components/LibraryView.tsx` · `frontend/src/components/SessionCard.tsx` · `GEOMETRY_VISUAL_SPEC.md` | Two-tier Reusable 2D Geometry Illustration System (`Axo Geometry 2D System`): Tier A `24×24` Geometry Family Icons (`pyramid`, `sphere`, `cylinder`, `cone`, `neutral`, `GeometryFamilyIcon`, `normalizeGeometryFamily`, `renderFamilyThumbnailContent`), Tier B 14 composable 2D Problem Illustration Templates (`pyramid.section`, `pyramid.diagonal-section`, `pyramid.perpendicular`, `pyramid.altitude-distance`, `pyramid.volume-height`, `pyramid.circumscribed-sphere`, `sphere.plane-section`, `sphere.basic-radius`, `cylinder.perpendicular-section`, `cylinder.oblique-axis`, `cylinder.right-basic`, `cone.axial-section`, `cone.slant-generator`, `cone.inscribed-cylinder`) built from shared composable 2D shape & relation components (`Pyramid2D`, `Sphere2D`, `Cylinder2D`, `Cone2D`, `Plane2D`, `Section2D`, `Segment2D`, `PerpendicularMarker2D`, `Geo2D*`, `GEO2D_TOKENS`), structured `IllustrationSpec` (`deriveIllustrationSpecFromScene3D`, `resolveTemplateFromIllustrationSpec`), 4-level `Scene3D` resolver (`resolveGeometryIllustration`: `verified` → `generic` → `family-icon` → `fallback-neutral` with `data-thumb-fallback="true"`, zero unverified `<text>` labels in generic/fallback modes), compact Library search & filter toolbar (`#library-filter-meta-row`, `#btn-library-filter-clear`), and content-fitted Composer `+` popover (`.plus-popover-menu`) | `frontend/src/components/geometry2d/geometry2d-illustration-system.test.tsx`, `frontend/src/components/phase-b-views.test.tsx`, `frontend/src/code-index-sync.test.ts` |
+
 ## Axo Camera-First & Photo Fan Stack + Multi-Image Unified Input (2026-11-08)
 
 | Path | Owns | Locked by |
@@ -131,6 +156,7 @@
 | `frontend/src/state/learner-recovery-snapshot.ts` | Schema-versioned (`schemaVersion: 1`), TTL-bounded (`30 min`), size-capped (`<= 4 KB`) `sessionStorage` learner state snapshot (`saveLearnerRecoverySnapshot`, `loadLearnerRecoverySnapshot`, `clearLearnerRecoverySnapshot`, `sanitizeCameraSnapshot`) preserving `stepIndex`, `selectedId`, display layer toggles/opacities, finite camera pose, `dockCollapsed`, and `mobileViewMode` across runtime recovery without corrupting incompatible state | `frontend/src/components/axo-runtime-recovery.test.tsx` |
 | `frontend/src/components/ErrorBoundary.tsx` · `frontend/src/App.tsx` · `frontend/src/llm/client.ts` | Condition-based `ErrorBoundary` auto-recovery on verified Vite HMR (`vite:afterUpdate`, capped at `MAX_HMR_AUTO_RECOVERIES = 2`, paused when hidden) and route/problem `resetKey` transitions (`AppRoot` location key + `popstate` sync); bounded exponential backoff retry (`postJsonWithBoundedRetry`, `maxRetries = 2`) in `analyzeViaServer` strictly for transient `TypeError` network failures and HTTP `502`/`504` | `frontend/src/components/axo-runtime-recovery.test.tsx`, `frontend/src/components/error-boundary.test.tsx`, `frontend/src/llm/offline-guard.test.ts` |
 | `frontend/src/simulations/domains/geometry/scene3d-view.tsx` · `frontend/src/components/SimulationWorkspace.tsx` · `frontend/src/styles/global.css` | `WebglLifecyclePhase` (`healthy` / `recovering` / `failed`) + `webglEpoch` GPU resource disposal and automatic context re-initialization on `webglcontextrestored` (capped at `MAX_WEBGL_AUTO_RESTORES = 2` with `4500ms` timeout); viewer-scoped `<ErrorBoundary mien="scene3d-viewer">` isolating Three.js/viewer crashes inside `#stage-3d-box` while keeping Header and Study Dock (`#ws-dock`, `#dock-prob-statement`, `#dock-steps-ul`) intact; compact borderless `AxoViewerRecoverySurface` (`"Đang khôi phục mô phỏng"`) and flat stage error surfaces | `frontend/src/components/axo-runtime-recovery.test.tsx`, `frontend/src/components/axo-error-experience.test.tsx` |
+| `frontend/src/simulations/domains/geometry/simulation-error-classifier.ts` · `frontend/src/components/AxoErrorExperience.tsx` | Pure deterministic simulation failure classifier (`classifySimulationError`, `shouldOmitDockConstructionSteps`, `ensureMutableSceneForAttachment`, `SimulationErrorCategory`: `invalid_scene_data` / `geometry_contradiction` / `unsupported_simulation` / `renderer_runtime_failure`, `SimulationErrorCode`: `SCENE_INVALID_SCHEMA` / `SCENE_UNAVAILABLE` / `GEOMETRY_CONTRADICTION` / `UNSUPPORTED_SIMULATION` / `WEBGL_INIT_FAILED` / `WEBGL_CONTEXT_LOST` / `VIEWER_RENDER_CRASH`): separates bounded `renderer_runtime_failure` (WebGL context/init/viewer boundary, auto-retry cap 2 with non-reload remount) from non-recoverable data/geometry/unsupported errors, suppressing stage navigation/manual retry buttons and `#ws-dock` Steps on non-recoverable failures | `frontend/src/simulations/domains/geometry/simulation-error-recovery.test.tsx`, `frontend/src/components/axo-error-experience.test.tsx`, `frontend/src/components/axo-error-navigation-matrix.test.tsx` |
 | `frontend/src/simulations/domains/geometry/scene3d-model.ts` · `frontend/src/simulations/domains/geometry/scene3d-annotations.ts` · `frontend/src/simulations/domains/geometry/scene3d-semantic-policy.ts` | `inspectScene3DPayloadIntegrity` deep structural/Exact fraction guard via `toNumber`; `classifyQuantityProvenance` (`GIVEN`, `CERTIFIED_DERIVED`, `UNVERIFIED`, `DISPLAY_ONLY`) blocking `length_unit.is_given === false` (`a = 1`) and illustrative/unlisted `free` quantities from `GIVEN`; `certifiedHybridGivenDimensions` reading Adapter `/4` `source_provenance` (`segment_length`, `regular_polygon.side`) without mutating `envelope.scene3d`; `AnnotationView.hideGiven` wiring for `#chk-dimensions`; and `formatQuantityCompactReadout` / `buildGoalCompletionSummary` preserving symbolic expressions (`2a`, `4a`) | `frontend/src/simulations/domains/geometry/scene3d-cross-family-audit.test.tsx`, `frontend/src/simulations/domains/geometry/scene3d-continuation-provenance-symbolic.test.tsx` |
 
 ## Closed input contract — research NOT_READY (committed 2026-10-30)
@@ -884,7 +910,7 @@ inventory của chính run `repo-cleanup`; không còn consumer/test sống và 
 | Vai trò | Vị trí |
 |---|---|
 | HTTP surface | `backend/app/main.py` — `POST /api/analyze` (tuyến sản phẩm **Hybrid `/4`** mặc định: `HYBRID_ROUTE_MODE = live`, `staging-replay` cho dev/test, `CACHE_VERSION = 132`), `/api/image/extract`, `/api/health`, `/api/diagnostics/runtime`, `/api/diagnostics/semantic`, `/api/preview/hybrid` (loopback fixture preview) |
-| Router gắn thêm | `accounts/router.py` · `accounts/classroom_router.py` · `accounts/session_router.py` (`include_router` ở `main.py`) |
+| Router gắn thêm | `accounts/router.py` (`/api/auth/*`, history, admin — không còn Classroom HTTP ở V1 Option B) · `simulation/step_edit_router.py` (`/api/simulations/step-edit*`) (`include_router` ở `main.py`; `HISTORICAL_REMOVED`: `accounts/classroom_router.py`, `accounts/session_router.py`) |
 | Production pipeline (`Hybrid /4`) | `backend/app/main.py::_analyze_hybrid_route` → `backend/app/ai/hybrid_offline.py` (`prepare_live_hybrid` / `prepare_staging_replay` → `run_hybrid_offline`) → `backend/app/ai/adapter4_route.py` (`run_typed_fact_next_v2_route` / `build_adapter4_response`) |
 | Trích xuất LLM duy nhất | `backend/app/ai/typed_fact_next_extraction.py` → `backend/app/simulation/geometry_functions/typed_fact_next.py` (`typed-fact-next/2`, qua `typed_fact_next_bridge.py::bridge_v2`) — chỉ trích xuất dữ kiện, quan hệ và mục tiêu kèm trích dẫn câu đề; **không** sinh chương trình giải |
 | Cổng nguồn, lập kế hoạch & nhân hình học | `registry.py::kiem_nguon` (`geometry-functions/33`, 49 hàm) → `planner.py` (`geometry-fact-planner/26`) → `engine.py` (`geometry-function-engine/24`) → `function_route.py` + `construction_continuity.py` |
@@ -1952,6 +1978,17 @@ Hộp thoại chụp ảnh đề bài tối giản (`#photo-camera-dialog`, Came
 xoay ảnh hay xác nhận nhiều bước. Chụp xong 1 ảnh ⇒ dừng `MediaStream`, đính kèm ảnh thành chip trong `#composer-files-wrap` và đóng hộp thoại ngay;
 bẫy Tab, đóng bằng Escape / nút đóng / bấm nền, trả focus về nút mở. Tests: `photo-problem-panel.test.tsx`; trình duyệt: `photo-problem-browser-check.mjs`.
 
+### `components/ScreenCaptureDialog.tsx` · Change impact: offline
+Chụp màn hình đề bài tĩnh trên Desktop/Laptop (`#menu-item-screen-capture`, `#screen-capture-dialog`) và phân giải khả năng Upload Menu theo thiết bị thực tế (`resolveUploadMenuCapabilities`):
+gọi `navigator.mediaDevices.getDisplayMedia({ video: true, audio: false })`, trích đúng 1 khung hình tĩnh PNG (`captureScreenStillFrame`) rồi dừng ngay lập tức toàn bộ `MediaStreamTrack` (`stopAllMediaStreamTracks` trong `finally`),
+hiển thị hộp thoại Light Mode xem trước ảnh khi chụp thành công (`Xem trước ảnh chụp màn hình`: Hủy / Chụp lại / Đính kèm vào khung nhập, không tự động gửi); đóng im lặng không mở modal khi người dùng chủ động hủy hộp thoại chọn nguồn (`code: "cancelled"`), và chuyển các lỗi trình duyệt chưa hỗ trợ / hệ thống chặn quyền / không đọc được nguồn sang toast nhỏ Light Mode qua `useToastStore`. Tests: `components/__tests__/v942-claude-menu-capture.test.tsx`, `components/__tests__/v943-ux-lifecycle-sidebar.test.tsx`.
+
+### `components/LeftSidebar.tsx` · Change impact: visual / presentation
+Thanh bên trái 3 trạng thái (`expanded` · `collapsed` · `mobile drawer`, `#left-sidebar`, `#sb-collapsed-trigger-zone`) và hộp thoại tìm kiếm (`#axo-search-modal`): điều hướng chính (`#nav-item-new-problem` mở Composer trống trên `/app` mà không tạo bản ghi rỗng, `#nav-item-library`), danh sách `BÀI TOÁN` chỉ hiển thị bài toán hợp lệ ở trạng thái `READY` (qua `buildUnifiedProblemList`), gắn biểu tượng nhóm hình học (`GeometryFamilyIcon` qua `data-geometry-family`), menu thao tác (`#sb-problem-action-menu`: Ghim / Đổi tên / Xóa) và chân trang tài khoản đồng bộ theo vai trò (`Guest` / `Student` / `Teacher` / `Admin`). Tests: `components/__tests__/LeftSidebar.v9_2.test.tsx`, `components/__tests__/v943-ux-lifecycle-sidebar.test.tsx`.
+
+### `components/LandingView.tsx` · Change impact: visual / presentation
+Trang giới thiệu công khai “Axo Spatial Story” tại `/` và `/gioi-thieu` (`#view-landing.axo-sp-root`) tách biệt với không gian làm việc `/app`, giữ nguyên tuyến mặc định V1.2.2 trong trạng thái `PENDING_OWNER_REVIEW` đồng thời hỗ trợ định tuyến xem trước cô lập V1.4 (`LandingPrototypeMode` = `"prod" | "v14"`, `readLandingPrototypeMode`, `switchLandingPrototype` qua `?preview=v1.4`, đã loại bỏ các bản prototype V1.3 bị từ chối `LandingPrototypeA`/`LandingPrototypeB` và lớp `.axo-v13-*`): gồm header kính nổi `components/landing/LandingHeader.tsx` (`#landing-header`, thanh chọn `#landing-nav` scroll-spy `requestAnimationFrame`, chế độ V1.4 `presentation="v14"` / `is-v14` / `data-nav-hover-state` bỏ viền hộp ngoài của thanh nav, giữ `.is-current-section` cùng vạch đáy `::after` và `font-weight: 500` không nhảy rộng khi di chuột chéo, cuộn mượt `window.scrollTo({ top: 0 })` khi bấm `landing-hero`, loại bỏ nút đăng nhập riêng của Guest ở Desktop/Mobile Header và Mobile Drawer, nhận diện phiên đăng nhập qua `<TopNavAccount />` và nhãn `"Vào ứng dụng"` không chặn khách trải nghiệm, ngăn kéo di động đúng 5 mục Guest / tài khoản `#landing-mobile-account` kèm `#btn-landing-drawer-logout` + 1 CTA chính `#btn-landing-drawer-primary` + khôi phục focus khi bấm `Escape` và focus trap `Tab`/`Shift+Tab`), chú thích typography biểu cảm `components/landing/AnnotatedHeading.tsx` (`AnnotatedPhrase` với 3 biến thể `circle` nới cung thoáng dấu tiếng Việt và chữ `g`, `underline`, và `highlight` mở rộng khung chữ nhật `polygon` quanh thiết diện kèm vạch góc và `IntersectionObserver`), Hero Spatial Geometry Gallery `components/landing/LandingHeroV14.tsx` (tiêu đề cân đối 2 dòng mọi viewport `320px–1920px` kèm `.axo-v14-hero-phrase-keep` và thứ tự xếp lớp `.axo-v14-hero-title-line + .axo-v14-hero-title-line` tránh phủ dòng 1, 1 WebGL `S.ABCD` góc nhìn `[11.8, 6.0, -5.2]` + `scaleDist` `1.18/1.16` đổ bóng tiếp xúc radial mềm `createHeroContactTexture`, cắt cạnh ở nửa không gian `splitEdgeAtPlane` `lowerSolid renderOrder = 4` / `upperSolid renderOrder = 8` và `secEdgeBindings` phân mặt trước-nét liền/sau-nét đứt tránh xuyên sai qua mặt phẳng `(MNP)`, thiết diện cam đất `MENPF`, ký hiệu vuông góc `SA ⊥ (ABCD)` tại `A`, `projectAnchors` 9 nhãn chu vi `S, B, C, D, M, N, P, E, F`, 3 vệ tinh liên kết trục trực tiếp với `S.ABCD` qua `buildHeroSpatialGallerySpecs` / `HERO_SATELLITE_COUNT = 3` — `orthographicPlan`, `extractedPentagon` và chóp trên tách rời 7 đỉnh chính xác `{S, C, M, E, N, P, F}` của nửa không gian chứa `S` trong `detachedUpperCap` `capFaceLoops` — kịch bản `HERO_STORYBOARD_MS = 3800` tự dừng `0` RAF, bỏ qua parallax chạm cảm ứng và `<HeroFallbackSvg />` `?no_webgl=1`), kể chuyện cuộn trang liên tục `components/landing/LandingStorytellingV14.tsx` (`0` WebGL, nền band giấy ấm `--axo-sp-paper` `#F6F5F4` với đĩa sân khấu sứ trắng `--canvas` bo `24px`, đường dẫn cuộn `192svh` desktop / `182svh` mobile, `.axo-v14-story-context-line` + 1 thanh tiến trình `.axo-v14-story-rail` / `.axo-v14-story-rail-fill`, khối công thức viền trái bỏ viền hộp, `prismBuild = 1` dựng đủ lăng trụ `ABC.A′B′C′` ngay từ Chặng 1 kèm hào quang đồng tâm `.axo-v14-svg-seed-halo` tại `M, N, P`, thu gọn lề `STORY_PLANE_QUAD = 0.24` giảm độ mờ mặt phẳng, phân biệt nét liền mặt trước / nét đứt `6 4` mặt khuất, thẻ nổi bật Chặng 4 `Hình thật thiết diện` / `Hình thang cân MNPQ` trên `STORY_SVG_W=700 × STORY_SVG_H=500`, `computeChapterEnvelope` hiển thị 1 chương, khóa `Q` chặt ở Chặng 3–4, 0 đáp án số học), phần kết & chân trang `components/landing/LandingClosingV14.tsx` (`LandingClosingV14` nổi bật bằng panel bo tròn `32px` nền sứ xanh `--axo-sp-closing-panel` trên `--axo-sp-paper`, gắn kết chặt `28px` với `LandingFooterV14` phẳng không `border-top` `0px`, `scrollToLandingSection` dùng `window.scrollTo({ top: 0 })` cho `landing-hero`, hiệu ứng gạch chân `scaleX` và `#btn-landing-footer-top` nền `--canvas`) cùng bản xem trước cô lập `components/landing/LandingPreviewV14.tsx`, điêu khắc Hero V1.2.2 `components/landing/LandingHeroSculpture3D.tsx`, điêu khắc đa khối phần kết V1.2.2 `components/landing/LandingClosingSculpture.tsx`, khung 3D Three.js + fallback SVG dùng chung `components/landing/LandingHeroScene3D.tsx` (`SpatialSceneCanvas` tái sử dụng **1 `WebGLRenderer` bền vững mỗi mount**, cắt cạnh ở nửa không gian `(secNormal, secOffset)` thành `posSolidLine` / `negSolidLine` tự động nâng `renderOrder = 8` theo nửa phía camera khi xoay 360° và giảm độ mờ viền thiết diện mặt khuất `hostFront` chỉ trong nhánh `presentation === "v14"`, bóng tiếp xúc radial `createDemoContactTexture`, bù nâng khung `v14AspectScale` tới `320px` và khóa hướng cử chỉ cảm ứng `gestureMode`), mạch kể chuyện V1.2.2 `components/landing/LandingStorytelling.tsx` cùng `components/landing/LandingExplainerAnimation.tsx` và `components/landing/LandingIllustrationAccents.tsx`, khu trải nghiệm 3D tương tác `components/landing/LandingInteractiveDemo.tsx` (`#trai-nghiem` / `#landing-product-showcase` giữ nguyên `default` V1.2.2 và chế độ V1.4 nền band trắng `--axo-sp-bg` với sân khấu `--axo-sp-paper` không viền + cột biên tập mở bên phải hiển thị `.axo-v14-demo-model-name`, pill chuyển mẫu không viền 1px, huy hiệu `Kéo để xoay 3D`, nút chọn mẫu/bước di động `>= 44px`, thanh `.axo-sp-demo-step-dock`), dữ liệu tọa độ chuẩn hóa `landing-geometry-data.ts` (`chop-thiet-dien-ba-diem`, `lap-phuong-thiet-dien-bat-ky`, `LANDING_PRISM_STORY_SPEC`, `computeBoundedPlaneQuad`, `computeShowcaseCameraPreset` xác lập `v14CameraPos`/`v14LookAt` xiên theo pháp tuyến mặt cắt — `normalCosine = 0.8699` hình chóp và `0.9703` lập phương mở rộng lục giác `MNEPFQ` gấp `6.3×`), phần kết WebGL 3D **lăng trụ lục giác đều khám phá 3D** `components/landing/LandingClosingScene3D.tsx` (`spatial-polyhedra-exploration-3d`: `baseScale = 0.9`, `lookVec = [0.24, 0.04, 0]`, lăng trụ lục giác đều tách `lower = 4` / `plane = 5` / `secFill = 6` / `secBorder = 7|6` / `upper = 8` / `dots = 9` tránh xuyên nét, kết hợp **Companion 3** lục giác trích rời `extractedHexGroup` từ `computeClosingExtractedHexagon2D()` hướng camera + đồng bộ `<ClosingFallbackSvg />`, kịch bản 4 nhịp `CLOSING_STORYBOARD_MS = 3600` tự dừng `0` RAF, full `.dispose()`), và `components/landing/landing.css` (hệ phân cấp typography `h1 > h2` mọi bề rộng `320px–1920px`, chữ nội dung `>= 16px`, panel kết `--axo-sp-closing-panel` từ `color-mix` trên biến `tokens.css`, 0 viền `1px` trang trí và 0 màu hex literal trong CSS/TSX). Báo cáo V1.8 Spatial Editorial 2.0: `docs/evaluation/landing/AXO-LANDING-V18-VISUAL-ARCHITECTURE-REPORT.md` (trước đó: `docs/evaluation/landing/AXO-LANDING-V1.7-VISUAL-ACCEPTANCE-REPORT.md`, `docs/evaluation/landing/AXO-LANDING-V1.7-SPATIAL-EXPERIENCE-REPORT.md`, `docs/evaluation/landing/AXO-LANDING-SPATIAL-VISUAL-SYSTEM-REPORT.md`). Tests: `components/phase-b-views.test.tsx`, `components/__tests__/landing-version-lifecycle.test.ts`, `components/__tests__/landing-scroll-storytelling.test.tsx`, `components/__tests__/landing-auth-sync.test.tsx`, `components/__tests__/landing-auth-navigation.test.tsx`, `components/__tests__/landing-mobile-drawer.test.tsx`, `components/__tests__/landing-cta-flow.test.tsx`, `components/__tests__/landing-cta-geometry.test.tsx`, `components/__tests__/landing-cta-motion.test.tsx`, `components/__tests__/landing-footer-layout.test.tsx`, `components/__tests__/landing-approved-ui-regression.test.tsx`, `components/__tests__/landing-spatial-story.test.tsx`, `components/__tests__/landing-demo-integrity.test.tsx`, `components/__tests__/landing-design-system.test.tsx`, `components/__tests__/landing-header-navigation.test.tsx`, `components/__tests__/landing-storytelling-interaction.test.tsx`, `components/__tests__/landing-webgl-lifecycle.test.tsx`, `components/__tests__/landing-motion-accessibility.test.tsx`, `components/__tests__/landing-storytelling-geometry.test.tsx`, `components/__tests__/landing-annotated-typography.test.tsx`, `components/__tests__/landing-hero-visual-lifecycle.test.tsx`, `components/__tests__/landing-storytelling-continuity.test.tsx`, `components/__tests__/landing-responsive-layout.test.tsx`, `components/__tests__/landing-product-integrity.test.tsx`, `components/__tests__/sidebar-toggle-icon.test.tsx`.
+
 ### `components/PhotoCameraView.tsx` · Change impact: offline
 Khung ngắm máy ảnh trực tiếp tối giản qua `getUserMedia` (chỉ khởi động khi người học bấm “Chụp ảnh đề bài”):
 mobile hiển thị video chiếm vùng chính + nút chụp tròn ở giữa dưới (`#btn-photo-capture`) + nút thư viện ảnh bên trái + nút đổi camera bên phải chỉ khi khả dụng (`canSwitchCamera`);
@@ -2081,16 +2118,17 @@ Tests: `extract-image.test.ts`.
 ### `test-setup.ts` · Change impact: offline
 Guard offline vitest: stub `fetch` → ném lỗi. Tests: `llm/offline-guard.test.ts`.
 
-## M18 — TẦNG TÀI KHOẢN VÀ LỚP HỌC
+## M18 — TẦNG TÀI KHOẢN (LỚP HỌC ĐÃ GỠ Ở V1 OPTION B)
 
-> Tầng này KHÔNG sở hữu sự thật mô phỏng. Engine tất định vẫn là nơi duy nhất
-> giữ state/timeline/kết quả và là bên duy nhất phán học sinh đúng hay sai
-> (bất biến #27). Lớp học chỉ ĐỌC bằng chứng có cấu trúc.
+> **Quyết định Option B (V1):** Classroom và Live Session đã được gỡ vĩnh viễn khỏi HTTP API
+> (`0` route lớp học trong OpenAPI) và giao diện frontend; 5 bảng DB lịch sử
+> (`classrooms`, `class_memberships`, `assignments`, `practice_sessions`, `classroom_sessions`)
+> được bảo toàn nguyên vẹn ở tầng DB qua migration `f8a2c41d9e05`. Tầng này hiện chỉ phục vụ
+> danh tính, lịch sử phân tích cá nhân và quản trị (`accounts/router.py`, `auth.ts`).
 
 ### `backend/app/accounts/` — DANH TÍNH, VAI TRÒ, QUYỀN
 
-Bốn file, bốn tầng, đi một chiều: `policy` (thuần) ← `service` (DB) ←
-`router`/`classroom_router` (HTTP).
+Đi một chiều: `policy` (thuần) ← `service` (DB) ← `router` (HTTP).
 
 - **`passwords.py`** — PBKDF2-HMAC-SHA256 từ thư viện chuẩn, salt riêng mỗi tài
   khoản, so constant-time. KHÔNG thêm passlib/bcrypt: cùng thuật toán, thêm một
@@ -2099,33 +2137,33 @@ Bốn file, bốn tầng, đi một chiều: `policy` (thuần) ← `service` (D
   (một exception riêng là kênh dò tài khoản).
 - **`policy.py`** — HÀM THUẦN, test được không cần FastAPI. `resolve_signup_role`
   (đăng ký thường LUÔN ra học sinh; vai trò giáo viên cần mã mời từ môi trường;
-  thiếu cấu hình ⇒ ĐÓNG), `entitlement_for` (khách: 1 lượt thử, không lớp, không
-  lịch sử bền), `can_observe_class` / `can_read_class`.
-- **`service.py`** — phiên (mở/tra/gắn user/đóng), tài khoản, mã lớp. `attach_user`
+  thiếu cấu hình ⇒ ĐÓNG), `entitlement_for`. (`HISTORICAL_REMOVED`: `can_observe_class`,
+  `can_read_class` của bề mặt Classroom HTTP đã gỡ).
+- **`service.py`** — phiên (mở/tra/gắn user/đóng) và tài khoản. `attach_user`
   GIỮ hàng phiên đang có thay vì mở phiên mới: `guest_trials_used` nằm trên hàng
-  đó, mở mới là đăng nhập-rồi-đăng-xuất lại có lượt. Mã lớp bỏ `0O1IL` vì học
-  sinh gõ tay mã đó trên bảng.
-- **`router.py`** — `/api/auth/*` + `/api/classes*`. Sai email và sai mật khẩu
-  trả CÙNG một câu (không cho dò tài khoản). Mã lớp CHỈ hiện cho giáo viên sở
-  hữu. `Caller`/`get_caller` là dependency giải danh tính dùng chung.
-- **`classroom_router.py`** — `/api/assignments*` + `/api/classes/{id}/observe`.
-  `_validated_envelope` là CỔNG: config phải qua đúng `SimSpec.validate` của
-  target (bất biến #28). Tiến độ bị KẸP về miền hợp lệ, đếm chỉ TĂNG.
+  đó, mở mới là đăng nhập-rồi-đăng-xuất lại có lượt.
+- **`router.py`** — `/api/auth/*`, lịch sử và quản trị (`/api/admin/*`). Sai email
+  và sai mật khẩu trả CÙNG một câu (không cho dò tài khoản). `Caller`/`get_caller`
+  là dependency giải danh tính dùng chung. Các route Classroom/Live Session đã gỡ hoàn
+  toàn theo Option B (trả `404 {"detail":"Not Found"}`).
+- **`HISTORICAL_REMOVED` (`accounts/classroom_router.py` · `accounts/session_router.py`):**
+  từng phục vụ `/api/classes*`, `/api/assignments*`, `/api/classes/{id}/observe`,
+  `/api/classes/{id}/session*`; đã gỡ ở `bf1ee2a57` và khóa fail-closed qua
+  `backend/tests/test_owner_scope_resolution.py` (18 endpoint trả `404`).
 
 ### `backend/app/persistence/classroom_models.py`
-Sáu bảng: `users` · `auth_sessions` (phục vụ cả KHÁCH — chỗ đếm lượt thử) ·
-`classrooms` · `class_memberships` (unique ở tầng DB) · `assignments` (giữ
-envelope ĐÃ VALIDATE, không giữ đề để sinh lại) · `practice_sessions` (bằng chứng
-CÓ CẤU TRÚC, không phải ảnh state của renderer).
-Đặt cạnh `db.py` chứ không nhét vào: `db.py` sở hữu ngân hàng bài. Chung `Base`
-nên Alembic thấy một metadata; `alembic/env.py` phải import file này VÌ TÁC DỤNG
-PHỤ, nếu không autogenerate sẽ sinh migration XOÁ các bảng.
+Active account, auth, history, quota ledger, and admin tables (`users`, `auth_sessions`, `learning_history_entries`, `user_account_meta`, `admin_system_settings`, `admin_audit_logs`, `analysis_usage_ledger`, `admin_analysis_telemetry`). Historical Classroom ORM tables (`classrooms`, `class_memberships`, `assignments`, `practice_sessions`, `classroom_sessions`) were retired from active code in `bf1ee2a57` while their persisted database tables/rows remain safely retained non-destructively in `f8a2c41d9e05` and excluded from `alembic check` autogenerate drift via `alembic/env.py::_include_name`.
 
-### `state/auth.ts` · `state/classroom.ts`
-Hai store TÁCH khỏi `state/store.ts` (vốn cố ý mù domain). `auth` giữ danh tính
-+ quyền đọc từ `/api/auth/me`; `classroom` là BẢN CHIẾU của lớp/bài/quan sát.
-Vai trò ở client là để VẼ, không phải quyền: sửa nó trong devtools thì thấy được
-thanh điều hướng giáo viên và không gọi nổi endpoint nào. Vì thế KHÔNG lưu bền.
+### `state/auth.ts` (`HISTORICAL_REMOVED`: `state/classroom.ts`)
+Store `state/auth.ts` TÁCH khỏi `state/store.ts` (vốn cố ý mù domain), giữ danh tính
++ quyền đọc từ `/api/auth/me`. Vai trò ở client chỉ để hiển thị: server vẫn kiểm quyền
+trên mọi endpoint. `state/classroom.ts` đã gỡ khỏi workspace ở V1 Option B.
+
+### `backend/tests/test_owner_scope_resolution.py`
+Khóa quyết định **Option B** (18 endpoint Classroom/Live Session trả `404`, `0` rò rỉ
+OpenAPI, CLI đã gỡ trả `exit 2`), vết end-to-end Step Editor (`(α)->(P)`, `AB->SB`,
+`(MNP)->(Q)`, `422`, `409`, khôi phục `latest_client_seq` sau restart) và kiểm chứng
+PostgreSQL `20` bảng + bảo toàn dữ liệu bảng lịch sử (`@pytest.mark.postgres`).
 
 ### `components/TopNav.tsx`
 Điều hướng MỨC ỨNG DỤNG, chỉ có sau đăng nhập — **một hàng ngang trong
@@ -2571,56 +2609,35 @@ bước tách rời vì `route` không được import `scene3d`).
 
 ### `frontend/scripts/accept-product-scope.mjs` · offline (cần dev + uvicorn)
 
-Nghiệm thu **dọn phạm vi sản phẩm**: đi hết các đường điều hướng chính bằng hai
-tiến trình Chrome (giáo viên + học sinh), quét **TEXT ĐÃ RENDER** từng trang tìm
-nhãn miền và cụm chữ quảng bá đề Tin học. Vì sao không phải test đơn vị: một
-`publicCatalog()` sạch KHÔNG đảm bảo màn hình sạch — nhãn còn nằm trong hằng số,
-chuỗi còn nằm trong component khác. Bốn lát: bề mặt công khai · lối vào hình học
-(bấm gợi ý ⇒ xưởng 3D) · bài giáo viên giao (hồi quy §13, cả hai vai mở được) ·
-ba bề rộng. Artifact: `docs/evaluation/geometry/product-scope-acceptance.json`,
-có `provenance`.
+Nghiệm thu **dọn phạm vi sản phẩm** (cập nhật theo **Option B**): đi qua `/`, `/app`
+và `/simulation/chop-mat-cau-ngoai-tiep` bằng Playwright ở ba bề rộng
+(`1920x1080`, `1366x768`, `390x844`), kiểm tra `/api/health` (`ok === true`), xác
+nhận `/api/classes` và `/api/assignments` trả `404` (`{"detail":"Not Found"}`), quét
+**TEXT ĐÃ RENDER** tìm `0` nhãn miền/cụm quảng bá Tin học và `0` điều khiển UI Lớp
+học, đồng thời ghi JSON có `provenance` vào đường dẫn `--out` (mặc định ở thư mục
+tạm hệ thống để không chạm artifact lịch sử).
 
-⚠️ **So khớp KHÔNG phân biệt hoa–thường, và đó là điểm sống còn của guard này.**
-`innerText` trả văn bản ĐÃ RENDER, mà `.starter-group-title` mang
-`text-transform: uppercase` — nên "Thuật toán" hiện lên màn hình dưới dạng
-"THUẬT TOÁN". Bản đầu so khớp nguyên văn và mọi khẳng định "0 nhãn miền Tin học"
-đều XANH VÔ NGHĨA. Lộ ra nhờ khẳng định NGƯỢC ("Thư viện phải có nhóm Hình học")
-đỏ — bài học: guard vắng-mặt phải đi kèm một guard có-mặt, nếu không nó xanh cả
-khi mù. Đã tiêm lỗi (`PRODUCT_DOMAINS += "algorithm"`) để thấy nó đỏ thật.
+⚠️ **So khớp KHÔNG phân biệt hoa–thường** vì CSS `text-transform: uppercase` biến
+chữ hiển thị; guard vắng-mặt luôn đi kèm khẳng định có-mặt của Hình học / Xưởng 3D.
 
-### ackend/scripts/seed_demo_accounts.py
+### `backend/scripts/seed_demo_accounts.py`
 
-Clean 3-account demo SQLite seeder (1 Admin, 1 Teacher, 1 Student) with zero hardcoded credentials; writes generated credentials receipt only to an explicit local path outside Git when --receipt-out is passed. Also persists UserAccountMeta, AdminSystemSetting, AdminAuditLogEntry, and AdminAnalysisTelemetry in ackend/app/persistence/classroom_models.py.
+Clean 3-account demo SQLite seeder (1 Admin, 1 Teacher, 1 Student) with zero hardcoded credentials; writes generated credentials receipt only to an explicit local path outside Git when `--receipt-out` is passed, and fails closed (`RETAINED_CLASSROOM_DATA_PRESENT`) before mutating `users` if retained legacy Classroom tables contain live rows. Also persists `UserAccountMeta`, `AdminSystemSetting`, `AdminAuditLogEntry`, and `AdminAnalysisTelemetry` in `backend/app/persistence/classroom_models.py`.
 
-### `frontend/scripts/accept-live-classroom.mjs` · offline (cần dev + uvicorn)
-Nghiệm thu **phiên dạy trực tiếp**: BA tiến trình Chrome, ba `--user-data-dir`
-riêng ⇒ ba kho cookie thật. Đổi vai bằng cách sửa state client thì bài kiểm tự
-kiểm giả định của chính nó, nên không làm. Tám lát: bám theo · tự do (hai học
-sinh giữ tiêu điểm riêng) · gọi cả lớp về (`syncCmdId` tăng mà `mode` vẫn `free`)
-· giơ tay (bảng theo dõi thấy đúng bước + tiêu điểm, học sinh kia KHÔNG bị lây)
-· **giao diện + xưởng 3D** · uỷ quyền (bốn ca 403) · kết thúc tiết · **ba bề rộng
-phòng máy** (1920/1536/1366: không tràn ngang, điều khiển của vai không bị cắt).
-Artifact: `docs/evaluation/geometry/live-classroom-acceptance.json`, có
-`provenance` nên sửa mã sản phẩm là nó thành `STALE_SOURCE`.
+### `backend/alembic/migration_preflight.py` · `backend/alembic/env.py` · `backend/alembic/versions/f8a2c41d9e05_remove_classroom_and_live_session_tables.py`
 
-⚠️ **Dấu vân tay backend soi ROUTE, không soi `/api/auth/me`.** Container Docker
-cũ trên cổng 8000 cũng trả 200 cho `/auth/me`, nên bản đầu chạy tiếp rồi đỏ ở
-tận Scenario 1 với một thông điệp không liên quan. Nay hỏi thẳng
-`/api/classes/999999/session`: FastAPI trả `{"detail":"Not Found"}` khi KHÔNG có
-route, còn handler thật trả tiếng Việt của nó — **cùng mã 404, chỉ phần thân
-phân biệt được**. Và hỏi qua `:3000` (đường trình duyệt đi), vì `localhost` phân
-giải `::1` trước `127.0.0.1` trên Windows: curl vào `127.0.0.1` có thể nói
-chuyện với một tiến trình khác hẳn cái mà trang web nói chuyện.
+Startup and online Alembic migration safety guard (`evaluate_migration_safety`, `scan_revision_ast`, `BLOCK_EXIT_CODE = 23`): blocks destructive DDL/DML (`drop_table`, `drop_column`, raw `DROP`/`TRUNCATE`/`DELETE`) and unstamped populated DBs (`UNSTAMPED_EXISTING_DATABASE`), enforced in `backend/Dockerfile` (`ENV ALGOSIM_STARTUP_MODE=1`, `CMD python alembic/migration_preflight.py --startup && alembic upgrade head ...`) and `env.py::_run_online_preflight`. Revision `f8a2c41d9e05` non-destructively preserves any retained legacy Classroom tables/rows while `env.py::_include_name` keeps `alembic check` clean on both legacy-retained and fresh databases. Locked by `backend/tests/test_database_safety_closure.py` and `backend/tests/test_migration_drift.py`.
 
-Scenario 5 tồn tại vì bốn lát đầu đi thẳng API và **không hỏi cái gì dựng lên
-màn hình** — nó bắt được hai bug chặn cả tính năng mà mọi test API vẫn xanh:
-`classroomId` bị bỏ rơi lúc mở bài (⇒ dải lớp không bao giờ dựng) và giáo viên
-không có nút mở bài (⇒ không vào được xưởng, nơi dock điều khiển lớp sống).
+### `frontend/scripts/accept-live-classroom.mjs` · `CLASSROOM_FEATURE_RETIRED`
+Entrypoint nghiệm thu Live Classroom đã gỡ vĩnh viễn theo **Option B** (V1 không có
+Classroom / Live Session trên HTTP và UI): fail-closed với mã thoát `2`
+(`CLASSROOM_FEATURE_RETIRED`, hỗ trợ `--json` và `--help` thoát `0`), không chạm
+database hay `docs/evaluation/`. Artifact lịch sử `docs/evaluation/geometry/live-classroom-acceptance.json`
+giữ nguyên đóng băng chỉ để tham chiếu lịch sử. (`HISTORICAL_REMOVED`: ba lát lớp học
+trực tiếp, `classroom_router.py`, `session_router.py`).
 
 ### `backend/scripts/seed_classroom_fixture.py`
-Dữ liệu demo cho nghiệm thu: 1 giáo viên · 2 học sinh · 1 lớp · 1 bài. Mật khẩu
-đọc từ `ALGOSIM_FIXTURE_PASSWORD`, không có mặc định trong mã (`§34`) — chạy
-nhầm trên máy thật cũng không đẻ ra tài khoản ai cũng biết mật khẩu. Idempotent.
+Retired Classroom fixture entrypoint (`CLASSROOM_FEATURE_RETIRED`, exits `2`; `--help` exits `0`). Preserves clean CLI imports without removed `Classroom`/`Assignment`/`ClassMembership` ORM symbols and directs operators to `backend/scripts/seed_demo_accounts.py`. Locked by `backend/tests/test_database_safety_closure.py`.
 
 ### `frontend/scripts/evidence.mjs`
 W0 — XUẤT XỨ CỦA BẰNG CHỨNG. `provenance(tool, env)` gắn `head` (git SHA) +
@@ -3926,12 +3943,12 @@ bộ ca ở hai bờ (`tests/semantic_program/test_envelope_config_gate.py`). B�
 có ở bờ Python: `bool` **là** `int`, nên `frame_lo: False` lọt thành `0` nếu
 không chặn thẳng.
 
-Ai gọi: `classroom_router._validated_envelope`. Tuyến ngữ nghĩa KHÔNG nằm trong
-`CATALOG` (nó không phải target chuyên biệt), nên cổng giao bài không dùng được
-`CATALOG[sim_id].validate` — và trước bản này nó **từ chối thẳng mọi envelope
-hình học**, tức giáo viên không giao được đúng miền mà đề tài nói về. Nhánh này
-KHÔNG chuẩn hoá config, có chủ đích: config tuyến ngữ nghĩa là artifact đã biên
-dịch, không phải tham số người dùng gõ — không có dạng chính tắc nào để quy về.
+`validate_semantic_envelope_config` được giữ lại làm hàm kiểm hình dạng envelope
+tuyến ngữ nghĩa `generic.semantic_program`. (`HISTORICAL_REMOVED`: lời gọi từ
+`classroom_router._validated_envelope` — tuyến lớp học đã gỡ ở V1 Option B). Tuyến
+ngữ nghĩa KHÔNG nằm trong `CATALOG`, nên khi từng phục vụ giao bài nó không dùng
+được `CATALOG[sim_id].validate` và cần hàm kiểm riêng không chuẩn hoá lại config
+(vì config tuyến ngữ nghĩa là artifact đã biên dịch, không có dạng chính tắc để quy về).
 
 ### `backend/app/simulation/semantic_program/obligations.py` · offline
 
@@ -4572,7 +4589,7 @@ nên lần sau lại xảy ra.
 ⚠️ KHÔNG dùng khi thứ bị cấm không được xuất hiện **kể cả trong lời bàn** (ví
 dụ một nguyên thuỷ chiếu màn hình): ở đó quét cả chú thích mới đúng.
 
-### `frontend/src/components/LiveClassDock.tsx` · offline
+### `frontend/src/components/LiveClassDock.tsx` · offline · HISTORICAL_REMOVED
 
 Sở hữu **ba mảnh giao diện lớp trực tiếp**, đều THUẦN theo props (test SSR
 được): `LiveClassDock` (giáo viên) · `StudentLiveIndicator` · `HelpRequestButton`.
@@ -4586,7 +4603,7 @@ KHÔNG nút giả: mỗi nút hoặc gọi thật một endpoint, hoặc `disabl
 nói vì sao. Không enum kỹ thuật lọt ra bề mặt học sinh (`follow`/`free`/
 `cmd_id`) — chỉ "Đang theo cô/thầy" / "Em tự khám phá".
 
-### `frontend/src/components/LiveClassStrip.tsx` · offline
+### `frontend/src/components/LiveClassStrip.tsx` · offline · HISTORICAL_REMOVED
 
 BIÊN duy nhất nối tầng lớp học vào xưởng 3D: đọc `useClassroomStore`, phân vai
 (giáo viên → dock, học sinh → chỉ báo + giơ tay), rồi trả xuống một mẩu JSX qua
@@ -4601,7 +4618,7 @@ prop `daiLop`. `Scene3DExplorer` vì thế **không bao giờ import store lớp
 khi TIÊU ĐIỂM thật sự đổi — một `STATE_UPDATE` mỗi khung hình lúc xoay hình
 không phải đồng bộ, là bão.
 
-### `frontend/src/components/MonitorView.tsx` · `MonitorRoute.tsx` · offline
+### `frontend/src/components/MonitorView.tsx` · `MonitorRoute.tsx` · offline · HISTORICAL_REMOVED
 
 Bảng **theo dõi lớp** — một TRANG riêng, không phải cột cạnh canvas: 32 học
 sinh cạnh khung 3D thì cả hai đều không dùng được. `MonitorView` nhận
@@ -4613,7 +4630,7 @@ TRUNG TÍNH — «Chưa hoạt động gần đây» mô tả một sự kiện 
 "đang gặp khó" là một phán quyết mà bảng này không có quyền. Giơ tay lên đầu
 danh sách; sắp phần còn lại theo ĐỘ CŨ, không theo số lần bấm.
 
-### `frontend/src/state/classroom-sync.ts` · offline · **0 gọi model**
+### `frontend/src/state/classroom-sync.ts` · offline · **0 gọi model** · HISTORICAL_REMOVED
 
 Sở hữu **luật đồng bộ lớp học** dưới dạng HÀM THUẦN: `apDungPhien` ·
 `nenGuiTienDo` · `NHIP_PHIEN_MS` · `NHIP_THEO_DOI_MS` · `CHUA_THAY`.
@@ -4990,6 +5007,10 @@ CSS↔TS) và `scene3d-causal-colors.test.tsx` (màu THẬT trên vật liệu t
 ### `frontend/src/simulations/domains/geometry/scene3d-semantic-policy.ts` · offline
 
 **Chính sách biểu diễn ngữ nghĩa thống nhất (`Semantic Visualization Policy`)**: phân loại 12 vai trò ngữ nghĩa toán học theo HTML chuẩn (`SOLID_SHELL`, `BOUNDARY_AND_INTERSECTION`, `HIDDEN_EDGE`, `RESULT_SECTION`, `GEOMETRIC_PLANE`, `INSCRIBED_CIRCLE`, `CIRCUMSCRIBED_CIRCLE`, `INSCRIBED_SPHERE`, `CIRCUMSCRIBED_SPHERE`, `STANDALONE_SPHERE`, `REFERENCE_EQUATOR`, `CERTIFIED_RELATION_MARKER`, `AUXILIARY_CONSTRUCTION`), phân loại provenance toán học `SceneClaimProvenance` (`GIVEN`, `DERIVED_VERIFIED`, `CONSTRUCTED`, `ILLUSTRATIVE_CHOICE`, `UNVERIFIED`, `CONTRADICTORY_OR_UNSUPPORTED`) qua `classifyPolygonShapeWithProvenance` (có hỗ trợ `chart_metric` + kiểm tra dấu `ILLUSTRATIVE_*`/`MODEL_ASSUMPTION`/`is_given: false`), tuần tự hóa sư phạm không bước tính đáp số (`buildPedagogicalConstructionPlan`, `pedagogicalStepList`), bảo toàn sắc độ toán học khi hover/click/chọn (`modulateSemanticColor`, `|Δhue| < 1.5°`), một chính sách hiển thị mặt phẳng & thiết diện mặc định duy nhất dựa trên ngữ nghĩa (`resolvePlaneSectionVisibility`), neo tấm phẳng cục bộ (`compactPlaneAnchorPoints`), trọng tâm góc nhìn sư phạm (`cauTrucSuPham`) và đường tham chiếu trình bày phi thẩm quyền (`buildContractReferenceGroup` với `authoritative: false`, không sửa `Scene3D` hay `free_objects`). Khoá: `scene3d-semantic-policy.test.tsx`, `scene3d-master-semantic-fidelity.test.tsx`, `scene3d-hybrid-contract-matrix.test.ts` và fixture hữu tỉ `frontend/src/simulations/domains/geometry/scene3d-inscribed-circumscribed-fixtures.json`.
+
+### `frontend/src/simulations/domains/geometry/scene3d-representation-consistency.ts` · offline
+
+**Kiểm định nhất quán biểu diễn hình học 3D theo tỉ lệ cảnh (`auditSceneRepresentationConsistency`)**: kiểm tra phi đột biến (không sửa toạ độ Backend, không chạy trong RAF/hover, ghi nhớ theo `WeakMap`) tính khớp giữa toạ độ chính xác của `Scene3D` và biểu diễn trực quan của `scene3d-semantic-policy.ts` theo từng bước dựng hoặc khung cuối — gồm `point_on_plane` (chân vuông góc witness trên `surface`/`polygon`, đa giác mặt phẳng giới hạn/cục bộ và tính đồng phẳng của `section`/`polygon3`), `point_on_line`, `intersection_consistency`, `section_connectivity`, `mesh_consistency`, cùng phân định `UNDETERMINED` khi cảnh bước đầu chưa đủ hai điểm hữu hạn (`sceneScale === 0`) và `VALID` khi đạt chuẩn tỉ lệ. Khoá: `frontend/src/simulations/domains/geometry/v9413-geometry-rendering-integrity.test.tsx`.
 
 ### `frontend/src/simulations/domains/geometry/scene3d-solution.tsx` · offline — ĐÃ GỠ ở regular-square-pyramid-w05 (thay bằng bảng «Đại lượng» + ô soi, mục W05 bên dưới)
 

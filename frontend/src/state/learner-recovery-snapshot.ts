@@ -52,6 +52,8 @@ export interface LearnerRecoverySnapshotInput {
   mobileViewMode: MobileViewMode;
   display: LearnerDisplaySnapshot;
   camera: LearnerCameraSnapshot | null;
+  relationActiveForId?: string | null;
+  relationsExpanded?: boolean;
 }
 
 export interface LearnerRecoverySnapshot extends LearnerRecoverySnapshotInput {
@@ -75,6 +77,17 @@ export interface SnapshotOptions {
   ttlMs?: number;
 }
 
+const fallbackMemoryMap = new Map<string, string>();
+const fallbackMemoryStorage: SnapshotStorageLike = {
+  getItem: (key: string) => fallbackMemoryMap.get(key) ?? null,
+  setItem: (key: string, value: string) => {
+    fallbackMemoryMap.set(key, value);
+  },
+  removeItem: (key: string) => {
+    fallbackMemoryMap.delete(key);
+  },
+};
+
 function defaultSessionStorage(): SnapshotStorageLike | null {
   try {
     if (typeof window !== "undefined" && window.sessionStorage) {
@@ -83,7 +96,7 @@ function defaultSessionStorage(): SnapshotStorageLike | null {
   } catch {
     /* sessionStorage có thể bị chặn trong iframe sandbox hoặc chế độ riêng tư nghiêm ngặt */
   }
-  return null;
+  return fallbackMemoryStorage;
 }
 
 function isFiniteCoordTuple(v: unknown): v is [number, number, number] {
@@ -186,6 +199,14 @@ function parseSingleSnapshotEntry(
     mobileViewMode: rec.mobileViewMode === "stage_expanded" ? "stage_expanded" : "dock_open",
     display,
     camera: sanitizeCameraSnapshot(rec.camera),
+    ...(rec.relationActiveForId === null
+      ? { relationActiveForId: null }
+      : typeof rec.relationActiveForId === "string" && rec.relationActiveForId.trim()
+        ? { relationActiveForId: rec.relationActiveForId.trim().slice(0, 120) }
+        : {}),
+    ...(typeof rec.relationsExpanded === "boolean"
+      ? { relationsExpanded: rec.relationsExpanded }
+      : {}),
   };
 }
 
@@ -254,6 +275,14 @@ export function saveLearnerRecoverySnapshot(
     mobileViewMode: input.mobileViewMode === "stage_expanded" ? "stage_expanded" : "dock_open",
     display,
     camera: sanitizeCameraSnapshot(input.camera),
+    ...(input.relationActiveForId === null
+      ? { relationActiveForId: null }
+      : typeof input.relationActiveForId === "string" && input.relationActiveForId.trim()
+        ? { relationActiveForId: input.relationActiveForId.trim().slice(0, 120) }
+        : {}),
+    ...(typeof input.relationsExpanded === "boolean"
+      ? { relationsExpanded: input.relationsExpanded }
+      : {}),
   };
 
   const map = readValidStoredEntries(store, nowMs, ttlMs);

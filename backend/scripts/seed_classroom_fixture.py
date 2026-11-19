@@ -1,123 +1,72 @@
 # -*- coding: utf-8 -*-
-"""Dựng dữ liệu DEV/TEST cho nghiệm thu trình duyệt (M18, `§34`).
+"""Retired Classroom fixture entrypoint guard (BLOCKER-DB-2 resolution).
 
-Chạy từ `backend/`:
-    .venv/Scripts/python.exe scripts/seed_classroom_fixture.py
+Classroom routes (`classroom_router.py`, `session_router.py`) and Classroom ORM
+models (`Classroom`, `ClassMembership`, `Assignment`, `PracticeSession`,
+`ClassroomSession`) were retired from active application code in `bf1ee2a57`
+while existing persisted Classroom tables/rows remain safely retained in-place.
 
-Tạo: 1 quản trị · 1 giáo viên · 2 học sinh · 1 lớp · 1 bài thực hành đã giao.
-
-CHÍNH SÁCH MẬT KHẨU CỦA FIXTURE (`§34` — không nhét mật khẩu production vào mã):
-mật khẩu đọc từ biến môi trường `ALGOSIM_FIXTURE_PASSWORD`; không đặt thì script
-SINH NGẪU NHIÊN và in ra một lần. Không có giá trị mặc định nào nằm trong file
-này, nên kể cả khi script bị chạy nhầm trên máy chủ thật thì cũng không tạo ra
-một tài khoản mà mọi người đọc mã đều biết mật khẩu.
-
-Script IDEMPOTENT: chạy lại không nhân đôi lớp/bài.
+This script no longer imports removed ORM symbols or creates legacy tables.
+Use `scripts/seed_demo_accounts.py` to seed the 3 active demo accounts
+(`admin`, `teacher`, `student`) into an isolated SQLite DB.
 """
-
 from __future__ import annotations
 
-import os
-import secrets
+import argparse
+import json
 import sys
 from pathlib import Path
+from typing import Sequence
 
-sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
+BACKEND_ROOT = Path(__file__).resolve().parents[1]
+if str(BACKEND_ROOT) not in sys.path:
+    sys.path.insert(0, str(BACKEND_ROOT))
 
-import json  # noqa: E402
+# Verify active non-Classroom persistence and demo-account seeder remain importable.
+from app.persistence.classroom_models import User  # noqa: E402, F401
+from scripts import seed_demo_accounts  # noqa: E402, F401
 
-from sqlalchemy import select  # noqa: E402
-
-from app.accounts import service  # noqa: E402
-from app.accounts.policy import Role  # noqa: E402
-from app.persistence.classroom_models import (  # noqa: E402
-    Assignment, ClassMembership, Classroom, User,
-)
-from app.persistence.db import Base, SessionLocal, engine  # noqa: E402
-
-#: Tài khoản quản trị demo. Vai trò TEACHER — hệ KHÔNG có vai `admin` (xem
-#: `accounts/policy.py::Role`): chưa có việc gì cho nó làm, và thêm một vai chỉ
-#: để đặt tên là thêm một nhánh quyền không ai kiểm.
-ADMIN_EMAIL = "admin@algosim.test"
-TEACHER_EMAIL = "gv.demo@algosim.test"
-STUDENT_A_EMAIL = "hs.an@algosim.test"
-STUDENT_B_EMAIL = "hs.binh@algosim.test"
-CLASS_NAME = "10A1 — Tin học"
-
-#: Envelope demo: đi qua ĐÚNG cổng validate mà mọi bài giao khác đi.
-DEMO_ENVELOPE = {
-    "status": "ok",
-    "simulation_id": "logic.and_gate",
-    "domain": "logic",
-    "visual_mode": "2d",
-    "title": "Cổng AND: khi nào đèn sáng?",
-    "config": {"inputA": 1, "inputB": 0, "notes": None},
-}
+RETIRED_REASON_CODE = "CLASSROOM_FEATURE_RETIRED"
+EXIT_RETIRED = 2
 
 
-def _password() -> str:
-    pw = os.getenv("ALGOSIM_FIXTURE_PASSWORD", "").strip()
-    if pw:
-        return pw
-    generated = "dev-" + secrets.token_urlsafe(12)
-    print(f"  (sinh mật khẩu ngẫu nhiên: {generated})")
-    return generated
+def status_payload() -> dict[str, object]:
+    """Return structured status explaining why Classroom fixture seeding is retired."""
+    return {
+        "ok": False,
+        "status": RETIRED_REASON_CODE,
+        "message": (
+            "Classroom fixture seeding is retired (Classroom ORM/routers removed in bf1ee2a57; "
+            "existing legacy tables are retained non-destructively in DB). "
+            "Use `python scripts/seed_demo_accounts.py` instead."
+        ),
+        "replacement": "scripts/seed_demo_accounts.py",
+        "legacy_tables_untouched": True,
+    }
 
 
-def _get_or_create(session, email: str, name: str, role: Role, password: str) -> User:
-    row = session.execute(select(User).where(User.email == email)).scalar_one_or_none()
-    if row is not None:
-        return row
-    return service.create_user(session, email=email, display_name=name,
-                               password=password, role=role)
+def main(argv: Sequence[str] | None = None) -> int:
+    if hasattr(sys.stdout, "reconfigure"):
+        sys.stdout.reconfigure(encoding="utf-8", errors="replace")
+    if hasattr(sys.stderr, "reconfigure"):
+        sys.stderr.reconfigure(encoding="utf-8", errors="replace")
 
+    parser = argparse.ArgumentParser(
+        prog="seed_classroom_fixture.py",
+        description=(
+            "Retired Classroom fixture entrypoint. Does not touch any database; "
+            "use scripts/seed_demo_accounts.py for supported demo accounts."
+        ),
+    )
+    parser.add_argument("--json", action="store_true", help="Print structured JSON status")
+    args = parser.parse_args(argv)
 
-def main() -> int:
-    Base.metadata.create_all(engine)  # SQLite dev; Postgres do Alembic sở hữu
-    password = _password()
-    with SessionLocal() as session:
-        _get_or_create(session, ADMIN_EMAIL, "Quản trị (demo)", Role.TEACHER, password)
-        teacher = _get_or_create(session, TEACHER_EMAIL, "Cô Lan (demo)", Role.TEACHER, password)
-        an = _get_or_create(session, STUDENT_A_EMAIL, "Nguyễn Văn An", Role.STUDENT, password)
-        binh = _get_or_create(session, STUDENT_B_EMAIL, "Trần Thị Bình", Role.STUDENT, password)
-        session.flush()
-
-        cls = session.execute(
-            select(Classroom).where(Classroom.teacher_id == teacher.id,
-                                    Classroom.name == CLASS_NAME)
-        ).scalar_one_or_none()
-        if cls is None:
-            cls = Classroom(teacher_id=teacher.id, name=CLASS_NAME,
-                            join_code=service.generate_join_code(session))
-            session.add(cls)
-            session.flush()
-
-        for student in (an, binh):
-            exists = session.execute(
-                select(ClassMembership).where(
-                    ClassMembership.classroom_id == cls.id,
-                    ClassMembership.student_id == student.id)
-            ).scalar_one_or_none()
-            if exists is None:
-                session.add(ClassMembership(classroom_id=cls.id, student_id=student.id))
-
-        assignment = session.execute(
-            select(Assignment).where(Assignment.classroom_id == cls.id)
-        ).scalar_one_or_none()
-        if assignment is None:
-            session.add(Assignment(
-                classroom_id=cls.id, created_by=teacher.id,
-                title="Bảng chân trị của cổng AND",
-                instruction="Bật/tắt hai đầu vào rồi ghi lại khi nào đầu ra bằng 1.",
-                simulation_id=DEMO_ENVELOPE["simulation_id"],
-                envelope_json=json.dumps(DEMO_ENVELOPE, ensure_ascii=False)))
-
-        session.commit()
-        print(f"  quản trị  : {ADMIN_EMAIL}")
-        print(f"  giáo viên : {TEACHER_EMAIL}")
-        print(f"  học sinh  : {STUDENT_A_EMAIL} · {STUDENT_B_EMAIL}")
-        print(f"  lớp       : {cls.name}  ·  mã {cls.join_code}")
-    return 0
+    payload = status_payload()
+    if args.json:
+        print(json.dumps(payload, ensure_ascii=False, indent=2))
+    else:
+        print(f"{payload['status']}: {payload['message']}", file=sys.stderr)
+    return EXIT_RETIRED
 
 
 if __name__ == "__main__":

@@ -1,0 +1,233 @@
+{
+  "commit": "014a2fd24160b25039f589f5adaf3b762ba985f8",
+  "measured_at": "2026-11-19T09:27:43.860660+00:00",
+  "protected_root_db_sha256": "39D676C7B50A925975828434A00D38E3BAC3C5F50E4E2A724A695768C7C83EE3",
+  "protected_root_db_unchanged": true,
+  "stamp_safety_conditions": [
+    "Database is not running under ALGOSIM_STARTUP_MODE=1",
+    "Target revision exists in Alembic ScriptDirectory",
+    "Existing alembic_version table is not empty without explicit --purge, and current revision does not differ from target without --purge",
+    "100% live schema parity (tables and columns) matches target revision, with Classroom tables checked atomically (0 or 5) at f8a2c41d9e05",
+    "Backup + isolated copy parity verified before stamping legacy unversioned DBs"
+  ],
+  "scenarios": [
+    {
+      "scenario": "algosim_acceptance_15_tables_readonly_check",
+      "preflight_exit": 0,
+      "preflight": {
+        "dialect": "postgresql",
+        "direction": "upgrade",
+        "target_rev": "head",
+        "startup_mode": true,
+        "db_revisions": [
+          "f8a2c41d9e05"
+        ],
+        "script_heads": [
+          "f8a2c41d9e05"
+        ],
+        "user_tables_count": 14,
+        "destructive_operations": [],
+        "retained_legacy_tables_present": [],
+        "planned_revisions": [],
+        "allowed": true,
+        "reason_code": "SAFE_NO_DESTRUCTIVE_OPERATIONS",
+        "message": "Migration preflight passed cleanly with zero destructive operations."
+      },
+      "alembic_check_exit": 0,
+      "scenario_passed": true
+    },
+    {
+      "scenario": "pg_fresh_20_tables",
+      "preflight_exit": 0,
+      "preflight": {
+        "dialect": "postgresql",
+        "direction": "upgrade",
+        "target_rev": "head",
+        "startup_mode": true,
+        "db_revisions": [
+          "f8a2c41d9e05"
+        ],
+        "script_heads": [
+          "f8a2c41d9e05"
+        ],
+        "user_tables_count": 19,
+        "destructive_operations": [],
+        "retained_legacy_tables_present": [
+          "assignments",
+          "class_memberships",
+          "classroom_sessions",
+          "classrooms",
+          "practice_sessions"
+        ],
+        "planned_revisions": [],
+        "allowed": true,
+        "reason_code": "SAFE_NO_DESTRUCTIVE_OPERATIONS",
+        "message": "Migration preflight passed cleanly with zero destructive operations."
+      },
+      "alembic_check_exit": 0,
+      "scenario_passed": true
+    },
+    {
+      "scenario": "pg_legacy_migrated_20_tables",
+      "preflight_exit": 0,
+      "preflight": {
+        "dialect": "postgresql",
+        "direction": "upgrade",
+        "target_rev": "head",
+        "startup_mode": true,
+        "db_revisions": [
+          "f8a2c41d9e05"
+        ],
+        "script_heads": [
+          "f8a2c41d9e05"
+        ],
+        "user_tables_count": 19,
+        "destructive_operations": [],
+        "retained_legacy_tables_present": [
+          "assignments",
+          "class_memberships",
+          "classroom_sessions",
+          "classrooms",
+          "practice_sessions"
+        ],
+        "planned_revisions": [],
+        "allowed": true,
+        "reason_code": "SAFE_NO_DESTRUCTIVE_OPERATIONS",
+        "message": "Migration preflight passed cleanly with zero destructive operations."
+      },
+      "alembic_check_exit": 0,
+      "scenario_passed": true
+    },
+    {
+      "scenario": "isolated_copy_of_root_algosim_db_46u_66c",
+      "original_db_sha256_before": "39D676C7B50A925975828434A00D38E3BAC3C5F50E4E2A724A695768C7C83EE3",
+      "original_db_sha256_after": "39D676C7B50A925975828434A00D38E3BAC3C5F50E4E2A724A695768C7C83EE3",
+      "wrong_stamp_head_blocked": true,
+      "auto_startup_blocked": true,
+      "valid_stamp_e437149641fa_exit": 0,
+      "upgrade_head_exit": 0,
+      "alembic_check_exit": 0,
+      "counts_before": {
+        "users": 46,
+        "classroom_sessions": 8,
+        "practice_sessions": 16,
+        "assignments": 10,
+        "class_memberships": 20,
+        "classrooms": 12
+      },
+      "counts_after": {
+        "users": 46,
+        "classroom_sessions": 8,
+        "practice_sessions": 16,
+        "assignments": 10,
+        "class_memberships": 20,
+        "classrooms": 12
+      },
+      "rows_100pct_preserved": true,
+      "scenario_passed": true
+    },
+    {
+      "scenario": "pg16_rogue_table_drift",
+      "preflight_exit": 23,
+      "preflight": {
+        "dialect": "postgresql",
+        "direction": "upgrade",
+        "target_rev": "head",
+        "startup_mode": true,
+        "db_revisions": [
+          "f8a2c41d9e05"
+        ],
+        "script_heads": [
+          "f8a2c41d9e05"
+        ],
+        "user_tables_count": 20,
+        "destructive_operations": [],
+        "retained_legacy_tables_present": [
+          "assignments",
+          "class_memberships",
+          "classroom_sessions",
+          "classrooms",
+          "practice_sessions"
+        ],
+        "planned_revisions": [],
+        "allowed": false,
+        "reason_code": "SCHEMA_DRIFT_DETECTED",
+        "drift_details": {
+          "missing_tables": [],
+          "unexpected_tables": [
+            "rogue_drift_audit"
+          ],
+          "missing_columns": {},
+          "unexpected_columns": {}
+        },
+        "message": "Live schema drifted from Alembic history through revision 'f8a2c41d9e05': missing/unexpected tables, columns, or partial legacy Classroom retention detected."
+      },
+      "alembic_upgrade_blocked": true,
+      "scenario_passed": true
+    },
+    {
+      "scenario": "pg16_partial_legacy_classroom_subset_4_of_5",
+      "preflight_exit": 23,
+      "preflight": {
+        "dialect": "postgresql",
+        "direction": "upgrade",
+        "target_rev": "head",
+        "startup_mode": true,
+        "db_revisions": [
+          "f8a2c41d9e05"
+        ],
+        "script_heads": [
+          "f8a2c41d9e05"
+        ],
+        "user_tables_count": 18,
+        "destructive_operations": [],
+        "retained_legacy_tables_present": [
+          "assignments",
+          "class_memberships",
+          "classrooms",
+          "practice_sessions"
+        ],
+        "planned_revisions": [],
+        "allowed": false,
+        "reason_code": "SCHEMA_DRIFT_DETECTED",
+        "drift_details": {
+          "missing_tables": [
+            "classroom_sessions"
+          ],
+          "unexpected_tables": [],
+          "missing_columns": {},
+          "unexpected_columns": {},
+          "partial_legacy_classroom_tables": [
+            "assignments",
+            "class_memberships",
+            "classrooms",
+            "practice_sessions"
+          ]
+        },
+        "message": "Live schema drifted from Alembic history through revision 'f8a2c41d9e05': missing/unexpected tables, columns, or partial legacy Classroom retention detected."
+      },
+      "scenario_passed": true
+    }
+  ],
+  "all_passed": true,
+  "verified_seal_commit": "dbfbcf31256b60f076d8ff4464aac9223a213f09",
+  "product_commit_sha": "600f5105d4222cd6835cc916b34d5cb3f11610e6",
+  "measured_system_tree_hash": "78edfa1784625e9bca8f1a4cd70b60359d198ba77530986903175a57e18206a7",
+  "root_cause_fixes": [
+    {
+      "issue_id": "ISSUE-ALEMBIC-STAMP-AND-DRIFT-PREFLIGHT-GAP",
+      "commit": "014a2fd24160b25039f589f5adaf3b762ba985f8",
+      "summary": "Enforce stamp parity, unexpected rogue table drift, and atomic 0-or-5 legacy Classroom retention check in migration_preflight.py and env.py."
+    },
+    {
+      "issue_id": "ISSUE-FE-UNORBITED-CAMERA-JUMP-ON-STEP-EDIT-COMMIT",
+      "commit": "3f3afb25b84bf845267fbda6f6e6c128c6ee502b",
+      "summary": "Preserve live unorbited camera pose and lens viewOffset across same-scene step-edit rebuilds in scene3d-view.tsx and SimulationWorkspace.tsx."
+    },
+    {
+      "issue_id": "ISSUE-SE-CROSS-CONTEXT-CLIENT-SEQ-DESYNC",
+      "commit": "600f5105d4222cd6835cc916b34d5cb3f11610e6",
+      "summary": "Expose persisted latest_client_seq on GET /sessions/{id}/state and 409 EDIT_SUPERSEDED, sync frontend submit seq watermark across fresh contexts, and surface server-side 409 conflicts cleanly."
+    }
+  ]
+}

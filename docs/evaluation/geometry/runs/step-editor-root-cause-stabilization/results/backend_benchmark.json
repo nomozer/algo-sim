@@ -1,0 +1,327 @@
+{
+  "schema_version": "axo-step-editor-benchmark/1",
+  "generated_at": "2026-11-18T04:45:56.515590+00:00",
+  "environment": {
+    "os": "Windows 11 (10.0.26100, AMD64)",
+    "cpu": "11th Gen Intel(R) Core(TM) i5-11400H @ 2.70GHz",
+    "logical_cores": 12,
+    "python": "3.12.10"
+  },
+  "scenarios": {
+    "s11_bisector_compound_partial": {
+      "mode": "PARTIAL_TOPOLOGICAL_REBUILD",
+      "recomputed_count": 9,
+      "skipped_count": 21,
+      "iterations": 30,
+      "warmup": 3,
+      "stages": {
+        "parser_ms": {
+          "median_p50_ms": 0.193,
+          "p95_ms": 0.397,
+          "min_ms": 0.169,
+          "max_ms": 0.519
+        },
+        "typed_facts_ms": {
+          "median_p50_ms": 0.009,
+          "p95_ms": 0.026,
+          "min_ms": 0.007,
+          "max_ms": 0.054
+        },
+        "dependency_invalidation_ms": {
+          "median_p50_ms": 1.159,
+          "p95_ms": 2.146,
+          "min_ms": 0.884,
+          "max_ms": 18.002
+        },
+        "registry_ms": {
+          "median_p50_ms": 0.002,
+          "p95_ms": 0.004,
+          "min_ms": 0.001,
+          "max_ms": 0.022
+        },
+        "kernel_ms": {
+          "median_p50_ms": 0.427,
+          "p95_ms": 0.808,
+          "min_ms": 0.361,
+          "max_ms": 0.86
+        },
+        "dependency_rebuild_ms": {
+          "median_p50_ms": 0.211,
+          "p95_ms": 0.4,
+          "min_ms": 0.188,
+          "max_ms": 0.473
+        },
+        "scene3d_build_ms": {
+          "median_p50_ms": 2.742,
+          "p95_ms": 5.137,
+          "min_ms": 2.47,
+          "max_ms": 5.892
+        },
+        "validation_ms": {
+          "median_p50_ms": 2.952,
+          "p95_ms": 5.165,
+          "min_ms": 2.649,
+          "max_ms": 5.949
+        },
+        "total_ms": {
+          "median_p50_ms": 10.534,
+          "p95_ms": 19.731,
+          "min_ms": 9.074,
+          "max_ms": 26.668
+        }
+      }
+    },
+    "s11_bisector_compound_full_rebuild": {
+      "mode": "FULL_TOPOLOGICAL_REBUILD",
+      "recomputed_count": 25,
+      "skipped_count": 0,
+      "iterations": 30,
+      "warmup": 3,
+      "stages": {
+        "parser_ms": {
+          "median_p50_ms": 0.169,
+          "p95_ms": 0.275,
+          "min_ms": 0.142,
+          "max_ms": 0.593
+        },
+        "typed_facts_ms": {
+          "median_p50_ms": 0.007,
+          "p95_ms": 0.013,
+          "min_ms": 0.006,
+          "max_ms": 0.033
+        },
+        "dependency_invalidation_ms": {
+          "median_p50_ms": 0.915,
+          "p95_ms": 1.488,
+          "min_ms": 0.823,
+          "max_ms": 2.443
+        },
+        "registry_ms": {
+          "median_p50_ms": 0.001,
+          "p95_ms": 0.002,
+          "min_ms": 0.001,
+          "max_ms": 0.003
+        },
+        "kernel_ms": {
+          "median_p50_ms": 0.532,
+          "p95_ms": 0.984,
+          "min_ms": 0.476,
+          "max_ms": 1.25
+        },
+        "dependency_rebuild_ms": {
+          "median_p50_ms": 0.354,
+          "p95_ms": 0.61,
+          "min_ms": 0.319,
+          "max_ms": 0.837
+        },
+        "scene3d_build_ms": {
+          "median_p50_ms": 2.631,
+          "p95_ms": 3.485,
+          "min_ms": 2.339,
+          "max_ms": 5.224
+        },
+        "validation_ms": {
+          "median_p50_ms": 2.853,
+          "p95_ms": 3.671,
+          "min_ms": 2.58,
+          "max_ms": 17.655
+        },
+        "total_ms": {
+          "median_p50_ms": 9.634,
+          "p95_ms": 15.258,
+          "min_ms": 8.856,
+          "max_ms": 24.705
+        }
+      }
+    },
+    "s1_ratio_section_partial": {
+      "mode": "PARTIAL_TOPOLOGICAL_REBUILD",
+      "recomputed_count": 6,
+      "skipped_count": 17,
+      "iterations": 30,
+      "warmup": 3,
+      "stages": {
+        "parser_ms": {
+          "median_p50_ms": 0.188,
+          "p95_ms": 0.263,
+          "min_ms": 0.155,
+          "max_ms": 0.299
+        },
+        "typed_facts_ms": {
+          "median_p50_ms": 0.008,
+          "p95_ms": 0.012,
+          "min_ms": 0.007,
+          "max_ms": 0.021
+        },
+        "dependency_invalidation_ms": {
+          "median_p50_ms": 0.841,
+          "p95_ms": 1.235,
+          "min_ms": 0.724,
+          "max_ms": 13.242
+        },
+        "registry_ms": {
+          "median_p50_ms": 0.001,
+          "p95_ms": 0.001,
+          "min_ms": 0.0,
+          "max_ms": 0.001
+        },
+        "kernel_ms": {
+          "median_p50_ms": 1.679,
+          "p95_ms": 1.895,
+          "min_ms": 1.587,
+          "max_ms": 2.289
+        },
+        "dependency_rebuild_ms": {
+          "median_p50_ms": 1.561,
+          "p95_ms": 1.776,
+          "min_ms": 1.467,
+          "max_ms": 2.168
+        },
+        "scene3d_build_ms": {
+          "median_p50_ms": 2.315,
+          "p95_ms": 2.936,
+          "min_ms": 2.07,
+          "max_ms": 3.422
+        },
+        "validation_ms": {
+          "median_p50_ms": 4.015,
+          "p95_ms": 4.857,
+          "min_ms": 3.774,
+          "max_ms": 5.196
+        },
+        "total_ms": {
+          "median_p50_ms": 11.343,
+          "p95_ms": 13.205,
+          "min_ms": 10.703,
+          "max_ms": 23.694
+        }
+      }
+    },
+    "s1_ratio_section_full_rebuild": {
+      "mode": "FULL_TOPOLOGICAL_REBUILD",
+      "recomputed_count": 18,
+      "skipped_count": 0,
+      "iterations": 30,
+      "warmup": 3,
+      "stages": {
+        "parser_ms": {
+          "median_p50_ms": 0.192,
+          "p95_ms": 0.238,
+          "min_ms": 0.158,
+          "max_ms": 0.257
+        },
+        "typed_facts_ms": {
+          "median_p50_ms": 0.008,
+          "p95_ms": 0.014,
+          "min_ms": 0.006,
+          "max_ms": 0.027
+        },
+        "dependency_invalidation_ms": {
+          "median_p50_ms": 0.799,
+          "p95_ms": 0.912,
+          "min_ms": 0.709,
+          "max_ms": 0.921
+        },
+        "registry_ms": {
+          "median_p50_ms": 0.001,
+          "p95_ms": 0.001,
+          "min_ms": 0.0,
+          "max_ms": 0.001
+        },
+        "kernel_ms": {
+          "median_p50_ms": 1.855,
+          "p95_ms": 1.949,
+          "min_ms": 1.696,
+          "max_ms": 3.073
+        },
+        "dependency_rebuild_ms": {
+          "median_p50_ms": 1.739,
+          "p95_ms": 1.825,
+          "min_ms": 1.587,
+          "max_ms": 2.871
+        },
+        "scene3d_build_ms": {
+          "median_p50_ms": 2.381,
+          "p95_ms": 4.166,
+          "min_ms": 2.081,
+          "max_ms": 15.947
+        },
+        "validation_ms": {
+          "median_p50_ms": 4.17,
+          "p95_ms": 4.7,
+          "min_ms": 3.915,
+          "max_ms": 7.167
+        },
+        "total_ms": {
+          "median_p50_ms": 11.781,
+          "p95_ms": 15.836,
+          "min_ms": 11.208,
+          "max_ms": 25.078
+        }
+      }
+    },
+    "s11_equiv_noop_check": {
+      "mode": "NO_OP_EQUIVALENT",
+      "recomputed_count": 0,
+      "skipped_count": 31,
+      "iterations": 30,
+      "warmup": 3,
+      "stages": {
+        "parser_ms": {
+          "median_p50_ms": 0.111,
+          "p95_ms": 0.133,
+          "min_ms": 0.095,
+          "max_ms": 0.138
+        },
+        "typed_facts_ms": {
+          "median_p50_ms": 0.005,
+          "p95_ms": 0.006,
+          "min_ms": 0.004,
+          "max_ms": 0.006
+        },
+        "dependency_invalidation_ms": {
+          "median_p50_ms": 0.903,
+          "p95_ms": 0.979,
+          "min_ms": 0.843,
+          "max_ms": 1.073
+        },
+        "registry_ms": {
+          "median_p50_ms": 0.001,
+          "p95_ms": 0.001,
+          "min_ms": 0.001,
+          "max_ms": 0.001
+        },
+        "kernel_ms": {
+          "median_p50_ms": 0.0,
+          "p95_ms": 0.0,
+          "min_ms": 0.0,
+          "max_ms": 0.0
+        },
+        "dependency_rebuild_ms": {
+          "median_p50_ms": 0.0,
+          "p95_ms": 0.0,
+          "min_ms": 0.0,
+          "max_ms": 0.0
+        },
+        "scene3d_build_ms": {
+          "median_p50_ms": 0.0,
+          "p95_ms": 0.0,
+          "min_ms": 0.0,
+          "max_ms": 0.0
+        },
+        "validation_ms": {
+          "median_p50_ms": 3.332,
+          "p95_ms": 3.844,
+          "min_ms": 3.059,
+          "max_ms": 17.059
+        },
+        "total_ms": {
+          "median_p50_ms": 6.603,
+          "p95_ms": 12.649,
+          "min_ms": 6.226,
+          "max_ms": 20.327
+        }
+      }
+    }
+  }
+}

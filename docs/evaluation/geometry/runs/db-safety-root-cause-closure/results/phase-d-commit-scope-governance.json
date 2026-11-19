@@ -1,0 +1,877 @@
+{
+  "baseline_main": "bb046fa22aceff47abe22aa783aa64fc65caee13",
+  "base_feature_commit_count_prior_to_closure": 114,
+  "domain_counts": {
+    "attachment_composer": 9,
+    "classroom_retirement": 1,
+    "database_migration": 4,
+    "geometry_core_scene3d": 21,
+    "landing_page": 39,
+    "step_editor": 11,
+    "tests_docs_eval": 16,
+    "workspace_sidebar": 13,
+    "database_safety_closure": 1
+  },
+  "domains": {
+    "attachment_composer": [
+      {
+        "short": "9fff0e360",
+        "sha": "9fff0e360d7be7785df0b50766d36264974ba597",
+        "subject": "feat(frontend): composable 2D geometry illustrations, compact library toolbar, and fitted composer plus menu",
+        "file_count": 10
+      },
+      {
+        "short": "e82fdb184",
+        "sha": "e82fdb184636272850224457dc4c8a5c2bee8f40",
+        "subject": "style(composer): refine plus attachment popover proportions, states, and keyboard focus",
+        "file_count": 3
+      },
+      {
+        "short": "81aa0e245",
+        "sha": "81aa0e245fb9e77fa3a05c7533b12b2219abb138",
+        "subject": "feat(frontend): standardize semantic geometry colors, Oxyz axes, angle markers, steps, and composer menu",
+        "file_count": 13
+      },
+      {
+        "short": "15b4505bf",
+        "sha": "15b4505bf8b9b1904e2c968a273c68453ba19887",
+        "subject": "fix(frontend): viewport-aware composer popover & scene3d pedagogical fixes",
+        "file_count": 11
+      },
+      {
+        "short": "1bd1fe92d",
+        "sha": "1bd1fe92d089e73b0f1a2b838576950d863ac1e3",
+        "subject": "perf(composer): single-commit plus popover positioning and proportion refinement",
+        "file_count": 3
+      },
+      {
+        "short": "6888b512a",
+        "sha": "6888b512a729bd94bd15068b108f39014b27cba4",
+        "subject": "fix(frontend): compact Composer + popover proportions and eliminate overlap with Gợi ý khám phá",
+        "file_count": 3
+      },
+      {
+        "short": "998b0dd88",
+        "sha": "998b0dd88ae5ac566f0fffca8f8a79e79389acad",
+        "subject": "fix(axo): refine attachment cards, pdf preview stack, and unify composer send/stop",
+        "file_count": 5
+      },
+      {
+        "short": "5bcf47f51",
+        "sha": "5bcf47f51ce192d6e5a380506e4c3b12f81055f1",
+        "subject": "fix(axo): correct attachment focus and remove docx fallback preview",
+        "file_count": 6
+      },
+      {
+        "short": "9220fc635",
+        "sha": "9220fc6359ed42dc119383f477a1c6cb9191ce14",
+        "subject": "feat(attachment): integrate ScreenCaptureDialog, pdfjs-dist manifest, resize test, and attachment evidence",
+        "file_count": 154
+      }
+    ],
+    "classroom_retirement": [
+      {
+        "short": "bf1ee2a57",
+        "sha": "bf1ee2a57c20f10c9663a5d212546eb1a4e50f87",
+        "subject": "refactor(classroom): retire Classroom/Live Session modules and rebase f8a2c41d9e05 onto 9c4d8e2b7a10",
+        "file_count": 37
+      }
+    ],
+    "database_migration": [
+      {
+        "short": "37b7460dd",
+        "sha": "37b7460ddd6f01dc07e5999dd09e29abe3ac2486",
+        "subject": "fix(step-editor): close Alembic, geometry boundary, concurrency retry & version clock gaps",
+        "file_count": 10
+      },
+      {
+        "short": "5d1da3cac",
+        "sha": "5d1da3cac55f69ae14d859578c2c5b34b2622c14",
+        "subject": "test(postgres): add PostgreSQL 16 ephemeral harness, full B2 row-lock/restart suite, and C2 geometry oracle",
+        "file_count": 2
+      },
+      {
+        "short": "35c360b83",
+        "sha": "35c360b83ebcd7fff14f14fffabdacab8d09a2ec",
+        "subject": "fix(tests): expose shared pg_container fixture to step editor closure postgres tests",
+        "file_count": 1
+      },
+      {
+        "short": "1eaa33fbb",
+        "sha": "1eaa33fbb083f26da8709f4d86a3143fd7cb2c56",
+        "subject": "docs(evaluation): record Step Editor release-gate verification evidence on real PostgreSQL 16",
+        "file_count": 22
+      }
+    ],
+    "geometry_core_scene3d": [
+      {
+        "short": "20e4faa45",
+        "sha": "20e4faa45d2d0394a7afc4c79646df7b82502e4c",
+        "subject": "feat(geometry-library): audit 11 samples, fix Scene3D camera/visibility/labels, and sync thumbnails",
+        "file_count": 7
+      },
+      {
+        "short": "3ce5251bc",
+        "sha": "3ce5251bc38728fb4012aeada3be0de19cbe1476",
+        "subject": "feat(frontend): implement reusable 2D geometry illustration system and library visual refinement",
+        "file_count": 12
+      },
+      {
+        "short": "ef9c20160",
+        "sha": "ef9c20160cb869c6dbb3137993b456274fe366b4",
+        "subject": "feat(axo-library): replace 11 sample problems with 11 advanced THPT 3D geometry simulations and composable 2D templates",
+        "file_count": 19
+      },
+      {
+        "short": "a6d9bebf6",
+        "sha": "a6d9bebf66339be99a9dfbba83ecfa072ab9d3d1",
+        "subject": "fix(scene3d): fix root-cause camera framing, sphere/line/plane bounds, and label readability",
+        "file_count": 5
+      },
+      {
+        "short": "012493f1c",
+        "sha": "012493f1ce24d6bb15f17135b32dc2c4c78e05ab",
+        "subject": "fix(axo): remove preview navigation and normalize scrollbar cursor",
+        "file_count": 3
+      },
+      {
+        "short": "65ffb998a",
+        "sha": "65ffb998ab1192685d18b43bf678df2b78ec8330",
+        "subject": "style(axo): normalize icon sizing and optical alignment",
+        "file_count": 6
+      },
+      {
+        "short": "c7a6077fd",
+        "sha": "c7a6077fd048d3c0fe91cb515879b8547fa4bf28",
+        "subject": "fix(axo): improve geometry scene rendering consistency",
+        "file_count": 5
+      },
+      {
+        "short": "5a229507b",
+        "sha": "5a229507b81db76f61548e2e1d26e757980c2d65",
+        "subject": "fix(display-names): resolve plane symbols before naming points that lie on them (GEO-BE-001)",
+        "file_count": 3
+      },
+      {
+        "short": "3085b182e",
+        "sha": "3085b182eb587df053f8a67bbe5895754778e503",
+        "subject": "fix(axo): simplify geometry plane visualization policy",
+        "file_count": 5
+      },
+      {
+        "short": "d49763413",
+        "sha": "d497634139276f90c177a99a3b0bb23eaf665d2e",
+        "subject": "fix(axo): strengthen geometry step integrity and visualization",
+        "file_count": 7
+      },
+      {
+        "short": "dfc063840",
+        "sha": "dfc0638406ab547297ea16ba0d1cc23da35af479",
+        "subject": "fix(axo): refine geometry interaction and step visualization",
+        "file_count": 8
+      },
+      {
+        "short": "af81b3db5",
+        "sha": "af81b3db59140d39f27142d1b669c1bf23efe343",
+        "subject": "fix(axo): verify plane geometry and refine object interactions",
+        "file_count": 9
+      },
+      {
+        "short": "b5810dcc3",
+        "sha": "b5810dcc31e745f5290a89a1082047aa4a34964b",
+        "subject": "fix(axo): integrate verified backend geometry contracts",
+        "file_count": 9
+      },
+      {
+        "short": "8b0c270ad",
+        "sha": "8b0c270ade50187381828111f825fa234daf2418",
+        "subject": "fix(axo): refine geometry relationships and camera locate",
+        "file_count": 4
+      },
+      {
+        "short": "72d7271db",
+        "sha": "72d7271db3455daf0e24d4509de7a2472fade9a2",
+        "subject": "refactor(test): organize frontend tests by behavior and domain",
+        "file_count": 16
+      },
+      {
+        "short": "b57df99cf",
+        "sha": "b57df99cf73bccd827e1babad21af699c889b3d4",
+        "subject": "fix(axo): prevent self-referential contract relation formatting",
+        "file_count": 2
+      },
+      {
+        "short": "aecd3daa5",
+        "sha": "aecd3daa5a9ca289e3521ac40c7be6ad8f1e60eb",
+        "subject": "fix(axo): improve geometric relationship presentation",
+        "file_count": 4
+      },
+      {
+        "short": "c46353c78",
+        "sha": "c46353c783d2044250b73e9a571851999d67ec5a",
+        "subject": "fix(axo): restore geometry toolbar functionality",
+        "file_count": 5
+      },
+      {
+        "short": "7cca5b4b1",
+        "sha": "7cca5b4b1b3efa31484610b6753c0c28720f103a",
+        "subject": "style(axo): restore geometry customization naming",
+        "file_count": 2
+      },
+      {
+        "short": "72870daaf",
+        "sha": "72870daafe1afc5932cd46b536096836f4698d42",
+        "subject": "fix(axo): restore geometry plane framing and step consistency",
+        "file_count": 2
+      },
+      {
+        "short": "d0cb1d40f",
+        "sha": "d0cb1d40f71a50ac2ae227f254c3eb0d4e70fa22",
+        "subject": "refactor(workspace): restore compact step list baseline, slim inline editor, and remove persistent update badge",
+        "file_count": 7
+      }
+    ],
+    "landing_page": [
+      {
+        "short": "ed71ff6ea",
+        "sha": "ed71ff6eaa0abf6463d983f5e71a296b6d48e366",
+        "subject": "feat(axo): build landing page visual prototype",
+        "file_count": 11
+      },
+      {
+        "short": "56c50f3a1",
+        "sha": "56c50f3a1364d379099debfe097d9d04559fe381",
+        "subject": "feat(axo): upgrade landing hero and closing visual direction",
+        "file_count": 4
+      },
+      {
+        "short": "dd5d92f67",
+        "sha": "dd5d92f6744bb7005f3ea89db07c6cdf72e6fe37",
+        "subject": "feat(axo): refine spatial storytelling, demo, and 3d rendering lifecycle",
+        "file_count": 7
+      },
+      {
+        "short": "6712a7a50",
+        "sha": "6712a7a50ea137a2be728a121418823eb5ec5ac8",
+        "subject": "style(axo): align landing components with design system",
+        "file_count": 4
+      },
+      {
+        "short": "ef5dd3d37",
+        "sha": "ef5dd3d37d125476e6104d92184f0844dde7e108",
+        "subject": "feat(axo): refine landing visual storytelling",
+        "file_count": 4
+      },
+      {
+        "short": "42502b9c6",
+        "sha": "42502b9c636cdfa14872ca30b0b2b48e178d01e5",
+        "subject": "refactor(axo): simplify interactive geometry showcase",
+        "file_count": 2
+      },
+      {
+        "short": "fb5650d0f",
+        "sha": "fb5650d0f3dbdbe7c59a29e16b0e4c6f20416e28",
+        "subject": "perf(axo): optimize landing animation lifecycle",
+        "file_count": 3
+      },
+      {
+        "short": "3281b934b",
+        "sha": "3281b934b0ecd9173f8e54a0f99191807d0afa94",
+        "subject": "docs(axo): record landing v1.2 evaluation report and code index",
+        "file_count": 2
+      },
+      {
+        "short": "9e2340c72",
+        "sha": "9e2340c7246c3c78dedc3be85c1a6c42d9720c20",
+        "subject": "fix(axo): synchronize landing and workspace auth navigation",
+        "file_count": 3
+      },
+      {
+        "short": "5f66a2910",
+        "sha": "5f66a2910d6eaf3743077f0b4ec4d57dfc765132",
+        "subject": "fix(axo): remove redundant mobile navigation actions",
+        "file_count": 3
+      },
+      {
+        "short": "61f3f78f6",
+        "sha": "61f3f78f6977287a652d064cff198ea0196aa0f0",
+        "subject": "feat(axo): redesign hero spatial illustration",
+        "file_count": 3
+      },
+      {
+        "short": "2533d1442",
+        "sha": "2533d14420ed617138e6026fb46852162f59f470",
+        "subject": "feat(axo): add animated product explainer storytelling",
+        "file_count": 6
+      },
+      {
+        "short": "85f47feee",
+        "sha": "85f47feeef4c6373e12c8265c739f268eb576605",
+        "subject": "refactor(axo): simplify interactive demo and exact math presentation",
+        "file_count": 3
+      },
+      {
+        "short": "9f7ff3286",
+        "sha": "9f7ff3286cd24b6db450c92d211864435e095a1c",
+        "subject": "style(axo): add CSS rules for explainer stage and mobile drawer button",
+        "file_count": 1
+      },
+      {
+        "short": "d75681930",
+        "sha": "d756819300890353b41b11800850cd075b64f822",
+        "subject": "fix(axo): restore mobile menu focus on Escape close",
+        "file_count": 1
+      },
+      {
+        "short": "59300b9b4",
+        "sha": "59300b9b4d2cae46df602d96d3e86c83d9ea71dc",
+        "subject": "fix(axo): prevent storytelling mobile overflow and scene4 badge overlap",
+        "file_count": 2
+      },
+      {
+        "short": "916fa589b",
+        "sha": "916fa589b381f823c73b520e412e0849bbbeecc1",
+        "subject": "docs(axo): add v1.2.1 verification report",
+        "file_count": 2
+      },
+      {
+        "short": "2cde6e6a4",
+        "sha": "2cde6e6a4921827ecf6ab41101da80bdd2f3f029",
+        "subject": "fix(axo): streamline landing authentication and navigation",
+        "file_count": 15
+      },
+      {
+        "short": "aebcb1810",
+        "sha": "aebcb18109d0997736eef1446c6adc9ed7481480",
+        "subject": "feat(axo): add v1.3 landing motion prototypes for owner review",
+        "file_count": 8
+      },
+      {
+        "short": "eeb12c9c6",
+        "sha": "eeb12c9c6a0e35e17ba0cf49ec41d2d8edb3c03f",
+        "subject": "feat(axo): add expressive geometry typography",
+        "file_count": 4
+      },
+      {
+        "short": "f97f00b1f",
+        "sha": "f97f00b1ff0f19e814121d20444a6618f54d516c",
+        "subject": "feat(axo): redesign landing hero visual system",
+        "file_count": 4
+      },
+      {
+        "short": "e34faf7d4",
+        "sha": "e34faf7d46f2608455e35b82d4ac4e7f06ac83c9",
+        "subject": "feat(axo): refine spatial storytelling preview",
+        "file_count": 4
+      },
+      {
+        "short": "b717cebd1",
+        "sha": "b717cebd1cc704156cac75b54ab9c2bfa6c3f68a",
+        "subject": "style(axo): unify demo and final cta presentation",
+        "file_count": 10
+      },
+      {
+        "short": "ed308d1a8",
+        "sha": "ed308d1a86c3df256e982f4912ebe99ed50779e0",
+        "subject": "docs(axo): add v1.4 visual direction report",
+        "file_count": 2
+      },
+      {
+        "short": "471baf39b",
+        "sha": "471baf39b9c5c321d7c78ac7c72ba6b6a643af7f",
+        "subject": "feat(axo): upgrade v1.4 closing 3d scene and editorial footer",
+        "file_count": 9
+      },
+      {
+        "short": "1bfc2bc36",
+        "sha": "1bfc2bc361c2a887e5d826996e365154cb09c41d",
+        "subject": "docs(axo): add landing cta footer refinement report",
+        "file_count": 1
+      },
+      {
+        "short": "d04a445a6",
+        "sha": "d04a445a672f6ce813ef0d9815593fcafc1a576f",
+        "subject": "feat(axo): recover v1.4 landing design, scroll storytelling, and consolidate prototypes",
+        "file_count": 23
+      },
+      {
+        "short": "2ddcd6f25",
+        "sha": "2ddcd6f2592d62985ed98b60f046af9c6654372a",
+        "subject": "docs(axo): add landing design recovery and scroll storytelling report",
+        "file_count": 1
+      },
+      {
+        "short": "a7d2437a9",
+        "sha": "a7d2437a9204cc9d0ed981d590f99bdbcd6a0c19",
+        "subject": "feat(axo): recover v1.4 landing storytelling, 3d visuals, and zero-answer ux",
+        "file_count": 19
+      },
+      {
+        "short": "e39d67548",
+        "sha": "e39d67548fb1819fb8cdeadb038dd3f54e69a66c",
+        "subject": "docs(axo): add landing v1.4 product recovery report",
+        "file_count": 1
+      },
+      {
+        "short": "eb7448533",
+        "sha": "eb7448533c124e84b6e07aebf7e8d56a854ef0a0",
+        "subject": "feat(axo): refine v1.4 landing hero, scroll storytelling, demo, closing 3d and footer",
+        "file_count": 18
+      },
+      {
+        "short": "55d4e9e10",
+        "sha": "55d4e9e108cf948e9cac91d92871d681acd381bb",
+        "subject": "docs(axo): add landing v1.4 final refinement report",
+        "file_count": 1
+      },
+      {
+        "short": "2732803e3",
+        "sha": "2732803e31e26fc91f4eeefb4c6dfcf9835f69ec",
+        "subject": "feat(landing): AXO Landing V1.5 spatial editorial recovery on isolated preview",
+        "file_count": 16
+      },
+      {
+        "short": "b769a554f",
+        "sha": "b769a554fee774d99e068ded748c288111bc4d13",
+        "subject": "feat(landing): AXO Landing V1.6 visual quality recovery on isolated preview",
+        "file_count": 13
+      },
+      {
+        "short": "b99311d3f",
+        "sha": "b99311d3feef9748693a885a36bff89ada11fbd8",
+        "subject": "feat(landing): refine V1.6 header hover, spatial hero, scroll storytelling, and studio demo",
+        "file_count": 13
+      },
+      {
+        "short": "aaf180072",
+        "sha": "aaf180072a32c4efbbb07684d4c51dfce7b57705",
+        "subject": "feat(landing): spatial visual system gallery, continuous light ground, and closing hexagon polish",
+        "file_count": 8
+      },
+      {
+        "short": "762402943",
+        "sha": "762402943774a21b07212c772854de8d55d4cbfb",
+        "subject": "feat(landing): refine v1.7 spatial storytelling, showcase stage, and coupled geometry",
+        "file_count": 10
+      },
+      {
+        "short": "b84e19f5c",
+        "sha": "b84e19f5c018eb8a10d1f1f5003e16cfca187251",
+        "subject": "feat(landing): refine v1.7 storytelling stage, cube camera preset, and spatial editorial rhythm",
+        "file_count": 11
+      },
+      {
+        "short": "b73c2c29f",
+        "sha": "b73c2c29f2fc70af80dac8e6648eb794bee67beb",
+        "subject": "feat(landing): axo landing v1.8 spatial editorial 2.0 visual architecture and geometry redesign",
+        "file_count": 9
+      }
+    ],
+    "step_editor": [
+      {
+        "short": "438fa69ca",
+        "sha": "438fa69cab04bc266110937874051e8616d8ea37",
+        "subject": "feat(workspace): add editable construction steps, deterministic partial kernel rebuild, and verified feedback pipeline",
+        "file_count": 15
+      },
+      {
+        "short": "7607f0d6e",
+        "sha": "7607f0d6e5e846d97c393e7876f7fa4cf389ad35",
+        "subject": "fix(workspace): stabilize construction step editor semantic resolution, exact invariants, and UX",
+        "file_count": 9
+      },
+      {
+        "short": "f3cf5fa79",
+        "sha": "f3cf5fa793890e77d882a2fd7835075e87d536a1",
+        "subject": "fix(workspace): restore construction step editor V1 UX, fix textarea overflow & line wrapping",
+        "file_count": 25
+      },
+      {
+        "short": "602a38db8",
+        "sha": "602a38db82351c17c3f6097089d4e938f8cfb345",
+        "subject": "fix(step-editor): harden V2.2 rebuild reliability, exact oracle, fail-closed gates, async guards, and E2E evidence",
+        "file_count": 22
+      },
+      {
+        "short": "ba261dea5",
+        "sha": "ba261dea555eae16b0754005c96e9bb6fdaa6e91",
+        "subject": "fix(step-editor): stabilize root causes RC-1..RC-7 and pre-merge verification",
+        "file_count": 24
+      },
+      {
+        "short": "ac8badd63",
+        "sha": "ac8badd6366bb7b4df43297ef75f01a9aafa3c45",
+        "subject": "fix(step-editor): resolve IND-1..IND-7 root causes and complete independent acceptance",
+        "file_count": 24
+      },
+      {
+        "short": "a493d89c0",
+        "sha": "a493d89c0d3f58c87612faf3d1b2c1840569cac8",
+        "subject": "fix(step-editor): harden FP-1..FP-6 geometry equivalence, invariants, cancel and pre-merge verification",
+        "file_count": 29
+      },
+      {
+        "short": "bae665e79",
+        "sha": "bae665e79d69b6b47fae34187b0ea1b02d722e50",
+        "subject": "feat(step-editor): close post-commit cancel race, idempotency, topology guard and merge-gate verification",
+        "file_count": 28
+      },
+      {
+        "short": "5b013d16e",
+        "sha": "5b013d16e620fb23a98fc29c1aceebdd319baef2",
+        "subject": "fix(step-editor): use helper display reference instead of raw internal id in plane labels (IA-RC1)",
+        "file_count": 2
+      },
+      {
+        "short": "2558f9fb5",
+        "sha": "2558f9fb59e147be6d2cdd1eb2744d6c004c9ae4",
+        "subject": "fix(step-editor): keep inline step editor actions visible inside dock scroll",
+        "file_count": 2
+      },
+      {
+        "short": "2ff70ce45",
+        "sha": "2ff70ce455f0b298a7878880ab7eb3fee21cc572",
+        "subject": "fix(step-editor): clamp mobile dock and editor visibility under virtual keyboard",
+        "file_count": 3
+      }
+    ],
+    "tests_docs_eval": [
+      {
+        "short": "312962e1d",
+        "sha": "312962e1d79f1b7dfbfd26d8fb43816b4673a063",
+        "subject": "docs(eval): GEO-BE-001 receipts — reproduction, dependency audit, catalog diff, id scan, reproducibility, regression attribution",
+        "file_count": 10
+      },
+      {
+        "short": "aab83790c",
+        "sha": "aab83790c4a139bedfdeac1044b81eb27ea40fa4",
+        "subject": "refactor(test): finalize safe test naming cleanup",
+        "file_count": 2
+      },
+      {
+        "short": "919a06111",
+        "sha": "919a06111ba5ef7da47b604124e58f27d0f02686",
+        "subject": "docs(axo): add geometry regression and tab bar refinement report",
+        "file_count": 1
+      },
+      {
+        "short": "29cc3abe2",
+        "sha": "29cc3abe27f2bf868c25a1af976fc9e92eedd27b",
+        "subject": "docs(geometry): add AXO Step Editor V1 restoration report and QA evidence",
+        "file_count": 1
+      },
+      {
+        "short": "3eabbf674",
+        "sha": "3eabbf674bfca82d19ca00b2894d2576dd87a5e5",
+        "subject": "chore(evaluation): refresh EVALUATION_CANDIDATE and pilot approval templates for Step Editor seal",
+        "file_count": 4
+      },
+      {
+        "short": "0730235e6",
+        "sha": "0730235e66597800ae799775974536a0eeffa7ea",
+        "subject": "docs(evaluation): record Step Editor integration & regression closure evidence",
+        "file_count": 22
+      },
+      {
+        "short": "db015cb2a",
+        "sha": "db015cb2a3d3462366117d66b065c242efcdcd2b",
+        "subject": "chore(seal): sync EVALUATION_CANDIDATE and pilot approval templates with integrated clean tree",
+        "file_count": 4
+      },
+      {
+        "short": "0b58654b0",
+        "sha": "0b58654b03f666ffb947ac4cb9633aee0ece16b4",
+        "subject": "fix(tests): avoid Win32 pipe inheritance hang when spawning local pg_ctl in pytest",
+        "file_count": 1
+      },
+      {
+        "short": "20cc7137f",
+        "sha": "20cc7137fba7ecbae13ec0d75f8a752f0d44b1d8",
+        "subject": "fix(tests): use curved.CurvedSolid and curved.the_tich with Radical(he, can, mu) in C2 oracle",
+        "file_count": 1
+      },
+      {
+        "short": "546126013",
+        "sha": "5461260133e84e8a764f784fb81ffbec35883e86",
+        "subject": "fix(tests): align C2 geometry oracle with exact sample object IDs",
+        "file_count": 1
+      },
+      {
+        "short": "194c0cca5",
+        "sha": "194c0cca5f941b7b81dda3298f22a7092e453153",
+        "subject": "fix(tests): use radical.sign for Radical exact area positivity check in C2",
+        "file_count": 1
+      },
+      {
+        "short": "ebacab9bd",
+        "sha": "ebacab9bd315f7cb02a4150c6f72372bcd502c04",
+        "subject": "chore(seal): update EVALUATION_CANDIDATE and pilot templates after IA-RC1 fix",
+        "file_count": 4
+      },
+      {
+        "short": "a4022c600",
+        "sha": "a4022c60076fb4b89572055e513f4ecc8fc0fbba",
+        "subject": "chore(eval): refresh evaluation candidate seal after IA-RC2",
+        "file_count": 1
+      },
+      {
+        "short": "27f2c98d2",
+        "sha": "27f2c98d2a0f7e9cbe4de8d23837db29e86f0aea",
+        "subject": "chore(eval): refresh evaluation candidate seal after IA-RC3",
+        "file_count": 1
+      },
+      {
+        "short": "fdf3e5e79",
+        "sha": "fdf3e5e79d907c533da50cb4dca56bd48069cde1",
+        "subject": "docs(eval): add independent acceptance and main release preparation report",
+        "file_count": 22
+      },
+      {
+        "short": "daab6b4e4",
+        "sha": "daab6b4e4833317911e73e3d01f5401bf04949d6",
+        "subject": "docs(eval): record pre-merge safety audit and BLOCKED_DATABASE_SAFETY gate report",
+        "file_count": 39
+      }
+    ],
+    "workspace_sidebar": [
+      {
+        "short": "388bb9718",
+        "sha": "388bb97180cb4cc5366f6607c5c1491e7314a5d6",
+        "subject": "feat(geometry-library): unify Scene3D thumbnail projection, exact cone orbit occlusion, and minimalist header",
+        "file_count": 6
+      },
+      {
+        "short": "d2aeec4a8",
+        "sha": "d2aeec4a85312b545f6215843dbdd2687eeb009d",
+        "subject": "style(header): refine main and workspace headers via shared layout container and design tokens",
+        "file_count": 3
+      },
+      {
+        "short": "b554b1c8a",
+        "sha": "b554b1c8ac9be476e32d7167ae05fc56c60558c7",
+        "subject": "style(axo): refine sidebar section header and filter alignment",
+        "file_count": 3
+      },
+      {
+        "short": "78665ef5a",
+        "sha": "78665ef5af8c6003202b8e185d627fff1543c0b6",
+        "subject": "style(axo): refine sidebar section chevron",
+        "file_count": 3
+      },
+      {
+        "short": "9ff57ef17",
+        "sha": "9ff57ef17a60786db97f1b519f39474380379314",
+        "subject": "fix(axo): refine sidebar scrollbar appearance and scrolling",
+        "file_count": 3
+      },
+      {
+        "short": "dc14cacc9",
+        "sha": "dc14cacc95239c653247bcde7020d0400534b4d5",
+        "subject": "fix(axo): prevent duplicate workspace tabs",
+        "file_count": 7
+      },
+      {
+        "short": "333cadc4e",
+        "sha": "333cadc4e6bfd4b0df4141d0c7d5190ea3bf16d4",
+        "subject": "fix(axo): stabilize simulation error handling and recovery",
+        "file_count": 11
+      },
+      {
+        "short": "8af24a5c8",
+        "sha": "8af24a5c8fc755336fbb7b07e0dd1cc7ad343837",
+        "subject": "fix(axo): simplify sidebar empty state",
+        "file_count": 3
+      },
+      {
+        "short": "c65eea956",
+        "sha": "c65eea9569744a927656584a4a1dc96dc913f633",
+        "subject": "style(axo): match sidebar toggle icon to approved reference",
+        "file_count": 2
+      },
+      {
+        "short": "94292eac0",
+        "sha": "94292eac0889da224949c949c11d635aadbaa667",
+        "subject": "fix(axo): remove redundant tab close confirmation and preserve drafts",
+        "file_count": 2
+      },
+      {
+        "short": "9b72a2c51",
+        "sha": "9b72a2c51cc8ca13539ef20c313abf9752f2b3f3",
+        "subject": "style(axo): refine sidebar toggle icon geometry",
+        "file_count": 3
+      },
+      {
+        "short": "edc87fe45",
+        "sha": "edc87fe456a79457591e892de02dd2055c5c3041",
+        "subject": "style(axo): refine workspace tab readability and active states",
+        "file_count": 3
+      },
+      {
+        "short": "a9a5d20b1",
+        "sha": "a9a5d20b1c2ffa85ff967240eac53c7ebcad469d",
+        "subject": "feat(workspace): integrate single-instance tab state, draft history, recovery snapshot, and shell views",
+        "file_count": 18
+      }
+    ],
+    "database_safety_closure": [
+      {
+        "short": "0fe3873a4",
+        "sha": "0fe3873a4fbeaa95006a6d7a36dea68a0828b1f2",
+        "subject": "fix(db-safety): neutralize destructive classroom drop, add startup migration preflight, and close legacy script dependencies",
+        "file_count": 15,
+        "files": [
+          "backend/Dockerfile",
+          "backend/alembic/env.py",
+          "backend/alembic/migration_preflight.py",
+          "backend/alembic/versions/f8a2c41d9e05_remove_classroom_and_live_session_tables.py",
+          "backend/scripts/seed_classroom_fixture.py",
+          "backend/scripts/seed_demo_accounts.py",
+          "backend/tests/geometry/test_step_editor_integration_closure.py",
+          "backend/tests/test_database_safety_closure.py",
+          "backend/tests/test_dev_backend_launcher.py",
+          "backend/tests/test_postgres_axo_history_migration.py",
+          "docs/CLASSROOM_AUTH_CONTRACT.md",
+          "docs/CODE_INDEX.md",
+          "docs/OPERATIONS.md",
+          "frontend/public/prototypes/axo-left-sidebar-prototype.html",
+          "frontend/public/prototypes/axo-multi-problem-workspace.html"
+        ]
+      }
+    ]
+  },
+  "shared_product_files_coupling_domains": {
+    "backend/app/main.py": [
+      "classroom_retirement",
+      "step_editor"
+    ],
+    "backend/app/simulation/geometry/__init__.py": [
+      "database_migration",
+      "geometry_core_scene3d"
+    ],
+    "backend/app/simulation/geometry/kernel.py": [
+      "database_migration",
+      "geometry_core_scene3d"
+    ],
+    "backend/app/simulation/geometry_functions/step_editor.py": [
+      "geometry_core_scene3d",
+      "step_editor"
+    ],
+    "backend/app/simulation/step_edit_router.py": [
+      "database_migration",
+      "step_editor"
+    ],
+    "frontend/src/App.tsx": [
+      "geometry_core_scene3d",
+      "landing_page",
+      "workspace_sidebar"
+    ],
+    "frontend/src/components/ConstructionStepEditor.tsx": [
+      "geometry_core_scene3d",
+      "step_editor"
+    ],
+    "frontend/src/components/LeftSidebar.tsx": [
+      "geometry_core_scene3d",
+      "workspace_sidebar"
+    ],
+    "frontend/src/components/LibraryView.tsx": [
+      "attachment_composer",
+      "geometry_core_scene3d",
+      "workspace_sidebar"
+    ],
+    "frontend/src/components/ProblemInput.tsx": [
+      "attachment_composer",
+      "geometry_core_scene3d",
+      "workspace_sidebar"
+    ],
+    "frontend/src/components/SamplePreview.tsx": [
+      "attachment_composer",
+      "geometry_core_scene3d",
+      "workspace_sidebar"
+    ],
+    "frontend/src/components/SimulationWorkspace.tsx": [
+      "attachment_composer",
+      "geometry_core_scene3d",
+      "step_editor",
+      "workspace_sidebar"
+    ],
+    "frontend/src/components/geometry2d/index.ts": [
+      "attachment_composer",
+      "geometry_core_scene3d"
+    ],
+    "frontend/src/components/geometry2d/primitives.tsx": [
+      "attachment_composer",
+      "geometry_core_scene3d"
+    ],
+    "frontend/src/components/geometry2d/resolver.ts": [
+      "attachment_composer",
+      "geometry_core_scene3d"
+    ],
+    "frontend/src/components/geometry2d/templates.tsx": [
+      "attachment_composer",
+      "geometry_core_scene3d"
+    ],
+    "frontend/src/data/geometry-samples.ts": [
+      "attachment_composer",
+      "geometry_core_scene3d"
+    ],
+    "frontend/src/data/offline-catalog.ts": [
+      "attachment_composer",
+      "geometry_core_scene3d"
+    ],
+    "frontend/src/simulations/domains/geometry/scene3d-edge-visibility.ts": [
+      "geometry_core_scene3d",
+      "workspace_sidebar"
+    ],
+    "frontend/src/simulations/domains/geometry/scene3d-model.ts": [
+      "geometry_core_scene3d",
+      "step_editor"
+    ],
+    "frontend/src/simulations/domains/geometry/scene3d-semantic-policy.ts": [
+      "attachment_composer",
+      "geometry_core_scene3d",
+      "step_editor"
+    ],
+    "frontend/src/simulations/domains/geometry/scene3d-view.tsx": [
+      "attachment_composer",
+      "geometry_core_scene3d",
+      "step_editor",
+      "workspace_sidebar"
+    ],
+    "frontend/src/state/construction-step-edits.ts": [
+      "database_migration",
+      "step_editor"
+    ],
+    "frontend/src/state/store.ts": [
+      "geometry_core_scene3d",
+      "workspace_sidebar"
+    ],
+    "frontend/src/styles/global.css": [
+      "attachment_composer",
+      "geometry_core_scene3d",
+      "step_editor",
+      "workspace_sidebar"
+    ]
+  },
+  "cross_domain_dependency_proof": {
+    "why_naive_partial_cherry_pick_unsafe": [
+      "backend/app/main.py intertwines Classroom retirement (bf1ee2a57) and Step Editor router mount (step_editor).",
+      "Alembic chain is strictly linear: 9c4d8e2b7a10 -> f8a2c41d9e05, and Step Editor closure tests + Postgres history tests pin this exact linear chain.",
+      "frontend/src/App.tsx, frontend/src/components/AxoErrorExperience.tsx, and frontend/src/state/store.ts intertwine LandingView routing ('/' -> '/app'), Workspace single-instance tabs, and guest/auth recovery used by Step Editor E2E.",
+      "frontend/src/components/SimulationWorkspace.tsx, frontend/src/styles/global.css, scene3d-model.ts, scene3d-semantic-policy.ts, and scene3d-view.tsx share cumulative commits across geometry_core_scene3d, attachment_composer, workspace_sidebar, and step_editor.",
+      "frontend/src/code-index-sync.test.ts ratchets every production module in frontend/src against docs/CODE_INDEX.md, coupling documentation and source trees."
+    ],
+    "prototyping_bloat_removed": [
+      "frontend/public/prototypes/axo-left-sidebar-prototype.html (0 references, removed)",
+      "frontend/public/prototypes/axo-multi-problem-workspace.html (0 references, removed)"
+    ],
+    "integration_and_rollback_strategy": {
+      "selected_strategy": "Unified hardened integration candidate (`release/axo-step-editor-db-safe-rc`) retaining Landing Page V1.8, Workspace tabs, Geometry Library, Attachment composer, non-destructive Classroom retirement (`f8a2c41d9e05`), migration preflight guard, and Step Editor V1 in a single fast-forwardable release train.",
+      "rollback_mechanism": "Non-destructive git/deployment rollback to baseline `main` (`bb046fa22aceff47abe22aa783aa64fc65caee13`) or forward `git revert`; database tables and legacy Classroom rows remain intact (`0` rows dropped) and `downgrade()` cleanly handles both legacy-retained and fresh databases."
+    }
+  },
+  "gate_d_status": "PASS",
+  "closure_commit_sha": "0fe3873a4fbeaa95006a6d7a36dea68a0828b1f2",
+  "closure_tree_sha": "e5493ccac443a13228eb8fed46bb2bcd01073932",
+  "total_feature_commits_ahead_of_main": 115,
+  "total_changed_files_vs_main": 607
+}

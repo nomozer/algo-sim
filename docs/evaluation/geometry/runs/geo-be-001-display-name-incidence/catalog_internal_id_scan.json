@@ -1,0 +1,11 @@
+{
+  "ticket": "GEO-BE-001",
+  "repository": "axo-geometry-library (a git worktree of the algo-sim repository, shared .git)",
+  "branch": "feat/axo-geometry-library-verification",
+  "baseline_head": "c7a6077fd",
+  "fix_commit": "5a229507b",
+  "live_ai_calls": 0,
+  "method": "every presentation field (label, notation, reference, role) of every object of every sample scanned for whole-token object ids that are machine names (contain '_' or start lowercase) — derived from each scene's own id set, not one regex",
+  "advanced_after": "0 leaks (test_no_presentation_field_of_any_generated_sample_carries_an_internal_id)",
+  "advanced_before": "4 leaks (mp_MNP ×3, mp_NPQ ×1)"
+}

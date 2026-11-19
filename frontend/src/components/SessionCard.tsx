@@ -115,6 +115,8 @@ export function SessionCard({
   const sampleId = resolveGeometrySampleId(item);
   const category = geometryCategoryForItem(item);
   const stats = progressStatsOf(item);
+  const rawScene3d = (recoverCatalogScene3D(item.envelope) as { scene3d?: unknown }).scene3d;
+  const scene3d = hopLeScene3D(rawScene3d) ? rawScene3d : null;
 
   if (variant === "history") {
     return (
@@ -151,7 +153,7 @@ export function SessionCard({
         )}
         <div className="resume-home-left">
           <div className="resume-mini-thumb" aria-hidden="true">
-            <SamplePreview sampleId={sampleId} category={category} />
+            <SamplePreview sampleId={sampleId} category={category} scene3d={scene3d} />
           </div>
           <div className="resume-info">
             <div className="resume-title" title={item.title}>{item.title}</div>
@@ -189,7 +191,7 @@ export function SessionCard({
     >
       <div className="resume-home-left">
         <div className="resume-mini-thumb" id="home-resume-thumb" aria-hidden="true">
-          <SamplePreview sampleId={sampleId} category={category} />
+          <SamplePreview sampleId={sampleId} category={category} scene3d={scene3d} />
         </div>
         <div className="resume-info">
           <div className="resume-title" id="home-resume-title">

@@ -1,0 +1,1203 @@
+{
+  "generated_at": "2026-11-18T15:21:50.361515+00:00",
+  "total_samples": 22,
+  "total_ui_steps": 166,
+  "editable_attempted": 135,
+  "passed": 117,
+  "identity_false_diff_changed_count": 0,
+  "identity_false_diff_changed": [],
+  "prime_leaks": [],
+  "failures": [
+    {
+      "sample": "mp-vuong-goc-duong",
+      "step": 5,
+      "targetIds": [
+        "mpb"
+      ],
+      "title": "Dựng mặt phẳng (α)",
+      "error": "UNSUPPORTED_STEP_SYNTAX: Chưa nhận diện được phép dựng hình hợp lệ trong câu 'Dựng mặt phẳng (α)'. Hãy mô tả rõ phép dựng (ví dụ: 'Xác định trung điểm H của AB', 'Lấy điểm M thuộc SA sao cho SM = 1/3 SA', 'Dựng mặt phẳng (α) qua H và vuông góc với AB', 'Xác định giao điểm E của SB với (MNP)')."
+    },
+    {
+      "sample": "mp-vuong-goc-duong",
+      "step": 6,
+      "targetIds": [
+        "kc__foot1",
+        "kc__perp_seg"
+      ],
+      "title": "Hạ đoạn vuông góc SH ⊥ (α) tại H",
+      "error": "READOUT_STEP_NOT_EDITABLE: Bước đo đại lượng/kết quả được tính tự động từ hình đã dựng; hãy chỉnh sửa các bước dựng hình học phía trước."
+    },
+    {
+      "sample": "cau-cat-mat-phang",
+      "step": 1,
+      "targetIds": [
+        "P"
+      ],
+      "title": "Dựng mặt phẳng cắt (P)",
+      "error": "UNSUPPORTED_STEP_SYNTAX: Chưa nhận diện được phép dựng hình hợp lệ trong câu 'Dựng mặt phẳng cắt (P)'. Hãy mô tả rõ phép dựng (ví dụ: 'Xác định trung điểm H của AB', 'Lấy điểm M thuộc SA sao cho SM = 1/3 SA', 'Dựng mặt phẳng (α) qua H và vuông góc với AB', 'Xác định giao điểm E của SB với (MNP)')."
+    },
+    {
+      "sample": "cau-cat-mat-phang",
+      "step": 2,
+      "targetIds": [
+        "C__center",
+        "C__dist"
+      ],
+      "title": "Xác định hình chiếu vuông góc H của tâm I và đoạn IH",
+      "error": "UNSUPPORTED_STEP_SYNTAX: Chưa nhận diện được phép dựng hình hợp lệ trong câu 'Xác định hình chiếu vuông góc H của tâm I và đoạn IH'. Hãy mô tả rõ phép dựng (ví dụ: 'Xác định trung điểm H của AB', 'Lấy điểm M thuộc SA sao cho SM = 1/3 SA', 'Dựng mặt phẳng (α) qua H và vuông góc với AB', 'Xác định giao điểm E của SB với (MNP)')."
+    },
+    {
+      "sample": "cau-cat-mat-phang",
+      "step": 3,
+      "targetIds": [
+        "C__rim_pt",
+        "C__sec_rad",
+        "C__sph_rad"
+      ],
+      "title": "Xác định điểm M thuộc giao tuyến và tam giác vuông IHM",
+      "error": "UNSUPPORTED_STEP_SYNTAX: Chưa nhận diện được phép dựng hình hợp lệ trong câu 'Xác định điểm M thuộc giao tuyến và tam giác vuông IHM'. Hãy mô tả rõ phép dựng (ví dụ: 'Xác định trung điểm H của AB', 'Lấy điểm M thuộc SA sao cho SM = 1/3 SA', 'Dựng mặt phẳng (α) qua H và vuông góc với AB', 'Xác định giao điểm E của SB với (MNP)')."
+    },
+    {
+      "sample": "cau-cat-mat-phang",
+      "step": 4,
+      "targetIds": [
+        "C"
+      ],
+      "title": "Dựng đường tròn thiết diện giao của mặt cầu và (P)",
+      "error": "UNSUPPORTED_STEP_SYNTAX: Chưa nhận diện được phép dựng hình hợp lệ trong câu 'Dựng đường tròn thiết diện giao của mặt cầu và (P)'. Hãy mô tả rõ phép dựng (ví dụ: 'Xác định trung điểm H của AB', 'Lấy điểm M thuộc SA sao cho SM = 1/3 SA', 'Dựng mặt phẳng (α) qua H và vuông góc với AB', 'Xác định giao điểm E của SB với (MNP)')."
+    },
+    {
+      "sample": "tru-thiet-dien-tron",
+      "step": 4,
+      "targetIds": [
+        "P"
+      ],
+      "title": "Dựng mặt phẳng cắt (α)",
+      "error": "UNSUPPORTED_STEP_SYNTAX: Chưa nhận diện được phép dựng hình hợp lệ trong câu 'Dựng mặt phẳng cắt (α)'. Hãy mô tả rõ phép dựng (ví dụ: 'Xác định trung điểm H của AB', 'Lấy điểm M thuộc SA sao cho SM = 1/3 SA', 'Dựng mặt phẳng (α) qua H và vuông góc với AB', 'Xác định giao điểm E của SB với (MNP)')."
+    },
+    {
+      "sample": "tru-thiet-dien-tron",
+      "step": 5,
+      "targetIds": [
+        "C"
+      ],
+      "title": "Dựng đường tròn thiết diện giao của hình trụ và (α)",
+      "error": "UNSUPPORTED_CURVED_OR_FREEFORM_STEP: Phép dựng khối/mặt tròn xoay trong 'Dựng đường tròn thiết diện giao của hình trụ và (α)' nằm ngoài phạm vi chỉnh sửa bước dựng hình phẳng/chóp hiện tại."
+    },
+    {
+      "sample": "non-duong-sinh",
+      "step": 2,
+      "targetIds": [
+        "doan_SA"
+      ],
+      "title": "Dựng đường sinh SA của hình nón",
+      "error": "UNSUPPORTED_CURVED_OR_FREEFORM_STEP: Phép dựng khối/mặt tròn xoay trong 'Dựng đường sinh SA của hình nón' nằm ngoài phạm vi chỉnh sửa bước dựng hình phẳng/chóp hiện tại."
+    },
+    {
+      "sample": "non-thiet-dien-truc",
+      "step": 3,
+      "targetIds": [
+        "B"
+      ],
+      "title": "Xác định điểm B đối xứng với A qua O",
+      "error": "UNSUPPORTED_STEP_SYNTAX: Chưa nhận diện được phép dựng hình hợp lệ trong câu 'Xác định điểm B đối xứng với A qua O'. Hãy mô tả rõ phép dựng (ví dụ: 'Xác định trung điểm H của AB', 'Lấy điểm M thuộc SA sao cho SM = 1/3 SA', 'Dựng mặt phẳng (α) qua H và vuông góc với AB', 'Xác định giao điểm E của SB với (MNP)')."
+    },
+    {
+      "sample": "mat-cau-cat-mat-phang",
+      "step": 1,
+      "targetIds": [
+        "mp_P"
+      ],
+      "title": "Dựng mặt phẳng cắt (P)",
+      "error": "UNSUPPORTED_STEP_SYNTAX: Chưa nhận diện được phép dựng hình hợp lệ trong câu 'Dựng mặt phẳng cắt (P)'. Hãy mô tả rõ phép dựng (ví dụ: 'Xác định trung điểm H của AB', 'Lấy điểm M thuộc SA sao cho SM = 1/3 SA', 'Dựng mặt phẳng (α) qua H và vuông góc với AB', 'Xác định giao điểm E của SB với (MNP)')."
+    },
+    {
+      "sample": "mat-cau-cat-mat-phang",
+      "step": 3,
+      "targetIds": [
+        "C"
+      ],
+      "title": "Dựng đường tròn thiết diện giao của mặt cầu và (P)",
+      "error": "UNSUPPORTED_STEP_SYNTAX: Chưa nhận diện được phép dựng hình hợp lệ trong câu 'Dựng đường tròn thiết diện giao của mặt cầu và (P)'. Hãy mô tả rõ phép dựng (ví dụ: 'Xác định trung điểm H của AB', 'Lấy điểm M thuộc SA sao cho SM = 1/3 SA', 'Dựng mặt phẳng (α) qua H và vuông góc với AB', 'Xác định giao điểm E của SB với (MNP)')."
+    },
+    {
+      "sample": "oxyz-giao-diem-duong-mat",
+      "step": 0,
+      "targetIds": [
+        "mp_P",
+        "tam_giac_ABC"
+      ],
+      "title": "Dựng mặt phẳng (P)",
+      "error": "UNSUPPORTED_STEP_SYNTAX: Chưa nhận diện được phép dựng hình hợp lệ trong câu 'Dựng mặt phẳng (P)'. Hãy mô tả rõ phép dựng (ví dụ: 'Xác định trung điểm H của AB', 'Lấy điểm M thuộc SA sao cho SM = 1/3 SA', 'Dựng mặt phẳng (α) qua H và vuông góc với AB', 'Xác định giao điểm E của SB với (MNP)')."
+    },
+    {
+      "sample": "mat-phang-tiep-xuc-mat-cau",
+      "step": 1,
+      "targetIds": [
+        "mp_tiep_dien"
+      ],
+      "title": "Dựng mặt phẳng tiếp diện tại A",
+      "error": "UNSUPPORTED_STEP_SYNTAX: Chưa nhận diện được phép dựng hình hợp lệ trong câu 'Dựng mặt phẳng tiếp diện tại A'. Hãy mô tả rõ phép dựng (ví dụ: 'Xác định trung điểm H của AB', 'Lấy điểm M thuộc SA sao cho SM = 1/3 SA', 'Dựng mặt phẳng (α) qua H và vuông góc với AB', 'Xác định giao điểm E của SB với (MNP)')."
+    },
+    {
+      "sample": "hinh-non-cat-song-song-day",
+      "step": 2,
+      "targetIds": [
+        "doan_SA"
+      ],
+      "title": "Dựng đường sinh SA của hình nón",
+      "error": "UNSUPPORTED_CURVED_OR_FREEFORM_STEP: Phép dựng khối/mặt tròn xoay trong 'Dựng đường sinh SA của hình nón' nằm ngoài phạm vi chỉnh sửa bước dựng hình phẳng/chóp hiện tại."
+    },
+    {
+      "sample": "hinh-non-cat-song-song-day",
+      "step": 3,
+      "targetIds": [
+        "doan_SB"
+      ],
+      "title": "Dựng đường sinh SB của hình nón",
+      "error": "UNSUPPORTED_CURVED_OR_FREEFORM_STEP: Phép dựng khối/mặt tròn xoay trong 'Dựng đường sinh SB của hình nón' nằm ngoài phạm vi chỉnh sửa bước dựng hình phẳng/chóp hiện tại."
+    },
+    {
+      "sample": "hinh-non-cat-song-song-day",
+      "step": 6,
+      "targetIds": [
+        "mp_P"
+      ],
+      "title": "Dựng mặt phẳng cắt qua I",
+      "error": "UNSUPPORTED_STEP_SYNTAX: Chưa nhận diện được phép dựng hình hợp lệ trong câu 'Dựng mặt phẳng cắt qua I'. Hãy mô tả rõ phép dựng (ví dụ: 'Xác định trung điểm H của AB', 'Lấy điểm M thuộc SA sao cho SM = 1/3 SA', 'Dựng mặt phẳng (α) qua H và vuông góc với AB', 'Xác định giao điểm E của SB với (MNP)')."
+    },
+    {
+      "sample": "hinh-non-cat-song-song-day",
+      "step": 9,
+      "targetIds": [
+        "C"
+      ],
+      "title": "Dựng đường tròn thiết diện giao của hình nón và mặt phẳng qua I",
+      "error": "UNSUPPORTED_CURVED_OR_FREEFORM_STEP: Phép dựng khối/mặt tròn xoay trong 'Dựng đường tròn thiết diện giao của hình nón và mặt phẳng qua I' nằm ngoài phạm vi chỉnh sửa bước dựng hình phẳng/chóp hiện tại."
+    }
+  ],
+  "bench_48_steps": {
+    "count": 50,
+    "median_ms": 18.699,
+    "p95_ms": 27.035,
+    "max_ms": 104.136,
+    "stage_medians_ms": {
+      "parser_ms": 0.253,
+      "typed_facts_ms": 0.018,
+      "dependency_invalidation_ms": 1.874,
+      "registry_ms": 0.002,
+      "planner_ms": 4.284,
+      "dependency_rebuild_ms": 0.01,
+      "kernel_ms": 0.239,
+      "scene3d_build_ms": 4.72,
+      "validation_ms": 6.716,
+      "total_ms": 18.699
+    }
+  },
+  "memory_25_edits": {
+    "edits": 25,
+    "wall_ms": 3388.87,
+    "mean_ms": 134.679,
+    "p95_ms": 152.937,
+    "max_ms": 158.316,
+    "traced_current_kb": 276.76,
+    "traced_peak_kb": 754.22,
+    "initial_object_count": 24,
+    "final_object_count": 24
+  },
+  "concurrent_benchmark": {
+    "cross_session_2_threads_10_ops": {
+      "statuses": [
+        200,
+        200,
+        200,
+        200,
+        200,
+        200,
+        200,
+        200,
+        200,
+        200
+      ],
+      "median_ms": 103.424,
+      "max_ms": 257.736
+    },
+    "same_session_2_thread_race_3_rounds": {
+      "statuses": [
+        409,
+        200,
+        409,
+        200,
+        409,
+        200
+      ],
+      "median_ms": 67.399,
+      "max_ms": 72.643
+    }
+  },
+  "before_after_comparison": {
+    "baseline_passed_steps": 110,
+    "after_passed_steps": 117,
+    "baseline_48_median_ms": 13.046,
+    "after_48_median_ms": 18.699,
+    "delta_48_median_ms": 5.653,
+    "baseline_48_p95_ms": 17.596,
+    "after_48_p95_ms": 27.035,
+    "baseline_25_edit_mean_ms": 84.287,
+    "after_25_edit_mean_ms": 134.679,
+    "baseline_25_edit_peak_kb": 733.51,
+    "after_25_edit_peak_kb": 754.22
+  },
+  "timings_sample_ms": [
+    {
+      "sample": "chop-thiet-dien-ba-diem",
+      "step": 0,
+      "target": "day_ABCD",
+      "total_ms": 20.293,
+      "stages": {
+        "parser_ms": 0.275,
+        "typed_facts_ms": 0.018,
+        "dependency_invalidation_ms": 1.52,
+        "registry_ms": 0.002,
+        "planner_ms": 3.893,
+        "dependency_rebuild_ms": 0.016,
+        "kernel_ms": 0.388,
+        "scene3d_build_ms": 5.242,
+        "validation_ms": 7.311,
+        "total_ms": 20.293
+      },
+      "skipped_unaffected_count": 23
+    },
+    {
+      "sample": "chop-thiet-dien-ba-diem",
+      "step": 2,
+      "target": "canh_ben_S_B",
+      "total_ms": 18.756,
+      "stages": {
+        "parser_ms": 0.339,
+        "typed_facts_ms": 0.024,
+        "dependency_invalidation_ms": 1.95,
+        "registry_ms": 0.003,
+        "planner_ms": 3.218,
+        "dependency_rebuild_ms": 0.007,
+        "kernel_ms": 0.142,
+        "scene3d_build_ms": 4.273,
+        "validation_ms": 7.472,
+        "total_ms": 18.756
+      },
+      "skipped_unaffected_count": 21
+    },
+    {
+      "sample": "chop-thiet-dien-ba-diem",
+      "step": 3,
+      "target": "chop",
+      "total_ms": 20.517,
+      "stages": {
+        "parser_ms": 0.24,
+        "typed_facts_ms": 0.009,
+        "dependency_invalidation_ms": 1.557,
+        "registry_ms": 0.002,
+        "planner_ms": 2.583,
+        "dependency_rebuild_ms": 2.754,
+        "kernel_ms": 2.958,
+        "scene3d_build_ms": 4.848,
+        "validation_ms": 6.748,
+        "total_ms": 20.517
+      },
+      "skipped_unaffected_count": 20
+    },
+    {
+      "sample": "chop-thiet-dien-ba-diem",
+      "step": 4,
+      "target": "O",
+      "total_ms": 14.753,
+      "stages": {
+        "parser_ms": 0.229,
+        "typed_facts_ms": 0.024,
+        "dependency_invalidation_ms": 2.101,
+        "registry_ms": 0.002,
+        "validation_ms": 8.122,
+        "planner_ms": 11.095,
+        "kernel_ms": 0.0,
+        "dependency_rebuild_ms": 0.0,
+        "scene3d_build_ms": 0.0,
+        "total_ms": 14.753
+      },
+      "skipped_unaffected_count": 23
+    },
+    {
+      "sample": "chop-thiet-dien-ba-diem",
+      "step": 5,
+      "target": "M",
+      "total_ms": 13.364,
+      "stages": {
+        "parser_ms": 0.311,
+        "typed_facts_ms": 0.018,
+        "dependency_invalidation_ms": 1.699,
+        "registry_ms": 0.001,
+        "validation_ms": 7.181,
+        "planner_ms": 9.601,
+        "kernel_ms": 0.0,
+        "dependency_rebuild_ms": 0.0,
+        "scene3d_build_ms": 0.0,
+        "total_ms": 13.364
+      },
+      "skipped_unaffected_count": 23
+    },
+    {
+      "sample": "chop-thiet-dien-ba-diem",
+      "step": 6,
+      "target": "N",
+      "total_ms": 17.803,
+      "stages": {
+        "parser_ms": 0.193,
+        "typed_facts_ms": 0.025,
+        "dependency_invalidation_ms": 1.705,
+        "registry_ms": 0.003,
+        "validation_ms": 11.685,
+        "planner_ms": 14.03,
+        "kernel_ms": 0.0,
+        "dependency_rebuild_ms": 0.0,
+        "scene3d_build_ms": 0.0,
+        "total_ms": 17.803
+      },
+      "skipped_unaffected_count": 23
+    },
+    {
+      "sample": "chop-thiet-dien-ba-diem",
+      "step": 7,
+      "target": "P",
+      "total_ms": 14.166,
+      "stages": {
+        "parser_ms": 0.177,
+        "typed_facts_ms": 0.012,
+        "dependency_invalidation_ms": 2.112,
+        "registry_ms": 0.002,
+        "validation_ms": 5.976,
+        "planner_ms": 8.874,
+        "kernel_ms": 0.0,
+        "dependency_rebuild_ms": 0.0,
+        "scene3d_build_ms": 0.0,
+        "total_ms": 14.166
+      },
+      "skipped_unaffected_count": 23
+    },
+    {
+      "sample": "chop-thiet-dien-ba-diem",
+      "step": 8,
+      "target": "mp_MNP",
+      "total_ms": 24.268,
+      "stages": {
+        "parser_ms": 0.394,
+        "typed_facts_ms": 0.024,
+        "dependency_invalidation_ms": 1.809,
+        "registry_ms": 0.002,
+        "planner_ms": 3.036,
+        "dependency_rebuild_ms": 2.549,
+        "kernel_ms": 2.889,
+        "scene3d_build_ms": 5.115,
+        "validation_ms": 9.05,
+        "total_ms": 24.268
+      },
+      "skipped_unaffected_count": 18
+    },
+    {
+      "sample": "chop-thiet-dien-ba-diem",
+      "step": 9,
+      "target": "E",
+      "total_ms": 104.136,
+      "stages": {
+        "parser_ms": 0.289,
+        "typed_facts_ms": 0.02,
+        "dependency_invalidation_ms": 2.143,
+        "registry_ms": 0.002,
+        "planner_ms": 4.899,
+        "dependency_rebuild_ms": 0.008,
+        "kernel_ms": 0.273,
+        "scene3d_build_ms": 88.77,
+        "validation_ms": 6.62,
+        "total_ms": 104.136
+      },
+      "skipped_unaffected_count": 23
+    },
+    {
+      "sample": "chop-thiet-dien-ba-diem",
+      "step": 10,
+      "target": "F",
+      "total_ms": 21.1,
+      "stages": {
+        "parser_ms": 0.439,
+        "typed_facts_ms": 0.026,
+        "dependency_invalidation_ms": 1.884,
+        "registry_ms": 0.002,
+        "planner_ms": 4.954,
+        "dependency_rebuild_ms": 0.014,
+        "kernel_ms": 0.39,
+        "scene3d_build_ms": 4.675,
+        "validation_ms": 7.274,
+        "total_ms": 21.1
+      },
+      "skipped_unaffected_count": 23
+    },
+    {
+      "sample": "chop-thiet-dien-ba-diem",
+      "step": 11,
+      "target": "thiet_dien",
+      "total_ms": 22.851,
+      "stages": {
+        "parser_ms": 0.451,
+        "typed_facts_ms": 0.025,
+        "dependency_invalidation_ms": 1.833,
+        "registry_ms": 0.003,
+        "planner_ms": 3.713,
+        "dependency_rebuild_ms": 1.326,
+        "kernel_ms": 3.819,
+        "scene3d_build_ms": 4.845,
+        "validation_ms": 6.683,
+        "total_ms": 22.851
+      },
+      "skipped_unaffected_count": 21
+    },
+    {
+      "sample": "lap-phuong-thiet-dien-bat-ky",
+      "step": 0,
+      "target": "day_ABCD",
+      "total_ms": 24.412,
+      "stages": {
+        "parser_ms": 0.212,
+        "typed_facts_ms": 0.009,
+        "dependency_invalidation_ms": 1.855,
+        "registry_ms": 0.004,
+        "planner_ms": 5.194,
+        "dependency_rebuild_ms": 0.023,
+        "kernel_ms": 0.402,
+        "scene3d_build_ms": 6.17,
+        "validation_ms": 9.884,
+        "total_ms": 24.412
+      },
+      "skipped_unaffected_count": 28
+    },
+    {
+      "sample": "lap-phuong-thiet-dien-bat-ky",
+      "step": 1,
+      "target": "day_A_primeB_primeC_primeD_prime",
+      "total_ms": 25.918,
+      "stages": {
+        "parser_ms": 0.405,
+        "typed_facts_ms": 0.026,
+        "dependency_invalidation_ms": 2.375,
+        "registry_ms": 0.004,
+        "planner_ms": 5.986,
+        "dependency_rebuild_ms": 0.013,
+        "kernel_ms": 0.244,
+        "scene3d_build_ms": 5.636,
+        "validation_ms": 9.526,
+        "total_ms": 25.918
+      },
+      "skipped_unaffected_count": 28
+    },
+    {
+      "sample": "lap-phuong-thiet-dien-bat-ky",
+      "step": 2,
+      "target": "canh_ben_A_A_prime",
+      "total_ms": 25.354,
+      "stages": {
+        "parser_ms": 0.239,
+        "typed_facts_ms": 0.023,
+        "dependency_invalidation_ms": 2.382,
+        "registry_ms": 0.005,
+        "planner_ms": 5.551,
+        "dependency_rebuild_ms": 0.014,
+        "kernel_ms": 0.318,
+        "scene3d_build_ms": 5.579,
+        "validation_ms": 9.705,
+        "total_ms": 25.354
+      },
+      "skipped_unaffected_count": 25
+    },
+    {
+      "sample": "lap-phuong-thiet-dien-bat-ky",
+      "step": 3,
+      "target": "lap_phuong",
+      "total_ms": 23.655,
+      "stages": {
+        "parser_ms": 0.259,
+        "typed_facts_ms": 0.011,
+        "dependency_invalidation_ms": 2.074,
+        "registry_ms": 0.004,
+        "planner_ms": 3.873,
+        "dependency_rebuild_ms": 2.199,
+        "kernel_ms": 2.494,
+        "scene3d_build_ms": 5.086,
+        "validation_ms": 8.519,
+        "total_ms": 23.655
+      },
+      "skipped_unaffected_count": 26
+    },
+    {
+      "sample": "lap-phuong-thiet-dien-bat-ky",
+      "step": 4,
+      "target": "M",
+      "total_ms": 16.786,
+      "stages": {
+        "parser_ms": 0.356,
+        "typed_facts_ms": 0.021,
+        "dependency_invalidation_ms": 2.437,
+        "registry_ms": 0.003,
+        "validation_ms": 8.692,
+        "planner_ms": 12.236,
+        "kernel_ms": 0.0,
+        "dependency_rebuild_ms": 0.0,
+        "scene3d_build_ms": 0.0,
+        "total_ms": 16.786
+      },
+      "skipped_unaffected_count": 28
+    },
+    {
+      "sample": "lap-phuong-thiet-dien-bat-ky",
+      "step": 5,
+      "target": "N",
+      "total_ms": 16.285,
+      "stages": {
+        "parser_ms": 0.234,
+        "typed_facts_ms": 0.015,
+        "dependency_invalidation_ms": 2.169,
+        "registry_ms": 0.001,
+        "validation_ms": 9.248,
+        "planner_ms": 12.295,
+        "kernel_ms": 0.0,
+        "dependency_rebuild_ms": 0.0,
+        "scene3d_build_ms": 0.0,
+        "total_ms": 16.285
+      },
+      "skipped_unaffected_count": 28
+    },
+    {
+      "sample": "lap-phuong-thiet-dien-bat-ky",
+      "step": 6,
+      "target": "P",
+      "total_ms": 15.32,
+      "stages": {
+        "parser_ms": 0.168,
+        "typed_facts_ms": 0.021,
+        "dependency_invalidation_ms": 2.109,
+        "registry_ms": 0.003,
+        "validation_ms": 8.168,
+        "planner_ms": 11.32,
+        "kernel_ms": 0.0,
+        "dependency_rebuild_ms": 0.0,
+        "scene3d_build_ms": 0.0,
+        "total_ms": 15.32
+      },
+      "skipped_unaffected_count": 28
+    },
+    {
+      "sample": "lap-phuong-thiet-dien-bat-ky",
+      "step": 7,
+      "target": "mp_MNP",
+      "total_ms": 25.532,
+      "stages": {
+        "parser_ms": 0.389,
+        "typed_facts_ms": 0.016,
+        "dependency_invalidation_ms": 2.07,
+        "registry_ms": 0.004,
+        "planner_ms": 3.352,
+        "dependency_rebuild_ms": 1.925,
+        "kernel_ms": 2.049,
+        "scene3d_build_ms": 5.446,
+        "validation_ms": 10.034,
+        "total_ms": 25.532
+      },
+      "skipped_unaffected_count": 23
+    },
+    {
+      "sample": "lap-phuong-thiet-dien-bat-ky",
+      "step": 8,
+      "target": "E",
+      "total_ms": 25.783,
+      "stages": {
+        "parser_ms": 0.444,
+        "typed_facts_ms": 0.021,
+        "dependency_invalidation_ms": 2.52,
+        "registry_ms": 0.006,
+        "planner_ms": 6.816,
+        "dependency_rebuild_ms": 0.011,
+        "kernel_ms": 0.532,
+        "scene3d_build_ms": 5.947,
+        "validation_ms": 9.622,
+        "total_ms": 25.783
+      },
+      "skipped_unaffected_count": 28
+    },
+    {
+      "sample": "lap-phuong-thiet-dien-bat-ky",
+      "step": 9,
+      "target": "F",
+      "total_ms": 26.513,
+      "stages": {
+        "parser_ms": 0.407,
+        "typed_facts_ms": 0.019,
+        "dependency_invalidation_ms": 2.21,
+        "registry_ms": 0.002,
+        "planner_ms": 5.992,
+        "dependency_rebuild_ms": 0.009,
+        "kernel_ms": 0.363,
+        "scene3d_build_ms": 5.697,
+        "validation_ms": 9.627,
+        "total_ms": 26.513
+      },
+      "skipped_unaffected_count": 28
+    },
+    {
+      "sample": "lap-phuong-thiet-dien-bat-ky",
+      "step": 10,
+      "target": "Q",
+      "total_ms": 27.463,
+      "stages": {
+        "parser_ms": 0.491,
+        "typed_facts_ms": 0.024,
+        "dependency_invalidation_ms": 2.346,
+        "registry_ms": 0.003,
+        "planner_ms": 6.103,
+        "dependency_rebuild_ms": 0.012,
+        "kernel_ms": 0.546,
+        "scene3d_build_ms": 5.683,
+        "validation_ms": 9.901,
+        "total_ms": 27.463
+      },
+      "skipped_unaffected_count": 28
+    },
+    {
+      "sample": "lap-phuong-thiet-dien-bat-ky",
+      "step": 11,
+      "target": "thiet_dien",
+      "total_ms": 29.321,
+      "stages": {
+        "parser_ms": 0.258,
+        "typed_facts_ms": 0.011,
+        "dependency_invalidation_ms": 2.119,
+        "registry_ms": 0.002,
+        "planner_ms": 4.396,
+        "dependency_rebuild_ms": 1.251,
+        "kernel_ms": 4.262,
+        "scene3d_build_ms": 5.932,
+        "validation_ms": 10.235,
+        "total_ms": 29.321
+      },
+      "skipped_unaffected_count": 27
+    },
+    {
+      "sample": "lang-tru-tam-giac-thiet-dien",
+      "step": 0,
+      "target": "day_ABC",
+      "total_ms": 19.908,
+      "stages": {
+        "parser_ms": 0.345,
+        "typed_facts_ms": 0.026,
+        "dependency_invalidation_ms": 1.751,
+        "registry_ms": 0.003,
+        "planner_ms": 4.066,
+        "dependency_rebuild_ms": 0.016,
+        "kernel_ms": 0.213,
+        "scene3d_build_ms": 4.607,
+        "validation_ms": 7.443,
+        "total_ms": 19.908
+      },
+      "skipped_unaffected_count": 22
+    },
+    {
+      "sample": "lang-tru-tam-giac-thiet-dien",
+      "step": 1,
+      "target": "day_A_primeB_primeC_prime",
+      "total_ms": 13.736,
+      "stages": {
+        "parser_ms": 0.164,
+        "typed_facts_ms": 0.009,
+        "dependency_invalidation_ms": 1.04,
+        "registry_ms": 0.002,
+        "planner_ms": 2.565,
+        "dependency_rebuild_ms": 0.01,
+        "kernel_ms": 0.182,
+        "scene3d_build_ms": 3.395,
+        "validation_ms": 4.93,
+        "total_ms": 13.736
+      },
+      "skipped_unaffected_count": 22
+    },
+    {
+      "sample": "lang-tru-tam-giac-thiet-dien",
+      "step": 2,
+      "target": "canh_ben_A_A_prime",
+      "total_ms": 16.017,
+      "stages": {
+        "parser_ms": 0.284,
+        "typed_facts_ms": 0.02,
+        "dependency_invalidation_ms": 1.751,
+        "registry_ms": 0.002,
+        "planner_ms": 3.445,
+        "dependency_rebuild_ms": 0.01,
+        "kernel_ms": 0.234,
+        "scene3d_build_ms": 2.971,
+        "validation_ms": 7.107,
+        "total_ms": 16.017
+      },
+      "skipped_unaffected_count": 20
+    },
+    {
+      "sample": "lang-tru-tam-giac-thiet-dien",
+      "step": 3,
+      "target": "lang_tru",
+      "total_ms": 22.867,
+      "stages": {
+        "parser_ms": 0.217,
+        "typed_facts_ms": 0.01,
+        "dependency_invalidation_ms": 1.805,
+        "registry_ms": 0.001,
+        "planner_ms": 2.937,
+        "dependency_rebuild_ms": 3.516,
+        "kernel_ms": 3.675,
+        "scene3d_build_ms": 4.725,
+        "validation_ms": 7.884,
+        "total_ms": 22.867
+      },
+      "skipped_unaffected_count": 19
+    },
+    {
+      "sample": "lang-tru-tam-giac-thiet-dien",
+      "step": 4,
+      "target": "N",
+      "total_ms": 7.956,
+      "stages": {
+        "parser_ms": 0.092,
+        "typed_facts_ms": 0.006,
+        "dependency_invalidation_ms": 0.923,
+        "registry_ms": 0.001,
+        "validation_ms": 4.707,
+        "planner_ms": 5.995,
+        "kernel_ms": 0.0,
+        "dependency_rebuild_ms": 0.0,
+        "scene3d_build_ms": 0.0,
+        "total_ms": 7.956
+      },
+      "skipped_unaffected_count": 22
+    },
+    {
+      "sample": "lang-tru-tam-giac-thiet-dien",
+      "step": 5,
+      "target": "P",
+      "total_ms": 10.587,
+      "stages": {
+        "parser_ms": 0.125,
+        "typed_facts_ms": 0.008,
+        "dependency_invalidation_ms": 1.463,
+        "registry_ms": 0.001,
+        "validation_ms": 5.943,
+        "planner_ms": 7.944,
+        "kernel_ms": 0.0,
+        "dependency_rebuild_ms": 0.0,
+        "scene3d_build_ms": 0.0,
+        "total_ms": 10.587
+      },
+      "skipped_unaffected_count": 22
+    },
+    {
+      "sample": "lang-tru-tam-giac-thiet-dien",
+      "step": 6,
+      "target": "Q",
+      "total_ms": 8.158,
+      "stages": {
+        "parser_ms": 0.158,
+        "typed_facts_ms": 0.012,
+        "dependency_invalidation_ms": 1.235,
+        "registry_ms": 0.001,
+        "validation_ms": 3.705,
+        "planner_ms": 5.365,
+        "kernel_ms": 0.0,
+        "dependency_rebuild_ms": 0.0,
+        "scene3d_build_ms": 0.0,
+        "total_ms": 8.158
+      },
+      "skipped_unaffected_count": 22
+    },
+    {
+      "sample": "lang-tru-tam-giac-thiet-dien",
+      "step": 7,
+      "target": "mp_NPQ",
+      "total_ms": 17.848,
+      "stages": {
+        "parser_ms": 0.116,
+        "typed_facts_ms": 0.007,
+        "dependency_invalidation_ms": 0.928,
+        "registry_ms": 0.001,
+        "planner_ms": 1.629,
+        "dependency_rebuild_ms": 2.037,
+        "kernel_ms": 2.132,
+        "scene3d_build_ms": 4.859,
+        "validation_ms": 7.251,
+        "total_ms": 17.848
+      },
+      "skipped_unaffected_count": 17
+    },
+    {
+      "sample": "lang-tru-tam-giac-thiet-dien",
+      "step": 8,
+      "target": "M",
+      "total_ms": 16.024,
+      "stages": {
+        "parser_ms": 0.162,
+        "typed_facts_ms": 0.009,
+        "dependency_invalidation_ms": 1.316,
+        "registry_ms": 0.001,
+        "planner_ms": 3.651,
+        "dependency_rebuild_ms": 0.005,
+        "kernel_ms": 0.225,
+        "scene3d_build_ms": 3.587,
+        "validation_ms": 5.928,
+        "total_ms": 16.024
+      },
+      "skipped_unaffected_count": 22
+    },
+    {
+      "sample": "lang-tru-tam-giac-thiet-dien",
+      "step": 9,
+      "target": "E",
+      "total_ms": 16.016,
+      "stages": {
+        "parser_ms": 0.204,
+        "typed_facts_ms": 0.009,
+        "dependency_invalidation_ms": 1.357,
+        "registry_ms": 0.001,
+        "planner_ms": 3.661,
+        "dependency_rebuild_ms": 0.005,
+        "kernel_ms": 0.2,
+        "scene3d_build_ms": 3.639,
+        "validation_ms": 5.744,
+        "total_ms": 16.016
+      },
+      "skipped_unaffected_count": 22
+    },
+    {
+      "sample": "lang-tru-tam-giac-thiet-dien",
+      "step": 10,
+      "target": "thiet_dien",
+      "total_ms": 19.058,
+      "stages": {
+        "parser_ms": 0.181,
+        "typed_facts_ms": 0.007,
+        "dependency_invalidation_ms": 1.491,
+        "registry_ms": 0.001,
+        "planner_ms": 2.726,
+        "dependency_rebuild_ms": 1.453,
+        "kernel_ms": 3.27,
+        "scene3d_build_ms": 3.631,
+        "validation_ms": 6.784,
+        "total_ms": 19.058
+      },
+      "skipped_unaffected_count": 20
+    },
+    {
+      "sample": "chop-mat-cau-ngoai-tiep",
+      "step": 0,
+      "target": "day_ABCD",
+      "total_ms": 18.642,
+      "stages": {
+        "parser_ms": 0.2,
+        "typed_facts_ms": 0.011,
+        "dependency_invalidation_ms": 2.034,
+        "registry_ms": 0.002,
+        "planner_ms": 3.818,
+        "dependency_rebuild_ms": 0.014,
+        "kernel_ms": 0.38,
+        "scene3d_build_ms": 5.257,
+        "validation_ms": 5.414,
+        "total_ms": 18.642
+      },
+      "skipped_unaffected_count": 31
+    },
+    {
+      "sample": "chop-mat-cau-ngoai-tiep",
+      "step": 2,
+      "target": "canh_ben_S_B",
+      "total_ms": 17.946,
+      "stages": {
+        "parser_ms": 0.231,
+        "typed_facts_ms": 0.019,
+        "dependency_invalidation_ms": 2.05,
+        "registry_ms": 0.002,
+        "planner_ms": 2.985,
+        "dependency_rebuild_ms": 0.013,
+        "kernel_ms": 0.221,
+        "scene3d_build_ms": 5.606,
+        "validation_ms": 5.213,
+        "total_ms": 17.946
+      },
+      "skipped_unaffected_count": 29
+    },
+    {
+      "sample": "chop-mat-cau-ngoai-tiep",
+      "step": 3,
+      "target": "chop",
+      "total_ms": 19.076,
+      "stages": {
+        "parser_ms": 0.411,
+        "typed_facts_ms": 0.014,
+        "dependency_invalidation_ms": 2.074,
+        "registry_ms": 0.002,
+        "planner_ms": 3.663,
+        "dependency_rebuild_ms": 0.016,
+        "kernel_ms": 0.162,
+        "scene3d_build_ms": 5.093,
+        "validation_ms": 5.691,
+        "total_ms": 19.076
+      },
+      "skipped_unaffected_count": 31
+    },
+    {
+      "sample": "chop-mat-cau-ngoai-tiep",
+      "step": 4,
+      "target": "doan_AC",
+      "total_ms": 17.852,
+      "stages": {
+        "parser_ms": 0.2,
+        "typed_facts_ms": 0.014,
+        "dependency_invalidation_ms": 1.771,
+        "registry_ms": 0.001,
+        "planner_ms": 3.301,
+        "dependency_rebuild_ms": 0.007,
+        "kernel_ms": 0.099,
+        "scene3d_build_ms": 5.975,
+        "validation_ms": 4.631,
+        "total_ms": 17.852
+      },
+      "skipped_unaffected_count": 31
+    },
+    {
+      "sample": "chop-mat-cau-ngoai-tiep",
+      "step": 5,
+      "target": "O",
+      "total_ms": 13.233,
+      "stages": {
+        "parser_ms": 0.268,
+        "typed_facts_ms": 0.024,
+        "dependency_invalidation_ms": 1.867,
+        "registry_ms": 0.002,
+        "validation_ms": 6.552,
+        "planner_ms": 9.378,
+        "kernel_ms": 0.0,
+        "dependency_rebuild_ms": 0.0,
+        "scene3d_build_ms": 0.0,
+        "total_ms": 13.233
+      },
+      "skipped_unaffected_count": 31
+    },
+    {
+      "sample": "chop-mat-cau-ngoai-tiep",
+      "step": 6,
+      "target": "M",
+      "total_ms": 10.798,
+      "stages": {
+        "parser_ms": 0.161,
+        "typed_facts_ms": 0.009,
+        "dependency_invalidation_ms": 1.289,
+        "registry_ms": 0.001,
+        "validation_ms": 6.379,
+        "planner_ms": 8.482,
+        "kernel_ms": 0.0,
+        "dependency_rebuild_ms": 0.0,
+        "scene3d_build_ms": 0.0,
+        "total_ms": 10.798
+      },
+      "skipped_unaffected_count": 31
+    },
+    {
+      "sample": "chop-mat-cau-ngoai-tiep",
+      "step": 7,
+      "target": "mp_tt_AB",
+      "total_ms": 8.918,
+      "stages": {
+        "parser_ms": 0.172,
+        "typed_facts_ms": 0.006,
+        "dependency_invalidation_ms": 1.203,
+        "registry_ms": 0.003,
+        "validation_ms": 4.794,
+        "planner_ms": 6.732,
+        "kernel_ms": 0.0,
+        "dependency_rebuild_ms": 0.0,
+        "scene3d_build_ms": 0.0,
+        "total_ms": 8.918
+      },
+      "skipped_unaffected_count": 31
+    },
+    {
+      "sample": "chop-mat-cau-ngoai-tiep",
+      "step": 8,
+      "target": "mp_tt_AD",
+      "total_ms": 11.56,
+      "stages": {
+        "parser_ms": 0.193,
+        "typed_facts_ms": 0.011,
+        "dependency_invalidation_ms": 1.194,
+        "registry_ms": 0.003,
+        "validation_ms": 6.631,
+        "planner_ms": 8.57,
+        "kernel_ms": 0.0,
+        "dependency_rebuild_ms": 0.0,
+        "scene3d_build_ms": 0.0,
+        "total_ms": 11.56
+      },
+      "skipped_unaffected_count": 31
+    },
+    {
+      "sample": "chop-mat-cau-ngoai-tiep",
+      "step": 9,
+      "target": "mp_tt_SA",
+      "total_ms": 16.756,
+      "stages": {
+        "parser_ms": 0.247,
+        "typed_facts_ms": 0.022,
+        "dependency_invalidation_ms": 2.001,
+        "registry_ms": 0.002,
+        "planner_ms": 4.193,
+        "dependency_rebuild_ms": 0.383,
+        "kernel_ms": 0.645,
+        "scene3d_build_ms": 4.714,
+        "validation_ms": 3.34,
+        "total_ms": 16.756
+      },
+      "skipped_unaffected_count": 23
+    },
+    {
+      "sample": "chop-mat-cau-ngoai-tiep",
+      "step": 10,
+      "target": "truc_day",
+      "total_ms": 13.58,
+      "stages": {
+        "parser_ms": 0.238,
+        "typed_facts_ms": 0.009,
+        "dependency_invalidation_ms": 1.201,
+        "registry_ms": 0.003,
+        "planner_ms": 3.008,
+        "dependency_rebuild_ms": 0.438,
+        "kernel_ms": 0.731,
+        "scene3d_build_ms": 3.3,
+        "validation_ms": 4.126,
+        "total_ms": 13.58
+      },
+      "skipped_unaffected_count": 23
+    },
+    {
+      "sample": "chop-mat-cau-ngoai-tiep",
+      "step": 11,
+      "target": "I",
+      "total_ms": 19.58,
+      "stages": {
+        "parser_ms": 0.388,
+        "typed_facts_ms": 0.016,
+        "dependency_invalidation_ms": 2.125,
+        "registry_ms": 0.002,
+        "planner_ms": 4.248,
+        "dependency_rebuild_ms": 0.454,
+        "kernel_ms": 0.826,
+        "scene3d_build_ms": 5.147,
+        "validation_ms": 4.955,
+        "total_ms": 19.58
+      },
+      "skipped_unaffected_count": 24
+    },
+    {
+      "sample": "chop-mat-cau-ngoai-tiep",
+      "step": 12,
+      "target": "doan_OI",
+      "total_ms": 19.472,
+      "stages": {
+        "parser_ms": 0.319,
+        "typed_facts_ms": 0.023,
+        "dependency_invalidation_ms": 2.237,
+        "registry_ms": 0.004,
+        "planner_ms": 5.135,
+        "dependency_rebuild_ms": 0.01,
+        "kernel_ms": 0.314,
+        "scene3d_build_ms": 5.438,
+        "validation_ms": 4.685,
+        "total_ms": 19.472
+      },
+      "skipped_unaffected_count": 31
+    },
+    {
+      "sample": "chop-mat-cau-ngoai-tiep",
+      "step": 13,
+      "target": "doan_MI",
+      "total_ms": 19.548,
+      "stages": {
+        "parser_ms": 0.341,
+        "typed_facts_ms": 0.028,
+        "dependency_invalidation_ms": 1.882,
+        "registry_ms": 0.003,
+        "planner_ms": 4.255,
+        "dependency_rebuild_ms": 0.011,
+        "kernel_ms": 0.244,
+        "scene3d_build_ms": 5.931,
+        "validation_ms": 5.017,
+        "total_ms": 19.548
+      },
+      "skipped_unaffected_count": 31
+    },
+    {
+      "sample": "chop-mat-cau-ngoai-tiep",
+      "step": 14,
+      "target": "cau_ngoai_tiep",
+      "total_ms": 19.208,
+      "stages": {
+        "parser_ms": 0.333,
+        "typed_facts_ms": 0.017,
+        "dependency_invalidation_ms": 1.825,
+        "registry_ms": 0.001,
+        "planner_ms": 4.168,
+        "dependency_rebuild_ms": 0.162,
+        "kernel_ms": 0.44,
+        "scene3d_build_ms": 5.873,
+        "validation_ms": 4.841,
+        "total_ms": 19.208
+      },
+      "skipped_unaffected_count": 29
+    },
+    {
+      "sample": "chop-mat-cau-ngoai-tiep",
+      "step": 15,
+      "target": "doan_IS",
+      "total_ms": 19.682,
+      "stages": {
+        "parser_ms": 0.447,
+        "typed_facts_ms": 0.03,
+        "dependency_invalidation_ms": 1.958,
+        "registry_ms": 0.004,
+        "planner_ms": 4.312,
+        "dependency_rebuild_ms": 0.007,
+        "kernel_ms": 0.217,
+        "scene3d_build_ms": 5.47,
+        "validation_ms": 5.608,
+        "total_ms": 19.682
+      },
+      "skipped_unaffected_count": 31
+    },
+    {
+      "sample": "chop-mat-cau-ngoai-tiep",
+      "step": 16,
+      "target": "doan_IA",
+      "total_ms": 14.562,
+      "stages": {
+        "parser_ms": 0.288,
+        "typed_facts_ms": 0.023,
+        "dependency_invalidation_ms": 1.907,
+        "registry_ms": 0.004,
+        "planner_ms": 3.651,
+        "dependency_rebuild_ms": 0.006,
+        "kernel_ms": 0.211,
+        "scene3d_build_ms": 3.497,
+        "validation_ms": 3.342,
+        "total_ms": 14.562
+      },
+      "skipped_unaffected_count": 31
+    }
+  ]
+}

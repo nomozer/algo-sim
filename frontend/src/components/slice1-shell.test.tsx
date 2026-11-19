@@ -11,7 +11,6 @@ import {
 } from "./TopNav";
 import { useAuthStore, type AuthUser } from "../state/auth";
 import { useAppStore } from "../state/store";
-import { useClassroomStore, type Assignment, type Classroom } from "../state/classroom";
 import { registerAllSimulations } from "../simulations";
 import { __resetHistoryForTest } from "../state/history";
 
@@ -22,44 +21,32 @@ function setAuthForSSR(user: AuthUser | null) {
   Object.assign(useAuthStore.getInitialState(), { user, resolved: true });
 }
 
-function setClassroomForSSR(patch: {
-  classes?: Classroom[];
-  assignments?: Assignment[];
-}) {
-  const next = {
-    classes: patch.classes ?? [],
-    assignments: patch.assignments ?? [],
-    session: null,
-  };
-  useClassroomStore.setState(next);
-  Object.assign(useClassroomStore.getInitialState(), next);
-}
-
 describe("Axo V2.7 Slice 1 — Application Shell, Header, Navigation, Dropdowns & Toast", () => {
   beforeEach(() => {
     __resetHistoryForTest();
     useAppStore.getState().reset();
+    useAppStore.getState().setGuestEnteredApp(true);
+    Object.assign(useAppStore.getInitialState(), useAppStore.getState());
     useToastStore.getState().clearToasts();
     Object.assign(useToastStore.getInitialState(), { toasts: [] });
     setAuthForSSR(null);
-    setClassroomForSSR({ classes: [], assignments: [] });
   });
 
   afterEach(() => {
     setAuthForSSR(null);
-    setClassroomForSSR({ classes: [], assignments: [] });
+    useAppStore.getState().reset();
+    Object.assign(useAppStore.getInitialState(), useAppStore.getState());
     useToastStore.getState().clearToasts();
     Object.assign(useToastStore.getInitialState(), { toasts: [] });
   });
 
-  it("Header khách (Guest): hiển thị thương hiệu Axo, capsule 3 mục (Trang chủ, Thư viện, Lịch sử), nút Đăng nhập và Đăng ký", () => {
+  it("Header khách (Guest): hiển thị thương hiệu Axo, capsule (Trang chủ, Thư viện), nút Đăng nhập và Đăng ký", () => {
     const html = renderToString(<App />);
     expect(html).toContain("Axo");
     expect(html).toContain("axo-logo-svg");
     expect(html).toContain("nav-n1-capsule");
     expect(html).toContain("Trang chủ");
     expect(html).toContain("Thư viện");
-    expect(html).toContain("Lịch sử");
     expect(html).toContain("Đăng nhập");
     expect(html).toContain("Đăng ký");
     for (const legacyLabel of ["Mô phỏng mới", "Bài thực hành", "Lớp của em", "Quan sát lớp"]) {
@@ -67,7 +54,7 @@ describe("Axo V2.7 Slice 1 — Application Shell, Header, Navigation, Dropdowns 
     }
   });
 
-  it("TopNav đã đăng nhập: nhất quán đúng 3 mục (Trang chủ, Thư viện, Lịch sử) cho cả Học sinh và Giáo viên (P3)", () => {
+  it("TopNav đã đăng nhập: nhất quán đúng 2 mục (Trang chủ, Thư viện) cho cả Học sinh và Giáo viên", () => {
     setAuthForSSR({
       id: 101,
       email: "minhanh@axo.edu.vn",
@@ -82,12 +69,10 @@ describe("Axo V2.7 Slice 1 — Application Shell, Header, Navigation, Dropdowns 
     expect(itemsForRole("student").map((i) => i.label)).toEqual([
       "Trang chủ",
       "Thư viện",
-      "Lịch sử",
     ]);
     expect(itemsForRole("teacher").map((i) => i.label)).toEqual([
       "Trang chủ",
       "Thư viện",
-      "Lịch sử",
     ]);
     for (const item of itemsForRole("student")) {
       expect(navHtml).toContain(item.label);
@@ -97,7 +82,7 @@ describe("Axo V2.7 Slice 1 — Application Shell, Header, Navigation, Dropdowns 
     }
   });
 
-  it("TopNavAccount: hiển thị nút hồ sơ người dùng và menu dropdown chuẩn V2.7 (loại bỏ Lớp học/Bài thực hành/Quan sát lớp)", () => {
+  it("TopNavAccount: hiển thị nút hồ sơ người dùng và menu dropdown chuẩn (loại bỏ Lớp học/Bài thực hành/Quan sát lớp)", () => {
     setAuthForSSR({
       id: 202,
       email: "thay.huy@axo.edu.vn",
@@ -113,7 +98,6 @@ describe("Axo V2.7 Slice 1 — Application Shell, Header, Navigation, Dropdowns 
     expect(accHtml).toContain("account-pop-avatar");
     expect(accHtml).toContain("Hạn mức AI hôm nay");
     expect(accHtml).toContain("Cài đặt tài khoản");
-    expect(accHtml).toContain("Lịch sử học tập");
     expect(accHtml).toContain("Đăng xuất");
     expect(accHtml).toContain("user-profile-btn");
     for (const removedItem of ["Lớp học của tôi", "Quản lý lớp học", "Bài thực hành", "Bài đã giao", "Quan sát lớp học"]) {
@@ -121,7 +105,7 @@ describe("Axo V2.7 Slice 1 — Application Shell, Header, Navigation, Dropdowns 
     }
   });
 
-  it("NotificationDropdown: chỉ phản ánh dữ liệu lớp học/bài giao thực tế từ store, không có thông báo demo cứng", () => {
+  it("NotificationDropdown: hiển thị trạng thái trống sạch sẽ hoặc danh sách thông báo thực tế, không có thông báo demo cứng", () => {
     setAuthForSSR({
       id: 101,
       email: "minhanh@axo.edu.vn",
@@ -134,33 +118,22 @@ describe("Axo V2.7 Slice 1 — Application Shell, Header, Navigation, Dropdowns 
     expect(emptyHtml).toContain("Chưa có thông báo mới.");
     expect(emptyHtml).not.toContain("DEMO");
 
-    setClassroomForSSR({
-      classes: [
-        {
-          id: 11,
-          name: "11A1",
-          archived: false,
-          createdAt: "2026-10-27T07:00:00Z",
-        },
-      ],
-      assignments: [
-        {
-          id: 501,
-          classroomId: 11,
-          title: "Thiết diện hình chóp S.ABCD",
-          instruction: "Tìm giao tuyến của (MNP) với các mặt bên",
-          simulationId: "generic.semantic_program",
-          closed: false,
-          createdAt: "2026-10-27T08:00:00Z",
-          myPractice: null,
-        },
-      ],
-    });
-
-    const withAsgHtml = renderToString(<NotificationDropdown initialOpen />);
-    expect(withAsgHtml).toContain("Thiết diện hình chóp S.ABCD");
-    expect(withAsgHtml).toContain("11A1");
-    expect(withAsgHtml).toContain("Đánh dấu đã đọc");
+    const withItemsHtml = renderToString(
+      <NotificationDropdown
+        initialOpen
+        items={[
+          {
+            id: "notif-1",
+            title: "Thiết diện hình chóp S.ABCD",
+            subtitle: "Đã dựng xong mô hình 3D",
+            targetView: "workspace",
+          },
+        ]}
+      />,
+    );
+    expect(withItemsHtml).toContain("Thiết diện hình chóp S.ABCD");
+    expect(withItemsHtml).toContain("Đã dựng xong mô hình 3D");
+    expect(withItemsHtml).toContain("Đánh dấu đã đọc");
   });
 
   it("ToastContainer: hiển thị thông báo góc trên bên phải đúng chuẩn V2.7 với phân loại tone và nút đóng", () => {

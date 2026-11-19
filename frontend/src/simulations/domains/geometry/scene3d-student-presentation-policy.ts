@@ -20,7 +20,9 @@ import { veTrenKhung } from "./scene3d-presentation";
 import {
   buildPedagogicalStepNarration,
   canonicalizeSceneFaceTokensInText,
+  replaceRawSceneIdTokens,
   resolveSemanticObjectContract,
+  resolveStepGoalKind,
   resolveStudentObjectPresentation,
   verifyVisualContinuity,
   type PedagogicalStepNarration,
@@ -34,6 +36,7 @@ import {
 export {
   buildPedagogicalStepNarration,
   canonicalizeSceneFaceTokensInText,
+  resolveStepGoalKind,
   resolveStudentObjectPresentation,
   verifyVisualContinuity,
   type PedagogicalStepNarration,
@@ -42,6 +45,84 @@ export {
   type VisualContinuityReport,
   type VisualContinuityViolation,
   type VisualContinuityViolationCode,
+};
+
+export type StepGoalKind = "Define" | "Construct" | "Intersect" | "Verify" | "Measure" | "Complete";
+
+export const STEP_GOAL_LABELS: Record<StepGoalKind, string> = {
+  Define: "Khởi tạo dữ kiện",
+  Construct: "Dựng yếu tố trung gian",
+  Intersect: "Xác định giao điểm / giao tuyến",
+  Verify: "Kiểm chứng quan hệ hình học",
+  Measure: "Đo đạc và tính đại lượng",
+  Complete: "Hoàn thiện hình biểu diễn",
+};
+
+export interface StepGoalPresentationRule {
+  goal: StepGoalKind;
+  label: string;
+  emphasizePrimaryTargets: boolean;
+  keepPrerequisiteContext: boolean;
+  showCoplanarIntersectionGuides: boolean;
+  showRelationWitnesses: boolean;
+  fadeCompletedScaffolds: boolean;
+}
+
+export const STEP_GOAL_PRESENTATION_POLICY: Record<StepGoalKind, StepGoalPresentationRule> = {
+  Define: {
+    goal: "Define",
+    label: STEP_GOAL_LABELS.Define,
+    emphasizePrimaryTargets: true,
+    keepPrerequisiteContext: true,
+    showCoplanarIntersectionGuides: false,
+    showRelationWitnesses: true,
+    fadeCompletedScaffolds: false,
+  },
+  Construct: {
+    goal: "Construct",
+    label: STEP_GOAL_LABELS.Construct,
+    emphasizePrimaryTargets: true,
+    keepPrerequisiteContext: true,
+    showCoplanarIntersectionGuides: true,
+    showRelationWitnesses: true,
+    fadeCompletedScaffolds: true,
+  },
+  Intersect: {
+    goal: "Intersect",
+    label: STEP_GOAL_LABELS.Intersect,
+    emphasizePrimaryTargets: true,
+    keepPrerequisiteContext: true,
+    showCoplanarIntersectionGuides: true,
+    showRelationWitnesses: true,
+    fadeCompletedScaffolds: true,
+  },
+  Verify: {
+    goal: "Verify",
+    label: STEP_GOAL_LABELS.Verify,
+    emphasizePrimaryTargets: true,
+    keepPrerequisiteContext: true,
+    showCoplanarIntersectionGuides: true,
+    showRelationWitnesses: true,
+    fadeCompletedScaffolds: true,
+  },
+  Measure: {
+    goal: "Measure",
+    label: STEP_GOAL_LABELS.Measure,
+    emphasizePrimaryTargets: true,
+    keepPrerequisiteContext: true,
+    showCoplanarIntersectionGuides: true,
+    showRelationWitnesses: true,
+    fadeCompletedScaffolds: true,
+  },
+  Complete: {
+    goal: "Complete",
+    label: STEP_GOAL_LABELS.Complete,
+    emphasizePrimaryTargets: true,
+    keepPrerequisiteContext: true,
+    showCoplanarIntersectionGuides: true,
+    showRelationWitnesses: true,
+    fadeCompletedScaffolds: true,
+  },
 };
 
 export type SimulationInformationCategory =
@@ -141,7 +222,7 @@ export function evaluateStudentPresentationPolicy(
       if (classifySimulationEntityCategory(scene, obj) === "INTERNAL_MATH_RESULT") {
         return null;
       }
-      const cleaned = sanitizeStudentDescriptorText(obj.role);
+      const cleaned = sanitizeStudentDescriptorText(replaceRawSceneIdTokens(obj.role, scene));
       if (scene) {
         const sceneObj = scene.objects.find((x) => x.id === obj.id);
         if (cleaned && cleaned.length <= 26 && sceneObj && obj.role !== sceneObj.role) {

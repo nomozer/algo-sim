@@ -54,10 +54,17 @@ from __future__ import annotations
 
 from dataclasses import dataclass
 from fractions import Fraction
-from typing import Any, Callable, Optional
+from typing import Any, Callable, Optional, Sequence
 
-from .exact import GeometryError, Line3, Plane3, Point3, Vec3
-from .kernel import intersect_line_plane, project_point_onto_plane
+from . import metric as _m
+from .exact import GeometryError, Line3, Plane3, Point3, Vec3, det3
+from .kernel import (
+    intersect_line_plane,
+    intersect_plane_plane,
+    midpoint,
+    plane_through_point_perpendicular_to,
+    project_point_onto_plane,
+)
 from .radical import (
     ExactNumber,
     Radical,
@@ -88,6 +95,8 @@ __all__ = [
     "ban_kinh",
     "binh_phuong_ban_kinh",
     "ERR_BAN_KINH_NGOAI_MIEN",
+    "ERR_KHONG_NGOAI_TIEP",
+    "circumscribed_sphere",
 ]
 
 # ── MÃ LỖI ────────────────────────────────────────────────────────────────
@@ -1111,3 +1120,56 @@ def khong_sinh_diem_tren_mat_cong(ten_phep: str) -> GeometryError:
         f"'{ten_phep}' cần một điểm NẰM TRÊN mặt cong, và toạ độ của nó nói "
         "chung không hữu tỉ — phiên bản này không biểu diễn được. Các điểm "
         "hữu tỉ trên mặt (tâm, điểm vành đã khai) thì dùng được.")
+
+
+#: Các điểm đồng phẳng hoặc không cùng nằm trên một mặt cầu duy nhất.
+ERR_KHONG_NGOAI_TIEP = "NO_CIRCUMSCRIBED_SPHERE"
+
+
+def circumscribed_sphere(points: Sequence[Point3]) -> tuple[Point3, Fraction]:
+    """Tâm `I` và bình phương bán kính `R²` của mặt cầu ngoại tiếp hệ điểm `points` trong ℚ³.
+
+    Dựng tất định từ giao của ba mặt phẳng trung trực không đồng trục, sau đó
+    kiểm tra mọi điểm trong `points` đều cách đều `I` theo metric hiện hành.
+    Ném `NO_CIRCUMSCRIBED_SPHERE` khi hệ điểm đồng phẳng hoặc không đồng cầu.
+    """
+    if len(points) < 4:
+        raise GeometryError(
+            ERR_KHONG_NGOAI_TIEP,
+            "cần ít nhất 4 điểm không đồng phẳng để xác định duy nhất mặt cầu ngoại tiếp",
+        )
+    p0 = points[0]
+    rest = list(points[1:])
+    chosen: tuple[Point3, Point3, Point3] | None = None
+    n = len(rest)
+    for i in range(n):
+        for j in range(i + 1, n):
+            for k in range(j + 1, n):
+                if det3(rest[i] - p0, rest[j] - p0, rest[k] - p0) != 0:
+                    chosen = (rest[i], rest[j], rest[k])
+                    break
+            if chosen is not None:
+                break
+        if chosen is not None:
+            break
+    if chosen is None:
+        raise GeometryError(
+            ERR_KHONG_NGOAI_TIEP,
+            "các điểm đồng phẳng hoặc suy biến — không xác định duy nhất mặt cầu ngoại tiếp",
+        )
+    pa, pb, pc = chosen
+    pl1 = plane_through_point_perpendicular_to(midpoint(p0, pa), Line3.through(p0, pa))
+    pl2 = plane_through_point_perpendicular_to(midpoint(p0, pb), Line3.through(p0, pb))
+    pl3 = plane_through_point_perpendicular_to(midpoint(p0, pc), Line3.through(p0, pc))
+    axis = intersect_plane_plane(pl1, pl2)
+    center = intersect_line_plane(axis, pl3)
+    r_sq = _m.norm_sq(p0 - center)
+    if r_sq <= 0:
+        raise GeometryError(ERR_KHONG_NGOAI_TIEP, "bán kính mặt cầu ngoại tiếp không dương")
+    for pt in points[1:]:
+        if _m.norm_sq(pt - center) != r_sq:
+            raise GeometryError(
+                ERR_KHONG_NGOAI_TIEP,
+                "các đỉnh không cùng cách đều tâm — khối đa diện không có mặt cầu ngoại tiếp",
+            )
+    return center, r_sq

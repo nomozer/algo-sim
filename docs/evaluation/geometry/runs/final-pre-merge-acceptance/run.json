@@ -1,0 +1,65 @@
+{
+  "schema_version": "axo-evaluation-run/1",
+  "run_id": "final-pre-merge-acceptance",
+  "task_slug": "final-pre-merge-acceptance",
+  "date": "2026-11-19",
+  "generated_at": "2026-11-19T15:12:00+00:00",
+  "branch": "release/axo-final-pre-merge-acceptance",
+  "evaluated_candidate_commit": "897d70c9f9a3862ef5dcaa45a3f91ffd326e91ed",
+  "final_code_and_test_commit": "892e15f06fc53c623a1392f0766d69c21291436a",
+  "product_commit_sha": "600f5105d4222cd6835cc916b34d5cb3f11610e6",
+  "baseline_main_commit": "bb046fa22aceff47abe22aa783aa64fc65caee13",
+  "measured_system_tree_hash": "78edfa1784625e9bca8f1a4cd70b60359d198ba77530986903175a57e18206a7",
+  "measured_system_file_count": 109,
+  "cache_version": "132",
+  "ownership_resolutions": {
+    "C-Classroom": "OPTION_B_IMPLEMENTED_AND_VERIFIED",
+    "C-Landing": "PENDING_OWNER_DECISION",
+    "C-Workspace": "PENDING_OWNER_DECISION",
+    "C-Release": "PENDING_OWNER_DECISION"
+  },
+  "statuses": {
+    "RELEASE_DECISION": "READY_FOR_OWNER_APPROVAL",
+    "MERGE_STATUS": "NOT_MERGED",
+    "PUSH_STATUS": "NOT_PUSHED",
+    "DOCKER_RUNTIME_GATE": "PASS",
+    "MODEL_STATUS": "MODEL_NOT_TRAINED",
+    "PRODUCTION_DEPLOYMENT_VERIFIED": "NO",
+    "INDEPENDENT_H1_VALIDATION": "NOT_MEASURED"
+  },
+  "artifacts": {
+    "formal_report": "AXO-FINAL-PRE-MERGE-ACCEPTANCE-REPORT.md",
+    "report": "report.md",
+    "owner_approval_checklist": "owner-approval-checklist.md",
+    "release_gates_summary": "release-gates-summary.json",
+    "integration_candidate_manifest": "integration-candidate-manifest.json",
+    "results": [
+      "browser-e2e-summary.json",
+      "docker-runtime-verification.json",
+      "geometry-independent-oracle.json",
+      "integration-candidate-manifest.json",
+      "ownership-scope-decision-matrix.json",
+      "performance-memory-verification.json",
+      "postgres-recovery-verification.json",
+      "release-gates-summary.json",
+      "step-editor-state-consistency.json"
+    ],
+    "images": [
+      "images/fpa-1920-422-rollback.png",
+      "images/fpa-1920-before-edit.png",
+      "images/fpa-1920-cascade-f5.png",
+      "images/fpa-1920-sb-rename-P.png",
+      "images/fpa-landing-1920.png",
+      "images/fpa-post-restart.png",
+      "images/fpa-rea-mcp.png",
+      "images/fpa-vkb-390x460.png",
+      "images/fpa-vp-1366x768.png",
+      "images/fpa-vp-1440x900.png",
+      "images/fpa-vp-1920x1080.png",
+      "images/fpa-vp-320x568.png",
+      "images/fpa-vp-390x844.png",
+      "images/fpa-vp-768x1024.png",
+      "images/fpa-workspace-app-1920.png"
+    ]
+  }
+}

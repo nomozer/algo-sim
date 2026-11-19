@@ -125,7 +125,8 @@ describe("App SSR — Home sạch (không giả inspector/timeline rỗng)", () 
     const html = renderToString(<App />);
     expect(html).toContain("Em muốn dựng hình nào?");
     expect(html).toContain("Phân tích");
-    expect(html).toContain("Gợi ý khám phá"); // starter chips
+    expect(html).toContain('id="left-sidebar"');
+    expect(html).not.toContain("Gợi ý khám phá");
     expect(html).not.toContain("player-controls");
     expect(html).not.toContain("panel-right"); // không inspector rỗng
     expect(html).not.toContain("Tua đến bước"); // không timeline rỗng

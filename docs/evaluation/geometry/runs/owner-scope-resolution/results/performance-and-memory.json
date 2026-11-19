@@ -1,0 +1,265 @@
+{
+  "commit": "6880a03eb295cd45152e8114a8867cfee7b2ee4c",
+  "measured_at": "2026-11-19T11:22:26.026991+00:00",
+  "cold_edit_subprocess": {
+    "runs": [
+      {
+        "import_ms": 617.692,
+        "cold_first_call_ms": 30.504,
+        "engine_total_ms": 17.594
+      },
+      {
+        "import_ms": 629.062,
+        "cold_first_call_ms": 29.39,
+        "engine_total_ms": 16.564
+      },
+      {
+        "import_ms": 672.796,
+        "cold_first_call_ms": 28.824,
+        "engine_total_ms": 16.202
+      }
+    ],
+    "cold_first_call_ms": {
+      "n": 3,
+      "p50_ms": 29.39,
+      "p95_ms": 30.393,
+      "p99_ms": 30.482,
+      "min_ms": 28.824,
+      "max_ms": 30.504,
+      "mean_ms": 29.573,
+      "iqr_ms": 0.84
+    },
+    "engine_total_ms": {
+      "n": 3,
+      "p50_ms": 16.564,
+      "p95_ms": 17.491,
+      "p99_ms": 17.573,
+      "min_ms": 16.202,
+      "max_ms": 17.594,
+      "mean_ms": 16.787,
+      "iqr_ms": 0.696
+    }
+  },
+  "warm_kernel_engine_N120": {
+    "s11_bisector_sb_partial_ms": {
+      "n": 120,
+      "p50_ms": 10.869,
+      "p95_ms": 13.216,
+      "p99_ms": 20.049,
+      "min_ms": 9.95,
+      "max_ms": 34.317,
+      "mean_ms": 11.416,
+      "iqr_ms": 0.887
+    },
+    "s1_ratio_cascade_partial_ms": {
+      "n": 120,
+      "p50_ms": 12.751,
+      "p95_ms": 15.527,
+      "p99_ms": 23.753,
+      "min_ms": 11.881,
+      "max_ms": 30.527,
+      "mean_ms": 13.323,
+      "iqr_ms": 0.757
+    }
+  },
+  "live_pg16_http_N30": {
+    "endpoint": "http://127.0.0.1:8000/api/simulation/steps/edit",
+    "http_roundtrip_ms": {
+      "n": 30,
+      "p50_ms": 56.27,
+      "p95_ms": 89.098,
+      "p99_ms": 114.987,
+      "min_ms": 40.499,
+      "max_ms": 121.802,
+      "mean_ms": 59.555,
+      "iqr_ms": 13.185
+    },
+    "server_engine_ms": {
+      "n": 30,
+      "p50_ms": 13.876,
+      "p95_ms": 23.69,
+      "p99_ms": 57.747,
+      "min_ms": 11.842,
+      "max_ms": 71.086,
+      "mean_ms": 17.18,
+      "iqr_ms": 3.321
+    },
+    "pg_commit_ms": {
+      "n": 30,
+      "p50_ms": 8.425,
+      "p95_ms": 12.437,
+      "p99_ms": 14.737,
+      "min_ms": 6.461,
+      "max_ms": 15.643,
+      "mean_ms": 9.02,
+      "iqr_ms": 1.455
+    }
+  },
+  "live_pg16_422_refusal_N15_ms": {
+    "n": 15,
+    "p50_ms": 30.69,
+    "p95_ms": 38.492,
+    "p99_ms": 40.647,
+    "min_ms": 16.573,
+    "max_ms": 41.186,
+    "mean_ms": 29.759,
+    "iqr_ms": 9.613
+  },
+  "live_pg16_409_conflict_N15_ms": {
+    "n": 15,
+    "p50_ms": 19.463,
+    "p95_ms": 24.716,
+    "p99_ms": 25.842,
+    "min_ms": 6.995,
+    "max_ms": 26.123,
+    "mean_ms": 16.69,
+    "iqr_ms": 16.072
+  },
+  "live_pg16_state_recovery_N15_ms": {
+    "n": 15,
+    "p50_ms": 14.876,
+    "p95_ms": 33.665,
+    "p99_ms": 39.219,
+    "min_ms": 12.076,
+    "max_ms": 40.608,
+    "mean_ms": 19.774,
+    "iqr_ms": 13.089
+  },
+  "python_memory_50_cycles": {
+    "cycles": 50,
+    "retained_delta_kb_after_gc": 0.8,
+    "current_traced_kb": 0.69,
+    "peak_traced_kb": 694.04
+  },
+  "frontend_browser_metrics": {
+    "ui_interaction_open_latency_ms": {
+      "iterations": 15,
+      "p50_ms": 22.862,
+      "p95_ms": 38.56,
+      "p99_ms": 48.352,
+      "min_ms": 18.576,
+      "max_ms": 50.8,
+      "mean_ms": 25.903,
+      "iqr_ms": 7.662,
+      "samples_ms": [
+        24.794,
+        33.008,
+        50.8,
+        22.862,
+        22.434,
+        27.086,
+        19.264,
+        20.996,
+        19.719,
+        20.502,
+        19.645,
+        18.576,
+        28.319,
+        33.315,
+        27.226
+      ]
+    },
+    "frontend_update_completion_ms": {
+      "iterations": 15,
+      "p50_ms": 113.084,
+      "p95_ms": 165.748,
+      "p99_ms": 168.965,
+      "min_ms": 96.062,
+      "max_ms": 169.769,
+      "mean_ms": 119.597,
+      "iqr_ms": 14.58,
+      "samples_ms": [
+        169.769,
+        114.839,
+        124.879,
+        112.958,
+        130.32,
+        103.856,
+        107.184,
+        118.279,
+        118.034,
+        106.813,
+        107.557,
+        106.301,
+        164.024,
+        113.084,
+        96.062
+      ]
+    },
+    "scene3d_post_edit_render_ms": {
+      "iterations": 15,
+      "p50_ms": 32,
+      "p95_ms": 50.11,
+      "p99_ms": 52.742,
+      "min_ms": 2.1,
+      "max_ms": 53.4,
+      "mean_ms": 31.98,
+      "iqr_ms": 2.4,
+      "samples_ms": [
+        48.7,
+        34.5,
+        2.1,
+        32.4,
+        32.6,
+        32.5,
+        31.9,
+        29.4,
+        32,
+        30.1,
+        30.5,
+        30.2,
+        53.4,
+        32,
+        27.4
+      ]
+    },
+    "e2e_step_edit_roundtrip_ms": {
+      "iterations": 15,
+      "p50_ms": 196.833,
+      "p95_ms": 255.098,
+      "p99_ms": 261.894,
+      "min_ms": 185.204,
+      "max_ms": 263.593,
+      "mean_ms": 207.058,
+      "iqr_ms": 29.006,
+      "samples_ms": [
+        251.457,
+        211.757,
+        221.441,
+        202.294,
+        221.927,
+        192.172,
+        186.605,
+        196.799,
+        196.833,
+        189.099,
+        185.204,
+        186.617,
+        263.593,
+        212.871,
+        187.202
+      ]
+    }
+  },
+  "frontend_js_heap_50_cycles": {
+    "cycles": 50,
+    "heapBefore": {
+      "jsHeapUsedMB": 28.287,
+      "jsHeapTotalMB": 29.797,
+      "nodes": 717
+    },
+    "heapAfter": {
+      "jsHeapUsedMB": 33.788,
+      "jsHeapTotalMB": 36.117,
+      "nodes": 705
+    },
+    "heapDeltaMB": 5.501,
+    "nodeDelta": -12,
+    "canvasCountAfter": 1,
+    "roundtrip_50_cycles_ms": {
+      "p50_ms": 207.17,
+      "p95_ms": 257.01,
+      "max_ms": 348.18
+    }
+  }
+}

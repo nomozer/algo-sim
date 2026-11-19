@@ -1,0 +1,187 @@
+{
+  "startedAt": "2026-11-19T05:34:36.181Z",
+  "baseUrl": "http://localhost:3001",
+  "backendUrl": "http://127.0.0.1:8000",
+  "routesAndAttachmentSmoke": {
+    "landingStatus": 200,
+    "landingTitle": "Axo — Mô phỏng tương tác",
+    "appStatus": 200,
+    "fileInputCount": 3,
+    "plusMenuOpened": true
+  },
+  "stepEditorValidAndKeyboard": {
+    "status": "PASS",
+    "hoverHeightDeltaPx": 0,
+    "opacityTransition": "0 -> 1",
+    "keyboardEnterEscapeOk": true,
+    "textareaSingleLineScrollable": false,
+    "textareaHorizontalOverflow": false,
+    "httpStatus": 200,
+    "mpDisplayLabel": "Mặt phẳng (α) qua «Trung điểm của S và B» và vuông góc với SB",
+    "leakedRawHelper": false,
+    "recomputedCount": 9
+  },
+  "invalidEditsAndRollback": [
+    {
+      "case": "empty_whitespace",
+      "runDisabled": true,
+      "httpSent": false
+    },
+    {
+      "case": "undefined_point_SZ",
+      "status": 422,
+      "errorCode": "MISSING_DEPENDENCY",
+      "draftPreserved": true
+    },
+    {
+      "case": "collinear_AOC",
+      "status": 422,
+      "errorCode": "COLLINEAR_POINTS",
+      "draftPreserved": true
+    },
+    {
+      "case": "unsupported_syntax",
+      "status": 422,
+      "errorCode": "UNSUPPORTED_STEP_SYNTAX",
+      "draftPreserved": true
+    }
+  ],
+  "cascadeTabIsolationAndSkew": {
+    "status": "PASS",
+    "skewOrthogonality422": "DOWNSTREAM_ORTHOGONALITY_BROKEN",
+    "sequentialS1FinalMXyz": [
+      "0",
+      "0",
+      "9/2"
+    ],
+    "prismStatus": 200,
+    "tabCloseAndReopenRetained": true,
+    "dockScrollIsolated": true,
+    "staleRevisionProbe": {
+      "status": 409,
+      "code": "STALE_REVISION_CONFLICT"
+    },
+    "s1SessionPrefix": "se-be5cdbf3-sa…"
+  },
+  "viewports": [
+    {
+      "width": 1920,
+      "height": 1080,
+      "overflowX": 0,
+      "canvasVisible": true,
+      "canvasWidthPx": 1289,
+      "canvasHeightPx": 1042,
+      "runClipped": false,
+      "cancelClipped": false,
+      "textareaHeightPx": 85,
+      "textareaOverflowY": "hidden",
+      "textareaHorizontalOverflow": false,
+      "controlsOccludeActions": false,
+      "navOperable": true
+    },
+    {
+      "width": 1440,
+      "height": 900,
+      "overflowX": 0,
+      "canvasVisible": true,
+      "canvasWidthPx": 809,
+      "canvasHeightPx": 862,
+      "runClipped": false,
+      "cancelClipped": false,
+      "textareaHeightPx": 85,
+      "textareaOverflowY": "hidden",
+      "textareaHorizontalOverflow": false,
+      "controlsOccludeActions": false,
+      "navOperable": true
+    },
+    {
+      "width": 1366,
+      "height": 768,
+      "overflowX": 0,
+      "canvasVisible": true,
+      "canvasWidthPx": 735,
+      "canvasHeightPx": 730,
+      "runClipped": false,
+      "cancelClipped": false,
+      "textareaHeightPx": 85,
+      "textareaOverflowY": "hidden",
+      "textareaHorizontalOverflow": false,
+      "controlsOccludeActions": false,
+      "navOperable": true
+    },
+    {
+      "width": 1024,
+      "height": 768,
+      "overflowX": 0,
+      "canvasVisible": true,
+      "canvasWidthPx": 704,
+      "canvasHeightPx": 730,
+      "runClipped": false,
+      "cancelClipped": false,
+      "textareaHeightPx": 85,
+      "textareaOverflowY": "hidden",
+      "textareaHorizontalOverflow": false,
+      "controlsOccludeActions": false,
+      "navOperable": true
+    },
+    {
+      "width": 768,
+      "height": 1024,
+      "overflowX": 0,
+      "canvasVisible": true,
+      "canvasWidthPx": 472,
+      "canvasHeightPx": 986,
+      "runClipped": false,
+      "cancelClipped": false,
+      "textareaHeightPx": 85,
+      "textareaOverflowY": "hidden",
+      "textareaHorizontalOverflow": false,
+      "controlsOccludeActions": false,
+      "navOperable": true
+    },
+    {
+      "width": 390,
+      "height": 844,
+      "overflowX": 0,
+      "canvasVisible": true,
+      "canvasWidthPx": 390,
+      "canvasHeightPx": 444,
+      "runClipped": false,
+      "cancelClipped": false,
+      "textareaHeightPx": 85,
+      "textareaOverflowY": "hidden",
+      "textareaHorizontalOverflow": false,
+      "controlsOccludeActions": false,
+      "navOperable": true
+    },
+    {
+      "width": 320,
+      "height": 568,
+      "overflowX": 0,
+      "canvasVisible": true,
+      "canvasWidthPx": 320,
+      "canvasHeightPx": 293,
+      "runClipped": false,
+      "cancelClipped": false,
+      "textareaHeightPx": 85,
+      "textareaOverflowY": "hidden",
+      "textareaHorizontalOverflow": false,
+      "controlsOccludeActions": false,
+      "navOperable": true
+    }
+  ],
+  "touchAndVkb": {
+    "status": "PASS",
+    "pencilVisibleOnTouchActive": true,
+    "vkb390x460": {
+      "overflowX": 0,
+      "taInViewport": true,
+      "runInViewport": true,
+      "cancelInViewport": true
+    }
+  },
+  "consoleErrors": [],
+  "pageErrors": [],
+  "unexpected5xx": [],
+  "finishedAt": "2026-11-19T05:35:18.665Z"
+}

@@ -466,7 +466,7 @@ describe("AXO — Cross-Family Scene3D Stabilization & Acceptance Suite (§4–�
     expect(presP?.description).toContain("vuông góc với OO′");
 
     // 3b. Tilted right circular cylinder (`tru-truc-xien` — right cylinder tilted in 3D space)
-    const tiltedEntry = publicCatalog().find((e) => e.id === "tru-truc-xien")!;
+    const tiltedEntry = offlineCatalog().find((e) => e.id === "tru-truc-xien")!;
     expect(tiltedEntry.title).toBe("Hình trụ tròn xoay có trục đặt nghiêng");
     const tiltedCylScene = prepareFullPipelineScene(sampleRawScene("tru-truc-xien"));
     const tiltedCylObj = tiltedCylScene.disp.objects.find((o) => o.type === "curved_solid" && o.curved_kind === "cylinder")!;
@@ -606,8 +606,8 @@ describe("AXO — Cross-Family Scene3D Stabilization & Acceptance Suite (§4–�
   });
 
   it("6. Context Object Card Across All 8 Entity Types & Auxiliary Toggle (§6.1, §9.12): zero coordinate-frame boilerplate leak, clean titles/roles, and interactive Hide/Isolate/Undo hooks rendered", () => {
-    const chopSample = publicCatalog().find((e) => e.id === "thiet-dien-chop")!;
-    const sphereSample = publicCatalog().find((e) => e.id === "cau-cat-mat-phang")!;
+    const chopSample = offlineCatalog().find((e) => e.id === "thiet-dien-chop")!;
+    const sphereSample = offlineCatalog().find((e) => e.id === "cau-cat-mat-phang")!;
     const chopRaw = (chopSample.envelope as unknown as { scene3d: Scene3D }).scene3d;
     const sphereRaw = (sphereSample.envelope as unknown as { scene3d: Scene3D }).scene3d;
     const chopPrep = prepareFullPipelineScene(chopRaw);
@@ -678,8 +678,10 @@ describe("AXO — Cross-Family Scene3D Stabilization & Acceptance Suite (§4–�
         />,
       );
       expect(html, `${item.kind} card should mount`).toContain('class="context-object-card"');
-      expect(html, `${item.kind} card must expose #btn-card-hide`).toContain('id="btn-card-hide"');
-      expect(html, `${item.kind} card must expose #btn-card-isolate`).toContain('id="btn-card-isolate"');
+      expect(html, `${item.kind} card must omit removed #btn-card-hide`).not.toContain('id="btn-card-hide"');
+      expect(html, `${item.kind} card must omit removed #btn-card-isolate`).not.toContain('id="btn-card-isolate"');
+      expect(html, `${item.kind} workspace must omit removed #dock-visibility-restore-bar`).not.toContain('id="dock-visibility-restore-bar"');
+      expect(html, `${item.kind} workspace must omit removed #btn-restore-hidden-objects`).not.toContain('id="btn-restore-hidden-objects"');
       expect(html, `${item.kind} workspace must omit redundant #btn-undo-interaction`).not.toContain('id="btn-undo-interaction"');
       expect(html, `${item.kind} workspace must keep #btn-reset-pos`).toContain('id="btn-reset-pos"');
       expect(html, `${item.kind} workspace must keep #btn-xray`).toContain('id="btn-xray"');

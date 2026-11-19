@@ -47,7 +47,7 @@ EXPOSE 8000
 # đường nhận SIGTERM sạch; đó là hành vi cho máy lập trình, không cho lượt đo
 # hay bản chạy thật.
 ENV DEV_RELOAD=0
+ENV ALGOSIM_STARTUP_MODE=1
 
-# Tiến hoá schema (Alembic) TRƯỚC khi phục vụ — trên DB bền (Postgres) đây là
-# đường DUY NHẤT đổi schema. `exec` để uvicorn thành PID 1, nhận đúng SIGTERM.
-CMD alembic upgrade head &&     if [ "$DEV_RELOAD" = "1" ]; then       WATCHFILES_FORCE_POLLING=1 exec uvicorn app.main:app --host 0.0.0.0         --port 8000 --reload --reload-dir /app/app;     else       exec uvicorn app.main:app --host 0.0.0.0 --port 8000;     fi
+# Kiểm tra cổng an toàn trước khi tiến hoá schema (chặn migration phá hủy / DB lạ lúc boot).
+CMD python alembic/migration_preflight.py --startup && alembic upgrade head &&     if [ "$DEV_RELOAD" = "1" ]; then       WATCHFILES_FORCE_POLLING=1 exec uvicorn app.main:app --host 0.0.0.0         --port 8000 --reload --reload-dir /app/app;     else       exec uvicorn app.main:app --host 0.0.0.0 --port 8000;     fi

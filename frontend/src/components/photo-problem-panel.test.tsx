@@ -542,7 +542,7 @@ describe("Device-Aware Camera Entry (§2–§9): 15 kịch bản phân loại th
     expect(shouldShowCameraEntry({ userAgent: "", maxTouchPoints: 0 })).toBe(false);
   });
 
-  it("React integration (§9): Desktop chỉ render #menu-item-upload-file (không dòng trống); Mobile/Tablet render cả #menu-item-upload-file và #menu-item-camera", () => {
+  it("React integration (§9 / V9.4.2): Desktop render #menu-item-upload-file + #menu-item-screen-capture (ẩn #menu-item-camera); Mobile/Tablet ưu tiên #menu-item-upload-file + #menu-item-camera", () => {
     const desktopOpenHtml = renderToString(
       <ProblemInput
         initialPlusMenuOpen
@@ -559,15 +559,18 @@ describe("Device-Aware Camera Entry (§2–§9): 15 kịch bản phân loại th
     expect(desktopOpenHtml).toContain('id="plus-popover-menu"');
     expect(desktopOpenHtml).toContain('id="menu-item-upload-file"');
     expect(desktopOpenHtml).toContain("Tải tệp từ thiết bị");
+    expect(desktopOpenHtml).toContain('id="menu-item-screen-capture"');
+    expect(desktopOpenHtml).toContain("Chụp màn hình");
     expect(desktopOpenHtml).not.toContain('id="menu-item-camera"');
     expect(desktopOpenHtml).not.toContain("Chụp ảnh đề bài");
-    // Chỉ có đúng 1 role="menuitem" trong plus-popover-menu trên desktop
+    // Có đúng 2 role="menuitem" trong plus-popover-menu trên desktop (Tải tệp từ thiết bị + Chụp màn hình)
     const desktopMenuItems = desktopOpenHtml.match(/role="menuitem"/g) ?? [];
-    expect(desktopMenuItems).toHaveLength(1);
+    expect(desktopMenuItems).toHaveLength(2);
 
     const ipadOpenHtml = renderToString(
       <ProblemInput
         initialPlusMenuOpen
+        capabilitySignals={{ hasDisplayMedia: false }}
         deviceSignals={{
           userAgent:
             "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/17.4 Safari/605.1.15",

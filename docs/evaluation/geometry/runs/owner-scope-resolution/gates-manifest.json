@@ -1,0 +1,117 @@
+{
+  "schema_version": "axo-gates-manifest/1",
+  "run_slug": "owner-scope-resolution",
+  "branch": "release/axo-owner-scope-resolution",
+  "candidate_commit": "892e15f06fc53c623a1392f0766d69c21291436a",
+  "code_doc_option_b_commit": "6880a03eb295cd45152e8114a8867cfee7b2ee4c",
+  "measured_system_tree_hash": "78edfa1784625e9bca8f1a4cd70b60359d198ba77530986903175a57e18206a7",
+  "measured_system_file_count": 109,
+  "baseline_main_commit": "bb046fa22aceff47abe22aa783aa64fc65caee13",
+  "gates": [
+    {
+      "id": "candidate_freeze_verify",
+      "command": "python -X utf8 scripts/freeze_evaluation_candidate.py --verify",
+      "exit_code": 0,
+      "status": "PASS",
+      "summary": "109 product files verified against hash 78edfa1784625e9b..."
+    },
+    {
+      "id": "targeted_offline_safety_risk_owner_scope",
+      "command": "pytest -q tests/test_database_safety_closure.py tests/test_migration_drift.py tests/test_pre_merge_release_acceptance.py tests/test_pre_merge_risk_closure.py tests/test_owner_scope_resolution.py tests/test_auth_api.py -k \"not postgres\"",
+      "exit_code": 0,
+      "status": "PASS",
+      "summary": "52 passed, 4 deselected in 108.83s"
+    },
+    {
+      "id": "postgresql_16_suite",
+      "command": "pytest -q -m postgres (TEST_POSTGRES_URL=postgresql+psycopg2://.../algosim_osr_pytest)",
+      "exit_code": 0,
+      "status": "PASS",
+      "summary": "8 passed, 14026 deselected in 153.92s"
+    },
+    {
+      "id": "semantic_program_full",
+      "command": "pytest -q tests/semantic_program",
+      "exit_code": 0,
+      "status": "PASS",
+      "summary": "1192 passed, 1 skipped in 65.83s"
+    },
+    {
+      "id": "root_tests_offline",
+      "command": "pytest -q tests/test_*.py -k \"not postgres\"",
+      "exit_code": 0,
+      "status": "PASS",
+      "summary": "815 passed, 8 deselected in 261.93s"
+    },
+    {
+      "id": "geometry_full",
+      "command": "pytest -q tests/geometry",
+      "exit_code": 0,
+      "status": "PASS",
+      "summary": "12000 passed, 6 skipped, 3 deselected, 9 xfailed in 402.38s"
+    },
+    {
+      "id": "frontend_tsc",
+      "command": "npx tsc -b",
+      "exit_code": 0,
+      "status": "PASS",
+      "summary": "0 TypeScript errors"
+    },
+    {
+      "id": "frontend_build",
+      "command": "npm run build",
+      "exit_code": 0,
+      "status": "PASS",
+      "summary": "Vite production bundle built in 4.65s"
+    },
+    {
+      "id": "frontend_vitest_full",
+      "command": "npx vitest run",
+      "exit_code": 0,
+      "status": "PASS",
+      "summary": "193 test files passed (193), 2278 tests passed (2278) in 119.62s"
+    },
+    {
+      "id": "docs_ia_audit",
+      "command": "python -X utf8 backend/scripts/audit_docs_information_architecture.py",
+      "exit_code": 0,
+      "status": "PASS",
+      "summary": "0 broken links, 0 CODE_INDEX stale paths, 0 secret leaks, 29 root docs, 167 catalogued, unclassified []"
+    },
+    {
+      "id": "option_b_product_scope_browser",
+      "command": "node scripts/accept-product-scope.mjs --base http://localhost:3001 --out results/product-scope-acceptance.json",
+      "exit_code": 0,
+      "status": "PASS",
+      "summary": "48/48 checks passed, 0 console/page errors, FRESH provenance eda6ced6c56f0827 at head 892e15f06"
+    },
+    {
+      "id": "option_b_retired_classroom_cli",
+      "command": "node scripts/accept-live-classroom.mjs --json",
+      "exit_code": 2,
+      "status": "PASS",
+      "summary": "Fail-closed CLASSROOM_FEATURE_RETIRED (exit 2) without mutating DBs or docs"
+    },
+    {
+      "id": "browser_e2e_responsive_restart_rea_mcp",
+      "command": "node run-osr-browser.mjs phase1 + phase2-restart + REA MCP CDP :9342",
+      "exit_code": 0,
+      "status": "PASS",
+      "summary": "All 6 viewports + VKB 390x460, unorbited & orbited invariance (0 px / 0 delta), 422/409, PG16 restart recovery v15->v16, REA MCP screenshot 150127 B"
+    },
+    {
+      "id": "pg16_backup_restore_and_bb046fa22_rollback",
+      "command": "python -X utf8 osr_pg_backup_restore_rollback.py",
+      "exit_code": 0,
+      "status": "PASS",
+      "summary": "Single-txn 20-table snapshot 89236 B restored with 100% parity + bb046fa22 Modes A/B1/B2 rollback verified"
+    },
+    {
+      "id": "docker_daemon_container_gate",
+      "command": "docker version / docker info (bounded 60s Desktop attempt)",
+      "exit_code": 1,
+      "status": "ENVIRONMENT_BLOCKED",
+      "summary": "com.docker.service Stopped (Manual); npipe //./pipe/dockerDesktopLinuxEngine unavailable on host"
+    }
+  ]
+}

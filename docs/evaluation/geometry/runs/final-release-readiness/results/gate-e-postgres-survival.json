@@ -1,0 +1,132 @@
+{
+  "verified_at": "2026-11-19T08:18:10.061124+00:00",
+  "database": "algosim_acceptance",
+  "startup_preflight": {
+    "dialect": "postgresql",
+    "direction": "upgrade",
+    "target_rev": "head",
+    "startup_mode": true,
+    "db_revisions": [
+      "f8a2c41d9e05"
+    ],
+    "script_heads": [
+      "f8a2c41d9e05"
+    ],
+    "user_tables_count": 14,
+    "destructive_operations": [],
+    "retained_legacy_tables_present": [],
+    "planned_revisions": [],
+    "allowed": true,
+    "reason_code": "SAFE_NO_DESTRUCTIVE_OPERATIONS",
+    "message": "Migration preflight passed cleanly with zero destructive operations."
+  },
+  "all_preexisting_pks_100pct_survived": true,
+  "no_truncate_used": true,
+  "table_survival_diffs": {
+    "admin_analysis_telemetry": {
+      "pre_count": 0,
+      "post_count": 0,
+      "delta": 0,
+      "pre_pk_survived_count": null,
+      "lost_pre_pks": []
+    },
+    "admin_audit_logs": {
+      "pre_count": 0,
+      "post_count": 0,
+      "delta": 0,
+      "pre_pk_survived_count": null,
+      "lost_pre_pks": []
+    },
+    "admin_system_settings": {
+      "pre_count": 0,
+      "post_count": 0,
+      "delta": 0,
+      "pre_pk_survived_count": null,
+      "lost_pre_pks": []
+    },
+    "alembic_version": {
+      "pre_count": 1,
+      "post_count": 1,
+      "delta": 0,
+      "pre_pk_survived_count": 1,
+      "lost_pre_pks": []
+    },
+    "analysis_usage_ledger": {
+      "pre_count": 0,
+      "post_count": 0,
+      "delta": 0,
+      "pre_pk_survived_count": null,
+      "lost_pre_pks": []
+    },
+    "auth_sessions": {
+      "pre_count": 36,
+      "post_count": 53,
+      "delta": 17,
+      "pre_pk_survived_count": 36,
+      "lost_pre_pks": []
+    },
+    "learning_history_entries": {
+      "pre_count": 0,
+      "post_count": 0,
+      "delta": 0,
+      "pre_pk_survived_count": null,
+      "lost_pre_pks": []
+    },
+    "reuse_metrics": {
+      "pre_count": 0,
+      "post_count": 0,
+      "delta": 0,
+      "pre_pk_survived_count": null,
+      "lost_pre_pks": []
+    },
+    "simulation_cache": {
+      "pre_count": 0,
+      "post_count": 0,
+      "delta": 0,
+      "pre_pk_survived_count": null,
+      "lost_pre_pks": []
+    },
+    "simulation_patterns": {
+      "pre_count": 0,
+      "post_count": 0,
+      "delta": 0,
+      "pre_pk_survived_count": null,
+      "lost_pre_pks": []
+    },
+    "step_edit_feedback": {
+      "pre_count": 35,
+      "post_count": 91,
+      "delta": 56,
+      "pre_pk_survived_count": 35,
+      "lost_pre_pks": []
+    },
+    "step_edit_revisions": {
+      "pre_count": 35,
+      "post_count": 91,
+      "delta": 56,
+      "pre_pk_survived_count": 35,
+      "lost_pre_pks": []
+    },
+    "step_edit_sessions": {
+      "pre_count": 13,
+      "post_count": 25,
+      "delta": 12,
+      "pre_pk_survived_count": 13,
+      "lost_pre_pks": []
+    },
+    "user_account_meta": {
+      "pre_count": 0,
+      "post_count": 0,
+      "delta": 0,
+      "pre_pk_survived_count": null,
+      "lost_pre_pks": []
+    },
+    "users": {
+      "pre_count": 0,
+      "post_count": 0,
+      "delta": 0,
+      "pre_pk_survived_count": null,
+      "lost_pre_pks": []
+    }
+  }
+}

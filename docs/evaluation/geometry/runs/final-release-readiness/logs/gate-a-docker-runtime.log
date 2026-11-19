@@ -1,0 +1,8 @@
+Docker Engine=29.9.2 OS/Arch=linux/amd64 Context=desktop-linux
+Building axo-release-readiness-backend:rc from HEAD=a0f4a516630bb582d982463cd1160f7668154221 image_inputs_sha256=3bc1b8b3a4c484183245c114571af694cfcf2f2b4b380e32139938204919ee96
+Built Image ID=sha256:ceed2ce3e65e05b5d5e10fc22a289a41525f9da8ff3a4c5a76f28125f3c684b8 Size=790333245 Architecture=linux/amd64
+Isolated PG container axo-rr-pg16 ready (server_version=16.15)
+Boot 1 healthy (running|healthy|0) on 127.0.0.1:58603
+Boot 2 after docker restart healthy (running|healthy|0), state persisted v=1
+All 4 fail-closed container startup denial cases exited 23 cleanly.
+GATE_A_DOCKER_RUNTIME_PASS

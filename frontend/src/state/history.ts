@@ -45,6 +45,53 @@ export const HISTORY_MAX_ITEMS = 30;
 const LEGACY_KEY = "algosim.history.v1";
 /** Khoá của MỘT bản ghi: tiền tố + `id`. */
 export const HISTORY_ITEM_KEY_PREFIX = "algosim.history.v1:";
+/** Khoá lưu tùy chọn quản lý bài toán cục bộ (ghim / tên tùy chỉnh). */
+export const PROBLEM_META_KEY = "algosim.problem_meta.v1";
+/** Khoá lưu các lượt xử lý bài toán (`needs_attention` / `in_progress`) qua lần tải lại trang (V7/V8 Phase 7). */
+export const PROBLEM_PROCESSING_RECORDS_KEY = "algosim.processing_records.v1";
+/** Khoá lưu bản nháp đề bài cục bộ (`algosim.draft.v1`) để không mất đề bài khi tải lại trang hoặc chuyển tab. */
+export const PROBLEM_DRAFT_STORAGE_KEY = "algosim.draft.v1";
+/** Thông điệp chuẩn khi một tác vụ `in_progress` bị ngắt kết nối giữa chừng do tải lại trang (V8 Phase 7.1 & 7.2). */
+export const INTERRUPTED_BY_RELOAD_REASON =
+  "Kết nối xử lý bị ngắt khi tải lại trang (chưa xác nhận trạng thái máy chủ)";
+
+export type ProblemProcessingFailureKind = "CONNECTION_INTERRUPTED" | "PROBLEM_ERROR";
+
+export interface ProblemLocalMeta {
+  pinned?: boolean;
+  pinnedAt?: number | null;
+  customTitle?: string | null;
+}
+
+export interface PersistedProblemProcessingRecord {
+  readonly canonicalId: string;
+  readonly title: string;
+  readonly problemStatement: string;
+  readonly status: "in_progress" | "needs_attention";
+  readonly reasonCode?: string | null;
+  readonly reasonMessage?: string | null;
+  readonly interruptedByReload?: boolean;
+  readonly failureKind?: ProblemProcessingFailureKind | null;
+  readonly unsupported?: unknown;
+  readonly clientFailure?: unknown;
+  readonly analysisError?: string | null;
+  readonly createdAt: number;
+  readonly updatedAt: number;
+}
+
+/**
+ * Loại bỏ các tiền tố trạng thái tạm thời (nếu có) để không bao giờ ghi cứng tiền tố trạng thái
+ * vào `customTitle` hoặc `title` của bài toán.
+ */
+export function stripStatusPrefixesFromTitle(raw: string | null | undefined): string {
+  if (!raw) return "";
+  return raw
+    .replace(
+      /^(?:\[(?:Đang tiến hành|Cần chú ý|Sẵn sàng|Đang xử lý|Lỗi)\]\s*|(?:Đang tiến hành|Cần chú ý|Sẵn sàng|Đang mở)\s*[·:—–-]\s*)+/iu,
+      "",
+    )
+    .trim();
+}
 
 /** Tập con của Web Storage mà lịch sử cần (liệt kê khoá để đọc các bản ghi). */
 export interface StorageLike {
@@ -71,6 +118,11 @@ export interface HistoryItem {
   /** Tiến độ trình bày an toàn (null = chưa ghi). */
   lastCursor: number | null;
   visualMode: VisualMode | null;
+  /** V5: Trạng thái ghim bài toán lên đầu danh sách (lưu cục bộ). */
+  pinned?: boolean;
+  pinnedAt?: number | null;
+  /** V5: Tên hiển thị tùy chỉnh do người dùng đặt qua hành động Đổi tên. */
+  customTitle?: string | null;
 }
 
 /** Đồng hồ đơn điệu tăng — tránh hoà lastViewedAt khi ghi liên tiếp trong 1ms. */
@@ -197,14 +249,220 @@ export interface HistoryStore {
    */
   record(env: SimulationEnvelope, originalInput: string | null, recordId?: string): HistoryItem;
   touch(id: string, patch: { lastCursor?: number; visualMode?: VisualMode }): void;
+  setPinned(id: string, pinned: boolean): HistoryItem | null;
+  rename(id: string, newTitle: string): HistoryItem | null;
+  getMeta(id: string): ProblemLocalMeta | null;
+  readProcessingRecords(opts?: {
+    recoverReloadInterrupted?: boolean;
+  }): Record<string, PersistedProblemProcessingRecord>;
+  writeProcessingRecords(
+    records: Readonly<Record<string, PersistedProblemProcessingRecord>>,
+  ): void;
+  clearProcessingRecords(): void;
+  readDraftText(): string;
+  writeDraftText(text: string): void;
+  clearDraftText(): void;
   remove(id: string): void;
   clear(): void;
   replaceAll?(items: HistoryItem[]): void;
 }
 
+function getSessionStorageSafe(): StorageLike | null {
+  try {
+    if (typeof window === "undefined") return null;
+    const ss = (window as { sessionStorage?: StorageLike }).sessionStorage;
+    if (!ss || typeof ss.getItem !== "function" || typeof ss.setItem !== "function") return null;
+    return ss;
+  } catch {
+    return null;
+  }
+}
+
 export function createHistoryStore(storage: StorageLike | null): HistoryStore {
   /** khoá → (chuỗi đã đọc, bản ghi đã kiểm) — chỉ parse lại khoá có chuỗi đổi. */
   const cache = new Map<string, { raw: string; item: HistoryItem | null }>();
+
+  function readMetaMap(): Record<string, ProblemLocalMeta> {
+    if (!storage) return {};
+    try {
+      const raw = storage.getItem(PROBLEM_META_KEY);
+      if (!raw) return {};
+      const parsed: unknown = JSON.parse(raw);
+      if (typeof parsed !== "object" || parsed === null || Array.isArray(parsed)) return {};
+      return parsed as Record<string, ProblemLocalMeta>;
+    } catch {
+      return {};
+    }
+  }
+
+  function writeMetaMap(map: Record<string, ProblemLocalMeta>): void {
+    if (!storage) return;
+    try {
+      storage.setItem(PROBLEM_META_KEY, JSON.stringify(map));
+    } catch {
+      /* storage đầy/bị chặn → bỏ qua êm */
+    }
+  }
+
+  function readRawProcessingRecords(): Record<string, PersistedProblemProcessingRecord> {
+    const ss = getSessionStorageSafe();
+    let raw: string | null = null;
+    try {
+      raw = storage?.getItem(PROBLEM_PROCESSING_RECORDS_KEY) ?? null;
+      if (!raw && ss) {
+        raw = ss.getItem(PROBLEM_PROCESSING_RECORDS_KEY);
+      }
+    } catch {
+      raw = null;
+    }
+    if (!raw) return {};
+    try {
+      const parsed: unknown = JSON.parse(raw);
+      if (typeof parsed !== "object" || parsed === null || Array.isArray(parsed)) {
+        return {};
+      }
+      const out: Record<string, PersistedProblemProcessingRecord> = {};
+      for (const [k, v] of Object.entries(parsed as Record<string, unknown>)) {
+        if (!v || typeof v !== "object") continue;
+        const r = v as Record<string, unknown>;
+        const canonicalId = typeof r.canonicalId === "string" && r.canonicalId.trim() ? r.canonicalId.trim() : k;
+        const status = r.status === "in_progress" || r.status === "needs_attention" ? r.status : null;
+        if (!canonicalId || !status) continue;
+        const rawTitle = typeof r.title === "string" ? r.title : "";
+        const cleanTitle = stripStatusPrefixesFromTitle(rawTitle) || "Bài toán cần chú ý";
+        const stmt = typeof r.problemStatement === "string" ? r.problemStatement : "";
+        const reasonCode = typeof r.reasonCode === "string" ? r.reasonCode : null;
+        const isReloadInterrupted =
+          status === "needs_attention" &&
+          (r.interruptedByReload === true ||
+            reasonCode === "INTERRUPTED_BY_RELOAD" ||
+            r.failureKind === "CONNECTION_INTERRUPTED");
+        const failureKind: ProblemProcessingFailureKind | null =
+          status === "in_progress"
+            ? null
+            : r.failureKind === "CONNECTION_INTERRUPTED" || isReloadInterrupted
+              ? "CONNECTION_INTERRUPTED"
+              : "PROBLEM_ERROR";
+        const createdAt = typeof r.createdAt === "number" && Number.isFinite(r.createdAt) ? r.createdAt : now();
+        const updatedAt = typeof r.updatedAt === "number" && Number.isFinite(r.updatedAt) ? r.updatedAt : createdAt;
+        out[canonicalId] = {
+          canonicalId,
+          title: cleanTitle,
+          problemStatement: stmt,
+          status,
+          reasonCode,
+          reasonMessage: typeof r.reasonMessage === "string" ? r.reasonMessage : null,
+          interruptedByReload: isReloadInterrupted,
+          failureKind,
+          unsupported: r.unsupported ?? null,
+          clientFailure: r.clientFailure ?? null,
+          analysisError: typeof r.analysisError === "string" ? r.analysisError : null,
+          createdAt,
+          updatedAt,
+        };
+      }
+      return out;
+    } catch {
+      return {};
+    }
+  }
+
+  function writeRawProcessingRecords(
+    records: Readonly<Record<string, PersistedProblemProcessingRecord>>,
+  ): void {
+    const serialized = JSON.stringify(records);
+    if (storage) {
+      try {
+        storage.setItem(PROBLEM_PROCESSING_RECORDS_KEY, serialized);
+      } catch {
+        /* bỏ qua êm */
+      }
+    }
+    const ss = getSessionStorageSafe();
+    if (ss) {
+      try {
+        ss.setItem(PROBLEM_PROCESSING_RECORDS_KEY, serialized);
+      } catch {
+        /* bỏ qua êm */
+      }
+    }
+  }
+
+  function readDraftTextRaw(): string {
+    const ss = getSessionStorageSafe();
+    try {
+      const fromStorage = storage?.getItem(PROBLEM_DRAFT_STORAGE_KEY) ?? null;
+      if (typeof fromStorage === "string" && fromStorage.length > 0) {
+        return fromStorage;
+      }
+      const fromSession = ss?.getItem(PROBLEM_DRAFT_STORAGE_KEY) ?? null;
+      if (typeof fromSession === "string" && fromSession.length > 0) {
+        return fromSession;
+      }
+    } catch {
+      /* bỏ qua êm */
+    }
+    return "";
+  }
+
+  function writeDraftTextRaw(text: string): void {
+    const trimmed = text.trim();
+    if (!trimmed) {
+      clearDraftTextRaw();
+      return;
+    }
+    if (storage) {
+      try {
+        storage.setItem(PROBLEM_DRAFT_STORAGE_KEY, text);
+      } catch {
+        /* bỏ qua êm */
+      }
+    }
+    const ss = getSessionStorageSafe();
+    if (ss) {
+      try {
+        ss.setItem(PROBLEM_DRAFT_STORAGE_KEY, text);
+      } catch {
+        /* bỏ qua êm */
+      }
+    }
+  }
+
+  function clearDraftTextRaw(): void {
+    if (storage) {
+      try {
+        storage.removeItem(PROBLEM_DRAFT_STORAGE_KEY);
+      } catch {
+        /* bỏ qua êm */
+      }
+    }
+    const ss = getSessionStorageSafe();
+    if (ss) {
+      try {
+        ss.removeItem(PROBLEM_DRAFT_STORAGE_KEY);
+      } catch {
+        /* bỏ qua êm */
+      }
+    }
+  }
+
+  function applyMetaToItem(item: HistoryItem, meta?: ProblemLocalMeta): HistoryItem {
+    const rawCustomTitle = (meta?.customTitle ?? item.customTitle ?? "").trim();
+    const customTitle = stripStatusPrefixesFromTitle(rawCustomTitle) || null;
+    const pinned = Boolean(meta?.pinned ?? item.pinned);
+    const pinnedAt = pinned ? (meta?.pinnedAt ?? item.pinnedAt ?? item.updatedAt) : null;
+    if (!customTitle && item.pinned === pinned && (item.pinnedAt ?? null) === pinnedAt) {
+      return item;
+    }
+    return {
+      ...item,
+      title: customTitle ?? item.title,
+      customTitle,
+      pinned,
+      pinnedAt,
+      envelope: customTitle ? { ...item.envelope, title: customTitle } : item.envelope,
+    };
+  }
 
   function parseItem(raw: string): HistoryItem | null {
     try {
@@ -212,8 +470,13 @@ export function createHistoryStore(storage: StorageLike | null): HistoryStore {
       if (!isValidItem(it)) return null;
       const rawScene = (it.envelope as SimulationEnvelope & { scene3d?: unknown }).scene3d;
       const safeScene = hopLeScene3D(rawScene) ? rawScene : null;
-      const normTitle = normalizeCylinderEnvelopeTitle(it.title, safeScene);
-      const normEnvTitle = normalizeCylinderEnvelopeTitle(it.envelope.title, safeScene);
+      const hasCustomTitle = typeof it.customTitle === "string" && it.customTitle.trim().length > 0;
+      const normTitle = hasCustomTitle
+        ? it.customTitle!.trim()
+        : normalizeCylinderEnvelopeTitle(it.title, safeScene);
+      const normEnvTitle = hasCustomTitle
+        ? it.customTitle!.trim()
+        : normalizeCylinderEnvelopeTitle(it.envelope.title, safeScene);
       return normTitle !== it.title || normEnvTitle !== it.envelope.title
         ? { ...it, title: normTitle, envelope: { ...it.envelope, title: normEnvTitle } }
         : it;
@@ -254,6 +517,7 @@ export function createHistoryStore(storage: StorageLike | null): HistoryStore {
     if (!storage) return [];
     try {
       migrateLegacy(storage);
+      const metaMap = readMetaMap();
       const items: HistoryItem[] = [];
       const seen = new Set<string>();
       for (const k of itemKeys(storage)) {
@@ -265,7 +529,9 @@ export function createHistoryStore(storage: StorageLike | null): HistoryStore {
           c = { raw, item: parseItem(raw) };
           cache.set(k, c);
         }
-        if (c.item) items.push({ ...c.item });
+        if (c.item) {
+          items.push(applyMetaToItem({ ...c.item }, metaMap[c.item.id]));
+        }
       }
       for (const k of [...cache.keys()]) if (!seen.has(k)) cache.delete(k);
       return items;
@@ -279,7 +545,9 @@ export function createHistoryStore(storage: StorageLike | null): HistoryStore {
     try {
       const raw = storage.getItem(HISTORY_ITEM_KEY_PREFIX + id);
       const item = raw === null ? null : parseItem(raw);
-      return item ? { ...item } : null;
+      if (!item) return null;
+      const metaMap = readMetaMap();
+      return applyMetaToItem({ ...item }, metaMap[id]);
     } catch {
       return null;
     }
@@ -288,7 +556,21 @@ export function createHistoryStore(storage: StorageLike | null): HistoryStore {
   function put(item: HistoryItem): void {
     if (!storage) return;
     try {
-      storage.setItem(HISTORY_ITEM_KEY_PREFIX + item.id, JSON.stringify(item));
+      const persisted = {
+        id: item.id,
+        schemaVersion: item.schemaVersion,
+        title: item.title,
+        simulationId: item.simulationId,
+        domain: item.domain,
+        envelope: item.envelope,
+        originalInput: item.originalInput,
+        createdAt: item.createdAt,
+        updatedAt: item.updatedAt,
+        lastViewedAt: item.lastViewedAt,
+        lastCursor: item.lastCursor,
+        visualMode: item.visualMode,
+      };
+      storage.setItem(HISTORY_ITEM_KEY_PREFIX + item.id, JSON.stringify(persisted));
     } catch {
       /* storage đầy/bị chặn → lịch sử là tiện ích, không được phá app */
     }
@@ -313,6 +595,7 @@ export function createHistoryStore(storage: StorageLike | null): HistoryStore {
       const cleanEnv = sanitizeEnvelope(env);
       const id = recordId ?? (input ? submissionIdOf(cleanEnv, input) : historyIdOf(env));
       const items = read();
+      const metaMap = readMetaMap();
       const t = now();
       const existing =
         items.find((x) => x.id === id) ??
@@ -326,24 +609,33 @@ export function createHistoryStore(storage: StorageLike | null): HistoryStore {
               && sceneDigestOf(x.envelope) === sceneDigestOf(cleanEnv))
           : undefined);
       if (existing) {
+        const meta = metaMap[existing.id];
+        const customTitle = (meta?.customTitle ?? existing.customTitle ?? "").trim() || null;
         existing.lastViewedAt = t;
         existing.updatedAt = t;
         // Mở không kèm đề (bài mẫu, route) mà trúng một bản ghi LẦN GỬI cũ (cùng khoá biên dịch): chỉ đánh dấu đã
         // xem, không ghi đè envelope hay đề của lần gửi đó.
         if (input || existing.originalInput === null) {
-          existing.title = cleanEnv.title;
-          existing.envelope = cleanEnv;
+          existing.title = customTitle ?? cleanEnv.title;
+          existing.customTitle = customTitle;
+          existing.envelope = customTitle ? { ...cleanEnv, title: customTitle } : cleanEnv;
         }
         put(existing);
         return existing;
       }
+      const meta = metaMap[id];
+      const customTitle = (meta?.customTitle ?? "").trim() || null;
+      const pinned = Boolean(meta?.pinned);
       const item: HistoryItem = {
         id,
         schemaVersion: HISTORY_SCHEMA_VERSION,
-        title: cleanEnv.title,
+        title: customTitle ?? cleanEnv.title,
+        customTitle,
+        pinned,
+        pinnedAt: pinned ? (meta?.pinnedAt ?? t) : null,
         simulationId: env.simulation_id,
         domain: env.domain,
-        envelope: cleanEnv,
+        envelope: customTitle ? { ...cleanEnv, title: customTitle } : cleanEnv,
         originalInput: input,
         createdAt: t,
         updatedAt: t,
@@ -376,23 +668,184 @@ export function createHistoryStore(storage: StorageLike | null): HistoryStore {
       put(item);
     },
 
+    setPinned(id, pinned) {
+      if (!id) return null;
+      const t = now();
+      const metaMap = readMetaMap();
+      const prevMeta = metaMap[id] ?? {};
+      metaMap[id] = {
+        ...prevMeta,
+        pinned,
+        pinnedAt: pinned ? t : null,
+      };
+      writeMetaMap(metaMap);
+      const item = readOne(id);
+      if (!item) return null;
+      item.pinned = pinned;
+      item.pinnedAt = pinned ? t : null;
+      put(item);
+      return item;
+    },
+
+    rename(id, newTitle) {
+      const trimmed = stripStatusPrefixesFromTitle(newTitle);
+      if (!id || !trimmed) return null;
+      const t = now();
+      const metaMap = readMetaMap();
+      const prevMeta = metaMap[id] ?? {};
+      metaMap[id] = {
+        ...prevMeta,
+        customTitle: trimmed,
+      };
+      writeMetaMap(metaMap);
+      const procMap = readRawProcessingRecords();
+      if (id in procMap) {
+        procMap[id] = {
+          ...procMap[id]!,
+          title: trimmed,
+          updatedAt: t,
+        };
+        writeRawProcessingRecords(procMap);
+      }
+      const item = readOne(id);
+      if (!item) return null;
+      item.title = trimmed;
+      item.customTitle = trimmed;
+      item.envelope = { ...item.envelope, title: trimmed };
+      item.updatedAt = t;
+      put(item);
+      return item;
+    },
+
+    getMeta(id) {
+      if (!id) return null;
+      const metaMap = readMetaMap();
+      const meta = metaMap[id];
+      const item = readOne(id);
+      if (!meta && !item) return null;
+      const rawCustom = (meta?.customTitle ?? item?.customTitle ?? "").trim();
+      return {
+        pinned: Boolean(meta?.pinned ?? item?.pinned),
+        pinnedAt: (meta?.pinned ?? item?.pinned) ? (meta?.pinnedAt ?? item?.pinnedAt ?? null) : null,
+        customTitle: stripStatusPrefixesFromTitle(rawCustom) || null,
+      };
+    },
+
+    readProcessingRecords(opts) {
+      const rawMap = readRawProcessingRecords();
+      if (!opts?.recoverReloadInterrupted) {
+        return rawMap;
+      }
+      let mutated = false;
+      let latestInterruptedStmt = "";
+      let latestInterruptedAt = -1;
+      const t = now();
+      const recovered: Record<string, PersistedProblemProcessingRecord> = {};
+      for (const [k, rec] of Object.entries(rawMap)) {
+        if (rec.status === "in_progress") {
+          mutated = true;
+          if (rec.problemStatement.trim() && rec.updatedAt >= latestInterruptedAt) {
+            latestInterruptedAt = rec.updatedAt;
+            latestInterruptedStmt = rec.problemStatement.trim();
+          }
+          recovered[k] = {
+            ...rec,
+            status: "needs_attention",
+            reasonCode: rec.reasonCode || "INTERRUPTED_BY_RELOAD",
+            reasonMessage: INTERRUPTED_BY_RELOAD_REASON,
+            interruptedByReload: true,
+            failureKind: "CONNECTION_INTERRUPTED",
+            analysisError: rec.analysisError || INTERRUPTED_BY_RELOAD_REASON,
+            updatedAt: t,
+          };
+        } else {
+          recovered[k] = rec;
+        }
+      }
+      if (mutated) {
+        writeRawProcessingRecords(recovered);
+        if (latestInterruptedStmt && !readDraftTextRaw().trim()) {
+          writeDraftTextRaw(latestInterruptedStmt);
+        }
+      }
+      return recovered;
+    },
+
+    writeProcessingRecords(records) {
+      writeRawProcessingRecords(records);
+    },
+
+    clearProcessingRecords() {
+      if (storage) {
+        try {
+          storage.removeItem(PROBLEM_PROCESSING_RECORDS_KEY);
+        } catch {
+          /* bỏ qua êm */
+        }
+      }
+      const ss = getSessionStorageSafe();
+      if (ss) {
+        try {
+          ss.removeItem(PROBLEM_PROCESSING_RECORDS_KEY);
+        } catch {
+          /* bỏ qua êm */
+        }
+      }
+    },
+
+    readDraftText() {
+      return readDraftTextRaw();
+    },
+
+    writeDraftText(text) {
+      writeDraftTextRaw(text);
+    },
+
+    clearDraftText() {
+      clearDraftTextRaw();
+    },
+
     remove(id) {
       drop(id);
+      const metaMap = readMetaMap();
+      if (id in metaMap) {
+        delete metaMap[id];
+        writeMetaMap(metaMap);
+      }
+      const procMap = readRawProcessingRecords();
+      if (id in procMap) {
+        delete procMap[id];
+        writeRawProcessingRecords(procMap);
+      }
     },
 
     clear() {
-      if (!storage) return;
-      try {
-        for (const k of itemKeys(storage)) storage.removeItem(k);
-        storage.removeItem(LEGACY_KEY);
-      } catch {
-        /* như trên */
+      if (storage) {
+        try {
+          for (const k of itemKeys(storage)) storage.removeItem(k);
+          storage.removeItem(LEGACY_KEY);
+          storage.removeItem(PROBLEM_META_KEY);
+          storage.removeItem(PROBLEM_PROCESSING_RECORDS_KEY);
+          storage.removeItem(PROBLEM_DRAFT_STORAGE_KEY);
+        } catch {
+          /* như trên */
+        }
+      }
+      const ss = getSessionStorageSafe();
+      if (ss) {
+        try {
+          ss.removeItem(PROBLEM_PROCESSING_RECORDS_KEY);
+          ss.removeItem(PROBLEM_DRAFT_STORAGE_KEY);
+        } catch {
+          /* như trên */
+        }
       }
       cache.clear();
     },
 
     replaceAll(items) {
-      const keep = items.slice(0, HISTORY_MAX_ITEMS);
+      const metaMap = readMetaMap();
+      const keep = items.slice(0, HISTORY_MAX_ITEMS).map((it) => applyMetaToItem(it, metaMap[it.id]));
       const ids = new Set(keep.map((x) => x.id));
       for (const it of keep) put(it);
       for (const old of read()) if (!ids.has(old.id)) drop(old.id);
@@ -465,13 +918,21 @@ export function fromServerHistoryDto(dto: ServerHistoryDto): HistoryItem | null 
   if (!dto || typeof dto.id !== "string" || !dto.envelope || typeof dto.envelope !== "object") {
     return null;
   }
+  const cleanEnv = sanitizeEnvelope(dto.envelope);
+  const resolvedTitle = dto.title?.trim() || cleanEnv.title || "Mô phỏng hình học";
+  const meta = historyStore.getMeta(dto.id);
+  const customTitle = meta?.customTitle ?? (resolvedTitle !== cleanEnv.title ? resolvedTitle : null);
+  const finalTitle = customTitle ?? resolvedTitle;
   return {
     id: dto.id,
     schemaVersion: HISTORY_SCHEMA_VERSION,
-    title: dto.title || dto.envelope.title || "Mô phỏng hình học",
+    title: finalTitle,
+    customTitle,
+    pinned: Boolean(meta?.pinned),
+    pinnedAt: meta?.pinned ? (meta.pinnedAt ?? null) : null,
     simulationId: dto.simulationId || dto.envelope.simulation_id || "generic.semantic_program",
     domain: dto.domain || dto.envelope.domain || "geometry",
-    envelope: sanitizeEnvelope(dto.envelope),
+    envelope: finalTitle !== cleanEnv.title ? { ...cleanEnv, title: finalTitle } : cleanEnv,
     originalInput: dto.originalInput ?? null,
     createdAt: parseServerTimestamp(dto.createdAt),
     updatedAt: parseServerTimestamp(dto.updatedAt),

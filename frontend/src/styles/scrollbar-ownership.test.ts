@@ -70,14 +70,15 @@ describe("thanh cuộn không được tàng hình", () => {
     expect(color, "đã ghi đè `scrollbar-color` — chính là đường làm nó tàng hình")
       .toBeNull();
 
-    /* Nút mũi tên hai đầu là tín hiệu "cuộn được" của hệ điều hành. Bản trước
-       ẩn chúng đi cho gọn; nay không được ẩn nữa. */
+    /* Giữ nút hệ điều hành cho scrollbar toàn trang. Danh sách attachment có
+       điều khiển riêng và có thể ẩn nút trong phạm vi selector của nó. */
     /* Bóc chú thích trước khi khớp — cùng quy ước với mọi guard quét nguồn
        khác trong repo. Không bóc thì chính đoạn chú thích mô tả BẢN CŨ sẽ làm
        guard đỏ, tức guard tự vấp vào tài liệu của mình. */
     const code = GLOBAL.replace(/\/\*[\s\S]*?\*\//g, "");
     expect(code, "vẫn ẩn nút mũi tên của thanh cuộn hệ điều hành")
-      .not.toMatch(/::-webkit-scrollbar-button\s*\{[^}]*display:\s*none/);
+      .not.toMatch(/(?:^|\n)\s*::-webkit-scrollbar-button\s*\{[^}]*display:\s*none/);
+    expect(code).toMatch(/\.composer-files-row::-webkit-scrollbar-button\s*\{[^}]*display:\s*none/);
   });
 
   it("ba mức đậm dần đều có định nghĩa (var() trỏ hụt là lỗi IM LẶNG)", () => {

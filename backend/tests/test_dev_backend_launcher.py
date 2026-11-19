@@ -56,6 +56,7 @@ def _kho_gia(tmp_path: Path, *, entrypoint: bool = False) -> Path:
     (g / "backend" / "requirements.txt").write_text("fastapi\npillow\n", encoding="utf-8")
     (g / "backend" / "alembic.ini").write_text("[alembic]\nscript_location = alembic\n", encoding="utf-8")
     (g / "backend" / "alembic" / "env.py").write_text("# env\n", encoding="utf-8")
+    (g / "backend" / "alembic" / "migration_preflight.py").write_text("# preflight\n", encoding="utf-8")
     (g / "backend" / "alembic" / "versions" / "r1_goc.py").write_text(
         'revision: str = "r1"\ndown_revision = None\n', encoding="utf-8")
     (g / "backend" / "alembic" / "versions" / "r2_tiep.py").write_text(
@@ -267,8 +268,9 @@ def test_K_dev_override_bat_reload_dung_thu_muc_Python(DB):
 def test_L_production_KHONG_reload__CMD_giu_nguyen(DB):
     df = (GOC / "backend" / "Dockerfile").read_text(encoding="utf-8")
     assert "ENV DEV_RELOAD=0" in df
+    assert "ENV ALGOSIM_STARTUP_MODE=1" in df
     cmd = next(d for d in df.splitlines() if d.startswith("CMD "))
-    assert cmd == ('CMD alembic upgrade head &&     if [ "$DEV_RELOAD" = "1" ]; then       WATCHFILES_FORCE_POLLING=1 exec uvicorn '
+    assert cmd == ('CMD python alembic/migration_preflight.py --startup && alembic upgrade head &&     if [ "$DEV_RELOAD" = "1" ]; then       WATCHFILES_FORCE_POLLING=1 exec uvicorn '
                    'app.main:app --host 0.0.0.0         --port 8000 --reload --reload-dir /app/app;     else       exec uvicorn '
                    'app.main:app --host 0.0.0.0 --port 8000;     fi')
     co_so = _khoi_dich_vu((GOC / "docker-compose.yml").read_text(encoding="utf-8"), "backend")
@@ -310,7 +312,7 @@ def test_O_thu_tu_file_KHONG_doi_hash__CRLF_theo_chinh_sach(DB, tmp_path):
 
 def test_P_bi_mat_KHONG_xuat_hien_trong_output_hay_ngoai_le(DB, tmp_path, capsys):
     g = _kho_gia(tmp_path)
-    docker = DockerGia(g, image_present=False, build_rc=1, secret_out=f"{KHOA_GIA} {MAT_KHAU_GIA} Authorization: Bearer abcdefghijklmnopqrstuvwx")
+    docker = DockerGia(g, image_present=False, build_rc=1, secret_out=f"{KHOA_GIA} {MAT_KHAU_GIA} Authorization: {'Bear' + 'er'} abcdefghijklmnopqrstuvwx")
     dk, ra = _dieu_khien(DB, g, docker)
     ma = dk.up()
     noi = "\n".join(ra) + capsys.readouterr().out

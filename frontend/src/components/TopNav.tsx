@@ -2,7 +2,6 @@ import { useEffect, useLayoutEffect, useMemo, useRef, useState } from "react";
 import { create } from "zustand";
 import { useAppStore, type AppView } from "../state/store";
 import { useAuthStore } from "../state/auth";
-import { useClassroomStore } from "../state/classroom";
 import {
   IconAlert,
   IconAxoLogo,
@@ -15,6 +14,7 @@ import {
   IconInfo,
   IconLibrary,
   IconLogout,
+  IconSidebarPanel,
 } from "./icons";
 
 /**
@@ -210,56 +210,25 @@ export function ToastContainer() {
 
 /* ── Chuông thông báo (NotificationDropdown) ─────────────────────────────── */
 
-interface NotificationEntry {
+export interface NotificationEntry {
   id: string;
   title: string;
   subtitle: string;
   targetView: AppView;
 }
 
-export function NotificationDropdown({ initialOpen = false }: { initialOpen?: boolean }) {
+export function NotificationDropdown({
+  initialOpen = false,
+  items = [],
+}: {
+  initialOpen?: boolean;
+  items?: NotificationEntry[];
+}) {
   const [open, setOpen] = useState(initialOpen);
   const [readIds, setReadIds] = useState<string[]>([]);
   const wrapRef = useRef<HTMLDivElement | null>(null);
 
-  const classes = useClassroomStore((s) => s.classes);
-  const assignments = useClassroomStore((s) => s.assignments);
-  const session = useClassroomStore((s) => s.session);
-  const sessionClassId = useClassroomStore((s) => s.sessionClassId);
   const setView = useAppStore((s) => s.setView);
-
-  const items = useMemo<NotificationEntry[]>(() => {
-    const out: NotificationEntry[] = [];
-    const classMap = new Map(classes.map((c) => [c.id, c.name]));
-
-    if (session) {
-      const clsName =
-        sessionClassId !== null
-          ? (classMap.get(sessionClassId) ?? `Lớp #${sessionClassId}`)
-          : "Lớp học";
-      out.push({
-        id: `live-${session.sessionId}-${session.roundId}`,
-        title: `Phiên học trực tiếp đang diễn ra (${clsName})`,
-        subtitle: "Nhấn để vào lớp học",
-        targetView: "classes",
-      });
-    }
-
-    for (const a of assignments) {
-      if (a.closed) continue;
-      const done = Boolean(a.myPractice?.completed);
-      if (done) continue;
-      const clsName = classMap.get(a.classroomId);
-      out.push({
-        id: `asg-${a.id}`,
-        title: a.title,
-        subtitle: clsName ? `Bài thực hành · ${clsName}` : (a.instruction || "Bài thực hành mới"),
-        targetView: "assignments",
-      });
-    }
-
-    return out;
-  }, [assignments, classes, session, sessionClassId]);
 
   const unreadCount = useMemo(
     () => items.filter((item) => !readIds.includes(item.id)).length,
@@ -373,22 +342,20 @@ interface Item {
  *  3. Lịch sử (`history`)
  * Nhất quán choทั้ง khách (Guest), học sinh (Student) và giáo viên (Teacher).
  */
+void IconHistory;
+
 const AXO_V27_NAV_ITEMS: Item[] = [
-  { view: "home", label: "Trang chủ", icon: <IconHome size={14} /> },
-  { view: "library", label: "Thư viện", icon: <IconLibrary size={14} /> },
-  { view: "history", label: "Lịch sử", icon: <IconHistory size={14} /> },
+  { view: "home", label: "Trang chủ", icon: <IconHome size={15} /> },
+  { view: "library", label: "Thư viện", icon: <IconLibrary size={15} /> },
 ];
 
 /** W05 — tên trang đích của nút quay lại trong xưởng 3D. Khoá `AppView` vào, tiếng Việt ra. */
 export const TEN_TRANG: Partial<Record<AppView, string>> = {
   home: "Trang chủ",
+  landing: "Giới thiệu Axo",
   library: "Thư viện",
   history: "Lịch sử",
-  classes: "Lớp học",
-  assignments: "Bài thực hành",
-  observe: "Quan sát lớp",
   account: "Tài khoản",
-  monitor: "Theo dõi lớp",
   admin: "Trung tâm quản trị",
 };
 
@@ -408,6 +375,7 @@ export function TopNav() {
   const view = useAppStore((s) => s.view);
   const setView = useAppStore((s) => s.setView);
   const goHome = useAppStore((s) => s.goHome);
+  const leftRailMobileOpen = useAppStore((s) => s.leftRailMobileOpen);
 
   const items = itemsForRole(user?.role);
 
@@ -416,13 +384,25 @@ export function TopNav() {
       <div className="axo-brand">
         <button
           type="button"
+          id="btn-mobile-open-sidebar"
+          className={`btn-mobile-drawer-trigger${leftRailMobileOpen ? " is-hidden-when-drawer-open" : ""}`}
+          onClick={() => useAppStore.getState().setLeftRailMobileOpen(true)}
+          title="Mở điều hướng"
+          aria-label="Mở điều hướng"
+          aria-hidden={leftRailMobileOpen ? "true" : undefined}
+          tabIndex={leftRailMobileOpen ? -1 : undefined}
+        >
+          <IconSidebarPanel />
+        </button>
+        <button
+          type="button"
           id="btn-brand-home"
           className="nav-wordmark axo-logo-btn"
           onClick={goHome}
           title="Về trang chủ Axo"
           aria-label="Về trang chủ Axo"
         >
-          <IconAxoLogo size={22} />
+          <IconAxoLogo size={26} />
           <span className="nav-wordmark-text">Axo</span>
         </button>
       </div>
@@ -688,23 +668,6 @@ export function TopNavAccount({ initialOpen = false }: { initialOpen?: boolean }
                   <circle cx="12" cy="7" r="4" />
                 </svg>
                 <span>Cài đặt tài khoản</span>
-              </button>
-
-              <button
-                type="button"
-                id="btn-acc-open-history"
-                className="acc-pop-item account-pop-btn"
-                role="menuitem"
-                onClick={() => {
-                  setOpen(false);
-                  setView("history");
-                }}
-              >
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.9" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-                  <circle cx="12" cy="12" r="9" />
-                  <polyline points="12 7 12 12 15 15" />
-                </svg>
-                <span>Lịch sử học tập</span>
               </button>
 
               <div className="acc-pop-sep account-pop-sep" role="separator" />

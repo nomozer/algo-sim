@@ -336,19 +336,6 @@ describe("nhãn panel phải — đổi tên có ranh giới, không thay chuỗ
     ).toEqual([]);
   });
 
-  it("bảng quan sát lớp KHÔNG đụng panel phải — hai bề mặt khác nhau", () => {
-    /* Đối chứng cho guard ngay trên: nếu `ObserveView` một ngày dựng panel bên
-       phải thì nó rơi vào tầm soi và chữ "Quan sát lớp" của nó thành vi phạm.
-       Bài này khoá ranh giới đó lại cho rõ. */
-    const owner = FILES.find((f) => f.path.endsWith(join("components", "ObserveView.tsx")));
-    expect(owner, "không tìm thấy ObserveView.tsx").toBeDefined();
-    const body = code(owner!.text);
-    expect(body).toContain("Quan sát lớp");
-    for (const marker of RIGHT_PANEL_MARKERS) {
-      expect(body, `ObserveView đụng vào panel phải qua "${marker}"`).not.toContain(marker);
-    }
-  });
-
   it("renderer generic KHÔNG còn bày cặp tab [Quan sát][Chỉnh sửa] cho học sinh", () => {
     /* W12 — ĐẢO CHIỀU CÓ CHỦ ĐÍCH. Bài này trước đây khoá SỰ TỒN TẠI của cặp
        tab; nay nó khoá SỰ VẮNG MẶT, vì cặp tab ấy sai bản chất sản phẩm:

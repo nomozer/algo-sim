@@ -1,0 +1,143 @@
+{
+  "audited_at": "2026-11-19T07:51:42.840554+00:00",
+  "categories": {
+    "1_midpoints_bisectors_sphere_and_helper_sync": {
+      "status": "PASS",
+      "M_AB_xyz": [
+        "2",
+        "0",
+        "2"
+      ],
+      "M_AB_learner_text": "Dựng trung điểm của S và B.",
+      "mp_normal": [
+        "4",
+        "0",
+        "-4"
+      ],
+      "truc_day_in_P_and_beta": true,
+      "I_xyz": [
+        "2",
+        "2",
+        "2"
+      ],
+      "vertex_dist_sq": {
+        "A": "12",
+        "B": "12",
+        "C": "12",
+        "D": "12",
+        "S": "12"
+      },
+      "zero_stale_helper_or_plane_alias_leaks": true
+    },
+    "2_ratio_segment_and_pyramid_sections": {
+      "status": "PASS",
+      "edits": [
+        {
+          "ratio": "1/4",
+          "t_SB_E": "1/2",
+          "t_SD_F": "1/2",
+          "vertices": 5,
+          "coplanar": true,
+          "convex_winding": true,
+          "area_sq_exact": "425/2"
+        },
+        {
+          "ratio": "3/4",
+          "t_SB_E": "9/10",
+          "t_SD_F": "9/10",
+          "vertices": 5,
+          "coplanar": true,
+          "convex_winding": true,
+          "area_sq_exact": "9801/50"
+        },
+        {
+          "ratio": "1/2",
+          "t_SB_E": "3/4",
+          "t_SD_F": "3/4",
+          "vertices": 5,
+          "coplanar": true,
+          "convex_winding": true,
+          "area_sq_exact": "216"
+        }
+      ]
+    },
+    "3_prisms_and_cubes_sections": {
+      "status": "PASS",
+      "cases": {
+        "lang-tru-tam-giac-thiet-dien": {
+          "status": "PASS",
+          "vertices": 5,
+          "coplanar": true,
+          "convex_winding": true,
+          "area_sq_exact": "244"
+        },
+        "lap-phuong-thiet-dien-bat-ky": {
+          "status": "PASS",
+          "vertices": 6,
+          "coplanar": true,
+          "convex_winding": true,
+          "area_sq_exact": "751109/1764"
+        }
+      }
+    },
+    "4_orthogonality_and_skew_common_perpendicular": {
+      "status": "PASS",
+      "u_SC": "2/3",
+      "v_BD": "1/2",
+      "PQ_dot_SC": "0",
+      "PQ_dot_BD": "0",
+      "norm_sq_exact": "8/3"
+    },
+    "5_exact_measurements_and_volumes": {
+      "status": "PASS",
+      "circumscribed_sphere_R_sq": "12",
+      "circumscribed_sphere_V_formula": "32π√3",
+      "pyramid_section_area_sq_exact_series": {
+        "1/4": "425/2",
+        "3/4": "9801/50",
+        "1/2": "216"
+      },
+      "skew_distance_sq_exact": "8/3"
+    },
+    "6_degenerate_and_negative_refusals": {
+      "status": "PASS",
+      "cases": [
+        {
+          "case": "collinear_AOC",
+          "error_code": "COLLINEAR_POINTS",
+          "failed_stage": "kernel"
+        },
+        {
+          "case": "duplicate_points_AA",
+          "error_code": "INVALID_OPERAND",
+          "failed_stage": "parser"
+        },
+        {
+          "case": "undefined_SZ",
+          "error_code": "MISSING_DEPENDENCY",
+          "failed_stage": "planner"
+        },
+        {
+          "case": "ratio_gt_1",
+          "error_code": "INVALID_RATIO",
+          "failed_stage": "parser"
+        },
+        {
+          "case": "circular_M",
+          "error_code": "MISSING_DEPENDENCY",
+          "failed_stage": "planner"
+        },
+        {
+          "case": "unsupported_spiral",
+          "error_code": "UNSUPPORTED_STEP_SYNTAX",
+          "failed_stage": "parser"
+        }
+      ]
+    }
+  },
+  "oracle_generalization_limits": [
+    "Pure-Fraction analytic oracle independently verifies sample-based exact 3D Euclidean geometry, coordinates, coplanarity, winding convexity, polygon area^2, common-perpendicular 2x2 Gram systems, sphere equidistance, and step-edit semantic/learner_text metadata.",
+    "Does NOT execute paid live Gemini NLU extractions (K-1/R-1/S-2 remain gated PENDING_OWNER_DECISION).",
+    "Does NOT cover curved solids (cylinders/cones/spheres generated from scratch) or Model 2 learned step-parser (MODEL_NOT_TRAINED)."
+  ]
+}

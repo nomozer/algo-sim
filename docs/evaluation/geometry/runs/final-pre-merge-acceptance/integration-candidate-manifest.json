@@ -1,0 +1,180 @@
+{
+  "schema_version": "axo-integration-candidate-manifest/1",
+  "generated_at": "2026-11-19T15:12:00+00:00",
+  "worktree": "D:\\Documents\\projects\\algo-sim\\.superpowers\\worktrees\\final-pre-merge-acceptance",
+  "branch": "release/axo-final-pre-merge-acceptance",
+  "evaluated_candidate_commit": "897d70c9f9a3862ef5dcaa45a3f91ffd326e91ed",
+  "final_code_and_test_commit": "892e15f06fc53c623a1392f0766d69c21291436a",
+  "product_commit_sha": "600f5105d4222cd6835cc916b34d5cb3f11610e6",
+  "baseline_main_commit": "bb046fa22aceff47abe22aa783aa64fc65caee13",
+  "source_fingerprint": "eda6ced6c56f0827",
+  "git_ancestry_and_merge_simulation": {
+    "status": "PASS",
+    "is_ancestor": true,
+    "merge_base": "bb046fa22aceff47abe22aa783aa64fc65caee13",
+    "commits_ahead_of_main": 134,
+    "merge_tree_oid": "7d0b96e4c51655af23dbb7ae0b07be4e860c92ff",
+    "head_tree_oid": "7d0b96e4c51655af23dbb7ae0b07be4e860c92ff",
+    "matches_head_tree": true,
+    "isolated_ff_only_exit": 0,
+    "isolated_no_ff_no_commit_exit": 0,
+    "conflict_count": 0,
+    "windows_longpaths_note": "On Windows deep paths, isolated clone simulation required -c core.longpaths=true due to historical screenshot filenames in docs/evaluation/geometry/runs/20260928-cross-family-hidden-line-occlusion-oracle-and-formation-repair/."
+  },
+  "freeze_verification": {
+    "status": "PASS",
+    "command": "python -X utf8 backend/scripts/freeze_evaluation_candidate.py --verify",
+    "exit_code": 0,
+    "measured_system_file_count": 109,
+    "measured_system_tree_hash": "78edfa1784625e9bca8f1a4cd70b60359d198ba77530986903175a57e18206a7",
+    "cache_version": "132",
+    "duration_ms": 82562
+  },
+  "alembic_and_preflight": {
+    "alembic_head": "f8a2c41d9e05",
+    "postgresql_16": {
+      "status": "PASS",
+      "preflight_exit_code": 0,
+      "alembic_check_exit_code": 0,
+      "reason_code": "SAFE_NO_DESTRUCTIVE_OPERATIONS",
+      "user_tables_count": 19,
+      "total_tables_including_alembic_version": 20,
+      "retained_legacy_tables_present": [
+        "assignments",
+        "class_memberships",
+        "classroom_sessions",
+        "classrooms",
+        "practice_sessions"
+      ],
+      "alembic_check_message": "No new upgrade operations detected.",
+      "duration_ms": 522158
+    },
+    "sqlite_clean_temp": {
+      "status": "PASS",
+      "upgrade_exit_code": 0,
+      "preflight_exit_code": 0,
+      "alembic_check_exit_code": 0,
+      "reason_code": "SAFE_NO_DESTRUCTIVE_OPERATIONS",
+      "user_tables_count": 19,
+      "alembic_check_message": "No new upgrade operations detected.",
+      "duration_ms": 697182
+    }
+  },
+  "sequential_test_suites": {
+    "backend_postgres_7_modules": {
+      "status": "PASS",
+      "command": "python -m pytest -v -m postgres --tb=short tests/geometry/test_step_editor_integration_closure.py tests/test_database_safety_closure.py tests/test_owner_scope_resolution.py tests/test_postgres_axo_history_migration.py tests/test_postgres_integration.py tests/test_pre_merge_release_acceptance.py tests/test_pre_merge_risk_closure.py",
+      "exit_code": 0,
+      "passed": 8,
+      "failed": 0,
+      "skipped": 0,
+      "deselected": 33,
+      "xfailed": 0,
+      "warnings": 1,
+      "duration_s": 105.63,
+      "deselected_impact": "Non-postgres tests within those 7 modules were deselected by -m postgres and executed in the non-postgres backend runs below.",
+      "full_tree_memory_note": "An earlier full-tree `pytest -q -m postgres` invocation collecting all 14,029 backend tests before spawning child PG16 clusters hit exit 3 with Windows host commit-charge MemoryError inside pytest _code ast.parse after 2 passed, 1 failed, 14,026 deselected; running all 7 @pytest.mark.postgres modules directly in a clean sequential process passed 8/8."
+    },
+    "backend_geometry": {
+      "status": "PASS",
+      "command": "python -m pytest -q tests/geometry -rsx --tb=short",
+      "exit_code": 0,
+      "passed": 12000,
+      "failed": 0,
+      "skipped": 6,
+      "deselected": 3,
+      "xfailed": 9,
+      "warnings": 1,
+      "duration_s": 409.78,
+      "duration_ms": 412390,
+      "rsx_classification": {
+        "skipped": [
+          "tests/geometry/test_unified_solid_scope.py:186 [6 cases] - A3-DEV-02 (2), A3-DEV-09 (2), demo1-pyramid-derived-section (2) have no residual_volume goal"
+        ],
+        "deselected": "3 postgres-marked tests deselected by default marker config in pytest.ini; verified via pytest -v -m postgres.",
+        "xfailed": [
+          "tests/geometry/test_generalized_goal_entry.py::test_length_goal_refusal[unread-second-ask]",
+          "tests/geometry/test_generalized_goal_entry.py::test_length_goal_refusal[contradictory-length]",
+          "tests/geometry/test_hybrid_compiler_benchmark.py::test_case_outcome[B27-facts]",
+          "tests/geometry/test_hybrid_compiler_benchmark.py::test_case_outcome[B27-pipeline]",
+          "tests/geometry/test_hybrid_compiler_benchmark.py::test_case_outcome[B28-facts]",
+          "tests/geometry/test_hybrid_compiler_benchmark.py::test_case_outcome[B28-pipeline]",
+          "tests/geometry/test_hybrid_simulation_capability_probes.py::test_centre_label_exhaustion_is_a_coded_outcome",
+          "tests/geometry/test_premise_source_coverage.py::test_goal_fact_quote_does_not_cover_a_hypothesis[...]",
+          "tests/geometry/test_source_grounding_reliability.py::test_targeted_case_meets_its_preregistered_label[E05-unsupported-second-quantity]"
+        ]
+      }
+    },
+    "backend_semantic_program": {
+      "status": "PASS",
+      "command": "python -m pytest -q tests/semantic_program -rsx --tb=short",
+      "exit_code": 0,
+      "passed": 1192,
+      "failed": 0,
+      "skipped": 1,
+      "deselected": 0,
+      "xfailed": 0,
+      "duration_s": 39.14,
+      "duration_ms": 40641,
+      "rsx_classification": {
+        "skipped": [
+          "tests/semantic_program/test_scalar_obligations.py:95 - missing term defaults to identity (dedicated test exists)"
+        ]
+      }
+    },
+    "backend_root_non_postgres": {
+      "status": "PASS",
+      "command": "python -m pytest -q <52 files in tests/test_*.py> -k \"not postgres\" -rsx --tb=short",
+      "files_count": 52,
+      "exit_code": 0,
+      "passed": 815,
+      "failed": 0,
+      "skipped": 0,
+      "deselected": 8,
+      "xfailed": 0,
+      "warnings": 1,
+      "duration_s": 220.0,
+      "duration_ms": 221629,
+      "rsx_classification": {
+        "deselected": "8 postgres-named tests deselected by `-k \"not postgres\"`; PG16 integration covered by backend_postgres_7_modules."
+      }
+    },
+    "frontend_typecheck_tsc": {
+      "status": "PASS",
+      "command": "npx tsc -b",
+      "exit_code": 0,
+      "duration_ms": 6607
+    },
+    "frontend_production_build": {
+      "status": "PASS",
+      "command": "npm run build",
+      "exit_code": 0,
+      "modules_transformed": 129,
+      "vite_build_s": 9.13,
+      "total_duration_ms": 16447
+    },
+    "frontend_vitest_full_max_workers_1": {
+      "status": "PASS",
+      "command": "npx vitest run --maxWorkers=1",
+      "exit_code": 0,
+      "files_passed": 193,
+      "files_total": 193,
+      "tests_passed": 2278,
+      "tests_failed": 0,
+      "duration_s": 220.59,
+      "duration_ms": 222390,
+      "unthrottled_max_workers_2_observation": "With default vite.config.ts maxWorkers=2 on busy 16 GiB host, 192/193 files (2277/2278 tests) passed twice; axo-pedagogical-presentation-hardening.test.tsx:425 hit 5000ms default per-test timeout (5117ms) because GEOMETRY_SAMPLES expanded from 11 to 22 samples without a per-test timeout override. Isolated run passed 8/8 in 4422ms; full suite with --maxWorkers=1 passed 193/193 (2278/2278, line 425 in 3011ms) with zero code or assertion changes."
+    },
+    "docs_information_architecture_audit": {
+      "status": "PASS",
+      "command": "python -X utf8 backend/scripts/audit_docs_information_architecture.py",
+      "exit_code": 0,
+      "root_docs": 29,
+      "catalogued": 167,
+      "unclassified": 0,
+      "broken_links": 0,
+      "stale_paths": 0,
+      "secret_leaks": 0
+    }
+  }
+}

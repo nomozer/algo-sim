@@ -1,0 +1,194 @@
+{
+  "baseUrl": "http://localhost:3001",
+  "backendUrl": "http://localhost:8000",
+  "startedAt": "2026-11-18T13:14:44.287Z",
+  "routes": {
+    "/": {
+      "status": 200,
+      "title": "Axo — Mô phỏng tương tác",
+      "textLen": 1907,
+      "overflowX": 0,
+      "hasNavOrLanding": true
+    },
+    "/gioi-thieu": {
+      "status": 200,
+      "title": "Giới thiệu Axo | Axo",
+      "textLen": 1907,
+      "overflowX": 0,
+      "hasNavOrLanding": true
+    },
+    "/gioi-thieu?preview=v1.4": {
+      "status": 200,
+      "title": "Giới thiệu Axo | Axo",
+      "textLen": 1591,
+      "overflowX": 0,
+      "hasNavOrLanding": true
+    },
+    "/app": {
+      "status": 200,
+      "title": "Axo — Mô phỏng tương tác",
+      "textLen": 340,
+      "overflowX": 0,
+      "hasNavOrLanding": true
+    }
+  },
+  "viewports": [
+    {
+      "width": 1920,
+      "height": 1080,
+      "overflowX": 0,
+      "canvasVisible": true,
+      "dockVisible": true,
+      "runClipped": false,
+      "cancelClipped": false,
+      "textareaClipped": false,
+      "scrollHostIndependent": true
+    },
+    {
+      "width": 1440,
+      "height": 900,
+      "overflowX": 0,
+      "canvasVisible": true,
+      "dockVisible": true,
+      "runClipped": false,
+      "cancelClipped": false,
+      "textareaClipped": false,
+      "scrollHostIndependent": true
+    },
+    {
+      "width": 1366,
+      "height": 768,
+      "overflowX": 0,
+      "canvasVisible": true,
+      "dockVisible": true,
+      "runClipped": false,
+      "cancelClipped": false,
+      "textareaClipped": false,
+      "scrollHostIndependent": true
+    },
+    {
+      "width": 1024,
+      "height": 768,
+      "overflowX": 0,
+      "canvasVisible": true,
+      "dockVisible": true,
+      "runClipped": false,
+      "cancelClipped": false,
+      "textareaClipped": false,
+      "scrollHostIndependent": true
+    },
+    {
+      "width": 768,
+      "height": 1024,
+      "overflowX": 0,
+      "canvasVisible": true,
+      "dockVisible": true,
+      "runClipped": false,
+      "cancelClipped": false,
+      "textareaClipped": false,
+      "scrollHostIndependent": true
+    },
+    {
+      "width": 390,
+      "height": 844,
+      "overflowX": 0,
+      "canvasVisible": true,
+      "dockVisible": true,
+      "runClipped": false,
+      "cancelClipped": false,
+      "textareaClipped": false,
+      "scrollHostIndependent": true
+    },
+    {
+      "width": 360,
+      "height": 800,
+      "overflowX": 0,
+      "canvasVisible": true,
+      "dockVisible": true,
+      "runClipped": false,
+      "cancelClipped": false,
+      "textareaClipped": false,
+      "scrollHostIndependent": true
+    },
+    {
+      "width": 320,
+      "height": 568,
+      "overflowX": 0,
+      "canvasVisible": true,
+      "dockVisible": true,
+      "runClipped": false,
+      "cancelClipped": false,
+      "textareaClipped": false,
+      "scrollHostIndependent": true
+    }
+  ],
+  "states": {
+    "beforeHover": {
+      "alphaRowIdx": 7,
+      "defaultHeight": 56.875,
+      "hoverHeight": 56.875,
+      "heightDeltaPx": 0,
+      "defaultBtnOpacity": "0",
+      "hoverBtnOpacity": "1"
+    },
+    "validCommit": {
+      "postsTriggeredBySingleClick": 1,
+      "commitUiMs": 968.64,
+      "rowTextAfter": "8\nDựng mặt phẳng (α) đi qua tâm O của hình vuông ABCD và vuông góc với AB.\nHình phụMặt phẳng đi qua điểm O và vuông góc với đường thẳng AB",
+      "paTitleAfter": "Dựng mặt phẳng (α) đi qua tâm O của hình vuông ABCD và vuông góc với AB."
+    },
+    "rejected422": {
+      "errorBanner": "Không thể dựng mặt phẳng trung trực vì chưa xác định được điểm Z.",
+      "draftPreserved": true,
+      "rowPreservedCommittedTitle": true
+    }
+  },
+  "prismPrimeCheck": {
+    "pRowIdx": 5,
+    "hasUnicodePrime": true,
+    "hasRawUnderscorePrime": false
+  },
+  "keyboardAndFocus": {
+    "openMs": 32.51,
+    "editorButtons": [
+      "Hủy",
+      "Chạy"
+    ],
+    "activeTitleBeforeKeys": "Nối bán kính IA của mặt cầu",
+    "activeTitleAfterArrows": "Nối bán kính IA của mặt cầu",
+    "closedOnEscape": true
+  },
+  "touchMode": {
+    "opacityBeforeTap": "0",
+    "opacityAfterRowSelect": "1",
+    "pencilVisibleOnActiveRow": false,
+    "editorOpenedViaTap": true
+  },
+  "reducedMotion": {
+    "prefersReducedMotionMatched": true,
+    "committedCleanly": true
+  },
+  "cancelAbort": {
+    "editorClosedImmediatelyOnCancel": true
+  },
+  "disconnectRecovery": {
+    "offlineErrorShown": "Không thể kết nối tới máy chủ dựng hình cục bộ. Nội dung bạn vừa gõ vẫn được giữ lại.",
+    "draftPreserved": true,
+    "recoveredAfterReconnect": true
+  },
+  "sequential20EditsGpuAndMemory": {
+    "edits": 20,
+    "canvasCountFinal": 1,
+    "meanUiRoundTripMs": 353.36,
+    "p95UiRoundTripMs": 485.56,
+    "maxUiRoundTripMs": 669.82,
+    "heapStartMb": 77.63,
+    "heapEndMb": 77.63
+  },
+  "consoleErrors": [
+    "Failed to load resource: the server responded with a status of 422 (Unprocessable Entity)"
+  ],
+  "pageErrors": [],
+  "failedNetworkRequests": [],
+  "videoPath": "C:\\Users\\Bunny\\.gemini\\antigravity\\brain\\66179be9-dccc-4012-bfc0-e6da9b37191c\\step-editor-independent-qa\\page@431758cc2177a5cc7a4346321f0c97cb.webm"
+}

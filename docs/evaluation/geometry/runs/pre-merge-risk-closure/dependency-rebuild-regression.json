@@ -1,0 +1,512 @@
+{
+  "commit": "014a2fd24160b25039f589f5adaf3b762ba985f8",
+  "measured_at": "2026-11-19T09:29:52.156316+00:00",
+  "total_scenarios": 9,
+  "all_passed": true,
+  "scenarios": [
+    {
+      "step": "1_s11_ab_to_sb_and_alpha_to_P",
+      "status": "committed",
+      "before_digest": "45a73e1a57dc8c36",
+      "after_digest": "fb7c6b2f5fd5e197",
+      "dependency_summary": {
+        "edited_target_ids": [
+          "mp_tt_AB"
+        ],
+        "created_ids": [
+          "line_S_B"
+        ],
+        "reused_ids": [
+          "M_AB"
+        ],
+        "retired_ids": [],
+        "recomputed_ids": [
+          "truc_day",
+          "I",
+          "doan_OI",
+          "doan_MI",
+          "doan_IS",
+          "doan_IA",
+          "cau_ngoai_tiep",
+          "R",
+          "V_cau"
+        ],
+        "skipped_unaffected_ids": [
+          "A",
+          "B",
+          "C",
+          "D",
+          "S",
+          "ab",
+          "O",
+          "day",
+          "doan_AC",
+          "M_AD",
+          "ad",
+          "day_ABCD",
+          "M",
+          "chop",
+          "sa",
+          "chieu_cao_SA",
+          "canh_ben_S_B",
+          "canh_ben_S_C",
+          "canh_ben_S_D",
+          "mp_tt_AD",
+          "mp_tt_SA"
+        ],
+        "cycle_detected": false
+      },
+      "invariants": {
+        "missing_deps": [],
+        "missing_ev_objs": [],
+        "missing_ev_deps": [],
+        "orphans": [],
+        "continuity_issues": [],
+        "clean": true
+      },
+      "oracle_verified": true,
+      "M_AB_xyz": [
+        "2",
+        "0",
+        "2"
+      ],
+      "I_xyz": [
+        "2",
+        "2",
+        "2"
+      ]
+    },
+    {
+      "step": "2_s11_direct_sb_to_ad_while_beta_on_ad_422",
+      "status": "rolled_back",
+      "error_code": "CONTAINED_INFINITE_INTERSECTION",
+      "failed_stage": "kernel",
+      "oracle_verified": true
+    },
+    {
+      "step": "3_s11_retarget_beta_ad_to_sc",
+      "status": "committed",
+      "before_digest": "fb7c6b2f5fd5e197",
+      "after_digest": "c727ae94c6d5de09",
+      "dependency_summary": {
+        "edited_target_ids": [
+          "mp_tt_AD"
+        ],
+        "created_ids": [
+          "line_S_C"
+        ],
+        "reused_ids": [
+          "M_AD"
+        ],
+        "retired_ids": [],
+        "recomputed_ids": [
+          "truc_day",
+          "I",
+          "doan_OI",
+          "doan_MI",
+          "doan_IS",
+          "doan_IA",
+          "cau_ngoai_tiep",
+          "R",
+          "V_cau"
+        ],
+        "skipped_unaffected_ids": [
+          "A",
+          "B",
+          "C",
+          "D",
+          "S",
+          "ab",
+          "O",
+          "day",
+          "doan_AC",
+          "ad",
+          "day_ABCD",
+          "M",
+          "M_AB",
+          "chop",
+          "sa",
+          "line_S_B",
+          "chieu_cao_SA",
+          "canh_ben_S_B",
+          "canh_ben_S_C",
+          "canh_ben_S_D",
+          "mp_tt_SA",
+          "mp_tt_AB"
+        ],
+        "cycle_detected": false
+      },
+      "invariants": {
+        "missing_deps": [],
+        "missing_ev_objs": [],
+        "missing_ev_deps": [],
+        "orphans": [],
+        "continuity_issues": [],
+        "clean": true
+      },
+      "oracle_verified": true,
+      "M_AD_xyz": [
+        "2",
+        "2",
+        "2"
+      ]
+    },
+    {
+      "step": "4_s11_sb_to_ad",
+      "status": "committed",
+      "before_digest": "c727ae94c6d5de09",
+      "after_digest": "4fab7bef5459b5b4",
+      "dependency_summary": {
+        "edited_target_ids": [
+          "mp_tt_AB"
+        ],
+        "created_ids": [],
+        "reused_ids": [
+          "M_AB"
+        ],
+        "retired_ids": [
+          "line_S_B"
+        ],
+        "recomputed_ids": [
+          "truc_day",
+          "I",
+          "doan_OI",
+          "doan_MI",
+          "doan_IS",
+          "doan_IA",
+          "cau_ngoai_tiep",
+          "R",
+          "V_cau"
+        ],
+        "skipped_unaffected_ids": [
+          "A",
+          "B",
+          "C",
+          "D",
+          "S",
+          "ab",
+          "O",
+          "day",
+          "doan_AC",
+          "ad",
+          "day_ABCD",
+          "M",
+          "M_AD",
+          "chop",
+          "sa",
+          "line_S_C",
+          "chieu_cao_SA",
+          "canh_ben_S_B",
+          "canh_ben_S_C",
+          "canh_ben_S_D",
+          "mp_tt_SA",
+          "mp_tt_AD"
+        ],
+        "cycle_detected": false
+      },
+      "invariants": {
+        "missing_deps": [],
+        "missing_ev_objs": [],
+        "missing_ev_deps": [],
+        "orphans": [],
+        "continuity_issues": [],
+        "clean": true
+      },
+      "oracle_verified": true,
+      "M_AB_xyz": [
+        "0",
+        "2",
+        "0"
+      ],
+      "line_S_B_retired": true
+    },
+    {
+      "step": "5_s11_ad_to_ab_and_P_to_alpha",
+      "status": "committed",
+      "before_digest": "4fab7bef5459b5b4",
+      "after_digest": "3a7d66a219a406be",
+      "dependency_summary": {
+        "edited_target_ids": [
+          "mp_tt_AB"
+        ],
+        "created_ids": [],
+        "reused_ids": [
+          "M_AB"
+        ],
+        "retired_ids": [],
+        "recomputed_ids": [
+          "truc_day",
+          "I",
+          "doan_OI",
+          "doan_MI",
+          "doan_IS",
+          "doan_IA",
+          "cau_ngoai_tiep",
+          "R",
+          "V_cau"
+        ],
+        "skipped_unaffected_ids": [
+          "A",
+          "B",
+          "C",
+          "D",
+          "S",
+          "ab",
+          "O",
+          "day",
+          "doan_AC",
+          "ad",
+          "day_ABCD",
+          "M",
+          "M_AD",
+          "chop",
+          "sa",
+          "line_S_C",
+          "chieu_cao_SA",
+          "canh_ben_S_B",
+          "canh_ben_S_C",
+          "canh_ben_S_D",
+          "mp_tt_SA",
+          "mp_tt_AD"
+        ],
+        "cycle_detected": false
+      },
+      "invariants": {
+        "missing_deps": [],
+        "missing_ev_objs": [],
+        "missing_ev_deps": [],
+        "orphans": [],
+        "continuity_issues": [],
+        "clean": true
+      },
+      "oracle_verified": true,
+      "M_AB_xyz": [
+        "2",
+        "0",
+        "0"
+      ],
+      "notation": "(α)"
+    },
+    {
+      "step": "6a_s11_repeated_compound_K_on_SB",
+      "status": "committed",
+      "before_digest": "3a7d66a219a406be",
+      "after_digest": "5bf241012d984a60",
+      "dependency_summary": {
+        "edited_target_ids": [
+          "mp_tt_AB"
+        ],
+        "created_ids": [
+          "K",
+          "line_S_B"
+        ],
+        "reused_ids": [],
+        "retired_ids": [
+          "M_AB"
+        ],
+        "recomputed_ids": [
+          "truc_day",
+          "I",
+          "doan_OI",
+          "doan_MI",
+          "doan_IS",
+          "doan_IA",
+          "cau_ngoai_tiep",
+          "R",
+          "V_cau"
+        ],
+        "skipped_unaffected_ids": [
+          "A",
+          "B",
+          "C",
+          "D",
+          "S",
+          "ab",
+          "O",
+          "day",
+          "doan_AC",
+          "ad",
+          "day_ABCD",
+          "M",
+          "M_AD",
+          "chop",
+          "sa",
+          "line_S_C",
+          "chieu_cao_SA",
+          "canh_ben_S_B",
+          "canh_ben_S_C",
+          "canh_ben_S_D",
+          "mp_tt_SA",
+          "mp_tt_AD"
+        ],
+        "cycle_detected": false
+      },
+      "invariants": {
+        "missing_deps": [],
+        "missing_ev_objs": [],
+        "missing_ev_deps": [],
+        "orphans": [],
+        "continuity_issues": [],
+        "clean": true
+      },
+      "oracle_verified": true
+    },
+    {
+      "step": "6b_s11_compound_back_to_bisector_AD",
+      "status": "committed",
+      "before_digest": "5bf241012d984a60",
+      "after_digest": "ae7af718ce3f7ad0",
+      "dependency_summary": {
+        "edited_target_ids": [
+          "mp_tt_AB"
+        ],
+        "created_ids": [
+          "mid_A_D"
+        ],
+        "reused_ids": [],
+        "retired_ids": [
+          "K",
+          "line_S_B"
+        ],
+        "recomputed_ids": [
+          "truc_day",
+          "I",
+          "doan_OI",
+          "doan_MI",
+          "doan_IS",
+          "doan_IA",
+          "cau_ngoai_tiep",
+          "R",
+          "V_cau"
+        ],
+        "skipped_unaffected_ids": [
+          "A",
+          "B",
+          "C",
+          "D",
+          "S",
+          "ab",
+          "O",
+          "day",
+          "doan_AC",
+          "ad",
+          "day_ABCD",
+          "M",
+          "M_AD",
+          "chop",
+          "sa",
+          "line_S_C",
+          "chieu_cao_SA",
+          "canh_ben_S_B",
+          "canh_ben_S_C",
+          "canh_ben_S_D",
+          "mp_tt_SA",
+          "mp_tt_AD"
+        ],
+        "cycle_detected": false
+      },
+      "invariants": {
+        "missing_deps": [],
+        "missing_ev_objs": [],
+        "missing_ev_deps": [],
+        "orphans": [],
+        "continuity_issues": [],
+        "clean": true
+      },
+      "oracle_verified": true
+    },
+    {
+      "step": "7_s1_upstream_ratio_cascade_M_1_4",
+      "status": "committed",
+      "before_digest": "89962f55cd1802c2",
+      "after_digest": "dd822b9fa81460de",
+      "dependency_summary": {
+        "edited_target_ids": [
+          "M"
+        ],
+        "created_ids": [],
+        "reused_ids": [],
+        "retired_ids": [],
+        "recomputed_ids": [
+          "mp_MNP",
+          "E",
+          "F",
+          "thiet_dien",
+          "S_td",
+          "V_chop"
+        ],
+        "skipped_unaffected_ids": [
+          "A",
+          "B",
+          "C",
+          "D",
+          "S",
+          "O",
+          "N",
+          "day",
+          "P",
+          "day_ABCD",
+          "chop",
+          "sb",
+          "sd",
+          "chieu_cao_SA",
+          "canh_ben_S_B",
+          "canh_ben_S_C",
+          "canh_ben_S_D"
+        ],
+        "cycle_detected": false
+      },
+      "invariants": {
+        "missing_deps": [],
+        "missing_ev_objs": [],
+        "missing_ev_deps": [],
+        "orphans": [],
+        "continuity_issues": [],
+        "clean": true
+      },
+      "oracle_verified": true,
+      "M_xyz": [
+        "0",
+        "0",
+        "9/2"
+      ],
+      "recomputed_count": 6
+    },
+    {
+      "step": "8_http_422_and_409_guards",
+      "status_codes": {
+        "invalid_syntax_422": 422,
+        "valid_commit": 200,
+        "stale_version_409": 409,
+        "ooo_seq_409": 409
+      },
+      "error_codes": {
+        "invalid_422": "UNSUPPORTED_STEP_SYNTAX",
+        "stale_409": "STALE_REVISION_CONFLICT",
+        "ooo_409": "EDIT_SUPERSEDED"
+      },
+      "oracle_verified": true
+    }
+  ],
+  "live_pg16_browser_persistence_note": "See browser-responsive-results.json for live reload, new-tab, and backend-restart state continuity on algosim_risk_closure_staging.",
+  "verified_seal_commit": "dbfbcf31256b60f076d8ff4464aac9223a213f09",
+  "product_commit_sha": "600f5105d4222cd6835cc916b34d5cb3f11610e6",
+  "measured_system_tree_hash": "78edfa1784625e9bca8f1a4cd70b60359d198ba77530986903175a57e18206a7",
+  "root_cause_fixes": [
+    {
+      "issue_id": "ISSUE-ALEMBIC-STAMP-AND-DRIFT-PREFLIGHT-GAP",
+      "commit": "014a2fd24160b25039f589f5adaf3b762ba985f8",
+      "summary": "Enforce stamp parity, unexpected rogue table drift, and atomic 0-or-5 legacy Classroom retention check in migration_preflight.py and env.py."
+    },
+    {
+      "issue_id": "ISSUE-FE-UNORBITED-CAMERA-JUMP-ON-STEP-EDIT-COMMIT",
+      "commit": "3f3afb25b84bf845267fbda6f6e6c128c6ee502b",
+      "summary": "Preserve live unorbited camera pose and lens viewOffset across same-scene step-edit rebuilds in scene3d-view.tsx and SimulationWorkspace.tsx."
+    },
+    {
+      "issue_id": "ISSUE-SE-CROSS-CONTEXT-CLIENT-SEQ-DESYNC",
+      "commit": "600f5105d4222cd6835cc916b34d5cb3f11610e6",
+      "summary": "Expose persisted latest_client_seq on GET /sessions/{id}/state and 409 EDIT_SUPERSEDED, sync frontend submit seq watermark across fresh contexts, and surface server-side 409 conflicts cleanly."
+    }
+  ]
+}

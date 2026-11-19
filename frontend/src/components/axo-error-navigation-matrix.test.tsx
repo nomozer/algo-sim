@@ -87,8 +87,9 @@ describe("AXO Master §9: Error State Design Quality, Strict Classification & 10
         secondaryRetryLabel="Khôi phục khung 3D"
       />,
     );
-    expect(htmlWebglWithRetry).toContain('data-error-action="secondary-retry"');
-    expect(htmlWebglWithRetry).toContain("Khôi phục khung 3D");
+    expect(htmlWebglWithRetry).not.toContain('data-error-action="secondary-retry"');
+    expect(htmlWebglWithRetry).not.toContain("Khôi phục khung 3D");
+    expect(htmlWebglWithRetry).not.toContain('class="axo-error-actions"');
     expect(htmlWebglWithRetry).not.toMatch(/\b404\b/u);
   });
 
@@ -167,13 +168,19 @@ describe("AXO Master §9: Error State Design Quality, Strict Classification & 10
     expect(useAppStore.getState().active).not.toBeNull();
 
     // Case 9: Return from error -> hit a second error -> escape again without getting stuck in error loop
+    // (openHistory() consolidates cleanly to safe landing view "home", while openLibrary() lands on "library")
     useAppStore.getState().openHistory();
     useAppStore.getState().syncLocationRoute("/loi-lan-1");
     expect(useAppStore.getState().view).toBe("not_found");
-    expect(useAppStore.getState().escapeFromError()).toBe("history");
+    expect(useAppStore.getState().escapeFromError()).toBe("home");
     useAppStore.getState().syncLocationRoute("/loi-lan-2");
     expect(useAppStore.getState().view).toBe("not_found");
-    expect(useAppStore.getState().escapeFromError()).toBe("history");
+    expect(useAppStore.getState().escapeFromError()).toBe("home");
+
+    useAppStore.getState().openLibrary();
+    useAppStore.getState().syncLocationRoute("/loi-library");
+    expect(useAppStore.getState().view).toBe("not_found");
+    expect(useAppStore.getState().escapeFromError()).toBe("library");
   });
 
   it("6. URL navigation to a corrupted history item (`scene3d` invalid) surfaces `unsupported_simulation` (never 404, never silent Home drop) and escapes cleanly", () => {
@@ -211,7 +218,7 @@ describe("AXO Master §9: Error State Design Quality, Strict Classification & 10
     const html = renderToString(<App />);
     expect(html).toContain('data-error-kind="unsupported_simulation"');
     expect(html).not.toContain('data-error-kind="not_found"');
-    expect(useAppStore.getState().escapeFromError()).toBe("history");
+    expect(useAppStore.getState().escapeFromError()).toBe("home");
     historyStore.clear();
   });
 

@@ -1441,13 +1441,16 @@ describe("AXO Mathematical & Pedagogical Reliability Gate", () => {
           await page.clock.fastForward(6000);
           expect(await page.evaluate(() => (window as any).__state.postUnmountFailureCalls)).toBe(0);
 
-          // 5) Renderer constructor exception -> localized fallback in #stage-3d-box, #ws-dock stays intact, NOT 404
+          // 5) Renderer constructor exception -> recovering then bounded auto-retry cap -> localized failed fallback in #stage-3d-box, #ws-dock stays intact, NOT 404
           await page.evaluate(() => {
             const w = window as any;
             w.__resetRoot();
             w.__setRendererMode("throw");
             w.__mountFullWorkspace();
           });
+          for (let tick = 0; tick < 4; tick += 1) {
+            await page.clock.fastForward(250);
+          }
           const afterThrow = await page.evaluate(() => ({
             hasDock: Boolean(document.getElementById("ws-dock")),
             hasSteps: Boolean(document.getElementById("dock-steps-ul")),

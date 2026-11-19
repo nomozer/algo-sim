@@ -8,9 +8,12 @@ import {
   type LibraryCategory,
 } from "../data/offline-catalog";
 import type { Domain } from "../simulations/types";
-import { useAppStore } from "../state/store";
+import { resolveEffectiveWorkspaceTabs, useAppStore } from "../state/store";
+import { findMatchingOpenSimulationTab } from "../state/workspace-tab-identity";
 import { SamplePreview } from "./SamplePreview";
 import { stepCountOfEnvelope } from "./SessionCard";
+import { WorkspaceTabBar } from "./WorkspaceTabBar";
+import { GeometryFamilyIcon, normalizeGeometryFamily } from "./geometry2d";
 
 /**
  * Thư viện mô phỏng Axo V2.7 (Phase B — Full UI Replacement, P5).
@@ -27,6 +30,17 @@ import { stepCountOfEnvelope } from "./SessionCard";
 export const GROUP_ORDER: Domain[] = ["geometry"];
 
 const PROBLEM_CATALOG_ORDER: readonly string[] = [
+  "chop-thiet-dien-ba-diem",
+  "lap-phuong-thiet-dien-bat-ky",
+  "khoang-cach-diem-mat-phang-nghieng",
+  "goc-nhi-dien-hai-mat-phang",
+  "khoang-cach-hai-duong-cheo-nhau",
+  "lang-tru-tam-giac-thiet-dien",
+  "mat-cau-cat-mat-phang",
+  "oxyz-giao-diem-duong-mat",
+  "mat-phang-tiep-xuc-mat-cau",
+  "hinh-non-cat-song-song-day",
+  "chop-mat-cau-ngoai-tiep",
   "thiet-dien-chop",
   "cau-cat-mat-phang",
   "tru-thiet-dien-tron",
@@ -41,8 +55,8 @@ const PROBLEM_CATALOG_ORDER: readonly string[] = [
 ];
 
 export function LibraryView({
-  initialSearch = "",
-  initialCategory = "all",
+  initialSearch,
+  initialCategory,
   initialCategoryMenuOpen = false,
 }: {
   initialSearch?: string;
@@ -50,10 +64,86 @@ export function LibraryView({
   initialCategoryMenuOpen?: boolean;
 } = {}) {
   const loadEnvelope = useAppStore((s) => s.loadEnvelope);
-  const [query, setQuery] = useState(initialSearch);
-  const [activeCat, setActiveCat] = useState<LibraryCategory>(initialCategory);
+  const activateWorkspaceTab = useAppStore((s) => s.activateWorkspaceTab);
+  const libraryTabOpen = useAppStore((s) => s.libraryTabOpen);
+  const libraryUiState = useAppStore((s) => s.libraryUiState);
+  const setLibraryUiState = useAppStore((s) => s.setLibraryUiState);
+  const [query, setQueryState] = useState<string>(
+    initialSearch !== undefined ? initialSearch : libraryUiState.search,
+  );
+  const [activeCat, setActiveCatState] = useState<LibraryCategory>(
+    initialCategory !== undefined
+      ? initialCategory
+      : ((libraryUiState.category || "all") as LibraryCategory),
+  );
   const [menuOpen, setMenuOpen] = useState(initialCategoryMenuOpen);
   const dropdownWrapRef = useRef<HTMLDivElement>(null);
+  const containerRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    if (initialSearch === undefined && query !== libraryUiState.search) {
+      setQueryState(libraryUiState.search);
+    }
+  }, [initialSearch, libraryUiState.search]);
+
+  useEffect(() => {
+    if (initialCategory === undefined) {
+      const nextCat = (libraryUiState.category || "all") as LibraryCategory;
+      if (activeCat !== nextCat) {
+        setActiveCatState(nextCat);
+      }
+    }
+  }, [initialCategory, libraryUiState.category]);
+
+  useEffect(() => {
+    const el = containerRef.current;
+    if (!el || typeof window === "undefined") return;
+    const savedTop = useAppStore.getState().libraryUiState.scrollTop;
+    const scrollParent = el.closest(".app-single") as HTMLElement | null;
+    if (savedTop > 0) {
+      el.scrollTop = savedTop;
+      if (scrollParent) {
+        scrollParent.scrollTop = savedTop;
+      }
+      if (
+        el.scrollHeight <= el.clientHeight &&
+        document.documentElement.scrollHeight > window.innerHeight
+      ) {
+        try {
+          window.scrollTo(0, savedTop);
+        } catch {
+          /* bỏ qua trong jsdom nếu scrollTo chưa được cài */
+        }
+      }
+    }
+
+    const onParentScroll = () => {
+      if (scrollParent && scrollParent.scrollTop !== useAppStore.getState().libraryUiState.scrollTop) {
+        setLibraryUiState({ scrollTop: scrollParent.scrollTop });
+      }
+    };
+    const onWindowScroll = () => {
+      if (el.scrollHeight <= el.clientHeight) {
+        setLibraryUiState({ scrollTop: window.scrollY || document.documentElement.scrollTop || 0 });
+      }
+    };
+    scrollParent?.addEventListener("scroll", onParentScroll, { passive: true });
+    window.addEventListener("scroll", onWindowScroll, { passive: true });
+    return () => {
+      scrollParent?.removeEventListener("scroll", onParentScroll);
+      window.removeEventListener("scroll", onWindowScroll);
+    };
+  }, [setLibraryUiState]);
+
+  const setQuery = (next: string) => {
+    setQueryState(next);
+    setLibraryUiState({ search: next });
+  };
+
+  const setActiveCat = (next: LibraryCategory) => {
+    setActiveCatState(next);
+    setLibraryUiState({ category: next });
+  };
 
   const entries = useMemo(() => {
     const raw = publicCatalog();
@@ -110,20 +200,42 @@ export function LibraryView({
   });
 
   const activeCatName = activeCat === "all" ? "Tất cả" : activeCat;
-  const activeCatCount = countForCategory(activeCat);
 
   const openSample = (entry: CatalogEntry) => {
+    const state = useAppStore.getState();
+    const { tabs: effectiveTabs } = resolveEffectiveWorkspaceTabs({
+      workspaceTabs: state.workspaceTabs,
+      activeTabId: state.activeTabId,
+      active: state.active,
+      activeSampleId: state.activeSampleId,
+      activeHistoryId: state.activeHistoryId,
+    });
+    const existingTab = findMatchingOpenSimulationTab(effectiveTabs, {
+      tabId: `tab-sample-${entry.id}`,
+      sampleId: entry.id,
+      title: entry.title,
+      problemStatement: problemTextForSample(entry.id) || entry.envelope.problem_statement || null,
+      envelope: entry.envelope,
+    });
+    if (existingTab) {
+      activateWorkspaceTab(existingTab.id);
+      return;
+    }
     loadEnvelope(entry.envelope, entry.id);
   };
 
   return (
-    <div className="page-container" id="view-library">
+    <>
+      {libraryTabOpen ? <WorkspaceTabBar /> : null}
+      <div
+        ref={containerRef}
+        className="page-container"
+        id="view-library"
+        onScroll={(e) => setLibraryUiState({ scrollTop: e.currentTarget.scrollTop })}
+      >
       <div className="page-head-block">
         <div className="page-head-row">
           <h1 className="page-main-title">Thư viện mô phỏng</h1>
-          <span className="page-sub-desc" id="library-count-readout">
-            {`Hiển thị ${filtered.length} / ${entries.length} bài mô phỏng`}
-          </span>
         </div>
         <p className="page-sub-desc">
           Khám phá các bài toán hình học không gian qua mô hình 3D tương tác và từng bước dựng hình.
@@ -147,7 +259,7 @@ export function LibraryView({
             type="search"
             id="library-search-input"
             className="lib-search-input"
-            placeholder="Tìm theo tên bài, hình chóp, mặt cầu, hình trụ, hình nón, thiết diện..."
+            placeholder="Tìm bài mô phỏng..."
             aria-label="Tìm kiếm bài mô phỏng"
             value={query}
             onChange={(e) => setQuery(e.target.value)}
@@ -179,17 +291,18 @@ export function LibraryView({
             onClick={() => setMenuOpen((v) => !v)}
           >
             <span className="btn-lib-cat-left lib-cat-btn-label" id="library-category-btn-label">
-              <svg viewBox="0 0 24 24" aria-hidden="true">
-                <polygon points="12 2 2 7 12 12 22 7 12 2" />
-                <polyline points="2 17 12 22 22 17" />
-                <polyline points="2 12 12 17 22 12" />
-              </svg>
-              <span>
-                <span className="btn-lib-cat-prefix">Loại hình học:</span>{" "}
-                <strong id="library-category-selected-label">
-                  {`${activeCatName} (${activeCatCount})`}
-                </strong>
-              </span>
+              {activeCat !== "all" ? (
+                <GeometryFamilyIcon
+                  family={normalizeGeometryFamily(activeCat)}
+                  size={16}
+                  className="btn-lib-cat-family-icon"
+                />
+              ) : (
+                <svg viewBox="0 0 24 24" aria-hidden="true">
+                  <polygon points="22 3 2 3 10 12.46 10 19 14 21 14 12.46 22 3" />
+                </svg>
+              )}
+              <strong id="library-category-selected-label">{activeCatName}</strong>
             </span>
             <svg
               className="btn-lib-cat-caret lib-cat-caret"
@@ -241,6 +354,13 @@ export function LibraryView({
                         <polyline points="3 8.5 6.5 12 13 4.5" />
                       </svg>
                     </span>
+                    {cat !== "all" ? (
+                      <GeometryFamilyIcon
+                        family={normalizeGeometryFamily(cat)}
+                        size={15}
+                        className="lib-cat-menu-family-icon"
+                      />
+                    ) : null}
                     <span>{label}</span>
                   </span>
                   <span className="lib-cat-menu-count">{count}</span>
@@ -249,6 +369,24 @@ export function LibraryView({
             })}
           </div>
         </div>
+      </div>
+
+      <div className="lib-filter-meta-row" id="library-filter-meta-row">
+        <span className="lib-filter-count page-sub-desc" id="library-count-readout">
+          {`${filtered.length} bài mô phỏng phù hợp`}
+        </span>
+        {activeCat !== "all" ? (
+          <button
+            type="button"
+            className="btn-lib-filter-clear"
+            id="btn-library-filter-clear"
+            aria-label={`Bỏ lọc ${activeCatName}`}
+            onClick={() => setActiveCat("all")}
+          >
+            <span>{`Bỏ lọc: ${activeCatName}`}</span>
+            <span aria-hidden="true">×</span>
+          </button>
+        ) : null}
       </div>
 
       <div className="lib-cards-grid" id="library-cards-grid">
@@ -300,5 +438,6 @@ export function LibraryView({
         )}
       </div>
     </div>
+    </>
   );
 }

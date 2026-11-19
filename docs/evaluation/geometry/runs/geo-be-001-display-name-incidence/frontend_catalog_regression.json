@@ -1,0 +1,18 @@
+{
+  "ticket": "GEO-BE-001",
+  "repository": "axo-geometry-library (a git worktree of the algo-sim repository, shared .git)",
+  "branch": "feat/axo-geometry-library-verification",
+  "baseline_head": "c7a6077fd",
+  "fix_commit": "5a229507b",
+  "live_ai_calls": 0,
+  "v9413_geometry_rendering_integrity": "8/8 PASS",
+  "geometry_domain_and_catalog_consumers": "1370/1371 PASS",
+  "failure": {
+    "test": "semantic-dumb-frontend.test.ts › không tệp nào đọc `producer` để quyết chữ hiển thị",
+    "cause": "frontend/src/components/family-icons.tsx (committed in 65ffb998a by the frontend session) — static source scan, independent of the catalog",
+    "owner": "frontend session V9.4.13",
+    "action": "not modified (UI ownership)"
+  },
+  "geometry_samples_test_ts": "NOT_FOUND under that name in this repository",
+  "real_browser": "NOT_MEASURED in repository A (catalog verified at data level and by the SSR rendering tests above)"
+}

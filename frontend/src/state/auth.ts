@@ -40,9 +40,6 @@ export interface AuthUser {
 export interface Entitlement {
   canRunSimulation: boolean;
   canPersistHistory: boolean;
-  canJoinClass: boolean;
-  canOwnClass: boolean;
-  canReceiveAssignment: boolean;
   /** `null` = đã đăng nhập, không còn giới hạn lượt thử. */
   trialsLeft: number | null;
 }
@@ -51,9 +48,6 @@ export interface Entitlement {
 const UNKNOWN: Entitlement = {
   canRunSimulation: true,
   canPersistHistory: false,
-  canJoinClass: false,
-  canOwnClass: false,
-  canReceiveAssignment: false,
   trialsLeft: null,
 };
 

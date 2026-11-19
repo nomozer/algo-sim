@@ -1,0 +1,74 @@
+{
+  "schema_version": "axo-evaluation-run/1",
+  "run_id": "step-editor-independent-acceptance-main-prep",
+  "task_slug": "axo-step-editor-independent-acceptance-root-cause-verification-main-release-prep",
+  "date": "2026-11-19",
+  "branch": "feat/axo-geometry-library-verification",
+  "merge_base_main": "bb046fa22aceff47abe22aa783aa64fc65caee13",
+  "clean_candidate_commit": "27f2c98d2a0f7e9cbe4de8d23837db29e86f0aea",
+  "root_cause_fixes": [
+    {
+      "id": "IA-RC1",
+      "commit": "5b013d16e620fb23a98fc29c1aceebdd319baef2",
+      "seal_commit": "ebacab9bd315f7cb02a4150c6f72372bcd502c04",
+      "summary": "Eliminate raw internal midpoint helper ID (M_AB) leak in rebuilt plane labels and preserve helper display_label"
+    },
+    {
+      "id": "IA-RC2",
+      "commit": "2558f9fb59e147be6d2cdd1eb2744d6c004c9ae4",
+      "seal_commit": "a4022c60076fb4b89572055e513f4ecc8fc0fbba",
+      "summary": "Keep inline step editor form and Hủy/Chạy action buttons visible inside .dock-scroll on open, multiline growth, and error display"
+    },
+    {
+      "id": "IA-RC3",
+      "commit": "2ff70ce455f0b298a7878880ab7eb3fee21cc572",
+      "seal_commit": "27f2c98d2a0f7e9cbe4de8d23837db29e86f0aea",
+      "summary": "Clamp inline editor visibility to visualViewport/innerHeight and relax mobile dock/stage min-heights under virtual keyboard viewport (390x460)"
+    }
+  ],
+  "measured_system_tree_hash": "e0ea792d71667f12911fa7b0425bc4761aabdc337ad605491bc06c33137076a4",
+  "measured_system_file_count": 109,
+  "statuses": {
+    "CLEAN_CANDIDATE_SEAL_AND_DOCS_AUDIT": "PASS",
+    "FRONTEND_TSC_BUILD_AND_VITEST": "PASS",
+    "BACKEND_GEOMETRY_SEMANTIC_AND_OTHER": "PASS",
+    "POSTGRESQL_16_INTEGRATION_AND_ALEMBIC": "PASS",
+    "LIVE_HOST_PLAYWRIGHT_PHASE1_AND_PHASE2": "PASS",
+    "RESPONSIVE_7_VIEWPORTS_TOUCH_AND_VKB": "PASS",
+    "REA_MCP_PASSIVE_OBSERVATION": "PASS",
+    "SECRET_REDACTION_AUDIT": "PASS",
+    "MODEL_STATUS": "MODEL_NOT_TRAINED",
+    "FINAL_VERDICT": "READY_FOR_MERGE"
+  },
+  "artifacts": {
+    "formal_report": "AXO-STEP-EDITOR-INDEPENDENT-ACCEPTANCE-REPORT.md",
+    "report": "report.md",
+    "quality_gates_summary": "results/quality-gates-summary.json",
+    "acceptance_e2e_phase1": "results/acceptance-e2e-phase1.json",
+    "acceptance_e2e_phase2": "results/acceptance-e2e-phase2.json",
+    "postgres_acceptance_audit": "results/postgres-acceptance-audit.json",
+    "rea_mcp_acceptance": "results/rea-mcp-acceptance.json",
+    "images": [
+      "images/acceptance-1920-3a-s11-valid-sb.png",
+      "images/acceptance-1920-3b-invalid-422-sz.png",
+      "images/acceptance-1920-3c-s1-f5.png",
+      "images/acceptance-1920-3c-prism.png",
+      "images/acceptance-1920-post-restart.png",
+      "images/acceptance-vp-1920x1080.png",
+      "images/acceptance-vp-1440x900.png",
+      "images/acceptance-vp-1366x768.png",
+      "images/acceptance-vp-1024x768.png",
+      "images/acceptance-vp-768x1024.png",
+      "images/acceptance-vp-390x844.png",
+      "images/acceptance-vp-320x568.png",
+      "images/acceptance-touch-390x460-vkb.png",
+      "images/acceptance-rea-mcp.png"
+    ]
+  },
+  "rea_mcp_evidence": {
+    "list_browser_targets": "ev_801a51aecd4adc7bf8508a22f0d5d38970826192c27813f1b80d4e0a3d77d34b",
+    "inspect_web_page": "ev_15267ec87e075e46cad6df61a1ca467ca97b1c6f47c36dd44662a83fb254a509",
+    "capture_web_screenshot": "ev_cf59d63b8fc45a100ef7a03d2a17e5ff2788857ce22505ca3b42983651e2c95a",
+    "artifact_sha256": "64513149a1cef8ea1d37aaf9bdbd5994a1507dbdacd32044807ac075fe3a4db4"
+  }
+}

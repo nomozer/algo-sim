@@ -105,6 +105,18 @@
   --sp-xl: 28px;
   --sp-xxl: 32px;
 
+  /* AXO V9.4.11 — Normalized Icon & Optical Alignment Tokens */
+  --axo-icon-header-hit: 32px;
+  --axo-icon-mobile-hit: 34px;
+  --axo-icon-header-glyph: 18px;
+  --axo-icon-nav-glyph: 18px;
+  --axo-icon-geo-slot: 18px;
+  --axo-icon-geo-glyph: 17px;
+  --axo-icon-sm-glyph: 14px;
+  --axo-icon-menu-glyph: 16px;
+  --axo-icon-brand-sb: 22px;
+  --axo-sb-icon-gap: 9px;
+
   /* W7 — CHÍNH SÁCH BỀ RỘNG KHAY ĐIỀU KHIỂN, ở tầng WORKSPACE.
    *
    * Khay không được co giãn theo cơ chế (đo được ở HEAD 104c752: cơ chế trải

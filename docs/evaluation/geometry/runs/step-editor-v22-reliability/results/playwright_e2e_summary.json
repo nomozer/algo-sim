@@ -1,0 +1,92 @@
+{
+  "startedAt": "2026-11-17T17:15:58.957Z",
+  "routes": {
+    "/": {
+      "loaded": true,
+      "horizontalOverflow": false,
+      "pageErrorsCount": 0
+    },
+    "/gioi-thieu": {
+      "loaded": true,
+      "horizontalOverflow": false,
+      "pageErrorsCount": 0
+    },
+    "/library": {
+      "loaded": true,
+      "horizontalOverflow": false,
+      "pageErrorsCount": 0
+    },
+    "/simulation/pyramid-circumscribed-sphere": {
+      "loaded": true,
+      "horizontalOverflow": false,
+      "pageErrorsCount": 0
+    },
+    "/simulation/pyramid-three-point-section": {
+      "loaded": true,
+      "horizontalOverflow": false,
+      "pageErrorsCount": 0
+    }
+  },
+  "viewports": {
+    "1920x1080": {
+      "rowHeightBefore": 56.4749755859375,
+      "rowHeightHover": 56.4749755859375,
+      "rowHeightDeltaPx": 0,
+      "titleLeftDeltaPx": 0,
+      "defaultPencilOpacity": "0",
+      "hoverPencilOpacity": "1",
+      "leavePencilOpacity": "0",
+      "focusPencilOpacity": "0",
+      "taScrollbarCheck": {
+        "clientHeight": 30,
+        "scrollHeight": 30,
+        "overflowY": "hidden",
+        "overflowX": "hidden"
+      },
+      "horizontalOverflow": false,
+      "cameraPreservedAcrossRebuild": true,
+      "consoleErrorsCount": 1
+    },
+    "1366x768": {
+      "horizontalOverflow": false
+    },
+    "768x1024": {
+      "horizontalOverflow": false
+    },
+    "390x844": {
+      "activePencilOpacity": "1",
+      "draftPreservedOnResize": true,
+      "formRightLeWidth": true,
+      "cancelVisible": true,
+      "runVisible": true,
+      "hOverflow": false
+    },
+    "320x568": {
+      "formRightLeWidth": true,
+      "cancelVisible": true,
+      "runVisible": true,
+      "hOverflow": false
+    }
+  },
+  "frontendCommitRenderBenchmark": {
+    "n_samples": 30,
+    "warmup": 2,
+    "frontend_commit_render_p50_ms": 41.9,
+    "frontend_commit_render_p95_ms": 75.37,
+    "e2e_browser_roundtrip_p50_ms": 149.84,
+    "e2e_browser_roundtrip_p95_ms": 235.185
+  },
+  "edgeCasesPlaywright": {
+    "persistedAfterReload": true,
+    "errState": {
+      "errorText": "Không thể dựng mặt phẳng (α) vì chưa xác định được điểm Q.",
+      "draftValue": "Dựng mặt phẳng (α) qua Q và vuông góc với AB",
+      "url": "/simulation/pyramid-circumscribed-sphere"
+    },
+    "slowRouteHits": 1,
+    "cancelWhileRunningWorks": true,
+    "stepRevertedAfterCancel": true,
+    "webglDispatched": true,
+    "canvasAliveAfterLossAndRebuild": true
+  }
+}

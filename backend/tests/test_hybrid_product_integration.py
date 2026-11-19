@@ -493,16 +493,3 @@ def test_stated_perpendicular_to_a_non_vertex_foot_is_drawn_once_in_learner_orde
     sh = [o for o in r.scene3d["objects"] if o["type"] == "segment3" and set(o.get("endpoint_ids") or ()) == {"S", "H"}]
     assert len(sh) == 1 and sh[0]["perpendicular_witness"]["foot_id"] == "H"
     assert check(r.scene3d) == {"O1": [], "O2": [], "O3": [], "O4": []}
-
-
-def test_assigned_hybrid_envelope_keeps_the_problem_statement_through_the_classroom_gate():
-    """F1 of the pedagogical review: the classroom stores the envelope the teacher's browser sends; the statement the
-    frontend stamps on it (`problem_statement`) must survive the gate, so a student who opens the assignment sees it."""
-    from app.accounts.classroom_router import _validated_envelope
-    from scripts.export_hybrid_product_integration_corpus import RUN_DIR
-
-    bundle = json.loads((RUN_DIR / "product-integration-frontend-fixtures.json").read_text(encoding="utf-8"))
-    row = next(f for f in bundle["fixtures"] if f["id"] == "S2-B-I07_ve_va_tinh")
-    envelope = {**row["response"]["envelope"], "problem_statement": row["problem_text"]}
-    _sim_id, blob = _validated_envelope(envelope)
-    assert json.loads(blob)["problem_statement"] == row["problem_text"]

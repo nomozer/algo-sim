@@ -1,0 +1,64 @@
+{
+  "schema_version": "axo-evaluation-run/1",
+  "run_id": "owner-scope-resolution",
+  "task_slug": "owner-scope-resolution",
+  "date": "2026-11-19",
+  "generated_at": "2026-11-19T11:46:30+00:00",
+  "branch": "release/axo-owner-scope-resolution",
+  "baseline_main_commit": "bb046fa22aceff47abe22aa783aa64fc65caee13",
+  "origin_main_commit": "bb046fa22aceff47abe22aa783aa64fc65caee13",
+  "prior_audit_commit": "9c1c8bca8ce900bb2125c7459a4f60469d3660f2",
+  "option_b_implementation_commit": "6880a03eb295cd45152e8114a8867cfee7b2ee4c",
+  "final_code_and_test_commit": "892e15f06fc53c623a1392f0766d69c21291436a",
+  "measured_system_tree_hash": "78edfa1784625e9bca8f1a4cd70b60359d198ba77530986903175a57e18206a7",
+  "measured_system_file_count": 109,
+  "cache_version": "132",
+  "ownership_resolutions": {
+    "C-Classroom": "OPTION_B_IMPLEMENTED_AND_VERIFIED",
+    "C-Landing": "PENDING_OWNER_DECISION",
+    "C-Workspace": "PENDING_OWNER_DECISION",
+    "C-Release": "PENDING_OWNER_DECISION"
+  },
+  "statuses": {
+    "RELEASE_DECISION": "TECHNICALLY_READY_PENDING_OWNER_APPROVAL",
+    "MERGE_STATUS": "NOT_MERGED",
+    "PUSH_STATUS": "NOT_PUSHED",
+    "DOCKER_RUNTIME_GATE": "ENVIRONMENT_BLOCKED",
+    "MODEL_STATUS": "MODEL_NOT_TRAINED",
+    "PRODUCTION_DEPLOYMENT_VERIFIED": "NO",
+    "INDEPENDENT_H1_VALIDATION": "NOT_MEASURED"
+  },
+  "artifacts": {
+    "formal_report": "AXO-OWNER-SCOPE-RESOLUTION-AND-PRE-MERGE-REPORT.md",
+    "report": "report.md",
+    "gates_manifest": "gates-manifest.json",
+    "results": [
+      "results/accept-live-classroom-retired.json",
+      "results/browser-responsive-results.json",
+      "results/docker-runtime-check.json",
+      "results/ownership-domain-audit.json",
+      "results/performance-and-memory.json",
+      "results/pg16-backup-restore-rollback.json",
+      "results/pg16_live_setup.json",
+      "results/product-scope-acceptance.json",
+      "results/rea-mcp-verification.json"
+    ],
+    "images": [
+      "images/osr-1920-422-rollback.png",
+      "images/osr-1920-before-edit.png",
+      "images/osr-1920-cascade-f5.png",
+      "images/osr-1920-sb-rename-P.png",
+      "images/osr-landing-1920.png",
+      "images/osr-post-restart.png",
+      "images/osr-rea-mcp.png",
+      "images/osr-vkb-390x460.png",
+      "images/osr-vp-1366x768.png",
+      "images/osr-vp-1440x900.png",
+      "images/osr-vp-1920x1080.png",
+      "images/osr-vp-320x568.png",
+      "images/osr-vp-390x844.png",
+      "images/osr-vp-768x1024.png",
+      "images/osr-workspace-app-1920.png"
+    ]
+  }
+}

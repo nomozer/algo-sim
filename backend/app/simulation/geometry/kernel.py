@@ -232,3 +232,4 @@ def polygon_from_right_angle_chain(lengths: "list[Fraction]") -> tuple[Point3, .
     if any((p[j] - p[j - 1]).cross(p[(j + 1) % k] - p[j]).dot(z) <= 0 for j in range(k)):
         raise GeometryError(ERR_KHONG_LOI, "chuỗi góc vuông không khép thành đa giác lồi")
     return tuple(p)
+

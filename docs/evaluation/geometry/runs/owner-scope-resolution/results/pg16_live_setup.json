@@ -1,0 +1,107 @@
+{
+  "database": "algosim_osr_live",
+  "table_count": 20,
+  "tables": [
+    "admin_analysis_telemetry",
+    "admin_audit_logs",
+    "admin_system_settings",
+    "alembic_version",
+    "analysis_usage_ledger",
+    "assignments",
+    "auth_sessions",
+    "class_memberships",
+    "classroom_sessions",
+    "classrooms",
+    "learning_history_entries",
+    "practice_sessions",
+    "reuse_metrics",
+    "simulation_cache",
+    "simulation_patterns",
+    "step_edit_feedback",
+    "step_edit_revisions",
+    "step_edit_sessions",
+    "user_account_meta",
+    "users"
+  ],
+  "preflight": {
+    "dialect": "postgresql",
+    "direction": "upgrade",
+    "target_rev": "head",
+    "startup_mode": true,
+    "db_revisions": [
+      "e437149641fa"
+    ],
+    "script_heads": [
+      "f8a2c41d9e05"
+    ],
+    "user_tables_count": 16,
+    "destructive_operations": [],
+    "retained_legacy_tables_present": [
+      "assignments",
+      "class_memberships",
+      "classroom_sessions",
+      "classrooms",
+      "practice_sessions"
+    ],
+    "planned_revisions": [
+      "9c4d8e2b7a10",
+      "f8a2c41d9e05"
+    ],
+    "allowed": true,
+    "reason_code": "SAFE_NO_DESTRUCTIVE_OPERATIONS",
+    "message": "Migration preflight passed cleanly with zero destructive operations."
+  },
+  "baseline_digests": {
+    "classrooms": [
+      1,
+      "00f8d608d0fb4baf86bfb2d63ab0d582a2237639c8690db50b322c7555721196"
+    ],
+    "class_memberships": [
+      2,
+      "b8fa76ffa3d5489ed35b0285950581b99b53609ea31420e239736ceaefafd540"
+    ],
+    "assignments": [
+      1,
+      "eb837caad541c7996eb68c2223cc973d59a5492096732fabf556bfb75c975d44"
+    ],
+    "practice_sessions": [
+      2,
+      "9e00005aac1d23f8f768f6e2e4385a81b0fe82322a9a1e69d5b569915cbd24a5"
+    ],
+    "classroom_sessions": [
+      1,
+      "19a4c7122bc381f6b8e4c58a2e98ded7edc964bb82bc5ada47edc2c6e833b7ab"
+    ],
+    "users": [
+      3,
+      "d670c95961a8738e60d2cf2eaf5cfde49fb894fb58dd642f6bf66da81b0fad67"
+    ]
+  },
+  "post_upgrade_digests": {
+    "classrooms": [
+      1,
+      "00f8d608d0fb4baf86bfb2d63ab0d582a2237639c8690db50b322c7555721196"
+    ],
+    "class_memberships": [
+      2,
+      "b8fa76ffa3d5489ed35b0285950581b99b53609ea31420e239736ceaefafd540"
+    ],
+    "assignments": [
+      1,
+      "eb837caad541c7996eb68c2223cc973d59a5492096732fabf556bfb75c975d44"
+    ],
+    "practice_sessions": [
+      2,
+      "9e00005aac1d23f8f768f6e2e4385a81b0fe82322a9a1e69d5b569915cbd24a5"
+    ],
+    "classroom_sessions": [
+      1,
+      "19a4c7122bc381f6b8e4c58a2e98ded7edc964bb82bc5ada47edc2c6e833b7ab"
+    ],
+    "users": [
+      3,
+      "d670c95961a8738e60d2cf2eaf5cfde49fb894fb58dd642f6bf66da81b0fad67"
+    ]
+  },
+  "parity_match": true
+}

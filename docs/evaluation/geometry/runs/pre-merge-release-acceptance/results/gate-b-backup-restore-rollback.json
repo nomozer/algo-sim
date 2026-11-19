@@ -1,0 +1,68 @@
+{
+  "audited_at": "2026-11-19T06:20:31.850409+00:00",
+  "gate_b1_official_pg_dump_restore_cli_available": false,
+  "gate_b1_official_toolchain_status": "BLOCKED_ENVIRONMENT",
+  "gate_b1_single_transaction_logical_backup_restore_status": "PASS",
+  "gate_b1_sqlite_restore_verification": {
+    "root_sqlite": {
+      "integrity_check": "ok",
+      "fk_violations": 0,
+      "fk_enforced": true,
+      "table_count": 16,
+      "sha256": "2b13b63d6a04136df064babaa7da269649eadf46ae14d1c2da97231401367e8a"
+    },
+    "dev_sqlite": {
+      "integrity_check": "ok",
+      "fk_violations": 0,
+      "fk_enforced": true,
+      "table_count": 14,
+      "sha256": "13beeaa713e4a001bf74e7f6acf2b0feaa55221f1f31fd0ea2e0ac3487c35b24"
+    }
+  },
+  "gate_b1_pg16_9_criteria_restore_verification": {
+    "algosim_acceptance": {
+      "fk_enforced": true,
+      "unique_enforced": true,
+      "nextval_above_pre_last_value": 10,
+      "sequences_checked": 12,
+      "triggers_checked": 0,
+      "functions_checked": 0,
+      "extensions_checked": [
+        "plpgsql"
+      ],
+      "app_boot_on_restored_db_status": 200,
+      "post_restore_step_edit_and_state_roundtrip": "PASS"
+    },
+    "algosim_host": {
+      "tables_and_rows_parity": true,
+      "constraints_and_indexes_parity": true,
+      "sequences_parity": true,
+      "triggers_functions_extensions_parity": true,
+      "alembic_version": [
+        "f8a2c41d9e05"
+      ]
+    }
+  },
+  "gate_b2_application_rollback_rehearsal": {
+    "status": "PASS",
+    "baseline_main_commit": "bb046fa22aceff47abe22aa783aa64fc65caee13",
+    "step_1_rc_created_revisions": 2,
+    "step_2_bb046fa22_app_booted_health_ok": true,
+    "step_2_classroom_route_status_on_bb046fa22": 401,
+    "rows_intact_during_app_rollback": {
+      "users": 3,
+      "classrooms": 1,
+      "practice_sessions": 2,
+      "step_edit_sessions": 1,
+      "step_edit_revisions": 2
+    },
+    "step_3_rc_restarted_step_editor_state_found": true,
+    "step_3_committed_version": 2,
+    "step_3_M_xyz": [
+      "0",
+      "0",
+      "3/2"
+    ],
+    "application_rollback_vs_db_downgrade_distinction": "Application rollback switches binary/container back to bb046fa22 WITHOUT running `alembic downgrade` (leaving additive step_edit_* tables in place while preserving 100% legacy & new rows)."
+  }
+}

@@ -1,0 +1,17 @@
+{
+  "status": "PASS",
+  "verifiedAt": "2026-11-19T00:13:48.626Z",
+  "sessionId": "se-be5cdbf3-sample-chop-thiet-dien-ba-diem-55591bff",
+  "stateHttpStatus": 200,
+  "found": true,
+  "committedVersion": 1,
+  "backendMXyzAfterRestart": [
+    "0",
+    "0",
+    "9/2"
+  ],
+  "uiStepRowAfterRestart": "6\nLấy điểm M thuộc SA sao cho SM/SA = 1/4",
+  "consoleErrors": [],
+  "pageErrors": [],
+  "screenshot": "D:/Documents/projects/axo-geometry-library/docs/evaluation/geometry/runs/step-editor-release-gate/images/release-gate-1920-post-restart.png"
+}

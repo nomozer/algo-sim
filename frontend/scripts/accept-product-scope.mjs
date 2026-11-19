@@ -1,322 +1,265 @@
+#!/usr/bin/env node
 /**
- * accept-product-scope.mjs — BỀ MẶT CÔNG KHAI KHÔNG CÒN DANH TÍNH TIN HỌC.
+ * Product-scope browser acceptance guard (Option B aligned).
  *
- * ─── HỎI GÌ, VÀ VÌ SAO KHÔNG HỎI BẰNG TEST ĐƠN VỊ ───────────────────────
- *
- * `catalog.test.tsx` đã khoá `publicCatalog()`. Nhưng một danh mục sạch KHÔNG
- * đảm bảo màn hình sạch: nhãn miền còn nằm trong hằng số, chuỗi còn nằm trong
- * component khác, một trang khác vẫn có thể in ra "Thuật toán". Câu hỏi ở đây
- * là câu duy nhất người dùng thật sự hỏi:
- *
- *     Đi hết các đường điều hướng CHÍNH, có gặp lại sản phẩm Tin học không?
- *
- * Nên nó quét TEXT ĐÃ RENDER trên từng trang, hai vai, trình duyệt thật.
- *
- * ─── HAI CÁI BẪY GIỮ NGUYÊN TỪ `accept-live-classroom.mjs` ──────────────
- *
- *   1. Dấu vân tay backend soi ROUTE MỚI, không soi `/api/auth/me` — container
- *      Docker cũ cũng trả 200 cho endpoint cũ.
- *   2. Dấu vân tay TRANG trước mọi khẳng định vắng-mặt: trang trắng làm mọi
- *      `không chứa X` xanh hết, và xanh vì màn hình rỗng.
- *
- * Cần: `npm run dev` (:3000) + uvicorn (:8000) với `ALGOSIM_TEACHER_SIGNUP_CODE`.
+ * Audits live runtime routes (`/`, `/app`, `/simulation/chop-mat-cau-ngoai-tiep`)
+ * across desktop/tablet/mobile viewports without probing or seeding deprecated
+ * Classroom / Live Session features, and without writing into frozen docs.
  */
-import { spawn } from "node:child_process";
-import { existsSync, mkdirSync, mkdtempSync, writeFileSync } from "node:fs";
-import { tmpdir } from "node:os";
-import { dirname, join, resolve } from "node:path";
+import os from "node:os";
+import path from "node:path";
+import { writeFileSync } from "node:fs";
+import { chromium } from "playwright";
 import { provenance } from "./evidence.mjs";
 
-const args = process.argv.slice(2);
-const argOf = (n, d) => (args.includes(n) ? args[args.indexOf(n) + 1] : d);
-const OUT = resolve(argOf("--out",
-  new URL("../../docs/evaluation/geometry/product-scope-acceptance.json",
-    import.meta.url).pathname.replace(/^[/]/, "")));
-mkdirSync(dirname(OUT), { recursive: true });
+const LEGACY_INFORMATICS_DOMAINS = [
+  "Thuật toán",
+  "Nhị phân",
+  "CSDL",
+  "Lôgic",
+  "Màu sắc",
+];
+const LEGACY_INFORMATICS_PHRASES = [
+  "Tin học THPT",
+  "mô phỏng thuật toán",
+  "số nhị phân",
+  "cổng logic",
+  "mạng máy tính",
+  "cơ sở dữ liệu",
+];
+const RETIRED_CLASSROOM_LABELS = [
+  "Lớp học của tôi",
+  "Quản lý lớp học",
+  "Bài thực hành",
+  "Bài đã giao",
+  "Quan sát lớp học",
+  "Phiên trực tiếp",
+  "Bắt đầu tiết",
+  "Theo cô/thầy",
+];
 
-const PASS = argOf("--pass", "accept-scope-12345");
-const CODE = argOf("--teacher-code", "ACCEPT-TEACHER");
-const STAMP = Date.now();
+function parseArgs(argv) {
+  let baseUrl = "http://localhost:3001";
+  let outPath = path.join(os.tmpdir(), "axo-product-scope-acceptance.json");
+  let help = false;
 
-const CHROME = [
-  "C:/Program Files/Google/Chrome/Application/chrome.exe",
-  "C:/Program Files (x86)/Google/Chrome/Application/chrome.exe",
-  "/usr/bin/google-chrome",
-].find(existsSync);
-if (!CHROME) { console.error("Không tìm thấy Chrome."); process.exit(1); }
-
-const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
-const rows = [];
-const failures = [];
-const consoleErrors = [];
-
-function ghi(scenario, actor, action, expected, actual, pass) {
-  rows.push({ scenario, actor, action, expected, actual, pass });
-  console.log(`  ${pass ? "✓" : "✗"} [${scenario}] ${actor}: ${action} — ${actual}`);
-  if (!pass) failures.push(`[${scenario}] ${actor}: ${action} — mong ${expected}, được ${actual}`);
+  for (let i = 0; i < argv.length; i += 1) {
+    const arg = argv[i];
+    if (arg === "--help" || arg === "-h") {
+      help = true;
+    } else if (arg === "--base" && argv[i + 1]) {
+      baseUrl = argv[++i];
+    } else if (arg.startsWith("--base=")) {
+      baseUrl = arg.slice("--base=".length);
+    } else if (arg === "--out" && argv[i + 1]) {
+      outPath = argv[++i];
+    } else if (arg.startsWith("--out=")) {
+      outPath = arg.slice("--out=".length);
+    }
+  }
+  return { baseUrl: baseUrl.replace(/\/+$/, ""), outPath, help };
 }
 
-/* ── DANH TÍNH BACKEND ─────────────────────────────────────────────────── */
-for (const duong of ["/api/classes/999999/session", "/api/classes/999999/monitor"]) {
-  const r = await fetch(`http://localhost:3000${duong}`).then((x) => x.json()).catch(() => null);
-  if (!r || r.detail === "Not Found") {
-    console.error(`✗ Backend sau proxy :3000 KHÔNG có route ${duong}.`);
-    console.error("  Chạy: docker compose stop backend  rồi khởi động lại uvicorn.");
-    process.exit(2);
+function includesFolded(haystack, needle) {
+  return haystack.toLowerCase().includes(needle.toLowerCase());
+}
+
+async function fetchJson(url) {
+  const res = await fetch(url, { headers: { Accept: "application/json" } });
+  const text = await res.text();
+  let json = null;
+  try {
+    json = JSON.parse(text);
+  } catch {
+    json = null;
+  }
+  return { status: res.status, ok: res.ok, json, text };
+}
+
+async function waitForRouteReady(page, routePath) {
+  await page.waitForLoadState("domcontentloaded");
+  if (routePath.startsWith("/simulation/")) {
+    await page.waitForSelector(".geo3d-canvas canvas", { timeout: 15000 });
+    await page.waitForTimeout(1000);
+  } else {
+    await page.waitForFunction(
+      () => (document.body?.innerText ?? "").trim().length > 100,
+      { timeout: 15000 },
+    );
+    await page.waitForTimeout(600);
   }
 }
 
-/* ── MỘT VAI = MỘT TIẾN TRÌNH CHROME ───────────────────────────────────── */
-async function moVai(ten, cdpPort) {
-  const dir = mkdtempSync(join(tmpdir(), `scope-${ten}-`));
-  const proc = spawn(CHROME, ["--headless=new", "--disable-gpu",
-    `--remote-debugging-port=${cdpPort}`, `--user-data-dir=${dir}`,
-    "--window-size=1600,900", "--hide-scrollbars",
-    "--use-gl=angle", "--use-angle=swiftshader", "--enable-unsafe-swiftshader",
-    "about:blank"], { stdio: "ignore" });
-
-  let wsUrl;
-  for (let i = 0; i < 60 && !wsUrl; i++) {
-    try {
-      const l = await (await fetch(`http://127.0.0.1:${cdpPort}/json/list`)).json();
-      wsUrl = l.find((t) => t.type === "page")?.webSocketDebuggerUrl;
-    } catch { /* chưa lên */ }
-    if (!wsUrl) await sleep(300);
+async function main() {
+  const opts = parseArgs(process.argv.slice(2));
+  if (opts.help) {
+    process.stdout.write(
+      "Usage: node frontend/scripts/accept-product-scope.mjs [--base http://localhost:3001] [--out <json-path>]\n",
+    );
+    process.exit(0);
   }
-  if (!wsUrl) { console.error(`✗ ${ten}: Chrome không lên`); process.exit(3); }
 
-  const ws = new WebSocket(wsUrl);
-  await new Promise((r) => (ws.onopen = r));
-  let id = 0; const pend = new Map();
-  ws.onmessage = (e) => {
-    const m = JSON.parse(e.data);
-    if (m.method === "Runtime.consoleAPICalled" && m.params?.type === "error") {
-      consoleErrors.push({ actor: ten, text: (m.params.args ?? []).map((a) => a.value).join(" ") });
-    }
-    if (m.method === "Runtime.exceptionThrown") {
-      consoleErrors.push({ actor: ten, text: m.params?.exceptionDetails?.text ?? "exception" });
-    }
-    if (m.id && pend.has(m.id)) { pend.get(m.id)(m); pend.delete(m.id); }
+  const rows = [];
+  const consoleErrors = [];
+  const pageErrors = [];
+  const viewports = [
+    [1920, 1080],
+    [1366, 768],
+    [390, 844],
+  ];
+  const routes = ["/", "/app", "/simulation/chop-mat-cau-ngoai-tiep"];
+
+  const record = (section, check, expected, actual, pass) => {
+    rows.push({ section, check, expected, actual, pass: Boolean(pass) });
   };
-  const send = (method, params = {}) => new Promise((res) => {
-    const i = ++id; pend.set(i, res);
-    ws.send(JSON.stringify({ id: i, method, params }));
-  });
-  const ev = async (x) => (await send("Runtime.evaluate",
-    { expression: x, awaitPromise: true, returnByValue: true })).result?.result?.value;
-  const evj = async (x) => { const v = await ev(x); return v ? JSON.parse(v) : null; };
 
-  await send("Page.enable"); await send("Runtime.enable");
-  await send("Page.navigate", { url: "http://localhost:3000" });
-  await sleep(2500);
-  return { ten, send, ev, evj, dong: () => { try { ws.close(); } catch {} proc.kill(); } };
-}
+  // 1. Live health & Option B 404 verification via the configured base URL
+  const health = await fetchJson(`${opts.baseUrl}/api/health`);
+  record(
+    "backend-health",
+    "GET /api/health",
+    "HTTP 200 & ok === true",
+    `HTTP ${health.status} ok=${health.json?.ok}`,
+    health.status === 200 && health.json?.ok === true,
+  );
 
-const apij = async (v, method, path, body) => JSON.parse(await v.ev(
-  `fetch(${JSON.stringify(path)},{method:${JSON.stringify(method)},credentials:'include',
-   headers:{'Content-Type':'application/json'}${body ? `,body:JSON.stringify(${JSON.stringify(body)})` : ""}})
-   .then(async r=>JSON.stringify({s:r.status,b:await r.json().catch(()=>null)}))`));
-
-/* Nhãn miền của đề CŨ. Chúng là chuỗi hiển thị, nên gặp lại chúng trên màn
-   hình đúng nghĩa là bề mặt còn danh tính cũ. `Hình học` KHÔNG nằm đây. */
-const NHAN_CU = ["Thuật toán", "Nhị phân", "Mạng", "CSDL", "Lôgic", "Web", "Màu sắc"];
-/* Cụm chữ quảng bá đề cũ. Tách khỏi nhãn miền vì chúng hỏng theo kiểu khác:
-   nhãn lọt qua hằng số, còn cụm này lọt qua chuỗi viết tay trong component. */
-const CUM_CU = ["Tin học THPT", "mô phỏng thuật toán", "số nhị phân",
-                "cổng logic", "mạng máy tính", "cơ sở dữ liệu"];
-
-/* ⚠️ SO SÁNH KHÔNG PHÂN BIỆT HOA–THƯỜNG, và đây KHÔNG phải chuyện tiểu tiết.
-   `innerText` trả về văn bản ĐÃ RENDER, nên `text-transform: uppercase` trên
-   `.starter-group-title` biến "Hình học" thành "HÌNH HỌC". Bản đầu của guard
-   này so khớp nguyên văn, nên mọi khẳng định "0 nhãn miền Tin học" XANH VÔ
-   NGHĨA — nó sẽ không thấy một nhóm "THUẬT TOÁN" hiện ngay giữa Thư viện.
-   Lộ ra nhờ khẳng định NGƯỢC ("phải có nhóm Hình học") đỏ. */
-const co = (text, chuoi) => text.toLowerCase().includes(chuoi.toLowerCase());
-
-const doTrang = (v) => v.evj(`JSON.stringify({
-  text: document.body.innerText,
-  nutDieuHuong: [...document.querySelectorAll('nav button, nav a, .app-sidebar button')]
-    .map(b => b.textContent.trim()).filter(Boolean),
-  theGoiY: document.querySelectorAll('.starter-card').length,
-  xuong3d: !!document.querySelector('.geo3d-xuong'),
-  canvas: document.querySelectorAll('.geo3d-canvas canvas').length,
-})`);
-
-const diToi = async (v, nhan) => {
-  await v.ev(`(()=>{const b=[...document.querySelectorAll('button,a')]
-    .find(e=>e.textContent.trim()===${JSON.stringify(nhan)});if(b)b.click();return !!b})()`);
-  await sleep(1500);
-};
-
-console.log("━━ Dựng hai vai ━━");
-const T = await moVai("teacher", 9830);
-const A = await moVai("student", 9831);
-
-try {
-  /* ── 0 · TÀI KHOẢN + LỚP + BÀI HÌNH HỌC ────────────────────────────── */
-  let r = await apij(T, "POST", "/api/auth/register", {
-    email: `gv.scope.${STAMP}@algosim.test`, displayName: "Cô Phạm Vi",
-    password: PASS, role: "teacher", teacherCode: CODE });
-  ghi("0-setup", "teacher", "đăng ký giáo viên", "200", `HTTP ${r.s}`, r.s === 200);
-
-  r = await apij(T, "POST", "/api/classes", { name: "11A2" });
-  const lop = r.b;
-  ghi("0-setup", "teacher", "tạo lớp", "200", `HTTP ${r.s}`, r.s === 200 && !!lop?.id);
-
-  /* Envelope lấy từ CHÍNH bài mẫu của sản phẩm — không viết tay. */
-  const MAU = await A.evj(`fetch('/').then(()=>JSON.stringify(null))`) ?? null;
-  void MAU;
-  const mauHH = await T.evj(`(async()=>{
-    const m = await import('/src/data/geometry-samples.json?import');
-    const s = (m.default ?? m).samples.find(x => x.id === 'thiet-dien-chop');
-    return JSON.stringify(s ? s.envelope : null);
-  })()`);
-  ghi("0-setup", "teacher", "lấy được envelope bài mẫu hình học",
-      "envelope có scene3d",
-      mauHH ? `simId=${mauHH.simulation_id} scene3d=${!!mauHH.scene3d}` : "không lấy được",
-      !!mauHH?.scene3d);
-
-  r = await apij(T, "POST", "/api/assignments", {
-    classroomId: lop.id, title: "Thiết diện S.ABCD",
-    instruction: "Dựng thiết diện qua M song song với (SBD).", envelope: mauHH });
-  ghi("0-setup", "teacher", "giao được bài HÌNH HỌC (hồi quy §13)", "200",
-      `HTTP ${r.s}` + (r.s === 200 ? "" : ` · ${JSON.stringify(r.b).slice(0, 160)}`),
-      r.s === 200);
-
-  r = await apij(A, "POST", "/api/auth/register", {
-    email: `hs.scope.${STAMP}@algosim.test`, displayName: "An", password: PASS });
-  const ok = r.s === 200;
-  r = await apij(A, "POST", "/api/classes/join", { code: lop.joinCode });
-  ghi("0-setup", "student", "đăng ký + vào lớp", "200", `HTTP ${r.s}`, ok && r.s === 200);
-
-  /* ── 1 · BỀ MẶT KHÔNG CÒN DANH TÍNH TIN HỌC ────────────────────────── */
-  console.log("");
-  console.log("━━ SCENARIO 1 — BỀ MẶT CÔNG KHAI ━━");
-
-  for (const [v, vai] of [[A, "student"], [T, "teacher"]]) {
-    await v.send("Page.navigate", { url: "http://localhost:3000" });
-    await sleep(3000);
-    const home = await doTrang(v);
-
-    ghi("1-surface", vai, "Trang chủ dựng được (dấu vân tay trang)",
-        "có nội dung + điều hướng",
-        `text=${home.text.length}b nav=${home.nutDieuHuong.length}`,
-        home.text.length > 200 && home.nutDieuHuong.length >= 4);
-
-    const nhanLot = NHAN_CU.filter((x) => co(home.text, x));
-    ghi("1-surface", vai, "Trang chủ: 0 nhãn miền Tin học",
-        "0 nhãn", nhanLot.length ? nhanLot.join(",") : "0 nhãn", nhanLot.length === 0);
-
-    const cumLot = CUM_CU.filter((x) => co(home.text, x));
-    ghi("1-surface", vai, "Trang chủ: 0 cụm quảng bá đề cũ",
-        "0 cụm", cumLot.length ? cumLot.join(",") : "0 cụm", cumLot.length === 0);
-
-    ghi("1-surface", vai, "Trang chủ: gợi ý đúng ba bài hình học",
-        "3 thẻ", `${home.theGoiY} thẻ`, home.theGoiY === 3);
-
-    /* Thư viện — chỗ dễ sót nhất, vì nó dựng nhóm từ hằng số miền. */
-    await diToi(v, "Thư viện");
-    const thu = await doTrang(v);
-    ghi("1-surface", vai, "Thư viện dựng được (dấu vân tay trang)",
-        "tiêu đề Thư viện", `khớp=${co(thu.text, "Thư viện mô phỏng")}`,
-        co(thu.text, "Thư viện mô phỏng"));
-    const thuLot = [...NHAN_CU, ...CUM_CU].filter((x) => co(thu.text, x));
-    ghi("1-surface", vai, "Thư viện: 0 di sản Tin học",
-        "0 chuỗi", thuLot.length ? thuLot.join(",") : "0 chuỗi", thuLot.length === 0);
-    ghi("1-surface", vai, "Thư viện: có nhóm Hình học",
-        "hiện nhãn Hình học", `có=${co(thu.text, "Hình học")}`,
-        co(thu.text, "Hình học"));
-
-    /* Không đường điều hướng CHÍNH nào dẫn tới miền cũ. */
-    const navLot = home.nutDieuHuong.filter((n) => NHAN_CU.some((x) => n.includes(x)));
-    ghi("1-surface", vai, "điều hướng chính: 0 mục miền Tin học",
-        "0 mục", navLot.length ? navLot.join(",") : `0/${home.nutDieuHuong.length} mục`,
-        navLot.length === 0);
+  for (const retiredPath of ["/api/classes", "/api/assignments"]) {
+    const resp = await fetchJson(`${opts.baseUrl}${retiredPath}`);
+    record(
+      "option-b-routes",
+      `GET ${retiredPath} retired`,
+      'HTTP 404 {"detail":"Not Found"}',
+      `HTTP ${resp.status} ${resp.text.slice(0, 100)}`,
+      resp.status === 404 && resp.json?.detail === "Not Found",
+    );
   }
 
-  /* ── 2 · GEOMETRY-FIRST: MỞ MỘT GỢI Ý → XƯỞNG 3D ───────────────────── */
-  console.log("");
-  console.log("━━ SCENARIO 2 — LỐI VÀO HÌNH HỌC ━━");
+  const browser = await chromium.launch({ headless: true });
+  try {
+    const context = await browser.newContext({ viewport: { width: 1920, height: 1080 } });
+    const page = await context.newPage();
+    page.on("console", (msg) => {
+      if (msg.type() === "error") {
+        consoleErrors.push({ url: page.url(), text: msg.text() });
+      }
+    });
+    page.on("pageerror", (err) => {
+      pageErrors.push({ url: page.url(), text: String(err) });
+    });
 
-  await A.send("Page.navigate", { url: "http://localhost:3000" });
-  await sleep(3000);
-  await A.ev(`(()=>{const b=document.querySelector('.starter-card');if(b)b.click();return !!b})()`);
-  await sleep(4500);
-  const xuong = await doTrang(A);
-  ghi("2-entry", "student", "bấm gợi ý ⇒ vào thẳng xưởng 3D",
-      ".geo3d-xuong + canvas", `xuong=${xuong.xuong3d} canvas=${xuong.canvas}`,
-      xuong.xuong3d === true && xuong.canvas >= 1);
-  ghi("2-entry", "student", "xưởng 3D: 0 di sản Tin học trên màn hình",
-      "0 chuỗi",
-      (() => { const l = [...NHAN_CU, ...CUM_CU].filter((x) => co(xuong.text, x));
-               return l.length ? l.join(",") : "0 chuỗi"; })(),
-      ![...NHAN_CU, ...CUM_CU].some((x) => co(xuong.text, x)));
+    for (const [width, height] of viewports) {
+      await page.setViewportSize({ width, height });
+      for (const routePath of routes) {
+        const vpTag = `${width}x${height} ${routePath}`;
+        await page.goto(`${opts.baseUrl}${routePath}`, { waitUntil: "domcontentloaded", timeout: 25000 });
+        await waitForRouteReady(page, routePath);
 
-  /* ── 3 · BÀI GIÁO VIÊN GIAO — HỒI QUY LỚP HỌC (§13) ────────────────── */
-  console.log("");
-  console.log("━━ SCENARIO 3 — BÀI ĐƯỢC GIAO ━━");
+        const snap = await page.evaluate(() => ({
+          pathname: window.location.pathname,
+          text: document.body?.innerText ?? "",
+          navButtons: [...document.querySelectorAll("nav button, nav a, .app-sidebar button, .app-sidebar a")]
+            .map((el) => (el.textContent ?? "").trim())
+            .filter(Boolean),
+          canvasCount: document.querySelectorAll(".geo3d-canvas canvas").length,
+          scrollWidth: document.documentElement.scrollWidth,
+          clientWidth: document.documentElement.clientWidth,
+        }));
 
-  await A.send("Page.navigate", { url: "http://localhost:3000" });
-  await sleep(2800);
-  await diToi(A, "Bài thực hành");
-  const ds = await doTrang(A);
-  ghi("3-assignment", "student", "thấy bài giáo viên giao",
-      "tiêu đề bài hiện ra", `có=${co(ds.text, "Thiết diện S.ABCD")}`,
-      co(ds.text, "Thiết diện S.ABCD"));
+        // Guard against false-green blank screen
+        const nonEmpty = snap.text.trim().length > 100;
+        record("surface-anchor", `${vpTag} non-empty`, "> 100 chars", `${snap.text.trim().length} chars`, nonEmpty);
 
-  await A.ev(`(()=>{const b=document.querySelector('.assignment-card .btn-primary');
-    if(b)b.click();return !!b})()`);
-  await sleep(4500);
-  const baiMo = await doTrang(A);
-  ghi("3-assignment", "student", "mở bài ⇒ xưởng 3D, 0 gọi AI",
-      ".geo3d-xuong + canvas", `xuong=${baiMo.xuong3d} canvas=${baiMo.canvas}`,
-      baiMo.xuong3d === true && baiMo.canvas >= 1);
+        if (routePath === "/") {
+          record(
+            "surface-anchor",
+            `${vpTag} Axo landing identity`,
+            "Contains Axo copy",
+            `hasAxo=${includesFolded(snap.text, "Axo")}`,
+            includesFolded(snap.text, "Axo"),
+          );
+        } else if (routePath === "/app") {
+          record(
+            "surface-anchor",
+            `${vpTag} Workspace shell`,
+            "Has workspace or library navigation",
+            `hasLib=${includesFolded(snap.text, "Thư viện")}`,
+            includesFolded(snap.text, "Thư viện") || includesFolded(snap.text, "Hình học"),
+          );
+        } else {
+          record(
+            "surface-anchor",
+            `${vpTag} Simulation 3D canvas`,
+            ">= 1 Scene3D canvas",
+            `canvasCount=${snap.canvasCount}`,
+            snap.canvasCount >= 1,
+          );
+        }
 
-  await T.send("Page.navigate", { url: "http://localhost:3000" });
-  await sleep(2800);
-  await diToi(T, "Bài đã giao");
-  await T.ev(`(()=>{const b=document.querySelector('.assignment-card .btn-primary');
-    if(b)b.click();return !!b})()`);
-  await sleep(4500);
-  const gvMo = await doTrang(T);
-  ghi("3-assignment", "teacher", "giáo viên mở được bài để dạy",
-      ".geo3d-xuong + dock lớp",
-      `xuong=${gvMo.xuong3d} dock=${co(gvMo.text, "Bắt đầu tiết")
-        || co(gvMo.text, "Theo cô/thầy")}`,
-      gvMo.xuong3d === true);
+        const leakedInformatics = [...LEGACY_INFORMATICS_DOMAINS, ...LEGACY_INFORMATICS_PHRASES].filter((term) =>
+          includesFolded(snap.text, term),
+        );
+        record(
+          "domain-scope",
+          `${vpTag} 0 Informatics terms`,
+          "0 leaked terms",
+          leakedInformatics.length ? leakedInformatics.join(",") : "0",
+          leakedInformatics.length === 0,
+        );
 
-  /* ── 4 · BA BỀ RỘNG ────────────────────────────────────────────────── */
-  console.log("");
-  console.log("━━ SCENARIO 4 — BA BỀ RỘNG ━━");
-  for (const [w, h] of [[1920, 1080], [1536, 864], [1366, 768]]) {
-    for (const [v, vai] of [[T, "teacher"], [A, "student"]]) {
-      await v.send("Emulation.setDeviceMetricsOverride",
-        { width: w, height: h, deviceScaleFactor: 1, mobile: false });
-      await sleep(1200);
-      const d = await v.evj(`JSON.stringify({
-        tran: document.documentElement.scrollWidth > document.documentElement.clientWidth + 1,
-        xuong: !!document.querySelector('.geo3d-xuong'),
-      })`);
-      ghi("4-responsive", vai, `${w}x${h} — không tràn ngang`, "scrollWidth <= clientWidth",
-          `tràn=${d.tran} xuong=${d.xuong}`, d.tran === false);
+        const leakedClassroom = RETIRED_CLASSROOM_LABELS.filter((term) => includesFolded(snap.text, term));
+        record(
+          "option-b-ui",
+          `${vpTag} 0 Classroom UI controls`,
+          "0 retired Classroom labels",
+          leakedClassroom.length ? leakedClassroom.join(",") : "0",
+          leakedClassroom.length === 0,
+        );
+
+        const overflowPx = snap.scrollWidth - snap.clientWidth;
+        record(
+          "responsive-layout",
+          `${vpTag} no horizontal overflow`,
+          "scrollWidth <= clientWidth + 2",
+          `scroll=${snap.scrollWidth} client=${snap.clientWidth} (diff=${overflowPx})`,
+          overflowPx <= 2,
+        );
+      }
     }
+    await context.close();
+  } finally {
+    await browser.close();
   }
-  for (const v of [T, A]) await v.send("Emulation.clearDeviceMetricsOverride");
-} finally {
-  T.dong(); A.dong();
+
+  const failures = rows.filter((r) => !r.pass);
+  const pass = failures.length === 0 && consoleErrors.length === 0 && pageErrors.length === 0;
+  const report = {
+    schema: "axo-product-scope-acceptance/v2-option-b",
+    baseUrl: opts.baseUrl,
+    runAt: new Date().toISOString(),
+    routes,
+    viewports: viewports.map(([w, h]) => `${w}x${h}`),
+    checksTotal: rows.length,
+    checksPassed: rows.length - failures.length,
+    failures,
+    consoleErrors,
+    pageErrors,
+    pass,
+    ...provenance("accept-product-scope", {
+      baseUrl: opts.baseUrl,
+      routes: routes.join(","),
+      viewports: viewports.map(([w, h]) => `${w}x${h}`).join(","),
+    }),
+    rows,
+  };
+
+  writeFileSync(opts.outPath, `${JSON.stringify(report, null, 2)}\n`, "utf-8");
+  process.stdout.write(
+    `${pass ? "[PASS]" : "[FAIL]"} accept-product-scope: ${report.checksPassed}/${report.checksTotal}, consoleErrors=${consoleErrors.length}, pageErrors=${pageErrors.length} -> ${opts.outPath}\n`,
+  );
+  process.exit(pass ? 0 : 1);
 }
 
-const pass = failures.length === 0 && consoleErrors.length === 0;
-writeFileSync(OUT, JSON.stringify({
-  khai: "Nghiệm thu dọn phạm vi sản phẩm — hai tiến trình Chrome, hai kho cookie. "
-      + "Quét TEXT ĐÃ RENDER trên từng trang: danh mục sạch không đảm bảo màn hình sạch.",
-  chayLuc: new Date().toISOString(),
-  contexts: ["teacher", "student"],
-  chuoiCam: { nhanMien: NHAN_CU, cumQuangBa: CUM_CU },
-  ...provenance("accept-product-scope", { contexts: "2" }),
-  rows, failures, consoleErrors, pass,
-}, null, 1) + "\n", "utf-8");
-
-console.log(`\n${pass ? "✓ NGHIỆM THU XANH" : "✗ NGHIỆM THU ĐỎ"} — ${rows.filter((r) => r.pass).length}/${rows.length} · lỗi console ${consoleErrors.length}`);
-console.log(`→ ${OUT}`);
-process.exit(pass ? 0 : 1);
+main().catch((err) => {
+  process.stderr.write(`[ERROR] accept-product-scope failed: ${err?.stack || err}\n`);
+  process.exit(1);
+});

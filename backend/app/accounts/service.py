@@ -13,7 +13,7 @@ from datetime import datetime, timedelta, timezone
 
 from sqlalchemy import select
 
-from ..persistence.classroom_models import AuthSession, ClassMembership, Classroom, User
+from ..persistence.classroom_models import AuthSession, User
 from .passwords import hash_password, verify_password
 from .policy import Role
 
@@ -21,11 +21,6 @@ from .policy import Role
 #: đăng nhập lại giữa hai tiết, đủ ngắn để một máy phòng máy không mở mãi.
 SESSION_TTL = timedelta(days=30)
 SESSION_COOKIE = "algosim_session"
-
-#: Bảng chữ cái của MÃ LỚP: bỏ 0/O/1/I/L để đọc-đọc-lại trên bảng không nhầm.
-#: Học sinh gõ tay mã này, nên cặp ký tự dễ lẫn là lỗi dùng thật, không phải lý thuyết.
-_CODE_ALPHABET = "ABCDEFGHJKMNPQRSTUVWXYZ23456789"
-_CODE_LENGTH = 6
 
 
 def _now() -> datetime:
@@ -158,33 +153,3 @@ def teacher_signup_code() -> str | None:
     """
     code = os.getenv("ALGOSIM_TEACHER_SIGNUP_CODE", "").strip()
     return code or None
-
-
-# ── LỚP ──────────────────────────────────────────────────────────────────────
-
-def generate_join_code(session) -> str:
-    """Mã lớp duy nhất. Thử lại khi đụng — không gắn số thứ tự lớp vào mã.
-
-    Vì sao không dùng id lớp: mã đoán được thì bất kỳ ai cũng vào được lớp bất
-    kỳ. Ngẫu nhiên mật mã trong bảng chữ cái không-mơ-hồ.
-    """
-    for _ in range(20):
-        code = "".join(secrets.choice(_CODE_ALPHABET) for _ in range(_CODE_LENGTH))
-        clash = session.execute(
-            select(Classroom).where(Classroom.join_code == code)
-        ).scalar_one_or_none()
-        if clash is None:
-            return code
-    raise RuntimeError("Không sinh được mã lớp duy nhất.")
-
-
-def normalize_join_code(raw: str) -> str:
-    """Học sinh gõ mã: bỏ khoảng trắng, hoa hết. "abc 123" ≡ "ABC123"."""
-    return "".join((raw or "").split()).upper()
-
-
-def member_ids(session, classroom_id: int) -> frozenset[int]:
-    rows = session.execute(
-        select(ClassMembership.student_id).where(ClassMembership.classroom_id == classroom_id)
-    ).scalars().all()
-    return frozenset(rows)

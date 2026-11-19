@@ -1,0 +1,75 @@
+{
+  "schema_version": "axo-evaluation-run/1",
+  "run_id": "db-safety-root-cause-closure",
+  "task_slug": "axo-database-safety-root-cause-closure-and-main-release-preparation",
+  "date": "2026-11-19",
+  "branch": "feat/axo-geometry-library-verification",
+  "clean_rc_branch": "release/axo-step-editor-db-safe-rc",
+  "merge_base_main": "bb046fa22aceff47abe22aa783aa64fc65caee13",
+  "closure_commit_sha": "0fe3873a4fbeaa95006a6d7a36dea68a0828b1f2",
+  "closure_tree_sha": "e5493ccac443a13228eb8fed46bb2bcd01073932",
+  "product_commit_sha": "2ff70ce455f0b298a7878880ab7eb3fee21cc572",
+  "origin_main_before_and_after": "bb046fa22aceff47abe22aa783aa64fc65caee13",
+  "measured_system_tree_hash": "e0ea792d71667f12911fa7b0425bc4761aabdc337ad605491bc06c33137076a4",
+  "measured_system_file_count": 109,
+  "gates": {
+    "DB_SAFETY": "PASS",
+    "BACKUP_RESTORE": "PASS",
+    "MIGRATION_COMPATIBILITY": "PASS",
+    "CLASSROOM_DEPENDENCIES": "PASS",
+    "RELEASE_SCOPE": "PASS",
+    "GEOMETRY_REGRESSION": "PASS",
+    "STEP_EDITOR": "PASS",
+    "POSTGRES_E2E": "PASS",
+    "FRONTEND": "PASS",
+    "BUILD": "PASS",
+    "BROWSER_VERIFICATION": "PASS",
+    "DOCS_AUDIT": "PASS"
+  },
+  "statuses": {
+    "RELEASE_DECISION": "READY_FOR_OWNER_REVIEW",
+    "RELEASE_GATE": "READY_FOR_OWNER_REVIEW",
+    "MERGE_STATUS": "NOT_MERGED",
+    "PUSH_STATUS": "NOT_PUSHED",
+    "MODEL_STATUS": "MODEL_NOT_TRAINED",
+    "SECRET_REDACTION_AUDIT": "PASS"
+  },
+  "closed_blockers": [
+    "BLOCKER-DB-1",
+    "BLOCKER-DB-2",
+    "GOVERNANCE-SCOPE-1"
+  ],
+  "artifacts": {
+    "formal_report": "AXO-DB-SAFETY-ROOT-CAUSE-CLOSURE-REPORT.md",
+    "report": "report.md",
+    "phase_a_backup_restore": "results/phase-a-db-forensic-and-backup-restore.json",
+    "phase_d_commit_scope": "results/phase-d-commit-scope-governance.json",
+    "phase_e_test_summary": "results/phase-e-test-summary.json",
+    "phase_e_geometry_exactness": "results/phase-e-geometry-exactness.json",
+    "phase_f_browser_phase1": "results/phase-f-browser-e2e-phase1.json",
+    "phase_f_browser_phase2": "results/phase-f-browser-e2e-phase2.json",
+    "phase_f_postgres_live_state": "results/phase-f-postgres-live-state.json",
+    "phase_f_rea_mcp": "results/phase-f-rea-mcp.json",
+    "images": [
+      "images/db-closure-1920-sb-valid.png",
+      "images/db-closure-1920-422-rollback.png",
+      "images/db-closure-1920-cascade-f5.png",
+      "images/db-closure-post-restart.png",
+      "images/db-closure-rea-mcp.png",
+      "images/db-closure-vp-1920x1080.png",
+      "images/db-closure-vp-1440x900.png",
+      "images/db-closure-vp-1366x768.png",
+      "images/db-closure-vp-1024x768.png",
+      "images/db-closure-vp-768x1024.png",
+      "images/db-closure-vp-390x844.png",
+      "images/db-closure-vp-320x568.png",
+      "images/db-closure-vkb-390x460.png"
+    ]
+  },
+  "rea_mcp_evidence": {
+    "list_browser_targets": "ev_8fee1d916af71c7bd4be68d8ca5375774f779961ee3deba273c9ae692634b5be",
+    "inspect_web_page": "ev_3794817351eeaba52fc0aea92256dd060051e95598f6e05cde11d0d8f18b762d",
+    "capture_web_screenshot": "ev_ba95843d6e3daf05c189a9c3a0db2e4bcd93d7537789a286bf1ca718575ed425",
+    "artifact_sha256": "6cb0d56f69c6838fc6ee537158a68be86bb02d9f384647c40b031da3d5780537"
+  }
+}

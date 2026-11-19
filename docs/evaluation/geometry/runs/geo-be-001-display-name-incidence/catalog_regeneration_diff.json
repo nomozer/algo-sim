@@ -1,0 +1,192 @@
+{
+  "ticket": "GEO-BE-001",
+  "repository": "axo-geometry-library (a git worktree of the algo-sim repository, shared .git)",
+  "branch": "feat/axo-geometry-library-verification",
+  "baseline_head": "c7a6077fd",
+  "fix_commit": "5a229507b",
+  "live_ai_calls": 0,
+  "advanced_catalog": {
+    "changes": [
+      {
+        "key": [
+          "chop-thiet-dien-ba-diem",
+          "F"
+        ],
+        "field": "role",
+        "presentation": true,
+        "before": "Giao điểm của SD và mp_MNP",
+        "after": "Giao điểm của SD và (MNP)"
+      },
+      {
+        "key": [
+          "lang-tru-tam-giac-thiet-dien",
+          "E"
+        ],
+        "field": "role",
+        "presentation": true,
+        "before": "Giao điểm của A′B′ và mp_NPQ",
+        "after": "Giao điểm của A′B′ và (NPQ)"
+      },
+      {
+        "key": [
+          "lap-phuong-thiet-dien-bat-ky",
+          "F"
+        ],
+        "field": "role",
+        "presentation": true,
+        "before": "Giao điểm của A′B′ và mp_MNP",
+        "after": "Giao điểm của A′B′ và (MNP)"
+      },
+      {
+        "key": [
+          "lap-phuong-thiet-dien-bat-ky",
+          "Q"
+        ],
+        "field": "role",
+        "presentation": true,
+        "before": "Giao điểm của AA′ và mp_MNP",
+        "after": "Giao điểm của AA′ và (MNP)"
+      }
+    ],
+    "only_presentation": true,
+    "count": 4
+  },
+  "basic_catalog": {
+    "presentation_changes_from_fix": 0,
+    "pre_existing_drift": [
+      {
+        "key": [
+          "thiet-dien-chop",
+          "thiet_dien"
+        ],
+        "field": "steps",
+        "presentation": false,
+        "before": [
+          {
+            "face_index": 1,
+            "a": [
+              "1",
+              "0",
+              "2"
+            ],
+            "b": [
+              "0",
+              "0",
+              "2"
+            ]
+          },
+          {
+            "face_index": 4,
+            "a": [
+              "0",
+              "0",
+              "2"
+            ],
+            "b": [
+              "0",
+              "1",
+              "2"
+            ]
+          },
+          {
+            "face_index": 3,
+            "a": [
+              "0",
+              "1",
+              "2"
+            ],
+            "b": [
+              "1",
+              "1",
+              "2"
+            ]
+          },
+          {
+            "face_index": 2,
+            "a": [
+              "1",
+              "1",
+              "2"
+            ],
+            "b": [
+              "1",
+              "0",
+              "2"
+            ]
+          }
+        ],
+        "after": [
+          {
+            "face_index": 1,
+            "a": [
+              "1",
+              "0",
+              "2"
+            ],
+            "b": [
+              "0",
+              "0",
+              "2"
+            ],
+            "parallel_face_edge": [
+              0,
+              1
+            ]
+          },
+          {
+            "face_index": 4,
+            "a": [
+              "0",
+              "0",
+              "2"
+            ],
+            "b": [
+              "0",
+              "1",
+              "2"
+            ],
+            "parallel_face_edge": [
+              3,
+              0
+            ]
+          },
+          {
+            "face_index": 3,
+            "a": [
+              "0",
+              "1",
+              "2"
+            ],
+            "b": [
+              "1",
+              "1",
+              "2"
+            ],
+            "parallel_face_edge": [
+              2,
+              3
+            ]
+          },
+          {
+            "face_index": 2,
+            "a": [
+              "1",
+              "1",
+              "2"
+            ],
+            "b": [
+              "1",
+              "0",
+              "2"
+            ],
+            "parallel_face_edge": [
+              1,
+              2
+            ]
+          }
+        ]
+      }
+    ],
+    "drift_classification": "PRE_EXISTING_GENERATOR_DRIFT (present when regenerating from clean HEAD code without the fix; section `steps` gain a field) — NOT part of GEO-BE-001, file restored, not committed"
+  }
+}

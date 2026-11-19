@@ -1,0 +1,69 @@
+{
+  "audited_at": "2026-11-19T13:45:59.187864+00:00",
+  "status": "PASS",
+  "pg_database": "algosim_fpa_phase_c",
+  "c2_edits": [
+    {
+      "case": "rename_alpha_to_P",
+      "status": 200,
+      "committed_version": 1,
+      "leaks": 0
+    },
+    {
+      "case": "swap_AB_to_SB_and_hoisted_helper",
+      "status": 200,
+      "committed_version": 2,
+      "hoisted_M_AB_learner_text": "Dựng trung điểm của S và B.",
+      "truc_day_learner_text": "Dựng giao tuyến của (P) và (β).",
+      "leaks": 0
+    },
+    {
+      "case": "reverse_SB_to_AB",
+      "status": 200,
+      "committed_version": 3,
+      "leaks": 0
+    },
+    {
+      "case": "ratio_1_3_plus_downstream_plane_Q_and_section_rebuild",
+      "status": 200,
+      "committed_version": 2,
+      "object_ids_preserved": true,
+      "section_label": "Thiết diện MBPF"
+    }
+  ],
+  "c3_atomicity": [
+    {
+      "case": "422_missing_point_Z",
+      "http_status": 422,
+      "error_code": "MISSING_DEPENDENCY",
+      "draft_preserved": true,
+      "db_committed_scene_sha256_unchanged": true,
+      "db_committed_count_unchanged": 3,
+      "audit_rolled_back_logged": true
+    },
+    {
+      "case": "409_stale_revision_conflict",
+      "http_status": 409,
+      "error_code": "STALE_REVISION_CONFLICT",
+      "db_snapshot_byte_identical": true
+    }
+  ],
+  "sync_rebuilt_event_audit": {
+    "repeat_determinism_5_runs": {
+      "digests_identical": true,
+      "digest": "fb7c6b2f5fd5e197"
+    },
+    "branches_checked": [
+      "updated_ids",
+      "recomputed_ids_with_notation",
+      "recomputed_ids_without_notation",
+      "kept_helpers",
+      "hoist_ev_by_obj",
+      "rebuilt_sections_EXTEND_STEP",
+      "justification_text_and_details"
+    ],
+    "zero_stale_operands": true,
+    "hoisted_M_AB_event_synced": true,
+    "justification_text_renamed_to_P": "Vì (P) cắt (β) theo giao tuyến d"
+  }
+}

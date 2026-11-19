@@ -31,12 +31,12 @@ class TestLuotDungThu:
         assert me["entitlement"]["trialsLeft"] == GUEST_TRIAL_LIMIT
         assert me["entitlement"]["canRunSimulation"] is True
 
-    def test_khach_KHONG_co_quyen_lop_hoc(self, api):
+    def test_khach_KHONG_co_quyen_luu_lich_su_ben_va_khong_con_truong_lop_hoc(self, api):
         ent = api.get("/api/auth/me").json()["entitlement"]
-        assert ent["canJoinClass"] is False
-        assert ent["canOwnClass"] is False
-        assert ent["canReceiveAssignment"] is False
         assert ent["canPersistHistory"] is False
+        assert "canJoinClass" not in ent
+        assert "canOwnClass" not in ent
+        assert "canReceiveAssignment" not in ent
 
     def test_de_bi_TU_CHOI_khong_an_mat_luot_duy_nhat(self, api):
         """Lượt chỉ tính khi RA ĐƯỢC mô phỏng.
