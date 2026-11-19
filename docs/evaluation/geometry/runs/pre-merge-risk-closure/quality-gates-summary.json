@@ -1,0 +1,87 @@
+{
+  "schema_version": "axo-quality-gates-summary/1",
+  "generated_at": "2026-11-19T10:25:55.676845+00:00",
+  "verified_seal_commit": "dbfbcf31256b60f076d8ff4464aac9223a213f09",
+  "product_commit_sha": "600f5105d4222cd6835cc916b34d5cb3f11610e6",
+  "measured_system_tree_hash": "78edfa1784625e9bca8f1a4cd70b60359d198ba77530986903175a57e18206a7",
+  "baseline_report_commit": "86b62adbb63688ad09124eca033535a329c611a7",
+  "baseline_code_commit": "a0f4a516630bb582d982463cd1160f7668154221",
+  "baseline_main_commit": "bb046fa22aceff47abe22aa783aa64fc65caee13",
+  "overall_verdict": "TECHNICALLY_READY_PENDING_OWNER_APPROVAL",
+  "gates": {
+    "BASELINE_86B62ADBB_AUDIT": {
+      "status": "PASS",
+      "detail": "86b62adbb differs from a0f4a5166 by exactly 42 docs/evaluation/geometry/runs/final-release-readiness/ files and 0 product/runtime/test files."
+    },
+    "P0_2_SCHEMA_PARITY_AND_STAMP_SAFETY": {
+      "status": "PASS",
+      "detail": "15 vs 20 tables fully explained (5 retained legacy Classroom tables); 0 catalog diffs across core 15 tables & 20-table paths; migration_preflight & env.py hardened against rogue tables, partial Classroom subset (1..4), and invalid online alembic stamp (commit 014a2fd24); protected algo-sim/backend/algosim.db SHA-256 unchanged."
+    },
+    "P0_3_SEMANTIC_IDENTITY_AND_DEPENDENCY_REBUILD": {
+      "status": "PASS",
+      "detail": "M_AB & mp_tt_AB verified as opaque stable keys across all 9 lifecycle stages (0 semantic ID-parsing hits); 9/9 complex multi-edit & pure-Fraction oracle scenarios passed cleanly."
+    },
+    "P0_4_CLASSROOM_RETIREMENT_IMPACT": {
+      "status": "BLOCKED_OWNERSHIP",
+      "decision_status": "OWNER_DECISION_REQUIRED",
+      "removed_endpoints": 18,
+      "retained_db_tables": 5,
+      "detail": "18 Classroom/Live Session HTTP endpoints removed (6 in accounts/router.py, 5 in classroom_router.py, 7 in session_router.py), 0 active candidate UI callers, 5 legacy DB tables preserved; requires explicit Owner decision Option A vs Option B."
+    },
+    "P0_8_OWNER_DECISION_MATRIX": {
+      "status": "BLOCKED_OWNERSHIP",
+      "decision_status": "PENDING_OWNER_DECISION",
+      "decision_count": 4,
+      "detail": "4 major scope decisions documented with 10 required impact fields each; none self-approved."
+    },
+    "P1_5_SINGLE_WORKER_AND_PG16_CONCURRENCY": {
+      "status": "PASS",
+      "detail": "V1 Uvicorn workers=1 architectural constraint proven & fail-closed (HTTP 503 UNSUPPORTED_MULTI_WORKER_TOPOLOGY); live PG16 load tests at 1/5/20 concurrent sessions (78 valid commits, 26 expected 422s, 0 5xx, 0 lost updates) + 5-thread same-session OCC race + 8 concurrent /api/auth/me health pings (100% 200)."
+    },
+    "P1_6_PERFORMANCE_VARIANCE_ROOT_CAUSE": {
+      "status": "PASS",
+      "detail": "S11 p95 jump (11.748 -> 22.686 ms) proven to be Python Gen-2 cyclic GC pauses (44-84 ms every ~26 calls) + N=30 quantile aliasing; head-to-head GC-OFF (N=120) shows delta_p50=-0.592 ms, delta_p95=-0.324 ms vs 2a44ac92 (zero code regression)."
+    },
+    "P1_7_CAMERA_INVARIANCE_RESPONSIVE_RESTART_REA_MCP": {
+      "status": "PASS",
+      "detail": "Fixed unorbited camera jump (commit 3f3afb25b, maxDeltaPx=0) and cross-context client_seq desync across restarts (commit 600f5105d); orbited camera delta=0; 6 viewports + VKB 390x460 PASS; PG16 restart + post-restart edit v15->v16 PASS; REA MCP passive inspect + screenshot PASS (SHA-256 64513149...)."
+    },
+    "SECTION_9_SEQUENTIAL_REGRESSION_SUITES": {
+      "status": "PASS",
+      "seal_verify_exit": 0,
+      "backend_offline_safety_acceptance_risk": "23 passed, 3 deselected (postgres)",
+      "backend_pg16_safety_integration": "5 passed, 21 deselected",
+      "backend_step_editor_9_files_non_pg": "132 passed, 2 deselected (postgres)",
+      "backend_step_editor_pg_integration": "2 passed, 9 deselected (total 134/134 across 9 Step Editor files)",
+      "backend_semantic_program": "1192 passed, 1 skipped (test_scalar_obligations.py:95 intentional skip)",
+      "frontend_build": "PASS (tsc -b && vite build, 6.08s)",
+      "frontend_vitest": "193 test files, 2277 passed, 0 failed, 0 skipped",
+      "git_merge_simulation_vs_main": "0 conflicts, merge-base --is-ancestor exit 0, 130 commits, 732 files changed"
+    }
+  },
+  "statuses": {
+    "RELEASE_DECISION": "TECHNICALLY_READY_PENDING_OWNER_APPROVAL",
+    "MERGE_STATUS": "NOT_MERGED",
+    "PUSH_STATUS": "NOT_PUSHED",
+    "MODEL_STATUS": "MODEL_NOT_TRAINED",
+    "PRODUCTION_DEPLOYMENT_VERIFIED": "NO",
+    "INDEPENDENT_H1_VALIDATION": "NOT_MEASURED"
+  },
+  "root_cause_fixes": [
+    {
+      "issue_id": "ISSUE-ALEMBIC-STAMP-AND-DRIFT-PREFLIGHT-GAP",
+      "commit": "014a2fd24160b25039f589f5adaf3b762ba985f8",
+      "summary": "Enforce stamp parity, unexpected rogue table drift, and atomic 0-or-5 legacy Classroom retention check in migration_preflight.py and env.py."
+    },
+    {
+      "issue_id": "ISSUE-FE-UNORBITED-CAMERA-JUMP-ON-STEP-EDIT-COMMIT",
+      "commit": "3f3afb25b84bf845267fbda6f6e6c128c6ee502b",
+      "summary": "Preserve live unorbited camera pose and lens viewOffset across same-scene step-edit rebuilds in scene3d-view.tsx and SimulationWorkspace.tsx."
+    },
+    {
+      "issue_id": "ISSUE-SE-CROSS-CONTEXT-CLIENT-SEQ-DESYNC",
+      "commit": "600f5105d4222cd6835cc916b34d5cb3f11610e6",
+      "summary": "Expose persisted latest_client_seq on GET /sessions/{id}/state and 409 EDIT_SUPERSEDED, sync frontend submit seq watermark across fresh contexts, and surface server-side 409 conflicts cleanly."
+    }
+  ]
+}

@@ -1,0 +1,498 @@
+{
+  "commit": "014a2fd24160b25039f589f5adaf3b762ba985f8",
+  "measured_at": "2026-11-19T09:27:27.673406+00:00",
+  "alembic_head": "f8a2c41d9e05",
+  "alembic_revision_chain": [
+    {
+      "revision": "72095b7dd318",
+      "down_revision": null,
+      "script": "72095b7dd318_initial_schema.py",
+      "doc": "initial schema (simulation_cache, simulation_patterns, reuse_metrics)",
+      "created_tables": [
+        "reuse_metrics",
+        "simulation_cache",
+        "simulation_patterns"
+      ],
+      "added_columns": []
+    },
+    {
+      "revision": "f32f9b107b77",
+      "down_revision": "72095b7dd318",
+      "script": "f32f9b107b77_m18_accounts_and_classroom.py",
+      "doc": "m18 accounts and classroom",
+      "created_tables": [
+        "assignments",
+        "auth_sessions",
+        "class_memberships",
+        "classrooms",
+        "practice_sessions",
+        "users"
+      ],
+      "added_columns": []
+    },
+    {
+      "revision": "a1c7e4b90d52",
+      "down_revision": "f32f9b107b77",
+      "script": "a1c7e4b90d52_live_classroom_session.py",
+      "doc": "live classroom session + semantic focus",
+      "created_tables": [
+        "classroom_sessions"
+      ],
+      "added_columns": [
+        "practice_sessions.selected_id",
+        "practice_sessions.last_action",
+        "practice_sessions.help_requested",
+        "practice_sessions.help_requested_at"
+      ]
+    },
+    {
+      "revision": "c4e8a91b2f03",
+      "down_revision": "a1c7e4b90d52",
+      "script": "c4e8a91b2f03_learning_history_entries.py",
+      "doc": "learning history entries per user",
+      "created_tables": [
+        "learning_history_entries"
+      ],
+      "added_columns": []
+    },
+    {
+      "revision": "d5f9b82c3a14",
+      "down_revision": "c4e8a91b2f03",
+      "script": "d5f9b82c3a14_admin_persistence_and_telemetry.py",
+      "doc": "admin persistence and telemetry tables",
+      "created_tables": [
+        "admin_analysis_telemetry",
+        "admin_audit_logs",
+        "admin_system_settings",
+        "user_account_meta"
+      ],
+      "added_columns": []
+    },
+    {
+      "revision": "e437149641fa",
+      "down_revision": "d5f9b82c3a14",
+      "script": "e437149641fa_analysis_usage_ledger.py",
+      "doc": "analysis usage ledger",
+      "created_tables": [
+        "analysis_usage_ledger"
+      ],
+      "added_columns": []
+    },
+    {
+      "revision": "9c4d8e2b7a10",
+      "down_revision": "e437149641fa",
+      "script": "9c4d8e2b7a10_add_step_edit_tables.py",
+      "doc": "add step edit tables",
+      "created_tables": [
+        "step_edit_feedback",
+        "step_edit_revisions",
+        "step_edit_sessions"
+      ],
+      "added_columns": []
+    },
+    {
+      "revision": "f8a2c41d9e05",
+      "down_revision": "9c4d8e2b7a10",
+      "script": "f8a2c41d9e05_remove_classroom_and_live_session_tables.py",
+      "doc": "retain legacy classroom tables on classroom feature retirement",
+      "created_tables": [],
+      "added_columns": []
+    }
+  ],
+  "active_orm_tables_count": 14,
+  "active_orm_tables": [
+    "admin_analysis_telemetry",
+    "admin_audit_logs",
+    "admin_system_settings",
+    "analysis_usage_ledger",
+    "auth_sessions",
+    "learning_history_entries",
+    "reuse_metrics",
+    "simulation_cache",
+    "simulation_patterns",
+    "step_edit_feedback",
+    "step_edit_revisions",
+    "step_edit_sessions",
+    "user_account_meta",
+    "users"
+  ],
+  "retained_legacy_classroom_tables": [
+    "assignments",
+    "class_memberships",
+    "classroom_sessions",
+    "classrooms",
+    "practice_sessions"
+  ],
+  "valid_states_at_f8a2c41d9e05": {
+    "state_20_tables": {
+      "table_count": 20,
+      "composition": "14 active ORM tables + 5 retained legacy Classroom tables + alembic_version",
+      "produced_by": [
+        "alembic upgrade head on empty DB (inherits 5 legacy tables from f32f9b107b77 & a1c7e4b90d52; f8a2c41d9e05 upgrade is non-destructive no-op)",
+        "alembic upgrade head from legacy e437149641fa / 9c4d8e2b7a10 DBs (staging_restored)"
+      ]
+    },
+    "state_15_tables": {
+      "table_count": 15,
+      "composition": "14 active ORM tables + alembic_version (0 legacy Classroom tables)",
+      "produced_by": [
+        "Databases initialized when pre-BLOCKER-DB-1 f8a2c41d9e05 dropped empty Classroom tables (algosim_acceptance, algosim_host)",
+        "ORM Base.metadata.create_all() stamped at f8a2c41d9e05 (core-only runtime schema)"
+      ]
+    },
+    "invalid_intermediate_states": "16..19 tables (1..4 of 5 retained legacy Classroom tables) rejected by migration_preflight as SCHEMA_DRIFT_DETECTED"
+  },
+  "database_summaries": {
+    "algosim_rc_fresh_head": {
+      "table_count": 20,
+      "revs": [
+        "f8a2c41d9e05"
+      ],
+      "tables": [
+        "admin_analysis_telemetry",
+        "admin_audit_logs",
+        "admin_system_settings",
+        "alembic_version",
+        "analysis_usage_ledger",
+        "assignments",
+        "auth_sessions",
+        "class_memberships",
+        "classroom_sessions",
+        "classrooms",
+        "learning_history_entries",
+        "practice_sessions",
+        "reuse_metrics",
+        "simulation_cache",
+        "simulation_patterns",
+        "step_edit_feedback",
+        "step_edit_revisions",
+        "step_edit_sessions",
+        "user_account_meta",
+        "users"
+      ]
+    },
+    "algosim_rc_legacy_migrated": {
+      "table_count": 20,
+      "revs": [
+        "f8a2c41d9e05"
+      ],
+      "tables": [
+        "admin_analysis_telemetry",
+        "admin_audit_logs",
+        "admin_system_settings",
+        "alembic_version",
+        "analysis_usage_ledger",
+        "assignments",
+        "auth_sessions",
+        "class_memberships",
+        "classroom_sessions",
+        "classrooms",
+        "learning_history_entries",
+        "practice_sessions",
+        "reuse_metrics",
+        "simulation_cache",
+        "simulation_patterns",
+        "step_edit_feedback",
+        "step_edit_revisions",
+        "step_edit_sessions",
+        "user_account_meta",
+        "users"
+      ]
+    },
+    "algosim_acceptance_readonly": {
+      "table_count": 15,
+      "revs": [
+        "f8a2c41d9e05"
+      ],
+      "tables": [
+        "admin_analysis_telemetry",
+        "admin_audit_logs",
+        "admin_system_settings",
+        "alembic_version",
+        "analysis_usage_ledger",
+        "auth_sessions",
+        "learning_history_entries",
+        "reuse_metrics",
+        "simulation_cache",
+        "simulation_patterns",
+        "step_edit_feedback",
+        "step_edit_revisions",
+        "step_edit_sessions",
+        "user_account_meta",
+        "users"
+      ]
+    },
+    "algosim_rc_orm_core15": {
+      "table_count": 15,
+      "revs": [
+        "f8a2c41d9e05"
+      ],
+      "tables": [
+        "admin_analysis_telemetry",
+        "admin_audit_logs",
+        "admin_system_settings",
+        "alembic_version",
+        "analysis_usage_ledger",
+        "auth_sessions",
+        "learning_history_entries",
+        "reuse_metrics",
+        "simulation_cache",
+        "simulation_patterns",
+        "step_edit_feedback",
+        "step_edit_revisions",
+        "step_edit_sessions",
+        "user_account_meta",
+        "users"
+      ]
+    }
+  },
+  "table_difference_list_20_vs_15": [
+    {
+      "table": "assignments",
+      "origin_revision": "f32f9b107b77",
+      "category": "RETAINED_LEGACY_CLASSROOM_TABLE",
+      "in_orm_metadata": false,
+      "in_f8_alembic_upgrade_from_base": true,
+      "in_algosim_acceptance": false
+    },
+    {
+      "table": "class_memberships",
+      "origin_revision": "f32f9b107b77",
+      "category": "RETAINED_LEGACY_CLASSROOM_TABLE",
+      "in_orm_metadata": false,
+      "in_f8_alembic_upgrade_from_base": true,
+      "in_algosim_acceptance": false
+    },
+    {
+      "table": "classroom_sessions",
+      "origin_revision": "a1c7e4b90d52",
+      "category": "RETAINED_LEGACY_CLASSROOM_TABLE",
+      "in_orm_metadata": false,
+      "in_f8_alembic_upgrade_from_base": true,
+      "in_algosim_acceptance": false
+    },
+    {
+      "table": "classrooms",
+      "origin_revision": "f32f9b107b77",
+      "category": "RETAINED_LEGACY_CLASSROOM_TABLE",
+      "in_orm_metadata": false,
+      "in_f8_alembic_upgrade_from_base": true,
+      "in_algosim_acceptance": false
+    },
+    {
+      "table": "practice_sessions",
+      "origin_revision": "f32f9b107b77",
+      "category": "RETAINED_LEGACY_CLASSROOM_TABLE",
+      "in_orm_metadata": false,
+      "in_f8_alembic_upgrade_from_base": true,
+      "in_algosim_acceptance": false
+    }
+  ],
+  "catalog_parity_diffs": {
+    "fresh_20_vs_legacy_migrated_20_diff_count": 0,
+    "fresh_20_vs_legacy_migrated_20_diffs": [],
+    "shared_15_tables_fresh20_vs_acceptance15_diff_count": 0,
+    "shared_15_tables_fresh20_vs_acceptance15_diffs": [],
+    "shared_15_tables_acceptance15_vs_orm15_diff_count": 0,
+    "shared_15_tables_acceptance15_vs_orm15_diffs": [],
+    "sequences_fresh_20": [
+      {
+        "name": "admin_analysis_telemetry_id_seq",
+        "data_type": "integer",
+        "start_value": 1,
+        "increment_by": 1
+      },
+      {
+        "name": "admin_audit_logs_id_seq",
+        "data_type": "integer",
+        "start_value": 1,
+        "increment_by": 1
+      },
+      {
+        "name": "analysis_usage_ledger_id_seq",
+        "data_type": "integer",
+        "start_value": 1,
+        "increment_by": 1
+      },
+      {
+        "name": "assignments_id_seq",
+        "data_type": "integer",
+        "start_value": 1,
+        "increment_by": 1
+      },
+      {
+        "name": "auth_sessions_id_seq",
+        "data_type": "integer",
+        "start_value": 1,
+        "increment_by": 1
+      },
+      {
+        "name": "class_memberships_id_seq",
+        "data_type": "integer",
+        "start_value": 1,
+        "increment_by": 1
+      },
+      {
+        "name": "classroom_sessions_id_seq",
+        "data_type": "integer",
+        "start_value": 1,
+        "increment_by": 1
+      },
+      {
+        "name": "classrooms_id_seq",
+        "data_type": "integer",
+        "start_value": 1,
+        "increment_by": 1
+      },
+      {
+        "name": "learning_history_entries_id_seq",
+        "data_type": "integer",
+        "start_value": 1,
+        "increment_by": 1
+      },
+      {
+        "name": "practice_sessions_id_seq",
+        "data_type": "integer",
+        "start_value": 1,
+        "increment_by": 1
+      },
+      {
+        "name": "simulation_cache_id_seq",
+        "data_type": "integer",
+        "start_value": 1,
+        "increment_by": 1
+      },
+      {
+        "name": "simulation_patterns_id_seq",
+        "data_type": "integer",
+        "start_value": 1,
+        "increment_by": 1
+      },
+      {
+        "name": "step_edit_feedback_id_seq",
+        "data_type": "integer",
+        "start_value": 1,
+        "increment_by": 1
+      },
+      {
+        "name": "step_edit_revisions_id_seq",
+        "data_type": "integer",
+        "start_value": 1,
+        "increment_by": 1
+      },
+      {
+        "name": "step_edit_sessions_id_seq",
+        "data_type": "integer",
+        "start_value": 1,
+        "increment_by": 1
+      },
+      {
+        "name": "user_account_meta_id_seq",
+        "data_type": "integer",
+        "start_value": 1,
+        "increment_by": 1
+      },
+      {
+        "name": "users_id_seq",
+        "data_type": "integer",
+        "start_value": 1,
+        "increment_by": 1
+      }
+    ],
+    "sequences_acceptance_15": [
+      {
+        "name": "admin_analysis_telemetry_id_seq",
+        "data_type": "integer",
+        "start_value": 1,
+        "increment_by": 1
+      },
+      {
+        "name": "admin_audit_logs_id_seq",
+        "data_type": "integer",
+        "start_value": 1,
+        "increment_by": 1
+      },
+      {
+        "name": "analysis_usage_ledger_id_seq",
+        "data_type": "integer",
+        "start_value": 1,
+        "increment_by": 1
+      },
+      {
+        "name": "auth_sessions_id_seq",
+        "data_type": "integer",
+        "start_value": 1,
+        "increment_by": 1
+      },
+      {
+        "name": "learning_history_entries_id_seq",
+        "data_type": "integer",
+        "start_value": 1,
+        "increment_by": 1
+      },
+      {
+        "name": "simulation_cache_id_seq",
+        "data_type": "integer",
+        "start_value": 1,
+        "increment_by": 1
+      },
+      {
+        "name": "simulation_patterns_id_seq",
+        "data_type": "integer",
+        "start_value": 1,
+        "increment_by": 1
+      },
+      {
+        "name": "step_edit_feedback_id_seq",
+        "data_type": "integer",
+        "start_value": 1,
+        "increment_by": 1
+      },
+      {
+        "name": "step_edit_revisions_id_seq",
+        "data_type": "integer",
+        "start_value": 1,
+        "increment_by": 1
+      },
+      {
+        "name": "step_edit_sessions_id_seq",
+        "data_type": "integer",
+        "start_value": 1,
+        "increment_by": 1
+      },
+      {
+        "name": "user_account_meta_id_seq",
+        "data_type": "integer",
+        "start_value": 1,
+        "increment_by": 1
+      },
+      {
+        "name": "users_id_seq",
+        "data_type": "integer",
+        "start_value": 1,
+        "increment_by": 1
+      }
+    ]
+  },
+  "difference_explained_and_valid": true,
+  "verified_seal_commit": "dbfbcf31256b60f076d8ff4464aac9223a213f09",
+  "product_commit_sha": "600f5105d4222cd6835cc916b34d5cb3f11610e6",
+  "measured_system_tree_hash": "78edfa1784625e9bca8f1a4cd70b60359d198ba77530986903175a57e18206a7",
+  "root_cause_fixes": [
+    {
+      "issue_id": "ISSUE-ALEMBIC-STAMP-AND-DRIFT-PREFLIGHT-GAP",
+      "commit": "014a2fd24160b25039f589f5adaf3b762ba985f8",
+      "summary": "Enforce stamp parity, unexpected rogue table drift, and atomic 0-or-5 legacy Classroom retention check in migration_preflight.py and env.py."
+    },
+    {
+      "issue_id": "ISSUE-FE-UNORBITED-CAMERA-JUMP-ON-STEP-EDIT-COMMIT",
+      "commit": "3f3afb25b84bf845267fbda6f6e6c128c6ee502b",
+      "summary": "Preserve live unorbited camera pose and lens viewOffset across same-scene step-edit rebuilds in scene3d-view.tsx and SimulationWorkspace.tsx."
+    },
+    {
+      "issue_id": "ISSUE-SE-CROSS-CONTEXT-CLIENT-SEQ-DESYNC",
+      "commit": "600f5105d4222cd6835cc916b34d5cb3f11610e6",
+      "summary": "Expose persisted latest_client_seq on GET /sessions/{id}/state and 409 EDIT_SUPERSEDED, sync frontend submit seq watermark across fresh contexts, and surface server-side 409 conflicts cleanly."
+    }
+  ]
+}
