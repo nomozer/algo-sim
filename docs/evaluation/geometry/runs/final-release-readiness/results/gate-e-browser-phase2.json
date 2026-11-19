@@ -1,0 +1,18 @@
+{
+  "status": "PASS",
+  "verifiedAt": "2026-11-19T08:17:12.938Z",
+  "sessionIdPublicPrefix": "se-be5cdbf3-sa…",
+  "stateHttpStatus": 200,
+  "found": true,
+  "committedVersion": 10,
+  "revisionCount": 10,
+  "backendMXyzAfterRestart": [
+    "0",
+    "0",
+    "9/2"
+  ],
+  "uiStepRowAfterRestart": "6\nLấy điểm M thuộc SA sao cho SM/SA = 1/4",
+  "consoleErrors": [],
+  "pageErrors": [],
+  "screenshot": "images/final-readiness-post-restart.png"
+}

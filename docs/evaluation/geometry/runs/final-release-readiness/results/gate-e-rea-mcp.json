@@ -1,0 +1,38 @@
+{
+  "list_browser_targets_ev": "ev_6b939fff27994a5244fe0a4c6665babb41aa5b5bad6e1d88b1fc364cc6fb86a0",
+  "inspect_web_page_ev": "ev_06015a0f6f1a2f5cfbe05bd7709ffeb3c35742360c4a85f270e044fbb30d7e42",
+  "capture_web_screenshot_ev": "ev_973b14770495dac5c29bf584f6bdc09a75159ae0caeca44a62dbd9f0ea52aa31",
+  "page_url": "http://localhost:3001/simulation/pyramid-circumscribed-sphere",
+  "page_title": "Mô phỏng hình học 3D | Axo",
+  "viewport": {
+    "width": 1440,
+    "height": 900
+  },
+  "console_events_count": 3,
+  "console_error_count": 0,
+  "network_requests_count": 0,
+  "storage_summary": {
+    "origin": "http://localhost:3001",
+    "usage_bytes": 0,
+    "quota_bytes": 1114175228,
+    "local_storage_keys": [
+      "algosim.processing_records.v1",
+      "axo:client-session-id:v1",
+      "algosim.history.v1:h198csmj"
+    ],
+    "session_storage_keys": [
+      "algosim.processing_records.v1",
+      "algosim.workspace_tabs_session.v1",
+      "axo:learner-recovery:v1"
+    ],
+    "indexed_db_names": [],
+    "cache_names": [],
+    "content_fingerprints": [],
+    "fingerprint_algorithm": "sha256",
+    "fingerprints_complete": false,
+    "values_redacted": true
+  },
+  "screenshot_path": "images/final-readiness-rea-mcp.png",
+  "screenshot_bytes": 150127,
+  "artifact_sha256": "64513149a1cef8ea1d37aaf9bdbd5994a1507dbdacd32044807ac075fe3a4db4"
+}

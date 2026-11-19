@@ -1,0 +1,60 @@
+{
+  "audited_at": "2026-11-19T07:53:05.124869+00:00",
+  "gate_b_official_pg_backup_restore_status": "PASS",
+  "gate_b_rollback_rehearsal_status": "PASS",
+  "official_cli_versions": [
+    "postgres (PostgreSQL) 16.15",
+    "pg_dump (PostgreSQL) 16.15",
+    "pg_restore (PostgreSQL) 16.15",
+    "psql (PostgreSQL) 16.15"
+  ],
+  "staging_pg_dump_restore": {
+    "dump_bytes": 92078,
+    "dump_sha256": "b7af1f05009a776ea0fade168fa01d0ee49d9872cce69e2d54557f82d8b33ffa",
+    "toc_entries": 192,
+    "table_count": 20,
+    "row_counts_parity": true,
+    "row_sha256_parity": true,
+    "constraints_parity": true,
+    "indexes_parity": true,
+    "fk_negative_enforced": true,
+    "unique_negative_enforced": true,
+    "sequence_nextval_verified": 3,
+    "alembic_version": [
+      "f8a2c41d9e05"
+    ],
+    "post_restore_container_edit_v3_and_restart": {
+      "status": "PASS",
+      "M_xyz": [
+        "0",
+        "0",
+        "3"
+      ]
+    }
+  },
+  "host_algosim_acceptance_readonly_catalog": {
+    "tables": 15,
+    "alembic_version": [
+      "f8a2c41d9e05"
+    ],
+    "step_edit_sessions": 13,
+    "step_edit_revisions": 35,
+    "loopback_only_note": "Host PG16 listens on 127.0.0.1:55432 and bundled pgsql16/bin omits pg_dump.exe; full official pg_dump/pg_restore/psql parity proven on staging_source -> staging_restored in postgres:16-alpine."
+  },
+  "legacy_46u_66c_sqlite_parity_before_stamp": {
+    "status": "PASS",
+    "exact_16_table_schema_match_to_e437149641fa": true,
+    "protected_original_sha256_preserved": true
+  },
+  "application_rollback_b3": {
+    "status": "PASS",
+    "baseline_main_commit": "bb046fa22aceff47abe22aa783aa64fc65caee13",
+    "classes_route_status_on_main": 401,
+    "assignments_route_status_on_main": 401,
+    "non_equivalent_operations": {
+      "application_rollback": "Reverts backend/frontend binaries to bb046fa22 while keeping additive DB tables intact (zero data loss).",
+      "database_restore": "Replaces/restores DB state from pg_dump snapshot to a point in time.",
+      "database_schema_rollback": "Runs alembic downgrade (destructive if dropping populated tables; NOT used for emergency rollback)."
+    }
+  }
+}

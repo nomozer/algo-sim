@@ -1,0 +1,79 @@
+{
+  "schema_version": "axo-evaluation-run/1",
+  "run_id": "final-release-readiness",
+  "task_slug": "axo-final-release-readiness-docker-pg-closure-and-merge-prep",
+  "date": "2026-11-19",
+  "verification_branch": "release/axo-final-release-readiness",
+  "baseline_acceptance_branch": "release/axo-pre-merge-final-acceptance",
+  "baseline_acceptance_report_commit": "e022666343189e19b9c0dfd139e45a2b50dd3d6d",
+  "baseline_acceptance_code_commit": "2a44ac92125a1c2df8017dcfa909d0124365d871",
+  "preserved_rc_branch": "feat/axo-geometry-library-verification",
+  "preserved_rc_sha": "aa860d7def12c03c05907e56e5fdca385b1e8dd2",
+  "merge_base_main": "bb046fa22aceff47abe22aa783aa64fc65caee13",
+  "origin_main": "bb046fa22aceff47abe22aa783aa64fc65caee13",
+  "product_fix_commit_sha": "ccedfabdb3deb67563a6bf4bc42d00b793c844c9",
+  "code_verified_commit_sha": "a0f4a516630bb582d982463cd1160f7668154221",
+  "code_verified_tree_sha": "2510c29e57db9737c0cb111b1c8e7302b747a50b",
+  "measured_system_tree_hash": "ea6626e7a205e33a14a6229fa9b4586b27ebda1619bfce516db0437b8e79ec90",
+  "measured_system_file_count": 109,
+  "cache_version": "132",
+  "gates": {
+    "GATE_A_DOCKER_RUNTIME": "PASS",
+    "GATE_B_OFFICIAL_PG_BACKUP_RESTORE": "PASS",
+    "GATE_B_ROLLBACK_AND_LEGACY_PARITY": "PASS",
+    "GATE_C_SCOPE_AUDIT": "BLOCKED_OWNERSHIP",
+    "GATE_C_MERGE_SIMULATION": "PASS",
+    "GATE_D1_D3_STEP_EDITOR_REGRESSION": "PASS",
+    "GATE_D4_INDEPENDENT_GEOMETRY_ORACLE": "PASS",
+    "GATE_E_LIVE_HOST_RESPONSIVE_BROWSER_AND_REA_MCP": "PASS",
+    "GATE_F1_TEST_INTEGRITY_AND_AUDIT": "PASS",
+    "GATE_F2_PERFORMANCE_COMPARISON": "PASS",
+    "DOCS_INFORMATION_ARCHITECTURE_AUDIT": "PASS"
+  },
+  "statuses": {
+    "RELEASE_DECISION": "TECHNICALLY_READY_PENDING_OWNER_APPROVAL",
+    "MERGE_STATUS": "NOT_MERGED",
+    "PUSH_STATUS": "NOT_PUSHED",
+    "MODEL_STATUS": "MODEL_NOT_TRAINED",
+    "PRODUCTION_DEPLOYMENT_VERIFIED": "NO",
+    "INDEPENDENT_H1_VALIDATION": "NOT_MEASURED",
+    "SECRET_REDACTION_AUDIT": "PASS"
+  },
+  "root_cause_fixes": [
+    "ISSUE-SE-ABSORBED-HELPER-AND-HOISTED-EVENT-SYNC"
+  ],
+  "artifacts": {
+    "formal_report": "AXO-FINAL-RELEASE-READINESS-REPORT.md",
+    "report": "report.md",
+    "gate_a": "results/gate-a-docker-runtime.json",
+    "gate_b": "results/gate-b-official-pg-backup-restore.json",
+    "gate_c": "results/gate-c-scope-and-merge-simulation.json",
+    "gate_d4_oracle": "results/gate-d4-independent-oracle.json",
+    "gate_e_phase1": "results/gate-e-browser-phase1.json",
+    "gate_e_phase2": "results/gate-e-browser-phase2.json",
+    "gate_e_rea_mcp": "results/gate-e-rea-mcp.json",
+    "gate_e_pg_survival": "results/gate-e-postgres-survival.json",
+    "gate_f1_tests": "results/gate-f1-test-integrity.json",
+    "gate_f2_perf": "results/gate-f2-performance-comparison.json",
+    "images": [
+      "images/final-readiness-1920-sb-rename-P.png",
+      "images/final-readiness-1920-422-rollback.png",
+      "images/final-readiness-1920-cascade-f5.png",
+      "images/final-readiness-post-restart.png",
+      "images/final-readiness-vkb-390x460.png",
+      "images/final-readiness-vp-1920x1080.png",
+      "images/final-readiness-vp-1440x900.png",
+      "images/final-readiness-vp-1280x800.png",
+      "images/final-readiness-vp-768x1024.png",
+      "images/final-readiness-vp-390x844.png",
+      "images/final-readiness-vp-320x568.png",
+      "images/final-readiness-rea-mcp.png"
+    ]
+  },
+  "rea_mcp_evidence": {
+    "list_browser_targets": "ev_6b939fff27994a5244fe0a4c6665babb41aa5b5bad6e1d88b1fc364cc6fb86a0",
+    "inspect_web_page": "ev_06015a0f6f1a2f5cfbe05bd7709ffeb3c35742360c4a85f270e044fbb30d7e42",
+    "capture_web_screenshot": "ev_973b14770495dac5c29bf584f6bdc09a75159ae0caeca44a62dbd9f0ea52aa31",
+    "artifact_sha256": "64513149a1cef8ea1d37aaf9bdbd5994a1507dbdacd32044807ac075fe3a4db4"
+  }
+}
