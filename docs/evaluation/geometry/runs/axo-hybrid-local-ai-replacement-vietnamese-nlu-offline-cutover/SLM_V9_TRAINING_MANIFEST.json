@@ -1,0 +1,78 @@
+{
+  "schema": "slm-v9-training-data-manifest/1",
+  "generated_at_utc": "2026-11-19T06:23:09.816061+00:00",
+  "external_ai_calls": 0,
+  "schema_version": "slm-compact-clause/1",
+  "closure_mode": "v9",
+  "storage_location_outside_git": "C:\\Users\\Bunny\\AppData\\Local\\axo-slm\\training\\datasets_v9",
+  "sealed_corpora_opened": false,
+  "splits": {
+    "train": {
+      "path": "C:\\Users\\Bunny\\AppData\\Local\\axo-slm\\training\\datasets_v9\\train_v9.jsonl",
+      "sha256": "4432a5c7bb470750df84c5d8eaa1cde9212849e1cd0f354af8954aa05a882342",
+      "total": 474,
+      "positives": 386,
+      "negatives": 88,
+      "families": {
+        "TR11_NEG_AMBIG_SINGULAR_AND_COND": 24,
+        "TR03_RIGHT_ISO_TRI_FACE_PERP": 26,
+        "TR14_CONVERSATIONAL_AND_REORDERED": 24,
+        "TR08_TRAPEZOID_PARA_PYR": 24,
+        "TR12_NEG_CONTRA_NEGATED_IMPOSSIBLE": 24,
+        "TR05_PROJ_ONTO_EDGE_AND_FACE_ALT": 24,
+        "TR06_MIDPOINT_CENTROID_COMPOSITE": 24,
+        "TR13_NEG_MISSING_DIM_AND_OOS": 24,
+        "TR9_MULTI_GOAL_2_3_4": 36,
+        "TR02_RHOM_BASE_ANGLE_PYR": 28,
+        "TR01_RECT_BASE_PERP_VOL_DIST": 28,
+        "TR10_RATIO_DIV_EQ_LEN": 20,
+        "TR9_TETRA_ORTHO_CENT": 30,
+        "TR9_BIET_SHAPE_WITHOUT_DAY": 20,
+        "TR9_CUBE_PRISM_AUX_LEN": 30,
+        "TR04_REG_PYR_DUAL_LEN_ANG": 24,
+        "TR07_PRISM_AND_CUBOID_MULTI": 24,
+        "TR09_SKEW_AND_PT_LINE_DIST_AREA": 24,
+        "TR9_HARD_NEGATIVE_CALIBRATION": 16
+      }
+    },
+    "val": {
+      "path": "C:\\Users\\Bunny\\AppData\\Local\\axo-slm\\training\\datasets_v9\\val_v9.jsonl",
+      "sha256": "86e25ae9561ff878fe2a453ed40d4f80f5721e742935c6e7534170710bdc42e8",
+      "total": 126,
+      "positives": 94,
+      "negatives": 32,
+      "families": {
+        "VL01_FACE_PERP_RECT_ANG_DIST": 24,
+        "VL02_RHOM_MID_SKEW_DIST": 24,
+        "VL03_PRISM_PROJ_AREA": 20,
+        "VL04_MIXED_NEG_ADVERSARIAL": 24,
+        "VL9_MULTI_GOAL_DISJOINT": 14,
+        "VL9_TETRA_PRISM_RECT_DISJOINT": 12,
+        "VL9_NEG_DISJOINT": 8
+      }
+    }
+  },
+  "anti_leakage_audit": {
+    "external_corpora_checked": 565,
+    "includes_corpora": [
+      "C60_BLIND_NLU",
+      "COMP112",
+      "DEV37",
+      "DEV_CALIBRATION_16",
+      "EXTERNAL17_REAL_TRANSCRIPTIONS",
+      "HOLDOUT_40",
+      "NC_NL",
+      "PROBES39",
+      "REAL27",
+      "S2_36",
+      "SLM_NEW_HOLDOUT_48",
+      "SLM_V7_HOLDOUT_112"
+    ],
+    "exact_normalized_overlaps_external": 0,
+    "structural_skeleton_overlaps_external": 0,
+    "max_4gram_jaccard_external": 0.3611,
+    "closest_external_pair": "tr07_159~HOLDOUT_40",
+    "train_val_family_overlaps": 0,
+    "train_val_structural_skeleton_overlaps": 0
+  }
+}

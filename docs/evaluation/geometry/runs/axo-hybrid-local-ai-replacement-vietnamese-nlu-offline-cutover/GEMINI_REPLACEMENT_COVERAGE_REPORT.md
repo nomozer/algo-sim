@@ -1,0 +1,19 @@
+# AXO HYBRID /9 — Gemini Dependency Audit & Replacement Coverage Report
+
+- **Surfaces Audited:** `9` across `backend/app/**` (`11` token-matching files) & `frontend/src/**` (`4` token-matching files)
+- **Migration Distribution:** `{'REPLACE_WITH_LOCAL': 3, 'DISABLE_AS_UNSUPPORTED': 2, 'REPLACE_WITH_DETERMINISTIC': 1, 'RETAIN_CODE_DISABLED': 2, 'OUTSIDE_APPROVED_SCOPE': 1}`
+- **Rule Followed (§18 & §23):** Locked Gemini modules (`gemini.py`, `function_calling.py`, `fact_extraction.py`, `typed_fact_next_extraction.py`, `skills/*.md`) are kept `RETAIN_CODE_DISABLED` on local-only paths rather than deleted prematurely, preserving locked extraction surface hashes (`33197a45…`) and instant rollback.
+
+## Replacement Map
+
+| ID | Surface | Ownership | Classification | Local Replacement / Disposition |
+|---|---|---|---|---|
+| `GEM-01` | POST /api/analyze (default HYBRID_ROUTE_MODE=live) | `OWNED_FOR_LOCAL_ONLY_OPT_IN (default 'live' flip requires owner cutover approval)` | `REPLACE_WITH_LOCAL` | HYBRID_ROUTE_MODE=local-only-scoped / local-first-slm (`LocalSlmHybridRun` -> Local Parser -> slm-verified-normalizer/3 -> local-slm-extractor/4 -> Source Gate -> Planner /26 -> Kernel /24) |
+| `GEM-02` | POST /api/analyze (HYBRID_ROUTE_MODE=local-first with Gemini fallback) | `OWNED_EDITABLE` | `REPLACE_WITH_LOCAL` | Local Parser + slm-verified-normalizer/3 + Local Qwen3 SLM + slm-grounding-validator/4 (`local-only-scoped` / `offline-lab`, zero Gemini fallback) |
+| `GEM-03` | POST /api/analyze legacy `input.type == 'image'` handler inside `ingest_to_text` | `OWNED_FOR_LOCAL_ONLY_OPT_IN` | `DISABLE_AS_UNSUPPORTED` | Already blocked at `_analyze_once`; local-only modes force `api_key=None` into `ingest_to_text` as defense-in-depth. |
+| `GEM-04` | POST /api/input/prepare (Unified Photo/PDF/DOCX -> Vision Fallback) | `OWNED_FOR_LOCAL_ONLY_OPT_IN` | `REPLACE_WITH_DETERMINISTIC` | Local deterministic CV cropper + `run_local_ocr_route` (Paddle/RapidOCR + Tesseract/VietOCR + span confirmation); PDF/DOCX text+OMML are 100% deterministic. |
+| `GEM-05` | POST /api/image/extract (Legacy Tier-A Vision Endpoint) | `OWNED_FOR_LOCAL_ONLY_OPT_IN` | `DISABLE_AS_UNSUPPORTED` | Disable cloud VLM in local-only modes (HTTP `503 LOCAL_ONLY_CLOUD_VISION_DISABLED`, directing callers to `/api/input/prepare` local OCR). |
+| `GEM-06` | Locked Gemini Extraction Surface Modules (`gemini.py`, `function_calling.py`, `fact_extraction.py`, `typed_fact_next_extraction.py`) | `LOCKED_SURFACE (`BLOCKED_OWNERSHIP`)` | `RETAIN_CODE_DISABLED` | Retained untouched in codebase (`RETAIN_CODE_DISABLED` when local-only active) so rollback to `live` remains instant and locked hashes stay invariant. |
+| `GEM-07` | Gemini Skills (`backend/app/ai/skills/*.md` — `transcribe.md`, `typed_fact_next*`, etc.) | `LOCKED_SURFACE (`cache_identity.lock.json` depends on skill hashes)` | `RETAIN_CODE_DISABLED` | Compact Chinese/Vietnamese system prompt in `local_slm_extractor.py` for Local Qwen3 SLM. |
+| `GEM-08` | Health & Runtime Diagnostics (`GET /api/health`, `GET /api/diagnostics/runtime`, `accounts/router.py` admin overview) | `Backend owned (`main.py`), `frontend/**` (`AuthGate.tsx`, `ProblemInput.tsx`) BLOCKED_OWNERSHIP` | `REPLACE_WITH_LOCAL` | Expose `localOnlyMode`, `localSlmReady`, `localSlmModel`, `extractionBackend`, `aiAvailable` in `/api/health` while keeping `hasKey` truthful (`bool(GEMINI_API_KEY)`) and delivering frontend UX patch via `handoff/`. |
+| `GEM-09` | Frontend Composer & AuthGate (`hasKey` / `MISSING_API_KEY` UX) | `BLOCKED_OWNERSHIP (separate `axo-geometry-library` worktree `0fe3873a4`)` | `OUTSIDE_APPROVED_SCOPE` | Respect `health.aiAvailable` / `health.localOnlyMode && health.localSlmReady` and handle local SLM 503 states (`MODEL_RUNTIME_UNAVAILABLE`, `LOCAL_SLM_BUSY`, `LOCAL_SLM_TIMEOUT`). |

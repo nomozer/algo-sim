@@ -17,9 +17,14 @@ from app.ai.local_slm_runtime import (  # noqa: E402
     COMPARATOR_LOCAL_SLM_MODEL_KEY,
     DEFAULT_LOCAL_SLM_MODEL_KEY,
     FINETUNED_LOCAL_SLM_MODEL_KEY,
+    V9_LOCAL_SLM_MODEL_KEY,
     LocalSlmRuntime,
     LocalSlmRuntimeError,
     ensure_local_slm_provisioned,
+    read_active_local_slm_model_key,
+    resolve_local_slm_cache_dir,
+    resolve_local_slm_model_spec,
+    write_active_local_slm_model_key,
 )
 
 _SMOKE_SCHEMA = {
@@ -39,13 +44,55 @@ def _resolve_model_keys(selector: str) -> list[str]:
         return [DEFAULT_LOCAL_SLM_MODEL_KEY, COMPARATOR_LOCAL_SLM_MODEL_KEY]
     if norm == "all_with_v7":
         return [DEFAULT_LOCAL_SLM_MODEL_KEY, FINETUNED_LOCAL_SLM_MODEL_KEY, COMPARATOR_LOCAL_SLM_MODEL_KEY]
+    if norm in {"all_with_v9", "all_v9"}:
+        return [DEFAULT_LOCAL_SLM_MODEL_KEY, FINETUNED_LOCAL_SLM_MODEL_KEY, V9_LOCAL_SLM_MODEL_KEY, COMPARATOR_LOCAL_SLM_MODEL_KEY]
     if norm == "primary":
         return [DEFAULT_LOCAL_SLM_MODEL_KEY]
     if norm in {"finetuned", "v7", "axo-v7"}:
         return [FINETUNED_LOCAL_SLM_MODEL_KEY]
+    if norm in {"v9", "axo-v9", "v9-default"}:
+        return [V9_LOCAL_SLM_MODEL_KEY]
+    if norm in {"active", "v9-active"}:
+        return [read_active_local_slm_model_key() or V9_LOCAL_SLM_MODEL_KEY]
     if norm == "comparator":
         return [COMPARATOR_LOCAL_SLM_MODEL_KEY]
     return [selector.strip()]
+
+
+def _collect_status(*, cache_dir: str | None, verify_hashes: bool) -> dict:
+    root = resolve_local_slm_cache_dir(cache_dir)
+    active_key = read_active_local_slm_model_key(cache_dir) or V9_LOCAL_SLM_MODEL_KEY
+    models_status: dict[str, dict] = {}
+    all_core_ok = True
+    for key in (DEFAULT_LOCAL_SLM_MODEL_KEY, FINETUNED_LOCAL_SLM_MODEL_KEY, V9_LOCAL_SLM_MODEL_KEY):
+        try:
+            prov = ensure_local_slm_provisioned(
+                model_key=key,
+                cache_dir=cache_dir,
+                allow_download=False,
+                force_rehash=verify_hashes,
+            )
+            models_status[key] = {
+                "provisioned": True,
+                "sha256": prov.model_spec.sha256,
+                "model_path": str(prov.model_path),
+                "server_executable": str(prov.server_executable),
+            }
+        except LocalSlmRuntimeError as exc:
+            models_status[key] = {
+                "provisioned": False,
+                "reason_code": exc.reason_code,
+                "detail": exc.detail,
+            }
+            if key in (active_key, V9_LOCAL_SLM_MODEL_KEY):
+                all_core_ok = False
+    return {
+        "ok": all_core_ok,
+        "cache_dir": str(root),
+        "active_model_key": active_key,
+        "explicit_active_override": read_active_local_slm_model_key(cache_dir),
+        "models": models_status,
+    }
 
 
 def main(argv: list[str] | None = None) -> int:
@@ -53,7 +100,7 @@ def main(argv: list[str] | None = None) -> int:
     parser.add_argument(
         "--model",
         default="primary",
-        help="Model key ('primary', 'comparator', 'all', or explicit model_key).",
+        help="Model key ('primary', 'v7', 'v9', 'active', 'comparator', 'all', 'all_v9', or explicit model_key).",
     )
     parser.add_argument("--cache-dir", default=None, help="Override LOCAL_SLM_CACHE_DIR.")
     parser.add_argument(
@@ -76,8 +123,68 @@ def main(argv: list[str] | None = None) -> int:
         action="store_true",
         help="Include llama-server.exe --help flag grep in output.",
     )
+    parser.add_argument("--status", action="store_true", help="Report current active model and local cache readiness.")
+    parser.add_argument("--verify", action="store_true", help="Strictly rehash and verify active + frozen local models.")
+    parser.add_argument("--activate", default=None, help="Verify and activate a local SLM model key (e.g., 'v9', 'v7').")
+    parser.add_argument(
+        "--rollback",
+        nargs="?",
+        const=FINETUNED_LOCAL_SLM_MODEL_KEY,
+        default=None,
+        help="Verify and roll back the active local model (default: qwen3-0.6b-axo-v7-q4_k_m).",
+    )
     parser.add_argument("--json", action="store_true", help="Print JSON output.")
     args = parser.parse_args(argv)
+
+    if args.activate is not None or args.rollback is not None:
+        target_sel = args.activate if args.activate is not None else args.rollback
+        action = "activate" if args.activate is not None else "rollback"
+        try:
+            spec = resolve_local_slm_model_spec(target_sel)
+            prov = ensure_local_slm_provisioned(
+                model_key=spec.model_key,
+                cache_dir=args.cache_dir,
+                allow_download=False,
+                force_rehash=True,
+            )
+            state_path = write_active_local_slm_model_key(
+                spec.model_key,
+                reason=f"cli_{action}",
+                cache_dir=args.cache_dir,
+            )
+            payload = {
+                "ok": True,
+                "action": action,
+                "active_model_key": spec.model_key,
+                "sha256": spec.sha256,
+                "model_path": str(prov.model_path),
+                "state_file": str(state_path),
+            }
+            if args.json:
+                print(json.dumps(payload, indent=2, ensure_ascii=False))
+            else:
+                print(f"[OK] {action}: active={spec.model_key} sha256={spec.sha256[:16]}... state={state_path}")
+            return 0
+        except LocalSlmRuntimeError as exc:
+            payload = {"ok": False, "action": action, "reason_code": exc.reason_code, "detail": exc.detail}
+            print(json.dumps(payload, indent=2, ensure_ascii=False))
+            return 2
+
+    if args.status or args.verify:
+        status_payload = _collect_status(cache_dir=args.cache_dir, verify_hashes=bool(args.verify or args.force_rehash))
+        if args.json:
+            print(json.dumps(status_payload, indent=2, ensure_ascii=False))
+        else:
+            print(
+                f"[{'OK' if status_payload['ok'] else 'FAIL'}] active={status_payload['active_model_key']} "
+                f"cache={status_payload['cache_dir']}"
+            )
+            for mk, info in status_payload["models"].items():
+                if info.get("provisioned"):
+                    print(f"  - {mk}: READY sha256={str(info['sha256'])[:16]}...")
+                else:
+                    print(f"  - {mk}: MISSING ({info.get('reason_code')})")
+        return 0 if status_payload["ok"] else 2
 
     results: list[dict] = []
     help_flags: list[str] = []

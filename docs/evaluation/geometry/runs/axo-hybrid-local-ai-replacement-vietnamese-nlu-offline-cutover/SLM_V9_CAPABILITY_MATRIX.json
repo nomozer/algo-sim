@@ -1,0 +1,63 @@
+{
+  "schema": "slm-v9-capability-matrix/1",
+  "generated_at_utc": "2026-11-19T10:54:26.088783+00:00",
+  "external_ai_calls": 0,
+  "model_evaluated": "qwen3-0.6b-axo-v9-q4_k_m",
+  "measured_corpora": {
+    "val_v9_disjoint_126": {
+      "positives": "94/94 (100.00%)",
+      "negatives": "32/32 (100.00%)",
+      "wrong_served": 0
+    },
+    "c60_blind_nlu": {
+      "positives": "32/42",
+      "arm_b_gold_canon_solvable": "33/42",
+      "wrong_served": 0
+    },
+    "external17": {
+      "positives": "12/12",
+      "negatives_or_oos": "5/5",
+      "wrong_served": 0
+    },
+    "slm_v9_unseen_150": {
+      "positives": "94/105",
+      "negatives": "45/45",
+      "wrong_served": 0,
+      "external_independence": "NOT_MEASURED"
+    }
+  },
+  "supported_and_validated": [
+    "Polyhedral solids (3/4-sided pyramids incl. regular/equilateral/isosceles/right/right-iso/rect/rhom/para bases, orthogonal/regular tetrahedra, right/regular prisms, cuboids, cubes) with Source Gate + Exact Kernel /24 proofs",
+    "Auxiliary entities (mid, cent, proj, div, face_perp) & multi-goal up to 4 goals (vol, len, dist_pt_plane, dist_pt_line, dist_line_line, ang_lp, ang_pp, ang_ll)",
+    "Colloquial headers/punctuation, diacriticless variants (VN11), unitless numerals (VN08), .docx and clean text-layer PDF ingestion with 0 cloud calls",
+    "Fail-closed refusals on missing data, ambiguity, negated/contradictory premises, non-positive quantities, OOS curved/analytic/calculus/code, typos, and prompt injections"
+  ],
+  "experimental": [
+    "Open-vocabulary general phrasing outside verified Source Gate surface templates (`local-only-general`, gated by `AXO_ALLOW_GENERAL_LOCAL_CUTOVER=1` until owner cutover + external validation)",
+    "`local-shadow` parity telemetry logging on owner dev/staging environments (cloud remains authoritative unless explicitly switched)"
+  ],
+  "unsupported": [
+    "Multimodal cloud vision OCR in `local-only-*` / `offline-lab` (`503 LOCAL_ONLY_CLOUD_VISION_DISABLED`, requires user span confirmation or local deterministic OCR)",
+    "Spheres, cones, cylinders, Oxyz analytic geometry, calculus, 2D planar geometry without polyhedral host, and quadratic edge expressions (`SC²`)",
+    "Unverified conversational prefix grammar locked behind owner Source Gate (`registry.py::atomic_forms` — patch in `handoff/source_gate_optional_grammar.patch`)"
+  ],
+  "not_measured": [
+    "`EXTERNAL_INDEPENDENCE = NOT_MEASURED` (`sealed_H1` and `locked_W2_W3` unopened; no live third-party student log corpus)",
+    "`PHYSICAL_TARGET_HARDWARE = NOT_MEASURED` (measured on 15.78 GiB Win32 host + simulated 2-thread CPU cap, not physical 4/6/8 GiB student devices)",
+    "`GEMINI_PARITY = NOT_MEASURED` (zero external cloud AI calls authorized/run in `/9`) and `REAL_STUDENT_USABILITY = NOT_MEASURED`"
+  ],
+  "supported_locally_verified": [
+    "Polyhedral solids: pyramids (3/4-sided bases, regular/equilateral/isosceles/right/right-iso/rect/rhom/para), orthogonal/regular tetrahedra, right/regular prisms, cuboids, cubes",
+    "Auxiliary entities: midpoints, centroids, orthogonal projections, segment ratio divisions (div), face perpendicularity",
+    "Measurements: volume, segment lengths, point-to-plane/point-to-line/skew-line distances, line-plane/plane-plane/line-line angles",
+    "Multi-goal extraction up to 4 goals per problem (`vol`, `len`, `dist_*`, `ang_*`) under GBNF + Source Gate + Exact Kernel /24",
+    "Local ingestion: direct Vietnamese text, .docx documents, clean text-layer PDFs (0 cloud calls)",
+    "Fail-closed refusal: missing dimensions, ambiguous references, negated/contradictory premises, curved/non-geometry OOS, typos, prompt injections"
+  ],
+  "not_supported_or_requires_gemini": [
+    "Multimodal cloud vision OCR on unverified photos/scanned PDF pages (`503 LOCAL_ONLY_CLOUD_VISION_DISABLED` in local-only mode)",
+    "Upstream TypedFactNext/Bridge unsupported targets: finite planar segment queries without polyhedral context, triangle area goals, quadratic edge expressions (`SC²`), context-dependent multi-turn follow-ups",
+    "Spheres, cones, cylinders, Oxyz analytic geometry, calculus, non-geometry subjects (intentionally refused fail-closed)",
+    "Sealed held-out human baseline (`INDEPENDENT_H1_VALIDATION = NOT_MEASURED`)"
+  ]
+}

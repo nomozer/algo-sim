@@ -1,0 +1,3613 @@
+{
+  "schema": "slm-v9-unseen-evaluation/1",
+  "generated_at_utc": "2026-11-19T10:54:26.088783+00:00",
+  "external_ai_calls": 0,
+  "external_independence_disclosure": "EXTERNAL_INDEPENDENCE = NOT_MEASURED (author-constructed unseen benchmark + unlocked C60/EXTERNAL17; sealed_H1 & locked_W2_W3 not opened)",
+  "single_shot_execution": true,
+  "candidate_identity": {
+    "product_commit": null,
+    "measured_system_tree_hash": null,
+    "cache_version": "145",
+    "model_key": "qwen3-0.6b-axo-v9-q4_k_m",
+    "model_sha256": "73f1484b08b97ed2a1f44e32bcf6610210c7fda51567c4cd0a03d98dffc6cc35"
+  },
+  "unseen_150_summary": {
+    "total": 150,
+    "positives_total": 105,
+    "positives_exact_strict": 94,
+    "positive_exact_rate": 0.8952,
+    "positive_wilson_95_ci": [
+      0.8221,
+      0.9405
+    ],
+    "fast_path_served": 54,
+    "slm_served": 40,
+    "negatives_total": 45,
+    "negatives_safe_refused": 45,
+    "negative_safe_refusal_rate": 1.0,
+    "negative_wilson_95_ci": [
+      0.9213,
+      1.0
+    ],
+    "wrong_served_total": 0,
+    "overall_correct": 139,
+    "overall_rate": 0.9267,
+    "overall_wilson_95_ci": [
+      0.8735,
+      0.9586
+    ]
+  },
+  "per_group": {
+    "G01_COLLOQUIAL_CONVERSATIONAL": {
+      "total": 12,
+      "correct": 12,
+      "rate": 1.0,
+      "wrong_served": 0,
+      "fast_path_served": 6,
+      "slm_served": 6
+    },
+    "G02_REORDERED_PREMISES": {
+      "total": 10,
+      "correct": 6,
+      "rate": 0.6,
+      "wrong_served": 0,
+      "fast_path_served": 5,
+      "slm_served": 1
+    },
+    "G03_IMPLICIT_BIET_SHAPE_WITHOUT_DAY": {
+      "total": 10,
+      "correct": 5,
+      "rate": 0.5,
+      "wrong_served": 0,
+      "fast_path_served": 0,
+      "slm_served": 5
+    },
+    "G04_TETRAHEDRON_ORTHO_AND_REGULAR": {
+      "total": 12,
+      "correct": 11,
+      "rate": 0.9167,
+      "wrong_served": 0,
+      "fast_path_served": 0,
+      "slm_served": 11
+    },
+    "G05_PRISM_CUBOID_CUBE": {
+      "total": 12,
+      "correct": 12,
+      "rate": 1.0,
+      "wrong_served": 0,
+      "fast_path_served": 4,
+      "slm_served": 8
+    },
+    "G06_MULTI_GOAL_2_TO_4": {
+      "total": 14,
+      "correct": 13,
+      "rate": 0.9286,
+      "wrong_served": 0,
+      "fast_path_served": 4,
+      "slm_served": 9
+    },
+    "G07_AUXILIARY_MID_CENTROID_PROJ_DIV": {
+      "total": 12,
+      "correct": 12,
+      "rate": 1.0,
+      "wrong_served": 0,
+      "fast_path_served": 12,
+      "slm_served": 0
+    },
+    "G08_ANGLE_LINE_PLANE_DIHEDRAL": {
+      "total": 12,
+      "correct": 12,
+      "rate": 1.0,
+      "wrong_served": 0,
+      "fast_path_served": 12,
+      "slm_served": 0
+    },
+    "G09_DISTANCE_PT_PLANE_AND_SKEW": {
+      "total": 11,
+      "correct": 11,
+      "rate": 1.0,
+      "wrong_served": 0,
+      "fast_path_served": 11,
+      "slm_served": 0
+    },
+    "G10_NEG_MISSING_AND_AMBIGUOUS": {
+      "total": 15,
+      "correct": 15,
+      "rate": 1.0,
+      "wrong_served": 0,
+      "fast_path_served": 0,
+      "slm_served": 0
+    },
+    "G11_NEG_CONTRADICTORY_NEGATED_CONDITIONAL": {
+      "total": 15,
+      "correct": 15,
+      "rate": 1.0,
+      "wrong_served": 0,
+      "fast_path_served": 0,
+      "slm_served": 0
+    },
+    "G12_NEG_OUT_OF_SCOPE_TYPO_INJECTION": {
+      "total": 15,
+      "correct": 15,
+      "rate": 1.0,
+      "wrong_served": 0,
+      "fast_path_served": 0,
+      "slm_served": 0
+    }
+  },
+  "external17_real_transcriptions": {
+    "total": 17,
+    "positives_total": 12,
+    "positives_exact_strict": 12,
+    "negatives_or_oos_total": 5,
+    "negatives_safe_refused": 5,
+    "wrong_served_total": 0,
+    "cases": [
+      {
+        "orig_id": "ext_prt_01_hd_q_5259753#1",
+        "eval_role": "VERIFIED_POSITIVE",
+        "oracles": [
+          "a³√3/3"
+        ],
+        "status": "SERVED",
+        "reason_code": null,
+        "extraction_mode": "LOCAL_DETERMINISTIC_PARSER",
+        "slm_invoked": false,
+        "answers": {
+          "q1": "a³√3/3"
+        },
+        "ok_any": true,
+        "ok_strict": true,
+        "wrong_served": false,
+        "wall_ms": 48.34,
+        "provider_calls": 0
+      },
+      {
+        "orig_id": "ext_prt_02_hd_q_7922924#1",
+        "eval_role": "VERIFIED_POSITIVE",
+        "oracles": [
+          "6"
+        ],
+        "status": "SERVED",
+        "reason_code": null,
+        "extraction_mode": "LOCAL_DETERMINISTIC_PARSER",
+        "slm_invoked": false,
+        "answers": {
+          "q1": "6"
+        },
+        "ok_any": true,
+        "ok_strict": true,
+        "wrong_served": false,
+        "wall_ms": 61.9,
+        "provider_calls": 0
+      },
+      {
+        "orig_id": "ext_prt_03_hd_q_7907931#1",
+        "eval_role": "VERIFIED_POSITIVE",
+        "oracles": [
+          "a√2/2"
+        ],
+        "status": "SERVED",
+        "reason_code": null,
+        "extraction_mode": "LOCAL_DETERMINISTIC_PARSER",
+        "slm_invoked": false,
+        "answers": {
+          "q1": "a√2/2"
+        },
+        "ok_any": true,
+        "ok_strict": true,
+        "wrong_served": false,
+        "wall_ms": 48.63,
+        "provider_calls": 0
+      },
+      {
+        "orig_id": "ext_prt_03_hd_q_7907931#2",
+        "eval_role": "VERIFIED_POSITIVE",
+        "oracles": [
+          "a³/4"
+        ],
+        "status": "SERVED",
+        "reason_code": null,
+        "extraction_mode": "LOCAL_DETERMINISTIC_PARSER",
+        "slm_invoked": false,
+        "answers": {
+          "q1": "a³/4"
+        },
+        "ok_any": true,
+        "ok_strict": true,
+        "wrong_served": false,
+        "wall_ms": 47.76,
+        "provider_calls": 0
+      },
+      {
+        "orig_id": "ext_prt_04_hd_q_8436784#1",
+        "eval_role": "VERIFIED_POSITIVE",
+        "oracles": [
+          "1/2"
+        ],
+        "status": "SERVED",
+        "reason_code": null,
+        "extraction_mode": "LOCAL_DETERMINISTIC_PARSER",
+        "slm_invoked": false,
+        "answers": {
+          "q1": "1/2"
+        },
+        "ok_any": true,
+        "ok_strict": true,
+        "wrong_served": false,
+        "wall_ms": 89.79,
+        "provider_calls": 0
+      },
+      {
+        "orig_id": "ext_prt_05_hd_q_7451806#1",
+        "eval_role": "VERIFIED_POSITIVE",
+        "oracles": [
+          "6/5"
+        ],
+        "status": "SERVED",
+        "reason_code": null,
+        "extraction_mode": "LOCAL_DETERMINISTIC_PARSER",
+        "slm_invoked": false,
+        "answers": {
+          "q1": "6/5"
+        },
+        "ok_any": true,
+        "ok_strict": true,
+        "wrong_served": false,
+        "wall_ms": 60.39,
+        "provider_calls": 0
+      },
+      {
+        "orig_id": "ext_prt_06_hd_q_1084979#1",
+        "eval_role": "VERIFIED_POSITIVE",
+        "oracles": [
+          "a³√15/4",
+          "a√15/5"
+        ],
+        "status": "SERVED",
+        "reason_code": null,
+        "extraction_mode": "LOCAL_DETERMINISTIC_PARSER",
+        "slm_invoked": false,
+        "answers": {
+          "q2": "a√15/5",
+          "q1": "a³√15/4"
+        },
+        "ok_any": true,
+        "ok_strict": true,
+        "wrong_served": false,
+        "wall_ms": 86.06,
+        "provider_calls": 0
+      },
+      {
+        "orig_id": "ext_prt_07_hd_q_7958052#1",
+        "eval_role": "VERIFIED_POSITIVE",
+        "oracles": [
+          "4,7"
+        ],
+        "status": "SERVED",
+        "reason_code": null,
+        "extraction_mode": "LOCAL_DETERMINISTIC_PARSER",
+        "slm_invoked": false,
+        "answers": {
+          "q1": "4,7"
+        },
+        "ok_any": true,
+        "ok_strict": true,
+        "wrong_served": false,
+        "wall_ms": 51.91,
+        "provider_calls": 0
+      },
+      {
+        "orig_id": "ext_prt_08_hd_q_7509702#1",
+        "eval_role": "OOS_OR_DIAGRAM_DEPENDENT",
+        "oracles": [],
+        "status": "REFUSED",
+        "reason_code": "AMBIGUOUS_FACT",
+        "extraction_mode": "LOCAL_SLM_GROUNDING_REJECTED",
+        "slm_invoked": true,
+        "answers": {},
+        "ok_any": true,
+        "ok_strict": true,
+        "wrong_served": false,
+        "wall_ms": 1441.63,
+        "provider_calls": 0
+      },
+      {
+        "orig_id": "ext_prt_09_vmmu_page_r4#1",
+        "eval_role": "VERIFIED_POSITIVE",
+        "oracles": [
+          "2"
+        ],
+        "status": "SERVED",
+        "reason_code": null,
+        "extraction_mode": "LOCAL_DETERMINISTIC_PARSER",
+        "slm_invoked": false,
+        "answers": {
+          "q1": "2"
+        },
+        "ok_any": true,
+        "ok_strict": true,
+        "wrong_served": false,
+        "wall_ms": 44.68,
+        "provider_calls": 0
+      },
+      {
+        "orig_id": "ext_prt_10_vmmu_page_r7#1",
+        "eval_role": "OOS_OR_DIAGRAM_DEPENDENT",
+        "oracles": [],
+        "status": "REFUSED",
+        "reason_code": "AMBIGUOUS_FACT",
+        "extraction_mode": "LOCAL_SLM_GROUNDING_REJECTED",
+        "slm_invoked": true,
+        "answers": {},
+        "ok_any": true,
+        "ok_strict": true,
+        "wrong_served": false,
+        "wall_ms": 1016.73,
+        "provider_calls": 0
+      },
+      {
+        "orig_id": "ext_prt_11_vmmu_page_r10#1",
+        "eval_role": "VERIFIED_POSITIVE",
+        "oracles": [
+          "cos²=3/4"
+        ],
+        "status": "SERVED",
+        "reason_code": null,
+        "extraction_mode": "LOCAL_DETERMINISTIC_PARSER",
+        "slm_invoked": false,
+        "answers": {
+          "q1": "30°"
+        },
+        "ok_any": true,
+        "ok_strict": true,
+        "wrong_served": false,
+        "wall_ms": 44.1,
+        "provider_calls": 0
+      },
+      {
+        "orig_id": "ext_prt_12_vmmu_page_r11#1",
+        "eval_role": "VERIFIED_POSITIVE",
+        "oracles": [
+          "2√3"
+        ],
+        "status": "SERVED",
+        "reason_code": null,
+        "extraction_mode": "LOCAL_DETERMINISTIC_PARSER",
+        "slm_invoked": false,
+        "answers": {
+          "q1": "2√3"
+        },
+        "ok_any": true,
+        "ok_strict": true,
+        "wrong_served": false,
+        "wall_ms": 44.96,
+        "provider_calls": 0
+      },
+      {
+        "orig_id": "ext_prt_13_vmmu_page_r25#1",
+        "eval_role": "OOS_OR_DIAGRAM_DEPENDENT",
+        "oracles": [],
+        "status": "REFUSED",
+        "reason_code": "OUT_OF_SCOPE",
+        "extraction_mode": "LOCAL_SLM_GROUNDING_REJECTED",
+        "slm_invoked": true,
+        "answers": {},
+        "ok_any": true,
+        "ok_strict": true,
+        "wrong_served": false,
+        "wall_ms": 853.62,
+        "provider_calls": 0
+      },
+      {
+        "orig_id": "ext_prt_14_vmmu_page_r26#1",
+        "eval_role": "OOS_OR_DIAGRAM_DEPENDENT",
+        "oracles": [],
+        "status": "REFUSED",
+        "reason_code": "OUT_OF_SCOPE",
+        "extraction_mode": "LOCAL_SLM_GROUNDING_REJECTED",
+        "slm_invoked": true,
+        "answers": {},
+        "ok_any": true,
+        "ok_strict": true,
+        "wrong_served": false,
+        "wall_ms": 897.67,
+        "provider_calls": 0
+      },
+      {
+        "orig_id": "ext_prt_15_vmmu_page_r28#1",
+        "eval_role": "OOS_OR_DIAGRAM_DEPENDENT",
+        "oracles": [],
+        "status": "REFUSED",
+        "reason_code": "OUT_OF_SCOPE",
+        "extraction_mode": "LOCAL_SLM_GROUNDING_REJECTED",
+        "slm_invoked": true,
+        "answers": {},
+        "ok_any": true,
+        "ok_strict": true,
+        "wrong_served": false,
+        "wall_ms": 803.43,
+        "provider_calls": 0
+      },
+      {
+        "orig_id": "ext_hw_b1_01_hd_a_6043187#1",
+        "eval_role": "VERIFIED_POSITIVE",
+        "oracles": [
+          "a³√3"
+        ],
+        "status": "SERVED",
+        "reason_code": null,
+        "extraction_mode": "LOCAL_DETERMINISTIC_PARSER",
+        "slm_invoked": false,
+        "answers": {
+          "q1": "a³√3"
+        },
+        "ok_any": true,
+        "ok_strict": true,
+        "wrong_served": false,
+        "wall_ms": 67.38,
+        "provider_calls": 0
+      }
+    ]
+  },
+  "c60_blind_nlu_reference": {
+    "positives_total": 42,
+    "positives_exact_strict": 32,
+    "fast_path_served": 23,
+    "slm_served": 9,
+    "wrong_served_total": 0
+  },
+  "unseen_150_cases": [
+    {
+      "case_id": "u9_001",
+      "group": "G01_COLLOQUIAL_CONVERSATIONAL",
+      "kind": "positive",
+      "eval_role": "VERIFIED_POSITIVE",
+      "neg_tag": "",
+      "gold_oracles": [
+        "8a³/3"
+      ],
+      "status": "SERVED",
+      "reason_code": null,
+      "extraction_mode": "LOCAL_PARSER_AFTER_V3_NORMALIZER",
+      "slm_invoked": false,
+      "answers": {
+        "q1": "8a³/3"
+      },
+      "ok_any": true,
+      "ok_strict": true,
+      "wrong_served": false,
+      "wall_ms": 44.33,
+      "provider_calls": 0
+    },
+    {
+      "case_id": "u9_002",
+      "group": "G01_COLLOQUIAL_CONVERSATIONAL",
+      "kind": "positive",
+      "eval_role": "VERIFIED_POSITIVE",
+      "neg_tag": "",
+      "gold_oracles": [
+        "4a√57/19"
+      ],
+      "status": "SERVED",
+      "reason_code": null,
+      "extraction_mode": "LOCAL_SLM_GROUNDED",
+      "slm_invoked": true,
+      "answers": {
+        "q1": "4a√57/19"
+      },
+      "ok_any": true,
+      "ok_strict": true,
+      "wrong_served": false,
+      "wall_ms": 6416.26,
+      "provider_calls": 0
+    },
+    {
+      "case_id": "u9_003",
+      "group": "G01_COLLOQUIAL_CONVERSATIONAL",
+      "kind": "positive",
+      "eval_role": "VERIFIED_POSITIVE",
+      "neg_tag": "",
+      "gold_oracles": [
+        "15a³/2"
+      ],
+      "status": "SERVED",
+      "reason_code": null,
+      "extraction_mode": "LOCAL_PARSER_AFTER_V3_NORMALIZER",
+      "slm_invoked": false,
+      "answers": {
+        "q1": "15a³/2"
+      },
+      "ok_any": true,
+      "ok_strict": true,
+      "wrong_served": false,
+      "wall_ms": 63.37,
+      "provider_calls": 0
+    },
+    {
+      "case_id": "u9_004",
+      "group": "G01_COLLOQUIAL_CONVERSATIONAL",
+      "kind": "positive",
+      "eval_role": "VERIFIED_POSITIVE",
+      "neg_tag": "",
+      "gold_oracles": [
+        "15a√381/127"
+      ],
+      "status": "SERVED",
+      "reason_code": null,
+      "extraction_mode": "LOCAL_SLM_GROUNDED",
+      "slm_invoked": true,
+      "answers": {
+        "q1": "15a√381/127"
+      },
+      "ok_any": true,
+      "ok_strict": true,
+      "wrong_served": false,
+      "wall_ms": 4117.66,
+      "provider_calls": 0
+    },
+    {
+      "case_id": "u9_005",
+      "group": "G01_COLLOQUIAL_CONVERSATIONAL",
+      "kind": "positive",
+      "eval_role": "VERIFIED_POSITIVE",
+      "neg_tag": "",
+      "gold_oracles": [
+        "a³/2"
+      ],
+      "status": "SERVED",
+      "reason_code": null,
+      "extraction_mode": "LOCAL_PARSER_AFTER_V3_NORMALIZER",
+      "slm_invoked": false,
+      "answers": {
+        "q1": "a³/2"
+      },
+      "ok_any": true,
+      "ok_strict": true,
+      "wrong_served": false,
+      "wall_ms": 48.94,
+      "provider_calls": 0
+    },
+    {
+      "case_id": "u9_006",
+      "group": "G01_COLLOQUIAL_CONVERSATIONAL",
+      "kind": "positive",
+      "eval_role": "VERIFIED_POSITIVE",
+      "neg_tag": "",
+      "gold_oracles": [
+        "3a√13/13"
+      ],
+      "status": "SERVED",
+      "reason_code": null,
+      "extraction_mode": "LOCAL_SLM_GROUNDED",
+      "slm_invoked": true,
+      "answers": {
+        "q1": "3a√13/13"
+      },
+      "ok_any": true,
+      "ok_strict": true,
+      "wrong_served": false,
+      "wall_ms": 3659.87,
+      "provider_calls": 0
+    },
+    {
+      "case_id": "u9_007",
+      "group": "G01_COLLOQUIAL_CONVERSATIONAL",
+      "kind": "positive",
+      "eval_role": "VERIFIED_POSITIVE",
+      "neg_tag": "",
+      "gold_oracles": [
+        "16a³/3"
+      ],
+      "status": "SERVED",
+      "reason_code": null,
+      "extraction_mode": "LOCAL_PARSER_AFTER_V3_NORMALIZER",
+      "slm_invoked": false,
+      "answers": {
+        "q1": "16a³/3"
+      },
+      "ok_any": true,
+      "ok_strict": true,
+      "wrong_served": false,
+      "wall_ms": 50.92,
+      "provider_calls": 0
+    },
+    {
+      "case_id": "u9_008",
+      "group": "G01_COLLOQUIAL_CONVERSATIONAL",
+      "kind": "positive",
+      "eval_role": "VERIFIED_POSITIVE",
+      "neg_tag": "",
+      "gold_oracles": [
+        "a√3"
+      ],
+      "status": "SERVED",
+      "reason_code": null,
+      "extraction_mode": "LOCAL_SLM_GROUNDED",
+      "slm_invoked": true,
+      "answers": {
+        "q1": "a√3"
+      },
+      "ok_any": true,
+      "ok_strict": true,
+      "wrong_served": false,
+      "wall_ms": 3491.41,
+      "provider_calls": 0
+    },
+    {
+      "case_id": "u9_009",
+      "group": "G01_COLLOQUIAL_CONVERSATIONAL",
+      "kind": "positive",
+      "eval_role": "VERIFIED_POSITIVE",
+      "neg_tag": "",
+      "gold_oracles": [
+        "a³"
+      ],
+      "status": "SERVED",
+      "reason_code": null,
+      "extraction_mode": "LOCAL_PARSER_AFTER_V3_NORMALIZER",
+      "slm_invoked": false,
+      "answers": {
+        "q1": "a³"
+      },
+      "ok_any": true,
+      "ok_strict": true,
+      "wrong_served": false,
+      "wall_ms": 50.55,
+      "provider_calls": 0
+    },
+    {
+      "case_id": "u9_010",
+      "group": "G01_COLLOQUIAL_CONVERSATIONAL",
+      "kind": "positive",
+      "eval_role": "VERIFIED_POSITIVE",
+      "neg_tag": "",
+      "gold_oracles": [
+        "3a√7/7"
+      ],
+      "status": "SERVED",
+      "reason_code": null,
+      "extraction_mode": "LOCAL_SLM_GROUNDED",
+      "slm_invoked": true,
+      "answers": {
+        "q1": "3a√7/7"
+      },
+      "ok_any": true,
+      "ok_strict": true,
+      "wrong_served": false,
+      "wall_ms": 3634.52,
+      "provider_calls": 0
+    },
+    {
+      "case_id": "u9_011",
+      "group": "G01_COLLOQUIAL_CONVERSATIONAL",
+      "kind": "positive",
+      "eval_role": "VERIFIED_POSITIVE",
+      "neg_tag": "",
+      "gold_oracles": [
+        "16a³/3"
+      ],
+      "status": "SERVED",
+      "reason_code": null,
+      "extraction_mode": "LOCAL_PARSER_AFTER_V3_NORMALIZER",
+      "slm_invoked": false,
+      "answers": {
+        "q1": "16a³/3"
+      },
+      "ok_any": true,
+      "ok_strict": true,
+      "wrong_served": false,
+      "wall_ms": 55.22,
+      "provider_calls": 0
+    },
+    {
+      "case_id": "u9_012",
+      "group": "G01_COLLOQUIAL_CONVERSATIONAL",
+      "kind": "positive",
+      "eval_role": "VERIFIED_POSITIVE",
+      "neg_tag": "",
+      "gold_oracles": [
+        "4a√33/11"
+      ],
+      "status": "SERVED",
+      "reason_code": null,
+      "extraction_mode": "LOCAL_SLM_GROUNDED",
+      "slm_invoked": true,
+      "answers": {
+        "q1": "4a√33/11"
+      },
+      "ok_any": true,
+      "ok_strict": true,
+      "wrong_served": false,
+      "wall_ms": 3581.75,
+      "provider_calls": 0
+    },
+    {
+      "case_id": "u9_013",
+      "group": "G02_REORDERED_PREMISES",
+      "kind": "positive",
+      "eval_role": "VERIFIED_POSITIVE",
+      "neg_tag": "",
+      "gold_oracles": [
+        "2a³√3/3"
+      ],
+      "status": "SERVED",
+      "reason_code": null,
+      "extraction_mode": "LOCAL_DETERMINISTIC_PARSER",
+      "slm_invoked": false,
+      "answers": {
+        "q1": "2a³√3/3"
+      },
+      "ok_any": true,
+      "ok_strict": true,
+      "wrong_served": false,
+      "wall_ms": 41.38,
+      "provider_calls": 0
+    },
+    {
+      "case_id": "u9_014",
+      "group": "G02_REORDERED_PREMISES",
+      "kind": "positive",
+      "eval_role": "VERIFIED_POSITIVE",
+      "neg_tag": "",
+      "gold_oracles": [
+        "2a√5/3"
+      ],
+      "status": "REFUSED",
+      "reason_code": "SOURCE_PREMISE_UNREAD",
+      "extraction_mode": "LOCAL_SLM_GROUNDED",
+      "slm_invoked": true,
+      "answers": {},
+      "ok_any": false,
+      "ok_strict": false,
+      "wrong_served": false,
+      "wall_ms": 2896.23,
+      "provider_calls": 0
+    },
+    {
+      "case_id": "u9_015",
+      "group": "G02_REORDERED_PREMISES",
+      "kind": "positive",
+      "eval_role": "VERIFIED_POSITIVE",
+      "neg_tag": "",
+      "gold_oracles": [
+        "4a³√3"
+      ],
+      "status": "SERVED",
+      "reason_code": null,
+      "extraction_mode": "LOCAL_DETERMINISTIC_PARSER",
+      "slm_invoked": false,
+      "answers": {
+        "q1": "4a³√3"
+      },
+      "ok_any": true,
+      "ok_strict": true,
+      "wrong_served": false,
+      "wall_ms": 41.22,
+      "provider_calls": 0
+    },
+    {
+      "case_id": "u9_016",
+      "group": "G02_REORDERED_PREMISES",
+      "kind": "positive",
+      "eval_role": "VERIFIED_POSITIVE",
+      "neg_tag": "",
+      "gold_oracles": [
+        "3a√286/22"
+      ],
+      "status": "REFUSED",
+      "reason_code": "SOURCE_OBJECT_MISMATCH",
+      "extraction_mode": "LOCAL_SLM_GROUNDED",
+      "slm_invoked": true,
+      "answers": {},
+      "ok_any": false,
+      "ok_strict": false,
+      "wrong_served": false,
+      "wall_ms": 4818.93,
+      "provider_calls": 0
+    },
+    {
+      "case_id": "u9_017",
+      "group": "G02_REORDERED_PREMISES",
+      "kind": "positive",
+      "eval_role": "VERIFIED_POSITIVE",
+      "neg_tag": "",
+      "gold_oracles": [
+        "4a³√6/3"
+      ],
+      "status": "SERVED",
+      "reason_code": null,
+      "extraction_mode": "LOCAL_DETERMINISTIC_PARSER",
+      "slm_invoked": false,
+      "answers": {
+        "q1": "4a³√6/3"
+      },
+      "ok_any": true,
+      "ok_strict": true,
+      "wrong_served": false,
+      "wall_ms": 54.75,
+      "provider_calls": 0
+    },
+    {
+      "case_id": "u9_018",
+      "group": "G02_REORDERED_PREMISES",
+      "kind": "positive",
+      "eval_role": "VERIFIED_POSITIVE",
+      "neg_tag": "",
+      "gold_oracles": [
+        "2a√10/3"
+      ],
+      "status": "SERVED",
+      "reason_code": null,
+      "extraction_mode": "LOCAL_SLM_GROUNDED",
+      "slm_invoked": true,
+      "answers": {
+        "q1": "2a√10/3"
+      },
+      "ok_any": true,
+      "ok_strict": true,
+      "wrong_served": false,
+      "wall_ms": 4532.25,
+      "provider_calls": 0
+    },
+    {
+      "case_id": "u9_019",
+      "group": "G02_REORDERED_PREMISES",
+      "kind": "positive",
+      "eval_role": "VERIFIED_POSITIVE",
+      "neg_tag": "",
+      "gold_oracles": [
+        "20a³"
+      ],
+      "status": "SERVED",
+      "reason_code": null,
+      "extraction_mode": "LOCAL_DETERMINISTIC_PARSER",
+      "slm_invoked": false,
+      "answers": {
+        "q1": "20a³"
+      },
+      "ok_any": true,
+      "ok_strict": true,
+      "wrong_served": false,
+      "wall_ms": 40.91,
+      "provider_calls": 0
+    },
+    {
+      "case_id": "u9_020",
+      "group": "G02_REORDERED_PREMISES",
+      "kind": "positive",
+      "eval_role": "VERIFIED_POSITIVE",
+      "neg_tag": "",
+      "gold_oracles": [
+        "20a√41/41"
+      ],
+      "status": "REFUSED",
+      "reason_code": "SOURCE_PREMISE_UNREAD",
+      "extraction_mode": "LOCAL_SLM_GROUNDED",
+      "slm_invoked": true,
+      "answers": {},
+      "ok_any": false,
+      "ok_strict": false,
+      "wrong_served": false,
+      "wall_ms": 2972.23,
+      "provider_calls": 0
+    },
+    {
+      "case_id": "u9_021",
+      "group": "G02_REORDERED_PREMISES",
+      "kind": "positive",
+      "eval_role": "VERIFIED_POSITIVE",
+      "neg_tag": "",
+      "gold_oracles": [
+        "2a³"
+      ],
+      "status": "SERVED",
+      "reason_code": null,
+      "extraction_mode": "LOCAL_DETERMINISTIC_PARSER",
+      "slm_invoked": false,
+      "answers": {
+        "q1": "2a³"
+      },
+      "ok_any": true,
+      "ok_strict": true,
+      "wrong_served": false,
+      "wall_ms": 57.44,
+      "provider_calls": 0
+    },
+    {
+      "case_id": "u9_022",
+      "group": "G02_REORDERED_PREMISES",
+      "kind": "positive",
+      "eval_role": "VERIFIED_POSITIVE",
+      "neg_tag": "",
+      "gold_oracles": [
+        "a√30/6"
+      ],
+      "status": "REFUSED",
+      "reason_code": "SOURCE_PREMISE_UNREAD",
+      "extraction_mode": "LOCAL_SLM_GROUNDED",
+      "slm_invoked": true,
+      "answers": {},
+      "ok_any": false,
+      "ok_strict": false,
+      "wrong_served": false,
+      "wall_ms": 2837.98,
+      "provider_calls": 0
+    },
+    {
+      "case_id": "u9_023",
+      "group": "G03_IMPLICIT_BIET_SHAPE_WITHOUT_DAY",
+      "kind": "positive",
+      "eval_role": "VERIFIED_POSITIVE",
+      "neg_tag": "",
+      "gold_oracles": [
+        "8a³√3/3"
+      ],
+      "status": "REFUSED",
+      "reason_code": "UNGROUNDED_VALUE",
+      "extraction_mode": "LOCAL_SLM_GROUNDED",
+      "slm_invoked": true,
+      "answers": {},
+      "ok_any": false,
+      "ok_strict": false,
+      "wrong_served": false,
+      "wall_ms": 3153.96,
+      "provider_calls": 0
+    },
+    {
+      "case_id": "u9_024",
+      "group": "G03_IMPLICIT_BIET_SHAPE_WITHOUT_DAY",
+      "kind": "positive",
+      "eval_role": "VERIFIED_POSITIVE",
+      "neg_tag": "",
+      "gold_oracles": [
+        "3a√10/10"
+      ],
+      "status": "SERVED",
+      "reason_code": null,
+      "extraction_mode": "LOCAL_SLM_GROUNDED",
+      "slm_invoked": true,
+      "answers": {
+        "q1": "3a√10/10"
+      },
+      "ok_any": true,
+      "ok_strict": true,
+      "wrong_served": false,
+      "wall_ms": 4414.77,
+      "provider_calls": 0
+    },
+    {
+      "case_id": "u9_025",
+      "group": "G03_IMPLICIT_BIET_SHAPE_WITHOUT_DAY",
+      "kind": "positive",
+      "eval_role": "VERIFIED_POSITIVE",
+      "neg_tag": "",
+      "gold_oracles": [
+        "a³/3"
+      ],
+      "status": "REFUSED",
+      "reason_code": "UNGROUNDED_VALUE",
+      "extraction_mode": "LOCAL_SLM_GROUNDED",
+      "slm_invoked": true,
+      "answers": {},
+      "ok_any": false,
+      "ok_strict": false,
+      "wrong_served": false,
+      "wall_ms": 4034.67,
+      "provider_calls": 0
+    },
+    {
+      "case_id": "u9_026",
+      "group": "G03_IMPLICIT_BIET_SHAPE_WITHOUT_DAY",
+      "kind": "positive",
+      "eval_role": "VERIFIED_POSITIVE",
+      "neg_tag": "",
+      "gold_oracles": [
+        "2a√17/17"
+      ],
+      "status": "SERVED",
+      "reason_code": null,
+      "extraction_mode": "LOCAL_SLM_GROUNDED",
+      "slm_invoked": true,
+      "answers": {
+        "q1": "2a√17/17"
+      },
+      "ok_any": true,
+      "ok_strict": true,
+      "wrong_served": false,
+      "wall_ms": 3945.96,
+      "provider_calls": 0
+    },
+    {
+      "case_id": "u9_027",
+      "group": "G03_IMPLICIT_BIET_SHAPE_WITHOUT_DAY",
+      "kind": "positive",
+      "eval_role": "VERIFIED_POSITIVE",
+      "neg_tag": "",
+      "gold_oracles": [
+        "3a³√3"
+      ],
+      "status": "REFUSED",
+      "reason_code": "UNGROUNDED_VALUE",
+      "extraction_mode": "LOCAL_SLM_GROUNDED",
+      "slm_invoked": true,
+      "answers": {},
+      "ok_any": false,
+      "ok_strict": false,
+      "wrong_served": false,
+      "wall_ms": 2994.5,
+      "provider_calls": 0
+    },
+    {
+      "case_id": "u9_028",
+      "group": "G03_IMPLICIT_BIET_SHAPE_WITHOUT_DAY",
+      "kind": "positive",
+      "eval_role": "VERIFIED_POSITIVE",
+      "neg_tag": "",
+      "gold_oracles": [
+        "12a√73/73"
+      ],
+      "status": "SERVED",
+      "reason_code": null,
+      "extraction_mode": "LOCAL_SLM_GROUNDED",
+      "slm_invoked": true,
+      "answers": {
+        "q1": "12a√73/73"
+      },
+      "ok_any": true,
+      "ok_strict": true,
+      "wrong_served": false,
+      "wall_ms": 4159.68,
+      "provider_calls": 0
+    },
+    {
+      "case_id": "u9_029",
+      "group": "G03_IMPLICIT_BIET_SHAPE_WITHOUT_DAY",
+      "kind": "positive",
+      "eval_role": "VERIFIED_POSITIVE",
+      "neg_tag": "",
+      "gold_oracles": [
+        "2a³√6/3"
+      ],
+      "status": "REFUSED",
+      "reason_code": "UNGROUNDED_VALUE",
+      "extraction_mode": "LOCAL_SLM_GROUNDED",
+      "slm_invoked": true,
+      "answers": {},
+      "ok_any": false,
+      "ok_strict": false,
+      "wrong_served": false,
+      "wall_ms": 3018.42,
+      "provider_calls": 0
+    },
+    {
+      "case_id": "u9_030",
+      "group": "G03_IMPLICIT_BIET_SHAPE_WITHOUT_DAY",
+      "kind": "positive",
+      "eval_role": "VERIFIED_POSITIVE",
+      "neg_tag": "",
+      "gold_oracles": [
+        "2a/3"
+      ],
+      "status": "SERVED",
+      "reason_code": null,
+      "extraction_mode": "LOCAL_SLM_GROUNDED",
+      "slm_invoked": true,
+      "answers": {
+        "q1": "2a/3"
+      },
+      "ok_any": true,
+      "ok_strict": true,
+      "wrong_served": false,
+      "wall_ms": 4361.03,
+      "provider_calls": 0
+    },
+    {
+      "case_id": "u9_031",
+      "group": "G03_IMPLICIT_BIET_SHAPE_WITHOUT_DAY",
+      "kind": "positive",
+      "eval_role": "VERIFIED_POSITIVE",
+      "neg_tag": "",
+      "gold_oracles": [
+        "8a³/3"
+      ],
+      "status": "REFUSED",
+      "reason_code": "UNGROUNDED_VALUE",
+      "extraction_mode": "LOCAL_SLM_GROUNDED",
+      "slm_invoked": true,
+      "answers": {},
+      "ok_any": false,
+      "ok_strict": false,
+      "wrong_served": false,
+      "wall_ms": 3425.92,
+      "provider_calls": 0
+    },
+    {
+      "case_id": "u9_032",
+      "group": "G03_IMPLICIT_BIET_SHAPE_WITHOUT_DAY",
+      "kind": "positive",
+      "eval_role": "VERIFIED_POSITIVE",
+      "neg_tag": "",
+      "gold_oracles": [
+        "2a√39/13"
+      ],
+      "status": "SERVED",
+      "reason_code": null,
+      "extraction_mode": "LOCAL_SLM_GROUNDED",
+      "slm_invoked": true,
+      "answers": {
+        "q1": "2a√39/13"
+      },
+      "ok_any": true,
+      "ok_strict": true,
+      "wrong_served": false,
+      "wall_ms": 4249.97,
+      "provider_calls": 0
+    },
+    {
+      "case_id": "u9_033",
+      "group": "G04_TETRAHEDRON_ORTHO_AND_REGULAR",
+      "kind": "positive",
+      "eval_role": "VERIFIED_POSITIVE",
+      "neg_tag": "",
+      "gold_oracles": [
+        "13/3"
+      ],
+      "status": "SERVED",
+      "reason_code": null,
+      "extraction_mode": "LOCAL_SLM_GROUNDED",
+      "slm_invoked": true,
+      "answers": {
+        "q1": "13/3"
+      },
+      "ok_any": true,
+      "ok_strict": true,
+      "wrong_served": false,
+      "wall_ms": 4488.66,
+      "provider_calls": 0
+    },
+    {
+      "case_id": "u9_034",
+      "group": "G04_TETRAHEDRON_ORTHO_AND_REGULAR",
+      "kind": "positive",
+      "eval_role": "VERIFIED_POSITIVE",
+      "neg_tag": "",
+      "gold_oracles": [
+        "24"
+      ],
+      "status": "SERVED",
+      "reason_code": null,
+      "extraction_mode": "LOCAL_SLM_GROUNDED",
+      "slm_invoked": true,
+      "answers": {
+        "q1": "24"
+      },
+      "ok_any": true,
+      "ok_strict": true,
+      "wrong_served": false,
+      "wall_ms": 4345.97,
+      "provider_calls": 0
+    },
+    {
+      "case_id": "u9_035",
+      "group": "G04_TETRAHEDRON_ORTHO_AND_REGULAR",
+      "kind": "positive",
+      "eval_role": "VERIFIED_POSITIVE",
+      "neg_tag": "",
+      "gold_oracles": [
+        "10√2/3"
+      ],
+      "status": "SERVED",
+      "reason_code": null,
+      "extraction_mode": "LOCAL_SLM_GROUNDED",
+      "slm_invoked": true,
+      "answers": {
+        "q1": "10√2/3"
+      },
+      "ok_any": true,
+      "ok_strict": true,
+      "wrong_served": false,
+      "wall_ms": 4770.19,
+      "provider_calls": 0
+    },
+    {
+      "case_id": "u9_036",
+      "group": "G04_TETRAHEDRON_ORTHO_AND_REGULAR",
+      "kind": "positive",
+      "eval_role": "VERIFIED_POSITIVE",
+      "neg_tag": "",
+      "gold_oracles": [
+        "80"
+      ],
+      "status": "SERVED",
+      "reason_code": null,
+      "extraction_mode": "LOCAL_SLM_GROUNDED",
+      "slm_invoked": true,
+      "answers": {
+        "q1": "80"
+      },
+      "ok_any": true,
+      "ok_strict": true,
+      "wrong_served": false,
+      "wall_ms": 4522.39,
+      "provider_calls": 0
+    },
+    {
+      "case_id": "u9_037",
+      "group": "G04_TETRAHEDRON_ORTHO_AND_REGULAR",
+      "kind": "positive",
+      "eval_role": "VERIFIED_POSITIVE",
+      "neg_tag": "",
+      "gold_oracles": [
+        "a"
+      ],
+      "status": "SERVED",
+      "reason_code": null,
+      "extraction_mode": "LOCAL_SLM_GROUNDED",
+      "slm_invoked": true,
+      "answers": {
+        "q1": "a"
+      },
+      "ok_any": true,
+      "ok_strict": true,
+      "wrong_served": false,
+      "wall_ms": 4550.43,
+      "provider_calls": 0
+    },
+    {
+      "case_id": "u9_038",
+      "group": "G04_TETRAHEDRON_ORTHO_AND_REGULAR",
+      "kind": "positive",
+      "eval_role": "VERIFIED_POSITIVE",
+      "neg_tag": "",
+      "gold_oracles": [
+        "2a³/3"
+      ],
+      "status": "SERVED",
+      "reason_code": null,
+      "extraction_mode": "LOCAL_SLM_GROUNDED",
+      "slm_invoked": true,
+      "answers": {
+        "q1": "2a³/3"
+      },
+      "ok_any": true,
+      "ok_strict": true,
+      "wrong_served": false,
+      "wall_ms": 4283.72,
+      "provider_calls": 0
+    },
+    {
+      "case_id": "u9_039",
+      "group": "G04_TETRAHEDRON_ORTHO_AND_REGULAR",
+      "kind": "positive",
+      "eval_role": "VERIFIED_POSITIVE",
+      "neg_tag": "",
+      "gold_oracles": [
+        "a√14/3"
+      ],
+      "status": "SERVED",
+      "reason_code": null,
+      "extraction_mode": "LOCAL_SLM_GROUNDED",
+      "slm_invoked": true,
+      "answers": {
+        "q1": "a√14/3"
+      },
+      "ok_any": true,
+      "ok_strict": true,
+      "wrong_served": false,
+      "wall_ms": 4608.37,
+      "provider_calls": 0
+    },
+    {
+      "case_id": "u9_040",
+      "group": "G04_TETRAHEDRON_ORTHO_AND_REGULAR",
+      "kind": "positive",
+      "eval_role": "VERIFIED_POSITIVE",
+      "neg_tag": "",
+      "gold_oracles": [
+        "a³"
+      ],
+      "status": "SERVED",
+      "reason_code": null,
+      "extraction_mode": "LOCAL_SLM_GROUNDED",
+      "slm_invoked": true,
+      "answers": {
+        "q1": "a³"
+      },
+      "ok_any": true,
+      "ok_strict": true,
+      "wrong_served": false,
+      "wall_ms": 4167.69,
+      "provider_calls": 0
+    },
+    {
+      "case_id": "u9_041",
+      "group": "G04_TETRAHEDRON_ORTHO_AND_REGULAR",
+      "kind": "positive",
+      "eval_role": "VERIFIED_POSITIVE",
+      "neg_tag": "",
+      "gold_oracles": [
+        "3"
+      ],
+      "status": "SERVED",
+      "reason_code": null,
+      "extraction_mode": "LOCAL_SLM_GROUNDED",
+      "slm_invoked": true,
+      "answers": {
+        "q1": "3"
+      },
+      "ok_any": true,
+      "ok_strict": true,
+      "wrong_served": false,
+      "wall_ms": 4770.2,
+      "provider_calls": 0
+    },
+    {
+      "case_id": "u9_042",
+      "group": "G04_TETRAHEDRON_ORTHO_AND_REGULAR",
+      "kind": "positive",
+      "eval_role": "VERIFIED_POSITIVE",
+      "neg_tag": "",
+      "gold_oracles": [
+        "56/3"
+      ],
+      "status": "REFUSED",
+      "reason_code": "SOURCE_PREMISE_UNREAD",
+      "extraction_mode": "LOCAL_SLM_GROUNDED",
+      "slm_invoked": true,
+      "answers": {},
+      "ok_any": false,
+      "ok_strict": false,
+      "wrong_served": false,
+      "wall_ms": 2640.31,
+      "provider_calls": 0
+    },
+    {
+      "case_id": "u9_043",
+      "group": "G04_TETRAHEDRON_ORTHO_AND_REGULAR",
+      "kind": "positive",
+      "eval_role": "VERIFIED_POSITIVE",
+      "neg_tag": "",
+      "gold_oracles": [
+        "5a√2/3"
+      ],
+      "status": "SERVED",
+      "reason_code": null,
+      "extraction_mode": "LOCAL_SLM_GROUNDED",
+      "slm_invoked": true,
+      "answers": {
+        "q1": "5a√2/3"
+      },
+      "ok_any": true,
+      "ok_strict": true,
+      "wrong_served": false,
+      "wall_ms": 4402.92,
+      "provider_calls": 0
+    },
+    {
+      "case_id": "u9_044",
+      "group": "G04_TETRAHEDRON_ORTHO_AND_REGULAR",
+      "kind": "positive",
+      "eval_role": "VERIFIED_POSITIVE",
+      "neg_tag": "",
+      "gold_oracles": [
+        "10a³"
+      ],
+      "status": "SERVED",
+      "reason_code": null,
+      "extraction_mode": "LOCAL_SLM_GROUNDED",
+      "slm_invoked": true,
+      "answers": {
+        "q1": "10a³"
+      },
+      "ok_any": true,
+      "ok_strict": true,
+      "wrong_served": false,
+      "wall_ms": 3974.6,
+      "provider_calls": 0
+    },
+    {
+      "case_id": "u9_045",
+      "group": "G05_PRISM_CUBOID_CUBE",
+      "kind": "positive",
+      "eval_role": "VERIFIED_POSITIVE",
+      "neg_tag": "",
+      "gold_oracles": [
+        "0a"
+      ],
+      "status": "SERVED",
+      "reason_code": null,
+      "extraction_mode": "LOCAL_DETERMINISTIC_PARSER",
+      "slm_invoked": false,
+      "answers": {
+        "q1": "0a"
+      },
+      "ok_any": true,
+      "ok_strict": true,
+      "wrong_served": false,
+      "wall_ms": 56.18,
+      "provider_calls": 0
+    },
+    {
+      "case_id": "u9_046",
+      "group": "G05_PRISM_CUBOID_CUBE",
+      "kind": "positive",
+      "eval_role": "VERIFIED_POSITIVE",
+      "neg_tag": "",
+      "gold_oracles": [
+        "0a"
+      ],
+      "status": "SERVED",
+      "reason_code": null,
+      "extraction_mode": "LOCAL_DETERMINISTIC_PARSER",
+      "slm_invoked": false,
+      "answers": {
+        "q1": "0a"
+      },
+      "ok_any": true,
+      "ok_strict": true,
+      "wrong_served": false,
+      "wall_ms": 52.01,
+      "provider_calls": 0
+    },
+    {
+      "case_id": "u9_047",
+      "group": "G05_PRISM_CUBOID_CUBE",
+      "kind": "positive",
+      "eval_role": "VERIFIED_POSITIVE",
+      "neg_tag": "",
+      "gold_oracles": [
+        "0a"
+      ],
+      "status": "SERVED",
+      "reason_code": null,
+      "extraction_mode": "LOCAL_DETERMINISTIC_PARSER",
+      "slm_invoked": false,
+      "answers": {
+        "q1": "0a"
+      },
+      "ok_any": true,
+      "ok_strict": true,
+      "wrong_served": false,
+      "wall_ms": 52.83,
+      "provider_calls": 0
+    },
+    {
+      "case_id": "u9_048",
+      "group": "G05_PRISM_CUBOID_CUBE",
+      "kind": "positive",
+      "eval_role": "VERIFIED_POSITIVE",
+      "neg_tag": "",
+      "gold_oracles": [
+        "0"
+      ],
+      "status": "SERVED",
+      "reason_code": null,
+      "extraction_mode": "LOCAL_DETERMINISTIC_PARSER",
+      "slm_invoked": false,
+      "answers": {
+        "q1": "0"
+      },
+      "ok_any": true,
+      "ok_strict": true,
+      "wrong_served": false,
+      "wall_ms": 46.47,
+      "provider_calls": 0
+    },
+    {
+      "case_id": "u9_049",
+      "group": "G05_PRISM_CUBOID_CUBE",
+      "kind": "positive",
+      "eval_role": "VERIFIED_POSITIVE",
+      "neg_tag": "",
+      "gold_oracles": [
+        "a√26"
+      ],
+      "status": "SERVED",
+      "reason_code": null,
+      "extraction_mode": "LOCAL_SLM_GROUNDED",
+      "slm_invoked": true,
+      "answers": {
+        "q1": "a√26"
+      },
+      "ok_any": true,
+      "ok_strict": true,
+      "wrong_served": false,
+      "wall_ms": 3108.8,
+      "provider_calls": 0
+    },
+    {
+      "case_id": "u9_050",
+      "group": "G05_PRISM_CUBOID_CUBE",
+      "kind": "positive",
+      "eval_role": "VERIFIED_POSITIVE",
+      "neg_tag": "",
+      "gold_oracles": [
+        "√53/2"
+      ],
+      "status": "SERVED",
+      "reason_code": null,
+      "extraction_mode": "LOCAL_SLM_GROUNDED",
+      "slm_invoked": true,
+      "answers": {
+        "q1": "√53/2"
+      },
+      "ok_any": true,
+      "ok_strict": true,
+      "wrong_served": false,
+      "wall_ms": 2995.86,
+      "provider_calls": 0
+    },
+    {
+      "case_id": "u9_051",
+      "group": "G05_PRISM_CUBOID_CUBE",
+      "kind": "positive",
+      "eval_role": "VERIFIED_POSITIVE",
+      "neg_tag": "",
+      "gold_oracles": [
+        "a√29/2"
+      ],
+      "status": "SERVED",
+      "reason_code": null,
+      "extraction_mode": "LOCAL_SLM_GROUNDED",
+      "slm_invoked": true,
+      "answers": {
+        "q1": "a√29/2"
+      },
+      "ok_any": true,
+      "ok_strict": true,
+      "wrong_served": false,
+      "wall_ms": 3172.05,
+      "provider_calls": 0
+    },
+    {
+      "case_id": "u9_052",
+      "group": "G05_PRISM_CUBOID_CUBE",
+      "kind": "positive",
+      "eval_role": "VERIFIED_POSITIVE",
+      "neg_tag": "",
+      "gold_oracles": [
+        "√173/2"
+      ],
+      "status": "SERVED",
+      "reason_code": null,
+      "extraction_mode": "LOCAL_SLM_GROUNDED",
+      "slm_invoked": true,
+      "answers": {
+        "q1": "√173/2"
+      },
+      "ok_any": true,
+      "ok_strict": true,
+      "wrong_served": false,
+      "wall_ms": 3568.3,
+      "provider_calls": 0
+    },
+    {
+      "case_id": "u9_053",
+      "group": "G05_PRISM_CUBOID_CUBE",
+      "kind": "positive",
+      "eval_role": "VERIFIED_POSITIVE",
+      "neg_tag": "",
+      "gold_oracles": [
+        "8a³"
+      ],
+      "status": "SERVED",
+      "reason_code": null,
+      "extraction_mode": "LOCAL_SLM_GROUNDED",
+      "slm_invoked": true,
+      "answers": {
+        "q1": "8a³"
+      },
+      "ok_any": true,
+      "ok_strict": true,
+      "wrong_served": false,
+      "wall_ms": 2384.54,
+      "provider_calls": 0
+    },
+    {
+      "case_id": "u9_054",
+      "group": "G05_PRISM_CUBOID_CUBE",
+      "kind": "positive",
+      "eval_role": "VERIFIED_POSITIVE",
+      "neg_tag": "",
+      "gold_oracles": [
+        "64"
+      ],
+      "status": "SERVED",
+      "reason_code": null,
+      "extraction_mode": "LOCAL_SLM_GROUNDED",
+      "slm_invoked": true,
+      "answers": {
+        "q1": "64"
+      },
+      "ok_any": true,
+      "ok_strict": true,
+      "wrong_served": false,
+      "wall_ms": 2529.22,
+      "provider_calls": 0
+    },
+    {
+      "case_id": "u9_055",
+      "group": "G05_PRISM_CUBOID_CUBE",
+      "kind": "positive",
+      "eval_role": "VERIFIED_POSITIVE",
+      "neg_tag": "",
+      "gold_oracles": [
+        "27a³"
+      ],
+      "status": "SERVED",
+      "reason_code": null,
+      "extraction_mode": "LOCAL_SLM_GROUNDED",
+      "slm_invoked": true,
+      "answers": {
+        "q1": "27a³"
+      },
+      "ok_any": true,
+      "ok_strict": true,
+      "wrong_served": false,
+      "wall_ms": 2296.06,
+      "provider_calls": 0
+    },
+    {
+      "case_id": "u9_056",
+      "group": "G05_PRISM_CUBOID_CUBE",
+      "kind": "positive",
+      "eval_role": "VERIFIED_POSITIVE",
+      "neg_tag": "",
+      "gold_oracles": [
+        "216"
+      ],
+      "status": "SERVED",
+      "reason_code": null,
+      "extraction_mode": "LOCAL_SLM_GROUNDED",
+      "slm_invoked": true,
+      "answers": {
+        "q1": "216"
+      },
+      "ok_any": true,
+      "ok_strict": true,
+      "wrong_served": false,
+      "wall_ms": 2629.89,
+      "provider_calls": 0
+    },
+    {
+      "case_id": "u9_057",
+      "group": "G06_MULTI_GOAL_2_TO_4",
+      "kind": "positive",
+      "eval_role": "VERIFIED_POSITIVE",
+      "neg_tag": "",
+      "gold_oracles": [
+        "cos²=18/25",
+        "7",
+        "36"
+      ],
+      "status": "SERVED",
+      "reason_code": null,
+      "extraction_mode": "LOCAL_SLM_GROUNDED",
+      "slm_invoked": true,
+      "answers": {
+        "q2": "cos²=18/25",
+        "q1": "7",
+        "q3": "36"
+      },
+      "ok_any": true,
+      "ok_strict": true,
+      "wrong_served": false,
+      "wall_ms": 3894.38,
+      "provider_calls": 0
+    },
+    {
+      "case_id": "u9_058",
+      "group": "G06_MULTI_GOAL_2_TO_4",
+      "kind": "positive",
+      "eval_role": "VERIFIED_POSITIVE",
+      "neg_tag": "",
+      "gold_oracles": [
+        "3√14/7",
+        "36"
+      ],
+      "status": "SERVED",
+      "reason_code": null,
+      "extraction_mode": "LOCAL_SLM_GROUNDED",
+      "slm_invoked": true,
+      "answers": {
+        "q1": "3√14/7",
+        "q2": "36"
+      },
+      "ok_any": true,
+      "ok_strict": true,
+      "wrong_served": false,
+      "wall_ms": 3507.93,
+      "provider_calls": 0
+    },
+    {
+      "case_id": "u9_059",
+      "group": "G06_MULTI_GOAL_2_TO_4",
+      "kind": "positive",
+      "eval_role": "VERIFIED_POSITIVE",
+      "neg_tag": "",
+      "gold_oracles": [
+        "cos²=2/5",
+        "3a",
+        "4a³"
+      ],
+      "status": "SERVED",
+      "reason_code": null,
+      "extraction_mode": "LOCAL_SLM_GROUNDED",
+      "slm_invoked": true,
+      "answers": {
+        "q2": "cos²=2/5",
+        "q1": "3a",
+        "q3": "4a³"
+      },
+      "ok_any": true,
+      "ok_strict": true,
+      "wrong_served": false,
+      "wall_ms": 4038.73,
+      "provider_calls": 0
+    },
+    {
+      "case_id": "u9_060",
+      "group": "G06_MULTI_GOAL_2_TO_4",
+      "kind": "positive",
+      "eval_role": "VERIFIED_POSITIVE",
+      "neg_tag": "",
+      "gold_oracles": [
+        "a√6/3",
+        "4a³"
+      ],
+      "status": "SERVED",
+      "reason_code": null,
+      "extraction_mode": "LOCAL_SLM_GROUNDED",
+      "slm_invoked": true,
+      "answers": {
+        "q1": "a√6/3",
+        "q2": "4a³"
+      },
+      "ok_any": true,
+      "ok_strict": true,
+      "wrong_served": false,
+      "wall_ms": 3862.05,
+      "provider_calls": 0
+    },
+    {
+      "case_id": "u9_061",
+      "group": "G06_MULTI_GOAL_2_TO_4",
+      "kind": "positive",
+      "eval_role": "VERIFIED_POSITIVE",
+      "neg_tag": "",
+      "gold_oracles": [
+        "cos²=625/1394",
+        "5a√2",
+        "60a³"
+      ],
+      "status": "SERVED",
+      "reason_code": null,
+      "extraction_mode": "LOCAL_SLM_GROUNDED",
+      "slm_invoked": true,
+      "answers": {
+        "q2": "cos²=625/1394",
+        "q1": "5a√2",
+        "q3": "60a³"
+      },
+      "ok_any": true,
+      "ok_strict": true,
+      "wrong_served": false,
+      "wall_ms": 4593.32,
+      "provider_calls": 0
+    },
+    {
+      "case_id": "u9_062",
+      "group": "G06_MULTI_GOAL_2_TO_4",
+      "kind": "positive",
+      "eval_role": "VERIFIED_POSITIVE",
+      "neg_tag": "",
+      "gold_oracles": [
+        "60a√769/769",
+        "60a³"
+      ],
+      "status": "REFUSED",
+      "reason_code": "REQUEST_NOT_ANSWERED",
+      "extraction_mode": "LOCAL_SLM_GROUNDING_REJECTED",
+      "slm_invoked": true,
+      "answers": {},
+      "ok_any": false,
+      "ok_strict": false,
+      "wrong_served": false,
+      "wall_ms": 4258.07,
+      "provider_calls": 0
+    },
+    {
+      "case_id": "u9_063",
+      "group": "G06_MULTI_GOAL_2_TO_4",
+      "kind": "positive",
+      "eval_role": "VERIFIED_POSITIVE",
+      "neg_tag": "",
+      "gold_oracles": [
+        "cos²=256/425",
+        "√26",
+        "12"
+      ],
+      "status": "SERVED",
+      "reason_code": null,
+      "extraction_mode": "LOCAL_SLM_GROUNDED",
+      "slm_invoked": true,
+      "answers": {
+        "q2": "cos²=256/425",
+        "q1": "√26",
+        "q3": "12"
+      },
+      "ok_any": true,
+      "ok_strict": true,
+      "wrong_served": false,
+      "wall_ms": 3892.91,
+      "provider_calls": 0
+    },
+    {
+      "case_id": "u9_064",
+      "group": "G06_MULTI_GOAL_2_TO_4",
+      "kind": "positive",
+      "eval_role": "VERIFIED_POSITIVE",
+      "neg_tag": "",
+      "gold_oracles": [
+        "12/13",
+        "12"
+      ],
+      "status": "SERVED",
+      "reason_code": null,
+      "extraction_mode": "LOCAL_SLM_GROUNDED",
+      "slm_invoked": true,
+      "answers": {
+        "q1": "12/13",
+        "q2": "12"
+      },
+      "ok_any": true,
+      "ok_strict": true,
+      "wrong_served": false,
+      "wall_ms": 3868.36,
+      "provider_calls": 0
+    },
+    {
+      "case_id": "u9_065",
+      "group": "G06_MULTI_GOAL_2_TO_4",
+      "kind": "positive",
+      "eval_role": "VERIFIED_POSITIVE",
+      "neg_tag": "",
+      "gold_oracles": [
+        "cos²=9/35",
+        "3a",
+        "2a³√6"
+      ],
+      "status": "SERVED",
+      "reason_code": null,
+      "extraction_mode": "LOCAL_SLM_GROUNDED",
+      "slm_invoked": true,
+      "answers": {
+        "q2": "cos²=9/35",
+        "q1": "3a",
+        "q3": "2a³√6"
+      },
+      "ok_any": true,
+      "ok_strict": true,
+      "wrong_served": false,
+      "wall_ms": 4357.86,
+      "provider_calls": 0
+    },
+    {
+      "case_id": "u9_066",
+      "group": "G06_MULTI_GOAL_2_TO_4",
+      "kind": "positive",
+      "eval_role": "VERIFIED_POSITIVE",
+      "neg_tag": "",
+      "gold_oracles": [
+        "2a√39/13",
+        "2a³√6"
+      ],
+      "status": "SERVED",
+      "reason_code": null,
+      "extraction_mode": "LOCAL_SLM_GROUNDED",
+      "slm_invoked": true,
+      "answers": {
+        "q1": "2a√39/13",
+        "q2": "2a³√6"
+      },
+      "ok_any": true,
+      "ok_strict": true,
+      "wrong_served": false,
+      "wall_ms": 3682.76,
+      "provider_calls": 0
+    },
+    {
+      "case_id": "u9_067",
+      "group": "G06_MULTI_GOAL_2_TO_4",
+      "kind": "positive",
+      "eval_role": "VERIFIED_POSITIVE",
+      "neg_tag": "",
+      "gold_oracles": [
+        "cos²=1/2",
+        "2√3/3",
+        "2√3",
+        "8"
+      ],
+      "status": "SERVED",
+      "reason_code": null,
+      "extraction_mode": "LOCAL_DETERMINISTIC_PARSER",
+      "slm_invoked": false,
+      "answers": {
+        "q2": "cos²=1/2",
+        "q3": "2√3/3",
+        "q1": "2√3",
+        "q4": "8"
+      },
+      "ok_any": true,
+      "ok_strict": true,
+      "wrong_served": false,
+      "wall_ms": 90.52,
+      "provider_calls": 0
+    },
+    {
+      "case_id": "u9_068",
+      "group": "G06_MULTI_GOAL_2_TO_4",
+      "kind": "positive",
+      "eval_role": "VERIFIED_POSITIVE",
+      "neg_tag": "",
+      "gold_oracles": [
+        "cos²=1/2",
+        "a√3",
+        "3a√3",
+        "27a³"
+      ],
+      "status": "SERVED",
+      "reason_code": null,
+      "extraction_mode": "LOCAL_DETERMINISTIC_PARSER",
+      "slm_invoked": false,
+      "answers": {
+        "q2": "cos²=1/2",
+        "q3": "a√3",
+        "q1": "3a√3",
+        "q4": "27a³"
+      },
+      "ok_any": true,
+      "ok_strict": true,
+      "wrong_served": false,
+      "wall_ms": 86.02,
+      "provider_calls": 0
+    },
+    {
+      "case_id": "u9_069",
+      "group": "G06_MULTI_GOAL_2_TO_4",
+      "kind": "positive",
+      "eval_role": "VERIFIED_POSITIVE",
+      "neg_tag": "",
+      "gold_oracles": [
+        "cos²=1/2",
+        "4√3/3",
+        "4√3",
+        "64"
+      ],
+      "status": "SERVED",
+      "reason_code": null,
+      "extraction_mode": "LOCAL_DETERMINISTIC_PARSER",
+      "slm_invoked": false,
+      "answers": {
+        "q2": "cos²=1/2",
+        "q3": "4√3/3",
+        "q1": "4√3",
+        "q4": "64"
+      },
+      "ok_any": true,
+      "ok_strict": true,
+      "wrong_served": false,
+      "wall_ms": 70.83,
+      "provider_calls": 0
+    },
+    {
+      "case_id": "u9_070",
+      "group": "G06_MULTI_GOAL_2_TO_4",
+      "kind": "positive",
+      "eval_role": "VERIFIED_POSITIVE",
+      "neg_tag": "",
+      "gold_oracles": [
+        "cos²=1/2",
+        "a√3/3",
+        "a√3",
+        "a³"
+      ],
+      "status": "SERVED",
+      "reason_code": null,
+      "extraction_mode": "LOCAL_DETERMINISTIC_PARSER",
+      "slm_invoked": false,
+      "answers": {
+        "q2": "cos²=1/2",
+        "q3": "a√3/3",
+        "q1": "a√3",
+        "q4": "a³"
+      },
+      "ok_any": true,
+      "ok_strict": true,
+      "wrong_served": false,
+      "wall_ms": 70.68,
+      "provider_calls": 0
+    },
+    {
+      "case_id": "u9_071",
+      "group": "G07_AUXILIARY_MID_CENTROID_PROJ_DIV",
+      "kind": "positive",
+      "eval_role": "VERIFIED_POSITIVE",
+      "neg_tag": "",
+      "gold_oracles": [
+        "a³√3/8"
+      ],
+      "status": "SERVED",
+      "reason_code": null,
+      "extraction_mode": "LOCAL_DETERMINISTIC_PARSER",
+      "slm_invoked": false,
+      "answers": {
+        "q1": "a³√3/8"
+      },
+      "ok_any": true,
+      "ok_strict": true,
+      "wrong_served": false,
+      "wall_ms": 104.07,
+      "provider_calls": 0
+    },
+    {
+      "case_id": "u9_072",
+      "group": "G07_AUXILIARY_MID_CENTROID_PROJ_DIV",
+      "kind": "positive",
+      "eval_role": "VERIFIED_POSITIVE",
+      "neg_tag": "",
+      "gold_oracles": [
+        "a³"
+      ],
+      "status": "SERVED",
+      "reason_code": null,
+      "extraction_mode": "LOCAL_DETERMINISTIC_PARSER",
+      "slm_invoked": false,
+      "answers": {
+        "q1": "a³"
+      },
+      "ok_any": true,
+      "ok_strict": true,
+      "wrong_served": false,
+      "wall_ms": 44.51,
+      "provider_calls": 0
+    },
+    {
+      "case_id": "u9_073",
+      "group": "G07_AUXILIARY_MID_CENTROID_PROJ_DIV",
+      "kind": "positive",
+      "eval_role": "VERIFIED_POSITIVE",
+      "neg_tag": "",
+      "gold_oracles": [
+        "9a³/8"
+      ],
+      "status": "SERVED",
+      "reason_code": null,
+      "extraction_mode": "LOCAL_DETERMINISTIC_PARSER",
+      "slm_invoked": false,
+      "answers": {
+        "q1": "9a³/8"
+      },
+      "ok_any": true,
+      "ok_strict": true,
+      "wrong_served": false,
+      "wall_ms": 44.27,
+      "provider_calls": 0
+    },
+    {
+      "case_id": "u9_074",
+      "group": "G07_AUXILIARY_MID_CENTROID_PROJ_DIV",
+      "kind": "positive",
+      "eval_role": "VERIFIED_POSITIVE",
+      "neg_tag": "",
+      "gold_oracles": [
+        "9a³√3/8"
+      ],
+      "status": "SERVED",
+      "reason_code": null,
+      "extraction_mode": "LOCAL_DETERMINISTIC_PARSER",
+      "slm_invoked": false,
+      "answers": {
+        "q1": "9a³√3/8"
+      },
+      "ok_any": true,
+      "ok_strict": true,
+      "wrong_served": false,
+      "wall_ms": 43.95,
+      "provider_calls": 0
+    },
+    {
+      "case_id": "u9_075",
+      "group": "G07_AUXILIARY_MID_CENTROID_PROJ_DIV",
+      "kind": "positive",
+      "eval_role": "VERIFIED_POSITIVE",
+      "neg_tag": "",
+      "gold_oracles": [
+        "6a√13/13"
+      ],
+      "status": "SERVED",
+      "reason_code": null,
+      "extraction_mode": "LOCAL_DETERMINISTIC_PARSER",
+      "slm_invoked": false,
+      "answers": {
+        "q1": "6a√13/13"
+      },
+      "ok_any": true,
+      "ok_strict": true,
+      "wrong_served": false,
+      "wall_ms": 44.53,
+      "provider_calls": 0
+    },
+    {
+      "case_id": "u9_076",
+      "group": "G07_AUXILIARY_MID_CENTROID_PROJ_DIV",
+      "kind": "positive",
+      "eval_role": "VERIFIED_POSITIVE",
+      "neg_tag": "",
+      "gold_oracles": [
+        "4a√17/17"
+      ],
+      "status": "SERVED",
+      "reason_code": null,
+      "extraction_mode": "LOCAL_DETERMINISTIC_PARSER",
+      "slm_invoked": false,
+      "answers": {
+        "q1": "4a√17/17"
+      },
+      "ok_any": true,
+      "ok_strict": true,
+      "wrong_served": false,
+      "wall_ms": 44.96,
+      "provider_calls": 0
+    },
+    {
+      "case_id": "u9_077",
+      "group": "G07_AUXILIARY_MID_CENTROID_PROJ_DIV",
+      "kind": "positive",
+      "eval_role": "VERIFIED_POSITIVE",
+      "neg_tag": "",
+      "gold_oracles": [
+        "6a√13/13"
+      ],
+      "status": "SERVED",
+      "reason_code": null,
+      "extraction_mode": "LOCAL_DETERMINISTIC_PARSER",
+      "slm_invoked": false,
+      "answers": {
+        "q1": "6a√13/13"
+      },
+      "ok_any": true,
+      "ok_strict": true,
+      "wrong_served": false,
+      "wall_ms": 43.86,
+      "provider_calls": 0
+    },
+    {
+      "case_id": "u9_078",
+      "group": "G07_AUXILIARY_MID_CENTROID_PROJ_DIV",
+      "kind": "positive",
+      "eval_role": "VERIFIED_POSITIVE",
+      "neg_tag": "",
+      "gold_oracles": [
+        "10a√29/29"
+      ],
+      "status": "SERVED",
+      "reason_code": null,
+      "extraction_mode": "LOCAL_DETERMINISTIC_PARSER",
+      "slm_invoked": false,
+      "answers": {
+        "q1": "10a√29/29"
+      },
+      "ok_any": true,
+      "ok_strict": true,
+      "wrong_served": false,
+      "wall_ms": 44.67,
+      "provider_calls": 0
+    },
+    {
+      "case_id": "u9_079",
+      "group": "G07_AUXILIARY_MID_CENTROID_PROJ_DIV",
+      "kind": "positive",
+      "eval_role": "VERIFIED_POSITIVE",
+      "neg_tag": "",
+      "gold_oracles": [
+        "a³√3/6"
+      ],
+      "status": "SERVED",
+      "reason_code": null,
+      "extraction_mode": "LOCAL_DETERMINISTIC_PARSER",
+      "slm_invoked": false,
+      "answers": {
+        "q1": "a³√3/6"
+      },
+      "ok_any": true,
+      "ok_strict": true,
+      "wrong_served": false,
+      "wall_ms": 41.21,
+      "provider_calls": 0
+    },
+    {
+      "case_id": "u9_080",
+      "group": "G07_AUXILIARY_MID_CENTROID_PROJ_DIV",
+      "kind": "positive",
+      "eval_role": "VERIFIED_POSITIVE",
+      "neg_tag": "",
+      "gold_oracles": [
+        "a³√3"
+      ],
+      "status": "SERVED",
+      "reason_code": null,
+      "extraction_mode": "LOCAL_DETERMINISTIC_PARSER",
+      "slm_invoked": false,
+      "answers": {
+        "q1": "a³√3"
+      },
+      "ok_any": true,
+      "ok_strict": true,
+      "wrong_served": false,
+      "wall_ms": 43.23,
+      "provider_calls": 0
+    },
+    {
+      "case_id": "u9_081",
+      "group": "G07_AUXILIARY_MID_CENTROID_PROJ_DIV",
+      "kind": "positive",
+      "eval_role": "VERIFIED_POSITIVE",
+      "neg_tag": "",
+      "gold_oracles": [
+        "3a³√3"
+      ],
+      "status": "SERVED",
+      "reason_code": null,
+      "extraction_mode": "LOCAL_DETERMINISTIC_PARSER",
+      "slm_invoked": false,
+      "answers": {
+        "q1": "3a³√3"
+      },
+      "ok_any": true,
+      "ok_strict": true,
+      "wrong_served": false,
+      "wall_ms": 41.38,
+      "provider_calls": 0
+    },
+    {
+      "case_id": "u9_082",
+      "group": "G07_AUXILIARY_MID_CENTROID_PROJ_DIV",
+      "kind": "positive",
+      "eval_role": "VERIFIED_POSITIVE",
+      "neg_tag": "",
+      "gold_oracles": [
+        "a³√3/4"
+      ],
+      "status": "SERVED",
+      "reason_code": null,
+      "extraction_mode": "LOCAL_DETERMINISTIC_PARSER",
+      "slm_invoked": false,
+      "answers": {
+        "q1": "a³√3/4"
+      },
+      "ok_any": true,
+      "ok_strict": true,
+      "wrong_served": false,
+      "wall_ms": 44.55,
+      "provider_calls": 0
+    },
+    {
+      "case_id": "u9_083",
+      "group": "G08_ANGLE_LINE_PLANE_DIHEDRAL",
+      "kind": "positive",
+      "eval_role": "VERIFIED_POSITIVE",
+      "neg_tag": "",
+      "gold_oracles": [
+        "cos²=1/2"
+      ],
+      "status": "SERVED",
+      "reason_code": null,
+      "extraction_mode": "LOCAL_DETERMINISTIC_PARSER",
+      "slm_invoked": false,
+      "answers": {
+        "q1": "cos²=1/2"
+      },
+      "ok_any": true,
+      "ok_strict": true,
+      "wrong_served": false,
+      "wall_ms": 42.04,
+      "provider_calls": 0
+    },
+    {
+      "case_id": "u9_084",
+      "group": "G08_ANGLE_LINE_PLANE_DIHEDRAL",
+      "kind": "positive",
+      "eval_role": "VERIFIED_POSITIVE",
+      "neg_tag": "",
+      "gold_oracles": [
+        "cos²=4/9"
+      ],
+      "status": "SERVED",
+      "reason_code": null,
+      "extraction_mode": "LOCAL_DETERMINISTIC_PARSER",
+      "slm_invoked": false,
+      "answers": {
+        "q1": "cos²=4/9"
+      },
+      "ok_any": true,
+      "ok_strict": true,
+      "wrong_served": false,
+      "wall_ms": 40.65,
+      "provider_calls": 0
+    },
+    {
+      "case_id": "u9_085",
+      "group": "G08_ANGLE_LINE_PLANE_DIHEDRAL",
+      "kind": "positive",
+      "eval_role": "VERIFIED_POSITIVE",
+      "neg_tag": "",
+      "gold_oracles": [
+        "cos²=1/6"
+      ],
+      "status": "SERVED",
+      "reason_code": null,
+      "extraction_mode": "LOCAL_DETERMINISTIC_PARSER",
+      "slm_invoked": false,
+      "answers": {
+        "q1": "cos²=1/6"
+      },
+      "ok_any": true,
+      "ok_strict": true,
+      "wrong_served": false,
+      "wall_ms": 42.79,
+      "provider_calls": 0
+    },
+    {
+      "case_id": "u9_086",
+      "group": "G08_ANGLE_LINE_PLANE_DIHEDRAL",
+      "kind": "positive",
+      "eval_role": "VERIFIED_POSITIVE",
+      "neg_tag": "",
+      "gold_oracles": [
+        "cos²=1/2"
+      ],
+      "status": "SERVED",
+      "reason_code": null,
+      "extraction_mode": "LOCAL_DETERMINISTIC_PARSER",
+      "slm_invoked": false,
+      "answers": {
+        "q1": "cos²=1/2"
+      },
+      "ok_any": true,
+      "ok_strict": true,
+      "wrong_served": false,
+      "wall_ms": 42.67,
+      "provider_calls": 0
+    },
+    {
+      "case_id": "u9_087",
+      "group": "G08_ANGLE_LINE_PLANE_DIHEDRAL",
+      "kind": "positive",
+      "eval_role": "VERIFIED_POSITIVE",
+      "neg_tag": "",
+      "gold_oracles": [
+        "cos²=1/3"
+      ],
+      "status": "SERVED",
+      "reason_code": null,
+      "extraction_mode": "LOCAL_DETERMINISTIC_PARSER",
+      "slm_invoked": false,
+      "answers": {
+        "q1": "cos²=1/3"
+      },
+      "ok_any": true,
+      "ok_strict": true,
+      "wrong_served": false,
+      "wall_ms": 41.38,
+      "provider_calls": 0
+    },
+    {
+      "case_id": "u9_088",
+      "group": "G08_ANGLE_LINE_PLANE_DIHEDRAL",
+      "kind": "positive",
+      "eval_role": "VERIFIED_POSITIVE",
+      "neg_tag": "",
+      "gold_oracles": [
+        "cos²=1/3"
+      ],
+      "status": "SERVED",
+      "reason_code": null,
+      "extraction_mode": "LOCAL_DETERMINISTIC_PARSER",
+      "slm_invoked": false,
+      "answers": {
+        "q1": "cos²=1/3"
+      },
+      "ok_any": true,
+      "ok_strict": true,
+      "wrong_served": false,
+      "wall_ms": 44.17,
+      "provider_calls": 0
+    },
+    {
+      "case_id": "u9_089",
+      "group": "G08_ANGLE_LINE_PLANE_DIHEDRAL",
+      "kind": "positive",
+      "eval_role": "VERIFIED_POSITIVE",
+      "neg_tag": "",
+      "gold_oracles": [
+        "cos²=1/2"
+      ],
+      "status": "SERVED",
+      "reason_code": null,
+      "extraction_mode": "LOCAL_DETERMINISTIC_PARSER",
+      "slm_invoked": false,
+      "answers": {
+        "q1": "cos²=1/2"
+      },
+      "ok_any": true,
+      "ok_strict": true,
+      "wrong_served": false,
+      "wall_ms": 41.23,
+      "provider_calls": 0
+    },
+    {
+      "case_id": "u9_090",
+      "group": "G08_ANGLE_LINE_PLANE_DIHEDRAL",
+      "kind": "positive",
+      "eval_role": "VERIFIED_POSITIVE",
+      "neg_tag": "",
+      "gold_oracles": [
+        "cos²=3/7"
+      ],
+      "status": "SERVED",
+      "reason_code": null,
+      "extraction_mode": "LOCAL_DETERMINISTIC_PARSER",
+      "slm_invoked": false,
+      "answers": {
+        "q1": "cos²=3/7"
+      },
+      "ok_any": true,
+      "ok_strict": true,
+      "wrong_served": false,
+      "wall_ms": 40.06,
+      "provider_calls": 0
+    },
+    {
+      "case_id": "u9_091",
+      "group": "G08_ANGLE_LINE_PLANE_DIHEDRAL",
+      "kind": "positive",
+      "eval_role": "VERIFIED_POSITIVE",
+      "neg_tag": "",
+      "gold_oracles": [
+        "cos²=1/5"
+      ],
+      "status": "SERVED",
+      "reason_code": null,
+      "extraction_mode": "LOCAL_DETERMINISTIC_PARSER",
+      "slm_invoked": false,
+      "answers": {
+        "q1": "cos²=1/5"
+      },
+      "ok_any": true,
+      "ok_strict": true,
+      "wrong_served": false,
+      "wall_ms": 45.35,
+      "provider_calls": 0
+    },
+    {
+      "case_id": "u9_092",
+      "group": "G08_ANGLE_LINE_PLANE_DIHEDRAL",
+      "kind": "positive",
+      "eval_role": "VERIFIED_POSITIVE",
+      "neg_tag": "",
+      "gold_oracles": [
+        "cos²=1/2"
+      ],
+      "status": "SERVED",
+      "reason_code": null,
+      "extraction_mode": "LOCAL_DETERMINISTIC_PARSER",
+      "slm_invoked": false,
+      "answers": {
+        "q1": "cos²=1/2"
+      },
+      "ok_any": true,
+      "ok_strict": true,
+      "wrong_served": false,
+      "wall_ms": 42.64,
+      "provider_calls": 0
+    },
+    {
+      "case_id": "u9_093",
+      "group": "G08_ANGLE_LINE_PLANE_DIHEDRAL",
+      "kind": "positive",
+      "eval_role": "VERIFIED_POSITIVE",
+      "neg_tag": "",
+      "gold_oracles": [
+        "cos²=16/41"
+      ],
+      "status": "SERVED",
+      "reason_code": null,
+      "extraction_mode": "LOCAL_DETERMINISTIC_PARSER",
+      "slm_invoked": false,
+      "answers": {
+        "q1": "cos²=16/41"
+      },
+      "ok_any": true,
+      "ok_strict": true,
+      "wrong_served": false,
+      "wall_ms": 40.24,
+      "provider_calls": 0
+    },
+    {
+      "case_id": "u9_094",
+      "group": "G08_ANGLE_LINE_PLANE_DIHEDRAL",
+      "kind": "positive",
+      "eval_role": "VERIFIED_POSITIVE",
+      "neg_tag": "",
+      "gold_oracles": [
+        "cos²=9/34"
+      ],
+      "status": "SERVED",
+      "reason_code": null,
+      "extraction_mode": "LOCAL_DETERMINISTIC_PARSER",
+      "slm_invoked": false,
+      "answers": {
+        "q1": "cos²=9/34"
+      },
+      "ok_any": true,
+      "ok_strict": true,
+      "wrong_served": false,
+      "wall_ms": 42.04,
+      "provider_calls": 0
+    },
+    {
+      "case_id": "u9_095",
+      "group": "G09_DISTANCE_PT_PLANE_AND_SKEW",
+      "kind": "positive",
+      "eval_role": "VERIFIED_POSITIVE",
+      "neg_tag": "",
+      "gold_oracles": [
+        "2a√33/33"
+      ],
+      "status": "SERVED",
+      "reason_code": null,
+      "extraction_mode": "LOCAL_DETERMINISTIC_PARSER",
+      "slm_invoked": false,
+      "answers": {
+        "q1": "2a√33/33"
+      },
+      "ok_any": true,
+      "ok_strict": true,
+      "wrong_served": false,
+      "wall_ms": 46.24,
+      "provider_calls": 0
+    },
+    {
+      "case_id": "u9_096",
+      "group": "G09_DISTANCE_PT_PLANE_AND_SKEW",
+      "kind": "positive",
+      "eval_role": "VERIFIED_POSITIVE",
+      "neg_tag": "",
+      "gold_oracles": [
+        "2a√5/3"
+      ],
+      "status": "SERVED",
+      "reason_code": null,
+      "extraction_mode": "LOCAL_PARSER_AFTER_V3_NORMALIZER",
+      "slm_invoked": false,
+      "answers": {
+        "q1": "2a√5/3"
+      },
+      "ok_any": true,
+      "ok_strict": true,
+      "wrong_served": false,
+      "wall_ms": 50.37,
+      "provider_calls": 0
+    },
+    {
+      "case_id": "u9_097",
+      "group": "G09_DISTANCE_PT_PLANE_AND_SKEW",
+      "kind": "positive",
+      "eval_role": "VERIFIED_POSITIVE",
+      "neg_tag": "",
+      "gold_oracles": [
+        "a√21/7"
+      ],
+      "status": "SERVED",
+      "reason_code": null,
+      "extraction_mode": "LOCAL_DETERMINISTIC_PARSER",
+      "slm_invoked": false,
+      "answers": {
+        "q1": "a√21/7"
+      },
+      "ok_any": true,
+      "ok_strict": true,
+      "wrong_served": false,
+      "wall_ms": 49.23,
+      "provider_calls": 0
+    },
+    {
+      "case_id": "u9_098",
+      "group": "G09_DISTANCE_PT_PLANE_AND_SKEW",
+      "kind": "positive",
+      "eval_role": "VERIFIED_POSITIVE",
+      "neg_tag": "",
+      "gold_oracles": [
+        "a√39/4"
+      ],
+      "status": "SERVED",
+      "reason_code": null,
+      "extraction_mode": "LOCAL_PARSER_AFTER_V3_NORMALIZER",
+      "slm_invoked": false,
+      "answers": {
+        "q1": "a√39/4"
+      },
+      "ok_any": true,
+      "ok_strict": true,
+      "wrong_served": false,
+      "wall_ms": 54.54,
+      "provider_calls": 0
+    },
+    {
+      "case_id": "u9_099",
+      "group": "G09_DISTANCE_PT_PLANE_AND_SKEW",
+      "kind": "positive",
+      "eval_role": "VERIFIED_POSITIVE",
+      "neg_tag": "",
+      "gold_oracles": [
+        "a"
+      ],
+      "status": "SERVED",
+      "reason_code": null,
+      "extraction_mode": "LOCAL_DETERMINISTIC_PARSER",
+      "slm_invoked": false,
+      "answers": {
+        "q1": "a"
+      },
+      "ok_any": true,
+      "ok_strict": true,
+      "wrong_served": false,
+      "wall_ms": 46.48,
+      "provider_calls": 0
+    },
+    {
+      "case_id": "u9_100",
+      "group": "G09_DISTANCE_PT_PLANE_AND_SKEW",
+      "kind": "positive",
+      "eval_role": "VERIFIED_POSITIVE",
+      "neg_tag": "",
+      "gold_oracles": [
+        "3a√55/10"
+      ],
+      "status": "SERVED",
+      "reason_code": null,
+      "extraction_mode": "LOCAL_PARSER_AFTER_V3_NORMALIZER",
+      "slm_invoked": false,
+      "answers": {
+        "q1": "3a√55/10"
+      },
+      "ok_any": true,
+      "ok_strict": true,
+      "wrong_served": false,
+      "wall_ms": 54.12,
+      "provider_calls": 0
+    },
+    {
+      "case_id": "u9_101",
+      "group": "G09_DISTANCE_PT_PLANE_AND_SKEW",
+      "kind": "positive",
+      "eval_role": "VERIFIED_POSITIVE",
+      "neg_tag": "",
+      "gold_oracles": [
+        "2a√34/17"
+      ],
+      "status": "SERVED",
+      "reason_code": null,
+      "extraction_mode": "LOCAL_DETERMINISTIC_PARSER",
+      "slm_invoked": false,
+      "answers": {
+        "q1": "2a√34/17"
+      },
+      "ok_any": true,
+      "ok_strict": true,
+      "wrong_served": false,
+      "wall_ms": 46.61,
+      "provider_calls": 0
+    },
+    {
+      "case_id": "u9_102",
+      "group": "G09_DISTANCE_PT_PLANE_AND_SKEW",
+      "kind": "positive",
+      "eval_role": "VERIFIED_POSITIVE",
+      "neg_tag": "",
+      "gold_oracles": [
+        "2a√70/7"
+      ],
+      "status": "SERVED",
+      "reason_code": null,
+      "extraction_mode": "LOCAL_PARSER_AFTER_V3_NORMALIZER",
+      "slm_invoked": false,
+      "answers": {
+        "q1": "2a√70/7"
+      },
+      "ok_any": true,
+      "ok_strict": true,
+      "wrong_served": false,
+      "wall_ms": 57.07,
+      "provider_calls": 0
+    },
+    {
+      "case_id": "u9_103",
+      "group": "G09_DISTANCE_PT_PLANE_AND_SKEW",
+      "kind": "positive",
+      "eval_role": "VERIFIED_POSITIVE",
+      "neg_tag": "",
+      "gold_oracles": [
+        "a√205/41"
+      ],
+      "status": "SERVED",
+      "reason_code": null,
+      "extraction_mode": "LOCAL_DETERMINISTIC_PARSER",
+      "slm_invoked": false,
+      "answers": {
+        "q1": "a√205/41"
+      },
+      "ok_any": true,
+      "ok_strict": true,
+      "wrong_served": false,
+      "wall_ms": 47.74,
+      "provider_calls": 0
+    },
+    {
+      "case_id": "u9_104",
+      "group": "G09_DISTANCE_PT_PLANE_AND_SKEW",
+      "kind": "positive",
+      "eval_role": "VERIFIED_POSITIVE",
+      "neg_tag": "",
+      "gold_oracles": [
+        "a√30/3"
+      ],
+      "status": "SERVED",
+      "reason_code": null,
+      "extraction_mode": "LOCAL_PARSER_AFTER_V3_NORMALIZER",
+      "slm_invoked": false,
+      "answers": {
+        "q1": "a√30/3"
+      },
+      "ok_any": true,
+      "ok_strict": true,
+      "wrong_served": false,
+      "wall_ms": 52.03,
+      "provider_calls": 0
+    },
+    {
+      "case_id": "u9_105",
+      "group": "G09_DISTANCE_PT_PLANE_AND_SKEW",
+      "kind": "positive",
+      "eval_role": "VERIFIED_POSITIVE",
+      "neg_tag": "",
+      "gold_oracles": [
+        "4a√33/33"
+      ],
+      "status": "SERVED",
+      "reason_code": null,
+      "extraction_mode": "LOCAL_DETERMINISTIC_PARSER",
+      "slm_invoked": false,
+      "answers": {
+        "q1": "4a√33/33"
+      },
+      "ok_any": true,
+      "ok_strict": true,
+      "wrong_served": false,
+      "wall_ms": 45.76,
+      "provider_calls": 0
+    },
+    {
+      "case_id": "u9_106",
+      "group": "G10_NEG_MISSING_AND_AMBIGUOUS",
+      "kind": "negative",
+      "eval_role": "NEGATIVE_OR_ADVERSARIAL",
+      "neg_tag": "missing",
+      "gold_oracles": [],
+      "status": "REFUSED",
+      "reason_code": "MISSING_DIMENSION",
+      "extraction_mode": "LOCAL_DETERMINISTIC_PARSER",
+      "slm_invoked": false,
+      "answers": {},
+      "ok_any": true,
+      "ok_strict": true,
+      "wrong_served": false,
+      "wall_ms": 56.51,
+      "provider_calls": 0
+    },
+    {
+      "case_id": "u9_107",
+      "group": "G10_NEG_MISSING_AND_AMBIGUOUS",
+      "kind": "negative",
+      "eval_role": "NEGATIVE_OR_ADVERSARIAL",
+      "neg_tag": "missing",
+      "gold_oracles": [],
+      "status": "REFUSED",
+      "reason_code": "MISSING_DIMENSION",
+      "extraction_mode": "LOCAL_DETERMINISTIC_PARSER",
+      "slm_invoked": false,
+      "answers": {},
+      "ok_any": true,
+      "ok_strict": true,
+      "wrong_served": false,
+      "wall_ms": 123.5,
+      "provider_calls": 0
+    },
+    {
+      "case_id": "u9_108",
+      "group": "G10_NEG_MISSING_AND_AMBIGUOUS",
+      "kind": "negative",
+      "eval_role": "NEGATIVE_OR_ADVERSARIAL",
+      "neg_tag": "missing",
+      "gold_oracles": [],
+      "status": "REFUSED",
+      "reason_code": "AMBIGUOUS_FACT",
+      "extraction_mode": "LOCAL_SLM_GROUNDING_REJECTED",
+      "slm_invoked": true,
+      "answers": {},
+      "ok_any": true,
+      "ok_strict": true,
+      "wrong_served": false,
+      "wall_ms": 2588.8,
+      "provider_calls": 0
+    },
+    {
+      "case_id": "u9_109",
+      "group": "G10_NEG_MISSING_AND_AMBIGUOUS",
+      "kind": "negative",
+      "eval_role": "NEGATIVE_OR_ADVERSARIAL",
+      "neg_tag": "missing",
+      "gold_oracles": [],
+      "status": "REFUSED",
+      "reason_code": "MISSING_DIMENSION",
+      "extraction_mode": "LOCAL_DETERMINISTIC_PARSER",
+      "slm_invoked": false,
+      "answers": {},
+      "ok_any": true,
+      "ok_strict": true,
+      "wrong_served": false,
+      "wall_ms": 70.4,
+      "provider_calls": 0
+    },
+    {
+      "case_id": "u9_110",
+      "group": "G10_NEG_MISSING_AND_AMBIGUOUS",
+      "kind": "negative",
+      "eval_role": "NEGATIVE_OR_ADVERSARIAL",
+      "neg_tag": "missing",
+      "gold_oracles": [],
+      "status": "REFUSED",
+      "reason_code": "MISSING_DIMENSION",
+      "extraction_mode": "LOCAL_DETERMINISTIC_PARSER",
+      "slm_invoked": false,
+      "answers": {},
+      "ok_any": true,
+      "ok_strict": true,
+      "wrong_served": false,
+      "wall_ms": 65.82,
+      "provider_calls": 0
+    },
+    {
+      "case_id": "u9_111",
+      "group": "G10_NEG_MISSING_AND_AMBIGUOUS",
+      "kind": "negative",
+      "eval_role": "NEGATIVE_OR_ADVERSARIAL",
+      "neg_tag": "ambig",
+      "gold_oracles": [],
+      "status": "REFUSED",
+      "reason_code": "INCONSISTENT_FACTS",
+      "extraction_mode": "LOCAL_SLM_GROUNDING_REJECTED",
+      "slm_invoked": true,
+      "answers": {},
+      "ok_any": true,
+      "ok_strict": true,
+      "wrong_served": false,
+      "wall_ms": 1509.33,
+      "provider_calls": 0
+    },
+    {
+      "case_id": "u9_112",
+      "group": "G10_NEG_MISSING_AND_AMBIGUOUS",
+      "kind": "negative",
+      "eval_role": "NEGATIVE_OR_ADVERSARIAL",
+      "neg_tag": "ambig",
+      "gold_oracles": [],
+      "status": "REFUSED",
+      "reason_code": "INCONSISTENT_FACTS",
+      "extraction_mode": "LOCAL_SLM_GROUNDING_REJECTED",
+      "slm_invoked": true,
+      "answers": {},
+      "ok_any": true,
+      "ok_strict": true,
+      "wrong_served": false,
+      "wall_ms": 1198.14,
+      "provider_calls": 0
+    },
+    {
+      "case_id": "u9_113",
+      "group": "G10_NEG_MISSING_AND_AMBIGUOUS",
+      "kind": "negative",
+      "eval_role": "NEGATIVE_OR_ADVERSARIAL",
+      "neg_tag": "ambig",
+      "gold_oracles": [],
+      "status": "REFUSED",
+      "reason_code": "AMBIGUOUS_FACT",
+      "extraction_mode": "LOCAL_SLM_GROUNDING_REJECTED",
+      "slm_invoked": true,
+      "answers": {},
+      "ok_any": true,
+      "ok_strict": true,
+      "wrong_served": false,
+      "wall_ms": 2144.67,
+      "provider_calls": 0
+    },
+    {
+      "case_id": "u9_114",
+      "group": "G10_NEG_MISSING_AND_AMBIGUOUS",
+      "kind": "negative",
+      "eval_role": "NEGATIVE_OR_ADVERSARIAL",
+      "neg_tag": "ambig",
+      "gold_oracles": [],
+      "status": "REFUSED",
+      "reason_code": "AMBIGUOUS_REFERENCE",
+      "extraction_mode": "LOCAL_SLM_GROUNDING_REJECTED",
+      "slm_invoked": true,
+      "answers": {},
+      "ok_any": true,
+      "ok_strict": true,
+      "wrong_served": false,
+      "wall_ms": 2739.46,
+      "provider_calls": 0
+    },
+    {
+      "case_id": "u9_115",
+      "group": "G10_NEG_MISSING_AND_AMBIGUOUS",
+      "kind": "negative",
+      "eval_role": "NEGATIVE_OR_ADVERSARIAL",
+      "neg_tag": "ambig",
+      "gold_oracles": [],
+      "status": "REFUSED",
+      "reason_code": "OUT_OF_SCOPE",
+      "extraction_mode": "LOCAL_SLM_GROUNDING_REJECTED",
+      "slm_invoked": true,
+      "answers": {},
+      "ok_any": true,
+      "ok_strict": true,
+      "wrong_served": false,
+      "wall_ms": 946.08,
+      "provider_calls": 0
+    },
+    {
+      "case_id": "u9_116",
+      "group": "G10_NEG_MISSING_AND_AMBIGUOUS",
+      "kind": "negative",
+      "eval_role": "NEGATIVE_OR_ADVERSARIAL",
+      "neg_tag": "missing",
+      "gold_oracles": [],
+      "status": "REFUSED",
+      "reason_code": "AMBIGUOUS_FACT",
+      "extraction_mode": "LOCAL_SLM_GROUNDING_REJECTED",
+      "slm_invoked": true,
+      "answers": {},
+      "ok_any": true,
+      "ok_strict": true,
+      "wrong_served": false,
+      "wall_ms": 1142.43,
+      "provider_calls": 0
+    },
+    {
+      "case_id": "u9_117",
+      "group": "G10_NEG_MISSING_AND_AMBIGUOUS",
+      "kind": "negative",
+      "eval_role": "NEGATIVE_OR_ADVERSARIAL",
+      "neg_tag": "ambig",
+      "gold_oracles": [],
+      "status": "REFUSED",
+      "reason_code": "UNDERDETERMINED_POINT",
+      "extraction_mode": "LOCAL_DETERMINISTIC_PARSER",
+      "slm_invoked": false,
+      "answers": {},
+      "ok_any": true,
+      "ok_strict": true,
+      "wrong_served": false,
+      "wall_ms": 99.58,
+      "provider_calls": 0
+    },
+    {
+      "case_id": "u9_118",
+      "group": "G10_NEG_MISSING_AND_AMBIGUOUS",
+      "kind": "negative",
+      "eval_role": "NEGATIVE_OR_ADVERSARIAL",
+      "neg_tag": "ambig",
+      "gold_oracles": [],
+      "status": "REFUSED",
+      "reason_code": "AMBIGUOUS_FACT",
+      "extraction_mode": "LOCAL_SLM_GROUNDING_REJECTED",
+      "slm_invoked": true,
+      "answers": {},
+      "ok_any": true,
+      "ok_strict": true,
+      "wrong_served": false,
+      "wall_ms": 2527.49,
+      "provider_calls": 0
+    },
+    {
+      "case_id": "u9_119",
+      "group": "G10_NEG_MISSING_AND_AMBIGUOUS",
+      "kind": "negative",
+      "eval_role": "NEGATIVE_OR_ADVERSARIAL",
+      "neg_tag": "missing",
+      "gold_oracles": [],
+      "status": "REFUSED",
+      "reason_code": "MISSING_DIMENSION",
+      "extraction_mode": "LOCAL_DETERMINISTIC_PARSER",
+      "slm_invoked": false,
+      "answers": {},
+      "ok_any": true,
+      "ok_strict": true,
+      "wrong_served": false,
+      "wall_ms": 99.39,
+      "provider_calls": 0
+    },
+    {
+      "case_id": "u9_120",
+      "group": "G10_NEG_MISSING_AND_AMBIGUOUS",
+      "kind": "negative",
+      "eval_role": "NEGATIVE_OR_ADVERSARIAL",
+      "neg_tag": "missing",
+      "gold_oracles": [],
+      "status": "REFUSED",
+      "reason_code": "AMBIGUOUS_FACT",
+      "extraction_mode": "LOCAL_DETERMINISTIC_PARSER",
+      "slm_invoked": false,
+      "answers": {},
+      "ok_any": true,
+      "ok_strict": true,
+      "wrong_served": false,
+      "wall_ms": 57.21,
+      "provider_calls": 0
+    },
+    {
+      "case_id": "u9_121",
+      "group": "G11_NEG_CONTRADICTORY_NEGATED_CONDITIONAL",
+      "kind": "negative",
+      "eval_role": "NEGATIVE_OR_ADVERSARIAL",
+      "neg_tag": "negated",
+      "gold_oracles": [],
+      "status": "REFUSED",
+      "reason_code": "INCONSISTENT_FACTS",
+      "extraction_mode": "LOCAL_SLM_GROUNDING_REJECTED",
+      "slm_invoked": true,
+      "answers": {},
+      "ok_any": true,
+      "ok_strict": true,
+      "wrong_served": false,
+      "wall_ms": 2877.86,
+      "provider_calls": 0
+    },
+    {
+      "case_id": "u9_122",
+      "group": "G11_NEG_CONTRADICTORY_NEGATED_CONDITIONAL",
+      "kind": "negative",
+      "eval_role": "NEGATIVE_OR_ADVERSARIAL",
+      "neg_tag": "negated",
+      "gold_oracles": [],
+      "status": "REFUSED",
+      "reason_code": "INCONSISTENT_FACTS",
+      "extraction_mode": "LOCAL_SLM_GROUNDING_REJECTED",
+      "slm_invoked": true,
+      "answers": {},
+      "ok_any": true,
+      "ok_strict": true,
+      "wrong_served": false,
+      "wall_ms": 3467.65,
+      "provider_calls": 0
+    },
+    {
+      "case_id": "u9_123",
+      "group": "G11_NEG_CONTRADICTORY_NEGATED_CONDITIONAL",
+      "kind": "negative",
+      "eval_role": "NEGATIVE_OR_ADVERSARIAL",
+      "neg_tag": "contra",
+      "gold_oracles": [],
+      "status": "REFUSED",
+      "reason_code": "INCONSISTENT_FACTS",
+      "extraction_mode": "LOCAL_SLM_GROUNDED",
+      "slm_invoked": true,
+      "answers": {},
+      "ok_any": true,
+      "ok_strict": true,
+      "wrong_served": false,
+      "wall_ms": 4105.82,
+      "provider_calls": 0
+    },
+    {
+      "case_id": "u9_124",
+      "group": "G11_NEG_CONTRADICTORY_NEGATED_CONDITIONAL",
+      "kind": "negative",
+      "eval_role": "NEGATIVE_OR_ADVERSARIAL",
+      "neg_tag": "nonpos",
+      "gold_oracles": [],
+      "status": "REFUSED",
+      "reason_code": "AMBIGUOUS_FACT",
+      "extraction_mode": "LOCAL_SLM_GROUNDING_REJECTED",
+      "slm_invoked": true,
+      "answers": {},
+      "ok_any": true,
+      "ok_strict": true,
+      "wrong_served": false,
+      "wall_ms": 1411.78,
+      "provider_calls": 0
+    },
+    {
+      "case_id": "u9_125",
+      "group": "G11_NEG_CONTRADICTORY_NEGATED_CONDITIONAL",
+      "kind": "negative",
+      "eval_role": "NEGATIVE_OR_ADVERSARIAL",
+      "neg_tag": "nonpos",
+      "gold_oracles": [],
+      "status": "REFUSED",
+      "reason_code": "UNGROUNDED_VALUE",
+      "extraction_mode": "LOCAL_SLM_GROUNDED",
+      "slm_invoked": true,
+      "answers": {},
+      "ok_any": true,
+      "ok_strict": true,
+      "wrong_served": false,
+      "wall_ms": 2638.63,
+      "provider_calls": 0
+    },
+    {
+      "case_id": "u9_126",
+      "group": "G11_NEG_CONTRADICTORY_NEGATED_CONDITIONAL",
+      "kind": "negative",
+      "eval_role": "NEGATIVE_OR_ADVERSARIAL",
+      "neg_tag": "contra",
+      "gold_oracles": [],
+      "status": "REFUSED",
+      "reason_code": "AMBIGUOUS_FACT",
+      "extraction_mode": "LOCAL_SLM_GROUNDING_REJECTED",
+      "slm_invoked": true,
+      "answers": {},
+      "ok_any": true,
+      "ok_strict": true,
+      "wrong_served": false,
+      "wall_ms": 1088.74,
+      "provider_calls": 0
+    },
+    {
+      "case_id": "u9_127",
+      "group": "G11_NEG_CONTRADICTORY_NEGATED_CONDITIONAL",
+      "kind": "negative",
+      "eval_role": "NEGATIVE_OR_ADVERSARIAL",
+      "neg_tag": "conditional",
+      "gold_oracles": [],
+      "status": "REFUSED",
+      "reason_code": "gate_out_of_scope",
+      "extraction_mode": "LOCAL_DETERMINISTIC_PARSER",
+      "slm_invoked": false,
+      "answers": {},
+      "ok_any": true,
+      "ok_strict": true,
+      "wrong_served": false,
+      "wall_ms": 7.04,
+      "provider_calls": 0
+    },
+    {
+      "case_id": "u9_128",
+      "group": "G11_NEG_CONTRADICTORY_NEGATED_CONDITIONAL",
+      "kind": "negative",
+      "eval_role": "NEGATIVE_OR_ADVERSARIAL",
+      "neg_tag": "conditional",
+      "gold_oracles": [],
+      "status": "REFUSED",
+      "reason_code": "UNGROUNDED_VALUE",
+      "extraction_mode": "LOCAL_SLM_GROUNDING_REJECTED",
+      "slm_invoked": true,
+      "answers": {},
+      "ok_any": true,
+      "ok_strict": true,
+      "wrong_served": false,
+      "wall_ms": 2848.68,
+      "provider_calls": 0
+    },
+    {
+      "case_id": "u9_129",
+      "group": "G11_NEG_CONTRADICTORY_NEGATED_CONDITIONAL",
+      "kind": "negative",
+      "eval_role": "NEGATIVE_OR_ADVERSARIAL",
+      "neg_tag": "contra",
+      "gold_oracles": [],
+      "status": "REFUSED",
+      "reason_code": "INCONSISTENT_FACTS",
+      "extraction_mode": "LOCAL_SLM_GROUNDED",
+      "slm_invoked": true,
+      "answers": {},
+      "ok_any": true,
+      "ok_strict": true,
+      "wrong_served": false,
+      "wall_ms": 3433.1,
+      "provider_calls": 0
+    },
+    {
+      "case_id": "u9_130",
+      "group": "G11_NEG_CONTRADICTORY_NEGATED_CONDITIONAL",
+      "kind": "negative",
+      "eval_role": "NEGATIVE_OR_ADVERSARIAL",
+      "neg_tag": "contra",
+      "gold_oracles": [],
+      "status": "REFUSED",
+      "reason_code": "UNGROUNDED_VALUE",
+      "extraction_mode": "LOCAL_SLM_GROUNDED",
+      "slm_invoked": true,
+      "answers": {},
+      "ok_any": true,
+      "ok_strict": true,
+      "wrong_served": false,
+      "wall_ms": 3451.5,
+      "provider_calls": 0
+    },
+    {
+      "case_id": "u9_131",
+      "group": "G11_NEG_CONTRADICTORY_NEGATED_CONDITIONAL",
+      "kind": "negative",
+      "eval_role": "NEGATIVE_OR_ADVERSARIAL",
+      "neg_tag": "contra",
+      "gold_oracles": [],
+      "status": "REFUSED",
+      "reason_code": "OUT_OF_SCOPE",
+      "extraction_mode": "LOCAL_SLM_GROUNDING_REJECTED",
+      "slm_invoked": true,
+      "answers": {},
+      "ok_any": true,
+      "ok_strict": true,
+      "wrong_served": false,
+      "wall_ms": 1054.28,
+      "provider_calls": 0
+    },
+    {
+      "case_id": "u9_132",
+      "group": "G11_NEG_CONTRADICTORY_NEGATED_CONDITIONAL",
+      "kind": "negative",
+      "eval_role": "NEGATIVE_OR_ADVERSARIAL",
+      "neg_tag": "nonpos",
+      "gold_oracles": [],
+      "status": "REFUSED",
+      "reason_code": "NON_POSITIVE_LENGTH",
+      "extraction_mode": "LOCAL_PARSER_AFTER_V3_NORMALIZER",
+      "slm_invoked": false,
+      "answers": {},
+      "ok_any": true,
+      "ok_strict": true,
+      "wrong_served": false,
+      "wall_ms": 23.59,
+      "provider_calls": 0
+    },
+    {
+      "case_id": "u9_133",
+      "group": "G11_NEG_CONTRADICTORY_NEGATED_CONDITIONAL",
+      "kind": "negative",
+      "eval_role": "NEGATIVE_OR_ADVERSARIAL",
+      "neg_tag": "contra",
+      "gold_oracles": [],
+      "status": "REFUSED",
+      "reason_code": "AMBIGUOUS_FACT",
+      "extraction_mode": "LOCAL_SLM_GROUNDING_REJECTED",
+      "slm_invoked": true,
+      "answers": {},
+      "ok_any": true,
+      "ok_strict": true,
+      "wrong_served": false,
+      "wall_ms": 1054.32,
+      "provider_calls": 0
+    },
+    {
+      "case_id": "u9_134",
+      "group": "G11_NEG_CONTRADICTORY_NEGATED_CONDITIONAL",
+      "kind": "negative",
+      "eval_role": "NEGATIVE_OR_ADVERSARIAL",
+      "neg_tag": "conditional",
+      "gold_oracles": [],
+      "status": "REFUSED",
+      "reason_code": "AMBIGUOUS_FACT",
+      "extraction_mode": "LOCAL_SLM_GROUNDING_REJECTED",
+      "slm_invoked": true,
+      "answers": {},
+      "ok_any": true,
+      "ok_strict": true,
+      "wrong_served": false,
+      "wall_ms": 1959.83,
+      "provider_calls": 0
+    },
+    {
+      "case_id": "u9_135",
+      "group": "G11_NEG_CONTRADICTORY_NEGATED_CONDITIONAL",
+      "kind": "negative",
+      "eval_role": "NEGATIVE_OR_ADVERSARIAL",
+      "neg_tag": "contra",
+      "gold_oracles": [],
+      "status": "REFUSED",
+      "reason_code": "AMBIGUOUS_FACT",
+      "extraction_mode": "LOCAL_SLM_GROUNDING_REJECTED",
+      "slm_invoked": true,
+      "answers": {},
+      "ok_any": true,
+      "ok_strict": true,
+      "wrong_served": false,
+      "wall_ms": 1053.03,
+      "provider_calls": 0
+    },
+    {
+      "case_id": "u9_136",
+      "group": "G12_NEG_OUT_OF_SCOPE_TYPO_INJECTION",
+      "kind": "negative",
+      "eval_role": "NEGATIVE_OR_ADVERSARIAL",
+      "neg_tag": "oos_sphere",
+      "gold_oracles": [],
+      "status": "REFUSED",
+      "reason_code": "SOURCE_OBJECT_MISMATCH",
+      "extraction_mode": "LOCAL_SLM_GROUNDED",
+      "slm_invoked": true,
+      "answers": {},
+      "ok_any": true,
+      "ok_strict": true,
+      "wrong_served": false,
+      "wall_ms": 2576.06,
+      "provider_calls": 0
+    },
+    {
+      "case_id": "u9_137",
+      "group": "G12_NEG_OUT_OF_SCOPE_TYPO_INJECTION",
+      "kind": "negative",
+      "eval_role": "NEGATIVE_OR_ADVERSARIAL",
+      "neg_tag": "oos_cone",
+      "gold_oracles": [],
+      "status": "REFUSED",
+      "reason_code": "OUT_OF_SCOPE",
+      "extraction_mode": "LOCAL_SLM_GROUNDING_REJECTED",
+      "slm_invoked": true,
+      "answers": {},
+      "ok_any": true,
+      "ok_strict": true,
+      "wrong_served": false,
+      "wall_ms": 709.28,
+      "provider_calls": 0
+    },
+    {
+      "case_id": "u9_138",
+      "group": "G12_NEG_OUT_OF_SCOPE_TYPO_INJECTION",
+      "kind": "negative",
+      "eval_role": "NEGATIVE_OR_ADVERSARIAL",
+      "neg_tag": "oos_cyl",
+      "gold_oracles": [],
+      "status": "REFUSED",
+      "reason_code": "OUT_OF_SCOPE",
+      "extraction_mode": "LOCAL_SLM_GROUNDING_REJECTED",
+      "slm_invoked": true,
+      "answers": {},
+      "ok_any": true,
+      "ok_strict": true,
+      "wrong_served": false,
+      "wall_ms": 758.81,
+      "provider_calls": 0
+    },
+    {
+      "case_id": "u9_139",
+      "group": "G12_NEG_OUT_OF_SCOPE_TYPO_INJECTION",
+      "kind": "negative",
+      "eval_role": "NEGATIVE_OR_ADVERSARIAL",
+      "neg_tag": "oos_oxyz",
+      "gold_oracles": [],
+      "status": "REFUSED",
+      "reason_code": "OUT_OF_SCOPE",
+      "extraction_mode": "LOCAL_DETERMINISTIC_PARSER",
+      "slm_invoked": false,
+      "answers": {},
+      "ok_any": true,
+      "ok_strict": true,
+      "wrong_served": false,
+      "wall_ms": 7.54,
+      "provider_calls": 0
+    },
+    {
+      "case_id": "u9_140",
+      "group": "G12_NEG_OUT_OF_SCOPE_TYPO_INJECTION",
+      "kind": "negative",
+      "eval_role": "NEGATIVE_OR_ADVERSARIAL",
+      "neg_tag": "oos_calc",
+      "gold_oracles": [],
+      "status": "REFUSED",
+      "reason_code": "gate_out_of_scope",
+      "extraction_mode": "LOCAL_DETERMINISTIC_PARSER",
+      "slm_invoked": false,
+      "answers": {},
+      "ok_any": true,
+      "ok_strict": true,
+      "wrong_served": false,
+      "wall_ms": 5.87,
+      "provider_calls": 0
+    },
+    {
+      "case_id": "u9_141",
+      "group": "G12_NEG_OUT_OF_SCOPE_TYPO_INJECTION",
+      "kind": "negative",
+      "eval_role": "NEGATIVE_OR_ADVERSARIAL",
+      "neg_tag": "oos_trig",
+      "gold_oracles": [],
+      "status": "REFUSED",
+      "reason_code": "gate_out_of_scope",
+      "extraction_mode": "LOCAL_DETERMINISTIC_PARSER",
+      "slm_invoked": false,
+      "answers": {},
+      "ok_any": true,
+      "ok_strict": true,
+      "wrong_served": false,
+      "wall_ms": 5.53,
+      "provider_calls": 0
+    },
+    {
+      "case_id": "u9_142",
+      "group": "G12_NEG_OUT_OF_SCOPE_TYPO_INJECTION",
+      "kind": "negative",
+      "eval_role": "NEGATIVE_OR_ADVERSARIAL",
+      "neg_tag": "oos_code",
+      "gold_oracles": [],
+      "status": "REFUSED",
+      "reason_code": "gate_out_of_scope",
+      "extraction_mode": "LOCAL_DETERMINISTIC_PARSER",
+      "slm_invoked": false,
+      "answers": {},
+      "ok_any": true,
+      "ok_strict": true,
+      "wrong_served": false,
+      "wall_ms": 5.85,
+      "provider_calls": 0
+    },
+    {
+      "case_id": "u9_143",
+      "group": "G12_NEG_OUT_OF_SCOPE_TYPO_INJECTION",
+      "kind": "negative",
+      "eval_role": "NEGATIVE_OR_ADVERSARIAL",
+      "neg_tag": "typo",
+      "gold_oracles": [],
+      "status": "REFUSED",
+      "reason_code": "AMBIGUOUS_FACT",
+      "extraction_mode": "LOCAL_SLM_GROUNDING_REJECTED",
+      "slm_invoked": true,
+      "answers": {},
+      "ok_any": true,
+      "ok_strict": true,
+      "wrong_served": false,
+      "wall_ms": 1059.76,
+      "provider_calls": 0
+    },
+    {
+      "case_id": "u9_144",
+      "group": "G12_NEG_OUT_OF_SCOPE_TYPO_INJECTION",
+      "kind": "negative",
+      "eval_role": "NEGATIVE_OR_ADVERSARIAL",
+      "neg_tag": "typo",
+      "gold_oracles": [],
+      "status": "REFUSED",
+      "reason_code": "UNGROUNDED_VALUE",
+      "extraction_mode": "LOCAL_SLM_GROUNDING_REJECTED",
+      "slm_invoked": true,
+      "answers": {},
+      "ok_any": true,
+      "ok_strict": true,
+      "wrong_served": false,
+      "wall_ms": 2338.87,
+      "provider_calls": 0
+    },
+    {
+      "case_id": "u9_145",
+      "group": "G12_NEG_OUT_OF_SCOPE_TYPO_INJECTION",
+      "kind": "negative",
+      "eval_role": "NEGATIVE_OR_ADVERSARIAL",
+      "neg_tag": "injection",
+      "gold_oracles": [],
+      "status": "REFUSED",
+      "reason_code": "INCONSISTENT_FACTS",
+      "extraction_mode": "LOCAL_SLM_GROUNDING_REJECTED",
+      "slm_invoked": true,
+      "answers": {},
+      "ok_any": true,
+      "ok_strict": true,
+      "wrong_served": false,
+      "wall_ms": 1084.67,
+      "provider_calls": 0
+    },
+    {
+      "case_id": "u9_146",
+      "group": "G12_NEG_OUT_OF_SCOPE_TYPO_INJECTION",
+      "kind": "negative",
+      "eval_role": "NEGATIVE_OR_ADVERSARIAL",
+      "neg_tag": "injection",
+      "gold_oracles": [],
+      "status": "REFUSED",
+      "reason_code": "INCONSISTENT_FACTS",
+      "extraction_mode": "LOCAL_SLM_GROUNDING_REJECTED",
+      "slm_invoked": true,
+      "answers": {},
+      "ok_any": true,
+      "ok_strict": true,
+      "wrong_served": false,
+      "wall_ms": 1132.22,
+      "provider_calls": 0
+    },
+    {
+      "case_id": "u9_147",
+      "group": "G12_NEG_OUT_OF_SCOPE_TYPO_INJECTION",
+      "kind": "negative",
+      "eval_role": "NEGATIVE_OR_ADVERSARIAL",
+      "neg_tag": "injection",
+      "gold_oracles": [],
+      "status": "REFUSED",
+      "reason_code": "UNGROUNDED_VALUE",
+      "extraction_mode": "LOCAL_SLM_SECURITY_REFUSED",
+      "slm_invoked": false,
+      "answers": {},
+      "ok_any": true,
+      "ok_strict": true,
+      "wrong_served": false,
+      "wall_ms": 5.27,
+      "provider_calls": 0
+    },
+    {
+      "case_id": "u9_148",
+      "group": "G12_NEG_OUT_OF_SCOPE_TYPO_INJECTION",
+      "kind": "negative",
+      "eval_role": "NEGATIVE_OR_ADVERSARIAL",
+      "neg_tag": "oos_cone",
+      "gold_oracles": [],
+      "status": "REFUSED",
+      "reason_code": "SOURCE_OBJECT_MISMATCH",
+      "extraction_mode": "LOCAL_SLM_GROUNDED",
+      "slm_invoked": true,
+      "answers": {},
+      "ok_any": true,
+      "ok_strict": true,
+      "wrong_served": false,
+      "wall_ms": 2955.62,
+      "provider_calls": 0
+    },
+    {
+      "case_id": "u9_149",
+      "group": "G12_NEG_OUT_OF_SCOPE_TYPO_INJECTION",
+      "kind": "negative",
+      "eval_role": "NEGATIVE_OR_ADVERSARIAL",
+      "neg_tag": "oos_sphere",
+      "gold_oracles": [],
+      "status": "REFUSED",
+      "reason_code": "UNGROUNDED_VALUE",
+      "extraction_mode": "LOCAL_SLM_GROUNDING_REJECTED",
+      "slm_invoked": true,
+      "answers": {},
+      "ok_any": true,
+      "ok_strict": true,
+      "wrong_served": false,
+      "wall_ms": 2355.93,
+      "provider_calls": 0
+    },
+    {
+      "case_id": "u9_150",
+      "group": "G12_NEG_OUT_OF_SCOPE_TYPO_INJECTION",
+      "kind": "negative",
+      "eval_role": "NEGATIVE_OR_ADVERSARIAL",
+      "neg_tag": "oos_2d",
+      "gold_oracles": [],
+      "status": "REFUSED",
+      "reason_code": "gate_out_of_scope",
+      "extraction_mode": "LOCAL_DETERMINISTIC_PARSER",
+      "slm_invoked": false,
+      "answers": {},
+      "ok_any": true,
+      "ok_strict": true,
+      "wrong_served": false,
+      "wall_ms": 8.16,
+      "provider_calls": 0
+    }
+  ]
+}

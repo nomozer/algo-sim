@@ -1,0 +1,148 @@
+{
+  "schema": "c60-gold-intervention-results/1",
+  "generated_at_utc": "2026-11-19T05:58:07.574122+00:00",
+  "external_ai_calls": 0,
+  "counts": {
+    "total": 60,
+    "verified_positives": 42,
+    "negatives": 13,
+    "non_scalar_ui_construct": 5
+  },
+  "arms": {
+    "arm_a_current_v7": {
+      "positives_total": 42,
+      "served_exact_strict_all": 13,
+      "served_exact_any": 13,
+      "rate_strict_all": 0.3095,
+      "wrong_served": 0
+    },
+    "arm_b_gold_typed_fact_v2_raw_text": {
+      "positives_total": 42,
+      "served_exact_strict_all": 15,
+      "served_exact_any": 15,
+      "rate_strict_all": 0.3571,
+      "wrong_served": 0
+    },
+    "arm_b_gold_typed_fact_v2_canon_text": {
+      "positives_total": 42,
+      "served_exact_strict_all": 33,
+      "served_exact_any": 33,
+      "rate_strict_all": 0.7857,
+      "wrong_served": 0
+    },
+    "arm_c_gold_compact_clause_raw_text": {
+      "positives_total": 42,
+      "served_exact_strict_all": 5,
+      "served_exact_any": 5,
+      "rate_strict_all": 0.119,
+      "wrong_served": 0
+    },
+    "arm_c_gold_compact_clause_canon_text": {
+      "positives_total": 42,
+      "served_exact_strict_all": 18,
+      "served_exact_any": 18,
+      "rate_strict_all": 0.4286,
+      "wrong_served": 0
+    }
+  },
+  "root_cause_counts_on_42_positives_multi_label": {
+    "PARSER_COVERAGE_GAP": 22,
+    "SOURCE_GATE_GRAMMAR_GAP": 11,
+    "NORMALIZER_LANGUAGE_GAP": 10,
+    "MODEL_SEMANTIC_ERROR": 10,
+    "MODEL_ENTITY_BINDING_ERROR": 6,
+    "SOURCE_GROUNDING_ERROR": 6,
+    "TYPED_FACT_SCHEMA_LIMITATION": 5,
+    "MULTI_GOAL_CONTRACT_LIMITATION": 5,
+    "DOWNSTREAM_CAPABILITY_LIMITATION": 3,
+    "MATHEMATICAL_AMBIGUITY": 3,
+    "MODEL_GOAL_EXTRACTION_ERROR": 2
+  },
+  "p6_questions_answers": {
+    "q1_solvable_with_perfect_v2_and_canon_extraction": 33,
+    "q1_solvable_with_perfect_v2_raw_text_only": 15,
+    "q2_still_failed_even_with_gold_v2_canon": [
+      "D05",
+      "D13",
+      "L10",
+      "L12",
+      "L23",
+      "L28",
+      "L31",
+      "L36",
+      "L38"
+    ],
+    "q3_missing_goal_contract_or_schema": [
+      "D09",
+      "L10",
+      "L19",
+      "L21",
+      "L22"
+    ],
+    "q4_multi_goal_contract_limitation_cases": [
+      "D12",
+      "L23",
+      "L27",
+      "L28",
+      "L30"
+    ],
+    "q5_wording_or_normalizer_closure_only_needed": [
+      "D02",
+      "D03",
+      "D06",
+      "D09",
+      "D11",
+      "D12",
+      "L02",
+      "L03",
+      "L05",
+      "L07",
+      "L13",
+      "L19",
+      "L20",
+      "L21",
+      "L22",
+      "L25",
+      "L29",
+      "L30"
+    ],
+    "q6_source_gate_grammar_gap_cases": [
+      "D02",
+      "D03",
+      "D06",
+      "D11",
+      "L12",
+      "L13",
+      "L21",
+      "L22",
+      "L25",
+      "L30",
+      "L38"
+    ],
+    "q7_out_of_downstream_capability_cases": [
+      "D05",
+      "L12",
+      "L28"
+    ],
+    "q8_slm_genuinely_wrong_extracted_cases": [
+      "D02",
+      "D03",
+      "D09",
+      "D11",
+      "D12",
+      "L02",
+      "L03",
+      "L05",
+      "L07",
+      "L19",
+      "L20",
+      "L21",
+      "L22",
+      "L23",
+      "L24",
+      "L25",
+      "L27",
+      "L29"
+    ]
+  }
+}
