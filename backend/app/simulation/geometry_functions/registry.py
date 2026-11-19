@@ -1983,16 +1983,31 @@ def _nhan_khoi(k: LoiGoi) -> set[str]:
     return {*([k.args.apex] if k.fn in ("pyramid", "regular_pyramid") else []), *k.args.base, *(getattr(k.args, "top", None) or [])}
 
 
-#: One object a simulation request may show (SL-1): the figure, a declared polyhedron by its GENERIC kind word (and its
-#: own notation), or built points — the scene draws exactly these. A specific class word ("lập phương", "hộp", "tứ diện")
-#: is a claim the gate does not verify here, a segment / line / plane is not drawn, and a shape noun ("hình vuông ABCD")
-#: is a claim: none is a mention (independent review, BLOCKERs 1–2).
-_VAT_MO_PHONG = re.compile(rf"(?:(?:hình|khối)\s+(?P<kn>chóp|lăng\s+trụ)(?:\s+(?P<k>{_NHAN}\.{_NHAN}))?(?!\s*(?:đều|đứng|xiên))"
-                           rf"|(?P<hinh>hình(?:\s+vẽ)?)"
+#: One object a simulation request may show (SL-1): the figure, a declared polyhedron by its kind words (and its own
+#: notation), or built points — the scene draws exactly these. A segment / line / plane is not drawn and a shape noun
+#: ("hình vuông ABCD") is a claim: none is a mention (independent review, BLOCKERs 1–2). /11 (run
+#: `axo-hybrid-simulation-intent-generalization-grounded-slm-recovery`): a SPECIFIC kind word or modifier ("lập phương",
+#: "hộp chữ nhật", "tứ diện đều", "chóp đều", "lăng trụ đứng") is still a claim — it is read only when `_loai_cum_dung`
+#: proves it from the validated calls of the solid it names, exactly as for a solid phrase written without its symbol.
+#: "hình 3D / không gian / ba chiều / theo giả thiết (trên)" is the figure itself and adds nothing.
+_VAT_MO_PHONG = re.compile(rf"(?:(?:(?:hình|khối)\s+)?(?P<kn>chóp|lăng\s+trụ|hộp(?:\s+chữ\s+nhật)?|lập\s+phương|tứ\s+diện)"
+                           rf"(?P<km>(?:\s+(?:đứng|đều|xiên|tam\s+giác|tứ\s+giác|ngũ\s+giác|lục\s+giác|chữ\s+nhật))*)"
+                           rf"(?:\s+(?P<k>{_NHAN}(?:\.{_NHAN})?))?(?![\w'])(?P<km2>(?:\s+(?:đứng|đều|xiên))*)"
+                           rf"|(?P<hinh>hình(?:\s+(?:vẽ|3D|không\s+gian|ba\s+chiều))?(?:\s+theo\s+giả\s+thiết(?:\s+(?:trên|đã\s+cho))?)?)"
                            rf"|(?:các\s+)?(?P<vai>điểm|đỉnh)\s+(?P<d>{_L1}(?:\s*,\s*{_L1})*))"
                            rf"(?:\s+(?:này|đó|đã\s+cho|trên))?(?![\w'])", re.IGNORECASE)
 _NOI_VAT_MO_PHONG = re.compile(r"\s*,\s*(?:và\s+)?|\s+và\s+|\s+cùng\s+(?:với\s+)?", re.IGNORECASE)
-_MO_YEU_CAU_MO_PHONG = re.compile(rf"\s*(?:(?:không|chưa)\s+cần\s+)?{_DONG_TU_MO_PHONG}\s+", re.IGNORECASE)
+_MO_YEU_CAU_MO_PHONG = re.compile(rf"\s*(?:(?:không|chưa|chỉ)\s+cần\s+)?{_DONG_TU_MO_PHONG}\s+", re.IGNORECASE)
+#: /11: content-free tail of a request ("…, không cần tính toán", "… giúp em"): it asks nothing and states no fact.
+_DUOI_MO_PHONG = re.compile(r"(?:\s*,?\s*(?:và\s+)?(?:không|chưa)\s+cần\s+tính(?:\s+toán|\s+gì(?:\s+thêm)?)?"
+                            r"|\s+giúp(?:\s+(?:mình|em|tôi|tớ))?)", re.IGNORECASE)
+
+
+def _ky_hieu_khoi(k: LoiGoi) -> str:
+    """Notation of a validated solid call ("S.ABCD", "ABC.A'B'C'") for `_loai_cum_dung`."""
+    if k.fn in ("pyramid", "regular_pyramid"):
+        return f"{k.args.apex}.{''.join(k.args.base)}"
+    return f"{''.join(k.args.base)}.{''.join(getattr(k.args, 'top', None) or [])}"
 #: … then the question of the same sentence ("Vẽ hình rồi tính …", "Không cần vẽ hình, tính …").
 _SAU_MO_PHONG_HOI = re.compile(r"(?:\s*,\s*|\s+)(?:(?:rồi|và|sau\s+đó|đồng\s+thời)\s+)?(?=(?:hãy\s+)?(?:tính|tìm|xác\s+định)(?!\w))",
                                re.IGNORECASE)
@@ -2012,9 +2027,16 @@ def _doc_yeu_cau_mo_phong(de: str, a: int, b: int, calls: tuple[LoiGoi, ...]) ->
         if v is None:
             return None
         if v["kn"]:
-            loai = _LOAI_KHOI[re.sub(r"\s+", " ", v["kn"].lower())]
+            tu = re.sub(r"\s+", " ", v["kn"].lower())
+            km = re.sub(r"\s+", " ", f"{v['km'] or ''} {v['km2'] or ''}".lower()).strip()
+            loai = _LOAI_KHOI[tu]
             nhan = set(re.findall(r"[A-Z][0-9]*'?", v["k"] or ""))
-            if not any(k.fn in loai and (not nhan or nhan == _nhan_khoi(k)) for k in khoi):
+            hop = [k for k in khoi if k.fn in loai and (not nhan or nhan == _nhan_khoi(k))]
+            # a specific class word / modifier is a claim, proven only from the named solid's validated calls (/11)
+            if tu not in ("chóp", "lăng trụ") or km:
+                cum = f"{tu} {km}".strip()
+                hop = [k for k in hop if _loai_cum_dung(cum, _ky_hieu_khoi(k), calls)]
+            if not hop:
                 return None
         elif v["d"]:
             diem = set(re.findall(r"[A-Z][0-9]*'?", v["d"]))
@@ -2022,6 +2044,8 @@ def _doc_yeu_cau_mo_phong(de: str, a: int, b: int, calls: tuple[LoiGoi, ...]) ->
             if not diem <= (set().union(*map(_nhan_khoi, khoi)) if v["vai"].lower() == "đỉnh" else dung):
                 return None
         p = v.end()
+        while (t := _DUOI_MO_PHONG.match(de, p, b)) is not None and t.end() > p:
+            p = t.end()
         if _C_HET.fullmatch(de, p, b):
             return b
         if (q := _SAU_MO_PHONG_HOI.match(de, p, b)) is not None:
