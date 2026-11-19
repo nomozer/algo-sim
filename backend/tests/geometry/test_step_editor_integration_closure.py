@@ -1566,24 +1566,29 @@ def test_phase_c2_independent_exact_geometry_invariants_across_4_problems():
     vol = the_tich(CurvedSolid(kind="ball", anchor=center, apex_or_top=None, rim_point=A))
     assert vol.he == Fraction(32) and vol.can == 3 and vol.mu == 1  # 32π√3
     s11 = by_slug["chop-mat-cau-ngoai-tiep"]
-    mc = _find_obj(s11, "mat_cau")
+    mc = _find_obj(s11, "cau_ngoai_tiep")
     assert mc is not None and [hf(x) for x in mc["anchor"]] == [Fraction(2), Fraction(2), Fraction(2)]
     assert hf(mc["radius_sq"]) == Fraction(12)
+    assert _find_obj(s11, "R")["value"] == "2√3"
+    assert _find_obj(s11, "V_cau")["value"] == "32π√3"
 
     # 2 & 3) chop-thiet-dien-ba-diem & lang-tru-tam-giac-thiet-dien: coplanar, closed cyclic polygon, valid edge params
-    for slug in ("chop-thiet-dien-ba-diem", "lang-tru-tam-giac-thiet-dien"):
+    for slug, pl_id in (
+        ("chop-thiet-dien-ba-diem", "mp_MNP"),
+        ("lang-tru-tam-giac-thiet-dien", "mp_NPQ"),
+    ):
         sc = by_slug[slug]
         objs = {o["id"]: o for o in sc["objects"]}
         sec = next(o for o in sc["objects"] if o.get("type") == "section")
         pts = [Vec3.of(*p) for p in sec["polygon"]]
         assert len(pts) >= 3
-        pl = Plane3(Vec3.of(*objs[sec["plane"]]["point"]), Vec3.of(*objs[sec["plane"]]["normal"]))
+        pl = Plane3(Vec3.of(*objs[pl_id]["point"]), Vec3.of(*objs[pl_id]["normal"]))
         for p in pts:
             assert P.point_on_plane(p, pl)
-        # Check pairwise distinct consecutive vertices & positive area
+        # Check pairwise distinct consecutive vertices & positive exact area = 6√6
         for i in range(len(pts)):
             assert not (pts[i] - pts[(i + 1) % len(pts)]).is_zero()
-        assert area_of(pts) > 0
+        assert area_of(pts) == sqrt_rational(Fraction(216))
         # Edit M in chop-thiet-dien-ba-diem and confirm new section E/F stay strictly on edges SB/SD with 0 < t < 1
         if slug == "chop-thiet-dien-ba-diem":
             rebuilt = se.execute_step_edit(
@@ -1617,14 +1622,16 @@ def test_phase_c2_independent_exact_geometry_invariants_across_4_problems():
     p_b = Vec3.of(*sobjs["B"]["xyz"])
     p_c = Vec3.of(*sobjs["C"]["xyz"])
     p_d = Vec3.of(*sobjs["D"]["xyz"])
-    perp_seg = next(o for o in s_skew["objects"] if (o.get("source") or {}).get("segment_role") == "common_perpendicular")
-    ep_a, ep_b = Vec3.of(*sobjs[perp_seg["from"]]["xyz"]), Vec3.of(*sobjs[perp_seg["to"]]["xyz"])
-    perp_vec = ep_b - ep_a
+    assert _find_obj(s_skew, "doan_PQ") is not None
+    assert _find_obj(s_skew, "kc_SC_BD")["value"] == "2√6/3"
+    ep_p, ep_q = Vec3.of(*sobjs["P"]["xyz"]), Vec3.of(*sobjs["Q"]["xyz"])
+    perp_vec = ep_p - ep_q
     assert not perp_vec.is_zero()
-    # In S.ABCD skew lines (d_a, d_b), common perpendicular must have zero dot product with both skew lines!
+    # In S.ABCD skew lines (SC, BD), common perpendicular must lie on SC & BD with zero dot product on both
     l_sc = Line3.through(p_s, p_c)
     l_bd = Line3.through(p_b, p_d)
-    assert P.point_on_line(ep_a, l_sc) or P.point_on_line(ep_b, l_sc)
-    assert P.point_on_line(ep_a, l_bd) or P.point_on_line(ep_b, l_bd)
+    assert P.point_on_line(ep_p, l_sc)
+    assert P.point_on_line(ep_q, l_bd)
     assert perp_vec.dot(l_sc.direction) == 0
     assert perp_vec.dot(l_bd.direction) == 0
+    assert perp_vec.norm_sq() == M.distance_sq_skew_lines(l_sc, l_bd) == Fraction(8, 3)
