@@ -29,6 +29,7 @@ import {
   STEP_TEXTAREA_MIN_HEIGHT_PX,
   StepEditPencilButton,
   StepTitleText,
+  ensureStepEditorFormVisible,
   syncStepTextareaHeight,
 } from "./ConstructionStepEditor";
 import { AxoWorkspaceV62, SimulationWorkspace } from "./SimulationWorkspace";
@@ -1574,5 +1575,78 @@ describe("AXO Step Editor V2.2 — Reliability Hardening & Edge Cases (§5, §7)
       expect(res.version_number).toBe(2);
       expect(res.revision_version_number).toBe(4);
     }
+  });
+
+  it("IA-RC2: ensureStepEditorFormVisible keeps .step-edit-form and Hủy/Chạy inside .dock-scroll on open, multiline growth, and error display", () => {
+    const makePair = (opts: {
+      hostTop: number;
+      hostBottom: number;
+      scrollTop: number;
+      scrollHeight: number;
+      clientHeight: number;
+      formTop: number;
+      formBottom: number;
+    }) => {
+      const host = {
+        scrollTop: opts.scrollTop,
+        scrollHeight: opts.scrollHeight,
+        clientHeight: opts.clientHeight,
+        getBoundingClientRect: () =>
+          ({
+            top: opts.hostTop,
+            bottom: opts.hostBottom,
+            height: opts.hostBottom - opts.hostTop,
+          }) as DOMRect,
+      };
+      const form = {
+        closest: (sel: string) => (sel === ".dock-scroll" ? (host as unknown as HTMLElement) : null),
+        getBoundingClientRect: () =>
+          ({
+            top: opts.formTop,
+            bottom: opts.formBottom,
+            height: opts.formBottom - opts.formTop,
+          }) as DOMRect,
+      } as unknown as HTMLElement;
+      return { host, form };
+    };
+
+    // Case 1: Form already inside [hostRect.top + 12, hostRect.bottom - 12] -> no-op
+    const inBounds = makePair({
+      hostTop: 80,
+      hostBottom: 756,
+      scrollTop: 120,
+      scrollHeight: 900,
+      clientHeight: 676,
+      formTop: 500,
+      formBottom: 720,
+    });
+    expect(ensureStepEditorFormVisible(inBounds.form)).toBe(false);
+    expect(inBounds.host.scrollTop).toBe(120);
+
+    // Case 2: At 1024x768 Step 8 multiline growth pushes Hủy/Chạy below hostRect.bottom - 12 (744)
+    const clippedBottom = makePair({
+      hostTop: 80,
+      hostBottom: 756,
+      scrollTop: 100,
+      scrollHeight: 900,
+      clientHeight: 676,
+      formTop: 610,
+      formBottom: 798,
+    });
+    expect(ensureStepEditorFormVisible(clippedBottom.form)).toBe(true);
+    expect(clippedBottom.host.scrollTop).toBe(154);
+
+    // Case 3: Form top clipped above hostRect.top + 12 (92) -> scrolls up cleanly clamped >= 0
+    const clippedTop = makePair({
+      hostTop: 80,
+      hostBottom: 756,
+      scrollTop: 100,
+      scrollHeight: 900,
+      clientHeight: 676,
+      formTop: 60,
+      formBottom: 210,
+    });
+    expect(ensureStepEditorFormVisible(clippedTop.form)).toBe(true);
+    expect(clippedTop.host.scrollTop).toBe(68);
   });
 });

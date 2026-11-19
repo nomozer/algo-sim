@@ -109,6 +109,48 @@ export function syncStepTextareaHeight(
   return { heightPx, scrollable };
 }
 
+export function ensureStepEditorFormVisible(
+  formEl: HTMLElement | null,
+  paddingPx = 12,
+): boolean {
+  if (!formEl || typeof formEl.closest !== "function") return false;
+  const scrollHost = formEl.closest<HTMLElement>(".dock-scroll");
+  if (
+    !scrollHost ||
+    typeof formEl.getBoundingClientRect !== "function" ||
+    typeof scrollHost.getBoundingClientRect !== "function"
+  ) {
+    return false;
+  }
+  const formRect = formEl.getBoundingClientRect();
+  const hostRect = scrollHost.getBoundingClientRect();
+  if (hostRect.height <= 0 || formRect.height <= 0) return false;
+
+  const pad = Math.min(paddingPx, Math.max(4, Math.floor(hostRect.height * 0.1)));
+  const visibleTop = hostRect.top + pad;
+  const visibleBottom = hostRect.bottom - pad;
+
+  let delta = 0;
+  if (formRect.bottom > visibleBottom) {
+    delta = Math.ceil(formRect.bottom - visibleBottom);
+  } else if (formRect.top < visibleTop) {
+    delta = -Math.ceil(visibleTop - formRect.top);
+  }
+  if (delta === 0) return false;
+
+  const prev = scrollHost.scrollTop;
+  const hasRealScrollBounds = scrollHost.scrollHeight > 0 && scrollHost.clientHeight > 0;
+  const next = hasRealScrollBounds
+    ? Math.min(
+        Math.max(0, scrollHost.scrollHeight - scrollHost.clientHeight),
+        Math.max(0, prev + delta),
+      )
+    : Math.max(0, prev + delta);
+  if (next === prev) return false;
+  scrollHost.scrollTop = next;
+  return true;
+}
+
 export interface StepEditPencilButtonProps {
   stepNumber: number;
   disabled?: boolean;
@@ -182,6 +224,7 @@ export const InlineConstructionStepEditor: React.FC<InlineConstructionStepEditor
   onSubmit,
 }) => {
   const [draft, setDraft] = useState(initialValue);
+  const formRef = useRef<HTMLFormElement | null>(null);
   const textareaRef = useRef<HTMLTextAreaElement | null>(null);
   const prevStepIndexRef = useRef<number>(stepIndex);
 
@@ -201,6 +244,7 @@ export const InlineConstructionStepEditor: React.FC<InlineConstructionStepEditor
       el.focus();
     }
     syncStepTextareaHeight(el);
+    ensureStepEditorFormVisible(formRef.current);
     const len = el.value.length;
     try {
       el.setSelectionRange(len, len);
@@ -213,15 +257,26 @@ export const InlineConstructionStepEditor: React.FC<InlineConstructionStepEditor
     const el = textareaRef.current;
     if (!el) return;
     syncStepTextareaHeight(el);
+    ensureStepEditorFormVisible(formRef.current);
   }, [draft]);
+
+  useIsomorphicLayoutEffect(() => {
+    if (errorText) {
+      ensureStepEditorFormVisible(formRef.current);
+    }
+  }, [errorText]);
 
   useEffect(() => {
     const el = textareaRef.current;
     if (!el || typeof ResizeObserver === "undefined") return;
     const ro = new ResizeObserver(() => {
       syncStepTextareaHeight(el);
+      ensureStepEditorFormVisible(formRef.current);
     });
     ro.observe(el);
+    if (formRef.current) ro.observe(formRef.current);
+    const scrollHost = typeof el.closest === "function" ? el.closest<HTMLElement>(".dock-scroll") : null;
+    if (scrollHost) ro.observe(scrollHost);
     return () => {
       ro.disconnect();
     };
@@ -231,6 +286,7 @@ export const InlineConstructionStepEditor: React.FC<InlineConstructionStepEditor
 
   return (
     <form
+      ref={formRef}
       className="step-edit-form"
       onClick={(e) => e.stopPropagation()}
       onPointerDown={(e) => e.stopPropagation()}
