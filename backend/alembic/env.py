@@ -48,20 +48,27 @@ def _include_name(name: str | None, type_: str, parent_names: dict) -> bool:
 
 
 def _run_online_preflight(connection) -> None:
-    """Enforce migration safety gate right before executing upgrade or downgrade."""
+    """Enforce migration safety gate right before executing upgrade, downgrade, or stamp."""
     mc = context.get_context()
     fn = mc.opts.get("fn")
     fn_name = getattr(fn, "__name__", "")
-    if fn_name not in ("upgrade", "downgrade"):
+    if fn_name not in ("upgrade", "downgrade", "do_stamp"):
         return
     if mc.environment_context is None:
         return
-    target_rev = str(mc.environment_context.context_opts.get("destination_rev") or "head")
+    direction = "stamp" if fn_name == "do_stamp" else fn_name
+    raw_dest = mc.environment_context.context_opts.get("destination_rev")
+    if isinstance(raw_dest, (tuple, list)):
+        target_rev = str(raw_dest[0]) if raw_dest else "head"
+    else:
+        target_rev = str(raw_dest or "head")
+    purge = bool(mc.environment_context.context_opts.get("purge"))
     report = _preflight.evaluate_migration_safety(
         connection,
         config,
-        direction=fn_name,
+        direction=direction,
         target_rev=target_rev,
+        purge=purge,
     )
     if not report["allowed"]:
         raise RuntimeError(

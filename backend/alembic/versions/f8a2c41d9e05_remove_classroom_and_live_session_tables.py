@@ -13,9 +13,13 @@ live user/classroom data) risked irreversible table destruction with an empty-sc
 `downgrade()`.
 
 Safe resolution preserving the migration revision graph (`9c4d8e2b7a10 -> f8a2c41d9e05`):
-- `upgrade()` is strictly NON-DESTRUCTIVE: existing Classroom tables and all rows
-  are preserved intact in the database; new/fresh databases simply do not create
-  them.
+- `upgrade()` is strictly NON-DESTRUCTIVE (`return None`): existing Classroom
+  tables and all rows are preserved intact; fresh databases migrated with
+  `alembic upgrade head` inherit those 5 empty tables from `f32f9b107b77`/
+  `a1c7e4b90d52` (20 tables total), while databases initialized via ORM
+  `Base.metadata.create_all()` or migrated prior to BLOCKER-DB-1 hold only the
+  14 active ORM tables + `alembic_version` (15 tables total). Both states are
+  contract-valid at `f8a2c41d9e05`.
 - `downgrade()` inspects live tables and ONLY creates missing legacy Classroom
   table schemas when returning to `9c4d8e2b7a10` on databases where they were
   never created or had already been dropped before this fix; if any table already

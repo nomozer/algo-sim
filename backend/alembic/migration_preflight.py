@@ -229,6 +229,83 @@ def _parse_allowed_revisions(raw: str) -> set[str]:
     return {item.strip() for item in (raw or "").split(",") if item.strip()}
 
 
+def _expected_schema_at_revision(script_dir: ScriptDirectory, rev: str) -> tuple[dict[str, set[str]], bool]:
+    """Reconstruct expected tables & column names through `rev`, and whether `f8a2c41d9e05` is included."""
+    history_revs = list(reversed(list(script_dir.walk_revisions(base="base", head=rev))))
+    expected_cols: dict[str, set[str]] = {}
+    for hrev in history_revs:
+        h_path = Path(hrev.path)
+        ct_map, ac_list = scan_revision_creates(h_path, fn_name="upgrade")
+        for tbl, cols in ct_map.items():
+            expected_cols[tbl] = set(cols)
+        for tbl, col in ac_list:
+            expected_cols.setdefault(tbl, set()).add(col)
+        for hit in scan_revision_ast(h_path, fn_name="upgrade"):
+            if hit["operation"] == "drop_table":
+                expected_cols.pop(hit["table"], None)
+            elif hit["operation"] == "drop_column" and hit["column"] and hit["table"] in expected_cols:
+                expected_cols[hit["table"]].discard(hit["column"])
+    f8_reached = any(r.revision == "f8a2c41d9e05" for r in history_revs)
+    return expected_cols, f8_reached
+
+
+def _validate_schema_parity_for_revision(
+    insp: sa.Inspector,
+    script_dir: ScriptDirectory,
+    rev: str,
+    non_alembic_tables: Sequence[str],
+    live_cols_cache: dict[str, set[str]] | None = None,
+) -> dict[str, Any]:
+    """Compare live tables/columns against expected schema at `rev`.
+
+    At `f8a2c41d9e05`, retained legacy Classroom tables are valid ONLY atomically
+    (either all 5 tables present = 20-table DB, or 0 legacy tables present = 15-table DB).
+    Partial legacy subsets (1..4 of 5 tables) and any unexpected/rogue tables fail closed.
+    """
+    cache = live_cols_cache if live_cols_cache is not None else {}
+    expected_cols, f8_reached = _expected_schema_at_revision(script_dir, rev)
+    existing_non_alembic = set(non_alembic_tables)
+
+    unexpected_tables = sorted(existing_non_alembic - set(expected_cols.keys()))
+    present_legacy = sorted(RETAINED_LEGACY_CLASSROOM_TABLES & existing_non_alembic)
+    all_legacy_absent = len(present_legacy) == 0
+    partial_legacy = (
+        present_legacy
+        if f8_reached and 0 < len(present_legacy) < len(RETAINED_LEGACY_CLASSROOM_TABLES)
+        else []
+    )
+
+    missing_tables: list[str] = []
+    missing_columns: dict[str, list[str]] = {}
+    unexpected_columns: dict[str, list[str]] = {}
+    for tbl, exp_set in sorted(expected_cols.items()):
+        if tbl in RETAINED_LEGACY_CLASSROOM_TABLES and f8_reached and all_legacy_absent:
+            continue
+        if tbl not in existing_non_alembic:
+            missing_tables.append(tbl)
+            continue
+        live_set = cache.get(tbl)
+        if live_set is None:
+            live_set = {c["name"] for c in insp.get_columns(tbl)}
+            cache[tbl] = live_set
+        miss_c = sorted(exp_set - live_set)
+        extra_c = sorted(live_set - exp_set)
+        if miss_c:
+            missing_columns[tbl] = miss_c
+        if extra_c:
+            unexpected_columns[tbl] = extra_c
+
+    has_drift = bool(missing_tables or unexpected_tables or missing_columns or unexpected_columns or partial_legacy)
+    return {
+        "has_drift": has_drift,
+        "missing_tables": missing_tables,
+        "unexpected_tables": unexpected_tables,
+        "missing_columns": missing_columns,
+        "unexpected_columns": unexpected_columns,
+        "partial_legacy_classroom_tables": partial_legacy,
+    }
+
+
 def evaluate_migration_safety(
     connection: sa.Connection,
     alembic_cfg: Config,
@@ -238,6 +315,7 @@ def evaluate_migration_safety(
     startup_mode: bool = False,
     guard_destructive_downgrade: bool = False,
     env: Mapping[str, str] | None = None,
+    purge: bool = False,
 ) -> dict[str, Any]:
     """Evaluate whether the requested Alembic transition is data-safe and authorized."""
     env_map = os.environ if env is None else env
@@ -297,6 +375,89 @@ def evaluate_migration_safety(
             "message": f"Database contains multiple alembic_version rows: {db_revs}.",
         }
 
+    current_rev = db_revs[0] if db_revs else None
+    if current_rev is not None and current_rev not in all_revs:
+        return {
+            **base_report,
+            "allowed": False,
+            "reason_code": "UNKNOWN_DB_REVISION",
+            "message": f"Database revision {current_rev!r} is not present in source Alembic script chain.",
+        }
+
+    if direction == "stamp":
+        if effective_startup:
+            return {
+                **base_report,
+                "allowed": False,
+                "reason_code": "STAMP_FORBIDDEN_AT_STARTUP",
+                "message": "Manual `alembic stamp` is forbidden while ALGOSIM_STARTUP_MODE=1 is active.",
+            }
+        if target_rev == "base":
+            if non_alembic_tables:
+                return {
+                    **base_report,
+                    "allowed": False,
+                    "reason_code": "INVALID_STAMP_SCHEMA_MISMATCH",
+                    "drift_details": {"unexpected_tables": non_alembic_tables},
+                    "message": "Cannot stamp revision 'base' on a non-empty schema.",
+                }
+            return {
+                **base_report,
+                "allowed": True,
+                "reason_code": "SAFE_VALIDATED_STAMP",
+                "message": "Validated stamp to 'base' on empty schema.",
+            }
+        try:
+            rev_obj = script_dir.get_revision("head" if target_rev in ("head", "heads") else target_rev)
+        except Exception:
+            rev_obj = None
+        if rev_obj is None:
+            return {
+                **base_report,
+                "allowed": False,
+                "reason_code": "UNKNOWN_TARGET_REVISION",
+                "message": f"Target stamp revision {target_rev!r} does not exist in Alembic script chain.",
+            }
+        resolved_target = rev_obj.revision
+        if "alembic_version" in existing_set and not db_revs and not purge:
+            return {
+                **base_report,
+                "allowed": False,
+                "reason_code": "EMPTY_ALEMBIC_VERSION_TABLE",
+                "message": (
+                    "Database has an empty alembic_version table; inspect aborted migration before stamping "
+                    "(or pass --purge after verifying schema parity)."
+                ),
+            }
+        if current_rev is not None and current_rev != resolved_target and not purge:
+            return {
+                **base_report,
+                "allowed": False,
+                "reason_code": "STAMP_ON_ALREADY_VERSIONED_DATABASE",
+                "message": (
+                    f"Refusing to overwrite existing revision stamp {current_rev!r} with {resolved_target!r} "
+                    "without explicit upgrade/downgrade (schema parity check protects version history)."
+                ),
+            }
+        parity = _validate_schema_parity_for_revision(insp, script_dir, resolved_target, non_alembic_tables)
+        if parity["has_drift"]:
+            return {
+                **base_report,
+                "allowed": False,
+                "reason_code": "INVALID_STAMP_SCHEMA_MISMATCH",
+                "drift_details": parity,
+                "message": (
+                    f"Live schema does not match Alembic revision {resolved_target!r}: refusing `alembic stamp`."
+                ),
+            }
+        return {
+            **base_report,
+            "allowed": True,
+            "reason_code": "SAFE_VALIDATED_STAMP",
+            "resolved_target_revision": resolved_target,
+            "message": f"Verified full schema parity against target stamp revision {resolved_target!r}.",
+        }
+
     # Pre-Alembic populated database protection (e.g. dev/prod DBs created via SQLAlchemy create_all)
     if not db_revs and non_alembic_tables:
         counts = {t: _count_table_rows(connection, existing_set, t) for t in non_alembic_tables}
@@ -321,15 +482,6 @@ def evaluate_migration_safety(
                 "Database contains an empty alembic_version table with no revision row and no application tables. "
                 "Inspect partial/aborted migration state before continuing."
             ),
-        }
-
-    current_rev = db_revs[0] if db_revs else None
-    if current_rev is not None and current_rev not in all_revs:
-        return {
-            **base_report,
-            "allowed": False,
-            "reason_code": "UNKNOWN_DB_REVISION",
-            "message": f"Database revision {current_rev!r} is not present in source Alembic script chain.",
         }
 
     if direction == "upgrade":
@@ -367,10 +519,10 @@ def evaluate_migration_safety(
     base_report["destructive_operations"] = destructive_ops
 
     if not destructive_ops:
+        live_cols_cache: dict[str, set[str]] = {}
         if direction == "upgrade":
             colliding_tables: list[str] = []
             colliding_columns: list[str] = []
-            live_cols_cache: dict[str, set[str]] = {}
             for step in steps:
                 ct_map, ac_list = scan_revision_creates(Path(step.revision.path), fn_name="upgrade")
                 for tbl in ct_map:
@@ -395,58 +547,31 @@ def evaluate_migration_safety(
                     ),
                 }
 
-            if current_rev is not None:
-                history_revs = list(reversed(list(script_dir.walk_revisions(base="base", head=current_rev))))
-                expected_cols: dict[str, set[str]] = {}
-                for hrev in history_revs:
-                    h_path = Path(hrev.path)
-                    ct_map, ac_list = scan_revision_creates(h_path, fn_name="upgrade")
-                    for tbl, cols in ct_map.items():
-                        expected_cols[tbl] = set(cols)
-                    for tbl, col in ac_list:
-                        expected_cols.setdefault(tbl, set()).add(col)
-                    for hit in scan_revision_ast(h_path, fn_name="upgrade"):
-                        if hit["operation"] == "drop_table":
-                            expected_cols.pop(hit["table"], None)
-                        elif hit["operation"] == "drop_column" and hit["column"] and hit["table"] in expected_cols:
-                            expected_cols[hit["table"]].discard(hit["column"])
-
-                f8_reached = any(r.revision == "f8a2c41d9e05" for r in history_revs)
-                missing_tables: list[str] = []
-                missing_columns: dict[str, list[str]] = {}
-                unexpected_columns: dict[str, list[str]] = {}
-                for tbl, exp_set in sorted(expected_cols.items()):
-                    if tbl in RETAINED_LEGACY_CLASSROOM_TABLES and f8_reached and tbl not in existing_set:
-                        continue
-                    if tbl not in existing_set:
-                        missing_tables.append(tbl)
-                        continue
-                    live_set = live_cols_cache.get(tbl)
-                    if live_set is None:
-                        live_set = {c["name"] for c in insp.get_columns(tbl)}
-                        live_cols_cache[tbl] = live_set
-                    miss_c = sorted(exp_set - live_set)
-                    extra_c = sorted(live_set - exp_set)
-                    if miss_c:
-                        missing_columns[tbl] = miss_c
-                    if extra_c:
-                        unexpected_columns[tbl] = extra_c
-
-                if missing_tables or missing_columns or unexpected_columns:
-                    return {
-                        **base_report,
-                        "allowed": False,
-                        "reason_code": "SCHEMA_DRIFT_DETECTED",
-                        "drift_details": {
-                            "missing_tables": missing_tables,
-                            "missing_columns": missing_columns,
-                            "unexpected_columns": unexpected_columns,
-                        },
-                        "message": (
-                            f"Live schema drifted from Alembic history through revision {current_rev!r}: "
-                            "missing tables/columns or unexpected columns detected."
+        if current_rev is not None:
+            parity = _validate_schema_parity_for_revision(
+                insp, script_dir, current_rev, non_alembic_tables, live_cols_cache
+            )
+            if parity["has_drift"]:
+                return {
+                    **base_report,
+                    "allowed": False,
+                    "reason_code": "SCHEMA_DRIFT_DETECTED",
+                    "drift_details": {
+                        "missing_tables": parity["missing_tables"],
+                        "unexpected_tables": parity["unexpected_tables"],
+                        "missing_columns": parity["missing_columns"],
+                        "unexpected_columns": parity["unexpected_columns"],
+                        **(
+                            {"partial_legacy_classroom_tables": parity["partial_legacy_classroom_tables"]}
+                            if parity["partial_legacy_classroom_tables"]
+                            else {}
                         ),
-                    }
+                    },
+                    "message": (
+                        f"Live schema drifted from Alembic history through revision {current_rev!r}: "
+                        "missing/unexpected tables, columns, or partial legacy Classroom retention detected."
+                    ),
+                }
 
         return {
             **base_report,
@@ -533,7 +658,7 @@ def main(argv: Sequence[str] | None = None) -> int:
         description="Verify Alembic migration safety before executing schema evolution.",
     )
     parser.add_argument("--alembic-ini", type=Path, default=None, help="Path to alembic.ini")
-    parser.add_argument("--direction", choices=("upgrade", "downgrade"), default="upgrade")
+    parser.add_argument("--direction", choices=("upgrade", "downgrade", "stamp"), default="upgrade")
     parser.add_argument("--target", default="head", help="Target Alembic revision (default: head)")
     parser.add_argument("--startup", action="store_true", help="Enforce strict application-startup policy")
     parser.add_argument(
