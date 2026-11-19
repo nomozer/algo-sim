@@ -1889,24 +1889,24 @@ describe("AXO Step Editor V2.2 — Reliability Hardening & Edge Cases (§5, §7)
           ...ev,
           learner_text: "Dựng giao tuyến của (P) và (β).",
           explanation: renameAlphaToP(String(ev.explanation ?? "")),
-          formula_text: renameAlphaToP(String(ev.formula_text ?? "")),
           display_label: renameAlphaToP(String(ev.display_label ?? "")),
+          justification_text: typeof ev.justification_text === "string" ? renameAlphaToP(ev.justification_text) : ev.justification_text,
         };
       }
       return {
         ...ev,
         learner_text: typeof ev.learner_text === "string" ? renameAlphaToP(ev.learner_text) : ev.learner_text,
         explanation: typeof ev.explanation === "string" ? renameAlphaToP(ev.explanation) : ev.explanation,
-        formula_text: typeof ev.formula_text === "string" ? renameAlphaToP(ev.formula_text) : ev.formula_text,
+        display_label: typeof ev.display_label === "string" ? renameAlphaToP(ev.display_label) : ev.display_label,
+        justification_text: typeof ev.justification_text === "string" ? renameAlphaToP(ev.justification_text) : ev.justification_text,
       };
     });
 
     if (rebuilt.formation?.steps) {
       rebuilt.formation.steps = rebuilt.formation.steps.map((st) => ({
         ...st,
-        label: typeof st.label === "string" ? renameAlphaToP(st.label) : st.label,
-        title: typeof st.title === "string" ? renameAlphaToP(st.title) : st.title,
-        narration: typeof st.narration === "string" ? renameAlphaToP(st.narration) : st.narration,
+        learner_text: typeof st.learner_text === "string" ? renameAlphaToP(st.learner_text) : st.learner_text,
+        justification_text: typeof st.justification_text === "string" ? renameAlphaToP(st.justification_text) : st.justification_text,
       }));
     }
 
@@ -1935,7 +1935,7 @@ describe("AXO Step Editor V2.2 — Reliability Hardening & Edge Cases (§5, §7)
       versionNumber: 1,
       committedScene: rebuilt,
       stepOverrides: { mp_tt_AB: overrideText },
-      dependencySummary: { cycle_detected: false },
+      dependencySummary: null,
       revisions: [],
       feedbackItems: [],
       updatedAt: Date.now(),
