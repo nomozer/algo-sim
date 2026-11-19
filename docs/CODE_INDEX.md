@@ -1,5 +1,16 @@
 # CODE_INDEX.md — Chỉ mục module + BỘ NHỚ KIẾN TRÚC
 
+## Proof integrity, independent evaluation & controlled integration (AXO CONSTRUCTION /2, 2026-11-19)
+
+| Hạng mục / Vai trò | Đường dẫn chuẩn (`03200886a` trên nền product đóng băng `6310113f2` / `113a6a7cf6bb…`, `123` files, freeze `/2`: `26c9b505…`) |
+|---|---|
+| Bộ kiểm chứng chính xác L0–L4 chặt chẽ (`construction-exact-verifier/2`), giữ witness `A07`, tách `point_distance`/`segment_length` (`D02`), bảo toàn khối `Scene3D`, và lời văn thân thiện (`_friendly_learner_text`) | `backend/experimental/construction_planner/__init__.py`, `backend/experimental/construction_planner/construction_graph.py`, `backend/experimental/construction_planner/construction_operators.py`, `backend/experimental/construction_planner/construction_state.py`, `backend/experimental/construction_planner/construction_verifier.py`, `backend/experimental/construction_planner/construction_search.py`, `backend/experimental/construction_planner/scene3d_bridge.py` |
+| 9 bất biến hình học (`SO(3,Q)`, `GL(3,Q)` hiệp biến $G' = A^{-T} G A^{-1}$), kiểm định 6 bất biến trình bày & chuyển đa phương án, cầu nối Source-Gate (`verified-input-bridge/1`), adapter feature-flag `AXO_DYNAMIC_CONSTRUCTION_MODE` & bộ chọn tất định Model 2 | `backend/experimental/construction_planner/geometry_invariance.py`, `backend/experimental/construction_planner/presentation_validator.py`, `backend/experimental/construction_planner/verified_input_bridge.py`, `backend/experimental/construction_planner/integration_adapter.py`, `backend/experimental/construction_planner/model2_interface.py` |
+| Script đối soát 40 ca / 4 nhánh công bằng / tái phân loại `N0`–`N5`, kiểm toán 12 đột biến + Oracle Isolation + 9 bất biến, và single-shot Holdout `N=60` + Stress Benchmark | `backend/scripts/reconcile_and_compare_construction_v2.py`, `backend/scripts/audit_proof_integrity_and_invariance_v2.py`, `backend/scripts/evaluate_independent_construction_v2.py` |
+| Bộ kiểm thử 18 hạng mục `/2` (`34` passed gộp `/1`, `0` failed; `15,070` full backend) | `backend/tests/geometry/test_axo_construction_v2_integrity_and_integration.py` |
+| 2 bản vá bàn giao sở hữu (`git apply --check` PASS, `0` edit `backend/app/**` & `frontend/`) | `docs/evaluation/geometry/runs/axo-construction-proof-integrity-independent-evaluation-controlled-integration/handoff/backend_adapter4_dynamic_construction_flag.patch`, `docs/evaluation/geometry/runs/axo-construction-proof-integrity-independent-evaluation-controlled-integration/handoff/frontend_scene3d_multiplan_switcher.patch` |
+| Báo cáo tổng kết chiến dịch `AXO CONSTRUCTION /2` (`Level 2 — BACKEND_INTEGRATION_READY`) | `docs/evaluation/geometry/runs/axo-construction-proof-integrity-independent-evaluation-controlled-integration/FINAL_MASTER_REPORT.md` |
+
 ## Verified construction graph & dynamic planner feasibility (AXO CONSTRUCTION /1, 2026-11-19)
 
 | Hạng mục / Vai trò | Đường dẫn chuẩn (`418dd89f8` trên nền product đóng băng `6310113f2` / `113a6a7cf6bb…`, `123` files) |
