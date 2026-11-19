@@ -878,11 +878,47 @@ _SUBCLAUSE_CONTENT_RE = re.compile(
 )
 
 
-#: a request to SHOW the built figure (rule 7b; the gate reads it whole and it asks nothing): "Hãy mô phỏng hình và điểm H"
-_SUBCLAUSE_SHOW_RE = re.compile(
-    r"(?:(?:hãy|em\s+hãy)\s+)?(?:mô\s+phỏng|vẽ|dựng)\s+(?:lại\s+)?hình(?:\s+(?:chóp|lăng\s+trụ|vẽ))?"
-    r"(?:\s+và\s+(?:các\s+)?điểm\s+(?:[A-Z][0-9]*'?)(?:\s*(?:,|và)\s*[A-Z][0-9]*'?)*)?",
+#: Rule 7b grammar of a request to SHOW the built figure (/11, shared vocabulary with the Source Gate's `_VAT_MO_PHONG`):
+#: a show verb, then the figure or a declared solid by its kind words (+ optional notation, deixis, extra points) and a
+#: content-free tail. It asks nothing and states no fact; whether a kind word is TRUE of the solid is the Source Gate's
+#: claim check, which solid it names is `_sim_request_target`. Negated ("Không/Đừng …") or conditional requests never match.
+_SIM_VERB = (r"(?:(?:em|bạn)\s+)?(?:hãy\s+)?(?:chỉ\s+cần\s+)?(?:vẽ|dựng|mô\s+phỏng|minh\s+ho[ạa]|biểu\s+diễn|hiển\s+thị"
+             r"|cho\s+(?:mình|em|tôi|tớ)\s+xem)(?:\s+giúp(?:\s+(?:mình|em|tôi|tớ))?|\s+lại)?")
+_SIM_SOLID = (rf"(?:(?:hình|khối)\s+)?(?P<kn>chóp|lăng\s+trụ|hộp(?:\s+chữ\s+nhật)?|lập\s+phương|tứ\s+diện)"
+              rf"(?:\s+(?:đứng|đều|xiên|tam\s+giác|tứ\s+giác|ngũ\s+giác|lục\s+giác|chữ\s+nhật))*"
+              rf"(?:\s+(?P<lbl>(?:{_PT})+(?:\.(?:{_PT})+)?))?(?![\w'])(?:\s+(?:đứng|đều|xiên))*")
+_SIM_FIGURE = r"(?P<fig>hình(?:\s+(?:vẽ|3D|không\s+gian|ba\s+chiều))?(?:\s+theo\s+giả\s+thiết(?:\s+(?:trên|đã\s+cho))?)?)"
+_SIM_OBJECT = (rf"(?:{_SIM_SOLID}|{_SIM_FIGURE})(?P<deix>\s+(?:này|đó|đã\s+cho|trên))?(?![\w'])"
+               rf"(?:\s*(?:,\s*)?(?:và|cùng(?:\s+với)?)\s+(?:các\s+)?(?:điểm|đỉnh)\s+{_PT}(?:\s*(?:,|và)\s*{_PT})*)?"
+               r"(?:\s*,?\s*(?:và\s+)?(?:không|chưa)\s+cần\s+tính(?:\s+toán|\s+gì(?:\s+thêm)?)?|\s+giúp(?:\s+(?:mình|em|tôi|tớ))?)*")
+_SIM_REQUEST_RE = re.compile(
+    rf"^\s*(?P<sim>{_SIM_VERB}\s+{_SIM_OBJECT})"
+    r"(?:\s*(?:,\s*)?(?:rồi\s+|và\s+|sau\s+đó\s+|đồng\s+thời\s+)?(?:hãy\s+)?(?P<rest>(?:tính|tìm|xác\s+định)\s+.+))?\s*[!.…]*\s*$",
     re.IGNORECASE | re.UNICODE)
+#: a request to SHOW the built figure (rule 7b; the gate reads it whole and it asks nothing): "Hãy mô phỏng hình và điểm H"
+_SUBCLAUSE_SHOW_RE = re.compile(rf"{_SIM_VERB}\s+{_SIM_OBJECT}", re.IGNORECASE | re.UNICODE)
+
+_PYRAMID_KIND_WORDS = ("chóp", "tứ diện")
+
+
+def _sim_request_target(m: re.Match[str], solids: list[dict[str, Any]], primary: str) -> str | None:
+    """The declared solid a 7b request names, or None when it names none or more than one (never a guess).
+    A notation must equal a declared solid's (as a label set); a kind word with no notation picks the ONLY declared solid of
+    that pyramid/prism class; the bare figure ("hình", "hình 3D") is the primary solid, but with deixis ("hình đó") and
+    several solids it is ambiguous."""
+    if not solids:
+        return None
+    if m["lbl"]:
+        want = set(re.findall(_PT, m["lbl"]))
+        hits = [s["solid_id"] for s in solids if set(re.findall(_PT, str(s.get("notation") or ""))) == want]
+        return hits[0] if len(hits) == 1 else None
+    if m["kn"]:
+        pyr = re.sub(r"\s+", " ", m["kn"].lower()) in _PYRAMID_KIND_WORDS
+        hits = [s["solid_id"] for s in solids if ("pyramid" in str(s.get("solid_type"))) == pyr]
+        return hits[0] if len(hits) == 1 else None
+    if m["deix"] and len(solids) > 1:
+        return None
+    return primary
 #: the part before the comma is itself only a list of labels ("M, N thuộc (P)", "Gọi M, N lần lượt …"): a list of subjects
 _SUBCLAUSE_SUBJECTS_RE = re.compile(r"(?:(?:Gọi|Cho|các|hai|ba)\s+(?:điểm\s+)?)?(?:(?:[A-Z][0-9]*'?)+\s*,\s*)*(?:[A-Z][0-9]*'?)+",
                                     re.IGNORECASE)
@@ -937,7 +973,9 @@ def _unread_subclauses(builder: "_AstBuilder", a: int, b: int, pre4: tuple[int, 
     # items of this sentence, and earlier sections a later sentence may extend (stated intersections carry own quotes)
     items = (builder.solids[pre4[0]:], builder.premises[pre4[1]:], builder.derived_sections,
              builder.math_goals[pre4[3]:], builder.described_points[pre3[0]:], builder.relations[pre3[1]:],
-             builder.simulation_goals[pre3[2]:], builder.unresolved)
+             # rule 7b REPLACES the declaration's auto goal, so a slice from pre3 can be empty; quotes are searched in this
+             # sentence only, so the whole list is safe (/11)
+             builder.simulation_goals, builder.unresolved)
 
     def quotes(x):
         if isinstance(x, dict):
@@ -987,7 +1025,9 @@ def _unread_values(builder: "_AstBuilder", a: int, b: int, pre4: tuple[int, int,
         start = a + h.end()
     items = (builder.solids[pre4[0]:], builder.premises[pre4[1]:], builder.derived_sections,
              builder.math_goals[pre4[3]:], builder.described_points[pre3[0]:], builder.relations[pre3[1]:],
-             builder.simulation_goals[pre3[2]:], builder.unresolved)
+             # rule 7b REPLACES the declaration's auto goal, so a slice from pre3 can be empty; quotes are searched in this
+             # sentence only, so the whole list is safe (/11)
+             builder.simulation_goals, builder.unresolved)
 
     def quotes(x):
         if isinstance(x, dict):
@@ -3879,15 +3919,14 @@ def _parse_clause_into_ast(builder: _AstBuilder, clause: ClauseSpan) -> None:
         return
 
     # 7b. Trailing simulation request: "Hãy mô phỏng hình (và điểm M)?(, rồi tính ...)?" / "Vẽ hình rồi tính ..." / "Mô phỏng hình chóp và tính ..."
-    m_sim_lead = re.match(
-        rf"^\s*(?P<sim>(?:Hãy\s+)?(?:mô\s+phỏng|vẽ)\s+hình(?:\s+chóp|\s+lăng\s+trụ)?(?:\s+và\s+điểm\s+{_PT})?)(?:\s*(?:,\s*)?(?:rồi\s+|và\s+)?(?P<rest>tính\s+.+))?$",
-        ctext_norm,
-        re.IGNORECASE | re.UNICODE,
-    )
-    if m_sim_lead and builder.solids:
+    # /11: one shared grammar (`_SIM_REQUEST_RE`) for every show verb and declared-solid kind word; the request must name
+    # exactly one declared solid (`_sim_request_target`), otherwise it stays unparsed (refused / clarified downstream).
+    m_sim_lead = _SIM_REQUEST_RE.match(ctext_norm)
+    sim_target = _sim_request_target(m_sim_lead, builder.solids, builder._primary_solid_id) if m_sim_lead else None
+    if m_sim_lead and sim_target:
         q_sim = _clean_quote(raw, ca + m_sim_lead.start("sim"), ca + m_sim_lead.end("sim"))
         builder.simulation_goals = [
-            {"goal_id": "sg1", "kind": "construct_object", "target_solid_id": builder._primary_solid_id, "quote": q_sim}
+            {"goal_id": "sg1", "kind": "construct_object", "target_solid_id": sim_target, "quote": q_sim}
         ]
         mapped_goal = True
 
