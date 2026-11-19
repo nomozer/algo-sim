@@ -156,6 +156,68 @@ def scan_revision_ast(py_path: Path, fn_name: str = "upgrade") -> list[dict[str,
     return findings
 
 
+def _col_name_from_ast(call: ast.Call) -> str | None:
+    if call.args:
+        nm = _const_str(call.args[0])
+        if nm:
+            return nm
+    for kw in call.keywords:
+        if kw.arg == "name":
+            nm = _const_str(kw.value)
+            if nm:
+                return nm
+    return None
+
+
+def scan_revision_creates(py_path: Path, fn_name: str = "upgrade") -> tuple[dict[str, list[str]], list[tuple[str, str]]]:
+    """Extract unconditional top-level `create_table` and `add_column` declarations from `fn_name`."""
+    source = py_path.read_text(encoding="utf-8", errors="replace")
+    tree = ast.parse(source, filename=str(py_path))
+    target_fn = next(
+        (n for n in tree.body if isinstance(n, ast.FunctionDef) and n.name == fn_name),
+        None,
+    )
+    if target_fn is None:
+        return {}, []
+
+    created_tables: dict[str, list[str]] = {}
+    added_columns: list[tuple[str, str]] = []
+
+    for stmt in target_fn.body:
+        if isinstance(stmt, ast.If):
+            continue
+        batch_aliases = _resolve_batch_tables(ast.FunctionDef(name="_s", args=target_fn.args, body=[stmt], decorator_list=[]))
+        for sub in ast.walk(stmt):
+            if not isinstance(sub, ast.Call):
+                continue
+            obj, method = _call_attr_name(sub)
+            if not method:
+                continue
+            if obj == "op" and method == "create_table":
+                tbl = _table_kw_or_arg(sub, 0)
+                if tbl:
+                    cols: list[str] = []
+                    for arg in sub.args[1:]:
+                        if isinstance(arg, ast.Call) and isinstance(arg.func, ast.Attribute) and arg.func.attr == "Column":
+                            cn = _col_name_from_ast(arg)
+                            if cn:
+                                cols.append(cn)
+                    created_tables[tbl] = cols
+            elif method == "add_column" and obj in ("op", "batch_op", *batch_aliases):
+                if obj == "op" and len(sub.args) >= 2 and isinstance(sub.args[1], ast.Call):
+                    tbl = _table_kw_or_arg(sub, 0)
+                    cn = _col_name_from_ast(sub.args[1])
+                    if tbl and cn:
+                        added_columns.append((tbl, cn))
+                elif obj != "op" and sub.args and isinstance(sub.args[0], ast.Call):
+                    tbl = batch_aliases.get(obj or "")
+                    cn = _col_name_from_ast(sub.args[0])
+                    if tbl and cn:
+                        added_columns.append((tbl, cn))
+
+    return created_tables, added_columns
+
+
 def _count_table_rows(connection: sa.Connection, existing_tables: set[str], table_name: str) -> int | None:
     if table_name not in existing_tables:
         return None
@@ -250,6 +312,17 @@ def evaluate_migration_safety(
             ),
         }
 
+    if "alembic_version" in existing_set and not db_revs and not non_alembic_tables:
+        return {
+            **base_report,
+            "allowed": False,
+            "reason_code": "EMPTY_ALEMBIC_VERSION_TABLE",
+            "message": (
+                "Database contains an empty alembic_version table with no revision row and no application tables. "
+                "Inspect partial/aborted migration state before continuing."
+            ),
+        }
+
     current_rev = db_revs[0] if db_revs else None
     if current_rev is not None and current_rev not in all_revs:
         return {
@@ -294,6 +367,87 @@ def evaluate_migration_safety(
     base_report["destructive_operations"] = destructive_ops
 
     if not destructive_ops:
+        if direction == "upgrade":
+            colliding_tables: list[str] = []
+            colliding_columns: list[str] = []
+            live_cols_cache: dict[str, set[str]] = {}
+            for step in steps:
+                ct_map, ac_list = scan_revision_creates(Path(step.revision.path), fn_name="upgrade")
+                for tbl in ct_map:
+                    if tbl in existing_set:
+                        colliding_tables.append(tbl)
+                for tbl, col in ac_list:
+                    if tbl in existing_set:
+                        if tbl not in live_cols_cache:
+                            live_cols_cache[tbl] = {c["name"] for c in insp.get_columns(tbl)}
+                        if col in live_cols_cache[tbl]:
+                            colliding_columns.append(f"{tbl}.{col}")
+            if colliding_tables or colliding_columns:
+                return {
+                    **base_report,
+                    "allowed": False,
+                    "reason_code": "PARTIAL_MIGRATION_PRE_EXISTING_OBJECT",
+                    "colliding_tables": sorted(set(colliding_tables)),
+                    "colliding_columns": sorted(set(colliding_columns)),
+                    "message": (
+                        "Pending non-destructive migration conflicts with pre-existing database tables/columns "
+                        "(partial or interrupted prior migration state). Inspect and reconcile before executing DDL."
+                    ),
+                }
+
+            if current_rev is not None:
+                history_revs = list(reversed(list(script_dir.walk_revisions(base="base", head=current_rev))))
+                expected_cols: dict[str, set[str]] = {}
+                for hrev in history_revs:
+                    h_path = Path(hrev.path)
+                    ct_map, ac_list = scan_revision_creates(h_path, fn_name="upgrade")
+                    for tbl, cols in ct_map.items():
+                        expected_cols[tbl] = set(cols)
+                    for tbl, col in ac_list:
+                        expected_cols.setdefault(tbl, set()).add(col)
+                    for hit in scan_revision_ast(h_path, fn_name="upgrade"):
+                        if hit["operation"] == "drop_table":
+                            expected_cols.pop(hit["table"], None)
+                        elif hit["operation"] == "drop_column" and hit["column"] and hit["table"] in expected_cols:
+                            expected_cols[hit["table"]].discard(hit["column"])
+
+                f8_reached = any(r.revision == "f8a2c41d9e05" for r in history_revs)
+                missing_tables: list[str] = []
+                missing_columns: dict[str, list[str]] = {}
+                unexpected_columns: dict[str, list[str]] = {}
+                for tbl, exp_set in sorted(expected_cols.items()):
+                    if tbl in RETAINED_LEGACY_CLASSROOM_TABLES and f8_reached and tbl not in existing_set:
+                        continue
+                    if tbl not in existing_set:
+                        missing_tables.append(tbl)
+                        continue
+                    live_set = live_cols_cache.get(tbl)
+                    if live_set is None:
+                        live_set = {c["name"] for c in insp.get_columns(tbl)}
+                        live_cols_cache[tbl] = live_set
+                    miss_c = sorted(exp_set - live_set)
+                    extra_c = sorted(live_set - exp_set)
+                    if miss_c:
+                        missing_columns[tbl] = miss_c
+                    if extra_c:
+                        unexpected_columns[tbl] = extra_c
+
+                if missing_tables or missing_columns or unexpected_columns:
+                    return {
+                        **base_report,
+                        "allowed": False,
+                        "reason_code": "SCHEMA_DRIFT_DETECTED",
+                        "drift_details": {
+                            "missing_tables": missing_tables,
+                            "missing_columns": missing_columns,
+                            "unexpected_columns": unexpected_columns,
+                        },
+                        "message": (
+                            f"Live schema drifted from Alembic history through revision {current_rev!r}: "
+                            "missing tables/columns or unexpected columns detected."
+                        ),
+                    }
+
         return {
             **base_report,
             "allowed": True,

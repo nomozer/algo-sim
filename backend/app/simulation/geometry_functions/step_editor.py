@@ -4083,6 +4083,19 @@ def execute_step_edit(
             retired_set = set(retired_helper_ids)
             if primary_obj["id"] not in (updated_ids or []):
                 updated_ids.append(primary_obj["id"])
+            for oid in {*updated_ids, *kept_helpers, *(o["id"] for o in newly_created_objs)}:
+                if oid in by_id:
+                    dep_list = list(by_id[oid].get("depends") or ())
+                    if "computational_depends" in by_id[oid]:
+                        by_id[oid]["computational_depends"] = list(dep_list)
+                    if "visible_prerequisites" in by_id[oid]:
+                        by_id[oid]["visible_prerequisites"] = list(dep_list)
+                    if "dependency_edges" in by_id[oid]:
+                        by_id[oid]["dependency_edges"] = [
+                            {"source_id": dep_id, "relation": "topological"}
+                            for dep_id in dep_list
+                        ]
+
             for oid in updated_ids:
                 if oid not in mem or oid not in by_id:
                     raise StepEditRefusal(
@@ -4161,7 +4174,7 @@ def execute_step_edit(
         for d_obj in surviving_objs:
             oid_cur = d_obj.get("id")
             if oid_cur in recomputed_ids:
-                for field_name in ("notation", "label", "display_label", "reference"):
+                for field_name in ("notation", "label", "display_label", "reference", "role"):
                     val_str = d_obj.get(field_name)
                     if isinstance(val_str, str):
                         d_obj[field_name] = _apply_notation_renames(val_str, notation_renames)
@@ -4275,10 +4288,12 @@ def execute_step_edit(
         ev_copy = copy.deepcopy(ev)
         if ev.get("action") == "CREATE" and ev_obj_id:
             emitted_obj_events.add(str(ev_obj_id))
-        if ev_obj_id in updated_ids or ev_obj_id in recomputed_ids:
+        if ev_obj_id in updated_ids or ev_obj_id in recomputed_ids or ev_obj_id in kept_helpers:
             cur_o = next((o for o in surviving_objs if o["id"] == ev_obj_id), None)
             if cur_o is not None:
                 ev_copy["depends"] = list(cur_o.get("depends") or ())
+                if "visible_prerequisites" in ev_copy:
+                    ev_copy["visible_prerequisites"] = list(cur_o.get("depends") or ())
                 if notation_renames and ev_obj_id in recomputed_ids:
                     for ev_field in ("learner_text", "display_label", "explanation", "title"):
                         if isinstance(ev_copy.get(ev_field), str):
@@ -4289,6 +4304,24 @@ def execute_step_edit(
                     ev_copy["learner_text"] = parsed_new.normalized_text
                 elif not ev_copy.get("learner_text"):
                     ev_copy["learner_text"] = cur_o.get("label") or ""
+                if ev_obj_id in updated_ids or ev_obj_id in kept_helpers:
+                    ev_copy["display_label"] = cur_o.get("display_label") or cur_o.get("label") or ev_copy.get("display_label")
+                    ev_copy["explanation"] = (
+                        (parsed_new.normalized_text if ev_obj_id == primary_id and parsed_new.normalized_text else None)
+                        or cur_o.get("label")
+                        or ev_copy.get("explanation")
+                    )
+                ev_details = ev_copy.get("details")
+                if isinstance(ev_details, dict):
+                    if "toa_do" in ev_details and "xyz" in cur_o:
+                        ev_details["toa_do"] = list(cur_o["xyz"])
+                    if "label" in ev_details and (cur_o.get("notation") or cur_o.get("label")):
+                        ev_details["label"] = cur_o.get("notation") or cur_o.get("label")
+                    ev_val = ev_details.get("value")
+                    if isinstance(ev_val, dict):
+                        for vk in ("point", "normal", "direction"):
+                            if vk in ev_val and isinstance(cur_o.get(vk), list):
+                                ev_val[vk] = list(cur_o[vk])
         new_events.append(ev_copy)
 
     for idx_e, ev in enumerate(new_events):
