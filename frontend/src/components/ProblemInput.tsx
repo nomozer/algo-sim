@@ -116,9 +116,10 @@ export function describeHomeRefusal(
 
   // /11: a verified `route-d-clarification/1` question (checked by the hybrid adapter, no internal ids) states what the
   // learner must add or clarify; it wins over the category label, which can say "capability gap" for missing data.
-  const question = unsupported.clarification?.question;
-  if (question && unsupported.clarification?.kind !== "unsupported") {
-    const missing = unsupported.clarification.nlu_class === "MISSING_DATA";
+  const clar = unsupported.clarification;
+  const question = clar?.question;
+  if (clar && question && clar.kind !== "unsupported") {
+    const missing = clar.nlu_class === "MISSING_DATA";
     return {
       title: missing ? "Đề bài cần thêm dữ kiện để dựng hình" : "Đề bài có chỗ cần viết rõ hơn",
       body: normalizeDisplayBrand(question),

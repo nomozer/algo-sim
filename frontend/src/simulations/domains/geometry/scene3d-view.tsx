@@ -5109,6 +5109,31 @@ export function Scene3DWorkspace({
       renderer.domElement.dispatchEvent(new WheelEvent("wheel", e));
     };
     container.addEventListener("wheel", chuyenWheelVeCanvas, { passive: false });
+    // V17 (/11, pointer trace in run `axo-hybrid-simulation-intent-generalization-grounded-slm-recovery`): a measurement
+    // chip at the canvas centre took the pointerdown, so OrbitControls never started and a drag there did not rotate.
+    // Same contract as the wheel: an overlay keeps its pointer events (a click still selects), but a DRAG that starts on
+    // it (moved >= 4 px) is handed to the canvas from its start point, so OrbitControls captures and rotates.
+    let keoTuLopPhu: { id: number; x: number; y: number; type: string; button: number; buttons: number } | null = null;
+    const batDauKeoTuLopPhu = (e: PointerEvent) => {
+      keoTuLopPhu = e.target !== renderer.domElement && e.isPrimary
+        ? { id: e.pointerId, x: e.clientX, y: e.clientY, type: e.pointerType, button: e.button, buttons: e.buttons }
+        : null;
+    };
+    const chuyenKeoVeCanvas = (e: PointerEvent) => {
+      const s = keoTuLopPhu;
+      if (!s || e.pointerId !== s.id || Math.hypot(e.clientX - s.x, e.clientY - s.y) < 4) return;
+      keoTuLopPhu = null;
+      const chung = { bubbles: true, cancelable: true, composed: true, pointerId: s.id, pointerType: s.type, isPrimary: true };
+      renderer.domElement.dispatchEvent(new PointerEvent("pointerdown",
+        { ...chung, clientX: s.x, clientY: s.y, button: s.button, buttons: s.buttons }));
+      renderer.domElement.dispatchEvent(new PointerEvent("pointermove",
+        { ...chung, clientX: e.clientX, clientY: e.clientY, button: -1, buttons: e.buttons }));
+    };
+    const huyKeoTuLopPhu = () => { keoTuLopPhu = null; };
+    container.addEventListener("pointerdown", batDauKeoTuLopPhu);
+    container.addEventListener("pointermove", chuyenKeoVeCanvas);
+    container.addEventListener("pointerup", huyKeoTuLopPhu);
+    container.addEventListener("pointercancel", huyKeoTuLopPhu);
     renderer.domElement.addEventListener("webglcontextlost", xuLyMatNguCanhWebgl, false);
     renderer.domElement.addEventListener("webglcontextrestored", xuLyKhoiPhucNguCanhWebgl, false);
     if (typeof document !== "undefined") {
@@ -6270,6 +6295,10 @@ export function Scene3DWorkspace({
       }
       renderer.domElement.removeEventListener("wheel", xuLyDoiDieuKhien);
       container.removeEventListener("wheel", chuyenWheelVeCanvas);
+      container.removeEventListener("pointerdown", batDauKeoTuLopPhu);
+      container.removeEventListener("pointermove", chuyenKeoVeCanvas);
+      container.removeEventListener("pointerup", huyKeoTuLopPhu);
+      container.removeEventListener("pointercancel", huyKeoTuLopPhu);
       renderer.domElement.removeEventListener("webglcontextlost", xuLyMatNguCanhWebgl);
       renderer.domElement.removeEventListener("webglcontextrestored", xuLyKhoiPhucNguCanhWebgl);
       dieuKhien.removeEventListener("start", danhDauNguoiDungChinhCam);
