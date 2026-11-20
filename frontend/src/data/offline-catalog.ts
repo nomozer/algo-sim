@@ -104,32 +104,6 @@ export function canonicalSlugForSampleId(sampleIdOrToken: string): string {
   return trimmed;
 }
 
-export const DOMAIN_COLOR: Record<Domain, string> = {
-  algorithm: "var(--accent-green)",
-  logic: "var(--accent-purple-deep)",
-  binary: "var(--primary)",
-  network: "var(--accent-pink)",
-  tree: "var(--accent-green)",
-  database: "var(--accent-teal)",
-  web: "var(--accent-orange)",
-  color: "var(--accent-sky)",
-  geometry: "var(--secondary)",
-  generic: "var(--accent-orange-deep)",
-};
-
-export const DOMAIN_LABEL: Record<Domain, string> = {
-  algorithm: "Thuật toán",
-  logic: "Lôgic",
-  binary: "Nhị phân",
-  network: "Mạng",
-  tree: "Cây",
-  database: "CSDL",
-  web: "Web",
-  color: "Màu sắc",
-  geometry: "Hình học",
-  generic: "Tổng quát",
-};
-
 let _offlineCatalogMemo: CatalogEntry[] | null = null;
 let _discoverableCatalogMemo: CatalogEntry[] | null = null;
 let _publicCatalogMemo: CatalogEntry[] | null = null;
@@ -179,22 +153,6 @@ export function offlineCatalog(): CatalogEntry[] {
 }
 
 export const PRODUCT_DOMAINS: readonly Domain[] = ["geometry"];
-
-export const FOCUS_SIM_IDS: readonly string[] = [
-  "algorithm.find_max",
-  "algorithm.find_min",
-  "algorithm.sum_if",
-  "algorithm.count_if",
-  "algorithm.linear_search",
-  "algorithm.scan",
-  "algorithm.bounded_control_flow",
-  "algorithm.binary_search",
-  "algorithm.bubble_sort",
-  "algorithm.insertion_sort",
-  "algorithm.selection_sort",
-  "tree.traversal",
-  "network.graph_traversal",
-];
 
 /**
  * Danh mục NGƯỜI DÙNG THẤY: mẫu công khai VÀ thuộc phạm vi sản phẩm.

@@ -2424,9 +2424,9 @@ entry hỏng/version lạ bỏ qua êm. Tests: `history.test.ts`.
 ### `components/HomeView.tsx` · `HistoryView.tsx` · `data/offline-catalog.ts` · offline
 M9-UX1 — Home (hero + composer + gợi ý chọn lọc + "Tiếp tục học" ≤5) và trang
 Lịch sử (đủ item, Mở lại/Xóa/Xóa tất cả). `offline-catalog.ts`: danh mục mẫu
-hợp nhất (`offlineCatalog` — ĐẦY ĐỦ kể cả fixture, `publicCatalog` — chỉ
-Tin học THPT cho học sinh (M9-UX2, nguyên tắc COVERAGE §2.7), `starterEntries`
-(6), `DOMAIN_COLOR/LABEL`) dùng chung Home + InputPanel. `App.tsx` route theo
+hợp nhất (`offlineCatalog` — ĐẦY ĐỦ kể cả fixture, `publicCatalog` — nay chỉ
+bài mẫu hình học cho học sinh (M9-UX2, nguyên tắc COVERAGE §2.7), `starterEntries`;
+`DOMAIN_COLOR/LABEL`, `FOCUS_SIM_IDS` của Tin học gỡ ở /13 — không người đọc) dùng chung Home + InputPanel. `App.tsx` route theo
 `store.view`; toggle panel chỉ trong workspace. Exports thêm:
 `formatRelativeTime` (HomeView). **M9-UX3**: card gợi ý HÀNG NGANG (tranh trái /
 chữ phải → mọi card cao bằng nhau bất kể tiêu đề); "xem tất cả" GOM NHÓM theo
