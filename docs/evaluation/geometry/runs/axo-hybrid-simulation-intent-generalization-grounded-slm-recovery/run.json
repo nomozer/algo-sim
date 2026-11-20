@@ -1,0 +1,286 @@
+{
+ "schema": "axo-evaluation-run/2",
+ "run_id": "axo-hybrid-simulation-intent-generalization-grounded-slm-recovery",
+ "wave_id": "AXO_HYBRID_SIMULATION_INTENT_GENERALIZATION_GROUNDED_SLM_RECOVERY",
+ "campaign": "AXO HYBRID /11",
+ "generated_at_utc": "2026-11-20T04:16:51Z",
+ "classification": "SLM_CAUSAL_AUDIT + PRODUCT_FIXES + BLIND_LIVE_BROWSER_ACCEPTANCE_LOCAL_ONLY_SCOPED",
+ "branch": "feat/simulation-intent-slm-recovery",
+ "start_base_commit": "2f12b96b0",
+ "preregistration_commit": "5d0e86dad",
+ "product_commits": {
+  "source_gate_request_nouns": "806a7d338",
+  "parser_simulation_intent": "0557dcaf6",
+  "frontend_clarification_and_retry": "3e5eb8809",
+  "slm_simulation_only_contract": "fcf68e91b",
+  "scene3d_v17_overlay_drag": "b15fd9e92",
+  "cache_146": "5c25c7ea9",
+  "scene3d_u08_label_glide": "31e6b47c9"
+ },
+ "freeze_commits": {
+  "candidate_refreeze_1": "fad0db5f2",
+  "acceptance_freeze": "fec016682",
+  "candidate_refreeze_2": "18aadea7b"
+ },
+ "candidate": {
+  "measured_system_tree_hash": "13a320603f40bbc32730c26fc6c3232b6c0f00fdfdc2e3e49ba258aca25806f6",
+  "measured_files": 123,
+  "cache_version": "146",
+  "default_hybrid_route_mode": "live",
+  "model": {
+   "key": "qwen3-0.6b-axo-v9-q4_k_m",
+   "sha256": "73f1484b08b97ed2a1f44e32bcf6610210c7fda51567c4cd0a03d98dffc6cc35",
+   "llama_cpp_release": "b12470"
+  },
+  "browser": {
+   "driver": "playwright",
+   "playwright_version": "1.62.1",
+   "engine": "chromium (bundled with playwright)"
+  },
+  "parser": "local-geometry-parser/2",
+  "extractor": "local-slm-extractor/5",
+  "grounding": "slm-grounding-validator/5",
+  "source_gate_registry": "geometry-functions/33",
+  "manifest_sha256": "86136867a82a841f0a603c04f50fcbd9811320c28dc00bcf8472bb8a7464f961",
+  "criteria_sha256": "e4c92e4174000c0960dddf17762dfc6affccd644482cb967dd7f4870c7cdc5db",
+  "oracle": "tools/scene_oracle.py (independent exact Fraction + Gram; copied from /10, + ratio2)"
+ },
+ "owner_decisions_this_session": {
+  "parser_slm_adapter": "OWNED",
+  "frontend": "OWNED",
+  "source_gate": "NARROW: _VAT_MO_PHONG only",
+  "domain_gate": "PATCH_AND_HANDOFF_ONLY",
+  "planner_engine_kernel_typed_facts": "LOCKED (prototype + handoff)",
+  "hybrid_preview": "LOCKED",
+  "holdout": "AGENT_AUTHORED_FROZEN_BEFORE_CHANGES"
+ },
+ "safety_and_scope_boundaries": {
+  "merged": false,
+  "pushed": false,
+  "main_modified": false,
+  "gemini_calls": 0,
+  "approved_by_user_written": false,
+  "frozen_runs_modified": false,
+  "construction_v1_v2_modified": false,
+  "fine_tuning": false,
+  "needle3": false
+ },
+ "quality_gates": {
+  "J0_baseline_ownership": "PASS",
+  "J1_slm20_root_cause": "PASS",
+  "J2_simulation_intent_generalization": "PARTIAL",
+  "J3_grounded_slm_recovery": "FAIL (4/30 < 0.30)",
+  "J4_underdetermination": "PARTIAL (3/5 clarify, D02/D03 'chưa hỗ trợ'; design handed off)",
+  "J5_user_experience": "PARTIAL (clarification + retry PASS; diacritic-free NOT applied)",
+  "J6_scene3d_interaction": "PASS (V17 fixed; U08 fixed post hoc; O provenance handed off)",
+  "J7_new_blind_live": "FAIL (completion 0.659 < 0.85)",
+  "J8_performance_offline": "PASS (dev host)",
+  "J9_full_regression": "PENDING: T3 run 3 at the commit that adds run.json (runs 1-2 in V11_REGRESSION_REPORT.md)",
+  "J10_release": "see verdicts"
+ },
+ "t3_detail": "PENDING: T3 run 3 at the commit that adds run.json (runs 1-2 in V11_REGRESSION_REPORT.md)",
+ "verdicts": {
+  "SIMULATION_INTENT_GENERALIZATION_VERIFIED": "FALSE (partial)",
+  "GROUNDED_SLM_RECOVERY_VERIFIED": false,
+  "FULL_STACK_LOCAL_ONLY_VERIFIED": true,
+  "LIVE_SIMULATION_ACCEPTED": false,
+  "SCOPED_CUTOVER_READY": false,
+  "SCOPED_CUTOVER_COMPLETED": false,
+  "BLOCKED_OWNERSHIP": true,
+  "BLOCKED_MODEL_EXTRACTION": false,
+  "BLOCKED_SOURCE_GROUNDING": true,
+  "BLOCKED_DOWNSTREAM_CAPABILITY": "PARTIAL",
+  "BLOCKED_VISUAL_INTERACTION": false,
+  "BLOCKED_PERFORMANCE": false,
+  "NOT_MEASURED": [
+   "EXTERNAL_INDEPENDENCE",
+   "PHYSICAL_TARGET_HARDWARE_4_8_GIB",
+   "REAL_STUDENT_USABILITY",
+   "GEMINI_PARITY"
+  ]
+ },
+ "metrics_summary": {
+  "SIMULATION_COMPLETION_RATE_in_scope": {
+   "k": 56,
+   "n": 85,
+   "rate": 0.6588,
+   "wilson95": [
+    0.5531,
+    0.7508
+   ]
+  },
+  "completion_by_stratum": {
+   "PARSER_COMPLETE": {
+    "k": 52,
+    "n": 55,
+    "rate": 0.9455,
+    "wilson95": [
+     0.8515,
+     0.9813
+    ]
+   },
+   "SLM_REQUIRED": {
+    "k": 4,
+    "n": 30,
+    "rate": 0.1333,
+    "wilson95": [
+     0.0531,
+     0.2968
+    ]
+   }
+  },
+  "completion_by_intent": {
+   "SIMULATE_ONLY": {
+    "k": 22,
+    "n": 39,
+    "rate": 0.5641,
+    "wilson95": [
+     0.4098,
+     0.707
+    ]
+   },
+   "SIMULATE_AND_QUERY": {
+    "k": 5,
+    "n": 16,
+    "rate": 0.3125,
+    "wilson95": [
+     0.1416,
+     0.556
+    ]
+   },
+   "QUERY_WITH_SCENE": {
+    "k": 29,
+    "n": 30,
+    "rate": 0.9667,
+    "wilson95": [
+     0.8333,
+     0.9941
+    ]
+   }
+  },
+  "SLM_VERIFIED_SCENE_RATE": {
+   "k": 4,
+   "n": 30,
+   "rate": 0.1333,
+   "wilson95": [
+    0.0531,
+    0.2968
+   ]
+  },
+  "geometry_correctness_of_served": {
+   "k": 58,
+   "n": 58,
+   "rate": 1.0,
+   "wilson95": [
+    0.9379,
+    1.0
+   ]
+  },
+  "numeric_answers_correct": {
+   "k": 35,
+   "n": 35,
+   "rate": 1.0,
+   "wilson95": [
+    0.9011,
+    1.0
+   ]
+  },
+  "visual_ok_of_served": {
+   "k": 56,
+   "n": 58,
+   "rate": 0.9655,
+   "wilson95": [
+    0.8827,
+    0.9905
+   ]
+  },
+  "interaction_ops": {
+   "k": 232,
+   "n": 232,
+   "rate": 1.0,
+   "wilson95": [
+    0.9837,
+    1.0
+   ]
+  },
+  "safe_refusal_negatives": {
+   "k": 24,
+   "n": 24,
+   "rate": 1.0,
+   "wilson95": [
+    0.862,
+    1.0
+   ]
+  },
+  "safety": {
+   "wrong_served_scenes": 0,
+   "served_numeric_mismatch": 0,
+   "fabricated_math_goal_on_simulate_only": [],
+   "external_requests_browser": 0,
+   "ui_token_leaks": 0,
+   "cloud_key_text": 0
+  }
+ },
+ "performance": {
+  "fast_path_backend_ms": {
+   "n": 68,
+   "p50": 32.0,
+   "p95": 62.7,
+   "max": 294.253
+  },
+  "slm_path_backend_ms": {
+   "n": 37,
+   "p50": 2796.4,
+   "p95": 5172.1,
+   "max": 7114.711
+  },
+  "served_first_visible_scene_ms": {
+   "n": 58,
+   "p50": 189.7,
+   "p95": 3126.1,
+   "max": 4238.1
+  },
+  "served_first_interactive_frame_ms": {
+   "n": 58,
+   "p50": 932.0,
+   "p95": 3874.5,
+   "max": 5045.3
+  },
+  "stack_ws_total_max_mb": 2223.2
+ },
+ "artifacts": [
+  "BASELINE_AND_OWNERSHIP_AUDIT.md",
+  "CACHE_SEMANTIC_IDENTITY_DECISION.md",
+  "FINAL_MASTER_REPORT.md",
+  "LOCAL_RUNTIME_RETRY_VALIDATION.md",
+  "MODEL_VS_DOWNSTREAM_CAUSAL_ANALYSIS.md",
+  "OWNER_HANDOFF.md",
+  "PARSER_GENERALIZATION_TEST_RESULTS.json",
+  "SCENE3D_INTERACTION_DEFECT_REPORT.md",
+  "SIMULATION_CLARIFICATION_UX_REPORT.md",
+  "SIMULATION_INTENT_GENERALIZATION_DESIGN.md",
+  "SLM20_GOLD_INTERVENTION_RESULTS.json",
+  "SLM20_ROOT_CAUSE_AUDIT.json",
+  "SLM_GROUNDED_RECOVERY_REPORT.md",
+  "SLM_RECOVERY_ABLATION.json",
+  "SOURCE_GATE_REJECTION_TAXONOMY.md",
+  "UNDERDETERMINED_SIMULATION_SEMANTICS.md",
+  "V10_CASE_LEVEL_FAILURE_RECONCILIATION.json",
+  "V11_ACCEPTANCE_CRITERIA_PREREGISTERED.json",
+  "V11_BROWSER_RENDER_EVIDENCE.md",
+  "V11_FULL_STACK_PERFORMANCE.json",
+  "V11_LIVE_ACCEPTANCE_FREEZE.json",
+  "V11_LIVE_ACCEPTANCE_MANIFEST.json",
+  "V11_LIVE_ACCEPTANCE_RESULTS.json",
+  "V11_MATHEMATICAL_SCENE_VALIDATION.json",
+  "V11_NETWORK_ISOLATION_REPORT.md",
+  "V11_NETWORK_ISOLATION_RESULTS.json",
+  "V11_REGRESSION_REPORT.md",
+  "V11_RELEASE_READINESS_DECISION.md",
+  "V11_SLM_REQUIRED_EVALUATION.json",
+  "V11_UI_SCENARIO_RESULTS.json",
+  "V11_UNDERDETERMINED_RESULTS.json",
+  "V17_POINTER_INTERACTION_RESULTS.json",
+  "pending_template_refresh.json"
+ ]
+}
