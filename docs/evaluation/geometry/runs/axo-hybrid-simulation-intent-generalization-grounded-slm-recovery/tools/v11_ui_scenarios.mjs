@@ -24,7 +24,10 @@ const man = JSON.parse(readFileSync(arg("manifest"), "utf8"));
 const byId = Object.fromEntries([...man.valid_cases, ...man.negative_cases].map((c) => [c.case_id, c]));
 byId.V17_10 = { case_id: "V17_10", original_input: "Cho hình chóp S.ABC có đáy ABC là tam giác đều cạnh 2a, SB vuông góc với (ABC), SB = a. Hãy mô phỏng hình chóp.",
   gold_entities: { solid_vertices: ["S", "A", "B", "C"], auxiliary_points: [] } };
-const SCENES = arg("scenes").split(","), CLARIFY = arg("clarify"), SLM = arg("slm"), FAST = arg("fast");
+// a fresh SLM-routed text (not in the manifest, so not in the SLM cache): the request is genuinely slow (I06, I07)
+byId.SLOW_ADHOC = { case_id: "SLOW_ADHOC", original_input: `Vẽ hình chóp S.ABCD có đáy ABCD là hình chữ nhật, AB = ${3 + (Date.now() % 7)}, AD = ${11 + (Date.now() % 5)}, SA vuông góc với đáy, SA = 5 và tính độ dài SC.` };
+const SCENES = arg("scenes").split(","), CLARIFY = arg("clarify"), FAST = arg("fast");
+const SLM = arg("slm") === "adhoc" ? "SLOW_ADHOC" : arg("slm");
 const only = arg("only") ? new Set(arg("only").split(",")) : null;
 const want = (id) => !only || only.has(id);
 const results = [];
@@ -170,21 +173,22 @@ try {
     const p = per[0];
     rec("I05", p.surface === "TOAST" && !p.not_supported_text && p.question_surfaced, { registered: p, learner_text_by_case: per });
   }
-  if (want("I06")) {   // backend started with a short deadline: the classified timeout must not be retried
+  if (want("I06")) {   // llama-server suspended (fault injection): the classified 504 timeout must not be retried;
+                        // "promptly" = within the product SLM request deadline (DEFAULT_LOCAL_SLM_REQUEST_TIMEOUT_S = 45 s,
+                        // local_slm_runtime.py) + 5 s; the /10 defect took 135 s (3 attempts). CORRECTED after the first
+                        // I06 run: the harness first assumed a 30 s deadline (read from main.py's live-route default).
     const { ctx, page } = await session(browser);
     const t0 = Date.now();
     const s = await submit(page, SLM);
     const shown = Date.now() - t0;
-    await page.waitForTimeout(8000);   // a retry would show up here
     const toast = await page.locator(".axo-composer-toast").first().innerText().catch(() => "");
-    rec("I06", page.__analyze.length === 1 && s.http === 504 && shown < 30000, { case_id: SLM, ...s, analyze_calls: page.__analyze.length, ms_to_message: shown, toast: toast.slice(0, 300) });
+    await page.waitForTimeout(8000);   // a retry would show up here
+    rec("I06", page.__analyze.length === 1 && s.http === 504 && shown < 50000, { case_id: SLM, ...s, analyze_calls: page.__analyze.length, ms_to_message: shown, toast: toast.slice(0, 300) });
     await ctx.close();
   }
   if (want("I07")) {   // cancel a slow (SLM) request, submit a fast one; the late first response must never replace it
     const { ctx, page } = await session(browser);
-    // a fresh SLM-routed text (not in the manifest, so not in the SLM cache): the request is genuinely slow
-    byId.SLOW_ADHOC = { case_id: "SLOW_ADHOC", original_input: `Vẽ hình chóp S.ABCD có đáy ABCD là hình chữ nhật, AB = ${3 + (Date.now() % 7)}, AD = 4, SA vuông góc với đáy, SA = 5 và tính độ dài SC.` };
-    const slow = await submit(page, SLM === "adhoc" ? "SLOW_ADHOC" : SLM, { wait: false });
+    const slow = await submit(page, SLM, { wait: false });
     const cancel = page.locator("#btn-composer-cancel");
     const hadCancel = await cancel.first().waitFor({ state: "visible", timeout: 5000 }).then(() => true).catch(() => false);
     if (hadCancel) await cancel.first().click();

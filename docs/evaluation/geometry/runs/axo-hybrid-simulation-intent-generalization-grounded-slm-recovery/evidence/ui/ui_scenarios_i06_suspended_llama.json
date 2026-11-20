@@ -1,0 +1,20 @@
+{
+ "schema": "axo-v11-ui-scenarios/1",
+ "browser": "151.0.7922.34",
+ "base": "http://127.0.0.1:4174",
+ "tag": "i06_suspended_llama",
+ "results": [
+  {
+   "scenario_id": "I06",
+   "pass": false,
+   "case_id": "SLOW_ADHOC",
+   "http": 504,
+   "route": null,
+   "mode": null,
+   "surface": "TOAST",
+   "analyze_calls": 1,
+   "ms_to_message": 45329,
+   "toast": ""
+  }
+ ]
+}

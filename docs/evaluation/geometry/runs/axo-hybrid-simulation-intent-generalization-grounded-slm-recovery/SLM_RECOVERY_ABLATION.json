@@ -1,0 +1,88 @@
+{
+ "schema": "axo-v11-slm-recovery-ablation/1",
+ "set": "/10 valid cases (64, exposed regression set)",
+ "model": "qwen3-0.6b-axo-v9-q4_k_m",
+ "exposed": true,
+ "grammar_variants": {
+  "U": "SIM_ONLY_UNRESOLVED_WITHOUT_FACTS = False",
+  "S": "SIM_ONLY_UNRESOLVED_WITHOUT_FACTS = True (product)"
+ },
+ "grammar_ablation_summary": {
+  "U": {
+   "cases": 64,
+   "slm_ok": 35,
+   "served_valid": 29,
+   "wrong_served": 0,
+   "slm_pure_cases": 10,
+   "slm_pure_served_valid": 1,
+   "simulate_only_served_valid": 3,
+   "unresolved_with_facts": 21
+  },
+  "S": {
+   "cases": 64,
+   "slm_ok": 51,
+   "served_valid": 41,
+   "wrong_served": 0,
+   "slm_pure_cases": 10,
+   "slm_pure_served_valid": 1,
+   "simulate_only_served_valid": 15,
+   "unresolved_with_facts": 5
+  }
+ },
+ "slm20_product_route": {
+  "baseline_code": "2f12b96b0 (/10)",
+  "after_fix_code": "fcf68e91b",
+  "baseline_served": [],
+  "after_fix_served": [
+   "Q03",
+   "Q08",
+   "Q10",
+   "V06",
+   "V08",
+   "V09",
+   "V10",
+   "V11",
+   "V14",
+   "V19",
+   "V26",
+   "V28"
+  ],
+  "after_fix_served_by_parser": [
+   "Q03",
+   "Q08",
+   "V06",
+   "V08",
+   "V09",
+   "V10",
+   "V11",
+   "V14",
+   "V19",
+   "V26",
+   "V28"
+  ],
+  "after_fix_served_by_slm": [
+   "Q10"
+  ],
+  "after_fix_oracle_valid": [
+   "Q03",
+   "Q08",
+   "Q10",
+   "V06",
+   "V08",
+   "V09",
+   "V10",
+   "V11",
+   "V14",
+   "V19",
+   "V26",
+   "V28"
+  ],
+  "control_cases": [
+   "V13",
+   "V18",
+   "C24",
+   "C20"
+  ]
+ },
+ "reading": "the contract fix makes SLM output valid far more often (slm_ok U 35 -> S 51) but on this exposed set the recovered cases are mostly served by the generalized parser before the SLM runs; SLM-pure contribution is measured on the blind SLM_REQUIRED stratum (V11_SLM_STRATUM_RESULTS.json)"
+}

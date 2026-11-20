@@ -1,0 +1,748 @@
+{
+ "schema": "axo-v11-slm-stratum-audit/1",
+ "post_hoc": true,
+ "first_failing_layer": {
+  "SLM_REPORTED_UNRESOLVED": 8,
+  "DOWNSTREAM_SOURCE_GATE": 13,
+  "PARSER_REFUSED_BEFORE_SLM": 2,
+  "NONE (served in blind run)": 4,
+  "DOMAIN_GATE": 3
+ },
+ "split_served_valid": [
+  "S12",
+  "S16",
+  "S20",
+  "S34",
+  "Q04",
+  "Q08",
+  "Q09",
+  "Q10",
+  "Q12",
+  "Q13",
+  "Q14"
+ ],
+ "rows": [
+  {
+   "case_id": "S09",
+   "input": "Chỉ cần vẽ hình, không cần tính toán: hình chóp S.ABC có đáy ABC là tam giác vuông tại A, AB = 3, AC = 4, SA vuông góc với (ABC) và SA = 6.",
+   "blind": {
+    "route_status": "REFUSED",
+    "extraction_mode": "LOCAL_SLM_GROUNDING_REJECTED",
+    "refusal_code": "AMBIGUOUS_FACT"
+   },
+   "slm": {
+    "ok": false,
+    "raw": "{\"s\":[0,\"pyr\",\"S.ABC\",0],\"r\":[{\"c\":0,\"p\":\"right_tri\",\"a\":\"ABC\",\"pt\":\"A\"},{\"c\":0,\"p\":\"len\",\"a\":\"AB\",\"q\":\"3\"},{\"c\":0,\"p\":\"len\",\"a\":\"AC\",\"q\":\"4\"},{\"c\":0,\"p\":\"perp_lp\",\"a\":\"SA\",\"b\":\"ABC\"},{\"c\":0,\"p\":\"len\",\"a\":\"SA\",\"q\":\"6\"}],\"g\":[],\"u\":[{\"c\":0,\"k\":\"missing\"}]}",
+    "grounding": "SLM_REPORTED_UNRESOLVED",
+    "rejected_ops": [
+     {
+      "op": "unresolved",
+      "reason": "SLM marked clause 0 as missing_operand."
+     }
+    ],
+    "error": null
+   },
+   "first_failing_layer": "SLM_REPORTED_UNRESOLVED"
+  },
+  {
+   "case_id": "S11",
+   "input": "Cho hình lập phương ABCD.EFGH có cạnh 4. Hãy dựng hình 3D của hình lập phương này.",
+   "blind": {
+    "route_status": "REFUSED",
+    "extraction_mode": "LOCAL_SLM_GROUNDED",
+    "refusal_code": "SOURCE_OBJECT_MISMATCH"
+   },
+   "slm": {
+    "ok": true,
+    "raw": "{\"s\":[0,\"cube\",\"ABCD.EFGH\",1],\"r\":[{\"c\":0,\"p\":\"len\",\"a\":\"AE\",\"q\":\"4\"}],\"g\":[{\"c\":1,\"t\":\"vol\",\"tgt\":\"ABCD.EFGH\"}],\"u\":[]}",
+    "grounding": "GROUNDED_AND_LOWERED",
+    "rejected_ops": [],
+    "error": null
+   },
+   "arm_B": {
+    "status": "REFUSED",
+    "code": "SOURCE_OBJECT_MISMATCH"
+   },
+   "first_failing_layer": "DOWNSTREAM_SOURCE_GATE"
+  },
+  {
+   "case_id": "S12",
+   "input": "Hãy vẽ giúp em hình chóp tam giác đều S.ABC, cạnh đáy bằng 2a, cạnh bên bằng 3a.",
+   "blind": {
+    "route_status": "REFUSED",
+    "extraction_mode": "LOCAL_SLM_GROUNDING_REJECTED",
+    "refusal_code": "AMBIGUOUS_FACT"
+   },
+   "slm": {
+    "ok": false,
+    "raw": "{\"s\":[0,\"pyr\",\"S.ABC\",1],\"r\":[{\"c\":0,\"p\":\"reg_poly\",\"a\":\"ABC\",\"q\":\"2a\"},{\"c\":0,\"p\":\"len\",\"a\":\"SA\",\"q\":\"3a\"}],\"g\":[],\"u\":[{\"c\":0,\"k\":\"ambig\"}]}",
+    "grounding": "SLM_REPORTED_UNRESOLVED",
+    "rejected_ops": [
+     {
+      "op": "unresolved",
+      "reason": "SLM marked clause 0 as ambiguous."
+     }
+    ],
+    "error": null
+   },
+   "arm_SPLIT": {
+    "text": "Cho hình chóp tam giác đều S.ABC, cạnh đáy bằng 2a, cạnh bên bằng 3a. Hãy mô phỏng hình.",
+    "status": "SERVED",
+    "code": null,
+    "mode": "LOCAL_DETERMINISTIC_PARSER",
+    "oracle": "MATHEMATICALLY_VALID",
+    "numeric": null
+   },
+   "first_failing_layer": "SLM_REPORTED_UNRESOLVED"
+  },
+  {
+   "case_id": "S13",
+   "input": "Cho khối lăng trụ tam giác đều ABC.A'B'C' có tất cả các cạnh bằng a. Biểu diễn khối lăng trụ đã cho.",
+   "blind": {
+    "route_status": "REFUSED",
+    "extraction_mode": "LOCAL_SLM_GROUNDED",
+    "refusal_code": "UNGROUNDED_VALUE"
+   },
+   "slm": {
+    "ok": true,
+    "raw": "{\"s\":[0,\"pri\",\"ABC.A'B'C'\",1],\"r\":[{\"c\":0,\"p\":\"reg_poly\",\"a\":\"ABC\",\"q\":\"a\"}],\"g\":[],\"u\":[]}",
+    "grounding": "GROUNDED_AND_LOWERED",
+    "rejected_ops": [],
+    "error": null
+   },
+   "arm_B": {
+    "status": "REFUSED",
+    "code": "UNGROUNDED_VALUE"
+   },
+   "first_failing_layer": "DOWNSTREAM_SOURCE_GATE"
+  },
+  {
+   "case_id": "S15",
+   "input": "Một hình chóp S.ABCD có đáy là hình vuông ABCD cạnh 3cm, cạnh SA vuông góc với đáy và SA = 4cm. Em hãy mô phỏng hình chóp đó.",
+   "blind": {
+    "route_status": "REFUSED",
+    "extraction_mode": "LOCAL_DETERMINISTIC_PARSER",
+    "refusal_code": "AMBIGUOUS_FACT"
+   },
+   "slm": {
+    "ok": false,
+    "raw": "{\"s\":[0,\"pyr\",\"S.ABCD\",0],\"r\":[],\"g\":[],\"u\":[{\"c\":0,\"k\":\"ambig\"}]}",
+    "grounding": "SLM_REPORTED_UNRESOLVED",
+    "rejected_ops": [
+     {
+      "op": "unresolved",
+      "reason": "SLM marked clause 0 as ambiguous."
+     }
+    ],
+    "error": null
+   },
+   "first_failing_layer": "PARSER_REFUSED_BEFORE_SLM"
+  },
+  {
+   "case_id": "S16",
+   "input": "Vẽ khối chóp S.ABCD, đáy ABCD là hình thoi cạnh 2, góc ABC = 60°, SA ⊥ (ABCD), SA = 3.",
+   "blind": {
+    "route_status": "REFUSED",
+    "extraction_mode": "LOCAL_SLM_GROUNDING_REJECTED",
+    "refusal_code": "AMBIGUOUS_FACT"
+   },
+   "slm": {
+    "ok": false,
+    "raw": "{\"s\":[0,\"pyr\",\"S.ABCD\",0],\"r\":[{\"c\":0,\"p\":\"rhom\",\"a\":\"ABCD\",\"q\":\"2\"}],\"g\":[],\"u\":[{\"c\":1,\"k\":\"ambig\"}]}",
+    "grounding": "SLM_REPORTED_UNRESOLVED",
+    "rejected_ops": [
+     {
+      "op": "unresolved",
+      "reason": "SLM marked clause 1 as ambiguous."
+     }
+    ],
+    "error": null
+   },
+   "arm_SPLIT": {
+    "text": "Cho hình chóp S.ABCD, đáy ABCD là hình thoi cạnh 2, góc ABC = 60°, SA ⊥ (ABCD), SA = 3. Hãy mô phỏng hình.",
+    "status": "SERVED",
+    "code": null,
+    "mode": "LOCAL_DETERMINISTIC_PARSER",
+    "oracle": "MATHEMATICALLY_VALID",
+    "numeric": null
+   },
+   "first_failing_layer": "SLM_REPORTED_UNRESOLVED"
+  },
+  {
+   "case_id": "S17",
+   "input": "Hãy mô phỏng hình hộp chữ nhật ABCD.A'B'C'D' có đáy là hình vuông cạnh a và chiều cao 2a.",
+   "blind": {
+    "route_status": "REFUSED",
+    "extraction_mode": "LOCAL_SLM_GROUNDING_REJECTED",
+    "refusal_code": "AMBIGUOUS_FACT"
+   },
+   "slm": {
+    "ok": false,
+    "raw": "{\"s\":[0,\"box\",\"ABCD.A'B'C'D'\",1],\"r\":[{\"c\":0,\"p\":\"reg_poly\",\"a\":\"ABCD\",\"q\":\"a\"},{\"c\":0,\"p\":\"height\",\"a\":\"ABCD.A'B'C'D'\",\"q\":\"2a\"}],\"g\":[],\"u\":[{\"c\":0,\"k\":\"ambig\"}]}",
+    "grounding": "SLM_REPORTED_UNRESOLVED",
+    "rejected_ops": [
+     {
+      "op": "unresolved",
+      "reason": "SLM marked clause 0 as ambiguous."
+     }
+    ],
+    "error": null
+   },
+   "arm_SPLIT": {
+    "text": "Cho hình hộp chữ nhật ABCD.A'B'C'D' có đáy là hình vuông cạnh a và chiều cao 2a. Hãy mô phỏng hình.",
+    "status": "REFUSED",
+    "code": "LIVE_AI_DISABLED",
+    "mode": "FAIL_CLOSED_NO_FALLBACK"
+   },
+   "first_failing_layer": "SLM_REPORTED_UNRESOLVED"
+  },
+  {
+   "case_id": "S19",
+   "input": "Cho hình chóp S.ABCD có đáy ABCD là hình vuông cạnh a. Hai mặt phẳng (SAB) và (SAD) cùng vuông góc với đáy, SA = 2a. Hãy dựng hình.",
+   "blind": {
+    "route_status": "SERVED",
+    "extraction_mode": "LOCAL_SLM_GROUNDED",
+    "refusal_code": null
+   },
+   "first_failing_layer": "NONE (served in blind run)"
+  },
+  {
+   "case_id": "S20",
+   "input": "Mô phỏng hình chóp đều S.ABCD với đáy là hình vuông cạnh 2a và chiều cao bằng a.",
+   "blind": {
+    "route_status": "REFUSED",
+    "extraction_mode": "LOCAL_SLM_GROUNDING_REJECTED",
+    "refusal_code": "AMBIGUOUS_FACT"
+   },
+   "slm": {
+    "ok": false,
+    "raw": "{\"s\":[0,\"pyr\",\"S.ABCD\",1],\"r\":[{\"c\":0,\"p\":\"reg_poly\",\"a\":\"ABCD\",\"q\":\"2a\"},{\"c\":0,\"p\":\"len\",\"a\":\"S.ABCD\",\"q\":\"a\"}],\"g\":[],\"u\":[{\"c\":0,\"k\":\"ambig\"}]}",
+    "grounding": "SLM_REPORTED_UNRESOLVED",
+    "rejected_ops": [
+     {
+      "op": "unresolved",
+      "reason": "SLM marked clause 0 as ambiguous."
+     }
+    ],
+    "error": null
+   },
+   "arm_SPLIT": {
+    "text": "Cho hình chóp đều S.ABCD với đáy là hình vuông cạnh 2a và chiều cao bằng a. Hãy mô phỏng hình.",
+    "status": "SERVED",
+    "code": null,
+    "mode": "LOCAL_DETERMINISTIC_PARSER",
+    "oracle": "MATHEMATICALLY_VALID",
+    "numeric": null
+   },
+   "first_failing_layer": "SLM_REPORTED_UNRESOLVED"
+  },
+  {
+   "case_id": "S21",
+   "input": "Cho hình chóp S.ABC có đáy ABC là tam giác cân tại B với BA = BC = a, góc ABC bằng 120°, SB vuông góc với đáy, SB = a. Vẽ hình chóp.",
+   "blind": {
+    "route_status": "REFUSED",
+    "extraction_mode": "LOCAL_DETERMINISTIC_PARSER",
+    "refusal_code": "AMBIGUOUS_FACT"
+   },
+   "slm": {
+    "ok": true,
+    "raw": "{\"s\":[0,\"pyr\",\"S.ABC\",0],\"r\":[{\"c\":0,\"p\":\"iso_tri\",\"a\":\"ABC\",\"pt\":\"B\"},{\"c\":0,\"p\":\"len\",\"a\":\"BA\",\"q\":\"a\"},{\"c\":1,\"p\":\"ang_vtx\",\"a\":\"ABC\",\"pt\":\"B\",\"q\":\"120°\"},{\"c\":1,\"p\":\"perp_lp\",\"a\":\"SB\",\"b\":\"ABC\"},{\"c\":1,\"p\":\"len\",\"a\":\"SB\",\"q\":\"a\"}],\"g\":[],\"u\":[]}",
+    "grounding": "GROUNDED_AND_LOWERED",
+    "rejected_ops": [],
+    "error": null
+   },
+   "arm_B": {
+    "status": "REFUSED",
+    "code": "SOURCE_PREMISE_UNREAD"
+   },
+   "first_failing_layer": "PARSER_REFUSED_BEFORE_SLM"
+  },
+  {
+   "case_id": "S22",
+   "input": "Hãy dựng hình chóp S.ABCD có đáy là hình chữ nhật với AB = 3, BC = 4; cạnh bên SA vuông góc với đáy, SA = 5. Không cần tính gì thêm.",
+   "blind": {
+    "route_status": "REFUSED",
+    "extraction_mode": "LOCAL_SLM_GROUNDING_REJECTED",
+    "refusal_code": "INCONSISTENT_FACTS"
+   },
+   "slm": {
+    "ok": false,
+    "raw": "{\"s\":[0,\"pyr\",\"S.ABCD\",0],\"r\":[],\"g\":[],\"u\":[{\"c\":0,\"k\":\"contra\"}]}",
+    "grounding": "SLM_REPORTED_UNRESOLVED",
+    "rejected_ops": [
+     {
+      "op": "unresolved",
+      "reason": "SLM marked clause 0 as contradictory."
+     }
+    ],
+    "error": null
+   },
+   "arm_SPLIT": {
+    "text": "Cho hình chóp S.ABCD có đáy là hình chữ nhật với AB = 3, BC = 4; cạnh bên SA vuông góc với đáy, SA = 5. Không cần tính gì thêm. Hãy mô phỏng hình.",
+    "status": "REFUSED",
+    "code": "LIVE_AI_DISABLED",
+    "mode": "FAIL_CLOSED_NO_FALLBACK"
+   },
+   "first_failing_layer": "SLM_REPORTED_UNRESOLVED"
+  },
+  {
+   "case_id": "S28",
+   "input": "Hình chóp S.ABCD có ABCD là hình vuông cạnh 4, SA vuông góc mặt đáy, SA = 4; điểm N nằm trên cạnh SD với SN = 3ND. Hãy vẽ hình chóp và điểm N.",
+   "blind": {
+    "route_status": "REFUSED",
+    "extraction_mode": "LOCAL_SLM_GROUNDED",
+    "refusal_code": "UNGROUNDED_VALUE"
+   },
+   "slm": {
+    "ok": true,
+    "raw": "{\"s\":[0,\"pyr\",\"S.ABCD\",0],\"r\":[{\"c\":0,\"p\":\"reg_poly\",\"a\":\"ABCD\",\"q\":\"4\"},{\"c\":0,\"p\":\"perp_lp\",\"a\":\"SA\",\"b\":\"ABCD\"},{\"c\":0,\"p\":\"len\",\"a\":\"SA\",\"q\":\"4\"}],\"g\":[],\"u\":[]}",
+    "grounding": "GROUNDED_AND_LOWERED",
+    "rejected_ops": [],
+    "error": null
+   },
+   "arm_B": {
+    "status": "REFUSED",
+    "code": "UNGROUNDED_VALUE"
+   },
+   "first_failing_layer": "DOWNSTREAM_SOURCE_GATE"
+  },
+  {
+   "case_id": "S32",
+   "input": "Dựng hình chóp tứ giác đều S.MNPQ có tất cả các cạnh bằng 2.",
+   "blind": {
+    "route_status": "REFUSED",
+    "extraction_mode": "LOCAL_SLM_GROUNDING_REJECTED",
+    "refusal_code": "AMBIGUOUS_FACT"
+   },
+   "slm": {
+    "ok": false,
+    "raw": "{\"s\":[0,\"pyr\",\"S.MNPQ\",1],\"r\":[{\"c\":0,\"p\":\"len\",\"a\":\"S.MNPQ\",\"q\":\"2\"}],\"g\":[],\"u\":[{\"c\":0,\"k\":\"ambig\"}]}",
+    "grounding": "SLM_REPORTED_UNRESOLVED",
+    "rejected_ops": [
+     {
+      "op": "unresolved",
+      "reason": "SLM marked clause 0 as ambiguous."
+     }
+    ],
+    "error": null
+   },
+   "arm_SPLIT": {
+    "text": "Cho hình chóp tứ giác đều S.MNPQ có tất cả các cạnh bằng 2. Hãy mô phỏng hình.",
+    "status": "REFUSED",
+    "code": "LIVE_AI_DISABLED",
+    "mode": "FAIL_CLOSED_NO_FALLBACK"
+   },
+   "first_failing_layer": "SLM_REPORTED_UNRESOLVED"
+  },
+  {
+   "case_id": "S34",
+   "input": "Hãy mô phỏng khối hộp chữ nhật ABCD.A'B'C'D' biết AB = a, AD = a√2, AA' = a√3.",
+   "blind": {
+    "route_status": "REFUSED",
+    "extraction_mode": "LOCAL_SLM_GROUNDED",
+    "refusal_code": "SOURCE_OBJECT_MISMATCH"
+   },
+   "slm": {
+    "ok": true,
+    "raw": "{\"s\":[0,\"box\",\"ABCD.A'B'C'D'\",1],\"r\":[{\"c\":0,\"p\":\"len\",\"a\":\"AB\",\"q\":\"a\"},{\"c\":0,\"p\":\"len\",\"a\":\"AD\",\"q\":\"a√2\"},{\"c\":0,\"p\":\"len\",\"a\":\"AA'\",\"q\":\"a√3\"}],\"g\":[{\"c\":0,\"t\":\"vol\",\"tgt\":\"ABCD.A'B'C'D'\"}],\"u\":[]}",
+    "grounding": "GROUNDED_AND_LOWERED",
+    "rejected_ops": [],
+    "error": null
+   },
+   "arm_B": {
+    "status": "REFUSED",
+    "code": "SOURCE_OBJECT_MISMATCH"
+   },
+   "arm_SPLIT": {
+    "text": "Cho hình hộp chữ nhật ABCD.A'B'C'D' biết AB = a, AD = a√2, AA' = a√3. Hãy mô phỏng hình.",
+    "status": "SERVED",
+    "code": null,
+    "mode": "LOCAL_DETERMINISTIC_PARSER",
+    "oracle": "MATHEMATICALLY_VALID",
+    "numeric": null
+   },
+   "first_failing_layer": "DOWNSTREAM_SOURCE_GATE"
+  },
+  {
+   "case_id": "S36",
+   "input": "Cho lăng trụ tam giác ABC.A'B'C' có đáy là tam giác đều cạnh 2, AA' vuông góc với (ABC), AA' = 3. Mô phỏng lăng trụ.",
+   "blind": {
+    "route_status": "SERVED",
+    "extraction_mode": "LOCAL_SLM_GROUNDED",
+    "refusal_code": null
+   },
+   "first_failing_layer": "NONE (served in blind run)"
+  },
+  {
+   "case_id": "S37",
+   "input": "Mo phong hinh lap phuong ABCD.A'B'C'D' canh 2.",
+   "blind": {
+    "route_status": null,
+    "extraction_mode": null,
+    "refusal_code": null
+   },
+   "slm": {
+    "ok": false,
+    "raw": "{\"s\":[0,\"pri\",\"ABCD.A'B'C'D'\",0],\"r\":[],\"g\":[],\"u\":[{\"c\":0,\"k\":\"unsup\"}]}",
+    "grounding": "SLM_REPORTED_UNRESOLVED",
+    "rejected_ops": [
+     {
+      "op": "unresolved",
+      "reason": "SLM marked clause 0 as unsupported."
+     }
+    ],
+    "error": null
+   },
+   "first_failing_layer": "DOMAIN_GATE"
+  },
+  {
+   "case_id": "S38",
+   "input": "Hay dung hinh chop S.ABC co day ABC la tam giac deu canh a, SA vuong goc voi day, SA = 2a.",
+   "blind": {
+    "route_status": null,
+    "extraction_mode": null,
+    "refusal_code": null
+   },
+   "slm": {
+    "ok": false,
+    "raw": "{\"s\":[0,\"pyr\",\"S.ABC\",0],\"r\":[{\"c\":0,\"p\":\"len\",\"a\":\"SA\",\"q\":\"2a\"},{\"c\":0,\"p\":\"len\",\"a\":\"SA\",\"q\":\"a\"}],\"g\":[],\"u\":[{\"c\":0,\"k\":\"ambig\"}]}",
+    "grounding": "SLM_REPORTED_UNRESOLVED",
+    "rejected_ops": [
+     {
+      "op": "unresolved",
+      "reason": "SLM marked clause 0 as ambiguous."
+     }
+    ],
+    "error": null
+   },
+   "first_failing_layer": "DOMAIN_GATE"
+  },
+  {
+   "case_id": "Q02",
+   "input": "Vẽ hình lập phương ABCD.A'B'C'D' cạnh 2 và tính độ dài đoạn AC'.",
+   "blind": {
+    "route_status": "REFUSED",
+    "extraction_mode": "LOCAL_SLM_GROUNDING_REJECTED",
+    "refusal_code": "AMBIGUOUS_FACT"
+   },
+   "slm": {
+    "ok": false,
+    "raw": "{\"s\":[0,\"cube\",\"ABCD.A'B'C'D'\",1],\"r\":[{\"c\":0,\"p\":\"len\",\"a\":\"AA'\",\"q\":\"2\"}],\"g\":[],\"u\":[{\"c\":0,\"k\":\"ambig\"}]}",
+    "grounding": "SLM_REPORTED_UNRESOLVED",
+    "rejected_ops": [
+     {
+      "op": "unresolved",
+      "reason": "SLM marked clause 0 as ambiguous."
+     }
+    ],
+    "error": null
+   },
+   "arm_SPLIT": {
+    "text": "Cho hình lập phương ABCD.A'B'C'D' cạnh 2. Hãy mô phỏng hình và tính độ dài đoạn AC'.",
+    "status": "REFUSED",
+    "code": "LIVE_AI_DISABLED",
+    "mode": "FAIL_CLOSED_NO_FALLBACK"
+   },
+   "first_failing_layer": "SLM_REPORTED_UNRESOLVED"
+  },
+  {
+   "case_id": "Q04",
+   "input": "Mô phỏng hình chóp S.ABCD có đáy là hình vuông cạnh a, SA vuông góc với đáy, SA = a và tính góc giữa SC với mặt phẳng (ABCD).",
+   "blind": {
+    "route_status": "REFUSED",
+    "extraction_mode": "LOCAL_SLM_GROUNDED",
+    "refusal_code": "PREDICATE_NOT_IN_QUOTE"
+   },
+   "slm": {
+    "ok": true,
+    "raw": "{\"s\":[0,\"pyr\",\"S.ABCD\",0],\"r\":[{\"c\":0,\"p\":\"reg_poly\",\"a\":\"ABCD\",\"q\":\"a\"},{\"c\":0,\"p\":\"perp_lp\",\"a\":\"SA\",\"b\":\"ABCD\"},{\"c\":0,\"p\":\"len\",\"a\":\"SA\",\"q\":\"a\"}],\"g\":[{\"c\":0,\"t\":\"ang_lp\",\"a\":\"SC\",\"b\":\"ABCD\"}],\"u\":[]}",
+    "grounding": "GROUNDED_AND_LOWERED",
+    "rejected_ops": [],
+    "error": null
+   },
+   "arm_B": {
+    "status": "REFUSED",
+    "code": "PREDICATE_NOT_IN_QUOTE"
+   },
+   "arm_SPLIT": {
+    "text": "Cho hình chóp S.ABCD có đáy là hình vuông cạnh a, SA vuông góc với đáy, SA = a. Hãy mô phỏng hình và tính góc giữa SC với mặt phẳng (ABCD).",
+    "status": "SERVED",
+    "code": null,
+    "mode": "LOCAL_DETERMINISTIC_PARSER",
+    "oracle": "MATHEMATICALLY_VALID",
+    "numeric": "CORRECT"
+   },
+   "first_failing_layer": "DOWNSTREAM_SOURCE_GATE"
+  },
+  {
+   "case_id": "Q05",
+   "input": "Hãy vẽ hình chóp tứ giác đều S.ABCD có cạnh đáy 2 và cạnh bên √6, sau đó tính chiều cao của hình chóp.",
+   "blind": {
+    "route_status": "REFUSED",
+    "extraction_mode": "LOCAL_SLM_GROUNDED",
+    "refusal_code": "SOURCE_OBJECT_MISMATCH"
+   },
+   "slm": {
+    "ok": true,
+    "raw": "{\"s\":[0,\"pyr\",\"S.ABCD\",1],\"r\":[{\"c\":0,\"p\":\"reg_poly\",\"a\":\"ABCD\",\"q\":\"2\"},{\"c\":0,\"p\":\"len\",\"a\":\"SA\",\"q\":\"√6\"}],\"g\":[{\"c\":1,\"t\":\"vol\",\"tgt\":\"S.ABCD\"}],\"u\":[]}",
+    "grounding": "GROUNDED_AND_LOWERED",
+    "rejected_ops": [],
+    "error": null
+   },
+   "arm_B": {
+    "status": "REFUSED",
+    "code": "SOURCE_OBJECT_MISMATCH"
+   },
+   "arm_SPLIT": {
+    "text": "Cho hình chóp tứ giác đều S.ABCD có cạnh đáy 2 và cạnh bên √6. Hãy mô phỏng hình và tính chiều cao của hình chóp.",
+    "status": "REFUSED",
+    "code": "LIVE_AI_DISABLED",
+    "mode": "FAIL_CLOSED_NO_FALLBACK"
+   },
+   "first_failing_layer": "DOWNSTREAM_SOURCE_GATE"
+  },
+  {
+   "case_id": "Q06",
+   "input": "Biểu diễn tứ diện OABC với OA, OB, OC đôi một vuông góc, OA = 1, OB = 2, OC = 2 và tính thể tích khối tứ diện.",
+   "blind": {
+    "route_status": "REFUSED",
+    "extraction_mode": "LOCAL_SLM_GROUNDED",
+    "refusal_code": "QUESTION_CONTEXT_UNSUPPORTED"
+   },
+   "slm": {
+    "ok": true,
+    "raw": "{\"s\":[0,\"pyr\",\"O.ABC\",0],\"r\":[{\"c\":0,\"p\":\"perp_ll\",\"a\":\"OA\",\"b\":\"OB\"},{\"c\":0,\"p\":\"perp_ll\",\"a\":\"OA\",\"b\":\"OC\"},{\"c\":0,\"p\":\"perp_ll\",\"a\":\"OB\",\"b\":\"OC\"},{\"c\":0,\"p\":\"len\",\"a\":\"OA\",\"q\":\"1\"},{\"c\":0,\"p\":\"len\",\"a\":\"OB\",\"q\":\"2\"},{\"c\":0,\"p\":\"len\",\"a\":\"OC\",\"q\":\"2\"}],\"g\":[{\"c\":0,\"t\":\"vol\",\"tgt\":\"O.ABC\"}],\"u\":[]}",
+    "grounding": "GROUNDED_AND_LOWERED",
+    "rejected_ops": [],
+    "error": null
+   },
+   "arm_B": {
+    "status": "REFUSED",
+    "code": "QUESTION_CONTEXT_UNSUPPORTED"
+   },
+   "arm_SPLIT": {
+    "text": "Cho hình tứ diện OABC với OA, OB, OC đôi một vuông góc, OA = 1, OB = 2, OC = 2. Hãy mô phỏng hình và tính thể tích khối tứ diện.",
+    "status": "REFUSED",
+    "code": "LIVE_AI_DISABLED",
+    "mode": "FAIL_CLOSED_NO_FALLBACK"
+   },
+   "first_failing_layer": "DOWNSTREAM_SOURCE_GATE"
+  },
+  {
+   "case_id": "Q07",
+   "input": "Dựng hình lăng trụ đứng ABC.A'B'C' có đáy là tam giác vuông cân tại A, AB = AC = 2, AA' = 3, rồi tính thể tích.",
+   "blind": {
+    "route_status": "SERVED",
+    "extraction_mode": "LOCAL_SLM_GROUNDED",
+    "refusal_code": null
+   },
+   "first_failing_layer": "NONE (served in blind run)"
+  },
+  {
+   "case_id": "Q08",
+   "input": "Hãy mô phỏng hình chóp S.ABCD đáy là hình chữ nhật, AB = 3, AD = 4, SA vuông góc với đáy, SA = 5 và tính độ dài SC.",
+   "blind": {
+    "route_status": "REFUSED",
+    "extraction_mode": "LOCAL_SLM_GROUNDED",
+    "refusal_code": "QUESTION_CONTEXT_UNSUPPORTED"
+   },
+   "slm": {
+    "ok": true,
+    "raw": "{\"s\":[0,\"pyr\",\"S.ABCD\",0],\"r\":[{\"c\":0,\"p\":\"rect\",\"a\":\"ABCD\"},{\"c\":0,\"p\":\"len\",\"a\":\"AB\",\"q\":\"3\"},{\"c\":0,\"p\":\"len\",\"a\":\"AD\",\"q\":\"4\"},{\"c\":0,\"p\":\"perp_lp\",\"a\":\"SA\",\"b\":\"ABCD\"},{\"c\":0,\"p\":\"len\",\"a\":\"SA\",\"q\":\"5\"}],\"g\":[{\"c\":0,\"t\":\"len\",\"a\":\"SC\"}],\"u\":[]}",
+    "grounding": "GROUNDED_AND_LOWERED",
+    "rejected_ops": [],
+    "error": null
+   },
+   "arm_B": {
+    "status": "REFUSED",
+    "code": "QUESTION_CONTEXT_UNSUPPORTED"
+   },
+   "arm_SPLIT": {
+    "text": "Cho hình chóp S.ABCD đáy là hình chữ nhật, AB = 3, AD = 4, SA vuông góc với đáy, SA = 5. Hãy mô phỏng hình và tính độ dài SC.",
+    "status": "SERVED",
+    "code": null,
+    "mode": "LOCAL_DETERMINISTIC_PARSER",
+    "oracle": "MATHEMATICALLY_VALID",
+    "numeric": "CORRECT"
+   },
+   "first_failing_layer": "DOWNSTREAM_SOURCE_GATE"
+  },
+  {
+   "case_id": "Q09",
+   "input": "Vẽ hình chóp S.ABC có SA, AB, AC đôi một vuông góc, SA = AB = AC = 3 và tính khoảng cách từ A đến mặt phẳng (SBC).",
+   "blind": {
+    "route_status": "REFUSED",
+    "extraction_mode": "LOCAL_SLM_GROUNDED",
+    "refusal_code": "SOURCE_OBJECT_MISMATCH"
+   },
+   "slm": {
+    "ok": true,
+    "raw": "{\"s\":[0,\"pyr\",\"S.ABC\",0],\"r\":[{\"c\":0,\"p\":\"perp_ll\",\"a\":\"SA\",\"b\":\"AB\"},{\"c\":0,\"p\":\"perp_ll\",\"a\":\"SA\",\"b\":\"AC\"},{\"c\":0,\"p\":\"perp_ll\",\"a\":\"AB\",\"b\":\"AC\"},{\"c\":0,\"p\":\"len\",\"a\":\"SA\",\"q\":\"3\"},{\"c\":0,\"p\":\"len\",\"a\":\"AB\",\"q\":\"3\"},{\"c\":0,\"p\":\"len\",\"a\":\"AC\",\"q\":\"3\"}],\"g\":[{\"c\":0,\"t\":\"dist_pt_plane\",\"a\":\"A\",\"b\":\"SBC\"}],\"u\":[]}",
+    "grounding": "GROUNDED_AND_LOWERED",
+    "rejected_ops": [],
+    "error": null
+   },
+   "arm_B": {
+    "status": "REFUSED",
+    "code": "SOURCE_OBJECT_MISMATCH"
+   },
+   "arm_SPLIT": {
+    "text": "Cho hình chóp S.ABC có SA, AB, AC đôi một vuông góc, SA = AB = AC = 3. Hãy mô phỏng hình và tính khoảng cách từ A đến mặt phẳng (SBC).",
+    "status": "SERVED",
+    "code": null,
+    "mode": "LOCAL_DETERMINISTIC_PARSER",
+    "oracle": "MATHEMATICALLY_VALID",
+    "numeric": "CORRECT"
+   },
+   "first_failing_layer": "DOWNSTREAM_SOURCE_GATE"
+  },
+  {
+   "case_id": "Q10",
+   "input": "Mô phỏng hình lập phương ABCD.A'B'C'D' cạnh a và tính góc giữa hai mặt phẳng (A'BD) và (ABCD).",
+   "blind": {
+    "route_status": "REFUSED",
+    "extraction_mode": "LOCAL_SLM_GROUNDED",
+    "refusal_code": "QUESTION_CONTEXT_UNSUPPORTED"
+   },
+   "slm": {
+    "ok": true,
+    "raw": "{\"s\":[0,\"cube\",\"ABCD.A'B'C'D'\",1],\"r\":[{\"c\":0,\"p\":\"len\",\"a\":\"AA'\",\"q\":\"a\"},{\"c\":0,\"p\":\"reg_poly\",\"a\":\"ABCD\",\"q\":\"a\"}],\"g\":[{\"c\":0,\"t\":\"ang_pp\",\"a\":\"A'BD\",\"b\":\"ABCD\"}],\"u\":[]}",
+    "grounding": "GROUNDED_AND_LOWERED",
+    "rejected_ops": [],
+    "error": null
+   },
+   "arm_B": {
+    "status": "REFUSED",
+    "code": "QUESTION_CONTEXT_UNSUPPORTED"
+   },
+   "arm_SPLIT": {
+    "text": "Cho hình lập phương ABCD.A'B'C'D' cạnh a. Hãy mô phỏng hình và tính góc giữa hai mặt phẳng (A'BD) và (ABCD).",
+    "status": "SERVED",
+    "code": null,
+    "mode": "LOCAL_DETERMINISTIC_PARSER",
+    "oracle": "MATHEMATICALLY_VALID",
+    "numeric": "CORRECT"
+   },
+   "first_failing_layer": "DOWNSTREAM_SOURCE_GATE"
+  },
+  {
+   "case_id": "Q12",
+   "input": "Hãy mô phỏng tứ diện đều ABCD cạnh a và tính khoảng cách từ A đến mặt phẳng (BCD).",
+   "blind": {
+    "route_status": "REFUSED",
+    "extraction_mode": "LOCAL_SLM_GROUNDED",
+    "refusal_code": "SOURCE_OBJECT_MISMATCH"
+   },
+   "slm": {
+    "ok": true,
+    "raw": "{\"s\":[0,\"pyr\",\"A.BCD\",1],\"r\":[{\"c\":0,\"p\":\"reg_poly\",\"a\":\"BCD\",\"q\":\"a\"}],\"g\":[{\"c\":0,\"t\":\"dist_pt_plane\",\"a\":\"A\",\"b\":\"BCD\"}],\"u\":[]}",
+    "grounding": "GROUNDED_AND_LOWERED",
+    "rejected_ops": [],
+    "error": null
+   },
+   "arm_B": {
+    "status": "REFUSED",
+    "code": "SOURCE_OBJECT_MISMATCH"
+   },
+   "arm_SPLIT": {
+    "text": "Cho hình tứ diện đều ABCD cạnh a. Hãy mô phỏng hình và tính khoảng cách từ A đến mặt phẳng (BCD).",
+    "status": "SERVED",
+    "code": null,
+    "mode": "LOCAL_DETERMINISTIC_PARSER",
+    "oracle": "MATHEMATICALLY_VALID",
+    "numeric": "CORRECT"
+   },
+   "first_failing_layer": "DOWNSTREAM_SOURCE_GATE"
+  },
+  {
+   "case_id": "Q13",
+   "input": "Vẽ hình chóp S.ABCD có đáy ABCD là hình vuông cạnh 2, SA vuông góc với đáy, SA = 2√2; tính góc giữa đường thẳng SC và mặt phẳng đáy.",
+   "blind": {
+    "route_status": "REFUSED",
+    "extraction_mode": "LOCAL_SLM_GROUNDED",
+    "refusal_code": "SOURCE_OBJECT_MISMATCH"
+   },
+   "slm": {
+    "ok": true,
+    "raw": "{\"s\":[0,\"pyr\",\"S.ABCD\",0],\"r\":[{\"c\":0,\"p\":\"reg_poly\",\"a\":\"ABCD\",\"q\":\"2\"},{\"c\":0,\"p\":\"perp_lp\",\"a\":\"SA\",\"b\":\"ABCD\"},{\"c\":0,\"p\":\"len\",\"a\":\"SA\",\"q\":\"2√2\"}],\"g\":[{\"c\":1,\"t\":\"ang_lp\",\"a\":\"SC\",\"b\":\"ABCD\"}],\"u\":[]}",
+    "grounding": "GROUNDED_AND_LOWERED",
+    "rejected_ops": [],
+    "error": null
+   },
+   "arm_B": {
+    "status": "REFUSED",
+    "code": "SOURCE_OBJECT_MISMATCH"
+   },
+   "arm_SPLIT": {
+    "text": "Cho hình chóp S.ABCD có đáy ABCD là hình vuông cạnh 2, SA vuông góc với đáy, SA = 2√2. Hãy mô phỏng hình và tính góc giữa đường thẳng SC và mặt phẳng đáy.",
+    "status": "SERVED",
+    "code": null,
+    "mode": "LOCAL_DETERMINISTIC_PARSER",
+    "oracle": "MATHEMATICALLY_VALID",
+    "numeric": "CORRECT"
+   },
+   "first_failing_layer": "DOWNSTREAM_SOURCE_GATE"
+  },
+  {
+   "case_id": "Q14",
+   "input": "Mô phỏng hình hộp chữ nhật ABCD.A'B'C'D' với AB = 3, AD = 4, AA' = 12 và tính độ dài đường chéo BD'.",
+   "blind": {
+    "route_status": "REFUSED",
+    "extraction_mode": "LOCAL_SLM_GROUNDED",
+    "refusal_code": "QUESTION_CONTEXT_UNSUPPORTED"
+   },
+   "slm": {
+    "ok": true,
+    "raw": "{\"s\":[0,\"box\",\"ABCD.A'B'C'D'\",1],\"r\":[{\"c\":0,\"p\":\"len\",\"a\":\"AB\",\"q\":\"3\"},{\"c\":0,\"p\":\"len\",\"a\":\"AD\",\"q\":\"4\"},{\"c\":0,\"p\":\"len\",\"a\":\"AA'\",\"q\":\"12\"}],\"g\":[{\"c\":0,\"t\":\"len\",\"a\":\"BD'\"}],\"u\":[]}",
+    "grounding": "GROUNDED_AND_LOWERED",
+    "rejected_ops": [],
+    "error": null
+   },
+   "arm_B": {
+    "status": "REFUSED",
+    "code": "QUESTION_CONTEXT_UNSUPPORTED"
+   },
+   "arm_SPLIT": {
+    "text": "Cho hình hộp chữ nhật ABCD.A'B'C'D' với AB = 3, AD = 4, AA' = 12. Hãy mô phỏng hình và tính độ dài đường chéo BD'.",
+    "status": "SERVED",
+    "code": null,
+    "mode": "LOCAL_DETERMINISTIC_PARSER",
+    "oracle": "MATHEMATICALLY_VALID",
+    "numeric": "CORRECT"
+   },
+   "first_failing_layer": "DOWNSTREAM_SOURCE_GATE"
+  },
+  {
+   "case_id": "C17",
+   "input": "Cho hình lập phương ABCD.A'B'C'D' cạnh 2. Gọi M là trung điểm của BB'. Tính độ dài đoạn D'M.",
+   "blind": {
+    "route_status": "SERVED",
+    "extraction_mode": "LOCAL_SLM_GROUNDED",
+    "refusal_code": null
+   },
+   "first_failing_layer": "NONE (served in blind run)"
+  },
+  {
+   "case_id": "C24",
+   "input": "Hinh chop S.ABCD co day ABCD la hinh vuong canh 2, SA vuong goc voi day, SA = 3. Tinh the tich khoi chop.",
+   "blind": {
+    "route_status": null,
+    "extraction_mode": null,
+    "refusal_code": null
+   },
+   "slm": {
+    "ok": false,
+    "raw": "{\"s\":[0,\"pyr\",\"S.ABCD\",0],\"r\":[{\"c\":0,\"p\":\"len\",\"a\":\"SA\",\"q\":\"2\"},{\"c\":0,\"p\":\"len\",\"a\":\"SA\",\"q\":\"3\"}],\"g\":[],\"u\":[{\"c\":0,\"k\":\"ambig\"}]}",
+    "grounding": "SLM_REPORTED_UNRESOLVED",
+    "rejected_ops": [
+     {
+      "op": "unresolved",
+      "reason": "SLM marked clause 0 as ambiguous."
+     }
+    ],
+    "error": null
+   },
+   "first_failing_layer": "DOMAIN_GATE"
+  }
+ ]
+}

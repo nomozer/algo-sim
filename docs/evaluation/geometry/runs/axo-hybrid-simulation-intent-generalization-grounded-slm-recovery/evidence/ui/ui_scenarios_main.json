@@ -1,0 +1,476 @@
+{
+ "schema": "axo-v11-ui-scenarios/1",
+ "browser": "151.0.7922.34",
+ "base": "http://127.0.0.1:4173",
+ "tag": "main",
+ "results": [
+  {
+   "scenario_id": "I01",
+   "pass": true,
+   "scenes": [
+    {
+     "case_id": "V17_10",
+     "surface": "SCENE",
+     "start": {
+      "x": 503,
+      "y": 407
+     },
+     "under": {
+      "tag": "SPAN",
+      "cls": "geo3d-so-do la-net-khuat"
+     },
+     "frame_pixel_diff": 0.093,
+     "labels_moved": 4,
+     "rotated": true
+    },
+    {
+     "case_id": "C09",
+     "surface": "SCENE",
+     "start": {
+      "x": 503,
+      "y": 407
+     },
+     "under": {
+      "tag": "CANVAS",
+      "cls": ""
+     },
+     "frame_pixel_diff": 0.09838,
+     "labels_moved": 6,
+     "rotated": true
+    },
+    {
+     "case_id": "S01",
+     "surface": "SCENE",
+     "start": {
+      "x": 503,
+      "y": 407
+     },
+     "under": {
+      "tag": "CANVAS",
+      "cls": ""
+     },
+     "frame_pixel_diff": 0.06331,
+     "labels_moved": 8,
+     "rotated": true
+    },
+    {
+     "case_id": "C13",
+     "surface": "SCENE",
+     "start": {
+      "x": 503,
+      "y": 407
+     },
+     "under": {
+      "tag": "CANVAS",
+      "cls": ""
+     },
+     "frame_pixel_diff": 0.08867,
+     "labels_moved": 5,
+     "rotated": true
+    }
+   ]
+  },
+  {
+   "scenario_id": "I02",
+   "pass": true,
+   "scene": "C09",
+   "surface": "SCENE",
+   "edge": {
+    "start": {
+     "x": 359,
+     "y": 578
+    },
+    "under": {
+     "tag": "CANVAS",
+     "cls": ""
+    },
+    "frame_pixel_diff": 0.09856,
+    "labels_moved": 6,
+    "rotated": true
+   },
+   "chip": {
+    "start": {
+     "x": 369,
+     "y": 543
+    },
+    "under": {
+     "tag": "CANVAS",
+     "cls": ""
+    },
+    "frame_pixel_diff": 0.09068,
+    "labels_moved": 6,
+    "rotated": true
+   },
+   "near_label": {
+    "start": {
+     "x": 336,
+     "y": 507
+    },
+    "under": {
+     "tag": "CANVAS",
+     "cls": ""
+    },
+    "frame_pixel_diff": 0.1014,
+    "labels_moved": 6,
+    "rotated": true
+   }
+  },
+  {
+   "scenario_id": "I04",
+   "pass": false,
+   "scene": "C09",
+   "second_reset_drift_vs_first_settled": [
+    {
+     "t": 100,
+     "max_drift_px": 4
+    },
+    {
+     "t": 300,
+     "max_drift_px": 4
+    },
+    {
+     "t": 600,
+     "max_drift_px": 4
+    },
+    {
+     "t": 1000,
+     "max_drift_px": 4
+    },
+    {
+     "t": 1800,
+     "max_drift_px": 4
+    },
+    {
+     "t": 3000,
+     "max_drift_px": 4
+    },
+    {
+     "t": 4500,
+     "max_drift_px": 4
+    }
+   ],
+   "first_reset_convergence": [
+    {
+     "t": 100,
+     "max_drift_px_vs_settled": 0
+    },
+    {
+     "t": 300,
+     "max_drift_px_vs_settled": 0
+    },
+    {
+     "t": 600,
+     "max_drift_px_vs_settled": 0
+    },
+    {
+     "t": 1000,
+     "max_drift_px_vs_settled": 0
+    },
+    {
+     "t": 1800,
+     "max_drift_px_vs_settled": 0
+    },
+    {
+     "t": 3000,
+     "max_drift_px_vs_settled": 0
+    },
+    {
+     "t": 4500,
+     "max_drift_px_vs_settled": 0
+    }
+   ],
+   "settled_first": {
+    "A": [
+     313,
+     496
+    ],
+    "B": [
+     392,
+     635
+    ],
+    "C": [
+     721,
+     478
+    ],
+    "D": [
+     622,
+     377
+    ],
+    "S": [
+     264,
+     146
+    ],
+    "kq_q1__foot1": [
+     438,
+     499
+    ]
+   },
+   "settled_second": {
+    "A": [
+     310,
+     497
+    ],
+    "B": [
+     393,
+     637
+    ],
+    "C": [
+     723,
+     477
+    ],
+    "D": [
+     623,
+     375
+    ],
+    "S": [
+     264,
+     146
+    ],
+    "kq_q1__foot1": [
+     440,
+     498
+    ]
+   }
+  },
+  {
+   "scenario_id": "I03",
+   "pass": true,
+   "after_reset": {
+    "start": {
+     "x": 503,
+     "y": 407
+    },
+    "under": {
+     "tag": "CANVAS",
+     "cls": ""
+    },
+    "frame_pixel_diff": 0.09861,
+    "labels_moved": 6,
+    "rotated": true
+   },
+   "after_problem_change": {
+    "surface": "SCENE",
+    "start": {
+     "x": 503,
+     "y": 407
+    },
+    "under": {
+     "tag": "CANVAS",
+     "cls": ""
+    },
+    "frame_pixel_diff": 0.06321,
+    "labels_moved": 8,
+    "rotated": true
+   },
+   "labels_after_change": [
+    "A",
+    "A_prime",
+    "B",
+    "B_prime",
+    "C",
+    "C_prime",
+    "D",
+    "D_prime"
+   ],
+   "gold": [
+    "A",
+    "A_prime",
+    "B",
+    "B_prime",
+    "C",
+    "C_prime",
+    "D",
+    "D_prime"
+   ]
+  },
+  {
+   "scenario_id": "I00_console_main",
+   "pass": true,
+   "console_errors": []
+  },
+  {
+   "scenario_id": "I05",
+   "pass": true,
+   "registered": {
+    "case_id": "N17",
+    "http": 200,
+    "route": "REFUSED",
+    "mode": "LOCAL_DETERMINISTIC_PARSER",
+    "surface": "TOAST",
+    "toast": "Đề bài cần thêm dữ kiện để dựng hình\nTrong “S.ABCD có đáy là hình vuông”, bạn hãy nói rõ các số đo cần thiết. Bạn có thể bổ sung hoặc viết rõ phần đó ngay trên ô nhập rồi nhấn Dựng hình.",
+    "not_supported_text": false,
+    "question_surfaced": true
+   },
+   "learner_text_by_case": [
+    {
+     "case_id": "N17",
+     "http": 200,
+     "route": "REFUSED",
+     "mode": "LOCAL_DETERMINISTIC_PARSER",
+     "surface": "TOAST",
+     "toast": "Đề bài cần thêm dữ kiện để dựng hình\nTrong “S.ABCD có đáy là hình vuông”, bạn hãy nói rõ các số đo cần thiết. Bạn có thể bổ sung hoặc viết rõ phần đó ngay trên ô nhập rồi nhấn Dựng hình.",
+     "not_supported_text": false,
+     "question_surfaced": true
+    },
+    {
+     "case_id": "D01",
+     "http": 200,
+     "route": "REFUSED",
+     "mode": "LOCAL_DETERMINISTIC_PARSER",
+     "surface": "TOAST",
+     "toast": "Đề bài cần thêm dữ kiện để dựng hình\nTrong “đáy ABCD là hình vuông”, bạn hãy nói rõ các số đo cần thiết. Bạn có thể bổ sung hoặc viết rõ phần đó ngay trên ô nhập rồi nhấn Dựng hình.",
+     "not_supported_text": false,
+     "question_surfaced": true
+    },
+    {
+     "case_id": "D02",
+     "http": 200,
+     "route": "REFUSED",
+     "mode": "LOCAL_DETERMINISTIC_PARSER",
+     "surface": "TOAST",
+     "toast": "Axo chưa hỗ trợ phép dựng này\nCác giả thiết chưa cố định duy nhất hình dạng, và hệ chưa có chứng chỉ bất biến tổng quát cho đại lượng được hỏi nên tạm dừng thay vì kết luận từ hình mẫu. Bạn có thể thử các bài về thiết diện, khoảng cách, góc hoặc thể tích.",
+     "not_supported_text": true,
+     "question_surfaced": false
+    },
+    {
+     "case_id": "D03",
+     "http": 200,
+     "route": "REFUSED",
+     "mode": "LOCAL_DETERMINISTIC_PARSER",
+     "surface": "TOAST",
+     "toast": "Axo chưa hỗ trợ phép dựng này\nCác giả thiết chưa cố định duy nhất hình dạng, và hệ chưa có chứng chỉ bất biến tổng quát cho đại lượng được hỏi nên tạm dừng thay vì kết luận từ hình mẫu. Bạn có thể thử các bài về thiết diện, khoảng cách, góc hoặc thể tích.",
+     "not_supported_text": true,
+     "question_surfaced": false
+    },
+    {
+     "case_id": "D04",
+     "http": 200,
+     "route": "REFUSED",
+     "mode": "LOCAL_DETERMINISTIC_PARSER",
+     "surface": "TOAST",
+     "toast": "Đề bài cần thêm dữ kiện để dựng hình\nTrong “ABC.A'B'C' có đáy là tam giác đều”, bạn hãy nói rõ các số đo cần thiết. Bạn có thể bổ sung hoặc viết rõ phần đó ngay trên ô nhập rồi nhấn Dựng hình.",
+     "not_supported_text": false,
+     "question_surfaced": true
+    },
+    {
+     "case_id": "D05",
+     "http": 200,
+     "route": "REFUSED",
+     "mode": "LOCAL_DETERMINISTIC_PARSER",
+     "surface": "TOAST",
+     "toast": "Đề bài chưa đủ dữ kiện để dựng hình\nCác dữ kiện đã nêu trong đề chưa xác định duy nhất đại lượng hoặc hình cần dựng (tồn tại nhiều hình hợp lệ thỏa mọi giả thiết nhưng cho kết quả khác nhau). Em hãy kiểm tra và bổ sung số đo còn thiếu trong đề rồi gửi lại. Bạn có thể bổ sung dữ kiện còn thiếu ngay trên ô nhập rồi nhấn Dựng hình.",
+     "not_supported_text": false,
+     "question_surfaced": true
+    },
+    {
+     "case_id": "S15",
+     "http": 200,
+     "route": "REFUSED",
+     "mode": "LOCAL_DETERMINISTIC_PARSER",
+     "surface": "TOAST",
+     "toast": "Đề bài cần thêm dữ kiện để dựng hình\nTrong “S.ABCD có đáy là hình vuông”, bạn hãy nói rõ các số đo cần thiết. Bạn có thể bổ sung hoặc viết rõ phần đó ngay trên ô nhập rồi nhấn Dựng hình.",
+     "not_supported_text": false,
+     "question_surfaced": true
+    },
+    {
+     "case_id": "S21",
+     "http": 200,
+     "route": "REFUSED",
+     "mode": "LOCAL_DETERMINISTIC_PARSER",
+     "surface": "TOAST",
+     "toast": "Đề bài cần thêm dữ kiện để dựng hình\nTrong “Vẽ hình chóp”, bạn hãy nói rõ tên các đỉnh của hình và các số đo cần thiết. Bạn có thể bổ sung hoặc viết rõ phần đó ngay trên ô nhập rồi nhấn Dựng hình.",
+     "not_supported_text": false,
+     "question_surfaced": true
+    }
+   ]
+  },
+  {
+   "scenario_id": "I07",
+   "pass": false,
+   "slow": "Q04",
+   "fast": "C09",
+   "cancel_button": false,
+   "fast_surface": "SCENE",
+   "labels_at_render": [
+    "A",
+    "B",
+    "C",
+    "D",
+    "S",
+    "kq_q1__foot1"
+   ],
+   "labels_after_15s": [
+    "A",
+    "B",
+    "C",
+    "D",
+    "S",
+    "kq_q1__foot1"
+   ],
+   "gold": [
+    "A",
+    "B",
+    "C",
+    "D",
+    "S"
+   ],
+   "console_errors": []
+  },
+  {
+   "scenario_id": "I08_1920x1080",
+   "pass": true,
+   "composer_visible": true,
+   "canvas": {
+    "w": 1560,
+    "h": 1034
+   },
+   "overflow_x": false,
+   "labels_inside": true,
+   "canvas_viewport_share": 0.778,
+   "centre_drag_rotated": true,
+   "screenshot": "screenshots\\I08_1920x1080.png"
+  },
+  {
+   "scenario_id": "I08_1366x768",
+   "pass": true,
+   "composer_visible": true,
+   "canvas": {
+    "w": 1006,
+    "h": 722
+   },
+   "overflow_x": false,
+   "labels_inside": true,
+   "canvas_viewport_share": 0.692,
+   "centre_drag_rotated": true,
+   "screenshot": "screenshots\\I08_1366x768.png"
+  },
+  {
+   "scenario_id": "I08_768x1024",
+   "pass": true,
+   "composer_visible": true,
+   "canvas": {
+    "w": 472,
+    "h": 978
+   },
+   "overflow_x": false,
+   "labels_inside": true,
+   "canvas_viewport_share": 0.587,
+   "centre_drag_rotated": true,
+   "screenshot": "screenshots\\I08_768x1024.png"
+  },
+  {
+   "scenario_id": "I08_390x844",
+   "pass": true,
+   "composer_visible": true,
+   "canvas": {
+    "w": 390,
+    "h": 438
+   },
+   "overflow_x": false,
+   "labels_inside": true,
+   "canvas_viewport_share": 0.519,
+   "centre_drag_rotated": true,
+   "screenshot": "screenshots\\I08_390x844.png"
+  }
+ ]
+}
