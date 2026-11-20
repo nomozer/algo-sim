@@ -20,9 +20,7 @@ export default defineConfig({
             id.includes("node_modules/maath") ||
             id.includes("node_modules/camera-controls") ||
             id.includes("node_modules/troika-") ||
-            id.includes("node_modules/three-stdlib") ||
-            id.includes("node_modules/suspend-react") ||
-            id.includes("node_modules/@pmndrs/assets")
+            id.includes("node_modules/three-stdlib")
           ) {
             return "vendor-r3f";
           }
