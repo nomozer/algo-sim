@@ -970,7 +970,12 @@ MISSING_KEY_MSG = (
 #       synthesis schema and grammar surface change. The geometry card is byte-identical and served scenes unchanged
 #       (samples regenerate identically); a `149:route-d` row MISSES by the lock rule
 #       (`tests/semantic_program/test_taxonomy_frozen.py`).
-CACHE_VERSION = "150"
+# 151 — 2026-11-21 (axo-hybrid-local-model1-finalization-test-consolidation): Model 1 residual closures (§6.D),
+#       unit similarity representative policy `UNIT_SIMILARITY_REPRESENTATIVE` for unitless similarity-determined
+#       `SIMULATE_ONLY` solids (§17), explicit geometric construction of derived polygon center `O` without
+#       `LAYOUT_DERIVED` (§19), and missing-data `route-d-clarification/1` surfacing across parser & SLM refusals
+#       (§6.G); `150:route-d` rows MISS (`tests/geometry/test_v13_similarity_and_provenance.py`).
+CACHE_VERSION = "151"
 
 #: Hai chế độ hợp lệ của kiến trúc chính thức Hybrid `/4` do máy chủ sở hữu:
 #: - `live` (mặc định): trích xuất có cấu trúc qua Gemini (`typed-fact-next/2`) khi cấu hình `GEMINI_API_KEY`.
