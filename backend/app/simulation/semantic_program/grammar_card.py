@@ -516,13 +516,10 @@ def _tap_hinh_hoc() -> tuple[frozenset[str], frozenset[str]]:
 def grammar_card(domain: str | None = None) -> str:
     """Hợp đồng IR ở dạng gọn, tiếng Việt, dẫn xuất 100% từ `contract.py`.
 
-    `domain="hinh_hoc"` trả bản THU HẸP: chỉ IR hình học, không `visual_bindings`.
-    Mặc định `None` giữ bản đầy đủ — tức **hành vi Tin học nguyên vẹn**, cùng
-    khuôn fail-safe với `detect_domain` (cửa duy nhất mở là cửa sang hình học).
+    (/13) Chỉ còn MỘT thẻ — IR hình học. Bản "đầy đủ" (container, `visual_bindings`) là thẻ của miền Tin học và đã
+    gỡ cùng từ vựng ấy; `domain` giữ lại để không đổi chữ ký của các nơi gọi.
     """
-    if domain == "hinh_hoc":
-        return _the_hinh_hoc()
-    return _the_day_du()
+    return _the_hinh_hoc()
 
 
 def manh_hop_dong(loi: str, domain: str | None = None, *, toi_da: int = 12) -> str:
@@ -732,10 +729,8 @@ _DONG_KHOI_CONG = (
 #: co lại, còn tập hình học thì đang lớn — nên thêm một kiểu hình học từ nay
 #: **tự hiện ra trong thẻ**. Đó là điều `_TOAN_HANG_LENH` và `O_TEN` đã làm cho
 #: ô toán hạng; dòng này đưa cùng luật ấy sang danh sách kiểu.
-_KIEU_TIN_HOC = frozenset({
-    "int", "str", "array", "stack", "queue", "matrix", "map", "set",
-    "tree_node", "graph", "node_ref", "null",
-})
+#: (/13) Kiểu container đã rời `MemoryType`; còn lại những kiểu thẻ hình học không mời khai (y như trước).
+_KIEU_TIN_HOC = frozenset({"int", "str", "null"})
 
 
 def _the_hinh_hoc() -> str:
@@ -779,41 +774,4 @@ def _the_hinh_hoc() -> str:
     )
 
 
-def _the_day_du() -> str:
-    bat_buoc = [n for n, f in C.SemanticProgramSpec.model_fields.items()
-                if f.is_required()]
-    spec = _truong(C.SemanticProgramSpec)
-    khai = _truong(C.MemoryDeclaration)
-    kieu = " ".join(typing.get_args(C.MemoryType))
-    prim = " ".join(
-        typing.get_args(C.VisualContainerBinding.model_fields["primitive"].annotation)
-    )
-
-    return (
-        "HỢP ĐỒNG JSON — dùng ĐÚNG các tên dưới đây, không đặt tên khác, không "
-        "bọc thêm một tầng nào ở ngoài.\n\n"
-        f"Đối tượng gốc: {spec}\n"
-        f"  BẮT BUỘC phải có đủ: {', '.join(bat_buoc)} — thiếu một cái là hỏng.\n"
-        "  `?` = tuỳ chọn. KHÔNG có khoá `semantic_program`, `variables` hay "
-        "`program` ở ngoài cùng.\n\n"
-        f"memory_declarations[]: {khai}\n"
-        f"  type nhận đúng một trong: {kieu}\n"
-        "  element_type dùng cho array/stack/queue/set/matrix; key_type và "
-        "val_type dùng cho map.\n\n"
-        + _khoi("statements[] — mỗi phần tử có `kind` và các trường:",
-                C.SemanticStatement)
-        + "\n\n"
-        # ⚠️ KHÔNG thêm bảng kiểu của `measure` vào bản ĐẦY ĐỦ. `measure` là
-        # biểu thức hình học; một đề Tin học không bao giờ phát nó, nên bảng ấy
-        # ở đây là byte thuần tuý thừa — và ngân sách thẻ (4200) tồn tại đúng để
-        # chặn kiểu thêm-vì-tiện này. Nó nằm ở `_the_hinh_hoc`, cạnh chỗ dùng.
-        + _khoi("biểu thức giá trị — cũng có `kind`:", C.ValueExpr)
-        + "\n\n"
-        + _khoi("điều kiện — cũng có `kind`:", C.ConditionExpr)
-        + "\n\n"
-        "visual_bindings: containers[] pointers[] value_boxes[]\n"
-        f"  containers[]: {_truong(C.VisualContainerBinding)}\n"
-        f"    primitive nhận đúng một trong: {prim}\n"
-        f"  pointers[]: {_truong(C.VisualPointerBinding)}\n"
-        f"  value_boxes[]: {_truong(C.VisualValueBoxBinding)}\n"
-    )
+# (/13) `_the_day_du` — thẻ đầy đủ của miền Tin học (container, `visual_bindings`) — đã gỡ.

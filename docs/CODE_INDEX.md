@@ -5909,19 +5909,15 @@ cho một case chưa bao giờ tới bước sinh.
 mẫu số < 20, mà mẫu số của `R`/`O`/`V` là *số ca đã qua tầng trước* (ở lượt #1 là
 3 và 1). Khoá bởi `test_reliability_v2.py` (23 test).
 
-### `backend/scripts/cross_domain_matrix.py` · offline · 0 API call
+### ⛔ đã gỡ (/13): `cross_domain_matrix.py` và fixture Tin học của `tests/semantic_program`
 
-Bảy lớp trạng thái (scalar · array · string · stack · derived_sequence · tree ·
-graph) đi qua **một** bộ 11 cổng, không nhánh riêng miền nào. Đáp án mong đợi
-**kiểm tay** (21=10101₂ · max=89 · "radar" · `{[()]}` · prefix [2,6,7,14,17] ·
-preorder A,B,C · BFS 1→5), không chép từ đầu ra của hệ — nếu không
-`EXPECTED_RESULT` là tautology. `--json/--md` ghi artifact vào
-thư mục output tạm do người chạy chọn; bộ artifact `semantic-vnext` thời Tin học đã retire.
-
-Khoá bởi `tests/semantic_program/test_cross_domain_matrix.py`, và nửa quan trọng
-hơn của bộ test ấy là phần TIÊM LỖI: bản đầu của ma trận **rỗng** — gỡ binding
-mà 6/7 lớp vẫn xanh, vì cổng chỉ chạm container biến động còn dãy đầu vào
-chỉ-đọc thì không ai đòi. Đó là nguồn gốc luật (2) của `learner_surface`.
+Ma trận bảy lớp trạng thái Tin học (array · stack · tree · graph …) qua 11 cổng, `fixtures_coverage_18.py`,
+`unseen_smoke_fixtures.py`, `execution_oracles.py` và 23 file test chỉ dùng chúng đã gỡ cùng từ vựng container của IR
+(run `axo-hybrid-local-model1-finalization-test-consolidation`; danh sách + lý do từng file ở
+`TEST_CONSOLIDATION_RESULTS.json` của run). Luật CHUNG mà chúng khoá được chuyển sang ca hình học:
+`tests/geometry/test_geometry_coverage_gate.py` (C₁a/C₁b), `tests/geometry/test_learner_surface_3d.py`,
+`tests/semantic_program/test_frame_state_invariant.py`, `tests/semantic_program/test_interpreter_fail_closed.py`.
+Bản cũ nằm trong git history.
 
 ### `backend/tests/test_mocked_production_e2e.py` · offline · 0 API call
 

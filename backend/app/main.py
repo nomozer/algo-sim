@@ -964,7 +964,13 @@ MISSING_KEY_MSG = (
 #       snake_case naming descriptions and `SEMANTIC_ANALYZE_SCHEMA` are deleted, so the hashed `analyze_schema` surface
 #       changes. Served scenes are unchanged; a `148:route-d` row MISSES by the lock rule
 #       (`tests/semantic_program/test_domain_string.py`).
-CACHE_VERSION = "149"
+# 150 — 2026-11-20 (axo-hybrid-local-model1-finalization-test-consolidation, scope compliance step B): the IR loses the
+#       informatics container vocabulary — container memory types, container statements/expressions/conditions,
+#       `visual_bindings`, the eleven informatics obligations and their checkers, the full grammar card — so the hashed
+#       synthesis schema and grammar surface change. The geometry card is byte-identical and served scenes unchanged
+#       (samples regenerate identically); a `149:route-d` row MISSES by the lock rule
+#       (`tests/semantic_program/test_taxonomy_frozen.py`).
+CACHE_VERSION = "150"
 
 #: Hai chế độ hợp lệ của kiến trúc chính thức Hybrid `/4` do máy chủ sở hữu:
 #: - `live` (mặc định): trích xuất có cấu trúc qua Gemini (`typed-fact-next/2`) khi cấu hình `GEMINI_API_KEY`.

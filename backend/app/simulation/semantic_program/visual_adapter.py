@@ -1,58 +1,21 @@
 # -*- coding: utf-8 -*-
-"""VISUAL_TRACE_ADAPTER: Bộ tiếp hợp chuyển đổi SemanticTrace sang Visual Frame Timeline (DSL).
+"""VISUAL_TRACE_ADAPTER: SemanticTrace → dãy khung (frame timeline) mà timeline frontend tua theo.
 
-Nguyên tắc:
-- 100% tất định (Deterministic mapping).
-- Semantic Program không cần biết về MOVE_POINTER hay HIGHLIGHT.
-- Adapter tự động suy luận:
-  + Biến con trỏ đổi giá trị -> Di chuyển visual pointer.
-  + Đọc/ghi/so sánh mảng -> Kích hoạt highlight ô tương ứng.
-  + State biến cập nhật -> Đồng bộ giá trị trong value_box.
-  + Thuyết minh 2 tầng: Tier 1 (Fact) + Tier 2 (Pedagogical Intent).
+Mỗi bước trace thành MỘT khung (bất biến #31 `frame k ⇔ trace[k]`), mang thuyết minh hai tầng: Tier 1 (sự kiện
+của bước) + Tier 2 (`pedagogical_intent`, chỉ ở khung đầu).
+
+(/13) Khung không còn đối tượng 2D. Container/con trỏ/hộp giá trị (`array_strip`, `stack_view`, `graph_view`, …) là
+đường lên màn hình của miền Tin học và đã gỡ cùng `visual_bindings`; hình học đi bằng `scene3d`, không qua đây.
+`objects` vẫn có mặt (rỗng) vì đó là hình dạng khung mà frontend và `pacer` đọc.
 """
 from __future__ import annotations
-import copy
+
 from typing import Any, Optional
+
 from pydantic import BaseModel, Field
 
-from .contract import SemanticProgramSpec, VisualBindings
+from .contract import SemanticProgramSpec
 from .interpreter import SemanticExecutionResult, SemanticTraceStep
-
-
-def _day_phan_tu(val: Any) -> list[Any]:
-    """Trạng thái bộ nhớ → DÃY PHẦN TỬ vẽ được.
-
-    `str` được tách thành từng ký tự, và đó là điểm của hàm này: một chuỗi LÀ
-    dãy ký tự, nên bài quét chuỗi (đối xứng, đếm nguyên âm, kiểm ngoặc) phải
-    thấy được từng ô như thấy một mảng. Bản trước dùng
-    `isinstance(val, (list, tuple, set))` nên chuỗi rơi về `[]` — hình rỗng
-    trong khi chương trình đang duyệt nó.
-    """
-    if isinstance(val, str):
-        return list(val)
-    if isinstance(val, (list, tuple, set)):
-        # `to_display` từng ô: frontend render `String(v)`, nên một `Vec3` lọt
-        # vào đây sẽ in ra `[object Object]` — nếu nó kịp qua `json.dumps`.
-        return [to_cell(v) for v in val]
-    return []
-
-
-# BIÊN VẬN CHUYỂN — xem `transport.py`. Mọi giá trị rời bộ nhớ để vào envelope
-# phải đi qua đây; nếu không, một `Vec3` hay `Fraction` sẽ sống tới tận
-# `json.dumps` lúc ghi cache và nổ SAU KHI cả pipeline đã báo thành công.
-from .transport import to_cell, to_display, transport_pair  # noqa: E402
-
-
-class VisualObject(BaseModel):
-    id: str
-    type: str
-    label: Optional[str] = None
-    items: Optional[list[Any]] = None
-    value: Optional[Any] = None
-    target: Optional[str] = None
-    target_index: Optional[int] = None
-    capacity: Optional[int] = None
-    highlight_indices: Optional[list[int]] = None
 
 
 class VisualFrame(BaseModel):
@@ -65,153 +28,21 @@ class VisualFrame(BaseModel):
 
 
 class VisualTraceAdapter:
-    #: Đối sánh HAI CHIỀU với enum `VisualContainerBinding.primitive` — bất biến
-    #: #33. Thêm primitive vào contract mà quên nhánh ở `_adapt_single_step` thì
-    #: LLM khai nó sẽ ra object rỗng, lỗi CÂM (đã xảy ra với `bar_chart`).
-    HANDLED_PRIMITIVES: frozenset[str] = frozenset(
-        {
-            "array_strip",
-            "queue_view",
-            "stack_view",
-            "table_grid",
-            "tree_element",
-            "bit_register",
-            "bar_chart",
-            "graph_view",
-            "map_view",
-        }
-    )
-
     def __init__(self, spec: SemanticProgramSpec):
         self.spec = spec
-        self.bindings: VisualBindings = spec.visual_bindings
 
     def adapt(self, exec_result: SemanticExecutionResult) -> list[VisualFrame]:
-        frames: list[VisualFrame] = []
-
-        for step in exec_result.trace:
-            frame = self._adapt_single_step(step)
-            frames.append(frame)
-
-        return frames
+        return [self._adapt_single_step(step) for step in exec_result.trace]
 
     def _adapt_single_step(self, step: SemanticTraceStep) -> VisualFrame:
-        snap = step.memory_snapshot
-        visual_objects: list[dict[str, Any]] = []
-        highlighted_ids: list[str] = []
-
-        # 1. Dựng các container hiển thị
-        for cb in self.bindings.containers:
-            val = snap.get(cb.semantic_id, [])
-            obj_dict: dict[str, Any] = {
-                "id": cb.semantic_id,
-                "type": cb.primitive,
-                "label": cb.label,
-            }
-
-            if cb.primitive in ("array_strip", "queue_view"):
-                obj_dict["items"] = _day_phan_tu(val)
-            elif cb.primitive == "stack_view":
-                obj_dict["items"] = _day_phan_tu(val)
-                obj_dict["capacity"] = max(8, len(obj_dict["items"]) + 2)
-            elif cb.primitive == "table_grid":
-                obj_dict["items"] = ([to_cell(v) for v in val]
-                                     if isinstance(val, list) else [])
-            elif cb.primitive == "graph_view":
-                # Topology đọc THẲNG từ bộ nhớ: {đỉnh: [đỉnh kề, …]}.
-                adj = val if isinstance(val, dict) else {}
-                obj_dict["nodes"] = sorted(str(k) for k in adj)
-                obj_dict["edges"] = sorted(
-                    {
-                        tuple(sorted((str(u), str(v))))
-                        for u, ke in adj.items()
-                        for v in (ke or [])
-                    }
-                )
-                obj_dict["edges"] = [list(e) for e in obj_dict["edges"]]
-                # Trạng thái đỉnh do CHƯƠNG TRÌNH khai biến nào mang nó; adapter
-                # chỉ đọc. Không có khai báo ⇒ không tô, KHÔNG tự chạy lại BFS.
-                if cb.visited_ref:
-                    v = snap.get(cb.visited_ref)
-                    obj_dict["visited"] = sorted(
-                        str(x) for x in v
-                    ) if isinstance(v, (list, tuple, set)) else []
-                if cb.current_ref:
-                    cur = snap.get(cb.current_ref)
-                    obj_dict["current"] = None if cur is None else str(cur)
-            elif cb.primitive == "bar_chart":
-                # Cột = phần tử của container. Renderer chỉ ĐỌC chiều cao từ đây,
-                # KHÔNG tự tính lại từ biểu thức nào khác (bất biến #31).
-                obj_dict["items"] = ([to_cell(v) for v in val]
-                                     if isinstance(val, (list, tuple)) else [])
-            elif cb.primitive == "map_view":
-                # Cặp khoá→giá trị theo THỨ TỰ KHOÁ ĐÃ SẮP, không theo thứ tự
-                # chèn: thứ tự chèn phụ thuộc lượt chạy nên hai lần chụp cùng
-                # một bài cho hình khác nhau, và ảnh chụp hết so được với nhau.
-                # Cùng lý do `graph_view` sắp `nodes`/`edges`.
-                d = val if isinstance(val, dict) else {}
-                obj_dict["entries"] = [[str(k), to_cell(d[k])]
-                                       for k in sorted(d, key=str)]
-            elif cb.primitive == "tree_element":
-                obj_dict["value"], _exact = transport_pair(val)
-                if _exact is not None:
-                    obj_dict["exact"] = _exact
-            elif cb.primitive == "bit_register":
-                obj_dict["value"], _exact = transport_pair(val)
-                if _exact is not None:
-                    obj_dict["exact"] = _exact
-
-            # Highlight logic nếu bước này tác động trực tiếp vào container
-            if step.target == cb.semantic_id:
-                highlighted_ids.append(cb.semantic_id)
-
-            visual_objects.append(obj_dict)
-
-        # 2. Dựng các con trỏ hiển thị (Pointers)
-        for pb in self.bindings.pointers:
-            idx_val = to_display(snap.get(pb.var_ref, None))
-            if idx_val is not None and isinstance(idx_val, int):
-                ptr_dict: dict[str, Any] = {
-                    "id": pb.pointer_id,
-                    "type": "pointer",
-                    "label": pb.label,
-                    "target": pb.target_container,
-                    "target_index": idx_val,
-                }
-                visual_objects.append(ptr_dict)
-                if step.target == pb.var_ref:
-                    highlighted_ids.append(pb.pointer_id)
-
-        # 3. Dựng các hộp giá trị (Value Boxes)
-        for vb in self.bindings.value_boxes:
-            v_val = snap.get(vb.var_ref, None)
-            # `value` giữ SCALAR (frontend làm `String(v)`), cấu trúc chính
-            # xác đi ở trường SONG SONG `exact` — cùng khuôn `scene3d.quantity`.
-            _hien, _exact = transport_pair(v_val if v_val is not None else "")
-            vb_dict: dict[str, Any] = {
-                "id": vb.box_id,
-                "type": "value_box",
-                "label": vb.label,
-                "value": _hien,
-            }
-            if _exact is not None:
-                vb_dict["exact"] = _exact
-            if step.target == vb.var_ref:
-                highlighted_ids.append(vb.box_id)
-            visual_objects.append(vb_dict)
-
-        # 4. Ghép thuyết minh 2 tầng
         tier1 = step.tier1_narration
         tier2 = self.spec.pedagogical_intent
-        narration = f"{tier1}"
-        if step.step_index == 0 and tier2:
-            narration = f"{tier2} | {tier1}"
-
+        narration = f"{tier2} | {tier1}" if step.step_index == 0 and tier2 else f"{tier1}"
         return VisualFrame(
             step_index=step.step_index,
             narration=narration,
             tier1_fact=tier1,
             tier2_intent=tier2,
-            objects=visual_objects,
-            highlighted_object_ids=highlighted_ids,
+            objects=[],
+            highlighted_object_ids=[],
         )

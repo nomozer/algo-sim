@@ -75,15 +75,8 @@ PLACEHOLDER_LEAKS = ("undefined", "null", "[object Object]", "NaN", "Infinity")
 #: đòi mọi kiểu có mặt ở đây. Thêm một `MemoryType` mà quên bảng này là ĐỎ — nên
 #: lần sau câu hỏi "kiểu này có cần hiện không" bị bắt buộc phải trả lời.
 SURFACE_POLICY: dict[str, str] = {
-    # ── PHẢI HIỆN khi biến động: tập hợp thay đổi CHÍNH LÀ cơ chế bài đang dạy.
-    "array": "container",
-    "stack": "container",
-    "queue": "container",
-    "matrix": "container",
-    "map": "container",
-    "set": "container",
-    "graph": "container",
-    "tree_node": "container",
+    # (/13) Kiểu container của miền Tin học (array/stack/queue/matrix/map/set/graph/tree_node, `node_ref`, `null`)
+    # đã gỡ khỏi `MemoryType`, nên cũng rời bảng này.
     # ── KHÔNG đòi, và mỗi dòng phải nói VÌ SAO ────────────────────────────────
     "int": "vô hướng — biến đếm/chỉ số/tạm. Đòi vẽ hết thì màn hình đầy thứ "
            "không phải nội dung bài, và cổng sẽ bị tắt vì kêu oan.",
@@ -91,8 +84,6 @@ SURFACE_POLICY: dict[str, str] = {
     "bool": "vô hướng — cờ nội bộ. Nếu nó mang CÂU TRẢ LỜI thì đã bị luật "
             "witness bắt phải hiện, không cần luật thứ hai.",
     "str": "vô hướng — nhãn/kết quả dạng chữ. Cùng lý do với `bool`.",
-    "node_ref": "con trỏ tới một đỉnh, không phải dữ liệu. Đường lên màn hình "
-                "của nó là `pointers` binding, không phải một container.",
     "null": "vắng mặt của giá trị — không có gì để hiện.",
     # ── MIỀN HÌNH HỌC (2026-08-24) ───────────────────────────────────────────
     # Quyết định ở đây KHÔNG suy được từ miền cũ: một `array` biến động là cơ
@@ -130,22 +121,8 @@ CONTAINER_TYPES = frozenset(
     t for t, v in SURFACE_POLICY.items() if v == "container"
 )
 
-#: Mỗi kiểu phải-hiện đi được ra ÍT NHẤT MỘT visual primitive. Đây là vế thứ hai
-#: của bất biến §1: *đã admit và biến động* ⇒ *biểu diễn được*. `map` từng vi
-#: phạm đúng vế này suốt nhiều milestone — admit từ lâu, không primitive nào vẽ
-#: được, nên mọi bài có đáp án là bảng đều chạy được mà không xem được.
-TYPE_TO_PRIMITIVES: dict[str, tuple[str, ...]] = {
-    "array": ("array_strip", "bar_chart", "table_grid"),
-    "stack": ("stack_view",),
-    "queue": ("queue_view",),
-    "matrix": ("table_grid",),
-    "map": ("map_view",),
-    # `set` đi qua `array_strip`: adapter đã phẳng hoá `set` thành list. Thứ tự
-    # do adapter sắp, không phải thứ tự chèn.
-    "set": ("array_strip",),
-    "graph": ("graph_view",),
-    "tree_node": ("tree_element",),
-}
+# (/13) `TYPE_TO_PRIMITIVES` (kiểu container → primitive 2D) đã gỡ cùng miền Tin học: kiểu phải-hiện còn lại đều là
+# vật hình học, và đường lên màn hình của chúng là cảnh 3D (`_tren_canh_3d`), không phải một primitive.
 
 
 class LearnerSurfaceResult(BaseModel):
@@ -154,26 +131,6 @@ class LearnerSurfaceResult(BaseModel):
     #: Mỗi mục là MỘT câu nói rõ cái gì không thấy được, để telemetry (§5) chỉ
     #: thẳng chỗ sửa thay vì báo "không phát được".
     invisible: list[str] = Field(default_factory=list)
-
-
-def _bound_names(spec: SemanticProgramSpec) -> set[str]:
-    """Mọi tên bộ nhớ có ÍT NHẤT MỘT đường lên màn hình."""
-    vb = spec.visual_bindings
-    if vb is None:
-        return set()
-    ra: set[str] = set()
-    for cb in vb.containers or ():
-        ra.add(cb.semantic_id)
-        # `graph_view` tô trạng thái qua hai biến phụ — chúng cũng là đường lên
-        # màn hình, nên biến được tham chiếu ở đây coi như đã hiện.
-        for phu in (getattr(cb, "visited_ref", None), getattr(cb, "current_ref", None)):
-            if phu:
-                ra.add(phu)
-    for pb in vb.pointers or ():
-        ra.add(pb.var_ref)
-    for box in vb.value_boxes or ():
-        ra.add(box.var_ref)
-    return ra
 
 
 def _tren_canh_3d(
@@ -323,7 +280,8 @@ def check_learner_surface(
     # nửa của màn hình. Vị từ nằm ở tầng kernel (`geometry_exec`) để cảnh và
     # cổng dùng CHUNG một định nghĩa; hai bản `isinstance` song song sẽ trôi
     # khỏi nhau đúng vào ngày thêm một kiểu hình học mới.
-    thay_duoc = _bound_names(spec) | _tren_canh_3d(spec, exec_res)
+    # (/13) Nửa 2D (`visual_bindings`) đã gỡ cùng miền Tin học: màn hình chỉ còn cảnh 3D.
+    thay_duoc = _tren_canh_3d(spec, exec_res)
 
     # ─── TÊN HỢP ĐỒNG PHẢI ĐI QUA CÙNG PHÉP PHÂN GIẢI VỚI MỌI CỔNG KHÁC ────
     #

@@ -1,72 +1,21 @@
 # -*- coding: utf-8 -*-
 """Khoá TAXONOMY ĐÃ ĐÓNG BĂNG (hard scope lock §1.1).
 
-Sau khi SEALED niêm phong, thêm một obligation checker để cải thiện kết quả
-SEALED làm seal MẤT HIỆU LỰC. Nhưng một dòng thêm vào dict thì lặng lẽ — nên
-khoá bằng test: đổi taxonomy là ĐỎ, và người đổi phải đối diện câu hỏi
-"thay đổi này đến từ DEV hay từ một ca SEALED?".
+Sau khi SEALED niêm phong, thêm một obligation checker để cải thiện kết quả SEALED làm seal MẤT HIỆU LỰC. Một dòng
+thêm vào dict thì lặng lẽ — nên khoá bằng test: đổi taxonomy là ĐỎ, và người đổi phải đối diện câu hỏi "thay đổi này
+đến từ DEV hay từ một ca SEALED?".
 
-Danh sách dưới đây chốt 2026-08-20 từ phân tích DEV
-(`docs/evaluation/semantic-benchmark/dev/DEV_TAXONOMY_ANALYSIS.md`).
+─── /13 (2026-11-20): taxonomy chỉ còn MIỀN HÌNH HỌC ─────────────────────────────────────────────────────────────
+Câu hỏi bắt buộc của test này — trả lời: **KHÔNG TỪ DEV, KHÔNG TỪ SEALED**. Nguồn là khoá phạm vi của Owner
+("loại bỏ hoàn toàn miền Tin học"), quyết định trước mọi phép đo của /13. Mười một nghĩa vụ Tin học (danh sách ở
+`CO_Y_KHONG_CO`) rời taxonomy cùng checker của chúng. Seal #1 (`a075e9f5…`) thuộc miền Tin học: điểm số lịch sử vẫn
+trích được từ bằng chứng đóng băng của nó, nhưng hệ hiện hành không còn chạy lại được lượt ấy — so số cũ với hệ mới
+là so hai hệ khác nhau. Lịch sử mở từng nghĩa vụ hình học (`section_matches` 2026-08-30, `radius` 2026-09-03,
+`area`/`lateral_area` 2026-09-04) nằm trong git history của file này.
 """
-from app.simulation.semantic_program.obligations import (
-    AGGREGATE_OPS,
-    OBLIGATION_KINDS,
-    SEQUENCE_TRANSFORMS,
-)
+from app.simulation.semantic_program.obligations import OBLIGATION_KINDS
 
 TAXONOMY_DA_DONG_BANG = {
-    "extremum",
-    "aggregate_matching",
-    "ordering",
-    "membership",
-    "first_match_index",
-    "total_mapping",
-    "derived_sequence",
-    "reachability",
-    "structural_traversal",
-    # MỞ 2026-08-23. Câu hỏi bắt buộc của test này — *thay đổi đến từ DEV hay
-    # từ một case SEALED?* — trả lời: **DEV**. Ma trận xuyên miền
-    # (`cross_domain_matrix.py`) cho thấy bài "chuỗi ngoặc hợp lệ" không có kind
-    # nào diễn đạt được: `membership` kiểm `item in container`, còn bài này hỏi
-    # một VỊ TỪ trên toàn bộ đầu vào. Hệ quả đo được: `executable=True` mà không
-    # bao giờ `servable`, cho cả một lớp bài chứ không riêng bài nào.
-    #
-    # Phản đối cũ ("kiểm nó đòi cài lại thuật toán đang kiểm") được trả lời đầy
-    # đủ trong docstring của `obligations.py` — tóm tắt: `_extremum` cũng tính
-    # lại `max`, và điều giữ tính oracle là *tính lại TỪ DỮ LIỆU ĐỀ, không đọc
-    # witness để suy đáp án*, chứ không phải *không được cài lại*.
-    "predicate_verdict",
-    # MỞ 2026-08-24, nguồn DEV và đo được TỪ CHÍNH BẢNG NÀY: trước khi thêm,
-    # **0/10 nghĩa vụ nhận được một chủ thể vô hướng** — toàn bộ taxonomy hình
-    # dạng *container*. Trong khi vòng lặp tích luỹ trên một biên số
-    # (`S = 1+2+…+n`, `1×2×…×n`, `S = 1³+…+n³`) là kiến trúc cơ bản nhất của
-    # chương trình Tin học 10. Đó là khoảng trống của HỢP ĐỒNG, chứng minh được
-    # mà không cần nhìn bài nào — không phải nhu cầu của một ca.
-    #
-    # Tính độc lập của oracle giữ được nhờ HAI tập ĐÓNG: `op` ∈ {sum, product}
-    # và `term` ∈ `TERM_TRANSFORMS`. Số hạng ngoài tập ⇒ mức yếu, vì kiểm nó
-    # đòi đánh giá biểu thức của chương trình — tức chạy lại chính nó.
-    "scalar_accumulation",
-    # ── MIỀN HÌNH HỌC KHÔNG GIAN — MỞ 2026-08-24 ────────────────────────────
-    #
-    # Câu hỏi bắt buộc của test này là *"thay đổi đến từ DEV hay từ một ca
-    # SEALED?"*. Ở đây câu trả lời là **KHÔNG PHẢI CẢ HAI**: đề tài đã ĐỔI
-    # (`STATUS_LEDGER §0-2026-08-24`, nguồn: GVHD), và tám kind dưới đây là
-    # taxonomy của một MIỀN MỚI, không phải bản nới của miền cũ.
-    #
-    # Chín kind phía trên **giữ nguyên**, không đụng — chúng vẫn là taxonomy
-    # thật của lượt SEALED #1, và số `A 3/40 · B 1/40` vẫn trích được.
-    #
-    # ĐIỂM KHÁC BẢN CHẤT so với miền Tin học: cả tám đều có checker
-    # **server-owned**, không cái nào ở mức yếu. Ở đó, kiểm `predicate_verdict`
-    # đòi cài lại chính thuật toán đang kiểm nên phải cãi nhau nhiều tháng; ở
-    # đây kiểm là một PHÉP TÍNH giải tích (`u·v == 0`), không phải một lời giải.
-    # Tính độc lập không mất, nên không kind nào phải để mức yếu.
-    #
-    # Vì sao tách `point_on_line` khỏi `point_on_plane` thay vì gộp `incidence`:
-    # hai cái nhận CHỦ THỂ khác nhau, gộp thì bảng kiểu mất tác dụng và một đề
-    # hỏi "M có thuộc (SBC)" sẽ lọt khi LLM gắn nhầm vào một đường thẳng.
     "point_on_line",
     "point_on_plane",
     "parallel",
@@ -75,64 +24,22 @@ TAXONOMY_DA_DONG_BANG = {
     "distance",
     "angle",
     "volume",
-    # MỞ 2026-08-30. Câu hỏi bắt buộc của test này — *thay đổi đến từ DEV hay
-    # từ một case SEALED?* — trả lời: **KHÔNG TỪ ĐÂU CẢ TRONG HAI**. Nó đến từ
-    # một lượt soát năng lực TĨNH (`CAPABILITY_GAP_AUDIT`), không từ việc nhìn
-    # kết quả một case nào. Seal #1 thuộc miền Tin học và không có nghĩa vụ
-    # hình học nào; tập held-out hình học CHƯA CHẠY.
-    #
-    # ĐO ĐƯỢC, không suy luận: `coplanar` là checker duy nhất nhận một
-    # `Section`, và nó gần như luôn xanh — mọi đỉnh thiết diện sinh ra từ giao
-    # với đúng MỘT mặt phẳng nên chúng đồng phẳng theo định nghĩa. Một chương
-    # trình bỏ sót đỉnh thứ tư của thiết diện vẫn qua `coplanar`.
-    #
-    # HỆ QUẢ PHẢI KHAI: ô A13 của `BANG_O` (held-out ĐÃ NIÊM PHONG) vẫn gắn
-    # `coplanar`. Không gắn lại — sửa dụng cụ đo sau khi niêm phong là đúng thứ
-    # con dấu tồn tại để ngăn. Nên trên held-out, thiết diện vẫn chấm YẾU; chỗ
-    # ấy khai ở `test_obligation_oracle_connectivity.KHONG_CO_O_DO`.
     "section_matches",
-    # MỞ 2026-09-03 (`RADIUS_OBLIGATION_COVERAGE`). Câu hỏi bắt buộc của test
-    # này — *thay đổi đến từ DEV hay từ một case SEALED?* — trả lời: **KHÔNG TỪ
-    # ĐÂU CẢ TRONG HAI**. Nó đến từ `CURVED_MODEL_ACCEPTANCE_V2`, một phép đo
-    # MỚI trên một bộ ca MỚI (`8c6a184f1c175964…`), không phải một ca SEALED và
-    # không phải tập DEV. Seal #1 thuộc miền Tin học; baseline `a075e9f5…` không
-    # có nghĩa vụ hình học nào và KHÔNG được chạy lại.
-    #
-    # ĐO ĐƯỢC, không suy luận: hai ca (`ball_1`, `circumsphere`) sinh chương
-    # trình ĐÚNG — dùng `measure radius` — rồi chết ở cổng phủ, vì `analyze`
-    # không có từ nào để nói *"đề hỏi bán kính"* và phải ép nó vào `distance`.
-    #
-    # ⚠️ Đây là **mở rộng của SẢN PHẨM HIỆN TẠI SAU baseline đã niêm phong**.
-    # Điểm số lịch sử vẫn gắn với taxonomy gốc của chúng; so số cũ với số mới
-    # mà không nói rõ phiên bản là so hai hệ khác nhau.
     "radius",
-    # ─── `area` + `lateral_area`, thêm 2026-09-04 ─────────────────────────
-    #
-    # `ANALYZE_OBLIGATION_SURFACE_COMPLETION`. Câu hỏi bắt buộc của test này —
-    # *"thay đổi đến từ DEV hay từ một case SEALED?"* — trả lời: **KHÔNG phải
-    # cái nào**. Nó đến từ `CURVED_V3_RESEAL_PREFLIGHT`, đo bằng aggregate
-    # CHỈ-ĐẾM trên pool V3 — một pool **chưa từng chạy** (`seed = null`). Seal
-    # #1 (`a075e9f5…`, Tin học) không có nghĩa vụ hình học nào và không bị đụng.
-    #
-    # ĐO ĐƯỢC: `area` 8 lượt · `lateral_area` 6 lượt trong pool; **14/18 ca
-    # dương** mang ít nhất một nghĩa vụ bị `analyze` loại IM LẶNG, và 7/9 ô
-    # dương chỉ chứa ca như thế. Cùng hình dạng với `radius` một wave trước.
-    #
-    # ⚠️ Như `radius`: đây là mở rộng SẢN PHẨM SAU baseline đã niêm phong.
-    # Điểm số lịch sử vẫn gắn taxonomy gốc của chúng.
     "area",
     "lateral_area",
 }
 
 #: Cố ý KHÔNG có mặt — ghi lại kèm lý do để lần sau khỏi "bổ sung cho đủ".
+_TIN_HOC_DA_GO = "nghĩa vụ miền Tin học — gỡ ở /13 theo khoá phạm vi của Owner"
 CO_Y_KHONG_CO = {
-    # `predicate_verdict` ĐÃ RỜI danh sách này 2026-08-23 — xem
-    # `TAXONOMY_DA_DONG_BANG` và docstring `obligations.py`. Giữ lại một dòng
-    # lịch sử thay vì xoá sạch: lý do loại nó năm xưa vẫn đúng về một nửa (không
-    # kiểm được từ trạng thái cuối), chỉ sai ở vế "mất tính độc lập".
     "count_matching": "đã bị bao trùm bởi aggregate_matching (đếm = gộp với phép count)",
     "distinct_preserving_order": "là một phép của derived_sequence, không phải nguyên thuỷ riêng",
     "connected_components": "tổ hợp được từ reachability lặp — xét TỔ HỢP trước khi xét MỞ RỘNG",
+    **{k: _TIN_HOC_DA_GO for k in (
+        "extremum", "aggregate_matching", "ordering", "membership", "first_match_index", "total_mapping",
+        "derived_sequence", "reachability", "structural_traversal", "predicate_verdict", "scalar_accumulation",
+    )},
 }
 
 
@@ -151,9 +58,13 @@ def test_khong_lang_le_them_lai_cai_da_co_y_loai():
     )
 
 
-def test_phep_gop_va_phep_bien_doi_deu_dong():
-    assert AGGREGATE_OPS == {"count", "sum", "product", "max", "min"}
-    assert SEQUENCE_TRANSFORMS == {"reverse", "distinct", "filter", "map", "identity"}
+def test_rows_written_before_the_IR_container_prune_miss():
+    """CACHE_VERSION 149 -> 150 (/13): taxonomy, IR schema and grammar surface lost the informatics vocabulary, so a
+    `149:route-d` row was written by a system that still carried it and must MISS."""
+    from tests.cache_policy import assert_cache_policy_at_least, assert_route_d_row_misses
+
+    assert_cache_policy_at_least(150)
+    assert_route_d_row_misses("149:route-d")
 
 
 def test_moi_nghia_vu_deu_khai_mien_kieu_khong_rong():

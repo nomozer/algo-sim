@@ -19,37 +19,18 @@ from .contract import (
     ConditionExpr,
     SemanticStatement,
     AssignStmt,
-    WriteIndexStmt,
-    MapSetStmt,
-    SwapStmt,
-    PushStmt,
-    PopStmt,
-    EnqueueStmt,
-    DequeueStmt,
-    SetInsertStmt,
-    SetRemoveStmt,
     IfStmt,
     WhileStmt,
     ForRangeStmt,
-    ForEachStmt,
     BreakStmt,
     ReturnStmt,
     LiteralExpr,
     VarRefExpr,
-    IndexRefExpr,
-    FieldRefExpr,
     BinaryArithExpr,
     UnaryArithExpr,
-    LengthExpr,
-    PeekExpr,
-    MapGetExpr,
-    NeighborsExpr,
     CompareCond,
     LogicCond,
     NotCond,
-    IsEmptyCond,
-    ContainsCond,
-    IsNullCond,
 )
 from .validator import validate_semantic_program
 
@@ -89,13 +70,8 @@ class SemanticExecutionError(Exception):
         super().__init__(f"{code}: {detail}")
 
 
-#: Lấy phần tử ra khỏi một container rỗng.
-ERR_RONG = "EMPTY_CONTAINER"
-#: Chỉ số ngoài `[0, len)`. Âm KHÔNG phải "đếm từ cuối" — IR không có ngữ nghĩa đó.
-ERR_CHI_SO = "INDEX_OUT_OF_RANGE"
-#: Tên container không có trong `memory_declarations`.
-ERR_KHONG_CO = "UNDECLARED_CONTAINER"
-#: Container có thật nhưng sai kiểu cho thao tác đang làm.
+#: Biểu thức/thao tác không có nhánh thực thi (fail-closed). Giá trị giữ nguyên chuỗi cũ để telemetry cũ còn đọc được;
+#: (/13) các mã container (EMPTY_CONTAINER / INDEX_OUT_OF_RANGE / UNDECLARED_CONTAINER) đã gỡ cùng thao tác container.
 ERR_SAI_KIEU = "CONTAINER_TYPE_MISMATCH"
 
 
@@ -227,84 +203,6 @@ class SemanticProgramInterpreter:
                 details={"value": val},
                 narration=narration,
             )
-
-        elif isinstance(stmt, WriteIndexStmt):
-            idx = self._eval_value(stmt.index)
-            val = self._eval_value(stmt.val)
-            container = self._lay_day(stmt.container, "write_index", doi_khong_rong=False)
-            if not isinstance(idx, int) or isinstance(idx, bool) or not 0 <= idx < len(container):
-                raise SemanticExecutionError(
-                    ERR_CHI_SO,
-                    f"ghi vào {stmt.container}[{idx!r}] ngoài [0, {len(container)})",
-                )
-            if stmt.second_index is None:
-                container[idx] = val
-                self._record_step(
-                    action="write_index",
-                    target=stmt.container,
-                    details={"index": idx, "value": val},
-                    narration=f"Ghi giá trị {val} vào {stmt.container}[{idx}].",
-                )
-            else:
-                row = container[idx]
-                c_idx = self._eval_value(stmt.second_index)
-                if not isinstance(row, list):
-                    raise SemanticExecutionError(
-                        ERR_SAI_KIEU,
-                        f"{stmt.container}[{idx}] không phải một hàng để ghi theo cột",
-                    )
-                if not isinstance(c_idx, int) or isinstance(c_idx, bool) or not 0 <= c_idx < len(row):
-                    raise SemanticExecutionError(
-                        ERR_CHI_SO,
-                        f"ghi vào {stmt.container}[{idx}][{c_idx!r}] ngoài [0, {len(row)})",
-                    )
-                row[c_idx] = val
-                self._record_step(
-                    action="write_index",
-                    target=stmt.container,
-                    details={"row": idx, "col": c_idx, "value": val},
-                    narration=f"Ghi giá trị {val} vào {stmt.container}[{idx}][{c_idx}].",
-                )
-
-        elif isinstance(stmt, MapSetStmt):
-            key = str(self._eval_value(stmt.key))
-            val = self._eval_value(stmt.val)
-            container = self.memory[stmt.container]
-            if isinstance(container, dict):
-                container[key] = val
-                self._record_step(
-                    action="map_set",
-                    target=stmt.container,
-                    details={"key": key, "value": val},
-                    narration=f"Cập nhật {stmt.container}['{key}'] = {val}.",
-                )
-
-        elif isinstance(stmt, SwapStmt):
-            idx_a = self._eval_value(stmt.idx_a)
-            idx_b = self._eval_value(stmt.idx_b)
-            container = self.memory[stmt.container]
-            if isinstance(container, list) and 0 <= idx_a < len(container) and 0 <= idx_b < len(container):
-                val_a = container[idx_a]
-                val_b = container[idx_b]
-                container[idx_a], container[idx_b] = container[idx_b], container[idx_a]
-                self._record_step(
-                    action="swap",
-                    target=stmt.container,
-                    details={"idx_a": idx_a, "idx_b": idx_b, "val_a": val_a, "val_b": val_b},
-                    narration=f"Hoán đổi {stmt.container}[{idx_a}] ({val_a}) và {stmt.container}[{idx_b}] ({val_b}).",
-                )
-
-        elif isinstance(stmt, PushStmt):
-            val = self._eval_value(stmt.val)
-            container = self.memory[stmt.container]
-            if isinstance(container, list):
-                container.append(val)
-                self._record_step(
-                    action="push",
-                    target=stmt.container,
-                    details={"value": val},
-                    narration=f"Đẩy giá trị '{val}' vào {stmt.container}.",
-                )
 
         # ── DỰNG HÌNH ────────────────────────────────────────────────────
         # Ba nhánh này KHÔNG tự tính toạ độ. Chúng đọc tên, gọi `geometry_exec`,
@@ -449,71 +347,6 @@ class SemanticProgramInterpreter:
                 semantic_kind="GEOMETRY_CONSTRUCTION",
             )
 
-        elif isinstance(stmt, PopStmt):
-            container = self._lay_day(stmt.container, "pop", doi_khong_rong=True)
-            top_val = container.pop()
-            if stmt.dest_var:
-                self._set_var(stmt.dest_var, top_val)
-            self._record_step(
-                action="pop",
-                target=stmt.container,
-                details={"popped_value": top_val, "dest_var": stmt.dest_var},
-                narration=f"Lấy phần tử đỉnh '{top_val}' ra khỏi {stmt.container}.",
-            )
-
-        elif isinstance(stmt, EnqueueStmt):
-            val = self._eval_value(stmt.val)
-            container = self._lay_day(stmt.container, "enqueue", doi_khong_rong=False)
-            container.append(val)
-            self._record_step(
-                action="enqueue",
-                target=stmt.container,
-                details={"value": val},
-                narration=f"Thêm '{val}' vào cuối hàng đợi {stmt.container}.",
-            )
-
-        elif isinstance(stmt, DequeueStmt):
-            container = self._lay_day(stmt.container, "dequeue", doi_khong_rong=True)
-            front_val = container.pop(0)
-            if stmt.dest_var:
-                self._set_var(stmt.dest_var, front_val)
-            self._record_step(
-                action="dequeue",
-                target=stmt.container,
-                details={"dequeued_value": front_val, "dest_var": stmt.dest_var},
-                narration=f"Lấy phần tử đầu '{front_val}' ra khỏi hàng đợi {stmt.container}.",
-            )
-
-        elif isinstance(stmt, SetInsertStmt):
-            val = self._eval_value(stmt.val)
-            container = self.memory[stmt.container]
-            if isinstance(container, (set, list)):
-                if isinstance(container, list):
-                    if val not in container:
-                        container.append(val)
-                else:
-                    container.add(val)
-                self._record_step(
-                    action="set_insert",
-                    target=stmt.container,
-                    details={"value": val},
-                    narration=f"Thêm phần tử '{val}' vào tập hợp {stmt.container}.",
-                )
-
-        elif isinstance(stmt, SetRemoveStmt):
-            val = self._eval_value(stmt.val)
-            container = self.memory[stmt.container]
-            if isinstance(container, list) and val in container:
-                container.remove(val)
-            elif isinstance(container, set) and val in container:
-                container.discard(val)
-            self._record_step(
-                action="set_remove",
-                target=stmt.container,
-                details={"value": val},
-                narration=f"Xóa phần tử '{val}' khỏi tập hợp {stmt.container}.",
-            )
-
         elif isinstance(stmt, IfStmt):
             cond_val = self._eval_condition(stmt.condition)
             self._record_step(
@@ -558,28 +391,6 @@ class SemanticProgramInterpreter:
                     self.should_break = False
                     break
 
-        elif isinstance(stmt, ForEachStmt):
-            if isinstance(stmt.container_or_expr, str):
-                items = self.memory.get(stmt.container_or_expr, [])
-            else:
-                items = self._eval_value(stmt.container_or_expr)
-
-            if isinstance(items, (list, tuple, set)):
-                for item in list(items):
-                    if self.step_counter >= self.max_steps or self.should_break or self.return_value is not None:
-                        break
-                    self._set_var(stmt.item_var, item)
-                    self._record_step(
-                        action="foreach_step",
-                        target=stmt.item_var,
-                        details={"item": item},
-                        narration=f"Xét phần tử: {stmt.item_var} = '{item}'.",
-                    )
-                    self._execute_statements(stmt.body)
-                    if self.should_break:
-                        self.should_break = False
-                        break
-
         elif isinstance(stmt, BreakStmt):
             self.should_break = True
             self._record_step(
@@ -607,44 +418,6 @@ class SemanticProgramInterpreter:
             return expr.value
         elif isinstance(expr, VarRefExpr):
             return self._get_var(expr.name)
-        elif isinstance(expr, IndexRefExpr):
-            container = self._lay_container(expr.container, "index")
-            idx = self._eval_value(expr.index)
-            if not isinstance(container, (list, str)):
-                raise SemanticExecutionError(
-                    ERR_SAI_KIEU,
-                    f"index cần dãy/chuỗi nhưng '{expr.container}' là "
-                    f"{type(container).__name__}",
-                )
-            # Chỉ số ÂM là lỗi, không phải "đếm từ cuối". Python cho `a[-1]`;
-            # IR thì không khai ngữ nghĩa ấy ở đâu cả, nên nhận nó là âm thầm
-            # thêm một luật không ai dạy cho LLM.
-            if not isinstance(idx, int) or isinstance(idx, bool) or not 0 <= idx < len(container):
-                raise SemanticExecutionError(
-                    ERR_CHI_SO,
-                    f"{expr.container}[{idx!r}] ngoài [0, {len(container)})",
-                )
-            if expr.second_index is None:
-                return container[idx]
-
-            row = container[idx]
-            c_idx = self._eval_value(expr.second_index)
-            if not isinstance(row, list):
-                raise SemanticExecutionError(
-                    ERR_SAI_KIEU,
-                    f"{expr.container}[{idx}] không phải một hàng để lấy chỉ số thứ hai",
-                )
-            if not isinstance(c_idx, int) or isinstance(c_idx, bool) or not 0 <= c_idx < len(row):
-                raise SemanticExecutionError(
-                    ERR_CHI_SO,
-                    f"{expr.container}[{idx}][{c_idx!r}] ngoài [0, {len(row)})",
-                )
-            return row[c_idx]
-        elif isinstance(expr, FieldRefExpr):
-            target = self._eval_value(expr.target)
-            if isinstance(target, dict):
-                return target.get(expr.field, None)
-            return getattr(target, expr.field, None)
         elif isinstance(expr, BinaryArithExpr):
             l = self._eval_value(expr.left)
             r = self._eval_value(expr.right)
@@ -686,34 +459,6 @@ class SemanticProgramInterpreter:
             if expr.op == "-" and isinstance(v, Radical):
                 return _rad_neg(v)
             return -v if expr.op == "-" else v
-        elif isinstance(expr, LengthExpr):
-            # `get(..., [])` rồi `else 0` là HAI lớp bịa chồng nhau: tên sai →
-            # độ dài 0, kiểu sai → độ dài 0. Cả hai đều đọc như một sự thật.
-            c = self._lay_container(expr.container, "length")
-            if not isinstance(c, (list, dict, set, str)):
-                raise SemanticExecutionError(
-                    ERR_SAI_KIEU,
-                    f"length không áp dụng cho '{expr.container}' "
-                    f"({type(c).__name__})",
-                )
-            return len(c)
-        elif isinstance(expr, PeekExpr):
-            # Trả `None` ở đây thì phép so sánh ngay sau đó lặng lẽ SAI, chứ
-            # không lặng lẽ dừng — tệ hơn hẳn một lỗi nổ đúng chỗ.
-            return self._lay_day(expr.container, "peek", doi_khong_rong=True)[-1]
-        elif isinstance(expr, MapGetExpr):
-            m = self.memory.get(expr.container, {})
-            key = str(self._eval_value(expr.key))
-            default_val = self._eval_value(expr.default) if expr.default else None
-            if isinstance(m, dict):
-                return m.get(key, default_val)
-            return default_val
-        elif isinstance(expr, NeighborsExpr):
-            g = self.memory.get(expr.graph, {})
-            node = str(self._eval_value(expr.node))
-            if isinstance(g, dict):
-                return g.get(node, [])
-            return []
 
         # ── BIỂU THỨC HÌNH HỌC trong `assign` ────────────────────────────
         #
@@ -768,48 +513,7 @@ class SemanticProgramInterpreter:
             return False
         elif isinstance(cond, NotCond):
             return not self._eval_condition(cond.expr)
-        elif isinstance(cond, IsEmptyCond):
-            c = self.memory.get(cond.container, [])
-            return len(c) == 0 if isinstance(c, (list, dict, set, str)) else True
-        elif isinstance(cond, ContainsCond):
-            c = self.memory.get(cond.container, None)
-            item = self._eval_value(cond.item)
-            if isinstance(c, dict):
-                return str(item) in c
-            elif isinstance(c, (list, set, tuple, str)):
-                return item in c
-            return False
-        elif isinstance(cond, IsNullCond):
-            v = self._eval_value(cond.expr)
-            return v is None
         return False
-
-    def _lay_container(self, ten: str, thao_tac: str) -> Any:
-        """Đọc một container theo TÊN, fail-closed.
-
-        Thay cho `self.memory.get(ten, [])` — mặc định ấy biến một tên viết sai
-        thành một dãy rỗng hợp lệ, và chương trình chạy tiếp trên hư không.
-        """
-        if ten not in self.memory:
-            raise SemanticExecutionError(
-                ERR_KHONG_CO,
-                f"{thao_tac} tham chiếu '{ten}' không có trong memory_declarations",
-            )
-        return self.memory[ten]
-
-    def _lay_day(self, ten: str, thao_tac: str, doi_khong_rong: bool) -> list:
-        """Container dạng DÃY, fail-closed cả kiểu lẫn tính rỗng."""
-        c = self._lay_container(ten, thao_tac)
-        if not isinstance(c, list):
-            raise SemanticExecutionError(
-                ERR_SAI_KIEU,
-                f"{thao_tac} cần một dãy nhưng '{ten}' là {type(c).__name__}",
-            )
-        if doi_khong_rong and not c:
-            raise SemanticExecutionError(
-                ERR_RONG, f"{thao_tac} trên '{ten}' đang RỖNG"
-            )
-        return c
 
     def _get_var(self, name: str) -> Any:
         for scope in reversed(self.scope_stack):

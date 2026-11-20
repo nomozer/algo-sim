@@ -52,7 +52,6 @@ from .transport import check_envelope_transport
 from .pacer import DEFAULT_PRESENTATION_BUDGET
 from .pipeline_adapter import (
     DEFAULT_EXECUTION_BUDGET,
-    VisualBindingUnresolved,
     compile_semantic_program_to_envelope,
 )
 from .ir_static_check import kiem_tinh
@@ -585,13 +584,6 @@ def _sau_grounding(
             spec,
             execution_budget=execution_budget,
             presentation_budget=presentation_budget,
-        )
-    except VisualBindingUnresolved as e:
-        return _hong(
-            "binding",
-            ErrorCode.SEMANTIC_PROGRAM_INVALID,
-            f"Hợp đồng thị giác không phân giải được: {e}",
-            **da_chay,
         )
     except (ValueError, KeyError, TypeError) as e:
         return _hong(

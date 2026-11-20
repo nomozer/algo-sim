@@ -138,24 +138,8 @@ def test_khop_thang_thi_KHONG_ghi_hoa_giai():
     assert kq.ok and kq.symbol_reconciled == []
 
 
-def test_luoi_KHONG_mo_cho_nghia_vu_tin_hoc():
-    """Chốt phạm vi. `extremum` là nghĩa vụ Tin học, nên dù tên chỉ khác hoa
-    thường thì C₁a vẫn phải từ chối — `A != a` ở miền thông thường."""
-    hd = RequestContract(obligations=(
-        Obligation(kind="extremum", container="arr", params={"witness": "m"}),
-    ))
-    spec = SemanticProgramSpec(
-        spec_version="1.0", title="Tìm max",
-        memory_declarations=[
-            MemoryDeclaration(name="arr", type="array", initial_value=[1, 2]),
-            MemoryDeclaration(name="M", type="int"),
-        ],
-        statements=[{"kind": "assign", "target_var": "M",
-                     "expr": {"kind": "index", "container": "arr",
-                              "index": {"kind": "literal", "value": 0}}}],
-    )
-    kq = check_structural_coverage(hd, spec)
-    assert not kq.ok and kq.symbol_reconciled == []
+# (/13) `test_luoi_KHONG_mo_cho_nghia_vu_tin_hoc` đã gỡ: nó chốt "lưới hoà giải hoa/thường không mở cho nghĩa vụ
+# Tin học (`extremum`)". Taxonomy nay không còn nghĩa vụ nào ngoài hình học, nên không còn chiều nào để chốt.
 
 
 # ══ RANH GIỚI CỦA BẢN NỚI C₁a — tìm ra khi test CŨ đỏ ═══════════════════

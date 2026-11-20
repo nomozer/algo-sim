@@ -57,27 +57,14 @@ from typing import Any
 
 from pydantic import BaseModel, ConfigDict
 
-#: Cấu trúc duyệt được — miền của các nghĩa vụ đếm/gộp.
-TRAVERSABLE = frozenset({"array", "matrix", "set", "map", "tree_node"})
-
 #: kind → miền kiểu container hợp lệ. Bảng này nói nghĩa vụ nào ĐƯỢC KHAI và
 #: hợp với kiểu container nào — nó KHÔNG nói cái nào kiểm chứng được. Câu hỏi
 #: sau do `CHECKERS` (postconditions.py) trả lời; xem `has_server_owned_checker`
 #: để biết vì sao trộn hai câu đó lại từng làm mức yếu chết câm.
 OBLIGATION_KINDS: dict[str, frozenset[str]] = {
-    "extremum": frozenset({"array", "matrix"}),
-    # Bao trùm `count_matching` cũ: đếm = gộp với phép `count`. Thêm nó làm
-    # taxonomy GỌN đi chứ không phình ra.
-    "aggregate_matching": TRAVERSABLE,
-    "ordering": frozenset({"array"}),
-    "membership": frozenset({"array", "set", "map"}),
-    # Khác `membership` ở chỗ đòi VỊ TRÍ ĐẦU TIÊN — thứ tự duyệt là một phần
-    # của câu trả lời (điểm nghẽn nhận thức #3).
-    "first_match_index": frozenset({"array"}),
-    "total_mapping": frozenset({"map"}),
-    "derived_sequence": frozenset({"array", "stack", "queue"}),
-    "reachability": frozenset({"graph"}),
-    "structural_traversal": frozenset({"tree_node"}),
+    # (/13) Nghĩa vụ của miền Tin học (extremum, aggregate_matching, ordering, membership, first_match_index,
+    # total_mapping, derived_sequence, reachability, structural_traversal, predicate_verdict, scalar_accumulation)
+    # đã gỡ cùng checker của chúng: chủ thể của chúng là container/vô hướng của một chương trình thuật toán.
     # ── MIỀN HÌNH HỌC KHÔNG GIAN (2026-08-24) ────────────────────────────────
     #
     # Tám nghĩa vụ, chia hai nhóm theo ĐÚNG câu hỏi bài toán hỏi:
@@ -124,33 +111,6 @@ OBLIGATION_KINDS: dict[str, frozenset[str]] = {
     # ⚠️ `distance` · `angle` · `volume` **KHÔNG** viết ở đây nữa. Chúng là
     # nghĩa vụ ĐO, và kiểu chủ thể của chúng DẪN XUẤT từ `measure_contract`
     # ngay sau bảng này — xem khối `NGHIA_VU_DO` bên dưới.
-    # Phán quyết đúng/sai trên TOÀN BỘ dữ liệu vào. Miền rộng vì một vị từ có
-    # thể hỏi về bất kỳ cấu trúc nào; cái hẹp là tập vị từ KIỂM ĐƯỢC, và nó do
-    # `PREDICATE_CHECKERS` giữ chứ không phải bảng này (xem docstring module).
-    "predicate_verdict": (
-        TRAVERSABLE
-        | frozenset({"stack", "queue", "graph"})
-        # VÔ HƯỚNG, mở 2026-08-24. "n chẵn hay lẻ", "biểu thức này True hay
-        # False" — chủ thể là MỘT SỐ, không phải một tập. Vị từ vô hướng đi qua
-        # `_PREDS` (`postconditions.py`): tập ĐÓNG và sơ cấp (even/odd/gt/ge/
-        # lt/le/eq) đã có sẵn từ trước, nên mở chiều này KHÔNG đẻ thêm checker
-        # nào. Vị từ ngoài tập ấy — "năm nhuận" chẳng hạn — vẫn là
-        # `verification_gap`, và đó là câu trả lời trung thực.
-        | frozenset({"int", "float", "bool", "str"})
-    ),
-    # ── `scalar_accumulation`, mở 2026-08-24 ────────────────────────────────
-    #
-    # VÌ SAO: đo cơ học trên chính bảng này cho thấy **0/10 nghĩa vụ nhận được
-    # một chủ thể vô hướng**. Toàn bộ taxonomy hình dạng *container*. Nhưng vòng
-    # lặp tích luỹ trên một BIÊN SỐ — `S = 1 + 2 + … + n`, `1 × 2 × … × n`,
-    # `S = 1³ + 2³ + … + n³` — là kiến trúc cơ bản nhất của chương trình Tin học
-    # 10, và không kind nào diễn đạt được nó. Đây là khoảng trống của HỢP ĐỒNG,
-    # đo được mà không cần nhìn bài nào.
-    #
-    # KHÁC `aggregate_matching` ở NGUỒN: kia gộp trên một container đã có, đây
-    # gộp trên một DÃY SINH RA TỪ BIÊN. Chủ thể là biên `n`, nên miền là vô
-    # hướng — không chồng lấn.
-    "scalar_accumulation": frozenset({"int", "float"}),
 }
 
 # ── NGHĨA VỤ ĐO: DẪN XUẤT, không viết tay ────────────────────────────────
@@ -175,40 +135,8 @@ def _nap_nghia_vu_do() -> None:
 _nap_nghia_vu_do()
 
 
-#: Số hạng của phép tích luỹ — tập ĐÓNG, mỗi phép tính lại được bằng biểu thức
-#: sơ cấp trên `k`. Đóng là điều kiện để checker giữ tính độc lập: mở cho một
-#: biểu thức bất kỳ thì checker phải ĐÁNH GIÁ biểu thức của chương trình, tức
-#: chạy lại chính chương trình.
-TERM_TRANSFORMS = frozenset({"identity", "square", "cube", "reciprocal"})
-
-#: Phép gộp đóng của `aggregate_matching`.
-AGGREGATE_OPS = frozenset({"count", "sum", "product", "max", "min"})
-
-#: Phép biến đổi đóng của `derived_sequence` — mỗi phép kiểm được TẤT ĐỊNH mà
-#: không cài lại thuật toán sinh ra nó.
-SEQUENCE_TRANSFORMS = frozenset({"reverse", "distinct", "filter", "map", "identity"})
-
-#: Thủ tục mà đề có thể ÉP BUỘC, dùng cho route semantic.
-#:
-#: Tập ĐÓNG RIÊNG, cố ý KHÔNG dẫn xuất từ catalog: khoá phạm vi cũ nằm ngay
-#: trong `enum: list(analyze_exposed_values())` của `ANALYZE_SCHEMA`, nên tái
-#: dùng nó là kéo lại đúng cái vừa gỡ (spec E5). Catalog vocabulary vẫn sống
-#: cho đường module; nó chỉ không được quyết định admissibility ở đây.
-#:
-#: `None` = đề KHÔNG ép thủ tục ⇒ oracle so tương đương ngữ nghĩa, chứ không so
-#: canonical mechanism events (spec §5.5).
-SEMANTIC_PRESCRIBED_PROCEDURES = frozenset({
-    "adjacent_compare_swap",
-    "select_extreme_repeated",
-    "shift_into_sorted_prefix",
-    "partition_recursive",
-    "tree_traversal.preorder",
-    "tree_traversal.inorder",
-    "tree_traversal.postorder",
-    "tree_traversal.level_order",
-    "breadth_first",
-    "depth_first",
-})
+# (/13) TERM_TRANSFORMS / AGGREGATE_OPS / SEQUENCE_TRANSFORMS / SEMANTIC_PRESCRIBED_PROCEDURES (thủ tục sắp xếp,
+# duyệt cây/đồ thị mà đề Tin học có thể ép) đã gỡ cùng các nghĩa vụ dùng chúng.
 
 
 class Obligation(BaseModel):

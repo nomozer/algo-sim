@@ -18,10 +18,7 @@ from pathlib import Path
 import pytest
 
 from app.main import CACHE_VERSION
-from app.simulation.semantic_program.contract import (
-    SPEC_VERSION,
-    VisualContainerBinding,
-)
+from app.simulation.semantic_program.contract import SPEC_VERSION
 from app.simulation.semantic_program.obligations import OBLIGATION_KINDS
 
 ROOT = Path(__file__).resolve().parents[3]
@@ -62,9 +59,8 @@ def test_taxonomy_khong_troi_khoi_ban_da_dong_bang(manifest):
 
 
 def test_tap_primitive_khong_troi(manifest):
-    hien_tai = sorted(
-        typing.get_args(VisualContainerBinding.model_fields["primitive"].annotation)
-    )
+    # (/13) Không còn primitive hiển thị container: tập đã đóng băng phải là tập RỖNG (không phải trường vắng).
+    hien_tai: list[str] = []
     assert manifest["visual_primitive_set"]["hash"] == _sha(
         json.dumps(hien_tai, ensure_ascii=False)
     )

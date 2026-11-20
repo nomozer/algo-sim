@@ -86,15 +86,16 @@ def test_server_LOC_nghia_vu_sai_mien_du_LLM_van_khai():
     assert [o.kind for o in hd.obligations] == ["point_on_plane"]
 
 
-def test_khong_truyen_domain_thi_KHONG_LOC_gi_ca():
-    """Đường Tin học phải nguyên vẹn — `None` = hành vi trước Wave 2."""
+def test_khong_truyen_domain_van_LOAI_nghia_vu_ngoai_taxonomy():
+    """(/13) Bản trước khoá "không truyền domain ⇒ đường Tin học giữ nguyên `derived_sequence`". Nghĩa vụ ấy đã rời
+    taxonomy, nên câu đúng bây giờ là chiều ngược lại: nó bị loại ngay ở biên, kể cả khi không lọc theo miền."""
     payload = {
         "input_facts": [],
         "obligations": [
             {"kind": "derived_sequence", "container": "day", "witness": "kq"}
         ],
     }
-    assert len(build_request_contract(payload).obligations) == 1
+    assert len(build_request_contract(payload).obligations) == 0
 
 
 def test_chi_mien_hinh_hoc_co_nghia_vu_ngoai_pham_vi_thi_khong():
@@ -324,7 +325,7 @@ def test_KHONG_ep_kieu_am_tham():
 
 
 def test_kieu_hop_le_KHONG_bi_cham():
-    for t in ("float", "bool", "point3", "solid", "array", "plane3"):
+    for t in ("float", "bool", "point3", "solid", "plane3"):
         assert MemoryDeclaration(name="x", type=t).type == t
 
 
@@ -606,14 +607,11 @@ def test_B_NAY_DA_XANH_vi_man_hinh_co_them_nua_thu_hai():
 
 def test_KHONG_co_nguyen_thuy_thi_giac_3D_nao():
     """Nói thẳng thứ `test_B_VAN_CHAN…` đang phụ thuộc vào, để lời giải thích
-    của nó không phải một suy đoán."""
-    from app.simulation.semantic_program.contract import VisualContainerBinding
-    import typing
+    của nó không phải một suy đoán. (/13: IR không còn primitive hiển thị nào — `VisualContainerBinding` đã gỡ —
+    nên điều kiện còn mạnh hơn: không có ĐƯỜNG nào trong IR để khai một cảnh, 3D hay 2D.)"""
+    from app.simulation.semantic_program import contract as C
 
-    prim = typing.get_args(
-        VisualContainerBinding.model_fields["primitive"].annotation
-    )
-    assert not [p for p in prim if "3d" in p.lower() or "scene" in p.lower()], prim
+    assert not hasattr(C, "VisualContainerBinding") and "visual_bindings" not in C.SemanticProgramSpec.model_fields
 
 
 def test_geo_09_ORACLE_cham_duoc_witness():

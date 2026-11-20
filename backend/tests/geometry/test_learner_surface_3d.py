@@ -108,18 +108,18 @@ def test_bien_hinh_hoc_chua_dung_KHONG_duoc_tinh_la_da_hien():
 
 
 # ══ MIỀN TIN HỌC KHÔNG ĐƯỢC ĐỔI MỘT BIT ══════════════════════════════════
-def test_chuong_trinh_TIN_HOC_khong_co_gi_tren_canh_3D():
-    """Nửa 3D rỗng cho miền Tin học ⇒ cổng vẫn chặn ngăn xếp không có binding,
-    đúng như sự cố vNext mà nó sinh ra để chặn."""
+def test_gia_tri_KHONG_hinh_hoc_khong_co_gi_tren_canh_3D():
+    """Vô hướng không phải đại lượng đo ⇒ không có trên cảnh 3D. (/13: bản trước dùng ngăn xếp của miền Tin học —
+    kiểu ấy đã gỡ; luật "chỉ vật hình học/đại lượng đo mới tính là hiện" vẫn khoá ở đây.)"""
     spec = SemanticProgramSpec.model_validate({
-        "title": "khoá miền Tin học",
+        "title": "chỉ vô hướng",
         "memory_declarations": [
-            {"name": "st", "type": "stack", "initial_value": []},
             {"name": "n", "type": "int", "initial_value": 3},
+            {"name": "nhan", "type": "str", "initial_value": "("},
         ],
         "statements": [],
     })
-    ket = type("K", (), {"final_memory": {"st": ["("], "n": 3}})()
+    ket = type("K", (), {"final_memory": {"n": 3, "nhan": "("}})()
     assert _tren_canh_3d(spec, ket) == set()
 
 
@@ -161,3 +161,40 @@ def test_CHI_MOT_nguon_su_that_cho_phep_phan_loai():
     src = f.read_text(encoding="utf-8")
     assert "la_doi_tuong_hinh_hoc" in src and "la_dai_luong_do" in src
     assert 'isinstance(gt, Fraction) and kieu.get' not in src
+
+
+# ── Luật CHUNG của cổng bề mặt, chuyển từ `tests/semantic_program/test_learner_surface.py` (/13) ─────────────────
+# File ấy khoá chúng bằng chương trình Tin học (ngăn xếp, tìm max) và payload 2D; miền Tin học đã gỡ, các luật thì
+# vẫn sống: mọi `MemoryType` phải có quyết định hiển thị, và chuỗi kỹ thuật không được rò lên lời kể.
+import typing  # noqa: E402
+
+from app.simulation.error_codes import SEMANTIC_FAILURE_CATEGORY, ErrorCode  # noqa: E402
+from app.simulation.semantic_program.contract import MemoryType  # noqa: E402
+from app.simulation.semantic_program.learner_surface import SURFACE_POLICY, _ro_ri  # noqa: E402
+
+
+@pytest.mark.parametrize("mt", sorted(typing.get_args(MemoryType)))
+def test_moi_memory_type_co_quyet_dinh_hien_thi_tuong_minh(mt):
+    """Thêm `MemoryType` mà quên chính sách hiển thị ⇒ ĐỎ ngay tại đây (bản cũ từng bỏ sót `tree_node` IM LẶNG)."""
+    assert mt in SURFACE_POLICY
+
+
+def test_ma_loi_be_mat_thieu_la_khoang_trong_kiem_chung():
+    assert SEMANTIC_FAILURE_CATEGORY[ErrorCode.LEARNER_SURFACE_INCOMPLETE.value] == "verification_gap"
+
+
+def _env_loi_ke(narration: str) -> dict:
+    return {"config": {"frames": [{"step_index": 0, "narration": narration, "objects": []}]}}
+
+
+@pytest.mark.parametrize("ro", ["undefined", "null", "[object Object]", "NaN", "Infinity"])
+def test_chuoi_ky_thuat_trong_loi_ke_bi_bat(ro):
+    """Giá trị hỏng nội suy vào câu nằm GIỮA câu, không đứng một mình."""
+    assert _ro_ri(_env_loi_ke(f"Độ dài SA bằng {ro}."))
+
+
+@pytest.mark.parametrize("ke", ["Độ dài SA bằng 0.", "", "Trung điểm M của SA"])
+def test_loi_ke_that_KHONG_bi_bat_oan(ke):
+    """Số 0 thật và câu rỗng đều hợp lệ — bẫy ngược chiều của `?? 0`. (Lời kể quét chặt hơn ô giá trị: một từ
+    `null` trong câu đã là rò, nên ca "chữ null là nội dung" của ô giá trị 2D không chuyển sang đây.)"""
+    assert _ro_ri(_env_loi_ke(ke)) == []

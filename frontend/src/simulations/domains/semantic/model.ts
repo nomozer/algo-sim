@@ -14,48 +14,14 @@
  * nên lời kể tới bước 15 trong khi ngăn xếp trên hình vẫn rỗng.
  */
 
+/**
+ * Đối tượng của một khung. (/13) Backend không còn phát đối tượng 2D nào (đường container của miền Tin học đã gỡ),
+ * nên mảng `objects` của khung luôn rỗng; kiểu giữ lại phần tối thiểu để đọc lịch sử cũ mà không đoán nghĩa của nó.
+ */
 export interface SemanticObject {
   id: string;
   type: string;
   label?: string;
-  items?: unknown[];
-  /**
-   * Giá trị hộp — **SCALAR đã định dạng** cho người đọc (`"√3"`, `"3/5"`,
-   * `"(1, 2, 3)"`), hoặc một số/chuỗi thường với bài Tin học.
-   *
-   * ⚠️ KHÔNG phải đối tượng runtime. Backend từng đặt thẳng `Vec3`/`Fraction`
-   * vào đây; envelope khi ấy không `json.dumps` được và cả lượt phân tích chết
-   * ở bước ghi cache — sau khi mọi cổng đã báo thành công. Nay biên vận chuyển
-   * (`semantic_program/transport.py`) đảm bảo nó luôn là scalar, nên
-   * `String(value)` an toàn và không bao giờ ra `[object Object]`.
-   */
-  value?: unknown;
-  /**
-   * CẤU TRÚC chính xác đi kèm, khi giá trị là số chính xác hay vật hình học:
-   * `{kind:"rational"|"radical"|"vec3", …}`. `value` là DẪN XUẤT của nó.
-   *
-   * Vắng mặt khi giá trị vốn đã là JSON thường — bọc một `int` vào một dict
-   * chỉ để "cho đồng bộ" là dựng hình dạng thứ hai cho cùng một thứ.
-   */
-  exact?: { kind: string; [k: string]: unknown };
-  target?: string;
-  target_index?: number;
-  capacity?: number;
-  /* ── `graph_view` (2026-08-21) ──────────────────────────────────────────
-     Cả bốn trường đều do BACKEND đọc từ `memory_snapshot` rồi gửi xuống.
-     Renderer KHÔNG được suy ra `visited` bằng cách tự chạy lại BFS/DFS —
-     làm thế là dựng engine thứ hai ở tầng trình bày (R0 cấm). Không khai
-     `visited_ref`/`current_ref` thì hai trường dưới vắng mặt, và đồ thị vẽ
-     không tô trạng thái. */
-  nodes?: string[];
-  edges?: string[][];
-  visited?: string[];
-  current?: string | null;
-  /* ── `map_view` (2026-08-23) ────────────────────────────────────────────
-     Cặp khoá→giá trị, ĐÃ SẮP THEO KHOÁ ở backend. Renderer không sắp lại và
-     không tự suy: thứ tự chèn phụ thuộc lượt chạy nên hai lần chụp cùng một
-     bài sẽ cho hình khác nhau. Cùng luật với `nodes`/`edges`. */
-  entries?: [string, unknown][];
 }
 
 export interface SemanticFrame {

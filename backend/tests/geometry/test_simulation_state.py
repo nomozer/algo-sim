@@ -192,15 +192,15 @@ def test_doi_tuong_CHUA_DUNG_khong_vao_canh():
     assert "H" not in {o["id"] for o in build_scene(spec, kq.final_memory)["objects"]}
 
 
-def test_bien_TIN_HOC_khong_vao_canh_3D():
-    """Một `array` không thuộc cảnh hình học. Nhét vào là mời renderer đoán."""
+def test_bien_KHONG_hinh_hoc_khong_vao_canh_3D():
+    """Vô hướng không phải vật hình học. Nhét vào là mời renderer đoán. (/13: bản trước dùng `array` Tin học.)"""
     spec, kq = _chay({
-        "spec_version": "1.0", "title": "Dãy số Tin học",
+        "spec_version": "1.0", "title": "Chỉ vô hướng",
         "memory_declarations": [
-            {"name": "day", "type": "array", "initial_value": [3, 1, 2]},
+            {"name": "nhan", "type": "str", "initial_value": "dãy"},
             {"name": "n", "type": "int", "initial_value": 3},
         ],
-        "statements": [], "visual_bindings": {},
+        "statements": [],
     })
     assert build_scene(spec, kq.final_memory)["objects"] == []
 

@@ -36,7 +36,6 @@ def _spec(mem: list[dict], stmts: list[dict]) -> SemanticProgramSpec:
         "pedagogical_intent": "Thấy chân đường vuông góc nằm ở đâu.",
         "memory_declarations": mem,
         "statements": stmts,
-        "visual_bindings": {"containers": [], "pointers": [], "value_boxes": []},
     })
 
 
@@ -187,3 +186,64 @@ def test_ratio_KHONG_bi_hieu_nham_la_ten_vung_nho():
           "expr": {"kind": "divide_segment", "a": "A", "b": "B", "ratio": "2/3"}}],
     )
     assert _bao_dong(_phu_thuoc(s.statements, frozenset()), "M") == {"A", "B"}
+
+
+# ── Luật CHUNG của C₁a/C₁b, chuyển từ `tests/semantic_program/test_coverage_gate_c1{a,b}.py` (/13) ─────────────
+# Hai file ấy khoá các luật dưới đây bằng chương trình Tin học (`tìm max` trên mảng). Gỡ miền Tin học không gỡ luật:
+# cổng phủ vẫn chạy trên mọi nghĩa vụ hình học, nên cùng luật được khoá lại trên phép chiếu `H` của bài trên.
+
+def _chieu(*, trong_nhanh_chet: bool = False) -> SemanticProgramSpec:
+    dung = {"kind": "construct_point", "target_var": "H",
+            "expr": {"kind": "project_onto", "point": "S", "target": "day"}}
+    if trong_nhanh_chet:
+        dung = {"kind": "if", "then_body": [dung], "else_body": [],
+                "condition": {"kind": "compare", "op": "==", "left": {"kind": "literal", "value": 1},
+                              "right": {"kind": "literal", "value": 2}}}
+    return _spec(
+        [{"name": "S", "type": "point3", "initial_value": [0, 0, 2]},
+         {"name": "day", "type": "plane3", "initial_value": _DAY},
+         {"name": "H", "type": "point3", "initial_value": None}],
+        [dung],
+    )
+
+
+def test_witness_CHUA_KHAI_thi_C1a_tu_choi():
+    r = _c1a("point_on_plane", "day", "khong_khai", _chieu())
+    assert not r.ok and r.error_code == "REQUESTED_OPERATION_UNCOVERED"
+
+
+def test_THIEU_witness_thi_C1a_tu_choi():
+    hop_dong = RequestContract(facts=[], obligations=[Obligation(kind="point_on_plane", container="day", params={})])
+    r = check_structural_coverage(hop_dong, _chieu())
+    assert not r.ok and any("witness" in m for m in r.missing), r.missing
+
+
+def test_chu_the_SAI_KIEU_cho_nghia_vu_thi_C1a_tu_choi():
+    """`point_on_plane` nhận một MẶT PHẲNG; gắn nó lên một điểm là sai từ vựng, không phải một đề khác."""
+    assert not _c1a("point_on_plane", "S", "H", _chieu()).ok
+
+
+def test_hop_dong_RONG_thi_ca_hai_cong_deu_qua():
+    from app.simulation.semantic_program.interpreter import SemanticProgramInterpreter
+
+    s = _chieu()
+    assert check_structural_coverage(RequestContract(), s).ok
+    assert check_realized_coverage(RequestContract(), s, SemanticProgramInterpreter().execute(s)).ok
+
+
+def test_hop_dong_la_BAT_BIEN():
+    """Nghĩa vụ đóng băng — tầng sinh KHÔNG có quyền khai lại (§5.2)."""
+    import pydantic
+
+    c = _hop_dong("point_on_plane", "day", "H")
+    with pytest.raises(pydantic.ValidationError):
+        c.obligations = ()
+
+
+def test_C1a_QUA_nhung_C1b_TRUOT_khi_witness_chi_dung_trong_nhanh_chet():
+    """Toàn bộ lý do C₁b tồn tại: có đường tạo ra `H` (C₁a), nhưng lượt chạy không bao giờ đi đường ấy."""
+    s = _chieu(trong_nhanh_chet=True)
+    assert _c1a("point_on_plane", "day", "H", s).ok
+    r = _c1b("point_on_plane", "day", "H", s)
+    assert not r.ok and r.error_code == "OBLIGATION_WITNESS_UNREALIZED", r
+    assert _c1b("point_on_plane", "day", "H", _chieu()).ok

@@ -155,11 +155,7 @@ def test_the_hinh_hoc_mang_kieu_toan_hang():
     assert "không theo chữ trong đề" in the
 
 
-def test_the_TIN_HOC_khong_mang_bang_phep_do():
-    """`measure` là biểu thức hình học; đề Tin học không bao giờ phát nó, nên
-    bảng ở đó là byte thừa — và ngân sách thẻ tồn tại đúng để chặn kiểu
-    thêm-vì-tiện ấy."""
-    assert "không theo chữ trong đề" not in grammar_card(None)
+# (/13) `test_the_TIN_HOC_khong_mang_bang_phep_do` đã gỡ cùng thẻ Tin học (bản đầy đủ của `grammar_card`).
 
 
 def test_bang_chung_offline_replay_con_nguyen_trong_the():

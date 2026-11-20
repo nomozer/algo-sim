@@ -6,7 +6,6 @@ from .contract import (
     ValueExpr,
     ConditionExpr,
     SemanticStatement,
-    VisualBindings,
     generate_json_schema,
 )
 from .validator import validate_semantic_program, ValidationResult
@@ -24,7 +23,6 @@ __all__ = [
     "ValueExpr",
     "ConditionExpr",
     "SemanticStatement",
-    "VisualBindings",
     "generate_json_schema",
     "validate_semantic_program",
     "ValidationResult",
