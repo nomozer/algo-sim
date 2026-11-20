@@ -70,7 +70,10 @@ const RAW_MACHINE_LEAK_RE =
   /::|@[a-zA-Z0-9_]+|_prime\b|Traceback|\b(?:kq|td|mp_td|khoi|derived|tam_cau|tx_cau|mp_tx|mp_day|day_k)_[a-zA-Z0-9_]+\b/i;
 
 function resolveBackendPython(): string {
+  // `ALGO_SIM_PYTHON` first: the same override `scripts/full-gate.mjs` honours, so a worktree without its own venv
+  // (owner policy: one shared worktree) runs this contract instead of failing on a missing path.
   const candidates = [
+    ...(process.env.ALGO_SIM_PYTHON ? [process.env.ALGO_SIM_PYTHON] : []),
     path.join(BACKEND_DIR, ".venv/Scripts/python.exe"),
     path.join(BACKEND_DIR, ".venv/bin/python"),
     path.resolve(WORKTREE_ROOT, "../algo-sim/backend/.venv/Scripts/python.exe"),
