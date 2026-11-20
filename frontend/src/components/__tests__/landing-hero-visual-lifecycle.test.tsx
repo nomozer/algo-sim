@@ -5,10 +5,7 @@ import { afterEach, describe, expect, it } from "vitest";
 import { useAuthStore, type AuthUser } from "../../state/auth";
 import { LandingView, readLandingPrototypeMode } from "../LandingView";
 import { canonicalPathForView, resolveLocationRoute } from "../AxoErrorExperience";
-import {
-  AXO_MINIMAL_HERO_STEPS,
-  LandingHeroV14,
-} from "../landing/LandingHeroV14";
+import { LandingHeroV14 } from "../landing/LandingHeroV14";
 import { LandingPreviewV14 } from "../landing/LandingPreviewV14";
 
 function syncAuthStoreForSSR() {
@@ -48,7 +45,7 @@ describe("AXO Landing V1.4 — Minimal Product-First Hero, Cleanup & Lifecycle",
     expect(prodHtml).not.toContain("axo-v14-root");
   });
 
-  it("renders Notion-minimal left copy (without circle stroke) + verified product cube visual on right", () => {
+  it("renders Notion-minimal left copy (without circle stroke) + Bundaumayo-composed Atelier studio diorama visual on right", () => {
     useAuthStore.setState({ user: null });
     syncAuthStoreForSSR();
     const v14Html = renderToStaticMarkup(<LandingPreviewV14 />);
@@ -59,7 +56,7 @@ describe("AXO Landing V1.4 — Minimal Product-First Hero, Cleanup & Lifecycle",
 
     const heroSlice = v14Html.slice(heroStart, storyStart);
     expect(heroSlice).toContain('id="axo-v14-hero-heading"');
-    expect(heroSlice).toContain("axo-v14-hero-minimal");
+    expect(heroSlice).toContain("axo-v14-hero-atelier");
     expect(heroSlice).toContain("Hình học không gian,");
     expect(heroSlice).toContain("dễ hình dung hơn.");
     expect(heroSlice).not.toContain("axo-v14-anno-circle");
@@ -68,14 +65,12 @@ describe("AXO Landing V1.4 — Minimal Product-First Hero, Cleanup & Lifecycle",
     expect(heroSlice).toContain('id="btn-landing-hero-story"');
     expect(heroSlice).toContain("Xem cách hoạt động");
     expect(heroSlice).toContain('id="landing-hero-sculpture"');
-    expect(heroSlice).toContain('data-hero-mode="minimal-product-first"');
-    expect(heroSlice).toContain("Lập phương ABCD.A′B′C′D′");
-    expect(heroSlice).toContain("Lục giác đều");
+    expect(heroSlice).toContain('data-hero-mode="atelier-studio-diorama"');
+    expect(heroSlice).toContain("/assets/landing/hero-studio/hero-studio-diorama.png");
+    expect(heroSlice).toContain("/assets/landing/hero-studio/hero-float-plane.png");
+    expect(heroSlice).toContain("/assets/landing/hero-studio/hero-float-orbit.png");
     expect(heroSlice).not.toContain("12√3");
-    expect(AXO_MINIMAL_HERO_STEPS).toHaveLength(3);
-    for (const step of AXO_MINIMAL_HERO_STEPS) {
-      expect(heroSlice).toContain(`id="btn-landing-hero-step-${step.id}"`);
-    }
+    expect(heroSlice).not.toContain("axo-v14-hero-minimal");
 
     expect(heroSlice).not.toContain("<canvas");
     expect(heroSlice).not.toContain("axo-v14-portal-");
@@ -97,12 +92,15 @@ describe("AXO Landing V1.4 — Minimal Product-First Hero, Cleanup & Lifecycle",
     expect(authHtml).not.toContain("Đăng nhập ngay");
   });
 
-  it("enforces full cleanup of retired portals, glass sculpture PNGs, and unused r3f dependencies", () => {
+  it("enforces full cleanup of retired portals, glass sculpture PNGs, and unused r3f dependencies, while verifying studio plates exist", () => {
     const feRoot = path.resolve(__dirname, "../../..");
     expect(fs.existsSync(path.join(feRoot, "src/prototypes/enter-portals-ref"))).toBe(false);
     expect(fs.existsSync(path.join(feRoot, "public/draco"))).toBe(false);
     expect(fs.existsSync(path.join(feRoot, "public/assets/landing/hero-concept"))).toBe(false);
     expect(fs.existsSync(path.join(feRoot, "src/components/landing/portals"))).toBe(false);
+    expect(fs.existsSync(path.join(feRoot, "public/assets/landing/hero-studio/hero-studio-diorama.png"))).toBe(true);
+    expect(fs.existsSync(path.join(feRoot, "public/assets/landing/hero-studio/hero-float-plane.png"))).toBe(true);
+    expect(fs.existsSync(path.join(feRoot, "public/assets/landing/hero-studio/hero-float-orbit.png"))).toBe(true);
 
     const pkg = JSON.parse(fs.readFileSync(path.join(feRoot, "package.json"), "utf8")) as {
       dependencies?: Record<string, string>;
