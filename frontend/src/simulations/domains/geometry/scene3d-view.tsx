@@ -4131,6 +4131,37 @@ export function nhanChuaToiCho(lech: { dx: number; dy: number }, dich: { dx: num
   return lech.dx !== dich.dx || lech.dy !== dich.dy;
 }
 
+/**
+ * Compensates safe camera NDC framing bounds by pixel label padding and lens-shift (`setViewOffset`) so
+ * projected vertices and 2D labels fit inside the canvas before user orbit/reset (`V11-VIS-1`).
+ */
+export function tinhVungAnToanKhungNhin(
+  tc: {
+    tiLeDoc: number;
+    tiLeNgang: number;
+    dichTamNgang: number;
+    dichTamDoc: number;
+  },
+  w: number,
+  h: number,
+): VungAnToanNdc {
+  const safeW = Math.max(w, 1);
+  const safeH = Math.max(h, 1);
+  const padX = Math.min(0.22, 48 / safeW);
+  const padTop = Math.min(0.24, 52 / safeH);
+  const padBot = Math.min(0.22, 46 / safeH);
+  const screenXMin = -Math.min(0.88, 1 - padX);
+  const screenXMax = Math.min(0.88, 1 - padX);
+  const screenYMin = -Math.min(0.86, 1 - padBot);
+  const screenYMax = Math.min(0.86, 1 - padTop);
+  return {
+    xMin: Math.min(-0.18, Math.max(-tc.tiLeNgang, screenXMin - tc.dichTamNgang)),
+    xMax: Math.max(0.18, Math.min(tc.tiLeNgang, screenXMax - tc.dichTamNgang)),
+    yMin: Math.min(-0.18, Math.max(-tc.tiLeDoc, screenYMin - tc.dichTamDoc)),
+    yMax: Math.max(0.18, Math.min(tc.tiLeDoc, screenYMax - tc.dichTamDoc)),
+  };
+}
+
 export function tinhViTriNhanDiem(
   diem: readonly { id: string; x: number; y: number; w: number; h: number }[],
   canh2d: readonly { ax: number; ay: number; bx: number; by: number }[],
@@ -4139,6 +4170,7 @@ export function tinhViTriNhanDiem(
    *  hướng cũ được cộng tối đa `THUONG_GIU_HUONG` điểm, đủ để hai phía tương đương không đổi qua lại giữa các khung khi
    *  xoay, quá nhỏ để thắng một va chạm thật (phạt tới ~77 điểm khi đè lên nét). */
   huongTruoc?: Map<string, number>,
+  khung?: { w: number; h: number; pad?: number },
 ): Map<string, { x: number; y: number; duoi: boolean }> {
   const ra = new Map<string, { x: number; y: number; duoi: boolean }>();
   if (diem.length === 0) return ra;
@@ -4234,12 +4266,29 @@ export function tinhViTriNhanDiem(
         }
       }
 
+      if (khung && khung.w > 0 && khung.h > 0) {
+        const pad = khung.pad ?? 8;
+        const over = Math.max(0, pad - lx)
+          + Math.max(0, lx + cw - (khung.w - pad))
+          + Math.max(0, pad - ly)
+          + Math.max(0, ly + ch - (khung.h - pad));
+        if (over > 0) {
+          score -= 180 + over * 10;
+        }
+      }
+
       if (score > bestScore) {
         bestScore = score;
         bestLx = lx;
         bestLy = ly;
         bestTheta = theta;
       }
+    }
+
+    if (khung && khung.w > 0 && khung.h > 0) {
+      const pad = khung.pad ?? 8;
+      bestLx = Math.max(pad, Math.min(Math.max(pad, khung.w - pad - cw), bestLx));
+      bestLy = Math.max(pad, Math.min(Math.max(pad, khung.h - pad - ch), bestLy));
     }
 
     huongTruoc?.set(p.id, bestTheta);
@@ -5393,7 +5442,7 @@ export function Scene3DWorkspace({
         const [cw, ch] = co.get(el)!;
         ungVienDiem2d.push({ el, id, x, y, w: cw, h: ch, uuTien: Number(el.dataset.uuTien ?? "1") });
       }
-      const viTriToiUu = tinhViTriNhanDiem(ungVienDiem2d, canh2d, gocVuongPts, huongNhanRef.current);
+      const viTriToiUu = tinhViTriNhanDiem(ungVienDiem2d, canh2d, gocVuongPts, huongNhanRef.current, { w, h, pad: 8 });
       nhanDangTruot = false;
       for (const u of ungVienDiem2d) {
         const dich = viTriToiUu.get(u.id) ?? { x: u.x - (u.w || 18) / 2, y: u.y - 1.4 * (u.h || 18), duoi: false };
@@ -6214,17 +6263,16 @@ export function Scene3DWorkspace({
       return { dsNguon, infoTam, diem };
     };
 
-    const vungAnToanTuTuyChon = (tc: {
-      tiLeDoc: number;
-      tiLeNgang: number;
-      dichTamNgang: number;
-      dichTamDoc: number;
-    }): VungAnToanNdc => ({
-      xMin: Math.max(-0.88, -tc.tiLeNgang),
-      xMax: Math.min(0.88, tc.tiLeNgang),
-      yMin: Math.max(-0.86, -tc.tiLeDoc),
-      yMax: Math.min(0.86, tc.tiLeDoc),
-    });
+    const vungAnToanTuTuyChon = (
+      tc: {
+        tiLeDoc: number;
+        tiLeNgang: number;
+        dichTamNgang: number;
+        dichTamDoc: number;
+      },
+      w: number,
+      h: number,
+    ): VungAnToanNdc => tinhVungAnToanKhungNhin(tc, w, h);
 
     const sanKhau = container.closest(".geo3d-san") ?? container.parentElement;
     let trangThaiPanelTruoc = Boolean(
@@ -6263,7 +6311,7 @@ export function Scene3DWorkspace({
       const w = renderer.domElement.clientWidth || 1;
       const h = renderer.domElement.clientHeight || 1;
       const kn = (infoTam
-        ? khungNhinQuanhTam(diem, infoTam.tamXoay, cam.fov, w / h, huong, vungAnToanTuTuyChon(tc))
+        ? khungNhinQuanhTam(diem, infoTam.tamXoay, cam.fov, w / h, huong, vungAnToanTuTuyChon(tc, w, h))
         : khungNhinSuPham(diem, [], [], cam.fov, w / h, huong, { ...tc, dichTamDoc: 0 }))
         ?? khungNhinVua(hopBaoCuaDiem(diem), cam.fov, w / h);
       if (!kn) return;
