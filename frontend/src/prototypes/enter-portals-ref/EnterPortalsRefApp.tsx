@@ -1,36 +1,24 @@
-import * as THREE from "three";
-import { useEffect, useRef, useState } from "react";
-import type { ComponentRef, ReactNode } from "react";
+import { Suspense, useRef, useState } from "react";
+import { Canvas } from "@react-three/fiber";
+import { Gltf, Preload } from "@react-three/drei";
+import { Logo } from "@pmndrs/branding";
 import {
-  Canvas,
-  extend,
-  useFrame,
-  useThree,
-  type GroupProps,
-} from "@react-three/fiber";
-import {
-  useCursor,
-  MeshPortalMaterial,
-  CameraControls,
-  Gltf,
-  Text,
-  Preload,
-} from "@react-three/drei";
-import { useRoute, useLocation } from "wouter";
-import { easing, geometry } from "maath";
-import { suspend } from "suspend-react";
-import type {} from "./r3f-jsx";
+  GOLDEN_PORTAL_HEIGHT,
+  PortalCameraRig,
+  PortalFrame,
+} from "../../components/landing/portals/PortalEngine";
 
-import picklesModel from "./assets/pickles_3d_version_of_hyuna_lees_illustration-transformed.glb?url";
-import teaModel from "./assets/fiesta_tea-transformed.glb?url";
-import stillModel from "./assets/still_life_based_on_heathers_artwork-transformed.glb?url";
+const picklesModel = new URL(
+  "./assets/pickles_3d_version_of_hyuna_lees_illustration-transformed.glb",
+  import.meta.url,
+).href;
+const teaModel = new URL("./assets/fiesta_tea-transformed.glb", import.meta.url).href;
+const stillModel = new URL(
+  "./assets/still_life_based_on_heathers_artwork-transformed.glb",
+  import.meta.url,
+).href;
 
-extend({ RoundedPlaneGeometry: geometry.RoundedPlaneGeometry });
-
-const regular = import("@pmndrs/assets/fonts/inter_regular.woff");
-const medium = import("@pmndrs/assets/fonts/inter_medium.woff");
-
-export const GOLDEN_PORTAL_HEIGHT = 1.61803398875;
+export { GOLDEN_PORTAL_HEIGHT };
 
 export interface ReferencePortalSpec {
   id: string;
@@ -42,6 +30,7 @@ export interface ReferencePortalSpec {
   width: number;
   height: number;
   radius: number;
+  modelSrc: string;
   modelScale?: number;
   modelPosition: [number, number, number];
 }
@@ -57,6 +46,7 @@ export const REFERENCE_PORTAL_SPECS: readonly ReferencePortalSpec[] = [
     width: 1,
     height: GOLDEN_PORTAL_HEIGHT,
     radius: 0.1,
+    modelSrc: picklesModel,
     modelScale: 8,
     modelPosition: [0, -0.7, -2],
   },
@@ -69,6 +59,7 @@ export const REFERENCE_PORTAL_SPECS: readonly ReferencePortalSpec[] = [
     width: 1,
     height: GOLDEN_PORTAL_HEIGHT,
     radius: 0.1,
+    modelSrc: teaModel,
     modelPosition: [0, -2, -3],
   },
   {
@@ -81,6 +72,7 @@ export const REFERENCE_PORTAL_SPECS: readonly ReferencePortalSpec[] = [
     width: 1,
     height: GOLDEN_PORTAL_HEIGHT,
     radius: 0.1,
+    modelSrc: stillModel,
     modelScale: 2,
     modelPosition: [0, -0.8, -4],
   },
@@ -88,9 +80,17 @@ export const REFERENCE_PORTAL_SPECS: readonly ReferencePortalSpec[] = [
 
 export function EnterPortalsRefApp({
   eventSource,
+  activeId: controlledActiveId,
+  onActiveIdChange,
 }: {
   eventSource?: HTMLElement;
+  activeId?: string | null;
+  onActiveIdChange?: (id: string | null) => void;
 }) {
+  const [uncontrolledActiveId, setUncontrolledActiveId] = useState<string | null>(null);
+  const activeId = controlledActiveId !== undefined ? controlledActiveId : uncontrolledActiveId;
+  const setActiveId = onActiveIdChange ?? setUncontrolledActiveId;
+
   return (
     <Canvas
       camera={{ fov: 75, position: [0, 0, 20] }}
@@ -103,141 +103,88 @@ export function EnterPortalsRefApp({
       eventPrefix="client"
     >
       <color attach="background" args={["#f0f0f0"]} />
-      <Frame
-        id="01"
-        name={`pick\nles`}
-        author="Omar Faruq Tawsif"
-        bg="#e4cdac"
-        position={[-1.15, 0, 0]}
-        rotation={[0, 0.5, 0]}
-      >
-        <Gltf src={picklesModel} scale={8} position={[0, -0.7, -2]} useDraco="/draco/" />
-      </Frame>
-      <Frame id="02" name="tea" author="Omar Faruq Tawsif">
-        <Gltf src={teaModel} position={[0, -2, -3]} useDraco="/draco/" />
-      </Frame>
-      <Frame
-        id="03"
-        name="still"
-        author="Omar Faruq Tawsif"
-        bg="#d1d1ca"
-        position={[1.15, 0, 0]}
-        rotation={[0, -0.5, 0]}
-      >
-        <Gltf src={stillModel} scale={2} position={[0, -0.8, -4]} useDraco="/draco/" />
-      </Frame>
-      <Rig />
+      {REFERENCE_PORTAL_SPECS.map((spec) => (
+        <PortalFrame
+          key={spec.id}
+          id={spec.id}
+          title={spec.name}
+          indexLabel={`/${spec.id}`}
+          subtitle={spec.author}
+          bg={spec.bg}
+          width={spec.width}
+          height={spec.height}
+          radius={spec.radius}
+          position={spec.position}
+          rotation={spec.rotation}
+          activationMode="double-click"
+          isActive={activeId === spec.id}
+          onSelect={(id) => setActiveId(id)}
+        >
+          <Suspense fallback={null}>
+            <Gltf
+              src={spec.modelSrc}
+              scale={spec.modelScale}
+              position={spec.modelPosition}
+              useDraco="/draco/"
+            />
+          </Suspense>
+        </PortalFrame>
+      ))}
+      <PortalCameraRig
+        activeId={activeId}
+        galleryPosition={[0, 0, 2]}
+        galleryFocus={[0, 0, 0]}
+        enterOffset={[0, 0.5, 0.25]}
+        enterFocus={[0, 0, -2]}
+        allowGalleryOrbit
+        allowWheelZoom
+      />
       <Preload all />
     </Canvas>
   );
 }
 
-type FrameProps = Omit<GroupProps, "id"> & {
-  id: string;
-  name: string;
-  author: string;
-  bg?: string;
-  width?: number;
-  height?: number;
-  children?: ReactNode;
-};
+/**
+ * Invariant Gate 1 Enter Portals Reference wrapper hosted inside the single SPA root
+ * at `/about?preview=portal-reference` without altering reference scene geometry,
+ * camera framing, interaction, or leaking global styles.
+ */
+export function ReferencePortalPreview() {
+  const [activeId, setActiveId] = useState<string | null>(null);
+  const stageRef = useRef<HTMLDivElement | null>(null);
 
-function Frame({
-  id,
-  name,
-  author,
-  bg,
-  width = 1,
-  height = GOLDEN_PORTAL_HEIGHT,
-  children,
-  ...props
-}: FrameProps) {
-  const portal = useRef<ComponentRef<typeof MeshPortalMaterial>>(null!);
-  const [, setLocation] = useLocation();
-  const [, params] = useRoute("/item/:id");
-  const [hovered, hover] = useState(false);
-  useCursor(hovered);
-  useFrame((_state, dt) =>
-    easing.damp(portal.current, "blend", params?.id === id ? 1 : 0, 0.2, dt),
-  );
   return (
-    <group {...props}>
-      <Text
-        font={(suspend(medium) as { default: string }).default}
-        fontSize={0.3}
-        anchorY="top"
-        anchorX="left"
-        lineHeight={0.8}
-        position={[-0.375, 0.715, 0.01]}
-        material-toneMapped={false}
-      >
-        {name}
-      </Text>
-      <Text
-        font={(suspend(regular) as { default: string }).default}
-        fontSize={0.1}
-        anchorX="right"
-        position={[0.4, -0.659, 0.01]}
-        material-toneMapped={false}
-      >
-        /{id}
-      </Text>
-      <Text
-        font={(suspend(regular) as { default: string }).default}
-        fontSize={0.04}
-        anchorX="right"
-        position={[0.0, -0.677, 0.01]}
-        material-toneMapped={false}
-      >
-        {author}
-      </Text>
-      <mesh
-        name={id}
-        onDoubleClick={(e) => (
-          e.stopPropagation(),
-          setLocation("/item/" + e.object.name)
-        )}
-        onPointerOver={() => hover(true)}
-        onPointerOut={() => hover(false)}
-      >
-        <roundedPlaneGeometry args={[width, height, 0.1]} />
-        <MeshPortalMaterial
-          ref={portal}
-          events={params?.id === id}
-          side={THREE.DoubleSide}
-          blur={0}
-          resolution={512}
+    <div
+      ref={stageRef}
+      id="axo-portal-reference-stage"
+      className="axo-ref-portal-stage"
+      data-active-portal={activeId ?? ""}
+    >
+      <EnterPortalsRefApp
+        eventSource={stageRef.current ?? undefined}
+        activeId={activeId}
+        onActiveIdChange={setActiveId}
+      />
+      <div className="axo-ref-portal-overlay">
+        <a href="https://pmnd.rs/" className="axo-ref-portal-pmndrs">
+          pmnd.rs
+          <br />
+          dev collective
+        </a>
+        <div className="axo-ref-portal-date">15/06/2023</div>
+        <Logo className="axo-ref-portal-logo" />
+        <a
+          id="btn-ref-portal-back"
+          className="axo-ref-portal-back"
+          href="#back"
+          onClick={(e) => {
+            e.preventDefault();
+            setActiveId(null);
+          }}
         >
-          <color attach="background" args={[bg ?? "#ffffff"]} />
-          {children}
-        </MeshPortalMaterial>
-      </mesh>
-    </group>
-  );
-}
-
-function Rig({
-  position = new THREE.Vector3(0, 0, 2),
-  focus = new THREE.Vector3(0, 0, 0),
-}: {
-  position?: THREE.Vector3;
-  focus?: THREE.Vector3;
-}) {
-  const { controls, scene } = useThree();
-  const [, params] = useRoute("/item/:id");
-  useEffect(() => {
-    const active = params?.id ? scene.getObjectByName(params.id) : undefined;
-    if (active && active.parent) {
-      active.parent.localToWorld(position.set(0, 0.5, 0.25));
-      active.parent.localToWorld(focus.set(0, 0, -2));
-    }
-    (controls as unknown as CameraControls | null)?.setLookAt(
-      ...(position.toArray() as [number, number, number]),
-      ...(focus.toArray() as [number, number, number]),
-      true,
-    );
-  });
-  return (
-    <CameraControls makeDefault minPolarAngle={0} maxPolarAngle={Math.PI / 2} />
+          {activeId ? "< back" : "double click to enter portal"}
+        </a>
+      </div>
+    </div>
   );
 }
