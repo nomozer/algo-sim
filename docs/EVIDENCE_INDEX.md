@@ -1,3 +1,18 @@
+## WAVE_ID = AXO_HYBRID_SIMULATION_INTENT_GENERALIZATION_GROUNDED_SLM_RECOVERY
+
+- `RUN_ID` = axo-hybrid-simulation-intent-generalization-grounded-slm-recovery
+- `REPORT` = docs/evaluation/geometry/runs/axo-hybrid-simulation-intent-generalization-grounded-slm-recovery/FINAL_MASTER_REPORT.md
+- `ARTIFACT_DIRECTORY` = docs/evaluation/geometry/runs/axo-hybrid-simulation-intent-generalization-grounded-slm-recovery/
+- `START_BASE` = 2f12b96b0 (AXO HYBRID /10 head)
+- `CODE_COMMIT` = 806a7d338 · 0557dcaf6 · 3e5eb8809 · fcf68e91b · b15fd9e92 · 5c25c7ea9 (CACHE_VERSION 146) · 31e6b47c9 · candidate fad0db5f2 / 18aadea7b (13a320603f40bbc32730c26fc6c3232b6c0f00fdfdc2e3e49ba258aca25806f6, 123 files)
+- `CLASSIFICATION` = SLM_CAUSAL_AUDIT + PRODUCT_FIXES + BLIND_LIVE_BROWSER_ACCEPTANCE_LOCAL_ONLY_SCOPED
+- `PRODUCT_CHANGE` = YES (parser, SLM adapter, Source Gate `_VAT_MO_PHONG` only, frontend); CACHE_VERSION 145 -> 146; default HYBRID_ROUTE_MODE = live unchanged
+- `MODEL_REQUEST_COUNT` = 0 cloud; local AxoV9 GGUF only
+- `VERIFICATION` = V11_LIVE_ACCEPTANCE_FREEZE.json (frozen before any live call, fec016682); V11_LIVE_ACCEPTANCE_RESULTS.json; V11_MATHEMATICAL_SCENE_VALIDATION.json; V11_SLM_REQUIRED_EVALUATION.json; V11_UI_SCENARIO_RESULTS.json; evidence/browser/; evidence/ui/; evidence/network/; evidence/memory/; evidence/slm20/; evidence/v17/
+- `CORRECTS` = NONE (adds to /10: SLM 0/20 was contract/Source Gate, not model capability — 17/20 model outputs correct)
+- `CORRECTED_BY` = NONE
+- `LIMITATIONS` = author-constructed blind set (EXTERNAL_INDEPENDENCE = NOT_MEASURED; S09-S11 SPEC_ANTICIPATED); LIVE_SIMULATION_ACCEPTED = FALSE (0.659 < 0.85); GROUNDED_SLM_RECOVERY_VERIFIED = FALSE (4/30); U08 fix and SLM stratum audit are post hoc; I06 harness threshold corrected after the first run (disclosed); PHYSICAL_TARGET_HARDWARE / GEMINI_PARITY / REAL_STUDENT_USABILITY = NOT_MEASURED
+
 # EVIDENCE_INDEX.md — Chỉ mục bằng chứng và chuỗi đính chính (Master Evidence Index)
 
 ## WAVE_ID = AXO_HYBRID_LOCAL_ONLY_3D_SIMULATION_LIVE_ACCEPTANCE_CUTOVER

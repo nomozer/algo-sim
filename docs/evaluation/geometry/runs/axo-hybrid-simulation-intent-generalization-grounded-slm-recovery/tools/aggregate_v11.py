@@ -67,7 +67,7 @@ for cid, c in CASES.items():
     rows.append({"case_id": cid, "intent": intent, "stratum": frz.get(cid, {}).get("stratum", "NEGATIVE"), "family": c["geometric_family"],
                  "http": r.get("http"), "route_status": r.get("route_status"), "extraction_mode": r.get("extraction_mode"),
                  "refusal_code": r.get("refusal_code"), "ux_state": r.get("ux_state"), "scene_validation": v.get("scene_validation"),
-                 "relations_checked": v.get("relations_checked"), "numeric": num, "visual_ok": visual if served else None, "interaction": inter,
+                 "relations_checked": len(v.get("relations") or []), "numeric": num, "visual_ok": visual if served else None, "interaction": inter,
                  "backend_total_ms": r.get("backend_total_ms"), "http_round_trip_ms": r.get("http_round_trip_ms"),
                  "first_visible_scene_ms": r.get("first_visible_scene_ms"), "first_interactive_frame_ms": r.get("first_interactive_frame_ms"),
                  "console_errors": r.get("console_errors"), "external_requests": r.get("external_requests"),
@@ -113,12 +113,18 @@ gates = {"primary_completion_ge_0.85": c_rate >= 0.85, "slm_rate_ge_0.30_and_ge_
 wr("V11_LIVE_ACCEPTANCE_RESULTS.json", {"schema": "axo-v11-live-acceptance-results/1", "blind": True,
     "freeze": rd("V11_LIVE_ACCEPTANCE_FREEZE.json")["code"], "criteria_sha256": rd("V11_LIVE_ACCEPTANCE_FREEZE.json")["inputs"]["criteria_sha256"],
     "rates": rates, "gates": gates, "cases": rows})
-wr("V11_SLM_STRATUM_RESULTS.json", {"schema": "axo-v11-slm-stratum/1", "rule": crit["slm_recovery"], "result": s,
+wr("V11_SLM_REQUIRED_EVALUATION.json", {"schema": "axo-v11-slm-stratum/1", "rule": crit["slm_recovery"], "result": s,
     "slm_provenance_scenes": [r["case_id"] for r in slm_scene], "rows": [r for r in rows if r["stratum"] == "SLM_REQUIRED"],
     "post_hoc_audit": "evidence/slm_stratum/v11_slm_stratum_audit.json", "post_hoc_first_failing_layer": rd(EV / "slm_stratum" / "v11_slm_stratum_audit.json")["first_failing_layer"],
     "post_hoc_split_rephrase_served_valid": rd(EV / "slm_stratum" / "v11_slm_stratum_audit.json")["split_served_valid"]})
 wr("V11_UNDERDETERMINED_RESULTS.json", {"schema": "axo-v11-underdetermined/1", "rule": crit["underdetermined"], "rows": und,
     "learner_text": next((r.get("learner_text_by_case") for r in ui.values() if r["scenario_id"] == "I05"), None)})
+v = rd(EV / "scene_validation_v11.json")
+wr("V11_MATHEMATICAL_SCENE_VALIDATION.json", {"schema": "axo-v11-scene-validation/1", "validator": v["validator"], "source": "evidence/scene_validation_v11.json",
+    "counts": {k: sum(r.get("scene_validation") == k for r in v["results"]) for k in ("MATHEMATICALLY_VALID", "MATHEMATICALLY_INVALID", "VALIDATION_ERROR", "NOT_SERVED")},
+    "relations_checked_total": sum(len(r.get("relations") or []) for r in v["results"]),
+    "relations_violated_total": sum(not x.get("holds") for r in v["results"] for x in (r.get("relations") or [])),
+    "results": v["results"]})
 wr("V11_UI_SCENARIO_RESULTS.json", {"schema": "axo-v11-ui-scenarios/1", "files": sorted({r["file"] for r in ui.values()}), "results": list(ui.values())})
 
 det = [r for r in rows if r["extraction_mode"] in ("LOCAL_DETERMINISTIC_PARSER", "LOCAL_PARSER_AFTER_V3_NORMALIZER")]
@@ -130,7 +136,7 @@ for t, g, n, ws, pv, cpu in mem:
 tot = {}
 for t, g, n, ws, pv, cpu in mem:
     tot[t] = tot.get(t, 0) + float(ws)
-wr("V11_PERFORMANCE_RESULTS.json", {"schema": "axo-v11-performance/1", "host": "this Windows 11 dev host only (no target-hardware claim)",
+wr("V11_FULL_STACK_PERFORMANCE.json", {"schema": "axo-v11-performance/1", "host": "this Windows 11 dev host only (no target-hardware claim)",
     "fast_path_backend_ms": dist([r["backend_total_ms"] for r in det]), "slm_path_backend_ms": dist([r["backend_total_ms"] for r in slm_path]),
     "fast_path_round_trip_ms": dist([r["http_round_trip_ms"] for r in det]), "slm_path_round_trip_ms": dist([r["http_round_trip_ms"] for r in slm_path]),
     "served_first_visible_scene_ms": dist([r["first_visible_scene_ms"] for r in rows if r["route_status"] == "SERVED"]),
