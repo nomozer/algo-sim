@@ -1,5 +1,14 @@
 # CODE_INDEX.md — Chỉ mục module + BỘ NHỚ KIẾN TRÚC
 
+## Local Model 1 finalization & test consolidation (AXO HYBRID /13, 2026-11-20)
+
+| Hạng mục / Vai trò | Đường dẫn |
+|---|---|
+| Kiểm tiền đề cache chung cho mọi test vô hiệu hoá (`assert_cache_policy_at_least(<bản giới thiệu>)`), thay 27 chỗ ghim giá trị `CACHE_VERSION` hiện hành; khoá thật vẫn là lock | `backend/tests/cache_policy.py` · khoá: `backend/tests/test_cache_identity.py` |
+| Gắn lại danh tính runtime cho ba template C21 đang PENDING (không bao giờ ghi phê duyệt; biên nhận ghi vào `--run-dir`), thay 24 bản sao `tools/refresh_pending_templates.py` theo run | `backend/scripts/refresh_pending_templates.py` · kiểm: `backend/tests/geometry/test_s2_student_language_pilot_runner.py::test_shared_template_refresh_rebinds_pending_templates_only_and_never_approves` |
+| Thiết diện: `ordered_vertex_*` / `polygon` / `vertex_sources` cùng một hoán vị, chu trình đọc theo tên mặt phẳng cắt | `backend/app/simulation/semantic_program/simulation_state.py` (`_can_chinh_chu_trinh_dinh`, `_gan_chu_trinh_canh_thiet_dien`) · kiểm: `backend/tests/geometry/test_backend_geometry_handoff_resolution.py` |
+| `zero_measure_audit` sinh từ sự kiện MEASURE giá trị 0 (không còn dán tay) | `backend/scripts/build_advanced_geometry_samples.py::zero_measure_audit` · đọc bởi `frontend/src/simulations/domains/geometry/backend-geometry-contracts.test.ts` |
+
 ## Compositional geometry language & grounded live acceptance (AXO HYBRID /12, 2026-11-20)
 
 | Hạng mục / Vai trò | Đường dẫn chuẩn (`4f4162d87` / `f3c185a08bf0f227…`, `124` files, `0` diff `A4` locked files) |

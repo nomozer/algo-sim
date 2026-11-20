@@ -1300,3 +1300,36 @@ def test_sha256_file_and_approval_terms_are_invariant_under_windows_crlf_checkou
     k1_tmpl = json.loads(Path(specs["K-1"]["template_path"]).read_text(encoding="utf-8"))
     k1_approved = {k: v for k, v in k1_tmpl.items() if k != "owner_decision"} | {"paid_project_confirmed": True}
     assert R.check_approval_terms(k1_corpus_crlf, k1_approved)["pilot"] == "K-1"
+
+
+def test_shared_template_refresh_rebinds_pending_templates_only_and_never_approves(tmp_path):
+    """`scripts/refresh_pending_templates.py` (shared since /13, replacing 24 per-run copies): identity fields follow
+    the runtime, the decision stays PENDING and unpaid, a non-pending template is refused untouched, and an existing
+    receipt is never overwritten."""
+    from scripts import refresh_pending_templates as T
+
+    corpus = tmp_path / "c.json"
+    corpus.write_text("{}", encoding="utf-8")
+    pending = {"owner_decision": T.PENDING, "paid_project_confirmed": False, "measured_system": "old"}
+    tpl = tmp_path / "k1.template.json"
+    tpl.write_text(json.dumps(pending), encoding="utf-8")
+    ident = {k: f"new-{k}" for k in T.KEYS}
+    specs = {"K-1": {"template_path": tpl, "corpus_path": corpus}}
+
+    out = T.refresh(tmp_path / "run", "test", specs=specs, ident=ident)
+    after = json.loads(tpl.read_text(encoding="utf-8"))
+    assert after["measured_system"] == after["measured_system_tree_hash"] == "new-measured_system"
+    assert (after["owner_decision"], after["paid_project_confirmed"]) == (T.PENDING, False)
+    assert out["rows"][0]["before"]["measured_system"] == "old"
+    assert json.loads((tmp_path / "run/logs/prior-k1.template.json").read_text(encoding="utf-8")) == pending
+
+    with pytest.raises(SystemExit, match="exists"):
+        T.refresh(tmp_path / "run", "again", specs=specs, ident=ident)
+
+    approved = tmp_path / "k1b.template.json"
+    approved.write_text(json.dumps({**pending, "owner_decision": "APPROVED"}), encoding="utf-8")
+    before = approved.read_bytes()
+    with pytest.raises(SystemExit, match="refusing"):
+        T.refresh(tmp_path / "run2", "test", specs={"K-1": {"template_path": approved, "corpus_path": corpus}},
+                  ident=ident)
+    assert approved.read_bytes() == before
