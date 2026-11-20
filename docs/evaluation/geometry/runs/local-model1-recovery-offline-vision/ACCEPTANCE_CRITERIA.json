@@ -1,0 +1,62 @@
+{
+  "schema": "axo-acceptance-criteria/1",
+  "run_id": "local-model1-recovery-offline-vision",
+  "manifest": {
+    "path": "ACCEPTANCE_MANIFEST.json",
+    "sha256": "d313abe7cffe49498e50f8f2c88175807af012a06dd3d34c29861c95c8b5476d"
+  },
+  "harness": {
+    "version": "axo-live-acceptance-harness/1",
+    "scene_oracle_sha256": "a73bc2cf7d26795862fe3fadf2d04d6a0ca803ad92a4acac50ba0e50f9bb40cb",
+    "gold_generator_sha256": "98caf37309055fe69c083aaf6fbbd92b5460bf2ca682969b728503abf24d16a0"
+  },
+  "exposure": {
+    "external_independence": "NOT_MEASURED",
+    "normalized_prior_strings": 28672,
+    "training_corpus_included": true,
+    "normalized_containment_matches": 0,
+    "single_shot": true
+  },
+  "runtime": {
+    "route_mode": "local-only-scoped",
+    "allow_live_ai": false,
+    "model": "AxoV9",
+    "gguf_sha256": "73f1484b08b97ed2a1f44e32bcf6610210c7fda51567c4cd0a03d98dffc6cc35",
+    "llama_cpp_release": "b12470",
+    "require_fresh_cache": true,
+    "cloud_fallback": false
+  },
+  "primary": {
+    "completion_rate_min": 0.85,
+    "population": "all positive text and attachment cases",
+    "completion": "served with correct source facts, exact scene and answers, visual and interaction pass"
+  },
+  "slm": {
+    "completion_rate_min": 0.3,
+    "min_live_verified_scenes": 5,
+    "population": "baseline SLM_REQUIRED text cases; final-candidate strata reported separately",
+    "cache_and_replay_credit": false
+  },
+  "modalities": {
+    "explicit_per_modality_live_metrics": true,
+    "positive_completion_rate_min": 0.85,
+    "required": [
+      "digital_pdf",
+      "docx",
+      "mixed_pdf",
+      "raster_image",
+      "scanned_pdf",
+      "text"
+    ]
+  },
+  "safety": {
+    "all_negative_safe": true,
+    "external_ai_calls": 0,
+    "wrong_served": 0,
+    "grounding_violations_served": 0,
+    "unverified_relations_served": 0,
+    "fabricated_numeric_goals": 0,
+    "served_numeric_mismatch": 0
+  },
+  "candidate_consistency": "same committed product, cache, model and runtime for live acceptance and Full T3"
+}
