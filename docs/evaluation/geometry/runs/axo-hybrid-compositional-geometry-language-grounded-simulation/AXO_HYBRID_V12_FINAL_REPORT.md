@@ -2,7 +2,8 @@
 
 - **Run ID:** `axo-hybrid-compositional-geometry-language-grounded-simulation`
 - **Branch:** `feat/compositional-geometry-grounding` (không merge `main`, không push, bảo toàn cây sạch)
-- **Frozen Product Candidate:** `4f4162d87f8f77388d21c8065f4b0bfd67cb648c` (`measured_system.tree_hash = f3c185a08bf0f227fafc6621195017f3517d7227b20b93c7fdf86278103df40d`, `124` file, `CACHE_VERSION = "147"`, `ROUTE_D_CACHE_POLICY = "147:route-d"`, `HYBRID_ROUTE_MODE = "live"` mặc định giữ nguyên).
+- **Frozen Blind-Run Candidate (`candidate_1`):** `4f4162d87f8f77388d21c8065f4b0bfd67cb648c` (`measured_system.tree_hash = f3c185a08bf0f227fafc6621195017f3517d7227b20b93c7fdf86278103df40d`, `124` file, `CACHE_VERSION = "147"`, `ROUTE_D_CACHE_POLICY = "147:route-d"`, `HYBRID_ROUTE_MODE = "live"` mặc định giữ nguyên).
+- **Post-T3 Refreeze (`candidate_refreeze_2`, chỉ vá 7 hồi quy backend pytest không làm thay đổi số đo mù `#17`–`#22`):** `963cef832020f1bd9b3d19d071ab133884e6cfc7` / freeze `bcf1c797223563c8126fe10eb9119ccfc34db5df` (`measured_system.tree_hash = 87a40770e14a730cbfafbf2a618ac747847c5f285ddd932057228816e39e73bd`, `124` file, `CACHE_VERSION = "147"`, `semantic_environment_hash = 16838af02af616f4…`).
 - **Trạng thái A4:** `planner.py`, `engine.py`, `typed_fact_next.py`, `adapter4_route.py`, `scene3d.py`, `backend/experimental/construction_planner/`, `tokens.css`, `transition-semantics.test.ts` đều **`0` diff** từ gốc nhánh tới `HEAD`; `registry.py` giữ `geometry-functions/33` và **`0` import từ `app.ai`**.
 
 ---
@@ -35,7 +36,7 @@ Chạy một lượt duy nhất trên tập preregistered `V12_ACCEPTANCE_MANIFE
 - **`LIVE_SIMULATION_ACCEPTED = FALSE`** (`0.8381 < 0.85` — gần ngưỡng, thiếu `2` ca trong `17` ca dừng bảo thủ đã phân loại ở [`RESIDUAL_GAPS_AND_HANDOFF_ROADMAP.md`](RESIDUAL_GAPS_AND_HANDOFF_ROADMAP.md))
 - **`SCOPED_CUTOVER_COMPLETED = FALSE`** (`HYBRID_ROUTE_MODE = "live"` mặc định giữ nguyên)
 - **`NOT_MEASURED`:** `EXTERNAL_INDEPENDENCE`, `INDEPENDENT_H1_VALIDATION`, `PHYSICAL_TARGET_HARDWARE_4_8_GIB`, `GEMINI_PARITY`, `REAL_STUDENT_USABILITY`.
-- **Full T3 Gate:** `PENDING_STEP7_T3_EXECUTION` (sẽ cập nhật ngay sau khi chạy `npm run test:full` tại Step 7.4).
+- **Full T3 Gate (`npm run test:full` trên `bcf1c7972`, `ALLOW_LIVE_AI=0`):** **`FULL_PRODUCT_GATE_PASS`** (`790.3s`): backend `pytest` **`15,234 passed, 9 skipped, 3 deselected, 12 xfailed, 0 failed`** (`721.6s` / `715.23s`), frontend `vitest` **`146 files / 2,077 passed`** (`59.8s`), `tsc -b && vite build` **PASS** (`7.5s`), `replay_demo_cases.py` **`5/5` + `1/1`** (`0.8s`), `audit_demo_crash_surface.py` **`6/6`** (`0.5s`).
 
 ---
 
