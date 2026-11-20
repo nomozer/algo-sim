@@ -145,6 +145,10 @@ _GOAL_VERB_RE = re.compile(
     r"(?:\b(?:tính|tìm|xác\s+định|hỏi|cho\s+biết|yêu\s+cầu|bao\s+nhiêu|bằng\s+mấy|dài\s+bao\s+nhiêu|rộng\s+bao\s+nhiêu|cao\s+bao\s+nhiêu)\b|\?)",
     re.IGNORECASE | re.UNICODE,
 )
+_STRICT_GOAL_ASK_RE = re.compile(
+    r"(?:\b(?:tính(?!\s+chất)|tìm|xác\s+định|hỏi|bao\s+nhiêu|bằng\s+mấy)\b|\?)",
+    re.IGNORECASE | re.UNICODE,
+)
 
 _AMBIGUOUS_LATERAL_SINGLE_RE = re.compile(r"\bcạnh\s+bên\b", re.IGNORECASE | re.UNICODE)
 _UNIVERSAL_LATERAL_RE = re.compile(
@@ -440,7 +444,7 @@ def index_source_clauses(norm_text: str) -> list[IndexedClause]:
             if sub[:m_tm.start()].strip():
                 cur_b = cur_a + m_tm.start()
                 sub = norm_text[cur_a:cur_b]
-        split_hits = list(_TRAILING_GOAL_SPLIT_RE.finditer(sub))
+        split_hits = [] if _SIM_REQUEST_RE.match(sub) else list(_TRAILING_GOAL_SPLIT_RE.finditer(sub))
         if split_hits:
             pos = 0
             for m_sp in split_hits:
@@ -1058,6 +1062,9 @@ def _convert_goal(
     if isinstance(cid, int) and 0 <= cid < len(clauses):
         ordered_goal_clauses.append(clauses[cid])
     for cl in clauses:
+        if cl not in ordered_goal_clauses and _STRICT_GOAL_ASK_RE.search(cl.text):
+            ordered_goal_clauses.append(cl)
+    for cl in clauses:
         if cl not in ordered_goal_clauses and _GOAL_MARKERS_RE.search(cl.text):
             ordered_goal_clauses.append(cl)
     if not ordered_goal_clauses:
@@ -1109,6 +1116,8 @@ def _convert_goal(
             continue
         gcl_pts = extract_geometry_points(gcl.text)
         gcl_low = gcl.text.lower()
+        if gtype == "volume" and "thể tích" not in gcl_low and not re.search(r"\bv\s*[_(\[]", gcl_low):
+            continue
         if not req_pts or all(rp in gcl_pts for rp in req_pts):
             ctext = gcl.text
             break
@@ -3227,6 +3236,8 @@ def _convert_compact_goal(
             continue
         gcl_pts = extract_geometry_points(gcl.text)
         gcl_low = gcl.text.lower()
+        if gcode == "vol" and "thể tích" not in gcl_low and not re.search(r"\bv\s*[_(\[]", gcl_low):
+            continue
         if not req_pts or all(rp in gcl_pts for rp in req_pts):
             ctext = gcl.text
             matched_cid = gcl.clause_id
@@ -3263,12 +3274,6 @@ def _premise_dedup_key(prem: dict[str, Any]) -> tuple[Any, ...]:
         else:
             norm_items.append((k, str(v).strip().upper() if isinstance(v, str) else str(v)))
     return (kind, tuple(norm_items))
-
-
-_STRICT_GOAL_ASK_RE = re.compile(
-    r"(?:\b(?:tính(?!\s+chất)|tìm|xác\s+định|hỏi|bao\s+nhiêu|bằng\s+mấy)\b|\?)",
-    re.IGNORECASE | re.UNICODE,
-)
 
 
 def simulation_request_span(clauses: list[IndexedClause], working_text: str) -> tuple[int, int] | None:

@@ -239,14 +239,27 @@ def test_adversarial_2_swapped_ask_operand_rejected() -> None:
 
 
 def test_adversarial_3_negated_premise_rejected() -> None:
-    text = "Cho hình chóp S.ABCD có đáy là hình vuông cạnh a, SA không vuông góc với đáy."
-    with pytest.raises(R.TuChoi) as exc:
-        _kiem(text, [
+    # Same-sentence role side ("cạnh a") + negated clause refuses one layer earlier at role binding (round 3-4 invariant)
+    text_role = "Cho hình chóp S.ABCD có đáy là hình vuông cạnh a, SA không vuông góc với đáy."
+    with pytest.raises(R.TuChoi) as exc_role:
+        _kiem(text_role, [
             {"id": "c1", "fn": "pyramid", "args": {"apex": "S", "base": ["A", "B", "C", "D"]}, "source": {"quotes": ["Cho hình chóp S.ABCD"]}},
             {"id": "c2", "fn": "regular_polygon", "args": {"vertices": ["A", "B", "C", "D"], "side": "a"}, "source": {"quotes": ["hình chóp S.ABCD có đáy là hình vuông cạnh a"]}},
             {"id": "c3", "fn": "perpendicular_line_plane", "args": {"line": ["S", "A"], "plane": ["A", "B", "C", "D"]}, "source": {"quotes": ["SA không vuông góc với đáy"]}},
         ])
-    assert exc.value.code == "NEGATED_CLAUSE"
+    assert exc_role.value.code == "UNGROUNDED_VALUE"
+
+    # Named-segment compositional premise reaches `c5` directly and refuses with `NEGATED_CLAUSE`
+    text_named = "Vẽ hình chóp S.ABCD có đáy ABCD là hình chữ nhật, AB = a, AD = 2a, SA không vuông góc với đáy."
+    with pytest.raises(R.TuChoi) as exc_neg:
+        _kiem(text_named, [
+            {"id": "c1", "fn": "pyramid", "args": {"apex": "S", "base": ["A", "B", "C", "D"]}, "source": {"quotes": ["Vẽ hình chóp S.ABCD"]}},
+            {"id": "c2", "fn": "rectangle", "args": {"vertices": ["A", "B", "C", "D"]}, "source": {"quotes": ["đáy ABCD là hình chữ nhật"]}},
+            {"id": "c3", "fn": "segment_length", "args": {"segment": ["A", "B"], "value": "a"}, "source": {"quotes": ["AB = a"]}},
+            {"id": "c4", "fn": "segment_length", "args": {"segment": ["A", "D"], "value": "2*a"}, "source": {"quotes": ["AD = 2a"]}},
+            {"id": "c5", "fn": "perpendicular_line_plane", "args": {"line": ["S", "A"], "plane": ["A", "B", "C", "D"]}, "source": {"quotes": ["SA không vuông góc với đáy"]}},
+        ])
+    assert exc_neg.value.code == "NEGATED_CLAUSE"
 
 
 def test_adversarial_4_conditional_premise_rejected() -> None:
@@ -287,7 +300,8 @@ def test_adversarial_7_bare_object_list_and_unread_local_mod_rejected() -> None:
         _kiem("Cho mình xem hình chóp S.ABCD và đường thẳng SC.", [
             {"id": "c1", "fn": "pyramid", "args": {"apex": "S", "base": ["A", "B", "C", "D"]}, "source": {"quotes": ["hình chóp S.ABCD"]}},
         ])
-    with pytest.raises(R.TuChoi) as exc:
+    # Same-sentence role side ("cạnh a") + number-carrying trailing request refuses one layer earlier at role binding
+    with pytest.raises(R.TuChoi) as exc_role:
         _kiem(
             "Vẽ hình chóp S.ABCD có đáy ABCD là hình vuông cạnh a, SA vuông góc với đáy, SA = a và tính độ dài SC với SA = 2a.",
             [
@@ -298,4 +312,20 @@ def test_adversarial_7_bare_object_list_and_unread_local_mod_rejected() -> None:
                 {"id": "c5", "fn": "ask_length", "args": {"segment": ["S", "C"]}, "source": {"quotes": ["tính độ dài SC"]}},
             ],
         )
-    assert exc.value.code == "QUESTION_LOCAL_GIVEN_CONFLICT"
+    assert exc_role.value.code == "UNGROUNDED_VALUE"
+
+    # Named-segment compositional premise reaches question-region audit and refuses with `QUESTION_LOCAL_GIVEN_CONFLICT`
+    with pytest.raises(R.TuChoi) as exc_q:
+        _kiem(
+            "Vẽ hình chóp S.ABCD có đáy ABCD là hình chữ nhật, AB = a, AD = 2a, SA vuông góc với đáy, SA = a và tính độ dài SC với SA = 2a.",
+            [
+                {"id": "c1", "fn": "pyramid", "args": {"apex": "S", "base": ["A", "B", "C", "D"]}, "source": {"quotes": ["Vẽ hình chóp S.ABCD"]}},
+                {"id": "c2", "fn": "rectangle", "args": {"vertices": ["A", "B", "C", "D"]}, "source": {"quotes": ["đáy ABCD là hình chữ nhật"]}},
+                {"id": "c3", "fn": "segment_length", "args": {"segment": ["A", "B"], "value": "a"}, "source": {"quotes": ["AB = a"]}},
+                {"id": "c4", "fn": "segment_length", "args": {"segment": ["A", "D"], "value": "2*a"}, "source": {"quotes": ["AD = 2a"]}},
+                {"id": "c5", "fn": "perpendicular_line_plane", "args": {"line": ["S", "A"], "plane": ["A", "B", "C", "D"]}, "source": {"quotes": ["SA vuông góc với đáy"]}},
+                {"id": "c6", "fn": "segment_length", "args": {"segment": ["S", "A"], "value": "a"}, "source": {"quotes": ["SA = a"]}},
+                {"id": "c7", "fn": "ask_length", "args": {"segment": ["S", "C"]}, "source": {"quotes": ["tính độ dài SC"]}},
+            ],
+        )
+    assert exc_q.value.code == "QUESTION_LOCAL_GIVEN_CONFLICT"

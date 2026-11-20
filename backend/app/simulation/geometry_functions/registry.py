@@ -1587,9 +1587,9 @@ def _co_doi_tuong_hinh(c: LoiGoi, de: str = "") -> bool:
                         ok = True
                 if len(phan) == 2 and _cung_da_giac(phan[1 if len(phan[0]) == 1 else 0], vertices):
                     m_k = (
-                        re.search(rf"(?:^\s*|(?<!\w)(?:cho|xét|{_DONG_TU_MO_PHONG})\s+)(?:(?:một\s+)?(?:hình|khối)\s+)?chóp(?:\s+(?P<sh_k>(?:tam|tứ|ngũ|lục)\s+giác))?\s+đều\s*$", q[:dau], re.IGNORECASE)
+                        re.search(rf"(?:^\s*|(?<!\w)(?:cho|{_DONG_TU_MO_PHONG})\s+)(?:(?:một\s+)?(?:hình|khối)\s+)?chóp(?:\s+(?P<sh_k>(?:tam|tứ|ngũ|lục)\s+giác))?\s+đều\s*$", q[:dau], re.IGNORECASE)
                         if len(phan[0]) == 1
-                        else re.search(rf"(?:^\s*|(?<!\w)(?:cho|xét|{_DONG_TU_MO_PHONG})\s+)(?:(?:một\s+)?(?:hình|khối)\s+)?lăng\s+trụ(?:\s+(?P<sh_k>(?:tam|tứ|ngũ|lục)\s+giác))?\s+đều\s*$", q[:dau], re.IGNORECASE)
+                        else re.search(rf"(?:^\s*|(?<!\w)(?:cho|{_DONG_TU_MO_PHONG})\s+)(?:(?:một\s+)?(?:hình|khối)\s+)?lăng\s+trụ(?:\s+(?P<sh_k>(?:tam|tứ|ngũ|lục)\s+giác))?\s+đều\s*$", q[:dau], re.IGNORECASE)
                         if len(phan[0]) == len(phan[1])
                         else None
                     )
@@ -1764,6 +1764,11 @@ _HINH = (
 #: that only mentions objects the validated calls already build (`_doc_yeu_cau_mo_phong`). It never adds a fact.
 _DONG_TU_MO_PHONG = (r"(?:(?:(?:em|bạn|mình|tớ)\s+)?(?:(?:muốn|cần)\s+xem|(?:hãy\s+)?(?:chỉ\s+cần\s+)?(?:vẽ|dựng|mô\s+phỏng|minh\s+ho[ạa]|biểu\s+diễn|hiển\s+thị"
                      r"|cho\s+(?:mình|em|tôi|tớ)\s+xem))(?:\s+giúp(?:\s+(?:mình|em|tôi|tớ))?|\s+lại)?)(?!\w)")
+_CUM_KHONG_CAN_TINH = re.compile(
+    r"(?:(?:chỉ\s+cần\s+)?(?:vẽ|dựng|mô\s+phỏng)\s+(?:hình|khối)(?:\s+3D)?(?:\s*,\s*(?:và\s+)?)?)?"
+    r"(?:không|chưa)\s+cần\s+tính(?:\s+toán|\s+gì(?:\s+thêm)?)?(?=\s*(?:[,;:.()!\-–]|$))",
+    re.IGNORECASE,
+)
 _C_KHOI = re.compile(rf"(?:(?:cho|xét|{_DONG_TU_MO_PHONG})\s+)?(?:một\s+)?(?:(?:hình|khối)\s+)?(?P<kn>chóp|lăng\s+trụ|hộp(?:\s+chữ\s+nhật)?|lập\s+phương|tứ\s+diện)"
                      rf"(?P<km>(?:\s+(?:đứng|đều|xiên|tam\s+giác|tứ\s+giác|ngũ\s+giác|lục\s+giác|chữ\s+nhật))*)"
                      rf"\s+(?P<k>{_NHAN}(?:\.{_NHAN})?)(?![\w'])"
@@ -1920,7 +1925,7 @@ _C_THETICH = re.compile(
     re.IGNORECASE,
 )
 #: "cạnh CD" (a named edge) continues its clause; only a role "cạnh" ("… cạnh 2", "… cạnh bên") opens a new one
-_C_NOI = re.compile(rf"\s*[,;]\s*(?:và\s+)?|\s+và\s+|\s+(?=biết\s|th[ỏo]a\s+mãn\s|trong\s+đó\s|sao\s+cho\s|(?:(?:mặt|tứ\s+giác|tam\s+giác)\s+)?đáy(?!\w)|với\s+(?:(?:mặt|tứ\s+giác|tam\s+giác)\s+)?đáy(?!\w)|có\s|với\s+hai\s+đáy(?!\w)|với\s+đáy\s+(?:lớn|nhỏ)(?!\w)|với\s+(?:(?:(?:tất\s+cả\s+(?:các\s+)?|các|mọi|mỗi)\s+)?(?:cạnh|chiều\s+cao|đường\s+cao|độ\s+dài|đoạn(?:\s+thẳng)?|đường\s+chéo|kích\s+thước)(?!\w)|{_L1}{_L1}(?![\w']))"
+_C_NOI = re.compile(rf"\s*[,;]\s*(?:và\s+)?|\s+và\s+|\s+(?=biết\s|th[ỏo]a\s+mãn\s|với\s+(?:(?:mặt|tứ\s+giác|tam\s+giác)\s+)?đáy(?!\w)|có\s|trong\s+đó\s|sao\s+cho\s|(?:(?:mặt|tứ\s+giác|tam\s+giác)\s+)?đáy\s+{_L1}{_L1}{_NHAN}(?![\w'])|với\s+hai\s+đáy(?!\w)|với\s+đáy\s+(?:lớn|nhỏ)(?!\w)|với\s+(?:(?:(?:tất\s+cả\s+(?:các\s+)?|các|mọi|mỗi)\s+)?(?:cạnh|chiều\s+cao|đường\s+cao|độ\s+dài|đoạn(?:\s+thẳng)?|đường\s+chéo|kích\s+thước)(?!\w)|{_L1}{_L1}(?![\w']))"
                     rf"|(?:(?:tất\s+cả\s+(?:các\s+)?|các|mọi|mỗi)\s+)?cạnh\s+(?!{_L1}{_L1}(?![\w'])))", re.IGNORECASE)
 #: Number-free CLOSED premise clauses (review round 4): a face ⊥ a face, the shape of a named triangle/face (optionally
 #: lying in a plane ⊥ the base), equal named segments. They bind nothing; they only keep their sentence parseable.
@@ -1945,7 +1950,13 @@ _C_MPDN = re.compile(rf"(?:mặt\s+phẳng\s+|mp\s*)?\((?:[A-Z][0-9']?|[α-ωΑ-
                      rf"(?=\s*(?:[,;.!?]|và\s|$))", re.IGNORECASE)
 _C_DAU = re.compile(r"\s*(?:trong\s+không\s+gian\s*,\s*)?(?:(?:biết(?:\s+rằng)?|th[ỏo]a\s+mãn)\s+)?", re.IGNORECASE)
 _C_HET = re.compile(rf"\s*(?:{_THAM_KHAO_HINH}\s*)?[.!?;]?\s*", re.IGNORECASE)
-_C_HOI = re.compile(r"(?:hãy\s+)?(?:tính|tìm|xác\s+định|hỏi)(?!\w)", re.IGNORECASE)
+_C_HOI = re.compile(
+    rf"(?:(?:rồi|sau\s+đó|đồng\s+thời|tiếp\s+theo|từ\s+đó|do\s+đó|vậy|khi\s+đó)\s+)?"
+    rf"(?:(?:(?:em|bạn)\s+)?(?:hãy\s+)?(?:tính(?!\s+từ\b)|tìm|xác\s+định|hỏi|cho\s+biết)(?!\w)"
+    rf"|(?:(?:em|bạn)\s+)?hãy\s+(?:vẽ|dựng|mô\s+phỏng|minh\s+ho[ạa]|biểu\s+diễn|hiển\s+thị)(?!\w)"
+    rf"|{_CUM_KHONG_CAN_TINH.pattern})",
+    re.IGNORECASE,
+)
 #: A named polygon with its side ("Tam giác ABC đều cạnh 2" / "có ABCD là hình vuông cạnh 4"): the side belongs to THAT polygon
 #: (labelled binding); non-base polygons still change the subject for unlabelled roles of the sentence.
 _C_DAGIAC = re.compile(rf"(?:(?:tam\s+giác|hình\s+vuông|lục\s+giác)\s+(?P<p>{_L1}{_L1}{_NHAN})(?![\w'])\s+(?:là\s+(?:một\s+)?"
@@ -2067,7 +2078,7 @@ def _phan_tich_cau(s: str) -> list[tuple[str, re.Match | None]] | None:
     while True:
         # the request part of the sentence ("…, SA = 3, tính độ dài SC.") ends its premises; it binds nothing, and a request
         # carrying a number (a local given or a changed value) leaves the sentence unread
-        if q := _C_HOI.match(s, p):
+        if (out or not _C_KHOI.match(s, p)) and (q := _C_HOI.match(s, p)):
             return out if not any(_doc(x) is not None for x in _SO.finditer(s, q.end())) else None
         for kind, rx in (("khoi", _C_KHOI), ("day", _C_DAY), ("dagiac", _C_DAGIAC), ("dcao", _C_DCAO), ("mpdn", _C_MPDN), ("tyso", _TY_SO), ("diem", _C_DIEM),
                          ("chieu", _C_CHIEU), ("mat", _C_MAT), ("vuong", _C_VUONG), ("song", _C_SONG),
@@ -2121,8 +2132,6 @@ def _lien_ket_cau(de: str, a: int, b: int, calls: tuple[LoiGoi, ...]) -> dict[in
     p = a
     while p < b:
         x, y = _bien_cau(de, p)
-        if y > b:
-            y = b
         cau = _phan_tich_cau(de[x:y])
         # reviews round 3–4: an opaque clause may re-attribute ANY role of its sentence, before or after it ("…, đường cao
         # bằng 5, H là chân của nó trên cạnh AB", "…cạnh 3, nhưng đó là cạnh của tam giác khác"): a sentence with any
@@ -4613,11 +4622,6 @@ _GIAN_DAN = re.compile(
 #: "một nửa", "một cạnh") stays premise content.
 _MAO_TU_KHOI = re.compile(r"\s*một\s+(?=(?:hình|khối|hộp|lăng\s+trụ|chóp|tứ\s+diện)(?!\w))", re.IGNORECASE)
 #: Sentence-initial simulation verb directly before a solid noun (SL-1): a lead-in like "Cho", never premise content.
-_CUM_KHONG_CAN_TINH = re.compile(
-    r"(?:(?:chỉ\s+cần\s+)?(?:vẽ|dựng|mô\s+phỏng)\s+(?:hình|khối)(?:\s+3D)?(?:\s*,\s*(?:và\s+)?)?)?"
-    r"(?:không|chưa)\s+cần\s+tính(?:\s+toán|\s+gì(?:\s+thêm)?)?(?=\s*(?:[,;:.()!\-–]|$))",
-    re.IGNORECASE,
-)
 _MO_PHONG_MO_KHOI = re.compile(
     rf"\s*(?:{_DONG_TU_MO_PHONG}(?:\s+(?:hình|mô\s+hình)\s+3D\s+của)?"
     rf"(?:\s*,?\s*(?:và\s+)?(?:không|chưa)\s+cần\s+tính(?:\s+toán|\s+gì(?:\s+thêm)?)?\s*[:,-])?"
