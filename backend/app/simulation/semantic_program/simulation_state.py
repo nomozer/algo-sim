@@ -701,7 +701,8 @@ def build_scene(
                 # Align cycle start/orientation if section label explicitly specifies one
                 lbl_hint = str(prov.get(ten, {}).get("label") or ten)
                 syms = [ky_hieu_dai_luong(n) or n.replace("'", "′") for n in ten_dinh_clean]
-                ten_dinh_clean, _ = _can_chinh_chu_trinh_dinh(ten_dinh_clean, syms, lbl_hint)
+                ten_dinh_clean, _ = _can_chinh_chu_trinh_dinh(
+                    ten_dinh_clean, syms, lbl_hint, _ten_mat_cat(ten, prov, memory))
                 return {"section_vertex_names": ten_dinh_clean}
         if loai == "plane3" and isinstance(gt, Plane3):
             # Điểm có tên nằm TRÊN mặt phẳng (chính xác) — để tên khai `(ABCD)` được kiểm, không rút thầm thành `(ABC)`.
@@ -920,25 +921,49 @@ def _can_chinh_chu_trinh_dinh(
     ids: list[str],
     syms: list[str],
     label_hint: str,
+    prefix_hint: str = "",
 ) -> tuple[list[str], list[str]]:
-    """Xoay/đảo chu trình đỉnh thiết diện khi nhãn nguồn nêu đúng một hoán vị vòng."""
+    """Xoay/đảo chu trình đỉnh thiết diện khi nhãn nguồn nêu đúng một hoán vị vòng.
+
+    Không nhãn nào nêu cả chu trình ⇒ đọc chu trình bắt đầu bằng tên mặt phẳng cắt (`prefix_hint`, vd `(MNP)` ⇒
+    `MNPQ` chứ không `NMQP`) khi các đỉnh ấy liên tiếp trên chu trình. Chỉ xoay/đảo — cùng một đa giác, cùng tập cạnh.
+    """
     if len(ids) < 3 or len(ids) != len(syms):
         return ids, syms
-    tokens = re.findall(r"[A-Za-z0-9'′]+", (label_hint or "").replace("'", "′"))
     norm_syms = [s.replace("'", "′") for s in syms]
     rev_ids = list(reversed(ids))
     rev_syms = list(reversed(syms))
     norm_rev = list(reversed(norm_syms))
-    for tok in tokens:
-        for base_ids, base_syms, base_norm in (
-            (ids, syms, norm_syms),
-            (rev_ids, rev_syms, norm_rev),
-        ):
-            for idx in range(len(base_norm)):
-                rot = base_norm[idx:] + base_norm[:idx]
-                if "".join(rot) == tok:
-                    return base_ids[idx:] + base_ids[:idx], base_syms[idx:] + base_syms[:idx]
-    return ids, syms
+    cac_vong = ((ids, syms, norm_syms), (rev_ids, rev_syms, norm_rev))
+
+    def _tim(tokens: list[str], khop) -> tuple[list[str], list[str]] | None:
+        for tok in tokens:
+            for base_ids, base_syms, base_norm in cac_vong:
+                for idx in range(len(base_norm)):
+                    if khop(base_norm[idx:] + base_norm[:idx], tok):
+                        return base_ids[idx:] + base_ids[:idx], base_syms[idx:] + base_syms[:idx]
+        return None
+
+    def _tach(text: str) -> list[str]:
+        return re.findall(r"[A-Za-z0-9'′]+", (text or "").replace("'", "′"))
+
+    ca_vong = _tim(_tach(label_hint), lambda rot, tok: "".join(rot) == tok)
+    if ca_vong is not None:
+        return ca_vong
+    dau_vong = _tim(
+        _tach(prefix_hint),
+        lambda rot, tok: any("".join(rot[:k]) == tok for k in range(2, len(rot))),
+    )
+    return dau_vong if dau_vong is not None else (ids, syms)
+
+
+def _ten_mat_cat(ten: str, prov: dict[str, dict[str, Any]], memory: dict[str, Any]) -> str:
+    """Nhãn nguồn của (các) mặt phẳng cắt mà thiết diện `ten` dựa vào — gợi ý thứ tự đọc chu trình đỉnh."""
+    return " ".join(
+        str((prov.get(s) or {}).get("label") or "")
+        for s in (prov.get(ten) or {}).get("sources", [])
+        if isinstance(memory.get(s), Plane3)
+    )
 
 
 def _gan_measured_quantity(
@@ -1057,8 +1082,17 @@ def _gan_chu_trinh_canh_thiet_dien(
             continue
         syms = [str(m.get("notation") or m["id"]) for m in matched if m is not None]
         hint = f"{sec.get('notation') or ''} {(prov.get(sec['id']) or {}).get('label') or ''} {sec['id']}"
-        ids, syms = _can_chinh_chu_trinh_dinh(ids, syms, hint)
+        goc = list(ids)
+        ids, syms = _can_chinh_chu_trinh_dinh(ids, syms, hint, _ten_mat_cat(sec["id"], prov, memory))
         n = len(syms)
+        # `ordered_vertex_ids[i]` IS `polygon[i]` and `vertex_sources[i]` for every consumer that pairs them by index
+        # (frontend edge/right-angle wording). Re-aligning the names without the coordinates read `SA ⊥ SC tại S`
+        # off the diagonal section (SAC) whose right angle is at A — permute all three together.
+        thu_tu = [goc.index(i) for i in ids]
+        for khoa in ("polygon", "vertex_sources"):
+            ds = sec.get(khoa)
+            if isinstance(ds, list) and len(ds) == n:
+                sec[khoa] = [ds[k] for k in thu_tu]
         sec["ordered_vertex_ids"] = ids
         sec["ordered_vertex_symbols"] = syms
         sec["ordered_boundary_edges"] = [f"{syms[i]}{syms[(i + 1) % n]}" for i in range(n)]

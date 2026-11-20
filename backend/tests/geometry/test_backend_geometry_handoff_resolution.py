@@ -263,6 +263,82 @@ def test_curved_solid_radius_and_lateral_area() -> None:
 # ── GEO-BE-V9415-001 & Section 6 Cross-Check ──────────────────────────────────
 
 
+def _assert_section_index_aligned(objs: dict[str, Any], sec: dict[str, Any]) -> None:
+    """`ordered_vertex_ids[i]` IS `polygon[i]` (and `vertex_sources[i]`): consumers pair names with coordinates by
+    index. /13 merge: the cycle was re-aligned for its name while `polygon` kept the kernel order, so the frontend read
+    `SA ⊥ SC tại S` off the diagonal section (SAC) of a pyramid with SA ⊥ (ABCD) — the right angle is at A."""
+    ids = sec["ordered_vertex_ids"]
+    assert [objs[i]["xyz"] for i in ids] == sec["polygon"]
+    assert len(sec["vertex_sources"]) == len(sec["polygon"])
+
+
+_PYRAMID_DECLS = [_pt("A", [0, 0, 0]), _pt("B", [2, 0, 0]), _pt("C", [2, 2, 0]), _pt("D", [0, 2, 0]), _pt("S", [0, 0, 4])]
+_PYRAMID = {"kind": "construct_solid", "target_var": "chop", "vertices": ["A", "B", "C", "D", "S"],
+            "faces": [["A", "B", "C", "D"], ["S", "A", "B"], ["S", "B", "C"], ["S", "C", "D"], ["S", "D", "A"]],
+            "label": "S.ABCD"}
+
+
+@pytest.mark.parametrize("statements, symbols", [
+    # Diagonal plane named by the section label itself: (SAC).
+    ([{"kind": "construct_plane", "target_var": "sac", "through": ["S", "A", "C"], "label": "(SAC)"},
+      {"kind": "construct_section", "target_var": "td", "solid": "chop", "plane": "sac",
+       "label": "thiết diện theo mặt phẳng (SAC)"}],
+     ["S", "A", "C"]),
+    # Section label names no cycle: the cutting plane (MNP) decides how the cycle is read (MNPQ, not NMQP).
+    ([{"kind": "construct_point", "target_var": "M", "label": "M", "expr": {"kind": "midpoint", "a": "S", "b": "A"}},
+      {"kind": "construct_point", "target_var": "N", "label": "N", "expr": {"kind": "midpoint", "a": "S", "b": "B"}},
+      {"kind": "construct_point", "target_var": "P", "label": "P", "expr": {"kind": "midpoint", "a": "S", "b": "C"}},
+      {"kind": "construct_plane", "target_var": "mp", "label": "(MNP)", "through": ["M", "N", "P"]},
+      {"kind": "construct_line", "target_var": "sd", "label": "SD", "through_a": "S", "through_b": "D"},
+      {"kind": "construct_point", "target_var": "Q", "label": "Q",
+       "expr": {"kind": "intersect_line_plane", "line": "sd", "plane": "mp"}},
+      {"kind": "construct_section", "target_var": "td", "label": "thiết diện", "solid": "chop", "plane": "mp"}],
+     ["M", "N", "P", "Q"]),
+])
+def test_section_cycle_is_named_and_index_aligned(statements, symbols) -> None:
+    _, _, _, scene3d = _run_pipeline({
+        "spec_version": "1.0", "title": "section cycle", "description": "section cycle",
+        "pedagogical_intent": "construct_and_show", "memory_declarations": _PYRAMID_DECLS,
+        "statements": [_PYRAMID, *statements], "visual_bindings": {},
+    })
+    objs = {o["id"]: o for o in scene3d["objects"]}
+    sec = objs["td"]
+    assert sec["ordered_vertex_symbols"] == symbols
+    assert sec["notation"] == "".join(symbols)
+    _assert_section_index_aligned(objs, sec)
+
+
+def test_route_d_rows_written_before_the_section_cycle_fix_miss() -> None:
+    """CACHE_VERSION 147 -> 148 (/13): served sections are now index-aligned and read from the cutting plane, so a
+    `147:route-d` row may carry the misaligned cycle the frontend turns into `SA ⊥ SC tại S`; it must MISS."""
+    from types import SimpleNamespace
+
+    from app import main as M
+    from tests.cache_policy import assert_cache_policy_at_least
+
+    assert_cache_policy_at_least(148)
+
+    class _Session:
+        def __init__(self, row):
+            self.row = row
+
+        def query(self, _model):
+            return self
+
+        def filter_by(self, **_k):
+            return self
+
+        def first(self):
+            return self.row
+
+    def row(policy):
+        return SimpleNamespace(policy_version=policy, dsl_version=next(iter(M.SUPPORTED_VERSIONS)))
+
+    assert M._cache_lookup(_Session(row("147:route-d")), "k", M.ROUTE_D_CACHE_POLICY) is None
+    live = row(M.ROUTE_D_CACHE_POLICY)
+    assert M._cache_lookup(_Session(live), "k", M.ROUTE_D_CACHE_POLICY) is live
+
+
 def test_coplanar_section_lineage_unused_point_and_pentagon_edges() -> None:
     """Coplanar Euclidean section must label intersecting lines cleanly, avoid false
     unused auxiliaries when absent, flag dead points when present, and emit all 5
@@ -332,6 +408,7 @@ def test_coplanar_section_lineage_unused_point_and_pentagon_edges() -> None:
     sec = objs["MENPF"]
     assert sec["ordered_vertex_symbols"] == ["M", "E", "N", "P", "F"]
     assert sec["ordered_boundary_edges"] == ["ME", "EN", "NP", "PF", "FM"]
+    _assert_section_index_aligned(objs, sec)
     sec_close_ev = next(
         e for e in scene3d["events"]
         if e.get("object") == "MENPF" and e.get("action") == "STEP"

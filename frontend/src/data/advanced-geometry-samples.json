@@ -1535,21 +1535,6 @@
        "formation_roles": [],
        "polygon": [
         [
-         "4",
-         "2",
-         "0"
-        ],
-        [
-         "2",
-         "4",
-         "0"
-        ],
-        [
-         "0",
-         "3",
-         "3/2"
-        ],
-        [
          "0",
          "0",
          "3"
@@ -1557,6 +1542,21 @@
         [
          "3",
          "0",
+         "3/2"
+        ],
+        [
+         "4",
+         "2",
+         "0"
+        ],
+        [
+         "2",
+         "4",
+         "0"
+        ],
+        [
+         "0",
+         "3",
          "3/2"
         ]
        ],
@@ -1738,6 +1738,22 @@
          "kind": "SOLID_EDGE_INTERSECTION",
          "solid_vertex_index": null,
          "solid_edge_vertex_indices": [
+          0,
+          4
+         ]
+        },
+        {
+         "kind": "SOLID_EDGE_INTERSECTION",
+         "solid_vertex_index": null,
+         "solid_edge_vertex_indices": [
+          1,
+          4
+         ]
+        },
+        {
+         "kind": "SOLID_EDGE_INTERSECTION",
+         "solid_vertex_index": null,
+         "solid_edge_vertex_indices": [
           1,
           2
          ]
@@ -1755,22 +1771,6 @@
          "solid_vertex_index": null,
          "solid_edge_vertex_indices": [
           3,
-          4
-         ]
-        },
-        {
-         "kind": "SOLID_EDGE_INTERSECTION",
-         "solid_vertex_index": null,
-         "solid_edge_vertex_indices": [
-          0,
-          4
-         ]
-        },
-        {
-         "kind": "SOLID_EDGE_INTERSECTION",
-         "solid_vertex_index": null,
-         "solid_edge_vertex_indices": [
-          1,
           4
          ]
         }
@@ -1818,55 +1818,55 @@
        "surface_role": "SECTION_REGION",
        "endpoint_entities": [
         {
-         "entity_id": "section:thiet_dien:point:on:chop::edge:B-C",
-         "section_vertex_ordinal": 0,
-         "provenance_kind": "SOLID_EDGE_INTERSECTION",
-         "coordinate_hash": "19a158e2bd9b2d0f",
-         "anonymous_coordinate_fallback": false
-        },
-        {
-         "entity_id": "section:thiet_dien:point:on:chop::edge:C-D",
-         "section_vertex_ordinal": 1,
-         "provenance_kind": "SOLID_EDGE_INTERSECTION",
-         "coordinate_hash": "b857f346c851b7cf",
-         "anonymous_coordinate_fallback": false
-        },
-        {
-         "entity_id": "section:thiet_dien:point:on:chop::edge:D-S",
-         "section_vertex_ordinal": 2,
-         "provenance_kind": "SOLID_EDGE_INTERSECTION",
-         "coordinate_hash": "c1d58b074e51ce98",
-         "anonymous_coordinate_fallback": false
-        },
-        {
          "entity_id": "section:thiet_dien:point:on:chop::edge:A-S",
-         "section_vertex_ordinal": 3,
+         "section_vertex_ordinal": 0,
          "provenance_kind": "SOLID_EDGE_INTERSECTION",
          "coordinate_hash": "c874f42ac6304770",
          "anonymous_coordinate_fallback": false
         },
         {
          "entity_id": "section:thiet_dien:point:on:chop::edge:B-S",
-         "section_vertex_ordinal": 4,
+         "section_vertex_ordinal": 1,
          "provenance_kind": "SOLID_EDGE_INTERSECTION",
          "coordinate_hash": "35fe558efc236960",
+         "anonymous_coordinate_fallback": false
+        },
+        {
+         "entity_id": "section:thiet_dien:point:on:chop::edge:B-C",
+         "section_vertex_ordinal": 2,
+         "provenance_kind": "SOLID_EDGE_INTERSECTION",
+         "coordinate_hash": "19a158e2bd9b2d0f",
+         "anonymous_coordinate_fallback": false
+        },
+        {
+         "entity_id": "section:thiet_dien:point:on:chop::edge:C-D",
+         "section_vertex_ordinal": 3,
+         "provenance_kind": "SOLID_EDGE_INTERSECTION",
+         "coordinate_hash": "b857f346c851b7cf",
+         "anonymous_coordinate_fallback": false
+        },
+        {
+         "entity_id": "section:thiet_dien:point:on:chop::edge:D-S",
+         "section_vertex_ordinal": 4,
+         "provenance_kind": "SOLID_EDGE_INTERSECTION",
+         "coordinate_hash": "c1d58b074e51ce98",
          "anonymous_coordinate_fallback": false
         }
        ],
        "identity_diagnostics": [],
        "boundary_edge_ids": [
+        "section:thiet_dien:edge:section:thiet_dien:point:on:chop::edge:A-S:section:thiet_dien:point:on:chop::edge:B-S",
+        "section:thiet_dien:edge:section:thiet_dien:point:on:chop::edge:B-S:section:thiet_dien:point:on:chop::edge:B-C",
         "section:thiet_dien:edge:section:thiet_dien:point:on:chop::edge:B-C:section:thiet_dien:point:on:chop::edge:C-D",
         "section:thiet_dien:edge:section:thiet_dien:point:on:chop::edge:C-D:section:thiet_dien:point:on:chop::edge:D-S",
-        "section:thiet_dien:edge:section:thiet_dien:point:on:chop::edge:D-S:section:thiet_dien:point:on:chop::edge:A-S",
-        "section:thiet_dien:edge:section:thiet_dien:point:on:chop::edge:A-S:section:thiet_dien:point:on:chop::edge:B-S",
-        "section:thiet_dien:edge:section:thiet_dien:point:on:chop::edge:B-C:section:thiet_dien:point:on:chop::edge:B-S"
+        "section:thiet_dien:edge:section:thiet_dien:point:on:chop::edge:A-S:section:thiet_dien:point:on:chop::edge:D-S"
        ],
        "section_edge_coordinate_hashes": {
+        "section:thiet_dien:edge:section:thiet_dien:point:on:chop::edge:A-S:section:thiet_dien:point:on:chop::edge:B-S": "35fe558efc236960:c874f42ac6304770",
+        "section:thiet_dien:edge:section:thiet_dien:point:on:chop::edge:B-S:section:thiet_dien:point:on:chop::edge:B-C": "19a158e2bd9b2d0f:35fe558efc236960",
         "section:thiet_dien:edge:section:thiet_dien:point:on:chop::edge:B-C:section:thiet_dien:point:on:chop::edge:C-D": "19a158e2bd9b2d0f:b857f346c851b7cf",
         "section:thiet_dien:edge:section:thiet_dien:point:on:chop::edge:C-D:section:thiet_dien:point:on:chop::edge:D-S": "b857f346c851b7cf:c1d58b074e51ce98",
-        "section:thiet_dien:edge:section:thiet_dien:point:on:chop::edge:D-S:section:thiet_dien:point:on:chop::edge:A-S": "c1d58b074e51ce98:c874f42ac6304770",
-        "section:thiet_dien:edge:section:thiet_dien:point:on:chop::edge:A-S:section:thiet_dien:point:on:chop::edge:B-S": "35fe558efc236960:c874f42ac6304770",
-        "section:thiet_dien:edge:section:thiet_dien:point:on:chop::edge:B-C:section:thiet_dien:point:on:chop::edge:B-S": "19a158e2bd9b2d0f:35fe558efc236960"
+        "section:thiet_dien:edge:section:thiet_dien:point:on:chop::edge:A-S:section:thiet_dien:point:on:chop::edge:D-S": "c1d58b074e51ce98:c874f42ac6304770"
        }
       },
       {
@@ -3843,10 +3843,10 @@
          {
           "object_id": "thiet_dien",
           "visible_edge_ids": [
-           "section:thiet_dien:edge:section:thiet_dien:point:on:chop::edge:B-C:section:thiet_dien:point:on:chop::edge:C-D"
+           "section:thiet_dien:edge:section:thiet_dien:point:on:chop::edge:A-S:section:thiet_dien:point:on:chop::edge:B-S"
           ],
           "ordered_construction_ids": [
-           "section:thiet_dien:edge:section:thiet_dien:point:on:chop::edge:B-C:section:thiet_dien:point:on:chop::edge:C-D"
+           "section:thiet_dien:edge:section:thiet_dien:point:on:chop::edge:A-S:section:thiet_dien:point:on:chop::edge:B-S"
           ],
           "closed": false,
           "fill_visible": false
@@ -3896,12 +3896,12 @@
          {
           "object_id": "thiet_dien",
           "visible_edge_ids": [
-           "section:thiet_dien:edge:section:thiet_dien:point:on:chop::edge:B-C:section:thiet_dien:point:on:chop::edge:C-D",
-           "section:thiet_dien:edge:section:thiet_dien:point:on:chop::edge:C-D:section:thiet_dien:point:on:chop::edge:D-S"
+           "section:thiet_dien:edge:section:thiet_dien:point:on:chop::edge:A-S:section:thiet_dien:point:on:chop::edge:B-S",
+           "section:thiet_dien:edge:section:thiet_dien:point:on:chop::edge:B-S:section:thiet_dien:point:on:chop::edge:B-C"
           ],
           "ordered_construction_ids": [
-           "section:thiet_dien:edge:section:thiet_dien:point:on:chop::edge:B-C:section:thiet_dien:point:on:chop::edge:C-D",
-           "section:thiet_dien:edge:section:thiet_dien:point:on:chop::edge:C-D:section:thiet_dien:point:on:chop::edge:D-S"
+           "section:thiet_dien:edge:section:thiet_dien:point:on:chop::edge:A-S:section:thiet_dien:point:on:chop::edge:B-S",
+           "section:thiet_dien:edge:section:thiet_dien:point:on:chop::edge:B-S:section:thiet_dien:point:on:chop::edge:B-C"
           ],
           "closed": false,
           "fill_visible": false
@@ -3951,14 +3951,14 @@
          {
           "object_id": "thiet_dien",
           "visible_edge_ids": [
-           "section:thiet_dien:edge:section:thiet_dien:point:on:chop::edge:B-C:section:thiet_dien:point:on:chop::edge:C-D",
-           "section:thiet_dien:edge:section:thiet_dien:point:on:chop::edge:C-D:section:thiet_dien:point:on:chop::edge:D-S",
-           "section:thiet_dien:edge:section:thiet_dien:point:on:chop::edge:D-S:section:thiet_dien:point:on:chop::edge:A-S"
+           "section:thiet_dien:edge:section:thiet_dien:point:on:chop::edge:A-S:section:thiet_dien:point:on:chop::edge:B-S",
+           "section:thiet_dien:edge:section:thiet_dien:point:on:chop::edge:B-S:section:thiet_dien:point:on:chop::edge:B-C",
+           "section:thiet_dien:edge:section:thiet_dien:point:on:chop::edge:B-C:section:thiet_dien:point:on:chop::edge:C-D"
           ],
           "ordered_construction_ids": [
-           "section:thiet_dien:edge:section:thiet_dien:point:on:chop::edge:B-C:section:thiet_dien:point:on:chop::edge:C-D",
-           "section:thiet_dien:edge:section:thiet_dien:point:on:chop::edge:C-D:section:thiet_dien:point:on:chop::edge:D-S",
-           "section:thiet_dien:edge:section:thiet_dien:point:on:chop::edge:D-S:section:thiet_dien:point:on:chop::edge:A-S"
+           "section:thiet_dien:edge:section:thiet_dien:point:on:chop::edge:A-S:section:thiet_dien:point:on:chop::edge:B-S",
+           "section:thiet_dien:edge:section:thiet_dien:point:on:chop::edge:B-S:section:thiet_dien:point:on:chop::edge:B-C",
+           "section:thiet_dien:edge:section:thiet_dien:point:on:chop::edge:B-C:section:thiet_dien:point:on:chop::edge:C-D"
           ],
           "closed": false,
           "fill_visible": false
@@ -4008,16 +4008,16 @@
          {
           "object_id": "thiet_dien",
           "visible_edge_ids": [
+           "section:thiet_dien:edge:section:thiet_dien:point:on:chop::edge:A-S:section:thiet_dien:point:on:chop::edge:B-S",
+           "section:thiet_dien:edge:section:thiet_dien:point:on:chop::edge:B-S:section:thiet_dien:point:on:chop::edge:B-C",
            "section:thiet_dien:edge:section:thiet_dien:point:on:chop::edge:B-C:section:thiet_dien:point:on:chop::edge:C-D",
-           "section:thiet_dien:edge:section:thiet_dien:point:on:chop::edge:C-D:section:thiet_dien:point:on:chop::edge:D-S",
-           "section:thiet_dien:edge:section:thiet_dien:point:on:chop::edge:D-S:section:thiet_dien:point:on:chop::edge:A-S",
-           "section:thiet_dien:edge:section:thiet_dien:point:on:chop::edge:A-S:section:thiet_dien:point:on:chop::edge:B-S"
+           "section:thiet_dien:edge:section:thiet_dien:point:on:chop::edge:C-D:section:thiet_dien:point:on:chop::edge:D-S"
           ],
           "ordered_construction_ids": [
+           "section:thiet_dien:edge:section:thiet_dien:point:on:chop::edge:A-S:section:thiet_dien:point:on:chop::edge:B-S",
+           "section:thiet_dien:edge:section:thiet_dien:point:on:chop::edge:B-S:section:thiet_dien:point:on:chop::edge:B-C",
            "section:thiet_dien:edge:section:thiet_dien:point:on:chop::edge:B-C:section:thiet_dien:point:on:chop::edge:C-D",
-           "section:thiet_dien:edge:section:thiet_dien:point:on:chop::edge:C-D:section:thiet_dien:point:on:chop::edge:D-S",
-           "section:thiet_dien:edge:section:thiet_dien:point:on:chop::edge:D-S:section:thiet_dien:point:on:chop::edge:A-S",
-           "section:thiet_dien:edge:section:thiet_dien:point:on:chop::edge:A-S:section:thiet_dien:point:on:chop::edge:B-S"
+           "section:thiet_dien:edge:section:thiet_dien:point:on:chop::edge:C-D:section:thiet_dien:point:on:chop::edge:D-S"
           ],
           "closed": false,
           "fill_visible": false
@@ -4067,18 +4067,18 @@
          {
           "object_id": "thiet_dien",
           "visible_edge_ids": [
+           "section:thiet_dien:edge:section:thiet_dien:point:on:chop::edge:A-S:section:thiet_dien:point:on:chop::edge:B-S",
+           "section:thiet_dien:edge:section:thiet_dien:point:on:chop::edge:B-S:section:thiet_dien:point:on:chop::edge:B-C",
            "section:thiet_dien:edge:section:thiet_dien:point:on:chop::edge:B-C:section:thiet_dien:point:on:chop::edge:C-D",
            "section:thiet_dien:edge:section:thiet_dien:point:on:chop::edge:C-D:section:thiet_dien:point:on:chop::edge:D-S",
-           "section:thiet_dien:edge:section:thiet_dien:point:on:chop::edge:D-S:section:thiet_dien:point:on:chop::edge:A-S",
-           "section:thiet_dien:edge:section:thiet_dien:point:on:chop::edge:A-S:section:thiet_dien:point:on:chop::edge:B-S",
-           "section:thiet_dien:edge:section:thiet_dien:point:on:chop::edge:B-C:section:thiet_dien:point:on:chop::edge:B-S"
+           "section:thiet_dien:edge:section:thiet_dien:point:on:chop::edge:A-S:section:thiet_dien:point:on:chop::edge:D-S"
           ],
           "ordered_construction_ids": [
+           "section:thiet_dien:edge:section:thiet_dien:point:on:chop::edge:A-S:section:thiet_dien:point:on:chop::edge:B-S",
+           "section:thiet_dien:edge:section:thiet_dien:point:on:chop::edge:B-S:section:thiet_dien:point:on:chop::edge:B-C",
            "section:thiet_dien:edge:section:thiet_dien:point:on:chop::edge:B-C:section:thiet_dien:point:on:chop::edge:C-D",
            "section:thiet_dien:edge:section:thiet_dien:point:on:chop::edge:C-D:section:thiet_dien:point:on:chop::edge:D-S",
-           "section:thiet_dien:edge:section:thiet_dien:point:on:chop::edge:D-S:section:thiet_dien:point:on:chop::edge:A-S",
-           "section:thiet_dien:edge:section:thiet_dien:point:on:chop::edge:A-S:section:thiet_dien:point:on:chop::edge:B-S",
-           "section:thiet_dien:edge:section:thiet_dien:point:on:chop::edge:B-C:section:thiet_dien:point:on:chop::edge:B-S"
+           "section:thiet_dien:edge:section:thiet_dien:point:on:chop::edge:A-S:section:thiet_dien:point:on:chop::edge:D-S"
           ],
           "closed": true,
           "fill_visible": false
@@ -4128,18 +4128,18 @@
          {
           "object_id": "thiet_dien",
           "visible_edge_ids": [
+           "section:thiet_dien:edge:section:thiet_dien:point:on:chop::edge:A-S:section:thiet_dien:point:on:chop::edge:B-S",
+           "section:thiet_dien:edge:section:thiet_dien:point:on:chop::edge:B-S:section:thiet_dien:point:on:chop::edge:B-C",
            "section:thiet_dien:edge:section:thiet_dien:point:on:chop::edge:B-C:section:thiet_dien:point:on:chop::edge:C-D",
            "section:thiet_dien:edge:section:thiet_dien:point:on:chop::edge:C-D:section:thiet_dien:point:on:chop::edge:D-S",
-           "section:thiet_dien:edge:section:thiet_dien:point:on:chop::edge:D-S:section:thiet_dien:point:on:chop::edge:A-S",
-           "section:thiet_dien:edge:section:thiet_dien:point:on:chop::edge:A-S:section:thiet_dien:point:on:chop::edge:B-S",
-           "section:thiet_dien:edge:section:thiet_dien:point:on:chop::edge:B-C:section:thiet_dien:point:on:chop::edge:B-S"
+           "section:thiet_dien:edge:section:thiet_dien:point:on:chop::edge:A-S:section:thiet_dien:point:on:chop::edge:D-S"
           ],
           "ordered_construction_ids": [
+           "section:thiet_dien:edge:section:thiet_dien:point:on:chop::edge:A-S:section:thiet_dien:point:on:chop::edge:B-S",
+           "section:thiet_dien:edge:section:thiet_dien:point:on:chop::edge:B-S:section:thiet_dien:point:on:chop::edge:B-C",
            "section:thiet_dien:edge:section:thiet_dien:point:on:chop::edge:B-C:section:thiet_dien:point:on:chop::edge:C-D",
            "section:thiet_dien:edge:section:thiet_dien:point:on:chop::edge:C-D:section:thiet_dien:point:on:chop::edge:D-S",
-           "section:thiet_dien:edge:section:thiet_dien:point:on:chop::edge:D-S:section:thiet_dien:point:on:chop::edge:A-S",
-           "section:thiet_dien:edge:section:thiet_dien:point:on:chop::edge:A-S:section:thiet_dien:point:on:chop::edge:B-S",
-           "section:thiet_dien:edge:section:thiet_dien:point:on:chop::edge:B-C:section:thiet_dien:point:on:chop::edge:B-S"
+           "section:thiet_dien:edge:section:thiet_dien:point:on:chop::edge:A-S:section:thiet_dien:point:on:chop::edge:D-S"
           ],
           "closed": true,
           "fill_visible": true
@@ -4192,18 +4192,18 @@
          {
           "object_id": "thiet_dien",
           "visible_edge_ids": [
+           "section:thiet_dien:edge:section:thiet_dien:point:on:chop::edge:A-S:section:thiet_dien:point:on:chop::edge:B-S",
+           "section:thiet_dien:edge:section:thiet_dien:point:on:chop::edge:B-S:section:thiet_dien:point:on:chop::edge:B-C",
            "section:thiet_dien:edge:section:thiet_dien:point:on:chop::edge:B-C:section:thiet_dien:point:on:chop::edge:C-D",
            "section:thiet_dien:edge:section:thiet_dien:point:on:chop::edge:C-D:section:thiet_dien:point:on:chop::edge:D-S",
-           "section:thiet_dien:edge:section:thiet_dien:point:on:chop::edge:D-S:section:thiet_dien:point:on:chop::edge:A-S",
-           "section:thiet_dien:edge:section:thiet_dien:point:on:chop::edge:A-S:section:thiet_dien:point:on:chop::edge:B-S",
-           "section:thiet_dien:edge:section:thiet_dien:point:on:chop::edge:B-C:section:thiet_dien:point:on:chop::edge:B-S"
+           "section:thiet_dien:edge:section:thiet_dien:point:on:chop::edge:A-S:section:thiet_dien:point:on:chop::edge:D-S"
           ],
           "ordered_construction_ids": [
+           "section:thiet_dien:edge:section:thiet_dien:point:on:chop::edge:A-S:section:thiet_dien:point:on:chop::edge:B-S",
+           "section:thiet_dien:edge:section:thiet_dien:point:on:chop::edge:B-S:section:thiet_dien:point:on:chop::edge:B-C",
            "section:thiet_dien:edge:section:thiet_dien:point:on:chop::edge:B-C:section:thiet_dien:point:on:chop::edge:C-D",
            "section:thiet_dien:edge:section:thiet_dien:point:on:chop::edge:C-D:section:thiet_dien:point:on:chop::edge:D-S",
-           "section:thiet_dien:edge:section:thiet_dien:point:on:chop::edge:D-S:section:thiet_dien:point:on:chop::edge:A-S",
-           "section:thiet_dien:edge:section:thiet_dien:point:on:chop::edge:A-S:section:thiet_dien:point:on:chop::edge:B-S",
-           "section:thiet_dien:edge:section:thiet_dien:point:on:chop::edge:B-C:section:thiet_dien:point:on:chop::edge:B-S"
+           "section:thiet_dien:edge:section:thiet_dien:point:on:chop::edge:A-S:section:thiet_dien:point:on:chop::edge:D-S"
           ],
           "closed": true,
           "fill_visible": true
@@ -4255,18 +4255,18 @@
          {
           "object_id": "thiet_dien",
           "visible_edge_ids": [
+           "section:thiet_dien:edge:section:thiet_dien:point:on:chop::edge:A-S:section:thiet_dien:point:on:chop::edge:B-S",
+           "section:thiet_dien:edge:section:thiet_dien:point:on:chop::edge:B-S:section:thiet_dien:point:on:chop::edge:B-C",
            "section:thiet_dien:edge:section:thiet_dien:point:on:chop::edge:B-C:section:thiet_dien:point:on:chop::edge:C-D",
            "section:thiet_dien:edge:section:thiet_dien:point:on:chop::edge:C-D:section:thiet_dien:point:on:chop::edge:D-S",
-           "section:thiet_dien:edge:section:thiet_dien:point:on:chop::edge:D-S:section:thiet_dien:point:on:chop::edge:A-S",
-           "section:thiet_dien:edge:section:thiet_dien:point:on:chop::edge:A-S:section:thiet_dien:point:on:chop::edge:B-S",
-           "section:thiet_dien:edge:section:thiet_dien:point:on:chop::edge:B-C:section:thiet_dien:point:on:chop::edge:B-S"
+           "section:thiet_dien:edge:section:thiet_dien:point:on:chop::edge:A-S:section:thiet_dien:point:on:chop::edge:D-S"
           ],
           "ordered_construction_ids": [
+           "section:thiet_dien:edge:section:thiet_dien:point:on:chop::edge:A-S:section:thiet_dien:point:on:chop::edge:B-S",
+           "section:thiet_dien:edge:section:thiet_dien:point:on:chop::edge:B-S:section:thiet_dien:point:on:chop::edge:B-C",
            "section:thiet_dien:edge:section:thiet_dien:point:on:chop::edge:B-C:section:thiet_dien:point:on:chop::edge:C-D",
            "section:thiet_dien:edge:section:thiet_dien:point:on:chop::edge:C-D:section:thiet_dien:point:on:chop::edge:D-S",
-           "section:thiet_dien:edge:section:thiet_dien:point:on:chop::edge:D-S:section:thiet_dien:point:on:chop::edge:A-S",
-           "section:thiet_dien:edge:section:thiet_dien:point:on:chop::edge:A-S:section:thiet_dien:point:on:chop::edge:B-S",
-           "section:thiet_dien:edge:section:thiet_dien:point:on:chop::edge:B-C:section:thiet_dien:point:on:chop::edge:B-S"
+           "section:thiet_dien:edge:section:thiet_dien:point:on:chop::edge:A-S:section:thiet_dien:point:on:chop::edge:D-S"
           ],
           "closed": true,
           "fill_visible": true
@@ -6082,33 +6082,33 @@
        "formation_roles": [],
        "polygon": [
         [
+         "0",
+         "2",
+         "0"
+        ],
+        [
          "2",
          "4",
          "0"
         ],
         [
-         "0",
-         "2",
-         "0"
-        ],
-        [
-         "0",
-         "0",
+         "4",
+         "4",
          "2"
         ],
         [
+         "4",
+         "2",
+         "4"
+        ],
+        [
          "2",
          "0",
          "4"
         ],
         [
-         "4",
-         "2",
-         "4"
-        ],
-        [
-         "4",
-         "4",
+         "0",
+         "0",
          "2"
         ]
        ],
@@ -6324,6 +6324,14 @@
          "kind": "SOLID_EDGE_INTERSECTION",
          "solid_vertex_index": null,
          "solid_edge_vertex_indices": [
+          0,
+          3
+         ]
+        },
+        {
+         "kind": "SOLID_EDGE_INTERSECTION",
+         "solid_vertex_index": null,
+         "solid_edge_vertex_indices": [
           2,
           3
          ]
@@ -6332,24 +6340,8 @@
          "kind": "SOLID_EDGE_INTERSECTION",
          "solid_vertex_index": null,
          "solid_edge_vertex_indices": [
-          0,
-          3
-         ]
-        },
-        {
-         "kind": "SOLID_EDGE_INTERSECTION",
-         "solid_vertex_index": null,
-         "solid_edge_vertex_indices": [
-          0,
-          4
-         ]
-        },
-        {
-         "kind": "SOLID_EDGE_INTERSECTION",
-         "solid_vertex_index": null,
-         "solid_edge_vertex_indices": [
-          4,
-          5
+          2,
+          6
          ]
         },
         {
@@ -6364,8 +6356,16 @@
          "kind": "SOLID_EDGE_INTERSECTION",
          "solid_vertex_index": null,
          "solid_edge_vertex_indices": [
-          2,
-          6
+          4,
+          5
+         ]
+        },
+        {
+         "kind": "SOLID_EDGE_INTERSECTION",
+         "solid_vertex_index": null,
+         "solid_edge_vertex_indices": [
+          0,
+          4
          ]
         }
        ],
@@ -6415,64 +6415,64 @@
        "surface_role": "SECTION_REGION",
        "endpoint_entities": [
         {
-         "entity_id": "section:thiet_dien:point:on:lap_phuong::edge:C-D",
-         "section_vertex_ordinal": 0,
-         "provenance_kind": "SOLID_EDGE_INTERSECTION",
-         "coordinate_hash": "b857f346c851b7cf",
-         "anonymous_coordinate_fallback": false
-        },
-        {
          "entity_id": "section:thiet_dien:point:on:lap_phuong::edge:A-D",
-         "section_vertex_ordinal": 1,
+         "section_vertex_ordinal": 0,
          "provenance_kind": "SOLID_EDGE_INTERSECTION",
          "coordinate_hash": "b9e5212abeb94d43",
          "anonymous_coordinate_fallback": false
         },
         {
-         "entity_id": "section:thiet_dien:point:on:lap_phuong::edge:A-A_prime",
-         "section_vertex_ordinal": 2,
+         "entity_id": "section:thiet_dien:point:on:lap_phuong::edge:C-D",
+         "section_vertex_ordinal": 1,
          "provenance_kind": "SOLID_EDGE_INTERSECTION",
-         "coordinate_hash": "c874f52ac6304923",
+         "coordinate_hash": "b857f346c851b7cf",
          "anonymous_coordinate_fallback": false
         },
         {
-         "entity_id": "section:thiet_dien:point:on:lap_phuong::edge:A_prime-B_prime",
-         "section_vertex_ordinal": 3,
+         "entity_id": "section:thiet_dien:point:on:lap_phuong::edge:C-C_prime",
+         "section_vertex_ordinal": 2,
          "provenance_kind": "SOLID_EDGE_INTERSECTION",
-         "coordinate_hash": "dc5f1346dd1d952f",
+         "coordinate_hash": "4c38c8e2d9ded903",
          "anonymous_coordinate_fallback": false
         },
         {
          "entity_id": "section:thiet_dien:point:on:lap_phuong::edge:B_prime-C_prime",
-         "section_vertex_ordinal": 4,
+         "section_vertex_ordinal": 3,
          "provenance_kind": "SOLID_EDGE_INTERSECTION",
          "coordinate_hash": "19a154e2bd9b2643",
          "anonymous_coordinate_fallback": false
         },
         {
-         "entity_id": "section:thiet_dien:point:on:lap_phuong::edge:C-C_prime",
+         "entity_id": "section:thiet_dien:point:on:lap_phuong::edge:A_prime-B_prime",
+         "section_vertex_ordinal": 4,
+         "provenance_kind": "SOLID_EDGE_INTERSECTION",
+         "coordinate_hash": "dc5f1346dd1d952f",
+         "anonymous_coordinate_fallback": false
+        },
+        {
+         "entity_id": "section:thiet_dien:point:on:lap_phuong::edge:A-A_prime",
          "section_vertex_ordinal": 5,
          "provenance_kind": "SOLID_EDGE_INTERSECTION",
-         "coordinate_hash": "4c38c8e2d9ded903",
+         "coordinate_hash": "c874f52ac6304923",
          "anonymous_coordinate_fallback": false
         }
        ],
        "identity_diagnostics": [],
        "boundary_edge_ids": [
-        "section:thiet_dien:edge:section:thiet_dien:point:on:lap_phuong::edge:C-D:section:thiet_dien:point:on:lap_phuong::edge:A-D",
-        "section:thiet_dien:edge:section:thiet_dien:point:on:lap_phuong::edge:A-D:section:thiet_dien:point:on:lap_phuong::edge:A-A_prime",
-        "section:thiet_dien:edge:section:thiet_dien:point:on:lap_phuong::edge:A-A_prime:section:thiet_dien:point:on:lap_phuong::edge:A_prime-B_prime",
-        "section:thiet_dien:edge:section:thiet_dien:point:on:lap_phuong::edge:A_prime-B_prime:section:thiet_dien:point:on:lap_phuong::edge:B_prime-C_prime",
-        "section:thiet_dien:edge:section:thiet_dien:point:on:lap_phuong::edge:B_prime-C_prime:section:thiet_dien:point:on:lap_phuong::edge:C-C_prime",
-        "section:thiet_dien:edge:section:thiet_dien:point:on:lap_phuong::edge:C-D:section:thiet_dien:point:on:lap_phuong::edge:C-C_prime"
+        "section:thiet_dien:edge:section:thiet_dien:point:on:lap_phuong::edge:A-D:section:thiet_dien:point:on:lap_phuong::edge:C-D",
+        "section:thiet_dien:edge:section:thiet_dien:point:on:lap_phuong::edge:C-D:section:thiet_dien:point:on:lap_phuong::edge:C-C_prime",
+        "section:thiet_dien:edge:section:thiet_dien:point:on:lap_phuong::edge:C-C_prime:section:thiet_dien:point:on:lap_phuong::edge:B_prime-C_prime",
+        "section:thiet_dien:edge:section:thiet_dien:point:on:lap_phuong::edge:B_prime-C_prime:section:thiet_dien:point:on:lap_phuong::edge:A_prime-B_prime",
+        "section:thiet_dien:edge:section:thiet_dien:point:on:lap_phuong::edge:A_prime-B_prime:section:thiet_dien:point:on:lap_phuong::edge:A-A_prime",
+        "section:thiet_dien:edge:section:thiet_dien:point:on:lap_phuong::edge:A-D:section:thiet_dien:point:on:lap_phuong::edge:A-A_prime"
        ],
        "section_edge_coordinate_hashes": {
-        "section:thiet_dien:edge:section:thiet_dien:point:on:lap_phuong::edge:C-D:section:thiet_dien:point:on:lap_phuong::edge:A-D": "b857f346c851b7cf:b9e5212abeb94d43",
-        "section:thiet_dien:edge:section:thiet_dien:point:on:lap_phuong::edge:A-D:section:thiet_dien:point:on:lap_phuong::edge:A-A_prime": "b9e5212abeb94d43:c874f52ac6304923",
-        "section:thiet_dien:edge:section:thiet_dien:point:on:lap_phuong::edge:A-A_prime:section:thiet_dien:point:on:lap_phuong::edge:A_prime-B_prime": "c874f52ac6304923:dc5f1346dd1d952f",
-        "section:thiet_dien:edge:section:thiet_dien:point:on:lap_phuong::edge:A_prime-B_prime:section:thiet_dien:point:on:lap_phuong::edge:B_prime-C_prime": "19a154e2bd9b2643:dc5f1346dd1d952f",
-        "section:thiet_dien:edge:section:thiet_dien:point:on:lap_phuong::edge:B_prime-C_prime:section:thiet_dien:point:on:lap_phuong::edge:C-C_prime": "19a154e2bd9b2643:4c38c8e2d9ded903",
-        "section:thiet_dien:edge:section:thiet_dien:point:on:lap_phuong::edge:C-D:section:thiet_dien:point:on:lap_phuong::edge:C-C_prime": "4c38c8e2d9ded903:b857f346c851b7cf"
+        "section:thiet_dien:edge:section:thiet_dien:point:on:lap_phuong::edge:A-D:section:thiet_dien:point:on:lap_phuong::edge:C-D": "b857f346c851b7cf:b9e5212abeb94d43",
+        "section:thiet_dien:edge:section:thiet_dien:point:on:lap_phuong::edge:C-D:section:thiet_dien:point:on:lap_phuong::edge:C-C_prime": "4c38c8e2d9ded903:b857f346c851b7cf",
+        "section:thiet_dien:edge:section:thiet_dien:point:on:lap_phuong::edge:C-C_prime:section:thiet_dien:point:on:lap_phuong::edge:B_prime-C_prime": "19a154e2bd9b2643:4c38c8e2d9ded903",
+        "section:thiet_dien:edge:section:thiet_dien:point:on:lap_phuong::edge:B_prime-C_prime:section:thiet_dien:point:on:lap_phuong::edge:A_prime-B_prime": "19a154e2bd9b2643:dc5f1346dd1d952f",
+        "section:thiet_dien:edge:section:thiet_dien:point:on:lap_phuong::edge:A_prime-B_prime:section:thiet_dien:point:on:lap_phuong::edge:A-A_prime": "c874f52ac6304923:dc5f1346dd1d952f",
+        "section:thiet_dien:edge:section:thiet_dien:point:on:lap_phuong::edge:A-D:section:thiet_dien:point:on:lap_phuong::edge:A-A_prime": "b9e5212abeb94d43:c874f52ac6304923"
        }
       },
       {
@@ -8967,10 +8967,10 @@
          {
           "object_id": "thiet_dien",
           "visible_edge_ids": [
-           "section:thiet_dien:edge:section:thiet_dien:point:on:lap_phuong::edge:C-D:section:thiet_dien:point:on:lap_phuong::edge:A-D"
+           "section:thiet_dien:edge:section:thiet_dien:point:on:lap_phuong::edge:A-D:section:thiet_dien:point:on:lap_phuong::edge:C-D"
           ],
           "ordered_construction_ids": [
-           "section:thiet_dien:edge:section:thiet_dien:point:on:lap_phuong::edge:C-D:section:thiet_dien:point:on:lap_phuong::edge:A-D"
+           "section:thiet_dien:edge:section:thiet_dien:point:on:lap_phuong::edge:A-D:section:thiet_dien:point:on:lap_phuong::edge:C-D"
           ],
           "closed": false,
           "fill_visible": false
@@ -9024,12 +9024,12 @@
          {
           "object_id": "thiet_dien",
           "visible_edge_ids": [
-           "section:thiet_dien:edge:section:thiet_dien:point:on:lap_phuong::edge:C-D:section:thiet_dien:point:on:lap_phuong::edge:A-D",
-           "section:thiet_dien:edge:section:thiet_dien:point:on:lap_phuong::edge:A-D:section:thiet_dien:point:on:lap_phuong::edge:A-A_prime"
+           "section:thiet_dien:edge:section:thiet_dien:point:on:lap_phuong::edge:A-D:section:thiet_dien:point:on:lap_phuong::edge:C-D",
+           "section:thiet_dien:edge:section:thiet_dien:point:on:lap_phuong::edge:C-D:section:thiet_dien:point:on:lap_phuong::edge:C-C_prime"
           ],
           "ordered_construction_ids": [
-           "section:thiet_dien:edge:section:thiet_dien:point:on:lap_phuong::edge:C-D:section:thiet_dien:point:on:lap_phuong::edge:A-D",
-           "section:thiet_dien:edge:section:thiet_dien:point:on:lap_phuong::edge:A-D:section:thiet_dien:point:on:lap_phuong::edge:A-A_prime"
+           "section:thiet_dien:edge:section:thiet_dien:point:on:lap_phuong::edge:A-D:section:thiet_dien:point:on:lap_phuong::edge:C-D",
+           "section:thiet_dien:edge:section:thiet_dien:point:on:lap_phuong::edge:C-D:section:thiet_dien:point:on:lap_phuong::edge:C-C_prime"
           ],
           "closed": false,
           "fill_visible": false
@@ -9083,14 +9083,14 @@
          {
           "object_id": "thiet_dien",
           "visible_edge_ids": [
-           "section:thiet_dien:edge:section:thiet_dien:point:on:lap_phuong::edge:C-D:section:thiet_dien:point:on:lap_phuong::edge:A-D",
-           "section:thiet_dien:edge:section:thiet_dien:point:on:lap_phuong::edge:A-D:section:thiet_dien:point:on:lap_phuong::edge:A-A_prime",
-           "section:thiet_dien:edge:section:thiet_dien:point:on:lap_phuong::edge:A-A_prime:section:thiet_dien:point:on:lap_phuong::edge:A_prime-B_prime"
+           "section:thiet_dien:edge:section:thiet_dien:point:on:lap_phuong::edge:A-D:section:thiet_dien:point:on:lap_phuong::edge:C-D",
+           "section:thiet_dien:edge:section:thiet_dien:point:on:lap_phuong::edge:C-D:section:thiet_dien:point:on:lap_phuong::edge:C-C_prime",
+           "section:thiet_dien:edge:section:thiet_dien:point:on:lap_phuong::edge:C-C_prime:section:thiet_dien:point:on:lap_phuong::edge:B_prime-C_prime"
           ],
           "ordered_construction_ids": [
-           "section:thiet_dien:edge:section:thiet_dien:point:on:lap_phuong::edge:C-D:section:thiet_dien:point:on:lap_phuong::edge:A-D",
-           "section:thiet_dien:edge:section:thiet_dien:point:on:lap_phuong::edge:A-D:section:thiet_dien:point:on:lap_phuong::edge:A-A_prime",
-           "section:thiet_dien:edge:section:thiet_dien:point:on:lap_phuong::edge:A-A_prime:section:thiet_dien:point:on:lap_phuong::edge:A_prime-B_prime"
+           "section:thiet_dien:edge:section:thiet_dien:point:on:lap_phuong::edge:A-D:section:thiet_dien:point:on:lap_phuong::edge:C-D",
+           "section:thiet_dien:edge:section:thiet_dien:point:on:lap_phuong::edge:C-D:section:thiet_dien:point:on:lap_phuong::edge:C-C_prime",
+           "section:thiet_dien:edge:section:thiet_dien:point:on:lap_phuong::edge:C-C_prime:section:thiet_dien:point:on:lap_phuong::edge:B_prime-C_prime"
           ],
           "closed": false,
           "fill_visible": false
@@ -9144,16 +9144,16 @@
          {
           "object_id": "thiet_dien",
           "visible_edge_ids": [
-           "section:thiet_dien:edge:section:thiet_dien:point:on:lap_phuong::edge:C-D:section:thiet_dien:point:on:lap_phuong::edge:A-D",
-           "section:thiet_dien:edge:section:thiet_dien:point:on:lap_phuong::edge:A-D:section:thiet_dien:point:on:lap_phuong::edge:A-A_prime",
-           "section:thiet_dien:edge:section:thiet_dien:point:on:lap_phuong::edge:A-A_prime:section:thiet_dien:point:on:lap_phuong::edge:A_prime-B_prime",
-           "section:thiet_dien:edge:section:thiet_dien:point:on:lap_phuong::edge:A_prime-B_prime:section:thiet_dien:point:on:lap_phuong::edge:B_prime-C_prime"
+           "section:thiet_dien:edge:section:thiet_dien:point:on:lap_phuong::edge:A-D:section:thiet_dien:point:on:lap_phuong::edge:C-D",
+           "section:thiet_dien:edge:section:thiet_dien:point:on:lap_phuong::edge:C-D:section:thiet_dien:point:on:lap_phuong::edge:C-C_prime",
+           "section:thiet_dien:edge:section:thiet_dien:point:on:lap_phuong::edge:C-C_prime:section:thiet_dien:point:on:lap_phuong::edge:B_prime-C_prime",
+           "section:thiet_dien:edge:section:thiet_dien:point:on:lap_phuong::edge:B_prime-C_prime:section:thiet_dien:point:on:lap_phuong::edge:A_prime-B_prime"
           ],
           "ordered_construction_ids": [
-           "section:thiet_dien:edge:section:thiet_dien:point:on:lap_phuong::edge:C-D:section:thiet_dien:point:on:lap_phuong::edge:A-D",
-           "section:thiet_dien:edge:section:thiet_dien:point:on:lap_phuong::edge:A-D:section:thiet_dien:point:on:lap_phuong::edge:A-A_prime",
-           "section:thiet_dien:edge:section:thiet_dien:point:on:lap_phuong::edge:A-A_prime:section:thiet_dien:point:on:lap_phuong::edge:A_prime-B_prime",
-           "section:thiet_dien:edge:section:thiet_dien:point:on:lap_phuong::edge:A_prime-B_prime:section:thiet_dien:point:on:lap_phuong::edge:B_prime-C_prime"
+           "section:thiet_dien:edge:section:thiet_dien:point:on:lap_phuong::edge:A-D:section:thiet_dien:point:on:lap_phuong::edge:C-D",
+           "section:thiet_dien:edge:section:thiet_dien:point:on:lap_phuong::edge:C-D:section:thiet_dien:point:on:lap_phuong::edge:C-C_prime",
+           "section:thiet_dien:edge:section:thiet_dien:point:on:lap_phuong::edge:C-C_prime:section:thiet_dien:point:on:lap_phuong::edge:B_prime-C_prime",
+           "section:thiet_dien:edge:section:thiet_dien:point:on:lap_phuong::edge:B_prime-C_prime:section:thiet_dien:point:on:lap_phuong::edge:A_prime-B_prime"
           ],
           "closed": false,
           "fill_visible": false
@@ -9207,18 +9207,18 @@
          {
           "object_id": "thiet_dien",
           "visible_edge_ids": [
-           "section:thiet_dien:edge:section:thiet_dien:point:on:lap_phuong::edge:C-D:section:thiet_dien:point:on:lap_phuong::edge:A-D",
-           "section:thiet_dien:edge:section:thiet_dien:point:on:lap_phuong::edge:A-D:section:thiet_dien:point:on:lap_phuong::edge:A-A_prime",
-           "section:thiet_dien:edge:section:thiet_dien:point:on:lap_phuong::edge:A-A_prime:section:thiet_dien:point:on:lap_phuong::edge:A_prime-B_prime",
-           "section:thiet_dien:edge:section:thiet_dien:point:on:lap_phuong::edge:A_prime-B_prime:section:thiet_dien:point:on:lap_phuong::edge:B_prime-C_prime",
-           "section:thiet_dien:edge:section:thiet_dien:point:on:lap_phuong::edge:B_prime-C_prime:section:thiet_dien:point:on:lap_phuong::edge:C-C_prime"
+           "section:thiet_dien:edge:section:thiet_dien:point:on:lap_phuong::edge:A-D:section:thiet_dien:point:on:lap_phuong::edge:C-D",
+           "section:thiet_dien:edge:section:thiet_dien:point:on:lap_phuong::edge:C-D:section:thiet_dien:point:on:lap_phuong::edge:C-C_prime",
+           "section:thiet_dien:edge:section:thiet_dien:point:on:lap_phuong::edge:C-C_prime:section:thiet_dien:point:on:lap_phuong::edge:B_prime-C_prime",
+           "section:thiet_dien:edge:section:thiet_dien:point:on:lap_phuong::edge:B_prime-C_prime:section:thiet_dien:point:on:lap_phuong::edge:A_prime-B_prime",
+           "section:thiet_dien:edge:section:thiet_dien:point:on:lap_phuong::edge:A_prime-B_prime:section:thiet_dien:point:on:lap_phuong::edge:A-A_prime"
           ],
           "ordered_construction_ids": [
-           "section:thiet_dien:edge:section:thiet_dien:point:on:lap_phuong::edge:C-D:section:thiet_dien:point:on:lap_phuong::edge:A-D",
-           "section:thiet_dien:edge:section:thiet_dien:point:on:lap_phuong::edge:A-D:section:thiet_dien:point:on:lap_phuong::edge:A-A_prime",
-           "section:thiet_dien:edge:section:thiet_dien:point:on:lap_phuong::edge:A-A_prime:section:thiet_dien:point:on:lap_phuong::edge:A_prime-B_prime",
-           "section:thiet_dien:edge:section:thiet_dien:point:on:lap_phuong::edge:A_prime-B_prime:section:thiet_dien:point:on:lap_phuong::edge:B_prime-C_prime",
-           "section:thiet_dien:edge:section:thiet_dien:point:on:lap_phuong::edge:B_prime-C_prime:section:thiet_dien:point:on:lap_phuong::edge:C-C_prime"
+           "section:thiet_dien:edge:section:thiet_dien:point:on:lap_phuong::edge:A-D:section:thiet_dien:point:on:lap_phuong::edge:C-D",
+           "section:thiet_dien:edge:section:thiet_dien:point:on:lap_phuong::edge:C-D:section:thiet_dien:point:on:lap_phuong::edge:C-C_prime",
+           "section:thiet_dien:edge:section:thiet_dien:point:on:lap_phuong::edge:C-C_prime:section:thiet_dien:point:on:lap_phuong::edge:B_prime-C_prime",
+           "section:thiet_dien:edge:section:thiet_dien:point:on:lap_phuong::edge:B_prime-C_prime:section:thiet_dien:point:on:lap_phuong::edge:A_prime-B_prime",
+           "section:thiet_dien:edge:section:thiet_dien:point:on:lap_phuong::edge:A_prime-B_prime:section:thiet_dien:point:on:lap_phuong::edge:A-A_prime"
           ],
           "closed": false,
           "fill_visible": false
@@ -9272,20 +9272,20 @@
          {
           "object_id": "thiet_dien",
           "visible_edge_ids": [
-           "section:thiet_dien:edge:section:thiet_dien:point:on:lap_phuong::edge:C-D:section:thiet_dien:point:on:lap_phuong::edge:A-D",
-           "section:thiet_dien:edge:section:thiet_dien:point:on:lap_phuong::edge:A-D:section:thiet_dien:point:on:lap_phuong::edge:A-A_prime",
-           "section:thiet_dien:edge:section:thiet_dien:point:on:lap_phuong::edge:A-A_prime:section:thiet_dien:point:on:lap_phuong::edge:A_prime-B_prime",
-           "section:thiet_dien:edge:section:thiet_dien:point:on:lap_phuong::edge:A_prime-B_prime:section:thiet_dien:point:on:lap_phuong::edge:B_prime-C_prime",
-           "section:thiet_dien:edge:section:thiet_dien:point:on:lap_phuong::edge:B_prime-C_prime:section:thiet_dien:point:on:lap_phuong::edge:C-C_prime",
-           "section:thiet_dien:edge:section:thiet_dien:point:on:lap_phuong::edge:C-D:section:thiet_dien:point:on:lap_phuong::edge:C-C_prime"
+           "section:thiet_dien:edge:section:thiet_dien:point:on:lap_phuong::edge:A-D:section:thiet_dien:point:on:lap_phuong::edge:C-D",
+           "section:thiet_dien:edge:section:thiet_dien:point:on:lap_phuong::edge:C-D:section:thiet_dien:point:on:lap_phuong::edge:C-C_prime",
+           "section:thiet_dien:edge:section:thiet_dien:point:on:lap_phuong::edge:C-C_prime:section:thiet_dien:point:on:lap_phuong::edge:B_prime-C_prime",
+           "section:thiet_dien:edge:section:thiet_dien:point:on:lap_phuong::edge:B_prime-C_prime:section:thiet_dien:point:on:lap_phuong::edge:A_prime-B_prime",
+           "section:thiet_dien:edge:section:thiet_dien:point:on:lap_phuong::edge:A_prime-B_prime:section:thiet_dien:point:on:lap_phuong::edge:A-A_prime",
+           "section:thiet_dien:edge:section:thiet_dien:point:on:lap_phuong::edge:A-D:section:thiet_dien:point:on:lap_phuong::edge:A-A_prime"
           ],
           "ordered_construction_ids": [
-           "section:thiet_dien:edge:section:thiet_dien:point:on:lap_phuong::edge:C-D:section:thiet_dien:point:on:lap_phuong::edge:A-D",
-           "section:thiet_dien:edge:section:thiet_dien:point:on:lap_phuong::edge:A-D:section:thiet_dien:point:on:lap_phuong::edge:A-A_prime",
-           "section:thiet_dien:edge:section:thiet_dien:point:on:lap_phuong::edge:A-A_prime:section:thiet_dien:point:on:lap_phuong::edge:A_prime-B_prime",
-           "section:thiet_dien:edge:section:thiet_dien:point:on:lap_phuong::edge:A_prime-B_prime:section:thiet_dien:point:on:lap_phuong::edge:B_prime-C_prime",
-           "section:thiet_dien:edge:section:thiet_dien:point:on:lap_phuong::edge:B_prime-C_prime:section:thiet_dien:point:on:lap_phuong::edge:C-C_prime",
-           "section:thiet_dien:edge:section:thiet_dien:point:on:lap_phuong::edge:C-D:section:thiet_dien:point:on:lap_phuong::edge:C-C_prime"
+           "section:thiet_dien:edge:section:thiet_dien:point:on:lap_phuong::edge:A-D:section:thiet_dien:point:on:lap_phuong::edge:C-D",
+           "section:thiet_dien:edge:section:thiet_dien:point:on:lap_phuong::edge:C-D:section:thiet_dien:point:on:lap_phuong::edge:C-C_prime",
+           "section:thiet_dien:edge:section:thiet_dien:point:on:lap_phuong::edge:C-C_prime:section:thiet_dien:point:on:lap_phuong::edge:B_prime-C_prime",
+           "section:thiet_dien:edge:section:thiet_dien:point:on:lap_phuong::edge:B_prime-C_prime:section:thiet_dien:point:on:lap_phuong::edge:A_prime-B_prime",
+           "section:thiet_dien:edge:section:thiet_dien:point:on:lap_phuong::edge:A_prime-B_prime:section:thiet_dien:point:on:lap_phuong::edge:A-A_prime",
+           "section:thiet_dien:edge:section:thiet_dien:point:on:lap_phuong::edge:A-D:section:thiet_dien:point:on:lap_phuong::edge:A-A_prime"
           ],
           "closed": true,
           "fill_visible": false
@@ -9339,20 +9339,20 @@
          {
           "object_id": "thiet_dien",
           "visible_edge_ids": [
-           "section:thiet_dien:edge:section:thiet_dien:point:on:lap_phuong::edge:C-D:section:thiet_dien:point:on:lap_phuong::edge:A-D",
-           "section:thiet_dien:edge:section:thiet_dien:point:on:lap_phuong::edge:A-D:section:thiet_dien:point:on:lap_phuong::edge:A-A_prime",
-           "section:thiet_dien:edge:section:thiet_dien:point:on:lap_phuong::edge:A-A_prime:section:thiet_dien:point:on:lap_phuong::edge:A_prime-B_prime",
-           "section:thiet_dien:edge:section:thiet_dien:point:on:lap_phuong::edge:A_prime-B_prime:section:thiet_dien:point:on:lap_phuong::edge:B_prime-C_prime",
-           "section:thiet_dien:edge:section:thiet_dien:point:on:lap_phuong::edge:B_prime-C_prime:section:thiet_dien:point:on:lap_phuong::edge:C-C_prime",
-           "section:thiet_dien:edge:section:thiet_dien:point:on:lap_phuong::edge:C-D:section:thiet_dien:point:on:lap_phuong::edge:C-C_prime"
+           "section:thiet_dien:edge:section:thiet_dien:point:on:lap_phuong::edge:A-D:section:thiet_dien:point:on:lap_phuong::edge:C-D",
+           "section:thiet_dien:edge:section:thiet_dien:point:on:lap_phuong::edge:C-D:section:thiet_dien:point:on:lap_phuong::edge:C-C_prime",
+           "section:thiet_dien:edge:section:thiet_dien:point:on:lap_phuong::edge:C-C_prime:section:thiet_dien:point:on:lap_phuong::edge:B_prime-C_prime",
+           "section:thiet_dien:edge:section:thiet_dien:point:on:lap_phuong::edge:B_prime-C_prime:section:thiet_dien:point:on:lap_phuong::edge:A_prime-B_prime",
+           "section:thiet_dien:edge:section:thiet_dien:point:on:lap_phuong::edge:A_prime-B_prime:section:thiet_dien:point:on:lap_phuong::edge:A-A_prime",
+           "section:thiet_dien:edge:section:thiet_dien:point:on:lap_phuong::edge:A-D:section:thiet_dien:point:on:lap_phuong::edge:A-A_prime"
           ],
           "ordered_construction_ids": [
-           "section:thiet_dien:edge:section:thiet_dien:point:on:lap_phuong::edge:C-D:section:thiet_dien:point:on:lap_phuong::edge:A-D",
-           "section:thiet_dien:edge:section:thiet_dien:point:on:lap_phuong::edge:A-D:section:thiet_dien:point:on:lap_phuong::edge:A-A_prime",
-           "section:thiet_dien:edge:section:thiet_dien:point:on:lap_phuong::edge:A-A_prime:section:thiet_dien:point:on:lap_phuong::edge:A_prime-B_prime",
-           "section:thiet_dien:edge:section:thiet_dien:point:on:lap_phuong::edge:A_prime-B_prime:section:thiet_dien:point:on:lap_phuong::edge:B_prime-C_prime",
-           "section:thiet_dien:edge:section:thiet_dien:point:on:lap_phuong::edge:B_prime-C_prime:section:thiet_dien:point:on:lap_phuong::edge:C-C_prime",
-           "section:thiet_dien:edge:section:thiet_dien:point:on:lap_phuong::edge:C-D:section:thiet_dien:point:on:lap_phuong::edge:C-C_prime"
+           "section:thiet_dien:edge:section:thiet_dien:point:on:lap_phuong::edge:A-D:section:thiet_dien:point:on:lap_phuong::edge:C-D",
+           "section:thiet_dien:edge:section:thiet_dien:point:on:lap_phuong::edge:C-D:section:thiet_dien:point:on:lap_phuong::edge:C-C_prime",
+           "section:thiet_dien:edge:section:thiet_dien:point:on:lap_phuong::edge:C-C_prime:section:thiet_dien:point:on:lap_phuong::edge:B_prime-C_prime",
+           "section:thiet_dien:edge:section:thiet_dien:point:on:lap_phuong::edge:B_prime-C_prime:section:thiet_dien:point:on:lap_phuong::edge:A_prime-B_prime",
+           "section:thiet_dien:edge:section:thiet_dien:point:on:lap_phuong::edge:A_prime-B_prime:section:thiet_dien:point:on:lap_phuong::edge:A-A_prime",
+           "section:thiet_dien:edge:section:thiet_dien:point:on:lap_phuong::edge:A-D:section:thiet_dien:point:on:lap_phuong::edge:A-A_prime"
           ],
           "closed": true,
           "fill_visible": true
@@ -9407,20 +9407,20 @@
          {
           "object_id": "thiet_dien",
           "visible_edge_ids": [
-           "section:thiet_dien:edge:section:thiet_dien:point:on:lap_phuong::edge:C-D:section:thiet_dien:point:on:lap_phuong::edge:A-D",
-           "section:thiet_dien:edge:section:thiet_dien:point:on:lap_phuong::edge:A-D:section:thiet_dien:point:on:lap_phuong::edge:A-A_prime",
-           "section:thiet_dien:edge:section:thiet_dien:point:on:lap_phuong::edge:A-A_prime:section:thiet_dien:point:on:lap_phuong::edge:A_prime-B_prime",
-           "section:thiet_dien:edge:section:thiet_dien:point:on:lap_phuong::edge:A_prime-B_prime:section:thiet_dien:point:on:lap_phuong::edge:B_prime-C_prime",
-           "section:thiet_dien:edge:section:thiet_dien:point:on:lap_phuong::edge:B_prime-C_prime:section:thiet_dien:point:on:lap_phuong::edge:C-C_prime",
-           "section:thiet_dien:edge:section:thiet_dien:point:on:lap_phuong::edge:C-D:section:thiet_dien:point:on:lap_phuong::edge:C-C_prime"
+           "section:thiet_dien:edge:section:thiet_dien:point:on:lap_phuong::edge:A-D:section:thiet_dien:point:on:lap_phuong::edge:C-D",
+           "section:thiet_dien:edge:section:thiet_dien:point:on:lap_phuong::edge:C-D:section:thiet_dien:point:on:lap_phuong::edge:C-C_prime",
+           "section:thiet_dien:edge:section:thiet_dien:point:on:lap_phuong::edge:C-C_prime:section:thiet_dien:point:on:lap_phuong::edge:B_prime-C_prime",
+           "section:thiet_dien:edge:section:thiet_dien:point:on:lap_phuong::edge:B_prime-C_prime:section:thiet_dien:point:on:lap_phuong::edge:A_prime-B_prime",
+           "section:thiet_dien:edge:section:thiet_dien:point:on:lap_phuong::edge:A_prime-B_prime:section:thiet_dien:point:on:lap_phuong::edge:A-A_prime",
+           "section:thiet_dien:edge:section:thiet_dien:point:on:lap_phuong::edge:A-D:section:thiet_dien:point:on:lap_phuong::edge:A-A_prime"
           ],
           "ordered_construction_ids": [
-           "section:thiet_dien:edge:section:thiet_dien:point:on:lap_phuong::edge:C-D:section:thiet_dien:point:on:lap_phuong::edge:A-D",
-           "section:thiet_dien:edge:section:thiet_dien:point:on:lap_phuong::edge:A-D:section:thiet_dien:point:on:lap_phuong::edge:A-A_prime",
-           "section:thiet_dien:edge:section:thiet_dien:point:on:lap_phuong::edge:A-A_prime:section:thiet_dien:point:on:lap_phuong::edge:A_prime-B_prime",
-           "section:thiet_dien:edge:section:thiet_dien:point:on:lap_phuong::edge:A_prime-B_prime:section:thiet_dien:point:on:lap_phuong::edge:B_prime-C_prime",
-           "section:thiet_dien:edge:section:thiet_dien:point:on:lap_phuong::edge:B_prime-C_prime:section:thiet_dien:point:on:lap_phuong::edge:C-C_prime",
-           "section:thiet_dien:edge:section:thiet_dien:point:on:lap_phuong::edge:C-D:section:thiet_dien:point:on:lap_phuong::edge:C-C_prime"
+           "section:thiet_dien:edge:section:thiet_dien:point:on:lap_phuong::edge:A-D:section:thiet_dien:point:on:lap_phuong::edge:C-D",
+           "section:thiet_dien:edge:section:thiet_dien:point:on:lap_phuong::edge:C-D:section:thiet_dien:point:on:lap_phuong::edge:C-C_prime",
+           "section:thiet_dien:edge:section:thiet_dien:point:on:lap_phuong::edge:C-C_prime:section:thiet_dien:point:on:lap_phuong::edge:B_prime-C_prime",
+           "section:thiet_dien:edge:section:thiet_dien:point:on:lap_phuong::edge:B_prime-C_prime:section:thiet_dien:point:on:lap_phuong::edge:A_prime-B_prime",
+           "section:thiet_dien:edge:section:thiet_dien:point:on:lap_phuong::edge:A_prime-B_prime:section:thiet_dien:point:on:lap_phuong::edge:A-A_prime",
+           "section:thiet_dien:edge:section:thiet_dien:point:on:lap_phuong::edge:A-D:section:thiet_dien:point:on:lap_phuong::edge:A-A_prime"
           ],
           "closed": true,
           "fill_visible": true
@@ -9478,20 +9478,20 @@
          {
           "object_id": "thiet_dien",
           "visible_edge_ids": [
-           "section:thiet_dien:edge:section:thiet_dien:point:on:lap_phuong::edge:C-D:section:thiet_dien:point:on:lap_phuong::edge:A-D",
-           "section:thiet_dien:edge:section:thiet_dien:point:on:lap_phuong::edge:A-D:section:thiet_dien:point:on:lap_phuong::edge:A-A_prime",
-           "section:thiet_dien:edge:section:thiet_dien:point:on:lap_phuong::edge:A-A_prime:section:thiet_dien:point:on:lap_phuong::edge:A_prime-B_prime",
-           "section:thiet_dien:edge:section:thiet_dien:point:on:lap_phuong::edge:A_prime-B_prime:section:thiet_dien:point:on:lap_phuong::edge:B_prime-C_prime",
-           "section:thiet_dien:edge:section:thiet_dien:point:on:lap_phuong::edge:B_prime-C_prime:section:thiet_dien:point:on:lap_phuong::edge:C-C_prime",
-           "section:thiet_dien:edge:section:thiet_dien:point:on:lap_phuong::edge:C-D:section:thiet_dien:point:on:lap_phuong::edge:C-C_prime"
+           "section:thiet_dien:edge:section:thiet_dien:point:on:lap_phuong::edge:A-D:section:thiet_dien:point:on:lap_phuong::edge:C-D",
+           "section:thiet_dien:edge:section:thiet_dien:point:on:lap_phuong::edge:C-D:section:thiet_dien:point:on:lap_phuong::edge:C-C_prime",
+           "section:thiet_dien:edge:section:thiet_dien:point:on:lap_phuong::edge:C-C_prime:section:thiet_dien:point:on:lap_phuong::edge:B_prime-C_prime",
+           "section:thiet_dien:edge:section:thiet_dien:point:on:lap_phuong::edge:B_prime-C_prime:section:thiet_dien:point:on:lap_phuong::edge:A_prime-B_prime",
+           "section:thiet_dien:edge:section:thiet_dien:point:on:lap_phuong::edge:A_prime-B_prime:section:thiet_dien:point:on:lap_phuong::edge:A-A_prime",
+           "section:thiet_dien:edge:section:thiet_dien:point:on:lap_phuong::edge:A-D:section:thiet_dien:point:on:lap_phuong::edge:A-A_prime"
           ],
           "ordered_construction_ids": [
-           "section:thiet_dien:edge:section:thiet_dien:point:on:lap_phuong::edge:C-D:section:thiet_dien:point:on:lap_phuong::edge:A-D",
-           "section:thiet_dien:edge:section:thiet_dien:point:on:lap_phuong::edge:A-D:section:thiet_dien:point:on:lap_phuong::edge:A-A_prime",
-           "section:thiet_dien:edge:section:thiet_dien:point:on:lap_phuong::edge:A-A_prime:section:thiet_dien:point:on:lap_phuong::edge:A_prime-B_prime",
-           "section:thiet_dien:edge:section:thiet_dien:point:on:lap_phuong::edge:A_prime-B_prime:section:thiet_dien:point:on:lap_phuong::edge:B_prime-C_prime",
-           "section:thiet_dien:edge:section:thiet_dien:point:on:lap_phuong::edge:B_prime-C_prime:section:thiet_dien:point:on:lap_phuong::edge:C-C_prime",
-           "section:thiet_dien:edge:section:thiet_dien:point:on:lap_phuong::edge:C-D:section:thiet_dien:point:on:lap_phuong::edge:C-C_prime"
+           "section:thiet_dien:edge:section:thiet_dien:point:on:lap_phuong::edge:A-D:section:thiet_dien:point:on:lap_phuong::edge:C-D",
+           "section:thiet_dien:edge:section:thiet_dien:point:on:lap_phuong::edge:C-D:section:thiet_dien:point:on:lap_phuong::edge:C-C_prime",
+           "section:thiet_dien:edge:section:thiet_dien:point:on:lap_phuong::edge:C-C_prime:section:thiet_dien:point:on:lap_phuong::edge:B_prime-C_prime",
+           "section:thiet_dien:edge:section:thiet_dien:point:on:lap_phuong::edge:B_prime-C_prime:section:thiet_dien:point:on:lap_phuong::edge:A_prime-B_prime",
+           "section:thiet_dien:edge:section:thiet_dien:point:on:lap_phuong::edge:A_prime-B_prime:section:thiet_dien:point:on:lap_phuong::edge:A-A_prime",
+           "section:thiet_dien:edge:section:thiet_dien:point:on:lap_phuong::edge:A-D:section:thiet_dien:point:on:lap_phuong::edge:A-A_prime"
           ],
           "closed": true,
           "fill_visible": true
@@ -9549,20 +9549,20 @@
          {
           "object_id": "thiet_dien",
           "visible_edge_ids": [
-           "section:thiet_dien:edge:section:thiet_dien:point:on:lap_phuong::edge:C-D:section:thiet_dien:point:on:lap_phuong::edge:A-D",
-           "section:thiet_dien:edge:section:thiet_dien:point:on:lap_phuong::edge:A-D:section:thiet_dien:point:on:lap_phuong::edge:A-A_prime",
-           "section:thiet_dien:edge:section:thiet_dien:point:on:lap_phuong::edge:A-A_prime:section:thiet_dien:point:on:lap_phuong::edge:A_prime-B_prime",
-           "section:thiet_dien:edge:section:thiet_dien:point:on:lap_phuong::edge:A_prime-B_prime:section:thiet_dien:point:on:lap_phuong::edge:B_prime-C_prime",
-           "section:thiet_dien:edge:section:thiet_dien:point:on:lap_phuong::edge:B_prime-C_prime:section:thiet_dien:point:on:lap_phuong::edge:C-C_prime",
-           "section:thiet_dien:edge:section:thiet_dien:point:on:lap_phuong::edge:C-D:section:thiet_dien:point:on:lap_phuong::edge:C-C_prime"
+           "section:thiet_dien:edge:section:thiet_dien:point:on:lap_phuong::edge:A-D:section:thiet_dien:point:on:lap_phuong::edge:C-D",
+           "section:thiet_dien:edge:section:thiet_dien:point:on:lap_phuong::edge:C-D:section:thiet_dien:point:on:lap_phuong::edge:C-C_prime",
+           "section:thiet_dien:edge:section:thiet_dien:point:on:lap_phuong::edge:C-C_prime:section:thiet_dien:point:on:lap_phuong::edge:B_prime-C_prime",
+           "section:thiet_dien:edge:section:thiet_dien:point:on:lap_phuong::edge:B_prime-C_prime:section:thiet_dien:point:on:lap_phuong::edge:A_prime-B_prime",
+           "section:thiet_dien:edge:section:thiet_dien:point:on:lap_phuong::edge:A_prime-B_prime:section:thiet_dien:point:on:lap_phuong::edge:A-A_prime",
+           "section:thiet_dien:edge:section:thiet_dien:point:on:lap_phuong::edge:A-D:section:thiet_dien:point:on:lap_phuong::edge:A-A_prime"
           ],
           "ordered_construction_ids": [
-           "section:thiet_dien:edge:section:thiet_dien:point:on:lap_phuong::edge:C-D:section:thiet_dien:point:on:lap_phuong::edge:A-D",
-           "section:thiet_dien:edge:section:thiet_dien:point:on:lap_phuong::edge:A-D:section:thiet_dien:point:on:lap_phuong::edge:A-A_prime",
-           "section:thiet_dien:edge:section:thiet_dien:point:on:lap_phuong::edge:A-A_prime:section:thiet_dien:point:on:lap_phuong::edge:A_prime-B_prime",
-           "section:thiet_dien:edge:section:thiet_dien:point:on:lap_phuong::edge:A_prime-B_prime:section:thiet_dien:point:on:lap_phuong::edge:B_prime-C_prime",
-           "section:thiet_dien:edge:section:thiet_dien:point:on:lap_phuong::edge:B_prime-C_prime:section:thiet_dien:point:on:lap_phuong::edge:C-C_prime",
-           "section:thiet_dien:edge:section:thiet_dien:point:on:lap_phuong::edge:C-D:section:thiet_dien:point:on:lap_phuong::edge:C-C_prime"
+           "section:thiet_dien:edge:section:thiet_dien:point:on:lap_phuong::edge:A-D:section:thiet_dien:point:on:lap_phuong::edge:C-D",
+           "section:thiet_dien:edge:section:thiet_dien:point:on:lap_phuong::edge:C-D:section:thiet_dien:point:on:lap_phuong::edge:C-C_prime",
+           "section:thiet_dien:edge:section:thiet_dien:point:on:lap_phuong::edge:C-C_prime:section:thiet_dien:point:on:lap_phuong::edge:B_prime-C_prime",
+           "section:thiet_dien:edge:section:thiet_dien:point:on:lap_phuong::edge:B_prime-C_prime:section:thiet_dien:point:on:lap_phuong::edge:A_prime-B_prime",
+           "section:thiet_dien:edge:section:thiet_dien:point:on:lap_phuong::edge:A_prime-B_prime:section:thiet_dien:point:on:lap_phuong::edge:A-A_prime",
+           "section:thiet_dien:edge:section:thiet_dien:point:on:lap_phuong::edge:A-D:section:thiet_dien:point:on:lap_phuong::edge:A-A_prime"
           ],
           "closed": true,
           "fill_visible": true

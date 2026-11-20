@@ -954,7 +954,12 @@ MISSING_KEY_MSG = (
 #       phức hợp (`geometry-functions/33`), domain gate không dấu và căn khung camera
 #       Scene3D (`V11-VIS-1`); bản ghi `146:route-d` cũ phải MISS
 #       (`tests/geometry/test_cache_v12_compositional_invalidation.py`).
-CACHE_VERSION = "147"
+# 148 — 2026-11-20 (axo-hybrid-local-model1-finalization-test-consolidation, merge of main): a served section's
+#       `ordered_vertex_*`, `polygon` and `vertex_sources` are permuted together (index i = the same vertex) and the
+#       cycle is read from the cutting plane's name ((MNP) ⇒ MNPQ). A `147:route-d` row may carry names rotated away
+#       from their coordinates, which main's frontend reads as a false right angle (`SA ⊥ SC tại S` on (SAC)) ⇒ MISS
+#       (`tests/geometry/test_backend_geometry_handoff_resolution.py`).
+CACHE_VERSION = "148"
 
 #: Hai chế độ hợp lệ của kiến trúc chính thức Hybrid `/4` do máy chủ sở hữu:
 #: - `live` (mặc định): trích xuất có cấu trúc qua Gemini (`typed-fact-next/2`) khi cấu hình `GEMINI_API_KEY`.
