@@ -10,11 +10,9 @@ import {
 import {
   CameraControls,
   MeshPortalMaterial,
-  Text,
   useCursor,
 } from "@react-three/drei";
 import { easing, geometry } from "maath";
-import { suspend } from "suspend-react";
 import type {} from "./r3f-jsx";
 
 extend({ RoundedPlaneGeometry: geometry.RoundedPlaneGeometry });
@@ -23,23 +21,12 @@ export const GOLDEN_PORTAL_HEIGHT = 1.61803398875;
 
 export type PortalTransitionPhase = "gallery" | "entering" | "inside" | "exiting";
 
-const regularFontImport = () => import("@pmndrs/assets/fonts/inter_regular.woff");
-const mediumFontImport = () => import("@pmndrs/assets/fonts/inter_medium.woff");
-
-export function useBundledInterFonts(): { regular: string; medium: string } {
-  const regular = (suspend(regularFontImport, ["axo-inter-regular"]) as { default: string })
-    .default;
-  const medium = (suspend(mediumFontImport, ["axo-inter-medium"]) as { default: string })
-    .default;
-  return { regular, medium };
-}
-
 export interface PortalFrameProps extends Omit<GroupProps, "id" | "onSelect"> {
   readonly id: string;
   readonly isActive: boolean;
   readonly onSelect: (id: string) => void;
   readonly onSettled?: (id: string, active: boolean) => void;
-  readonly activationMode?: "double-click" | "single-click";
+  readonly onHoverChange?: (id: string, hovered: boolean) => void;
   readonly width?: number;
   readonly height?: number;
   readonly radius?: number;
@@ -47,11 +34,6 @@ export interface PortalFrameProps extends Omit<GroupProps, "id" | "onSelect"> {
   readonly dampTime?: number;
   readonly bg?: string;
   readonly reducedMotion?: boolean;
-  readonly title?: string;
-  readonly titleFontSize?: number;
-  readonly indexLabel?: string;
-  readonly subtitle?: string;
-  readonly labelColor?: string;
   readonly frameOutlineColor?: string;
   readonly frameOutlineHoverColor?: string;
   readonly overlayFadeGroup?: boolean;
@@ -64,31 +46,26 @@ export function PortalFrame({
   isActive,
   onSelect,
   onSettled,
-  activationMode = "double-click",
+  onHoverChange,
   width = 1,
   height = GOLDEN_PORTAL_HEIGHT,
   radius = 0.1,
   resolution = 512,
   dampTime = 0.2,
-  bg,
+  bg = "#ffffff",
   reducedMotion = false,
-  title,
-  titleFontSize = 0.3,
-  indexLabel,
-  subtitle,
-  labelColor = "#ffffff",
   frameOutlineColor,
   frameOutlineHoverColor,
-  overlayFadeGroup = false,
+  overlayFadeGroup = true,
   headerSlot,
   children,
   ...groupProps
 }: PortalFrameProps) {
+  const outerGroupRef = useRef<THREE.Group>(null);
   const portal = useRef<ComponentRef<typeof MeshPortalMaterial>>(null!);
   const overlayRef = useRef<THREE.Group>(null);
   const settledTargetRef = useRef<boolean | null>(isActive ? null : false);
   const [hovered, setHovered] = useState(false);
-  const { regular, medium } = useBundledInterFonts();
 
   useCursor(hovered && !isActive);
 
@@ -110,8 +87,17 @@ export function PortalFrame({
       easing.damp(mat, "blend", target, dampTime, dt);
     }
 
+    if (outerGroupRef.current) {
+      const hoverZ = !isActive && hovered && !reducedMotion ? 0.065 : 0;
+      if (reducedMotion) {
+        outerGroupRef.current.position.z = hoverZ;
+      } else {
+        easing.damp(outerGroupRef.current.position, "z", hoverZ, 0.14, dt);
+      }
+    }
+
     if (overlayRef.current && overlayFadeGroup) {
-      const fadeOpacity = THREE.MathUtils.clamp(1 - mat.blend * 2.4, 0, 1);
+      const fadeOpacity = THREE.MathUtils.clamp(1 - mat.blend * 2.5, 0, 1);
       overlayRef.current.visible = fadeOpacity > 0.02;
       overlayRef.current.traverse((obj) => {
         const mesh = obj as THREE.Mesh;
@@ -134,11 +120,11 @@ export function PortalFrame({
     }
   });
 
-  const rimShape = useMemo(() => {
+  const rimGeom = useMemo(() => {
     if (!frameOutlineColor) return null;
-    const w = width + 0.024;
-    const h = height + 0.024;
-    const r = Math.min(radius + 0.012, w * 0.45, h * 0.45);
+    const w = width + 0.022;
+    const h = height + 0.022;
+    const r = Math.min(radius + 0.011, w * 0.45, h * 0.45);
     const shape = new THREE.Shape();
     const x = -w / 2;
     const y = -h / 2;
@@ -152,32 +138,28 @@ export function PortalFrame({
     shape.lineTo(x, y + r);
     shape.quadraticCurveTo(x, y, x + r, y);
 
-    const inner = new THREE.Path();
-    const iw = width;
-    const ih = height;
-    const ir = radius;
-    const ix = -iw / 2;
-    const iy = -ih / 2;
-    inner.moveTo(ix + ir, iy);
-    inner.lineTo(ix + iw - ir, iy);
-    inner.quadraticCurveTo(ix + iw, iy, ix + iw, iy + ir);
-    inner.lineTo(ix + iw, iy + ih - ir);
-    inner.quadraticCurveTo(ix + iw, iy + ih, ix + iw - ir, iy + ih);
-    inner.lineTo(ix + ir, iy + ih);
-    inner.quadraticCurveTo(ix, iy + ih, ix, iy + ih - ir);
-    inner.lineTo(ix, iy + ir);
-    inner.quadraticCurveTo(ix, iy, ix + ir, iy);
-    shape.holes.push(inner);
+    const hole = new THREE.Path();
+    const ix = -width / 2;
+    const iy = -height / 2;
+    hole.moveTo(ix + radius, iy);
+    hole.lineTo(ix + width - radius, iy);
+    hole.quadraticCurveTo(ix + width, iy, ix + width, iy + radius);
+    hole.lineTo(ix + width, iy + height - radius);
+    hole.quadraticCurveTo(ix + width, iy + height, ix + width - radius, iy + height);
+    hole.lineTo(ix + radius, iy + height);
+    hole.quadraticCurveTo(ix, iy + height, ix, iy + height - radius);
+    hole.lineTo(ix, iy + radius);
+    hole.quadraticCurveTo(ix, iy, ix + radius, iy);
+    shape.holes.push(hole);
 
-    const geom = new THREE.ShapeGeometry(shape, 18);
-    return geom;
+    return new THREE.ShapeGeometry(shape, 18);
   }, [frameOutlineColor, width, height, radius]);
 
   useEffect(() => {
     return () => {
-      rimShape?.dispose();
+      rimGeom?.dispose();
     };
-  }, [rimShape]);
+  }, [rimGeom]);
 
   const resolvedRimColor =
     hovered && !isActive && frameOutlineHoverColor
@@ -186,110 +168,92 @@ export function PortalFrame({
 
   return (
     <group {...groupProps}>
-      <group ref={overlayRef}>
-        {title !== undefined && (
-          <Text
-            font={medium}
-            fontSize={titleFontSize}
-            anchorY="top"
-            anchorX="left"
-            lineHeight={0.8}
-            position={[-0.375, 0.715, 0.01]}
-            color={labelColor}
-            material-toneMapped={false}
-          >
-            {title}
-          </Text>
-        )}
-        {indexLabel !== undefined && (
-          <Text
-            font={regular}
-            fontSize={0.1}
-            anchorX="right"
-            position={[0.4, -0.659, 0.01]}
-            color={labelColor}
-            material-toneMapped={false}
-          >
-            {indexLabel}
-          </Text>
-        )}
-        {subtitle !== undefined && (
-          <Text
-            font={regular}
-            fontSize={0.04}
-            anchorX="right"
-            position={[0.0, -0.677, 0.01]}
-            color={labelColor}
-            material-toneMapped={false}
-          >
-            {subtitle}
-          </Text>
-        )}
-        {headerSlot}
-      </group>
+      <group ref={outerGroupRef}>
+        <group ref={overlayRef}>{headerSlot}</group>
 
-      {rimShape && resolvedRimColor && !isActive && (
-        <mesh geometry={rimShape} position={[0, 0, -0.002]}>
-          <meshBasicMaterial color={resolvedRimColor} toneMapped={false} />
-        </mesh>
-      )}
+        {rimGeom && resolvedRimColor && !isActive && (
+          <mesh geometry={rimGeom} position={[0, 0, -0.002]}>
+            <meshBasicMaterial color={resolvedRimColor} toneMapped={false} />
+          </mesh>
+        )}
 
-      <mesh
-        name={id}
-        onDoubleClick={
-          activationMode === "double-click"
-            ? (e) => {
-                e.stopPropagation();
-                onSelect(id);
-              }
-            : undefined
-        }
-        onClick={
-          activationMode === "single-click"
-            ? (e) => {
-                e.stopPropagation();
-                if (e.delta <= 6 && !isActive) {
-                  onSelect(id);
-                }
-              }
-            : undefined
-        }
-        onPointerOver={(e) => {
-          e.stopPropagation();
-          setHovered(true);
-        }}
-        onPointerOut={() => setHovered(false)}
-      >
-        <roundedPlaneGeometry args={[width, height, radius]} />
-        <MeshPortalMaterial
-          ref={portal}
-          events={isActive}
-          side={THREE.DoubleSide}
-          blur={0}
-          resolution={resolution}
+        <mesh
+          name={id}
+          onClick={(e) => {
+            e.stopPropagation();
+            if (e.delta <= 6 && !isActive) {
+              onSelect(id);
+            }
+          }}
+          onPointerOver={(e) => {
+            e.stopPropagation();
+            setHovered(true);
+            onHoverChange?.(id, true);
+          }}
+          onPointerOut={() => {
+            setHovered(false);
+            onHoverChange?.(id, false);
+          }}
         >
-          <color attach="background" args={[bg ?? "#ffffff"]} />
-          {children}
-        </MeshPortalMaterial>
-      </mesh>
+          <roundedPlaneGeometry args={[width, height, radius]} />
+          <MeshPortalMaterial
+            ref={portal}
+            events={isActive}
+            side={THREE.DoubleSide}
+            blur={0}
+            resolution={resolution}
+          >
+            <color attach="background" args={[bg]} />
+            {children}
+          </MeshPortalMaterial>
+        </mesh>
+      </group>
     </group>
   );
 }
 
+export interface PortalParallaxGroupProps {
+  readonly activeId: string | null;
+  readonly pointerRef: React.MutableRefObject<{ x: number; y: number }>;
+  readonly reducedMotion: boolean;
+  readonly children: ReactNode;
+}
+
+export function PortalParallaxCluster({
+  activeId,
+  pointerRef,
+  reducedMotion,
+  children,
+}: PortalParallaxGroupProps) {
+  const clusterRef = useRef<THREE.Group>(null);
+
+  useFrame((_state, dt) => {
+    const g = clusterRef.current;
+    if (!g) return;
+    const targetRotY =
+      activeId === null && !reducedMotion ? pointerRef.current.x * 0.085 : 0;
+    const targetRotX =
+      activeId === null && !reducedMotion ? -pointerRef.current.y * 0.05 : 0;
+    if (reducedMotion) {
+      g.rotation.y = targetRotY;
+      g.rotation.x = targetRotX;
+    } else {
+      easing.damp(g.rotation, "y", targetRotY, 0.18, dt);
+      easing.damp(g.rotation, "x", targetRotX, 0.18, dt);
+    }
+  });
+
+  return <group ref={clusterRef}>{children}</group>;
+}
+
 export interface PortalCameraRigProps {
   readonly activeId: string | null;
+  readonly resetNonce?: number;
   readonly galleryPosition?: [number, number, number];
   readonly galleryFocus?: [number, number, number];
   readonly enterOffset?: [number, number, number];
   readonly enterFocus?: [number, number, number];
-  readonly interiorPreset?: {
-    readonly key: string;
-    readonly offset: [number, number, number];
-    readonly focus: [number, number, number];
-  } | null;
   readonly reducedMotion?: boolean;
-  readonly allowGalleryOrbit?: boolean;
-  readonly allowWheelZoom?: boolean;
   readonly minPolarAngle?: number;
   readonly maxPolarAngle?: number;
   readonly minDistance?: number;
@@ -300,18 +264,16 @@ type CameraControlsInstance = ComponentRef<typeof CameraControls>;
 
 export function PortalCameraRig({
   activeId,
-  galleryPosition = [0, 0, 2],
+  resetNonce = 0,
+  galleryPosition = [0, 0, 3.8],
   galleryFocus = [0, 0, 0],
-  enterOffset = [0, 0.5, 0.25],
-  enterFocus = [0, 0, -2],
-  interiorPreset = null,
+  enterOffset = [0, 0.22, 0.68],
+  enterFocus = [0, -0.12, -2.15],
   reducedMotion = false,
-  allowGalleryOrbit = true,
-  allowWheelZoom = true,
-  minPolarAngle = 0,
-  maxPolarAngle = Math.PI / 2,
-  minDistance,
-  maxDistance,
+  minPolarAngle = 0.15,
+  maxPolarAngle = Math.PI * 0.64,
+  minDistance = 1.2,
+  maxDistance = 6.5,
 }: PortalCameraRigProps) {
   const { controls, scene } = useThree();
   const controlsRef = useRef<CameraControlsInstance | null>(null);
@@ -324,6 +286,7 @@ export function PortalCameraRig({
     touchTwo: number;
     touchThree: number;
   } | null>(null);
+
   const positionVec = useMemo(() => new THREE.Vector3(), []);
   const focusVec = useMemo(() => new THREE.Vector3(), []);
   const galleryX = galleryPosition[0];
@@ -338,13 +301,6 @@ export function PortalCameraRig({
   const enterFx = enterFocus[0];
   const enterFy = enterFocus[1];
   const enterFz = enterFocus[2];
-  const presetKey = interiorPreset?.key ?? "";
-  const presetOx = interiorPreset?.offset[0];
-  const presetOy = interiorPreset?.offset[1];
-  const presetOz = interiorPreset?.offset[2];
-  const presetFx = interiorPreset?.focus[0];
-  const presetFy = interiorPreset?.focus[1];
-  const presetFz = interiorPreset?.focus[2];
 
   useEffect(() => {
     const camControls = (controls ?? controlsRef.current) as CameraControlsInstance | null;
@@ -363,16 +319,17 @@ export function PortalCameraRig({
     }
 
     const defaults = defaultActionsRef.current;
-    const interactive = activeId !== null || allowGalleryOrbit;
+    const isInside = activeId !== null;
     const none = 0 as never;
-    camControls.mouseButtons.left = interactive ? (defaults.left as never) : none;
-    camControls.mouseButtons.middle = interactive ? (defaults.middle as never) : none;
-    camControls.mouseButtons.right = interactive ? (defaults.right as never) : none;
-    camControls.mouseButtons.wheel = interactive && allowWheelZoom ? (defaults.wheel as never) : none;
-    camControls.touches.one = interactive ? (defaults.touchOne as never) : none;
-    camControls.touches.two = interactive && allowWheelZoom ? (defaults.touchTwo as never) : none;
-    camControls.touches.three = interactive ? (defaults.touchThree as never) : none;
-  }, [controls, activeId, allowGalleryOrbit, allowWheelZoom]);
+    // Unlock orbit only inside an active portal; keep wheel unbound so vertical page scrolling never traps users
+    camControls.mouseButtons.left = isInside ? (defaults.left as never) : none;
+    camControls.mouseButtons.middle = isInside ? (defaults.middle as never) : none;
+    camControls.mouseButtons.right = isInside ? (defaults.right as never) : none;
+    camControls.mouseButtons.wheel = none;
+    camControls.touches.one = isInside ? (defaults.touchOne as never) : none;
+    camControls.touches.two = none;
+    camControls.touches.three = none;
+  }, [controls, activeId]);
 
   useEffect(() => {
     const camControls = (controls ?? controlsRef.current) as CameraControlsInstance | null;
@@ -380,14 +337,8 @@ export function PortalCameraRig({
 
     const active = activeId ? scene.getObjectByName(activeId) : undefined;
     if (active && active.parent) {
-      const targetOx = presetOx ?? enterOx;
-      const targetOy = presetOy ?? enterOy;
-      const targetOz = presetOz ?? enterOz;
-      const targetFx = presetFx ?? enterFx;
-      const targetFy = presetFy ?? enterFy;
-      const targetFz = presetFz ?? enterFz;
-      active.parent.localToWorld(positionVec.set(targetOx, targetOy, targetOz));
-      active.parent.localToWorld(focusVec.set(targetFx, targetFy, targetFz));
+      active.parent.localToWorld(positionVec.set(enterOx, enterOy, enterOz));
+      active.parent.localToWorld(focusVec.set(enterFx, enterFy, enterFz));
     } else {
       positionVec.set(galleryX, galleryY, galleryZ);
       focusVec.set(focusX, focusY, focusZ);
@@ -406,6 +357,7 @@ export function PortalCameraRig({
     controls,
     scene,
     activeId,
+    resetNonce,
     galleryX,
     galleryY,
     galleryZ,
@@ -418,13 +370,6 @@ export function PortalCameraRig({
     enterFx,
     enterFy,
     enterFz,
-    presetKey,
-    presetOx,
-    presetOy,
-    presetOz,
-    presetFx,
-    presetFy,
-    presetFz,
     reducedMotion,
     positionVec,
     focusVec,
