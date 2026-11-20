@@ -2029,7 +2029,7 @@ _VAT_MO_PHONG = re.compile(rf"(?:(?:(?:hình\s+3D|mô\s+hình\s+3D)\s+(?:của\s
                            rf"(?P<km>(?:\s+(?:đứng|đều|xiên|tam\s+giác|tứ\s+giác|ngũ\s+giác|lục\s+giác|chữ\s+nhật))*)"
                            rf"(?:\s+(?P<k>{_NHAN}(?:\.{_NHAN})?))?(?![\w'])(?P<km2>(?:\s+(?:đứng|đều|xiên))*)"
                            rf"|(?P<hinh>hình(?:\s+(?:vẽ|3D|không\s+gian|ba\s+chiều))?(?:\s+theo\s+giả\s+thiết(?:\s+(?:trên|đã\s+cho))?)?)"
-                           rf"|(?P<vseg>đường\s+cao|chiều\s+cao|cạnh\s+bên|cạnh\s+đáy|cạnh|đoạn(?:\s+thẳng)?|đường\s+chéo)\s+(?P<seg>{_L1}{_L1})"
+                           rf"|(?P<vseg>đường\s+cao|chiều\s+cao|cạnh\s+bên|cạnh\s+đáy)\s+(?P<seg>{_L1}{_L1})"
                            rf"|(?:các\s+)?(?P<vai>điểm|đỉnh)\s+(?P<d>{_L1}(?:\s*,\s*{_L1})*))"
                            rf"(?:\s+(?:này|đó|đã\s+cho|trên))?(?![\w'])", re.IGNORECASE)
 _NOI_VAT_MO_PHONG = re.compile(r"\s*,\s*(?:và\s+)?|\s+và\s+|\s+cùng\s+(?:với\s+)?", re.IGNORECASE)

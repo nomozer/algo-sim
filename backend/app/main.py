@@ -975,7 +975,11 @@ MISSING_KEY_MSG = (
 #       `SIMULATE_ONLY` solids (§17), explicit geometric construction of derived polygon center `O` without
 #       `LAYOUT_DERIVED` (§19), and missing-data `route-d-clarification/1` surfacing across parser & SLM refusals
 #       (§6.G); `150:route-d` rows MISS (`tests/geometry/test_v13_similarity_and_provenance.py`).
-CACHE_VERSION = "151"
+# 152 — 2026-11-21 (axo-hybrid-local-model1-finalization-test-consolidation, T3 gate fix): tighten `_VAT_MO_PHONG` to
+#       role-verified segment terms only so calling diagonals edges returns `REFUSED` (`test_route_d_student_language`),
+#       and restore clause-level `cent` GBNF rule emission in `local-slm-extractor/6` when `c_segs` is empty
+#       (`test_slm_v9_language_closure_and_security`); `151:route-d` rows MISS.
+CACHE_VERSION = "152"
 
 #: Hai chế độ hợp lệ của kiến trúc chính thức Hybrid `/4` do máy chủ sở hữu:
 #: - `live` (mặc định): trích xuất có cấu trúc qua Gemini (`typed-fact-next/2`) khi cấu hình `GEMINI_API_KEY`.

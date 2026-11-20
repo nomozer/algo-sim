@@ -2029,21 +2029,9 @@ def build_compact_grammar_for_context(
                         lines.append(rf'{pfx}pairll ::= "{{\"c\":{cid},\"p\":" ({" | ".join(pair_ll_preds)}) ",\"a\":" {pfx}seg ",\"b\":" {pfx}seg "}}"')
                     c_rels.append(f"{pfx}pairll")
             if c_pts:
-                has_poly_center_cue = (
-                    use_v9
-                    and bool(re.search(r"\btâm\b", clow))
-                    and "trọng tâm" not in clow
-                    and not any(w in clow for w in ("mặt cầu", "khối cầu", "hình cầu", "nội tiếp", "ngoại tiếp", "đường tròn"))
-                )
                 if _cue("midpoint"):
                     lines.append(rf'{pfx}mid ::= "{{\"c\":{cid},\"p\":\"mid\",\"pt\":" {pfx}pt ",\"a\":" {pfx}seg "}}"')
                     c_rels.append(f"{pfx}mid")
-                if has_poly_center_cue and c_polys:
-                    lines.append(rf'{pfx}cent ::= "{{\"c\":{cid},\"p\":\"cent\",\"pt\":" {pfx}pt ",\"a\":" {pfx}poly "}}"')
-                    c_rels.append(f"{pfx}cent")
-                elif c_tris and _cue("centroid"):
-                    lines.append(rf'{pfx}cent ::= "{{\"c\":{cid},\"p\":\"cent\",\"pt\":" {pfx}pt ",\"a\":" {pfx}tri "}}"')
-                    c_rels.append(f"{pfx}cent")
                 if len(c_segs) >= 2 and _cue("intersect_line_line"):
                     lines.append(rf'{pfx}interll ::= "{{\"c\":{cid},\"p\":\"inter_ll\",\"pt\":" {pfx}pt ",\"a\":" {pfx}seg ",\"b\":" {pfx}seg "}}"')
                     c_rels.append(f"{pfx}interll")
@@ -2062,6 +2050,19 @@ def build_compact_grammar_for_context(
             if len(c_segs) >= 2 and c_ratio_qtys and has_ratio_cue:
                 lines.append(rf'{pfx}ratio ::= "{{\"c\":{cid},\"p\":\"ratio\",\"a\":" {pfx}seg ",\"b\":" {pfx}seg ",\"q\":" {pfx}rqty "}}"')
                 c_rels.append(f"{pfx}ratio")
+        if c_pts:
+            has_poly_center_cue = (
+                use_v9
+                and bool(re.search(r"\btâm\b", clow))
+                and "trọng tâm" not in clow
+                and not any(w in clow for w in ("mặt cầu", "khối cầu", "hình cầu", "nội tiếp", "ngoại tiếp", "đường tròn"))
+            )
+            if has_poly_center_cue and c_polys:
+                lines.append(rf'{pfx}cent ::= "{{\"c\":{cid},\"p\":\"cent\",\"pt\":" {pfx}pt ",\"a\":" {pfx}poly "}}"')
+                c_rels.append(f"{pfx}cent")
+            elif c_tris and _cue("centroid"):
+                lines.append(rf'{pfx}cent ::= "{{\"c\":{cid},\"p\":\"cent\",\"pt\":" {pfx}pt ",\"a\":" {pfx}tri "}}"')
+                c_rels.append(f"{pfx}cent")
         if len(c_pts) >= 2 and ("chiếu" in clow or "đường cao" in clow or "chân đường cao" in clow):
             proj_preds = []
             if "chiếu" in clow:

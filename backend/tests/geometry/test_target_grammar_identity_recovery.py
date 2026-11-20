@@ -99,6 +99,12 @@ def test_registered_controls_keep_schema_and_exact_route_outcomes(case):
             expected = tuple(moved["after"])
         if expected[1] == 'ADAPTER_INTERNAL_ERROR':   # the 8 F7 cells; Owner D1 re-pins them (f7-narrow-recovery)
             expected = ('REFUSED', 'BRIDGE_UNSUPPORTED_MEASUREMENT')
+        # /13 §6.D (7f196eed3): bridge_v2 (`a4`) graduates `measurement/area` on `{"polygon": ...}` from
+        # `BRIDGE_UNSUPPORTED_MEASUREMENT` to `SERVED` with exact area 24 (1/2 * 6 * 8); `observed-red.json` stays untouched.
+        if name == 'a4' and case in ('G.area.polygon.plain', 'G.area.polygon.goal_sid', 'G.area.polygon.goal_sid_null', 'G.area.polygon.qualified'):
+            assert expected == ('REFUSED', 'BRIDGE_UNSUPPORTED_MEASUREMENT')
+            assert (r.status, r.code, r.answer_exact) == ('SERVED', None, {'q': {'coef': '24', 'dim': 0, 'unit': None}})
+            continue
         assert (r.status, r.code) == expected, (case,name,r.reason)
         if r.status == 'SERVED':
             assert r.answer_exact == before[name]['answer']

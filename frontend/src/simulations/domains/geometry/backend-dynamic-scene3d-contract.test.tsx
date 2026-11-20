@@ -11,7 +11,7 @@
  * items initially), `Định vị` (0 crashes / 0 `NaN`), and verifies fail-closed
  * `REFUSED` payloads (`gate_out_of_scope`, `MISSING_DIMENSION`, `PLANE_NOT_UNIQUE`).
  */
-import { execFileSync } from "node:child_process";
+import { execFileSync, spawnSync } from "node:child_process";
 import fs from "node:fs";
 import { createRequire } from "node:module";
 import path from "node:path";
@@ -79,6 +79,18 @@ function resolveBackendPython(): string {
     path.resolve(WORKTREE_ROOT, "../algo-sim/backend/.venv/Scripts/python.exe"),
     path.resolve(WORKTREE_ROOT, "../algo-sim/backend/.venv/bin/python"),
   ];
+  const common = spawnSync("git", ["-C", WORKTREE_ROOT, "rev-parse", "--path-format=absolute", "--git-common-dir"], {
+    encoding: "utf-8",
+  });
+  if (common.status === 0 && common.stdout.trim()) {
+    const mainRoot = path.dirname(common.stdout.trim());
+    if (mainRoot !== WORKTREE_ROOT) {
+      candidates.push(
+        path.join(mainRoot, "backend/.venv/Scripts/python.exe"),
+        path.join(mainRoot, "backend/.venv/bin/python"),
+      );
+    }
+  }
   for (const candidate of candidates) {
     if (fs.existsSync(candidate)) {
       return candidate;
