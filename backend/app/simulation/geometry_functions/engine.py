@@ -1688,27 +1688,50 @@ class _Dung:
                         if ca_v.args.vertex not in vong:
                             continue
                         k = vong.index(ca_v.args.vertex)
-                        if frozenset(ca_v.args.rays) != frozenset((vong[(k - 1) % 4], vong[(k + 1) % 4])):
-                            continue
-                        _sin2, cos2, cos_sign = self._goc_tham_so(
-                            ca_v.args.value, ca_v.args.unit, allow_obtuse=True, calls=(ca_v.id,)
-                        )
-                        if cos_sign is None:
-                            raise TuChoi("AMBIGUOUS_FACT", "góc đỉnh hình bình hành/hình thoi từ sin chưa phân biệt nhọn hay tù", (ca_v.id,))
-                        if cos2 == 0:
-                            m_val = Z
-                        else:
-                            m_abs = _sqrt_q(a2 * b2 * cos2)
-                            if m_abs is None:
+                        rays = frozenset(ca_v.args.rays)
+                        adj_rays = frozenset((vong[(k - 1) % 4], vong[(k + 1) % 4]))
+                        side_diag_rays = {
+                            frozenset((vong[(k - 1) % 4], vong[(k + 2) % 4])),
+                            frozenset((vong[(k + 1) % 4], vong[(k + 2) % 4])),
+                        }
+                        if rays == adj_rays:
+                            _sin2, cos2, cos_sign = self._goc_tham_so(
+                                ca_v.args.value, ca_v.args.unit, allow_obtuse=True, calls=(ca_v.id,)
+                            )
+                            if cos_sign is None:
+                                raise TuChoi("AMBIGUOUS_FACT", "góc đỉnh hình bình hành/hình thoi từ sin chưa phân biệt nhọn hay tù", (ca_v.id,))
+                            if cos2 == 0:
+                                m_val = Z
+                            else:
+                                m_abs = _sqrt_q(a2 * b2 * cos2)
+                                if m_abs is None:
+                                    raise TuChoi(
+                                        "EXACT_DOMAIN_EXCEEDED",
+                                        "tích vô hướng hai cạnh kề chứa căn lồng ngoài miền Gram hữu tỉ ℚ",
+                                        (c.id, ca_v.id),
+                                    )
+                                ip = m_abs if cos_sign > 0 else -m_abs
+                                m_val = ip if k in (0, 2) else -ip
+                            dung.add(ca_v.id)
+                            break
+                        if (c.fn == "rhombus" or a2 == b2) and a2 == b2 and rays in side_diag_rays:
+                            # In a rhombus, diagonals bisect the interior angles: angle alpha between a side and the
+                            # diagonal at vertex `k` satisfies 0 < alpha < 90° and cos(2*alpha) = 2*cos²(alpha) - 1 ∈ Q.
+                            _sin2, cos2, cos_sign = self._goc_tham_so(
+                                ca_v.args.value, ca_v.args.unit, allow_obtuse=False, calls=(ca_v.id,)
+                            )
+                            if cos_sign is None:
+                                raise TuChoi("AMBIGUOUS_FACT", "góc cạnh–đường chéo hình thoi từ sin chưa phân biệt", (ca_v.id,))
+                            if cos_sign <= 0 or cos2 <= 0 or cos2 >= 1:
                                 raise TuChoi(
-                                    "EXACT_DOMAIN_EXCEEDED",
-                                    "tích vô hướng hai cạnh kề chứa căn lồng ngoài miền Gram hữu tỉ ℚ",
+                                    "INCONSISTENT_FACTS",
+                                    "góc giữa cạnh và đường chéo hình thoi phải nhọn (0° < α < 90°)",
                                     (c.id, ca_v.id),
                                 )
-                            ip = m_abs if cos_sign > 0 else -m_abs
+                            ip = a2 * (2 * cos2 - 1)
                             m_val = ip if k in (0, 2) else -ip
-                        dung.add(ca_v.id)
-                        break
+                            dung.add(ca_v.id)
+                            break
         if m_val is None:
             if self._co_the_dung_affine_minh_hoa():
                 self.free_affine_for.add(self.root.name)

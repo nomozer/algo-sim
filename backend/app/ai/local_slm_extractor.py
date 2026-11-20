@@ -3490,6 +3490,9 @@ def validate_and_lower_compact_clause(
                 premises.append({"kind": "regular_polygon", "args": {"vertices": base, "side": side_val}, "quote": ctext_s, "solid_id": "s1"})
                 premises.append({"kind": "segment_length", "args": {"segment": [apex, base[0]], "value": side_val}, "quote": ctext_s, "solid_id": "s1"})
                 accepted_ops.append({"kind": "tetrahedron_expansion", "clause_id": solid_raw[0]})
+        elif use_v7 and "tứ diện đều" in cs_low and not [q for q in ctx.quantities if solid_raw[0] in q.clause_ids] and not _NEGATED_PREDICATE_RE.search(cs_low):
+            premises.append({"kind": "equal_length", "args": {"segment_a": [apex, base[0]], "segment_b": [base[0], base[1]]}, "quote": solid_quote, "solid_id": "s1"})
+            accepted_ops.append({"kind": "tetrahedron_unitless_expansion", "clause_id": solid_raw[0]})
     elif solid_info["solid_type"] == "prism" and re.search(
         r"lăng\s+trụ\s+(?:tam\s+giác\s+|tứ\s+giác\s+)?đều|lăng\s+trụ\s+đứng|lập\s+phương|hộp\s+chữ\s+nhật",
         cs_low,
@@ -3510,6 +3513,10 @@ def validate_and_lower_compact_clause(
                 premises.append({"kind": "regular_polygon", "args": {"vertices": b_verts, "side": side_val}, "quote": ctext_s, "solid_id": "s1"})
                 premises.append({"kind": "segment_length", "args": {"segment": [b_verts[0], t_verts[0]], "value": side_val}, "quote": ctext_s, "solid_id": "s1"})
                 accepted_ops.append({"kind": "cube_expansion", "clause_id": solid_raw[0]})
+            elif len(c_q) == 0 and not _NEGATED_PREDICATE_RE.search(cs_low):
+                premises.append({"kind": "regular_polygon", "args": {"vertices": b_verts}, "quote": solid_quote, "solid_id": "s1"})
+                premises.append({"kind": "equal_length", "args": {"segment_a": [b_verts[0], t_verts[0]], "segment_b": [b_verts[0], b_verts[1]]}, "quote": solid_quote, "solid_id": "s1"})
+                accepted_ops.append({"kind": "cube_unitless_expansion", "clause_id": solid_raw[0]})
 
     # 2. Expand relations deterministically
     lp_lengths = _local_parser_segment_lengths(ctx.local_parser_payload)

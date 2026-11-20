@@ -1256,6 +1256,8 @@ def _bridge(p: TypedFactNextPayload, section_fact, version: str, v2: bool) -> di
                                                                          "plane_constraints") if k in f}})
         elif v2 and (described := _cau_hoi_mo_ta(g, mo_ta)) is not None:
             facts.append({**q, **described})
+        elif v2 and g.goal_type == "area" and isinstance(g.target, dict) and "polygon" in g.target:
+            facts.append({**q, "quantity": "area", "points": _refs(g.target["polygon"])})
         elif v2 and g.goal_type == "distance":
             facts.append({**q, **_distance_question(g)})
         elif v2 and g.goal_type == "angle":

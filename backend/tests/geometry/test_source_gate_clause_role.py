@@ -276,7 +276,7 @@ MUTANTS = [
     # Mutants re-pointed to the shared clause analyser of review 2 (`_vai_tro_tai`, `_kiem_cau_hoi`, `_duoc_hoi`).
     ("anchors inside the quote ignored", "for pos in _moc_menh_de(c, de, dau, _c)}", "for pos in [dau]}",
      lambda: _code(_perp("Chứng minh rằng SA vuông góc với (ABCD)."), _no_perpendicular) != "GOAL_CLAUSE_NOT_PREMISE"),
-    ("condition markers dropped", "if _DIEU_KIEN.search(truoc) or _THI.search(de[p:b]) or _DIEU_KIEN_SAU.search(de[p:mb]):",
+    ("condition markers dropped", "if any(m.end() <= p - a for m in _DIEU_KIEN.finditer(de[a:b])) or _THI.search(de[p:b]) or _DIEU_KIEN_SAU.search(de[p:mb]):",
      "if False:",
      lambda: _consequent_code() != "CONDITIONAL_CLAUSE"),
     ("ask check dropped", "            _kiem_cau_hoi(c, de, vts, calls)\n", "            pass\n",

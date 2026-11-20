@@ -155,6 +155,9 @@ _PTS2 = rf"(?:{_PT}){{2}}"
 _PTS3 = rf"(?:{_PT}){{3}}"
 _PTS4 = rf"(?:{_PT}){{4}}"
 _PTS3_6 = rf"(?:{_PT}){{3,6}}"
+#: Lead of a NAMED base polygon "có / với / biết (rằng) ABCD là hình …" (/13 adds "biết (rằng)"); the quote starts at the
+#: labels, and the rules using it require the labels to be the declared solid's base.
+_BASE_NAMED_LEAD = r"(?:(?:có|với|và|biết(?:\s+rằng)?)\s+|(?<=[,;]\s))"
 _W_NO_SUP = r"[^\W²³']"
 _PAREN_UNIT_RE = r"\s*(?:đơn\s+vị(?:\s+(?:độ\s+dài|diện\s+tích|thể\s+tích|góc))?\s*:?\s*)?(?:(?-i:mm|cm|dm|km|m)|đvđd|đvdt|đvtt|°|độ|radian|rad)(?:\s*(?:[²³]|\^\s*[23]|[23]))?\s*\)"
 _ATTACHED_UNIT_RE = r"(?=(?:(?-i:mm|cm|dm|km|m)(?:\s*(?:[²³]|\^\s*[23]|[23]))?|đvđd|đvdt|đvtt|°|độ|radian|rad)(?!" + _W_NO_SUP + r")(?![²³^0-9]))"
@@ -897,9 +900,16 @@ _SIM_SOLID = (rf"(?:(?:(?:mô\s+)?hình\s+3D)\s+(?:của\s+)?)?(?:(?:hình|khố
               rf"(?:\s+(?:đứng|đều|xiên|tam\s+giác|tứ\s+giác|ngũ\s+giác|lục\s+giác|chữ\s+nhật))*"
               rf"(?:\s+(?P<lbl>(?:{_PT})+(?:\.(?:{_PT})+)?))?(?![\w'])(?:\s+(?:đứng|đều|xiên))*")
 _SIM_FIGURE = r"(?P<fig>hình(?:\s+(?:vẽ|3D|không\s+gian|ba\s+chiều))?(?:\s+theo\s+giả\s+thiết(?:\s+(?:trên|đã\s+cho))?)?)"
-_SIM_OBJECT = (rf"(?:{_SIM_SOLID}|{_SIM_FIGURE})(?P<deix>\s+(?:này|đó|đã\s+cho|trên))?(?![\w'])"
-               rf"(?:\s*(?:,\s*)?(?:và|cùng(?:\s+với)?)\s+(?:các\s+)?(?:điểm|đỉnh)\s+{_PT}(?:\s*(?:,|và)\s*{_PT})*)?"
-               r"(?:\s*,?\s*(?:và\s+)?(?:không|chưa)\s+cần\s+tính(?:\s+toán|\s+gì(?:\s+thêm)?)?|\s+giúp(?:\s+(?:mình|em|tôi|tớ))?)*")
+_SIM_SEG = rf"(?:(?:đường\s+cao|chiều\s+cao|cạnh(?:\s+(?:bên|đáy))?|đoạn(?:\s+thẳng)?|đường\s+chéo)\s+{_PTS2}(?![\w']))"
+_SIM_PTS = rf"(?:(?:các\s+)?(?:điểm|đỉnh)\s+{_PT}(?:\s*(?:,|và)\s*{_PT})*)"
+_SIM_EXTRA_ITEM = rf"(?:{_SIM_SEG}|{_SIM_PTS})"
+_SIM_JOIN = r"(?:\s*,\s*(?:và\s+)?|\s+(?:và|cùng(?:\s+với)?)\s+)"
+_SIM_CORE = rf"(?:{_SIM_SOLID}|{_SIM_FIGURE})(?P<deix>\s+(?:này|đó|đã\s+cho|trên))?(?![\w'])"
+_SIM_OBJECT = (
+    rf"(?:{_SIM_EXTRA_ITEM}{_SIM_JOIN})*{_SIM_CORE}"
+    rf"(?:{_SIM_JOIN}{_SIM_EXTRA_ITEM})*"
+    r"(?:\s*,?\s*(?:và\s+)?(?:không|chưa)\s+cần\s+tính(?:\s+toán|\s+gì(?:\s+thêm)?)?|\s+giúp(?:\s+(?:mình|em|tôi|tớ))?)*"
+)
 _SIM_REQUEST_RE = re.compile(
     rf"^\s*(?P<sim>{_SIM_VERB}\s+{_SIM_OBJECT})"
     r"(?:\s*(?:,\s*)?(?:rồi\s+|và\s+|sau\s+đó\s+|đồng\s+thời\s+)?(?:hãy\s+)?(?P<rest>(?:tính|tìm|xác\s+định)\s+.+))?\s*[!.…]*\s*$",
@@ -1522,14 +1532,14 @@ def _parse_clause_into_ast(builder: _AstBuilder, clause: ClauseSpan) -> None:
                 builder._primary_notation = not_str
                 mapped_fact = True
 
-    # 1d. Tetrahedron: "Cho tứ diện (đều )?OABC" or "Cho tứ diện ABCD"
+    # 1d. Tetrahedron: "Cho (hình|khối) tứ diện (đều )?OABC" or the apex-dotted "tứ diện O.ABC" (/13)
     m_tet = re.search(
-        rf"(?P<lead>{_SOLID_LEAD}\s+)?(?P<core>tứ\s+diện(?:\s+(?P<reg>đều))?\s+(?P<pts>{_PTS4}))(?![\w'.])",
+        rf"(?P<lead>{_SOLID_LEAD}\s+)?(?P<core>(?:(?:hình|khối)\s+)?tứ\s+diện(?:\s+(?P<reg>đều))?\s+(?P<pts>{_PT}\.{_PTS3}|{_PTS4}))(?![\w'.])",
         ctext_norm,
         re.IGNORECASE | re.UNICODE,
     )
     if m_tet and not builder.solids:
-        pts = _split_pts(m_tet.group("pts"))
+        pts = _split_pts(m_tet.group("pts").replace(".", ""))
         not_str = f"{pts[0]}.{''.join(pts[1:])}"
         builder._base_vertices = pts[1:]
         q_solid = _clean_quote(raw, ca + m_tet.start(), ca + m_tet.end())
@@ -1947,7 +1957,7 @@ def _parse_clause_into_ast(builder: _AstBuilder, clause: ClauseSpan) -> None:
         mapped_fact = True
 
     for m_reg_named in re.finditer(
-        rf"(?P<full>(?:có|với)\s+(?P<verts>{_PTS3_6})\s+là\s+(?:một\s+)?(?P<shape>hình\s+vuông|tam\s+giác\s+đều|lục\s+giác\s+đều)(?![\w'])(?:\s+(?:có\s+)?cạnh\s+(?:bằng\s+)?(?P<side>{_VAL}){_OPT_LEN_UNIT_TAIL})?)",
+        rf"(?P<full>{_BASE_NAMED_LEAD}(?P<verts>{_PTS3_6})\s+là\s+(?:một\s+)?(?P<shape>hình\s+vuông|tam\s+giác\s+đều|lục\s+giác\s+đều)(?![\w'])(?:\s+(?:có\s+)?cạnh\s+(?:bằng\s+)?(?P<side>{_VAL}){_OPT_LEN_UNIT_TAIL})?)",
         ctext_norm,
         re.IGNORECASE | re.UNICODE,
     ):
@@ -2006,14 +2016,17 @@ def _parse_clause_into_ast(builder: _AstBuilder, clause: ClauseSpan) -> None:
                 )
                 mapped_fact = True
 
-    # 2b. Rectangle base: "đáy (ABCD )?là hình chữ nhật"
+    # 2b. Rectangle base: "đáy (ABCD )?là hình chữ nhật" — or the named base "biết / có / với ABCD là hình chữ nhật" (/13)
     for m_rect in re.finditer(
-        rf"(?P<full>đáy(?:\s+(?P<verts>{_PTS4}))?\s+là\s+hình\s+chữ\s+nhật)",
+        rf"(?P<full>(?:đáy(?:\s+(?P<verts>{_PTS4}))?|{_BASE_NAMED_LEAD}(?P<verts0>{_PTS4}))\s+là\s+(?:một\s+)?hình\s+chữ\s+nhật)",
         ctext_norm,
         re.IGNORECASE | re.UNICODE,
     ):
-        verts = _split_pts(m_rect.group("verts")) if m_rect.group("verts") else list(builder._base_vertices)
-        rc_start = m_rect.start("full")
+        if m_rect.group("verts0") and set(_split_pts(m_rect.group("verts0"))) != set(builder._base_vertices):
+            continue                                     # a named polygon that is not this solid's base: not this rule
+        verts = (_split_pts(m_rect.group("verts") or m_rect.group("verts0"))
+                 if (m_rect.group("verts") or m_rect.group("verts0")) else list(builder._base_vertices))
+        rc_start = m_rect.start("verts0") if m_rect.group("verts0") else m_rect.start("full")
         if (
             not m_rect.group("verts")
             and clause_solid_not_span is not None
@@ -2204,14 +2217,16 @@ def _parse_clause_into_ast(builder: _AstBuilder, clause: ClauseSpan) -> None:
 
     # 2h. FAMILY-2 Rhombus & Parallelogram ("đáy (ABCD )?là hình thoi( ABCD)?( cạnh a)?" / "đáy (ABCD )?là hình bình hành( ABCD)?")
     for m_rhom in re.finditer(
-        rf"(?P<full>đáy(?:\s+(?P<verts>{_PTS4})(?![\w']))?\s+là\s+(?:một\s+)?hình\s+thoi(?:\s+(?P<verts2>{_PTS4})(?![\w']))?(?:(?:\s*,\s*|\s+)(?:có\s+)?(?:độ\s+dài\s+)?cạnh(?:\s*(?:bằng|=|là))?\s*(?P<side>{_VAL}){_OPT_LEN_UNIT_TAIL})?)",
+        rf"(?P<full>(?:đáy(?:\s+(?P<verts>{_PTS4})(?![\w']))?|{_BASE_NAMED_LEAD}(?P<verts0>{_PTS4}))\s+là\s+(?:một\s+)?hình\s+thoi(?:\s+(?P<verts2>{_PTS4})(?![\w']))?(?:(?:\s*,\s*|\s+)(?:có\s+)?(?:độ\s+dài\s+)?cạnh(?:\s*(?:bằng|=|là))?\s*(?P<side>{_VAL}){_OPT_LEN_UNIT_TAIL})?)",
         ctext_norm,
         re.IGNORECASE | re.UNICODE,
     ):
-        rh_verts_raw = m_rhom.group("verts") or m_rhom.group("verts2")
+        if m_rhom.group("verts0") and set(_split_pts(m_rhom.group("verts0"))) != set(builder._base_vertices):
+            continue                                     # /13 named form: only this solid's own base
+        rh_verts_raw = m_rhom.group("verts") or m_rhom.group("verts0") or m_rhom.group("verts2")
         verts = _split_pts(rh_verts_raw) if rh_verts_raw else list(builder._base_vertices)
         if len(verts) == 4:
-            rh_start = m_rhom.start("full")
+            rh_start = m_rhom.start("verts0") if m_rhom.group("verts0") else m_rhom.start("full")
             if (
                 not rh_verts_raw
                 and clause_solid_not_span is not None
@@ -2489,6 +2504,29 @@ def _parse_clause_into_ast(builder: _AstBuilder, clause: ClauseSpan) -> None:
                     "args": {"line": line_pts, "plane": plane_pts},
                     "quote": q_lpp,
                     "solid_id": sid,
+                }
+            )
+            mapped_fact = True
+
+    # 3b-bis (/13). Two planes through one lateral edge, both ⊥ the base: "hai mặt phẳng (SAB) và (SAD) cùng vuông góc với
+    # (mặt) đáy / (ABCD)" — the textbook way of stating SA ⊥ base. Only when the two planes share EXACTLY two points; the
+    # Source Gate binds the call to this phrase (`registry._hai_mat_vuong_day_khop`), never to an invented "SA ⊥ …".
+    for m_2p in re.finditer(
+        rf"(?P<full>hai\s+mặt\s+(?:phẳng|bên)\s+\(\s*(?P<p1>{_PTS3})\s*\)\s*(?:,|và)\s*(?:mặt\s+phẳng\s+)?\(\s*(?P<p2>{_PTS3})\s*\)"
+        rf"\s+(?:cùng|đều)\s+vuông\s+góc\s+(?:với\s+)?(?P<target>(?:mặt\s+phẳng\s+|mp\s*)?\((?P<plane>{_PTS3_6})\)|mặt\s+phẳng\s+đáy(?:\s+\({_PTS3_6}\))?|mặt\s+đáy(?:\s+\({_PTS3_6}\))?|đáy(?:\s+\({_PTS3_6}\))?))(?![\w'])",
+        ctext_norm,
+        re.IGNORECASE | re.UNICODE,
+    ):
+        p1, p2 = _split_pts(m_2p.group("p1")), _split_pts(m_2p.group("p2"))
+        line_pts = [v for v in p1 if v in p2]
+        plane_pts = _split_pts(m_2p.group("plane")) if m_2p.group("plane") else list(builder._base_vertices)
+        if len(set(p1)) == 3 and len(set(p2)) == 3 and set(p1) != set(p2) and len(line_pts) == 2 and len(plane_pts) >= 3:
+            builder.premises.append(
+                {
+                    "kind": "perpendicular_line_plane",
+                    "args": {"line": line_pts, "plane": plane_pts},
+                    "quote": _clean_quote(raw, ca + m_2p.start("full"), ca + m_2p.end("full")),
+                    "solid_id": builder._primary_solid_id,
                 }
             )
             mapped_fact = True
@@ -4442,7 +4480,7 @@ def _parse_clause_into_ast(builder: _AstBuilder, clause: ClauseSpan) -> None:
         else:
             sid_v = builder._primary_solid_id
         # Use full clause quote if multiple goals share the sentence or if noun-phrase question (no leading 'tính'), else exact match quote
-        is_multi_in_clause = bool(re.search(r"\bvà\b|,.*tính", ctext_norm, re.IGNORECASE)) and not bool(m_sim_lead)
+        is_multi_in_clause = bool(re.search(r"\b(?:và|cùng)\b|,.*tính", ctext_norm, re.IGNORECASE)) and not bool(m_sim_lead)
         is_noun_phrase = not m_vol.group("full").lower().startswith("tính")
         q_v = (
             _clean_quote(raw, ca, cb)
@@ -4511,11 +4549,21 @@ def _parse_clause_into_ast(builder: _AstBuilder, clause: ClauseSpan) -> None:
             mapped_goal = True
 
     for m_poly_area in re.finditer(
-        rf"(?P<full>Tính\s+diện\s+tích\s+(?:tam\s+giác|tứ\s+giác|hình\s+vuông|hình\s+chữ\s+nhật)\s+(?P<poly>{_PTS3_6}))(?![\w'])",
+        rf"(?P<full>(?:tính\s+)?diện\s+tích(?:\s+của)?\s+(?:tam\s+giác|tứ\s+giác|hình\s+vuông|hình\s+chữ\s+nhật|hình\s+thoi|hình\s+bình\s+hành|hình\s+thang|đa\s+giác)\s+(?P<poly>{_PTS3_6}))(?![\w'])",
         ctext_norm,
         re.IGNORECASE | re.UNICODE,
     ):
-        q_pa = _clean_quote(raw, ca + m_poly_area.start("full"), ca + m_poly_area.end("full"))
+        has_ask_verb_pa = m_poly_area.group("full").lower().startswith("tính") or bool(
+            re.search(r"\b(?:tính|tìm|xác\s+định|hỏi)\b", ctext_norm[: m_poly_area.start("full")], re.IGNORECASE)
+        )
+        if not has_ask_verb_pa or re.match(rf"^\s*(?:=|bằng|là)\s*{_VAL}", ctext_norm[m_poly_area.end("full") :], re.IGNORECASE | re.UNICODE):
+            continue
+        is_multi_pa = bool(re.search(r"\b(?:và|cùng)\b|,.*tính", ctext_norm, re.IGNORECASE)) and not bool(m_sim_lead)
+        q_pa = (
+            _clean_quote(raw, ca, cb)
+            if (not m_poly_area.group("full").lower().startswith("tính") or is_multi_pa)
+            else _clean_quote(raw, ca + m_poly_area.start("full"), ca + m_poly_area.end("full"))
+        )
         builder.math_goals.append(
             {
                 "goal_id": f"q{len(builder.math_goals) + 1}",
@@ -4555,13 +4603,13 @@ def _parse_clause_into_ast(builder: _AstBuilder, clause: ClauseSpan) -> None:
             mapped_goal = True
 
     for m_len_seg in re.finditer(
-        rf"(?P<full>(?:tính\s+)?độ\s+dài(?:\s+(?:đoạn(?:\s+thẳng)?|đường\s+chéo|cạnh))?\s+(?P<seg>{_PTS2}))(?![\w'])",
+        rf"(?P<full>(?:tính\s+)?độ\s+dài(?:\s+(?:đoạn(?:\s+thẳng)?|đường\s+chéo|cạnh(?:\s+(?:bên|đáy))?))?\s+(?P<seg>{_PTS2}))(?![\w'])",
         ctext_norm,
         re.IGNORECASE | re.UNICODE,
     ):
         seg_pts = _split_pts(m_len_seg.group("seg"))
         has_other_goal_in_clause = bool(
-            re.search(r"khoảng\s+cách|bán\s+kính|thể\s+tích", ctext_norm, re.IGNORECASE)
+            re.search(r"khoảng\s+cách|bán\s+kính|thể\s+tích|diện\s+tích|góc|tỉ\s+số", ctext_norm, re.IGNORECASE)
         )
         q_ls = (
             _clean_quote(raw, ca + m_len_seg.start("full"), ca + m_len_seg.end("full"))
@@ -5121,10 +5169,10 @@ def _parse_clause_into_ast(builder: _AstBuilder, clause: ClauseSpan) -> None:
                 clause.classification = CLAUSE_UNPARSED_FACT_CANDIDATE
                 return
 
-        # 6) Compound goal completeness: if two scalar goal quantities are joined by `và`, must have >= 2 math_goals
+        # 6) Compound goal completeness: if two scalar goal quantities are joined by `và`/`cùng`, must have >= 2 math_goals
         _q_kw = r"(?:diện\s+tích|thể\s+tích|khoảng\s+cách|k/c|độ\s+dài|bán\s+kính|góc\s+(?:giữa|tạo\s+bởi|hợp\s+bởi)|tỉ\s+số|chu\s+vi)"
         if mapped_goal and re.search(
-            rf"\b{_q_kw}\b.+?\bvà\s+(?:tính\s+)?{_q_kw}\b",
+            rf"\b{_q_kw}\b.+?\b(?:và|cùng)\s+(?:tính\s+)?{_q_kw}\b",
             ctext_norm,
             re.IGNORECASE | re.UNICODE,
         ):

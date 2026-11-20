@@ -1766,7 +1766,8 @@ _DONG_TU_MO_PHONG = (r"(?:(?:(?:em|bạn|mình|tớ)\s+)?(?:(?:muốn|cần)\s+x
                      r"|cho\s+(?:mình|em|tôi|tớ)\s+xem))(?:\s+giúp(?:\s+(?:mình|em|tôi|tớ))?|\s+lại)?)(?!\w)")
 _CUM_KHONG_CAN_TINH = re.compile(
     r"(?:(?:chỉ\s+cần\s+)?(?:vẽ|dựng|mô\s+phỏng)\s+(?:hình|khối)(?:\s+3D)?(?:\s*,\s*(?:và\s+)?)?)?"
-    r"(?:không|chưa)\s+cần\s+tính(?:\s+toán|\s+gì(?:\s+thêm)?)?(?=\s*(?:[,;:.()!\-–]|$))",
+    # /13: "không tính toán gì" / "không cần tính" — "cần" optional; still a whole meta phrase closed by punctuation
+    r"(?:không|chưa)\s+(?:cần\s+)?tính(?:\s+toán)?(?:\s+gì(?:\s+thêm)?)?(?=\s*(?:[,;:.()!\-–]|$))",
     re.IGNORECASE,
 )
 _C_KHOI = re.compile(rf"(?:(?:cho|xét|{_DONG_TU_MO_PHONG})\s+)?(?:một\s+)?(?:(?:hình|khối)\s+)?(?P<kn>chóp|lăng\s+trụ|hộp(?:\s+chữ\s+nhật)?|lập\s+phương|tứ\s+diện)"
@@ -1938,6 +1939,11 @@ _C_MAT = re.compile(rf"(?:{_MAT_NHAN}\s+(?:và\s+)?(?:nằm\s+trong\s+mặt\s+ph
                     rf"|{_L1}{_L1}(?:\s*=\s*{_L1}{_L1})+(?![\w'])(?!\s*=))"
                     # a figure reference ("(minh họa như hình vẽ bên)") may close the clause, as it may close a sentence (`_C_HET`)
                     rf"(?=\s*(?:{_THAM_KHAO_HINH}\s*)?(?:[,;.!?]|và\s|$))", re.IGNORECASE)
+#: /13: "hai mặt phẳng (SAB) và (SAD) cùng vuông góc với (mặt) đáy (ABCD)" — a number-free line ⊥ base premise (the two
+#: planes' common edge, `_hai_mat_vuong_day_khop`), read as kind "vuong": it changes no subject, like "SA ⊥ (ABCD)".
+_C_HAI_MAT = re.compile(rf"(?:(?:có|với|biết)\s+)?hai\s+mặt\s+(?:phẳng|bên)\s+\({_L1}{_L1}{_NHAN}\)\s*(?:,|và)\s*(?:mặt\s+phẳng\s+)?\({_L1}{_L1}{_NHAN}\)"
+                        rf"\s+(?:cùng|đều)\s+vuông\s+góc\s+với\s+{_MAT_DICH}(?:\s*\({_NHAN}\))?"
+                        rf"(?=\s*(?:{_THAM_KHAO_HINH}\s*)?(?:[,;.!?]|và\s|$))", re.IGNORECASE)
 #: Run `compositional-semantics-simulation-goals`: a NAMED plane defined by number-free incidence / ∥ / ⊥ relations
 #: ("mặt phẳng (P) đi qua M và song song với mặt đáy", "(α) chứa AB và vuông góc với (SCD)"). It names no height, side or
 #: segment value; the section call that uses the plane is verified by its own quote. Read here only so the OTHER clauses of
@@ -1948,7 +1954,15 @@ _MPDN_PHAN = (rf"(?:(?:đi\s+qua|qua|chứa)\s+(?:{_MPDN_REF})(?:\s*(?:,|và)\s*
               rf"|(?:song\s+song|vuông\s+góc)\s+với\s+{_MPDN_DICH}(?:\s+và\s+{_MPDN_DICH})?)")
 _C_MPDN = re.compile(rf"(?:mặt\s+phẳng\s+|mp\s*)?\((?:[A-Z][0-9']?|[α-ωΑ-Ω][0-9']?)\)\s+{_MPDN_PHAN}(?:\s+(?:và\s+)?{_MPDN_PHAN}){{0,2}}"
                      rf"(?=\s*(?:[,;.!?]|và\s|$))", re.IGNORECASE)
-_C_DAU = re.compile(r"\s*(?:trong\s+không\s+gian\s*,\s*)?(?:(?:biết(?:\s+rằng)?|th[ỏo]a\s+mãn)\s+)?", re.IGNORECASE)
+#: /13: a sentence may open with the number-free meta request "Chỉ cần vẽ hình, không cần tính toán:" before its premises
+#: (only when closed by ":" / "-": the premises follow it; a trailing request is `_C_HOI`'s job).
+_C_DAU = re.compile(rf"\s*(?:{_CUM_KHONG_CAN_TINH.pattern}\s*[:\-–]\s*)?(?:trong\s+không\s+gian\s*,\s*)?(?:(?:biết(?:\s+rằng)?|th[ỏo]a\s+mãn)\s+)?",
+                    re.IGNORECASE)
+#: /13: a number-free purpose tail closing a sentence ("…; gọi I là trung điểm của LL' để hiển thị thêm điểm I.") — it asks
+#: to show what the sentence built; it states no premise.
+_MUC_DICH_HIEN_THI = r"(?:để|nhằm)\s+(?:hiển\s+thị|vẽ|biểu\s+diễn|minh\s+ho[ạa]|đánh\s+dấu)(?:\s+(?:thêm|cả|luôn))*"
+_DUOI_MUC_DICH = re.compile(rf"\s+{_MUC_DICH_HIEN_THI}(?:\s+(?:(?:các\s+)?điểm\s+)?{_L1}(?:\s*(?:,|và)\s*{_L1})*)?(?=\s*[.!?;]?\s*$)",
+                            re.IGNORECASE)
 _C_HET = re.compile(rf"\s*(?:{_THAM_KHAO_HINH}\s*)?[.!?;]?\s*", re.IGNORECASE)
 _C_HOI = re.compile(
     rf"(?:(?:rồi|sau\s+đó|đồng\s+thời|tiếp\s+theo|từ\s+đó|do\s+đó|vậy|khi\s+đó)\s+)?"
@@ -2009,6 +2023,7 @@ _VAT_MO_PHONG = re.compile(rf"(?:(?:(?:hình\s+3D|mô\s+hình\s+3D)\s+(?:của\s
                            rf"(?P<km>(?:\s+(?:đứng|đều|xiên|tam\s+giác|tứ\s+giác|ngũ\s+giác|lục\s+giác|chữ\s+nhật))*)"
                            rf"(?:\s+(?P<k>{_NHAN}(?:\.{_NHAN})?))?(?![\w'])(?P<km2>(?:\s+(?:đứng|đều|xiên))*)"
                            rf"|(?P<hinh>hình(?:\s+(?:vẽ|3D|không\s+gian|ba\s+chiều))?(?:\s+theo\s+giả\s+thiết(?:\s+(?:trên|đã\s+cho))?)?)"
+                           rf"|(?P<vseg>đường\s+cao|chiều\s+cao|cạnh\s+bên|cạnh\s+đáy|cạnh|đoạn(?:\s+thẳng)?|đường\s+chéo)\s+(?P<seg>{_L1}{_L1})"
                            rf"|(?:các\s+)?(?P<vai>điểm|đỉnh)\s+(?P<d>{_L1}(?:\s*,\s*{_L1})*))"
                            rf"(?:\s+(?:này|đó|đã\s+cho|trên))?(?![\w'])", re.IGNORECASE)
 _NOI_VAT_MO_PHONG = re.compile(r"\s*,\s*(?:và\s+)?|\s+và\s+|\s+cùng\s+(?:với\s+)?", re.IGNORECASE)
@@ -2053,6 +2068,10 @@ def _doc_yeu_cau_mo_phong(de: str, a: int, b: int, calls: tuple[LoiGoi, ...]) ->
                 hop = [k for k in hop if _loai_cum_dung(cum, _ky_hieu_khoi(k), calls)]
             if not hop:
                 return None
+        elif v["seg"]:
+            seg_pts = re.findall(r"[A-Z][0-9]*'?", v["seg"])
+            if len(set(seg_pts)) != 2 or not set(seg_pts) <= dung or not _vai_tro_doi_tuong_khop(v["vseg"], seg_pts, calls):
+                return None
         elif v["d"]:
             diem = set(re.findall(r"[A-Z][0-9]*'?", v["d"]))
             # "đỉnh" claims a solid vertex; "điểm" any point a validated call builds (drawn in the scene)
@@ -2073,6 +2092,8 @@ def _doc_yeu_cau_mo_phong(de: str, a: int, b: int, calls: tuple[LoiGoi, ...]) ->
 def _phan_tich_cau(s: str) -> list[tuple[str, re.Match | None]] | None:
     """Clauses of sentence `s` when ALL of it parses, else None. A clause outside the grammar is tolerated only when it
     carries no number; it is recorded as opaque ("mo") and its whole sentence then binds no role (`_lien_ket_cau`)."""
+    if mt := _DUOI_MUC_DICH.search(s):                   # /13: sentence-final purpose tail; earlier offsets unchanged
+        s = s[:mt.start()] + s[mt.end():]
     gd = _GIAN_DAN.match(s)
     p, out = _C_DAU.match(s, gd.end() if gd else 0).end(), []
     while True:
@@ -2081,6 +2102,7 @@ def _phan_tich_cau(s: str) -> list[tuple[str, re.Match | None]] | None:
         if (out or not _C_KHOI.match(s, p)) and (q := _C_HOI.match(s, p)):
             return out if not any(_doc(x) is not None for x in _SO.finditer(s, q.end())) else None
         for kind, rx in (("khoi", _C_KHOI), ("day", _C_DAY), ("dagiac", _C_DAGIAC), ("dcao", _C_DCAO), ("mpdn", _C_MPDN), ("tyso", _TY_SO), ("diem", _C_DIEM),
+                         ("vuong", _C_HAI_MAT),
                          ("chieu", _C_CHIEU), ("mat", _C_MAT), ("vuong", _C_VUONG), ("song", _C_SONG),
                          ("tiso_doan", _C_TISO_DOAN), ("dientich", _C_DIENTICH), ("thetich", _C_THETICH), ("goc", _C_GOC), ("doan", _C_DOAN), ("vai", _C_VAI)):
             if m := rx.match(s, p):
@@ -3565,7 +3587,9 @@ def _vai_tro_tai(de: str, p: int) -> str | None:
     if muc >= 0 and "biết" not in truoc[muc:] and not _DONG_TU_HOI.search(truoc[muc:]):
         return "GOAL"
     ma, mb = _bien_menh_de(de, p)
-    if _DIEU_KIEN.search(truoc) or _THI.search(de[p:b]) or _DIEU_KIEN_SAU.search(de[p:mb]):
+    # Inspect the whole sentence `de[a:b]` so negative lookaheads (`muốn(?!\s+xem\b)`, `khi(?!\s+đó...)`) are not
+    # blinded when `p` sits right before the lookahead word (`"Em muốn |xem..."` / `"Khi |đó..."`).
+    if any(m.end() <= p - a for m in _DIEU_KIEN.finditer(de[a:b])) or _THI.search(de[p:b]) or _DIEU_KIEN_SAU.search(de[p:mb]):
         return "CONDITIONAL"
     # mệnh đề hỏi có/không, hay mọi mệnh đề kết bằng "?" ("Tại sao …?", "Liệu … ?") — S1, nhóm A
     intro = list(_DUNG_GAN.finditer(truoc))
@@ -4057,7 +4081,7 @@ def _kiem_nguon_goc(calls: tuple[LoiGoi, ...], text: str, auxiliary: tuple[dict,
         vuong_can_eq = c.fn == "equal_length" and (_vuong_can_hai_canh(c, de) or _canh_tu_dien_deu(c)
                                                    or _can_co_goc_vuong(c, calls))
         tri_alt_proj = c.fn == "orthogonal_projection_line" and any(_duong_cao_tam_giac_khop(c, q) for q in c.quotes)
-        td_vuong_tai = c.fn == "perpendicular_lines" and _tu_dien_vuong_tai_khop(c)
+        td_vuong_tai = (c.fn == "perpendicular_lines" and _tu_dien_vuong_tai_khop(c)) or _hai_mat_vuong_day_khop(c)
         if not vuong_can_eq and not tri_alt_proj:
             for nhom in c.spec.keywords:
                 if not _co_tu(c.quotes, nhom):
@@ -4604,7 +4628,10 @@ def _kiem_du_kien_cau_hoi(calls: tuple[LoiGoi, ...], de: str, read_quotes: tuple
 
 
 #: Premise text a call need not quote: lead-ins and connectors between quoted claims (closed).
-_NOI_TIEN_DE = re.compile(rf"[\s,;:.()!\-–]*(?:(?:{_THAM_KHAO_HINH}|(?:cho|gọi|biết|rằng|có|và|với|trong đó|là|của|hãy|xét|thiết\s+lập|ta|đồng thời|lần lượt"
+#: Content-free connectives between read quotes. /13: "các" (plural marker of a read object list: "có các cạnh OA, OB, OC
+#: …") and "sao cho" introducing construction data ("… đôi một vuông góc sao cho OA = 1"); every value after them must
+#: still sit inside a call quote (`so_trong` below), so "sao cho … nhỏ nhất" keeps its unread condition and is refused.
+_NOI_TIEN_DE = re.compile(rf"[\s,;:.()!\-–]*(?:(?:{_THAM_KHAO_HINH}|(?:cho|gọi|biết|rằng|có|và|với|trong đó|là|của|hãy|xét|thiết\s+lập|ta|đồng thời|lần lượt|các|sao\s+cho|{_MUC_DICH_HIEN_THI}|điểm"
                           r"|theo thứ tự|tại|thì|đơn vị|(?:cm|dm|mm|m)(?:\s*(?:\^\s*[23]|[²³]))?|đvđd|đvdt|đvtt)(?!\w))[\s,;:.()!\-–]*)*", re.IGNORECASE)
 _MO_DAU_MUC_DE = (
     r"(?:cho|trên|trong|một|gọi|biết|xét|giả\s+sử|tính|tìm|xác\s+định|hỏi|vẽ|dựng|mô\s+phỏng|chứng\s+minh)(?!\w)"
@@ -4812,6 +4839,12 @@ def _kiem_vung_tien_de(calls: tuple[LoiGoi, ...], de: str, het: int, read_quotes
             continue
         gd = _GIAN_DAN.match(de, a, b)
         a0 = gd.end() if gd else a
+        # /13: a sentence opening with the number-free meta "Không cần tính toán, hãy vẽ hình." — the meta phrase reads
+        # nothing; what follows it is checked as usual (a request to show built objects, or premises)
+        if (mk := re.compile(rf"\s*{_CUM_KHONG_CAN_TINH.pattern}\s*[,;:\-–]?\s*", re.IGNORECASE).match(de, a0, b)) and mk.end() < b:
+            a0 = mk.end()
+        elif mk:
+            continue
         if _doc_yeu_cau_mo_phong(de, a0, b, calls) == b:
             continue                                     # only asks to show built objects (SL-1)
         # only before the solid's own attributes ("… có / với / biết …"): a bare mention list is the reader's job above, so
@@ -8184,6 +8217,30 @@ def _tu_dien_vuong_tai_khop(c: LoiGoi) -> bool:
             tet = re.findall(_DIEM, m[1])
             v = m[2]
             if len(set(tet)) == 4 and v == v_want and both <= set(tet):
+                return True
+    return False
+
+
+#: "hai mặt phẳng (SAB) và (SAD) cùng vuông góc với …" / "hai mặt bên (SAB), (SAD) đều vuông góc với …" (/13).
+_HAI_MAT_VUONG = re.compile(
+    r"hai\s+mặt\s+(?:phẳng|bên)\s+\(\s*((?:[A-Z][0-9]*'?){3,})\s*\)\s*(?:,|và)\s*(?:mặt\s+phẳng\s+)?\(\s*((?:[A-Z][0-9]*'?){3,})\s*\)"
+    r"\s+(?:cùng|đều)\s+vuông\s+góc\s+với",
+    re.IGNORECASE,
+)
+
+
+def _hai_mat_vuong_day_khop(c: LoiGoi) -> bool:
+    """Bind `perpendicular_line_plane(line, plane)` to "hai mặt phẳng (P1) và (P2) cùng vuông góc với <plane>" when the
+    two planes are distinct and share EXACTLY the two points of `line` — the theorem "two intersecting planes both
+    perpendicular to a third meet in a line perpendicular to it". The plane itself is still checked by `_co_mat`, a
+    negation by `_phu_dinh`; any other line (or a pair sharing one point / three points) stays unbound."""
+    if c.fn != "perpendicular_line_plane" or len(set(c.args.line)) != 2:
+        return False
+    for q in c.quotes:
+        for m in _HAI_MAT_VUONG.finditer(q):
+            p1, p2 = (re.findall(_DIEM, g) for g in m.groups())
+            if len(set(p1)) == len(p1) == 3 and len(set(p2)) == len(p2) == 3 and set(p1) != set(p2) \
+                    and set(p1) & set(p2) == set(c.args.line):
                 return True
     return False
 

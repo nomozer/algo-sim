@@ -1,0 +1,813 @@
+{
+ "schema": "axo-model1-residual-diagnostics/1",
+ "rows": [
+  {
+   "case_id": "V006",
+   "text": "Chỉ cần vẽ hình, không cần tính toán: hình chóp K.EFGH có đáy EFGH là hình vuông cạnh 4, KF vuông góc với đáy và KF = 2.",
+   "v12": {
+    "status": "REFUSED",
+    "code": "UNGROUNDED_VALUE",
+    "extraction_mode": "LOCAL_SLM_GROUNDED",
+    "parse": "LOCAL_PARSE_PARTIAL",
+    "route": "LOCAL_SLM_FALLBACK",
+    "fallback_reason": "SOURCE_GATE_MISMATCH:UNGROUNDED_VALUE:p1: 'đáy EFGH là hình vuông cạnh 4' không gắn 4 với vai trò của ô này trong một câu đọc trọn",
+    "slm_grounding": "GROUNDED_AND_LOWERED",
+    "slm_accepted_ops": [
+     "regular_polygon",
+     "perpendicular_line_plane",
+     "segment_length"
+    ],
+    "first_failing_layer": "SOURCE_GATE:UNGROUNDED_VALUE"
+   },
+   "current": {
+    "status": "SERVED",
+    "code": null,
+    "extraction_mode": "LOCAL_DETERMINISTIC_PARSER",
+    "parse": "LOCAL_PARSE_COMPLETE",
+    "route": "LOCAL_DETERMINISTIC_HYBRID",
+    "fallback_reason": null,
+    "slm_grounding": null,
+    "slm_accepted_ops": [],
+    "first_failing_layer": "NONE",
+    "ms": 719,
+    "oracle": "MATHEMATICALLY_VALID"
+   },
+   "gold_intervention": {
+    "text": "Vẽ hình chóp K.EFGH có đáy EFGH là hình vuông cạnh 4, KF vuông góc với đáy và KF = 2.",
+    "note": "meta prefix removed",
+    "status": "SERVED",
+    "code": null,
+    "extraction_mode": "LOCAL_DETERMINISTIC_PARSER",
+    "parse": "LOCAL_PARSE_COMPLETE",
+    "route": "LOCAL_DETERMINISTIC_HYBRID",
+    "fallback_reason": null,
+    "slm_grounding": null,
+    "slm_accepted_ops": [],
+    "first_failing_layer": "NONE",
+    "ms": 21,
+    "oracle": "MATHEMATICALLY_VALID",
+    "numeric": null
+   }
+  },
+  {
+   "case_id": "V008",
+   "text": "Em muốn xem hình lăng trụ đứng MNP.M'N'P' có đáy MNP là tam giác vuông tại M với MN = 3, MP = 4 và MM' = 6.",
+   "v12": {
+    "status": "REFUSED",
+    "code": "CONDITIONAL_CLAUSE",
+    "extraction_mode": "LOCAL_DETERMINISTIC_PARSER",
+    "parse": "LOCAL_PARSE_COMPLETE",
+    "route": "LOCAL_DETERMINISTIC_HYBRID",
+    "fallback_reason": null,
+    "slm_grounding": null,
+    "slm_accepted_ops": [],
+    "first_failing_layer": "SOURCE_GATE:CONDITIONAL_CLAUSE"
+   },
+   "current": {
+    "status": "SERVED",
+    "code": null,
+    "extraction_mode": "LOCAL_DETERMINISTIC_PARSER",
+    "parse": "LOCAL_PARSE_COMPLETE",
+    "route": "LOCAL_DETERMINISTIC_HYBRID",
+    "fallback_reason": null,
+    "slm_grounding": null,
+    "slm_accepted_ops": [],
+    "first_failing_layer": "NONE",
+    "ms": 35,
+    "oracle": "MATHEMATICALLY_VALID"
+   },
+   "gold_intervention": {
+    "text": "Vẽ hình lăng trụ đứng MNP.M'N'P' có đáy MNP là tam giác vuông tại M, MN = 3, MP = 4 và MM' = 6.",
+    "note": "'với' removed",
+    "status": "SERVED",
+    "code": null,
+    "extraction_mode": "LOCAL_DETERMINISTIC_PARSER",
+    "parse": "LOCAL_PARSE_COMPLETE",
+    "route": "LOCAL_DETERMINISTIC_HYBRID",
+    "fallback_reason": null,
+    "slm_grounding": null,
+    "slm_accepted_ops": [],
+    "first_failing_layer": "NONE",
+    "ms": 25,
+    "oracle": "MATHEMATICALLY_VALID",
+    "numeric": null
+   }
+  },
+  {
+   "case_id": "V027",
+   "text": "Dựng hình tứ diện O.MNP có các cạnh OM, ON, OP đôi một vuông góc sao cho OM = 2, ON = 3, OP = 6.",
+   "v12": {
+    "status": "REFUSED",
+    "code": "AMBIGUOUS_FACT",
+    "extraction_mode": "LOCAL_SLM_GROUNDING_REJECTED",
+    "parse": "LOCAL_PARSE_PARTIAL",
+    "route": "LOCAL_SLM_FALLBACK",
+    "fallback_reason": "SCHEMA_VALIDATION_FAILED:EMPTY_SOLIDS:EMPTY_SOLIDS: TypedFactNextPayload requires at least one declared solid.",
+    "slm_grounding": "SLM_REPORTED_UNRESOLVED",
+    "slm_accepted_ops": [],
+    "first_failing_layer": "EXTRACTION(parser+SLM): solid/relations not extracted"
+   },
+   "current": {
+    "status": "SERVED",
+    "code": null,
+    "extraction_mode": "LOCAL_DETERMINISTIC_PARSER",
+    "parse": "LOCAL_PARSE_COMPLETE",
+    "route": "LOCAL_DETERMINISTIC_HYBRID",
+    "fallback_reason": null,
+    "slm_grounding": null,
+    "slm_accepted_ops": [],
+    "first_failing_layer": "NONE",
+    "ms": 24,
+    "oracle": "MATHEMATICALLY_VALID"
+   },
+   "gold_intervention": {
+    "text": "Cho tứ diện OMNP có OM, ON, OP đôi một vuông góc, OM = 2, ON = 3, OP = 6. Vẽ hình.",
+    "note": "O.MNP -> OMNP",
+    "status": "SERVED",
+    "code": null,
+    "extraction_mode": "LOCAL_DETERMINISTIC_PARSER",
+    "parse": "LOCAL_PARSE_COMPLETE",
+    "route": "LOCAL_DETERMINISTIC_HYBRID",
+    "fallback_reason": null,
+    "slm_grounding": null,
+    "slm_accepted_ops": [],
+    "first_failing_layer": "NONE",
+    "ms": 30,
+    "oracle": "MATHEMATICALLY_VALID",
+    "numeric": null
+   }
+  },
+  {
+   "case_id": "V029",
+   "text": "Hãy mô phỏng hình chóp S.MNPQ biết MNPQ là hình thoi cạnh 2a, góc NMP bằng 60°, hai mặt phẳng (SMN) và (SMQ) cùng vuông góc với (MNPQ) và SM = 2a.",
+   "v12": {
+    "status": "REFUSED",
+    "code": "MISSING_DIMENSION",
+    "extraction_mode": "LOCAL_SLM_GROUNDED",
+    "parse": "LOCAL_PARSE_PARTIAL",
+    "route": "LOCAL_SLM_FALLBACK",
+    "fallback_reason": "UNPARSED_FACT_CANDIDATE",
+    "slm_grounding": "GROUNDED_AND_LOWERED",
+    "slm_accepted_ops": [
+     "rhombus",
+     "vertex_angle",
+     "perpendicular_line_plane",
+     "segment_length"
+    ],
+    "first_failing_layer": "EXTRACTION(dimension lost) or PLANNER:MISSING_DIMENSION"
+   },
+   "current": {
+    "status": "SERVED",
+    "code": null,
+    "extraction_mode": "LOCAL_DETERMINISTIC_PARSER",
+    "parse": "LOCAL_PARSE_COMPLETE",
+    "route": "LOCAL_DETERMINISTIC_HYBRID",
+    "fallback_reason": null,
+    "slm_grounding": null,
+    "slm_accepted_ops": [],
+    "first_failing_layer": "NONE",
+    "ms": 32,
+    "oracle": "MATHEMATICALLY_INVALID"
+   },
+   "gold_intervention": {
+    "text": "Vẽ hình chóp S.MNPQ có đáy MNPQ là hình thoi cạnh 2a, góc NMQ = 60°, SM vuông góc với (MNPQ) và SM = 2a.",
+    "note": "gold encodes angle NMQ = 60°; the /12 text says NMP",
+    "status": "SERVED",
+    "code": null,
+    "extraction_mode": "LOCAL_DETERMINISTIC_PARSER",
+    "parse": "LOCAL_PARSE_COMPLETE",
+    "route": "LOCAL_DETERMINISTIC_HYBRID",
+    "fallback_reason": null,
+    "slm_grounding": null,
+    "slm_accepted_ops": [],
+    "first_failing_layer": "NONE",
+    "ms": 25,
+    "oracle": "MATHEMATICALLY_VALID",
+    "numeric": null
+   }
+  },
+  {
+   "case_id": "V030",
+   "text": "Vẽ hình chóp K.EFG biết hai mặt bên (KEF) và (KEG) cùng vuông góc với đáy, tam giác EFG đều cạnh a và KE = 2a.",
+   "v12": {
+    "status": "REFUSED",
+    "code": "UNGROUNDED_VALUE",
+    "extraction_mode": "LOCAL_SLM_GROUNDED",
+    "parse": "LOCAL_PARSE_PARTIAL",
+    "route": "LOCAL_SLM_FALLBACK",
+    "fallback_reason": "UNPARSED_FACT_CANDIDATE",
+    "slm_grounding": "GROUNDED_AND_LOWERED",
+    "slm_accepted_ops": [
+     "perpendicular_line_plane",
+     "regular_polygon",
+     "segment_length"
+    ],
+    "first_failing_layer": "SOURCE_GATE:UNGROUNDED_VALUE"
+   },
+   "current": {
+    "status": "SERVED",
+    "code": null,
+    "extraction_mode": "LOCAL_DETERMINISTIC_PARSER",
+    "parse": "LOCAL_PARSE_COMPLETE",
+    "route": "LOCAL_DETERMINISTIC_HYBRID",
+    "fallback_reason": null,
+    "slm_grounding": null,
+    "slm_accepted_ops": [],
+    "first_failing_layer": "NONE",
+    "ms": 25,
+    "oracle": "MATHEMATICALLY_VALID"
+   },
+   "gold_intervention": {
+    "text": "Vẽ hình chóp K.EFG có đáy EFG là tam giác đều cạnh a, KE vuông góc với đáy và KE = 2a.",
+    "note": "two faces ⊥ base -> edge ⊥ base",
+    "status": "SERVED",
+    "code": null,
+    "extraction_mode": "LOCAL_DETERMINISTIC_PARSER",
+    "parse": "LOCAL_PARSE_COMPLETE",
+    "route": "LOCAL_DETERMINISTIC_HYBRID",
+    "fallback_reason": null,
+    "slm_grounding": null,
+    "slm_accepted_ops": [],
+    "first_failing_layer": "NONE",
+    "ms": 21,
+    "oracle": "MATHEMATICALLY_VALID",
+    "numeric": null
+   }
+  },
+  {
+   "case_id": "V031",
+   "text": "Cho hình chóp P.ABC biết rằng tam giác ABC vuông tại B, AB = 3, BC = 4; đường thẳng PB vuông góc với (ABC) và PB = 5. Không cần tính toán, hãy vẽ hình.",
+   "v12": {
+    "status": "REFUSED",
+    "code": "SOURCE_PREMISE_UNREAD",
+    "extraction_mode": "LOCAL_SLM_GROUNDED",
+    "parse": "LOCAL_PARSE_PARTIAL",
+    "route": "LOCAL_SLM_FALLBACK",
+    "fallback_reason": "SOURCE_GATE_MISMATCH:SOURCE_PREMISE_UNREAD:tiền đề 'Không cần tính toán, hãy vẽ hình.' chưa được lời gọi nào đọc — có thể đổi hình; không dùng mô hình cũ",
+    "slm_grounding": "GROUNDED_AND_LOWERED",
+    "slm_accepted_ops": [
+     "right_angle",
+     "segment_length",
+     "segment_length",
+     "perpendicular_line_plane",
+     "segment_length"
+    ],
+    "first_failing_layer": "SOURCE_GATE:SOURCE_PREMISE_UNREAD"
+   },
+   "current": {
+    "status": "SERVED",
+    "code": null,
+    "extraction_mode": "LOCAL_DETERMINISTIC_PARSER",
+    "parse": "LOCAL_PARSE_COMPLETE",
+    "route": "LOCAL_DETERMINISTIC_HYBRID",
+    "fallback_reason": null,
+    "slm_grounding": null,
+    "slm_accepted_ops": [],
+    "first_failing_layer": "NONE",
+    "ms": 27,
+    "oracle": "MATHEMATICALLY_VALID"
+   },
+   "gold_intervention": {
+    "text": "Vẽ hình chóp P.ABC có đáy ABC là tam giác vuông tại B, AB = 3, BC = 4, PB vuông góc với (ABC) và PB = 5.",
+    "note": "meta clause removed",
+    "status": "SERVED",
+    "code": null,
+    "extraction_mode": "LOCAL_DETERMINISTIC_PARSER",
+    "parse": "LOCAL_PARSE_COMPLETE",
+    "route": "LOCAL_DETERMINISTIC_HYBRID",
+    "fallback_reason": null,
+    "slm_grounding": null,
+    "slm_accepted_ops": [],
+    "first_failing_layer": "NONE",
+    "ms": 24,
+    "oracle": "MATHEMATICALLY_VALID",
+    "numeric": null
+   }
+  },
+  {
+   "case_id": "V032",
+   "text": "Biểu diễn hình lập phương KLMN.K'L'M'N' biết độ dài cạnh bằng 4; gọi I là trung điểm của đoạn LL' để hiển thị thêm điểm I.",
+   "v12": {
+    "status": "REFUSED",
+    "code": "SOURCE_PREMISE_UNREAD",
+    "extraction_mode": "LOCAL_SLM_GROUNDED",
+    "parse": "LOCAL_PARSE_PARTIAL",
+    "route": "LOCAL_SLM_FALLBACK",
+    "fallback_reason": "UNPARSED_FACT_CANDIDATE",
+    "slm_grounding": "GROUNDED_AND_LOWERED",
+    "slm_accepted_ops": [
+     "right_prism",
+     "cube_expansion"
+    ],
+    "first_failing_layer": "SOURCE_GATE:SOURCE_PREMISE_UNREAD"
+   },
+   "current": {
+    "status": "REFUSED",
+    "code": "SOURCE_PREMISE_UNREAD",
+    "extraction_mode": "LOCAL_SLM_GROUNDED",
+    "parse": "LOCAL_PARSE_PARTIAL",
+    "route": "LOCAL_SLM_FALLBACK",
+    "fallback_reason": "UNPARSED_FACT_CANDIDATE",
+    "slm_grounding": "GROUNDED_AND_LOWERED",
+    "slm_accepted_ops": [
+     "right_prism",
+     "cube_expansion"
+    ],
+    "first_failing_layer": "SOURCE_GATE:SOURCE_PREMISE_UNREAD",
+    "ms": 4808,
+    "oracle": "NOT_SERVED"
+   },
+   "gold_intervention": {
+    "text": "Vẽ hình lập phương KLMN.K'L'M'N' cạnh 4. Gọi I là trung điểm của LL'. Vẽ hình và điểm I.",
+    "note": "purpose tail removed",
+    "status": "SERVED",
+    "code": null,
+    "extraction_mode": "LOCAL_DETERMINISTIC_PARSER",
+    "parse": "LOCAL_PARSE_COMPLETE",
+    "route": "LOCAL_DETERMINISTIC_HYBRID",
+    "fallback_reason": null,
+    "slm_grounding": null,
+    "slm_accepted_ops": [],
+    "first_failing_layer": "NONE",
+    "ms": 34,
+    "oracle": "MATHEMATICALLY_VALID",
+    "numeric": null
+   }
+  },
+  {
+   "case_id": "V033",
+   "text": "Hãy dựng lăng trụ tam giác KLM.K'L'M' có cạnh bên KK' vuông góc với đáy, KK' = 4, đáy KLM là tam giác vuông cân tại K với KL = KM = 2.",
+   "v12": {
+    "status": "REFUSED",
+    "code": "SOURCE_PREMISE_UNREAD",
+    "extraction_mode": "LOCAL_SLM_GROUNDED",
+    "parse": "LOCAL_PARSE_PARTIAL",
+    "route": "LOCAL_SLM_FALLBACK",
+    "fallback_reason": "SCHEMA_VALIDATION_FAILED:EMPTY_SOLIDS:EMPTY_SOLIDS: TypedFactNextPayload requires at least one declared solid.",
+    "slm_grounding": "GROUNDED_AND_LOWERED",
+    "slm_accepted_ops": [
+     "perpendicular_line_plane",
+     "segment_length",
+     "equal_length",
+     "segment_length"
+    ],
+    "first_failing_layer": "EXTRACTION(parser+SLM): solid/relations not extracted"
+   },
+   "current": {
+    "status": "REFUSED",
+    "code": "SOURCE_PREMISE_UNREAD",
+    "extraction_mode": "LOCAL_SLM_GROUNDED",
+    "parse": "LOCAL_PARSE_PARTIAL",
+    "route": "LOCAL_SLM_FALLBACK",
+    "fallback_reason": "SCHEMA_VALIDATION_FAILED:EMPTY_SOLIDS:EMPTY_SOLIDS: TypedFactNextPayload requires at least one declared solid.",
+    "slm_grounding": "GROUNDED_AND_LOWERED",
+    "slm_accepted_ops": [
+     "perpendicular_line_plane",
+     "segment_length",
+     "equal_length",
+     "segment_length"
+    ],
+    "first_failing_layer": "EXTRACTION(parser+SLM): solid/relations not extracted",
+    "ms": 3103,
+    "oracle": "NOT_SERVED"
+   },
+   "gold_intervention": {
+    "text": "Dựng lăng trụ đứng KLM.K'L'M' có đáy KLM là tam giác vuông cân tại K, KL = KM = 2 và KK' = 4.",
+    "note": "reordered",
+    "status": "SERVED",
+    "code": null,
+    "extraction_mode": "LOCAL_DETERMINISTIC_PARSER",
+    "parse": "LOCAL_PARSE_COMPLETE",
+    "route": "LOCAL_DETERMINISTIC_HYBRID",
+    "fallback_reason": null,
+    "slm_grounding": null,
+    "slm_accepted_ops": [],
+    "first_failing_layer": "NONE",
+    "ms": 42,
+    "oracle": "MATHEMATICALLY_VALID",
+    "numeric": null
+   }
+  },
+  {
+   "case_id": "V040",
+   "text": "Hay ve hinh chop H.MNPQ biet hai mat phang (HMN) va (HMQ) cung vuong goc voi mat day (MNPQ), MNPQ la hinh vuong canh 2 va HM = 4.",
+   "v12": {
+    "status": "REFUSED",
+    "code": "REPLAY_SOURCE_IDENTITY_MISMATCH",
+    "extraction_mode": "LOCAL_SLM_GROUNDED",
+    "parse": "LOCAL_PARSE_PARTIAL",
+    "route": "LOCAL_SLM_FALLBACK",
+    "fallback_reason": "UNPARSED_FACT_CANDIDATE",
+    "slm_grounding": "GROUNDED_AND_LOWERED",
+    "slm_accepted_ops": [
+     "perpendicular_line_plane",
+     "regular_polygon",
+     "segment_length"
+    ],
+    "first_failing_layer": "SLM_QUOTE_MAPPING:REPLAY_SOURCE_IDENTITY_MISMATCH"
+   },
+   "current": {
+    "status": "SERVED",
+    "code": null,
+    "extraction_mode": "LOCAL_DETERMINISTIC_PARSER",
+    "parse": "LOCAL_PARSE_COMPLETE",
+    "route": "LOCAL_DETERMINISTIC_HYBRID",
+    "fallback_reason": null,
+    "slm_grounding": null,
+    "slm_accepted_ops": [],
+    "first_failing_layer": "NONE",
+    "ms": 57,
+    "oracle": "MATHEMATICALLY_VALID"
+   },
+   "gold_intervention": {
+    "text": "Vẽ hình chóp H.MNPQ có đáy MNPQ là hình vuông cạnh 2, HM vuông góc với đáy và HM = 4.",
+    "note": "diacritics + faces ⊥ base",
+    "status": "SERVED",
+    "code": null,
+    "extraction_mode": "LOCAL_DETERMINISTIC_PARSER",
+    "parse": "LOCAL_PARSE_COMPLETE",
+    "route": "LOCAL_DETERMINISTIC_HYBRID",
+    "fallback_reason": null,
+    "slm_grounding": null,
+    "slm_accepted_ops": [],
+    "first_failing_layer": "NONE",
+    "ms": 55,
+    "oracle": "MATHEMATICALLY_VALID",
+    "numeric": null
+   }
+  },
+  {
+   "case_id": "V047",
+   "text": "Biểu diễn tứ diện K.EFG với KE, KF, KG đôi một vuông góc, KE = 2, KF = 2, KG = 1 và tính thể tích khối tứ diện K.EFG.",
+   "v12": {
+    "status": "REFUSED",
+    "code": "AMBIGUOUS_FACT",
+    "extraction_mode": "LOCAL_SLM_GROUNDING_REJECTED",
+    "parse": "LOCAL_PARSE_PARTIAL",
+    "route": "LOCAL_SLM_FALLBACK",
+    "fallback_reason": "SCHEMA_VALIDATION_FAILED:EMPTY_SOLIDS:EMPTY_SOLIDS: TypedFactNextPayload requires at least one declared solid.",
+    "slm_grounding": "SLM_REPORTED_UNRESOLVED",
+    "slm_accepted_ops": [],
+    "first_failing_layer": "EXTRACTION(parser+SLM): solid/relations not extracted"
+   },
+   "current": {
+    "status": "SERVED",
+    "code": null,
+    "extraction_mode": "LOCAL_DETERMINISTIC_PARSER",
+    "parse": "LOCAL_PARSE_COMPLETE",
+    "route": "LOCAL_DETERMINISTIC_HYBRID",
+    "fallback_reason": null,
+    "slm_grounding": null,
+    "slm_accepted_ops": [],
+    "first_failing_layer": "NONE",
+    "ms": 65,
+    "oracle": "MATHEMATICALLY_VALID"
+   },
+   "gold_intervention": {
+    "text": "Cho tứ diện KEFG có KE, KF, KG đôi một vuông góc, KE = 2, KF = 2, KG = 1. Vẽ hình và tính thể tích khối tứ diện KEFG.",
+    "note": "K.EFG -> KEFG",
+    "status": "SERVED",
+    "code": null,
+    "extraction_mode": "LOCAL_DETERMINISTIC_PARSER",
+    "parse": "LOCAL_PARSE_COMPLETE",
+    "route": "LOCAL_DETERMINISTIC_HYBRID",
+    "fallback_reason": null,
+    "slm_grounding": null,
+    "slm_accepted_ops": [],
+    "first_failing_layer": "NONE",
+    "ms": 92,
+    "oracle": "MATHEMATICALLY_VALID",
+    "numeric": "CORRECT"
+   }
+  },
+  {
+   "case_id": "V062",
+   "text": "Biểu diễn hình chóp K.EFGH biết EFGH là hình thoi cạnh 2, góc FEH = 60°, đường thẳng KE vuông góc với đáy, KE = 2 và tính thể tích khối chóp K.EFGH.",
+   "v12": {
+    "status": "REFUSED",
+    "code": "QUESTION_CONTEXT_UNSUPPORTED",
+    "extraction_mode": "LOCAL_SLM_GROUNDED",
+    "parse": "LOCAL_PARSE_PARTIAL",
+    "route": "LOCAL_SLM_FALLBACK",
+    "fallback_reason": "UNPARSED_FACT_CANDIDATE",
+    "slm_grounding": "GROUNDED_AND_LOWERED",
+    "slm_accepted_ops": [
+     "rhombus",
+     "vertex_angle",
+     "perpendicular_line_plane",
+     "segment_length",
+     "goal:vol"
+    ],
+    "first_failing_layer": "SOURCE_GATE:QUESTION_CONTEXT_UNSUPPORTED"
+   },
+   "current": {
+    "status": "SERVED",
+    "code": null,
+    "extraction_mode": "LOCAL_DETERMINISTIC_PARSER",
+    "parse": "LOCAL_PARSE_COMPLETE",
+    "route": "LOCAL_DETERMINISTIC_HYBRID",
+    "fallback_reason": null,
+    "slm_grounding": null,
+    "slm_accepted_ops": [],
+    "first_failing_layer": "NONE",
+    "ms": 92,
+    "oracle": "MATHEMATICALLY_VALID"
+   },
+   "gold_intervention": {
+    "text": "Vẽ hình chóp K.EFGH có đáy EFGH là hình thoi cạnh 2, góc FEH = 60°, KE vuông góc với đáy và KE = 2. Tính thể tích khối chóp K.EFGH.",
+    "note": "'Biểu diễn ... biết' -> 'Vẽ ... có'",
+    "status": "SERVED",
+    "code": null,
+    "extraction_mode": "LOCAL_DETERMINISTIC_PARSER",
+    "parse": "LOCAL_PARSE_COMPLETE",
+    "route": "LOCAL_DETERMINISTIC_HYBRID",
+    "fallback_reason": null,
+    "slm_grounding": null,
+    "slm_accepted_ops": [],
+    "first_failing_layer": "NONE",
+    "ms": 48,
+    "oracle": "MATHEMATICALLY_VALID",
+    "numeric": "CORRECT"
+   }
+  },
+  {
+   "case_id": "V067",
+   "text": "Cho hình chóp K.EFGH có đáy EFGH là hình vuông cạnh 2, đường cao KE = 4. Biểu diễn đường cao KE và hình chóp K.EFGH rồi tính thể tích khối chóp.",
+   "v12": {
+    "status": "REFUSED",
+    "code": "SOURCE_PREMISE_UNREAD",
+    "extraction_mode": "LOCAL_SLM_GROUNDED",
+    "parse": "LOCAL_PARSE_PARTIAL",
+    "route": "LOCAL_SLM_FALLBACK",
+    "fallback_reason": "SOURCE_GATE_MISMATCH:QUESTION_CONTEXT_UNSUPPORTED:phần dữ kiện/đổi giả thiết trong câu hỏi chưa được đọc trọn; không dùng mô hình cũ",
+    "slm_grounding": "GROUNDED_AND_LOWERED",
+    "slm_accepted_ops": [
+     "regular_polygon",
+     "segment_length",
+     "goal:vol"
+    ],
+    "first_failing_layer": "SOURCE_GATE:SOURCE_PREMISE_UNREAD"
+   },
+   "current": {
+    "status": "SERVED",
+    "code": null,
+    "extraction_mode": "LOCAL_DETERMINISTIC_PARSER",
+    "parse": "LOCAL_PARSE_COMPLETE",
+    "route": "LOCAL_DETERMINISTIC_HYBRID",
+    "fallback_reason": null,
+    "slm_grounding": null,
+    "slm_accepted_ops": [],
+    "first_failing_layer": "NONE",
+    "ms": 48,
+    "oracle": "MATHEMATICALLY_VALID"
+   },
+   "gold_intervention": {
+    "text": "Vẽ hình chóp K.EFGH có đáy EFGH là hình vuông cạnh 2, KE vuông góc với đáy và KE = 4. Tính thể tích khối chóp K.EFGH.",
+    "note": "'đường cao KE' -> 'KE ⊥ đáy'",
+    "status": "SERVED",
+    "code": null,
+    "extraction_mode": "LOCAL_DETERMINISTIC_PARSER",
+    "parse": "LOCAL_PARSE_COMPLETE",
+    "route": "LOCAL_DETERMINISTIC_HYBRID",
+    "fallback_reason": null,
+    "slm_grounding": null,
+    "slm_accepted_ops": [],
+    "first_failing_layer": "NONE",
+    "ms": 43,
+    "oracle": "MATHEMATICALLY_VALID",
+    "numeric": "CORRECT"
+   }
+  },
+  {
+   "case_id": "V070",
+   "text": "Dựng hình chóp tứ giác đều H.MNPQ có cạnh đáy 4 và chiều cao bằng 4; tính độ dài cạnh bên HM và thể tích khối chóp.",
+   "v12": {
+    "status": "REFUSED",
+    "code": "UNGROUNDED_VALUE",
+    "extraction_mode": "LOCAL_SLM_GROUNDED",
+    "parse": "LOCAL_PARSE_PARTIAL",
+    "route": "LOCAL_SLM_FALLBACK",
+    "fallback_reason": "UNPARSED_GOAL_CANDIDATE",
+    "slm_grounding": "GROUNDED_AND_LOWERED",
+    "slm_accepted_ops": [
+     "regular_pyramid",
+     "regular_polygon",
+     "segment_length",
+     "goal:len",
+     "goal:vol"
+    ],
+    "first_failing_layer": "SOURCE_GATE:UNGROUNDED_VALUE"
+   },
+   "current": {
+    "status": "SERVED",
+    "code": null,
+    "extraction_mode": "LOCAL_DETERMINISTIC_PARSER",
+    "parse": "LOCAL_PARSE_COMPLETE",
+    "route": "LOCAL_DETERMINISTIC_HYBRID",
+    "fallback_reason": null,
+    "slm_grounding": null,
+    "slm_accepted_ops": [],
+    "first_failing_layer": "NONE",
+    "ms": 130,
+    "oracle": "MATHEMATICALLY_VALID"
+   },
+   "gold_intervention": {
+    "text": "Vẽ hình chóp tứ giác đều H.MNPQ có cạnh đáy bằng 4 và chiều cao bằng 4. Tính độ dài cạnh bên HM và thể tích khối chóp H.MNPQ.",
+    "note": "reworded",
+    "status": "SERVED",
+    "code": null,
+    "extraction_mode": "LOCAL_DETERMINISTIC_PARSER",
+    "parse": "LOCAL_PARSE_COMPLETE",
+    "route": "LOCAL_DETERMINISTIC_HYBRID",
+    "fallback_reason": null,
+    "slm_grounding": null,
+    "slm_accepted_ops": [],
+    "first_failing_layer": "NONE",
+    "ms": 92,
+    "oracle": "MATHEMATICALLY_VALID",
+    "numeric": "CORRECT"
+   }
+  },
+  {
+   "case_id": "V072",
+   "text": "Mô phỏng lăng trụ đứng MNP.M'N'P' có đáy là tam giác đều cạnh 2, cạnh bên MM' = 2√3 và tính diện tích tam giác MNP cùng thể tích khối lăng trụ.",
+   "v12": {
+    "status": "REFUSED",
+    "code": "BRIDGE_UNSUPPORTED_MEASUREMENT",
+    "extraction_mode": "LOCAL_DETERMINISTIC_PARSER",
+    "parse": "LOCAL_PARSE_COMPLETE",
+    "route": "LOCAL_DETERMINISTIC_HYBRID",
+    "fallback_reason": null,
+    "slm_grounding": null,
+    "slm_accepted_ops": [],
+    "first_failing_layer": "BRIDGE:BRIDGE_UNSUPPORTED_MEASUREMENT"
+   },
+   "current": {
+    "status": "SERVED",
+    "code": null,
+    "extraction_mode": "LOCAL_DETERMINISTIC_PARSER",
+    "parse": "LOCAL_PARSE_COMPLETE",
+    "route": "LOCAL_DETERMINISTIC_HYBRID",
+    "fallback_reason": null,
+    "slm_grounding": null,
+    "slm_accepted_ops": [],
+    "first_failing_layer": "NONE",
+    "ms": 153,
+    "oracle": "MATHEMATICALLY_VALID"
+   },
+   "gold_intervention": {
+    "text": "Vẽ lăng trụ đứng MNP.M'N'P' có đáy là tam giác đều cạnh 2 và MM' = 2√3. Tính diện tích tam giác MNP và thể tích khối lăng trụ.",
+    "note": "reworded; area of a base face still asked",
+    "status": "SERVED",
+    "code": null,
+    "extraction_mode": "LOCAL_DETERMINISTIC_PARSER",
+    "parse": "LOCAL_PARSE_COMPLETE",
+    "route": "LOCAL_DETERMINISTIC_HYBRID",
+    "fallback_reason": null,
+    "slm_grounding": null,
+    "slm_accepted_ops": [],
+    "first_failing_layer": "NONE",
+    "ms": 71,
+    "oracle": "MATHEMATICALLY_VALID",
+    "numeric": "MISMATCH"
+   }
+  },
+  {
+   "case_id": "V088",
+   "text": "Cho hình chóp H.MNPQ biết hai mặt phẳng (HMN) và (HMQ) cùng vuông góc với đáy, MNPQ là hình vuông cạnh 3 và HM = 3. Tính góc giữa mặt phẳng (HPQ) và mặt phẳng đáy.",
+   "v12": {
+    "status": "REFUSED",
+    "code": "UNGROUNDED_VALUE",
+    "extraction_mode": "LOCAL_SLM_GROUNDED",
+    "parse": "LOCAL_PARSE_PARTIAL",
+    "route": "LOCAL_SLM_FALLBACK",
+    "fallback_reason": "UNPARSED_FACT_CANDIDATE",
+    "slm_grounding": "GROUNDED_AND_LOWERED",
+    "slm_accepted_ops": [
+     "perpendicular_line_plane",
+     "regular_polygon",
+     "segment_length",
+     "goal:ang_pp"
+    ],
+    "first_failing_layer": "SOURCE_GATE:UNGROUNDED_VALUE"
+   },
+   "current": {
+    "status": "SERVED",
+    "code": null,
+    "extraction_mode": "LOCAL_DETERMINISTIC_PARSER",
+    "parse": "LOCAL_PARSE_COMPLETE",
+    "route": "LOCAL_DETERMINISTIC_HYBRID",
+    "fallback_reason": null,
+    "slm_grounding": null,
+    "slm_accepted_ops": [],
+    "first_failing_layer": "NONE",
+    "ms": 93,
+    "oracle": "MATHEMATICALLY_VALID"
+   },
+   "gold_intervention": {
+    "text": "Cho hình chóp H.MNPQ có đáy MNPQ là hình vuông cạnh 3, HM vuông góc với đáy và HM = 3. Tính góc giữa mặt phẳng (HPQ) và mặt phẳng đáy.",
+    "note": "faces ⊥ base -> edge ⊥ base",
+    "status": "SERVED",
+    "code": null,
+    "extraction_mode": "LOCAL_DETERMINISTIC_PARSER",
+    "parse": "LOCAL_PARSE_COMPLETE",
+    "route": "LOCAL_DETERMINISTIC_HYBRID",
+    "fallback_reason": null,
+    "slm_grounding": null,
+    "slm_accepted_ops": [],
+    "first_failing_layer": "NONE",
+    "ms": 53,
+    "oracle": "MATHEMATICALLY_VALID",
+    "numeric": "CORRECT"
+   }
+  },
+  {
+   "case_id": "V098",
+   "text": "Cho tứ diện K.EFG có KE, EF, EG đôi một vuông góc, KE = 3, EF = 4, EG = 5. Tính thể tích khối tứ diện K.EFG.",
+   "v12": {
+    "status": "REFUSED",
+    "code": "AMBIGUOUS_FACT",
+    "extraction_mode": "LOCAL_SLM_GROUNDING_REJECTED",
+    "parse": "LOCAL_PARSE_PARTIAL",
+    "route": "LOCAL_SLM_FALLBACK",
+    "fallback_reason": "SCHEMA_VALIDATION_FAILED:EMPTY_SOLIDS:EMPTY_SOLIDS: TypedFactNextPayload requires at least one declared solid.",
+    "slm_grounding": "SLM_REPORTED_UNRESOLVED",
+    "slm_accepted_ops": [],
+    "first_failing_layer": "EXTRACTION(parser+SLM): solid/relations not extracted"
+   },
+   "current": {
+    "status": "SERVED",
+    "code": null,
+    "extraction_mode": "LOCAL_DETERMINISTIC_PARSER",
+    "parse": "LOCAL_PARSE_COMPLETE",
+    "route": "LOCAL_DETERMINISTIC_HYBRID",
+    "fallback_reason": null,
+    "slm_grounding": null,
+    "slm_accepted_ops": [],
+    "first_failing_layer": "NONE",
+    "ms": 42,
+    "oracle": "MATHEMATICALLY_VALID"
+   },
+   "gold_intervention": {
+    "text": "Cho tứ diện EKFG có EK, EF, EG đôi một vuông góc, EK = 3, EF = 4, EG = 5. Tính thể tích khối tứ diện EKFG.",
+    "note": "vertex E named first",
+    "status": "SERVED",
+    "code": null,
+    "extraction_mode": "LOCAL_DETERMINISTIC_PARSER",
+    "parse": "LOCAL_PARSE_COMPLETE",
+    "route": "LOCAL_DETERMINISTIC_HYBRID",
+    "fallback_reason": null,
+    "slm_grounding": null,
+    "slm_accepted_ops": [],
+    "first_failing_layer": "NONE",
+    "ms": 50,
+    "oracle": "MATHEMATICALLY_VALID",
+    "numeric": "CORRECT"
+   }
+  },
+  {
+   "case_id": "V104",
+   "text": "Cho tu dien O.MNP co OM, ON, OP doi mot vuong goc voi OM = 3, ON = 4, OP = 6. Tinh the tich khoi tu dien O.MNP.",
+   "v12": {
+    "status": "REFUSED",
+    "code": "AMBIGUOUS_FACT",
+    "extraction_mode": "LOCAL_SLM_GROUNDING_REJECTED",
+    "parse": "LOCAL_PARSE_PARTIAL",
+    "route": "LOCAL_SLM_FALLBACK",
+    "fallback_reason": "SCHEMA_VALIDATION_FAILED:EMPTY_SOLIDS:EMPTY_SOLIDS: TypedFactNextPayload requires at least one declared solid.",
+    "slm_grounding": "SLM_REPORTED_UNRESOLVED",
+    "slm_accepted_ops": [],
+    "first_failing_layer": "EXTRACTION(parser+SLM): solid/relations not extracted"
+   },
+   "current": {
+    "status": "SERVED",
+    "code": null,
+    "extraction_mode": "LOCAL_DETERMINISTIC_PARSER",
+    "parse": "LOCAL_PARSE_COMPLETE",
+    "route": "LOCAL_DETERMINISTIC_HYBRID",
+    "fallback_reason": null,
+    "slm_grounding": null,
+    "slm_accepted_ops": [],
+    "first_failing_layer": "NONE",
+    "ms": 93,
+    "oracle": "MATHEMATICALLY_VALID"
+   },
+   "gold_intervention": {
+    "text": "Cho tứ diện OMNP có OM, ON, OP đôi một vuông góc, OM = 3, ON = 4, OP = 6. Tính thể tích khối tứ diện OMNP.",
+    "note": "diacritics, O.MNP -> OMNP",
+    "status": "SERVED",
+    "code": null,
+    "extraction_mode": "LOCAL_DETERMINISTIC_PARSER",
+    "parse": "LOCAL_PARSE_COMPLETE",
+    "route": "LOCAL_DETERMINISTIC_HYBRID",
+    "fallback_reason": null,
+    "slm_grounding": null,
+    "slm_accepted_ops": [],
+    "first_failing_layer": "NONE",
+    "ms": 86,
+    "oracle": "MATHEMATICALLY_VALID",
+    "numeric": "CORRECT"
+   }
+  }
+ ]
+}

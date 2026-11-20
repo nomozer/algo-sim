@@ -1,0 +1,103 @@
+"""/13 Model 1 residuals: phrase families that made the /12 local route refuse a fully specified problem.
+
+Diagnosis (run `axo-hybrid-local-model1-finalization-test-consolidation`, MODEL1_RESIDUAL_FAILURE_AUDIT.json): for 15 of
+the 17 incomplete /12 cases the same geometry in a canonical phrasing is served and oracle-valid, so the first failing
+layer is reading the original phrasing (deterministic parser / Source Gate), not planning or the kernel. The cases below
+are NEW sentences of those families (different labels and values from /12 and from the /13 holdout); each must be read
+by the deterministic parser alone (no SLM in tests) and served with the exact answer. The Source Gate is not loosened:
+negated and conditional premises stay refused (last tests).
+"""
+from __future__ import annotations
+
+import math
+import sys
+from pathlib import Path
+
+import pytest
+
+ROOT = Path(__file__).resolve().parents[3]
+sys.path.insert(0, str(ROOT / "docs/evaluation/geometry/harness/live-acceptance"))
+import scene_oracle  # noqa: E402
+
+from app.ai.adaptive_input_router import route_text_input_local_slm  # noqa: E402
+from app.ai.local_geometry_parser import LOCAL_PARSE_COMPLETE, parse_geometry_problem_locally  # noqa: E402
+from app.ai.local_slm_extractor import V9_CLOSURE_MODE  # noqa: E402
+
+R3 = math.sqrt(3)
+
+CASES = [
+    # family: dotted tetrahedron notation "tứ diện X.YZT" (/12 V027, V047, V104)
+    ("tetra_dot", "Dựng tứ diện S.ABC có SA, SB, SC đôi một vuông góc và SA = 1, SB = 2, SC = 3.", None),
+    ("tetra_dot_query", "Cho tứ diện D.EFG với DE, DF, DG đôi một vuông góc, DE = DF = DG = 2. Tính thể tích khối tứ diện D.EFG.", [4 / 3]),
+    # family: three mutually perpendicular edges meeting at a vertex that is not the first letter (/12 V098)
+    ("trirect_base_corner", "Cho tứ diện A.BCD có AB, BC, BD đôi một vuông góc, AB = 3, BC = 1, BD = 2. Tính thể tích khối tứ diện.", [1.0]),
+    # family: "các cạnh … sao cho …" (/12 V027)
+    ("edges_such_that", "Vẽ tứ diện OIJK có các cạnh OI, OJ, OK đôi một vuông góc sao cho OI = 1, OJ = 1, OK = 2.", None),
+    # family: two lateral faces through one edge, both ⊥ the base ⇒ that edge ⊥ the base (/12 V030, V040, V088)
+    ("two_faces_perp_square", "Vẽ hình chóp S.ABCD có đáy ABCD là hình vuông cạnh 3, hai mặt phẳng (SAB) và (SAD) cùng vuông góc với (ABCD) và SA = 1.", None),
+    ("two_faces_perp_tri", "Cho hình chóp D.ABC có hai mặt bên (DAB) và (DAC) cùng vuông góc với đáy, tam giác ABC đều cạnh 2, DA = 1. Tính thể tích khối chóp.", [R3 / 3]),
+    ("two_faces_perp_ascii", "Ve hinh chop S.ABCD biet hai mat phang (SAB) va (SAD) cung vuong goc voi mat day (ABCD), ABCD la hinh vuong canh 1 va SA = 3.", None),
+    # family: meta clauses that only say "draw, do not compute" (/12 V006, V031)
+    ("meta_prefix", "Chỉ cần vẽ hình, không tính toán gì: hình chóp S.ABCD có đáy là hình vuông cạnh 1, SB vuông góc với đáy và SB = 1.", None),
+    ("meta_suffix", "Cho hình chóp S.ABC có đáy là tam giác vuông tại A, AB = 1, AC = 2, SA vuông góc với (ABC), SA = 2. Không cần tính toán, hãy vẽ hình.", None),
+    # family: purpose tail "để hiển thị thêm điểm …" (/12 V032)
+    ("purpose_tail", "Vẽ hình lập phương ABCD.A'B'C'D' cạnh 2; gọi M là trung điểm của đoạn AA' để hiển thị thêm điểm M.", None),
+    # family: "với" introducing data, not a condition (/12 V008, V033)
+    ("voi_data", "Vẽ lăng trụ đứng ABC.A'B'C' có đáy ABC là tam giác vuông tại A với AB = 1, AC = 3 và AA' = 2.", None),
+    # family: "đường cao SA = …" names the altitude (/12 V067)
+    ("altitude_named", "Cho hình chóp S.ABCD có đáy ABCD là hình vuông cạnh 1, đường cao SA = 2. Vẽ hình chóp rồi tính thể tích khối chóp.", [2 / 3]),
+    # family: "Biểu diễn … biết … và tính …" (/12 V062)
+    ("represent_knowing", "Biểu diễn hình chóp S.ABCD biết ABCD là hình thoi cạnh 1, góc BAD = 60°, SA vuông góc với đáy, SA = 1 và tính thể tích khối chóp S.ABCD.", [R3 / 6]),
+    # family: "Em muốn xem … có đáy … với …" (/12 V008)
+    ("em_muon_xem_voi", "Em muốn xem hình lăng trụ đứng ABC.A'B'C' có đáy ABC là tam giác vuông tại A với AB = 2, AC = 3 và AA' = 4.", None),
+    # family: "Dựng hình tứ diện O.ABC …" (/12 V027)
+    ("dung_hinh_tu_dien_dot", "Dựng hình tứ diện O.ABC có các cạnh OA, OB, OC đôi một vuông góc sao cho OA = 1, OB = 2, OC = 3.", None),
+    # family: rhombus side-diagonal angle (/12 V029)
+    ("rhombus_side_diag_angle", "Vẽ hình chóp P.EFGH biết EFGH là hình thoi cạnh 2, góc FEG bằng 60°, PE vuông góc với (EFGH) và PE = 2.", None),
+    # family: "Biểu diễn đường cao XY và hình chóp … rồi tính …" (/12 V067)
+    ("sim_alt_before_solid", "Cho hình chóp P.EFGH có đáy EFGH là hình vuông cạnh 3, đường cao PE = 2. Biểu diễn đường cao PE và hình chóp P.EFGH rồi tính thể tích khối chóp.", [6.0]),
+    # family: "có cạnh đáy 2 … tính độ dài cạnh bên XY và thể tích …" (/12 V070)
+    ("reg_pyr_compound_lat_vol", "Dựng hình chóp tứ giác đều P.EFGH có cạnh đáy 2 và chiều cao bằng 2; tính độ dài cạnh bên PE và thể tích khối chóp.", [math.sqrt(6), 8 / 3]),
+    # family: "tính diện tích tam giác … cùng thể tích khối lăng trụ" (/12 V072)
+    ("poly_area_cung_volume", "Mô phỏng lăng trụ đứng DEF.D'E'F' có đáy là tam giác đều cạnh 4, cạnh bên DD' = √3 và tính diện tích tam giác DEF cùng thể tích khối lăng trụ.", [4 * R3, 12.0]),
+]
+
+
+@pytest.mark.parametrize("name,text,gold", CASES, ids=[c[0] for c in CASES])
+def test_residual_family_is_read_by_the_parser_and_served_exactly(name, text, gold, monkeypatch):
+    monkeypatch.setenv("ALLOW_LIVE_AI", "0")
+    monkeypatch.delenv("GEMINI_API_KEY", raising=False)
+    lp = parse_geometry_problem_locally(text, use_cache=False)
+    assert lp.status == LOCAL_PARSE_COMPLETE, (lp.status, lp.reason_code, lp.fallback_reason)
+    out = route_text_input_local_slm(text, closure_mode=V9_CLOSURE_MODE, normalizer_version="v3", runtime=None,
+                                     allow_download=False, use_cache=False)
+    rd = out.response["route_d"]
+    assert out.status == "SERVED", (rd.get("refusal"), rd.get("reason_code"))
+    assert rd.get("extraction_mode") == "LOCAL_DETERMINISTIC_PARSER"
+    if gold is not None:
+        num = scene_oracle.numeric(rd.get("answers"), rd.get("answer_exact"), gold)
+        assert num["status"] == "CORRECT", num
+
+
+@pytest.mark.parametrize("text", [
+    "Cho hình chóp S.ABCD có đáy là hình vuông cạnh 2, hai mặt phẳng (SAB) và (SAD) không cùng vuông góc với đáy, SA = 1. Vẽ hình.",
+    "Nếu hai mặt phẳng (SAB) và (SAD) cùng vuông góc với đáy thì hãy vẽ hình chóp S.ABCD có đáy là hình vuông cạnh 2 và SA = 1.",
+    "Không cần vẽ hình chóp S.ABCD có đáy là hình vuông cạnh 2, SA vuông góc với đáy và SA = 1.",
+])
+def test_negated_or_conditional_premises_stay_refused(text, monkeypatch):
+    monkeypatch.setenv("ALLOW_LIVE_AI", "0")
+    lp = parse_geometry_problem_locally(text, use_cache=False)
+    assert lp.status != LOCAL_PARSE_COMPLETE, (text, lp.status)
+
+
+@pytest.mark.parametrize("text", [
+    "Vẽ hình chóp P.EFGH có đáy EFGH là hình thoi cạnh 2, góc FEG bằng 90°, PE vuông góc với đáy và PE = 2.",
+    "Vẽ hình chóp P.EFGH có đáy EFGH là hình thoi cạnh 2, góc FEG bằng 120°, PE vuông góc với đáy và PE = 2.",
+])
+def test_invalid_rhombus_side_diagonal_angle_is_refused(text, monkeypatch):
+    monkeypatch.setenv("ALLOW_LIVE_AI", "0")
+    monkeypatch.delenv("GEMINI_API_KEY", raising=False)
+    out = route_text_input_local_slm(text, closure_mode=V9_CLOSURE_MODE, normalizer_version="v3", runtime=None,
+                                     allow_download=False, use_cache=False)
+    assert out.status == "REFUSED"
+    assert (out.response["route_d"].get("refusal") or {}).get("code") == "INCONSISTENT_FACTS"
