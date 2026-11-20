@@ -64,7 +64,7 @@ def test_tap_primitive_khong_troi(manifest):
     assert manifest["visual_primitive_set"]["hash"] == _sha(
         json.dumps(hien_tai, ensure_ascii=False)
     )
-    assert "graph_view" in manifest["visual_primitive_set"]["primitives"]
+    assert manifest["visual_primitive_set"]["primitives"] == []      # (/13) bản cũ đòi `graph_view` — đã gỡ
 
 
 def test_schema_khong_troi(manifest):
