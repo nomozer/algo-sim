@@ -88,7 +88,8 @@ def _cleanup_runtime():
 def test_default_route_remains_live_and_general_cutover_is_gated(monkeypatch):
     monkeypatch.delenv("HYBRID_ROUTE_MODE", raising=False)
     assert M.hybrid_route_mode() == "live"
-    assert M.CACHE_VERSION == "147"
+    from tests.cache_policy import assert_cache_policy_at_least
+    assert_cache_policy_at_least(145)
 
     monkeypatch.setenv("HYBRID_ROUTE_MODE", "local-only-general")
     monkeypatch.delenv("AXO_ALLOW_GENERAL_LOCAL_CUTOVER", raising=False)

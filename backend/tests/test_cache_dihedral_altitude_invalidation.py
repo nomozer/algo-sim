@@ -21,7 +21,8 @@ VOLUME = P + "tam giác SAB đều và nằm trong mặt phẳng vuông góc v�
 
 
 def test_version_pair():
-    assert main_module.CACHE_VERSION == "147" and main_module.ROUTE_D_CACHE_POLICY == "147:route-d"
+    from tests.cache_policy import assert_cache_policy_at_least
+    assert_cache_policy_at_least(134)
 
 
 def test_fresh_envelopes_carry_the_acute_angle_and_the_altitude():

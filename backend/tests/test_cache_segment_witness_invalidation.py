@@ -30,8 +30,8 @@ LEGACY = json.loads(
 
 
 def test_cache_version_bump_covers_hybrid_cutover():
-    assert main_module.CACHE_VERSION == "147"
-    assert main_module.ROUTE_D_CACHE_POLICY == "147:route-d"
+    from tests.cache_policy import assert_cache_policy_at_least
+    assert_cache_policy_at_least(127)
     assert _policy_identity(main_module.route_policy_snapshot()) == main_module.ROUTE_D_CACHE_POLICY
     assert LEGACY["written_by_cache_version"] == "126"
 

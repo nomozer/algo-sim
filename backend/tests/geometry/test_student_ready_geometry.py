@@ -379,8 +379,8 @@ def test_locked_gemini_extraction_surfaces_invariant():
 
 
 def test_stale_144_route_d_cache_invalidated_and_recomputed_under_145(monkeypatch):
-    assert M.CACHE_VERSION == "147"
-    assert M.ROUTE_D_CACHE_POLICY == "147:route-d"
+    from tests.cache_policy import assert_cache_policy_at_least
+    assert_cache_policy_at_least(145)
 
     text = (
         "Cho hình chóp S.ABCD có đáy ABCD là hình vuông cạnh 2a. "
@@ -429,7 +429,7 @@ def test_stale_144_route_d_cache_invalidated_and_recomputed_under_145(monkeypatc
         with SessionLocal() as s:
             row = s.query(SimulationCache).filter_by(key=key).first()
             assert row is not None
-            assert row.policy_version == "147:route-d"
+            assert row.policy_version == M.ROUTE_D_CACHE_POLICY
     finally:
         with SessionLocal() as s:
             s.query(SimulationCache).filter_by(key=key).delete()

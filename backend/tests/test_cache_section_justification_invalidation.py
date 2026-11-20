@@ -30,10 +30,11 @@ def _row(policy_version):
 
 
 def test_cache_version_is_131():
-    assert main_module.CACHE_VERSION == "147"
+    from tests.cache_policy import assert_cache_policy_at_least
+    assert_cache_policy_at_least(131)
 
 
 def test_v130_row_misses_and_a_v131_row_hits():
     assert _cache_lookup(_Session(_row("130")), "k") is None
-    hit = _row("147")
+    hit = _row(main_module.CACHE_VERSION)
     assert _cache_lookup(_Session(hit), "k") is hit

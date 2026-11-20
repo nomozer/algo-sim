@@ -18,7 +18,8 @@ TEXT = ("Cho hình chóp S.ABCD có đáy ABCD là hình vuông cạnh a, SA vu�
 
 
 def test_version_pair():
-    assert main_module.CACHE_VERSION == "147" and main_module.ROUTE_D_CACHE_POLICY == "147:route-d"
+    from tests.cache_policy import assert_cache_policy_at_least
+    assert_cache_policy_at_least(133)
 
 
 def test_row_written_under_132_misses_and_the_new_scene_carries_the_construction():

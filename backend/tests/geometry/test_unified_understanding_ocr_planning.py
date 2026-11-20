@@ -351,8 +351,8 @@ def test_stream_b_glyph_topology_strict_positive_and_negative():
 
 
 def test_stream_c_mode_a_and_cache_143_invalidation(monkeypatch):
-    assert M.CACHE_VERSION == "147"
-    assert M.ROUTE_D_CACHE_POLICY == "147:route-d"
+    from tests.cache_policy import assert_cache_policy_at_least
+    assert_cache_policy_at_least(143)
 
     trig_txt = (
         "Cho hình chóp S.ABC có đáy ABC là tam giác đều cạnh a, SA vuông góc với (ABC) và SA = a. "

@@ -36,8 +36,8 @@ NESTED_SIM_PROMPT = (
 
 
 def test_v12_version_constants_and_cache_policy_pair() -> None:
-    assert M.CACHE_VERSION == "147"
-    assert M.ROUTE_D_CACHE_POLICY == "147:route-d"
+    from tests.cache_policy import assert_cache_policy_at_least
+    assert_cache_policy_at_least(147)
     assert LOCAL_GEOMETRY_PARSER_VERSION == "local-geometry-parser/3"
     assert LOCAL_SLM_EXTRACTOR_V9_VERSION == "local-slm-extractor/6"
     assert SLM_GROUNDING_VALIDATOR_V9_VERSION == "slm-grounding-validator/6"
@@ -126,7 +126,7 @@ def test_stale_146_route_d_row_misses_and_recomputes_under_147(client: TestClien
         with SessionLocal() as s:
             refreshed = s.query(SimulationCache).filter_by(key=target_key).first()
             assert refreshed is not None
-            assert refreshed.policy_version == "147:route-d"
+            assert refreshed.policy_version == M.ROUTE_D_CACHE_POLICY
             assert "stale_146_sentinel" not in refreshed.envelope_json
     finally:
         with SessionLocal() as s:

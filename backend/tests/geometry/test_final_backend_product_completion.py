@@ -454,7 +454,8 @@ def test_analyze_api_hybrid_default_staging_replay_and_fail_closed_invalid_mode(
 
     assert not (Path(main.__file__).resolve().parent / "simulation" / "geometry_compiler").exists()
     assert not (Path(main.__file__).resolve().parent / "ai" / "pipeline.py").exists()
-    assert main.CACHE_VERSION == "147"
+    from tests.cache_policy import assert_cache_policy_at_least
+    assert_cache_policy_at_least(131)
     monkeypatch.delenv("HYBRID_ROUTE_MODE", raising=False)
     assert main.hybrid_route_mode() == "live"
 

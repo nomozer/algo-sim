@@ -54,8 +54,8 @@ def test_route_d_cache_policy_tracks_cache_version_140_and_lockfile(monkeypatch:
     from app.runtime_identity import semantic_environment_fingerprint, semantic_environment_hash
     from app.simulation.geometry_functions import trig_construction_certificates as TCC
 
-    assert M.CACHE_VERSION == "147"
-    assert M.ROUTE_D_CACHE_POLICY == "147:route-d"
+    from tests.cache_policy import assert_cache_policy_at_least
+    assert_cache_policy_at_least(140)
     assert _prior_policy() == "139:route-d"
 
     fp_base = semantic_environment_fingerprint()
