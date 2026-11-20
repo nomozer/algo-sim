@@ -527,35 +527,55 @@ export default function App() {
       prevHistoryState?.axoTabId !== resolvedAxoTabId;
     const effectiveView = useAppStore.getState().view;
     if (effectiveView !== view) return;
-    if (effectiveView === "landing" && currentPath === "/gioi-thieu") {
-      try {
-        const suffix = `${window.location.search ?? ""}${window.location.hash ?? ""}`;
-        if (typeof window.history?.replaceState === "function") {
-          window.history.replaceState(
-            {
-              axoView: "landing",
-              axoTabId: null,
-              tabId: null,
-              sampleId: null,
-              historyId: null,
-            },
-            "",
-            `/about${suffix}`,
-          );
-        }
-      } catch {
-        /* bỏ qua nếu môi trường kiểm thử chặn replaceState */
-      }
-      return;
-    }
     if (
       effectiveView === "landing" &&
-      (currentPath === "/" ||
+      (currentPath === "/gioi-thieu" ||
+        currentPath === "/" ||
         currentPath === "/about" ||
         currentPath === "/landing" ||
         currentPath === "/welcome" ||
         currentPath === "/intro")
     ) {
+      try {
+        const searchParams = new URLSearchParams(window.location.search ?? "");
+        const rawPreview = searchParams.get("preview")?.trim().toLowerCase();
+        const rawProto = searchParams.get("prototype")?.trim().toLowerCase();
+        let queryChanged = false;
+        if (
+          rawPreview === "v1.4" ||
+          rawPreview === "v14" ||
+          rawProto === "landing-v14" ||
+          rawProto === "v1.4" ||
+          rawProto === "v14"
+        ) {
+          searchParams.set("preview", "landing-v14");
+          searchParams.delete("prototype");
+          queryChanged = true;
+        }
+        if (currentPath === "/gioi-thieu" || queryChanged) {
+          const nextPath = currentPath === "/gioi-thieu" ? "/about" : currentPath;
+          const nextQuery = searchParams.toString();
+          const suffix = `${nextQuery ? `?${nextQuery}` : ""}${window.location.hash ?? ""}`;
+          if (typeof window.history?.replaceState === "function") {
+            window.history.replaceState(
+              {
+                axoView: "landing",
+                axoTabId: null,
+                tabId: null,
+                sampleId: null,
+                historyId: null,
+              },
+              "",
+              `${nextPath}${suffix}`,
+            );
+          }
+          if (queryChanged) {
+            window.dispatchEvent(new CustomEvent("axolanding:protochange"));
+          }
+        }
+      } catch {
+        /* bỏ qua nếu môi trường kiểm thử chặn replaceState */
+      }
       return;
     }
     if (currentPath === targetPath && !sameWorkspaceTabRoute) return;
