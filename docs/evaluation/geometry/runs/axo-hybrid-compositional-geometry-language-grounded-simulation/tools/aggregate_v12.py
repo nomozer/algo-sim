@@ -68,8 +68,8 @@ def main() -> int:
         inter_ok = bool((br.get("interactions") or {}).get("ok"))
         completed = served and oracle_ok and numeric_ok and visual_ok and inter_ok
 
-        cache_meta = body.get("cache") or {}
-        cache_hit = bool(cache_meta.get("hit") or rd.get("cache_hit"))
+        cache_meta = body.get("cache") if isinstance(body.get("cache"), dict) else {}
+        cache_hit = bool(cache_meta.get("hit") or body.get("cached") or rd.get("cache_hit"))
         ext_mode = rd.get("extraction_mode")
         stratum = cand_by_id[cid]["stratum"]
         p2_stratum = p2_by_id[cid]["stratum"]
@@ -83,7 +83,7 @@ def main() -> int:
                         grounding_violations.append({"case_id": cid, "issue": iss})
                     if any(k in iss for k in ("RELATION_VIOLATED", "MISSING_POINT_FOR_RELATION")):
                         unverified_relations.append({"case_id": cid, "issue": iss})
-            if c.get("simulation_intent") == "simulate_only" and (rd.get("answers") or rd.get("math_goals")):
+            if str(c.get("simulation_intent") or "").upper() == "SIMULATE_ONLY" and (rd.get("answers") or rd.get("math_goals")):
                 fabricated_numeric_goals.append({"case_id": cid, "answers": rd.get("answers")})
             if num_info is not None and num_info.get("status") != "CORRECT":
                 served_numeric_mismatch.append({"case_id": cid, "numeric": num_info})
