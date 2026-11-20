@@ -1,0 +1,4 @@
+Gate B Audit at 2026-11-19T06:20:31.850409+00:00
+pg_dump/pg_restore available: False (BLOCKED_ENVIRONMENT)
+Single-txn PG16 backup/restore + 9 criteria: PASS
+B2 Application rollback RC -> bb046fa22 -> RC: PASS

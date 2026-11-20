@@ -23,7 +23,10 @@ import { fileURLToPath } from "node:url";
 import { join } from "node:path";
 
 const SRC = fileURLToPath(new URL("../", import.meta.url));
-const CSS = readFileSync(fileURLToPath(new URL("./global.css", import.meta.url)), "utf-8");
+const CSS =
+  readFileSync(fileURLToPath(new URL("./global.css", import.meta.url)), "utf-8") +
+  "\n" +
+  readFileSync(fileURLToPath(new URL("../components/landing/landing.css", import.meta.url)), "utf-8");
 
 function walk(dir: string, out: string[] = []): string[] {
   for (const name of readdirSync(dir)) {

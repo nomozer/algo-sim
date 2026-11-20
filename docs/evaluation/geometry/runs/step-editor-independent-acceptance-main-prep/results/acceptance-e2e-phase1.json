@@ -1,0 +1,230 @@
+{
+  "startedAt": "2026-11-19T01:25:00.760Z",
+  "baseUrl": "http://localhost:3001",
+  "backendUrl": "http://127.0.0.1:8000",
+  "section3A": {
+    "status": "PASS",
+    "counterBefore": "Bước 17/17",
+    "counterAfter": "Bước 8/17",
+    "alphaIdx": 7,
+    "hoverHeightDeltaPx": 0,
+    "opacityDefault": "0",
+    "opacityHover": "1",
+    "textareaSingleLineScrollable": false,
+    "textareaHorizontalOverflow": false,
+    "httpStatus": 200,
+    "beforeAfterChanged": true,
+    "recomputedIds": [
+      "truc_day",
+      "I",
+      "doan_OI",
+      "doan_MI",
+      "doan_IS",
+      "doan_IA",
+      "cau_ngoai_tiep",
+      "R",
+      "V_cau"
+    ],
+    "mpDisplayLabel": "Mặt phẳng (α) qua «Trung điểm của S và B» và vuông góc với SB",
+    "leakedRawHelper": false,
+    "sphereAnchor": [
+      "2",
+      "2",
+      "2"
+    ],
+    "sphereRadiusSq": "12",
+    "committedVersion": 1
+  },
+  "section3B": [
+    {
+      "name": "5a_empty_whitespace",
+      "status": "PASS",
+      "runDisabledOnEmpty": true,
+      "httpSent": false
+    },
+    {
+      "name": "1_undefined_point_SZ",
+      "status": "PASS",
+      "httpStatus": 422,
+      "errorCode": "MISSING_DEPENDENCY",
+      "draftPreserved": true
+    },
+    {
+      "name": "2_collinear_AOC",
+      "status": "PASS",
+      "httpStatus": 422,
+      "errorCode": "COLLINEAR_POINTS",
+      "draftPreserved": true
+    },
+    {
+      "name": "3_nonexistent_line_ref",
+      "status": "PASS",
+      "httpStatus": 422,
+      "errorCode": "MISSING_DEPENDENCY",
+      "draftPreserved": true
+    },
+    {
+      "name": "4_out_of_scope_spiral",
+      "status": "PASS",
+      "httpStatus": 422,
+      "errorCode": "UNSUPPORTED_STEP_SYNTAX",
+      "draftPreserved": true
+    },
+    {
+      "name": "5_meaningless_text",
+      "status": "PASS",
+      "httpStatus": 422,
+      "errorCode": "UNSUPPORTED_STEP_SYNTAX",
+      "draftPreserved": true
+    }
+  ],
+  "section3C": {
+    "status": "PASS",
+    "earlySequentialRatios": [
+      "1/4",
+      "3/4",
+      "1/4"
+    ],
+    "finalMXyz": [
+      "0",
+      "0",
+      "9/2"
+    ],
+    "middleStepRenameStatus": 200,
+    "latePrismEditStatus": 200,
+    "tabCountBeforeClose": 3,
+    "tabLabelsBeforeClose": [
+      "Hình chóp S.ABCD và mặt cầu ngoại tiếp (S) tâm I",
+      "Thiết diện hình chóp S.ABCD cắt bởi mặt phẳng (MNP)",
+      "Thiết diện ngũ giác của lăng trụ đứng ABC.A'B'C' cắt bởi mặt phẳng (NPQ)"
+    ],
+    "reopenS1RetainedOverride": true,
+    "dockScrollIsolated": true,
+    "staleRevisionProbe": {
+      "status": 409,
+      "code": "STALE_REVISION_CONFLICT"
+    },
+    "sessionIdPublicPrefix": "se-be5cdbf3-sa…"
+  },
+  "section5Viewports": [
+    {
+      "width": 1920,
+      "height": 1080,
+      "overflowX": 0,
+      "canvasVisible": true,
+      "canvasWidthPx": 1289,
+      "canvasHeightPx": 1042,
+      "runClipped": false,
+      "cancelClipped": false,
+      "textareaHeightPx": 85,
+      "textareaOverflowY": "hidden",
+      "textareaHorizontalOverflow": false,
+      "controlsOccludeActions": false,
+      "navOperable": true
+    },
+    {
+      "width": 1440,
+      "height": 900,
+      "overflowX": 0,
+      "canvasVisible": true,
+      "canvasWidthPx": 809,
+      "canvasHeightPx": 862,
+      "runClipped": false,
+      "cancelClipped": false,
+      "textareaHeightPx": 85,
+      "textareaOverflowY": "hidden",
+      "textareaHorizontalOverflow": false,
+      "controlsOccludeActions": false,
+      "navOperable": true
+    },
+    {
+      "width": 1366,
+      "height": 768,
+      "overflowX": 0,
+      "canvasVisible": true,
+      "canvasWidthPx": 735,
+      "canvasHeightPx": 730,
+      "runClipped": false,
+      "cancelClipped": false,
+      "textareaHeightPx": 85,
+      "textareaOverflowY": "hidden",
+      "textareaHorizontalOverflow": false,
+      "controlsOccludeActions": false,
+      "navOperable": true
+    },
+    {
+      "width": 1024,
+      "height": 768,
+      "overflowX": 0,
+      "canvasVisible": true,
+      "canvasWidthPx": 704,
+      "canvasHeightPx": 730,
+      "runClipped": false,
+      "cancelClipped": false,
+      "textareaHeightPx": 85,
+      "textareaOverflowY": "hidden",
+      "textareaHorizontalOverflow": false,
+      "controlsOccludeActions": false,
+      "navOperable": true
+    },
+    {
+      "width": 768,
+      "height": 1024,
+      "overflowX": 0,
+      "canvasVisible": true,
+      "canvasWidthPx": 472,
+      "canvasHeightPx": 986,
+      "runClipped": false,
+      "cancelClipped": false,
+      "textareaHeightPx": 85,
+      "textareaOverflowY": "hidden",
+      "textareaHorizontalOverflow": false,
+      "controlsOccludeActions": false,
+      "navOperable": true
+    },
+    {
+      "width": 390,
+      "height": 844,
+      "overflowX": 0,
+      "canvasVisible": true,
+      "canvasWidthPx": 390,
+      "canvasHeightPx": 444,
+      "runClipped": false,
+      "cancelClipped": false,
+      "textareaHeightPx": 85,
+      "textareaOverflowY": "hidden",
+      "textareaHorizontalOverflow": false,
+      "controlsOccludeActions": false,
+      "navOperable": true
+    },
+    {
+      "width": 320,
+      "height": 568,
+      "overflowX": 0,
+      "canvasVisible": true,
+      "canvasWidthPx": 320,
+      "canvasHeightPx": 293,
+      "runClipped": false,
+      "cancelClipped": false,
+      "textareaHeightPx": 85,
+      "textareaOverflowY": "hidden",
+      "textareaHorizontalOverflow": false,
+      "controlsOccludeActions": false,
+      "navOperable": true
+    }
+  ],
+  "section5TouchAndVkb": {
+    "status": "PASS",
+    "pencilVisibleOnTouchActive": true,
+    "vkb390x460": {
+      "overflowX": 0,
+      "taInViewport": true,
+      "runInViewport": true,
+      "cancelInViewport": true
+    }
+  },
+  "consoleErrors": [],
+  "pageErrors": [],
+  "unexpected5xx": [],
+  "finishedAt": "2026-11-19T01:25:35.671Z"
+}

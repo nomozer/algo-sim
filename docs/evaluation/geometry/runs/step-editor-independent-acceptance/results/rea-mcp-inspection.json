@@ -1,0 +1,18 @@
+{
+  "list_targets_evidence_id": "ev_84ce90e944cb11ff6f35b0b3ec444c0c0e3b3634cfeeaebb4cbf3c7a79997c41",
+  "inspect_evidence_id": "ev_d3a8b4a0eced717537430c8d886c0afb8046bff87149c9df58892815dc350d05",
+  "inspect_url": "http://localhost:3001/simulation/pyramid-circumscribed-sphere",
+  "inspect_title": "Mô phỏng hình học 3D | Axo",
+  "dom_total_nodes": 789,
+  "accessibility_excluded_count": 383,
+  "console_dropped_events": 0,
+  "console_events": 3,
+  "network_requests_count": 0,
+  "screenshot_evidence_id": "ev_d9fefa75738a91db7cc4f45fbba0c2fd68c14dda76eb8716e4b343ca0341b418",
+  "screenshot_sha256": "aa1b10d92db6a14acfe09825547b315145466f5e1f1bc4611ac35054999e8776",
+  "screenshot_bytes": 153918,
+  "viewport": {
+    "width": 1440,
+    "height": 900
+  }
+}

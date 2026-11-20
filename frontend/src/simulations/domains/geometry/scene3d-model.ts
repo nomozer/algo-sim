@@ -344,6 +344,14 @@ export interface SceneObject {
   endpoint_entities?: SectionEndpointEntity[];
   identity_diagnostics?: string[];
   section_edge_coordinate_hashes?: Record<string, string>;
+  computational_depends?: string[];
+  visible_prerequisites?: string[];
+  construction_lineage?: ConstructionLineage;
+  measured_quantity?: MeasuredQuantity;
+  ordered_vertex_ids?: string[];
+  ordered_vertex_symbols?: string[];
+  ordered_boundary_edges?: string[];
+  is_unused_auxiliary?: boolean;
   /**
    * ĐẠI LƯỢNG ĐO — chuỗi ĐÃ ĐỊNH DẠNG cho người đọc (`"√2"`, `"3√2/5"`).
    *
@@ -434,32 +442,106 @@ const GIA_TRI_DAI_LUONG_CHUA_BIET = new Set([
   "-Infinity",
 ]);
 
-/** Kiểm tra đại lượng mang giá trị rỗng hoặc ký hiệu giữ chỗ chưa biết (`"?"`, `"unknown"`, `"NaN"`...). */
+export function isVectorLeakString(raw: unknown): boolean {
+  return typeof raw === "string" && /^\s*Vec3\s*\(/i.test(raw);
+}
+
+/** Kiểm tra đại lượng mang giá trị rỗng, rò rỉ Vec3(...) hoặc ký hiệu giữ chỗ chưa biết. */
 export function laGiaTriDaiLuongChuaBiet(raw: string | null | undefined): boolean {
   if (typeof raw !== "string") return true;
   const t = raw.trim();
-  return t.length === 0 || GIA_TRI_DAI_LUONG_CHUA_BIET.has(t);
+  return t.length === 0 || GIA_TRI_DAI_LUONG_CHUA_BIET.has(t) || isVectorLeakString(t);
 }
 
 /**
  * Định dạng biểu thức có thẩm quyền của một đối tượng `quantity` mà không tính toán lại:
  * ưu tiên `symbolic` (biểu thức chứa tham số đề cho), kế đến cấu trúc chính xác `exact` (`hienSo`),
- * cuối cùng là `value`. Trả về `null` nếu thiếu giá trị hoặc là placeholder chưa biết.
+ * cuối cùng là `value` hoặc `measured_quantity`. Trả về `null` nếu thiếu giá trị, chưa biết hoặc rò rỉ `Vec3(...)`.
  */
 export function hienBieuThucDaiLuong(
-  o: Pick<SceneObject, "symbolic" | "exact" | "value">,
+  o: Pick<SceneObject, "symbolic" | "exact" | "value" | "measured_quantity">,
 ): string | null {
   if (typeof o.symbolic === "string" && !laGiaTriDaiLuongChuaBiet(o.symbolic)) {
     return o.symbolic.trim();
   }
-  if (o.exact) {
-    const ex = hienSo(o.exact, typeof o.value === "string" ? o.value : "");
+  const mqVal =
+    o.measured_quantity?.value !== undefined && o.measured_quantity?.value !== null
+      ? String(o.measured_quantity.value)
+      : undefined;
+  const rawFallback = typeof o.value === "string" && !isVectorLeakString(o.value)
+    ? o.value
+    : (mqVal && !isVectorLeakString(mqVal) ? mqVal : "");
+  const exactStruct = o.exact ?? o.measured_quantity?.exact ?? undefined;
+  if (exactStruct) {
+    const ex = hienSo(exactStruct, rawFallback);
     return laGiaTriDaiLuongChuaBiet(ex) ? null : ex.trim();
   }
-  if (typeof o.value === "string" && !laGiaTriDaiLuongChuaBiet(o.value)) {
-    return o.value.trim();
+  if (!laGiaTriDaiLuongChuaBiet(rawFallback)) {
+    return rawFallback.trim();
   }
   return null;
+}
+
+/**
+ * Chỉ trả về quan hệ toán học đã được Backend chứng nhận tường minh trong `measured_quantity.certified_relation`.
+ * Tuyệt đối không suy diễn vuông góc chỉ vì giá trị số bằng `"0"` hay tên biến.
+ */
+export function resolveCertifiedMeasuredRelation(
+  o: Pick<SceneObject, "measured_quantity"> | null | undefined,
+): MeasuredCertifiedRelation {
+  const rel = o?.measured_quantity?.certified_relation;
+  if (
+    rel === "perpendicular_lines"
+    || rel === "point_on_plane"
+    || rel === "coplanar_intersecting_or_coincident_lines"
+  ) {
+    return rel;
+  }
+  return null;
+}
+
+/**
+ * Tiền đề hiển thị cho đối tượng trực quan, tách khỏi `computational_depends` khi có `vector3`/`non_visual`
+ * trung gian nhưng vẫn giữ phụ thuộc tính toán nguyên vẹn cho `computational_depends` / `depends`.
+ */
+export function resolveVisualPrerequisitesOf(
+  _scene: Pick<Scene3D, "objects">,
+  obj: SceneObject,
+): string[] {
+  if (
+    obj.type === "quantity"
+    || obj.render === "non_visual"
+    || obj.render === "readout"
+    || obj.display_role === "non_visual"
+    || obj.display_role === "measurement"
+  ) {
+    return [...(obj.computational_depends ?? obj.depends ?? [])];
+  }
+  if (Array.isArray(obj.visible_prerequisites)) {
+    return [...obj.visible_prerequisites];
+  }
+  if (
+    obj.construction_lineage?.mode === "vector_translation"
+    && Array.isArray(obj.construction_lineage.visible_prerequisites)
+  ) {
+    return [...obj.construction_lineage.visible_prerequisites];
+  }
+  const edgeBySource = new Map<string, DependencyEdge>();
+  for (const edge of obj.dependency_edges ?? []) {
+    edgeBySource.set(edge.source_id, edge);
+  }
+  const out: string[] = [];
+  for (const depId of obj.depends ?? []) {
+    const edge = edgeBySource.get(depId);
+    if (edge?.is_non_visual_carrier && Array.isArray(edge.resolved_visible_sources)) {
+      for (const sid of edge.resolved_visible_sources) {
+        if (sid && sid !== obj.id && !out.includes(sid)) out.push(sid);
+      }
+      continue;
+    }
+    if (depId && depId !== obj.id && !out.includes(depId)) out.push(depId);
+  }
+  return out;
 }
 
 /**
@@ -520,9 +602,57 @@ export type FormationSemanticKind =
 
 export type DependencyRelation = "numerical" | "structural" | "topological" | "layout";
 
+export type ConstructionLineage =
+  | { mode: "direct_euclidean_primitive"; producer: string }
+  | {
+      mode: "algebraic_line_plane_intersection";
+      line_id: string;
+      plane_id: string;
+      pedagogical_limitation?: string;
+    }
+  | {
+      mode: "euclidean_coplanar_intersection";
+      coplanar_lines: [string, string];
+    }
+  | {
+      mode: "vector_translation";
+      base_point_id: string;
+      vector_id: string;
+      visible_prerequisites: string[];
+    };
+
+export type MeasuredQuantityKind =
+  | "distance"
+  | "angle_cos_sq"
+  | "angle_cos"
+  | "volume"
+  | "area"
+  | "radius"
+  | "lateral_area"
+  | (string & {});
+
+export type MeasuredCertifiedRelation =
+  | "perpendicular_lines"
+  | "point_on_plane"
+  | "coplanar_intersecting_or_coincident_lines"
+  | null;
+
+export interface MeasuredQuantity {
+  quantity_kind: MeasuredQuantityKind;
+  producer?: string;
+  subject_ids: string[];
+  subject_labels?: string[];
+  subject_types?: string[];
+  value?: string | number | null;
+  exact?: ExactNumberJson | null;
+  certified_relation?: MeasuredCertifiedRelation;
+}
+
 export interface DependencyEdge {
   source_id: string;
   relation: DependencyRelation;
+  is_non_visual_carrier?: boolean;
+  resolved_visible_sources?: string[];
 }
 
 export interface SectionVertexSource {
@@ -587,6 +717,10 @@ export interface SceneEvent {
   display_label?: string;
   details?: Record<string, unknown>;
   semantic_kind?: FormationSemanticKind;
+  visible_prerequisites?: string[];
+  construction_lineage?: ConstructionLineage;
+  measured_quantity?: MeasuredQuantity;
+  formation_roles?: string[];
   diagnostics?: string[];
 }
 
@@ -608,6 +742,9 @@ export interface FormationStep {
   details?: Record<string, unknown>;
   semantic_kind?: FormationSemanticKind;
   geometry_progress?: GeometryProgress[];
+  visible_prerequisites?: string[];
+  construction_lineage?: ConstructionLineage;
+  measured_quantity?: MeasuredQuantity;
 }
 
 export interface SceneFormation {
@@ -699,6 +836,7 @@ export interface Scene3D {
   events: SceneEvent[];
   free_objects: string[];
   formation?: SceneFormation;
+  unused_auxiliary_ids?: string[];
   /** W17: chẩn đoán cho người phát triển (`ANNOTATION_UNBOUND …`) — không hiện cho học sinh. */
   diagnostics?: string[];
   /** exact-dimensions: metric KHUNG G (3×3 phân số) khi bố cục là khung affine — vắng ⇒ Euclid. `scene3d-chart`. */
@@ -980,7 +1118,8 @@ export function diemHuuHan(objects: SceneObject[]): Vec3[] {
     if (o.render === "surface" || o.render === "line") continue;
     them(o.xyz); them(o.center); them(o.anchor); them(o.apex_or_top);
     them(o.rim_point); them(o.annotation?.witness?.foot); them(o.annotation?.witness?.from_point);
-    them(o.perpendicular_witness?.foot);
+    them(o.annotation?.witness?.second?.foot);
+    them(o.perpendicular_witness?.foot); them(o.perpendicular_witness?.second?.foot);
     for (const v of o.vertices ?? []) them(v);
     for (const v of o.polygon ?? []) them(v);
     // Khối cong: bán kính nở ra theo hai phương ⟂ TRỤC. Chỉ có `rim_point` thì
@@ -1014,6 +1153,25 @@ export function diemHuuHan(objects: SceneObject[]): Vec3[] {
         for (const u of phuong) {
           ra.push([t[0] + u[0] * r, t[1] + u[1] * r, t[2] + u[2] * r]);
           ra.push([t[0] - u[0] * r, t[1] - u[1] * r, t[2] - u[2] * r]);
+        }
+        // Pairwise 45-degree great-circle boundary points for spheres (exact radius r) prevent 13.4% cos(30°) silhouette underestimation on portrait viewports.
+        if (phuong.length === 3) {
+          const rCap = r / Math.SQRT2;
+          for (let a = 0; a < 3; a += 1) {
+            for (let b = a + 1; b < 3; b += 1) {
+              const ua = phuong[a];
+              const ub = phuong[b];
+              for (const sa of [-1, 1]) {
+                for (const sb of [-1, 1]) {
+                  ra.push([
+                    t[0] + (sa * ua[0] + sb * ub[0]) * rCap,
+                    t[1] + (sa * ua[1] + sb * ub[1]) * rCap,
+                    t[2] + (sa * ua[2] + sb * ub[2]) * rCap,
+                  ]);
+                }
+              }
+            }
+          }
         }
         // Normalized diagonal surface points keep diagonal camera views on the true radius-r surface
         // without inflating the bounding box to r*sqrt(2) or r*sqrt(3).
@@ -1523,6 +1681,32 @@ export function diemChoDuong(objects: SceneObject[], duongId: string): Vec3[] {
       ...(w?.second?.on === duongId && w.second.foot ? [toVec3(w.second.foot)] : []),
     ]);
   return [...diemHuuHan(objects), ...chan];
+}
+
+/** Điểm neo hình học thật để xét thẳng hàng trên đường `duongId` (không gồm đám mây mẫu biên mặt cong `±r` tổng hợp,
+ *  tránh trục thẳng đứng đi qua tâm cầu nhận nhầm hai cực `c ± R·ez` làm mốc căng đoạn lõi xuyên thủng mặt cầu). */
+export function diemNeoDuongThang(objects: SceneObject[], duongId: string): Vec3[] {
+  const ra: Vec3[] = [];
+  const them = (v?: ExactVec3 | null) => { if (v) ra.push(toVec3(v)); };
+  for (const o of objects) {
+    if (o.render === "surface" || o.render === "line") continue;
+    them(o.xyz); them(o.center); them(o.anchor); them(o.apex_or_top);
+    them(o.rim_point); them(o.annotation?.witness?.foot); them(o.annotation?.witness?.from_point);
+    them(o.annotation?.witness?.second?.foot);
+    them(o.perpendicular_witness?.foot); them(o.perpendicular_witness?.second?.foot);
+    if (o.point_a) them(o.point_a);
+    if (o.point_b) them(o.point_b);
+    for (const ep of o.endpoints ?? []) them(ep);
+    for (const v of o.vertices ?? []) them(v);
+    for (const v of o.polygon ?? []) them(v);
+    if (duongId) {
+      for (const w of [o.annotation?.witness, o.perpendicular_witness]) {
+        if (w?.on === duongId && w.foot) them(w.foot);
+        if (w?.second?.on === duongId && w.second.foot) them(w.second.foot);
+      }
+    }
+  }
+  return ra;
 }
 
 /**
@@ -2634,6 +2818,25 @@ export interface AttachedHybridSceneMetadata {
 const _exactSceneOrigin = new WeakMap<object, Scene3D>();
 const _worldTransformedScenes = new WeakSet<object>();
 const _hybridViewByScene = new WeakMap<object, AttachedHybridSceneMetadata>();
+const _verifiedStepEditedScenes = new WeakSet<object>();
+
+/**
+ * Đánh dấu một cảnh `Scene3D` đã qua tái dựng và kiểm chứng bởi Step Editor (`FP-4`),
+ * giúp metadata đáp số Hybrid `/4` cập nhật theo giá trị Exact Kernel mới mà không báo mâu thuẫn giả.
+ */
+export function markVerifiedStepEditedScene<T extends Pick<Scene3D, "objects">>(scene: T): T {
+  if (scene && typeof scene === "object") {
+    _verifiedStepEditedScenes.add(scene as object);
+  }
+  return scene;
+}
+
+export function isVerifiedStepEditedScene(scene: Pick<Scene3D, "objects"> | null | undefined): boolean {
+  if (!scene || typeof scene !== "object") return false;
+  if (_verifiedStepEditedScenes.has(scene as object)) return true;
+  const exact = _exactSceneOrigin.get(scene as object);
+  return Boolean(exact && _verifiedStepEditedScenes.has(exact as object));
+}
 
 /**
  * Đính kèm metadata `HybridPreviewView` đã kiểm chứng vào một cảnh mà KHÔNG sửa đổi (`mutate`) payload `envelope.scene3d`.
@@ -2648,10 +2851,31 @@ export function attachHybridViewToScene<T extends AttachedHybridSceneMetadata>(
     _hybridViewByScene.delete(scene as object);
     return;
   }
-  _hybridViewByScene.set(scene as object, view);
+  let effectiveView: T = view;
+  if (Array.isArray(view.answers) && view.answers.length > 0 && isVerifiedStepEditedScene(scene)) {
+    const exact = exactSceneOriginOf(scene);
+    const byId = new Map<string, SceneObject>();
+    for (const o of scene.objects) byId.set(o.id, o);
+    for (const o of exact.objects) byId.set(o.id, o);
+    effectiveView = {
+      ...view,
+      answers: view.answers.map((ans) => {
+        if (!ans.quantity_id) return ans;
+        const qObj = byId.get(ans.quantity_id);
+        if (!qObj || qObj.value == null) return ans;
+        const nextVal = String(qObj.value);
+        return {
+          ...ans,
+          value: nextVal,
+          ...(ans.coefficient !== undefined ? { coefficient: nextVal } : {}),
+        };
+      }),
+    };
+  }
+  _hybridViewByScene.set(scene as object, effectiveView);
   const exact = _exactSceneOrigin.get(scene as object);
   if (exact && exact !== scene) {
-    _hybridViewByScene.set(exact as object, view);
+    _hybridViewByScene.set(exact as object, effectiveView);
   }
 }
 
@@ -2677,6 +2901,9 @@ export function registerExactSceneOrigin(displayScene: Scene3D, exactScene: Scen
   if (displayScene !== exactScene) {
     const rootExact = exactSceneOriginOf(exactScene);
     _exactSceneOrigin.set(displayScene, rootExact);
+    if (_verifiedStepEditedScenes.has(exactScene as object) || _verifiedStepEditedScenes.has(rootExact as object)) {
+      _verifiedStepEditedScenes.add(displayScene as object);
+    }
     const hv = _hybridViewByScene.get(exactScene as object) ?? _hybridViewByScene.get(rootExact as object);
     if (hv) {
       _hybridViewByScene.set(displayScene as object, hv);
@@ -2716,6 +2943,10 @@ export function propagateSceneLineage(nextScene: Scene3D, prevScene: Scene3D, ex
   if (nextScene === prevScene) return nextScene;
   if (isSceneWorldTransformed(prevScene)) {
     markSceneWorldTransformed(nextScene);
+  }
+  if (isVerifiedStepEditedScene(prevScene)) {
+    markVerifiedStepEditedScene(nextScene);
+    if (exactNextOverride) markVerifiedStepEditedScene(exactNextOverride);
   }
   const prevHv = hybridViewOfScene(prevScene);
   if (prevHv) {

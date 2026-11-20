@@ -1,0 +1,50 @@
+{
+  "redaction_policy": "STRICT_REDACTED_NO_TOKENS_NO_SECRETS",
+  "list_browser_targets_evidence_id": "ev_801a51aecd4adc7bf8508a22f0d5d38970826192c27813f1b80d4e0a3d77d34b",
+  "inspect_web_page_evidence_id": "ev_15267ec87e075e46cad6df61a1ca467ca97b1c6f47c36dd44662a83fb254a509",
+  "capture_web_screenshot_evidence_id": "ev_cf59d63b8fc45a100ef7a03d2a17e5ff2788857ce22505ca3b42983651e2c95a",
+  "browser_product": "HeadlessChrome/151.0.7922.34",
+  "target_url": "http://localhost:3001/simulation/pyramid-circumscribed-sphere",
+  "origin": "http://localhost:3001",
+  "title": "Mô phỏng hình học 3D | Axo",
+  "viewport": {
+    "width": 1440,
+    "height": 900
+  },
+  "dom_keys": [
+    "total_nodes",
+    "nodes"
+  ],
+  "dom_node_count": 783,
+  "accessibility_keys": [
+    "total_nodes",
+    "text_capture",
+    "nodes"
+  ],
+  "accessibility_node_count": 445,
+  "console_keys": [
+    "events",
+    "coverage_started_at",
+    "prior_activity_available"
+  ],
+  "console_message_count": 0,
+  "console_error_count": 0,
+  "network_request_count": 0,
+  "storage_key_names_only": {
+    "localStorage": [
+      "algosim.processing_records.v1",
+      "axo:client-session-id:v1",
+      "algosim.history.v1:h198csmj"
+    ],
+    "sessionStorage": [
+      "algosim.processing_records.v1",
+      "algosim.workspace_tabs_session.v1",
+      "axo:learner-recovery:v1"
+    ],
+    "values_redacted": true
+  },
+  "screenshot_path": "images/acceptance-rea-mcp.png",
+  "screenshot_sha256": "64513149a1cef8ea1d37aaf9bdbd5994a1507dbdacd32044807ac075fe3a4db4",
+  "screenshot_bytes": 150127,
+  "completeness_status": "complete_within_window"
+}

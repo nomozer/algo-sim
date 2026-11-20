@@ -1,0 +1,148 @@
+diff --git a/backend/alembic/env.py b/backend/alembic/env.py
+--- a/backend/alembic/env.py
++++ b/backend/alembic/env.py
+@@ -21,7 +21,7 @@ from app.persistence.db import DATABASE_URL, IS_SQLITE, Base, engine
+ # M18 — import VÌ TÁC DỤNG PHỤ: các model lớp học phải nạp vào `Base.metadata`
+ # trước khi autogenerate đọc nó, nếu không Alembic sẽ tưởng bảng thừa và sinh
+ # ra một migration XOÁ chúng. Đây là lý do dòng import "không dùng" này tồn tại.
+-from app.persistence import classroom_models  # noqa: F401
++from app.persistence import classroom_models, step_edit_models  # noqa: F401
+ 
+ config = context.config
+ 
+diff --git a/backend/alembic/versions/9c4d8e2b7a10_add_step_edit_tables.py b/backend/alembic/versions/9c4d8e2b7a10_add_step_edit_tables.py
+new file mode 100644
+--- /dev/null
++++ b/backend/alembic/versions/9c4d8e2b7a10_add_step_edit_tables.py
+@@ -0,0 +1,122 @@
++"""add step edit tables
++
++Revision ID: 9c4d8e2b7a10
++Revises: f8a2c41d9e05
++Create Date: 2026-11-18
++"""
++from typing import Sequence, Union
++
++from alembic import op
++import sqlalchemy as sa
++
++
++revision: str = "9c4d8e2b7a10"
++down_revision: Union[str, Sequence[str], None] = "f8a2c41d9e05"
++branch_labels: Union[str, Sequence[str], None] = None
++depends_on: Union[str, Sequence[str], None] = None
++
++
++def upgrade() -> None:
++    """Create step_edit_sessions, step_edit_revisions, and step_edit_feedback tables."""
++    op.create_table(
++        "step_edit_sessions",
++        sa.Column("id", sa.Integer(), autoincrement=True, nullable=False),
++        sa.Column("owner_scope", sa.String(length=96), nullable=False),
++        sa.Column("session_id", sa.String(length=128), nullable=False),
++        sa.Column("problem_key", sa.String(length=160), nullable=False),
++        sa.Column("base_scene_sha256", sa.String(length=64), nullable=False),
++        sa.Column("committed_scene_json", sa.Text(), nullable=False),
++        sa.Column("step_overrides_json", sa.Text(), nullable=False),
++        sa.Column("dependency_graph_json", sa.Text(), nullable=False),
++        sa.Column("revision_count", sa.Integer(), nullable=False),
++        sa.Column("created_at", sa.DateTime(), nullable=False),
++        sa.Column("updated_at", sa.DateTime(), nullable=False),
++        sa.PrimaryKeyConstraint("id"),
++        sa.UniqueConstraint("owner_scope", "session_id", name="uq_step_edit_session_owner_sid"),
++    )
++    op.create_index(op.f("ix_step_edit_sessions_owner_scope"), "step_edit_sessions", ["owner_scope"], unique=False)
++    op.create_index(op.f("ix_step_edit_sessions_session_id"), "step_edit_sessions", ["session_id"], unique=False)
++
++    op.create_table(
++        "step_edit_revisions",
++        sa.Column("id", sa.Integer(), autoincrement=True, nullable=False),
++        sa.Column("revision_id", sa.String(length=64), nullable=False),
++        sa.Column("owner_scope", sa.String(length=96), nullable=False),
++        sa.Column("session_id", sa.String(length=128), nullable=False),
++        sa.Column("version_number", sa.Integer(), nullable=False),
++        sa.Column("step_id", sa.String(length=80), nullable=False),
++        sa.Column("step_index", sa.Integer(), nullable=False),
++        sa.Column("previous_instruction", sa.Text(), nullable=False),
++        sa.Column("edited_instruction", sa.Text(), nullable=False),
++        sa.Column("normalized_intent_json", sa.Text(), nullable=False),
++        sa.Column("affected_dependencies_json", sa.Text(), nullable=False),
++        sa.Column("validation_status", sa.String(length=32), nullable=False),
++        sa.Column("execution_status", sa.String(length=32), nullable=False),
++        sa.Column("error_code", sa.String(length=64), nullable=True),
++        sa.Column("learner_error", sa.Text(), nullable=True),
++        sa.Column("stage_timings_json", sa.Text(), nullable=False),
++        sa.Column("before_scene_digest", sa.String(length=64), nullable=False),
++        sa.Column("after_scene_digest", sa.String(length=64), nullable=True),
++        sa.Column("timestamp", sa.DateTime(), nullable=False),
++        sa.PrimaryKeyConstraint("id"),
++        sa.UniqueConstraint("owner_scope", "session_id", "version_number", name="uq_step_edit_revision_version"),
++    )
++    op.create_index(op.f("ix_step_edit_revisions_owner_scope"), "step_edit_revisions", ["owner_scope"], unique=False)
++    op.create_index(op.f("ix_step_edit_revisions_revision_id"), "step_edit_revisions", ["revision_id"], unique=True)
++    op.create_index(op.f("ix_step_edit_revisions_session_id"), "step_edit_revisions", ["session_id"], unique=False)
++
++    op.create_table(
++        "step_edit_feedback",
++        sa.Column("id", sa.Integer(), autoincrement=True, nullable=False),
++        sa.Column("feedback_id", sa.String(length=64), nullable=False),
++        sa.Column("revision_id", sa.String(length=64), nullable=False),
++        sa.Column("owner_scope", sa.String(length=96), nullable=False),
++        sa.Column("session_id", sa.String(length=128), nullable=False),
++        sa.Column("problem_group_key", sa.String(length=96), nullable=False),
++        sa.Column("original_step", sa.Text(), nullable=False),
++        sa.Column("corrected_step", sa.Text(), nullable=False),
++        sa.Column("original_intent_json", sa.Text(), nullable=False),
++        sa.Column("corrected_intent_json", sa.Text(), nullable=False),
++        sa.Column("geometry_context_json", sa.Text(), nullable=False),
++        sa.Column("dependency_context_json", sa.Text(), nullable=False),
++        sa.Column("registry_operations_json", sa.Text(), nullable=False),
++        sa.Column("validation_result_json", sa.Text(), nullable=False),
++        sa.Column("execution_result_json", sa.Text(), nullable=False),
++        sa.Column("user_acceptance_status", sa.String(length=32), nullable=False),
++        sa.Column("dataset_eligibility", sa.String(length=32), nullable=False),
++        sa.Column("reviewer_note", sa.Text(), nullable=True),
++        sa.Column("schema_version", sa.String(length=32), nullable=False),
++        sa.Column("created_at", sa.DateTime(), nullable=False),
++        sa.Column("updated_at", sa.DateTime(), nullable=False),
++        sa.PrimaryKeyConstraint("id"),
++    )
++    op.create_index(op.f("ix_step_edit_feedback_dataset_eligibility"), "step_edit_feedback", ["dataset_eligibility"], unique=False)
++    op.create_index(op.f("ix_step_edit_feedback_feedback_id"), "step_edit_feedback", ["feedback_id"], unique=True)
++    op.create_index(op.f("ix_step_edit_feedback_owner_scope"), "step_edit_feedback", ["owner_scope"], unique=False)
++    op.create_index(op.f("ix_step_edit_feedback_problem_group_key"), "step_edit_feedback", ["problem_group_key"], unique=False)
++    op.create_index(op.f("ix_step_edit_feedback_revision_id"), "step_edit_feedback", ["revision_id"], unique=False)
++    op.create_index(op.f("ix_step_edit_feedback_session_id"), "step_edit_feedback", ["session_id"], unique=False)
++    op.create_index(op.f("ix_step_edit_feedback_user_acceptance_status"), "step_edit_feedback", ["user_acceptance_status"], unique=False)
++
++
++def downgrade() -> None:
++    """Drop the three step-edit tables in reverse order."""
++    op.drop_index(op.f("ix_step_edit_feedback_user_acceptance_status"), table_name="step_edit_feedback")
++    op.drop_index(op.f("ix_step_edit_feedback_session_id"), table_name="step_edit_feedback")
++    op.drop_index(op.f("ix_step_edit_feedback_revision_id"), table_name="step_edit_feedback")
++    op.drop_index(op.f("ix_step_edit_feedback_problem_group_key"), table_name="step_edit_feedback")
++    op.drop_index(op.f("ix_step_edit_feedback_owner_scope"), table_name="step_edit_feedback")
++    op.drop_index(op.f("ix_step_edit_feedback_feedback_id"), table_name="step_edit_feedback")
++    op.drop_index(op.f("ix_step_edit_feedback_dataset_eligibility"), table_name="step_edit_feedback")
++    op.drop_table("step_edit_feedback")
++
++    op.drop_index(op.f("ix_step_edit_revisions_session_id"), table_name="step_edit_revisions")
++    op.drop_index(op.f("ix_step_edit_revisions_revision_id"), table_name="step_edit_revisions")
++    op.drop_index(op.f("ix_step_edit_revisions_owner_scope"), table_name="step_edit_revisions")
++    op.drop_table("step_edit_revisions")
++
++    op.drop_index(op.f("ix_step_edit_sessions_session_id"), table_name="step_edit_sessions")
++    op.drop_index(op.f("ix_step_edit_sessions_owner_scope"), table_name="step_edit_sessions")
++    op.drop_table("step_edit_sessions")
+diff --git a/backend/tests/test_postgres_axo_history_migration.py b/backend/tests/test_postgres_axo_history_migration.py
+--- a/backend/tests/test_postgres_axo_history_migration.py
++++ b/backend/tests/test_postgres_axo_history_migration.py
+@@ -19,9 +19,10 @@ from tests.test_postgres_integration import _alembic, pg_container  # noqa: F4
+ pytestmark = pytest.mark.postgres
+-MAIN_HEAD, AXO_HEAD = "a1c7e4b90d52", "f8a2c41d9e05"
++MAIN_HEAD, AXO_HEAD = "a1c7e4b90d52", "9c4d8e2b7a10"
+ AXO_TABLES = {"learning_history_entries", "user_account_meta", "admin_system_settings", "admin_audit_logs",
+-              "admin_analysis_telemetry", "analysis_usage_ledger"}
++              "admin_analysis_telemetry", "analysis_usage_ledger",
++              "step_edit_sessions", "step_edit_revisions", "step_edit_feedback"}

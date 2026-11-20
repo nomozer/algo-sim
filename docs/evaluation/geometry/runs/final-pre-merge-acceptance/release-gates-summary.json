@@ -1,0 +1,68 @@
+{
+  "schema_version": "axo-release-gates-summary/1",
+  "generated_at": "2026-11-19T15:12:00+00:00",
+  "branch": "release/axo-final-pre-merge-acceptance",
+  "evaluated_candidate_commit": "897d70c9f9a3862ef5dcaa45a3f91ffd326e91ed",
+  "final_code_and_test_commit": "892e15f06fc53c623a1392f0766d69c21291436a",
+  "baseline_main_commit": "bb046fa22aceff47abe22aa783aa64fc65caee13",
+  "statuses": {
+    "RELEASE_DECISION": "READY_FOR_OWNER_APPROVAL",
+    "MERGE_STATUS": "NOT_MERGED",
+    "PUSH_STATUS": "NOT_PUSHED",
+    "DOCKER_RUNTIME_GATE": "PASS",
+    "MODEL_STATUS": "MODEL_NOT_TRAINED",
+    "PRODUCTION_DEPLOYMENT_VERIFIED": "NO",
+    "INDEPENDENT_H1_VALIDATION": "NOT_MEASURED"
+  },
+  "ownership_resolutions": {
+    "C-Classroom": "OPTION_B_IMPLEMENTED_AND_VERIFIED",
+    "C-Landing": "PENDING_OWNER_DECISION",
+    "C-Workspace": "PENDING_OWNER_DECISION",
+    "C-Release": "PENDING_OWNER_DECISION"
+  },
+  "gates": {
+    "Gate_A_Docker_Runtime": {
+      "status": "PASS",
+      "evidence": "docker-runtime-verification.json",
+      "summary": "Live Linux Docker Engine 29.9.2 + postgres:16-alpine 16.16: image algosim-backend:fpa-gate (790,342,908 B) built with GIT_SHA=897d70c9f; Boot 1 healthy (5400.58 ms) running startup migration_preflight + alembic upgrade head -> f8a2c41d9e05; Option B 404; Step Edit #1 committed_version=1 survived container restart Boot 2 (5994.42 ms); all 6 fail-closed negative scenarios enforced (23 UNSTAMPED_EXISTING_DATABASE, SCHEMA_DRIFT_DETECTED, PARTIAL_MIGRATION_PRE_EXISTING_OBJECT, DESTRUCTIVE_MIGRATION_FORBIDDEN_AT_STARTUP; 1 DOWNGRADE_FORBIDDEN_AT_STARTUP; 503 INVALID_HYBRID_ROUTE_MODE); pg_dump -Fc (82,075 B) + pg_restore 20-table parity + Step Edit #2 committed_version=2."
+    },
+    "Gate_B_PostgreSQL_Backup_Restore_Rollback": {
+      "status": "PASS",
+      "evidence": "postgres-recovery-verification.json",
+      "summary": "PG16.6 backup archive pg16_fpa_src.snapshot.tar.gz (15,136 B, sha256 389b65588ec...) restored with 20-table 100% row SHA-256 / constraint / index / FK / Unique / sequence parity and post-restore Step Edit #2 (200, committed_version=2). Verified bb046fa22 binary rollback Modes A, B1 (9c4d8e2b7a10), and B2 (17 legacy tables restored on approved downgrade, startup/unapproved downgrade blocked). Isolated RO check confirmed protected D:\\Documents\\projects\\algo-sim\\backend\\algosim.db (16 tables, 46 users, sha256 39D676C7B50A...) untouched."
+    },
+    "Gate_C_Ownership_Scope_Audit": {
+      "status": "PENDING_OWNER_DECISION",
+      "evidence": "ownership-scope-decision-matrix.json",
+      "summary": "Audited all 789 changed files vs bb046fa22 (228 non-doc, 561 docs). C-Classroom is resolved and verified under Option B (27 files: 0 Classroom OpenAPI routes, 18 retired endpoints return 404, 0 frontend callers, 5 legacy DB tables retained empty). Technical audit of C-Landing (40 files, 0 legacy Informatics terms) and C-Workspace (119 files, couples Step Editor UI & Scene3D) recommends INCLUDE; explicit Owner sign-off required for C-Landing, C-Workspace, and C-Release."
+    },
+    "Gate_D_Geometry_Oracle_And_StepEditor_Consistency": {
+      "status": "PASS",
+      "evidence": [
+        "geometry-independent-oracle.json",
+        "step-editor-state-consistency.json",
+        "performance-memory-verification.json"
+      ],
+      "summary": "Independent pure-Fraction oracle (zero app.simulation.geometry imports) verified C1 S.ABCD circumcenter I=(2,2,2), R^2=12, bisectors, line incidence, 3-pose camera SHA-256 invariance, and 3 degenerate rejections; C2 & C3 verified notation cascades ((alpha)->(P), AB->SB hoisted M_AB, SB->AB, M=1/3, all 7 _sync_rebuilt_event branches, 5-run determinism fb7c6b2f5fd5e197, PG16 422/409 atomicity); C4 verified 6 geometry families. Phase D perf/memory verified N=5 restart (boot p50=2357.529 ms, state p50=47.702 ms), warm kernel p50=11.046 ms, PG16 HTTP commit p50=70.352 ms, Python tracemalloc 50-cycle retained=0.8 KB, CDP 50-edit node/listener delta=0, 20 problem switches webglCreatedTotal=1, Scene3D unmount domCanvases=0."
+    },
+    "Gate_E_Clean_Candidate_Suites_And_Merge_Simulation": {
+      "status": "PASS",
+      "evidence": "integration-candidate-manifest.json",
+      "summary": "Isolated merge simulation into main (bb046fa22) succeeded cleanly (--ff-only exit 0, --no-ff --no-commit exit 0 CONFLICTS=0, merge-tree matches HEAD_TREE). Sequential suites all passed: freeze_evaluation_candidate --verify (109 files), PG16 & SQLite preflight+alembic check, 7-module -m postgres (8 passed, 33 deselected), tests/geometry (12,000 passed, 6 skipped, 3 deselected, 9 xfailed), tests/semantic_program (1,192 passed, 1 skipped), 52 root test_*.py (815 passed, 8 deselected), tsc -b (exit 0), npm run build (exit 0), vitest --maxWorkers=1 (193/193 files, 2,278/2,278 tests; non-blocking worker-contention timeout note recorded under maxWorkers=2), audit_docs_information_architecture.py (PASS)."
+    },
+    "Gate_F_Live_Host_Browser_Desktop_Mobile_REA": {
+      "status": "PASS",
+      "evidence": "browser-e2e-summary.json",
+      "summary": "Live Uvicorn :18000 (PG16 algosim_fpa_live, git_sha=897d70c9f, cache_version=132) + Vite :3001 verified with external :8000 untouched. Passed Landing->/app, PNG upload, /library & /login F5 reload, 404 Option B probes, tab switch mid-draft, hover pencil, (alpha)->(P) & AB->SB (0 stale tokens, unorbited maxDeltaPx=0, orbited/zoomed posDelta=0 targetDelta=0), 422/409 draft preservation, N=20 E2E roundtrip p50=223.369 ms, 6 viewports + VKB 390x460 (overflowX=0), post-restart PG16 state recovery (version 20->21), accept-product-scope.mjs (48/48), accept-live-classroom.mjs (exit 2 CLASSROOM_FEATURE_RETIRED), and REA MCP inspection + capture (150,135 B), 0 console/page/5xx errors."
+    },
+    "Gate_G_Repository_Safety_And_Governance": {
+      "status": "PASS",
+      "evidence": [
+        "run.json",
+        "owner-approval-checklist.md",
+        "AXO-FINAL-PRE-MERGE-ACCEPTANCE-REPORT.md"
+      ],
+      "summary": "Clean candidate preserved (zero edits outside final-pre-merge-acceptance run artifacts), main untouched at bb046fa22, protected worktrees and algosim.db (sha256 39D676C7...) untouched, docs IA audit PASS (0 unclassified/broken/secrets), zero raw tracebacks or auto-approval tokens."
+    }
+  }
+}

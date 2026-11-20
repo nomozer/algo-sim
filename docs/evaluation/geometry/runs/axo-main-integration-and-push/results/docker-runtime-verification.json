@@ -1,0 +1,129 @@
+{
+  "gate": "A",
+  "gate_name": "Docker Runtime Gate",
+  "status": "PASS",
+  "gate_status": "PASS",
+  "docker_runtime_gate": "PASS",
+  "checked_at": "2026-11-19T16:27:32.308916+00:00",
+  "commit": "804464adedf0661b1938943aae55b03ba12db003",
+  "alembic_head": "f8a2c41d9e05",
+  "docker_environment": {
+    "context": "desktop-linux",
+    "client_version": "29.9.2",
+    "server_version": "29.9.2",
+    "platform": "Docker Desktop 4.97.0 (244584)",
+    "os_arch": "linux/amd64",
+    "kernel_version": "6.6.87.2-microsoft-standard-WSL2",
+    "pg_container_image": "postgres:16-alpine",
+    "pg_container_version": "16.16",
+    "pg_tools": [
+      "pg_dump (PostgreSQL) 16.16",
+      "pg_restore (PostgreSQL) 16.16"
+    ]
+  },
+  "built_image": {
+    "tag": "algosim-backend:main-int-gate",
+    "id": "sha256:c3f3219b8244993b630c03ddf31a714019192822d89878529374ca4c67ad9bf9",
+    "size_bytes": 790342908,
+    "build_duration_ms": 7750.41,
+    "config_cmd": [
+      "/bin/sh",
+      "-c",
+      "python alembic/migration_preflight.py --startup && alembic upgrade head &&     if [ \"$DEV_RELOAD\" = \"1\" ]; then       WATCHFILES_FORCE_POLLING=1 exec uvicorn app.main:app --host 0.0.0.0         --port 8000 --reload --reload-dir /app/app;     else       exec uvicorn app.main:app --host 0.0.0.0 --port 8000;     fi"
+    ],
+    "config_labels": {
+      "org.algosim.backend.build-time": "2026-11-19T16:26:35+00:00",
+      "org.algosim.backend.git-sha": "804464adedf0661b1938943aae55b03ba12db003",
+      "org.algosim.backend.image-inputs-sha256": "f29eea162cace5f7bd2da1f9a0d830af31ffb2d7d1d1b9f540c4efae72edb35b",
+      "org.algosim.backend.requirements-sha256": "8653237b274670619374f98f4a2138e6e5776b3be4cae7301d0211b1f630c164"
+    }
+  },
+  "boot_1_and_restart": {
+    "boot1_health": "healthy",
+    "boot1_ready_ms": 5460.39,
+    "boot2_restart_health": "healthy",
+    "boot2_restart_ms": 6213.72,
+    "git_sha_matches": true,
+    "preflight_in_logs": true,
+    "option_b_classes_status": 404,
+    "option_b_assignments_status": 404,
+    "option_b_live_sessions_status": 404,
+    "step_edit_1_status": 200,
+    "step_edit_1_committed_version": 1,
+    "step_edit_1_after_digest": "fb7c6b2f5fd5e197",
+    "step_edit_persisted_across_restart": true,
+    "boot1_log_lines": [
+      "MIGRATION_PREFLIGHT=PASS reason=SAFE_NO_DESTRUCTIVE_OPERATIONS :: Migration preflight passed cleanly with zero destructive operations.",
+      "INFO:     127.0.0.1:57920 - \"GET /api/health HTTP/1.1\" 200 OK",
+      "INFO  [alembic.runtime.migration] Context impl PostgresqlImpl.",
+      "INFO  [alembic.runtime.migration] Will assume transactional DDL.",
+      "INFO  [alembic.runtime.migration] Running upgrade e437149641fa -> 9c4d8e2b7a10, add step edit tables",
+      "INFO  [alembic.runtime.migration] Running upgrade 9c4d8e2b7a10 -> f8a2c41d9e05, retain legacy classroom tables on classroom feature retirement",
+      "INFO:     Started server process [1]",
+      "INFO:     Waiting for application startup.",
+      "INFO:     Application startup complete.",
+      "INFO:     Uvicorn running on http://0.0.0.0:8000 (Press CTRL+C to quit)"
+    ],
+    "boot2_log_lines": [
+      "MIGRATION_PREFLIGHT=PASS reason=SAFE_NO_DESTRUCTIVE_OPERATIONS :: Migration preflight passed cleanly with zero destructive operations.",
+      "INFO:     127.0.0.1:57920 - \"GET /api/health HTTP/1.1\" 200 OK",
+      "INFO:     172.19.0.1:50060 - \"GET /api/health HTTP/1.1\" 200 OK",
+      "INFO:     172.19.0.1:50062 - \"GET /api/classes HTTP/1.1\" 404 Not Found",
+      "INFO:     172.19.0.1:50076 - \"GET /api/assignments HTTP/1.1\" 404 Not Found",
+      "INFO:     172.19.0.1:50078 - \"GET /api/live-sessions HTTP/1.1\" 404 Not Found",
+      "INFO:     172.19.0.1:50082 - \"POST /api/simulation/steps/edit HTTP/1.1\" 200 OK",
+      "MIGRATION_PREFLIGHT=PASS reason=SAFE_NO_DESTRUCTIVE_OPERATIONS :: Migration preflight passed cleanly with zero destructive operations.",
+      "INFO:     127.0.0.1:42204 - \"GET /api/health HTTP/1.1\" 200 OK",
+      "INFO:     172.19.0.1:46054 - \"GET /api/simulation/sessions/mi-docker-s1/state HTTP/1.1\" 200 OK"
+    ]
+  },
+  "negative_fail_closed_matrix": {
+    "unstamped_existing_db": {
+      "exit_code": 23,
+      "reason": "UNSTAMPED_EXISTING_DATABASE",
+      "log_excerpt": [
+        "MIGRATION_PREFLIGHT=BLOCKED reason=UNSTAMPED_EXISTING_DATABASE :: Existing non-empty schema has no alembic_version stamp. Refusing automatic alembic upgrade/stamp; back up database, inspect schema parity against migrations, and migrate under explicit operator control."
+      ]
+    },
+    "schema_drift_db": {
+      "exit_code": 23,
+      "reason": "SCHEMA_DRIFT_DETECTED",
+      "log_excerpt": [
+        "MIGRATION_PREFLIGHT=BLOCKED reason=SCHEMA_DRIFT_DETECTED :: Live schema drifted from Alembic history through revision 'f8a2c41d9e05': missing/unexpected tables, columns, or partial legacy Classroom retention detected."
+      ]
+    },
+    "partial_migration_db": {
+      "exit_code": 23,
+      "reason": "PARTIAL_MIGRATION_PRE_EXISTING_OBJECT",
+      "log_excerpt": [
+        "MIGRATION_PREFLIGHT=BLOCKED reason=PARTIAL_MIGRATION_PRE_EXISTING_OBJECT :: Pending non-destructive migration conflicts with pre-existing database tables/columns (partial or interrupted prior migration state). Inspect and reconcile before executing DDL."
+      ]
+    },
+    "destructive_pending_migration": {
+      "exit_code": 23,
+      "reason": "DESTRUCTIVE_MIGRATION_FORBIDDEN_AT_STARTUP",
+      "log_excerpt": [
+        "MIGRATION_PREFLIGHT=BLOCKED reason=DESTRUCTIVE_MIGRATION_FORBIDDEN_AT_STARTUP :: Blocked destructive upgrade revision(s) ['deadc0de0099'] during container/app startup. Automatic `alembic upgrade head` must never execute DROP/TRUNCATE/DELETE operations."
+      ]
+    },
+    "hybrid_route_mode_off": {
+      "http_status": 503,
+      "reason_code": "INVALID_HYBRID_ROUTE_MODE"
+    },
+    "startup_downgrade_attempt": {
+      "exit_code": 1,
+      "reason": "DOWNGRADE_FORBIDDEN_AT_STARTUP"
+    }
+  },
+  "official_pg_dump_restore": {
+    "dump_path": "D:\\Documents\\projects\\algo-sim\\.superpowers\\db-safety-backups\\2026-11-19-axo-main-integration-and-push\\mi_docker_main.pgdump",
+    "dump_bytes": 82073,
+    "dump_sha256": "0e6e9ea6ec3a11fb4d56f473f136f2189158599ff3bb81535e372a6c2dad971d",
+    "tables_parity_20": true,
+    "row_sha256_parity": true,
+    "constraints_and_indexes_parity": true,
+    "post_restore_container_state_ok": true,
+    "post_restore_step_edit_2_status": 200,
+    "post_restore_committed_version": 2
+  }
+}

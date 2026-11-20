@@ -23,7 +23,10 @@ import os
 import socket
 import sys
 import tempfile
+import uuid
 from pathlib import Path
+
+_SESSION_NONCE = uuid.uuid4().hex[:8]
 
 import httpx
 import pytest
@@ -35,8 +38,8 @@ import pytest
 pytest_plugins = ("geometry_regression_fixtures",)
 
 
-def duong_dan_db_test(pid: int | None = None) -> str:
-    """URL SQLite RIÊNG cho MỘT lượt pytest, đặt tên theo PID.
+def duong_dan_db_test(pid: int | None = None, nonce: str | None = None) -> str:
+    """URL SQLite RIÊNG cho MỘT lượt pytest, đặt tên theo PID + nonce phiên.
 
     ─── VÌ SAO, ĐO ĐƯỢC 2026-08-25 ──────────────────────────────────────────
 
@@ -60,8 +63,9 @@ def duong_dan_db_test(pid: int | None = None) -> str:
     quyết nửa khác của bài toán (đổi chỗ `SessionLocal` cho từng test cần DB
     trống); hai thứ không thay nhau được.
     """
-    pid = os.getpid() if pid is None else pid
-    return f"sqlite:///{Path(tempfile.gettempdir()) / f'algosim-test-{pid}.db'}"
+    resolved_pid = os.getpid() if pid is None else pid
+    resolved_nonce = _SESSION_NONCE if nonce is None else nonce
+    return f"sqlite:///{Path(tempfile.gettempdir()) / f'algosim-test-{resolved_pid}-{resolved_nonce}.db'}"
 
 
 # `setdefault`, KHÔNG gán đè: lượt chỉ định DATABASE_URL tường minh (smoke
@@ -75,6 +79,12 @@ def pytest_sessionfinish(session, exitstatus):
     duong_dan = os.environ.get("DATABASE_URL", "")
     if duong_dan != duong_dan_db_test():
         return  # DB do người khác chỉ định — không phải của ta, không đụng
+    db_mod = sys.modules.get("app.persistence.db")
+    if db_mod is not None and getattr(db_mod, "engine", None) is not None:
+        try:
+            db_mod.engine.dispose()
+        except Exception:
+            pass
     try:
         Path(duong_dan.removeprefix("sqlite:///")).unlink(missing_ok=True)
     except OSError:

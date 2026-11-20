@@ -1,0 +1,70 @@
+{
+  "schema_version": "axo-evaluation-run/1",
+  "run_id": "pre-merge-risk-closure",
+  "task_slug": "axo-pre-merge-risk-closure-architecture-contract-and-owner-decision-gate",
+  "date": "2026-11-19",
+  "generated_at": "2026-11-19T10:25:55.676845+00:00",
+  "verification_branch": "audit/axo-pre-merge-risk-closure",
+  "baseline_acceptance_branch": "release/axo-final-release-readiness",
+  "baseline_report_commit": "86b62adbb63688ad09124eca033535a329c611a7",
+  "baseline_code_commit": "a0f4a516630bb582d982463cd1160f7668154221",
+  "merge_base_main": "bb046fa22aceff47abe22aa783aa64fc65caee13",
+  "origin_main": "bb046fa22aceff47abe22aa783aa64fc65caee13",
+  "product_fix_commits": [
+    "014a2fd24160b25039f589f5adaf3b762ba985f8",
+    "3f3afb25b84bf845267fbda6f6e6c128c6ee502b",
+    "600f5105d4222cd6835cc916b34d5cb3f11610e6"
+  ],
+  "final_verified_seal_commit": "dbfbcf31256b60f076d8ff4464aac9223a213f09",
+  "final_product_commit_sha": "600f5105d4222cd6835cc916b34d5cb3f11610e6",
+  "measured_system_tree_hash": "78edfa1784625e9bca8f1a4cd70b60359d198ba77530986903175a57e18206a7",
+  "measured_system_file_count": 109,
+  "cache_version": "132",
+  "gates": {
+    "BASELINE_86B62ADBB_AUDIT": "PASS",
+    "P0_2_SCHEMA_PARITY_AND_STAMP_SAFETY": "PASS",
+    "P0_3_SEMANTIC_IDENTITY_AND_DEPENDENCY_REBUILD": "PASS",
+    "P0_4_CLASSROOM_RETIREMENT_IMPACT": "BLOCKED_OWNERSHIP",
+    "P0_8_OWNER_DECISION_MATRIX": "BLOCKED_OWNERSHIP",
+    "P1_5_SINGLE_WORKER_AND_PG16_CONCURRENCY": "PASS",
+    "P1_6_PERFORMANCE_VARIANCE_ROOT_CAUSE": "PASS",
+    "P1_7_CAMERA_INVARIANCE_RESPONSIVE_RESTART_REA_MCP": "PASS",
+    "SECTION_9_SEQUENTIAL_REGRESSION_SUITES": "PASS"
+  },
+  "statuses": {
+    "RELEASE_DECISION": "TECHNICALLY_READY_PENDING_OWNER_APPROVAL",
+    "MERGE_STATUS": "NOT_MERGED",
+    "PUSH_STATUS": "NOT_PUSHED",
+    "MODEL_STATUS": "MODEL_NOT_TRAINED",
+    "PRODUCTION_DEPLOYMENT_VERIFIED": "NO",
+    "INDEPENDENT_H1_VALIDATION": "NOT_MEASURED"
+  },
+  "artifacts": {
+    "formal_report": "AXO-PRE-MERGE-RISK-CLOSURE-REPORT.md",
+    "report": "report.md",
+    "owner_decision_matrix": "owner-decision-matrix.md",
+    "quality_gates_summary": "quality-gates-summary.json",
+    "schema_contract_diff": "schema-contract-diff.json",
+    "migration_safety_results": "migration-safety-results.json",
+    "semantic_identity_audit": "semantic-identity-audit.json",
+    "dependency_rebuild_regression": "dependency-rebuild-regression.json",
+    "classroom_api_impact_matrix": "classroom-api-impact-matrix.json",
+    "single_worker_concurrency_results": "single-worker-concurrency-results.json",
+    "performance_remeasurement": "performance-remeasurement.json",
+    "browser_responsive_results": "browser-responsive-results.json",
+    "images": [
+      "images/rc-1920-422-rollback.png",
+      "images/rc-1920-cascade-f5.png",
+      "images/rc-1920-sb-rename-P.png",
+      "images/rc-post-restart.png",
+      "images/rc-rea-mcp.png",
+      "images/rc-vkb-390x460.png",
+      "images/rc-vp-1280x800.png",
+      "images/rc-vp-1440x900.png",
+      "images/rc-vp-1920x1080.png",
+      "images/rc-vp-320x568.png",
+      "images/rc-vp-390x844.png",
+      "images/rc-vp-768x1024.png"
+    ]
+  }
+}

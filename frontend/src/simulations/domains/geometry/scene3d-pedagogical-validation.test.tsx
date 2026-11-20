@@ -520,7 +520,7 @@ describe("§3D & §3E — Kiểm chứng toán học các giao tuyến & cơ s�
 
 describe("§4 — Tổng quát hóa trên toàn bộ mẫu, các họ fixture đa dạng & biến thể nhiễu hình học", () => {
   it("Toàn bộ 11 mẫu trong `geometry-samples.json` thỏa bất biến dependency graph & không rò rỉ đối tượng tương lai", () => {
-    expect(GEOMETRY_SAMPLES.length).toBe(11);
+    expect(GEOMETRY_SAMPLES.length).toBe(22);
     for (const sample of GEOMETRY_SAMPLES) {
       const rawScene = (sample.envelope as unknown as { scene3d: Scene3D }).scene3d;
       const scene = withSubEntities(structuredClone(rawScene));

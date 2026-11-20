@@ -1,0 +1,466 @@
+{
+  "commit": "dbfbcf31256b60f076d8ff4464aac9223a213f09",
+  "startedAt": "2026-11-19T10:10:19.864Z",
+  "baseUrl": "http://localhost:3012",
+  "backendUrl": "http://127.0.0.1:8012",
+  "routesAndAttachmentSmoke": {
+    "landingStatus": 200,
+    "appStatus": 200,
+    "fileInputCount": 3,
+    "plusMenuOpened": true
+  },
+  "unorbitedCameraInvariance": {
+    "status": "PASS",
+    "vertsBefore": {
+      "B": {
+        "x": 652.49,
+        "y": 762
+      },
+      "C": {
+        "x": 1011.38,
+        "y": 884
+      },
+      "D": {
+        "x": 1171.16,
+        "y": 696
+      },
+      "S": {
+        "x": 861.93,
+        "y": 310
+      }
+    },
+    "vertsAfter": {
+      "B": {
+        "x": 652.49,
+        "y": 762
+      },
+      "C": {
+        "x": 1011.38,
+        "y": 884
+      },
+      "D": {
+        "x": 1171.16,
+        "y": 696
+      },
+      "S": {
+        "x": 861.93,
+        "y": 310
+      }
+    },
+    "deltasPx": {
+      "S": 0,
+      "B": 0,
+      "C": 0,
+      "D": 0
+    },
+    "maxDeltaPx": 0
+  },
+  "orbitedCameraInvariance": {
+    "status": "PASS",
+    "cameraBefore": {
+      "position": [
+        13.209819128877946,
+        2.8085230302487707,
+        4.041857825120221
+      ],
+      "target": [
+        2,
+        2,
+        2
+      ]
+    },
+    "cameraAfter": {
+      "position": [
+        13.209819128877946,
+        2.8085230302487707,
+        4.041857825120221
+      ],
+      "target": [
+        2,
+        2,
+        2
+      ]
+    },
+    "threeJsCameraPositionDelta": 0,
+    "threeJsCameraTargetDelta": 0
+  },
+  "stepEditorRenameAndZeroLeak": {
+    "status": "PASS",
+    "opacityTransition": "0 -> 1",
+    "pencilHiddenWhileEditing": true,
+    "draftSurvivedDockScroll": true,
+    "dockBoundsOk": true,
+    "staleAlphaRowsAfter": 0
+  },
+  "draftAndErrorPreservation": [
+    {
+      "case": "undefined_point_SZ",
+      "status": 422,
+      "errorCode": "MISSING_DEPENDENCY",
+      "draftPreserved": true
+    },
+    {
+      "case": "collinear_AOC",
+      "status": 422,
+      "errorCode": "COLLINEAR_POINTS",
+      "draftPreserved": true
+    },
+    {
+      "case": "unsupported_syntax",
+      "status": 422,
+      "errorCode": "UNSUPPORTED_STEP_SYNTAX",
+      "draftPreserved": true
+    }
+  ],
+  "cascadeTabIsolationAndSkew": {
+    "status": "PASS",
+    "f5Retained": true,
+    "tabReopenRetained": true,
+    "dockScrollIsolated": true,
+    "sequentialS1FinalMXyz": [
+      "0",
+      "0",
+      "9/2"
+    ],
+    "committedVersion": 15,
+    "probes409": {
+      "stale": {
+        "status": 409,
+        "code": "STALE_REVISION_CONFLICT"
+      },
+      "superseded": {
+        "status": 409,
+        "code": "EDIT_SUPERSEDED"
+      }
+    }
+  },
+  "browserMetrics": {
+    "ui_interaction_open_latency_ms": {
+      "iterations": 15,
+      "p50_ms": 43.505,
+      "p95_ms": 50.8,
+      "p99_ms": 52.002,
+      "min_ms": 30.217,
+      "max_ms": 52.303,
+      "mean_ms": 43.816,
+      "iqr_ms": 6.21,
+      "samples_ms": [
+        48.355,
+        47.163,
+        43.505,
+        42.138,
+        40.089,
+        44.289,
+        46.34,
+        50.156,
+        41.144,
+        41.55,
+        40.416,
+        47.95,
+        52.303,
+        41.626,
+        30.217
+      ]
+    },
+    "frontend_update_completion_ms": {
+      "iterations": 15,
+      "p50_ms": 134.587,
+      "p95_ms": 227.32,
+      "p99_ms": 243.567,
+      "min_ms": 116.754,
+      "max_ms": 247.629,
+      "mean_ms": 148.297,
+      "iqr_ms": 22.11,
+      "samples_ms": [
+        247.629,
+        153.427,
+        139.819,
+        127.206,
+        134.587,
+        148.089,
+        160.734,
+        130.09,
+        131.949,
+        132.841,
+        139.419,
+        120.575,
+        122.713,
+        218.616,
+        116.754
+      ]
+    },
+    "scene3d_post_edit_render_ms": {
+      "iterations": 15,
+      "p50_ms": 46,
+      "p95_ms": 69.68,
+      "p99_ms": 86.256,
+      "min_ms": 0.5,
+      "max_ms": 90.4,
+      "mean_ms": 38.873,
+      "iqr_ms": 32.05,
+      "samples_ms": [
+        90.4,
+        55.2,
+        60.8,
+        0.7,
+        0.5,
+        49.7,
+        45.1,
+        50.6,
+        50.7,
+        45.5,
+        49.9,
+        0.8,
+        46,
+        3.1,
+        34.1
+      ]
+    },
+    "e2e_step_edit_roundtrip_ms": {
+      "iterations": 15,
+      "p50_ms": 265.579,
+      "p95_ms": 353.492,
+      "p99_ms": 362.809,
+      "min_ms": 210.16,
+      "max_ms": 365.138,
+      "mean_ms": 276.48,
+      "iqr_ms": 34.69,
+      "samples_ms": [
+        365.138,
+        286.247,
+        282.545,
+        348.501,
+        247.59,
+        276.136,
+        289.856,
+        251.431,
+        265.579,
+        264.113,
+        255.293,
+        234.543,
+        256.231,
+        313.838,
+        210.16
+      ]
+    }
+  },
+  "viewports": [
+    {
+      "width": 1920,
+      "height": 1080,
+      "mobileTouch": false,
+      "overflowX": 0,
+      "canvasVisible": true,
+      "canvasWidthPx": 1289,
+      "canvasHeightPx": 1042,
+      "runClipped": false,
+      "cancelClipped": false,
+      "runBtnHeightPx": 25,
+      "cancelBtnHeightPx": 25,
+      "textareaHeightPx": 32,
+      "textareaHorizontalOverflow": false,
+      "controlsOccludeActions": false,
+      "webglPhase": "healthy",
+      "canvasViewportHeightRatio": 0.965,
+      "visibleVertexLabels": 8,
+      "visiblePlaneLabels": 0,
+      "clippedLabels": [],
+      "occludedSceneControls": []
+    },
+    {
+      "width": 1440,
+      "height": 900,
+      "mobileTouch": false,
+      "overflowX": 0,
+      "canvasVisible": true,
+      "canvasWidthPx": 809,
+      "canvasHeightPx": 862,
+      "runClipped": false,
+      "cancelClipped": false,
+      "runBtnHeightPx": 25,
+      "cancelBtnHeightPx": 25,
+      "textareaHeightPx": 32,
+      "textareaHorizontalOverflow": false,
+      "controlsOccludeActions": false,
+      "webglPhase": "healthy",
+      "canvasViewportHeightRatio": 0.958,
+      "visibleVertexLabels": 8,
+      "visiblePlaneLabels": 0,
+      "clippedLabels": [],
+      "occludedSceneControls": []
+    },
+    {
+      "width": 1280,
+      "height": 800,
+      "mobileTouch": false,
+      "overflowX": 0,
+      "canvasVisible": true,
+      "canvasWidthPx": 673,
+      "canvasHeightPx": 762,
+      "runClipped": false,
+      "cancelClipped": false,
+      "runBtnHeightPx": 25,
+      "cancelBtnHeightPx": 25,
+      "textareaHeightPx": 48,
+      "textareaHorizontalOverflow": false,
+      "controlsOccludeActions": false,
+      "webglPhase": "healthy",
+      "canvasViewportHeightRatio": 0.953,
+      "visibleVertexLabels": 8,
+      "visiblePlaneLabels": 0,
+      "clippedLabels": [],
+      "occludedSceneControls": []
+    },
+    {
+      "width": 768,
+      "height": 1024,
+      "mobileTouch": false,
+      "overflowX": 0,
+      "canvasVisible": true,
+      "canvasWidthPx": 472,
+      "canvasHeightPx": 986,
+      "runClipped": false,
+      "cancelClipped": false,
+      "runBtnHeightPx": 25,
+      "cancelBtnHeightPx": 25,
+      "textareaHeightPx": 48,
+      "textareaHorizontalOverflow": false,
+      "controlsOccludeActions": false,
+      "webglPhase": "healthy",
+      "canvasViewportHeightRatio": 0.963,
+      "visibleVertexLabels": 8,
+      "visiblePlaneLabels": 0,
+      "clippedLabels": [],
+      "occludedSceneControls": []
+    },
+    {
+      "width": 390,
+      "height": 844,
+      "mobileTouch": true,
+      "overflowX": 0,
+      "canvasVisible": true,
+      "canvasWidthPx": 390,
+      "canvasHeightPx": 444,
+      "runClipped": false,
+      "cancelClipped": false,
+      "runBtnHeightPx": 30,
+      "cancelBtnHeightPx": 30,
+      "textareaHeightPx": 32,
+      "textareaHorizontalOverflow": false,
+      "controlsOccludeActions": false,
+      "webglPhase": "healthy",
+      "canvasViewportHeightRatio": 0.527,
+      "visibleVertexLabels": 8,
+      "visiblePlaneLabels": 0,
+      "clippedLabels": [],
+      "occludedSceneControls": []
+    },
+    {
+      "width": 320,
+      "height": 568,
+      "mobileTouch": true,
+      "overflowX": 0,
+      "canvasVisible": true,
+      "canvasWidthPx": 320,
+      "canvasHeightPx": 293,
+      "runClipped": false,
+      "cancelClipped": false,
+      "runBtnHeightPx": 30,
+      "cancelBtnHeightPx": 30,
+      "textareaHeightPx": 48,
+      "textareaHorizontalOverflow": false,
+      "controlsOccludeActions": false,
+      "webglPhase": "healthy",
+      "canvasViewportHeightRatio": 0.515,
+      "visibleVertexLabels": 8,
+      "visiblePlaneLabels": 0,
+      "clippedLabels": [],
+      "occludedSceneControls": []
+    }
+  ],
+  "touchAndVkb": {
+    "status": "PASS",
+    "pencilVisibleOnTouchActive": true,
+    "vkb390x460": {
+      "overflowX": 0,
+      "taInViewport": true,
+      "runInViewport": true,
+      "cancelInViewport": true
+    }
+  },
+  "consoleErrors": [],
+  "pageErrors": [],
+  "unexpected5xx": [],
+  "finishedAt": "2026-11-19T10:11:19.837Z",
+  "postBackendRestartRecovery": {
+    "status": "PASS",
+    "sessionId": "se-be5cdbf3-sample-chop-thiet-dien-ba-diem-55591bff",
+    "restoredCommittedVersion": 15,
+    "restoredMxyz": [
+      "0",
+      "0",
+      "9/2"
+    ],
+    "postRestartEditStatus": 200,
+    "postRestartCommittedVersion": 16
+  },
+  "reaMcpEvidence": {
+    "status": "PASS",
+    "cdpEndpoint": "http://127.0.0.1:9341",
+    "targetId": "A1BE2003DCC5CC382677449816A9AE1E",
+    "targetUrl": "http://localhost:3012/simulation/pyramid-circumscribed-sphere",
+    "list_browser_targets_evidence_id": "ev_20118e13067624bd2f581cde44f1b7894c95328a3c04116e9691a7cdc960a142",
+    "inspect_web_page_evidence_id": "ev_73255d1bf31b4f9872c765ae5b2ca9cc77102fd8fb4d96467b31c07579504e58",
+    "capture_web_screenshot_evidence_id": "ev_974bb9e0c0a92b3a1a7a8f23691be66a80517e4b1b3856cc74e283c3b523c7ff",
+    "screenshot_file": "images/rc-rea-mcp.png",
+    "screenshot_bytes": 150127,
+    "artifact_sha256": "64513149a1cef8ea1d37aaf9bdbd5994a1507dbdacd32044807ac075fe3a4db4",
+    "console_message_count": 0,
+    "console_error_count": 0,
+    "accessibility_text_length": 8019,
+    "step_editor_visible_in_accessibility": true,
+    "storage": {
+      "origin": "http://localhost:3012",
+      "usage_bytes": 0,
+      "quota_bytes": 1072760250,
+      "local_storage_keys": [
+        "algosim.processing_records.v1",
+        "axo:client-session-id:v1",
+        "algosim.history.v1:h198csmj"
+      ],
+      "session_storage_keys": [
+        "algosim.processing_records.v1",
+        "algosim.workspace_tabs_session.v1",
+        "axo:learner-recovery:v1"
+      ],
+      "indexed_db_names": [],
+      "cache_names": [],
+      "content_fingerprints": [],
+      "fingerprint_algorithm": "sha256",
+      "fingerprints_complete": false,
+      "values_redacted": true
+    },
+    "dom_total_nodes": 783,
+    "accessibility_total_nodes": 445
+  },
+  "verified_seal_commit": "dbfbcf31256b60f076d8ff4464aac9223a213f09",
+  "product_commit_sha": "600f5105d4222cd6835cc916b34d5cb3f11610e6",
+  "measured_system_tree_hash": "78edfa1784625e9bca8f1a4cd70b60359d198ba77530986903175a57e18206a7",
+  "root_cause_fixes": [
+    {
+      "issue_id": "ISSUE-ALEMBIC-STAMP-AND-DRIFT-PREFLIGHT-GAP",
+      "commit": "014a2fd24160b25039f589f5adaf3b762ba985f8",
+      "summary": "Enforce stamp parity, unexpected rogue table drift, and atomic 0-or-5 legacy Classroom retention check in migration_preflight.py and env.py."
+    },
+    {
+      "issue_id": "ISSUE-FE-UNORBITED-CAMERA-JUMP-ON-STEP-EDIT-COMMIT",
+      "commit": "3f3afb25b84bf845267fbda6f6e6c128c6ee502b",
+      "summary": "Preserve live unorbited camera pose and lens viewOffset across same-scene step-edit rebuilds in scene3d-view.tsx and SimulationWorkspace.tsx."
+    },
+    {
+      "issue_id": "ISSUE-SE-CROSS-CONTEXT-CLIENT-SEQ-DESYNC",
+      "commit": "600f5105d4222cd6835cc916b34d5cb3f11610e6",
+      "summary": "Expose persisted latest_client_seq on GET /sessions/{id}/state and 409 EDIT_SUPERSEDED, sync frontend submit seq watermark across fresh contexts, and surface server-side 409 conflicts cleanly."
+    }
+  ]
+}

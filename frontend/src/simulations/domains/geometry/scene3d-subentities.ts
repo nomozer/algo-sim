@@ -298,6 +298,19 @@ function _diemCuaDinh(
   const cungTap = (a: string[], b: string[]) =>
     new Set(a).size === a.length && a.length === b.length && a.every((x) => b.includes(x));
   return (sec.polygon ?? []).map((v, k) => {
+    const orderedVid = sec.ordered_vertex_ids?.[k];
+    if (orderedVid) {
+      const ordObj = theoId.get(orderedVid);
+      if (
+        ordObj
+        && !isSubEntity(ordObj.id)
+        && ordObj.type === "point3"
+        && !laDiemPhuDungMatPhang(scene, ordObj, theoId)
+        && (!ordObj.xyz || _khoaToa(ordObj.xyz) === _khoaToa(v))
+      ) {
+        return ordObj;
+      }
+    }
     const khoa = _khoaToa(v);
     const mot = diem.get(khoa);
     if (mot !== null) {
@@ -449,6 +462,13 @@ export function sectionCycleLabel(
 ): string | null {
   const sec = scene.objects.find((o) => o.id === sectionId);
   if (!sec?.polygon || sec.polygon.length < 3) return null;
+  if (
+    Array.isArray(sec.ordered_vertex_symbols)
+    && sec.ordered_vertex_symbols.length === sec.polygon.length
+    && sec.ordered_vertex_symbols.every((sym) => typeof sym === "string" && sym.trim().length > 0 && !/^Đỉnh\s+\d+$/u.test(sym.trim()))
+  ) {
+    return sec.ordered_vertex_symbols.map((sym) => sym.trim()).join("");
+  }
   const diem = _banDoDiem(scene);
   /* KÝ HIỆU, không phải tên đầy đủ. `"MNPQ"` là cách đề bài gọi một thiết diện;
    * ghép tên đọc được thì ra `"Điểm AĐiểm CĐiểm S"` — đo được trong trình duyệt
@@ -466,6 +486,10 @@ export interface SectionDetails {
   vertexCount: number;
   /** Tên từng đỉnh theo CHU TRÌNH — có tên thì dùng tên, không thì "Đỉnh k". */
   vertexNames: string[];
+  /** Id điểm đỉnh theo đúng thứ tự chu trình do Backend chứng nhận (nếu có). */
+  orderedVertexIds?: string[];
+  /** Ký hiệu các cạnh biên theo chu trình (`["ME","EN","NP","PF","FM"]`, nếu có). */
+  orderedBoundaryEdges?: string[];
   /** Id khối bị cắt, đọc theo KIỂU chứ không theo vị trí trong `depends`. */
   solidId: string | null;
   planeId: string | null;
@@ -488,12 +512,24 @@ export function sectionDetails(
   const diem = _banDoDiem(scene);
   const cua = (loai: string) =>
     sec.depends.find((d) => theoId.get(d)?.type === loai) ?? null;
+  const hasCertifiedSyms =
+    Array.isArray(sec.ordered_vertex_symbols)
+    && sec.ordered_vertex_symbols.length === sec.polygon.length
+    && sec.ordered_vertex_symbols.every((sym) => typeof sym === "string" && sym.trim().length > 0 && !/^Đỉnh\s+\d+$/u.test(sym.trim()));
+  const fallbackNames = _diemCuaDinh(scene, sec, diem).map((o, i) => o?.notation ?? o?.label ?? `Đỉnh ${i + 1}`);
   return {
     cycleLabel: sectionCycleLabel(scene, id),
     vertexCount: sec.polygon.length,
-    // Danh sách đỉnh — ký hiệu trước, vì đây là một DÃY và câu đầy đủ nối bằng
-    // dấu phẩy sẽ dài hơn cả ô soi. Không có ký hiệu thì mới dùng tên.
-    vertexNames: _diemCuaDinh(scene, sec, diem).map((o, i) => o?.notation ?? o?.label ?? `Đỉnh ${i + 1}`),
+    // Danh sách đỉnh — ưu tiên ordered_vertex_symbols từ Backend, không tự đoán hay đảo chiều chu trình.
+    vertexNames: hasCertifiedSyms
+      ? sec.ordered_vertex_symbols!.map((sym) => sym.trim())
+      : fallbackNames,
+    orderedVertexIds: Array.isArray(sec.ordered_vertex_ids) && sec.ordered_vertex_ids.length === sec.polygon.length
+      ? [...sec.ordered_vertex_ids]
+      : undefined,
+    orderedBoundaryEdges: Array.isArray(sec.ordered_boundary_edges) && sec.ordered_boundary_edges.length >= 3
+      ? [...sec.ordered_boundary_edges]
+      : undefined,
     solidId: sec.parent ?? cua("solid"),
     planeId: cua("plane3"),
   };

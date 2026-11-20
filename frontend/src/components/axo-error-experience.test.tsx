@@ -47,6 +47,12 @@ describe("AXO Error Experience & Unbreakable Escape Navigation (§7–§8)", () 
       kind: "not_found",
       requestedPath: "/khong-ton-tai",
     });
+    for (const removedClassroomPath of ["/classes", "/assignments", "/monitor", "/observe"]) {
+      expect(resolveLocationRoute(removedClassroomPath, "", "")).toEqual({
+        kind: "not_found",
+        requestedPath: removedClassroomPath,
+      });
+    }
     expect(resolveLocationRoute("/simulation/khong-co-bai-nay", "", "")).toEqual({
       kind: "not_found",
       requestedPath: "/simulation/khong-co-bai-nay",
@@ -148,7 +154,7 @@ describe("AXO Error Experience & Unbreakable Escape Navigation (§7–§8)", () 
     expect(appBrokenSceneHtml).toContain('data-error-kind="unsupported_simulation"');
     expect(appBrokenSceneHtml).toContain('data-illustration="axo-constraint-unclosed"');
     expect(appBrokenSceneHtml).not.toContain('data-error-kind="not_found"');
-    expect(appBrokenSceneHtml).toContain("Quay lại");
+    expect(appBrokenSceneHtml).not.toContain('class="axo-error-actions"');
 
     // Mâu thuẫn tọa độ toán học bị chặn bởi trình xác minh tất định ở Frontend
     const sampleScene3d = (sample.envelope as unknown as { scene3d: Record<string, unknown> }).scene3d;
@@ -197,7 +203,7 @@ describe("AXO Error Experience & Unbreakable Escape Navigation (§7–§8)", () 
     expect(refusalHtml).toContain("CHƯA ĐỦ DỮ KIỆN");
     expect(refusalHtml).toContain("thiếu độ dài cạnh bên");
     expect(refusalHtml).not.toContain("GIVEN_VALUE_NOT_IN_SOURCE");
-    expect(refusalHtml).toContain("Quay lại");
+    expect(refusalHtml).not.toContain('class="axo-error-actions"');
   });
 
   it("4. Network / Data Loading Failure: phân loại từ hợp đồng lỗi có kiểu (AxoClientError), tuyệt đối không đoán từ chuỗi message", () => {

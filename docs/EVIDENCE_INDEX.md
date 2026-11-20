@@ -448,6 +448,16 @@ VERIFICATION = baseline_integrity.json; prior_metric_reconciliation.json; full_r
 CORRECTS = image-first-ocr-verified-geometry report CER0.0110 (recomputed0.1135 on five polyhedral cases,0.1040 on all12); misleading independent_holdout labels after exposure; unsupported full-regression and zero-corruption claims; active-RAM interpretation. Original29 artifacts unchanged.
 CORRECTED_BY = NONE
 LIMITATIONS = 8 relevant images (2 development/6 frozen external), unverified agent references; new-corpus0 served; live Vision NOT_AUTHORIZED; real students/H1/physical-low-end NOT_MEASURED. Precursor concurrent5/20 HTTP500 retained, precise cause UNKNOWN; controlled SQLite mechanism fixed; bounded follow-up10/10 and sealed-candidate20/20 (0 captured server exceptions) do not prove production-load reliability. Whole-HEAD publication gate remains BLOCKED by97 pending entries unchanged from baseline.
+## Correction — `step-editor-main-integration-audit` raw traceback log removal
+
+CORRECTS: `docs/evaluation/geometry/runs/step-editor-main-integration-audit/logs/phase-b-migration-safety.log` (`blob=3c31f2f74f7ba2e5f4a62e31a55ab2084eb32362`, `5,074` bytes, `sha256=94990008cde3ec4c92b01a43487865a3af6406cc995a4c7223284f34b773dcfd`).
+REMOVED_FROM_HEAD_AT: pre-merge publication hygiene cleanup on `release/axo-main-integration-rc` per `AGENTS.md §4` (raw Python traceback line in tip tree). Structured non-secret audit evidence remains intact in `docs/evaluation/geometry/runs/step-editor-main-integration-audit/results/phase-b-database-safety-audit.json`.
+
+## Correction — `axo-attachment-scroll` local screenshots
+
+CORRECTS: `docs/evaluation/geometry/runs/axo-attachment-scroll/images/after-drag-end.png` and `images/mobile-swipe.png`.
+CORRECTED_BY: `docs/evaluation/geometry/runs/axo-attachment-refinement/report.md`.
+During V9.4.7, rerunning the older local browser scripts overwrote those two untracked screenshots. Their earlier bytes are `NOT_RECOVERABLE` from the current working tree; the current files are later captures and must not be treated as the original V9.4.6 images. Other evidence has not been reclassified by this correction.
 
 **Git state / recovery update, 2026-11-07:** see [CURRENT_STATE — repository closure](CURRENT_STATE.md#repository-closure--2026-11-07).
 Retired branch names now have local `refs/archive/repository-closure/` references and a verified private self-contained bundle.

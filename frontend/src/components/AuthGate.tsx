@@ -3919,6 +3919,26 @@ export function AdminWorkspaceView({
                   <span className="admin-sb-label">Nhật ký quản trị</span>
                   <span className="admin-sb-tooltip">Nhật ký quản trị</span>
                 </button>
+
+                <button
+                  type="button"
+                  className="admin-sb-item"
+                  id="btn-admin-back-workspace"
+                  data-admin-tab="back-workspace"
+                  aria-label="Về không gian học"
+                  title="Về không gian học"
+                  onClick={() => {
+                    setMobileDrawerOpen(false);
+                    goHome();
+                  }}
+                >
+                  <svg viewBox="0 0 24 24" aria-hidden="true">
+                    <path d="M19 12H5" />
+                    <polyline points="12 19 5 12 12 5" />
+                  </svg>
+                  <span className="admin-sb-label">Về không gian học</span>
+                  <span className="admin-sb-tooltip">Về không gian học</span>
+                </button>
               </nav>
             </div>
           </aside>
@@ -4047,8 +4067,34 @@ export function AdminWorkspaceView({
                       data-admin-acc-act="account-info"
                       onClick={() => {
                         setAccMenuOpen(false);
-                        const adminItem = users.find((u) => u.role === "admin") ?? users[0] ?? null;
-                        if (adminItem) setDetailUser(adminItem);
+                        const matchedAdmin =
+                          users.find(
+                            (u) =>
+                              (user && (String(u.id) === String(user.id) || u.email === user.email)) ||
+                              u.role === "admin",
+                          ) ?? null;
+                        const adminItem: AdminUserItem = matchedAdmin
+                          ? {
+                              ...matchedAdmin,
+                              role: "admin",
+                              name: user?.displayName || matchedAdmin.name || "Quản trị viên",
+                              email: user?.email || matchedAdmin.email || "admin@axo.edu.vn",
+                            }
+                          : {
+                              id: user?.id ?? "admin-self",
+                              name: user?.displayName || "Quản trị viên",
+                              email: user?.email || "admin@axo.edu.vn",
+                              role: "admin",
+                              status: "active",
+                              school: user?.school || user?.workplace || "Hệ thống Axo",
+                              joinedAt: new Date().toLocaleDateString("vi-VN"),
+                              joinedTs: Date.now(),
+                              dailyLimit: user?.dailyLimit ?? 200,
+                              tokenCap: 500000,
+                              usedToday: user?.usedToday ?? 0,
+                              tokensToday: "Chưa đo token",
+                            };
+                        setDetailUser(adminItem);
                       }}
                     >
                       <svg viewBox="0 0 24 24" aria-hidden="true">

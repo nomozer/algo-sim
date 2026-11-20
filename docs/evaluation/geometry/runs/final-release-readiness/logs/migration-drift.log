@@ -1,0 +1,40 @@
+INFO  [alembic.runtime.migration] Context impl PostgresqlImpl.
+INFO  [alembic.runtime.migration] Will assume transactional DDL.
+INFO  [alembic.runtime.plugins] setting up autogenerate plugin alembic.autogenerate.schemas
+INFO  [alembic.runtime.plugins] setting up autogenerate plugin alembic.autogenerate.tables
+INFO  [alembic.runtime.plugins] setting up autogenerate plugin alembic.autogenerate.types
+INFO  [alembic.runtime.plugins] setting up autogenerate plugin alembic.autogenerate.constraints
+INFO  [alembic.runtime.plugins] setting up autogenerate plugin alembic.autogenerate.defaults
+INFO  [alembic.runtime.plugins] setting up autogenerate plugin alembic.autogenerate.comments
+INFO  [alembic.ddl.postgresql] Detected sequence named 'admin_analysis_telemetry_id_seq' as owned by integer column 'admin_analysis_telemetry(id)', assuming SERIAL and omitting
+INFO  [alembic.ddl.postgresql] Detected sequence named 'learning_history_entries_id_seq' as owned by integer column 'learning_history_entries(id)', assuming SERIAL and omitting
+INFO  [alembic.ddl.postgresql] Detected sequence named 'simulation_cache_id_seq' as owned by integer column 'simulation_cache(id)', assuming SERIAL and omitting
+INFO  [alembic.ddl.postgresql] Detected sequence named 'step_edit_sessions_id_seq' as owned by integer column 'step_edit_sessions(id)', assuming SERIAL and omitting
+INFO  [alembic.ddl.postgresql] Detected sequence named 'step_edit_revisions_id_seq' as owned by integer column 'step_edit_revisions(id)', assuming SERIAL and omitting
+INFO  [alembic.ddl.postgresql] Detected sequence named 'admin_audit_logs_id_seq' as owned by integer column 'admin_audit_logs(id)', assuming SERIAL and omitting
+INFO  [alembic.ddl.postgresql] Detected sequence named 'simulation_patterns_id_seq' as owned by integer column 'simulation_patterns(id)', assuming SERIAL and omitting
+INFO  [alembic.ddl.postgresql] Detected sequence named 'analysis_usage_ledger_id_seq' as owned by integer column 'analysis_usage_ledger(id)', assuming SERIAL and omitting
+INFO  [alembic.ddl.postgresql] Detected sequence named 'users_id_seq' as owned by integer column 'users(id)', assuming SERIAL and omitting
+INFO  [alembic.ddl.postgresql] Detected sequence named 'auth_sessions_id_seq' as owned by integer column 'auth_sessions(id)', assuming SERIAL and omitting
+INFO  [alembic.ddl.postgresql] Detected sequence named 'user_account_meta_id_seq' as owned by integer column 'user_account_meta(id)', assuming SERIAL and omitting
+INFO  [alembic.ddl.postgresql] Detected sequence named 'step_edit_feedback_id_seq' as owned by integer column 'step_edit_feedback(id)', assuming SERIAL and omitting
+No new upgrade operations detected.
+{
+  "dialect": "postgresql",
+  "direction": "upgrade",
+  "target_rev": "head",
+  "startup_mode": true,
+  "db_revisions": [
+    "f8a2c41d9e05"
+  ],
+  "script_heads": [
+    "f8a2c41d9e05"
+  ],
+  "user_tables_count": 14,
+  "destructive_operations": [],
+  "retained_legacy_tables_present": [],
+  "planned_revisions": [],
+  "allowed": true,
+  "reason_code": "SAFE_NO_DESTRUCTIVE_OPERATIONS",
+  "message": "Migration preflight passed cleanly with zero destructive operations."
+}

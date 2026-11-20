@@ -1,0 +1,762 @@
+{
+  "audited_at": "2026-11-19T08:09:12.723666+00:00",
+  "main_sha": "bb046fa22aceff47abe22aa783aa64fc65caee13",
+  "rc_head_sha": "a0f4a516630bb582d982463cd1160f7668154221",
+  "rc_head_tree": "2510c29e57db9737c0cb111b1c8e7302b747a50b",
+  "commits_ahead_of_main": 124,
+  "total_changed_files_vs_main": 688,
+  "git_name_status_counts": {
+    "M": 93,
+    "A": 575,
+    "D": 18,
+    "R": 2
+  },
+  "domains_9_audit": {
+    "1_geometry_kernel_semantic_and_scene3d": {
+      "file_count": 55,
+      "sample_files": [
+        {
+          "status": "M",
+          "path": "backend/app/simulation/geometry/__init__.py"
+        },
+        {
+          "status": "M",
+          "path": "backend/app/simulation/geometry/curved.py"
+        },
+        {
+          "status": "M",
+          "path": "backend/app/simulation/geometry/kernel.py"
+        },
+        {
+          "status": "A",
+          "path": "backend/app/simulation/geometry_functions/feedback_dataset.py"
+        },
+        {
+          "status": "M",
+          "path": "backend/app/simulation/semantic_program/display_names.py"
+        },
+        {
+          "status": "A",
+          "path": "frontend/src/components/geometry2d/family-icons.tsx"
+        },
+        {
+          "status": "A",
+          "path": "frontend/src/components/geometry2d/geometry2d-illustration-system.test.tsx"
+        },
+        {
+          "status": "A",
+          "path": "frontend/src/components/geometry2d/index.ts"
+        },
+        {
+          "status": "A",
+          "path": "frontend/src/components/geometry2d/primitives.tsx"
+        },
+        {
+          "status": "A",
+          "path": "frontend/src/components/geometry2d/resolver.ts"
+        },
+        {
+          "status": "A",
+          "path": "frontend/src/components/geometry2d/templates.tsx"
+        },
+        {
+          "status": "A",
+          "path": "frontend/src/data/advanced-geometry-samples.json"
+        },
+        {
+          "status": "M",
+          "path": "frontend/src/data/geometry-samples.ts"
+        },
+        {
+          "status": "M",
+          "path": "frontend/src/data/offline-catalog.ts"
+        },
+        {
+          "status": "M",
+          "path": "frontend/src/simulations/domains/geometry/Scene3DExplorer.tsx"
+        },
+        {
+          "status": "A",
+          "path": "frontend/src/simulations/domains/geometry/__fixtures__/coplanar-euclidean-sections.fixture.json"
+        },
+        {
+          "status": "M",
+          "path": "frontend/src/simulations/domains/geometry/axo-cross-family-scene3d-acceptance.test.tsx"
+        },
+        {
+          "status": "M",
+          "path": "frontend/src/simulations/domains/geometry/axo-reliability-gate.test.tsx"
+        },
+        {
+          "status": "A",
+          "path": "frontend/src/simulations/domains/geometry/backend-dynamic-scene3d-contract.test.tsx"
+        },
+        {
+          "status": "A",
+          "path": "frontend/src/simulations/domains/geometry/backend-geometry-contracts.test.ts"
+        },
+        {
+          "status": "A",
+          "path": "frontend/src/simulations/domains/geometry/camera-locate-benchmark.test.ts"
+        },
+        {
+          "status": "A",
+          "path": "frontend/src/simulations/domains/geometry/camera-locate.test.ts"
+        },
+        {
+          "status": "A",
+          "path": "frontend/src/simulations/domains/geometry/construction-step-visibility.test.tsx"
+        },
+        {
+          "status": "A",
+          "path": "frontend/src/simulations/domains/geometry/geometry-relationship-presentation.test.tsx"
+        },
+        {
+          "status": "A",
+          "path": "frontend/src/simulations/domains/geometry/object-relations.test.tsx"
+        }
+      ],
+      "functional_change": "Upgrade Geometry Kernel, exact arithmetic, semantic program contracts, 2D illustration primitives, Scene3DView camera recovery & object formation.",
+      "reason": "Support editable construction steps, exact coordinate certificates, camera retention, and WebGL crash/context hardening.",
+      "dependencies": [
+        "step_editor.py hooks",
+        "semantic_program schema",
+        "frontend Scene3DWorkspace"
+      ],
+      "user_impact": "Improved 3D readability, exact computation, preserved camera across edits.",
+      "backward_compat_risk": "LOW-MEDIUM (schema extensions additive; cached problems bumped to CACHE_VERSION=132).",
+      "tests_run": [
+        "backend tests/geometry (12000)",
+        "backend tests/semantic_program (1192)",
+        "frontend vitest scene3d/geometry2d",
+        "Gate D4 pure-Fraction oracle"
+      ],
+      "tests_missing": [
+        "Live paid Gemini K-1/R-1/S-2 pilot execution (intentionally gated PENDING_OWNER_DECISION)"
+      ],
+      "rollback_plan": "Application binary rollback to main (bb046fa22); cache versions cleanly isolate 131 vs 132.",
+      "owner_approval": "Usually accepted alongside Step Editor; verify compatibility expectations for CACHE_VERSION=132."
+    },
+    "2_step_editor_and_persistence": {
+      "file_count": 6,
+      "sample_files": [
+        {
+          "status": "A",
+          "path": "backend/app/ai/step_edit_route.py"
+        },
+        {
+          "status": "A",
+          "path": "backend/app/persistence/step_edit_models.py"
+        },
+        {
+          "status": "A",
+          "path": "backend/app/simulation/geometry_functions/step_editor.py"
+        },
+        {
+          "status": "A",
+          "path": "backend/app/simulation/step_edit_router.py"
+        },
+        {
+          "status": "A",
+          "path": "frontend/src/components/ConstructionStepEditor.tsx"
+        },
+        {
+          "status": "A",
+          "path": "frontend/src/state/construction-step-edits.ts"
+        }
+      ],
+      "functional_change": "Introduce inline Step Editor UI, POST /steps/edit, POST /steps/cancel, GET /state, PostgreSQL row lock FOR UPDATE NOWAIT, optimistic versioning & client_seq checks.",
+      "reason": "Core Step Editor V1 feature + hardening fixes (IA-RC1..3, stale metadata sync, absorbed helper learner_text sync).",
+      "dependencies": [
+        "Domain 1 kernel hooks",
+        "Domain 3 Alembic 9c4d8e2b7a10",
+        "Domain 4 SimulationWorkspace.tsx",
+        "Domain 7 main.py"
+      ],
+      "user_impact": "Learners can inspect, edit, validate, persist across F5/restart, and cancel individual geometry steps.",
+      "backward_compat_risk": "LOW (additive endpoints & additive step_edit_* tables).",
+      "tests_run": [
+        "test_pre_merge_release_acceptance",
+        "test_step_editor_integration_closure",
+        "PG16 docker & local E2E",
+        "Playwright 8 viewports + REA MCP"
+      ],
+      "tests_missing": [
+        "None within deterministic Step Editor V1 scope (Model 2 AI stays MODEL_NOT_TRAINED by design)"
+      ],
+      "rollback_plan": "Application rollback to bb046fa22 leaves step_edit_* rows untouched and non-conflicting.",
+      "owner_approval": "Core deliverable for release approval."
+    },
+    "3_database_migration": {
+      "file_count": 4,
+      "sample_files": [
+        {
+          "status": "M",
+          "path": "backend/alembic/env.py"
+        },
+        {
+          "status": "A",
+          "path": "backend/alembic/migration_preflight.py"
+        },
+        {
+          "status": "A",
+          "path": "backend/alembic/versions/9c4d8e2b7a10_add_step_edit_tables.py"
+        },
+        {
+          "status": "A",
+          "path": "backend/alembic/versions/f8a2c41d9e05_remove_classroom_and_live_session_tables.py"
+        }
+      ],
+      "functional_change": "Add linear revisions 9c4d8e2b7a10 (step_edit_* tables) and no-op f8a2c41d9e05, plus strict startup migration_preflight.py AST + schema drift + partial migration + unstamped DB guards.",
+      "reason": "Prevent silent data loss on legacy Classroom DBs and refuse unsafe automatic DDL before Uvicorn starts.",
+      "dependencies": [
+        "alembic/env.py",
+        "backend/Dockerfile CMD",
+        "backend/app/main.py"
+      ],
+      "user_impact": "Operators receive fail-closed exit 23 diagnostics on unstamped/drifted DBs rather than silent corruption.",
+      "backward_compat_risk": "MEDIUM operational requirement: unstamped legacy DBs (like root 46-user/66-row algosim.db) require explicit backup + parity verification + `alembic stamp e437149641fa` before `upgrade head`.",
+      "tests_run": [
+        "Gate A Docker real container",
+        "Gate B pg_dump/pg_restore 16.15",
+        "Gate A2 8 scenarios on SQLite & PG16"
+      ],
+      "tests_missing": [
+        "None (host Docker + pg_dump/pg_restore + local PG16 all closed)"
+      ],
+      "rollback_plan": "NEVER use destructive `alembic downgrade` on populated DBs; use application rollback to bb046fa22 or `pg_restore` backup.",
+      "owner_approval": "Approve operational migration runbook for legacy unstamped databases."
+    },
+    "4_workspace_and_attachment": {
+      "file_count": 95,
+      "sample_files": [
+        {
+          "status": "D",
+          "path": "frontend/src/components/AssignDialog.tsx"
+        },
+        {
+          "status": "D",
+          "path": "frontend/src/components/AssignmentsView.tsx"
+        },
+        {
+          "status": "M",
+          "path": "frontend/src/components/AuthGate.tsx"
+        },
+        {
+          "status": "M",
+          "path": "frontend/src/components/AxoErrorExperience.tsx"
+        },
+        {
+          "status": "D",
+          "path": "frontend/src/components/ClassesView.tsx"
+        },
+        {
+          "status": "M",
+          "path": "frontend/src/components/ErrorBoundary.tsx"
+        },
+        {
+          "status": "M",
+          "path": "frontend/src/components/HomeView.tsx"
+        },
+        {
+          "status": "A",
+          "path": "frontend/src/components/LeftSidebar.tsx"
+        },
+        {
+          "status": "M",
+          "path": "frontend/src/components/LibraryView.tsx"
+        },
+        {
+          "status": "D",
+          "path": "frontend/src/components/LiveClassDock.tsx"
+        },
+        {
+          "status": "D",
+          "path": "frontend/src/components/LiveClassStrip.tsx"
+        },
+        {
+          "status": "D",
+          "path": "frontend/src/components/MonitorRoute.tsx"
+        },
+        {
+          "status": "D",
+          "path": "frontend/src/components/MonitorView.tsx"
+        },
+        {
+          "status": "D",
+          "path": "frontend/src/components/ObserveView.tsx"
+        },
+        {
+          "status": "A",
+          "path": "frontend/src/components/PdfPreview.tsx"
+        },
+        {
+          "status": "D",
+          "path": "frontend/src/components/PracticeReporter.tsx"
+        },
+        {
+          "status": "M",
+          "path": "frontend/src/components/ProblemInput.tsx"
+        },
+        {
+          "status": "M",
+          "path": "frontend/src/components/SamplePreview.tsx"
+        },
+        {
+          "status": "A",
+          "path": "frontend/src/components/ScreenCaptureDialog.tsx"
+        },
+        {
+          "status": "M",
+          "path": "frontend/src/components/SessionCard.tsx"
+        },
+        {
+          "status": "M",
+          "path": "frontend/src/components/SimulationWorkspace.tsx"
+        },
+        {
+          "status": "M",
+          "path": "frontend/src/components/TopNav.tsx"
+        },
+        {
+          "status": "A",
+          "path": "frontend/src/components/WorkspaceTabBar.tsx"
+        },
+        {
+          "status": "A",
+          "path": "frontend/src/components/__tests__/LeftSidebar.v9_2.test.tsx"
+        },
+        {
+          "status": "A",
+          "path": "frontend/src/components/__tests__/attachment-fidelity.test.tsx"
+        }
+      ],
+      "functional_change": "Single-instance workspace tab model, draft history, recovery snapshot, attachment composer (+ menu, ScreenCaptureDialog, pdfjs-dist manifest), left sidebar & global.css.",
+      "reason": "Support multi-problem tabs and attachment workflow without reloading full sessions during step edits.",
+      "dependencies": [
+        "App.tsx",
+        "SimulationWorkspace.tsx",
+        "global.css",
+        "lucide-react / pdfjs-dist"
+      ],
+      "user_impact": "Changes landing-to-workspace transition (/ -> /app), multi-tab behavior, composer attachments.",
+      "backward_compat_risk": "MEDIUM (UI workflow changes bundled on same release train as Step Editor).",
+      "tests_run": [
+        "vitest 192 files / 2274 passed",
+        "Playwright smoke (#btn-composer-plus -> #plus-popover-menu, tab close/reopen, scroll isolation, 8 viewports)"
+      ],
+      "tests_missing": [
+        "Dedicated multi-page PDF upload & webcam hardware stream live E2E outside unit tests"
+      ],
+      "rollback_plan": "Application rollback reverts frontend bundle with zero schema side effects.",
+      "owner_approval": "OWNER_SCOPE_DECISION_REQUIRED: approve shipping Workspace & Attachment UI overhaul in same merge."
+    },
+    "5_landing_page": {
+      "file_count": 17,
+      "sample_files": [
+        {
+          "status": "A",
+          "path": "frontend/src/components/LandingView.tsx"
+        },
+        {
+          "status": "A",
+          "path": "frontend/src/components/landing/AnnotatedHeading.tsx"
+        },
+        {
+          "status": "A",
+          "path": "frontend/src/components/landing/LandingClosingScene3D.tsx"
+        },
+        {
+          "status": "A",
+          "path": "frontend/src/components/landing/LandingClosingSculpture.tsx"
+        },
+        {
+          "status": "A",
+          "path": "frontend/src/components/landing/LandingClosingV14.tsx"
+        },
+        {
+          "status": "A",
+          "path": "frontend/src/components/landing/LandingExplainerAnimation.tsx"
+        },
+        {
+          "status": "A",
+          "path": "frontend/src/components/landing/LandingHeader.tsx"
+        },
+        {
+          "status": "A",
+          "path": "frontend/src/components/landing/LandingHeroScene3D.tsx"
+        },
+        {
+          "status": "A",
+          "path": "frontend/src/components/landing/LandingHeroSculpture3D.tsx"
+        },
+        {
+          "status": "A",
+          "path": "frontend/src/components/landing/LandingHeroV14.tsx"
+        },
+        {
+          "status": "A",
+          "path": "frontend/src/components/landing/LandingIllustrationAccents.tsx"
+        },
+        {
+          "status": "A",
+          "path": "frontend/src/components/landing/LandingInteractiveDemo.tsx"
+        },
+        {
+          "status": "A",
+          "path": "frontend/src/components/landing/LandingPreviewV14.tsx"
+        },
+        {
+          "status": "A",
+          "path": "frontend/src/components/landing/LandingStorytelling.tsx"
+        },
+        {
+          "status": "A",
+          "path": "frontend/src/components/landing/LandingStorytellingV14.tsx"
+        },
+        {
+          "status": "A",
+          "path": "frontend/src/components/landing/landing-geometry-data.ts"
+        },
+        {
+          "status": "A",
+          "path": "frontend/src/components/landing/landing.css"
+        }
+      ],
+      "functional_change": "Add LandingView V1.8 hero/storytelling/closing 3D components and move default `/` entry route from workspace directly to Landing page (moving app workspace to `/app`, ~39 commits).",
+      "reason": "Product landing & interactive marketing showcase developed on same upstream feature branch.",
+      "dependencies": [
+        "frontend/src/App.tsx",
+        "landing-geometry-data.ts",
+        "landing.css"
+      ],
+      "user_impact": "BREAKING NAVIGATION CHANGE: visiting `/` renders Landing page instead of immediate solver composer (now `/app`).",
+      "backward_compat_risk": "HIGH product-behavior change if bookmarks/users/tests expect `/` to open the problem input directly.",
+      "tests_run": [
+        "vitest landing tests",
+        "Playwright GET / (200) & GET /app (200)"
+      ],
+      "tests_missing": [
+        "Explicit Owner sign-off authorizing `/` route takeover"
+      ],
+      "rollback_plan": "Revert App routing or rollback application release to bb046fa22.",
+      "owner_approval": "OWNER_SCOPE_DECISION_REQUIRED: approve switching `/` to LandingView V1.8 and `/app` to workspace."
+    },
+    "6_auth_and_classroom_retirement": {
+      "file_count": 7,
+      "sample_files": [
+        {
+          "status": "M",
+          "path": "backend/app/accounts/__init__.py"
+        },
+        {
+          "status": "D",
+          "path": "backend/app/accounts/classroom_router.py"
+        },
+        {
+          "status": "M",
+          "path": "backend/app/accounts/policy.py"
+        },
+        {
+          "status": "M",
+          "path": "backend/app/accounts/router.py"
+        },
+        {
+          "status": "M",
+          "path": "backend/app/accounts/service.py"
+        },
+        {
+          "status": "D",
+          "path": "backend/app/accounts/session_router.py"
+        },
+        {
+          "status": "M",
+          "path": "backend/app/persistence/classroom_models.py"
+        }
+      ],
+      "functional_change": "Remove Classroom & Live Session HTTP routers (`classroom_router.py`, `session_router.py`) and ORM/policy definitions from `app/accounts/` and `main.py` (`bf1ee2a57`), while keeping legacy Classroom DB tables intact non-destructively in `f8a2c41d9e05`.",
+      "reason": "Retire unused Classroom/Live Session endpoints cleanly on Hybrid architecture branch while preserving legacy DB rows.",
+      "dependencies": [
+        "backend/app/main.py",
+        "backend/alembic/versions/f8a2c41d9e05",
+        "backend/app/accounts/"
+      ],
+      "user_impact": "BREAKING HTTP API REMOVAL: `/api/classes*`, `/api/assignments*`, `/api/classes/{id}/observe`, live classroom session routes return 404 on RC.",
+      "backward_compat_risk": "HIGH breaking API compatibility change if any active client, teacher flow, or integration calls Classroom endpoints.",
+      "tests_run": [
+        "backend-other tests (auth/guest trial/usage ledger)",
+        "Gate B2 confirming routes return 401 again upon rollback to bb046fa22 with 100% Classroom rows preserved"
+      ],
+      "tests_missing": [
+        "Owner business confirmation that Classroom HTTP APIs are intentionally retired for this release"
+      ],
+      "rollback_plan": "Rollback binary to bb046fa22 immediately restores `/api/classes` and `/api/assignments` against preserved tables.",
+      "owner_approval": "OWNER_SCOPE_DECISION_REQUIRED: explicitly approve retiring Classroom/Live Session HTTP routes."
+    },
+    "7_platform_app_wiring": {
+      "file_count": 2,
+      "sample_files": [
+        {
+          "status": "M",
+          "path": "backend/Dockerfile"
+        },
+        {
+          "status": "M",
+          "path": "backend/app/main.py"
+        }
+      ],
+      "functional_change": "Wire FastAPI routers in `main.py`, PostgreSQL pool in `db.py`, Docker compose/healthcheck/preflight startup CMD (`Dockerfile`), requirements (`pymupdf`, `python-docx`, `pillow`, `lxml`).",
+      "reason": "Fail-closed container boot, PostgreSQL support, single-worker safety check, and document ingestion runtime dependencies.",
+      "dependencies": [
+        "Domains 1, 2, 3, 6"
+      ],
+      "user_impact": "Enforces single-worker Uvicorn on PostgreSQL (`503 UNSUPPORTED_MULTI_WORKER_TOPOLOGY` if multi-worker flags set) and preflight startup gate.",
+      "backward_compat_risk": "MEDIUM (ops must keep Uvicorn single-worker with PG row locks and configure `DATABASE_URL` + preflight).",
+      "tests_run": [
+        "Gate A real Docker build & boot matrix",
+        "Gate B2 rollback",
+        "test_dev_backend_launcher",
+        "test_step_editor_integration_closure"
+      ],
+      "tests_missing": [
+        "Production TLS reverse-proxy / ingress stress test beyond single-host staging"
+      ],
+      "rollback_plan": "Application container rollback to bb046fa22.",
+      "owner_approval": "Confirm single-worker Uvicorn topology constraint for target deployment."
+    },
+    "8_config_scripts_runtime": {
+      "file_count": 17,
+      "sample_files": [
+        {
+          "status": "M",
+          "path": ".gitignore"
+        },
+        {
+          "status": "A",
+          "path": "GEOMETRY_VISUAL_SPEC.md"
+        },
+        {
+          "status": "M",
+          "path": "backend/conftest.py"
+        },
+        {
+          "status": "A",
+          "path": "backend/scripts/build_advanced_geometry_samples.py"
+        },
+        {
+          "status": "A",
+          "path": "backend/scripts/prepare_step_feedback_dataset.py"
+        },
+        {
+          "status": "M",
+          "path": "backend/scripts/seed_classroom_fixture.py"
+        },
+        {
+          "status": "M",
+          "path": "backend/scripts/seed_demo_accounts.py"
+        },
+        {
+          "status": "M",
+          "path": "frontend/index.html"
+        },
+        {
+          "status": "M",
+          "path": "frontend/package-lock.json"
+        },
+        {
+          "status": "M",
+          "path": "frontend/package.json"
+        },
+        {
+          "status": "A",
+          "path": "frontend/public/favicon-16x16.png"
+        },
+        {
+          "status": "A",
+          "path": "frontend/public/favicon-32x32.png"
+        },
+        {
+          "status": "M",
+          "path": "frontend/public/favicon.svg"
+        },
+        {
+          "status": "A",
+          "path": "frontend/scripts/attachment-resize.node-test.mjs"
+        },
+        {
+          "status": "M",
+          "path": "frontend/src/App.tsx"
+        },
+        {
+          "status": "M",
+          "path": "frontend/src/llm/input.ts"
+        },
+        {
+          "status": "M",
+          "path": "frontend/src/main.tsx"
+        }
+      ],
+      "functional_change": "Add/update `backend/conftest.py` (PID+nonce SQLite test isolation), `backend/scripts/*`, removed obsolete Classroom fixture assumptions, frontend build/entry config (`vite`, `package.json`, `index.html`, favicons).",
+      "reason": "Reproducible candidate sealing, PostgreSQL/Docker dev helpers, feedback dataset prep, Windows PID DB isolation.",
+      "dependencies": [
+        "package-lock.json",
+        "docs/CODE_INDEX.md sync checks"
+      ],
+      "user_impact": "Developer & CI workflow changes (`dev_backend.py up`, `freeze_evaluation_candidate.py`).",
+      "backward_compat_risk": "LOW.",
+      "tests_run": [
+        "test_dev_backend_launcher",
+        "test_test_portability",
+        "test_db_ownership",
+        "freeze_evaluation_candidate --verify",
+        "vite build"
+      ],
+      "tests_missing": [
+        "None"
+      ],
+      "rollback_plan": "Git revert / app rollback.",
+      "owner_approval": "Routine release engineering change."
+    },
+    "9_tests_docs_eval": {
+      "file_count": 485,
+      "sample_files": [
+        {
+          "status": "A",
+          "path": "backend/tests/geometry/test_axo_11_advanced_samples.py"
+        },
+        {
+          "status": "A",
+          "path": "backend/tests/geometry/test_editable_construction_steps.py"
+        },
+        {
+          "status": "A",
+          "path": "backend/tests/geometry/test_step_editor_final_premerge.py"
+        },
+        {
+          "status": "A",
+          "path": "backend/tests/geometry/test_step_editor_independent_acceptance.py"
+        },
+        {
+          "status": "A",
+          "path": "backend/tests/geometry/test_step_editor_integration_closure.py"
+        },
+        {
+          "status": "A",
+          "path": "backend/tests/geometry/test_step_editor_main_release_acceptance.py"
+        },
+        {
+          "status": "A",
+          "path": "backend/tests/geometry/test_step_editor_root_cause_stabilization.py"
+        },
+        {
+          "status": "A",
+          "path": "backend/tests/geometry/test_step_editor_v22_reliability.py"
+        },
+        {
+          "status": "A",
+          "path": "backend/tests/semantic_program/test_display_names_incidence_cycle.py"
+        },
+        {
+          "status": "M",
+          "path": "backend/tests/test_auth_api.py"
+        },
+        {
+          "status": "D",
+          "path": "backend/tests/test_classroom_api.py"
+        },
+        {
+          "status": "A",
+          "path": "backend/tests/test_database_safety_closure.py"
+        },
+        {
+          "status": "M",
+          "path": "backend/tests/test_dev_backend_launcher.py"
+        },
+        {
+          "status": "M",
+          "path": "backend/tests/test_guest_trial.py"
+        },
+        {
+          "status": "M",
+          "path": "backend/tests/test_hybrid_product_integration.py"
+        },
+        {
+          "status": "D",
+          "path": "backend/tests/test_live_session_api.py"
+        },
+        {
+          "status": "M",
+          "path": "backend/tests/test_postgres_axo_history_migration.py"
+        },
+        {
+          "status": "M",
+          "path": "backend/tests/test_postgres_integration.py"
+        },
+        {
+          "status": "A",
+          "path": "backend/tests/test_pre_merge_release_acceptance.py"
+        },
+        {
+          "status": "M",
+          "path": "docs/CLASSROOM_AUTH_CONTRACT.md"
+        },
+        {
+          "status": "M",
+          "path": "docs/CODE_INDEX.md"
+        },
+        {
+          "status": "M",
+          "path": "docs/EVIDENCE_INDEX.md"
+        },
+        {
+          "status": "M",
+          "path": "docs/OPERATIONS.md"
+        },
+        {
+          "status": "A",
+          "path": "docs/evaluation/geometry/runs/axo-attachment-fidelity/capture-after.cjs"
+        },
+        {
+          "status": "A",
+          "path": "docs/evaluation/geometry/runs/axo-attachment-fidelity/capture.cjs"
+        }
+      ],
+      "functional_change": "New unit/integration suites (`test_pre_merge_release_acceptance.py`, `test_database_safety_closure.py`, `test_postgres_integration.py`), refrozen `EVALUATION_CANDIDATE.json`, synced C21 templates, `docs/CODE_INDEX.md`, run reports.",
+      "reason": "Maintain full-tree IA balance, verifiable evidence artifacts, and C21 candidate hash parity.",
+      "dependencies": [
+        "scripts/audit_docs_information_architecture.py",
+        "frontend code-index-sync.test.ts"
+      ],
+      "user_impact": "None at runtime.",
+      "backward_compat_risk": "NONE.",
+      "tests_run": [
+        "audit_docs_information_architecture.py PASS",
+        "code-index-sync.test.ts PASS",
+        "freeze_evaluation_candidate --verify PASS"
+      ],
+      "tests_missing": [
+        "None"
+      ],
+      "rollback_plan": "Clean git branch.",
+      "owner_approval": "Routine evidence governance."
+    }
+  },
+  "merge_simulation": {
+    "merge_base": "bb046fa22aceff47abe22aa783aa64fc65caee13",
+    "main_is_strict_ancestor_of_rc": true,
+    "merge_tree_exit": 0,
+    "merge_tree_oid": "2510c29e57db9737c0cb111b1c8e7302b747a50b",
+    "merge_tree_matches_rc_head_tree": true,
+    "ff_only_exit": 0,
+    "ff_only_resulting_tree_matches_rc": true,
+    "no_ff_no_commit_exit": 0,
+    "mechanical_conflicts": [],
+    "behavioral_conflicts_requiring_owner_decision": [
+      "Root route `/` switches from problem workspace to LandingView (`/app` serves workspace).",
+      "Classroom & Live Session HTTP routers (`app/accounts/classroom_router.py`, `session_router.py`) removed cleanly from runtime (DB tables retained)."
+    ],
+    "main_untouched_after_sim": true
+  },
+  "gate_c_classification": "BLOCKED_OWNERSHIP",
+  "gate_c_technical_merge_simulation": "PASS"
+}

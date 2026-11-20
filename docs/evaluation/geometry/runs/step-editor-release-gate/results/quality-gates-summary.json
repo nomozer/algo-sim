@@ -1,0 +1,102 @@
+{
+  "run_id": "step-editor-release-gate",
+  "release_candidate_commit": "194c0cca5f941b7b81dda3298f22a7092e453153",
+  "product_commit_sha": "a9a5d20b1c2ffa85ff967240eac53c7ebcad469d",
+  "measured_system_tree_hash": "4e2afa521df1bc98f1c6d267f3f6d5ce8eaaceee1592df9e32014c391b9eaf7b",
+  "measured_system_file_count": 109,
+  "gates": {
+    "freeze_evaluation_candidate_verify": {
+      "status": "PASS",
+      "exit_code": 0
+    },
+    "audit_docs_information_architecture": {
+      "status": "PASS",
+      "exit_code": 0,
+      "code_index_stale_paths": 0,
+      "internal_links_broken": 0,
+      "secret_leaks": 0,
+      "unclassified_docs": 0
+    },
+    "pytest_migration_drift": {
+      "status": "PASS",
+      "exit_code": 0,
+      "passed": 2,
+      "failed": 0,
+      "duration_s": 5.27
+    },
+    "pytest_postgres_16_real": {
+      "status": "PASS",
+      "exit_code": 0,
+      "postgres_version": "PostgreSQL 16.6 Windows x64 (local pg_ctl ephemeral cluster)",
+      "passed": 4,
+      "skipped": 0,
+      "deselected": 9,
+      "failed": 0,
+      "duration_s": 46.84
+    },
+    "pytest_step_editor_closure": {
+      "status": "PASS",
+      "exit_code": 0,
+      "passed": 9,
+      "deselected": 2,
+      "failed": 0,
+      "duration_s": 14.36
+    },
+    "pytest_geometry_full": {
+      "status": "PASS",
+      "exit_code": 0,
+      "passed": 11996,
+      "skipped": 6,
+      "deselected": 3,
+      "xfailed": 9,
+      "failed": 0,
+      "duration_s": 342.69
+    },
+    "pytest_semantic_program": {
+      "status": "PASS",
+      "exit_code": 0,
+      "passed": 1192,
+      "skipped": 1,
+      "failed": 0,
+      "duration_s": 40.81
+    },
+    "pytest_other_backend": {
+      "status": "PASS",
+      "exit_code": 0,
+      "passed": 793,
+      "deselected": 2,
+      "failed": 0,
+      "duration_s": 104.53
+    },
+    "replay_demo_cases": {
+      "status": "PASS",
+      "exit_code": 0,
+      "demo_replay_pass": "5/5",
+      "reduced_chain_cases": "1/1"
+    },
+    "audit_demo_crash_surface": {
+      "status": "PASS",
+      "exit_code": 0,
+      "boundary_pass": "6/6",
+      "unhandled_500": 0
+    },
+    "frontend_tsc_b": {
+      "status": "PASS",
+      "exit_code": 0
+    },
+    "frontend_vite_build": {
+      "status": "PASS",
+      "exit_code": 0,
+      "modules_transformed": 129,
+      "duration_s": 5.5
+    },
+    "frontend_vitest_run": {
+      "status": "PASS",
+      "exit_code": 0,
+      "test_files_passed": 192,
+      "tests_passed": 2272,
+      "failed": 0,
+      "duration_s": 107.15
+    }
+  }
+}

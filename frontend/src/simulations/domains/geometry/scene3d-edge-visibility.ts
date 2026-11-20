@@ -878,6 +878,7 @@ export function dongBoNetDayManHinh(
   dashedHiddenShown = true,
   stepPulse = 0,
   zoomDashScale = 1,
+  xray = false,
 ): FatLineSyncSummary {
   const clampedPulse = Number.isFinite(stepPulse) ? Math.max(0, Math.min(1, stepPulse)) : 0;
   const resolveStepRole = (n: THREE.Object3D | null | undefined): "new" | "dep" | undefined => {
@@ -943,7 +944,7 @@ export function dongBoNetDayManHinh(
         || line.name.endsWith(":khuat")
       );
     const isUnoccludedForcedDash = Boolean(line.userData?.forceDashed === true && line.userData?.hidden !== true);
-    if (!dashedHiddenShown && isDashed && !isUnoccludedForcedDash) {
+    if (!xray && !dashedHiddenShown && isDashed && !isUnoccludedForcedDash) {
       return;
     }
     const isPlaneBorder =
@@ -1112,8 +1113,9 @@ export function dongBoNetDayManHinh(
     lm.linewidth = widthPx;
     lm.resolution.set(resW, resH);
     lm.transparent = true;
-    lm.opacity = mat.opacity ?? 1;
-    lm.depthTest = mat.depthTest;
+    const baseLineOp = mat.opacity ?? 1;
+    lm.opacity = xray && isDashed ? Math.max(baseLineOp, 0.85) : baseLineOp;
+    lm.depthTest = xray ? false : mat.depthTest;
     lm.depthWrite = false;
     lm.depthFunc = mat.depthFunc;
     lm.polygonOffset = mat.polygonOffset;
@@ -1181,7 +1183,7 @@ export function dongBoNetDayManHinh(
       { suffix: "khuat", netSrc: rim.khuatNet, meshSrc: rim.khuatMesh, isHidden: true },
     ];
     for (const pass of passes) {
-      if (pass.isHidden && !dashedHiddenShown) continue;
+      if (pass.isHidden && !dashedHiddenShown && !xray) continue;
       if (!pass.netSrc.visible) continue;
       const matSrc = pass.meshSrc.material as THREE.MeshBasicMaterial | undefined;
       if (!matSrc || matSrc.colorWrite === false || (matSrc.transparent && matSrc.opacity <= 0.01)) continue;
@@ -1310,8 +1312,9 @@ export function dongBoNetDayManHinh(
       lm.linewidth = widthPx;
       lm.resolution.set(resW, resH);
       lm.transparent = true;
-      lm.opacity = matSrc.opacity ?? 1;
-      lm.depthTest = matSrc.depthTest;
+      const baseRimOp = matSrc.opacity ?? 1;
+      lm.opacity = xray && pass.isHidden ? Math.max(baseRimOp, 0.85) : baseRimOp;
+      lm.depthTest = xray ? false : matSrc.depthTest;
       lm.depthWrite = false;
       lm.depthFunc = matSrc.depthFunc;
       lm.polygonOffset = matSrc.polygonOffset;

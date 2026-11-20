@@ -1,0 +1,62 @@
+{
+  "run_id": "step-editor-integration-closure",
+  "recorded_at_local": "2026-11-19T00:35:30+07:00",
+  "baseline_commit": "bae665e79d69b6b47fae34187b0ea1b02d722e50",
+  "worktree": "D:/Documents/projects/axo-geometry-library",
+  "checks_executed": {
+    "curriculum_sphere_boundary": {
+      "command": "pytest tests/geometry/test_curriculum_coverage.py -k KHONG_co_mat_cong -v",
+      "exit_code": 1,
+      "summary": "1 failed, 17 deselected in 0.78s",
+      "failure": "test_KHONG_co_mat_cong_va_KHONG_co_phep_chieu_song_song -> AssertionError: sphere (circumscribed_sphere present on kernel module dir(K))"
+    },
+    "freeze_evaluation_candidate_verify": {
+      "command": "python scripts/freeze_evaluation_candidate.py --verify",
+      "exit_code": 1,
+      "frozen_tree_hash_prefix": "b1a8d439fe488c2a",
+      "frozen_file_count": 106,
+      "current_tree_hash_prefix": "e7723a3cc3e164b4",
+      "current_file_count": 109,
+      "drift_fields": [
+        "product_commit_sha",
+        "measured_system.tree_hash"
+      ]
+    },
+    "semantic_candidate_tests": {
+      "command": "pytest tests/semantic_program/test_evaluation_candidate.py -q",
+      "exit_code": 1,
+      "summary": "1 failed, 25 passed in 30.85s",
+      "failure": "test_ma_san_pham_khong_troi_khoi_ban_da_dong_bang (frozen 88ff25730 b1a8d439... != current e7723a3cc3e1...)"
+    }
+  },
+  "backlog_classification": {
+    "postgres_integration_incomplete": {
+      "status": "REPRODUCED",
+      "root_cause": "step_edit_models.ensure_step_edit_tables() is intentionally a no-op when sqlite_owns_schema(eng) is False; backend/alembic/env.py lacks step_edit_models import; committed Alembic head e437149641fa has no step_edit_* migration; Docker Desktop service & engine are Stopped locally pending startup attempt."
+    },
+    "alembic_classroom_dependency": {
+      "status": "REPRODUCED",
+      "root_cause": "f8a2c41d9e05_remove_classroom_and_live_session_tables.py exists only as untracked parallel Classroom WIP pointing to down_revision=e437149641fa; committed migration 9c4d8e2b7a10 for step_edit_* must descend cleanly from committed e437149641fa with a parallel rebase handoff patch for Classroom."
+    },
+    "geometry_15_failures": {
+      "status": "REPRODUCED",
+      "root_cause": "Breakdown: (a) 1 real boundary regression in kernel.py (ef9c20160 placed circumscribed_sphere/ERR_KHONG_NGOAI_TIEP in kernel.py instead of curved.py); (b) 13 candidate-seal/owner-approval-template drift failures tied to EVALUATION_CANDIDATE.json @ 88ff25730 and 2f0a4a83 dict format in templates; (c) 1 dirty-worktree-only Classroom CODE_INDEX path check caused by uncommitted Classroom deletions."
+    },
+    "semantic_candidate_1_failure": {
+      "status": "REPRODUCED",
+      "root_cause": "test_ma_san_pham_khong_troi_khoi_ban_da_dong_bang fails because EVALUATION_CANDIDATE.json is still frozen at 88ff25730 (106 files, b1a8d439...) while branch HEAD product tree is 109 files (e7723a3cc3e1...)."
+    },
+    "code_index_4_stale_classroom_paths": {
+      "status": "NOT_REPRODUCED_ON_CLEAN_HEAD",
+      "root_cause": "All 4 Classroom paths (LiveClassDock.tsx, LiveClassStrip.tsx, MonitorView.tsx, classroom-sync.ts) still exist in committed HEAD bae665e79; they only appear deleted in the dirty worktree due to parallel uncommitted Classroom D deletions (OWNERSHIP_BLOCKED)."
+    },
+    "candidate_seal_unverified": {
+      "status": "REPRODUCED",
+      "root_cause": "freeze_evaluation_candidate.py --verify fails with exit code 1 due to product_commit_sha and measured_system.tree_hash drift plus k1/r1/s2-owner-approval.template.json hash/schema drift."
+    },
+    "step_editor_flow_verified_with_concurrency_gaps": {
+      "status": "REPRODUCED",
+      "root_cause": "End-to-end flow exists, but (a) step_edit_router.py mutates _LATEST_CLIENT_SEQ before db.commit(), turning retry after DB OperationalError (503) into false 409 EDIT_SUPERSEDED; (b) StepEditRequest lacks expected_committed_version optimistic conflict check and non-SQLite row lock (.with_for_update()); (c) construction-step-edits.ts returns raw revision_count instead of effectiveVer (committed_version) after failed 422 attempts."
+    }
+  }
+}

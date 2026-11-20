@@ -1,0 +1,151 @@
+{
+  "postgres_version": "PostgreSQL 16.6, compiled by Visual C++ build 1942, 64-bit",
+  "alembic_version": [
+    "f8a2c41d9e05"
+  ],
+  "step_edit_sessions_columns": [
+    "id",
+    "owner_scope",
+    "session_id",
+    "problem_key",
+    "base_scene_sha256",
+    "committed_scene_json",
+    "step_overrides_json",
+    "dependency_graph_json",
+    "revision_count",
+    "created_at",
+    "updated_at"
+  ],
+  "step_edit_revisions_columns": [
+    "id",
+    "revision_id",
+    "owner_scope",
+    "session_id",
+    "version_number",
+    "step_id",
+    "step_index",
+    "previous_instruction",
+    "edited_instruction",
+    "normalized_intent_json",
+    "affected_dependencies_json",
+    "validation_status",
+    "execution_status",
+    "error_code",
+    "learner_error",
+    "stage_timings_json",
+    "before_scene_digest",
+    "after_scene_digest",
+    "timestamp"
+  ],
+  "step_edit_sessions_count": 7,
+  "step_edit_revisions_count": 9,
+  "recent_sessions": [
+    {
+      "session_id": "se-be5cdbf3-sample-khoang-cach-hai-duong-cheo-nhau-c6ab03ef",
+      "problem_key": "sample:khoang-cach-hai-duong-cheo-nhau",
+      "revision_count": 1,
+      "updated_at": "2026-11-19 07:12:45.143776"
+    },
+    {
+      "session_id": "se-be5cdbf3-sample-lang-tru-tam-giac-thiet-dien-9bc4629f",
+      "problem_key": "sample:lang-tru-tam-giac-thiet-dien",
+      "revision_count": 1,
+      "updated_at": "2026-11-19 07:12:36.94584"
+    },
+    {
+      "session_id": "se-be5cdbf3-sample-chop-thiet-dien-ba-diem-55591bff",
+      "problem_key": "sample:chop-thiet-dien-ba-diem",
+      "revision_count": 1,
+      "updated_at": "2026-11-19 07:12:33.313133"
+    },
+    {
+      "session_id": "se-be5cdbf3-sample-chop-mat-cau-ngoai-tiep-63ddb9fa",
+      "problem_key": "sample:chop-mat-cau-ngoai-tiep",
+      "revision_count": 2,
+      "updated_at": "2026-11-19 07:12:31.041306"
+    },
+    {
+      "session_id": "se-be5cdbf3-sample-lang-tru-tam-giac-thiet-dien-9bc4629f",
+      "problem_key": "sample:lang-tru-tam-giac-thiet-dien",
+      "revision_count": 1,
+      "updated_at": "2026-11-19 07:12:05.081554"
+    },
+    {
+      "session_id": "se-be5cdbf3-sample-chop-thiet-dien-ba-diem-55591bff",
+      "problem_key": "sample:chop-thiet-dien-ba-diem",
+      "revision_count": 1,
+      "updated_at": "2026-11-19 07:12:01.597608"
+    },
+    {
+      "session_id": "se-be5cdbf3-sample-chop-mat-cau-ngoai-tiep-63ddb9fa",
+      "problem_key": "sample:chop-mat-cau-ngoai-tiep",
+      "revision_count": 2,
+      "updated_at": "2026-11-19 07:11:59.114625"
+    }
+  ],
+  "recent_revisions": [
+    {
+      "revision_id": "rev-40c1b47115ee408c",
+      "session_id": "se-be5cdbf3-sample-khoang-cach-hai-duong-cheo-nhau-c6ab03ef",
+      "version_number": 1,
+      "step_id": "P",
+      "validation_status": "FAILED"
+    },
+    {
+      "revision_id": "rev-cc4af28741dc423a",
+      "session_id": "se-be5cdbf3-sample-lang-tru-tam-giac-thiet-dien-9bc4629f",
+      "version_number": 1,
+      "step_id": "P",
+      "validation_status": "PASSED"
+    },
+    {
+      "revision_id": "rev-ab71026819c0481e",
+      "session_id": "se-be5cdbf3-sample-chop-thiet-dien-ba-diem-55591bff",
+      "version_number": 1,
+      "step_id": "M",
+      "validation_status": "PASSED"
+    },
+    {
+      "revision_id": "rev-ce161e7d0d964983",
+      "session_id": "se-be5cdbf3-sample-chop-mat-cau-ngoai-tiep-63ddb9fa",
+      "version_number": 2,
+      "step_id": "mp_tt_AB",
+      "validation_status": "PASSED"
+    },
+    {
+      "revision_id": "rev-6a13e96bc0d4453a",
+      "session_id": "se-be5cdbf3-sample-chop-mat-cau-ngoai-tiep-63ddb9fa",
+      "version_number": 1,
+      "step_id": "mp_tt_AB",
+      "validation_status": "FAILED"
+    },
+    {
+      "revision_id": "rev-c93c55d654e74105",
+      "session_id": "se-be5cdbf3-sample-lang-tru-tam-giac-thiet-dien-9bc4629f",
+      "version_number": 1,
+      "step_id": "P",
+      "validation_status": "PASSED"
+    },
+    {
+      "revision_id": "rev-b4276a77ddda4670",
+      "session_id": "se-be5cdbf3-sample-chop-thiet-dien-ba-diem-55591bff",
+      "version_number": 1,
+      "step_id": "M",
+      "validation_status": "PASSED"
+    },
+    {
+      "revision_id": "rev-b0484be91ef0458c",
+      "session_id": "se-be5cdbf3-sample-chop-mat-cau-ngoai-tiep-63ddb9fa",
+      "version_number": 2,
+      "step_id": "mp_tt_AB",
+      "validation_status": "PASSED"
+    },
+    {
+      "revision_id": "rev-8bebd27664b041cc",
+      "session_id": "se-be5cdbf3-sample-chop-mat-cau-ngoai-tiep-63ddb9fa",
+      "version_number": 1,
+      "step_id": "mp_tt_AB",
+      "validation_status": "FAILED"
+    }
+  ]
+}

@@ -57,6 +57,10 @@ const LAYOUT_EXCEPTIONS: Record<string, string> = {
     "trị học sinh vừa đặt — chuyển động là cách quan hệ 'đổi giá trị → hộp đổi' " +
     "hiện ra. Nó nằm trong khung xem trước có biên riêng nên không đẩy nội dung " +
     "học tập nào bên ngoài, và không có gì trong dòng chảy tài liệu đứng sau nó.",
+  ".home-composer-box .composer-textarea":
+    "Ô nhập đề trên màn Bài toán mới là khối cuối cùng trong khung căn giữa của " +
+    "`#view-home` (không có nội dung học tập nào đứng sau nó trong dòng chảy tài liệu); " +
+    "chuyển động `height` mượt theo số dòng gõ giúp tránh giật khung nhập và không đẩy chỗ nhìn.",
   /* ⛔ `.app-nav-shell` đã gỡ khỏi danh sách cùng cột điều hướng trái. Ngoại lệ
      ấy cấp phép cho `transition` trên bề rộng một ngăn đóng/mở được; hàng ngang
      thay nó không đổi kích thước nên không cần — và giữ lại một ngoại lệ không

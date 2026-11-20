@@ -1,0 +1,364 @@
+{
+  "startedAt": "2026-11-19T08:15:49.602Z",
+  "baseUrl": "http://localhost:3001",
+  "backendUrl": "http://127.0.0.1:8000",
+  "routesAndAttachmentSmoke": {
+    "landingStatus": 200,
+    "landingTitle": "Axo — Mô phỏng tương tác",
+    "appStatus": 200,
+    "fileInputCount": 3,
+    "plusMenuOpened": true
+  },
+  "stepEditorRenameAndZeroLeak": {
+    "status": "PASS",
+    "hoverHeightDeltaPx": 0,
+    "opacityTransition": "0 -> 1",
+    "keyboardEnterEscapeOk": true,
+    "canvasShiftDuringEditPx": 0,
+    "canvasShiftAfterCommitPx": 0,
+    "textareaSingleLineScrollable": false,
+    "textareaHorizontalOverflow": false,
+    "httpStatus": 200,
+    "renameLatencyMs": 281.742,
+    "rowsWithAlphaBefore": 3,
+    "staleAlphaRowsAfter": 0,
+    "renamedPRowsAfter": 3,
+    "mAbLearnerTextAfter": "Dựng trung điểm của S và B.",
+    "pointIRoleAfter": "Giao điểm của «Giao tuyến của (P) và (β)» và (γ)",
+    "mpDisplayLabel": "Mặt phẳng (P) qua «Trung điểm của S và B» và vuông góc với SB",
+    "leakedRawHelperOrOldNotation": false,
+    "recomputedCount": 9
+  },
+  "cameraAndDraftPreservation": {
+    "status": "PASS",
+    "draftSurvivedDockScroll": true,
+    "orbitMoveDistancePx": 171.234,
+    "cameraOrbitedBeforeCommit": {
+      "position": [
+        13.160575254778587,
+        3.3235983024105678,
+        4.042690697801483
+      ],
+      "target": [
+        2,
+        2,
+        2
+      ]
+    },
+    "cameraAfterCommit": {
+      "position": [
+        13.160575254778587,
+        3.3235983024105678,
+        4.042690697801483
+      ],
+      "target": [
+        2,
+        2,
+        2
+      ]
+    },
+    "threeJsCameraPositionDelta": 0,
+    "threeJsCameraTargetDelta": 0,
+    "counterPreOpen": "Bước 15/17",
+    "counterAfterOpenCancel": "Bước 15/17",
+    "counterPostCommitFocusedEditedStep": "Bước 8/17",
+    "stepPreservedOnOpenCancel": true,
+    "postCommitFocusedEditedStep": true
+  },
+  "scene3dVisualAndInteractive": {
+    "initial": {
+      "ok": true,
+      "webglPhase": "healthy",
+      "canvasBox": {
+        "left": 271,
+        "top": 38,
+        "width": 1289,
+        "height": 1042
+      },
+      "visibleVertexLabels": 8,
+      "visiblePlaneLabels": 0,
+      "visibleMeasureBadges": 0,
+      "clippedLabels": [],
+      "vertexLabelOverlaps": [],
+      "occludedSceneControls": [],
+      "projectedCoverageRatioW": 0.402,
+      "projectedCoverageRatioH": 0.551
+    },
+    "afterOrbitAndCommit": {
+      "ok": true,
+      "webglPhase": "healthy",
+      "canvasBox": {
+        "left": 271,
+        "top": 38,
+        "width": 1289,
+        "height": 1042
+      },
+      "visibleVertexLabels": 8,
+      "visiblePlaneLabels": 0,
+      "visibleMeasureBadges": 0,
+      "clippedLabels": [],
+      "vertexLabelOverlaps": [],
+      "occludedSceneControls": [],
+      "projectedCoverageRatioW": 0.374,
+      "projectedCoverageRatioH": 0.485
+    },
+    "stepScrubberVerified": {
+      "counterBefore": "Bước 17/17",
+      "counterPrev": "Bước 16/17",
+      "counterNext": "Bước 17/17"
+    }
+  },
+  "invalidEditsAndConcurrency": [
+    {
+      "case": "empty_whitespace",
+      "runDisabled": true,
+      "httpSent": false
+    },
+    {
+      "case": "undefined_point_SZ",
+      "status": 422,
+      "errorCode": "MISSING_DEPENDENCY",
+      "draftPreserved": true,
+      "counterPreservedOn422": true
+    },
+    {
+      "case": "collinear_AOC",
+      "status": 422,
+      "errorCode": "COLLINEAR_POINTS",
+      "draftPreserved": true,
+      "counterPreservedOn422": true
+    },
+    {
+      "case": "unsupported_syntax",
+      "status": 422,
+      "errorCode": "UNSUPPORTED_STEP_SYNTAX",
+      "draftPreserved": true,
+      "counterPreservedOn422": true
+    },
+    {
+      "case": "skew_orthogonality_broken",
+      "status": 422,
+      "errorCode": "DOWNSTREAM_ORTHOGONALITY_BROKEN"
+    },
+    {
+      "case": "stale_version_conflict",
+      "status": 409,
+      "code": "STALE_REVISION_CONFLICT"
+    },
+    {
+      "case": "out_of_order_client_seq_superseded",
+      "status": 409,
+      "code": "EDIT_SUPERSEDED"
+    }
+  ],
+  "cascadeTabIsolationAndSkew": {
+    "status": "PASS",
+    "skewOrthogonality422": "DOWNSTREAM_ORTHOGONALITY_BROKEN",
+    "sequentialS1FinalMXyz": [
+      "0",
+      "0",
+      "9/2"
+    ],
+    "prismStatus": 200,
+    "tabCloseAndReopenRetained": true,
+    "dockScrollIsolated": true,
+    "s1SessionPrefix": "se-be5cdbf3-sa…",
+    "committedVersion": 10
+  },
+  "browserMetrics": {
+    "ui_interaction_open_latency_ms": {
+      "iterations": 10,
+      "p50_ms": 22.695,
+      "p95_ms": 29.216,
+      "min_ms": 18.612,
+      "max_ms": 30.62,
+      "samples_ms": [
+        22.397,
+        30.62,
+        21.207,
+        27.5,
+        19.353,
+        26.244,
+        18.612,
+        22.993,
+        24.501,
+        19.63
+      ]
+    },
+    "frontend_update_completion_ms": {
+      "iterations": 10,
+      "p50_ms": 121.188,
+      "p95_ms": 169.24,
+      "min_ms": 110.64,
+      "max_ms": 186.477,
+      "samples_ms": [
+        186.477,
+        120.76,
+        127.558,
+        110.64,
+        117.719,
+        148.171,
+        121.615,
+        113.887,
+        138.665,
+        112.819
+      ]
+    },
+    "scene3d_post_edit_render_ms": {
+      "iterations": 10,
+      "p50_ms": 29.6,
+      "p95_ms": 34.775,
+      "min_ms": 0.7,
+      "max_ms": 36.8,
+      "samples_ms": [
+        0.7,
+        36.8,
+        32.3,
+        29.5,
+        28.7,
+        30,
+        30.3,
+        29.7,
+        27.7,
+        28.1
+      ]
+    },
+    "e2e_step_edit_roundtrip_ms": {
+      "iterations": 10,
+      "p50_ms": 209.395,
+      "p95_ms": 259.164,
+      "min_ms": 191.964,
+      "max_ms": 270.748,
+      "samples_ms": [
+        270.748,
+        245.006,
+        210.948,
+        199.266,
+        195.311,
+        233.776,
+        207.842,
+        206.212,
+        230.523,
+        191.964
+      ]
+    }
+  },
+  "viewports": [
+    {
+      "width": 1920,
+      "height": 1080,
+      "overflowX": 0,
+      "canvasVisible": true,
+      "canvasWidthPx": 1289,
+      "canvasHeightPx": 1042,
+      "runClipped": false,
+      "cancelClipped": false,
+      "textareaHeightPx": 85,
+      "textareaOverflowY": "hidden",
+      "textareaHorizontalOverflow": false,
+      "controlsOccludeActions": false,
+      "navOperable": true,
+      "sceneClippedLabels": [],
+      "sceneOccludedControls": []
+    },
+    {
+      "width": 1440,
+      "height": 900,
+      "overflowX": 0,
+      "canvasVisible": true,
+      "canvasWidthPx": 809,
+      "canvasHeightPx": 862,
+      "runClipped": false,
+      "cancelClipped": false,
+      "textareaHeightPx": 85,
+      "textareaOverflowY": "hidden",
+      "textareaHorizontalOverflow": false,
+      "controlsOccludeActions": false,
+      "navOperable": true,
+      "sceneClippedLabels": [],
+      "sceneOccludedControls": []
+    },
+    {
+      "width": 1280,
+      "height": 800,
+      "overflowX": 0,
+      "canvasVisible": true,
+      "canvasWidthPx": 673,
+      "canvasHeightPx": 762,
+      "runClipped": false,
+      "cancelClipped": false,
+      "textareaHeightPx": 85,
+      "textareaOverflowY": "hidden",
+      "textareaHorizontalOverflow": false,
+      "controlsOccludeActions": false,
+      "navOperable": true,
+      "sceneClippedLabels": [],
+      "sceneOccludedControls": []
+    },
+    {
+      "width": 768,
+      "height": 1024,
+      "overflowX": 0,
+      "canvasVisible": true,
+      "canvasWidthPx": 472,
+      "canvasHeightPx": 986,
+      "runClipped": false,
+      "cancelClipped": false,
+      "textareaHeightPx": 85,
+      "textareaOverflowY": "hidden",
+      "textareaHorizontalOverflow": false,
+      "controlsOccludeActions": false,
+      "navOperable": true,
+      "sceneClippedLabels": [],
+      "sceneOccludedControls": []
+    },
+    {
+      "width": 390,
+      "height": 844,
+      "overflowX": 0,
+      "canvasVisible": true,
+      "canvasWidthPx": 390,
+      "canvasHeightPx": 444,
+      "runClipped": false,
+      "cancelClipped": false,
+      "textareaHeightPx": 85,
+      "textareaOverflowY": "hidden",
+      "textareaHorizontalOverflow": false,
+      "controlsOccludeActions": false,
+      "navOperable": true,
+      "sceneClippedLabels": [],
+      "sceneOccludedControls": []
+    },
+    {
+      "width": 320,
+      "height": 568,
+      "overflowX": 0,
+      "canvasVisible": true,
+      "canvasWidthPx": 320,
+      "canvasHeightPx": 293,
+      "runClipped": false,
+      "cancelClipped": false,
+      "textareaHeightPx": 85,
+      "textareaOverflowY": "hidden",
+      "textareaHorizontalOverflow": false,
+      "controlsOccludeActions": false,
+      "navOperable": true,
+      "sceneClippedLabels": [],
+      "sceneOccludedControls": []
+    }
+  ],
+  "touchAndVkb": {
+    "status": "PASS",
+    "pencilVisibleOnTouchActive": true,
+    "vkb390x460": {
+      "overflowX": 0,
+      "taInViewport": true,
+      "runInViewport": true,
+      "cancelInViewport": true
+    }
+  },
+  "consoleErrors": [],
+  "pageErrors": [],
+  "unexpected5xx": [],
+  "finishedAt": "2026-11-19T08:16:37.341Z"
+}

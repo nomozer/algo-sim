@@ -1,0 +1,79 @@
+{
+  "schema_version": "axo-evaluation-run/1",
+  "run_id": "step-editor-root-cause-stabilization",
+  "task_slug": "axo-step-editor-root-cause-stabilization-pre-merge",
+  "date": "2026-11-18",
+  "branch": "feat/axo-geometry-library-verification",
+  "start_head": "602a38db82351c17c3f6097089d4e938f8cfb345",
+  "model_status": "MODEL_NOT_TRAINED",
+  "physical_mobile_hardware_status": "NOT_VERIFIED",
+  "status": "READY_FOR_OWNER_REVIEW",
+  "owner_approval": "PENDING_OWNER_REVIEW",
+  "root_causes_fixed": [
+    "RC-1",
+    "RC-2",
+    "RC-3",
+    "RC-4",
+    "RC-5",
+    "RC-6",
+    "RC-7"
+  ],
+  "artifacts": {
+    "report": "report.md",
+    "backend_benchmark": "results/backend_benchmark.json",
+    "playwright_e2e_summary": "results/playwright_e2e_summary.json",
+    "images": [
+      "images/stab-desktop-1920-hover.png",
+      "images/stab-desktop-1920-422-preserved.png",
+      "images/stab-desktop-1920-caseA-pa-sync.png",
+      "images/stab-desktop-1920-caseB-section.png",
+      "images/stab-desktop-1366.png",
+      "images/stab-tablet-768.png",
+      "images/stab-mobile-390-editor.png",
+      "images/stab-mobile-320-editor.png",
+      "images/rea-mcp-desktop-1920.png"
+    ]
+  },
+  "rea_mcp_evidence": {
+    "list_browser_targets": "ev_86dfdbde32d2835af2b565cd41ac9beaaa6415ef3a52ddf75a13caabe1a4aba2",
+    "inspect_web_page": "ev_f1084d377223119db75ccc6515959acc59689257c0591635051fb103cb1ca03c",
+    "capture_web_screenshot": "ev_1ff6b3cba3416b28da261aa5951b298a1b8f12d3f5aa006d6eb1c501dc8b5356"
+  },
+  "tests": {
+    "backend_green_suite": {
+      "files": [
+        "backend/tests/geometry/test_scene3d.py",
+        "backend/tests/geometry/test_scene3d_integration.py",
+        "backend/tests/geometry/test_simulation_state.py",
+        "backend/tests/geometry/test_text_to_geometry_functions.py",
+        "backend/tests/semantic_program/test_domain_string.py",
+        "backend/tests/semantic_program/test_type_authority.py",
+        "backend/tests/test_cache_identity.py",
+        "backend/tests/geometry/test_editable_construction_steps.py",
+        "backend/tests/geometry/test_step_editor_v22_reliability.py",
+        "backend/tests/geometry/test_step_editor_root_cause_stabilization.py"
+      ],
+      "status": "PASS",
+      "passed": 528,
+      "failed": 0
+    },
+    "frontend_green_suites": {
+      "files": [
+        "frontend/src/components/construction-step-editor.test.tsx",
+        "frontend/src/components/axo-runtime-recovery.test.tsx",
+        "frontend/src/components/workspace-layout-and-controls.test.tsx",
+        "frontend/src/simulations/domains/geometry/construction-step-visibility.test.tsx",
+        "frontend/src/simulations/domains/geometry/step-continuity-and-scene-invariants.test.tsx",
+        "frontend/src/components/control-layout.test.ts"
+      ],
+      "status": "PASS",
+      "passed": 50,
+      "failed": 0
+    },
+    "frontend_typecheck_and_build": {
+      "tsc": "0 errors",
+      "vite_build": "129 modules",
+      "status": "PASS"
+    }
+  }
+}

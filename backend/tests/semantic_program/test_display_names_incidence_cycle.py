@@ -1,13 +1,12 @@
 # -*- coding: utf-8 -*-
-"""GEO-BE-001 integrated into AlgoSim (fix of axo-geometry-library `5a229507b`, display_names.py hunk only).
+"""GEO-BE-001: a point lying ON a plane is not an input that defines the plane.
 
-A point lying ON a plane is not an input that defines the plane: resolving a plane's declared multi-point name used to
-resolve every point of `points_on_plane`, including intersection points whose own `sources` contain that very plane; the
-call back into the half-built plane returned early (`dang_giai`) and their sentence fell back to the raw id
-("Giao điểm của SD và mp_MNP"), depending on iteration order.
+`display_names._mot_luot` resolved a plane's declared multi-point name by first resolving every point of
+`points_on_plane` — including the intersection points (F = SD ∩ (MNP)) whose own `sources` contain that very plane. The
+call back into the plane returned early (`dang_giai`), so F's sentence was built while the plane had no symbol and fell
+back to the raw id: "Giao điểm của SD và mp_MNP". Which point broke depended on the iteration order.
 
-The name tables are the real `ten_hien_thi` inputs of the two samples that reproduced the defect
-(`fixtures/display_name_incidence_tables.json`, derived data); plus a raw-id scan of scenes this route builds itself.
+These tests run the real advanced-sample generator, then the captured name tables permuted, renamed and made cyclic.
 """
 from __future__ import annotations
 
@@ -15,64 +14,93 @@ import copy
 import json
 import random
 import re
-from fractions import Fraction
+import sys
 from pathlib import Path
 
 import pytest
 
-from app.simulation.geometry.exact import Vec3
 from app.simulation.semantic_program import display_names as DN
+from app.simulation.semantic_program import simulation_state as SS
 
+SCRIPTS = Path(__file__).resolve().parents[2] / "scripts"
 PRESENTATION = ("label", "notation", "reference", "role")
-_FIX = json.loads((Path(__file__).parent / "fixtures/display_name_incidence_tables.json").read_text(encoding="utf-8"))
 
 
-def _dec(o):
-    if isinstance(o, dict):
-        if set(o) == {"__vec3__"}:
-            return Vec3(*(Fraction(x) for x in o["__vec3__"]))
-        return {k: _dec(v) for k, v in o.items()}
-    if isinstance(o, list):
-        return [_dec(v) for v in o]
-    return o
+@pytest.fixture(scope="module")
+def generated(monkeypatch_module):
+    captured: list[dict] = []
+    real = SS.ten_hien_thi
+
+    def spy(table, **kw):
+        captured.append((copy.deepcopy(table), kw))
+        return real(table, **kw)
+
+    monkeypatch_module.setattr(SS, "ten_hien_thi", spy)
+    sys.path.insert(0, str(SCRIPTS))
+    import build_advanced_geometry_samples as B
+    samples = B.build_all_advanced_samples()
+    return samples, captured
 
 
-def _table(name):
-    t = _FIX["tables"][name]
-    kw = dict(t["kwargs"])
-    if "source_plane_names" in kw:
-        kw["source_plane_names"] = frozenset(kw["source_plane_names"])
-    return _dec(copy.deepcopy(t["table"])), kw
+@pytest.fixture(scope="module")
+def monkeypatch_module():
+    mp = pytest.MonkeyPatch()
+    yield mp
+    mp.undo()
 
 
-def _ids_in(text, ids):
+def _obj(samples, sid, oid):
+    s = next(x for x in samples if x["id"] == sid)
+    return next(o for o in s["envelope"]["scene3d"]["objects"] if o["id"] == oid)
+
+
+@pytest.mark.parametrize("sid, oid, role", [
+    ("chop-thiet-dien-ba-diem", "F", "Giao điểm của SD và (MNP)"),
+    ("lap-phuong-thiet-dien-bat-ky", "F", "Giao điểm của A′B′ và (MNP)"),
+    ("lap-phuong-thiet-dien-bat-ky", "Q", "Giao điểm của AA′ và (MNP)"),
+    ("lang-tru-tam-giac-thiet-dien", "E", "Giao điểm của A′B′ và (NPQ)"),
+])
+def test_the_four_reported_intersection_points_name_their_plane(generated, sid, oid, role):
+    samples, _ = generated
+    assert _obj(samples, sid, oid)["role"] == role
+
+
+def _ids_in(text: str, ids: set[str]) -> list[str]:
+    """Internal ids (machine names: containing '_' or lowercase-led, ≥ 2 chars) appearing as whole tokens."""
     machine = {i for i in ids if "_" in i or (len(i) >= 2 and i[0].islower())}
     return [t for t in re.findall(r"[A-Za-z0-9_′']+", text or "") if t in machine]
 
 
-@pytest.mark.parametrize("name, oid, role", [("pyramid_mnp", "F", "Giao điểm của SD và (MNP)"),
-                                             ("prism_npq", "E", "Giao điểm của A′B′ và (NPQ)")])
-def test_an_intersection_point_names_the_plane_it_lies_on(name, oid, role):
-    table, kw = _table(name)
-    assert DN.ten_hien_thi(table, **kw)[oid]["role"] == role
+def test_no_presentation_field_of_any_generated_sample_carries_an_internal_id(generated):
+    samples, _ = generated
+    leaks = []
+    for s in samples:
+        objs = s["envelope"]["scene3d"]["objects"]
+        ids = {o["id"] for o in objs}
+        for o in objs:
+            for f in PRESENTATION:
+                if (bad := _ids_in(str(o.get(f) or ""), ids)):
+                    leaks.append((s["id"], o["id"], f, o.get(f), bad))
+    assert leaks == []
 
 
-@pytest.mark.parametrize("name", ["pyramid_mnp", "prism_npq"])
-def test_no_presentation_field_carries_an_internal_id(name):
-    table, kw = _table(name)
-    names = DN.ten_hien_thi(table, **kw)
-    assert [(t, f) for t, r in names.items() for f in PRESENTATION if _ids_in(str(r.get(f) or ""), set(table))] == []
+def _table(generated, needle):
+    return next(copy.deepcopy(t) for t, kw in generated[1] if needle in t)
+
+
+def _names(table, **kw):
+    return DN.ten_hien_thi(table, **kw)
 
 
 @pytest.mark.parametrize("seed", range(6))
-@pytest.mark.parametrize("name", ["pyramid_mnp", "prism_npq"])
-def test_names_do_not_depend_on_the_iteration_order(name, seed):
-    table, kw = _table(name)
-    base = DN.ten_hien_thi(table, **kw)
-    keys = list(table)
-    random.Random(seed).shuffle(keys)
-    assert DN.ten_hien_thi({k: table[k] for k in keys}, **kw) == base
-    assert DN.ten_hien_thi({k: table[k] for k in reversed(list(table))}, **kw) == base
+def test_names_do_not_depend_on_the_iteration_order(generated, seed):
+    for needle in ("mp_MNP", "mp_NPQ"):
+        table = _table(generated, needle)
+        base = _names(table)
+        keys = list(table)
+        random.Random(seed).shuffle(keys)
+        assert _names({k: table[k] for k in keys}) == base
+        assert _names({k: table[k] for k in reversed(list(table))}) == base
 
 
 def _rename(table, mapping):
@@ -95,24 +123,19 @@ def _rename(table, mapping):
     return out
 
 
-def test_renamed_plane_points_follow_the_new_names():
-    table, kw = _table("pyramid_mnp")
-    names = DN.ten_hien_thi(_rename(table, {"M": "X", "N": "Y", "P": "Z", "mp_MNP": "mp_XYZ"}), **kw)
-    assert names["F"]["role"] == "Giao điểm của SD và (XYZ)" and names["mp_XYZ"]["notation"] == "(XYZ)"
+def test_renamed_plane_points_follow_the_new_names(generated):
+    table = _table(generated, "mp_MNP")
+    ren = _rename(table, {"M": "X", "N": "Y", "P": "Z", "mp_MNP": "mp_XYZ"})
+    names = _names(ren)
+    assert names["F"]["role"] == "Giao điểm của SD và (XYZ)"
+    assert names["mp_XYZ"]["notation"] == "(XYZ)"
 
 
-def test_a_greek_named_plane_keeps_its_name():
-    table, kw = _table("pyramid_mnp")
-    table["mp_MNP"]["label"] = "(α)"
-    names = DN.ten_hien_thi(table, **{**kw, "prefer_declared_plane_names": True})
-    assert names["mp_MNP"]["notation"] == "(α)" and names["F"]["role"] == "Giao điểm của SD và (α)"
-
-
-def test_graph_references_are_left_as_ids():
-    table, kw = _table("pyramid_mnp")
-    before = copy.deepcopy(table)
-    DN.ten_hien_thi(table, **kw)
-    assert table == before                                   # the table (sources, producers, ids) is never rewritten
+def test_ids_stay_machine_names_in_the_dependency_graph(generated):
+    samples, _ = generated
+    for sid, oid in (("chop-thiet-dien-ba-diem", "F"), ("lang-tru-tam-giac-thiet-dien", "E")):
+        deps = _obj(samples, sid, oid).get("depends") or _obj(samples, sid, oid).get("sources") or []
+        assert all(not d.startswith("(") for d in deps)          # graph references are ids, never symbols
 
 
 def test_a_true_definition_cycle_never_prints_an_id_and_is_reported():
@@ -125,19 +148,15 @@ def test_a_true_definition_cycle_never_prints_an_id_and_is_reported():
     }
     report: set[str] = set()
     names = DN.ten_hien_thi(table, unresolved=report)
-    assert report & {"G", "mp_a"}
-    assert not [(t, f) for t, r in names.items() for f in PRESENTATION if _ids_in(str(r.get(f) or ""), set(table))]
+    assert report >= {"G"} or report >= {"mp_a"}
+    for t, row in names.items():
+        for f in PRESENTATION:
+            assert not _ids_in(str(row.get(f) or ""), set(table)), (t, f, row.get(f))
 
 
-@pytest.mark.parametrize("text", [
-    "Cho hình chóp S.ABCD có đáy ABCD là hình vuông cạnh a, SA vuông góc với mặt phẳng đáy và SA = a. Gọi M, N, P lần lượt "
-    "là trung điểm của SA, SB, SC. Dựng thiết diện của hình chóp cắt bởi mặt phẳng (MNP).",
-    "Cho hình lập phương ABCD.A'B'C'D' có cạnh bằng a. Gọi M, N, P lần lượt là trung điểm của AB, BC, CC'. Dựng thiết "
-    "diện của hình lập phương cắt bởi mặt phẳng (MNP).",
-])
-def test_scenes_built_by_this_route_carry_no_internal_id_in_presentation(monkeypatch, text):
-    monkeypatch.setenv("ALLOW_LIVE_AI", "0")
-    from app.ai.adaptive_input_router import route_text_input
-    objs = route_text_input(text, allow_live_ai=False).response["envelope"]["scene3d"]["objects"]
-    ids = {o["id"] for o in objs}
-    assert [(o["id"], f) for o in objs for f in PRESENTATION if _ids_in(str(o.get(f) or ""), ids)] == []
+def test_a_greek_named_plane_keeps_its_name_in_the_intersection_role(generated):
+    table = _table(generated, "mp_MNP")
+    table["mp_MNP"]["label"] = "(α)"
+    names = DN.ten_hien_thi(table, prefer_declared_plane_names=True)
+    assert names["mp_MNP"]["notation"] == "(α)"
+    assert names["F"]["role"] == "Giao điểm của SD và (α)"

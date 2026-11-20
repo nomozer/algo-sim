@@ -1,0 +1,112 @@
+{
+  "schema_version": "axo-evaluation-run/1",
+  "run_id": "step-editor-v22-reliability",
+  "task_slug": "axo-step-editor-v22-geometry-rebuild-reliability",
+  "date": "2026-11-18",
+  "branch": "feat/axo-geometry-library-verification",
+  "start_head": "29cc3abe27f2bf868c25a1af976fc9e92eedd27b",
+  "v1_restoration_commit": "f3cf5fa793890e77d882a2fd7835075e87d536a1",
+  "v1_baseline_commit": "438fa69cab04bc266110937874051e8616d8ea37",
+  "model_status": "MODEL_NOT_TRAINED",
+  "status": "READY_FOR_OWNER_REVIEW",
+  "owner_approval": "PENDING_OWNER_REVIEW",
+  "artifacts": {
+    "report": "report.md",
+    "backend_benchmark": "results/backend_benchmark.json",
+    "playwright_e2e_summary": "results/playwright_e2e_summary.json",
+    "playwright_followup_summary": "results/playwright_followup_summary.json",
+    "images": [
+      "images/v22-desktop-1920-hover.png",
+      "images/v22-desktop-1920-rebuild-H.png",
+      "images/v22-desktop-1920-error-preserved.png",
+      "images/v22-desktop-1920-sample1-section-rebuild.png",
+      "images/v22-desktop-1366.png",
+      "images/v22-tablet-768.png",
+      "images/v22-mobile-390-editor.png",
+      "images/v22-mobile-320-editor.png"
+    ]
+  },
+  "bugs_fixed": [
+    "BUG-1",
+    "BUG-2",
+    "BUG-3",
+    "BUG-4",
+    "BUG-5",
+    "BUG-6",
+    "BUG-7",
+    "BUG-8"
+  ],
+  "tests": {
+    "backend_targeted": {
+      "files": [
+        "backend/tests/geometry/test_editable_construction_steps.py",
+        "backend/tests/geometry/test_step_editor_v22_reliability.py"
+      ],
+      "status": "PASS",
+      "passed": 26,
+      "failed": 0
+    },
+    "frontend_step_editor": {
+      "files": [
+        "frontend/src/components/construction-step-editor.test.tsx"
+      ],
+      "status": "PASS",
+      "passed": 15,
+      "failed": 0
+    },
+    "frontend_typecheck_and_build": {
+      "tsc": "0 errors",
+      "vite_build": "129 modules",
+      "status": "PASS"
+    }
+  },
+  "benchmark": {
+    "environment": {
+      "os": "Windows 11 (10.0.26100, AMD64)",
+      "cpu": "11th Gen Intel(R) Core(TM) i5-11400H @ 2.70GHz (12 logical cores)",
+      "python": "3.12.10",
+      "iterations_measured": 30
+    },
+    "backend_ms": {
+      "s11_bisector_compound_partial": {
+        "mode": "PARTIAL_TOPOLOGICAL_REBUILD",
+        "recomputed_count": 9,
+        "skipped_count": 21,
+        "p50_ms": 19.024,
+        "p95_ms": 27.162
+      },
+      "s11_bisector_compound_full_rebuild": {
+        "mode": "FULL_TOPOLOGICAL_REBUILD",
+        "recomputed_count": 25,
+        "skipped_count": 0,
+        "p50_ms": 18.614,
+        "p95_ms": 20.751
+      },
+      "s1_ratio_section_partial": {
+        "mode": "PARTIAL_TOPOLOGICAL_REBUILD",
+        "recomputed_count": 6,
+        "skipped_count": 17,
+        "p50_ms": 21.162,
+        "p95_ms": 23.816
+      },
+      "s1_ratio_section_full_rebuild": {
+        "mode": "FULL_TOPOLOGICAL_REBUILD",
+        "recomputed_count": 18,
+        "skipped_count": 0,
+        "p50_ms": 22.52,
+        "p95_ms": 25.674
+      },
+      "s11_equiv_noop_cache_hit": {
+        "mode": "NO_OP_EQUIVALENT",
+        "p50_ms": 14.805,
+        "p95_ms": 20.402
+      }
+    },
+    "chrome_e2e_ms": {
+      "frontend_commit_render_p50_ms": 41.9,
+      "frontend_commit_render_p95_ms": 75.37,
+      "full_roundtrip_p50_ms": 149.84,
+      "full_roundtrip_p95_ms": 235.185
+    }
+  }
+}

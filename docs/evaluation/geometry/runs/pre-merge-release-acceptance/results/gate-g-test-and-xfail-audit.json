@@ -1,0 +1,174 @@
+{
+  "audited_at": "2026-11-19T07:06:51.909001+00:00",
+  "suites": {
+    "backend-postgres": {
+      "counts": {
+        "passed": 6,
+        "deselected": 14016
+      },
+      "xfail_count": 0,
+      "skip_count": 0
+    },
+    "backend-geometry": {
+      "counts": {
+        "passed": 12000,
+        "skipped": 6,
+        "deselected": 3,
+        "xfailed": 9
+      },
+      "xfail_count": 9,
+      "skip_count": 3
+    },
+    "backend-semantic-program": {
+      "counts": {
+        "passed": 1192,
+        "skipped": 1
+      },
+      "xfail_count": 0,
+      "skip_count": 1
+    },
+    "backend-other": {
+      "counts": {
+        "passed": 807,
+        "deselected": 4
+      },
+      "xfail_count": 0,
+      "skip_count": 0
+    },
+    "seal-verify": {
+      "tail": [
+        "Candidate khớp bản đã đóng băng (mã sản phẩm: 109 file, 702c98f5a0ae65ef…)."
+      ]
+    },
+    "backend-replay-demo": {
+      "tail": [
+        "✔ v2_04_thiet_dien_goc_va_the_tich   bước=12 cảnh=13  THIẾT DIỆN · góc · thể tích",
+        "loại: plane3,point3,quantity,section,solid",
+        "DEMO_CASES               5",
+        "DEMO_REPLAY_PASS         5/5",
+        "REDUCED_CHAIN_CASES      1/1"
+      ]
+    },
+    "backend-crash-audit": {
+      "tail": [
+        "✔ rửa năng lực qua biểu thức lồng      mong=SCHEMA             thực=SCHEMA",
+        "Lỗi cú pháp schema SemanticProgramSpec: 1 validation error for SemanticProgramSpec",
+        "statements.0.construct_point.expr.tra",
+        "BIÊN ĐÚNG KỲ VỌNG      6/6",
+        "NÉM RA NGOÀI (=500)    0"
+      ]
+    },
+    "frontend-tsc": {
+      "tail": []
+    },
+    "frontend-vite-build": {
+      "tail": [
+        "(!) Some chunks are larger than 500 kB after minification. Consider:",
+        "- Using dynamic import() to code-split the application",
+        "- Use build.rollupOptions.output.manualChunks to improve chunking: https://rollupjs.org/configuration-options/#output-manualchunks",
+        "- Adjust chunk size limit for this warning via build.chunkSizeWarningLimit.",
+        "\u001b[32m✓ built in 5.02s\u001b[39m"
+      ]
+    },
+    "frontend-vitest": {
+      "test_files": "Test Files  192 passed (192)",
+      "tests": "Tests  2274 passed (2274)",
+      "duration": "Duration  104.78s (transform 6.55s, setup 1.84s, import 49.27s, tests 124.72s, environment 15ms)"
+    }
+  },
+  "xfails_exact": [
+    {
+      "suite": "backend-geometry",
+      "raw": "XFAIL tests/geometry/test_generalized_goal_entry.py::test_length_goal_refusal[unread-second-ask] - Request coverage (M1, run hybrid-semantic-grounding-reliability) refuses REQUEST_NOT_ANSWERED, not the registered QUESTION_CONTEXT_UNSUPPORTED / NOT_ASKED_IN_SOURCE; label preserved",
+      "category": "known_source_gate_refusal_code_taxonomy_xfail",
+      "pre_merge_step_editor_risk": "LOW_PREEXISTING_REFUSAL_CODE_LABEL_ALIAS",
+      "detail": "Pre-existing conservative source-gate refusal / code label mismatch under M1 grounding suite (refused cleanly, expected label differs); baseline unchanged."
+    },
+    {
+      "suite": "backend-geometry",
+      "raw": "XFAIL tests/geometry/test_generalized_goal_entry.py::test_length_goal_refusal[contradictory-length] - Registered code INCONSISTENT_CONSTRAINTS differs from existing INCONSISTENT_FACTS; label preserved",
+      "category": "known_source_gate_refusal_code_taxonomy_xfail",
+      "pre_merge_step_editor_risk": "LOW_PREEXISTING_REFUSAL_CODE_LABEL_ALIAS",
+      "detail": "Pre-existing conservative source-gate refusal / code label mismatch under M1 grounding suite (refused cleanly, expected label differs); baseline unchanged."
+    },
+    {
+      "suite": "backend-geometry",
+      "raw": "XFAIL tests/geometry/test_hybrid_compiler_benchmark.py::test_case_outcome[B27-facts] - GAP B27: unnamed derived operand: Typed Facts cannot name 'trung điểm của SC' inside a question",
+      "category": "known_nlu_grounding_gap_xfail",
+      "pre_merge_step_editor_risk": "LOW_PREEXISTING_TYPED_FACTS_NL_GAP_B27_B28",
+      "detail": "Pre-existing Hybrid NL-to-TypedFact extraction boundary gaps (GAP B27 unnamed derived operand in question, GAP B28 'tâm' vs 'trọng tâm'); baseline unchanged."
+    },
+    {
+      "suite": "backend-geometry",
+      "raw": "XFAIL tests/geometry/test_hybrid_compiler_benchmark.py::test_case_outcome[B27-pipeline] - GAP B27: unnamed derived operand: Typed Facts cannot name 'trung điểm của SC' inside a question",
+      "category": "known_nlu_grounding_gap_xfail",
+      "pre_merge_step_editor_risk": "LOW_PREEXISTING_TYPED_FACTS_NL_GAP_B27_B28",
+      "detail": "Pre-existing Hybrid NL-to-TypedFact extraction boundary gaps (GAP B27 unnamed derived operand in question, GAP B28 'tâm' vs 'trọng tâm'); baseline unchanged."
+    },
+    {
+      "suite": "backend-geometry",
+      "raw": "XFAIL tests/geometry/test_hybrid_compiler_benchmark.py::test_case_outcome[B28-facts] - GAP B28: 'tâm' of a square = centroid, but the centroid source keyword is only 'trọng tâm'",
+      "category": "known_nlu_grounding_gap_xfail",
+      "pre_merge_step_editor_risk": "LOW_PREEXISTING_TYPED_FACTS_NL_GAP_B27_B28",
+      "detail": "Pre-existing Hybrid NL-to-TypedFact extraction boundary gaps (GAP B27 unnamed derived operand in question, GAP B28 'tâm' vs 'trọng tâm'); baseline unchanged."
+    },
+    {
+      "suite": "backend-geometry",
+      "raw": "XFAIL tests/geometry/test_hybrid_compiler_benchmark.py::test_case_outcome[B28-pipeline] - GAP B28: 'tâm' of a square = centroid, but the centroid source keyword is only 'trọng tâm'",
+      "category": "known_nlu_grounding_gap_xfail",
+      "pre_merge_step_editor_risk": "LOW_PREEXISTING_TYPED_FACTS_NL_GAP_B27_B28",
+      "detail": "Pre-existing Hybrid NL-to-TypedFact extraction boundary gaps (GAP B27 unnamed derived operand in question, GAP B28 'tâm' vs 'trọng tâm'); baseline unchanged."
+    },
+    {
+      "suite": "backend-geometry",
+      "raw": "XFAIL tests/geometry/test_hybrid_simulation_capability_probes.py::test_centre_label_exhaustion_is_a_coded_outcome - ISSUE-ARCH-ENGINE-CENTRE-LABEL-EXHAUSTION: StopIteration instead of a coded refusal",
+      "category": "known_geometry_engine_xfail",
+      "pre_merge_step_editor_risk": "LOW_PREEXISTING_ENGINE_CENTRE_EXHAUSTION_TRACKED",
+      "detail": "Pre-existing ISSUE-ARCH-ENGINE-CENTRE-LABEL-EXHAUSTION in full problem extraction path (StopIteration instead of coded refusal); Step Editor does not invoke this probe path."
+    },
+    {
+      "suite": "backend-geometry",
+      "raw": "XFAIL tests/geometry/test_premise_source_coverage.py::test_goal_fact_quote_does_not_cover_a_hypothesis[Ch\\u1ee9ng minh SC vu\\xf4ng g\\xf3c v\\u1edbi BD v\\xe0 \\u0111\\xe1y l\\xe0 h\\xecnh ch\\u1eef nh\\u1eadt.] - bounded: a hypothesis joined to a goal by 'và' with no marker stays inside the goal clause",
+      "category": "known_source_gate_refusal_code_taxonomy_xfail",
+      "pre_merge_step_editor_risk": "LOW_PREEXISTING_REFUSAL_CODE_LABEL_ALIAS",
+      "detail": "Pre-existing conservative source-gate refusal / code label mismatch under M1 grounding suite (refused cleanly, expected label differs); baseline unchanged."
+    },
+    {
+      "suite": "backend-geometry",
+      "raw": "XFAIL tests/geometry/test_source_grounding_reliability.py::test_targeted_case_meets_its_preregistered_label[E05-unsupported-second-quantity] - refused NOT_ASKED_IN_SOURCE: an unsupported quantity is not a known ask phrase",
+      "category": "known_source_gate_refusal_code_taxonomy_xfail",
+      "pre_merge_step_editor_risk": "LOW_PREEXISTING_REFUSAL_CODE_LABEL_ALIAS",
+      "detail": "Pre-existing conservative source-gate refusal / code label mismatch under M1 grounding suite (refused cleanly, expected label differs); baseline unchanged."
+    }
+  ],
+  "skips_exact": [
+    {
+      "suite": "backend-geometry",
+      "raw": "SKIPPED [2] tests\\geometry\\test_unified_solid_scope.py:186: A3-DEV-02 has no residual_volume goal",
+      "category": "parametrized_corpus_applicability_guard",
+      "pre_merge_step_editor_risk": "NONE_INTENTIONAL_CORPUS_APPLICABILITY_GUARD",
+      "detail": "Parametrized residual_volume test skips fixtures (A3-DEV-02, A3-DEV-09, demo1-pyramid-derived-section) that do not pose a residual_volume goal."
+    },
+    {
+      "suite": "backend-geometry",
+      "raw": "SKIPPED [2] tests\\geometry\\test_unified_solid_scope.py:186: A3-DEV-09 has no residual_volume goal",
+      "category": "parametrized_corpus_applicability_guard",
+      "pre_merge_step_editor_risk": "NONE_INTENTIONAL_CORPUS_APPLICABILITY_GUARD",
+      "detail": "Parametrized residual_volume test skips fixtures (A3-DEV-02, A3-DEV-09, demo1-pyramid-derived-section) that do not pose a residual_volume goal."
+    },
+    {
+      "suite": "backend-geometry",
+      "raw": "SKIPPED [2] tests\\geometry\\test_unified_solid_scope.py:186: demo1-pyramid-derived-section has no residual_volume goal",
+      "category": "parametrized_corpus_applicability_guard",
+      "pre_merge_step_editor_risk": "NONE_INTENTIONAL_CORPUS_APPLICABILITY_GUARD",
+      "detail": "Parametrized residual_volume test skips fixtures (A3-DEV-02, A3-DEV-09, demo1-pyramid-derived-section) that do not pose a residual_volume goal."
+    },
+    {
+      "suite": "backend-semantic-program",
+      "raw": "SKIPPED [1] tests\\semantic_program\\test_scalar_obligations.py:95: thiếu `term` mặc định về identity — đã có test riêng",
+      "category": "parametrized_duplicate_branch_guard",
+      "pre_merge_step_editor_risk": "NONE_DEDICATED_IDENTITY_TEST_EXISTS",
+      "detail": "Semantic-program parametrized obligation skips missing-term branch because identity default has its own dedicated regression test."
+    }
+  ]
+}

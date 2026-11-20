@@ -1,0 +1,242 @@
+{
+  "commit": "014a2fd24160b25039f589f5adaf3b762ba985f8",
+  "measured_at": "2026-11-19T09:29:51.823120+00:00",
+  "question": "Are historical IDs M_AB and mp_tt_AB opaque keys or parsed for geometric semantics?",
+  "conclusion": "OPAQUE_STABLE_KEYS_WITH_SYNCHRONIZED_METADATA",
+  "lifecycle_trace": [
+    {
+      "stage": "1_step_text",
+      "component": "InlineConstructionStepEditor.tsx",
+      "id_role": "Never sent as semantic prompt; user edits Vietnamese instruction text (tieuDeBuoc)."
+    },
+    {
+      "stage": "2_parser",
+      "component": "step_editor.py:parse_edited_step_instruction",
+      "id_role": "Zero access to scene object IDs; extracts ClauseIntent from text only."
+    },
+    {
+      "stage": "3_typed_facts_ir",
+      "component": "step_editor.py:ParsedStepEdit",
+      "id_role": "Stores normalized_text, registry_operations, point/line/plane symbol inputs; target_ids and absorbed_ids passed as handles only."
+    },
+    {
+      "stage": "4_dependency_graph",
+      "component": "step_editor.py:_build_dependency_graph",
+      "id_role": "Builds DAG edges strictly from obj['depends'], ignoring ID substrings."
+    },
+    {
+      "stage": "5_exact_geometry_kernel",
+      "component": "step_editor.py:execute_step_edit",
+      "id_role": "Computes exact Fraction/Radical coords using K.midpoint(mem[a_id], mem[b_id]) & Plane3; updates absorbed helper label/depends/xyz/reference in place."
+    },
+    {
+      "stage": "6_scene3d_objects",
+      "component": "step_editor.py + scene3d_hooks",
+      "id_role": "Rebuilds notation, label, display_label, reference, role, depends, computational_depends, visible_prerequisites, dependency_edges, topology, formulas."
+    },
+    {
+      "stage": "7_events",
+      "component": "step_editor.py:_sync_rebuilt_event",
+      "id_role": "Synchronizes events[*].depends, visible_prerequisites, learner_text, display_label, explanation, details (including hoisted dependencies)."
+    },
+    {
+      "stage": "8_learner_text_and_frontend",
+      "component": "scene3d-semantic-policy.ts (shortSym, replaceRawSceneIdTokens, SimulationWorkspace.tsx)",
+      "id_role": "shortSym resolves notation/reference/display_label/label first; absorbedHelperIds in SimulationWorkspace.tsx uses pObj.depends (unnamed point3), NOT ID strings."
+    },
+    {
+      "stage": "9_persistence",
+      "component": "step_edit_router.py (StepEditSessionRecord, StepEditRevisionRecord, VerifiedStepFeedbackRecord)",
+      "id_role": "Persists full committed Scene3D, step_overrides, dependency_summary, and feedback snapshots keyed by (owner_scope, session_id)."
+    }
+  ],
+  "id_pattern_audit_total_hits": 33,
+  "m_ab_or_mp_tt_semantic_parsing_hits": [],
+  "findings_sample": [
+    {
+      "location": "backend/app/simulation/geometry_functions/step_editor.py:3817",
+      "classification": "FALLBACK_BASE_PLANE_HEURISTIC_WHEN_UNSPECIFIED",
+      "snippet": "and (\"day\" in o[\"id\"].lower() or \"đáy\" in str(o.get(\"label\") or \"\").lower())"
+    },
+    {
+      "location": "frontend/src/components/family-icons.tsx:419",
+      "classification": "TECHNICAL_ID_PREFIX_OR_SUFFIX_CHECK",
+      "snippet": "(s) => s.id === trimmed || s.id.toLowerCase() === lower,"
+    },
+    {
+      "location": "frontend/src/components/geometry2d/resolver.ts:254",
+      "classification": "RENDER_GROUP_OR_BASE_POLYGON_HEURISTIC",
+      "snippet": "(o.surface_role === \"BASE_REGION\" || o.id.startsWith(\"day_\")) &&"
+    },
+    {
+      "location": "frontend/src/components/geometry2d/resolver.ts:332",
+      "classification": "RENDER_GROUP_OR_BASE_POLYGON_HEURISTIC",
+      "snippet": "(o.type === \"polygon3\" && (o.surface_role === \"BASE_REGION\" || o.id.startsWith(\"day_\"))),"
+    },
+    {
+      "location": "frontend/src/components/geometry2d/resolver.ts:380",
+      "classification": "RENDER_GROUP_OR_BASE_POLYGON_HEURISTIC",
+      "snippet": "(o.type === \"polygon3\" && (o.surface_role === \"BASE_REGION\" || o.id.startsWith(\"day_\"))),"
+    },
+    {
+      "location": "frontend/src/components/geometry2d/resolver.ts:431",
+      "classification": "RENDER_GROUP_OR_BASE_POLYGON_HEURISTIC",
+      "snippet": "(o.surface_role === \"BASE_REGION\" || o.id.startsWith(\"day_\")),"
+    },
+    {
+      "location": "frontend/src/components/geometry2d/resolver.ts:443",
+      "classification": "RENDER_GROUP_OR_BASE_POLYGON_HEURISTIC",
+      "snippet": "!o.id.startsWith(\"day_\") &&"
+    },
+    {
+      "location": "frontend/src/components/geometry2d/resolver.ts:587",
+      "classification": "RENDER_GROUP_OR_BASE_POLYGON_HEURISTIC",
+      "snippet": "!o.id.includes(\"equator\") &&"
+    },
+    {
+      "location": "frontend/src/components/geometry2d/resolver.ts:1151",
+      "classification": "RENDER_GROUP_OR_BASE_POLYGON_HEURISTIC",
+      "snippet": "!o.id.startsWith(\"day_\") &&"
+    },
+    {
+      "location": "frontend/src/components/landing/LandingHeroScene3D.tsx:1495",
+      "classification": "TECHNICAL_ID_PREFIX_OR_SUFFIX_CHECK",
+      "snippet": ": pt.id.replace(\"_prime\", \"′\");"
+    },
+    {
+      "location": "frontend/src/data/offline-catalog.ts:220",
+      "classification": "TECHNICAL_ID_PREFIX_OR_SUFFIX_CHECK",
+      "snippet": "(e) => e.slug === lower || e.id === trimmed || e.id.toLowerCase() === lower,"
+    },
+    {
+      "location": "frontend/src/data/offline-catalog.ts:224",
+      "classification": "TECHNICAL_ID_PREFIX_OR_SUFFIX_CHECK",
+      "snippet": "(e) => e.slug === lower || e.id === trimmed || e.id.toLowerCase() === lower,"
+    },
+    {
+      "location": "frontend/src/simulations/domains/geometry/interaction-state.ts:359",
+      "classification": "TECHNICAL_ID_PREFIX_OR_SUFFIX_CHECK",
+      "snippet": "o.id.startsWith(\"duong_tron_day\"))"
+    },
+    {
+      "location": "frontend/src/simulations/domains/geometry/scene3d-annotations.ts:442",
+      "classification": "TECHNICAL_ID_PREFIX_OR_SUFFIX_CHECK",
+      "snippet": "cand.authoritative !== false && !cand.id.endsWith(\"__radius\");"
+    },
+    {
+      "location": "frontend/src/simulations/domains/geometry/scene3d-model.ts:2191",
+      "classification": "DISPLAY_TOKEN_SCRUB_OR_TECHNICAL_SUBENTITY_DELIMITER",
+      "snippet": "|| o.id.startsWith(\"kq_vcert\")"
+    },
+    {
+      "location": "frontend/src/simulations/domains/geometry/scene3d-model.ts:2296",
+      "classification": "DISPLAY_TOKEN_SCRUB_OR_TECHNICAL_SUBENTITY_DELIMITER",
+      "snippet": "if (kq.has(object.id) && !object.id.startsWith(\"kq_vcert\")) {"
+    },
+    {
+      "location": "frontend/src/simulations/domains/geometry/scene3d-model.ts:2426",
+      "classification": "DISPLAY_TOKEN_SCRUB_OR_TECHNICAL_SUBENTITY_DELIMITER",
+      "snippet": "&& (!ketQua.has(o.id) || o.id.startsWith(\"kq_vcert\")),"
+    },
+    {
+      "location": "frontend/src/simulations/domains/geometry/scene3d-model.ts:2432",
+      "classification": "DISPLAY_TOKEN_SCRUB_OR_TECHNICAL_SUBENTITY_DELIMITER",
+      "snippet": "if (ketQua.has(o.id) && !o.id.startsWith(\"kq_vcert\")) continue;"
+    },
+    {
+      "location": "frontend/src/simulations/domains/geometry/scene3d-model.ts:2460",
+      "classification": "DISPLAY_TOKEN_SCRUB_OR_TECHNICAL_SUBENTITY_DELIMITER",
+      "snippet": "if (o.id.startsWith(\"kq_vcert\")) continue;"
+    },
+    {
+      "location": "frontend/src/simulations/domains/geometry/scene3d-model.ts:2682",
+      "classification": "DISPLAY_TOKEN_SCRUB_OR_TECHNICAL_SUBENTITY_DELIMITER",
+      "snippet": "item.provenance ??= item.id.startsWith(\"rel:assump:\") ? \"ILLUSTRATIVE\" : \"GIVEN\";"
+    },
+    {
+      "location": "frontend/src/simulations/domains/geometry/scene3d-model.ts:3547",
+      "classification": "OTHER_TECHNICAL_ID_CHECK",
+      "snippet": "&& !o.id.includes(\"__\")"
+    },
+    {
+      "location": "frontend/src/simulations/domains/geometry/scene3d-model.ts:3803",
+      "classification": "OTHER_TECHNICAL_ID_CHECK",
+      "snippet": "&& !tp.id.includes(\"__\")"
+    },
+    {
+      "location": "frontend/src/simulations/domains/geometry/scene3d-semantic-policy.ts:960",
+      "classification": "OTHER_TECHNICAL_ID_CHECK",
+      "snippet": "if (!cand.id.includes(\"::edge:\") && !presentSet.has(cand.id)) continue;"
+    },
+    {
+      "location": "frontend/src/simulations/domains/geometry/scene3d-semantic-policy.ts:961",
+      "classification": "OTHER_TECHNICAL_ID_CHECK",
+      "snippet": "if (cand.id.includes(\"::edge:\") && cand.parent && !presentSet.has(cand.parent)) continue;"
+    },
+    {
+      "location": "frontend/src/simulations/domains/geometry/scene3d-semantic-policy.ts:3840",
+      "classification": "OTHER_TECHNICAL_ID_CHECK",
+      "snippet": "ballsInScene.find((b) => o.id.startsWith(`${b.id}__`))"
+    },
+    {
+      "location": "frontend/src/simulations/domains/geometry/scene3d-semantic-policy.ts:5795",
+      "classification": "DISPLAY_TOKEN_SCRUB_OR_TECHNICAL_SUBENTITY_DELIMITER",
+      "snippet": "if (o.type === \"point3\" && o.xyz && !o.id.includes(\"::\")) {"
+    },
+    {
+      "location": "frontend/src/simulations/domains/geometry/scene3d-semantic-policy.ts:7325",
+      "classification": "DISPLAY_TOKEN_SCRUB_OR_TECHNICAL_SUBENTITY_DELIMITER",
+      "snippet": "const hostSolid = polyObj.id.endsWith(\"__base\")"
+    },
+    {
+      "location": "frontend/src/simulations/domains/geometry/scene3d-semantic-policy.ts:7895",
+      "classification": "DISPLAY_TOKEN_SCRUB_OR_TECHNICAL_SUBENTITY_DELIMITER",
+      "snippet": "return o.id.replace(/_prime$/u, \"′\").replace(/'+/gu, \"′\");"
+    },
+    {
+      "location": "frontend/src/simulations/domains/geometry/scene3d-semantic-policy.ts:19781",
+      "classification": "DISPLAY_TOKEN_SCRUB_OR_TECHNICAL_SUBENTITY_DELIMITER",
+      "snippet": "if (options?.replaceRawIds !== false && pl.id.includes(\"_\") && out.includes(pl.id)) {"
+    },
+    {
+      "location": "frontend/src/simulations/domains/geometry/scene3d-semantic-policy.ts:19817",
+      "classification": "DISPLAY_TOKEN_SCRUB_OR_TECHNICAL_SUBENTITY_DELIMITER",
+      "snippet": "(o) => !isSubEntity(o.id) && o.type !== \"plane3\" && o.id.includes(\"_\") && out.includes(o.id),"
+    },
+    {
+      "location": "frontend/src/simulations/domains/geometry/scene3d-semantic-policy.ts:20595",
+      "classification": "OTHER_TECHNICAL_ID_CHECK",
+      "snippet": "if (obj.id.includes(\"__diag_\") || /^Đường\\s+chéo\\b/iu.test(obj.label ?? \"\")) {"
+    },
+    {
+      "location": "frontend/src/simulations/domains/geometry/scene3d-view.tsx:7622",
+      "classification": "OTHER_TECHNICAL_ID_CHECK",
+      "snippet": "if (o.type === \"point3\" && o.parent && o.id.includes(\"::vertex:\")) {"
+    },
+    {
+      "location": "frontend/src/simulations/domains/geometry/scene3d-view.tsx:7623",
+      "classification": "OTHER_TECHNICAL_ID_CHECK",
+      "snippet": "if (progressCha && !progressCha.closed && Number(o.id.split(\":vertex:\")[1]) > progressCha.visible_edge_ids.length) {"
+    }
+  ],
+  "verified_seal_commit": "dbfbcf31256b60f076d8ff4464aac9223a213f09",
+  "product_commit_sha": "600f5105d4222cd6835cc916b34d5cb3f11610e6",
+  "measured_system_tree_hash": "78edfa1784625e9bca8f1a4cd70b60359d198ba77530986903175a57e18206a7",
+  "root_cause_fixes": [
+    {
+      "issue_id": "ISSUE-ALEMBIC-STAMP-AND-DRIFT-PREFLIGHT-GAP",
+      "commit": "014a2fd24160b25039f589f5adaf3b762ba985f8",
+      "summary": "Enforce stamp parity, unexpected rogue table drift, and atomic 0-or-5 legacy Classroom retention check in migration_preflight.py and env.py."
+    },
+    {
+      "issue_id": "ISSUE-FE-UNORBITED-CAMERA-JUMP-ON-STEP-EDIT-COMMIT",
+      "commit": "3f3afb25b84bf845267fbda6f6e6c128c6ee502b",
+      "summary": "Preserve live unorbited camera pose and lens viewOffset across same-scene step-edit rebuilds in scene3d-view.tsx and SimulationWorkspace.tsx."
+    },
+    {
+      "issue_id": "ISSUE-SE-CROSS-CONTEXT-CLIENT-SEQ-DESYNC",
+      "commit": "600f5105d4222cd6835cc916b34d5cb3f11610e6",
+      "summary": "Expose persisted latest_client_seq on GET /sessions/{id}/state and 409 EDIT_SUPERSEDED, sync frontend submit seq watermark across fresh contexts, and surface server-side 409 conflicts cleanly."
+    }
+  ]
+}

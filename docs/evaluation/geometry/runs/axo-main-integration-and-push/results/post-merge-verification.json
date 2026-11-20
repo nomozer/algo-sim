@@ -1,0 +1,66 @@
+{
+  "schema_version": "axo-post-merge-verification/1",
+  "checked_at": "2026-11-19T16:41:27+00:00",
+  "target_branch": "main",
+  "merge_commit_sha": "f7eb7f9bf37dba7101c0955e0fdabeee67636661",
+  "parents": [
+    "bb046fa22aceff47abe22aa783aa64fc65caee13",
+    "7c9ffdc8722601f79b12beb21acc43356b222d95"
+  ],
+  "rollback_tag": "pre-axo-step-editor-main-bb046fa22",
+  "rollback_archive_ref": "refs/archive/pre-axo-step-editor-main-bb046fa22",
+  "merge_tree_matches_rc_tree": true,
+  "checks": {
+    "freeze_evaluation_candidate_verify": {
+      "exit_code": 0,
+      "measured_system_file_count": 109,
+      "tree_hash": "78edfa1784625e9bca8f1a4cd70b60359d198ba77530986903175a57e18206a7",
+      "product_commit_sha": "600f5105d4222cd6835cc916b34d5cb3f11610e6"
+    },
+    "audit_docs_information_architecture": {
+      "exit_code": 0,
+      "status": "PASS",
+      "broken_links": 0,
+      "stale_paths": 0,
+      "secret_leaks": 0,
+      "unclassified": []
+    },
+    "check_publication_safety_head": {
+      "unexcepted_violations": 0
+    },
+    "critical_backend_pytest": {
+      "exit_code": 0,
+      "passed": 70,
+      "failed": 0,
+      "skipped": 0,
+      "deselected": 3,
+      "duration_s": 112.16,
+      "deselected_note": "3 postgres-marked tests deselected by `-k \"not postgres\"`; PG16 parity already verified `8 passed, 33 deselected` at 804464ade."
+    },
+    "frontend_production_build": {
+      "exit_code": 0,
+      "modules_transformed": 129,
+      "vite_build_s": 6.06
+    },
+    "critical_vitest": {
+      "exit_code": 0,
+      "files_passed": 3,
+      "tests_passed": 39,
+      "tests_failed": 0,
+      "duration_s": 7.97,
+      "sweep_22_samples_duration_ms": 4123
+    },
+    "live_http_smoke": {
+      "status": "PASS",
+      "git_sha": "f7eb7f9bf37dba7101c0955e0fdabeee67636661",
+      "cache_version": "132",
+      "get_root": 200,
+      "get_app": 200,
+      "get_api_health": 200,
+      "get_api_classes": 404,
+      "post_edit_valid_200_version": 1,
+      "post_edit_invalid_422_code": "MISSING_DEPENDENCY",
+      "post_422_state_version_preserved": 1
+    }
+  }
+}

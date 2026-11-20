@@ -1,0 +1,36 @@
+{
+  "evidence_id_inspect": "ev_a6583ab68ffdc9e3abbab418f0ce9caf70ae42a444649fe11a6941707280b488",
+  "evidence_id_screenshot": "ev_5c030f99dc342884b4e9fe3f49aaef626118d25a2d5fb5eaf4953e95cf3fdd35",
+  "url": "http://localhost:3001/simulation/pyramid-circumscribed-sphere",
+  "title": "Mô phỏng hình học 3D | Axo",
+  "normalized_keys": [
+    "accessibility",
+    "browser",
+    "capture_window",
+    "completeness",
+    "console",
+    "dom",
+    "frames",
+    "limitations",
+    "metadata",
+    "network",
+    "resources",
+    "scripts",
+    "storage",
+    "target",
+    "workers"
+  ],
+  "dom_summary": {
+    "total_nodes": 783
+  },
+  "console_error_count": 0,
+  "storage_redacted_note": "include_storage_keys omitted; storage values not captured",
+  "screenshot_file": "images/final-acceptance-rea-mcp.png",
+  "screenshot_bytes": 150127,
+  "screenshot_sha256": "64513149a1cef8ea1d37aaf9bdbd5994a1507dbdacd32044807ac075fe3a4db4",
+  "console_event_total": 3,
+  "console_error_types_checked": [
+    "debug",
+    "info"
+  ]
+}

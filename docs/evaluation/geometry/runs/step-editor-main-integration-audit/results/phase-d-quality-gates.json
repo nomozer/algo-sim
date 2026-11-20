@@ -1,0 +1,139 @@
+{
+  "verified_on_commit": "fdf3e5e79d907c533da50cb4dca56bd48069cde1",
+  "candidate_seal": {
+    "status": "PASS",
+    "output": "Candidate khớp bản đã đóng băng (mã sản phẩm: 109 file, e0ea792d71667f12…).",
+    "log": "logs/seal-verify.log"
+  },
+  "frontend": {
+    "tsc_b": {
+      "status": "PASS",
+      "log": "logs/frontend-tsc.log"
+    },
+    "vite_build": {
+      "status": "PASS",
+      "summary": [
+        "✓ 129 modules transformed.",
+        "✓ built in 5.15s"
+      ],
+      "log": "logs/frontend-vite-build.log"
+    },
+    "vitest": {
+      "status": "PASS",
+      "test_files_passed": 192,
+      "test_files_total": 192,
+      "tests_passed": 2274,
+      "tests_failed": 0,
+      "tests_skipped": 0,
+      "log": "logs/frontend-vitest.log",
+      "summary_lines": [
+        "✓ src/components/__tests__/landing-cta-motion.test.tsx (2 tests) 4ms",
+        "✓ src/simulations/domains/geometry/scene3d-sphere-tangent-narration.test.ts (2 tests) 4ms",
+        "Test Files  192 passed (192)",
+        "Tests  2274 passed (2274)",
+        "Start at  11:06:19",
+        "Duration  104.24s (transform 7.16s, setup 1.84s, import 49.26s, tests 123.24s, environment 15ms)"
+      ]
+    }
+  },
+  "backend": {
+    "tests_geometry": {
+      "status": "PASS",
+      "passed": 12000,
+      "failed": 0,
+      "skipped": 6,
+      "deselected": 3,
+      "xfailed": 9,
+      "summary_line": "12000 passed, 6 skipped, 3 deselected, 9 xfailed, 1 warning in 451.37s (0:07:31)",
+      "skipped_items": [
+        "SKIPPED [2] tests\\geometry\\test_unified_solid_scope.py:186: A3-DEV-02 has no residual_volume goal",
+        "SKIPPED [2] tests\\geometry\\test_unified_solid_scope.py:186: A3-DEV-09 has no residual_volume goal",
+        "SKIPPED [2] tests\\geometry\\test_unified_solid_scope.py:186: demo1-pyramid-derived-section has no residual_volume goal"
+      ],
+      "xfailed_items": [
+        "XFAIL tests/geometry/test_generalized_goal_entry.py::test_length_goal_refusal[unread-second-ask] - Request coverage (M1, run hybrid-semantic-grounding-reliability) refuses REQUEST_NOT_ANSWERED, not the registered QUESTION_CONTEXT_UNSUPPORTED / NOT_ASKED_IN_SOURCE; label preserved",
+        "XFAIL tests/geometry/test_generalized_goal_entry.py::test_length_goal_refusal[contradictory-length] - Registered code INCONSISTENT_CONSTRAINTS differs from existing INCONSISTENT_FACTS; label preserved",
+        "XFAIL tests/geometry/test_hybrid_compiler_benchmark.py::test_case_outcome[B27-facts] - GAP B27: unnamed derived operand: Typed Facts cannot name 'trung điểm của SC' inside a question",
+        "XFAIL tests/geometry/test_hybrid_compiler_benchmark.py::test_case_outcome[B27-pipeline] - GAP B27: unnamed derived operand: Typed Facts cannot name 'trung điểm của SC' inside a question",
+        "XFAIL tests/geometry/test_hybrid_compiler_benchmark.py::test_case_outcome[B28-facts] - GAP B28: 'tâm' of a square = centroid, but the centroid source keyword is only 'trọng tâm'",
+        "XFAIL tests/geometry/test_hybrid_compiler_benchmark.py::test_case_outcome[B28-pipeline] - GAP B28: 'tâm' of a square = centroid, but the centroid source keyword is only 'trọng tâm'",
+        "XFAIL tests/geometry/test_hybrid_simulation_capability_probes.py::test_centre_label_exhaustion_is_a_coded_outcome - ISSUE-ARCH-ENGINE-CENTRE-LABEL-EXHAUSTION: StopIteration instead of a coded refusal",
+        "XFAIL tests/geometry/test_premise_source_coverage.py::test_goal_fact_quote_does_not_cover_a_hypothesis[Ch\\u1ee9ng minh SC vu\\xf4ng g\\xf3c v\\u1edbi BD v\\xe0 \\u0111\\xe1y l\\xe0 h\\xecnh ch\\u1eef nh\\u1eadt.] - bounded: a hypothesis joined to a goal by 'và' with no marker stays inside the goal clause",
+        "XFAIL tests/geometry/test_source_grounding_reliability.py::test_targeted_case_meets_its_preregistered_label[E05-unsupported-second-quantity] - refused NOT_ASKED_IN_SOURCE: an unsupported quantity is not a known ask phrase"
+      ],
+      "log": "logs/backend-geometry.log"
+    },
+    "tests_semantic_program": {
+      "status": "PASS",
+      "passed": 1192,
+      "failed": 0,
+      "skipped": 1,
+      "deselected": 0,
+      "xfailed": 0,
+      "summary_line": "1192 passed, 1 skipped in 36.57s",
+      "skipped_items": [
+        "SKIPPED [1] tests\\semantic_program\\test_scalar_obligations.py:95: thiếu `term` mặc định về identity — đã có test riêng"
+      ],
+      "log": "logs/backend-semantic-program.log"
+    },
+    "tests_other": {
+      "status": "PASS",
+      "passed": 793,
+      "failed": 0,
+      "skipped": 0,
+      "deselected": 2,
+      "xfailed": 0,
+      "summary_line": "793 passed, 2 deselected, 1 warning in 107.56s (0:01:47)",
+      "log": "logs/backend-other.log"
+    },
+    "full_default_totals": {
+      "passed": 13985,
+      "failed": 0,
+      "skipped": 7,
+      "deselected": 5,
+      "xfailed": 9
+    },
+    "deselected_marker_nodes": [
+      "tests/geometry/test_evidence_identity_reconciliation.py::test_raw_response_identity_reproduced",
+      "tests/geometry/test_step_editor_integration_closure.py::test_step_edit_postgres_migration_handoff_live_container",
+      "tests/geometry/test_step_editor_integration_closure.py::test_postgres_real_step_editor_end_to_end_persistence_restart_and_rollback",
+      "tests/test_postgres_axo_history_migration.py::test_axo_migrations_and_history_api_on_postgres",
+      "tests/test_postgres_integration.py::test_postgres_migrate_persist_reconnect"
+    ],
+    "postgres_suite": {
+      "status": "PASS",
+      "passed": 4,
+      "failed": 0,
+      "deselected": 14002,
+      "summary_line": "=============== 4 passed, 14002 deselected, 1 warning in 53.39s ===============",
+      "log": "logs/backend-postgres.log"
+    },
+    "migration_drift_suite": {
+      "status": "PASS",
+      "passed": 2,
+      "failed": 0,
+      "summary_line": "============================== 2 passed in 5.85s ==============================",
+      "log": "logs/backend-migration-drift.log"
+    },
+    "step_editor_acceptance_suites": {
+      "status": "PASS",
+      "passed": 87,
+      "failed": 0,
+      "deselected": 2,
+      "summary_line": "87 passed, 2 deselected, 1 warning in 25.45s",
+      "log": "logs/backend-step-editor-suites.log"
+    },
+    "replay_demo_cases": {
+      "status": "PASS",
+      "demo_replay_pass": "5/5",
+      "reduced_chain_cases": "1/1",
+      "log": "logs/backend-replay-demo.log"
+    },
+    "audit_demo_crash_surface": {
+      "status": "PASS",
+      "boundary_matches": "6/6",
+      "unexpected_500": 0,
+      "log": "logs/backend-crash-audit.log"
+    }
+  }
+}

@@ -4,6 +4,7 @@ import { AppRoot } from "./App";
 import { registerAllSimulations } from "./simulations";
 import { useAppStore } from "./state/store";
 import "./styles/global.css";
+import "./components/landing/landing.css";
 
 registerAllSimulations();
 

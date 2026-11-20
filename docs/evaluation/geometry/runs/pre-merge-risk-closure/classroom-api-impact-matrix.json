@@ -1,0 +1,708 @@
+{
+  "commit": "014a2fd24160b25039f589f5adaf3b762ba985f8",
+  "baseline_main": "bb046fa22aceff47abe22aa783aa64fc65caee13",
+  "measured_at": "2026-11-19T09:29:53.503677+00:00",
+  "decision_status": "OWNER_DECISION_REQUIRED",
+  "removed_endpoint_count": 18,
+  "removed_endpoints": [
+    {
+      "item": "GET /api/classes",
+      "baseline_main": "ACTIVE (backend/app/accounts/router.py:list_classes)",
+      "release_candidate": "REMOVED_404 (routes removed from accounts/router.py)",
+      "consumer": "Baseline frontend/src/state/classroom.ts & class management UI; external API callers",
+      "impact": "404 Not Found in candidate",
+      "options": "Option A: restore /api/classes* handlers | Option B: formalize retirement contract & changelog",
+      "decision_status": "OWNER_DECISION_REQUIRED"
+    },
+    {
+      "item": "POST /api/classes",
+      "baseline_main": "ACTIVE (backend/app/accounts/router.py:create_class)",
+      "release_candidate": "REMOVED_404 (routes removed from accounts/router.py)",
+      "consumer": "Baseline frontend/src/state/classroom.ts & class management UI; external API callers",
+      "impact": "404 Not Found in candidate",
+      "options": "Option A: restore /api/classes* handlers | Option B: formalize retirement contract & changelog",
+      "decision_status": "OWNER_DECISION_REQUIRED"
+    },
+    {
+      "item": "POST /api/classes/{class_id}/code",
+      "baseline_main": "ACTIVE (backend/app/accounts/router.py:regenerate_code)",
+      "release_candidate": "REMOVED_404 (routes removed from accounts/router.py)",
+      "consumer": "Baseline frontend/src/state/classroom.ts & class management UI; external API callers",
+      "impact": "404 Not Found in candidate",
+      "options": "Option A: restore /api/classes* handlers | Option B: formalize retirement contract & changelog",
+      "decision_status": "OWNER_DECISION_REQUIRED"
+    },
+    {
+      "item": "DELETE /api/classes/{class_id}/code",
+      "baseline_main": "ACTIVE (backend/app/accounts/router.py:revoke_code)",
+      "release_candidate": "REMOVED_404 (routes removed from accounts/router.py)",
+      "consumer": "Baseline frontend/src/state/classroom.ts & class management UI; external API callers",
+      "impact": "404 Not Found in candidate",
+      "options": "Option A: restore /api/classes* handlers | Option B: formalize retirement contract & changelog",
+      "decision_status": "OWNER_DECISION_REQUIRED"
+    },
+    {
+      "item": "POST /api/classes/join",
+      "baseline_main": "ACTIVE (backend/app/accounts/router.py:join_class)",
+      "release_candidate": "REMOVED_404 (routes removed from accounts/router.py)",
+      "consumer": "Baseline frontend/src/state/classroom.ts & class management UI; external API callers",
+      "impact": "404 Not Found in candidate",
+      "options": "Option A: restore /api/classes* handlers | Option B: formalize retirement contract & changelog",
+      "decision_status": "OWNER_DECISION_REQUIRED"
+    },
+    {
+      "item": "GET /api/classes/{class_id}/members",
+      "baseline_main": "ACTIVE (backend/app/accounts/router.py:class_members)",
+      "release_candidate": "REMOVED_404 (routes removed from accounts/router.py)",
+      "consumer": "Baseline frontend/src/state/classroom.ts & class management UI; external API callers",
+      "impact": "404 Not Found in candidate",
+      "options": "Option A: restore /api/classes* handlers | Option B: formalize retirement contract & changelog",
+      "decision_status": "OWNER_DECISION_REQUIRED"
+    },
+    {
+      "item": "POST /api/assignments",
+      "baseline_main": "ACTIVE (backend/app/accounts/classroom_router.py:create_assignment)",
+      "release_candidate": "REMOVED_404 (classroom_router.py deleted)",
+      "consumer": "Baseline frontend/src/state/classroom.ts & live-classroom views; external scripted API callers",
+      "impact": "404 Not Found in candidate",
+      "options": "Option A: restore router | Option B: formalize retirement contract & changelog",
+      "decision_status": "OWNER_DECISION_REQUIRED"
+    },
+    {
+      "item": "GET /api/assignments",
+      "baseline_main": "ACTIVE (backend/app/accounts/classroom_router.py:list_assignments)",
+      "release_candidate": "REMOVED_404 (classroom_router.py deleted)",
+      "consumer": "Baseline frontend/src/state/classroom.ts & live-classroom views; external scripted API callers",
+      "impact": "404 Not Found in candidate",
+      "options": "Option A: restore router | Option B: formalize retirement contract & changelog",
+      "decision_status": "OWNER_DECISION_REQUIRED"
+    },
+    {
+      "item": "GET /api/assignments/{assignment_id}",
+      "baseline_main": "ACTIVE (backend/app/accounts/classroom_router.py:open_assignment)",
+      "release_candidate": "REMOVED_404 (classroom_router.py deleted)",
+      "consumer": "Baseline frontend/src/state/classroom.ts & live-classroom views; external scripted API callers",
+      "impact": "404 Not Found in candidate",
+      "options": "Option A: restore router | Option B: formalize retirement contract & changelog",
+      "decision_status": "OWNER_DECISION_REQUIRED"
+    },
+    {
+      "item": "POST /api/assignments/{assignment_id}/progress",
+      "baseline_main": "ACTIVE (backend/app/accounts/classroom_router.py:report_progress)",
+      "release_candidate": "REMOVED_404 (classroom_router.py deleted)",
+      "consumer": "Baseline frontend/src/state/classroom.ts & live-classroom views; external scripted API callers",
+      "impact": "404 Not Found in candidate",
+      "options": "Option A: restore router | Option B: formalize retirement contract & changelog",
+      "decision_status": "OWNER_DECISION_REQUIRED"
+    },
+    {
+      "item": "GET /api/classes/{class_id}/observe",
+      "baseline_main": "ACTIVE (backend/app/accounts/classroom_router.py:observe_class)",
+      "release_candidate": "REMOVED_404 (classroom_router.py deleted)",
+      "consumer": "Baseline frontend/src/state/classroom.ts & live-classroom views; external scripted API callers",
+      "impact": "404 Not Found in candidate",
+      "options": "Option A: restore router | Option B: formalize retirement contract & changelog",
+      "decision_status": "OWNER_DECISION_REQUIRED"
+    },
+    {
+      "item": "POST /api/classes/{class_id}/session",
+      "baseline_main": "ACTIVE (backend/app/accounts/session_router.py:start_session)",
+      "release_candidate": "REMOVED_404 (session_router.py deleted)",
+      "consumer": "Baseline frontend/src/state/classroom-sync.ts; Classroom teacher follow/broadcast",
+      "impact": "404 Not Found in candidate",
+      "options": "Option A: restore live sync router | Option B: formalize retirement contract & changelog",
+      "decision_status": "OWNER_DECISION_REQUIRED"
+    },
+    {
+      "item": "GET /api/classes/{class_id}/session",
+      "baseline_main": "ACTIVE (backend/app/accounts/session_router.py:read_session)",
+      "release_candidate": "REMOVED_404 (session_router.py deleted)",
+      "consumer": "Baseline frontend/src/state/classroom-sync.ts; Classroom teacher follow/broadcast",
+      "impact": "404 Not Found in candidate",
+      "options": "Option A: restore live sync router | Option B: formalize retirement contract & changelog",
+      "decision_status": "OWNER_DECISION_REQUIRED"
+    },
+    {
+      "item": "DELETE /api/classes/{class_id}/session",
+      "baseline_main": "ACTIVE (backend/app/accounts/session_router.py:end_session)",
+      "release_candidate": "REMOVED_404 (session_router.py deleted)",
+      "consumer": "Baseline frontend/src/state/classroom-sync.ts; Classroom teacher follow/broadcast",
+      "impact": "404 Not Found in candidate",
+      "options": "Option A: restore live sync router | Option B: formalize retirement contract & changelog",
+      "decision_status": "OWNER_DECISION_REQUIRED"
+    },
+    {
+      "item": "POST /api/classes/{class_id}/session/command",
+      "baseline_main": "ACTIVE (backend/app/accounts/session_router.py:issue_command)",
+      "release_candidate": "REMOVED_404 (session_router.py deleted)",
+      "consumer": "Baseline frontend/src/state/classroom-sync.ts; Classroom teacher follow/broadcast",
+      "impact": "404 Not Found in candidate",
+      "options": "Option A: restore live sync router | Option B: formalize retirement contract & changelog",
+      "decision_status": "OWNER_DECISION_REQUIRED"
+    },
+    {
+      "item": "POST /api/assignments/{assignment_id}/help",
+      "baseline_main": "ACTIVE (backend/app/accounts/session_router.py:request_help)",
+      "release_candidate": "REMOVED_404 (session_router.py deleted)",
+      "consumer": "Baseline frontend/src/state/classroom-sync.ts; Classroom teacher follow/broadcast",
+      "impact": "404 Not Found in candidate",
+      "options": "Option A: restore live sync router | Option B: formalize retirement contract & changelog",
+      "decision_status": "OWNER_DECISION_REQUIRED"
+    },
+    {
+      "item": "POST /api/classes/{class_id}/help/{student_id}/clear",
+      "baseline_main": "ACTIVE (backend/app/accounts/session_router.py:clear_help)",
+      "release_candidate": "REMOVED_404 (session_router.py deleted)",
+      "consumer": "Baseline frontend/src/state/classroom-sync.ts; Classroom teacher follow/broadcast",
+      "impact": "404 Not Found in candidate",
+      "options": "Option A: restore live sync router | Option B: formalize retirement contract & changelog",
+      "decision_status": "OWNER_DECISION_REQUIRED"
+    },
+    {
+      "item": "GET /api/classes/{class_id}/monitor",
+      "baseline_main": "ACTIVE (backend/app/accounts/session_router.py:monitor_class)",
+      "release_candidate": "REMOVED_404 (session_router.py deleted)",
+      "consumer": "Baseline frontend/src/state/classroom-sync.ts; Classroom teacher follow/broadcast",
+      "impact": "404 Not Found in candidate",
+      "options": "Option A: restore live sync router | Option B: formalize retirement contract & changelog",
+      "decision_status": "OWNER_DECISION_REQUIRED"
+    }
+  ],
+  "git_file_changes": [
+    "M\tbackend/app/accounts/__init__.py",
+    "D\tbackend/app/accounts/classroom_router.py",
+    "M\tbackend/app/accounts/policy.py",
+    "M\tbackend/app/accounts/router.py",
+    "M\tbackend/app/accounts/service.py",
+    "D\tbackend/app/accounts/session_router.py",
+    "M\tbackend/app/persistence/classroom_models.py",
+    "M\tbackend/scripts/seed_classroom_fixture.py",
+    "D\tbackend/tests/test_classroom_api.py",
+    "M\tdocs/CLASSROOM_AUTH_CONTRACT.md",
+    "M\tfrontend/src/App.tsx",
+    "D\tfrontend/src/components/live-classroom.test.tsx",
+    "A\tfrontend/src/state/__tests__/workspace-tab-close.test.tsx",
+    "M\tfrontend/src/state/auth.ts",
+    "D\tfrontend/src/state/classroom-sync.test.ts",
+    "D\tfrontend/src/state/classroom-sync.ts",
+    "D\tfrontend/src/state/classroom.ts",
+    "A\tfrontend/src/state/construction-step-edits.ts",
+    "M\tfrontend/src/state/history.ts",
+    "M\tfrontend/src/state/learner-recovery-snapshot.ts",
+    "M\tfrontend/src/state/store.ts",
+    "M\tfrontend/src/state/view-history.test.tsx",
+    "A\tfrontend/src/state/workspace-single-instance-navigation.test.tsx",
+    "A\tfrontend/src/state/workspace-tab-identity.ts"
+  ],
+  "auth_and_account_impact": {
+    "preserved_routes": [
+      "/api/auth/*",
+      "/api/admin/*",
+      "/api/history/*"
+    ],
+    "removed_roles_or_flows": "Classroom teacher join-code management, student assignment submission, live follow/sync polling",
+    "deleted_frontend_modules": [
+      "frontend/src/state/classroom.ts",
+      "frontend/src/state/classroom-sync.ts",
+      "frontend/src/state/classroom-sync.test.ts",
+      "frontend/src/components/live-classroom.test.tsx"
+    ],
+    "client_storage_keys": "Active candidate uses axo:learner-recovery:v1 & auth session cookie; zero stale classroom client callers remain in frontend/src",
+    "retained_db_tables_preserved": [
+      "classrooms",
+      "class_memberships",
+      "assignments",
+      "practice_sessions",
+      "classroom_sessions"
+    ],
+    "db_model_change": "Classroom ORM classes removed from backend/app/persistence/classroom_models.py (User/AuthSession retained), while DB tables and rows stay intact via non-destructive f8a2c41d9e05",
+    "scripts_and_docs": "seed_classroom_fixture.py converted to fail-closed retirement guard (exit 2); docs/CLASSROOM_AUTH_CONTRACT.md & docs/CODE_INDEX.md updated"
+  },
+  "leftover_reference_inventory": {
+    "backend": [
+      {
+        "file": "backend/alembic/env.py",
+        "hit_count": 2,
+        "sample_hits": [
+          "L9: - Các bảng Classroom cũ được giữ nguyên an toàn trong cơ sở dữ liệu hiện hữu và",
+          "L44: \"\"\"Ignore retained legacy Classroom tables during autogenerate / alembic check.\"\"\""
+        ]
+      },
+      {
+        "file": "backend/alembic/migration_preflight.py",
+        "hit_count": 7,
+        "sample_hits": [
+          "L7: holding Classroom or account records) from unsafe automatic `alembic upgrade`.",
+          "L28: \"classroom_sessions\",",
+          "L29: \"practice_sessions\",",
+          "L30: \"assignments\",",
+          "L31: \"class_memberships\","
+        ]
+      },
+      {
+        "file": "backend/alembic/versions/a1c7e4b90d52_live_classroom_session.py",
+        "hit_count": 22,
+        "sample_hits": [
+          "L1: \"\"\"live classroom session + semantic focus",
+          "L15: ① `practice_sessions` mọc thêm TIÊU ĐIỂM NGỮ NGHĨA + TRỢ GIÚP. Mở rộng bảng",
+          "L20: ② `classroom_sessions` là bảng MỚI — trạng thái điều phối sống trong một",
+          "L43: op.add_column(\"practice_sessions\",",
+          "L45: op.add_column(\"practice_sessions\","
+        ]
+      },
+      {
+        "file": "backend/alembic/versions/f32f9b107b77_m18_accounts_and_classroom.py",
+        "hit_count": 14,
+        "sample_hits": [
+          "L1: \"\"\"m18 accounts and classroom",
+          "L69: op.create_table('assignments',",
+          "L83: with op.batch_alter_table('assignments', schema=None) as batch_op:",
+          "L88: op.create_table('class_memberships',",
+          "L98: with op.batch_alter_table('class_memberships', schema=None) as batch_op:"
+        ]
+      },
+      {
+        "file": "backend/alembic/versions/f8a2c41d9e05_remove_classroom_and_live_session_tables.py",
+        "hit_count": 23,
+        "sample_hits": [
+          "L1: \"\"\"retain legacy classroom tables on classroom feature retirement",
+          "L7: Revision ID `f8a2c41d9e05` previously dropped the five Classroom / Live Session",
+          "L8: tables (`classroom_sessions`, `practice_sessions`, `assignments`,",
+          "L9: `class_memberships`, `classrooms`) unconditionally inside `upgrade()`. Because",
+          "L12: live user/classroom data) risked irreversible table destruction with an empty-schema"
+        ]
+      },
+      {
+        "file": "backend/scripts/seed_classroom_fixture.py",
+        "hit_count": 8,
+        "sample_hits": [
+          "L2: \"\"\"Retired Classroom fixture entrypoint guard (BLOCKER-DB-2 resolution).",
+          "L4: Classroom routes (`classroom_router.py`, `session_router.py`) and Classroom ORM",
+          "L5: models (`Classroom`, `ClassMembership`, `Assignment`, `PracticeSession`,",
+          "L7: while existing persisted Classroom tables/rows remain safely retained in-place.",
+          "L25: # Verify active non-Classroom persistence and demo-account seeder remain importable."
+        ]
+      },
+      {
+        "file": "backend/scripts/seed_demo_accounts.py",
+        "hit_count": 5,
+        "sample_hits": [
+          "L124: \"class_memberships\",",
+          "L125: \"assignments\",",
+          "L126: \"practice_sessions\",",
+          "L127: \"classroom_sessions\",",
+          "L135: \"RETAINED_CLASSROOM_DATA_PRESENT: cơ sở dữ liệu chứa dữ liệu Classroom cần bảo toàn \""
+        ]
+      },
+      {
+        "file": "backend/tests/source_scan.py",
+        "hit_count": 1,
+        "sample_hits": [
+          "L12: live-classroom.test.tsx      — *\"«đang gặp khó» thì không\"*"
+        ]
+      },
+      {
+        "file": "backend/tests/test_auth_api.py",
+        "hit_count": 1,
+        "sample_hits": [
+          "L122: \"/api/assignments\","
+        ]
+      },
+      {
+        "file": "backend/tests/test_database_safety_closure.py",
+        "hit_count": 18,
+        "sample_hits": [
+          "L7: 3. Legacy DB with populated 5-table Classroom graph (row count + FK + SHA-256 table digest parity across",
+          "L9: 4. DB already at `9c4d8e2b7a10` with Step Editor + Classroom rows -> `upgrade head`.",
+          "L10: 5. DB already at pre-fix `f8a2c41d9e05` (no Classroom tables, Step Editor rows present) -> `upgrade head`",
+          "L17: `seed_demo_accounts.py` (0 legacy tables created; refuses mutation when Classroom rows exist).",
+          "L40: LEGACY_TABLES = (\"classrooms\", \"class_memberships\", \"assignments\", \"practice_sessions\", \"classroom_sessions\")"
+        ]
+      },
+      {
+        "file": "backend/tests/test_postgres_axo_history_migration.py",
+        "hit_count": 8,
+        "sample_hits": [
+          "L53: c.execute(text(\"insert into class_memberships (classroom_id, student_id, joined_at) \"",
+          "L55: c.execute(text(\"insert into assignments (classroom_id, created_by, title, instruction, simulation_id, envelope_json, clo",
+          "L57: a_id = c.execute(text(\"select id from assignments where classroom_id = :c\"), {\"c\": cls_id}).scalar_one()",
+          "L58: c.execute(text(\"insert into practice_sessions (assignment_id, student_id, simulation_id, cursor, step_count, explore_ope",
+          "L60: c.execute(text(\"insert into classroom_sessions (classroom_id, teacher_id, round_id, cmd_id, mode, assignment_id, simulat"
+        ]
+      },
+      {
+        "file": "backend/tests/test_pre_merge_release_acceptance.py",
+        "hit_count": 6,
+        "sample_hits": [
+          "L172: \"\"\"Build deterministic unstamped e437149641fa SQLite DB with 46 users & 66 Classroom rows;",
+          "L209: text(\"INSERT INTO class_memberships (classroom_id, student_id, joined_at) VALUES (:cid, :sid, CURRENT_TIMESTAMP)\"),",
+          "L220: \"INSERT INTO assignments (classroom_id, created_by, title, instruction, simulation_id, envelope_json, closed, created_at",
+          "L225: aid = conn.execute(text(\"SELECT id FROM assignments WHERE title = :title\"), {\"title\": title}).scalar_one()",
+          "L231: \"INSERT INTO practice_sessions (assignment_id, student_id, simulation_id, cursor, step_count, \""
+        ]
+      },
+      {
+        "file": "backend/tests/test_pre_merge_risk_closure.py",
+        "hit_count": 8,
+        "sample_hits": [
+          "L96: # 1. Fresh empty DB via alembic upgrade head -> 20 tables (14 core + 5 retained Classroom + alembic_version)",
+          "L158: \"\"\"Retaining only a partial subset (1..4 of 5) Classroom tables at f8a2c41d9e05 is rejected as drift.\"\"\"",
+          "L165: conn.execute(text(\"DROP TABLE classroom_sessions\"))",
+          "L171: assert report[\"drift_details\"][\"missing_tables\"] == [\"classroom_sessions\"]",
+          "L249: \"\"\"Verify PostgreSQL 16 guards against wrong stamp, rogue tables, partial Classroom tables, and preserves parity.\"\"\""
+        ]
+      },
+      {
+        "file": "backend/tests/geometry/scope_field_census.py",
+        "hit_count": 1,
+        "sample_hits": [
+          "L42: \"\"\"Propagate target/key values through assignments, helpers and partial bindings to actual reads."
+        ]
+      },
+      {
+        "file": "backend/tests/geometry/test_step_editor_integration_closure.py",
+        "hit_count": 9,
+        "sample_hits": [
+          "L616: \"INSERT INTO class_memberships (classroom_id, student_id, joined_at) \"",
+          "L623: \"INSERT INTO assignments (classroom_id, created_by, title, instruction, simulation_id, envelope_json, closed, created_at",
+          "L629: text(\"SELECT id FROM assignments WHERE classroom_id = :c_id\"),",
+          "L634: \"INSERT INTO practice_sessions (assignment_id, student_id, simulation_id, cursor, step_count, explore_open, challenge_op",
+          "L641: \"INSERT INTO classroom_sessions (classroom_id, teacher_id, round_id, cmd_id, mode, assignment_id, simulation_id, current"
+        ]
+      }
+    ],
+    "frontend": [
+      {
+        "file": "frontend/src/test-source.ts",
+        "hit_count": 1,
+        "sample_hits": [
+          "L12: *   `live-classroom.test.tsx`    — *\"«đang gặp khó» thì không\"*"
+        ]
+      },
+      {
+        "file": "frontend/src/components/axo-error-experience.test.tsx",
+        "hit_count": 1,
+        "sample_hits": [
+          "L50: for (const removedClassroomPath of [\"/classes\", \"/assignments\", \"/monitor\", \"/observe\"]) {"
+        ]
+      },
+      {
+        "file": "frontend/src/components/phase-b-views.test.tsx",
+        "hit_count": 2,
+        "sample_hits": [
+          "L2047: expect(teacherV9Html).not.toContain('id=\"nav-item-assignments\"');",
+          "L2204: expect(leftSidebarSrc).not.toContain(\"nav-item-assignments\");"
+        ]
+      },
+      {
+        "file": "frontend/src/components/__tests__/LeftSidebar.v9_2.test.tsx",
+        "hit_count": 3,
+        "sample_hits": [
+          "L119: expect(teacherHtml).not.toContain('id=\"nav-item-assignments\"');",
+          "L174: it(\"V9.3 Phase 2.2: Removed classroom routes (/classes, /assignments, /monitor, /observe) safely fall back to 404 not_fo",
+          "L175: for (const removedPath of [\"/classes\", \"/assignments\", \"/monitor\", \"/observe\"]) {"
+        ]
+      },
+      {
+        "file": "frontend/src/components/__tests__/v92-composer-upload.test.tsx",
+        "hit_count": 2,
+        "sample_hits": [
+          "L209: it(\"3. AXO V9.3/V9.4: Dead Classroom CSS Cleanup, Sticky Guest Footer, and Two-Tier Light Mode Composer Typography & Too",
+          "L219: // Phase 1.2: Dead Classroom / Assignment / Monitor / LiveSession CSS rules removed"
+        ]
+      },
+      {
+        "file": "frontend/src/simulations/domains/geometry/axo-pedagogical-presentation-hardening.test.tsx",
+        "hit_count": 1,
+        "sample_hits": [
+          "L1020: // (6) Spoiler sanitization strips numeric/symbolic answer assignments while keeping geometric intersections"
+        ]
+      }
+    ],
+    "docs": [
+      {
+        "file": "docs/AI_CONTEXT_BUNDLE.md",
+        "hit_count": 3,
+        "sample_hits": [
+          "L143: - **classroom-band-fit chờ người dùng:** `runs/classroom-band-fit/review.md` H-1…H-3 (ảnh, quyết chip chỉ hiện chấm màu ",
+          "L144: 640–667 px ngang) và C-1…C-4 (thao tác tay chế độ lớp). `ISSUE-ARCH-CLASSROOM-BAND-CROWDS-PHONE-TOP-ROW` RESOLVED (chờ d",
+          "L147: `runs/final-acceptance/review.md` (D-1 đã xử lý ở classroom-band-fit). UX debt người dùng chấp nhận tạm, vẫn OPEN: bảng "
+        ]
+      },
+      {
+        "file": "docs/ARCHITECTURE_MAP.md",
+        "hit_count": 2,
+        "sample_hits": [
+          "L346: | 27 | **Tầng lớp học ĐỌC bằng chứng, KHÔNG phán đúng/sai** (M18). Correctness thuộc về engine tất định và `predict.chec",
+          "L348: | 28 | **Chữ của giáo viên không bao giờ thành sự thật runtime** (M18). Giao bài = giao một **envelope ĐÃ QUA `SimSpec.v"
+        ]
+      },
+      {
+        "file": "docs/CLASSROOM_AUTH_CONTRACT.md",
+        "hit_count": 5,
+        "sample_hits": [
+          "L28: | Lớp của ai | `classrooms.teacher_id` + `class_memberships` |",
+          "L73: > - Các route Classroom/Assignment/Live-Session (`/api/classes*`, `/api/assignments*`) và các ORM model tương ứng đã đượ",
+          "L75: > - 5 bảng Classroom lịch sử (`classrooms`, `class_memberships`, `assignments`, `practice_sessions`, `classroom_sessions",
+          "L84: # khởi tạo 3 tài khoản demo cô lập (thay thế script Classroom cũ đã ngừng)",
+          "L89: mới, làm mọi phép nghiệm thu vô nghĩa. `accept-classroom-m18.mjs` kiểm danh"
+        ]
+      },
+      {
+        "file": "docs/CODE_INDEX.md",
+        "hit_count": 19,
+        "sample_hits": [
+          "L42: - **Attempt identity.** `newAttemptId()` (`frontend/src/state/history.ts`, `a` + 128-bit hex via `getRandomValues`) is c",
+          "L375: | `backend/scripts/check_publication_safety.py` | Pre-push gate (0 model calls) over Git OBJECTS, not the working tree: ",
+          "L2148: - **`classroom_router.py`** — `/api/assignments*` + `/api/classes/{id}/observe`.",
+          "L2153: Active account, auth, history, quota ledger, and admin tables (`users`, `auth_sessions`, `learning_history_entries`, `us",
+          "L2155: ### `state/auth.ts` · `state/classroom.ts`"
+        ]
+      },
+      {
+        "file": "docs/CURRENT_STATE.md",
+        "hit_count": 4,
+        "sample_hits": [
+          "L64: **INTEGRATED CUTOVER 2026-11-04 — Final Hybrid Architecture Cutover (Owner-directed): `HYBRID_DEFAULT_CUTOVER_COMPLETE =",
+          "L828: > **Dải lớp học trên điện thoại — run classroom-band-fit (2026-10-09, máy local; đo `6a1801e7` lần 3, worktree tách rời ",
+          "L837: > | Run | [`classroom-band-fit`](evaluation/geometry/runs/classroom-band-fit/) (`review.md`, `report.md`, `handoff.md`) ",
+          "L844: > | Dải lớp học trên điện thoại | lỗi thật, **có từ `main`**: nhánh 11/24, `main` 5/24, không hồi quy — `ISSUE-ARCH-CLAS"
+        ]
+      },
+      {
+        "file": "docs/EVIDENCE_INDEX.md",
+        "hit_count": 10,
+        "sample_hits": [
+          "L402: CLASSIFICATION = REAL_BROWSER_AND_UVICORN_NETWORK_E2E_STAGING_REPLAY + PRODUCT_RUNTIME_REPLAY_VERIFICATION_NOT_LIVE_PROV",
+          "L486: CLASSIFICATION = OWNER_DIRECTED_DEFAULT_ARCHITECTURE_CUTOVER + OFFLINE_FULL_PRODUCT_VERIFICATION (0 live provider calls;",
+          "L3363: - **MEASUREMENT_COMMIT:** bc989cd2 source (frontend/src identical to 95a56a17); scratch builds of that source and of mai",
+          "L3371: - **CORRECTS:** NONE (phone-landscape-layout report §6 listed the classroom band as unmeasured; measured here, earlier f",
+          "L3373: - **THESIS_USE:** merge readiness of the branch; classroom band defect (pre-existing on main); emulated-touch support fo"
+        ]
+      },
+      {
+        "file": "docs/OPEN_ISSUES.md",
+        "hit_count": 6,
+        "sample_hits": [
+          "L954: - **description:** Hand-run browser scripts in `frontend/scripts/` still build paths from `new URL(...).pathname`, which",
+          "L1520: - **description:** Eight of the ten T1 scripts in `frontend/package.json` (`test:domain:algorithm`, `binary`, `logic`, `",
+          "L1670: ### ISSUE-ARCH-CLASSROOM-BAND-CROWDS-PHONE-TOP-ROW",
+          "L1671: - **description:** The classroom band (`daiLop`: assignment label, the teacher's «Giao cho lớp», the live-class dock or ",
+          "L1675: - **status:** RESOLVED (run `classroom-band-fit`, product `45f5a7f0`) — waiting for the user's review (`runs/classroom-b"
+        ]
+      },
+      {
+        "file": "docs/OPERATIONS.md",
+        "hit_count": 1,
+        "sample_hits": [
+          "L187: - Revision `f8a2c41d9e05` giữ nguyên trạng 5 bảng Classroom cũ (`classrooms`, `class_memberships`, `assignments`, `pract"
+        ]
+      },
+      {
+        "file": "docs/ROADMAP.md",
+        "hit_count": 1,
+        "sample_hits": [
+          "L338: - **Việc `classroom-band-fit` (2026-10-09, run [`classroom-band-fit`](evaluation/geometry/runs/classroom-band-fit/), máy"
+        ]
+      },
+      {
+        "file": "docs/STATUS_LEDGER.md",
+        "hit_count": 9,
+        "sample_hits": [
+          "L1393: - **OPENED:** ISSUE-ARCH-CLASSROOM-BAND-CROWDS-PHONE-TOP-ROW (branch 11/24, main 5/24, no regression), ISSUE-ARCH-MOBILE",
+          "L1405: - **RUN_ID:** classroom-band-fit (task classroom-band-fit; local; same branch feat/regular-square-pyramid)",
+          "L1412: - **FULL_PRODUCT_SUITE:** T3 at the run's final documentation commit — `runs/classroom-band-fit/handoff.md` §2",
+          "L1413: - **PRODUCT_CHANGED:** YES — classroom band folds into a status chip on tight phone screens; title floor; tool group no-",
+          "L1415: - **REPORT_PATH:** docs/evaluation/geometry/runs/classroom-band-fit/report.md"
+        ]
+      },
+      {
+        "file": "docs/TEST_TIERS.md",
+        "hit_count": 2,
+        "sample_hits": [
+          "L25: > `test:domain:shared-ui`, `test:domain:classroom`; `impact.mjs` sở hữu miền hình học theo thư mục",
+          "L30: > gỡ; chỉ `shared-ui` và `classroom` còn chọn được test. Miền hình học chưa có script T1 và chưa có chủ sở hữu trong"
+        ]
+      },
+      {
+        "file": "docs/evaluation/RUN_NAMING.md",
+        "hit_count": 1,
+        "sample_hits": [
+          "L108: - Script chứng nhận thời Tin học từng ghi ở đây (`certify-*-w12.mjs`, `*-w7.mjs`, `accept-classroom-m18.mjs`, `capture-w"
+        ]
+      },
+      {
+        "file": "docs/evaluation/landing/AXO-LANDING-CTA-FOOTER-REFINEMENT-REPORT.md",
+        "hit_count": 2,
+        "sample_hits": [
+          "L196: - **`frontend/`:** sửa `index.html`, `package.json`, `package-lock.json`, `public/favicon.svg`, `AuthGate.tsx`, `AxoErro",
+          "L225: | Toàn bộ file dirty/untracked của Classroom, Attachment, LeftSidebar V9.2–V9.4.x (`backend/*`, `docs/EVIDENCE_INDEX.md`"
+        ]
+      },
+      {
+        "file": "docs/evaluation/landing/AXO-LANDING-SPATIAL-VISUAL-SYSTEM-REPORT.md",
+        "hit_count": 1,
+        "sample_hits": [
+          "L121: - `python backend/scripts/audit_docs_information_architecture.py --json` có sẵn 4 đường dẫn stale `OWNERSHIP_BLOCKED` tr"
+        ]
+      },
+      {
+        "file": "docs/evaluation/landing/AXO-LANDING-V1.2-REPORT.md",
+        "hit_count": 2,
+        "sample_hits": [
+          "L283: 2. **Audit docs tồn đọng ngoài phạm vi (`NOT_OUR_REGRESSION`):** `backend/scripts/audit_docs_information_architecture.py",
+          "L299: - `frontend/src/components/{AssignDialog,AssignmentsView,AuthGate,AxoErrorExperience,ClassesView,HomeView,LiveClassDock,"
+        ]
+      },
+      {
+        "file": "docs/evaluation/landing/AXO-LANDING-V1.3-CREATIVE-DIRECTION-REPORT.md",
+        "hit_count": 1,
+        "sample_hits": [
+          "L214: - `python backend/scripts/audit_docs_information_architecture.py --json`: trả `STATUS: \"FAIL\"` (mã thoát `1`) **chỉ do 4"
+        ]
+      },
+      {
+        "file": "docs/evaluation/landing/AXO-LANDING-V1.6-VISUAL-RECOVERY-REPORT.md",
+        "hit_count": 2,
+        "sample_hits": [
+          "L169: | `audit_docs_information_architecture.py` | Exit `1` (`CODE_INDEX` 4 stale paths do các file classroom `OWNERSHIP_BLOCK",
+          "L222: - `audit_docs_information_architecture.py` vẫn báo exit `1` cho tới khi phiên làm việc sở hữu cụm classroom (`OWNERSHIP_"
+        ]
+      },
+      {
+        "file": "docs/evaluation/landing/AXO-LANDING-V1.7-SPATIAL-EXPERIENCE-REPORT.md",
+        "hit_count": 1,
+        "sample_hits": [
+          "L12: Chỉ chỉnh sửa **8 tệp mã nguồn & kiểm thử thuộc danh sách V1.4 + 2 tệp tài liệu**, tuyệt đối không chạm các tệp `OWNERSH"
+        ]
+      },
+      {
+        "file": "docs/evaluation/landing/AXO-LANDING-V1.7-VISUAL-ACCEPTANCE-REPORT.md",
+        "hit_count": 1,
+        "sample_hits": [
+          "L19: Chỉ chạm **11 file thuộc phạm vi Landing V1.4 + kiểm thử + tài liệu chỉ mục/báo cáo**; toàn bộ các file `OWNERSHIP_BLOCK"
+        ]
+      },
+      {
+        "file": "docs/evaluation/landing/AXO-LANDING-V14-PRODUCT-RECOVERY-REPORT.md",
+        "hit_count": 1,
+        "sample_hits": [
+          "L220: - **`backend/scripts/audit_docs_information_architecture.py`:** `Internal links broken: 0`, `Docs root closed list: True"
+        ]
+      },
+      {
+        "file": "docs/evaluation/landing/AXO-LANDING-V18-VISUAL-ARCHITECTURE-REPORT.md",
+        "hit_count": 2,
+        "sample_hits": [
+          "L17: - **Biên giới `OWNERSHIP_BLOCKED`:** Toàn bộ thay đổi dở trên working tree ngoài Landing (`backend/**`, `docs/EVIDENCE_I",
+          "L172: - **Kiểm tra kiến trúc tài liệu (`python backend/scripts/audit_docs_information_architecture.py --json`):** `OWNERSHIP.v"
+        ]
+      },
+      {
+        "file": "docs/evaluation/landing/AXO-LANDING-VISUAL-MOTION-REDESIGN-REPORT.md",
+        "hit_count": 2,
+        "sample_hits": [
+          "L137: | Docs Architecture Audit (`python backend/scripts/audit_docs_information_architecture.py --json`) | Kiểm tra cấu trúc `",
+          "L146: 4. **Hạng mục `OWNERSHIP_BLOCKED` trong `CODE_INDEX.md` / worktree:** `audit_docs_information_architecture.py --json` tr"
+        ]
+      },
+      {
+        "file": "docs/evaluation/reports/architecture-gap-audit-2026-09.md",
+        "hit_count": 2,
+        "sample_hits": [
+          "L169: `transparent_ids` · `current_step`). `classroom-sync.apDungPhien` là **reducer",
+          "L236: | `state/classroom.ts` | 44 | 18 | có xử lý cục bộ |"
+        ]
+      },
+      {
+        "file": "docs/evaluation/reports/AXO-GEOMETRY-REGRESSION-TABBAR-REPORT.md",
+        "hit_count": 2,
+        "sample_hits": [
+          "L134: 2. Kiểm tra kiến trúc tài liệu `python backend/scripts/audit_docs_information_architecture.py` sau khi tạo báo cáo ghi n",
+          "L156: - `frontend/index.html`, `frontend/package.json`, `frontend/package-lock.json`, `frontend/public/*`, `frontend/scripts/a"
+        ]
+      },
+      {
+        "file": "docs/evaluation/reports/GEOMETRY_ARCHITECTURE_EXPRESSIVENESS_AUDIT.md",
+        "hit_count": 1,
+        "sample_hits": [
+          "L590: **Không còn nguồn sự thật kép.** `state/classroom-sync.apDungPhien` **không**"
+        ]
+      },
+      {
+        "file": "docs/evaluation/reports/SCOPE_ALIGNMENT_AUDIT.md",
+        "hit_count": 1,
+        "sample_hits": [
+          "L37: chung mà chúng nhập chỉ có: `components/icons.tsx`, `state/classroom-sync.ts`,"
+        ]
+      },
+      {
+        "file": "docs/legacy/CURRENT_STATE_HISTORY.md",
+        "hit_count": 1,
+        "sample_hits": [
+          "L385: > Nghiệm thu: `docs/evaluation/m18/classroom-acceptance.json`."
+        ]
+      },
+      {
+        "file": "docs/legacy/STATUS_LEDGER_INFORMATICS_ERA.md",
+        "hit_count": 6,
+        "sample_hits": [
+          "L40: | Trang khách (không thanh bên, một ô nhập, dùng thử 1 lượt) | **DONE** | `accept-classroom-m18.mjs` 4 bề rộng | **W7C**",
+          "L43: | Giáo viên quan sát (trạng thái có cấu trúc, 5s) | **DONE** | bất biến #27; `accept-classroom-m18.mjs` | — |",
+          "L45: | Phiên dạy trực tiếp (bám theo · tự do · gọi cả lớp về) | **DONE** | `test_live_session_api.py`; `classroom-sync.test.t",
+          "L107: | Vỏ ứng dụng theo vai trò | **DONE** | `ux-shell.test.tsx`, `accept-classroom-m18.mjs` | W7D |",
+          "L125: | Nghiệm thu trình duyệt 4 bề rộng | **DONE** | composition + classroom + experience | W12 (mở rộng) |"
+        ]
+      },
+      {
+        "file": "docs/research/thesis/THESIS_REFERENCE_NEEDS.md",
+        "hit_count": 1,
+        "sample_hits": [
+          "L157: technology integration mathematics classroom barriers · GeoGebra adoption"
+        ]
+      }
+    ]
+  },
+  "options_analysis": {
+    "Option_A_Preserve_Compatibility": {
+      "summary": "Restore classroom_router.py, session_router.py, classroom_models.py ORM mappings, frontend classroom state/UI routes, and test_classroom_api.py.",
+      "pros": [
+        "100% HTTP backward compatibility for existing Classroom/Live Session users and scripts"
+      ],
+      "cons": [
+        "Reintroduces Classroom surface removed intentionally from candidate; requires integration testing alongside Step Editor & Landing/App split"
+      ],
+      "rollback": "Route feature flag or git revert commit restoring Classroom routers"
+    },
+    "Option_B_Intentional_Retirement": {
+      "summary": "Keep HTTP APIs retired (404), keep legacy DB tables read-only/intact (0 data loss), publish formal API retirement notice, changelog, and backup/export runbook.",
+      "pros": [
+        "Smaller V1 attack/maintenance surface focused cleanly on Step Editor + Workspace; zero data loss in PostgreSQL"
+      ],
+      "cons": [
+        "Breaking change for any external consumer or Teacher/Student Classroom workflow expecting /api/classes/* or /api/sessions/*"
+      ],
+      "rollback": "Git revert / restore routers from bb046fa22 without touching DB tables (since data was never dropped)"
+    }
+  },
+  "verified_seal_commit": "dbfbcf31256b60f076d8ff4464aac9223a213f09",
+  "product_commit_sha": "600f5105d4222cd6835cc916b34d5cb3f11610e6",
+  "measured_system_tree_hash": "78edfa1784625e9bca8f1a4cd70b60359d198ba77530986903175a57e18206a7",
+  "root_cause_fixes": [
+    {
+      "issue_id": "ISSUE-ALEMBIC-STAMP-AND-DRIFT-PREFLIGHT-GAP",
+      "commit": "014a2fd24160b25039f589f5adaf3b762ba985f8",
+      "summary": "Enforce stamp parity, unexpected rogue table drift, and atomic 0-or-5 legacy Classroom retention check in migration_preflight.py and env.py."
+    },
+    {
+      "issue_id": "ISSUE-FE-UNORBITED-CAMERA-JUMP-ON-STEP-EDIT-COMMIT",
+      "commit": "3f3afb25b84bf845267fbda6f6e6c128c6ee502b",
+      "summary": "Preserve live unorbited camera pose and lens viewOffset across same-scene step-edit rebuilds in scene3d-view.tsx and SimulationWorkspace.tsx."
+    },
+    {
+      "issue_id": "ISSUE-SE-CROSS-CONTEXT-CLIENT-SEQ-DESYNC",
+      "commit": "600f5105d4222cd6835cc916b34d5cb3f11610e6",
+      "summary": "Expose persisted latest_client_seq on GET /sessions/{id}/state and 409 EDIT_SUPERSEDED, sync frontend submit seq watermark across fresh contexts, and surface server-side 409 conflicts cleanly."
+    }
+  ]
+}

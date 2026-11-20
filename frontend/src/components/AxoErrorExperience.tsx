@@ -21,6 +21,12 @@ export type LocationRouteDecision =
 const STATIC_PATH_TO_VIEW: Readonly<Record<string, Exclude<AppView, "not_found">>> = {
   "/": "home",
   "/index.html": "home",
+  "/app": "home",
+  "/home": "home",
+  "/gioi-thieu": "landing",
+  "/welcome": "landing",
+  "/intro": "landing",
+  "/landing": "landing",
   "/library": "library",
   "/history": "history",
   "/login": "login",
@@ -28,10 +34,6 @@ const STATIC_PATH_TO_VIEW: Readonly<Record<string, Exclude<AppView, "not_found">
   "/forgot": "forgot",
   "/reset": "reset",
   "/admin": "admin",
-  "/classes": "classes",
-  "/assignments": "assignments",
-  "/observe": "observe",
-  "/monitor": "monitor",
   "/account": "account",
 };
 
@@ -42,6 +44,8 @@ export function canonicalPathForView(
   switch (view) {
     case "home":
       return "/";
+    case "landing":
+      return "/gioi-thieu";
     case "library":
       return "/library";
     case "history":
@@ -58,14 +62,6 @@ export function canonicalPathForView(
       return "/reset";
     case "admin":
       return "/admin";
-    case "classes":
-      return "/classes";
-    case "assignments":
-      return "/assignments";
-    case "observe":
-      return "/observe";
-    case "monitor":
-      return "/monitor";
     case "account":
       return "/account";
     case "not_found":
@@ -438,74 +434,76 @@ export function AxoErrorExperience({
 
           {children && <div className="axo-error-slot">{children}</div>}
 
-          <div className="axo-error-actions" aria-label="Điều hướng khôi phục">
-            {showBackPrimary ? (
-              <button
-                type="button"
-                className="btn-primary axo-error-btn-primary"
-                data-error-action="back"
-                onClick={onBack}
-              >
-                <svg
-                  className="axo-error-btn-icon"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="currentColor"
-                  strokeWidth="2"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  aria-hidden="true"
-                >
-                  <path d="M19 12H5" />
-                  <path d="m12 19-7-7 7-7" />
-                </svg>
-                <span>{backLabel}</span>
-              </button>
-            ) : (
-              primaryHomeHandler && (
+          {variant === "page" && (
+            <div className="axo-error-actions" aria-label="Điều hướng khôi phục">
+              {showBackPrimary ? (
                 <button
                   type="button"
                   className="btn-primary axo-error-btn-primary"
-                  data-error-action="home"
-                  onClick={primaryHomeHandler}
+                  data-error-action="back"
+                  onClick={onBack}
                 >
-                  <span>{homeLabel}</span>
+                  <svg
+                    className="axo-error-btn-icon"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    strokeWidth="2"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    aria-hidden="true"
+                  >
+                    <path d="M19 12H5" />
+                    <path d="m12 19-7-7 7-7" />
+                  </svg>
+                  <span>{backLabel}</span>
                 </button>
-              )
-            )}
+              ) : (
+                primaryHomeHandler && (
+                  <button
+                    type="button"
+                    className="btn-primary axo-error-btn-primary"
+                    data-error-action="home"
+                    onClick={primaryHomeHandler}
+                  >
+                    <span>{homeLabel}</span>
+                  </button>
+                )
+              )}
 
-            {onSecondaryRetry ? (
-              <button
-                type="button"
-                className="axo-error-btn-secondary"
-                data-error-action="secondary-retry"
-                onClick={onSecondaryRetry}
-              >
-                <span>{secondaryRetryLabel}</span>
-              </button>
-            ) : onOpenLibrary ? (
-              <button
-                type="button"
-                className="axo-error-btn-secondary"
-                data-error-action="library"
-                onClick={onOpenLibrary}
-              >
-                <span>{libraryLabel}</span>
-              </button>
-            ) : (
-              showBackPrimary &&
-              onGoHome && (
+              {onSecondaryRetry ? (
                 <button
                   type="button"
                   className="axo-error-btn-secondary"
-                  data-error-action="home"
-                  onClick={onGoHome}
+                  data-error-action="secondary-retry"
+                  onClick={onSecondaryRetry}
                 >
-                  <span>{homeLabel}</span>
+                  <span>{secondaryRetryLabel}</span>
                 </button>
-              )
-            )}
-          </div>
+              ) : onOpenLibrary ? (
+                <button
+                  type="button"
+                  className="axo-error-btn-secondary"
+                  data-error-action="library"
+                  onClick={onOpenLibrary}
+                >
+                  <span>{libraryLabel}</span>
+                </button>
+              ) : (
+                showBackPrimary &&
+                onGoHome && (
+                  <button
+                    type="button"
+                    className="axo-error-btn-secondary"
+                    data-error-action="home"
+                    onClick={onGoHome}
+                  >
+                    <span>{homeLabel}</span>
+                  </button>
+                )
+              )}
+            </div>
+          )}
         </div>
       </div>
     </section>

@@ -1,0 +1,5 @@
+Official PostgreSQL Tools: postgres (PostgreSQL) 16.15 | pg_dump (PostgreSQL) 16.15 | pg_restore (PostgreSQL) 16.15 | psql (PostgreSQL) 16.15
+staging_source catalog recorded: 20 tables, alembic=['f8a2c41d9e05']
+pg_dump (92078 B) + pg_restore into staging_restored completed (192 TOC objects)
+Post-restore container write v=3 + docker restart state verification PASS (M=['0', '0', '3'])
+Host algosim_acceptance read-only catalog verified: 15 tables, alembic=['f8a2c41d9e05'], sessions=13, revisions=35 (host :55432 is loopback-only 127.0.0.1)

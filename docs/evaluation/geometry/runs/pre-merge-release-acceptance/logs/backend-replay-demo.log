@@ -1,0 +1,23 @@
+✔ n1_thoi_dinh_thu_tu                [PASS   ] dừng=—  bước=6  cảnh=8
+    dựng đỉnh thứ tư từ vectơ · đo tới đường · đáp số vô tỉ √3
+    loại: line3,point3,quantity,vector3 · producer 5/8 · depends 5/8 · sự kiện 6
+✔ n2_lang_tru_xien_hai_vecto         [PASS   ] dừng=—  bước=7  cảnh=10
+    lăng trụ XIÊN · hai vectơ dẫn xuất · trung điểm · 3√3
+    loại: line3,point3,quantity,vector3 · producer 6/10 · depends 6/10 · sự kiện 7
+✔ t3_hop_tinh_tien_day_chuyen        [PASS   ] dừng=—  bước=10  cảnh=13
+    dây chuyền tịnh tiến 4 đỉnh · chuỗi sâu · 3√89/5
+    loại: line3,point3,quantity,vector3 · producer 9/13 · depends 9/13 · sự kiện 10
+✔ t4_mat_xich_trong_chuoi_sau        [PASS   ] dừng=—  bước=9  cảnh=12
+    hình chiếu trong chuỗi phụ thuộc · 2√2
+    loại: line3,plane3,point3,quantity,vector3 · producer 8/12 · depends 8/12 · sự kiện 9
+✔ n4_giao_duong_mat_roi_do           [REFUSAL] dừng=GROUNDING  bước=None  cảnh=None
+    CỔNG TỪ CHỐI: trích dẫn dữ kiện không có trong hợp đồng
+    INPUT_NOT_GROUNDED A: source_fact_id 'A(0; 0; 0)' không có trong RequestContract; B: source_fact_id 'B(2; 0; 0)' không có trong RequestContract; C: source_fact_id 'C(2; 2; 0)' không có trong RequestContract
+
+── chạy RÚT GỌN (artifact không lưu hợp đồng ⇒ bỏ grounding) ──
+✔ v2_04_thiet_dien_goc_va_the_tich   bước=12 cảnh=13  THIẾT DIỆN · góc · thể tích
+    loại: plane3,point3,quantity,section,solid
+
+  DEMO_CASES               5
+  DEMO_REPLAY_PASS         5/5
+  REDUCED_CHAIN_CASES      1/1

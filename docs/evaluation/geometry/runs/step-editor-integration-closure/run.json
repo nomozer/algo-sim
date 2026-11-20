@@ -1,0 +1,55 @@
+{
+  "schema_version": "axo-evaluation-run/1",
+  "run_id": "step-editor-integration-closure",
+  "task_slug": "axo-step-editor-integration-closure-and-merge-gate",
+  "date": "2026-11-19",
+  "branch": "feat/axo-geometry-library-verification",
+  "start_head": "bae665e79d69b6b47fae34187b0ea1b02d722e50",
+  "product_commit": "37b7460ddd6f01dc07e5999dd09e29abe3ac2486",
+  "candidate_seal_commit": "3eabbf674bfca82d19ca00b2894d2576dd87a5e5",
+  "measured_system_tree_hash": "c1323d0a7bd9fda0e13114bfc4a03fe36124bb8d733ef472cf5430f967378b38",
+  "measured_system_file_count": 111,
+  "statuses": {
+    "GEOMETRY_BOUNDARY_CLOSURE": "FIXED_AND_VERIFIED",
+    "CANDIDATE_SEAL_VERIFICATION": "FIXED_AND_VERIFIED",
+    "ALEMBIC_REAL_MIGRATION_CHAIN": "FIXED_AND_VERIFIED",
+    "CONCURRENCY_RETRY_AND_VERSION_CLOCK": "FIXED_AND_VERIFIED",
+    "POSTGRES_LIVE_CONTAINER": "ENVIRONMENT_BLOCKED",
+    "CLEAN_HEAD_FRONTEND_BUILD": "OWNERSHIP_BLOCKED",
+    "INTEGRATED_WORKTREE_FRONTEND_BUILD": "FIXED_AND_VERIFIED",
+    "HOST_E2E_AND_RESTART": "FIXED_AND_VERIFIED",
+    "MODEL_STATUS": "MODEL_NOT_TRAINED",
+    "FINAL_VERDICT": "BLOCKED"
+  },
+  "artifacts": {
+    "formal_report": "AXO-STEP-EDITOR-INTEGRATION-CLOSURE-REPORT.md",
+    "report": "report.md",
+    "pre_intervention_baseline": "results/pre-intervention-baseline.json",
+    "quality_gates_summary": "results/quality-gates-summary.json",
+    "closure_e2e_verification": "results/closure-e2e-verification.json",
+    "rea_mcp_closure_inspection": "results/rea-mcp-closure-inspection.json",
+    "alembic_handoff_patch": "patches/postgres-step-edit-alembic-handoff.patch",
+    "classroom_rebase_patch": "patches/classroom-wip-rebase-onto-step-editor.patch",
+    "images": [
+      "images/closure-1920-p1-valid-edit.png",
+      "images/closure-1920-invalid-422.png",
+      "images/closure-1920-p2-cascade-f5.png",
+      "images/closure-1920-p3-prism.png",
+      "images/closure-1920-p4-common-perp.png",
+      "images/closure-1920-post-restart.png",
+      "images/closure-vp-1920x1080.png",
+      "images/closure-vp-1440x900.png",
+      "images/closure-vp-1366x768.png",
+      "images/closure-vp-1024x768.png",
+      "images/closure-vp-768x1024.png",
+      "images/closure-vp-390x844.png",
+      "images/closure-vp-320x568.png",
+      "images/closure-rea-mcp-screenshot.png"
+    ]
+  },
+  "rea_mcp_evidence": {
+    "list_browser_targets": "ev_ac7a48fd2be1333ae5dc89a04c04ed44cd0c0973361ae9c49d47dac78f2c94b1",
+    "capture_web_screenshot": "ev_d6aa74d328817cc0c0113e797ca739e3503cd2aade9551c613b217a9c971eaca",
+    "artifact_sha256": "7c6be261d76b65f48d65b08adb7e88e027ed641f879c48783dd25edfe808574e"
+  }
+}

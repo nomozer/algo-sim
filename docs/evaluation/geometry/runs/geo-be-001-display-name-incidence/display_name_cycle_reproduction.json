@@ -1,0 +1,35 @@
+{
+  "ticket": "GEO-BE-001",
+  "repository": "axo-geometry-library (a git worktree of the algo-sim repository, shared .git)",
+  "branch": "feat/axo-geometry-library-verification",
+  "baseline_head": "c7a6077fd",
+  "fix_commit": "5a229507b",
+  "live_ai_calls": 0,
+  "method": "real generator path build_all_advanced_samples() with ten_hien_thi spied (test_display_names_incidence_cycle.py)",
+  "reproduced_at": "c7a6077fd",
+  "rows": [
+    {
+      "sample": "chop-thiet-dien-ba-diem",
+      "object": "F",
+      "before": "Giao điểm của SD và mp_MNP"
+    },
+    {
+      "sample": "lap-phuong-thiet-dien-bat-ky",
+      "object": "F",
+      "before": "Giao điểm của A′B′ và mp_MNP"
+    },
+    {
+      "sample": "lap-phuong-thiet-dien-bat-ky",
+      "object": "Q",
+      "before": "Giao điểm của AA′ và mp_MNP"
+    },
+    {
+      "sample": "lang-tru-tam-giac-thiet-dien",
+      "object": "E",
+      "before": "Giao điểm của A′B′ và mp_NPQ"
+    }
+  ],
+  "call_trace": "giai(E) → giai(mp_MNP) (sources of E) → points_on_plane [M,N,P,E,F] → giai(F) → sources [sd, mp_MNP] → giai(mp_MNP) returns early (dang_giai) → F's sentence built with goi_ngan.get('mp_MNP','mp_MNP') = raw id → memoized",
+  "order_dependence": "the FIRST intersection point resolved pulls the plane in and is correct (E); every other point on that plane gets the id (F) — verified by permuted-order tests failing before the fix",
+  "verdict": "REPRODUCED; ticket hypothesis CONFIRMED (points_on_plane incidence recursion + dang_giai early return + raw-id fallback)"
+}

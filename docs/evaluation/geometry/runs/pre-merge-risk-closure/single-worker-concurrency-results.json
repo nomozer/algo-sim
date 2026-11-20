@@ -1,0 +1,262 @@
+{
+  "commit": "014a2fd24160b25039f589f5adaf3b762ba985f8",
+  "measured_at": "2026-11-19T09:36:58.570238+00:00",
+  "staging_endpoint": "http://127.0.0.1:8012",
+  "verdict": "PROVEN_ARCHITECTURAL_V1_CONSTRAINT",
+  "why_single_worker_required": {
+    "in_process_mutable_state": [
+      {
+        "symbol": "_SESSION_LOCKS",
+        "purpose": "Bounded OrderedDict[(owner_scope, session_id), threading.RLock] (max 2048) serializing per-session edits."
+      },
+      {
+        "symbol": "_CANCELLED_REQUESTS",
+        "purpose": "Bounded OrderedDict[(owner_scope, session_id, client_request_id), bool] for in-flight cancel signal propagation."
+      },
+      {
+        "symbol": "_LATEST_CLIENT_SEQ",
+        "purpose": "Bounded OrderedDict fast-path monotonic client_seq guard (backed by persisted _latest_client_seq in dependency_graph_json across restarts)."
+      },
+      {
+        "symbol": "_LAST_COMMIT_SNAPSHOT",
+        "purpose": "In-process map cleared/complemented by DB _prev_snapshot & idempotent replay via dependency_graph_json."
+      }
+    ],
+    "database_synchronization": [
+      "db.rollback() before acquiring per-session RLock prevents stale PostgreSQL REPEATABLE READ / READ COMMITTED snapshot reads.",
+      "SELECT ... FROM step_edit_sessions FOR UPDATE locks the session row in PostgreSQL during revision evaluation & commit.",
+      "Single atomic DB transaction updates StepEditSessionRecord and appends StepEditRevisionRecord + VerifiedStepFeedbackRecord.",
+      "SQLAlchemy QueuePool (pool_size=10, max_overflow=20 -> 30 max concurrent PG connections)."
+    ],
+    "fail_closed_enforcement": "_assert_single_worker_runtime() rejects WEB_CONCURRENCY>1 / UVICORN_WORKERS>1 / GUNICORN_CMD_ARGS workers>1 with HTTP 503 UNSUPPORTED_MULTI_WORKER_TOPOLOGY.",
+    "fast_api_event_loop_behavior": "Endpoints are synchronous `def`, executed by FastAPI/Starlette in AnyIO's 40-thread worker pool so per-session RLock waits do not block the asyncio event loop."
+  },
+  "multi_worker_guard_test": {
+    "status_code": 503,
+    "error_code": "UNSUPPORTED_MULTI_WORKER_TOPOLOGY",
+    "passed": true
+  },
+  "controlled_load_tiers": {
+    "concurrent_1_sessions": {
+      "sessions": 1,
+      "valid_commits": 3,
+      "validation_422_count": 1,
+      "conflict_409_count": 0,
+      "server_5xx_count": 0,
+      "lost_updates": 0,
+      "db_sessions_verified": 1,
+      "cross_session_isolation_ok": true,
+      "http_rtt_ms": {
+        "n": 3,
+        "p50_ms": 78.355,
+        "p95_ms": 101.634,
+        "p99_ms": 103.704,
+        "min_ms": 69.007,
+        "max_ms": 104.221,
+        "mean_ms": 83.861,
+        "stdev_ms": 18.241,
+        "iqr_ms": 17.607
+      },
+      "server_engine_ms": {
+        "n": 3,
+        "p50_ms": 19.203,
+        "p95_ms": 20.65,
+        "p99_ms": 20.779,
+        "min_ms": 16.227,
+        "max_ms": 20.811,
+        "mean_ms": 18.747,
+        "stdev_ms": 2.326,
+        "iqr_ms": 2.292
+      },
+      "pg_commit_ms": {
+        "n": 3,
+        "p50_ms": 14.821,
+        "p95_ms": 15.603,
+        "p99_ms": 15.673,
+        "min_ms": 10.658,
+        "max_ms": 15.69,
+        "mean_ms": 13.723,
+        "stdev_ms": 2.69,
+        "iqr_ms": 2.516
+      },
+      "queue_and_http_overhead_ms": {
+        "n": 3,
+        "p50_ms": 47.307,
+        "p95_ms": 70.207,
+        "p99_ms": 72.243,
+        "min_ms": 34.114,
+        "max_ms": 72.752,
+        "mean_ms": 51.391,
+        "stdev_ms": 19.64,
+        "iqr_ms": 19.319
+      }
+    },
+    "concurrent_5_sessions": {
+      "sessions": 5,
+      "valid_commits": 15,
+      "validation_422_count": 5,
+      "conflict_409_count": 0,
+      "server_5xx_count": 0,
+      "lost_updates": 0,
+      "db_sessions_verified": 5,
+      "cross_session_isolation_ok": true,
+      "http_rtt_ms": {
+        "n": 15,
+        "p50_ms": 273.089,
+        "p95_ms": 368.716,
+        "p99_ms": 402.52,
+        "min_ms": 235.949,
+        "max_ms": 410.971,
+        "mean_ms": 290.258,
+        "stdev_ms": 54.908,
+        "iqr_ms": 98.196
+      },
+      "server_engine_ms": {
+        "n": 15,
+        "p50_ms": 27.946,
+        "p95_ms": 64.573,
+        "p99_ms": 66.423,
+        "min_ms": 16.764,
+        "max_ms": 66.885,
+        "mean_ms": 32.707,
+        "stdev_ms": 15.208,
+        "iqr_ms": 14.934
+      },
+      "pg_commit_ms": {
+        "n": 15,
+        "p50_ms": 41.001,
+        "p95_ms": 117.707,
+        "p99_ms": 131.68,
+        "min_ms": 19.513,
+        "max_ms": 135.173,
+        "mean_ms": 54.205,
+        "stdev_ms": 35.093,
+        "iqr_ms": 48.109
+      },
+      "queue_and_http_overhead_ms": {
+        "n": 15,
+        "p50_ms": 200.021,
+        "p95_ms": 297.895,
+        "p99_ms": 316.699,
+        "min_ms": 99.982,
+        "max_ms": 321.4,
+        "mean_ms": 203.346,
+        "stdev_ms": 62.482,
+        "iqr_ms": 69.172
+      }
+    },
+    "concurrent_20_sessions": {
+      "sessions": 20,
+      "valid_commits": 60,
+      "validation_422_count": 20,
+      "conflict_409_count": 0,
+      "server_5xx_count": 0,
+      "lost_updates": 0,
+      "db_sessions_verified": 20,
+      "cross_session_isolation_ok": true,
+      "http_rtt_ms": {
+        "n": 60,
+        "p50_ms": 1121.432,
+        "p95_ms": 1381.371,
+        "p99_ms": 1405.906,
+        "min_ms": 590.443,
+        "max_ms": 1416.541,
+        "mean_ms": 1092.495,
+        "stdev_ms": 213.994,
+        "iqr_ms": 299.015
+      },
+      "server_engine_ms": {
+        "n": 60,
+        "p50_ms": 27.255,
+        "p95_ms": 58.729,
+        "p99_ms": 103.481,
+        "min_ms": 16.144,
+        "max_ms": 117.883,
+        "mean_ms": 32.473,
+        "stdev_ms": 17.757,
+        "iqr_ms": 14.652
+      },
+      "pg_commit_ms": {
+        "n": 60,
+        "p50_ms": 50.373,
+        "p95_ms": 162.788,
+        "p99_ms": 194.428,
+        "min_ms": 17.649,
+        "max_ms": 211.587,
+        "mean_ms": 62.594,
+        "stdev_ms": 43.717,
+        "iqr_ms": 45.685
+      },
+      "queue_and_http_overhead_ms": {
+        "n": 60,
+        "p50_ms": 1028.569,
+        "p95_ms": 1300.513,
+        "p99_ms": 1335.274,
+        "min_ms": 467.905,
+        "max_ms": 1362.482,
+        "mean_ms": 997.428,
+        "stdev_ms": 234.717,
+        "iqr_ms": 347.6
+      }
+    }
+  },
+  "same_session_contention_tests": {
+    "5_threads_concurrent_version_0_race": {
+      "winners_200": 1,
+      "conflicts_409": 4,
+      "error_codes_409": [
+        "EDIT_SUPERSEDED",
+        "STALE_REVISION_CONFLICT"
+      ],
+      "db_committed_version_after": 1,
+      "passed": true
+    },
+    "idempotent_replay_check": {
+      "status_code": 200,
+      "idempotent_replay": true,
+      "committed_version": 1,
+      "passed": true
+    },
+    "out_of_order_client_seq": {
+      "seq20_status": 200,
+      "seq6_status": 409,
+      "seq6_error_code": "EDIT_SUPERSEDED",
+      "passed": true
+    },
+    "concurrent_health_pings": {
+      "all_200": true,
+      "rtt_ms": {
+        "n": 8,
+        "p50_ms": 16.313,
+        "p95_ms": 18.13,
+        "p99_ms": 18.15,
+        "min_ms": 15.454,
+        "max_ms": 18.155,
+        "mean_ms": 16.644,
+        "stdev_ms": 1.077,
+        "iqr_ms": 1.726
+      }
+    }
+  },
+  "single_worker_and_concurrency_passed": true,
+  "verified_seal_commit": "dbfbcf31256b60f076d8ff4464aac9223a213f09",
+  "product_commit_sha": "600f5105d4222cd6835cc916b34d5cb3f11610e6",
+  "measured_system_tree_hash": "78edfa1784625e9bca8f1a4cd70b60359d198ba77530986903175a57e18206a7",
+  "root_cause_fixes": [
+    {
+      "issue_id": "ISSUE-ALEMBIC-STAMP-AND-DRIFT-PREFLIGHT-GAP",
+      "commit": "014a2fd24160b25039f589f5adaf3b762ba985f8",
+      "summary": "Enforce stamp parity, unexpected rogue table drift, and atomic 0-or-5 legacy Classroom retention check in migration_preflight.py and env.py."
+    },
+    {
+      "issue_id": "ISSUE-FE-UNORBITED-CAMERA-JUMP-ON-STEP-EDIT-COMMIT",
+      "commit": "3f3afb25b84bf845267fbda6f6e6c128c6ee502b",
+      "summary": "Preserve live unorbited camera pose and lens viewOffset across same-scene step-edit rebuilds in scene3d-view.tsx and SimulationWorkspace.tsx."
+    },
+    {
+      "issue_id": "ISSUE-SE-CROSS-CONTEXT-CLIENT-SEQ-DESYNC",
+      "commit": "600f5105d4222cd6835cc916b34d5cb3f11610e6",
+      "summary": "Expose persisted latest_client_seq on GET /sessions/{id}/state and 409 EDIT_SUPERSEDED, sync frontend submit seq watermark across fresh contexts, and surface server-side 409 conflicts cleanly."
+    }
+  ]
+}

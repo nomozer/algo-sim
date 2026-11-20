@@ -22,8 +22,6 @@ from app.accounts.policy import (
     GUEST_TRIAL_LIMIT,
     Role,
     RoleEscalationError,
-    can_observe_class,
-    can_read_class,
     entitlement_for,
     resolve_signup_role,
 )
@@ -96,38 +94,37 @@ class TestVaiTro:
 # ── QUYỀN ────────────────────────────────────────────────────────────────────
 
 class TestQuyen:
-    def test_khach_co_dung_mot_luot_va_khong_co_lop(self):
+    def test_khach_co_dung_mot_luot_va_khong_luu_lich_su_ben(self):
         e = entitlement_for(None, guest_trials_used=0)
         assert e.can_run_simulation and e.trials_left == GUEST_TRIAL_LIMIT
-        assert not e.can_join_class and not e.can_own_class
-        assert not e.can_receive_assignment and not e.can_persist_history
+        assert not e.can_persist_history
+        assert not hasattr(e, "can_join_class")
+        assert not hasattr(e, "can_own_class")
+        assert not hasattr(e, "can_receive_assignment")
 
     def test_khach_dung_het_luot_thi_khong_chay_duoc_nua(self):
         e = entitlement_for(None, guest_trials_used=GUEST_TRIAL_LIMIT)
         assert not e.can_run_simulation and e.trials_left == 0
 
-    def test_hoc_sinh_vao_lop_duoc_nhung_khong_so_huu_lop(self):
-        e = entitlement_for(Role.STUDENT)
-        assert e.can_join_class and not e.can_own_class and e.can_receive_assignment
+    def test_hoc_sinh_va_giao_vien_co_quyen_mo_phong_va_luu_lich_su(self):
+        for role in (Role.STUDENT, Role.TEACHER):
+            e = entitlement_for(role)
+            assert e.can_run_simulation and e.can_persist_history and e.trials_left is None
+            assert not hasattr(e, "can_join_class")
+            assert not hasattr(e, "can_own_class")
+            assert not hasattr(e, "can_receive_assignment")
 
-    def test_giao_vien_so_huu_lop_nhung_khong_nhan_bai(self):
-        e = entitlement_for(Role.TEACHER)
-        assert e.can_own_class and not e.can_join_class and not e.can_receive_assignment
-
-    def test_giao_vien_KHAC_khong_quan_sat_duoc_lop_khong_phai_cua_minh(self):
-        """§36.3 — 'là giáo viên' không đủ; phải là giáo viên CỦA LỚP ĐÓ."""
-        assert can_observe_class(viewer_role=Role.TEACHER, viewer_id=7, class_teacher_id=7)
-        assert not can_observe_class(viewer_role=Role.TEACHER, viewer_id=8, class_teacher_id=7)
-
-    def test_hoc_sinh_khong_bao_gio_quan_sat_duoc_lop(self):
-        assert not can_observe_class(viewer_role=Role.STUDENT, viewer_id=7, class_teacher_id=7)
-        assert not can_observe_class(viewer_role=None, viewer_id=None, class_teacher_id=7)
-
-    def test_hoc_sinh_doc_duoc_lop_MINH_DA_VAO_va_chi_lop_do(self):
-        assert can_read_class(viewer_role=Role.STUDENT, viewer_id=3,
-                              class_teacher_id=1, member_ids=frozenset({3, 4}))
-        assert not can_read_class(viewer_role=Role.STUDENT, viewer_id=9,
-                                  class_teacher_id=1, member_ids=frozenset({3, 4}))
+    def test_endpoints_lop_hoc_bai_thuc_hanh_va_phien_truc_tiep_da_go_tra_404(self, api):
+        """Các tuyến lớp học, giao bài và điều phối trực tiếp đã gỡ hoàn toàn phải trả 404."""
+        for path in (
+            "/api/classes",
+            "/api/classes/join",
+            "/api/assignments",
+            "/api/practice-sessions",
+            "/api/live-session",
+        ):
+            assert api.get(path).status_code == 404
+            assert api.post(path, json={}).status_code == 404
 
 
 # ── HTTP ─────────────────────────────────────────────────────────────────────

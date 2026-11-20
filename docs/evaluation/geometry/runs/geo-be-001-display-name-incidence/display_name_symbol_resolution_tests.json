@@ -1,0 +1,21 @@
+{
+  "ticket": "GEO-BE-001",
+  "repository": "axo-geometry-library (a git worktree of the algo-sim repository, shared .git)",
+  "branch": "feat/axo-geometry-library-verification",
+  "baseline_head": "c7a6077fd",
+  "fix_commit": "5a229507b",
+  "live_ai_calls": 0,
+  "file": "backend/tests/semantic_program/test_display_names_incidence_cycle.py",
+  "tests": 15,
+  "passed": 15,
+  "covers": [
+    "the four reported roles (exact text)",
+    "no internal id in any presentation field of all 11 generated samples",
+    "6 shuffled + reversed iteration orders give identical names (both planes)",
+    "renamed M,N,P → X,Y,Z",
+    "graph references stay ids",
+    "a true definition cycle is reported and prints no id",
+    "a Greek-named plane (α)"
+  ],
+  "red_before_fix": "4 role tests, the leak scan and the order tests failed at c7a6077fd"
+}

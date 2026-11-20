@@ -1,0 +1,108 @@
+{
+  "schema_version": "axo-evaluation-run/1",
+  "run_id": "step-editor-final-premerge",
+  "task_slug": "axo-step-editor-final-premerge-verification",
+  "date": "2026-11-18",
+  "branch": "feat/axo-geometry-library-verification",
+  "start_head": "ac8badd6366bb7b4df43297ef75f01a9aafa3c45",
+  "root_causes_fixed": [
+    "FP-1",
+    "FP-2",
+    "FP-3",
+    "FP-4",
+    "FP-5",
+    "FP-6"
+  ],
+  "statuses": {
+    "GEOMETRY_MUTATION": "PASS",
+    "DOWNSTREAM_REBUILD": "PASS",
+    "ATOMIC_COMMIT": "PASS",
+    "MULTIPROCESS_CONCURRENCY": "PASS",
+    "PERSISTENCE_INTEGRITY": "PASS",
+    "STEP_EDITOR_UX": "PASS",
+    "REGRESSION_GATES": "PARTIAL",
+    "OWNERSHIP": "CLEAN",
+    "HOST_QA": "PASS",
+    "MODEL_STATUS": "MODEL_NOT_TRAINED",
+    "MERGE_READINESS": "READY",
+    "OWNER_APPROVAL": "PENDING_OWNER_REVIEW",
+    "PHYSICAL_MOBILE": "NOT_VERIFIED"
+  },
+  "artifacts": {
+    "report": "report.md",
+    "formal_report": "AXO-STEP-EDITOR-FINAL-PREMERGE-REPORT.md",
+    "backend_perf_comparison": "results/backend-perf-comparison.json",
+    "live_host_qa": "results/live-host-qa.json",
+    "rea_mcp_inspection": "results/rea-mcp-inspection.json",
+    "images": [
+      "images/fp-1920-state1-before-hover.png",
+      "images/fp-1920-state2-editing-open.png",
+      "images/fp-1920-state3-group-a-equiv.png",
+      "images/fp-1920-state4-group-b-mutated-reloaded.png",
+      "images/fp-1920-state5-group-c-422.png",
+      "images/fp-1920-state5b-group-d-422.png",
+      "images/fp-1920-prism-prime-check.png",
+      "images/fp-vp-1440x900-editing.png",
+      "images/fp-vp-1366x768-editing.png",
+      "images/fp-vp-768x1024-editing.png",
+      "images/fp-vp-390x844-editing.png",
+      "images/fp-vp-360x800-editing.png",
+      "images/fp-vp-320x568-editing.png",
+      "images/route-landing.png",
+      "images/route-gioi-thieu.png",
+      "images/rea-mcp-cdp-screenshot.png"
+    ]
+  },
+  "rea_mcp_evidence": {
+    "list_browser_targets": "ev_06bc8f7ca9acb0a2aa6ff3259d2422256e27559e62875c49c3273fc79e23a8e0",
+    "inspect_web_page": "ev_1a7e8e432364b8a636e7b50a86d568601175f8d2d62a590bc96c235d89330053",
+    "capture_web_screenshot": "ev_dd3aee13413e5a0d37ac65c0811db2caf92807923cd69c223b58b3a31faab5ad"
+  },
+  "tests": {
+    "final_premerge_suite": {
+      "file": "backend/tests/geometry/test_step_editor_final_premerge.py",
+      "status": "PASS",
+      "passed": 14,
+      "failed": 0
+    },
+    "backend_geometry_all_25": {
+      "status": "PARTIAL",
+      "passed": 11972,
+      "skipped": 6,
+      "deselected": 1,
+      "xfailed": 9,
+      "failed": 15,
+      "step_editor_failures": 0
+    },
+    "backend_semantic_program": {
+      "ignored": ["backend/tests/semantic_program/test_evaluation_candidate.py"],
+      "status": "PASS",
+      "passed": 1166,
+      "skipped": 1,
+      "failed": 0
+    },
+    "backend_evaluation_candidate": {
+      "status": "EXPECTED_EXCEPTION",
+      "passed": 25,
+      "failed": 1
+    },
+    "backend_non_geometry_non_semantic": {
+      "status": "PASS",
+      "passed": 793,
+      "deselected": 2,
+      "failed": 0
+    },
+    "frontend_vitest_full": {
+      "status": "PASS",
+      "test_files_passed": 192,
+      "tests_passed": 2270,
+      "failed": 0,
+      "duration_s": 155.08
+    },
+    "frontend_typecheck_and_build": {
+      "tsc": "0 errors",
+      "vite_build_s": 7.71,
+      "status": "PASS"
+    }
+  }
+}

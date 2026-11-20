@@ -242,9 +242,9 @@ describe("(5D) ranh giới: renderer không suy luận hình học", () => {
     expect(view).toContain("pickSemanticId(");
     expect(view).not.toContain(".point;");
     expect(view).not.toMatch(/intersect\w*\([^)]*\)\s*\[0\]\.point/);
-    // Và `Raycaster` chỉ được xuất hiện trong view, KHÔNG trong model thuần.
+    // Và `Raycaster` / hàm raycast Three.js chỉ được xuất hiện trong view, KHÔNG trong model thuần.
     expect(model).not.toContain("Raycaster");
-    expect(model).not.toContain("intersect");
+    expect(model).not.toMatch(/\bintersectObjects?\b|\.raycast\b/i);
   });
 
   it("không import kernel/validator/oracle — chỉ nguồn THUẦN của miền", () => {

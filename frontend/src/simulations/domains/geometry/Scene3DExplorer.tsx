@@ -28,12 +28,6 @@
  * một mặt trong khung rồi thấy cây sáng ở chỗ khác.
  */
 import { useEffect, useMemo, useState } from "react";
-import {
-  CHUA_THAY,
-  apDungPhien,
-  type ClassroomSession,
-  type SeenMarks,
-} from "../../../state/classroom-sync";
 import type { MucPhanTichToan, RouteDSimulationSummary, Scene3D } from "./scene3d-model";
 import { veKhongGian } from "./scene3d-chart";
 import {
@@ -87,7 +81,7 @@ import {
   hasHiddenByDefault,
   quantitySources,
 } from "./scene3d-annotations";
-import { MenuCongCu, NhomLop, hoTroToanManHinh } from "./scene3d-tool-menu";
+import { MenuCongCu, hoTroToanManHinh } from "./scene3d-tool-menu";
 import { resolveStudentObjectPresentation } from "./scene3d-semantic-policy";
 import { MathDisplay } from "./scene3d-view";
 import { IconBack, IconExperiment, IconReset } from "../../../components/icons";
@@ -187,7 +181,7 @@ const nutMoBang = (id: BangThongTin) =>
     );
 
 export function Scene3DExplorer({
-  scene: sceneKhung, de, tieuDe, quayLai, phien, onFocus, daiLop, daiLopTomTat, hybrid, routeDSimulation,
+  scene: sceneKhung, de, tieuDe, quayLai, onFocus, hybrid, routeDSimulation,
 }: {
   scene: Scene3D;
   /** Đề bài nguyên văn. Vắng ⇒ không dựng nút «Đề bài». */
@@ -197,25 +191,9 @@ export function Scene3DExplorer({
   /** W05 — đường ra của chế độ tập trung: chữ là tên trang đích. Vỏ quyết đích, xưởng chỉ bày nút. */
   quayLai?: { nhan: string; onClick: () => void };
   /**
-   * Trạng thái phiên lớp. `null`/vắng ⇒ xưởng chạy y như khi tự học.
-   *
-   * Là PROP, không phải `useClassroomStore` ở đây: miền hình học không được
-   * biết tới tầng lớp học. Biết là nó chỉ chạy được trong đúng một ngữ cảnh,
-   * và test SSR phải dựng cả store lên mới render nổi.
-   */
-  phien?: ClassroomSession | null;
-  /**
    * Báo TIÊU ĐIỂM NGỮ NGHĨA ra ngoài — id vật đang chọn + hành động vừa làm.
-   *
-   * Đây KHÔNG phải bản sao của `InteractionState`: nó là bản TÓM TẮT
-   * (`StudentObservation`) mà giáo viên đọc. `InteractionState` đầy đủ vẫn chỉ
-   * sống ở component này.
    */
   onFocus?: (selectedId: string | null, action: string) => void;
-  /** Dải phụ trong thanh trên — nơi vỏ cắm chỉ báo lớp / dock giáo viên. Vắng ⇒ không có chip lớp. */
-  daiLop?: React.ReactNode;
-  /** Trạng thái lớp (chỉ đọc) cho chip của `NhomLop` khi màn chật gom dải lớp lại. */
-  daiLopTomTat?: React.ReactNode;
   /** HYBRID_PREVIEW_FRONTEND_CONTRACT §3/§5: thông tin kiểm mục tiêu trên cấu hình của Route D (quan sát trên một hình, không phải chứng minh). */
   hybrid?: HybridPreviewView | null;
   /** P6/P7 — Tóm tắt kết quả và chứng chỉ kiểm chứng của Adapter /3 (offline research preview) cho Chế độ B («Phân tích toán học»). */
@@ -240,8 +218,6 @@ export function Scene3DExplorer({
     + phanTich.givenDimensions.length
     + phanTich.certificates.length
     + (hybrid?.observations.length ?? 0) > 0;
-  const [moc, setMoc] = useState<SeenMarks>(CHUA_THAY);
-  const [baoDongBo, setBaoDongBo] = useState(false);
   /* W4 (H-W2-3): các BẢNG THÔNG TIN đang mở — mỗi bảng độc lập (mở cái này không đóng cái kia); chỉ giữ TÊN bảng,
      không giữ một bản chọn riêng. Vị trí và thứ tự lớp do `BangNoiHost` giữ. */
   const [moBang, setMoBang] = useState<ReadonlySet<BangThongTin>>(new Set());
@@ -343,31 +319,6 @@ export function Scene3DExplorer({
     return (id: string) => m.get(id) ?? "đối tượng hình học";
   }, [day]);
 
-  /* ── ÁP LỆNH GIÁO VIÊN ────────────────────────────────────────────────
-   *
-   * Khoá theo `cmdId`/`roundId`, KHÔNG theo `phien` (object mới mỗi nhịp hỏi
-   * ⇒ effect chạy 1,5 giây một lần và học sinh bị kéo về liên tục — đúng lỗi
-   * mà `cmd_id` sinh ra để chặn, và nó sẽ quay lại ở đây nếu khoá sai).
-   *
-   * Luật ở `apDungPhien` (hàm thuần, có test riêng); chỗ này chỉ nối dây. */
-  const coTrongCanh = useMemo(() => {
-    const co = new Set(day.objects.map((o) => o.id));
-    return (id: string) => co.has(id);
-  }, [day]);
-
-  useEffect(() => {
-    const kq = apDungPhien(tt, phien ?? null, moc, coTrongCanh);
-    if (kq.seen !== moc) setMoc(kq.seen);
-    if (!kq.applied) return;
-    setTt(kq.next);
-    if (kq.reason === "sync") {
-      setBaoDongBo(true);
-      const t = setTimeout(() => setBaoDongBo(false), 2600);
-      return () => clearTimeout(t);
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [phien?.roundId, phien?.cmdId, phien?.syncCmdId, phien?.mode, coTrongCanh]);
-
   const dangChon = tt.selected_id
     ? day.objects.find((o) => o.id === tt.selected_id) ?? null
     : null;
@@ -458,7 +409,7 @@ export function Scene3DExplorer({
       {/* ── HÀNG TRÊN (W05 · chế độ tập trung): đường ra · tên bài · công cụ đã NHÓM ─────────────────────────────
           Vỏ không dựng thanh trên toàn cục cho cảnh 3D, nên đường ra nằm ở đây. Thao tác chính có chữ («Đề bài»);
           công cụ cùng loại vào menu («Khám phá», «Hiển thị», «Thêm») — tính năng mới vào một nhóm, không thêm chip. */}
-      <div className={`geo3d-thanh${daiLop ? " co-lop" : ""}`}>
+      <div className="geo3d-thanh">
         {quayLai && (
           <button type="button" className="geo3d-quay-lai" onClick={quayLai.onClick}
                   title={`Rời mô phỏng, về ${quayLai.nhan}`} aria-label={quayLai.nhan}>
@@ -466,15 +417,6 @@ export function Scene3DExplorer({
           </button>
         )}
         <h1 className="geo3d-ten-bai" title={tieuDe ?? undefined}>{tieuDe || "Hình dựng theo từng bước"}</h1>
-        {/* Lời báo NGẮN, KHÔNG modal: giáo viên vừa gọi cả lớp về, học sinh
-            cần biết vì sao màn hình mình vừa đổi — nhưng một hộp thoại chặn
-            màn hình giữa tiết thì tệ hơn cả việc không báo. */}
-        {baoDongBo && (
-          <span className="geo3d-bao-dong-bo" role="status">
-            Giáo viên đã đồng bộ lớp
-          </span>
-        )}
-        {daiLop && <NhomLop tomTat={daiLopTomTat ?? "Lớp học"}>{daiLop}</NhomLop>}
         <div className="geo3d-thanh-nut">
           {de && (
             <button

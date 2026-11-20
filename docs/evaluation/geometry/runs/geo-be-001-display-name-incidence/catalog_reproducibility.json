@@ -1,0 +1,10 @@
+{
+  "ticket": "GEO-BE-001",
+  "repository": "axo-geometry-library (a git worktree of the algo-sim repository, shared .git)",
+  "branch": "feat/axo-geometry-library-verification",
+  "baseline_head": "c7a6077fd",
+  "fix_commit": "5a229507b",
+  "live_ai_calls": 0,
+  "advanced": "BYTE_IDENTICAL on a second regeneration",
+  "coordinates_producers_dependencies_changed": false
+}

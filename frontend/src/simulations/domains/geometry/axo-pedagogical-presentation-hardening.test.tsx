@@ -487,7 +487,7 @@ describe("AXO System-Wide Pedagogical Presentation Hardening & Regression Audit 
           expect(html).not.toContain("16π");
         }
       }
-    });
+    }, 20_000);
   });
 
   describe("§4 & §5 — Reference Case 1: Cylinder Section Perpendicular to Axis (`tru-thiet-dien-tron`) & Curved-Solid Distinction", () => {

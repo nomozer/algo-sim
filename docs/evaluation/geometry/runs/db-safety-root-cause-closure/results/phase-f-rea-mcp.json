@@ -1,0 +1,18 @@
+{
+  "audited_at": "2026-11-19T05:36:33.775640+00:00",
+  "status": "PASS",
+  "cdp_endpoint": "http://127.0.0.1:9339",
+  "target_list_evidence_id": "ev_8fee1d916af71c7bd4be68d8ca5375774f779961ee3deba273c9ae692634b5be",
+  "inspect_evidence_id": "ev_3794817351eeaba52fc0aea92256dd060051e95598f6e05cde11d0d8f18b762d",
+  "screenshot_evidence_id": "ev_ba95843d6e3daf05c189a9c3a0db2e4bcd93d7537789a286bf1ca718575ed425",
+  "page_title": "Mô phỏng hình học 3D | Axo",
+  "page_origin": "http://localhost:3001",
+  "dom_node_count": 783,
+  "console_error_count": 0,
+  "network_request_count": 0,
+  "network_5xx_count": 0,
+  "storage_key_names": [],
+  "screenshot_file": "images/db-closure-rea-mcp.png",
+  "screenshot_bytes": 150135,
+  "screenshot_sha256": "6cb0d56f69c6838fc6ee537158a68be86bb02d9f384647c40b031da3d5780537"
+}

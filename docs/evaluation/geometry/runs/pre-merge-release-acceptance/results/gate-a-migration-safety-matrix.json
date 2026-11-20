@@ -1,0 +1,624 @@
+{
+  "audited_at": "2026-11-19T06:15:41.360410+00:00",
+  "git_inventory": {
+    "main": "bb046fa22aceff47abe22aa783aa64fc65caee13",
+    "origin_main": "bb046fa22aceff47abe22aa783aa64fc65caee13",
+    "feat_axo_geometry_library_verification": "aa860d7def12c03c05907e56e5fdca385b1e8dd2",
+    "release_axo_step_editor_db_safe_rc": "aa860d7def12c03c05907e56e5fdca385b1e8dd2",
+    "release_axo_pre_merge_final_acceptance": "36e7c11a0c2b71242345c9c740a05374187040dc",
+    "active_rc_branch": "release/axo-pre-merge-final-acceptance",
+    "prior_blocker_fix_commit": "0fe3873a4fbeaa95006a6d7a36dea68a0828b1f2",
+    "prior_reported_rc_commit": "aa860d7def12c03c05907e56e5fdca385b1e8dd2",
+    "baseline_main_commit": "bb046fa22aceff47abe22aa783aa64fc65caee13",
+    "worktree_count": 17,
+    "worktrees": [
+      {
+        "worktree": "D:/Documents/projects/algo-sim",
+        "HEAD": "bb046fa22aceff47abe22aa783aa64fc65caee13",
+        "branch": "refs/heads/axo-ui-consistency",
+        "tracked_dirty_count": 0,
+        "ocr_reconcile_present": true
+      },
+      {
+        "worktree": "D:/Documents/projects/algo-sim/.superpowers/worktrees/adaptive-local-ocr-fallback",
+        "HEAD": "25a0986029f09f991282d88f6d9f466a36b44a64",
+        "branch": "refs/heads/feat/adaptive-local-ocr-fallback",
+        "tracked_dirty_count": 0
+      },
+      {
+        "worktree": "D:/Documents/projects/algo-sim/.superpowers/worktrees/algosim-local-first-image-ingestion",
+        "HEAD": "d79565b52ec19a7b1a75be28c09bb43cc0f6d146",
+        "branch": "refs/heads/feat/algosim-local-first-image-ingestion",
+        "tracked_dirty_count": 0
+      },
+      {
+        "worktree": "D:/Documents/projects/algo-sim/.superpowers/worktrees/axo-pedagogical-integration",
+        "HEAD": "67f780ca9711a866727741f16bd09ab5ad5d3849",
+        "detached": "true",
+        "tracked_dirty_count": 1
+      },
+      {
+        "worktree": "D:/Documents/projects/algo-sim/.superpowers/worktrees/hybrid-backend-capabilities",
+        "HEAD": "ad311e043e46198a91c9b451df8056df9d837ed5",
+        "branch": "refs/heads/feat/hybrid-backend-capabilities",
+        "tracked_dirty_count": 0
+      },
+      {
+        "worktree": "D:/Documents/projects/algo-sim/.superpowers/worktrees/hybrid-goal-driven-planner",
+        "HEAD": "6dcdd690402c37c6265c8ca2a5dce487b006cf9a",
+        "branch": "refs/heads/feat/hybrid-goal-driven-planner",
+        "tracked_dirty_count": 0
+      },
+      {
+        "worktree": "D:/Documents/projects/algo-sim/.superpowers/worktrees/hybrid-production-composition",
+        "HEAD": "fb291cba3069fa9f5fa8d28893c064b4ec523ae7",
+        "branch": "refs/heads/feat/hybrid-production-composition",
+        "tracked_dirty_count": 0
+      },
+      {
+        "worktree": "D:/Documents/projects/algo-sim/.superpowers/worktrees/hybrid-reasoning-generalization",
+        "HEAD": "756697dc7aecd6cd03a889e3f2a67f0783919b75",
+        "branch": "refs/heads/feat/hybrid-reasoning-generalization",
+        "tracked_dirty_count": 0
+      },
+      {
+        "worktree": "D:/Documents/projects/algo-sim/.superpowers/worktrees/independent-geometry",
+        "HEAD": "04ec8e4185e8fc7332180dab28522a2874a92384",
+        "branch": "refs/heads/eval/independent-geometry",
+        "tracked_dirty_count": 0
+      },
+      {
+        "worktree": "D:/Documents/projects/algo-sim/.superpowers/worktrees/local-first-geometry-understanding",
+        "HEAD": "c73506cb23b0b365d8e475c6b5386a31176a669b",
+        "branch": "refs/heads/feat/local-first-geometry-understanding",
+        "tracked_dirty_count": 3
+      },
+      {
+        "worktree": "D:/Documents/projects/algo-sim/.superpowers/worktrees/parallel-ingestion-reasoning",
+        "HEAD": "32f14b8fc4231b6a57ada34966c019e99ff148c0",
+        "branch": "refs/heads/integration/parallel-ingestion-reasoning",
+        "tracked_dirty_count": 0
+      },
+      {
+        "worktree": "D:/Documents/projects/algo-sim/.superpowers/worktrees/real-world-vision",
+        "HEAD": "e872d025e661be6468b5362038ff2630819f90ea",
+        "branch": "refs/heads/eval/real-world-vision",
+        "tracked_dirty_count": 0
+      },
+      {
+        "worktree": "D:/Documents/projects/algo-sim/.superpowers/worktrees/release-stabilization-validation-readiness",
+        "HEAD": "4baf4a3045742824f9a2f1e3da57ded9a172cf1f",
+        "branch": "refs/heads/feat/release-stabilization-validation-readiness",
+        "tracked_dirty_count": 0
+      },
+      {
+        "worktree": "D:/Documents/projects/algo-sim/.superpowers/worktrees/step-editor-release-candidate",
+        "HEAD": "36e7c11a0c2b71242345c9c740a05374187040dc",
+        "branch": "refs/heads/release/axo-pre-merge-final-acceptance",
+        "tracked_dirty_count": 0
+      },
+      {
+        "worktree": "D:/Documents/projects/algo-sim/.superpowers/worktrees/t3-common-base-d79565b5",
+        "HEAD": "5f2de7ee1f87100aea080b553de7c3c0eaa7a72c",
+        "detached": "true",
+        "tracked_dirty_count": 0
+      },
+      {
+        "worktree": "D:/Documents/projects/algo-sim/.superpowers/worktrees/w3-f2-ratio-projection-language-grounding",
+        "HEAD": "15a8e1ac327e7ec5197ebe5d08330afb444b9571",
+        "detached": "true",
+        "tracked_dirty_count": 0
+      },
+      {
+        "worktree": "D:/Documents/projects/axo-geometry-library",
+        "HEAD": "aa860d7def12c03c05907e56e5fdca385b1e8dd2",
+        "branch": "refs/heads/feat/axo-geometry-library-verification",
+        "tracked_dirty_count": 0
+      }
+    ]
+  },
+  "alembic_dag_audit": {
+    "heads": [
+      "f8a2c41d9e05"
+    ],
+    "revision_count": 8,
+    "linear_chain_base_to_head": [
+      {
+        "revision": "72095b7dd318",
+        "down_revision": null,
+        "script": "72095b7dd318_initial_schema.py",
+        "upgrade_creates": {
+          "reuse_metrics": 2,
+          "simulation_cache": 10,
+          "simulation_patterns": 14
+        },
+        "upgrade_adds": [],
+        "upgrade_destructive_ast": [],
+        "downgrade_destructive_ast": [
+          {
+            "operation": "drop_table",
+            "table": "simulation_patterns",
+            "column": null,
+            "line": 78
+          },
+          {
+            "operation": "drop_table",
+            "table": "simulation_cache",
+            "column": null,
+            "line": 82
+          },
+          {
+            "operation": "drop_table",
+            "table": "reuse_metrics",
+            "column": null,
+            "line": 83
+          }
+        ]
+      },
+      {
+        "revision": "f32f9b107b77",
+        "down_revision": "72095b7dd318",
+        "script": "f32f9b107b77_m18_accounts_and_classroom.py",
+        "upgrade_creates": {
+          "users": 7,
+          "auth_sessions": 7,
+          "classrooms": 7,
+          "assignments": 9,
+          "class_memberships": 4,
+          "practice_sessions": 13
+        },
+        "upgrade_adds": [],
+        "upgrade_destructive_ast": [],
+        "downgrade_destructive_ast": [
+          {
+            "operation": "drop_table",
+            "table": "practice_sessions",
+            "column": null,
+            "line": 135
+          },
+          {
+            "operation": "drop_table",
+            "table": "class_memberships",
+            "column": null,
+            "line": 140
+          },
+          {
+            "operation": "drop_table",
+            "table": "assignments",
+            "column": null,
+            "line": 146
+          },
+          {
+            "operation": "drop_table",
+            "table": "classrooms",
+            "column": null,
+            "line": 151
+          },
+          {
+            "operation": "drop_table",
+            "table": "auth_sessions",
+            "column": null,
+            "line": 157
+          },
+          {
+            "operation": "drop_table",
+            "table": "users",
+            "column": null,
+            "line": 162
+          }
+        ]
+      },
+      {
+        "revision": "a1c7e4b90d52",
+        "down_revision": "f32f9b107b77",
+        "script": "a1c7e4b90d52_live_classroom_session.py",
+        "upgrade_creates": {
+          "classroom_sessions": 16
+        },
+        "upgrade_adds": [
+          [
+            "practice_sessions",
+            "selected_id"
+          ],
+          [
+            "practice_sessions",
+            "last_action"
+          ],
+          [
+            "practice_sessions",
+            "help_requested"
+          ],
+          [
+            "practice_sessions",
+            "help_requested_at"
+          ]
+        ],
+        "upgrade_destructive_ast": [],
+        "downgrade_destructive_ast": [
+          {
+            "operation": "drop_table",
+            "table": "classroom_sessions",
+            "column": null,
+            "line": 100
+          },
+          {
+            "operation": "drop_column",
+            "table": "practice_sessions",
+            "column": "help_requested_at",
+            "line": 101
+          },
+          {
+            "operation": "drop_column",
+            "table": "practice_sessions",
+            "column": "help_requested",
+            "line": 102
+          },
+          {
+            "operation": "drop_column",
+            "table": "practice_sessions",
+            "column": "last_action",
+            "line": 103
+          },
+          {
+            "operation": "drop_column",
+            "table": "practice_sessions",
+            "column": "selected_id",
+            "line": 104
+          }
+        ]
+      },
+      {
+        "revision": "c4e8a91b2f03",
+        "down_revision": "a1c7e4b90d52",
+        "script": "c4e8a91b2f03_learning_history_entries.py",
+        "upgrade_creates": {
+          "learning_history_entries": 15
+        },
+        "upgrade_adds": [],
+        "upgrade_destructive_ast": [],
+        "downgrade_destructive_ast": [
+          {
+            "operation": "drop_table",
+            "table": "learning_history_entries",
+            "column": null,
+            "line": 66
+          }
+        ]
+      },
+      {
+        "revision": "d5f9b82c3a14",
+        "down_revision": "c4e8a91b2f03",
+        "script": "d5f9b82c3a14_admin_persistence_and_telemetry.py",
+        "upgrade_creates": {
+          "user_account_meta": 16,
+          "admin_system_settings": 3,
+          "admin_audit_logs": 10,
+          "admin_analysis_telemetry": 13
+        },
+        "upgrade_adds": [],
+        "upgrade_destructive_ast": [],
+        "downgrade_destructive_ast": [
+          {
+            "operation": "drop_table",
+            "table": "admin_analysis_telemetry",
+            "column": null,
+            "line": 141
+          },
+          {
+            "operation": "drop_table",
+            "table": "admin_audit_logs",
+            "column": null,
+            "line": 155
+          },
+          {
+            "operation": "drop_table",
+            "table": "admin_system_settings",
+            "column": null,
+            "line": 157
+          },
+          {
+            "operation": "drop_table",
+            "table": "user_account_meta",
+            "column": null,
+            "line": 163
+          }
+        ]
+      },
+      {
+        "revision": "e437149641fa",
+        "down_revision": "d5f9b82c3a14",
+        "script": "e437149641fa_analysis_usage_ledger.py",
+        "upgrade_creates": {
+          "analysis_usage_ledger": 7
+        },
+        "upgrade_adds": [],
+        "upgrade_destructive_ast": [],
+        "downgrade_destructive_ast": [
+          {
+            "operation": "drop_table",
+            "table": "analysis_usage_ledger",
+            "column": null,
+            "line": 51
+          }
+        ]
+      },
+      {
+        "revision": "9c4d8e2b7a10",
+        "down_revision": "e437149641fa",
+        "script": "9c4d8e2b7a10_add_step_edit_tables.py",
+        "upgrade_creates": {
+          "step_edit_sessions": 11,
+          "step_edit_revisions": 19,
+          "step_edit_feedback": 21
+        },
+        "upgrade_adds": [],
+        "upgrade_destructive_ast": [],
+        "downgrade_destructive_ast": [
+          {
+            "operation": "drop_table",
+            "table": "step_edit_feedback",
+            "column": null,
+            "line": 111
+          },
+          {
+            "operation": "drop_table",
+            "table": "step_edit_revisions",
+            "column": null,
+            "line": 116
+          },
+          {
+            "operation": "drop_table",
+            "table": "step_edit_sessions",
+            "column": null,
+            "line": 120
+          }
+        ]
+      },
+      {
+        "revision": "f8a2c41d9e05",
+        "down_revision": "9c4d8e2b7a10",
+        "script": "f8a2c41d9e05_remove_classroom_and_live_session_tables.py",
+        "upgrade_creates": {},
+        "upgrade_adds": [],
+        "upgrade_destructive_ast": [],
+        "downgrade_destructive_ast": []
+      }
+    ],
+    "main_bb046fa22_revision_head": "e437149641fa"
+  },
+  "root_algosim_db_vs_e437149641fa": {
+    "tables_match": true,
+    "table_count": 16,
+    "column_diffs": {},
+    "exact_schema_match_to_e437149641fa": true
+  },
+  "observable_databases": {
+    "root_sqlite": {
+      "name": "root_sqlite",
+      "path": "D:\\Documents\\projects\\algo-sim\\backend\\algosim.db",
+      "bytes": 413696,
+      "sha256": "39d676c7b50a925975828434a00d38e3bac3c5f50e4e2a724a695768c7c83ee3",
+      "integrity_check": "ok",
+      "foreign_key_violations": 0,
+      "alembic_version": null,
+      "table_count": 16,
+      "table_row_counts": {
+        "admin_analysis_telemetry": 5,
+        "admin_audit_logs": 0,
+        "admin_system_settings": 0,
+        "analysis_usage_ledger": 5,
+        "assignments": 10,
+        "auth_sessions": 100,
+        "class_memberships": 20,
+        "classroom_sessions": 8,
+        "classrooms": 12,
+        "learning_history_entries": 0,
+        "practice_sessions": 16,
+        "reuse_metrics": 3,
+        "simulation_cache": 2,
+        "simulation_patterns": 0,
+        "user_account_meta": 11,
+        "users": 46
+      },
+      "step_edit_tables_present": [],
+      "classroom_tables_present": [
+        "assignments",
+        "class_memberships",
+        "classroom_sessions",
+        "classrooms",
+        "practice_sessions"
+      ],
+      "startup_preflight_verdict": {
+        "allowed": false,
+        "reason_code": "UNSTAMPED_EXISTING_DATABASE",
+        "message": "Existing non-empty schema has no alembic_version stamp. Refusing automatic alembic upgrade/stamp; back up database, inspect schema parity against migrations, and migrate under explicit operator control."
+      }
+    },
+    "dev_sqlite": {
+      "name": "dev_sqlite",
+      "path": "D:\\Documents\\projects\\axo-geometry-library\\backend\\algosim.db",
+      "bytes": 7757824,
+      "sha256": "eefc81f72315869f93d1320fc60383e5e37752f95ea117b6bbffc04c63a742e6",
+      "integrity_check": "ok",
+      "foreign_key_violations": 0,
+      "alembic_version": null,
+      "table_count": 14,
+      "table_row_counts": {
+        "admin_analysis_telemetry": 7,
+        "admin_audit_logs": 0,
+        "admin_system_settings": 0,
+        "analysis_usage_ledger": 7,
+        "auth_sessions": 1116,
+        "learning_history_entries": 0,
+        "reuse_metrics": 0,
+        "simulation_cache": 0,
+        "simulation_patterns": 0,
+        "step_edit_feedback": 280,
+        "step_edit_revisions": 280,
+        "step_edit_sessions": 74,
+        "user_account_meta": 0,
+        "users": 0
+      },
+      "step_edit_tables_present": [
+        "step_edit_feedback",
+        "step_edit_revisions",
+        "step_edit_sessions"
+      ],
+      "classroom_tables_present": [],
+      "startup_preflight_verdict": {
+        "allowed": false,
+        "reason_code": "UNSTAMPED_EXISTING_DATABASE",
+        "message": "Existing non-empty schema has no alembic_version stamp. Refusing automatic alembic upgrade/stamp; back up database, inspect schema parity against migrations, and migrate under explicit operator control."
+      }
+    },
+    "rc_sqlite": {
+      "name": "rc_sqlite",
+      "path": "D:\\Documents\\projects\\algo-sim\\.superpowers\\worktrees\\step-editor-release-candidate\\backend\\algosim.db",
+      "bytes": 151552,
+      "sha256": "8df9e0c22b46b90e40eba3c3ebb982315feaf78d2a027182f7613e95df740509",
+      "integrity_check": "ok",
+      "foreign_key_violations": 0,
+      "alembic_version": null,
+      "table_count": 11,
+      "table_row_counts": {
+        "admin_analysis_telemetry": 0,
+        "admin_audit_logs": 0,
+        "admin_system_settings": 0,
+        "analysis_usage_ledger": 0,
+        "auth_sessions": 0,
+        "learning_history_entries": 0,
+        "reuse_metrics": 0,
+        "simulation_cache": 0,
+        "simulation_patterns": 0,
+        "user_account_meta": 0,
+        "users": 0
+      },
+      "step_edit_tables_present": [],
+      "classroom_tables_present": [],
+      "startup_preflight_verdict": {
+        "allowed": false,
+        "reason_code": "UNSTAMPED_EXISTING_DATABASE",
+        "message": "Existing non-empty schema has no alembic_version stamp. Refusing automatic alembic upgrade/stamp; back up database, inspect schema parity against migrations, and migrate under explicit operator control."
+      }
+    },
+    "pg16_algosim_acceptance": {
+      "name": "pg16:algosim_acceptance",
+      "alembic_version": [
+        "f8a2c41d9e05"
+      ],
+      "table_count": 15,
+      "table_row_counts": {
+        "admin_analysis_telemetry": 0,
+        "admin_audit_logs": 0,
+        "admin_system_settings": 0,
+        "alembic_version": 1,
+        "analysis_usage_ledger": 0,
+        "auth_sessions": 23,
+        "learning_history_entries": 0,
+        "reuse_metrics": 0,
+        "simulation_cache": 0,
+        "simulation_patterns": 0,
+        "step_edit_feedback": 18,
+        "step_edit_revisions": 18,
+        "step_edit_sessions": 8,
+        "user_account_meta": 0,
+        "users": 0
+      },
+      "step_edit_tables_present": [
+        "step_edit_feedback",
+        "step_edit_revisions",
+        "step_edit_sessions"
+      ],
+      "classroom_tables_present": [],
+      "startup_preflight_verdict": {
+        "allowed": true,
+        "reason_code": "SAFE_NO_DESTRUCTIVE_OPERATIONS",
+        "message": "Migration preflight passed cleanly with zero destructive operations."
+      }
+    },
+    "pg16_algosim_host": {
+      "name": "pg16:algosim_host",
+      "alembic_version": [
+        "f8a2c41d9e05"
+      ],
+      "table_count": 15,
+      "table_row_counts": {
+        "admin_analysis_telemetry": 0,
+        "admin_audit_logs": 0,
+        "admin_system_settings": 0,
+        "alembic_version": 1,
+        "analysis_usage_ledger": 0,
+        "auth_sessions": 12,
+        "learning_history_entries": 0,
+        "reuse_metrics": 0,
+        "simulation_cache": 0,
+        "simulation_patterns": 0,
+        "step_edit_feedback": 9,
+        "step_edit_revisions": 9,
+        "step_edit_sessions": 7,
+        "user_account_meta": 0,
+        "users": 0
+      },
+      "step_edit_tables_present": [
+        "step_edit_feedback",
+        "step_edit_revisions",
+        "step_edit_sessions"
+      ],
+      "classroom_tables_present": [],
+      "startup_preflight_verdict": {
+        "allowed": true,
+        "reason_code": "SAFE_NO_DESTRUCTIVE_OPERATIONS",
+        "message": "Migration preflight passed cleanly with zero destructive operations."
+      }
+    }
+  },
+  "gate_a2_8_scenarios_sqlite": [
+    {
+      "scenario": "1_fresh_empty_db",
+      "status": "PASS",
+      "preflight": "SAFE_NO_DESTRUCTIVE_OPERATIONS",
+      "alembic_check_exit": 0
+    },
+    {
+      "scenario": "2_pre_step_editor_e437149641fa",
+      "status": "PASS",
+      "rows_preserved": true
+    },
+    {
+      "scenario": "3_existing_step_editor_revision",
+      "status": "PASS",
+      "step_edit_row_kept": true
+    },
+    {
+      "scenario": "4_unstamped_46_user_66_classroom_sqlite",
+      "status": "PASS",
+      "auto_startup_blocked": "UNSTAMPED_EXISTING_DATABASE",
+      "file_unchanged_when_blocked": true,
+      "controlled_operator_stamp_then_upgrade": "e437149641fa -> f8a2c41d9e05",
+      "users_preserved": 46,
+      "classroom_rows_preserved": 66,
+      "alembic_check_after_controlled_upgrade": true
+    },
+    {
+      "scenario": "5_pre_fix_f8_without_legacy_tables",
+      "status": "PASS",
+      "preflight": "SAFE_NO_DESTRUCTIVE_OPERATIONS"
+    },
+    {
+      "scenario": "6_schema_drift_blocked",
+      "status": "PASS",
+      "preflight": "SCHEMA_DRIFT_DETECTED"
+    },
+    {
+      "scenario": "7_partial_migration_blocked",
+      "status": "PASS",
+      "preflight": "PARTIAL_MIGRATION_PRE_EXISTING_OBJECT"
+    },
+    {
+      "scenario": "8_app_rollback_additive_db_compatible",
+      "status": "PASS",
+      "step_edit_and_legacy_tables_coexist": true
+    }
+  ],
+  "gate_a_verdict": "PASS_WITH_LEGACY_UNSTAMPED_OPERATOR_GATE"
+}

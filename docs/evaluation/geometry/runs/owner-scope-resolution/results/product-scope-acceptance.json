@@ -1,0 +1,374 @@
+{
+  "schema": "axo-product-scope-acceptance/v2-option-b",
+  "baseUrl": "http://localhost:3001",
+  "runAt": "2026-11-19T11:44:21.034Z",
+  "routes": [
+    "/",
+    "/app",
+    "/simulation/chop-mat-cau-ngoai-tiep"
+  ],
+  "viewports": [
+    "1920x1080",
+    "1366x768",
+    "390x844"
+  ],
+  "checksTotal": 48,
+  "checksPassed": 48,
+  "failures": [],
+  "consoleErrors": [],
+  "pageErrors": [],
+  "pass": true,
+  "provenanceVersion": 2,
+  "sourceFingerprint": "eda6ced6c56f0827",
+  "dirtyRelevantSources": [],
+  "head": "892e15f06fc53c623a1392f0766d69c21291436a",
+  "dirty": false,
+  "generatedAt": "2026-11-19T11:44:21.164Z",
+  "tool": "accept-product-scope",
+  "toolVersion": "1",
+  "environment": {
+    "node": "v26.13.0",
+    "platform": "win32",
+    "baseUrl": "http://localhost:3001",
+    "routes": "/,/app,/simulation/chop-mat-cau-ngoai-tiep",
+    "viewports": "1920x1080,1366x768,390x844"
+  },
+  "rows": [
+    {
+      "section": "backend-health",
+      "check": "GET /api/health",
+      "expected": "HTTP 200 & ok === true",
+      "actual": "HTTP 200 ok=true",
+      "pass": true
+    },
+    {
+      "section": "option-b-routes",
+      "check": "GET /api/classes retired",
+      "expected": "HTTP 404 {\"detail\":\"Not Found\"}",
+      "actual": "HTTP 404 {\"detail\":\"Not Found\"}",
+      "pass": true
+    },
+    {
+      "section": "option-b-routes",
+      "check": "GET /api/assignments retired",
+      "expected": "HTTP 404 {\"detail\":\"Not Found\"}",
+      "actual": "HTTP 404 {\"detail\":\"Not Found\"}",
+      "pass": true
+    },
+    {
+      "section": "surface-anchor",
+      "check": "1920x1080 / non-empty",
+      "expected": "> 100 chars",
+      "actual": "1907 chars",
+      "pass": true
+    },
+    {
+      "section": "surface-anchor",
+      "check": "1920x1080 / Axo landing identity",
+      "expected": "Contains Axo copy",
+      "actual": "hasAxo=true",
+      "pass": true
+    },
+    {
+      "section": "domain-scope",
+      "check": "1920x1080 / 0 Informatics terms",
+      "expected": "0 leaked terms",
+      "actual": "0",
+      "pass": true
+    },
+    {
+      "section": "option-b-ui",
+      "check": "1920x1080 / 0 Classroom UI controls",
+      "expected": "0 retired Classroom labels",
+      "actual": "0",
+      "pass": true
+    },
+    {
+      "section": "responsive-layout",
+      "check": "1920x1080 / no horizontal overflow",
+      "expected": "scrollWidth <= clientWidth + 2",
+      "actual": "scroll=1920 client=1920 (diff=0)",
+      "pass": true
+    },
+    {
+      "section": "surface-anchor",
+      "check": "1920x1080 /app non-empty",
+      "expected": "> 100 chars",
+      "actual": "340 chars",
+      "pass": true
+    },
+    {
+      "section": "surface-anchor",
+      "check": "1920x1080 /app Workspace shell",
+      "expected": "Has workspace or library navigation",
+      "actual": "hasLib=true",
+      "pass": true
+    },
+    {
+      "section": "domain-scope",
+      "check": "1920x1080 /app 0 Informatics terms",
+      "expected": "0 leaked terms",
+      "actual": "0",
+      "pass": true
+    },
+    {
+      "section": "option-b-ui",
+      "check": "1920x1080 /app 0 Classroom UI controls",
+      "expected": "0 retired Classroom labels",
+      "actual": "0",
+      "pass": true
+    },
+    {
+      "section": "responsive-layout",
+      "check": "1920x1080 /app no horizontal overflow",
+      "expected": "scrollWidth <= clientWidth + 2",
+      "actual": "scroll=1920 client=1920 (diff=0)",
+      "pass": true
+    },
+    {
+      "section": "surface-anchor",
+      "check": "1920x1080 /simulation/chop-mat-cau-ngoai-tiep non-empty",
+      "expected": "> 100 chars",
+      "actual": "1380 chars",
+      "pass": true
+    },
+    {
+      "section": "surface-anchor",
+      "check": "1920x1080 /simulation/chop-mat-cau-ngoai-tiep Simulation 3D canvas",
+      "expected": ">= 1 Scene3D canvas",
+      "actual": "canvasCount=1",
+      "pass": true
+    },
+    {
+      "section": "domain-scope",
+      "check": "1920x1080 /simulation/chop-mat-cau-ngoai-tiep 0 Informatics terms",
+      "expected": "0 leaked terms",
+      "actual": "0",
+      "pass": true
+    },
+    {
+      "section": "option-b-ui",
+      "check": "1920x1080 /simulation/chop-mat-cau-ngoai-tiep 0 Classroom UI controls",
+      "expected": "0 retired Classroom labels",
+      "actual": "0",
+      "pass": true
+    },
+    {
+      "section": "responsive-layout",
+      "check": "1920x1080 /simulation/chop-mat-cau-ngoai-tiep no horizontal overflow",
+      "expected": "scrollWidth <= clientWidth + 2",
+      "actual": "scroll=1920 client=1920 (diff=0)",
+      "pass": true
+    },
+    {
+      "section": "surface-anchor",
+      "check": "1366x768 / non-empty",
+      "expected": "> 100 chars",
+      "actual": "1380 chars",
+      "pass": true
+    },
+    {
+      "section": "surface-anchor",
+      "check": "1366x768 / Axo landing identity",
+      "expected": "Contains Axo copy",
+      "actual": "hasAxo=true",
+      "pass": true
+    },
+    {
+      "section": "domain-scope",
+      "check": "1366x768 / 0 Informatics terms",
+      "expected": "0 leaked terms",
+      "actual": "0",
+      "pass": true
+    },
+    {
+      "section": "option-b-ui",
+      "check": "1366x768 / 0 Classroom UI controls",
+      "expected": "0 retired Classroom labels",
+      "actual": "0",
+      "pass": true
+    },
+    {
+      "section": "responsive-layout",
+      "check": "1366x768 / no horizontal overflow",
+      "expected": "scrollWidth <= clientWidth + 2",
+      "actual": "scroll=1366 client=1366 (diff=0)",
+      "pass": true
+    },
+    {
+      "section": "surface-anchor",
+      "check": "1366x768 /app non-empty",
+      "expected": "> 100 chars",
+      "actual": "367 chars",
+      "pass": true
+    },
+    {
+      "section": "surface-anchor",
+      "check": "1366x768 /app Workspace shell",
+      "expected": "Has workspace or library navigation",
+      "actual": "hasLib=true",
+      "pass": true
+    },
+    {
+      "section": "domain-scope",
+      "check": "1366x768 /app 0 Informatics terms",
+      "expected": "0 leaked terms",
+      "actual": "0",
+      "pass": true
+    },
+    {
+      "section": "option-b-ui",
+      "check": "1366x768 /app 0 Classroom UI controls",
+      "expected": "0 retired Classroom labels",
+      "actual": "0",
+      "pass": true
+    },
+    {
+      "section": "responsive-layout",
+      "check": "1366x768 /app no horizontal overflow",
+      "expected": "scrollWidth <= clientWidth + 2",
+      "actual": "scroll=1366 client=1366 (diff=0)",
+      "pass": true
+    },
+    {
+      "section": "surface-anchor",
+      "check": "1366x768 /simulation/chop-mat-cau-ngoai-tiep non-empty",
+      "expected": "> 100 chars",
+      "actual": "1380 chars",
+      "pass": true
+    },
+    {
+      "section": "surface-anchor",
+      "check": "1366x768 /simulation/chop-mat-cau-ngoai-tiep Simulation 3D canvas",
+      "expected": ">= 1 Scene3D canvas",
+      "actual": "canvasCount=1",
+      "pass": true
+    },
+    {
+      "section": "domain-scope",
+      "check": "1366x768 /simulation/chop-mat-cau-ngoai-tiep 0 Informatics terms",
+      "expected": "0 leaked terms",
+      "actual": "0",
+      "pass": true
+    },
+    {
+      "section": "option-b-ui",
+      "check": "1366x768 /simulation/chop-mat-cau-ngoai-tiep 0 Classroom UI controls",
+      "expected": "0 retired Classroom labels",
+      "actual": "0",
+      "pass": true
+    },
+    {
+      "section": "responsive-layout",
+      "check": "1366x768 /simulation/chop-mat-cau-ngoai-tiep no horizontal overflow",
+      "expected": "scrollWidth <= clientWidth + 2",
+      "actual": "scroll=1366 client=1366 (diff=0)",
+      "pass": true
+    },
+    {
+      "section": "surface-anchor",
+      "check": "390x844 / non-empty",
+      "expected": "> 100 chars",
+      "actual": "1429 chars",
+      "pass": true
+    },
+    {
+      "section": "surface-anchor",
+      "check": "390x844 / Axo landing identity",
+      "expected": "Contains Axo copy",
+      "actual": "hasAxo=true",
+      "pass": true
+    },
+    {
+      "section": "domain-scope",
+      "check": "390x844 / 0 Informatics terms",
+      "expected": "0 leaked terms",
+      "actual": "0",
+      "pass": true
+    },
+    {
+      "section": "option-b-ui",
+      "check": "390x844 / 0 Classroom UI controls",
+      "expected": "0 retired Classroom labels",
+      "actual": "0",
+      "pass": true
+    },
+    {
+      "section": "responsive-layout",
+      "check": "390x844 / no horizontal overflow",
+      "expected": "scrollWidth <= clientWidth + 2",
+      "actual": "scroll=390 client=390 (diff=0)",
+      "pass": true
+    },
+    {
+      "section": "surface-anchor",
+      "check": "390x844 /app non-empty",
+      "expected": "> 100 chars",
+      "actual": "328 chars",
+      "pass": true
+    },
+    {
+      "section": "surface-anchor",
+      "check": "390x844 /app Workspace shell",
+      "expected": "Has workspace or library navigation",
+      "actual": "hasLib=true",
+      "pass": true
+    },
+    {
+      "section": "domain-scope",
+      "check": "390x844 /app 0 Informatics terms",
+      "expected": "0 leaked terms",
+      "actual": "0",
+      "pass": true
+    },
+    {
+      "section": "option-b-ui",
+      "check": "390x844 /app 0 Classroom UI controls",
+      "expected": "0 retired Classroom labels",
+      "actual": "0",
+      "pass": true
+    },
+    {
+      "section": "responsive-layout",
+      "check": "390x844 /app no horizontal overflow",
+      "expected": "scrollWidth <= clientWidth + 2",
+      "actual": "scroll=390 client=390 (diff=0)",
+      "pass": true
+    },
+    {
+      "section": "surface-anchor",
+      "check": "390x844 /simulation/chop-mat-cau-ngoai-tiep non-empty",
+      "expected": "> 100 chars",
+      "actual": "1429 chars",
+      "pass": true
+    },
+    {
+      "section": "surface-anchor",
+      "check": "390x844 /simulation/chop-mat-cau-ngoai-tiep Simulation 3D canvas",
+      "expected": ">= 1 Scene3D canvas",
+      "actual": "canvasCount=1",
+      "pass": true
+    },
+    {
+      "section": "domain-scope",
+      "check": "390x844 /simulation/chop-mat-cau-ngoai-tiep 0 Informatics terms",
+      "expected": "0 leaked terms",
+      "actual": "0",
+      "pass": true
+    },
+    {
+      "section": "option-b-ui",
+      "check": "390x844 /simulation/chop-mat-cau-ngoai-tiep 0 Classroom UI controls",
+      "expected": "0 retired Classroom labels",
+      "actual": "0",
+      "pass": true
+    },
+    {
+      "section": "responsive-layout",
+      "check": "390x844 /simulation/chop-mat-cau-ngoai-tiep no horizontal overflow",
+      "expected": "scrollWidth <= clientWidth + 2",
+      "actual": "scroll=390 client=390 (diff=0)",
+      "pass": true
+    }
+  ]
+}

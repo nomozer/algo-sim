@@ -1,0 +1,80 @@
+{
+  "schema_version": "axo-evaluation-run/1",
+  "run_id": "step-editor-main-integration-audit",
+  "task_slug": "axo-final-pre-merge-audit-safe-main-integration-release-verification",
+  "date": "2026-11-19",
+  "branch": "feat/axo-geometry-library-verification",
+  "merge_base_main": "bb046fa22aceff47abe22aa783aa64fc65caee13",
+  "clean_candidate_code_commit": "27f2c98d2a0f7e9cbe4de8d23837db29e86f0aea",
+  "audited_head_commit": "fdf3e5e79d907c533da50cb4dca56bd48069cde1",
+  "origin_main_before_and_after": "bb046fa22aceff47abe22aa783aa64fc65caee13",
+  "measured_system_tree_hash": "e0ea792d71667f12911fa7b0425bc4761aabdc337ad605491bc06c33137076a4",
+  "measured_system_file_count": 109,
+  "statuses": {
+    "PHASE_A_GIT_PREFLIGHT_AND_SCOPE": "FAIL_SCOPE_GOVERNANCE_FINDING",
+    "PHASE_B_POSTGRES_MIGRATION_DATA_SAFETY": "BLOCKED_DATABASE_SAFETY",
+    "PHASE_C_FIVE_FAMILY_GEOMETRY_AND_HTTP": "PASS",
+    "PHASE_D_SEAL_AND_DOCS_AUDIT": "PASS",
+    "PHASE_D_FRONTEND_TSC_BUILD_VITEST": "PASS",
+    "PHASE_D_BACKEND_GEOMETRY_SEMANTIC_OTHER": "PASS",
+    "PHASE_D_POSTGRES_16_INTEGRATION": "PASS",
+    "PHASE_D_PLAYWRIGHT_PHASE1_AND_PHASE2": "PASS",
+    "PHASE_D_REA_MCP_OBSERVATION": "PASS",
+    "SECRET_REDACTION_AUDIT": "PASS",
+    "RELEASE_DECISION": "NOT_READY_FOR_MAIN_INTEGRATION",
+    "RELEASE_GATE": "BLOCKED_DATABASE_SAFETY",
+    "MERGE_STATUS": "NOT_MERGED",
+    "PUSH_STATUS": "NOT_PUSHED",
+    "MODEL_STATUS": "MODEL_NOT_TRAINED"
+  },
+  "blockers": [
+    {
+      "id": "BLOCKER-DB-1",
+      "severity": "CRITICAL",
+      "summary": "Alembic migration f8a2c41d9e05 unconditionally drops 5 populated Classroom tables with empty-schema downgrade and is auto-executed by backend/Dockerfile:53 while D:/Documents/projects/algo-sim/backend/algosim.db holds 66 live Classroom rows."
+    },
+    {
+      "id": "BLOCKER-DB-2",
+      "severity": "HIGH",
+      "summary": "backend/scripts/seed_classroom_fixture.py fails immediately with ImportError because Classroom ORM symbols were deleted in bf1ee2a57."
+    },
+    {
+      "id": "GOVERNANCE-SCOPE-1",
+      "severity": "HIGH",
+      "summary": "Branch bundles 113 commits (563 files vs main) spanning Landing Page (34 commits switching '/' to LandingView), Classroom retirement (1), Attachment (10), Workspace tabs (14), Geometry/Scene3D library (24), Step Editor (17), and Eval/Docs (13)."
+    }
+  ],
+  "artifacts": {
+    "formal_report": "AXO-STEP-EDITOR-MAIN-INTEGRATION-REPORT.md",
+    "report": "report.md",
+    "phase_a_git_preflight": "results/phase-a-git-preflight-audit.json",
+    "phase_b_database_safety": "results/phase-b-database-safety-audit.json",
+    "phase_c_geometry_and_pipeline": "results/phase-c-geometry-and-pipeline-audit.json",
+    "phase_d_quality_gates": "results/phase-d-quality-gates.json",
+    "phase_d_browser_phase1": "results/phase-d-browser-e2e-phase1.json",
+    "phase_d_browser_phase2": "results/phase-d-browser-e2e-phase2.json",
+    "phase_d_postgres_host_state": "results/phase-d-postgres-host-state.json",
+    "phase_d_rea_mcp": "results/phase-d-rea-mcp.json",
+    "images": [
+      "images/main-integration-1920-sb-valid.png",
+      "images/main-integration-1920-422-rollback.png",
+      "images/main-integration-1920-cascade-f5.png",
+      "images/main-integration-post-restart.png",
+      "images/main-integration-rea-mcp.png",
+      "images/main-integration-vp-1920x1080.png",
+      "images/main-integration-vp-1440x900.png",
+      "images/main-integration-vp-1366x768.png",
+      "images/main-integration-vp-1024x768.png",
+      "images/main-integration-vp-768x1024.png",
+      "images/main-integration-vp-390x844.png",
+      "images/main-integration-vp-320x568.png",
+      "images/main-integration-vkb-390x460.png"
+    ]
+  },
+  "rea_mcp_evidence": {
+    "list_browser_targets": "ev_be8d658ff0823ac821d0f79b89b11855475f891cfd0f42417612b368bf9d8cfc",
+    "inspect_web_page": "ev_81951b80a15adf43055b9137a11296636e663e93f8d671f18d14ae98b26090f8",
+    "capture_web_screenshot": "ev_762ef12fc56eef118018b06afd150c91a9554ce0f1738f6f5bbc837a18a9897d",
+    "artifact_sha256": "6cb0d56f69c6838fc6ee537158a68be86bb02d9f384647c40b031da3d5780537"
+  }
+}

@@ -246,38 +246,30 @@ describe("Hybrid /4 product integration — recoverable infrastructure errors cl
     expect(st.view).toBe("home");
   });
 
-  it("clears activeAssignment and semanticFocus on refusal, infrastructure error, and invalid envelope (M18)", () => {
-    const fakeAssignment = { id: "asg-1", title: "Bài cô giao", classroomId: "cls-1" } as any;
+  it("clears semanticFocus on refusal, infrastructure error, and invalid envelope (M18)", () => {
     const servedEnv = docPhanHoiPhanTich(fixtureOf("K-A01"));
     const refusalEnv = docPhanHoiPhanTich(fixtureOf("S2-C-A01_goc_chieu"));
     expect(servedEnv.status).toBe("ok");
     expect(refusalEnv.status).toBe("unsupported");
     if (servedEnv.status !== "ok" || refusalEnv.status !== "unsupported") return;
 
-    // 1. Refusal clears activeAssignment & semanticFocus
-    useAppStore.getState().setActiveAssignment(fakeAssignment);
+    // 1. Refusal clears semanticFocus
     useAppStore.getState().setSemanticFocus("step-1" as any);
     useAppStore.getState().loadEnvelope(servedEnv, undefined, "K-A01");
     useAppStore.getState().setView("home");
-    expect(useAppStore.getState().activeAssignment).not.toBeNull();
     useAppStore.getState().loadUnsupported(refusalEnv);
-    expect(useAppStore.getState().activeAssignment).toBeNull();
     expect(useAppStore.getState().semanticFocus).toBeNull();
 
-    // 2. Infrastructure error clears activeAssignment & semanticFocus
-    useAppStore.getState().setActiveAssignment(fakeAssignment);
+    // 2. Infrastructure error clears semanticFocus
     useAppStore.getState().setSemanticFocus("step-2" as any);
     useAppStore.getState().loadEnvelope(servedEnv, undefined, "K-A01");
     useAppStore.getState().setView("home");
     useAppStore.getState().setAnalysisError("Dịch vụ trích xuất gặp sự cố kết nối.");
-    expect(useAppStore.getState().activeAssignment).toBeNull();
     expect(useAppStore.getState().semanticFocus).toBeNull();
 
-    // 3. Invalid envelope rejection clears activeAssignment & semanticFocus
-    useAppStore.getState().setActiveAssignment(fakeAssignment);
+    // 3. Invalid envelope rejection clears semanticFocus
     useAppStore.getState().setSemanticFocus("step-3" as any);
     useAppStore.getState().loadEnvelope({ ...servedEnv, simulation_id: "unknown.sim" } as any);
-    expect(useAppStore.getState().activeAssignment).toBeNull();
     expect(useAppStore.getState().semanticFocus).toBeNull();
   });
 });

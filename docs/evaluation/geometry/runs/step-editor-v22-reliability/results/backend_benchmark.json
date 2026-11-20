@@ -1,0 +1,358 @@
+{
+  "generated_at_utc": "2026-11-17T17:15:29.169229+00:00",
+  "environment": {
+    "os": "Windows 11 (10.0.26100)",
+    "machine": "AMD64",
+    "cpu": "11th Gen Intel(R) Core(TM) i5-11400H @ 2.70GHz",
+    "logical_cores": 12,
+    "python_version": "3.12.10"
+  },
+  "methodology": "Warmup 3 iterations + 30 measured sequential calls per scenario in single Python process with deep-copied Scene3D inputs; p50=median, p95=linear-interpolated 95th percentile.",
+  "scenarios": {
+    "s11_bisector_compound_partial": {
+      "mode": "PARTIAL_TOPOLOGICAL_REBUILD",
+      "n_samples": 30,
+      "warmup": 3,
+      "recomputed_count": 9,
+      "skipped_unaffected_count": 21,
+      "stages": {
+        "parser_ms": {
+          "median_p50_ms": 0.414,
+          "p95_ms": 0.617,
+          "min_ms": 0.194,
+          "max_ms": 0.826
+        },
+        "typed_facts_ms": {
+          "median_p50_ms": 0.021,
+          "p95_ms": 0.039,
+          "min_ms": 0.008,
+          "max_ms": 0.097
+        },
+        "planner_ms": {
+          "median_p50_ms": 3.329,
+          "p95_ms": 5.45,
+          "min_ms": 1.862,
+          "max_ms": 47.427
+        },
+        "registry_ms": {
+          "median_p50_ms": 0.003,
+          "p95_ms": 0.007,
+          "min_ms": 0.001,
+          "max_ms": 0.009
+        },
+        "dependency_invalidation_ms": {
+          "median_p50_ms": 1.903,
+          "p95_ms": 3.948,
+          "min_ms": 1.005,
+          "max_ms": 46.107
+        },
+        "kernel_ms": {
+          "median_p50_ms": 0.823,
+          "p95_ms": 1.335,
+          "min_ms": 0.449,
+          "max_ms": 1.502
+        },
+        "dependency_rebuild_ms": {
+          "median_p50_ms": 0.387,
+          "p95_ms": 0.603,
+          "min_ms": 0.205,
+          "max_ms": 0.846
+        },
+        "scene3d_build_ms": {
+          "median_p50_ms": 5.018,
+          "p95_ms": 6.787,
+          "min_ms": 3.008,
+          "max_ms": 9.526
+        },
+        "validation_ms": {
+          "median_p50_ms": 5.707,
+          "p95_ms": 8.504,
+          "min_ms": 3.239,
+          "max_ms": 11.671
+        },
+        "total_ms": {
+          "median_p50_ms": 19.024,
+          "p95_ms": 27.162,
+          "min_ms": 14.764,
+          "max_ms": 63.771
+        }
+      }
+    },
+    "s11_bisector_compound_full_rebuild": {
+      "mode": "FULL_TOPOLOGICAL_REBUILD",
+      "n_samples": 30,
+      "warmup": 3,
+      "recomputed_count": 25,
+      "skipped_unaffected_count": 0,
+      "stages": {
+        "parser_ms": {
+          "median_p50_ms": 0.38,
+          "p95_ms": 0.598,
+          "min_ms": 0.176,
+          "max_ms": 0.668
+        },
+        "typed_facts_ms": {
+          "median_p50_ms": 0.02,
+          "p95_ms": 0.041,
+          "min_ms": 0.008,
+          "max_ms": 0.061
+        },
+        "planner_ms": {
+          "median_p50_ms": 2.992,
+          "p95_ms": 3.887,
+          "min_ms": 1.596,
+          "max_ms": 4.082
+        },
+        "registry_ms": {
+          "median_p50_ms": 0.003,
+          "p95_ms": 0.006,
+          "min_ms": 0.001,
+          "max_ms": 0.011
+        },
+        "dependency_invalidation_ms": {
+          "median_p50_ms": 1.647,
+          "p95_ms": 2.063,
+          "min_ms": 0.898,
+          "max_ms": 2.111
+        },
+        "kernel_ms": {
+          "median_p50_ms": 1.165,
+          "p95_ms": 2.65,
+          "min_ms": 0.538,
+          "max_ms": 3.003
+        },
+        "dependency_rebuild_ms": {
+          "median_p50_ms": 0.696,
+          "p95_ms": 1.232,
+          "min_ms": 0.362,
+          "max_ms": 2.572
+        },
+        "scene3d_build_ms": {
+          "median_p50_ms": 4.832,
+          "p95_ms": 5.655,
+          "min_ms": 2.883,
+          "max_ms": 6.098
+        },
+        "validation_ms": {
+          "median_p50_ms": 5.34,
+          "p95_ms": 7.536,
+          "min_ms": 3.441,
+          "max_ms": 48.069
+        },
+        "total_ms": {
+          "median_p50_ms": 18.614,
+          "p95_ms": 20.751,
+          "min_ms": 11.463,
+          "max_ms": 58.266
+        }
+      }
+    },
+    "s1_ratio_section_partial": {
+      "mode": "PARTIAL_TOPOLOGICAL_REBUILD",
+      "n_samples": 30,
+      "warmup": 3,
+      "recomputed_count": 6,
+      "skipped_unaffected_count": 17,
+      "stages": {
+        "parser_ms": {
+          "median_p50_ms": 0.424,
+          "p95_ms": 0.624,
+          "min_ms": 0.215,
+          "max_ms": 1.854
+        },
+        "typed_facts_ms": {
+          "median_p50_ms": 0.017,
+          "p95_ms": 0.035,
+          "min_ms": 0.008,
+          "max_ms": 0.172
+        },
+        "planner_ms": {
+          "median_p50_ms": 2.886,
+          "p95_ms": 4.067,
+          "min_ms": 1.593,
+          "max_ms": 4.428
+        },
+        "registry_ms": {
+          "median_p50_ms": 0.002,
+          "p95_ms": 0.005,
+          "min_ms": 0.001,
+          "max_ms": 0.006
+        },
+        "dependency_invalidation_ms": {
+          "median_p50_ms": 1.465,
+          "p95_ms": 1.957,
+          "min_ms": 0.868,
+          "max_ms": 2.351
+        },
+        "kernel_ms": {
+          "median_p50_ms": 2.931,
+          "p95_ms": 3.629,
+          "min_ms": 1.979,
+          "max_ms": 4.184
+        },
+        "dependency_rebuild_ms": {
+          "median_p50_ms": 2.656,
+          "p95_ms": 3.355,
+          "min_ms": 1.794,
+          "max_ms": 3.965
+        },
+        "scene3d_build_ms": {
+          "median_p50_ms": 4.546,
+          "p95_ms": 5.552,
+          "min_ms": 2.616,
+          "max_ms": 5.886
+        },
+        "validation_ms": {
+          "median_p50_ms": 7.392,
+          "p95_ms": 8.851,
+          "min_ms": 4.928,
+          "max_ms": 9.189
+        },
+        "total_ms": {
+          "median_p50_ms": 21.162,
+          "p95_ms": 23.816,
+          "min_ms": 17.115,
+          "max_ms": 56.484
+        }
+      }
+    },
+    "s1_ratio_section_full_rebuild": {
+      "mode": "FULL_TOPOLOGICAL_REBUILD",
+      "n_samples": 30,
+      "warmup": 3,
+      "recomputed_count": 18,
+      "skipped_unaffected_count": 0,
+      "stages": {
+        "parser_ms": {
+          "median_p50_ms": 0.388,
+          "p95_ms": 0.567,
+          "min_ms": 0.224,
+          "max_ms": 1.825
+        },
+        "typed_facts_ms": {
+          "median_p50_ms": 0.018,
+          "p95_ms": 0.035,
+          "min_ms": 0.009,
+          "max_ms": 0.119
+        },
+        "planner_ms": {
+          "median_p50_ms": 2.897,
+          "p95_ms": 4.592,
+          "min_ms": 1.863,
+          "max_ms": 41.229
+        },
+        "registry_ms": {
+          "median_p50_ms": 0.002,
+          "p95_ms": 0.005,
+          "min_ms": 0.001,
+          "max_ms": 0.005
+        },
+        "dependency_invalidation_ms": {
+          "median_p50_ms": 1.606,
+          "p95_ms": 3.0,
+          "min_ms": 0.931,
+          "max_ms": 40.428
+        },
+        "kernel_ms": {
+          "median_p50_ms": 3.338,
+          "p95_ms": 4.504,
+          "min_ms": 1.987,
+          "max_ms": 4.84
+        },
+        "dependency_rebuild_ms": {
+          "median_p50_ms": 3.025,
+          "p95_ms": 4.007,
+          "min_ms": 1.838,
+          "max_ms": 4.227
+        },
+        "scene3d_build_ms": {
+          "median_p50_ms": 4.293,
+          "p95_ms": 5.652,
+          "min_ms": 2.548,
+          "max_ms": 6.29
+        },
+        "validation_ms": {
+          "median_p50_ms": 7.909,
+          "p95_ms": 10.008,
+          "min_ms": 4.548,
+          "max_ms": 11.156
+        },
+        "total_ms": {
+          "median_p50_ms": 22.52,
+          "p95_ms": 25.674,
+          "min_ms": 15.788,
+          "max_ms": 57.535
+        }
+      }
+    },
+    "s11_equiv_noop_cache_hit": {
+      "mode": "NO_OP_EQUIVALENT",
+      "n_samples": 30,
+      "warmup": 3,
+      "recomputed_count": 0,
+      "skipped_unaffected_count": 31,
+      "stages": {
+        "parser_ms": {
+          "median_p50_ms": 0.299,
+          "p95_ms": 0.386,
+          "min_ms": 0.166,
+          "max_ms": 0.411
+        },
+        "typed_facts_ms": {
+          "median_p50_ms": 0.017,
+          "p95_ms": 0.032,
+          "min_ms": 0.008,
+          "max_ms": 0.034
+        },
+        "planner_ms": {
+          "median_p50_ms": 10.613,
+          "p95_ms": 17.103,
+          "min_ms": 6.561,
+          "max_ms": 53.036
+        },
+        "registry_ms": {
+          "median_p50_ms": 0.002,
+          "p95_ms": 0.007,
+          "min_ms": 0.001,
+          "max_ms": 0.018
+        },
+        "dependency_invalidation_ms": {
+          "median_p50_ms": 1.915,
+          "p95_ms": 4.521,
+          "min_ms": 1.052,
+          "max_ms": 42.37
+        },
+        "kernel_ms": {
+          "median_p50_ms": 0.0,
+          "p95_ms": 0.0,
+          "min_ms": 0.0,
+          "max_ms": 0.0
+        },
+        "dependency_rebuild_ms": {
+          "median_p50_ms": 0.0,
+          "p95_ms": 0.0,
+          "min_ms": 0.0,
+          "max_ms": 0.0
+        },
+        "scene3d_build_ms": {
+          "median_p50_ms": 0.0,
+          "p95_ms": 0.0,
+          "min_ms": 0.0,
+          "max_ms": 0.0
+        },
+        "validation_ms": {
+          "median_p50_ms": 7.428,
+          "p95_ms": 9.066,
+          "min_ms": 4.429,
+          "max_ms": 12.991
+        },
+        "total_ms": {
+          "median_p50_ms": 14.805,
+          "p95_ms": 20.402,
+          "min_ms": 10.408,
+          "max_ms": 56.231
+        }
+      }
+    }
+  }
+}

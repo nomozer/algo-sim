@@ -1,0 +1,114 @@
+{
+  "audited_at": "2026-11-19T07:49:16.205190+00:00",
+  "commit": "a0f4a516630bb582d982463cd1160f7668154221",
+  "docker_environment": {
+    "context": "desktop-linux",
+    "client_version": "29.9.2",
+    "server_version": "29.9.2",
+    "server_os_arch": "linux/amd64"
+  },
+  "built_image": {
+    "tag": "axo-release-readiness-backend:rc",
+    "id": "sha256:ceed2ce3e65e05b5d5e10fc22a289a41525f9da8ff3a4c5a76f28125f3c684b8",
+    "os_arch": "linux/amd64",
+    "size_bytes": 790333245,
+    "labels": {
+      "org.algosim.backend.build-time": "2026-11-19T07:49:13+00:00",
+      "org.algosim.backend.git-sha": "a0f4a516630bb582d982463cd1160f7668154221",
+      "org.algosim.backend.image-inputs-sha256": "3bc1b8b3a4c484183245c114571af694cfcf2f2b4b380e32139938204919ee96",
+      "org.algosim.backend.requirements-sha256": "8653237b274670619374f98f4a2138e6e5776b3be4cae7301d0211b1f630c164"
+    },
+    "cmd": [
+      "/bin/sh",
+      "-c",
+      "python alembic/migration_preflight.py --startup && alembic upgrade head &&     if [ \"$DEV_RELOAD\" = \"1\" ]; then       WATCHFILES_FORCE_POLLING=1 exec uvicorn app.main:app --host 0.0.0.0         --port 8000 --reload --reload-dir /app/app;     else       exec uvicorn app.main:app --host 0.0.0.0 --port 8000;     fi"
+    ],
+    "requirements_sha256": "8653237b274670619374f98f4a2138e6e5776b3be4cae7301d0211b1f630c164",
+    "image_inputs_sha256": "3bc1b8b3a4c484183245c114571af694cfcf2f2b4b380e32139938204919ee96"
+  },
+  "boot_1": {
+    "status": "PASS",
+    "docker_health_state": "running|healthy|0",
+    "preflight_passed_in_logs": true,
+    "alembic_head_reached_in_logs": true,
+    "health_http": 200,
+    "health_db": "postgresql",
+    "runtime_git_sha_matches": true,
+    "feedback_model_status": "MODEL_NOT_TRAINED",
+    "step_edit_http": 200,
+    "m_ab_learner_text_verified": "Dựng trung điểm của S và B.",
+    "state_http": 200,
+    "committed_version": 1,
+    "logs_tail": [
+      "MIGRATION_PREFLIGHT=PASS reason=SAFE_NO_DESTRUCTIVE_OPERATIONS :: Migration preflight passed cleanly with zero destructive operations.",
+      "INFO:     127.0.0.1:40890 - \"GET /api/health HTTP/1.1\" 200 OK",
+      "INFO  [alembic.runtime.migration] Context impl PostgresqlImpl.",
+      "INFO  [alembic.runtime.migration] Will assume transactional DDL.",
+      "INFO  [alembic.runtime.migration] Running upgrade  -> 72095b7dd318, initial schema (simulation_cache, simulation_patterns, reuse_metrics)",
+      "INFO  [alembic.runtime.migration] Running upgrade 72095b7dd318 -> f32f9b107b77, m18 accounts and classroom",
+      "INFO  [alembic.runtime.migration] Running upgrade f32f9b107b77 -> a1c7e4b90d52, live classroom session + semantic focus",
+      "INFO  [alembic.runtime.migration] Running upgrade a1c7e4b90d52 -> c4e8a91b2f03, learning history entries per user",
+      "INFO  [alembic.runtime.migration] Running upgrade c4e8a91b2f03 -> d5f9b82c3a14, admin persistence and telemetry tables",
+      "INFO  [alembic.runtime.migration] Running upgrade d5f9b82c3a14 -> e437149641fa, analysis usage ledger",
+      "INFO  [alembic.runtime.migration] Running upgrade e437149641fa -> 9c4d8e2b7a10, add step edit tables",
+      "INFO  [alembic.runtime.migration] Running upgrade 9c4d8e2b7a10 -> f8a2c41d9e05, retain legacy classroom tables on classroom feature retirement",
+      "INFO:     Started server process [1]",
+      "INFO:     Waiting for application startup.",
+      "INFO:     Application startup complete.",
+      "INFO:     Uvicorn running on http://0.0.0.0:8000 (Press CTRL+C to quit)"
+    ]
+  },
+  "boot_2_restart": {
+    "status": "PASS",
+    "docker_health_state": "running|healthy|0",
+    "health_http": 200,
+    "state_http": 200,
+    "committed_version_preserved": 1,
+    "logs_tail": [
+      "INFO  [alembic.runtime.migration] Running upgrade 9c4d8e2b7a10 -> f8a2c41d9e05, retain legacy classroom tables on classroom feature retirement",
+      "INFO:     Started server process [1]",
+      "INFO:     Waiting for application startup.",
+      "INFO:     Application startup complete.",
+      "INFO:     Uvicorn running on http://0.0.0.0:8000 (Press CTRL+C to quit)",
+      "INFO:     Shutting down",
+      "INFO:     Waiting for application shutdown.",
+      "INFO:     Application shutdown complete.",
+      "INFO:     Finished server process [1]",
+      "INFO  [alembic.runtime.migration] Context impl PostgresqlImpl.",
+      "INFO  [alembic.runtime.migration] Will assume transactional DDL.",
+      "INFO:     Started server process [1]",
+      "INFO:     Waiting for application startup.",
+      "INFO:     Application startup complete.",
+      "INFO:     Uvicorn running on http://0.0.0.0:8000 (Press CTRL+C to quit)"
+    ]
+  },
+  "negative_fail_closed_containers": {
+    "unstamped_existing_db": {
+      "status": "PASS",
+      "exit_code": 23,
+      "reason_in_logs": "UNSTAMPED_EXISTING_DATABASE",
+      "uvicorn_started": false,
+      "rows_intact": 1
+    },
+    "schema_drift_db": {
+      "status": "PASS",
+      "exit_code": 23,
+      "reason_in_logs": "SCHEMA_DRIFT_DETECTED",
+      "uvicorn_started": false
+    },
+    "partial_migration_db": {
+      "status": "PASS",
+      "exit_code": 23,
+      "reason_in_logs": "PARTIAL_MIGRATION_PRE_EXISTING_OBJECT",
+      "uvicorn_started": false
+    },
+    "destructive_pending_migration": {
+      "status": "PASS",
+      "exit_code": 23,
+      "reason_in_logs": "DESTRUCTIVE_MIGRATION_FORBIDDEN_AT_STARTUP",
+      "uvicorn_started": false,
+      "users_row_intact": 1
+    }
+  },
+  "gate_a_docker_runtime_status": "PASS"
+}

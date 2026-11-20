@@ -53,6 +53,10 @@ interface Props {
   onCatch?: (loi: Error) => void;
   /** Tín hiệu thông báo lên shell ngoài khi boundary tự phục hồi (HMR) hoặc thử lại thành công. */
   onRecover?: () => void;
+  /** Số lần tự động thử khôi phục tối đa (mặc định 0 — tắt với boundary cấp trang). */
+  autoRetryMax?: number;
+  /** Độ trễ trước khi tự động thử khôi phục (ms). */
+  autoRetryDelayMs?: number;
   /**
    * Giao diện thay thế. Nhận `thuLai` để dựng nút phục hồi.
    *
@@ -62,7 +66,11 @@ interface Props {
    */
   fallback: (
     thuLai: () => void,
-    meta: { readonly canRetry: boolean; readonly retryCount: number },
+    meta: {
+      readonly canRetry: boolean;
+      readonly retryCount: number;
+      readonly isAutoRetrying: boolean;
+    },
   ) => ReactNode;
 }
 
@@ -87,6 +95,14 @@ const MAX_HMR_AUTO_RECOVERIES = 2;
 export class ErrorBoundary extends Component<Props, State> {
   state: State = { hong: false, soLanThuLai: 0, hmrEpoch: 0 };
   private _mounted = false;
+  private _autoRetryTimer: ReturnType<typeof setTimeout> | null = null;
+
+  private _clearAutoRetryTimer(): void {
+    if (this._autoRetryTimer !== null) {
+      clearTimeout(this._autoRetryTimer);
+      this._autoRetryTimer = null;
+    }
+  }
 
   private readonly _onViteAfterUpdate = (): void => {
     if (!this._mounted) return;
@@ -163,8 +179,15 @@ export class ErrorBoundary extends Component<Props, State> {
     hot?.on?.("vite:afterUpdate", this._onViteAfterUpdate);
   }
 
+  override componentDidUpdate(prevProps: Props): void {
+    if (prevProps.resetKey !== this.props.resetKey || !this.state.hong) {
+      this._clearAutoRetryTimer();
+    }
+  }
+
   override componentWillUnmount(): void {
     this._mounted = false;
+    this._clearAutoRetryTimer();
     const hot = (import.meta as unknown as {
       hot?: {
         off?: (event: string, cb: () => void) => void;
@@ -183,18 +206,46 @@ export class ErrorBoundary extends Component<Props, State> {
     // eslint-disable-next-line no-console
     console.error(`[ErrorBoundary:${this.props.mien}]`, loi, tin.componentStack);
     this.props.onCatch?.(loi);
+
+    const autoRetryMax = this.props.autoRetryMax ?? 0;
+    const retryCount = this.state.soLanThuLai ?? 0;
+    const hidden = typeof document !== "undefined" && document.visibilityState === "hidden";
+    if (autoRetryMax > 0 && retryCount < autoRetryMax && !hidden && this._autoRetryTimer === null) {
+      const expectedKhoa = this.props.resetKey;
+      const delay = Math.max(0, this.props.autoRetryDelayMs ?? 180);
+      this._autoRetryTimer = setTimeout(() => {
+        this._autoRetryTimer = null;
+        const hiddenNow = typeof document !== "undefined" && document.visibilityState === "hidden";
+        if (!this._mounted || !this.state.hong || this.props.resetKey !== expectedKhoa || hiddenNow) {
+          return;
+        }
+        this.setState(
+          (prev) => ({ hong: false, soLanThuLai: (prev.soLanThuLai ?? 0) + 1 }),
+          () => {
+            this.props.onRecover?.();
+          },
+        );
+      }, delay);
+    }
   }
 
   render(): ReactNode {
     if (!this.state.hong) return this.props.children;
     const retryCount = this.state.soLanThuLai ?? 0;
-    const canRetry = retryCount < 1;
+    const maxAuto = this.props.autoRetryMax ?? 0;
+    const canRetry = retryCount < Math.max(1, maxAuto);
+    const isAutoRetrying =
+      maxAuto > 0 &&
+      retryCount < maxAuto &&
+      (typeof document === "undefined" || document.visibilityState !== "hidden");
     return this.props.fallback(
-      () =>
+      () => {
+        this._clearAutoRetryTimer();
         this.setState({ hong: false, soLanThuLai: retryCount + 1 }, () => {
           this.props.onRecover?.();
-        }),
-      { canRetry, retryCount },
+        });
+      },
+      { canRetry, retryCount, isAutoRetrying },
     );
   }
 }

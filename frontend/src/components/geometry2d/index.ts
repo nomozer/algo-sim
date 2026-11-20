@@ -1,0 +1,61 @@
+export {
+  Cone2D,
+  Cube2D,
+  Cylinder2D,
+  DEFAULT_CUBE_FRAME,
+  DEFAULT_PRISM_FRAME,
+  DEFAULT_PYRAMID_FRAME,
+  GEO2D_TOKENS,
+  Geo2DEdge,
+  Geo2DEllipseRim,
+  Geo2DPlaneBadge,
+  Geo2DPoint,
+  Geo2DPolygon,
+  Geo2DRightAngle,
+  Geometry2DFrame,
+  PerpendicularMarker2D,
+  Plane2D,
+  Prism2D,
+  Pyramid2D,
+  Section2D,
+  Segment2D,
+  Sphere2D,
+  type EdgeVisualRole,
+  type Point2D,
+  type Section2DProps,
+} from "./primitives";
+
+export {
+  GEOMETRY_FAMILY_ICONS,
+  GeometryFamilyIcon,
+  normalizeGeometryFamily,
+  renderFamilyThumbnailContent,
+  type GeometryFamilyIconSpec,
+  type GeometryFamilyId,
+} from "./family-icons";
+
+export {
+  GEOMETRY_TEMPLATES,
+  type GeometryTemplateDefinition,
+  type GeometryTemplateId,
+  type TemplateRenderOptions,
+  type VerifiedTemplateLabels,
+} from "./templates";
+
+export {
+  SAMPLE_ILLUSTRATION_MAPPING,
+  deriveIllustrationSpecFromScene3D,
+  detectFamilyFromScene3D,
+  extractVerifiedLabelsFromScene3D,
+  resolveGeometryIllustration,
+  resolveTemplateFromIllustrationSpec,
+  resolveTemplateIdFromScene3D,
+  verifyCatalogIllustrationConsistency,
+  type GeometryIllustrationInput,
+  type GeometryIllustrationMode,
+  type GeometryRelation,
+  type IllustrationEmphasis,
+  type IllustrationSpec,
+  type ResolvedGeometryIllustration,
+  type ShapeKind,
+} from "./resolver";

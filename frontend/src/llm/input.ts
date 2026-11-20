@@ -139,6 +139,14 @@ export async function fileToPayload(file: File): Promise<InputPayload> {
 
 export const MAX_ATTACHMENT_BYTES = 10 * 1024 * 1024;
 export const MAX_ATTACHMENTS = 10;
+export const MAX_TOTAL_ATTACHMENT_BYTES = 25 * 1024 * 1024;
+
+/** Detect only obvious truncation or a wrong signature; the server parses the PDF. */
+export async function isClearlyInvalidPdf(file: Blob): Promise<boolean> {
+  if (file.size < 32) return true;
+  const header = await file.slice(0, 5).arrayBuffer();
+  return new TextDecoder().decode(header) !== "%PDF-";
+}
 
 /** Định dạng tệp đính kèm thống nhất trên Composer hình học: Ảnh (PNG/JPG/WEBP), PDF và Word (.docx). */
 export const COMPOSER_ACCEPT = ".png,.jpg,.jpeg,.webp,.pdf,.docx";
@@ -156,10 +164,12 @@ export interface ComposerAttachmentItem {
   previewUrl?: string;
   status?: "loading" | "ready" | "error";
   errorMessage?: string;
+  source?: "camera" | "upload" | "paste";
 }
 
 export type ComposerFileRejectionCode =
   | "empty_file"
+  | "invalid_pdf"
   | "too_large"
   | "heic_unsupported"
   | "unsupported_format"
@@ -199,6 +209,15 @@ export function splitAttachmentName(fullName: string): { stem: string; extWithDo
     stem: safe.slice(0, dot),
     extWithDot: safe.slice(dot).toLowerCase(),
   };
+}
+
+/** Chỉ mở modal xem trước đối với ảnh và PDF có trình xem thực tế (loại trừ DOCX/DOC). */
+export function canPreviewAttachment(
+  item: Pick<ComposerAttachmentItem, "kind" | "ext">,
+): boolean {
+  const ext = (item.ext || "").toLowerCase();
+  if (item.kind === "document" || ext === ".docx" || ext === ".doc") return false;
+  return item.kind === "image" || item.kind === "pdf";
 }
 
 /** MIME khai kèm khi gửi tệp đính kèm sang `/api/input/prepare`. */
@@ -260,12 +279,20 @@ export function validateComposerFile(
     };
   }
 
+  if (kind === "pdf" && file.size < 32) {
+    return { ok: false, code: "invalid_pdf", reason: `Không thể đọc tệp PDF "${file.name}": tệp bị cắt ngắn.` };
+  }
+
   if (file.size > MAX_ATTACHMENT_BYTES) {
     return {
       ok: false,
       code: "too_large",
       reason: `Tệp "${file.name}" vượt quá giới hạn 10 MB.`,
     };
+  }
+
+  if (existingFiles.reduce((sum, item) => sum + item.size, 0) + file.size > MAX_TOTAL_ATTACHMENT_BYTES) {
+    return { ok: false, code: "too_large", reason: "Tổng dung lượng tệp đính kèm vượt quá 25 MB." };
   }
 
   if (existingFiles.some((f) => f.name === file.name && f.size === file.size)) {

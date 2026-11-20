@@ -1,0 +1,46 @@
+{
+  "ins_keys": [
+    "browser",
+    "target",
+    "capture_window",
+    "completeness",
+    "frames",
+    "dom",
+    "accessibility",
+    "scripts",
+    "resources",
+    "network",
+    "console",
+    "workers",
+    "metadata",
+    "storage",
+    "limitations"
+  ],
+  "target": {
+    "target_id": "D8F4B834AD74E20A8412D49B399FB36A",
+    "type": "page",
+    "title": "Mô phỏng hình học 3D | Axo",
+    "url": "http://localhost:3001/simulation/pyramid-three-point-section",
+    "origin": "http://localhost:3001",
+    "attached": null
+  },
+  "document": null,
+  "console": 3,
+  "network": 4,
+  "screenshot_target": {
+    "target_id": "D8F4B834AD74E20A8412D49B399FB36A",
+    "url": "http://localhost:3001/simulation/pyramid-three-point-section",
+    "origin": "http://localhost:3001"
+  },
+  "viewport": {
+    "width": 1440,
+    "height": 900
+  },
+  "artifact_keys": [
+    "sha256",
+    "bytes",
+    "media_type",
+    "data_base64"
+  ],
+  "artifact_sha256": "7c6be261d76b65f48d65b08adb7e88e027ed641f879c48783dd25edfe808574e"
+}

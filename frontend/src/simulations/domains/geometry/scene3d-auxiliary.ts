@@ -24,6 +24,79 @@ export interface HinhPhu {
 }
 
 const _cache = new WeakMap<Scene3D, Map<string, HinhPhu>>();
+const _measLinesCache = new WeakMap<Scene3D, Set<string>>();
+
+function edgePairKey(a: string, b: string): string {
+  return a < b ? `${a}::${b}` : `${b}::${a}`;
+}
+
+function collectSolidAndPolygonEdgeKeys(scene: Scene3D): Set<string> {
+  const keys = new Set<string>();
+  for (const o of scene.objects) {
+    if (o.type === "solid" && o.vertex_ids && o.faces) {
+      for (const f of o.faces) {
+        for (let i = 0; i < f.length; i += 1) {
+          const u = o.vertex_ids[f[i]];
+          const v = o.vertex_ids[f[(i + 1) % f.length]];
+          if (u && v && u !== v) keys.add(edgePairKey(u, v));
+        }
+      }
+    } else if (o.type === "polygon3") {
+      const vs = o.vertex_ids && o.vertex_ids.length >= 3 ? o.vertex_ids : (o.depends ?? []);
+      if (vs.length >= 3) {
+        for (let i = 0; i < vs.length; i += 1) {
+          const u = vs[i];
+          const v = vs[(i + 1) % vs.length];
+          if (u && v && u !== v) keys.add(edgePairKey(u, v));
+        }
+      }
+    }
+  }
+  return keys;
+}
+
+function collectFiniteSegmentKeys(scene: Scene3D): Set<string> {
+  const keys = collectSolidAndPolygonEdgeKeys(scene);
+  for (const o of scene.objects) {
+    if (o.type !== "segment3") continue;
+    const eps = o.endpoint_ids && o.endpoint_ids.length === 2 ? o.endpoint_ids : (o.depends ?? []);
+    if (eps.length === 2 && eps[0] !== eps[1]) {
+      keys.add(edgePairKey(eps[0], eps[1]));
+    }
+  }
+  return keys;
+}
+
+/**
+ * ĐƯỜNG THẲNG PHỤ CHỈ ĐỂ ĐO (`line3` dẫn xuất có `CONSTRUCT_AUXILIARY_GEOMETRY`, không phải `given`/`target`,
+ * đi qua 2 điểm đã nối sẵn bằng cạnh khối/đoạn hữu hạn, và không có vật hình học nào khác dựng từ nó ngoài `quantity`):
+ * ẩn mặc định giống `measurementOnlyPlanes` và không mở bước «Xác định đường thẳng chứa cạnh ...».
+ */
+export function measurementOnlyLines(scene: Scene3D): Set<string> {
+  const cached = _measLinesCache.get(scene);
+  if (cached) return cached;
+  const loai = new Map(scene.objects.map((o) => [o.id, o.type]));
+  const finiteKeys = new Set([
+    ...collectFiniteSegmentKeys(scene),
+    ...collectSolidAndPolygonEdgeKeys(scene),
+  ]);
+  const ra = new Set<string>();
+  for (const o of scene.objects) {
+    if (o.type !== "line3" || o.origin !== "derived") continue;
+    const vai = o.formation_roles ?? [];
+    const nhom = o.display_group ?? [];
+    if (vai.length !== 1 || vai[0] !== VAI_PHU || nhom.includes("given") || nhom.includes("target")) continue;
+    const deps = o.depends ?? [];
+    if (deps.length !== 2 || !deps.every((id) => loai.get(id) === "point3")) continue;
+    if (!finiteKeys.has(edgePairKey(deps[0], deps[1]))) continue;
+    const nonQtyCon = scene.objects.filter((x) => !x.parent && x.type !== "quantity" && x.depends?.includes(o.id));
+    if (nonQtyCon.length === 0) {
+      ra.add(o.id);
+    }
+  }
+  _measLinesCache.set(scene, ra);
+  return ra;
+}
 
 export function auxiliaryObjects(scene: Scene3D): Map<string, HinhPhu> {
   const co = _cache.get(scene);
@@ -47,34 +120,69 @@ export function auxiliaryObjects(scene: Scene3D): Map<string, HinhPhu> {
     ? o.faces.map((f) => new Set(f.map((i) => o.vertex_ids![i]))) : []);
   const laMatCuaKhoi = (o: { depends?: string[] }) =>
     matKhoi.some((m) => (o.depends ?? []).every((id) => m.has(id)));
+  const solidEdgeKeys = collectSolidAndPolygonEdgeKeys(scene);
+  const finiteSegKeys = collectFiniteSegmentKeys(scene);
+  const measOnlyLines = measurementOnlyLines(scene);
+  const coKhoiChinh = scene.objects.some((x) => x.type === "solid" || x.type === "curved_solid");
+  const laDuongCatMatPhangDocLap = (
+    o: Scene3D["objects"][number],
+    conList: Scene3D["objects"],
+  ): boolean =>
+    !coKhoiChinh
+    && o.type === "line3"
+    && conList.some(
+      (x) =>
+        x.type === "point3"
+        && !x.perpendicular_witness
+        && (x.depends ?? []).some((depId) => loai.get(depId) === "plane3"),
+    );
+  const laDuongMangCanhDaCo = (o: Scene3D["objects"][number]): boolean => {
+    if (o.type !== "line3") return false;
+    const deps = o.depends ?? [];
+    return deps.length === 2 && deps.every((id) => loai.get(id) === "point3") && finiteSegKeys.has(edgePairKey(deps[0], deps[1]));
+  };
+  const laDuongMangCanhKhoi = (o: Scene3D["objects"][number]): boolean => {
+    if (o.type !== "line3") return false;
+    const deps = o.depends ?? [];
+    return deps.length === 2 && deps.every((id) => loai.get(id) === "point3") && solidEdgeKeys.has(edgePairKey(deps[0], deps[1]));
+  };
   const nonQtyChildrenOf = (id: string) =>
     scene.objects.filter((x) => !x.parent && x.type !== "quantity" && x.depends?.includes(id));
   // Mặt phẳng / đường thẳng phụ trợ trung gian chỉ phục vụ xác định tâm của khối cầu (`curved_solid` `ball`,
-  // ví dụ các mặt phẳng trung trực và trục ngoại tiếp): hiện trong các bước xác định tâm, tự ẩn sau khi hoàn tất.
-  const laKhungDungTamMatCau = (startId: string): boolean => {
+  // ví dụ các mặt phẳng trung trực và trục ngoại tiếp): hiện trong các bước xác định tâm, tự ẩn khi khối cầu đã dựng.
+  const timKhungDungTamMatCau = (startId: string): string[] | null => {
     const first = nonQtyChildrenOf(startId);
-    if (first.length === 0) return false;
+    if (first.length === 0) return null;
     const visited = new Set<string>([startId]);
     const stack = [...first];
-    let sawSphereLeaf = false;
+    const sphereLeaves: string[] = [];
     let sawCenterPoint = false;
     while (stack.length > 0) {
       const cur = stack.pop()!;
       if (visited.has(cur.id)) continue;
       visited.add(cur.id);
       if (cur.type === "curved_solid" && cur.curved_kind === "ball") {
-        sawSphereLeaf = true;
+        sphereLeaves.push(cur.id);
         continue;
       }
-      if (cur.type === "point3") sawCenterPoint = true;
-      if (cur.type !== "plane3" && cur.type !== "line3" && cur.type !== "point3") {
-        return false;
+      if (cur.type === "point3") {
+        sawCenterPoint = true;
+        // Điểm tâm I có thể có thêm các đoạn bán kính ngoại tiếp (IS, IA, OI, MI) dựng từ I ngoài mặt cầu
+        const ptNext = nonQtyChildrenOf(cur.id).filter(
+          (nx) => !(nx.type === "segment3" && (nx.formation_roles ?? []).every((r) => r === VAI_PHU)),
+        );
+        if (ptNext.length === 0) return null;
+        stack.push(...ptNext);
+        continue;
+      }
+      if (cur.type !== "plane3" && cur.type !== "line3") {
+        return null;
       }
       const next = nonQtyChildrenOf(cur.id);
-      if (next.length === 0) return false;
+      if (next.length === 0) return null;
       stack.push(...next);
     }
-    return sawSphereLeaf && sawCenterPoint;
+    return sphereLeaves.length > 0 && sawCenterPoint ? sphereLeaves : null;
   };
   for (const o of scene.objects) {
     const vai = o.formation_roles ?? [];
@@ -98,27 +206,35 @@ export function auxiliaryObjects(scene: Scene3D): Map<string, HinhPhu> {
           continue;
         }
       }
-      if (
-        o.origin === "derived"
-        && (o.type === "plane3" || o.type === "line3")
-        && !nhom.includes("given")
-        && !nhom.includes("target")
-        && !duongChieu.has(o.id)
-        && laKhungDungTamMatCau(o.id)
-      ) {
-        const dungTam = con.filter((x) => x.type !== "quantity").map((x) => x.id);
+    }
+    if (
+      o.origin === "derived"
+      && (o.type === "plane3" || o.type === "line3")
+      && (o.formation_roles === undefined || (vai.length === 1 && vai[0] === VAI_PHU))
+      && !nhom.includes("given")
+      && !nhom.includes("target")
+      && !duongChieu.has(o.id)
+    ) {
+      const sphereLeaves = timKhungDungTamMatCau(o.id);
+      if (sphereLeaves) {
         const k = [...Array(n).keys()].find((s) => {
           const hien = new Set(objectsAt(scene, s).map((x) => x.id));
-          return dungTam.every((id) => hien.has(id));
+          return sphereLeaves.every((id) => hien.has(id));
         });
         if (k !== undefined) {
-          ra.set(o.id, { loai: "dung", xongTai: k });
+          // Tự ẩn ngay khi khối cầu hoàn tất (trước bước dựng khối cầu k => xongTai = Math.max(0, k - 1))
+          ra.set(o.id, { loai: "dung", xongTai: Math.max(0, k - 1) });
           continue;
         }
       }
     }
+    if (measOnlyLines.has(o.id)) {
+      ra.set(o.id, { loai: "do", xongTai: -1 });
+      continue;
+    }
+    const choPhepDuongMangCanhMucTieu = nhom.includes("target") && laDuongMangCanhKhoi(o);
     if (o.origin !== "derived" || vai.length !== 1 || vai[0] !== VAI_PHU
-        || nhom.includes("given") || nhom.includes("target")) continue;
+        || nhom.includes("given") || (nhom.includes("target") && !choPhepDuongMangCanhMucTieu)) continue;
     const extendAcrossTrailingMeasures = (baseStep: number): number => {
       let endFrame = baseStep;
       while (endFrame + 1 < n) {
@@ -180,7 +296,7 @@ export function auxiliaryObjects(scene: Scene3D): Map<string, HinhPhu> {
         && (o.depends ?? []).length === 2
         && (o.depends ?? []).every((id) => loai.get(id) === "point3")
         && authCon.length > 0
-        && authCon.every((x) => x.type === "point3" && Boolean(x.notation));
+        && authCon.every((x) => (x.type === "point3" && Boolean(x.notation)) || x.type === "plane3");
       if (diemPhuKhongKyHieu) {
         const k = [...Array(n).keys()].find((s) => {
           const hien = new Set(objectsAt(scene, s).map((x) => x.id));
@@ -194,8 +310,10 @@ export function auxiliaryObjects(scene: Scene3D): Map<string, HinhPhu> {
       }
       if (!diemPhuMp) continue;
     } else if (o.type === "line3") {
-      if (duongChieu.has(o.id)) continue;
+      if (laDuongCatMatPhangDocLap(o, con)) continue;
+      if (duongChieu.has(o.id) && !laDuongMangCanhDaCo(o)) continue;
     } else if (o.type === "plane3") {
+      if (!coKhoiChinh && Boolean(o.notation)) continue;
       if (duongChieu.has(o.id) && !laMatCuaKhoi(o)) continue;
     } else {
       continue;

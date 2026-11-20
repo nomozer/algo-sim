@@ -1,0 +1,22 @@
+{
+  "ticket": "GEO-BE-001",
+  "repository": "axo-geometry-library (a git worktree of the algo-sim repository, shared .git)",
+  "branch": "feat/axo-geometry-library-verification",
+  "baseline_head": "c7a6077fd",
+  "fix_commit": "5a229507b",
+  "live_ai_calls": 0,
+  "ownership": {
+    "display_names_owner": "backend/app/simulation/semantic_program/display_names.py (clean before the fix)",
+    "catalog_generators": [
+      "backend/scripts/build_advanced_geometry_samples.py",
+      "backend/scripts/build_geometry_samples.py"
+    ],
+    "catalogs": [
+      "frontend/src/data/advanced-geometry-samples.json",
+      "frontend/src/data/geometry-samples.json"
+    ],
+    "same_file_in_algo_sim_worktree": "byte-identical display_names.py (sha256 9e90ce8a…) in local-first-geometry-understanding — NOT copied there (task rule); advanced catalog exists only here",
+    "other_session_dirty_files": "82 uncommitted files (accounts / classroom / frontend packages / CODE_INDEX / EVIDENCE_INDEX) — not staged, not reverted"
+  },
+  "frontend_sanitizer": "replaceRawSceneIdTokens kept (defense in depth); the backend test checks catalog fields WITHOUT it"
+}

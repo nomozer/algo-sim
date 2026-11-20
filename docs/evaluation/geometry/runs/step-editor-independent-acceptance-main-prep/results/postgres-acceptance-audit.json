@@ -1,0 +1,459 @@
+{
+  "audited_at": "2026-11-19T01:27:25.548967+00:00",
+  "redaction_policy": "STRICT_REDACTED_NO_DSN_NO_CREDENTIALS_NO_TOKENS",
+  "database_engine": "PostgreSQL",
+  "server_version": "PostgreSQL 16.6, compiled by Visual C++ build 1942, 64-bit",
+  "database_name": "algosim_acceptance",
+  "host": "127.0.0.1",
+  "port": 55432,
+  "alembic_heads": [
+    "f8a2c41d9e05"
+  ],
+  "alembic_chain_note": "9c4d8e2b7a10_add_step_edit_tables -> f8a2c41d9e05_remove_classroom_and_live_session_tables (head)",
+  "indexes": [
+    {
+      "table": "step_edit_feedback",
+      "index": "ix_step_edit_feedback_dataset_eligibility",
+      "definition": "CREATE INDEX ix_step_edit_feedback_dataset_eligibility ON public.step_edit_feedback USING btree (dataset_eligibility)"
+    },
+    {
+      "table": "step_edit_feedback",
+      "index": "ix_step_edit_feedback_feedback_id",
+      "definition": "CREATE UNIQUE INDEX ix_step_edit_feedback_feedback_id ON public.step_edit_feedback USING btree (feedback_id)"
+    },
+    {
+      "table": "step_edit_feedback",
+      "index": "ix_step_edit_feedback_owner_scope",
+      "definition": "CREATE INDEX ix_step_edit_feedback_owner_scope ON public.step_edit_feedback USING btree (owner_scope)"
+    },
+    {
+      "table": "step_edit_feedback",
+      "index": "ix_step_edit_feedback_problem_group_key",
+      "definition": "CREATE INDEX ix_step_edit_feedback_problem_group_key ON public.step_edit_feedback USING btree (problem_group_key)"
+    },
+    {
+      "table": "step_edit_feedback",
+      "index": "ix_step_edit_feedback_revision_id",
+      "definition": "CREATE INDEX ix_step_edit_feedback_revision_id ON public.step_edit_feedback USING btree (revision_id)"
+    },
+    {
+      "table": "step_edit_feedback",
+      "index": "ix_step_edit_feedback_session_id",
+      "definition": "CREATE INDEX ix_step_edit_feedback_session_id ON public.step_edit_feedback USING btree (session_id)"
+    },
+    {
+      "table": "step_edit_feedback",
+      "index": "ix_step_edit_feedback_user_acceptance_status",
+      "definition": "CREATE INDEX ix_step_edit_feedback_user_acceptance_status ON public.step_edit_feedback USING btree (user_acceptance_status)"
+    },
+    {
+      "table": "step_edit_feedback",
+      "index": "step_edit_feedback_pkey",
+      "definition": "CREATE UNIQUE INDEX step_edit_feedback_pkey ON public.step_edit_feedback USING btree (id)"
+    },
+    {
+      "table": "step_edit_revisions",
+      "index": "ix_step_edit_revisions_owner_scope",
+      "definition": "CREATE INDEX ix_step_edit_revisions_owner_scope ON public.step_edit_revisions USING btree (owner_scope)"
+    },
+    {
+      "table": "step_edit_revisions",
+      "index": "ix_step_edit_revisions_revision_id",
+      "definition": "CREATE UNIQUE INDEX ix_step_edit_revisions_revision_id ON public.step_edit_revisions USING btree (revision_id)"
+    },
+    {
+      "table": "step_edit_revisions",
+      "index": "ix_step_edit_revisions_session_id",
+      "definition": "CREATE INDEX ix_step_edit_revisions_session_id ON public.step_edit_revisions USING btree (session_id)"
+    },
+    {
+      "table": "step_edit_revisions",
+      "index": "step_edit_revisions_pkey",
+      "definition": "CREATE UNIQUE INDEX step_edit_revisions_pkey ON public.step_edit_revisions USING btree (id)"
+    },
+    {
+      "table": "step_edit_revisions",
+      "index": "uq_step_edit_revision_version",
+      "definition": "CREATE UNIQUE INDEX uq_step_edit_revision_version ON public.step_edit_revisions USING btree (owner_scope, session_id, version_number)"
+    },
+    {
+      "table": "step_edit_sessions",
+      "index": "ix_step_edit_sessions_owner_scope",
+      "definition": "CREATE INDEX ix_step_edit_sessions_owner_scope ON public.step_edit_sessions USING btree (owner_scope)"
+    },
+    {
+      "table": "step_edit_sessions",
+      "index": "ix_step_edit_sessions_session_id",
+      "definition": "CREATE INDEX ix_step_edit_sessions_session_id ON public.step_edit_sessions USING btree (session_id)"
+    },
+    {
+      "table": "step_edit_sessions",
+      "index": "step_edit_sessions_pkey",
+      "definition": "CREATE UNIQUE INDEX step_edit_sessions_pkey ON public.step_edit_sessions USING btree (id)"
+    },
+    {
+      "table": "step_edit_sessions",
+      "index": "uq_step_edit_session_owner_sid",
+      "definition": "CREATE UNIQUE INDEX uq_step_edit_session_owner_sid ON public.step_edit_sessions USING btree (owner_scope, session_id)"
+    }
+  ],
+  "constraints": [
+    {
+      "table": "step_edit_feedback",
+      "constraint": "2200_33036_10_not_null",
+      "type": "CHECK"
+    },
+    {
+      "table": "step_edit_feedback",
+      "constraint": "2200_33036_11_not_null",
+      "type": "CHECK"
+    },
+    {
+      "table": "step_edit_feedback",
+      "constraint": "2200_33036_12_not_null",
+      "type": "CHECK"
+    },
+    {
+      "table": "step_edit_feedback",
+      "constraint": "2200_33036_13_not_null",
+      "type": "CHECK"
+    },
+    {
+      "table": "step_edit_feedback",
+      "constraint": "2200_33036_14_not_null",
+      "type": "CHECK"
+    },
+    {
+      "table": "step_edit_feedback",
+      "constraint": "2200_33036_15_not_null",
+      "type": "CHECK"
+    },
+    {
+      "table": "step_edit_feedback",
+      "constraint": "2200_33036_16_not_null",
+      "type": "CHECK"
+    },
+    {
+      "table": "step_edit_feedback",
+      "constraint": "2200_33036_17_not_null",
+      "type": "CHECK"
+    },
+    {
+      "table": "step_edit_feedback",
+      "constraint": "2200_33036_19_not_null",
+      "type": "CHECK"
+    },
+    {
+      "table": "step_edit_feedback",
+      "constraint": "2200_33036_1_not_null",
+      "type": "CHECK"
+    },
+    {
+      "table": "step_edit_feedback",
+      "constraint": "2200_33036_20_not_null",
+      "type": "CHECK"
+    },
+    {
+      "table": "step_edit_feedback",
+      "constraint": "2200_33036_21_not_null",
+      "type": "CHECK"
+    },
+    {
+      "table": "step_edit_feedback",
+      "constraint": "2200_33036_2_not_null",
+      "type": "CHECK"
+    },
+    {
+      "table": "step_edit_feedback",
+      "constraint": "2200_33036_3_not_null",
+      "type": "CHECK"
+    },
+    {
+      "table": "step_edit_feedback",
+      "constraint": "2200_33036_4_not_null",
+      "type": "CHECK"
+    },
+    {
+      "table": "step_edit_feedback",
+      "constraint": "2200_33036_5_not_null",
+      "type": "CHECK"
+    },
+    {
+      "table": "step_edit_feedback",
+      "constraint": "2200_33036_6_not_null",
+      "type": "CHECK"
+    },
+    {
+      "table": "step_edit_feedback",
+      "constraint": "2200_33036_7_not_null",
+      "type": "CHECK"
+    },
+    {
+      "table": "step_edit_feedback",
+      "constraint": "2200_33036_8_not_null",
+      "type": "CHECK"
+    },
+    {
+      "table": "step_edit_feedback",
+      "constraint": "2200_33036_9_not_null",
+      "type": "CHECK"
+    },
+    {
+      "table": "step_edit_feedback",
+      "constraint": "step_edit_feedback_pkey",
+      "type": "PRIMARY KEY"
+    },
+    {
+      "table": "step_edit_revisions",
+      "constraint": "2200_33022_10_not_null",
+      "type": "CHECK"
+    },
+    {
+      "table": "step_edit_revisions",
+      "constraint": "2200_33022_11_not_null",
+      "type": "CHECK"
+    },
+    {
+      "table": "step_edit_revisions",
+      "constraint": "2200_33022_12_not_null",
+      "type": "CHECK"
+    },
+    {
+      "table": "step_edit_revisions",
+      "constraint": "2200_33022_13_not_null",
+      "type": "CHECK"
+    },
+    {
+      "table": "step_edit_revisions",
+      "constraint": "2200_33022_16_not_null",
+      "type": "CHECK"
+    },
+    {
+      "table": "step_edit_revisions",
+      "constraint": "2200_33022_17_not_null",
+      "type": "CHECK"
+    },
+    {
+      "table": "step_edit_revisions",
+      "constraint": "2200_33022_19_not_null",
+      "type": "CHECK"
+    },
+    {
+      "table": "step_edit_revisions",
+      "constraint": "2200_33022_1_not_null",
+      "type": "CHECK"
+    },
+    {
+      "table": "step_edit_revisions",
+      "constraint": "2200_33022_2_not_null",
+      "type": "CHECK"
+    },
+    {
+      "table": "step_edit_revisions",
+      "constraint": "2200_33022_3_not_null",
+      "type": "CHECK"
+    },
+    {
+      "table": "step_edit_revisions",
+      "constraint": "2200_33022_4_not_null",
+      "type": "CHECK"
+    },
+    {
+      "table": "step_edit_revisions",
+      "constraint": "2200_33022_5_not_null",
+      "type": "CHECK"
+    },
+    {
+      "table": "step_edit_revisions",
+      "constraint": "2200_33022_6_not_null",
+      "type": "CHECK"
+    },
+    {
+      "table": "step_edit_revisions",
+      "constraint": "2200_33022_7_not_null",
+      "type": "CHECK"
+    },
+    {
+      "table": "step_edit_revisions",
+      "constraint": "2200_33022_8_not_null",
+      "type": "CHECK"
+    },
+    {
+      "table": "step_edit_revisions",
+      "constraint": "2200_33022_9_not_null",
+      "type": "CHECK"
+    },
+    {
+      "table": "step_edit_revisions",
+      "constraint": "step_edit_revisions_pkey",
+      "type": "PRIMARY KEY"
+    },
+    {
+      "table": "step_edit_revisions",
+      "constraint": "uq_step_edit_revision_version",
+      "type": "UNIQUE"
+    },
+    {
+      "table": "step_edit_sessions",
+      "constraint": "2200_33009_10_not_null",
+      "type": "CHECK"
+    },
+    {
+      "table": "step_edit_sessions",
+      "constraint": "2200_33009_11_not_null",
+      "type": "CHECK"
+    },
+    {
+      "table": "step_edit_sessions",
+      "constraint": "2200_33009_1_not_null",
+      "type": "CHECK"
+    },
+    {
+      "table": "step_edit_sessions",
+      "constraint": "2200_33009_2_not_null",
+      "type": "CHECK"
+    },
+    {
+      "table": "step_edit_sessions",
+      "constraint": "2200_33009_3_not_null",
+      "type": "CHECK"
+    },
+    {
+      "table": "step_edit_sessions",
+      "constraint": "2200_33009_4_not_null",
+      "type": "CHECK"
+    },
+    {
+      "table": "step_edit_sessions",
+      "constraint": "2200_33009_5_not_null",
+      "type": "CHECK"
+    },
+    {
+      "table": "step_edit_sessions",
+      "constraint": "2200_33009_6_not_null",
+      "type": "CHECK"
+    },
+    {
+      "table": "step_edit_sessions",
+      "constraint": "2200_33009_7_not_null",
+      "type": "CHECK"
+    },
+    {
+      "table": "step_edit_sessions",
+      "constraint": "2200_33009_8_not_null",
+      "type": "CHECK"
+    },
+    {
+      "table": "step_edit_sessions",
+      "constraint": "2200_33009_9_not_null",
+      "type": "CHECK"
+    },
+    {
+      "table": "step_edit_sessions",
+      "constraint": "step_edit_sessions_pkey",
+      "type": "PRIMARY KEY"
+    },
+    {
+      "table": "step_edit_sessions",
+      "constraint": "uq_step_edit_session_owner_sid",
+      "type": "UNIQUE"
+    }
+  ],
+  "session_count": 3,
+  "sessions": [
+    {
+      "session_prefix": "se-be5cdbf3-sa...(51ch)",
+      "owner_scope_kind": "client",
+      "problem_key": "sample:chop-mat-cau-ngoai-tiep",
+      "base_scene_sha256_prefix": "ed99e68c836997ac",
+      "revision_count": 6,
+      "committed_scene_bytes": 70514,
+      "step_overrides_bytes": 57,
+      "dependency_graph_bytes": 3484
+    },
+    {
+      "session_prefix": "se-be5cdbf3-sa...(51ch)",
+      "owner_scope_kind": "client",
+      "problem_key": "sample:chop-thiet-dien-ba-diem",
+      "base_scene_sha256_prefix": "056d584693336b15",
+      "revision_count": 4,
+      "committed_scene_bytes": 68952,
+      "step_overrides_bytes": 82,
+      "dependency_graph_bytes": 83832
+    },
+    {
+      "session_prefix": "se-be5cdbf3-sa...(56ch)",
+      "owner_scope_kind": "client",
+      "problem_key": "sample:lang-tru-tam-giac-thiet-dien",
+      "base_scene_sha256_prefix": "1afb1aa52f3482af",
+      "revision_count": 1,
+      "committed_scene_bytes": 71319,
+      "step_overrides_bytes": 49,
+      "dependency_graph_bytes": 3896
+    }
+  ],
+  "per_problem_revisions": [
+    {
+      "problem_key": "sample:chop-mat-cau-ngoai-tiep",
+      "committed_revisions": 1,
+      "rolled_back_revisions": 5,
+      "total_revisions": 6
+    },
+    {
+      "problem_key": "sample:chop-thiet-dien-ba-diem",
+      "committed_revisions": 4,
+      "rolled_back_revisions": 0,
+      "total_revisions": 4
+    },
+    {
+      "problem_key": "sample:lang-tru-tam-giac-thiet-dien",
+      "committed_revisions": 1,
+      "rolled_back_revisions": 0,
+      "total_revisions": 1
+    }
+  ],
+  "revision_summary": [
+    {
+      "validation_status": "PASSED",
+      "execution_status": "COMMITTED",
+      "error_code": null,
+      "count": 6
+    },
+    {
+      "validation_status": "FAILED",
+      "execution_status": "ROLLED_BACK",
+      "error_code": "COLLINEAR_POINTS",
+      "count": 1
+    },
+    {
+      "validation_status": "FAILED",
+      "execution_status": "ROLLED_BACK",
+      "error_code": "MISSING_DEPENDENCY",
+      "count": 2
+    },
+    {
+      "validation_status": "FAILED",
+      "execution_status": "ROLLED_BACK",
+      "error_code": "UNSUPPORTED_STEP_SYNTAX",
+      "count": 2
+    }
+  ],
+  "total_revisions": 11,
+  "feedback_summary": [
+    {
+      "user_acceptance_status": "GEOMETRY_VERIFIED",
+      "dataset_eligibility": "INELIGIBLE",
+      "schema_version": "axo-step-feedback/1",
+      "count": 6
+    },
+    {
+      "user_acceptance_status": "REJECTED",
+      "dataset_eligibility": "INELIGIBLE",
+      "schema_version": "axo-step-feedback/1",
+      "count": 5
+    }
+  ],
+  "total_feedback_rows": 11,
+  "feedback_complete_dataset_field_rows": 11,
+  "model_training_status": "MODEL_NOT_TRAINED"
+}

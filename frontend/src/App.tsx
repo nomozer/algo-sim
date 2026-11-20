@@ -13,6 +13,16 @@ import { ErrorBoundary, ErrorFallback } from "./components/ErrorBoundary";
 import { HistoryView } from "./components/HistoryView";
 import { HomeView } from "./components/HomeView";
 import { IconPanel } from "./components/icons";
+import { LandingView } from "./components/LandingView";
+import {
+  applyIntendedDestination,
+  clearIntendedDestination,
+  consumeIntendedDestination,
+  peekIntendedDestination,
+  restoreSavedDraftIfEmpty,
+  saveIntendedDestination,
+} from "./components/landing/landing-geometry-data";
+import { LeftSidebar } from "./components/LeftSidebar";
 import { LibraryView } from "./components/LibraryView";
 import { SimulationControls } from "./components/SimulationControls";
 import { SimulationWorkspace } from "./components/SimulationWorkspace";
@@ -30,6 +40,82 @@ import { recoverCatalogScene3D } from "./data/offline-catalog";
 import { hopLeScene3D } from "./simulations/domains/geometry/scene3d-model";
 import { useAppStore } from "./state/store";
 import { useAuthStore } from "./state/auth";
+import { LIBRARY_TAB_ID } from "./state/workspace-tab-identity";
+
+export const AXO_AUTH_SYNC_STORAGE_KEY = "axo_auth_sync_v1";
+export const AXO_AUTH_SYNC_CHANNEL = "axo_auth_sync_v1";
+
+let activeAuthReconcile: Promise<void> | null = null;
+let lastAuthReconcileAt = 0;
+const AUTH_RECONCILE_THROTTLE_MS = 1200;
+
+export function resetAuthReconcileForTests(): void {
+  activeAuthReconcile = null;
+  lastAuthReconcileAt = 0;
+}
+
+export async function reconcileAuthSession(force = false): Promise<void> {
+  if (typeof fetch !== "function") {
+    await useAuthStore.getState().refresh();
+    return;
+  }
+  if (activeAuthReconcile) {
+    return activeAuthReconcile;
+  }
+  if (!force && lastAuthReconcileAt > 0 && Date.now() - lastAuthReconcileAt < AUTH_RECONCILE_THROTTLE_MS) {
+    return;
+  }
+
+  activeAuthReconcile = (async () => {
+    try {
+      const res = await fetch("/api/auth/me", {
+        credentials: "include",
+        headers: { "Content-Type": "application/json" },
+        method: "GET",
+      });
+      if (res.status === 401 || res.status === 403) {
+        useAuthStore.setState({
+          user: null,
+          resolved: true,
+          authGate: null,
+          error: null,
+        });
+        if (typeof window !== "undefined") {
+          try {
+            window.sessionStorage.removeItem("axo_auth_session_hint");
+          } catch {
+            /* bỏ qua nếu trình duyệt chặn sessionStorage */
+          }
+        }
+        return;
+      }
+      if (!res.ok) {
+        if (!useAuthStore.getState().resolved) {
+          useAuthStore.setState({ resolved: true });
+        }
+        return;
+      }
+      const body = (await res.json()) as {
+        user?: ReturnType<typeof useAuthStore.getState>["user"];
+        entitlement?: ReturnType<typeof useAuthStore.getState>["entitlement"];
+      };
+      useAuthStore.setState((prev) => ({
+        user: body?.user ?? null,
+        entitlement: body?.entitlement ?? prev.entitlement,
+        resolved: true,
+      }));
+    } catch {
+      if (!useAuthStore.getState().resolved) {
+        useAuthStore.setState({ resolved: true });
+      }
+    } finally {
+      lastAuthReconcileAt = Date.now();
+      activeAuthReconcile = null;
+    }
+  })();
+
+  return activeAuthReconcile;
+}
 
 export function reconcileCrashedResetKey(
   crashedResetKey: string | null,
@@ -69,66 +155,246 @@ export default function App() {
   const view = useAppStore((s) => s.view);
   const setView = useAppStore((s) => s.setView);
   const active = useAppStore((s) => s.active);
+  const workspaceTabs = useAppStore((s) => s.workspaceTabs);
+  const activeTabId = useAppStore((s) => s.activeTabId);
+  const navHistoryMode = useAppStore((s) => s.navHistoryMode);
   const unsupported = useAppStore((s) => s.unsupported);
   const activeSampleId = useAppStore((s) => s.activeSampleId);
   const activeHistoryId = useAppStore((s) => s.activeHistoryId);
   const routeFailure = useAppStore((s) => s.routeFailure);
   const hasInAppNavigation = useAppStore((s) => s.hasInAppNavigation);
   const syncLocationRoute = useAppStore((s) => s.syncLocationRoute);
+  const hydrateWorkspaceSession = useAppStore((s) => s.hydrateWorkspaceSession);
   const escapeFromError = useAppStore((s) => s.escapeFromError);
   const openLibrary = useAppStore((s) => s.openLibrary);
   const rightOpen = useAppStore((s) => s.rightOpen);
   const toggleRight = useAppStore((s) => s.toggleRight);
   const goHome = useAppStore((s) => s.goHome);
-  const assignment = useAppStore((s) => s.activeAssignment);
+  const guestEnteredApp = useAppStore((s) => s.guestEnteredApp);
+  const leftRailMobileOpen = useAppStore((s) => s.leftRailMobileOpen);
 
   const user = useAuthStore((s) => s.user);
-  const refresh = useAuthStore((s) => s.refresh);
+  const authResolved = useAuthStore((s) => s.resolved);
   const isPopStateSyncRef = useRef(false);
   const hasHydratedLocationRef = useRef(false);
+  const prevBroadcastUserIdRef = useRef<number | null | undefined>(undefined);
+  const prevSessionUserIdRef = useRef<number | null | undefined>(undefined);
+  const prevViewForAuthRef = useRef(view);
+  const lastNonAuthDestRef = useRef<{
+    kind: "home" | "workspace" | "library" | "sample";
+    sampleId?: string;
+    preferActive?: boolean;
+  } | null>(null);
   const [crashedResetKey, setCrashedResetKey] = useState<string | null>(null);
+  const [guestHeaderMenuOpen, setGuestHeaderMenuOpen] = useState(false);
+  const guestHeaderRef = useRef<HTMLDivElement | null>(null);
+  void HistoryView;
 
-  /* Hỏi máy chủ MỘT LẦN lúc mở app: phiên nằm ở cookie httpOnly nên JS không
-     tự đọc được, và đây là cách duy nhất biết mình đang là ai. Đồng thời đồng bộ
-     pathname/hash ban đầu và lắng nghe Browser Back/Forward (popstate). */
   useEffect(() => {
-    void refresh();
+    setGuestHeaderMenuOpen(false);
+  }, [user, view]);
+
+  useEffect(() => {
+    if (!guestHeaderMenuOpen || typeof window === "undefined") return;
+    const onPointerDown = (e: MouseEvent) => {
+      if (guestHeaderRef.current && !guestHeaderRef.current.contains(e.target as Node)) {
+        setGuestHeaderMenuOpen(false);
+      }
+    };
+    const onKeyDown = (e: KeyboardEvent) => {
+      if (e.key === "Escape") {
+        setGuestHeaderMenuOpen(false);
+      }
+    };
+    window.addEventListener("mousedown", onPointerDown);
+    window.addEventListener("keydown", onKeyDown);
+    return () => {
+      window.removeEventListener("mousedown", onPointerDown);
+      window.removeEventListener("keydown", onKeyDown);
+    };
+  }, [guestHeaderMenuOpen]);
+
+  useEffect(() => {
+    if (typeof window === "undefined" || !authResolved) return;
+    const nextUserId = user?.id ?? null;
+    try {
+      if (user) {
+        window.sessionStorage.setItem("axo_auth_session_hint", "1");
+      } else {
+        window.sessionStorage.removeItem("axo_auth_session_hint");
+      }
+    } catch {
+      /* bỏ qua nếu trình duyệt chặn sessionStorage */
+    }
+
+    if (prevBroadcastUserIdRef.current === undefined) {
+      prevBroadcastUserIdRef.current = nextUserId;
+      return;
+    }
+    if (prevBroadcastUserIdRef.current === nextUserId) {
+      return;
+    }
+    prevBroadcastUserIdRef.current = nextUserId;
+    const payload = JSON.stringify({ userId: nextUserId, ts: Date.now() });
+    try {
+      window.localStorage.setItem(AXO_AUTH_SYNC_STORAGE_KEY, payload);
+    } catch {
+      /* bỏ qua nếu trình duyệt chặn localStorage */
+    }
+    try {
+      if (typeof BroadcastChannel !== "undefined") {
+        const ch = new BroadcastChannel(AXO_AUTH_SYNC_CHANNEL);
+        ch.postMessage({ userId: nextUserId, ts: Date.now() });
+        ch.close();
+      }
+    } catch {
+      /* bỏ qua nếu môi trường không hỗ trợ BroadcastChannel */
+    }
+  }, [authResolved, user]);
+
+  /* Hỏi máy chủ và giữ phiên đồng bộ xuyên tab + xuyên view giữa Landing và Workspace:
+     cookie httpOnly nên JS không tự đọc trực tiếp được. */
+  useEffect(() => {
+    void reconcileAuthSession(true);
     if (typeof window === "undefined") return;
-    const applyBrowserLocation = () => {
+
+    const handleFocusOrVisibility = () => {
+      if (typeof document !== "undefined" && document.visibilityState === "hidden") return;
+      void reconcileAuthSession();
+    };
+    const handleStorageSync = (e: StorageEvent) => {
+      if (e.key !== AXO_AUTH_SYNC_STORAGE_KEY || !e.newValue) return;
+      try {
+        const parsed = JSON.parse(e.newValue) as { userId?: number | null };
+        const curUserId = useAuthStore.getState().user?.id ?? null;
+        if ((parsed.userId ?? null) !== curUserId) {
+          void reconcileAuthSession(true);
+        }
+      } catch {
+        void reconcileAuthSession(true);
+      }
+    };
+
+    let bc: BroadcastChannel | null = null;
+    try {
+      if (typeof BroadcastChannel !== "undefined") {
+        bc = new BroadcastChannel(AXO_AUTH_SYNC_CHANNEL);
+        bc.onmessage = (ev: MessageEvent<{ userId?: number | null }>) => {
+          const curUserId = useAuthStore.getState().user?.id ?? null;
+          if ((ev.data?.userId ?? null) !== curUserId) {
+            void reconcileAuthSession(true);
+          }
+        };
+      }
+    } catch {
+      bc = null;
+    }
+
+    let popStateResetTimer: number | null = null;
+    const applyBrowserLocation = (ev?: Event) => {
       isPopStateSyncRef.current = true;
+      if (popStateResetTimer !== null) {
+        window.clearTimeout(popStateResetTimer);
+      }
       try {
         syncLocationRoute(window.location.pathname, window.location.hash, window.location.search);
+        const popState = (
+          (ev as PopStateEvent | undefined)?.state ?? window.history?.state
+        ) as
+          | { axoView?: string; axoTabId?: string | null; tabId?: string | null }
+          | null
+          | undefined;
+        const requestedTabId = popState?.axoTabId ?? popState?.tabId ?? null;
+        if (popState?.axoView === "workspace" && requestedTabId) {
+          const cur = useAppStore.getState();
+          const matchingTab = cur.workspaceTabs.find((t) => t.id === requestedTabId);
+          if (matchingTab && (cur.view !== "workspace" || cur.activeTabId !== matchingTab.id)) {
+            if (matchingTab.kind === "draft") {
+              useAppStore.setState({
+                view: "workspace",
+                activeTabId: matchingTab.id,
+                problemText: matchingTab.draftText ?? cur.problemText,
+                routeFailure: null,
+                navHistoryMode: "replace",
+              });
+            } else {
+              useAppStore.setState({
+                view: "workspace",
+                activeTabId: matchingTab.id,
+                active: matchingTab.active ?? cur.active,
+                activeSampleId: matchingTab.sampleId,
+                activeHistoryId: matchingTab.historyId,
+                routeFailure: null,
+                navHistoryMode: "replace",
+              });
+            }
+          }
+        }
         const st = useAppStore.getState();
-        if (st.view === "workspace" && st.routeFailure === null && typeof window.history?.replaceState === "function") {
-          const canonicalTarget = canonicalPathForView(st.view, st.activeSampleId ?? st.activeHistoryId);
+        if (st.routeFailure === null && typeof window.history?.replaceState === "function") {
           const curPath =
             window.location.pathname.length > 1 && window.location.pathname.endsWith("/")
               ? window.location.pathname.replace(/\/+$/, "")
               : window.location.pathname || "/";
-          if (curPath !== canonicalTarget) {
+          if (st.view === "workspace") {
+            const isDraftActive =
+              st.activeTabId === "tab-draft-new" &&
+              st.workspaceTabs.some((t) => t.id === "tab-draft-new");
+            const canonicalTarget = isDraftActive
+              ? "/workspace"
+              : canonicalPathForView(st.view, st.activeSampleId ?? st.activeHistoryId);
+            if (
+              curPath !== canonicalTarget ||
+              (window.history.state as { axoTabId?: string | null } | null)?.axoTabId !== st.activeTabId
+            ) {
+              try {
+                window.history.replaceState(
+                  {
+                    axoView: st.view,
+                    axoTabId: st.activeTabId,
+                    tabId: st.activeTabId,
+                    sampleId: isDraftActive ? null : st.activeSampleId,
+                    historyId: isDraftActive ? null : st.activeHistoryId,
+                  },
+                  "",
+                  canonicalTarget,
+                );
+              } catch {
+                /* bỏ qua nếu môi trường kiểm thử chặn replaceState */
+              }
+            }
+          } else if (
+            st.view === "library" &&
+            curPath === "/library" &&
+            (window.history.state as { axoTabId?: string | null } | null)?.axoTabId !== LIBRARY_TAB_ID
+          ) {
             try {
               window.history.replaceState(
-                { axoView: st.view, sampleId: st.activeSampleId, historyId: st.activeHistoryId },
+                {
+                  axoView: "library",
+                  axoTabId: LIBRARY_TAB_ID,
+                  tabId: LIBRARY_TAB_ID,
+                  sampleId: null,
+                  historyId: null,
+                },
                 "",
-                canonicalTarget,
+                "/library",
               );
             } catch {
               /* bỏ qua nếu môi trường kiểm thử chặn replaceState */
             }
           }
         }
-
-
-
-
       } finally {
-        window.setTimeout(() => {
+        popStateResetTimer = window.setTimeout(() => {
           isPopStateSyncRef.current = false;
+          popStateResetTimer = null;
         }, 0);
       }
     };
     if (!hasHydratedLocationRef.current) {
       hasHydratedLocationRef.current = true;
+      hydrateWorkspaceSession();
       if (
         window.location.pathname !== "/" ||
         window.location.hash === "#admin" ||
@@ -137,14 +403,84 @@ export default function App() {
       ) {
         applyBrowserLocation();
       }
+      restoreSavedDraftIfEmpty();
     }
     window.addEventListener("hashchange", applyBrowserLocation);
     window.addEventListener("popstate", applyBrowserLocation);
+    window.addEventListener("focus", handleFocusOrVisibility);
+    window.addEventListener("storage", handleStorageSync);
+    if (typeof document !== "undefined") {
+      document.addEventListener("visibilitychange", handleFocusOrVisibility);
+    }
     return () => {
+      if (popStateResetTimer !== null) {
+        window.clearTimeout(popStateResetTimer);
+      }
+      isPopStateSyncRef.current = false;
       window.removeEventListener("hashchange", applyBrowserLocation);
       window.removeEventListener("popstate", applyBrowserLocation);
+      window.removeEventListener("focus", handleFocusOrVisibility);
+      window.removeEventListener("storage", handleStorageSync);
+      if (typeof document !== "undefined") {
+        document.removeEventListener("visibilitychange", handleFocusOrVisibility);
+      }
+      if (bc) {
+        bc.close();
+      }
     };
-  }, [refresh, syncLocationRoute]);
+  }, [syncLocationRoute, hydrateWorkspaceSession]);
+
+  useEffect(() => {
+    if (view === "library") {
+      lastNonAuthDestRef.current = { kind: "library" };
+    } else if (view === "workspace") {
+      if (activeSampleId) {
+        lastNonAuthDestRef.current = { kind: "sample", sampleId: activeSampleId };
+      } else if (active !== null) {
+        lastNonAuthDestRef.current = { kind: "workspace", preferActive: true };
+      }
+    } else if (view === "home" && (guestEnteredApp || Boolean(user))) {
+      lastNonAuthDestRef.current = { kind: "home" };
+    }
+  }, [view, activeSampleId, active, guestEnteredApp, user]);
+
+  useEffect(() => {
+    const prevView = prevViewForAuthRef.current;
+    prevViewForAuthRef.current = view;
+    if ((view === "login" || view === "register") && prevView !== view) {
+      if (!peekIntendedDestination() && lastNonAuthDestRef.current) {
+        saveIntendedDestination(lastNonAuthDestRef.current);
+      }
+    }
+    if (!authResolved || prevView === view) return;
+    if (prevView === "landing" || view === "landing") {
+      void reconcileAuthSession();
+    }
+  }, [view, authResolved]);
+
+  useEffect(() => {
+    const curUserId = user?.id ?? null;
+    if (prevSessionUserIdRef.current === undefined) {
+      prevSessionUserIdRef.current = curUserId;
+      return;
+    }
+    const prevUserId = prevSessionUserIdRef.current;
+    prevSessionUserIdRef.current = curUserId;
+
+    if (prevUserId === null && user !== null) {
+      const pending = consumeIntendedDestination();
+      if (pending) {
+        applyIntendedDestination(pending, user);
+      } else {
+        restoreSavedDraftIfEmpty();
+      }
+    } else if (prevUserId !== null && user === null) {
+      clearIntendedDestination();
+      if (view === "admin" || view === "account") {
+        setView("landing");
+      }
+    }
+  }, [user, view, setView]);
 
   // Browser tab: "Axo" on the home page, "<page> | Axo" elsewhere (the 3D workspace is named by its role).
   useEffect(() => {
@@ -159,25 +495,111 @@ export default function App() {
     if (view === "not_found" || routeFailure !== null) return;
     if (view === "reset" && new URLSearchParams(window.location.search).has("reset_token")) return;
     if (view === "admin" && window.location.hash === "#admin") return;
-    const targetPath = canonicalPathForView(view, activeSampleId ?? activeHistoryId);
+    const isDraftActive =
+      view === "workspace" &&
+      activeTabId === "tab-draft-new" &&
+      workspaceTabs.some((t) => t.id === "tab-draft-new");
     const currentPath =
       window.location.pathname.length > 1 && window.location.pathname.endsWith("/")
         ? window.location.pathname.replace(/\/+$/, "")
         : window.location.pathname || "/";
-    if (currentPath === targetPath) return;
+    const targetPath = isDraftActive
+      ? "/workspace"
+      : view === "home" && (Boolean(user) || guestEnteredApp || currentPath === "/app")
+        ? "/app"
+        : canonicalPathForView(view, activeSampleId ?? activeHistoryId);
+    const resolvedAxoTabId =
+      view === "library"
+        ? LIBRARY_TAB_ID
+        : view === "workspace"
+          ? activeTabId
+          : null;
+    const prevHistoryState = window.history.state as
+      | { axoView?: string; axoTabId?: string | null }
+      | null
+      | undefined;
+    const sameWorkspaceTabRoute =
+      view === "workspace" &&
+      targetPath === "/workspace" &&
+      prevHistoryState?.axoView === "workspace" &&
+      Boolean(prevHistoryState?.axoTabId) &&
+      prevHistoryState?.axoTabId !== resolvedAxoTabId;
+    const effectiveView = useAppStore.getState().view;
+    if (effectiveView !== view) return;
+    if (
+      effectiveView === "landing" &&
+      (currentPath === "/" ||
+        currentPath === "/gioi-thieu" ||
+        currentPath === "/landing" ||
+        currentPath === "/welcome" ||
+        currentPath === "/intro")
+    ) {
+      return;
+    }
+    if (currentPath === targetPath && !sameWorkspaceTabRoute) return;
+    const historyState = {
+      axoView: view,
+      axoTabId: resolvedAxoTabId,
+      tabId: activeTabId,
+      sampleId: isDraftActive ? null : activeSampleId,
+      historyId: isDraftActive ? null : activeHistoryId,
+    };
     try {
-      window.history.pushState({ axoView: view, sampleId: activeSampleId, historyId: activeHistoryId }, "", targetPath);
+      if (navHistoryMode === "replace" && typeof window.history?.replaceState === "function") {
+        window.history.replaceState(historyState, "", targetPath);
+      } else {
+        window.history.pushState(historyState, "", targetPath);
+      }
     } catch {
       /* bỏ qua nếu môi trường kiểm thử chặn pushState */
     }
-  }, [view, activeSampleId, activeHistoryId, routeFailure]);
+  }, [view, activeTabId, workspaceTabs, activeSampleId, activeHistoryId, routeFailure, navHistoryMode, guestEnteredApp, user]);
 
-  const inWorkspace = view === "workspace" && (active !== null || unsupported !== null) && routeFailure === null;
+  const inWorkspace =
+    view === "workspace" &&
+    (active !== null || unsupported !== null || workspaceTabs.length > 0) &&
+    routeFailure === null;
+  const isDraftWorkspaceTab =
+    inWorkspace && activeTabId === "tab-draft-new" && workspaceTabs.some((t) => t.id === "tab-draft-new");
   const isAuthPage =
     view === "login" || view === "register" || view === "forgot" || view === "reset";
   const isAdminPage = view === "admin";
-  const isStandaloneShell = isAuthPage || isAdminPage;
-  const mainResetKey = `${view}|${activeHistoryId ?? activeSampleId ?? ""}|${active?.envelope?.simulation_id ?? ""}|${active?.envelope?.title ?? ""}`;
+  const browserPathname =
+    typeof window !== "undefined" ? window.location.pathname || "/" : "";
+  const normalizedBrowserPath =
+    browserPathname.length > 1 && browserPathname.endsWith("/")
+      ? browserPathname.replace(/\/+$/, "")
+      : browserPathname;
+  const isExplicitAppPath =
+    normalizedBrowserPath === "/app" || normalizedBrowserPath === "/home";
+  const isLandingPathname =
+    normalizedBrowserPath === "/gioi-thieu" ||
+    normalizedBrowserPath === "/welcome" ||
+    normalizedBrowserPath === "/intro" ||
+    normalizedBrowserPath === "/landing";
+  const isInitialLandingPathname =
+    !hasHydratedLocationRef.current &&
+    !hasInAppNavigation &&
+    view === "home" &&
+    isLandingPathname;
+  const hasSessionHint =
+    typeof window !== "undefined" &&
+    (() => {
+      try {
+        return window.sessionStorage.getItem("axo_auth_session_hint") === "1";
+      } catch {
+        return false;
+      }
+    })();
+  const isGuestLandingOnHome =
+    view === "home" &&
+    !user &&
+    !guestEnteredApp &&
+    !isExplicitAppPath &&
+    (authResolved || (typeof window !== "undefined" && browserPathname === "/" && !hasSessionHint));
+  const isLandingPage = view === "landing" || isGuestLandingOnHome || isInitialLandingPathname;
+  const isStandaloneShell = isAuthPage || isAdminPage || isLandingPage;
+  const mainResetKey = `${view}|${activeTabId ?? ""}|${activeHistoryId ?? activeSampleId ?? ""}|${active?.envelope?.simulation_id ?? ""}|${active?.envelope?.title ?? ""}`;
   const activeCrashedResetKey = reconcileCrashedResetKey(crashedResetKey, mainResetKey);
   useEffect(() => {
     if (crashedResetKey !== null && crashedResetKey !== mainResetKey) {
@@ -196,12 +618,12 @@ export default function App() {
       })()
     : null;
   const isGeometryDomainWorkspace = Boolean(
-    inWorkspace && active?.envelope?.domain === "geometry",
+    inWorkspace && (active?.envelope?.domain === "geometry" || isDraftWorkspaceTab),
   );
   const canvasFirst =
     inWorkspace && hopLeScene3D(safeScene3d)
       ? !mainBoundaryCrashed
-      : isGeometryDomainWorkspace && !mainBoundaryCrashed;
+      : (isGeometryDomainWorkspace || (inWorkspace && isDraftWorkspaceTab)) && !mainBoundaryCrashed;
   const adaptiveStateRef = useRef<AdaptiveHeaderState | undefined>(undefined);
 
   useEffect(() => {
@@ -273,7 +695,8 @@ export default function App() {
     )
     : isAuthPage ? <AuthPageView mode={view} />
     : isAdminPage ? <AdminWorkspaceView />
-    : view === "history" ? <HistoryView />
+    : isLandingPage ? <LandingView />
+    : view === "history" ? <HomeView />
     : view === "library" ? <LibraryView />
     : view === "account" && user ? (
       <section className="page-stack" aria-label="Cài đặt tài khoản">
@@ -305,43 +728,84 @@ export default function App() {
 
   return (
     <div
-      className={`app-root${user ? " is-authed" : ""}${canvasFirst ? " la-tap-trung" : ""}${isAuthPage ? " is-auth-page" : ""}${isAdminPage ? " is-page-admin" : ""}`}
+      className={`app-root${user ? " is-authed" : ""}${!isStandaloneShell ? " has-left-sidebar" : ""}${leftRailMobileOpen ? " is-mobile-sidebar-open" : ""}${canvasFirst ? " la-tap-trung" : ""}${isAuthPage ? " is-auth-page" : ""}${isAdminPage ? " is-page-admin" : ""}${isLandingPage ? " is-page-landing" : ""}`}
     >
+      {!isStandaloneShell && <LeftSidebar />}
       <div className="app-main">
         {/* W05 · CHẾ ĐỘ TẬP TRUNG: cảnh 3D lấp trang — thanh trên toàn cục (đăng nhập/đăng ký, điều hướng, «Giải
             thích» vốn không tác dụng với cảnh 3D) KHÔNG dựng. Khi ErrorBoundary bắt lỗi render, `canvasFirst`
             tắt ngay để khôi phục thanh điều hướng trên cùng bên ngoài vùng hỏng. */}
-        {!canvasFirst && (
+        {!canvasFirst && !isLandingPage && (
         <header className="nav-bar">
           <TopNav />
 
           <nav className="nav-links axo-header-right" aria-label="Tác vụ người dùng">
-            {!user ? (
-              <div className="header-auth-group" id="header-guest-actions">
+            {!user && (!hasSessionHint || authResolved) ? (
+              <div
+                ref={guestHeaderRef}
+                className="header-auth-group header-guest-account-wrap"
+                id="header-guest-actions"
+              >
                 <button
                   type="button"
-                  id="btn-open-login"
-                  className="nav-link btn-auth-ghost"
-                  onClick={() => setView("login")}
+                  id="btn-header-guest-account"
+                  className={`header-guest-account-btn${guestHeaderMenuOpen ? " is-open" : ""}`}
+                  onClick={() => setGuestHeaderMenuOpen((v) => !v)}
+                  aria-label="Tài khoản — Đăng nhập hoặc Đăng ký"
+                  title="Tài khoản — Đăng nhập hoặc Đăng ký"
+                  aria-haspopup="menu"
+                  aria-expanded={guestHeaderMenuOpen}
+                  aria-controls="header-guest-popover"
                 >
-                  Đăng nhập
+                  <svg
+                    viewBox="0 0 20 20"
+                    width="18"
+                    height="18"
+                    fill="none"
+                    stroke="currentColor"
+                    strokeWidth="1.75"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    aria-hidden="true"
+                  >
+                    <circle cx="10" cy="6.8" r="3.1" />
+                    <path d="M4.3 16.5c1.1-2.8 3.1-4.1 5.7-4.1s4.6 1.3 5.7 4.1" />
+                  </svg>
                 </button>
-                <button
-                  type="button"
-                  id="btn-open-signup"
-                  className="btn-primary nav-cta btn-auth-primary"
-                  onClick={() => setView("register")}
+                <div
+                  id="header-guest-popover"
+                  className={`header-guest-popover${guestHeaderMenuOpen ? " open" : ""}`}
+                  role="menu"
+                  aria-label="Tài khoản khách"
                 >
-                  Đăng ký
-                </button>
+                  <button
+                    type="button"
+                    id="btn-open-login"
+                    role="menuitem"
+                    className="header-guest-menu-item nav-link btn-auth-ghost"
+                    onClick={() => {
+                      setGuestHeaderMenuOpen(false);
+                      setView("login");
+                    }}
+                  >
+                    Đăng nhập
+                  </button>
+                  <button
+                    type="button"
+                    id="btn-open-signup"
+                    role="menuitem"
+                    className="header-guest-menu-item btn-primary nav-cta btn-auth-primary"
+                    onClick={() => {
+                      setGuestHeaderMenuOpen(false);
+                      setView("register");
+                    }}
+                  >
+                    Đăng ký
+                  </button>
+                </div>
               </div>
             ) : inWorkspace && active !== null && active.envelope.domain !== "geometry" && !mainBoundaryCrashed && (
               <>
-                {assignment && (
-                  <span className="nav-assignment" title={assignment.instruction}>
-                    Bài: <strong>{assignment.title}</strong>
-                  </span>
-                )}
                 <button className="btn-utility" onClick={goHome}
                   title="Phân tích một đề khác (bài đang xem được lưu vào Lịch sử)">
                   + Mô phỏng mới

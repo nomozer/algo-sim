@@ -19,9 +19,10 @@ from sqlalchemy.orm import sessionmaker
 from tests.test_postgres_integration import _alembic, pg_container  # noqa: F401 — shared throw-away container
 
 pytestmark = pytest.mark.postgres
-MAIN_HEAD, AXO_HEAD = "a1c7e4b90d52", "d5f9b82c3a14"
+MAIN_HEAD, AXO_HEAD = "a1c7e4b90d52", "f8a2c41d9e05"
 AXO_TABLES = {"learning_history_entries", "user_account_meta", "admin_system_settings", "admin_audit_logs",
-              "admin_analysis_telemetry"}
+              "admin_analysis_telemetry", "analysis_usage_ledger",
+              "step_edit_sessions", "step_edit_revisions", "step_edit_feedback"}
 
 
 def _payload(key: str, title: str) -> dict:
@@ -42,7 +43,22 @@ def test_axo_migrations_and_history_api_on_postgres(pg_container, monkeypatch): 
     engine = create_engine(url, pool_pre_ping=True)
     with engine.begin() as c:
         c.execute(text("insert into users (email, display_name, password_hash, role, must_change_password, created_at) "
-                       "values ('seed@algosim.edu.vn', 'Seed', 'x', 'student', false, now())"))
+                       "values ('seed@algosim.edu.vn', 'Seed', 'x', 'teacher', false, now()), "
+                       "('seed-stu@algosim.edu.vn', 'Stu', 'x', 'student', false, now())"))
+        t_id = c.execute(text("select id from users where email = 'seed@algosim.edu.vn'")).scalar_one()
+        s_id = c.execute(text("select id from users where email = 'seed-stu@algosim.edu.vn'")).scalar_one()
+        c.execute(text("insert into classrooms (teacher_id, name, join_code, code_active, archived, created_at) "
+                       "values (:t, 'PG-Preserve-11A', 'PG9988', true, false, now())"), {"t": t_id})
+        cls_id = c.execute(text("select id from classrooms where join_code = 'PG9988'")).scalar_one()
+        c.execute(text("insert into class_memberships (classroom_id, student_id, joined_at) "
+                       "values (:c, :s, now())"), {"c": cls_id, "s": s_id})
+        c.execute(text("insert into assignments (classroom_id, created_by, title, instruction, simulation_id, envelope_json, closed, created_at) "
+                       "values (:c, :t, 'PG Assign', 'Do math', 'sim.pg', '{}', false, now())"), {"c": cls_id, "t": t_id})
+        a_id = c.execute(text("select id from assignments where classroom_id = :c"), {"c": cls_id}).scalar_one()
+        c.execute(text("insert into practice_sessions (assignment_id, student_id, simulation_id, cursor, step_count, explore_open, challenge_open, action_count, commitment_count, completed, started_at, updated_at, help_requested) "
+                       "values (:a, :s, 'sim.pg', 1, 2, true, false, 1, 0, false, now(), now(), false)"), {"a": a_id, "s": s_id})
+        c.execute(text("insert into classroom_sessions (classroom_id, teacher_id, round_id, cmd_id, mode, assignment_id, simulation_id, current_step, isolated_ids, exploded_groups, sync_cmd_id, active, started_at, updated_at) "
+                       "values (:c, :t, 'pg-round', 1, 'follow', :a, 'sim.pg', 1, '[]', '[]', 0, true, now(), now())"), {"c": cls_id, "t": t_id, "a": a_id})
     assert not (AXO_TABLES & _tables(engine))
 
     up = _alembic(["upgrade", "head"], url)
@@ -50,6 +66,8 @@ def test_axo_migrations_and_history_api_on_postgres(pg_container, monkeypatch): 
     with engine.connect() as c:
         assert c.execute(text("select version_num from alembic_version")).scalar_one() == AXO_HEAD
         assert c.execute(text("select count(*) from users where email = 'seed@algosim.edu.vn'")).scalar_one() == 1
+        for tbl in ("classrooms", "class_memberships", "assignments", "practice_sessions", "classroom_sessions"):
+            assert c.execute(text(f"select count(*) from {tbl}")).scalar_one() == 1, f"{tbl} lost during upgrade"
         cons = {r[0]: r[1] for r in c.execute(text(
             "select conname, contype from pg_constraint where conrelid = 'learning_history_entries'::regclass"))}
         idx = {r[0] for r in c.execute(text("select indexname from pg_indexes where tablename = 'learning_history_entries'"))}
@@ -112,7 +130,12 @@ def test_axo_migrations_and_history_api_on_postgres(pg_container, monkeypatch): 
     assert not (AXO_TABLES & _tables(engine))
     with engine.connect() as c:
         assert c.execute(text("select count(*) from users where email = 'seed@algosim.edu.vn'")).scalar_one() == 1
+        for tbl in ("classrooms", "class_memberships", "assignments", "practice_sessions", "classroom_sessions"):
+            assert c.execute(text(f"select count(*) from {tbl}")).scalar_one() == 1, f"{tbl} lost on downgrade"
     assert _alembic(["upgrade", "head"], url).returncode == 0
+    with engine.connect() as c:
+        for tbl in ("classrooms", "class_memberships", "assignments", "practice_sessions", "classroom_sessions"):
+            assert c.execute(text(f"select count(*) from {tbl}")).scalar_one() == 1, f"{tbl} lost on re-upgrade"
     check = _alembic(["check"], url)
     assert check.returncode == 0, check.stdout + check.stderr
     engine.dispose()

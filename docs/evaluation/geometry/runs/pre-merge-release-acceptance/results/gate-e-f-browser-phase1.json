@@ -1,0 +1,281 @@
+{
+  "startedAt": "2026-11-19T07:08:10.399Z",
+  "baseUrl": "http://localhost:3001",
+  "backendUrl": "http://127.0.0.1:8000",
+  "routesAndAttachmentSmoke": {
+    "landingStatus": 200,
+    "landingTitle": "Axo — Mô phỏng tương tác",
+    "appStatus": 200,
+    "fileInputCount": 3,
+    "plusMenuOpened": true
+  },
+  "stepEditorRenameAndZeroLeak": {
+    "status": "PASS",
+    "hoverHeightDeltaPx": 0,
+    "opacityTransition": "0 -> 1",
+    "keyboardEnterEscapeOk": true,
+    "canvasShiftDuringEditPx": 0,
+    "canvasShiftAfterCommitPx": 0,
+    "textareaSingleLineScrollable": false,
+    "textareaHorizontalOverflow": false,
+    "httpStatus": 200,
+    "renameLatencyMs": 262,
+    "rowsWithAlphaBefore": 3,
+    "staleAlphaRowsAfter": 0,
+    "renamedPRowsAfter": 3,
+    "pointIRoleAfter": "Giao điểm của «Giao tuyến của (P) và (β)» và (γ)",
+    "mpDisplayLabel": "Mặt phẳng (P) qua «Trung điểm của S và B» và vuông góc với SB",
+    "leakedRawHelperOrOldNotation": false,
+    "recomputedCount": 9
+  },
+  "scene3dVisualAndInteractive": {
+    "initial": {
+      "ok": true,
+      "webglPhase": "healthy",
+      "canvasBox": {
+        "left": 271,
+        "top": 38,
+        "width": 1289,
+        "height": 1042
+      },
+      "visibleVertexLabels": 8,
+      "visiblePlaneLabels": 3,
+      "visibleMeasureBadges": 0,
+      "clippedLabels": [],
+      "vertexLabelOverlaps": [],
+      "projectedCoverageRatioW": 0.409,
+      "projectedCoverageRatioH": 0.523
+    },
+    "afterOrbitAndWheel": {
+      "ok": true,
+      "webglPhase": "healthy",
+      "canvasBox": {
+        "left": 271,
+        "top": 38,
+        "width": 1289,
+        "height": 1042
+      },
+      "visibleVertexLabels": 8,
+      "visiblePlaneLabels": 3,
+      "visibleMeasureBadges": 0,
+      "clippedLabels": [],
+      "vertexLabelOverlaps": [],
+      "projectedCoverageRatioW": 0.451,
+      "projectedCoverageRatioH": 0.473
+    },
+    "stepScrubberVerified": {
+      "counterBefore": "Bước 12/17",
+      "counterPrev": "Bước 11/17",
+      "counterNext": "Bước 12/17"
+    }
+  },
+  "invalidEditsAndConcurrency": [
+    {
+      "case": "empty_whitespace",
+      "runDisabled": true,
+      "httpSent": false
+    },
+    {
+      "case": "undefined_point_SZ",
+      "status": 422,
+      "errorCode": "MISSING_DEPENDENCY",
+      "draftPreserved": true
+    },
+    {
+      "case": "collinear_AOC",
+      "status": 422,
+      "errorCode": "COLLINEAR_POINTS",
+      "draftPreserved": true
+    },
+    {
+      "case": "unsupported_syntax",
+      "status": 422,
+      "errorCode": "UNSUPPORTED_STEP_SYNTAX",
+      "draftPreserved": true
+    },
+    {
+      "case": "skew_orthogonality_broken",
+      "status": 422,
+      "errorCode": "DOWNSTREAM_ORTHOGONALITY_BROKEN"
+    },
+    {
+      "case": "stale_version_conflict",
+      "status": 409,
+      "code": "STALE_REVISION_CONFLICT"
+    },
+    {
+      "case": "out_of_order_client_seq_superseded",
+      "status": 409,
+      "code": "EDIT_SUPERSEDED"
+    }
+  ],
+  "cascadeTabIsolationAndSkew": {
+    "status": "PASS",
+    "skewOrthogonality422": "DOWNSTREAM_ORTHOGONALITY_BROKEN",
+    "sequentialS1FinalMXyz": [
+      "0",
+      "0",
+      "9/2"
+    ],
+    "prismStatus": 200,
+    "tabCloseAndReopenRetained": true,
+    "dockScrollIsolated": true,
+    "s1SessionPrefix": "se-be5cdbf3-sa…",
+    "committedVersion": 10
+  },
+  "browserE2ELatencyStats": {
+    "iterations": 10,
+    "p50_ms": 129.5,
+    "p95_ms": 194.05,
+    "min_ms": 117,
+    "max_ms": 199,
+    "samples_ms": [
+      128,
+      188,
+      199,
+      161,
+      127,
+      135,
+      131,
+      125,
+      117,
+      120
+    ]
+  },
+  "viewports": [
+    {
+      "width": 1920,
+      "height": 1080,
+      "overflowX": 0,
+      "canvasVisible": true,
+      "canvasWidthPx": 1289,
+      "canvasHeightPx": 1042,
+      "runClipped": false,
+      "cancelClipped": false,
+      "textareaHeightPx": 85,
+      "textareaOverflowY": "hidden",
+      "textareaHorizontalOverflow": false,
+      "controlsOccludeActions": false,
+      "navOperable": true
+    },
+    {
+      "width": 1440,
+      "height": 900,
+      "overflowX": 0,
+      "canvasVisible": true,
+      "canvasWidthPx": 809,
+      "canvasHeightPx": 862,
+      "runClipped": false,
+      "cancelClipped": false,
+      "textareaHeightPx": 85,
+      "textareaOverflowY": "hidden",
+      "textareaHorizontalOverflow": false,
+      "controlsOccludeActions": false,
+      "navOperable": true
+    },
+    {
+      "width": 1366,
+      "height": 768,
+      "overflowX": 0,
+      "canvasVisible": true,
+      "canvasWidthPx": 735,
+      "canvasHeightPx": 730,
+      "runClipped": false,
+      "cancelClipped": false,
+      "textareaHeightPx": 85,
+      "textareaOverflowY": "hidden",
+      "textareaHorizontalOverflow": false,
+      "controlsOccludeActions": false,
+      "navOperable": true
+    },
+    {
+      "width": 1280,
+      "height": 800,
+      "overflowX": 0,
+      "canvasVisible": true,
+      "canvasWidthPx": 673,
+      "canvasHeightPx": 762,
+      "runClipped": false,
+      "cancelClipped": false,
+      "textareaHeightPx": 85,
+      "textareaOverflowY": "hidden",
+      "textareaHorizontalOverflow": false,
+      "controlsOccludeActions": false,
+      "navOperable": true
+    },
+    {
+      "width": 1024,
+      "height": 768,
+      "overflowX": 0,
+      "canvasVisible": true,
+      "canvasWidthPx": 704,
+      "canvasHeightPx": 730,
+      "runClipped": false,
+      "cancelClipped": false,
+      "textareaHeightPx": 85,
+      "textareaOverflowY": "hidden",
+      "textareaHorizontalOverflow": false,
+      "controlsOccludeActions": false,
+      "navOperable": true
+    },
+    {
+      "width": 768,
+      "height": 1024,
+      "overflowX": 0,
+      "canvasVisible": true,
+      "canvasWidthPx": 472,
+      "canvasHeightPx": 986,
+      "runClipped": false,
+      "cancelClipped": false,
+      "textareaHeightPx": 85,
+      "textareaOverflowY": "hidden",
+      "textareaHorizontalOverflow": false,
+      "controlsOccludeActions": false,
+      "navOperable": true
+    },
+    {
+      "width": 390,
+      "height": 844,
+      "overflowX": 0,
+      "canvasVisible": true,
+      "canvasWidthPx": 390,
+      "canvasHeightPx": 444,
+      "runClipped": false,
+      "cancelClipped": false,
+      "textareaHeightPx": 85,
+      "textareaOverflowY": "hidden",
+      "textareaHorizontalOverflow": false,
+      "controlsOccludeActions": false,
+      "navOperable": true
+    },
+    {
+      "width": 320,
+      "height": 568,
+      "overflowX": 0,
+      "canvasVisible": true,
+      "canvasWidthPx": 320,
+      "canvasHeightPx": 293,
+      "runClipped": false,
+      "cancelClipped": false,
+      "textareaHeightPx": 85,
+      "textareaOverflowY": "hidden",
+      "textareaHorizontalOverflow": false,
+      "controlsOccludeActions": false,
+      "navOperable": true
+    }
+  ],
+  "touchAndVkb": {
+    "status": "PASS",
+    "pencilVisibleOnTouchActive": true,
+    "vkb390x460": {
+      "overflowX": 0,
+      "taInViewport": true,
+      "runInViewport": true,
+      "cancelInViewport": true
+    }
+  },
+  "consoleErrors": [],
+  "pageErrors": [],
+  "unexpected5xx": [],
+  "finishedAt": "2026-11-19T07:08:55.863Z"
+}
