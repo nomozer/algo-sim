@@ -1970,9 +1970,6 @@ def build_compact_grammar_for_context(
                             rf'{pfx}triptr ::= "{{\"c\":{cid},\"p\":" ({" | ".join(tri_shapes)}) ",\"a\":" {pfx}tri ",\"pt\":" {pfx}tript "}}"'
                         )
                         c_rels.append(f"{pfx}triptr")
-                    if _cue("centroid"):
-                        lines.append(rf'{pfx}cent ::= "{{\"c\":{cid},\"p\":\"cent\",\"pt\":" {pfx}pt ",\"a\":" {pfx}tri "}}"')
-                        c_rels.append(f"{pfx}cent")
                     if c_ang_qtys and _cue("vertex_angle"):
                         lines.append(
                             rf'{pfx}angvtx ::= "{{\"c\":{cid},\"p\":\"ang_vtx\",\"a\":" {pfx}tri ",\"pt\":" {pfx}tript ",\"q\":" {pfx}aqty "}}"'
@@ -2032,10 +2029,19 @@ def build_compact_grammar_for_context(
                         lines.append(rf'{pfx}pairll ::= "{{\"c\":{cid},\"p\":" ({" | ".join(pair_ll_preds)}) ",\"a\":" {pfx}seg ",\"b\":" {pfx}seg "}}"')
                     c_rels.append(f"{pfx}pairll")
             if c_pts:
+                has_poly_center_cue = (
+                    use_v9
+                    and bool(re.search(r"\btâm\b", clow))
+                    and "trọng tâm" not in clow
+                    and not any(w in clow for w in ("mặt cầu", "khối cầu", "hình cầu", "nội tiếp", "ngoại tiếp", "đường tròn"))
+                )
                 if _cue("midpoint"):
                     lines.append(rf'{pfx}mid ::= "{{\"c\":{cid},\"p\":\"mid\",\"pt\":" {pfx}pt ",\"a\":" {pfx}seg "}}"')
                     c_rels.append(f"{pfx}mid")
-                if use_v9 and c_tris and _cue("centroid"):
+                if has_poly_center_cue and c_polys:
+                    lines.append(rf'{pfx}cent ::= "{{\"c\":{cid},\"p\":\"cent\",\"pt\":" {pfx}pt ",\"a\":" {pfx}poly "}}"')
+                    c_rels.append(f"{pfx}cent")
+                elif c_tris and _cue("centroid"):
                     lines.append(rf'{pfx}cent ::= "{{\"c\":{cid},\"p\":\"cent\",\"pt\":" {pfx}pt ",\"a\":" {pfx}tri "}}"')
                     c_rels.append(f"{pfx}cent")
                 if len(c_segs) >= 2 and _cue("intersect_line_line"):
@@ -2575,6 +2581,7 @@ def _expand_compact_relation(
     solid_info: dict[str, Any] | None,
     *,
     closure_mode: str = DEFAULT_CLOSURE_MODE,
+    prior_premises: list[dict[str, Any]] | None = None,
 ) -> tuple[list[dict[str, Any]], str | None]:
     """Validate entity/quantity indices + source cues and lower into typed-fact-next/2 premises."""
     use_v7 = closure_mode != "v6"
@@ -2679,8 +2686,15 @@ def _expand_compact_relation(
         if not ok_q:
             return [], f"UNGROUNDED_VALUE:{v5_kind}:{qty_entry.canon_expr}"
 
+    has_poly_center_cue = (
+        pcode == "cent"
+        and use_v9
+        and bool(re.search(r"\btâm\b", clow))
+        and "trọng tâm" not in clow
+        and not any(w in clow for w in ("mặt cầu", "khối cầu", "hình cầu", "nội tiếp", "ngoại tiếp", "đường tròn"))
+    )
     cues = _PREDICATE_LEXICAL_CUES[v5_kind]
-    if not any(cue in clow for cue in cues):
+    if not any(cue in clow for cue in cues) and not has_poly_center_cue:
         return [], f"PREDICATE_CUE_MISSING:{v5_kind}"
 
     # Verify all referenced entity points appear grounded in working text / base context
@@ -2894,13 +2908,57 @@ def _expand_compact_relation(
         poly = _pts(ea)
         if not pt or len(poly) < 3:
             return [], "INVALID_PREMISE_ARGS:centroid"
-        q_str = _select_source_gate_quote(
-            ctext, [pt, *poly], ctx.working_text, "centroid",
-            required_contiguous=_poly_contig(poly),
-            required_cues=("trọng tâm",) if use_v7 else None,
-            closure_mode=closure_mode,
+        has_poly_center_cue = (
+            use_v9
+            and bool(re.search(r"\btâm\b", clow))
+            and "trọng tâm" not in clow
+            and not any(w in clow for w in ("mặt cầu", "khối cầu", "hình cầu", "nội tiếp", "ngoại tiếp", "đường tròn"))
         )
-        out_premises.append({"kind": "centroid", "args": {"point": pt, "polygon": poly}, "quote": q_str, "solid_id": sid})
+        if has_poly_center_cue:
+            all_prems = list(prior_premises or ()) + list((ctx.local_parser_payload or {}).get("premises") or ())
+            poly_set = set(poly)
+            if "hình thang" in ctx.working_text.lower() or any(
+                p.get("kind") in ("trapezoid", "isosceles_trapezoid")
+                and set(p.get("args", {}).get("vertices") or ()) == poly_set
+                for p in all_prems
+            ):
+                return [], "UNPROVED_POLYGON_CENTER"
+            prover = next(
+                (
+                    p
+                    for p in all_prems
+                    if p.get("kind") in ("regular_polygon", "rectangle", "rhombus", "parallelogram")
+                    and set(p.get("args", {}).get("vertices") or ()) == poly_set
+                ),
+                None,
+            )
+            if prover is None:
+                return [], "UNPROVED_POLYGON_CENTER"
+            v = list(prover.get("args", {}).get("vertices") or ())
+            if prover.get("kind") == "regular_polygon" and len(v) == 3:
+                q_str = _select_source_gate_quote(
+                    ctext, [pt], ctx.working_text, "centroid",
+                    required_cues=("tâm",),
+                    closure_mode=closure_mode,
+                )
+                out_premises.append({"kind": "centroid", "args": {"point": pt, "polygon": v}, "quote": q_str, "solid_id": sid})
+            elif len(v) >= 4 and len(v) % 2 == 0:
+                q_str = _select_source_gate_quote(
+                    ctext, [pt], ctx.working_text, "midpoint",
+                    required_cues=("tâm",),
+                    closure_mode=closure_mode,
+                )
+                out_premises.append({"kind": "midpoint", "args": {"point": pt, "segment": [v[0], v[len(v) // 2]]}, "quote": q_str, "solid_id": sid})
+            else:
+                return [], "UNPROVED_POLYGON_CENTER"
+        else:
+            q_str = _select_source_gate_quote(
+                ctext, [pt, *poly], ctx.working_text, "centroid",
+                required_contiguous=_poly_contig(poly),
+                required_cues=("trọng tâm",) if use_v7 else None,
+                closure_mode=closure_mode,
+            )
+            out_premises.append({"kind": "centroid", "args": {"point": pt, "polygon": poly}, "quote": q_str, "solid_id": sid})
 
     elif pcode in ("proj", "alt"):
         img = _pts(ept)[0] if ept and len(ept.vertices) == 1 else ""
@@ -3491,6 +3549,7 @@ def validate_and_lower_compact_clause(
                 premises.append({"kind": "segment_length", "args": {"segment": [apex, base[0]], "value": side_val}, "quote": ctext_s, "solid_id": "s1"})
                 accepted_ops.append({"kind": "tetrahedron_expansion", "clause_id": solid_raw[0]})
         elif use_v7 and "tứ diện đều" in cs_low and not [q for q in ctx.quantities if solid_raw[0] in q.clause_ids] and not _NEGATED_PREDICATE_RE.search(cs_low):
+            premises.append({"kind": "regular_polygon", "args": {"vertices": base}, "quote": solid_quote, "solid_id": "s1"})
             premises.append({"kind": "equal_length", "args": {"segment_a": [apex, base[0]], "segment_b": [base[0], base[1]]}, "quote": solid_quote, "solid_id": "s1"})
             accepted_ops.append({"kind": "tetrahedron_unitless_expansion", "clause_id": solid_raw[0]})
     elif solid_info["solid_type"] == "prism" and re.search(
@@ -3518,12 +3577,20 @@ def validate_and_lower_compact_clause(
                 premises.append({"kind": "equal_length", "args": {"segment_a": [b_verts[0], t_verts[0]], "segment_b": [b_verts[0], b_verts[1]]}, "quote": solid_quote, "solid_id": "s1"})
                 accepted_ops.append({"kind": "cube_unitless_expansion", "clause_id": solid_raw[0]})
 
-    # 2. Expand relations deterministically
+    # 2. Expand relations deterministically (shape predicates before polygon-center relations)
     lp_lengths = _local_parser_segment_lengths(ctx.local_parser_payload)
-    for rel in raw_slm_json.get("r") or ():
-        if not isinstance(rel, dict):
-            continue
-        expanded, err = _expand_compact_relation(rel, ctx, solid_info, closure_mode=closure_mode)
+    ordered_rels = sorted(
+        (r for r in (raw_slm_json.get("r") or ()) if isinstance(r, dict)),
+        key=lambda r: 1 if r.get("p") == "cent" else 0,
+    )
+    for rel in ordered_rels:
+        expanded, err = _expand_compact_relation(
+            rel,
+            ctx,
+            solid_info,
+            closure_mode=closure_mode,
+            prior_premises=premises,
+        )
         if err is not None:
             rejected_ops.append({"op": str(rel.get("p") or "unknown"), "reason": err})
             if err.startswith("AMBIGUOUS_REFERENCE"):

@@ -34,4 +34,30 @@ describe("missing-data refusal surfaces the verified clarification question", ()
     const view = { ...base, clarification: { ...base.clarification!, kind: "unsupported", nlu_class: "VALID_BUT_UNSUPPORTED", question: null } } as AnalysisUnsupported;
     expect(describeHomeRefusal(view).title).toBe("Axo chưa hỗ trợ phép dựng này");
   });
+
+  it("reads top-level route_d.clarification on MISSING_DIMENSION and FOOT_NOT_DETERMINED without saying chua ho tro", () => {
+    for (const code of ["MISSING_DIMENSION", "FOOT_NOT_DETERMINED"] as const) {
+      const payload = structuredClone(live) as any;
+      payload.envelope.reason_code = code;
+      payload.envelope.failure_category = "insufficient_specification";
+      payload.envelope.refusal_cause = "SOURCE";
+      payload.route_d.refusal = {
+        code,
+        reason_code: code,
+        nlu_class: "MISSING_DATA",
+        clarification_question: payload.route_d.refusal.clarification.question,
+      };
+      payload.route_d.clarification = {
+        ...live.route_d.refusal.clarification,
+        kind: "missing_operand",
+        nlu_class: "MISSING_DATA",
+      };
+      const view = docPhanHoiPhanTich(payload) as AnalysisUnsupported;
+      expect(view.error_code).toBeUndefined();
+      expect(view.clarification?.question).toMatch(/nói rõ các số đo/);
+      const shown = describeHomeRefusal(view);
+      expect(shown.title).toBe("Đề bài cần thêm dữ kiện để dựng hình");
+      expect(JSON.stringify(shown)).not.toMatch(/chưa hỗ trợ|ngoài phạm vi|HYBRID_RESPONSE_INVALID/);
+    }
+  });
 });

@@ -687,9 +687,20 @@ function kiemSectionsCore(sections: unknown, scene: Scene3D): string | null {
   return null;
 }
 
+const MISSING_DATA_CLARIFICATION_CODES = new Set([
+  "AMBIGUOUS_FACT",
+  "MISSING_DIMENSION",
+  "UNDERDETERMINED_POINT",
+  "FOOT_NOT_DETERMINED",
+  "PLANE_NOT_UNIQUE",
+  "AMBIGUOUS_REFERENCE",
+  "SECTION_NOT_CLOSED_ON_LATERAL_EDGES",
+]);
+
 function kiemClarification(
   rawClar: unknown,
   refusalCode: string,
+  allowMissingDataCodes = false,
 ): { ok: true; view: HybridClarificationView } | { ok: false; reason: string } {
   if (!laDoiTuong(rawClar) || rawClar.schema_version !== HYBRID_CLARIFICATION_SCHEMA) {
     return { ok: false, reason: "clarification sai schema_version" };
@@ -707,7 +718,10 @@ function kiemClarification(
     return { ok: false, reason: "clarification lệch nlu_class" };
   }
   const expectedCode = typedKind === "unsupported" ? "OUT_OF_SCOPE" : "AMBIGUOUS_FACT";
-  if (refusalCode !== expectedCode) {
+  const codeAllowed = allowMissingDataCodes && typedKind !== "unsupported"
+    ? MISSING_DATA_CLARIFICATION_CODES.has(refusalCode)
+    : refusalCode === expectedCode;
+  if (!codeAllowed) {
     return { ok: false, reason: "clarification lệch mã từ chối" };
   }
   if (typeof rawClar.quote !== "string" || !rawClar.quote.trim()) {
@@ -900,6 +914,11 @@ export function docPhanHoiHybrid(raw: unknown): KetQuaPhanHoiHybrid {
       }
       if ("clarification" in raw.route_d.refusal && raw.route_d.refusal.clarification !== undefined) {
         const clar = kiemClarification(raw.route_d.refusal.clarification, raw.route_d.refusal.code);
+        if (!clar.ok) return clar;
+        return { ok: true, envelope: { ...envelope, clarification: clar.view } };
+      }
+      if ("clarification" in raw.route_d && raw.route_d.clarification !== undefined) {
+        const clar = kiemClarification(raw.route_d.clarification, raw.route_d.refusal.code, true);
         if (!clar.ok) return clar;
         return { ok: true, envelope: { ...envelope, clarification: clar.view } };
       }

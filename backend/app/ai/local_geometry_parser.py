@@ -1161,6 +1161,51 @@ _FIG_REF_SUFFIX_RE = re.compile(
 )
 
 
+def _emit_proved_polygon_center(
+    builder: _AstBuilder,
+    pt: str,
+    target_verts: list[str],
+    quote: str,
+) -> bool:
+    """§19: Emit exact construction (`midpoint` of opposite vertices or `centroid` for equilateral triangle)
+    for explicit polygon center ONLY when `builder.premises` already proves central symmetry or equilateral base."""
+    if not pt or not pt[0].isupper() or len(target_verts) < 3 or len(set(target_verts)) != len(target_verts):
+        return False
+    target_set = frozenset(target_verts)
+    if any(
+        p.get("kind") in ("trapezoid", "isosceles_trapezoid")
+        and frozenset(p.get("args", {}).get("vertices") or ()) == target_set
+        for p in builder.premises
+    ):
+        return False
+    for p in builder.premises:
+        kind = p.get("kind")
+        v = list(p.get("args", {}).get("vertices") or ())
+        if frozenset(v) != target_set:
+            continue
+        if kind == "regular_polygon" and len(v) == 3:
+            builder.premises.append(
+                {
+                    "kind": "centroid",
+                    "args": {"point": pt, "polygon": v},
+                    "quote": quote,
+                    "solid_id": builder._primary_solid_id,
+                }
+            )
+            return True
+        if kind in ("regular_polygon", "rectangle", "rhombus", "parallelogram") and len(v) >= 4 and len(v) % 2 == 0:
+            builder.premises.append(
+                {
+                    "kind": "midpoint",
+                    "args": {"point": pt, "segment": [v[0], v[len(v) // 2]]},
+                    "quote": quote,
+                    "solid_id": builder._primary_solid_id,
+                }
+            )
+            return True
+    return False
+
+
 def _parse_clause_into_ast(builder: _AstBuilder, clause: ClauseSpan) -> None:
     raw = builder.raw_text
     ca, cb = clause.start, clause.end
@@ -1461,6 +1506,11 @@ def _parse_clause_into_ast(builder: _AstBuilder, clause: ClauseSpan) -> None:
             ctext_norm[m_reg_pyr.end("core") :],
             re.IGNORECASE | re.UNICODE,
         )
+        m_all_eq_rp = None if m_all_rp else re.search(
+            r"(?:có\s+)?(?:(?:tất\s+cả\s+(?:các\s+)?|mọi\s+|các\s+)cạnh(?:\s+đều)?\s+bằng\s+nhau|(?:các\s+)?cạnh\s+bên(?:\s+đều)?\s+bằng\s+cạnh\s+đáy)(?!\w)",
+            ctext_norm[m_reg_pyr.end("core") :],
+            re.IGNORECASE | re.UNICODE,
+        )
         if m_all_rp and _is_valid_val(m_all_rp.group("val")):
             all_val = _canon_val(m_all_rp.group("val"))
             q_all = _clean_quote(raw, q_from, ca + m_reg_pyr.end("core") + m_all_rp.end())
@@ -1468,6 +1518,14 @@ def _parse_clause_into_ast(builder: _AstBuilder, clause: ClauseSpan) -> None:
                 [
                     {"kind": "regular_polygon", "args": {"vertices": base_pts, "side": all_val}, "quote": q_all, "solid_id": sid},
                     {"kind": "segment_length", "args": {"segment": [apex_s, base_pts[0]], "value": all_val}, "quote": q_all, "solid_id": sid},
+                ]
+            )
+        elif m_all_eq_rp:
+            q_all_eq = _clean_quote(raw, q_from, ca + m_reg_pyr.end("core") + m_all_eq_rp.end())
+            builder.premises.extend(
+                [
+                    {"kind": "regular_polygon", "args": {"vertices": base_pts}, "quote": q_all_eq, "solid_id": sid},
+                    {"kind": "equal_length", "args": {"segment_a": [apex_s, base_pts[0]], "segment_b": [base_pts[0], base_pts[1]]}, "quote": q_all_eq, "solid_id": sid},
                 ]
             )
         m_h = re.search(
@@ -1614,6 +1672,7 @@ def _parse_clause_into_ast(builder: _AstBuilder, clause: ClauseSpan) -> None:
                 [
                     {"kind": "right_prism", "args": {"base": base_pts, "top": top_pts}, "quote": q_cube, "solid_id": sid},
                     {"kind": "regular_polygon", "args": {"vertices": base_pts}, "quote": q_cube, "solid_id": sid},
+                    {"kind": "equal_length", "args": {"segment_a": [base_pts[0], top_pts[0]], "segment_b": [base_pts[0], base_pts[1]]}, "quote": q_cube, "solid_id": sid},
                 ]
             )
         builder._primary_solid_id = sid
@@ -1732,6 +1791,18 @@ def _parse_clause_into_ast(builder: _AstBuilder, clause: ClauseSpan) -> None:
                         "quote": q_pside,
                         "solid_id": sid,
                     }
+                )
+            elif (m_all_eq_pr := re.search(
+                r"(?:có\s+)?(?:(?:tất\s+cả\s+(?:các\s+)?|mọi\s+|các\s+)cạnh(?:\s+đều)?\s+bằng\s+nhau|(?:các\s+)?cạnh\s+bên(?:\s+đều)?\s+bằng\s+cạnh\s+đáy)(?!\w)",
+                ctext_norm[m_prism.end() :],
+                re.IGNORECASE | re.UNICODE,
+            )):
+                q_eq_pr = _clean_quote(raw, ca + m_prism.start(), ca + m_prism.end() + m_all_eq_pr.end())
+                builder.premises.extend(
+                    [
+                        {"kind": "regular_polygon", "args": {"vertices": base_pts}, "quote": q_eq_pr, "solid_id": sid},
+                        {"kind": "equal_length", "args": {"segment_a": [base_pts[0], top_pts[0]], "segment_b": [base_pts[0], base_pts[1]]}, "quote": q_eq_pr, "solid_id": sid},
+                    ]
                 )
             else:
                 builder.premises.append(
@@ -1916,9 +1987,9 @@ def _parse_clause_into_ast(builder: _AstBuilder, clause: ClauseSpan) -> None:
         mapped_fact = True
 
     # ── 2. Base & Polygon Shape Premises ─────────────────────────────────────────────────────────────────────────
-    # 2a. Square or equilateral triangle base: "đáy (ABCD )?là (hình vuông|tam giác đều|lục giác đều)( ABCD)?( cạnh (bằng )?2)?"
+    # 2a. Square or equilateral triangle base: "đáy (ABCD )?là (hình vuông|tam giác đều|lục giác đều)( ABCD)?( có tâm O)?( cạnh (bằng )?2)?"
     for m_reg_base in re.finditer(
-        rf"(?P<full>đáy(?:\s+(?P<verts>{_PTS3_6}))?\s+là\s+(?P<shape>hình\s+vuông|tam\s+giác\s+đều|lục\s+giác\s+đều)(?:\s+(?P<verts2>{_PTS3_6})(?![\w']))?(?:\s+(?:có\s+)?cạnh\s+(?:bằng\s+)?(?P<side>{_VAL}){_OPT_LEN_UNIT_TAIL})?)",
+        rf"(?P<full>đáy(?:\s+(?P<verts>{_PTS3_6}))?\s+là\s+(?P<shape>hình\s+vuông|tam\s+giác\s+đều|lục\s+giác\s+đều)(?:\s+(?P<verts2>{_PTS3_6})(?![\w']))?(?:\s*(?:,\s*)?(?:có\s+)?tâm(?:\s+đối\s+xứng)?(?:\s+là)?\s+(?P<ctr0>{_PT})(?![\w']))?(?:\s*(?:,\s*)?(?:có\s+)?cạnh\s+(?:bằng\s+)?(?P<side>{_VAL}){_OPT_LEN_UNIT_TAIL})?(?:\s*(?:,\s*)?(?:có\s+)?tâm(?:\s+đối\s+xứng)?(?:\s+là)?\s+(?P<ctr>{_PT})(?![\w']))?)",
         ctext_norm,
         re.IGNORECASE | re.UNICODE,
     ):
@@ -1954,10 +2025,13 @@ def _parse_clause_into_ast(builder: _AstBuilder, clause: ClauseSpan) -> None:
         builder.premises.append(
             {"kind": "regular_polygon", "args": args_rb, "quote": q_rb, "solid_id": builder._primary_solid_id}
         )
+        ctr_rb = m_reg_base.group("ctr") or m_reg_base.group("ctr0")
+        if ctr_rb:
+            _emit_proved_polygon_center(builder, ctr_rb, verts, q_rb)
         mapped_fact = True
 
     for m_reg_named in re.finditer(
-        rf"(?P<full>{_BASE_NAMED_LEAD}(?P<verts>{_PTS3_6})\s+là\s+(?:một\s+)?(?P<shape>hình\s+vuông|tam\s+giác\s+đều|lục\s+giác\s+đều)(?![\w'])(?:\s+(?:có\s+)?cạnh\s+(?:bằng\s+)?(?P<side>{_VAL}){_OPT_LEN_UNIT_TAIL})?)",
+        rf"(?P<full>{_BASE_NAMED_LEAD}(?P<verts>{_PTS3_6})\s+là\s+(?:một\s+)?(?P<shape>hình\s+vuông|tam\s+giác\s+đều|lục\s+giác\s+đều)(?![\w'])(?:\s*(?:,\s*)?(?:có\s+)?tâm(?:\s+đối\s+xứng)?(?:\s+là)?\s+(?P<ctr0>{_PT})(?![\w']))?(?:\s*(?:,\s*)?(?:có\s+)?cạnh\s+(?:bằng\s+)?(?P<side>{_VAL}){_OPT_LEN_UNIT_TAIL})?(?:\s*(?:,\s*)?(?:có\s+)?tâm(?:\s+đối\s+xứng)?(?:\s+là)?\s+(?P<ctr>{_PT})(?![\w']))?)",
         ctext_norm,
         re.IGNORECASE | re.UNICODE,
     ):
@@ -1983,6 +2057,9 @@ def _parse_clause_into_ast(builder: _AstBuilder, clause: ClauseSpan) -> None:
                     {"kind": "regular_polygon", "args": args_rn, "quote": q_rn, "solid_id": builder._primary_solid_id}
                 )
                 mapped_fact = True
+            ctr_rn = m_reg_named.group("ctr") or m_reg_named.group("ctr0")
+            if ctr_rn:
+                _emit_proved_polygon_center(builder, ctr_rn, verts_rn, q_rn)
 
     for m_reg_tri in re.finditer(
         rf"(?P<full>(?:tam\s+giác|mặt\s+bên)\s+(?P<verts>{_PTS3})\s+(?:là\s+(?:một\s+)?tam\s+giác\s+)?đều(?:\s+cạnh\s+(?:bằng\s+)?(?P<side>{_VAL}){_OPT_LEN_UNIT_TAIL})?)",
@@ -2016,19 +2093,19 @@ def _parse_clause_into_ast(builder: _AstBuilder, clause: ClauseSpan) -> None:
                 )
                 mapped_fact = True
 
-    # 2b. Rectangle base: "đáy (ABCD )?là hình chữ nhật" — or the named base "biết / có / với ABCD là hình chữ nhật" (/13)
+    # 2b. Rectangle base: "đáy (ABCD )?là hình chữ nhật( ABCD)?( tâm O)?" — or the named base "biết / có / với ABCD là hình chữ nhật" (/13)
     for m_rect in re.finditer(
-        rf"(?P<full>(?:đáy(?:\s+(?P<verts>{_PTS4}))?|{_BASE_NAMED_LEAD}(?P<verts0>{_PTS4}))\s+là\s+(?:một\s+)?hình\s+chữ\s+nhật)",
+        rf"(?P<full>(?:đáy(?:\s+(?P<verts>{_PTS4}))?|{_BASE_NAMED_LEAD}(?P<verts0>{_PTS4}))\s+là\s+(?:một\s+)?hình\s+chữ\s+nhật(?:\s+(?P<verts2>{_PTS4})(?![\w']))?(?:\s*(?:,\s*)?(?:có\s+)?tâm(?:\s+đối\s+xứng)?(?:\s+là)?\s+(?P<ctr>{_PT})(?![\w']))?)",
         ctext_norm,
         re.IGNORECASE | re.UNICODE,
     ):
         if m_rect.group("verts0") and set(_split_pts(m_rect.group("verts0"))) != set(builder._base_vertices):
             continue                                     # a named polygon that is not this solid's base: not this rule
-        verts = (_split_pts(m_rect.group("verts") or m_rect.group("verts0"))
-                 if (m_rect.group("verts") or m_rect.group("verts0")) else list(builder._base_vertices))
+        rc_verts_raw = m_rect.group("verts") or m_rect.group("verts0") or m_rect.group("verts2")
+        verts = _split_pts(rc_verts_raw) if rc_verts_raw else list(builder._base_vertices)
         rc_start = m_rect.start("verts0") if m_rect.group("verts0") else m_rect.start("full")
         if (
-            not m_rect.group("verts")
+            not rc_verts_raw
             and clause_solid_not_span is not None
             and clause_solid_not_span[1] <= rc_start
             and re.fullmatch(
@@ -2042,6 +2119,8 @@ def _parse_clause_into_ast(builder: _AstBuilder, clause: ClauseSpan) -> None:
         builder.premises.append(
             {"kind": "rectangle", "args": {"vertices": verts}, "quote": q_rc, "solid_id": builder._primary_solid_id}
         )
+        if m_rect.group("ctr"):
+            _emit_proved_polygon_center(builder, m_rect.group("ctr"), verts, q_rc)
         mapped_fact = True
 
     # 2c. Right (or right-isosceles) triangle base / named triangle:
@@ -2215,9 +2294,9 @@ def _parse_clause_into_ast(builder: _AstBuilder, clause: ClauseSpan) -> None:
             )
             mapped_fact = True
 
-    # 2h. FAMILY-2 Rhombus & Parallelogram ("đáy (ABCD )?là hình thoi( ABCD)?( cạnh a)?" / "đáy (ABCD )?là hình bình hành( ABCD)?")
+    # 2h. FAMILY-2 Rhombus & Parallelogram ("đáy (ABCD )?là hình thoi( ABCD)?( tâm O)?( cạnh a)?" / "đáy (ABCD )?là hình bình hành( ABCD)?( tâm O)?")
     for m_rhom in re.finditer(
-        rf"(?P<full>(?:đáy(?:\s+(?P<verts>{_PTS4})(?![\w']))?|{_BASE_NAMED_LEAD}(?P<verts0>{_PTS4}))\s+là\s+(?:một\s+)?hình\s+thoi(?:\s+(?P<verts2>{_PTS4})(?![\w']))?(?:(?:\s*,\s*|\s+)(?:có\s+)?(?:độ\s+dài\s+)?cạnh(?:\s*(?:bằng|=|là))?\s*(?P<side>{_VAL}){_OPT_LEN_UNIT_TAIL})?)",
+        rf"(?P<full>(?:đáy(?:\s+(?P<verts>{_PTS4})(?![\w']))?|{_BASE_NAMED_LEAD}(?P<verts0>{_PTS4}))\s+là\s+(?:một\s+)?hình\s+thoi(?:\s+(?P<verts2>{_PTS4})(?![\w']))?(?:\s*(?:,\s*)?(?:có\s+)?tâm(?:\s+đối\s+xứng)?(?:\s+là)?\s+(?P<ctr0>{_PT})(?![\w']))?(?:(?:\s*,\s*|\s+)(?:có\s+)?(?:độ\s+dài\s+)?cạnh(?:\s*(?:bằng|=|là))?\s*(?P<side>{_VAL}){_OPT_LEN_UNIT_TAIL})?(?:\s*(?:,\s*)?(?:có\s+)?tâm(?:\s+đối\s+xứng)?(?:\s+là)?\s+(?P<ctr>{_PT})(?![\w']))?)",
         ctext_norm,
         re.IGNORECASE | re.UNICODE,
     ):
@@ -2245,10 +2324,13 @@ def _parse_clause_into_ast(builder: _AstBuilder, clause: ClauseSpan) -> None:
             builder.premises.append(
                 {"kind": "rhombus", "args": args_rh, "quote": q_rh, "solid_id": builder._primary_solid_id}
             )
+            ctr_rh = m_rhom.group("ctr") or m_rhom.group("ctr0")
+            if ctr_rh:
+                _emit_proved_polygon_center(builder, ctr_rh, verts, q_rh)
             mapped_fact = True
 
     for m_para in re.finditer(
-        rf"(?P<full>đáy(?:\s+(?P<verts>{_PTS4})(?![\w']))?\s+là\s+(?:một\s+)?hình\s+bình\s+hành(?:\s+(?P<verts2>{_PTS4})(?![\w']))?(?:\s+(?:có\s+)?tâm\s+(?:là\s+)?(?P<ctr>{_PT}))?)(?![\w'])",
+        rf"(?P<full>đáy(?:\s+(?P<verts>{_PTS4})(?![\w']))?\s+là\s+(?:một\s+)?hình\s+bình\s+hành(?:\s+(?P<verts2>{_PTS4})(?![\w']))?(?:\s*(?:,\s*)?(?:có\s+)?tâm(?:\s+đối\s+xứng)?(?:\s+là)?\s+(?P<ctr>{_PT}))?)(?![\w'])",
         ctext_norm,
         re.IGNORECASE | re.UNICODE,
     ):
@@ -2271,6 +2353,8 @@ def _parse_clause_into_ast(builder: _AstBuilder, clause: ClauseSpan) -> None:
             builder.premises.append(
                 {"kind": "parallelogram", "args": {"vertices": verts}, "quote": q_pa, "solid_id": builder._primary_solid_id}
             )
+            if m_para.group("ctr"):
+                _emit_proved_polygon_center(builder, m_para.group("ctr"), verts, q_pa)
             mapped_fact = True
 
     # 2i. Named polygon / face area premise: "diện tích của hình vuông ABB'A' bằng 12(cm²)", "diện tích tam giác ABC bằng a²/2", "S_{ABCD} = a²"
@@ -3416,6 +3500,31 @@ def _parse_clause_into_ast(builder: _AstBuilder, clause: ClauseSpan) -> None:
         )
         mapped_fact = True
 
+    # 5c'. §19 Explicit polygon center: "(Gọi/Đặt )?O là tâm (đối xứng )?(của )?(đáy|hình ...|ABC...)" / "tâm O của ..."
+    for m_pctr in re.finditer(
+        rf"(?P<full>(?:(?P<lead>gọi|đặt|lấy|chọn|với|biết)\s+)?(?<![\w'])(?P<pt>{_PT})\s+là\s+(?<!trọng\s)tâm(?:\s+đối\s+xứng)?(?:\s+của)?\s+(?P<obj>(?:(?:hình\s+vuông|hình\s+chữ\s+nhật|hình\s+thoi|hình\s+bình\s+hành|tam\s+giác(?:\s+đều)?|tứ\s+giác\s+đều|lục\s+giác\s+đều|đa\s+giác\s+đều|mặt\s+đáy|đáy)\s*)?\(?(?P<poly>{_PTS3_6})\)?|(?:mặt\s+)?đáy(?:\s+\(?(?P<poly_d>{_PTS3_6})\)?)?)"
+        rf"|(?<![\w'])tâm(?:\s+đối\s+xứng)?\s+(?P<pt2>{_PT})\s+của\s+(?P<obj2>(?:(?:hình\s+vuông|hình\s+chữ\s+nhật|hình\s+thoi|hình\s+bình\s+hành|tam\s+giác(?:\s+đều)?|tứ\s+giác\s+đều|lục\s+giác\s+đều|đa\s+giác\s+đều|mặt\s+đáy|đáy)\s*)?\(?(?P<poly2>{_PTS3_6})\)?|(?:mặt\s+)?đáy(?:\s+\(?(?P<poly_d2>{_PTS3_6})\)?)?))(?![\w'])",
+        ctext_norm,
+        re.IGNORECASE | re.UNICODE,
+    ):
+        pt_c = m_pctr.group("pt") or m_pctr.group("pt2")
+        if not pt_c or not pt_c[0].isupper():
+            continue
+        if any(
+            p.get("kind") in ("midpoint", "centroid") and p.get("args", {}).get("point") == pt_c
+            for p in builder.premises
+        ):
+            continue
+        if re.search(r"mặt\s+cầu|khối\s+cầu|hình\s+cầu|nội\s+tiếp|ngoại\s+tiếp|đường\s+tròn", ctext_norm, re.IGNORECASE):
+            continue
+        raw_poly = m_pctr.group("poly") or m_pctr.group("poly_d") or m_pctr.group("poly2") or m_pctr.group("poly_d2")
+        verts_c = _split_pts(raw_poly) if raw_poly else list(builder._base_vertices)
+        lead_c = (m_pctr.group("lead") or "").lower()
+        q_start = m_pctr.start("pt") if lead_c in ("lấy", "chọn", "với", "biết") else m_pctr.start("full")
+        q_pctr = _clean_quote(raw, ca + q_start, ca + m_pctr.end("full"))
+        if _emit_proved_polygon_center(builder, pt_c, verts_c, q_pctr):
+            mapped_fact = True
+
     # 5d. Paired projections onto lines: "Gọi H, K lần lượt là hình chiếu vuông góc của A lên SB, SD"
     matched_pr_list = False
     for m_pr_list in re.finditer(
@@ -4553,6 +4662,8 @@ def _parse_clause_into_ast(builder: _AstBuilder, clause: ClauseSpan) -> None:
         ctext_norm,
         re.IGNORECASE | re.UNICODE,
     ):
+        if re.search(r"(?:tỉ\s+số|tỷ\s+số|thương(?:\s+số)?)\s*(?:của\s+|giữa\s+)?$", ctext_norm[: m_poly_area.start("full")], re.IGNORECASE):
+            continue
         has_ask_verb_pa = m_poly_area.group("full").lower().startswith("tính") or bool(
             re.search(r"\b(?:tính|tìm|xác\s+định|hỏi)\b", ctext_norm[: m_poly_area.start("full")], re.IGNORECASE)
         )
@@ -5678,10 +5789,16 @@ def _resolve_late_regular_polygon_dimension(builder: "_AstBuilder") -> None:
                 if (pts_q & p_verts) and (pts_q - p_verts):
                     has_angle_coupling = True
                     break
-            all_goals_scale_invariant = bool(builder.math_goals) and all(
-                (g.get("goal_type") if g.get("kind") == "measurement" else g.get("kind"))
-                in ("angle", "length_ratio", "area_ratio", "volume_ratio")
-                for g in builder.math_goals
+            all_goals_scale_invariant = (
+                (not builder.math_goals and bool(builder.simulation_goals))
+                or (
+                    bool(builder.math_goals)
+                    and all(
+                        (g.get("goal_type") if g.get("kind") == "measurement" else g.get("kind"))
+                        in ("angle", "length_ratio", "area_ratio", "volume_ratio")
+                        for g in builder.math_goals
+                    )
+                )
             )
             if (
                 has_direct_dim

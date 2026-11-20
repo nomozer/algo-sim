@@ -200,6 +200,11 @@ def _phong_bi(r: KetQuaTuyen) -> dict[str, Any]:
         # Present only when the figure is NOT fixed by the source (a height-invariant answer): the scene is illustrative.
         **({"scene_configuration": deepcopy(cfg)}
            if served and (cfg := (r.details or {}).get("scene_configuration")) else {}),
+        **({"scale_policy": "UNIT_SIMILARITY_REPRESENTATIVE"}
+           if served
+           and (cfg := (r.details or {}).get("scene_configuration"))
+           and cfg.get("kind") == "SIMILARITY_SCALE_ILLUSTRATIVE"
+           and not r.answers else {}),
         # Present only when a source goal's NUMBER is not answered although its object is constructed (cos/tan of an angle).
         **({"source_goal_completion": deepcopy(sgc)}
            if served and (sgc := (r.details or {}).get("source_goal_completion")) else {}),
@@ -362,6 +367,8 @@ def build_adapter4_response(result: KetQuaTuyen, problem_text: str) -> dict[str,
                     and not _angle_construction_bound(obj["angle_construction"], pts):
                 raise PreviewInvalid("RESULT_BINDING_UNVERIFIED")
         if route.get("scene_configuration") != _phong_bi(result).get("scene_configuration"):
+            raise PreviewInvalid("RESULT_BINDING_UNVERIFIED")
+        if route.get("scale_policy") != _phong_bi(result).get("scale_policy"):
             raise PreviewInvalid("RESULT_BINDING_UNVERIFIED")
         if (route.get("scene_configuration") or {}).get("kind") == "TARGET_INVARIANT_ILLUSTRATIVE" \
                 and not _invariance_proof_bound(route["scene_configuration"], result.answer_exact, objects):

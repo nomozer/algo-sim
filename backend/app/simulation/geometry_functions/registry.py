@@ -1578,8 +1578,11 @@ def _co_doi_tuong_hinh(c: LoiGoi, de: str = "") -> bool:
                     if re.search(r"(?:(?:tam|tứ|ngũ|lục|đa)\s+giác\s+đều|hình\s+vuông)\s*$",
                                  q[:dau], re.IGNORECASE):
                         ok = True
-                # Every triangular face of the explicitly named regular tetrahedron is regular.
-                if n == 3 and len(phan) == 1 and len(phan[0]) == 4 and set(vertices) <= set(phan[0]):
+                # Every triangular face of the explicitly named regular tetrahedron is regular ("ABCD" or dotted "O.ABC").
+                if n == 3 and (
+                    (len(phan) == 1 and len(phan[0]) == 4 and set(vertices) <= set(phan[0]))
+                    or (len(phan) == 2 and len(phan[0]) == 1 and len(phan[1]) == 3 and set(vertices) <= set(phan[0] + phan[1]))
+                ):
                     if (re.search(r"\btứ\s+diện\s+đều\s*$", q[:dau], re.IGNORECASE)
                             or (re.search(r"\btứ\s+diện\s*$", q[:dau], re.IGNORECASE)
                                 and re.match(r"\s+đều(?!\s*(?:bằng|là|thuộc|nằm|vuông\s+góc|song\s+song|cắt|đi\s+qua|=))\b",
@@ -1792,12 +1795,14 @@ _C_DCAO = re.compile(rf"{_L1}{_L1}\s+là\s+đường\s+cao(?:\s+của\s+(?:(?:h�
                      rf"(?![\w'])(?=\s*(?:[,;.!?]|và\s|$))", re.IGNORECASE)
 #: Number-free CLOSED point definition (review round 4: no word-list exemption): "(gọi) X là trung điểm / tâm / trọng tâm /
 #: giao điểm / hình chiếu (vuông góc) … của <labelled object>", "X là điểm (di động) trên/thuộc cạnh XY" — the whole clause.
-_DOI_TUONG_NHAN = (rf"(?:(?:cạnh|đoạn(?:\s+thẳng)?|đường\s+thẳng|tam\s+giác|hình\s+vuông|hình\s+chữ\s+nhật|mặt\s+phẳng|"
-                   rf"mặt\s+đáy|đáy|mp)\s*)?\(?{_NHAN}\)?")
-_C_DIEM = re.compile(rf"(?:(?:gọi\s+)?{_L1}\s+là\s+(?:(?:trung\s+điểm|điểm\s+chính\s+giữa|tâm|trọng\s+tâm)\s+(?:của\s+)?{_DOI_TUONG_NHAN}"
+_DOI_TUONG_NHAN = (rf"(?:(?:cạnh|đoạn(?:\s+thẳng)?|đường\s+thẳng|tam\s+giác(?:\s+đều)?|tứ\s+giác\s+đều|lục\s+giác\s+đều|"
+                   rf"đa\s+giác\s+đều|hình\s+vuông|hình\s+chữ\s+nhật|hình\s+thoi|hình\s+bình\s+hành|"
+                   rf"mặt\s+phẳng|mặt\s+đáy|đáy|mp)\s*)?\(?{_NHAN}\)?")
+_C_DIEM = re.compile(rf"(?:(?:gọi\s+|đặt\s+)?{_L1}\s+là\s+(?:(?:trung\s+điểm|điểm\s+chính\s+giữa|tâm(?:\s+đối\s+xứng)?|trọng\s+tâm)\s+(?:của\s+)?(?:{_DOI_TUONG_NHAN}|(?:mặt\s+)?đáy)"
                      rf"|giao\s+điểm\s+(?:của\s+)?{_DOI_TUONG_NHAN}\s+(?:và|với)\s+{_DOI_TUONG_NHAN}"
                      rf"|điểm\s+đối\s+xứng\s+(?:của|với)\s+(?:điểm\s+)?{_L1}\s+qua\s+(?:(?:điểm|tâm(?:\s+đối\s+xứng)?)\s+)?{_L1})"
-                     rf"|(?:gọi\s+)?{_L1}\s+là\s+điểm(?:\s+di\s+động)?\s+(?:nằm\s+)?(?:trên|thuộc)\s+{_DOI_TUONG_NHAN}"
+                     rf"|tâm(?:\s+đối\s+xứng)?\s+(?P<pt_tam>{_L1})\s+của\s+(?:{_DOI_TUONG_NHAN}|(?:mặt\s+)?đáy)"
+                     rf"|(?:gọi\s+|đặt\s+)?{_L1}\s+là\s+điểm(?:\s+di\s+động)?\s+(?:nằm\s+)?(?:trên|thuộc)\s+{_DOI_TUONG_NHAN}"
                      rf"|{_DOI_TUONG_NHAN}\s+(?:(?:và|với)\s+{_DOI_TUONG_NHAN}\s+cắt\s+nhau|cắt\s+{_DOI_TUONG_NHAN})\s+(?:tại|ở)\s+(?:(?:điểm|giao\s+điểm)\s+)?(?P<pt_cat>{_L1}))"
                      rf"(?![\w'])(?=\s*(?:[,;.!?]|và\s|$))", re.IGNORECASE)
 _DIEM_CHIEU_DICH = (
@@ -1936,6 +1941,7 @@ _C_MAT = re.compile(rf"(?:{_MAT_NHAN}\s+(?:và\s+)?(?:nằm\s+trong\s+mặt\s+ph
                     rf"|(?:(?:mặt\s+bên|tam\s+giác)\s+)?{_L1}{_L1}{_NHAN}\s+(?:là\s+(?:một\s+)?)?(?:tam\s+giác\s+)?"
                     rf"(?:đều|vuông(?:\s+cân)?(?:\s+tại\s+{_L1})?|cân(?:\s+tại\s+{_L1})?)(?![\w'])"
                     rf"(?:\s+(?:và\s+)?(?:nằm\s+)?trong\s+mặt\s+phẳng\s+vuông\s+góc\s+với\s+{_MAT_DICH})?"
+                    rf"|(?:(?:có|với)\s+)?(?:(?:tất\s+cả\s+(?:các\s+)?|mọi\s+|các\s+)cạnh(?:\s+đều)?\s+bằng\s+nhau|(?:các\s+)?cạnh\s+bên(?:\s+đều)?\s+bằng\s+cạnh\s+đáy)"
                     rf"|{_L1}{_L1}(?:\s*=\s*{_L1}{_L1})+(?![\w'])(?!\s*=))"
                     # a figure reference ("(minh họa như hình vẽ bên)") may close the clause, as it may close a sentence (`_C_HET`)
                     rf"(?=\s*(?:{_THAM_KHAO_HINH}\s*)?(?:[,;.!?]|và\s|$))", re.IGNORECASE)
@@ -4079,10 +4085,12 @@ def _kiem_nguon_goc(calls: tuple[LoiGoi, ...], text: str, auxiliary: tuple[dict,
         if c.fn in ("parallelogram", "rhombus", "trapezoid", "isosceles_trapezoid") and not _co_doi_tuong_hinh(c, de):
             raise TuChoi("OBJECT_NOT_IN_QUOTE", f"{c.id}: cụm {c.fn} không gọi đúng đa giác {c.args.vertices}", (c.id,))
         vuong_can_eq = c.fn == "equal_length" and (_vuong_can_hai_canh(c, de) or _canh_tu_dien_deu(c)
+                                                   or _canh_lap_phuong(c) or _tat_ca_canh_bang_nhau(c, calls)
                                                    or _can_co_goc_vuong(c, calls))
         tri_alt_proj = c.fn == "orthogonal_projection_line" and any(_duong_cao_tam_giac_khop(c, q) for q in c.quotes)
         td_vuong_tai = (c.fn == "perpendicular_lines" and _tu_dien_vuong_tai_khop(c)) or _hai_mat_vuong_day_khop(c)
-        if not vuong_can_eq and not tri_alt_proj:
+        tam_day_pt = c.fn in ("midpoint", "centroid") and _tam_da_giac_dung_nguon(c, de, calls)
+        if not vuong_can_eq and not tri_alt_proj and not tam_day_pt:
             for nhom in c.spec.keywords:
                 if not _co_tu(c.quotes, nhom):
                     raise TuChoi("PREDICATE_NOT_IN_QUOTE", f"{c.id}: {c.fn} cần một trong {list(nhom)} trong {c.quote!r}", (c.id,))
@@ -4095,7 +4103,7 @@ def _kiem_nguon_goc(calls: tuple[LoiGoi, ...], text: str, auxiliary: tuple[dict,
         role_seg_ratio = c.fn == "segment_ratio" and any(
             m["rv1"] for q in c.quotes for m in _TI_SO_DOAN_RE.finditer(chuan_hoa(q))
         )
-        if not vuong_can_eq and not tri_alt_proj and not td_vuong_tai and not role_seg_ratio:
+        if not vuong_can_eq and not tri_alt_proj and not td_vuong_tai and not role_seg_ratio and not tam_day_pt:
             for f in c.spec.segment_fields:
                 if not _co_doan(c.quotes, getattr(c.args, f)):
                     raise TuChoi("ROLE_NOT_IN_QUOTE", f"{c.id}: đoạn {''.join(getattr(c.args, f))} không được nhắc trong {c.quote!r}", (c.id,))
@@ -4105,7 +4113,7 @@ def _kiem_nguon_goc(calls: tuple[LoiGoi, ...], text: str, auxiliary: tuple[dict,
                 raise TuChoi("ROLE_NOT_IN_QUOTE", f"{c.id}: điểm {getattr(c.args, f)} ({f}) không được nhắc trong {c.quote!r}", (c.id,))
         if c.fn in ("intersect_line_line", "intersect_line_plane", "orthogonal_projection_line", "midpoint", "centroid",
                     "right_angle", "divide_segment", "point_reflection"):
-            if not tri_alt_proj and not construction_source_bound(c, de):
+            if not tri_alt_proj and not tam_day_pt and not construction_source_bound(c, de):
                 raise TuChoi("SOURCE_OBJECT_MISMATCH", f"{c.id}: vai trò điểm và toán hạng dựng không khớp nguồn", (c.id,))
         if c.fn in ("curved_section", "curved_subsolid") and (ma := _phan_cong_dung_nguon(c, calls, de)):
             raise TuChoi(ma, f"{c.id}: {c.quote!r} không nêu đúng {'thiết diện' if c.fn == 'curved_section' else 'khối nón nhỏ'} "
@@ -4708,10 +4716,11 @@ def _vai_tro_doi_tuong_khop(danh: str, nhan: list[str], calls: tuple[LoiGoi, ...
 
 
 def _tam_day(day: list[str], calls: tuple[LoiGoi, ...]) -> set[str]:
-    """Points a call names as the centre of a regular base: its centroid, or the meet of two long diagonals."""
+    """Points a call names as the centre of a regular base: centroid, opposite-vertex midpoint, or meet of diagonals."""
     n = len(day)
     cheo = [{day[i], day[i + n // 2]} for i in range(n // 2)] if n % 2 == 0 else []
     return {c.args.point for c in calls if c.fn == "centroid" and set(c.args.polygon) == set(day)} | {
+        c.args.point for c in calls if c.fn == "midpoint" and set(c.args.segment) in cheo} | {
         c.args.point for c in calls if c.fn == "intersect_line_line" and set(c.args.line1) in cheo
         and set(c.args.line2) in cheo and set(c.args.line1) != set(c.args.line2)}
 
@@ -8176,10 +8185,12 @@ def _duong_cao_tam_giac_khop(c: LoiGoi, q: str) -> bool:
     return False
 
 
-#: Run `target-invariant-regular-solid-semantics`: "tứ diện đều XYZW" DEFINES a tetrahedron whose six edges are equal.
-#: Only the four vertices written right after the phrase are read; "tứ diện XYZW" (no "đều"), "chóp tam giác đều" or a
-#: tetrahedron with one regular face never match.
-_TU_DIEN_DEU = re.compile(r"(?<!\w)tứ\s+diện\s+đều\s+(?P<p>(?:[A-Z][0-9]*'?){4})(?![\w'.])", re.IGNORECASE)
+#: Run `target-invariant-regular-solid-semantics`: "tứ diện đều XYZW" (and "hình tứ diện đều X.YZW" /13) DEFINES
+#: a tetrahedron whose six edges are equal.
+_TU_DIEN_DEU = re.compile(
+    r"(?<!\w)(?:(?:hình|khối)\s+)?tứ\s+diện\s+đều\s+(?P<p>(?:[A-Z][0-9]*'?)\.(?:[A-Z][0-9]*'?){3}|(?:[A-Z][0-9]*'?){4})(?![\w'.])",
+    re.IGNORECASE,
+)
 
 
 def _canh_tu_dien_deu(c: LoiGoi) -> bool:
@@ -8195,6 +8206,68 @@ def _canh_tu_dien_deu(c: LoiGoi) -> bool:
             v = re.findall(r"[A-Z][0-9]*'?", m["p"])
             if len(set(v)) == 4 and a <= set(v) and b <= set(v):
                 return True                    # every pair of a tetrahedron's vertices is an edge
+    return False
+
+
+_LAP_PHUONG_KHOI = re.compile(
+    r"(?<!\w)(?:(?:hình|khối)\s+)?lập\s+phương\s+(?P<b1>(?:[A-Z][0-9]*'?){4})\.(?P<t1>(?:[A-Z][0-9]*'?){4})(?![\w'.])",
+    re.IGNORECASE,
+)
+
+
+def _canh_lap_phuong(c: LoiGoi) -> bool:
+    """`equal_length` of two edges of a CUBE that the call's own quote defines ("Vẽ hình lập phương ABCD.A'B'C'D'")."""
+    if c.fn != "equal_length":
+        return False
+    a, b = set(c.args.segment_a), set(c.args.segment_b)
+    if len(a) != 2 or len(b) != 2 or a == b:
+        return False
+    for q in c.quotes:
+        for m in _LAP_PHUONG_KHOI.finditer(chuan_hoa(q)):
+            vb = re.findall(r"[A-Z][0-9]*'?", m["b1"])
+            vt = re.findall(r"[A-Z][0-9]*'?", m["t1"])
+            if len(vb) == 4 and len(vt) == 4 and len(set(vb + vt)) == 8:
+                edges = (
+                    [{vb[i], vb[(i + 1) % 4]} for i in range(4)]
+                    + [{vt[i], vt[(i + 1) % 4]} for i in range(4)]
+                    + [{vb[i], vt[i]} for i in range(4)]
+                )
+                if a in edges and b in edges:
+                    return True
+    return False
+
+
+_TAT_CA_CANH_BANG_NHAU = re.compile(
+    r"(?<!\w)(?:(?:tất\s+cả\s+(?:các\s+)?|mọi\s+|các\s+)cạnh(?:\s+đều)?\s+bằng\s+nhau"
+    r"|(?:các\s+)?cạnh\s+bên(?:\s+đều)?\s+bằng\s+cạnh\s+đáy)(?!\w)",
+    re.IGNORECASE,
+)
+
+
+def _tat_ca_canh_bang_nhau(c: LoiGoi, calls: tuple[LoiGoi, ...]) -> bool:
+    """Bind unitless 'tất cả các cạnh bằng nhau' / 'cạnh bên bằng cạnh đáy' to `equal_length` on an edge pair of the owned solid."""
+    if c.fn != "equal_length":
+        return False
+    a, b = set(c.args.segment_a), set(c.args.segment_b)
+    if len(a) != 2 or len(b) != 2 or a == b:
+        return False
+    if not any(_TAT_CA_CANH_BANG_NHAU.search(q) for q in c.quotes):
+        return False
+    sols = [k for k in calls if k.fn in ("regular_pyramid", "pyramid", "prism")]
+    if not sols:
+        return False
+    for k in sols:
+        base = list(k.args.base)
+        top = list(getattr(k.args, "top", None) or [])
+        base_edges = [{base[i], base[(i + 1) % len(base)]} for i in range(len(base))]
+        lat_edges = (
+            [{k.args.apex, v} for v in base]
+            if k.fn in ("pyramid", "regular_pyramid")
+            else [{bv, tv} for bv, tv in zip(base, top)]
+        )
+        all_edges = base_edges + lat_edges + ([{top[i], top[(i + 1) % len(top)]} for i in range(len(top))] if top else [])
+        if a in all_edges and b in all_edges:
+            return True
     return False
 
 
@@ -8351,6 +8424,93 @@ def _dinh_nghia_diem_dung_nguon(c: LoiGoi, q: str, de: str) -> bool:
         objs = groups(m[2])
         if m[1] == a.point and len(objs) == 1 and len(objs[0]) == len(obj) and set(objs[0]) == set(obj):
             return True
+    return False
+
+
+_POLY_CENTER_NOUN = (
+    r"hình\s+vuông|hình\s+chữ\s+nhật|hình\s+thoi|hình\s+bình\s+hành|tam\s+giác(?:\s+đều)?|"
+    r"tứ\s+giác\s+đều|lục\s+giác\s+đều|đa\s+giác\s+đều|hình\s+thang(?:\s+(?:vuông|cân))?"
+)
+_POLY_CENTER_OBJ = (
+    rf"(?:(?:{_POLY_CENTER_NOUN}|mặt\s+đáy|đáy|mặt\s+phẳng|mp)(?:\s+\(?{_NHAN}\)?)?"
+    rf"(?:\s+(?:là\s+)?(?:một\s+)?(?:{_POLY_CENTER_NOUN})(?:\s+\(?{_NHAN}\)?)?)?"
+    rf"|\(?{_NHAN}\)?)"
+)
+
+
+def _tam_da_giac_dung_nguon(
+    c: LoiGoi,
+    de: str,
+    calls: tuple[LoiGoi, ...],
+    quote_override: str | None = None,
+) -> bool:
+    """§19: Ground explicit `"<P> là tâm ..."` / `"tâm <P> của ..."` / `"... có tâm <P>"` ONLY on a proved
+    centrally-symmetric polygon (`midpoint` of opposite vertices) or equilateral triangle (`centroid`),
+    and never on trapezoids, general triangles, circles, or spheres."""
+    if c.fn not in ("midpoint", "centroid"):
+        return False
+    pt = c.args.point
+    quotes = (quote_override,) if quote_override is not None else c.quotes
+    solid_bases = [
+        list(k.args.base)
+        for k in calls
+        if k.fn in ("pyramid", "regular_pyramid", "prism") and len(getattr(k.args, "base", ())) >= 3
+    ]
+    de_norm = chuan_hoa(de) if de else ""
+    pt_esc = re.escape(pt)
+    p1 = re.compile(
+        rf"(?:(?:gọi|đặt)\s+)?(?-i:(?<![\w']){pt_esc}(?![\w']))\s+là\s+tâm(?:\s+đối\s+xứng)?(?:\s+của)?\s+(?P<obj>{_POLY_CENTER_OBJ})",
+        re.IGNORECASE,
+    )
+    p2 = re.compile(
+        rf"(?<![\w'])tâm(?:\s+đối\s+xứng)?\s+(?-i:(?<![\w']){pt_esc}(?![\w']))\s+của\s+(?P<obj>{_POLY_CENTER_OBJ})",
+        re.IGNORECASE,
+    )
+    p3 = re.compile(
+        rf"(?P<obj>{_POLY_CENTER_OBJ})\s+(?:có\s+)?tâm(?:\s+đối\s+xứng)?(?:\s+là)?\s+(?-i:(?<![\w']){pt_esc}(?![\w']))",
+        re.IGNORECASE,
+    )
+    for raw_q in quotes:
+        q_norm = chuan_hoa(raw_q)
+        if re.search(r"(?i:mặt\s+cầu|khối\s+cầu|hình\s+cầu|nội\s+tiếp|ngoại\s+tiếp|đường\s+tròn)", q_norm):
+            continue
+        for pat in (p1, p2, p3):
+            for m in pat.finditer(q_norm):
+                obj = m.group("obj")
+                if re.search(r"(?i:hình\s+thang|mặt\s+cầu|khối\s+cầu|hình\s+cầu|nội\s+tiếp|ngoại\s+tiếp|đường\s+tròn)", obj):
+                    continue
+                poly_tokens = re.findall(rf"{_DAU_NHAN}(?:{_DIEM}){{3,}}(?![\w'])", obj)
+                poly: list[str] = []
+                if poly_tokens:
+                    poly = re.findall(_DIEM, poly_tokens[-1])
+                elif re.search(r"(?i:\bđáy\b)", obj) and len(solid_bases) == 1:
+                    poly = solid_bases[0]
+                if len(poly) < 3 or len(set(poly)) != len(poly):
+                    continue
+                poly_set = frozenset(poly)
+                if any(d.fn in ("trapezoid", "isosceles_trapezoid") and frozenset(d.args.vertices) == poly_set for d in calls):
+                    continue
+                poly_lbl = re.escape("".join(poly))
+                if de_norm and re.search(
+                    rf"(?i:hình\s+thang(?:\s+(?:vuông|cân))?\s+{poly_lbl}|đáy(?:\s+{poly_lbl})?\s+là\s+(?:một\s+)?hình\s+thang)",
+                    de_norm,
+                ):
+                    continue
+                if c.fn == "midpoint":
+                    if len(poly) < 4 or len(poly) % 2 != 0:
+                        continue
+                    for d in calls:
+                        if d.fn in ("regular_polygon", "rectangle", "rhombus", "parallelogram") and _cung_da_giac(list(d.args.vertices), poly):
+                            v = list(d.args.vertices)
+                            half = len(v) // 2
+                            diags = {frozenset((v[i], v[i + half])) for i in range(half)}
+                            if frozenset(c.args.segment) in diags:
+                                return True
+                elif c.fn == "centroid":
+                    if len(poly) != 3 or frozenset(c.args.polygon) != poly_set:
+                        continue
+                    if any(d.fn == "regular_polygon" and frozenset(d.args.vertices) == poly_set for d in calls):
+                        return True
     return False
 
 
@@ -9005,7 +9165,11 @@ def construction_source_bound(c: LoiGoi, de: str = "") -> bool:
         khoi = _khoi_cua_loi_goi(_GOI_NGUON.get())
         return any(_khop_doi_xung(c, q, khoi) for q in c.quotes)
     if c.fn in ("midpoint", "centroid", "right_angle"):
-        return any(_dinh_nghia_diem_dung_nguon(c, q, de) for q in c.quotes)
+        return any(
+            _dinh_nghia_diem_dung_nguon(c, q, de)
+            or (c.fn in ("midpoint", "centroid") and _tam_da_giac_dung_nguon(c, de, _GOI_NGUON.get(), q))
+            for q in c.quotes
+        )
     if c.fn == "divide_segment":
         return any(_ty_so_dung_nguon(c, q) for q in c.quotes)
     if c.fn == "orthogonal_projection" and _co_tu(c.quotes, ("chân đường cao", "hạ đường cao", "kẻ đường cao")):
@@ -9482,9 +9646,13 @@ def _cau_tien_de_dong_hop_le(s: str, s_start: int, de: str, calls: tuple[LoiGoi,
                             v == want for seg in _canh_cua(verts) for v, _cid in _nguon_do_dai_cuc_bo(calls, list(seg))):
                         return False
             elif "hình thang cân" in txt:
+                if re.search(r"\btâm\b", txt):
+                    return False
                 if m["ds"] is not None or not any(d.fn == "isosceles_trapezoid" and _cung_da_giac(list(d.args.vertices), verts) for d in calls):
                     return False
             elif "hình thang" in txt:
+                if re.search(r"\btâm\b", txt):
+                    return False
                 if m["ds"] is not None:
                     return False
                 has_trap = any(d.fn == "trapezoid" and _cung_da_giac(list(d.args.vertices), verts) for d in calls)
@@ -9585,7 +9753,7 @@ def _cau_tien_de_dong_hop_le(s: str, s_start: int, de: str, calls: tuple[LoiGoi,
             if want not in vals:
                 raise TuChoi("UNGROUNDED_VALUE", f"{matched[0].id}: giá trị vai trò không khớp số đo nguồn", (matched[0].id,))
         elif kind == "diem":
-            pt = m.groupdict().get("pt_cat") or re.findall(r"[A-Z][0-9]*'?", re.sub(r"^gọi\s+", "", m.group(), flags=re.I))[0]
+            pt = m.groupdict().get("pt_cat") or m.groupdict().get("pt_tam") or re.findall(r"[A-Z][0-9]*'?", re.sub(r"^(?:gọi|đặt)\s+", "", m.group(), flags=re.I))[0]
             if not any(d.fn in ("midpoint", "centroid", "divide_segment", "intersect_line_line", "intersect_line_plane") and getattr(d.args, "point", None) == pt
                        and construction_source_bound(replace(d, quotes=(m.group(),)), de) for d in calls):
                 return False

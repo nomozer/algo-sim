@@ -2756,29 +2756,6 @@ class _Dung:
                 self.trace[-1]["dependencies"] = [a, b]
                 self.dung.add(c.id)
                 return True
-        for k in sorted(self.khoi.values(), key=lambda k: k.name):
-            if k.kind == "pyramid" and k.regular and k.apex not in self.pts:
-                if frozenset(k.base) != frozenset(self.root.base):
-                    continue  # Derived solids consume known vertices; they never seed another chart or choose an apex.
-                reg = [c for c in self.of("regular_polygon") if frozenset(c.args.vertices) == frozenset(k.base)]
-                if not reg:
-                    raise TuChoi("REGULAR_PYRAMID_NEEDS_REGULAR_BASE", f"chóp đều {k.name} nhưng đáy chưa được khai là đa giác đều",
-                                 (k.call,))
-                if self.tam is None:
-                    self.tam = next(t for t in ("O", "I", "O1", "O2") if t not in self.text_labels and t not in self.pts)
-                    n = len(k.base)
-                    self._dat(self.tam, tuple(sum(self.pts[v][i] for v in k.base) / n for i in range(3)),
-                              "center_of_regular_base", {k.call, reg[0].id}, "DERIVED")
-                    self.trace[-1]["dependencies"] = list(k.base)
-                h2, cs = self._chieu_cao(
-                    k.apex,
-                    self.tam,
-                    [k.name],
-                    perp_calls=(k.call,),
-                    perp_rule="line_perpendicular_to_plane",
-                )
-                self._dat_ngoai_day(k.apex, self.tam, h2, "apex_over_center", {k.call, reg[0].id} | cs)
-                return True
         for c in self.of("centroid"):
             p, da = c.args.point, c.args.polygon
             if len(da) != 3:
@@ -2794,6 +2771,36 @@ class _Dung:
                           "DERIVED")
                 self.trace[-1]["dependencies"] = list(da)
                 self.dung.add(c.id)
+                return True
+        for k in sorted(self.khoi.values(), key=lambda k: k.name):
+            if k.kind == "pyramid" and k.regular and k.apex not in self.pts:
+                if frozenset(k.base) != frozenset(self.root.base):
+                    continue  # Derived solids consume known vertices; they never seed another chart or choose an apex.
+                reg = [c for c in self.of("regular_polygon") if frozenset(c.args.vertices) == frozenset(k.base)]
+                if not reg:
+                    raise TuChoi("REGULAR_PYRAMID_NEEDS_REGULAR_BASE", f"chóp đều {k.name} nhưng đáy chưa được khai là đa giác đều",
+                                 (k.call,))
+                if self.tam is None:
+                    n = len(k.base)
+                    ctr_xyz = tuple(sum(self.pts[v][i] for v in k.base) / n for i in range(3))
+                    existing_ctr = next(
+                        (lbl for lbl, xyz in self.pts.items() if lbl != k.apex and xyz == ctr_xyz),
+                        None,
+                    )
+                    if existing_ctr is not None:
+                        self.tam = existing_ctr
+                    else:
+                        self.tam = next(t for t in ("O", "I", "O1", "O2") if t not in self.text_labels and t not in self.pts)
+                        self._dat(self.tam, ctr_xyz, "center_of_regular_base", {k.call, reg[0].id}, "DERIVED")
+                        self.trace[-1]["dependencies"] = list(k.base)
+                h2, cs = self._chieu_cao(
+                    k.apex,
+                    self.tam,
+                    [k.name],
+                    perp_calls=(k.call,),
+                    perp_rule="line_perpendicular_to_plane",
+                )
+                self._dat_ngoai_day(k.apex, self.tam, h2, "apex_over_center", {k.call, reg[0].id} | cs)
                 return True
         for c, (a, b), mp, luat, chan_khai in self._rang_buoc_vuong():
             if c.fn == "orthogonal_projection" and (c.args.point in self.pts or c.args.image not in self.pts):
@@ -5157,6 +5164,60 @@ class _Dung:
                 else:
                     lenh.append(P.declare_point(ir_name(t), self.pts[t], t))
                     khai.append(P.memory_declaration(ir_name(t), "point3", provenance="LAYOUT_DERIVED"))
+            elif t == self.tam and self.root is not None and len(self.root.base) >= 3:
+                base = self.root.base
+                n = len(base)
+                if n == 3 and all(
+                    3 * self.pts[t][i] == sum(self.pts[v][i] for v in base)
+                    for i in range(3)
+                ):
+                    a, b, c3 = base
+                    m = ir_name(t) + "_mid_" + ir_name(b) + ir_name(c3)
+                    lenh.append({"kind": "construct_point", "target_var": m,
+                                 "expr": {"kind": "midpoint", "a": ir_name(b), "b": ir_name(c3)}})
+                    lenh.append({"kind": "construct_point", "target_var": ir_name(t), "label": t,
+                                 "expr": {"kind": "divide_segment", "a": ir_name(a), "b": m, "ratio": "2/3"}})
+                    khai += [P.memory_declaration(m, "point3"), P.memory_declaration(ir_name(t), "point3")]
+                elif n % 2 == 0 and all(
+                    2 * self.pts[t][i] == self.pts[base[0]][i] + self.pts[base[n // 2]][i]
+                    for i in range(3)
+                ):
+                    lenh.append({"kind": "construct_point", "target_var": ir_name(t), "label": t,
+                                 "expr": {"kind": "midpoint", "a": ir_name(base[0]), "b": ir_name(base[n // 2])}})
+                    khai.append(P.memory_declaration(ir_name(t), "point3"))
+                else:
+                    v0, v1, v2 = base[0], base[1], base[2]
+                    mps: list[str] = []
+                    for idx, vj_lbl in enumerate((v1, v2), 1):
+                        mid = f"td_tam_{ir_name(t)}_{idx}"
+                        ln = f"dt_tam_{ir_name(t)}_{idx}"
+                        mp = f"mp_tam_{ir_name(t)}_{idx}"
+                        lenh.append({"kind": "construct_point", "target_var": mid,
+                                     "expr": {"kind": "midpoint", "a": ir_name(v0), "b": ir_name(vj_lbl)}})
+                        lenh.append(P.construct_line(ln, ir_name(v0), ir_name(vj_lbl)))
+                        lenh.append({"kind": "assign", "target_var": mp,
+                                     "expr": {"kind": "plane_perpendicular_to_line", "point": mid, "line": ln}})
+                        khai += [
+                            P.memory_declaration(mid, "point3"),
+                            P.memory_declaration(ln, "line3"),
+                            P.memory_declaration(mp, "plane3"),
+                        ]
+                        so_huu.add(ln)
+                        mps.append(mp)
+                    truc = f"truc_tam_{ir_name(t)}"
+                    mp_day = f"mp_day_tam_{ir_name(t)}"
+                    lenh.append({"kind": "assign", "target_var": truc,
+                                 "expr": {"kind": "intersect_plane_plane", "plane_a": mps[0], "plane_b": mps[1]}})
+                    lenh.append({"kind": "construct_plane", "target_var": mp_day,
+                                 "through": list(map(ir_name, (v0, v1, v2)))})
+                    lenh.append({"kind": "construct_point", "target_var": ir_name(t), "label": t,
+                                 "expr": {"kind": "intersect_line_plane", "line": truc, "plane": mp_day}})
+                    khai += [
+                        P.memory_declaration(truc, "line3"),
+                        P.memory_declaration(mp_day, "plane3"),
+                        P.memory_declaration(ir_name(t), "point3"),
+                    ]
+                    so_huu.add(mp_day)
             else:
                 lenh.append(P.declare_point(ir_name(t), self.pts[t], t))
                 khai.append(P.memory_declaration(ir_name(t), "point3", provenance="LAYOUT_DERIVED"))
@@ -7442,9 +7503,15 @@ def _thu_chuan_hoa_ty_le(problem_text: str, plan: Any, auxiliary: tuple[dict, ..
     except TuChoi:
         return None
     asks = [c for c in calls if c.fn.startswith("ask_")]
-    if not asks or any(c.fn not in SCALE_FREE_ASKS for c in asks):
+    solids = [c for c in calls if c.fn in ("pyramid", "regular_pyramid", "prism")]
+    if asks:
+        if any(c.fn not in SCALE_FREE_ASKS for c in asks):
+            audit(certified=False, failed_obligation="PO-2_SCALE_FREE_GOALS",
+                  detail="mục tiêu không bất biến qua phép đồng dạng (độ dài, diện tích hay thể tích tuyệt đối)")
+            return None
+    elif not solids:
         audit(certified=False, failed_obligation="PO-2_SCALE_FREE_GOALS",
-              detail="mục tiêu không bất biến qua phép đồng dạng (độ dài, diện tích hay thể tích tuyệt đối)")
+              detail="không có khối đa diện hay mục tiêu bất biến qua phép đồng dạng")
         return None
     co_do_dai = [c.id for c in calls if not c.fn.startswith("ask_") and c.fn not in _SCALE_FREE_VALUED
                  and bool(_muc_dai_luong_cua_goi((c,)))]
@@ -7461,13 +7528,13 @@ def _thu_chuan_hoa_ty_le(problem_text: str, plan: Any, auxiliary: tuple[dict, ..
         audit(certified=False, failed_obligation="PO-3_UNIQUE_UP_TO_SCALE",
               detail=f"{len(anchors)} neo độ cao độc lập: các nhánh dấu chưa được xét trong phép chuẩn hoá")
         return None
-    if res.status != "SERVED" and res.code == "MISSING_DIMENSION":
+    if res.status != "SERVED" and res.code == "MISSING_DIMENSION" and asks:
         # one unit leaves a SHAPE freedom: serve only if the GOAL is proven invariant over it
         ti = _thu_bat_bien_muc_tieu(problem_text, plan, auxiliary, read_quotes, calls, asks, audit)
         if ti is not None:
             return ti
     if res.status != "SERVED" or not holder or holder[0]._scale_segment is None \
-            or (res.details or {}).get("free_height_for"):
+            or (res.details or {}).get("free_height_for") or holder[0].free_affine_for:
         audit(certified=False, failed_obligation="PO-3_UNIQUE_UP_TO_SCALE",
               detail=(f"cố định một đoạn đơn vị vẫn chưa xác định hình ({res.code}): còn tự do HÌNH DẠNG, không chỉ tỉ lệ"
                       if res.status != "SERVED" else "hình còn tham số tự do ngoài tỉ lệ"))

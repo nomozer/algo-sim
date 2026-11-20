@@ -61,10 +61,177 @@ from app.ai.typed_fact_next_extraction import (
 from app.simulation.error_codes import ErrorCode
 from app.simulation.geometry_functions import engine, planner, registry
 from app.simulation.geometry_functions.determinacy_audit import audit_determinacy_from_typed_facts
-from app.simulation.geometry_functions.typed_fact_next import TYPED_FACT_NEXT_V2_SCHEMA_VERSION
+from app.simulation.geometry_functions.typed_fact_next import (
+    TYPED_FACT_NEXT_V2_SCHEMA_VERSION,
+    UnresolvedSpec,
+    clarification_record,
+)
 
 ADAPTIVE_INPUT_ROUTER_VERSION = "adaptive-input-router/1"
 LOCAL_OCR_PRODUCTION_STATUS = "LOCAL_OCR_DIAGNOSTIC_ONLY"
+
+_MISSING_DATA_REFUSAL_CODES = frozenset({
+    "MISSING_DIMENSION",
+    "UNDERDETERMINED_POINT",
+    "FOOT_NOT_DETERMINED",
+    "PLANE_NOT_UNIQUE",
+    "AMBIGUOUS_FACT",
+    "AMBIGUOUS_REFERENCE",
+    "SECTION_NOT_CLOSED_ON_LATERAL_EDGES",
+})
+
+
+def _build_missing_data_clarification(problem_text: str, ref_code: str) -> dict[str, Any] | None:
+    """§6.G (I05 / VI06): Server-built `route-d-clarification/1` for underdetermined / missing-data refusals."""
+    quote = (problem_text or "").strip()
+    if not quote or len(re.findall(r"\w", quote)) < 2:
+        return None
+    if ref_code == "MISSING_DIMENSION":
+        spec = UnresolvedSpec(unresolved_id="u1", kind="missing_operand", quote=quote, missing_roles=("dimension",))
+    elif ref_code in ("AMBIGUOUS_FACT", "AMBIGUOUS_REFERENCE"):
+        spec = UnresolvedSpec(unresolved_id="u1", kind="ambiguous", quote=quote, missing_roles=("relation_kind",))
+    elif ref_code in _MISSING_DATA_REFUSAL_CODES:
+        spec = UnresolvedSpec(
+            unresolved_id="u1",
+            kind="missing_operand",
+            quote=quote,
+            missing_roles=("relation_kind", "dimension"),
+        )
+    else:
+        return None
+    clar = clarification_record(spec, problem_text)
+    return clar if clar.get("spans") and clar.get("question") else None
+
+
+def _enrich_hybrid_refusal(
+    *,
+    norm_text: str,
+    response: dict[str, Any],
+    receipt: dict[str, Any],
+    payload: dict[str, Any] | None,
+    local_parse_status: str,
+    local_parse_reason: str | None,
+    local_fallback_reason: str | None,
+    source_coverage: dict[str, Any],
+    is_fallback_allowed: bool,
+    local_complete: bool,
+    force_local_source_missing: bool = False,
+) -> tuple[dict[str, Any], dict[str, Any], dict[str, Any] | None, dict[str, Any] | None, str | None]:
+    """Shared determinacy audit + `insufficient_specification` + `route-d-clarification/1` enrichment for parser and SLM paths."""
+    from app.ai.hybrid_preview import RefusalClass, classify_refusal
+
+    route_d_raw = dict(response.get("route_d") or {})
+    refusal_raw = dict(route_d_raw.get("refusal") or {})
+    env_raw = dict(response.get("envelope") or {})
+    ref_code = str(
+        refusal_raw.get("code")
+        or refusal_raw.get("reason_code")
+        or env_raw.get("reason_code")
+        or ""
+    )
+
+    det_audit: dict[str, Any] | None = None
+    raw_det = receipt.get("determinacy_audit")
+    if isinstance(raw_det, dict):
+        det_audit = deepcopy(raw_det)
+
+    unresolved_items = list((payload or {}).get("unresolved") or [])
+    unresolved_kinds = [str(u.get("kind") or "") for u in unresolved_items if isinstance(u, dict)]
+    only_dim_missing = bool(unresolved_items) and all(
+        isinstance(u, dict)
+        and u.get("kind") == "missing_operand"
+        and list(u.get("missing_roles") or []) == ["dimension"]
+        for u in unresolved_items
+    )
+    if det_audit is None and payload is not None and (
+        ref_code in ("MISSING_DIMENSION", "UNDERDETERMINED_POINT", "FOOT_NOT_DETERMINED", "PLANE_NOT_UNIQUE", "FIGURE_NOT_UNIQUE", "AMBIGUOUS_FACT")
+        or (local_parse_status == LOCAL_PARSE_AMBIGUOUS and only_dim_missing)
+    ):
+        det_audit = audit_determinacy_from_typed_facts(
+            norm_text,
+            payload,
+            terminal_code=ref_code or "AMBIGUOUS_FACT",
+        )
+
+    diag = diagnose(
+        parse_status=local_parse_status,
+        parse_reason=local_parse_reason,
+        fallback_reason=local_fallback_reason,
+        source_coverage=source_coverage,
+        terminal_code=ref_code or None,
+        fallback_allowed=is_fallback_allowed,
+        planner=route_d_raw.get("planner"),
+        unresolved_kinds=unresolved_kinds,
+        determinacy_audit=det_audit,
+    )
+
+    reclassified_env: dict[str, Any] | None = None
+    reclassified_group: str | None = None
+    if receipt.get("failure_stage") != "adapter4" and ref_code:
+        if diag.get("root_cause") == "UNSUPPORTED_GOAL_KIND":
+            kind = RefusalClass(
+                "CAPABILITY",
+                "capability_gap",
+                "UNKNOWN",
+                "Hệ chưa hỗ trợ yêu cầu chứng minh hình học; hiện chỉ dựng hình và tính các đại lượng hình học không gian.",
+            )
+        else:
+            is_proven_local_complete = (
+                local_complete
+                or local_parse_status == LOCAL_PARSE_COMPLETE
+                or (
+                    local_parse_status == LOCAL_PARSE_AMBIGUOUS
+                    and only_dim_missing
+                    and (det_audit or {}).get("status") == "PROVED_UNDERDETERMINED"
+                )
+            )
+            kind = classify_refusal(
+                ref_code,
+                route_d_raw.get("planner"),
+                problem_text=norm_text,
+                details={"determinacy_audit": det_audit} if det_audit is not None else None,
+                local_complete=is_proven_local_complete,
+            )
+            if (
+                force_local_source_missing
+                and ref_code in _MISSING_DATA_REFUSAL_CODES
+                and kind.failure_category == "insufficient_specification"
+                and kind.refusal_cause != "SOURCE"
+            ):
+                kind = RefusalClass(kind.group, "insufficient_specification", "SOURCE", kind.message)
+        reclassified_env = {
+            "status": "unsupported",
+            "reason_code": ref_code,
+            "reason": kind.message,
+            "learner_reason": kind.message,
+            "failure_category": kind.failure_category,
+            "refusal_cause": kind.refusal_cause,
+        }
+        if receipt.get("failure_kind") != "TECHNICAL_FAILURE":
+            reclassified_group = kind.group
+
+    eff_env = reclassified_env or env_raw
+    eff_cat = str(refusal_raw.get("failure_category") or eff_env.get("failure_category") or "")
+    existing_clar = refusal_raw.get("clarification") if isinstance(refusal_raw.get("clarification"), dict) else None
+    if existing_clar is None and eff_cat == "insufficient_specification":
+        existing_clar = _build_missing_data_clarification(norm_text, ref_code)
+
+    out_response = dict(response)
+    if reclassified_env is not None:
+        out_response["envelope"] = reclassified_env
+    if existing_clar is not None:
+        if not isinstance(refusal_raw, dict):
+            refusal_raw = {}
+        refusal_raw["nlu_class"] = existing_clar.get("nlu_class")
+        if existing_clar.get("question"):
+            refusal_raw["clarification_question"] = existing_clar.get("question")
+        if ref_code in ("AMBIGUOUS_FACT", "OUT_OF_SCOPE") and "clarification" not in refusal_raw:
+            refusal_raw["clarification"] = deepcopy(existing_clar)
+        route_d_raw["refusal"] = refusal_raw
+        route_d_raw["clarification"] = deepcopy(existing_clar)
+        out_response["route_d"] = route_d_raw
+
+    return out_response, receipt, det_audit, diag, reclassified_group
 
 InputKind = Literal["text", "pdf_text", "docx", "image", "pdf_scan", "user_edited_text"]
 
@@ -343,90 +510,30 @@ def route_text_input(
         status_str = str(route_d_raw.get("status") or "REFUSED")
         refusal_raw = route_d_raw.get("refusal") or {}
         env_raw = hyb_out.response.get("envelope") or {}
-        ref_code = str(
-            refusal_raw.get("code")
-            or refusal_raw.get("reason_code")
-            or env_raw.get("reason_code")
-            or ""
-        )
-
         det_audit: dict[str, Any] | None = None
         diag: dict[str, Any] | None = None
-        reclassified_env: dict[str, Any] | None = None
         reclassified_group: str | None = None
+        response = dict(hyb_out.response)
 
         if status_str != "SERVED":
-            raw_det = hyb_out.receipt.get("determinacy_audit")
-            if isinstance(raw_det, dict):
-                det_audit = deepcopy(raw_det)
-            unresolved_items = list((local_res.payload or {}).get("unresolved") or [])
-            unresolved_kinds = [str(u.get("kind") or "") for u in unresolved_items if isinstance(u, dict)]
-            only_dim_missing = bool(unresolved_items) and all(
-                isinstance(u, dict)
-                and u.get("kind") == "missing_operand"
-                and list(u.get("missing_roles") or []) == ["dimension"]
-                for u in unresolved_items
-            )
-            if det_audit is None and (
-                ref_code in ("MISSING_DIMENSION", "UNDERDETERMINED_POINT", "FOOT_NOT_DETERMINED", "PLANE_NOT_UNIQUE", "FIGURE_NOT_UNIQUE")
-                or (local_res.status == LOCAL_PARSE_AMBIGUOUS and only_dim_missing)
-            ):
-                det_audit = audit_determinacy_from_typed_facts(
-                    norm_text,
-                    local_res.payload,
-                    terminal_code=ref_code or "AMBIGUOUS_FACT",
-                )
-            diag = diagnose(
-                parse_status=local_res.status,
-                parse_reason=local_res.reason_code,
-                fallback_reason=local_res.fallback_reason,
+            response, _rec_unused, det_audit, diag, reclassified_group = _enrich_hybrid_refusal(
+                norm_text=norm_text,
+                response=response,
+                receipt=hyb_out.receipt,
+                payload=local_res.payload,
+                local_parse_status=local_res.status,
+                local_parse_reason=local_res.reason_code,
+                local_fallback_reason=local_res.fallback_reason,
                 source_coverage=local_res.source_coverage.to_dict(),
-                terminal_code=ref_code or None,
-                fallback_allowed=is_fallback_allowed,
-                planner=route_d_raw.get("planner"),
-                unresolved_kinds=unresolved_kinds,
-                determinacy_audit=det_audit,
+                is_fallback_allowed=is_fallback_allowed,
+                local_complete=(local_res.status == LOCAL_PARSE_COMPLETE),
+                force_local_source_missing=True,
             )
-            if hyb_out.receipt.get("failure_stage") != "adapter4" and ref_code:
-                from app.ai.hybrid_preview import RefusalClass, classify_refusal
 
-                if diag.get("root_cause") == "UNSUPPORTED_GOAL_KIND":
-                    kind = RefusalClass(
-                        "CAPABILITY",
-                        "capability_gap",
-                        "UNKNOWN",
-                        "Hệ chưa hỗ trợ yêu cầu chứng minh hình học; hiện chỉ dựng hình và tính các đại lượng hình học không gian.",
-                    )
-                else:
-                    is_proven_local_complete = (
-                        local_res.status == LOCAL_PARSE_COMPLETE
-                        or (
-                            local_res.status == LOCAL_PARSE_AMBIGUOUS
-                            and only_dim_missing
-                            and (det_audit or {}).get("status") == "PROVED_UNDERDETERMINED"
-                        )
-                    )
-                    kind = classify_refusal(
-                        ref_code,
-                        route_d_raw.get("planner"),
-                        problem_text=norm_text,
-                        details={"determinacy_audit": det_audit} if det_audit is not None else None,
-                        local_complete=is_proven_local_complete,
-                    )
-                reclassified_env = {
-                    "status": "unsupported",
-                    "reason_code": ref_code,
-                    "reason": kind.message,
-                    "learner_reason": kind.message,
-                    "failure_category": kind.failure_category,
-                    "refusal_cause": kind.refusal_cause,
-                }
-                if hyb_out.receipt.get("failure_kind") != "TECHNICAL_FAILURE":
-                    reclassified_group = kind.group
-
-        eff_env = reclassified_env or env_raw
+        eff_env = response.get("envelope") or env_raw
+        eff_refusal = (response.get("route_d") or {}).get("refusal") or refusal_raw
         fail_cat = str(
-            refusal_raw.get("failure_category")
+            eff_refusal.get("failure_category")
             or eff_env.get("failure_category")
             or ""
         )
@@ -470,9 +577,6 @@ def route_text_input(
             source_coverage=local_res.source_coverage.to_dict(),
             cache_key_metadata=cache_meta,
         )
-        response = dict(hyb_out.response)
-        if reclassified_env is not None:
-            response["envelope"] = reclassified_env
         route_d = dict(response.get("route_d") or {})
         route_d["extraction_mode"] = "LOCAL_DETERMINISTIC_PARSER"
         route_d["local_parser_version"] = LOCAL_GEOMETRY_PARSER_VERSION
@@ -591,32 +695,55 @@ def route_text_input(
         source_coverage=local_res.source_coverage.to_dict(),
         cache_key_metadata=cache_meta,
     )
+    non_infra_clar = _build_missing_data_clarification(norm_text, fail_code) if not is_infra_block else None
+    non_infra_env: dict[str, Any] = {
+        "status": "refused",
+        "reason_code": fail_code,
+        "failure_kind": "INFRASTRUCTURE_FAILURE" if is_infra_block else "EXTRACTION_FALLBACK_REQUIRED",
+    }
+    non_infra_refusal: dict[str, Any] = {
+        "code": fail_code,
+        "reason_code": fail_code,
+        "fallback_reason": local_res.fallback_reason,
+    }
+    if not is_infra_block and fail_code in _MISSING_DATA_REFUSAL_CODES and non_infra_clar is not None:
+        from app.ai.hybrid_preview import classify_refusal
+
+        kind_fc = classify_refusal(fail_code, problem_text=norm_text, local_complete=True)
+        non_infra_env = {
+            "status": "unsupported",
+            "reason_code": fail_code,
+            "reason": kind_fc.message,
+            "learner_reason": kind_fc.message,
+            "failure_category": "insufficient_specification",
+            "refusal_cause": "SOURCE",
+        }
+        non_infra_refusal["nlu_class"] = non_infra_clar["nlu_class"]
+        if non_infra_clar.get("question"):
+            non_infra_refusal["clarification_question"] = non_infra_clar["question"]
+        if fail_code == "AMBIGUOUS_FACT":
+            non_infra_refusal["clarification"] = deepcopy(non_infra_clar)
+
     response = {
         "schema_version": ROUTE_D_SIMULATION_V4_SCHEMA_VERSION,
         "route_d": {
             "status": "REFUSED",
             "adapter_version": ADAPTER_V4_VERSION,
             "schema_version": ROUTE_D_SIMULATION_V4_SCHEMA_VERSION,
+            **({"contract_version": TYPED_FACT_NEXT_V2_SCHEMA_VERSION} if not is_infra_block else {}),
             "extraction_mode": "FAIL_CLOSED_NO_FALLBACK",
             "local_parser_version": LOCAL_GEOMETRY_PARSER_VERSION,
             "adaptive_router_version": ADAPTIVE_INPUT_ROUTER_VERSION,
             "adaptive_telemetry": telemetry.to_dict(),
-            "refusal": {
-                "code": fail_code,
-                "reason_code": fail_code,
-                "fallback_reason": local_res.fallback_reason,
-            },
+            "refusal": non_infra_refusal,
+            **({"clarification": deepcopy(non_infra_clar)} if non_infra_clar is not None and fail_code in _MISSING_DATA_REFUSAL_CODES else {}),
             # the terminal reason above says the fallback was blocked; this says what the local route did not read
             "local_diagnostics": diagnose(
                 parse_status=local_res.status, parse_reason=local_res.reason_code, fallback_reason=local_res.fallback_reason,
                 source_coverage=local_res.source_coverage.to_dict(), terminal_code=fail_code,
                 fallback_allowed=is_fallback_allowed),
         },
-        "envelope": {
-            "status": "refused",
-            "reason_code": fail_code,
-            "failure_kind": "INFRASTRUCTURE_FAILURE" if is_infra_block else "EXTRACTION_FALLBACK_REQUIRED",
-        },
+        "envelope": non_infra_env,
     }
     receipt = {
         "schema": "adaptive-input-route-receipt/1",
@@ -1880,28 +2007,51 @@ def route_text_input_local_slm(
             source_coverage=cov_dict,
             cache_key_metadata=slm_id,
         )
+        slm_clar = _build_missing_data_clarification(slm_res.norm_text, fail_code) if fail_code in _MISSING_DATA_REFUSAL_CODES else None
+        slm_refusal: dict[str, Any] = {
+            "code": fail_code,
+            "reason_code": fail_code,
+            "failure_taxonomy": slm_res.failure_taxonomy,
+        }
+        slm_env: dict[str, Any] = {
+            "status": "refused",
+            "reason_code": fail_code,
+            "failure_kind": "EXTRACTION_FALLBACK_REQUIRED",
+        }
+        if slm_clar is not None:
+            from app.ai.hybrid_preview import classify_refusal
+
+            kind_slm = classify_refusal(fail_code, problem_text=slm_res.norm_text, local_complete=True)
+            slm_env = {
+                "status": "unsupported",
+                "reason_code": fail_code,
+                "reason": kind_slm.message,
+                "learner_reason": kind_slm.message,
+                "failure_category": "insufficient_specification",
+                "refusal_cause": "SOURCE",
+            }
+            slm_refusal["nlu_class"] = slm_clar["nlu_class"]
+            if slm_clar.get("question"):
+                slm_refusal["clarification_question"] = slm_clar["question"]
+            if fail_code == "AMBIGUOUS_FACT":
+                slm_refusal["clarification"] = deepcopy(slm_clar)
+
         resp_ref = {
             "schema_version": ROUTE_D_SIMULATION_V4_SCHEMA_VERSION,
             "route_d": {
                 "status": "REFUSED",
                 "adapter_version": ADAPTER_V4_VERSION,
                 "schema_version": ROUTE_D_SIMULATION_V4_SCHEMA_VERSION,
+                "contract_version": TYPED_FACT_NEXT_V2_SCHEMA_VERSION,
                 "extraction_mode": "LOCAL_SLM_GROUNDING_REJECTED",
                 "local_parser_version": LOCAL_GEOMETRY_PARSER_VERSION,
                 "adaptive_router_version": ADAPTIVE_INPUT_ROUTER_VERSION,
                 "adaptive_telemetry": tel_ref.to_dict(),
                 "slm_grounding_envelope": slm_res.grounding_envelope,
-                "refusal": {
-                    "code": fail_code,
-                    "reason_code": fail_code,
-                    "failure_taxonomy": slm_res.failure_taxonomy,
-                },
+                "refusal": slm_refusal,
+                **({"clarification": deepcopy(slm_clar)} if slm_clar is not None else {}),
             },
-            "envelope": {
-                "status": "refused",
-                "reason_code": fail_code,
-                "failure_kind": "EXTRACTION_FALLBACK_REQUIRED",
-            },
+            "envelope": slm_env,
         }
         rec_ref = {
             "schema": "adaptive-input-route-receipt/1",
@@ -1950,18 +2100,43 @@ def route_text_input_local_slm(
     )
     resp_ok = dict(hyb_out.response)
     route_d = dict(resp_ok.get("route_d") or {})
+    status_str = str(route_d.get("status") or "REFUSED")
+    det_slm: dict[str, Any] | None = None
+    diag_slm: dict[str, Any] | None = None
+    reclass_group_slm: str | None = None
+    if status_str != "SERVED":
+        resp_ok, _rec_unused, det_slm, diag_slm, reclass_group_slm = _enrich_hybrid_refusal(
+            norm_text=slm_res.norm_text,
+            response=resp_ok,
+            receipt=hyb_out.receipt,
+            payload=slm_res.canonical_payload,
+            local_parse_status=local_res.status,
+            local_parse_reason=local_res.reason_code,
+            local_fallback_reason=local_res.fallback_reason,
+            source_coverage=cov_dict,
+            is_fallback_allowed=False,
+            local_complete=True,
+            force_local_source_missing=True,
+        )
+        route_d = dict(resp_ok.get("route_d") or {})
+
     route_d["extraction_mode"] = "LOCAL_SLM_GROUNDED"
     route_d["local_parser_version"] = LOCAL_GEOMETRY_PARSER_VERSION
     route_d["adaptive_router_version"] = ADAPTIVE_INPUT_ROUTER_VERSION
     route_d["adaptive_telemetry"] = tel_ok.to_dict()
     route_d["slm_grounding_envelope"] = slm_res.grounding_envelope
+    if det_slm is not None:
+        route_d["determinacy_audit"] = det_slm
+    if diag_slm is not None:
+        route_d["local_diagnostics"] = diag_slm
     resp_ok["route_d"] = route_d
     rec_ok = {
         **hyb_out.receipt,
+        **({"failure_kind": reclass_group_slm} if reclass_group_slm is not None else {}),
+        **({"determinacy_audit": deepcopy(det_slm)} if det_slm is not None else {}),
         "adaptive_telemetry": tel_ok.to_dict(),
         "slm_grounding_envelope": slm_res.grounding_envelope,
     }
-    status_str = str(route_d.get("status") or "REFUSED")
     return AdaptiveRouteOutcome(
         status=status_str,
         response=resp_ok,
