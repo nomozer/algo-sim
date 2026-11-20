@@ -4137,59 +4137,439 @@
 }
 
 /* --------------------------------------------------------------------------
-   Landing V1.4 — Redesigned Enter Portals Right-Hand Hero Stage
+   Landing V1.4 — Spatial Prism Horizon (First-Principles Design-First Hero)
    -------------------------------------------------------------------------- */
 
-@media (min-width: 1100px) {
-  .axo-v14-hero-shell {
-    grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr);
-  }
+.axo-v14-hero.axo-v14-hero-horizon {
+  position: relative;
+  background: linear-gradient(
+    180deg,
+    var(--canvas) 0%,
+    var(--canvas) 70%,
+    var(--canvas-soft) 100%
+  );
+  scroll-margin-top: 72px;
+  padding: clamp(18px, 3vh, 42px) clamp(20px, 4vw, 48px) clamp(20px, 2.8vh, 36px);
 }
 
-.axo-v14-hero-visual.axo-v14-portal-stage {
-  height: auto;
-  min-height: 0;
+.axo-v14-hero-horizon-shell {
+  width: 100%;
+  max-width: 1180px;
+  min-height: clamp(612px, calc(100svh - 132px), 956px);
+  margin: 0 auto;
   display: flex;
   flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  text-align: center;
+  gap: clamp(12px, 1.8vh, 22px);
+}
+
+.axo-v14-hero-horizon-title {
+  order: 1;
+  max-width: 820px;
+  font-size: clamp(2.15rem, 3.25vw, 3.35rem);
+  line-height: 1.2;
+  letter-spacing: -0.034em;
+}
+
+.axo-v14-hero-horizon-body {
+  order: 2;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  max-width: 680px;
+}
+
+.axo-v14-hero-horizon-lead {
+  margin: 0;
+  max-width: 60ch;
+  font-size: clamp(0.95rem, 1.04vw, 1.0625rem);
+  line-height: 1.56;
+  text-wrap: balance;
+}
+
+.axo-v14-hero-horizon-actions {
+  margin-top: clamp(14px, 1.8vh, 22px);
+  justify-content: center;
+}
+
+.axo-v14-hero-horizon-stage {
+  --axo-hx: 0;
+  --axo-hy: 0;
+  order: 3;
+  position: relative;
+  flex: 1 1 auto;
+  width: 100%;
+  max-width: 1160px;
+  min-height: clamp(276px, 43svh, 480px);
+  height: clamp(276px, 43svh, 480px);
+  max-height: 500px;
+  display: flex;
   align-items: center;
   justify-content: center;
-  gap: 10px;
-}
-
-.axo-v14-portal-root {
-  position: relative;
-  width: 100%;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 10px;
-}
-
-.axo-v14-portal-canvas-wrap {
-  position: relative;
-  width: 100%;
-  height: clamp(460px, 46vw, 560px);
-  border-radius: var(--rounded-xl);
-  overflow: hidden;
+  overflow: visible;
   touch-action: pan-y;
 }
 
-.axo-v14-portal-canvas-wrap.is-inside {
-  touch-action: none;
-  border: 1px solid var(--hairline);
-  box-shadow: var(--shadow-soft);
-}
-
-.axo-v14-portal-canvas-wrap canvas {
-  display: block;
+.axo-v14-horizon-drafting {
+  position: absolute;
+  inset: 0;
   width: 100%;
   height: 100%;
+  pointer-events: none;
+  overflow: visible;
+  z-index: 1;
 }
 
-.axo-v14-portal-root.is-gallery canvas {
-  touch-action: pan-y !important;
+.axo-v14-horizon-orbit-ring {
+  fill: none;
+  stroke: var(--primary);
+  stroke-width: 1.2;
+  stroke-opacity: 0.14;
 }
 
+.axo-v14-horizon-orbit-inner {
+  fill: none;
+  stroke: var(--ink-muted);
+  stroke-width: 1;
+  stroke-dasharray: 4 7;
+  stroke-opacity: 0.16;
+}
+
+.axo-v14-horizon-datum {
+  stroke: var(--ink-muted);
+  stroke-width: 1;
+  stroke-opacity: 0.16;
+}
+
+.axo-v14-horizon-tick {
+  fill: none;
+  stroke: var(--ink-muted);
+  stroke-width: 1.3;
+  stroke-opacity: 0.34;
+}
+
+.axo-v14-horizon-shadow {
+  position: absolute;
+  pointer-events: none;
+  border-radius: var(--rounded-full);
+  z-index: 2;
+}
+
+.axo-v14-horizon-shadow-main {
+  left: 50%;
+  bottom: 4.5%;
+  width: clamp(200px, 28%, 310px);
+  height: 28px;
+  transform: translate3d(
+    calc(-50% + var(--axo-hx) * -4px),
+    calc(var(--axo-hy) * 2px),
+    0
+  );
+  background: radial-gradient(
+    ellipse at center,
+    rgba(0, 0, 0, 0.16) 0%,
+    rgba(0, 0, 0, 0.06) 44%,
+    rgba(0, 0, 0, 0) 76%
+  );
+  filter: blur(7px);
+}
+
+.axo-v14-horizon-shadow-left {
+  left: clamp(3.5%, 6vw, 8.5%);
+  bottom: 7%;
+  width: clamp(110px, 15%, 168px);
+  height: 22px;
+  transform: translate3d(calc(var(--axo-hx) * -8px), 0, 0);
+  background: radial-gradient(
+    ellipse at center,
+    rgba(0, 0, 0, 0.09) 0%,
+    rgba(0, 0, 0, 0) 74%
+  );
+  filter: blur(8px);
+}
+
+.axo-v14-horizon-shadow-right {
+  right: clamp(3.5%, 6vw, 8.5%);
+  bottom: 12%;
+  width: clamp(92px, 13%, 144px);
+  height: 18px;
+  transform: translate3d(calc(var(--axo-hx) * 8px), 0, 0);
+  background: radial-gradient(
+    ellipse at center,
+    rgba(0, 117, 222, 0.08) 0%,
+    rgba(0, 0, 0, 0.03) 45%,
+    rgba(0, 0, 0, 0) 74%
+  );
+  filter: blur(8px);
+}
+
+.axo-v14-sculpt-layer {
+  position: absolute;
+  margin: 0;
+  pointer-events: none;
+  user-select: none;
+  will-change: transform;
+}
+
+.axo-v14-sculpt-img {
+  display: block;
+  width: auto;
+  height: 100%;
+  max-width: 100%;
+  object-fit: contain;
+}
+
+.axo-v14-sculpt-center {
+  left: 50%;
+  bottom: 7%;
+  height: 89%;
+  z-index: 4;
+  transform: translate3d(
+    calc(-50% + var(--axo-hx) * -10px),
+    calc(var(--axo-hy) * -8px),
+    0
+  );
+}
+
+.axo-v14-sculpt-sat-left {
+  left: clamp(2%, 5vw, 7%);
+  bottom: 14%;
+  height: 47%;
+  z-index: 3;
+  transform: translate3d(
+    calc(var(--axo-hx) * 14px),
+    calc(var(--axo-hy) * 10px),
+    0
+  );
+  animation: axo-v14-float-left 7.2s ease-in-out infinite;
+}
+
+.axo-v14-sculpt-sat-right {
+  right: clamp(3%, 5.5vw, 8%);
+  top: 8%;
+  height: 42%;
+  z-index: 5;
+  transform: translate3d(
+    calc(var(--axo-hx) * -18px),
+    calc(var(--axo-hy) * -13px),
+    0
+  );
+  animation: axo-v14-float-right 6.4s ease-in-out infinite;
+}
+
+@keyframes axo-v14-float-left {
+  0%,
+  100% {
+    margin-bottom: 0;
+  }
+  50% {
+    margin-bottom: 7px;
+  }
+}
+
+@keyframes axo-v14-float-right {
+  0%,
+  100% {
+    margin-top: 0;
+  }
+  50% {
+    margin-top: 7px;
+  }
+}
+
+.axo-v14-horizon-footer-cue {
+  order: 4;
+  width: 100%;
+  max-width: 1080px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding-top: 2px;
+}
+
+.axo-v14-horizon-cross {
+  color: var(--ink-muted);
+  font-size: 0.9375rem;
+  font-weight: 400;
+  line-height: 1;
+  opacity: 0.65;
+  user-select: none;
+}
+
+.axo-v14-horizon-scroll-link {
+  display: inline-flex;
+  align-items: center;
+  min-height: 36px;
+  padding: 4px 14px;
+  border-radius: var(--rounded-full);
+  color: var(--ink-muted);
+  font-size: 0.78rem;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  text-decoration: none;
+  transition: color var(--axo-v14-t-fast) var(--axo-v14-ease-out),
+    background-color var(--axo-v14-t-fast) var(--axo-v14-ease-out);
+}
+
+.axo-v14-horizon-scroll-link:hover {
+  color: var(--primary-active);
+  background-color: var(--surface);
+}
+
+.axo-v14-horizon-scroll-link:focus-visible {
+  outline: 2px solid var(--primary);
+  outline-offset: 2px;
+}
+
+@media (max-width: 1024px) {
+  .axo-v14-hero.axo-v14-hero-horizon {
+    padding: 20px clamp(20px, 4vw, 40px) 24px;
+  }
+
+  .axo-v14-hero-horizon-shell {
+    min-height: 0;
+    gap: 14px;
+  }
+
+  .axo-v14-hero-horizon-stage {
+    height: clamp(270px, 42vw, 370px);
+    min-height: 270px;
+  }
+
+  .axo-v14-sculpt-sat-left {
+    left: 3%;
+    height: 47%;
+  }
+
+  .axo-v14-sculpt-sat-right {
+    right: 3%;
+    height: 41%;
+  }
+}
+
+@media (max-width: 680px) {
+  .axo-v14-hero.axo-v14-hero-horizon {
+    padding: 14px 18px 22px;
+  }
+
+  .axo-v14-hero-horizon-shell {
+    gap: 12px;
+  }
+
+  .axo-v14-hero-horizon-title {
+    order: 1;
+    font-size: clamp(1.8rem, 7.2vw, 2.3rem);
+    line-height: 1.24;
+  }
+
+  .axo-v14-hero-horizon-stage {
+    order: 2;
+    height: clamp(206px, 54vw, 264px);
+    min-height: 206px;
+    margin-top: 2px;
+  }
+
+  .axo-v14-hero-horizon-body {
+    order: 3;
+    max-width: 100%;
+  }
+
+  .axo-v14-hero-horizon-lead {
+    font-size: 0.9375rem;
+    line-height: 1.54;
+  }
+
+  .axo-v14-hero-horizon-actions {
+    width: 100%;
+    margin-top: 14px;
+  }
+
+  .axo-v14-hero-horizon-actions .axo-v14-btn {
+    min-height: 46px;
+  }
+
+  .axo-v14-sculpt-center {
+    height: 92%;
+    bottom: 6%;
+  }
+
+  .axo-v14-sculpt-sat-left {
+    left: 2%;
+    bottom: 11%;
+    height: 42%;
+  }
+
+  .axo-v14-sculpt-sat-right {
+    right: 2%;
+    top: 6%;
+    height: 37%;
+  }
+
+  .axo-v14-horizon-shadow-left {
+    left: 4%;
+    width: 22%;
+  }
+
+  .axo-v14-horizon-shadow-right {
+    right: 4%;
+    width: 20%;
+  }
+
+  .axo-v14-horizon-footer-cue {
+    order: 4;
+    padding-top: 4px;
+  }
+
+  .axo-v14-horizon-cross-mid {
+    display: none;
+  }
+
+  .axo-v14-horizon-scroll-link {
+    font-size: 0.72rem;
+    letter-spacing: 0.04em;
+    padding-inline: 8px;
+  }
+}
+
+@media (max-width: 390px) {
+  .axo-v14-hero-horizon-title {
+    font-size: clamp(1.62rem, 7.6vw, 1.95rem);
+  }
+
+  .axo-v14-hero-horizon-stage {
+    height: clamp(188px, 55vw, 224px);
+    min-height: 188px;
+  }
+
+  .axo-v14-sculpt-sat-left {
+    left: 0;
+    height: 39%;
+  }
+
+  .axo-v14-sculpt-sat-right {
+    right: 0;
+    height: 34%;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .axo-v14-sculpt-sat-left,
+  .axo-v14-sculpt-sat-right {
+    animation: none;
+  }
+
+  .axo-v14-horizon-scroll-link {
+    transition: none;
+  }
+}
+
+/* Preserved CSS classes for unmounted legacy HeroPortalStageV14 / HeroPortalFallbackSvg
+   (kept dormant until Phase 7 post-approval cleanup so class-coverage stays green). */
 .axo-v14-portal-hud-top {
   position: absolute;
   top: 14px;
@@ -4212,27 +4592,11 @@
   border-radius: var(--rounded-full);
   border: 1px solid var(--axo-sp-border-strong);
   background: rgba(255, 255, 255, 0.92);
-  backdrop-filter: blur(8px);
   color: var(--ink);
   font-family: inherit;
   font-size: 0.8125rem;
   font-weight: 600;
   cursor: pointer;
-  box-shadow: var(--shadow-soft);
-  transition: background-color 0.16s ease, border-color 0.16s ease, color 0.16s ease;
-}
-
-.axo-v14-portal-hud-btn:hover {
-  background: var(--surface);
-  border-color: var(--primary);
-  color: var(--primary-active);
-}
-
-.axo-v14-portal-hud-btn:focus-visible,
-.axo-v14-portal-chip:focus-visible,
-.axo-v14-portal-nav-pill:focus-visible {
-  outline: 2px solid var(--primary);
-  outline-offset: 2px;
 }
 
 .axo-v14-portal-hud-bottom {
@@ -4255,35 +4619,7 @@
   padding: 5px 8px;
   border-radius: var(--rounded-full);
   background: rgba(255, 255, 255, 0.92);
-  backdrop-filter: blur(8px);
   border: 1px solid var(--hairline);
-  box-shadow: var(--shadow-soft);
-}
-
-.axo-v14-portal-chip {
-  pointer-events: auto;
-  padding: 5px 12px;
-  border-radius: var(--rounded-full);
-  border: 1px solid var(--hairline);
-  background: var(--surface);
-  color: var(--ink-secondary);
-  font-family: inherit;
-  font-size: 0.75rem;
-  font-weight: 600;
-  cursor: pointer;
-  box-shadow: var(--shadow-soft);
-  transition: background-color 0.15s ease, border-color 0.15s ease, color 0.15s ease;
-}
-
-.axo-v14-portal-chip:hover {
-  background: var(--canvas-soft);
-  color: var(--ink);
-}
-
-.axo-v14-portal-chip.is-active {
-  background: var(--accent-sky-tint);
-  border-color: var(--primary);
-  color: var(--primary-active);
 }
 
 .axo-v14-portal-quiet-note {
@@ -4296,50 +4632,12 @@
   font-weight: 500;
 }
 
-/* Desktop keyboard-only focus bar (stays invisible until Tab-focused); visible on touch/mobile */
 .axo-v14-portal-nav-bar {
   position: absolute;
   width: 1px;
   height: 1px;
-  padding: 0;
-  margin: -1px;
   overflow: hidden;
-  clip: rect(0, 0, 0, 0);
-  white-space: nowrap;
   border: 0;
-}
-
-.axo-v14-portal-nav-bar:focus-within {
-  position: static;
-  width: auto;
-  height: auto;
-  margin: 0;
-  overflow: visible;
-  clip: auto;
-  white-space: normal;
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  justify-content: center;
-  gap: 8px;
-}
-
-.axo-v14-portal-nav-pill {
-  padding: 7px 13px;
-  border-radius: var(--rounded-full);
-  border: 1px solid var(--axo-sp-border-strong);
-  background: var(--surface);
-  color: var(--ink-secondary);
-  font-family: inherit;
-  font-size: 0.8125rem;
-  font-weight: 600;
-  cursor: pointer;
-}
-
-.axo-v14-portal-nav-pill.is-active {
-  background: var(--primary);
-  border-color: var(--primary);
-  color: var(--on-primary);
 }
 
 .axo-v14-portal-fallback {
@@ -4354,28 +4652,6 @@
   width: 100%;
   height: 100%;
   max-width: 560px;
-}
-
-.axo-v14-fb-card {
-  stroke: var(--axo-sp-border-strong);
-  stroke-width: 2;
-}
-
-.axo-v14-fb-card-light {
-  fill: var(--canvas-soft);
-}
-
-.axo-v14-fb-card-indigo {
-  fill: var(--secondary);
-}
-
-.axo-v14-fb-card-sky {
-  fill: var(--accent-sky-tint);
-}
-
-.axo-v14-fb-card.is-active {
-  stroke: var(--primary);
-  stroke-width: 3;
 }
 
 .axo-v14-fb-edge-dark {
@@ -4400,47 +4676,4 @@
   fill: rgba(255, 100, 200, 0.2);
   stroke: var(--accent-orange);
   stroke-width: 2.4;
-}
-
-@media (max-width: 1024px) {
-  .axo-v14-portal-canvas-wrap {
-    height: clamp(350px, 44vw, 372px);
-  }
-}
-
-@media (max-width: 680px) {
-  .axo-v14-portal-canvas-wrap {
-    height: clamp(320px, 84vw, 400px);
-  }
-
-  .axo-v14-portal-nav-bar {
-    position: static;
-    width: 100%;
-    height: auto;
-    margin: 0;
-    overflow: visible;
-    clip: auto;
-    white-space: normal;
-    display: flex;
-    flex-wrap: wrap;
-    align-items: center;
-    justify-content: center;
-    gap: 8px;
-  }
-
-  .axo-v14-portal-nav-pill {
-    padding: 7px 11px;
-    font-size: 0.75rem;
-  }
-}
-
-@media (max-width: 390px) {
-  .axo-v14-portal-canvas-wrap {
-    height: 310px;
-  }
-
-  .axo-v14-portal-hud-btn {
-    padding: 6px 11px;
-    font-size: 0.75rem;
-  }
 }

@@ -6,18 +6,10 @@ import { useAuthStore, type AuthUser } from "../../state/auth";
 import { LandingView, readLandingPrototypeMode } from "../LandingView";
 import { canonicalPathForView, resolveLocationRoute } from "../AxoErrorExperience";
 import {
-  LANDING_CUBE_SAMPLE,
-  LANDING_PRISM_STORY_SPEC,
-  LANDING_PYRAMID_SAMPLE,
-} from "../landing/landing-geometry-data";
-import { LandingHeroV14 } from "../landing/LandingHeroV14";
+  AXO_V14_HERO_CONCEPT_ASSETS,
+  LandingHeroV14,
+} from "../landing/LandingHeroV14";
 import { LandingPreviewV14 } from "../landing/LandingPreviewV14";
-import { GOLDEN_PORTAL_HEIGHT } from "../landing/portals/PortalEngine";
-import {
-  AXO_V14_CAMERA_FOV,
-  computeV14PortalCameraZ,
-  V14_HERO_PORTAL_SPECS,
-} from "../landing/portals/HeroPortalStageV14";
 
 function syncAuthStoreForSSR() {
   Object.assign(useAuthStore.getInitialState(), useAuthStore.getState());
@@ -32,7 +24,7 @@ const TEST_STUDENT_USER: AuthUser = {
   status: "active",
 };
 
-describe("AXO Landing V1.4 — Redesigned Enter Portals Hero, Route Normalization & Lifecycle", () => {
+describe("AXO Landing V1.4 — First-Principles Design-First Hero, Route Normalization & Lifecycle", () => {
   afterEach(() => {
     useAuthStore.setState({ user: null });
     syncAuthStoreForSSR();
@@ -57,55 +49,42 @@ describe("AXO Landing V1.4 — Redesigned Enter Portals Hero, Route Normalizatio
     expect(prodHtml).not.toContain("axo-v14-root");
   });
 
-  it("binds the 3 Hero portals to verified mathematical solids and keeps desktop/mobile framing unclipped", () => {
-    expect(GOLDEN_PORTAL_HEIGHT).toBeCloseTo((1 + Math.sqrt(5)) / 2, 9);
-    expect(V14_HERO_PORTAL_SPECS.map((p) => p.id)).toEqual([
-      "construction",
-      "exploration",
-      "relationships",
-    ]);
-    expect(V14_HERO_PORTAL_SPECS.map((p) => p.sampleId)).toEqual([
-      LANDING_PRISM_STORY_SPEC.id,
-      LANDING_CUBE_SAMPLE.id,
-      LANDING_PYRAMID_SAMPLE.id,
-    ]);
-    expect(V14_HERO_PORTAL_SPECS[0].rotation[1]).toBeGreaterThan(0);
-    expect(V14_HERO_PORTAL_SPECS[1].position[2]).toBeGreaterThan(
-      V14_HERO_PORTAL_SPECS[0].position[2],
-    );
-    expect(V14_HERO_PORTAL_SPECS[2].rotation[1]).toBeLessThan(0);
-
-    const tanHalfFov = Math.tan((AXO_V14_CAMERA_FOV * Math.PI) / 360);
-    const halfW = 1.59;
-    const frontOffset = 0.22;
-
-    for (const aspect of [1.5, 1.25, 1.15, 1.0, 0.875]) {
-      const z = computeV14PortalCameraZ(aspect);
-      const dist = z - frontOffset;
-      const visibleHalfH = dist * tanHalfFov;
-      const visibleHalfW = visibleHalfH * aspect;
-      expect(visibleHalfH).toBeGreaterThan(GOLDEN_PORTAL_HEIGHT * 0.5);
-      expect(visibleHalfW).toBeGreaterThan(halfW);
-    }
-  });
-
-  it("preserves exact Landing V1.4 left copy, annotation, CTAs, and non-Hero sections with SVG fallback", () => {
+  it("renders Spatial Prism Horizon design-first Hero without mounting WebGL or Portal cards", () => {
     useAuthStore.setState({ user: null });
     syncAuthStoreForSSR();
     const v14Html = renderToStaticMarkup(<LandingPreviewV14 />);
+    const heroStart = v14Html.indexOf('id="landing-hero"');
+    const storyStart = v14Html.indexOf('id="cach-hoat-dong"');
+    expect(heroStart).toBeGreaterThan(-1);
+    expect(storyStart).toBeGreaterThan(heroStart);
+
+    const heroSlice = v14Html.slice(heroStart, storyStart);
+    expect(heroSlice).toContain('id="axo-v14-hero-heading"');
+    expect(heroSlice).toContain("axo-v14-hero-horizon");
+    expect(heroSlice).toContain("axo-v14-anno-circle");
+    expect(heroSlice).toContain('id="btn-landing-hero-start"');
+    expect(heroSlice).toContain("Bắt đầu dựng hình");
+    expect(heroSlice).toContain('id="btn-landing-hero-story"');
+    expect(heroSlice).toContain("Xem cách hoạt động");
+    expect(heroSlice).toContain('id="landing-hero-sculpture"');
+    expect(heroSlice).toContain('data-design-stage="first-principles-concept"');
+
+    // Design-first stage uses 3 cohesive sculptural concept PNGs, zero WebGL canvas before approval
+    expect(AXO_V14_HERO_CONCEPT_ASSETS).toHaveLength(3);
+    for (const asset of AXO_V14_HERO_CONCEPT_ASSETS) {
+      expect(heroSlice).toContain(asset.src);
+    }
+    expect(heroSlice).not.toContain("<canvas");
+    expect(heroSlice).not.toContain("axo-v14-portal-");
+
+    // All non-Hero Landing V1.4 sections stay intact
     expect(v14Html).toContain("axo-v14-root");
-    expect(v14Html).toContain("axo-v14-anno-circle");
-    expect(v14Html).toContain('id="btn-landing-hero-start"');
-    expect(v14Html).toContain("Bắt đầu dựng hình");
-    expect(v14Html).toContain('id="btn-landing-hero-story"');
-    expect(v14Html).toContain("Xem cách hoạt động");
-    expect(v14Html).toContain('id="landing-hero-sculpture"');
-    expect(v14Html).toContain('id="v14-hero-portal-fallback"');
     expect(v14Html).toContain('id="cach-hoat-dong"');
     expect(v14Html).toContain('id="trai-nghiem"');
     expect(v14Html).toContain('id="landing-final-cta"');
     expect(v14Html).toContain('id="landing-footer"');
     expect(v14Html).not.toContain("PENDING_OWNER_REVIEW");
+    expect(v14Html).not.toContain("APPROVED_BY_USER");
 
     useAuthStore.setState({ user: TEST_STUDENT_USER });
     syncAuthStoreForSSR();
@@ -114,7 +93,7 @@ describe("AXO Landing V1.4 — Redesigned Enter Portals Hero, Route Normalizatio
     expect(authHtml).not.toContain("Đăng nhập ngay");
   });
 
-  it("enforces cleanup of wrong previews/GLBs/Draco and enforces single Canvas + GPU disposal", () => {
+  it("verifies concept asset files exist under public/ and legacy deprecated prototypes stay absent", () => {
     const feRoot = path.resolve(__dirname, "../../..");
     expect(fs.existsSync(path.join(feRoot, "src/prototypes/enter-portals-ref"))).toBe(false);
     expect(fs.existsSync(path.join(feRoot, "public/draco"))).toBe(false);
@@ -125,27 +104,18 @@ describe("AXO Landing V1.4 — Redesigned Enter Portals Hero, Route Normalizatio
       fs.existsSync(path.join(feRoot, "src/components/landing/portals/axo-portal-worlds.tsx")),
     ).toBe(false);
 
-    const stageSrc = fs.readFileSync(
-      path.join(feRoot, "src/components/landing/portals/HeroPortalStageV14.tsx"),
-      "utf8",
-    );
-    expect((stageSrc.match(/<Canvas\b/g) ?? [])).toHaveLength(1);
-    expect(stageSrc).toContain("prefers-reduced-motion: reduce");
-    expect(stageSrc).toContain("IntersectionObserver");
-    expect(stageSrc).toContain("HeroPortalFallbackSvg");
+    for (const asset of AXO_V14_HERO_CONCEPT_ASSETS) {
+      const diskPath = path.join(feRoot, "public", asset.src.replace(/^\//, ""));
+      expect(fs.existsSync(diskPath)).toBe(true);
+    }
 
-    const worldsSrc = fs.readFileSync(
-      path.join(feRoot, "src/components/landing/portals/HeroPortalWorldsV14.tsx"),
+    const heroSrc = fs.readFileSync(
+      path.resolve(__dirname, "../landing/LandingHeroV14.tsx"),
       "utf8",
     );
-    expect(worldsSrc).toContain("dispose()");
-    expect(worldsSrc).not.toContain("APPROVED_BY_USER");
-
-    const engineSrc = fs.readFileSync(
-      path.join(feRoot, "src/components/landing/portals/PortalEngine.tsx"),
-      "utf8",
-    );
-    expect(engineSrc).not.toContain("suspend-react");
-    expect(engineSrc).not.toContain("@pmndrs/");
+    expect(heroSrc).toContain("prefers-reduced-motion: reduce");
+    expect(heroSrc).not.toContain("HeroPortalStageV14");
+    expect(heroSrc).not.toContain("var(--");
+    expect(heroSrc).not.toContain("APPROVED_BY_USER");
   });
 });
