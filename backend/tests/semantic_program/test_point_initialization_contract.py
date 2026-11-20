@@ -451,7 +451,7 @@ def test_CA2_bam_danh_tinh_KHAC_truong_cache_so_sanh():
         (GOC / "cache_identity.lock.json").read_text(encoding="utf-8"))
     assert khoa["cache_version"] == main_module.CACHE_VERSION
     assert khoa["semantic_environment_hash"] == semantic_environment_hash()
-    assert main_module.CACHE_VERSION == "146"
+    assert main_module.CACHE_VERSION == "147"
     for comp in (
         "prompts",
         "grammar_card",

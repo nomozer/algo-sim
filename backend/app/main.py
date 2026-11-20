@@ -952,7 +952,13 @@ MISSING_KEY_MSG = (
 #       cục bộ chọn đích yêu cầu mô phỏng theo nhãn/loại khối và phủ đủ mệnh đề, SLM `local-slm-extractor/5` hạ 0 mục
 #       tiêu số cho đề chỉ-mô-phỏng. Khoá Route D không băm Source Gate, và `local-geometry-parser/2` không đổi ⇒ mọi row
 #       `145:route-d` phải MISS (`tests/test_cache_simulation_intent_invalidation.py`).
-CACHE_VERSION = "146"
+# 147 — 2026-11-20 (axo-hybrid-compositional-geometry-language-grounded-simulation):
+#       cô lập cache Route D sau khi mở rộng parser mệnh đề phức hợp
+#       (`local-geometry-parser/3`), extractor (`local-slm-extractor/6`), Source Gate
+#       phức hợp (`geometry-functions/33`), domain gate không dấu và căn khung camera
+#       Scene3D (`V11-VIS-1`); bản ghi `146:route-d` cũ phải MISS
+#       (`tests/geometry/test_cache_v12_compositional_invalidation.py`).
+CACHE_VERSION = "147"
 
 #: Hai chế độ hợp lệ của kiến trúc chính thức Hybrid `/4` do máy chủ sở hữu:
 #: - `live` (mặc định): trích xuất có cấu trúc qua Gemini (`typed-fact-next/2`) khi cấu hình `GEMINI_API_KEY`.

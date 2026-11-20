@@ -230,8 +230,8 @@ def test_reread_cache_deduplication_and_worker_version_isolation(monkeypatch):
 
 
 def test_confirmation_provenance_edited_cache_key_and_144_invalidation(monkeypatch):
-    assert M.CACHE_VERSION == "146"
-    assert M.ROUTE_D_CACHE_POLICY == "146:route-d"
+    assert M.CACHE_VERSION == "147"
+    assert M.ROUTE_D_CACHE_POLICY == "147:route-d"
 
     draft_text = (
         "Cho hình chóp S.ABCD có đáy ABCD là hình vuông cạnh a, "

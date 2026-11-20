@@ -229,7 +229,8 @@ def test_inv_20_candidate_and_cache_verify_only():
     # 143 -> 144 (real-world-geometry-input-verified-simulation): `_cac_moc_cau` đồng bộ biên câu hỏi viết hoa khuyết dấu chấm + `layout-aware-ocr-reconcile/3` + hợp đồng `verified-input-provenance/1` ⇒ row 143:route-d phải MISS.
     # 144 -> 145 (student-ready-geometry-simulation-input-reliability): `point_reflection`, `premise-described-point`, tham chiếu đỉnh phụ `@id` qua mô tả, suy biến đồng dạng tam giác vuông/đáy, `layout-aware-ocr-reconcile/4`, `local-ocr-route/3` ⇒ row 144:route-d phải MISS.
     # 145 -> 146 (axo-hybrid-simulation-intent-generalization-grounded-slm-recovery): Source Gate nhận yêu cầu mô phỏng có danh từ khối, bộ đọc cục bộ tổng quát hoá ý định chỉ-mô-phỏng, SLM `local-slm-extractor/5` hạ 0 mục tiêu số cho đề chỉ-mô-phỏng ⇒ row 145:route-d phải MISS.
-    assert str(CACHE_VERSION) == "146"
+    # 146 -> 147 (axo-hybrid-compositional-geometry-language-grounded-simulation): parser mệnh đề phức hợp (`local-geometry-parser/3`), extractor (`local-slm-extractor/6`), Source Gate phức hợp (`geometry-functions/33`), domain gate không dấu và căn khung camera Scene3D (`V11-VIS-1`) ⇒ row 146:route-d phải MISS.
+    assert str(CACHE_VERSION) == "147"
 
 
 def test_inv_21_favicon_not_in_staged_changes():
