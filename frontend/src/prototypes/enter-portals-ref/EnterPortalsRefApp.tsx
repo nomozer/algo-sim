@@ -19,7 +19,7 @@ import {
 import { useRoute, useLocation } from "wouter";
 import { easing, geometry } from "maath";
 import { suspend } from "suspend-react";
-import "./r3f-jsx";
+import type {} from "./r3f-jsx";
 
 import picklesModel from "./assets/pickles_3d_version_of_hyuna_lees_illustration-transformed.glb?url";
 import teaModel from "./assets/fiesta_tea-transformed.glb?url";
