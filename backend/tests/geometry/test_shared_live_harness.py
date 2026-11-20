@@ -63,6 +63,19 @@ def test_unchanged_tools_are_byte_copies_of_the_12_tools():
         assert (H / name).read_bytes() == (R12 / "tools" / name).read_bytes(), name
 
 
+def test_holdout_freeze_is_intact():
+    """/13 holdout: manifest, criteria, baseline stratum, builder and the harness it is measured with are frozen
+    (LF-normalised SHA-256) before any Model 1 or geometry change; editing any of them afterwards is red."""
+    import hashlib
+
+    freeze = _load(ROOT / "docs/evaluation/geometry/runs/axo-hybrid-local-model1-finalization-test-consolidation/ACCEPTANCE_FREEZE.json")
+    for rel, digest in freeze["files"].items():
+        raw = (ROOT / rel).read_bytes().replace(b"\r\n", b"\n")
+        assert hashlib.sha256(raw).hexdigest() == digest, rel
+    frozen_harness = {Path(rel).name for rel in freeze["files"] if rel.startswith("docs/evaluation/geometry/harness/")}
+    assert frozen_harness == {p.name for p in H.iterdir() if p.is_file()}, "harness file added/removed after the freeze"
+
+
 def test_no_harness_tool_defaults_its_output_into_a_run_directory():
     for p in H.iterdir():
         if p.suffix in (".py", ".mjs"):

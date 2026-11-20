@@ -201,7 +201,10 @@ async function main() {
   ].filter(Boolean);
   const fastCase = [...servedChecks].sort((a, b) => a.ms - b.ms)[0];
   const slowCase = [...servedChecks].sort((a, b) => b.ms - a.ms)[0];
+  // The manifest may preregister the clarification case (/13: the /12 fallback below picked a §17 similarity case).
+  const declaredClarify = (manifest.ui_runtime_scenarios || []).find((s) => s.kind === "CLARIFICATION_SURFACED" && s.case_id);
   const clarifyCandidate =
+    (declaredClarify && validById[declaredClarify.case_id]) ||
     checks.results.find((r) => r.route_status !== "SERVED" && (r.reason_code === "AMBIGUOUS_FACT" || r.reason_code === "FACT_INCOMPLETE")) ||
     manifest.valid_cases.find((c) => c.expected_behavior !== "SERVE") ||
     manifest.negative_cases[0];

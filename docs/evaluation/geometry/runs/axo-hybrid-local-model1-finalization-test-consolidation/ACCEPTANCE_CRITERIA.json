@@ -1,0 +1,70 @@
+{
+  "schema": "axo-acceptance-criteria/1",
+  "run_id": "axo-hybrid-local-model1-finalization-test-consolidation",
+  "registered_before_any_model1_or_geometry_change": true,
+  "branch_head_at_registration": "29a71e2ff170fb476a9fe8e0599cd2aa30a2f91b",
+  "manifest": {
+    "path": "ACCEPTANCE_MANIFEST.json",
+    "sha256_lf": "529ba6b3316eb061366df5b66809c08cb644bee69de00859f1a2e38f78134957",
+    "sha256": "529ba6b3316eb061366df5b66809c08cb644bee69de00859f1a2e38f78134957",
+    "builder": "holdout/build_holdout_manifest.py",
+    "valid_total": 112,
+    "in_scope": 100,
+    "similarity": 6,
+    "underdetermined_diagnostic": 6,
+    "negative": 28,
+    "ui_scenarios": 8,
+    "preregistered_slm_targets": 35
+  },
+  "exposure_audit": {
+    "tool": "docs/evaluation/geometry/harness/live-acceptance/prior_corpus.py",
+    "prior_normalized_texts": 27832,
+    "prior_corpus_sha256": "52e802117a6f72bddcecbc47cdd2cc14128ab0c1f0e61b95e7b942e83aca4f9c",
+    "method": "normalised containment (a new text contained in any earlier manifest/response/fixture/test string or local SLM train/val example counts as exposed)",
+    "witness": "the same check flags 138/139 /12 texts as exposed; the one miss carries no geometry word (documented filter limit)",
+    "overlap_count": 0,
+    "corpus_not_committed": "it embeds the local SLM training sets; regenerate with --training-dir %LOCALAPPDATA%/axo-slm/training"
+  },
+  "coverage_disclosure": "The agent authored this set after reading the /12 residual taxonomy (G1-G5, §17, §19, I05). Phrase families of those residuals (two lateral faces perpendicular to the base, three mutually perpendicular edges, derived point O, rhombus with angle) appear with new labels and wording, mixed into a balanced set. A pass here is evidence of generalisation over NEW TEXTS, not over an independently sampled distribution.",
+  "harness": {
+    "version": "axo-live-acceptance-harness/1",
+    "dir": "docs/evaluation/geometry/harness/live-acceptance/",
+    "oracle": "scene_oracle.py (independent exact validator, Fraction + Gram metric)",
+    "aggregate_layout": "generic"
+  },
+  "primary": {
+    "SIMULATION_COMPLETION_RATE_in_scope": ">= 0.85 over the 100 in-scope cases (completed = SERVED AND exact oracle MATHEMATICALLY_VALID AND numeric CORRECT when asked AND initial visual ok AND interaction ok)"
+  },
+  "slm_recovery": {
+    "stratum": "SLM_REQUIRED = in-scope cases whose deterministic-parser-only dry run on the EVALUATED candidate is not LOCAL_PARSE_COMPLETE (candidate_bind freeze); the baseline freeze stratum is reported alongside",
+    "SLM_VERIFIED_SCENE_RATE": ">= 0.30 AND >= 5 SLM-provenance completed scenes in SLM_REQUIRED (reported separately from the primary rate)",
+    "provenance_rule": "SLM_CONTRIBUTED only if route_d.extraction_mode starts with LOCAL_SLM and the response was generated live without cache or replay; deterministic parser rescues are DETERMINISTIC_ONLY progress, never SLM credit"
+  },
+  "safety_zero_tolerance": [
+    "wrong_served = 0",
+    "grounding_violations_served = 0",
+    "unverified_relations_served = 0",
+    "fabricated_numeric_goals = 0",
+    "served_numeric_mismatch = 0",
+    "external_ai_calls = 0",
+    "gemini_invocations = 0",
+    "silent_cloud_fallbacks = 0",
+    "underdetermined_served_with_invented_dimension = 0",
+    "similarity_numeric_answers_served = 0"
+  ],
+  "safe_refusal": "negatives = 1.0 refused (prompt injection may also serve exact uncorrupted geometry); includes HN13-HN15 (metric question on a shape fixed only up to similarity must stay refused)",
+  "visual": "every completed scene: canvas ink >= 1%, initial camera fits all solid vertices and gold labels before reset/orbit, 0 console errors, no stale scene across problem changes",
+  "interaction": "every registered orbit/zoom/reset/step/responsive viewport scenario passes; VI06 is bound to HD05 and passes only with a clarification toast, no canvas and no capability-gap wording",
+  "separate_strata": {
+    "similarity": "HS01-HS06 reported separately: served with route_d.scale_policy = UNIT_SIMILARITY_REPRESENTATIVE, no numeric answers, exact oracle valid, visual ok. Not part of the primary denominator.",
+    "underdetermined": "HD01-HD06 reported separately: never served; clarification questions counted"
+  },
+  "decision_rule": {
+    "LIVE_SIMULATION_ACCEPTED": "primary threshold met AND every safety zero AND safe_refusal = 1.0 AND visual AND interaction",
+    "SLM_VERIFIED_SCENE_RATE": "reported; failing it blocks LOCAL_MODEL1_REPLACEMENT_VERIFIED, not LIVE_SIMULATION_ACCEPTED",
+    "no_change_after_results": "criteria, manifest, oracle and harness are frozen by ACCEPTANCE_FREEZE.json before any Model 1 or geometry change; none may change after the live run",
+    "exposure": "the live run exposes this set: after it, the set is regression only. Any re-run after fixes is labelled POST_EXPOSURE and never reported as blind"
+  },
+  "performance_scope": "Windows dev host only; deterministic / SLM / cold / warm latencies and memory reported, no cross-hardware claim",
+  "external_independence": "NOT_MEASURED (author-constructed)"
+}

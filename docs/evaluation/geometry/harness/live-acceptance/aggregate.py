@@ -243,6 +243,32 @@ def main() -> int:
         "underdetermined_diagnostic_rows": underdet_rows,
         "negative_rows": neg_rows,
     }
+    sim_cases = [c for c in underdet if c["expected_behavior"] == "SERVE_SIMILARITY_REPRESENTATIVE"]
+    if sim_cases:  # manifests from /13 on; absent from /12, whose replay must stay identical
+        sim_rows = []
+        for c in sim_cases:
+            rd = (resp_by_id.get(c["case_id"], {}).get("body") or {}).get("route_d") or {}
+            br = browser_by_id.get(c["case_id"], {})
+            served = rd.get("status") == "SERVED"
+            sim_rows.append({
+                "case_id": c["case_id"], "route_status": rd.get("status"), "reason_code": rd.get("reason_code"),
+                "scale_policy": rd.get("scale_policy"), "answers": rd.get("answers") or None,
+                "oracle_status": oracle_by_id.get(c["case_id"], {}).get("scene_validation"),
+                "visual_ok": bool(br.get("initial_visual_ok")),
+                "similarity_served_ok": served and rd.get("scale_policy") == "UNIT_SIMILARITY_REPRESENTATIVE"
+                and not rd.get("answers") and oracle_by_id.get(c["case_id"], {}).get("scene_validation") == "MATHEMATICALLY_VALID"
+                and bool(br.get("initial_visual_ok")),
+            })
+        clarify = [r for r in underdet_rows if r["expected_behavior"] == "CLARIFY_OR_ILLUSTRATIVE"]
+        live_acceptance["separate_strata"] = {
+            "similarity_rows": sim_rows,
+            "similarity_served_ok": sum(r["similarity_served_ok"] for r in sim_rows),
+            "similarity_total": len(sim_rows),
+            "similarity_numeric_answers_served": sum(bool(r["answers"]) for r in sim_rows),
+            "underdetermined_total": len(clarify),
+            "underdetermined_served_with_invented_dimension": [r["case_id"] for r in clarify if r["route_status"] == "SERVED"],
+            "underdetermined_with_clarification": sum(r["has_clarification_question"] for r in clarify),
+        }
     (run / "LIVE_ACCEPTANCE_RESULTS.json").write_text(
         json.dumps(live_acceptance, ensure_ascii=False, indent=2) + "\n", encoding="utf-8"
     )
