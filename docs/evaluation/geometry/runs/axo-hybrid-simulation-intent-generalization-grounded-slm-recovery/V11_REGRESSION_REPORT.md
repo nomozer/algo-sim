@@ -8,7 +8,7 @@ Log nằm ngoài cây (scratchpad), có ghi sha256.
 |---|---|---|---|---|---|---|---|
 | 1 | `18aadea7b` | 15173 passed / **2 failed** / 9 skipped / 12 xfailed (1180 s) | 145 file / 2075 | ✓ | 5/5 | 6/6 | FAIL — log `aa20d0e6…` |
 | 2 | `5895b2c45` | 15174 passed / **1 failed** / 9 skipped / 12 xfailed (838 s) | 145 / 2075 | ✓ | 5/5 | 6/6 | FAIL — log `ece3b9c6…` |
-| 3 | xem `run.json` (`t3_detail`) | | | | | | |
+| 3 | `8484b2413` | **15175 passed** / 0 failed / 9 skipped / 12 xfailed (769 s) | 145 / 2075 | ✓ | 5/5 | 6/6 | **FULL_PRODUCT_GATE_PASS** — log `58b3de7a…` |
 
 ## Lỗi và xử lý
 

@@ -3,7 +3,7 @@
  "run_id": "axo-hybrid-simulation-intent-generalization-grounded-slm-recovery",
  "wave_id": "AXO_HYBRID_SIMULATION_INTENT_GENERALIZATION_GROUNDED_SLM_RECOVERY",
  "campaign": "AXO HYBRID /11",
- "generated_at_utc": "2026-11-20T04:16:51Z",
+ "generated_at_utc": "2026-11-20T04:31:26Z",
  "classification": "SLM_CAUSAL_AUDIT + PRODUCT_FIXES + BLIND_LIVE_BROWSER_ACCEPTANCE_LOCAL_ONLY_SCOPED",
  "branch": "feat/simulation-intent-slm-recovery",
  "start_base_commit": "2f12b96b0",
@@ -75,10 +75,10 @@
   "J6_scene3d_interaction": "PASS (V17 fixed; U08 fixed post hoc; O provenance handed off)",
   "J7_new_blind_live": "FAIL (completion 0.659 < 0.85)",
   "J8_performance_offline": "PASS (dev host)",
-  "J9_full_regression": "PENDING: T3 run 3 at the commit that adds run.json (runs 1-2 in V11_REGRESSION_REPORT.md)",
+  "J9_full_regression": "FULL_PRODUCT_GATE_PASS at 8484b2413 (run 3, clean detached worktree): pytest 15175 passed/9 skipped/3 deselected/12 xfailed, vitest 145 files 2075 tests, build, demo 5/5, crash surface 6/6; log sha256 58b3de7ae34926e00e26a9935b14f215a14e9532e9d38de5fcfe7d0954457b4c (kept outside the tree). Runs 1-2 failed on pending C21 template metadata and the then-missing run.json (V11_REGRESSION_REPORT.md).",
   "J10_release": "see verdicts"
  },
- "t3_detail": "PENDING: T3 run 3 at the commit that adds run.json (runs 1-2 in V11_REGRESSION_REPORT.md)",
+ "t3_detail": "FULL_PRODUCT_GATE_PASS at 8484b2413 (run 3, clean detached worktree): pytest 15175 passed/9 skipped/3 deselected/12 xfailed, vitest 145 files 2075 tests, build, demo 5/5, crash surface 6/6; log sha256 58b3de7ae34926e00e26a9935b14f215a14e9532e9d38de5fcfe7d0954457b4c (kept outside the tree). Runs 1-2 failed on pending C21 template metadata and the then-missing run.json (V11_REGRESSION_REPORT.md).",
  "verdicts": {
   "SIMULATION_INTENT_GENERALIZATION_VERIFIED": "FALSE (partial)",
   "GROUNDED_SLM_RECOVERY_VERIFIED": false,
@@ -281,6 +281,7 @@
   "V11_UI_SCENARIO_RESULTS.json",
   "V11_UNDERDETERMINED_RESULTS.json",
   "V17_POINTER_INTERACTION_RESULTS.json",
-  "pending_template_refresh.json"
+  "pending_template_refresh.json",
+  "run.json"
  ]
 }
