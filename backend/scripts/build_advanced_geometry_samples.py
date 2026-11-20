@@ -1343,6 +1343,29 @@ def build_all_advanced_samples() -> list[dict[str, Any]]:
     return ra
 
 
+def zero_measure_audit(ra: list[dict[str, Any]]) -> list[dict[str, Any]]:
+    """Every MEASURE event whose exact value is 0 (a certified perpendicularity read as cos² = 0).
+
+    Derived from the built scenes so the sample file stays fully generated; it used to be pasted into the JSON by hand
+    (`b5810dcc3`) and was lost on every regeneration. Read by `backend-geometry-contracts.test.ts`.
+    """
+    audit: list[dict[str, Any]] = []
+    for item in ra:
+        for ev in item["envelope"]["scene3d"].get("events", []):
+            mq = ev.get("measured_quantity")
+            if ev.get("action") != "MEASURE" or not isinstance(mq, dict) or mq.get("value") != "0":
+                continue
+            audit.append({
+                "sample_id": item["id"],
+                "step_index": ev["step_index"],
+                "object": ev["object"],
+                "measured_quantity": mq,
+                "explanation": ev.get("explanation"),
+                "learner_text": ev.get("learner_text"),
+            })
+    return audit
+
+
 def main() -> int:
     if hasattr(sys.stdout, "reconfigure"):
         sys.stdout.reconfigure(encoding="utf-8")
@@ -1365,6 +1388,7 @@ def main() -> int:
                     "rồi chạy lại."
                 ),
                 "samples": ra,
+                "zero_measure_audit": zero_measure_audit(ra),
             },
             ensure_ascii=False,
             indent=1,
