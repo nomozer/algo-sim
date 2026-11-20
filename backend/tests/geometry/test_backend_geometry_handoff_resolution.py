@@ -436,9 +436,9 @@ def test_circumsphere_separates_computational_and_visible_prerequisites() -> Non
 
 
 def test_static_frontend_fixture_reproduction_signature() -> None:
-    """Confirm coincident_elements_pyramid in Backend's copy of the regression fixtures
-    exhibits the exact Frontend authoring gap (missing CREATE event for SB_line and
-    missing readout_ids on formation.steps)."""
+    """coincident_elements_pyramid used to exhibit the Frontend authoring gap (no CREATE event for SB_line before K,
+    no readout_ids on formation.steps). main closed it in `b5810dcc3` ("integrate verified backend geometry
+    contracts"); since the /13 merge of main this test pins the CLOSED state so the gap cannot silently reopen."""
     fixture_path = REPO_ROOT / "frontend" / "src" / "simulations" / "domains" / "geometry" / "scene3d-regression-archetypes-fixtures.json"
     if not fixture_path.exists():
         pytest.skip(f"Missing archetype fixture: {fixture_path}")
@@ -454,5 +454,5 @@ def test_static_frontend_fixture_reproduction_signature() -> None:
             created_before_K.append(ev["object"])
     k_ev = next(ev for ev in scene["events"] if ev.get("object") == "K")
     assert "SB_line" in k_ev.get("depends", [])
-    assert "SB_line" not in created_before_K
-    assert all("readout_ids" not in step for step in scene["formation"]["steps"])
+    assert "SB_line" in created_before_K
+    assert any("readout_ids" in step for step in scene["formation"]["steps"])
