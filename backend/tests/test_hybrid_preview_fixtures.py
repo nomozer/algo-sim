@@ -53,7 +53,12 @@ ROOT = Path(__file__).resolve().parents[2]
 #: Superseded by run `dimension-aware-verified-construction` (CACHE_VERSION 140): 7 served fixtures carry additive
 #: `dimension-expression/1` symbolic quantity metadata; answers, coordinates, expected contracts and refusal/gate
 #: fixtures are unchanged. The trace-method bundle stays unchanged as the evidence it was.
-FIXTURES = ROOT / 'docs/evaluation/geometry/runs/dimension-aware-verified-construction/fixtures-dimension-aware'
+#: Superseded by run `axo-hybrid-local-model1-finalization-test-consolidation` (CACHE_VERSION 150): the IR container
+#: vocabulary of the informatics domain was pruned, so every served fixture's `route_d.geometry_ir` no longer carries
+#: the always-null `element_type`/`key_type`/`val_type` per declaration nor an empty `visual_bindings` (no frontend
+#: reader — checked). Scenes, answers, expected contracts and refusal/gate fixtures are unchanged. The
+#: dimension-aware bundle stays unchanged as the evidence it was.
+FIXTURES = ROOT / 'docs/evaluation/geometry/runs/axo-hybrid-local-model1-finalization-test-consolidation/fixtures-hybrid-preview'
 #: The superseded bundle — the one that predates the route D version bump the identity-restore test is about.
 OLD_FIXTURES = ROOT / 'docs/evaluation/geometry/runs/hybrid-preview-contract-hardening/fixtures-adapter-2'
 SCRIPT = ROOT / 'backend/scripts/export_hybrid_preview_fixtures.py'
