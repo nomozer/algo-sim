@@ -1,12 +1,12 @@
 {
   "khai": "Danh tính của hệ tại thời điểm ĐÓNG BĂNG để đánh giá. Không sửa file này vì kết quả SEALED — SEALED chỉ được phép làm thay đổi KẾT LUẬN.",
-  "dong_bang_luc": "2026-11-20T10:26:13+00:00",
-  "commit": "bb644c7238194f8cd11d650de22ae3a5a5f357c5",
-  "commit_ngan": "bb644c723",
-  "product_commit_sha": "bb644c7238194f8cd11d650de22ae3a5a5f357c5",
+  "dong_bang_luc": "2026-11-20T14:05:46+00:00",
+  "commit": "c8868964a6c7da144400077a4e4275b51e01ce73",
+  "commit_ngan": "c8868964a",
+  "product_commit_sha": "c8868964a6c7da144400077a4e4275b51e01ce73",
   "product_commit_rule": "product-paths-excluding-test-only/1",
   "cay_lam_viec_sach": true,
-  "cache_version": "149",
+  "cache_version": "150",
   "spec_version_ir": "1.0",
   "measured_system": {
     "paths": [
@@ -15,94 +15,51 @@
       "frontend/src/simulations/domains/semantic/semantic_program.schema.json"
     ],
     "so_file": 127,
-    "tree_hash": "7cd5708297b99d2146c876f26080345057e81314b05dda1cd08b236e5718d4c0",
+    "tree_hash": "195255c875e60fa4fa8fc511b2dcc6abcad5c93b54a64bf7fb9df7a9912a96b1",
     "khai": "Băm nội dung toàn bộ mã SẢN PHẨM của hệ được đo. Harness (scripts/tests/docs) KHÔNG nằm trong đây, nên bộ đo được phép cứng cáp thêm mà không phải đóng băng lại candidate."
   },
   "taxonomy": {
-    "so_nghia_vu": 23,
+    "so_nghia_vu": 12,
     "kinds": [
-      "aggregate_matching",
       "angle",
       "area",
       "coplanar",
-      "derived_sequence",
       "distance",
-      "extremum",
-      "first_match_index",
       "lateral_area",
-      "membership",
-      "ordering",
       "parallel",
       "perpendicular",
       "point_on_line",
       "point_on_plane",
-      "predicate_verdict",
       "radius",
-      "reachability",
-      "scalar_accumulation",
       "section_matches",
-      "structural_traversal",
-      "total_mapping",
       "volume"
     ],
-    "aggregate_ops": [
-      "count",
-      "max",
-      "min",
-      "product",
-      "sum"
-    ],
-    "sequence_transforms": [
-      "distinct",
-      "filter",
-      "identity",
-      "map",
-      "reverse"
-    ],
+    "aggregate_ops": [],
+    "sequence_transforms": [],
     "co_checker_server_owned": [
-      "aggregate_matching",
       "angle",
       "area",
       "coplanar",
-      "derived_sequence",
       "distance",
-      "extremum",
-      "first_match_index",
       "lateral_area",
-      "membership",
-      "ordering",
       "parallel",
       "perpendicular",
       "point_on_line",
       "point_on_plane",
-      "predicate_verdict",
       "radius",
-      "reachability",
-      "scalar_accumulation",
       "section_matches",
-      "total_mapping",
       "volume"
     ],
-    "hash": "478573817749800ce8ad3635e7c574e466bd068ce5f37ee4882d1af5b5667e45"
+    "hash": "b7b27005ac7e46575c13dabfe3b8244c3740a6392bbd0f0139b259d0898be858"
   },
   "visual_primitive_set": {
-    "so_primitive": 9,
-    "primitives": [
-      "array_strip",
-      "bar_chart",
-      "bit_register",
-      "graph_view",
-      "map_view",
-      "queue_view",
-      "stack_view",
-      "table_grid",
-      "tree_element"
-    ],
-    "hash": "9357dab18fe3bce13eec0dfb5e09febf1f102a32e6338322ecb243bc234d77ef"
+    "so_primitive": 0,
+    "primitives": [],
+    "hash": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
   },
   "schema_semantic_program": {
     "duong_dan": "docs/schemas/semantic_program.schema.json",
-    "hash": "667758005778bf217d663939424ee9c4b0c8f5ca70c65d5111b25ccdb0a0e1a4"
+    "hash": "71d4c7a89938b18787cd2ff0028cc5d4119ef7e78f7151fd6b7a4ab82b2db8c8"
   },
   "dev": {
     "duong_dan": "docs/evaluation/semantic-benchmark/dev/cases.json",
