@@ -184,7 +184,7 @@ def test_nine_field_cache_identity_invalidation_and_lru():
         "schema_version": SLM_COMPACT_SCHEMA_VERSION,
         "schema_sha256": "def456",
         "grounding_policy_version": f"{SLM_GROUNDING_VALIDATOR_VERSION}|norm={SLM_VERIFIED_NORMALIZER_VERSION}",
-        "parser_version": "local-geometry-parser/2",
+        "parser_version": "local-geometry-parser/3",
         "capability_identity": compute_local_slm_capability_identity(),
         "namespace": LOCAL_SLM_CACHE_NAMESPACE,
     }

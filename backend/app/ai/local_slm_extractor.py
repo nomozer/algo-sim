@@ -22,6 +22,17 @@ import time
 from typing import Any
 
 from app.ai.adapter4_route import ADAPTER_V4_VERSION, ROUTE_D_SIMULATION_V4_SCHEMA_VERSION
+from app.ai.compositional_clause_analysis import (
+    CONTEXT_HEADER_RE,
+    INLINE_EXAM_HEADER_PREFIX_RE,
+    INLINE_LEADING_META_RE,
+    INLINE_TRAILING_META_RE,
+    META_NO_CALC_RE,
+    SIMULATION_LEAD_VERB_RE,
+    _EMBEDDED_SOLID_HEAD_RE,
+    _TRAILING_GOAL_SPLIT_RE,
+    analyze_compositional_geometry,
+)
 from app.ai.local_geometry_parser import (
     LOCAL_GEOMETRY_PARSER_VERSION,
     LOCAL_PARSE_COMPLETE,
@@ -64,13 +75,12 @@ from app.simulation.geometry.expression import ExprParseError, parse_quantity_ex
 from app.simulation.geometry_functions import engine, planner, registry
 
 LOCAL_SLM_EXTRACTOR_VERSION = "local-slm-extractor/3"
-#: /5 and validator /5 (run `axo-hybrid-simulation-intent-generalization-grounded-slm-recovery`): simulation-only GBNF
-#: branch (`g:[]`), construct_object quoted on the show request, sim-only lowering. Both feed the SLM cache key, so no
-#: extraction cached under /4 (forced metric goal) is ever replayed.
-LOCAL_SLM_EXTRACTOR_V9_VERSION = "local-slm-extractor/5"
+#: /6 and validator /6 (AXO HYBRID /12): compositional clause splitting, nested simulation lead-in canonicalization,
+#: universal edge / solid height cues, controlled diacritic restoration, and A3 visualization ambiguity refusal.
+LOCAL_SLM_EXTRACTOR_V9_VERSION = "local-slm-extractor/6"
 SLM_COMPACT_SCHEMA_VERSION = "slm-compact-clause/1"
 SLM_GROUNDING_VALIDATOR_VERSION = "slm-grounding-validator/3"
-SLM_GROUNDING_VALIDATOR_V9_VERSION = "slm-grounding-validator/5"
+SLM_GROUNDING_VALIDATOR_V9_VERSION = "slm-grounding-validator/6"
 #: /11 grammar variant (chosen by SLM_RECOVERY_ABLATION.json): in a simulation-only root, `u` non-empty only with `r:[]`.
 SIM_ONLY_UNRESOLVED_WITHOUT_FACTS = True
 SLM_GROUNDING_ENVELOPE_VERSION = "slm-grounding-envelope/3"
@@ -409,10 +419,71 @@ def detect_prompt_injection(text: str) -> str | None:
 
 
 def index_source_clauses(norm_text: str) -> list[IndexedClause]:
-    return [
-        IndexedClause(clause_id=idx, start=sa, end=sb, text=st)
-        for idx, (sa, sb, st) in enumerate(split_into_Sentences(norm_text))
-    ]
+    out: list[IndexedClause] = []
+    for sa, sb, st in split_into_Sentences(norm_text):
+        s_trim = st.strip()
+        if not s_trim:
+            continue
+        if CONTEXT_HEADER_RE.fullmatch(s_trim) or META_NO_CALC_RE.fullmatch(s_trim.strip(" .;!?")):
+            continue
+        cur_a, cur_b = sa, sb
+        sub = norm_text[cur_a:cur_b]
+        if m_eh := INLINE_EXAM_HEADER_PREFIX_RE.match(sub):
+            if sub[m_eh.end():].strip():
+                cur_a += m_eh.end()
+                sub = norm_text[cur_a:cur_b]
+        if m_lm := INLINE_LEADING_META_RE.match(sub):
+            if sub[m_lm.end():].strip():
+                cur_a += m_lm.end()
+                sub = norm_text[cur_a:cur_b]
+        if m_tm := INLINE_TRAILING_META_RE.search(sub):
+            if sub[:m_tm.start()].strip():
+                cur_b = cur_a + m_tm.start()
+                sub = norm_text[cur_a:cur_b]
+        split_hits = list(_TRAILING_GOAL_SPLIT_RE.finditer(sub))
+        if split_hits:
+            pos = 0
+            for m_sp in split_hits:
+                l_end = m_sp.start()
+                while l_end > pos and sub[l_end - 1] in " \t,;:":
+                    l_end -= 1
+                l_start = pos
+                while l_start < l_end and sub[l_start].isspace():
+                    l_start += 1
+                if l_start < l_end:
+                    out.append(IndexedClause(
+                        clause_id=len(out),
+                        start=cur_a + l_start,
+                        end=cur_a + l_end,
+                        text=norm_text[cur_a + l_start : cur_a + l_end],
+                    ))
+                pos = m_sp.end()
+            t_a, t_b = pos, len(sub)
+            while t_a < t_b and sub[t_a].isspace():
+                t_a += 1
+            while t_b > t_a and sub[t_b - 1] in " \t":
+                t_b -= 1
+            if t_a < t_b:
+                out.append(IndexedClause(
+                    clause_id=len(out),
+                    start=cur_a + t_a,
+                    end=cur_a + t_b,
+                    text=norm_text[cur_a + t_a : cur_a + t_b],
+                ))
+        else:
+            t_a, t_b = cur_a, cur_b
+            while t_a < t_b and norm_text[t_a].isspace():
+                t_a += 1
+            while t_b > t_a and norm_text[t_b - 1].isspace():
+                t_b -= 1
+            if t_a < t_b:
+                out.append(IndexedClause(
+                    clause_id=len(out),
+                    start=t_a,
+                    end=t_b,
+                    text=norm_text[t_a:t_b],
+                ))
+    return out
 
 
 def extract_geometry_points(text: str) -> set[str]:
@@ -1026,12 +1097,22 @@ def _convert_goal(
             return None, f"UNGROUNDED_GOAL_POINT:{vtok}"
 
     req_pts = [x for x in ([pt] if pt else []) + seg + line + line2 + plane + plane2 + poly]
+    is_solid_height_goal = False
+    if gtype == "distance" and pt and len(plane) >= 3 and solid_info and solid_info.get("solid_type") == "pyramid" and "." in str(solid_info.get("notation") or ""):
+        s_apex, s_base_raw = str(solid_info["notation"]).split(".", 1)
+        s_base_pts = re.findall(r"[A-Z][0-9]*'*", s_base_raw)
+        if pt == s_apex and set(plane) <= set(s_base_pts):
+            is_solid_height_goal = True
     ctext = ""
     for gcl in ordered_goal_clauses:
         if not _GOAL_MARKERS_RE.search(gcl.text):
             continue
         gcl_pts = extract_geometry_points(gcl.text)
+        gcl_low = gcl.text.lower()
         if not req_pts or all(rp in gcl_pts for rp in req_pts):
+            ctext = gcl.text
+            break
+        if is_solid_height_goal and ("chiều cao" in gcl_low or "đường cao" in gcl_low):
             ctext = gcl.text
             break
     if not ctext:
@@ -1054,8 +1135,11 @@ def _convert_goal(
     if gtype == "distance":
         target: dict[str, Any] = {}
         if pt and len(plane) >= 3:
-            target = {"point": pt, "plane": plane}
-            quote_tokens = [pt, *plane]
+            target = {"point": pt, "plane": plane[:3] if is_solid_height_goal else plane}
+            if is_solid_height_goal and not all(tok in extract_geometry_points(ctext) for tok in [pt, *plane]):
+                quote_tokens = ["chiều cao"] if "chiều cao" in ctext.lower() else ["đường cao"]
+            else:
+                quote_tokens = [pt, *plane]
         elif pt and len(line) == 2:
             target = {"point": pt, "line": line}
             quote_tokens = [pt, *line]
@@ -1650,11 +1734,14 @@ def build_compact_grammar_for_context(
 
     all_solids = [e for e in ctx.entities if e.kind == "solid"]
     base_polys_from_solids: list[str] = []
+    top_polys_from_solids: list[str] = []
     for se in all_solids:
         left_s, right_s = se.label.split(".", 1)
         base_lbl = right_s if se.solid_subtype == "pyr" else left_s
         if base_lbl and base_lbl not in base_polys_from_solids:
             base_polys_from_solids.append(base_lbl)
+        if se.solid_subtype != "pyr" and right_s and right_s not in top_polys_from_solids:
+            top_polys_from_solids.append(right_s)
 
     lines: list[str] = [
         f"cid ::= {cid_rule}",
@@ -1700,14 +1787,19 @@ def build_compact_grammar_for_context(
             # Only include base polygons in a clause if explicitly referenced outside solid notation, "đáy" is present, or v9 cube/box clause
             allow_implicit_solid_base = (
                 "đáy" in clow
-                or (use_v9 and ("hình lập phương" in clow or "hình hộp chữ nhật" in clow))
+                or (use_v9 and ("lập phương" in clow or "hộp chữ nhật" in clow))
             )
+            if e.label in top_polys_from_solids:
+                if not re.search(rf"(?<![A-Z0-9'.]){re.escape(e.label)}(?![A-Z0-9'])", cl.text) and not any(
+                    w in clow for w in ("hai đáy", "mặt trên", "đáy trên")
+                ):
+                    continue
             if e.label in base_polys_from_solids and not allow_implicit_solid_base:
                 if not re.search(rf"(?<![A-Z0-9'.]){re.escape(e.label)}(?![A-Z0-9'])", cl.text):
                     continue
             if e.label not in c_polys:
                 c_polys.append(e.label)
-        if "đáy" in clow or (use_v9 and ("hình lập phương" in clow or "hình hộp chữ nhật" in clow)):
+        if "đáy" in clow or (use_v9 and ("lập phương" in clow or "hộp chữ nhật" in clow)):
             for bp in base_polys_from_solids:
                 if bp not in c_polys:
                     c_polys.append(bp)
@@ -1730,9 +1822,10 @@ def build_compact_grammar_for_context(
         c_reg_pyr = [
             e.label
             for e in all_solids
-            if e.is_regular_solid
-            and e.solid_subtype == "pyr"
-            and ("cạnh bên" in clow or "tứ diện đều" in clow or cid in e.clause_ids)
+            if (
+                (e.is_regular_solid and e.solid_subtype == "pyr" and ("cạnh bên" in clow or "tứ diện đều" in clow or cid in e.clause_ids))
+                or (use_v9 and any(w in clow for w in ("tất cả các cạnh", "tất cả cạnh", "mọi cạnh")))
+            )
         ]
         c_len_tgts = list(dict.fromkeys(c_segs if c_segs else c_reg_pyr))
         c_solids = [e.label for e in all_solids if cid in e.clause_ids] or [e.label for e in all_solids]
@@ -2035,12 +2128,14 @@ def build_compact_grammar_for_context(
         cid = gcl.clause_id
         glow = gcl.text.lower()
         g_polys = [e.label for e in ctx.entities if e.kind == "poly" and cid in e.clause_ids]
-        if "đáy" in glow:
+        if "đáy" in glow or "chiều cao" in glow or "đường cao" in glow:
             for bp in base_polys_from_solids:
                 if bp not in g_polys:
                     g_polys.append(bp)
         g_segs = [e.label for e in ctx.entities if e.kind == "seg" and cid in e.clause_ids]
         g_pts = [e.label for e in ctx.entities if e.kind == "point" and cid in e.clause_ids]
+        if ("chiều cao" in glow or "đường cao" in glow) and not g_pts:
+            g_pts = list(all_pt_lbls)
         if not (g_polys or g_segs or g_pts):
             g_polys, g_segs, g_pts = all_poly_lbls, all_seg_lbls, all_pt_lbls
 
@@ -2055,7 +2150,7 @@ def build_compact_grammar_for_context(
             lines.append(f"{gpfx}pt ::= {_gbnf_union(g_pts)}")
 
         g_alts: list[str] = []
-        has_dist_cue_g = any(w in glow for w in ("khoảng cách", "cách ", "k/c"))
+        has_dist_cue_g = any(w in glow for w in ("khoảng cách", "cách ", "k/c", "chiều cao", "đường cao"))
         if all_solid_lbls:
             lines.append(rf'{gpfx}vol ::= "{{\"c\":{cid},\"t\":\"vol\",\"tgt\":" {gpfx}sol "}}"')
             g_alts.append(f"{gpfx}vol")
@@ -2255,14 +2350,24 @@ def build_compact_clause_context(working_text: str) -> CompactClauseContext:
                 _add_entity("solid", s_lbl, all_v, cid, solid_subtype=subtype, is_reg=is_reg)
                 _add_entity("poly", left, tuple(lpts), cid)
                 _add_entity("poly", right, tuple(rpts), cid)
-                # Regular/explicit cube needs AA' lateral edge anchor if not explicitly named in text
-                if subtype == "cube" and len(lpts) >= 1 and len(rpts) >= 1:
+                # Regular/explicit cube, box, or prism with universal edge/height cues needs AA' lateral edge anchor if not explicitly named in text
+                if (
+                    subtype in ("cube", "box", "pri")
+                    and len(lpts) >= 1
+                    and len(rpts) >= 1
+                    and (
+                        subtype in ("cube", "box")
+                        or any(w in clow for w in ("tất cả các cạnh", "tất cả cạnh", "mọi cạnh", "chiều cao", "đường cao"))
+                    )
+                ):
                     _add_entity("seg", f"{lpts[0]}{rpts[0]}", (lpts[0], rpts[0]), cid)
             elif len(lpts) == 1 and len(rpts) >= 3:
                 all_v = tuple([*lpts, *rpts])
                 _add_entity("solid", s_lbl, all_v, cid, solid_subtype="pyr", is_reg=is_reg)
                 _add_entity("poly", right, tuple(rpts), cid)
-                if is_reg and _AMBIGUOUS_LATERAL_SINGLE_RE.search(clow):
+                if (is_reg and _AMBIGUOUS_LATERAL_SINGLE_RE.search(clow)) or any(
+                    w in clow for w in ("tất cả các cạnh", "tất cả cạnh", "mọi cạnh", "tứ diện đều")
+                ):
                     _add_entity("seg", f"{lpts[0]}{rpts[0]}", (lpts[0], rpts[0]), cid)
 
         # 1b. Tetrahedron without dot ("tứ diện ABCD")
@@ -2273,6 +2378,8 @@ def build_compact_clause_context(working_text: str) -> CompactClauseContext:
                 s_lbl = f"{pts[0]}.{''.join(pts[1:])}"
                 _add_entity("solid", s_lbl, tuple(pts), cid, solid_subtype="pyr", is_reg=is_reg)
                 _add_entity("poly", "".join(pts[1:]), tuple(pts[1:]), cid)
+                if is_reg or any(w in clow for w in ("tất cả các cạnh", "tất cả cạnh", "mọi cạnh")):
+                    _add_entity("seg", f"{pts[0]}{pts[1]}", (pts[0], pts[1]), cid)
 
         # 1c. Parenthesized planes (SBC), (ABCD) & named triangles / faces / angles
         for pm in re.finditer(r"\(\s*((?:[A-Z][0-9]*'*){3,6})\s*\)", ctext):
@@ -2571,8 +2678,20 @@ def _expand_compact_relation(
     cpts = extract_geometry_points(ctext)
     bpts = set(_solid_base_vertices(solid_info))
     all_pts = extract_geometry_points(ctx.working_text)
-    is_reg_cube_or_lat = solid_info and solid_info.get("_is_reg") and (
-        "cạnh bên" in clow or "lập phương" in ctx.working_text.lower() or (use_v7 and "tứ diện đều" in ctx.working_text.lower())
+    is_reg_cube_or_lat = bool(
+        solid_info
+        and (
+            (
+                solid_info.get("_is_reg")
+                and (
+                    "cạnh bên" in clow
+                    or "lập phương" in ctx.working_text.lower()
+                    or (use_v7 and "tứ diện đều" in ctx.working_text.lower())
+                )
+            )
+            or (use_v9 and any(w in clow for w in ("tất cả các cạnh", "tất cả cạnh", "mọi cạnh")))
+            or (use_v9 and solid_info.get("solid_type") == "prism" and any(w in clow for w in ("chiều cao", "đường cao", "lập phương", "hộp chữ nhật")))
+        )
     )
     for ent in (ea, eb, ept):
         if ent is None:
@@ -2836,11 +2955,21 @@ def _expand_compact_relation(
         seg = _pts(ea)
         if qty_entry is None:
             return [], "INVALID_PREMISE_ARGS:segment_length"
+        is_all_edges_cl = use_v9 and any(w in clow for w in ("tất cả các cạnh", "tất cả cạnh", "mọi cạnh"))
         is_reg_lat = bool(solid_info and solid_info.get("_is_reg") and "cạnh bên" in clow)
-        is_reg_tet_all = bool(use_v7 and solid_info and solid_info.get("_is_reg") and "tứ diện đều" in clow)
+        is_reg_tet_all = bool(use_v7 and solid_info and (solid_info.get("_is_reg") and "tứ diện đều" in clow or (is_all_edges_cl and solid_info["solid_type"] == "pyramid")))
+        if is_all_edges_cl and solid_info and solid_info.get("solid_type") == "prism" and "." in str(solid_info.get("notation") or ""):
+            bverts = _solid_base_vertices(solid_info)
+            tverts = _parse_solid_vertices("prism", solid_info["notation"])[len(bverts):]
+            q_pri_all = ctext if (ctext in ctx.working_text and solid_info["notation"] in ctext) else solid_info.get("quote") or ctext
+            if q_pri_all not in ctx.working_text or qty_entry.canon_expr not in q_pri_all:
+                q_pri_all = select_clean_quote(ctext, [*bverts, qty_entry.canon_expr], ctx.working_text, closure_mode=closure_mode)
+            out_premises.append({"kind": "regular_polygon", "args": {"vertices": bverts, "side": qty_entry.canon_expr}, "quote": q_pri_all, "solid_id": sid})
+            out_premises.append({"kind": "segment_length", "args": {"segment": [bverts[0], tverts[0]], "value": qty_entry.canon_expr}, "quote": q_pri_all, "solid_id": sid})
+            return out_premises, None
         if len(seg) != 2:
-            # Allow solid entity for regular pyramid lateral edge ("cạnh bên bằng 2a") or regular tetrahedron universal edge
-            if ea is not None and ea.kind == "solid" and solid_info and solid_info.get("_is_reg") and solid_info["solid_type"] == "pyramid":
+            # Allow solid entity for regular pyramid lateral edge ("cạnh bên bằng 2a"), regular tetrahedron, or all-edges-equal
+            if ea is not None and ea.kind == "solid" and solid_info and solid_info["solid_type"] == "pyramid" and (solid_info.get("_is_reg") or is_all_edges_cl):
                 apex = solid_info["notation"].split(".", 1)[0]
                 bverts = _solid_base_vertices(solid_info)
                 seg = [apex, bverts[0]]
@@ -2867,6 +2996,29 @@ def _expand_compact_relation(
                 out_premises.append({"kind": "regular_polygon", "args": {"vertices": b_verts, "side": qty_entry.canon_expr}, "quote": q_cube, "solid_id": sid})
                 out_premises.append({"kind": "segment_length", "args": {"segment": seg, "value": qty_entry.canon_expr}, "quote": q_cube, "solid_id": sid})
                 return out_premises, None
+            if (
+                use_v9
+                and solid_info is not None
+                and solid_info.get("solid_type") == "prism"
+                and ("chiều cao" in clow or "đường cao" in clow)
+                and seg_ab not in ctext
+                and seg_ba not in ctext
+                and qty_entry.canon_expr in ctext
+                and set(seg).issubset(set(_parse_solid_vertices("prism", solid_info["notation"])))
+            ):
+                q_h = _select_source_gate_quote(
+                    ctext, [qty_entry.canon_expr], ctx.working_text, "height",
+                    role_val=qty_entry.canon_expr, required_cues=("chiều cao", "đường cao"), closure_mode=closure_mode,
+                )
+                out_premises.append({"kind": "height", "args": {"solid": sid, "value": qty_entry.canon_expr}, "quote": q_h, "solid_id": sid})
+                return out_premises, None
+            if is_all_edges_cl and solid_info and solid_info.get("solid_type") == "pyramid" and seg_ab not in ctext and seg_ba not in ctext and qty_entry.canon_expr in ctext:
+                apex = solid_info["notation"].split(".", 1)[0]
+                bverts = _solid_base_vertices(solid_info)
+                q_tet = ctext if (ctext in ctx.working_text and solid_info["notation"] in ctext) else _select_source_gate_quote(ctext, [*bverts, qty_entry.canon_expr], ctx.working_text, "regular_polygon", role_val=qty_entry.canon_expr, closure_mode=closure_mode)
+                out_premises.append({"kind": "regular_polygon", "args": {"vertices": bverts, "side": qty_entry.canon_expr}, "quote": q_tet, "solid_id": sid})
+                out_premises.append({"kind": "segment_length", "args": {"segment": [apex, bverts[0]], "value": qty_entry.canon_expr}, "quote": q_tet, "solid_id": sid})
+                return out_premises, None
             if not is_reg_lat and seg_ab not in ctext and seg_ba not in ctext:
                 return [], f"UNGROUNDED_SEGMENT_PAIR:{seg_ab}"
             if not is_reg_lat:
@@ -2883,9 +3035,9 @@ def _expand_compact_relation(
                 val_pat = re.compile(rf"(?<![A-Za-z0-9]){esc_v}(?![A-Za-z0-9√/])")
                 same_piece_ok = any(seg_pat.search(p) and val_pat.search(p) for p in pieces_v)
                 if not same_piece_ok:
-                    # Allow explicit shared list ("AB, AC cùng bằng a") only if no scalar sits between seg and val
+                    # Allow explicit shared list ("AB, AC cùng bằng a") or long subject clause ("đường cao SA ... có độ dài a√3")
                     between_pat = re.compile(
-                        rf"(?<![A-Z0-9']){esc_s}(?![A-Z0-9'])[^.;!?=]{{0,35}}(?:=|bằng|dài)\s*{esc_v}(?![A-Za-z0-9√/])",
+                        rf"(?<![A-Z0-9']){esc_s}(?![A-Z0-9'])[^.;!?=]{{0,64}}(?:=|bằng|(?:có\s+)?(?:độ\s+)?dài(?:\s*(?:=|bằng|là))?)\s*{esc_v}(?![A-Za-z0-9√/])",
                         re.IGNORECASE | re.UNICODE,
                     )
                     if not between_pat.search(ctext):
@@ -2908,8 +3060,16 @@ def _expand_compact_relation(
     elif pcode == "height":
         if qty_entry is None:
             return [], "INVALID_PREMISE_ARGS:height"
-        q_str = _select_source_gate_quote(ctext, [qty_entry.canon_expr], ctx.working_text, "height", role_val=qty_entry.canon_expr, closure_mode=closure_mode)
-        out_premises.append({"kind": "height", "args": {"value": qty_entry.canon_expr}, "quote": q_str, "solid_id": sid})
+        q_str = _select_source_gate_quote(
+            ctext,
+            [qty_entry.canon_expr],
+            ctx.working_text,
+            "height",
+            role_val=qty_entry.canon_expr,
+            required_cues=("chiều cao", "đường cao") if use_v9 else None,
+            closure_mode=closure_mode,
+        )
+        out_premises.append({"kind": "height", "args": {"solid": sid, "value": qty_entry.canon_expr}, "quote": q_str, "solid_id": sid})
 
     elif pcode in ("ang_lp", "ang_pp", "dihed", "ang_ll", "ang_vtx"):
         if qty_entry is None:
@@ -3050,15 +3210,31 @@ def _convert_compact_goal(
     # For solid volume / full-solid area, req_pts may be empty or solid vertices
     if gcode == "vol":
         req_pts = []
+    is_solid_height_goal = bool(
+        gcode == "dist_pt_plane"
+        and len(ga) == 1
+        and len(gb) >= 3
+        and solid_info
+        and solid_info.get("solid_type") == "pyramid"
+        and "." in str(solid_info.get("notation") or "")
+        and ga[0] == str(solid_info["notation"]).split(".", 1)[0]
+        and set(gb) <= set(_solid_base_vertices(solid_info))
+    )
     ctext = ""
     matched_cid: int | None = None
     for gcl in ordered_goal_clauses:
         if not _GOAL_MARKERS_RE.search(gcl.text):
             continue
         gcl_pts = extract_geometry_points(gcl.text)
+        gcl_low = gcl.text.lower()
         if not req_pts or all(rp in gcl_pts for rp in req_pts):
             ctext = gcl.text
             matched_cid = gcl.clause_id
+            break
+        if is_solid_height_goal and ("chiều cao" in gcl_low or "đường cao" in gcl_low):
+            ctext = gcl.text
+            matched_cid = gcl.clause_id
+            gb = gb[:3]
             break
     if not ctext or matched_cid is None:
         return None, f"UNGROUNDED_GOAL_CLAUSE_TOKENS:{v5_gtype}"
@@ -3096,25 +3272,30 @@ _STRICT_GOAL_ASK_RE = re.compile(
 
 
 def simulation_request_span(clauses: list[IndexedClause], working_text: str) -> tuple[int, int] | None:
-    """Span in `working_text` of the show request (rule 7b grammar, `_SIM_REQUEST_RE`) of the first clause that is one,
-    else None. /11: the `construct_object` goal quotes exactly this span, as the deterministic parser does."""
+    """Span in `working_text` of the show request (rule 7b grammar or nested lead-in verb + solid head)."""
     for cl in clauses:
         m = _SIM_REQUEST_RE.match(cl.text)
-        if m is None:
-            continue
-        sim = m.group("sim").strip()
-        p = working_text.find(sim, cl.start)
-        if p >= 0:
-            return p, p + len(sim)
+        if m is not None:
+            sim = m.group("sim").strip()
+            p = working_text.find(sim, cl.start)
+            if p >= 0:
+                return p, p + len(sim)
+        if m_lead := SIMULATION_LEAD_VERB_RE.match(cl.text):
+            tail = cl.text[m_lead.end():]
+            if m_head := _EMBEDDED_SOLID_HEAD_RE.match(tail):
+                rel_a = len(cl.text) - len(cl.text.lstrip())
+                rel_b = m_lead.end() + m_head.end("head")
+                return cl.start + rel_a, cl.start + rel_b
     return None
 
 
 def is_simulation_only_source(ctx: "CompactClauseContext") -> bool:
-    """/11: the source asks nothing (no ask verb / '?') and states an explicit show request. The compact GBNF then has no
-    goal clause and admits `g:[]` (before /11 it forced >= 1 metric goal or an unresolved item: AxoV9 emitted `goal:vol`
-    for 'Hãy mô phỏng hình lập phương', see SLM20_ROOT_CAUSE_AUDIT.json)."""
+    """/12: simulation-only check strips leading/trailing meta_no_calc clauses and supports nested simulation lead-ins."""
     if any(_GOAL_VERB_RE.search(cl.text) for cl in ctx.clauses):
         return False
+    comp = analyze_compositional_geometry(ctx.working_text)
+    if comp.is_simulation_only_intent:
+        return True
     return simulation_request_span(ctx.clauses, ctx.working_text) is not None
 
 
@@ -3222,14 +3403,24 @@ def validate_and_lower_compact_clause(
                             if v5_stype == "prism"
                             else ("tứ diện đều", "chóp", "tứ diện")
                         )
-                        solid_quote = select_clean_quote(
+                        m_tight_sol = re.search(
+                            rf"(?:(?:hình|khối)\s+)?(?:chóp|lăng\s+trụ|hộp(?:\s+chữ\s+nhật)?|lập\s+phương|tứ\s+diện)"
+                            rf"(?:\s+(?:đứng|đều|xiên|tam\s+giác|tứ\s+giác|ngũ\s+giác|lục\s+giác|chữ\s+nhật))*"
+                            rf"\s+{re.escape(s_ent.label)}(?![A-Z0-9'])",
                             ctext_s,
-                            list(s_ent.vertices),
-                            ctx.working_text,
-                            required_contiguous=[s_ent.label] if s_ent.label in ctext_s else None,
-                            required_cues=s_cues,
-                            closure_mode=closure_mode,
+                            re.IGNORECASE,
                         )
+                        if m_tight_sol and m_tight_sol.group(0) in ctx.working_text:
+                            solid_quote = m_tight_sol.group(0)
+                        else:
+                            solid_quote = select_clean_quote(
+                                ctext_s,
+                                list(s_ent.vertices),
+                                ctx.working_text,
+                                required_contiguous=[s_ent.label] if s_ent.label in ctext_s else None,
+                                required_cues=s_cues,
+                                closure_mode=closure_mode,
+                            )
                     else:
                         solid_quote = select_clean_quote(ctext_s, list(s_ent.vertices), ctx.working_text, closure_mode=closure_mode)
                     if stype_code == "cube" and ctext_s in ctx.working_text:
@@ -3503,10 +3694,20 @@ def validate_and_lower_compact_clause(
     }
 
 
+def _prompt_clause_text(text: str) -> str:
+    """Canonicalize nested simulation lead-ins ("Mô phỏng hình chóp..." -> "Cho hình chóp...") for AxoV9 prompt ONLY."""
+    if m_lead := SIMULATION_LEAD_VERB_RE.match(text):
+        tail = text[m_lead.end():]
+        if _EMBEDDED_SOLID_HEAD_RE.match(tail):
+            cleaned_tail = re.sub(r"^(?:(?:mô\s+hình|hình)\s+3D\s+của\s+)", "", tail, flags=re.IGNORECASE)
+            return f"Cho {cleaned_tail}"
+    return text
+
+
 def _build_compact_clause_messages(ctx: CompactClauseContext, *, clause_subset: list[IndexedClause] | None = None) -> list[dict[str, str]]:
     """Build static-prefix-cacheable prompt with typed symbol tables and worked JSON examples."""
     target_clauses = clause_subset if clause_subset is not None else ctx.clauses
-    clause_block = "\n".join(f"[{c.clause_id}] {c.text}" for c in target_clauses)
+    clause_block = "\n".join(f"[{c.clause_id}] {_prompt_clause_text(c.text)}" for c in target_clauses)
 
     def _lbls(kind: str) -> str:
         vals = [e.label for e in ctx.entities if e.kind == kind]
@@ -3648,12 +3849,43 @@ def run_local_slm_extraction(
             stage_timings_ms={"preprocessing_ms": round((time.perf_counter() - t_prep0) * 1000.0, 3)},
         )
 
+    # Phase B2 (/12): reject A3 visualization-metric ambiguity before invoking SLM; project diacritic-free text 1-1
+    comp_analysis = analyze_compositional_geometry(norm_raw)
+    if comp_analysis.ambiguous_visualization_clauses:
+        prep_ms = round((time.perf_counter() - t_prep0) * 1000.0, 3)
+        amb_reasons = [c.ambiguity_reason for c in comp_analysis.ambiguous_visualization_clauses if c.ambiguity_reason]
+        return LocalSlmExtractionResult(
+            ok=False,
+            strategy=eff_strategy,
+            model_key=spec.model_key,
+            model_sha256=spec.sha256,
+            norm_text=norm_raw,
+            wire_payload=None,
+            canonical_payload=None,
+            reason_code="AMBIGUOUS_FACT",
+            reason_detail=f"Refused A3 ambiguous display-metric wording without explicit query/construction target: {amb_reasons}",
+            failure_taxonomy="AMBIGUOUS_DISPLAY_METRIC",
+            grounding_envelope={
+                "envelope_version": eff_env_ver,
+                "validator_version": eff_val_ver,
+                "strategy": eff_strategy,
+                "closure_mode": eff_closure,
+                "model_key": spec.model_key,
+                "model_sha256": spec.sha256,
+                "slm_invoked": False,
+                "grounding_status": "REJECTED_AMBIGUOUS_DISPLAY_METRIC",
+                "failure_taxonomy": "AMBIGUOUS_DISPLAY_METRIC",
+            },
+            stage_timings_ms={"preprocessing_ms": prep_ms},
+        )
+
     # Phase C: span-audited Verified Normalization (only when enabled)
     norm_res: VerifiedNormalizationResult | None = None
-    working_text = norm_raw
+    norm_input = normalize_problem_text(comp_analysis.mapped.normalized_text) if comp_analysis.mapped.diacritic_projected else norm_raw
+    working_text = norm_input
     t_norm0 = time.perf_counter()
     if eff_use_norm:
-        norm_res = normalize_for_slm_grounding(norm_raw, normalizer_version=eff_norm_ver)
+        norm_res = normalize_for_slm_grounding(norm_input, normalizer_version=eff_norm_ver)
         working_text = norm_res.canonical_text
         if norm_res.typo_detected:
             prep_ms = round((time.perf_counter() - t_prep0) * 1000.0, 3)
@@ -3934,6 +4166,42 @@ def run_local_slm_extraction(
             wire_normalize_ms = 0.0
             if canon_payload is not None:
                 t_wn0 = time.perf_counter()
+                mapped = comp_analysis.mapped
+                norm_mapped = mapped.normalized_text if mapped.diacritic_projected else norm_raw
+
+                def _orig_quote_slm(q_val: Any) -> Any:
+                    if not isinstance(q_val, str) or not q_val or q_val in norm_raw:
+                        return q_val
+                    cand = q_val
+                    if norm_res is not None and getattr(norm_res, "steps", None) and cand not in norm_mapped:
+                        for st in reversed(norm_res.steps):
+                            if st.normalized_excerpt and st.normalized_excerpt in cand and st.original_excerpt:
+                                cand = cand.replace(st.normalized_excerpt, st.original_excerpt)
+                    if cand in norm_raw:
+                        return cand
+                    if mapped.diacritic_projected:
+                        p0 = norm_mapped.find(cand)
+                        if p0 < 0 and len(cand) > 1:
+                            for alt in (cand[0].lower() + cand[1:], cand[0].upper() + cand[1:]):
+                                p0 = norm_mapped.find(alt)
+                                if p0 >= 0:
+                                    break
+                        if p0 < 0:
+                            m_ci = re.search(re.escape(cand), norm_mapped, re.IGNORECASE | re.UNICODE)
+                            if m_ci:
+                                p0 = m_ci.start()
+                        if p0 >= 0:
+                            oq = mapped.orig_quote(p0, p0 + len(cand))
+                            if oq and oq in norm_raw:
+                                return oq
+                    return cand if cand in norm_raw else q_val
+
+                if mapped.diacritic_projected:
+                    canon_payload["problem_text"] = norm_raw
+                    for key in ("solids", "premises", "derived_sections", "relations", "simulation_goals", "math_goals", "unresolved", "described_points"):
+                        for item in canon_payload.get(key) or ():
+                            if isinstance(item, dict) and "quote" in item:
+                                item["quote"] = _orig_quote_slm(item["quote"])
                 wire_payload = to_wire_typed_fact_next_v2(canon_payload)
                 norm_canon = _normalize_transport_payload(wire_payload)
                 wire_normalize_ms = round((time.perf_counter() - t_wn0) * 1000.0, 3)

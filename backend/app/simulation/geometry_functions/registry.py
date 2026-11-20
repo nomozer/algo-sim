@@ -1920,7 +1920,7 @@ _C_THETICH = re.compile(
     re.IGNORECASE,
 )
 #: "cạnh CD" (a named edge) continues its clause; only a role "cạnh" ("… cạnh 2", "… cạnh bên") opens a new one
-_C_NOI = re.compile(rf"\s*[,;]\s*(?:và\s+)?|\s+và\s+|\s+(?=biết\s|th[ỏo]a\s+mãn\s|trong\s+đó\s|sao\s+cho\s|với\s+(?:(?:mặt|tứ\s+giác|tam\s+giác)\s+)?đáy(?!\w)|có\s|với\s+hai\s+đáy(?!\w)|với\s+đáy\s+(?:lớn|nhỏ)(?!\w)|với\s+(?:(?:(?:tất\s+cả\s+(?:các\s+)?|các|mọi|mỗi)\s+)?(?:cạnh|chiều\s+cao|đường\s+cao|độ\s+dài|đoạn(?:\s+thẳng)?|đường\s+chéo|kích\s+thước)(?!\w)|{_L1}{_L1}(?![\w']))"
+_C_NOI = re.compile(rf"\s*[,;]\s*(?:và\s+)?|\s+và\s+|\s+(?=biết\s|th[ỏo]a\s+mãn\s|trong\s+đó\s|sao\s+cho\s|(?:(?:mặt|tứ\s+giác|tam\s+giác)\s+)?đáy(?!\w)|với\s+(?:(?:mặt|tứ\s+giác|tam\s+giác)\s+)?đáy(?!\w)|có\s|với\s+hai\s+đáy(?!\w)|với\s+đáy\s+(?:lớn|nhỏ)(?!\w)|với\s+(?:(?:(?:tất\s+cả\s+(?:các\s+)?|các|mọi|mỗi)\s+)?(?:cạnh|chiều\s+cao|đường\s+cao|độ\s+dài|đoạn(?:\s+thẳng)?|đường\s+chéo|kích\s+thước)(?!\w)|{_L1}{_L1}(?![\w']))"
                     rf"|(?:(?:tất\s+cả\s+(?:các\s+)?|các|mọi|mỗi)\s+)?cạnh\s+(?!{_L1}{_L1}(?![\w'])))", re.IGNORECASE)
 #: Number-free CLOSED premise clauses (review round 4): a face ⊥ a face, the shape of a named triangle/face (optionally
 #: lying in a plane ⊥ the base), equal named segments. They bind nothing; they only keep their sentence parseable.
@@ -3819,7 +3819,9 @@ _BU_DAU_PHRASE_MAP: tuple[tuple[str, str], ...] = (
     ("hien thi", "hiển thị"), ("minh hoa", "minh họa"),
     ("tinh the tich", "tính thể tích"), ("the tich", "thể tích"),
     ("tinh dien tich", "tính diện tích"), ("dien tich", "diện tích"),
+    ("tinh khoang cach tu", "tính khoảng cách từ"), ("khoang cach tu", "khoảng cách từ"),
     ("tinh khoang cach", "tính khoảng cách"), ("khoang cach", "khoảng cách"),
+    ("tu diem", "từ điểm"), ("tu duong thang", "từ đường thẳng"), ("tu mat phang", "từ mặt phẳng"),
     ("tinh do dai", "tính độ dài"), ("do dai", "độ dài"), ("tinh goc", "tính góc"),
     ("so do", "số đo"), ("da cho", "đã cho"), ("sau do", "sau đó"),
     ("dong thoi", "đồng thời"), ("sao cho", "sao cho"), ("thoa man", "thỏa mãn"),
@@ -4191,9 +4193,17 @@ def _kiem_du_kien_cau_hoi(calls: tuple[LoiGoi, ...], de: str, read_quotes: tuple
         mp_s = _la_khoi_mo_dau_kem_gt(de, a_s, ce, calls)
         return bool(mp_s is not None and mp_s.start() <= pos < mp_s.end())
 
+    khong_can_tinh_spans = [(m.start(), m.end()) for m in _CUM_KHONG_CAN_TINH.finditer(de)]
+
+    def _la_khong_can_tinh(pos: int) -> bool:
+        return any(sa <= pos < sb for sa, sb in khong_can_tinh_spans)
+
     def _req_verbs(a: int = 0, b: int | None = None) -> list[re.Match[str]]:
         end_b = len(de) if b is None else b
-        return [m for m in request_verb_raw.finditer(de, a, end_b) if not _la_mo_khoi_mo_phong(m.start())]
+        return [
+            m for m in request_verb_raw.finditer(de, a, end_b)
+            if not _la_mo_khoi_mo_phong(m.start()) and not _la_khong_can_tinh(m.start())
+        ]
     rb = doc_rang_buoc(de)
     lengths = [m for m in _DO_DAI_CUC_BO.finditer(de) if _doc(m) is not None and _DUOI_BANG.match(de[m.end():])]
 
@@ -4557,7 +4567,8 @@ def _kiem_du_kien_cau_hoi(calls: tuple[LoiGoi, ...], de: str, read_quotes: tuple
                 for c in calls
             )
         )
-        if ((phrases or _DONG_TU_HOI.search(de, start, end)
+        if ((phrases or any(not _la_mo_khoi_mo_phong(m.start()) and not _la_khong_can_tinh(m.start())
+                            for m in _DONG_TU_HOI.finditer(de, start, end))
              or (bool(_req_verbs(start, end)) and not co_dung_hop_le)
              or (any(c.spec.kind == "ask" for c in calls) and start >= first_request))
                 and not _DAN_CAU_HOI.fullmatch(du)):
@@ -4602,8 +4613,18 @@ _GIAN_DAN = re.compile(
 #: "một nửa", "một cạnh") stays premise content.
 _MAO_TU_KHOI = re.compile(r"\s*một\s+(?=(?:hình|khối|hộp|lăng\s+trụ|chóp|tứ\s+diện)(?!\w))", re.IGNORECASE)
 #: Sentence-initial simulation verb directly before a solid noun (SL-1): a lead-in like "Cho", never premise content.
-_MO_PHONG_MO_KHOI = re.compile(rf"\s*{_DONG_TU_MO_PHONG}\s+(?=(?:một\s+)?(?:(?:hình|khối)\s+)?(?:chóp|lăng\s+trụ|hộp|lập\s+phương"
-                               r"|tứ\s+diện)(?!\w))", re.IGNORECASE)
+_CUM_KHONG_CAN_TINH = re.compile(
+    r"(?:(?:chỉ\s+cần\s+)?(?:vẽ|dựng|mô\s+phỏng)\s+(?:hình|khối)(?:\s+3D)?(?:\s*,\s*(?:và\s+)?)?)?"
+    r"(?:không|chưa)\s+cần\s+tính(?:\s+toán|\s+gì(?:\s+thêm)?)?(?=\s*(?:[,;:.()!\-–]|$))",
+    re.IGNORECASE,
+)
+_MO_PHONG_MO_KHOI = re.compile(
+    rf"\s*(?:{_DONG_TU_MO_PHONG}(?:\s+(?:hình|mô\s+hình)\s+3D\s+của)?"
+    rf"(?:\s*,?\s*(?:và\s+)?(?:không|chưa)\s+cần\s+tính(?:\s+toán|\s+gì(?:\s+thêm)?)?\s*[:,-])?"
+    rf"|{_CUM_KHONG_CAN_TINH.pattern}\s*[:,-](?:\s*cho)?)"
+    r"\s+(?=(?:một\s+)?(?:(?:hình|khối)\s+)?(?:chóp|lăng\s+trụ|hộp|lập\s+phương|tứ\s+diện)(?!\w))",
+    re.IGNORECASE,
+)
 #: Nouns that only NAME an object next to its label; ROLE nouns also state a role and are accepted only when that role
 #: matches a validated call (`_vai_tro_doi_tuong_khop`) — "đường cao SB" is a claim, not a name.
 _DANH_TU_TRUNG_TINH = r"mặt phẳng|đường thẳng|đoạn thẳng|đoạn|cạnh|mặt|điểm|độ dài|(?:các\s+)?kích\s+thước|hình chóp|khối chóp"
@@ -4832,6 +4853,12 @@ def _kiem_vung_tien_de(calls: tuple[LoiGoi, ...], de: str, het: int, read_quotes
             dv = re.findall(r"[A-Z][0-9]*'?", m_day_k["dv"]) if m_day_k["dv"] else _chu_cua_day(de, a0 + m_day_k.start())
             if dv and set(dv) <= dung and _vai_tro_doi_tuong_khop("đáy", list(dv), calls):
                 ten |= set(range(a0 + m_day_k.start(), a0 + m_day_k.end()))
+        if m_tail := re.search(
+            rf"(?:\s*[,;:\-–]\s*(?:và\s+)?|\s+và\s+){_CUM_KHONG_CAN_TINH.pattern}\s*[.!?]*\s*$",
+            de[a0:b],
+            re.IGNORECASE,
+        ):
+            doc[a0 + m_tail.start() : b] = [True] * (b - (a0 + m_tail.start()))
         con = "".join(" " if phu[i] or doc[i] or i in ten else de[i] for i in range(a0, b))
         if not _NOI_TIEN_DE.fullmatch(con):
             raise TuChoi("SOURCE_PREMISE_UNREAD", f"tiền đề {de[a0:b].strip()!r} chưa được lời gọi nào đọc — có thể đổi "
