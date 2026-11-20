@@ -16,7 +16,7 @@ import pytest
 from app.simulation.semantic_program.analyze_contract import build_request_contract
 from app.simulation.semantic_program.domain_profile import (
     DOMAIN_HINH_HOC,
-    DOMAIN_TIN_HOC,
+    DOMAIN_NGOAI_PHAM_VI,
 )
 from app.simulation.semantic_program.request_contract import InputFact, RequestContract
 from app.simulation.semantic_program.scale_normalization import (
@@ -131,12 +131,12 @@ def test_van_xuoi_khong_bao_gio_bi_viet_lai():
     assert _gia_tri(hd, "tc") == ("tam giác SAB vuông tại S",)
 
 
-def test_mien_tin_hoc_KHONG_bi_chuan_hoa_thang():
-    """`'a'` ở Tin học là DỮ LIỆU, không phải tham số tỉ lệ."""
+def test_ngoai_pham_vi_KHONG_bi_chuan_hoa_thang():
+    """`'a'` ngoài miền hình học là DỮ LIỆU, không phải tham số tỉ lệ (trước /13: miền Tin học)."""
     payload = {"input_facts": [{"id": "chuoi", "label": "Chuỗi", "value": "a"}]}
     hd = build_request_contract(
         payload, problem_text="Đếm số lần ký tự a xuất hiện.",
-        domain=DOMAIN_TIN_HOC)
+        domain=DOMAIN_NGOAI_PHAM_VI)
     assert hd.scale_binding is None
     assert _gia_tri(hd, "chuoi") == ("a",)
 

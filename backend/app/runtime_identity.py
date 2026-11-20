@@ -252,10 +252,7 @@ def semantic_environment_fingerprint() -> dict:
         TRIG_CONSTRUCTION_CERTIFICATE_VERSION,
     )
     from app.simulation.geometry_functions.typed_fact_next import TYPED_FACT_NEXT_V2_SCHEMA_VERSION
-    from app.simulation.semantic_program.analyze_contract import (
-        SEMANTIC_ANALYZE_SCHEMA,
-        analyze_schema_for,
-    )
+    from app.simulation.semantic_program.analyze_contract import analyze_schema_for
     from app.simulation.semantic_program.contract import generate_json_schema
 
     vt = skill_fingerprint()
@@ -279,8 +276,8 @@ def semantic_environment_fingerprint() -> dict:
         "prompts": vt["tong"],
         "grammar_card": vt["grammar_card"],
         "synthesis_schema": _bam_json(generate_json_schema()),
-        "analyze_schema": _bam_json(
-            [SEMANTIC_ANALYZE_SCHEMA, analyze_schema_for("hinh_hoc")]),
+        # /13: chỉ schema hình học — schema Tin học đã gỡ khỏi sản phẩm.
+        "analyze_schema": _bam_json([analyze_schema_for("hinh_hoc")]),
         "capability": stable_capability_hash(),
         "typed_fact_next_surface": typed_fact_next_surface_fingerprint(),
         "hybrid_route_surface": _bam_json(hybrid_surface),

@@ -29,7 +29,7 @@ import pytest
 from app.simulation.semantic_program.analyze_contract import analyze_schema_for
 from app.simulation.semantic_program.domain_profile import (
     DOMAIN_HINH_HOC,
-    DOMAIN_TIN_HOC,
+    DOMAIN_NGOAI_PHAM_VI,
     _MANH_MOI_NGHIA_VU,
     co_duong_thuc_thi,
     detect_domain,
@@ -158,7 +158,7 @@ def test_08_NGOAI_MIEN_van_bi_chan_nhu_cu():
     """Cổng này đứng SAU `detect_domain`; thêm manh mối không mở cửa cho ai."""
     tin_hoc = ("Viết chương trình tính diện tích hình chữ nhật rồi in ra "
                "màn hình bằng Python.")
-    assert co_duong_thuc_thi(tin_hoc, DOMAIN_TIN_HOC) is False
+    assert co_duong_thuc_thi(tin_hoc, DOMAIN_NGOAI_PHAM_VI) is False
     # …và ngay cả khi ép miền hình học, một chuỗi rỗng vẫn fail-closed.
     assert co_duong_thuc_thi("", DOMAIN_HINH_HOC) is False
     assert co_duong_thuc_thi("Cho hình chóp S.ABCD.", DOMAIN_HINH_HOC) is False

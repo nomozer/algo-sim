@@ -97,10 +97,10 @@ def test_khong_truyen_domain_thi_KHONG_LOC_gi_ca():
     assert len(build_request_contract(payload).obligations) == 1
 
 
-def test_taxonomy_chia_DU_va_KHONG_CHONG_LAN():
-    geo, tin = DP.geometry_obligation_kinds(), DP.tin_hoc_obligation_kinds()
-    assert geo | tin == set(OBLIGATION_KINDS), "có nghĩa vụ rơi khỏi cả hai miền"
-    assert not (geo & tin), f"nghĩa vụ nằm ở cả hai miền: {sorted(geo & tin)}"
+def test_chi_mien_hinh_hoc_co_nghia_vu_ngoai_pham_vi_thi_khong():
+    """/13: miền Tin học đã gỡ. Nghĩa vụ hình học vẫn là tập con của taxonomy; ngoài phạm vi không có nghĩa vụ nào."""
+    assert DP.geometry_obligation_kinds() and DP.geometry_obligation_kinds() <= set(OBLIGATION_KINDS)
+    assert DP.obligation_kinds_for(DP.DOMAIN_NGOAI_PHAM_VI) == frozenset()
 
 
 def test_prescribed_procedure_VANG_MAT_o_mien_hinh_hoc():
@@ -108,8 +108,8 @@ def test_prescribed_procedure_VANG_MAT_o_mien_hinh_hoc():
     một cơ chế mà đề không hề đòi — đúng lỗi `prescribed_procedure` bịa."""
     assert "prescribed_procedure" not in analyze_schema_for(
         DP.DOMAIN_HINH_HOC)["properties"]
-    assert "prescribed_procedure" in analyze_schema_for(
-        DP.DOMAIN_TIN_HOC)["properties"]
+    with pytest.raises(ValueError):                         # /13: không còn schema analyze nào ngoài hình học
+        analyze_schema_for(DP.DOMAIN_NGOAI_PHAM_VI)
 
 
 @pytest.mark.parametrize("case", json.loads(_DEV.read_text(encoding="utf-8"))["cases"])
@@ -132,7 +132,7 @@ def test_moi_de_DEV_duoc_nhan_dung_mien(case):
 def test_de_TIN_HOC_khong_bi_keo_sang_hinh_hoc(de):
     """Bộ nhận miền fail-safe về phía Tin học. Cửa duy nhất nó mở là cửa đi
     sang hình học, nên 24 target Tin học không thể bị nó làm hỏng."""
-    assert DP.detect_domain(de) == DP.DOMAIN_TIN_HOC
+    assert DP.detect_domain(de) == DP.DOMAIN_NGOAI_PHAM_VI
 
 
 # ══ §2. GIẢ THIẾT MÔ HÌNH HOÁ vs DỮ KIỆN ĐỀ CHO ═══════════════════════════

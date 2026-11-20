@@ -959,7 +959,12 @@ MISSING_KEY_MSG = (
 #       cycle is read from the cutting plane's name ((MNP) ⇒ MNPQ). A `147:route-d` row may carry names rotated away
 #       from their coordinates, which main's frontend reads as a false right angle (`SA ⊥ SC tại S` on (SAC)) ⇒ MISS
 #       (`tests/geometry/test_backend_geometry_handoff_resolution.py`).
-CACHE_VERSION = "148"
+# 149 — 2026-11-20 (axo-hybrid-local-model1-finalization-test-consolidation, scope compliance): the informatics domain
+#       leaves the product — `detect_domain` answers `hinh_hoc` | `out_of_scope` (was `tin_hoc`), its obligation set,
+#       snake_case naming descriptions and `SEMANTIC_ANALYZE_SCHEMA` are deleted, so the hashed `analyze_schema` surface
+#       changes. Served scenes are unchanged; a `148:route-d` row MISSES by the lock rule
+#       (`tests/semantic_program/test_domain_string.py`).
+CACHE_VERSION = "149"
 
 #: Hai chế độ hợp lệ của kiến trúc chính thức Hybrid `/4` do máy chủ sở hữu:
 #: - `live` (mặc định): trích xuất có cấu trúc qua Gemini (`typed-fact-next/2`) khi cấu hình `GEMINI_API_KEY`.

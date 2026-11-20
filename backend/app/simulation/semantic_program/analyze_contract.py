@@ -57,15 +57,6 @@ def _vi_tu_kiem_duoc() -> list[str]:
 _VI_TU_KIEM_DUOC = _vi_tu_kiem_duoc()
 
 
-#: Quy ước ĐẶT TÊN của miền Tin học — chữ thường, snake_case.
-MO_TA_TEN_TIN_HOC = (
-    "Tên biến kiểu snake_case, chỉ chữ thường không dấu, số và gạch dưới. "
-    "KHÔNG viết cụm từ hay câu."
-)
-MO_TA_WITNESS_TIN_HOC = (
-    "Tên biến kiểu snake_case sẽ chứa câu trả lời. KHÔNG viết cụm từ hay câu."
-)
-
 #: Quy ước ĐẶT TÊN của miền hình học — **KHÔNG** snake_case.
 #:
 #: ─── ĐO ĐƯỢC Ở PHASE 5.5 (`5f42363`), `geo_01` ──────────────────────────────
@@ -95,8 +86,8 @@ def _schema(
     obligation_kinds: list[str],
     fact_kinds: tuple[str, ...],
     co_prescribed: bool,
-    mo_ta_container: str = MO_TA_TEN_TIN_HOC,
-    mo_ta_witness: str = MO_TA_WITNESS_TIN_HOC,
+    mo_ta_container: str,
+    mo_ta_witness: str,
     co_quan_he: bool = False,
 ) -> dict[str, Any]:
     """Dựng schema `analyze` cho MỘT miền.
@@ -364,24 +355,18 @@ def analyze_schema_for(domain: str) -> dict[str, Any]:
         obligation_kinds_for,
     )
 
-    la_hh = domain == DOMAIN_HINH_HOC
+    # /13: chỉ có miền hình học. Schema Tin học (`SEMANTIC_ANALYZE_SCHEMA`, mô tả tên snake_case, `prescribed`) đã gỡ —
+    # không đường sản phẩm nào gửi nó cho mô hình; nó chỉ còn được băm vào bề mặt mô hình.
+    if domain != DOMAIN_HINH_HOC:
+        raise ValueError(f"không có schema analyze cho miền {domain!r}: ngoài phạm vi thì từ chối, không phân tích")
     return _schema(
         obligation_kinds=sorted(obligation_kinds_for(domain)),
-        fact_kinds=INPUT_FACT_KINDS_HINH_HOC if la_hh else INPUT_FACT_KINDS,
-        co_prescribed=not la_hh,
-        mo_ta_container=MO_TA_TEN_HINH_HOC if la_hh else MO_TA_TEN_TIN_HOC,
-        mo_ta_witness=(MO_TA_WITNESS_HINH_HOC if la_hh
-                       else MO_TA_WITNESS_TIN_HOC),
-        co_quan_he=la_hh,
+        fact_kinds=INPUT_FACT_KINDS_HINH_HOC,
+        co_prescribed=False,
+        mo_ta_container=MO_TA_TEN_HINH_HOC,
+        mo_ta_witness=MO_TA_WITNESS_HINH_HOC,
+        co_quan_he=True,
     )
-
-
-#: Giữ tên cũ = giữ nguyên mọi đường gọi Tin học đã có.
-SEMANTIC_ANALYZE_SCHEMA: dict[str, Any] = _schema(
-    obligation_kinds=sorted(OBLIGATION_KINDS),
-    fact_kinds=INPUT_FACT_KINDS,
-    co_prescribed=True,
-)
 
 #: `value`/`cos_sq` là ĐẠI LƯỢNG MONG ĐỢI của ba nghĩa vụ hình học. Thiếu chúng
 #: ở đây thì `check_distance`/`check_angle`/`check_volume` đọc `params` ra `None`

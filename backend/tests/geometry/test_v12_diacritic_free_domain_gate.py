@@ -2,7 +2,7 @@ from __future__ import annotations
 
 from app.simulation.semantic_program.domain_profile import (
     DOMAIN_HINH_HOC,
-    DOMAIN_TIN_HOC,
+    DOMAIN_NGOAI_PHAM_VI,
     detect_domain,
 )
 
@@ -34,4 +34,4 @@ def test_diacritic_free_out_of_domain_and_bare_word_decoys_remain_tin_hoc():
         "Toi muon xem hinh minh hoa mot con meo.",
     ]
     for txt in out_of_domain_decoys:
-        assert detect_domain(txt) == DOMAIN_TIN_HOC, f"False positive on decoy: {txt}"
+        assert detect_domain(txt) == DOMAIN_NGOAI_PHAM_VI, f"False positive on decoy: {txt}"

@@ -23,9 +23,7 @@ import pytest
 from app.simulation.semantic_program import domain_profile as DP
 from app.simulation.semantic_program.analyze_contract import (
     MO_TA_TEN_HINH_HOC,
-    MO_TA_TEN_TIN_HOC,
     MO_TA_WITNESS_HINH_HOC,
-    MO_TA_WITNESS_TIN_HOC,
     analyze_schema_for,
 )
 from app.simulation.semantic_program.contract import (
@@ -38,13 +36,12 @@ from app.simulation.semantic_program.request_contract import RequestContract
 
 
 # ══ ① NGUỒN — mô tả trường theo MIỀN ═════════════════════════════════════
-def test_hai_mien_co_mo_ta_ten_KHAC_NHAU():
+def test_schema_hinh_hoc_mang_mo_ta_ten_cua_hinh_hoc():
+    """/13: chỉ còn miền hình học — schema của nó mang đúng quy ước đặt tên CHỮ HOA (không còn bản snake_case)."""
     hh = analyze_schema_for(DP.DOMAIN_HINH_HOC)[
         "properties"]["obligations"]["items"]["properties"]
-    th = analyze_schema_for(DP.DOMAIN_TIN_HOC)[
-        "properties"]["obligations"]["items"]["properties"]
-    assert hh["witness"]["description"] != th["witness"]["description"]
-    assert hh["container"]["description"] != th["container"]["description"]
+    assert hh["witness"]["description"] == MO_TA_WITNESS_HINH_HOC
+    assert hh["container"]["description"] == MO_TA_TEN_HINH_HOC
 
 
 def test_mo_ta_HINH_HOC_khong_con_bat_snake_case():
@@ -52,12 +49,6 @@ def test_mo_ta_HINH_HOC_khong_con_bat_snake_case():
     for m in (MO_TA_TEN_HINH_HOC, MO_TA_WITNESS_HINH_HOC):
         assert "snake_case" not in m.lower() or "ĐỪNG" in m
         assert "CHỮ HOA" in m
-
-
-def test_mo_ta_TIN_HOC_giu_nguyen_snake_case():
-    """Không hồi quy: quy ước Tin học ĐÚNG ở miền Tin học."""
-    for m in (MO_TA_TEN_TIN_HOC, MO_TA_WITNESS_TIN_HOC):
-        assert "snake_case" in m
 
 
 # ══ ② LƯỚI — hẹp, có kiểu, KHÔNG phải `lower()` toàn cục ═════════════════

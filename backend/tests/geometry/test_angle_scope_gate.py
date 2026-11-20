@@ -36,7 +36,7 @@ import pytest
 
 from app.simulation.semantic_program.domain_profile import (
     DOMAIN_HINH_HOC,
-    DOMAIN_TIN_HOC,
+    DOMAIN_NGOAI_PHAM_VI,
     detect_domain,
 )
 
@@ -78,7 +78,7 @@ def test_de_GOC_tren_hinh_lap_phuong_phai_vao_mien_hinh_hoc(de):
 
 @pytest.mark.parametrize("de", TIN_HOC)
 def test_de_TIN_HOC_muon_tu_vung_hinh_hoc_van_o_nguyen_tin_hoc(de):
-    assert detect_domain(de) == DOMAIN_TIN_HOC, de
+    assert detect_domain(de) == DOMAIN_NGOAI_PHAM_VI, de
 
 
 #: Lỗ CÓ TỪ TRƯỚC đợt bổ sung `hình lập phương`, đo được 2026-08-29: cụm MẠNH
@@ -95,7 +95,7 @@ TIN_HOC_CO_DANH_TU_KHOI = (
 def test_DANH_TU_KHOI_khong_keo_noi_de_TIN_HOC_sang_hinh_hoc(de):
     """Cụm mạnh gọi tên một VẬT; dấu hiệu Tin học gọi tên một VIỆC. Đề hỏi
     *làm gì*, nên bằng chứng về việc phải thắng bằng chứng về vật."""
-    assert detect_domain(de) == DOMAIN_TIN_HOC, de
+    assert detect_domain(de) == DOMAIN_NGOAI_PHAM_VI, de
 
 
 def test_HINH_LAP_PHUONG_la_cum_MANH_khong_phai_cum_yeu():
