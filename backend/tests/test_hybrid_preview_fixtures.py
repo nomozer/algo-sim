@@ -58,7 +58,10 @@ ROOT = Path(__file__).resolve().parents[2]
 #: the always-null `element_type`/`key_type`/`val_type` per declaration nor an empty `visual_bindings` (no frontend
 #: reader — checked). Scenes, answers, expected contracts and refusal/gate fixtures are unchanged. The
 #: dimension-aware bundle stays unchanged as the evidence it was.
-FIXTURES = ROOT / 'docs/evaluation/geometry/runs/axo-hybrid-local-model1-finalization-test-consolidation/fixtures-hybrid-preview'
+#: Superseded within the same run (CACHE_VERSION 152): `served-H03_REGULAR_SQUARE_PYRAMID_ROLE_LENGTHS` and
+#: `served-H14_REGULAR_TETRAHEDRON` construct their base centre explicitly (§19) instead of `LAYOUT_DERIVED`, and `_VAT_MO_PHONG`
+#: tightens back to role-verified segment terms; the cache 150 bundle stays unchanged as the evidence it was.
+FIXTURES = ROOT / 'docs/evaluation/geometry/runs/axo-hybrid-local-model1-finalization-test-consolidation/fixtures-hybrid-preview-v152'
 #: The superseded bundle — the one that predates the route D version bump the identity-restore test is about.
 OLD_FIXTURES = ROOT / 'docs/evaluation/geometry/runs/hybrid-preview-contract-hardening/fixtures-adapter-2'
 SCRIPT = ROOT / 'backend/scripts/export_hybrid_preview_fixtures.py'
