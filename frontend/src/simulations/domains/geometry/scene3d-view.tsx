@@ -4126,6 +4126,11 @@ export function lamMuotLechNhan(
   return { dx: truoc.dx + (dich.dx - truoc.dx) * k, dy: truoc.dy + (dich.dy - truoc.dy) * k };
 }
 
+/** /11 (U08): the drawn offset has not landed on its target yet ⇒ the render loop must schedule another frame. */
+export function nhanChuaToiCho(lech: { dx: number; dy: number }, dich: { dx: number; dy: number }): boolean {
+  return lech.dx !== dich.dx || lech.dy !== dich.dy;
+}
+
 export function tinhViTriNhanDiem(
   diem: readonly { id: string; x: number; y: number; w: number; h: number }[],
   canh2d: readonly { ax: number; ay: number; bx: number; by: number }[],
@@ -5032,6 +5037,9 @@ export function Scene3DWorkspace({
     let controlsInteracting = false;
     let khoangTuaHienTai: number | null = null;
     let lastInteractionWakeMs = 0;
+    //: /11 (U08): some label is still gliding toward its slot (`lamMuotLechNhan` moves half the gap per frame); the
+    //: render loop must stay awake until it lands, or it freezes mid-way and the NEXT unrelated render moves it.
+    let nhanDangTruot = false;
     let wakeRenderLoop = () => {};
     const danhDauNguoiDungChinhCam = () => {
       if (!dangDatKhungTuDong) userAdjustedCamera = true;
@@ -5386,9 +5394,12 @@ export function Scene3DWorkspace({
         ungVienDiem2d.push({ el, id, x, y, w: cw, h: ch, uuTien: Number(el.dataset.uuTien ?? "1") });
       }
       const viTriToiUu = tinhViTriNhanDiem(ungVienDiem2d, canh2d, gocVuongPts, huongNhanRef.current);
+      nhanDangTruot = false;
       for (const u of ungVienDiem2d) {
         const dich = viTriToiUu.get(u.id) ?? { x: u.x - (u.w || 18) / 2, y: u.y - 1.4 * (u.h || 18), duoi: false };
-        const lech = lamMuotLechNhan(lechNhanRef.current.get(u.id), { dx: dich.x - u.x, dy: dich.y - u.y });
+        const muc = { dx: dich.x - u.x, dy: dich.y - u.y };
+        const lech = lamMuotLechNhan(lechNhanRef.current.get(u.id), muc);
+        if (nhanChuaToiCho(lech, muc)) nhanDangTruot = true;
         lechNhanRef.current.set(u.id, lech);
         const pos = { x: u.x + lech.dx, y: u.y + lech.dy, duoi: dich.duoi };
         u.el.style.transform = `translate(${Math.round(pos.x)}px,${Math.round(pos.y)}px)`;
@@ -5896,7 +5907,7 @@ export function Scene3DWorkspace({
 
     let rafId = 0;
     const isAnimationActive = (controlsChanged: boolean): boolean => {
-      if (controlsChanged || controlsInteracting) return true;
+      if (controlsChanged || controlsInteracting || nhanDangTruot) return true;
       const nowMs = typeof performance !== "undefined" ? performance.now() : Date.now();
       if (nowMs - lastInteractionWakeMs < 260) return true;
       if (currentStepPulse() > 0) return true;

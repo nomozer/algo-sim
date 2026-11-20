@@ -182,10 +182,11 @@ try {
   }
   if (want("I07")) {   // cancel a slow (SLM) request, submit a fast one; the late first response must never replace it
     const { ctx, page } = await session(browser);
-    const slow = await submit(page, SLM, { wait: false });
-    await page.waitForTimeout(800);
+    // a fresh SLM-routed text (not in the manifest, so not in the SLM cache): the request is genuinely slow
+    byId.SLOW_ADHOC = { case_id: "SLOW_ADHOC", original_input: `Vẽ hình chóp S.ABCD có đáy ABCD là hình chữ nhật, AB = ${3 + (Date.now() % 7)}, AD = 4, SA vuông góc với đáy, SA = 5 và tính độ dài SC.` };
+    const slow = await submit(page, SLM === "adhoc" ? "SLOW_ADHOC" : SLM, { wait: false });
     const cancel = page.locator("#btn-composer-cancel");
-    const hadCancel = await cancel.count() > 0;
+    const hadCancel = await cancel.first().waitFor({ state: "visible", timeout: 5000 }).then(() => true).catch(() => false);
     if (hadCancel) await cancel.first().click();
     await slow.pending.catch(() => null);
     const f = await submit(page, FAST);
