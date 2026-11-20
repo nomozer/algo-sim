@@ -15,3 +15,30 @@ def assert_cache_policy_at_least(introduced: str | int) -> None:
 
     assert int(M.CACHE_VERSION) >= int(introduced), (M.CACHE_VERSION, introduced)
     assert M.ROUTE_D_CACHE_POLICY == f"{M.CACHE_VERSION}:route-d"
+
+
+def assert_route_d_row_misses(old_policy: str) -> None:
+    """A row written under `old_policy` MISSES in the product's Route D lookup; one under the live policy HITS."""
+    from types import SimpleNamespace
+
+    from app import main as M
+
+    class _Session:
+        def __init__(self, row):
+            self.row = row
+
+        def query(self, _model):
+            return self
+
+        def filter_by(self, **_k):
+            return self
+
+        def first(self):
+            return self.row
+
+    def row(policy):
+        return SimpleNamespace(policy_version=policy, dsl_version=next(iter(M.SUPPORTED_VERSIONS)))
+
+    assert M._cache_lookup(_Session(row(old_policy)), "k", M.ROUTE_D_CACHE_POLICY) is None
+    live = row(M.ROUTE_D_CACHE_POLICY)
+    assert M._cache_lookup(_Session(live), "k", M.ROUTE_D_CACHE_POLICY) is live

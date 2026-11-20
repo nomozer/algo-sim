@@ -311,32 +311,10 @@ def test_section_cycle_is_named_and_index_aligned(statements, symbols) -> None:
 def test_route_d_rows_written_before_the_section_cycle_fix_miss() -> None:
     """CACHE_VERSION 147 -> 148 (/13): served sections are now index-aligned and read from the cutting plane, so a
     `147:route-d` row may carry the misaligned cycle the frontend turns into `SA ⊥ SC tại S`; it must MISS."""
-    from types import SimpleNamespace
-
-    from app import main as M
-    from tests.cache_policy import assert_cache_policy_at_least
+    from tests.cache_policy import assert_cache_policy_at_least, assert_route_d_row_misses
 
     assert_cache_policy_at_least(148)
-
-    class _Session:
-        def __init__(self, row):
-            self.row = row
-
-        def query(self, _model):
-            return self
-
-        def filter_by(self, **_k):
-            return self
-
-        def first(self):
-            return self.row
-
-    def row(policy):
-        return SimpleNamespace(policy_version=policy, dsl_version=next(iter(M.SUPPORTED_VERSIONS)))
-
-    assert M._cache_lookup(_Session(row("147:route-d")), "k", M.ROUTE_D_CACHE_POLICY) is None
-    live = row(M.ROUTE_D_CACHE_POLICY)
-    assert M._cache_lookup(_Session(live), "k", M.ROUTE_D_CACHE_POLICY) is live
+    assert_route_d_row_misses("147:route-d")
 
 
 def test_coplanar_section_lineage_unused_point_and_pentagon_edges() -> None:
