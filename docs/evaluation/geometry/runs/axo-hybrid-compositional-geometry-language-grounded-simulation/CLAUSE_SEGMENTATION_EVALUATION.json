@@ -1,0 +1,2323 @@
+{
+  "schema": "axo-v12-clause-segmentation-evaluation/1",
+  "analyzer_version": "compositional-clause-analyzer/1",
+  "dev_corpus": "V11_LIVE_ACCEPTANCE_MANIFEST.json (114 historical/dev cases; V12 blind manifest untouched)",
+  "summary": {
+    "total_cases": 114,
+    "exact_orig_span_mismatch_count": 0,
+    "simulate_only_intent_detected": "39/39",
+    "simulate_and_query_intent_detected": "15/16",
+    "negated_or_conditional_flagged_on_negatives": 4,
+    "diacritic_projected_valid": 3
+  },
+  "rows": [
+    {
+      "case_id": "S01",
+      "intent_v11": "SIMULATE_ONLY",
+      "clauses_count": 2,
+      "roles": [
+        "SIMULATION_REQUEST",
+        "OBJECT_DECLARATION"
+      ],
+      "subkinds": [
+        "nested_lead_simulation",
+        "embedded_declaration"
+      ],
+      "is_simulation_only_intent": true,
+      "is_mixed_simulation_and_query": false,
+      "has_negated_command": false,
+      "has_negated_premise": false,
+      "has_conditional_premise": false,
+      "ambiguous_vis_count": 0,
+      "diacritic_projected": false
+    },
+    {
+      "case_id": "S02",
+      "intent_v11": "SIMULATE_ONLY",
+      "clauses_count": 2,
+      "roles": [
+        "SIMULATION_REQUEST",
+        "OBJECT_DECLARATION"
+      ],
+      "subkinds": [
+        "nested_lead_simulation",
+        "embedded_declaration"
+      ],
+      "is_simulation_only_intent": true,
+      "is_mixed_simulation_and_query": false,
+      "has_negated_command": false,
+      "has_negated_premise": false,
+      "has_conditional_premise": false,
+      "ambiguous_vis_count": 0,
+      "diacritic_projected": false
+    },
+    {
+      "case_id": "S03",
+      "intent_v11": "SIMULATE_ONLY",
+      "clauses_count": 2,
+      "roles": [
+        "SIMULATION_REQUEST",
+        "OBJECT_DECLARATION"
+      ],
+      "subkinds": [
+        "nested_lead_simulation",
+        "embedded_declaration"
+      ],
+      "is_simulation_only_intent": true,
+      "is_mixed_simulation_and_query": false,
+      "has_negated_command": false,
+      "has_negated_premise": false,
+      "has_conditional_premise": false,
+      "ambiguous_vis_count": 0,
+      "diacritic_projected": false
+    },
+    {
+      "case_id": "S04",
+      "intent_v11": "SIMULATE_ONLY",
+      "clauses_count": 2,
+      "roles": [
+        "SIMULATION_REQUEST",
+        "OBJECT_DECLARATION"
+      ],
+      "subkinds": [
+        "nested_lead_simulation",
+        "embedded_declaration"
+      ],
+      "is_simulation_only_intent": true,
+      "is_mixed_simulation_and_query": false,
+      "has_negated_command": false,
+      "has_negated_premise": false,
+      "has_conditional_premise": false,
+      "ambiguous_vis_count": 0,
+      "diacritic_projected": false
+    },
+    {
+      "case_id": "S05",
+      "intent_v11": "SIMULATE_ONLY",
+      "clauses_count": 2,
+      "roles": [
+        "SIMULATION_REQUEST",
+        "OBJECT_DECLARATION"
+      ],
+      "subkinds": [
+        "nested_lead_simulation",
+        "embedded_declaration"
+      ],
+      "is_simulation_only_intent": true,
+      "is_mixed_simulation_and_query": false,
+      "has_negated_command": false,
+      "has_negated_premise": false,
+      "has_conditional_premise": false,
+      "ambiguous_vis_count": 0,
+      "diacritic_projected": false
+    },
+    {
+      "case_id": "S06",
+      "intent_v11": "SIMULATE_ONLY",
+      "clauses_count": 2,
+      "roles": [
+        "OBJECT_DECLARATION",
+        "SIMULATION_REQUEST"
+      ],
+      "subkinds": [
+        "declaration_with_constraints",
+        "standalone_simulation"
+      ],
+      "is_simulation_only_intent": true,
+      "is_mixed_simulation_and_query": false,
+      "has_negated_command": false,
+      "has_negated_premise": false,
+      "has_conditional_premise": false,
+      "ambiguous_vis_count": 0,
+      "diacritic_projected": false
+    },
+    {
+      "case_id": "S07",
+      "intent_v11": "SIMULATE_ONLY",
+      "clauses_count": 2,
+      "roles": [
+        "OBJECT_DECLARATION",
+        "SIMULATION_REQUEST"
+      ],
+      "subkinds": [
+        "declaration_with_constraints",
+        "standalone_simulation"
+      ],
+      "is_simulation_only_intent": true,
+      "is_mixed_simulation_and_query": false,
+      "has_negated_command": false,
+      "has_negated_premise": false,
+      "has_conditional_premise": false,
+      "ambiguous_vis_count": 0,
+      "diacritic_projected": false
+    },
+    {
+      "case_id": "S08",
+      "intent_v11": "SIMULATE_ONLY",
+      "clauses_count": 2,
+      "roles": [
+        "SIMULATION_REQUEST",
+        "OBJECT_DECLARATION"
+      ],
+      "subkinds": [
+        "nested_lead_simulation",
+        "embedded_declaration"
+      ],
+      "is_simulation_only_intent": true,
+      "is_mixed_simulation_and_query": false,
+      "has_negated_command": false,
+      "has_negated_premise": false,
+      "has_conditional_premise": false,
+      "ambiguous_vis_count": 0,
+      "diacritic_projected": false
+    },
+    {
+      "case_id": "S09",
+      "intent_v11": "SIMULATE_ONLY",
+      "clauses_count": 2,
+      "roles": [
+        "NEGATED_REQUEST",
+        "OBJECT_DECLARATION"
+      ],
+      "subkinds": [
+        "meta_no_calc",
+        "declaration_with_constraints"
+      ],
+      "is_simulation_only_intent": true,
+      "is_mixed_simulation_and_query": false,
+      "has_negated_command": false,
+      "has_negated_premise": false,
+      "has_conditional_premise": false,
+      "ambiguous_vis_count": 0,
+      "diacritic_projected": false
+    },
+    {
+      "case_id": "S10",
+      "intent_v11": "SIMULATE_ONLY",
+      "clauses_count": 2,
+      "roles": [
+        "OBJECT_DECLARATION",
+        "SIMULATION_REQUEST"
+      ],
+      "subkinds": [
+        "declaration_with_constraints",
+        "standalone_simulation"
+      ],
+      "is_simulation_only_intent": true,
+      "is_mixed_simulation_and_query": false,
+      "has_negated_command": false,
+      "has_negated_premise": false,
+      "has_conditional_premise": false,
+      "ambiguous_vis_count": 0,
+      "diacritic_projected": false
+    },
+    {
+      "case_id": "S11",
+      "intent_v11": "SIMULATE_ONLY",
+      "clauses_count": 2,
+      "roles": [
+        "OBJECT_DECLARATION",
+        "SIMULATION_REQUEST"
+      ],
+      "subkinds": [
+        "declaration_with_constraints",
+        "standalone_simulation"
+      ],
+      "is_simulation_only_intent": true,
+      "is_mixed_simulation_and_query": false,
+      "has_negated_command": false,
+      "has_negated_premise": false,
+      "has_conditional_premise": false,
+      "ambiguous_vis_count": 0,
+      "diacritic_projected": false
+    },
+    {
+      "case_id": "S12",
+      "intent_v11": "SIMULATE_ONLY",
+      "clauses_count": 1,
+      "roles": [
+        "SIMULATION_REQUEST"
+      ],
+      "subkinds": [
+        "standalone_simulation"
+      ],
+      "is_simulation_only_intent": true,
+      "is_mixed_simulation_and_query": false,
+      "has_negated_command": false,
+      "has_negated_premise": false,
+      "has_conditional_premise": false,
+      "ambiguous_vis_count": 0,
+      "diacritic_projected": false
+    },
+    {
+      "case_id": "S13",
+      "intent_v11": "SIMULATE_ONLY",
+      "clauses_count": 2,
+      "roles": [
+        "OBJECT_DECLARATION",
+        "SIMULATION_REQUEST"
+      ],
+      "subkinds": [
+        "declaration_with_constraints",
+        "standalone_simulation"
+      ],
+      "is_simulation_only_intent": true,
+      "is_mixed_simulation_and_query": false,
+      "has_negated_command": false,
+      "has_negated_premise": false,
+      "has_conditional_premise": false,
+      "ambiguous_vis_count": 0,
+      "diacritic_projected": false
+    },
+    {
+      "case_id": "S14",
+      "intent_v11": "SIMULATE_ONLY",
+      "clauses_count": 2,
+      "roles": [
+        "OBJECT_DECLARATION",
+        "SIMULATION_REQUEST"
+      ],
+      "subkinds": [
+        "declaration_with_constraints",
+        "standalone_simulation"
+      ],
+      "is_simulation_only_intent": true,
+      "is_mixed_simulation_and_query": false,
+      "has_negated_command": false,
+      "has_negated_premise": false,
+      "has_conditional_premise": false,
+      "ambiguous_vis_count": 0,
+      "diacritic_projected": false
+    },
+    {
+      "case_id": "S15",
+      "intent_v11": "SIMULATE_ONLY",
+      "clauses_count": 2,
+      "roles": [
+        "OBJECT_DECLARATION",
+        "SIMULATION_REQUEST"
+      ],
+      "subkinds": [
+        "declaration_with_constraints",
+        "standalone_simulation"
+      ],
+      "is_simulation_only_intent": true,
+      "is_mixed_simulation_and_query": false,
+      "has_negated_command": false,
+      "has_negated_premise": false,
+      "has_conditional_premise": false,
+      "ambiguous_vis_count": 0,
+      "diacritic_projected": false
+    },
+    {
+      "case_id": "S16",
+      "intent_v11": "SIMULATE_ONLY",
+      "clauses_count": 1,
+      "roles": [
+        "SIMULATION_REQUEST"
+      ],
+      "subkinds": [
+        "standalone_simulation"
+      ],
+      "is_simulation_only_intent": true,
+      "is_mixed_simulation_and_query": false,
+      "has_negated_command": false,
+      "has_negated_premise": false,
+      "has_conditional_premise": false,
+      "ambiguous_vis_count": 0,
+      "diacritic_projected": false
+    },
+    {
+      "case_id": "S17",
+      "intent_v11": "SIMULATE_ONLY",
+      "clauses_count": 2,
+      "roles": [
+        "SIMULATION_REQUEST",
+        "OBJECT_DECLARATION"
+      ],
+      "subkinds": [
+        "nested_lead_simulation",
+        "embedded_declaration"
+      ],
+      "is_simulation_only_intent": true,
+      "is_mixed_simulation_and_query": false,
+      "has_negated_command": false,
+      "has_negated_premise": false,
+      "has_conditional_premise": false,
+      "ambiguous_vis_count": 0,
+      "diacritic_projected": false
+    },
+    {
+      "case_id": "S18",
+      "intent_v11": "SIMULATE_ONLY",
+      "clauses_count": 2,
+      "roles": [
+        "SIMULATION_REQUEST",
+        "OBJECT_DECLARATION"
+      ],
+      "subkinds": [
+        "nested_lead_simulation",
+        "embedded_declaration"
+      ],
+      "is_simulation_only_intent": true,
+      "is_mixed_simulation_and_query": false,
+      "has_negated_command": false,
+      "has_negated_premise": false,
+      "has_conditional_premise": false,
+      "ambiguous_vis_count": 0,
+      "diacritic_projected": false
+    },
+    {
+      "case_id": "S19",
+      "intent_v11": "SIMULATE_ONLY",
+      "clauses_count": 3,
+      "roles": [
+        "OBJECT_DECLARATION",
+        "GEOMETRIC_CONSTRAINT",
+        "SIMULATION_REQUEST"
+      ],
+      "subkinds": [
+        "declaration_with_constraints",
+        "constraint",
+        "standalone_simulation"
+      ],
+      "is_simulation_only_intent": true,
+      "is_mixed_simulation_and_query": false,
+      "has_negated_command": false,
+      "has_negated_premise": false,
+      "has_conditional_premise": false,
+      "ambiguous_vis_count": 0,
+      "diacritic_projected": false
+    },
+    {
+      "case_id": "S20",
+      "intent_v11": "SIMULATE_ONLY",
+      "clauses_count": 2,
+      "roles": [
+        "SIMULATION_REQUEST",
+        "OBJECT_DECLARATION"
+      ],
+      "subkinds": [
+        "nested_lead_simulation",
+        "embedded_declaration"
+      ],
+      "is_simulation_only_intent": true,
+      "is_mixed_simulation_and_query": false,
+      "has_negated_command": false,
+      "has_negated_premise": false,
+      "has_conditional_premise": false,
+      "ambiguous_vis_count": 0,
+      "diacritic_projected": false
+    },
+    {
+      "case_id": "S21",
+      "intent_v11": "SIMULATE_ONLY",
+      "clauses_count": 2,
+      "roles": [
+        "OBJECT_DECLARATION",
+        "SIMULATION_REQUEST"
+      ],
+      "subkinds": [
+        "declaration_with_constraints",
+        "standalone_simulation"
+      ],
+      "is_simulation_only_intent": true,
+      "is_mixed_simulation_and_query": false,
+      "has_negated_command": false,
+      "has_negated_premise": false,
+      "has_conditional_premise": false,
+      "ambiguous_vis_count": 0,
+      "diacritic_projected": false
+    },
+    {
+      "case_id": "S22",
+      "intent_v11": "SIMULATE_ONLY",
+      "clauses_count": 4,
+      "roles": [
+        "SIMULATION_REQUEST",
+        "OBJECT_DECLARATION",
+        "GEOMETRIC_CONSTRAINT",
+        "NEGATED_REQUEST"
+      ],
+      "subkinds": [
+        "nested_lead_simulation",
+        "embedded_declaration",
+        "constraint",
+        "meta_no_calc"
+      ],
+      "is_simulation_only_intent": true,
+      "is_mixed_simulation_and_query": false,
+      "has_negated_command": false,
+      "has_negated_premise": false,
+      "has_conditional_premise": false,
+      "ambiguous_vis_count": 0,
+      "diacritic_projected": false
+    },
+    {
+      "case_id": "S23",
+      "intent_v11": "SIMULATE_ONLY",
+      "clauses_count": 2,
+      "roles": [
+        "SIMULATION_REQUEST",
+        "OBJECT_DECLARATION"
+      ],
+      "subkinds": [
+        "nested_lead_simulation",
+        "embedded_declaration"
+      ],
+      "is_simulation_only_intent": true,
+      "is_mixed_simulation_and_query": false,
+      "has_negated_command": false,
+      "has_negated_premise": false,
+      "has_conditional_premise": false,
+      "ambiguous_vis_count": 0,
+      "diacritic_projected": false
+    },
+    {
+      "case_id": "S24",
+      "intent_v11": "SIMULATE_ONLY",
+      "clauses_count": 3,
+      "roles": [
+        "OBJECT_DECLARATION",
+        "OBJECT_DECLARATION",
+        "SIMULATION_REQUEST"
+      ],
+      "subkinds": [
+        "declaration_with_constraints",
+        "declaration",
+        "standalone_simulation"
+      ],
+      "is_simulation_only_intent": true,
+      "is_mixed_simulation_and_query": false,
+      "has_negated_command": false,
+      "has_negated_premise": false,
+      "has_conditional_premise": false,
+      "ambiguous_vis_count": 0,
+      "diacritic_projected": false
+    },
+    {
+      "case_id": "S25",
+      "intent_v11": "SIMULATE_ONLY",
+      "clauses_count": 3,
+      "roles": [
+        "OBJECT_DECLARATION",
+        "OBJECT_DECLARATION",
+        "SIMULATION_REQUEST"
+      ],
+      "subkinds": [
+        "declaration_with_constraints",
+        "declaration_with_constraints",
+        "standalone_simulation"
+      ],
+      "is_simulation_only_intent": true,
+      "is_mixed_simulation_and_query": false,
+      "has_negated_command": false,
+      "has_negated_premise": false,
+      "has_conditional_premise": false,
+      "ambiguous_vis_count": 0,
+      "diacritic_projected": false
+    },
+    {
+      "case_id": "S26",
+      "intent_v11": "SIMULATE_ONLY",
+      "clauses_count": 3,
+      "roles": [
+        "OBJECT_DECLARATION",
+        "OBJECT_DECLARATION",
+        "SIMULATION_REQUEST"
+      ],
+      "subkinds": [
+        "declaration_with_constraints",
+        "declaration_with_constraints",
+        "standalone_simulation"
+      ],
+      "is_simulation_only_intent": true,
+      "is_mixed_simulation_and_query": false,
+      "has_negated_command": false,
+      "has_negated_premise": false,
+      "has_conditional_premise": false,
+      "ambiguous_vis_count": 0,
+      "diacritic_projected": false
+    },
+    {
+      "case_id": "S27",
+      "intent_v11": "SIMULATE_ONLY",
+      "clauses_count": 3,
+      "roles": [
+        "OBJECT_DECLARATION",
+        "OBJECT_DECLARATION",
+        "SIMULATION_REQUEST"
+      ],
+      "subkinds": [
+        "declaration_with_constraints",
+        "declaration_with_constraints",
+        "standalone_simulation"
+      ],
+      "is_simulation_only_intent": true,
+      "is_mixed_simulation_and_query": false,
+      "has_negated_command": false,
+      "has_negated_premise": false,
+      "has_conditional_premise": false,
+      "ambiguous_vis_count": 0,
+      "diacritic_projected": false
+    },
+    {
+      "case_id": "S28",
+      "intent_v11": "SIMULATE_ONLY",
+      "clauses_count": 3,
+      "roles": [
+        "OBJECT_DECLARATION",
+        "GEOMETRIC_CONSTRAINT",
+        "SIMULATION_REQUEST"
+      ],
+      "subkinds": [
+        "declaration_with_constraints",
+        "constraint",
+        "standalone_simulation"
+      ],
+      "is_simulation_only_intent": true,
+      "is_mixed_simulation_and_query": false,
+      "has_negated_command": false,
+      "has_negated_premise": false,
+      "has_conditional_premise": false,
+      "ambiguous_vis_count": 0,
+      "diacritic_projected": false
+    },
+    {
+      "case_id": "S29",
+      "intent_v11": "SIMULATE_ONLY",
+      "clauses_count": 2,
+      "roles": [
+        "SIMULATION_REQUEST",
+        "OBJECT_DECLARATION"
+      ],
+      "subkinds": [
+        "nested_lead_simulation",
+        "embedded_declaration"
+      ],
+      "is_simulation_only_intent": true,
+      "is_mixed_simulation_and_query": false,
+      "has_negated_command": false,
+      "has_negated_premise": false,
+      "has_conditional_premise": false,
+      "ambiguous_vis_count": 0,
+      "diacritic_projected": false
+    },
+    {
+      "case_id": "S30",
+      "intent_v11": "SIMULATE_ONLY",
+      "clauses_count": 2,
+      "roles": [
+        "OBJECT_DECLARATION",
+        "SIMULATION_REQUEST"
+      ],
+      "subkinds": [
+        "declaration_with_constraints",
+        "standalone_simulation"
+      ],
+      "is_simulation_only_intent": true,
+      "is_mixed_simulation_and_query": false,
+      "has_negated_command": false,
+      "has_negated_premise": false,
+      "has_conditional_premise": false,
+      "ambiguous_vis_count": 0,
+      "diacritic_projected": false
+    },
+    {
+      "case_id": "S31",
+      "intent_v11": "SIMULATE_ONLY",
+      "clauses_count": 2,
+      "roles": [
+        "SIMULATION_REQUEST",
+        "OBJECT_DECLARATION"
+      ],
+      "subkinds": [
+        "nested_lead_simulation",
+        "embedded_declaration"
+      ],
+      "is_simulation_only_intent": true,
+      "is_mixed_simulation_and_query": false,
+      "has_negated_command": false,
+      "has_negated_premise": false,
+      "has_conditional_premise": false,
+      "ambiguous_vis_count": 0,
+      "diacritic_projected": false
+    },
+    {
+      "case_id": "S32",
+      "intent_v11": "SIMULATE_ONLY",
+      "clauses_count": 2,
+      "roles": [
+        "SIMULATION_REQUEST",
+        "OBJECT_DECLARATION"
+      ],
+      "subkinds": [
+        "nested_lead_simulation",
+        "embedded_declaration"
+      ],
+      "is_simulation_only_intent": true,
+      "is_mixed_simulation_and_query": false,
+      "has_negated_command": false,
+      "has_negated_premise": false,
+      "has_conditional_premise": false,
+      "ambiguous_vis_count": 0,
+      "diacritic_projected": false
+    },
+    {
+      "case_id": "S33",
+      "intent_v11": "SIMULATE_ONLY",
+      "clauses_count": 2,
+      "roles": [
+        "OBJECT_DECLARATION",
+        "SIMULATION_REQUEST"
+      ],
+      "subkinds": [
+        "declaration_with_constraints",
+        "standalone_simulation"
+      ],
+      "is_simulation_only_intent": true,
+      "is_mixed_simulation_and_query": false,
+      "has_negated_command": false,
+      "has_negated_premise": false,
+      "has_conditional_premise": false,
+      "ambiguous_vis_count": 0,
+      "diacritic_projected": false
+    },
+    {
+      "case_id": "S34",
+      "intent_v11": "SIMULATE_ONLY",
+      "clauses_count": 2,
+      "roles": [
+        "SIMULATION_REQUEST",
+        "OBJECT_DECLARATION"
+      ],
+      "subkinds": [
+        "nested_lead_simulation",
+        "embedded_declaration"
+      ],
+      "is_simulation_only_intent": true,
+      "is_mixed_simulation_and_query": false,
+      "has_negated_command": false,
+      "has_negated_premise": false,
+      "has_conditional_premise": false,
+      "ambiguous_vis_count": 0,
+      "diacritic_projected": false
+    },
+    {
+      "case_id": "S35",
+      "intent_v11": "SIMULATE_ONLY",
+      "clauses_count": 2,
+      "roles": [
+        "SIMULATION_REQUEST",
+        "OBJECT_DECLARATION"
+      ],
+      "subkinds": [
+        "nested_lead_simulation",
+        "embedded_declaration"
+      ],
+      "is_simulation_only_intent": true,
+      "is_mixed_simulation_and_query": false,
+      "has_negated_command": false,
+      "has_negated_premise": false,
+      "has_conditional_premise": false,
+      "ambiguous_vis_count": 0,
+      "diacritic_projected": false
+    },
+    {
+      "case_id": "S36",
+      "intent_v11": "SIMULATE_ONLY",
+      "clauses_count": 2,
+      "roles": [
+        "OBJECT_DECLARATION",
+        "SIMULATION_REQUEST"
+      ],
+      "subkinds": [
+        "declaration_with_constraints",
+        "standalone_simulation"
+      ],
+      "is_simulation_only_intent": true,
+      "is_mixed_simulation_and_query": false,
+      "has_negated_command": false,
+      "has_negated_premise": false,
+      "has_conditional_premise": false,
+      "ambiguous_vis_count": 0,
+      "diacritic_projected": false
+    },
+    {
+      "case_id": "S37",
+      "intent_v11": "SIMULATE_ONLY",
+      "clauses_count": 2,
+      "roles": [
+        "SIMULATION_REQUEST",
+        "OBJECT_DECLARATION"
+      ],
+      "subkinds": [
+        "nested_lead_simulation",
+        "embedded_declaration"
+      ],
+      "is_simulation_only_intent": true,
+      "is_mixed_simulation_and_query": false,
+      "has_negated_command": false,
+      "has_negated_premise": false,
+      "has_conditional_premise": false,
+      "ambiguous_vis_count": 0,
+      "diacritic_projected": true
+    },
+    {
+      "case_id": "S38",
+      "intent_v11": "SIMULATE_ONLY",
+      "clauses_count": 2,
+      "roles": [
+        "SIMULATION_REQUEST",
+        "OBJECT_DECLARATION"
+      ],
+      "subkinds": [
+        "nested_lead_simulation",
+        "embedded_declaration"
+      ],
+      "is_simulation_only_intent": true,
+      "is_mixed_simulation_and_query": false,
+      "has_negated_command": false,
+      "has_negated_premise": false,
+      "has_conditional_premise": false,
+      "ambiguous_vis_count": 0,
+      "diacritic_projected": true
+    },
+    {
+      "case_id": "S39",
+      "intent_v11": "SIMULATE_ONLY",
+      "clauses_count": 3,
+      "roles": [
+        "OBJECT_DECLARATION",
+        "OBJECT_DECLARATION",
+        "SIMULATION_REQUEST"
+      ],
+      "subkinds": [
+        "declaration_with_constraints",
+        "declaration_with_constraints",
+        "standalone_simulation"
+      ],
+      "is_simulation_only_intent": true,
+      "is_mixed_simulation_and_query": false,
+      "has_negated_command": false,
+      "has_negated_premise": false,
+      "has_conditional_premise": false,
+      "ambiguous_vis_count": 0,
+      "diacritic_projected": false
+    },
+    {
+      "case_id": "Q01",
+      "intent_v11": "SIMULATE_AND_QUERY",
+      "clauses_count": 3,
+      "roles": [
+        "SIMULATION_REQUEST",
+        "OBJECT_DECLARATION",
+        "MEASUREMENT_REQUEST"
+      ],
+      "subkinds": [
+        "nested_lead_simulation",
+        "embedded_declaration",
+        "measurement"
+      ],
+      "is_simulation_only_intent": false,
+      "is_mixed_simulation_and_query": true,
+      "has_negated_command": false,
+      "has_negated_premise": false,
+      "has_conditional_premise": false,
+      "ambiguous_vis_count": 0,
+      "diacritic_projected": false
+    },
+    {
+      "case_id": "Q02",
+      "intent_v11": "SIMULATE_AND_QUERY",
+      "clauses_count": 3,
+      "roles": [
+        "SIMULATION_REQUEST",
+        "OBJECT_DECLARATION",
+        "MEASUREMENT_REQUEST"
+      ],
+      "subkinds": [
+        "nested_lead_simulation",
+        "embedded_declaration",
+        "measurement"
+      ],
+      "is_simulation_only_intent": false,
+      "is_mixed_simulation_and_query": true,
+      "has_negated_command": false,
+      "has_negated_premise": false,
+      "has_conditional_premise": false,
+      "ambiguous_vis_count": 0,
+      "diacritic_projected": false
+    },
+    {
+      "case_id": "Q03",
+      "intent_v11": "SIMULATE_AND_QUERY",
+      "clauses_count": 3,
+      "roles": [
+        "SIMULATION_REQUEST",
+        "OBJECT_DECLARATION",
+        "MEASUREMENT_REQUEST"
+      ],
+      "subkinds": [
+        "nested_lead_simulation",
+        "embedded_declaration",
+        "measurement"
+      ],
+      "is_simulation_only_intent": false,
+      "is_mixed_simulation_and_query": true,
+      "has_negated_command": false,
+      "has_negated_premise": false,
+      "has_conditional_premise": false,
+      "ambiguous_vis_count": 0,
+      "diacritic_projected": false
+    },
+    {
+      "case_id": "Q04",
+      "intent_v11": "SIMULATE_AND_QUERY",
+      "clauses_count": 3,
+      "roles": [
+        "SIMULATION_REQUEST",
+        "OBJECT_DECLARATION",
+        "MEASUREMENT_REQUEST"
+      ],
+      "subkinds": [
+        "nested_lead_simulation",
+        "embedded_declaration",
+        "measurement"
+      ],
+      "is_simulation_only_intent": false,
+      "is_mixed_simulation_and_query": true,
+      "has_negated_command": false,
+      "has_negated_premise": false,
+      "has_conditional_premise": false,
+      "ambiguous_vis_count": 0,
+      "diacritic_projected": false
+    },
+    {
+      "case_id": "Q05",
+      "intent_v11": "SIMULATE_AND_QUERY",
+      "clauses_count": 3,
+      "roles": [
+        "SIMULATION_REQUEST",
+        "OBJECT_DECLARATION",
+        "MEASUREMENT_REQUEST"
+      ],
+      "subkinds": [
+        "nested_lead_simulation",
+        "embedded_declaration",
+        "measurement"
+      ],
+      "is_simulation_only_intent": false,
+      "is_mixed_simulation_and_query": true,
+      "has_negated_command": false,
+      "has_negated_premise": false,
+      "has_conditional_premise": false,
+      "ambiguous_vis_count": 0,
+      "diacritic_projected": false
+    },
+    {
+      "case_id": "Q06",
+      "intent_v11": "SIMULATE_AND_QUERY",
+      "clauses_count": 3,
+      "roles": [
+        "SIMULATION_REQUEST",
+        "OBJECT_DECLARATION",
+        "MEASUREMENT_REQUEST"
+      ],
+      "subkinds": [
+        "nested_lead_simulation",
+        "embedded_declaration",
+        "measurement"
+      ],
+      "is_simulation_only_intent": false,
+      "is_mixed_simulation_and_query": true,
+      "has_negated_command": false,
+      "has_negated_premise": false,
+      "has_conditional_premise": false,
+      "ambiguous_vis_count": 0,
+      "diacritic_projected": false
+    },
+    {
+      "case_id": "Q07",
+      "intent_v11": "SIMULATE_AND_QUERY",
+      "clauses_count": 3,
+      "roles": [
+        "SIMULATION_REQUEST",
+        "OBJECT_DECLARATION",
+        "MEASUREMENT_REQUEST"
+      ],
+      "subkinds": [
+        "nested_lead_simulation",
+        "embedded_declaration",
+        "measurement"
+      ],
+      "is_simulation_only_intent": false,
+      "is_mixed_simulation_and_query": true,
+      "has_negated_command": false,
+      "has_negated_premise": false,
+      "has_conditional_premise": false,
+      "ambiguous_vis_count": 0,
+      "diacritic_projected": false
+    },
+    {
+      "case_id": "Q08",
+      "intent_v11": "SIMULATE_AND_QUERY",
+      "clauses_count": 2,
+      "roles": [
+        "SIMULATION_REQUEST",
+        "MEASUREMENT_REQUEST"
+      ],
+      "subkinds": [
+        "standalone_simulation",
+        "measurement"
+      ],
+      "is_simulation_only_intent": false,
+      "is_mixed_simulation_and_query": true,
+      "has_negated_command": false,
+      "has_negated_premise": false,
+      "has_conditional_premise": false,
+      "ambiguous_vis_count": 0,
+      "diacritic_projected": false
+    },
+    {
+      "case_id": "Q09",
+      "intent_v11": "SIMULATE_AND_QUERY",
+      "clauses_count": 3,
+      "roles": [
+        "SIMULATION_REQUEST",
+        "OBJECT_DECLARATION",
+        "MEASUREMENT_REQUEST"
+      ],
+      "subkinds": [
+        "nested_lead_simulation",
+        "embedded_declaration",
+        "measurement"
+      ],
+      "is_simulation_only_intent": false,
+      "is_mixed_simulation_and_query": true,
+      "has_negated_command": false,
+      "has_negated_premise": false,
+      "has_conditional_premise": false,
+      "ambiguous_vis_count": 0,
+      "diacritic_projected": false
+    },
+    {
+      "case_id": "Q10",
+      "intent_v11": "SIMULATE_AND_QUERY",
+      "clauses_count": 3,
+      "roles": [
+        "SIMULATION_REQUEST",
+        "OBJECT_DECLARATION",
+        "MEASUREMENT_REQUEST"
+      ],
+      "subkinds": [
+        "nested_lead_simulation",
+        "embedded_declaration",
+        "measurement"
+      ],
+      "is_simulation_only_intent": false,
+      "is_mixed_simulation_and_query": true,
+      "has_negated_command": false,
+      "has_negated_premise": false,
+      "has_conditional_premise": false,
+      "ambiguous_vis_count": 0,
+      "diacritic_projected": false
+    },
+    {
+      "case_id": "Q11",
+      "intent_v11": "SIMULATE_AND_QUERY",
+      "clauses_count": 3,
+      "roles": [
+        "SIMULATION_REQUEST",
+        "OBJECT_DECLARATION",
+        "MEASUREMENT_REQUEST"
+      ],
+      "subkinds": [
+        "nested_lead_simulation",
+        "embedded_declaration",
+        "measurement"
+      ],
+      "is_simulation_only_intent": false,
+      "is_mixed_simulation_and_query": true,
+      "has_negated_command": false,
+      "has_negated_premise": false,
+      "has_conditional_premise": false,
+      "ambiguous_vis_count": 0,
+      "diacritic_projected": false
+    },
+    {
+      "case_id": "Q12",
+      "intent_v11": "SIMULATE_AND_QUERY",
+      "clauses_count": 3,
+      "roles": [
+        "SIMULATION_REQUEST",
+        "OBJECT_DECLARATION",
+        "MEASUREMENT_REQUEST"
+      ],
+      "subkinds": [
+        "nested_lead_simulation",
+        "embedded_declaration",
+        "measurement"
+      ],
+      "is_simulation_only_intent": false,
+      "is_mixed_simulation_and_query": true,
+      "has_negated_command": false,
+      "has_negated_premise": false,
+      "has_conditional_premise": false,
+      "ambiguous_vis_count": 0,
+      "diacritic_projected": false
+    },
+    {
+      "case_id": "Q13",
+      "intent_v11": "SIMULATE_AND_QUERY",
+      "clauses_count": 3,
+      "roles": [
+        "SIMULATION_REQUEST",
+        "OBJECT_DECLARATION",
+        "MEASUREMENT_REQUEST"
+      ],
+      "subkinds": [
+        "nested_lead_simulation",
+        "embedded_declaration",
+        "measurement"
+      ],
+      "is_simulation_only_intent": false,
+      "is_mixed_simulation_and_query": true,
+      "has_negated_command": false,
+      "has_negated_premise": false,
+      "has_conditional_premise": false,
+      "ambiguous_vis_count": 0,
+      "diacritic_projected": false
+    },
+    {
+      "case_id": "Q14",
+      "intent_v11": "SIMULATE_AND_QUERY",
+      "clauses_count": 3,
+      "roles": [
+        "SIMULATION_REQUEST",
+        "OBJECT_DECLARATION",
+        "MEASUREMENT_REQUEST"
+      ],
+      "subkinds": [
+        "nested_lead_simulation",
+        "embedded_declaration",
+        "measurement"
+      ],
+      "is_simulation_only_intent": false,
+      "is_mixed_simulation_and_query": true,
+      "has_negated_command": false,
+      "has_negated_premise": false,
+      "has_conditional_premise": false,
+      "ambiguous_vis_count": 0,
+      "diacritic_projected": false
+    },
+    {
+      "case_id": "Q15",
+      "intent_v11": "SIMULATE_AND_QUERY",
+      "clauses_count": 3,
+      "roles": [
+        "SIMULATION_REQUEST",
+        "OBJECT_DECLARATION",
+        "MEASUREMENT_REQUEST"
+      ],
+      "subkinds": [
+        "nested_lead_simulation",
+        "embedded_declaration",
+        "measurement"
+      ],
+      "is_simulation_only_intent": false,
+      "is_mixed_simulation_and_query": true,
+      "has_negated_command": false,
+      "has_negated_premise": false,
+      "has_conditional_premise": false,
+      "ambiguous_vis_count": 0,
+      "diacritic_projected": false
+    },
+    {
+      "case_id": "Q16",
+      "intent_v11": "SIMULATE_AND_QUERY",
+      "clauses_count": 2,
+      "roles": [
+        "SIMULATION_REQUEST",
+        "OBJECT_DECLARATION"
+      ],
+      "subkinds": [
+        "nested_lead_simulation",
+        "embedded_declaration"
+      ],
+      "is_simulation_only_intent": true,
+      "is_mixed_simulation_and_query": false,
+      "has_negated_command": false,
+      "has_negated_premise": false,
+      "has_conditional_premise": false,
+      "ambiguous_vis_count": 0,
+      "diacritic_projected": false
+    },
+    {
+      "case_id": "C01",
+      "intent_v11": "QUERY_WITH_SCENE",
+      "clauses_count": 2,
+      "roles": [
+        "OBJECT_DECLARATION",
+        "MEASUREMENT_REQUEST"
+      ],
+      "subkinds": [
+        "declaration_with_constraints",
+        "measurement"
+      ],
+      "is_simulation_only_intent": false,
+      "is_mixed_simulation_and_query": false,
+      "has_negated_command": false,
+      "has_negated_premise": false,
+      "has_conditional_premise": false,
+      "ambiguous_vis_count": 0,
+      "diacritic_projected": false
+    },
+    {
+      "case_id": "C02",
+      "intent_v11": "QUERY_WITH_SCENE",
+      "clauses_count": 2,
+      "roles": [
+        "OBJECT_DECLARATION",
+        "MEASUREMENT_REQUEST"
+      ],
+      "subkinds": [
+        "declaration_with_constraints",
+        "measurement"
+      ],
+      "is_simulation_only_intent": false,
+      "is_mixed_simulation_and_query": false,
+      "has_negated_command": false,
+      "has_negated_premise": false,
+      "has_conditional_premise": false,
+      "ambiguous_vis_count": 0,
+      "diacritic_projected": false
+    },
+    {
+      "case_id": "C03",
+      "intent_v11": "QUERY_WITH_SCENE",
+      "clauses_count": 2,
+      "roles": [
+        "OBJECT_DECLARATION",
+        "MEASUREMENT_REQUEST"
+      ],
+      "subkinds": [
+        "declaration_with_constraints",
+        "measurement"
+      ],
+      "is_simulation_only_intent": false,
+      "is_mixed_simulation_and_query": false,
+      "has_negated_command": false,
+      "has_negated_premise": false,
+      "has_conditional_premise": false,
+      "ambiguous_vis_count": 0,
+      "diacritic_projected": false
+    },
+    {
+      "case_id": "C04",
+      "intent_v11": "QUERY_WITH_SCENE",
+      "clauses_count": 2,
+      "roles": [
+        "OBJECT_DECLARATION",
+        "MEASUREMENT_REQUEST"
+      ],
+      "subkinds": [
+        "declaration_with_constraints",
+        "measurement"
+      ],
+      "is_simulation_only_intent": false,
+      "is_mixed_simulation_and_query": false,
+      "has_negated_command": false,
+      "has_negated_premise": false,
+      "has_conditional_premise": false,
+      "ambiguous_vis_count": 0,
+      "diacritic_projected": false
+    },
+    {
+      "case_id": "C05",
+      "intent_v11": "QUERY_WITH_SCENE",
+      "clauses_count": 2,
+      "roles": [
+        "OBJECT_DECLARATION",
+        "MEASUREMENT_REQUEST"
+      ],
+      "subkinds": [
+        "declaration_with_constraints",
+        "measurement"
+      ],
+      "is_simulation_only_intent": false,
+      "is_mixed_simulation_and_query": false,
+      "has_negated_command": false,
+      "has_negated_premise": false,
+      "has_conditional_premise": false,
+      "ambiguous_vis_count": 0,
+      "diacritic_projected": false
+    },
+    {
+      "case_id": "C06",
+      "intent_v11": "QUERY_WITH_SCENE",
+      "clauses_count": 2,
+      "roles": [
+        "OBJECT_DECLARATION",
+        "MEASUREMENT_REQUEST"
+      ],
+      "subkinds": [
+        "declaration_with_constraints",
+        "measurement"
+      ],
+      "is_simulation_only_intent": false,
+      "is_mixed_simulation_and_query": false,
+      "has_negated_command": false,
+      "has_negated_premise": false,
+      "has_conditional_premise": false,
+      "ambiguous_vis_count": 0,
+      "diacritic_projected": false
+    },
+    {
+      "case_id": "C07",
+      "intent_v11": "QUERY_WITH_SCENE",
+      "clauses_count": 2,
+      "roles": [
+        "OBJECT_DECLARATION",
+        "MEASUREMENT_REQUEST"
+      ],
+      "subkinds": [
+        "declaration_with_constraints",
+        "measurement"
+      ],
+      "is_simulation_only_intent": false,
+      "is_mixed_simulation_and_query": false,
+      "has_negated_command": false,
+      "has_negated_premise": false,
+      "has_conditional_premise": false,
+      "ambiguous_vis_count": 0,
+      "diacritic_projected": false
+    },
+    {
+      "case_id": "C08",
+      "intent_v11": "QUERY_WITH_SCENE",
+      "clauses_count": 2,
+      "roles": [
+        "OBJECT_DECLARATION",
+        "MEASUREMENT_REQUEST"
+      ],
+      "subkinds": [
+        "declaration_with_constraints",
+        "measurement"
+      ],
+      "is_simulation_only_intent": false,
+      "is_mixed_simulation_and_query": false,
+      "has_negated_command": false,
+      "has_negated_premise": false,
+      "has_conditional_premise": false,
+      "ambiguous_vis_count": 0,
+      "diacritic_projected": false
+    },
+    {
+      "case_id": "C09",
+      "intent_v11": "QUERY_WITH_SCENE",
+      "clauses_count": 2,
+      "roles": [
+        "OBJECT_DECLARATION",
+        "MEASUREMENT_REQUEST"
+      ],
+      "subkinds": [
+        "declaration_with_constraints",
+        "measurement"
+      ],
+      "is_simulation_only_intent": false,
+      "is_mixed_simulation_and_query": false,
+      "has_negated_command": false,
+      "has_negated_premise": false,
+      "has_conditional_premise": false,
+      "ambiguous_vis_count": 0,
+      "diacritic_projected": false
+    },
+    {
+      "case_id": "C10",
+      "intent_v11": "QUERY_WITH_SCENE",
+      "clauses_count": 2,
+      "roles": [
+        "OBJECT_DECLARATION",
+        "MEASUREMENT_REQUEST"
+      ],
+      "subkinds": [
+        "declaration_with_constraints",
+        "measurement"
+      ],
+      "is_simulation_only_intent": false,
+      "is_mixed_simulation_and_query": false,
+      "has_negated_command": false,
+      "has_negated_premise": false,
+      "has_conditional_premise": false,
+      "ambiguous_vis_count": 0,
+      "diacritic_projected": false
+    },
+    {
+      "case_id": "C11",
+      "intent_v11": "QUERY_WITH_SCENE",
+      "clauses_count": 2,
+      "roles": [
+        "OBJECT_DECLARATION",
+        "MEASUREMENT_REQUEST"
+      ],
+      "subkinds": [
+        "declaration_with_constraints",
+        "measurement"
+      ],
+      "is_simulation_only_intent": false,
+      "is_mixed_simulation_and_query": false,
+      "has_negated_command": false,
+      "has_negated_premise": false,
+      "has_conditional_premise": false,
+      "ambiguous_vis_count": 0,
+      "diacritic_projected": false
+    },
+    {
+      "case_id": "C12",
+      "intent_v11": "QUERY_WITH_SCENE",
+      "clauses_count": 2,
+      "roles": [
+        "OBJECT_DECLARATION",
+        "MEASUREMENT_REQUEST"
+      ],
+      "subkinds": [
+        "declaration_with_constraints",
+        "measurement"
+      ],
+      "is_simulation_only_intent": false,
+      "is_mixed_simulation_and_query": false,
+      "has_negated_command": false,
+      "has_negated_premise": false,
+      "has_conditional_premise": false,
+      "ambiguous_vis_count": 0,
+      "diacritic_projected": false
+    },
+    {
+      "case_id": "C13",
+      "intent_v11": "QUERY_WITH_SCENE",
+      "clauses_count": 2,
+      "roles": [
+        "OBJECT_DECLARATION",
+        "MEASUREMENT_REQUEST"
+      ],
+      "subkinds": [
+        "declaration_with_constraints",
+        "measurement"
+      ],
+      "is_simulation_only_intent": false,
+      "is_mixed_simulation_and_query": false,
+      "has_negated_command": false,
+      "has_negated_premise": false,
+      "has_conditional_premise": false,
+      "ambiguous_vis_count": 0,
+      "diacritic_projected": false
+    },
+    {
+      "case_id": "C14",
+      "intent_v11": "QUERY_WITH_SCENE",
+      "clauses_count": 2,
+      "roles": [
+        "OBJECT_DECLARATION",
+        "MEASUREMENT_REQUEST"
+      ],
+      "subkinds": [
+        "declaration_with_constraints",
+        "measurement"
+      ],
+      "is_simulation_only_intent": false,
+      "is_mixed_simulation_and_query": false,
+      "has_negated_command": false,
+      "has_negated_premise": false,
+      "has_conditional_premise": false,
+      "ambiguous_vis_count": 0,
+      "diacritic_projected": false
+    },
+    {
+      "case_id": "C15",
+      "intent_v11": "QUERY_WITH_SCENE",
+      "clauses_count": 2,
+      "roles": [
+        "OBJECT_DECLARATION",
+        "MEASUREMENT_REQUEST"
+      ],
+      "subkinds": [
+        "declaration_with_constraints",
+        "measurement"
+      ],
+      "is_simulation_only_intent": false,
+      "is_mixed_simulation_and_query": false,
+      "has_negated_command": false,
+      "has_negated_premise": false,
+      "has_conditional_premise": false,
+      "ambiguous_vis_count": 0,
+      "diacritic_projected": false
+    },
+    {
+      "case_id": "C16",
+      "intent_v11": "QUERY_WITH_SCENE",
+      "clauses_count": 2,
+      "roles": [
+        "OBJECT_DECLARATION",
+        "MEASUREMENT_REQUEST"
+      ],
+      "subkinds": [
+        "declaration_with_constraints",
+        "measurement"
+      ],
+      "is_simulation_only_intent": false,
+      "is_mixed_simulation_and_query": false,
+      "has_negated_command": false,
+      "has_negated_premise": false,
+      "has_conditional_premise": false,
+      "ambiguous_vis_count": 0,
+      "diacritic_projected": false
+    },
+    {
+      "case_id": "C17",
+      "intent_v11": "QUERY_WITH_SCENE",
+      "clauses_count": 3,
+      "roles": [
+        "OBJECT_DECLARATION",
+        "OBJECT_DECLARATION",
+        "MEASUREMENT_REQUEST"
+      ],
+      "subkinds": [
+        "declaration_with_constraints",
+        "declaration_with_constraints",
+        "measurement"
+      ],
+      "is_simulation_only_intent": false,
+      "is_mixed_simulation_and_query": false,
+      "has_negated_command": false,
+      "has_negated_premise": false,
+      "has_conditional_premise": false,
+      "ambiguous_vis_count": 0,
+      "diacritic_projected": false
+    },
+    {
+      "case_id": "C18",
+      "intent_v11": "QUERY_WITH_SCENE",
+      "clauses_count": 3,
+      "roles": [
+        "OBJECT_DECLARATION",
+        "OBJECT_DECLARATION",
+        "MEASUREMENT_REQUEST"
+      ],
+      "subkinds": [
+        "declaration_with_constraints",
+        "declaration_with_constraints",
+        "measurement"
+      ],
+      "is_simulation_only_intent": false,
+      "is_mixed_simulation_and_query": false,
+      "has_negated_command": false,
+      "has_negated_premise": false,
+      "has_conditional_premise": false,
+      "ambiguous_vis_count": 0,
+      "diacritic_projected": false
+    },
+    {
+      "case_id": "C19",
+      "intent_v11": "QUERY_WITH_SCENE",
+      "clauses_count": 2,
+      "roles": [
+        "OBJECT_DECLARATION",
+        "MEASUREMENT_REQUEST"
+      ],
+      "subkinds": [
+        "declaration_with_constraints",
+        "measurement"
+      ],
+      "is_simulation_only_intent": false,
+      "is_mixed_simulation_and_query": false,
+      "has_negated_command": false,
+      "has_negated_premise": false,
+      "has_conditional_premise": false,
+      "ambiguous_vis_count": 0,
+      "diacritic_projected": false
+    },
+    {
+      "case_id": "C20",
+      "intent_v11": "QUERY_WITH_SCENE",
+      "clauses_count": 2,
+      "roles": [
+        "OBJECT_DECLARATION",
+        "MEASUREMENT_REQUEST"
+      ],
+      "subkinds": [
+        "declaration_with_constraints",
+        "measurement"
+      ],
+      "is_simulation_only_intent": false,
+      "is_mixed_simulation_and_query": false,
+      "has_negated_command": false,
+      "has_negated_premise": false,
+      "has_conditional_premise": false,
+      "ambiguous_vis_count": 0,
+      "diacritic_projected": false
+    },
+    {
+      "case_id": "C21",
+      "intent_v11": "QUERY_WITH_SCENE",
+      "clauses_count": 2,
+      "roles": [
+        "OBJECT_DECLARATION",
+        "MEASUREMENT_REQUEST"
+      ],
+      "subkinds": [
+        "declaration_with_constraints",
+        "measurement"
+      ],
+      "is_simulation_only_intent": false,
+      "is_mixed_simulation_and_query": false,
+      "has_negated_command": false,
+      "has_negated_premise": false,
+      "has_conditional_premise": false,
+      "ambiguous_vis_count": 0,
+      "diacritic_projected": false
+    },
+    {
+      "case_id": "C22",
+      "intent_v11": "QUERY_WITH_SCENE",
+      "clauses_count": 2,
+      "roles": [
+        "OBJECT_DECLARATION",
+        "MEASUREMENT_REQUEST"
+      ],
+      "subkinds": [
+        "declaration_with_constraints",
+        "measurement"
+      ],
+      "is_simulation_only_intent": false,
+      "is_mixed_simulation_and_query": false,
+      "has_negated_command": false,
+      "has_negated_premise": false,
+      "has_conditional_premise": false,
+      "ambiguous_vis_count": 0,
+      "diacritic_projected": false
+    },
+    {
+      "case_id": "C23",
+      "intent_v11": "QUERY_WITH_SCENE",
+      "clauses_count": 2,
+      "roles": [
+        "OBJECT_DECLARATION",
+        "MEASUREMENT_REQUEST"
+      ],
+      "subkinds": [
+        "declaration_with_constraints",
+        "measurement"
+      ],
+      "is_simulation_only_intent": false,
+      "is_mixed_simulation_and_query": false,
+      "has_negated_command": false,
+      "has_negated_premise": false,
+      "has_conditional_premise": false,
+      "ambiguous_vis_count": 0,
+      "diacritic_projected": false
+    },
+    {
+      "case_id": "C24",
+      "intent_v11": "QUERY_WITH_SCENE",
+      "clauses_count": 2,
+      "roles": [
+        "OBJECT_DECLARATION",
+        "MEASUREMENT_REQUEST"
+      ],
+      "subkinds": [
+        "declaration_with_constraints",
+        "measurement"
+      ],
+      "is_simulation_only_intent": false,
+      "is_mixed_simulation_and_query": false,
+      "has_negated_command": false,
+      "has_negated_premise": false,
+      "has_conditional_premise": false,
+      "ambiguous_vis_count": 0,
+      "diacritic_projected": true
+    },
+    {
+      "case_id": "C25",
+      "intent_v11": "QUERY_WITH_SCENE",
+      "clauses_count": 3,
+      "roles": [
+        "CONTEXT_HEADER",
+        "OBJECT_DECLARATION",
+        "MEASUREMENT_REQUEST"
+      ],
+      "subkinds": [
+        "exam_header",
+        "declaration_with_constraints",
+        "measurement"
+      ],
+      "is_simulation_only_intent": false,
+      "is_mixed_simulation_and_query": false,
+      "has_negated_command": false,
+      "has_negated_premise": false,
+      "has_conditional_premise": false,
+      "ambiguous_vis_count": 0,
+      "diacritic_projected": false
+    },
+    {
+      "case_id": "C26",
+      "intent_v11": "QUERY_WITH_SCENE",
+      "clauses_count": 2,
+      "roles": [
+        "OBJECT_DECLARATION",
+        "MEASUREMENT_REQUEST"
+      ],
+      "subkinds": [
+        "declaration_with_constraints",
+        "measurement"
+      ],
+      "is_simulation_only_intent": false,
+      "is_mixed_simulation_and_query": false,
+      "has_negated_command": false,
+      "has_negated_premise": false,
+      "has_conditional_premise": false,
+      "ambiguous_vis_count": 0,
+      "diacritic_projected": false
+    },
+    {
+      "case_id": "C27",
+      "intent_v11": "QUERY_WITH_SCENE",
+      "clauses_count": 2,
+      "roles": [
+        "OBJECT_DECLARATION",
+        "MEASUREMENT_REQUEST"
+      ],
+      "subkinds": [
+        "declaration_with_constraints",
+        "measurement"
+      ],
+      "is_simulation_only_intent": false,
+      "is_mixed_simulation_and_query": false,
+      "has_negated_command": false,
+      "has_negated_premise": false,
+      "has_conditional_premise": false,
+      "ambiguous_vis_count": 0,
+      "diacritic_projected": false
+    },
+    {
+      "case_id": "C28",
+      "intent_v11": "QUERY_WITH_SCENE",
+      "clauses_count": 2,
+      "roles": [
+        "OBJECT_DECLARATION",
+        "MEASUREMENT_REQUEST"
+      ],
+      "subkinds": [
+        "declaration_with_constraints",
+        "measurement"
+      ],
+      "is_simulation_only_intent": false,
+      "is_mixed_simulation_and_query": false,
+      "has_negated_command": false,
+      "has_negated_premise": false,
+      "has_conditional_premise": false,
+      "ambiguous_vis_count": 0,
+      "diacritic_projected": false
+    },
+    {
+      "case_id": "C29",
+      "intent_v11": "QUERY_WITH_SCENE",
+      "clauses_count": 2,
+      "roles": [
+        "OBJECT_DECLARATION",
+        "MEASUREMENT_REQUEST"
+      ],
+      "subkinds": [
+        "declaration_with_constraints",
+        "measurement"
+      ],
+      "is_simulation_only_intent": false,
+      "is_mixed_simulation_and_query": false,
+      "has_negated_command": false,
+      "has_negated_premise": false,
+      "has_conditional_premise": false,
+      "ambiguous_vis_count": 0,
+      "diacritic_projected": false
+    },
+    {
+      "case_id": "C30",
+      "intent_v11": "QUERY_WITH_SCENE",
+      "clauses_count": 2,
+      "roles": [
+        "OBJECT_DECLARATION",
+        "MEASUREMENT_REQUEST"
+      ],
+      "subkinds": [
+        "declaration_with_constraints",
+        "measurement"
+      ],
+      "is_simulation_only_intent": false,
+      "is_mixed_simulation_and_query": false,
+      "has_negated_command": false,
+      "has_negated_premise": false,
+      "has_conditional_premise": false,
+      "ambiguous_vis_count": 0,
+      "diacritic_projected": false
+    },
+    {
+      "case_id": "D01",
+      "intent_v11": "UNDERDETERMINED_BUT_SIMULATABLE",
+      "clauses_count": 2,
+      "roles": [
+        "SIMULATION_REQUEST",
+        "OBJECT_DECLARATION"
+      ],
+      "subkinds": [
+        "nested_lead_simulation",
+        "embedded_declaration"
+      ],
+      "is_simulation_only_intent": true,
+      "is_mixed_simulation_and_query": false,
+      "has_negated_command": false,
+      "has_negated_premise": false,
+      "has_conditional_premise": false,
+      "ambiguous_vis_count": 0,
+      "diacritic_projected": false
+    },
+    {
+      "case_id": "D02",
+      "intent_v11": "UNDERDETERMINED_BUT_SIMULATABLE",
+      "clauses_count": 1,
+      "roles": [
+        "SIMULATION_REQUEST"
+      ],
+      "subkinds": [
+        "standalone_simulation"
+      ],
+      "is_simulation_only_intent": true,
+      "is_mixed_simulation_and_query": false,
+      "has_negated_command": false,
+      "has_negated_premise": false,
+      "has_conditional_premise": false,
+      "ambiguous_vis_count": 0,
+      "diacritic_projected": false
+    },
+    {
+      "case_id": "D03",
+      "intent_v11": "UNDERDETERMINED_BUT_SIMULATABLE",
+      "clauses_count": 1,
+      "roles": [
+        "SIMULATION_REQUEST"
+      ],
+      "subkinds": [
+        "standalone_simulation"
+      ],
+      "is_simulation_only_intent": true,
+      "is_mixed_simulation_and_query": false,
+      "has_negated_command": false,
+      "has_negated_premise": false,
+      "has_conditional_premise": false,
+      "ambiguous_vis_count": 0,
+      "diacritic_projected": false
+    },
+    {
+      "case_id": "D04",
+      "intent_v11": "UNDERDETERMINED_BUT_SIMULATABLE",
+      "clauses_count": 2,
+      "roles": [
+        "SIMULATION_REQUEST",
+        "OBJECT_DECLARATION"
+      ],
+      "subkinds": [
+        "nested_lead_simulation",
+        "embedded_declaration"
+      ],
+      "is_simulation_only_intent": true,
+      "is_mixed_simulation_and_query": false,
+      "has_negated_command": false,
+      "has_negated_premise": false,
+      "has_conditional_premise": false,
+      "ambiguous_vis_count": 0,
+      "diacritic_projected": false
+    },
+    {
+      "case_id": "D05",
+      "intent_v11": "UNDERDETERMINED_BUT_SIMULATABLE",
+      "clauses_count": 2,
+      "roles": [
+        "OBJECT_DECLARATION",
+        "SIMULATION_REQUEST"
+      ],
+      "subkinds": [
+        "declaration_with_constraints",
+        "standalone_simulation"
+      ],
+      "is_simulation_only_intent": true,
+      "is_mixed_simulation_and_query": false,
+      "has_negated_command": false,
+      "has_negated_premise": false,
+      "has_conditional_premise": false,
+      "ambiguous_vis_count": 0,
+      "diacritic_projected": false
+    },
+    {
+      "case_id": "N01",
+      "intent_v11": "NEGATIVE",
+      "clauses_count": 1,
+      "roles": [
+        "NEGATED_REQUEST"
+      ],
+      "subkinds": [
+        "negated_command"
+      ],
+      "is_simulation_only_intent": false,
+      "is_mixed_simulation_and_query": false,
+      "has_negated_command": true,
+      "has_negated_premise": false,
+      "has_conditional_premise": false,
+      "ambiguous_vis_count": 0,
+      "diacritic_projected": false
+    },
+    {
+      "case_id": "N02",
+      "intent_v11": "NEGATIVE",
+      "clauses_count": 1,
+      "roles": [
+        "NEGATED_REQUEST"
+      ],
+      "subkinds": [
+        "negated_command"
+      ],
+      "is_simulation_only_intent": false,
+      "is_mixed_simulation_and_query": false,
+      "has_negated_command": true,
+      "has_negated_premise": false,
+      "has_conditional_premise": false,
+      "ambiguous_vis_count": 0,
+      "diacritic_projected": false
+    },
+    {
+      "case_id": "N03",
+      "intent_v11": "NEGATIVE",
+      "clauses_count": 1,
+      "roles": [
+        "CONDITIONAL_PREMISE"
+      ],
+      "subkinds": [
+        "conditional"
+      ],
+      "is_simulation_only_intent": false,
+      "is_mixed_simulation_and_query": false,
+      "has_negated_command": false,
+      "has_negated_premise": false,
+      "has_conditional_premise": true,
+      "ambiguous_vis_count": 0,
+      "diacritic_projected": false
+    },
+    {
+      "case_id": "N04",
+      "intent_v11": "NEGATIVE",
+      "clauses_count": 1,
+      "roles": [
+        "SIMULATION_REQUEST"
+      ],
+      "subkinds": [
+        "standalone_simulation"
+      ],
+      "is_simulation_only_intent": true,
+      "is_mixed_simulation_and_query": false,
+      "has_negated_command": false,
+      "has_negated_premise": false,
+      "has_conditional_premise": false,
+      "ambiguous_vis_count": 0,
+      "diacritic_projected": false
+    },
+    {
+      "case_id": "N05",
+      "intent_v11": "NEGATIVE",
+      "clauses_count": 1,
+      "roles": [
+        "SIMULATION_REQUEST"
+      ],
+      "subkinds": [
+        "standalone_simulation"
+      ],
+      "is_simulation_only_intent": true,
+      "is_mixed_simulation_and_query": false,
+      "has_negated_command": false,
+      "has_negated_premise": false,
+      "has_conditional_premise": false,
+      "ambiguous_vis_count": 0,
+      "diacritic_projected": false
+    },
+    {
+      "case_id": "N06",
+      "intent_v11": "NEGATIVE",
+      "clauses_count": 1,
+      "roles": [
+        "SIMULATION_REQUEST"
+      ],
+      "subkinds": [
+        "standalone_simulation"
+      ],
+      "is_simulation_only_intent": true,
+      "is_mixed_simulation_and_query": false,
+      "has_negated_command": false,
+      "has_negated_premise": false,
+      "has_conditional_premise": false,
+      "ambiguous_vis_count": 0,
+      "diacritic_projected": false
+    },
+    {
+      "case_id": "N07",
+      "intent_v11": "NEGATIVE",
+      "clauses_count": 2,
+      "roles": [
+        "OBJECT_DECLARATION",
+        "SIMULATION_REQUEST"
+      ],
+      "subkinds": [
+        "declaration_with_constraints",
+        "standalone_simulation"
+      ],
+      "is_simulation_only_intent": true,
+      "is_mixed_simulation_and_query": false,
+      "has_negated_command": false,
+      "has_negated_premise": false,
+      "has_conditional_premise": false,
+      "ambiguous_vis_count": 0,
+      "diacritic_projected": false
+    },
+    {
+      "case_id": "N08",
+      "intent_v11": "NEGATIVE",
+      "clauses_count": 2,
+      "roles": [
+        "OBJECT_DECLARATION",
+        "SIMULATION_REQUEST"
+      ],
+      "subkinds": [
+        "declaration_with_constraints",
+        "standalone_simulation"
+      ],
+      "is_simulation_only_intent": true,
+      "is_mixed_simulation_and_query": false,
+      "has_negated_command": false,
+      "has_negated_premise": false,
+      "has_conditional_premise": false,
+      "ambiguous_vis_count": 0,
+      "diacritic_projected": false
+    },
+    {
+      "case_id": "N09",
+      "intent_v11": "NEGATIVE",
+      "clauses_count": 1,
+      "roles": [
+        "GEOMETRIC_CONSTRAINT"
+      ],
+      "subkinds": [
+        "constraint"
+      ],
+      "is_simulation_only_intent": false,
+      "is_mixed_simulation_and_query": false,
+      "has_negated_command": false,
+      "has_negated_premise": false,
+      "has_conditional_premise": false,
+      "ambiguous_vis_count": 0,
+      "diacritic_projected": false
+    },
+    {
+      "case_id": "N10",
+      "intent_v11": "NEGATIVE",
+      "clauses_count": 2,
+      "roles": [
+        "OBJECT_DECLARATION",
+        "SIMULATION_REQUEST"
+      ],
+      "subkinds": [
+        "declaration_with_constraints",
+        "standalone_simulation"
+      ],
+      "is_simulation_only_intent": true,
+      "is_mixed_simulation_and_query": false,
+      "has_negated_command": false,
+      "has_negated_premise": false,
+      "has_conditional_premise": false,
+      "ambiguous_vis_count": 0,
+      "diacritic_projected": false
+    },
+    {
+      "case_id": "N11",
+      "intent_v11": "NEGATIVE",
+      "clauses_count": 3,
+      "roles": [
+        "OBJECT_DECLARATION",
+        "SIMULATION_REQUEST",
+        "OBJECT_DECLARATION"
+      ],
+      "subkinds": [
+        "declaration_with_constraints",
+        "nested_lead_simulation",
+        "embedded_declaration"
+      ],
+      "is_simulation_only_intent": true,
+      "is_mixed_simulation_and_query": false,
+      "has_negated_command": false,
+      "has_negated_premise": false,
+      "has_conditional_premise": false,
+      "ambiguous_vis_count": 0,
+      "diacritic_projected": false
+    },
+    {
+      "case_id": "N12",
+      "intent_v11": "NEGATIVE",
+      "clauses_count": 2,
+      "roles": [
+        "OBJECT_DECLARATION",
+        "SIMULATION_REQUEST"
+      ],
+      "subkinds": [
+        "declaration_with_constraints",
+        "standalone_simulation"
+      ],
+      "is_simulation_only_intent": true,
+      "is_mixed_simulation_and_query": false,
+      "has_negated_command": false,
+      "has_negated_premise": false,
+      "has_conditional_premise": false,
+      "ambiguous_vis_count": 0,
+      "diacritic_projected": false
+    },
+    {
+      "case_id": "N13",
+      "intent_v11": "NEGATIVE",
+      "clauses_count": 2,
+      "roles": [
+        "OBJECT_DECLARATION",
+        "SIMULATION_REQUEST"
+      ],
+      "subkinds": [
+        "declaration",
+        "standalone_simulation"
+      ],
+      "is_simulation_only_intent": true,
+      "is_mixed_simulation_and_query": false,
+      "has_negated_command": false,
+      "has_negated_premise": false,
+      "has_conditional_premise": false,
+      "ambiguous_vis_count": 0,
+      "diacritic_projected": false
+    },
+    {
+      "case_id": "N14",
+      "intent_v11": "NEGATIVE",
+      "clauses_count": 2,
+      "roles": [
+        "OBJECT_DECLARATION",
+        "SIMULATION_REQUEST"
+      ],
+      "subkinds": [
+        "declaration",
+        "standalone_simulation"
+      ],
+      "is_simulation_only_intent": true,
+      "is_mixed_simulation_and_query": false,
+      "has_negated_command": false,
+      "has_negated_premise": false,
+      "has_conditional_premise": false,
+      "ambiguous_vis_count": 0,
+      "diacritic_projected": false
+    },
+    {
+      "case_id": "N15",
+      "intent_v11": "NEGATIVE",
+      "clauses_count": 1,
+      "roles": [
+        "SIMULATION_REQUEST"
+      ],
+      "subkinds": [
+        "standalone_simulation"
+      ],
+      "is_simulation_only_intent": true,
+      "is_mixed_simulation_and_query": false,
+      "has_negated_command": false,
+      "has_negated_premise": false,
+      "has_conditional_premise": false,
+      "ambiguous_vis_count": 0,
+      "diacritic_projected": false
+    },
+    {
+      "case_id": "N16",
+      "intent_v11": "NEGATIVE",
+      "clauses_count": 2,
+      "roles": [
+        "OBJECT_DECLARATION",
+        "MEASUREMENT_REQUEST"
+      ],
+      "subkinds": [
+        "declaration",
+        "measurement"
+      ],
+      "is_simulation_only_intent": false,
+      "is_mixed_simulation_and_query": false,
+      "has_negated_command": false,
+      "has_negated_premise": false,
+      "has_conditional_premise": false,
+      "ambiguous_vis_count": 0,
+      "diacritic_projected": false
+    },
+    {
+      "case_id": "N17",
+      "intent_v11": "NEGATIVE",
+      "clauses_count": 2,
+      "roles": [
+        "OBJECT_DECLARATION",
+        "MEASUREMENT_REQUEST"
+      ],
+      "subkinds": [
+        "declaration_with_constraints",
+        "measurement"
+      ],
+      "is_simulation_only_intent": false,
+      "is_mixed_simulation_and_query": false,
+      "has_negated_command": false,
+      "has_negated_premise": false,
+      "has_conditional_premise": false,
+      "ambiguous_vis_count": 0,
+      "diacritic_projected": false
+    },
+    {
+      "case_id": "N18",
+      "intent_v11": "NEGATIVE",
+      "clauses_count": 3,
+      "roles": [
+        "GEOMETRIC_CONSTRAINT",
+        "OBJECT_DECLARATION",
+        "SIMULATION_REQUEST"
+      ],
+      "subkinds": [
+        "constraint",
+        "declaration_with_constraints",
+        "standalone_simulation"
+      ],
+      "is_simulation_only_intent": true,
+      "is_mixed_simulation_and_query": false,
+      "has_negated_command": false,
+      "has_negated_premise": false,
+      "has_conditional_premise": false,
+      "ambiguous_vis_count": 0,
+      "diacritic_projected": false
+    },
+    {
+      "case_id": "N19",
+      "intent_v11": "NEGATIVE",
+      "clauses_count": 2,
+      "roles": [
+        "NEGATED_REQUEST",
+        "SIMULATION_REQUEST"
+      ],
+      "subkinds": [
+        "negated_premise",
+        "standalone_simulation"
+      ],
+      "is_simulation_only_intent": false,
+      "is_mixed_simulation_and_query": false,
+      "has_negated_command": false,
+      "has_negated_premise": true,
+      "has_conditional_premise": false,
+      "ambiguous_vis_count": 0,
+      "diacritic_projected": false
+    },
+    {
+      "case_id": "N20",
+      "intent_v11": "NEGATIVE",
+      "clauses_count": 2,
+      "roles": [
+        "SIMULATION_REQUEST",
+        "OBJECT_DECLARATION"
+      ],
+      "subkinds": [
+        "nested_lead_simulation",
+        "embedded_declaration"
+      ],
+      "is_simulation_only_intent": true,
+      "is_mixed_simulation_and_query": false,
+      "has_negated_command": false,
+      "has_negated_premise": false,
+      "has_conditional_premise": false,
+      "ambiguous_vis_count": 0,
+      "diacritic_projected": false
+    },
+    {
+      "case_id": "N21",
+      "intent_v11": "NEGATIVE",
+      "clauses_count": 2,
+      "roles": [
+        "OBJECT_DECLARATION",
+        "SIMULATION_REQUEST"
+      ],
+      "subkinds": [
+        "declaration",
+        "standalone_simulation"
+      ],
+      "is_simulation_only_intent": true,
+      "is_mixed_simulation_and_query": false,
+      "has_negated_command": false,
+      "has_negated_premise": false,
+      "has_conditional_premise": false,
+      "ambiguous_vis_count": 0,
+      "diacritic_projected": false
+    },
+    {
+      "case_id": "N22",
+      "intent_v11": "NEGATIVE",
+      "clauses_count": 1,
+      "roles": [
+        "SIMULATION_REQUEST"
+      ],
+      "subkinds": [
+        "standalone_simulation"
+      ],
+      "is_simulation_only_intent": true,
+      "is_mixed_simulation_and_query": false,
+      "has_negated_command": false,
+      "has_negated_premise": false,
+      "has_conditional_premise": false,
+      "ambiguous_vis_count": 0,
+      "diacritic_projected": false
+    },
+    {
+      "case_id": "N23",
+      "intent_v11": "NEGATIVE",
+      "clauses_count": 2,
+      "roles": [
+        "OBJECT_DECLARATION",
+        "SIMULATION_REQUEST"
+      ],
+      "subkinds": [
+        "declaration_with_constraints",
+        "standalone_simulation"
+      ],
+      "is_simulation_only_intent": true,
+      "is_mixed_simulation_and_query": false,
+      "has_negated_command": false,
+      "has_negated_premise": false,
+      "has_conditional_premise": false,
+      "ambiguous_vis_count": 0,
+      "diacritic_projected": false
+    },
+    {
+      "case_id": "N24",
+      "intent_v11": "NEGATIVE",
+      "clauses_count": 1,
+      "roles": [
+        "SIMULATION_REQUEST"
+      ],
+      "subkinds": [
+        "standalone_simulation"
+      ],
+      "is_simulation_only_intent": true,
+      "is_mixed_simulation_and_query": false,
+      "has_negated_command": false,
+      "has_negated_premise": false,
+      "has_conditional_premise": false,
+      "ambiguous_vis_count": 0,
+      "diacritic_projected": false
+    }
+  ]
+}

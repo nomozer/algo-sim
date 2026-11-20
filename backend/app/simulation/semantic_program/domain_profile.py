@@ -644,6 +644,10 @@ def detect_domain(text: str) -> str:
     if not text:
         return DOMAIN_TIN_HOC
     t = text.lower()
+    # /12 (A2): controlled diacritic-free detection ONLY when no Vietnamese diacritics appear;
+    # accented inputs keep the exact untouched matching path below.
+    if _khong_dau(t) == t:
+        return _detect_diacritic_free(t, text)
     # BỐN MỨC, không còn ba (sửa 2026-08-29 — xem `_MANH_QUAN_HE`).
     #
     # Cụm QUAN HỆ thắng cả phủ quyết Tin học; danh từ KHỐI thì không. Bản cũ
@@ -656,5 +660,47 @@ def detect_domain(text: str) -> str:
     if any(d in t for d in _MANH_DANH_TU_KHOI):
         return DOMAIN_HINH_HOC
     if sum(1 for d in _DAU_HIEU_YEU if d in t) >= 3:
+        return DOMAIN_HINH_HOC
+    return DOMAIN_TIN_HOC
+
+
+_DAU = str.maketrans("đ", "d")
+_ASCII_GEOM_NOTATION_RE = re.compile(r"(?<![A-Za-z])[A-Z][0-9']*(?:\.[A-Z][0-9']*|[A-Z]{2,5})(?![a-z])")
+_ASCII_DECOY_EXTRA = (
+    "mang hinh", "con lac", "lo xo", "bien do", "dao dong",
+    "cay khung", "thuat toan", "kruskal", "dijkstra",
+    "van toc", "gia toc", "dong dien", "mach dien",
+    "phuong trinh", "tich phan", "dao ham", "xac suat",
+    "code", "html", "sql", "javascript", "java",
+)
+
+
+def _khong_dau(s: str) -> str:
+    import unicodedata
+    return "".join(c for c in unicodedata.normalize("NFD", s.translate(_DAU)) if unicodedata.category(c) != "Mn")
+
+
+def _co_cum_tu(t: str, phrase: str) -> bool:
+    if any(sym in phrase for sym in ("⊥", "∥", "//")):
+        return phrase in t
+    return bool(re.search(rf"(?<![\w']){re.escape(phrase)}(?![\w'])", t))
+
+
+def _detect_diacritic_free(t: str, raw_text: str) -> str:
+    """Controlled word-boundary diacritic-free domain detection (A2: 0 decoy false positives)."""
+    if any(_co_cum_tu(t, p) for p in _ASCII_DECOY_EXTRA) or any(
+        _co_cum_tu(t, _khong_dau(d)) for d in _DAU_HIEU_TIN_HOC
+    ):
+        return DOMAIN_TIN_HOC
+    has_notation = bool(_ASCII_GEOM_NOTATION_RE.search(raw_text))
+    weak_stripped = tuple(
+        _khong_dau(d) for d in _DAU_HIEU_YEU if d != "đáy"
+    ) + ("mat day", "canh day", "day la")
+    weak_hits = sum(1 for d in weak_stripped if _co_cum_tu(t, d))
+    if any(_co_cum_tu(t, _khong_dau(d)) for d in _MANH_QUAN_HE) and (has_notation or weak_hits >= 1):
+        return DOMAIN_HINH_HOC
+    if any(_co_cum_tu(t, _khong_dau(d)) for d in _MANH_DANH_TU_KHOI) and (has_notation or weak_hits >= 2):
+        return DOMAIN_HINH_HOC
+    if weak_hits >= 3 and (has_notation or weak_hits >= 4):
         return DOMAIN_HINH_HOC
     return DOMAIN_TIN_HOC
