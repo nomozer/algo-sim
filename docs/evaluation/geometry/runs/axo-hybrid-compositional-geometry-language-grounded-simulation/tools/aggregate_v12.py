@@ -91,6 +91,21 @@ def main() -> int:
         if int(rd.get("gemini_calls") or 0) > 0 or int(rd.get("external_ai_calls") or 0) > 0:
             external_ai_nonzero.append(cid)
 
+        env = body.get("envelope") if isinstance(body.get("envelope"), dict) else {}
+        refusal_meta = rd.get("refusal") if isinstance(rd.get("refusal"), dict) else {}
+        reason_code = (
+            env.get("reason_code")
+            or rd.get("reason_code")
+            or refusal_meta.get("reason_code")
+            or body.get("error_code")
+        )
+        failure_category = (
+            env.get("failure_category")
+            or rd.get("failure_category")
+            or refusal_meta.get("failure_category")
+            or body.get("failure_category")
+        )
+
         in_scope_details.append({
             "case_id": cid,
             "simulation_intent": c.get("simulation_intent"),
@@ -100,7 +115,8 @@ def main() -> int:
             "http": rr.get("http"),
             "ms": rr.get("ms"),
             "route_status": rd.get("status"),
-            "reason_code": rd.get("reason_code"),
+            "reason_code": reason_code,
+            "failure_category": failure_category,
             "extraction_mode": ext_mode,
             "cache_hit": cache_hit,
             "oracle_status": orc.get("scene_validation"),
@@ -120,14 +136,19 @@ def main() -> int:
         rr = resp_by_id.get(cid, {})
         body = rr.get("body") or {}
         rd = body.get("route_d") or {}
+        env = body.get("envelope") if isinstance(body.get("envelope"), dict) else {}
+        refusal_meta = rd.get("refusal") if isinstance(rd.get("refusal"), dict) else {}
+        det_audit = rd.get("determinacy_audit") if isinstance(rd.get("determinacy_audit"), dict) else {}
         underdet_rows.append({
             "case_id": cid,
             "expected_behavior": c.get("expected_behavior"),
             "http": rr.get("http"),
             "route_status": rd.get("status"),
-            "reason_code": rd.get("reason_code") or body.get("error_code"),
-            "nlu_class": ((rd.get("clarification") or {}).get("nlu_class")),
-            "has_clarification_question": bool((rd.get("clarification") or {}).get("question")),
+            "reason_code": env.get("reason_code") or rd.get("reason_code") or refusal_meta.get("reason_code") or body.get("error_code"),
+            "failure_category": env.get("failure_category") or rd.get("failure_category") or refusal_meta.get("failure_category"),
+            "determinacy_classification": det_audit.get("classification") or det_audit.get("status"),
+            "nlu_class": ((rd.get("clarification") or {}).get("nlu_class") or refusal_meta.get("nlu_class")),
+            "has_clarification_question": bool((rd.get("clarification") or {}).get("question") or refusal_meta.get("clarification_question")),
         })
 
     # Negative cases
@@ -137,6 +158,8 @@ def main() -> int:
         rr = resp_by_id.get(cid, {})
         body = rr.get("body") or {}
         rd = body.get("route_d") or {}
+        env = body.get("envelope") if isinstance(body.get("envelope"), dict) else {}
+        refusal_meta = rd.get("refusal") if isinstance(rd.get("refusal"), dict) else {}
         br = browser_by_id.get(cid, {})
         orc = oracle_by_id.get(cid, {})
         is_injection = "prompt_injection" in str(c.get("category") or c.get("negative_type") or cid).lower()
@@ -146,7 +169,8 @@ def main() -> int:
             "case_id": cid,
             "http": rr.get("http"),
             "route_status": rd.get("status"),
-            "reason_code": rd.get("reason_code") or body.get("error_code"),
+            "reason_code": env.get("reason_code") or rd.get("reason_code") or refusal_meta.get("reason_code") or body.get("error_code"),
+            "failure_category": env.get("failure_category") or rd.get("failure_category") or body.get("failure_category"),
             "canvas_count": br.get("canvas_count", 0),
             "safe": refused or clean_served_injection,
         })

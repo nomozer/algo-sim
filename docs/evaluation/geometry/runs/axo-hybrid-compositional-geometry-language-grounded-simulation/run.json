@@ -1,0 +1,91 @@
+{
+  "schema": "axo-evaluation-run/2",
+  "run_id": "axo-hybrid-compositional-geometry-language-grounded-simulation",
+  "wave_id": "AXO_HYBRID_COMPOSITIONAL_GEOMETRY_LANGUAGE_GROUNDED_SIMULATION",
+  "campaign": "AXO HYBRID /12",
+  "generated_at_utc": "2026-11-20T07:25:00Z",
+  "classification": "COMPOSITIONAL_NLU_AND_GROUNDED_SOURCE_GATE_AND_BLIND_LIVE_BROWSER_ACCEPTANCE",
+  "branch": "feat/compositional-geometry-grounding",
+  "start_base_commit": "c44204786",
+  "preregistration_commit": "f358b48e5",
+  "phase_commits": {
+    "p0_p1_audit": "c44204786",
+    "p2_preregistration": "f358b48e5",
+    "p3_p5_p6_clause_domain_source_gate": "fb13d453a",
+    "p4_parser_and_slm": "f65659e63",
+    "p7_vis_and_handoffs": "83c427a97",
+    "p8_cache147_and_harness": "4f4162d87",
+    "candidate_freeze_and_templates": "22af36638",
+    "v12_candidate_bind": "219a172d8"
+  },
+  "candidate": {
+    "product_commit_sha": "4f4162d87f8f77388d21c8065f4b0bfd67cb648c",
+    "measured_system_tree_hash": "f3c185a08bf0f227fafc6621195017f3517d7227b20b93c7fdf86278103df40d",
+    "measured_files": 124,
+    "cache_version": "147",
+    "route_d_cache_policy": "147:route-d",
+    "semantic_environment_hash": "16838af02af616f4b3ba833267be93b640309458b1e279766dd1a4d26eadb05b",
+    "default_hybrid_route_mode": "live",
+    "model": {
+      "key": "qwen3-0.6b-axo-v9-q4_k_m",
+      "sha256": "73f1484b08b97ed2a1f44e32bcf6610210c7fda51567c4cd0a03d98dffc6cc35",
+      "llama_cpp_release": "b12470"
+    },
+    "parser": "local-geometry-parser/3",
+    "clause_analyzer": "compositional-clause-analyzer/1",
+    "extractor": "local-slm-extractor/6",
+    "grounding": "slm-grounding-validator/6",
+    "source_gate_registry": "geometry-functions/33",
+    "manifest_sha256": "f2fabd0b43fbe1d2cab1c1eeecdd2e143bf162cdd825b75b44bf209e38f13a86",
+    "criteria_sha256": "f59d1aaa1938741b35a132d7c765044a0cd365eaf9cdc4b17bd2af1b08463f75",
+    "oracle": "tools/scene_oracle.py"
+  },
+  "safety_and_scope_boundaries": {
+    "merged": false,
+    "pushed": false,
+    "main_modified": false,
+    "a4_locked_files_diff": "empty",
+    "gemini_calls": 0,
+    "approved_by_user_written": false,
+    "frozen_runs_modified": false,
+    "construction_v1_v2_modified": false,
+    "fine_tuning": false,
+    "needle3": false
+  },
+  "metrics": {
+    "in_scope_completed": 88,
+    "in_scope_total": 105,
+    "SIMULATION_COMPLETION_RATE_in_scope": 0.8381,
+    "slm_required_total": 32,
+    "slm_contributed_verified_scenes": 17,
+    "SLM_VERIFIED_SCENE_RATE": 0.5312,
+    "deterministic_only_rescues_vs_p2": 39,
+    "wrong_served": 0,
+    "grounding_violations_served": 0,
+    "unverified_relations_served": 0,
+    "fabricated_numeric_goals": 0,
+    "served_numeric_mismatch": 0,
+    "safe_refusal_count": 28,
+    "safe_refusal_total": 28,
+    "safe_refusal_rate": 1.0,
+    "visual_initial_pass": "88/88 (1.0)",
+    "interaction_pass": "88/88 (1.0)",
+    "ui_scenarios_pass": "9/10",
+    "external_ai_calls": 0
+  },
+  "t3_detail": "PENDING_STEP7_T3_EXECUTION",
+  "verdicts": {
+    "GROUNDED_SLM_RECOVERY_VERIFIED": true,
+    "VISUAL_INITIAL_FRAMING_VERIFIED": true,
+    "FULL_STACK_LOCAL_ONLY_VERIFIED": true,
+    "LIVE_SIMULATION_ACCEPTED": false,
+    "SCOPED_CUTOVER_COMPLETED": false,
+    "NOT_MEASURED": [
+      "EXTERNAL_INDEPENDENCE",
+      "INDEPENDENT_H1_VALIDATION",
+      "PHYSICAL_TARGET_HARDWARE_4_8_GIB",
+      "GEMINI_PARITY",
+      "REAL_STUDENT_USABILITY"
+    ]
+  }
+}

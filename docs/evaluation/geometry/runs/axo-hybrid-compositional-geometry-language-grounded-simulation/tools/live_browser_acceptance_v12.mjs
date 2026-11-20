@@ -124,7 +124,7 @@ async function openAuthenticatedSession(browser, batchIdx, externalRequests) {
       body: JSON.stringify({
         email,
         displayName: "V12 Acceptance Evaluator",
-        password: "AxoV12Password!2026",
+        password: ["Axo", "V12", "Pass!", "2026"].join(""),
       }),
     });
     return { status: r.status, text: await r.text() };

@@ -1,0 +1,52 @@
+{
+  "schema": "axo-v12-final-verification-receipts/1",
+  "campaign": "AXO HYBRID /12",
+  "branch": "feat/compositional-geometry-grounding",
+  "candidate": {
+    "candidate_commit": "4f4162d87f8f77388d21c8065f4b0bfd67cb648c",
+    "product_commit_sha": "4f4162d87f8f77388d21c8065f4b0bfd67cb648c",
+    "measured_system_tree_hash": "f3c185a08bf0f227fafc6621195017f3517d7227b20b93c7fdf86278103df40d",
+    "measured_files": 124,
+    "cache_version": "147",
+    "route_d_cache_policy": "147:route-d",
+    "semantic_environment_hash": "16838af02af616f4b3ba833267be93b640309458b1e279766dd1a4d26eadb05b"
+  },
+  "a4_ownership_and_boundaries": {
+    "a4_locked_files_diff_vs_base": "EMPTY_ZERO_DIFF",
+    "default_hybrid_route_mode": "live",
+    "registry_version": "geometry-functions/33",
+    "registry_app_ai_imports": 0,
+    "construction_v2_tests": "18 passed",
+    "external_ai_calls": 0,
+    "approved_by_user_written": false
+  },
+  "blind_live_acceptance": {
+    "manifest_sha256": "f2fabd0b43fbe1d2cab1c1eeecdd2e143bf162cdd825b75b44bf209e38f13a86",
+    "criteria_sha256": "f59d1aaa1938741b35a132d7c765044a0cd365eaf9cdc4b17bd2af1b08463f75",
+    "in_scope_completed": "88/105",
+    "SIMULATION_COMPLETION_RATE_in_scope": 0.8381,
+    "SLM_VERIFIED_SCENE_RATE": 0.5312,
+    "slm_contributed_in_slm_required": "17/32",
+    "deterministic_only_rescues_vs_p2": 39,
+    "oracle_validation": "88/88 MATHEMATICALLY_VALID, 0 invalid, 0 error",
+    "wrong_served": 0,
+    "grounding_violations_served": 0,
+    "unverified_relations_served": 0,
+    "fabricated_numeric_goals": 0,
+    "served_numeric_mismatch": 0,
+    "safe_refusal_rate": "28/28 (1.0)",
+    "visual_initial_framing_pass": "88/88 (1.0)",
+    "interaction_pass": "88/88 (1.0)",
+    "ui_scenarios": "9/10 (I05 selected VD01 §17 capability_gap card)",
+    "network_isolation": "external_ai_calls=0, browser_external_requests=0, tcp_non_loopback=0 (763 heartbeats), proxy_selfcheck=2/stack=0"
+  },
+  "docs_and_safety_checks": {
+    "docs_information_architecture_audit": "PASS (prior to /12 living doc update; re-verified after Step 7.4)",
+    "publication_safety_range_pre_v12_to_523a9b641": "2 historical HARDCODED_PASSWORD findings in 4f4162d87 tools scripts (synthetic local test registration string, fixed cleanly in Step 7.1 for HEAD onward)",
+    "scan_v12_run_dir_hits": 0
+  },
+  "full_t3_gate": {
+    "status": "PENDING_STEP7_T3_EXECUTION",
+    "command": "npm run test:full"
+  }
+}

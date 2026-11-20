@@ -1,0 +1,235 @@
+{
+  "schema": "axo-v12-ui-scenarios/1",
+  "base": "http://127.0.0.1:4173",
+  "external_requests_count": 0,
+  "external_requests": [],
+  "total_scenarios": 10,
+  "passed_scenarios": 9,
+  "results": [
+    {
+      "scenario_id": "I01",
+      "pass": true,
+      "scenes": [
+        {
+          "case_id": "V001",
+          "surface": "SCENE",
+          "start": {
+            "x": 503,
+            "y": 453
+          },
+          "under": {
+            "tag": "CANVAS",
+            "cls": ""
+          },
+          "frame_pixel_diff": 0.06095,
+          "labels_moved": 5,
+          "rotated": true
+        },
+        {
+          "case_id": "V055",
+          "surface": "SCENE",
+          "start": {
+            "x": 503,
+            "y": 453
+          },
+          "under": {
+            "tag": "CANVAS",
+            "cls": ""
+          },
+          "frame_pixel_diff": 0.06339,
+          "labels_moved": 6,
+          "rotated": true
+        },
+        {
+          "case_id": "V002",
+          "surface": "SCENE",
+          "start": {
+            "x": 503,
+            "y": 453
+          },
+          "under": {
+            "tag": "CANVAS",
+            "cls": ""
+          },
+          "frame_pixel_diff": 0.07437,
+          "labels_moved": 5,
+          "rotated": true
+        }
+      ],
+      "console_errors": []
+    },
+    {
+      "scenario_id": "I02",
+      "pass": true,
+      "scene": "V001",
+      "edge": {
+        "start": {
+          "x": 389,
+          "y": 542
+        },
+        "under": {
+          "tag": "CANVAS",
+          "cls": ""
+        },
+        "frame_pixel_diff": 0.06047,
+        "labels_moved": 5,
+        "rotated": true
+      },
+      "chip": {
+        "start": {
+          "x": 412,
+          "y": 520
+        },
+        "under": {
+          "tag": "CANVAS",
+          "cls": ""
+        },
+        "frame_pixel_diff": 0.05956,
+        "labels_moved": 5,
+        "rotated": true
+      },
+      "near_label": {
+        "start": {
+          "x": 474,
+          "y": 481
+        },
+        "under": {
+          "tag": "CANVAS",
+          "cls": ""
+        },
+        "frame_pixel_diff": 0.05781,
+        "labels_moved": 5,
+        "rotated": true
+      }
+    },
+    {
+      "scenario_id": "I04",
+      "pass": true,
+      "scene": "V001",
+      "double_reset_max_drift_px": 0
+    },
+    {
+      "scenario_id": "I03",
+      "pass": true,
+      "after_reset": {
+        "start": {
+          "x": 503,
+          "y": 453
+        },
+        "under": {
+          "tag": "CANVAS",
+          "cls": ""
+        },
+        "frame_pixel_diff": 0.06182,
+        "labels_moved": 5,
+        "rotated": true
+      },
+      "after_change": {
+        "start": {
+          "x": 503,
+          "y": 453
+        },
+        "under": {
+          "tag": "CANVAS",
+          "cls": ""
+        },
+        "frame_pixel_diff": 0.06348,
+        "labels_moved": 6,
+        "rotated": true
+      },
+      "missing_gold_after_change": []
+    },
+    {
+      "scenario_id": "I05",
+      "pass": false,
+      "case_id": "VD01",
+      "reason_code": null,
+      "toast": "Axo chưa hỗ trợ phép dựng này\nCác giả thiết chưa cố định duy nhất hình dạng, và hệ chưa có chứng chỉ bất biến tổng quát cho đại lượng được hỏi nên tạm dừng thay vì kết luận từ hình mẫu. Bạn có thể thử các bài về thiết diện, khoảng cách, góc hoặc thể tích.",
+      "console_errors": []
+    },
+    {
+      "scenario_id": "I07",
+      "pass": true,
+      "had_cancel_button": true,
+      "slow_case": "V002",
+      "fast_case": "V036",
+      "labels_at_render": [
+        "E",
+        "F",
+        "G",
+        "H",
+        "N",
+        "O"
+      ],
+      "labels_after_wait": [
+        "E",
+        "F",
+        "G",
+        "H",
+        "N",
+        "O"
+      ],
+      "console_errors": []
+    },
+    {
+      "scenario_id": "I08_1920x1080",
+      "pass": true,
+      "case_id": "V002",
+      "overflow_x": false,
+      "canvas": {
+        "w": 1560,
+        "h": 1034
+      },
+      "outside_initial_labels": [],
+      "missing_gold_labels": [],
+      "canvas_viewport_share": 0.778,
+      "centre_drag_rotated": true,
+      "console_errors": []
+    },
+    {
+      "scenario_id": "I08_1366x768",
+      "pass": true,
+      "case_id": "V002",
+      "overflow_x": false,
+      "canvas": {
+        "w": 1006,
+        "h": 722
+      },
+      "outside_initial_labels": [],
+      "missing_gold_labels": [],
+      "canvas_viewport_share": 0.692,
+      "centre_drag_rotated": true,
+      "console_errors": []
+    },
+    {
+      "scenario_id": "I08_768x1024",
+      "pass": true,
+      "case_id": "V002",
+      "overflow_x": false,
+      "canvas": {
+        "w": 472,
+        "h": 978
+      },
+      "outside_initial_labels": [],
+      "missing_gold_labels": [],
+      "canvas_viewport_share": 0.587,
+      "centre_drag_rotated": true,
+      "console_errors": []
+    },
+    {
+      "scenario_id": "I08_390x844",
+      "pass": true,
+      "case_id": "V002",
+      "overflow_x": false,
+      "canvas": {
+        "w": 390,
+        "h": 438
+      },
+      "outside_initial_labels": [],
+      "missing_gold_labels": [],
+      "canvas_viewport_share": 0.519,
+      "centre_drag_rotated": true,
+      "console_errors": []
+    }
+  ]
+}

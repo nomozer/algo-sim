@@ -1,3 +1,18 @@
+## WAVE_ID = AXO_HYBRID_COMPOSITIONAL_GEOMETRY_LANGUAGE_GROUNDED_SIMULATION
+
+- `RUN_ID` = axo-hybrid-compositional-geometry-language-grounded-simulation
+- `REPORT` = docs/evaluation/geometry/runs/axo-hybrid-compositional-geometry-language-grounded-simulation/AXO_HYBRID_V12_FINAL_REPORT.md
+- `ARTIFACT_DIRECTORY` = docs/evaluation/geometry/runs/axo-hybrid-compositional-geometry-language-grounded-simulation/
+- `START_BASE` = c44204786 (from /11 tip ef1075e7df4727e895a913ef4e6fdd8382b8d671)
+- `CODE_COMMIT` = fb13d453a (clause analyzer + diacritic-free domain gate + compositional Source Gate) · f65659e63 (`local-geometry-parser/3` + `local-slm-extractor/6` + `slm-grounding-validator/6`) · 83c427a97 (`V11-VIS-1` `scene3d-view.tsx` + `§17`/`§19` handoffs) · 4f4162d87 (`CACHE_VERSION` 147) · frozen candidate 22af36638 (`f3c185a08bf0f227fafc6621195017f3517d7227b20b93c7fdf86278103df40d`, 124 files, `0` diff `A4` locked files)
+- `CLASSIFICATION` = COMPOSITIONAL_NLU_AND_GROUNDED_SOURCE_GATE_AND_BLIND_LIVE_BROWSER_ACCEPTANCE
+- `PRODUCT_CHANGE` = YES (`compositional_clause_analysis.py`, `domain_profile.py`, `local_geometry_parser.py`, `local_slm_extractor.py`, Source Gate `registry.py` preserving `geometry-functions/33` & `0` `app.ai` imports, `scene3d-view.tsx`, `main.py` `CACHE_VERSION 147`; default `HYBRID_ROUTE_MODE = live` preserved)
+- `MODEL_REQUEST_COUNT` = 0 cloud; local `Qwen3-0.6B-AxoV9-Q4_K_M` (`73f1484b…`) only
+- `VERIFICATION` = V12_ACCEPTANCE_MANIFEST.json (`f2fabd0b…`); V12_EVALUATION_FREEZE.json; V12_CANDIDATE_FREEZE.json (`219a172d8`); LIVE_ACCEPTANCE_RESULTS.json (`88/105 = 0.8381`, `wrong_served = 0`, `28/28` safe refusals); SCENE_ORACLE_VERIFICATION.json (`88/88 MATHEMATICALLY_VALID`); SLM_LIVE_CONTRIBUTION_AUDIT.json (`17/32 = 0.5312` live `LOCAL_SLM_GROUNDED`, `+39` det rescues); VISUAL_AND_INTERACTION_ACCEPTANCE.json (`88/88` initial framing & interactions, `9/10` UI scenarios); PERFORMANCE_AND_RESOURCE_REPORT.json; NETWORK_ISOLATION_PROOF.json; ABLATION_AND_GENERALIZATION_REPORT.md; RESIDUAL_GAPS_AND_HANDOFF_ROADMAP.md; THESIS_EVIDENCE_SUMMARY.md; FINAL_VERIFICATION_RECEIPTS.json; run.json; handoff/derived_point_o_provenance.patch
+- `CORRECTS` = NONE
+- `CORRECTED_BY` = NONE
+- `LIMITATIONS` = author-constructed blind set (`EXTERNAL_INDEPENDENCE = NOT_MEASURED`); `GROUNDED_SLM_RECOVERY_VERIFIED = TRUE` (`17/32 = 0.5312`) and `VISUAL_INITIAL_FRAMING_VERIFIED = TRUE` (`88/88 = 1.0`), but `LIVE_SIMULATION_ACCEPTED = FALSE` (`0.8381 < 0.85`, `2` cases short; `17` residual cases catalogued in `RESIDUAL_GAPS_AND_HANDOFF_ROADMAP.md`); `I05` scenario hit `VD01` `§17` `capability_gap` card; `live SLM p95 = 6,703.0 ms > 5,000 ms` on dev host; `INDEPENDENT_H1_VALIDATION / PHYSICAL_TARGET_HARDWARE_4_8_GIB / GEMINI_PARITY / REAL_STUDENT_USABILITY = NOT_MEASURED`; `A4` (`planner/engine/typed_fact_next/adapter4/scene3d/construction_planner`) kept `0` diff.
+
 ## WAVE_ID = AXO_HYBRID_SIMULATION_INTENT_GENERALIZATION_GROUNDED_SLM_RECOVERY
 
 - `RUN_ID` = axo-hybrid-simulation-intent-generalization-grounded-slm-recovery

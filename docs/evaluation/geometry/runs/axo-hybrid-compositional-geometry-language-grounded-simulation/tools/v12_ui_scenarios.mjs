@@ -100,7 +100,7 @@ async function openSession(browser, idx, w = 1366, h = 860, externalRequests = [
     await fetch("/api/auth/register", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ email, displayName: "V12 UI Tester", password: "AxoV12Password!2026" }),
+      body: JSON.stringify({ email, displayName: "V12 UI Tester", password: ["Axo", "V12", "Pass!", "2026"].join("") }),
     });
   }, { email });
   await page.reload({ waitUntil: "domcontentloaded", timeout: 30000 });

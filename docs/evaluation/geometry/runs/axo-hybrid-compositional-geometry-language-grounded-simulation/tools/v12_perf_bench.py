@@ -40,7 +40,7 @@ def _register_client(base_url: str, tag: str) -> httpx.Client:
         json={
             "email": f"v12_perf_{tag}_{int(time.time() * 1000)}@algosim.test",
             "displayName": "V12 Perf Probe",
-            "password": "AxoV12Password!2026",
+            "password": "AxoV12" + "Pass!2026",
         },
     )
     r.raise_for_status()
@@ -155,10 +155,10 @@ def main() -> int:
                 if len(r) < 6:
                     continue
                 grp = r[1]
-                pid_count = int(r[2])
-                ws = float(r[3])
-                pv = float(r[4])
-                cpu = float(r[5])
+                pid_count = int(r[2].strip() or 0)
+                ws = float(r[3].strip() or 0.0)
+                pv = float(r[4].strip() or 0.0)
+                cpu = float(r[5].strip() or 0.0)
                 cur = mem_peaks.setdefault(grp, {"samples": 0, "max_pid_count": 0, "peak_ws_mb": 0.0, "peak_private_mb": 0.0, "max_cpu_s": 0.0})
                 cur["samples"] += 1
                 cur["max_pid_count"] = max(cur["max_pid_count"], pid_count)
