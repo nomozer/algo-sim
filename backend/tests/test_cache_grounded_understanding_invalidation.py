@@ -26,7 +26,7 @@ NOW_REFUSED = ("Cho hình chóp tứ giác đều S.ABCD có cạnh bên bằng 
 
 
 def test_version_pair():
-    assert M.CACHE_VERSION == "145" and M.ROUTE_D_CACHE_POLICY == "145:route-d"
+    assert M.CACHE_VERSION == "146" and M.ROUTE_D_CACHE_POLICY == "146:route-d"
 
 
 @pytest.fixture

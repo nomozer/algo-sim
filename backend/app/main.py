@@ -947,7 +947,12 @@ MISSING_KEY_MSG = (
 #       hoa khuyết dấu chấm (vd `vmmu_r513`: `NOT_ASKED_IN_SOURCE` → `MISSING_DIMENSION` kèm `determinacy_audit`), OCR
 #       họ hai kênh `layout-aware-ocr-reconcile/3` / `local-ocr-route/2` / `local-ocr-worker/3`, và hợp đồng provenance
 #       `verified-input-provenance/1`; mọi row `143:route-d` phải MISS (`tests/geometry/test_real_world_input_verified_simulation.py`).
-CACHE_VERSION = "145"
+# 146 — 2026-11-20 (axo-hybrid-simulation-intent-generalization-grounded-slm-recovery): Source Gate `_VAT_MO_PHONG`
+#       nhận danh từ khối/hình có nhãn ("mô phỏng hình chóp S.ABCD", "chỉ cần vẽ hình, không cần tính toán"), bộ đọc
+#       cục bộ chọn đích yêu cầu mô phỏng theo nhãn/loại khối và phủ đủ mệnh đề, SLM `local-slm-extractor/5` hạ 0 mục
+#       tiêu số cho đề chỉ-mô-phỏng. Khoá Route D không băm Source Gate, và `local-geometry-parser/2` không đổi ⇒ mọi row
+#       `145:route-d` phải MISS (`tests/test_cache_simulation_intent_invalidation.py`).
+CACHE_VERSION = "146"
 
 #: Hai chế độ hợp lệ của kiến trúc chính thức Hybrid `/4` do máy chủ sở hữu:
 #: - `live` (mặc định): trích xuất có cấu trúc qua Gemini (`typed-fact-next/2`) khi cấu hình `GEMINI_API_KEY`.
