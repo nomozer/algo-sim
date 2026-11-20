@@ -565,21 +565,6 @@ export async function runComposerSubmit({
 }: RunComposerSubmitOptions): Promise<void> {
   if (!canSubmit || lockRef.current) return;
   lockRef.current = true;
-  // Một lần bấm gửi = một lần học. Nếu người dùng đang gửi lại ngay lượt vừa thất bại trong cùng khung nhập,
-  // giữ nguyên ID ổn định của lượt đó để cập nhật trạng thái mà không nhân bản bản ghi.
-  const reusableFailedId =
-    requestIdRef?.current &&
-    useAppStore.getState().problemProcessingRecords[requestIdRef.current]?.status ===
-      "needs_attention"
-      ? requestIdRef.current
-      : null;
-  const attemptId = reusableFailedId ?? newAttemptId();
-  if (requestIdRef) {
-    requestIdRef.current = attemptId;
-  }
-
-  const ctl = typeof AbortController !== "undefined" ? new AbortController() : null;
-  if (abortRef) abortRef.current = ctl;
 
   const targetAttachments =
     attachments && attachments.length > 0
@@ -596,6 +581,26 @@ export async function runComposerSubmit({
     (typeof overridePreparedText === "string" ? overridePreparedText.trim() : problemText.trim()) ||
     targetAttachments[0]?.name ||
     "Bài toán đang xử lý";
+
+  // Một lần bấm gửi = một lần học. Chỉ tái sử dụng attemptId cho trường hợp gửi lại đúng đề vừa gặp
+  // lỗi hệ thống/hạ tầng (unsupported === null, HTTP non-2xx không bị khoá Idempotency-Key ở máy chủ);
+  // từ chối toán học (HTTP 200) đã ghi nhận Idempotency-Key và đổi đề phải luôn dùng mã mới.
+  const prevFailedRecord = requestIdRef?.current
+    ? useAppStore.getState().problemProcessingRecords[requestIdRef.current]
+    : undefined;
+  const reusableFailedId =
+    prevFailedRecord?.status === "needs_attention" &&
+    prevFailedRecord.unsupported === null &&
+    prevFailedRecord.problemStatement === initialStatement
+      ? requestIdRef!.current
+      : null;
+  const attemptId = reusableFailedId ?? newAttemptId();
+  if (requestIdRef) {
+    requestIdRef.current = attemptId;
+  }
+
+  const ctl = typeof AbortController !== "undefined" ? new AbortController() : null;
+  if (abortRef) abortRef.current = ctl;
 
   type DraftTabSlice = {
     view: string;
@@ -733,11 +738,15 @@ export async function runComposerSubmit({
     }
 
     stage = "analyze";
+    const httpAttemptId =
+      reusableFailedId && prevFailedRecord?.problemStatement !== finalProblemText
+        ? newAttemptId()
+        : attemptId;
     const result = await analyzeFn(
       { type: "text", content: finalProblemText },
       ctl?.signal,
       undefined,
-      attemptId,
+      httpAttemptId,
     );
     if (ctl?.signal.aborted || wasOriginDraftTabClosed()) {
       useAppStore.getState().clearProblemProcessing(attemptId);

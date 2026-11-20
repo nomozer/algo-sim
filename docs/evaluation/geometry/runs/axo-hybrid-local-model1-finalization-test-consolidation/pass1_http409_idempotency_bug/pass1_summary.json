@@ -1,0 +1,1481 @@
+{
+  "schema": "axo-v13-pass1-aborted-summary/1",
+  "cause": "Frontend ProblemInput.tsx reused needs_attention attemptId as Idempotency-Key across subsequent prompts, causing HTTP 409 IDEMPOTENCY_KEY_REUSED after the first HTTP 200 refusal in each 10-case browser batch",
+  "total_cases": 140,
+  "http_200_served": 48,
+  "http_200_non_served": 13,
+  "http_409_count": 79,
+  "proxy_intercepted_records": 0,
+  "tcp_heartbeats": 561,
+  "tcp_non_loopback_records": 0,
+  "breakdown": [
+    {
+      "http": 409,
+      "route_status": null,
+      "reason_code": "IDEMPOTENCY_KEY_REUSED",
+      "count": 79
+    },
+    {
+      "http": 200,
+      "route_status": "SERVED",
+      "reason_code": null,
+      "count": 48
+    },
+    {
+      "http": 200,
+      "route_status": "REFUSED",
+      "reason_code": "UNGROUNDED_VALUE",
+      "count": 3
+    },
+    {
+      "http": 200,
+      "route_status": "REFUSED",
+      "reason_code": "INCONSISTENT_FACTS",
+      "count": 2
+    },
+    {
+      "http": 200,
+      "route_status": "REFUSED",
+      "reason_code": "MISSING_DIMENSION",
+      "count": 2
+    },
+    {
+      "http": 200,
+      "route_status": "REFUSED",
+      "reason_code": "AMBIGUOUS_FACT",
+      "count": 1
+    },
+    {
+      "http": 200,
+      "route_status": "REFUSED",
+      "reason_code": "AMBIGUOUS_VALUE_QUOTE",
+      "count": 1
+    },
+    {
+      "http": 200,
+      "route_status": "REFUSED",
+      "reason_code": "NOT_ASKED_IN_SOURCE",
+      "count": 1
+    },
+    {
+      "http": 200,
+      "route_status": "REFUSED",
+      "reason_code": "SOURCE_PREMISE_UNREAD",
+      "count": 1
+    },
+    {
+      "http": 200,
+      "route_status": "REFUSED",
+      "reason_code": "UNSUPPORTED_BASE_SHAPE",
+      "count": 1
+    },
+    {
+      "http": 200,
+      "route_status": null,
+      "reason_code": "gate_out_of_scope",
+      "count": 1
+    }
+  ],
+  "rows": [
+    {
+      "case_id": "H001",
+      "group": "valid",
+      "expected_behavior": "SERVE",
+      "http": 200,
+      "ms": 545,
+      "route_status": "SERVED",
+      "extraction_mode": "LOCAL_DETERMINISTIC_PARSER",
+      "reason_code": null
+    },
+    {
+      "case_id": "H002",
+      "group": "valid",
+      "expected_behavior": "SERVE",
+      "http": 200,
+      "ms": 141,
+      "route_status": "SERVED",
+      "extraction_mode": "LOCAL_DETERMINISTIC_PARSER",
+      "reason_code": null
+    },
+    {
+      "case_id": "H003",
+      "group": "valid",
+      "expected_behavior": "SERVE",
+      "http": 200,
+      "ms": 126,
+      "route_status": null,
+      "extraction_mode": null,
+      "reason_code": "gate_out_of_scope"
+    },
+    {
+      "case_id": "H004",
+      "group": "valid",
+      "expected_behavior": "SERVE",
+      "http": 409,
+      "ms": 68,
+      "route_status": null,
+      "extraction_mode": null,
+      "reason_code": "IDEMPOTENCY_KEY_REUSED"
+    },
+    {
+      "case_id": "H005",
+      "group": "valid",
+      "expected_behavior": "SERVE",
+      "http": 409,
+      "ms": 50,
+      "route_status": null,
+      "extraction_mode": null,
+      "reason_code": "IDEMPOTENCY_KEY_REUSED"
+    },
+    {
+      "case_id": "H006",
+      "group": "valid",
+      "expected_behavior": "SERVE",
+      "http": 409,
+      "ms": 62,
+      "route_status": null,
+      "extraction_mode": null,
+      "reason_code": "IDEMPOTENCY_KEY_REUSED"
+    },
+    {
+      "case_id": "H007",
+      "group": "valid",
+      "expected_behavior": "SERVE",
+      "http": 409,
+      "ms": 63,
+      "route_status": null,
+      "extraction_mode": null,
+      "reason_code": "IDEMPOTENCY_KEY_REUSED"
+    },
+    {
+      "case_id": "H008",
+      "group": "valid",
+      "expected_behavior": "SERVE",
+      "http": 409,
+      "ms": 55,
+      "route_status": null,
+      "extraction_mode": null,
+      "reason_code": "IDEMPOTENCY_KEY_REUSED"
+    },
+    {
+      "case_id": "H009",
+      "group": "valid",
+      "expected_behavior": "SERVE",
+      "http": 409,
+      "ms": 51,
+      "route_status": null,
+      "extraction_mode": null,
+      "reason_code": "IDEMPOTENCY_KEY_REUSED"
+    },
+    {
+      "case_id": "H010",
+      "group": "valid",
+      "expected_behavior": "SERVE",
+      "http": 409,
+      "ms": 58,
+      "route_status": null,
+      "extraction_mode": null,
+      "reason_code": "IDEMPOTENCY_KEY_REUSED"
+    },
+    {
+      "case_id": "H011",
+      "group": "valid",
+      "expected_behavior": "SERVE",
+      "http": 200,
+      "ms": 4360,
+      "route_status": "REFUSED",
+      "extraction_mode": "LOCAL_SLM_GROUNDED",
+      "reason_code": "AMBIGUOUS_VALUE_QUOTE"
+    },
+    {
+      "case_id": "H012",
+      "group": "valid",
+      "expected_behavior": "SERVE",
+      "http": 409,
+      "ms": 59,
+      "route_status": null,
+      "extraction_mode": null,
+      "reason_code": "IDEMPOTENCY_KEY_REUSED"
+    },
+    {
+      "case_id": "H013",
+      "group": "valid",
+      "expected_behavior": "SERVE",
+      "http": 409,
+      "ms": 51,
+      "route_status": null,
+      "extraction_mode": null,
+      "reason_code": "IDEMPOTENCY_KEY_REUSED"
+    },
+    {
+      "case_id": "H014",
+      "group": "valid",
+      "expected_behavior": "SERVE",
+      "http": 409,
+      "ms": 56,
+      "route_status": null,
+      "extraction_mode": null,
+      "reason_code": "IDEMPOTENCY_KEY_REUSED"
+    },
+    {
+      "case_id": "H015",
+      "group": "valid",
+      "expected_behavior": "SERVE",
+      "http": 409,
+      "ms": 55,
+      "route_status": null,
+      "extraction_mode": null,
+      "reason_code": "IDEMPOTENCY_KEY_REUSED"
+    },
+    {
+      "case_id": "H016",
+      "group": "valid",
+      "expected_behavior": "SERVE",
+      "http": 409,
+      "ms": 55,
+      "route_status": null,
+      "extraction_mode": null,
+      "reason_code": "IDEMPOTENCY_KEY_REUSED"
+    },
+    {
+      "case_id": "H017",
+      "group": "valid",
+      "expected_behavior": "SERVE",
+      "http": 409,
+      "ms": 52,
+      "route_status": null,
+      "extraction_mode": null,
+      "reason_code": "IDEMPOTENCY_KEY_REUSED"
+    },
+    {
+      "case_id": "H018",
+      "group": "valid",
+      "expected_behavior": "SERVE",
+      "http": 409,
+      "ms": 54,
+      "route_status": null,
+      "extraction_mode": null,
+      "reason_code": "IDEMPOTENCY_KEY_REUSED"
+    },
+    {
+      "case_id": "H019",
+      "group": "valid",
+      "expected_behavior": "SERVE",
+      "http": 409,
+      "ms": 61,
+      "route_status": null,
+      "extraction_mode": null,
+      "reason_code": "IDEMPOTENCY_KEY_REUSED"
+    },
+    {
+      "case_id": "H020",
+      "group": "valid",
+      "expected_behavior": "SERVE",
+      "http": 409,
+      "ms": 57,
+      "route_status": null,
+      "extraction_mode": null,
+      "reason_code": "IDEMPOTENCY_KEY_REUSED"
+    },
+    {
+      "case_id": "H021",
+      "group": "valid",
+      "expected_behavior": "SERVE",
+      "http": 200,
+      "ms": 1400,
+      "route_status": "REFUSED",
+      "extraction_mode": "LOCAL_SLM_GROUNDING_REJECTED",
+      "reason_code": "INCONSISTENT_FACTS"
+    },
+    {
+      "case_id": "H022",
+      "group": "valid",
+      "expected_behavior": "SERVE",
+      "http": 409,
+      "ms": 67,
+      "route_status": null,
+      "extraction_mode": null,
+      "reason_code": "IDEMPOTENCY_KEY_REUSED"
+    },
+    {
+      "case_id": "H023",
+      "group": "valid",
+      "expected_behavior": "SERVE",
+      "http": 409,
+      "ms": 55,
+      "route_status": null,
+      "extraction_mode": null,
+      "reason_code": "IDEMPOTENCY_KEY_REUSED"
+    },
+    {
+      "case_id": "H024",
+      "group": "valid",
+      "expected_behavior": "SERVE",
+      "http": 409,
+      "ms": 60,
+      "route_status": null,
+      "extraction_mode": null,
+      "reason_code": "IDEMPOTENCY_KEY_REUSED"
+    },
+    {
+      "case_id": "H025",
+      "group": "valid",
+      "expected_behavior": "SERVE",
+      "http": 409,
+      "ms": 53,
+      "route_status": null,
+      "extraction_mode": null,
+      "reason_code": "IDEMPOTENCY_KEY_REUSED"
+    },
+    {
+      "case_id": "H026",
+      "group": "valid",
+      "expected_behavior": "SERVE",
+      "http": 409,
+      "ms": 54,
+      "route_status": null,
+      "extraction_mode": null,
+      "reason_code": "IDEMPOTENCY_KEY_REUSED"
+    },
+    {
+      "case_id": "H027",
+      "group": "valid",
+      "expected_behavior": "SERVE",
+      "http": 409,
+      "ms": 58,
+      "route_status": null,
+      "extraction_mode": null,
+      "reason_code": "IDEMPOTENCY_KEY_REUSED"
+    },
+    {
+      "case_id": "H028",
+      "group": "valid",
+      "expected_behavior": "SERVE",
+      "http": 409,
+      "ms": 49,
+      "route_status": null,
+      "extraction_mode": null,
+      "reason_code": "IDEMPOTENCY_KEY_REUSED"
+    },
+    {
+      "case_id": "H029",
+      "group": "valid",
+      "expected_behavior": "SERVE",
+      "http": 409,
+      "ms": 53,
+      "route_status": null,
+      "extraction_mode": null,
+      "reason_code": "IDEMPOTENCY_KEY_REUSED"
+    },
+    {
+      "case_id": "H030",
+      "group": "valid",
+      "expected_behavior": "SERVE",
+      "http": 409,
+      "ms": 74,
+      "route_status": null,
+      "extraction_mode": null,
+      "reason_code": "IDEMPOTENCY_KEY_REUSED"
+    },
+    {
+      "case_id": "H031",
+      "group": "valid",
+      "expected_behavior": "SERVE",
+      "http": 200,
+      "ms": 148,
+      "route_status": "SERVED",
+      "extraction_mode": "LOCAL_DETERMINISTIC_PARSER",
+      "reason_code": null
+    },
+    {
+      "case_id": "H032",
+      "group": "valid",
+      "expected_behavior": "SERVE",
+      "http": 200,
+      "ms": 1256,
+      "route_status": "REFUSED",
+      "extraction_mode": "LOCAL_SLM_GROUNDING_REJECTED",
+      "reason_code": "AMBIGUOUS_FACT"
+    },
+    {
+      "case_id": "H033",
+      "group": "valid",
+      "expected_behavior": "SERVE",
+      "http": 409,
+      "ms": 61,
+      "route_status": null,
+      "extraction_mode": null,
+      "reason_code": "IDEMPOTENCY_KEY_REUSED"
+    },
+    {
+      "case_id": "H034",
+      "group": "valid",
+      "expected_behavior": "SERVE",
+      "http": 409,
+      "ms": 55,
+      "route_status": null,
+      "extraction_mode": null,
+      "reason_code": "IDEMPOTENCY_KEY_REUSED"
+    },
+    {
+      "case_id": "H035",
+      "group": "valid",
+      "expected_behavior": "SERVE",
+      "http": 409,
+      "ms": 51,
+      "route_status": null,
+      "extraction_mode": null,
+      "reason_code": "IDEMPOTENCY_KEY_REUSED"
+    },
+    {
+      "case_id": "H036",
+      "group": "valid",
+      "expected_behavior": "SERVE",
+      "http": 409,
+      "ms": 56,
+      "route_status": null,
+      "extraction_mode": null,
+      "reason_code": "IDEMPOTENCY_KEY_REUSED"
+    },
+    {
+      "case_id": "H037",
+      "group": "valid",
+      "expected_behavior": "SERVE",
+      "http": 409,
+      "ms": 54,
+      "route_status": null,
+      "extraction_mode": null,
+      "reason_code": "IDEMPOTENCY_KEY_REUSED"
+    },
+    {
+      "case_id": "H038",
+      "group": "valid",
+      "expected_behavior": "SERVE",
+      "http": 409,
+      "ms": 51,
+      "route_status": null,
+      "extraction_mode": null,
+      "reason_code": "IDEMPOTENCY_KEY_REUSED"
+    },
+    {
+      "case_id": "H039",
+      "group": "valid",
+      "expected_behavior": "SERVE",
+      "http": 409,
+      "ms": 53,
+      "route_status": null,
+      "extraction_mode": null,
+      "reason_code": "IDEMPOTENCY_KEY_REUSED"
+    },
+    {
+      "case_id": "H040",
+      "group": "valid",
+      "expected_behavior": "SERVE",
+      "http": 409,
+      "ms": 52,
+      "route_status": null,
+      "extraction_mode": null,
+      "reason_code": "IDEMPOTENCY_KEY_REUSED"
+    },
+    {
+      "case_id": "H041",
+      "group": "valid",
+      "expected_behavior": "SERVE",
+      "http": 200,
+      "ms": 161,
+      "route_status": "SERVED",
+      "extraction_mode": "LOCAL_DETERMINISTIC_PARSER",
+      "reason_code": null
+    },
+    {
+      "case_id": "H042",
+      "group": "valid",
+      "expected_behavior": "SERVE",
+      "http": 200,
+      "ms": 179,
+      "route_status": "SERVED",
+      "extraction_mode": "LOCAL_DETERMINISTIC_PARSER",
+      "reason_code": null
+    },
+    {
+      "case_id": "H043",
+      "group": "valid",
+      "expected_behavior": "SERVE",
+      "http": 200,
+      "ms": 187,
+      "route_status": "SERVED",
+      "extraction_mode": "LOCAL_DETERMINISTIC_PARSER",
+      "reason_code": null
+    },
+    {
+      "case_id": "H044",
+      "group": "valid",
+      "expected_behavior": "SERVE",
+      "http": 200,
+      "ms": 165,
+      "route_status": "SERVED",
+      "extraction_mode": "LOCAL_DETERMINISTIC_PARSER",
+      "reason_code": null
+    },
+    {
+      "case_id": "H045",
+      "group": "valid",
+      "expected_behavior": "SERVE",
+      "http": 200,
+      "ms": 133,
+      "route_status": "REFUSED",
+      "extraction_mode": "LOCAL_DETERMINISTIC_PARSER",
+      "reason_code": "UNSUPPORTED_BASE_SHAPE"
+    },
+    {
+      "case_id": "H046",
+      "group": "valid",
+      "expected_behavior": "SERVE",
+      "http": 409,
+      "ms": 48,
+      "route_status": null,
+      "extraction_mode": null,
+      "reason_code": "IDEMPOTENCY_KEY_REUSED"
+    },
+    {
+      "case_id": "H047",
+      "group": "valid",
+      "expected_behavior": "SERVE",
+      "http": 409,
+      "ms": 66,
+      "route_status": null,
+      "extraction_mode": null,
+      "reason_code": "IDEMPOTENCY_KEY_REUSED"
+    },
+    {
+      "case_id": "H048",
+      "group": "valid",
+      "expected_behavior": "SERVE",
+      "http": 409,
+      "ms": 53,
+      "route_status": null,
+      "extraction_mode": null,
+      "reason_code": "IDEMPOTENCY_KEY_REUSED"
+    },
+    {
+      "case_id": "H049",
+      "group": "valid",
+      "expected_behavior": "SERVE",
+      "http": 409,
+      "ms": 58,
+      "route_status": null,
+      "extraction_mode": null,
+      "reason_code": "IDEMPOTENCY_KEY_REUSED"
+    },
+    {
+      "case_id": "H050",
+      "group": "valid",
+      "expected_behavior": "SERVE",
+      "http": 409,
+      "ms": 66,
+      "route_status": null,
+      "extraction_mode": null,
+      "reason_code": "IDEMPOTENCY_KEY_REUSED"
+    },
+    {
+      "case_id": "H051",
+      "group": "valid",
+      "expected_behavior": "SERVE",
+      "http": 200,
+      "ms": 157,
+      "route_status": "SERVED",
+      "extraction_mode": "LOCAL_DETERMINISTIC_PARSER",
+      "reason_code": null
+    },
+    {
+      "case_id": "H052",
+      "group": "valid",
+      "expected_behavior": "SERVE",
+      "http": 200,
+      "ms": 147,
+      "route_status": "SERVED",
+      "extraction_mode": "LOCAL_PARSER_AFTER_V3_NORMALIZER",
+      "reason_code": null
+    },
+    {
+      "case_id": "H053",
+      "group": "valid",
+      "expected_behavior": "SERVE",
+      "http": 200,
+      "ms": 157,
+      "route_status": "SERVED",
+      "extraction_mode": "LOCAL_DETERMINISTIC_PARSER",
+      "reason_code": null
+    },
+    {
+      "case_id": "H054",
+      "group": "valid",
+      "expected_behavior": "SERVE",
+      "http": 200,
+      "ms": 162,
+      "route_status": "SERVED",
+      "extraction_mode": "LOCAL_DETERMINISTIC_PARSER",
+      "reason_code": null
+    },
+    {
+      "case_id": "H055",
+      "group": "valid",
+      "expected_behavior": "SERVE",
+      "http": 200,
+      "ms": 153,
+      "route_status": "SERVED",
+      "extraction_mode": "LOCAL_PARSER_AFTER_V3_NORMALIZER",
+      "reason_code": null
+    },
+    {
+      "case_id": "H056",
+      "group": "valid",
+      "expected_behavior": "SERVE",
+      "http": 200,
+      "ms": 153,
+      "route_status": "SERVED",
+      "extraction_mode": "LOCAL_DETERMINISTIC_PARSER",
+      "reason_code": null
+    },
+    {
+      "case_id": "H057",
+      "group": "valid",
+      "expected_behavior": "SERVE",
+      "http": 200,
+      "ms": 217,
+      "route_status": "SERVED",
+      "extraction_mode": "LOCAL_DETERMINISTIC_PARSER",
+      "reason_code": null
+    },
+    {
+      "case_id": "H058",
+      "group": "valid",
+      "expected_behavior": "SERVE",
+      "http": 200,
+      "ms": 1977,
+      "route_status": "REFUSED",
+      "extraction_mode": "LOCAL_SLM_GROUNDED",
+      "reason_code": "SOURCE_PREMISE_UNREAD"
+    },
+    {
+      "case_id": "H059",
+      "group": "valid",
+      "expected_behavior": "SERVE",
+      "http": 409,
+      "ms": 56,
+      "route_status": null,
+      "extraction_mode": null,
+      "reason_code": "IDEMPOTENCY_KEY_REUSED"
+    },
+    {
+      "case_id": "H060",
+      "group": "valid",
+      "expected_behavior": "SERVE",
+      "http": 409,
+      "ms": 52,
+      "route_status": null,
+      "extraction_mode": null,
+      "reason_code": "IDEMPOTENCY_KEY_REUSED"
+    },
+    {
+      "case_id": "H061",
+      "group": "valid",
+      "expected_behavior": "SERVE",
+      "http": 200,
+      "ms": 170,
+      "route_status": "SERVED",
+      "extraction_mode": "LOCAL_DETERMINISTIC_PARSER",
+      "reason_code": null
+    },
+    {
+      "case_id": "H062",
+      "group": "valid",
+      "expected_behavior": "SERVE",
+      "http": 200,
+      "ms": 167,
+      "route_status": "SERVED",
+      "extraction_mode": "LOCAL_DETERMINISTIC_PARSER",
+      "reason_code": null
+    },
+    {
+      "case_id": "H063",
+      "group": "valid",
+      "expected_behavior": "SERVE",
+      "http": 200,
+      "ms": 3203,
+      "route_status": "SERVED",
+      "extraction_mode": "LOCAL_SLM_GROUNDED",
+      "reason_code": null
+    },
+    {
+      "case_id": "H064",
+      "group": "valid",
+      "expected_behavior": "SERVE",
+      "http": 200,
+      "ms": 157,
+      "route_status": "SERVED",
+      "extraction_mode": "LOCAL_DETERMINISTIC_PARSER",
+      "reason_code": null
+    },
+    {
+      "case_id": "H065",
+      "group": "valid",
+      "expected_behavior": "SERVE",
+      "http": 200,
+      "ms": 4077,
+      "route_status": "REFUSED",
+      "extraction_mode": "LOCAL_SLM_GROUNDED",
+      "reason_code": "UNGROUNDED_VALUE"
+    },
+    {
+      "case_id": "H066",
+      "group": "valid",
+      "expected_behavior": "SERVE",
+      "http": 409,
+      "ms": 255,
+      "route_status": null,
+      "extraction_mode": null,
+      "reason_code": "IDEMPOTENCY_KEY_REUSED"
+    },
+    {
+      "case_id": "H067",
+      "group": "valid",
+      "expected_behavior": "SERVE",
+      "http": 409,
+      "ms": 58,
+      "route_status": null,
+      "extraction_mode": null,
+      "reason_code": "IDEMPOTENCY_KEY_REUSED"
+    },
+    {
+      "case_id": "H068",
+      "group": "valid",
+      "expected_behavior": "SERVE",
+      "http": 409,
+      "ms": 64,
+      "route_status": null,
+      "extraction_mode": null,
+      "reason_code": "IDEMPOTENCY_KEY_REUSED"
+    },
+    {
+      "case_id": "H069",
+      "group": "valid",
+      "expected_behavior": "SERVE",
+      "http": 409,
+      "ms": 56,
+      "route_status": null,
+      "extraction_mode": null,
+      "reason_code": "IDEMPOTENCY_KEY_REUSED"
+    },
+    {
+      "case_id": "H070",
+      "group": "valid",
+      "expected_behavior": "SERVE",
+      "http": 409,
+      "ms": 51,
+      "route_status": null,
+      "extraction_mode": null,
+      "reason_code": "IDEMPOTENCY_KEY_REUSED"
+    },
+    {
+      "case_id": "H071",
+      "group": "valid",
+      "expected_behavior": "SERVE",
+      "http": 200,
+      "ms": 139,
+      "route_status": "SERVED",
+      "extraction_mode": "LOCAL_DETERMINISTIC_PARSER",
+      "reason_code": null
+    },
+    {
+      "case_id": "H072",
+      "group": "valid",
+      "expected_behavior": "SERVE",
+      "http": 200,
+      "ms": 145,
+      "route_status": "SERVED",
+      "extraction_mode": "LOCAL_DETERMINISTIC_PARSER",
+      "reason_code": null
+    },
+    {
+      "case_id": "H073",
+      "group": "valid",
+      "expected_behavior": "SERVE",
+      "http": 200,
+      "ms": 146,
+      "route_status": "SERVED",
+      "extraction_mode": "LOCAL_DETERMINISTIC_PARSER",
+      "reason_code": null
+    },
+    {
+      "case_id": "H074",
+      "group": "valid",
+      "expected_behavior": "SERVE",
+      "http": 200,
+      "ms": 166,
+      "route_status": "SERVED",
+      "extraction_mode": "LOCAL_DETERMINISTIC_PARSER",
+      "reason_code": null
+    },
+    {
+      "case_id": "H075",
+      "group": "valid",
+      "expected_behavior": "SERVE",
+      "http": 200,
+      "ms": 165,
+      "route_status": "SERVED",
+      "extraction_mode": "LOCAL_DETERMINISTIC_PARSER",
+      "reason_code": null
+    },
+    {
+      "case_id": "H076",
+      "group": "valid",
+      "expected_behavior": "SERVE",
+      "http": 200,
+      "ms": 158,
+      "route_status": "SERVED",
+      "extraction_mode": "LOCAL_DETERMINISTIC_PARSER",
+      "reason_code": null
+    },
+    {
+      "case_id": "H077",
+      "group": "valid",
+      "expected_behavior": "SERVE",
+      "http": 200,
+      "ms": 136,
+      "route_status": "SERVED",
+      "extraction_mode": "LOCAL_DETERMINISTIC_PARSER",
+      "reason_code": null
+    },
+    {
+      "case_id": "H078",
+      "group": "valid",
+      "expected_behavior": "SERVE",
+      "http": 200,
+      "ms": 173,
+      "route_status": "SERVED",
+      "extraction_mode": "LOCAL_DETERMINISTIC_PARSER",
+      "reason_code": null
+    },
+    {
+      "case_id": "H079",
+      "group": "valid",
+      "expected_behavior": "SERVE",
+      "http": 200,
+      "ms": 196,
+      "route_status": "SERVED",
+      "extraction_mode": "LOCAL_DETERMINISTIC_PARSER",
+      "reason_code": null
+    },
+    {
+      "case_id": "H080",
+      "group": "valid",
+      "expected_behavior": "SERVE",
+      "http": 200,
+      "ms": 157,
+      "route_status": "SERVED",
+      "extraction_mode": "LOCAL_DETERMINISTIC_PARSER",
+      "reason_code": null
+    },
+    {
+      "case_id": "H081",
+      "group": "valid",
+      "expected_behavior": "SERVE",
+      "http": 200,
+      "ms": 140,
+      "route_status": "SERVED",
+      "extraction_mode": "LOCAL_DETERMINISTIC_PARSER",
+      "reason_code": null
+    },
+    {
+      "case_id": "H082",
+      "group": "valid",
+      "expected_behavior": "SERVE",
+      "http": 200,
+      "ms": 128,
+      "route_status": "SERVED",
+      "extraction_mode": "LOCAL_DETERMINISTIC_PARSER",
+      "reason_code": null
+    },
+    {
+      "case_id": "H083",
+      "group": "valid",
+      "expected_behavior": "SERVE",
+      "http": 200,
+      "ms": 146,
+      "route_status": "SERVED",
+      "extraction_mode": "LOCAL_DETERMINISTIC_PARSER",
+      "reason_code": null
+    },
+    {
+      "case_id": "H084",
+      "group": "valid",
+      "expected_behavior": "SERVE",
+      "http": 200,
+      "ms": 139,
+      "route_status": "SERVED",
+      "extraction_mode": "LOCAL_DETERMINISTIC_PARSER",
+      "reason_code": null
+    },
+    {
+      "case_id": "H085",
+      "group": "valid",
+      "expected_behavior": "SERVE",
+      "http": 200,
+      "ms": 154,
+      "route_status": "SERVED",
+      "extraction_mode": "LOCAL_DETERMINISTIC_PARSER",
+      "reason_code": null
+    },
+    {
+      "case_id": "H086",
+      "group": "valid",
+      "expected_behavior": "SERVE",
+      "http": 200,
+      "ms": 125,
+      "route_status": "SERVED",
+      "extraction_mode": "LOCAL_DETERMINISTIC_PARSER",
+      "reason_code": null
+    },
+    {
+      "case_id": "H087",
+      "group": "valid",
+      "expected_behavior": "SERVE",
+      "http": 200,
+      "ms": 162,
+      "route_status": "SERVED",
+      "extraction_mode": "LOCAL_DETERMINISTIC_PARSER",
+      "reason_code": null
+    },
+    {
+      "case_id": "H088",
+      "group": "valid",
+      "expected_behavior": "SERVE",
+      "http": 200,
+      "ms": 159,
+      "route_status": "SERVED",
+      "extraction_mode": "LOCAL_DETERMINISTIC_PARSER",
+      "reason_code": null
+    },
+    {
+      "case_id": "H089",
+      "group": "valid",
+      "expected_behavior": "SERVE",
+      "http": 200,
+      "ms": 3393,
+      "route_status": "REFUSED",
+      "extraction_mode": "LOCAL_SLM_GROUNDED",
+      "reason_code": "UNGROUNDED_VALUE"
+    },
+    {
+      "case_id": "H090",
+      "group": "valid",
+      "expected_behavior": "SERVE",
+      "http": 409,
+      "ms": 66,
+      "route_status": null,
+      "extraction_mode": null,
+      "reason_code": "IDEMPOTENCY_KEY_REUSED"
+    },
+    {
+      "case_id": "H091",
+      "group": "valid",
+      "expected_behavior": "SERVE",
+      "http": 200,
+      "ms": 3305,
+      "route_status": "SERVED",
+      "extraction_mode": "LOCAL_SLM_GROUNDED",
+      "reason_code": null
+    },
+    {
+      "case_id": "H092",
+      "group": "valid",
+      "expected_behavior": "SERVE",
+      "http": 200,
+      "ms": 142,
+      "route_status": "SERVED",
+      "extraction_mode": "LOCAL_DETERMINISTIC_PARSER",
+      "reason_code": null
+    },
+    {
+      "case_id": "H093",
+      "group": "valid",
+      "expected_behavior": "SERVE",
+      "http": 200,
+      "ms": 150,
+      "route_status": "SERVED",
+      "extraction_mode": "LOCAL_DETERMINISTIC_PARSER",
+      "reason_code": null
+    },
+    {
+      "case_id": "H094",
+      "group": "valid",
+      "expected_behavior": "SERVE",
+      "http": 200,
+      "ms": 2237,
+      "route_status": "SERVED",
+      "extraction_mode": "LOCAL_SLM_GROUNDED",
+      "reason_code": null
+    },
+    {
+      "case_id": "H095",
+      "group": "valid",
+      "expected_behavior": "SERVE",
+      "http": 200,
+      "ms": 191,
+      "route_status": "SERVED",
+      "extraction_mode": "LOCAL_DETERMINISTIC_PARSER",
+      "reason_code": null
+    },
+    {
+      "case_id": "H096",
+      "group": "valid",
+      "expected_behavior": "SERVE",
+      "http": 200,
+      "ms": 164,
+      "route_status": "SERVED",
+      "extraction_mode": "LOCAL_DETERMINISTIC_PARSER",
+      "reason_code": null
+    },
+    {
+      "case_id": "H097",
+      "group": "valid",
+      "expected_behavior": "SERVE",
+      "http": 200,
+      "ms": 3313,
+      "route_status": "REFUSED",
+      "extraction_mode": "LOCAL_SLM_GROUNDED",
+      "reason_code": "NOT_ASKED_IN_SOURCE"
+    },
+    {
+      "case_id": "H098",
+      "group": "valid",
+      "expected_behavior": "SERVE",
+      "http": 409,
+      "ms": 65,
+      "route_status": null,
+      "extraction_mode": null,
+      "reason_code": "IDEMPOTENCY_KEY_REUSED"
+    },
+    {
+      "case_id": "H099",
+      "group": "valid",
+      "expected_behavior": "SERVE",
+      "http": 409,
+      "ms": 54,
+      "route_status": null,
+      "extraction_mode": null,
+      "reason_code": "IDEMPOTENCY_KEY_REUSED"
+    },
+    {
+      "case_id": "H100",
+      "group": "valid",
+      "expected_behavior": "SERVE",
+      "http": 409,
+      "ms": 61,
+      "route_status": null,
+      "extraction_mode": null,
+      "reason_code": "IDEMPOTENCY_KEY_REUSED"
+    },
+    {
+      "case_id": "HS01",
+      "group": "valid",
+      "expected_behavior": "SERVE_SIMILARITY_REPRESENTATIVE",
+      "http": 200,
+      "ms": 155,
+      "route_status": "SERVED",
+      "extraction_mode": "LOCAL_DETERMINISTIC_PARSER",
+      "reason_code": null
+    },
+    {
+      "case_id": "HS02",
+      "group": "valid",
+      "expected_behavior": "SERVE_SIMILARITY_REPRESENTATIVE",
+      "http": 200,
+      "ms": 2058,
+      "route_status": "SERVED",
+      "extraction_mode": "LOCAL_SLM_GROUNDED",
+      "reason_code": null
+    },
+    {
+      "case_id": "HS03",
+      "group": "valid",
+      "expected_behavior": "SERVE_SIMILARITY_REPRESENTATIVE",
+      "http": 200,
+      "ms": 139,
+      "route_status": "SERVED",
+      "extraction_mode": "LOCAL_DETERMINISTIC_PARSER",
+      "reason_code": null
+    },
+    {
+      "case_id": "HS04",
+      "group": "valid",
+      "expected_behavior": "SERVE_SIMILARITY_REPRESENTATIVE",
+      "http": 200,
+      "ms": 146,
+      "route_status": "SERVED",
+      "extraction_mode": "LOCAL_DETERMINISTIC_PARSER",
+      "reason_code": null
+    },
+    {
+      "case_id": "HS05",
+      "group": "valid",
+      "expected_behavior": "SERVE_SIMILARITY_REPRESENTATIVE",
+      "http": 200,
+      "ms": 119,
+      "route_status": "SERVED",
+      "extraction_mode": "LOCAL_DETERMINISTIC_PARSER",
+      "reason_code": null
+    },
+    {
+      "case_id": "HS06",
+      "group": "valid",
+      "expected_behavior": "SERVE_SIMILARITY_REPRESENTATIVE",
+      "http": 200,
+      "ms": 121,
+      "route_status": "SERVED",
+      "extraction_mode": "LOCAL_DETERMINISTIC_PARSER",
+      "reason_code": null
+    },
+    {
+      "case_id": "HD01",
+      "group": "valid",
+      "expected_behavior": "CLARIFY_OR_ILLUSTRATIVE",
+      "http": 200,
+      "ms": 152,
+      "route_status": "REFUSED",
+      "extraction_mode": "LOCAL_DETERMINISTIC_PARSER",
+      "reason_code": "MISSING_DIMENSION"
+    },
+    {
+      "case_id": "HD02",
+      "group": "valid",
+      "expected_behavior": "CLARIFY_OR_ILLUSTRATIVE",
+      "http": 409,
+      "ms": 62,
+      "route_status": null,
+      "extraction_mode": null,
+      "reason_code": "IDEMPOTENCY_KEY_REUSED"
+    },
+    {
+      "case_id": "HD03",
+      "group": "valid",
+      "expected_behavior": "CLARIFY_OR_ILLUSTRATIVE",
+      "http": 409,
+      "ms": 47,
+      "route_status": null,
+      "extraction_mode": null,
+      "reason_code": "IDEMPOTENCY_KEY_REUSED"
+    },
+    {
+      "case_id": "HD04",
+      "group": "valid",
+      "expected_behavior": "CLARIFY_OR_ILLUSTRATIVE",
+      "http": 409,
+      "ms": 56,
+      "route_status": null,
+      "extraction_mode": null,
+      "reason_code": "IDEMPOTENCY_KEY_REUSED"
+    },
+    {
+      "case_id": "HD05",
+      "group": "valid",
+      "expected_behavior": "CLARIFY_OR_ILLUSTRATIVE",
+      "http": 200,
+      "ms": 129,
+      "route_status": "REFUSED",
+      "extraction_mode": "LOCAL_DETERMINISTIC_PARSER",
+      "reason_code": "MISSING_DIMENSION"
+    },
+    {
+      "case_id": "HD06",
+      "group": "valid",
+      "expected_behavior": "CLARIFY_OR_ILLUSTRATIVE",
+      "http": 409,
+      "ms": 48,
+      "route_status": null,
+      "extraction_mode": null,
+      "reason_code": "IDEMPOTENCY_KEY_REUSED"
+    },
+    {
+      "case_id": "HN01",
+      "group": "negative",
+      "expected_behavior": "SAFE_REFUSE",
+      "http": 409,
+      "ms": 60,
+      "route_status": null,
+      "extraction_mode": null,
+      "reason_code": "IDEMPOTENCY_KEY_REUSED"
+    },
+    {
+      "case_id": "HN02",
+      "group": "negative",
+      "expected_behavior": "SAFE_REFUSE",
+      "http": 409,
+      "ms": 53,
+      "route_status": null,
+      "extraction_mode": null,
+      "reason_code": "IDEMPOTENCY_KEY_REUSED"
+    },
+    {
+      "case_id": "HN03",
+      "group": "negative",
+      "expected_behavior": "SAFE_REFUSE",
+      "http": 409,
+      "ms": 73,
+      "route_status": null,
+      "extraction_mode": null,
+      "reason_code": "IDEMPOTENCY_KEY_REUSED"
+    },
+    {
+      "case_id": "HN04",
+      "group": "negative",
+      "expected_behavior": "SAFE_REFUSE",
+      "http": 409,
+      "ms": 50,
+      "route_status": null,
+      "extraction_mode": null,
+      "reason_code": "IDEMPOTENCY_KEY_REUSED"
+    },
+    {
+      "case_id": "HN05",
+      "group": "negative",
+      "expected_behavior": "SAFE_REFUSE",
+      "http": 409,
+      "ms": 63,
+      "route_status": null,
+      "extraction_mode": null,
+      "reason_code": "IDEMPOTENCY_KEY_REUSED"
+    },
+    {
+      "case_id": "HN06",
+      "group": "negative",
+      "expected_behavior": "SAFE_REFUSE",
+      "http": 409,
+      "ms": 52,
+      "route_status": null,
+      "extraction_mode": null,
+      "reason_code": "IDEMPOTENCY_KEY_REUSED"
+    },
+    {
+      "case_id": "HN07",
+      "group": "negative",
+      "expected_behavior": "SAFE_REFUSE",
+      "http": 409,
+      "ms": 57,
+      "route_status": null,
+      "extraction_mode": null,
+      "reason_code": "IDEMPOTENCY_KEY_REUSED"
+    },
+    {
+      "case_id": "HN08",
+      "group": "negative",
+      "expected_behavior": "SAFE_REFUSE",
+      "http": 409,
+      "ms": 54,
+      "route_status": null,
+      "extraction_mode": null,
+      "reason_code": "IDEMPOTENCY_KEY_REUSED"
+    },
+    {
+      "case_id": "HN09",
+      "group": "negative",
+      "expected_behavior": "SAFE_REFUSE",
+      "http": 200,
+      "ms": 1198,
+      "route_status": "REFUSED",
+      "extraction_mode": "LOCAL_SLM_GROUNDING_REJECTED",
+      "reason_code": "INCONSISTENT_FACTS"
+    },
+    {
+      "case_id": "HN10",
+      "group": "negative",
+      "expected_behavior": "SAFE_REFUSE",
+      "http": 409,
+      "ms": 62,
+      "route_status": null,
+      "extraction_mode": null,
+      "reason_code": "IDEMPOTENCY_KEY_REUSED"
+    },
+    {
+      "case_id": "HN11",
+      "group": "negative",
+      "expected_behavior": "SAFE_REFUSE",
+      "http": 409,
+      "ms": 47,
+      "route_status": null,
+      "extraction_mode": null,
+      "reason_code": "IDEMPOTENCY_KEY_REUSED"
+    },
+    {
+      "case_id": "HN12",
+      "group": "negative",
+      "expected_behavior": "SAFE_REFUSE",
+      "http": 409,
+      "ms": 56,
+      "route_status": null,
+      "extraction_mode": null,
+      "reason_code": "IDEMPOTENCY_KEY_REUSED"
+    },
+    {
+      "case_id": "HN13",
+      "group": "negative",
+      "expected_behavior": "SAFE_REFUSE",
+      "http": 409,
+      "ms": 54,
+      "route_status": null,
+      "extraction_mode": null,
+      "reason_code": "IDEMPOTENCY_KEY_REUSED"
+    },
+    {
+      "case_id": "HN14",
+      "group": "negative",
+      "expected_behavior": "SAFE_REFUSE",
+      "http": 409,
+      "ms": 57,
+      "route_status": null,
+      "extraction_mode": null,
+      "reason_code": "IDEMPOTENCY_KEY_REUSED"
+    },
+    {
+      "case_id": "HN15",
+      "group": "negative",
+      "expected_behavior": "SAFE_REFUSE",
+      "http": 409,
+      "ms": 53,
+      "route_status": null,
+      "extraction_mode": null,
+      "reason_code": "IDEMPOTENCY_KEY_REUSED"
+    },
+    {
+      "case_id": "HN16",
+      "group": "negative",
+      "expected_behavior": "SAFE_REFUSE",
+      "http": 409,
+      "ms": 55,
+      "route_status": null,
+      "extraction_mode": null,
+      "reason_code": "IDEMPOTENCY_KEY_REUSED"
+    },
+    {
+      "case_id": "HN17",
+      "group": "negative",
+      "expected_behavior": "SAFE_REFUSE",
+      "http": 409,
+      "ms": 56,
+      "route_status": null,
+      "extraction_mode": null,
+      "reason_code": "IDEMPOTENCY_KEY_REUSED"
+    },
+    {
+      "case_id": "HN18",
+      "group": "negative",
+      "expected_behavior": "SAFE_REFUSE",
+      "http": 409,
+      "ms": 47,
+      "route_status": null,
+      "extraction_mode": null,
+      "reason_code": "IDEMPOTENCY_KEY_REUSED"
+    },
+    {
+      "case_id": "HN19",
+      "group": "negative",
+      "expected_behavior": "SAFE_REFUSE",
+      "http": 200,
+      "ms": 1674,
+      "route_status": "REFUSED",
+      "extraction_mode": "LOCAL_SLM_GROUNDED",
+      "reason_code": "UNGROUNDED_VALUE"
+    },
+    {
+      "case_id": "HN20",
+      "group": "negative",
+      "expected_behavior": "SAFE_REFUSE",
+      "http": 409,
+      "ms": 53,
+      "route_status": null,
+      "extraction_mode": null,
+      "reason_code": "IDEMPOTENCY_KEY_REUSED"
+    },
+    {
+      "case_id": "HN21",
+      "group": "negative",
+      "expected_behavior": "SAFE_REFUSE",
+      "http": 409,
+      "ms": 62,
+      "route_status": null,
+      "extraction_mode": null,
+      "reason_code": "IDEMPOTENCY_KEY_REUSED"
+    },
+    {
+      "case_id": "HN22",
+      "group": "negative",
+      "expected_behavior": "SAFE_REFUSE",
+      "http": 409,
+      "ms": 60,
+      "route_status": null,
+      "extraction_mode": null,
+      "reason_code": "IDEMPOTENCY_KEY_REUSED"
+    },
+    {
+      "case_id": "HN23",
+      "group": "negative",
+      "expected_behavior": "SAFE_REFUSE",
+      "http": 409,
+      "ms": 73,
+      "route_status": null,
+      "extraction_mode": null,
+      "reason_code": "IDEMPOTENCY_KEY_REUSED"
+    },
+    {
+      "case_id": "HN24",
+      "group": "negative",
+      "expected_behavior": "SAFE_REFUSE",
+      "http": 409,
+      "ms": 59,
+      "route_status": null,
+      "extraction_mode": null,
+      "reason_code": "IDEMPOTENCY_KEY_REUSED"
+    },
+    {
+      "case_id": "HN25",
+      "group": "negative",
+      "expected_behavior": "SAFE_REFUSE",
+      "http": 409,
+      "ms": 56,
+      "route_status": null,
+      "extraction_mode": null,
+      "reason_code": "IDEMPOTENCY_KEY_REUSED"
+    },
+    {
+      "case_id": "HN26",
+      "group": "negative",
+      "expected_behavior": "SAFE_REFUSE",
+      "http": 409,
+      "ms": 55,
+      "route_status": null,
+      "extraction_mode": null,
+      "reason_code": "IDEMPOTENCY_KEY_REUSED"
+    },
+    {
+      "case_id": "HN27",
+      "group": "negative",
+      "expected_behavior": "SAFE_REFUSE_OR_CORRECT_SERVE",
+      "http": 409,
+      "ms": 57,
+      "route_status": null,
+      "extraction_mode": null,
+      "reason_code": "IDEMPOTENCY_KEY_REUSED"
+    },
+    {
+      "case_id": "HN28",
+      "group": "negative",
+      "expected_behavior": "SAFE_REFUSE",
+      "http": 409,
+      "ms": 58,
+      "route_status": null,
+      "extraction_mode": null,
+      "reason_code": "IDEMPOTENCY_KEY_REUSED"
+    }
+  ]
+}
