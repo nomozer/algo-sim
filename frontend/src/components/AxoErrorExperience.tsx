@@ -23,6 +23,7 @@ const STATIC_PATH_TO_VIEW: Readonly<Record<string, Exclude<AppView, "not_found">
   "/index.html": "home",
   "/app": "home",
   "/home": "home",
+  "/about": "landing",
   "/gioi-thieu": "landing",
   "/welcome": "landing",
   "/intro": "landing",
@@ -45,7 +46,7 @@ export function canonicalPathForView(
     case "home":
       return "/";
     case "landing":
-      return "/gioi-thieu";
+      return "/about";
     case "library":
       return "/library";
     case "history":

@@ -298,6 +298,7 @@ export default function App() {
       }
       try {
         syncLocationRoute(window.location.pathname, window.location.hash, window.location.search);
+        window.dispatchEvent(new CustomEvent("axolanding:protochange"));
         const popState = (
           (ev as PopStateEvent | undefined)?.state ?? window.history?.state
         ) as
@@ -526,10 +527,31 @@ export default function App() {
       prevHistoryState?.axoTabId !== resolvedAxoTabId;
     const effectiveView = useAppStore.getState().view;
     if (effectiveView !== view) return;
+    if (effectiveView === "landing" && currentPath === "/gioi-thieu") {
+      try {
+        const suffix = `${window.location.search ?? ""}${window.location.hash ?? ""}`;
+        if (typeof window.history?.replaceState === "function") {
+          window.history.replaceState(
+            {
+              axoView: "landing",
+              axoTabId: null,
+              tabId: null,
+              sampleId: null,
+              historyId: null,
+            },
+            "",
+            `/about${suffix}`,
+          );
+        }
+      } catch {
+        /* bỏ qua nếu môi trường kiểm thử chặn replaceState */
+      }
+      return;
+    }
     if (
       effectiveView === "landing" &&
       (currentPath === "/" ||
-        currentPath === "/gioi-thieu" ||
+        currentPath === "/about" ||
         currentPath === "/landing" ||
         currentPath === "/welcome" ||
         currentPath === "/intro")
@@ -573,6 +595,7 @@ export default function App() {
   const isExplicitAppPath =
     normalizedBrowserPath === "/app" || normalizedBrowserPath === "/home";
   const isLandingPathname =
+    normalizedBrowserPath === "/about" ||
     normalizedBrowserPath === "/gioi-thieu" ||
     normalizedBrowserPath === "/welcome" ||
     normalizedBrowserPath === "/intro" ||

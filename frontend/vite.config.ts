@@ -15,6 +15,17 @@ export default defineConfig({
       output: {
         manualChunks(id) {
           if (id.includes("node_modules/three")) return "vendor-three";
+          if (
+            id.includes("node_modules/@react-three") ||
+            id.includes("node_modules/maath") ||
+            id.includes("node_modules/camera-controls") ||
+            id.includes("node_modules/troika-") ||
+            id.includes("node_modules/three-stdlib") ||
+            id.includes("node_modules/suspend-react") ||
+            id.includes("node_modules/@pmndrs/assets")
+          ) {
+            return "vendor-r3f";
+          }
           if (id.includes("geometry-samples")) return "geometry-samples";
           return undefined;
         },

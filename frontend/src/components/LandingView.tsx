@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { Suspense, lazy, useEffect, useState } from "react";
 import { IconAxoLogo } from "./icons";
 import { LandingClosingSculpture } from "./landing/LandingClosingSculpture";
 import { LandingHeader } from "./landing/LandingHeader";
@@ -10,7 +10,19 @@ import { LandingStorytelling } from "./landing/LandingStorytelling";
 import { enterAxoWorkspace, openLibraryFromLanding } from "./landing/landing-geometry-data";
 import { useAuthStore } from "../state/auth";
 
-export type LandingPrototypeMode = "prod" | "v14";
+const ReferencePortalPreview = lazy(() =>
+  import("../prototypes/enter-portals-ref/EnterPortalsRefApp").then((m) => ({
+    default: m.ReferencePortalPreview,
+  })),
+);
+
+const AxoHeroPortals = lazy(() =>
+  import("./landing/portals/AxoHeroPortals").then((m) => ({
+    default: m.AxoHeroPortals,
+  })),
+);
+
+export type LandingPrototypeMode = "prod" | "v14" | "portal-reference" | "axo-hero";
 
 const PROTO_CHANGE_EVENT = "axolanding:protochange";
 
@@ -24,6 +36,12 @@ export function readLandingPrototypeMode(search?: string): LandingPrototypeMode 
   const params = new URLSearchParams(raw);
   const previewParam = params.get("preview")?.trim().toLowerCase();
   const protoParam = params.get("prototype")?.trim().toLowerCase();
+  if (previewParam === "portal-reference") {
+    return "portal-reference";
+  }
+  if (previewParam === "axo-hero") {
+    return "axo-hero";
+  }
   if (
     previewParam === "v1.4" ||
     previewParam === "v14" ||
@@ -41,8 +59,10 @@ export function switchLandingPrototype(mode: LandingPrototypeMode): void {
   url.searchParams.delete("prototype");
   if (mode === "prod") {
     url.searchParams.delete("preview");
-  } else {
+  } else if (mode === "v14") {
     url.searchParams.set("preview", "v1.4");
+  } else {
+    url.searchParams.set("preview", mode);
   }
   const nextUrl = `${url.pathname}${url.search}${url.hash}`;
   window.history.pushState(null, "", nextUrl);
@@ -74,6 +94,26 @@ export function LandingView() {
     return <LandingPreviewV14 />;
   }
 
+  if (protoMode === "portal-reference") {
+    return (
+      <Suspense
+        fallback={
+          <div
+            className="axo-ref-portal-loading"
+            role="status"
+            aria-label="Loading Enter Portals reference"
+          >
+            Loading Enter Portals reference...
+          </div>
+        }
+      >
+        <ReferencePortalPreview />
+      </Suspense>
+    );
+  }
+
+  const isAxoPortalHero = protoMode === "axo-hero";
+
   const scrollToSection = (id: string) => {
     if (typeof document === "undefined") return;
     document.getElementById(id)?.scrollIntoView({ behavior: "smooth", block: "start" });
@@ -84,8 +124,12 @@ export function LandingView() {
       <LandingHeader />
 
       <main id="landing-main" className="axo-sp-main">
-        {/* Hero — Frameless Spatial Brand Sculpture + Focused 2-CTA Hierarchy */}
-        <section id="landing-hero" className="axo-sp-hero" aria-labelledby="landing-hero-title">
+        {/* Hero — Stable Spatial Brand Sculpture or Axo 3-Portal Preview */}
+        <section
+          id="landing-hero"
+          className={`axo-sp-hero${isAxoPortalHero ? " is-portal-hero" : ""}`}
+          aria-labelledby="landing-hero-title"
+        >
           <div className="axo-sp-container axo-sp-hero-grid">
             <div className="axo-sp-hero-copy">
               <h1 id="landing-hero-title" className="axo-sp-hero-title">
@@ -118,7 +162,20 @@ export function LandingView() {
             </div>
 
             <div className="axo-sp-hero-visual">
-              <LandingHeroSculpture3D />
+              {isAxoPortalHero ? (
+                <Suspense
+                  fallback={
+                    <div
+                      className="axo-portal-loading-placeholder"
+                      aria-label="Đang tải cụm cổng 3D Axo"
+                    />
+                  }
+                >
+                  <AxoHeroPortals />
+                </Suspense>
+              ) : (
+                <LandingHeroSculpture3D />
+              )}
             </div>
           </div>
         </section>
