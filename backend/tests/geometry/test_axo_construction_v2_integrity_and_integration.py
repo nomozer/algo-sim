@@ -370,12 +370,32 @@ def test_cat15_lock_cache_identity_verify() -> None:
     assert proc.returncode == 0, f"lock_cache_identity failed: {proc.stdout}\n{proc.stderr}"
 
 
+#: Commit whose tree the handoff patches were written against (they were added, not applied, in 03200886a).
+HANDOFF_BASE = "03200886a"
+#: Patches that no longer fit the INTEGRATED tree and must be rebased by AXO CONSTRUCTION /2 (owner order: Model 1 →
+#: merge main → Construction /2). The frozen patch itself is never edited. frontend: the /13 merge of main brought
+#: the Option B classroom-scope retirement, which removed `phien`/`daiLop`/`daiLopTomTat` from `Scene3DExplorer`'s
+#: props — the patch's context lines.
+HANDOFF_REBASE_REQUIRED = {"frontend_scene3d_multiplan_switcher.patch"}
+
+
 # Category 16: Handoff Patches Cleanly Pass git apply --check & Ownership Files Untouched
-def test_cat16_handoff_patches_apply_cleanly_with_zero_unowned_edits() -> None:
+def test_cat16_handoff_patches_apply_cleanly_with_zero_unowned_edits(tmp_path) -> None:
+    import os
+
     handoff_dir = V2_RUN_DIR / "handoff"
+    index_env = {**os.environ, "GIT_INDEX_FILE": str(tmp_path / "base.index")}
+    subprocess.run(["git", "read-tree", HANDOFF_BASE], cwd=REPO_ROOT, env=index_env, check=True)
     for patch_name in ("backend_adapter4_dynamic_construction_flag.patch", "frontend_scene3d_multiplan_switcher.patch"):
         p_file = handoff_dir / patch_name
         assert p_file.exists(), f"Missing patch {p_file}"
+        # The frozen handoff is still valid at the tree it was written for (index blobs are LF; the patch is CRLF).
+        lf = p_file.read_bytes().replace(b"\r\n", b"\n")
+        at_base = subprocess.run(["git", "apply", "--cached", "--check", "-"], cwd=REPO_ROOT, env=index_env,
+                                 input=lf, capture_output=True, check=False)
+        assert at_base.returncode == 0, f"{patch_name} no longer applies at {HANDOFF_BASE}: {at_base.stderr!r}"
+        if patch_name in HANDOFF_REBASE_REQUIRED:
+            continue
         proc = subprocess.run(["git", "apply", "--check", str(p_file)], cwd=REPO_ROOT, capture_output=True, text=True, check=False)
         assert proc.returncode == 0, f"git apply --check failed for {patch_name}: {proc.stderr}"
 
