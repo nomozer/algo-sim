@@ -1,0 +1,144 @@
+{
+ "schema": "axo-v10-failure-reconciliation/1",
+ "refused_valid_cases": 24,
+ "by_primary": {
+  "DETERMINISTIC_INTENT_COVERAGE_GAP": 1,
+  "DOMAIN_ROUTING_ERROR": 2,
+  "MODEL_RELATION_EXTRACTION_ERROR": 1,
+  "SOURCE_GATE_GRAMMAR_GAP": 7,
+  "SOURCE_QUOTE_ALIGNMENT_FAILURE": 1,
+  "TYPED_FACT_CONTRACT_MISMATCH": 11,
+  "UNDERDETERMINED_SIMULATION": 1
+ },
+ "no_route_cases": {
+  "V18": "DOMAIN_ROUTING_ERROR",
+  "C24": "DOMAIN_ROUTING_ERROR"
+ },
+ "truly_out_of_product_scope": 0,
+ "rows": [
+  {
+   "case_id": "V02",
+   "slm_route": true,
+   "primary_root_cause": "TYPED_FACT_CONTRACT_MISMATCH"
+  },
+  {
+   "case_id": "V05",
+   "slm_route": true,
+   "primary_root_cause": "SOURCE_GATE_GRAMMAR_GAP"
+  },
+  {
+   "case_id": "V06",
+   "slm_route": true,
+   "primary_root_cause": "TYPED_FACT_CONTRACT_MISMATCH"
+  },
+  {
+   "case_id": "V08",
+   "slm_route": true,
+   "primary_root_cause": "TYPED_FACT_CONTRACT_MISMATCH"
+  },
+  {
+   "case_id": "V09",
+   "slm_route": true,
+   "primary_root_cause": "TYPED_FACT_CONTRACT_MISMATCH"
+  },
+  {
+   "case_id": "V10",
+   "slm_route": true,
+   "primary_root_cause": "TYPED_FACT_CONTRACT_MISMATCH"
+  },
+  {
+   "case_id": "V11",
+   "slm_route": true,
+   "primary_root_cause": "TYPED_FACT_CONTRACT_MISMATCH"
+  },
+  {
+   "case_id": "V14",
+   "slm_route": true,
+   "primary_root_cause": "TYPED_FACT_CONTRACT_MISMATCH"
+  },
+  {
+   "case_id": "V16",
+   "slm_route": true,
+   "primary_root_cause": "TYPED_FACT_CONTRACT_MISMATCH"
+  },
+  {
+   "case_id": "V19",
+   "slm_route": true,
+   "primary_root_cause": "TYPED_FACT_CONTRACT_MISMATCH"
+  },
+  {
+   "case_id": "V26",
+   "slm_route": true,
+   "primary_root_cause": "TYPED_FACT_CONTRACT_MISMATCH"
+  },
+  {
+   "case_id": "V28",
+   "slm_route": true,
+   "primary_root_cause": "TYPED_FACT_CONTRACT_MISMATCH"
+  },
+  {
+   "case_id": "Q03",
+   "slm_route": true,
+   "primary_root_cause": "SOURCE_GATE_GRAMMAR_GAP"
+  },
+  {
+   "case_id": "Q04",
+   "slm_route": true,
+   "primary_root_cause": "SOURCE_GATE_GRAMMAR_GAP"
+  },
+  {
+   "case_id": "Q05",
+   "slm_route": true,
+   "primary_root_cause": "SOURCE_GATE_GRAMMAR_GAP"
+  },
+  {
+   "case_id": "Q08",
+   "slm_route": true,
+   "primary_root_cause": "SOURCE_GATE_GRAMMAR_GAP"
+  },
+  {
+   "case_id": "Q10",
+   "slm_route": true,
+   "primary_root_cause": "SOURCE_QUOTE_ALIGNMENT_FAILURE"
+  },
+  {
+   "case_id": "C03",
+   "slm_route": true,
+   "primary_root_cause": "SOURCE_GATE_GRAMMAR_GAP"
+  },
+  {
+   "case_id": "C25",
+   "slm_route": true,
+   "primary_root_cause": "MODEL_RELATION_EXTRACTION_ERROR"
+  },
+  {
+   "case_id": "C26",
+   "slm_route": true,
+   "primary_root_cause": "SOURCE_GATE_GRAMMAR_GAP"
+  },
+  {
+   "case_id": "V13",
+   "slm_route": false,
+   "primary_root_cause": "DETERMINISTIC_INTENT_COVERAGE_GAP",
+   "note": "parser AMBIGUOUS on the parallelogram clause; router does not fall back to SLM on AMBIGUOUS; Arm D (SLM facts, goal removed) SERVED"
+  },
+  {
+   "case_id": "V18",
+   "slm_route": false,
+   "primary_root_cause": "DOMAIN_ROUTING_ERROR",
+   "note": "domain gate detect_domain refuses diacritic-less geometry before the router (handoff)"
+  },
+  {
+   "case_id": "C24",
+   "slm_route": false,
+   "primary_root_cause": "DOMAIN_ROUTING_ERROR",
+   "note": "same"
+  },
+  {
+   "case_id": "C20",
+   "slm_route": false,
+   "primary_root_cause": "UNDERDETERMINED_SIMULATION",
+   "note": "cube without an edge: angle fixed up to similarity; kernel refuses MISSING_DIMENSION; illustrative scale is kernel-owned (handoff)"
+  }
+ ]
+}

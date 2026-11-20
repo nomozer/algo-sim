@@ -1,0 +1,1642 @@
+{
+ "schema": "axo-slm20-root-cause/1",
+ "source": "evidence/slm20/slm20_audit_baseline.json (real AxoV9 GGUF, product runtime, /10 code at 2f12b96b0)",
+ "counts": {
+  "cases": 20,
+  "primary": {
+   "MODEL_RELATION_EXTRACTION_ERROR": 1,
+   "SOURCE_GATE_GRAMMAR_GAP": 7,
+   "SOURCE_QUOTE_ALIGNMENT_FAILURE": 1,
+   "TYPED_FACT_CONTRACT_MISMATCH": 11
+  },
+  "model_semantically_correct": 17,
+  "not_expressible_under_grammar": 2,
+  "model_capability_failure": 1,
+  "fabricated_metric_goal_forced_by_grammar": 8
+ },
+ "rows": [
+  {
+   "case_id": "V02",
+   "intent": "SIMULATE_ONLY",
+   "input": "Cho hình chóp S.ABCD có đáy là hình vuông ABCD cạnh 2a, cạnh bên SA vuông góc với đáy và SA = 3a. Vẽ hình chóp S.ABCD.",
+   "parser": {
+    "status": "LOCAL_PARSE_AMBIGUOUS",
+    "reason_code": "AMBIGUOUS_FACT",
+    "has_payload": true,
+    "unparsed_goal": [],
+    "unparsed_fact": []
+   },
+   "slm_raw_model_output": "{\"s\":[0,\"pyr\",\"S.ABCD\",0],\"r\":[],\"g\":[],\"u\":[{\"c\":0,\"k\":\"ambig\"}]}",
+   "slm_grounding_status": "SLM_REPORTED_UNRESOLVED",
+   "slm_accepted_ops": [],
+   "slm_rejected_ops": [
+    {
+     "op": "unresolved",
+     "reason": "SLM marked clause 0 as ambiguous."
+    }
+   ],
+   "normalizer_rules": [
+    "VN06_CUBE_CANH_BANG",
+    "VN07_CANH_BEN_PERP_PREFIX",
+    "VN07_IMPLICIT_MAT_DAY_PERP"
+   ],
+   "lowered_payload_problem_text_equals_input": false,
+   "arms": {
+    "arm_A_product": {
+     "status": "REFUSED",
+     "extraction_mode": "LOCAL_SLM_GROUNDING_REJECTED",
+     "code": "AMBIGUOUS_FACT",
+     "oracle": null
+    },
+    "arm_B_slm_payload": {
+     "status": "NOT_RUN",
+     "why": "SLM output not lowered (no payload)"
+    },
+    "arm_D_gold_intent": {
+     "status": "NOT_RUN",
+     "why": "SLM output not lowered (no payload)"
+    },
+    "arm_C_parser_facts_gold_intent": {
+     "status": "REFUSED",
+     "code": "AMBIGUOUS_FACT",
+     "oracle": null
+    },
+    "arm_E_downstream_canonical": {
+     "status": "SERVED",
+     "extraction_mode": "LOCAL_DETERMINISTIC_PARSER",
+     "code": null,
+     "oracle": {
+      "scene_validation": "MATHEMATICALLY_VALID",
+      "issues": [],
+      "numeric": null
+     }
+    }
+   },
+   "model_semantically_correct": "NOT_EXPRESSIBLE",
+   "first_failing_layer": "SLM_GRAMMAR",
+   "primary_root_cause": "TYPED_FACT_CONTRACT_MISMATCH",
+   "secondary": [
+    "DETERMINISTIC_INTENT_COVERAGE_GAP"
+   ],
+   "minimal_fix": "goal-free grammar branch when the source asks nothing; parser 7b noun coverage",
+   "evidence": "raw u:[ambig] — the only legal non-metric output",
+   "model_capability_failure": false
+  },
+  {
+   "case_id": "V05",
+   "intent": "SIMULATE_ONLY",
+   "input": "Cho hình chóp tứ giác đều S.ABCD có tất cả các cạnh đều bằng a. Hãy mô phỏng hình chóp.",
+   "parser": {
+    "status": "LOCAL_PARSE_PARTIAL",
+    "reason_code": "UNPARSED_FACT_CANDIDATE",
+    "has_payload": false,
+    "unparsed_goal": [],
+    "unparsed_fact": [
+     "Cho hình chóp tứ giác đều S.ABCD có tất cả các cạnh đều bằng a"
+    ]
+   },
+   "slm_raw_model_output": "{\"s\":[0,\"pyr\",\"S.ABCD\",1],\"r\":[{\"c\":0,\"p\":\"len\",\"a\":\"S.ABCD\",\"q\":\"a\"}],\"g\":[{\"c\":1,\"t\":\"vol\",\"tgt\":\"S.ABCD\"}],\"u\":[]}",
+   "slm_grounding_status": "GROUNDED_AND_LOWERED",
+   "slm_accepted_ops": [
+    {
+     "kind": "regular_pyramid",
+     "clause_id": 0
+    },
+    {
+     "kind": "segment_length",
+     "clause_id": 0
+    },
+    {
+     "kind": "goal:vol",
+     "clause_id": 1
+    }
+   ],
+   "slm_rejected_ops": [],
+   "normalizer_rules": [],
+   "lowered_payload_problem_text_equals_input": true,
+   "arms": {
+    "arm_A_product": {
+     "status": "REFUSED",
+     "extraction_mode": "LOCAL_SLM_GROUNDED",
+     "code": "UNGROUNDED_VALUE",
+     "oracle": null
+    },
+    "arm_B_slm_payload": {
+     "status": "REFUSED",
+     "code": "UNGROUNDED_VALUE",
+     "oracle": null
+    },
+    "arm_D_gold_intent": {
+     "status": "REFUSED",
+     "code": "UNGROUNDED_VALUE",
+     "math_goals_removed": 1,
+     "oracle": null
+    },
+    "arm_C_parser_facts_gold_intent": {
+     "status": "NOT_CONSTRUCTED",
+     "why": "parser built no payload (LOCAL_PARSE_PARTIAL)"
+    },
+    "arm_E_downstream_canonical": {
+     "status": "SERVED",
+     "extraction_mode": "LOCAL_DETERMINISTIC_PARSER",
+     "code": null,
+     "oracle": {
+      "scene_validation": "MATHEMATICALLY_VALID",
+      "issues": [],
+      "numeric": null
+     }
+    }
+   },
+   "model_semantically_correct": true,
+   "first_failing_layer": "SLM_LOWERING+SOURCE_GATE",
+   "primary_root_cause": "SOURCE_GATE_GRAMMAR_GAP",
+   "secondary": [
+    "TYPED_FACT_CONTRACT_MISMATCH",
+    "SLM_LOWERING_INCOMPLETE"
+   ],
+   "minimal_fix": "lower len-on-regular-solid to every edge class; Source Gate reads 'tất cả các cạnh (đều) bằng' (handoff unless owner widens)",
+   "evidence": "raw r:len(S.ABCD)=a (all edges); lowered only SA=a; UNGROUNDED_VALUE in B and D",
+   "model_capability_failure": false
+  },
+  {
+   "case_id": "V06",
+   "intent": "SIMULATE_ONLY",
+   "input": "Cho tứ diện đều ABCD cạnh a. Hãy mô phỏng tứ diện.",
+   "parser": {
+    "status": "LOCAL_PARSE_PARTIAL",
+    "reason_code": "UNPARSED_GOAL_CANDIDATE",
+    "has_payload": false,
+    "unparsed_goal": [
+     "Hãy mô phỏng tứ diện"
+    ],
+    "unparsed_fact": []
+   },
+   "slm_raw_model_output": "{\"s\":[0,\"pyr\",\"A.BCD\",1],\"r\":[{\"c\":0,\"p\":\"len\",\"a\":\"A.BCD\",\"q\":\"a\"}],\"g\":[{\"c\":1,\"t\":\"vol\",\"tgt\":\"A.BCD\"}],\"u\":[]}",
+   "slm_grounding_status": "GROUNDED_AND_LOWERED",
+   "slm_accepted_ops": [
+    {
+     "kind": "regular_pyramid",
+     "clause_id": 0
+    },
+    {
+     "kind": "tetrahedron_expansion",
+     "clause_id": 0
+    },
+    {
+     "kind": "goal:vol",
+     "clause_id": 1
+    }
+   ],
+   "slm_rejected_ops": [],
+   "normalizer_rules": [],
+   "lowered_payload_problem_text_equals_input": true,
+   "arms": {
+    "arm_A_product": {
+     "status": "REFUSED",
+     "extraction_mode": "LOCAL_SLM_GROUNDED",
+     "code": "SOURCE_OBJECT_MISMATCH",
+     "oracle": null
+    },
+    "arm_B_slm_payload": {
+     "status": "REFUSED",
+     "code": "SOURCE_OBJECT_MISMATCH",
+     "oracle": null
+    },
+    "arm_D_gold_intent": {
+     "status": "REFUSED",
+     "code": "SOURCE_PREMISE_UNREAD",
+     "math_goals_removed": 1,
+     "oracle": null
+    },
+    "arm_C_parser_facts_gold_intent": {
+     "status": "NOT_CONSTRUCTED",
+     "why": "parser built no payload (LOCAL_PARSE_PARTIAL)"
+    },
+    "arm_E_downstream_canonical": {
+     "status": "SERVED",
+     "extraction_mode": "LOCAL_DETERMINISTIC_PARSER",
+     "code": null,
+     "oracle": {
+      "scene_validation": "MATHEMATICALLY_VALID",
+      "issues": [],
+      "numeric": null
+     }
+    }
+   },
+   "model_semantically_correct": true,
+   "first_failing_layer": "SLM_GRAMMAR",
+   "primary_root_cause": "TYPED_FACT_CONTRACT_MISMATCH",
+   "secondary": [
+    "SOURCE_GATE_GRAMMAR_GAP",
+    "SLM_LOWERING_QUOTE"
+   ],
+   "minimal_fix": "goal-free grammar + construct_object quote on the command; Source Gate noun 'tứ diện'",
+   "evidence": "B: SOURCE_OBJECT_MISMATCH (forced goal:vol); D (goal removed): SOURCE_PREMISE_UNREAD (command unread)",
+   "model_capability_failure": false
+  },
+  {
+   "case_id": "V08",
+   "intent": "SIMULATE_ONLY",
+   "input": "Cho hình lập phương ABCD.A'B'C'D' cạnh a. Hãy mô phỏng hình lập phương.",
+   "parser": {
+    "status": "LOCAL_PARSE_PARTIAL",
+    "reason_code": "UNPARSED_GOAL_CANDIDATE",
+    "has_payload": false,
+    "unparsed_goal": [
+     "Hãy mô phỏng hình lập phương"
+    ],
+    "unparsed_fact": []
+   },
+   "slm_raw_model_output": "{\"s\":[0,\"cube\",\"ABCD.A'B'C'D'\",1],\"r\":[{\"c\":0,\"p\":\"len\",\"a\":\"AA'\",\"q\":\"a\"}],\"g\":[{\"c\":1,\"t\":\"vol\",\"tgt\":\"ABCD.A'B'C'D'\"}],\"u\":[]}",
+   "slm_grounding_status": "GROUNDED_AND_LOWERED",
+   "slm_accepted_ops": [
+    {
+     "kind": "right_prism",
+     "clause_id": 0
+    },
+    {
+     "kind": "cube_expansion",
+     "clause_id": 0
+    },
+    {
+     "kind": "goal:vol",
+     "clause_id": 1
+    }
+   ],
+   "slm_rejected_ops": [],
+   "normalizer_rules": [
+    "VN06_CUBE_CANH_BANG"
+   ],
+   "lowered_payload_problem_text_equals_input": false,
+   "arms": {
+    "arm_A_product": {
+     "status": "REFUSED",
+     "extraction_mode": "LOCAL_SLM_GROUNDED",
+     "code": "SOURCE_OBJECT_MISMATCH",
+     "oracle": null
+    },
+    "arm_B_slm_payload": {
+     "status": "REFUSED",
+     "code": "SOURCE_OBJECT_MISMATCH",
+     "oracle": null
+    },
+    "arm_D_gold_intent": {
+     "status": "REFUSED",
+     "code": "SOURCE_PREMISE_UNREAD",
+     "math_goals_removed": 1,
+     "oracle": null
+    },
+    "arm_C_parser_facts_gold_intent": {
+     "status": "NOT_CONSTRUCTED",
+     "why": "parser built no payload (LOCAL_PARSE_PARTIAL)"
+    },
+    "arm_E_downstream_canonical": {
+     "status": "SERVED",
+     "extraction_mode": "LOCAL_DETERMINISTIC_PARSER",
+     "code": null,
+     "oracle": {
+      "scene_validation": "MATHEMATICALLY_VALID",
+      "issues": [],
+      "numeric": null
+     }
+    }
+   },
+   "model_semantically_correct": true,
+   "first_failing_layer": "SLM_GRAMMAR",
+   "primary_root_cause": "TYPED_FACT_CONTRACT_MISMATCH",
+   "secondary": [
+    "SOURCE_GATE_GRAMMAR_GAP",
+    "SLM_LOWERING_QUOTE"
+   ],
+   "minimal_fix": "same; noun 'lập phương'",
+   "evidence": "B forced goal:vol; D command unread; direct probe: Source Gate reads only 'mô phỏng hình (chóp|lăng trụ)'",
+   "model_capability_failure": false
+  },
+  {
+   "case_id": "V09",
+   "intent": "SIMULATE_ONLY",
+   "input": "Cho hình hộp chữ nhật ABCD.A'B'C'D' có AB = 2, AD = 3, AA' = 4. Hãy mô phỏng hình hộp.",
+   "parser": {
+    "status": "LOCAL_PARSE_PARTIAL",
+    "reason_code": "UNPARSED_GOAL_CANDIDATE",
+    "has_payload": false,
+    "unparsed_goal": [
+     "Hãy mô phỏng hình hộp"
+    ],
+    "unparsed_fact": []
+   },
+   "slm_raw_model_output": "{\"s\":[0,\"box\",\"ABCD.A'B'C'D'\",1],\"r\":[{\"c\":0,\"p\":\"len\",\"a\":\"AB\",\"q\":\"2\"},{\"c\":0,\"p\":\"len\",\"a\":\"AD\",\"q\":\"3\"},{\"c\":0,\"p\":\"len\",\"a\":\"AA'\",\"q\":\"4\"}],\"g\":[{\"c\":1,\"t\":\"lratio\",\"a\":\"AB\",\"b\":\"AD\"},{\"c\":1,\"t\":\"lratio\",\"a\":\"AB\",\"b\":\"AA'\"},{\"c\":1,\"t\":\"lratio\",\"a\":\"AD\",\"b\":\"AA'\"}],\"u\":[]}",
+   "slm_grounding_status": "REJECTED_NO_GROUNDED_GOAL",
+   "slm_accepted_ops": [
+    {
+     "kind": "right_prism",
+     "clause_id": 0
+    },
+    {
+     "kind": "rectangle",
+     "clause_id": 0
+    },
+    {
+     "kind": "segment_length",
+     "clause_id": 0
+    },
+    {
+     "kind": "segment_length",
+     "clause_id": 0
+    },
+    {
+     "kind": "segment_length",
+     "clause_id": 0
+    }
+   ],
+   "slm_rejected_ops": [
+    {
+     "op": "goal:lratio",
+     "reason": "UNGROUNDED_GOAL_CLAUSE_TOKENS:length_ratio"
+    },
+    {
+     "op": "goal:lratio",
+     "reason": "UNGROUNDED_GOAL_CLAUSE_TOKENS:length_ratio"
+    },
+    {
+     "op": "goal:lratio",
+     "reason": "UNGROUNDED_GOAL_CLAUSE_TOKENS:length_ratio"
+    }
+   ],
+   "normalizer_rules": [],
+   "lowered_payload_problem_text_equals_input": false,
+   "arms": {
+    "arm_A_product": {
+     "status": "REFUSED",
+     "extraction_mode": "LOCAL_SLM_GROUNDING_REJECTED",
+     "code": "AMBIGUOUS_FACT",
+     "oracle": null
+    },
+    "arm_B_slm_payload": {
+     "status": "NOT_RUN",
+     "why": "SLM output not lowered (no payload)"
+    },
+    "arm_D_gold_intent": {
+     "status": "NOT_RUN",
+     "why": "SLM output not lowered (no payload)"
+    },
+    "arm_C_parser_facts_gold_intent": {
+     "status": "NOT_CONSTRUCTED",
+     "why": "parser built no payload (LOCAL_PARSE_PARTIAL)"
+    },
+    "arm_E_downstream_canonical": {
+     "status": "SERVED",
+     "extraction_mode": "LOCAL_DETERMINISTIC_PARSER",
+     "code": null,
+     "oracle": {
+      "scene_validation": "MATHEMATICALLY_VALID",
+      "issues": [],
+      "numeric": null
+     }
+    }
+   },
+   "model_semantically_correct": true,
+   "first_failing_layer": "SLM_GRAMMAR",
+   "primary_root_cause": "TYPED_FACT_CONTRACT_MISMATCH",
+   "secondary": [
+    "DETERMINISTIC_INTENT_COVERAGE_GAP"
+   ],
+   "minimal_fix": "goal-free grammar; noun 'hình hộp'",
+   "evidence": "forced goal lratio rejected UNGROUNDED_GOAL_CLAUSE_TOKENS",
+   "model_capability_failure": false
+  },
+  {
+   "case_id": "V10",
+   "intent": "SIMULATE_ONLY",
+   "input": "Cho lăng trụ đứng ABC.A'B'C' có đáy là tam giác ABC vuông cân tại A, AB = AC = a, cạnh bên AA' = 2a. Hãy mô phỏng lăng trụ.",
+   "parser": {
+    "status": "LOCAL_PARSE_PARTIAL",
+    "reason_code": "UNPARSED_GOAL_CANDIDATE",
+    "has_payload": false,
+    "unparsed_goal": [
+     "Hãy mô phỏng lăng trụ"
+    ],
+    "unparsed_fact": []
+   },
+   "slm_raw_model_output": "{\"s\":[0,\"pri\",\"ABC.A'B'C'\",1],\"r\":[{\"c\":0,\"p\":\"right_iso_tri\",\"a\":\"ABC\",\"pt\":\"A\"},{\"c\":0,\"p\":\"len\",\"a\":\"AB\",\"q\":\"a\"},{\"c\":0,\"p\":\"len\",\"a\":\"AC\",\"q\":\"a\"},{\"c\":0,\"p\":\"len\",\"a\":\"AA'\",\"q\":\"2a\"}],\"g\":[{\"c\":1,\"t\":\"lratio\",\"a\":\"AB\",\"b\":\"AC\"}],\"u\":[]}",
+   "slm_grounding_status": "REJECTED_NO_GROUNDED_GOAL",
+   "slm_accepted_ops": [
+    {
+     "kind": "right_prism",
+     "clause_id": 0
+    },
+    {
+     "kind": "right_angle",
+     "clause_id": 0
+    },
+    {
+     "kind": "equal_length",
+     "clause_id": 0
+    },
+    {
+     "kind": "segment_length",
+     "clause_id": 0
+    },
+    {
+     "kind": "segment_length",
+     "clause_id": 0
+    },
+    {
+     "kind": "segment_length",
+     "clause_id": 0
+    }
+   ],
+   "slm_rejected_ops": [
+    {
+     "op": "goal:lratio",
+     "reason": "UNGROUNDED_GOAL_CLAUSE_TOKENS:length_ratio"
+    }
+   ],
+   "normalizer_rules": [
+    "VN06_CHAINED_SEGMENT_EQ",
+    "VN06_RIGHT_PRISM_CANH_BEN",
+    "VN03_BARE_PRISM"
+   ],
+   "lowered_payload_problem_text_equals_input": false,
+   "arms": {
+    "arm_A_product": {
+     "status": "REFUSED",
+     "extraction_mode": "LOCAL_SLM_GROUNDING_REJECTED",
+     "code": "AMBIGUOUS_FACT",
+     "oracle": null
+    },
+    "arm_B_slm_payload": {
+     "status": "NOT_RUN",
+     "why": "SLM output not lowered (no payload)"
+    },
+    "arm_D_gold_intent": {
+     "status": "NOT_RUN",
+     "why": "SLM output not lowered (no payload)"
+    },
+    "arm_C_parser_facts_gold_intent": {
+     "status": "NOT_CONSTRUCTED",
+     "why": "parser built no payload (LOCAL_PARSE_PARTIAL)"
+    },
+    "arm_E_downstream_canonical": {
+     "status": "SERVED",
+     "extraction_mode": "LOCAL_DETERMINISTIC_PARSER",
+     "code": null,
+     "oracle": {
+      "scene_validation": "MATHEMATICALLY_VALID",
+      "issues": [],
+      "numeric": null
+     }
+    }
+   },
+   "model_semantically_correct": true,
+   "first_failing_layer": "SLM_GRAMMAR",
+   "primary_root_cause": "TYPED_FACT_CONTRACT_MISMATCH",
+   "secondary": [
+    "DETERMINISTIC_INTENT_COVERAGE_GAP"
+   ],
+   "minimal_fix": "goal-free grammar; 'lăng trụ' followed by nothing → parser",
+   "evidence": "forced goal lratio rejected",
+   "model_capability_failure": false
+  },
+  {
+   "case_id": "V11",
+   "intent": "SIMULATE_ONLY",
+   "input": "Cho lăng trụ tam giác đều ABC.A'B'C' có cạnh đáy bằng a và cạnh bên bằng a. Hãy mô phỏng lăng trụ.",
+   "parser": {
+    "status": "LOCAL_PARSE_PARTIAL",
+    "reason_code": "UNPARSED_GOAL_CANDIDATE",
+    "has_payload": false,
+    "unparsed_goal": [
+     "Hãy mô phỏng lăng trụ"
+    ],
+    "unparsed_fact": []
+   },
+   "slm_raw_model_output": "{\"s\":[0,\"pri\",\"ABC.A'B'C'\",1],\"r\":[{\"c\":0,\"p\":\"reg_poly\",\"a\":\"ABC\",\"q\":\"a\"},{\"c\":0,\"p\":\"reg_poly\",\"a\":\"A'B'C'\"},{\"c\":0,\"p\":\"reg_poly\",\"a\":\"ABC\",\"q\":\"a\"}],\"g\":[{\"c\":1,\"t\":\"vol\",\"tgt\":\"ABC.A'B'C'\"}],\"u\":[]}",
+   "slm_grounding_status": "GROUNDED_AND_LOWERED",
+   "slm_accepted_ops": [
+    {
+     "kind": "right_prism",
+     "clause_id": 0
+    },
+    {
+     "kind": "regular_polygon",
+     "clause_id": 0
+    },
+    {
+     "kind": "regular_polygon",
+     "clause_id": 0
+    },
+    {
+     "kind": "goal:vol",
+     "clause_id": 1
+    }
+   ],
+   "slm_rejected_ops": [],
+   "normalizer_rules": [],
+   "lowered_payload_problem_text_equals_input": true,
+   "arms": {
+    "arm_A_product": {
+     "status": "REFUSED",
+     "extraction_mode": "LOCAL_SLM_GROUNDED",
+     "code": "SOURCE_OBJECT_MISMATCH",
+     "oracle": null
+    },
+    "arm_B_slm_payload": {
+     "status": "REFUSED",
+     "code": "SOURCE_OBJECT_MISMATCH",
+     "oracle": null
+    },
+    "arm_D_gold_intent": {
+     "status": "REFUSED",
+     "code": "SOURCE_PREMISE_UNREAD",
+     "math_goals_removed": 1,
+     "oracle": null
+    },
+    "arm_C_parser_facts_gold_intent": {
+     "status": "NOT_CONSTRUCTED",
+     "why": "parser built no payload (LOCAL_PARSE_PARTIAL)"
+    },
+    "arm_E_downstream_canonical": {
+     "status": "SERVED",
+     "extraction_mode": "LOCAL_DETERMINISTIC_PARSER",
+     "code": null,
+     "oracle": {
+      "scene_validation": "MATHEMATICALLY_VALID",
+      "issues": [],
+      "numeric": null
+     }
+    }
+   },
+   "model_semantically_correct": true,
+   "first_failing_layer": "SLM_GRAMMAR",
+   "primary_root_cause": "TYPED_FACT_CONTRACT_MISMATCH",
+   "secondary": [
+    "SOURCE_GATE_GRAMMAR_GAP"
+   ],
+   "minimal_fix": "goal-free grammar; noun 'lăng trụ' (+ đều) in Source Gate",
+   "evidence": "B forced goal:vol; D command unread",
+   "model_capability_failure": false
+  },
+  {
+   "case_id": "V14",
+   "intent": "SIMULATE_ONLY",
+   "input": "Cho hình chóp S.ABC có đáy là tam giác ABC cân tại A, AB = AC = a, góc BAC = 120°, SA vuông góc với đáy, SA = 2a. Hãy dựng hình chóp.",
+   "parser": {
+    "status": "LOCAL_PARSE_PARTIAL",
+    "reason_code": "UNPARSED_GOAL_CANDIDATE",
+    "has_payload": false,
+    "unparsed_goal": [
+     "Hãy dựng hình chóp"
+    ],
+    "unparsed_fact": []
+   },
+   "slm_raw_model_output": "{\"s\":[0,\"pyr\",\"S.ABC\",0],\"r\":[{\"c\":0,\"p\":\"iso_tri\",\"a\":\"ABC\",\"pt\":\"A\"},{\"c\":0,\"p\":\"len\",\"a\":\"AB\",\"q\":\"a\"},{\"c\":1,\"p\":\"ang_vtx\",\"a\":\"BAC\",\"pt\":\"A\",\"q\":\"120°\"},{\"c\":1,\"p\":\"perp_lp\",\"a\":\"SA\",\"b\":\"ABC\"},{\"c\":1,\"p\":\"len\",\"a\":\"SA\",\"q\":\"2a\"}],\"g\":[{\"c\":2,\"t\":\"dist_line_line\",\"a\":\"SA\",\"b\":\"AB\"},{\"c\":2,\"t\":\"dist_line_line\",\"a\":\"SA\",\"b\":\"AC\"}],\"u\":[]}",
+   "slm_grounding_status": "GROUNDED_AND_LOWERED",
+   "slm_accepted_ops": [
+    {
+     "kind": "equal_length",
+     "clause_id": 0
+    },
+    {
+     "kind": "segment_length",
+     "clause_id": 0
+    },
+    {
+     "kind": "vertex_angle",
+     "clause_id": 1
+    },
+    {
+     "kind": "perpendicular_line_plane",
+     "clause_id": 1
+    },
+    {
+     "kind": "segment_length",
+     "clause_id": 1
+    },
+    {
+     "kind": "goal:dist_line_line",
+     "clause_id": 2
+    },
+    {
+     "kind": "goal:dist_line_line",
+     "clause_id": 2
+    }
+   ],
+   "slm_rejected_ops": [],
+   "normalizer_rules": [
+    "VN06_CHAINED_SEGMENT_EQ",
+    "VN07_IMPLICIT_MAT_DAY_PERP",
+    "VN09_SPLIT_COORDINATED_GOALS"
+   ],
+   "lowered_payload_problem_text_equals_input": false,
+   "arms": {
+    "arm_A_product": {
+     "status": "REFUSED",
+     "extraction_mode": "LOCAL_SLM_GROUNDED",
+     "code": "SOURCE_OBJECT_MISMATCH",
+     "oracle": null
+    },
+    "arm_B_slm_payload": {
+     "status": "REFUSED",
+     "code": "SOURCE_OBJECT_MISMATCH",
+     "oracle": null
+    },
+    "arm_D_gold_intent": {
+     "status": "REFUSED",
+     "code": "SOURCE_PREMISE_UNREAD",
+     "math_goals_removed": 2,
+     "oracle": null
+    },
+    "arm_C_parser_facts_gold_intent": {
+     "status": "NOT_CONSTRUCTED",
+     "why": "parser built no payload (LOCAL_PARSE_PARTIAL)"
+    },
+    "arm_E_downstream_canonical": {
+     "status": "SERVED",
+     "extraction_mode": "LOCAL_DETERMINISTIC_PARSER",
+     "code": null,
+     "oracle": {
+      "scene_validation": "MATHEMATICALLY_VALID",
+      "issues": [],
+      "numeric": null
+     }
+    }
+   },
+   "model_semantically_correct": true,
+   "first_failing_layer": "SLM_GRAMMAR",
+   "primary_root_cause": "TYPED_FACT_CONTRACT_MISMATCH",
+   "secondary": [
+    "DETERMINISTIC_INTENT_COVERAGE_GAP"
+   ],
+   "minimal_fix": "goal-free grammar; verb 'dựng' in parser 7b",
+   "evidence": "B forced goal dist_line_line ×2; D command unread",
+   "model_capability_failure": false
+  },
+  {
+   "case_id": "V16",
+   "intent": "SIMULATE_ONLY",
+   "input": "Bài 3. Trong không gian, cho hình chóp S.ABCD có đáy ABCD là hình chữ nhật, AB = a, BC = 2a. Cạnh bên SA vuông góc với mặt phẳng đáy và SA = 2a. Gọi M là trung điểm của cạnh SD và N là trung điểm của cạnh SC. Hãy mô phỏng hình chóp và các điểm M, N.",
+   "parser": {
+    "status": "LOCAL_PARSE_PARTIAL",
+    "reason_code": "UNPARSED_GOAL_CANDIDATE",
+    "has_payload": false,
+    "unparsed_goal": [
+     "Hãy mô phỏng hình chóp và các điểm M, N"
+    ],
+    "unparsed_fact": [
+     "Trong không gian, cho hình chóp S.ABCD có đáy ABCD là hình chữ nhật, AB = a, BC = 2a"
+    ]
+   },
+   "slm_raw_model_output": "{\"s\":[1,\"pyr\",\"S.ABCD\",0],\"r\":[{\"c\":1,\"p\":\"rect\",\"a\":\"ABCD\"},{\"c\":1,\"p\":\"len\",\"a\":\"AB\",\"q\":\"a\"},{\"c\":1,\"p\":\"len\",\"a\":\"BC\",\"q\":\"2a\"},{\"c\":2,\"p\":\"perp_lp\",\"a\":\"SA\",\"b\":\"ABCD\"},{\"c\":2,\"p\":\"len\",\"a\":\"SA\",\"q\":\"2a\"},{\"c\":3,\"p\":\"mid\",\"pt\":\"M\",\"a\":\"SD\"},{\"c\":3,\"p\":\"mid\",\"pt\":\"N\",\"a\":\"SC\"}],\"g\":[{\"c\":4,\"t\":\"vol\",\"tgt\":\"S.ABCD\"}],\"u\":[]}",
+   "slm_grounding_status": "GROUNDED_AND_LOWERED",
+   "slm_accepted_ops": [
+    {
+     "kind": "rectangle",
+     "clause_id": 1
+    },
+    {
+     "kind": "segment_length",
+     "clause_id": 1
+    },
+    {
+     "kind": "segment_length",
+     "clause_id": 1
+    },
+    {
+     "kind": "perpendicular_line_plane",
+     "clause_id": 2
+    },
+    {
+     "kind": "segment_length",
+     "clause_id": 2
+    },
+    {
+     "kind": "midpoint",
+     "clause_id": 3
+    },
+    {
+     "kind": "midpoint",
+     "clause_id": 3
+    },
+    {
+     "kind": "goal:vol",
+     "clause_id": 4
+    }
+   ],
+   "slm_rejected_ops": [],
+   "normalizer_rules": [],
+   "lowered_payload_problem_text_equals_input": true,
+   "arms": {
+    "arm_A_product": {
+     "status": "REFUSED",
+     "extraction_mode": "LOCAL_SLM_GROUNDED",
+     "code": "SOURCE_OBJECT_MISMATCH",
+     "oracle": null
+    },
+    "arm_B_slm_payload": {
+     "status": "REFUSED",
+     "code": "SOURCE_OBJECT_MISMATCH",
+     "oracle": null
+    },
+    "arm_D_gold_intent": {
+     "status": "REFUSED",
+     "code": "SOURCE_PREMISE_UNREAD",
+     "math_goals_removed": 1,
+     "oracle": null
+    },
+    "arm_C_parser_facts_gold_intent": {
+     "status": "NOT_CONSTRUCTED",
+     "why": "parser built no payload (LOCAL_PARSE_PARTIAL)"
+    },
+    "arm_E_downstream_canonical": {
+     "status": "SERVED",
+     "extraction_mode": "LOCAL_DETERMINISTIC_PARSER",
+     "code": null,
+     "oracle": {
+      "scene_validation": "MATHEMATICALLY_VALID",
+      "issues": [],
+      "numeric": null
+     }
+    }
+   },
+   "model_semantically_correct": true,
+   "first_failing_layer": "SLM_GRAMMAR",
+   "primary_root_cause": "TYPED_FACT_CONTRACT_MISMATCH",
+   "secondary": [
+    "SOURCE_GATE_GRAMMAR_GAP"
+   ],
+   "minimal_fix": "goal-free grammar; 'hình chóp và các điểm M, N' (Source Gate already lists points)",
+   "evidence": "B forced goal:vol; D command unread (normalized text)",
+   "model_capability_failure": false
+  },
+  {
+   "case_id": "V19",
+   "intent": "SIMULATE_ONLY",
+   "input": "Cho tứ diện ABCD có AB, AC, AD đôi một vuông góc, AB = AC = AD = a. Hãy mô phỏng tứ diện ABCD.",
+   "parser": {
+    "status": "LOCAL_PARSE_PARTIAL",
+    "reason_code": "UNPARSED_GOAL_CANDIDATE",
+    "has_payload": false,
+    "unparsed_goal": [
+     "Hãy mô phỏng tứ diện ABCD"
+    ],
+    "unparsed_fact": []
+   },
+   "slm_raw_model_output": "{\"s\":[0,\"pyr\",\"A.BCD\",0],\"r\":[],\"g\":[],\"u\":[{\"c\":0,\"k\":\"ambig\"}]}",
+   "slm_grounding_status": "SLM_REPORTED_UNRESOLVED",
+   "slm_accepted_ops": [],
+   "slm_rejected_ops": [
+    {
+     "op": "unresolved",
+     "reason": "SLM marked clause 0 as ambiguous."
+    }
+   ],
+   "normalizer_rules": [
+    "VN06_CHAINED_SEGMENT_EQ"
+   ],
+   "lowered_payload_problem_text_equals_input": false,
+   "arms": {
+    "arm_A_product": {
+     "status": "REFUSED",
+     "extraction_mode": "LOCAL_SLM_GROUNDING_REJECTED",
+     "code": "AMBIGUOUS_FACT",
+     "oracle": null
+    },
+    "arm_B_slm_payload": {
+     "status": "NOT_RUN",
+     "why": "SLM output not lowered (no payload)"
+    },
+    "arm_D_gold_intent": {
+     "status": "NOT_RUN",
+     "why": "SLM output not lowered (no payload)"
+    },
+    "arm_C_parser_facts_gold_intent": {
+     "status": "NOT_CONSTRUCTED",
+     "why": "parser built no payload (LOCAL_PARSE_PARTIAL)"
+    },
+    "arm_E_downstream_canonical": {
+     "status": "SERVED",
+     "extraction_mode": "LOCAL_DETERMINISTIC_PARSER",
+     "code": null,
+     "oracle": {
+      "scene_validation": "MATHEMATICALLY_VALID",
+      "issues": [],
+      "numeric": null
+     }
+    }
+   },
+   "model_semantically_correct": "NOT_EXPRESSIBLE",
+   "first_failing_layer": "SLM_GRAMMAR",
+   "primary_root_cause": "TYPED_FACT_CONTRACT_MISMATCH",
+   "secondary": [
+    "DETERMINISTIC_INTENT_COVERAGE_GAP"
+   ],
+   "minimal_fix": "goal-free grammar; noun 'tứ diện ABCD'",
+   "evidence": "raw u:[ambig]",
+   "model_capability_failure": false
+  },
+  {
+   "case_id": "V26",
+   "intent": "SIMULATE_ONLY",
+   "input": "Cho hình hộp chữ nhật ABCD.A'B'C'D' có AB = a, AD = 2a, AA' = 3a. Mô phỏng hình hộp chữ nhật đó.",
+   "parser": {
+    "status": "LOCAL_PARSE_PARTIAL",
+    "reason_code": "UNPARSED_GOAL_CANDIDATE",
+    "has_payload": false,
+    "unparsed_goal": [
+     "Mô phỏng hình hộp chữ nhật đó"
+    ],
+    "unparsed_fact": []
+   },
+   "slm_raw_model_output": "{\"s\":[0,\"box\",\"ABCD.A'B'C'D'\",1],\"r\":[{\"c\":0,\"p\":\"len\",\"a\":\"AB\",\"q\":\"a\"},{\"c\":0,\"p\":\"len\",\"a\":\"AD\",\"q\":\"2a\"},{\"c\":0,\"p\":\"len\",\"a\":\"AA'\",\"q\":\"3a\"}],\"g\":[{\"c\":1,\"t\":\"vol\",\"tgt\":\"ABCD.A'B'C'D'\"}],\"u\":[]}",
+   "slm_grounding_status": "GROUNDED_AND_LOWERED",
+   "slm_accepted_ops": [
+    {
+     "kind": "right_prism",
+     "clause_id": 0
+    },
+    {
+     "kind": "rectangle",
+     "clause_id": 0
+    },
+    {
+     "kind": "segment_length",
+     "clause_id": 0
+    },
+    {
+     "kind": "segment_length",
+     "clause_id": 0
+    },
+    {
+     "kind": "segment_length",
+     "clause_id": 0
+    },
+    {
+     "kind": "goal:vol",
+     "clause_id": 1
+    }
+   ],
+   "slm_rejected_ops": [],
+   "normalizer_rules": [],
+   "lowered_payload_problem_text_equals_input": true,
+   "arms": {
+    "arm_A_product": {
+     "status": "REFUSED",
+     "extraction_mode": "LOCAL_SLM_GROUNDED",
+     "code": "SOURCE_OBJECT_MISMATCH",
+     "oracle": null
+    },
+    "arm_B_slm_payload": {
+     "status": "REFUSED",
+     "code": "SOURCE_OBJECT_MISMATCH",
+     "oracle": null
+    },
+    "arm_D_gold_intent": {
+     "status": "REFUSED",
+     "code": "SOURCE_PREMISE_UNREAD",
+     "math_goals_removed": 1,
+     "oracle": null
+    },
+    "arm_C_parser_facts_gold_intent": {
+     "status": "NOT_CONSTRUCTED",
+     "why": "parser built no payload (LOCAL_PARSE_PARTIAL)"
+    },
+    "arm_E_downstream_canonical": {
+     "status": "SERVED",
+     "extraction_mode": "LOCAL_DETERMINISTIC_PARSER",
+     "code": null,
+     "oracle": {
+      "scene_validation": "MATHEMATICALLY_VALID",
+      "issues": [],
+      "numeric": null
+     }
+    }
+   },
+   "model_semantically_correct": true,
+   "first_failing_layer": "SLM_GRAMMAR",
+   "primary_root_cause": "TYPED_FACT_CONTRACT_MISMATCH",
+   "secondary": [
+    "SOURCE_GATE_GRAMMAR_GAP"
+   ],
+   "minimal_fix": "goal-free grammar; 'hình hộp chữ nhật đó'",
+   "evidence": "B forced goal:vol; D command unread",
+   "model_capability_failure": false
+  },
+  {
+   "case_id": "V28",
+   "intent": "SIMULATE_ONLY",
+   "input": "Cho hình chóp đều S.ABC có cạnh đáy bằng a, cạnh bên bằng a√2. Hãy mô phỏng hình chóp đều đó.",
+   "parser": {
+    "status": "LOCAL_PARSE_PARTIAL",
+    "reason_code": "UNPARSED_GOAL_CANDIDATE",
+    "has_payload": false,
+    "unparsed_goal": [
+     "Hãy mô phỏng hình chóp đều đó"
+    ],
+    "unparsed_fact": []
+   },
+   "slm_raw_model_output": "{\"s\":[0,\"pyr\",\"S.ABC\",1],\"r\":[{\"c\":0,\"p\":\"reg_poly\",\"a\":\"ABC\",\"q\":\"a\"},{\"c\":0,\"p\":\"len\",\"a\":\"SA\",\"q\":\"a√2\"}],\"g\":[{\"c\":1,\"t\":\"vol\",\"tgt\":\"S.ABC\"}],\"u\":[]}",
+   "slm_grounding_status": "GROUNDED_AND_LOWERED",
+   "slm_accepted_ops": [
+    {
+     "kind": "regular_pyramid",
+     "clause_id": 0
+    },
+    {
+     "kind": "regular_polygon",
+     "clause_id": 0
+    },
+    {
+     "kind": "segment_length",
+     "clause_id": 0
+    },
+    {
+     "kind": "goal:vol",
+     "clause_id": 1
+    }
+   ],
+   "slm_rejected_ops": [],
+   "normalizer_rules": [],
+   "lowered_payload_problem_text_equals_input": true,
+   "arms": {
+    "arm_A_product": {
+     "status": "REFUSED",
+     "extraction_mode": "LOCAL_SLM_GROUNDED",
+     "code": "SOURCE_OBJECT_MISMATCH",
+     "oracle": null
+    },
+    "arm_B_slm_payload": {
+     "status": "REFUSED",
+     "code": "SOURCE_OBJECT_MISMATCH",
+     "oracle": null
+    },
+    "arm_D_gold_intent": {
+     "status": "REFUSED",
+     "code": "SOURCE_PREMISE_UNREAD",
+     "math_goals_removed": 1,
+     "oracle": null
+    },
+    "arm_C_parser_facts_gold_intent": {
+     "status": "NOT_CONSTRUCTED",
+     "why": "parser built no payload (LOCAL_PARSE_PARTIAL)"
+    },
+    "arm_E_downstream_canonical": {
+     "status": "SERVED",
+     "extraction_mode": "LOCAL_DETERMINISTIC_PARSER",
+     "code": null,
+     "oracle": {
+      "scene_validation": "MATHEMATICALLY_VALID",
+      "issues": [],
+      "numeric": null
+     }
+    }
+   },
+   "model_semantically_correct": true,
+   "first_failing_layer": "SLM_GRAMMAR",
+   "primary_root_cause": "TYPED_FACT_CONTRACT_MISMATCH",
+   "secondary": [
+    "SOURCE_GATE_GRAMMAR_GAP"
+   ],
+   "minimal_fix": "goal-free grammar; 'hình chóp đều đó' (Source Gate forbids 'đều' after chóp)",
+   "evidence": "B forced goal:vol; D command unread",
+   "model_capability_failure": false
+  },
+  {
+   "case_id": "Q03",
+   "intent": "SIMULATE_AND_QUERY",
+   "input": "Cho hình lập phương ABCD.A'B'C'D' cạnh a. Hãy mô phỏng hình lập phương và tính khoảng cách giữa hai đường thẳng AA' và BD.",
+   "parser": {
+    "status": "LOCAL_PARSE_PARTIAL",
+    "reason_code": "QUESTION_CONTEXT_UNSUPPORTED",
+    "has_payload": false,
+    "unparsed_goal": [],
+    "unparsed_fact": []
+   },
+   "slm_raw_model_output": "{\"s\":[0,\"cube\",\"ABCD.A'B'C'D'\",1],\"r\":[{\"c\":0,\"p\":\"len\",\"a\":\"AA'\",\"q\":\"a\"}],\"g\":[{\"c\":1,\"t\":\"dist_line_line\",\"a\":\"AA'\",\"b\":\"BD\"}],\"u\":[]}",
+   "slm_grounding_status": "GROUNDED_AND_LOWERED",
+   "slm_accepted_ops": [
+    {
+     "kind": "right_prism",
+     "clause_id": 0
+    },
+    {
+     "kind": "cube_expansion",
+     "clause_id": 0
+    },
+    {
+     "kind": "goal:dist_line_line",
+     "clause_id": 1
+    }
+   ],
+   "slm_rejected_ops": [],
+   "normalizer_rules": [
+    "VN06_CUBE_CANH_BANG"
+   ],
+   "lowered_payload_problem_text_equals_input": false,
+   "arms": {
+    "arm_A_product": {
+     "status": "REFUSED",
+     "extraction_mode": "LOCAL_SLM_GROUNDED",
+     "code": "QUESTION_CONTEXT_UNSUPPORTED",
+     "oracle": null
+    },
+    "arm_B_slm_payload": {
+     "status": "REFUSED",
+     "code": "QUESTION_CONTEXT_UNSUPPORTED",
+     "oracle": null
+    },
+    "arm_D_gold_intent": {
+     "status": "REFUSED",
+     "code": "QUESTION_CONTEXT_UNSUPPORTED",
+     "math_goals_removed": 0,
+     "oracle": null
+    },
+    "arm_C_parser_facts_gold_intent": {
+     "status": "NOT_CONSTRUCTED",
+     "why": "parser built no payload (LOCAL_PARSE_PARTIAL)"
+    },
+    "arm_E_downstream_canonical": {
+     "status": "SERVED",
+     "extraction_mode": "LOCAL_DETERMINISTIC_PARSER",
+     "code": null,
+     "oracle": {
+      "scene_validation": "MATHEMATICALLY_VALID",
+      "issues": [],
+      "numeric": "CORRECT"
+     }
+    }
+   },
+   "model_semantically_correct": true,
+   "first_failing_layer": "SOURCE_GATE",
+   "primary_root_cause": "SOURCE_GATE_GRAMMAR_GAP",
+   "secondary": [
+    "DETERMINISTIC_INTENT_COVERAGE_GAP"
+   ],
+   "minimal_fix": "Source Gate reads 'mô phỏng hình lập phương và tính …' once the noun is in its request grammar",
+   "evidence": "goal dist_line_line correct; QUESTION_CONTEXT_UNSUPPORTED in A,B,D",
+   "model_capability_failure": false
+  },
+  {
+   "case_id": "Q04",
+   "intent": "SIMULATE_AND_QUERY",
+   "input": "Cho hình chóp S.ABCD có đáy ABCD là hình chữ nhật, AB = a, AD = a√3, SA ⊥ (ABCD), SA = a. Hãy mô phỏng và biểu diễn góc giữa đường thẳng SC và mặt phẳng (ABCD).",
+   "parser": {
+    "status": "LOCAL_PARSE_PARTIAL",
+    "reason_code": "NOT_ASKED_IN_SOURCE",
+    "has_payload": false,
+    "unparsed_goal": [],
+    "unparsed_fact": []
+   },
+   "slm_raw_model_output": "{\"s\":[0,\"pyr\",\"S.ABCD\",0],\"r\":[{\"c\":0,\"p\":\"rect\",\"a\":\"ABCD\"},{\"c\":0,\"p\":\"len\",\"a\":\"AB\",\"q\":\"a\"},{\"c\":0,\"p\":\"len\",\"a\":\"AD\",\"q\":\"a√3\"},{\"c\":0,\"p\":\"perp_lp\",\"a\":\"SA\",\"b\":\"ABCD\"},{\"c\":0,\"p\":\"len\",\"a\":\"SA\",\"q\":\"a\"}],\"g\":[{\"c\":1,\"t\":\"ang_lp\",\"a\":\"SC\",\"b\":\"ABCD\"}],\"u\":[]}",
+   "slm_grounding_status": "GROUNDED_AND_LOWERED",
+   "slm_accepted_ops": [
+    {
+     "kind": "rectangle",
+     "clause_id": 0
+    },
+    {
+     "kind": "segment_length",
+     "clause_id": 0
+    },
+    {
+     "kind": "segment_length",
+     "clause_id": 0
+    },
+    {
+     "kind": "perpendicular_line_plane",
+     "clause_id": 0
+    },
+    {
+     "kind": "segment_length",
+     "clause_id": 0
+    },
+    {
+     "kind": "goal:ang_lp",
+     "clause_id": 1
+    }
+   ],
+   "slm_rejected_ops": [],
+   "normalizer_rules": [],
+   "lowered_payload_problem_text_equals_input": true,
+   "arms": {
+    "arm_A_product": {
+     "status": "REFUSED",
+     "extraction_mode": "LOCAL_SLM_GROUNDED",
+     "code": "NOT_ASKED_IN_SOURCE",
+     "oracle": null
+    },
+    "arm_B_slm_payload": {
+     "status": "REFUSED",
+     "code": "NOT_ASKED_IN_SOURCE",
+     "oracle": null
+    },
+    "arm_D_gold_intent": {
+     "status": "REFUSED",
+     "code": "NOT_ASKED_IN_SOURCE",
+     "math_goals_removed": 0,
+     "oracle": null
+    },
+    "arm_C_parser_facts_gold_intent": {
+     "status": "NOT_CONSTRUCTED",
+     "why": "parser built no payload (LOCAL_PARSE_PARTIAL)"
+    },
+    "arm_E_downstream_canonical": {
+     "status": "SERVED",
+     "extraction_mode": "LOCAL_DETERMINISTIC_PARSER",
+     "code": null,
+     "oracle": {
+      "scene_validation": "MATHEMATICALLY_VALID",
+      "issues": [],
+      "numeric": "CORRECT"
+     }
+    }
+   },
+   "model_semantically_correct": true,
+   "first_failing_layer": "SOURCE_GATE",
+   "primary_root_cause": "SOURCE_GATE_GRAMMAR_GAP",
+   "secondary": [
+    "SOURCE_QUOTE_ALIGNMENT_FAILURE"
+   ],
+   "minimal_fix": "'biểu diễn <quantity>' is not an ask in the Source Gate question grammar — owner contract decision (handoff)",
+   "evidence": "NOT_ASKED_IN_SOURCE in A,B,D",
+   "model_capability_failure": false
+  },
+  {
+   "case_id": "Q05",
+   "intent": "SIMULATE_AND_QUERY",
+   "input": "Mô phỏng hình chóp S.ABCD có đáy là hình vuông cạnh 2a, SA vuông góc với đáy, SA = 2a và biểu diễn khoảng cách từ S đến mặt phẳng (ABCD).",
+   "parser": {
+    "status": "LOCAL_PARSE_PARTIAL",
+    "reason_code": "UNGROUNDED_VALUE",
+    "has_payload": false,
+    "unparsed_goal": [],
+    "unparsed_fact": []
+   },
+   "slm_raw_model_output": "{\"s\":[0,\"pyr\",\"S.ABCD\",0],\"r\":[{\"c\":0,\"p\":\"reg_poly\",\"a\":\"ABCD\",\"q\":\"2a\"},{\"c\":0,\"p\":\"perp_lp\",\"a\":\"SA\",\"b\":\"ABCD\"},{\"c\":0,\"p\":\"len\",\"a\":\"SA\",\"q\":\"2a\"}],\"g\":[{\"c\":0,\"t\":\"dist_pt_plane\",\"a\":\"S\",\"b\":\"ABCD\"}],\"u\":[]}",
+   "slm_grounding_status": "GROUNDED_AND_LOWERED",
+   "slm_accepted_ops": [
+    {
+     "kind": "regular_polygon",
+     "clause_id": 0
+    },
+    {
+     "kind": "perpendicular_line_plane",
+     "clause_id": 0
+    },
+    {
+     "kind": "segment_length",
+     "clause_id": 0
+    },
+    {
+     "kind": "goal:dist_pt_plane",
+     "clause_id": 0
+    }
+   ],
+   "slm_rejected_ops": [],
+   "normalizer_rules": [
+    "VN07_IMPLICIT_MAT_DAY_PERP"
+   ],
+   "lowered_payload_problem_text_equals_input": false,
+   "arms": {
+    "arm_A_product": {
+     "status": "REFUSED",
+     "extraction_mode": "LOCAL_SLM_GROUNDED",
+     "code": "AMBIGUOUS_VALUE_QUOTE",
+     "oracle": null
+    },
+    "arm_B_slm_payload": {
+     "status": "REFUSED",
+     "code": "AMBIGUOUS_VALUE_QUOTE",
+     "oracle": null
+    },
+    "arm_D_gold_intent": {
+     "status": "REFUSED",
+     "code": "AMBIGUOUS_VALUE_QUOTE",
+     "math_goals_removed": 0,
+     "oracle": null
+    },
+    "arm_C_parser_facts_gold_intent": {
+     "status": "NOT_CONSTRUCTED",
+     "why": "parser built no payload (LOCAL_PARSE_PARTIAL)"
+    },
+    "arm_E_downstream_canonical": {
+     "status": "SERVED",
+     "extraction_mode": "LOCAL_DETERMINISTIC_PARSER",
+     "code": null,
+     "oracle": {
+      "scene_validation": "MATHEMATICALLY_VALID",
+      "issues": [],
+      "numeric": "CORRECT"
+     }
+    }
+   },
+   "model_semantically_correct": true,
+   "first_failing_layer": "SLM_LOWERING_QUOTE+SOURCE_GATE",
+   "primary_root_cause": "SOURCE_GATE_GRAMMAR_GAP",
+   "secondary": [
+    "SOURCE_QUOTE_ALIGNMENT_FAILURE"
+   ],
+   "minimal_fix": "goal quote picked from a fact clause; 'biểu diễn khoảng cách' not an ask (handoff)",
+   "evidence": "AMBIGUOUS_VALUE_QUOTE; goal quote = 'SA vuông góc với (ABCD)'",
+   "model_capability_failure": false
+  },
+  {
+   "case_id": "Q08",
+   "intent": "SIMULATE_AND_QUERY",
+   "input": "Cho hình hộp chữ nhật ABCD.A'B'C'D' có AB = 1, AD = 2, AA' = 2. Vẽ hình hộp và tính độ dài đường chéo AC'.",
+   "parser": {
+    "status": "LOCAL_PARSE_PARTIAL",
+    "reason_code": "QUESTION_CONTEXT_UNSUPPORTED",
+    "has_payload": false,
+    "unparsed_goal": [],
+    "unparsed_fact": []
+   },
+   "slm_raw_model_output": "{\"s\":[0,\"box\",\"ABCD.A'B'C'D'\",1],\"r\":[{\"c\":0,\"p\":\"len\",\"a\":\"AB\",\"q\":\"1\"},{\"c\":0,\"p\":\"len\",\"a\":\"AD\",\"q\":\"2\"},{\"c\":0,\"p\":\"len\",\"a\":\"AA'\",\"q\":\"2\"}],\"g\":[{\"c\":1,\"t\":\"len\",\"a\":\"AC'\"}],\"u\":[]}",
+   "slm_grounding_status": "GROUNDED_AND_LOWERED",
+   "slm_accepted_ops": [
+    {
+     "kind": "right_prism",
+     "clause_id": 0
+    },
+    {
+     "kind": "rectangle",
+     "clause_id": 0
+    },
+    {
+     "kind": "segment_length",
+     "clause_id": 0
+    },
+    {
+     "kind": "segment_length",
+     "clause_id": 0
+    },
+    {
+     "kind": "segment_length",
+     "clause_id": 0
+    },
+    {
+     "kind": "goal:len",
+     "clause_id": 1
+    }
+   ],
+   "slm_rejected_ops": [],
+   "normalizer_rules": [],
+   "lowered_payload_problem_text_equals_input": true,
+   "arms": {
+    "arm_A_product": {
+     "status": "REFUSED",
+     "extraction_mode": "LOCAL_SLM_GROUNDED",
+     "code": "QUESTION_CONTEXT_UNSUPPORTED",
+     "oracle": null
+    },
+    "arm_B_slm_payload": {
+     "status": "REFUSED",
+     "code": "QUESTION_CONTEXT_UNSUPPORTED",
+     "oracle": null
+    },
+    "arm_D_gold_intent": {
+     "status": "REFUSED",
+     "code": "QUESTION_CONTEXT_UNSUPPORTED",
+     "math_goals_removed": 0,
+     "oracle": null
+    },
+    "arm_C_parser_facts_gold_intent": {
+     "status": "NOT_CONSTRUCTED",
+     "why": "parser built no payload (LOCAL_PARSE_PARTIAL)"
+    },
+    "arm_E_downstream_canonical": {
+     "status": "SERVED",
+     "extraction_mode": "LOCAL_DETERMINISTIC_PARSER",
+     "code": null,
+     "oracle": {
+      "scene_validation": "MATHEMATICALLY_VALID",
+      "issues": [],
+      "numeric": "CORRECT"
+     }
+    }
+   },
+   "model_semantically_correct": true,
+   "first_failing_layer": "SOURCE_GATE",
+   "primary_root_cause": "SOURCE_GATE_GRAMMAR_GAP",
+   "secondary": [
+    "DETERMINISTIC_INTENT_COVERAGE_GAP"
+   ],
+   "minimal_fix": "noun 'hình hộp' in the Source Gate request grammar",
+   "evidence": "goal len correct; QUESTION_CONTEXT_UNSUPPORTED",
+   "model_capability_failure": false
+  },
+  {
+   "case_id": "Q10",
+   "intent": "SIMULATE_AND_QUERY",
+   "input": "Cho hình chóp S.ABC có đáy ABC là tam giác vuông tại A, AB = a, AC = 2a, SA vuông góc với (ABC), SA = 2a. Hãy biểu diễn hình chóp và tính thể tích.",
+   "parser": {
+    "status": "LOCAL_PARSE_PARTIAL",
+    "reason_code": "UNPARSED_GOAL_CANDIDATE",
+    "has_payload": false,
+    "unparsed_goal": [
+     "Hãy biểu diễn hình chóp và tính thể tích"
+    ],
+    "unparsed_fact": []
+   },
+   "slm_raw_model_output": "{\"s\":[0,\"pyr\",\"S.ABC\",0],\"r\":[{\"c\":0,\"p\":\"right_tri\",\"a\":\"ABC\",\"pt\":\"A\"},{\"c\":0,\"p\":\"len\",\"a\":\"AB\",\"q\":\"a\"},{\"c\":0,\"p\":\"len\",\"a\":\"AC\",\"q\":\"2a\"},{\"c\":0,\"p\":\"perp_lp\",\"a\":\"SA\",\"b\":\"ABC\"},{\"c\":0,\"p\":\"len\",\"a\":\"SA\",\"q\":\"2a\"}],\"g\":[{\"c\":1,\"t\":\"vol\",\"tgt\":\"S.ABC\"}],\"u\":[]}",
+   "slm_grounding_status": "GROUNDED_AND_LOWERED",
+   "slm_accepted_ops": [
+    {
+     "kind": "right_angle",
+     "clause_id": 0
+    },
+    {
+     "kind": "segment_length",
+     "clause_id": 0
+    },
+    {
+     "kind": "segment_length",
+     "clause_id": 0
+    },
+    {
+     "kind": "perpendicular_line_plane",
+     "clause_id": 0
+    },
+    {
+     "kind": "segment_length",
+     "clause_id": 0
+    },
+    {
+     "kind": "goal:vol",
+     "clause_id": 1
+    }
+   ],
+   "slm_rejected_ops": [],
+   "normalizer_rules": [],
+   "lowered_payload_problem_text_equals_input": true,
+   "arms": {
+    "arm_A_product": {
+     "status": "REFUSED",
+     "extraction_mode": "LOCAL_SLM_GROUNDED",
+     "code": "SOURCE_OBJECT_MISMATCH",
+     "oracle": null
+    },
+    "arm_B_slm_payload": {
+     "status": "REFUSED",
+     "code": "SOURCE_OBJECT_MISMATCH",
+     "oracle": null
+    },
+    "arm_D_gold_intent": {
+     "status": "REFUSED",
+     "code": "SOURCE_OBJECT_MISMATCH",
+     "math_goals_removed": 0,
+     "oracle": null
+    },
+    "arm_C_parser_facts_gold_intent": {
+     "status": "NOT_CONSTRUCTED",
+     "why": "parser built no payload (LOCAL_PARSE_PARTIAL)"
+    },
+    "arm_E_downstream_canonical": {
+     "status": "SERVED",
+     "extraction_mode": "LOCAL_DETERMINISTIC_PARSER",
+     "code": null,
+     "oracle": {
+      "scene_validation": "MATHEMATICALLY_VALID",
+      "issues": [],
+      "numeric": "CORRECT"
+     }
+    }
+   },
+   "model_semantically_correct": true,
+   "first_failing_layer": "SLM_LOWERING_QUOTE",
+   "primary_root_cause": "SOURCE_QUOTE_ALIGNMENT_FAILURE",
+   "secondary": [],
+   "minimal_fix": "right_tri quote must be the clause stating 'vuông tại A'",
+   "evidence": "right_angle premise quoted 'SA vuông góc với (ABC)' → SOURCE_OBJECT_MISMATCH",
+   "model_capability_failure": false
+  },
+  {
+   "case_id": "C03",
+   "intent": "QUERY_WITH_SCENE",
+   "input": "Cho hình chóp tứ giác đều S.ABCD có tất cả các cạnh bằng a. Tính thể tích khối chóp S.ABCD.",
+   "parser": {
+    "status": "LOCAL_PARSE_PARTIAL",
+    "reason_code": "UNPARSED_FACT_CANDIDATE",
+    "has_payload": false,
+    "unparsed_goal": [],
+    "unparsed_fact": [
+     "Cho hình chóp tứ giác đều S.ABCD có tất cả các cạnh bằng a"
+    ]
+   },
+   "slm_raw_model_output": "{\"s\":[0,\"pyr\",\"S.ABCD\",1],\"r\":[{\"c\":0,\"p\":\"len\",\"a\":\"S.ABCD\",\"q\":\"a\"}],\"g\":[{\"c\":1,\"t\":\"vol\",\"tgt\":\"S.ABCD\"}],\"u\":[]}",
+   "slm_grounding_status": "GROUNDED_AND_LOWERED",
+   "slm_accepted_ops": [
+    {
+     "kind": "regular_pyramid",
+     "clause_id": 0
+    },
+    {
+     "kind": "segment_length",
+     "clause_id": 0
+    },
+    {
+     "kind": "goal:vol",
+     "clause_id": 1
+    }
+   ],
+   "slm_rejected_ops": [],
+   "normalizer_rules": [],
+   "lowered_payload_problem_text_equals_input": true,
+   "arms": {
+    "arm_A_product": {
+     "status": "REFUSED",
+     "extraction_mode": "LOCAL_SLM_GROUNDED",
+     "code": "UNGROUNDED_VALUE",
+     "oracle": null
+    },
+    "arm_B_slm_payload": {
+     "status": "REFUSED",
+     "code": "UNGROUNDED_VALUE",
+     "oracle": null
+    },
+    "arm_D_gold_intent": {
+     "status": "REFUSED",
+     "code": "UNGROUNDED_VALUE",
+     "math_goals_removed": 0,
+     "oracle": null
+    },
+    "arm_C_parser_facts_gold_intent": {
+     "status": "NOT_CONSTRUCTED",
+     "why": "parser built no payload (LOCAL_PARSE_PARTIAL)"
+    },
+    "arm_E_downstream_canonical": {
+     "status": "SERVED",
+     "extraction_mode": "LOCAL_DETERMINISTIC_PARSER",
+     "code": null,
+     "oracle": {
+      "scene_validation": "MATHEMATICALLY_VALID",
+      "issues": [],
+      "numeric": "CORRECT"
+     }
+    }
+   },
+   "model_semantically_correct": true,
+   "first_failing_layer": "SLM_LOWERING+SOURCE_GATE",
+   "primary_root_cause": "SOURCE_GATE_GRAMMAR_GAP",
+   "secondary": [
+    "SLM_LOWERING_INCOMPLETE"
+   ],
+   "minimal_fix": "as V05",
+   "evidence": "raw len on solid; lowered SA only",
+   "model_capability_failure": false
+  },
+  {
+   "case_id": "C25",
+   "intent": "QUERY_WITH_SCENE",
+   "input": "Hình chóp S.ABCD đáy hình vuông cạnh 4, SA vuông góc đáy, SA = 3. Tính thể tích.",
+   "parser": {
+    "status": "LOCAL_PARSE_PARTIAL",
+    "reason_code": "UNPARSED_GOAL_CANDIDATE",
+    "has_payload": false,
+    "unparsed_goal": [
+     "Tính thể tích"
+    ],
+    "unparsed_fact": [
+     "Hình chóp S.ABCD đáy hình vuông cạnh 4, SA vuông góc đáy, SA = 3"
+    ]
+   },
+   "slm_raw_model_output": "{\"s\":[0,\"pyr\",\"S.ABCD\",0],\"r\":[],\"g\":[],\"u\":[{\"c\":0,\"k\":\"ambig\"}]}",
+   "slm_grounding_status": "SLM_REPORTED_UNRESOLVED",
+   "slm_accepted_ops": [],
+   "slm_rejected_ops": [
+    {
+     "op": "unresolved",
+     "reason": "SLM marked clause 0 as ambiguous."
+    }
+   ],
+   "normalizer_rules": [
+    "VN06_IMPLICIT_BARE_SOLID",
+    "VN06_SOLID_SEP_DAY",
+    "VN06_IMPLICIT_BASE_LABEL_SHAPE",
+    "VN07_IMPLICIT_MAT_DAY_PERP"
+   ],
+   "lowered_payload_problem_text_equals_input": false,
+   "arms": {
+    "arm_A_product": {
+     "status": "REFUSED",
+     "extraction_mode": "LOCAL_SLM_GROUNDING_REJECTED",
+     "code": "AMBIGUOUS_FACT",
+     "oracle": null
+    },
+    "arm_B_slm_payload": {
+     "status": "NOT_RUN",
+     "why": "SLM output not lowered (no payload)"
+    },
+    "arm_D_gold_intent": {
+     "status": "NOT_RUN",
+     "why": "SLM output not lowered (no payload)"
+    },
+    "arm_C_parser_facts_gold_intent": {
+     "status": "NOT_CONSTRUCTED",
+     "why": "parser built no payload (LOCAL_PARSE_PARTIAL)"
+    },
+    "arm_E_downstream_canonical": {
+     "status": "SERVED",
+     "extraction_mode": "LOCAL_DETERMINISTIC_PARSER",
+     "code": null,
+     "oracle": {
+      "scene_validation": "MATHEMATICALLY_VALID",
+      "issues": [],
+      "numeric": "CORRECT"
+     }
+    }
+   },
+   "model_semantically_correct": false,
+   "first_failing_layer": "MODEL",
+   "primary_root_cause": "MODEL_RELATION_EXTRACTION_ERROR",
+   "secondary": [
+    "NORMALIZER_PROVENANCE_ERROR"
+   ],
+   "minimal_fix": "telegraphic clause: grammar allowed facts + vol goal, model chose ambig after 4 VN06/VN07 rewrites; candidate for training data only if a re-run confirms",
+   "evidence": "raw u:[ambig]; Arm E canonical served",
+   "model_capability_failure": true
+  },
+  {
+   "case_id": "C26",
+   "intent": "QUERY_WITH_SCENE",
+   "input": "Câu 2 (2 điểm). Cho hình chóp S.ABCD có đáy ABCD là hình vuông cạnh a, SA vuông góc với mặt phẳng (ABCD) và SA = a√2. a) Tính thể tích khối chóp S.ABCD. b) Tính góc giữa đường thẳng SC và mặt phẳng (ABCD).",
+   "parser": {
+    "status": "LOCAL_PARSE_PARTIAL",
+    "reason_code": "SOURCE_PREMISE_UNREAD",
+    "has_payload": false,
+    "unparsed_goal": [],
+    "unparsed_fact": []
+   },
+   "slm_raw_model_output": "{\"s\":[1,\"pyr\",\"S.ABCD\",0],\"r\":[{\"c\":1,\"p\":\"reg_poly\",\"a\":\"ABCD\",\"q\":\"a\"},{\"c\":1,\"p\":\"perp_lp\",\"a\":\"SA\",\"b\":\"ABCD\"},{\"c\":1,\"p\":\"len\",\"a\":\"SA\",\"q\":\"a√2\"}],\"g\":[{\"c\":2,\"t\":\"vol\",\"tgt\":\"S.ABCD\"},{\"c\":3,\"t\":\"ang_lp\",\"a\":\"SC\",\"b\":\"ABCD\"}],\"u\":[]}",
+   "slm_grounding_status": "GROUNDED_AND_LOWERED",
+   "slm_accepted_ops": [
+    {
+     "kind": "regular_polygon",
+     "clause_id": 1
+    },
+    {
+     "kind": "perpendicular_line_plane",
+     "clause_id": 1
+    },
+    {
+     "kind": "segment_length",
+     "clause_id": 1
+    },
+    {
+     "kind": "goal:vol",
+     "clause_id": 2
+    },
+    {
+     "kind": "goal:ang_lp",
+     "clause_id": 3
+    }
+   ],
+   "slm_rejected_ops": [],
+   "normalizer_rules": [
+    "VN09_SPLIT_ENUM_GOALS",
+    "VN09_SPLIT_ENUM_GOALS"
+   ],
+   "lowered_payload_problem_text_equals_input": false,
+   "arms": {
+    "arm_A_product": {
+     "status": "REFUSED",
+     "extraction_mode": "LOCAL_SLM_GROUNDED",
+     "code": "SOURCE_PREMISE_UNREAD",
+     "oracle": null
+    },
+    "arm_B_slm_payload": {
+     "status": "REFUSED",
+     "code": "SOURCE_PREMISE_UNREAD",
+     "oracle": null
+    },
+    "arm_D_gold_intent": {
+     "status": "REFUSED",
+     "code": "SOURCE_PREMISE_UNREAD",
+     "math_goals_removed": 0,
+     "oracle": null
+    },
+    "arm_C_parser_facts_gold_intent": {
+     "status": "NOT_CONSTRUCTED",
+     "why": "parser built no payload (LOCAL_PARSE_PARTIAL)"
+    },
+    "arm_E_downstream_canonical": {
+     "status": "SERVED",
+     "extraction_mode": "LOCAL_DETERMINISTIC_PARSER",
+     "code": null,
+     "oracle": {
+      "scene_validation": "MATHEMATICALLY_VALID",
+      "issues": [],
+      "numeric": "CORRECT"
+     }
+    }
+   },
+   "model_semantically_correct": true,
+   "first_failing_layer": "SOURCE_GATE",
+   "primary_root_cause": "SOURCE_GATE_GRAMMAR_GAP",
+   "secondary": [],
+   "minimal_fix": "exam header 'Câu 2 (2 điểm).' unread by Source Gate (handoff; parser treats it benign)",
+   "evidence": "SOURCE_PREMISE_UNREAD in A,B,D",
+   "model_capability_failure": false
+  }
+ ]
+}

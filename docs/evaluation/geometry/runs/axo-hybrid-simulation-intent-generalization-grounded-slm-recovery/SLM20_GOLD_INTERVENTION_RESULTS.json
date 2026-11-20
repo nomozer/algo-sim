@@ -1,0 +1,764 @@
+{
+ "schema": "axo-slm20-gold-intervention/1",
+ "arms": {
+  "A": "product route",
+  "B": "SLM lowered payload → downstream",
+  "D": "SLM facts + gold simulation intent",
+  "C": "parser payload of original + gold intent",
+  "E": "deterministic route on a minimal canonical rephrase (oracle-checked); C20's rephrase ADDS an edge length — not equivalent"
+ },
+ "served": {
+  "arm_A_product": 0,
+  "arm_B_slm_payload": 0,
+  "arm_D_gold_intent": 1,
+  "arm_C_parser_facts_gold_intent": 0,
+  "arm_E_downstream_canonical": 24
+ },
+ "valid_by_oracle": {
+  "arm_A_product": 0,
+  "arm_B_slm_payload": 0,
+  "arm_D_gold_intent": 1,
+  "arm_C_parser_facts_gold_intent": 0,
+  "arm_E_downstream_canonical": 24
+ },
+ "rows": [
+  {
+   "case_id": "V02",
+   "arm_A_product": {
+    "status": "REFUSED",
+    "code": "AMBIGUOUS_FACT",
+    "oracle": null
+   },
+   "arm_B_slm_payload": {
+    "status": "NOT_RUN",
+    "why": "SLM output not lowered (no payload)"
+   },
+   "arm_D_gold_intent": {
+    "status": "NOT_RUN",
+    "why": "SLM output not lowered (no payload)"
+   },
+   "arm_C_parser_facts_gold_intent": {
+    "status": "REFUSED",
+    "code": "AMBIGUOUS_FACT",
+    "oracle": null
+   },
+   "arm_E_downstream_canonical": {
+    "status": "SERVED",
+    "code": null,
+    "oracle": {
+     "scene_validation": "MATHEMATICALLY_VALID",
+     "issues": [],
+     "numeric": null
+    }
+   }
+  },
+  {
+   "case_id": "V05",
+   "arm_A_product": {
+    "status": "REFUSED",
+    "code": "UNGROUNDED_VALUE",
+    "oracle": null
+   },
+   "arm_B_slm_payload": {
+    "status": "REFUSED",
+    "code": "UNGROUNDED_VALUE",
+    "oracle": null
+   },
+   "arm_D_gold_intent": {
+    "status": "REFUSED",
+    "code": "UNGROUNDED_VALUE",
+    "oracle": null
+   },
+   "arm_C_parser_facts_gold_intent": {
+    "status": "NOT_CONSTRUCTED",
+    "why": "parser built no payload (LOCAL_PARSE_PARTIAL)"
+   },
+   "arm_E_downstream_canonical": {
+    "status": "SERVED",
+    "code": null,
+    "oracle": {
+     "scene_validation": "MATHEMATICALLY_VALID",
+     "issues": [],
+     "numeric": null
+    }
+   }
+  },
+  {
+   "case_id": "V06",
+   "arm_A_product": {
+    "status": "REFUSED",
+    "code": "SOURCE_OBJECT_MISMATCH",
+    "oracle": null
+   },
+   "arm_B_slm_payload": {
+    "status": "REFUSED",
+    "code": "SOURCE_OBJECT_MISMATCH",
+    "oracle": null
+   },
+   "arm_D_gold_intent": {
+    "status": "REFUSED",
+    "code": "SOURCE_PREMISE_UNREAD",
+    "oracle": null
+   },
+   "arm_C_parser_facts_gold_intent": {
+    "status": "NOT_CONSTRUCTED",
+    "why": "parser built no payload (LOCAL_PARSE_PARTIAL)"
+   },
+   "arm_E_downstream_canonical": {
+    "status": "SERVED",
+    "code": null,
+    "oracle": {
+     "scene_validation": "MATHEMATICALLY_VALID",
+     "issues": [],
+     "numeric": null
+    }
+   }
+  },
+  {
+   "case_id": "V08",
+   "arm_A_product": {
+    "status": "REFUSED",
+    "code": "SOURCE_OBJECT_MISMATCH",
+    "oracle": null
+   },
+   "arm_B_slm_payload": {
+    "status": "REFUSED",
+    "code": "SOURCE_OBJECT_MISMATCH",
+    "oracle": null
+   },
+   "arm_D_gold_intent": {
+    "status": "REFUSED",
+    "code": "SOURCE_PREMISE_UNREAD",
+    "oracle": null
+   },
+   "arm_C_parser_facts_gold_intent": {
+    "status": "NOT_CONSTRUCTED",
+    "why": "parser built no payload (LOCAL_PARSE_PARTIAL)"
+   },
+   "arm_E_downstream_canonical": {
+    "status": "SERVED",
+    "code": null,
+    "oracle": {
+     "scene_validation": "MATHEMATICALLY_VALID",
+     "issues": [],
+     "numeric": null
+    }
+   }
+  },
+  {
+   "case_id": "V09",
+   "arm_A_product": {
+    "status": "REFUSED",
+    "code": "AMBIGUOUS_FACT",
+    "oracle": null
+   },
+   "arm_B_slm_payload": {
+    "status": "NOT_RUN",
+    "why": "SLM output not lowered (no payload)"
+   },
+   "arm_D_gold_intent": {
+    "status": "NOT_RUN",
+    "why": "SLM output not lowered (no payload)"
+   },
+   "arm_C_parser_facts_gold_intent": {
+    "status": "NOT_CONSTRUCTED",
+    "why": "parser built no payload (LOCAL_PARSE_PARTIAL)"
+   },
+   "arm_E_downstream_canonical": {
+    "status": "SERVED",
+    "code": null,
+    "oracle": {
+     "scene_validation": "MATHEMATICALLY_VALID",
+     "issues": [],
+     "numeric": null
+    }
+   }
+  },
+  {
+   "case_id": "V10",
+   "arm_A_product": {
+    "status": "REFUSED",
+    "code": "AMBIGUOUS_FACT",
+    "oracle": null
+   },
+   "arm_B_slm_payload": {
+    "status": "NOT_RUN",
+    "why": "SLM output not lowered (no payload)"
+   },
+   "arm_D_gold_intent": {
+    "status": "NOT_RUN",
+    "why": "SLM output not lowered (no payload)"
+   },
+   "arm_C_parser_facts_gold_intent": {
+    "status": "NOT_CONSTRUCTED",
+    "why": "parser built no payload (LOCAL_PARSE_PARTIAL)"
+   },
+   "arm_E_downstream_canonical": {
+    "status": "SERVED",
+    "code": null,
+    "oracle": {
+     "scene_validation": "MATHEMATICALLY_VALID",
+     "issues": [],
+     "numeric": null
+    }
+   }
+  },
+  {
+   "case_id": "V11",
+   "arm_A_product": {
+    "status": "REFUSED",
+    "code": "SOURCE_OBJECT_MISMATCH",
+    "oracle": null
+   },
+   "arm_B_slm_payload": {
+    "status": "REFUSED",
+    "code": "SOURCE_OBJECT_MISMATCH",
+    "oracle": null
+   },
+   "arm_D_gold_intent": {
+    "status": "REFUSED",
+    "code": "SOURCE_PREMISE_UNREAD",
+    "oracle": null
+   },
+   "arm_C_parser_facts_gold_intent": {
+    "status": "NOT_CONSTRUCTED",
+    "why": "parser built no payload (LOCAL_PARSE_PARTIAL)"
+   },
+   "arm_E_downstream_canonical": {
+    "status": "SERVED",
+    "code": null,
+    "oracle": {
+     "scene_validation": "MATHEMATICALLY_VALID",
+     "issues": [],
+     "numeric": null
+    }
+   }
+  },
+  {
+   "case_id": "V14",
+   "arm_A_product": {
+    "status": "REFUSED",
+    "code": "SOURCE_OBJECT_MISMATCH",
+    "oracle": null
+   },
+   "arm_B_slm_payload": {
+    "status": "REFUSED",
+    "code": "SOURCE_OBJECT_MISMATCH",
+    "oracle": null
+   },
+   "arm_D_gold_intent": {
+    "status": "REFUSED",
+    "code": "SOURCE_PREMISE_UNREAD",
+    "oracle": null
+   },
+   "arm_C_parser_facts_gold_intent": {
+    "status": "NOT_CONSTRUCTED",
+    "why": "parser built no payload (LOCAL_PARSE_PARTIAL)"
+   },
+   "arm_E_downstream_canonical": {
+    "status": "SERVED",
+    "code": null,
+    "oracle": {
+     "scene_validation": "MATHEMATICALLY_VALID",
+     "issues": [],
+     "numeric": null
+    }
+   }
+  },
+  {
+   "case_id": "V16",
+   "arm_A_product": {
+    "status": "REFUSED",
+    "code": "SOURCE_OBJECT_MISMATCH",
+    "oracle": null
+   },
+   "arm_B_slm_payload": {
+    "status": "REFUSED",
+    "code": "SOURCE_OBJECT_MISMATCH",
+    "oracle": null
+   },
+   "arm_D_gold_intent": {
+    "status": "REFUSED",
+    "code": "SOURCE_PREMISE_UNREAD",
+    "oracle": null
+   },
+   "arm_C_parser_facts_gold_intent": {
+    "status": "NOT_CONSTRUCTED",
+    "why": "parser built no payload (LOCAL_PARSE_PARTIAL)"
+   },
+   "arm_E_downstream_canonical": {
+    "status": "SERVED",
+    "code": null,
+    "oracle": {
+     "scene_validation": "MATHEMATICALLY_VALID",
+     "issues": [],
+     "numeric": null
+    }
+   }
+  },
+  {
+   "case_id": "V19",
+   "arm_A_product": {
+    "status": "REFUSED",
+    "code": "AMBIGUOUS_FACT",
+    "oracle": null
+   },
+   "arm_B_slm_payload": {
+    "status": "NOT_RUN",
+    "why": "SLM output not lowered (no payload)"
+   },
+   "arm_D_gold_intent": {
+    "status": "NOT_RUN",
+    "why": "SLM output not lowered (no payload)"
+   },
+   "arm_C_parser_facts_gold_intent": {
+    "status": "NOT_CONSTRUCTED",
+    "why": "parser built no payload (LOCAL_PARSE_PARTIAL)"
+   },
+   "arm_E_downstream_canonical": {
+    "status": "SERVED",
+    "code": null,
+    "oracle": {
+     "scene_validation": "MATHEMATICALLY_VALID",
+     "issues": [],
+     "numeric": null
+    }
+   }
+  },
+  {
+   "case_id": "V26",
+   "arm_A_product": {
+    "status": "REFUSED",
+    "code": "SOURCE_OBJECT_MISMATCH",
+    "oracle": null
+   },
+   "arm_B_slm_payload": {
+    "status": "REFUSED",
+    "code": "SOURCE_OBJECT_MISMATCH",
+    "oracle": null
+   },
+   "arm_D_gold_intent": {
+    "status": "REFUSED",
+    "code": "SOURCE_PREMISE_UNREAD",
+    "oracle": null
+   },
+   "arm_C_parser_facts_gold_intent": {
+    "status": "NOT_CONSTRUCTED",
+    "why": "parser built no payload (LOCAL_PARSE_PARTIAL)"
+   },
+   "arm_E_downstream_canonical": {
+    "status": "SERVED",
+    "code": null,
+    "oracle": {
+     "scene_validation": "MATHEMATICALLY_VALID",
+     "issues": [],
+     "numeric": null
+    }
+   }
+  },
+  {
+   "case_id": "V28",
+   "arm_A_product": {
+    "status": "REFUSED",
+    "code": "SOURCE_OBJECT_MISMATCH",
+    "oracle": null
+   },
+   "arm_B_slm_payload": {
+    "status": "REFUSED",
+    "code": "SOURCE_OBJECT_MISMATCH",
+    "oracle": null
+   },
+   "arm_D_gold_intent": {
+    "status": "REFUSED",
+    "code": "SOURCE_PREMISE_UNREAD",
+    "oracle": null
+   },
+   "arm_C_parser_facts_gold_intent": {
+    "status": "NOT_CONSTRUCTED",
+    "why": "parser built no payload (LOCAL_PARSE_PARTIAL)"
+   },
+   "arm_E_downstream_canonical": {
+    "status": "SERVED",
+    "code": null,
+    "oracle": {
+     "scene_validation": "MATHEMATICALLY_VALID",
+     "issues": [],
+     "numeric": null
+    }
+   }
+  },
+  {
+   "case_id": "Q03",
+   "arm_A_product": {
+    "status": "REFUSED",
+    "code": "QUESTION_CONTEXT_UNSUPPORTED",
+    "oracle": null
+   },
+   "arm_B_slm_payload": {
+    "status": "REFUSED",
+    "code": "QUESTION_CONTEXT_UNSUPPORTED",
+    "oracle": null
+   },
+   "arm_D_gold_intent": {
+    "status": "REFUSED",
+    "code": "QUESTION_CONTEXT_UNSUPPORTED",
+    "oracle": null
+   },
+   "arm_C_parser_facts_gold_intent": {
+    "status": "NOT_CONSTRUCTED",
+    "why": "parser built no payload (LOCAL_PARSE_PARTIAL)"
+   },
+   "arm_E_downstream_canonical": {
+    "status": "SERVED",
+    "code": null,
+    "oracle": {
+     "scene_validation": "MATHEMATICALLY_VALID",
+     "issues": [],
+     "numeric": "CORRECT"
+    }
+   }
+  },
+  {
+   "case_id": "Q04",
+   "arm_A_product": {
+    "status": "REFUSED",
+    "code": "NOT_ASKED_IN_SOURCE",
+    "oracle": null
+   },
+   "arm_B_slm_payload": {
+    "status": "REFUSED",
+    "code": "NOT_ASKED_IN_SOURCE",
+    "oracle": null
+   },
+   "arm_D_gold_intent": {
+    "status": "REFUSED",
+    "code": "NOT_ASKED_IN_SOURCE",
+    "oracle": null
+   },
+   "arm_C_parser_facts_gold_intent": {
+    "status": "NOT_CONSTRUCTED",
+    "why": "parser built no payload (LOCAL_PARSE_PARTIAL)"
+   },
+   "arm_E_downstream_canonical": {
+    "status": "SERVED",
+    "code": null,
+    "oracle": {
+     "scene_validation": "MATHEMATICALLY_VALID",
+     "issues": [],
+     "numeric": "CORRECT"
+    }
+   }
+  },
+  {
+   "case_id": "Q05",
+   "arm_A_product": {
+    "status": "REFUSED",
+    "code": "AMBIGUOUS_VALUE_QUOTE",
+    "oracle": null
+   },
+   "arm_B_slm_payload": {
+    "status": "REFUSED",
+    "code": "AMBIGUOUS_VALUE_QUOTE",
+    "oracle": null
+   },
+   "arm_D_gold_intent": {
+    "status": "REFUSED",
+    "code": "AMBIGUOUS_VALUE_QUOTE",
+    "oracle": null
+   },
+   "arm_C_parser_facts_gold_intent": {
+    "status": "NOT_CONSTRUCTED",
+    "why": "parser built no payload (LOCAL_PARSE_PARTIAL)"
+   },
+   "arm_E_downstream_canonical": {
+    "status": "SERVED",
+    "code": null,
+    "oracle": {
+     "scene_validation": "MATHEMATICALLY_VALID",
+     "issues": [],
+     "numeric": "CORRECT"
+    }
+   }
+  },
+  {
+   "case_id": "Q08",
+   "arm_A_product": {
+    "status": "REFUSED",
+    "code": "QUESTION_CONTEXT_UNSUPPORTED",
+    "oracle": null
+   },
+   "arm_B_slm_payload": {
+    "status": "REFUSED",
+    "code": "QUESTION_CONTEXT_UNSUPPORTED",
+    "oracle": null
+   },
+   "arm_D_gold_intent": {
+    "status": "REFUSED",
+    "code": "QUESTION_CONTEXT_UNSUPPORTED",
+    "oracle": null
+   },
+   "arm_C_parser_facts_gold_intent": {
+    "status": "NOT_CONSTRUCTED",
+    "why": "parser built no payload (LOCAL_PARSE_PARTIAL)"
+   },
+   "arm_E_downstream_canonical": {
+    "status": "SERVED",
+    "code": null,
+    "oracle": {
+     "scene_validation": "MATHEMATICALLY_VALID",
+     "issues": [],
+     "numeric": "CORRECT"
+    }
+   }
+  },
+  {
+   "case_id": "Q10",
+   "arm_A_product": {
+    "status": "REFUSED",
+    "code": "SOURCE_OBJECT_MISMATCH",
+    "oracle": null
+   },
+   "arm_B_slm_payload": {
+    "status": "REFUSED",
+    "code": "SOURCE_OBJECT_MISMATCH",
+    "oracle": null
+   },
+   "arm_D_gold_intent": {
+    "status": "REFUSED",
+    "code": "SOURCE_OBJECT_MISMATCH",
+    "oracle": null
+   },
+   "arm_C_parser_facts_gold_intent": {
+    "status": "NOT_CONSTRUCTED",
+    "why": "parser built no payload (LOCAL_PARSE_PARTIAL)"
+   },
+   "arm_E_downstream_canonical": {
+    "status": "SERVED",
+    "code": null,
+    "oracle": {
+     "scene_validation": "MATHEMATICALLY_VALID",
+     "issues": [],
+     "numeric": "CORRECT"
+    }
+   }
+  },
+  {
+   "case_id": "C03",
+   "arm_A_product": {
+    "status": "REFUSED",
+    "code": "UNGROUNDED_VALUE",
+    "oracle": null
+   },
+   "arm_B_slm_payload": {
+    "status": "REFUSED",
+    "code": "UNGROUNDED_VALUE",
+    "oracle": null
+   },
+   "arm_D_gold_intent": {
+    "status": "REFUSED",
+    "code": "UNGROUNDED_VALUE",
+    "oracle": null
+   },
+   "arm_C_parser_facts_gold_intent": {
+    "status": "NOT_CONSTRUCTED",
+    "why": "parser built no payload (LOCAL_PARSE_PARTIAL)"
+   },
+   "arm_E_downstream_canonical": {
+    "status": "SERVED",
+    "code": null,
+    "oracle": {
+     "scene_validation": "MATHEMATICALLY_VALID",
+     "issues": [],
+     "numeric": "CORRECT"
+    }
+   }
+  },
+  {
+   "case_id": "C25",
+   "arm_A_product": {
+    "status": "REFUSED",
+    "code": "AMBIGUOUS_FACT",
+    "oracle": null
+   },
+   "arm_B_slm_payload": {
+    "status": "NOT_RUN",
+    "why": "SLM output not lowered (no payload)"
+   },
+   "arm_D_gold_intent": {
+    "status": "NOT_RUN",
+    "why": "SLM output not lowered (no payload)"
+   },
+   "arm_C_parser_facts_gold_intent": {
+    "status": "NOT_CONSTRUCTED",
+    "why": "parser built no payload (LOCAL_PARSE_PARTIAL)"
+   },
+   "arm_E_downstream_canonical": {
+    "status": "SERVED",
+    "code": null,
+    "oracle": {
+     "scene_validation": "MATHEMATICALLY_VALID",
+     "issues": [],
+     "numeric": "CORRECT"
+    }
+   }
+  },
+  {
+   "case_id": "C26",
+   "arm_A_product": {
+    "status": "REFUSED",
+    "code": "SOURCE_PREMISE_UNREAD",
+    "oracle": null
+   },
+   "arm_B_slm_payload": {
+    "status": "REFUSED",
+    "code": "SOURCE_PREMISE_UNREAD",
+    "oracle": null
+   },
+   "arm_D_gold_intent": {
+    "status": "REFUSED",
+    "code": "SOURCE_PREMISE_UNREAD",
+    "oracle": null
+   },
+   "arm_C_parser_facts_gold_intent": {
+    "status": "NOT_CONSTRUCTED",
+    "why": "parser built no payload (LOCAL_PARSE_PARTIAL)"
+   },
+   "arm_E_downstream_canonical": {
+    "status": "SERVED",
+    "code": null,
+    "oracle": {
+     "scene_validation": "MATHEMATICALLY_VALID",
+     "issues": [],
+     "numeric": "CORRECT"
+    }
+   }
+  },
+  {
+   "case_id": "V13",
+   "arm_A_product": {
+    "status": "REFUSED",
+    "code": "AMBIGUOUS_FACT",
+    "oracle": null
+   },
+   "arm_B_slm_payload": {
+    "status": "REFUSED",
+    "code": "SOURCE_OBJECT_MISMATCH",
+    "oracle": null
+   },
+   "arm_D_gold_intent": {
+    "status": "SERVED",
+    "code": null,
+    "oracle": {
+     "scene_validation": "MATHEMATICALLY_VALID",
+     "issues": [],
+     "numeric": null
+    }
+   },
+   "arm_C_parser_facts_gold_intent": {
+    "status": "REFUSED",
+    "code": "AMBIGUOUS_FACT",
+    "oracle": null
+   },
+   "arm_E_downstream_canonical": {
+    "status": "SERVED",
+    "code": null,
+    "oracle": {
+     "scene_validation": "MATHEMATICALLY_VALID",
+     "issues": [],
+     "numeric": null
+    }
+   }
+  },
+  {
+   "case_id": "V18",
+   "arm_A_product": {
+    "status": "REFUSED",
+    "code": "gate_out_of_scope",
+    "oracle": null
+   },
+   "arm_B_slm_payload": {
+    "status": "NOT_RUN",
+    "why": "SLM output not lowered (no payload)"
+   },
+   "arm_D_gold_intent": {
+    "status": "NOT_RUN",
+    "why": "SLM output not lowered (no payload)"
+   },
+   "arm_C_parser_facts_gold_intent": {
+    "status": "NOT_CONSTRUCTED",
+    "why": "parser built no payload (LOCAL_PARSE_UNSUPPORTED)"
+   },
+   "arm_E_downstream_canonical": {
+    "status": "SERVED",
+    "code": null,
+    "oracle": {
+     "scene_validation": "MATHEMATICALLY_VALID",
+     "issues": [],
+     "numeric": null
+    }
+   }
+  },
+  {
+   "case_id": "C24",
+   "arm_A_product": {
+    "status": "REFUSED",
+    "code": "gate_out_of_scope",
+    "oracle": null
+   },
+   "arm_B_slm_payload": {
+    "status": "NOT_RUN",
+    "why": "SLM output not lowered (no payload)"
+   },
+   "arm_D_gold_intent": {
+    "status": "NOT_RUN",
+    "why": "SLM output not lowered (no payload)"
+   },
+   "arm_C_parser_facts_gold_intent": {
+    "status": "NOT_CONSTRUCTED",
+    "why": "parser built no payload (LOCAL_PARSE_UNSUPPORTED)"
+   },
+   "arm_E_downstream_canonical": {
+    "status": "SERVED",
+    "code": null,
+    "oracle": {
+     "scene_validation": "MATHEMATICALLY_VALID",
+     "issues": [],
+     "numeric": "CORRECT"
+    }
+   }
+  },
+  {
+   "case_id": "C20",
+   "arm_A_product": {
+    "status": "REFUSED",
+    "code": "MISSING_DIMENSION",
+    "oracle": null
+   },
+   "arm_B_slm_payload": {
+    "status": "REFUSED",
+    "code": "MISSING_DIMENSION",
+    "oracle": null
+   },
+   "arm_D_gold_intent": {
+    "status": "REFUSED",
+    "code": "MISSING_DIMENSION",
+    "oracle": null
+   },
+   "arm_C_parser_facts_gold_intent": {
+    "status": "REFUSED",
+    "code": "MISSING_DIMENSION",
+    "oracle": null
+   },
+   "arm_E_downstream_canonical": {
+    "status": "SERVED",
+    "code": null,
+    "oracle": {
+     "scene_validation": "MATHEMATICALLY_VALID",
+     "issues": [],
+     "numeric": "CORRECT"
+    }
+   }
+  }
+ ],
+ "note": "Arm D isolates the forced goal: for the 7 SIMULATE_ONLY cases it moves the first failure from SOURCE_OBJECT_MISMATCH to SOURCE_PREMISE_UNREAD (the Source Gate does not read the command); V13 is SERVED by Arm D."
+}
