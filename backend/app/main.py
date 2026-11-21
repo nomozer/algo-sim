@@ -992,7 +992,12 @@ MISSING_KEY_MSG = (
 #       reordered premises-first) and the Source Gate reading "không đôi một / cùng … vuông góc" as a negation. A
 #       `154:route-d` row may hold a scene served from a negated pairwise perpendicularity ⇒ MISS
 #       (`tests/geometry/test_model1_residual_phrasings.py::test_v15_cache_policy_isolates_cache_154_rows`).
-CACHE_VERSION = "155"
+# 156 — 2026-11-21 (semantic-grounding-slm-recovery): two-layer semantic rewrite safety checks against original source
+#       spans, deferring incomplete non-base `perpendicular_line_plane` checks in `engine._mot_buoc` (B18), reading bare
+#       prism height + 3-vertex unnamed right prism base (E02), polite `"Hãy cho biết …"` questions (G08), exam header
+#       prefixes (`"Đề bài: / Yêu cầu:"`), and `local-slm-extractor/6` dense clause splitting / carrier grammar / 3-pair
+#       closure ⇒ MISS (`tests/geometry/test_model1_residual_phrasings.py::test_cache_156_policy_isolates_cache_155_rows`).
+CACHE_VERSION = "156"
 
 #: Hai chế độ hợp lệ của kiến trúc chính thức Hybrid `/4` do máy chủ sở hữu:
 #: - `live` (mặc định): trích xuất có cấu trúc qua Gemini (`typed-fact-next/2`) khi cấu hình `GEMINI_API_KEY`.
