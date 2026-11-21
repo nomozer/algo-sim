@@ -1,4 +1,5 @@
 import {
+  useCallback,
   useEffect,
   useMemo,
   useRef,
@@ -50,8 +51,8 @@ export const STORY_STAGES_V14: readonly StoryStageV14Spec[] = [
     relationNote: "Giả thiết: Lăng trụ đứng đáy đều ABC.A′B′C′ · Trung điểm M, N, P",
     establishedState: "ΔABC đều · AA′ ⊥ (ABC) · M ∈ AB, N ∈ AC, P ∈ CC′",
     camera: {
-      yaw: -0.36,
-      pitch: 0.26,
+      yaw: -0.26,
+      pitch: 0.27,
       zoom: 1,
       extrude: 1,
       prismBuild: 1,
@@ -74,8 +75,8 @@ export const STORY_STAGES_V14: readonly StoryStageV14Spec[] = [
     relationNote: "Đối tượng đã dựng: (MNP) cắt (ABC) theo MN và cắt (ACC′A′) theo NP",
     establishedState: "(MNP) ∩ (ABC) = MN · (MNP) ∩ (ACC′A′) = NP",
     camera: {
-      yaw: -0.16,
-      pitch: 0.29,
+      yaw: -0.18,
+      pitch: 0.28,
       zoom: 1,
       extrude: 1,
       prismBuild: 1,
@@ -98,15 +99,15 @@ export const STORY_STAGES_V14: readonly StoryStageV14Spec[] = [
     relationNote: "Quan hệ quan sát được: MN ∥ BC ⇒ PQ ∥ BC · Xác định Q ∈ BB′",
     establishedState: "MN ∥ BC ⇒ (MNP) ∩ (BCC′B′) = PQ ∥ BC · Q ∈ BB′",
     camera: {
-      yaw: 0.04,
-      pitch: 0.31,
+      yaw: -0.09,
+      pitch: 0.29,
       zoom: 1,
       extrude: 1,
       prismBuild: 1,
       planeSweep: 1,
       parallelCue: 1,
-      traceProgress: 0.76,
-      sectionFill: 0.08,
+      traceProgress: 0.75,
+      sectionFill: 0,
     },
   },
   {
@@ -122,8 +123,8 @@ export const STORY_STAGES_V14: readonly StoryStageV14Spec[] = [
     relationNote: "Kết quả xác lập: Thiết diện phẳng hình thang cân MNPQ trên (MNP)",
     establishedState: "MNPQ đồng phẳng · MN ∥ PQ · NP = QM",
     camera: {
-      yaw: 0.19,
-      pitch: 0.3,
+      yaw: -0.04,
+      pitch: 0.29,
       zoom: 1,
       extrude: 1,
       prismBuild: 1,
@@ -184,6 +185,35 @@ export function computeStoryScrollProgress(
   return clamp01(-runwayTop / travel);
 }
 
+/**
+ * Maps rendered vertical centers of the 4 chapter cards relative to a viewport
+ * reading focal line into [0, 1], guaranteeing threshold crossings at 0.25 / 0.50 / 0.75
+ * at the exact midpoints between neighboring chapters.
+ */
+export function computeChapterScrollProgress(
+  chapterCenters: readonly number[],
+  focalY: number,
+  lastChapterBottom?: number,
+): number {
+  if (chapterCenters.length < 4) return 0;
+  const [c0, c1, c2, c3] = chapterCenters;
+
+  if (focalY <= c0) {
+    return lerp(0, 0.125, clamp01(1 - (c0 - focalY) / 180));
+  }
+  if (focalY <= c1) {
+    return 0.125 + 0.25 * clamp01((focalY - c0) / Math.max(1, c1 - c0));
+  }
+  if (focalY <= c2) {
+    return 0.375 + 0.25 * clamp01((focalY - c1) / Math.max(1, c2 - c1));
+  }
+  if (focalY <= c3) {
+    return 0.625 + 0.25 * clamp01((focalY - c2) / Math.max(1, c3 - c2));
+  }
+  const tail = Math.max(110, ((lastChapterBottom ?? c3 + 120) - c3) * 0.8);
+  return lerp(0.875, 1, clamp01((focalY - c3) / tail));
+}
+
 export function stageIndexFromProgress(progress: number): number {
   const p = clamp01(progress);
   if (p < 0.25) return 0;
@@ -193,8 +223,7 @@ export function stageIndexFromProgress(progress: number): number {
 }
 
 /**
- * Guarantees strictly 1 active visible chapter across all p in [0, 1]:
- * zero blank deadband and zero simultaneous overlapping text.
+ * Guarantees strictly 1 active chapter across all p in [0, 1].
  */
 export function computeChapterEnvelope(
   progress: number,
@@ -256,6 +285,10 @@ export function computeChapterEnvelope(
   return { opacity: 0, offsetY: 0, isVisible: false };
 }
 
+/**
+ * Stage-locked interpolation: strictly prevents geometric features (plane, Q,
+ * parallel guides, final section fill) from leaking into earlier chapters.
+ */
 export function interpolateStoryPose(
   progress: number,
   reducedMotion = false,
@@ -272,41 +305,66 @@ export function interpolateStoryPose(
     };
   }
 
-  // Piecewise smooth keyframes aligned with the 4 scroll chapters [0..0.25..0.50..0.75..1]
-  const k = [0.06, 0.32, 0.58, 0.84] as const;
-  let s0 = STORY_STAGES_V14[0].camera;
-  let s1 = STORY_STAGES_V14[0].camera;
-  let u = 0;
+  const s0 = STORY_STAGES_V14[0].camera;
+  const s1 = STORY_STAGES_V14[1].camera;
+  const s2 = STORY_STAGES_V14[2].camera;
+  const s3 = STORY_STAGES_V14[3].camera;
 
-  if (p <= k[0]) {
-    return { progress: p, activeStageIndex, ...s0 };
-  }
-  if (p <= k[1]) {
-    s0 = STORY_STAGES_V14[0].camera;
-    s1 = STORY_STAGES_V14[1].camera;
-    u = smoothstep(k[0], k[1], p);
-  } else if (p <= k[2]) {
-    s0 = STORY_STAGES_V14[1].camera;
-    s1 = STORY_STAGES_V14[2].camera;
-    u = smoothstep(k[1], k[2], p);
-  } else {
-    s0 = STORY_STAGES_V14[2].camera;
-    s1 = STORY_STAGES_V14[3].camera;
-    u = smoothstep(k[2], k[3], p);
+  if (p < 0.25) {
+    return {
+      progress: p,
+      activeStageIndex,
+      ...s0,
+    };
   }
 
+  if (p < 0.5) {
+    const u1 = smoothstep(0.25, 0.37, p);
+    return {
+      progress: p,
+      activeStageIndex,
+      yaw: lerp(s0.yaw, s1.yaw, u1),
+      pitch: lerp(s0.pitch, s1.pitch, u1),
+      zoom: 1,
+      extrude: 1,
+      prismBuild: 1,
+      planeSweep: u1,
+      parallelCue: 0,
+      traceProgress: 0.5 * smoothstep(0.28, 0.42, p),
+      sectionFill: 0,
+    };
+  }
+
+  if (p < 0.75) {
+    const u2 = smoothstep(0.5, 0.62, p);
+    return {
+      progress: p,
+      activeStageIndex,
+      yaw: lerp(s1.yaw, s2.yaw, u2),
+      pitch: lerp(s1.pitch, s2.pitch, u2),
+      zoom: 1,
+      extrude: 1,
+      prismBuild: 1,
+      planeSweep: 1,
+      parallelCue: u2,
+      traceProgress: lerp(0.5, 0.75, smoothstep(0.54, 0.66, p)),
+      sectionFill: 0,
+    };
+  }
+
+  const u3 = smoothstep(0.75, 0.87, p);
   return {
     progress: p,
     activeStageIndex,
-    yaw: lerp(s0.yaw, s1.yaw, u),
-    pitch: lerp(s0.pitch, s1.pitch, u),
-    zoom: lerp(s0.zoom, s1.zoom, u),
-    extrude: lerp(s0.extrude, s1.extrude, u),
-    prismBuild: lerp(s0.prismBuild, s1.prismBuild, u),
-    planeSweep: lerp(s0.planeSweep, s1.planeSweep, u),
-    parallelCue: lerp(s0.parallelCue, s1.parallelCue, u),
-    traceProgress: lerp(s0.traceProgress, s1.traceProgress, u),
-    sectionFill: lerp(s0.sectionFill, s1.sectionFill, u),
+    yaw: lerp(s2.yaw, s3.yaw, u3),
+    pitch: lerp(s2.pitch, s3.pitch, u3),
+    zoom: 1,
+    extrude: 1,
+    prismBuild: 1,
+    planeSweep: 1,
+    parallelCue: lerp(1, s3.parallelCue, u3),
+    traceProgress: lerp(0.75, 1, smoothstep(0.75, 0.84, p)),
+    sectionFill: smoothstep(0.78, 0.88, p),
   };
 }
 
@@ -384,33 +442,25 @@ function isFaceFrontFacing(
 }
 
 const STORY_SVG_W = 700;
-const STORY_SVG_H = 500;
+const STORY_SVG_H = 480;
 const PRISM_HEIGHT_SCALE = 1.16;
+
+const STORY_POINT_KEYS = [
+  "A",
+  "B",
+  "C",
+  "A_prime",
+  "B_prime",
+  "C_prime",
+  "M",
+  "N",
+  "P",
+  "Q",
+] as const;
 
 function scaleStoryHeight(pt: Vec3Tuple, baseY: number, factor = PRISM_HEIGHT_SCALE): Vec3Tuple {
   return [pt[0], baseY + (pt[1] - baseY) * factor, pt[2]];
 }
-
-const STORY_PLANE_QUAD = (() => {
-  const pMap = LANDING_PRISM_STORY_SPEC.pointMap;
-  const baseY = pMap["A"].pos[1];
-  const m = scaleStoryHeight(pMap["M"].pos, baseY);
-  const n = scaleStoryHeight(pMap["N"].pos, baseY);
-  const p = scaleStoryHeight(pMap["P"].pos, baseY);
-  const q = scaleStoryHeight(pMap["Q"].pos, baseY);
-  const ux = n[0] - m[0];
-  const uy = n[1] - m[1];
-  const uz = n[2] - m[2];
-  const vx = p[0] - m[0];
-  const vy = p[1] - m[1];
-  const vz = p[2] - m[2];
-  const normal: Vec3Tuple = [
-    uy * vz - uz * vy,
-    uz * vx - ux * vz,
-    ux * vy - uy * vx,
-  ];
-  return computeBoundedPlaneQuad([m, n, p, q], normal, 0.24);
-})();
 
 function buildDoubleTickD(a: ProjectedPoint2D, b: ProjectedPoint2D): string {
   const dx = b.x - a.x;
@@ -429,6 +479,156 @@ function buildDoubleTickD(a: ProjectedPoint2D, b: ProjectedPoint2D): string {
   ].join(" ");
 }
 
+// Module-level precomputed invariant 3D & 2D geometry (zero recomputation on scroll)
+const STORY_FACE_DEFS: readonly (readonly string[])[] = [
+  ["A", "C", "B"],
+  ["A_prime", "B_prime", "C_prime"],
+  ["A", "B", "B_prime", "A_prime"],
+  ["B", "C", "C_prime", "B_prime"],
+  ["C", "A", "A_prime", "C_prime"],
+];
+
+const STORY_STATIC_GEOM = (() => {
+  const pMap = LANDING_PRISM_STORY_SPEC.pointMap;
+  const baseY = pMap["A"].pos[1];
+  const coords: Record<string, Vec3Tuple> = {};
+  for (const key of STORY_POINT_KEYS) {
+    const p = pMap[key].pos;
+    coords[key] =
+      key === "A" || key === "B" || key === "C" || key === "M" || key === "N"
+        ? p
+        : scaleStoryHeight(p, baseY);
+  }
+
+  const solidCenter: Vec3Tuple = [
+    (coords["A"][0] +
+      coords["B"][0] +
+      coords["C"][0] +
+      coords["A_prime"][0] +
+      coords["B_prime"][0] +
+      coords["C_prime"][0]) /
+      6,
+    (coords["A"][1] +
+      coords["B"][1] +
+      coords["C"][1] +
+      coords["A_prime"][1] +
+      coords["B_prime"][1] +
+      coords["C_prime"][1]) /
+      6,
+    (coords["A"][2] +
+      coords["B"][2] +
+      coords["C"][2] +
+      coords["A_prime"][2] +
+      coords["B_prime"][2] +
+      coords["C_prime"][2]) /
+      6,
+  ];
+
+  // Bounded plane quad for (MNP)
+  const m = coords["M"];
+  const n = coords["N"];
+  const p = coords["P"];
+  const q = coords["Q"];
+  const ux = n[0] - m[0];
+  const uy = n[1] - m[1];
+  const uz = n[2] - m[2];
+  const vx = p[0] - m[0];
+  const vy = p[1] - m[1];
+  const vz = p[2] - m[2];
+  const normal: Vec3Tuple = [
+    uy * vz - uz * vy,
+    uz * vx - ux * vz,
+    ux * vy - uy * vx,
+  ];
+  const planeQuad = computeBoundedPlaneQuad([m, n, p, q], normal, 0.24);
+
+  // Perpendicular right-angle witness at A (AA' perp AB)
+  const pA = coords["A"];
+  const pB = coords["B"];
+  const pAp = coords["A_prime"];
+  const uAB: Vec3Tuple = [pB[0] - pA[0], pB[1] - pA[1], pB[2] - pA[2]];
+  const uAAp: Vec3Tuple = [pAp[0] - pA[0], pAp[1] - pA[1], pAp[2] - pA[2]];
+  const lenAB = Math.hypot(...uAB) || 1;
+  const lenAAp = Math.hypot(...uAAp) || 1;
+  const raSize = 0.36;
+  const b1: Vec3Tuple = [
+    pA[0] + (uAB[0] / lenAB) * raSize,
+    pA[1] + (uAB[1] / lenAB) * raSize,
+    pA[2] + (uAB[2] / lenAB) * raSize,
+  ];
+  const b2: Vec3Tuple = [
+    pA[0] + (uAAp[0] / lenAAp) * raSize,
+    pA[1] + (uAAp[1] / lenAAp) * raSize,
+    pA[2] + (uAAp[2] / lenAAp) * raSize,
+  ];
+  const bc: Vec3Tuple = [
+    b1[0] + (uAAp[0] / lenAAp) * raSize,
+    b1[1] + (uAAp[1] / lenAAp) * raSize,
+    b1[2] + (uAAp[2] / lenAAp) * raSize,
+  ];
+
+  // Exact isometric 2D true-shape trapezoid MNPQ from canonical domainXyz
+  const domM = pMap["M"].domainXyz;
+  const domN = pMap["N"].domainXyz;
+  const domP = pMap["P"].domainXyz;
+  const domQ = pMap["Q"].domainXyz;
+  const uxRaw: Vec3Tuple = [domN[0] - domM[0], domN[1] - domM[1], domN[2] - domM[2]];
+  const uLen = Math.hypot(...uxRaw) || 1;
+  const uAxis: Vec3Tuple = [uxRaw[0] / uLen, uxRaw[1] / uLen, uxRaw[2] / uLen];
+  const midTop: Vec3Tuple = [(domM[0] + domN[0]) * 0.5, (domM[1] + domN[1]) * 0.5, (domM[2] + domN[2]) * 0.5];
+  const midBot: Vec3Tuple = [(domQ[0] + domP[0]) * 0.5, (domQ[1] + domP[1]) * 0.5, (domQ[2] + domP[2]) * 0.5];
+  const vxRaw: Vec3Tuple = [midBot[0] - midTop[0], midBot[1] - midTop[1], midBot[2] - midTop[2]];
+  const vLen = Math.hypot(...vxRaw) || 1;
+  const vAxis: Vec3Tuple = [vxRaw[0] / vLen, vxRaw[1] / vLen, vxRaw[2] / vLen];
+  const trapCentroid: Vec3Tuple = [
+    (domM[0] + domN[0] + domP[0] + domQ[0]) * 0.25,
+    (domM[1] + domN[1] + domP[1] + domQ[1]) * 0.25,
+    (domM[2] + domN[2] + domP[2] + domQ[2]) * 0.25,
+  ];
+  const insetCenterX = 577;
+  const insetCenterY = 144;
+  const insetScale = 34;
+  const mapTrapPt = (id: string, dom: Vec3Tuple) => {
+    const rel: Vec3Tuple = [
+      dom[0] - trapCentroid[0],
+      dom[1] - trapCentroid[1],
+      dom[2] - trapCentroid[2],
+    ];
+    const u = rel[0] * uAxis[0] + rel[1] * uAxis[1] + rel[2] * uAxis[2];
+    const v = rel[0] * vAxis[0] + rel[1] * vAxis[1] + rel[2] * vAxis[2];
+    return {
+      id,
+      label: pMap[id].label,
+      role: pMap[id].role,
+      x: insetCenterX + u * insetScale,
+      y: insetCenterY + v * insetScale,
+    };
+  };
+  const trapPts = [
+    mapTrapPt("M", domM),
+    mapTrapPt("N", domN),
+    mapTrapPt("P", domP),
+    mapTrapPt("Q", domQ),
+  ];
+  const trapPolyPoints = trapPts.map((pt) => `${pt.x.toFixed(1)},${pt.y.toFixed(1)}`).join(" ");
+  const insetTicksD = [
+    buildDoubleTickD({ x: trapPts[1].x, y: trapPts[1].y, z: 0 }, { x: trapPts[2].x, y: trapPts[2].y, z: 0 }),
+    buildDoubleTickD({ x: trapPts[0].x, y: trapPts[0].y, z: 0 }, { x: trapPts[3].x, y: trapPts[3].y, z: 0 }),
+  ].join(" ");
+
+  return {
+    pMap,
+    coords,
+    solidCenter,
+    planeQuad,
+    rightAnglePts: { b1, b2, bc },
+    trapPts,
+    trapPolyPoints,
+    insetTicksD,
+    insetCardRect: { x: 466, y: 20, width: 222, height: 202 },
+  };
+})();
+
 function PrismEditorialStage({
   pose,
   reducedMotion,
@@ -440,86 +640,31 @@ function PrismEditorialStage({
     STORY_STAGES_V14[pose.activeStageIndex] ?? STORY_STAGES_V14[0];
 
   const scene = useMemo(() => {
-    const pMap = LANDING_PRISM_STORY_SPEC.pointMap;
-    const baseY = pMap["A"].pos[1];
-    const extrudeVec = (id: string): Vec3Tuple => {
-      const p = pMap[id].pos;
-      if (id === "A" || id === "B" || id === "C" || id === "M" || id === "N") {
-        return p;
-      }
-      return scaleStoryHeight(p, baseY, PRISM_HEIGHT_SCALE * pose.extrude);
-    };
-
-    const coords: Record<string, Vec3Tuple> = {};
-    for (const key of [
-      "A",
-      "B",
-      "C",
-      "A_prime",
-      "B_prime",
-      "C_prime",
-      "M",
-      "N",
-      "P",
-      "Q",
-    ]) {
-      coords[key] = extrudeVec(key);
-    }
+    const { pMap, coords, solidCenter, planeQuad, rightAnglePts, insetCardRect } =
+      STORY_STATIC_GEOM;
 
     const insetReveal = reducedMotion
       ? pose.activeStageIndex === 3
         ? 1
         : 0
-      : smoothstep(0.76, 0.91, pose.progress);
-    const scale = 76 * pose.zoom;
-    const cx = lerp(350, 240, insetReveal);
-    const cy = 266;
+      : smoothstep(0.76, 0.9, pose.progress);
+    const scale = 78 * pose.zoom;
+    const cx = lerp(332, 224, insetReveal);
+    const cy = 254;
     const proj: Record<string, ProjectedPoint2D> = {};
-    for (const [k, v] of Object.entries(coords)) {
-      proj[k] = projectPrismPoint3D(v, pose.yaw, pose.pitch, cx, cy, scale);
+    for (const k of STORY_POINT_KEYS) {
+      proj[k] = projectPrismPoint3D(coords[k], pose.yaw, pose.pitch, cx, cy, scale);
     }
 
-    const pillarGrow = 1;
-    const topGrow = 1;
     const seedHaloStrength = reducedMotion
       ? pose.activeStageIndex === 0
         ? 1
         : 0
-      : 1 - smoothstep(0.16, 0.34, pose.progress);
+      : pose.activeStageIndex >= 1
+        ? Math.max(0, 1 - smoothstep(0.25, 0.34, pose.progress))
+        : 1;
 
-    const solidCenter: Vec3Tuple = [
-      (coords["A"][0] +
-        coords["B"][0] +
-        coords["C"][0] +
-        coords["A_prime"][0] +
-        coords["B_prime"][0] +
-        coords["C_prime"][0]) /
-        6,
-      (coords["A"][1] +
-        coords["B"][1] +
-        coords["C"][1] +
-        coords["A_prime"][1] +
-        coords["B_prime"][1] +
-        coords["C_prime"][1]) /
-        6,
-      (coords["A"][2] +
-        coords["B"][2] +
-        coords["C"][2] +
-        coords["A_prime"][2] +
-        coords["B_prime"][2] +
-        coords["C_prime"][2]) /
-        6,
-    ];
-
-    const faceDefs: readonly (readonly string[])[] = [
-      ["A", "C", "B"],
-      ["A_prime", "B_prime", "C_prime"],
-      ["A", "B", "B_prime", "A_prime"],
-      ["B", "C", "C_prime", "B_prime"],
-      ["C", "A", "A_prime", "C_prime"],
-    ];
-
-    const faceFrontMap = faceDefs.map((f) =>
+    const faceFrontMap = STORY_FACE_DEFS.map((f) =>
       isFaceFrontFacing(
         f.map((id) => coords[id]),
         solidCenter,
@@ -529,13 +674,12 @@ function PrismEditorialStage({
     );
 
     const edgeVisibleInSolid = (from: string, to: string): boolean => {
-      let frontTouch = 0;
-      for (let i = 0; i < faceDefs.length; i++) {
+      for (let i = 0; i < STORY_FACE_DEFS.length; i++) {
         if (!faceFrontMap[i]) continue;
-        const f = faceDefs[i];
-        if (f.includes(from) && f.includes(to)) frontTouch++;
+        const f = STORY_FACE_DEFS[i];
+        if (f.includes(from) && f.includes(to)) return true;
       }
-      return frontTouch >= 1;
+      return false;
     };
 
     const centroidX =
@@ -555,21 +699,10 @@ function PrismEditorialStage({
         proj["C_prime"].y) /
       6;
 
-    const prismWeight = 1;
     const edges = LANDING_PRISM_STORY_SPEC.solidEdges.map((edge) => {
       const a = proj[edge.from];
-      const bOrig = proj[edge.to];
+      const b = proj[edge.to];
       const isTop = edge.from.includes("prime") && edge.to.includes("prime");
-      const isPillar = !edge.from.includes("prime") && edge.to.includes("prime");
-      const growFrac = isPillar ? pillarGrow : isTop ? topGrow : 1;
-      const b: ProjectedPoint2D =
-        growFrac >= 0.999
-          ? bOrig
-          : {
-              x: lerp(a.x, bOrig.x, growFrac),
-              y: lerp(a.y, bOrig.y, growFrac),
-              z: lerp(a.z, bOrig.z, growFrac),
-            };
       const isNonParticipating =
         isTop || (edge.from === "A" && edge.to === "A_prime");
       let opacity = 0.92;
@@ -581,43 +714,15 @@ function PrismEditorialStage({
         key: `${edge.from}-${edge.to}`,
         a,
         b,
-        bFull: bOrig,
-        isGrowingPillar: false,
         dashed: !front,
         opacity,
-        visible: true,
       };
     });
 
-    // Perpendicular right-angle witness at A (AA' perp AB)
-    const pA = coords["A"];
-    const pB = coords["B"];
-    const pAp = coords["A_prime"];
-    const uAB: Vec3Tuple = [pB[0] - pA[0], pB[1] - pA[1], pB[2] - pA[2]];
-    const uAAp: Vec3Tuple = [pAp[0] - pA[0], pAp[1] - pA[1], pAp[2] - pA[2]];
-    const lenAB = Math.hypot(...uAB) || 1;
-    const lenAAp = Math.hypot(...uAAp) || 1;
-    const raSize = 0.36;
-    const b1: Vec3Tuple = [
-      pA[0] + (uAB[0] / lenAB) * raSize,
-      pA[1] + (uAB[1] / lenAB) * raSize,
-      pA[2] + (uAB[2] / lenAB) * raSize,
-    ];
-    const b2: Vec3Tuple = [
-      pA[0] + (uAAp[0] / lenAAp) * raSize,
-      pA[1] + (uAAp[1] / lenAAp) * raSize,
-      pA[2] + (uAAp[2] / lenAAp) * raSize,
-    ];
-    const bc: Vec3Tuple = [
-      b1[0] + (uAAp[0] / lenAAp) * raSize,
-      b1[1] + (uAAp[1] / lenAAp) * raSize,
-      b1[2] + (uAAp[2] / lenAAp) * raSize,
-    ];
-    const raB1 = projectPrismPoint3D(b1, pose.yaw, pose.pitch, cx, cy, scale);
-    const raB2 = projectPrismPoint3D(b2, pose.yaw, pose.pitch, cx, cy, scale);
-    const raC = projectPrismPoint3D(bc, pose.yaw, pose.pitch, cx, cy, scale);
+    const raB1 = projectPrismPoint3D(rightAnglePts.b1, pose.yaw, pose.pitch, cx, cy, scale);
+    const raB2 = projectPrismPoint3D(rightAnglePts.b2, pose.yaw, pose.pitch, cx, cy, scale);
+    const raC = projectPrismPoint3D(rightAnglePts.bc, pose.yaw, pose.pitch, cx, cy, scale);
 
-    // Midpoint witness ticks for given midpoints M in AB, N in AC, P in CC', Q in BB'
     const makeTickSegment = (ptId: string, aId: string, bId: string) => {
       const pm = proj[ptId];
       const pa = proj[aId];
@@ -642,10 +747,10 @@ function PrismEditorialStage({
       makeTickSegment("P", "C", "C_prime"),
     ];
 
-    const liftY = (1 - pose.planeSweep) * 0.62;
-    const planePolyPts = STORY_PLANE_QUAD.map((q) =>
+    const liftY = (1 - pose.planeSweep) * 0.56;
+    const planePolyPts = planeQuad.map((qPt) =>
       projectPrismPoint3D(
-        [q[0], q[1] + liftY, q[2]],
+        [qPt[0], qPt[1] + liftY, qPt[2]],
         pose.yaw,
         pose.pitch,
         cx,
@@ -655,10 +760,9 @@ function PrismEditorialStage({
     );
 
     const fmt = (pts: readonly ProjectedPoint2D[]) =>
-      pts.map((p) => `${p.x.toFixed(1)},${p.y.toFixed(1)}`).join(" ");
+      pts.map((pt) => `${pt.x.toFixed(1)},${pt.y.toFixed(1)}`).join(" ");
 
     const loopIds = ["M", "N", "P", "Q"] as const;
-    // Host prism face index per segment: MN->base(0), NP->ACC'A'(4), PQ->BCC'B'(3), QM->ABB'A'(2)
     const traceHostFaceIdx = [0, 4, 3, 2] as const;
     const tracedEdges = loopIds.map((id, idx) => {
       const nextId = loopIds[(idx + 1) % loopIds.length];
@@ -678,35 +782,24 @@ function PrismEditorialStage({
       };
     });
 
-    const visibleIds = [
-      "A",
-      "B",
-      "C",
-      "A_prime",
-      "B_prime",
-      "C_prime",
-      "M",
-      "N",
-      "P",
-      "Q",
-    ].filter((id) => {
-      if (id === "Q") {
-        return pose.activeStageIndex >= 2 && (pose.parallelCue > 0.25 || pose.traceProgress > 0.56);
-      }
-      return true;
-    });
+    const showQ =
+      pose.activeStageIndex >= 2 &&
+      (pose.parallelCue > 0.25 || pose.traceProgress > 0.56 || reducedMotion);
+    const visibleIds = STORY_POINT_KEYS.filter((id) => (id === "Q" ? showQ : true));
 
     const labelCandidates = visibleIds.map((id) => {
       const pt = proj[id];
       const dx = pt.x - centroidX;
       const dy = pt.y - centroidY;
       const len = Math.max(1, Math.hypot(dx, dy));
-      const pad = id === "C" ? 16 : 19;
-      return {
-        id,
-        x: pt.x + (dx / len) * pad,
-        y: pt.y + (dy / len) * pad + 4,
-      };
+      const pad = id === "C" ? 15 : 18;
+      let lx = pt.x + (dx / len) * pad;
+      let ly = pt.y + (dy / len) * pad + 4;
+      // Nudge any top-right vertex label (e.g. B') clear of Stage 4 inset frame
+      if (insetReveal > 0.08 && lx > insetCardRect.x - 24 && ly < insetCardRect.y + insetCardRect.height + 16) {
+        lx = Math.min(lx, insetCardRect.x - 24);
+      }
+      return { id, x: lx, y: ly };
     });
     separateLabelPositions(
       labelCandidates,
@@ -715,7 +808,7 @@ function PrismEditorialStage({
       28,
       30,
       22,
-      26,
+      24,
     );
 
     const makeBaseEqTick = (aId: string, bId: string, tFrac: number) => {
@@ -749,11 +842,9 @@ function PrismEditorialStage({
       py: proj[id].y,
       lx: labelCandidates[i].x,
       ly: labelCandidates[i].y,
-      opacity: id.includes("prime") ? prismWeight : 1,
     }));
 
-    const frontLateralPolys = faceDefs
-      .slice(2)
+    const frontLateralPolys = STORY_FACE_DEFS.slice(2)
       .map((f, idx) => ({
         pts: fmt(f.map((id) => proj[id])),
         front: faceFrontMap[idx + 2],
@@ -764,63 +855,13 @@ function PrismEditorialStage({
       }))
       .filter((item) => item.front);
 
-    const haloCy = Math.min(468, (proj["A"].y + proj["B"].y + proj["C"].y) / 3 + 28);
-
-    // Exact isometric 2D true-shape trapezoid MNPQ from canonical domainXyz
-    const domM = pMap["M"].domainXyz;
-    const domN = pMap["N"].domainXyz;
-    const domP = pMap["P"].domainXyz;
-    const domQ = pMap["Q"].domainXyz;
-    const uxRaw: Vec3Tuple = [domN[0] - domM[0], domN[1] - domM[1], domN[2] - domM[2]];
-    const uLen = Math.hypot(...uxRaw) || 1;
-    const uAxis: Vec3Tuple = [uxRaw[0] / uLen, uxRaw[1] / uLen, uxRaw[2] / uLen];
-    const midTop: Vec3Tuple = [(domM[0] + domN[0]) * 0.5, (domM[1] + domN[1]) * 0.5, (domM[2] + domN[2]) * 0.5];
-    const midBot: Vec3Tuple = [(domQ[0] + domP[0]) * 0.5, (domQ[1] + domP[1]) * 0.5, (domQ[2] + domP[2]) * 0.5];
-    const vxRaw: Vec3Tuple = [midBot[0] - midTop[0], midBot[1] - midTop[1], midBot[2] - midTop[2]];
-    const vLen = Math.hypot(...vxRaw) || 1;
-    const vAxis: Vec3Tuple = [vxRaw[0] / vLen, vxRaw[1] / vLen, vxRaw[2] / vLen];
-    const trapCentroid: Vec3Tuple = [
-      (domM[0] + domN[0] + domP[0] + domQ[0]) * 0.25,
-      (domM[1] + domN[1] + domP[1] + domQ[1]) * 0.25,
-      (domM[2] + domN[2] + domP[2] + domQ[2]) * 0.25,
-    ];
-    const insetCenterX = 571;
-    const insetCenterY = 148;
-    const insetScale = 35;
-    const mapTrapPt = (id: string, dom: Vec3Tuple) => {
-      const rel: Vec3Tuple = [
-        dom[0] - trapCentroid[0],
-        dom[1] - trapCentroid[1],
-        dom[2] - trapCentroid[2],
-      ];
-      const u = rel[0] * uAxis[0] + rel[1] * uAxis[1] + rel[2] * uAxis[2];
-      const v = rel[0] * vAxis[0] + rel[1] * vAxis[1] + rel[2] * vAxis[2];
-      return {
-        id,
-        label: pMap[id].label,
-        role: pMap[id].role,
-        x: insetCenterX + u * insetScale,
-        y: insetCenterY + v * insetScale,
-      };
-    };
-    const trapPts = [
-      mapTrapPt("M", domM),
-      mapTrapPt("N", domN),
-      mapTrapPt("P", domP),
-      mapTrapPt("Q", domQ),
-    ];
-    const insetTicksD = [
-      buildDoubleTickD({ x: trapPts[1].x, y: trapPts[1].y, z: 0 }, { x: trapPts[2].x, y: trapPts[2].y, z: 0 }),
-      buildDoubleTickD({ x: trapPts[0].x, y: trapPts[0].y, z: 0 }, { x: trapPts[3].x, y: trapPts[3].y, z: 0 }),
-    ].join(" ");
+    const haloCy = Math.min(448, (proj["A"].y + proj["B"].y + proj["C"].y) / 3 + 26);
 
     return {
       proj,
       cx,
-      topGrow,
       insetReveal,
       seedHaloStrength,
-      prismWeight,
       edges,
       frontLateralPolys,
       midpointTicks,
@@ -832,321 +873,323 @@ function PrismEditorialStage({
       topPts: fmt([proj["A_prime"], proj["B_prime"], proj["C_prime"]]),
       planePts: fmt(planePolyPts),
       sectionPts: fmt([proj["M"], proj["N"], proj["P"], proj["Q"]]),
-      trapPts,
-      trapPolyPoints: trapPts.map((pt) => `${pt.x.toFixed(1)},${pt.y.toFixed(1)}`).join(" "),
-      insetTicksD,
       tracedEdges,
       labels,
     };
   }, [pose, reducedMotion]);
 
+  const { trapPts, trapPolyPoints, insetTicksD, insetCardRect } = STORY_STATIC_GEOM;
+
   return (
-    <div className="axo-v14-story-stage-pin">
-      <div
-        id="landing-storytelling-scene"
-        className="axo-v14-story-stage"
-        data-story-stage={pose.activeStageIndex}
-        data-story-progress={pose.progress.toFixed(3)}
-        data-reduced-motion={reducedMotion ? "true" : "false"}
+    <div
+      id="landing-storytelling-scene"
+      className="axo-v14-story-stage"
+      data-story-stage={pose.activeStageIndex}
+      data-story-progress={pose.progress.toFixed(3)}
+      data-reduced-motion={reducedMotion ? "true" : "false"}
+    >
+      <svg
+        className="axo-v14-story-svg"
+        viewBox={`0 0 ${STORY_SVG_W} ${STORY_SVG_H}`}
+        role="img"
+        aria-label={`Lăng trụ tam giác đều ABC.A′B′C′: ${activeStage.chapterHeading}`}
       >
-        <svg
-          className="axo-v14-story-svg"
-          viewBox={`0 0 ${STORY_SVG_W} ${STORY_SVG_H}`}
-          role="img"
-          aria-label={`Lăng trụ tam giác đều ABC.A′B′C′: ${activeStage.chapterHeading}`}
-        >
-          <ellipse
-            className="axo-v14-svg-contact-halo"
-            cx={scene.cx.toFixed(1)}
-            cy={scene.haloCy.toFixed(1)}
-            rx="198"
-            ry="26"
+        <ellipse
+          className="axo-v14-svg-contact-halo"
+          cx={scene.cx.toFixed(1)}
+          cy={scene.haloCy.toFixed(1)}
+          rx="192"
+          ry="24"
+        />
+
+        <polygon className="axo-v14-svg-prism-base" points={scene.basePts} />
+
+        {scene.frontLateralPolys.map((face, idx) => (
+          <polygon
+            key={`lat-${idx}`}
+            className={`axo-v14-svg-prism-face ${face.toneClass}`}
+            points={face.pts}
+            fillOpacity={face.toneClass.includes("lit") ? "0.82" : "0.44"}
           />
+        ))}
 
-          <polygon className="axo-v14-svg-prism-base" points={scene.basePts} />
+        <polygon
+          className="axo-v14-svg-prism-top"
+          points={scene.topPts}
+          fillOpacity="0.200"
+          strokeOpacity="0.720"
+        />
 
-          {scene.frontLateralPolys.map((face, idx) => (
-            <polygon
-              key={`lat-${idx}`}
-              className={`axo-v14-svg-prism-face ${face.toneClass}`}
-              points={face.pts}
-              fillOpacity={((face.toneClass.includes("lit") ? 0.82 : 0.44) * scene.topGrow).toFixed(3)}
-            />
-          ))}
-
-          {scene.topGrow > 0.08 && (
-            <polygon
-              className="axo-v14-svg-prism-top"
-              points={scene.topPts}
-              fillOpacity={(0.2 * scene.topGrow).toFixed(3)}
-              strokeOpacity={(0.72 * scene.topGrow).toFixed(3)}
-            />
-          )}
-
-          {scene.edges.map((edge) =>
-            edge.visible ? (
-              <g key={edge.key}>
-                {edge.isGrowingPillar && (
-                  <line
-                    className="axo-v14-svg-prism-edge-back"
-                    x1={edge.b.x}
-                    y1={edge.b.y}
-                    x2={edge.bFull.x}
-                    y2={edge.bFull.y}
-                    strokeOpacity="0.28"
-                  />
-                )}
-                <line
-                  className={
-                    edge.dashed
-                      ? "axo-v14-svg-prism-edge-back"
-                      : "axo-v14-svg-prism-edge-front"
-                  }
-                  x1={edge.a.x}
-                  y1={edge.a.y}
-                  x2={edge.b.x}
-                  y2={edge.b.y}
-                  strokeOpacity={
-                    edge.dashed
-                      ? (edge.opacity * 0.56).toFixed(3)
-                      : edge.opacity.toFixed(3)
-                  }
-                />
-              </g>
-            ) : null,
-          )}
-
-          <path
-            className="axo-v14-svg-edge-altitude"
-            d={scene.rightAnglePath}
-            fill="none"
-            opacity="0.88"
+        {scene.edges.map((edge) => (
+          <line
+            key={edge.key}
+            className={
+              edge.dashed
+                ? "axo-v14-svg-prism-edge-back"
+                : "axo-v14-svg-prism-edge-front"
+            }
+            x1={edge.a.x}
+            y1={edge.a.y}
+            x2={edge.b.x}
+            y2={edge.b.y}
+            strokeOpacity={
+              edge.dashed
+                ? (edge.opacity * 0.56).toFixed(3)
+                : edge.opacity.toFixed(3)
+            }
           />
+        ))}
 
-          <path
-            className="axo-v14-svg-eq-tick"
-            d={scene.equilateralBaseTicksD}
-            fill="none"
-            opacity={Math.max(0.28, 0.85 * (1 - 0.5 * pose.sectionFill)).toFixed(3)}
+        <path
+          className="axo-v14-svg-edge-altitude"
+          d={scene.rightAnglePath}
+          fill="none"
+          opacity="0.88"
+        />
+
+        <path
+          className="axo-v14-svg-eq-tick"
+          d={scene.equilateralBaseTicksD}
+          fill="none"
+          opacity={Math.max(0.28, 0.85 * (1 - 0.5 * pose.sectionFill)).toFixed(3)}
+        />
+
+        {scene.midpointTicks.map((tick) => (
+          <line
+            key={tick.key}
+            className="axo-v14-svg-midpoint-tick"
+            x1={tick.x1.toFixed(1)}
+            y1={tick.y1.toFixed(1)}
+            x2={tick.x2.toFixed(1)}
+            y2={tick.y2.toFixed(1)}
           />
+        ))}
 
-          {scene.midpointTicks.map((tick) => (
+        {pose.parallelCue > 0.04 && (
+          <g opacity={pose.parallelCue.toFixed(3)}>
             <line
-              key={tick.key}
-              className="axo-v14-svg-midpoint-tick"
-              x1={tick.x1.toFixed(1)}
-              y1={tick.y1.toFixed(1)}
-              x2={tick.x2.toFixed(1)}
-              y2={tick.y2.toFixed(1)}
+              className="axo-v14-svg-parallel-band"
+              x1={scene.proj["B"].x}
+              y1={scene.proj["B"].y}
+              x2={scene.proj["C"].x}
+              y2={scene.proj["C"].y}
             />
-          ))}
-
-          {pose.parallelCue > 0.04 && (
-            <g opacity={pose.parallelCue.toFixed(3)}>
-              <line
-                className="axo-v14-svg-parallel-band"
-                x1={scene.proj["B"].x}
-                y1={scene.proj["B"].y}
-                x2={scene.proj["C"].x}
-                y2={scene.proj["C"].y}
-              />
-              <line
-                className="axo-v14-svg-parallel-band"
-                x1={scene.proj["M"].x}
-                y1={scene.proj["M"].y}
-                x2={scene.proj["N"].x}
-                y2={scene.proj["N"].y}
-              />
-              {pose.planeSweep > 0.45 && (
-                <line
-                  className="axo-v14-svg-parallel-band"
-                  x1={scene.proj["P"].x}
-                  y1={scene.proj["P"].y}
-                  x2={scene.proj["Q"].x}
-                  y2={scene.proj["Q"].y}
-                />
-              )}
-              <line
-                className="axo-v14-svg-parallel-guide"
-                x1={scene.proj["B"].x}
-                y1={scene.proj["B"].y}
-                x2={scene.proj["C"].x}
-                y2={scene.proj["C"].y}
-              />
-              <line
-                className="axo-v14-svg-parallel-guide"
-                x1={scene.proj["M"].x}
-                y1={scene.proj["M"].y}
-                x2={scene.proj["N"].x}
-                y2={scene.proj["N"].y}
-              />
-              {pose.planeSweep > 0.45 && (
-                <line
-                  className="axo-v14-svg-parallel-guide"
-                  x1={scene.proj["P"].x}
-                  y1={scene.proj["P"].y}
-                  x2={scene.proj["Q"].x}
-                  y2={scene.proj["Q"].y}
-                />
-              )}
-            </g>
-          )}
-
-          {pose.planeSweep > 0.02 && (
-            <polygon
-              className="axo-v14-svg-cutting-plane"
-              points={scene.planePts}
-              fillOpacity={(0.13 * pose.planeSweep).toFixed(3)}
-              strokeOpacity={(0.54 * pose.planeSweep).toFixed(3)}
+            <line
+              className="axo-v14-svg-parallel-band"
+              x1={scene.proj["M"].x}
+              y1={scene.proj["M"].y}
+              x2={scene.proj["N"].x}
+              y2={scene.proj["N"].y}
             />
-          )}
-
-          {pose.sectionFill > 0.02 && (
-            <polygon
-              className="axo-v14-svg-section-poly"
-              points={scene.sectionPts}
-              fillOpacity={(0.42 * pose.sectionFill).toFixed(3)}
-              stroke="none"
+            <line
+              className="axo-v14-svg-parallel-band"
+              x1={scene.proj["P"].x}
+              y1={scene.proj["P"].y}
+              x2={scene.proj["Q"].x}
+              y2={scene.proj["Q"].y}
             />
-          )}
-
-          {scene.tracedEdges.map((seg) =>
-            seg.u > 0.01 ? (
-              <line
-                key={seg.key}
-                className="axo-v14-svg-section-trace"
-                x1={seg.x1}
-                y1={seg.y1}
-                x2={seg.x2}
-                y2={seg.y2}
-                strokeDasharray={seg.isFront ? undefined : "6 4"}
-                strokeOpacity={(
-                  (seg.isFront ? 0.96 : 0.72) *
-                  Math.min(1, 0.45 + 0.55 * seg.u)
-                ).toFixed(3)}
-              />
-            ) : null,
-          )}
-
-          {pose.sectionFill > 0.35 && (
-            <path
-              className="axo-v14-svg-leg-tick"
-              d={scene.congruenceLegsD}
-              fill="none"
-              opacity={Math.min(0.92, (pose.sectionFill - 0.35) * 1.54).toFixed(3)}
+            <line
+              className="axo-v14-svg-parallel-guide"
+              x1={scene.proj["B"].x}
+              y1={scene.proj["B"].y}
+              x2={scene.proj["C"].x}
+              y2={scene.proj["C"].y}
             />
-          )}
+            <line
+              className="axo-v14-svg-parallel-guide"
+              x1={scene.proj["M"].x}
+              y1={scene.proj["M"].y}
+              x2={scene.proj["N"].x}
+              y2={scene.proj["N"].y}
+            />
+            <line
+              className="axo-v14-svg-parallel-guide"
+              x1={scene.proj["P"].x}
+              y1={scene.proj["P"].y}
+              x2={scene.proj["Q"].x}
+              y2={scene.proj["Q"].y}
+            />
+          </g>
+        )}
 
-          {scene.labels.map((item) => {
-            const isSeed = item.role === "seed";
-            const isInter = item.role === "intersection";
-            const dotClass = isInter
-              ? "axo-v14-svg-section-dot"
-              : isSeed
-                ? "axo-v14-svg-seed-dot"
-                : "axo-v14-svg-vertex-dot";
-            const textClass = isInter
-              ? "axo-v14-svg-label-inter"
-              : isSeed
-                ? "axo-v14-svg-label-seed"
-                : "axo-v14-svg-vertex-text";
-            return (
-              <g key={item.id} opacity={item.opacity.toFixed(3)}>
-                {isSeed && scene.seedHaloStrength > 0.04 && (
-                  <circle
-                    className="axo-v14-svg-seed-halo"
-                    cx={item.px}
-                    cy={item.py}
-                    r={(7.5 + 3.5 * scene.seedHaloStrength).toFixed(1)}
-                    opacity={(0.82 * scene.seedHaloStrength).toFixed(3)}
-                  />
-                )}
+        {pose.planeSweep > 0.02 && (
+          <polygon
+            className="axo-v14-svg-cutting-plane"
+            points={scene.planePts}
+            fillOpacity={(0.13 * pose.planeSweep).toFixed(3)}
+            strokeOpacity={(0.54 * pose.planeSweep).toFixed(3)}
+          />
+        )}
+
+        {pose.sectionFill > 0.02 && (
+          <polygon
+            className="axo-v14-svg-section-poly"
+            points={scene.sectionPts}
+            fillOpacity={(0.4 * pose.sectionFill).toFixed(3)}
+            stroke="none"
+          />
+        )}
+
+        {scene.tracedEdges.map((seg) =>
+          seg.u > 0.01 ? (
+            <line
+              key={seg.key}
+              className="axo-v14-svg-section-trace"
+              x1={seg.x1}
+              y1={seg.y1}
+              x2={seg.x2}
+              y2={seg.y2}
+              strokeDasharray={seg.isFront ? undefined : "6 4"}
+              strokeOpacity={(
+                (seg.isFront ? 0.96 : 0.72) *
+                Math.min(1, 0.45 + 0.55 * seg.u)
+              ).toFixed(3)}
+            />
+          ) : null,
+        )}
+
+        {pose.sectionFill > 0.35 && (
+          <path
+            className="axo-v14-svg-leg-tick"
+            d={scene.congruenceLegsD}
+            fill="none"
+            opacity={Math.min(0.92, (pose.sectionFill - 0.35) * 1.54).toFixed(3)}
+          />
+        )}
+
+        {scene.labels.map((item) => {
+          const isSeed = item.role === "seed";
+          const isInter = item.role === "intersection";
+          const dotClass = isInter
+            ? "axo-v14-svg-section-dot"
+            : isSeed
+              ? "axo-v14-svg-seed-dot"
+              : "axo-v14-svg-vertex-dot";
+          const textClass = isInter
+            ? "axo-v14-svg-label-inter"
+            : isSeed
+              ? "axo-v14-svg-label-seed"
+              : "axo-v14-svg-vertex-text";
+          return (
+            <g key={item.id}>
+              {isSeed && scene.seedHaloStrength > 0.04 && (
                 <circle
-                  className={dotClass}
+                  className="axo-v14-svg-seed-halo"
                   cx={item.px}
                   cy={item.py}
-                  r={isInter ? 4.8 : isSeed ? 4.4 : 3.2}
+                  r={(7.5 + 3.2 * scene.seedHaloStrength).toFixed(1)}
+                  opacity={(0.82 * scene.seedHaloStrength).toFixed(3)}
                 />
-                <text className={textClass} x={item.lx} y={item.ly}>
-                  {item.label}
+              )}
+              <circle
+                className={dotClass}
+                cx={item.px}
+                cy={item.py}
+                r={isInter ? 4.8 : isSeed ? 4.4 : 3.2}
+              />
+              <text className={textClass} x={item.lx} y={item.ly}>
+                {item.label}
+              </text>
+            </g>
+          );
+        })}
+
+        {scene.insetReveal > 0.02 && (
+          <g
+            className="axo-v14-svg-trueshape-inset"
+            opacity={scene.insetReveal.toFixed(3)}
+            transform={`translate(0 ${(10 * (1 - scene.insetReveal)).toFixed(1)})`}
+          >
+            <rect
+              className="axo-v14-svg-inset-card"
+              x={insetCardRect.x}
+              y={insetCardRect.y}
+              width={insetCardRect.width}
+              height={insetCardRect.height}
+              rx="12"
+            />
+            <text
+              className="axo-v14-svg-inset-caption"
+              x={insetCardRect.x + insetCardRect.width * 0.5}
+              y="46"
+            >
+              Hình thật thiết diện
+            </text>
+            <text
+              className="axo-v14-svg-inset-subcaption"
+              x={insetCardRect.x + insetCardRect.width * 0.5}
+              y="64"
+            >
+              Hình thang cân MNPQ
+            </text>
+            <polygon
+              className="axo-v14-svg-section-poly"
+              points={trapPolyPoints}
+              fillOpacity="0.38"
+              strokeOpacity="0.94"
+            />
+            <line
+              className="axo-v14-svg-parallel-guide"
+              x1={trapPts[0].x}
+              y1={trapPts[0].y}
+              x2={trapPts[1].x}
+              y2={trapPts[1].y}
+            />
+            <line
+              className="axo-v14-svg-parallel-guide"
+              x1={trapPts[3].x}
+              y1={trapPts[3].y}
+              x2={trapPts[2].x}
+              y2={trapPts[2].y}
+            />
+            <path className="axo-v14-svg-leg-tick" d={insetTicksD} fill="none" />
+            {trapPts.map((tp, idx) => (
+              <g key={`trap-${tp.id}`}>
+                <circle
+                  className={
+                    tp.role === "intersection"
+                      ? "axo-v14-svg-section-dot"
+                      : "axo-v14-svg-seed-dot"
+                  }
+                  cx={tp.x.toFixed(1)}
+                  cy={tp.y.toFixed(1)}
+                  r="3.8"
+                />
+                <text
+                  className={
+                    tp.role === "intersection"
+                      ? "axo-v14-svg-label-inter"
+                      : "axo-v14-svg-label-seed"
+                  }
+                  x={(tp.x + (idx === 0 || idx === 3 ? -15 : 15)).toFixed(1)}
+                  y={(tp.y + (idx < 2 ? -10 : 16)).toFixed(1)}
+                >
+                  {tp.label}
                 </text>
               </g>
-            );
-          })}
+            ))}
+          </g>
+        )}
+      </svg>
 
-          {scene.insetReveal > 0.02 && (
-            <g
-              className="axo-v14-svg-trueshape-inset"
-              opacity={scene.insetReveal.toFixed(3)}
-              transform={`translate(0 ${(12 * (1 - scene.insetReveal)).toFixed(1)})`}
-            >
-              <rect
-                className="axo-v14-svg-inset-card"
-                x="458"
-                y="24"
-                width="226"
-                height="210"
-                rx="14"
-              />
-              <text className="axo-v14-svg-inset-caption" x="571" y="50">
-                Hình thật thiết diện
-              </text>
-              <text className="axo-v14-svg-inset-subcaption" x="571" y="68">
-                Hình thang cân MNPQ
-              </text>
-              <polygon
-                className="axo-v14-svg-section-poly"
-                points={scene.trapPolyPoints}
-                fillOpacity="0.38"
-                strokeOpacity="0.94"
-              />
-              <line
-                className="axo-v14-svg-parallel-guide"
-                x1={scene.trapPts[0].x}
-                y1={scene.trapPts[0].y}
-                x2={scene.trapPts[1].x}
-                y2={scene.trapPts[1].y}
-              />
-              <line
-                className="axo-v14-svg-parallel-guide"
-                x1={scene.trapPts[3].x}
-                y1={scene.trapPts[3].y}
-                x2={scene.trapPts[2].x}
-                y2={scene.trapPts[2].y}
-              />
-              <path
-                className="axo-v14-svg-leg-tick"
-                d={scene.insetTicksD}
-                fill="none"
-              />
-              {scene.trapPts.map((tp, idx) => (
-                <g key={`trap-${tp.id}`}>
-                  <circle
-                    className={
-                      tp.role === "intersection"
-                        ? "axo-v14-svg-section-dot"
-                        : "axo-v14-svg-seed-dot"
-                    }
-                    cx={tp.x.toFixed(1)}
-                    cy={tp.y.toFixed(1)}
-                    r="3.8"
-                  />
-                  <text
-                    className={
-                      tp.role === "intersection"
-                        ? "axo-v14-svg-label-inter"
-                        : "axo-v14-svg-label-seed"
-                    }
-                    x={(tp.x + (idx === 0 || idx === 3 ? -16 : 16)).toFixed(1)}
-                    y={(tp.y + (idx < 2 ? -10 : 16)).toFixed(1)}
-                  >
-                    {tp.label}
-                  </text>
-                </g>
-              ))}
-            </g>
-          )}
-        </svg>
+      <div className="axo-v14-story-stage-bar">
+        <span className="axo-v14-story-stage-status">
+          {`0${activeStage.shortNum} / 04 · ${activeStage.epistemicRole}`}
+        </span>
+        <div className="axo-v14-story-legend" aria-hidden="true">
+          <span className="axo-v14-story-legend-item">
+            <span className="axo-v14-story-swatch is-seed" />
+            Điểm gốc
+          </span>
+          <span className="axo-v14-story-legend-item">
+            <span className="axo-v14-story-swatch is-plane" />
+            Mặt phẳng (MNP)
+          </span>
+          <span className="axo-v14-story-legend-item">
+            <span className="axo-v14-story-swatch is-section" />
+            Thiết diện MNPQ
+          </span>
+        </div>
       </div>
     </div>
   );
@@ -1160,10 +1203,13 @@ function readStoryProgressOverride(): number | null {
   return Number.isFinite(parsed) ? clamp01(parsed) : null;
 }
 
+const STAGE_SNAP_PROGRESS = [0.08, 0.375, 0.625, 0.92] as const;
+
 export function LandingStorytellingV14() {
   const sectionRef = useRef<HTMLElement | null>(null);
   const runwayRef = useRef<HTMLDivElement | null>(null);
-  const stickyRef = useRef<HTMLDivElement | null>(null);
+  const stagePinRef = useRef<HTMLDivElement | null>(null);
+  const chapterRefs = useRef<(HTMLLIElement | null)[]>([]);
   const targetProgressRef = useRef<number>(readStoryProgressOverride() ?? 0);
   const currentProgressRef = useRef<number>(targetProgressRef.current);
   const reducedMotionRef = useRef<boolean>(false);
@@ -1172,6 +1218,21 @@ export function LandingStorytellingV14() {
   const [scrollProgress, setScrollProgress] = useState<number>(
     () => targetProgressRef.current,
   );
+
+  const computeFocalY = useCallback((): number => {
+    const pinEl = stagePinRef.current;
+    if (!pinEl) return 380;
+    const pinHeight = pinEl.getBoundingClientRect().height || 500;
+    if (window.innerWidth <= 920) {
+      const topOffset = 68;
+      const pinBottom = topOffset + pinHeight;
+      const freeBelowPin = Math.max(0, window.innerHeight - pinBottom);
+      const bandOffset = Math.round(Math.max(140, Math.min(168, freeBelowPin * 0.5)));
+      return Math.min(window.innerHeight - 40, pinBottom + bandOffset);
+    }
+    const dockBottom = Math.min(window.innerHeight - 96, 88 + pinHeight);
+    return Math.max(240, dockBottom - 110);
+  }, []);
 
   useEffect(() => {
     if (typeof window === "undefined") return;
@@ -1196,14 +1257,14 @@ export function LandingStorytellingV14() {
       const target = targetProgressRef.current;
       const cur = currentProgressRef.current;
       const diff = target - cur;
-      if (reducedMotionRef.current || Math.abs(diff) < 0.0012) {
-        if (cur !== target) {
+      if (reducedMotionRef.current || Math.abs(diff) < 0.002) {
+        if (Math.abs(cur - target) > 0.0005) {
           currentProgressRef.current = target;
           setScrollProgress(target);
         }
         return;
       }
-      const next = cur + diff * 0.34;
+      const next = cur + diff * 0.36;
       currentProgressRef.current = next;
       setScrollProgress(next);
       rafId = window.requestAnimationFrame(tick);
@@ -1211,27 +1272,40 @@ export function LandingStorytellingV14() {
 
     const syncTarget = (immediate = false) => {
       if (readStoryProgressOverride() !== null) return;
-      const runwayEl = runwayRef.current;
-      const stickyEl = stickyRef.current;
-      if (!runwayEl || !stickyEl) return;
-      const runwayRect = runwayEl.getBoundingClientRect();
-      const stickyRect = stickyEl.getBoundingClientRect();
-      const nextTarget = computeStoryScrollProgress(
-        runwayRect.top,
-        runwayRect.height,
-        stickyRect.height,
-      );
+      const secEl = sectionRef.current;
+      if (!secEl) return;
+      const secRect = secEl.getBoundingClientRect();
+
+      let nextTarget: number | null = null;
+      if (secRect.top > window.innerHeight + 160) {
+        nextTarget = 0;
+      } else if (secRect.bottom < -160) {
+        nextTarget = 1;
+      } else {
+        const chEls = chapterRefs.current;
+        if (chEls.length < 4 || chEls.some((el) => !el)) return;
+        const rects = chEls.map((el) => el!.getBoundingClientRect());
+        const centers = rects.map((r) => r.top + r.height * 0.5);
+        nextTarget = computeChapterScrollProgress(
+          centers,
+          computeFocalY(),
+          rects[3].bottom,
+        );
+      }
+
       targetProgressRef.current = nextTarget;
       if (
         immediate ||
         reducedMotionRef.current ||
-        Math.abs(nextTarget - currentProgressRef.current) > 0.2
+        Math.abs(nextTarget - currentProgressRef.current) > 0.22
       ) {
-        currentProgressRef.current = nextTarget;
-        setScrollProgress(nextTarget);
+        if (Math.abs(currentProgressRef.current - nextTarget) > 0.001) {
+          currentProgressRef.current = nextTarget;
+          setScrollProgress(nextTarget);
+        }
         return;
       }
-      if (!document.hidden && rafId === 0 && Math.abs(nextTarget - currentProgressRef.current) >= 0.0012) {
+      if (!document.hidden && rafId === 0 && Math.abs(nextTarget - currentProgressRef.current) >= 0.002) {
         rafId = window.requestAnimationFrame(tick);
       }
     };
@@ -1265,7 +1339,7 @@ export function LandingStorytellingV14() {
         ? new ResizeObserver(handleScrollOrResize)
         : null;
     if (runwayRef.current) ro?.observe(runwayRef.current);
-    if (stickyRef.current) ro?.observe(stickyRef.current);
+    if (stagePinRef.current) ro?.observe(stagePinRef.current);
 
     return () => {
       if (rafId !== 0) window.cancelAnimationFrame(rafId);
@@ -1275,7 +1349,41 @@ export function LandingStorytellingV14() {
       mq?.removeEventListener?.("change", onMotionChange);
       ro?.disconnect();
     };
-  }, []);
+  }, [computeFocalY]);
+
+  const jumpToChapter = useCallback(
+    (idx: number) => {
+      if (typeof window === "undefined") return;
+      const chEl = chapterRefs.current[idx];
+      if (!chEl) return;
+      const rect = chEl.getBoundingClientRect();
+      const chCenterDoc = window.scrollY + rect.top + rect.height * 0.5;
+      const focal = computeFocalY();
+      const targetY =
+        window.innerWidth <= 920
+          ? Math.max(
+              0,
+              Math.round(
+                window.scrollY +
+                  rect.top -
+                  (68 + (stagePinRef.current?.getBoundingClientRect().height || 300) + 14),
+              ),
+            )
+          : Math.max(0, Math.round(chCenterDoc - focal));
+      const snap = STAGE_SNAP_PROGRESS[idx] ?? 0;
+
+      if (readStoryProgressOverride() === null) {
+        targetProgressRef.current = snap;
+        currentProgressRef.current = snap;
+        setScrollProgress(snap);
+      }
+      window.scrollTo({
+        top: targetY,
+        behavior: reducedMotionRef.current ? "auto" : "smooth",
+      });
+    },
+    [computeFocalY],
+  );
 
   const pose = useMemo(
     () => interpolateStoryPose(scrollProgress, reducedMotion),
@@ -1304,15 +1412,20 @@ export function LandingStorytellingV14() {
         </div>
 
         <div ref={runwayRef} className="axo-v14-story-runway">
-          <div ref={stickyRef} className="axo-v14-story-sticky">
-            <div className="axo-v14-story-track">
+          <div className="axo-v14-story-track">
+            <div ref={stagePinRef} className="axo-v14-story-stage-pin">
               <PrismEditorialStage pose={pose} reducedMotion={reducedMotion} />
+            </div>
 
-              <div className="axo-v14-story-narrative">
+            <div className="axo-v14-story-narrative">
+              <div className="axo-v14-story-narrative-head">
                 <p className="axo-v14-story-context-line">
                   Mô hình: Lăng trụ tam giác đều ABC.A′B′C′
                 </p>
-                <div className="axo-v14-story-rail" aria-hidden="true">
+                <nav
+                  className="axo-v14-story-rail"
+                  aria-label="Tiến trình bốn chặng dựng hình"
+                >
                   {STORY_STAGES_V14.map((s, idx) => {
                     const segFill = reducedMotion
                       ? idx <= pose.activeStageIndex
@@ -1326,74 +1439,82 @@ export function LandingStorytellingV14() {
                           ? " is-done"
                           : "";
                     return (
-                      <div key={s.shortNum} className={`axo-v14-story-rail-item${stateCls}`}>
-                        <span className="axo-v14-story-rail-bar">
+                      <button
+                        key={s.shortNum}
+                        type="button"
+                        className={`axo-v14-story-rail-item${stateCls}`}
+                        aria-current={idx === pose.activeStageIndex ? "step" : undefined}
+                        aria-label={`${s.chapterHeading}: ${s.title}`}
+                        onClick={() => jumpToChapter(idx)}
+                      >
+                        <span className="axo-v14-story-rail-bar" aria-hidden="true">
                           <span
                             className="axo-v14-story-rail-fill"
-                            style={{ transform: `scaleX(${segFill.toFixed(4)})` }}
+                            style={{ transform: `scaleX(${segFill.toFixed(3)})` }}
                           />
                         </span>
-                        <span className="axo-v14-story-rail-label">{`0${s.shortNum} · ${s.mobileShortTag}`}</span>
-                      </div>
+                        <span className="axo-v14-story-rail-label">
+                          {`0${s.shortNum} · ${s.mobileShortTag}`}
+                        </span>
+                      </button>
                     );
                   })}
-                </div>
-
-                <ol
-                  className="axo-v14-story-chapters"
-                  aria-label="Các chặng dựng hình theo cuộn trang"
-                >
-                  {STORY_STAGES_V14.map((stage, idx) => {
-                    const env = computeChapterEnvelope(
-                      pose.progress,
-                      idx,
-                      reducedMotion,
-                    );
-                    const isActive = reducedMotion
-                      ? true
-                      : idx === pose.activeStageIndex;
-                    return (
-                      <li
-                        key={stage.shortNum}
-                        data-story-chapter={idx}
-                        data-active={isActive ? "true" : "false"}
-                        data-chapter-visible={env.isVisible ? "true" : "false"}
-                        className={
-                          isActive
-                            ? "axo-v14-story-chapter is-active"
-                            : "axo-v14-story-chapter"
-                        }
-                        style={
-                          reducedMotion
-                            ? undefined
-                            : {
-                                opacity: env.opacity.toFixed(3),
-                                transform: `translate3d(0, ${env.offsetY.toFixed(1)}px, 0)`,
-                                visibility: env.isVisible ? "visible" : "hidden",
-                                pointerEvents: env.isVisible ? "auto" : "none",
-                              }
-                        }
-                      >
-                        <div className="axo-v14-story-chapter-meta">
-                          <span className="axo-v14-story-epistemic-badge">
-                            {stage.epistemicRole}
-                          </span>
-                          <span className="axo-v14-story-chapter-index">
-                            {stage.chapterHeading}
-                          </span>
-                        </div>
-                        <h3 className="axo-v14-story-chapter-title">{stage.title}</h3>
-                        <p className="axo-v14-story-chapter-summary">
-                          {stage.summary}
-                        </p>
-                        <div className="axo-v14-story-epistemic-box">
-                          {stage.establishedState}
-                        </div>
-                      </li>
-                    );
-                  })}
-                </ol>
+                </nav>
               </div>
+
+              <ol
+                className="axo-v14-story-chapters"
+                aria-label="Các chặng dựng hình theo cuộn trang"
+              >
+                {STORY_STAGES_V14.map((stage, idx) => {
+                  const isActive = idx === pose.activeStageIndex;
+                  const state = isActive
+                    ? "active"
+                    : idx < pose.activeStageIndex
+                      ? "done"
+                      : "upcoming";
+                  return (
+                    <li
+                      key={stage.shortNum}
+                      ref={(el) => {
+                        chapterRefs.current[idx] = el;
+                      }}
+                      data-story-chapter={idx}
+                      data-active={isActive ? "true" : "false"}
+                      data-state={state}
+                      className={`axo-v14-story-chapter${isActive ? " is-active" : ""}`}
+                    >
+                      <div className="axo-v14-story-chapter-meta">
+                        <span className="axo-v14-story-chapter-index">
+                          {stage.chapterHeading}
+                        </span>
+                        <span className="axo-v14-story-chapter-sep" aria-hidden="true">
+                          ·
+                        </span>
+                        <span className="axo-v14-story-epistemic-role">
+                          {stage.epistemicRole}
+                        </span>
+                      </div>
+                      <h3 className="axo-v14-story-chapter-title">
+                        <button
+                          type="button"
+                          className="axo-v14-story-chapter-trigger"
+                          aria-current={isActive ? "step" : undefined}
+                          onClick={() => jumpToChapter(idx)}
+                        >
+                          {stage.title}
+                        </button>
+                      </h3>
+                      <p className="axo-v14-story-chapter-summary">
+                        {stage.summary}
+                      </p>
+                      <div className="axo-v14-story-epistemic-box">
+                        {stage.establishedState}
+                      </div>
+                    </li>
+                  );
+                })}
+              </ol>
             </div>
           </div>
         </div>

@@ -4,6 +4,7 @@ import { renderToStaticMarkup } from "react-dom/server";
 import { describe, expect, it } from "vitest";
 import {
   computeChapterEnvelope,
+  computeChapterScrollProgress,
   computeStoryScrollProgress,
   interpolateStoryPose,
   LandingStorytellingV14,
@@ -72,6 +73,47 @@ describe("AXO Landing — Scroll-Driven Spatial Storytelling", () => {
     const forwardMid = interpolateStoryPose(0.55, false);
     const reverseMid = interpolateStoryPose(0.55, false);
     expect(reverseMid).toEqual(forwardMid);
+  });
+
+  it("enforces strict stage-locked geometry visibility and deterministic chapter focal progress", () => {
+    // Stage 1 [0, 0.25): no plane, no parallel cues, no traces, no fill
+    const s0 = interpolateStoryPose(0.16, false);
+    expect(s0.activeStageIndex).toBe(0);
+    expect(s0.planeSweep).toBe(0);
+    expect(s0.parallelCue).toBe(0);
+    expect(s0.traceProgress).toBe(0);
+    expect(s0.sectionFill).toBe(0);
+
+    // Stage 2 [0.25, 0.50): plane & MN/NP traces active, no parallel cues, no final fill
+    const s1 = interpolateStoryPose(0.42, false);
+    expect(s1.activeStageIndex).toBe(1);
+    expect(s1.planeSweep).toBe(1);
+    expect(s1.traceProgress).toBeCloseTo(0.5, 4);
+    expect(s1.parallelCue).toBe(0);
+    expect(s1.sectionFill).toBe(0);
+
+    // Stage 3 [0.50, 0.75): parallel cues & PQ active, zero closing QM fill
+    const s2 = interpolateStoryPose(0.68, false);
+    expect(s2.activeStageIndex).toBe(2);
+    expect(s2.parallelCue).toBe(1);
+    expect(s2.traceProgress).toBeCloseTo(0.75, 4);
+    expect(s2.sectionFill).toBe(0);
+
+    // Stage 4 [0.75, 1.0]: closed trace + fill
+    const s3 = interpolateStoryPose(0.92, false);
+    expect(s3.activeStageIndex).toBe(3);
+    expect(s3.traceProgress).toBe(1);
+    expect(s3.sectionFill).toBe(1);
+
+    // Chapter focal progress crosses 0.25, 0.50, 0.75 right at midpoints [420, 660, 900]
+    const centers = [300, 540, 780, 1020] as const;
+    expect(computeChapterScrollProgress(centers, 419, 1140)).toBeLessThan(0.25);
+    expect(computeChapterScrollProgress(centers, 421, 1140)).toBeGreaterThanOrEqual(0.25);
+    expect(computeChapterScrollProgress(centers, 659, 1140)).toBeLessThan(0.5);
+    expect(computeChapterScrollProgress(centers, 661, 1140)).toBeGreaterThanOrEqual(0.5);
+    expect(computeChapterScrollProgress(centers, 899, 1140)).toBeLessThan(0.75);
+    expect(computeChapterScrollProgress(centers, 901, 1140)).toBeGreaterThanOrEqual(0.75);
+    expect(computeChapterScrollProgress(centers, 1200, 1140)).toBe(1);
   });
 
   it("snaps cleanly per chapter under prefers-reduced-motion", () => {
