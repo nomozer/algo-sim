@@ -1,0 +1,142 @@
+{
+  "browser": "157.0.8103.78",
+  "category": "AUTOMATED_BROWSER_NOT_HUMAN_STUDY",
+  "backendPort": 8767,
+  "answers_graded_in": "api_acceptance_*.json (same images, same server)",
+  "rows": [
+    {
+      "case_id": "vmmu_r476",
+      "partition": "development",
+      "viewport": "1440x900",
+      "category": "C2_USER_CORRECTED_SIMULATED_CONFIRM_ONLY",
+      "prepareStatus": "needs_confirmation",
+      "spansConfirmedByKeyboard": 5,
+      "cropsLoaded": true,
+      "buildEnabledAfterConfirm": true,
+      "horizontalOverflowPx": 0,
+      "analyzeStatus": "SERVED",
+      "answers": [
+        "cos²=3/4"
+      ],
+      "expected": "30°",
+      "canvas": true,
+      "uploadToReviewMs": 662,
+      "uploadToFirstUsableSceneMs": 2190,
+      "studentDwell": "scripted keyboard, near zero; real reading time NOT_MEASURED",
+      "errors": [],
+      "pass": true
+    },
+    {
+      "case_id": "vmmu_r476",
+      "partition": "development",
+      "viewport": "390x844",
+      "category": "C2_USER_CORRECTED_SIMULATED_CONFIRM_ONLY",
+      "prepareStatus": "needs_confirmation",
+      "spansConfirmedByKeyboard": 5,
+      "cropsLoaded": true,
+      "buildEnabledAfterConfirm": true,
+      "horizontalOverflowPx": 0,
+      "analyzeStatus": "SERVED",
+      "answers": [
+        "cos²=3/4"
+      ],
+      "expected": "30°",
+      "canvas": true,
+      "uploadToReviewMs": 882,
+      "uploadToFirstUsableSceneMs": 1445,
+      "studentDwell": "scripted keyboard, near zero; real reading time NOT_MEASURED",
+      "errors": [],
+      "pass": true
+    },
+    {
+      "case_id": "vmmu_r273",
+      "partition": "frozen_external_evaluation",
+      "viewport": "1440x900",
+      "category": "C2_USER_CORRECTED_SIMULATED_CONFIRM_ONLY",
+      "prepareStatus": "needs_confirmation",
+      "spansConfirmedByKeyboard": 3,
+      "cropsLoaded": true,
+      "buildEnabledAfterConfirm": true,
+      "horizontalOverflowPx": 0,
+      "analyzeStatus": "SERVED",
+      "answers": [
+        "a³"
+      ],
+      "expected": "a³",
+      "canvas": true,
+      "uploadToReviewMs": 3515,
+      "uploadToFirstUsableSceneMs": 4314,
+      "studentDwell": "scripted keyboard, near zero; real reading time NOT_MEASURED",
+      "errors": [],
+      "pass": true
+    },
+    {
+      "case_id": "vmmu_r273",
+      "partition": "frozen_external_evaluation",
+      "viewport": "390x844",
+      "category": "C2_USER_CORRECTED_SIMULATED_CONFIRM_ONLY",
+      "prepareStatus": "needs_confirmation",
+      "spansConfirmedByKeyboard": 3,
+      "cropsLoaded": true,
+      "buildEnabledAfterConfirm": true,
+      "horizontalOverflowPx": 0,
+      "analyzeStatus": "SERVED",
+      "answers": [
+        "a³"
+      ],
+      "expected": "a³",
+      "canvas": true,
+      "uploadToReviewMs": 388,
+      "uploadToFirstUsableSceneMs": 929,
+      "studentDwell": "scripted keyboard, near zero; real reading time NOT_MEASURED",
+      "errors": [],
+      "pass": true
+    },
+    {
+      "case_id": "vmmu_r492",
+      "partition": "frozen_external_evaluation",
+      "viewport": "1440x900",
+      "category": "C2_USER_CORRECTED_SIMULATED_CONFIRM_ONLY",
+      "prepareStatus": "needs_confirmation",
+      "spansConfirmedByKeyboard": 2,
+      "cropsLoaded": true,
+      "buildEnabledAfterConfirm": true,
+      "horizontalOverflowPx": 0,
+      "analyzeStatus": "SERVED",
+      "answers": [
+        "cos²=1/4"
+      ],
+      "expected": "60°",
+      "canvas": true,
+      "uploadToReviewMs": 582,
+      "uploadToFirstUsableSceneMs": 1087,
+      "studentDwell": "scripted keyboard, near zero; real reading time NOT_MEASURED",
+      "errors": [],
+      "pass": true
+    },
+    {
+      "case_id": "vmmu_r492",
+      "partition": "frozen_external_evaluation",
+      "viewport": "390x844",
+      "category": "C2_USER_CORRECTED_SIMULATED_CONFIRM_ONLY",
+      "prepareStatus": "needs_confirmation",
+      "spansConfirmedByKeyboard": 2,
+      "cropsLoaded": true,
+      "buildEnabledAfterConfirm": true,
+      "horizontalOverflowPx": 0,
+      "analyzeStatus": "SERVED",
+      "answers": [
+        "cos²=1/4"
+      ],
+      "expected": "60°",
+      "canvas": true,
+      "uploadToReviewMs": 506,
+      "uploadToFirstUsableSceneMs": 997,
+      "studentDwell": "scripted keyboard, near zero; real reading time NOT_MEASURED",
+      "errors": [],
+      "pass": true
+    }
+  ],
+  "passed": 6,
+  "total": 6
+}

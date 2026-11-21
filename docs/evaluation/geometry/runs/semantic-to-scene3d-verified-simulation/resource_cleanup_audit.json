@@ -1,0 +1,116 @@
+{
+  "browser": "157.0.8103.78",
+  "headless": true,
+  "backend": "measured_app loopback, HYBRID_ROUTE_MODE=local-first, ALLOW_LIVE_AI=0",
+  "synthetic_signup_status": 200,
+  "series": [
+    {
+      "cycle": 0,
+      "case": "angle_line_plane",
+      "heap_mb": 17.99864387512207,
+      "canvases": 1,
+      "steps": 6,
+      "rendered": 13
+    },
+    {
+      "cycle": 0,
+      "case": "skew_lines_angle",
+      "heap_mb": 22.859278678894043,
+      "canvases": 1,
+      "steps": 6,
+      "rendered": 17
+    },
+    {
+      "cycle": 1,
+      "case": "angle_line_plane",
+      "heap_mb": 21.758174896240234,
+      "canvases": 1,
+      "steps": 6,
+      "rendered": 13
+    },
+    {
+      "cycle": 1,
+      "case": "skew_lines_angle",
+      "heap_mb": 22.962599754333496,
+      "canvases": 1,
+      "steps": 6,
+      "rendered": 17
+    },
+    {
+      "cycle": 2,
+      "case": "angle_line_plane",
+      "heap_mb": 22.24750328063965,
+      "canvases": 1,
+      "steps": 6,
+      "rendered": 13
+    },
+    {
+      "cycle": 2,
+      "case": "skew_lines_angle",
+      "heap_mb": 24.00454807281494,
+      "canvases": 1,
+      "steps": 6,
+      "rendered": 17
+    },
+    {
+      "cycle": 3,
+      "case": "angle_line_plane",
+      "heap_mb": 22.967576026916504,
+      "canvases": 1,
+      "steps": 6,
+      "rendered": 13
+    },
+    {
+      "cycle": 3,
+      "case": "skew_lines_angle",
+      "heap_mb": 24.73332691192627,
+      "canvases": 1,
+      "steps": 6,
+      "rendered": 17
+    },
+    {
+      "cycle": 4,
+      "case": "angle_line_plane",
+      "heap_mb": 24.00718116760254,
+      "canvases": 1,
+      "steps": 6,
+      "rendered": 13
+    },
+    {
+      "cycle": 4,
+      "case": "skew_lines_angle",
+      "heap_mb": 25.7600679397583,
+      "canvases": 1,
+      "steps": 6,
+      "rendered": 17
+    },
+    {
+      "cycle": 5,
+      "case": "angle_line_plane",
+      "heap_mb": 24.63060188293457,
+      "canvases": 1,
+      "steps": 6,
+      "rendered": 13
+    },
+    {
+      "cycle": 5,
+      "case": "skew_lines_angle",
+      "heap_mb": 26.483288764953613,
+      "canvases": 1,
+      "steps": 6,
+      "rendered": 17
+    }
+  ],
+  "timeline_walk_heap_mb": [
+    24.16195774078369,
+    25.42100238800049,
+    27.178149223327637,
+    25.623291969299316
+  ],
+  "timeline_walk_growth_mb": 1.461334228515625,
+  "method": "6 cycles × 2 problems in one signed-in page (each analysis is kept in the learner history), forced GC (--expose-gc) before each reading; plus 15 timeline walks of one problem with no new analysis",
+  "heap_mean_early_mb": 22.74320650100708,
+  "heap_mean_late_mb": 25.220284938812256,
+  "heap_growth_mb": 2.477078437805176,
+  "canvas_count_constant": true
+}

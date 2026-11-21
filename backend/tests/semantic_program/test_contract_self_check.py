@@ -61,9 +61,8 @@ def _moi_dinh_danh_IR() -> set[str]:
     ra |= _tap_kind(C.ConditionExpr)
     ra |= set(typing.get_args(C.MemoryType))
     ra |= set(quantity_trong_contract())
-    for m in (C.SemanticProgramSpec, C.MemoryDeclaration,
-              C.VisualContainerBinding, C.VisualPointerBinding,
-              C.VisualValueBoxBinding):
+    # (/13) ba model `Visual*Binding` đã gỡ cùng `visual_bindings` (miền Tin học).
+    for m in (C.SemanticProgramSpec, C.MemoryDeclaration):
         ra |= set(m.model_fields)
     for k in _tap_kind(C.SemanticStatement) | _tap_kind(C.ValueExpr):
         pass

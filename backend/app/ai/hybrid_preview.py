@@ -101,7 +101,8 @@ _NHOM: tuple[tuple[str, str, frozenset[str], str], ...] = (
         "ZERO_VECTOR", "PLANE_EQUATION_DEGENERATE", "POLYGON_CHAIN_NOT_CONVEX", "MEASURE_UNDEFINED", "METRIC_NOT_EUCLIDEAN",
         "PLANE_DOES_NOT_CUT", "PLANE_TOUCHES_VERTEX", "PLANE_TOUCHES_EDGE", "SECTION_INTERSECTION_DEGENERATE",
         # stated cut edges of a derived plane (`DINH_CAT_CANH`) that the built figure contradicts
-        "SECTION_VERTEX_OFF_EDGE", "LINE_PARALLEL_TO_PLANE", "DEGENERATE_DERIVED_SECTION", "SECTION_BOUNDARY_INCOMPLETE"}),
+        "SECTION_VERTEX_OFF_EDGE", "LINE_PARALLEL_TO_PLANE", "DEGENERATE_DERIVED_SECTION", "SECTION_BOUNDARY_INCOMPLETE",
+        "DEGENERATE_CONSTRUCTION"}),
      "Các dữ kiện dùng để dựng hình mâu thuẫn nhau hoặc làm hình suy biến, nên không có hình nào thoả tất cả. AlgoSim "
      "dừng lại thay vì dựng một hình sai."),
     ("SOURCE_UNVERIFIED", "verification_gap", frozenset({
@@ -155,17 +156,47 @@ def _de_ghi_do_dai_khong_duong(problem_text: str) -> bool:
     return bool(problem_text) and do_dai_de_ghi_khong_duong(SimpleNamespace(problem_text=problem_text)) is not None
 
 
+_MSG_DEDUCTION_CAPABILITY_GAP = (
+    "Hệ đã đọc các giả thiết trong đề nhưng chưa có quy tắc suy diễn tất định cho tổ hợp quan hệ này, "
+    "nên dừng lại thay vì dựng một hình gần đúng."
+)
+_MSG_SHAPE_INVARIANCE_UNCERTIFIED = (
+    "Các giả thiết chưa cố định duy nhất hình dạng, và hệ chưa có chứng chỉ bất biến tổng quát cho đại lượng "
+    "được hỏi nên tạm dừng thay vì kết luận từ hình mẫu."
+)
+_MSG_PROVED_UNDERDETERMINED_SOURCE = (
+    "Các dữ kiện đã nêu trong đề chưa xác định duy nhất đại lượng hoặc hình cần dựng (tồn tại nhiều hình hợp lệ "
+    "thỏa mọi giả thiết nhưng cho kết quả khác nhau). Em hãy kiểm tra và bổ sung số đo còn thiếu trong đề rồi gửi lại."
+)
+
+
 def classify_refusal(code: str, planner: dict | None = None, *, adapter: bool = False,
-                     problem_text: str = "") -> RefusalClass:
+                     problem_text: str = "", details: dict | None = None,
+                     local_complete: bool = False) -> RefusalClass:
     """Group of a refusal from structured data only (never the `reason` prose). `adapter=True`: the preview's own check on
     a SERVED result raised it, so the code describes the system's output (a non-Euclidean chart there is a tampered scene,
     not contradictory givens). A `NEGATED_CLAUSE` that carries a negated observation was constructed and has no
     certificate (`function_route.run_fact_route`); without one the planner refused the clause as unsupported.
-    `refusal_cause` is SOURCE only when the server reads the cause in `problem_text` itself."""
+    `refusal_cause` is SOURCE only when the server reads the cause in `problem_text` itself or `local_complete` proves
+    100% clause grounding with a machine-certified determinacy/contradiction witness."""
     if adapter and code == "METRIC_NOT_EUCLIDEAN":
         code = "PREVIEW_RESULT_INVALID"
     if code == "NEGATED_CLAUSE" and (planner or {}).get("negated_checks"):
         code = "PROOF_UNVERIFIABLE"
+    det = (details or {}).get("determinacy_audit") if isinstance(details, dict) else None
+    if not adapter and code in ("MISSING_DIMENSION", "UNDERDETERMINED_POINT", "FOOT_NOT_DETERMINED", "AMBIGUOUS_FACT") and isinstance(det, dict):
+        if (
+            det.get("status") == "UNPROVED_DUE_TO_CAPABILITY_GAP"
+            and det.get("witness_kind") != "NO_VALID_VARIATION_CONSTRUCTED"
+        ):
+            msg = (
+                _MSG_SHAPE_INVARIANCE_UNCERTIFIED
+                if det.get("witness_kind") == "CONSTANT_ACROSS_SAMPLED_REALIZATIONS_UNPROVED_INVARIANCE"
+                else _MSG_DEDUCTION_CAPABILITY_GAP
+            )
+            return RefusalClass("CAPABILITY", "capability_gap", "UNKNOWN", msg)
+        if det.get("status") == "PROVED_UNDERDETERMINED" and local_complete:
+            return RefusalClass("MISSING_DATA", "insufficient_specification", "SOURCE", _MSG_PROVED_UNDERDETERMINED_SOURCE)
     group = next(((name, category, message) for name, category, codes, message in _NHOM if code in codes), None)
     if group is None:
         return _FALLBACK
@@ -173,6 +204,11 @@ def classify_refusal(code: str, planner: dict | None = None, *, adapter: bool = 
     if code == "NON_POSITIVE_LENGTH" and _de_ghi_do_dai_khong_duong(problem_text):
         return RefusalClass(name, category, "SOURCE", learner_reason(
             {"status": "unsupported", "reason_code": code, "failure_category": category, "refusal_cause": "SOURCE"}))
+    if local_complete and not adapter:
+        if code == "PLANE_NOT_UNIQUE":
+            return RefusalClass("MISSING_DATA", "insufficient_specification", "SOURCE", _MSG_PROVED_UNDERDETERMINED_SOURCE)
+        if name == "INVALID_DATA":
+            return RefusalClass(name, category, "SOURCE", message)
     return RefusalClass(name, category, "UNKNOWN", message)
 
 

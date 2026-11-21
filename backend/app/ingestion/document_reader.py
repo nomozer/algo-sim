@@ -826,6 +826,22 @@ def merge_supplemental_text(base_problem_text: str, directive: UserComposerDirec
     base = base_problem_text.strip()
     supp = directive.supplemental_text.strip()
     if not supp:
+        raw_edit = directive.raw_text.strip()
+        has_explicit_nav = (
+            directive.target_page is not None
+            or directive.target_problem_number is not None
+            or directive.target_problem_index is not None
+            or bool(re.match(r'^\s*(?:giải|làm|chọn|xem)\s+(?:bài|câu)\b', raw_edit, flags=re.IGNORECASE))
+        )
+        if (
+            raw_edit
+            and directive.is_standalone_problem
+            and len(raw_edit) >= 45
+            and 'cho ' in raw_edit.lower()
+            and not has_explicit_nav
+            and raw_edit != base
+        ):
+            return raw_edit
         return base
     if supp.lower() in base.lower():
         return base

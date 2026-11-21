@@ -1,0 +1,39 @@
+{
+  "schema": "algosim-evaluation-run-manifest/1",
+  "run_slug": "independent-h1-real-world-acceptance",
+  "task_title": "ALGOSIM — INDEPENDENT H-1, REAL-WORLD VISION & LOW-END ACCEPTANCE",
+  "generated_at_utc": "2026-11-09T14:20:36.818601+00:00",
+  "git_branch": "feat/local-first-geometry-understanding",
+  "product_commit_sha": "87497d79a6537681b91c3f06fffea86a7e593a02",
+  "measured_system_tree_hash": "ba0261c14a22b205b476d9951e3aa32fea63ef78c74ee1d413d4ac5ad093f759",
+  "measured_system_file_count": 108,
+  "allow_live_ai": 0,
+  "live_gemini_calls": 0,
+  "component_versions": {
+    "local_geometry_parser": "local-geometry-parser/1",
+    "adaptive_input_router": "adaptive-input-router/1",
+    "typed_fact_next": "typed-fact-next/2",
+    "planner": "geometry-fact-planner/26",
+    "registry": "geometry-functions/33",
+    "engine": "geometry-function-engine/24",
+    "adapter": "hybrid-simulation-adapter/4",
+    "envelope": "hybrid-route-d-simulation/4"
+  },
+  "acceptance_gates": {
+    "Gate_A_Independent_H1_Geometry": "PENDING_EXTERNAL_CORPUS",
+    "Gate_B_Real_World_Image_and_OCR": "REAL_WORLD_IMAGE_NOT_MEASURED",
+    "Gate_C_Adaptive_AI_Routing": "OFFLINE_ROUTING_VERIFIED",
+    "Gate_D_Low_End_Performance": "RESOURCE_CONSTRAINED_SIMULATION_ONLY"
+  },
+  "artifacts_sha256": {
+    "h1_corpus_provenance_receipt.json": "cf5ee2675a28896b866ecbfef3dbf8913ef004e5a203ef1550fa33d83acb9823",
+    "h1_contamination_audit_receipt.json": "48387794630885cbde48fe4f75d2cfcafeadb31d8dafab534450bb023e5c132b",
+    "h1_geometry_evaluation_receipt.json": "59cf92686c0bda1f368fa045663d7ee9c21be267aafb1ae96fdb3079695d8ed1",
+    "real_world_image_corpus_manifest.json": "1fe660f05d3a20e24494bf4a10c93dd2d254c9e83d469c7a26bfa22e37e499a4",
+    "region_detection_real_world_receipt.json": "6fae0fdded042b63615096b6349e233ff44c3a82d76c9f91669f084592ae8fd5",
+    "ocr_fidelity_real_world_receipt.json": "df71c8e0b3f71a69d225133d5b0ca3a18ff7900f3b86b875d8b5e8301c43c6b9",
+    "adaptive_routing_acceptance_receipt.json": "c9a52b5ac0b431941d1043c880275bdcab609ba48278beb6b158e14c79ce059d",
+    "low_end_hardware_performance_receipt.json": "adf5a54b08924d1aac838f00509a6d81a6f49110bb81f7a72d7d337bbd46dacb",
+    "hybrid_capability_prioritization.json": "49fb147737441c94a69569d1b62461e6866ff728c19b9d6f9c99e65e1da06847"
+  }
+}

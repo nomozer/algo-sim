@@ -86,9 +86,12 @@ function resolveGitCommonRepoRoot(): string | null {
 
 function resolveBackendPython(): string {
   const candidates: string[] = [];
-  const envPython = process.env.BACKEND_PYTHON?.trim();
-  if (envPython) {
-    candidates.push(envPython);
+  // `ALGO_SIM_PYTHON` first: the same override `scripts/full-gate.mjs` honours, so a worktree without its own venv
+  // (owner policy: one shared worktree) runs this contract instead of failing on a missing path.
+  for (const envPython of [process.env.ALGO_SIM_PYTHON?.trim(), process.env.BACKEND_PYTHON?.trim()]) {
+    if (envPython) {
+      candidates.push(envPython);
+    }
   }
   candidates.push(
     path.join(BACKEND_DIR, ".venv/Scripts/python.exe"),

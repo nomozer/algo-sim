@@ -1,0 +1,16 @@
+{
+  "run_id": "independent-geometry-plane-constraints",
+  "generated_at_utc": "2026-11-13T12:59:07.530446+00:00",
+  "dataset": "anvo25/vmmu full_vqa (Math rows)",
+  "sealed_rows": 94,
+  "row_list_source": "local-semantic-source-gate-reliability/fresh_external_preregistration.json (row numbers only)",
+  "row_list_sha256": "28f66813cb50a0eaf4b47f8bc23f25084eb4115ea1b878c017786ff809751017",
+  "opened_in_this_run": 0,
+  "downloaded": 0,
+  "viewed": 0,
+  "ocr": 0,
+  "file_names_read": 0,
+  "rule": "only the row numbers are known; their dataset ids (which carry the answer key) are not read",
+  "cross_source_risk": "VMMU pages are Vietnamese mock exams; any other Vietnamese exam source could repeat a sealed question. No new external source is used in this run, so no such overlap is introduced.",
+  "status": "SEALED"
+}

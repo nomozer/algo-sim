@@ -1,0 +1,101 @@
+{
+  "schema": "axo-legacy-verdict-reconciliation/1",
+  "source_artifact": "D:/Documents/projects/algo-sim/.superpowers/worktrees/simulation-intent-slm-recovery/docs/evaluation/geometry/runs/grounded-geometry-language-recovery/LIVE_TEXT_ACCEPTANCE_RESULTS.json",
+  "source_sha256": "2a9509f94b5c2c35b0e61d5b8a4f4ee9d05ac459ade6e9dbd8e97cd48599d5b2",
+  "reported_raw_flag_LIVE_SIMULATION_ACCEPTED": true,
+  "scores": {
+    "END_TO_END_SYSTEM_SCORE": {
+      "completed": 58,
+      "total_positive": 66,
+      "rate": 0.8787878787878788
+    },
+    "CANDIDATE_FALLBACK_SCORE": {
+      "verified_live_slm_scenes": 5,
+      "verified_case_ids": [
+        "C07",
+        "D05",
+        "G05",
+        "M02",
+        "M03"
+      ],
+      "candidate_slm_routed_total": 13,
+      "routed_case_ids": [
+        "A01",
+        "A02",
+        "A03",
+        "A05",
+        "C07",
+        "D05",
+        "E02",
+        "G05",
+        "G08",
+        "M02",
+        "M03",
+        "M05",
+        "M06"
+      ],
+      "rate": 0.38461538461538464,
+      "min_sample_floor": 0,
+      "min_scenes_floor": 5,
+      "min_rate": 0.3,
+      "sample_floor_met": true
+    },
+    "INDEPENDENT_SLM_SCORE": {
+      "status": "NOT_MEASURED",
+      "verified_scenes": null,
+      "positive_total": null,
+      "rate": null,
+      "extraction_correctness": null,
+      "grounding_correctness": null,
+      "negative_safe_refused": null,
+      "negative_total": null,
+      "false_assertions_served": null,
+      "invalid_relations_served": null
+    },
+    "LEGACY_BASELINE_STRATUM_SCORE": {
+      "baseline_slm_required_total": 38,
+      "completed_deterministically_on_candidate": 0,
+      "completed_via_live_slm": 5,
+      "verified_live_slm_case_ids": [
+        "C07",
+        "D05",
+        "G05",
+        "M02",
+        "M03"
+      ],
+      "rate_live_slm_over_baseline": 0.13157894736842105
+    }
+  },
+  "reconciled_verdicts": {
+    "SEMANTIC_REWRITE_SAFETY_VERIFIED": "NOT_MEASURED",
+    "SOURCE_GROUNDING_VERIFIED": true,
+    "TEXT_COMPLETION_THRESHOLD_MET": true,
+    "SYSTEM_TEXT_COMPLETION_THRESHOLD_MET": true,
+    "SLM_FALLBACK_SAMPLE_FLOOR_MET": true,
+    "SLM_FALLBACK_RATE_THRESHOLD_MET": true,
+    "SLM_FALLBACK_COUNT_THRESHOLD_MET": true,
+    "SLM_FALLBACK_GATE_MET": false,
+    "SLM_RATE_THRESHOLD_MET": false,
+    "SLM_COUNT_THRESHOLD_MET": true,
+    "SLM_INDEPENDENT_CAPABILITY_GATE_MET": "NOT_MEASURED",
+    "NEGATIVE_SAFETY_GATE_MET": true,
+    "CANDIDATE_IDENTITY_CONSISTENT": true,
+    "COMPOSITE_LIVE_TEXT_ACCEPTED": false,
+    "FULL_PRODUCT_GATE_PASS": true,
+    "LOCAL_TEXT_MODEL1_VERIFIED": false,
+    "LOCAL_VISION_REPLACEMENT_VERIFIED": false,
+    "FULL_GEMINI_ROLE_REPLACEMENT_VERIFIED": false,
+    "MAIN_MERGE_READY": false,
+    "MAIN_MERGE_COMPLETED": false,
+    "REMOTE_PUSH_COMPLETED": false
+  },
+  "discrepancy_audit": {
+    "historical_artifact_preserved_unmodified": true,
+    "artifact_a": "docs/evaluation/geometry/runs/grounded-geometry-language-recovery/LIVE_TEXT_ACCEPTANCE_RESULTS.json",
+    "artifact_a_flag": "LIVE_SIMULATION_ACCEPTED: true",
+    "artifact_b": "docs/evaluation/geometry/runs/grounded-geometry-language-recovery/run.json",
+    "artifact_b_flag": "verdicts.LIVE_TEXT_SIMULATION_ACCEPTED: false",
+    "root_cause": "summarize_c154.py lines 79-83 computed LIVE_SIMULATION_ACCEPTED solely from primary completion_rate >= 0.85 (58/66 = 0.8788), empty safety violations, and negative refusal HTTP 200 checks, omitting crit['slm'] (5/38 = 0.1316 < 0.30 FAIL) and network egress checks. Meanwhile /15 run.json and report.md manually incorporated the failing SLM gate and set LIVE_TEXT_SIMULATION_ACCEPTED = false.",
+    "resolution": "Created single-authority tracked evaluator backend/scripts/evaluate_live_text_acceptance.py with separated explicit flags (TEXT_COMPLETION_THRESHOLD_MET, SLM_RATE_THRESHOLD_MET, SLM_COUNT_THRESHOLD_MET, NEGATIVE_SAFETY_GATE_MET, COMPOSITE_LIVE_TEXT_ACCEPTED) and regression tests in backend/tests/geometry/test_shared_live_harness.py. Preserved /15 frozen evidence byte-for-byte."
+  }
+}

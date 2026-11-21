@@ -1,0 +1,67 @@
+{
+  "schema": "axo-full-t3-receipt/1",
+  "run_id": "semantic-grounding-slm-recovery",
+  "candidate": {
+    "head": "ee013b8fc",
+    "evaluated_freeze_head": "280cce79b52b5ba0d06bd73d2a2addc0bfe25889",
+    "candidate_commit": "c3e944d7fb7a86380738948d81ac6fdfdb514ed6",
+    "product_commit_sha": "c3e944d7fb7a86380738948d81ac6fdfdb514ed6",
+    "measured_system_tree_hash": "f3f04425378304b34e68a07d43df5d4f5a85c2a04ef90a08b6456c4403dafb4b",
+    "measured_files": 127,
+    "cache_version": "156",
+    "route_d_cache_policy": "156:route-d",
+    "evaluation_candidate_frozen_on_clean_tree": true,
+    "tracked_tree_clean_at_start": true,
+    "same_identity_as_live_acceptance": true,
+    "worktree": "reused shared development worktree switched to detached HEAD ee013b8fc; not an isolated freshly branched authoritative worktree -> AUTHORITATIVE_DETACHED_COMPLIANCE = NOT_VERIFIED"
+  },
+  "command": "cd frontend && npm run test:full",
+  "exit_code": 1,
+  "duration_s": 1184.2,
+  "verdict": "FULL_PRODUCT_GATE_FAIL",
+  "gates": {
+    "backend_pytest": {
+      "status": "FAIL",
+      "passed": 15157,
+      "failed": 4,
+      "skipped": 8,
+      "deselected": 9,
+      "xfailed": 12,
+      "warnings": 1,
+      "duration_s": 1055.17,
+      "wrapper_seconds": 1059.7,
+      "failed_tests": [
+        "tests/geometry/test_hybrid_ask_operand_binding.py::test_question_mark_clause_mutant_is_killed",
+        "tests/geometry/test_premise_sentence_generalization.py::test_each_grammar_extension_is_load_bearing[no_space_lead]",
+        "tests/geometry/test_route_d_semantic_shape_invariants.py::test_blocker_r2_1_multi_solid_unlabelled_base_shape_binds_local_prose_solid_and_reapexed_tetrahedron",
+        "tests/geometry/test_typedfactnext_planner_bridge.py::test_a_negated_derived_pyramid_request_is_refused[nhưng đừng dựng]"
+      ]
+    },
+    "frontend_vitest": {
+      "status": "PASS",
+      "files_passed": 203,
+      "tests_passed": 2345,
+      "failed": 0,
+      "duration_s": 112.02,
+      "wrapper_seconds": 114.4
+    },
+    "typecheck_build": {
+      "status": "PASS",
+      "seconds": 8.7
+    },
+    "demo_replay": {
+      "status": "PASS",
+      "passed": 5,
+      "total": 5,
+      "seconds": 0.7
+    },
+    "demo_crash_surface": {
+      "status": "PASS",
+      "passed": 6,
+      "total": 6,
+      "seconds": 0.8
+    }
+  },
+  "log": ".superpowers/offline-logs/semantic-grounding-slm-recovery/full-t3-c156/full-t3.log",
+  "log_sha256": "d0855537c60a2ce847353b6ff0d571958637d9eebf77e7c94be34020700070bf"
+}

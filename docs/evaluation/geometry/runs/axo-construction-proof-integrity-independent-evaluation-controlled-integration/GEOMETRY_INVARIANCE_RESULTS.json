@@ -1,0 +1,110 @@
+{
+  "generated_at_utc": "2026-11-19T04:30:33Z",
+  "schema": "axo-geometry-invariance/1",
+  "summary": {
+    "all_9_transforms_passed": true,
+    "passed_transforms": 9,
+    "total_transforms": 9
+  },
+  "transforms": [
+    {
+      "answer_invariant": true,
+      "base_answer": "a√21/7",
+      "case": "C01 (A,B,C,S -> P,Q,R,T)",
+      "l0_l4_passed": true,
+      "structural_dag_isomorphic": true,
+      "transform": "1_vertex_relabeling",
+      "transformed_answer": "a√21/7"
+    },
+    {
+      "answer_invariant": true,
+      "base_answer": "a√21/2",
+      "case": "B01 (reversed pending constructions)",
+      "l0_l4_passed": true,
+      "structural_dag_isomorphic": true,
+      "transform": "2_pending_order_permutation",
+      "transformed_answer": "a√21/2"
+    },
+    {
+      "answer_invariant": true,
+      "base_answer": "a√21/7",
+      "case": "C01 + (7/3, -11/5, 4)",
+      "l0_l4_passed": true,
+      "structural_dag_isomorphic": true,
+      "transform": "3_rigid_translation",
+      "transformed_answer": "a√21/7"
+    },
+    {
+      "answer_invariant": true,
+      "base_answer": "a√3/3",
+      "case": "C04 rotated by SO(3,Q) 3-4-5 matrix",
+      "l0_l4_passed": true,
+      "structural_dag_isomorphic": true,
+      "transform": "4_so3_rational_rotation",
+      "transformed_answer": "a√3/3"
+    },
+    {
+      "answer_invariant": true,
+      "base_answer": "a",
+      "case": "Oblique prism GL(3,Q) transform + G' = A^-T G A^-1",
+      "l0_l4_passed": true,
+      "structural_dag_isomorphic": true,
+      "transform": "5_gl3_non_diagonal_chart_covariance",
+      "transformed_answer": "a",
+      "transformed_chart_metric": [
+        [
+          "1",
+          "0",
+          "0"
+        ],
+        [
+          "0",
+          "3/16",
+          "-1/24"
+        ],
+        [
+          "0",
+          "-1/24",
+          "49/108"
+        ]
+      ]
+    },
+    {
+      "answer_invariant": true,
+      "base_answer": "a√21/7",
+      "case": "C01 reflected across x=0",
+      "l0_l4_passed": true,
+      "structural_dag_isomorphic": true,
+      "transform": "6_reflection_diag_minus1_1_1",
+      "transformed_answer": "a√21/7"
+    },
+    {
+      "answer_invariant": true,
+      "base_answer": "a√21/7",
+      "case": "C01 scaled by 3 (homogeneity of degree 1)",
+      "expected_scaled_answer": "3a√21/7",
+      "l0_l4_passed": true,
+      "structural_dag_isomorphic": true,
+      "transform": "7_coordinate_scaling_factor_3",
+      "transformed_answer": "3√21a/7"
+    },
+    {
+      "answer_invariant": true,
+      "base_answer": "a√3/3",
+      "case": "C04 shifted base point & negated line direction",
+      "l0_l4_passed": true,
+      "structural_dag_isomorphic": true,
+      "transform": "8_equivalent_line_representation",
+      "transformed_answer": "a√3/3"
+    },
+    {
+      "answer_invariant": true,
+      "base_answer": "a√21/7",
+      "case": "C01 scaled plane normal by -3/2",
+      "l0_l4_passed": true,
+      "structural_dag_isomorphic": true,
+      "transform": "9_equivalent_plane_representation",
+      "transformed_answer": "a√21/7"
+    }
+  ]
+}

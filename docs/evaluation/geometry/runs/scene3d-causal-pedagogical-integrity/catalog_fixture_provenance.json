@@ -1,0 +1,539 @@
+{
+  "run_id": "scene3d-causal-pedagogical-integrity",
+  "generated_at_utc": "2026-11-14T13:49:47.209247+00:00",
+  "this_worktree_head": "b99a46287a28fa520b6691be66e4c39533e75f48",
+  "library_head": "b57df99cf73bccd827e1babad21af699c889b3d4",
+  "library_working_tree": "NOT READ (another session; read via git show HEAD only)",
+  "items": {
+    "GEO-BE-V9415-004": {
+      "path": "frontend/src/simulations/domains/geometry/scene3d-regression-archetypes-fixtures.json",
+      "generator": "none (hand-authored frontend fixture)",
+      "this_worktree_committed": {
+        "sha256_lf": "fb9944d911861c22dd4770b3ce69a3f2814159fde224a6a4acba0b5984c6f60d",
+        "scenes": 2,
+        "violation_total": 17,
+        "per_scene": {
+          "/multi_layer_aux_pyramid/scene3d": {
+            "violations": {
+              "READOUT_IDS_MISSING": 9
+            },
+            "examples": {
+              "READOUT_IDS_MISSING": [
+                0,
+                1
+              ]
+            },
+            "orphans_not_flagged": [
+              "M",
+              "N",
+              "P",
+              "Q"
+            ],
+            "unused_auxiliary_flagged": []
+          },
+          "/coincident_elements_pyramid/scene3d": {
+            "violations": {
+              "READOUT_IDS_MISSING": 7,
+              "CAUSAL_BIRTH_ORDER": 1
+            },
+            "examples": {
+              "READOUT_IDS_MISSING": [
+                0,
+                1
+              ],
+              "CAUSAL_BIRTH_ORDER": [
+                [
+                  "K",
+                  5,
+                  "SB_line",
+                  "no CREATE event"
+                ]
+              ]
+            },
+            "orphans_not_flagged": [
+              "H",
+              "M"
+            ],
+            "unused_auxiliary_flagged": []
+          }
+        }
+      },
+      "library_committed": {
+        "sha256_lf": "a846f00428bd3e92acaa135d87ee5633bb338a89deae8cf7eb7f125bf26b3357",
+        "scenes": 2,
+        "violation_total": 9,
+        "per_scene": {
+          "/multi_layer_aux_pyramid/scene3d": {
+            "violations": {
+              "READOUT_IDS_MISSING": 9
+            },
+            "examples": {
+              "READOUT_IDS_MISSING": [
+                0,
+                1
+              ]
+            },
+            "orphans_not_flagged": [
+              "M",
+              "N",
+              "P",
+              "Q"
+            ],
+            "unused_auxiliary_flagged": []
+          },
+          "/coincident_elements_pyramid/scene3d": {
+            "violations": {},
+            "examples": {},
+            "orphans_not_flagged": [
+              "H",
+              "M"
+            ],
+            "unused_auxiliary_flagged": []
+          }
+        }
+      }
+    },
+    "GEO-BE-V9415-003": {
+      "path": "frontend/src/simulations/domains/geometry/scene3d-circumsphere-fixture.json",
+      "generator": "none (static fixture; backend-verified copy delivered in axo-backend-geometry-handoff)",
+      "this_worktree_committed": {
+        "sha256_lf": "9ae3333b42b5ab71770e8091758b248e6559f8f83ee2a7d4cb036b4ffb5769e3",
+        "scenes": 1,
+        "violation_total": 2,
+        "per_scene": {
+          "": {
+            "violations": {
+              "HIDDEN_MATH_VISUAL_DEPENDENCY": 2
+            },
+            "examples": {
+              "HIDDEN_MATH_VISUAL_DEPENDENCY": [
+                [
+                  "A_prime",
+                  "vec_OB"
+                ],
+                [
+                  "D",
+                  "vec_OC"
+                ]
+              ]
+            },
+            "orphans_not_flagged": [],
+            "unused_auxiliary_flagged": []
+          }
+        }
+      },
+      "library_committed": {
+        "sha256_lf": "322b25b39013cb8eac6763d656473a6dd3923455124f0cd71da1942bbab94b0f",
+        "scenes": 1,
+        "violation_total": 0,
+        "per_scene": {
+          "": {
+            "violations": {},
+            "examples": {},
+            "orphans_not_flagged": [],
+            "unused_auxiliary_flagged": []
+          }
+        }
+      }
+    },
+    "GEO-BE-V9415-001/002 (advanced catalog)": {
+      "path": "frontend/src/data/advanced-geometry-samples.json",
+      "generator": "backend/scripts/build_advanced_geometry_samples.py (library branch only; imports `circumscribed_sphere` absent from this branch's kernel)",
+      "this_worktree_committed": null,
+      "library_committed": {
+        "sha256_lf": "c27978c1121c827a54d2aa1dd521beb03035ce927dd66ad57b5e6e33ed39ba8f",
+        "scenes": 11,
+        "violation_total": 1,
+        "per_scene": {
+          "/samples[0]/envelope/scene3d": {
+            "violations": {},
+            "examples": {},
+            "orphans_not_flagged": [],
+            "unused_auxiliary_flagged": [
+              "O"
+            ]
+          },
+          "/samples[1]/envelope/scene3d": {
+            "violations": {},
+            "examples": {},
+            "orphans_not_flagged": [],
+            "unused_auxiliary_flagged": []
+          },
+          "/samples[2]/envelope/scene3d": {
+            "violations": {},
+            "examples": {},
+            "orphans_not_flagged": [],
+            "unused_auxiliary_flagged": []
+          },
+          "/samples[3]/envelope/scene3d": {
+            "violations": {},
+            "examples": {},
+            "orphans_not_flagged": [],
+            "unused_auxiliary_flagged": []
+          },
+          "/samples[4]/envelope/scene3d": {
+            "violations": {},
+            "examples": {},
+            "orphans_not_flagged": [],
+            "unused_auxiliary_flagged": []
+          },
+          "/samples[5]/envelope/scene3d": {
+            "violations": {},
+            "examples": {},
+            "orphans_not_flagged": [],
+            "unused_auxiliary_flagged": []
+          },
+          "/samples[6]/envelope/scene3d": {
+            "violations": {
+              "HIDDEN_MATH_VISUAL_DEPENDENCY": 1
+            },
+            "examples": {
+              "HIDDEN_MATH_VISUAL_DEPENDENCY": [
+                [
+                  "cau",
+                  "R"
+                ]
+              ]
+            },
+            "orphans_not_flagged": [],
+            "unused_auxiliary_flagged": []
+          },
+          "/samples[7]/envelope/scene3d": {
+            "violations": {},
+            "examples": {},
+            "orphans_not_flagged": [],
+            "unused_auxiliary_flagged": []
+          },
+          "/samples[8]/envelope/scene3d": {
+            "violations": {},
+            "examples": {},
+            "orphans_not_flagged": [],
+            "unused_auxiliary_flagged": []
+          },
+          "/samples[9]/envelope/scene3d": {
+            "violations": {},
+            "examples": {},
+            "orphans_not_flagged": [],
+            "unused_auxiliary_flagged": []
+          },
+          "/samples[10]/envelope/scene3d": {
+            "violations": {},
+            "examples": {},
+            "orphans_not_flagged": [],
+            "unused_auxiliary_flagged": []
+          }
+        }
+      }
+    },
+    "offline samples (this branch's generator)": {
+      "path": "frontend/src/data/geometry-samples.json",
+      "generator": "backend/scripts/build_geometry_samples.py (this branch; canonical, re-run here)",
+      "this_worktree_committed": {
+        "sha256_lf": "ae541683facd33368ae5bc778c2f7bf8b4fac178f0cac4770fea0d84ba73f3d5",
+        "scenes": 11,
+        "violation_total": 0,
+        "per_scene": {
+          "/samples[0]/envelope/scene3d": {
+            "violations": {},
+            "examples": {},
+            "orphans_not_flagged": [],
+            "unused_auxiliary_flagged": []
+          },
+          "/samples[1]/envelope/scene3d": {
+            "violations": {},
+            "examples": {},
+            "orphans_not_flagged": [],
+            "unused_auxiliary_flagged": []
+          },
+          "/samples[2]/envelope/scene3d": {
+            "violations": {},
+            "examples": {},
+            "orphans_not_flagged": [],
+            "unused_auxiliary_flagged": []
+          },
+          "/samples[3]/envelope/scene3d": {
+            "violations": {},
+            "examples": {},
+            "orphans_not_flagged": [],
+            "unused_auxiliary_flagged": []
+          },
+          "/samples[4]/envelope/scene3d": {
+            "violations": {},
+            "examples": {},
+            "orphans_not_flagged": [],
+            "unused_auxiliary_flagged": []
+          },
+          "/samples[5]/envelope/scene3d": {
+            "violations": {},
+            "examples": {},
+            "orphans_not_flagged": [],
+            "unused_auxiliary_flagged": []
+          },
+          "/samples[6]/envelope/scene3d": {
+            "violations": {},
+            "examples": {},
+            "orphans_not_flagged": [],
+            "unused_auxiliary_flagged": []
+          },
+          "/samples[7]/envelope/scene3d": {
+            "violations": {},
+            "examples": {},
+            "orphans_not_flagged": [],
+            "unused_auxiliary_flagged": []
+          },
+          "/samples[8]/envelope/scene3d": {
+            "violations": {},
+            "examples": {},
+            "orphans_not_flagged": [],
+            "unused_auxiliary_flagged": []
+          },
+          "/samples[9]/envelope/scene3d": {
+            "violations": {},
+            "examples": {},
+            "orphans_not_flagged": [],
+            "unused_auxiliary_flagged": []
+          },
+          "/samples[10]/envelope/scene3d": {
+            "violations": {},
+            "examples": {},
+            "orphans_not_flagged": [],
+            "unused_auxiliary_flagged": []
+          }
+        }
+      },
+      "library_committed": {
+        "sha256_lf": "fe5575f04e937a46fe6dd2950188ef651611331900643c8e3f70e9a300560ec5",
+        "scenes": 11,
+        "violation_total": 2,
+        "per_scene": {
+          "/samples[0]/envelope/scene3d": {
+            "violations": {},
+            "examples": {},
+            "orphans_not_flagged": [
+              "Q"
+            ],
+            "unused_auxiliary_flagged": []
+          },
+          "/samples[1]/envelope/scene3d": {
+            "violations": {},
+            "examples": {},
+            "orphans_not_flagged": [],
+            "unused_auxiliary_flagged": []
+          },
+          "/samples[2]/envelope/scene3d": {
+            "violations": {},
+            "examples": {},
+            "orphans_not_flagged": [],
+            "unused_auxiliary_flagged": []
+          },
+          "/samples[3]/envelope/scene3d": {
+            "violations": {},
+            "examples": {},
+            "orphans_not_flagged": [],
+            "unused_auxiliary_flagged": []
+          },
+          "/samples[4]/envelope/scene3d": {
+            "violations": {},
+            "examples": {},
+            "orphans_not_flagged": [],
+            "unused_auxiliary_flagged": []
+          },
+          "/samples[5]/envelope/scene3d": {
+            "violations": {},
+            "examples": {},
+            "orphans_not_flagged": [],
+            "unused_auxiliary_flagged": []
+          },
+          "/samples[6]/envelope/scene3d": {
+            "violations": {
+              "HIDDEN_MATH_VISUAL_DEPENDENCY": 1
+            },
+            "examples": {
+              "HIDDEN_MATH_VISUAL_DEPENDENCY": [
+                [
+                  "cau",
+                  "R"
+                ]
+              ]
+            },
+            "orphans_not_flagged": [],
+            "unused_auxiliary_flagged": []
+          },
+          "/samples[7]/envelope/scene3d": {
+            "violations": {},
+            "examples": {},
+            "orphans_not_flagged": [],
+            "unused_auxiliary_flagged": []
+          },
+          "/samples[8]/envelope/scene3d": {
+            "violations": {
+              "HIDDEN_MATH_VISUAL_DEPENDENCY": 1
+            },
+            "examples": {
+              "HIDDEN_MATH_VISUAL_DEPENDENCY": [
+                [
+                  "tru",
+                  "R"
+                ]
+              ]
+            },
+            "orphans_not_flagged": [],
+            "unused_auxiliary_flagged": []
+          },
+          "/samples[9]/envelope/scene3d": {
+            "violations": {},
+            "examples": {},
+            "orphans_not_flagged": [],
+            "unused_auxiliary_flagged": []
+          },
+          "/samples[10]/envelope/scene3d": {
+            "violations": {},
+            "examples": {},
+            "orphans_not_flagged": [],
+            "unused_auxiliary_flagged": []
+          }
+        }
+      }
+    }
+  },
+  "owner_handoff_artifacts": {
+    "scene3d-circumsphere-fixture.verified.json": {
+      "sha256_lf": "872368586fe8dd258e25f55fb7051da310ffad9f663e5d28dde54eb962536320",
+      "scenes": 1,
+      "violation_total": 0,
+      "per_scene": {
+        "": {
+          "violations": {},
+          "examples": {},
+          "orphans_not_flagged": [],
+          "unused_auxiliary_flagged": []
+        }
+      }
+    },
+    "coincident-elements-pyramid.verified.json": {
+      "sha256_lf": "1a5fb2edcf6d82bd766b1475b9ad5912c08abf4feef70066fac47f3a346ba1ea",
+      "scenes": 1,
+      "violation_total": 0,
+      "per_scene": {
+        "/coincident_elements_pyramid/scene3d": {
+          "violations": {},
+          "examples": {},
+          "orphans_not_flagged": [
+            "H",
+            "M"
+          ],
+          "unused_auxiliary_flagged": []
+        }
+      }
+    },
+    "advanced-geometry-samples.backend-fixed.json": {
+      "sha256_lf": "f4051d03313a2f02a982c3393bab7e7a2996df46b029e7d77c2b6560b671b0fa",
+      "scenes": 11,
+      "violation_total": 1,
+      "per_scene": {
+        "/samples[0]/envelope/scene3d": {
+          "violations": {},
+          "examples": {},
+          "orphans_not_flagged": [],
+          "unused_auxiliary_flagged": [
+            "O"
+          ]
+        },
+        "/samples[1]/envelope/scene3d": {
+          "violations": {},
+          "examples": {},
+          "orphans_not_flagged": [],
+          "unused_auxiliary_flagged": []
+        },
+        "/samples[2]/envelope/scene3d": {
+          "violations": {},
+          "examples": {},
+          "orphans_not_flagged": [],
+          "unused_auxiliary_flagged": []
+        },
+        "/samples[3]/envelope/scene3d": {
+          "violations": {},
+          "examples": {},
+          "orphans_not_flagged": [],
+          "unused_auxiliary_flagged": []
+        },
+        "/samples[4]/envelope/scene3d": {
+          "violations": {},
+          "examples": {},
+          "orphans_not_flagged": [],
+          "unused_auxiliary_flagged": []
+        },
+        "/samples[5]/envelope/scene3d": {
+          "violations": {},
+          "examples": {},
+          "orphans_not_flagged": [],
+          "unused_auxiliary_flagged": []
+        },
+        "/samples[6]/envelope/scene3d": {
+          "violations": {
+            "HIDDEN_MATH_VISUAL_DEPENDENCY": 1
+          },
+          "examples": {
+            "HIDDEN_MATH_VISUAL_DEPENDENCY": [
+              [
+                "cau",
+                "R"
+              ]
+            ]
+          },
+          "orphans_not_flagged": [],
+          "unused_auxiliary_flagged": []
+        },
+        "/samples[7]/envelope/scene3d": {
+          "violations": {},
+          "examples": {},
+          "orphans_not_flagged": [],
+          "unused_auxiliary_flagged": []
+        },
+        "/samples[8]/envelope/scene3d": {
+          "violations": {},
+          "examples": {},
+          "orphans_not_flagged": [],
+          "unused_auxiliary_flagged": []
+        },
+        "/samples[9]/envelope/scene3d": {
+          "violations": {},
+          "examples": {},
+          "orphans_not_flagged": [],
+          "unused_auxiliary_flagged": []
+        },
+        "/samples[10]/envelope/scene3d": {
+          "violations": {},
+          "examples": {},
+          "orphans_not_flagged": [],
+          "unused_auxiliary_flagged": []
+        }
+      }
+    },
+    "advanced-geometry-samples.coplanar-sections.verified.json": {
+      "sha256_lf": "87ed58a391b4bdff1ea6feaf45c39688704ea443391d48990538fa61430e8f67",
+      "scenes": 3,
+      "violation_total": 0,
+      "per_scene": {
+        "/samples[0]/envelope/scene3d": {
+          "violations": {},
+          "examples": {},
+          "orphans_not_flagged": [],
+          "unused_auxiliary_flagged": []
+        },
+        "/samples[1]/envelope/scene3d": {
+          "violations": {},
+          "examples": {},
+          "orphans_not_flagged": [],
+          "unused_auxiliary_flagged": []
+        },
+        "/samples[2]/envelope/scene3d": {
+          "violations": {},
+          "examples": {},
+          "orphans_not_flagged": [],
+          "unused_auxiliary_flagged": []
+        }
+      }
+    }
+  }
+}

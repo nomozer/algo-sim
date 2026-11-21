@@ -137,6 +137,8 @@ import {
   shouldOmitDockConstructionSteps,
 } from "../simulations/domains/geometry/simulation-error-classifier";
 import {
+  cauCauHinhMinhHoa,
+  cauMucTieuSoChuaTraLoi,
   cauQuanSat,
   hybridTaiBuoc,
   hybridViewCua,
@@ -1601,6 +1603,16 @@ export function AxoWorkspaceV62({
             id="safe-zone-rect"
             aria-hidden="true"
           />
+          {cauCauHinhMinhHoa(hybrid) && (
+            <p className="stage-illustrative-note" id="stage-illustrative-note" role="note" data-scene-unique="false">
+              {cauCauHinhMinhHoa(hybrid)}
+            </p>
+          )}
+          {cauMucTieuSoChuaTraLoi(hybrid) && (
+            <p className="stage-illustrative-note" id="stage-numeric-goal-note" role="note" data-numeric-goal="not-answered">
+              {cauMucTieuSoChuaTraLoi(hybrid)}
+            </p>
+          )}
 
           {/* ── REAL SCENE3D RENDERER (Three.js / WebGL) ──────────────────── */}
           <div
@@ -3456,6 +3468,23 @@ const GEOMETRY_REFUSAL_TEXT: Record<string, { title: string; reason: string }> =
   CURVED_PRIMITIVE_BLOCKED_BY_KERNEL: { title: "NGOÀI PHẠM VI DỰNG HÌNH", reason: "Hệ chưa hỗ trợ phép dựng chính xác cho loại khối được yêu cầu." },
 };
 
+// Source-verified Route-D invalid/contradictory premise codes (`refusal_cause === "SOURCE"` and no legacy `error_code`).
+const SOURCE_VERIFIED_INVALID_DATA_REFUSAL_TEXT: Record<string, { title: string; reason: string }> = {
+  NON_POSITIVE_LENGTH: { title: "SỐ ĐO KHÔNG DƯƠNG", reason: "Số đo độ dài trong đề phải là một số dương." },
+  QUESTION_LOCAL_GIVEN_CONFLICT: { title: "DỮ KIỆN MÂU THUẪN", reason: "Các dữ kiện đã cho mâu thuẫn nhau nên không tạo thành hình hợp lệ." },
+  SKEW_CLAIM_CONTRADICTED: { title: "DỮ KIỆN MÂU THUẪN", reason: "Các dữ kiện đã cho mâu thuẫn với quan hệ chéo nhau được nêu trong đề." },
+  PLANE_DOES_NOT_CUT: { title: "KHÔNG CÓ GIAO TUYẾN", reason: "Mặt phẳng đã cho không cắt khối hoặc đoạn cần dựng." },
+  PARALLEL_NO_INTERSECTION: { title: "KHÔNG CÓ GIAO TUYẾN", reason: "Hai đối tượng song song nên không có giao điểm hoặc giao tuyến." },
+  SKEW_NO_INTERSECTION: { title: "KHÔNG CÓ GIAO TUYẾN", reason: "Hai đường thẳng chéo nhau nên không có giao điểm." },
+  LINE_PARALLEL_TO_PLANE: { title: "KHÔNG CÓ GIAO TUYẾN", reason: "Đường thẳng song song với mặt phẳng nên không có giao điểm." },
+  DEGENERATE_SOLID: { title: "HÌNH SUY BIẾN", reason: "Các dữ kiện trong đề làm khối đa diện suy biến." },
+  DEGENERATE_POINTS: { title: "HÌNH SUY BIẾN", reason: "Các điểm trong đề trùng nhau hoặc làm hình suy biến." },
+  COLLINEAR_POINTS: { title: "HÌNH SUY BIẾN", reason: "Ba điểm xác định mặt phẳng thẳng hàng nên không tạo thành mặt phẳng duy nhất." },
+  NON_COPLANAR_POINTS: { title: "HÌNH SUY BIẾN", reason: "Các đỉnh của mặt đáy không đồng phẳng dưới các giả thiết đã cho." },
+  NO_CIRCUMSCRIBED_SPHERE: { title: "KHÔNG TỒN TẠI MẶT CẦU", reason: "Khối đã cho không có mặt cầu ngoại tiếp thỏa các giả thiết trong đề." },
+  NO_INSCRIBED_SPHERE: { title: "KHÔNG TỒN TẠI MẶT CẦU", reason: "Khối đã cho không có mặt cầu nội tiếp thỏa các giả thiết trong đề." },
+};
+
 export function UnsupportedNotice({
   unsupported,
 }: {
@@ -3480,9 +3509,13 @@ export function UnsupportedNotice({
   };
 }) {
   const geometricCode = unsupported.reason_code ?? unsupported.error_code;
+  const sourceVerifiedInvalid =
+    !unsupported.error_code && unsupported.refusal_cause === "SOURCE" && unsupported.reason_code
+      ? SOURCE_VERIFIED_INVALID_DATA_REFUSAL_TEXT[unsupported.reason_code]
+      : undefined;
   const geometricRefusal = unsupported.failure_category === "verification_gap"
     || (unsupported.failure_category === "insufficient_specification" && unsupported.refusal_cause !== "SOURCE")
-    ? undefined : geometricCode ? GEOMETRY_REFUSAL_TEXT[geometricCode] : undefined;
+    ? undefined : sourceVerifiedInvalid ?? (geometricCode ? GEOMETRY_REFUSAL_TEXT[geometricCode] : undefined);
   const failedVerification = unsupported.error_code === "postcondition_violated";
   const cutExplanation = geometricCode === "CURVED_PLANE_DOES_NOT_CUT"
     ? (unsupported.learner_reason ?? unsupported.reason).split(geometricCode).join("")

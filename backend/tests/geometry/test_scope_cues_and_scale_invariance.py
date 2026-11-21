@@ -30,7 +30,7 @@ from pathlib import Path
 import pytest
 
 from app.simulation.semantic_program.domain_profile import (
-    DOMAIN_TIN_HOC,
+    DOMAIN_NGOAI_PHAM_VI,
     _MANH_MOI_NGHIA_VU,
     co_duong_thuc_thi,
     detect_domain,
@@ -81,7 +81,7 @@ def test_HINH_BINH_HANH_va_ho_hang_deu_toi_duoc_parallel(de):
 def test_tu_vung_MOI_khong_keo_de_TIN_HOC_sang_hinh_hoc(de):
     """Nửa kia của phép mở: thêm `hình chữ nhật`/`hình vuông` vào manh mối mà
     kéo nhầm đề Tin học thì đổi một lỗi lấy một lỗi khác."""
-    assert detect_domain(de) == DOMAIN_TIN_HOC, de
+    assert detect_domain(de) == DOMAIN_NGOAI_PHAM_VI, de
     assert not co_duong_thuc_thi(de, detect_domain(de)), de
 
 

@@ -1,0 +1,459 @@
+{
+  "run_id": "controlled-vision-real-image-validation",
+  "head": "a78b1e087fc1b9a53ed92418d4d1a1b2b9d107d3",
+  "measured_system": [
+    "cd9b9f518805d30522ee7c488dd834d3b05ea08d3e78d86c82da13c735a8a58a",
+    115
+  ],
+  "allow_live_ai": 0,
+  "ground_truth_authority": "AGENT_TRANSCRIBED_UNVERIFIED",
+  "independent_h1": "NOT_MEASURED",
+  "purpose": "Specification for later parser / Source Gate / kernel work. No geometry was expanded in this run.",
+  "input": "agent transcription (statement only, choices excluded), local-first route, ALLOW_LIVE_AI=0",
+  "meaning_of_503": "With ALLOW_LIVE_AI=1 the local-first route would hand an incomplete local parse to the live extractor. These cases are therefore NOT measured as unsolvable by the product; they are unsolvable WITHOUT any AI call.",
+  "counts_by_layer": {
+    "LOCAL_PARSER_COVERAGE": 12,
+    "GEOMETRY_KERNEL": 1,
+    "CLARIFICATION_POLICY": 1,
+    "SOURCE_GATE": 5,
+    "OUT_OF_SCOPE_DOMAIN": 2
+  },
+  "carried_over": [
+    {
+      "case_id": "new_vmmu_full_r446",
+      "run": "real-image-ocr-vision-comparative-acceptance",
+      "owning_layer": "GEOMETRY_KERNEL",
+      "reason_code": "MISSING_DIMENSION",
+      "gap": "legs of a right isosceles triangle from its hypotenuse"
+    }
+  ],
+  "tuning_rule": "Items marked evaluation_split_item=true must move to development before any fix uses them.",
+  "cases": [
+    {
+      "case_id": "vmmu_r254",
+      "partition": "frozen_external_evaluation",
+      "tags": [
+        "oblique_prism",
+        "volume"
+      ],
+      "solver_scope": "UNKNOWN_PENDING_ADJUDICATION",
+      "local_parse_status": "LOCAL_PARSE_PARTIAL",
+      "reason_code": "UNPARSED_GOAL_CANDIDATE",
+      "owning_layer": "LOCAL_PARSER_COVERAGE",
+      "api_result_on_transcription": "503 None LIVE_AI_DISABLED",
+      "unparsed_fact_candidates": [
+        "Hình chiếu vuông góc của B' lên mặt phẳng (ABC) trùng với trọng tâm của tam giác ABC"
+      ],
+      "unparsed_goal_candidates": [
+        "Thể tích của khối tứ diện A'ABC theo a bằng"
+      ],
+      "fallback_reason": "UNPARSED_GOAL_CANDIDATE",
+      "expected_answer_from_dataset_key": "9√13a³/2",
+      "evaluation_split_item": true
+    },
+    {
+      "case_id": "vmmu_r256",
+      "partition": "frozen_external_evaluation",
+      "tags": [
+        "pyramid",
+        "distance_point_plane"
+      ],
+      "solver_scope": "UNKNOWN_PENDING_ADJUDICATION",
+      "local_parse_status": "LOCAL_PARSE_PARTIAL",
+      "reason_code": "UNPARSED_GOAL_CANDIDATE",
+      "owning_layer": "LOCAL_PARSER_COVERAGE",
+      "api_result_on_transcription": "503 None LIVE_AI_DISABLED",
+      "unparsed_fact_candidates": [
+        "Mặt bên SAB là tam giác đều và (SAB) ⊥ (ABCD) (tham khảo hình vẽ)"
+      ],
+      "unparsed_goal_candidates": [
+        "Tính khoảng cách từ A đên (SBC)"
+      ],
+      "fallback_reason": "UNPARSED_GOAL_CANDIDATE",
+      "expected_answer_from_dataset_key": "a√15/5",
+      "evaluation_split_item": true
+    },
+    {
+      "case_id": "vmmu_r258",
+      "partition": "frozen_external_evaluation",
+      "tags": [
+        "pyramid",
+        "dihedral"
+      ],
+      "solver_scope": "UNKNOWN_PENDING_ADJUDICATION",
+      "local_parse_status": "LOCAL_PARSE_PARTIAL",
+      "reason_code": "UNPARSED_FACT_CANDIDATE",
+      "owning_layer": "LOCAL_PARSER_COVERAGE",
+      "api_result_on_transcription": "503 None LIVE_AI_DISABLED",
+      "unparsed_fact_candidates": [
+        "Cho hình chóp S.ABC có đáy là tam giác vuông cân tại A, SA vuông góc với đáy và SA = AB (tham khảo hình vẽ)"
+      ],
+      "unparsed_goal_candidates": [],
+      "fallback_reason": "UNPARSED_FACT_CANDIDATE",
+      "expected_answer_from_dataset_key": "√2",
+      "evaluation_split_item": true
+    },
+    {
+      "case_id": "vmmu_r266",
+      "partition": "frozen_external_evaluation",
+      "tags": [
+        "pyramid",
+        "volume"
+      ],
+      "solver_scope": "IN_SCOPE_GEOMETRY_CAPABILITY_GAP",
+      "local_parse_status": "LOCAL_PARSE_COMPLETE",
+      "reason_code": "EXACT_DOMAIN_EXCEEDED",
+      "owning_layer": "GEOMETRY_KERNEL",
+      "api_result_on_transcription": "200 REFUSED EXACT_DOMAIN_EXCEEDED",
+      "unparsed_fact_candidates": [],
+      "unparsed_goal_candidates": [],
+      "fallback_reason": "",
+      "expected_answer_from_dataset_key": "3",
+      "evaluation_split_item": true
+    },
+    {
+      "case_id": "vmmu_r270",
+      "partition": "development",
+      "tags": [
+        "right_prism",
+        "volume",
+        "inverse_from_angle"
+      ],
+      "solver_scope": "UNKNOWN_PENDING_ADJUDICATION",
+      "local_parse_status": "LOCAL_PARSE_PARTIAL",
+      "reason_code": "UNPARSED_GOAL_CANDIDATE",
+      "owning_layer": "LOCAL_PARSER_COVERAGE",
+      "api_result_on_transcription": "503 None LIVE_AI_DISABLED",
+      "unparsed_fact_candidates": [],
+      "unparsed_goal_candidates": [
+        "Tính thể tích lăng trụ ABC.A'B'C'"
+      ],
+      "fallback_reason": "UNPARSED_GOAL_CANDIDATE",
+      "expected_answer_from_dataset_key": "a³√3/2",
+      "evaluation_split_item": false
+    },
+    {
+      "case_id": "vmmu_r277",
+      "partition": "frozen_external_evaluation",
+      "tags": [
+        "tetrahedron",
+        "volume",
+        "point_reflection"
+      ],
+      "solver_scope": "UNKNOWN_PENDING_ADJUDICATION",
+      "local_parse_status": "LOCAL_PARSE_PARTIAL",
+      "reason_code": "UNPARSED_GOAL_CANDIDATE",
+      "owning_layer": "LOCAL_PARSER_COVERAGE",
+      "api_result_on_transcription": "503 None LIVE_AI_DISABLED",
+      "unparsed_fact_candidates": [
+        "Gọi M, N, P lần lượt là điểm đối xứng với điểm O qua trung điểm ba cạnh AB, BC, CA của tam giác ABC"
+      ],
+      "unparsed_goal_candidates": [
+        "Thể tích của tứ diện OMNP bằng"
+      ],
+      "fallback_reason": "UNPARSED_GOAL_CANDIDATE",
+      "expected_answer_from_dataset_key": "8a³",
+      "evaluation_split_item": true
+    },
+    {
+      "case_id": "vmmu_r284",
+      "partition": "development",
+      "tags": [
+        "pyramid",
+        "distance_point_plane"
+      ],
+      "solver_scope": "UNKNOWN_PENDING_ADJUDICATION",
+      "local_parse_status": "LOCAL_PARSE_PARTIAL",
+      "reason_code": "UNPARSED_FACT_CANDIDATE",
+      "owning_layer": "LOCAL_PARSER_COVERAGE",
+      "api_result_on_transcription": "503 None LIVE_AI_DISABLED",
+      "unparsed_fact_candidates": [
+        "Cho hình chóp S.ABCD có đáy là hình vuông cạnh a, mặt bên SAB là tam giác đều và nằm trong mặt phẳng vuông góc với mặt phẳng đáy (minh họa như hình vẽ bên)"
+      ],
+      "unparsed_goal_candidates": [],
+      "fallback_reason": "UNPARSED_FACT_CANDIDATE",
+      "expected_answer_from_dataset_key": "√21a/7",
+      "evaluation_split_item": false
+    },
+    {
+      "case_id": "vmmu_r295",
+      "partition": "frozen_external_evaluation",
+      "tags": [
+        "cuboid",
+        "angle_line_plane"
+      ],
+      "solver_scope": "IN_SCOPE_GEOMETRY_CAPABILITY_GAP",
+      "local_parse_status": "LOCAL_PARSE_AMBIGUOUS",
+      "reason_code": "AMBIGUOUS_FACT",
+      "owning_layer": "CLARIFICATION_POLICY",
+      "api_result_on_transcription": "200 REFUSED AMBIGUOUS_FACT",
+      "unparsed_fact_candidates": [],
+      "unparsed_goal_candidates": [],
+      "fallback_reason": "",
+      "expected_answer_from_dataset_key": "60°",
+      "evaluation_split_item": true
+    },
+    {
+      "case_id": "vmmu_r298",
+      "partition": "frozen_external_evaluation",
+      "tags": [
+        "regular_prism",
+        "volume",
+        "inverse_from_angle"
+      ],
+      "solver_scope": "UNKNOWN_PENDING_ADJUDICATION",
+      "local_parse_status": "LOCAL_PARSE_PARTIAL",
+      "reason_code": "UNPARSED_GOAL_CANDIDATE",
+      "owning_layer": "LOCAL_PARSER_COVERAGE",
+      "api_result_on_transcription": "503 None LIVE_AI_DISABLED",
+      "unparsed_fact_candidates": [],
+      "unparsed_goal_candidates": [
+        "Tính thể tích V của khối lăng trụ đó"
+      ],
+      "fallback_reason": "UNPARSED_GOAL_CANDIDATE",
+      "expected_answer_from_dataset_key": "V = 2√6a³",
+      "evaluation_split_item": true
+    },
+    {
+      "case_id": "vmmu_r375",
+      "partition": "frozen_external_evaluation",
+      "tags": [
+        "regular_pyramid",
+        "distance_point_plane"
+      ],
+      "solver_scope": "UNKNOWN_PENDING_ADJUDICATION",
+      "local_parse_status": "LOCAL_PARSE_PARTIAL",
+      "reason_code": "SOURCE_PREMISE_UNREAD",
+      "owning_layer": "SOURCE_GATE",
+      "api_result_on_transcription": "503 None LIVE_AI_DISABLED",
+      "unparsed_fact_candidates": [],
+      "unparsed_goal_candidates": [],
+      "fallback_reason": "SOURCE_GATE_MISMATCH:SOURCE_PREMISE_UNREAD:tiền đề 'Cho hình chóp tứ giác đều S.ABCD có độ dài cạnh đáy bằng 4 và độ dài cạnh bên bằng 5 (tham khảo hình vẽ).' chưa được lời gọi nào đọc — có thể đổi hình; không dùng mô hình cũ",
+      "expected_answer_from_dataset_key": "√17",
+      "evaluation_split_item": true
+    },
+    {
+      "case_id": "vmmu_r460",
+      "partition": "frozen_external_evaluation",
+      "tags": [
+        "pyramid",
+        "volume",
+        "hypotenuse_given"
+      ],
+      "solver_scope": "UNKNOWN_PENDING_ADJUDICATION",
+      "local_parse_status": "LOCAL_PARSE_PARTIAL",
+      "reason_code": "NOT_ASKED_IN_SOURCE",
+      "owning_layer": "SOURCE_GATE",
+      "api_result_on_transcription": "503 None LIVE_AI_DISABLED",
+      "unparsed_fact_candidates": [],
+      "unparsed_goal_candidates": [],
+      "fallback_reason": "SOURCE_GATE_MISMATCH:NOT_ASKED_IN_SOURCE:q1: 'Thể tích khối chóp S.ABC theo a bằng' không hỏi đối tượng này nguyên vẹn (không có từ hỏi gắn với nó, đã gán giá trị, hay bị bổ nghĩa / đặt điều kiện) — không trả lời điều đề không hỏi",
+      "expected_answer_from_dataset_key": "a³√2/3",
+      "evaluation_split_item": true
+    },
+    {
+      "case_id": "vmmu_r461",
+      "partition": "development",
+      "tags": [
+        "cone",
+        "applied"
+      ],
+      "solver_scope": "OUT_OF_SCOPE",
+      "local_parse_status": "LOCAL_PARSE_PARTIAL",
+      "reason_code": "EMPTY_SOLIDS",
+      "owning_layer": "OUT_OF_SCOPE_DOMAIN",
+      "api_result_on_transcription": "503 None LIVE_AI_DISABLED",
+      "unparsed_fact_candidates": [
+        "Để làm một cái mũ sinh nhật người ta lấy một miếng giấy hình tam giác ABC đều cạnh 3 dm (như hình vẽ)",
+        "Người ta dùng compa có tâm là A và bán kính AK vạch cung tròn MN (M, N thứ tự thuộc cạnh AB và AC) rồi cắt miếng giấy theo cung tròn đó",
+        "Lấy phần hình quạt người ta gián sao cho cạnh AM và AN trùng nhau thành một cái mũ hình nón không đáy với đỉnh A"
+      ],
+      "unparsed_goal_candidates": [],
+      "fallback_reason": "SCHEMA_VALIDATION_FAILED:EMPTY_SOLIDS:EMPTY_SOLIDS: TypedFactNextPayload requires at least one declared solid.",
+      "expected_answer_from_dataset_key": "0,5 dm³",
+      "evaluation_split_item": false
+    },
+    {
+      "case_id": "vmmu_r463",
+      "partition": "frozen_external_evaluation",
+      "tags": [
+        "right_prism",
+        "volume",
+        "inverse_from_angle"
+      ],
+      "solver_scope": "UNKNOWN_PENDING_ADJUDICATION",
+      "local_parse_status": "LOCAL_PARSE_PARTIAL",
+      "reason_code": "EMPTY_SOLIDS",
+      "owning_layer": "LOCAL_PARSER_COVERAGE",
+      "api_result_on_transcription": "503 None LIVE_AI_DISABLED",
+      "unparsed_fact_candidates": [
+        "Cho khối lăng trụ đứng ABCDA'B'C'D' có đáy ABCD là hình thoi, ∠BAD = 60°, cạnh bên AA' = 2a và AC' hợp với đáy góc 30°"
+      ],
+      "unparsed_goal_candidates": [
+        "Thể tích khối lăng trụ đã cho bằng"
+      ],
+      "fallback_reason": "SCHEMA_VALIDATION_FAILED:EMPTY_SOLIDS:EMPTY_SOLIDS: TypedFactNextPayload requires at least one declared solid.",
+      "expected_answer_from_dataset_key": "4√3a³",
+      "evaluation_split_item": true
+    },
+    {
+      "case_id": "vmmu_r475",
+      "partition": "frozen_external_evaluation",
+      "tags": [
+        "cylinder_sphere_cone",
+        "applied"
+      ],
+      "solver_scope": "OUT_OF_SCOPE",
+      "local_parse_status": "LOCAL_PARSE_UNSUPPORTED",
+      "reason_code": "EMPTY_SOLIDS",
+      "owning_layer": "OUT_OF_SCOPE_DOMAIN",
+      "api_result_on_transcription": "503 None LIVE_AI_DISABLED",
+      "unparsed_fact_candidates": [
+        "Trên bàn có một cốc nước hình trụ chứa đầy nước, có chiều cao bằng 3 lần đường kính của đáy",
+        "Biết viên bi là một khối cầu có đường kính bằng đường kính của đương tròn đáy cốc nước"
+      ],
+      "unparsed_goal_candidates": [
+        "Người ta từ từ thả vào cốc nước viên bi và khối nón sao cho đỉnh khối nón nằm trên mặt cầu (như hình vẽ) thì thấy nước trong cốc tràn ra ngoài",
+        "Tính tỉ số thể tích của lượng nước còn lại trong cốc và lượng nước ban đầu"
+      ],
+      "fallback_reason": "SCHEMA_VALIDATION_FAILED:EMPTY_SOLIDS:EMPTY_SOLIDS: TypedFactNextPayload requires at least one declared solid.",
+      "expected_answer_from_dataset_key": "5/9",
+      "evaluation_split_item": true
+    },
+    {
+      "case_id": "vmmu_r488",
+      "partition": "development",
+      "tags": [
+        "right_prism",
+        "volume",
+        "inverse_from_angle"
+      ],
+      "solver_scope": "UNKNOWN_PENDING_ADJUDICATION",
+      "local_parse_status": "LOCAL_PARSE_PARTIAL",
+      "reason_code": "UNPARSED_GOAL_CANDIDATE",
+      "owning_layer": "LOCAL_PARSER_COVERAGE",
+      "api_result_on_transcription": "503 None LIVE_AI_DISABLED",
+      "unparsed_fact_candidates": [],
+      "unparsed_goal_candidates": [
+        "Thể tích của khối chóp B'.ACC'A' bằng"
+      ],
+      "fallback_reason": "UNPARSED_GOAL_CANDIDATE",
+      "expected_answer_from_dataset_key": "a³/3",
+      "evaluation_split_item": false
+    },
+    {
+      "case_id": "vmmu_r491",
+      "partition": "frozen_external_evaluation",
+      "tags": [
+        "oblique_prism",
+        "distance_point_plane"
+      ],
+      "solver_scope": "UNKNOWN_PENDING_ADJUDICATION",
+      "local_parse_status": "LOCAL_PARSE_PARTIAL",
+      "reason_code": "UNPARSED_FACT_CANDIDATE",
+      "owning_layer": "LOCAL_PARSER_COVERAGE",
+      "api_result_on_transcription": "503 None LIVE_AI_DISABLED",
+      "unparsed_fact_candidates": [
+        "Hình chiếu vuông góc của A' lên mặt phẳng (ABC) là điểm I thuộc cạnh BC"
+      ],
+      "unparsed_goal_candidates": [],
+      "fallback_reason": "UNPARSED_FACT_CANDIDATE",
+      "expected_answer_from_dataset_key": "2√5/5 a",
+      "evaluation_split_item": true
+    },
+    {
+      "case_id": "vmmu_r498",
+      "partition": "frozen_external_evaluation",
+      "tags": [
+        "regular_prism",
+        "dihedral"
+      ],
+      "solver_scope": "UNKNOWN_PENDING_ADJUDICATION",
+      "local_parse_status": "LOCAL_PARSE_PARTIAL",
+      "reason_code": "NOT_ASKED_IN_SOURCE",
+      "owning_layer": "SOURCE_GATE",
+      "api_result_on_transcription": "503 None LIVE_AI_DISABLED",
+      "unparsed_fact_candidates": [],
+      "unparsed_goal_candidates": [],
+      "fallback_reason": "SOURCE_GATE_MISMATCH:NOT_ASKED_IN_SOURCE:q1: \"góc giữa hai mặt phẳng (ABCD) và (ABC')\" không hỏi đối tượng này nguyên vẹn (không có từ hỏi gắn với nó, đã gán giá trị, hay bị bổ nghĩa / đặt điều kiện) — không trả lời điều đề không hỏi",
+      "expected_answer_from_dataset_key": "1/2",
+      "evaluation_split_item": true
+    },
+    {
+      "case_id": "vmmu_r513",
+      "partition": "development",
+      "tags": [
+        "cuboid",
+        "distance_point_plane"
+      ],
+      "solver_scope": "UNKNOWN_PENDING_ADJUDICATION",
+      "local_parse_status": "LOCAL_PARSE_PARTIAL",
+      "reason_code": "UNGROUNDED_VALUE",
+      "owning_layer": "SOURCE_GATE",
+      "api_result_on_transcription": "503 None LIVE_AI_DISABLED",
+      "unparsed_fact_candidates": [],
+      "unparsed_goal_candidates": [],
+      "fallback_reason": "SOURCE_GATE_MISMATCH:UNGROUNDED_VALUE:p4: 'AB = 2' không phát biểu AB BẰNG 2 (bất đẳng thức, phủ định, xấp xỉ, bội số, tuyển hay điều kiện) — không làm dữ kiện",
+      "expected_answer_from_dataset_key": "2√5/5",
+      "evaluation_split_item": false
+    },
+    {
+      "case_id": "vmmu_r520",
+      "partition": "frozen_external_evaluation",
+      "tags": [
+        "pyramid",
+        "dihedral"
+      ],
+      "solver_scope": "UNKNOWN_PENDING_ADJUDICATION",
+      "local_parse_status": "LOCAL_PARSE_PARTIAL",
+      "reason_code": "UNPARSED_FACT_CANDIDATE",
+      "owning_layer": "LOCAL_PARSER_COVERAGE",
+      "api_result_on_transcription": "503 None LIVE_AI_DISABLED",
+      "unparsed_fact_candidates": [
+        "Cho hình chóp S.ABC có đáy là tam giác vuông tại B, SA vuông góc với đáy và SA = AB (tham khảo hình bên)"
+      ],
+      "unparsed_goal_candidates": [],
+      "fallback_reason": "UNPARSED_FACT_CANDIDATE",
+      "expected_answer_from_dataset_key": "45°",
+      "evaluation_split_item": true
+    },
+    {
+      "case_id": "vmmu_r537",
+      "partition": "frozen_external_evaluation",
+      "tags": [
+        "regular_pyramid",
+        "distance_point_plane"
+      ],
+      "solver_scope": "UNKNOWN_PENDING_ADJUDICATION",
+      "local_parse_status": "LOCAL_PARSE_PARTIAL",
+      "reason_code": "SOURCE_PREMISE_UNREAD",
+      "owning_layer": "SOURCE_GATE",
+      "api_result_on_transcription": "503 None LIVE_AI_DISABLED",
+      "unparsed_fact_candidates": [],
+      "unparsed_goal_candidates": [],
+      "fallback_reason": "SOURCE_GATE_MISMATCH:SOURCE_PREMISE_UNREAD:tiền đề 'Cho hình chóp tứ giác đều S.ABCD có độ dài cạnh bên bằng a và diện tích đáy bằng a² (tham khảo hình bên dưới).' chưa được lời gọi nào đọc — có thể đổi hình; không dùng mô hình cũ",
+      "expected_answer_from_dataset_key": "a√6/3",
+      "evaluation_split_item": true
+    },
+    {
+      "case_id": "vmmu_r538",
+      "partition": "frozen_external_evaluation",
+      "tags": [
+        "regular_pyramid",
+        "angle_line_plane"
+      ],
+      "solver_scope": "UNKNOWN_PENDING_ADJUDICATION",
+      "local_parse_status": "LOCAL_PARSE_PARTIAL",
+      "reason_code": "UNPARSED_GOAL_CANDIDATE",
+      "owning_layer": "LOCAL_PARSER_COVERAGE",
+      "api_result_on_transcription": "503 None LIVE_AI_DISABLED",
+      "unparsed_fact_candidates": [],
+      "unparsed_goal_candidates": [
+        "Góc giữa cạnh bên và mặt đáy bằng"
+      ],
+      "fallback_reason": "UNPARSED_GOAL_CANDIDATE",
+      "expected_answer_from_dataset_key": "30°",
+      "evaluation_split_item": true
+    }
+  ]
+}

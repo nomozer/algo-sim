@@ -6,10 +6,12 @@ cached by `main` under `ROUTE_D_CACHE_POLICY` (`prepare_live_hybrid(...).cache_k
 """
 from __future__ import annotations
 
+from copy import deepcopy
 from dataclasses import dataclass, replace
 from hashlib import sha256
 import json
 import math
+import os
 from pathlib import Path
 import time
 from time import perf_counter
@@ -34,6 +36,10 @@ from app.simulation.geometry_functions.typed_fact_next import TYPED_FACT_NEXT_V2
 #: Surfaced as recoverable HTTP infrastructure errors (`502`/`503`/`504`), never mislabeled as mathematical refusals.
 HYBRID_INFRASTRUCTURE_CODES = frozenset({
     "LIVE_AI_DISABLED", "MISSING_API_KEY", "STAGING_CORPUS_UNAVAILABLE", "INVALID_HYBRID_ROUTE_MODE",
+    "LOCAL_ONLY_GENERAL_NOT_APPROVED", "LOCAL_ONLY_CLOUD_VISION_DISABLED",
+    "MODEL_RUNTIME_UNAVAILABLE", "MODEL_CHECKSUM_MISMATCH", "LOCAL_SLM_BUSY",
+    "LOCAL_SLM_TIMEOUT", "LOCAL_SLM_PROCESS_CRASHED", "LOCAL_SLM_RESPONSE_INVALID",
+    "INVALID_LOCAL_SLM_MODEL",
     "PROVIDER_ERROR", "PROVIDER_BLOCKED", "PROVIDER_REFUSED", "NO_CANDIDATE",
     "PROVIDER_RESPONSE_INVALID", "MALFORMED_RESPONSE_PART", "JSON_INVALID",
     "RESPONSE_TRUNCATED", "MAX_TOKENS",
@@ -190,11 +196,18 @@ def _run_hybrid_offline(problem_text: str, extractor: Extractor, policy: RoutePo
     if result.status != 'SERVED':
         from app.ai.hybrid_preview import classify_refusal
 
+        det_audit = result.details.get('determinacy_audit') if isinstance(result.details, dict) else None
+        if isinstance(det_audit, dict):
+            receipt['determinacy_audit'] = deepcopy(det_audit)
         technical = (result.code or '').endswith('_INTERNAL_ERROR') or result.code in {
             'ENGINE_EXECUTION_FAILED', 'ENGINE_SELF_CHECK_FAILED', 'ENGINE_IR_INVALID', 'SCENE_BUILD_FAILED',
             'SECTION_CONSTRUCTION_INTERNAL_FAILURE'}
-        receipt.update(failure_stage='deterministic_route',
-                       failure_kind='TECHNICAL_FAILURE' if technical else classify_refusal(result.code or '').group)
+        receipt.update(
+            failure_stage='deterministic_route',
+            failure_kind='TECHNICAL_FAILURE' if technical else classify_refusal(
+                result.code or '', result.planner, problem_text=source, details=result.details
+            ).group,
+        )
     stopped = interruption('adapter4')
     return stopped if stopped is not None else outcome
 
@@ -441,19 +454,437 @@ def prepare_live_hybrid(problem_text: str, *, model: str | None = None) -> LiveH
     return LiveHybridRun(problem_text, resolved_model, ext_fp, policy, key)
 
 
+@dataclass(frozen=True)
+class LocalFirstHybridRun:
+    """Selectable Local-First Hybrid `/4` run (`HYBRID_ROUTE_MODE=local-first` or `HYBRID_LOCAL_FIRST=1`)."""
+    problem_text: str
+    model: str
+    extraction_surface: str
+    policy: RoutePolicy
+    cache_key: str
+
+    def run(
+        self,
+        api_key: str | None = None,
+        *,
+        allow_live_ai: bool = True,
+        per_attempt_timeout_s: float = 60.0,
+        deadline_seconds: float | None = None,
+    ) -> HybridOfflineResult:
+        from app.ai.adaptive_input_router import route_text_input
+
+        eff_per = _finite_pos(per_attempt_timeout_s, 60.0)
+        eff_deadline = _finite_pos(deadline_seconds, eff_per * 3.0)
+        fallback_ext: Extractor | None = None
+        if allow_live_ai and api_key:
+            transport = _live_provider_transport(
+                api_key, model=self.model, timeout_seconds=eff_per, deadline_seconds=eff_deadline
+            )
+            fallback_ext = TransportExtractor(transport)
+        outcome = route_text_input(
+            self.problem_text,
+            fallback_extractor=fallback_ext,
+            allow_live_ai=allow_live_ai,
+            fallback_unavailable_code=("MISSING_API_KEY" if allow_live_ai and not api_key else None),
+            input_kind='text',
+            model=self.model,
+            policy=self.policy,
+            timeout_seconds=eff_deadline,
+        )
+        return HybridOfflineResult(outcome.response, outcome.receipt)
+
+
+def prepare_local_first_hybrid(problem_text: str, *, model: str | None = None) -> LocalFirstHybridRun:
+    from app.ai.adaptive_input_router import ADAPTIVE_INPUT_ROUTER_VERSION
+    from app.ai.local_geometry_parser import LOCAL_GEOMETRY_PARSER_VERSION
+
+    resolved_model = (model or '').strip() or 'gemini-2.5-flash'
+    policy = hybrid_offline_policy({'HYBRID_ROUTE_D_PREVIEW': '1'})
+    ext_fp = _tfn_extraction.typed_fact_next_surface_fingerprint()
+    identity = {
+        'route': 'HYBRID_V4_LOCAL_FIRST',
+        'router_version': ADAPTIVE_INPUT_ROUTER_VERSION,
+        'parser_version': LOCAL_GEOMETRY_PARSER_VERSION,
+        'model': resolved_model,
+        'extraction_surface': ext_fp,
+        'surface': dict(policy.preview_surface),
+        'response_contract': policy.response_contract,
+        'source': problem_text,
+    }
+    key = sha256(json.dumps(identity, sort_keys=True, ensure_ascii=False).encode('utf-8')).hexdigest()
+    return LocalFirstHybridRun(problem_text, resolved_model, ext_fp, policy, key)
+
+
+@dataclass(frozen=True)
+class LocalSlmHybridRun:
+    """Selectable Local-SLM Hybrid `/5` run (`HYBRID_ROUTE_MODE=local-slm`, `external_ai_calls = 0`)."""
+    problem_text: str
+    model_key: str
+    strategy: str
+    extraction_surface: str
+    policy: RoutePolicy
+    cache_key: str
+
+    def run(
+        self,
+        *,
+        timeout_seconds: float = 30.0,
+        allow_download: bool = False,
+    ) -> HybridOfflineResult:
+        from app.ai.adaptive_input_router import route_text_input_local_slm
+
+        outcome = route_text_input_local_slm(
+            self.problem_text,
+            model_key=self.model_key,
+            strategy=self.strategy,
+            allow_download=allow_download,
+            policy=self.policy,
+            timeout_seconds=_finite_pos(timeout_seconds, 30.0),
+        )
+        return HybridOfflineResult(outcome.response, outcome.receipt)
+
+
+def prepare_local_slm_hybrid(
+    problem_text: str,
+    *,
+    model_key: str | None = None,
+    strategy: str | None = None,
+) -> LocalSlmHybridRun:
+    from app.ai.adaptive_input_router import ADAPTIVE_INPUT_ROUTER_VERSION
+    from app.ai.local_geometry_parser import LOCAL_GEOMETRY_PARSER_VERSION
+    from app.ai.local_slm_extractor import (
+        LOCAL_SLM_EXTRACTOR_VERSION,
+        SLM_COMPACT_SCHEMA_VERSION,
+        SLM_GROUNDING_VALIDATOR_VERSION,
+        resolve_local_slm_strategy,
+    )
+    from app.ai.local_slm_runtime import LOCAL_SLM_CACHE_NAMESPACE, LOCAL_SLM_RUNTIME_VERSION, resolve_local_slm_model_spec
+
+    spec = resolve_local_slm_model_spec(model_key)
+    eff_strategy = resolve_local_slm_strategy(strategy)
+    policy = hybrid_offline_policy({'HYBRID_ROUTE_D_PREVIEW': '1'})
+    ext_fp = _tfn_extraction.typed_fact_next_surface_fingerprint()
+    is_v6 = eff_strategy in ('compact_clause', 'compact_clause_per_clause')
+    identity = {
+        'route': LOCAL_SLM_CACHE_NAMESPACE if is_v6 else 'HYBRID_V5_LOCAL_SLM',
+        'router_version': ADAPTIVE_INPUT_ROUTER_VERSION,
+        'parser_version': LOCAL_GEOMETRY_PARSER_VERSION,
+        'runtime_version': LOCAL_SLM_RUNTIME_VERSION,
+        'extractor_version': LOCAL_SLM_EXTRACTOR_VERSION,
+        'schema_version': SLM_COMPACT_SCHEMA_VERSION if is_v6 else eff_strategy,
+        'validator_version': SLM_GROUNDING_VALIDATOR_VERSION,
+        'model_key': spec.model_key,
+        'model_sha256': spec.sha256,
+        'strategy': eff_strategy,
+        'extraction_surface': ext_fp,
+        'surface': dict(policy.preview_surface),
+        'response_contract': policy.response_contract,
+        'source': problem_text,
+    }
+    key = sha256(json.dumps(identity, sort_keys=True, ensure_ascii=False).encode('utf-8')).hexdigest()
+    return LocalSlmHybridRun(problem_text, spec.model_key, eff_strategy, ext_fp, policy, key)
+
+
+@dataclass(frozen=True)
+class LocalSlmV9HybridRun:
+    """Selectable Hybrid `/9` local-only run (`offline-lab`, `local-only-scoped`, `local-only-general`, 0 external AI)."""
+    problem_text: str
+    mode_tag: str
+    model_key: str
+    strategy: str
+    extraction_surface: str
+    policy: RoutePolicy
+    cache_key: str
+
+    def run(
+        self,
+        *,
+        timeout_seconds: float = 30.0,
+        allow_download: bool = False,
+    ) -> HybridOfflineResult:
+        from app.ai.adaptive_input_router import route_text_input_local_slm
+        from app.ai.local_slm_extractor import V9_CLOSURE_MODE
+
+        outcome = route_text_input_local_slm(
+            self.problem_text,
+            model_key=self.model_key,
+            strategy=self.strategy,
+            closure_mode=V9_CLOSURE_MODE,
+            normalizer_version='v3',
+            allow_download=allow_download,
+            policy=self.policy,
+            timeout_seconds=_finite_pos(timeout_seconds, 30.0),
+        )
+        return HybridOfflineResult(outcome.response, outcome.receipt)
+
+
+def prepare_local_slm_v9_hybrid(
+    problem_text: str,
+    *,
+    mode_tag: str = 'local-only-scoped',
+    model_key: str | None = None,
+    strategy: str | None = None,
+) -> LocalSlmV9HybridRun:
+    from app.ai.adaptive_input_router import ADAPTIVE_INPUT_ROUTER_VERSION
+    from app.ai.local_geometry_parser import LOCAL_GEOMETRY_PARSER_VERSION
+    from app.ai.local_slm_extractor import (
+        LOCAL_SLM_EXTRACTOR_V9_VERSION,
+        SLM_COMPACT_SCHEMA_VERSION,
+        SLM_GROUNDING_VALIDATOR_V9_VERSION,
+        V9_CLOSURE_MODE,
+        resolve_local_slm_strategy,
+    )
+    from app.ai.local_slm_runtime import (
+        LOCAL_SLM_CACHE_V9_NAMESPACE,
+        LOCAL_SLM_RUNTIME_V9_VERSION,
+        resolve_local_slm_model_spec,
+    )
+    from app.ai.slm_verified_normalizer import SLM_VERIFIED_NORMALIZER_V3_VERSION
+
+    req_model = model_key or os.getenv('LOCAL_SLM_MODEL') or 'v9-active'
+    spec = resolve_local_slm_model_spec(req_model)
+    eff_strategy = resolve_local_slm_strategy(strategy)
+    policy = hybrid_offline_policy({'HYBRID_ROUTE_D_PREVIEW': '1'})
+    ext_fp = _tfn_extraction.typed_fact_next_surface_fingerprint()
+    identity = {
+        'route': LOCAL_SLM_CACHE_V9_NAMESPACE,
+        'mode_tag': mode_tag,
+        'router_version': ADAPTIVE_INPUT_ROUTER_VERSION,
+        'parser_version': LOCAL_GEOMETRY_PARSER_VERSION,
+        'normalizer_version': SLM_VERIFIED_NORMALIZER_V3_VERSION,
+        'closure_mode': V9_CLOSURE_MODE,
+        'runtime_version': LOCAL_SLM_RUNTIME_V9_VERSION,
+        'extractor_version': LOCAL_SLM_EXTRACTOR_V9_VERSION,
+        'schema_version': SLM_COMPACT_SCHEMA_VERSION,
+        'validator_version': SLM_GROUNDING_VALIDATOR_V9_VERSION,
+        'model_key': spec.model_key,
+        'model_sha256': spec.sha256,
+        'strategy': eff_strategy,
+        'extraction_surface': ext_fp,
+        'surface': dict(policy.preview_surface),
+        'response_contract': policy.response_contract,
+        'source': problem_text,
+    }
+    key = sha256(json.dumps(identity, sort_keys=True, ensure_ascii=False).encode('utf-8')).hexdigest()
+    return LocalSlmV9HybridRun(problem_text, mode_tag, spec.model_key, eff_strategy, ext_fp, policy, key)
+
+
+@dataclass(frozen=True)
+class LocalShadowHybridRun:
+    """Authoritative Live Gemini run + non-blocking Local SLM `/9` shadow comparison."""
+    problem_text: str
+    live_run: LiveHybridRun
+    cache_key: str
+
+    def run(
+        self,
+        api_key: str,
+        *,
+        per_attempt_timeout_s: float = 60.0,
+        deadline_seconds: float | None = None,
+    ) -> HybridOfflineResult:
+        live_res = self.live_run.run(
+            api_key,
+            per_attempt_timeout_s=per_attempt_timeout_s,
+            deadline_seconds=deadline_seconds,
+        )
+        response = dict(live_res.response)
+        route_d = dict(response.get('route_d') or {})
+        receipt = dict(live_res.receipt)
+        t_sh0 = perf_counter()
+        shadow_info: dict[str, Any] = {'slm_status': 'UNAVAILABLE', 'agreed_with_live': False, 'slm_ms': 0.0}
+        try:
+            eff_slm_timeout = min(_finite_pos(deadline_seconds, 15.0) if deadline_seconds is not None else 15.0, 15.0)
+            shadow_run = prepare_local_slm_v9_hybrid(self.problem_text, mode_tag='local-shadow')
+            shadow_res = shadow_run.run(timeout_seconds=eff_slm_timeout, allow_download=False)
+            slm_rd = (shadow_res.response or {}).get('route_d') or {}
+            slm_st = str(slm_rd.get('status') or 'REFUSED')
+            live_st = str(route_d.get('status') or 'REFUSED')
+            agreed = slm_st == live_st and (
+                slm_st != 'SERVED' or (slm_rd.get('answers') or {}) == (route_d.get('answers') or {})
+            )
+            shadow_info = {
+                'slm_status': slm_st,
+                'agreed_with_live': agreed,
+                'slm_ms': round((perf_counter() - t_sh0) * 1000.0, 2),
+                'model_key': shadow_run.model_key,
+            }
+        except Exception:
+            shadow_info = {
+                'slm_status': 'SHADOW_SKIPPED',
+                'agreed_with_live': False,
+                'slm_ms': round((perf_counter() - t_sh0) * 1000.0, 2),
+            }
+        route_d['local_shadow'] = shadow_info
+        response['route_d'] = route_d
+        receipt['local_shadow'] = shadow_info
+        return HybridOfflineResult(response, receipt)
+
+
+def prepare_local_shadow_hybrid(problem_text: str, *, model: str | None = None) -> LocalShadowHybridRun:
+    live_run = prepare_live_hybrid(problem_text, model=model)
+    return LocalShadowHybridRun(problem_text=problem_text, live_run=live_run, cache_key=live_run.cache_key)
+
+
+LOCAL_ONLY_HYBRID_MODES = ('local-slm', 'offline-lab', 'local-only-scoped', 'local-only-general')
+
+
+def local_slm_ready_status(env: Mapping[str, str], mode: str) -> dict[str, Any]:
+    """Non-throwing readiness summary for `/api/health` and runtime diagnostics."""
+    local_only = mode in LOCAL_ONLY_HYBRID_MODES
+    pref = str(env.get('LOCAL_SLM_MODEL') or ('v9-active' if mode != 'local-slm' else 'finetuned')).strip() or 'v9-active'
+    model_key: str | None = None
+    ready = False
+    try:
+        from app.ai.local_slm_runtime import ensure_local_slm_provisioned, resolve_local_slm_model_spec
+
+        spec = resolve_local_slm_model_spec(pref)
+        model_key = spec.model_key
+        ensure_local_slm_provisioned(model_key=spec.model_key, allow_download=False)
+        ready = True
+    except Exception:
+        ready = False
+    if local_only:
+        backend = 'local_slm_v9' if mode in ('offline-lab', 'local-only-scoped', 'local-only-general') else 'local_slm_v7'
+    elif mode == 'local-first':
+        backend = 'local_first_with_cloud_fallback'
+    elif mode == 'local-shadow':
+        backend = 'live_gemini_with_local_shadow'
+    elif mode == 'staging-replay':
+        backend = 'staging_replay'
+    elif mode == 'live':
+        backend = 'live_gemini'
+    else:
+        backend = 'invalid'
+    return {
+        'localOnlyMode': local_only,
+        'localSlmReady': ready,
+        'localSlmModel': model_key,
+        'extractionBackend': backend,
+    }
+
+
+def build_local_ai_ux_descriptor(*, status_code: int, body: Mapping[str, Any], local_only: bool) -> dict[str, str]:
+    """Map runtime & analysis payloads into one of 10 clean Vietnamese learner UX states (zero internal tokens)."""
+    reason_code = str(body.get('reason_code') or body.get('error_code') or '').strip()
+    if body.get('warming_up') or reason_code == 'LOCAL_SLM_WARMING_UP':
+        return {
+            'ux_state': 'WARMING_UP_MODEL',
+            'learner_title': 'Đang khởi động bộ đọc đề ngoại tuyến',
+            'learner_message': 'Hệ thống đang nạp mô hình trên máy. Em vui lòng đợi trong giây lát rồi thử lại.',
+        }
+    if reason_code == 'LOCAL_ONLY_CLOUD_VISION_DISABLED':
+        return {
+            'ux_state': 'CLOUD_OCR_DISABLED_OFFLINE',
+            'learner_title': 'Chế độ ngoại tuyến không đọc ảnh trực tuyến',
+            'learner_message': 'Chế độ hiện tại không gửi ảnh lên mạng. Em hãy nhập trực tiếp đề bài bằng chữ hoặc tải tệp PDF/DOCX có lớp văn bản.',
+        }
+    if reason_code in (
+        'MODEL_RUNTIME_UNAVAILABLE', 'MODEL_CHECKSUM_MISMATCH', 'INVALID_LOCAL_SLM_MODEL', 'LOCAL_ONLY_GENERAL_NOT_APPROVED',
+    ):
+        return {
+            'ux_state': 'MODEL_NOT_PROVISIONED',
+            'learner_title': 'Bộ đọc đề ngoại tuyến chưa sẵn sàng',
+            'learner_message': 'Mô hình xử lý trên máy chưa được cài đặt đầy đủ hoặc chưa bật. Em vẫn có thể xem các bài mô phỏng mẫu.',
+        }
+    if status_code in (502, 503, 504) or reason_code in (
+        'LOCAL_SLM_BUSY', 'LOCAL_SLM_TIMEOUT', 'LOCAL_SLM_PROCESS_CRASHED',
+        'LOCAL_SLM_RESPONSE_INVALID', 'HYBRID_DEADLINE_EXCEEDED', 'ROUTE_INTERNAL_ERROR',
+    ):
+        return {
+            'ux_state': 'RUNTIME_BUSY_OR_TIMEOUT',
+            'learner_title': 'Hệ thống xử lý trên máy đang bận',
+            'learner_message': 'Quá trình phân tích đề mất nhiều thời gian hơn dự kiến hoặc đang có nhiều lượt xử lý cùng lúc. Em hãy nhấn thử lại sau vài giây.',
+        }
+
+    route_d = body.get('route_d') if isinstance(body.get('route_d'), Mapping) else {}
+    envelope = body.get('envelope') if isinstance(body.get('envelope'), Mapping) else {}
+    rd_status = str(route_d.get('status') or '')
+    if status_code == 200 and rd_status == 'SERVED':
+        return {
+            'ux_state': 'SERVED_OFFLINE_VERIFIED',
+            'learner_title': 'Đã dựng hình và kiểm chứng thành công',
+            'learner_message': 'Hình không gian 3D và đáp số chính xác đã sẵn sàng từ quá trình xử lý ngay trên máy.',
+        }
+
+    refusal = route_d.get('refusal') if isinstance(route_d.get('refusal'), Mapping) else {}
+    rc = str(refusal.get('reason_code') or refusal.get('code') or reason_code or envelope.get('reason_code') or '').strip()
+    fcat = str(body.get('failure_category') or envelope.get('failure_category') or '').strip()
+
+    if body.get('status') == 'unsupported' or fcat in ('out_of_scope', 'capability_gap') or rc in (
+        'OUT_OF_SCOPE', 'GATE_OUT_OF_SCOPE', 'CURVED_WORDING_UNSUPPORTED', 'UNSUPPORTED_CAPABILITY', 'EXACT_DOMAIN_EXCEEDED',
+    ) or rc.startswith('BRIDGE_UNSUPPORTED'):
+        return {
+            'ux_state': 'OUT_OF_SUPPORTED_SCOPE',
+            'learner_title': 'Đề bài nằm ngoài phạm vi hỗ trợ hiện tại',
+            'learner_message': 'Hệ thống hiện tập trung dựng và giải hình học không gian khối đa diện bậc trung học phổ thông với các phép đo được hỗ trợ.',
+        }
+
+    if fcat == 'geometry_generation_failed' or rc in (
+        'INCONSISTENT_FACTS', 'NON_POSITIVE_LENGTH', 'DEGENERATE_SOLID', 'COLLINEAR_POINTS',
+        'NON_COPLANAR_POINTS', 'PARALLEL_NO_INTERSECTION', 'PLANE_DOES_NOT_CUT',
+        'NO_CIRCUMSCRIBED_SPHERE', 'NO_INSCRIBED_SPHERE',
+    ):
+        return {
+            'ux_state': 'CONTRADICTORY_GEOMETRY_DATA',
+            'learner_title': 'Giả thiết hình học có mâu thuẫn hoặc suy biến',
+            'learner_message': 'Các số đo hoặc quan hệ hình học trong đề bài không thể cùng tồn tại trong không gian. Em hãy kiểm tra lại các điều kiện đã nhập.',
+        }
+
+    if fcat == 'insufficient_specification' or rc in (
+        'MISSING_DIMENSION', 'UNDERDETERMINED_POINT', 'PLANE_NOT_UNIQUE',
+        'FOOT_NOT_DETERMINED', 'FACT_INCOMPLETE', 'SECTION_NOT_CLOSED_ON_LATERAL_EDGES',
+    ):
+        return {
+            'ux_state': 'MISSING_GEOMETRY_DATA',
+            'learner_title': 'Đề bài còn thiếu dữ kiện để dựng hình duy nhất',
+            'learner_message': 'Hệ thống chưa đủ độ dài, góc hoặc vị trí điểm cố định để xác định hình không gian. Em hãy bổ sung phần giả thiết còn thiếu.',
+        }
+
+    if status_code == 200 and 'ok' in body and 'route_d' not in body:
+        return {
+            'ux_state': 'READY_OFFLINE',
+            'learner_title': 'Sẵn sàng dựng hình ngoại tuyến',
+            'learner_message': 'Hệ thống đang chạy bằng mô hình trên máy, không cần khóa kết nối đám mây.',
+        }
+
+    return {
+        'ux_state': 'CLARIFICATION_NEEDED',
+        'learner_title': 'Cần viết rõ hơn một phần diễn đạt trong đề',
+        'learner_message': 'Một số cụm từ hoặc ký hiệu trong đề bài còn chưa rõ để đối chiếu chắc chắn. Em hãy diễn đạt tách câu ngắn gọn hơn rồi gửi lại.',
+    }
+
+
 def hybrid_route_identity(mode: str, env: Mapping[str, str]) -> dict[str, Any]:
     """Diagnostics snapshot for `/api/diagnostics/runtime` (never exposes secrets)."""
+    from app.ai.adaptive_input_router import ADAPTIVE_INPUT_ROUTER_VERSION
+    from app.ai.local_geometry_parser import LOCAL_GEOMETRY_PARSER_VERSION
+
     surface = _surface()
-    valid = mode in ('staging-replay', 'live')
-    extraction_mode = (
-        'REPLAY_STAGING_SIMULATED' if mode == 'staging-replay'
-        else ('LIVE_GEMINI_STRUCTURED' if mode == 'live' else 'INVALID_HYBRID_ROUTE_MODE')
-    )
+    known = ('staging-replay', 'live', 'local-first', 'local-slm', 'offline-lab', 'local-shadow', 'local-only-scoped', 'local-only-general')
+    valid = mode in known and (mode != 'local-only-general' or env.get('AXO_ALLOW_GENERAL_LOCAL_CUTOVER') == '1')
+    mode_map = {
+        'staging-replay': 'REPLAY_STAGING_SIMULATED',
+        'local-slm': 'LOCAL_FIRST_SLM_GROUNDED',
+        'offline-lab': 'LOCAL_ONLY_V9_OFFLINE_LAB',
+        'local-only-scoped': 'LOCAL_ONLY_V9_SCOPED',
+        'local-only-general': 'LOCAL_ONLY_V9_GENERAL',
+        'local-shadow': 'LIVE_GEMINI_WITH_LOCAL_V9_SHADOW',
+        'local-first': 'LOCAL_FIRST_DETERMINISTIC_WITH_AI_FALLBACK',
+        'live': 'LIVE_GEMINI_STRUCTURED',
+    }
+    extraction_mode = mode_map.get(mode, 'INVALID_HYBRID_ROUTE_MODE')
+    local_stat = local_slm_ready_status(env, mode)
     return {
         'mode': mode,
         'enabled': valid,
         'simulated': mode == 'staging-replay',
+        'local_only': local_stat['localOnlyMode'],
+        'local_slm_model_key': local_stat['localSlmModel'],
+        'local_slm_provisioned': local_stat['localSlmReady'],
         'extraction_mode': extraction_mode,
+        'local_parser_version': LOCAL_GEOMETRY_PARSER_VERSION,
+        'adaptive_router_version': ADAPTIVE_INPUT_ROUTER_VERSION,
         'registry_version': surface['registry_version'],
         'planner_version': surface['planner_version'],
         'engine_version': surface['engine_version'],

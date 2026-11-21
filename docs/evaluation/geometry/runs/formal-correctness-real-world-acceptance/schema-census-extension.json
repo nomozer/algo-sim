@@ -1,0 +1,153 @@
+{
+  "schema": "SCHEMA_CENSUS_EXTENSION/1",
+  "run": "formal-correctness-real-world-acceptance",
+  "extends": "docs/evaluation/geometry/runs/unified-angle-geometry-verified-image-to-3d/schema-census-extension.json",
+  "rule": "Additive only: classifies premise and MathGoalSpecV2 fields added in formal-correctness-real-world-acceptance without modifying frozen historical census snapshots.",
+  "fields": {
+    "PremiseSpec.args[face_area].polygon": {
+      "category": "VERTEX_REF",
+      "owner": "premise solid_id",
+      "rules": ["S5", "S7", "S8"],
+      "entry_points": "adapter4, planner route v2, bridge v2",
+      "positive_test": "test_angle_and_base_premise_scope_controls_serve",
+      "negative_test": "test_angle_and_base_premise_scope_violations_refuse"
+    },
+    "PremiseSpec.args[face_area].value": {
+      "category": "METADATA",
+      "note": "exact face area value"
+    },
+    "PremiseSpec.args[face_area].shape": {
+      "category": "METADATA",
+      "note": "face shape tag (square | rectangle | equilateral_triangle | triangle | polygon)"
+    },
+    "PremiseSpec.args[segment_ratio].segment_a": {
+      "category": "VERTEX_REF",
+      "owner": "premise solid_id",
+      "rules": ["S5", "S7", "S8"],
+      "entry_points": "adapter4, planner route v2, bridge v2",
+      "positive_test": "test_angle_and_base_premise_scope_controls_serve",
+      "negative_test": "test_angle_and_base_premise_scope_violations_refuse"
+    },
+    "PremiseSpec.args[segment_ratio].segment_b": {
+      "category": "VERTEX_REF",
+      "owner": "premise solid_id",
+      "rules": ["S5", "S7", "S8"],
+      "entry_points": "adapter4, planner route v2, bridge v2",
+      "positive_test": "test_angle_and_base_premise_scope_controls_serve",
+      "negative_test": "test_angle_and_base_premise_scope_violations_refuse"
+    },
+    "PremiseSpec.args[segment_ratio].ratio": {
+      "category": "METADATA",
+      "note": "exact positive rational ratio k where |segment_a| = k * |segment_b|"
+    },
+    "MathGoalSpecV2.goal_id": {
+      "category": "DEFINITION_ID",
+      "note": "goal id"
+    },
+    "MathGoalSpecV2.kind": {
+      "category": "METADATA",
+      "note": "no scope semantics"
+    },
+    "MathGoalSpecV2.quote": {
+      "category": "METADATA",
+      "note": "no scope semantics"
+    },
+    "MathGoalSpecV2.numerator_solid_id": {
+      "category": "SOLID_OPERAND",
+      "owner": "ratio goal",
+      "rules": ["S1"],
+      "entry_points": "adapter4, bridge v2",
+      "positive_test": "test_ratio_residual_controls_serve",
+      "negative_test": "test_ratio_residual_scope_refused",
+      "refusal_codes": ["UNKNOWN_SOLID_ID"]
+    },
+    "MathGoalSpecV2.denominator_solid_id": {
+      "category": "SOLID_OPERAND",
+      "owner": "ratio goal",
+      "rules": ["S1"],
+      "entry_points": "adapter4, bridge v2",
+      "positive_test": "test_ratio_residual_controls_serve",
+      "negative_test": "test_ratio_residual_scope_refused",
+      "refusal_codes": ["UNKNOWN_SOLID_ID"]
+    },
+    "MathGoalSpecV2.parent_solid_id": {
+      "category": "SOLID_OPERAND",
+      "owner": "residual goal",
+      "rules": ["S1", "S3"],
+      "entry_points": "adapter4, bridge v2",
+      "positive_test": "test_ratio_residual_controls_serve",
+      "negative_test": "test_residual_cut_must_descend_from_parent",
+      "refusal_codes": ["UNKNOWN_SOLID_ID", "SOURCE_OBJECT_MISMATCH"]
+    },
+    "MathGoalSpecV2.cut_solid_id": {
+      "category": "SOLID_OPERAND",
+      "owner": "residual goal",
+      "rules": ["S1", "S3"],
+      "entry_points": "adapter4, bridge v2",
+      "positive_test": "test_ratio_residual_controls_serve",
+      "negative_test": "test_residual_cut_must_descend_from_parent",
+      "refusal_codes": ["UNKNOWN_SOLID_ID", "SOURCE_OBJECT_MISMATCH"]
+    },
+    "MathGoalSpecV2.goal_type": {
+      "category": "METADATA",
+      "note": "no scope semantics"
+    },
+    "MathGoalSpecV2.target": {
+      "category": "METADATA",
+      "note": "container; keys classified on MathGoalSpec.target"
+    },
+    "MathGoalSpecV2.solid_id": {
+      "category": "SOLID_SCOPE",
+      "owner": "measurement / ratio goal",
+      "rules": ["S1", "S3", "S4"],
+      "entry_points": "adapter4, bridge v2",
+      "positive_test": "test_measurement_scope_controls_serve",
+      "negative_test": "test_measurement_scope_violations_refuse",
+      "refusal_codes": ["UNKNOWN_SOLID_ID", "SOURCE_OBJECT_MISMATCH", "INVALID_MATH_GOAL"]
+    },
+    "MathGoalSpecV2.numerator_segment": {
+      "category": "VERTEX_REF",
+      "owner": "length_ratio goal",
+      "rules": ["S5", "S7", "S8"],
+      "entry_points": "adapter4, bridge v2",
+      "positive_test": "test_measurement_scope_controls_serve",
+      "negative_test": "test_measurement_operand_violations_refuse",
+      "refusal_codes": ["SOURCE_OBJECT_MISMATCH", "UNKNOWN_SOLID_ID", "INVALID_MATH_GOAL"]
+    },
+    "MathGoalSpecV2.denominator_segment": {
+      "category": "VERTEX_REF",
+      "owner": "length_ratio goal",
+      "rules": ["S5", "S7", "S8"],
+      "entry_points": "adapter4, bridge v2",
+      "positive_test": "test_measurement_scope_controls_serve",
+      "negative_test": "test_measurement_operand_violations_refuse",
+      "refusal_codes": ["SOURCE_OBJECT_MISMATCH", "UNKNOWN_SOLID_ID", "INVALID_MATH_GOAL"]
+    },
+    "MathGoalSpecV2.numerator_polygon": {
+      "category": "VERTEX_REF",
+      "owner": "area_ratio goal",
+      "rules": ["S5", "S7", "S8"],
+      "entry_points": "adapter4, bridge v2",
+      "positive_test": "test_measurement_scope_controls_serve",
+      "negative_test": "test_measurement_operand_violations_refuse",
+      "refusal_codes": ["SOURCE_OBJECT_MISMATCH", "UNKNOWN_SOLID_ID", "INVALID_MATH_GOAL"]
+    },
+    "MathGoalSpecV2.denominator_polygon": {
+      "category": "VERTEX_REF",
+      "owner": "area_ratio goal",
+      "rules": ["S5", "S7", "S8"],
+      "entry_points": "adapter4, bridge v2",
+      "positive_test": "test_measurement_scope_controls_serve",
+      "negative_test": "test_measurement_operand_violations_refuse",
+      "refusal_codes": ["SOURCE_OBJECT_MISMATCH", "UNKNOWN_SOLID_ID", "INVALID_MATH_GOAL"]
+    },
+    "MathGoalSpecV2.requested_unit": {
+      "category": "METADATA",
+      "note": "output unit policy (deg)"
+    },
+    "MathGoalSpecV2.rounding": {
+      "category": "METADATA",
+      "note": "output rounding policy dict (ROUND_HALF_UP, decimals)"
+    }
+  }
+}

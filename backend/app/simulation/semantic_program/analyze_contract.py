@@ -20,7 +20,6 @@ from typing import Any
 
 from .obligations import (
     OBLIGATION_KINDS,
-    SEMANTIC_PRESCRIBED_PROCEDURES,
     Obligation,
 )
 from .literal_extractor import (
@@ -33,38 +32,11 @@ from .request_contract import InputFact, RequestContract, norm_value
 from .scale_normalization import chuan_hoa_thang
 from .structured_relations import RELATION_KINDS, GeometricRelation
 
-#: Kiểu của một mục dữ liệu đề cho — đóng, và bám hệ kiểu của IR.
-INPUT_FACT_KINDS = ("array", "matrix", "map", "set", "graph", "tree_node",
-                    "int", "str", "bool", "float")
+#: Kiểu của một mục dữ liệu đề cho — đóng, và bám hệ kiểu của IR. (/13: kiểu container đã gỡ cùng miền Tin học.)
+INPUT_FACT_KINDS = ("int", "str", "bool", "float")
 
+# (/13) `_vi_tu_kiem_duoc` / `_VI_TU_KIEM_DUOC` (enum vị từ của `predicate_verdict`) đã gỡ.
 
-def _vi_tu_kiem_duoc() -> list[str]:
-    """Tập vị từ mà server CÓ bộ kiểm độc lập — dẫn xuất, không chép tay.
-
-    Nhập trễ (trong hàm) để tránh vòng phụ thuộc: `postconditions` đọc
-    `obligations`, còn module này đọc cả hai.
-
-    Hai nguồn, hai loại chủ thể: `PREDICATE_CHECKERS` cho chủ thể TẬP HỢP
-    (`balanced_delimiters`), `_PREDS` cho chủ thể VÔ HƯỚNG (even/odd/gt/…).
-    Gộp lại vì với người khai nghĩa vụ thì đó chỉ là một câu hỏi: *tôi được
-    phép gọi tên vị từ nào?*
-    """
-    from .postconditions import _PREDS, PREDICATE_CHECKERS
-
-    return sorted(set(PREDICATE_CHECKERS) | set(_PREDS))
-
-
-_VI_TU_KIEM_DUOC = _vi_tu_kiem_duoc()
-
-
-#: Quy ước ĐẶT TÊN của miền Tin học — chữ thường, snake_case.
-MO_TA_TEN_TIN_HOC = (
-    "Tên biến kiểu snake_case, chỉ chữ thường không dấu, số và gạch dưới. "
-    "KHÔNG viết cụm từ hay câu."
-)
-MO_TA_WITNESS_TIN_HOC = (
-    "Tên biến kiểu snake_case sẽ chứa câu trả lời. KHÔNG viết cụm từ hay câu."
-)
 
 #: Quy ước ĐẶT TÊN của miền hình học — **KHÔNG** snake_case.
 #:
@@ -94,9 +66,8 @@ MO_TA_WITNESS_HINH_HOC = (
 def _schema(
     obligation_kinds: list[str],
     fact_kinds: tuple[str, ...],
-    co_prescribed: bool,
-    mo_ta_container: str = MO_TA_TEN_TIN_HOC,
-    mo_ta_witness: str = MO_TA_WITNESS_TIN_HOC,
+    mo_ta_container: str,
+    mo_ta_witness: str,
     co_quan_he: bool = False,
 ) -> dict[str, Any]:
     """Dựng schema `analyze` cho MỘT miền.
@@ -170,26 +141,7 @@ def _schema(
                     "cmp": {"type": "STRING", "nullable": True},
                     "op": {"type": "STRING", "nullable": True},
                     "transform": {"type": "STRING", "nullable": True},
-                    # VỊ TỪ — enum, không phải chuỗi tự do.
-                    #
-                    # ĐO ĐƯỢC (live 2026-08-24): đề chuỗi ngoặc đi trọn tới C₂,
-                    # `executable=True`, rồi rơi mức yếu chỉ vì nghĩa vụ không
-                    # kèm `pred`. Không phải mô hình lười — trường này là STRING
-                    # tự do, nên **nó chưa bao giờ được cho biết có những vị từ
-                    # nào**. Bắt ai đó gọi đúng tên một thứ chưa từng được giới
-                    # thiệu thì im lặng là kết cục đương nhiên.
-                    #
-                    # Liệt kê ở đây = liệt kê ĐÚNG tập KIỂM ĐƯỢC, dẫn xuất từ
-                    # chính hai registry chứ không chép tay: thêm một checker là
-                    # từ vựng analyze tự rộng ra, không có chỗ nào lệch.
-                    "pred": {
-                        "type": "STRING",
-                        "nullable": True,
-                        "enum": _VI_TU_KIEM_DUOC,
-                        "description": "Tên vị từ cho `predicate_verdict`. Chỉ "
-                                       "dùng tên trong danh sách; vị từ ngoài "
-                                       "danh sách sẽ không kiểm chứng được.",
-                    },
+                    # (/13) `pred` (vị từ của `predicate_verdict`, miền Tin học) đã gỡ.
                     # ── ĐẠI LƯỢNG MONG ĐỢI (miền hình học) ─────────────────
                     #
                     # `check_distance`/`check_volume` đọc `params["value"]`,
@@ -228,12 +180,6 @@ def _schema(
             },
         },
     }
-    if co_prescribed:
-        props["prescribed_procedure"] = {
-            "type": "STRING",
-            "enum": sorted(SEMANTIC_PRESCRIBED_PROCEDURES),
-            "nullable": True,
-        }
     if co_quan_he:
         props["geometric_relations"] = _luoc_do_quan_he()
         props["solid_topology"] = _luoc_do_solid_topology()
@@ -364,24 +310,17 @@ def analyze_schema_for(domain: str) -> dict[str, Any]:
         obligation_kinds_for,
     )
 
-    la_hh = domain == DOMAIN_HINH_HOC
+    # /13: chỉ có miền hình học. Schema Tin học (`SEMANTIC_ANALYZE_SCHEMA`, mô tả tên snake_case, `prescribed`) đã gỡ —
+    # không đường sản phẩm nào gửi nó cho mô hình; nó chỉ còn được băm vào bề mặt mô hình.
+    if domain != DOMAIN_HINH_HOC:
+        raise ValueError(f"không có schema analyze cho miền {domain!r}: ngoài phạm vi thì từ chối, không phân tích")
     return _schema(
         obligation_kinds=sorted(obligation_kinds_for(domain)),
-        fact_kinds=INPUT_FACT_KINDS_HINH_HOC if la_hh else INPUT_FACT_KINDS,
-        co_prescribed=not la_hh,
-        mo_ta_container=MO_TA_TEN_HINH_HOC if la_hh else MO_TA_TEN_TIN_HOC,
-        mo_ta_witness=(MO_TA_WITNESS_HINH_HOC if la_hh
-                       else MO_TA_WITNESS_TIN_HOC),
-        co_quan_he=la_hh,
+        fact_kinds=INPUT_FACT_KINDS_HINH_HOC,
+        mo_ta_container=MO_TA_TEN_HINH_HOC,
+        mo_ta_witness=MO_TA_WITNESS_HINH_HOC,
+        co_quan_he=True,
     )
-
-
-#: Giữ tên cũ = giữ nguyên mọi đường gọi Tin học đã có.
-SEMANTIC_ANALYZE_SCHEMA: dict[str, Any] = _schema(
-    obligation_kinds=sorted(OBLIGATION_KINDS),
-    fact_kinds=INPUT_FACT_KINDS,
-    co_prescribed=True,
-)
 
 #: `value`/`cos_sq` là ĐẠI LƯỢNG MONG ĐỢI của ba nghĩa vụ hình học. Thiếu chúng
 #: ở đây thì `check_distance`/`check_angle`/`check_volume` đọc `params` ra `None`

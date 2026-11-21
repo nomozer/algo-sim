@@ -1,0 +1,62 @@
+{
+ "files": 2830,
+ "status_counts": {
+  "M": 139,
+  "A": 2664,
+  "D": 27
+ },
+ "tip_bytes_added_or_modified": 114452601,
+ "largest": [
+  {
+   "bytes": 3279606,
+   "path": "docs/evaluation/geometry/runs/axo-hybrid-compositional-geometry-language-grounded-simulation/evidence/v12_responses.jsonl"
+  },
+  {
+   "bytes": 3231534,
+   "path": "docs/evaluation/geometry/runs/axo-hybrid-local-model1-finalization-test-consolidation/evidence/responses.jsonl"
+  },
+  {
+   "bytes": 2242151,
+   "path": "docs/evaluation/geometry/runs/axo-hybrid-simulation-intent-generalization-grounded-slm-recovery/evidence/browser/responses_v11.jsonl"
+  },
+  {
+   "bytes": 1459164,
+   "path": "docs/evaluation/geometry/runs/axo-hybrid-local-only-3d-simulation-live-acceptance-cutover/evidence/browser/responses_pass2.jsonl"
+  },
+  {
+   "bytes": 1337961,
+   "path": "docs/evaluation/geometry/runs/axo-hybrid-local-only-3d-simulation-live-acceptance-cutover/evidence/browser/responses_acceptance.jsonl"
+  },
+  {
+   "bytes": 1112152,
+   "path": "frontend/src/simulations/domains/geometry/scene3d-semantic-policy.ts"
+  },
+  {
+   "bytes": 986070,
+   "path": "docs/CODE_INDEX.md"
+  },
+  {
+   "bytes": 908951,
+   "path": "frontend/src/data/advanced-geometry-samples.json"
+  },
+  {
+   "bytes": 895795,
+   "path": "docs/evaluation/geometry/runs/axo-backend-geometry-handoff/advanced-geometry-samples.backend-fixed.json"
+  },
+  {
+   "bytes": 867830,
+   "path": "docs/evaluation/geometry/runs/specialized-geometry-extraction-slm-optimization/SLM_GOLD_INTERVENTION_RESULTS.json"
+  }
+ ],
+ "files_over_1MiB": 6,
+ "sensitive_names": [],
+ "binary_media_by_ext": {
+  "png": 416,
+  "pdf": 8,
+  "docx": 2
+ },
+ "deleted_by_dir": {
+  "backend/scripts": 1,
+  "backend/tests/semantic_program": 26
+ }
+}

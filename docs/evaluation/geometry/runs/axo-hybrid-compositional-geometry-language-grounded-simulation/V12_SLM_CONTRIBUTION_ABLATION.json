@@ -1,0 +1,136 @@
+{
+  "schema": "axo-v12-slm-contribution-ablation/1",
+  "extractor_version": "local-slm-extractor/6",
+  "validator_version": "slm-grounding-validator/6",
+  "model_key": "qwen3-0.6b-q4_k_m",
+  "closure_mode": "v9",
+  "dev_failure_recovery": {
+    "denominator_non_d": 29,
+    "DETERMINISTIC_ONLY": {
+      "count": 28,
+      "case_ids": [
+        "S07",
+        "S09",
+        "S11",
+        "S12",
+        "S13",
+        "S15",
+        "S16",
+        "S20",
+        "S21",
+        "S22",
+        "S28",
+        "S32",
+        "S34",
+        "S35",
+        "S37",
+        "S38",
+        "Q01",
+        "Q02",
+        "Q04",
+        "Q05",
+        "Q06",
+        "Q08",
+        "Q09",
+        "Q10",
+        "Q12",
+        "Q13",
+        "Q14",
+        "C24"
+      ]
+    },
+    "SLM_CONTRIBUTED": {
+      "count": 1,
+      "case_ids": [
+        "S17"
+      ],
+      "cases": [
+        {
+          "case_id": "S17",
+          "v11_bucket": "SLM_NESTED_CLAUSE_AMBIGUITY_OR_GBNF_UNRESOLVED",
+          "parser_status": "LOCAL_PARSE_PARTIAL",
+          "det_ok": false,
+          "det_err": "UNPARSED_FACT_CANDIDATE",
+          "slm_ok": true,
+          "slm_err": null,
+          "slm_inference_ms": 7225.43,
+          "resolved_by": "SLM_CONTRIBUTED"
+        }
+      ]
+    },
+    "COMBINED": {
+      "count": 29,
+      "rate": 1.0
+    }
+  },
+  "slm_direct_indirect_phrasing_probe": {
+    "total": 8,
+    "parser_partial_count": 7,
+    "slm_grounded_pass_count": 5,
+    "slm_grounded_pass_ids": [
+      "SYN_SLM_01",
+      "SYN_SLM_05",
+      "SYN_SLM_06",
+      "SYN_SLM_07",
+      "SYN_SLM_08"
+    ],
+    "cases": [
+      {
+        "case_id": "SYN_SLM_01",
+        "parser_status": "LOCAL_PARSE_PARTIAL",
+        "slm_ok": true,
+        "slm_err": null,
+        "slm_inference_ms": 7225.43
+      },
+      {
+        "case_id": "SYN_SLM_02",
+        "parser_status": "LOCAL_PARSE_PARTIAL",
+        "slm_ok": false,
+        "slm_err": "UNGROUNDED_VALUE: [{'op': 'len', 'reason': 'UNGROUNDED_VALUE:segment_length_conflict:AB:a!=a√3'}]",
+        "slm_inference_ms": 4032.41
+      },
+      {
+        "case_id": "SYN_SLM_03",
+        "parser_status": "LOCAL_PARSE_PARTIAL",
+        "slm_ok": false,
+        "slm_err": "TuChoi: AMBIGUOUS_VALUE_QUOTE: p1: quote nhiều số mà không số nào gắn duy nhất với vai trò của ô này",
+        "slm_inference_ms": 4138.24
+      },
+      {
+        "case_id": "SYN_SLM_04",
+        "parser_status": "LOCAL_PARSE_PARTIAL",
+        "slm_ok": false,
+        "slm_err": "UNGROUNDED_VALUE: [{'op': 'len', 'reason': 'UNGROUNDED_VALUE:segment_length_proximity:SA:2a'}]",
+        "slm_inference_ms": 3516.72
+      },
+      {
+        "case_id": "SYN_SLM_05",
+        "parser_status": "LOCAL_PARSE_COMPLETE",
+        "slm_ok": true,
+        "slm_err": null,
+        "slm_inference_ms": 4551.37
+      },
+      {
+        "case_id": "SYN_SLM_06",
+        "parser_status": "LOCAL_PARSE_PARTIAL",
+        "slm_ok": true,
+        "slm_err": null,
+        "slm_inference_ms": 2338.47
+      },
+      {
+        "case_id": "SYN_SLM_07",
+        "parser_status": "LOCAL_PARSE_PARTIAL",
+        "slm_ok": true,
+        "slm_err": null,
+        "slm_inference_ms": 3958.65
+      },
+      {
+        "case_id": "SYN_SLM_08",
+        "parser_status": "LOCAL_PARSE_PARTIAL",
+        "slm_ok": true,
+        "slm_err": null,
+        "slm_inference_ms": 4634.81
+      }
+    ]
+  }
+}

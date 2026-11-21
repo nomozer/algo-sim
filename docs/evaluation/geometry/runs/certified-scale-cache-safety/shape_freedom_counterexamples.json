@@ -1,0 +1,106 @@
+{
+  "run_id": "certified-scale-cache-safety",
+  "generated_at_utc": "2026-11-14T05:40:52.234783+00:00",
+  "product_commit": "902a3171c1a625c2741f0c6886d0328584dfb89e",
+  "measured_system": "243d932765f7d4065394f91c6b4f25972f8232ba9228aec89d4c63a244c1976b",
+  "cache_version": "135",
+  "environment": {
+    "ALLOW_LIVE_AI": "0",
+    "HYBRID_ROUTE_MODE": "local-first",
+    "live_ai_calls": 0
+  },
+  "head": "4bb423b48393605355be39e4d8dc4386ad9b3946",
+  "rows": [
+    {
+      "case_id": "COMP:scale_shape_free",
+      "text_sha256": "6b90d1f10b05b6bf6e9218c3f6f1b8484bdfe3a0bc2f4c1367ce0329fb493db4",
+      "expected": "REFUSE",
+      "before": {
+        "status": "REFUSED",
+        "code": "MISSING_DIMENSION",
+        "answers": null
+      },
+      "after": {
+        "status": "REFUSED",
+        "code": "MISSING_DIMENSION",
+        "answers": null
+      },
+      "after_root_cause": "SCALE_NORMALIZATION_UNSUPPORTED"
+    },
+    {
+      "case_id": "COMP:scale_height_free",
+      "text_sha256": "729659686b20e121c2686329e11f330155163ee071e6c3d09c569990f52d21cf",
+      "expected": "REFUSE",
+      "before": {
+        "status": "REFUSED",
+        "code": "MISSING_DIMENSION",
+        "answers": null
+      },
+      "after": {
+        "status": "REFUSED",
+        "code": "MISSING_DIMENSION",
+        "answers": null
+      },
+      "after_root_cause": "SCALE_NORMALIZATION_UNSUPPORTED"
+    },
+    {
+      "case_id": "COMP:scale_absolute_volume",
+      "text_sha256": "be44e6144852f2eb33eac3ccb4fa84edd32dd68dc538551fc87fff9b8bcd419a",
+      "expected": "REFUSE",
+      "before": {
+        "status": "REFUSED",
+        "code": "MISSING_DIMENSION",
+        "answers": null
+      },
+      "after": {
+        "status": "REFUSED",
+        "code": "MISSING_DIMENSION",
+        "answers": null
+      },
+      "after_root_cause": "INSUFFICIENT_CONSTRAINTS"
+    },
+    {
+      "case_id": "COMP:scale_regular_tetra_no_side",
+      "text_sha256": "d0a70b3e9ad5d6a8d9aadaa7b137879f5e7dab688e26bf9f44c4fdea3ab20428",
+      "expected": "REFUSE",
+      "before": {
+        "status": "REFUSED",
+        "code": "MISSING_DIMENSION",
+        "answers": null
+      },
+      "after": {
+        "status": "REFUSED",
+        "code": "MISSING_DIMENSION",
+        "answers": null
+      },
+      "after_root_cause": "SCALE_NORMALIZATION_UNSUPPORTED"
+    },
+    {
+      "case_id": "COMP:scale_iso_with_length",
+      "text_sha256": "6834963e817630d3fb4879e7c05f1312d482bd29a38c9995ec14519cbb4b05b1",
+      "expected": "SERVE",
+      "before": {
+        "status": "SERVED",
+        "code": null,
+        "answers": {
+          "q1": "cos²=1/3"
+        }
+      },
+      "after": {
+        "status": "SERVED",
+        "code": null,
+        "answers": {
+          "q1": "cos²=1/3"
+        }
+      },
+      "after_root_cause": null
+    }
+  ],
+  "rules": {
+    "shape_free (right at B, BC/AB open)": "PO-3 ⇒ refused (the angle is 45° for every BC — still uncertified, never guessed)",
+    "height_free": "PO-3 ⇒ refused",
+    "absolute_volume": "PO-2 ⇒ refused",
+    "regular tetrahedron without side": "PO-3 ⇒ refused: the calls carry no 'every edge equal' fact (representation gap of the parser/bridge, not of the certificate)",
+    "stated length": "served WITHOUT normalisation (the source fixes the scale); same exact angle"
+  }
+}

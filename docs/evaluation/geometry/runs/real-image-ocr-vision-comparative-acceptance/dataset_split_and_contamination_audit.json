@@ -1,0 +1,1193 @@
+{
+  "schema": "algosim-image-split-contamination-audit/1",
+  "frozen_at_utc": "2026-11-11T02:44:03.763372+00:00",
+  "manifest_sha256": "5e15c97e604a30cae95ca06d9c0a6a3b97505a2ee926811b8609c48928443e9d",
+  "ground_truth_provenance_sha256": "219fb540adb7fecf334463bea2f07760958bc2d4d119c12e8cc1944f63ac8e9a",
+  "split_rule": "development iff full_vqa row_idx modulo 3 equals 0; otherwise frozen_external_evaluation; chosen before OCR evaluation",
+  "development_case_ids": [
+    "new_vmmu_full_r327",
+    "new_vmmu_full_r450"
+  ],
+  "frozen_external_evaluation_case_ids": [
+    "new_vmmu_full_r310",
+    "new_vmmu_full_r322",
+    "new_vmmu_full_r440",
+    "new_vmmu_full_r445",
+    "new_vmmu_full_r446",
+    "new_vmmu_full_r448"
+  ],
+  "unique_selected_byte_hashes": 8,
+  "prior_tracked_corpus_manifest_inventory_files_scanned": [
+    {
+      "path": "docs/evaluation/geometry/cross-family-regression-20260927/EVIDENCE_MANIFEST.json",
+      "sha256": "686fc1113fb0f07e4ede0537454347f7b9996d790ffd924beab99b10721ea9f1"
+    },
+    {
+      "path": "docs/evaluation/geometry/cuboid-cube-semantic-closure-20260927/EVIDENCE_MANIFEST.json",
+      "sha256": "751a735b6488951694452d5aaa32e8c53cdbc4befdb2a8dd730dcd53607dc2aa"
+    },
+    {
+      "path": "docs/evaluation/geometry/cuboid-cube-visual-integrity/EVIDENCE_MANIFEST.json",
+      "sha256": "7a7c12ddaf5978641d91980af1b69be8c6e1a4e9e8c6d077010e6ec24b68cdb8"
+    },
+    {
+      "path": "docs/evaluation/geometry/curved-acceptance-v3/manifest.json",
+      "sha256": "4059f9db7a8719d132d347db1ef2614c0a89333c53fa162857f2e6cdf9ae4b9b"
+    },
+    {
+      "path": "docs/evaluation/geometry/curved-end-to-end-fresh-confirmation/manifest_curved-e2e-20260907T025742Z.json",
+      "sha256": "812f97511d91bac1f3e2b7716d3a9a28041a79a856a5df7ba127762b80d0bbbf"
+    },
+    {
+      "path": "docs/evaluation/geometry/curved-ergonomics-v2-run2/manifest.json",
+      "sha256": "f5d8eb3d5e1878f75423b6dc824210fdd5bc470ff435177abbbe3eaa02c4aebf"
+    },
+    {
+      "path": "docs/evaluation/geometry/curved-ergonomics-v2/manifest.json",
+      "sha256": "9f42247a65859192358bed425b1ebc1ee7fc7163b63ec8d1446b1d930b152620"
+    },
+    {
+      "path": "docs/evaluation/geometry/curved-section-discoverability-dev-v1/corpus.json",
+      "sha256": "d164768a59c30b7e13d276104cff1714e35c22d5ad898deb2b91155b2549c44a"
+    },
+    {
+      "path": "docs/evaluation/geometry/curved-section-discoverability-dev-v1/manifest_dev-v1-20260905T151639Z.json",
+      "sha256": "9c397bb3e89a6527e545d250b4c2e893fdad123c32739c688ac4ab9771e64da3"
+    },
+    {
+      "path": "docs/evaluation/geometry/curved-section-discoverability-dev-v1/manifest_dev-v1-20260905T151813Z.json",
+      "sha256": "f1c14a7ab1dac3bd894890f86ab2177abd79365ef4c17147768a9bdc2e74a7c3"
+    },
+    {
+      "path": "docs/evaluation/geometry/display-name-final-polish/RELEASE_REFRESH_MANIFEST.json",
+      "sha256": "1663704e2a1026149f2e93aa8f5268ee82f8cce82229ccf08d508950001128fc"
+    },
+    {
+      "path": "docs/evaluation/geometry/divide-segment-ratio-ab/manifest_ratio-ab-20260906T115624Z.json",
+      "sha256": "f73ec28c9632bca8e6e78e793c3da873488bcb4ca6e18372f95aaf8e51eac1be"
+    },
+    {
+      "path": "docs/evaluation/geometry/final-system-release/RELEASE_MANIFEST.json",
+      "sha256": "dbb97f3721cd2f1c6ab6ed3e5d87d2e98e14fe12e3bacdf32d676fbfe9700817"
+    },
+    {
+      "path": "docs/evaluation/geometry/generic-tier-a-browser-closure-20260927/EVIDENCE_MANIFEST.json",
+      "sha256": "ed1f2ddec099fa828c244232b610bd3561dc94af0fb5b1b9bea373d11df9efdf"
+    },
+    {
+      "path": "docs/evaluation/geometry/generic-tier-a-browser-closure-20260927/FIXTURE_MANIFEST.json",
+      "sha256": "c78bd8c915a4f6ff78f959b365f4da2ea2421c4203e94a7dabd32ddf905083fa"
+    },
+    {
+      "path": "docs/evaluation/geometry/minimal-card-fresh-confirmation/manifest_ratio-ab-20260907T021126Z.json",
+      "sha256": "33aad6243296c4ae0371e051dd0b27b1910e4dd7350268d5d51e4fde3905f216"
+    },
+    {
+      "path": "docs/evaluation/geometry/nonconvex-polyhedron-model-discoverability/manifest_nonconvex-polyhedron-model-discoverability-20260907T184454Z.json",
+      "sha256": "1d05dc6346e3a83ca8f99bce06e642588f22c8fa58c6753dbaa23bdcfbd616b3"
+    },
+    {
+      "path": "docs/evaluation/geometry/oblique-ellipse-after-axis-scale-repair/manifest_oblique-ellipse-after-axis-scale-repair-20260907T130935Z.json",
+      "sha256": "17ef1565f2e8411ec61f9d0ce262677ae6111fd21adaf3eda5808864d138f28f"
+    },
+    {
+      "path": "docs/evaluation/geometry/oblique-ellipse-final-card-rerun/manifest_oblique-ellipse-final-card-rerun-20260907T141954Z.json",
+      "sha256": "d6c8a6f2b1a4b703c71dd506804abc2c2db77e4a879a4a2561c87f91f5c465ce"
+    },
+    {
+      "path": "docs/evaluation/geometry/oblique-ellipse-fresh-confirmation/manifest_oblique-ellipse-after-scope-repair-20260907T050244Z.json",
+      "sha256": "8617bd416e68a01f008145314d07922691f38cbede988f1688a1d707867be97f"
+    },
+    {
+      "path": "docs/evaluation/geometry/operation-affordance-ab-v1/corpus.json",
+      "sha256": "d83145d79db3aaf1d8007b8a31f78562b73c2e38643dc28f27210f6263fcb312"
+    },
+    {
+      "path": "docs/evaluation/geometry/operation-affordance-ab-v1/manifest_ab-v1-20260905T164514Z.json",
+      "sha256": "0aa9ba56dfba64afd08a72f7a501facda5f24c18f15b48ade6d73d747954ca54"
+    },
+    {
+      "path": "docs/evaluation/geometry/phase7b-official/RUN_MANIFEST.json",
+      "sha256": "585cb10beb5624ccd68605883a0d1dce39c99534fa779e01b90907ebb71ab137"
+    },
+    {
+      "path": "docs/evaluation/geometry/photo-problem-to-scene/CORPUS.json",
+      "sha256": "5ce5f51f669d987a1315fdf31a1338e70ba583f63c518ca0ec715810da27c742"
+    },
+    {
+      "path": "docs/evaluation/geometry/photo-problem-to-scene/docs-information-architecture-handoff-hardening/DOC_INVENTORY.json",
+      "sha256": "294ae0112483cf7500281e9b2de51dcc3d85491b07bd5ad7d3f59f2aff18b353"
+    },
+    {
+      "path": "docs/evaluation/geometry/photo-problem-to-scene/model-variance-evidence-provenance-repair/DETERMINISM_RUN_A_MANIFEST.json",
+      "sha256": "b6282c2671112e5457f6308cd1691827327cb01b67b79c0a77c727693504733e"
+    },
+    {
+      "path": "docs/evaluation/geometry/photo-problem-to-scene/model-variance-evidence-provenance-repair/DETERMINISM_RUN_B_MANIFEST.json",
+      "sha256": "12b0687edf2dcf29f5ecfb563e57457d6fe63fa8db39371017fbcba7a14902e8"
+    },
+    {
+      "path": "docs/evaluation/geometry/photo-problem-to-scene/multicase-benchmark/BENCHMARK_MANIFEST.json",
+      "sha256": "c4c83e89270d7445b5ff4b568fd85c3a56a01aaf0d495f9607e06d5a226b993d"
+    },
+    {
+      "path": "docs/evaluation/geometry/photo-problem-to-scene/multicase-benchmark/CONTACT_SHEET_MANIFEST.json",
+      "sha256": "27b62978466ff5222aa680a4bfe9be0d64938771369097d2eb256f546c1a46bd"
+    },
+    {
+      "path": "docs/evaluation/geometry/photo-problem-to-scene/multicase-synthesis-token-benchmark/MULTICASE_BENCHMARK_MANIFEST.json",
+      "sha256": "803ff1ad5934b978853a4ceed1b4a2d56e66e662c2e2f3f8459e0323a6eb14c4"
+    },
+    {
+      "path": "docs/evaluation/geometry/photo-problem-to-scene/primitive-compiler-ab-benchmark/PRIMITIVE_COMPILER_AB_MANIFEST.json",
+      "sha256": "94af6e961557a8ee3b45ff3637a7254f17885c3f47f77dbabbddd364da117056"
+    },
+    {
+      "path": "docs/evaluation/geometry/photo-problem-to-scene/primitive-compiler-second-family-selection/SECOND_FAMILY_MANIFEST.json",
+      "sha256": "9ee8842e9903ecf053d8ccb91fc18e5f5eede1522fa5051537060531de849853"
+    },
+    {
+      "path": "docs/evaluation/geometry/photo-problem-to-scene/structured-relation-analyze-live/LIVE_CASE_MANIFEST.json",
+      "sha256": "8555a504b85636ec34feed56492f350420c6025590dc1dcbefe0a5baa68e590f"
+    },
+    {
+      "path": "docs/evaluation/geometry/photo-problem-to-scene/structured-relation-revalidation/CONTACT_SHEET_MANIFEST.json",
+      "sha256": "5c167474a4f013b1a3e4f60c4532262f9e9b9c7204c1dbd7ed679d432c644766"
+    },
+    {
+      "path": "docs/evaluation/geometry/photo-problem-to-scene/structured-relation-revalidation/LIVE_RUN_MANIFEST.json",
+      "sha256": "853a20786fbbc19b252403895d71cf503931674cbb4ad4a2f8930d316abf913b"
+    },
+    {
+      "path": "docs/evaluation/geometry/photo-problem-to-scene/v3-thesis-evidence-alignment-repair/V3_MANIFEST_BEFORE_AFTER.json",
+      "sha256": "7f2e43e83efbd856ebed9702a5fdf98d32c8d79ed28f5ee08e03e439aca21058"
+    },
+    {
+      "path": "docs/evaluation/geometry/point-initialization-repair-efficacy/manifest_repair-20260906T212731Z.json",
+      "sha256": "30b8b979680299ac7a180d7fd8d461af5a005246a3a1be074c375974510e94e0"
+    },
+    {
+      "path": "docs/evaluation/geometry/postfix-confirmation-v2/RUN_MANIFEST.json",
+      "sha256": "658d17d697ac6b1f075f8cd7d780abd26d2cc58971927f28a14e35cb8a71f8fc"
+    },
+    {
+      "path": "docs/evaluation/geometry/postfix-confirmation-v3/RUN_MANIFEST.json",
+      "sha256": "3443e6bdc9f4f6474ad32bd4af52609a250c430f97c3a1af49573dadb5aaabb7"
+    },
+    {
+      "path": "docs/evaluation/geometry/postfix-confirmation/RUN_MANIFEST.json",
+      "sha256": "b6ab4277a694445b6a51835ca2a24e193c1bea8ace3f4595a37b1380ed2edf36"
+    },
+    {
+      "path": "docs/evaluation/geometry/probe-contract-waves-2/manifest.json",
+      "sha256": "6796e4124dfc2a54c60ec1f64a38b77caa9fe066b34e9ed9faf0f73c52e2808f"
+    },
+    {
+      "path": "docs/evaluation/geometry/probe-contract-waves/manifest.json",
+      "sha256": "d2f5f8a9577b80434112940fa0d3fed1b237caecccd20cc91b3fa1d01ea1d1eb"
+    },
+    {
+      "path": "docs/evaluation/geometry/provenance-affordance-ab-4-luot/manifest_ratio-ab-20260906T210900Z.json",
+      "sha256": "2612d8040f33b2b2bdc30183652310ca350438675dd74a0c47b5e39b45e6a1b8"
+    },
+    {
+      "path": "docs/evaluation/geometry/ratio-affordance-staged-recheck/manifest_ratio-ab-20260906T164733Z.json",
+      "sha256": "070e45c9bb09a5a6365dde8dd8477e3d1068d4ef63da24088c4617642d968237"
+    },
+    {
+      "path": "docs/evaluation/geometry/rectangular-pyramid-visual-integrity/EVIDENCE_MANIFEST.json",
+      "sha256": "560382b3d3734f4a5721b557129e3fb97328c0936fadc7be6e54b4920969162e"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/20260927-cross-family-scene3d-product-semantic-repair/MANIFEST.json",
+      "sha256": "642f2382394c194b151d32f5ca3a3529509e8403cb968a835b0d3d75602df14e"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/20260927-cross-family-scene3d-product-semantic-repair/inputs/FIXTURE_MANIFEST.json",
+      "sha256": "2b8798e6e2725533e39476d1bdb149b1c4d31a1ff1b601533f389a200da59c7e"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/20260928-cross-family-hidden-line-occlusion-oracle-and-formation-repair/MANIFEST.json",
+      "sha256": "470f216804b1949dac21f625104a16aa79efad61ab315711b3e3400eb5c18959"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/20260928-cross-family-hidden-line-occlusion-oracle-and-formation-repair/inputs/FIXTURE_MANIFEST.json",
+      "sha256": "6250a1276d76a012e2f5b16550d9829f8c7cea9a0db40db86639501104497f7b"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/axo-end-to-end-authority-scene3d-usability/inputs/served-corpus-summary.json",
+      "sha256": "0b0752ce93f73fd79201176d44b9af2f5ab7e6d91b2b5711e5140dda5d6525ed"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/axo-final-mathematical-reliability/inputs/corpus.json",
+      "sha256": "127e35abcd03b0f28dec2a9556682419aeb7d992d8db43be936cfdcb2c617ae3"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/backend-hybrid-continuation/recovery-inventory.json",
+      "sha256": "d54076f31c163de3dbb35d0e8adfcfab7ccb0273ab6e8e7b8fb3887627ae786e"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/browser-temp-lifecycle/results/TEMP_INVENTORY.json",
+      "sha256": "41f5f29c806ab501dd85e5099d2be99c19064e6568338bb9838d192f95e5378d"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/classroom-band-fit/inputs/FIXTURE_MANIFEST.json",
+      "sha256": "72c48aa57947ed2c2a0a4b60485dcf0123320cae838ab6d29ad618113a7855b3"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/claude-to-codex-takeover/browser-corpus.json",
+      "sha256": "5c5145a0ff4ef2d0fffcf58933a78aff6dd20e15d534bb4af487cc5c27b91517"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/claude-to-codex-takeover/claude-resume/fixtures-adapter-2-common-perpendicular/manifest.json",
+      "sha256": "ac139d45e74fa52b86bd8fd9899bda7ea779f7adbe7c627b888170d6fc0273c4"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/composite-geometry/corpus-dev.json",
+      "sha256": "ece437aea1b2c580f77521b6411532c709bfeb4d73921abd588391081df8e6da"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/composite-geometry/results/final-candidate-2/dev-corpus.json",
+      "sha256": "8c8ab7799452c41c5a9fb1ef2a70e4c9ec3f84ea6e0c1cd4cf7cdfe8e4e1289b"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/composite-geometry/results/final-candidate/dev-corpus.json",
+      "sha256": "58c7dd3089711608fe1bf574c001db1495a308ad61ec9d37c3c9827ea02882bf"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/contract-driven-goal-composition/corpus.json",
+      "sha256": "bfcf97ed1e06b44b5f3e0c1d82c05d00ae5336152771524dead574ffc75e7fe8"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/cuboid-acceptance/MANIFEST.json",
+      "sha256": "cc63eae2f1a1ca8029c34d313766b3225d4ce098740d84cc81ab7865c5abf4e7"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/cuboid-final-review/MANIFEST.json",
+      "sha256": "2b499184fb82a024a11c9b388aa094dccb4728f7e41301804d7f4c12836258e2"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/cuboid-final-review/diagnostics/TEMP_FILE_INVENTORY.json",
+      "sha256": "d080625394d54cce7636dfb50cbfbb8556a8c4d6f9ef52ee1f55708c7f0e3324"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/cuboid-final-review/diagnostics/cache_proof/CORPUS_W20_LABELS.json",
+      "sha256": "cac7638c5d3883aa2e02ffc6cd38f161ca8ff0c88fd22b1c46a24818269134ac"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/cuboid-final-review/inventory/DOCS_INVENTORY.json",
+      "sha256": "d4c7a0b00c7a1afa09f52114e338ad5573675e455cfbb92b33085ae20ec75bf0"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/cuboid-final-review/inventory/DOCS_INVENTORY_BEFORE_4048ff83.json",
+      "sha256": "6f0b8e5448d301ad09af9548cc996025852107d830dbe0fbdcced59a264a5c03"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/exact-dimensions/inputs/FIXTURE_MANIFEST.json",
+      "sha256": "ddc00bf642bded020647fa0295fcffdc048c52db9f854949984c5a1142915c7f"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/f2-role-aware-oracle/visual/official-inputs/FIXTURE_MANIFEST.json",
+      "sha256": "4de5a910021802b3e84c85061fd037d26572eb5c2ef1d301ba713f341e4e01c2"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/generalized-goal-entry/corpus.json",
+      "sha256": "05ef82e654cc2d9e148c051bfe59195ed857354ebc36a1ae01510132f3014bbe"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/generalized-goal-entry/semantic-corpus.json",
+      "sha256": "873ea5728d73f87fe1eec7e8ec571319a55434257cb1e0515c7e946b530f2a43"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/geometry-capability-expansion/corpus-dev.json",
+      "sha256": "395036a0f122abc49ee683c45fb059a61b69d479325b9eb2f0ffb3e6156af04c"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/geometry-generalization-and-pedagogical-construction/fixtures-adapter-2-section-justification/manifest.json",
+      "sha256": "6ccee8fbc23f8cca99ff9d7b3898afeedbc448eaef7758d8fe287234dd5f1109"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/geometry-generalization-and-pedagogical-construction/integration/cleanup-inventory.json",
+      "sha256": "570498a574460f657bc68238ecdb66a4dc99b63ea953cd3bf194f730c7ea6480"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/geometry-library-expansion/diagnostics/artifact-manifest.json",
+      "sha256": "f67141c963561e47614d933f4ddddf2b286cd768abf25c6f4d5c5a516e2a584a"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/goal-directed-function-composition/corpus-dev.json",
+      "sha256": "1b626e0c1e556aa48224e7cd5e77fbf9fc5fb8fcf6dee1c8f2d9272a9e6bbcd3"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/goal-directed-function-composition/corpus-holdout.json",
+      "sha256": "b3f423b3e9eeb1722420c0b531285bd31fe7663e5c37fd96f1d91371932dddfb"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/goal-directed-function-discovery/corpus.json",
+      "sha256": "c0c4cc9991e8dbcc382f7e770a89bb82ac331fb3e792d0a4d5c2ef0e8ae36a1e"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/goal-directed-planner-generalization-audit/next-slice-corpus.json",
+      "sha256": "6587fabf084029bf7aa787df291b27bbf83fde95212ca9a8f1bd4c4ce9cbda84"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/hybrid-ab-pilot-readiness/diagnostics/artifact-manifest.json",
+      "sha256": "a1f9dbdcd34beb62763cedb06cad62a3419e8cffc6e607e4b56f25b1a8daaef2"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/hybrid-ab-pilot-readiness/fake-provider/FULL_AB/manifest.json",
+      "sha256": "26786f2c68f04b01c408a8e12faa39ad402ae156354cced0cf77da203e94ecfe"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/hybrid-ab-pilot-readiness/fake-provider/SMOKE_AB/manifest.json",
+      "sha256": "2bfa20cf324724893e0be8cf9615aebfc1ca4aac42996b4cf2e300aaed7d8383"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/hybrid-ab-pilot-readiness/fake-provider/final/FULL_AB/manifest.json",
+      "sha256": "ee2205abe342edb5dde2249543863edcd58a91a1bf81fa1e2dd25d5dc137d000"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/hybrid-ab-pilot-readiness/fake-provider/final/SMOKE_AB/manifest.json",
+      "sha256": "32248933634d21271de13b9697d0d756a794af2726fd9c5b7514a1c322273913"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/hybrid-ab-pilot-readiness/fake-provider/review-fix/FULL_AB/manifest.json",
+      "sha256": "b36b1e17acf2b2001c4a7a793da9cb41b7374f6ad293d4872c89d823b7746029"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/hybrid-ab-pilot-readiness/fake-provider/review-fix/SMOKE_AB/manifest.json",
+      "sha256": "cc9d7d2812efc8c836befdc4f6f6076d16d9149a20eed7c76d99a305536d396d"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/hybrid-ab-pilot-readiness/fake-provider/safety-certified/FULL_AB/manifest.json",
+      "sha256": "c2a3ecc75453690a62f75a97eb6716e95fd67e29083de53d09eb124456d786c9"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/hybrid-ab-pilot-readiness/fake-provider/safety-certified/SMOKE_AB/manifest.json",
+      "sha256": "de9c82cebbfb90ff54cc1cf6a22f2b7bff472d5cc199149dfdb7476d97a0cc5d"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/hybrid-ab-pilot-readiness/fake-provider/verified/FULL_AB/manifest.json",
+      "sha256": "52cf8d8898f42c47d6c2b942ec2b90d97e2774fb76d279ef0beb22f048558f36"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/hybrid-ab-pilot-readiness/fake-provider/verified/SMOKE_AB/manifest.json",
+      "sha256": "88fd130632c84b3b6e88714d08d0002793333a0139a7bbf2db74c3699f2cbdda"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/hybrid-backend-integration/cleanup-inventory.json",
+      "sha256": "f2b584a06d42a92b219d41a4cb75939d2e7137a9f675453c97f62d14ef4e2f65"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/hybrid-backend-reliability/fixtures-adapter-2-narration/manifest.json",
+      "sha256": "d8cdc12e1108f0645cc666ae2b6f8b2c475e41f9a102f623ccb68e9a7cd8b4d8"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/hybrid-independent-h1/H1_CORPUS_INTEGRITY.json",
+      "sha256": "b50871ae1aa1b6e7d4c84514f9b6ce6eef22fd4d0bc5269df2ee3ac993809b67"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/hybrid-independent-h1/h1-corpus-template.json",
+      "sha256": "62f7a1d31d4dd2c0509dc2ef882ccfe1d3ac569a4702cf7c7735fe84d2fc214c"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/hybrid-live-validation/legacy-dependency-inventory.json",
+      "sha256": "fead84c782896e97dfc04063b03639d2086f2070caa6fa5eb78db4b730186b2b"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/hybrid-master-backend-replacement/constraint-extraction-pilot-corpus.json",
+      "sha256": "60a40e2eadf8b9d0bb5c93a72ef1889b6802e0fda90aac13e317ef76894805aa"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/hybrid-master-backend-replacement/fixtures-adapter-2-composition-classification/manifest.json",
+      "sha256": "58ea96b4d47842339fdb4871998c25a289462fbe747e864db3de29f2f295bf95"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/hybrid-master-backend-replacement/fixtures-adapter-2-construction-continuity/manifest.json",
+      "sha256": "7e76b83459d072fb49170fe0db2bbb9c695c3c86c1b3fca321c2855fa5e41f1c"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/hybrid-master-backend-replacement/fixtures-adapter-2-search-telemetry/manifest.json",
+      "sha256": "bbdf02ed80380ada820a50db8c2bfb69c244a92bd2a2c84fa7003f7bc845552a"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/hybrid-master-backend-replacement/fixtures-adapter-2-trace-pre-postconditions/manifest.json",
+      "sha256": "326421f559fb5636abdf92ee5c5acb6dd6c9d583bc1d338179f8ca258b98e1a3"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/hybrid-master-backend-replacement/heldout-authoring/corpus-template.json",
+      "sha256": "06f79a15036bceda02d162627d10f22f841215fea6b2cfed80723dc49c57f616"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/hybrid-master-backend-replacement/inventory-phase-d.json",
+      "sha256": "7718b14f289c02cb341b986a519aa2b8daf0f0650a9228de857f18b123d86472"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/hybrid-master-backend-replacement/inventory-phase-e.json",
+      "sha256": "8c87b4d63e6fcbdda1a5e7299b531a86c30cd5ac0112c6398dc0865b81f1bfa3"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/hybrid-master-backend-replacement/inventory-phase-f.json",
+      "sha256": "c2759c0aa192985ddc3e586e9f7b104aa7ff698ea1ae542a1deee51174312827"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/hybrid-master-backend-replacement/inventory-phase-g.json",
+      "sha256": "b42ac08e3264f080e2aff9002b1d3cafaf6121c6f852b5b3c95bdc01931b8e40"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/hybrid-master-backend-replacement/inventory-phase-h.json",
+      "sha256": "79ff3899ea16227762542797cfe0e4ad86b4b9d9cd03077c670a4da8c96150ff"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/hybrid-master-backend-replacement/inventory-phase-i.json",
+      "sha256": "122af40db259c8b16e42e0269f9605915003d08833803bce572696f5596f02de"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/hybrid-master-backend-replacement/inventory-phase-j.json",
+      "sha256": "62209bbfad6777b057e98c35139d11abe01e4ac9a0778d69571fad46558d94f8"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/hybrid-master-backend-replacement/inventory-phase-k.json",
+      "sha256": "12fbed9605f07089ce14e622e1b040b78ef63776500b36d3ae25d773e90bf64e"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/hybrid-master-backend-replacement/inventory-phase-l.json",
+      "sha256": "eaa0b031f8ebbdd8b6fa44bae6cac74413fbe9f6058f059e51dcb7f7eb9e396c"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/hybrid-master-backend-replacement/inventory-phase-l2.json",
+      "sha256": "7c04c079f718ac9dc36760d2e62b8307e3707f2c85ddb5e6cc86351b267500d1"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/hybrid-master-backend-replacement/inventory-phase-m.json",
+      "sha256": "47ff07e81ee05b9e5ea10b5742e7076831844da034f3af4c53243a6bb4b2b87e"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/hybrid-master-backend-replacement/inventory-phase-n.json",
+      "sha256": "760c84e221124709458d6d227f134640c07f39df1dceb176d6b3f81b9ca58ccc"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/hybrid-master-backend-replacement/inventory-phase-n2.json",
+      "sha256": "b12bf15d1fed51fbd4da60c98e1c29799304065af700586bd645da7c7802a56e"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/hybrid-master-backend-replacement/inventory-phase-n3.json",
+      "sha256": "6c9eb0bae746897e0bae6542e5cc3e485b440a517ca21484a835adbfac20e52c"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/hybrid-master-backend-replacement/inventory-phase-n4.json",
+      "sha256": "323820710903d3a8a5bb71a6628791b2b9894aad65c45802ccf84c6c5d359294"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/hybrid-master-backend-replacement/inventory-phase-o.json",
+      "sha256": "40d8cd3f78f8a12e1d5a3a5f33a8327851b2ab1a89ef7782b8c19272b3f1f2ec"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/hybrid-master-backend-replacement/inventory-phase-p.json",
+      "sha256": "c1c06626eb2606103a2869058ce3d10b1c7e69f03cdc38208ff1aef80aabca05"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/hybrid-master-backend-replacement/inventory-phase-p2.json",
+      "sha256": "81ab99a7afa7503c828d909a586303f89067ff7aff52c1651a146cb0af4c7a49"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/hybrid-master-backend-replacement/inventory-phase-q.json",
+      "sha256": "65c9cc035f694469ed3405baad5f9682bd4d7594bd23dc785262c85223a9424b"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/hybrid-master-backend-replacement/inventory-phase-r.json",
+      "sha256": "c7074d0d1753d41a43534c7546699a29fc058e980262538a8032cc4a9fbcb156"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/hybrid-master-backend-replacement/inventory-phase-s.json",
+      "sha256": "adebe5c5d6cc1e45d38e4e55d8999a858c6895cb0a021898bc4c16919d926de0"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/hybrid-master-backend-replacement/inventory-phase-s2.json",
+      "sha256": "cd2740ffee79535b10b8a7b053c3965219f502a25c60468b82df5a661bb210e9"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/hybrid-master-backend-replacement/inventory-task2.json",
+      "sha256": "eed5758f947ae75e5aacf442640d819b7ce0693eccb5c37cec1a7c9b332a6a0e"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/hybrid-master-backend-replacement/k1-live-pilot-corpus.json",
+      "sha256": "19c0952d30336e1dcc4b707856b7259dd30f7f9c46a4f443bcf482dc0dd0dbf5"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/hybrid-master-backend-replacement/product-integration-staging-corpus.json",
+      "sha256": "caa2078ff1852568c1aeda58d2112827b7c697c61e47e01bcc6284faee5f09cc"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/hybrid-master-backend-replacement/r1-live-pilot-corpus.json",
+      "sha256": "fce3ca08e6f5096de5364bcc1a5b553e70e5e764506737f22a9b1bc798ddf0d8"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/hybrid-master-backend-replacement/s1-diacritic-development-corpus.json",
+      "sha256": "5f272738a11b9d07c0f56380f85e8fd5df44e51842829a52349575c7cea1bb7a"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/hybrid-master-backend-replacement/s2-student-language-pilot-corpus.json",
+      "sha256": "a8324e3306707dcc13984cb4468e266910eb97e8412e3c645def1cd12ba3a41b"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/hybrid-offline-consumer/results/workspace-inventory.json",
+      "sha256": "12f5d1ffad1ca86cb89538b2a3aab07d8549b58a231b877c6df0a2ab2c7efd73"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/hybrid-offline-readiness-finalization/verification/fresh-fixtures-manifest.json",
+      "sha256": "81b9dfabc28bab02a69479ec0fd67d08f5068f0d015e71278398e3e2bc3458a2"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/hybrid-pre-main-hardening/cleanup-manifest.json",
+      "sha256": "b681bbc818a2f9e4a03f45bd0ca10f0736af0f66192aa96c9d749a229f51c621"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/hybrid-preview-contract-hardening/fixtures-adapter-2/manifest.json",
+      "sha256": "d123c65a9b4a59986bea1efac2d8edd491880f8aba87a20c853dcb7a007179c4"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/hybrid-preview-contract-hardening/fixtures/manifest.json",
+      "sha256": "3cbe55ebc5bce6e0ced1c8e6549ec4e9541dcdfa11c9b0b6b02553e9f894efa5"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/hybrid-semantic-extraction-v2/inputs/corpus.json",
+      "sha256": "66f58b42f20baeb4f53faba078a156cc3d9a514fb7d10a18a6f3cebb424f6158"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/hybrid-semantic-grounding-reliability/corpus.json",
+      "sha256": "f4235c5de0b4f823dfb02a80e29bb433b256acd0fb96991e6d555225c1e87582"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/hybrid-v2-after-main-integration/cleanup/inventory-after.json",
+      "sha256": "3279b8702cb3a4398ba412796539fa29608061f115e9fa851c2ab807b7245c7a"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/hybrid-v2-after-main-integration/cleanup/inventory-before.json",
+      "sha256": "bc83b6560bae5328624cb78ac8e31eff53fecd40d91a9c337d1960b402e0e63f"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/hybrid-v2-backend-generalization/fixtures-adapter-2-named-plane/manifest.json",
+      "sha256": "c8e10031fc2b4725abfafbd16bb063fabb441edb1397a9cf65196d0f3ce52e71"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/hybrid-v2-backend-generalization/inputs/local-replay-corpus.json",
+      "sha256": "3efb34a39e71aff315b31b9d2d75fee00727af34bddc4e6f4bed704f70562264"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/hybrid-v2-backend-generalization/inputs/point-line/local-replay-corpus.json",
+      "sha256": "a41d0e4f62bc5223f1dbf491877f7854b9f96cb90a3b584373ee40b3b59dbb11"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/hybrid-v2-holdout-failure-repair/new-development-corpus.json",
+      "sha256": "970785f3a448b0dcc0443760ca25169c7ef633b7a4e0026b8560da73b926eafa"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/hybrid-v2-independent-vietnamese-geometry-holdout-wave3/holdout-manifest.json",
+      "sha256": "5ba6750300fc5cde5b5935bdb90163cd1bc23a5b2204e892949adfde4e72b192"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/hybrid-v2-independent-vietnamese-section-holdout-wave2/holdout-manifest.json",
+      "sha256": "684be19ccac67237fd5bf81913394f6ed20b889a2b92313ba96666598fbb9dad"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/hybrid-v2-nl-certificates-e2e/inputs/line-plane-distance/local-replay-corpus.json",
+      "sha256": "5dd9ed0d43fcdd3810790fc064660ca9f4e438e0cb4e7d1218b18eb85006b1e1"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/hybrid-v2-nl-certificates-e2e/inputs/point-line/local-replay-corpus.json",
+      "sha256": "a41d0e4f62bc5223f1dbf491877f7854b9f96cb90a3b584373ee40b3b59dbb11"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/hybrid-v2-w3-f2-ratio-projection-language-grounding/closed-input-contract/cic-d1-contract-recovery/pre-freeze-review/corpus_head.json",
+      "sha256": "0fe72fd833a727c2b8b681c4c279de7c4405d6f86f48de59383a22aad488ff6b"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/hybrid-v2-w3-f2-ratio-projection-language-grounding/closed-input-contract/cic-d1-contract-recovery/pre-freeze-review/corpus_main.json",
+      "sha256": "e35631f6d0a1e398fdf05334bbfb979bb8c253efefa2aa66c0f350bab1107372"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/hybrid-v2-w3-f2-ratio-projection-language-grounding/closed-input-contract/cic-d1-contract-recovery/pre-freeze-review/corpus_pre.json",
+      "sha256": "7e33c9e71789a0b55d6f50b8ff4d038c5e8d168677821b7ed1d96d759b8c81ec"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/hybrid-v2-w3-f2-ratio-projection-language-grounding/closed-input-contract/cic-d1-contract-recovery/target-grammar-identity-recovery/pre-freeze-review/corpus-head.json",
+      "sha256": "c97035d6155370202bdcc889bb8edd9afba47ef54f775527960dd2db99ff146a"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/hybrid-v2-w3-f2-ratio-projection-language-grounding/closed-input-contract/cic-d1-contract-recovery/target-grammar-identity-recovery/pre-freeze-review/corpus-main.json",
+      "sha256": "4030fa890d5f270e9ea701fc8c1dcfcc04aac65e78033763e242a4872b4c1bf5"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/hybrid-v2-w3-f2-ratio-projection-language-grounding/closed-input-contract/cic-d1-contract-recovery/target-grammar-identity-recovery/pre-freeze-review/corpus-pre.json",
+      "sha256": "d3dcf9d76a2965316c46645b426b22f49e51cbd3367254844b4431b5889ad980"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/hybrid-v2-w3-f2-ratio-projection-language-grounding/closed-input-contract/cic-d1-contract-recovery/target-grammar-identity-recovery/pre-freeze-review/corpus-prev-emulated.json",
+      "sha256": "ced2792c0aa896417c337c3da0909841a2c433739296de09497d0ff62b376985"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/hybrid-v2-w3-f2-ratio-projection-language-grounding/closed-input-contract/source-grammar-adjudication/acceptance-manifest.json",
+      "sha256": "88abf3c6cb2ab3ce9a99fabdb19e3338a9966b3511f22c1847d9790d8e984e5b"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/hybrid-v2-w3-f2-ratio-projection-language-grounding/unified-solid-scope-closure/schema-field-inventory-v2.json",
+      "sha256": "17b46aa5fdbe397a092adcdf49f8ba982008f24f5f0ca4a62f7554f56b81a35e"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/hybrid-v2-w3-f2-ratio-projection-language-grounding/unified-solid-scope-closure/schema-field-inventory.json",
+      "sha256": "ce28c329a5ac33aeffb6b36a5fda5b135b8238e5cc82496eb29b077c8e847687"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/hybrid-v2-wave3-main-integration/verification/post-cleanup/manifest.json",
+      "sha256": "8462a90e2a85ae49373785f267b7fe575715f92624782acafc07a67be3bd5781"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/independent-h1-real-world-acceptance/h1_corpus_provenance_receipt.json",
+      "sha256": "cf5ee2675a28896b866ecbfef3dbf8913ef004e5a203ef1550fa33d83acb9823"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/independent-h1-real-world-acceptance/real_world_image_corpus_manifest.json",
+      "sha256": "1fe660f05d3a20e24494bf4a10c93dd2d254c9e83d469c7a26bfa22e37e499a4"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/independent-nlu-extraction-evaluation/inputs/corpus-authoring/corpus.json",
+      "sha256": "44b4e502d4f55be23f9750ad08431b795ade79c1c64b27fe0521b2946ae38bbd"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/independent-nlu-extraction-evaluation/results/live-locked/manifest.json",
+      "sha256": "de7919255eff859e1d52fa5e3c5a60a36d43cf4303f9864aed4748e8a7d0b61e"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/independent-nlu-extraction-evaluation/results/live-pilot/manifest.json",
+      "sha256": "41e335c394eebafd002a5463f0a363f4630dc29fc0dc45b6c1d8a661c704a760"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/independent-nlu-extraction-evaluation/results/replay-locked/manifest.json",
+      "sha256": "df73a35765966ca551bed7e867ae292458c9113491f712a11ff4c2661eba4267"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/independent-nlu-extraction-evaluation/results/replay-pilot/manifest.json",
+      "sha256": "7cd962254b2a635be9a16a5bdfe745ad38a60e99bb6ad73797612ad234bb68b6"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/main-integration-readiness/diagnostics/untracked-backup-MANIFEST.json",
+      "sha256": "ce9b10f3a6a2c49675554f6bbb560c8bf9ca2d2090472e8389b6c05d4e26205e"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/mobile-canvas-fit/inputs/FIXTURE_MANIFEST.json",
+      "sha256": "4b2aaebd21b882a8bc0be3081982355332a56c38b598ea8f2c9f8e0b7b53bb57"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/pedagogical-construction-sequencing/inputs/corpus.json",
+      "sha256": "7b6eb0b9c2795c11a10dce8ac250028561a5d392589b557236b2bef6cd6bb0c9"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/pedagogical-simulation-integration/fixtures-adapter-2-stated-perpendicular/manifest.json",
+      "sha256": "58e45e5ad4b6b14bbf1f1cbb67f62f90e623ef79db1d63fc7a6f4e5a5d315330"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/phone-landscape-layout/inputs/FIXTURE_MANIFEST.json",
+      "sha256": "97f149b6d9a8042ed70e6c37ab68321d449a119e149e1a65c8f85c6f36a5fdb1"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/real-world-printed-handwriting-acquisition/external_image_corpus_manifest.json",
+      "sha256": "9748bd8127125574bd6f71c1c1e5f9316eca4c546ea134ce83d1e55022893296"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/real-world-printed-handwriting-acquisition/external_image_source_inventory.json",
+      "sha256": "a1e709919836964980d2839e44c18ab771f4206a86c8eec8f24c64787c7465a9"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/regular-square-pyramid-w01/MANIFEST.json",
+      "sha256": "93e150a484df4d5b28881081c34fb21fdbad5f56016185b3da5c90ce35917da5"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/regular-square-pyramid-w01/diagnostics/TEMP_FILE_INVENTORY.json",
+      "sha256": "a155b95866646bb4c99cc654501e2a63a93a4102e1c5e3f357780e18a0ed96b1"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/regular-square-pyramid-w01/diagnostics/cache_proof_corpus_w01.json",
+      "sha256": "570a5ab06218f04c63d18e6e6468e1215f5e8e724d395405dcedfd18176647fe"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/regular-square-pyramid-w01/diagnostics/cache_proof_corpus_w01_r2.json",
+      "sha256": "4a194a23f4c72d8802630ded55c1bf9a182e0c5ac86829a2b31d7a193a9a70df"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/regular-square-pyramid-w01/inputs/FIXTURE_MANIFEST.json",
+      "sha256": "58839cec659a32c9cd5c30010300a8269a84537f8ac08699e3fbef3182aa3d2a"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/regular-square-pyramid-w02/diagnostics/cache_proof_corpus_w02.json",
+      "sha256": "dc7a44115d3a36ae9efb70111b29e1da98cb6ab70b4694449f52059e07c91ad5"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/regular-square-pyramid-w02/inputs/FIXTURE_MANIFEST.json",
+      "sha256": "fd644ab5dfb54f6494e419ce5583888c5a6d629642b1d751812a4f66a85189cd"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/regular-square-pyramid-w03/diagnostics/cache_proof_corpus_w03.json",
+      "sha256": "5970eb168d94fc2514af3adafac413ee701a92a1d4944f15f14dffc89b06242e"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/regular-square-pyramid-w03/inputs/FIXTURE_MANIFEST.json",
+      "sha256": "30a6497df31315ba900a398819d5adc9ea65f263b31b42152333419d30380121"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/regular-square-pyramid-w04/diagnostics/cache_proof_corpus_w04.json",
+      "sha256": "c5d23b3ad5b0926277d44358b9ffd85550046268b5323d6677dd1d609bbb3572"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/regular-square-pyramid-w04/inputs/FIXTURE_MANIFEST.json",
+      "sha256": "c28ef800af5c5c8278613c66a2ba3ff64d3103a76b9e4ad9deb211e13bd695b2"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/regular-square-pyramid-w05/inputs/FIXTURE_MANIFEST.json",
+      "sha256": "7b587f7c90a15af30dc67da01d8fead64540575b21312afde7855a8093f1535c"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/regular-triangular-pyramid-w01/inputs/FIXTURE_MANIFEST.json",
+      "sha256": "ea8b46b0b92eeac1c4f8bbb1be0847959cd4a3d9ee051b1f4dba16cb8a06c79b"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/release-stabilization-validation-readiness/real_world_vision_corpus_template.json",
+      "sha256": "d595bc8decb9e019d3a8e522a5b3ce125bd22b6c9cde8440306d7ac20e333816"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/repo-cleanup/inventory.json",
+      "sha256": "d651f61c67e546a959d85dfa4cf98ea58459a685bc3aeeb6748c23ae83d12a9f"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/scene3d-codex-takeover/artifact-manifest.json",
+      "sha256": "50b446be82b92361521c0fd41cc933755130ba97bf64c61a3fa21690f409df09"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/scene3d-codex-takeover/visual/official-inputs/FIXTURE_MANIFEST.json",
+      "sha256": "e2a3a75c68327bb6d92db2cdb5be5952f427429b421e5954d6784d5b9f350df9"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/scene3d-final-acceptance/artifact-manifest.json",
+      "sha256": "cd2ddc8be9db1d0a302564a5f1e2a917350a6bed367165dc6b43b8a0f4c119fa"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/scene3d-to-hybrid-v2-replacement/fixtures-adapter-2-cache130/manifest.json",
+      "sha256": "3268f347786d0ee2130f449c3fef794dd391a736d7c8d460e114ac63e0207507"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/scene3d-to-hybrid-v2-replacement/local-replay-corpus.json",
+      "sha256": "e9276e5c5b75ab3a2dc10f54287310b27f713b95c674feea1d2b84d119e1b5b0"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/scene3d-to-hybrid-v2-replacement/visual/official-inputs-3dcd6d9f/FIXTURE_MANIFEST.json",
+      "sha256": "912baa4357933036e493959248efdfa2d29e8f5e2e03c2208a2a64dc7acd799e"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/scene3d-to-hybrid-v2-replacement/visual/official-inputs-e336e0df/FIXTURE_MANIFEST.json",
+      "sha256": "82d10d550bcc47ba829fdb547ecb9d52236c6ca1247ce132c90d7f2ad5b4c131"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/scene3d-unified-visual-language/capability-inventory.json",
+      "sha256": "bc5ac7de34aba8a7edf20b69516ce810cc74778b351a18a33c24c499b2b5951f"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/scene3d-unified-visual-language/material-inventory-before.json",
+      "sha256": "5c71df8d8db7c381b752d52bfd2baaaaf461f6abf06efa3a44c0cadb8cdcf2c9"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/scene3d-unified-visual-language/superseded-evidence-manifest.json",
+      "sha256": "75e09cf7467e61d8b62232a5e17c2e6962503e8e8edf3b1f0d9c14c59e1f7e23"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/scene3d-visual-correction/visual/official-inputs-3c6d1e65/FIXTURE_MANIFEST.json",
+      "sha256": "7d7de1320db6243b5df6650ff5c37aa6971fc7ae479430e8a2c067660831fd48"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/scene3d-visual-correction/visual/official-inputs-c84e8620/FIXTURE_MANIFEST.json",
+      "sha256": "66e3458472fe553e4ea91db86352011bd8dc1aac7383f546cbc7f4113631233a"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/semantic-extraction-schema-contract/inputs/corpus.json",
+      "sha256": "c5f690f940a1a0823858e156a772d07713b29e9d691b9ebf6ad5f6c347714021"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/semantic-extraction-schema-contract/inputs/heldout/corpus.json",
+      "sha256": "897ae8502591659248cd489006ef992c4892f92f054bac51a2bd7c3e3cae2a61"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/semantic-extraction-v3-runtime-revision/inputs/corpus.json",
+      "sha256": "c5f690f940a1a0823858e156a772d07713b29e9d691b9ebf6ad5f6c347714021"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/semantic-extraction-v3-runtime-revision/results/offline/gold-flat-LOCKED/manifest.json",
+      "sha256": "bdfd04c40b9bf1bdc6d02c51da94a50a49d603a531428c3fa70d2b8ee81859cd"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/semantic-extraction-v3-runtime-revision/results/offline/gold-flat-PILOT/manifest.json",
+      "sha256": "83c5730e9f0395e608cd36f78c5b9b4dd079a4a911ff86799765d07dcc2540f1"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/semantic-extraction-v3-runtime-revision/results/offline/gold-v3-LOCKED/manifest.json",
+      "sha256": "9b184a7b1fae91b140e8c6ca0a5db2ca3f25deadf444de780771a628060fde08"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/semantic-extraction-v3-runtime-revision/results/offline/gold-v3-PILOT/manifest.json",
+      "sha256": "f5e1280104245e3537df2ec478f7782a4777f0710eb2995e9345b4f3d0f17ca3"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/semantic-extraction-v3-runtime-revision/results/offline/replay-flat-LOCKED/manifest.json",
+      "sha256": "3c618ae62f5d44d32e5fd066836c7699f458d18fc1cf8754e7931afe2eb85b2e"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/semantic-extraction-v3-runtime-revision/results/offline/replay-flat-PILOT/manifest.json",
+      "sha256": "a3b2fcb7b4e39cb63651f78e73c43238732d2a6aea6569b8bdfaf582cd9fd2a4"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/semantic-extraction-v3-runtime-revision/results/offline/replay-v3-LOCKED/manifest.json",
+      "sha256": "704d6ce699093d9810f4b9cd61ef83f10189b3ecdd20333cbec5b3a51eb0c8c0"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/semantic-extraction-v3-runtime-revision/results/offline/replay-v3-PILOT/manifest.json",
+      "sha256": "4232a4fce5523daab087e077adb035319721a611213ae399d98b69d438ee84af"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/shared-ask-grammar-safety/evidence-reconciliation-55c657b8/manifest.json",
+      "sha256": "6ecce63d46cc5a118df2e28ea8d460476a489c44e8eddf6f65b4219948401d62"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/simulation-coverage-visual-validation/corpus-dev.json",
+      "sha256": "e92be0c7df8ed19d6c37f96844269c263d415635f608b6ac0ea5a6e4b2264e0e"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/simulation-demo6b-renderer-fix/candidate-and-browser-inventory-reconciliation.json",
+      "sha256": "9f866bc206112996c6361d8053fb5071a32804ee0c7126fafbd721e14118ec1c"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/simulation-evidence-repair/original-raw-manifest.json",
+      "sha256": "c94b58d8eb3da251154b9b23d37204c0720b206795a93e24e180233063f7f50e"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/simulation-visual-consistency-learning-ux/corpus-dev.json",
+      "sha256": "b52d9fb488aa4be2be187f13ddf695d944e986acb59a91e1f0a5e47595a18721"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/source-bound-result-planning/visual/corpus-results.json",
+      "sha256": "1ceed3f089d5d0de02599ff1a1e3e27b20207d7b1564b10b3ae5fd7d513696e7"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/source-bound-result-planning/visual/manifest.json",
+      "sha256": "84e439e4b130b4b18638abb308136c6ef738c8c8a8f880a6742fc8ae8078c70c"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/source-gate-hardening/corpus.json",
+      "sha256": "65c8f5afc4a87110bde641e4c87985535695d6afb75c0e65aa056c3ba154ec13"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/source-grounding-integration/inventory.json",
+      "sha256": "7b6fd3cc9b29ab0441917dded233c007dd7af462434bf31cd0329c3096550d55"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/source-grounding-integration/task-temp-inventory.json",
+      "sha256": "f21fb6b19122b0484503f99df2d1061d02f8b22e12d711dc6ece5a22e9fa7c03"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/sphere-final-closure/visual/official-inputs-3994f603/FIXTURE_MANIFEST.json",
+      "sha256": "4888cc7cc444fb53e55349532b788e89fd19b8e292f04838eae2a12fcb04c50a"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/two-line-plane-section/inputs/math-corpus.json",
+      "sha256": "0d31e49ea982f9378054dafc192b31ffd8bfdb8f8651424ec4ff2a9607138793"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/typedfact-next-adapter3-simulation/corpus-dev.json",
+      "sha256": "3c4f186ca106b8d3b23da34d736fb95f440f377f10aaf51f8333e64d580af0c9"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/unified-angle-geometry-verified-image-to-3d/independent_corpus_readiness.json",
+      "sha256": "36991bc065a25270baabf45863d1e07d8a681f6313cb4a2d803e6fccc999e423"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/visual-b3-sphere-integration/PACKAGE_MANIFEST.json",
+      "sha256": "c23063cc33d703a31c1375773f548c30d404e6d5fad2aa0395f89826ad2314e4"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/visual-b3-sphere-integration/visual/official-inputs-ddb1a4be/FIXTURE_MANIFEST.json",
+      "sha256": "6aeacf074ed582fb69a3bddb1ec8707c6ff3b4e82b9dd0aaf7c632bc9893c1a6"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/visual-b3-sphere-integration/visual/official-inputs/FIXTURE_MANIFEST.json",
+      "sha256": "60a8a2972285c68eaaeee0bf29d8eef5bd1816044ffecc9c29ee84544c44c5d0"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/visual-closure-hybrid-readiness/PACKAGE_MANIFEST.json",
+      "sha256": "8ad0e7dd14cdb3bc3021857b909b026d41a11b9a757adae248ed1e3c7c632314"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/visual-closure-hybrid-readiness/visual/final-inputs/FIXTURE_MANIFEST.json",
+      "sha256": "7956bf7f4979aea6a91f27f533ed3add67827b297a93cd3008eaa344474ca17c"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/visual-closure-hybrid-readiness/visual/inputs/FIXTURE_MANIFEST.json",
+      "sha256": "7e95f32942deec79b53720772f14e469fb45c8dc834e597be58a4f38e0333af7"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/visual-hybrid-final-corrections/visual/inputs/FIXTURE_MANIFEST.json",
+      "sha256": "0dbe85d79cf7a9b32b99553210efcf1a3719320ae3abd6392a2589f8bf38b0d0"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/visual-hybrid-integration/integrated/inputs/FIXTURE_MANIFEST.json",
+      "sha256": "e9d9db37193ad9609e2bb6e2dff77b53e12a476f24512463d07471d45a9aa499"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/visual-hybrid-integration/visual/inputs/FIXTURE_MANIFEST.json",
+      "sha256": "7bc301aa0027ebc8d68daf01181e4a1165cbb5b55af9dc88b45697f1aecf8b5f"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/visual-hybrid-integration/worktree-inventory.json",
+      "sha256": "1b1d8ae06108fe1865d339dc10ffa28f8cf5c5701822003b8193b4858d1395e5"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/visual-ux-final-quality/artifact-inventory.json",
+      "sha256": "79ed19898667309cfc17ba6e5a9a08b9b1eeb26b1b6d1a9ed73f8a56bd00c0a0"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/volume-reasoning/corpus-dev.json",
+      "sha256": "8e32e6e1a1928efe3e5dee68695d050191b7e2fccc5b9a3137897a1a88ff7245"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/w09-verify-cleanup/MANIFEST.json",
+      "sha256": "24eb6228c728609ec1a04fbd570feae085de3ce16aeb617652f89705c4bf1237"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/w09-verify-cleanup/diagnostics/VERIFICATION_FAILURE_INVENTORY.json",
+      "sha256": "8bd2a86043675711f8583b959da96038e660e65b418ed2ae4d74080b46a54697"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/w10-pedagogical-playback/MANIFEST.json",
+      "sha256": "02e62d040b386717030fc23c0202d2d9f53dcceeef690d6752f6da9f4800cd8d"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/w10-pedagogical-playback/inputs/FIXTURE_MANIFEST.json",
+      "sha256": "2f5f42fbe7b289dc17ffdee628ecd0c34fd6894e506021891f5143ce3abed98a"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/w11-pedagogical-polish/MANIFEST.json",
+      "sha256": "75909b011169138ed10b618e04ac8114094e9d71e90922ac3b58a9e25d344594"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/w11-pedagogical-polish/inputs/FIXTURE_MANIFEST.json",
+      "sha256": "0b07b63777ad3246ab06a77b06d32bcd836ef6f3d1aa2af02c224b1aa7ffe256"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/w12-pedagogical-grounding-closure/MANIFEST.json",
+      "sha256": "e126065b582a847b69a238a6d5ccf290d3d86efaf028c47186edc3b0e2a7e39f"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/w12-pedagogical-grounding-closure/inputs/FIXTURE_MANIFEST.json",
+      "sha256": "19e580bed329994d70857658c7e3571fff16b6aa02111451d42f18cebf0fb105"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/w13-geometry-preregistration/MANIFEST.json",
+      "sha256": "9b787d4e2953a2e2daeb7baaf55963533bf388b6ad63b6d2c45cd96f7d126a92"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/w13-geometry-preregistration/results/ABSOLUTE_ASSUMPTION_INVENTORY.json",
+      "sha256": "a3d309ef14da3b86539d9be998905063327235b8c566bd3a214653365d185b7a"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/w14-generic-formation-assumption/MANIFEST.json",
+      "sha256": "b20417208784df495258f7c3dd903462b2d469c2dd9c2a0a0f12f99a58980010"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/w14-generic-formation-assumption/diagnostics/S4_INVENTORY.json",
+      "sha256": "66562ff2998f580823461ef9a8e879577fe0a4a5d6c23f624d3eadaac04084cf"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/w14-generic-formation-assumption/diagnostics/S4_INVENTORY_AT_380db58c.json",
+      "sha256": "66562ff2998f580823461ef9a8e879577fe0a4a5d6c23f624d3eadaac04084cf"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/w14-generic-formation-assumption/diagnostics/S4_INVENTORY_BEFORE.json",
+      "sha256": "e0c3d868e0e51d0581fe877ff04eeb3dbb87332b053ecfd92e6828a63d8ecc90"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/w14-generic-formation-assumption/diagnostics/W13_LEFTOVER_INVENTORY.json",
+      "sha256": "04643a43d6300bc1219ebbdd72880818e26cbf5955c46880db3b2d360cfe199c"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/w14-generic-formation-assumption/diagnostics/assumption_corpus/CORPUS.json",
+      "sha256": "f3a861c4dfe65586f4886bfc64fc8904b3d73fca1e5d6af27c81072d8cf927e9"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/w14-generic-formation-assumption/inputs/FIXTURE_MANIFEST.json",
+      "sha256": "70e8aa791cb7eaf845d8cca117b1ca97d48c29b1d228ab1377dd193cf9cc18bf"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/w15-assumption-closure/MANIFEST.json",
+      "sha256": "995cecd3575da3d90cce985b681ca5ef4a2096aa562e08c2c1c184b0f3dc39ed"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/w15-assumption-closure/diagnostics/TEMP_FILE_INVENTORY.json",
+      "sha256": "f27fa4ab647903a95a45b8bc6bd7f3b6aadbb484be685704d46a7d37c1e034f7"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/w15-assumption-closure/diagnostics/assumption_corpus_w15/CORPUS.json",
+      "sha256": "bde93d9a8b468a3cc66bed349110191a4023279633590a719cd31d63347cadf9"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/w15-assumption-closure/diagnostics/assumption_corpus_w15b/CORPUS.json",
+      "sha256": "8662b150ad6a902f7123b2b61f470837fd57bf7e2de5854f470360e5e39eba09"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/w15-assumption-closure/inputs/FIXTURE_MANIFEST.json",
+      "sha256": "99cb2f8c2c4c865ee8d4b101f00da95d756efe81a68a88ba6eb5cab552f6abc3"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/w16-premerge-closure/MANIFEST.json",
+      "sha256": "dfefac7b94ea62fceb7bdfff14f4e3ffc38d0917aedba058d4e90d8ab695b226"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/w16-premerge-closure/diagnostics/TEMP_FILE_INVENTORY.json",
+      "sha256": "bf16dccc11ad4a4bd28678bc4f994b9ac92afdc5c679521e629862e00c6532e2"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/w16-premerge-closure/diagnostics/assumption_corpus_w16/CORPUS.json",
+      "sha256": "f95a5a60bf9e8eb2687bf2fffbacbdbba9f1b22d76bf042f01b5fed1cb6772a8"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/w16-premerge-closure/diagnostics/assumption_corpus_w16b/CORPUS.json",
+      "sha256": "311c17b69641813b61485226ac62449d18f8e6134b39a2baa7dcfddcbe56e308"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/w16-premerge-closure/inputs/FIXTURE_MANIFEST.json",
+      "sha256": "1d4d671f98ad204e6deae405940bc4d9b80dda364632863f2ed7211c1899ba45"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/w17-operation-annotations/MANIFEST.json",
+      "sha256": "b45168cd4c09b9f1f9e78ef9f2e128d905d49c39d70fa29e70272e90dc3561ae"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/w17-operation-annotations/diagnostics/TEMP_FILE_INVENTORY.json",
+      "sha256": "7b9eacc7da8b55b01aefccfad25983f4ecdddd731c8a15dfbfb9321c70dac402"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/w17-operation-annotations/diagnostics/assumption_corpus_w17/CORPUS.json",
+      "sha256": "f526886df31dae7c06c4a79e8ee2e67dbf6ce4f0bc5ced0837497506eb8423b7"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/w17-operation-annotations/diagnostics/assumption_corpus_w17c/CORPUS.json",
+      "sha256": "f2bb738dc595fa55e31ca957c5b98997103d0ac8a9e02b25c7b2cbbb34ab900b"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/w17-operation-annotations/diagnostics/evidence-intermediate-c5592c1a/inputs/FIXTURE_MANIFEST.json",
+      "sha256": "948aebd785484c14a9c20ca5a5e92864f68a0c3afd31dbeff34c6ec02ddf48b8"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/w17-operation-annotations/inputs/FIXTURE_MANIFEST.json",
+      "sha256": "25f0154a94b25ec14ae927626f971a10c35ae13d7ca5323840af2262fc348642"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/w18-binding-focus/MANIFEST.json",
+      "sha256": "1bdd70d2f2ea52eeeb66842d321473de81709172d4bb32b4a7d427a614d54d7c"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/w18-binding-focus/diagnostics/TEMP_FILE_INVENTORY.json",
+      "sha256": "a063bc5b38255825232a34e335512710dea1a8e4a4aae58b7cee07acd9c3dce8"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/w18-binding-focus/diagnostics/construction_corpus_w18/CORPUS.json",
+      "sha256": "712bd7e4e0b7a0b713c5caf1ad93b9cad474e1642d9904d80381b451441b66ba"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/w18-binding-focus/inputs/FIXTURE_MANIFEST.json",
+      "sha256": "10dbe2defb5fcdf8c598d304dbd24afcf3385467e3832038a8cff2d766b9cd17"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/w19-docs-organization/MANIFEST.json",
+      "sha256": "7787c56041101fda6ab73db117687daf365913af28379ee762eb1f392974ae78"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/w19-docs-organization/diagnostics/TEMP_FILE_INVENTORY.json",
+      "sha256": "28485a56e29ce4c81de7c003ae74875b998ba67a1740ece3f01ebfd1092d08d5"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/w19-docs-organization/inventory/INVENTORY.json",
+      "sha256": "b252a52672126c1bc1b15b46ce2f6ef35b19f33e08a4bf850433a58ff2d6c166"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/w20-cleanup-premerge/MANIFEST.json",
+      "sha256": "ee2ee6282a41a6773b11a39bc101fe044f7b405e6b6cc0c029bf4948378e4492"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/w20-cleanup-premerge/diagnostics/TEMP_FILE_INVENTORY.json",
+      "sha256": "f06e3ad64f7c0f2b21cb1a06cf7bcc904a0c7e4f984e63fa75ac17d90167b5cb"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/w20-cleanup-premerge/diagnostics/literal_target_corpus/CORPUS.json",
+      "sha256": "cac7638c5d3883aa2e02ffc6cd38f161ca8ff0c88fd22b1c46a24818269134ac"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/w20-cleanup-premerge/inventory/CLEANUP_INVENTORY.json",
+      "sha256": "13b4528b58a4297d3f01521b73dfb8cb53fcdf9cb4816a96ef27e728d5b1ecb9"
+    },
+    {
+      "path": "docs/evaluation/geometry/thesis-final-acceptance/CORPUS.json",
+      "sha256": "80985dc89b25a507f3e45d2a6232ba8d02d804e72206f1aaca56331b656f16fb"
+    },
+    {
+      "path": "docs/evaluation/geometry/thesis-final-acceptance/certification/stub_manifest.json",
+      "sha256": "0ba9f041d7388a0682c08b736c91c1d70bb43b71dfc0d6c2d6d50d4f331b7d58"
+    },
+    {
+      "path": "docs/evaluation/geometry/thesis-final-acceptance/thesis-final-20260908T160224Z/manifest.json",
+      "sha256": "2cb827b783f3ccc4d136e980b66dc85f40b2066359bc177a603324c170ee7134"
+    },
+    {
+      "path": "docs/evaluation/geometry/worktree-recovery/WORKTREE_RECOVERY_INVENTORY.json",
+      "sha256": "166067e349b1eb389a8267feb0a04c0b5091de3d9f51acd037e6b01bf9c2f66b"
+    },
+    {
+      "path": "docs/research/hybrid_architecture_evaluation_manifest.json",
+      "sha256": "e15322155e85d88ca7145d9c1b63878d2eb34da61e13cb9d394c7bcf30c0d911"
+    }
+  ],
+  "all_baseline_tracked_repository_exact_id_and_hash_scan": {
+    "command": "git grep -l -F -f <16 selected ID/hash patterns> HEAD -- docs backend frontend tools",
+    "exit_code": 1,
+    "matches": []
+  },
+  "prior_evaluation_overlap": "NO_EXACT_DATASET_ID_OR_IMAGE_HASH_MATCH",
+  "normalized_text_overlap": "NOT_EXHAUSTIVELY_MEASURED; visually distinct selected questions from previously catalogued geometry images; no claim of semantic or paraphrase independence",
+  "model_pretraining_contamination": "UNKNOWN",
+  "candidate_selection": "Visual geometry triage only; no measured-system OCR, kernel outcome, or expected score inspected before freeze",
+  "frozen_evaluation_policy": "Do not tune product or references from frozen evaluation; any correction must be a new evidence layer",
+  "h1_claim": "NOT_INDEPENDENT_H1; acquisition agent viewed originals; older cache source exposure is incompletely recoverable",
+  "network_acquisition": {
+    "newly_downloaded_images": 31,
+    "newly_downloaded_relevant_selected": 5,
+    "downloaded_non_geometry_excluded": 26,
+    "rows_downloaded": [
+      426,
+      456
+    ],
+    "stop_reason": "HTTP429_RATE_LIMIT_AFTER_ROW456; no further network acquisition",
+    "initial_row425_failures": [
+      "HTTP502",
+      "HTTP503",
+      "HTTP500"
+    ],
+    "rate_limit_failure_receipt_sha256": "44c73b9e4dd704e791bdf9492382384d487fd714795f9241805f104f157aae4d"
+  },
+  "limitations": [
+    "NO_NEW_HANDWRITTEN_IMAGES",
+    "NO_COMPLETE_MULTI_PROBLEM_IMAGES",
+    "ONLY_ONE_STANDARD_NAMED_PYRAMID_DISTANCE_CASE",
+    "TARGET_20_TO_30_RELEVANT_NOT_REACHED",
+    "UPSTREAM_MIT_DECLARATION_DOES_NOT_INDEPENDENTLY_ESTABLISH_RIGHTS_IN_EMBEDDED_EXAM_PAGES",
+    "OLDER_CACHE_RETRIEVAL_TIME_UNKNOWN",
+    "GROUND_TRUTH_NOT_HUMAN_VERIFIED",
+    "MATHEMATICAL_ORACLE_UNKNOWN"
+  ],
+  "provider_calls": 0,
+  "allow_live_ai": 0
+}

@@ -1,0 +1,33 @@
+{
+ "schema": "HISTORICAL_GOLD_REMEASURE/1",
+ "measured_receipt": "docs/evaluation/geometry/runs/independent-nlu-extraction-evaluation/results/gold/gold_rows.json",
+ "applies_after": "docs/evaluation/geometry/runs/hybrid-master-backend-replacement/results/historical-gold-delta.json",
+ "cause": "run hybrid-reasoning-generalization: engine `_tam_giac` Pythagoras over a right angle stated outside the base / as perpendicular_lines with a shared endpoint, and `_dinh_tu_ba_canh_ben` (apex by three lateral edges) — trirectangular tetrahedra are now laid out",
+ "model_calls": 0,
+ "rows_compared": 60,
+ "changed": {
+  "D08": {
+   "before": {
+    "status": "REFUSED",
+    "code": "MISSING_DIMENSION",
+    "values": {}
+   },
+   "after": {
+    "status": "SERVED",
+    "code": null,
+    "values": {
+     "f9": "18/7"
+    }
+   },
+   "split": "dev",
+   "source_text": "Tứ diện OABC có OA, OB, OC đôi một vuông góc, OA = 2, OB = 3, OC = 6. Gọi H là hình chiếu vuông góc của O lên mặt phẳng (ABC). Tính độ dài OH.",
+   "independent_expectation": {
+    "r1": {
+     "value_squared": "18/7",
+     "exact": "3√14/7",
+     "computed_by": "agent1_oracle.py"
+    }
+   }
+  }
+ }
+}

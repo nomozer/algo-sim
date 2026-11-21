@@ -1,0 +1,118 @@
+{
+  "run_id": "semantic-failure-safe-image-segmentation",
+  "generated_at_utc": "2026-11-13T16:48:38.445529+00:00",
+  "head": "dcbedcb0d67971beb6ba5260a7553abe55de5ee1",
+  "environment": {
+    "ALLOW_LIVE_AI": "0"
+  },
+  "command": "python docs/evaluation/geometry/runs/semantic-failure-safe-image-segmentation/tools/text_payload_eval.py",
+  "dataset_partition": "DEVELOPMENT (agent-written texts and payloads derived from them)",
+  "oracle_status": "AGENT_DIAGNOSTIC: each negative is a fault by construction",
+  "track_a_text": {
+    "boundary": "route_text_input (text → local parser → Source Gate → planner → kernel)",
+    "rows": {
+      "contradiction": {
+        "status": "REFUSED",
+        "terminal": "INCONSISTENT_FACTS",
+        "root_cause": "SOURCE_CONFLICT",
+        "safe": true
+      },
+      "missing_data": {
+        "status": "REFUSED",
+        "terminal": "AMBIGUOUS_FACT",
+        "root_cause": "INSUFFICIENT_CONSTRAINTS",
+        "safe": true
+      },
+      "invalid_point_definition": {
+        "status": "REFUSED",
+        "terminal": "LIVE_AI_DISABLED",
+        "root_cause": "SOURCE_PROVENANCE_MISSING",
+        "safe": true
+      },
+      "unsatisfiable_relation": {
+        "status": "REFUSED",
+        "terminal": "INCONSISTENT_FACTS",
+        "root_cause": "SOURCE_CONFLICT",
+        "safe": true
+      },
+      "plane_not_unique": {
+        "status": "REFUSED",
+        "terminal": "PLANE_NOT_UNIQUE",
+        "root_cause": "INSUFFICIENT_CONSTRAINTS",
+        "safe": true
+      },
+      "nonexistent_object": {
+        "status": "REFUSED",
+        "terminal": "UNDERDETERMINED_POINT",
+        "root_cause": "INSUFFICIENT_CONSTRAINTS",
+        "safe": true
+      },
+      "unsupported_goal": {
+        "status": "REFUSED",
+        "terminal": "LIVE_AI_DISABLED",
+        "root_cause": "UNSUPPORTED_GOAL_FUNCTION",
+        "safe": true
+      },
+      "goal_stated_as_premise": {
+        "status": "REFUSED",
+        "terminal": "LIVE_AI_DISABLED",
+        "root_cause": "UNRECOGNIZED_GOAL",
+        "safe": true
+      }
+    },
+    "served": 0,
+    "items": 8
+  },
+  "track_b_payload": {
+    "boundary": "run_typed_fact_next_v2_route (payload → schema → bridge → Source Gate → planner → kernel)",
+    "valid_text_control": {
+      "text_sha": "52f9c89387ac09db",
+      "status": "SERVED"
+    },
+    "rows": {
+      "quote_not_in_source": {
+        "status": "REFUSED",
+        "code": "QUOTE_NOT_IN_SOURCE",
+        "safe": true
+      },
+      "clause_dropped": {
+        "status": "REFUSED",
+        "code": "SOURCE_PREMISE_UNREAD",
+        "safe": true
+      },
+      "value_substituted": {
+        "status": "REFUSED",
+        "code": "UNGROUNDED_VALUE",
+        "safe": true
+      },
+      "symbol_differs_from_text": {
+        "status": "REFUSED",
+        "code": "SOURCE_OBJECT_MISMATCH",
+        "safe": true
+      },
+      "forged_verified_flag": {
+        "status": "REFUSED",
+        "code": "INVALID_TYPED_FACT_NEXT",
+        "safe": true
+      },
+      "fact_from_another_problem": {
+        "status": "REFUSED",
+        "code": "QUOTE_NOT_IN_SOURCE",
+        "safe": true
+      },
+      "nonexistent_entity": {
+        "status": "REFUSED",
+        "code": "UNKNOWN_LABEL",
+        "safe": true
+      },
+      "source_truncated": {
+        "status": "REFUSED",
+        "code": "QUOTE_NOT_IN_SOURCE",
+        "safe": true
+      }
+    },
+    "served": 0,
+    "items": 8
+  },
+  "historical_w2_w3": "unchanged: W2 2/48, W3 0/72 positives served correctly and 2 WRONG_SERVED under the registered rule (independent-geometry-plane-constraints/unseen_evaluation_results.json); its post-hoc note explains that both were payload-origin negatives sent as text. The split above is the corrected method for new measurements only."
+}

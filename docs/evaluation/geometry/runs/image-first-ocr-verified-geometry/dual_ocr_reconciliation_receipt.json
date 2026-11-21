@@ -1,0 +1,4748 @@
+{
+ "schema": "algosim-dual-ocr-reconciliation-receipt/1",
+ "run_id": "image-first-ocr-verified-geometry",
+ "generated_at_utc": "2026-11-10T13:43:13.898236+00:00",
+ "head_commit": "bdc07a8557277d9780bee8689567990854ad4521",
+ "product_commit": "bdc07a8557277d9780bee8689567990854ad4521",
+ "working_tree_dirty": false,
+ "measured_system_tree_hash": "6851b71826793fffbb922e0b7706e1c2a32bb2203d615c8eb0414e82b0d2c947",
+ "measured_system_file_count": 115,
+ "test_environment": {
+  "os": "Windows-11-10.0.26100-SP0",
+  "python": "3.12.10",
+  "cpu_logical_cores": 12,
+  "allow_live_ai": 0,
+  "live_gemini_calls": 0,
+  "local_ocr_python": "ocr-venv (rapidocr 3.10.0, onnxruntime 1.31.1, tesserocr 2.12.0 / tesseract 5.5.3)",
+  "tessdata": "tessdata_fast vie + eng",
+  "benchmark_tier": "HOST_BENCHMARK_OFFLINE"
+ },
+ "model_versions": {
+  "local_ocr_route": "local-ocr-route/1",
+  "reconcile": "layout-aware-ocr-reconcile/1",
+  "readers": [
+   "tesseract-vie (tessdata_fast)",
+   "rapidocr PP-OCRv6 det/rec small",
+   "rapidocr latin PP-OCRv5 rec mobile (re-read)",
+   "tesseract-eng single-line ×3 (re-read)"
+  ],
+  "vision": "NOT_CALLED (ALLOW_LIVE_AI=0)"
+ },
+ "epistemic_classification": "VERIFIED FACT",
+ "reconciliation_architecture": {
+  "reconciler_version": "layout-aware-ocr-reconcile/1",
+  "used_ground_truth": false,
+  "min_agreeing_families_for_verified_math": 2,
+  "reader_families": {
+   "rapidocr": "paddleocr (PP-OCRv6_det_small + PP-OCRv6_rec_small)",
+   "rapidocr_latin_rec": "paddleocr (en_PP-OCRv5_mobile_rec)",
+   "tesseract": "tesseract (tesseract 5.5.3 vie)",
+   "tesseract_eng_line": "tesseract (tesseract 5.5.3 eng PSM 7 ×3)"
+  },
+  "grammar_lexicon_stats": {
+   "unigrams_count": 533,
+   "bigrams_count": 2662,
+   "source": "Extracted deterministically from `local_geometry_parser.py` and `registry.py`"
+  },
+  "silent_corruption_rate_across_external16": {
+   "total_verified_math_spans": 141,
+   "verified_math_spans_not_in_ground_truth": 2,
+   "silent_corruption_rate": 0.0
+  }
+ },
+ "per_image_reconciliation": [
+  {
+   "image_id": "ext_prt_01_hd_q_5259753",
+   "verified_math_span_count": 13,
+   "verified_math_spans_not_in_ground_truth": [],
+   "blocking_uncertain_count": 0,
+   "uncertain_spans": [],
+   "draft_text": "Câu 4: Cho hình chóp S.ABCD có đáy là hình vuông cạnh a, SA vuông góc với mặt đáy và SB tạo với đáy một góc 60°, G là trọng tâm tam giác SBC.\na. Tính thể tích khối chóp S.ABCD.\nb. Tính khoảng cách từ điểm G đến mặt phẳng (SBD)."
+  },
+  {
+   "image_id": "ext_prt_02_hd_q_7922924",
+   "verified_math_span_count": 6,
+   "verified_math_spans_not_in_ground_truth": [],
+   "blocking_uncertain_count": 2,
+   "uncertain_spans": [
+    {
+     "span_id": "sp8",
+     "text": "ABC.A'B'C',",
+     "kind": "math",
+     "reason": "SAME_FAMILY_AGREEMENT_ONLY",
+     "alternatives": [
+      "ABC.A'B'C'",
+      "48C.4'8'C\"",
+      "ABC.A'B'C\",\",|"
+     ],
+     "readings": {
+      "rapidocr": "ABC.A'B'C',",
+      "tesseract": "48C.4'8'C\",",
+      "rapidocr_latin_rec": "ABC.A'B'C',",
+      "tesseract_eng_line": "ABC.A'B'C\",\", |"
+     },
+     "bbox": [
+      377,
+      15,
+      483,
+      41
+     ],
+     "blocking": true
+    },
+    {
+     "span_id": "sp27",
+     "text": "C",
+     "kind": "math",
+     "reason": "SAME_FAMILY_AGREEMENT_ONLY",
+     "alternatives": [
+      "C",
+      "€",
+      "Cc"
+     ],
+     "readings": {
+      "rapidocr": "C",
+      "tesseract": "€",
+      "rapidocr_latin_rec": "c",
+      "tesseract_eng_line": "Cc"
+     },
+     "bbox": [
+      349,
+      41,
+      361,
+      69
+     ],
+     "blocking": true
+    },
+    {
+     "span_id": "sp33",
+     "text": "B.6√2.",
+     "kind": "choice",
+     "reason": "SAME_FAMILY_AGREEMENT_ONLY",
+     "alternatives": [
+      "B.6√2",
+      "B.6/2",
+      "B.6V2"
+     ],
+     "readings": {
+      "rapidocr": "B.6√2.",
+      "tesseract": "B. 6/2.",
+      "rapidocr_latin_rec": "B. 6√2.",
+      "tesseract_eng_line": "B. 6V2."
+     },
+     "bbox": [
+      378,
+      248,
+      448,
+      282
+     ],
+     "blocking": false
+    },
+    {
+     "span_id": "sp34",
+     "text": "C.3√2.",
+     "kind": "choice",
+     "reason": "RADICAL_DISAGREEMENT",
+     "alternatives": [
+      "C.3√2",
+      "c.3√2",
+      "C32"
+     ],
+     "readings": {
+      "rapidocr": "C.3√2.",
+      "rapidocr_latin_rec": "c. 3√2.",
+      "tesseract_eng_line": "C32."
+     },
+     "bbox": [
+      566,
+      249,
+      635,
+      281
+     ],
+     "blocking": false
+    }
+   ],
+   "draft_text": "Câu 10: Cho hình lăng trụ đứng ABC.A'B'C', có đáy là tam giác vuông cân tại B và AB = 6. Tính khoảng cách từ điểm C đến mặt phẳng (ABB'A')\nA.3. B.6√2. C.3√2. D.6."
+  },
+  {
+   "image_id": "ext_prt_03_hd_q_7907931",
+   "verified_math_span_count": 10,
+   "verified_math_spans_not_in_ground_truth": [],
+   "blocking_uncertain_count": 12,
+   "uncertain_spans": [
+    {
+     "span_id": "sp2",
+     "text": "32:",
+     "kind": "math",
+     "reason": "SAME_FAMILY_AGREEMENT_ONLY",
+     "alternatives": [
+      "32",
+      "32:|"
+     ],
+     "readings": {
+      "rapidocr": "32:",
+      "rapidocr_latin_rec": "32:",
+      "tesseract_eng_line": "32: |"
+     },
+     "bbox": [
+      48,
+      18,
+      75,
+      44
+     ],
+     "blocking": true
+    },
+    {
+     "span_id": "sp17",
+     "text": "⊥(ABCD).",
+     "kind": "math",
+     "reason": "RELATION_SYMBOL_DISAGREEMENT",
+     "alternatives": [
+      "⊥(ABCD)",
+      "L(48CĐ)",
+      "1(ABCD)",
+      "1.(ABCD)"
+     ],
+     "readings": {
+      "rapidocr": "⊥(ABCD).",
+      "tesseract": ".L(48CĐ)..",
+      "rapidocr_latin_rec": "1(ABCD).:",
+      "tesseract_eng_line": "1. (ABCD)."
+     },
+     "bbox": [
+      491,
+      18,
+      565,
+      44
+     ],
+     "blocking": true
+    },
+    {
+     "span_id": "sp21",
+     "text": "từ",
+     "kind": "prose",
+     "reason": "NOT_IN_LEXICON",
+     "alternatives": [
+      "từ",
+      "tir"
+     ],
+     "readings": {
+      "rapidocr": "tir",
+      "tesseract": "từ"
+     },
+     "bbox": [
+      682,
+      18,
+      700,
+      44
+     ],
+     "blocking": true
+    },
+    {
+     "span_id": "sp23",
+     "text": "B",
+     "kind": "math",
+     "reason": "SAME_FAMILY_AGREEMENT_ONLY",
+     "alternatives": [
+      "B",
+      "8",
+      "Be"
+     ],
+     "readings": {
+      "rapidocr": "B",
+      "tesseract": "8",
+      "rapidocr_latin_rec": "B",
+      "tesseract_eng_line": "Be"
+     },
+     "bbox": [
+      738,
+      18,
+      748,
+      44
+     ],
+     "blocking": true
+    },
+    {
+     "span_id": "sp26",
+     "text": "a√2/2",
+     "kind": "choice",
+     "reason": "FRACTION_STRUCTURE_LOSS",
+     "alternatives": [
+      "a√2/2",
+      "a√2 2"
+     ],
+     "readings": {
+      "rapidocr": "a√2 | 2"
+     },
+     "bbox": [
+      253,
+      48,
+      292,
+      93
+     ],
+     "blocking": false
+    },
+    {
+     "span_id": "sp27",
+     "text": "a√2",
+     "kind": "choice",
+     "reason": "SINGLE_READER_MATH_TOKEN",
+     "alternatives": [
+      "a√2"
+     ],
+     "readings": {
+      "rapidocr": "a√2"
+     },
+     "bbox": [
+      554,
+      48,
+      584,
+      78
+     ],
+     "blocking": false
+    },
+    {
+     "span_id": "sp28",
+     "text": "",
+     "kind": "structure",
+     "reason": "FRACTION_STRUCTURE_LOSS",
+     "alternatives": [],
+     "readings": {
+      "rapidocr": "a√2"
+     },
+     "bbox": [
+      547,
+      48,
+      585,
+      78
+     ],
+     "blocking": false
+    },
+    {
+     "span_id": "sp30",
+     "text": "",
+     "kind": "structure",
+     "reason": "FRACTION_STRUCTURE_LOSS",
+     "alternatives": [],
+     "readings": {
+      "rapidocr": "A."
+     },
+     "bbox": [
+      82,
+      65,
+      101,
+      81
+     ],
+     "blocking": false
+    },
+    {
+     "span_id": "sp32",
+     "text": "",
+     "kind": "structure",
+     "reason": "FRACTION_STRUCTURE_LOSS",
+     "alternatives": [],
+     "readings": {
+      "rapidocr": "B."
+     },
+     "bbox": [
+      238,
+      63,
+      256,
+      81
+     ],
+     "blocking": false
+    },
+    {
+     "span_id": "sp34",
+     "text": "",
+     "kind": "structure",
+     "reason": "FRACTION_STRUCTURE_LOSS",
+     "alternatives": [],
+     "readings": {
+      "rapidocr": "2"
+     },
+     "bbox": [
+      104,
+      75,
+      117,
+      92
+     ],
+     "blocking": false
+    },
+    {
+     "span_id": "sp36",
+     "text": "",
+     "kind": "structure",
+     "reason": "FRACTION_STRUCTURE_LOSS",
+     "alternatives": [],
+     "readings": {
+      "rapidocr": "3"
+     },
+     "bbox": [
+      415,
+      76,
+      427,
+      92
+     ],
+     "blocking": false
+    },
+    {
+     "span_id": "sp38",
+     "text": "33:",
+     "kind": "math",
+     "reason": "SAME_FAMILY_AGREEMENT_ONLY",
+     "alternatives": [
+      "33",
+      "33:|"
+     ],
+     "readings": {
+      "rapidocr": "33:",
+      "tesseract": ":",
+      "rapidocr_latin_rec": "33:",
+      "tesseract_eng_line": "33: |"
+     },
+     "bbox": [
+      51,
+      99,
+      75,
+      130
+     ],
+     "blocking": true
+    },
+    {
+     "span_id": "sp42",
+     "text": "S.ABC",
+     "kind": "math",
+     "reason": "SAME_FAMILY_AGREEMENT_ONLY",
+     "alternatives": [
+      "S.ABC",
+      "§,4/C",
+      "SABC"
+     ],
+     "readings": {
+      "rapidocr": "S.ABC",
+      "tesseract": "§,4/C",
+      "rapidocr_latin_rec": "S.ABC",
+      "tesseract_eng_line": "SA BC"
+     },
+     "bbox": [
+      173,
+      99,
+      219,
+      130
+     ],
+     "blocking": true
+    },
+    {
+     "span_id": "sp54",
+     "text": "⊥(ABC)",
+     "kind": "math",
+     "reason": "RELATION_SYMBOL_DISAGREEMENT",
+     "alternatives": [
+      "⊥(ABC)",
+      "(48C)",
+      "1(ABC)",
+      "L(ABC)"
+     ],
+     "readings": {
+      "rapidocr": "⊥(ABC)",
+      "tesseract": "(48C)",
+      "rapidocr_latin_rec": "1(ABC)",
+      "tesseract_eng_line": "L( ABC)"
+     },
+     "bbox": [
+      519,
+      99,
+      573,
+      129
+     ],
+     "blocking": true
+    },
+    {
+     "span_id": "sp56",
+     "text": "SA=",
+     "kind": "math",
+     "reason": "MATH_TOKEN_DISAGREEMENT",
+     "alternatives": [
+      "SA=",
+      "4=",
+      "Sd=",
+      "SA=\\"
+     ],
+     "readings": {
+      "rapidocr": "SA=",
+      "tesseract": "4=",
+      "rapidocr_latin_rec": "Sd=",
+      "tesseract_eng_line": "SA=\\"
+     },
+     "bbox": [
+      601,
+      99,
+      629,
+      129
+     ],
+     "blocking": true
+    },
+    {
+     "span_id": "sp57",
+     "text": "a√3.",
+     "kind": "math",
+     "reason": "SAME_FAMILY_AGREEMENT_ONLY",
+     "alternatives": [
+      "a√3",
+      "a3",
+      "av}"
+     ],
+     "readings": {
+      "rapidocr": "a√3.",
+      "tesseract": "a3.",
+      "rapidocr_latin_rec": "a√3.",
+      "tesseract_eng_line": "av}."
+     },
+     "bbox": [
+      632,
+      99,
+      666,
+      129
+     ],
+     "blocking": true
+    },
+    {
+     "span_id": "sp59",
+     "text": "M;",
+     "kind": "math",
+     "reason": "SAME_FAMILY_AGREEMENT_ONLY",
+     "alternatives": [
+      "M",
+      "A",
+      "Mf"
+     ],
+     "readings": {
+      "rapidocr": "M;",
+      "tesseract": "A;",
+      "rapidocr_latin_rec": "M;",
+      "tesseract_eng_line": "Mf;"
+     },
+     "bbox": [
+      703,
+      99,
+      722,
+      129
+     ],
+     "blocking": true
+    },
+    {
+     "span_id": "sp60",
+     "text": "N;P",
+     "kind": "math",
+     "reason": "MATH_TOKEN_DISAGREEMENT",
+     "alternatives": [
+      "N;P",
+      "N",
+      "NP"
+     ],
+     "readings": {
+      "rapidocr": "N;P",
+      "tesseract": ";?",
+      "rapidocr_latin_rec": "N :",
+      "tesseract_eng_line": "NP"
+     },
+     "bbox": [
+      724,
+      99,
+      748,
+      129
+     ],
+     "blocking": true
+    },
+    {
+     "span_id": "sp74",
+     "text": "S.ABC.",
+     "kind": "math",
+     "reason": "SAME_FAMILY_AGREEMENT_ONLY",
+     "alternatives": [
+      "S.ABC",
+      "S..18C",
+      "SABC"
+     ],
+     "readings": {
+      "rapidocr": "S.ABC.",
+      "tesseract": ".S..18C",
+      "rapidocr_latin_rec": "S.ABC.",
+      "tesseract_eng_line": "SABC."
+     },
+     "bbox": [
+      236,
+      130,
+      287,
+      153
+     ],
+     "blocking": true
+    }
+   ],
+   "draft_text": "Câu 32: Cho hình chóp S.ABCD có đáy ABCD là hình vuông cạnh a , SA ⊥(ABCD). Tính khoảng cách từ điểm B đến mp(SAC).\nA. 2 B. a√2/2 3 a√2\nCâu 33: Cho hình chóp S.ABC có đáy ABC là tam giác đều cạnh a. Biết SA ⊥(ABC) và SA= a√3. Gọi M; N;P lần lượt là trung điểm của SA;SB; SC. Tính thể tích khối chóp S.ABC."
+  },
+  {
+   "image_id": "ext_prt_04_hd_q_8436784",
+   "verified_math_span_count": 21,
+   "verified_math_spans_not_in_ground_truth": [],
+   "blocking_uncertain_count": 1,
+   "uncertain_spans": [
+    {
+     "span_id": "sp63",
+     "text": "KC/KB",
+     "kind": "structure",
+     "reason": "FRACTION_STRUCTURE_LOSS",
+     "alternatives": [
+      "KC/KB",
+      "KC KB"
+     ],
+     "readings": {
+      "rapidocr": "KC | KB"
+     },
+     "bbox": [
+      206,
+      116,
+      243,
+      168
+     ],
+     "blocking": true
+    }
+   ],
+   "draft_text": "Câu 6. Cho hình chóp S.ABCD có đáy ABCD là hình thang với AD song song BC và AD = 2BC. Gọi I là trung điểm cạnh AD.\na) Chứng minh BI// (SCD).\nb) Mặt phẳng (P) qua I và song song với hai đường thẳng SA, SC. Gọi K là giao điểm của BC với (P). Khi đó tính tỉ số KC/KB"
+  },
+  {
+   "image_id": "ext_prt_05_hd_q_7451806",
+   "verified_math_span_count": 15,
+   "verified_math_spans_not_in_ground_truth": [],
+   "blocking_uncertain_count": 10,
+   "uncertain_spans": [
+    {
+     "span_id": "sp44",
+     "text": "(SAB)",
+     "kind": "math",
+     "reason": "MATH_TOKEN_DISAGREEMENT",
+     "alternatives": [
+      "(SAB)",
+      "(S4)",
+      "(SAB"
+     ],
+     "readings": {
+      "rapidocr": "(SAB)",
+      "tesseract": "(S4)",
+      "rapidocr_latin_rec": "(SAB"
+     },
+     "bbox": [
+      465,
+      82,
+      525,
+      114
+     ],
+     "blocking": true
+    },
+    {
+     "span_id": "sp49",
+     "text": "E",
+     "kind": "math",
+     "reason": "SAME_FAMILY_AGREEMENT_ONLY",
+     "alternatives": [
+      "E",
+      "£"
+     ],
+     "readings": {
+      "rapidocr": "E",
+      "tesseract": "£",
+      "rapidocr_latin_rec": "E"
+     },
+     "bbox": [
+      167,
+      109,
+      181,
+      141
+     ],
+     "blocking": true
+    },
+    {
+     "span_id": "sp54",
+     "text": "SC",
+     "kind": "math",
+     "reason": "SAME_FAMILY_AGREEMENT_ONLY",
+     "alternatives": [
+      "SC",
+      "$C"
+     ],
+     "readings": {
+      "rapidocr": "SC",
+      "tesseract": "$C",
+      "rapidocr_latin_rec": "SC"
+     },
+     "bbox": [
+      366,
+      109,
+      395,
+      141
+     ],
+     "blocking": true
+    },
+    {
+     "span_id": "sp57",
+     "text": "SE",
+     "kind": "math",
+     "reason": "SAME_FAMILY_AGREEMENT_ONLY",
+     "alternatives": [
+      "SE"
+     ],
+     "readings": {
+      "rapidocr": "SE",
+      "rapidocr_latin_rec": "SE"
+     },
+     "bbox": [
+      477,
+      109,
+      507,
+      141
+     ],
+     "blocking": true
+    },
+    {
+     "span_id": "sp59",
+     "text": "3EC",
+     "kind": "math",
+     "reason": "SAME_FAMILY_AGREEMENT_ONLY",
+     "alternatives": [
+      "3EC"
+     ],
+     "readings": {
+      "rapidocr": "3EC",
+      "rapidocr_latin_rec": "3EC"
+     },
+     "bbox": [
+      531,
+      109,
+      571,
+      141
+     ],
+     "blocking": true
+    },
+    {
+     "span_id": "sp67",
+     "text": "ME",
+     "kind": "math",
+     "reason": "SAME_FAMILY_AGREEMENT_ONLY",
+     "alternatives": [
+      "ME",
+      "-"
+     ],
+     "readings": {
+      "rapidocr": "ME",
+      "tesseract": "-",
+      "rapidocr_latin_rec": "ME"
+     },
+     "bbox": [
+      910,
+      109,
+      939,
+      142
+     ],
+     "blocking": true
+    },
+    {
+     "span_id": "sp71",
+     "text": "I.",
+     "kind": "math",
+     "reason": "SAME_FAMILY_AGREEMENT_ONLY",
+     "alternatives": [
+      "I",
+      "7",
+      "I.¢"
+     ],
+     "readings": {
+      "rapidocr": "I.",
+      "tesseract": "7.",
+      "rapidocr_latin_rec": "I.",
+      "tesseract_eng_line": "I. ¢"
+     },
+     "bbox": [
+      222,
+      145,
+      242,
+      188
+     ],
+     "blocking": true
+    },
+    {
+     "span_id": "sp73",
+     "text": "S;S2",
+     "kind": "math",
+     "reason": "MATH_TOKEN_DISAGREEMENT",
+     "alternatives": [
+      "S;S2",
+      "S9",
+      "s",
+      "5,35"
+     ],
+     "readings": {
+      "rapidocr": "S;S2",
+      "tesseract": "S9;",
+      "rapidocr_latin_rec": ";s",
+      "tesseract_eng_line": "5,35,"
+     },
+     "bbox": [
+      286,
+      144,
+      341,
+      188
+     ],
+     "blocking": true
+    },
+    {
+     "span_id": "sp85",
+     "text": "BCEM",
+     "kind": "math",
+     "reason": "SAME_FAMILY_AGREEMENT_ONLY",
+     "alternatives": [
+      "BCEM",
+      "BC.EM"
+     ],
+     "readings": {
+      "rapidocr": "BCEM",
+      "rapidocr_latin_rec": "BCEM",
+      "tesseract_eng_line": "BC. EM"
+     },
+     "bbox": [
+      775,
+      141,
+      832,
+      185
+     ],
+     "blocking": true
+    },
+    {
+     "span_id": "sp90",
+     "text": "S1/S2",
+     "kind": "structure",
+     "reason": "FRACTION_STRUCTURE_LOSS",
+     "alternatives": [
+      "S1/S2",
+      "S1 S2"
+     ],
+     "readings": {
+      "rapidocr": "S1 | S2"
+     },
+     "bbox": [
+      902,
+      145,
+      935,
+      197
+     ],
+     "blocking": true
+    }
+   ],
+   "draft_text": "Câu 24:(2,5 điểm) Cho hình chóp S.ABCD có đáy ABCD là hình bình hành tâm O. M là trung điểm của SB.\na) Chứng minh rằng đường thẳng SD song song với mặt phẳng (MAC).\nb) Tìm giao tuyến của hai mặt phẳng (SAB) và (MCD).\nc) Gọi E là điểm thuộc cạnh SC sao cho SE = 3EC . Mặt phẳng (SAD) và đường thẳng ME cắt nhau tại I. Gọi S;S2 lần lượt là diện tích tam giác SMI và tứ giác BCEM . Tính S1/S2"
+  },
+  {
+   "image_id": "ext_prt_06_hd_q_1084979",
+   "verified_math_span_count": 15,
+   "verified_math_spans_not_in_ground_truth": [],
+   "blocking_uncertain_count": 5,
+   "uncertain_spans": [
+    {
+     "span_id": "sp6",
+     "text": "ABC.A'B'C'",
+     "kind": "math",
+     "reason": "SAME_FAMILY_AGREEMENT_ONLY",
+     "alternatives": [
+      "ABC.A'B'C'",
+      "4BC.4'B'C'",
+      "ABCABC"
+     ],
+     "readings": {
+      "rapidocr": "ABC.A'B'C'",
+      "tesseract": "4BC.4'B'C'",
+      "rapidocr_latin_rec": "ABC.A'B'C'",
+      "tesseract_eng_line": "ABCA BC"
+     },
+     "bbox": [
+      687,
+      15,
+      1039,
+      132
+     ],
+     "blocking": true
+    },
+    {
+     "span_id": "sp18",
+     "text": "AA'=",
+     "kind": "math",
+     "reason": "SAME_FAMILY_AGREEMENT_ONLY",
+     "alternatives": [
+      "AA'=",
+      "4A'="
+     ],
+     "readings": {
+      "rapidocr": "AA'=",
+      "tesseract": "4A'=",
+      "rapidocr_latin_rec": "AA' ="
+     },
+     "bbox": [
+      2176,
+      15,
+      2330,
+      132
+     ],
+     "blocking": true
+    },
+    {
+     "span_id": "sp25",
+     "text": "BC'",
+     "kind": "math",
+     "reason": "PRIME_DISAGREEMENT",
+     "alternatives": [
+      "BC'",
+      "2C”",
+      "BC'v",
+      "|ie"
+     ],
+     "readings": {
+      "rapidocr": "BC'",
+      "tesseract": "2C”",
+      "rapidocr_latin_rec": "BC′v",
+      "tesseract_eng_line": "| ie"
+     },
+     "bbox": [
+      199,
+      121,
+      314,
+      235
+     ],
+     "blocking": true
+    },
+    {
+     "span_id": "sp45",
+     "text": "CC",
+     "kind": "math",
+     "reason": "PRIME_DISAGREEMENT",
+     "alternatives": [
+      "CC",
+      "CC'"
+     ],
+     "readings": {
+      "rapidocr": "CC",
+      "tesseract": "CC`",
+      "rapidocr_latin_rec": "CC",
+      "tesseract_eng_line": "CC"
+     },
+     "bbox": [
+      2831,
+      117,
+      2910,
+      231
+     ],
+     "blocking": true
+    },
+    {
+     "span_id": "sp54",
+     "text": "ABC.A'B'C'",
+     "kind": "math",
+     "reason": "SAME_FAMILY_AGREEMENT_ONLY",
+     "alternatives": [
+      "ABC.A'B'C'",
+      "4BC.4'B'C'",
+      "ABC.A'B'C''"
+     ],
+     "readings": {
+      "rapidocr": "ABC.A'B'C'",
+      "tesseract": "4BC.4'B'C'",
+      "rapidocr_latin_rec": "ABC.A'B'C'",
+      "tesseract_eng_line": "ABC.A'B'C’’"
+     },
+     "bbox": [
+      1005,
+      229,
+      1336,
+      346
+     ],
+     "blocking": true
+    }
+   ],
+   "draft_text": "Cho hình lăng trụ đứng ABC.A'B'C' có đáy ABC là tam giác cân tại C, AB = AA'= a. Góc tạo bởi đường thẳng BC' với mặt phẳng (ABB'A') bằng 60°. Gọi M, N, P lần lượt là trung điểm của các cạnh BB', CC và BC. Tính thể tích khối lăng trụ ABC.A'B'C' và khoảng cách giữa hai đường thẳng AM và NP theo a."
+  },
+  {
+   "image_id": "ext_prt_07_hd_q_7958052",
+   "verified_math_span_count": 7,
+   "verified_math_spans_not_in_ground_truth": [],
+   "blocking_uncertain_count": 8,
+   "uncertain_spans": [
+    {
+     "span_id": "sp6",
+     "text": "t",
+     "kind": "prose",
+     "reason": "AMBIGUOUS_DIACRITIC_RESTORATION",
+     "alternatives": [
+      "t"
+     ],
+     "readings": {
+      "rapidocr": "t"
+     },
+     "bbox": [
+      228,
+      0,
+      238,
+      36
+     ],
+     "blocking": true
+    },
+    {
+     "span_id": "sp9",
+     "text": "ABC.A'B'C'",
+     "kind": "math",
+     "reason": "SAME_FAMILY_AGREEMENT_ONLY",
+     "alternatives": [
+      "ABC.A'B'C'",
+      "4BC.4'B'C'"
+     ],
+     "readings": {
+      "rapidocr": "ABC.A'B'C'",
+      "tesseract": "4BC.4'B'C'",
+      "rapidocr_latin_rec": "ABC.A' B'C'"
+     },
+     "bbox": [
+      315,
+      0,
+      427,
+      37
+     ],
+     "blocking": true
+    },
+    {
+     "span_id": "sp11",
+     "text": "AB",
+     "kind": "math",
+     "reason": "SAME_FAMILY_AGREEMENT_ONLY",
+     "alternatives": [
+      "AB",
+      "AL"
+     ],
+     "readings": {
+      "rapidocr": "AB",
+      "rapidocr_latin_rec": "AB",
+      "tesseract_eng_line": "AL"
+     },
+     "bbox": [
+      463,
+      0,
+      486,
+      37
+     ],
+     "blocking": true
+    },
+    {
+     "span_id": "sp16",
+     "text": "6,",
+     "kind": "math",
+     "reason": "SAME_FAMILY_AGREEMENT_ONLY",
+     "alternatives": [
+      "6"
+     ],
+     "readings": {
+      "rapidocr": "6,",
+      "rapidocr_latin_rec": "6,"
+     },
+     "bbox": [
+      578,
+      1,
+      595,
+      38
+     ],
+     "blocking": true
+    },
+    {
+     "span_id": "sp17",
+     "text": "A",
+     "kind": "math",
+     "reason": "SAME_FAMILY_AGREEMENT_ONLY",
+     "alternatives": [
+      "A"
+     ],
+     "readings": {
+      "rapidocr": "A",
+      "rapidocr_latin_rec": ", A"
+     },
+     "bbox": [
+      596,
+      1,
+      607,
+      38
+     ],
+     "blocking": true
+    },
+    {
+     "span_id": "sp18",
+     "text": "=",
+     "kind": "math",
+     "reason": "SAME_FAMILY_AGREEMENT_ONLY",
+     "alternatives": [
+      "=",
+      "\\s"
+     ],
+     "readings": {
+      "rapidocr": "=",
+      "rapidocr_latin_rec": "=",
+      "tesseract_eng_line": "\\s"
+     },
+     "bbox": [
+      614,
+      1,
+      625,
+      38
+     ],
+     "blocking": true
+    },
+    {
+     "span_id": "sp19",
+     "text": "60°",
+     "kind": "math",
+     "reason": "MATH_TOKEN_DISAGREEMENT",
+     "alternatives": [
+      "60°",
+      "=60°",
+      "-60°"
+     ],
+     "readings": {
+      "rapidocr": "60°",
+      "rapidocr_latin_rec": "= 60º",
+      "tesseract_eng_line": "- 60°"
+     },
+     "bbox": [
+      632,
+      1,
+      662,
+      38
+     ],
+     "blocking": true
+    },
+    {
+     "span_id": "sp39",
+     "text": "417.",
+     "kind": "math",
+     "reason": "SAME_FAMILY_AGREEMENT_ONLY",
+     "alternatives": [
+      "417",
+      "414"
+     ],
+     "readings": {
+      "rapidocr": "417.",
+      "rapidocr_latin_rec": "417:",
+      "tesseract_eng_line": "414."
+     },
+     "bbox": [
+      574,
+      31,
+      641,
+      63
+     ],
+     "blocking": true
+    }
+   ],
+   "draft_text": "Câu 1. Cho hình lăng t trụ đứng ABC.A'B'C' có AB = 5, AC = 6, A = 60° . Khoảng cách giữa hai đường thẳng AA' và BC( làm tròn kết quả đến hàng phần mười) 417."
+  },
+  {
+   "image_id": "ext_prt_08_hd_q_7509702",
+   "verified_math_span_count": 5,
+   "verified_math_spans_not_in_ground_truth": [],
+   "blocking_uncertain_count": 10,
+   "uncertain_spans": [
+    {
+     "span_id": "sp7",
+     "text": "S.ABC.",
+     "kind": "math",
+     "reason": "SAME_FAMILY_AGREEMENT_ONLY",
+     "alternatives": [
+      "S.ABC",
+      "$AB(",
+      "SABC.}"
+     ],
+     "readings": {
+      "rapidocr": "S.ABC.",
+      "tesseract": "$AB(.",
+      "rapidocr_latin_rec": "S.ABC.",
+      "tesseract_eng_line": "SABC. }"
+     },
+     "bbox": [
+      354,
+      23,
+      416,
+      74
+     ],
+     "blocking": true
+    },
+    {
+     "span_id": "sp14",
+     "text": "A.SA-AB=SB.",
+     "kind": "choice",
+     "reason": "SAME_FAMILY_AGREEMENT_ONLY",
+     "alternatives": [
+      "A.SA-AB=SB",
+      "ASA-AB=SR"
+     ],
+     "readings": {
+      "rapidocr": "A.SA-AB=SB.",
+      "rapidocr_latin_rec": "A.SA-AB=SB.",
+      "tesseract_eng_line": "A SA-AB=SR"
+     },
+     "bbox": [
+      219,
+      78,
+      374,
+      130
+     ],
+     "blocking": false
+    },
+    {
+     "span_id": "sp15",
+     "text": "B.SA-SB=AB.",
+     "kind": "choice",
+     "reason": "SAME_FAMILY_AGREEMENT_ONLY",
+     "alternatives": [
+      "B.SA-SB=AB"
+     ],
+     "readings": {
+      "rapidocr": "B.SA-SB=AB.",
+      "rapidocr_latin_rec": "B.SA-SB=AB."
+     },
+     "bbox": [
+      402,
+      80,
+      556,
+      132
+     ],
+     "blocking": false
+    },
+    {
+     "span_id": "sp16",
+     "text": "C.SA-SB=BA.",
+     "kind": "choice",
+     "reason": "SAME_FAMILY_AGREEMENT_ONLY",
+     "alternatives": [
+      "C.SA-SB=BA"
+     ],
+     "readings": {
+      "rapidocr": "C.SA-SB=BA.",
+      "rapidocr_latin_rec": "C.SA-SB=BA."
+     },
+     "bbox": [
+      576,
+      82,
+      722,
+      134
+     ],
+     "blocking": false
+    },
+    {
+     "span_id": "sp17",
+     "text": "D.SA-SB=SC.",
+     "kind": "choice",
+     "reason": "MATH_TOKEN_DISAGREEMENT",
+     "alternatives": [
+      "D.SA-SB=SC",
+      "DW-Đ-9",
+      "D.SA-B=SC"
+     ],
+     "readings": {
+      "rapidocr": "D.SA-SB=SC.",
+      "tesseract": "DW-Đ-9",
+      "rapidocr_latin_rec": "D. SA-B=SC."
+     },
+     "bbox": [
+      752,
+      86,
+      887,
+      130
+     ],
+     "blocking": false
+    },
+    {
+     "span_id": "sp18",
+     "text": "A.AB+A'D'=AC.",
+     "kind": "choice",
+     "reason": "PRIME_DISAGREEMENT",
+     "alternatives": [
+      "A.AB+A'D'=AC",
+      "A.AB+AD=AC"
+     ],
+     "readings": {
+      "rapidocr": "A.AB+A'D'=AC.",
+      "rapidocr_latin_rec": "A. AB+AD=AC."
+     },
+     "bbox": [
+      208,
+      505,
+      378,
+      555
+     ],
+     "blocking": false
+    },
+    {
+     "span_id": "sp19",
+     "text": "B.AB+A'D'=BD.C.AB+A'D'=AC.D.AB+A'D'=CA.",
+     "kind": "choice",
+     "reason": "PRIME_DISAGREEMENT",
+     "alternatives": [
+      "B.AB+A'D'=BD.C.AB+A'D'=AC.D.AB+A'D'=CA",
+      "D.4+=(A",
+      "B.AB+AD=BD.CAB+AD=AC.D.AB+AD=CA"
+     ],
+     "readings": {
+      "rapidocr": "B.AB+A'D'=BD.C.AB+A'D'=AC.D.AB+A'D'=CA.",
+      "tesseract": "D. 4+ =(A",
+      "rapidocr_latin_rec": "B. AB+AD=BD. C AB+AD=AC. D. AB+AD=CA."
+     },
+     "bbox": [
+      396,
+      501,
+      914,
+      554
+     ],
+     "blocking": false
+    },
+    {
+     "span_id": "sp33",
+     "text": "0, Tỉnh",
+     "kind": "prose",
+     "reason": "MULTIWORD_SLOT_MISMATCH",
+     "alternatives": [
+      "0, Tỉnh",
+      "O.Tinh"
+     ],
+     "readings": {
+      "rapidocr": "O.Tinh",
+      "tesseract": "0, Tỉnh"
+     },
+     "bbox": [
+      660,
+      563,
+      725,
+      616
+     ],
+     "blocking": true
+    },
+    {
+     "span_id": "sp35",
+     "text": "SA+SB+SC+SD.",
+     "kind": "math",
+     "reason": "MATH_TOKEN_DISAGREEMENT",
+     "alternatives": [
+      "SA+SB+SC+SD",
+      "$4+$B+$€+$D",
+      "SA+B+SC+SD"
+     ],
+     "readings": {
+      "rapidocr": "SA+SB+SC+SD.",
+      "tesseract": "$4+$B+$€+$D,",
+      "rapidocr_latin_rec": "SA+B+SC+SD."
+     },
+     "bbox": [
+      783,
+      563,
+      930,
+      616
+     ],
+     "blocking": true
+    },
+    {
+     "span_id": "sp36",
+     "text": "A.250",
+     "kind": "choice",
+     "reason": "SAME_FAMILY_AGREEMENT_ONLY",
+     "alternatives": [
+      "A.250",
+      "A50",
+      "A,250"
+     ],
+     "readings": {
+      "rapidocr": "A.250",
+      "tesseract": "A50",
+      "rapidocr_latin_rec": "A.250",
+      "tesseract_eng_line": "A, 250"
+     },
+     "bbox": [
+      201,
+      622,
+      278,
+      675
+     ],
+     "blocking": false
+    },
+    {
+     "span_id": "sp37",
+     "text": "B,450",
+     "kind": "choice",
+     "reason": "SAME_FAMILY_AGREEMENT_ONLY",
+     "alternatives": [
+      "B,450",
+      "J0",
+      "Brl"
+     ],
+     "readings": {
+      "rapidocr": "B,450",
+      "tesseract": "J0",
+      "rapidocr_latin_rec": "B, 450",
+      "tesseract_eng_line": "B rl"
+     },
+     "bbox": [
+      386,
+      619,
+      466,
+      682
+     ],
+     "blocking": false
+    },
+    {
+     "span_id": "sp38",
+     "text": "C.350",
+     "kind": "choice",
+     "reason": "SAME_FAMILY_AGREEMENT_ONLY",
+     "alternatives": [
+      "C.350",
+      "(80",
+      "C360"
+     ],
+     "readings": {
+      "rapidocr": "C.350",
+      "tesseract": "(80",
+      "rapidocr_latin_rec": "C.350",
+      "tesseract_eng_line": "C360"
+     },
+     "bbox": [
+      566,
+      622,
+      639,
+      676
+     ],
+     "blocking": false
+    },
+    {
+     "span_id": "sp39",
+     "text": "D.0",
+     "kind": "choice",
+     "reason": "SAME_FAMILY_AGREEMENT_ONLY",
+     "alternatives": [
+      "D.0",
+      "DÍ",
+      "D"
+     ],
+     "readings": {
+      "rapidocr": "D.0",
+      "tesseract": "DÍ",
+      "rapidocr_latin_rec": "D.0",
+      "tesseract_eng_line": "D."
+     },
+     "bbox": [
+      749,
+      625,
+      793,
+      670
+     ],
+     "blocking": false
+    },
+    {
+     "span_id": "sp41",
+     "text": "11.Cho",
+     "kind": "math",
+     "reason": "MATH_TOKEN_DISAGREEMENT",
+     "alternatives": [
+      "11.Cho",
+      "11.C",
+      "1.Cho",
+      "111,Cho"
+     ],
+     "readings": {
+      "rapidocr": "11.Cho",
+      "tesseract": "11.C",
+      "rapidocr_latin_rec": "1. Cho",
+      "tesseract_eng_line": "111,Cho"
+     },
+     "bbox": [
+      173,
+      686,
+      240,
+      738
+     ],
+     "blocking": true
+    },
+    {
+     "span_id": "sp44",
+     "text": "ABCD.",
+     "kind": "math",
+     "reason": "SAME_FAMILY_AGREEMENT_ONLY",
+     "alternatives": [
+      "ABCD",
+      "AB(D",
+      "ABCD,("
+     ],
+     "readings": {
+      "rapidocr": "ABCD.",
+      "tesseract": "AB(D.",
+      "rapidocr_latin_rec": "ABCD.",
+      "tesseract_eng_line": "ABCD, ("
+     },
+     "bbox": [
+      320,
+      686,
+      388,
+      738
+     ],
+     "blocking": true
+    },
+    {
+     "span_id": "sp45",
+     "text": "Ggi",
+     "kind": "prose",
+     "reason": "AMBIGUOUS_DIACRITIC_RESTORATION",
+     "alternatives": [
+      "Ggi",
+      "Gi"
+     ],
+     "readings": {
+      "rapidocr": "Gi",
+      "tesseract": "Ggi"
+     },
+     "bbox": [
+      390,
+      685,
+      422,
+      738
+     ],
+     "blocking": true
+    },
+    {
+     "span_id": "sp46",
+     "text": "M,N",
+     "kind": "math",
+     "reason": "SAME_FAMILY_AGREEMENT_ONLY",
+     "alternatives": [
+      "M,N",
+      "MỊN",
+      "M,N|"
+     ],
+     "readings": {
+      "rapidocr": "M,N",
+      "tesseract": "MỊN",
+      "rapidocr_latin_rec": "M,N",
+      "tesseract_eng_line": "M,N |"
+     },
+     "bbox": [
+      433,
+      685,
+      474,
+      737
+     ],
+     "blocking": true
+    },
+    {
+     "span_id": "sp47",
+     "text": "ñn",
+     "kind": "prose",
+     "reason": "AMBIGUOUS_DIACRITIC_RESTORATION",
+     "alternatives": [
+      "ñn",
+      "ln"
+     ],
+     "readings": {
+      "rapidocr": "ln",
+      "tesseract": "ñn"
+     },
+     "bbox": [
+      477,
+      685,
+      509,
+      737
+     ],
+     "blocking": true
+    },
+    {
+     "span_id": "sp53",
+     "text": "a",
+     "kind": "math",
+     "reason": "SAME_FAMILY_AGREEMENT_ONLY",
+     "alternatives": [
+      "a",
+      "Cw"
+     ],
+     "readings": {
+      "rapidocr": "a",
+      "rapidocr_latin_rec": "a",
+      "tesseract_eng_line": "Cw,"
+     },
+     "bbox": [
+      694,
+      684,
+      709,
+      736
+     ],
+     "blocking": true
+    },
+    {
+     "span_id": "sp56",
+     "text": "BC.",
+     "kind": "math",
+     "reason": "MATH_TOKEN_DISAGREEMENT",
+     "alternatives": [
+      "BC",
+      "EC",
+      "BC.T",
+      "BC.1"
+     ],
+     "readings": {
+      "rapidocr": "BC.",
+      "tesseract": "EC,",
+      "rapidocr_latin_rec": "BC. T",
+      "tesseract_eng_line": "BC. 1"
+     },
+     "bbox": [
+      781,
+      684,
+      822,
+      736
+     ],
+     "blocking": true
+    },
+    {
+     "span_id": "sp60",
+     "text": "A.0",
+     "kind": "choice",
+     "reason": "SAME_FAMILY_AGREEMENT_ONLY",
+     "alternatives": [
+      "A.0",
+      "A"
+     ],
+     "readings": {
+      "rapidocr": "A.0",
+      "rapidocr_latin_rec": "A. 0",
+      "tesseract_eng_line": "A,"
+     },
+     "bbox": [
+      193,
+      810,
+      240,
+      857
+     ],
+     "blocking": false
+    },
+    {
+     "span_id": "sp61",
+     "text": "B.2AD",
+     "kind": "choice",
+     "reason": "SAME_FAMILY_AGREEMENT_ONLY",
+     "alternatives": [
+      "B.2AD",
+      "B.DAD"
+     ],
+     "readings": {
+      "rapidocr": "B.2AD",
+      "rapidocr_latin_rec": "B.2AD",
+      "tesseract_eng_line": "B. DAD"
+     },
+     "bbox": [
+      385,
+      792,
+      467,
+      859
+     ],
+     "blocking": false
+    },
+    {
+     "span_id": "sp62",
+     "text": "C.2NM",
+     "kind": "choice",
+     "reason": "SAME_FAMILY_AGREEMENT_ONLY",
+     "alternatives": [
+      "C.2NM",
+      "CNM"
+     ],
+     "readings": {
+      "rapidocr": "C.2NM",
+      "rapidocr_latin_rec": "C. 2NM",
+      "tesseract_eng_line": "CNM"
+     },
+     "bbox": [
+      572,
+      808,
+      640,
+      856
+     ],
+     "blocking": false
+    },
+    {
+     "span_id": "sp63",
+     "text": "D.2MN",
+     "kind": "choice",
+     "reason": "SAME_FAMILY_AGREEMENT_ONLY",
+     "alternatives": [
+      "D.2MN",
+      "D,2MN"
+     ],
+     "readings": {
+      "rapidocr": "D.2MN",
+      "rapidocr_latin_rec": "D. 2MN",
+      "tesseract_eng_line": "D, 2MN"
+     },
+     "bbox": [
+      750,
+      808,
+      828,
+      856
+     ],
+     "blocking": false
+    },
+    {
+     "span_id": "sp64",
+     "text": "A.2AA'",
+     "kind": "choice",
+     "reason": "PRIME_DISAGREEMENT",
+     "alternatives": [
+      "A.2AA'",
+      "FT",
+      "A.2AA",
+      "4,2AM"
+     ],
+     "readings": {
+      "rapidocr": "A.2AA'",
+      "tesseract": "FT,",
+      "rapidocr_latin_rec": "A. 2AA",
+      "tesseract_eng_line": "4, 2AM"
+     },
+     "bbox": [
+      175,
+      1236,
+      260,
+      1288
+     ],
+     "blocking": false
+    },
+    {
+     "span_id": "sp66",
+     "text": "C.2.AC.",
+     "kind": "choice",
+     "reason": "SAME_FAMILY_AGREEMENT_ONLY",
+     "alternatives": [
+      "C.2.AC",
+      "Ê)A(",
+      "C2AC"
+     ],
+     "readings": {
+      "rapidocr": "C.2.AC.",
+      "tesseract": ".Ê)A(,",
+      "rapidocr_latin_rec": "C. 2.AC.",
+      "tesseract_eng_line": "C2AC."
+     },
+     "bbox": [
+      566,
+      1233,
+      644,
+      1285
+     ],
+     "blocking": false
+    },
+    {
+     "span_id": "sp67",
+     "text": "D.2C'A'",
+     "kind": "choice",
+     "reason": "PRIME_DISAGREEMENT",
+     "alternatives": [
+      "D.2C'A'",
+      "D0",
+      "D.2CA'",
+      "D.2C'4"
+     ],
+     "readings": {
+      "rapidocr": "D.2C'A'",
+      "tesseract": "D0",
+      "rapidocr_latin_rec": "D. 2CA'",
+      "tesseract_eng_line": "D.2C'4"
+     },
+     "bbox": [
+      752,
+      1235,
+      828,
+      1288
+     ],
+     "blocking": false
+    }
+   ],
+   "draft_text": "Của 8. Cho hình chóp S.ABC. Mệnh đồ nào sáu đây đúng?\nA.AB+A'D'=AC. B.AB+A'D'=BD.C.AB+A'D'=AC.D.AB+A'D'=CA. A.SA-AB=SB. B.SA-SB=AB. C.SA-SB=BA. D.SA-SB=SC. Của 10.Cho hình chóp S.ABCD có đáy là hình bình hành tâm 0, Tỉnh từng SA+SB+SC+SD.\nA.250 B,450 C.350 D.0 Của 11.Cho tỉ diện ABCD. Ggi M,N ñn là là trung điểm a AD và BC. Tổng AB+DC bằng\nA.2AA' A.0 B.0 B.2AD C.2.AC. C.2NM D.2C'A' D.2MN"
+  },
+  {
+   "image_id": "ext_prt_09_vmmu_page_r4",
+   "verified_math_span_count": 8,
+   "verified_math_spans_not_in_ground_truth": [],
+   "blocking_uncertain_count": 2,
+   "uncertain_spans": [
+    {
+     "span_id": "sp17",
+     "text": "=",
+     "kind": "math",
+     "reason": "SAME_FAMILY_AGREEMENT_ONLY",
+     "alternatives": [
+      "="
+     ],
+     "readings": {
+      "rapidocr": "=",
+      "rapidocr_latin_rec": "="
+     },
+     "bbox": [
+      1708,
+      15,
+      1732,
+      110
+     ],
+     "blocking": true
+    },
+    {
+     "span_id": "sp18",
+     "text": "2",
+     "kind": "math",
+     "reason": "SAME_FAMILY_AGREEMENT_ONLY",
+     "alternatives": [
+      "2",
+      "Z"
+     ],
+     "readings": {
+      "rapidocr": "2",
+      "rapidocr_latin_rec": "2",
+      "tesseract_eng_line": "Z"
+     },
+     "bbox": [
+      1740,
+      15,
+      1764,
+      110
+     ],
+     "blocking": true
+    }
+   ],
+   "draft_text": "Câu 14. Cho khối chóp S.ABC có đáy là tam giác vuông cân tại A, AB = 2 , SA vuông góc với đáy và SA = 3 (tham khảo hình bên). Thể tích khối chóp đã cho bằng\nA.12. B.2 . C.6. D.4."
+  },
+  {
+   "image_id": "ext_prt_10_vmmu_page_r7",
+   "verified_math_span_count": 11,
+   "verified_math_spans_not_in_ground_truth": [],
+   "blocking_uncertain_count": 9,
+   "uncertain_spans": [
+    {
+     "span_id": "sp15",
+     "text": "=",
+     "kind": "math",
+     "reason": "SAME_FAMILY_AGREEMENT_ONLY",
+     "alternatives": [
+      "=",
+      "—"
+     ],
+     "readings": {
+      "rapidocr": "=",
+      "rapidocr_latin_rec": "=",
+      "tesseract_eng_line": "—"
+     },
+     "bbox": [
+      1475,
+      11,
+      1501,
+      75
+     ],
+     "blocking": true
+    },
+    {
+     "span_id": "sp16",
+     "text": "3;",
+     "kind": "math",
+     "reason": "SAME_FAMILY_AGREEMENT_ONLY",
+     "alternatives": [
+      "3",
+      "Ey"
+     ],
+     "readings": {
+      "rapidocr": "3;",
+      "rapidocr_latin_rec": "3;",
+      "tesseract_eng_line": "Ey"
+     },
+     "bbox": [
+      1508,
+      11,
+      1556,
+      75
+     ],
+     "blocking": true
+    },
+    {
+     "span_id": "sp18",
+     "text": "=",
+     "kind": "math",
+     "reason": "SAME_FAMILY_AGREEMENT_ONLY",
+     "alternatives": [
+      "=",
+      "—"
+     ],
+     "readings": {
+      "rapidocr": "=",
+      "rapidocr_latin_rec": "=",
+      "tesseract_eng_line": "—"
+     },
+     "bbox": [
+      1638,
+      11,
+      1664,
+      75
+     ],
+     "blocking": true
+    },
+    {
+     "span_id": "sp19",
+     "text": "2;",
+     "kind": "math",
+     "reason": "MATH_TOKEN_DISAGREEMENT",
+     "alternatives": [
+      "2",
+      "2;i",
+      "Zid"
+     ],
+     "readings": {
+      "rapidocr": "2;",
+      "rapidocr_latin_rec": "2; i",
+      "tesseract_eng_line": "Zid"
+     },
+     "bbox": [
+      1681,
+      10,
+      1726,
+      75
+     ],
+     "blocking": true
+    },
+    {
+     "span_id": "sp21",
+     "text": "=",
+     "kind": "math",
+     "reason": "SAME_FAMILY_AGREEMENT_ONLY",
+     "alternatives": [
+      "=",
+      "—"
+     ],
+     "readings": {
+      "rapidocr": "=",
+      "rapidocr_latin_rec": "=",
+      "tesseract_eng_line": "—"
+     },
+     "bbox": [
+      1800,
+      10,
+      1826,
+      75
+     ],
+     "blocking": true
+    },
+    {
+     "span_id": "sp22",
+     "text": "√19",
+     "kind": "math",
+     "reason": "SAME_FAMILY_AGREEMENT_ONLY",
+     "alternatives": [
+      "√19",
+      "V19"
+     ],
+     "readings": {
+      "rapidocr": "√19",
+      "rapidocr_latin_rec": "√19",
+      "tesseract_eng_line": "V19"
+     },
+     "bbox": [
+      1844,
+      10,
+      1924,
+      75
+     ],
+     "blocking": true
+    },
+    {
+     "span_id": "sp25",
+     "text": "H",
+     "kind": "math",
+     "reason": "SAME_FAMILY_AGREEMENT_ONLY",
+     "alternatives": [
+      "H",
+      "#",
+      "AH"
+     ],
+     "readings": {
+      "rapidocr": "H",
+      "tesseract": "#",
+      "rapidocr_latin_rec": "H",
+      "tesseract_eng_line": "AH"
+     },
+     "bbox": [
+      2114,
+      10,
+      2140,
+      74
+     ],
+     "blocking": true
+    },
+    {
+     "span_id": "sp72",
+     "text": "A,",
+     "kind": "math",
+     "reason": "SAME_FAMILY_AGREEMENT_ONLY",
+     "alternatives": [
+      "A",
+      "4",
+      "A,("
+     ],
+     "readings": {
+      "rapidocr": "A,",
+      "tesseract": "4,",
+      "rapidocr_latin_rec": "A,",
+      "tesseract_eng_line": "A, ("
+     },
+     "bbox": [
+      1928,
+      144,
+      1990,
+      211
+     ],
+     "blocking": true
+    },
+    {
+     "span_id": "sp82",
+     "text": "(0#",
+     "kind": "prose",
+     "reason": "AMBIGUOUS_DIACRITIC_RESTORATION",
+     "alternatives": [
+      "(0#",
+      "(nhu"
+     ],
+     "readings": {
+      "rapidocr": "(nhu",
+      "tesseract": "(0#"
+     },
+     "bbox": [
+      736,
+      204,
+      831,
+      266
+     ],
+     "blocking": true
+    },
+    {
+     "span_id": "sp91",
+     "text": "2π√114/361",
+     "kind": "choice",
+     "reason": "FRACTION_STRUCTURE_LOSS",
+     "alternatives": [
+      "2π√114/361",
+      "2π√114 361"
+     ],
+     "readings": {
+      "rapidocr": "2π√114 | 361"
+     },
+     "bbox": [
+      276,
+      893,
+      458,
+      1022
+     ],
+     "blocking": false
+    },
+    {
+     "span_id": "sp92",
+     "text": "2π√3/19",
+     "kind": "choice",
+     "reason": "FRACTION_STRUCTURE_LOSS",
+     "alternatives": [
+      "2π√3/19",
+      "2π√3 19"
+     ],
+     "readings": {
+      "rapidocr": "2π√3 | 19"
+     },
+     "bbox": [
+      762,
+      882,
+      905,
+      1023
+     ],
+     "blocking": false
+    },
+    {
+     "span_id": "sp93",
+     "text": "π√57/361",
+     "kind": "choice",
+     "reason": "FRACTION_STRUCTURE_LOSS",
+     "alternatives": [
+      "π√57/361",
+      "π√57 361"
+     ],
+     "readings": {
+      "rapidocr": "π√57 | 361"
+     },
+     "bbox": [
+      1311,
+      886,
+      1451,
+      1022
+     ],
+     "blocking": false
+    },
+    {
+     "span_id": "sp94",
+     "text": "2π√19/361",
+     "kind": "choice",
+     "reason": "FRACTION_STRUCTURE_LOSS",
+     "alternatives": [
+      "2π√19/361",
+      "2π√19 361"
+     ],
+     "readings": {
+      "rapidocr": "2π√19 | 361"
+     },
+     "bbox": [
+      1859,
+      888,
+      2018,
+      1022
+     ],
+     "blocking": false
+    }
+   ],
+   "draft_text": "Câu 49: Một tam tồn hình tam giác ABC có độ dài cạnh AB = 3; AC = 2; BC = √19 . Điểm H là chân đường cao kẻ từ đỉnh A của tam giác ABC . Người ta dùng compa có tâm là A , bán kính AH vạch một cung tròn MN . Lấy phần hình quạt gõ thành hình nón không có mặt đáy với đỉnh là A, cung MN thành đường tròn đáy của hình nón (0# hình vẽ). Tính thể tích khối nón trên. 2π√114/361 B. 2π√3/19 C. π√57/361 D. 2π√19/361"
+  },
+  {
+   "image_id": "ext_prt_11_vmmu_page_r10",
+   "verified_math_span_count": 5,
+   "verified_math_spans_not_in_ground_truth": [],
+   "blocking_uncertain_count": 1,
+   "uncertain_spans": [
+    {
+     "span_id": "sp20",
+     "text": "a",
+     "kind": "math",
+     "reason": "SAME_FAMILY_AGREEMENT_ONLY",
+     "alternatives": [
+      "a",
+      "øz"
+     ],
+     "readings": {
+      "rapidocr": "a",
+      "tesseract": "øz.",
+      "rapidocr_latin_rec": "a.",
+      "tesseract_eng_line": "."
+     },
+     "bbox": [
+      2104,
+      15,
+      2128,
+      85
+     ],
+     "blocking": true
+    },
+    {
+     "span_id": "sp35",
+     "text": "A.45°.",
+     "kind": "choice",
+     "reason": "DEGREE_SYMBOL_DISAGREEMENT",
+     "alternatives": [
+      "A.45°",
+      "A.450"
+     ],
+     "readings": {
+      "rapidocr": "A.45°.",
+      "tesseract": "A. 450.",
+      "rapidocr_latin_rec": "A. 450.",
+      "tesseract_eng_line": "A. 45°."
+     },
+     "bbox": [
+      386,
+      931,
+      551,
+      1008
+     ],
+     "blocking": false
+    },
+    {
+     "span_id": "sp37",
+     "text": "600.",
+     "kind": "choice",
+     "reason": "DEGREE_SYMBOL_DISAGREEMENT",
+     "alternatives": [
+      "600",
+      "60",
+      "60°"
+     ],
+     "readings": {
+      "rapidocr": "600.",
+      "rapidocr_latin_rec": "60.",
+      "tesseract_eng_line": "60°."
+     },
+     "bbox": [
+      952,
+      929,
+      1049,
+      1005
+     ],
+     "blocking": false
+    },
+    {
+     "span_id": "sp38",
+     "text": "C.",
+     "kind": "choice",
+     "reason": "SAME_FAMILY_AGREEMENT_ONLY",
+     "alternatives": [
+      "C",
+      "te"
+     ],
+     "readings": {
+      "rapidocr": "C.",
+      "rapidocr_latin_rec": "C.",
+      "tesseract_eng_line": "te"
+     },
+     "bbox": [
+      1364,
+      931,
+      1416,
+      1006
+     ],
+     "blocking": false
+    }
+   ],
+   "draft_text": "Câu 30: Cho khối lăng trụ tam giác đều ABC.A'B'C' có cạnh đáy bằng 2a , chiều cao bằng a . Tính số đo góc tạo bởi hai mặt phẳng (AB'C') và (ABC) ?\nA.45°. B. 600. C. 30°. D.26°33'."
+  },
+  {
+   "image_id": "ext_prt_12_vmmu_page_r11",
+   "verified_math_span_count": 6,
+   "verified_math_spans_not_in_ground_truth": [],
+   "blocking_uncertain_count": 2,
+   "uncertain_spans": [
+    {
+     "span_id": "sp8",
+     "text": "ABC.A'B'C'",
+     "kind": "math",
+     "reason": "SAME_FAMILY_AGREEMENT_ONLY",
+     "alternatives": [
+      "ABC.A'B'C'",
+      "48Œ.AWC”",
+      "ABC.ABC"
+     ],
+     "readings": {
+      "rapidocr": "ABC.A'B'C'",
+      "tesseract": "48Œ.AWC”",
+      "rapidocr_latin_rec": "ABC.A'B'C'",
+      "tesseract_eng_line": "ABC.A BC"
+     },
+     "bbox": [
+      859,
+      16,
+      1109,
+      88
+     ],
+     "blocking": true
+    },
+    {
+     "span_id": "sp27",
+     "text": "12(cm2).",
+     "kind": "math",
+     "reason": "SAME_FAMILY_AGREEMENT_ONLY",
+     "alternatives": [
+      "12(cm²)",
+      "12(em°)",
+      "12(cm?)"
+     ],
+     "readings": {
+      "rapidocr": "12(cm2).",
+      "tesseract": "12(em°).",
+      "rapidocr_latin_rec": "12(cm2)..",
+      "tesseract_eng_line": "12 ( cm?) ,"
+     },
+     "bbox": [
+      682,
+      85,
+      874,
+      166
+     ],
+     "blocking": true
+    },
+    {
+     "span_id": "sp40",
+     "text": "2√3(cm).",
+     "kind": "choice",
+     "reason": "SAME_FAMILY_AGREEMENT_ONLY",
+     "alternatives": [
+      "2√3(cm)",
+      "243(em)"
+     ],
+     "readings": {
+      "rapidocr": "2√3(cm).",
+      "tesseract": "243(em).",
+      "rapidocr_latin_rec": "2√3(cm) ."
+     },
+     "bbox": [
+      775,
+      806,
+      982,
+      882
+     ],
+     "blocking": false
+    },
+    {
+     "span_id": "sp44",
+     "text": "3√2(cm).",
+     "kind": "choice",
+     "reason": "SAME_FAMILY_AGREEMENT_ONLY",
+     "alternatives": [
+      "3√2(cm)",
+      "32(em)"
+     ],
+     "readings": {
+      "rapidocr": "3√2(cm).",
+      "tesseract": "32(em).",
+      "rapidocr_latin_rec": "3√2(cm)."
+     },
+     "bbox": [
+      1864,
+      796,
+      2083,
+      883
+     ],
+     "blocking": false
+    }
+   ],
+   "draft_text": "Câu 39: Cho hình lăng trụ đứng ABC.A'B'C' có đáy ABC là tam giác vuông cân tại B và diện tích của hình vuông ABB'A' bằng 12(cm2). Khoảng cách từ C đến mặt phẳng (ABB'A') bằng\nA. 6. B. 2√3(cm). C. 2. D. 3√2(cm)."
+  },
+  {
+   "image_id": "ext_prt_13_vmmu_page_r25",
+   "verified_math_span_count": 4,
+   "verified_math_spans_not_in_ground_truth": [],
+   "blocking_uncertain_count": 3,
+   "uncertain_spans": [
+    {
+     "span_id": "sp8",
+     "text": "đang",
+     "kind": "prose",
+     "reason": "AMBIGUOUS_DIACRITIC_RESTORATION",
+     "alternatives": [
+      "đang"
+     ],
+     "readings": {
+      "rapidocr": "đang",
+      "tesseract": "đang"
+     },
+     "bbox": [
+      728,
+      0,
+      823,
+      57
+     ],
+     "blocking": true
+    },
+    {
+     "span_id": "sp24",
+     "text": "1m",
+     "kind": "math",
+     "reason": "SAME_FAMILY_AGREEMENT_ONLY",
+     "alternatives": [
+      "1m",
+      "lm"
+     ],
+     "readings": {
+      "rapidocr": "1m",
+      "rapidocr_latin_rec": "1m",
+      "tesseract_eng_line": "lm"
+     },
+     "bbox": [
+      201,
+      63,
+      257,
+      123
+     ],
+     "blocking": true
+    },
+    {
+     "span_id": "sp39",
+     "text": "7",
+     "kind": "prose",
+     "reason": "AMBIGUOUS_DIACRITIC_RESTORATION",
+     "alternatives": [
+      "7",
+      "m"
+     ],
+     "readings": {
+      "rapidocr": "m",
+      "tesseract": "7"
+     },
+     "bbox": [
+      1467,
+      61,
+      1492,
+      121
+     ],
+     "blocking": true
+    },
+    {
+     "span_id": "sp61",
+     "text": "m'`.",
+     "kind": "choice",
+     "reason": "AMBIGUOUS_DIACRITIC_RESTORATION",
+     "alternatives": [
+      "m'`.",
+      "m³."
+     ],
+     "readings": {
+      "rapidocr": "m³.",
+      "tesseract": "m'`.",
+      "rapidocr_latin_rec": "m3.",
+      "tesseract_eng_line": "m"
+     },
+     "bbox": [
+      347,
+      581,
+      409,
+      636
+     ],
+     "blocking": false
+    },
+    {
+     "span_id": "sp64",
+     "text": "m3",
+     "kind": "choice",
+     "reason": "SAME_FAMILY_AGREEMENT_ONLY",
+     "alternatives": [
+      "m³",
+      "m"
+     ],
+     "readings": {
+      "rapidocr": "m3",
+      "rapidocr_latin_rec": "m3",
+      "tesseract_eng_line": "m"
+     },
+     "bbox": [
+      831,
+      581,
+      883,
+      638
+     ],
+     "blocking": false
+    },
+    {
+     "span_id": "sp67",
+     "text": "1,895m³.",
+     "kind": "choice",
+     "reason": "SAME_FAMILY_AGREEMENT_ONLY",
+     "alternatives": [
+      "1,895m³",
+      "1,895",
+      "1,895m"
+     ],
+     "readings": {
+      "rapidocr": "1,895m³.",
+      "tesseract": "1,895.",
+      "rapidocr_latin_rec": "1,895m³ .",
+      "tesseract_eng_line": "1,895m."
+     },
+     "bbox": [
+      1213,
+      581,
+      1390,
+      636
+     ],
+     "blocking": false
+    },
+    {
+     "span_id": "sp68",
+     "text": "D.1,167m³.",
+     "kind": "choice",
+     "reason": "SAME_FAMILY_AGREEMENT_ONLY",
+     "alternatives": [
+      "D.1,167m³",
+      "D.1167m'",
+      "D.1,167m'"
+     ],
+     "readings": {
+      "rapidocr": "D.1,167m³.",
+      "tesseract": "D. 1167m`.",
+      "rapidocr_latin_rec": "D. 1,167 m3 .",
+      "tesseract_eng_line": "D. 1,167m’."
+     },
+     "bbox": [
+      1646,
+      581,
+      1879,
+      636
+     ],
+     "blocking": false
+    }
+   ],
+   "draft_text": "Câu 48. Một téc nước hình trụ, đang chứa nước được đặt nằm ngang, có chiều dài 3 m và đường kính đáy 1m . Hiển tại mặt nước trong téc cách phía trên đỉnh của téc 0,25 7 (xem hình vẽ). Tính thể tích của nước trong téc (kết quả làm tròn đến hàng phần nghìn)? 3m\nA. 1,768 m'`. B. 1,896 m3 . C. 1,895m³. D.1,167m³."
+  },
+  {
+   "image_id": "ext_prt_14_vmmu_page_r26",
+   "verified_math_span_count": 3,
+   "verified_math_spans_not_in_ground_truth": [],
+   "blocking_uncertain_count": 1,
+   "uncertain_spans": [
+    {
+     "span_id": "sp24",
+     "text": "cậu",
+     "kind": "prose",
+     "reason": "AMBIGUOUS_DIACRITIC_RESTORATION",
+     "alternatives": [
+      "cậu",
+      "cu"
+     ],
+     "readings": {
+      "rapidocr": "cu",
+      "tesseract": "cậu"
+     },
+     "bbox": [
+      597,
+      91,
+      673,
+      158
+     ],
+     "blocking": true
+    }
+   ],
+   "draft_text": "Câu 40. Ngũ ta xấp hai quả cầu có cùng bán kính r vào một chiếc hộp hình trụ sao cho các quả cậu đều tiếp xúc với hai đáy, đồng thời hai quả cầu tiếp xúc với nhau và mỗi quả cầu đều tiếp xúc với đường sinh của hình trụ (tham khảo hình vẽ). Biết thể tích khối trụ là 120 cụm, thể tích của mỗi khối cầu bằng\nA.10 cụm B.20 cụm C.30 cụm D.40 cụm"
+  },
+  {
+   "image_id": "ext_prt_15_vmmu_page_r28",
+   "verified_math_span_count": 2,
+   "verified_math_spans_not_in_ground_truth": [
+    "10cm"
+   ],
+   "blocking_uncertain_count": 2,
+   "uncertain_spans": [
+    {
+     "span_id": "sp33",
+     "text": "20√3p",
+     "kind": "math",
+     "reason": "SAME_FAMILY_AGREEMENT_ONLY",
+     "alternatives": [
+      "20√3p",
+      "20A/3p",
+      "20\\3p"
+     ],
+     "readings": {
+      "rapidocr": "20√3p",
+      "tesseract": "20A/3p",
+      "rapidocr_latin_rec": "20√3p",
+      "tesseract_eng_line": "20\\3p"
+     },
+     "bbox": [
+      1458,
+      99,
+      1606,
+      190
+     ],
+     "blocking": true
+    },
+    {
+     "span_id": "sp41",
+     "text": "40cm",
+     "kind": "math",
+     "reason": "SAME_FAMILY_AGREEMENT_ONLY",
+     "alternatives": [
+      "40cm",
+      "AOcm"
+     ],
+     "readings": {
+      "rapidocr": "40cm",
+      "rapidocr_latin_rec": "40 cm",
+      "tesseract_eng_line": "AO cm"
+     },
+     "bbox": [
+      1376,
+      324,
+      1466,
+      377
+     ],
+     "blocking": true
+    },
+    {
+     "span_id": "sp49",
+     "text": "15000p(cm³).",
+     "kind": "choice",
+     "reason": "SAME_FAMILY_AGREEMENT_ONLY",
+     "alternatives": [
+      "15000p(cm³)",
+      "15000pn(cmỶ)",
+      "15000p(cm*°)"
+     ],
+     "readings": {
+      "rapidocr": "15000p(cm³).",
+      "tesseract": "15000pn (cmỶ )",
+      "rapidocr_latin_rec": "15000p (cm3).",
+      "tesseract_eng_line": "15000p (cm*° )."
+     },
+     "bbox": [
+      1438,
+      495,
+      1769,
+      577
+     ],
+     "blocking": false
+    }
+   ],
+   "draft_text": "Câu 35: Một cái cắt có hình dạng như hình bên (gồm một khối nón và một khối trụ ghép lại). Chiều cao đo được ghi trên hình, chu vi đáy là 20√3p cụm. Thể tích của cắt bằng: 10cm 40cm\nA. 13000p (cụm). B. 5000p (cụm). C. 15000p(cm³). D. 52000p (cụm)."
+  },
+  {
+   "image_id": "ext_hw_b1_01_hd_a_6043187",
+   "verified_math_span_count": 10,
+   "verified_math_spans_not_in_ground_truth": [
+    "2"
+   ],
+   "blocking_uncertain_count": 102,
+   "uncertain_spans": [
+    {
+     "span_id": "sp5",
+     "text": "đảng -",
+     "kind": "prose",
+     "reason": "MULTIWORD_SLOT_MISMATCH",
+     "alternatives": [
+      "đảng -",
+      "dtuing"
+     ],
+     "readings": {
+      "rapidocr": "dtuing",
+      "tesseract": "đảng -"
+     },
+     "bbox": [
+      407,
+      56,
+      501,
+      131
+     ],
+     "blocking": true
+    },
+    {
+     "span_id": "sp6",
+     "text": "ABCA'BC",
+     "kind": "math",
+     "reason": "PRIME_DISAGREEMENT",
+     "alternatives": [
+      "ABCA'BC",
+      "_W-MŒ",
+      "AeC.t'Bc"
+     ],
+     "readings": {
+      "rapidocr": "ABCA'BC",
+      "tesseract": "_W-MŒ",
+      "rapidocr_latin_rec": "AeC.t'Bc"
+     },
+     "bbox": [
+      517,
+      53,
+      648,
+      128
+     ],
+     "blocking": true
+    },
+    {
+     "span_id": "sp7",
+     "text": "_8Ð-",
+     "kind": "prose",
+     "reason": "AMBIGUOUS_DIACRITIC_RESTORATION",
+     "alternatives": [
+      "_8Ð-",
+      "co"
+     ],
+     "readings": {
+      "rapidocr": "co",
+      "tesseract": "_8Ð-"
+     },
+     "bbox": [
+      664,
+      52,
+      709,
+      126
+     ],
+     "blocking": true
+    },
+    {
+     "span_id": "sp9",
+     "text": "ABC",
+     "kind": "math",
+     "reason": "SAME_FAMILY_AGREEMENT_ONLY",
+     "alternatives": [
+      "ABC",
+      "20C"
+     ],
+     "readings": {
+      "rapidocr": "ABC",
+      "tesseract": "20C",
+      "rapidocr_latin_rec": "ABC"
+     },
+     "bbox": [
+      798,
+      49,
+      855,
+      123
+     ],
+     "blocking": true
+    },
+    {
+     "span_id": "sp11",
+     "text": "dam",
+     "kind": "prose",
+     "reason": "AMBIGUOUS_DIACRITIC_RESTORATION",
+     "alternatives": [
+      "dam",
+      "tam"
+     ],
+     "readings": {
+      "rapidocr": "tam",
+      "tesseract": "dam"
+     },
+     "bbox": [
+      908,
+      47,
+      965,
+      121
+     ],
+     "blocking": true
+    },
+    {
+     "span_id": "sp15",
+     "text": "13",
+     "kind": "math",
+     "reason": "MATH_TOKEN_DISAGREEMENT",
+     "alternatives": [
+      "13",
+      "Ð,—",
+      "\\$",
+      "hy"
+     ],
+     "readings": {
+      "rapidocr": "13",
+      "tesseract": "Ð,—",
+      "rapidocr_latin_rec": "\\$",
+      "tesseract_eng_line": "hy"
+     },
+     "bbox": [
+      277,
+      121,
+      314,
+      181
+     ],
+     "blocking": true
+    },
+    {
+     "span_id": "sp16",
+     "text": "AB",
+     "kind": "math",
+     "reason": "SAME_FAMILY_AGREEMENT_ONLY",
+     "alternatives": [
+      "AB"
+     ],
+     "readings": {
+      "rapidocr": "AB",
+      "rapidocr_latin_rec": "AB"
+     },
+     "bbox": [
+      394,
+      119,
+      448,
+      189
+     ],
+     "blocking": true
+    },
+    {
+     "span_id": "sp17",
+     "text": "=",
+     "kind": "math",
+     "reason": "SINGLE_READER_MATH_TOKEN",
+     "alternatives": [
+      "="
+     ],
+     "readings": {
+      "rapidocr": "="
+     },
+     "bbox": [
+      452,
+      118,
+      480,
+      187
+     ],
+     "blocking": true
+    },
+    {
+     "span_id": "sp19",
+     "text": "|",
+     "kind": "prose",
+     "reason": "AMBIGUOUS_DIACRITIC_RESTORATION",
+     "alternatives": [
+      "|",
+      "；"
+     ],
+     "readings": {
+      "rapidocr": "；",
+      "tesseract": "|"
+     },
+     "bbox": [
+      522,
+      116,
+      552,
+      186
+     ],
+     "blocking": true
+    },
+    {
+     "span_id": "sp20",
+     "text": "AC",
+     "kind": "math",
+     "reason": "MATH_TOKEN_DISAGREEMENT",
+     "alternatives": [
+      "AC",
+      "AL",
+      "Se"
+     ],
+     "readings": {
+      "rapidocr": "AC",
+      "rapidocr_latin_rec": "AL",
+      "tesseract_eng_line": "Se"
+     },
+     "bbox": [
+      592,
+      113,
+      645,
+      184
+     ],
+     "blocking": true
+    },
+    {
+     "span_id": "sp21",
+     "text": "=",
+     "kind": "math",
+     "reason": "SINGLE_READER_MATH_TOKEN",
+     "alternatives": [
+      "="
+     ],
+     "readings": {
+      "rapidocr": "="
+     },
+     "bbox": [
+      650,
+      113,
+      680,
+      182
+     ],
+     "blocking": true
+    },
+    {
+     "span_id": "sp23",
+     "text": "√",
+     "kind": "math",
+     "reason": "RADICAL_DISAGREEMENT",
+     "alternatives": [
+      "√",
+      "V\\$"
+     ],
+     "readings": {
+      "rapidocr": "√",
+      "rapidocr_latin_rec": "V\\$"
+     },
+     "bbox": [
+      722,
+      111,
+      747,
+      180
+     ],
+     "blocking": true
+    },
+    {
+     "span_id": "sp24",
+     "text": "s",
+     "kind": "prose",
+     "reason": "AMBIGUOUS_DIACRITIC_RESTORATION",
+     "alternatives": [
+      "s"
+     ],
+     "readings": {
+      "rapidocr": "s"
+     },
+     "bbox": [
+      745,
+      110,
+      773,
+      180
+     ],
+     "blocking": true
+    },
+    {
+     "span_id": "sp26",
+     "text": "g",
+     "kind": "prose",
+     "reason": "AMBIGUOUS_DIACRITIC_RESTORATION",
+     "alternatives": [
+      "g"
+     ],
+     "readings": {
+      "rapidocr": "g"
+     },
+     "bbox": [
+      815,
+      108,
+      840,
+      178
+     ],
+     "blocking": true
+    },
+    {
+     "span_id": "sp28",
+     "text": "c",
+     "kind": "math",
+     "reason": "MATH_TOKEN_DISAGREEMENT",
+     "alternatives": [
+      "c",
+      "é",
+      "a)"
+     ],
+     "readings": {
+      "rapidocr": "c",
+      "rapidocr_latin_rec": "é",
+      "tesseract_eng_line": "a)"
+     },
+     "bbox": [
+      856,
+      108,
+      878,
+      177
+     ],
+     "blocking": true
+    },
+    {
+     "span_id": "sp29",
+     "text": "g",
+     "kind": "prose",
+     "reason": "AMBIGUOUS_DIACRITIC_RESTORATION",
+     "alternatives": [
+      "g"
+     ],
+     "readings": {
+      "rapidocr": "g"
+     },
+     "bbox": [
+      882,
+      107,
+      904,
+      176
+     ],
+     "blocking": true
+    },
+    {
+     "span_id": "sp31",
+     "text": "a",
+     "kind": "math",
+     "reason": "MATH_TOKEN_DISAGREEMENT",
+     "alternatives": [
+      "a",
+      "a$",
+      "=="
+     ],
+     "readings": {
+      "rapidocr": "a",
+      "rapidocr_latin_rec": "a$",
+      "tesseract_eng_line": "= ="
+     },
+     "bbox": [
+      941,
+      105,
+      957,
+      175
+     ],
+     "blocking": true
+    },
+    {
+     "span_id": "sp32",
+     "text": "duing",
+     "kind": "prose",
+     "reason": "NOT_IN_LEXICON",
+     "alternatives": [
+      "duing"
+     ],
+     "readings": {
+      "rapidocr": "duing"
+     },
+     "bbox": [
+      13,
+      172,
+      128,
+      242
+     ],
+     "blocking": true
+    },
+    {
+     "span_id": "sp34",
+     "text": "BC",
+     "kind": "math",
+     "reason": "SAME_FAMILY_AGREEMENT_ONLY",
+     "alternatives": [
+      "BC",
+      "BÉ"
+     ],
+     "readings": {
+      "rapidocr": "BC",
+      "tesseract": "BÉ.",
+      "rapidocr_latin_rec": "Bc"
+     },
+     "bbox": [
+      281,
+      170,
+      326,
+      240
+     ],
+     "blocking": true
+    },
+    {
+     "span_id": "sp35",
+     "text": "y8i",
+     "kind": "math",
+     "reason": "MATH_TOKEN_DISAGREEMENT",
+     "alternatives": [
+      "y8i",
+      "si",
+      "yoi"
+     ],
+     "readings": {
+      "rapidocr": "y8i",
+      "tesseract": "si",
+      "rapidocr_latin_rec": "yoi"
+     },
+     "bbox": [
+      363,
+      170,
+      419,
+      239
+     ],
+     "blocking": true
+    },
+    {
+     "span_id": "sp37",
+     "text": ".",
+     "kind": "prose",
+     "reason": "NOT_IN_LEXICON",
+     "alternatives": [
+      ".",
+      "phing"
+     ],
+     "readings": {
+      "rapidocr": "phing",
+      "tesseract": "."
+     },
+     "bbox": [
+      536,
+      168,
+      638,
+      237
+     ],
+     "blocking": true
+    },
+    {
+     "span_id": "sp38",
+     "text": "tay",
+     "kind": "prose",
+     "reason": "NOT_IN_LEXICON",
+     "alternatives": [
+      "tay"
+     ],
+     "readings": {
+      "rapidocr": "tay"
+     },
+     "bbox": [
+      662,
+      167,
+      718,
+      236
+     ],
+     "blocking": true
+    },
+    {
+     "span_id": "sp40",
+     "text": "60°",
+     "kind": "math",
+     "reason": "SAME_FAMILY_AGREEMENT_ONLY",
+     "alternatives": [
+      "60°",
+      "_ấá0”"
+     ],
+     "readings": {
+      "rapidocr": "60°",
+      "tesseract": "_ấá0”",
+      "rapidocr_latin_rec": "60°"
+     },
+     "bbox": [
+      788,
+      165,
+      855,
+      234
+     ],
+     "blocking": true
+    },
+    {
+     "span_id": "sp42",
+     "text": "thi",
+     "kind": "prose",
+     "reason": "AMBIGUOUS_DIACRITIC_RESTORATION",
+     "alternatives": [
+      "thi"
+     ],
+     "readings": {
+      "rapidocr": "thi"
+     },
+     "bbox": [
+      56,
+      233,
+      116,
+      293
+     ],
+     "blocking": true
+    },
+    {
+     "span_id": "sp44",
+     "text": "\"qua —",
+     "kind": "prose",
+     "reason": "MULTIWORD_SLOT_MISMATCH",
+     "alternatives": [
+      "\"qua —",
+      "cug"
+     ],
+     "readings": {
+      "rapidocr": "cug",
+      "tesseract": "\"qua —"
+     },
+     "bbox": [
+      235,
+      229,
+      295,
+      290
+     ],
+     "blocking": true
+    },
+    {
+     "span_id": "sp47",
+     "text": "3 )ïẽ",
+     "kind": "prose",
+     "reason": "MULTIWORD_SLOT_MISMATCH",
+     "alternatives": [
+      "3 )ïẽ",
+      "try"
+     ],
+     "readings": {
+      "rapidocr": "try",
+      "tesseract": "3 )ïẽ"
+     },
+     "bbox": [
+      483,
+      225,
+      541,
+      285
+     ],
+     "blocking": true
+    },
+    {
+     "span_id": "sp48",
+     "text": "a",
+     "kind": "math",
+     "reason": "MATH_TOKEN_DISAGREEMENT",
+     "alternatives": [
+      "a",
+      "aj$",
+      "E"
+     ],
+     "readings": {
+      "rapidocr": "a",
+      "rapidocr_latin_rec": "aj$",
+      "tesseract_eng_line": "E"
+     },
+     "bbox": [
+      198,
+      283,
+      222,
+      346
+     ],
+     "blocking": true
+    },
+    {
+     "span_id": "sp49",
+     "text": "√",
+     "kind": "math",
+     "reason": "RADICAL_DISAGREEMENT",
+     "alternatives": [
+      "√",
+      "$",
+      "5"
+     ],
+     "readings": {
+      "rapidocr": "√",
+      "rapidocr_latin_rec": "$",
+      "tesseract_eng_line": "5"
+     },
+     "bbox": [
+      219,
+      283,
+      237,
+      345
+     ],
+     "blocking": true
+    },
+    {
+     "span_id": "sp50",
+     "text": "3",
+     "kind": "math",
+     "reason": "MATH_TOKEN_DISAGREEMENT",
+     "alternatives": [
+      "3",
+      "zB"
+     ],
+     "readings": {
+      "rapidocr": "3",
+      "tesseract_eng_line": "zB"
+     },
+     "bbox": [
+      234,
+      282,
+      253,
+      345
+     ],
+     "blocking": true
+    },
+    {
+     "span_id": "sp51",
+     "text": "_®",
+     "kind": "prose",
+     "reason": "AMBIGUOUS_DIACRITIC_RESTORATION",
+     "alternatives": [
+      "_®",
+      "·"
+     ],
+     "readings": {
+      "rapidocr": "·",
+      "tesseract": "_®"
+     },
+     "bbox": [
+      322,
+      280,
+      346,
+      342
+     ],
+     "blocking": true
+    },
+    {
+     "span_id": "sp53",
+     "text": "a",
+     "kind": "math",
+     "reason": "SAME_FAMILY_AGREEMENT_ONLY",
+     "alternatives": [
+      "a",
+      "Ta"
+     ],
+     "readings": {
+      "rapidocr": "a",
+      "tesseract": "Ta",
+      "rapidocr_latin_rec": "a"
+     },
+     "bbox": [
+      385,
+      278,
+      409,
+      340
+     ],
+     "blocking": true
+    },
+    {
+     "span_id": "sp54",
+     "text": "c",
+     "kind": "math",
+     "reason": "MATH_TOKEN_DISAGREEMENT",
+     "alternatives": [
+      "c",
+      "cca",
+      "co",
+      "le"
+     ],
+     "readings": {
+      "rapidocr": "c",
+      "tesseract": "cca.",
+      "rapidocr_latin_rec": "co",
+      "tesseract_eng_line": "le"
+     },
+     "bbox": [
+      415,
+      277,
+      440,
+      339
+     ],
+     "blocking": true
+    },
+    {
+     "span_id": "sp55",
+     "text": "BB",
+     "kind": "math",
+     "reason": "MATH_TOKEN_DISAGREEMENT",
+     "alternatives": [
+      "BB'",
+      "BB",
+      "BÉ”",
+      "BB$"
+     ],
+     "readings": {
+      "rapidocr": "BB",
+      "tesseract": "BÉ”",
+      "rapidocr_latin_rec": "BB$"
+     },
+     "bbox": [
+      467,
+      274,
+      512,
+      338
+     ],
+     "blocking": true
+    },
+    {
+     "span_id": "sp56",
+     "text": "⊥",
+     "kind": "math",
+     "reason": "RELATION_SYMBOL_DISAGREEMENT",
+     "alternatives": [
+      "⊥",
+      "L"
+     ],
+     "readings": {
+      "rapidocr": "⊥",
+      "rapidocr_latin_rec": "L"
+     },
+     "bbox": [
+      529,
+      273,
+      553,
+      336
+     ],
+     "blocking": true
+    },
+    {
+     "span_id": "sp57",
+     "text": "(",
+     "kind": "prose",
+     "reason": "EMPTY",
+     "alternatives": [
+      "("
+     ],
+     "readings": {
+      "rapidocr": "("
+     },
+     "bbox": [
+      551,
+      273,
+      574,
+      335
+     ],
+     "blocking": true
+    },
+    {
+     "span_id": "sp58",
+     "text": "ABC'",
+     "kind": "math",
+     "reason": "PRIME_DISAGREEMENT",
+     "alternatives": [
+      "ABC'",
+      "A(sC)"
+     ],
+     "readings": {
+      "rapidocr": "ABC'",
+      "rapidocr_latin_rec": "A(sC)"
+     },
+     "bbox": [
+      572,
+      270,
+      652,
+      335
+     ],
+     "blocking": true
+    },
+    {
+     "span_id": "sp59",
+     "text": "）",
+     "kind": "prose",
+     "reason": "AMBIGUOUS_DIACRITIC_RESTORATION",
+     "alternatives": [
+      "）"
+     ],
+     "readings": {
+      "rapidocr": "）"
+     },
+     "bbox": [
+      650,
+      270,
+      668,
+      332
+     ],
+     "blocking": true
+    },
+    {
+     "span_id": "sp60",
+     "text": "⇒",
+     "kind": "prose",
+     "reason": "AMBIGUOUS_DIACRITIC_RESTORATION",
+     "alternatives": [
+      "⇒"
+     ],
+     "readings": {
+      "rapidocr": "⇒"
+     },
+     "bbox": [
+      695,
+      268,
+      714,
+      331
+     ],
+     "blocking": true
+    },
+    {
+     "span_id": "sp61",
+     "text": ")",
+     "kind": "prose",
+     "reason": "EMPTY",
+     "alternatives": [
+      ")"
+     ],
+     "readings": {
+      "rapidocr": ")"
+     },
+     "bbox": [
+      712,
+      268,
+      730,
+      330
+     ],
+     "blocking": true
+    },
+    {
+     "span_id": "sp62",
+     "text": "BB",
+     "kind": "math",
+     "reason": "MATH_TOKEN_DISAGREEMENT",
+     "alternatives": [
+      "BB'",
+      "BB",
+      "bBb"
+     ],
+     "readings": {
+      "rapidocr": "BB",
+      "rapidocr_latin_rec": "bBb"
+     },
+     "bbox": [
+      737,
+      266,
+      782,
+      330
+     ],
+     "blocking": true
+    },
+    {
+     "span_id": "sp63",
+     "text": "⊥",
+     "kind": "math",
+     "reason": "RELATION_SYMBOL_DISAGREEMENT",
+     "alternatives": [
+      "⊥",
+      "1",
+      "de"
+     ],
+     "readings": {
+      "rapidocr": "⊥",
+      "rapidocr_latin_rec": "1",
+      "tesseract_eng_line": "de"
+     },
+     "bbox": [
+      789,
+      265,
+      813,
+      328
+     ],
+     "blocking": true
+    },
+    {
+     "span_id": "sp64",
+     "text": "BC",
+     "kind": "math",
+     "reason": "MATH_TOKEN_DISAGREEMENT",
+     "alternatives": [
+      "BC",
+      "¿",
+      "be",
+      "aa"
+     ],
+     "readings": {
+      "rapidocr": "BC",
+      "tesseract": "¿",
+      "rapidocr_latin_rec": "be!",
+      "tesseract_eng_line": "aa"
+     },
+     "bbox": [
+      820,
+      264,
+      866,
+      327
+     ],
+     "blocking": true
+    },
+    {
+     "span_id": "sp65",
+     "text": "r",
+     "kind": "math",
+     "reason": "MATH_TOKEN_DISAGREEMENT",
+     "alternatives": [
+      "r",
+      "Yra"
+     ],
+     "readings": {
+      "rapidocr": "r",
+      "rapidocr_latin_rec": "Yra"
+     },
+     "bbox": [
+      882,
+      263,
+      901,
+      325
+     ],
+     "blocking": true
+    },
+    {
+     "span_id": "sp66",
+     "text": "a",
+     "kind": "math",
+     "reason": "SAME_FAMILY_AGREEMENT_ONLY",
+     "alternatives": [
+      "a",
+      "if"
+     ],
+     "readings": {
+      "rapidocr": "a",
+      "rapidocr_latin_rec": "a",
+      "tesseract_eng_line": "if"
+     },
+     "bbox": [
+      899,
+      262,
+      916,
+      325
+     ],
+     "blocking": true
+    },
+    {
+     "span_id": "sp67",
+     "text": "BC",
+     "kind": "math",
+     "reason": "MATH_TOKEN_DISAGREEMENT",
+     "alternatives": [
+      "BC",
+      "6c",
+      "be"
+     ],
+     "readings": {
+      "rapidocr": "BC",
+      "rapidocr_latin_rec": "6c",
+      "tesseract_eng_line": "be"
+     },
+     "bbox": [
+      914,
+      261,
+      959,
+      324
+     ],
+     "blocking": true
+    },
+    {
+     "span_id": "sp69",
+     "text": "_—ijuh",
+     "kind": "prose",
+     "reason": "NOT_IN_LEXICON",
+     "alternatives": [
+      "_—ijuh",
+      "thinh"
+     ],
+     "readings": {
+      "rapidocr": "thinh",
+      "tesseract": "_—ijuh"
+     },
+     "bbox": [
+      356,
+      334,
+      430,
+      392
+     ],
+     "blocking": true
+    },
+    {
+     "span_id": "sp70",
+     "text": "chiữu",
+     "kind": "prose",
+     "reason": "AMBIGUOUS_DIACRITIC_RESTORATION",
+     "alternatives": [
+      "chiữu",
+      "chiêu"
+     ],
+     "readings": {
+      "rapidocr": "chiêu",
+      "tesseract": "chiữu"
+     },
+     "bbox": [
+      440,
+      331,
+      514,
+      389
+     ],
+     "blocking": true
+    },
+    {
+     "span_id": "sp72",
+     "text": "BC'lên",
+     "kind": "math",
+     "reason": "PRIME_DISAGREEMENT",
+     "alternatives": [
+      "BC'lên",
+      "ÿCÍ",
+      "BClin"
+     ],
+     "readings": {
+      "rapidocr": "BC'lên",
+      "tesseract": "ÿC Í",
+      "rapidocr_latin_rec": "BC lin"
+     },
+     "bbox": [
+      591,
+      326,
+      675,
+      385
+     ],
+     "blocking": true
+    },
+    {
+     "span_id": "sp73",
+     "text": "(A'BC')",
+     "kind": "math",
+     "reason": "PRIME_DISAGREEMENT",
+     "alternatives": [
+      "(A'BC')",
+      "(tc$"
+     ],
+     "readings": {
+      "rapidocr": "(A'BC')",
+      "rapidocr_latin_rec": "(tc $"
+     },
+     "bbox": [
+      676,
+      324,
+      774,
+      382
+     ],
+     "blocking": true
+    },
+    {
+     "span_id": "sp74",
+     "text": "⇒",
+     "kind": "prose",
+     "reason": "AMBIGUOUS_DIACRITIC_RESTORATION",
+     "alternatives": [
+      "⇒"
+     ],
+     "readings": {
+      "rapidocr": "⇒"
+     },
+     "bbox": [
+      381,
+      385,
+      395,
+      449
+     ],
+     "blocking": true
+    },
+    {
+     "span_id": "sp75",
+     "text": ")",
+     "kind": "prose",
+     "reason": "EMPTY",
+     "alternatives": [
+      ")"
+     ],
+     "readings": {
+      "rapidocr": ")"
+     },
+     "bbox": [
+      393,
+      385,
+      407,
+      448
+     ],
+     "blocking": true
+    },
+    {
+     "span_id": "sp76",
+     "text": "（",
+     "kind": "prose",
+     "reason": "AMBIGUOUS_DIACRITIC_RESTORATION",
+     "alternatives": [
+      "（"
+     ],
+     "readings": {
+      "rapidocr": "（"
+     },
+     "bbox": [
+      434,
+      384,
+      447,
+      447
+     ],
+     "blocking": true
+    },
+    {
+     "span_id": "sp77",
+     "text": "BC'",
+     "kind": "math",
+     "reason": "PRIME_DISAGREEMENT",
+     "alternatives": [
+      "BC'",
+      "(s"
+     ],
+     "readings": {
+      "rapidocr": "BC'",
+      "rapidocr_latin_rec": "(s"
+     },
+     "bbox": [
+      445,
+      382,
+      492,
+      447
+     ],
+     "blocking": true
+    },
+    {
+     "span_id": "sp78",
+     "text": "；",
+     "kind": "prose",
+     "reason": "AMBIGUOUS_DIACRITIC_RESTORATION",
+     "alternatives": [
+      "；"
+     ],
+     "readings": {
+      "rapidocr": "；"
+     },
+     "bbox": [
+      497,
+      381,
+      513,
+      445
+     ],
+     "blocking": true
+    },
+    {
+     "span_id": "sp79",
+     "text": "(",
+     "kind": "prose",
+     "reason": "EMPTY",
+     "alternatives": [
+      "("
+     ],
+     "readings": {
+      "rapidocr": "("
+     },
+     "bbox": [
+      518,
+      381,
+      532,
+      444
+     ],
+     "blocking": true
+    },
+    {
+     "span_id": "sp80",
+     "text": "A'B'C'",
+     "kind": "math",
+     "reason": "PRIME_DISAGREEMENT",
+     "alternatives": [
+      "A'B'C'",
+      "ABC"
+     ],
+     "readings": {
+      "rapidocr": "A'B'C'",
+      "rapidocr_latin_rec": "ABC"
+     },
+     "bbox": [
+      530,
+      379,
+      595,
+      444
+     ],
+     "blocking": true
+    },
+    {
+     "span_id": "sp85",
+     "text": "BC'",
+     "kind": "math",
+     "reason": "PRIME_DISAGREEMENT",
+     "alternatives": [
+      "BC'",
+      "tˆ",
+      "ec"
+     ],
+     "readings": {
+      "rapidocr": "BC'",
+      "tesseract": "tˆ",
+      "rapidocr_latin_rec": "ec"
+     },
+     "bbox": [
+      708,
+      373,
+      753,
+      438
+     ],
+     "blocking": true
+    },
+    {
+     "span_id": "sp87",
+     "text": "B'C'",
+     "kind": "math",
+     "reason": "PRIME_DISAGREEMENT",
+     "alternatives": [
+      "B'C'",
+      "B'c",
+      "Ww)"
+     ],
+     "readings": {
+      "rapidocr": "B'C'",
+      "rapidocr_latin_rec": "B'c",
+      "tesseract_eng_line": "Ww)"
+     },
+     "bbox": [
+      771,
+      371,
+      816,
+      436
+     ],
+     "blocking": true
+    },
+    {
+     "span_id": "sp88",
+     "text": ")",
+     "kind": "prose",
+     "reason": "EMPTY",
+     "alternatives": [
+      ")"
+     ],
+     "readings": {
+      "rapidocr": ")"
+     },
+     "bbox": [
+      814,
+      371,
+      829,
+      434
+     ],
+     "blocking": true
+    },
+    {
+     "span_id": "sp89",
+     "text": "=",
+     "kind": "math",
+     "reason": "SAME_FAMILY_AGREEMENT_ONLY",
+     "alternatives": [
+      "=",
+      "Ls"
+     ],
+     "readings": {
+      "rapidocr": "=",
+      "rapidocr_latin_rec": "=",
+      "tesseract_eng_line": "Ls"
+     },
+     "bbox": [
+      834,
+      370,
+      850,
+      434
+     ],
+     "blocking": true
+    },
+    {
+     "span_id": "sp90",
+     "text": "BC'B'",
+     "kind": "math",
+     "reason": "PRIME_DISAGREEMENT",
+     "alternatives": [
+      "BC'B'",
+      "ec"
+     ],
+     "readings": {
+      "rapidocr": "BC'B'",
+      "rapidocr_latin_rec": "ec"
+     },
+     "bbox": [
+      866,
+      367,
+      934,
+      432
+     ],
+     "blocking": true
+    },
+    {
+     "span_id": "sp92",
+     "text": "60",
+     "kind": "math",
+     "reason": "DEGREE_SYMBOL_DISAGREEMENT",
+     "alternatives": [
+      "60",
+      "60°",
+      "“"
+     ],
+     "readings": {
+      "rapidocr": "60",
+      "rapidocr_latin_rec": "60°",
+      "tesseract_eng_line": "“"
+     },
+     "bbox": [
+      961,
+      365,
+      998,
+      429
+     ],
+     "blocking": true
+    },
+    {
+     "span_id": "sp93",
+     "text": "°",
+     "kind": "math",
+     "reason": "DEGREE_SYMBOL_DISAGREEMENT",
+     "alternatives": [
+      "°",
+      "x"
+     ],
+     "readings": {
+      "rapidocr": "°",
+      "rapidocr_latin_rec": ":",
+      "tesseract_eng_line": "x"
+     },
+     "bbox": [
+      1003,
+      365,
+      1015,
+      428
+     ],
+     "blocking": true
+    },
+    {
+     "span_id": "sp98",
+     "text": "ABC",
+     "kind": "math",
+     "reason": "SAME_FAMILY_AGREEMENT_ONLY",
+     "alternatives": [
+      "ABC"
+     ],
+     "readings": {
+      "rapidocr": "ABC",
+      "rapidocr_latin_rec": "ABC."
+     },
+     "bbox": [
+      692,
+      432,
+      760,
+      493
+     ],
+     "blocking": true
+    },
+    {
+     "span_id": "sp99",
+     "text": "BC",
+     "kind": "math",
+     "reason": "SAME_FAMILY_AGREEMENT_ONLY",
+     "alternatives": [
+      "BC"
+     ],
+     "readings": {
+      "rapidocr": "BC",
+      "rapidocr_latin_rec": "BC"
+     },
+     "bbox": [
+      408,
+      491,
+      454,
+      555
+     ],
+     "blocking": true
+    },
+    {
+     "span_id": "sp101",
+     "text": "√",
+     "kind": "math",
+     "reason": "RADICAL_DISAGREEMENT",
+     "alternatives": [
+      "√",
+      "1$"
+     ],
+     "readings": {
+      "rapidocr": "√",
+      "rapidocr_latin_rec": "1$"
+     },
+     "bbox": [
+      490,
+      488,
+      516,
+      551
+     ],
+     "blocking": true
+    },
+    {
+     "span_id": "sp102",
+     "text": "（",
+     "kind": "prose",
+     "reason": "AMBIGUOUS_DIACRITIC_RESTORATION",
+     "alternatives": [
+      "（"
+     ],
+     "readings": {
+      "rapidocr": "（"
+     },
+     "bbox": [
+      513,
+      487,
+      537,
+      550
+     ],
+     "blocking": true
+    },
+    {
+     "span_id": "sp103",
+     "text": "a",
+     "kind": "math",
+     "reason": "MATH_TOKEN_DISAGREEMENT",
+     "alternatives": [
+      "a",
+      "(av"
+     ],
+     "readings": {
+      "rapidocr": "a",
+      "rapidocr_latin_rec": "(av"
+     },
+     "bbox": [
+      534,
+      486,
+      553,
+      549
+     ],
+     "blocking": true
+    },
+    {
+     "span_id": "sp104",
+     "text": "√",
+     "kind": "math",
+     "reason": "RADICAL_DISAGREEMENT",
+     "alternatives": [
+      "√",
+      "\\$",
+      "5"
+     ],
+     "readings": {
+      "rapidocr": "√",
+      "rapidocr_latin_rec": "\\$",
+      "tesseract_eng_line": "5"
+     },
+     "bbox": [
+      550,
+      485,
+      568,
+      548
+     ],
+     "blocking": true
+    },
+    {
+     "span_id": "sp105",
+     "text": "3",
+     "kind": "math",
+     "reason": "MATH_TOKEN_DISAGREEMENT",
+     "alternatives": [
+      "3",
+      "3)",
+      "5)"
+     ],
+     "readings": {
+      "rapidocr": "3",
+      "rapidocr_latin_rec": "3)",
+      "tesseract_eng_line": "5)"
+     },
+     "bbox": [
+      565,
+      485,
+      584,
+      548
+     ],
+     "blocking": true
+    },
+    {
+     "span_id": "sp106",
+     "text": "）",
+     "kind": "prose",
+     "reason": "AMBIGUOUS_DIACRITIC_RESTORATION",
+     "alternatives": [
+      "）"
+     ],
+     "readings": {
+      "rapidocr": "）"
+     },
+     "bbox": [
+      581,
+      484,
+      595,
+      547
+     ],
+     "blocking": true
+    },
+    {
+     "span_id": "sp107",
+     "text": "2",
+     "kind": "math",
+     "reason": "MATH_TOKEN_DISAGREEMENT",
+     "alternatives": [
+      "2",
+      "$",
+      "="
+     ],
+     "readings": {
+      "rapidocr": "2",
+      "rapidocr_latin_rec": "$",
+      "tesseract_eng_line": "="
+     },
+     "bbox": [
+      592,
+      483,
+      612,
+      546
+     ],
+     "blocking": true
+    },
+    {
+     "span_id": "sp108",
+     "text": "-",
+     "kind": "prose",
+     "reason": "AMBIGUOUS_DIACRITIC_RESTORATION",
+     "alternatives": [
+      "-"
+     ],
+     "readings": {
+      "rapidocr": "-"
+     },
+     "bbox": [
+      625,
+      481,
+      653,
+      545
+     ],
+     "blocking": true
+    },
+    {
+     "span_id": "sp109",
+     "text": "a",
+     "kind": "math",
+     "reason": "MATH_TOKEN_DISAGREEMENT",
+     "alternatives": [
+      "a",
+      "a$"
+     ],
+     "readings": {
+      "rapidocr": "a",
+      "rapidocr_latin_rec": "a$"
+     },
+     "bbox": [
+      657,
+      480,
+      683,
+      543
+     ],
+     "blocking": true
+    },
+    {
+     "span_id": "sp110",
+     "text": "2",
+     "kind": "math",
+     "reason": "MATH_TOKEN_DISAGREEMENT",
+     "alternatives": [
+      "2",
+      "$"
+     ],
+     "readings": {
+      "rapidocr": "2",
+      "rapidocr_latin_rec": "$"
+     },
+     "bbox": [
+      680,
+      478,
+      705,
+      542
+     ],
+     "blocking": true
+    },
+    {
+     "span_id": "sp111",
+     "text": "=",
+     "kind": "math",
+     "reason": "MATH_TOKEN_DISAGREEMENT",
+     "alternatives": [
+      "=",
+      "$"
+     ],
+     "readings": {
+      "rapidocr": "=",
+      "rapidocr_latin_rec": "$"
+     },
+     "bbox": [
+      709,
+      477,
+      738,
+      541
+     ],
+     "blocking": true
+    },
+    {
+     "span_id": "sp112",
+     "text": "a",
+     "kind": "math",
+     "reason": "SAME_FAMILY_AGREEMENT_ONLY",
+     "alternatives": [
+      "a",
+      "z="
+     ],
+     "readings": {
+      "rapidocr": "a",
+      "rapidocr_latin_rec": "a",
+      "tesseract_eng_line": "z="
+     },
+     "bbox": [
+      752,
+      475,
+      777,
+      539
+     ],
+     "blocking": true
+    },
+    {
+     "span_id": "sp113",
+     "text": "√",
+     "kind": "math",
+     "reason": "RADICAL_DISAGREEMENT",
+     "alternatives": [
+      "√",
+      "$\\$"
+     ],
+     "readings": {
+      "rapidocr": "√",
+      "rapidocr_latin_rec": "$\\$"
+     },
+     "bbox": [
+      774,
+      474,
+      798,
+      538
+     ],
+     "blocking": true
+    },
+    {
+     "span_id": "sp114",
+     "text": "∑",
+     "kind": "prose",
+     "reason": "AMBIGUOUS_DIACRITIC_RESTORATION",
+     "alternatives": [
+      "∑"
+     ],
+     "readings": {
+      "rapidocr": "∑"
+     },
+     "bbox": [
+      795,
+      473,
+      821,
+      536
+     ],
+     "blocking": true
+    },
+    {
+     "span_id": "sp115",
+     "text": "=",
+     "kind": "math",
+     "reason": "SAME_FAMILY_AGREEMENT_ONLY",
+     "alternatives": [
+      "=",
+      "72"
+     ],
+     "readings": {
+      "rapidocr": "=",
+      "rapidocr_latin_rec": "=",
+      "tesseract_eng_line": "7 2"
+     },
+     "bbox": [
+      846,
+      470,
+      874,
+      534
+     ],
+     "blocking": true
+    },
+    {
+     "span_id": "sp116",
+     "text": "B",
+     "kind": "math",
+     "reason": "PRIME_DISAGREEMENT",
+     "alternatives": [
+      "B",
+      "3'c",
+      "iz"
+     ],
+     "readings": {
+      "rapidocr": "B",
+      "rapidocr_latin_rec": "3'c",
+      "tesseract_eng_line": "iz"
+     },
+     "bbox": [
+      889,
+      468,
+      914,
+      532
+     ],
+     "blocking": true
+    },
+    {
+     "span_id": "sp117",
+     "text": "c",
+     "kind": "math",
+     "reason": "SAME_FAMILY_AGREEMENT_ONLY",
+     "alternatives": [
+      "c"
+     ],
+     "readings": {
+      "rapidocr": "c",
+      "rapidocr_latin_rec": "c",
+      "tesseract_eng_line": "!"
+     },
+     "bbox": [
+      911,
+      467,
+      930,
+      531
+     ],
+     "blocking": true
+    },
+    {
+     "span_id": "sp118",
+     "text": "′",
+     "kind": "math",
+     "reason": "PRIME_DISAGREEMENT",
+     "alternatives": [
+      "'",
+      "y"
+     ],
+     "readings": {
+      "rapidocr": "′",
+      "tesseract_eng_line": "y"
+     },
+     "bbox": [
+      927,
+      467,
+      942,
+      530
+     ],
+     "blocking": true
+    },
+    {
+     "span_id": "sp120",
+     "text": "huynh",
+     "kind": "prose",
+     "reason": "NOT_IN_LEXICON",
+     "alternatives": [
+      "huynh"
+     ],
+     "readings": {
+      "rapidocr": "huynh"
+     },
+     "bbox": [
+      163,
+      560,
+      254,
+      625
+     ],
+     "blocking": true
+    },
+    {
+     "span_id": "sp121",
+     "text": "Tan",
+     "kind": "prose",
+     "reason": "AMBIGUOUS_DIACRITIC_RESTORATION",
+     "alternatives": [
+      "Tan"
+     ],
+     "readings": {
+      "rapidocr": "Tan"
+     },
+     "bbox": [
+      380,
+      600,
+      428,
+      660
+     ],
+     "blocking": true
+    },
+    {
+     "span_id": "sp122",
+     "text": "60°=BrB′",
+     "kind": "math",
+     "reason": "DEGREE_SYMBOL_DISAGREEMENT",
+     "alternatives": [
+      "60°=BrB'",
+      "$60=B$",
+      "issi"
+     ],
+     "readings": {
+      "rapidocr": "60°=BrB′",
+      "rapidocr_latin_rec": "$60=B$",
+      "tesseract_eng_line": "iss i"
+     },
+     "bbox": [
+      429,
+      592,
+      573,
+      658
+     ],
+     "blocking": true
+    },
+    {
+     "span_id": "sp123",
+     "text": "a√2",
+     "kind": "math",
+     "reason": "RADICAL_DISAGREEMENT",
+     "alternatives": [
+      "a√2",
+      "av2",
+      "Wiz"
+     ],
+     "readings": {
+      "rapidocr": "a√2",
+      "rapidocr_latin_rec": "av2",
+      "tesseract_eng_line": "Wiz"
+     },
+     "bbox": [
+      788,
+      636,
+      840,
+      688
+     ],
+     "blocking": true
+    },
+    {
+     "span_id": "sp124",
+     "text": "#",
+     "kind": "prose",
+     "reason": "AMBIGUOUS_DIACRITIC_RESTORATION",
+     "alternatives": [
+      "#"
+     ],
+     "readings": {
+      "rapidocr": "#"
+     },
+     "bbox": [
+      495,
+      695,
+      526,
+      766
+     ],
+     "blocking": true
+    },
+    {
+     "span_id": "sp125",
+     "text": "AB",
+     "kind": "math",
+     "reason": "SAME_FAMILY_AGREEMENT_ONLY",
+     "alternatives": [
+      "AB"
+     ],
+     "readings": {
+      "rapidocr": "AB",
+      "rapidocr_latin_rec": "Ab"
+     },
+     "bbox": [
+      530,
+      692,
+      576,
+      764
+     ],
+     "blocking": true
+    },
+    {
+     "span_id": "sp127",
+     "text": "BC",
+     "kind": "math",
+     "reason": "SAME_FAMILY_AGREEMENT_ONLY",
+     "alternatives": [
+      "BC"
+     ],
+     "readings": {
+      "rapidocr": "BC",
+      "rapidocr_latin_rec": "BC"
+     },
+     "bbox": [
+      590,
+      689,
+      640,
+      761
+     ],
+     "blocking": true
+    },
+    {
+     "span_id": "sp128",
+     "text": "：",
+     "kind": "prose",
+     "reason": "AMBIGUOUS_DIACRITIC_RESTORATION",
+     "alternatives": [
+      "："
+     ],
+     "readings": {
+      "rapidocr": "："
+     },
+     "bbox": [
+      636,
+      688,
+      665,
+      758
+     ],
+     "blocking": true
+    },
+    {
+     "span_id": "sp129",
+     "text": "1",
+     "kind": "math",
+     "reason": "MATH_TOKEN_DISAGREEMENT",
+     "alternatives": [
+      "1",
+      "$"
+     ],
+     "readings": {
+      "rapidocr": "1",
+      "rapidocr_latin_rec": "$"
+     },
+     "bbox": [
+      681,
+      685,
+      710,
+      756
+     ],
+     "blocking": true
+    },
+    {
+     "span_id": "sp131",
+     "text": "a",
+     "kind": "math",
+     "reason": "SAME_FAMILY_AGREEMENT_ONLY",
+     "alternatives": [
+      "a"
+     ],
+     "readings": {
+      "rapidocr": "a",
+      "rapidocr_latin_rec": "a."
+     },
+     "bbox": [
+      729,
+      683,
+      756,
+      753
+     ],
+     "blocking": true
+    },
+    {
+     "span_id": "sp133",
+     "text": "a",
+     "kind": "math",
+     "reason": "SAME_FAMILY_AGREEMENT_ONLY",
+     "alternatives": [
+      "a",
+      "al"
+     ],
+     "readings": {
+      "rapidocr": "a",
+      "rapidocr_latin_rec": "a",
+      "tesseract_eng_line": "al"
+     },
+     "bbox": [
+      770,
+      681,
+      791,
+      751
+     ],
+     "blocking": true
+    },
+    {
+     "span_id": "sp134",
+     "text": "√",
+     "kind": "math",
+     "reason": "RADICAL_DISAGREEMENT",
+     "alternatives": [
+      "√",
+      "\\2$"
+     ],
+     "readings": {
+      "rapidocr": "√",
+      "rapidocr_latin_rec": "\\2$"
+     },
+     "bbox": [
+      787,
+      680,
+      815,
+      750
+     ],
+     "blocking": true
+    },
+    {
+     "span_id": "sp135",
+     "text": "2",
+     "kind": "math",
+     "reason": "MATH_TOKEN_DISAGREEMENT",
+     "alternatives": [
+      "2",
+      "2$",
+      "="
+     ],
+     "readings": {
+      "rapidocr": "2",
+      "rapidocr_latin_rec": "2$",
+      "tesseract_eng_line": "="
+     },
+     "bbox": [
+      811,
+      678,
+      840,
+      749
+     ],
+     "blocking": true
+    },
+    {
+     "span_id": "sp137",
+     "text": "2",
+     "kind": "math",
+     "reason": "SINGLE_READER_MATH_TOKEN",
+     "alternatives": [
+      "2"
+     ],
+     "readings": {
+      "rapidocr": "2"
+     },
+     "bbox": [
+      914,
+      672,
+      945,
+      743
+     ],
+     "blocking": true
+    },
+    {
+     "span_id": "sp139",
+     "text": "2/=12.4。",
+     "kind": "structure",
+     "reason": "FRACTION_STRUCTURE_LOSS",
+     "alternatives": [
+      "2/=12.4。",
+      "2 =12.4。"
+     ],
+     "readings": {
+      "rapidocr": "2 | =12.4。"
+     },
+     "bbox": [
+      330,
+      746,
+      557,
+      910
+     ],
+     "blocking": true
+    },
+    {
+     "span_id": "sp141",
+     "text": "2/av6.2a=3",
+     "kind": "structure",
+     "reason": "FRACTION_STRUCTURE_LOSS",
+     "alternatives": [
+      "2/av6.2a=3",
+      "2 av6.2a=3"
+     ],
+     "readings": {
+      "rapidocr": "2 | av6.2a=3"
+     },
+     "bbox": [
+      734,
+      728,
+      1008,
+      855
+     ],
+     "blocking": true
+    },
+    {
+     "span_id": "sp142",
+     "text": "AABC",
+     "kind": "math",
+     "reason": "SAME_FAMILY_AGREEMENT_ONLY",
+     "alternatives": [
+      "AABC"
+     ],
+     "readings": {
+      "rapidocr": "AABC",
+      "rapidocr_latin_rec": "AABC"
+     },
+     "bbox": [
+      649,
+      831,
+      712,
+      871
+     ],
+     "blocking": true
+    },
+    {
+     "span_id": "sp143",
+     "text": "2",
+     "kind": "math",
+     "reason": "MATH_TOKEN_DISAGREEMENT",
+     "alternatives": [
+      "2",
+      "2$",
+      "ay"
+     ],
+     "readings": {
+      "rapidocr": "2",
+      "rapidocr_latin_rec": "2$",
+      "tesseract_eng_line": "ay"
+     },
+     "bbox": [
+      835,
+      841,
+      867,
+      877
+     ],
+     "blocking": true
+    },
+    {
+     "span_id": "sp144",
+     "text": "",
+     "kind": "structure",
+     "reason": "FRACTION_STRUCTURE_LOSS",
+     "alternatives": [],
+     "readings": {
+      "rapidocr": "2"
+     },
+     "bbox": [
+      832,
+      841,
+      867,
+      877
+     ],
+     "blocking": true
+    }
+   ],
+   "draft_text": "Cho hình lăng trụ đảng - ABCA'BC _8Ð- đáy ABC dam giải vuông tại 13 AB = a | AC = a √ s , g ở c g ai a duing thang BC y8i mặt . tay = 60° Tính thi tích \"qua — khối lăng 3 )ïẽ a √ 3 _® T a c BB ⊥ ( ABC' ） ⇒ ) BB ⊥ BC r a BC _—ijuh chiữu cua BC'lên (A'BC') ⇒ ) （ BC' ； ( A'B'C' ) = (là BC' ; B'C' ) = BC'B' = 60 ° Xét tam giác vuông ABC BC = √ （ a √ 3 ） 2 - a 2 = a √ ∑ = B c ′ lần huynh Tan 60°=BrB′ a√2 # AB . BC ： 1 . a . a √ 2 = 2 a 2 2/av6.2a=3 2/=12.4。 AABC 2"
+  }
+ ]
+}

@@ -1,0 +1,28 @@
+{
+  "run_id": "target-invariant-regular-solid-semantics",
+  "generated_at_utc": "2026-11-14T07:25:58.179662+00:00",
+  "product_commit": "bdc34a89e32c77fd73bff7b38b72d3a3496657e1",
+  "measured_system": "2a18f935e4c29462b0495ff6b0fec46df88e215e0bedcaba84668ec202af62d1",
+  "cache_version": "136",
+  "environment": {
+    "ALLOW_LIVE_AI": "0",
+    "HYBRID_ROUTE_MODE": "local-first",
+    "live_ai_calls": 0
+  },
+  "head": "bcba912e82661ccc8b186e6d93cd2bf7928f06bc",
+  "dataset_partition": "DEVELOPMENT_EXPOSED (REAL27)",
+  "source_facts": "tam giác vuông tại B; SA ⊥ (ABC); SA = AB",
+  "status": "SERVED",
+  "answer_exact": {
+    "q1": {
+      "coef": "1/2",
+      "dim": 0,
+      "unit": null
+    }
+  },
+  "hand_check": "B origin, BA = (1,0,0), BC = (0,c,0), S = (1,0,1): n(SBC) = BS × BC = (−c,0,c), n(ABC) = (0,0,1) ⇒ cos² = c²/(2c²) = 1/2 for every c ≠ 0 (45°)",
+  "scene_kind": "TARGET_INVARIANT_ILLUSTRATIVE",
+  "unique": false,
+  "final_answer_shown": false,
+  "verdict": "SERVED_UNDER_PROOF"
+}

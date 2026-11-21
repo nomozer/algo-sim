@@ -1,0 +1,16 @@
+--- a/backend/app/main.py
++++ b/backend/app/main.py
+@@ -966,11 +966,11 @@
+ 
+ 
+ def hybrid_route_mode() -> str:
+-    """Đọc chế độ định tuyến Hybrid `/4`. Trống/chưa đặt ⇒ `live` (mặc định sản phẩm).
++    """Đọc chế độ định tuyến Hybrid `/4` / `/9`. Trống/chưa đặt ⇒ `local-only-scoped` (cutover ngoại tuyến).
+     Giá trị lạ (kể cả `off` đã ngừng sử dụng) ⇒ `invalid` để fail-closed HTTP 503, không lùi về kiến trúc cũ."""
+     raw = os.getenv("HYBRID_ROUTE_MODE")
+     if raw is None or not raw.strip():
+-        return "live"
++        return "local-only-scoped"
+     cleaned = raw.strip()
+     return cleaned if cleaned in HYBRID_ROUTE_MODES else "invalid"
+ 

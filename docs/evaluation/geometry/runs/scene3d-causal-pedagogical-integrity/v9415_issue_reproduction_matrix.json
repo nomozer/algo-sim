@@ -1,0 +1,116 @@
+{
+  "run_id": "scene3d-causal-pedagogical-integrity",
+  "generated_at_utc": "2026-11-14T15:39:13.820636+00:00",
+  "product_commit": "a2874d273959970faa501879f4f9dbfe20c93975",
+  "measured_system": "225f4bba5a8765ccd1c12507ce6dbd0bab25d69d02263148cf94752f921e2b56",
+  "cache_version": "138",
+  "dataset_partition": "DEVELOPMENT (agent-written corpus, exposed REAL27, exposed probes); never H-1 or locked W2/W3",
+  "environment": {
+    "ALLOW_LIVE_AI": "0",
+    "HYBRID_ROUTE_MODE": "local-first",
+    "live_ai_calls": 0
+  },
+  "head": "6da2795a493d6097add56294832f0d5a7ea1ef13",
+  "heads": {
+    "this_worktree": "b99a46287a28fa520b6691be66e4c39533e75f48",
+    "library": "b57df99cf73bccd827e1babad21af699c889b3d4"
+  },
+  "rows": {
+    "GEO-BE-V9415-004": {
+      "classification": "CONFIRMED_STATIC_FIXTURE",
+      "generator": "none (hand-authored frontend fixture)",
+      "reproduced_on_this_branch": {
+        "READOUT_IDS_MISSING": [
+          0,
+          1
+        ],
+        "CAUSAL_BIRTH_ORDER": [
+          [
+            "K",
+            5,
+            "SB_line",
+            "no CREATE event"
+          ]
+        ]
+      },
+      "on_library_head": {},
+      "status": "FIXED_IN_LIBRARY (b5810dcc3); this branch's copy stale; READOUT_IDS_MISSING remains in archetype multi_layer_aux_pyramid of the library"
+    },
+    "GEO-BE-V9415-003": {
+      "classification": "CROSS_LAYER_CONTRACT (static fixture + backend visible_prerequisites)",
+      "reproduced_on_this_branch": {
+        "": {
+          "violations": {
+            "HIDDEN_MATH_VISUAL_DEPENDENCY": 2
+          },
+          "examples": {
+            "HIDDEN_MATH_VISUAL_DEPENDENCY": [
+              [
+                "A_prime",
+                "vec_OB"
+              ],
+              [
+                "D",
+                "vec_OC"
+              ]
+            ]
+          },
+          "orphans_not_flagged": [],
+          "unused_auxiliary_flagged": []
+        }
+      },
+      "on_library_head": 0,
+      "backend": "visible_prerequisites (9d5e9b408) + this run: dependency-free carriers (a given radius R) are source data, never a visual prerequisite",
+      "status": "FIXED (library fixture clean; backend generalization in 70befe6f1)"
+    },
+    "GEO-BE-V9415-002": {
+      "classification": "CONFIRMED_BACKEND_GENERATOR",
+      "route_d_generic_measure_texts": {
+        "before": 0,
+        "after": 0
+      },
+      "status": "FIXED by owner commit 9d5e9b408 (verified independently, 0 generic texts on 111 served scenes)"
+    },
+    "GEO-BE-V9415-001": {
+      "classification": "CONFIRMED_BACKEND_GENERATOR (catalog: library generator; Route D: this branch)",
+      "route_d_reproduced": "(MNP) through midpoints of SA, BC, CD: vertices on SB and SD appeared with no reason",
+      "route_d_section_edges_without_reason": {
+        "before": 18,
+        "after": 2
+      },
+      "catalog": "orphan O / coplanar construction delivered by 9d5e9b408 and integrated in the library",
+      "status": "FIXED on Route D by the trace method (fac7ead77); 2 edges of a plane 'chứa BD và song song SC' remain without reason (needs a diagonal auxiliary plane)"
+    },
+    "ROUTE_D_UNUSED_AUXILIARY": {
+      "classification": "CONFIRMED_BACKEND_ADAPTER (found by this run's sweep)",
+      "before": {
+        "COMP:mc_label_list": [
+          "N"
+        ],
+        "DEV37:int_goal": [
+          "gt_g_il2"
+        ],
+        "DEV37:int_goal_mp": [
+          "gt_g_il2"
+        ]
+      },
+      "after": {},
+      "status": "FIXED (the asked intersection line and a source-stated point were flagged unused)"
+    },
+    "RIGHT_ANGLE_NOT_DRAWN": {
+      "classification": "CONFIRMED_BACKEND_GENERATOR",
+      "before": {
+        "line_perpendicular_plane": 2,
+        "null": 3,
+        "line_perpendicular_line": 1
+      },
+      "after": {
+        "line_perpendicular_plane": 2,
+        "plane_plane": 2,
+        "line_perpendicular_line": 1,
+        "line_line_skew": 1
+      },
+      "status": "FIXED"
+    }
+  }
+}

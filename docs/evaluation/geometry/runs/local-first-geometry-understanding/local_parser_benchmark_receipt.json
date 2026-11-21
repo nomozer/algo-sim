@@ -1,0 +1,3649 @@
+{
+  "schema": "algosim-local-parser-benchmark-receipt/1",
+  "parser_version": "local-geometry-parser/1",
+  "router_version": "adaptive-input-router/1",
+  "typed_fact_next_schema": "typed-fact-next/2",
+  "bridge_version": "typed-fact-next-bridge/2",
+  "planner_version": "geometry-fact-planner/26",
+  "registry_version": "geometry-functions/33",
+  "engine_version": "geometry-function-engine/24",
+  "allow_live_ai": 0,
+  "aggregate": {
+    "total_cases": 196,
+    "supported_positive_cases": 139,
+    "supported_positive_solved": 139,
+    "supported_positive_accuracy_pct": 100.0,
+    "gap_probe_cases": 10,
+    "gap_probes_fail_closed_exact": 10,
+    "negative_cases": 47,
+    "negative_correct": 47,
+    "wrong_served_count": 0,
+    "false_refusal_count": 0,
+    "total_ai_calls": 0,
+    "peak_rss_mb": 55.35
+  },
+  "suites": {
+    "Dev72": {
+      "suite_name": "Dev72",
+      "total_cases": 72,
+      "supported_positive_cases": 57,
+      "supported_positive_solved": 57,
+      "supported_positive_accuracy_pct": 100.0,
+      "gap_probe_cases": 6,
+      "gap_probes_fail_closed_exact": 6,
+      "negative_cases": 9,
+      "negative_correct": 9,
+      "wrong_served_count": 0,
+      "false_refusal_count": 0,
+      "total_ai_calls": 0,
+      "parse_latency_p50_ms": 11.374,
+      "parse_latency_p95_ms": 23.829,
+      "end_to_end_latency_p50_ms": 29.375,
+      "end_to_end_latency_p95_ms": 56.046
+    },
+    "HeldOut46": {
+      "suite_name": "HeldOut46",
+      "total_cases": 46,
+      "supported_positive_cases": 35,
+      "supported_positive_solved": 35,
+      "supported_positive_accuracy_pct": 100.0,
+      "gap_probe_cases": 4,
+      "gap_probes_fail_closed_exact": 4,
+      "negative_cases": 7,
+      "negative_correct": 7,
+      "wrong_served_count": 0,
+      "false_refusal_count": 0,
+      "total_ai_calls": 0,
+      "parse_latency_p50_ms": 10.456,
+      "parse_latency_p95_ms": 18.455,
+      "end_to_end_latency_p50_ms": 29.526,
+      "end_to_end_latency_p95_ms": 50.635
+    },
+    "K-1": {
+      "suite_name": "K-1",
+      "total_cases": 16,
+      "supported_positive_cases": 10,
+      "supported_positive_solved": 10,
+      "supported_positive_accuracy_pct": 100.0,
+      "gap_probe_cases": 0,
+      "gap_probes_fail_closed_exact": 0,
+      "negative_cases": 6,
+      "negative_correct": 6,
+      "wrong_served_count": 0,
+      "false_refusal_count": 0,
+      "total_ai_calls": 0,
+      "parse_latency_p50_ms": 15.712,
+      "parse_latency_p95_ms": 32.738,
+      "end_to_end_latency_p50_ms": 46.514,
+      "end_to_end_latency_p95_ms": 72.119
+    },
+    "R-1": {
+      "suite_name": "R-1",
+      "total_cases": 18,
+      "supported_positive_cases": 14,
+      "supported_positive_solved": 14,
+      "supported_positive_accuracy_pct": 100.0,
+      "gap_probe_cases": 0,
+      "gap_probes_fail_closed_exact": 0,
+      "negative_cases": 4,
+      "negative_correct": 4,
+      "wrong_served_count": 0,
+      "false_refusal_count": 0,
+      "total_ai_calls": 0,
+      "parse_latency_p50_ms": 11.736,
+      "parse_latency_p95_ms": 29.459,
+      "end_to_end_latency_p50_ms": 32.513,
+      "end_to_end_latency_p95_ms": 69.242
+    },
+    "S-2": {
+      "suite_name": "S-2",
+      "total_cases": 36,
+      "supported_positive_cases": 17,
+      "supported_positive_solved": 17,
+      "supported_positive_accuracy_pct": 100.0,
+      "gap_probe_cases": 0,
+      "gap_probes_fail_closed_exact": 0,
+      "negative_cases": 19,
+      "negative_correct": 19,
+      "wrong_served_count": 0,
+      "false_refusal_count": 0,
+      "total_ai_calls": 0,
+      "parse_latency_p50_ms": 4.813,
+      "parse_latency_p95_ms": 11.871,
+      "end_to_end_latency_p50_ms": 16.387,
+      "end_to_end_latency_p95_ms": 31.78
+    },
+    "RenamedAndParaphrased8": {
+      "suite_name": "RenamedAndParaphrased8",
+      "total_cases": 8,
+      "supported_positive_cases": 6,
+      "supported_positive_solved": 6,
+      "supported_positive_accuracy_pct": 100.0,
+      "gap_probe_cases": 0,
+      "gap_probes_fail_closed_exact": 0,
+      "negative_cases": 2,
+      "negative_correct": 2,
+      "wrong_served_count": 0,
+      "false_refusal_count": 0,
+      "total_ai_calls": 0,
+      "parse_latency_p50_ms": 9.864,
+      "parse_latency_p95_ms": 24.757,
+      "end_to_end_latency_p50_ms": 25.904,
+      "end_to_end_latency_p95_ms": 72.949
+    }
+  },
+  "per_suite_cases": {
+    "Dev72": [
+      {
+        "id": "PP1",
+        "kind": "supported_positive",
+        "parse_status": "LOCAL_PARSE_COMPLETE",
+        "coverage_complete": true,
+        "status": "SERVED",
+        "answers": [
+          "√2"
+        ],
+        "error_code": null,
+        "expected_answers": [
+          "2"
+        ],
+        "expected_code": null,
+        "passed": true,
+        "parse_latency_ms": 47.198,
+        "total_latency_ms": 67.786,
+        "ai_calls": 0
+      },
+      {
+        "id": "PP2",
+        "kind": "supported_positive",
+        "parse_status": "LOCAL_PARSE_COMPLETE",
+        "coverage_complete": true,
+        "status": "SERVED",
+        "answers": [
+          "√2/2"
+        ],
+        "error_code": null,
+        "expected_answers": [
+          "1/2"
+        ],
+        "expected_code": null,
+        "passed": true,
+        "parse_latency_ms": 11.598,
+        "total_latency_ms": 30.749,
+        "ai_calls": 0
+      },
+      {
+        "id": "PP3",
+        "kind": "supported_positive",
+        "parse_status": "LOCAL_PARSE_COMPLETE",
+        "coverage_complete": true,
+        "status": "SERVED",
+        "answers": [
+          "2/3"
+        ],
+        "error_code": null,
+        "expected_answers": [
+          "4/9"
+        ],
+        "expected_code": null,
+        "passed": true,
+        "parse_latency_ms": 10.032,
+        "total_latency_ms": 28.142,
+        "ai_calls": 0
+      },
+      {
+        "id": "PP4",
+        "kind": "supported_positive",
+        "parse_status": "LOCAL_PARSE_COMPLETE",
+        "coverage_complete": true,
+        "status": "SERVED",
+        "answers": [
+          "√2/2"
+        ],
+        "error_code": null,
+        "expected_answers": [
+          "1/2"
+        ],
+        "expected_code": null,
+        "passed": true,
+        "parse_latency_ms": 12.488,
+        "total_latency_ms": 35.504,
+        "ai_calls": 0
+      },
+      {
+        "id": "PP5",
+        "kind": "supported_positive",
+        "parse_status": "LOCAL_PARSE_COMPLETE",
+        "coverage_complete": true,
+        "status": "SERVED",
+        "answers": [
+          "1"
+        ],
+        "error_code": null,
+        "expected_answers": [
+          "1"
+        ],
+        "expected_code": null,
+        "passed": true,
+        "parse_latency_ms": 15.317,
+        "total_latency_ms": 37.362,
+        "ai_calls": 0
+      },
+      {
+        "id": "PP6",
+        "kind": "supported_positive",
+        "parse_status": "LOCAL_PARSE_COMPLETE",
+        "coverage_complete": true,
+        "status": "SERVED",
+        "answers": [
+          "√2"
+        ],
+        "error_code": null,
+        "expected_answers": [
+          "2"
+        ],
+        "expected_code": null,
+        "passed": true,
+        "parse_latency_ms": 9.824,
+        "total_latency_ms": 27.9,
+        "ai_calls": 0
+      },
+      {
+        "id": "PL1",
+        "kind": "supported_positive",
+        "parse_status": "LOCAL_PARSE_COMPLETE",
+        "coverage_complete": true,
+        "status": "SERVED",
+        "answers": [
+          "2√6/3"
+        ],
+        "error_code": null,
+        "expected_answers": [
+          "8/3"
+        ],
+        "expected_code": null,
+        "passed": true,
+        "parse_latency_ms": 14.363,
+        "total_latency_ms": 35.377,
+        "ai_calls": 0
+      },
+      {
+        "id": "PL2",
+        "kind": "supported_positive",
+        "parse_status": "LOCAL_PARSE_COMPLETE",
+        "coverage_complete": true,
+        "status": "SERVED",
+        "answers": [
+          "√6"
+        ],
+        "error_code": null,
+        "expected_answers": [
+          "6"
+        ],
+        "expected_code": null,
+        "passed": true,
+        "parse_latency_ms": 14.297,
+        "total_latency_ms": 33.812,
+        "ai_calls": 0
+      },
+      {
+        "id": "PL3",
+        "kind": "supported_positive",
+        "parse_status": "LOCAL_PARSE_COMPLETE",
+        "coverage_complete": true,
+        "status": "SERVED",
+        "answers": [
+          "1"
+        ],
+        "error_code": null,
+        "expected_answers": [
+          "1"
+        ],
+        "expected_code": null,
+        "passed": true,
+        "parse_latency_ms": 12.041,
+        "total_latency_ms": 33.318,
+        "ai_calls": 0
+      },
+      {
+        "id": "PL4",
+        "kind": "supported_positive",
+        "parse_status": "LOCAL_PARSE_COMPLETE",
+        "coverage_complete": true,
+        "status": "SERVED",
+        "answers": [
+          "√6/3"
+        ],
+        "error_code": null,
+        "expected_answers": [
+          "2/3"
+        ],
+        "expected_code": null,
+        "passed": true,
+        "parse_latency_ms": 13.976,
+        "total_latency_ms": 37.011,
+        "ai_calls": 0
+      },
+      {
+        "id": "PL5",
+        "kind": "gap_probe",
+        "parse_status": "LOCAL_PARSE_COMPLETE",
+        "coverage_complete": true,
+        "status": "REFUSED",
+        "answers": [],
+        "error_code": "BRIDGE_UNSUPPORTED_DESCRIBED_POINT",
+        "expected_answers": null,
+        "expected_code": "BRIDGE_INVALID_REFERENCE",
+        "passed": true,
+        "parse_latency_ms": 1.71,
+        "total_latency_ms": 2.698,
+        "ai_calls": 0
+      },
+      {
+        "id": "PL6",
+        "kind": "supported_positive",
+        "parse_status": "LOCAL_PARSE_COMPLETE",
+        "coverage_complete": true,
+        "status": "SERVED",
+        "answers": [
+          "0"
+        ],
+        "error_code": null,
+        "expected_answers": [
+          "0"
+        ],
+        "expected_code": null,
+        "passed": true,
+        "parse_latency_ms": 12.447,
+        "total_latency_ms": 32.782,
+        "ai_calls": 0
+      },
+      {
+        "id": "PL7",
+        "kind": "supported_positive",
+        "parse_status": "LOCAL_PARSE_COMPLETE",
+        "coverage_complete": true,
+        "status": "SERVED",
+        "answers": [
+          "3"
+        ],
+        "error_code": null,
+        "expected_answers": [
+          "9"
+        ],
+        "expected_code": null,
+        "passed": true,
+        "parse_latency_ms": 13.879,
+        "total_latency_ms": 36.454,
+        "ai_calls": 0
+      },
+      {
+        "id": "PR1",
+        "kind": "supported_positive",
+        "parse_status": "LOCAL_PARSE_COMPLETE",
+        "coverage_complete": true,
+        "status": "SERVED",
+        "answers": [
+          "12√61/61"
+        ],
+        "error_code": null,
+        "expected_answers": [
+          "144/61"
+        ],
+        "expected_code": null,
+        "passed": true,
+        "parse_latency_ms": 10.414,
+        "total_latency_ms": 27.557,
+        "ai_calls": 0
+      },
+      {
+        "id": "PR2",
+        "kind": "supported_positive",
+        "parse_status": "LOCAL_PARSE_COMPLETE",
+        "coverage_complete": true,
+        "status": "SERVED",
+        "answers": [
+          "2√61/5"
+        ],
+        "error_code": null,
+        "expected_answers": [
+          "244/25"
+        ],
+        "expected_code": null,
+        "passed": true,
+        "parse_latency_ms": 11.529,
+        "total_latency_ms": 33.101,
+        "ai_calls": 0
+      },
+      {
+        "id": "PR3",
+        "kind": "supported_positive",
+        "parse_status": "LOCAL_PARSE_COMPLETE",
+        "coverage_complete": true,
+        "status": "SERVED",
+        "answers": [
+          "9/13"
+        ],
+        "error_code": null,
+        "expected_answers": [
+          "9/13"
+        ],
+        "expected_code": null,
+        "passed": true,
+        "parse_latency_ms": 10.794,
+        "total_latency_ms": 29.04,
+        "ai_calls": 0
+      },
+      {
+        "id": "PR4",
+        "kind": "supported_positive",
+        "parse_status": "LOCAL_PARSE_COMPLETE",
+        "coverage_complete": true,
+        "status": "SERVED",
+        "answers": [
+          "36/61"
+        ],
+        "error_code": null,
+        "expected_answers": [
+          "36/61"
+        ],
+        "expected_code": null,
+        "passed": true,
+        "parse_latency_ms": 9.738,
+        "total_latency_ms": 28.203,
+        "ai_calls": 0
+      },
+      {
+        "id": "PR5",
+        "kind": "supported_positive",
+        "parse_status": "LOCAL_PARSE_COMPLETE",
+        "coverage_complete": true,
+        "status": "SERVED",
+        "answers": [
+          "12/5"
+        ],
+        "error_code": null,
+        "expected_answers": [
+          "144/25"
+        ],
+        "expected_code": null,
+        "passed": true,
+        "parse_latency_ms": 13.325,
+        "total_latency_ms": 33.592,
+        "ai_calls": 0
+      },
+      {
+        "id": "PR6",
+        "kind": "supported_positive",
+        "parse_status": "LOCAL_PARSE_COMPLETE",
+        "coverage_complete": true,
+        "status": "SERVED",
+        "answers": [
+          "12√61/61"
+        ],
+        "error_code": null,
+        "expected_answers": [
+          "144/61"
+        ],
+        "expected_code": null,
+        "passed": true,
+        "parse_latency_ms": 11.328,
+        "total_latency_ms": 30.157,
+        "ai_calls": 0
+      },
+      {
+        "id": "PR7",
+        "kind": "supported_positive",
+        "parse_status": "LOCAL_PARSE_COMPLETE",
+        "coverage_complete": true,
+        "status": "SERVED",
+        "answers": [
+          "√41/2"
+        ],
+        "error_code": null,
+        "expected_answers": [
+          "41/4"
+        ],
+        "expected_code": null,
+        "passed": true,
+        "parse_latency_ms": 12.44,
+        "total_latency_ms": 38.166,
+        "ai_calls": 0
+      },
+      {
+        "id": "PR8",
+        "kind": "supported_positive",
+        "parse_status": "LOCAL_PARSE_COMPLETE",
+        "coverage_complete": true,
+        "status": "SERVED",
+        "answers": [
+          "2"
+        ],
+        "error_code": null,
+        "expected_answers": [
+          "4"
+        ],
+        "expected_code": null,
+        "passed": true,
+        "parse_latency_ms": 11.496,
+        "total_latency_ms": 30.336,
+        "ai_calls": 0
+      },
+      {
+        "id": "AN1",
+        "kind": "supported_positive",
+        "parse_status": "LOCAL_PARSE_COMPLETE",
+        "coverage_complete": true,
+        "status": "SERVED",
+        "answers": [
+          "2/3"
+        ],
+        "error_code": null,
+        "expected_answers": [
+          "2/3"
+        ],
+        "expected_code": null,
+        "passed": true,
+        "parse_latency_ms": 9.364,
+        "total_latency_ms": 25.227,
+        "ai_calls": 0
+      },
+      {
+        "id": "AN2",
+        "kind": "supported_positive",
+        "parse_status": "LOCAL_PARSE_COMPLETE",
+        "coverage_complete": true,
+        "status": "SERVED",
+        "answers": [
+          "1/2"
+        ],
+        "error_code": null,
+        "expected_answers": [
+          "1/2"
+        ],
+        "expected_code": null,
+        "passed": true,
+        "parse_latency_ms": 8.821,
+        "total_latency_ms": 24.117,
+        "ai_calls": 0
+      },
+      {
+        "id": "AN3",
+        "kind": "supported_positive",
+        "parse_status": "LOCAL_PARSE_COMPLETE",
+        "coverage_complete": true,
+        "status": "SERVED",
+        "answers": [
+          "1/2"
+        ],
+        "error_code": null,
+        "expected_answers": [
+          "1/2"
+        ],
+        "expected_code": null,
+        "passed": true,
+        "parse_latency_ms": 10.614,
+        "total_latency_ms": 26.984,
+        "ai_calls": 0
+      },
+      {
+        "id": "AN4",
+        "kind": "supported_positive",
+        "parse_status": "LOCAL_PARSE_COMPLETE",
+        "coverage_complete": true,
+        "status": "SERVED",
+        "answers": [
+          "5/9"
+        ],
+        "error_code": null,
+        "expected_answers": [
+          "5/9"
+        ],
+        "expected_code": null,
+        "passed": true,
+        "parse_latency_ms": 8.93,
+        "total_latency_ms": 24.923,
+        "ai_calls": 0
+      },
+      {
+        "id": "AN5",
+        "kind": "supported_positive",
+        "parse_status": "LOCAL_PARSE_COMPLETE",
+        "coverage_complete": true,
+        "status": "SERVED",
+        "answers": [
+          "2/3"
+        ],
+        "error_code": null,
+        "expected_answers": [
+          "2/3"
+        ],
+        "expected_code": null,
+        "passed": true,
+        "parse_latency_ms": 9.109,
+        "total_latency_ms": 24.829,
+        "ai_calls": 0
+      },
+      {
+        "id": "AN6",
+        "kind": "supported_positive",
+        "parse_status": "LOCAL_PARSE_COMPLETE",
+        "coverage_complete": true,
+        "status": "SERVED",
+        "answers": [
+          "1/6"
+        ],
+        "error_code": null,
+        "expected_answers": [
+          "1/6"
+        ],
+        "expected_code": null,
+        "passed": true,
+        "parse_latency_ms": 9.513,
+        "total_latency_ms": 26.326,
+        "ai_calls": 0
+      },
+      {
+        "id": "AN7",
+        "kind": "supported_positive",
+        "parse_status": "LOCAL_PARSE_COMPLETE",
+        "coverage_complete": true,
+        "status": "SERVED",
+        "answers": [
+          "3/5"
+        ],
+        "error_code": null,
+        "expected_answers": [
+          "3/5"
+        ],
+        "expected_code": null,
+        "passed": true,
+        "parse_latency_ms": 8.938,
+        "total_latency_ms": 27.11,
+        "ai_calls": 0
+      },
+      {
+        "id": "PE1",
+        "kind": "supported_positive",
+        "parse_status": "LOCAL_PARSE_COMPLETE",
+        "coverage_complete": true,
+        "status": "SERVED",
+        "answers": [
+          "0"
+        ],
+        "error_code": null,
+        "expected_answers": [
+          "0"
+        ],
+        "expected_code": null,
+        "passed": true,
+        "parse_latency_ms": 10.484,
+        "total_latency_ms": 27.335,
+        "ai_calls": 0
+      },
+      {
+        "id": "PE2",
+        "kind": "supported_positive",
+        "parse_status": "LOCAL_PARSE_COMPLETE",
+        "coverage_complete": true,
+        "status": "SERVED",
+        "answers": [
+          "6/7"
+        ],
+        "error_code": null,
+        "expected_answers": [
+          "36/49"
+        ],
+        "expected_code": null,
+        "passed": true,
+        "parse_latency_ms": 9.011,
+        "total_latency_ms": 22.396,
+        "ai_calls": 0
+      },
+      {
+        "id": "PE3",
+        "kind": "supported_positive",
+        "parse_status": "LOCAL_PARSE_COMPLETE",
+        "coverage_complete": true,
+        "status": "SERVED",
+        "answers": [
+          "36/49"
+        ],
+        "error_code": null,
+        "expected_answers": [
+          "36/49"
+        ],
+        "expected_code": null,
+        "passed": true,
+        "parse_latency_ms": 9.392,
+        "total_latency_ms": 23.785,
+        "ai_calls": 0
+      },
+      {
+        "id": "PE4",
+        "kind": "supported_positive",
+        "parse_status": "LOCAL_PARSE_COMPLETE",
+        "coverage_complete": true,
+        "status": "SERVED",
+        "answers": [
+          "6√13/13"
+        ],
+        "error_code": null,
+        "expected_answers": [
+          "36/13"
+        ],
+        "expected_code": null,
+        "passed": true,
+        "parse_latency_ms": 12.278,
+        "total_latency_ms": 28.202,
+        "ai_calls": 0
+      },
+      {
+        "id": "PE5",
+        "kind": "supported_positive",
+        "parse_status": "LOCAL_PARSE_COMPLETE",
+        "coverage_complete": true,
+        "status": "SERVED",
+        "answers": [
+          "6/7"
+        ],
+        "error_code": null,
+        "expected_answers": [
+          "36/49"
+        ],
+        "expected_code": null,
+        "passed": true,
+        "parse_latency_ms": 9.948,
+        "total_latency_ms": 25.146,
+        "ai_calls": 0
+      },
+      {
+        "id": "PE6",
+        "kind": "supported_positive",
+        "parse_status": "LOCAL_PARSE_COMPLETE",
+        "coverage_complete": true,
+        "status": "SERVED",
+        "answers": [
+          "1"
+        ],
+        "error_code": null,
+        "expected_answers": [
+          "1"
+        ],
+        "expected_code": null,
+        "passed": true,
+        "parse_latency_ms": 9.849,
+        "total_latency_ms": 22.307,
+        "ai_calls": 0
+      },
+      {
+        "id": "PY1",
+        "kind": "supported_positive",
+        "parse_status": "LOCAL_PARSE_COMPLETE",
+        "coverage_complete": true,
+        "status": "SERVED",
+        "answers": [
+          "12/5"
+        ],
+        "error_code": null,
+        "expected_answers": [
+          "144/25"
+        ],
+        "expected_code": null,
+        "passed": true,
+        "parse_latency_ms": 9.622,
+        "total_latency_ms": 24.985,
+        "ai_calls": 0
+      },
+      {
+        "id": "PY2",
+        "kind": "supported_positive",
+        "parse_status": "LOCAL_PARSE_COMPLETE",
+        "coverage_complete": true,
+        "status": "SERVED",
+        "answers": [
+          "6"
+        ],
+        "error_code": null,
+        "expected_answers": [
+          "36"
+        ],
+        "expected_code": null,
+        "passed": true,
+        "parse_latency_ms": 9.757,
+        "total_latency_ms": 25.723,
+        "ai_calls": 0
+      },
+      {
+        "id": "PA1",
+        "kind": "supported_positive",
+        "parse_status": "LOCAL_PARSE_COMPLETE",
+        "coverage_complete": true,
+        "status": "SERVED",
+        "answers": [
+          "√2"
+        ],
+        "error_code": null,
+        "expected_answers": [
+          "2"
+        ],
+        "expected_code": null,
+        "passed": true,
+        "parse_latency_ms": 11.42,
+        "total_latency_ms": 29.711,
+        "ai_calls": 0
+      },
+      {
+        "id": "PA2",
+        "kind": "supported_positive",
+        "parse_status": "LOCAL_PARSE_COMPLETE",
+        "coverage_complete": true,
+        "status": "SERVED",
+        "answers": [
+          "√2"
+        ],
+        "error_code": null,
+        "expected_answers": [
+          "2"
+        ],
+        "expected_code": null,
+        "passed": true,
+        "parse_latency_ms": 12.039,
+        "total_latency_ms": 32.205,
+        "ai_calls": 0
+      },
+      {
+        "id": "PA3",
+        "kind": "gap_probe",
+        "parse_status": "LOCAL_PARSE_COMPLETE",
+        "coverage_complete": true,
+        "status": "REFUSED",
+        "answers": [],
+        "error_code": "BRIDGE_UNSUPPORTED_DESCRIBED_POINT",
+        "expected_answers": null,
+        "expected_code": "BRIDGE_INVALID_REFERENCE",
+        "passed": true,
+        "parse_latency_ms": 2.417,
+        "total_latency_ms": 3.192,
+        "ai_calls": 0
+      },
+      {
+        "id": "SE1",
+        "kind": "supported_positive",
+        "parse_status": "LOCAL_PARSE_COMPLETE",
+        "coverage_complete": true,
+        "status": "SERVED",
+        "answers": [
+          "1"
+        ],
+        "error_code": null,
+        "expected_answers": [
+          "1"
+        ],
+        "expected_code": null,
+        "passed": true,
+        "parse_latency_ms": 21.706,
+        "total_latency_ms": 52.78,
+        "ai_calls": 0
+      },
+      {
+        "id": "SE2",
+        "kind": "supported_positive",
+        "parse_status": "LOCAL_PARSE_COMPLETE",
+        "coverage_complete": true,
+        "status": "SERVED",
+        "answers": [
+          "2√3/3"
+        ],
+        "error_code": null,
+        "expected_answers": [
+          "4/3"
+        ],
+        "expected_code": null,
+        "passed": true,
+        "parse_latency_ms": 16.064,
+        "total_latency_ms": 48.174,
+        "ai_calls": 0
+      },
+      {
+        "id": "SE3",
+        "kind": "gap_probe",
+        "parse_status": "LOCAL_PARSE_COMPLETE",
+        "coverage_complete": true,
+        "status": "REFUSED",
+        "answers": [],
+        "error_code": "SOURCE_OBJECT_MISMATCH",
+        "expected_answers": null,
+        "expected_code": "SOURCE_OBJECT_MISMATCH",
+        "passed": true,
+        "parse_latency_ms": 6.18,
+        "total_latency_ms": 10.908,
+        "ai_calls": 0
+      },
+      {
+        "id": "SE4",
+        "kind": "supported_positive",
+        "parse_status": "LOCAL_PARSE_COMPLETE",
+        "coverage_complete": true,
+        "status": "SERVED",
+        "answers": [
+          "7√2/8"
+        ],
+        "error_code": null,
+        "expected_answers": [
+          "49/32"
+        ],
+        "expected_code": null,
+        "passed": true,
+        "parse_latency_ms": 36.266,
+        "total_latency_ms": 82.088,
+        "ai_calls": 0
+      },
+      {
+        "id": "RE1",
+        "kind": "supported_positive",
+        "parse_status": "LOCAL_PARSE_COMPLETE",
+        "coverage_complete": true,
+        "status": "SERVED",
+        "answers": [
+          "2"
+        ],
+        "error_code": null,
+        "expected_answers": [
+          "4"
+        ],
+        "expected_code": null,
+        "passed": true,
+        "parse_latency_ms": 9.198,
+        "total_latency_ms": 32.88,
+        "ai_calls": 0
+      },
+      {
+        "id": "RE2",
+        "kind": "supported_positive",
+        "parse_status": "LOCAL_PARSE_COMPLETE",
+        "coverage_complete": true,
+        "status": "SERVED",
+        "answers": [
+          "√3"
+        ],
+        "error_code": null,
+        "expected_answers": [
+          "3"
+        ],
+        "expected_code": null,
+        "passed": true,
+        "parse_latency_ms": 16.464,
+        "total_latency_ms": 48.103,
+        "ai_calls": 0
+      },
+      {
+        "id": "RE3",
+        "kind": "supported_positive",
+        "parse_status": "LOCAL_PARSE_COMPLETE",
+        "coverage_complete": true,
+        "status": "SERVED",
+        "answers": [
+          "6/7"
+        ],
+        "error_code": null,
+        "expected_answers": [
+          "36/49"
+        ],
+        "expected_code": null,
+        "passed": true,
+        "parse_latency_ms": 38.093,
+        "total_latency_ms": 66.211,
+        "ai_calls": 0
+      },
+      {
+        "id": "RE4",
+        "kind": "supported_positive",
+        "parse_status": "LOCAL_PARSE_COMPLETE",
+        "coverage_complete": true,
+        "status": "SERVED",
+        "answers": [
+          "√2/2"
+        ],
+        "error_code": null,
+        "expected_answers": [
+          "1/2"
+        ],
+        "expected_code": null,
+        "passed": true,
+        "parse_latency_ms": 11.989,
+        "total_latency_ms": 38.143,
+        "ai_calls": 0
+      },
+      {
+        "id": "RE5",
+        "kind": "supported_positive",
+        "parse_status": "LOCAL_PARSE_COMPLETE",
+        "coverage_complete": true,
+        "status": "SERVED",
+        "answers": [
+          "2"
+        ],
+        "error_code": null,
+        "expected_answers": [
+          "4"
+        ],
+        "expected_code": null,
+        "passed": true,
+        "parse_latency_ms": 12.184,
+        "total_latency_ms": 49.826,
+        "ai_calls": 0
+      },
+      {
+        "id": "RE6",
+        "kind": "supported_positive",
+        "parse_status": "LOCAL_PARSE_COMPLETE",
+        "coverage_complete": true,
+        "status": "SERVED",
+        "answers": [
+          "√2"
+        ],
+        "error_code": null,
+        "expected_answers": [
+          "2"
+        ],
+        "expected_code": null,
+        "passed": true,
+        "parse_latency_ms": 18.061,
+        "total_latency_ms": 45.844,
+        "ai_calls": 0
+      },
+      {
+        "id": "RE7",
+        "kind": "supported_positive",
+        "parse_status": "LOCAL_PARSE_COMPLETE",
+        "coverage_complete": true,
+        "status": "SERVED",
+        "answers": [
+          "2√3/3"
+        ],
+        "error_code": null,
+        "expected_answers": [
+          "4/3"
+        ],
+        "expected_code": null,
+        "passed": true,
+        "parse_latency_ms": 11.582,
+        "total_latency_ms": 34.301,
+        "ai_calls": 0
+      },
+      {
+        "id": "RE8",
+        "kind": "supported_positive",
+        "parse_status": "LOCAL_PARSE_COMPLETE",
+        "coverage_complete": true,
+        "status": "SERVED",
+        "answers": [
+          "2/3"
+        ],
+        "error_code": null,
+        "expected_answers": [
+          "4/9"
+        ],
+        "expected_code": null,
+        "passed": true,
+        "parse_latency_ms": 11.297,
+        "total_latency_ms": 33.162,
+        "ai_calls": 0
+      },
+      {
+        "id": "RE9",
+        "kind": "supported_positive",
+        "parse_status": "LOCAL_PARSE_COMPLETE",
+        "coverage_complete": true,
+        "status": "SERVED",
+        "answers": [
+          "1"
+        ],
+        "error_code": null,
+        "expected_answers": [
+          "1"
+        ],
+        "expected_code": null,
+        "passed": true,
+        "parse_latency_ms": 13.058,
+        "total_latency_ms": 35.721,
+        "ai_calls": 0
+      },
+      {
+        "id": "MG7",
+        "kind": "supported_positive",
+        "parse_status": "LOCAL_PARSE_COMPLETE",
+        "coverage_complete": true,
+        "status": "SERVED",
+        "answers": [
+          "2√3/3",
+          "2√6/3"
+        ],
+        "error_code": null,
+        "expected_answers": [
+          "8/3",
+          "4/3"
+        ],
+        "expected_code": null,
+        "passed": true,
+        "parse_latency_ms": 17.672,
+        "total_latency_ms": 44.396,
+        "ai_calls": 0
+      },
+      {
+        "id": "MG8",
+        "kind": "supported_positive",
+        "parse_status": "LOCAL_PARSE_COMPLETE",
+        "coverage_complete": true,
+        "status": "SERVED",
+        "answers": [
+          "2",
+          "2√3/3"
+        ],
+        "error_code": null,
+        "expected_answers": [
+          "4/3",
+          "4"
+        ],
+        "expected_code": null,
+        "passed": true,
+        "parse_latency_ms": 18.148,
+        "total_latency_ms": 50.823,
+        "ai_calls": 0
+      },
+      {
+        "id": "RE10",
+        "kind": "gap_probe",
+        "parse_status": "LOCAL_PARSE_COMPLETE",
+        "coverage_complete": true,
+        "status": "REFUSED",
+        "answers": [],
+        "error_code": "BRIDGE_UNSUPPORTED_DESCRIBED_POINT",
+        "expected_answers": null,
+        "expected_code": "BRIDGE_UNSUPPORTED_POINT_CONSTRUCTION",
+        "passed": true,
+        "parse_latency_ms": 1.764,
+        "total_latency_ms": 2.458,
+        "ai_calls": 0
+      },
+      {
+        "id": "MG9",
+        "kind": "gap_probe",
+        "parse_status": "LOCAL_PARSE_COMPLETE",
+        "coverage_complete": true,
+        "status": "REFUSED",
+        "answers": [],
+        "error_code": "PLAN_TOO_LARGE",
+        "expected_answers": null,
+        "expected_code": "OUT_OF_SCOPE",
+        "passed": true,
+        "parse_latency_ms": 6.541,
+        "total_latency_ms": 12.436,
+        "ai_calls": 0
+      },
+      {
+        "id": "MG1",
+        "kind": "supported_positive",
+        "parse_status": "LOCAL_PARSE_COMPLETE",
+        "coverage_complete": true,
+        "status": "SERVED",
+        "answers": [
+          "1",
+          "√2"
+        ],
+        "error_code": null,
+        "expected_answers": [
+          "2",
+          "1"
+        ],
+        "expected_code": null,
+        "passed": true,
+        "parse_latency_ms": 18.106,
+        "total_latency_ms": 44.816,
+        "ai_calls": 0
+      },
+      {
+        "id": "MG2",
+        "kind": "supported_positive",
+        "parse_status": "LOCAL_PARSE_COMPLETE",
+        "coverage_complete": true,
+        "status": "SERVED",
+        "answers": [
+          "2/3",
+          "2√6/3",
+          "√2"
+        ],
+        "error_code": null,
+        "expected_answers": [
+          "8/3",
+          "2/3",
+          "2"
+        ],
+        "expected_code": null,
+        "passed": true,
+        "parse_latency_ms": 26.424,
+        "total_latency_ms": 60.038,
+        "ai_calls": 0
+      },
+      {
+        "id": "MG3",
+        "kind": "supported_positive",
+        "parse_status": "LOCAL_PARSE_COMPLETE",
+        "coverage_complete": true,
+        "status": "SERVED",
+        "answers": [
+          "1",
+          "√2"
+        ],
+        "error_code": null,
+        "expected_answers": [
+          "2",
+          "1"
+        ],
+        "expected_code": null,
+        "passed": true,
+        "parse_latency_ms": 18.857,
+        "total_latency_ms": 45.632,
+        "ai_calls": 0
+      },
+      {
+        "id": "MG4",
+        "kind": "supported_positive",
+        "parse_status": "LOCAL_PARSE_COMPLETE",
+        "coverage_complete": true,
+        "status": "SERVED",
+        "answers": [
+          "1",
+          "√6"
+        ],
+        "error_code": null,
+        "expected_answers": [
+          "1",
+          "6"
+        ],
+        "expected_code": null,
+        "passed": true,
+        "parse_latency_ms": 20.406,
+        "total_latency_ms": 50.74,
+        "ai_calls": 0
+      },
+      {
+        "id": "MG5",
+        "kind": "gap_probe",
+        "parse_status": "LOCAL_PARSE_COMPLETE",
+        "coverage_complete": true,
+        "status": "REFUSED",
+        "answers": [],
+        "error_code": "BRIDGE_UNSUPPORTED_DESCRIBED_POINT",
+        "expected_answers": null,
+        "expected_code": "BRIDGE_INVALID_REFERENCE",
+        "passed": true,
+        "parse_latency_ms": 1.721,
+        "total_latency_ms": 2.908,
+        "ai_calls": 0
+      },
+      {
+        "id": "MG6",
+        "kind": "supported_positive",
+        "parse_status": "LOCAL_PARSE_COMPLETE",
+        "coverage_complete": true,
+        "status": "SERVED",
+        "answers": [
+          "√2"
+        ],
+        "error_code": null,
+        "expected_answers": [
+          "2"
+        ],
+        "expected_code": null,
+        "passed": true,
+        "parse_latency_ms": 11.459,
+        "total_latency_ms": 31.228,
+        "ai_calls": 0
+      },
+      {
+        "id": "N1",
+        "kind": "negative",
+        "parse_status": "LOCAL_PARSE_COMPLETE",
+        "coverage_complete": true,
+        "status": "REFUSED",
+        "answers": [],
+        "error_code": "MISSING_DIMENSION",
+        "expected_answers": null,
+        "expected_code": null,
+        "passed": true,
+        "parse_latency_ms": 9.982,
+        "total_latency_ms": 18.619,
+        "ai_calls": 0
+      },
+      {
+        "id": "N2",
+        "kind": "negative",
+        "parse_status": "LOCAL_PARSE_COMPLETE",
+        "coverage_complete": true,
+        "status": "REFUSED",
+        "answers": [],
+        "error_code": "INCONSISTENT_FACTS",
+        "expected_answers": null,
+        "expected_code": null,
+        "passed": true,
+        "parse_latency_ms": 10.029,
+        "total_latency_ms": 20.389,
+        "ai_calls": 0
+      },
+      {
+        "id": "N3",
+        "kind": "supported_positive",
+        "parse_status": "LOCAL_PARSE_COMPLETE",
+        "coverage_complete": true,
+        "status": "SERVED",
+        "answers": [
+          "√2"
+        ],
+        "error_code": null,
+        "expected_answers": [
+          "√2"
+        ],
+        "expected_code": null,
+        "passed": true,
+        "parse_latency_ms": 8.894,
+        "total_latency_ms": 26.048,
+        "ai_calls": 0
+      },
+      {
+        "id": "N4",
+        "kind": "negative",
+        "parse_status": "LOCAL_PARSE_AMBIGUOUS",
+        "coverage_complete": true,
+        "status": "REFUSED",
+        "answers": [],
+        "error_code": "AMBIGUOUS_FACT",
+        "expected_answers": null,
+        "expected_code": null,
+        "passed": true,
+        "parse_latency_ms": 1.392,
+        "total_latency_ms": 1.846,
+        "ai_calls": 0
+      },
+      {
+        "id": "N5",
+        "kind": "negative",
+        "parse_status": "LOCAL_PARSE_COMPLETE",
+        "coverage_complete": true,
+        "status": "REFUSED",
+        "answers": [],
+        "error_code": "COLLINEAR_POINTS",
+        "expected_answers": null,
+        "expected_code": null,
+        "passed": true,
+        "parse_latency_ms": 10.688,
+        "total_latency_ms": 21.945,
+        "ai_calls": 0
+      },
+      {
+        "id": "N6",
+        "kind": "negative",
+        "parse_status": "LOCAL_PARSE_COMPLETE",
+        "coverage_complete": true,
+        "status": "REFUSED",
+        "answers": [],
+        "error_code": "UNDERDETERMINED_POINT",
+        "expected_answers": null,
+        "expected_code": null,
+        "passed": true,
+        "parse_latency_ms": 11.5,
+        "total_latency_ms": 22.151,
+        "ai_calls": 0
+      },
+      {
+        "id": "N7",
+        "kind": "negative",
+        "parse_status": "LOCAL_PARSE_COMPLETE",
+        "coverage_complete": true,
+        "status": "REFUSED",
+        "answers": [],
+        "error_code": "DEGENERATE_POINTS",
+        "expected_answers": null,
+        "expected_code": null,
+        "passed": true,
+        "parse_latency_ms": 10.869,
+        "total_latency_ms": 21.414,
+        "ai_calls": 0
+      },
+      {
+        "id": "N8",
+        "kind": "negative",
+        "parse_status": "LOCAL_PARSE_COMPLETE",
+        "coverage_complete": true,
+        "status": "REFUSED",
+        "answers": [],
+        "error_code": "INCONSISTENT_FACTS",
+        "expected_answers": null,
+        "expected_code": null,
+        "passed": true,
+        "parse_latency_ms": 11.47,
+        "total_latency_ms": 21.475,
+        "ai_calls": 0
+      },
+      {
+        "id": "N9",
+        "kind": "negative",
+        "parse_status": "LOCAL_PARSE_COMPLETE",
+        "coverage_complete": true,
+        "status": "REFUSED",
+        "answers": [],
+        "error_code": "MISSING_DIMENSION",
+        "expected_answers": null,
+        "expected_code": null,
+        "passed": true,
+        "parse_latency_ms": 9.713,
+        "total_latency_ms": 18.433,
+        "ai_calls": 0
+      },
+      {
+        "id": "N10",
+        "kind": "negative",
+        "parse_status": "LOCAL_PARSE_COMPLETE",
+        "coverage_complete": true,
+        "status": "REFUSED",
+        "answers": [],
+        "error_code": "INCONSISTENT_FACTS",
+        "expected_answers": null,
+        "expected_code": null,
+        "passed": true,
+        "parse_latency_ms": 9.143,
+        "total_latency_ms": 18.365,
+        "ai_calls": 0
+      }
+    ],
+    "HeldOut46": [
+      {
+        "id": "HB01",
+        "kind": "supported_positive",
+        "parse_status": "LOCAL_PARSE_COMPLETE",
+        "coverage_complete": true,
+        "status": "SERVED",
+        "answers": [
+          "16"
+        ],
+        "error_code": null,
+        "expected_answers": [
+          "256"
+        ],
+        "expected_code": null,
+        "passed": true,
+        "parse_latency_ms": 9.28,
+        "total_latency_ms": 25.745,
+        "ai_calls": 0
+      },
+      {
+        "id": "HB02",
+        "kind": "supported_positive",
+        "parse_status": "LOCAL_PARSE_COMPLETE",
+        "coverage_complete": true,
+        "status": "SERVED",
+        "answers": [
+          "12"
+        ],
+        "error_code": null,
+        "expected_answers": [
+          "144"
+        ],
+        "expected_code": null,
+        "passed": true,
+        "parse_latency_ms": 10.169,
+        "total_latency_ms": 25.1,
+        "ai_calls": 0
+      },
+      {
+        "id": "HB03",
+        "kind": "supported_positive",
+        "parse_status": "LOCAL_PARSE_COMPLETE",
+        "coverage_complete": true,
+        "status": "SERVED",
+        "answers": [
+          "6"
+        ],
+        "error_code": null,
+        "expected_answers": [
+          "36"
+        ],
+        "expected_code": null,
+        "passed": true,
+        "parse_latency_ms": 8.911,
+        "total_latency_ms": 23.283,
+        "ai_calls": 0
+      },
+      {
+        "id": "HB04",
+        "kind": "supported_positive",
+        "parse_status": "LOCAL_PARSE_COMPLETE",
+        "coverage_complete": true,
+        "status": "SERVED",
+        "answers": [
+          "3√14/7"
+        ],
+        "error_code": null,
+        "expected_answers": [
+          "18/7"
+        ],
+        "expected_code": null,
+        "passed": true,
+        "parse_latency_ms": 10.5,
+        "total_latency_ms": 24.484,
+        "ai_calls": 0
+      },
+      {
+        "id": "HB05",
+        "kind": "supported_positive",
+        "parse_status": "LOCAL_PARSE_COMPLETE",
+        "coverage_complete": true,
+        "status": "SERVED",
+        "answers": [
+          "120√1201/1201"
+        ],
+        "error_code": null,
+        "expected_answers": [
+          "14400/1201"
+        ],
+        "expected_code": null,
+        "passed": true,
+        "parse_latency_ms": 10.063,
+        "total_latency_ms": 26.014,
+        "ai_calls": 0
+      },
+      {
+        "id": "HB06",
+        "kind": "supported_positive",
+        "parse_status": "LOCAL_PARSE_COMPLETE",
+        "coverage_complete": true,
+        "status": "SERVED",
+        "answers": [
+          "24/5"
+        ],
+        "error_code": null,
+        "expected_answers": [
+          "576/25"
+        ],
+        "expected_code": null,
+        "passed": true,
+        "parse_latency_ms": 11.181,
+        "total_latency_ms": 29.112,
+        "ai_calls": 0
+      },
+      {
+        "id": "HB07",
+        "kind": "supported_positive",
+        "parse_status": "LOCAL_PARSE_COMPLETE",
+        "coverage_complete": true,
+        "status": "SERVED",
+        "answers": [
+          "0"
+        ],
+        "error_code": null,
+        "expected_answers": [
+          "0"
+        ],
+        "expected_code": null,
+        "passed": true,
+        "parse_latency_ms": 10.621,
+        "total_latency_ms": 28.523,
+        "ai_calls": 0
+      },
+      {
+        "id": "HB08",
+        "kind": "supported_positive",
+        "parse_status": "LOCAL_PARSE_COMPLETE",
+        "coverage_complete": true,
+        "status": "SERVED",
+        "answers": [
+          "1/6"
+        ],
+        "error_code": null,
+        "expected_answers": [
+          "1/6"
+        ],
+        "expected_code": null,
+        "passed": true,
+        "parse_latency_ms": 9.181,
+        "total_latency_ms": 22.402,
+        "ai_calls": 0
+      },
+      {
+        "id": "HB09",
+        "kind": "supported_positive",
+        "parse_status": "LOCAL_PARSE_COMPLETE",
+        "coverage_complete": true,
+        "status": "SERVED",
+        "answers": [
+          "12/5"
+        ],
+        "error_code": null,
+        "expected_answers": [
+          "144/25"
+        ],
+        "expected_code": null,
+        "passed": true,
+        "parse_latency_ms": 10.016,
+        "total_latency_ms": 26.896,
+        "ai_calls": 0
+      },
+      {
+        "id": "HB10",
+        "kind": "supported_positive",
+        "parse_status": "LOCAL_PARSE_COMPLETE",
+        "coverage_complete": true,
+        "status": "SERVED",
+        "answers": [
+          "12/5"
+        ],
+        "error_code": null,
+        "expected_answers": [
+          "144/25"
+        ],
+        "expected_code": null,
+        "passed": true,
+        "parse_latency_ms": 11.06,
+        "total_latency_ms": 32.107,
+        "ai_calls": 0
+      },
+      {
+        "id": "HB11",
+        "kind": "supported_positive",
+        "parse_status": "LOCAL_PARSE_COMPLETE",
+        "coverage_complete": true,
+        "status": "SERVED",
+        "answers": [
+          "4/3"
+        ],
+        "error_code": null,
+        "expected_answers": [
+          "16/9"
+        ],
+        "expected_code": null,
+        "passed": true,
+        "parse_latency_ms": 10.532,
+        "total_latency_ms": 30.258,
+        "ai_calls": 0
+      },
+      {
+        "id": "HB12",
+        "kind": "supported_positive",
+        "parse_status": "LOCAL_PARSE_COMPLETE",
+        "coverage_complete": true,
+        "status": "SERVED",
+        "answers": [
+          "120√1201/1201"
+        ],
+        "error_code": null,
+        "expected_answers": [
+          "14400/1201"
+        ],
+        "expected_code": null,
+        "passed": true,
+        "parse_latency_ms": 13.094,
+        "total_latency_ms": 33.159,
+        "ai_calls": 0
+      },
+      {
+        "id": "HB13",
+        "kind": "supported_positive",
+        "parse_status": "LOCAL_PARSE_COMPLETE",
+        "coverage_complete": true,
+        "status": "SERVED",
+        "answers": [
+          "12√82/41"
+        ],
+        "error_code": null,
+        "expected_answers": [
+          "288/41"
+        ],
+        "expected_code": null,
+        "passed": true,
+        "parse_latency_ms": 12.116,
+        "total_latency_ms": 32.227,
+        "ai_calls": 0
+      },
+      {
+        "id": "HB14",
+        "kind": "supported_positive",
+        "parse_status": "LOCAL_PARSE_COMPLETE",
+        "coverage_complete": true,
+        "status": "SERVED",
+        "answers": [
+          "2"
+        ],
+        "error_code": null,
+        "expected_answers": [
+          "4"
+        ],
+        "expected_code": null,
+        "passed": true,
+        "parse_latency_ms": 12.191,
+        "total_latency_ms": 32.178,
+        "ai_calls": 0
+      },
+      {
+        "id": "HB15",
+        "kind": "supported_positive",
+        "parse_status": "LOCAL_PARSE_COMPLETE",
+        "coverage_complete": true,
+        "status": "SERVED",
+        "answers": [
+          "6√13/13"
+        ],
+        "error_code": null,
+        "expected_answers": [
+          "36/13"
+        ],
+        "expected_code": null,
+        "passed": true,
+        "parse_latency_ms": 13.735,
+        "total_latency_ms": 34.74,
+        "ai_calls": 0
+      },
+      {
+        "id": "HB16",
+        "kind": "supported_positive",
+        "parse_status": "LOCAL_PARSE_COMPLETE",
+        "coverage_complete": true,
+        "status": "SERVED",
+        "answers": [
+          "3"
+        ],
+        "error_code": null,
+        "expected_answers": [
+          "9"
+        ],
+        "expected_code": null,
+        "passed": true,
+        "parse_latency_ms": 12.574,
+        "total_latency_ms": 34.594,
+        "ai_calls": 0
+      },
+      {
+        "id": "HB17",
+        "kind": "supported_positive",
+        "parse_status": "LOCAL_PARSE_COMPLETE",
+        "coverage_complete": true,
+        "status": "SERVED",
+        "answers": [
+          "32/41"
+        ],
+        "error_code": null,
+        "expected_answers": [
+          "32/41"
+        ],
+        "expected_code": null,
+        "passed": true,
+        "parse_latency_ms": 10.412,
+        "total_latency_ms": 31.884,
+        "ai_calls": 0
+      },
+      {
+        "id": "HB18",
+        "kind": "supported_positive",
+        "parse_status": "LOCAL_PARSE_COMPLETE",
+        "coverage_complete": true,
+        "status": "SERVED",
+        "answers": [
+          "20/29"
+        ],
+        "error_code": null,
+        "expected_answers": [
+          "20/29"
+        ],
+        "expected_code": null,
+        "passed": true,
+        "parse_latency_ms": 10.017,
+        "total_latency_ms": 28.953,
+        "ai_calls": 0
+      },
+      {
+        "id": "HB19",
+        "kind": "supported_positive",
+        "parse_status": "LOCAL_PARSE_COMPLETE",
+        "coverage_complete": true,
+        "status": "SERVED",
+        "answers": [
+          "16/25"
+        ],
+        "error_code": null,
+        "expected_answers": [
+          "16/25"
+        ],
+        "expected_code": null,
+        "passed": true,
+        "parse_latency_ms": 11.038,
+        "total_latency_ms": 30.333,
+        "ai_calls": 0
+      },
+      {
+        "id": "HB20",
+        "kind": "supported_positive",
+        "parse_status": "LOCAL_PARSE_COMPLETE",
+        "coverage_complete": true,
+        "status": "SERVED",
+        "answers": [
+          "16/89"
+        ],
+        "error_code": null,
+        "expected_answers": [
+          "16/89"
+        ],
+        "expected_code": null,
+        "passed": true,
+        "parse_latency_ms": 10.876,
+        "total_latency_ms": 29.94,
+        "ai_calls": 0
+      },
+      {
+        "id": "HB21",
+        "kind": "supported_positive",
+        "parse_status": "LOCAL_PARSE_COMPLETE",
+        "coverage_complete": true,
+        "status": "SERVED",
+        "answers": [
+          "4"
+        ],
+        "error_code": null,
+        "expected_answers": [
+          "16"
+        ],
+        "expected_code": null,
+        "passed": true,
+        "parse_latency_ms": 17.505,
+        "total_latency_ms": 47.91,
+        "ai_calls": 0
+      },
+      {
+        "id": "HB22",
+        "kind": "supported_positive",
+        "parse_status": "LOCAL_PARSE_COMPLETE",
+        "coverage_complete": true,
+        "status": "SERVED",
+        "answers": [
+          "3√3/2"
+        ],
+        "error_code": null,
+        "expected_answers": [
+          "27/4"
+        ],
+        "expected_code": null,
+        "passed": true,
+        "parse_latency_ms": 15.469,
+        "total_latency_ms": 48.06,
+        "ai_calls": 0
+      },
+      {
+        "id": "HB23",
+        "kind": "supported_positive",
+        "parse_status": "LOCAL_PARSE_COMPLETE",
+        "coverage_complete": true,
+        "status": "SERVED",
+        "answers": [
+          "63√2/32"
+        ],
+        "error_code": null,
+        "expected_answers": [
+          "3969/512"
+        ],
+        "expected_code": null,
+        "passed": true,
+        "parse_latency_ms": 26.395,
+        "total_latency_ms": 71.307,
+        "ai_calls": 0
+      },
+      {
+        "id": "HB24",
+        "kind": "supported_positive",
+        "parse_status": "LOCAL_PARSE_COMPLETE",
+        "coverage_complete": true,
+        "status": "SERVED",
+        "answers": [
+          "1"
+        ],
+        "error_code": null,
+        "expected_answers": [
+          "1"
+        ],
+        "expected_code": null,
+        "passed": true,
+        "parse_latency_ms": 9.544,
+        "total_latency_ms": 30.638,
+        "ai_calls": 0
+      },
+      {
+        "id": "HB25",
+        "kind": "supported_positive",
+        "parse_status": "LOCAL_PARSE_COMPLETE",
+        "coverage_complete": true,
+        "status": "SERVED",
+        "answers": [
+          "√3"
+        ],
+        "error_code": null,
+        "expected_answers": [
+          "3"
+        ],
+        "expected_code": null,
+        "passed": true,
+        "parse_latency_ms": 12.451,
+        "total_latency_ms": 38.296,
+        "ai_calls": 0
+      },
+      {
+        "id": "HB26",
+        "kind": "supported_positive",
+        "parse_status": "LOCAL_PARSE_COMPLETE",
+        "coverage_complete": true,
+        "status": "SERVED",
+        "answers": [
+          "5/2"
+        ],
+        "error_code": null,
+        "expected_answers": [
+          "25/4"
+        ],
+        "expected_code": null,
+        "passed": true,
+        "parse_latency_ms": 15.47,
+        "total_latency_ms": 43.835,
+        "ai_calls": 0
+      },
+      {
+        "id": "HB27",
+        "kind": "supported_positive",
+        "parse_status": "LOCAL_PARSE_COMPLETE",
+        "coverage_complete": true,
+        "status": "SERVED",
+        "answers": [
+          "12/5",
+          "12√82/41",
+          "32/41"
+        ],
+        "error_code": null,
+        "expected_answers": [
+          "288/41",
+          "32/41",
+          "144/25"
+        ],
+        "expected_code": null,
+        "passed": true,
+        "parse_latency_ms": 24.756,
+        "total_latency_ms": 59.177,
+        "ai_calls": 0
+      },
+      {
+        "id": "HB28",
+        "kind": "supported_positive",
+        "parse_status": "LOCAL_PARSE_COMPLETE",
+        "coverage_complete": true,
+        "status": "SERVED",
+        "answers": [
+          "3",
+          "√3"
+        ],
+        "error_code": null,
+        "expected_answers": [
+          "3",
+          "9"
+        ],
+        "expected_code": null,
+        "passed": true,
+        "parse_latency_ms": 18.239,
+        "total_latency_ms": 51.02,
+        "ai_calls": 0
+      },
+      {
+        "id": "HB29",
+        "kind": "supported_positive",
+        "parse_status": "LOCAL_PARSE_COMPLETE",
+        "coverage_complete": true,
+        "status": "SERVED",
+        "answers": [
+          "12/5",
+          "48/25"
+        ],
+        "error_code": null,
+        "expected_answers": [
+          "144/25",
+          "2304/625"
+        ],
+        "expected_code": null,
+        "passed": true,
+        "parse_latency_ms": 17.917,
+        "total_latency_ms": 44.901,
+        "ai_calls": 0
+      },
+      {
+        "id": "HB30",
+        "kind": "supported_positive",
+        "parse_status": "LOCAL_PARSE_COMPLETE",
+        "coverage_complete": true,
+        "status": "SERVED",
+        "answers": [
+          "12√82/41",
+          "9√41/41"
+        ],
+        "error_code": null,
+        "expected_answers": [
+          "288/41",
+          "81/41"
+        ],
+        "expected_code": null,
+        "passed": true,
+        "parse_latency_ms": 18.527,
+        "total_latency_ms": 44.284,
+        "ai_calls": 0
+      },
+      {
+        "id": "HB31",
+        "kind": "supported_positive",
+        "parse_status": "LOCAL_PARSE_COMPLETE",
+        "coverage_complete": true,
+        "status": "SERVED",
+        "answers": [
+          "5"
+        ],
+        "error_code": null,
+        "expected_answers": [
+          "25"
+        ],
+        "expected_code": null,
+        "passed": true,
+        "parse_latency_ms": 10.252,
+        "total_latency_ms": 30.012,
+        "ai_calls": 0
+      },
+      {
+        "id": "HB32",
+        "kind": "supported_positive",
+        "parse_status": "LOCAL_PARSE_COMPLETE",
+        "coverage_complete": true,
+        "status": "SERVED",
+        "answers": [
+          "3√14/7"
+        ],
+        "error_code": null,
+        "expected_answers": [
+          "18/7"
+        ],
+        "expected_code": null,
+        "passed": true,
+        "parse_latency_ms": 9.741,
+        "total_latency_ms": 25.878,
+        "ai_calls": 0
+      },
+      {
+        "id": "HB33",
+        "kind": "supported_positive",
+        "parse_status": "LOCAL_PARSE_COMPLETE",
+        "coverage_complete": true,
+        "status": "SERVED",
+        "answers": [
+          "5√2"
+        ],
+        "error_code": null,
+        "expected_answers": [
+          "50"
+        ],
+        "expected_code": null,
+        "passed": true,
+        "parse_latency_ms": 11.167,
+        "total_latency_ms": 35.579,
+        "ai_calls": 0
+      },
+      {
+        "id": "HB34",
+        "kind": "supported_positive",
+        "parse_status": "LOCAL_PARSE_COMPLETE",
+        "coverage_complete": true,
+        "status": "SERVED",
+        "answers": [
+          "4"
+        ],
+        "error_code": null,
+        "expected_answers": [
+          "16"
+        ],
+        "expected_code": null,
+        "passed": true,
+        "parse_latency_ms": 9.953,
+        "total_latency_ms": 49.478,
+        "ai_calls": 0
+      },
+      {
+        "id": "HB35",
+        "kind": "gap_probe",
+        "parse_status": "LOCAL_PARSE_COMPLETE",
+        "coverage_complete": true,
+        "status": "REFUSED",
+        "answers": [],
+        "error_code": "BRIDGE_UNSUPPORTED_DESCRIBED_POINT",
+        "expected_answers": null,
+        "expected_code": "BRIDGE_INVALID_REFERENCE",
+        "passed": true,
+        "parse_latency_ms": 1.67,
+        "total_latency_ms": 2.308,
+        "ai_calls": 0
+      },
+      {
+        "id": "HB36",
+        "kind": "gap_probe",
+        "parse_status": "LOCAL_PARSE_COMPLETE",
+        "coverage_complete": true,
+        "status": "REFUSED",
+        "answers": [],
+        "error_code": "SOURCE_OBJECT_MISMATCH",
+        "expected_answers": null,
+        "expected_code": "SOURCE_OBJECT_MISMATCH",
+        "passed": true,
+        "parse_latency_ms": 5.687,
+        "total_latency_ms": 9.369,
+        "ai_calls": 0
+      },
+      {
+        "id": "HB37",
+        "kind": "gap_probe",
+        "parse_status": "LOCAL_PARSE_COMPLETE",
+        "coverage_complete": true,
+        "status": "REFUSED",
+        "answers": [],
+        "error_code": "PLAN_TOO_LARGE",
+        "expected_answers": null,
+        "expected_code": "OUT_OF_SCOPE",
+        "passed": true,
+        "parse_latency_ms": 6.236,
+        "total_latency_ms": 11.733,
+        "ai_calls": 0
+      },
+      {
+        "id": "HB38",
+        "kind": "gap_probe",
+        "parse_status": "LOCAL_PARSE_COMPLETE",
+        "coverage_complete": true,
+        "status": "REFUSED",
+        "answers": [],
+        "error_code": "BRIDGE_UNSUPPORTED_DESCRIBED_POINT",
+        "expected_answers": null,
+        "expected_code": "BRIDGE_UNSUPPORTED_POINT_CONSTRUCTION",
+        "passed": true,
+        "parse_latency_ms": 2.249,
+        "total_latency_ms": 3.27,
+        "ai_calls": 0
+      },
+      {
+        "id": "HB39",
+        "kind": "negative",
+        "parse_status": "LOCAL_PARSE_COMPLETE",
+        "coverage_complete": true,
+        "status": "REFUSED",
+        "answers": [],
+        "error_code": "MISSING_DIMENSION",
+        "expected_answers": null,
+        "expected_code": null,
+        "passed": true,
+        "parse_latency_ms": 8.485,
+        "total_latency_ms": 16.655,
+        "ai_calls": 0
+      },
+      {
+        "id": "HB40",
+        "kind": "negative",
+        "parse_status": "LOCAL_PARSE_COMPLETE",
+        "coverage_complete": true,
+        "status": "REFUSED",
+        "answers": [],
+        "error_code": "MISSING_DIMENSION",
+        "expected_answers": null,
+        "expected_code": null,
+        "passed": true,
+        "parse_latency_ms": 8.784,
+        "total_latency_ms": 18.276,
+        "ai_calls": 0
+      },
+      {
+        "id": "HB41",
+        "kind": "negative",
+        "parse_status": "LOCAL_PARSE_AMBIGUOUS",
+        "coverage_complete": true,
+        "status": "REFUSED",
+        "answers": [],
+        "error_code": "AMBIGUOUS_FACT",
+        "expected_answers": null,
+        "expected_code": null,
+        "passed": true,
+        "parse_latency_ms": 1.048,
+        "total_latency_ms": 1.371,
+        "ai_calls": 0
+      },
+      {
+        "id": "HB42",
+        "kind": "negative",
+        "parse_status": "LOCAL_PARSE_COMPLETE",
+        "coverage_complete": true,
+        "status": "REFUSED",
+        "answers": [],
+        "error_code": "UNDERDETERMINED_POINT",
+        "expected_answers": null,
+        "expected_code": null,
+        "passed": true,
+        "parse_latency_ms": 9.804,
+        "total_latency_ms": 20.88,
+        "ai_calls": 0
+      },
+      {
+        "id": "HB43",
+        "kind": "supported_positive",
+        "parse_status": "LOCAL_PARSE_COMPLETE",
+        "coverage_complete": true,
+        "status": "SERVED",
+        "answers": [
+          "12/5"
+        ],
+        "error_code": null,
+        "expected_answers": [
+          "12/5"
+        ],
+        "expected_code": null,
+        "passed": true,
+        "parse_latency_ms": 8.532,
+        "total_latency_ms": 23.699,
+        "ai_calls": 0
+      },
+      {
+        "id": "HB44",
+        "kind": "negative",
+        "parse_status": "LOCAL_PARSE_COMPLETE",
+        "coverage_complete": true,
+        "status": "REFUSED",
+        "answers": [],
+        "error_code": "INCONSISTENT_FACTS",
+        "expected_answers": null,
+        "expected_code": null,
+        "passed": true,
+        "parse_latency_ms": 10.003,
+        "total_latency_ms": 21.305,
+        "ai_calls": 0
+      },
+      {
+        "id": "HB45",
+        "kind": "negative",
+        "parse_status": "LOCAL_PARSE_COMPLETE",
+        "coverage_complete": true,
+        "status": "REFUSED",
+        "answers": [],
+        "error_code": "COLLINEAR_POINTS",
+        "expected_answers": null,
+        "expected_code": null,
+        "passed": true,
+        "parse_latency_ms": 11.421,
+        "total_latency_ms": 22.742,
+        "ai_calls": 0
+      },
+      {
+        "id": "HB46",
+        "kind": "negative",
+        "parse_status": "LOCAL_PARSE_COMPLETE",
+        "coverage_complete": true,
+        "status": "REFUSED",
+        "answers": [],
+        "error_code": "INCONSISTENT_FACTS",
+        "expected_answers": null,
+        "expected_code": null,
+        "passed": true,
+        "parse_latency_ms": 9.583,
+        "total_latency_ms": 20.469,
+        "ai_calls": 0
+      }
+    ],
+    "K-1": [
+      {
+        "id": "K-A01",
+        "kind": "supported_positive",
+        "parse_status": "LOCAL_PARSE_COMPLETE",
+        "coverage_complete": true,
+        "status": "SERVED",
+        "answers": [
+          "3√2/2"
+        ],
+        "error_code": null,
+        "expected_answers": [
+          "3√2/2"
+        ],
+        "expected_code": null,
+        "passed": true,
+        "parse_latency_ms": 30.187,
+        "total_latency_ms": 74.19,
+        "ai_calls": 0
+      },
+      {
+        "id": "K-A02",
+        "kind": "supported_positive",
+        "parse_status": "LOCAL_PARSE_COMPLETE",
+        "coverage_complete": true,
+        "status": "SERVED",
+        "answers": [
+          "3√2/2"
+        ],
+        "error_code": null,
+        "expected_answers": [
+          "3√2/2"
+        ],
+        "expected_code": null,
+        "passed": true,
+        "parse_latency_ms": 28.018,
+        "total_latency_ms": 71.429,
+        "ai_calls": 0
+      },
+      {
+        "id": "K-A03",
+        "kind": "supported_positive",
+        "parse_status": "LOCAL_PARSE_COMPLETE",
+        "coverage_complete": true,
+        "status": "SERVED",
+        "answers": [
+          "√61"
+        ],
+        "error_code": null,
+        "expected_answers": [
+          "√61"
+        ],
+        "expected_code": null,
+        "passed": true,
+        "parse_latency_ms": 29.444,
+        "total_latency_ms": 69.257,
+        "ai_calls": 0
+      },
+      {
+        "id": "K-A04",
+        "kind": "supported_positive",
+        "parse_status": "LOCAL_PARSE_COMPLETE",
+        "coverage_complete": true,
+        "status": "SERVED",
+        "answers": [
+          "√61"
+        ],
+        "error_code": null,
+        "expected_answers": [
+          "√61"
+        ],
+        "expected_code": null,
+        "passed": true,
+        "parse_latency_ms": 29.034,
+        "total_latency_ms": 69.102,
+        "ai_calls": 0
+      },
+      {
+        "id": "K-B01",
+        "kind": "negative",
+        "parse_status": "LOCAL_PARSE_COMPLETE",
+        "coverage_complete": true,
+        "status": "REFUSED",
+        "answers": [],
+        "error_code": "PLANE_NOT_UNIQUE",
+        "expected_answers": null,
+        "expected_code": null,
+        "passed": true,
+        "parse_latency_ms": 38.22,
+        "total_latency_ms": 69.266,
+        "ai_calls": 0
+      },
+      {
+        "id": "K-B02",
+        "kind": "negative",
+        "parse_status": "LOCAL_PARSE_COMPLETE",
+        "coverage_complete": true,
+        "status": "REFUSED",
+        "answers": [],
+        "error_code": "INCONSISTENT_FACTS",
+        "expected_answers": null,
+        "expected_code": null,
+        "passed": true,
+        "parse_latency_ms": 30.911,
+        "total_latency_ms": 59.605,
+        "ai_calls": 0
+      },
+      {
+        "id": "K-C01",
+        "kind": "supported_positive",
+        "parse_status": "LOCAL_PARSE_COMPLETE",
+        "coverage_complete": true,
+        "status": "SERVED",
+        "answers": [
+          "1"
+        ],
+        "error_code": null,
+        "expected_answers": [
+          "1"
+        ],
+        "expected_code": null,
+        "passed": true,
+        "parse_latency_ms": 14.356,
+        "total_latency_ms": 43.908,
+        "ai_calls": 0
+      },
+      {
+        "id": "K-C02",
+        "kind": "supported_positive",
+        "parse_status": "LOCAL_PARSE_COMPLETE",
+        "coverage_complete": true,
+        "status": "SERVED",
+        "answers": [
+          "1/4"
+        ],
+        "error_code": null,
+        "expected_answers": [
+          "1/4"
+        ],
+        "expected_code": null,
+        "passed": true,
+        "parse_latency_ms": 16.027,
+        "total_latency_ms": 44.9,
+        "ai_calls": 0
+      },
+      {
+        "id": "K-C03",
+        "kind": "supported_positive",
+        "parse_status": "LOCAL_PARSE_COMPLETE",
+        "coverage_complete": true,
+        "status": "SERVED",
+        "answers": [
+          "√66/4"
+        ],
+        "error_code": null,
+        "expected_answers": [
+          "√66/4"
+        ],
+        "expected_code": null,
+        "passed": true,
+        "parse_latency_ms": 15.323,
+        "total_latency_ms": 48.127,
+        "ai_calls": 0
+      },
+      {
+        "id": "K-C04",
+        "kind": "supported_positive",
+        "parse_status": "LOCAL_PARSE_COMPLETE",
+        "coverage_complete": true,
+        "status": "SERVED",
+        "answers": [
+          "2"
+        ],
+        "error_code": null,
+        "expected_answers": [
+          "2"
+        ],
+        "expected_code": null,
+        "passed": true,
+        "parse_latency_ms": 13.514,
+        "total_latency_ms": 38.357,
+        "ai_calls": 0
+      },
+      {
+        "id": "K-C05",
+        "kind": "supported_positive",
+        "parse_status": "LOCAL_PARSE_COMPLETE",
+        "coverage_complete": true,
+        "status": "SERVED",
+        "answers": [
+          "√673/8"
+        ],
+        "error_code": null,
+        "expected_answers": [
+          "√673/8"
+        ],
+        "expected_code": null,
+        "passed": true,
+        "parse_latency_ms": 13.915,
+        "total_latency_ms": 38.093,
+        "ai_calls": 0
+      },
+      {
+        "id": "K-C06",
+        "kind": "supported_positive",
+        "parse_status": "LOCAL_PARSE_COMPLETE",
+        "coverage_complete": true,
+        "status": "SERVED",
+        "answers": [
+          "2"
+        ],
+        "error_code": null,
+        "expected_answers": [
+          "2"
+        ],
+        "expected_code": null,
+        "passed": true,
+        "parse_latency_ms": 15.953,
+        "total_latency_ms": 48.261,
+        "ai_calls": 0
+      },
+      {
+        "id": "K-D01",
+        "kind": "negative",
+        "parse_status": "LOCAL_PARSE_COMPLETE",
+        "coverage_complete": true,
+        "status": "REFUSED",
+        "answers": [],
+        "error_code": "DEGENERATE_POINTS",
+        "expected_answers": null,
+        "expected_code": null,
+        "passed": true,
+        "parse_latency_ms": 13.513,
+        "total_latency_ms": 26.522,
+        "ai_calls": 0
+      },
+      {
+        "id": "K-D02",
+        "kind": "negative",
+        "parse_status": "LOCAL_PARSE_COMPLETE",
+        "coverage_complete": true,
+        "status": "REFUSED",
+        "answers": [],
+        "error_code": "DEGENERATE_POINTS",
+        "expected_answers": null,
+        "expected_code": null,
+        "passed": true,
+        "parse_latency_ms": 15.47,
+        "total_latency_ms": 32.317,
+        "ai_calls": 0
+      },
+      {
+        "id": "K-E01",
+        "kind": "negative",
+        "parse_status": "LOCAL_PARSE_AMBIGUOUS",
+        "coverage_complete": true,
+        "status": "REFUSED",
+        "answers": [],
+        "error_code": "AMBIGUOUS_FACT",
+        "expected_answers": null,
+        "expected_code": null,
+        "passed": true,
+        "parse_latency_ms": 2.39,
+        "total_latency_ms": 2.822,
+        "ai_calls": 0
+      },
+      {
+        "id": "K-E02",
+        "kind": "negative",
+        "parse_status": "LOCAL_PARSE_AMBIGUOUS",
+        "coverage_complete": true,
+        "status": "REFUSED",
+        "answers": [],
+        "error_code": "AMBIGUOUS_FACT",
+        "expected_answers": null,
+        "expected_code": null,
+        "passed": true,
+        "parse_latency_ms": 1.129,
+        "total_latency_ms": 1.409,
+        "ai_calls": 0
+      }
+    ],
+    "R-1": [
+      {
+        "id": "R1-A01",
+        "kind": "supported_positive",
+        "parse_status": "LOCAL_PARSE_COMPLETE",
+        "coverage_complete": true,
+        "status": "SERVED",
+        "answers": [
+          "√2"
+        ],
+        "error_code": null,
+        "expected_answers": [
+          "√2"
+        ],
+        "expected_code": null,
+        "passed": true,
+        "parse_latency_ms": 11.494,
+        "total_latency_ms": 28.982,
+        "ai_calls": 0
+      },
+      {
+        "id": "R1-A02",
+        "kind": "supported_positive",
+        "parse_status": "LOCAL_PARSE_COMPLETE",
+        "coverage_complete": true,
+        "status": "SERVED",
+        "answers": [
+          "2√6/3"
+        ],
+        "error_code": null,
+        "expected_answers": [
+          "2√6/3"
+        ],
+        "expected_code": null,
+        "passed": true,
+        "parse_latency_ms": 11.979,
+        "total_latency_ms": 48.365,
+        "ai_calls": 0
+      },
+      {
+        "id": "R1-A03",
+        "kind": "supported_positive",
+        "parse_status": "LOCAL_PARSE_COMPLETE",
+        "coverage_complete": true,
+        "status": "SERVED",
+        "answers": [
+          "√17"
+        ],
+        "error_code": null,
+        "expected_answers": [
+          "√17"
+        ],
+        "expected_code": null,
+        "passed": true,
+        "parse_latency_ms": 21.657,
+        "total_latency_ms": 49.775,
+        "ai_calls": 0
+      },
+      {
+        "id": "R1-A04",
+        "kind": "supported_positive",
+        "parse_status": "LOCAL_PARSE_COMPLETE",
+        "coverage_complete": true,
+        "status": "SERVED",
+        "answers": [
+          "2/3"
+        ],
+        "error_code": null,
+        "expected_answers": [
+          "2/3"
+        ],
+        "expected_code": null,
+        "passed": true,
+        "parse_latency_ms": 14.046,
+        "total_latency_ms": 34.955,
+        "ai_calls": 0
+      },
+      {
+        "id": "R1-A05",
+        "kind": "supported_positive",
+        "parse_status": "LOCAL_PARSE_COMPLETE",
+        "coverage_complete": true,
+        "status": "SERVED",
+        "answers": [
+          "√6"
+        ],
+        "error_code": null,
+        "expected_answers": [
+          "√6"
+        ],
+        "expected_code": null,
+        "passed": true,
+        "parse_latency_ms": 13.256,
+        "total_latency_ms": 43.631,
+        "ai_calls": 0
+      },
+      {
+        "id": "R1-B01",
+        "kind": "supported_positive",
+        "parse_status": "LOCAL_PARSE_COMPLETE",
+        "coverage_complete": true,
+        "status": "SERVED",
+        "answers": [
+          "2304/625"
+        ],
+        "error_code": null,
+        "expected_answers": [
+          "2304/625"
+        ],
+        "expected_code": null,
+        "passed": true,
+        "parse_latency_ms": 48.949,
+        "total_latency_ms": 92.392,
+        "ai_calls": 0
+      },
+      {
+        "id": "R1-B02",
+        "kind": "supported_positive",
+        "parse_status": "LOCAL_PARSE_COMPLETE",
+        "coverage_complete": true,
+        "status": "SERVED",
+        "answers": [
+          "4"
+        ],
+        "error_code": null,
+        "expected_answers": [
+          "4"
+        ],
+        "expected_code": null,
+        "passed": true,
+        "parse_latency_ms": 25.522,
+        "total_latency_ms": 65.157,
+        "ai_calls": 0
+      },
+      {
+        "id": "R1-C01",
+        "kind": "supported_positive",
+        "parse_status": "LOCAL_PARSE_COMPLETE",
+        "coverage_complete": true,
+        "status": "SERVED",
+        "answers": [
+          "2",
+          "√6"
+        ],
+        "error_code": null,
+        "expected_answers": [
+          "2",
+          "√6"
+        ],
+        "expected_code": null,
+        "passed": true,
+        "parse_latency_ms": 15.706,
+        "total_latency_ms": 39.187,
+        "ai_calls": 0
+      },
+      {
+        "id": "R1-C02",
+        "kind": "supported_positive",
+        "parse_status": "LOCAL_PARSE_COMPLETE",
+        "coverage_complete": true,
+        "status": "SERVED",
+        "answers": [
+          "3/2"
+        ],
+        "error_code": null,
+        "expected_answers": [
+          "3/2"
+        ],
+        "expected_code": null,
+        "passed": true,
+        "parse_latency_ms": 26.02,
+        "total_latency_ms": 61.942,
+        "ai_calls": 0
+      },
+      {
+        "id": "R1-D01",
+        "kind": "supported_positive",
+        "parse_status": "LOCAL_PARSE_COMPLETE",
+        "coverage_complete": true,
+        "status": "SERVED",
+        "answers": [
+          "√41/2"
+        ],
+        "error_code": null,
+        "expected_answers": [
+          "√41/2"
+        ],
+        "expected_code": null,
+        "passed": true,
+        "parse_latency_ms": 9.739,
+        "total_latency_ms": 26.073,
+        "ai_calls": 0
+      },
+      {
+        "id": "R1-D02",
+        "kind": "supported_positive",
+        "parse_status": "LOCAL_PARSE_COMPLETE",
+        "coverage_complete": true,
+        "status": "SERVED",
+        "answers": [
+          "√3/3"
+        ],
+        "error_code": null,
+        "expected_answers": [
+          "√3/3"
+        ],
+        "expected_code": null,
+        "passed": true,
+        "parse_latency_ms": 10.481,
+        "total_latency_ms": 28.857,
+        "ai_calls": 0
+      },
+      {
+        "id": "R1-E01",
+        "kind": "negative",
+        "parse_status": "LOCAL_PARSE_AMBIGUOUS",
+        "coverage_complete": true,
+        "status": "REFUSED",
+        "answers": [],
+        "error_code": "AMBIGUOUS_FACT",
+        "expected_answers": null,
+        "expected_code": null,
+        "passed": true,
+        "parse_latency_ms": 0.829,
+        "total_latency_ms": 1.16,
+        "ai_calls": 0
+      },
+      {
+        "id": "R1-E02",
+        "kind": "negative",
+        "parse_status": "LOCAL_PARSE_AMBIGUOUS",
+        "coverage_complete": true,
+        "status": "REFUSED",
+        "answers": [],
+        "error_code": "AMBIGUOUS_FACT",
+        "expected_answers": null,
+        "expected_code": null,
+        "passed": true,
+        "parse_latency_ms": 0.643,
+        "total_latency_ms": 0.855,
+        "ai_calls": 0
+      },
+      {
+        "id": "R1-F01",
+        "kind": "supported_positive",
+        "parse_status": "LOCAL_PARSE_COMPLETE",
+        "coverage_complete": true,
+        "status": "SERVED",
+        "answers": [
+          "√6/2"
+        ],
+        "error_code": null,
+        "expected_answers": [
+          "√6/2"
+        ],
+        "expected_code": null,
+        "passed": true,
+        "parse_latency_ms": 14.302,
+        "total_latency_ms": 38.17,
+        "ai_calls": 0
+      },
+      {
+        "id": "R1-F02",
+        "kind": "negative",
+        "parse_status": "LOCAL_PARSE_COMPLETE",
+        "coverage_complete": true,
+        "status": "REFUSED",
+        "answers": [],
+        "error_code": "BRIDGE_UNSUPPORTED_DESCRIBED_POINT",
+        "expected_answers": null,
+        "expected_code": null,
+        "passed": true,
+        "parse_latency_ms": 2.108,
+        "total_latency_ms": 2.782,
+        "ai_calls": 0
+      },
+      {
+        "id": "R1-F03",
+        "kind": "negative",
+        "parse_status": "LOCAL_PARSE_COMPLETE",
+        "coverage_complete": true,
+        "status": "REFUSED",
+        "answers": [],
+        "error_code": "OUT_OF_SCOPE",
+        "expected_answers": null,
+        "expected_code": null,
+        "passed": true,
+        "parse_latency_ms": 0.681,
+        "total_latency_ms": 0.907,
+        "ai_calls": 0
+      },
+      {
+        "id": "R1-G01",
+        "kind": "supported_positive",
+        "parse_status": "LOCAL_PARSE_COMPLETE",
+        "coverage_complete": true,
+        "status": "SERVED",
+        "answers": [
+          "1/3"
+        ],
+        "error_code": null,
+        "expected_answers": [
+          "1/3"
+        ],
+        "expected_code": null,
+        "passed": true,
+        "parse_latency_ms": 10.957,
+        "total_latency_ms": 30.071,
+        "ai_calls": 0
+      },
+      {
+        "id": "R1-G02",
+        "kind": "supported_positive",
+        "parse_status": "LOCAL_PARSE_COMPLETE",
+        "coverage_complete": true,
+        "status": "SERVED",
+        "answers": [
+          "√2/2"
+        ],
+        "error_code": null,
+        "expected_answers": [
+          "√2/2"
+        ],
+        "expected_code": null,
+        "passed": true,
+        "parse_latency_ms": 10.908,
+        "total_latency_ms": 29.371,
+        "ai_calls": 0
+      }
+    ],
+    "S-2": [
+      {
+        "id": "S2-A-I02_ve",
+        "kind": "supported_positive",
+        "parse_status": "LOCAL_PARSE_COMPLETE",
+        "coverage_complete": true,
+        "status": "SERVED",
+        "answers": [],
+        "error_code": null,
+        "expected_answers": [],
+        "expected_code": null,
+        "passed": true,
+        "parse_latency_ms": 3.519,
+        "total_latency_ms": 11.988,
+        "ai_calls": 0
+      },
+      {
+        "id": "S2-A-I04_mo_phong",
+        "kind": "supported_positive",
+        "parse_status": "LOCAL_PARSE_COMPLETE",
+        "coverage_complete": true,
+        "status": "SERVED",
+        "answers": [],
+        "error_code": null,
+        "expected_answers": [],
+        "expected_code": null,
+        "passed": true,
+        "parse_latency_ms": 3.478,
+        "total_latency_ms": 12.376,
+        "ai_calls": 0
+      },
+      {
+        "id": "S2-A-I05_cho_minh_xem",
+        "kind": "supported_positive",
+        "parse_status": "LOCAL_PARSE_COMPLETE",
+        "coverage_complete": true,
+        "status": "SERVED",
+        "answers": [],
+        "error_code": null,
+        "expected_answers": [],
+        "expected_code": null,
+        "passed": true,
+        "parse_latency_ms": 4.362,
+        "total_latency_ms": 13.797,
+        "ai_calls": 0
+      },
+      {
+        "id": "S2-A-I08_trailing_ve",
+        "kind": "supported_positive",
+        "parse_status": "LOCAL_PARSE_COMPLETE",
+        "coverage_complete": true,
+        "status": "SERVED",
+        "answers": [],
+        "error_code": null,
+        "expected_answers": [],
+        "expected_code": null,
+        "passed": true,
+        "parse_latency_ms": 4.536,
+        "total_latency_ms": 15.074,
+        "ai_calls": 0
+      },
+      {
+        "id": "S2-A-I09_trailing_mo_phong_hinh",
+        "kind": "supported_positive",
+        "parse_status": "LOCAL_PARSE_COMPLETE",
+        "coverage_complete": true,
+        "status": "SERVED",
+        "answers": [],
+        "error_code": null,
+        "expected_answers": [],
+        "expected_code": null,
+        "passed": true,
+        "parse_latency_ms": 4.165,
+        "total_latency_ms": 14.182,
+        "ai_calls": 0
+      },
+      {
+        "id": "S2-A-I12_trailing_point",
+        "kind": "supported_positive",
+        "parse_status": "LOCAL_PARSE_COMPLETE",
+        "coverage_complete": true,
+        "status": "SERVED",
+        "answers": [],
+        "error_code": null,
+        "expected_answers": [],
+        "expected_code": null,
+        "passed": true,
+        "parse_latency_ms": 5.09,
+        "total_latency_ms": 17.7,
+        "ai_calls": 0
+      },
+      {
+        "id": "S2-B-I07_ve_va_tinh",
+        "kind": "supported_positive",
+        "parse_status": "LOCAL_PARSE_COMPLETE",
+        "coverage_complete": true,
+        "status": "SERVED",
+        "answers": [
+          "8/3"
+        ],
+        "error_code": null,
+        "expected_answers": [
+          "8/3"
+        ],
+        "expected_code": null,
+        "passed": true,
+        "parse_latency_ms": 9.924,
+        "total_latency_ms": 28.34,
+        "ai_calls": 0
+      },
+      {
+        "id": "S2-B-I10_ve_roi_tinh",
+        "kind": "supported_positive",
+        "parse_status": "LOCAL_PARSE_COMPLETE",
+        "coverage_complete": true,
+        "status": "SERVED",
+        "answers": [
+          "8/3"
+        ],
+        "error_code": null,
+        "expected_answers": [
+          "8/3"
+        ],
+        "expected_code": null,
+        "passed": true,
+        "parse_latency_ms": 9.645,
+        "total_latency_ms": 26.446,
+        "ai_calls": 0
+      },
+      {
+        "id": "S2-B-I11_mo_phong_va_tinh_SC",
+        "kind": "supported_positive",
+        "parse_status": "LOCAL_PARSE_COMPLETE",
+        "coverage_complete": true,
+        "status": "SERVED",
+        "answers": [
+          "2√3"
+        ],
+        "error_code": null,
+        "expected_answers": [
+          "2√3"
+        ],
+        "expected_code": null,
+        "passed": true,
+        "parse_latency_ms": 9.571,
+        "total_latency_ms": 26.638,
+        "ai_calls": 0
+      },
+      {
+        "id": "S2-B-P07_shared_intermediate_two_goals",
+        "kind": "supported_positive",
+        "parse_status": "LOCAL_PARSE_COMPLETE",
+        "coverage_complete": true,
+        "status": "SERVED",
+        "answers": [
+          "1",
+          "√3"
+        ],
+        "error_code": null,
+        "expected_answers": [
+          "1",
+          "√3"
+        ],
+        "expected_code": null,
+        "passed": true,
+        "parse_latency_ms": 20.039,
+        "total_latency_ms": 48.221,
+        "ai_calls": 0
+      },
+      {
+        "id": "S2-B-P09_student_chain",
+        "kind": "supported_positive",
+        "parse_status": "LOCAL_PARSE_COMPLETE",
+        "coverage_complete": true,
+        "status": "SERVED",
+        "answers": [
+          "√3"
+        ],
+        "error_code": null,
+        "expected_answers": [
+          "√3"
+        ],
+        "expected_code": null,
+        "passed": true,
+        "parse_latency_ms": 11.263,
+        "total_latency_ms": 30.447,
+        "ai_calls": 0
+      },
+      {
+        "id": "S2-B-A03_control_with_dimensions",
+        "kind": "supported_positive",
+        "parse_status": "LOCAL_PARSE_COMPLETE",
+        "coverage_complete": true,
+        "status": "SERVED",
+        "answers": [
+          "√3"
+        ],
+        "error_code": null,
+        "expected_answers": [
+          "√3"
+        ],
+        "expected_code": null,
+        "passed": true,
+        "parse_latency_ms": 13.695,
+        "total_latency_ms": 35.781,
+        "ai_calls": 0
+      },
+      {
+        "id": "S2-C-A01_goc_chieu",
+        "kind": "negative",
+        "parse_status": "LOCAL_PARSE_AMBIGUOUS",
+        "coverage_complete": true,
+        "status": "REFUSED",
+        "answers": [],
+        "error_code": "AMBIGUOUS_FACT",
+        "expected_answers": null,
+        "expected_code": null,
+        "passed": true,
+        "parse_latency_ms": 0.358,
+        "total_latency_ms": 0.608,
+        "ai_calls": 0
+      },
+      {
+        "id": "S2-C-D05_projection_missing_target",
+        "kind": "negative",
+        "parse_status": "LOCAL_PARSE_AMBIGUOUS",
+        "coverage_complete": true,
+        "status": "REFUSED",
+        "answers": [],
+        "error_code": "AMBIGUOUS_FACT",
+        "expected_answers": null,
+        "expected_code": null,
+        "passed": true,
+        "parse_latency_ms": 0.894,
+        "total_latency_ms": 1.137,
+        "ai_calls": 0
+      },
+      {
+        "id": "S2-C-D06_unnamed_prism",
+        "kind": "negative",
+        "parse_status": "LOCAL_PARSE_AMBIGUOUS",
+        "coverage_complete": true,
+        "status": "REFUSED",
+        "answers": [],
+        "error_code": "AMBIGUOUS_FACT",
+        "expected_answers": null,
+        "expected_code": null,
+        "passed": true,
+        "parse_latency_ms": 0.157,
+        "total_latency_ms": 0.279,
+        "ai_calls": 0
+      },
+      {
+        "id": "S2-C-C04_angle_plane_missing",
+        "kind": "negative",
+        "parse_status": "LOCAL_PARSE_AMBIGUOUS",
+        "coverage_complete": true,
+        "status": "REFUSED",
+        "answers": [],
+        "error_code": "AMBIGUOUS_FACT",
+        "expected_answers": null,
+        "expected_code": null,
+        "passed": true,
+        "parse_latency_ms": 1.093,
+        "total_latency_ms": 1.423,
+        "ai_calls": 0
+      },
+      {
+        "id": "S2-C-C05_draw_then_compute",
+        "kind": "negative",
+        "parse_status": "LOCAL_PARSE_AMBIGUOUS",
+        "coverage_complete": true,
+        "status": "REFUSED",
+        "answers": [],
+        "error_code": "AMBIGUOUS_FACT",
+        "expected_answers": null,
+        "expected_code": null,
+        "passed": true,
+        "parse_latency_ms": 0.669,
+        "total_latency_ms": 0.884,
+        "ai_calls": 0
+      },
+      {
+        "id": "S2-C-C06_square_without_side",
+        "kind": "negative",
+        "parse_status": "LOCAL_PARSE_AMBIGUOUS",
+        "coverage_complete": true,
+        "status": "REFUSED",
+        "answers": [],
+        "error_code": "AMBIGUOUS_FACT",
+        "expected_answers": null,
+        "expected_code": null,
+        "passed": true,
+        "parse_latency_ms": 0.668,
+        "total_latency_ms": 0.903,
+        "ai_calls": 0
+      },
+      {
+        "id": "S2-D-D03_contradictory_length",
+        "kind": "negative",
+        "parse_status": "LOCAL_PARSE_COMPLETE",
+        "coverage_complete": true,
+        "status": "REFUSED",
+        "answers": [],
+        "error_code": "INCONSISTENT_FACTS",
+        "expected_answers": null,
+        "expected_code": null,
+        "passed": true,
+        "parse_latency_ms": 9.163,
+        "total_latency_ms": 19.081,
+        "ai_calls": 0
+      },
+      {
+        "id": "S2-D-D04_two_values_same_segment",
+        "kind": "negative",
+        "parse_status": "LOCAL_PARSE_COMPLETE",
+        "coverage_complete": true,
+        "status": "REFUSED",
+        "answers": [],
+        "error_code": "INCONSISTENT_FACTS",
+        "expected_answers": null,
+        "expected_code": null,
+        "passed": true,
+        "parse_latency_ms": 10.333,
+        "total_latency_ms": 19.35,
+        "ai_calls": 0
+      },
+      {
+        "id": "S2-D-D07_cube_rectangle_base",
+        "kind": "negative",
+        "parse_status": "LOCAL_PARSE_COMPLETE",
+        "coverage_complete": true,
+        "status": "REFUSED",
+        "answers": [],
+        "error_code": "INCONSISTENT_FACTS",
+        "expected_answers": null,
+        "expected_code": null,
+        "passed": true,
+        "parse_latency_ms": 10.781,
+        "total_latency_ms": 22.624,
+        "ai_calls": 0
+      },
+      {
+        "id": "S2-D-D08_cube_tall",
+        "kind": "negative",
+        "parse_status": "LOCAL_PARSE_COMPLETE",
+        "coverage_complete": true,
+        "status": "REFUSED",
+        "answers": [],
+        "error_code": "INCONSISTENT_FACTS",
+        "expected_answers": null,
+        "expected_code": null,
+        "passed": true,
+        "parse_latency_ms": 10.321,
+        "total_latency_ms": 21.865,
+        "ai_calls": 0
+      },
+      {
+        "id": "S2-D-D09_base_edge_perp_base",
+        "kind": "negative",
+        "parse_status": "LOCAL_PARSE_COMPLETE",
+        "coverage_complete": true,
+        "status": "REFUSED",
+        "answers": [],
+        "error_code": "INCONSISTENT_FACTS",
+        "expected_answers": null,
+        "expected_code": null,
+        "passed": true,
+        "parse_latency_ms": 9.421,
+        "total_latency_ms": 20.713,
+        "ai_calls": 0
+      },
+      {
+        "id": "S2-D-D10_square_diagonal_3",
+        "kind": "negative",
+        "parse_status": "LOCAL_PARSE_COMPLETE",
+        "coverage_complete": true,
+        "status": "REFUSED",
+        "answers": [],
+        "error_code": "INCONSISTENT_FACTS",
+        "expected_answers": null,
+        "expected_code": null,
+        "passed": true,
+        "parse_latency_ms": 9.986,
+        "total_latency_ms": 19.539,
+        "ai_calls": 0
+      },
+      {
+        "id": "S2-E-E01_oxyz",
+        "kind": "negative",
+        "parse_status": "LOCAL_PARSE_UNSUPPORTED",
+        "coverage_complete": false,
+        "status": "REFUSED",
+        "answers": [],
+        "error_code": "EMPTY_PROBLEM_TEXT",
+        "expected_answers": null,
+        "expected_code": null,
+        "passed": true,
+        "parse_latency_ms": 0.028,
+        "total_latency_ms": 0.029,
+        "ai_calls": 0
+      },
+      {
+        "id": "S2-E-E02_truncated_pyramid",
+        "kind": "negative",
+        "parse_status": "LOCAL_PARSE_COMPLETE",
+        "coverage_complete": false,
+        "status": "REFUSED",
+        "answers": [],
+        "error_code": "OUT_OF_SCOPE",
+        "expected_answers": null,
+        "expected_code": null,
+        "passed": true,
+        "parse_latency_ms": 0.609,
+        "total_latency_ms": 0.744,
+        "ai_calls": 0
+      },
+      {
+        "id": "S2-E-E03_volume_maximum",
+        "kind": "negative",
+        "parse_status": "LOCAL_PARSE_COMPLETE",
+        "coverage_complete": false,
+        "status": "REFUSED",
+        "answers": [],
+        "error_code": "OUT_OF_SCOPE",
+        "expected_answers": null,
+        "expected_code": null,
+        "passed": true,
+        "parse_latency_ms": 0.365,
+        "total_latency_ms": 0.468,
+        "ai_calls": 0
+      },
+      {
+        "id": "S2-E-E06_word_problem_rate",
+        "kind": "negative",
+        "parse_status": "LOCAL_PARSE_COMPLETE",
+        "coverage_complete": false,
+        "status": "REFUSED",
+        "answers": [],
+        "error_code": "OUT_OF_SCOPE",
+        "expected_answers": null,
+        "expected_code": null,
+        "passed": true,
+        "parse_latency_ms": 0.537,
+        "total_latency_ms": 0.634,
+        "ai_calls": 0
+      },
+      {
+        "id": "S2-E-E04_locus",
+        "kind": "negative",
+        "parse_status": "LOCAL_PARSE_COMPLETE",
+        "coverage_complete": true,
+        "status": "REFUSED",
+        "answers": [],
+        "error_code": "OUT_OF_SCOPE",
+        "expected_answers": null,
+        "expected_code": null,
+        "passed": true,
+        "parse_latency_ms": 0.606,
+        "total_latency_ms": 0.817,
+        "ai_calls": 0
+      },
+      {
+        "id": "S2-E-E05_translation",
+        "kind": "negative",
+        "parse_status": "LOCAL_PARSE_COMPLETE",
+        "coverage_complete": true,
+        "status": "REFUSED",
+        "answers": [],
+        "error_code": "OUT_OF_SCOPE",
+        "expected_answers": null,
+        "expected_code": null,
+        "passed": true,
+        "parse_latency_ms": 0.573,
+        "total_latency_ms": 0.785,
+        "ai_calls": 0
+      },
+      {
+        "id": "S2-F-S02_vuong_goc_day",
+        "kind": "supported_positive",
+        "parse_status": "LOCAL_PARSE_COMPLETE",
+        "coverage_complete": true,
+        "status": "SERVED",
+        "answers": [
+          "8/3"
+        ],
+        "error_code": null,
+        "expected_answers": [
+          "8/3"
+        ],
+        "expected_code": null,
+        "passed": true,
+        "parse_latency_ms": 8.87,
+        "total_latency_ms": 24.195,
+        "ai_calls": 0
+      },
+      {
+        "id": "S2-F-S03_symbol_perp",
+        "kind": "supported_positive",
+        "parse_status": "LOCAL_PARSE_COMPLETE",
+        "coverage_complete": true,
+        "status": "SERVED",
+        "answers": [
+          "8/3"
+        ],
+        "error_code": null,
+        "expected_answers": [
+          "8/3"
+        ],
+        "expected_code": null,
+        "passed": true,
+        "parse_latency_ms": 9.273,
+        "total_latency_ms": 24.54,
+        "ai_calls": 0
+      },
+      {
+        "id": "S2-F-S07_typo_tone",
+        "kind": "negative",
+        "parse_status": "LOCAL_PARSE_COMPLETE",
+        "coverage_complete": true,
+        "status": "REFUSED",
+        "answers": [],
+        "error_code": "UNGROUNDED_VALUE",
+        "expected_answers": null,
+        "expected_code": null,
+        "passed": true,
+        "parse_latency_ms": 2.546,
+        "total_latency_ms": 4.253,
+        "ai_calls": 0
+      },
+      {
+        "id": "S2-F-S08_altitude_wording",
+        "kind": "supported_positive",
+        "parse_status": "LOCAL_PARSE_COMPLETE",
+        "coverage_complete": true,
+        "status": "SERVED",
+        "answers": [
+          "8/3"
+        ],
+        "error_code": null,
+        "expected_answers": [
+          "8/3"
+        ],
+        "expected_code": null,
+        "passed": true,
+        "parse_latency_ms": 8.239,
+        "total_latency_ms": 22.485,
+        "ai_calls": 0
+      },
+      {
+        "id": "S2-F-F05_kc_mp_shorthand",
+        "kind": "supported_positive",
+        "parse_status": "LOCAL_PARSE_COMPLETE",
+        "coverage_complete": true,
+        "status": "SERVED",
+        "answers": [
+          "√2"
+        ],
+        "error_code": null,
+        "expected_answers": [
+          "√2"
+        ],
+        "expected_code": null,
+        "passed": true,
+        "parse_latency_ms": 9.053,
+        "total_latency_ms": 25.092,
+        "ai_calls": 0
+      },
+      {
+        "id": "S2-F-F06_dt_mp_shorthand",
+        "kind": "supported_positive",
+        "parse_status": "LOCAL_PARSE_COMPLETE",
+        "coverage_complete": true,
+        "status": "SERVED",
+        "answers": [
+          "2/3"
+        ],
+        "error_code": null,
+        "expected_answers": [
+          "2/3"
+        ],
+        "expected_code": null,
+        "passed": true,
+        "parse_latency_ms": 9.435,
+        "total_latency_ms": 25.389,
+        "ai_calls": 0
+      }
+    ],
+    "RenamedAndParaphrased8": [
+      {
+        "id": "GEN-01-RENAMED-PYRAMID",
+        "kind": "supported_positive",
+        "parse_status": "LOCAL_PARSE_COMPLETE",
+        "coverage_complete": true,
+        "status": "SERVED",
+        "answers": [
+          "48"
+        ],
+        "error_code": null,
+        "expected_answers": [
+          "48"
+        ],
+        "expected_code": null,
+        "passed": true,
+        "parse_latency_ms": 10.486,
+        "total_latency_ms": 26.66,
+        "ai_calls": 0
+      },
+      {
+        "id": "GEN-02-RENAMED-APEX-DISTANCE",
+        "kind": "supported_positive",
+        "parse_status": "LOCAL_PARSE_COMPLETE",
+        "coverage_complete": true,
+        "status": "SERVED",
+        "answers": [
+          "3√2/2"
+        ],
+        "error_code": null,
+        "expected_answers": [
+          "3√2/2"
+        ],
+        "expected_code": null,
+        "passed": true,
+        "parse_latency_ms": 10.555,
+        "total_latency_ms": 26.275,
+        "ai_calls": 0
+      },
+      {
+        "id": "GEN-03-RENAMED-PRISM",
+        "kind": "supported_positive",
+        "parse_status": "LOCAL_PARSE_COMPLETE",
+        "coverage_complete": true,
+        "status": "SERVED",
+        "answers": [
+          "30"
+        ],
+        "error_code": null,
+        "expected_answers": [
+          "30"
+        ],
+        "expected_code": null,
+        "passed": true,
+        "parse_latency_ms": 8.729,
+        "total_latency_ms": 25.534,
+        "ai_calls": 0
+      },
+      {
+        "id": "GEN-04-TRIORTHOGONAL-TETRAHEDRON",
+        "kind": "supported_positive",
+        "parse_status": "LOCAL_PARSE_COMPLETE",
+        "coverage_complete": true,
+        "status": "SERVED",
+        "answers": [
+          "3√14/7"
+        ],
+        "error_code": null,
+        "expected_answers": [
+          "3√14/7"
+        ],
+        "expected_code": null,
+        "passed": true,
+        "parse_latency_ms": 9.242,
+        "total_latency_ms": 23.662,
+        "ai_calls": 0
+      },
+      {
+        "id": "GEN-05-NESTED-DESCRIBED-POINT",
+        "kind": "supported_positive",
+        "parse_status": "LOCAL_PARSE_COMPLETE",
+        "coverage_complete": true,
+        "status": "SERVED",
+        "answers": [
+          "√6/2"
+        ],
+        "error_code": null,
+        "expected_answers": [
+          "√6/2"
+        ],
+        "expected_code": null,
+        "passed": true,
+        "parse_latency_ms": 14.915,
+        "total_latency_ms": 38.836,
+        "ai_calls": 0
+      },
+      {
+        "id": "GEN-06-PARALLEL-SECTION-VOLUME-RATIO",
+        "kind": "supported_positive",
+        "parse_status": "LOCAL_PARSE_COMPLETE",
+        "coverage_complete": true,
+        "status": "SERVED",
+        "answers": [
+          "1/8"
+        ],
+        "error_code": null,
+        "expected_answers": [
+          "1/8"
+        ],
+        "expected_code": null,
+        "passed": true,
+        "parse_latency_ms": 30.056,
+        "total_latency_ms": 91.317,
+        "ai_calls": 0
+      },
+      {
+        "id": "GEN-07-PARTIAL-UNPARSED-CLAUSE",
+        "kind": "negative",
+        "parse_status": "LOCAL_PARSE_PARTIAL",
+        "coverage_complete": false,
+        "status": "REFUSED",
+        "answers": [],
+        "error_code": "UNPARSED_FACT_CANDIDATE",
+        "expected_answers": null,
+        "expected_code": null,
+        "passed": true,
+        "parse_latency_ms": 1.163,
+        "total_latency_ms": 1.166,
+        "ai_calls": 0
+      },
+      {
+        "id": "GEN-08-OUT-OF-SCOPE-NON-GEOMETRY",
+        "kind": "negative",
+        "parse_status": "LOCAL_PARSE_UNSUPPORTED",
+        "coverage_complete": false,
+        "status": "REFUSED",
+        "answers": [],
+        "error_code": "GATE_OUT_OF_SCOPE",
+        "expected_answers": null,
+        "expected_code": "GATE_OUT_OF_SCOPE",
+        "passed": true,
+        "parse_latency_ms": 0.278,
+        "total_latency_ms": 0.279,
+        "ai_calls": 0
+      }
+    ]
+  }
+}

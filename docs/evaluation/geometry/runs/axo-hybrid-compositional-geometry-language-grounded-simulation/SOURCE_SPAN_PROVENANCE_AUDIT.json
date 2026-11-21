@@ -1,0 +1,1910 @@
+{
+  "schema": "axo-v12-source-span-provenance-audit/1",
+  "analyzer_version": "compositional-clause-analyzer/1",
+  "exact_orig_span_mismatch_count": 0,
+  "audited_total_clauses": 242,
+  "sample_records": [
+    {
+      "case_id": "S01",
+      "records": [
+        {
+          "original_text": "Hãy mô phỏng hình lập phương ABCD.A'B'C'D' có cạnh bằng 2a.",
+          "original_offsets": [
+            0,
+            42
+          ],
+          "normalized_text": "Hãy mô phỏng hình lập phương ABCD.A'B'C'D' có cạnh bằng 2a.",
+          "normalized_offsets": [
+            0,
+            42
+          ],
+          "clause_boundaries": [
+            0,
+            42
+          ],
+          "clause_role": "SIMULATION_REQUEST",
+          "quoted_source_span": "Hãy mô phỏng hình lập phương ABCD.A'B'C'D'",
+          "entity_binding": {
+            "entities": [
+              "A",
+              "A'"
+            ]
+          },
+          "extracted_fact": {},
+          "grounding_verdict": "VERIFIED",
+          "subkind": "nested_lead_simulation"
+        },
+        {
+          "original_text": "Hãy mô phỏng hình lập phương ABCD.A'B'C'D' có cạnh bằng 2a.",
+          "original_offsets": [
+            13,
+            58
+          ],
+          "normalized_text": "Hãy mô phỏng hình lập phương ABCD.A'B'C'D' có cạnh bằng 2a.",
+          "normalized_offsets": [
+            13,
+            58
+          ],
+          "clause_boundaries": [
+            13,
+            58
+          ],
+          "clause_role": "OBJECT_DECLARATION",
+          "quoted_source_span": "hình lập phương ABCD.A'B'C'D' có cạnh bằng 2a",
+          "entity_binding": {
+            "entities": [
+              "A",
+              "A'"
+            ]
+          },
+          "extracted_fact": {},
+          "grounding_verdict": "VERIFIED",
+          "subkind": "embedded_declaration"
+        }
+      ]
+    },
+    {
+      "case_id": "S02",
+      "records": [
+        {
+          "original_text": "Vẽ hình hộp chữ nhật ABCD.A'B'C'D' với AB = 3, BC = 4, AA' = 5.",
+          "original_offsets": [
+            0,
+            34
+          ],
+          "normalized_text": "Vẽ hình hộp chữ nhật ABCD.A'B'C'D' với AB = 3, BC = 4, AA' = 5.",
+          "normalized_offsets": [
+            0,
+            34
+          ],
+          "clause_boundaries": [
+            0,
+            34
+          ],
+          "clause_role": "SIMULATION_REQUEST",
+          "quoted_source_span": "Vẽ hình hộp chữ nhật ABCD.A'B'C'D'",
+          "entity_binding": {
+            "entities": [
+              "A",
+              "A'"
+            ]
+          },
+          "extracted_fact": {},
+          "grounding_verdict": "VERIFIED",
+          "subkind": "nested_lead_simulation"
+        },
+        {
+          "original_text": "Vẽ hình hộp chữ nhật ABCD.A'B'C'D' với AB = 3, BC = 4, AA' = 5.",
+          "original_offsets": [
+            3,
+            62
+          ],
+          "normalized_text": "Vẽ hình hộp chữ nhật ABCD.A'B'C'D' với AB = 3, BC = 4, AA' = 5.",
+          "normalized_offsets": [
+            3,
+            62
+          ],
+          "clause_boundaries": [
+            3,
+            62
+          ],
+          "clause_role": "OBJECT_DECLARATION",
+          "quoted_source_span": "hình hộp chữ nhật ABCD.A'B'C'D' với AB = 3, BC = 4, AA' = 5",
+          "entity_binding": {
+            "entities": [
+              "A",
+              "A'",
+              "B"
+            ]
+          },
+          "extracted_fact": {},
+          "grounding_verdict": "VERIFIED",
+          "subkind": "embedded_declaration"
+        }
+      ]
+    },
+    {
+      "case_id": "S03",
+      "records": [
+        {
+          "original_text": "Dựng hình tứ diện đều ABCD có cạnh bằng 3.",
+          "original_offsets": [
+            0,
+            26
+          ],
+          "normalized_text": "Dựng hình tứ diện đều ABCD có cạnh bằng 3.",
+          "normalized_offsets": [
+            0,
+            26
+          ],
+          "clause_boundaries": [
+            0,
+            26
+          ],
+          "clause_role": "SIMULATION_REQUEST",
+          "quoted_source_span": "Dựng hình tứ diện đều ABCD",
+          "entity_binding": {
+            "entities": [
+              "A"
+            ]
+          },
+          "extracted_fact": {},
+          "grounding_verdict": "VERIFIED",
+          "subkind": "nested_lead_simulation"
+        },
+        {
+          "original_text": "Dựng hình tứ diện đều ABCD có cạnh bằng 3.",
+          "original_offsets": [
+            5,
+            41
+          ],
+          "normalized_text": "Dựng hình tứ diện đều ABCD có cạnh bằng 3.",
+          "normalized_offsets": [
+            5,
+            41
+          ],
+          "clause_boundaries": [
+            5,
+            41
+          ],
+          "clause_role": "OBJECT_DECLARATION",
+          "quoted_source_span": "hình tứ diện đều ABCD có cạnh bằng 3",
+          "entity_binding": {
+            "entities": [
+              "A"
+            ]
+          },
+          "extracted_fact": {},
+          "grounding_verdict": "VERIFIED",
+          "subkind": "embedded_declaration"
+        }
+      ]
+    },
+    {
+      "case_id": "S04",
+      "records": [
+        {
+          "original_text": "Hãy dựng hình chóp tứ giác đều S.ABCD có cạnh đáy a và cạnh bên a√3.",
+          "original_offsets": [
+            0,
+            37
+          ],
+          "normalized_text": "Hãy dựng hình chóp tứ giác đều S.ABCD có cạnh đáy a và cạnh bên a√3.",
+          "normalized_offsets": [
+            0,
+            37
+          ],
+          "clause_boundaries": [
+            0,
+            37
+          ],
+          "clause_role": "SIMULATION_REQUEST",
+          "quoted_source_span": "Hãy dựng hình chóp tứ giác đều S.ABCD",
+          "entity_binding": {
+            "entities": [
+              "S",
+              "A"
+            ]
+          },
+          "extracted_fact": {},
+          "grounding_verdict": "VERIFIED",
+          "subkind": "nested_lead_simulation"
+        },
+        {
+          "original_text": "Hãy dựng hình chóp tứ giác đều S.ABCD có cạnh đáy a và cạnh bên a√3.",
+          "original_offsets": [
+            9,
+            67
+          ],
+          "normalized_text": "Hãy dựng hình chóp tứ giác đều S.ABCD có cạnh đáy a và cạnh bên a√3.",
+          "normalized_offsets": [
+            9,
+            67
+          ],
+          "clause_boundaries": [
+            9,
+            67
+          ],
+          "clause_role": "OBJECT_DECLARATION",
+          "quoted_source_span": "hình chóp tứ giác đều S.ABCD có cạnh đáy a và cạnh bên a√3",
+          "entity_binding": {
+            "entities": [
+              "S",
+              "A"
+            ]
+          },
+          "extracted_fact": {},
+          "grounding_verdict": "VERIFIED",
+          "subkind": "embedded_declaration"
+        }
+      ]
+    },
+    {
+      "case_id": "S05",
+      "records": [
+        {
+          "original_text": "Mô phỏng hình chóp S.MNPQ có đáy MNPQ là hình vuông cạnh 2, SM vuông góc với đáy và SM = 2.",
+          "original_offsets": [
+            0,
+            25
+          ],
+          "normalized_text": "Mô phỏng hình chóp S.MNPQ có đáy MNPQ là hình vuông cạnh 2, SM vuông góc với đáy và SM = 2.",
+          "normalized_offsets": [
+            0,
+            25
+          ],
+          "clause_boundaries": [
+            0,
+            25
+          ],
+          "clause_role": "SIMULATION_REQUEST",
+          "quoted_source_span": "Mô phỏng hình chóp S.MNPQ",
+          "entity_binding": {
+            "entities": [
+              "S",
+              "M"
+            ]
+          },
+          "extracted_fact": {},
+          "grounding_verdict": "VERIFIED",
+          "subkind": "nested_lead_simulation"
+        },
+        {
+          "original_text": "Mô phỏng hình chóp S.MNPQ có đáy MNPQ là hình vuông cạnh 2, SM vuông góc với đáy và SM = 2.",
+          "original_offsets": [
+            9,
+            90
+          ],
+          "normalized_text": "Mô phỏng hình chóp S.MNPQ có đáy MNPQ là hình vuông cạnh 2, SM vuông góc với đáy và SM = 2.",
+          "normalized_offsets": [
+            9,
+            90
+          ],
+          "clause_boundaries": [
+            9,
+            90
+          ],
+          "clause_role": "OBJECT_DECLARATION",
+          "quoted_source_span": "hình chóp S.MNPQ có đáy MNPQ là hình vuông cạnh 2, SM vuông góc với đáy và SM = 2",
+          "entity_binding": {
+            "entities": [
+              "S",
+              "M"
+            ]
+          },
+          "extracted_fact": {},
+          "grounding_verdict": "VERIFIED",
+          "subkind": "embedded_declaration"
+        }
+      ]
+    },
+    {
+      "case_id": "S06",
+      "records": [
+        {
+          "original_text": "Cho lăng trụ đứng ABC.DEF có đáy ABC là tam giác đều cạnh a, cạnh bên AD = 2a. Hãy vẽ hình lăng trụ đó.",
+          "original_offsets": [
+            0,
+            77
+          ],
+          "normalized_text": "Cho lăng trụ đứng ABC.DEF có đáy ABC là tam giác đều cạnh a, cạnh bên AD = 2a. Hãy vẽ hình lăng trụ đó.",
+          "normalized_offsets": [
+            0,
+            77
+          ],
+          "clause_boundaries": [
+            0,
+            77
+          ],
+          "clause_role": "OBJECT_DECLARATION",
+          "quoted_source_span": "Cho lăng trụ đứng ABC.DEF có đáy ABC là tam giác đều cạnh a, cạnh bên AD = 2a",
+          "entity_binding": {
+            "entities": [
+              "A",
+              "D"
+            ]
+          },
+          "extracted_fact": {},
+          "grounding_verdict": "VERIFIED",
+          "subkind": "declaration_with_constraints"
+        },
+        {
+          "original_text": "Cho lăng trụ đứng ABC.DEF có đáy ABC là tam giác đều cạnh a, cạnh bên AD = 2a. Hãy vẽ hình lăng trụ đó.",
+          "original_offsets": [
+            79,
+            102
+          ],
+          "normalized_text": "Cho lăng trụ đứng ABC.DEF có đáy ABC là tam giác đều cạnh a, cạnh bên AD = 2a. Hãy vẽ hình lăng trụ đó.",
+          "normalized_offsets": [
+            79,
+            102
+          ],
+          "clause_boundaries": [
+            79,
+            102
+          ],
+          "clause_role": "SIMULATION_REQUEST",
+          "quoted_source_span": "Hãy vẽ hình lăng trụ đó",
+          "entity_binding": {
+            "entities": []
+          },
+          "extracted_fact": {},
+          "grounding_verdict": "VERIFIED",
+          "subkind": "standalone_simulation"
+        }
+      ]
+    },
+    {
+      "case_id": "S07",
+      "records": [
+        {
+          "original_text": "Cho hình chóp O.ABC có OA, OB, OC đôi một vuông góc, OA = OB = OC = 2. Hãy biểu diễn hình chóp này.",
+          "original_offsets": [
+            0,
+            69
+          ],
+          "normalized_text": "Cho hình chóp O.ABC có OA, OB, OC đôi một vuông góc, OA = OB = OC = 2. Hãy biểu diễn hình chóp này.",
+          "normalized_offsets": [
+            0,
+            69
+          ],
+          "clause_boundaries": [
+            0,
+            69
+          ],
+          "clause_role": "OBJECT_DECLARATION",
+          "quoted_source_span": "Cho hình chóp O.ABC có OA, OB, OC đôi một vuông góc, OA = OB = OC = 2",
+          "entity_binding": {
+            "entities": [
+              "O",
+              "A"
+            ]
+          },
+          "extracted_fact": {},
+          "grounding_verdict": "VERIFIED",
+          "subkind": "declaration_with_constraints"
+        },
+        {
+          "original_text": "Cho hình chóp O.ABC có OA, OB, OC đôi một vuông góc, OA = OB = OC = 2. Hãy biểu diễn hình chóp này.",
+          "original_offsets": [
+            71,
+            98
+          ],
+          "normalized_text": "Cho hình chóp O.ABC có OA, OB, OC đôi một vuông góc, OA = OB = OC = 2. Hãy biểu diễn hình chóp này.",
+          "normalized_offsets": [
+            71,
+            98
+          ],
+          "clause_boundaries": [
+            71,
+            98
+          ],
+          "clause_role": "SIMULATION_REQUEST",
+          "quoted_source_span": "Hãy biểu diễn hình chóp này",
+          "entity_binding": {
+            "entities": []
+          },
+          "extracted_fact": {},
+          "grounding_verdict": "VERIFIED",
+          "subkind": "standalone_simulation"
+        }
+      ]
+    },
+    {
+      "case_id": "S08",
+      "records": [
+        {
+          "original_text": "Hiển thị hình hộp chữ nhật MNPQ.M'N'P'Q' có MN = 2, MQ = 3 và MM' = 4.",
+          "original_offsets": [
+            0,
+            40
+          ],
+          "normalized_text": "Hiển thị hình hộp chữ nhật MNPQ.M'N'P'Q' có MN = 2, MQ = 3 và MM' = 4.",
+          "normalized_offsets": [
+            0,
+            40
+          ],
+          "clause_boundaries": [
+            0,
+            40
+          ],
+          "clause_role": "SIMULATION_REQUEST",
+          "quoted_source_span": "Hiển thị hình hộp chữ nhật MNPQ.M'N'P'Q'",
+          "entity_binding": {
+            "entities": [
+              "M",
+              "M'"
+            ]
+          },
+          "extracted_fact": {},
+          "grounding_verdict": "VERIFIED",
+          "subkind": "nested_lead_simulation"
+        },
+        {
+          "original_text": "Hiển thị hình hộp chữ nhật MNPQ.M'N'P'Q' có MN = 2, MQ = 3 và MM' = 4.",
+          "original_offsets": [
+            9,
+            69
+          ],
+          "normalized_text": "Hiển thị hình hộp chữ nhật MNPQ.M'N'P'Q' có MN = 2, MQ = 3 và MM' = 4.",
+          "normalized_offsets": [
+            9,
+            69
+          ],
+          "clause_boundaries": [
+            9,
+            69
+          ],
+          "clause_role": "OBJECT_DECLARATION",
+          "quoted_source_span": "hình hộp chữ nhật MNPQ.M'N'P'Q' có MN = 2, MQ = 3 và MM' = 4",
+          "entity_binding": {
+            "entities": [
+              "M",
+              "M'"
+            ]
+          },
+          "extracted_fact": {},
+          "grounding_verdict": "VERIFIED",
+          "subkind": "embedded_declaration"
+        }
+      ]
+    },
+    {
+      "case_id": "S09",
+      "records": [
+        {
+          "original_text": "Chỉ cần vẽ hình, không cần tính toán: hình chóp S.ABC có đáy ABC là tam giác vuông tại A, AB = 3, AC = 4, SA vuông góc với (ABC) và SA = 6.",
+          "original_offsets": [
+            0,
+            36
+          ],
+          "normalized_text": "Chỉ cần vẽ hình, không cần tính toán: hình chóp S.ABC có đáy ABC là tam giác vuông tại A, AB = 3, AC = 4, SA vuông góc với (ABC) và SA = 6.",
+          "normalized_offsets": [
+            0,
+            36
+          ],
+          "clause_boundaries": [
+            0,
+            36
+          ],
+          "clause_role": "NEGATED_REQUEST",
+          "quoted_source_span": "Chỉ cần vẽ hình, không cần tính toán",
+          "entity_binding": {
+            "entities": []
+          },
+          "extracted_fact": {},
+          "grounding_verdict": "VERIFIED",
+          "subkind": "meta_no_calc"
+        },
+        {
+          "original_text": "Chỉ cần vẽ hình, không cần tính toán: hình chóp S.ABC có đáy ABC là tam giác vuông tại A, AB = 3, AC = 4, SA vuông góc với (ABC) và SA = 6.",
+          "original_offsets": [
+            38,
+            138
+          ],
+          "normalized_text": "Chỉ cần vẽ hình, không cần tính toán: hình chóp S.ABC có đáy ABC là tam giác vuông tại A, AB = 3, AC = 4, SA vuông góc với (ABC) và SA = 6.",
+          "normalized_offsets": [
+            38,
+            138
+          ],
+          "clause_boundaries": [
+            38,
+            138
+          ],
+          "clause_role": "OBJECT_DECLARATION",
+          "quoted_source_span": "hình chóp S.ABC có đáy ABC là tam giác vuông tại A, AB = 3, AC = 4, SA vuông góc với (ABC) và SA = 6",
+          "entity_binding": {
+            "entities": [
+              "S",
+              "A"
+            ]
+          },
+          "extracted_fact": {},
+          "grounding_verdict": "VERIFIED",
+          "subkind": "declaration_with_constraints"
+        }
+      ]
+    },
+    {
+      "case_id": "S10",
+      "records": [
+        {
+          "original_text": "Cho hình chóp S.ABCD có đáy ABCD là hình chữ nhật, AB = 2a, AD = a, SA vuông góc với mặt phẳng đáy, SA = a. Dựng hình theo giả thiết trên.",
+          "original_offsets": [
+            0,
+            106
+          ],
+          "normalized_text": "Cho hình chóp S.ABCD có đáy ABCD là hình chữ nhật, AB = 2a, AD = a, SA vuông góc với mặt phẳng đáy, SA = a. Dựng hình theo giả thiết trên.",
+          "normalized_offsets": [
+            0,
+            106
+          ],
+          "clause_boundaries": [
+            0,
+            106
+          ],
+          "clause_role": "OBJECT_DECLARATION",
+          "quoted_source_span": "Cho hình chóp S.ABCD có đáy ABCD là hình chữ nhật, AB = 2a, AD = a, SA vuông góc với mặt phẳng đáy, SA = a",
+          "entity_binding": {
+            "entities": [
+              "S",
+              "A"
+            ]
+          },
+          "extracted_fact": {},
+          "grounding_verdict": "VERIFIED",
+          "subkind": "declaration_with_constraints"
+        },
+        {
+          "original_text": "Cho hình chóp S.ABCD có đáy ABCD là hình chữ nhật, AB = 2a, AD = a, SA vuông góc với mặt phẳng đáy, SA = a. Dựng hình theo giả thiết trên.",
+          "original_offsets": [
+            108,
+            137
+          ],
+          "normalized_text": "Cho hình chóp S.ABCD có đáy ABCD là hình chữ nhật, AB = 2a, AD = a, SA vuông góc với mặt phẳng đáy, SA = a. Dựng hình theo giả thiết trên.",
+          "normalized_offsets": [
+            108,
+            137
+          ],
+          "clause_boundaries": [
+            108,
+            137
+          ],
+          "clause_role": "SIMULATION_REQUEST",
+          "quoted_source_span": "Dựng hình theo giả thiết trên",
+          "entity_binding": {
+            "entities": []
+          },
+          "extracted_fact": {},
+          "grounding_verdict": "VERIFIED",
+          "subkind": "standalone_simulation"
+        }
+      ]
+    },
+    {
+      "case_id": "S11",
+      "records": [
+        {
+          "original_text": "Cho hình lập phương ABCD.EFGH có cạnh 4. Hãy dựng hình 3D của hình lập phương này.",
+          "original_offsets": [
+            0,
+            39
+          ],
+          "normalized_text": "Cho hình lập phương ABCD.EFGH có cạnh 4. Hãy dựng hình 3D của hình lập phương này.",
+          "normalized_offsets": [
+            0,
+            39
+          ],
+          "clause_boundaries": [
+            0,
+            39
+          ],
+          "clause_role": "OBJECT_DECLARATION",
+          "quoted_source_span": "Cho hình lập phương ABCD.EFGH có cạnh 4",
+          "entity_binding": {
+            "entities": [
+              "A",
+              "E"
+            ]
+          },
+          "extracted_fact": {},
+          "grounding_verdict": "VERIFIED",
+          "subkind": "declaration_with_constraints"
+        },
+        {
+          "original_text": "Cho hình lập phương ABCD.EFGH có cạnh 4. Hãy dựng hình 3D của hình lập phương này.",
+          "original_offsets": [
+            41,
+            81
+          ],
+          "normalized_text": "Cho hình lập phương ABCD.EFGH có cạnh 4. Hãy dựng hình 3D của hình lập phương này.",
+          "normalized_offsets": [
+            41,
+            81
+          ],
+          "clause_boundaries": [
+            41,
+            81
+          ],
+          "clause_role": "SIMULATION_REQUEST",
+          "quoted_source_span": "Hãy dựng hình 3D của hình lập phương này",
+          "entity_binding": {
+            "entities": []
+          },
+          "extracted_fact": {},
+          "grounding_verdict": "VERIFIED",
+          "subkind": "standalone_simulation"
+        }
+      ]
+    },
+    {
+      "case_id": "S12",
+      "records": [
+        {
+          "original_text": "Hãy vẽ giúp em hình chóp tam giác đều S.ABC, cạnh đáy bằng 2a, cạnh bên bằng 3a.",
+          "original_offsets": [
+            0,
+            79
+          ],
+          "normalized_text": "Hãy vẽ giúp em hình chóp tam giác đều S.ABC, cạnh đáy bằng 2a, cạnh bên bằng 3a.",
+          "normalized_offsets": [
+            0,
+            79
+          ],
+          "clause_boundaries": [
+            0,
+            79
+          ],
+          "clause_role": "SIMULATION_REQUEST",
+          "quoted_source_span": "Hãy vẽ giúp em hình chóp tam giác đều S.ABC, cạnh đáy bằng 2a, cạnh bên bằng 3a",
+          "entity_binding": {
+            "entities": [
+              "S",
+              "A"
+            ]
+          },
+          "extracted_fact": {},
+          "grounding_verdict": "VERIFIED",
+          "subkind": "standalone_simulation"
+        }
+      ]
+    },
+    {
+      "case_id": "S13",
+      "records": [
+        {
+          "original_text": "Cho khối lăng trụ tam giác đều ABC.A'B'C' có tất cả các cạnh bằng a. Biểu diễn khối lăng trụ đã cho.",
+          "original_offsets": [
+            0,
+            67
+          ],
+          "normalized_text": "Cho khối lăng trụ tam giác đều ABC.A'B'C' có tất cả các cạnh bằng a. Biểu diễn khối lăng trụ đã cho.",
+          "normalized_offsets": [
+            0,
+            67
+          ],
+          "clause_boundaries": [
+            0,
+            67
+          ],
+          "clause_role": "OBJECT_DECLARATION",
+          "quoted_source_span": "Cho khối lăng trụ tam giác đều ABC.A'B'C' có tất cả các cạnh bằng a",
+          "entity_binding": {
+            "entities": [
+              "A",
+              "A'"
+            ]
+          },
+          "extracted_fact": {},
+          "grounding_verdict": "VERIFIED",
+          "subkind": "declaration_with_constraints"
+        },
+        {
+          "original_text": "Cho khối lăng trụ tam giác đều ABC.A'B'C' có tất cả các cạnh bằng a. Biểu diễn khối lăng trụ đã cho.",
+          "original_offsets": [
+            69,
+            99
+          ],
+          "normalized_text": "Cho khối lăng trụ tam giác đều ABC.A'B'C' có tất cả các cạnh bằng a. Biểu diễn khối lăng trụ đã cho.",
+          "normalized_offsets": [
+            69,
+            99
+          ],
+          "clause_boundaries": [
+            69,
+            99
+          ],
+          "clause_role": "SIMULATION_REQUEST",
+          "quoted_source_span": "Biểu diễn khối lăng trụ đã cho",
+          "entity_binding": {
+            "entities": []
+          },
+          "extracted_fact": {},
+          "grounding_verdict": "VERIFIED",
+          "subkind": "standalone_simulation"
+        }
+      ]
+    },
+    {
+      "case_id": "S14",
+      "records": [
+        {
+          "original_text": "Cho tứ diện ABCD có AB, AC, AD đôi một vuông góc với AB = 1, AC = 2, AD = 3. Mô phỏng tứ diện này.",
+          "original_offsets": [
+            0,
+            75
+          ],
+          "normalized_text": "Cho tứ diện ABCD có AB, AC, AD đôi một vuông góc với AB = 1, AC = 2, AD = 3. Mô phỏng tứ diện này.",
+          "normalized_offsets": [
+            0,
+            75
+          ],
+          "clause_boundaries": [
+            0,
+            75
+          ],
+          "clause_role": "OBJECT_DECLARATION",
+          "quoted_source_span": "Cho tứ diện ABCD có AB, AC, AD đôi một vuông góc với AB = 1, AC = 2, AD = 3",
+          "entity_binding": {
+            "entities": [
+              "A"
+            ]
+          },
+          "extracted_fact": {},
+          "grounding_verdict": "VERIFIED",
+          "subkind": "declaration_with_constraints"
+        },
+        {
+          "original_text": "Cho tứ diện ABCD có AB, AC, AD đôi một vuông góc với AB = 1, AC = 2, AD = 3. Mô phỏng tứ diện này.",
+          "original_offsets": [
+            77,
+            97
+          ],
+          "normalized_text": "Cho tứ diện ABCD có AB, AC, AD đôi một vuông góc với AB = 1, AC = 2, AD = 3. Mô phỏng tứ diện này.",
+          "normalized_offsets": [
+            77,
+            97
+          ],
+          "clause_boundaries": [
+            77,
+            97
+          ],
+          "clause_role": "SIMULATION_REQUEST",
+          "quoted_source_span": "Mô phỏng tứ diện này",
+          "entity_binding": {
+            "entities": []
+          },
+          "extracted_fact": {},
+          "grounding_verdict": "VERIFIED",
+          "subkind": "standalone_simulation"
+        }
+      ]
+    },
+    {
+      "case_id": "S15",
+      "records": [
+        {
+          "original_text": "Một hình chóp S.ABCD có đáy là hình vuông ABCD cạnh 3cm, cạnh SA vuông góc với đáy và SA = 4cm. Em hãy mô phỏng hình chóp đó.",
+          "original_offsets": [
+            0,
+            94
+          ],
+          "normalized_text": "Một hình chóp S.ABCD có đáy là hình vuông ABCD cạnh 3cm, cạnh SA vuông góc với đáy và SA = 4cm. Em hãy mô phỏng hình chóp đó.",
+          "normalized_offsets": [
+            0,
+            94
+          ],
+          "clause_boundaries": [
+            0,
+            94
+          ],
+          "clause_role": "OBJECT_DECLARATION",
+          "quoted_source_span": "Một hình chóp S.ABCD có đáy là hình vuông ABCD cạnh 3cm, cạnh SA vuông góc với đáy và SA = 4cm",
+          "entity_binding": {
+            "entities": [
+              "S",
+              "A"
+            ]
+          },
+          "extracted_fact": {},
+          "grounding_verdict": "VERIFIED",
+          "subkind": "declaration_with_constraints"
+        },
+        {
+          "original_text": "Một hình chóp S.ABCD có đáy là hình vuông ABCD cạnh 3cm, cạnh SA vuông góc với đáy và SA = 4cm. Em hãy mô phỏng hình chóp đó.",
+          "original_offsets": [
+            96,
+            124
+          ],
+          "normalized_text": "Một hình chóp S.ABCD có đáy là hình vuông ABCD cạnh 3cm, cạnh SA vuông góc với đáy và SA = 4cm. Em hãy mô phỏng hình chóp đó.",
+          "normalized_offsets": [
+            96,
+            124
+          ],
+          "clause_boundaries": [
+            96,
+            124
+          ],
+          "clause_role": "SIMULATION_REQUEST",
+          "quoted_source_span": "Em hãy mô phỏng hình chóp đó",
+          "entity_binding": {
+            "entities": []
+          },
+          "extracted_fact": {},
+          "grounding_verdict": "VERIFIED",
+          "subkind": "standalone_simulation"
+        }
+      ]
+    },
+    {
+      "case_id": "S16",
+      "records": [
+        {
+          "original_text": "Vẽ khối chóp S.ABCD, đáy ABCD là hình thoi cạnh 2, góc ABC = 60°, SA ⊥ (ABCD), SA = 3.",
+          "original_offsets": [
+            0,
+            85
+          ],
+          "normalized_text": "Vẽ khối chóp S.ABCD, đáy ABCD là hình thoi cạnh 2, góc ABC = 60°, SA ⊥ (ABCD), SA = 3.",
+          "normalized_offsets": [
+            0,
+            85
+          ],
+          "clause_boundaries": [
+            0,
+            85
+          ],
+          "clause_role": "SIMULATION_REQUEST",
+          "quoted_source_span": "Vẽ khối chóp S.ABCD, đáy ABCD là hình thoi cạnh 2, góc ABC = 60°, SA ⊥ (ABCD), SA = 3",
+          "entity_binding": {
+            "entities": [
+              "S",
+              "A"
+            ]
+          },
+          "extracted_fact": {},
+          "grounding_verdict": "VERIFIED",
+          "subkind": "standalone_simulation"
+        }
+      ]
+    },
+    {
+      "case_id": "S17",
+      "records": [
+        {
+          "original_text": "Hãy mô phỏng hình hộp chữ nhật ABCD.A'B'C'D' có đáy là hình vuông cạnh a và chiều cao 2a.",
+          "original_offsets": [
+            0,
+            44
+          ],
+          "normalized_text": "Hãy mô phỏng hình hộp chữ nhật ABCD.A'B'C'D' có đáy là hình vuông cạnh a và chiều cao 2a.",
+          "normalized_offsets": [
+            0,
+            44
+          ],
+          "clause_boundaries": [
+            0,
+            44
+          ],
+          "clause_role": "SIMULATION_REQUEST",
+          "quoted_source_span": "Hãy mô phỏng hình hộp chữ nhật ABCD.A'B'C'D'",
+          "entity_binding": {
+            "entities": [
+              "A",
+              "A'"
+            ]
+          },
+          "extracted_fact": {},
+          "grounding_verdict": "VERIFIED",
+          "subkind": "nested_lead_simulation"
+        },
+        {
+          "original_text": "Hãy mô phỏng hình hộp chữ nhật ABCD.A'B'C'D' có đáy là hình vuông cạnh a và chiều cao 2a.",
+          "original_offsets": [
+            13,
+            88
+          ],
+          "normalized_text": "Hãy mô phỏng hình hộp chữ nhật ABCD.A'B'C'D' có đáy là hình vuông cạnh a và chiều cao 2a.",
+          "normalized_offsets": [
+            13,
+            88
+          ],
+          "clause_boundaries": [
+            13,
+            88
+          ],
+          "clause_role": "OBJECT_DECLARATION",
+          "quoted_source_span": "hình hộp chữ nhật ABCD.A'B'C'D' có đáy là hình vuông cạnh a và chiều cao 2a",
+          "entity_binding": {
+            "entities": [
+              "A",
+              "A'"
+            ]
+          },
+          "extracted_fact": {},
+          "grounding_verdict": "VERIFIED",
+          "subkind": "embedded_declaration"
+        }
+      ]
+    },
+    {
+      "case_id": "S18",
+      "records": [
+        {
+          "original_text": "Dựng hình lăng trụ đứng ABCD.A'B'C'D' có đáy ABCD là hình vuông cạnh 2 và cạnh bên bằng 3.",
+          "original_offsets": [
+            0,
+            37
+          ],
+          "normalized_text": "Dựng hình lăng trụ đứng ABCD.A'B'C'D' có đáy ABCD là hình vuông cạnh 2 và cạnh bên bằng 3.",
+          "normalized_offsets": [
+            0,
+            37
+          ],
+          "clause_boundaries": [
+            0,
+            37
+          ],
+          "clause_role": "SIMULATION_REQUEST",
+          "quoted_source_span": "Dựng hình lăng trụ đứng ABCD.A'B'C'D'",
+          "entity_binding": {
+            "entities": [
+              "A",
+              "A'"
+            ]
+          },
+          "extracted_fact": {},
+          "grounding_verdict": "VERIFIED",
+          "subkind": "nested_lead_simulation"
+        },
+        {
+          "original_text": "Dựng hình lăng trụ đứng ABCD.A'B'C'D' có đáy ABCD là hình vuông cạnh 2 và cạnh bên bằng 3.",
+          "original_offsets": [
+            5,
+            89
+          ],
+          "normalized_text": "Dựng hình lăng trụ đứng ABCD.A'B'C'D' có đáy ABCD là hình vuông cạnh 2 và cạnh bên bằng 3.",
+          "normalized_offsets": [
+            5,
+            89
+          ],
+          "clause_boundaries": [
+            5,
+            89
+          ],
+          "clause_role": "OBJECT_DECLARATION",
+          "quoted_source_span": "hình lăng trụ đứng ABCD.A'B'C'D' có đáy ABCD là hình vuông cạnh 2 và cạnh bên bằng 3",
+          "entity_binding": {
+            "entities": [
+              "A",
+              "A'"
+            ]
+          },
+          "extracted_fact": {},
+          "grounding_verdict": "VERIFIED",
+          "subkind": "embedded_declaration"
+        }
+      ]
+    },
+    {
+      "case_id": "S19",
+      "records": [
+        {
+          "original_text": "Cho hình chóp S.ABCD có đáy ABCD là hình vuông cạnh a. Hai mặt phẳng (SAB) và (SAD) cùng vuông góc với đáy, SA = 2a. Hãy dựng hình.",
+          "original_offsets": [
+            0,
+            53
+          ],
+          "normalized_text": "Cho hình chóp S.ABCD có đáy ABCD là hình vuông cạnh a. Hai mặt phẳng (SAB) và (SAD) cùng vuông góc với đáy, SA = 2a. Hãy dựng hình.",
+          "normalized_offsets": [
+            0,
+            53
+          ],
+          "clause_boundaries": [
+            0,
+            53
+          ],
+          "clause_role": "OBJECT_DECLARATION",
+          "quoted_source_span": "Cho hình chóp S.ABCD có đáy ABCD là hình vuông cạnh a",
+          "entity_binding": {
+            "entities": [
+              "S",
+              "A"
+            ]
+          },
+          "extracted_fact": {},
+          "grounding_verdict": "VERIFIED",
+          "subkind": "declaration_with_constraints"
+        },
+        {
+          "original_text": "Cho hình chóp S.ABCD có đáy ABCD là hình vuông cạnh a. Hai mặt phẳng (SAB) và (SAD) cùng vuông góc với đáy, SA = 2a. Hãy dựng hình.",
+          "original_offsets": [
+            55,
+            115
+          ],
+          "normalized_text": "Cho hình chóp S.ABCD có đáy ABCD là hình vuông cạnh a. Hai mặt phẳng (SAB) và (SAD) cùng vuông góc với đáy, SA = 2a. Hãy dựng hình.",
+          "normalized_offsets": [
+            55,
+            115
+          ],
+          "clause_boundaries": [
+            55,
+            115
+          ],
+          "clause_role": "GEOMETRIC_CONSTRAINT",
+          "quoted_source_span": "Hai mặt phẳng (SAB) và (SAD) cùng vuông góc với đáy, SA = 2a",
+          "entity_binding": {
+            "entities": [
+              "S"
+            ]
+          },
+          "extracted_fact": {},
+          "grounding_verdict": "VERIFIED",
+          "subkind": "constraint"
+        },
+        {
+          "original_text": "Cho hình chóp S.ABCD có đáy ABCD là hình vuông cạnh a. Hai mặt phẳng (SAB) và (SAD) cùng vuông góc với đáy, SA = 2a. Hãy dựng hình.",
+          "original_offsets": [
+            117,
+            130
+          ],
+          "normalized_text": "Cho hình chóp S.ABCD có đáy ABCD là hình vuông cạnh a. Hai mặt phẳng (SAB) và (SAD) cùng vuông góc với đáy, SA = 2a. Hãy dựng hình.",
+          "normalized_offsets": [
+            117,
+            130
+          ],
+          "clause_boundaries": [
+            117,
+            130
+          ],
+          "clause_role": "SIMULATION_REQUEST",
+          "quoted_source_span": "Hãy dựng hình",
+          "entity_binding": {
+            "entities": []
+          },
+          "extracted_fact": {},
+          "grounding_verdict": "VERIFIED",
+          "subkind": "standalone_simulation"
+        }
+      ]
+    },
+    {
+      "case_id": "S20",
+      "records": [
+        {
+          "original_text": "Mô phỏng hình chóp đều S.ABCD với đáy là hình vuông cạnh 2a và chiều cao bằng a.",
+          "original_offsets": [
+            0,
+            29
+          ],
+          "normalized_text": "Mô phỏng hình chóp đều S.ABCD với đáy là hình vuông cạnh 2a và chiều cao bằng a.",
+          "normalized_offsets": [
+            0,
+            29
+          ],
+          "clause_boundaries": [
+            0,
+            29
+          ],
+          "clause_role": "SIMULATION_REQUEST",
+          "quoted_source_span": "Mô phỏng hình chóp đều S.ABCD",
+          "entity_binding": {
+            "entities": [
+              "S",
+              "A"
+            ]
+          },
+          "extracted_fact": {},
+          "grounding_verdict": "VERIFIED",
+          "subkind": "nested_lead_simulation"
+        },
+        {
+          "original_text": "Mô phỏng hình chóp đều S.ABCD với đáy là hình vuông cạnh 2a và chiều cao bằng a.",
+          "original_offsets": [
+            9,
+            79
+          ],
+          "normalized_text": "Mô phỏng hình chóp đều S.ABCD với đáy là hình vuông cạnh 2a và chiều cao bằng a.",
+          "normalized_offsets": [
+            9,
+            79
+          ],
+          "clause_boundaries": [
+            9,
+            79
+          ],
+          "clause_role": "OBJECT_DECLARATION",
+          "quoted_source_span": "hình chóp đều S.ABCD với đáy là hình vuông cạnh 2a và chiều cao bằng a",
+          "entity_binding": {
+            "entities": [
+              "S",
+              "A"
+            ]
+          },
+          "extracted_fact": {},
+          "grounding_verdict": "VERIFIED",
+          "subkind": "embedded_declaration"
+        }
+      ]
+    },
+    {
+      "case_id": "S21",
+      "records": [
+        {
+          "original_text": "Cho hình chóp S.ABC có đáy ABC là tam giác cân tại B với BA = BC = a, góc ABC bằng 120°, SB vuông góc với đáy, SB = a. Vẽ hình chóp.",
+          "original_offsets": [
+            0,
+            117
+          ],
+          "normalized_text": "Cho hình chóp S.ABC có đáy ABC là tam giác cân tại B với BA = BC = a, góc ABC bằng 120°, SB vuông góc với đáy, SB = a. Vẽ hình chóp.",
+          "normalized_offsets": [
+            0,
+            117
+          ],
+          "clause_boundaries": [
+            0,
+            117
+          ],
+          "clause_role": "OBJECT_DECLARATION",
+          "quoted_source_span": "Cho hình chóp S.ABC có đáy ABC là tam giác cân tại B với BA = BC = a, góc ABC bằng 120°, SB vuông góc với đáy, SB = a",
+          "entity_binding": {
+            "entities": [
+              "S",
+              "A",
+              "B"
+            ]
+          },
+          "extracted_fact": {},
+          "grounding_verdict": "VERIFIED",
+          "subkind": "declaration_with_constraints"
+        },
+        {
+          "original_text": "Cho hình chóp S.ABC có đáy ABC là tam giác cân tại B với BA = BC = a, góc ABC bằng 120°, SB vuông góc với đáy, SB = a. Vẽ hình chóp.",
+          "original_offsets": [
+            119,
+            131
+          ],
+          "normalized_text": "Cho hình chóp S.ABC có đáy ABC là tam giác cân tại B với BA = BC = a, góc ABC bằng 120°, SB vuông góc với đáy, SB = a. Vẽ hình chóp.",
+          "normalized_offsets": [
+            119,
+            131
+          ],
+          "clause_boundaries": [
+            119,
+            131
+          ],
+          "clause_role": "SIMULATION_REQUEST",
+          "quoted_source_span": "Vẽ hình chóp",
+          "entity_binding": {
+            "entities": []
+          },
+          "extracted_fact": {},
+          "grounding_verdict": "VERIFIED",
+          "subkind": "standalone_simulation"
+        }
+      ]
+    },
+    {
+      "case_id": "S22",
+      "records": [
+        {
+          "original_text": "Hãy dựng hình chóp S.ABCD có đáy là hình chữ nhật với AB = 3, BC = 4; cạnh bên SA vuông góc với đáy, SA = 5. Không cần tính gì thêm.",
+          "original_offsets": [
+            0,
+            25
+          ],
+          "normalized_text": "Hãy dựng hình chóp S.ABCD có đáy là hình chữ nhật với AB = 3, BC = 4; cạnh bên SA vuông góc với đáy, SA = 5. Không cần tính gì thêm.",
+          "normalized_offsets": [
+            0,
+            25
+          ],
+          "clause_boundaries": [
+            0,
+            25
+          ],
+          "clause_role": "SIMULATION_REQUEST",
+          "quoted_source_span": "Hãy dựng hình chóp S.ABCD",
+          "entity_binding": {
+            "entities": [
+              "S",
+              "A"
+            ]
+          },
+          "extracted_fact": {},
+          "grounding_verdict": "VERIFIED",
+          "subkind": "nested_lead_simulation"
+        },
+        {
+          "original_text": "Hãy dựng hình chóp S.ABCD có đáy là hình chữ nhật với AB = 3, BC = 4; cạnh bên SA vuông góc với đáy, SA = 5. Không cần tính gì thêm.",
+          "original_offsets": [
+            9,
+            68
+          ],
+          "normalized_text": "Hãy dựng hình chóp S.ABCD có đáy là hình chữ nhật với AB = 3, BC = 4; cạnh bên SA vuông góc với đáy, SA = 5. Không cần tính gì thêm.",
+          "normalized_offsets": [
+            9,
+            68
+          ],
+          "clause_boundaries": [
+            9,
+            68
+          ],
+          "clause_role": "OBJECT_DECLARATION",
+          "quoted_source_span": "hình chóp S.ABCD có đáy là hình chữ nhật với AB = 3, BC = 4",
+          "entity_binding": {
+            "entities": [
+              "S",
+              "A",
+              "B"
+            ]
+          },
+          "extracted_fact": {},
+          "grounding_verdict": "VERIFIED",
+          "subkind": "embedded_declaration"
+        },
+        {
+          "original_text": "Hãy dựng hình chóp S.ABCD có đáy là hình chữ nhật với AB = 3, BC = 4; cạnh bên SA vuông góc với đáy, SA = 5. Không cần tính gì thêm.",
+          "original_offsets": [
+            70,
+            107
+          ],
+          "normalized_text": "Hãy dựng hình chóp S.ABCD có đáy là hình chữ nhật với AB = 3, BC = 4; cạnh bên SA vuông góc với đáy, SA = 5. Không cần tính gì thêm.",
+          "normalized_offsets": [
+            70,
+            107
+          ],
+          "clause_boundaries": [
+            70,
+            107
+          ],
+          "clause_role": "GEOMETRIC_CONSTRAINT",
+          "quoted_source_span": "cạnh bên SA vuông góc với đáy, SA = 5",
+          "entity_binding": {
+            "entities": [
+              "S"
+            ]
+          },
+          "extracted_fact": {},
+          "grounding_verdict": "VERIFIED",
+          "subkind": "constraint"
+        },
+        {
+          "original_text": "Hãy dựng hình chóp S.ABCD có đáy là hình chữ nhật với AB = 3, BC = 4; cạnh bên SA vuông góc với đáy, SA = 5. Không cần tính gì thêm.",
+          "original_offsets": [
+            109,
+            131
+          ],
+          "normalized_text": "Hãy dựng hình chóp S.ABCD có đáy là hình chữ nhật với AB = 3, BC = 4; cạnh bên SA vuông góc với đáy, SA = 5. Không cần tính gì thêm.",
+          "normalized_offsets": [
+            109,
+            131
+          ],
+          "clause_boundaries": [
+            109,
+            131
+          ],
+          "clause_role": "NEGATED_REQUEST",
+          "quoted_source_span": "Không cần tính gì thêm",
+          "entity_binding": {
+            "entities": []
+          },
+          "extracted_fact": {},
+          "grounding_verdict": "VERIFIED",
+          "subkind": "meta_no_calc"
+        }
+      ]
+    },
+    {
+      "case_id": "S23",
+      "records": [
+        {
+          "original_text": "Hãy cho em xem hình lập phương ABCD.A'B'C'D' cạnh 1.",
+          "original_offsets": [
+            0,
+            44
+          ],
+          "normalized_text": "Hãy cho em xem hình lập phương ABCD.A'B'C'D' cạnh 1.",
+          "normalized_offsets": [
+            0,
+            44
+          ],
+          "clause_boundaries": [
+            0,
+            44
+          ],
+          "clause_role": "SIMULATION_REQUEST",
+          "quoted_source_span": "Hãy cho em xem hình lập phương ABCD.A'B'C'D'",
+          "entity_binding": {
+            "entities": [
+              "A",
+              "A'"
+            ]
+          },
+          "extracted_fact": {},
+          "grounding_verdict": "VERIFIED",
+          "subkind": "nested_lead_simulation"
+        },
+        {
+          "original_text": "Hãy cho em xem hình lập phương ABCD.A'B'C'D' cạnh 1.",
+          "original_offsets": [
+            15,
+            51
+          ],
+          "normalized_text": "Hãy cho em xem hình lập phương ABCD.A'B'C'D' cạnh 1.",
+          "normalized_offsets": [
+            15,
+            51
+          ],
+          "clause_boundaries": [
+            15,
+            51
+          ],
+          "clause_role": "OBJECT_DECLARATION",
+          "quoted_source_span": "hình lập phương ABCD.A'B'C'D' cạnh 1",
+          "entity_binding": {
+            "entities": [
+              "A",
+              "A'"
+            ]
+          },
+          "extracted_fact": {},
+          "grounding_verdict": "VERIFIED",
+          "subkind": "embedded_declaration"
+        }
+      ]
+    },
+    {
+      "case_id": "S24",
+      "records": [
+        {
+          "original_text": "Cho hình chóp S.ABCD đáy ABCD là hình vuông cạnh a, SA = a và SA vuông góc với (ABCD). Gọi O là giao điểm của AC và BD. Hãy mô phỏng hình chóp và điểm O.",
+          "original_offsets": [
+            0,
+            85
+          ],
+          "normalized_text": "Cho hình chóp S.ABCD đáy ABCD là hình vuông cạnh a, SA = a và SA vuông góc với (ABCD). Gọi O là giao điểm của AC và BD. Hãy mô phỏng hình chóp và điểm O.",
+          "normalized_offsets": [
+            0,
+            85
+          ],
+          "clause_boundaries": [
+            0,
+            85
+          ],
+          "clause_role": "OBJECT_DECLARATION",
+          "quoted_source_span": "Cho hình chóp S.ABCD đáy ABCD là hình vuông cạnh a, SA = a và SA vuông góc với (ABCD)",
+          "entity_binding": {
+            "entities": [
+              "S",
+              "A"
+            ]
+          },
+          "extracted_fact": {},
+          "grounding_verdict": "VERIFIED",
+          "subkind": "declaration_with_constraints"
+        },
+        {
+          "original_text": "Cho hình chóp S.ABCD đáy ABCD là hình vuông cạnh a, SA = a và SA vuông góc với (ABCD). Gọi O là giao điểm của AC và BD. Hãy mô phỏng hình chóp và điểm O.",
+          "original_offsets": [
+            87,
+            118
+          ],
+          "normalized_text": "Cho hình chóp S.ABCD đáy ABCD là hình vuông cạnh a, SA = a và SA vuông góc với (ABCD). Gọi O là giao điểm của AC và BD. Hãy mô phỏng hình chóp và điểm O.",
+          "normalized_offsets": [
+            87,
+            118
+          ],
+          "clause_boundaries": [
+            87,
+            118
+          ],
+          "clause_role": "OBJECT_DECLARATION",
+          "quoted_source_span": "Gọi O là giao điểm của AC và BD",
+          "entity_binding": {
+            "entities": [
+              "O",
+              "A",
+              "B"
+            ]
+          },
+          "extracted_fact": {},
+          "grounding_verdict": "VERIFIED",
+          "subkind": "declaration"
+        },
+        {
+          "original_text": "Cho hình chóp S.ABCD đáy ABCD là hình vuông cạnh a, SA = a và SA vuông góc với (ABCD). Gọi O là giao điểm của AC và BD. Hãy mô phỏng hình chóp và điểm O.",
+          "original_offsets": [
+            120,
+            152
+          ],
+          "normalized_text": "Cho hình chóp S.ABCD đáy ABCD là hình vuông cạnh a, SA = a và SA vuông góc với (ABCD). Gọi O là giao điểm của AC và BD. Hãy mô phỏng hình chóp và điểm O.",
+          "normalized_offsets": [
+            120,
+            152
+          ],
+          "clause_boundaries": [
+            120,
+            152
+          ],
+          "clause_role": "SIMULATION_REQUEST",
+          "quoted_source_span": "Hãy mô phỏng hình chóp và điểm O",
+          "entity_binding": {
+            "entities": [
+              "O"
+            ]
+          },
+          "extracted_fact": {},
+          "grounding_verdict": "VERIFIED",
+          "subkind": "standalone_simulation"
+        }
+      ]
+    },
+    {
+      "case_id": "S25",
+      "records": [
+        {
+          "original_text": "Cho tứ diện đều ABCD cạnh 2a. Gọi M là trung điểm của BC. Hãy vẽ tứ diện và điểm M.",
+          "original_offsets": [
+            0,
+            28
+          ],
+          "normalized_text": "Cho tứ diện đều ABCD cạnh 2a. Gọi M là trung điểm của BC. Hãy vẽ tứ diện và điểm M.",
+          "normalized_offsets": [
+            0,
+            28
+          ],
+          "clause_boundaries": [
+            0,
+            28
+          ],
+          "clause_role": "OBJECT_DECLARATION",
+          "quoted_source_span": "Cho tứ diện đều ABCD cạnh 2a",
+          "entity_binding": {
+            "entities": [
+              "A"
+            ]
+          },
+          "extracted_fact": {},
+          "grounding_verdict": "VERIFIED",
+          "subkind": "declaration_with_constraints"
+        },
+        {
+          "original_text": "Cho tứ diện đều ABCD cạnh 2a. Gọi M là trung điểm của BC. Hãy vẽ tứ diện và điểm M.",
+          "original_offsets": [
+            30,
+            56
+          ],
+          "normalized_text": "Cho tứ diện đều ABCD cạnh 2a. Gọi M là trung điểm của BC. Hãy vẽ tứ diện và điểm M.",
+          "normalized_offsets": [
+            30,
+            56
+          ],
+          "clause_boundaries": [
+            30,
+            56
+          ],
+          "clause_role": "OBJECT_DECLARATION",
+          "quoted_source_span": "Gọi M là trung điểm của BC",
+          "entity_binding": {
+            "entities": [
+              "M",
+              "B"
+            ]
+          },
+          "extracted_fact": {},
+          "grounding_verdict": "VERIFIED",
+          "subkind": "declaration_with_constraints"
+        },
+        {
+          "original_text": "Cho tứ diện đều ABCD cạnh 2a. Gọi M là trung điểm của BC. Hãy vẽ tứ diện và điểm M.",
+          "original_offsets": [
+            58,
+            82
+          ],
+          "normalized_text": "Cho tứ diện đều ABCD cạnh 2a. Gọi M là trung điểm của BC. Hãy vẽ tứ diện và điểm M.",
+          "normalized_offsets": [
+            58,
+            82
+          ],
+          "clause_boundaries": [
+            58,
+            82
+          ],
+          "clause_role": "SIMULATION_REQUEST",
+          "quoted_source_span": "Hãy vẽ tứ diện và điểm M",
+          "entity_binding": {
+            "entities": [
+              "M"
+            ]
+          },
+          "extracted_fact": {},
+          "grounding_verdict": "VERIFIED",
+          "subkind": "standalone_simulation"
+        }
+      ]
+    },
+    {
+      "case_id": "S35",
+      "records": [
+        {
+          "original_text": "Em muốn xem hình chóp S.ABC có đáy là tam giác ABC vuông cân tại A, AB = AC = 2 và SA vuông góc với đáy, SA = 2.",
+          "original_offsets": [
+            0,
+            27
+          ],
+          "normalized_text": "Em muốn xem hình chóp S.ABC có đáy là tam giác ABC vuông cân tại A, AB = AC = 2 và SA vuông góc với đáy, SA = 2.",
+          "normalized_offsets": [
+            0,
+            27
+          ],
+          "clause_boundaries": [
+            0,
+            27
+          ],
+          "clause_role": "SIMULATION_REQUEST",
+          "quoted_source_span": "Em muốn xem hình chóp S.ABC",
+          "entity_binding": {
+            "entities": [
+              "S",
+              "A"
+            ]
+          },
+          "extracted_fact": {},
+          "grounding_verdict": "VERIFIED",
+          "subkind": "nested_lead_simulation"
+        },
+        {
+          "original_text": "Em muốn xem hình chóp S.ABC có đáy là tam giác ABC vuông cân tại A, AB = AC = 2 và SA vuông góc với đáy, SA = 2.",
+          "original_offsets": [
+            12,
+            111
+          ],
+          "normalized_text": "Em muốn xem hình chóp S.ABC có đáy là tam giác ABC vuông cân tại A, AB = AC = 2 và SA vuông góc với đáy, SA = 2.",
+          "normalized_offsets": [
+            12,
+            111
+          ],
+          "clause_boundaries": [
+            12,
+            111
+          ],
+          "clause_role": "OBJECT_DECLARATION",
+          "quoted_source_span": "hình chóp S.ABC có đáy là tam giác ABC vuông cân tại A, AB = AC = 2 và SA vuông góc với đáy, SA = 2",
+          "entity_binding": {
+            "entities": [
+              "S",
+              "A"
+            ]
+          },
+          "extracted_fact": {},
+          "grounding_verdict": "VERIFIED",
+          "subkind": "embedded_declaration"
+        }
+      ]
+    },
+    {
+      "case_id": "S37",
+      "records": [
+        {
+          "original_text": "Mo phong hinh lap phuong ABCD.A'B'C'D' canh 2.",
+          "original_offsets": [
+            0,
+            38
+          ],
+          "normalized_text": "Mô phỏng hình lập phương ABCD.A'B'C'D' cạnh 2.",
+          "normalized_offsets": [
+            0,
+            38
+          ],
+          "clause_boundaries": [
+            0,
+            38
+          ],
+          "clause_role": "SIMULATION_REQUEST",
+          "quoted_source_span": "Mo phong hinh lap phuong ABCD.A'B'C'D'",
+          "entity_binding": {
+            "entities": [
+              "A",
+              "A'"
+            ]
+          },
+          "extracted_fact": {},
+          "grounding_verdict": "VERIFIED",
+          "subkind": "nested_lead_simulation"
+        },
+        {
+          "original_text": "Mo phong hinh lap phuong ABCD.A'B'C'D' canh 2.",
+          "original_offsets": [
+            9,
+            45
+          ],
+          "normalized_text": "Mô phỏng hình lập phương ABCD.A'B'C'D' cạnh 2.",
+          "normalized_offsets": [
+            9,
+            45
+          ],
+          "clause_boundaries": [
+            9,
+            45
+          ],
+          "clause_role": "OBJECT_DECLARATION",
+          "quoted_source_span": "hinh lap phuong ABCD.A'B'C'D' canh 2",
+          "entity_binding": {
+            "entities": [
+              "A",
+              "A'"
+            ]
+          },
+          "extracted_fact": {},
+          "grounding_verdict": "VERIFIED",
+          "subkind": "embedded_declaration"
+        }
+      ]
+    },
+    {
+      "case_id": "Q02",
+      "records": [
+        {
+          "original_text": "Vẽ hình lập phương ABCD.A'B'C'D' cạnh 2 và tính độ dài đoạn AC'.",
+          "original_offsets": [
+            0,
+            32
+          ],
+          "normalized_text": "Vẽ hình lập phương ABCD.A'B'C'D' cạnh 2 và tính độ dài đoạn AC'.",
+          "normalized_offsets": [
+            0,
+            32
+          ],
+          "clause_boundaries": [
+            0,
+            32
+          ],
+          "clause_role": "SIMULATION_REQUEST",
+          "quoted_source_span": "Vẽ hình lập phương ABCD.A'B'C'D'",
+          "entity_binding": {
+            "entities": [
+              "A",
+              "A'"
+            ]
+          },
+          "extracted_fact": {},
+          "grounding_verdict": "VERIFIED",
+          "subkind": "nested_lead_simulation"
+        },
+        {
+          "original_text": "Vẽ hình lập phương ABCD.A'B'C'D' cạnh 2 và tính độ dài đoạn AC'.",
+          "original_offsets": [
+            3,
+            39
+          ],
+          "normalized_text": "Vẽ hình lập phương ABCD.A'B'C'D' cạnh 2 và tính độ dài đoạn AC'.",
+          "normalized_offsets": [
+            3,
+            39
+          ],
+          "clause_boundaries": [
+            3,
+            39
+          ],
+          "clause_role": "OBJECT_DECLARATION",
+          "quoted_source_span": "hình lập phương ABCD.A'B'C'D' cạnh 2",
+          "entity_binding": {
+            "entities": [
+              "A",
+              "A'"
+            ]
+          },
+          "extracted_fact": {},
+          "grounding_verdict": "VERIFIED",
+          "subkind": "embedded_declaration"
+        },
+        {
+          "original_text": "Vẽ hình lập phương ABCD.A'B'C'D' cạnh 2 và tính độ dài đoạn AC'.",
+          "original_offsets": [
+            43,
+            63
+          ],
+          "normalized_text": "Vẽ hình lập phương ABCD.A'B'C'D' cạnh 2 và tính độ dài đoạn AC'.",
+          "normalized_offsets": [
+            43,
+            63
+          ],
+          "clause_boundaries": [
+            43,
+            63
+          ],
+          "clause_role": "MEASUREMENT_REQUEST",
+          "quoted_source_span": "tính độ dài đoạn AC'",
+          "entity_binding": {
+            "entities": [
+              "A"
+            ]
+          },
+          "extracted_fact": {},
+          "grounding_verdict": "VERIFIED",
+          "subkind": "measurement"
+        }
+      ]
+    },
+    {
+      "case_id": "Q16",
+      "records": [
+        {
+          "original_text": "Biểu diễn hình chóp S.ABCD có đáy là hình vuông cạnh a, SA vuông góc với mặt đáy, SA = a, và khoảng cách từ điểm B đến mặt phẳng (SAD).",
+          "original_offsets": [
+            0,
+            26
+          ],
+          "normalized_text": "Biểu diễn hình chóp S.ABCD có đáy là hình vuông cạnh a, SA vuông góc với mặt đáy, SA = a, và khoảng cách từ điểm B đến mặt phẳng (SAD).",
+          "normalized_offsets": [
+            0,
+            26
+          ],
+          "clause_boundaries": [
+            0,
+            26
+          ],
+          "clause_role": "SIMULATION_REQUEST",
+          "quoted_source_span": "Biểu diễn hình chóp S.ABCD",
+          "entity_binding": {
+            "entities": [
+              "S",
+              "A"
+            ]
+          },
+          "extracted_fact": {},
+          "grounding_verdict": "VERIFIED",
+          "subkind": "nested_lead_simulation"
+        },
+        {
+          "original_text": "Biểu diễn hình chóp S.ABCD có đáy là hình vuông cạnh a, SA vuông góc với mặt đáy, SA = a, và khoảng cách từ điểm B đến mặt phẳng (SAD).",
+          "original_offsets": [
+            10,
+            134
+          ],
+          "normalized_text": "Biểu diễn hình chóp S.ABCD có đáy là hình vuông cạnh a, SA vuông góc với mặt đáy, SA = a, và khoảng cách từ điểm B đến mặt phẳng (SAD).",
+          "normalized_offsets": [
+            10,
+            134
+          ],
+          "clause_boundaries": [
+            10,
+            134
+          ],
+          "clause_role": "OBJECT_DECLARATION",
+          "quoted_source_span": "hình chóp S.ABCD có đáy là hình vuông cạnh a, SA vuông góc với mặt đáy, SA = a, và khoảng cách từ điểm B đến mặt phẳng (SAD)",
+          "entity_binding": {
+            "entities": [
+              "S",
+              "A",
+              "B"
+            ]
+          },
+          "extracted_fact": {},
+          "grounding_verdict": "VERIFIED",
+          "subkind": "embedded_declaration"
+        }
+      ]
+    },
+    {
+      "case_id": "N01",
+      "records": [
+        {
+          "original_text": "Không mô phỏng hình chóp S.ABCD có đáy là hình vuông cạnh a.",
+          "original_offsets": [
+            0,
+            59
+          ],
+          "normalized_text": "Không mô phỏng hình chóp S.ABCD có đáy là hình vuông cạnh a.",
+          "normalized_offsets": [
+            0,
+            59
+          ],
+          "clause_boundaries": [
+            0,
+            59
+          ],
+          "clause_role": "NEGATED_REQUEST",
+          "quoted_source_span": "Không mô phỏng hình chóp S.ABCD có đáy là hình vuông cạnh a",
+          "entity_binding": {
+            "entities": [
+              "S",
+              "A"
+            ]
+          },
+          "extracted_fact": {},
+          "grounding_verdict": "BLOCKED_NEGATION_OR_CONDITION",
+          "subkind": "negated_command"
+        }
+      ]
+    },
+    {
+      "case_id": "N03",
+      "records": [
+        {
+          "original_text": "Nếu ABCD là hình vuông cạnh a thì hãy vẽ hình chóp S.ABCD với SA = a.",
+          "original_offsets": [
+            0,
+            68
+          ],
+          "normalized_text": "Nếu ABCD là hình vuông cạnh a thì hãy vẽ hình chóp S.ABCD với SA = a.",
+          "normalized_offsets": [
+            0,
+            68
+          ],
+          "clause_boundaries": [
+            0,
+            68
+          ],
+          "clause_role": "CONDITIONAL_PREMISE",
+          "quoted_source_span": "Nếu ABCD là hình vuông cạnh a thì hãy vẽ hình chóp S.ABCD với SA = a",
+          "entity_binding": {
+            "entities": [
+              "A",
+              "S"
+            ]
+          },
+          "extracted_fact": {},
+          "grounding_verdict": "BLOCKED_NEGATION_OR_CONDITION",
+          "subkind": "conditional"
+        }
+      ]
+    },
+    {
+      "case_id": "N19",
+      "records": [
+        {
+          "original_text": "Cho hình chóp S.ABCD có đáy là hình vuông cạnh a, SA không vuông góc với đáy. Hãy dựng hình.",
+          "original_offsets": [
+            0,
+            76
+          ],
+          "normalized_text": "Cho hình chóp S.ABCD có đáy là hình vuông cạnh a, SA không vuông góc với đáy. Hãy dựng hình.",
+          "normalized_offsets": [
+            0,
+            76
+          ],
+          "clause_boundaries": [
+            0,
+            76
+          ],
+          "clause_role": "NEGATED_REQUEST",
+          "quoted_source_span": "Cho hình chóp S.ABCD có đáy là hình vuông cạnh a, SA không vuông góc với đáy",
+          "entity_binding": {
+            "entities": [
+              "S",
+              "A"
+            ]
+          },
+          "extracted_fact": {},
+          "grounding_verdict": "BLOCKED_NEGATION_OR_CONDITION",
+          "subkind": "negated_premise"
+        },
+        {
+          "original_text": "Cho hình chóp S.ABCD có đáy là hình vuông cạnh a, SA không vuông góc với đáy. Hãy dựng hình.",
+          "original_offsets": [
+            78,
+            91
+          ],
+          "normalized_text": "Cho hình chóp S.ABCD có đáy là hình vuông cạnh a, SA không vuông góc với đáy. Hãy dựng hình.",
+          "normalized_offsets": [
+            78,
+            91
+          ],
+          "clause_boundaries": [
+            78,
+            91
+          ],
+          "clause_role": "SIMULATION_REQUEST",
+          "quoted_source_span": "Hãy dựng hình",
+          "entity_binding": {
+            "entities": []
+          },
+          "extracted_fact": {},
+          "grounding_verdict": "VERIFIED",
+          "subkind": "standalone_simulation"
+        }
+      ]
+    }
+  ]
+}

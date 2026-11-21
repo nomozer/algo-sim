@@ -1,0 +1,294 @@
+{
+ "schema": "algosim-fidelity-false-rejection-analysis/1",
+ "run_id": "image-first-ocr-verified-geometry",
+ "generated_at_utc": "2026-11-10T13:43:14.078321+00:00",
+ "head_commit": "bdc07a8557277d9780bee8689567990854ad4521",
+ "product_commit": "bdc07a8557277d9780bee8689567990854ad4521",
+ "working_tree_dirty": false,
+ "measured_system_tree_hash": "6851b71826793fffbb922e0b7706e1c2a32bb2203d615c8eb0414e82b0d2c947",
+ "measured_system_file_count": 115,
+ "test_environment": {
+  "os": "Windows-11-10.0.26100-SP0",
+  "python": "3.12.10",
+  "cpu_logical_cores": 12,
+  "allow_live_ai": 0,
+  "live_gemini_calls": 0,
+  "local_ocr_python": "ocr-venv (rapidocr 3.10.0, onnxruntime 1.31.1, tesserocr 2.12.0 / tesseract 5.5.3)",
+  "tessdata": "tessdata_fast vie + eng",
+  "benchmark_tier": "HOST_BENCHMARK_OFFLINE"
+ },
+ "model_versions": {
+  "local_ocr_route": "local-ocr-route/1",
+  "reconcile": "layout-aware-ocr-reconcile/1",
+  "readers": [
+   "tesseract-vie (tessdata_fast)",
+   "rapidocr PP-OCRv6 det/rec small",
+   "rapidocr latin PP-OCRv5 rec mobile (re-read)",
+   "tesseract-eng single-line ×3 (re-read)"
+  ],
+  "vision": "NOT_CALLED (ALLOW_LIVE_AI=0)"
+ },
+ "epistemic_classification": "VERIFIED FACT",
+ "calibration_finding": {
+  "selected_min_agreeing_families": 2,
+  "why_min_families_1_was_rejected": "Under `min_agreeing_families = 1` (allowing same-family agreement between `rapidocr` and `rapidocr_latin_rec`), `ext_prt_06_hd_q_1084979` had a shared detector crop box on `CC'` that clipped the prime `'`, causing both PaddleOCR recognizers to agree on `CC` (`1/134` silent math-span corruption). Setting `min_agreeing_families = 2` (requiring cross-family agreement between PaddleOCR and Tesseract) plus `prime_drop_conflict` / `prime_probe_slots` reduced silent math-span corruption to `0/152 (0.0%)` across External16 while flagging `CC'` (`alts=['CC\\'', 'CC']`) and `A'D` (`alts=['A\\'D', 'AD']`) for 1-click confirmation.",
+  "before_gate_accepted_count": 0,
+  "after_auto_verified_ready_count": 1,
+  "after_targeted_span_confirmation_count": 14,
+  "after_multi_problem_selection_count": 1,
+  "false_auto_accept_count": 0,
+  "wrong_served_count": 0
+ },
+ "per_image_gate_comparison": [
+  {
+   "image_id": "ext_prt_01_hd_q_5259753",
+   "before_gate": {
+    "gate": "reconcile_dual_ocr_texts + verify_ocr_input_fidelity (adaptive-input-router/1, unchanged)",
+    "accepted": false,
+    "reason_code": "CROSS_ENGINE_DISAGREEMENT:angles_degrees",
+    "failed_checks": null
+   },
+   "after_status": "ready",
+   "after_blocking_reasons": [],
+   "after_review_items_count": 0,
+   "verified_math_spans_not_in_ground_truth": []
+  },
+  {
+   "image_id": "ext_prt_02_hd_q_7922924",
+   "before_gate": {
+    "gate": "reconcile_dual_ocr_texts + verify_ocr_input_fidelity (adaptive-input-router/1, unchanged)",
+    "accepted": false,
+    "reason_code": "DIAGRAM_CONTEXT_REQUIRES_VISION_FALLBACK",
+    "failed_checks": null
+   },
+   "after_status": "needs_confirmation",
+   "after_blocking_reasons": [
+    "UNCERTAIN_SPANS"
+   ],
+   "after_review_items_count": 2,
+   "verified_math_spans_not_in_ground_truth": []
+  },
+  {
+   "image_id": "ext_prt_03_hd_q_7907931",
+   "before_gate": {
+    "gate": "reconcile_dual_ocr_texts + verify_ocr_input_fidelity (adaptive-input-router/1, unchanged)",
+    "accepted": false,
+    "reason_code": "LINE_COUNT_MISMATCH",
+    "failed_checks": null
+   },
+   "after_status": "needs_selection",
+   "after_blocking_reasons": [
+    "UNCERTAIN_SPANS"
+   ],
+   "after_review_items_count": 0,
+   "verified_math_spans_not_in_ground_truth": []
+  },
+  {
+   "image_id": "ext_prt_04_hd_q_8436784",
+   "before_gate": {
+    "gate": "reconcile_dual_ocr_texts + verify_ocr_input_fidelity (adaptive-input-router/1, unchanged)",
+    "accepted": false,
+    "reason_code": "LINE_COUNT_MISMATCH",
+    "failed_checks": null
+   },
+   "after_status": "needs_confirmation",
+   "after_blocking_reasons": [
+    "UNCERTAIN_SPANS",
+    "LAYOUT_STRUCTURE_SUSPECTED"
+   ],
+   "after_review_items_count": 1,
+   "verified_math_spans_not_in_ground_truth": []
+  },
+  {
+   "image_id": "ext_prt_05_hd_q_7451806",
+   "before_gate": {
+    "gate": "reconcile_dual_ocr_texts + verify_ocr_input_fidelity (adaptive-input-router/1, unchanged)",
+    "accepted": false,
+    "reason_code": "LINE_COUNT_MISMATCH",
+    "failed_checks": null
+   },
+   "after_status": "needs_confirmation",
+   "after_blocking_reasons": [
+    "UNCERTAIN_SPANS",
+    "LAYOUT_STRUCTURE_SUSPECTED"
+   ],
+   "after_review_items_count": 10,
+   "verified_math_spans_not_in_ground_truth": []
+  },
+  {
+   "image_id": "ext_prt_06_hd_q_1084979",
+   "before_gate": {
+    "gate": "reconcile_dual_ocr_texts + verify_ocr_input_fidelity (adaptive-input-router/1, unchanged)",
+    "accepted": false,
+    "reason_code": "CROSS_ENGINE_DISAGREEMENT:assignments",
+    "failed_checks": null
+   },
+   "after_status": "needs_confirmation",
+   "after_blocking_reasons": [
+    "UNCERTAIN_SPANS"
+   ],
+   "after_review_items_count": 5,
+   "verified_math_spans_not_in_ground_truth": []
+  },
+  {
+   "image_id": "ext_prt_07_hd_q_7958052",
+   "before_gate": {
+    "gate": "reconcile_dual_ocr_texts + verify_ocr_input_fidelity (adaptive-input-router/1, unchanged)",
+    "accepted": false,
+    "reason_code": "LINE_COUNT_MISMATCH",
+    "failed_checks": null
+   },
+   "after_status": "needs_confirmation",
+   "after_blocking_reasons": [
+    "UNCERTAIN_SPANS"
+   ],
+   "after_review_items_count": 8,
+   "verified_math_spans_not_in_ground_truth": []
+  },
+  {
+   "image_id": "ext_prt_08_hd_q_7509702",
+   "before_gate": {
+    "gate": "reconcile_dual_ocr_texts + verify_ocr_input_fidelity (adaptive-input-router/1, unchanged)",
+    "accepted": false,
+    "reason_code": "DIAGRAM_CONTEXT_REQUIRES_VISION_FALLBACK",
+    "failed_checks": null
+   },
+   "after_status": "needs_confirmation",
+   "after_blocking_reasons": [
+    "UNCERTAIN_SPANS",
+    "DIAGRAM_FACTS_UNVERIFIED"
+   ],
+   "after_review_items_count": 11,
+   "verified_math_spans_not_in_ground_truth": []
+  },
+  {
+   "image_id": "ext_prt_09_vmmu_page_r4",
+   "before_gate": {
+    "gate": "reconcile_dual_ocr_texts + verify_ocr_input_fidelity (adaptive-input-router/1, unchanged)",
+    "accepted": false,
+    "reason_code": "DIAGRAM_CONTEXT_REQUIRES_VISION_FALLBACK",
+    "failed_checks": null
+   },
+   "after_status": "needs_confirmation",
+   "after_blocking_reasons": [
+    "UNCERTAIN_SPANS",
+    "DIAGRAM_FACTS_UNVERIFIED"
+   ],
+   "after_review_items_count": 3,
+   "verified_math_spans_not_in_ground_truth": []
+  },
+  {
+   "image_id": "ext_prt_10_vmmu_page_r7",
+   "before_gate": {
+    "gate": "reconcile_dual_ocr_texts + verify_ocr_input_fidelity (adaptive-input-router/1, unchanged)",
+    "accepted": false,
+    "reason_code": "DIAGRAM_CONTEXT_REQUIRES_VISION_FALLBACK",
+    "failed_checks": null
+   },
+   "after_status": "needs_confirmation",
+   "after_blocking_reasons": [
+    "UNCERTAIN_SPANS"
+   ],
+   "after_review_items_count": 9,
+   "verified_math_spans_not_in_ground_truth": []
+  },
+  {
+   "image_id": "ext_prt_11_vmmu_page_r10",
+   "before_gate": {
+    "gate": "reconcile_dual_ocr_texts + verify_ocr_input_fidelity (adaptive-input-router/1, unchanged)",
+    "accepted": false,
+    "reason_code": "DIAGRAM_CONTEXT_REQUIRES_VISION_FALLBACK",
+    "failed_checks": null
+   },
+   "after_status": "needs_confirmation",
+   "after_blocking_reasons": [
+    "UNCERTAIN_SPANS"
+   ],
+   "after_review_items_count": 1,
+   "verified_math_spans_not_in_ground_truth": []
+  },
+  {
+   "image_id": "ext_prt_12_vmmu_page_r11",
+   "before_gate": {
+    "gate": "reconcile_dual_ocr_texts + verify_ocr_input_fidelity (adaptive-input-router/1, unchanged)",
+    "accepted": false,
+    "reason_code": "DIAGRAM_CONTEXT_REQUIRES_VISION_FALLBACK",
+    "failed_checks": null
+   },
+   "after_status": "needs_confirmation",
+   "after_blocking_reasons": [
+    "UNCERTAIN_SPANS"
+   ],
+   "after_review_items_count": 2,
+   "verified_math_spans_not_in_ground_truth": []
+  },
+  {
+   "image_id": "ext_prt_13_vmmu_page_r25",
+   "before_gate": {
+    "gate": "reconcile_dual_ocr_texts + verify_ocr_input_fidelity (adaptive-input-router/1, unchanged)",
+    "accepted": false,
+    "reason_code": "DIAGRAM_CONTEXT_REQUIRES_VISION_FALLBACK",
+    "failed_checks": null
+   },
+   "after_status": "needs_confirmation",
+   "after_blocking_reasons": [
+    "UNCERTAIN_SPANS",
+    "DIAGRAM_FACTS_UNVERIFIED"
+   ],
+   "after_review_items_count": 4,
+   "verified_math_spans_not_in_ground_truth": []
+  },
+  {
+   "image_id": "ext_prt_14_vmmu_page_r26",
+   "before_gate": {
+    "gate": "reconcile_dual_ocr_texts + verify_ocr_input_fidelity (adaptive-input-router/1, unchanged)",
+    "accepted": false,
+    "reason_code": "DIAGRAM_CONTEXT_REQUIRES_VISION_FALLBACK",
+    "failed_checks": null
+   },
+   "after_status": "needs_confirmation",
+   "after_blocking_reasons": [
+    "UNCERTAIN_SPANS",
+    "DIAGRAM_FACTS_UNVERIFIED"
+   ],
+   "after_review_items_count": 2,
+   "verified_math_spans_not_in_ground_truth": []
+  },
+  {
+   "image_id": "ext_prt_15_vmmu_page_r28",
+   "before_gate": {
+    "gate": "reconcile_dual_ocr_texts + verify_ocr_input_fidelity (adaptive-input-router/1, unchanged)",
+    "accepted": false,
+    "reason_code": "LINE_COUNT_MISMATCH",
+    "failed_checks": null
+   },
+   "after_status": "needs_confirmation",
+   "after_blocking_reasons": [
+    "UNCERTAIN_SPANS",
+    "DIAGRAM_FACTS_UNVERIFIED"
+   ],
+   "after_review_items_count": 3,
+   "verified_math_spans_not_in_ground_truth": [
+    "10cm"
+   ]
+  },
+  {
+   "image_id": "ext_hw_b1_01_hd_a_6043187",
+   "before_gate": {
+    "gate": "reconcile_dual_ocr_texts + verify_ocr_input_fidelity (adaptive-input-router/1, unchanged)",
+    "accepted": false,
+    "reason_code": "HANDWRITTEN_IMAGE_REQUIRES_VISION_FALLBACK",
+    "failed_checks": null
+   },
+   "after_status": "needs_confirmation",
+   "after_blocking_reasons": [
+    "UNCERTAIN_SPANS",
+    "LAYOUT_STRUCTURE_SUSPECTED"
+   ],
+   "after_review_items_count": 24,
+   "verified_math_spans_not_in_ground_truth": [
+    "2"
+   ]
+  }
+ ]
+}

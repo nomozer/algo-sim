@@ -1,0 +1,58 @@
+{
+  "schema_version": "publication-gate-status/2",
+  "run_id": "dimension-aware-verified-construction",
+  "generated_at_utc": "2026-11-15T16:58:49.871270+00:00",
+  "product_commit": "32bdaa1df3dd7606b59b8c3cd8411578c4206d54",
+  "product_commits": [
+    "0c9d4a2f0c892ac13fcd6e47b919e87bfb141479",
+    "32bdaa1df3dd7606b59b8c3cd8411578c4206d54"
+  ],
+  "candidate_freeze_commit": "3c65266ba0181ff27f31513af280aa2d9d3d71e7",
+  "measured_system": "b1403b91fd81410f9586c5676f541911540b4bc4bb0d7bf40204d17538623e59",
+  "measured_system_hash": "b1403b91fd81410f9586c5676f541911540b4bc4bb0d7bf40204d17538623e59",
+  "cache_version": "140",
+  "dataset_partition": "DEVELOPMENT_AND_GOVERNANCE_ONLY (full offline pytest/vitest/replay/docs/publication/freeze gates; sealed H-1 and locked W2/W3 untouched)",
+  "environment": {
+    "ALLOW_LIVE_AI": "0",
+    "GEMINI_API_KEY": "EMPTY",
+    "HYBRID_ROUTE_MODE": "local-first",
+    "live_ai_calls": 0
+  },
+  "head": "35053da80ea125582d15eda71cd70f7dbcb85165",
+  "PRODUCT_REGRESSION_VERDICT": "PASS",
+  "PUBLICATION_HEAD_VERDICT": "BLOCKED_PENDING_OWNER_REVIEW",
+  "publication_head_scan": [
+    "SUMMARY scanned=31868 messages=0 violations=97 pending_exception=97 verdict=BLOCKED"
+  ],
+  "PUBLICATION_RANGE_VERDICT": "PASS",
+  "publication_range_scan": {
+    "range": "b04bed0f8..HEAD",
+    "summary_lines": [
+      "SUMMARY scanned=196 messages=8 violations=0 pending_exception=0 verdict=PASS"
+    ]
+  },
+  "PUBLICATION_GOVERNANCE_STATUS": "BLOCKED_PENDING_OWNER_REVIEW",
+  "FULL_RELEASE_GATE": "BLOCKED_GATES_REMAIN",
+  "historical_blob": "2bfce9c8…",
+  "exceptions_approved_by_agent": 0,
+  "scan_policy_changed": false,
+  "test_command": "python -B backend/scripts/check_publication_safety.py --range b04bed0f8..HEAD && python -B backend/scripts/check_publication_safety.py --head",
+  "expected_behavior": "Range scan b04bed0f8..HEAD returns PASS with 0 violations and 0 agent-approved exceptions; HEAD scan remains BLOCKED with 97 inherited pending_exception findings on historical blob 2bfce9c8….",
+  "actual_behavior": {
+    "range_summary": [
+      "SUMMARY scanned=196 messages=8 violations=0 pending_exception=0 verdict=PASS"
+    ],
+    "head_summary": [
+      "SUMMARY scanned=31868 messages=0 violations=97 pending_exception=97 verdict=BLOCKED"
+    ],
+    "exceptions_approved_by_agent": 0,
+    "scan_policy_changed": false
+  },
+  "mathematical_oracle": "Deterministic Git object & commit message secret/leak/exception scanner (backend/scripts/check_publication_safety.py).",
+  "source_provenance": {
+    "range_log": "docs/evaluation/geometry/runs/dimension-aware-verified-construction/logs/final-publication_range.json",
+    "head_log": "docs/evaluation/geometry/runs/dimension-aware-verified-construction/logs/final-publication_head.json",
+    "exceptions_manifest": "docs/evaluation/geometry/runs/publication-safety-remediation/publication_exceptions.json"
+  },
+  "verdict": "PASS_RANGE_BLOCKED_HEAD_PENDING_OWNER_REVIEW"
+}

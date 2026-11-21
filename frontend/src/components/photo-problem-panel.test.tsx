@@ -324,7 +324,7 @@ describe("Khung hỗ trợ đầu vào thống nhất & luồng gửi kết hợ
       uncertain_tokens: [],
       missing_regions: [],
       candidates: [],
-      provenance: {},
+      provenance: { selected_candidate_id: "p1:1" },
       metrics: {
         vlm_calls: 0,
         used_vlm: false,
@@ -359,6 +359,7 @@ describe("Khung hỗ trợ đầu vào thống nhất & luồng gửi kết hợ
     expect(analyzeSpy).toHaveBeenCalledTimes(1);
     expect(analyzeSpy.mock.calls[0]?.[0]).toEqual({
       type: "text",
+      source_provenance: { origin: "document_extracted", selected_candidate_id: "p1:1" },
       content:
         "Cho hình chóp S.ABCD có đáy là hình vuông cạnh 2, SA vuông góc đáy và SA = 4. Tính thể tích khối chóp.",
     });
@@ -584,5 +585,170 @@ describe("Device-Aware Camera Entry (§2–§9): 15 kịch bản phân loại th
     expect(ipadOpenHtml).toContain("Chụp ảnh đề bài");
     const ipadMenuItems = ipadOpenHtml.match(/role="menuitem"/g) ?? [];
     expect(ipadMenuItems).toHaveLength(2);
+  });
+
+  it("Journey A + B (Section X): trích xuất ảnh tự động điền vào problemText; khi học sinh sửa văn bản đề đã trích xuất (SA = 3 -> SA = 6), không gọi lại prepareFn (0 VLM re-call) và gửi đúng đề đã sửa sang analyzeFn", async () => {
+    const imgAtt = makeFakeAttachment("de-chop.png", "image", ".png", "image/png");
+    const extractedBatchRef = { current: null as string | null };
+    const extractedText =
+      "Cho hình chóp S.ABCD có đáy ABCD là hình vuông cạnh 2, SA vuông góc với mặt phẳng (ABCD) và SA = 3. Tính thể tích khối chóp S.ABCD.";
+    const editedText =
+      "Cho hình chóp S.ABCD có đáy ABCD là hình vuông cạnh 2, SA vuông góc với mặt phẳng (ABCD) và SA = 6. Tính thể tích khối chóp S.ABCD.";
+
+    useAppStore.getState().setProblemText("");
+
+    const prepareSpy = vi.fn(async (_req: UnifiedInputPrepareRequest): Promise<UnifiedInputPrepareResponse> => ({
+      schema: "unified-input-prepare/1",
+      status: "ready",
+      source_kind: "image",
+      problem_text: extractedText,
+      learner_message: null,
+      reason_code: null,
+      flag_messages: [],
+      uncertain_tokens: [],
+      missing_regions: [],
+      candidates: [],
+      provenance: { has_associated_figure: true },
+      metrics: {
+        vlm_calls: 1,
+        used_vlm: true,
+        raw_input_bytes: 2048,
+        vlm_payload_bytes: 1400,
+        uncropped_baseline_bytes: 2048,
+        processing_ms: 42,
+      },
+    }));
+
+    const analyzeSpy = vi.fn(async (_payload: unknown) => ({
+      status: "unsupported" as const,
+      failure_category: "capability_gap",
+      error_code: "TEST_STUB",
+      reason: "Stub kiểm thử.",
+    }));
+
+    // Lượt 1 (Journey A): Tải ảnh rõ -> tự động trích xuất và điền vào store.problemText
+    await runComposerSubmit({
+      canSubmit: true,
+      lockRef: { current: false },
+      extractedBatchRef,
+      problemText: "",
+      attachments: [imgAtt],
+      health: { ok: true, hasKey: true, cachedProblems: 0 },
+      prepareFn: prepareSpy,
+      analyzeFn: analyzeSpy as any,
+    });
+
+    expect(prepareSpy).toHaveBeenCalledTimes(1);
+    expect(useAppStore.getState().problemText).toBe(extractedText);
+    expect(analyzeSpy).toHaveBeenCalledTimes(1);
+    expect(analyzeSpy.mock.calls[0]?.[0]).toEqual({
+      type: "text",
+      content: extractedText,
+    });
+
+    // Lượt 2 (Journey B): Học sinh sửa văn bản đề đã trích xuất (SA = 3 -> SA = 6) và nhấn Dựng hình lại
+    useAppStore.getState().setProblemText(editedText);
+    await runComposerSubmit({
+      canSubmit: true,
+      lockRef: { current: false },
+      extractedBatchRef,
+      problemText: useAppStore.getState().problemText,
+      attachments: [imgAtt],
+      health: { ok: true, hasKey: true, cachedProblems: 0 },
+      prepareFn: prepareSpy,
+      analyzeFn: analyzeSpy as any,
+    });
+
+    // Không gọi lại prepareFn (0 VLM call), chuyển thẳng văn bản đã sửa sang analyzeFn!
+    expect(prepareSpy).toHaveBeenCalledTimes(1);
+    expect(analyzeSpy).toHaveBeenCalledTimes(2);
+    expect(analyzeSpy.mock.calls[1]?.[0]).toEqual({
+      type: "text",
+      content: editedText,
+    });
+  });
+
+  it("Journey E (Section X): ảnh thiếu dữ kiện trả về insufficient_specification, giữ nguyên văn bản đã trích xuất trên ô nhập để học sinh bổ sung dữ kiện và dựng hình lại với 0 lượt đọc ảnh thừa", async () => {
+    const imgAtt = makeFakeAttachment("de-thieu-sa.png", "image", ".png", "image/png");
+    const extractedBatchRef = { current: null as string | null };
+    const incompleteText =
+      "Cho hình chóp S.ABCD có đáy ABCD là hình vuông cạnh 2, SA vuông góc với mặt phẳng (ABCD). Tính thể tích khối chóp S.ABCD.";
+    const completedText =
+      "Cho hình chóp S.ABCD có đáy ABCD là hình vuông cạnh 2, SA vuông góc với mặt phẳng (ABCD) và SA = 3. Tính thể tích khối chóp S.ABCD.";
+
+    useAppStore.getState().setProblemText("");
+
+    const prepareSpy = vi.fn(async (_req: UnifiedInputPrepareRequest): Promise<UnifiedInputPrepareResponse> => ({
+      schema: "unified-input-prepare/1",
+      status: "ready",
+      source_kind: "image",
+      problem_text: incompleteText,
+      learner_message: null,
+      reason_code: null,
+      flag_messages: [],
+      uncertain_tokens: [],
+      missing_regions: [],
+      candidates: [],
+      provenance: { has_associated_figure: true },
+      metrics: {
+        vlm_calls: 1,
+        used_vlm: true,
+        raw_input_bytes: 2048,
+        vlm_payload_bytes: 1400,
+        uncropped_baseline_bytes: 2048,
+        processing_ms: 38,
+      },
+    }));
+
+    const analyzeSpy = vi
+      .fn()
+      .mockResolvedValueOnce({
+        status: "unsupported" as const,
+        failure_category: "insufficient_specification",
+        error_code: "MISSING_DIMENSION",
+        reason: "Đề bài thiếu độ dài đường cao SA.",
+      })
+      .mockResolvedValueOnce({
+        status: "unsupported" as const,
+        failure_category: "capability_gap",
+        error_code: "RECOVERED_OK",
+        reason: "Đã nhận đủ SA = 3.",
+      });
+
+    // Bước 1: Ảnh thiếu dữ kiện -> trích xuất thành công nhưng analyze từ chối rõ lý do
+    await runComposerSubmit({
+      canSubmit: true,
+      lockRef: { current: false },
+      extractedBatchRef,
+      problemText: "",
+      attachments: [imgAtt],
+      health: { ok: true, hasKey: true, cachedProblems: 0 },
+      prepareFn: prepareSpy,
+      analyzeFn: analyzeSpy as any,
+    });
+
+    // Văn bản đề đã trích xuất vẫn nằm sẵn trong store.problemText để học sinh bổ sung ngay trên #home-problem-input
+    expect(useAppStore.getState().problemText).toBe(incompleteText);
+    expect(useAppStore.getState().unsupported?.failure_category).toBe("insufficient_specification");
+
+    // Bước 2: Học sinh bổ sung "và SA = 3" ngay trên ô nhập rồi bấm Dựng hình -> không gọi lại prepareFn
+    useAppStore.getState().setProblemText(completedText);
+    await runComposerSubmit({
+      canSubmit: true,
+      lockRef: { current: false },
+      extractedBatchRef,
+      problemText: useAppStore.getState().problemText,
+      attachments: [imgAtt],
+      health: { ok: true, hasKey: true, cachedProblems: 0 },
+      prepareFn: prepareSpy,
+      analyzeFn: analyzeSpy as any,
+    });
+
+    expect(prepareSpy).toHaveBeenCalledTimes(1);
+    expect(analyzeSpy).toHaveBeenCalledTimes(2);
+    expect(analyzeSpy.mock.calls[1]?.[0]).toEqual({
+      type: "text",
+      content: completedText,
+    });
   });
 });

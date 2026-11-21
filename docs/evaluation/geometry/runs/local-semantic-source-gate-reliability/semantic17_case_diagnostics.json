@@ -1,0 +1,571 @@
+{
+  "run_id": "local-semantic-source-gate-reliability",
+  "generated_at_utc": "2026-11-13T04:54:20.249879+00:00",
+  "inputs": [
+    "semantic17_trace_baseline.json (c5bb73f51 + working tree before any fix)",
+    "semantic17_trace_final.json (frozen candidate)"
+  ],
+  "reference_status": "AGENT_TRANSCRIBED_UNVERIFIED",
+  "exposure": "all 17 were read while writing the rules: development evidence only",
+  "repair_status_counts": {
+    "NOT_REPAIRED_CAPABILITY_GAP": 8,
+    "PARTIAL_FACT_READ_GOAL_FUNCTION_UNSUPPORTED": 2,
+    "REPAIRED_SERVED_MATCHES_KEY": 3,
+    "PARTIAL_GATE_FIX_STILL_REFUSED": 1,
+    "PARTIAL_STILL_REFUSED": 1,
+    "PARSE_REPAIRED_KERNEL_REFUSES_SAFELY": 1,
+    "NOT_REPAIRED_FAIL_CLOSED_CORRECT": 1
+  },
+  "root_cause_owner_counts": {
+    "PARSER_COVERAGE": 11,
+    "SOURCE_GATE": 5,
+    "EXACT_KERNEL": 1
+  },
+  "previous_run_misclassification": "Of the 5 cases the previous run filed under Source Gate, only r460 was a gate gap; r375 and r537 were parser silent drops the gate correctly caught, r498 is a parser drop plus an unsupported output function, r513 a missing period plus plane notation.",
+  "cases": [
+    {
+      "case_id": "vmmu_r254",
+      "partition_in_previous_run": "frozen_external_evaluation",
+      "expected_answer": "9√13a³/2",
+      "previous_run_label": "LOCAL_PARSER_COVERAGE",
+      "baseline": {
+        "first_failure_layer": "PARSER_COVERAGE",
+        "reason_code": "UNPARSED_GOAL_CANDIDATE"
+      },
+      "final": {
+        "first_failure_layer": "PARSER_COVERAGE",
+        "status": "LOCAL_PARSE_PARTIAL",
+        "reason_code": "UNPARSED_GOAL_CANDIDATE",
+        "downstream": {
+          "schema": "VALID",
+          "bridge_facts": 5,
+          "bridge_ambiguities": null,
+          "planner": {
+            "calls": 5,
+            "goals": 0,
+            "negated": 0
+          },
+          "source_gate": "REFUSED:SOURCE_PREMISE_UNREAD",
+          "source_gate_reason": "tiền đề \"Hình chiếu vuông góc của B' lên mặt phẳng (ABC) trùng với trọng tâm của tam giác ABC.\" chưa được lời gọi nào đọc — có thể đổi hình; không dùng mô hình cũ",
+          "first_failure": "SOURCE_GATE"
+        }
+      },
+      "root_cause_owner": "PARSER_COVERAGE",
+      "root_cause": "projection of a vertex onto the base 'trùng với trọng tâm' (centroid foot) and a sub-solid volume goal (tứ diện A'ABC)",
+      "candidate_general_rule": "oblique prism by centroid foot; sub-solid volume goal",
+      "repair_status": "NOT_REPAIRED_CAPABILITY_GAP",
+      "label": "INFERENCE (agent adjudication of the layered trace; traces are VERIFIED FACT)"
+    },
+    {
+      "case_id": "vmmu_r256",
+      "partition_in_previous_run": "frozen_external_evaluation",
+      "expected_answer": "a√15/5",
+      "previous_run_label": "LOCAL_PARSER_COVERAGE",
+      "baseline": {
+        "first_failure_layer": "PARSER_COVERAGE",
+        "reason_code": "UNPARSED_GOAL_CANDIDATE"
+      },
+      "final": {
+        "first_failure_layer": "PARSER_COVERAGE",
+        "status": "LOCAL_PARSE_PARTIAL",
+        "reason_code": "UNPARSED_GOAL_CANDIDATE",
+        "downstream": {
+          "schema": "VALID",
+          "bridge_facts": 3,
+          "bridge_ambiguities": null,
+          "planner": {
+            "calls": 3,
+            "goals": 0,
+            "negated": 0
+          },
+          "source_gate": "REFUSED:SOURCE_PREMISE_UNREAD",
+          "source_gate_reason": "tiền đề 'Mặt bên SAB là tam giác đều và (SAB) ⊥ (ABCD) (tham khảo hình vẽ).' chưa được lời gọi nào đọc — có thể đổi hình; không dùng mô hình cũ",
+          "first_failure": "SOURCE_GATE"
+        }
+      },
+      "root_cause_owner": "PARSER_COVERAGE",
+      "root_cause": "equilateral lateral face plus face-perpendicular-to-base '(SAB) ⊥ (ABCD)'; source typo 'đên'",
+      "candidate_general_rule": "lateral face ⟂ base construction",
+      "repair_status": "NOT_REPAIRED_CAPABILITY_GAP",
+      "label": "INFERENCE (agent adjudication of the layered trace; traces are VERIFIED FACT)"
+    },
+    {
+      "case_id": "vmmu_r258",
+      "partition_in_previous_run": "frozen_external_evaluation",
+      "expected_answer": "√2",
+      "previous_run_label": "LOCAL_PARSER_COVERAGE",
+      "baseline": {
+        "first_failure_layer": "PARSER_COVERAGE",
+        "reason_code": "UNPARSED_FACT_CANDIDATE"
+      },
+      "final": {
+        "first_failure_layer": "SOURCE_GATE",
+        "status": "LOCAL_PARSE_PARTIAL",
+        "reason_code": "NOT_ASKED_IN_SOURCE",
+        "downstream": {
+          "schema": "VALID",
+          "bridge_facts": 6,
+          "bridge_ambiguities": null,
+          "planner": {
+            "calls": 6,
+            "goals": 0,
+            "negated": 0
+          },
+          "source_gate": "REFUSED:NOT_ASKED_IN_SOURCE",
+          "source_gate_reason": "q1: 'góc giữa hai mặt phẳng (SBC) và (SBA)' không hỏi đối tượng này nguyên vẹn (không có từ hỏi gắn với nó, đã gán giá trị, hay bị bổ nghĩa / đặt điều kiện) — không trả lời điều đề không hỏi",
+          "first_failure": "SOURCE_GATE"
+        }
+      },
+      "root_cause_owner": "SOURCE_GATE",
+      "root_cause": "bare equality 'SA = AB' was silently dropped (fixed); the goal asks 'Tang của góc', an output function the closed output policy does not serve, and the problem is scale-free",
+      "candidate_general_rule": "tan output function under output-policy versioning",
+      "repair_status": "PARTIAL_FACT_READ_GOAL_FUNCTION_UNSUPPORTED",
+      "label": "INFERENCE (agent adjudication of the layered trace; traces are VERIFIED FACT)"
+    },
+    {
+      "case_id": "vmmu_r270",
+      "partition_in_previous_run": "development",
+      "expected_answer": "a³√3/2",
+      "previous_run_label": "LOCAL_PARSER_COVERAGE",
+      "baseline": {
+        "first_failure_layer": "PARSER_COVERAGE",
+        "reason_code": "UNPARSED_GOAL_CANDIDATE"
+      },
+      "final": {
+        "first_failure_layer": "NONE_LOCAL_PARSE_COMPLETE",
+        "status": "LOCAL_PARSE_COMPLETE",
+        "reason_code": null,
+        "downstream": {
+          "schema": "VALID",
+          "bridge_facts": 6,
+          "bridge_ambiguities": null,
+          "planner": {
+            "calls": 6,
+            "goals": 0,
+            "negated": 0
+          },
+          "source_gate": "ACCEPTED"
+        }
+      },
+      "root_cause_owner": "PARSER_COVERAGE",
+      "root_cause": "volume goal without 'khối' ('Tính thể tích lăng trụ …') and a value followed by 'biết' with no punctuation",
+      "candidate_general_rule": "volume goal wording; value boundary at 'biết' / new capitalised clause",
+      "repair_status": "REPAIRED_SERVED_MATCHES_KEY",
+      "label": "INFERENCE (agent adjudication of the layered trace; traces are VERIFIED FACT)"
+    },
+    {
+      "case_id": "vmmu_r277",
+      "partition_in_previous_run": "frozen_external_evaluation",
+      "expected_answer": "8a³",
+      "previous_run_label": "LOCAL_PARSER_COVERAGE",
+      "baseline": {
+        "first_failure_layer": "PARSER_COVERAGE",
+        "reason_code": "UNPARSED_GOAL_CANDIDATE"
+      },
+      "final": {
+        "first_failure_layer": "PARSER_COVERAGE",
+        "status": "LOCAL_PARSE_PARTIAL",
+        "reason_code": "UNPARSED_GOAL_CANDIDATE",
+        "downstream": {
+          "schema": "VALID",
+          "bridge_facts": 4,
+          "bridge_ambiguities": null,
+          "planner": {
+            "calls": 4,
+            "goals": 0,
+            "negated": 0
+          },
+          "source_gate": "REFUSED:SOURCE_PREMISE_UNREAD",
+          "source_gate_reason": "tiền đề 'Cho tứ diện OABC vuông tại O có OA = 2a, OB = 3a, OC = 4a.' chưa được lời gọi nào đọc — có thể đổi hình; không dùng mô hình cũ",
+          "first_failure": "SOURCE_GATE"
+        }
+      },
+      "root_cause_owner": "PARSER_COVERAGE",
+      "root_cause": "points defined as reflections of O through edge midpoints",
+      "candidate_general_rule": "point reflection construction",
+      "repair_status": "NOT_REPAIRED_CAPABILITY_GAP",
+      "label": "INFERENCE (agent adjudication of the layered trace; traces are VERIFIED FACT)"
+    },
+    {
+      "case_id": "vmmu_r284",
+      "partition_in_previous_run": "development",
+      "expected_answer": "√21a/7",
+      "previous_run_label": "LOCAL_PARSER_COVERAGE",
+      "baseline": {
+        "first_failure_layer": "PARSER_COVERAGE",
+        "reason_code": "UNPARSED_FACT_CANDIDATE"
+      },
+      "final": {
+        "first_failure_layer": "PARSER_COVERAGE",
+        "status": "LOCAL_PARSE_PARTIAL",
+        "reason_code": "UNPARSED_FACT_CANDIDATE",
+        "downstream": {
+          "schema": "VALID",
+          "bridge_facts": 3,
+          "bridge_ambiguities": null,
+          "planner": {
+            "calls": 3,
+            "goals": 0,
+            "negated": 0
+          },
+          "source_gate": "REFUSED:UNGROUNDED_VALUE",
+          "source_gate_reason": "p1: 'S.ABCD có đáy là hình vuông cạnh a' không gắn a với vai trò của ô này trong một câu đọc trọn",
+          "first_failure": "SOURCE_GATE"
+        }
+      },
+      "root_cause_owner": "PARSER_COVERAGE",
+      "root_cause": "lateral face perpendicular to the base is held by an explicit unsupported-relation guard",
+      "candidate_general_rule": "lateral face ⟂ base construction",
+      "repair_status": "NOT_REPAIRED_CAPABILITY_GAP",
+      "label": "INFERENCE (agent adjudication of the layered trace; traces are VERIFIED FACT)"
+    },
+    {
+      "case_id": "vmmu_r298",
+      "partition_in_previous_run": "frozen_external_evaluation",
+      "expected_answer": "V = 2√6a³",
+      "previous_run_label": "LOCAL_PARSER_COVERAGE",
+      "baseline": {
+        "first_failure_layer": "PARSER_COVERAGE",
+        "reason_code": "UNPARSED_GOAL_CANDIDATE"
+      },
+      "final": {
+        "first_failure_layer": "NONE_LOCAL_PARSE_COMPLETE",
+        "status": "LOCAL_PARSE_COMPLETE",
+        "reason_code": null,
+        "downstream": {
+          "schema": "VALID",
+          "bridge_facts": 4,
+          "bridge_ambiguities": null,
+          "planner": {
+            "calls": 4,
+            "goals": 0,
+            "negated": 0
+          },
+          "source_gate": "ACCEPTED"
+        }
+      },
+      "root_cause_owner": "PARSER_COVERAGE",
+      "root_cause": "regular prism with a list of dimensions 'cạnh đáy …, cạnh bên …' in either order",
+      "candidate_general_rule": "solid dimension list",
+      "repair_status": "REPAIRED_SERVED_MATCHES_KEY",
+      "label": "INFERENCE (agent adjudication of the layered trace; traces are VERIFIED FACT)"
+    },
+    {
+      "case_id": "vmmu_r375",
+      "partition_in_previous_run": "frozen_external_evaluation",
+      "expected_answer": "√17",
+      "previous_run_label": "SOURCE_GATE",
+      "baseline": {
+        "first_failure_layer": "SOURCE_GATE",
+        "reason_code": "SOURCE_PREMISE_UNREAD"
+      },
+      "final": {
+        "first_failure_layer": "NONE_LOCAL_PARSE_COMPLETE",
+        "status": "LOCAL_PARSE_COMPLETE",
+        "reason_code": null,
+        "downstream": {
+          "schema": "VALID",
+          "bridge_facts": 4,
+          "bridge_ambiguities": null,
+          "planner": {
+            "calls": 4,
+            "goals": 0,
+            "negated": 0
+          },
+          "source_gate": "ACCEPTED"
+        }
+      },
+      "root_cause_owner": "PARSER_COVERAGE",
+      "root_cause": "'độ dài cạnh đáy … cạnh bên …' was dropped by the parser; the Source Gate then caught the unread premise (the gate was right)",
+      "candidate_general_rule": "solid dimension list with 'độ dài'",
+      "repair_status": "REPAIRED_SERVED_MATCHES_KEY",
+      "label": "INFERENCE (agent adjudication of the layered trace; traces are VERIFIED FACT)"
+    },
+    {
+      "case_id": "vmmu_r460",
+      "partition_in_previous_run": "frozen_external_evaluation",
+      "expected_answer": "a³√2/3",
+      "previous_run_label": "SOURCE_GATE",
+      "baseline": {
+        "first_failure_layer": "SOURCE_GATE",
+        "reason_code": "NOT_ASKED_IN_SOURCE"
+      },
+      "final": {
+        "first_failure_layer": "SOURCE_GATE",
+        "status": "LOCAL_PARSE_PARTIAL",
+        "reason_code": "SOURCE_PREMISE_UNREAD",
+        "downstream": {
+          "schema": "VALID",
+          "bridge_facts": 6,
+          "bridge_ambiguities": null,
+          "planner": {
+            "calls": 6,
+            "goals": 0,
+            "negated": 0
+          },
+          "source_gate": "REFUSED:SOURCE_PREMISE_UNREAD",
+          "source_gate_reason": "tiền đề 'Cạnh SA vuông góc với mặt đáy (ABC), tam giác SAB cân.' chưa được lời gọi nào đọc — có thể đổi hình; không dùng mô hình cũ",
+          "first_failure": "SOURCE_GATE"
+        }
+      },
+      "root_cause_owner": "SOURCE_GATE",
+      "root_cause": "'… theo a bằng' tail was not recognised as asking (fixed) and 'vuông ở' (fixed); still 'tam giác SAB cân' is unread and the hypotenuse-leg relation is not modelled",
+      "candidate_general_rule": "isosceles vertex inference; hypotenuse from legs",
+      "repair_status": "PARTIAL_GATE_FIX_STILL_REFUSED",
+      "label": "INFERENCE (agent adjudication of the layered trace; traces are VERIFIED FACT)"
+    },
+    {
+      "case_id": "vmmu_r463",
+      "partition_in_previous_run": "frozen_external_evaluation",
+      "expected_answer": "4√3a³",
+      "previous_run_label": "LOCAL_PARSER_COVERAGE",
+      "baseline": {
+        "first_failure_layer": "PARSER_COVERAGE",
+        "reason_code": "EMPTY_SOLIDS"
+      },
+      "final": {
+        "first_failure_layer": "PARSER_COVERAGE",
+        "status": "LOCAL_PARSE_PARTIAL",
+        "reason_code": "EMPTY_SOLIDS",
+        "downstream": {
+          "first_failure": "PARSER_COVERAGE",
+          "schema": "NO_SOLID"
+        }
+      },
+      "root_cause_owner": "PARSER_COVERAGE",
+      "root_cause": "solid written without the dot 'ABCDA'B'C'D'' gives no solid; rhombus defined by an inverse condition",
+      "candidate_general_rule": "dot-less prism notation (ambiguous split must ask, not guess)",
+      "repair_status": "NOT_REPAIRED_CAPABILITY_GAP",
+      "label": "INFERENCE (agent adjudication of the layered trace; traces are VERIFIED FACT)"
+    },
+    {
+      "case_id": "vmmu_r488",
+      "partition_in_previous_run": "development",
+      "expected_answer": "a³/3",
+      "previous_run_label": "LOCAL_PARSER_COVERAGE",
+      "baseline": {
+        "first_failure_layer": "PARSER_COVERAGE",
+        "reason_code": "UNPARSED_GOAL_CANDIDATE"
+      },
+      "final": {
+        "first_failure_layer": "PARSER_COVERAGE",
+        "status": "LOCAL_PARSE_PARTIAL",
+        "reason_code": "UNPARSED_GOAL_CANDIDATE",
+        "downstream": {
+          "schema": "VALID",
+          "bridge_facts": 4,
+          "bridge_ambiguities": null,
+          "planner": {
+            "calls": 4,
+            "goals": 0,
+            "negated": 0
+          },
+          "source_gate": "REFUSED:SOURCE_PREMISE_UNREAD",
+          "source_gate_reason": "tiền đề \"Cho hình lăng trụ đứng ABC.A'B'C' có đáy ABC là tam giác vuông, AB = BC = a.\" chưa được lời gọi nào đọc — có thể đổi hình; không dùng mô hình cũ",
+          "first_failure": "SOURCE_GATE"
+        }
+      },
+      "root_cause_owner": "PARSER_COVERAGE",
+      "root_cause": "volume of a sub-solid 'B'.ACC'A''",
+      "candidate_general_rule": "sub-solid volume goal",
+      "repair_status": "NOT_REPAIRED_CAPABILITY_GAP",
+      "label": "INFERENCE (agent adjudication of the layered trace; traces are VERIFIED FACT)"
+    },
+    {
+      "case_id": "vmmu_r491",
+      "partition_in_previous_run": "frozen_external_evaluation",
+      "expected_answer": "2√5/5 a",
+      "previous_run_label": "LOCAL_PARSER_COVERAGE",
+      "baseline": {
+        "first_failure_layer": "PARSER_COVERAGE",
+        "reason_code": "UNPARSED_FACT_CANDIDATE"
+      },
+      "final": {
+        "first_failure_layer": "PARSER_COVERAGE",
+        "status": "LOCAL_PARSE_PARTIAL",
+        "reason_code": "UNPARSED_FACT_CANDIDATE",
+        "downstream": {
+          "schema": "VALID",
+          "bridge_facts": 5,
+          "bridge_ambiguities": null,
+          "planner": {
+            "calls": 5,
+            "goals": 0,
+            "negated": 0
+          },
+          "source_gate": "REFUSED:SOURCE_PREMISE_UNREAD",
+          "source_gate_reason": "tiền đề \"Hình chiếu vuông góc của A' lên mặt phẳng (ABC) là điểm I thuộc cạnh BC.\" chưa được lời gọi nào đọc — có thể đổi hình; không dùng mô hình cũ",
+          "first_failure": "SOURCE_GATE"
+        }
+      },
+      "root_cause_owner": "PARSER_COVERAGE",
+      "root_cause": "point I on BC left free (answer must be invariant in I); invariance certificate does not cover it",
+      "candidate_general_rule": "free-parameter invariance",
+      "repair_status": "NOT_REPAIRED_CAPABILITY_GAP",
+      "label": "INFERENCE (agent adjudication of the layered trace; traces are VERIFIED FACT)"
+    },
+    {
+      "case_id": "vmmu_r498",
+      "partition_in_previous_run": "frozen_external_evaluation",
+      "expected_answer": "1/2",
+      "previous_run_label": "SOURCE_GATE",
+      "baseline": {
+        "first_failure_layer": "SOURCE_GATE",
+        "reason_code": "NOT_ASKED_IN_SOURCE"
+      },
+      "final": {
+        "first_failure_layer": "SOURCE_GATE",
+        "status": "LOCAL_PARSE_PARTIAL",
+        "reason_code": "NOT_ASKED_IN_SOURCE",
+        "downstream": {
+          "schema": "VALID",
+          "bridge_facts": 4,
+          "bridge_ambiguities": null,
+          "planner": {
+            "calls": 4,
+            "goals": 0,
+            "negated": 0
+          },
+          "source_gate": "REFUSED:NOT_ASKED_IN_SOURCE",
+          "source_gate_reason": "q1: \"góc giữa hai mặt phẳng (ABCD) và (ABC')\" không hỏi đối tượng này nguyên vẹn (không có từ hỏi gắn với nó, đã gán giá trị, hay bị bổ nghĩa / đặt điều kiện) — không trả lời điều đề không hỏi",
+          "first_failure": "SOURCE_GATE"
+        }
+      },
+      "root_cause_owner": "SOURCE_GATE",
+      "root_cause": "dimension list fixed; the goal 'cosin của góc' asks an output function the closed policy does not serve, so NOT_ASKED_IN_SOURCE is the correct refusal",
+      "candidate_general_rule": "cos output function under output-policy versioning",
+      "repair_status": "PARTIAL_FACT_READ_GOAL_FUNCTION_UNSUPPORTED",
+      "label": "INFERENCE (agent adjudication of the layered trace; traces are VERIFIED FACT)"
+    },
+    {
+      "case_id": "vmmu_r513",
+      "partition_in_previous_run": "development",
+      "expected_answer": "2√5/5",
+      "previous_run_label": "SOURCE_GATE",
+      "baseline": {
+        "first_failure_layer": "SOURCE_GATE",
+        "reason_code": "UNGROUNDED_VALUE"
+      },
+      "final": {
+        "first_failure_layer": "SOURCE_GATE",
+        "status": "LOCAL_PARSE_PARTIAL",
+        "reason_code": "QUESTION_CONTEXT_UNSUPPORTED",
+        "downstream": {
+          "schema": "VALID",
+          "bridge_facts": 4,
+          "bridge_ambiguities": null,
+          "planner": {
+            "calls": 4,
+            "goals": 0,
+            "negated": 0
+          },
+          "source_gate": "REFUSED:QUESTION_CONTEXT_UNSUPPORTED",
+          "source_gate_reason": "phần dữ kiện/đổi giả thiết trong câu hỏi chưa được đọc trọn; không dùng mô hình cũ",
+          "first_failure": "SOURCE_GATE"
+        }
+      },
+      "root_cause_owner": "SOURCE_GATE",
+      "root_cause": "missing period before the question (fixed by the value boundary); the plane is written without parentheses, so the question context is unsupported",
+      "candidate_general_rule": "plane names without parentheses",
+      "repair_status": "PARTIAL_STILL_REFUSED",
+      "label": "INFERENCE (agent adjudication of the layered trace; traces are VERIFIED FACT)"
+    },
+    {
+      "case_id": "vmmu_r520",
+      "partition_in_previous_run": "frozen_external_evaluation",
+      "expected_answer": "45°",
+      "previous_run_label": "LOCAL_PARSER_COVERAGE",
+      "baseline": {
+        "first_failure_layer": "PARSER_COVERAGE",
+        "reason_code": "UNPARSED_FACT_CANDIDATE"
+      },
+      "final": {
+        "first_failure_layer": "NONE_LOCAL_PARSE_COMPLETE",
+        "status": "LOCAL_PARSE_COMPLETE",
+        "reason_code": null,
+        "downstream": {
+          "schema": "VALID",
+          "bridge_facts": 5,
+          "bridge_ambiguities": null,
+          "planner": {
+            "calls": 5,
+            "goals": 0,
+            "negated": 0
+          },
+          "source_gate": "ACCEPTED"
+        }
+      },
+      "root_cause_owner": "EXACT_KERNEL",
+      "root_cause": "parse now complete; the problem is scale-free and the exact kernel refuses with MISSING_DIMENSION instead of inventing a length",
+      "candidate_general_rule": "scale-free answers (ratio/angle) without a length",
+      "repair_status": "PARSE_REPAIRED_KERNEL_REFUSES_SAFELY",
+      "label": "INFERENCE (agent adjudication of the layered trace; traces are VERIFIED FACT)"
+    },
+    {
+      "case_id": "vmmu_r537",
+      "partition_in_previous_run": "frozen_external_evaluation",
+      "expected_answer": "a√6/3",
+      "previous_run_label": "SOURCE_GATE",
+      "baseline": {
+        "first_failure_layer": "SOURCE_GATE",
+        "reason_code": "SOURCE_PREMISE_UNREAD"
+      },
+      "final": {
+        "first_failure_layer": "SOURCE_GATE",
+        "status": "LOCAL_PARSE_PARTIAL",
+        "reason_code": "UNGROUNDED_VALUE",
+        "downstream": {
+          "schema": "VALID",
+          "bridge_facts": 3,
+          "bridge_ambiguities": null,
+          "planner": {
+            "calls": 4,
+            "goals": 0,
+            "negated": 0
+          },
+          "source_gate": "REFUSED:UNGROUNDED_VALUE",
+          "source_gate_reason": "p2: 'Cho hình chóp tứ giác đều S.ABCD có độ dài cạnh bên bằng a' không gắn a với vai trò của ô này trong một câu đọc trọn",
+          "first_failure": "SOURCE_GATE"
+        }
+      },
+      "root_cause_owner": "SOURCE_GATE",
+      "root_cause": "an area value 'a²' for a face is not a supported premise value; the gate fails closed with UNGROUNDED_VALUE (correct)",
+      "candidate_general_rule": "area premise values",
+      "repair_status": "NOT_REPAIRED_FAIL_CLOSED_CORRECT",
+      "label": "INFERENCE (agent adjudication of the layered trace; traces are VERIFIED FACT)"
+    },
+    {
+      "case_id": "vmmu_r538",
+      "partition_in_previous_run": "frozen_external_evaluation",
+      "expected_answer": "30°",
+      "previous_run_label": "LOCAL_PARSER_COVERAGE",
+      "baseline": {
+        "first_failure_layer": "PARSER_COVERAGE",
+        "reason_code": "UNPARSED_GOAL_CANDIDATE"
+      },
+      "final": {
+        "first_failure_layer": "PARSER_COVERAGE",
+        "status": "LOCAL_PARSE_PARTIAL",
+        "reason_code": "UNPARSED_GOAL_CANDIDATE",
+        "downstream": {
+          "schema": "VALID",
+          "bridge_facts": 3,
+          "bridge_ambiguities": null,
+          "planner": {
+            "calls": 3,
+            "goals": 0,
+            "negated": 0
+          },
+          "source_gate": "REFUSED:SOURCE_PREMISE_UNREAD",
+          "source_gate_reason": "tiền đề 'Góc giữa cạnh bên và mặt đáy bằng' chưa được lời gọi nào đọc — có thể đổi hình; không dùng mô hình cũ",
+          "first_failure": "SOURCE_GATE"
+        }
+      },
+      "root_cause_owner": "PARSER_COVERAGE",
+      "root_cause": "angle operands named by role 'cạnh bên' and 'mặt đáy' instead of by points",
+      "candidate_general_rule": "role-named angle operands in a regular pyramid",
+      "repair_status": "NOT_REPAIRED_CAPABILITY_GAP",
+      "label": "INFERENCE (agent adjudication of the layered trace; traces are VERIFIED FACT)"
+    }
+  ]
+}

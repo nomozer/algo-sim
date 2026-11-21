@@ -1,0 +1,59 @@
+{
+  "schema": "axo-acceptance-criteria/1",
+  "run_id": "grounded-geometry-language-recovery",
+  "manifest": {
+    "path": "ACCEPTANCE_MANIFEST.json",
+    "sha256": "a8427fcf4ef870197df473601eed58a7b52bf3952b1abb303c998d2969da5b7b"
+  },
+  "harness": {
+    "version": "axo-live-acceptance-harness/1",
+    "scene_oracle_sha256": "a73bc2cf7d26795862fe3fadf2d04d6a0ca803ad92a4acac50ba0e50f9bb40cb",
+    "gold_generator_sha256": "e4c605cf34559ec7e69f5962b1a8fa66078ba9ec4b8929368cafa4d3957d55e4"
+  },
+  "exposure": {
+    "external_independence": "NOT_MEASURED",
+    "normalized_prior_strings": 28905,
+    "training_corpus_included": true,
+    "normalized_containment_matches": 0,
+    "single_shot": true,
+    "author_also_fixes_product": true
+  },
+  "runtime": {
+    "route_mode": "local-only-scoped",
+    "allow_live_ai": false,
+    "model": "AxoV9",
+    "gguf_sha256": "73f1484b08b97ed2a1f44e32bcf6610210c7fda51567c4cd0a03d98dffc6cc35",
+    "llama_cpp_release": "b12470",
+    "require_fresh_cache": true,
+    "cloud_fallback": false
+  },
+  "primary": {
+    "completion_rate_min": 0.85,
+    "population": "all positive text cases",
+    "completion": "served with correct source facts, exact scene and answers, visual and interaction pass"
+  },
+  "slm": {
+    "completion_rate_min": 0.3,
+    "min_live_verified_scenes": 5,
+    "population": "positive cases whose stratum is SLM_REQUIRED in the baseline freeze (CACHE 154, before any /15 edit)",
+    "cache_and_replay_credit": false
+  },
+  "modalities": {
+    "explicit_per_modality_live_metrics": true,
+    "positive_completion_rate_min": 0.85,
+    "required": [
+      "text"
+    ]
+  },
+  "safety": {
+    "all_negative_safe": true,
+    "external_ai_calls": 0,
+    "wrong_served": 0,
+    "grounding_violations_served": 0,
+    "unverified_relations_served": 0,
+    "fabricated_numeric_goals": 0,
+    "served_numeric_mismatch": 0
+  },
+  "candidate_consistency": "same committed product, cache, model and runtime for live acceptance and Full T3",
+  "scope_note": "OCR/Vision development postponed by the owner: no attachment cases; LOCAL_VISION_REPLACEMENT_VERIFIED is not measured here"
+}

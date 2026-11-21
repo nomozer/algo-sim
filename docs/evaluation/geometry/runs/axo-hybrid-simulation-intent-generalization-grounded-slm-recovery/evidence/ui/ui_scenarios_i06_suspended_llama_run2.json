@@ -1,0 +1,20 @@
+{
+ "schema": "axo-v11-ui-scenarios/1",
+ "browser": "151.0.7922.34",
+ "base": "http://127.0.0.1:4174",
+ "tag": "i06_suspended_llama_run2",
+ "results": [
+  {
+   "scenario_id": "I06",
+   "pass": true,
+   "case_id": "SLOW_ADHOC",
+   "http": 504,
+   "route": null,
+   "mode": null,
+   "surface": "TOAST",
+   "analyze_calls": 1,
+   "ms_to_message": 45265,
+   "toast": "Máy chủ trả về lỗi khi phân tích\nQuá trình phân tích đề mất nhiều thời gian hơn dự kiến hoặc đang có nhiều lượt xử lý cùng lúc. Em hãy nhấn thử lại sau vài giây."
+  }
+ ]
+}

@@ -1,0 +1,1225 @@
+{
+  "schema": "algosim-wave-3b-ocr-expression-consistency/1",
+  "run_id": "dimension-aware-verified-construction",
+  "phase": "phase_11_step_26_ocr_to_expression_consistency",
+  "stage": "wave_3b_step_26",
+  "generated_by": "expr-dim-audit",
+  "generated_at_utc": "2026-11-15T14:46:53Z",
+  "branch": "feat/local-first-geometry-understanding",
+  "git_head_at_generation": "b04bed0f83e02ac27416814bea08fa830ee91461",
+  "head": "b04bed0f83e02ac27416814bea08fa830ee91461",
+  "product_commit": "32bdaa1df3dd7606b59b8c3cd8411578c4206d54",
+  "product_commit_rule": "product-paths-excluding-test-only/1",
+  "measured_system_hash": "b1403b91fd81410f9586c5676f541911540b4bc4bb0d7bf40204d17538623e59",
+  "measured_system_file_count": 120,
+  "baseline_measured_system_hash": "c25f9695828888987db2ab7990c4ff135da4d01c6b9d968f898c36728a0ae436",
+  "cache_version": "140",
+  "route_d_cache_policy": "140:route-d",
+  "semantic_environment_hash": "6233c43c395c9b493d31d3dbb5d0ca952604730f6185cf541d2f179c077f955b",
+  "corpus_id": "REAL27_IMAGES_PLUS_RENDERED_AND_DUAL_OCR_EXPRESSION_PROBES",
+  "provider_call_count": 0,
+  "environment": {
+    "ALLOW_LIVE_AI": "0",
+    "GEMINI_API_KEY": "",
+    "HYBRID_ROUTE_MODE": "local-first",
+    "live_ai_calls": 0,
+    "sealed_h1_rows_opened": 0,
+    "locked_w2_w3_rows_read": 0
+  },
+  "dataset_partition": "DEVELOPMENT_EXPOSED_ONLY (COMP112, DEV37, PROBES39, STAGE_P1_WAVE_PROBES 24, and exposed REAL27 text + images); zero access to sealed H-1 or locked W2/W3",
+  "test_command": "D:/Documents/projects/algo-sim/backend/.venv/Scripts/python.exe -B docs/evaluation/geometry/runs/dimension-aware-verified-construction/tools/evaluate_step26_wave3b.py",
+  "expected_behavior": "Measure OCR-to-expression consistency across all 27 exposed REAL27 images plus rendered-PNG and dual-engine reconciliation probes covering a², a³, 2a, a√3, a²/2, cm², mm²/mm³, corrupted a2/a3/a” detection, EXPONENT_SUPERSCRIPT_DISAGREEMENT flagging, single-problem isolation, and confirmation-gate safety so corrupted OCR never silently turns a² into a.",
+  "actual_behavior": "Across 27 REAL27 images: attribution counts {'OCR_OR_REGION_FAILURE': 10, 'CONSISTENT': 16, 'PARSER_STATUS_DIFFERS': 1} (v139) -> {'OCR_OR_REGION_FAILURE': 10, 'CONSISTENT': 16, 'PARSER_STATUS_DIFFERS': 1} (v140); 5/5 rendered-PNG real OCR probes (a², a³/3, 2a & a√3, a²/2, 3cm & 9cm²) served exact oracle answers with 0 wrong auto-serves; dual-OCR corruption & disagreement gates (a² vs a2, a² vs a, a² vs a”, both-engine a2, both-engine 2a”, mm2 -> mm² / mm3 -> mm³) block auto-ready (extraction_verified=False), and bare both-engine 'a”' (which passes the OCR prose branch) is deterministically refused downstream as LOCAL_PARSE_PARTIAL / UNREAD_VALUE, while an unflagged dropped superscript 'diện tích đáy bằng a' with 'cạnh bên bằng a' refuses INCONSISTENT_FACTS at SymbolEnvironment.",
+  "mathematical_oracle": "Three-layer superscript safety invariant: (Layer 1 — OCR Reconcile) '²³' are math tokens; disagreement between 'a²' and 'a2'/'a'/'a”' emits EXPONENT_SUPERSCRIPT_DISAGREEMENT and math-slot shared 'a2'/'a3'/'2a”' emits SHARED_CORRUPTION_PATTERN, blocking auto-ready status; (Layer 2 — Expression Boundary Parser) bare prose-slot 'a”' is rejected at clause/expression boundary as LOCAL_PARSE_PARTIAL (UNREAD_VALUE), never silently stripped to 'a'; (Layer 3 — Dimension Inference) if 'a²' were corrupted to 'a' in an AREA slot alongside 'a' in a LENGTH slot, SymbolEnvironment rejects the AREA-vs-LENGTH symbol conflict with INCONSISTENT_FACTS.",
+  "source_provenance": {
+    "ocr_reconcile_module": "backend/app/ingestion/ocr_reconcile.py",
+    "ocr_reconcile_version": "layout-aware-ocr-reconcile/1",
+    "unified_input_module": "backend/app/ingestion/unified_input.py",
+    "prior_ocr_consistency_receipt": "docs/evaluation/geometry/runs/grounded-vietnamese-geometry-understanding/ocr_text_semantic_consistency.json"
+  },
+  "real27_image_to_ast_consistency": {
+    "total_images": 27,
+    "attribution_before_v139": {
+      "OCR_OR_REGION_FAILURE": 10,
+      "CONSISTENT": 16,
+      "PARSER_STATUS_DIFFERS": 1
+    },
+    "attribution_after_v140": {
+      "OCR_OR_REGION_FAILURE": 10,
+      "CONSISTENT": 16,
+      "PARSER_STATUS_DIFFERS": 1
+    },
+    "multi_problem_leaks": [
+      "vmmu_r492"
+    ],
+    "note_on_vmmu_r492_option_marker": "As documented in grounded-vietnamese-geometry-understanding, vmmu_r492 contains 'vuông tại A.' inside its geometry statement matching the lexical regex '[A-D]. ', not a second problem leak (AST representation is 100% CONSISTENT).",
+    "rows": {
+      "vmmu_r247": {
+        "prepare_status": "needs_confirmation",
+        "draft_sha256": "f184fb9cf190746b2d480ed27708164d4db99a3cd4ed6f8966ab6feb00b168ea",
+        "confirmed_text_sha256": "430498746460ea566d933ddd4170e8a3652a460880403cb9ec3829a936dd2171",
+        "statement_sha256": "5f3e8da93e0ce388243259a966f6e1c30efeb8ee798d27c4af33c20f5398ecfe",
+        "texts_identical_after_choice_strip": false,
+        "statement_math_expressions": [],
+        "draft_ocr_math_expressions": [],
+        "confirmed_ocr_math_expressions": [],
+        "expression_tokens_preserved_in_confirmed": true,
+        "flagged_span_reasons": [
+          "Chữ tiếng Việt đọc chưa chắc",
+          "Dấu phẩy trên (′) đọc chưa chắc",
+          "Ký hiệu toán chưa được hai bộ đọc độc lập xác nhận",
+          "Ký hiệu toán đọc chưa chắc",
+          "Đề nhắc tới hình vẽ — em xác nhận hình không ghi thêm số đo, góc hay quan hệ nào ngoài lời đề (nếu có, em ghi bổ sung vào đề)."
+        ],
+        "ocr_parse": {
+          "status": "LOCAL_PARSE_PARTIAL",
+          "reason": "EMPTY_SOLIDS"
+        },
+        "statement_parse": {
+          "status": "LOCAL_PARSE_COMPLETE",
+          "reason": null
+        },
+        "same_representation": {
+          "solids": false,
+          "premises": false,
+          "goals": true
+        },
+        "single_problem": true,
+        "prior_v139_attribution": "OCR_OR_REGION_FAILURE",
+        "attribution": "OCR_OR_REGION_FAILURE"
+      },
+      "vmmu_r254": {
+        "prepare_status": "needs_confirmation",
+        "draft_sha256": "ed47cdebbf57099a6587b61f19a8b21383faebb04fafe18649fbfb7c1ef46222",
+        "confirmed_text_sha256": "d5ae5e7b13f63f35b17ed49182ccfd561faaeeee050c411e9e0d18ae36c4cc33",
+        "statement_sha256": "1b71b6ac60aedac7043c9a7c928ed4fa2b3d7229c6bef98432bea0446d00105d",
+        "texts_identical_after_choice_strip": false,
+        "statement_math_expressions": [
+          "2√13",
+          "30°",
+          "60°"
+        ],
+        "draft_ocr_math_expressions": [
+          "2√13",
+          "30°",
+          "60°"
+        ],
+        "confirmed_ocr_math_expressions": [
+          "2√13",
+          "30°",
+          "60°",
+          "99√13",
+          "a³"
+        ],
+        "expression_tokens_preserved_in_confirmed": false,
+        "flagged_span_reasons": [
+          "Chữ tiếng Việt đọc chưa chắc",
+          "Dấu căn (√) đọc chưa chắc",
+          "Hình vẽ có thể chứa dữ kiện chưa đọc được — em xác nhận hoặc ghi bổ sung vào đề.",
+          "Ký hiệu toán chưa được hai bộ đọc độc lập xác nhận",
+          "Ký hiệu toán đọc chưa chắc",
+          "Phân số viết hai tầng — kiểm tra tử số và mẫu số"
+        ],
+        "ocr_parse": {
+          "status": "LOCAL_PARSE_PARTIAL",
+          "reason": "UNPARSED_FACT_CANDIDATE"
+        },
+        "statement_parse": {
+          "status": "LOCAL_PARSE_PARTIAL",
+          "reason": "UNPARSED_GOAL_CANDIDATE"
+        },
+        "same_representation": {
+          "solids": true,
+          "premises": false,
+          "goals": false
+        },
+        "single_problem": true,
+        "prior_v139_attribution": "OCR_OR_REGION_FAILURE",
+        "attribution": "OCR_OR_REGION_FAILURE"
+      },
+      "vmmu_r256": {
+        "prepare_status": "needs_confirmation",
+        "draft_sha256": "edcb06d70ddf06d8a401522e04c8b7200431044e62496b089b2a683a2b2e5060",
+        "confirmed_text_sha256": "7ef9383908a9c3dd10984d180ec10bb26347c3c6b7a35606bd826ae20b6c0f71",
+        "statement_sha256": "b3c99ebccab872eab209179785d9c8940a1c36ce6c58a6ac2b94262810394950",
+        "texts_identical_after_choice_strip": false,
+        "statement_math_expressions": [
+          "120°"
+        ],
+        "draft_ocr_math_expressions": [
+          "120°"
+        ],
+        "confirmed_ocr_math_expressions": [
+          "120°"
+        ],
+        "expression_tokens_preserved_in_confirmed": true,
+        "flagged_span_reasons": [
+          "Ký hiệu có dạng thường bị đọc sai",
+          "Ký hiệu toán chưa được hai bộ đọc độc lập xác nhận",
+          "Phân số viết hai tầng — kiểm tra tử số và mẫu số",
+          "Đề nhắc tới hình vẽ — em xác nhận hình không ghi thêm số đo, góc hay quan hệ nào ngoài lời đề (nếu có, em ghi bổ sung vào đề)."
+        ],
+        "ocr_parse": {
+          "status": "LOCAL_PARSE_PARTIAL",
+          "reason": "UNPARSED_FACT_CANDIDATE"
+        },
+        "statement_parse": {
+          "status": "LOCAL_PARSE_PARTIAL",
+          "reason": "UNPARSED_GOAL_CANDIDATE"
+        },
+        "same_representation": {
+          "solids": true,
+          "premises": false,
+          "goals": true
+        },
+        "single_problem": true,
+        "prior_v139_attribution": "OCR_OR_REGION_FAILURE",
+        "attribution": "OCR_OR_REGION_FAILURE"
+      },
+      "vmmu_r258": {
+        "prepare_status": "needs_confirmation",
+        "draft_sha256": "36b74922b474c4a55fa2b664bfb4f3f0893e32e3b5bf97601d65642ba05aa816",
+        "confirmed_text_sha256": "dd8e8969028dbf5ac4e32f3afade7265c41c9c7f771052be261351f714e7750b",
+        "statement_sha256": "86a06df87628a29335dec2168da6037cf5396731bd9a29ce24bdc2d5a0b0cd92",
+        "texts_identical_after_choice_strip": false,
+        "statement_math_expressions": [],
+        "draft_ocr_math_expressions": [],
+        "confirmed_ocr_math_expressions": [],
+        "expression_tokens_preserved_in_confirmed": true,
+        "flagged_span_reasons": [
+          "Ký hiệu toán chưa được hai bộ đọc độc lập xác nhận",
+          "Đề nhắc tới hình vẽ — em xác nhận hình không ghi thêm số đo, góc hay quan hệ nào ngoài lời đề (nếu có, em ghi bổ sung vào đề)."
+        ],
+        "ocr_parse": {
+          "status": "LOCAL_PARSE_COMPLETE",
+          "reason": null
+        },
+        "statement_parse": {
+          "status": "LOCAL_PARSE_COMPLETE",
+          "reason": null
+        },
+        "same_representation": {
+          "solids": true,
+          "premises": true,
+          "goals": true
+        },
+        "single_problem": true,
+        "prior_v139_attribution": "CONSISTENT",
+        "attribution": "CONSISTENT"
+      },
+      "vmmu_r266": {
+        "prepare_status": "needs_confirmation",
+        "draft_sha256": "e959dcdec4c47f35a27061c7de15553699d5a7172c49533ed4cc7efea7b14165",
+        "confirmed_text_sha256": "e959dcdec4c47f35a27061c7de15553699d5a7172c49533ed4cc7efea7b14165",
+        "statement_sha256": "1e83a2eec97786ccdd033a1d744cdbb083f690e7bfd096b5a5cbbc2615879dc2",
+        "texts_identical_after_choice_strip": false,
+        "statement_math_expressions": [
+          "30°"
+        ],
+        "draft_ocr_math_expressions": [],
+        "confirmed_ocr_math_expressions": [],
+        "expression_tokens_preserved_in_confirmed": false,
+        "flagged_span_reasons": [
+          "Ký hiệu toán chưa được hai bộ đọc độc lập xác nhận"
+        ],
+        "ocr_parse": {
+          "status": "LOCAL_PARSE_PARTIAL",
+          "reason": "UNPARSED_FACT_CANDIDATE"
+        },
+        "statement_parse": {
+          "status": "LOCAL_PARSE_COMPLETE",
+          "reason": null
+        },
+        "same_representation": {
+          "solids": true,
+          "premises": false,
+          "goals": true
+        },
+        "single_problem": true,
+        "prior_v139_attribution": "OCR_OR_REGION_FAILURE",
+        "attribution": "OCR_OR_REGION_FAILURE"
+      },
+      "vmmu_r270": {
+        "prepare_status": "needs_confirmation",
+        "draft_sha256": "46851cb029d741d519e27da6bd6fd759f2eb1909e8b9209edc1934c9c442afab",
+        "confirmed_text_sha256": "95aad2dfd473b6d343606b745bee52304ff4b1dfe7d5d24e0fe1bdfbe67b0843",
+        "statement_sha256": "dada34f102c96ca7b1cf61c7fb1ef7bc66330e41ede6bbfd030952f3d0c7828e",
+        "texts_identical_after_choice_strip": false,
+        "statement_math_expressions": [
+          "60°"
+        ],
+        "draft_ocr_math_expressions": [],
+        "confirmed_ocr_math_expressions": [],
+        "expression_tokens_preserved_in_confirmed": false,
+        "flagged_span_reasons": [
+          "Dấu phẩy trên (′) đọc chưa chắc",
+          "Ký hiệu toán chưa được hai bộ đọc độc lập xác nhận",
+          "Ký hiệu toán đọc chưa chắc",
+          "Đề nhắc tới hình vẽ — em xác nhận hình không ghi thêm số đo, góc hay quan hệ nào ngoài lời đề (nếu có, em ghi bổ sung vào đề)."
+        ],
+        "ocr_parse": {
+          "status": "LOCAL_PARSE_PARTIAL",
+          "reason": "UNPARSED_FACT_CANDIDATE"
+        },
+        "statement_parse": {
+          "status": "LOCAL_PARSE_COMPLETE",
+          "reason": null
+        },
+        "same_representation": {
+          "solids": true,
+          "premises": false,
+          "goals": true
+        },
+        "single_problem": true,
+        "prior_v139_attribution": "OCR_OR_REGION_FAILURE",
+        "attribution": "OCR_OR_REGION_FAILURE"
+      },
+      "vmmu_r273": {
+        "prepare_status": "needs_confirmation",
+        "draft_sha256": "f9fe5d739f9a2a7195bdb292fa9fb056123aa35bdac13a1398a1ba2bda81f9e9",
+        "confirmed_text_sha256": "f9fe5d739f9a2a7195bdb292fa9fb056123aa35bdac13a1398a1ba2bda81f9e9",
+        "statement_sha256": "2c2c430855ded12bafe9c96def610b16b3e84da540b0aed451632080ec19c990",
+        "texts_identical_after_choice_strip": false,
+        "statement_math_expressions": [
+          "2a√3",
+          "a√3"
+        ],
+        "draft_ocr_math_expressions": [
+          "2a√3",
+          "a√3"
+        ],
+        "confirmed_ocr_math_expressions": [
+          "2a√3",
+          "a√3"
+        ],
+        "expression_tokens_preserved_in_confirmed": true,
+        "flagged_span_reasons": [
+          "Dấu căn (√) đọc chưa chắc",
+          "Hình vẽ có thể chứa dữ kiện chưa đọc được — em xác nhận hoặc ghi bổ sung vào đề.",
+          "Ký hiệu toán chưa được hai bộ đọc độc lập xác nhận"
+        ],
+        "ocr_parse": {
+          "status": "LOCAL_PARSE_COMPLETE",
+          "reason": null
+        },
+        "statement_parse": {
+          "status": "LOCAL_PARSE_COMPLETE",
+          "reason": null
+        },
+        "same_representation": {
+          "solids": true,
+          "premises": true,
+          "goals": true
+        },
+        "single_problem": true,
+        "prior_v139_attribution": "CONSISTENT",
+        "attribution": "CONSISTENT"
+      },
+      "vmmu_r277": {
+        "prepare_status": "needs_confirmation",
+        "draft_sha256": "c83f4f2351c5b774e13fdb641f2ce45708a52376ec16ab12e1a0c7ad99374c36",
+        "confirmed_text_sha256": "c83f4f2351c5b774e13fdb641f2ce45708a52376ec16ab12e1a0c7ad99374c36",
+        "statement_sha256": "9cc7353c9dd163e7190cb38347dd7a1aca2dabad29d3eb7c7cdba4ba8d81888e",
+        "texts_identical_after_choice_strip": false,
+        "statement_math_expressions": [],
+        "draft_ocr_math_expressions": [],
+        "confirmed_ocr_math_expressions": [],
+        "expression_tokens_preserved_in_confirmed": true,
+        "flagged_span_reasons": [
+          "Chữ tiếng Việt đọc chưa chắc",
+          "Ký hiệu toán chưa được hai bộ đọc độc lập xác nhận",
+          "Ký hiệu toán đọc chưa chắc"
+        ],
+        "ocr_parse": {
+          "status": "LOCAL_PARSE_PARTIAL",
+          "reason": "UNPARSED_GOAL_CANDIDATE"
+        },
+        "statement_parse": {
+          "status": "LOCAL_PARSE_PARTIAL",
+          "reason": "UNPARSED_GOAL_CANDIDATE"
+        },
+        "same_representation": {
+          "solids": true,
+          "premises": true,
+          "goals": true
+        },
+        "single_problem": true,
+        "prior_v139_attribution": "CONSISTENT",
+        "attribution": "CONSISTENT"
+      },
+      "vmmu_r284": {
+        "prepare_status": "needs_confirmation",
+        "draft_sha256": "bbef8ed1647bbd3f2c39f2c002024c0ce941a572d93c54c7cd5e864acc125e5a",
+        "confirmed_text_sha256": "72b56b121c861a26bbb51a49f373774defff7622ad992278ce6933af07660dc4",
+        "statement_sha256": "e3ab9e610dfc7fed5669a20c237bcc178b04a2f15702c1fa19af6778b5c91d51",
+        "texts_identical_after_choice_strip": false,
+        "statement_math_expressions": [],
+        "draft_ocr_math_expressions": [],
+        "confirmed_ocr_math_expressions": [],
+        "expression_tokens_preserved_in_confirmed": true,
+        "flagged_span_reasons": [
+          "Chỉ một bộ đọc nhận ra chỗ này",
+          "Chữ tiếng Việt đọc chưa chắc",
+          "Chữ tiếng Việt đọc chưa rõ dấu",
+          "Ký hiệu toán đọc chưa chắc",
+          "Đề nhắc tới hình vẽ — em xác nhận hình không ghi thêm số đo, góc hay quan hệ nào ngoài lời đề (nếu có, em ghi bổ sung vào đề)."
+        ],
+        "ocr_parse": {
+          "status": "LOCAL_PARSE_PARTIAL",
+          "reason": "UNPARSED_FACT_CANDIDATE"
+        },
+        "statement_parse": {
+          "status": "LOCAL_PARSE_COMPLETE",
+          "reason": null
+        },
+        "same_representation": {
+          "solids": true,
+          "premises": false,
+          "goals": true
+        },
+        "single_problem": true,
+        "prior_v139_attribution": "OCR_OR_REGION_FAILURE",
+        "attribution": "OCR_OR_REGION_FAILURE"
+      },
+      "vmmu_r295": {
+        "prepare_status": "needs_confirmation",
+        "draft_sha256": "89adcfd9cb0a3dc2b7c1f03e4446498f3deb2166a96d58af025204e7623281a7",
+        "confirmed_text_sha256": "5146679c7dc35dc7e91090b418c810aad5ab1058edaef1bb4c0588a0021785c5",
+        "statement_sha256": "294378d7c5c5f73cbbd137b3da1bba388cf9ab5acedd68d1d666bb8debf98be0",
+        "texts_identical_after_choice_strip": false,
+        "statement_math_expressions": [
+          "√6"
+        ],
+        "draft_ocr_math_expressions": [
+          "√6"
+        ],
+        "confirmed_ocr_math_expressions": [
+          "√6"
+        ],
+        "expression_tokens_preserved_in_confirmed": true,
+        "flagged_span_reasons": [
+          "Dấu căn (√) đọc chưa chắc",
+          "Ký hiệu toán chưa được hai bộ đọc độc lập xác nhận",
+          "Đề nhắc tới hình vẽ — em xác nhận hình không ghi thêm số đo, góc hay quan hệ nào ngoài lời đề (nếu có, em ghi bổ sung vào đề)."
+        ],
+        "ocr_parse": {
+          "status": "LOCAL_PARSE_COMPLETE",
+          "reason": null
+        },
+        "statement_parse": {
+          "status": "LOCAL_PARSE_COMPLETE",
+          "reason": null
+        },
+        "same_representation": {
+          "solids": true,
+          "premises": true,
+          "goals": true
+        },
+        "single_problem": true,
+        "prior_v139_attribution": "CONSISTENT",
+        "attribution": "CONSISTENT"
+      },
+      "vmmu_r298": {
+        "prepare_status": "needs_confirmation",
+        "draft_sha256": "95db5fadbcd75303014550984943a6a90412a8860ac206365c472b59a6c5947f",
+        "confirmed_text_sha256": "95db5fadbcd75303014550984943a6a90412a8860ac206365c472b59a6c5947f",
+        "statement_sha256": "a6e9d6b90f89854a2012a5a6d9631fa517fbbc6b2353940b998533c5d6e26895",
+        "texts_identical_after_choice_strip": true,
+        "statement_math_expressions": [
+          "60°"
+        ],
+        "draft_ocr_math_expressions": [
+          "60°"
+        ],
+        "confirmed_ocr_math_expressions": [
+          "60°"
+        ],
+        "expression_tokens_preserved_in_confirmed": true,
+        "flagged_span_reasons": [
+          "Ký hiệu toán chưa được hai bộ đọc độc lập xác nhận",
+          "Ký hiệu độ (°) đọc chưa chắc",
+          "Đề nhắc tới hình vẽ — em xác nhận hình không ghi thêm số đo, góc hay quan hệ nào ngoài lời đề (nếu có, em ghi bổ sung vào đề)."
+        ],
+        "ocr_parse": {
+          "status": "LOCAL_PARSE_COMPLETE",
+          "reason": null
+        },
+        "statement_parse": {
+          "status": "LOCAL_PARSE_COMPLETE",
+          "reason": null
+        },
+        "same_representation": {
+          "solids": true,
+          "premises": true,
+          "goals": true
+        },
+        "single_problem": true,
+        "prior_v139_attribution": "CONSISTENT",
+        "attribution": "CONSISTENT"
+      },
+      "vmmu_r375": {
+        "prepare_status": "needs_confirmation",
+        "draft_sha256": "e53baf45d6bd5a779ec5bb9574468812c464ed01a7fbd3360ba1f31b37330421",
+        "confirmed_text_sha256": "e53baf45d6bd5a779ec5bb9574468812c464ed01a7fbd3360ba1f31b37330421",
+        "statement_sha256": "43d3e7b4b26df10058e24fac2b230b42fcaf99d7a48c227b587b751280e8ac22",
+        "texts_identical_after_choice_strip": false,
+        "statement_math_expressions": [],
+        "draft_ocr_math_expressions": [],
+        "confirmed_ocr_math_expressions": [],
+        "expression_tokens_preserved_in_confirmed": true,
+        "flagged_span_reasons": [
+          "Đề nhắc tới hình vẽ — em xác nhận hình không ghi thêm số đo, góc hay quan hệ nào ngoài lời đề (nếu có, em ghi bổ sung vào đề)."
+        ],
+        "ocr_parse": {
+          "status": "LOCAL_PARSE_PARTIAL",
+          "reason": "INVALID_MATH_GOAL"
+        },
+        "statement_parse": {
+          "status": "LOCAL_PARSE_COMPLETE",
+          "reason": null
+        },
+        "same_representation": {
+          "solids": true,
+          "premises": true,
+          "goals": false
+        },
+        "single_problem": true,
+        "prior_v139_attribution": "OCR_OR_REGION_FAILURE",
+        "attribution": "OCR_OR_REGION_FAILURE"
+      },
+      "vmmu_r460": {
+        "prepare_status": "needs_confirmation",
+        "draft_sha256": "3e82cab672bfade15509ed3d5512a1aa32700186a5120e4d33bb91ea804e6fb9",
+        "confirmed_text_sha256": "3e82cab672bfade15509ed3d5512a1aa32700186a5120e4d33bb91ea804e6fb9",
+        "statement_sha256": "eeef7ddcad1956475fdfdf31fc2078ac40c7aeb676dcfae948e95dc2000cd85a",
+        "texts_identical_after_choice_strip": false,
+        "statement_math_expressions": [],
+        "draft_ocr_math_expressions": [],
+        "confirmed_ocr_math_expressions": [],
+        "expression_tokens_preserved_in_confirmed": true,
+        "flagged_span_reasons": [
+          "Hình vẽ có thể chứa dữ kiện chưa đọc được — em xác nhận hoặc ghi bổ sung vào đề."
+        ],
+        "ocr_parse": {
+          "status": "LOCAL_PARSE_PARTIAL",
+          "reason": "NOT_ASKED_IN_SOURCE"
+        },
+        "statement_parse": {
+          "status": "LOCAL_PARSE_COMPLETE",
+          "reason": null
+        },
+        "same_representation": {
+          "solids": true,
+          "premises": false,
+          "goals": true
+        },
+        "single_problem": true,
+        "prior_v139_attribution": "OCR_OR_REGION_FAILURE",
+        "attribution": "OCR_OR_REGION_FAILURE"
+      },
+      "vmmu_r461": {
+        "prepare_status": "needs_confirmation",
+        "draft_sha256": "1b5ad52c75af92d6950e55d6c1550aa96f29d4c0d0aba4cca06790ba4a93ec4c",
+        "confirmed_text_sha256": "1b5ad52c75af92d6950e55d6c1550aa96f29d4c0d0aba4cca06790ba4a93ec4c",
+        "statement_sha256": "809ff614e1cd0c7592adc9eea4ba87dab2a4947566019da16a6d8ec9cc1fde74",
+        "texts_identical_after_choice_strip": false,
+        "statement_math_expressions": [],
+        "draft_ocr_math_expressions": [],
+        "confirmed_ocr_math_expressions": [],
+        "expression_tokens_preserved_in_confirmed": true,
+        "flagged_span_reasons": [
+          "Ký hiệu toán chưa được hai bộ đọc độc lập xác nhận",
+          "Đề nhắc tới hình vẽ — em xác nhận hình không ghi thêm số đo, góc hay quan hệ nào ngoài lời đề (nếu có, em ghi bổ sung vào đề)."
+        ],
+        "ocr_parse": {
+          "status": "LOCAL_PARSE_PARTIAL",
+          "reason": "EMPTY_SOLIDS"
+        },
+        "statement_parse": {
+          "status": "LOCAL_PARSE_PARTIAL",
+          "reason": "EMPTY_SOLIDS"
+        },
+        "same_representation": {
+          "solids": true,
+          "premises": true,
+          "goals": true
+        },
+        "single_problem": true,
+        "prior_v139_attribution": "CONSISTENT",
+        "attribution": "CONSISTENT"
+      },
+      "vmmu_r463": {
+        "prepare_status": "needs_confirmation",
+        "draft_sha256": "10752f7e77dc79dec9b41ee1b7550df4462acfa0f97f3a0ee4a970382f60b64f",
+        "confirmed_text_sha256": "10752f7e77dc79dec9b41ee1b7550df4462acfa0f97f3a0ee4a970382f60b64f",
+        "statement_sha256": "d5b7213d8d1ec5e8e2a775f79368034cb363cc61ccc0bd25383a68cc276b8bd3",
+        "texts_identical_after_choice_strip": false,
+        "statement_math_expressions": [
+          "30°",
+          "60°"
+        ],
+        "draft_ocr_math_expressions": [
+          "30°",
+          "60 °"
+        ],
+        "confirmed_ocr_math_expressions": [
+          "30°",
+          "60 °"
+        ],
+        "expression_tokens_preserved_in_confirmed": false,
+        "flagged_span_reasons": [
+          "Chữ tiếng Việt đọc chưa rõ dấu",
+          "Ký hiệu toán chưa được hai bộ đọc độc lập xác nhận"
+        ],
+        "ocr_parse": {
+          "status": "LOCAL_PARSE_PARTIAL",
+          "reason": "UNPARSED_FACT_CANDIDATE"
+        },
+        "statement_parse": {
+          "status": "LOCAL_PARSE_COMPLETE",
+          "reason": null
+        },
+        "same_representation": {
+          "solids": true,
+          "premises": false,
+          "goals": true
+        },
+        "single_problem": true,
+        "prior_v139_attribution": "OCR_OR_REGION_FAILURE",
+        "attribution": "OCR_OR_REGION_FAILURE"
+      },
+      "vmmu_r475": {
+        "prepare_status": "needs_confirmation",
+        "draft_sha256": "5720e6eee4636ace2c0f658976c7ddb374bcf74cb8998d0fe89610fab6181d7f",
+        "confirmed_text_sha256": "5720e6eee4636ace2c0f658976c7ddb374bcf74cb8998d0fe89610fab6181d7f",
+        "statement_sha256": "33abd4b25c729c465d2ee1740f6f063514d834d02e35c6d1323a875b9f69b601",
+        "texts_identical_after_choice_strip": false,
+        "statement_math_expressions": [],
+        "draft_ocr_math_expressions": [],
+        "confirmed_ocr_math_expressions": [],
+        "expression_tokens_preserved_in_confirmed": true,
+        "flagged_span_reasons": [
+          "Chữ tiếng Việt đọc chưa rõ dấu",
+          "Đề nhắc tới hình vẽ — em xác nhận hình không ghi thêm số đo, góc hay quan hệ nào ngoài lời đề (nếu có, em ghi bổ sung vào đề)."
+        ],
+        "ocr_parse": {
+          "status": "LOCAL_PARSE_UNSUPPORTED",
+          "reason": "EMPTY_SOLIDS"
+        },
+        "statement_parse": {
+          "status": "LOCAL_PARSE_UNSUPPORTED",
+          "reason": "EMPTY_SOLIDS"
+        },
+        "same_representation": {
+          "solids": true,
+          "premises": true,
+          "goals": true
+        },
+        "single_problem": true,
+        "prior_v139_attribution": "CONSISTENT",
+        "attribution": "CONSISTENT"
+      },
+      "vmmu_r476": {
+        "prepare_status": "needs_confirmation",
+        "draft_sha256": "7923c5cabb596c2fbff7763911c21c5eb0151d2fec79d319578100d257fbaf6e",
+        "confirmed_text_sha256": "7923c5cabb596c2fbff7763911c21c5eb0151d2fec79d319578100d257fbaf6e",
+        "statement_sha256": "ce8609f40262757ab9cde8c4aa6069672d9efbf45c2a55c5880f283fe0b8b1f3",
+        "texts_identical_after_choice_strip": false,
+        "statement_math_expressions": [
+          "a√3"
+        ],
+        "draft_ocr_math_expressions": [
+          "a√3"
+        ],
+        "confirmed_ocr_math_expressions": [
+          "a√3"
+        ],
+        "expression_tokens_preserved_in_confirmed": true,
+        "flagged_span_reasons": [
+          "Ký hiệu toán chưa được hai bộ đọc độc lập xác nhận",
+          "Đề nhắc tới hình vẽ — em xác nhận hình không ghi thêm số đo, góc hay quan hệ nào ngoài lời đề (nếu có, em ghi bổ sung vào đề)."
+        ],
+        "ocr_parse": {
+          "status": "LOCAL_PARSE_COMPLETE",
+          "reason": null
+        },
+        "statement_parse": {
+          "status": "LOCAL_PARSE_COMPLETE",
+          "reason": null
+        },
+        "same_representation": {
+          "solids": true,
+          "premises": true,
+          "goals": true
+        },
+        "single_problem": true,
+        "prior_v139_attribution": "CONSISTENT",
+        "attribution": "CONSISTENT"
+      },
+      "vmmu_r488": {
+        "prepare_status": "needs_confirmation",
+        "draft_sha256": "cb2cb3cddcd280c1588671684aae0153305fb3edb60e40e95b8d101d95e7d504",
+        "confirmed_text_sha256": "5e830adde95cb3b74fac7e7910bc182ed750302c01dc02b870b51f2afc3a3b54",
+        "statement_sha256": "7a9d2a6349ee313907d1dfa7bf3b2c9b8822c4543212968a5400e9e44cb35d66",
+        "texts_identical_after_choice_strip": false,
+        "statement_math_expressions": [
+          "60°"
+        ],
+        "draft_ocr_math_expressions": [
+          "√3"
+        ],
+        "confirmed_ocr_math_expressions": [
+          "60°",
+          "√3"
+        ],
+        "expression_tokens_preserved_in_confirmed": false,
+        "flagged_span_reasons": [
+          "Ký hiệu toán chưa được hai bộ đọc độc lập xác nhận",
+          "Đề nhắc tới hình vẽ — em xác nhận hình không ghi thêm số đo, góc hay quan hệ nào ngoài lời đề (nếu có, em ghi bổ sung vào đề)."
+        ],
+        "ocr_parse": {
+          "status": "LOCAL_PARSE_PARTIAL",
+          "reason": "UNPARSED_FACT_CANDIDATE"
+        },
+        "statement_parse": {
+          "status": "LOCAL_PARSE_PARTIAL",
+          "reason": "UNPARSED_GOAL_CANDIDATE"
+        },
+        "same_representation": {
+          "solids": true,
+          "premises": true,
+          "goals": true
+        },
+        "single_problem": true,
+        "prior_v139_attribution": "CONSISTENT",
+        "attribution": "CONSISTENT"
+      },
+      "vmmu_r491": {
+        "prepare_status": "needs_confirmation",
+        "draft_sha256": "3b38e48f75c1548e868d61b91b3bdb6aecad9d0b5c178d265ccc7b3fe8bab427",
+        "confirmed_text_sha256": "3b38e48f75c1548e868d61b91b3bdb6aecad9d0b5c178d265ccc7b3fe8bab427",
+        "statement_sha256": "ccf866f6e06a328aa73adaca5eb5c95cbd247aca3f2c821dc11d3e84cab8ac3d",
+        "texts_identical_after_choice_strip": true,
+        "statement_math_expressions": [],
+        "draft_ocr_math_expressions": [],
+        "confirmed_ocr_math_expressions": [],
+        "expression_tokens_preserved_in_confirmed": true,
+        "flagged_span_reasons": [
+          "Ký hiệu toán chưa được hai bộ đọc độc lập xác nhận",
+          "Đề nhắc tới hình vẽ — em xác nhận hình không ghi thêm số đo, góc hay quan hệ nào ngoài lời đề (nếu có, em ghi bổ sung vào đề)."
+        ],
+        "ocr_parse": {
+          "status": "LOCAL_PARSE_PARTIAL",
+          "reason": "UNPARSED_FACT_CANDIDATE"
+        },
+        "statement_parse": {
+          "status": "LOCAL_PARSE_PARTIAL",
+          "reason": "UNPARSED_FACT_CANDIDATE"
+        },
+        "same_representation": {
+          "solids": true,
+          "premises": true,
+          "goals": true
+        },
+        "single_problem": true,
+        "prior_v139_attribution": "CONSISTENT",
+        "attribution": "CONSISTENT"
+      },
+      "vmmu_r492": {
+        "prepare_status": "needs_confirmation",
+        "draft_sha256": "b7b264cf4951ea4f39cec5a5a56866243033dae6c7fd4378e431c0afc8779ee8",
+        "confirmed_text_sha256": "b7b264cf4951ea4f39cec5a5a56866243033dae6c7fd4378e431c0afc8779ee8",
+        "statement_sha256": "0f07c493cb02fd120d04df23beaea5488e7ecfc91b6e24d567aea0655d0460ec",
+        "texts_identical_after_choice_strip": false,
+        "statement_math_expressions": [
+          "√15"
+        ],
+        "draft_ocr_math_expressions": [
+          "√15"
+        ],
+        "confirmed_ocr_math_expressions": [
+          "√15"
+        ],
+        "expression_tokens_preserved_in_confirmed": true,
+        "flagged_span_reasons": [
+          "Ký hiệu toán chưa được hai bộ đọc độc lập xác nhận",
+          "Đề nhắc tới hình vẽ — em xác nhận hình không ghi thêm số đo, góc hay quan hệ nào ngoài lời đề (nếu có, em ghi bổ sung vào đề)."
+        ],
+        "ocr_parse": {
+          "status": "LOCAL_PARSE_COMPLETE",
+          "reason": null
+        },
+        "statement_parse": {
+          "status": "LOCAL_PARSE_COMPLETE",
+          "reason": null
+        },
+        "same_representation": {
+          "solids": true,
+          "premises": true,
+          "goals": true
+        },
+        "single_problem": false,
+        "prior_v139_attribution": "CONSISTENT",
+        "attribution": "CONSISTENT"
+      },
+      "vmmu_r498": {
+        "prepare_status": "needs_confirmation",
+        "draft_sha256": "2490a7b77c50aef60215532d496e44d2ac28e1e30af33a219aa128f6b532212e",
+        "confirmed_text_sha256": "4b6ee1a24cfbbd940df2e349fdc89ea9fd93d44756a46006d0b322a5248120d0",
+        "statement_sha256": "c437503de7d0db0da8be5b1f9412fe7d6db4397ea1ac53b650c859b2fe81ab52",
+        "texts_identical_after_choice_strip": false,
+        "statement_math_expressions": [
+          "a√3",
+          "sin"
+        ],
+        "draft_ocr_math_expressions": [
+          "a√3",
+          "sin"
+        ],
+        "confirmed_ocr_math_expressions": [
+          "a√3",
+          "sin"
+        ],
+        "expression_tokens_preserved_in_confirmed": true,
+        "flagged_span_reasons": [
+          "Chữ tiếng Việt đọc chưa chắc",
+          "Dấu căn (√) đọc chưa chắc",
+          "Hình vẽ có thể chứa dữ kiện chưa đọc được — em xác nhận hoặc ghi bổ sung vào đề."
+        ],
+        "ocr_parse": {
+          "status": "LOCAL_PARSE_COMPLETE",
+          "reason": null
+        },
+        "statement_parse": {
+          "status": "LOCAL_PARSE_COMPLETE",
+          "reason": null
+        },
+        "same_representation": {
+          "solids": true,
+          "premises": true,
+          "goals": true
+        },
+        "single_problem": true,
+        "prior_v139_attribution": "CONSISTENT",
+        "attribution": "CONSISTENT"
+      },
+      "vmmu_r513": {
+        "prepare_status": "needs_confirmation",
+        "draft_sha256": "cf3e51109ac8d1598ad9a55699fecee4aa74cc342952217201ff727c4ca27967",
+        "confirmed_text_sha256": "cf3e51109ac8d1598ad9a55699fecee4aa74cc342952217201ff727c4ca27967",
+        "statement_sha256": "49464028330e78ad4de5b4bffbf81beee0779b43eedb8ff554a50b6713e03685",
+        "texts_identical_after_choice_strip": false,
+        "statement_math_expressions": [],
+        "draft_ocr_math_expressions": [],
+        "confirmed_ocr_math_expressions": [],
+        "expression_tokens_preserved_in_confirmed": true,
+        "flagged_span_reasons": [
+          "Hình vẽ có thể chứa dữ kiện chưa đọc được — em xác nhận hoặc ghi bổ sung vào đề.",
+          "Ký hiệu toán chưa được hai bộ đọc độc lập xác nhận"
+        ],
+        "ocr_parse": {
+          "status": "LOCAL_PARSE_PARTIAL",
+          "reason": "QUESTION_CONTEXT_UNSUPPORTED"
+        },
+        "statement_parse": {
+          "status": "LOCAL_PARSE_PARTIAL",
+          "reason": "QUESTION_CONTEXT_UNSUPPORTED"
+        },
+        "same_representation": {
+          "solids": true,
+          "premises": true,
+          "goals": true
+        },
+        "single_problem": true,
+        "prior_v139_attribution": "CONSISTENT",
+        "attribution": "CONSISTENT"
+      },
+      "vmmu_r520": {
+        "prepare_status": "needs_confirmation",
+        "draft_sha256": "315804398d3483f5c564b8669efb9164ed07515e1d502b557b372a86b6669b77",
+        "confirmed_text_sha256": "f32ec2a296b651146c16cd4cbd9e0b5f8b356565c2bdc27855458259d74b37d6",
+        "statement_sha256": "5c9054338f29fa3f03ccc522cd5be706b0e0e41a439a19426189c26c132378d2",
+        "texts_identical_after_choice_strip": false,
+        "statement_math_expressions": [],
+        "draft_ocr_math_expressions": [],
+        "confirmed_ocr_math_expressions": [],
+        "expression_tokens_preserved_in_confirmed": true,
+        "flagged_span_reasons": [
+          "Ký hiệu toán chưa được hai bộ đọc độc lập xác nhận",
+          "Ký hiệu toán đọc chưa chắc",
+          "Đề nhắc tới hình vẽ — em xác nhận hình không ghi thêm số đo, góc hay quan hệ nào ngoài lời đề (nếu có, em ghi bổ sung vào đề)."
+        ],
+        "ocr_parse": {
+          "status": "LOCAL_PARSE_PARTIAL",
+          "reason": "UNPARSED_FACT_CANDIDATE"
+        },
+        "statement_parse": {
+          "status": "LOCAL_PARSE_COMPLETE",
+          "reason": null
+        },
+        "same_representation": {
+          "solids": true,
+          "premises": true,
+          "goals": false
+        },
+        "single_problem": true,
+        "prior_v139_attribution": "OCR_OR_REGION_FAILURE",
+        "attribution": "OCR_OR_REGION_FAILURE"
+      },
+      "vmmu_r537": {
+        "prepare_status": "needs_confirmation",
+        "draft_sha256": "2c8a71796ecbb1c841b470c56b56045eabcf36d2cc91b3104c816f4102ae80e9",
+        "confirmed_text_sha256": "2c8a71796ecbb1c841b470c56b56045eabcf36d2cc91b3104c816f4102ae80e9",
+        "statement_sha256": "8b6a844c5ab49083138e6faedf8f6792fb0d3cb49a76e110ccde5f2b0ebdc80c",
+        "texts_identical_after_choice_strip": false,
+        "statement_math_expressions": [
+          "a²"
+        ],
+        "draft_ocr_math_expressions": [
+          "a²"
+        ],
+        "confirmed_ocr_math_expressions": [
+          "a²"
+        ],
+        "expression_tokens_preserved_in_confirmed": true,
+        "flagged_span_reasons": [
+          "Chỗ này đọc chưa chắc",
+          "Ký hiệu toán chưa được hai bộ đọc độc lập xác nhận",
+          "Đề nhắc tới hình vẽ — em xác nhận hình không ghi thêm số đo, góc hay quan hệ nào ngoài lời đề (nếu có, em ghi bổ sung vào đề)."
+        ],
+        "ocr_parse": {
+          "status": "LOCAL_PARSE_COMPLETE",
+          "reason": null
+        },
+        "statement_parse": {
+          "status": "LOCAL_PARSE_COMPLETE",
+          "reason": null
+        },
+        "same_representation": {
+          "solids": true,
+          "premises": true,
+          "goals": true
+        },
+        "single_problem": true,
+        "prior_v139_attribution": "CONSISTENT",
+        "attribution": "CONSISTENT"
+      },
+      "vmmu_r538": {
+        "prepare_status": "needs_confirmation",
+        "draft_sha256": "c8018c0075182547de67d9d1fbcdc0bc93b21088c451c7a89dbbba642737367a",
+        "confirmed_text_sha256": "c8018c0075182547de67d9d1fbcdc0bc93b21088c451c7a89dbbba642737367a",
+        "statement_sha256": "a4a500ab33ac1ab0dba657f00c75066bf0d47f79243d0eb6d553b46fb5940122",
+        "texts_identical_after_choice_strip": false,
+        "statement_math_expressions": [],
+        "draft_ocr_math_expressions": [],
+        "confirmed_ocr_math_expressions": [],
+        "expression_tokens_preserved_in_confirmed": true,
+        "flagged_span_reasons": [
+          "Ký hiệu toán chưa được hai bộ đọc độc lập xác nhận",
+          "Phân số viết hai tầng — kiểm tra tử số và mẫu số",
+          "Đề nhắc tới hình vẽ — em xác nhận hình không ghi thêm số đo, góc hay quan hệ nào ngoài lời đề (nếu có, em ghi bổ sung vào đề)."
+        ],
+        "ocr_parse": {
+          "status": "LOCAL_PARSE_COMPLETE",
+          "reason": null
+        },
+        "statement_parse": {
+          "status": "LOCAL_PARSE_COMPLETE",
+          "reason": null
+        },
+        "same_representation": {
+          "solids": true,
+          "premises": true,
+          "goals": true
+        },
+        "single_problem": true,
+        "prior_v139_attribution": "CONSISTENT",
+        "attribution": "CONSISTENT"
+      },
+      "vmmu_r559": {
+        "prepare_status": "needs_confirmation",
+        "draft_sha256": "3c91fe7c1519fe37558185f655be240312e7df25295f30be6ee76c25b6329506",
+        "confirmed_text_sha256": "3c91fe7c1519fe37558185f655be240312e7df25295f30be6ee76c25b6329506",
+        "statement_sha256": "37e359e64b1e81fbdb0a0eb7507fccba73e3e3206781923b653b85040a9c160b",
+        "texts_identical_after_choice_strip": true,
+        "statement_math_expressions": [
+          "sin"
+        ],
+        "draft_ocr_math_expressions": [
+          "sin"
+        ],
+        "confirmed_ocr_math_expressions": [
+          "sin"
+        ],
+        "expression_tokens_preserved_in_confirmed": true,
+        "flagged_span_reasons": [
+          "Hình vẽ có thể chứa dữ kiện chưa đọc được — em xác nhận hoặc ghi bổ sung vào đề.",
+          "Ký hiệu toán chưa được hai bộ đọc độc lập xác nhận"
+        ],
+        "ocr_parse": {
+          "status": "LOCAL_PARSE_COMPLETE",
+          "reason": null
+        },
+        "statement_parse": {
+          "status": "LOCAL_PARSE_COMPLETE",
+          "reason": null
+        },
+        "same_representation": {
+          "solids": true,
+          "premises": true,
+          "goals": true
+        },
+        "single_problem": true,
+        "prior_v139_attribution": "CONSISTENT",
+        "attribution": "CONSISTENT"
+      },
+      "vmmu_r695": {
+        "prepare_status": "needs_confirmation",
+        "draft_sha256": "47fceb99311184ae3385929869402e1639ca076f70987879ecf31cf87bddaaf6",
+        "confirmed_text_sha256": "d492a3e678ad56227bf9276537aa491198c632a16d32e17082564048782ad582",
+        "statement_sha256": "be92444253700faa6ccedfb0581868a07e75a3580bb9317db83ded26f4113fa1",
+        "texts_identical_after_choice_strip": false,
+        "statement_math_expressions": [],
+        "draft_ocr_math_expressions": [],
+        "confirmed_ocr_math_expressions": [],
+        "expression_tokens_preserved_in_confirmed": true,
+        "flagged_span_reasons": [
+          "Ký hiệu toán chưa được hai bộ đọc độc lập xác nhận",
+          "Phân số viết hai tầng — kiểm tra tử số và mẫu số",
+          "Đề nhắc tới hình vẽ — em xác nhận hình không ghi thêm số đo, góc hay quan hệ nào ngoài lời đề (nếu có, em ghi bổ sung vào đề)."
+        ],
+        "ocr_parse": {
+          "status": "LOCAL_PARSE_PARTIAL",
+          "reason": "NOT_ASKED_IN_SOURCE"
+        },
+        "statement_parse": {
+          "status": "LOCAL_PARSE_COMPLETE",
+          "reason": null
+        },
+        "same_representation": {
+          "solids": true,
+          "premises": true,
+          "goals": true
+        },
+        "single_problem": true,
+        "prior_v139_attribution": "PARSER_STATUS_DIFFERS",
+        "attribution": "PARSER_STATUS_DIFFERS"
+      }
+    }
+  },
+  "rendered_png_real_ocr_expression_probes": [
+    {
+      "probe_id": "render_area_a_squared",
+      "target_expression": "a²",
+      "prepare_status": "needs_confirmation",
+      "draft_text": "Cho hình chóp tứ giác đều S.ABCD có cạnh bên bằng a và diện tích đáy bằng a². Tính khoảng cách từ A đến mặt phẳng (SBC).",
+      "uncertain_reasons": [
+        "Ký hiệu toán chưa được hai bộ đọc độc lập xác nhận"
+      ],
+      "confirmed_edits": [],
+      "auto_ready_wrong_answer_served": false,
+      "confirmed_route_status": "SERVED",
+      "confirmed_answer": "a√6/3",
+      "expected_oracle_answer": "a√6/3",
+      "oracle_match": true
+    },
+    {
+      "probe_id": "render_volume_a_cubed",
+      "target_expression": "a³/3",
+      "prepare_status": "needs_confirmation",
+      "draft_text": "Cho hình chóp S.ABCD có đáy ABCD là hình vuông cạnh a, SA vuông góc với mặt phẳng đáy và thể tích khối chóp S.ABCD bằng a³/3. Tính độ dài cạnh SB.",
+      "uncertain_reasons": [
+        "Ký hiệu toán chưa được hai bộ đọc độc lập xác nhận"
+      ],
+      "confirmed_edits": [],
+      "auto_ready_wrong_answer_served": false,
+      "confirmed_route_status": "SERVED",
+      "confirmed_answer": "a√2",
+      "expected_oracle_answer": "a√2",
+      "oracle_match": true
+    },
+    {
+      "probe_id": "render_edge_2a_and_radical_a_sqrt_3",
+      "target_expression": "2a & a√3",
+      "prepare_status": "needs_confirmation",
+      "draft_text": "Cho hình chóp S.ABCD có đáy ABCD là hình vuông cạnh 2a, SA vuông góc với mặt phẳng đáy và SA = av3. Tính thể tích khối chóp S.ABCD.",
+      "uncertain_reasons": [
+        "Ký hiệu có dạng thường bị đọc sai"
+      ],
+      "confirmed_edits": [
+        {
+          "span_id": "sp23",
+          "from": "av3.",
+          "to": "a√3.",
+          "chosen_from_alternatives": false
+        }
+      ],
+      "auto_ready_wrong_answer_served": false,
+      "confirmed_route_status": "SERVED",
+      "confirmed_answer": "4a³√3/3",
+      "expected_oracle_answer": "4a³√3/3",
+      "oracle_match": true
+    },
+    {
+      "probe_id": "render_fraction_area_a2_div_2",
+      "target_expression": "a²/2",
+      "prepare_status": "needs_confirmation",
+      "draft_text": "Cho hình chóp S.ABC có đáy ABC là tam giác vuông cân tại B, diện tích tam giác ABC bằng a²/2, SA vuông góc với mặt phẳng đáy và SA = a. Tính thể tích khối chóp S.ABC.",
+      "uncertain_reasons": [
+        "Chỗ này đọc chưa chắc"
+      ],
+      "confirmed_edits": [],
+      "auto_ready_wrong_answer_served": false,
+      "confirmed_route_status": "SERVED",
+      "confirmed_answer": "a³/6",
+      "expected_oracle_answer": "a³/6",
+      "oracle_match": true
+    },
+    {
+      "probe_id": "render_metric_unit_cm_and_cm2",
+      "target_expression": "3cm & 9cm²",
+      "prepare_status": "needs_confirmation",
+      "draft_text": "Cho hình chóp tứ giác đều S.ABCD có cạnh bên bằng 3cm và diện tích đáy bằng 9cm². Tính khoảng cách từ A đến mặt phẳng (SBC).",
+      "uncertain_reasons": [
+        "Ký hiệu toán chưa được hai bộ đọc độc lập xác nhận"
+      ],
+      "confirmed_edits": [],
+      "auto_ready_wrong_answer_served": false,
+      "confirmed_route_status": "SERVED",
+      "confirmed_answer": "√6",
+      "expected_oracle_answer": "√6",
+      "oracle_match": true
+    }
+  ],
+  "token_and_reconciliation_safety_gates": {
+    "token_classification_and_unit_normalization": {
+      "a²": {
+        "is_mathlike": true,
+        "has_shared_corruption": false,
+        "norm_math": "a²"
+      },
+      "a³": {
+        "is_mathlike": true,
+        "has_shared_corruption": false,
+        "norm_math": "a³"
+      },
+      "2a": {
+        "is_mathlike": true,
+        "has_shared_corruption": false,
+        "norm_math": "2a"
+      },
+      "a√3": {
+        "is_mathlike": true,
+        "has_shared_corruption": false,
+        "norm_math": "a√3"
+      },
+      "a²/2": {
+        "is_mathlike": true,
+        "has_shared_corruption": false,
+        "norm_math": "a²/2"
+      },
+      "cm²": {
+        "is_mathlike": true,
+        "has_shared_corruption": false,
+        "norm_math": "cm²"
+      },
+      "4mm2": {
+        "has_shared_corruption": false,
+        "norm_math": "4mm²"
+      },
+      "8mm3": {
+        "has_shared_corruption": false,
+        "norm_math": "8mm³"
+      },
+      "corrupted_a2": {
+        "has_shared_corruption": true
+      },
+      "corrupted_a3": {
+        "has_shared_corruption": true
+      },
+      "corrupted_a_quote": {
+        "has_shared_corruption": true
+      }
+    },
+    "dual_engine_reconciliation_probes": {
+      "agreeing_a_squared": {
+        "extraction_verified": true,
+        "draft_text": "Cho hình chóp tứ giác đều S.ABCD có cạnh bên bằng a và diện tích đáy bằng a².",
+        "uncertain_reasons": []
+      },
+      "disagreement_a_squared_vs_a2": {
+        "extraction_verified": false,
+        "blocking_reasons": [
+          "UNCERTAIN_SPANS"
+        ],
+        "uncertain_reasons": [
+          "EXPONENT_SUPERSCRIPT_DISAGREEMENT"
+        ]
+      },
+      "disagreement_a_squared_vs_dropped_a": {
+        "extraction_verified": false,
+        "blocking_reasons": [
+          "UNCERTAIN_SPANS"
+        ],
+        "uncertain_reasons": [
+          "EXPONENT_SUPERSCRIPT_DISAGREEMENT"
+        ]
+      },
+      "disagreement_a_squared_vs_a_smart_quote": {
+        "extraction_verified": false,
+        "blocking_reasons": [
+          "UNCERTAIN_SPANS"
+        ],
+        "uncertain_reasons": [
+          "EXPONENT_SUPERSCRIPT_DISAGREEMENT"
+        ]
+      },
+      "both_engines_corrupted_a2": {
+        "extraction_verified": false,
+        "blocking_reasons": [
+          "UNCERTAIN_SPANS"
+        ],
+        "uncertain_reasons": [
+          "SHARED_CORRUPTION_PATTERN"
+        ]
+      },
+      "both_engines_corrupted_2a_smart_quote": {
+        "extraction_verified": false,
+        "blocking_reasons": [
+          "UNCERTAIN_SPANS"
+        ],
+        "uncertain_reasons": [
+          "SHARED_CORRUPTION_PATTERN"
+        ]
+      },
+      "both_engines_bare_a_smart_quote_prose_slot": {
+        "extraction_verified": true,
+        "has_shared_corruption_predicate": true,
+        "note": "Bare 'a”.' without digits/math glyphs enters prose slot in ocr_reconcile; caught fail-closed at Layer 2 by local_geometry_parser (LOCAL_PARSE_PARTIAL / UNREAD_VALUE)."
+      }
+    },
+    "downstream_dimension_defense_in_depth": {
+      "dropped_superscript_area_equals_a_with_length_a": {
+        "route_status": "REFUSED",
+        "reason_code": "INCONSISTENT_FACTS",
+        "silently_turned_a2_into_a_and_served": false
+      },
+      "unconfirmed_corrupted_a2_token": {
+        "route_status": "REFUSED",
+        "silently_served": false
+      },
+      "bare_a_smart_quote_same_symbol": {
+        "route_status": "REFUSED",
+        "parse_status": "LOCAL_PARSE_PARTIAL",
+        "silently_turned_a2_into_a_and_served": false
+      },
+      "bare_a_smart_quote_fresh_symbol": {
+        "route_status": "REFUSED",
+        "parse_status": "LOCAL_PARSE_PARTIAL",
+        "silently_turned_a2_into_a_and_served": false
+      }
+    }
+  },
+  "verdict": "PASS",
+  "baseline_product_commit": "d222e6d9b582d54fc42397a9593f52eb6fd77f18"
+}

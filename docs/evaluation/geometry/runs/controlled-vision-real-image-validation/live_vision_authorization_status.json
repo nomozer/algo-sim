@@ -1,0 +1,201 @@
+{
+  "schema": "algosim-live-vision-authorization-status/2",
+  "run_id": "controlled-vision-real-image-validation",
+  "generated_at_utc": "2026-11-12T16:34:42.056220+00:00",
+  "LIVE_VISION_AUTHORIZATION": "NOT_GRANTED",
+  "status": "LIVE_VISION_NOT_MEASURED",
+  "blocker": "BLOCKED_PENDING_OWNER_APPROVAL",
+  "architecture_decision": "ARCHITECTURE_DECISION_PENDING_LIVE_EVIDENCE",
+  "owner_authorization_file_present": false,
+  "allow_live_ai_in_measurement_server": "0",
+  "observed_provider_calls_in_this_run": {
+    "api_acceptance_development.json": 0,
+    "api_acceptance_development_baseline.json": 0,
+    "api_acceptance_frozen_external_evaluation.json": 0,
+    "api_acceptance_frozen_external_evaluation_baseline.json": 0
+  },
+  "total_observed_provider_calls": 0,
+  "provider_key_presence_used_as_authorization": false,
+  "simulated_vision_payloads_used": false,
+  "authorization_must_name": [
+    "provider",
+    "model and version",
+    "image SHA-256 list (from the manifest below)",
+    "maximum requests including retries",
+    "maximum USD with a pre-request reservation",
+    "retry limit",
+    "personal-data rule",
+    "stop conditions",
+    "approver"
+  ],
+  "hash_bound_corpus": {
+    "manifest": "docs/evaluation/geometry/runs/controlled-vision-real-image-validation/new_in_scope_image_manifest.json",
+    "manifest_sha256_lf": "4e65026c63753600111cdf82ddf1026423069d95581145f842f2baf9a48f5d45",
+    "images": [
+      {
+        "case_id": "vmmu_r247",
+        "sha256": "78c4b4962e286c248fa2b6b8819b8dc53fc215b7aa6bac2f765dee4dcebe5629",
+        "partition": "frozen_external_evaluation"
+      },
+      {
+        "case_id": "vmmu_r254",
+        "sha256": "856efe3f31a1f628739b7e59dd4883eceef016f414fbec0d6563b8f384da6e15",
+        "partition": "frozen_external_evaluation"
+      },
+      {
+        "case_id": "vmmu_r256",
+        "sha256": "4ae1fd776fe4ff16f290eddd3e4a7699b943dec7b1cfa0235a401d113864ba07",
+        "partition": "frozen_external_evaluation"
+      },
+      {
+        "case_id": "vmmu_r258",
+        "sha256": "5d01fa15116c70e493c30230068dbee2f3d3375cd6a36bbc4ac673e0b820ac3e",
+        "partition": "frozen_external_evaluation"
+      },
+      {
+        "case_id": "vmmu_r266",
+        "sha256": "5f2587de4d78c078002379f4405721556d604dff87fde093745ee312486f433e",
+        "partition": "frozen_external_evaluation"
+      },
+      {
+        "case_id": "vmmu_r270",
+        "sha256": "705dbd934e5568029737ad457ba0776d1eb47dd0ca420bc712081b0810bc3c25",
+        "partition": "development"
+      },
+      {
+        "case_id": "vmmu_r273",
+        "sha256": "47b627e0cd812f8703e551876c79f042896b750bdb58acb6b8a6af1ac07ba4df",
+        "partition": "frozen_external_evaluation"
+      },
+      {
+        "case_id": "vmmu_r277",
+        "sha256": "ac19cfdf164dccdb077a643049d51939a39c9ac88cdadf0e9970fbd2b3227990",
+        "partition": "frozen_external_evaluation"
+      },
+      {
+        "case_id": "vmmu_r284",
+        "sha256": "fa7b52ad0200b069e572877d033ba371f8724a7f32ce69416b937e932fb68417",
+        "partition": "development"
+      },
+      {
+        "case_id": "vmmu_r295",
+        "sha256": "6c769ab54f378a7a56756a09b65608a7c355bc48f7819e96dbf87beacf298a5e",
+        "partition": "frozen_external_evaluation"
+      },
+      {
+        "case_id": "vmmu_r298",
+        "sha256": "43ce23b449bd796d206b5b74d38daaaa1997ebeb7fe35b2bc88a6de5bf4d3f3b",
+        "partition": "frozen_external_evaluation"
+      },
+      {
+        "case_id": "vmmu_r375",
+        "sha256": "25ae1f68af866e7fd6e72adacae51b6ab8e9a63579a20d99c5a1e881d6454632",
+        "partition": "frozen_external_evaluation"
+      },
+      {
+        "case_id": "vmmu_r460",
+        "sha256": "2d7d95a5919f62abdca1e967b62b319f36e00eeb4c6bebb99f64697f5dc002b0",
+        "partition": "frozen_external_evaluation"
+      },
+      {
+        "case_id": "vmmu_r461",
+        "sha256": "723b6b3cae35d9a7c0304b1926a1a1067d738fb07e0f2e848d48a9ba1a6ffdc2",
+        "partition": "development"
+      },
+      {
+        "case_id": "vmmu_r463",
+        "sha256": "9486f6c7b72b70af84b119dc9c93726f69a9fed50de548a0acea00ec5fb73431",
+        "partition": "frozen_external_evaluation"
+      },
+      {
+        "case_id": "vmmu_r475",
+        "sha256": "425f3537b2257138294b3b0f09e56909fdba3618bac6c2c54c3c7e78a955c632",
+        "partition": "frozen_external_evaluation"
+      },
+      {
+        "case_id": "vmmu_r476",
+        "sha256": "a80297f57a4c10e1ad4fb49f4644aec4244dc57b2fb2f61fec714b9a6227c8aa",
+        "partition": "development"
+      },
+      {
+        "case_id": "vmmu_r488",
+        "sha256": "accfebbcd9af6e31ed7ad46dab68c6e9fa34cace2e46dc15affb3772acb928f2",
+        "partition": "development"
+      },
+      {
+        "case_id": "vmmu_r491",
+        "sha256": "5b6d73596d6a0ea092379669260cbe5dc97efb2e5d68acc4b79fc391499e279e",
+        "partition": "frozen_external_evaluation"
+      },
+      {
+        "case_id": "vmmu_r492",
+        "sha256": "afa607f8f3eb620c4801a8cb51066cb3e491dce9c3aef21c0345f1d7845ffae7",
+        "partition": "frozen_external_evaluation"
+      },
+      {
+        "case_id": "vmmu_r498",
+        "sha256": "8c89fd4b08710ada6841e1cd843bade3c61c3dfb7a1fcc938a217432fd8388bb",
+        "partition": "frozen_external_evaluation"
+      },
+      {
+        "case_id": "vmmu_r513",
+        "sha256": "0af1a28125ee26cfeb023801070050fe9669b48745a620b0dd0645c2f9807918",
+        "partition": "development"
+      },
+      {
+        "case_id": "vmmu_r520",
+        "sha256": "311375e19c83bc5285ab8565f38cc0a3b1febf0030fdb3bd9f087f1e9413fa29",
+        "partition": "frozen_external_evaluation"
+      },
+      {
+        "case_id": "vmmu_r537",
+        "sha256": "c8ad01b6fc3796b2c5853ee3270239b565d37d7bd40dd47ace149e48b2c82f14",
+        "partition": "frozen_external_evaluation"
+      },
+      {
+        "case_id": "vmmu_r538",
+        "sha256": "0dfc3b2af5921f4446404de7f9823f15b4f96a932ee37bfafa99143aa7fc777a",
+        "partition": "frozen_external_evaluation"
+      }
+    ],
+    "personal_data": "none: rendered exam crops from a public dataset, no faces, names or handwriting"
+  },
+  "offline_readiness": {
+    "preflight_tool": "docs/evaluation/geometry/runs/real-image-ocr-vision-comparative-acceptance/tools/vision_comparison.py",
+    "preflight_runs": [
+      {
+        "argv": [
+          "--self-test"
+        ],
+        "exit_code": 0,
+        "stdout": "3 authorization-rejection self-checks passed; provider_calls=0"
+      },
+      {
+        "argv": [],
+        "exit_code": 2,
+        "stdout": "{\"status\": \"NOT_AUTHORIZED\", \"provider_calls\": 0, \"reason\": \"Explicit owner authorization and hash-bound corpus are required.\"}"
+      }
+    ],
+    "ready": [
+      "frozen hash-bound manifest",
+      "agent references and critical-fact schema (new_in_scope_image_manifest.json)",
+      "production Vision extractor reused, not duplicated: backend/app/ingestion/image_extraction.py",
+      "request cap primitive: backend/app/ai/gemini.py ApiBudget",
+      "OCR-vs-Vision fact comparison with dimension binding: backend/app/ai/adaptive_input_router.py::compare_ocr_and_vision_facts",
+      "solver path for extracted text: /api/analyze (Source Gate -> parser -> planner -> exact kernel -> Scene3D)",
+      "grading against the dataset key: tools/evaluate_images.py::grade"
+    ],
+    "not_connected_by_design": [
+      "USD reservation and observed-cost accounting",
+      "live executor (vision_comparison.py returns BOUNDED_EXECUTOR_REQUIRED even after a valid authorisation)"
+    ],
+    "routing_safety_tests": "vision_routing_safety_tests.json"
+  },
+  "what_a_live_run_would_measure": [
+    "Vision transcription CER / critical-fact recovery on the same 25 images",
+    "diagram-fact reading",
+    "the 17 statements the local parser cannot finish, through the live typed-fact extractor",
+    "latency and USD per image",
+    "wrong-served against the dataset key"
+  ]
+}

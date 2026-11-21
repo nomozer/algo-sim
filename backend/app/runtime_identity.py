@@ -244,13 +244,15 @@ def semantic_environment_fingerprint() -> dict:
     **chính hàm này**, đừng dựng vân tay thứ hai.
     """
     from app.ai.adapter4_route import ADAPTER_V4_VERSION, ROUTE_D_SIMULATION_V4_SCHEMA_VERSION
+    from app.ai.adaptive_input_router import ADAPTIVE_INPUT_ROUTER_VERSION
+    from app.ai.local_geometry_parser import LOCAL_GEOMETRY_PARSER_VERSION
     from app.ai.typed_fact_next_extraction import typed_fact_next_surface_fingerprint
     from app.simulation.geometry_functions import engine, planner, registry
-    from app.simulation.geometry_functions.typed_fact_next import TYPED_FACT_NEXT_V2_SCHEMA_VERSION
-    from app.simulation.semantic_program.analyze_contract import (
-        SEMANTIC_ANALYZE_SCHEMA,
-        analyze_schema_for,
+    from app.simulation.geometry_functions.trig_construction_certificates import (
+        TRIG_CONSTRUCTION_CERTIFICATE_VERSION,
     )
+    from app.simulation.geometry_functions.typed_fact_next import TYPED_FACT_NEXT_V2_SCHEMA_VERSION
+    from app.simulation.semantic_program.analyze_contract import analyze_schema_for
     from app.simulation.semantic_program.contract import generate_json_schema
 
     vt = skill_fingerprint()
@@ -265,14 +267,17 @@ def semantic_environment_fingerprint() -> dict:
         "response_contract": TYPED_FACT_NEXT_V2_SCHEMA_VERSION,
         "adapter_version": ADAPTER_V4_VERSION,
         "envelope_version": ROUTE_D_SIMULATION_V4_SCHEMA_VERSION,
+        "local_parser_version": LOCAL_GEOMETRY_PARSER_VERSION,
+        "adaptive_router_version": ADAPTIVE_INPUT_ROUTER_VERSION,
+        "trig_construction_certificate_version": TRIG_CONSTRUCTION_CERTIFICATE_VERSION,
     }
 
     return {
         "prompts": vt["tong"],
         "grammar_card": vt["grammar_card"],
         "synthesis_schema": _bam_json(generate_json_schema()),
-        "analyze_schema": _bam_json(
-            [SEMANTIC_ANALYZE_SCHEMA, analyze_schema_for("hinh_hoc")]),
+        # /13: chỉ schema hình học — schema Tin học đã gỡ khỏi sản phẩm.
+        "analyze_schema": _bam_json([analyze_schema_for("hinh_hoc")]),
         "capability": stable_capability_hash(),
         "typed_fact_next_surface": typed_fact_next_surface_fingerprint(),
         "hybrid_route_surface": _bam_json(hybrid_surface),

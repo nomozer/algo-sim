@@ -1,0 +1,48 @@
+{
+  "schema": "axo-acceptance-freeze/1",
+  "frozen_before_any_model1_or_geometry_change": true,
+  "baseline_commit": "29a71e2ff170fb476a9fe8e0599cd2aa30a2f91b",
+  "hash_rule": "sha256 of LF-normalised bytes",
+  "files": {
+    "docs/evaluation/geometry/runs/axo-hybrid-local-model1-finalization-test-consolidation/ACCEPTANCE_MANIFEST.json": "529ba6b3316eb061366df5b66809c08cb644bee69de00859f1a2e38f78134957",
+    "docs/evaluation/geometry/runs/axo-hybrid-local-model1-finalization-test-consolidation/ACCEPTANCE_CRITERIA.json": "b8f88fb1e1d0bfc477c51b35a70370d67db854741e3307ebad9b182ba1e4d5bc",
+    "docs/evaluation/geometry/runs/axo-hybrid-local-model1-finalization-test-consolidation/EVALUATION_FREEZE.json": "4b1619f05d685e13efdd71e7042571fa00b14fc97a7995f1083feccb05e4bb63",
+    "docs/evaluation/geometry/runs/axo-hybrid-local-model1-finalization-test-consolidation/holdout/build_holdout_manifest.py": "c1e3db972299beeab078c5c48fa661f232f729b52d2087472576ae3fa8aa60f3",
+    "docs/evaluation/geometry/harness/live-acceptance/aggregate.py": "35827769d78a8121b1daf6d127eddf13507e957161fc13ad1f35de7f3195340c",
+    "docs/evaluation/geometry/harness/live-acceptance/egress_blackhole_proxy.py": "74a32e069f79f8aaa600e78f414370f0e2387e8fb896e923569d76d84beb0ac7",
+    "docs/evaluation/geometry/harness/live-acceptance/freeze_acceptance.py": "42d35544fef85ae04f7172b7589a06ea3df2df5101f73b107728f6d1f5446613",
+    "docs/evaluation/geometry/harness/live-acceptance/harness_paths.mjs": "64d55f8cb74750a1f963d2148b0fa7da94ba860cb1425cde7a9f1c542db618a6",
+    "docs/evaluation/geometry/harness/live-acceptance/live_browser_acceptance.mjs": "43c3de17100dbbd79d57fb001b5beacb387e658a9fdcbd4ae5f52323f40135fc",
+    "docs/evaluation/geometry/harness/live-acceptance/perf_bench.py": "ec6f91fffec89a7cf59abe48b88acea9c0c0a45719d1baf0c67d9bff8f422318",
+    "docs/evaluation/geometry/harness/live-acceptance/prior_corpus.py": "47ba133c4394c388ed2098a3cca777e4c11e03729f1242b5b55faf3aa5bd7da0",
+    "docs/evaluation/geometry/harness/live-acceptance/README.md": "c73b0bf8ca28e905458e388902094b394576ee800305d2ce853caa92285a8ab7",
+    "docs/evaluation/geometry/harness/live-acceptance/scene_oracle.py": "a73bc2cf7d26795862fe3fadf2d04d6a0ca803ad92a4acac50ba0e50f9bb40cb",
+    "docs/evaluation/geometry/harness/live-acceptance/stack_memory_sampler.ps1": "81068b0ecfce32d1d90b20025000dc380f325685f083d6e563743aa062e66767",
+    "docs/evaluation/geometry/harness/live-acceptance/tcp_egress_sampler.ps1": "a3ea2ba5bc28da71f01371458391aa685ede0e211ffdeed275e0540e0dd349e3",
+    "docs/evaluation/geometry/harness/live-acceptance/ui_scenarios.mjs": "55e4f6a4cf894b211aee64bfb2b7aaed867798860ce7aa905a8ccc877eb6bf4d"
+  },
+  "identity_at_freeze": {
+    "cache_version": "150",
+    "parser_version": "local-geometry-parser/3",
+    "slm_extractor_version": "local-slm-extractor/6",
+    "slm_validator_version": "slm-grounding-validator/6",
+    "candidate_commit": "c8868964a6c7da144400077a4e4275b51e01ce73"
+  },
+  "model": {
+    "key": "qwen3-0.6b-axo-v9-q4_k_m",
+    "sha256": "73f1484b08b97ed2a1f44e32bcf6610210c7fda51567c4cd0a03d98dffc6cc35",
+    "llama_cpp_release": "b12470"
+  },
+  "baseline_stratum": {
+    "valid_total": 112,
+    "in_scope": 100,
+    "parser_complete": 64,
+    "slm_required": 36,
+    "preregistered_slm_targets": 35,
+    "preregistered_slm_targets_in_slm_required": 25,
+    "separate": 12,
+    "negative": 28
+  },
+  "dataset_provenance": "AUTHOR_CONSTRUCTED; EXTERNAL_INDEPENDENCE = NOT_MEASURED",
+  "rule": "None of these files may change after this commit; test_shared_live_harness.py::test_holdout_freeze_is_intact is red otherwise. After the live run the set is exposed (regression only)."
+}

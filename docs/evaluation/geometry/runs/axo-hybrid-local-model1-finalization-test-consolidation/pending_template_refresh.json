@@ -1,0 +1,77 @@
+{
+  "classification": "CURRENT_PENDING_TEMPLATE_METADATA_REFRESH_NOT_HUMAN_APPROVAL",
+  "tool": "backend/scripts/refresh_pending_templates.py",
+  "reason": "AXO HYBRID /13: main merged into the branch (ba8db5612) and sections index-aligned with CACHE_VERSION 148 (eb26d7953) changed backend/app and frontend/src; metadata refresh only, not human approval.",
+  "runtime_identity_measured_system": "a1c5e6b85fa9d9a357812609b3de0bfcece1234861fe2e33d00f152842b64e78",
+  "rows": [
+    {
+      "study": "K-1",
+      "template": "D:/Documents/projects/algo-sim/.superpowers/worktrees/simulation-intent-slm-recovery/docs/evaluation/geometry/runs/hybrid-master-backend-replacement/k1-owner-approval.template.json",
+      "before": {
+        "measured_system": "87a40770e14a730cbfafbf2a618ac747847c5f285ddd932057228816e39e73bd",
+        "runner_sha256": "10bc64bb4b5533c6b1136611e5d55ee3de98260e69057df6ca3641ed1f16645c",
+        "paired_harness_sha256": "73a8270a0556ba09db711b38e8c4bad81f2b95cdbee1bd632f43e0f6153d7df6",
+        "scorer_sha256": "8c330bd493f9d401f579b6383f1a1df2bc9172eee2530cf187be2024801b5a2d",
+        "measured_system_tree_hash": "87a40770e14a730cbfafbf2a618ac747847c5f285ddd932057228816e39e73bd"
+      },
+      "after": {
+        "measured_system": "a1c5e6b85fa9d9a357812609b3de0bfcece1234861fe2e33d00f152842b64e78",
+        "runner_sha256": "10bc64bb4b5533c6b1136611e5d55ee3de98260e69057df6ca3641ed1f16645c",
+        "paired_harness_sha256": "73a8270a0556ba09db711b38e8c4bad81f2b95cdbee1bd632f43e0f6153d7df6",
+        "scorer_sha256": "8c330bd493f9d401f579b6383f1a1df2bc9172eee2530cf187be2024801b5a2d",
+        "measured_system_tree_hash": "a1c5e6b85fa9d9a357812609b3de0bfcece1234861fe2e33d00f152842b64e78"
+      },
+      "original_saved_as": "logs/prior-k1-owner-approval.template.json",
+      "original_sha256": "7f6a4fcf0e09ceab28a172eaa81482508e555d5d3c5d37ccc3ff4a325b6f7bfd",
+      "new_sha256": "f7a57d913a35e377e0f7d8fcd367d2dbb664402e74af618d3fed5af7d5aa8d26",
+      "owner_decision": "PENDING_OWNER_DECISION",
+      "paid_project_confirmed": false
+    },
+    {
+      "study": "S-2",
+      "template": "D:/Documents/projects/algo-sim/.superpowers/worktrees/simulation-intent-slm-recovery/docs/evaluation/geometry/runs/hybrid-master-backend-replacement/s2-owner-approval.template.json",
+      "before": {
+        "measured_system": "87a40770e14a730cbfafbf2a618ac747847c5f285ddd932057228816e39e73bd",
+        "runner_sha256": "10bc64bb4b5533c6b1136611e5d55ee3de98260e69057df6ca3641ed1f16645c",
+        "paired_harness_sha256": "73a8270a0556ba09db711b38e8c4bad81f2b95cdbee1bd632f43e0f6153d7df6",
+        "scorer_sha256": "8c330bd493f9d401f579b6383f1a1df2bc9172eee2530cf187be2024801b5a2d",
+        "measured_system_tree_hash": "87a40770e14a730cbfafbf2a618ac747847c5f285ddd932057228816e39e73bd"
+      },
+      "after": {
+        "measured_system": "a1c5e6b85fa9d9a357812609b3de0bfcece1234861fe2e33d00f152842b64e78",
+        "runner_sha256": "10bc64bb4b5533c6b1136611e5d55ee3de98260e69057df6ca3641ed1f16645c",
+        "paired_harness_sha256": "73a8270a0556ba09db711b38e8c4bad81f2b95cdbee1bd632f43e0f6153d7df6",
+        "scorer_sha256": "8c330bd493f9d401f579b6383f1a1df2bc9172eee2530cf187be2024801b5a2d",
+        "measured_system_tree_hash": "a1c5e6b85fa9d9a357812609b3de0bfcece1234861fe2e33d00f152842b64e78"
+      },
+      "original_saved_as": "logs/prior-s2-owner-approval.template.json",
+      "original_sha256": "4a3ab93bcbb4be99079d0365bcb862385209b98432d73712802840874fff54c3",
+      "new_sha256": "b98f35bdb2e39bc2a3146e91992e24fc757f70977690566540bfda5f4c65ed2d",
+      "owner_decision": "PENDING_OWNER_DECISION",
+      "paid_project_confirmed": false
+    },
+    {
+      "study": "R-1",
+      "template": "D:/Documents/projects/algo-sim/.superpowers/worktrees/simulation-intent-slm-recovery/docs/evaluation/geometry/runs/hybrid-master-backend-replacement/r1-owner-approval.template.json",
+      "before": {
+        "measured_system": "87a40770e14a730cbfafbf2a618ac747847c5f285ddd932057228816e39e73bd",
+        "runner_sha256": "10bc64bb4b5533c6b1136611e5d55ee3de98260e69057df6ca3641ed1f16645c",
+        "paired_harness_sha256": "73a8270a0556ba09db711b38e8c4bad81f2b95cdbee1bd632f43e0f6153d7df6",
+        "scorer_sha256": "8c330bd493f9d401f579b6383f1a1df2bc9172eee2530cf187be2024801b5a2d",
+        "measured_system_tree_hash": "87a40770e14a730cbfafbf2a618ac747847c5f285ddd932057228816e39e73bd"
+      },
+      "after": {
+        "measured_system": "a1c5e6b85fa9d9a357812609b3de0bfcece1234861fe2e33d00f152842b64e78",
+        "runner_sha256": "10bc64bb4b5533c6b1136611e5d55ee3de98260e69057df6ca3641ed1f16645c",
+        "paired_harness_sha256": "73a8270a0556ba09db711b38e8c4bad81f2b95cdbee1bd632f43e0f6153d7df6",
+        "scorer_sha256": "8c330bd493f9d401f579b6383f1a1df2bc9172eee2530cf187be2024801b5a2d",
+        "measured_system_tree_hash": "a1c5e6b85fa9d9a357812609b3de0bfcece1234861fe2e33d00f152842b64e78"
+      },
+      "original_saved_as": "logs/prior-r1-owner-approval.template.json",
+      "original_sha256": "9623e3f76dcf25f8ef3987809e33a23c617ecbd158ea19a5f9c6bb0d19796422",
+      "new_sha256": "386ff3998d54909ed7b2023702324aa99e8efc9a6e2eb69d0123b54e75df10ed",
+      "owner_decision": "PENDING_OWNER_DECISION",
+      "paid_project_confirmed": false
+    }
+  ]
+}

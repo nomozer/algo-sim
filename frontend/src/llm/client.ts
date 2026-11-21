@@ -13,7 +13,28 @@ export interface ServerHealth {
   ok: boolean;
   hasKey: boolean;
   cachedProblems: number;
+  aiAvailable?: boolean;
+  localOnlyMode?: boolean;
+  localSlmReady?: boolean;
+  localSlmModel?: string | null;
+  routeMode?: string;
 }
+
+export function isAiAvailable(health: ServerHealth | null | "loading"): boolean {
+  if (health === null || health === "loading") return true;
+  return Boolean(health.aiAvailable ?? (health.hasKey || (health.localOnlyMode && health.localSlmReady)));
+}
+
+/** Server-classified local-runtime failures (backend `local_slm_runtime` / `main._hybrid_infra_error`): retrying re-runs
+ * the same bounded inference and cannot fix the cause, so the client reports them at once. */
+const NON_RETRYABLE_REASONS = new Set([
+  "LOCAL_SLM_TIMEOUT",
+  "LOCAL_SLM_BUSY",
+  "LOCAL_SLM_RESPONSE_INVALID",
+  "MODEL_RUNTIME_UNAVAILABLE",
+  "MODEL_CHECKSUM_MISMATCH",
+  "HYBRID_DEADLINE_EXCEEDED",
+]);
 
 const CONNECT_HELP =
   "Không kết nối được máy chủ phân tích. Mở cửa sổ lệnh trong thư mục algo-sim và chạy: docker compose up -d --build";
@@ -28,11 +49,21 @@ export type ClientFailureCode =
   | "NOT_FOUND"
   | "HTTP_ERROR";
 
+export interface LocalUnderstandingSummary {
+  readonly rootCause?: string;
+  readonly rewriteMayHelp?: boolean;
+  readonly taxonomyClass?: string;
+  readonly failureDimension?: string;
+}
+
 export interface ClientFailureContract {
   readonly kind: "network" | "http";
   readonly code: ClientFailureCode;
   readonly status?: number;
   readonly message: string;
+  /** Lời giải thích của máy chủ khi tuyến cục bộ chưa đọc hết đề (phần nào chưa hiểu) — đã là tiếng Việt sạch. */
+  readonly learnerDetail?: string;
+  readonly localUnderstanding?: LocalUnderstandingSummary;
 }
 
 export class AxoClientError extends Error implements ClientFailureContract {
@@ -42,6 +73,8 @@ export class AxoClientError extends Error implements ClientFailureContract {
   readonly transient?: boolean;
   /** `reason_code` máy đọc của máy chủ (vd `LIVE_AI_DISABLED`) — CHỈ để chọn lời báo, KHÔNG BAO GIỜ hiển thị. */
   readonly reasonCode?: string;
+  readonly learnerDetail?: string;
+  readonly localUnderstanding?: LocalUnderstandingSummary;
 
   constructor(opts: {
     kind: "network" | "http";
@@ -50,6 +83,8 @@ export class AxoClientError extends Error implements ClientFailureContract {
     status?: number;
     transient?: boolean;
     reasonCode?: string;
+    learnerDetail?: string;
+    localUnderstanding?: LocalUnderstandingSummary;
   }) {
     super(opts.message);
     this.name = "AxoClientError";
@@ -58,6 +93,8 @@ export class AxoClientError extends Error implements ClientFailureContract {
     this.status = opts.status;
     this.transient = opts.transient;
     this.reasonCode = opts.reasonCode;
+    this.learnerDetail = opts.learnerDetail;
+    this.localUnderstanding = opts.localUnderstanding;
   }
 
   toContract(): ClientFailureContract {
@@ -66,6 +103,8 @@ export class AxoClientError extends Error implements ClientFailureContract {
       code: this.code,
       status: this.status,
       message: this.message,
+      learnerDetail: this.learnerDetail,
+      ...(this.localUnderstanding ? { localUnderstanding: this.localUnderstanding } : {}),
     };
   }
 }
@@ -143,13 +182,34 @@ async function postJson<T>(
       typeof rawMsg === "string" && rawMsg.trim().length > 0
         ? rawMsg
         : `Máy chủ trả lỗi HTTP ${res.status}.`;
+    const luRaw =
+      rec?.local_understanding && typeof rec.local_understanding === "object"
+        ? (rec.local_understanding as Record<string, unknown>)
+        : null;
+    const localUnderstanding: LocalUnderstandingSummary | undefined = luRaw
+      ? {
+          rootCause: typeof luRaw.root_cause === "string" ? luRaw.root_cause : undefined,
+          rewriteMayHelp:
+            typeof luRaw.rewrite_may_help === "boolean" ? luRaw.rewrite_may_help : undefined,
+          taxonomyClass:
+            typeof luRaw.taxonomy_class === "string" ? luRaw.taxonomy_class : undefined,
+          failureDimension:
+            typeof luRaw.failure_dimension === "string" ? luRaw.failure_dimension : undefined,
+        }
+      : undefined;
+    const reason = typeof rec?.reason_code === "string" ? rec.reason_code : "";
     throw new AxoClientError({
       kind: "http",
       code: classifyHttpFailureCode(res.status, rec),
       status: res.status,
       message: msg,
-      transient: res.status === 502 || res.status === 504,
+      // /11: a failure the server already classified as a local-runtime timeout / busy / invalid answer is not
+      // retried (each retry re-ran a 45 s inference: ~135 s of loading in /10); bare gateway 502/504 still are.
+      transient: (res.status === 502 || res.status === 504) && !NON_RETRYABLE_REASONS.has(reason),
       reasonCode: typeof rec?.reason_code === "string" ? rec.reason_code : undefined,
+      // the server says which part of the problem the local route did not read (only when it ran on the problem)
+      learnerDetail: rec?.local_understanding && typeof rawMsg === "string" ? rawMsg : undefined,
+      localUnderstanding,
     });
   }
   return body as T;
@@ -289,6 +349,14 @@ export interface PhotoUncertainToken {
   alternatives: string[];
   location: string;
   reason: string;
+  /* OCR local (run `image-first-ocr-verified-geometry`): vị trí ký tự trong `problem_text`, ảnh cắt nguồn. */
+  kind?: "math" | "prose" | "structure" | "choice" | "diagram" | string;
+  span_id?: string;
+  span_start?: number;
+  span_end?: number;
+  crop_data_url?: string | null;
+  source?: "local_ocr" | string;
+  reason_code?: string | null;
 }
 
 export interface PhotoExtraction {

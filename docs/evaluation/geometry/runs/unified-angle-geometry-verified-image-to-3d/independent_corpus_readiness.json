@@ -1,0 +1,51 @@
+{
+  "schema": "algosim-independent-corpus-readiness/1",
+  "generated_at_utc": "2026-11-10T03:59:49.289268+00:00",
+  "product_commit": "c61a3589782bde35b69e8376d8ebf136314e47f3",
+  "head_commit": "c61a3589782bde35b69e8376d8ebf136314e47f3",
+  "measured_system_tree_hash": "69bb83ba51b834f68c106bc4d3948dc02ca35af05eca0d8f50c0e0e4cf047cb4",
+  "measured_system_file_count": 108,
+  "code_version": {
+    "typed_fact_next": "typed-fact-next/2",
+    "bridge": "typed-fact-next-bridge/2",
+    "planner": "geometry-fact-planner/26",
+    "registry": "geometry-functions/33",
+    "engine": "geometry-function-engine/24",
+    "adapter": "hybrid-simulation-adapter/4",
+    "envelope": "hybrid-route-d-simulation/4",
+    "local_parser": "local-geometry-parser/1",
+    "adaptive_router": "adaptive-input-router/1",
+    "cache_version": "132"
+  },
+  "input_or_case_hash": "b22c583d0c2d4c4bfbafd51fd8c81a139855b35641da0a906436538bad3f1515",
+  "oracle": "8-layer H-1 anti-contamination scanner (score_independent_holdout_equivalence.py) + C28 sealing checklist",
+  "test_command": "pytest backend/tests/geometry/test_independent_holdout_equivalence.py -q",
+  "test_environment": {
+    "os": "Windows-11-10.0.26100-SP0",
+    "python": "3.12.10",
+    "cpu_logical_cores": 12,
+    "allow_live_ai": 0,
+    "live_gemini_calls": 0,
+    "benchmark_tier": "HOST_BENCHMARK_OFFLINE"
+  },
+  "expected_behavior": "Reuse 8-layer scanner without rebuilding; report INDEPENDENT_H1_VALIDATION = NOT_MEASURED and INDEPENDENT_GROUND_TRUTH_PENDING honestly until an uncontaminated human-verified blind corpus is supplied.",
+  "actual_behavior": "h1_measurement=NOT_MEASURED, external_statements_scanned=17, verbatim_repo_hits=17.",
+  "verdict": "NOT_MEASURED",
+  "INDEPENDENT_H1_VALIDATION": "NOT_MEASURED",
+  "corpus_status": [
+    "EXTERNAL_SOURCE_AVAILABLE",
+    "INDEPENDENT_GROUND_TRUTH_PENDING"
+  ],
+  "why_external_17_is_not_claimed_as_blind_h1": "The 17 external statements in external_image_corpus_manifest.json were inspected during gap analysis in real-world-printed-handwriting-acquisition and this wave; per Section 7.3, any corpus inspected to inform capability development is classified as development/diagnostic evaluation and never relabeled as blind H-1.",
+  "eight_layer_scan_hit_counts": {
+    "exact_verbatim": 17,
+    "normalized_text": 17,
+    "number_stripped_template": 17,
+    "isomorphic_vertex_renaming": 17,
+    "scale_factor_transform": 17,
+    "construction_relation_graph": 17,
+    "intermediate_construction_sequence": 17,
+    "solution_or_expected_answer_leakage": 17
+  },
+  "sealing_infrastructure_status": "AWAITING_INDEPENDENT_CORPUS"
+}

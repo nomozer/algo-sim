@@ -1,0 +1,26 @@
+{
+  "run_id": "semantic-to-scene3d-verified-simulation",
+  "generated_at_utc": "2026-11-13T06:30:52.433030+00:00",
+  "head": "6e3989ba5dda57f3b3369551592d832aff9251a1",
+  "new_kernel_primitives": 0,
+  "compositions_added": {
+    "line_plane": "intersect_line_plane + project_point_onto_plane",
+    "line_line": "intersect_line_line",
+    "line_line_skew": "named parallel segment (affine parallel test) or point + direction",
+    "plane_plane": "intersect_plane_plane + project_point_onto_line + component orthogonal to the edge in the frame metric"
+  },
+  "case_specific_primitives": 0,
+  "preconditions_and_degeneracy": [
+    "line ∥ plane / line ⊂ plane → no vertex (GeometryError, no construction)",
+    "parallel lines → no construction",
+    "parallel or coincident planes → no construction",
+    "projection equal to the vertex (90°) → handled by the right-angle witness",
+    "plane without a named point off the common line → no construction"
+  ],
+  "tests": {
+    "backend": "backend/tests/geometry/test_angle_construction.py (16 incl. cache)",
+    "frontend": "scene3d-angle-construction.test.ts (15)",
+    "fault_injection": "a projection foot moved by (0,1,0) with the backend checks disabled made 4 tests fail (session log); scene_invariants witness window caught 3/3 tampered scenes"
+  },
+  "frame_metric": "all orthogonality checks use the chart Gram metric; regular tetrahedron and regular triangular prism (non-identity G) verified"
+}

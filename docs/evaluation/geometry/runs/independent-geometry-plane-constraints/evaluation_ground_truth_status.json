@@ -1,0 +1,18 @@
+{
+  "run_id": "independent-geometry-plane-constraints",
+  "generated_at_utc": "2026-11-13T12:59:07.530446+00:00",
+  "levels": {
+    "OFFICIAL_ANSWER": "none in use (VMMU keys are multiple-choice letters; insufficient for a geometric construction)",
+    "SOURCED_SOLUTION": "none",
+    "HUMAN_VERIFIED_TRANSCRIPTION": "none",
+    "INDEPENDENT_GEOMETRIC_CERTIFICATE": "holdout-wave2/wave3 rational oracles (AI-curated, isolated sessions, first-principles analytic geometry; wave3 also carries an independent oracle review)",
+    "AGENT_ORACLE": "tools/verify_plane_constraints.py of this run (AGENT_DIAGNOSTIC, independent code path, same agent)",
+    "AXO_OUTPUT": "never used as ground truth"
+  },
+  "human_verified": 0,
+  "independent_h1": "NOT_MEASURED",
+  "labels_not_used": [
+    "HUMAN_VERIFIED",
+    "INDEPENDENT_H1"
+  ]
+}

@@ -1,0 +1,125 @@
+{
+  "schema": "algosim-fresh-external-evaluation/1",
+  "run_id": "local-semantic-source-gate-reliability",
+  "generated_at_utc": "2026-11-13T04:41:57.527334+00:00",
+  "head": "9f2314e1126322bb6066d57bdcade209a0904062",
+  "measurement_class": "EXTERNAL_DIAGNOSTIC_AGENT_TRANSCRIBED",
+  "held_out_claim": "FRESH_TO_THIS_RUN_NOT_INDEPENDENT_H1",
+  "evaluator_independence": "NONE: the agent that wrote the fixes selects, transcribes and scores",
+  "independent_h1": "NOT_MEASURED",
+  "frozen_candidate": {
+    "commit": "dcad65e5e22e41412c38264f941225e830be66ea",
+    "product_commit": "1c9c264891d6439518f9721a8ba0aa8a738cc74c",
+    "measured_system": "1cc979f559a632c30b97636e4b47532139b6205199ddbe97fc6fb6c6e9e16c28",
+    "cache_version": "132"
+  },
+  "sample": {
+    "seed": 20261113,
+    "size": 48,
+    "remaining_reserved_count": 94
+  },
+  "sampled_rows": 48,
+  "in_scope_items": 2,
+  "not_in_scope": {
+    "r541": "function / calculus problem (graph, variation table, extremum, equation roots), not solid geometry",
+    "r542": "integral and area under a derivative graph",
+    "r543": "function / calculus problem (graph, variation table, extremum, equation roots), not solid geometry",
+    "r544": "function / calculus problem (graph, variation table, extremum, equation roots), not solid geometry",
+    "r546": "function / calculus problem (graph, variation table, extremum, equation roots), not solid geometry",
+    "r549": "function / calculus problem (graph, variation table, extremum, equation roots), not solid geometry",
+    "r553": "function / calculus problem (graph, variation table, extremum, equation roots), not solid geometry",
+    "r554": "function / calculus problem (graph, variation table, extremum, equation roots), not solid geometry",
+    "r560": "function / calculus problem (graph, variation table, extremum, equation roots), not solid geometry",
+    "r565": "plane area between a line and a parabola",
+    "r568": "function / calculus problem (graph, variation table, extremum, equation roots), not solid geometry",
+    "r572": "function / calculus problem (graph, variation table, extremum, equation roots), not solid geometry",
+    "r577": "function / calculus problem (graph, variation table, extremum, equation roots), not solid geometry",
+    "r578": "function / calculus problem (graph, variation table, extremum, equation roots), not solid geometry",
+    "r580": "function / calculus problem (graph, variation table, extremum, equation roots), not solid geometry",
+    "r582": "function / calculus problem (graph, variation table, extremum, equation roots), not solid geometry",
+    "r586": "function / calculus problem (graph, variation table, extremum, equation roots), not solid geometry",
+    "r589": "function / calculus problem (graph, variation table, extremum, equation roots), not solid geometry",
+    "r594": "function / calculus problem (graph, variation table, extremum, equation roots), not solid geometry",
+    "r599": "function / calculus problem (graph, variation table, extremum, equation roots), not solid geometry",
+    "r606": "function / calculus problem (graph, variation table, extremum, equation roots), not solid geometry",
+    "r607": "function / calculus problem (graph, variation table, extremum, equation roots), not solid geometry",
+    "r609": "function / calculus problem (graph, variation table, extremum, equation roots), not solid geometry",
+    "r610": "function / calculus problem (graph, variation table, extremum, equation roots), not solid geometry",
+    "r626": "function / calculus problem (graph, variation table, extremum, equation roots), not solid geometry",
+    "r632": "function / calculus problem (graph, variation table, extremum, equation roots), not solid geometry",
+    "r635": "function / calculus problem (graph, variation table, extremum, equation roots), not solid geometry",
+    "r636": "function / calculus problem (graph, variation table, extremum, equation roots), not solid geometry",
+    "r638": "function / calculus problem (graph, variation table, extremum, equation roots), not solid geometry",
+    "r642": "function / calculus problem (graph, variation table, extremum, equation roots), not solid geometry",
+    "r644": "function / calculus problem (graph, variation table, extremum, equation roots), not solid geometry",
+    "r647": "function / calculus problem (graph, variation table, extremum, equation roots), not solid geometry",
+    "r649": "function / calculus problem (graph, variation table, extremum, equation roots), not solid geometry",
+    "r652": "function / calculus problem (graph, variation table, extremum, equation roots), not solid geometry",
+    "r654": "function / calculus problem (graph, variation table, extremum, equation roots), not solid geometry",
+    "r658": "plane area between a line and y = √x",
+    "r660": "function / calculus problem (graph, variation table, extremum, equation roots), not solid geometry",
+    "r662": "plane optimisation word problem (boat and walk)",
+    "r665": "function / calculus problem (graph, variation table, extremum, equation roots), not solid geometry",
+    "r669": "function / calculus problem (graph, variation table, extremum, equation roots), not solid geometry",
+    "r677": "recognise which drawing is not a polyhedron: no metric question",
+    "r684": "function / calculus problem (graph, variation table, extremum, equation roots), not solid geometry",
+    "r686": "cylinder inscribed in a sphere, maximise volume: curved solids with optimisation",
+    "r689": "function / calculus problem (graph, variation table, extremum, equation roots), not solid geometry",
+    "r691": "exponential function graphs",
+    "r693": "function / calculus problem (graph, variation table, extremum, equation roots), not solid geometry"
+  },
+  "text_route_outcomes": {
+    "LIVE_AI_DISABLED (local parse incomplete)": 1,
+    "NEEDS_CONFIRMATION": 1
+  },
+  "image_route": {
+    "prepare_status": {
+      "needs_confirmation": 2
+    },
+    "routes": {
+      "C2_USER_CORRECTED_SIMULATED": 2
+    },
+    "verdicts": {
+      "NOT_SERVED": 2
+    },
+    "all_critical_facts_in_prepared_text": 1
+  },
+  "wrong_served": {
+    "text": [],
+    "image": []
+  },
+  "per_case": [
+    {
+      "case_id": "vmmu_r559",
+      "tags": [
+        "regular_tetrahedron",
+        "angle_line_line",
+        "cosine_output",
+        "scale_free"
+      ],
+      "text_outcome": "LIVE_AI_DISABLED (local parse incomplete)",
+      "text_reason": "LIVE_AI_DISABLED",
+      "image_route": "C2_USER_CORRECTED_SIMULATED",
+      "image_verdict": "NOT_SERVED",
+      "image_reason": "LIVE_AI_DISABLED"
+    },
+    {
+      "case_id": "vmmu_r695",
+      "tags": [
+        "pyramid",
+        "distance_point_plane"
+      ],
+      "text_outcome": "NEEDS_CONFIRMATION",
+      "text_reason": "AMBIGUOUS_FACT",
+      "image_route": "C2_USER_CORRECTED_SIMULATED",
+      "image_verdict": "NOT_SERVED",
+      "image_reason": "AMBIGUOUS_FACT"
+    }
+  ],
+  "limits": [
+    "agent transcription and agent scope decision, not human verified",
+    "one dataset, printed exam crops, multiple choice",
+    "small n; counts only",
+    "C2 correction is scripted from the agent transcription, not a real student"
+  ]
+}

@@ -1,0 +1,94 @@
+{
+  "schema": "axo-v12-final-verification-receipts/1",
+  "campaign": "AXO HYBRID /12",
+  "branch": "feat/compositional-geometry-grounding",
+  "candidate_blind_live_run": {
+    "candidate_commit": "4f4162d87f8f77388d21c8065f4b0bfd67cb648c",
+    "product_commit_sha": "4f4162d87f8f77388d21c8065f4b0bfd67cb648c",
+    "measured_system_tree_hash": "f3c185a08bf0f227fafc6621195017f3517d7227b20b93c7fdf86278103df40d",
+    "measured_files": 124,
+    "cache_version": "147",
+    "route_d_cache_policy": "147:route-d",
+    "semantic_environment_hash": "16838af02af616f4b3ba833267be93b640309458b1e279766dd1a4d26eadb05b"
+  },
+  "candidate_refreeze_2": {
+    "purpose": "Fix 7 non-/12 historical backend pytest regressions uncovered in Full T3 gate without altering blind Step 6 measurements (#17-#22)",
+    "regression_fix_commit": "963cef832020f1bd9b3d19d071ab133884e6cfc7",
+    "candidate_commit": "bcf1c797223563c8126fe10eb9119ccfc34db5df",
+    "product_commit_sha": "963cef832020f1bd9b3d19d071ab133884e6cfc7",
+    "measured_system_tree_hash": "87a40770e14a730cbfafbf2a618ac747847c5f285ddd932057228816e39e73bd",
+    "measured_files": 124,
+    "cache_version": "147",
+    "route_d_cache_policy": "147:route-d",
+    "semantic_environment_hash": "16838af02af616f4b3ba833267be93b640309458b1e279766dd1a4d26eadb05b",
+    "construction_v2_and_s2_runner_tests": "124 passed in 39.72s"
+  },
+  "a4_ownership_and_boundaries": {
+    "a4_locked_files_diff_vs_base": "EMPTY_ZERO_DIFF",
+    "default_hybrid_route_mode": "live",
+    "registry_version": "geometry-functions/33",
+    "registry_app_ai_imports": 0,
+    "construction_v2_tests": "18 passed",
+    "external_ai_calls": 0,
+    "approved_by_user_written": false
+  },
+  "blind_live_acceptance": {
+    "manifest_sha256": "f2fabd0b43fbe1d2cab1c1eeecdd2e143bf162cdd825b75b44bf209e38f13a86",
+    "criteria_sha256": "f59d1aaa1938741b35a132d7c765044a0cd365eaf9cdc4b17bd2af1b08463f75",
+    "in_scope_completed": "88/105",
+    "SIMULATION_COMPLETION_RATE_in_scope": 0.8381,
+    "SLM_VERIFIED_SCENE_RATE": 0.5312,
+    "slm_contributed_in_slm_required": "17/32",
+    "deterministic_only_rescues_vs_p2": 39,
+    "oracle_validation": "88/88 MATHEMATICALLY_VALID, 0 invalid, 0 error",
+    "wrong_served": 0,
+    "grounding_violations_served": 0,
+    "unverified_relations_served": 0,
+    "fabricated_numeric_goals": 0,
+    "served_numeric_mismatch": 0,
+    "safe_refusal_rate": "28/28 (1.0)",
+    "visual_initial_framing_pass": "88/88 (1.0)",
+    "interaction_pass": "88/88 (1.0)",
+    "ui_scenarios": "9/10 (I05 selected VD01 §17 capability_gap card)",
+    "network_isolation": "external_ai_calls=0, browser_external_requests=0, tcp_non_loopback=0 (763 heartbeats), proxy_selfcheck=2/stack=0"
+  },
+  "docs_and_safety_checks": {
+    "docs_information_architecture_audit": "PASS (prior to /12 living doc update; re-verified after Step 7.4)",
+    "publication_safety_range_pre_v12_to_523a9b641": "2 historical HARDCODED_PASSWORD findings in 4f4162d87 tools scripts (synthetic local test registration string, fixed cleanly in Step 7.1 for HEAD onward)",
+    "scan_v12_run_dir_hits": 0
+  },
+  "full_t3_gate": {
+    "status": "FULL_PRODUCT_GATE_PASS",
+    "command": "npm run test:full (ALLOW_LIVE_AI=0, GEMINI_API_KEY='')",
+    "verified_on_commit": "bcf1c797223563c8126fe10eb9119ccfc34db5df",
+    "verified_on_tree_hash": "87a40770e14a730cbfafbf2a618ac747847c5f285ddd932057228816e39e73bd",
+    "total_duration_s": 790.3,
+    "gates": {
+      "backend_pytest": {
+        "status": "PASS",
+        "duration_s": 721.6,
+        "summary": "15234 passed, 9 skipped, 3 deselected, 12 xfailed, 1 warning in 715.23s (0 failed)"
+      },
+      "frontend_vitest": {
+        "status": "PASS",
+        "duration_s": 59.8,
+        "summary": "146 files passed (146), 2077 tests passed (2077) in 57.88s"
+      },
+      "typecheck_and_build_production": {
+        "status": "PASS",
+        "duration_s": 7.5,
+        "summary": "tsc -b && vite build (100 modules, built in 4.24s)"
+      },
+      "demo_replay": {
+        "status": "PASS",
+        "duration_s": 0.8,
+        "summary": "DEMO_REPLAY_PASS=5/5, REDUCED_CHAIN_CASES=1/1"
+      },
+      "demo_crash_surface": {
+        "status": "PASS",
+        "duration_s": 0.5,
+        "summary": "6/6 expected refusal boundaries, 0 unhandled 500s"
+      }
+    }
+  }
+}

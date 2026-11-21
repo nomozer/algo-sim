@@ -1,0 +1,1365 @@
+{
+  "run_id": "scene3d-causal-pedagogical-integrity",
+  "generated_at_utc": "2026-11-14T15:21:21.787887+00:00",
+  "head": "b99a46287a28fa520b6691be66e4c39533e75f48",
+  "environment": {
+    "ALLOW_LIVE_AI": "0",
+    "host": "developer desktop, shared, not isolated"
+  },
+  "command": "python docs/evaluation/geometry/runs/scene3d-causal-pedagogical-integrity/tools/perf.py <archive of 9d0949b09>/backend",
+  "summary": {
+    "before": {
+      "text_refused_median_ms": 2.03,
+      "text_served_median_ms": 61.64,
+      "diagnose_call_ms": 0.12450349997379817,
+      "prepare_single_median_ms": 2549.22,
+      "prepare_composite_median_ms": 3175.91,
+      "proof": {
+        "max_derived": 256,
+        "goals_timed": 45,
+        "prove_ms_max": 0.176,
+        "verify_ms_max": 0.08,
+        "steps_max": 8,
+        "budget_exceeded": 0
+      }
+    },
+    "after": {
+      "text_refused_median_ms": 1.95,
+      "text_served_median_ms": 60.49,
+      "diagnose_call_ms": 0.1324294999722042,
+      "prepare_single_median_ms": 2433.35,
+      "prepare_composite_median_ms": 3185.0,
+      "proof": {
+        "max_derived": 256,
+        "goals_timed": 45,
+        "prove_ms_max": 0.129,
+        "verify_ms_max": 0.1,
+        "steps_max": 8,
+        "budget_exceeded": 0
+      }
+    }
+  },
+  "rows": {
+    "before": {
+      "text": {
+        "mc_section_one_sentence": {
+          "ms": 34.30310000112513,
+          "status": "SERVED"
+        },
+        "mc_section_split": {
+          "ms": 32.158300004084595,
+          "status": "SERVED"
+        },
+        "mc_section_renamed": {
+          "ms": 34.61100000276929,
+          "status": "SERVED"
+        },
+        "mc_section_greek": {
+          "ms": 31.61760000512004,
+          "status": "SERVED"
+        },
+        "mc_extra_unread": {
+          "ms": 1.7707000006339513,
+          "status": "REFUSED"
+        },
+        "mc_extra_unread2": {
+          "ms": 2.0293999987188727,
+          "status": "REFUSED"
+        },
+        "mc_distance_extra_unread": {
+          "ms": 1.9025000001420267,
+          "status": "REFUSED"
+        },
+        "mc_distance": {
+          "ms": 21.43380000052275,
+          "status": "SERVED"
+        },
+        "mc_decimal_value": {
+          "ms": 21.525899996049702,
+          "status": "SERVED"
+        },
+        "mc_label_list": {
+          "ms": 27.610100005404092,
+          "status": "SERVED"
+        },
+        "order_plane_after_goal": {
+          "ms": 31.362699999590404,
+          "status": "SERVED"
+        },
+        "order_plane_after_goal_sep": {
+          "ms": 31.149299997196067,
+          "status": "SERVED"
+        },
+        "order_plane_never_defined": {
+          "ms": 1.7927000008057803,
+          "status": "REFUSED"
+        },
+        "order_premises_swapped": {
+          "ms": 24.542400002246723,
+          "status": "SERVED"
+        },
+        "dp_named_midpoint_goal": {
+          "ms": 23.479200004658196,
+          "status": "SERVED"
+        },
+        "dp_unnamed_midpoint_goal": {
+          "ms": 23.709500004770234,
+          "status": "SERVED"
+        },
+        "dp_unnamed_centroid_goal": {
+          "ms": 23.039699997752905,
+          "status": "SERVED"
+        },
+        "dp_unnamed_through_point": {
+          "ms": 1.7898000005516224,
+          "status": "REFUSED"
+        },
+        "dp_free_point": {
+          "ms": 1.6794000039226376,
+          "status": "REFUSED"
+        },
+        "dp_free_point_goi": {
+          "ms": 1.705899994703941,
+          "status": "REFUSED"
+        },
+        "dp_midpoint_as_goal": {
+          "ms": 1.6275000016321428,
+          "status": "REFUSED"
+        },
+        "dp_reflection": {
+          "ms": 1.6956999970716424,
+          "status": "REFUSED"
+        },
+        "dp_projection_unnamed_image": {
+          "ms": 1.854900001490023,
+          "status": "REFUSED"
+        },
+        "dp_redefined_conflict": {
+          "ms": 15.927799999190029,
+          "status": "REFUSED"
+        },
+        "goal_angle_line_plane": {
+          "ms": 23.846900003263727,
+          "status": "SERVED"
+        },
+        "goal_cos_line_plane": {
+          "ms": 22.906499994860496,
+          "status": "SERVED"
+        },
+        "goal_cos_spelled": {
+          "ms": 23.365500004729256,
+          "status": "SERVED"
+        },
+        "goal_tan_line_plane": {
+          "ms": 22.87369999976363,
+          "status": "SERVED"
+        },
+        "goal_sin_mc_stem": {
+          "ms": 21.74879999802215,
+          "status": "SERVED"
+        },
+        "goal_cos_planes": {
+          "ms": 24.958299996796995,
+          "status": "SERVED"
+        },
+        "goal_cos_lines": {
+          "ms": 27.285199998004828,
+          "status": "SERVED"
+        },
+        "goal_tan_right_angle": {
+          "ms": 23.31430000049295,
+          "status": "SERVED"
+        },
+        "goal_cos_scale_free": {
+          "ms": 63.02420000429265,
+          "status": "SERVED"
+        },
+        "goal_cos_of_length_neg": {
+          "ms": 1.844600003096275,
+          "status": "REFUSED"
+        },
+        "goal_cos_squared_neg": {
+          "ms": 1.7617999983485788,
+          "status": "REFUSED"
+        },
+        "goal_cos_given_premise_neg": {
+          "ms": 1.7491999969934113,
+          "status": "REFUSED"
+        },
+        "goal_cos_wrong_object_neg": {
+          "ms": 1.804799998353701,
+          "status": "REFUSED"
+        },
+        "proof_only": {
+          "ms": 3.529599998728372,
+          "status": "REFUSED"
+        },
+        "proof_premise_not_given": {
+          "ms": 3.2154000000446104,
+          "status": "REFUSED"
+        },
+        "amb_plane_not_unique": {
+          "ms": 1.8922000017482787,
+          "status": "REFUSED"
+        },
+        "contra_two_lengths": {
+          "ms": 13.758599998254795,
+          "status": "REFUSED"
+        },
+        "contra_skew_intersection": {
+          "ms": 14.72450000437675,
+          "status": "REFUSED"
+        },
+        "diagram_fact": {
+          "ms": 1.7425000041839667,
+          "status": "REFUSED"
+        },
+        "scale_iso_planes": {
+          "ms": 70.09430000471184,
+          "status": "SERVED"
+        },
+        "scale_iso_tan": {
+          "ms": 65.01199999911478,
+          "status": "SERVED"
+        },
+        "scale_iso_line_plane": {
+          "ms": 75.20970000041416,
+          "status": "SERVED"
+        },
+        "scale_iso_renamed": {
+          "ms": 65.99529999948572,
+          "status": "SERVED"
+        },
+        "scale_iso_with_length": {
+          "ms": 24.831300004734658,
+          "status": "SERVED"
+        },
+        "scale_shape_free": {
+          "ms": 91.30880000157049,
+          "status": "SERVED"
+        },
+        "scale_height_free": {
+          "ms": 27.58410000387812,
+          "status": "REFUSED"
+        },
+        "scale_absolute_volume": {
+          "ms": 20.823099999688566,
+          "status": "REFUSED"
+        },
+        "scale_regular_tetra_no_side": {
+          "ms": 67.01060000341386,
+          "status": "SERVED"
+        },
+        "ti_right_b_planes": {
+          "ms": 94.15330000047106,
+          "status": "SERVED"
+        },
+        "ti_right_b_tan": {
+          "ms": 87.41820000432199,
+          "status": "SERVED"
+        },
+        "ti_renamed": {
+          "ms": 91.48889999778476,
+          "status": "SERVED"
+        },
+        "ti_varying_line_plane": {
+          "ms": 29.70369999820832,
+          "status": "REFUSED"
+        },
+        "ti_height_free": {
+          "ms": 26.806399997440167,
+          "status": "REFUSED"
+        },
+        "ti_absolute_volume": {
+          "ms": 19.862200002535246,
+          "status": "REFUSED"
+        },
+        "tet_lines": {
+          "ms": 68.02430000243476,
+          "status": "SERVED"
+        },
+        "tet_cos_mc": {
+          "ms": 61.63699999888195,
+          "status": "SERVED"
+        },
+        "tet_renamed": {
+          "ms": 67.99360000150045,
+          "status": "SERVED"
+        },
+        "tet_with_side": {
+          "ms": 23.309999996854458,
+          "status": "SERVED"
+        },
+        "tet_edge_face": {
+          "ms": 55.72269999538548,
+          "status": "SERVED"
+        },
+        "tet_not_regular": {
+          "ms": 32.03600000415463,
+          "status": "REFUSED"
+        },
+        "tet_regular_pyramid_only": {
+          "ms": 34.64159999566618,
+          "status": "REFUSED"
+        },
+        "tet_conflict": {
+          "ms": 1.771099996403791,
+          "status": "REFUSED"
+        },
+        "pa_ratio2_planes": {
+          "ms": 92.61119999428047,
+          "status": "SERVED"
+        },
+        "pa_ratio2_tan": {
+          "ms": 88.2015999959549,
+          "status": "SERVED"
+        },
+        "pa_source_perp_lines": {
+          "ms": 90.47969999664929,
+          "status": "SERVED"
+        },
+        "pp_base": {
+          "ms": 92.63769999961369,
+          "status": "SERVED"
+        },
+        "pp_lateral": {
+          "ms": 91.71059999789577,
+          "status": "SERVED"
+        },
+        "lp_isosceles": {
+          "ms": 101.97250000055647,
+          "status": "SERVED"
+        },
+        "lp_ratio2": {
+          "ms": 100.19350000220584,
+          "status": "SERVED"
+        },
+        "lp_perpendicular": {
+          "ms": 101.85179999825777,
+          "status": "SERVED"
+        },
+        "lp_renamed": {
+          "ms": 100.51759999623755,
+          "status": "SERVED"
+        },
+        "ll_meeting": {
+          "ms": 107.88070000126027,
+          "status": "SERVED"
+        },
+        "ll_perpendicular": {
+          "ms": 108.31970000435831,
+          "status": "SERVED"
+        },
+        "ll_skew_perpendicular": {
+          "ms": 109.22579999896698,
+          "status": "SERVED"
+        },
+        "ll_skew_varying": {
+          "ms": 34.18799999781186,
+          "status": "REFUSED"
+        },
+        "lp_varying_lateral": {
+          "ms": 32.400500000221655,
+          "status": "REFUSED"
+        },
+        "lp_no_ratio": {
+          "ms": 29.965800000354648,
+          "status": "REFUSED"
+        },
+        "pa_prism_out_of_domain": {
+          "ms": 27.455200004624203,
+          "status": "REFUSED"
+        },
+        "_diagnose_ms": 0.12450349997379817,
+        "_proof": {
+          "max_derived": 256,
+          "rows": {
+            "goal_angle_line_plane": {
+              "prove_ms": 0.05673500018019695,
+              "verify_ms": null,
+              "status": null,
+              "steps": 0
+            },
+            "goal_cos_line_plane": {
+              "prove_ms": 0.061144999926909804,
+              "verify_ms": null,
+              "status": null,
+              "steps": 0
+            },
+            "goal_cos_spelled": {
+              "prove_ms": 0.05908499988436233,
+              "verify_ms": null,
+              "status": null,
+              "steps": 0
+            },
+            "goal_tan_line_plane": {
+              "prove_ms": 0.05391000013332814,
+              "verify_ms": null,
+              "status": null,
+              "steps": 0
+            },
+            "goal_sin_mc_stem": {
+              "prove_ms": 0.060540000049513765,
+              "verify_ms": null,
+              "status": null,
+              "steps": 0
+            },
+            "goal_cos_planes": {
+              "prove_ms": 0.0008949999028118327,
+              "verify_ms": null,
+              "status": null,
+              "steps": 0
+            },
+            "goal_cos_lines": {
+              "prove_ms": 0.0009549999958835542,
+              "verify_ms": null,
+              "status": null,
+              "steps": 0
+            },
+            "goal_tan_right_angle": {
+              "prove_ms": 0.08994999989226926,
+              "verify_ms": 0.029379999978118576,
+              "status": "PROVEN",
+              "steps": 2
+            },
+            "goal_cos_scale_free": {
+              "prove_ms": 0.027440000121714547,
+              "verify_ms": null,
+              "status": null,
+              "steps": 0
+            },
+            "scale_iso_planes": {
+              "prove_ms": 0.12950999989698175,
+              "verify_ms": null,
+              "status": null,
+              "steps": 0
+            },
+            "scale_iso_tan": {
+              "prove_ms": 0.104750000173226,
+              "verify_ms": null,
+              "status": null,
+              "steps": 0
+            },
+            "scale_iso_line_plane": {
+              "prove_ms": 0.12454499992600176,
+              "verify_ms": 0.047249999988707714,
+              "status": "PROVEN",
+              "steps": 4
+            },
+            "scale_iso_renamed": {
+              "prove_ms": 0.1075950000085868,
+              "verify_ms": null,
+              "status": null,
+              "steps": 0
+            },
+            "scale_iso_with_length": {
+              "prove_ms": 0.10637500017764978,
+              "verify_ms": null,
+              "status": null,
+              "steps": 0
+            },
+            "scale_shape_free": {
+              "prove_ms": 0.10469000008015428,
+              "verify_ms": 0.059514999884413555,
+              "status": "PROVEN",
+              "steps": 8
+            },
+            "scale_height_free": {
+              "prove_ms": 0.10452999995322898,
+              "verify_ms": null,
+              "status": null,
+              "steps": 0
+            },
+            "scale_regular_tetra_no_side": {
+              "prove_ms": 0.027145000058226287,
+              "verify_ms": null,
+              "status": null,
+              "steps": 0
+            },
+            "ti_right_b_planes": {
+              "prove_ms": 0.10388000009697862,
+              "verify_ms": 0.05959499976597726,
+              "status": "PROVEN",
+              "steps": 8
+            },
+            "ti_right_b_tan": {
+              "prove_ms": 0.17578000006324146,
+              "verify_ms": 0.06921499989402946,
+              "status": "PROVEN",
+              "steps": 8
+            },
+            "ti_renamed": {
+              "prove_ms": 0.13704000011784956,
+              "verify_ms": 0.08047999981499743,
+              "status": "PROVEN",
+              "steps": 8
+            },
+            "ti_varying_line_plane": {
+              "prove_ms": 0.1005599999189144,
+              "verify_ms": null,
+              "status": null,
+              "steps": 0
+            },
+            "ti_height_free": {
+              "prove_ms": 0.0899599999684142,
+              "verify_ms": null,
+              "status": null,
+              "steps": 0
+            },
+            "tet_lines": {
+              "prove_ms": 0.02767000005405862,
+              "verify_ms": null,
+              "status": null,
+              "steps": 0
+            },
+            "tet_cos_mc": {
+              "prove_ms": 0.027049999698647298,
+              "verify_ms": null,
+              "status": null,
+              "steps": 0
+            },
+            "tet_renamed": {
+              "prove_ms": 0.02675499999895692,
+              "verify_ms": null,
+              "status": null,
+              "steps": 0
+            },
+            "tet_with_side": {
+              "prove_ms": 0.02195999986724928,
+              "verify_ms": null,
+              "status": null,
+              "steps": 0
+            },
+            "tet_edge_face": {
+              "prove_ms": 0.027520000003278255,
+              "verify_ms": null,
+              "status": null,
+              "steps": 0
+            },
+            "tet_not_regular": {
+              "prove_ms": 0.013469999976223335,
+              "verify_ms": null,
+              "status": null,
+              "steps": 0
+            },
+            "tet_regular_pyramid_only": {
+              "prove_ms": 0.020165000023553148,
+              "verify_ms": null,
+              "status": null,
+              "steps": 0
+            },
+            "pa_ratio2_planes": {
+              "prove_ms": 0.15561000000161584,
+              "verify_ms": 0.07070499996189028,
+              "status": "PROVEN",
+              "steps": 8
+            },
+            "pa_ratio2_tan": {
+              "prove_ms": 0.11363000012352131,
+              "verify_ms": 0.06935999990673736,
+              "status": "PROVEN",
+              "steps": 8
+            },
+            "pa_source_perp_lines": {
+              "prove_ms": 0.1025049998133909,
+              "verify_ms": 0.05955000015092082,
+              "status": "PROVEN",
+              "steps": 8
+            },
+            "pp_base": {
+              "prove_ms": 0.08802499978628475,
+              "verify_ms": 0.02798000023176428,
+              "status": "PROVEN",
+              "steps": 2
+            },
+            "pp_lateral": {
+              "prove_ms": 0.08797499976935796,
+              "verify_ms": 0.04144999984418973,
+              "status": "PROVEN",
+              "steps": 5
+            },
+            "lp_isosceles": {
+              "prove_ms": 0.10140500016859733,
+              "verify_ms": 0.043184999958612025,
+              "status": "PROVEN",
+              "steps": 4
+            },
+            "lp_ratio2": {
+              "prove_ms": 0.11416500019549858,
+              "verify_ms": 0.06388000001606997,
+              "status": "PROVEN",
+              "steps": 4
+            },
+            "lp_perpendicular": {
+              "prove_ms": 0.08626999988337047,
+              "verify_ms": 0.03878499992424622,
+              "status": "PROVEN",
+              "steps": 2
+            },
+            "lp_renamed": {
+              "prove_ms": 0.11921499972231686,
+              "verify_ms": 0.051965000238851644,
+              "status": "PROVEN",
+              "steps": 4
+            },
+            "ll_meeting": {
+              "prove_ms": 0.10230000007140916,
+              "verify_ms": 0.04218499998387415,
+              "status": "PROVEN",
+              "steps": 4
+            },
+            "ll_perpendicular": {
+              "prove_ms": 0.08849000005284324,
+              "verify_ms": 0.04278499982319772,
+              "status": "PROVEN",
+              "steps": 6
+            },
+            "ll_skew_perpendicular": {
+              "prove_ms": 0.08808999991742894,
+              "verify_ms": 0.030205000075511634,
+              "status": "PROVEN",
+              "steps": 3
+            },
+            "ll_skew_varying": {
+              "prove_ms": 0.08205000012821984,
+              "verify_ms": null,
+              "status": null,
+              "steps": 0
+            },
+            "lp_varying_lateral": {
+              "prove_ms": 0.08789499988779426,
+              "verify_ms": null,
+              "status": null,
+              "steps": 0
+            },
+            "lp_no_ratio": {
+              "prove_ms": 0.07636000009370036,
+              "verify_ms": null,
+              "status": null,
+              "steps": 0
+            },
+            "pa_prism_out_of_domain": {
+              "prove_ms": 0.0008999999408842996,
+              "verify_ms": null,
+              "status": null,
+              "steps": 0
+            }
+          }
+        }
+      },
+      "prepare": {
+        "vmmu_r247": {
+          "ms": 4641.652800004522,
+          "status": "needs_confirmation",
+          "set": "REAL_SINGLE"
+        },
+        "vmmu_r254": {
+          "ms": 2443.594000003941,
+          "status": "needs_confirmation",
+          "set": "REAL_SINGLE"
+        },
+        "vmmu_r256": {
+          "ms": 2654.853300002287,
+          "status": "needs_confirmation",
+          "set": "REAL_SINGLE"
+        },
+        "vmmu_r258": {
+          "ms": 1673.664000001736,
+          "status": "needs_confirmation",
+          "set": "REAL_SINGLE"
+        },
+        "vmmu_r266": {
+          "ms": 1613.9234000002034,
+          "status": "needs_confirmation",
+          "set": "REAL_SINGLE"
+        },
+        "vmmu_r270": {
+          "ms": 3214.6190000057686,
+          "status": "needs_confirmation",
+          "set": "REAL_SINGLE"
+        },
+        "vmmu_r247+vmmu_r254": {
+          "ms": 3159.1365999993286,
+          "status": "needs_selection",
+          "set": "COMPOSITE_2"
+        },
+        "vmmu_r256+vmmu_r258": {
+          "ms": 3192.6881999970647,
+          "status": "needs_selection",
+          "set": "COMPOSITE_2"
+        },
+        "vmmu_r266+vmmu_r270": {
+          "ms": 3239.6568000040133,
+          "status": "needs_selection",
+          "set": "COMPOSITE_2"
+        },
+        "vmmu_r273+vmmu_r277": {
+          "ms": 2492.2478000007686,
+          "status": "needs_selection",
+          "set": "COMPOSITE_2"
+        }
+      }
+    },
+    "after": {
+      "text": {
+        "mc_section_one_sentence": {
+          "ms": 31.59140000207117,
+          "status": "SERVED"
+        },
+        "mc_section_split": {
+          "ms": 31.809700005396735,
+          "status": "SERVED"
+        },
+        "mc_section_renamed": {
+          "ms": 32.29470000223955,
+          "status": "SERVED"
+        },
+        "mc_section_greek": {
+          "ms": 32.03919999941718,
+          "status": "SERVED"
+        },
+        "mc_extra_unread": {
+          "ms": 1.934899999469053,
+          "status": "REFUSED"
+        },
+        "mc_extra_unread2": {
+          "ms": 1.805100000638049,
+          "status": "REFUSED"
+        },
+        "mc_distance_extra_unread": {
+          "ms": 1.7411999942851253,
+          "status": "REFUSED"
+        },
+        "mc_distance": {
+          "ms": 22.80849999806378,
+          "status": "SERVED"
+        },
+        "mc_decimal_value": {
+          "ms": 22.693500002787914,
+          "status": "SERVED"
+        },
+        "mc_label_list": {
+          "ms": 27.0063999996637,
+          "status": "SERVED"
+        },
+        "order_plane_after_goal": {
+          "ms": 32.891700000618584,
+          "status": "SERVED"
+        },
+        "order_plane_after_goal_sep": {
+          "ms": 33.44859999924665,
+          "status": "SERVED"
+        },
+        "order_plane_never_defined": {
+          "ms": 1.8019999988609925,
+          "status": "REFUSED"
+        },
+        "order_premises_swapped": {
+          "ms": 21.745199999713805,
+          "status": "SERVED"
+        },
+        "dp_named_midpoint_goal": {
+          "ms": 23.88760000030743,
+          "status": "SERVED"
+        },
+        "dp_unnamed_midpoint_goal": {
+          "ms": 26.01699999650009,
+          "status": "SERVED"
+        },
+        "dp_unnamed_centroid_goal": {
+          "ms": 23.929800001496915,
+          "status": "SERVED"
+        },
+        "dp_unnamed_through_point": {
+          "ms": 1.7397999981767498,
+          "status": "REFUSED"
+        },
+        "dp_free_point": {
+          "ms": 1.9050999981118366,
+          "status": "REFUSED"
+        },
+        "dp_free_point_goi": {
+          "ms": 1.7764999938663095,
+          "status": "REFUSED"
+        },
+        "dp_midpoint_as_goal": {
+          "ms": 1.757400001224596,
+          "status": "REFUSED"
+        },
+        "dp_reflection": {
+          "ms": 1.764300002832897,
+          "status": "REFUSED"
+        },
+        "dp_projection_unnamed_image": {
+          "ms": 1.7475999993621372,
+          "status": "REFUSED"
+        },
+        "dp_redefined_conflict": {
+          "ms": 16.816999996080995,
+          "status": "REFUSED"
+        },
+        "goal_angle_line_plane": {
+          "ms": 23.632500000530854,
+          "status": "SERVED"
+        },
+        "goal_cos_line_plane": {
+          "ms": 23.36469999863766,
+          "status": "SERVED"
+        },
+        "goal_cos_spelled": {
+          "ms": 23.166099999798462,
+          "status": "SERVED"
+        },
+        "goal_tan_line_plane": {
+          "ms": 24.18250000482658,
+          "status": "SERVED"
+        },
+        "goal_sin_mc_stem": {
+          "ms": 22.42839999962598,
+          "status": "SERVED"
+        },
+        "goal_cos_planes": {
+          "ms": 25.34390000073472,
+          "status": "SERVED"
+        },
+        "goal_cos_lines": {
+          "ms": 26.337100003729574,
+          "status": "SERVED"
+        },
+        "goal_tan_right_angle": {
+          "ms": 23.572599995532073,
+          "status": "SERVED"
+        },
+        "goal_cos_scale_free": {
+          "ms": 61.19789999502245,
+          "status": "SERVED"
+        },
+        "goal_cos_of_length_neg": {
+          "ms": 1.7490000027464703,
+          "status": "REFUSED"
+        },
+        "goal_cos_squared_neg": {
+          "ms": 1.735099998768419,
+          "status": "REFUSED"
+        },
+        "goal_cos_given_premise_neg": {
+          "ms": 1.7838999992818572,
+          "status": "REFUSED"
+        },
+        "goal_cos_wrong_object_neg": {
+          "ms": 1.8501999948057346,
+          "status": "REFUSED"
+        },
+        "proof_only": {
+          "ms": 4.017100000055507,
+          "status": "REFUSED"
+        },
+        "proof_premise_not_given": {
+          "ms": 3.8047999987611547,
+          "status": "REFUSED"
+        },
+        "amb_plane_not_unique": {
+          "ms": 1.946900003531482,
+          "status": "REFUSED"
+        },
+        "contra_two_lengths": {
+          "ms": 13.192699996579904,
+          "status": "REFUSED"
+        },
+        "contra_skew_intersection": {
+          "ms": 13.992100000905339,
+          "status": "REFUSED"
+        },
+        "diagram_fact": {
+          "ms": 1.7701000033412129,
+          "status": "REFUSED"
+        },
+        "scale_iso_planes": {
+          "ms": 64.8836999971536,
+          "status": "SERVED"
+        },
+        "scale_iso_tan": {
+          "ms": 60.488200004328974,
+          "status": "SERVED"
+        },
+        "scale_iso_line_plane": {
+          "ms": 67.5381000037305,
+          "status": "SERVED"
+        },
+        "scale_iso_renamed": {
+          "ms": 65.59349999588449,
+          "status": "SERVED"
+        },
+        "scale_iso_with_length": {
+          "ms": 24.198899998737033,
+          "status": "SERVED"
+        },
+        "scale_shape_free": {
+          "ms": 90.77329999854555,
+          "status": "SERVED"
+        },
+        "scale_height_free": {
+          "ms": 27.26260000054026,
+          "status": "REFUSED"
+        },
+        "scale_absolute_volume": {
+          "ms": 20.699799999420065,
+          "status": "REFUSED"
+        },
+        "scale_regular_tetra_no_side": {
+          "ms": 67.36489999457262,
+          "status": "SERVED"
+        },
+        "ti_right_b_planes": {
+          "ms": 90.62840000115102,
+          "status": "SERVED"
+        },
+        "ti_right_b_tan": {
+          "ms": 90.47139999893261,
+          "status": "SERVED"
+        },
+        "ti_renamed": {
+          "ms": 90.84089999669231,
+          "status": "SERVED"
+        },
+        "ti_varying_line_plane": {
+          "ms": 29.944999994768295,
+          "status": "REFUSED"
+        },
+        "ti_height_free": {
+          "ms": 25.63959999679355,
+          "status": "REFUSED"
+        },
+        "ti_absolute_volume": {
+          "ms": 19.017600003280677,
+          "status": "REFUSED"
+        },
+        "tet_lines": {
+          "ms": 66.9731999951182,
+          "status": "SERVED"
+        },
+        "tet_cos_mc": {
+          "ms": 61.34050000400748,
+          "status": "SERVED"
+        },
+        "tet_renamed": {
+          "ms": 71.29780000104802,
+          "status": "SERVED"
+        },
+        "tet_with_side": {
+          "ms": 23.247199998877477,
+          "status": "SERVED"
+        },
+        "tet_edge_face": {
+          "ms": 57.669399997394066,
+          "status": "SERVED"
+        },
+        "tet_not_regular": {
+          "ms": 31.944900001690257,
+          "status": "REFUSED"
+        },
+        "tet_regular_pyramid_only": {
+          "ms": 34.58620000310475,
+          "status": "REFUSED"
+        },
+        "tet_conflict": {
+          "ms": 1.7284000059589744,
+          "status": "REFUSED"
+        },
+        "pa_ratio2_planes": {
+          "ms": 91.16519999952288,
+          "status": "SERVED"
+        },
+        "pa_ratio2_tan": {
+          "ms": 91.51180000480963,
+          "status": "SERVED"
+        },
+        "pa_source_perp_lines": {
+          "ms": 90.8720999941579,
+          "status": "SERVED"
+        },
+        "pp_base": {
+          "ms": 107.89309999381658,
+          "status": "SERVED"
+        },
+        "pp_lateral": {
+          "ms": 90.51999999792315,
+          "status": "SERVED"
+        },
+        "lp_isosceles": {
+          "ms": 102.72019999683835,
+          "status": "SERVED"
+        },
+        "lp_ratio2": {
+          "ms": 101.44230000150856,
+          "status": "SERVED"
+        },
+        "lp_perpendicular": {
+          "ms": 99.50830000161659,
+          "status": "SERVED"
+        },
+        "lp_renamed": {
+          "ms": 103.74690000026021,
+          "status": "SERVED"
+        },
+        "ll_meeting": {
+          "ms": 107.37630000221543,
+          "status": "SERVED"
+        },
+        "ll_perpendicular": {
+          "ms": 109.9566999982926,
+          "status": "SERVED"
+        },
+        "ll_skew_perpendicular": {
+          "ms": 107.19620000600116,
+          "status": "SERVED"
+        },
+        "ll_skew_varying": {
+          "ms": 34.295099998416845,
+          "status": "REFUSED"
+        },
+        "lp_varying_lateral": {
+          "ms": 30.61800000432413,
+          "status": "REFUSED"
+        },
+        "lp_no_ratio": {
+          "ms": 29.675799996766727,
+          "status": "REFUSED"
+        },
+        "pa_prism_out_of_domain": {
+          "ms": 27.549799997359514,
+          "status": "REFUSED"
+        },
+        "_diagnose_ms": 0.1324294999722042,
+        "_proof": {
+          "max_derived": 256,
+          "rows": {
+            "goal_angle_line_plane": {
+              "prove_ms": 0.053560000014840625,
+              "verify_ms": null,
+              "status": null,
+              "steps": 0
+            },
+            "goal_cos_line_plane": {
+              "prove_ms": 0.05363499985833187,
+              "verify_ms": null,
+              "status": null,
+              "steps": 0
+            },
+            "goal_cos_spelled": {
+              "prove_ms": 0.05426999996416271,
+              "verify_ms": null,
+              "status": null,
+              "steps": 0
+            },
+            "goal_tan_line_plane": {
+              "prove_ms": 0.06161499986774288,
+              "verify_ms": null,
+              "status": null,
+              "steps": 0
+            },
+            "goal_sin_mc_stem": {
+              "prove_ms": 0.053309999930206686,
+              "verify_ms": null,
+              "status": null,
+              "steps": 0
+            },
+            "goal_cos_planes": {
+              "prove_ms": 0.0008899998647393659,
+              "verify_ms": null,
+              "status": null,
+              "steps": 0
+            },
+            "goal_cos_lines": {
+              "prove_ms": 0.0009300001693191007,
+              "verify_ms": null,
+              "status": null,
+              "steps": 0
+            },
+            "goal_tan_right_angle": {
+              "prove_ms": 0.0853999998071231,
+              "verify_ms": 0.021654999727616087,
+              "status": "PROVEN",
+              "steps": 2
+            },
+            "goal_cos_scale_free": {
+              "prove_ms": 0.026694999905885197,
+              "verify_ms": null,
+              "status": null,
+              "steps": 0
+            },
+            "scale_iso_planes": {
+              "prove_ms": 0.10465999985171948,
+              "verify_ms": null,
+              "status": null,
+              "steps": 0
+            },
+            "scale_iso_tan": {
+              "prove_ms": 0.11761499990825541,
+              "verify_ms": null,
+              "status": null,
+              "steps": 0
+            },
+            "scale_iso_line_plane": {
+              "prove_ms": 0.12477500022214372,
+              "verify_ms": 0.04803000010724645,
+              "status": "PROVEN",
+              "steps": 4
+            },
+            "scale_iso_renamed": {
+              "prove_ms": 0.103914999999688,
+              "verify_ms": null,
+              "status": null,
+              "steps": 0
+            },
+            "scale_iso_with_length": {
+              "prove_ms": 0.11392500018700957,
+              "verify_ms": null,
+              "status": null,
+              "steps": 0
+            },
+            "scale_shape_free": {
+              "prove_ms": 0.1025500001560431,
+              "verify_ms": 0.059374999909778126,
+              "status": "PROVEN",
+              "steps": 8
+            },
+            "scale_height_free": {
+              "prove_ms": 0.09727500000735745,
+              "verify_ms": null,
+              "status": null,
+              "steps": 0
+            },
+            "scale_regular_tetra_no_side": {
+              "prove_ms": 0.03138499996566679,
+              "verify_ms": null,
+              "status": null,
+              "steps": 0
+            },
+            "ti_right_b_planes": {
+              "prove_ms": 0.10690000017348211,
+              "verify_ms": 0.06834500018157996,
+              "status": "PROVEN",
+              "steps": 8
+            },
+            "ti_right_b_tan": {
+              "prove_ms": 0.1117200001317542,
+              "verify_ms": 0.06687499990221113,
+              "status": "PROVEN",
+              "steps": 8
+            },
+            "ti_renamed": {
+              "prove_ms": 0.10986499983118847,
+              "verify_ms": 0.06302000001596753,
+              "status": "PROVEN",
+              "steps": 8
+            },
+            "ti_varying_line_plane": {
+              "prove_ms": 0.09499000007053837,
+              "verify_ms": null,
+              "status": null,
+              "steps": 0
+            },
+            "ti_height_free": {
+              "prove_ms": 0.0787799999670824,
+              "verify_ms": null,
+              "status": null,
+              "steps": 0
+            },
+            "tet_lines": {
+              "prove_ms": 0.026805000015883707,
+              "verify_ms": null,
+              "status": null,
+              "steps": 0
+            },
+            "tet_cos_mc": {
+              "prove_ms": 0.028559999918797985,
+              "verify_ms": null,
+              "status": null,
+              "steps": 0
+            },
+            "tet_renamed": {
+              "prove_ms": 0.03262999998696614,
+              "verify_ms": null,
+              "status": null,
+              "steps": 0
+            },
+            "tet_with_side": {
+              "prove_ms": 0.021719999858760275,
+              "verify_ms": null,
+              "status": null,
+              "steps": 0
+            },
+            "tet_edge_face": {
+              "prove_ms": 0.026965000142809004,
+              "verify_ms": null,
+              "status": null,
+              "steps": 0
+            },
+            "tet_not_regular": {
+              "prove_ms": 0.013339999713934958,
+              "verify_ms": null,
+              "status": null,
+              "steps": 0
+            },
+            "tet_regular_pyramid_only": {
+              "prove_ms": 0.019474999862723053,
+              "verify_ms": null,
+              "status": null,
+              "steps": 0
+            },
+            "pa_ratio2_planes": {
+              "prove_ms": 0.1130399999965448,
+              "verify_ms": 0.08359000021300744,
+              "status": "PROVEN",
+              "steps": 8
+            },
+            "pa_ratio2_tan": {
+              "prove_ms": 0.12271000014152378,
+              "verify_ms": 0.0765300002967706,
+              "status": "PROVEN",
+              "steps": 8
+            },
+            "pa_source_perp_lines": {
+              "prove_ms": 0.11847000023408327,
+              "verify_ms": 0.0596049998421222,
+              "status": "PROVEN",
+              "steps": 8
+            },
+            "pp_base": {
+              "prove_ms": 0.11402999989513773,
+              "verify_ms": 0.027950000003329478,
+              "status": "PROVEN",
+              "steps": 2
+            },
+            "pp_lateral": {
+              "prove_ms": 0.11040999997931067,
+              "verify_ms": 0.0436700000136625,
+              "status": "PROVEN",
+              "steps": 5
+            },
+            "lp_isosceles": {
+              "prove_ms": 0.10029500008386094,
+              "verify_ms": 0.04198000024189241,
+              "status": "PROVEN",
+              "steps": 4
+            },
+            "lp_ratio2": {
+              "prove_ms": 0.11181499976373743,
+              "verify_ms": 0.05166500013729092,
+              "status": "PROVEN",
+              "steps": 4
+            },
+            "lp_perpendicular": {
+              "prove_ms": 0.08664499982842244,
+              "verify_ms": 0.0262100002146326,
+              "status": "PROVEN",
+              "steps": 2
+            },
+            "lp_renamed": {
+              "prove_ms": 0.12878999987151474,
+              "verify_ms": 0.09999499998230021,
+              "status": "PROVEN",
+              "steps": 4
+            },
+            "ll_meeting": {
+              "prove_ms": 0.10756500014394987,
+              "verify_ms": 0.043125000229338184,
+              "status": "PROVEN",
+              "steps": 4
+            },
+            "ll_perpendicular": {
+              "prove_ms": 0.09116500004893169,
+              "verify_ms": 0.043540000115172006,
+              "status": "PROVEN",
+              "steps": 6
+            },
+            "ll_skew_perpendicular": {
+              "prove_ms": 0.09301999998569954,
+              "verify_ms": 0.032065000050351955,
+              "status": "PROVEN",
+              "steps": 3
+            },
+            "ll_skew_varying": {
+              "prove_ms": 0.0786849999713013,
+              "verify_ms": null,
+              "status": null,
+              "steps": 0
+            },
+            "lp_varying_lateral": {
+              "prove_ms": 0.08777000002737623,
+              "verify_ms": null,
+              "status": null,
+              "steps": 0
+            },
+            "lp_no_ratio": {
+              "prove_ms": 0.08415000011154916,
+              "verify_ms": null,
+              "status": null,
+              "steps": 0
+            },
+            "pa_prism_out_of_domain": {
+              "prove_ms": 0.000884999826666899,
+              "verify_ms": null,
+              "status": null,
+              "steps": 0
+            }
+          }
+        }
+      },
+      "prepare": {
+        "vmmu_r247": {
+          "ms": 4127.457399998093,
+          "status": "needs_confirmation",
+          "set": "REAL_SINGLE"
+        },
+        "vmmu_r254": {
+          "ms": 2196.6596999991452,
+          "status": "needs_confirmation",
+          "set": "REAL_SINGLE"
+        },
+        "vmmu_r256": {
+          "ms": 2670.0315000052797,
+          "status": "needs_confirmation",
+          "set": "REAL_SINGLE"
+        },
+        "vmmu_r258": {
+          "ms": 1653.39110000059,
+          "status": "needs_confirmation",
+          "set": "REAL_SINGLE"
+        },
+        "vmmu_r266": {
+          "ms": 1608.5399000003235,
+          "status": "needs_confirmation",
+          "set": "REAL_SINGLE"
+        },
+        "vmmu_r270": {
+          "ms": 3151.7774000021745,
+          "status": "needs_confirmation",
+          "set": "REAL_SINGLE"
+        },
+        "vmmu_r247+vmmu_r254": {
+          "ms": 3159.029599999485,
+          "status": "needs_selection",
+          "set": "COMPOSITE_2"
+        },
+        "vmmu_r256+vmmu_r258": {
+          "ms": 3210.977800001274,
+          "status": "needs_selection",
+          "set": "COMPOSITE_2"
+        },
+        "vmmu_r266+vmmu_r270": {
+          "ms": 3263.698000002478,
+          "status": "needs_selection",
+          "set": "COMPOSITE_2"
+        },
+        "vmmu_r273+vmmu_r277": {
+          "ms": 2518.966100004036,
+          "status": "needs_selection",
+          "set": "COMPOSITE_2"
+        }
+      }
+    }
+  },
+  "physical_low_end": "PHYSICAL_LOW_END_NOT_MEASURED"
+}

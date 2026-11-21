@@ -1,0 +1,582 @@
+{
+  "run_id": "grounded-vietnamese-geometry-understanding",
+  "generated_at_utc": "2026-11-14T18:06:51.284832+00:00",
+  "input": "image → /api/input/prepare (local OCR) → scripted confirmation of flagged spans only → local parser",
+  "rows": {
+    "vmmu_r247": {
+      "prepare_status": "needs_confirmation",
+      "confirmed_text_sha256": "430498746460ea566d933ddd4170e8a3652a460880403cb9ec3829a936dd2171",
+      "statement_sha256": "5f3e8da93e0ce388243259a966f6e1c30efeb8ee798d27c4af33c20f5398ecfe",
+      "texts_identical": false,
+      "ocr": {
+        "status": "LOCAL_PARSE_PARTIAL",
+        "reason": "EMPTY_SOLIDS"
+      },
+      "statement": {
+        "status": "LOCAL_PARSE_COMPLETE",
+        "reason": null
+      },
+      "same_representation": {
+        "solids": false,
+        "premises": false,
+        "goals": true
+      },
+      "single_problem": true,
+      "attribution": "OCR_OR_REGION_FAILURE"
+    },
+    "vmmu_r254": {
+      "prepare_status": "needs_confirmation",
+      "confirmed_text_sha256": "d5ae5e7b13f63f35b17ed49182ccfd561faaeeee050c411e9e0d18ae36c4cc33",
+      "statement_sha256": "1b71b6ac60aedac7043c9a7c928ed4fa2b3d7229c6bef98432bea0446d00105d",
+      "texts_identical": false,
+      "ocr": {
+        "status": "LOCAL_PARSE_PARTIAL",
+        "reason": "UNPARSED_FACT_CANDIDATE"
+      },
+      "statement": {
+        "status": "LOCAL_PARSE_PARTIAL",
+        "reason": "UNPARSED_GOAL_CANDIDATE"
+      },
+      "same_representation": {
+        "solids": true,
+        "premises": false,
+        "goals": false
+      },
+      "single_problem": true,
+      "attribution": "OCR_OR_REGION_FAILURE"
+    },
+    "vmmu_r256": {
+      "prepare_status": "needs_confirmation",
+      "confirmed_text_sha256": "7ef9383908a9c3dd10984d180ec10bb26347c3c6b7a35606bd826ae20b6c0f71",
+      "statement_sha256": "b3c99ebccab872eab209179785d9c8940a1c36ce6c58a6ac2b94262810394950",
+      "texts_identical": false,
+      "ocr": {
+        "status": "LOCAL_PARSE_PARTIAL",
+        "reason": "UNPARSED_FACT_CANDIDATE"
+      },
+      "statement": {
+        "status": "LOCAL_PARSE_PARTIAL",
+        "reason": "UNPARSED_GOAL_CANDIDATE"
+      },
+      "same_representation": {
+        "solids": true,
+        "premises": false,
+        "goals": true
+      },
+      "single_problem": true,
+      "attribution": "OCR_OR_REGION_FAILURE"
+    },
+    "vmmu_r258": {
+      "prepare_status": "needs_confirmation",
+      "confirmed_text_sha256": "dd8e8969028dbf5ac4e32f3afade7265c41c9c7f771052be261351f714e7750b",
+      "statement_sha256": "86a06df87628a29335dec2168da6037cf5396731bd9a29ce24bdc2d5a0b0cd92",
+      "texts_identical": false,
+      "ocr": {
+        "status": "LOCAL_PARSE_COMPLETE",
+        "reason": null
+      },
+      "statement": {
+        "status": "LOCAL_PARSE_COMPLETE",
+        "reason": null
+      },
+      "same_representation": {
+        "solids": true,
+        "premises": true,
+        "goals": true
+      },
+      "single_problem": true,
+      "attribution": "CONSISTENT"
+    },
+    "vmmu_r266": {
+      "prepare_status": "needs_confirmation",
+      "confirmed_text_sha256": "e959dcdec4c47f35a27061c7de15553699d5a7172c49533ed4cc7efea7b14165",
+      "statement_sha256": "1e83a2eec97786ccdd033a1d744cdbb083f690e7bfd096b5a5cbbc2615879dc2",
+      "texts_identical": false,
+      "ocr": {
+        "status": "LOCAL_PARSE_PARTIAL",
+        "reason": "UNPARSED_FACT_CANDIDATE"
+      },
+      "statement": {
+        "status": "LOCAL_PARSE_COMPLETE",
+        "reason": null
+      },
+      "same_representation": {
+        "solids": true,
+        "premises": false,
+        "goals": true
+      },
+      "single_problem": true,
+      "attribution": "OCR_OR_REGION_FAILURE"
+    },
+    "vmmu_r270": {
+      "prepare_status": "needs_confirmation",
+      "confirmed_text_sha256": "95aad2dfd473b6d343606b745bee52304ff4b1dfe7d5d24e0fe1bdfbe67b0843",
+      "statement_sha256": "dada34f102c96ca7b1cf61c7fb1ef7bc66330e41ede6bbfd030952f3d0c7828e",
+      "texts_identical": false,
+      "ocr": {
+        "status": "LOCAL_PARSE_PARTIAL",
+        "reason": "UNPARSED_FACT_CANDIDATE"
+      },
+      "statement": {
+        "status": "LOCAL_PARSE_COMPLETE",
+        "reason": null
+      },
+      "same_representation": {
+        "solids": true,
+        "premises": false,
+        "goals": true
+      },
+      "single_problem": true,
+      "attribution": "OCR_OR_REGION_FAILURE"
+    },
+    "vmmu_r273": {
+      "prepare_status": "needs_confirmation",
+      "confirmed_text_sha256": "f9fe5d739f9a2a7195bdb292fa9fb056123aa35bdac13a1398a1ba2bda81f9e9",
+      "statement_sha256": "2c2c430855ded12bafe9c96def610b16b3e84da540b0aed451632080ec19c990",
+      "texts_identical": false,
+      "ocr": {
+        "status": "LOCAL_PARSE_COMPLETE",
+        "reason": null
+      },
+      "statement": {
+        "status": "LOCAL_PARSE_COMPLETE",
+        "reason": null
+      },
+      "same_representation": {
+        "solids": true,
+        "premises": true,
+        "goals": true
+      },
+      "single_problem": true,
+      "attribution": "CONSISTENT"
+    },
+    "vmmu_r277": {
+      "prepare_status": "needs_confirmation",
+      "confirmed_text_sha256": "c83f4f2351c5b774e13fdb641f2ce45708a52376ec16ab12e1a0c7ad99374c36",
+      "statement_sha256": "9cc7353c9dd163e7190cb38347dd7a1aca2dabad29d3eb7c7cdba4ba8d81888e",
+      "texts_identical": false,
+      "ocr": {
+        "status": "LOCAL_PARSE_PARTIAL",
+        "reason": "UNPARSED_GOAL_CANDIDATE"
+      },
+      "statement": {
+        "status": "LOCAL_PARSE_PARTIAL",
+        "reason": "UNPARSED_GOAL_CANDIDATE"
+      },
+      "same_representation": {
+        "solids": true,
+        "premises": true,
+        "goals": true
+      },
+      "single_problem": true,
+      "attribution": "CONSISTENT"
+    },
+    "vmmu_r284": {
+      "prepare_status": "needs_confirmation",
+      "confirmed_text_sha256": "72b56b121c861a26bbb51a49f373774defff7622ad992278ce6933af07660dc4",
+      "statement_sha256": "e3ab9e610dfc7fed5669a20c237bcc178b04a2f15702c1fa19af6778b5c91d51",
+      "texts_identical": false,
+      "ocr": {
+        "status": "LOCAL_PARSE_PARTIAL",
+        "reason": "UNPARSED_FACT_CANDIDATE"
+      },
+      "statement": {
+        "status": "LOCAL_PARSE_COMPLETE",
+        "reason": null
+      },
+      "same_representation": {
+        "solids": true,
+        "premises": false,
+        "goals": true
+      },
+      "single_problem": true,
+      "attribution": "OCR_OR_REGION_FAILURE"
+    },
+    "vmmu_r295": {
+      "prepare_status": "needs_confirmation",
+      "confirmed_text_sha256": "5146679c7dc35dc7e91090b418c810aad5ab1058edaef1bb4c0588a0021785c5",
+      "statement_sha256": "294378d7c5c5f73cbbd137b3da1bba388cf9ab5acedd68d1d666bb8debf98be0",
+      "texts_identical": false,
+      "ocr": {
+        "status": "LOCAL_PARSE_COMPLETE",
+        "reason": null
+      },
+      "statement": {
+        "status": "LOCAL_PARSE_COMPLETE",
+        "reason": null
+      },
+      "same_representation": {
+        "solids": true,
+        "premises": true,
+        "goals": true
+      },
+      "single_problem": true,
+      "attribution": "CONSISTENT"
+    },
+    "vmmu_r298": {
+      "prepare_status": "needs_confirmation",
+      "confirmed_text_sha256": "95db5fadbcd75303014550984943a6a90412a8860ac206365c472b59a6c5947f",
+      "statement_sha256": "a6e9d6b90f89854a2012a5a6d9631fa517fbbc6b2353940b998533c5d6e26895",
+      "texts_identical": false,
+      "ocr": {
+        "status": "LOCAL_PARSE_COMPLETE",
+        "reason": null
+      },
+      "statement": {
+        "status": "LOCAL_PARSE_COMPLETE",
+        "reason": null
+      },
+      "same_representation": {
+        "solids": true,
+        "premises": true,
+        "goals": true
+      },
+      "single_problem": true,
+      "attribution": "CONSISTENT"
+    },
+    "vmmu_r375": {
+      "prepare_status": "needs_confirmation",
+      "confirmed_text_sha256": "e53baf45d6bd5a779ec5bb9574468812c464ed01a7fbd3360ba1f31b37330421",
+      "statement_sha256": "43d3e7b4b26df10058e24fac2b230b42fcaf99d7a48c227b587b751280e8ac22",
+      "texts_identical": false,
+      "ocr": {
+        "status": "LOCAL_PARSE_PARTIAL",
+        "reason": "INVALID_MATH_GOAL"
+      },
+      "statement": {
+        "status": "LOCAL_PARSE_COMPLETE",
+        "reason": null
+      },
+      "same_representation": {
+        "solids": true,
+        "premises": true,
+        "goals": false
+      },
+      "single_problem": true,
+      "attribution": "OCR_OR_REGION_FAILURE"
+    },
+    "vmmu_r460": {
+      "prepare_status": "needs_confirmation",
+      "confirmed_text_sha256": "3e82cab672bfade15509ed3d5512a1aa32700186a5120e4d33bb91ea804e6fb9",
+      "statement_sha256": "eeef7ddcad1956475fdfdf31fc2078ac40c7aeb676dcfae948e95dc2000cd85a",
+      "texts_identical": false,
+      "ocr": {
+        "status": "LOCAL_PARSE_PARTIAL",
+        "reason": "NOT_ASKED_IN_SOURCE"
+      },
+      "statement": {
+        "status": "LOCAL_PARSE_COMPLETE",
+        "reason": null
+      },
+      "same_representation": {
+        "solids": true,
+        "premises": false,
+        "goals": true
+      },
+      "single_problem": true,
+      "attribution": "OCR_OR_REGION_FAILURE"
+    },
+    "vmmu_r461": {
+      "prepare_status": "needs_confirmation",
+      "confirmed_text_sha256": "1b5ad52c75af92d6950e55d6c1550aa96f29d4c0d0aba4cca06790ba4a93ec4c",
+      "statement_sha256": "809ff614e1cd0c7592adc9eea4ba87dab2a4947566019da16a6d8ec9cc1fde74",
+      "texts_identical": false,
+      "ocr": {
+        "status": "LOCAL_PARSE_PARTIAL",
+        "reason": "EMPTY_SOLIDS"
+      },
+      "statement": {
+        "status": "LOCAL_PARSE_PARTIAL",
+        "reason": "EMPTY_SOLIDS"
+      },
+      "same_representation": {
+        "solids": true,
+        "premises": true,
+        "goals": true
+      },
+      "single_problem": true,
+      "attribution": "CONSISTENT"
+    },
+    "vmmu_r463": {
+      "prepare_status": "needs_confirmation",
+      "confirmed_text_sha256": "10752f7e77dc79dec9b41ee1b7550df4462acfa0f97f3a0ee4a970382f60b64f",
+      "statement_sha256": "d5b7213d8d1ec5e8e2a775f79368034cb363cc61ccc0bd25383a68cc276b8bd3",
+      "texts_identical": false,
+      "ocr": {
+        "status": "LOCAL_PARSE_PARTIAL",
+        "reason": "UNPARSED_FACT_CANDIDATE"
+      },
+      "statement": {
+        "status": "LOCAL_PARSE_COMPLETE",
+        "reason": null
+      },
+      "same_representation": {
+        "solids": true,
+        "premises": false,
+        "goals": true
+      },
+      "single_problem": true,
+      "attribution": "OCR_OR_REGION_FAILURE"
+    },
+    "vmmu_r475": {
+      "prepare_status": "needs_confirmation",
+      "confirmed_text_sha256": "5720e6eee4636ace2c0f658976c7ddb374bcf74cb8998d0fe89610fab6181d7f",
+      "statement_sha256": "33abd4b25c729c465d2ee1740f6f063514d834d02e35c6d1323a875b9f69b601",
+      "texts_identical": false,
+      "ocr": {
+        "status": "LOCAL_PARSE_UNSUPPORTED",
+        "reason": "EMPTY_SOLIDS"
+      },
+      "statement": {
+        "status": "LOCAL_PARSE_UNSUPPORTED",
+        "reason": "EMPTY_SOLIDS"
+      },
+      "same_representation": {
+        "solids": true,
+        "premises": true,
+        "goals": true
+      },
+      "single_problem": true,
+      "attribution": "CONSISTENT"
+    },
+    "vmmu_r476": {
+      "prepare_status": "needs_confirmation",
+      "confirmed_text_sha256": "7923c5cabb596c2fbff7763911c21c5eb0151d2fec79d319578100d257fbaf6e",
+      "statement_sha256": "ce8609f40262757ab9cde8c4aa6069672d9efbf45c2a55c5880f283fe0b8b1f3",
+      "texts_identical": false,
+      "ocr": {
+        "status": "LOCAL_PARSE_COMPLETE",
+        "reason": null
+      },
+      "statement": {
+        "status": "LOCAL_PARSE_COMPLETE",
+        "reason": null
+      },
+      "same_representation": {
+        "solids": true,
+        "premises": true,
+        "goals": true
+      },
+      "single_problem": true,
+      "attribution": "CONSISTENT"
+    },
+    "vmmu_r488": {
+      "prepare_status": "needs_confirmation",
+      "confirmed_text_sha256": "5e830adde95cb3b74fac7e7910bc182ed750302c01dc02b870b51f2afc3a3b54",
+      "statement_sha256": "7a9d2a6349ee313907d1dfa7bf3b2c9b8822c4543212968a5400e9e44cb35d66",
+      "texts_identical": false,
+      "ocr": {
+        "status": "LOCAL_PARSE_PARTIAL",
+        "reason": "SOURCE_PREMISE_UNREAD"
+      },
+      "statement": {
+        "status": "LOCAL_PARSE_PARTIAL",
+        "reason": "UNPARSED_GOAL_CANDIDATE"
+      },
+      "same_representation": {
+        "solids": true,
+        "premises": true,
+        "goals": true
+      },
+      "single_problem": true,
+      "attribution": "CONSISTENT"
+    },
+    "vmmu_r491": {
+      "prepare_status": "needs_confirmation",
+      "confirmed_text_sha256": "3b38e48f75c1548e868d61b91b3bdb6aecad9d0b5c178d265ccc7b3fe8bab427",
+      "statement_sha256": "ccf866f6e06a328aa73adaca5eb5c95cbd247aca3f2c821dc11d3e84cab8ac3d",
+      "texts_identical": false,
+      "ocr": {
+        "status": "LOCAL_PARSE_PARTIAL",
+        "reason": "UNPARSED_FACT_CANDIDATE"
+      },
+      "statement": {
+        "status": "LOCAL_PARSE_PARTIAL",
+        "reason": "UNPARSED_FACT_CANDIDATE"
+      },
+      "same_representation": {
+        "solids": true,
+        "premises": true,
+        "goals": true
+      },
+      "single_problem": true,
+      "attribution": "CONSISTENT"
+    },
+    "vmmu_r492": {
+      "prepare_status": "needs_confirmation",
+      "confirmed_text_sha256": "b7b264cf4951ea4f39cec5a5a56866243033dae6c7fd4378e431c0afc8779ee8",
+      "statement_sha256": "0f07c493cb02fd120d04df23beaea5488e7ecfc91b6e24d567aea0655d0460ec",
+      "texts_identical": false,
+      "ocr": {
+        "status": "LOCAL_PARSE_COMPLETE",
+        "reason": null
+      },
+      "statement": {
+        "status": "LOCAL_PARSE_COMPLETE",
+        "reason": null
+      },
+      "same_representation": {
+        "solids": true,
+        "premises": true,
+        "goals": true
+      },
+      "single_problem": false,
+      "attribution": "CONSISTENT"
+    },
+    "vmmu_r498": {
+      "prepare_status": "needs_confirmation",
+      "confirmed_text_sha256": "4b6ee1a24cfbbd940df2e349fdc89ea9fd93d44756a46006d0b322a5248120d0",
+      "statement_sha256": "c437503de7d0db0da8be5b1f9412fe7d6db4397ea1ac53b650c859b2fe81ab52",
+      "texts_identical": false,
+      "ocr": {
+        "status": "LOCAL_PARSE_COMPLETE",
+        "reason": null
+      },
+      "statement": {
+        "status": "LOCAL_PARSE_COMPLETE",
+        "reason": null
+      },
+      "same_representation": {
+        "solids": true,
+        "premises": true,
+        "goals": true
+      },
+      "single_problem": true,
+      "attribution": "CONSISTENT"
+    },
+    "vmmu_r513": {
+      "prepare_status": "needs_confirmation",
+      "confirmed_text_sha256": "cf3e51109ac8d1598ad9a55699fecee4aa74cc342952217201ff727c4ca27967",
+      "statement_sha256": "49464028330e78ad4de5b4bffbf81beee0779b43eedb8ff554a50b6713e03685",
+      "texts_identical": false,
+      "ocr": {
+        "status": "LOCAL_PARSE_PARTIAL",
+        "reason": "QUESTION_CONTEXT_UNSUPPORTED"
+      },
+      "statement": {
+        "status": "LOCAL_PARSE_PARTIAL",
+        "reason": "QUESTION_CONTEXT_UNSUPPORTED"
+      },
+      "same_representation": {
+        "solids": true,
+        "premises": true,
+        "goals": true
+      },
+      "single_problem": true,
+      "attribution": "CONSISTENT"
+    },
+    "vmmu_r520": {
+      "prepare_status": "needs_confirmation",
+      "confirmed_text_sha256": "f32ec2a296b651146c16cd4cbd9e0b5f8b356565c2bdc27855458259d74b37d6",
+      "statement_sha256": "5c9054338f29fa3f03ccc522cd5be706b0e0e41a439a19426189c26c132378d2",
+      "texts_identical": false,
+      "ocr": {
+        "status": "LOCAL_PARSE_PARTIAL",
+        "reason": "UNPARSED_FACT_CANDIDATE"
+      },
+      "statement": {
+        "status": "LOCAL_PARSE_COMPLETE",
+        "reason": null
+      },
+      "same_representation": {
+        "solids": true,
+        "premises": true,
+        "goals": false
+      },
+      "single_problem": true,
+      "attribution": "OCR_OR_REGION_FAILURE"
+    },
+    "vmmu_r537": {
+      "prepare_status": "needs_confirmation",
+      "confirmed_text_sha256": "2c8a71796ecbb1c841b470c56b56045eabcf36d2cc91b3104c816f4102ae80e9",
+      "statement_sha256": "8b6a844c5ab49083138e6faedf8f6792fb0d3cb49a76e110ccde5f2b0ebdc80c",
+      "texts_identical": false,
+      "ocr": {
+        "status": "LOCAL_PARSE_PARTIAL",
+        "reason": "UNPARSED_FACT_CANDIDATE"
+      },
+      "statement": {
+        "status": "LOCAL_PARSE_PARTIAL",
+        "reason": "UNPARSED_FACT_CANDIDATE"
+      },
+      "same_representation": {
+        "solids": true,
+        "premises": true,
+        "goals": true
+      },
+      "single_problem": true,
+      "attribution": "CONSISTENT"
+    },
+    "vmmu_r538": {
+      "prepare_status": "needs_confirmation",
+      "confirmed_text_sha256": "c8018c0075182547de67d9d1fbcdc0bc93b21088c451c7a89dbbba642737367a",
+      "statement_sha256": "a4a500ab33ac1ab0dba657f00c75066bf0d47f79243d0eb6d553b46fb5940122",
+      "texts_identical": false,
+      "ocr": {
+        "status": "LOCAL_PARSE_COMPLETE",
+        "reason": null
+      },
+      "statement": {
+        "status": "LOCAL_PARSE_COMPLETE",
+        "reason": null
+      },
+      "same_representation": {
+        "solids": true,
+        "premises": true,
+        "goals": true
+      },
+      "single_problem": true,
+      "attribution": "CONSISTENT"
+    },
+    "vmmu_r559": {
+      "prepare_status": "needs_confirmation",
+      "confirmed_text_sha256": "3c91fe7c1519fe37558185f655be240312e7df25295f30be6ee76c25b6329506",
+      "statement_sha256": "37e359e64b1e81fbdb0a0eb7507fccba73e3e3206781923b653b85040a9c160b",
+      "texts_identical": false,
+      "ocr": {
+        "status": "LOCAL_PARSE_COMPLETE",
+        "reason": null
+      },
+      "statement": {
+        "status": "LOCAL_PARSE_COMPLETE",
+        "reason": null
+      },
+      "same_representation": {
+        "solids": true,
+        "premises": true,
+        "goals": true
+      },
+      "single_problem": true,
+      "attribution": "CONSISTENT"
+    },
+    "vmmu_r695": {
+      "prepare_status": "needs_confirmation",
+      "confirmed_text_sha256": "d492a3e678ad56227bf9276537aa491198c632a16d32e17082564048782ad582",
+      "statement_sha256": "be92444253700faa6ccedfb0581868a07e75a3580bb9317db83ded26f4113fa1",
+      "texts_identical": false,
+      "ocr": {
+        "status": "LOCAL_PARSE_PARTIAL",
+        "reason": "NOT_ASKED_IN_SOURCE"
+      },
+      "statement": {
+        "status": "LOCAL_PARSE_COMPLETE",
+        "reason": null
+      },
+      "same_representation": {
+        "solids": true,
+        "premises": true,
+        "goals": true
+      },
+      "single_problem": true,
+      "attribution": "PARSER_STATUS_DIFFERS"
+    }
+  },
+  "attribution": {
+    "OCR_OR_REGION_FAILURE": 10,
+    "CONSISTENT": 16,
+    "PARSER_STATUS_DIFFERS": 1
+  },
+  "multi_problem_leaks": [
+    "vmmu_r492"
+  ]
+}

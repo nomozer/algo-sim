@@ -60,8 +60,101 @@ def run_typed_fact_next_v2_route(raw: Any) -> KetQuaTuyen:
             from app.simulation.geometry_functions.typed_fact_next import quote_spans
 
             clar["spans"] = quote_spans(source, clar["quote"])   # offsets in the RAW source (a model input is stripped)
+        if r.status == "SERVED" and (sgc := _source_goal_completion(r, source)):
+            r.details = {**(r.details or {}), "source_goal_completion": sgc}
     r.route_d = deepcopy(_phong_bi(r))
     return r
+
+
+#: Run `compositional-semantics-simulation-goals`. A served answer may construct the OBJECT of a source goal without
+#: answering the NUMBER the source asks of it: "Tính côsin của góc …" is served as the constructed, kernel-certified angle;
+#: the cosine itself is never shown (output-policy/1, no-answer surface) and never counted as answered.
+SOURCE_GOAL_COMPLETION_VERSION = "source-goal-completion/1"
+
+
+def _angle_construction_bound(ac: Any, pts: dict[str, list[str]]) -> bool:
+    """`angle-construction/1` names only verified points: a named vertex / arm end has that point's coordinates, and the
+    perpendicular marker runs between two DISTINCT drawn points of the angle (vertex or arm ends)."""
+    if not isinstance(ac, dict) or not isinstance(ac.get("arms"), list) or not isinstance(ac.get("vertex"), list):
+        return False
+    norm = lambda v: [str(x) for x in v] if isinstance(v, list) else None  # noqa: E731
+    vertex, ends = norm(ac["vertex"]), [norm(a.get("to")) if isinstance(a, dict) else None for a in ac["arms"]]
+    if None in ends or (ac.get("vertex_id") in pts and pts[ac["vertex_id"]] != vertex):
+        return False
+    if any(isinstance(a, dict) and a.get("to_id") in pts and pts[a["to_id"]] != norm(a.get("to")) for a in ac["arms"]):
+        return False
+    perp = ac.get("perpendicular")
+    if perp is None:
+        return True
+    drawn = [vertex, *ends]
+    return isinstance(perp, dict) and norm(perp.get("foot")) in drawn and norm(perp.get("from")) in drawn \
+        and norm(perp.get("foot")) != norm(perp.get("from"))
+
+
+#: Which drawn right angle may stand for a proven 90° goal (angle-construction relation or `_goc_vuong` marker relation).
+_RIGHT_ANGLE_DRAWING = {
+    "ask_angle_plane_plane": frozenset({"plane_plane"}),
+    "ask_angle_line_plane": frozenset({"line_perpendicular_plane"}),
+    "ask_angle_lines": frozenset({"line_perpendicular_line", "line_line_skew"}),
+}
+
+
+def _invariance_proof_bound(cfg: Any, answer_exact: dict, objects: dict) -> bool:
+    """A `TARGET_INVARIANT_ILLUSTRATIVE` scene is bound to its `target-invariance-certificate/2`: every proven goal is a
+    served answer whose exact cos² IS the proven one, and the angle the scene draws for it is the proof's witness — the
+    same named vertex and the same two arm ends (run `proof-soundness-generalized-angle-invariance`)."""
+    from fractions import Fraction
+
+    cert = (cfg or {}).get("invariance_certificate") if isinstance(cfg, dict) else None
+    goals = cert.get("goals") if isinstance(cert, dict) else None
+    if not isinstance(cert, dict) or cert.get("schema_version") != "target-invariance-certificate/2" or not goals:
+        return False
+    for g in goals:
+        gid, concl = g.get("goal_id"), g.get("conclusion") or {}
+        if (g.get("independent_verification") or {}).get("verified") is not True or gid not in answer_exact:
+            return False
+        if Fraction(str(answer_exact[gid].get("coef"))) != Fraction(str(concl.get("cos_sq"))):
+            return False
+        q = objects.get(f"kq_{gid}") or {}
+        w, ac = concl.get("witness"), q.get("angle_construction")
+        # A 90° conclusion has no witness triangle; what the scene draws for it must be that KIND of right angle
+        # (run `scene3d-causal-pedagogical-integrity`): two planes ⇒ plane_plane, line–plane ⇒ the ⊥-plane marker, lines ⇒
+        # a meeting-point marker or the skew parallel construction.
+        kind = (g.get("goal") or {}).get("function")
+        drawn = {ac.get("relation")} if ac else set()
+        drawn |= {((q.get("annotation") or {}).get("witness") or {}).get("relation")} - {None}
+        if w is None and drawn and not drawn <= _RIGHT_ANGLE_DRAWING.get(kind, frozenset()):
+            return False
+        if w is not None and ac is not None and (
+                ac.get("vertex_id") != w.get("vertex")
+                or sorted(str(a.get("to_id")) for a in ac.get("arms") or ()) != sorted((w["ray_1"][1], w["ray_2"][1]))):
+            return False
+    return True
+
+
+def _source_goal_completion(r: KetQuaTuyen, source: str) -> dict[str, Any] | None:
+    """`source-goal-completion/1` when an `ask_angle_*` call answers an angle the source asks a trigonometric value OF
+    (read by the gate's own `ham_luong_giac_hoi`), else None — every other served result keeps its exact shape."""
+    from fractions import Fraction
+
+    from app.simulation.geometry_functions.registry import ham_luong_giac_hoi
+
+    goals = []
+    for c in r.calls:
+        if not str(c.get("fn", "")).startswith("ask_angle_"):
+            continue
+        fs = {ham_luong_giac_hoi(source, q) for q in c.get("quotes") or ()}
+        if len(fs) != 1 or (f := fs.pop()) is None:
+            continue
+        cos2 = Fraction((r.answer_exact.get(c["id"]) or {}).get("coef", "nan")) if c["id"] in r.answer_exact else None
+        defined = None if cos2 is None else {"tan": cos2 != 0, "cot": cos2 != 1}.get(f, True)
+        goals.append({"goal_id": c["id"], "source_request": "TRIGONOMETRIC_VALUE_OF_ANGLE", "function": f,
+                      "simulation_objective": "ANGLE_CONSTRUCTED_AND_VERIFIED", "state": "GOAL_VISUALIZATION_READY",
+                      "numeric_source_goal": "NOT_ANSWERED", "value_defined": defined})
+    if not goals:
+        return None
+    return {"schema_version": SOURCE_GOAL_COMPLETION_VERSION, "source_goal_fully_satisfied": False,
+            "numeric_answer_shown": False, "goals": goals}
 
 
 def _phong_bi(r: KetQuaTuyen) -> dict[str, Any]:
@@ -72,7 +165,7 @@ def _phong_bi(r: KetQuaTuyen) -> dict[str, Any]:
     sections = []
     seen = set()
     for d in (r.planner or {}).get("auxiliary") or [] if served else []:
-        if d.get("rule") != DINH_CAT_CANH:
+        if d.get("rule") != DINH_CAT_CANH or d.get("base_edge_intersection"):
             continue
         seen.add(d["goal"])
         sections.append({
@@ -104,6 +197,21 @@ def _phong_bi(r: KetQuaTuyen) -> dict[str, Any]:
         "length_unit": r.length_unit,
         "planner": {k: (r.planner or {}).get(k) for k in ("version", "bridge")},
         "construction_trace": deepcopy(r.trace) if served else [],
+        # Present only when the figure is NOT fixed by the source (a height-invariant answer): the scene is illustrative.
+        **({"scene_configuration": deepcopy(cfg)}
+           if served and (cfg := (r.details or {}).get("scene_configuration")) else {}),
+        **({"scale_policy": "UNIT_SIMILARITY_REPRESENTATIVE"}
+           if served
+           and (cfg := (r.details or {}).get("scene_configuration"))
+           and cfg.get("kind") == "SIMILARITY_SCALE_ILLUSTRATIVE"
+           and not r.answers else {}),
+        # Present only when a source goal's NUMBER is not answered although its object is constructed (cos/tan of an angle).
+        **({"source_goal_completion": deepcopy(sgc)}
+           if served and (sgc := (r.details or {}).get("source_goal_completion")) else {}),
+        # Present only when trigonometric / right-triangle length deductions were certified during construction.
+        **({"trig_construction_certificates": deepcopy(list(tcerts))}
+           if served and (tcerts := getattr(r, "trig_certificates", None)
+                          or (r.details or {}).get("trig_construction_certificates")) else {}),
     }
 
 
@@ -153,7 +261,13 @@ def build_adapter4_response(result: KetQuaTuyen, problem_text: str) -> dict[str,
                 "contract_version": TYPED_FACT_NEXT_V2_SCHEMA_VERSION}
 
     def refuse(code: str, *, adapter: bool = False) -> dict[str, Any]:
-        kind = classify_refusal(code, result.planner, adapter=adapter, problem_text=problem_text)
+        kind = classify_refusal(
+            code,
+            result.planner,
+            adapter=adapter,
+            problem_text=problem_text,
+            details=result.details if code == result.code else None,
+        )
         return {"schema_version": ROUTE_D_SIMULATION_V4_SCHEMA_VERSION,
                 "envelope": {"status": "unsupported", "reason_code": code, "reason": kind.message,
                              "learner_reason": kind.message, "failure_category": kind.failure_category,
@@ -221,10 +335,16 @@ def build_adapter4_response(result: KetQuaTuyen, problem_text: str) -> dict[str,
             symbolic = (f"cos²={coefficient}" if asks[key].startswith("ask_angle_")
                         else _hien_thi_ky_hieu(value, degree, result.length_unit)
                         if result.length_unit and degree else coefficient)
+            out_pol = answer.get("output_policy") if isinstance(answer.get("output_policy"), dict) else None
+            expected_display = symbolic
+            if out_pol is not None:
+                if out_pol.get("exact_answer") != symbolic:
+                    raise PreviewInvalid("PREVIEW_LENGTH_UNIT_INVALID")
+                expected_display = out_pol.get("rounded_display") or symbolic
             if (type(dim) is not int or dim < 0 or not isinstance(result.answers[key], str)
                     or not result.answers[key].strip()
                     or dim != (degree if result.length_unit else 0)
-                    or answer.get("coef") != coefficient or result.answers[key] != symbolic
+                    or answer.get("coef") != coefficient or result.answers[key] != expected_display
                     or answer.get("unit") != (result.length_unit if dim else None)):
                 raise PreviewInvalid("PREVIEW_LENGTH_UNIT_INVALID")
             quantity = objects.get(f"kq_{key}", {})
@@ -238,11 +358,48 @@ def build_adapter4_response(result: KetQuaTuyen, problem_text: str) -> dict[str,
                 point = result.exec_result.final_memory[obj["id"]]
                 if obj["xyz"] != [str(point.x), str(point.y), str(point.z)]:
                     raise PreviewInvalid("PREVIEW_RESULT_INVALID")
+        # Run `compositional-semantics-simulation-goals` (mutation "wrong projection foot" survived): the drawn angle is
+        # bound to the verified points — its vertex and arm ends ARE the kernel points they name, and its right-angle
+        # marker (perpendicular from → foot) joins two of those drawn points, never a free coordinate.
+        pts = {o["id"]: [str(x) for x in o["xyz"]] for o in objects.values() if o["type"] == "point3"}
+        for obj in objects.values():
+            if obj["type"] == "quantity" and obj.get("angle_construction") is not None \
+                    and not _angle_construction_bound(obj["angle_construction"], pts):
+                raise PreviewInvalid("RESULT_BINDING_UNVERIFIED")
+        if route.get("scene_configuration") != _phong_bi(result).get("scene_configuration"):
+            raise PreviewInvalid("RESULT_BINDING_UNVERIFIED")
+        if route.get("scale_policy") != _phong_bi(result).get("scale_policy"):
+            raise PreviewInvalid("RESULT_BINDING_UNVERIFIED")
+        if (route.get("scene_configuration") or {}).get("kind") == "TARGET_INVARIANT_ILLUSTRATIVE" \
+                and not _invariance_proof_bound(route["scene_configuration"], result.answer_exact, objects):
+            raise PreviewInvalid("RESULT_BINDING_UNVERIFIED")
         if route.get("sections") != _phong_bi(result)["sections"]:
             raise PreviewInvalid("PREVIEW_RESULT_INVALID")
         _validate_sections(route["sections"], objects, result)
         if route.get("relation_certificates") != _phong_bi(result)["relation_certificates"]:
             raise PreviewInvalid("PREVIEW_RESULT_INVALID")
+        if route.get("source_goal_completion") != _phong_bi(result).get("source_goal_completion"):
+            raise PreviewInvalid("RESULT_BINDING_UNVERIFIED")
+        if route.get("trig_construction_certificates") != _phong_bi(result).get("trig_construction_certificates"):
+            raise PreviewInvalid("RESULT_BINDING_UNVERIFIED")
+        if tcerts := route.get("trig_construction_certificates"):
+            from app.simulation.geometry_functions.trig_construction_certificates import (
+                TrigCertificateError,
+                verify_trig_construction_certificate,
+            )
+            if not isinstance(tcerts, list):
+                raise PreviewInvalid("RESULT_BINDING_UNVERIFIED")
+            for tcert in tcerts:
+                try:
+                    verify_trig_construction_certificate(
+                        tcert,
+                        calls=result.calls,
+                        scene_objects=objects,
+                        chart_metric=metric,
+                        length_unit=result.length_unit,
+                    )
+                except TrigCertificateError:
+                    raise PreviewInvalid("RESULT_BINDING_UNVERIFIED") from None
         for rcert in route.get("relation_certificates") or ():
             if not isinstance(rcert, dict):
                 raise PreviewInvalid("PREVIEW_RESULT_INVALID")
@@ -309,7 +466,7 @@ def _validate_sections(sections: list[dict], objects: dict[str, dict], result: K
     dinh_cat_by_id = {
         d.get("goal"): d
         for d in ((result.planner or {}).get("auxiliary") or () if result is not None else ())
-        if d.get("rule") == DINH_CAT_CANH
+        if d.get("rule") == DINH_CAT_CANH and not d.get("base_edge_intersection")
     }
     ids = set()
     for section in sections:

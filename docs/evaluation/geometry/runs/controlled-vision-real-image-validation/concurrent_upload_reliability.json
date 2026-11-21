@@ -1,0 +1,726 @@
+{
+  "ladder": {
+    "levels": [
+      {
+        "simultaneous": 1,
+        "rounds": [
+          {
+            "round": 0,
+            "wall_ms": 3454.426299998886,
+            "per_request_ms": [
+              3276.797599999554
+            ],
+            "statuses": [
+              200
+            ],
+            "prepare_status": [
+              "needs_confirmation"
+            ],
+            "server_exceptions": 0,
+            "sample_count": 83,
+            "fastapi_peak_rss_mib": 243.39453125,
+            "ocr_process_tree_peak_rss_mib": 822.95703125,
+            "combined_process_tree_peak_rss_mib": 1005.57421875,
+            "descendant_processes": [
+              {
+                "pid": 19844,
+                "parent_pid": 2308,
+                "exe": "python.exe",
+                "peak_rss_mib": 811.58203125
+              },
+              {
+                "pid": 19240,
+                "parent_pid": 2308,
+                "exe": "conhost.exe",
+                "peak_rss_mib": 7.2421875
+              },
+              {
+                "pid": 2308,
+                "parent_pid": 21484,
+                "exe": "python.exe",
+                "peak_rss_mib": 4.1328125
+              }
+            ]
+          },
+          {
+            "round": 1,
+            "wall_ms": 3166.979400000855,
+            "per_request_ms": [
+              2983.7031999995816
+            ],
+            "statuses": [
+              200
+            ],
+            "prepare_status": [
+              "needs_confirmation"
+            ],
+            "server_exceptions": 0,
+            "sample_count": 77,
+            "fastapi_peak_rss_mib": 216.94140625,
+            "ocr_process_tree_peak_rss_mib": 452.5546875,
+            "combined_process_tree_peak_rss_mib": 634.2578125,
+            "descendant_processes": [
+              {
+                "pid": 19844,
+                "parent_pid": 2308,
+                "exe": "python.exe",
+                "peak_rss_mib": 441.1796875
+              },
+              {
+                "pid": 19240,
+                "parent_pid": 2308,
+                "exe": "conhost.exe",
+                "peak_rss_mib": 7.2421875
+              },
+              {
+                "pid": 2308,
+                "parent_pid": 21484,
+                "exe": "python.exe",
+                "peak_rss_mib": 4.1328125
+              }
+            ]
+          },
+          {
+            "round": 2,
+            "wall_ms": 3880.9756000009656,
+            "per_request_ms": [
+              3678.121999997529
+            ],
+            "statuses": [
+              200
+            ],
+            "prepare_status": [
+              "needs_confirmation"
+            ],
+            "server_exceptions": 0,
+            "sample_count": 93,
+            "fastapi_peak_rss_mib": 216.44140625,
+            "ocr_process_tree_peak_rss_mib": 577.453125,
+            "combined_process_tree_peak_rss_mib": 759.96484375,
+            "descendant_processes": [
+              {
+                "pid": 19844,
+                "parent_pid": 2308,
+                "exe": "python.exe",
+                "peak_rss_mib": 566.078125
+              },
+              {
+                "pid": 19240,
+                "parent_pid": 2308,
+                "exe": "conhost.exe",
+                "peak_rss_mib": 7.2421875
+              },
+              {
+                "pid": 2308,
+                "parent_pid": 21484,
+                "exe": "python.exe",
+                "peak_rss_mib": 4.1328125
+              }
+            ]
+          }
+        ],
+        "requests": 3,
+        "http_200": 3,
+        "http_5xx": 0,
+        "server_exceptions": 0,
+        "per_request_ms": {
+          "n": 3,
+          "p50": 3276.797599999554,
+          "p95_nearest_rank": 3678.121999997529
+        },
+        "wall_ms": {
+          "n": 3,
+          "p50": 3454.426299998886,
+          "p95_nearest_rank": 3880.9756000009656
+        },
+        "combined_peak_rss_mib": {
+          "n": 3,
+          "p50": 759.96484375,
+          "p95_nearest_rank": 1005.57421875
+        }
+      },
+      {
+        "simultaneous": 2,
+        "rounds": [
+          {
+            "round": 0,
+            "wall_ms": 6144.018399998458,
+            "per_request_ms": [
+              3162.319599996408,
+              2685.064000001148
+            ],
+            "statuses": [
+              200,
+              200
+            ],
+            "prepare_status": [
+              "needs_confirmation",
+              "needs_confirmation"
+            ],
+            "server_exceptions": 0,
+            "sample_count": 146,
+            "fastapi_peak_rss_mib": 227.54296875,
+            "ocr_process_tree_peak_rss_mib": 833.38671875,
+            "combined_process_tree_peak_rss_mib": 1016.921875,
+            "descendant_processes": [
+              {
+                "pid": 19844,
+                "parent_pid": 2308,
+                "exe": "python.exe",
+                "peak_rss_mib": 822.01171875
+              },
+              {
+                "pid": 19240,
+                "parent_pid": 2308,
+                "exe": "conhost.exe",
+                "peak_rss_mib": 7.2421875
+              },
+              {
+                "pid": 2308,
+                "parent_pid": 21484,
+                "exe": "python.exe",
+                "peak_rss_mib": 4.1328125
+              }
+            ]
+          },
+          {
+            "round": 1,
+            "wall_ms": 5904.37269999893,
+            "per_request_ms": [
+              3371.4607000001706,
+              2248.449900002015
+            ],
+            "statuses": [
+              200,
+              200
+            ],
+            "prepare_status": [
+              "needs_confirmation",
+              "needs_confirmation"
+            ],
+            "server_exceptions": 0,
+            "sample_count": 141,
+            "fastapi_peak_rss_mib": 215.0,
+            "ocr_process_tree_peak_rss_mib": 742.3359375,
+            "combined_process_tree_peak_rss_mib": 924.98828125,
+            "descendant_processes": [
+              {
+                "pid": 19844,
+                "parent_pid": 2308,
+                "exe": "python.exe",
+                "peak_rss_mib": 730.9609375
+              },
+              {
+                "pid": 19240,
+                "parent_pid": 2308,
+                "exe": "conhost.exe",
+                "peak_rss_mib": 7.2421875
+              },
+              {
+                "pid": 2308,
+                "parent_pid": 21484,
+                "exe": "python.exe",
+                "peak_rss_mib": 4.1328125
+              }
+            ]
+          },
+          {
+            "round": 2,
+            "wall_ms": 6916.893800000253,
+            "per_request_ms": [
+              6619.603400002234,
+              4221.307400002843
+            ],
+            "statuses": [
+              200,
+              200
+            ],
+            "prepare_status": [
+              "needs_confirmation",
+              "needs_confirmation"
+            ],
+            "server_exceptions": 0,
+            "sample_count": 164,
+            "fastapi_peak_rss_mib": 272.05078125,
+            "ocr_process_tree_peak_rss_mib": 685.79296875,
+            "combined_process_tree_peak_rss_mib": 867.69140625,
+            "descendant_processes": [
+              {
+                "pid": 19844,
+                "parent_pid": 2308,
+                "exe": "python.exe",
+                "peak_rss_mib": 674.4453125
+              },
+              {
+                "pid": 19240,
+                "parent_pid": 2308,
+                "exe": "conhost.exe",
+                "peak_rss_mib": 7.2421875
+              },
+              {
+                "pid": 2308,
+                "parent_pid": 21484,
+                "exe": "python.exe",
+                "peak_rss_mib": 4.1328125
+              }
+            ]
+          }
+        ],
+        "requests": 6,
+        "http_200": 6,
+        "http_5xx": 0,
+        "server_exceptions": 0,
+        "per_request_ms": {
+          "n": 6,
+          "p50": 3266.8901499982894,
+          "p95_nearest_rank": 6619.603400002234
+        },
+        "wall_ms": {
+          "n": 3,
+          "p50": 6144.018399998458,
+          "p95_nearest_rank": 6916.893800000253
+        },
+        "combined_peak_rss_mib": {
+          "n": 3,
+          "p50": 924.98828125,
+          "p95_nearest_rank": 1016.921875
+        }
+      },
+      {
+        "simultaneous": 4,
+        "rounds": [
+          {
+            "round": 0,
+            "wall_ms": 11264.866800000163,
+            "per_request_ms": [
+              10819.061399997736,
+              10906.584700001986,
+              10895.735500002047,
+              10887.222600002133
+            ],
+            "statuses": [
+              200,
+              200,
+              200,
+              200
+            ],
+            "prepare_status": [
+              "needs_confirmation",
+              "needs_confirmation",
+              "needs_confirmation",
+              "needs_confirmation"
+            ],
+            "server_exceptions": 0,
+            "sample_count": 265,
+            "fastapi_peak_rss_mib": 212.13671875,
+            "ocr_process_tree_peak_rss_mib": 834.2734375,
+            "combined_process_tree_peak_rss_mib": 982.640625,
+            "descendant_processes": [
+              {
+                "pid": 19844,
+                "parent_pid": 2308,
+                "exe": "python.exe",
+                "peak_rss_mib": 822.92578125
+              },
+              {
+                "pid": 19240,
+                "parent_pid": 2308,
+                "exe": "conhost.exe",
+                "peak_rss_mib": 7.2421875
+              },
+              {
+                "pid": 2308,
+                "parent_pid": 21484,
+                "exe": "python.exe",
+                "peak_rss_mib": 4.10546875
+              }
+            ]
+          },
+          {
+            "round": 1,
+            "wall_ms": 10644.242399997893,
+            "per_request_ms": [
+              1898.8264000035997,
+              8148.202399999718,
+              2091.196700002911,
+              6256.750500000635
+            ],
+            "statuses": [
+              200,
+              200,
+              200,
+              200
+            ],
+            "prepare_status": [
+              "needs_confirmation",
+              "needs_confirmation",
+              "needs_confirmation",
+              "needs_confirmation"
+            ],
+            "server_exceptions": 0,
+            "sample_count": 252,
+            "fastapi_peak_rss_mib": 213.70703125,
+            "ocr_process_tree_peak_rss_mib": 877.57421875,
+            "combined_process_tree_peak_rss_mib": 1022.9140625,
+            "descendant_processes": [
+              {
+                "pid": 19844,
+                "parent_pid": 2308,
+                "exe": "python.exe",
+                "peak_rss_mib": 866.2265625
+              },
+              {
+                "pid": 19240,
+                "parent_pid": 2308,
+                "exe": "conhost.exe",
+                "peak_rss_mib": 7.2421875
+              },
+              {
+                "pid": 2308,
+                "parent_pid": 21484,
+                "exe": "python.exe",
+                "peak_rss_mib": 4.10546875
+              }
+            ]
+          },
+          {
+            "round": 2,
+            "wall_ms": 9847.642200002156,
+            "per_request_ms": [
+              4588.600199997018,
+              4595.886300001439,
+              9442.985500001669,
+              4869.117300000653
+            ],
+            "statuses": [
+              200,
+              200,
+              200,
+              200
+            ],
+            "prepare_status": [
+              "needs_confirmation",
+              "needs_confirmation",
+              "needs_confirmation",
+              "needs_confirmation"
+            ],
+            "server_exceptions": 0,
+            "sample_count": 233,
+            "fastapi_peak_rss_mib": 172.1171875,
+            "ocr_process_tree_peak_rss_mib": 505.0859375,
+            "combined_process_tree_peak_rss_mib": 653.2265625,
+            "descendant_processes": [
+              {
+                "pid": 19844,
+                "parent_pid": 2308,
+                "exe": "python.exe",
+                "peak_rss_mib": 493.73828125
+              },
+              {
+                "pid": 19240,
+                "parent_pid": 2308,
+                "exe": "conhost.exe",
+                "peak_rss_mib": 7.2421875
+              },
+              {
+                "pid": 2308,
+                "parent_pid": 21484,
+                "exe": "python.exe",
+                "peak_rss_mib": 4.10546875
+              }
+            ]
+          }
+        ],
+        "requests": 12,
+        "http_200": 12,
+        "http_5xx": 0,
+        "server_exceptions": 0,
+        "per_request_ms": {
+          "n": 12,
+          "p50": 7202.476450000177,
+          "p95_nearest_rank": 10906.584700001986
+        },
+        "wall_ms": {
+          "n": 3,
+          "p50": 10644.242399997893,
+          "p95_nearest_rank": 11264.866800000163
+        },
+        "combined_peak_rss_mib": {
+          "n": 3,
+          "p50": 982.640625,
+          "p95_nearest_rank": 1022.9140625
+        }
+      },
+      {
+        "simultaneous": 8,
+        "rounds": [
+          {
+            "round": 0,
+            "wall_ms": 12753.885800000717,
+            "per_request_ms": [
+              2770.071099999768,
+              2767.277599999943,
+              5226.393299999472,
+              1946.7417000014393,
+              2037.8792000010435,
+              7461.426300000312,
+              7378.275900002336,
+              7456.018500000937
+            ],
+            "statuses": [
+              401,
+              200,
+              200,
+              200,
+              200,
+              500,
+              200,
+              500
+            ],
+            "prepare_status": [
+              null,
+              "needs_confirmation",
+              "needs_confirmation",
+              "needs_confirmation",
+              "needs_confirmation",
+              "NON_JSON_RESPONSE",
+              "needs_confirmation",
+              "NON_JSON_RESPONSE"
+            ],
+            "server_exceptions": 3,
+            "sample_count": 301,
+            "fastapi_peak_rss_mib": 201.7734375,
+            "ocr_process_tree_peak_rss_mib": 701.16015625,
+            "combined_process_tree_peak_rss_mib": 849.58984375,
+            "descendant_processes": [
+              {
+                "pid": 19844,
+                "parent_pid": 2308,
+                "exe": "python.exe",
+                "peak_rss_mib": 689.8125
+              },
+              {
+                "pid": 19240,
+                "parent_pid": 2308,
+                "exe": "conhost.exe",
+                "peak_rss_mib": 7.2421875
+              },
+              {
+                "pid": 2308,
+                "parent_pid": 21484,
+                "exe": "python.exe",
+                "peak_rss_mib": 4.10546875
+              }
+            ]
+          },
+          {
+            "round": 1,
+            "wall_ms": 23304.0413000017,
+            "per_request_ms": [
+              20676.521599998523,
+              2059.5075999990513,
+              15364.07809999946,
+              2463.448500002414,
+              2825.776899997436,
+              17817.044200000964,
+              20686.162999998487,
+              20696.631899998465
+            ],
+            "statuses": [
+              200,
+              200,
+              200,
+              200,
+              200,
+              200,
+              200,
+              200
+            ],
+            "prepare_status": [
+              "needs_confirmation",
+              "needs_confirmation",
+              "needs_confirmation",
+              "needs_confirmation",
+              "needs_confirmation",
+              "needs_confirmation",
+              "needs_confirmation",
+              "needs_confirmation"
+            ],
+            "server_exceptions": 0,
+            "sample_count": 509,
+            "fastapi_peak_rss_mib": 181.046875,
+            "ocr_process_tree_peak_rss_mib": 602.5,
+            "combined_process_tree_peak_rss_mib": 753.63671875,
+            "descendant_processes": [
+              {
+                "pid": 19844,
+                "parent_pid": 2308,
+                "exe": "python.exe",
+                "peak_rss_mib": 591.15234375
+              },
+              {
+                "pid": 19240,
+                "parent_pid": 2308,
+                "exe": "conhost.exe",
+                "peak_rss_mib": 7.2421875
+              },
+              {
+                "pid": 2308,
+                "parent_pid": 21484,
+                "exe": "python.exe",
+                "peak_rss_mib": 4.10546875
+              }
+            ]
+          },
+          {
+            "round": 2,
+            "wall_ms": 23171.840099999827,
+            "per_request_ms": [
+              2837.9268999997294,
+              8399.763499997789,
+              7513.2854000003135,
+              6523.641300002055,
+              6532.618599998386,
+              13076.795899996796,
+              8432.28950000048,
+              7502.988100000948
+            ],
+            "statuses": [
+              200,
+              200,
+              401,
+              200,
+              200,
+              200,
+              200,
+              200
+            ],
+            "prepare_status": [
+              "needs_confirmation",
+              "needs_confirmation",
+              null,
+              "needs_confirmation",
+              "needs_confirmation",
+              "needs_confirmation",
+              "needs_confirmation",
+              "needs_confirmation"
+            ],
+            "server_exceptions": 1,
+            "sample_count": 518,
+            "fastapi_peak_rss_mib": 200.1171875,
+            "ocr_process_tree_peak_rss_mib": 603.0234375,
+            "combined_process_tree_peak_rss_mib": 754.72265625,
+            "descendant_processes": [
+              {
+                "pid": 19844,
+                "parent_pid": 2308,
+                "exe": "python.exe",
+                "peak_rss_mib": 591.67578125
+              },
+              {
+                "pid": 19240,
+                "parent_pid": 2308,
+                "exe": "conhost.exe",
+                "peak_rss_mib": 7.2421875
+              },
+              {
+                "pid": 2308,
+                "parent_pid": 21484,
+                "exe": "python.exe",
+                "peak_rss_mib": 4.10546875
+              }
+            ]
+          }
+        ],
+        "requests": 24,
+        "http_200": 20,
+        "http_5xx": 2,
+        "server_exceptions": 4,
+        "per_request_ms": {
+          "n": 24,
+          "p50": 7417.1472000016365,
+          "p95_nearest_rank": 20686.162999998487
+        },
+        "wall_ms": {
+          "n": 3,
+          "p50": 23171.840099999827,
+          "p95_nearest_rank": 23304.0413000017
+        },
+        "combined_peak_rss_mib": {
+          "n": 3,
+          "p50": 754.72265625,
+          "p95_nearest_rank": 849.58984375
+        }
+      }
+    ],
+    "duplicate_uploads": {
+      "simultaneous": 4,
+      "wall_ms": 5628.282300000137,
+      "statuses": [
+        200,
+        200,
+        200,
+        200
+      ],
+      "per_request_ms": [
+        441.5512999985367,
+        4680.650800000876,
+        4717.709299999115,
+        4660.949199998868
+      ],
+      "ocr_cached_flags": [
+        true,
+        true,
+        true,
+        true
+      ]
+    },
+    "client_abort": {
+      "client_aborted_after_ms": 300,
+      "aborted": true,
+      "next_request_ms": 3099.385400000756,
+      "same_request_alone_ms": 2906.1088999987987,
+      "server_side_cancellation": "NO_MEASURABLE_WAIT"
+    }
+  },
+  "cache_capacity": [
+    {
+      "distinct_images_before_repeat": 8,
+      "ocr_cache_entries_after": 16,
+      "first_ms": 3271.532599999773,
+      "repeat_ms": 631.4980999995896,
+      "repeat_ocr_cached": true,
+      "repeat_reread_ms": 359.51,
+      "policy": "single OrderedDict: normal OCR inserts trim to 16 entries, reread inserts trim to 64; reread entries therefore count against the 16 OCR slots"
+    },
+    {
+      "distinct_images_before_repeat": 20,
+      "ocr_cache_entries_after": 17,
+      "first_ms": 4444.684699999925,
+      "repeat_ms": 3473.7269999968703,
+      "repeat_ocr_cached": false,
+      "repeat_reread_ms": 389.2,
+      "policy": "single OrderedDict: normal OCR inserts trim to 16 entries, reread inserts trim to 64; reread entries therefore count against the 16 OCR slots"
+    }
+  ],
+  "run_id": "controlled-vision-real-image-validation",
+  "head": "5019a72fa0eb296002a24adb6e6dcd86d82a2c5d",
+  "measured_system": [
+    "cd9b9f518805d30522ee7c488dd834d3b05ea08d3e78d86c82da13c735a8a58a",
+    115
+  ],
+  "allow_live_ai": 0,
+  "ground_truth_authority": "AGENT_TRANSCRIBED_UNVERIFIED",
+  "independent_h1": "NOT_MEASURED",
+  "host": {
+    "cpu_model": "11th Gen Intel(R) Core(TM) i5-11400H @ 2.70GHz",
+    "physical_cores": "6",
+    "logical_cpus": 12,
+    "total_ram_mib": 16163,
+    "os": "Windows-11-10.0.26100-SP0",
+    "process_count": 309,
+    "physical_low_end": "PHYSICAL_LOW_END_NOT_MEASURED (no 2-4 core / 4 GB machine available)"
+  },
+  "database": "SQLite file (development default); PostgreSQL NOT_MEASURED",
+  "production_concurrency_claim": "NONE: a single developer workstation with SQLite cannot establish production concurrency"
+}

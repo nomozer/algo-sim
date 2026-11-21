@@ -1,0 +1,75 @@
+{
+ "schema": "axo-ui-scenarios/1",
+ "browser": "151.0.7922.34",
+ "base": "http://127.0.0.1:4173",
+ "results": [
+  {
+   "scenario_id": "U01",
+   "pass": true,
+   "hasKey": false,
+   "aiAvailable": true,
+   "localOnlyMode": true,
+   "localSlmReady": true,
+   "ux_state": "READY_OFFLINE",
+   "cloud_key_text": false
+  },
+  {
+   "scenario_id": "U02",
+   "pass": true,
+   "first": [
+    "A",
+    "B",
+    "C",
+    "D",
+    "S"
+   ],
+   "second": [
+    "A",
+    "B",
+    "C",
+    "O"
+   ],
+   "gold_second": [
+    "A",
+    "B",
+    "C",
+    "O"
+   ]
+  },
+  {
+   "scenario_id": "U05",
+   "pass": true,
+   "start": {
+    "x": 150.9,
+    "y": 190.4
+   },
+   "frame_changed": true,
+   "labels_moved": 4,
+   "analyze_calls": 0,
+   "drag_started_on_measurement_chip": {
+    "x": 377.7005310058594,
+    "y": 402.621337890625,
+    "cls": "geo3d-so-do la-net-khuat",
+    "pe": "auto",
+    "frame_changed": false
+   }
+  },
+  {
+   "scenario_id": "U06",
+   "pass": true,
+   "frame_changed": true
+  },
+  {
+   "scenario_id": "U07",
+   "pass": true,
+   "start": "Bước 5/5",
+   "after_prev": "Bước 4/5",
+   "after_next": "Bước 5/5"
+  },
+  {
+   "scenario_id": "U08",
+   "pass": null,
+   "exposed": false
+  }
+ ]
+}

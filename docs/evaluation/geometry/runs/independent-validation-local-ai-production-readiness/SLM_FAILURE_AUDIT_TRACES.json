@@ -1,0 +1,3118 @@
+{
+  "schema": "slm-failure-audit-traces/1",
+  "generated_at_utc": "2026-11-18T18:04:49.450616+00:00",
+  "six_unresolved_v7_cases_and_comparators": [
+    {
+      "case_id": "v7h_p8_01",
+      "model_key": "qwen3-0.6b-axo-v7-q4_k_m",
+      "1_original_text": "Thưa thầy, nhờ giải bài: Cho khối chóp H.UVWX có cạnh HU vuông góc mặt đáy (UVWX) và HU=3a. Biết UVWX là hình chữ nhật với UV=a√2, VW=2a. Lấy T là trung điểm WX. Hãy tìm khoảng cách từ điểm T đến (HVW).",
+      "2_normalized_text": "Cho nhờ giải bài: Cho khối chóp H.UVWX có cạnh HU vuông góc với (UVWX) và HU=3a. Biết UVWX là hình chữ nhật với UV=a√2, VW=2a. Lấy T là trung điểm WX. Tính khoảng cách từ điểm T đến (HVW).",
+      "3_transformation_provenance": {
+        "normalizer_version": "slm-verified-normalizer/2",
+        "changed": true,
+        "typo_detected": false,
+        "ambiguity_flags": [],
+        "applied_rule_ids": [
+          "VN02_THUA_THAY_OPENER",
+          "VN05_VUONG_GOC_MAT_DAY_PAREN",
+          "VN05_HAY_TIM_GOAL"
+        ],
+        "steps": [
+          {
+            "rule_id": "VN02_THUA_THAY_OPENER",
+            "transformation_rule_id": "VN02_THUA_THAY_OPENER",
+            "original_text": "Thưa thầy, ",
+            "original_span": [
+              0,
+              11
+            ],
+            "original_clause_id": 0,
+            "normalized_text": "Cho ",
+            "original_excerpt": "Thưa thầy, ",
+            "normalized_excerpt": "Cho ",
+            "original_entity_refs": [],
+            "scope": "CONVERSATIONAL_OPENER",
+            "polarity": "AFFIRMATIVE",
+            "semantic_equivalence_evidence": "strip_non_mathematical_vocative_opener",
+            "validation_status": "VALIDATED_MEANING_PRESERVING",
+            "validation_result": "VALIDATED_MEANING_PRESERVING",
+            "ambiguity_status": "UNAMBIGUOUS"
+          },
+          {
+            "rule_id": "VN05_VUONG_GOC_MAT_DAY_PAREN",
+            "transformation_rule_id": "VN05_VUONG_GOC_MAT_DAY_PAREN",
+            "original_text": "vuông góc mặt đáy (UVWX)",
+            "original_span": [
+              57,
+              81
+            ],
+            "original_clause_id": 1,
+            "normalized_text": "vuông góc với (UVWX)",
+            "original_excerpt": "vuông góc mặt đáy (UVWX)",
+            "normalized_excerpt": "vuông góc với (UVWX)",
+            "original_entity_refs": [
+              "UVWX"
+            ],
+            "scope": "LOCAL_CLAUSE",
+            "polarity": "AFFIRMATIVE",
+            "semantic_equivalence_evidence": "canonical_perpendicular_base_parenthesized_plane",
+            "validation_status": "VALIDATED_MEANING_PRESERVING",
+            "validation_result": "VALIDATED_MEANING_PRESERVING",
+            "ambiguity_status": "UNAMBIGUOUS"
+          },
+          {
+            "rule_id": "VN05_HAY_TIM_GOAL",
+            "transformation_rule_id": "VN05_HAY_TIM_GOAL",
+            "original_text": "Hãy tìm ",
+            "original_span": [
+              162,
+              170
+            ],
+            "original_clause_id": 4,
+            "normalized_text": "Tính ",
+            "original_excerpt": "Hãy tìm ",
+            "normalized_excerpt": "Tính ",
+            "original_entity_refs": [],
+            "scope": "GOAL_MARKER",
+            "polarity": "AFFIRMATIVE",
+            "semantic_equivalence_evidence": "canonical_goal_verb",
+            "validation_status": "VALIDATED_MEANING_PRESERVING",
+            "validation_result": "VALIDATED_MEANING_PRESERVING",
+            "ambiguity_status": "UNAMBIGUOUS"
+          }
+        ]
+      },
+      "4_parser_output": {
+        "raw_status": "LOCAL_PARSE_PARTIAL",
+        "raw_diagnostics": null,
+        "after_normalizer_status": "LOCAL_PARSE_PARTIAL",
+        "after_normalizer_premises_count": 0
+      },
+      "5_compact_slm_output": {
+        "raw_content": "{\"s\":[0,\"pyr\",\"H.UVWX\",0],\"r\":[{\"c\":0,\"p\":\"perp_lp\",\"a\":\"HU\",\"b\":\"UVWX\"},{\"c\":0,\"p\":\"len\",\"a\":\"HU\",\"q\":\"3a\"},{\"c\":1,\"p\":\"len\",\"a\":\"UV\",\"q\":\"a√2\"},{\"c\":1,\"p\":\"len\",\"a\":\"VW\",\"q\":\"2a\"},{\"c\":2,\"p\":\"mid\",\"pt\":\"T\",\"a\":\"WX\"}],\"g\":[{\"c\":3,\"t\":\"dist_pt_plane\",\"a\":\"T\",\"b\":\"HVW\"}],\"u\":[]}",
+        "parsed_json": {
+          "s": [
+            0,
+            "pyr",
+            "H.UVWX",
+            0
+          ],
+          "r": [
+            {
+              "c": 0,
+              "p": "perp_lp",
+              "a": "HU",
+              "b": "UVWX"
+            },
+            {
+              "c": 0,
+              "p": "len",
+              "a": "HU",
+              "q": "3a"
+            },
+            {
+              "c": 1,
+              "p": "len",
+              "a": "UV",
+              "q": "a√2"
+            },
+            {
+              "c": 1,
+              "p": "len",
+              "a": "VW",
+              "q": "2a"
+            },
+            {
+              "c": 2,
+              "p": "mid",
+              "pt": "T",
+              "a": "WX"
+            }
+          ],
+          "g": [
+            {
+              "c": 3,
+              "t": "dist_pt_plane",
+              "a": "T",
+              "b": "HVW"
+            }
+          ],
+          "u": []
+        },
+        "slm_invoked": true
+      },
+      "6_grounding_status": {
+        "ok": true,
+        "grounding_status": "GROUNDED_AND_LOWERED",
+        "failure_taxonomy": "NONE",
+        "accepted_ops": [
+          {
+            "kind": "perpendicular_line_plane",
+            "clause_id": 0
+          },
+          {
+            "kind": "segment_length",
+            "clause_id": 0
+          },
+          {
+            "kind": "segment_length",
+            "clause_id": 1
+          },
+          {
+            "kind": "segment_length",
+            "clause_id": 1
+          },
+          {
+            "kind": "midpoint",
+            "clause_id": 2
+          },
+          {
+            "kind": "goal:dist_pt_plane",
+            "clause_id": 3
+          }
+        ],
+        "rejected_ops": []
+      },
+      "7_typed_facts": {
+        "schema_version": "typed-fact-next/2",
+        "problem_text": "Cho nhờ giải bài: Cho khối chóp H.UVWX có cạnh HU vuông góc với (UVWX) và HU=3a. Biết UVWX là hình chữ nhật với UV=a√2, VW=2a. Lấy T là trung điểm WX. Tính khoảng cách từ điểm T đến (HVW).",
+        "length_unit": "a",
+        "solids": [
+          {
+            "solid_id": "s1",
+            "solid_type": "pyramid",
+            "notation": "H.UVWX",
+            "quote": "Cho nhờ giải bài: Cho khối chóp H.UVWX có cạnh HU vuông góc với (UVWX)"
+          }
+        ],
+        "premises": [
+          {
+            "kind": "perpendicular_line_plane",
+            "args": {
+              "line": [
+                "H",
+                "U"
+              ],
+              "plane": [
+                "U",
+                "V",
+                "W",
+                "X"
+              ]
+            },
+            "quote": "Cho nhờ giải bài: Cho khối chóp H.UVWX có cạnh HU vuông góc với (UVWX)",
+            "solid_id": "s1"
+          },
+          {
+            "kind": "segment_length",
+            "args": {
+              "segment": [
+                "H",
+                "U"
+              ],
+              "value": "3a"
+            },
+            "quote": "HU=3a",
+            "solid_id": "s1"
+          },
+          {
+            "kind": "segment_length",
+            "args": {
+              "segment": [
+                "U",
+                "V"
+              ],
+              "value": "a√2"
+            },
+            "quote": "UV=a√2",
+            "solid_id": "s1"
+          },
+          {
+            "kind": "segment_length",
+            "args": {
+              "segment": [
+                "V",
+                "W"
+              ],
+              "value": "2a"
+            },
+            "quote": "VW=2a",
+            "solid_id": "s1"
+          },
+          {
+            "kind": "midpoint",
+            "args": {
+              "point": "T",
+              "segment": [
+                "W",
+                "X"
+              ]
+            },
+            "quote": "Lấy T là trung điểm WX",
+            "solid_id": "s1"
+          }
+        ],
+        "derived_sections": [],
+        "relations": [],
+        "simulation_goals": [
+          {
+            "goal_id": "sg1",
+            "kind": "construct_object",
+            "quote": "Cho nhờ giải bài: Cho khối chóp H.UVWX có cạnh HU vuông góc với (UVWX)",
+            "target_solid_id": "s1"
+          }
+        ],
+        "math_goals": [
+          {
+            "goal_id": "q1",
+            "kind": "measurement",
+            "quote": "Tính khoảng cách từ điểm T đến (HVW)",
+            "goal_type": "distance",
+            "solid_id": "s1",
+            "target": {
+              "point": "T",
+              "plane": [
+                "H",
+                "V",
+                "W"
+              ]
+            }
+          }
+        ]
+      },
+      "8_source_gate_result": {
+        "status": "REFUSED",
+        "refusal_code": "SOURCE_PREMISE_UNREAD",
+        "refusal_message": null,
+        "gate_errors": []
+      },
+      "9_planner_result": "BLOCKED_BEFORE_OR_IN_PLANNER (SOURCE_PREMISE_UNREAD)",
+      "10_kernel_result": {
+        "route_status": "REFUSED",
+        "answer": null,
+        "oracle": "3a√22/22",
+        "v2_match": false,
+        "downstream_trace": "NOT_SERVED (SOURCE_PREMISE_UNREAD)"
+      },
+      "11_exact_refusal_reason": {
+        "extraction_reason_code": null,
+        "extraction_reason_detail": null,
+        "route_refusal_code": "SOURCE_PREMISE_UNREAD",
+        "route_refusal_message": null
+      },
+      "12_gold_intervention_result": {
+        "grounding_status": "GROUNDED_AND_LOWERED",
+        "route_status": "SERVED",
+        "answer": "3a√22/22",
+        "oracle_match_v2": true,
+        "refusal": null
+      },
+      "13_owner_boundary": {
+        "root_cause_category": "MODEL_SEMANTIC_ERROR (+ minor normalizer prefix quirk on v7h_p8_01)",
+        "explanation": "Compact-clause SLM AxoV7 omitted `{\"c\": 1, \"p\": \"rect\", \"a\": <base>}` when base shape was reordered into Sentence 1 (`Biết ABCD là hình chữ nhật với ...`) without the keyword `đáy`. Source Gate (`doc_rang_buoc`) faithfully detected that Sentence 1's premise was unread by any lowered fact and refused with `SOURCE_PREMISE_UNREAD`. Gold `compact_clause` JSON serves cleanly even with the conversational prefix.",
+        "owner_boundary": "local_slm_extractor / AxoV7 data coverage (NOT Source Gate defect); normalizer ownership in slm_verified_normalizer (FROZEN candidate in /8)"
+      }
+    },
+    {
+      "case_id": "v7h_p8_02",
+      "model_key": "qwen3-0.6b-axo-v7-q4_k_m",
+      "1_original_text": "Đề thi thử: Cho khối chóp C.ABDE có cạnh CA vuông góc mặt đáy (ABDE) và CA=2a√3. Biết ABDE là hình chữ nhật với AB=2a, BD=3a. Lấy T là trung điểm DE. Hãy tìm khoảng cách từ điểm T đến (CBD).",
+      "2_normalized_text": "Đề thi thử: Cho khối chóp C.ABDE có cạnh CA vuông góc với (ABDE) và CA=2a√3. Biết ABDE là hình chữ nhật với AB=2a, BD=3a. Lấy T là trung điểm DE. Tính khoảng cách từ điểm T đến (CBD).",
+      "3_transformation_provenance": {
+        "normalizer_version": "slm-verified-normalizer/2",
+        "changed": true,
+        "typo_detected": false,
+        "ambiguity_flags": [],
+        "applied_rule_ids": [
+          "VN05_VUONG_GOC_MAT_DAY_PAREN",
+          "VN05_HAY_TIM_GOAL"
+        ],
+        "steps": [
+          {
+            "rule_id": "VN05_VUONG_GOC_MAT_DAY_PAREN",
+            "transformation_rule_id": "VN05_VUONG_GOC_MAT_DAY_PAREN",
+            "original_text": "vuông góc mặt đáy (ABDE)",
+            "original_span": [
+              44,
+              68
+            ],
+            "original_clause_id": 1,
+            "normalized_text": "vuông góc với (ABDE)",
+            "original_excerpt": "vuông góc mặt đáy (ABDE)",
+            "normalized_excerpt": "vuông góc với (ABDE)",
+            "original_entity_refs": [
+              "ABDE"
+            ],
+            "scope": "LOCAL_CLAUSE",
+            "polarity": "AFFIRMATIVE",
+            "semantic_equivalence_evidence": "canonical_perpendicular_base_parenthesized_plane",
+            "validation_status": "VALIDATED_MEANING_PRESERVING",
+            "validation_result": "VALIDATED_MEANING_PRESERVING",
+            "ambiguity_status": "UNAMBIGUOUS"
+          },
+          {
+            "rule_id": "VN05_HAY_TIM_GOAL",
+            "transformation_rule_id": "VN05_HAY_TIM_GOAL",
+            "original_text": "Hãy tìm ",
+            "original_span": [
+              150,
+              158
+            ],
+            "original_clause_id": 4,
+            "normalized_text": "Tính ",
+            "original_excerpt": "Hãy tìm ",
+            "normalized_excerpt": "Tính ",
+            "original_entity_refs": [],
+            "scope": "GOAL_MARKER",
+            "polarity": "AFFIRMATIVE",
+            "semantic_equivalence_evidence": "canonical_goal_verb",
+            "validation_status": "VALIDATED_MEANING_PRESERVING",
+            "validation_result": "VALIDATED_MEANING_PRESERVING",
+            "ambiguity_status": "UNAMBIGUOUS"
+          }
+        ]
+      },
+      "4_parser_output": {
+        "raw_status": "LOCAL_PARSE_PARTIAL",
+        "raw_diagnostics": null,
+        "after_normalizer_status": "LOCAL_PARSE_PARTIAL",
+        "after_normalizer_premises_count": 0
+      },
+      "5_compact_slm_output": {
+        "raw_content": "{\"s\":[0,\"pyr\",\"C.ABDE\",0],\"r\":[{\"c\":0,\"p\":\"perp_lp\",\"a\":\"CA\",\"b\":\"ABDE\"},{\"c\":0,\"p\":\"len\",\"a\":\"CA\",\"q\":\"2a√3\"},{\"c\":1,\"p\":\"len\",\"a\":\"AB\",\"q\":\"2a\"},{\"c\":1,\"p\":\"len\",\"a\":\"BD\",\"q\":\"3a\"},{\"c\":2,\"p\":\"mid\",\"pt\":\"T\",\"a\":\"DE\"}],\"g\":[{\"c\":3,\"t\":\"dist_pt_plane\",\"a\":\"T\",\"b\":\"CBD\"}],\"u\":[]}",
+        "parsed_json": {
+          "s": [
+            0,
+            "pyr",
+            "C.ABDE",
+            0
+          ],
+          "r": [
+            {
+              "c": 0,
+              "p": "perp_lp",
+              "a": "CA",
+              "b": "ABDE"
+            },
+            {
+              "c": 0,
+              "p": "len",
+              "a": "CA",
+              "q": "2a√3"
+            },
+            {
+              "c": 1,
+              "p": "len",
+              "a": "AB",
+              "q": "2a"
+            },
+            {
+              "c": 1,
+              "p": "len",
+              "a": "BD",
+              "q": "3a"
+            },
+            {
+              "c": 2,
+              "p": "mid",
+              "pt": "T",
+              "a": "DE"
+            }
+          ],
+          "g": [
+            {
+              "c": 3,
+              "t": "dist_pt_plane",
+              "a": "T",
+              "b": "CBD"
+            }
+          ],
+          "u": []
+        },
+        "slm_invoked": true
+      },
+      "6_grounding_status": {
+        "ok": true,
+        "grounding_status": "GROUNDED_AND_LOWERED",
+        "failure_taxonomy": "NONE",
+        "accepted_ops": [
+          {
+            "kind": "perpendicular_line_plane",
+            "clause_id": 0
+          },
+          {
+            "kind": "segment_length",
+            "clause_id": 0
+          },
+          {
+            "kind": "segment_length",
+            "clause_id": 1
+          },
+          {
+            "kind": "segment_length",
+            "clause_id": 1
+          },
+          {
+            "kind": "midpoint",
+            "clause_id": 2
+          },
+          {
+            "kind": "goal:dist_pt_plane",
+            "clause_id": 3
+          }
+        ],
+        "rejected_ops": []
+      },
+      "7_typed_facts": {
+        "schema_version": "typed-fact-next/2",
+        "problem_text": "Đề thi thử: Cho khối chóp C.ABDE có cạnh CA vuông góc với (ABDE) và CA=2a√3. Biết ABDE là hình chữ nhật với AB=2a, BD=3a. Lấy T là trung điểm DE. Tính khoảng cách từ điểm T đến (CBD).",
+        "length_unit": "a",
+        "solids": [
+          {
+            "solid_id": "s1",
+            "solid_type": "pyramid",
+            "notation": "C.ABDE",
+            "quote": "Đề thi thử: Cho khối chóp C.ABDE có cạnh CA vuông góc với (ABDE)"
+          }
+        ],
+        "premises": [
+          {
+            "kind": "perpendicular_line_plane",
+            "args": {
+              "line": [
+                "C",
+                "A"
+              ],
+              "plane": [
+                "A",
+                "B",
+                "D",
+                "E"
+              ]
+            },
+            "quote": "Đề thi thử: Cho khối chóp C.ABDE có cạnh CA vuông góc với (ABDE)",
+            "solid_id": "s1"
+          },
+          {
+            "kind": "segment_length",
+            "args": {
+              "segment": [
+                "C",
+                "A"
+              ],
+              "value": "2a√3"
+            },
+            "quote": "CA=2a√3",
+            "solid_id": "s1"
+          },
+          {
+            "kind": "segment_length",
+            "args": {
+              "segment": [
+                "A",
+                "B"
+              ],
+              "value": "2a"
+            },
+            "quote": "AB=2a",
+            "solid_id": "s1"
+          },
+          {
+            "kind": "segment_length",
+            "args": {
+              "segment": [
+                "B",
+                "D"
+              ],
+              "value": "3a"
+            },
+            "quote": "BD=3a",
+            "solid_id": "s1"
+          },
+          {
+            "kind": "midpoint",
+            "args": {
+              "point": "T",
+              "segment": [
+                "D",
+                "E"
+              ]
+            },
+            "quote": "Lấy T là trung điểm DE",
+            "solid_id": "s1"
+          }
+        ],
+        "derived_sections": [],
+        "relations": [],
+        "simulation_goals": [
+          {
+            "goal_id": "sg1",
+            "kind": "construct_object",
+            "quote": "Đề thi thử: Cho khối chóp C.ABDE có cạnh CA vuông góc với (ABDE)",
+            "target_solid_id": "s1"
+          }
+        ],
+        "math_goals": [
+          {
+            "goal_id": "q1",
+            "kind": "measurement",
+            "quote": "Tính khoảng cách từ điểm T đến (CBD)",
+            "goal_type": "distance",
+            "solid_id": "s1",
+            "target": {
+              "point": "T",
+              "plane": [
+                "C",
+                "B",
+                "D"
+              ]
+            }
+          }
+        ]
+      },
+      "8_source_gate_result": {
+        "status": "REFUSED",
+        "refusal_code": "SOURCE_PREMISE_UNREAD",
+        "refusal_message": null,
+        "gate_errors": []
+      },
+      "9_planner_result": "BLOCKED_BEFORE_OR_IN_PLANNER (SOURCE_PREMISE_UNREAD)",
+      "10_kernel_result": {
+        "route_status": "REFUSED",
+        "answer": null,
+        "oracle": "a√3/2",
+        "v2_match": false,
+        "downstream_trace": "NOT_SERVED (SOURCE_PREMISE_UNREAD)"
+      },
+      "11_exact_refusal_reason": {
+        "extraction_reason_code": null,
+        "extraction_reason_detail": null,
+        "route_refusal_code": "SOURCE_PREMISE_UNREAD",
+        "route_refusal_message": null
+      },
+      "12_gold_intervention_result": {
+        "grounding_status": "GROUNDED_AND_LOWERED",
+        "route_status": "SERVED",
+        "answer": "a√3/2",
+        "oracle_match_v2": true,
+        "refusal": null
+      },
+      "13_owner_boundary": {
+        "root_cause_category": "MODEL_SEMANTIC_ERROR (+ minor normalizer prefix quirk on v7h_p8_01)",
+        "explanation": "Compact-clause SLM AxoV7 omitted `{\"c\": 1, \"p\": \"rect\", \"a\": <base>}` when base shape was reordered into Sentence 1 (`Biết ABCD là hình chữ nhật với ...`) without the keyword `đáy`. Source Gate (`doc_rang_buoc`) faithfully detected that Sentence 1's premise was unread by any lowered fact and refused with `SOURCE_PREMISE_UNREAD`. Gold `compact_clause` JSON serves cleanly even with the conversational prefix.",
+        "owner_boundary": "local_slm_extractor / AxoV7 data coverage (NOT Source Gate defect); normalizer ownership in slm_verified_normalizer (FROZEN candidate in /8)"
+      }
+    },
+    {
+      "case_id": "v7h_p8_03",
+      "model_key": "qwen3-0.6b-axo-v7-q4_k_m",
+      "1_original_text": "Câu hỏi hình không gian: Cho khối chóp N.GHIK có cạnh NG vuông góc mặt đáy (GHIK) và NG=2a. Biết GHIK là hình chữ nhật với GH=a√3, HI=a√5. Lấy T là trung điểm IK. Hãy tìm khoảng cách từ điểm T đến (NHI).",
+      "2_normalized_text": "Câu hỏi hình không gian: Cho khối chóp N.GHIK có cạnh NG vuông góc với (GHIK) và NG=2a. Biết GHIK là hình chữ nhật với GH=a√3, HI=a√5. Lấy T là trung điểm IK. Tính khoảng cách từ điểm T đến (NHI).",
+      "3_transformation_provenance": {
+        "normalizer_version": "slm-verified-normalizer/2",
+        "changed": true,
+        "typo_detected": false,
+        "ambiguity_flags": [],
+        "applied_rule_ids": [
+          "VN05_VUONG_GOC_MAT_DAY_PAREN",
+          "VN05_HAY_TIM_GOAL"
+        ],
+        "steps": [
+          {
+            "rule_id": "VN05_VUONG_GOC_MAT_DAY_PAREN",
+            "transformation_rule_id": "VN05_VUONG_GOC_MAT_DAY_PAREN",
+            "original_text": "vuông góc mặt đáy (GHIK)",
+            "original_span": [
+              57,
+              81
+            ],
+            "original_clause_id": 1,
+            "normalized_text": "vuông góc với (GHIK)",
+            "original_excerpt": "vuông góc mặt đáy (GHIK)",
+            "normalized_excerpt": "vuông góc với (GHIK)",
+            "original_entity_refs": [
+              "GHIK"
+            ],
+            "scope": "LOCAL_CLAUSE",
+            "polarity": "AFFIRMATIVE",
+            "semantic_equivalence_evidence": "canonical_perpendicular_base_parenthesized_plane",
+            "validation_status": "VALIDATED_MEANING_PRESERVING",
+            "validation_result": "VALIDATED_MEANING_PRESERVING",
+            "ambiguity_status": "UNAMBIGUOUS"
+          },
+          {
+            "rule_id": "VN05_HAY_TIM_GOAL",
+            "transformation_rule_id": "VN05_HAY_TIM_GOAL",
+            "original_text": "Hãy tìm ",
+            "original_span": [
+              163,
+              171
+            ],
+            "original_clause_id": 4,
+            "normalized_text": "Tính ",
+            "original_excerpt": "Hãy tìm ",
+            "normalized_excerpt": "Tính ",
+            "original_entity_refs": [],
+            "scope": "GOAL_MARKER",
+            "polarity": "AFFIRMATIVE",
+            "semantic_equivalence_evidence": "canonical_goal_verb",
+            "validation_status": "VALIDATED_MEANING_PRESERVING",
+            "validation_result": "VALIDATED_MEANING_PRESERVING",
+            "ambiguity_status": "UNAMBIGUOUS"
+          }
+        ]
+      },
+      "4_parser_output": {
+        "raw_status": "LOCAL_PARSE_PARTIAL",
+        "raw_diagnostics": null,
+        "after_normalizer_status": "LOCAL_PARSE_PARTIAL",
+        "after_normalizer_premises_count": 0
+      },
+      "5_compact_slm_output": {
+        "raw_content": "{\"s\":[0,\"pyr\",\"N.GHIK\",0],\"r\":[{\"c\":0,\"p\":\"perp_lp\",\"a\":\"NG\",\"b\":\"GHIK\"},{\"c\":0,\"p\":\"len\",\"a\":\"NG\",\"q\":\"2a\"},{\"c\":1,\"p\":\"len\",\"a\":\"GH\",\"q\":\"a√3\"},{\"c\":1,\"p\":\"len\",\"a\":\"HI\",\"q\":\"a√5\"},{\"c\":2,\"p\":\"mid\",\"pt\":\"T\",\"a\":\"IK\"}],\"g\":[{\"c\":3,\"t\":\"dist_pt_plane\",\"a\":\"T\",\"b\":\"NHI\"}],\"u\":[]}",
+        "parsed_json": {
+          "s": [
+            0,
+            "pyr",
+            "N.GHIK",
+            0
+          ],
+          "r": [
+            {
+              "c": 0,
+              "p": "perp_lp",
+              "a": "NG",
+              "b": "GHIK"
+            },
+            {
+              "c": 0,
+              "p": "len",
+              "a": "NG",
+              "q": "2a"
+            },
+            {
+              "c": 1,
+              "p": "len",
+              "a": "GH",
+              "q": "a√3"
+            },
+            {
+              "c": 1,
+              "p": "len",
+              "a": "HI",
+              "q": "a√5"
+            },
+            {
+              "c": 2,
+              "p": "mid",
+              "pt": "T",
+              "a": "IK"
+            }
+          ],
+          "g": [
+            {
+              "c": 3,
+              "t": "dist_pt_plane",
+              "a": "T",
+              "b": "NHI"
+            }
+          ],
+          "u": []
+        },
+        "slm_invoked": true
+      },
+      "6_grounding_status": {
+        "ok": true,
+        "grounding_status": "GROUNDED_AND_LOWERED",
+        "failure_taxonomy": "NONE",
+        "accepted_ops": [
+          {
+            "kind": "perpendicular_line_plane",
+            "clause_id": 0
+          },
+          {
+            "kind": "segment_length",
+            "clause_id": 0
+          },
+          {
+            "kind": "segment_length",
+            "clause_id": 1
+          },
+          {
+            "kind": "segment_length",
+            "clause_id": 1
+          },
+          {
+            "kind": "midpoint",
+            "clause_id": 2
+          },
+          {
+            "kind": "goal:dist_pt_plane",
+            "clause_id": 3
+          }
+        ],
+        "rejected_ops": []
+      },
+      "7_typed_facts": {
+        "schema_version": "typed-fact-next/2",
+        "problem_text": "Câu hỏi hình không gian: Cho khối chóp N.GHIK có cạnh NG vuông góc với (GHIK) và NG=2a. Biết GHIK là hình chữ nhật với GH=a√3, HI=a√5. Lấy T là trung điểm IK. Tính khoảng cách từ điểm T đến (NHI).",
+        "length_unit": "a",
+        "solids": [
+          {
+            "solid_id": "s1",
+            "solid_type": "pyramid",
+            "notation": "N.GHIK",
+            "quote": "Câu hỏi hình không gian: Cho khối chóp N.GHIK có cạnh NG vuông góc với (GHIK)"
+          }
+        ],
+        "premises": [
+          {
+            "kind": "perpendicular_line_plane",
+            "args": {
+              "line": [
+                "N",
+                "G"
+              ],
+              "plane": [
+                "G",
+                "H",
+                "I",
+                "K"
+              ]
+            },
+            "quote": "Câu hỏi hình không gian: Cho khối chóp N.GHIK có cạnh NG vuông góc với (GHIK)",
+            "solid_id": "s1"
+          },
+          {
+            "kind": "segment_length",
+            "args": {
+              "segment": [
+                "N",
+                "G"
+              ],
+              "value": "2a"
+            },
+            "quote": "NG=2a",
+            "solid_id": "s1"
+          },
+          {
+            "kind": "segment_length",
+            "args": {
+              "segment": [
+                "G",
+                "H"
+              ],
+              "value": "a√3"
+            },
+            "quote": "GH=a√3",
+            "solid_id": "s1"
+          },
+          {
+            "kind": "segment_length",
+            "args": {
+              "segment": [
+                "H",
+                "I"
+              ],
+              "value": "a√5"
+            },
+            "quote": "HI=a√5",
+            "solid_id": "s1"
+          },
+          {
+            "kind": "midpoint",
+            "args": {
+              "point": "T",
+              "segment": [
+                "I",
+                "K"
+              ]
+            },
+            "quote": "Lấy T là trung điểm IK",
+            "solid_id": "s1"
+          }
+        ],
+        "derived_sections": [],
+        "relations": [],
+        "simulation_goals": [
+          {
+            "goal_id": "sg1",
+            "kind": "construct_object",
+            "quote": "Câu hỏi hình không gian: Cho khối chóp N.GHIK có cạnh NG vuông góc với (GHIK)",
+            "target_solid_id": "s1"
+          }
+        ],
+        "math_goals": [
+          {
+            "goal_id": "q1",
+            "kind": "measurement",
+            "quote": "Tính khoảng cách từ điểm T đến (NHI)",
+            "goal_type": "distance",
+            "solid_id": "s1",
+            "target": {
+              "point": "T",
+              "plane": [
+                "N",
+                "H",
+                "I"
+              ]
+            }
+          }
+        ]
+      },
+      "8_source_gate_result": {
+        "status": "REFUSED",
+        "refusal_code": "SOURCE_PREMISE_UNREAD",
+        "refusal_message": null,
+        "gate_errors": []
+      },
+      "9_planner_result": "BLOCKED_BEFORE_OR_IN_PLANNER (SOURCE_PREMISE_UNREAD)",
+      "10_kernel_result": {
+        "route_status": "REFUSED",
+        "answer": null,
+        "oracle": "a√21/7",
+        "v2_match": false,
+        "downstream_trace": "NOT_SERVED (SOURCE_PREMISE_UNREAD)"
+      },
+      "11_exact_refusal_reason": {
+        "extraction_reason_code": null,
+        "extraction_reason_detail": null,
+        "route_refusal_code": "SOURCE_PREMISE_UNREAD",
+        "route_refusal_message": null
+      },
+      "12_gold_intervention_result": {
+        "grounding_status": "GROUNDED_AND_LOWERED",
+        "route_status": "SERVED",
+        "answer": "a√21/7",
+        "oracle_match_v2": true,
+        "refusal": null
+      },
+      "13_owner_boundary": {
+        "root_cause_category": "MODEL_SEMANTIC_ERROR (+ minor normalizer prefix quirk on v7h_p8_01)",
+        "explanation": "Compact-clause SLM AxoV7 omitted `{\"c\": 1, \"p\": \"rect\", \"a\": <base>}` when base shape was reordered into Sentence 1 (`Biết ABCD là hình chữ nhật với ...`) without the keyword `đáy`. Source Gate (`doc_rang_buoc`) faithfully detected that Sentence 1's premise was unread by any lowered fact and refused with `SOURCE_PREMISE_UNREAD`. Gold `compact_clause` JSON serves cleanly even with the conversational prefix.",
+        "owner_boundary": "local_slm_extractor / AxoV7 data coverage (NOT Source Gate defect); normalizer ownership in slm_verified_normalizer (FROZEN candidate in /8)"
+      }
+    },
+    {
+      "case_id": "v7h_p8_04",
+      "model_key": "qwen3-0.6b-axo-v7-q4_k_m",
+      "1_original_text": "Hướng dẫn giải: Cho khối chóp P.ABCD có cạnh PA vuông góc mặt đáy (ABCD) và PA=a√6. Biết ABCD là hình chữ nhật với AB=3a, BC=2a. Lấy T là trung điểm CD. Hãy tìm khoảng cách từ điểm T đến (PBC).",
+      "2_normalized_text": "Hướng dẫn giải: Cho khối chóp P.ABCD có cạnh PA vuông góc với (ABCD) và PA=a√6. Biết ABCD là hình chữ nhật với AB=3a, BC=2a. Lấy T là trung điểm CD. Tính khoảng cách từ điểm T đến (PBC).",
+      "3_transformation_provenance": {
+        "normalizer_version": "slm-verified-normalizer/2",
+        "changed": true,
+        "typo_detected": false,
+        "ambiguity_flags": [],
+        "applied_rule_ids": [
+          "VN05_VUONG_GOC_MAT_DAY_PAREN",
+          "VN05_HAY_TIM_GOAL"
+        ],
+        "steps": [
+          {
+            "rule_id": "VN05_VUONG_GOC_MAT_DAY_PAREN",
+            "transformation_rule_id": "VN05_VUONG_GOC_MAT_DAY_PAREN",
+            "original_text": "vuông góc mặt đáy (ABCD)",
+            "original_span": [
+              48,
+              72
+            ],
+            "original_clause_id": 1,
+            "normalized_text": "vuông góc với (ABCD)",
+            "original_excerpt": "vuông góc mặt đáy (ABCD)",
+            "normalized_excerpt": "vuông góc với (ABCD)",
+            "original_entity_refs": [
+              "ABCD"
+            ],
+            "scope": "LOCAL_CLAUSE",
+            "polarity": "AFFIRMATIVE",
+            "semantic_equivalence_evidence": "canonical_perpendicular_base_parenthesized_plane",
+            "validation_status": "VALIDATED_MEANING_PRESERVING",
+            "validation_result": "VALIDATED_MEANING_PRESERVING",
+            "ambiguity_status": "UNAMBIGUOUS"
+          },
+          {
+            "rule_id": "VN05_HAY_TIM_GOAL",
+            "transformation_rule_id": "VN05_HAY_TIM_GOAL",
+            "original_text": "Hãy tìm ",
+            "original_span": [
+              153,
+              161
+            ],
+            "original_clause_id": 4,
+            "normalized_text": "Tính ",
+            "original_excerpt": "Hãy tìm ",
+            "normalized_excerpt": "Tính ",
+            "original_entity_refs": [],
+            "scope": "GOAL_MARKER",
+            "polarity": "AFFIRMATIVE",
+            "semantic_equivalence_evidence": "canonical_goal_verb",
+            "validation_status": "VALIDATED_MEANING_PRESERVING",
+            "validation_result": "VALIDATED_MEANING_PRESERVING",
+            "ambiguity_status": "UNAMBIGUOUS"
+          }
+        ]
+      },
+      "4_parser_output": {
+        "raw_status": "LOCAL_PARSE_PARTIAL",
+        "raw_diagnostics": null,
+        "after_normalizer_status": "LOCAL_PARSE_PARTIAL",
+        "after_normalizer_premises_count": 0
+      },
+      "5_compact_slm_output": {
+        "raw_content": "{\"s\":[0,\"pyr\",\"P.ABCD\",0],\"r\":[{\"c\":0,\"p\":\"perp_lp\",\"a\":\"PA\",\"b\":\"ABCD\"},{\"c\":0,\"p\":\"len\",\"a\":\"PA\",\"q\":\"a√6\"},{\"c\":1,\"p\":\"len\",\"a\":\"AB\",\"q\":\"3a\"},{\"c\":1,\"p\":\"len\",\"a\":\"BC\",\"q\":\"2a\"},{\"c\":2,\"p\":\"mid\",\"pt\":\"T\",\"a\":\"CD\"}],\"g\":[{\"c\":3,\"t\":\"dist_pt_plane\",\"a\":\"T\",\"b\":\"PBC\"}],\"u\":[]}",
+        "parsed_json": {
+          "s": [
+            0,
+            "pyr",
+            "P.ABCD",
+            0
+          ],
+          "r": [
+            {
+              "c": 0,
+              "p": "perp_lp",
+              "a": "PA",
+              "b": "ABCD"
+            },
+            {
+              "c": 0,
+              "p": "len",
+              "a": "PA",
+              "q": "a√6"
+            },
+            {
+              "c": 1,
+              "p": "len",
+              "a": "AB",
+              "q": "3a"
+            },
+            {
+              "c": 1,
+              "p": "len",
+              "a": "BC",
+              "q": "2a"
+            },
+            {
+              "c": 2,
+              "p": "mid",
+              "pt": "T",
+              "a": "CD"
+            }
+          ],
+          "g": [
+            {
+              "c": 3,
+              "t": "dist_pt_plane",
+              "a": "T",
+              "b": "PBC"
+            }
+          ],
+          "u": []
+        },
+        "slm_invoked": true
+      },
+      "6_grounding_status": {
+        "ok": true,
+        "grounding_status": "GROUNDED_AND_LOWERED",
+        "failure_taxonomy": "NONE",
+        "accepted_ops": [
+          {
+            "kind": "perpendicular_line_plane",
+            "clause_id": 0
+          },
+          {
+            "kind": "segment_length",
+            "clause_id": 0
+          },
+          {
+            "kind": "segment_length",
+            "clause_id": 1
+          },
+          {
+            "kind": "segment_length",
+            "clause_id": 1
+          },
+          {
+            "kind": "midpoint",
+            "clause_id": 2
+          },
+          {
+            "kind": "goal:dist_pt_plane",
+            "clause_id": 3
+          }
+        ],
+        "rejected_ops": []
+      },
+      "7_typed_facts": {
+        "schema_version": "typed-fact-next/2",
+        "problem_text": "Hướng dẫn giải: Cho khối chóp P.ABCD có cạnh PA vuông góc với (ABCD) và PA=a√6. Biết ABCD là hình chữ nhật với AB=3a, BC=2a. Lấy T là trung điểm CD. Tính khoảng cách từ điểm T đến (PBC).",
+        "length_unit": "a",
+        "solids": [
+          {
+            "solid_id": "s1",
+            "solid_type": "pyramid",
+            "notation": "P.ABCD",
+            "quote": "Hướng dẫn giải: Cho khối chóp P.ABCD có cạnh PA vuông góc với (ABCD)"
+          }
+        ],
+        "premises": [
+          {
+            "kind": "perpendicular_line_plane",
+            "args": {
+              "line": [
+                "P",
+                "A"
+              ],
+              "plane": [
+                "A",
+                "B",
+                "C",
+                "D"
+              ]
+            },
+            "quote": "Hướng dẫn giải: Cho khối chóp P.ABCD có cạnh PA vuông góc với (ABCD)",
+            "solid_id": "s1"
+          },
+          {
+            "kind": "segment_length",
+            "args": {
+              "segment": [
+                "P",
+                "A"
+              ],
+              "value": "a√6"
+            },
+            "quote": "PA=a√6",
+            "solid_id": "s1"
+          },
+          {
+            "kind": "segment_length",
+            "args": {
+              "segment": [
+                "A",
+                "B"
+              ],
+              "value": "3a"
+            },
+            "quote": "AB=3a",
+            "solid_id": "s1"
+          },
+          {
+            "kind": "segment_length",
+            "args": {
+              "segment": [
+                "B",
+                "C"
+              ],
+              "value": "2a"
+            },
+            "quote": "BC=2a",
+            "solid_id": "s1"
+          },
+          {
+            "kind": "midpoint",
+            "args": {
+              "point": "T",
+              "segment": [
+                "C",
+                "D"
+              ]
+            },
+            "quote": "Lấy T là trung điểm CD",
+            "solid_id": "s1"
+          }
+        ],
+        "derived_sections": [],
+        "relations": [],
+        "simulation_goals": [
+          {
+            "goal_id": "sg1",
+            "kind": "construct_object",
+            "quote": "Hướng dẫn giải: Cho khối chóp P.ABCD có cạnh PA vuông góc với (ABCD)",
+            "target_solid_id": "s1"
+          }
+        ],
+        "math_goals": [
+          {
+            "goal_id": "q1",
+            "kind": "measurement",
+            "quote": "Tính khoảng cách từ điểm T đến (PBC)",
+            "goal_type": "distance",
+            "solid_id": "s1",
+            "target": {
+              "point": "T",
+              "plane": [
+                "P",
+                "B",
+                "C"
+              ]
+            }
+          }
+        ]
+      },
+      "8_source_gate_result": {
+        "status": "REFUSED",
+        "refusal_code": "SOURCE_PREMISE_UNREAD",
+        "refusal_message": null,
+        "gate_errors": []
+      },
+      "9_planner_result": "BLOCKED_BEFORE_OR_IN_PLANNER (SOURCE_PREMISE_UNREAD)",
+      "10_kernel_result": {
+        "route_status": "REFUSED",
+        "answer": null,
+        "oracle": "3a√10/10",
+        "v2_match": false,
+        "downstream_trace": "NOT_SERVED (SOURCE_PREMISE_UNREAD)"
+      },
+      "11_exact_refusal_reason": {
+        "extraction_reason_code": null,
+        "extraction_reason_detail": null,
+        "route_refusal_code": "SOURCE_PREMISE_UNREAD",
+        "route_refusal_message": null
+      },
+      "12_gold_intervention_result": {
+        "grounding_status": "GROUNDED_AND_LOWERED",
+        "route_status": "SERVED",
+        "answer": "3a√10/10",
+        "oracle_match_v2": true,
+        "refusal": null
+      },
+      "13_owner_boundary": {
+        "root_cause_category": "MODEL_SEMANTIC_ERROR (+ minor normalizer prefix quirk on v7h_p8_01)",
+        "explanation": "Compact-clause SLM AxoV7 omitted `{\"c\": 1, \"p\": \"rect\", \"a\": <base>}` when base shape was reordered into Sentence 1 (`Biết ABCD là hình chữ nhật với ...`) without the keyword `đáy`. Source Gate (`doc_rang_buoc`) faithfully detected that Sentence 1's premise was unread by any lowered fact and refused with `SOURCE_PREMISE_UNREAD`. Gold `compact_clause` JSON serves cleanly even with the conversational prefix.",
+        "owner_boundary": "local_slm_extractor / AxoV7 data coverage (NOT Source Gate defect); normalizer ownership in slm_verified_normalizer (FROZEN candidate in /8)"
+      }
+    },
+    {
+      "case_id": "v7h_p8_05",
+      "model_key": "qwen3-0.6b-axo-v7-q4_k_m",
+      "1_original_text": "Bài tập tự luận: Cho khối chóp Z.EFGH có cạnh ZE vuông góc mặt đáy (EFGH) và ZE=3a. Biết EFGH là hình chữ nhật với EF=2a, FG=4a. Lấy T là trung điểm GH. Hãy tìm khoảng cách từ điểm T đến (ZFG).",
+      "2_normalized_text": "Cho khối chóp Z.EFGH có cạnh ZE vuông góc với (EFGH) và ZE=3a. Biết EFGH là hình chữ nhật với EF=2a, FG=4a. Lấy T là trung điểm GH. Tính khoảng cách từ điểm T đến (ZFG).",
+      "3_transformation_provenance": {
+        "normalizer_version": "slm-verified-normalizer/2",
+        "changed": true,
+        "typo_detected": false,
+        "ambiguity_flags": [],
+        "applied_rule_ids": [
+          "VN02_CONV_PREFIX",
+          "VN02_DEDUP_OPENER",
+          "VN05_VUONG_GOC_MAT_DAY_PAREN",
+          "VN05_HAY_TIM_GOAL"
+        ],
+        "steps": [
+          {
+            "rule_id": "VN02_CONV_PREFIX",
+            "transformation_rule_id": "VN02_CONV_PREFIX",
+            "original_text": "Bài tập tự luận: ",
+            "original_span": [
+              0,
+              17
+            ],
+            "original_clause_id": 0,
+            "normalized_text": "Cho ",
+            "original_excerpt": "Bài tập tự luận: ",
+            "normalized_excerpt": "Cho ",
+            "original_entity_refs": [],
+            "scope": "CONVERSATIONAL_OPENER",
+            "polarity": "AFFIRMATIVE",
+            "semantic_equivalence_evidence": "strip_non_mathematical_prefix_before_colon",
+            "validation_status": "VALIDATED_MEANING_PRESERVING",
+            "validation_result": "VALIDATED_MEANING_PRESERVING",
+            "ambiguity_status": "UNAMBIGUOUS"
+          },
+          {
+            "rule_id": "VN02_DEDUP_OPENER",
+            "transformation_rule_id": "VN02_DEDUP_OPENER",
+            "original_text": "Bài tập tự luận: Cho ",
+            "original_span": [
+              0,
+              21
+            ],
+            "original_clause_id": 0,
+            "normalized_text": "Cho ",
+            "original_excerpt": "Bài tập tự luận: Cho ",
+            "normalized_excerpt": "Cho ",
+            "original_entity_refs": [],
+            "scope": "CONVERSATIONAL_OPENER",
+            "polarity": "AFFIRMATIVE",
+            "semantic_equivalence_evidence": "deduplicate_problem_opener",
+            "validation_status": "VALIDATED_MEANING_PRESERVING",
+            "validation_result": "VALIDATED_MEANING_PRESERVING",
+            "ambiguity_status": "UNAMBIGUOUS"
+          },
+          {
+            "rule_id": "VN05_VUONG_GOC_MAT_DAY_PAREN",
+            "transformation_rule_id": "VN05_VUONG_GOC_MAT_DAY_PAREN",
+            "original_text": "vuông góc mặt đáy (EFGH)",
+            "original_span": [
+              49,
+              73
+            ],
+            "original_clause_id": 1,
+            "normalized_text": "vuông góc với (EFGH)",
+            "original_excerpt": "vuông góc mặt đáy (EFGH)",
+            "normalized_excerpt": "vuông góc với (EFGH)",
+            "original_entity_refs": [
+              "EFGH"
+            ],
+            "scope": "LOCAL_CLAUSE",
+            "polarity": "AFFIRMATIVE",
+            "semantic_equivalence_evidence": "canonical_perpendicular_base_parenthesized_plane",
+            "validation_status": "VALIDATED_MEANING_PRESERVING",
+            "validation_result": "VALIDATED_MEANING_PRESERVING",
+            "ambiguity_status": "UNAMBIGUOUS"
+          },
+          {
+            "rule_id": "VN05_HAY_TIM_GOAL",
+            "transformation_rule_id": "VN05_HAY_TIM_GOAL",
+            "original_text": "Hãy tìm ",
+            "original_span": [
+              153,
+              161
+            ],
+            "original_clause_id": 4,
+            "normalized_text": "Tính ",
+            "original_excerpt": "Hãy tìm ",
+            "normalized_excerpt": "Tính ",
+            "original_entity_refs": [],
+            "scope": "GOAL_MARKER",
+            "polarity": "AFFIRMATIVE",
+            "semantic_equivalence_evidence": "canonical_goal_verb",
+            "validation_status": "VALIDATED_MEANING_PRESERVING",
+            "validation_result": "VALIDATED_MEANING_PRESERVING",
+            "ambiguity_status": "UNAMBIGUOUS"
+          }
+        ]
+      },
+      "4_parser_output": {
+        "raw_status": "LOCAL_PARSE_PARTIAL",
+        "raw_diagnostics": null,
+        "after_normalizer_status": "LOCAL_PARSE_PARTIAL",
+        "after_normalizer_premises_count": 0
+      },
+      "5_compact_slm_output": {
+        "raw_content": "{\"s\":[0,\"pyr\",\"Z.EFGH\",0],\"r\":[{\"c\":0,\"p\":\"perp_lp\",\"a\":\"ZE\",\"b\":\"EFGH\"},{\"c\":0,\"p\":\"len\",\"a\":\"ZE\",\"q\":\"3a\"},{\"c\":1,\"p\":\"len\",\"a\":\"EF\",\"q\":\"2a\"},{\"c\":1,\"p\":\"len\",\"a\":\"FG\",\"q\":\"4a\"},{\"c\":2,\"p\":\"mid\",\"pt\":\"T\",\"a\":\"GH\"}],\"g\":[{\"c\":3,\"t\":\"dist_pt_plane\",\"a\":\"T\",\"b\":\"ZFG\"}],\"u\":[]}",
+        "parsed_json": {
+          "s": [
+            0,
+            "pyr",
+            "Z.EFGH",
+            0
+          ],
+          "r": [
+            {
+              "c": 0,
+              "p": "perp_lp",
+              "a": "ZE",
+              "b": "EFGH"
+            },
+            {
+              "c": 0,
+              "p": "len",
+              "a": "ZE",
+              "q": "3a"
+            },
+            {
+              "c": 1,
+              "p": "len",
+              "a": "EF",
+              "q": "2a"
+            },
+            {
+              "c": 1,
+              "p": "len",
+              "a": "FG",
+              "q": "4a"
+            },
+            {
+              "c": 2,
+              "p": "mid",
+              "pt": "T",
+              "a": "GH"
+            }
+          ],
+          "g": [
+            {
+              "c": 3,
+              "t": "dist_pt_plane",
+              "a": "T",
+              "b": "ZFG"
+            }
+          ],
+          "u": []
+        },
+        "slm_invoked": true
+      },
+      "6_grounding_status": {
+        "ok": true,
+        "grounding_status": "GROUNDED_AND_LOWERED",
+        "failure_taxonomy": "NONE",
+        "accepted_ops": [
+          {
+            "kind": "perpendicular_line_plane",
+            "clause_id": 0
+          },
+          {
+            "kind": "segment_length",
+            "clause_id": 0
+          },
+          {
+            "kind": "segment_length",
+            "clause_id": 1
+          },
+          {
+            "kind": "segment_length",
+            "clause_id": 1
+          },
+          {
+            "kind": "midpoint",
+            "clause_id": 2
+          },
+          {
+            "kind": "goal:dist_pt_plane",
+            "clause_id": 3
+          }
+        ],
+        "rejected_ops": []
+      },
+      "7_typed_facts": {
+        "schema_version": "typed-fact-next/2",
+        "problem_text": "Cho khối chóp Z.EFGH có cạnh ZE vuông góc với (EFGH) và ZE=3a. Biết EFGH là hình chữ nhật với EF=2a, FG=4a. Lấy T là trung điểm GH. Tính khoảng cách từ điểm T đến (ZFG).",
+        "length_unit": "a",
+        "solids": [
+          {
+            "solid_id": "s1",
+            "solid_type": "pyramid",
+            "notation": "Z.EFGH",
+            "quote": "Cho khối chóp Z.EFGH có cạnh ZE vuông góc với (EFGH)"
+          }
+        ],
+        "premises": [
+          {
+            "kind": "perpendicular_line_plane",
+            "args": {
+              "line": [
+                "Z",
+                "E"
+              ],
+              "plane": [
+                "E",
+                "F",
+                "G",
+                "H"
+              ]
+            },
+            "quote": "Cho khối chóp Z.EFGH có cạnh ZE vuông góc với (EFGH)",
+            "solid_id": "s1"
+          },
+          {
+            "kind": "segment_length",
+            "args": {
+              "segment": [
+                "Z",
+                "E"
+              ],
+              "value": "3a"
+            },
+            "quote": "ZE=3a",
+            "solid_id": "s1"
+          },
+          {
+            "kind": "segment_length",
+            "args": {
+              "segment": [
+                "E",
+                "F"
+              ],
+              "value": "2a"
+            },
+            "quote": "EF=2a",
+            "solid_id": "s1"
+          },
+          {
+            "kind": "segment_length",
+            "args": {
+              "segment": [
+                "F",
+                "G"
+              ],
+              "value": "4a"
+            },
+            "quote": "FG=4a",
+            "solid_id": "s1"
+          },
+          {
+            "kind": "midpoint",
+            "args": {
+              "point": "T",
+              "segment": [
+                "G",
+                "H"
+              ]
+            },
+            "quote": "Lấy T là trung điểm GH",
+            "solid_id": "s1"
+          }
+        ],
+        "derived_sections": [],
+        "relations": [],
+        "simulation_goals": [
+          {
+            "goal_id": "sg1",
+            "kind": "construct_object",
+            "quote": "Cho khối chóp Z.EFGH có cạnh ZE vuông góc với (EFGH)",
+            "target_solid_id": "s1"
+          }
+        ],
+        "math_goals": [
+          {
+            "goal_id": "q1",
+            "kind": "measurement",
+            "quote": "Tính khoảng cách từ điểm T đến (ZFG)",
+            "goal_type": "distance",
+            "solid_id": "s1",
+            "target": {
+              "point": "T",
+              "plane": [
+                "Z",
+                "F",
+                "G"
+              ]
+            }
+          }
+        ]
+      },
+      "8_source_gate_result": {
+        "status": "REFUSED",
+        "refusal_code": "SOURCE_PREMISE_UNREAD",
+        "refusal_message": null,
+        "gate_errors": []
+      },
+      "9_planner_result": "BLOCKED_BEFORE_OR_IN_PLANNER (SOURCE_PREMISE_UNREAD)",
+      "10_kernel_result": {
+        "route_status": "REFUSED",
+        "answer": null,
+        "oracle": "3a√13/13",
+        "v2_match": false,
+        "downstream_trace": "NOT_SERVED (SOURCE_PREMISE_UNREAD)"
+      },
+      "11_exact_refusal_reason": {
+        "extraction_reason_code": null,
+        "extraction_reason_detail": null,
+        "route_refusal_code": "SOURCE_PREMISE_UNREAD",
+        "route_refusal_message": null
+      },
+      "12_gold_intervention_result": {
+        "grounding_status": "GROUNDED_AND_LOWERED",
+        "route_status": "SERVED",
+        "answer": "3a√13/13",
+        "oracle_match_v2": true,
+        "refusal": null
+      },
+      "13_owner_boundary": {
+        "root_cause_category": "MODEL_SEMANTIC_ERROR (+ minor normalizer prefix quirk on v7h_p8_01)",
+        "explanation": "Compact-clause SLM AxoV7 omitted `{\"c\": 1, \"p\": \"rect\", \"a\": <base>}` when base shape was reordered into Sentence 1 (`Biết ABCD là hình chữ nhật với ...`) without the keyword `đáy`. Source Gate (`doc_rang_buoc`) faithfully detected that Sentence 1's premise was unread by any lowered fact and refused with `SOURCE_PREMISE_UNREAD`. Gold `compact_clause` JSON serves cleanly even with the conversational prefix.",
+        "owner_boundary": "local_slm_extractor / AxoV7 data coverage (NOT Source Gate defect); normalizer ownership in slm_verified_normalizer (FROZEN candidate in /8)"
+      }
+    },
+    {
+      "case_id": "v7h_p5_09",
+      "model_key": "qwen3-0.6b-axo-v7-q4_k_m",
+      "1_original_text": "Cho hình chóp G.RST có đáy RST là tam giác đều cạnh 4a. Gọi I là trung điểm của cạnh RS, hình chiếu vuông góc của G lên (RST) trùng với điểm I. Góc giữa GT với mặt phẳng (RST) là 60°. Tính thể tích G.RST.",
+      "2_normalized_text": "Cho hình chóp G.RST có đáy RST là tam giác đều cạnh 4a. Gọi I là trung điểm của cạnh RS, hình chiếu vuông góc của G lên (RST) trùng với điểm I. Góc giữa GT với mặt phẳng (RST) là 60°. Tính thể tích G.RST.",
+      "3_transformation_provenance": {
+        "normalizer_version": "slm-verified-normalizer/2",
+        "changed": false,
+        "typo_detected": false,
+        "ambiguity_flags": [],
+        "applied_rule_ids": [],
+        "steps": []
+      },
+      "4_parser_output": {
+        "raw_status": "LOCAL_PARSE_PARTIAL",
+        "raw_diagnostics": null,
+        "after_normalizer_status": "LOCAL_PARSE_PARTIAL",
+        "after_normalizer_premises_count": 0
+      },
+      "5_compact_slm_output": {
+        "raw_content": "{\"s\":[0,\"pyr\",\"G.RST\",0],\"r\":[{\"c\":0,\"p\":\"reg_poly\",\"a\":\"RST\",\"q\":\"4a\"},{\"c\":1,\"p\":\"mid\",\"pt\":\"I\",\"a\":\"RS\"},{\"c\":1,\"p\":\"proj\",\"pt\":\"G\",\"a\":\"R\",\"b\":\"RST\"},{\"c\":1,\"p\":\"perp_lp\",\"a\":\"RS\",\"b\":\"RST\"},{\"c\":2,\"p\":\"ang_lp\",\"a\":\"GT\",\"b\":\"RST\",\"q\":\"60°\"}],\"g\":[{\"c\":3,\"t\":\"vol\",\"tgt\":\"G.RST\"}],\"u\":[]}",
+        "parsed_json": {
+          "s": [
+            0,
+            "pyr",
+            "G.RST",
+            0
+          ],
+          "r": [
+            {
+              "c": 0,
+              "p": "reg_poly",
+              "a": "RST",
+              "q": "4a"
+            },
+            {
+              "c": 1,
+              "p": "mid",
+              "pt": "I",
+              "a": "RS"
+            },
+            {
+              "c": 1,
+              "p": "proj",
+              "pt": "G",
+              "a": "R",
+              "b": "RST"
+            },
+            {
+              "c": 1,
+              "p": "perp_lp",
+              "a": "RS",
+              "b": "RST"
+            },
+            {
+              "c": 2,
+              "p": "ang_lp",
+              "a": "GT",
+              "b": "RST",
+              "q": "60°"
+            }
+          ],
+          "g": [
+            {
+              "c": 3,
+              "t": "vol",
+              "tgt": "G.RST"
+            }
+          ],
+          "u": []
+        },
+        "slm_invoked": true
+      },
+      "6_grounding_status": {
+        "ok": true,
+        "grounding_status": "GROUNDED_AND_LOWERED",
+        "failure_taxonomy": "NONE",
+        "accepted_ops": [
+          {
+            "kind": "regular_polygon",
+            "clause_id": 0
+          },
+          {
+            "kind": "midpoint",
+            "clause_id": 1
+          },
+          {
+            "kind": "orthogonal_projection",
+            "clause_id": 1
+          },
+          {
+            "kind": "perpendicular_line_plane",
+            "clause_id": 1
+          },
+          {
+            "kind": "line_plane_angle",
+            "clause_id": 2
+          },
+          {
+            "kind": "goal:vol",
+            "clause_id": 3
+          }
+        ],
+        "rejected_ops": []
+      },
+      "7_typed_facts": {
+        "schema_version": "typed-fact-next/2",
+        "problem_text": "Cho hình chóp G.RST có đáy RST là tam giác đều cạnh 4a. Gọi I là trung điểm của cạnh RS, hình chiếu vuông góc của G lên (RST) trùng với điểm I. Góc giữa GT với mặt phẳng (RST) là 60°. Tính thể tích G.RST.",
+        "length_unit": "a",
+        "solids": [
+          {
+            "solid_id": "s1",
+            "solid_type": "pyramid",
+            "notation": "G.RST",
+            "quote": "Cho hình chóp G.RST có đáy RST là tam giác đều cạnh 4a"
+          }
+        ],
+        "premises": [
+          {
+            "kind": "regular_polygon",
+            "args": {
+              "vertices": [
+                "R",
+                "S",
+                "T"
+              ],
+              "side": "4a"
+            },
+            "quote": "Cho hình chóp G.RST có đáy RST là tam giác đều cạnh 4a",
+            "solid_id": "s1"
+          },
+          {
+            "kind": "midpoint",
+            "args": {
+              "point": "I",
+              "segment": [
+                "R",
+                "S"
+              ]
+            },
+            "quote": "Gọi I là trung điểm của cạnh RS",
+            "solid_id": "s1"
+          },
+          {
+            "kind": "orthogonal_projection",
+            "args": {
+              "point": "R",
+              "image": "G",
+              "plane": [
+                "R",
+                "S",
+                "T"
+              ]
+            },
+            "quote": "hình chiếu vuông góc của G lên (RST) trùng với điểm I",
+            "solid_id": "s1"
+          },
+          {
+            "kind": "perpendicular_line_plane",
+            "args": {
+              "line": [
+                "R",
+                "S"
+              ],
+              "plane": [
+                "R",
+                "S",
+                "T"
+              ]
+            },
+            "quote": "Gọi I là trung điểm của cạnh RS, hình chiếu vuông góc của G lên (RST) trùng với điểm I",
+            "solid_id": "s1"
+          },
+          {
+            "kind": "line_plane_angle",
+            "args": {
+              "line": [
+                "G",
+                "T"
+              ],
+              "plane": [
+                "R",
+                "S",
+                "T"
+              ],
+              "value": "60",
+              "unit": "deg"
+            },
+            "quote": "Góc giữa GT với mặt phẳng (RST) là 60°",
+            "solid_id": "s1"
+          }
+        ],
+        "derived_sections": [],
+        "relations": [],
+        "simulation_goals": [
+          {
+            "goal_id": "sg1",
+            "kind": "construct_object",
+            "quote": "Cho hình chóp G.RST có đáy RST là tam giác đều cạnh 4a",
+            "target_solid_id": "s1"
+          }
+        ],
+        "math_goals": [
+          {
+            "goal_id": "q1",
+            "kind": "measurement",
+            "quote": "Tính thể tích G.RST",
+            "goal_type": "volume",
+            "solid_id": "s1",
+            "target": {
+              "solid_id": "s1"
+            }
+          }
+        ]
+      },
+      "8_source_gate_result": {
+        "status": "REFUSED",
+        "refusal_code": "SOURCE_OBJECT_MISMATCH",
+        "refusal_message": null,
+        "gate_errors": []
+      },
+      "9_planner_result": "BLOCKED_BEFORE_OR_IN_PLANNER (SOURCE_OBJECT_MISMATCH)",
+      "10_kernel_result": {
+        "route_status": "REFUSED",
+        "answer": null,
+        "oracle": "8a³√3",
+        "v2_match": false,
+        "downstream_trace": "NOT_SERVED (SOURCE_OBJECT_MISMATCH)"
+      },
+      "11_exact_refusal_reason": {
+        "extraction_reason_code": null,
+        "extraction_reason_detail": null,
+        "route_refusal_code": "SOURCE_OBJECT_MISMATCH",
+        "route_refusal_message": null
+      },
+      "12_gold_intervention_result": {
+        "grounding_status": "GROUNDED_AND_LOWERED",
+        "route_status": "SERVED",
+        "answer": "8a³√3",
+        "oracle_match_v2": true,
+        "refusal": null
+      },
+      "13_owner_boundary": {
+        "root_cause_category": "MODEL_SEMANTIC_ERROR",
+        "explanation": "Compact-clause SLM AxoV7 inverted the projection arguments on `hình chiếu vuông góc của G lên (RST) trùng với điểm I` (emitting `point='R', image='G'` plus spurious `perp_lp('RS', 'RST')`). Source Gate (`_C_CHIEU`) faithfully caught the swapped point/image against source text (`SOURCE_OBJECT_MISMATCH`), preventing an unsafe hallucinated solve.",
+        "owner_boundary": "AxoV7 model robustness (NOT Source Gate defect — Source Gate safety boundary worked as designed)"
+      }
+    },
+    {
+      "case_id": "v7h_p8_06",
+      "model_key": "qwen3-0.6b-axo-v7-q4_k_m",
+      "1_original_text": "Thưa thầy, nhờ giải bài: Cho lăng trụ đứng ABC.A'B'C', cạnh bên AA'=3a, đồng thời đáy ABC là tam giác vuông tại A với AB=2a, AC=2a√3. Tính thể tích ABC.A'B'C'.",
+      "2_normalized_text": "Cho nhờ giải bài: Cho lăng trụ đứng ABC.A'B'C', cạnh bên AA'=3a, đáy ABC là tam giác vuông tại A với AB=2a, AC=2a√3. Tính thể tích ABC.A'B'C'.",
+      "3_transformation_provenance": {
+        "normalizer_version": "slm-verified-normalizer/2",
+        "changed": true,
+        "typo_detected": false,
+        "ambiguity_flags": [],
+        "applied_rule_ids": [
+          "VN02_THUA_THAY_OPENER",
+          "VN05_DONG_THOI"
+        ],
+        "steps": [
+          {
+            "rule_id": "VN02_THUA_THAY_OPENER",
+            "transformation_rule_id": "VN02_THUA_THAY_OPENER",
+            "original_text": "Thưa thầy, ",
+            "original_span": [
+              0,
+              11
+            ],
+            "original_clause_id": 0,
+            "normalized_text": "Cho ",
+            "original_excerpt": "Thưa thầy, ",
+            "normalized_excerpt": "Cho ",
+            "original_entity_refs": [],
+            "scope": "CONVERSATIONAL_OPENER",
+            "polarity": "AFFIRMATIVE",
+            "semantic_equivalence_evidence": "strip_non_mathematical_vocative_opener",
+            "validation_status": "VALIDATED_MEANING_PRESERVING",
+            "validation_result": "VALIDATED_MEANING_PRESERVING",
+            "ambiguity_status": "UNAMBIGUOUS"
+          },
+          {
+            "rule_id": "VN05_DONG_THOI",
+            "transformation_rule_id": "VN05_DONG_THOI",
+            "original_text": ", đồng thời ",
+            "original_span": [
+              70,
+              82
+            ],
+            "original_clause_id": 1,
+            "normalized_text": ", ",
+            "original_excerpt": ", đồng thời ",
+            "normalized_excerpt": ", ",
+            "original_entity_refs": [],
+            "scope": "CLAUSE_CONNECTOR",
+            "polarity": "AFFIRMATIVE",
+            "semantic_equivalence_evidence": "canonical_additive_clause_connector",
+            "validation_status": "VALIDATED_MEANING_PRESERVING",
+            "validation_result": "VALIDATED_MEANING_PRESERVING",
+            "ambiguity_status": "UNAMBIGUOUS"
+          }
+        ]
+      },
+      "4_parser_output": {
+        "raw_status": "LOCAL_PARSE_PARTIAL",
+        "raw_diagnostics": null,
+        "after_normalizer_status": "LOCAL_PARSE_PARTIAL",
+        "after_normalizer_premises_count": 0
+      },
+      "5_compact_slm_output": {
+        "raw_content": "{\"s\":[0,\"pri\",\"ABC.A'B'C'\",1],\"r\":[{\"c\":0,\"p\":\"right_tri\",\"a\":\"ABC\",\"pt\":\"A\"},{\"c\":0,\"p\":\"len\",\"a\":\"AB\",\"q\":\"2a\"},{\"c\":0,\"p\":\"len\",\"a\":\"AC\",\"q\":\"2a√3\"},{\"c\":0,\"p\":\"len\",\"a\":\"AA'\",\"q\":\"3a\"}],\"g\":[{\"c\":1,\"t\":\"vol\",\"tgt\":\"ABC.A'B'C'\"}],\"u\":[]}",
+        "parsed_json": {
+          "s": [
+            0,
+            "pri",
+            "ABC.A'B'C'",
+            1
+          ],
+          "r": [
+            {
+              "c": 0,
+              "p": "right_tri",
+              "a": "ABC",
+              "pt": "A"
+            },
+            {
+              "c": 0,
+              "p": "len",
+              "a": "AB",
+              "q": "2a"
+            },
+            {
+              "c": 0,
+              "p": "len",
+              "a": "AC",
+              "q": "2a√3"
+            },
+            {
+              "c": 0,
+              "p": "len",
+              "a": "AA'",
+              "q": "3a"
+            }
+          ],
+          "g": [
+            {
+              "c": 1,
+              "t": "vol",
+              "tgt": "ABC.A'B'C'"
+            }
+          ],
+          "u": []
+        },
+        "slm_invoked": true
+      },
+      "6_grounding_status": {
+        "ok": true,
+        "grounding_status": "GROUNDED_AND_LOWERED",
+        "failure_taxonomy": "NONE",
+        "accepted_ops": [
+          {
+            "kind": "right_prism",
+            "clause_id": 0
+          },
+          {
+            "kind": "right_angle",
+            "clause_id": 0
+          },
+          {
+            "kind": "segment_length",
+            "clause_id": 0
+          },
+          {
+            "kind": "segment_length",
+            "clause_id": 0
+          },
+          {
+            "kind": "segment_length",
+            "clause_id": 0
+          },
+          {
+            "kind": "goal:vol",
+            "clause_id": 1
+          }
+        ],
+        "rejected_ops": []
+      },
+      "7_typed_facts": {
+        "schema_version": "typed-fact-next/2",
+        "problem_text": "Cho nhờ giải bài: Cho lăng trụ đứng ABC.A'B'C', cạnh bên AA'=3a, đáy ABC là tam giác vuông tại A với AB=2a, AC=2a√3. Tính thể tích ABC.A'B'C'.",
+        "length_unit": "a",
+        "solids": [
+          {
+            "solid_id": "s1",
+            "solid_type": "prism",
+            "notation": "ABC.A'B'C'",
+            "quote": "Cho nhờ giải bài: Cho lăng trụ đứng ABC.A'B'C'"
+          }
+        ],
+        "premises": [
+          {
+            "kind": "right_prism",
+            "args": {
+              "base": [
+                "A",
+                "B",
+                "C"
+              ],
+              "top": [
+                "A'",
+                "B'",
+                "C'"
+              ]
+            },
+            "quote": "Cho nhờ giải bài: Cho lăng trụ đứng ABC.A'B'C'",
+            "solid_id": "s1"
+          },
+          {
+            "kind": "right_angle",
+            "args": {
+              "vertex": "A",
+              "rays": [
+                "B",
+                "C"
+              ]
+            },
+            "quote": "đáy ABC là tam giác vuông tại A với AB=2a",
+            "solid_id": "s1"
+          },
+          {
+            "kind": "segment_length",
+            "args": {
+              "segment": [
+                "A",
+                "B"
+              ],
+              "value": "2a"
+            },
+            "quote": "Cho nhờ giải bài: Cho lăng trụ đứng ABC.A'B'C', cạnh bên AA'=3a, đáy ABC là tam giác vuông tại A với AB=2a, AC=2a√3",
+            "solid_id": "s1"
+          },
+          {
+            "kind": "segment_length",
+            "args": {
+              "segment": [
+                "A",
+                "C"
+              ],
+              "value": "2a√3"
+            },
+            "quote": "Cho nhờ giải bài: Cho lăng trụ đứng ABC.A'B'C', cạnh bên AA'=3a, đáy ABC là tam giác vuông tại A với AB=2a, AC=2a√3",
+            "solid_id": "s1"
+          },
+          {
+            "kind": "segment_length",
+            "args": {
+              "segment": [
+                "A",
+                "A'"
+              ],
+              "value": "3a"
+            },
+            "quote": "cạnh bên AA'=3a",
+            "solid_id": "s1"
+          }
+        ],
+        "derived_sections": [],
+        "relations": [],
+        "simulation_goals": [
+          {
+            "goal_id": "sg1",
+            "kind": "construct_object",
+            "quote": "Cho nhờ giải bài: Cho lăng trụ đứng ABC.A'B'C'",
+            "target_solid_id": "s1"
+          }
+        ],
+        "math_goals": [
+          {
+            "goal_id": "q1",
+            "kind": "measurement",
+            "quote": "Tính thể tích ABC.A'B'C'",
+            "goal_type": "volume",
+            "solid_id": "s1",
+            "target": {
+              "solid_id": "s1"
+            }
+          }
+        ]
+      },
+      "8_source_gate_result": {
+        "status": "SERVED",
+        "refusal_code": null,
+        "refusal_message": null,
+        "gate_errors": []
+      },
+      "9_planner_result": {
+        "chosen_plan": false,
+        "plan_steps_count": 0
+      },
+      "10_kernel_result": {
+        "route_status": "SERVED",
+        "answer": "6a³√3",
+        "oracle": "6a³√3",
+        "v2_match": true,
+        "downstream_trace": {
+          "status": "SERVED",
+          "answers": {
+            "q1": "6a³√3"
+          }
+        }
+      },
+      "11_exact_refusal_reason": {
+        "extraction_reason_code": null,
+        "extraction_reason_detail": null,
+        "route_refusal_code": null,
+        "route_refusal_message": null
+      },
+      "12_gold_intervention_result": {
+        "grounding_status": "GROUNDED_AND_LOWERED",
+        "route_status": "SERVED",
+        "answer": "6a³√3",
+        "oracle_match_v2": true,
+        "refusal": null
+      },
+      "13_owner_boundary": {
+        "root_cause_category": "MODEL_SEMANTIC_ERROR (+ minor normalizer prefix quirk on v7h_p8_01)",
+        "explanation": "Compact-clause SLM AxoV7 omitted `{\"c\": 1, \"p\": \"rect\", \"a\": <base>}` when base shape was reordered into Sentence 1 (`Biết ABCD là hình chữ nhật với ...`) without the keyword `đáy`. Source Gate (`doc_rang_buoc`) faithfully detected that Sentence 1's premise was unread by any lowered fact and refused with `SOURCE_PREMISE_UNREAD`. Gold `compact_clause` JSON serves cleanly even with the conversational prefix.",
+        "owner_boundary": "local_slm_extractor / AxoV7 data coverage (NOT Source Gate defect); normalizer ownership in slm_verified_normalizer (FROZEN candidate in /8)"
+      }
+    },
+    {
+      "case_id": "v7h_p5_08",
+      "model_key": "qwen3-0.6b-axo-v7-q4_k_m",
+      "1_original_text": "Cho hình chóp L.PQR có đáy PQR là tam giác đều cạnh 2a. Gọi I là trung điểm của cạnh PQ, hình chiếu vuông góc của L lên (PQR) trùng với điểm I. Góc giữa LR với mặt phẳng (PQR) là 45°. Tính thể tích L.PQR.",
+      "2_normalized_text": "Cho hình chóp L.PQR có đáy PQR là tam giác đều cạnh 2a. Gọi I là trung điểm của cạnh PQ, hình chiếu vuông góc của L lên (PQR) trùng với điểm I. Góc giữa LR với mặt phẳng (PQR) là 45°. Tính thể tích L.PQR.",
+      "3_transformation_provenance": {
+        "normalizer_version": "slm-verified-normalizer/2",
+        "changed": false,
+        "typo_detected": false,
+        "ambiguity_flags": [],
+        "applied_rule_ids": [],
+        "steps": []
+      },
+      "4_parser_output": {
+        "raw_status": "LOCAL_PARSE_PARTIAL",
+        "raw_diagnostics": null,
+        "after_normalizer_status": "LOCAL_PARSE_PARTIAL",
+        "after_normalizer_premises_count": 0
+      },
+      "5_compact_slm_output": {
+        "raw_content": "{\"s\":[0,\"pyr\",\"L.PQR\",0],\"r\":[{\"c\":0,\"p\":\"reg_poly\",\"a\":\"PQR\",\"q\":\"2a\"},{\"c\":1,\"p\":\"mid\",\"pt\":\"I\",\"a\":\"PQ\"},{\"c\":1,\"p\":\"proj\",\"pt\":\"I\",\"a\":\"L\",\"b\":\"PQR\"},{\"c\":2,\"p\":\"ang_lp\",\"a\":\"LR\",\"b\":\"PQR\",\"q\":\"45°\"}],\"g\":[{\"c\":3,\"t\":\"vol\",\"tgt\":\"L.PQR\"}],\"u\":[]}",
+        "parsed_json": {
+          "s": [
+            0,
+            "pyr",
+            "L.PQR",
+            0
+          ],
+          "r": [
+            {
+              "c": 0,
+              "p": "reg_poly",
+              "a": "PQR",
+              "q": "2a"
+            },
+            {
+              "c": 1,
+              "p": "mid",
+              "pt": "I",
+              "a": "PQ"
+            },
+            {
+              "c": 1,
+              "p": "proj",
+              "pt": "I",
+              "a": "L",
+              "b": "PQR"
+            },
+            {
+              "c": 2,
+              "p": "ang_lp",
+              "a": "LR",
+              "b": "PQR",
+              "q": "45°"
+            }
+          ],
+          "g": [
+            {
+              "c": 3,
+              "t": "vol",
+              "tgt": "L.PQR"
+            }
+          ],
+          "u": []
+        },
+        "slm_invoked": true
+      },
+      "6_grounding_status": {
+        "ok": true,
+        "grounding_status": "GROUNDED_AND_LOWERED",
+        "failure_taxonomy": "NONE",
+        "accepted_ops": [
+          {
+            "kind": "regular_polygon",
+            "clause_id": 0
+          },
+          {
+            "kind": "midpoint",
+            "clause_id": 1
+          },
+          {
+            "kind": "orthogonal_projection",
+            "clause_id": 1
+          },
+          {
+            "kind": "line_plane_angle",
+            "clause_id": 2
+          },
+          {
+            "kind": "goal:vol",
+            "clause_id": 3
+          }
+        ],
+        "rejected_ops": []
+      },
+      "7_typed_facts": {
+        "schema_version": "typed-fact-next/2",
+        "problem_text": "Cho hình chóp L.PQR có đáy PQR là tam giác đều cạnh 2a. Gọi I là trung điểm của cạnh PQ, hình chiếu vuông góc của L lên (PQR) trùng với điểm I. Góc giữa LR với mặt phẳng (PQR) là 45°. Tính thể tích L.PQR.",
+        "length_unit": "a",
+        "solids": [
+          {
+            "solid_id": "s1",
+            "solid_type": "pyramid",
+            "notation": "L.PQR",
+            "quote": "Cho hình chóp L.PQR có đáy PQR là tam giác đều cạnh 2a"
+          }
+        ],
+        "premises": [
+          {
+            "kind": "regular_polygon",
+            "args": {
+              "vertices": [
+                "P",
+                "Q",
+                "R"
+              ],
+              "side": "2a"
+            },
+            "quote": "Cho hình chóp L.PQR có đáy PQR là tam giác đều cạnh 2a",
+            "solid_id": "s1"
+          },
+          {
+            "kind": "midpoint",
+            "args": {
+              "point": "I",
+              "segment": [
+                "P",
+                "Q"
+              ]
+            },
+            "quote": "Gọi I là trung điểm của cạnh PQ",
+            "solid_id": "s1"
+          },
+          {
+            "kind": "orthogonal_projection",
+            "args": {
+              "point": "L",
+              "image": "I",
+              "plane": [
+                "P",
+                "Q",
+                "R"
+              ]
+            },
+            "quote": "hình chiếu vuông góc của L lên (PQR) trùng với điểm I",
+            "solid_id": "s1"
+          },
+          {
+            "kind": "line_plane_angle",
+            "args": {
+              "line": [
+                "L",
+                "R"
+              ],
+              "plane": [
+                "P",
+                "Q",
+                "R"
+              ],
+              "value": "45",
+              "unit": "deg"
+            },
+            "quote": "Góc giữa LR với mặt phẳng (PQR) là 45°",
+            "solid_id": "s1"
+          }
+        ],
+        "derived_sections": [],
+        "relations": [],
+        "simulation_goals": [
+          {
+            "goal_id": "sg1",
+            "kind": "construct_object",
+            "quote": "Cho hình chóp L.PQR có đáy PQR là tam giác đều cạnh 2a",
+            "target_solid_id": "s1"
+          }
+        ],
+        "math_goals": [
+          {
+            "goal_id": "q1",
+            "kind": "measurement",
+            "quote": "Tính thể tích L.PQR",
+            "goal_type": "volume",
+            "solid_id": "s1",
+            "target": {
+              "solid_id": "s1"
+            }
+          }
+        ]
+      },
+      "8_source_gate_result": {
+        "status": "SERVED",
+        "refusal_code": null,
+        "refusal_message": null,
+        "gate_errors": []
+      },
+      "9_planner_result": {
+        "chosen_plan": false,
+        "plan_steps_count": 0
+      },
+      "10_kernel_result": {
+        "route_status": "SERVED",
+        "answer": "a³",
+        "oracle": "a³",
+        "v2_match": true,
+        "downstream_trace": {
+          "status": "SERVED",
+          "answers": {
+            "q1": "a³"
+          }
+        }
+      },
+      "11_exact_refusal_reason": {
+        "extraction_reason_code": null,
+        "extraction_reason_detail": null,
+        "route_refusal_code": null,
+        "route_refusal_message": null
+      },
+      "12_gold_intervention_result": {
+        "grounding_status": "GROUNDED_AND_LOWERED",
+        "route_status": "SERVED",
+        "answer": "a³",
+        "oracle_match_v2": true,
+        "refusal": null
+      },
+      "13_owner_boundary": {
+        "root_cause_category": "PASSING_COMPARATOR",
+        "explanation": "Served matching oracle.",
+        "owner_boundary": "None"
+      }
+    }
+  ],
+  "slm_h23_regression": {
+    "config_c_original_qwen": {
+      "case_id": "slm_h23_ocr_extra_spaces",
+      "model_key": "qwen3-0.6b-q4_k_m",
+      "1_original_text": "Cho hình chóp S.ABC có đáy ABC đều cạnh 2a , SA vuông góc với ( ABC ) , SA = 3a . Tính thể tích khối chóp S.ABC.",
+      "2_normalized_text": "Cho hình chóp S.ABC có đáy ABC là tam giác đều cạnh 2a, SA vuông góc với (ABC), SA = 3a. Tính thể tích khối chóp S.ABC.",
+      "3_transformation_provenance": {
+        "normalizer_version": "slm-verified-normalizer/2",
+        "changed": true,
+        "typo_detected": false,
+        "ambiguity_flags": [],
+        "applied_rule_ids": [
+          "VN01_PARENS",
+          "VN01_PUNCT_SPACE",
+          "VN01_PUNCT_SPACE",
+          "VN01_PUNCT_SPACE",
+          "VN04_DAY_DEU_CANH"
+        ],
+        "steps": [
+          {
+            "rule_id": "VN01_PARENS",
+            "transformation_rule_id": "VN01_PARENS",
+            "original_text": "( ABC )",
+            "original_span": [
+              62,
+              69
+            ],
+            "original_clause_id": 1,
+            "normalized_text": "(ABC)",
+            "original_excerpt": "( ABC )",
+            "normalized_excerpt": "(ABC)",
+            "original_entity_refs": [
+              "ABC"
+            ],
+            "scope": "TYPOGRAPHY",
+            "polarity": "AFFIRMATIVE",
+            "semantic_equivalence_evidence": "strip_redundant_paren_spaces",
+            "validation_status": "VALIDATED_MEANING_PRESERVING",
+            "validation_result": "VALIDATED_MEANING_PRESERVING",
+            "ambiguity_status": "UNAMBIGUOUS"
+          },
+          {
+            "rule_id": "VN01_PUNCT_SPACE",
+            "transformation_rule_id": "VN01_PUNCT_SPACE",
+            "original_text": " ,",
+            "original_span": [
+              42,
+              44
+            ],
+            "original_clause_id": 1,
+            "normalized_text": ",",
+            "original_excerpt": " ,",
+            "normalized_excerpt": ",",
+            "original_entity_refs": [],
+            "scope": "TYPOGRAPHY",
+            "polarity": "AFFIRMATIVE",
+            "semantic_equivalence_evidence": "normalize_punctuation_spacing",
+            "validation_status": "VALIDATED_MEANING_PRESERVING",
+            "validation_result": "VALIDATED_MEANING_PRESERVING",
+            "ambiguity_status": "UNAMBIGUOUS"
+          },
+          {
+            "rule_id": "VN01_PUNCT_SPACE",
+            "transformation_rule_id": "VN01_PUNCT_SPACE",
+            "original_text": " ,",
+            "original_span": [
+              69,
+              71
+            ],
+            "original_clause_id": 1,
+            "normalized_text": ",",
+            "original_excerpt": " ,",
+            "normalized_excerpt": ",",
+            "original_entity_refs": [],
+            "scope": "TYPOGRAPHY",
+            "polarity": "AFFIRMATIVE",
+            "semantic_equivalence_evidence": "normalize_punctuation_spacing",
+            "validation_status": "VALIDATED_MEANING_PRESERVING",
+            "validation_result": "VALIDATED_MEANING_PRESERVING",
+            "ambiguity_status": "UNAMBIGUOUS"
+          },
+          {
+            "rule_id": "VN01_PUNCT_SPACE",
+            "transformation_rule_id": "VN01_PUNCT_SPACE",
+            "original_text": " .",
+            "original_span": [
+              79,
+              81
+            ],
+            "original_clause_id": 1,
+            "normalized_text": ".",
+            "original_excerpt": " .",
+            "normalized_excerpt": ".",
+            "original_entity_refs": [],
+            "scope": "TYPOGRAPHY",
+            "polarity": "AFFIRMATIVE",
+            "semantic_equivalence_evidence": "normalize_punctuation_spacing",
+            "validation_status": "VALIDATED_MEANING_PRESERVING",
+            "validation_result": "VALIDATED_MEANING_PRESERVING",
+            "ambiguity_status": "UNAMBIGUOUS"
+          },
+          {
+            "rule_id": "VN04_DAY_DEU_CANH",
+            "transformation_rule_id": "VN04_DAY_DEU_CANH",
+            "original_text": "đáy ABC đều cạnh 2a",
+            "original_span": [
+              23,
+              42
+            ],
+            "original_clause_id": 1,
+            "normalized_text": "đáy ABC là tam giác đều cạnh 2a",
+            "original_excerpt": "đáy ABC đều cạnh 2a",
+            "normalized_excerpt": "đáy ABC là tam giác đều cạnh 2a",
+            "original_entity_refs": [
+              "ABC"
+            ],
+            "scope": "BASE_POLYGON",
+            "polarity": "AFFIRMATIVE",
+            "semantic_equivalence_evidence": "expand_elliptical_triangular_base_noun",
+            "validation_status": "VALIDATED_MEANING_PRESERVING",
+            "validation_result": "VALIDATED_MEANING_PRESERVING",
+            "ambiguity_status": "UNAMBIGUOUS"
+          }
+        ]
+      },
+      "4_parser_output": {
+        "raw_status": "LOCAL_PARSE_PARTIAL",
+        "raw_diagnostics": null,
+        "after_normalizer_status": "LOCAL_PARSE_COMPLETE",
+        "after_normalizer_premises_count": 3
+      },
+      "5_compact_slm_output": {
+        "raw_content": "{\"s\":[0,\"pyr\",\"S.ABC\",0],\"r\":[{\"c\":0,\"p\":\"reg_poly\",\"a\":\"ABC\",\"q\":\"2a\"},{\"c\":0,\"p\":\"len\",\"a\":\"SA\",\"q\":\"3a\"},{\"c\":0,\"p\":\"perp_lp\",\"a\":\"SA\",\"b\":\"ABC\"},{\"c\":0,\"p\":\"perp_lp\",\"a\":\"SA\",\"b\":\"ABC\"},{\"c\":0,\"p\":\"perp_lp\",\"a\":\"SA\",\"b\":\"ABC\"},{\"c\":0,\"p\":\"perp_lp\",\"a\":\"SA\",\"b\":\"ABC\"}],\"g\":[{\"c\":1,\"t\":\"vol\",\"tgt\":\"S.ABC\"}],\"u\":[]}",
+        "parsed_json": {
+          "s": [
+            0,
+            "pyr",
+            "S.ABC",
+            0
+          ],
+          "r": [
+            {
+              "c": 0,
+              "p": "reg_poly",
+              "a": "ABC",
+              "q": "2a"
+            },
+            {
+              "c": 0,
+              "p": "len",
+              "a": "SA",
+              "q": "3a"
+            },
+            {
+              "c": 0,
+              "p": "perp_lp",
+              "a": "SA",
+              "b": "ABC"
+            },
+            {
+              "c": 0,
+              "p": "perp_lp",
+              "a": "SA",
+              "b": "ABC"
+            },
+            {
+              "c": 0,
+              "p": "perp_lp",
+              "a": "SA",
+              "b": "ABC"
+            },
+            {
+              "c": 0,
+              "p": "perp_lp",
+              "a": "SA",
+              "b": "ABC"
+            }
+          ],
+          "g": [
+            {
+              "c": 1,
+              "t": "vol",
+              "tgt": "S.ABC"
+            }
+          ],
+          "u": []
+        },
+        "slm_invoked": true
+      },
+      "6_grounding_status": {
+        "ok": true,
+        "grounding_status": "GROUNDED_AND_LOWERED",
+        "failure_taxonomy": "NONE",
+        "accepted_ops": [
+          {
+            "kind": "regular_polygon",
+            "clause_id": "parser_reconciled"
+          },
+          {
+            "kind": "perpendicular_line_plane",
+            "clause_id": "parser_reconciled"
+          },
+          {
+            "kind": "segment_length",
+            "clause_id": "parser_reconciled"
+          },
+          {
+            "kind": "goal:vol",
+            "clause_id": 1
+          }
+        ],
+        "rejected_ops": []
+      },
+      "7_typed_facts": {
+        "schema_version": "typed-fact-next/2",
+        "problem_text": "Cho hình chóp S.ABC có đáy ABC là tam giác đều cạnh 2a, SA vuông góc với (ABC), SA = 3a. Tính thể tích khối chóp S.ABC.",
+        "length_unit": "a",
+        "solids": [
+          {
+            "solid_id": "s1",
+            "solid_type": "pyramid",
+            "notation": "S.ABC",
+            "quote": "Cho hình chóp S.ABC có đáy ABC là tam giác đều cạnh 2a"
+          }
+        ],
+        "premises": [
+          {
+            "kind": "regular_polygon",
+            "args": {
+              "vertices": [
+                "A",
+                "B",
+                "C"
+              ],
+              "side": "2a"
+            },
+            "quote": "đáy ABC là tam giác đều cạnh 2a",
+            "solid_id": "s1"
+          },
+          {
+            "kind": "perpendicular_line_plane",
+            "args": {
+              "line": [
+                "S",
+                "A"
+              ],
+              "plane": [
+                "A",
+                "B",
+                "C"
+              ]
+            },
+            "quote": "SA vuông góc với (ABC)",
+            "solid_id": "s1"
+          },
+          {
+            "kind": "segment_length",
+            "args": {
+              "segment": [
+                "S",
+                "A"
+              ],
+              "value": "3a"
+            },
+            "quote": "SA = 3a",
+            "solid_id": "s1"
+          }
+        ],
+        "derived_sections": [],
+        "relations": [],
+        "simulation_goals": [
+          {
+            "goal_id": "sg1",
+            "kind": "construct_object",
+            "quote": "Cho hình chóp S.ABC có đáy ABC là tam giác đều cạnh 2a",
+            "target_solid_id": "s1"
+          }
+        ],
+        "math_goals": [
+          {
+            "goal_id": "q1",
+            "kind": "measurement",
+            "quote": "Tính thể tích khối chóp S.ABC",
+            "goal_type": "volume",
+            "solid_id": "s1",
+            "target": {
+              "solid_id": "s1"
+            }
+          }
+        ]
+      },
+      "8_source_gate_result": {
+        "status": "SERVED",
+        "refusal_code": null,
+        "refusal_message": null,
+        "gate_errors": []
+      },
+      "9_planner_result": {
+        "chosen_plan": false,
+        "plan_steps_count": 0
+      },
+      "10_kernel_result": {
+        "route_status": "SERVED",
+        "answer": "a³√3",
+        "oracle": "a³√3",
+        "v2_match": true,
+        "downstream_trace": {
+          "status": "SERVED",
+          "answers": {
+            "q1": "a³√3"
+          }
+        }
+      },
+      "11_exact_refusal_reason": {
+        "extraction_reason_code": null,
+        "extraction_reason_detail": null,
+        "route_refusal_code": null,
+        "route_refusal_message": null
+      },
+      "12_gold_intervention_result": {
+        "grounding_status": "GROUNDED_AND_LOWERED",
+        "route_status": "SERVED",
+        "answer": "a³√3",
+        "oracle_match_v2": true,
+        "refusal": null
+      },
+      "13_owner_boundary": null
+    },
+    "config_d_finetuned_axov7": {
+      "case_id": "slm_h23_ocr_extra_spaces",
+      "model_key": "qwen3-0.6b-axo-v7-q4_k_m",
+      "1_original_text": "Cho hình chóp S.ABC có đáy ABC đều cạnh 2a , SA vuông góc với ( ABC ) , SA = 3a . Tính thể tích khối chóp S.ABC.",
+      "2_normalized_text": "Cho hình chóp S.ABC có đáy ABC là tam giác đều cạnh 2a, SA vuông góc với (ABC), SA = 3a. Tính thể tích khối chóp S.ABC.",
+      "3_transformation_provenance": {
+        "normalizer_version": "slm-verified-normalizer/2",
+        "changed": true,
+        "typo_detected": false,
+        "ambiguity_flags": [],
+        "applied_rule_ids": [
+          "VN01_PARENS",
+          "VN01_PUNCT_SPACE",
+          "VN01_PUNCT_SPACE",
+          "VN01_PUNCT_SPACE",
+          "VN04_DAY_DEU_CANH"
+        ],
+        "steps": [
+          {
+            "rule_id": "VN01_PARENS",
+            "transformation_rule_id": "VN01_PARENS",
+            "original_text": "( ABC )",
+            "original_span": [
+              62,
+              69
+            ],
+            "original_clause_id": 1,
+            "normalized_text": "(ABC)",
+            "original_excerpt": "( ABC )",
+            "normalized_excerpt": "(ABC)",
+            "original_entity_refs": [
+              "ABC"
+            ],
+            "scope": "TYPOGRAPHY",
+            "polarity": "AFFIRMATIVE",
+            "semantic_equivalence_evidence": "strip_redundant_paren_spaces",
+            "validation_status": "VALIDATED_MEANING_PRESERVING",
+            "validation_result": "VALIDATED_MEANING_PRESERVING",
+            "ambiguity_status": "UNAMBIGUOUS"
+          },
+          {
+            "rule_id": "VN01_PUNCT_SPACE",
+            "transformation_rule_id": "VN01_PUNCT_SPACE",
+            "original_text": " ,",
+            "original_span": [
+              42,
+              44
+            ],
+            "original_clause_id": 1,
+            "normalized_text": ",",
+            "original_excerpt": " ,",
+            "normalized_excerpt": ",",
+            "original_entity_refs": [],
+            "scope": "TYPOGRAPHY",
+            "polarity": "AFFIRMATIVE",
+            "semantic_equivalence_evidence": "normalize_punctuation_spacing",
+            "validation_status": "VALIDATED_MEANING_PRESERVING",
+            "validation_result": "VALIDATED_MEANING_PRESERVING",
+            "ambiguity_status": "UNAMBIGUOUS"
+          },
+          {
+            "rule_id": "VN01_PUNCT_SPACE",
+            "transformation_rule_id": "VN01_PUNCT_SPACE",
+            "original_text": " ,",
+            "original_span": [
+              69,
+              71
+            ],
+            "original_clause_id": 1,
+            "normalized_text": ",",
+            "original_excerpt": " ,",
+            "normalized_excerpt": ",",
+            "original_entity_refs": [],
+            "scope": "TYPOGRAPHY",
+            "polarity": "AFFIRMATIVE",
+            "semantic_equivalence_evidence": "normalize_punctuation_spacing",
+            "validation_status": "VALIDATED_MEANING_PRESERVING",
+            "validation_result": "VALIDATED_MEANING_PRESERVING",
+            "ambiguity_status": "UNAMBIGUOUS"
+          },
+          {
+            "rule_id": "VN01_PUNCT_SPACE",
+            "transformation_rule_id": "VN01_PUNCT_SPACE",
+            "original_text": " .",
+            "original_span": [
+              79,
+              81
+            ],
+            "original_clause_id": 1,
+            "normalized_text": ".",
+            "original_excerpt": " .",
+            "normalized_excerpt": ".",
+            "original_entity_refs": [],
+            "scope": "TYPOGRAPHY",
+            "polarity": "AFFIRMATIVE",
+            "semantic_equivalence_evidence": "normalize_punctuation_spacing",
+            "validation_status": "VALIDATED_MEANING_PRESERVING",
+            "validation_result": "VALIDATED_MEANING_PRESERVING",
+            "ambiguity_status": "UNAMBIGUOUS"
+          },
+          {
+            "rule_id": "VN04_DAY_DEU_CANH",
+            "transformation_rule_id": "VN04_DAY_DEU_CANH",
+            "original_text": "đáy ABC đều cạnh 2a",
+            "original_span": [
+              23,
+              42
+            ],
+            "original_clause_id": 1,
+            "normalized_text": "đáy ABC là tam giác đều cạnh 2a",
+            "original_excerpt": "đáy ABC đều cạnh 2a",
+            "normalized_excerpt": "đáy ABC là tam giác đều cạnh 2a",
+            "original_entity_refs": [
+              "ABC"
+            ],
+            "scope": "BASE_POLYGON",
+            "polarity": "AFFIRMATIVE",
+            "semantic_equivalence_evidence": "expand_elliptical_triangular_base_noun",
+            "validation_status": "VALIDATED_MEANING_PRESERVING",
+            "validation_result": "VALIDATED_MEANING_PRESERVING",
+            "ambiguity_status": "UNAMBIGUOUS"
+          }
+        ]
+      },
+      "4_parser_output": {
+        "raw_status": "LOCAL_PARSE_PARTIAL",
+        "raw_diagnostics": null,
+        "after_normalizer_status": "LOCAL_PARSE_COMPLETE",
+        "after_normalizer_premises_count": 3
+      },
+      "5_compact_slm_output": {
+        "raw_content": "{\"s\":[0,\"pyr\",\"S.ABC\",0],\"r\":[{\"c\":0,\"p\":\"reg_poly\",\"a\":\"ABC\",\"q\":\"2a\"},{\"c\":0,\"p\":\"perp_lp\",\"a\":\"SA\",\"b\":\"ABC\"},{\"c\":0,\"p\":\"len\",\"a\":\"SA\",\"q\":\"3a\"}],\"g\":[],\"u\":[{\"c\":0,\"k\":\"missing\"}]}",
+        "parsed_json": {
+          "s": [
+            0,
+            "pyr",
+            "S.ABC",
+            0
+          ],
+          "r": [
+            {
+              "c": 0,
+              "p": "reg_poly",
+              "a": "ABC",
+              "q": "2a"
+            },
+            {
+              "c": 0,
+              "p": "perp_lp",
+              "a": "SA",
+              "b": "ABC"
+            },
+            {
+              "c": 0,
+              "p": "len",
+              "a": "SA",
+              "q": "3a"
+            }
+          ],
+          "g": [],
+          "u": [
+            {
+              "c": 0,
+              "k": "missing"
+            }
+          ]
+        },
+        "slm_invoked": true
+      },
+      "6_grounding_status": {
+        "ok": false,
+        "grounding_status": "SLM_REPORTED_UNRESOLVED",
+        "failure_taxonomy": "SLM_UNRESOLVED",
+        "accepted_ops": [],
+        "rejected_ops": [
+          {
+            "op": "unresolved",
+            "reason": "SLM marked clause 0 as missing_operand."
+          }
+        ]
+      },
+      "7_typed_facts": null,
+      "8_source_gate_result": "NOT_REACHED_GROUNDING_FAILED (AMBIGUOUS_FACT)",
+      "9_planner_result": "NOT_REACHED",
+      "10_kernel_result": {
+        "route_status": "REFUSED",
+        "answer": null,
+        "oracle": "a³√3",
+        "v2_match": false,
+        "downstream_trace": "NOT_REACHED"
+      },
+      "11_exact_refusal_reason": {
+        "extraction_reason_code": "AMBIGUOUS_FACT",
+        "extraction_reason_detail": "[{'op': 'unresolved', 'reason': 'SLM marked clause 0 as missing_operand.'}]",
+        "route_refusal_code": "AMBIGUOUS_FACT",
+        "route_refusal_message": "[{'op': 'unresolved', 'reason': 'SLM marked clause 0 as missing_operand.'}]"
+      },
+      "12_gold_intervention_result": {
+        "grounding_status": "GROUNDED_AND_LOWERED",
+        "route_status": "SERVED",
+        "answer": "a³√3",
+        "oracle_match_v2": true,
+        "refusal": null
+      },
+      "13_owner_boundary": {
+        "root_cause_category": "MODEL_SEMANTIC_ERROR (over-conservative unresolved emission on AxoV7)",
+        "explanation": "Config C (`qwen3-0.6b-q4_k_m`) extracted/reconciled the premises and SERVED `a³√3`; Config D (`qwen3-0.6b-axo-v7-q4_k_m`) emitted `u=[{\"c\": 0, \"r\": \"missing_operand\"}]`, tripping `AMBIGUOUS_FACT`. Zero wrong-served risk.",
+        "owner_boundary": "AxoV7 fine-tuned checkpoint calibration / local_slm_extractor"
+      }
+    }
+  },
+  "controlled_blast_radius_probes": [
+    {
+      "probe_id": "probe_clean_the_tich",
+      "text": "Cho hình chóp S.ABC có đáy ABC đều cạnh 2a, SA vuông góc với (ABC), SA=3a. Tính thể tích khối chóp S.ABC.",
+      "norm_text": "Cho hình chóp S.ABC có đáy ABC là tam giác đều cạnh 2a, SA vuông góc với (ABC), SA=3a. Tính thể tích khối chóp S.ABC.",
+      "parser_after_norm": "LOCAL_PARSE_COMPLETE",
+      "slm_invoked": true,
+      "slm_json": {
+        "s": [
+          0,
+          "pyr",
+          "S.ABC",
+          0
+        ],
+        "r": [
+          {
+            "c": 0,
+            "p": "reg_poly",
+            "a": "ABC",
+            "q": "2a"
+          },
+          {
+            "c": 0,
+            "p": "perp_lp",
+            "a": "SA",
+            "b": "ABC"
+          },
+          {
+            "c": 0,
+            "p": "len",
+            "a": "SA",
+            "q": "3a"
+          }
+        ],
+        "g": [],
+        "u": [
+          {
+            "c": 0,
+            "k": "missing"
+          }
+        ]
+      },
+      "grounding_status": "SLM_REPORTED_UNRESOLVED",
+      "route_status": "REFUSED",
+      "answer": null,
+      "refusal_code": "AMBIGUOUS_FACT"
+    },
+    {
+      "probe_id": "probe_ocr_the_tich",
+      "text": "Cho hình chóp S.ABC có đáy ABC đều cạnh 2a , SA vuông góc với ( ABC ) , SA = 3a . Tính thể tích S.ABC.",
+      "norm_text": "Cho hình chóp S.ABC có đáy ABC là tam giác đều cạnh 2a, SA vuông góc với (ABC), SA = 3a. Tính thể tích S.ABC.",
+      "parser_after_norm": "LOCAL_PARSE_PARTIAL",
+      "slm_invoked": true,
+      "slm_json": {
+        "s": [
+          0,
+          "pyr",
+          "S.ABC",
+          0
+        ],
+        "r": [
+          {
+            "c": 0,
+            "p": "reg_poly",
+            "a": "ABC",
+            "q": "2a"
+          },
+          {
+            "c": 0,
+            "p": "perp_lp",
+            "a": "SA",
+            "b": "ABC"
+          },
+          {
+            "c": 0,
+            "p": "len",
+            "a": "SA",
+            "q": "3a"
+          }
+        ],
+        "g": [],
+        "u": [
+          {
+            "c": 0,
+            "k": "missing"
+          }
+        ]
+      },
+      "grounding_status": "SLM_REPORTED_UNRESOLVED",
+      "route_status": "REFUSED",
+      "answer": null,
+      "refusal_code": "AMBIGUOUS_FACT"
+    },
+    {
+      "probe_id": "probe_clean_V_cua",
+      "text": "Cho hình chóp S.ABC có đáy ABC đều cạnh 2a, SA vuông góc với (ABC), SA=3a. Tính V của S.ABC.",
+      "norm_text": "Cho hình chóp S.ABC có đáy ABC là tam giác đều cạnh 2a, SA vuông góc với (ABC), SA=3a. Tính V của S.ABC.",
+      "parser_after_norm": "LOCAL_PARSE_PARTIAL",
+      "slm_invoked": true,
+      "slm_json": {
+        "s": [
+          0,
+          "pyr",
+          "S.ABC",
+          0
+        ],
+        "r": [
+          {
+            "c": 0,
+            "p": "reg_poly",
+            "a": "ABC",
+            "q": "2a"
+          },
+          {
+            "c": 0,
+            "p": "perp_lp",
+            "a": "SA",
+            "b": "ABC"
+          },
+          {
+            "c": 0,
+            "p": "len",
+            "a": "SA",
+            "q": "3a"
+          }
+        ],
+        "g": [
+          {
+            "c": 1,
+            "t": "vol",
+            "tgt": "S.ABC"
+          }
+        ],
+        "u": []
+      },
+      "grounding_status": "GROUNDED_AND_LOWERED",
+      "route_status": "REFUSED",
+      "answer": null,
+      "refusal_code": "NOT_ASKED_IN_SOURCE"
+    },
+    {
+      "probe_id": "probe_ocr_V_cua",
+      "text": "Cho hình chóp S.ABC có đáy ABC đều cạnh 2a , SA vuông góc với ( ABC ) , SA = 3a . Tính V của S.ABC.",
+      "norm_text": "Cho hình chóp S.ABC có đáy ABC là tam giác đều cạnh 2a, SA vuông góc với (ABC), SA = 3a. Tính V của S.ABC.",
+      "parser_after_norm": "LOCAL_PARSE_PARTIAL",
+      "slm_invoked": true,
+      "slm_json": {
+        "s": [
+          0,
+          "pyr",
+          "S.ABC",
+          0
+        ],
+        "r": [
+          {
+            "c": 0,
+            "p": "reg_poly",
+            "a": "ABC",
+            "q": "2a"
+          },
+          {
+            "c": 0,
+            "p": "perp_lp",
+            "a": "SA",
+            "b": "ABC"
+          },
+          {
+            "c": 0,
+            "p": "len",
+            "a": "SA",
+            "q": "3a"
+          }
+        ],
+        "g": [],
+        "u": [
+          {
+            "c": 0,
+            "k": "missing"
+          }
+        ]
+      },
+      "grounding_status": "SLM_REPORTED_UNRESOLVED",
+      "route_status": "REFUSED",
+      "answer": null,
+      "refusal_code": "AMBIGUOUS_FACT"
+    },
+    {
+      "probe_id": "probe_ocr_la_tam_giac_deu",
+      "text": "Cho hình chóp S.ABC có đáy ABC là tam giác đều cạnh 2a , SA vuông góc với ( ABC ) , SA = 3a . Tính thể tích khối chóp S.ABC.",
+      "norm_text": "Cho hình chóp S.ABC có đáy ABC là tam giác đều cạnh 2a, SA vuông góc với (ABC), SA = 3a. Tính thể tích khối chóp S.ABC.",
+      "parser_after_norm": "LOCAL_PARSE_COMPLETE",
+      "slm_invoked": true,
+      "slm_json": {
+        "s": [
+          0,
+          "pyr",
+          "S.ABC",
+          0
+        ],
+        "r": [
+          {
+            "c": 0,
+            "p": "reg_poly",
+            "a": "ABC",
+            "q": "2a"
+          },
+          {
+            "c": 0,
+            "p": "perp_lp",
+            "a": "SA",
+            "b": "ABC"
+          },
+          {
+            "c": 0,
+            "p": "len",
+            "a": "SA",
+            "q": "3a"
+          }
+        ],
+        "g": [],
+        "u": [
+          {
+            "c": 0,
+            "k": "missing"
+          }
+        ]
+      },
+      "grounding_status": "SLM_REPORTED_UNRESOLVED",
+      "route_status": "REFUSED",
+      "answer": null,
+      "refusal_code": "AMBIGUOUS_FACT"
+    },
+    {
+      "probe_id": "probe_reordered_rect_with_day_kw",
+      "text": "Thưa thầy, nhờ giải bài: Cho khối chóp H.UVWX có cạnh HU vuông góc với (UVWX) và HU=3a. Biết đáy UVWX là hình chữ nhật với UV=a√2, VW=2a. Lấy T là trung điểm WX. Hãy tìm khoảng cách từ điểm T đến (HVW).",
+      "norm_text": "Cho nhờ giải bài: Cho khối chóp H.UVWX có cạnh HU vuông góc với (UVWX) và HU=3a. Biết đáy UVWX là hình chữ nhật với UV=a√2, VW=2a. Lấy T là trung điểm WX. Tính khoảng cách từ điểm T đến (HVW).",
+      "parser_after_norm": "LOCAL_PARSE_PARTIAL",
+      "slm_invoked": true,
+      "slm_json": {
+        "s": [
+          0,
+          "pyr",
+          "H.UVWX",
+          0
+        ],
+        "r": [
+          {
+            "c": 0,
+            "p": "perp_lp",
+            "a": "HU",
+            "b": "UVWX"
+          },
+          {
+            "c": 0,
+            "p": "len",
+            "a": "HU",
+            "q": "3a"
+          },
+          {
+            "c": 1,
+            "p": "rect",
+            "a": "UVWX"
+          },
+          {
+            "c": 1,
+            "p": "len",
+            "a": "UV",
+            "q": "a√2"
+          },
+          {
+            "c": 1,
+            "p": "len",
+            "a": "VW",
+            "q": "2a"
+          },
+          {
+            "c": 2,
+            "p": "mid",
+            "pt": "T",
+            "a": "WX"
+          }
+        ],
+        "g": [
+          {
+            "c": 3,
+            "t": "dist_pt_plane",
+            "a": "T",
+            "b": "HVW"
+          }
+        ],
+        "u": []
+      },
+      "grounding_status": "GROUNDED_AND_LOWERED",
+      "route_status": "SERVED",
+      "answer": "3a√22/22",
+      "refusal_code": null
+    }
+  ]
+}

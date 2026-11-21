@@ -1,0 +1,84 @@
+{
+  "schema": "algosim-generalization-evaluation-receipt/1",
+  "generated_at_utc": "2026-11-10T03:59:49.570084+00:00",
+  "product_commit": "c61a3589782bde35b69e8376d8ebf136314e47f3",
+  "head_commit": "c61a3589782bde35b69e8376d8ebf136314e47f3",
+  "measured_system_tree_hash": "69bb83ba51b834f68c106bc4d3948dc02ca35af05eca0d8f50c0e0e4cf047cb4",
+  "measured_system_file_count": 108,
+  "code_version": {
+    "typed_fact_next": "typed-fact-next/2",
+    "bridge": "typed-fact-next-bridge/2",
+    "planner": "geometry-fact-planner/26",
+    "registry": "geometry-functions/33",
+    "engine": "geometry-function-engine/24",
+    "adapter": "hybrid-simulation-adapter/4",
+    "envelope": "hybrid-route-d-simulation/4",
+    "local_parser": "local-geometry-parser/1",
+    "adaptive_router": "adaptive-input-router/1",
+    "cache_version": "132"
+  },
+  "input_or_case_hash": "8d0bfed1de69414548d96b11dc56c46284302e1e7a85f679a2c257f2b1c1d27d",
+  "oracle": "Exact algebraic scaling/renaming invariance oracle + non-independent External17 downstream replay",
+  "test_command": "pytest backend/tests/geometry/test_angle_premise_and_dihedral_geometry.py backend/tests/geometry/test_reusable_base_geometry_families.py backend/tests/geometry/test_verified_image_to_3d_pipeline.py -q",
+  "test_environment": {
+    "os": "Windows-11-10.0.26100-SP0",
+    "python": "3.12.10",
+    "cpu_logical_cores": 12,
+    "allow_live_ai": 0,
+    "live_gemini_calls": 0,
+    "benchmark_tier": "HOST_BENCHMARK_OFFLINE"
+  },
+  "expected_behavior": "100% accuracy on renamed/reordered/scaled metamorphic tests and 0 wrong-served on External17 downstream replay while keeping INDEPENDENT_H1_VALIDATION = NOT_MEASURED.",
+  "actual_behavior": "metamorphic=3/3 passed; external17_oracle_downstream=4/17 solved (up from 2/17 baseline), 0 wrong-served; blind_h1=NOT_MEASURED.",
+  "verdict": "PASS_NON_INDEPENDENT_DIAGNOSTIC_ONLY",
+  "INDEPENDENT_H1_VALIDATION": "NOT_MEASURED",
+  "metamorphic_generalization_cases": [
+    {
+      "case_id": "META-01-RENAMED-TRAPEZOID-ANGLE",
+      "status": "SERVED",
+      "answers": [
+        "4a³√2"
+      ],
+      "expected": [
+        "4a³√2"
+      ],
+      "passed": true
+    },
+    {
+      "case_id": "META-02-REORDERED-RHOMBUS-120",
+      "status": "SERVED",
+      "answers": [
+        "4a³√3"
+      ],
+      "expected": [
+        "4a³√3"
+      ],
+      "passed": true
+    },
+    {
+      "case_id": "META-03-SCALED-ISOSCELES-PRISM",
+      "status": "SERVED",
+      "answers": [
+        "288"
+      ],
+      "expected": [
+        "288"
+      ],
+      "passed": true
+    }
+  ],
+  "external_17_oracle_downstream_promotion": {
+    "baseline_solved": [
+      "ext_prt_03_hd_q_7907931#2 (a³/4)",
+      "ext_prt_09_vmmu_page_r4#1 (2)"
+    ],
+    "newly_promoted_without_case_hardcoding": [
+      "ext_prt_01_hd_q_5259753#1 -> a³√3/3 (via composable line_plane_angle)",
+      "ext_hw_b1_01_hd_a_6043187#1 -> a³√3 (via composable line_plane_angle + right-triangle base)"
+    ],
+    "total_solved": 4,
+    "missing_dimension_refused": 2,
+    "unsupported_fail_closed": 11,
+    "wrong_served": 0
+  }
+}

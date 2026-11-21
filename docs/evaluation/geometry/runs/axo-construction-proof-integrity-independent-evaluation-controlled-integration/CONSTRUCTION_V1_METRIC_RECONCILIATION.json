@@ -1,0 +1,812 @@
+{
+  "cases": [
+    {
+      "case_id": "A01_sb_length_right_pyramid",
+      "classifications": {
+        "ANSWER_VERIFIED_WITHOUT_AUXILIARY": true,
+        "HAS_AUXILIARY_OBJECT": false,
+        "HAS_CONSTRUCTION_WITNESS": true,
+        "HAS_EXPLICIT_DEPENDENCY_CHAIN": true,
+        "HAS_GENUINE_IMPLICIT_AUXILIARY": false,
+        "HAS_MULTI_PLAN_ALTERNATIVES": false,
+        "VERIFIED_GRAPH": true
+      },
+      "expected_status": "GOAL_VERIFIED",
+      "group": "Group_A",
+      "historical_v1_any_plan_aux": false,
+      "historical_v1_auxiliary_count": 0,
+      "historical_v1_cand_b_passed": true,
+      "notes": "",
+      "primary_reconciled_category": "ANSWER_VERIFIED_WITHOUT_AUXILIARY",
+      "v2_cand_c_strict_l0_l4_passed": true,
+      "v2_strict_aux_object_count": 0
+    },
+    {
+      "case_id": "A02_midpoint_sm_equilateral",
+      "classifications": {
+        "ANSWER_VERIFIED_WITHOUT_AUXILIARY": false,
+        "HAS_AUXILIARY_OBJECT": true,
+        "HAS_CONSTRUCTION_WITNESS": true,
+        "HAS_EXPLICIT_DEPENDENCY_CHAIN": true,
+        "HAS_GENUINE_IMPLICIT_AUXILIARY": false,
+        "HAS_MULTI_PLAN_ALTERNATIVES": false,
+        "VERIFIED_GRAPH": true
+      },
+      "expected_status": "GOAL_VERIFIED",
+      "group": "Group_A",
+      "historical_v1_any_plan_aux": true,
+      "historical_v1_auxiliary_count": 1,
+      "historical_v1_cand_b_passed": true,
+      "notes": "",
+      "primary_reconciled_category": "HAS_EXPLICIT_CONSTRUCTION_AND_GOAL_EDGE_CONNECT",
+      "v2_cand_c_strict_l0_l4_passed": true,
+      "v2_strict_aux_object_count": 0
+    },
+    {
+      "case_id": "A03_centroid_sg_square_base",
+      "classifications": {
+        "ANSWER_VERIFIED_WITHOUT_AUXILIARY": false,
+        "HAS_AUXILIARY_OBJECT": true,
+        "HAS_CONSTRUCTION_WITNESS": true,
+        "HAS_EXPLICIT_DEPENDENCY_CHAIN": true,
+        "HAS_GENUINE_IMPLICIT_AUXILIARY": false,
+        "HAS_MULTI_PLAN_ALTERNATIVES": false,
+        "VERIFIED_GRAPH": true
+      },
+      "expected_status": "GOAL_VERIFIED",
+      "group": "Group_A",
+      "historical_v1_any_plan_aux": true,
+      "historical_v1_auxiliary_count": 1,
+      "historical_v1_cand_b_passed": true,
+      "notes": "",
+      "primary_reconciled_category": "HAS_EXPLICIT_CONSTRUCTION_AND_GOAL_EDGE_CONNECT",
+      "v2_cand_c_strict_l0_l4_passed": true,
+      "v2_strict_aux_object_count": 0
+    },
+    {
+      "case_id": "A04_midpoint_am_right_B",
+      "classifications": {
+        "ANSWER_VERIFIED_WITHOUT_AUXILIARY": false,
+        "HAS_AUXILIARY_OBJECT": true,
+        "HAS_CONSTRUCTION_WITNESS": true,
+        "HAS_EXPLICIT_DEPENDENCY_CHAIN": true,
+        "HAS_GENUINE_IMPLICIT_AUXILIARY": false,
+        "HAS_MULTI_PLAN_ALTERNATIVES": false,
+        "VERIFIED_GRAPH": true
+      },
+      "expected_status": "GOAL_VERIFIED",
+      "group": "Group_A",
+      "historical_v1_any_plan_aux": true,
+      "historical_v1_auxiliary_count": 1,
+      "historical_v1_cand_b_passed": true,
+      "notes": "",
+      "primary_reconciled_category": "HAS_EXPLICIT_CONSTRUCTION_AND_GOAL_EDGE_CONNECT",
+      "v2_cand_c_strict_l0_l4_passed": true,
+      "v2_strict_aux_object_count": 0
+    },
+    {
+      "case_id": "A05_volume_pyramid_right_B",
+      "classifications": {
+        "ANSWER_VERIFIED_WITHOUT_AUXILIARY": true,
+        "HAS_AUXILIARY_OBJECT": false,
+        "HAS_CONSTRUCTION_WITNESS": true,
+        "HAS_EXPLICIT_DEPENDENCY_CHAIN": true,
+        "HAS_GENUINE_IMPLICIT_AUXILIARY": false,
+        "HAS_MULTI_PLAN_ALTERNATIVES": false,
+        "VERIFIED_GRAPH": true
+      },
+      "expected_status": "GOAL_VERIFIED",
+      "group": "Group_A",
+      "historical_v1_any_plan_aux": false,
+      "historical_v1_auxiliary_count": 0,
+      "historical_v1_cand_b_passed": true,
+      "notes": "",
+      "primary_reconciled_category": "ANSWER_VERIFIED_WITHOUT_AUXILIARY",
+      "v2_cand_c_strict_l0_l4_passed": true,
+      "v2_strict_aux_object_count": 0
+    },
+    {
+      "case_id": "A06_volume_equilateral_pyramid",
+      "classifications": {
+        "ANSWER_VERIFIED_WITHOUT_AUXILIARY": true,
+        "HAS_AUXILIARY_OBJECT": false,
+        "HAS_CONSTRUCTION_WITNESS": true,
+        "HAS_EXPLICIT_DEPENDENCY_CHAIN": true,
+        "HAS_GENUINE_IMPLICIT_AUXILIARY": false,
+        "HAS_MULTI_PLAN_ALTERNATIVES": false,
+        "VERIFIED_GRAPH": true
+      },
+      "expected_status": "GOAL_VERIFIED",
+      "group": "Group_A",
+      "historical_v1_any_plan_aux": false,
+      "historical_v1_auxiliary_count": 0,
+      "historical_v1_cand_b_passed": true,
+      "notes": "",
+      "primary_reconciled_category": "ANSWER_VERIFIED_WITHOUT_AUXILIARY",
+      "v2_cand_c_strict_l0_l4_passed": true,
+      "v2_strict_aux_object_count": 0
+    },
+    {
+      "case_id": "A07_angle_sc_base_square",
+      "classifications": {
+        "ANSWER_VERIFIED_WITHOUT_AUXILIARY": true,
+        "HAS_AUXILIARY_OBJECT": false,
+        "HAS_CONSTRUCTION_WITNESS": true,
+        "HAS_EXPLICIT_DEPENDENCY_CHAIN": true,
+        "HAS_GENUINE_IMPLICIT_AUXILIARY": false,
+        "HAS_MULTI_PLAN_ALTERNATIVES": false,
+        "VERIFIED_GRAPH": true
+      },
+      "expected_status": "GOAL_VERIFIED",
+      "group": "Group_A",
+      "historical_v1_any_plan_aux": false,
+      "historical_v1_auxiliary_count": 0,
+      "historical_v1_cand_b_passed": true,
+      "notes": "A07 in /1 dropped `seg_C_A` due to missing key in `witness_keys`; fixed in /2 with strict L3 goal replay.",
+      "primary_reconciled_category": "ANSWER_VERIFIED_WITHOUT_AUXILIARY",
+      "v2_cand_c_strict_l0_l4_passed": true,
+      "v2_strict_aux_object_count": 1
+    },
+    {
+      "case_id": "A08_angle_sb_base_right",
+      "classifications": {
+        "ANSWER_VERIFIED_WITHOUT_AUXILIARY": true,
+        "HAS_AUXILIARY_OBJECT": false,
+        "HAS_CONSTRUCTION_WITNESS": true,
+        "HAS_EXPLICIT_DEPENDENCY_CHAIN": true,
+        "HAS_GENUINE_IMPLICIT_AUXILIARY": false,
+        "HAS_MULTI_PLAN_ALTERNATIVES": false,
+        "VERIFIED_GRAPH": true
+      },
+      "expected_status": "GOAL_VERIFIED",
+      "group": "Group_A",
+      "historical_v1_any_plan_aux": false,
+      "historical_v1_auxiliary_count": 0,
+      "historical_v1_cand_b_passed": true,
+      "notes": "",
+      "primary_reconciled_category": "ANSWER_VERIFIED_WITHOUT_AUXILIARY",
+      "v2_cand_c_strict_l0_l4_passed": true,
+      "v2_strict_aux_object_count": 0
+    },
+    {
+      "case_id": "A09_cube_face_diagonal_intersection_midpoint",
+      "classifications": {
+        "ANSWER_VERIFIED_WITHOUT_AUXILIARY": false,
+        "HAS_AUXILIARY_OBJECT": true,
+        "HAS_CONSTRUCTION_WITNESS": true,
+        "HAS_EXPLICIT_DEPENDENCY_CHAIN": true,
+        "HAS_GENUINE_IMPLICIT_AUXILIARY": false,
+        "HAS_MULTI_PLAN_ALTERNATIVES": false,
+        "VERIFIED_GRAPH": true
+      },
+      "expected_status": "GOAL_VERIFIED",
+      "group": "Group_A",
+      "historical_v1_any_plan_aux": true,
+      "historical_v1_auxiliary_count": 1,
+      "historical_v1_cand_b_passed": true,
+      "notes": "",
+      "primary_reconciled_category": "HAS_EXPLICIT_CONSTRUCTION_AND_GOAL_EDGE_CONNECT",
+      "v2_cand_c_strict_l0_l4_passed": true,
+      "v2_strict_aux_object_count": 0
+    },
+    {
+      "case_id": "A10_cube_section_diagonal_plane",
+      "classifications": {
+        "ANSWER_VERIFIED_WITHOUT_AUXILIARY": true,
+        "HAS_AUXILIARY_OBJECT": false,
+        "HAS_CONSTRUCTION_WITNESS": true,
+        "HAS_EXPLICIT_DEPENDENCY_CHAIN": true,
+        "HAS_GENUINE_IMPLICIT_AUXILIARY": false,
+        "HAS_MULTI_PLAN_ALTERNATIVES": false,
+        "VERIFIED_GRAPH": true
+      },
+      "expected_status": "GOAL_VERIFIED",
+      "group": "Group_A",
+      "historical_v1_any_plan_aux": false,
+      "historical_v1_auxiliary_count": 0,
+      "historical_v1_cand_b_passed": true,
+      "notes": "",
+      "primary_reconciled_category": "ANSWER_VERIFIED_WITHOUT_AUXILIARY",
+      "v2_cand_c_strict_l0_l4_passed": true,
+      "v2_strict_aux_object_count": 0
+    },
+    {
+      "case_id": "B01_divide_segment_ratio_length",
+      "classifications": {
+        "ANSWER_VERIFIED_WITHOUT_AUXILIARY": false,
+        "HAS_AUXILIARY_OBJECT": true,
+        "HAS_CONSTRUCTION_WITNESS": true,
+        "HAS_EXPLICIT_DEPENDENCY_CHAIN": true,
+        "HAS_GENUINE_IMPLICIT_AUXILIARY": false,
+        "HAS_MULTI_PLAN_ALTERNATIVES": false,
+        "VERIFIED_GRAPH": true
+      },
+      "expected_status": "GOAL_VERIFIED",
+      "group": "Group_B",
+      "historical_v1_any_plan_aux": true,
+      "historical_v1_auxiliary_count": 1,
+      "historical_v1_cand_b_passed": true,
+      "notes": "",
+      "primary_reconciled_category": "HAS_EXPLICIT_CONSTRUCTION_AND_GOAL_EDGE_CONNECT",
+      "v2_cand_c_strict_l0_l4_passed": true,
+      "v2_strict_aux_object_count": 0
+    },
+    {
+      "case_id": "B02_point_reflection_distance",
+      "classifications": {
+        "ANSWER_VERIFIED_WITHOUT_AUXILIARY": false,
+        "HAS_AUXILIARY_OBJECT": true,
+        "HAS_CONSTRUCTION_WITNESS": true,
+        "HAS_EXPLICIT_DEPENDENCY_CHAIN": true,
+        "HAS_GENUINE_IMPLICIT_AUXILIARY": false,
+        "HAS_MULTI_PLAN_ALTERNATIVES": false,
+        "VERIFIED_GRAPH": true
+      },
+      "expected_status": "GOAL_VERIFIED",
+      "group": "Group_B",
+      "historical_v1_any_plan_aux": true,
+      "historical_v1_auxiliary_count": 1,
+      "historical_v1_cand_b_passed": true,
+      "notes": "",
+      "primary_reconciled_category": "HAS_EXPLICIT_CONSTRUCTION_AND_GOAL_EDGE_CONNECT",
+      "v2_cand_c_strict_l0_l4_passed": true,
+      "v2_strict_aux_object_count": 0
+    },
+    {
+      "case_id": "B03_dihedral_linear_angle_equilateral",
+      "classifications": {
+        "ANSWER_VERIFIED_WITHOUT_AUXILIARY": false,
+        "HAS_AUXILIARY_OBJECT": true,
+        "HAS_CONSTRUCTION_WITNESS": true,
+        "HAS_EXPLICIT_DEPENDENCY_CHAIN": true,
+        "HAS_GENUINE_IMPLICIT_AUXILIARY": true,
+        "HAS_MULTI_PLAN_ALTERNATIVES": true,
+        "VERIFIED_GRAPH": true
+      },
+      "expected_status": "GOAL_VERIFIED",
+      "group": "Group_B",
+      "historical_v1_any_plan_aux": true,
+      "historical_v1_auxiliary_count": 3,
+      "historical_v1_cand_b_passed": true,
+      "notes": "",
+      "primary_reconciled_category": "HAS_CONSTRUCTION_WITNESS_WITH_AUXILIARY_DISCOVERY",
+      "v2_cand_c_strict_l0_l4_passed": true,
+      "v2_strict_aux_object_count": 3
+    },
+    {
+      "case_id": "B04_dihedral_linear_angle_cube",
+      "classifications": {
+        "ANSWER_VERIFIED_WITHOUT_AUXILIARY": false,
+        "HAS_AUXILIARY_OBJECT": true,
+        "HAS_CONSTRUCTION_WITNESS": true,
+        "HAS_EXPLICIT_DEPENDENCY_CHAIN": true,
+        "HAS_GENUINE_IMPLICIT_AUXILIARY": true,
+        "HAS_MULTI_PLAN_ALTERNATIVES": true,
+        "VERIFIED_GRAPH": true
+      },
+      "expected_status": "GOAL_VERIFIED",
+      "group": "Group_B",
+      "historical_v1_any_plan_aux": true,
+      "historical_v1_auxiliary_count": 3,
+      "historical_v1_cand_b_passed": true,
+      "notes": "",
+      "primary_reconciled_category": "HAS_CONSTRUCTION_WITNESS_WITH_AUXILIARY_DISCOVERY",
+      "v2_cand_c_strict_l0_l4_passed": true,
+      "v2_strict_aux_object_count": 3
+    },
+    {
+      "case_id": "B05_skew_angle_cube_parallel_transfer",
+      "classifications": {
+        "ANSWER_VERIFIED_WITHOUT_AUXILIARY": false,
+        "HAS_AUXILIARY_OBJECT": true,
+        "HAS_CONSTRUCTION_WITNESS": true,
+        "HAS_EXPLICIT_DEPENDENCY_CHAIN": true,
+        "HAS_GENUINE_IMPLICIT_AUXILIARY": true,
+        "HAS_MULTI_PLAN_ALTERNATIVES": true,
+        "VERIFIED_GRAPH": true
+      },
+      "expected_status": "GOAL_VERIFIED",
+      "group": "Group_B",
+      "historical_v1_any_plan_aux": true,
+      "historical_v1_auxiliary_count": 1,
+      "historical_v1_cand_b_passed": true,
+      "notes": "",
+      "primary_reconciled_category": "HAS_CONSTRUCTION_WITNESS_WITH_AUXILIARY_DISCOVERY",
+      "v2_cand_c_strict_l0_l4_passed": true,
+      "v2_strict_aux_object_count": 1
+    },
+    {
+      "case_id": "B06_divide_segment_plus_point_plane_distance",
+      "classifications": {
+        "ANSWER_VERIFIED_WITHOUT_AUXILIARY": false,
+        "HAS_AUXILIARY_OBJECT": true,
+        "HAS_CONSTRUCTION_WITNESS": true,
+        "HAS_EXPLICIT_DEPENDENCY_CHAIN": true,
+        "HAS_GENUINE_IMPLICIT_AUXILIARY": true,
+        "HAS_MULTI_PLAN_ALTERNATIVES": true,
+        "VERIFIED_GRAPH": true
+      },
+      "expected_status": "GOAL_VERIFIED",
+      "group": "Group_B",
+      "historical_v1_any_plan_aux": true,
+      "historical_v1_auxiliary_count": 3,
+      "historical_v1_cand_b_passed": true,
+      "notes": "",
+      "primary_reconciled_category": "HAS_CONSTRUCTION_WITNESS_WITH_AUXILIARY_DISCOVERY",
+      "v2_cand_c_strict_l0_l4_passed": true,
+      "v2_strict_aux_object_count": 3
+    },
+    {
+      "case_id": "B07_reflection_plus_centroid_length",
+      "classifications": {
+        "ANSWER_VERIFIED_WITHOUT_AUXILIARY": false,
+        "HAS_AUXILIARY_OBJECT": true,
+        "HAS_CONSTRUCTION_WITNESS": true,
+        "HAS_EXPLICIT_DEPENDENCY_CHAIN": true,
+        "HAS_GENUINE_IMPLICIT_AUXILIARY": false,
+        "HAS_MULTI_PLAN_ALTERNATIVES": false,
+        "VERIFIED_GRAPH": true
+      },
+      "expected_status": "GOAL_VERIFIED",
+      "group": "Group_B",
+      "historical_v1_any_plan_aux": true,
+      "historical_v1_auxiliary_count": 1,
+      "historical_v1_cand_b_passed": true,
+      "notes": "",
+      "primary_reconciled_category": "HAS_EXPLICIT_CONSTRUCTION_AND_GOAL_EDGE_CONNECT",
+      "v2_cand_c_strict_l0_l4_passed": true,
+      "v2_strict_aux_object_count": 0
+    },
+    {
+      "case_id": "B08_intersection_point_derived_plane_prism",
+      "classifications": {
+        "ANSWER_VERIFIED_WITHOUT_AUXILIARY": false,
+        "HAS_AUXILIARY_OBJECT": true,
+        "HAS_CONSTRUCTION_WITNESS": true,
+        "HAS_EXPLICIT_DEPENDENCY_CHAIN": true,
+        "HAS_GENUINE_IMPLICIT_AUXILIARY": false,
+        "HAS_MULTI_PLAN_ALTERNATIVES": false,
+        "VERIFIED_GRAPH": true
+      },
+      "expected_status": "GOAL_VERIFIED",
+      "group": "Group_B",
+      "historical_v1_any_plan_aux": true,
+      "historical_v1_auxiliary_count": 1,
+      "historical_v1_cand_b_passed": true,
+      "notes": "",
+      "primary_reconciled_category": "HAS_EXPLICIT_CONSTRUCTION_AND_GOAL_EDGE_CONNECT",
+      "v2_cand_c_strict_l0_l4_passed": true,
+      "v2_strict_aux_object_count": 0
+    },
+    {
+      "case_id": "B09_deep_19step_chain_exceeds_32_ir_slots",
+      "classifications": {
+        "ANSWER_VERIFIED_WITHOUT_AUXILIARY": false,
+        "HAS_AUXILIARY_OBJECT": true,
+        "HAS_CONSTRUCTION_WITNESS": true,
+        "HAS_EXPLICIT_DEPENDENCY_CHAIN": true,
+        "HAS_GENUINE_IMPLICIT_AUXILIARY": false,
+        "HAS_MULTI_PLAN_ALTERNATIVES": false,
+        "VERIFIED_GRAPH": true
+      },
+      "expected_status": "GOAL_VERIFIED",
+      "group": "Group_B",
+      "historical_v1_any_plan_aux": true,
+      "historical_v1_auxiliary_count": 1,
+      "historical_v1_cand_b_passed": true,
+      "notes": "",
+      "primary_reconciled_category": "HAS_EXPLICIT_CONSTRUCTION_AND_GOAL_EDGE_CONNECT",
+      "v2_cand_c_strict_l0_l4_passed": true,
+      "v2_strict_aux_object_count": 0
+    },
+    {
+      "case_id": "B10_derived_polygon_area_after_ratio",
+      "classifications": {
+        "ANSWER_VERIFIED_WITHOUT_AUXILIARY": false,
+        "HAS_AUXILIARY_OBJECT": true,
+        "HAS_CONSTRUCTION_WITNESS": true,
+        "HAS_EXPLICIT_DEPENDENCY_CHAIN": true,
+        "HAS_GENUINE_IMPLICIT_AUXILIARY": false,
+        "HAS_MULTI_PLAN_ALTERNATIVES": false,
+        "VERIFIED_GRAPH": true
+      },
+      "expected_status": "GOAL_VERIFIED",
+      "group": "Group_B",
+      "historical_v1_any_plan_aux": true,
+      "historical_v1_auxiliary_count": 3,
+      "historical_v1_cand_b_passed": true,
+      "notes": "",
+      "primary_reconciled_category": "HAS_EXPLICIT_CONSTRUCTION_AND_GOAL_EDGE_CONNECT",
+      "v2_cand_c_strict_l0_l4_passed": true,
+      "v2_strict_aux_object_count": 0
+    },
+    {
+      "case_id": "C01_aux_foot_d_A_SBC_equilateral",
+      "classifications": {
+        "ANSWER_VERIFIED_WITHOUT_AUXILIARY": false,
+        "HAS_AUXILIARY_OBJECT": true,
+        "HAS_CONSTRUCTION_WITNESS": true,
+        "HAS_EXPLICIT_DEPENDENCY_CHAIN": true,
+        "HAS_GENUINE_IMPLICIT_AUXILIARY": true,
+        "HAS_MULTI_PLAN_ALTERNATIVES": true,
+        "VERIFIED_GRAPH": true
+      },
+      "expected_status": "GOAL_VERIFIED",
+      "group": "Group_C",
+      "historical_v1_any_plan_aux": true,
+      "historical_v1_auxiliary_count": 3,
+      "historical_v1_cand_b_passed": true,
+      "notes": "",
+      "primary_reconciled_category": "HAS_CONSTRUCTION_WITNESS_WITH_AUXILIARY_DISCOVERY",
+      "v2_cand_c_strict_l0_l4_passed": true,
+      "v2_strict_aux_object_count": 3
+    },
+    {
+      "case_id": "C02_aux_foot_d_A_SBD_square",
+      "classifications": {
+        "ANSWER_VERIFIED_WITHOUT_AUXILIARY": false,
+        "HAS_AUXILIARY_OBJECT": true,
+        "HAS_CONSTRUCTION_WITNESS": true,
+        "HAS_EXPLICIT_DEPENDENCY_CHAIN": true,
+        "HAS_GENUINE_IMPLICIT_AUXILIARY": true,
+        "HAS_MULTI_PLAN_ALTERNATIVES": false,
+        "VERIFIED_GRAPH": true
+      },
+      "expected_status": "GOAL_VERIFIED",
+      "group": "Group_C",
+      "historical_v1_any_plan_aux": true,
+      "historical_v1_auxiliary_count": 3,
+      "historical_v1_cand_b_passed": true,
+      "notes": "",
+      "primary_reconciled_category": "HAS_CONSTRUCTION_WITNESS_WITH_AUXILIARY_DISCOVERY",
+      "v2_cand_c_strict_l0_l4_passed": true,
+      "v2_strict_aux_object_count": 3
+    },
+    {
+      "case_id": "C03_aux_parallel_line_plane_transfer",
+      "classifications": {
+        "ANSWER_VERIFIED_WITHOUT_AUXILIARY": false,
+        "HAS_AUXILIARY_OBJECT": true,
+        "HAS_CONSTRUCTION_WITNESS": true,
+        "HAS_EXPLICIT_DEPENDENCY_CHAIN": true,
+        "HAS_GENUINE_IMPLICIT_AUXILIARY": true,
+        "HAS_MULTI_PLAN_ALTERNATIVES": true,
+        "VERIFIED_GRAPH": true
+      },
+      "expected_status": "GOAL_VERIFIED",
+      "group": "Group_C",
+      "historical_v1_any_plan_aux": true,
+      "historical_v1_auxiliary_count": 3,
+      "historical_v1_cand_b_passed": true,
+      "notes": "",
+      "primary_reconciled_category": "HAS_CONSTRUCTION_WITNESS_WITH_AUXILIARY_DISCOVERY",
+      "v2_cand_c_strict_l0_l4_passed": true,
+      "v2_strict_aux_object_count": 3
+    },
+    {
+      "case_id": "C04_aux_skew_lines_cube_ABp_BCp",
+      "classifications": {
+        "ANSWER_VERIFIED_WITHOUT_AUXILIARY": false,
+        "HAS_AUXILIARY_OBJECT": true,
+        "HAS_CONSTRUCTION_WITNESS": true,
+        "HAS_EXPLICIT_DEPENDENCY_CHAIN": true,
+        "HAS_GENUINE_IMPLICIT_AUXILIARY": true,
+        "HAS_MULTI_PLAN_ALTERNATIVES": true,
+        "VERIFIED_GRAPH": true
+      },
+      "expected_status": "GOAL_VERIFIED",
+      "group": "Group_C",
+      "historical_v1_any_plan_aux": true,
+      "historical_v1_auxiliary_count": 4,
+      "historical_v1_cand_b_passed": true,
+      "notes": "",
+      "primary_reconciled_category": "HAS_CONSTRUCTION_WITNESS_WITH_AUXILIARY_DISCOVERY",
+      "v2_cand_c_strict_l0_l4_passed": true,
+      "v2_strict_aux_object_count": 4
+    },
+    {
+      "case_id": "C05_aux_skew_lines_pyramid_SA_BD",
+      "classifications": {
+        "ANSWER_VERIFIED_WITHOUT_AUXILIARY": false,
+        "HAS_AUXILIARY_OBJECT": true,
+        "HAS_CONSTRUCTION_WITNESS": true,
+        "HAS_EXPLICIT_DEPENDENCY_CHAIN": true,
+        "HAS_GENUINE_IMPLICIT_AUXILIARY": true,
+        "HAS_MULTI_PLAN_ALTERNATIVES": true,
+        "VERIFIED_GRAPH": true
+      },
+      "expected_status": "GOAL_VERIFIED",
+      "group": "Group_C",
+      "historical_v1_any_plan_aux": true,
+      "historical_v1_auxiliary_count": 3,
+      "historical_v1_cand_b_passed": true,
+      "notes": "",
+      "primary_reconciled_category": "HAS_CONSTRUCTION_WITNESS_WITH_AUXILIARY_DISCOVERY",
+      "v2_cand_c_strict_l0_l4_passed": true,
+      "v2_strict_aux_object_count": 3
+    },
+    {
+      "case_id": "C06_aux_point_to_line_foot",
+      "classifications": {
+        "ANSWER_VERIFIED_WITHOUT_AUXILIARY": false,
+        "HAS_AUXILIARY_OBJECT": true,
+        "HAS_CONSTRUCTION_WITNESS": true,
+        "HAS_EXPLICIT_DEPENDENCY_CHAIN": true,
+        "HAS_GENUINE_IMPLICIT_AUXILIARY": true,
+        "HAS_MULTI_PLAN_ALTERNATIVES": false,
+        "VERIFIED_GRAPH": true
+      },
+      "expected_status": "GOAL_VERIFIED",
+      "group": "Group_C",
+      "historical_v1_any_plan_aux": true,
+      "historical_v1_auxiliary_count": 3,
+      "historical_v1_cand_b_passed": true,
+      "notes": "",
+      "primary_reconciled_category": "HAS_CONSTRUCTION_WITNESS_WITH_AUXILIARY_DISCOVERY",
+      "v2_cand_c_strict_l0_l4_passed": true,
+      "v2_strict_aux_object_count": 3
+    },
+    {
+      "case_id": "C07_aux_angle_line_plane_SB_SAC",
+      "classifications": {
+        "ANSWER_VERIFIED_WITHOUT_AUXILIARY": false,
+        "HAS_AUXILIARY_OBJECT": true,
+        "HAS_CONSTRUCTION_WITNESS": true,
+        "HAS_EXPLICIT_DEPENDENCY_CHAIN": true,
+        "HAS_GENUINE_IMPLICIT_AUXILIARY": true,
+        "HAS_MULTI_PLAN_ALTERNATIVES": false,
+        "VERIFIED_GRAPH": true
+      },
+      "expected_status": "GOAL_VERIFIED",
+      "group": "Group_C",
+      "historical_v1_any_plan_aux": true,
+      "historical_v1_auxiliary_count": 3,
+      "historical_v1_cand_b_passed": true,
+      "notes": "",
+      "primary_reconciled_category": "HAS_CONSTRUCTION_WITNESS_WITH_AUXILIARY_DISCOVERY",
+      "v2_cand_c_strict_l0_l4_passed": true,
+      "v2_strict_aux_object_count": 4
+    },
+    {
+      "case_id": "C08_aux_parallel_plane_section_through_midpoint",
+      "classifications": {
+        "ANSWER_VERIFIED_WITHOUT_AUXILIARY": true,
+        "HAS_AUXILIARY_OBJECT": false,
+        "HAS_CONSTRUCTION_WITNESS": true,
+        "HAS_EXPLICIT_DEPENDENCY_CHAIN": true,
+        "HAS_GENUINE_IMPLICIT_AUXILIARY": false,
+        "HAS_MULTI_PLAN_ALTERNATIVES": false,
+        "VERIFIED_GRAPH": true
+      },
+      "expected_status": "GOAL_VERIFIED",
+      "group": "Group_C",
+      "historical_v1_any_plan_aux": false,
+      "historical_v1_auxiliary_count": 0,
+      "historical_v1_cand_b_passed": true,
+      "notes": "",
+      "primary_reconciled_category": "ANSWER_VERIFIED_WITHOUT_AUXILIARY",
+      "v2_cand_c_strict_l0_l4_passed": true,
+      "v2_strict_aux_object_count": 0
+    },
+    {
+      "cand_c_status": "MISSING_PRECONDITION",
+      "cand_c_valid_refusal": true,
+      "case_id": "D01_missing_height_precondition",
+      "expected_status": "MISSING_PRECONDITION",
+      "group": "Group_D",
+      "historical_v1_cand_b_passed": true
+    },
+    {
+      "case_id": "D02_degenerate_coincident_points",
+      "expected_status_historical_v1": "CONTRADICTORY_CONSTRAINTS",
+      "group": "Group_D",
+      "reconciled_semantics": {
+        "non_degenerate_segment_construction": {
+          "baseline_a_valid": false,
+          "cand_c_failure_code": "DEGENERATE_COINCIDENT_POINTS",
+          "cand_c_status": "DEGENERATE_CONSTRUCTION",
+          "cand_c_valid_refusal": true,
+          "description": "Segment construction requires distinct endpoints A != B",
+          "historical_cand_b_status": "CONTRADICTORY_CONSTRAINTS",
+          "historical_label_accurate": false
+        },
+        "point_distance": {
+          "baseline_a_result": "0a",
+          "baseline_a_valid": true,
+          "cand_c_answer": "0",
+          "cand_c_status": "GOAL_VERIFIED",
+          "cand_c_valid": true,
+          "description": "d(A, A) = 0 between identical points",
+          "historical_cand_b_valid_for_point_distance": false
+        },
+        "premise_consistency": {
+          "note": "Identical point query does not render solid premises contradictory; labeling D02 as CONTRADICTORY_CONSTRAINTS in /1 was inaccurate.",
+          "premises_contradictory": false
+        }
+      }
+    },
+    {
+      "cand_c_status": "DEGENERATE_CONSTRUCTION",
+      "cand_c_valid_refusal": true,
+      "case_id": "D03_degenerate_collinear_plane",
+      "expected_status": "CONTRADICTORY_CONSTRAINTS",
+      "group": "Group_D",
+      "historical_v1_cand_b_passed": true
+    },
+    {
+      "cand_c_status": "DEGENERATE_CONSTRUCTION",
+      "cand_c_valid_refusal": true,
+      "case_id": "D04_degenerate_parallel_no_intersection",
+      "expected_status": "CONTRADICTORY_CONSTRAINTS",
+      "group": "Group_D",
+      "historical_v1_cand_b_passed": true
+    },
+    {
+      "cand_c_status": "CONTRADICTORY_CONSTRAINTS",
+      "cand_c_valid_refusal": true,
+      "case_id": "D05_contradictory_triangle_inequality",
+      "expected_status": "CONTRADICTORY_CONSTRAINTS",
+      "group": "Group_D",
+      "historical_v1_cand_b_passed": true
+    },
+    {
+      "cand_c_status": "UNSUPPORTED_OPERATOR",
+      "cand_c_valid_refusal": true,
+      "case_id": "D06_unsupported_curved_tangent_sphere",
+      "expected_status": "UNSUPPORTED_OPERATOR",
+      "group": "Group_D",
+      "historical_v1_cand_b_passed": true
+    },
+    {
+      "cand_c_status": "MISSING_PRECONDITION",
+      "cand_c_valid_refusal": true,
+      "case_id": "D07_missing_base_right_angle_underdetermined",
+      "expected_status": "MISSING_PRECONDITION",
+      "group": "Group_D",
+      "historical_v1_cand_b_passed": true
+    },
+    {
+      "case_id": "E01_multiplan_d_A_SBC_equilateral",
+      "classifications": {
+        "ANSWER_VERIFIED_WITHOUT_AUXILIARY": false,
+        "HAS_AUXILIARY_OBJECT": true,
+        "HAS_CONSTRUCTION_WITNESS": true,
+        "HAS_EXPLICIT_DEPENDENCY_CHAIN": true,
+        "HAS_GENUINE_IMPLICIT_AUXILIARY": true,
+        "HAS_MULTI_PLAN_ALTERNATIVES": true,
+        "VERIFIED_GRAPH": true
+      },
+      "expected_status": "GOAL_VERIFIED",
+      "group": "Group_E",
+      "historical_v1_any_plan_aux": true,
+      "historical_v1_auxiliary_count": 3,
+      "historical_v1_cand_b_passed": true,
+      "notes": "",
+      "primary_reconciled_category": "HAS_CONSTRUCTION_WITNESS_WITH_AUXILIARY_DISCOVERY",
+      "v2_cand_c_strict_l0_l4_passed": true,
+      "v2_strict_aux_object_count": 3
+    },
+    {
+      "case_id": "E02_multiplan_d_A_SBC_right_B",
+      "classifications": {
+        "ANSWER_VERIFIED_WITHOUT_AUXILIARY": false,
+        "HAS_AUXILIARY_OBJECT": true,
+        "HAS_CONSTRUCTION_WITNESS": true,
+        "HAS_EXPLICIT_DEPENDENCY_CHAIN": true,
+        "HAS_GENUINE_IMPLICIT_AUXILIARY": true,
+        "HAS_MULTI_PLAN_ALTERNATIVES": true,
+        "VERIFIED_GRAPH": true
+      },
+      "expected_status": "GOAL_VERIFIED",
+      "group": "Group_E",
+      "historical_v1_any_plan_aux": true,
+      "historical_v1_auxiliary_count": 3,
+      "historical_v1_cand_b_passed": true,
+      "notes": "",
+      "primary_reconciled_category": "HAS_CONSTRUCTION_WITNESS_WITH_AUXILIARY_DISCOVERY",
+      "v2_cand_c_strict_l0_l4_passed": true,
+      "v2_strict_aux_object_count": 3
+    },
+    {
+      "case_id": "E03_multiplan_skew_d_SA_BC",
+      "classifications": {
+        "ANSWER_VERIFIED_WITHOUT_AUXILIARY": true,
+        "HAS_AUXILIARY_OBJECT": true,
+        "HAS_CONSTRUCTION_WITNESS": true,
+        "HAS_EXPLICIT_DEPENDENCY_CHAIN": true,
+        "HAS_GENUINE_IMPLICIT_AUXILIARY": true,
+        "HAS_MULTI_PLAN_ALTERNATIVES": true,
+        "VERIFIED_GRAPH": true
+      },
+      "expected_status": "GOAL_VERIFIED",
+      "group": "Group_E",
+      "historical_v1_any_plan_aux": true,
+      "historical_v1_auxiliary_count": 0,
+      "historical_v1_cand_b_passed": true,
+      "notes": "",
+      "primary_reconciled_category": "HAS_CONSTRUCTION_WITNESS_WITH_AUXILIARY_DISCOVERY",
+      "v2_cand_c_strict_l0_l4_passed": true,
+      "v2_strict_aux_object_count": 0
+    },
+    {
+      "case_id": "E04_multiplan_skew_angle_cube_symmetric_anchors",
+      "classifications": {
+        "ANSWER_VERIFIED_WITHOUT_AUXILIARY": false,
+        "HAS_AUXILIARY_OBJECT": true,
+        "HAS_CONSTRUCTION_WITNESS": true,
+        "HAS_EXPLICIT_DEPENDENCY_CHAIN": true,
+        "HAS_GENUINE_IMPLICIT_AUXILIARY": true,
+        "HAS_MULTI_PLAN_ALTERNATIVES": true,
+        "VERIFIED_GRAPH": true
+      },
+      "expected_status": "GOAL_VERIFIED",
+      "group": "Group_E",
+      "historical_v1_any_plan_aux": true,
+      "historical_v1_auxiliary_count": 1,
+      "historical_v1_cand_b_passed": true,
+      "notes": "",
+      "primary_reconciled_category": "HAS_CONSTRUCTION_WITNESS_WITH_AUXILIARY_DISCOVERY",
+      "v2_cand_c_strict_l0_l4_passed": true,
+      "v2_strict_aux_object_count": 1
+    },
+    {
+      "case_id": "E05_multiplan_dihedral_linear_vs_synthetic",
+      "classifications": {
+        "ANSWER_VERIFIED_WITHOUT_AUXILIARY": false,
+        "HAS_AUXILIARY_OBJECT": true,
+        "HAS_CONSTRUCTION_WITNESS": true,
+        "HAS_EXPLICIT_DEPENDENCY_CHAIN": true,
+        "HAS_GENUINE_IMPLICIT_AUXILIARY": true,
+        "HAS_MULTI_PLAN_ALTERNATIVES": true,
+        "VERIFIED_GRAPH": true
+      },
+      "expected_status": "GOAL_VERIFIED",
+      "group": "Group_E",
+      "historical_v1_any_plan_aux": true,
+      "historical_v1_auxiliary_count": 3,
+      "historical_v1_cand_b_passed": true,
+      "notes": "",
+      "primary_reconciled_category": "HAS_CONSTRUCTION_WITNESS_WITH_AUXILIARY_DISCOVERY",
+      "v2_cand_c_strict_l0_l4_passed": true,
+      "v2_strict_aux_object_count": 3
+    }
+  ],
+  "evaluator_version": "construction-benchmark-evaluator/2",
+  "generated_at_utc": "2026-11-19T04:30:43Z",
+  "historical_scores_reported_in_v1": {
+    "actual_aux_count_gt_zero_in_v1": "26/33",
+    "actual_zero_aux_count_in_v1": "7/33",
+    "baseline_a_total": "32/40",
+    "candidate_b_total": "40/40",
+    "claimed_aux_witness_positive": "33/33"
+  },
+  "reconciled_positive_33_classifications": {
+    "ANSWER_VERIFIED_WITHOUT_AUXILIARY": 8,
+    "HAS_AUXILIARY_OBJECT_HISTORICAL_V1_FIELD": 26,
+    "HAS_CONSTRUCTION_WITNESS": 33,
+    "HAS_EXPLICIT_DEPENDENCY_CHAIN": 33,
+    "HAS_GENUINE_IMPLICIT_AUXILIARY_OBJECT": 16,
+    "HAS_MULTI_PLAN_ALTERNATIVES": 13,
+    "VERIFIED_GRAPH": 33
+  },
+  "reconciled_scores": {
+    "policy_P_metric_coincident_zero_valid": {
+      "baseline_a_scalar_or_refusal_ok": "33/40",
+      "hardened_cand_c_v2": "40/40",
+      "historical_cand_b_v1": "39/40 (39/40 because /1 forcibly injected connect_segment(A,A) onto 'Tính AA.')"
+    },
+    "policy_P_strict_segment_construction": {
+      "baseline_a_strict_segment_or_refusal_ok": "32/40 (D02 served '0a' instead of refusing segment construction)",
+      "hardened_cand_c_v2": "40/40",
+      "historical_cand_b_v1_behavior_ok": "40/40 (refused correctly; status label CONTRADICTORY_CONSTRAINTS corrected to DEGENERATE_CONSTRUCTION)"
+    }
+  },
+  "schema": "axo-construction-v1-metric-reconciliation/1",
+  "v1_immutability": {
+    "artifacts_checked": 16,
+    "intact": true,
+    "mismatches": [],
+    "v1_run_id": "axo-construction-verified-graph-dynamic-planner-feasibility"
+  },
+  "v1_run_id": "axo-construction-verified-graph-dynamic-planner-feasibility"
+}

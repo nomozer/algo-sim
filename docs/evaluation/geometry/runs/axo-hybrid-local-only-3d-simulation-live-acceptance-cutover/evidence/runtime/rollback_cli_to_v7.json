@@ -1,0 +1,8 @@
+{
+  "ok": true,
+  "action": "rollback",
+  "active_model_key": "qwen3-0.6b-axo-v7-q4_k_m",
+  "sha256": "36e784d135627225e0b9c11b097c9a36222ee1e0e3f6f1d6116cc3060ac5e148",
+  "model_path": "C:\\Users\\Bunny\\AppData\\Local\\Temp\\claude\\1b6f0b36035d01ae\\a0910ca0-a4bf-4219-b9bb-3e8975dffa87\\scratchpad\\rollback_model_dir\\models\\qwen3-0.6b-axo-v7-q4_k_m\\Qwen3-0.6B-AxoV7-Q4_K_M.gguf",
+  "state_file": "C:\\Users\\Bunny\\AppData\\Local\\Temp\\claude\\1b6f0b36035d01ae\\a0910ca0-a4bf-4219-b9bb-3e8975dffa87\\scratchpad\\rollback_model_dir\\active_model.json"
+}

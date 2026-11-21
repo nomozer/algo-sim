@@ -1,0 +1,1 @@
+../docs/evaluation/geometry/runs/semantic-grounding-slm-recovery/holdout-6/ACCEPTANCE_MANIFEST.json,../docs/evaluation/geometry/runs/semantic-grounding-slm-recovery/holdout-6/SLM_INDEPENDENT_MANIFEST.json

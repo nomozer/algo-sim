@@ -1,0 +1,58 @@
+{
+  "classification": "CURRENT_PENDING_TEMPLATE_METADATA_REFRESH_NOT_HUMAN_APPROVAL",
+  "reason": "test_s2_student_language_pilot_runner requires pending templates to bind the current runtime; the dihedral fix, local sections/intersections, altitudes and cache 134 changed the measured system.",
+  "runtime_identity_measured_system": "8f49cd2d4d3211f6a90bb28ac3e9538bbb46febc08350c0517fc0171738d5d30",
+  "rows": [
+    {
+      "study": "K-1",
+      "template": "docs/evaluation/geometry/runs/hybrid-master-backend-replacement/k1-owner-approval.template.json",
+      "before": {
+        "measured_system": "b222260d9a59bfc0b44aa5cf6021e0a9e1a7ad49b39c288844fa00b1b4117b64",
+        "measured_system_tree_hash": "b222260d9a59bfc0b44aa5cf6021e0a9e1a7ad49b39c288844fa00b1b4117b64"
+      },
+      "after": {
+        "measured_system": "8f49cd2d4d3211f6a90bb28ac3e9538bbb46febc08350c0517fc0171738d5d30",
+        "measured_system_tree_hash": "8f49cd2d4d3211f6a90bb28ac3e9538bbb46febc08350c0517fc0171738d5d30"
+      },
+      "original_saved_as": "logs/prior-k1-owner-approval.template.json",
+      "original_sha256": "d38a5add9a27316719be0c4e0d19cb79a811f18b1253f0932eaa0547933694d3",
+      "new_sha256": "4945665654aa25ee3be1620e207978d6e162ca7fc5c8416e56e4a7be16f17086",
+      "owner_decision": "PENDING_OWNER_DECISION",
+      "paid_project_confirmed": false
+    },
+    {
+      "study": "S-2",
+      "template": "docs/evaluation/geometry/runs/hybrid-master-backend-replacement/s2-owner-approval.template.json",
+      "before": {
+        "measured_system": "b222260d9a59bfc0b44aa5cf6021e0a9e1a7ad49b39c288844fa00b1b4117b64",
+        "measured_system_tree_hash": "b222260d9a59bfc0b44aa5cf6021e0a9e1a7ad49b39c288844fa00b1b4117b64"
+      },
+      "after": {
+        "measured_system": "8f49cd2d4d3211f6a90bb28ac3e9538bbb46febc08350c0517fc0171738d5d30",
+        "measured_system_tree_hash": "8f49cd2d4d3211f6a90bb28ac3e9538bbb46febc08350c0517fc0171738d5d30"
+      },
+      "original_saved_as": "logs/prior-s2-owner-approval.template.json",
+      "original_sha256": "a1abb900ff859f7fc303215d854c70e8032be5d3114b404373ba298520bc3e06",
+      "new_sha256": "cce71ee987b1e9497d241cf824700d55a73ade5e58c47e4545c946fdcab9aa05",
+      "owner_decision": "PENDING_OWNER_DECISION",
+      "paid_project_confirmed": false
+    },
+    {
+      "study": "R-1",
+      "template": "docs/evaluation/geometry/runs/hybrid-master-backend-replacement/r1-owner-approval.template.json",
+      "before": {
+        "measured_system": "b222260d9a59bfc0b44aa5cf6021e0a9e1a7ad49b39c288844fa00b1b4117b64",
+        "measured_system_tree_hash": "b222260d9a59bfc0b44aa5cf6021e0a9e1a7ad49b39c288844fa00b1b4117b64"
+      },
+      "after": {
+        "measured_system": "8f49cd2d4d3211f6a90bb28ac3e9538bbb46febc08350c0517fc0171738d5d30",
+        "measured_system_tree_hash": "8f49cd2d4d3211f6a90bb28ac3e9538bbb46febc08350c0517fc0171738d5d30"
+      },
+      "original_saved_as": "logs/prior-r1-owner-approval.template.json",
+      "original_sha256": "854bfce1967742fd02f31d7f9fbf8d9f5783ee3eca5dbd9ba93d28ef6db6c421",
+      "new_sha256": "b2435bf09454431f54840ee244627b9bc486026eb08bca710bdb12c6e921301e",
+      "owner_decision": "PENDING_OWNER_DECISION",
+      "paid_project_confirmed": false
+    }
+  ]
+}

@@ -3,6 +3,8 @@ import {
   assistBlocker,
   canConfirmAssistText,
   describeUncertainToken,
+  extendSpanTarget,
+  reviewTokens,
   type UnifiedAssistState,
 } from "./photo-problem-flow";
 
@@ -21,6 +23,12 @@ export interface PhotoProblemPanelProps {
   onToggleConfirm(value: boolean): void;
   onSubmitConfirmed(): void;
   onDismiss(): void;
+  /** OCR local: sửa / xác nhận TẠI CHỖ một chỗ chưa chắc (không phải gõ lại cả đề). */
+  onEditSpan?(spanId: string, value: string): void;
+  onConfirmSpan?(spanId: string): void;
+  /** OCR tách một biểu thức thành nhiều mảnh: nối chỗ sửa với chữ kế tiếp, hoặc tách lại như máy đọc. */
+  onExtendSpan?(spanId: string): void;
+  onRestoreSpan?(spanId: string): void;
 }
 
 export function PhotoProblemPanel({
@@ -31,6 +39,10 @@ export function PhotoProblemPanel({
   onToggleConfirm,
   onSubmitConfirmed,
   onDismiss,
+  onEditSpan,
+  onConfirmSpan,
+  onExtendSpan,
+  onRestoreSpan,
 }: PhotoProblemPanelProps) {
   if (state.phase === "idle") return null;
 
@@ -88,6 +100,9 @@ export function PhotoProblemPanel({
 
   const blocker = assistBlocker(state);
   const canConfirm = canConfirmAssistText(state) && !busy;
+  const review = reviewTokens(state.uncertainTokens);
+  const reviewIds = new Set(review.map((t) => t.span_id));
+  const plainTokens = state.uncertainTokens.filter((t) => !reviewIds.has(t.span_id));
 
   return (
     <section
@@ -118,11 +133,87 @@ export function PhotoProblemPanel({
         </ul>
       )}
 
-      {state.uncertainTokens.length > 0 && (
+      {review.length > 0 && (
+        <div className="photo-block" id="photo-span-review">
+          <h3 className="photo-block-title">Các chỗ cần em xem lại ({review.length})</h3>
+          <ul className="photo-span-list">
+            {review.map((t) => {
+              const id = t.span_id as string;
+              const reviewed = Boolean(state.spanReviewed[id]);
+              const isDiagram = t.kind === "diagram";
+              const value = state.spanValues[id] ?? t.token;
+              return (
+                <li key={id} className="photo-span-item" data-span-id={id} data-reviewed={reviewed ? "true" : "false"}>
+                  {t.crop_data_url && (
+                    <img className="photo-span-crop" src={t.crop_data_url} alt={isDiagram ? "Hình vẽ trong ảnh" : `Ảnh gốc chỗ ${t.location}`} />
+                  )}
+                  <p className="photo-span-reason">{t.reason}</p>
+                  {!isDiagram && (
+                    <input
+                      className="photo-span-input"
+                      aria-label={`Sửa chỗ ${t.location}`}
+                      data-span-input={id}
+                      value={value}
+                      disabled={busy || state.freeEdit}
+                      spellCheck={false}
+                      onChange={(e) => onEditSpan?.(id, e.target.value)}
+                    />
+                  )}
+                  {!isDiagram &&
+                    t.alternatives.map((alt) => (
+                      <button
+                        key={alt}
+                        type="button"
+                        className="photo-span-alt"
+                        disabled={busy || state.freeEdit}
+                        onClick={() => onEditSpan?.(id, alt)}
+                      >
+                        {alt}
+                      </button>
+                    ))}
+                  {!isDiagram && state.spanExtensions?.[id] ? (
+                    <button
+                      type="button"
+                      className="photo-span-alt"
+                      data-span-restore={id}
+                      disabled={busy}
+                      onClick={() => onRestoreSpan?.(id)}
+                    >
+                      Tách lại như máy đọc
+                    </button>
+                  ) : !isDiagram && extendSpanTarget(state, id) ? (
+                    <button
+                      type="button"
+                      className="photo-span-alt"
+                      data-span-extend={id}
+                      disabled={busy}
+                      onClick={() => onExtendSpan?.(id)}
+                    >
+                      Nối với chữ kế tiếp
+                    </button>
+                  ) : null}
+                  <button
+                    type="button"
+                    className="photo-span-ok"
+                    data-span-ok={id}
+                    aria-pressed={reviewed}
+                    disabled={busy}
+                    onClick={() => onConfirmSpan?.(id)}
+                  >
+                    {reviewed ? "Đã xem" : isDiagram ? "Hình không có thêm dữ kiện" : "Đúng rồi"}
+                  </button>
+                </li>
+              );
+            })}
+          </ul>
+        </div>
+      )}
+
+      {plainTokens.length > 0 && (
         <div className="photo-block">
           <h3 className="photo-block-title">Chỗ đọc chưa chắc chắn</h3>
           <ul className="photo-list">
-            {state.uncertainTokens.map((t, idx) => (
+            {plainTokens.map((t, idx) => (
               <li key={`${t.token}-${idx}`}>{describeUncertainToken(t)}</li>
             ))}
           </ul>

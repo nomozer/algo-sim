@@ -1,0 +1,86 @@
+{
+  "schema": "axo-residual-failure-triage/1",
+  "run_id": "model1-integration-readiness",
+  "date": "2026-11-21",
+  "subject": "the 8 positive Holdout-6 cases candidate 157 did not serve (/16 LIVE_TEXT_ACCEPTANCE_RESULTS.json)",
+  "method": [
+    "re-ran each case on candidate 157 (arm A of PARSER_SLM_ROUTING_AUDIT.json) and read route_d.refusal, slm_grounding_envelope (accepted/rejected ops, grounding status) and route_d.local_diagnostics",
+    "ran the deterministic parser alone on the original and on the v3-normalized text (0 model calls)",
+    "first failing layer = the first layer whose output was wrong or missing, not the layer that emitted the final reason code"
+  ],
+  "oracle_changes": "none — no manifest, oracle or denominator was edited; all 8 stay in the historical 72",
+  "cases": [
+    {
+      "case_id": "C05", "text": "Em muốn xem mô hình hình chóp K.ACFG có đáy ACFG là hình vuông cạnh 9, KA vuông góc với mặt phẳng đáy và KA = 13.",
+      "final_code": "UNGROUNDED_VALUE (Source Gate)",
+      "first_failing_layer": "Local Parser", "evidence": "parser LOCAL_PARSE_PARTIAL/UNGROUNDED_VALUE on the colloquial request lead; AxoV9 lowered regular_polygon + perpendicular_line_plane + segment_length (GROUNDED_AND_LOWERED); Source Gate refused a value it could not tie to a source quote (local_diagnostics root_cause SOURCE_PROVENANCE_MISSING)",
+      "classification": "CAPABILITY_GAP_CORRECT_FAIL_CLOSED", "product_defect": false, "wrong_scene_risk": "none"
+    },
+    {
+      "case_id": "C07", "text": "Hỏi diện tích đáy FGH của hình chóp A.FGH bằng bao nhiêu, biết tam giác FGH vuông tại F, FG = 12, FH = 7, AF vuông góc với đáy và AF = 5?",
+      "final_code": "SOURCE_OBJECT_MISMATCH (Source Gate)",
+      "first_failing_layer": "Local Parser", "evidence": "question-first sentence with the premises after 'biết'; parser REQUEST_NOT_ANSWERED (the base-area goal is not lowered); AxoV9 emitted goal:area, the Source Gate could not bind the goal object 'đáy FGH' to the source",
+      "classification": "CAPABILITY_GAP_CORRECT_FAIL_CLOSED", "product_defect": false
+    },
+    {
+      "case_id": "C10", "text": "Dựng hình lập phương HJKN.H'J'K'N' cạnh 11 rồi tính diện tích mặt HJKN.",
+      "final_code": "AMBIGUOUS_FACT + clarification",
+      "first_failing_layer": "Local Parser", "evidence": "after the v3 split the parser has no rule for a cube face-area goal ('Tính diện tích mặt HJKN' unparsed); AxoV9 then emitted goal:vol (a wrong goal) and the grounding validator rejected it (UNGROUNDED_GOAL_CLAUSE_TOKENS:volume) — the SLM error was caught",
+      "classification": "CAPABILITY_GAP_CORRECT_FAIL_CLOSED", "product_defect": "MINOR_UX",
+      "note": "the clarification asks the learner to 'nói rõ quan hệ hình học' although nothing is ambiguous; the honest answer is a capability gap. Same wording issue in S02 and L06."
+    },
+    {
+      "case_id": "R06", "text": "Cho hình chóp D.MNP có đáy MNP vuông tại M, MN = 12, MP = 9, DM vuông góc với đáy và DM = 8. Tính diện tích đáy của hình chóp đã cho.",
+      "final_code": "SOURCE_OBJECT_MISMATCH (parser coverage)",
+      "first_failing_layer": "Local Parser", "evidence": "anaphoric goal object 'đáy của hình chóp đã cho' unrecognized (UNRECOGNIZED_GOAL); AxoV9's goal:area could not be bound to a named source object",
+      "classification": "CAPABILITY_GAP_CORRECT_FAIL_CLOSED", "product_defect": false
+    },
+    {
+      "case_id": "P08", "text": "Cho hình chóp V.JLXY có đáy JLXY là hình vuông cạnh 7; hai mặt phẳng (VJL) và (VJY) cùng vuông góc với đáy, VJ = 12. Tính thể tích khối chóp V.JLXY.",
+      "final_code": "QUESTION_CONTEXT_UNSUPPORTED (Source Gate)",
+      "first_failing_layer": "Planner / derived-relation capability", "evidence": "the parser reads every clause (3/3 recognized); 'two planes through VJ both ⊥ base ⇒ VJ ⊥ base' is a theorem step no registry rule derives. AxoV9 lowered perpendicular_line_plane(VJ, base) — a relation the source never states — and the Source Gate refused it",
+      "classification": "CAPABILITY_GAP_CORRECT_FAIL_CLOSED", "product_defect": false,
+      "note": "this is the Source Gate doing its job against an SLM-inferred fact; serving it would require a deterministic derived-relation rule, not a looser gate"
+    },
+    {
+      "case_id": "S02", "text": "Cho tứ diện KLNR có KL, KN, KR đôi một vuông góc và KL = 3a, KN = 4a, KR = 5a. Tính thể tích khối tứ diện theo a.",
+      "final_code": "AMBIGUOUS_FACT + clarification",
+      "first_failing_layer": "Local Parser", "evidence": "parser reads the premises but not the symbolic goal 'Tính thể tích khối tứ diện theo a' (UNPARSED_GOAL_CANDIDATE); AxoV9 marked clause 0 ambiguous (SLM_REPORTED_UNRESOLVED)",
+      "classification": "CAPABILITY_GAP_CORRECT_FAIL_CLOSED", "product_defect": "MINOR_UX (clarification wording, see C10)"
+    },
+    {
+      "case_id": "Q01b", "text": "Hãy cho biết thể tích khối chóp B.EFGH, với đáy EFGH là hình chữ nhật có EF = 4 và EH = 9, BE = 10 và đường cao là BE.",
+      "final_code": "OUT_OF_SCOPE (Route D capability escape)",
+      "first_failing_layer": "Local Parser", "evidence": "VN17 moves the question last; the parser leaves the fact sentence unparsed because 'đường cao là BE' (an altitude named without a length, after the value) has no rule (VN13 needs the length in the same phrase); AxoV9 marked the clause 'unsupported'",
+      "scope_assessment": {
+        "in_supported_scope": true,
+        "reason": "same solid, relations and exact answer (120) as Q01a, which candidate 157 serves deterministically; quadrilateral pyramid with an altitude is in the shipped text scope",
+        "gold_oracle_valid": true,
+        "domain_gate_refused": false,
+        "meaning_of_OUT_OF_SCOPE_here": "Route D's extraction escape 'unsupported' (group CAPABILITY, learner message 'cần một phép dựng hoặc một dạng câu hỏi mà hệ chưa hỗ trợ' — backend/app/ai/hybrid_preview.py:81–85), not the pre-provider subject gate GATE_OUT_OF_SCOPE",
+        "scope_contract_mismatch": false,
+        "manifest_changed": false
+      },
+      "classification": "CAPABILITY_GAP_CORRECT_FAIL_CLOSED", "product_defect": false,
+      "note": "the /16 report's 'OUT_OF_SCOPE' label reads like a scope verdict; it is a capability refusal. /16's per-case record has failure_category null because the local-only refusal body carries no top-level failure_category — reporting detail, not a learner-facing error"
+    },
+    {
+      "case_id": "L06", "text": "Cho tứ diện PQRW với ba cạnh PQ, PR, PW vuông góc từng đôi, có độ dài tương ứng là 3a, 4a và 7a. Tính thể tích khối tứ diện theo a.",
+      "final_code": "AMBIGUOUS_FACT + clarification",
+      "first_failing_layer": "Local Parser", "evidence": "VN14 aligns the values and the premises are readable; the symbolic goal 'theo a' is not (same gap as S02); AxoV9 marked clause 0 ambiguous",
+      "classification": "CAPABILITY_GAP_CORRECT_FAIL_CLOSED", "product_defect": "MINOR_UX (clarification wording)"
+    }
+  ],
+  "summary": {
+    "correct_fail_closed": 8,
+    "wrong_scene_served": 0,
+    "first_failing_layer": {"Local Parser": 7, "Planner / derived-relation capability": 1},
+    "terminal_detector": {"Source Gate": 4, "parser coverage": 1, "SLM grounding validator / SLM unresolved": 3},
+    "real_safety_defects": 0,
+    "minor_ux_defects": "clarification text 'nói rõ quan hệ hình học' for capability gaps (C10, S02, L06)",
+    "oracle_or_scope_discrepancies": 0,
+    "capability_backlog": ["symbolic-parameter goal 'Tính … theo a' for tetrahedra (S02, L06)", "cube face-area goal (C10)", "base-area goal of a named/anaphoric base (C07, R06)", "altitude named without its length ('đường cao là BE') (Q01b)", "derived ⊥ from two planes ⊥ base (P08)", "colloquial request lead with an inline side length (C05)"],
+    "fixed_in_this_run": "none of the 8 — each is a capability extension, outside /17 (no language campaign); the two parser defects fixed in this run are routing defects on cases that WERE served (via the SLM), see PARSER_SLM_ROUTING_AUDIT.json"
+  },
+  "RESIDUAL_FAILURES_CLASSIFIED": true
+}

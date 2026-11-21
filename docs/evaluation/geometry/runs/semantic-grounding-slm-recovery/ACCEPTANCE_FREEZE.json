@@ -1,0 +1,180 @@
+{
+  "schema": "axo-run-acceptance-freeze/1",
+  "run_id": "semantic-grounding-slm-recovery",
+  "baseline_ref": "4c1b94b61cdd8b1747059829a9d487b1749e1383",
+  "frozen_before_any_product_edit": true,
+  "active_set": "holdout-6",
+  "artifacts": {
+    "holdout6_manifest": {
+      "path": "holdout-6/ACCEPTANCE_MANIFEST.json",
+      "sha256": "f5423a44d64e34984bc3580e4c34c9d1f8529b6fd070d6d705fda2726235a0f2"
+    },
+    "slm_independent_3_manifest": {
+      "path": "holdout-6/SLM_INDEPENDENT_MANIFEST.json",
+      "sha256": "eca2456dfab2f245d3b54506d3686b9d7834bd0e21e0bda1ba62fdbb7e393f5d"
+    },
+    "acceptance_criteria": {
+      "path": "holdout-6/ACCEPTANCE_CRITERIA.json",
+      "sha256": "d5c33952a24dbcebee23e582d1b3063c6be4b2b05856604381216cebdc2e41d9"
+    },
+    "baseline_freeze": {
+      "path": "holdout-6/ACCEPTANCE_FREEZE.json",
+      "sha256": "e578396bded72a6b436bf85ae1b97526624eb2abf8a61c39515fd9462dffe667"
+    },
+    "gold_generator": {
+      "path": "holdout-6/build_holdout.py",
+      "sha256": "2f69ff05f7a301100b315ab15a8641d130e1de1e04db4b4102bd4656425b5b6e"
+    },
+    "candidate_freeze": {
+      "path": "holdout-6/CANDIDATE_FREEZE.json",
+      "sha256": "e4ee31986cc5ea595e07cbdc337232634a24db250258b84ee6be41befb1ba48b"
+    }
+  },
+  "historical_candidate_156_holdout4": {
+    "note": "Candidate 156 (c3e944d7fb7a86380738948d81ac6fdfdb514ed6 / HEAD ee013b8fc) completed single-shot Holdout-4 and SLM-Independent-1 cleanly (64/72 system, 22/30 SLM fallback, 25/30 SLM independent, 0 safety errors), then FAILED Full T3 on 4 backend pytest cases caused by registry.py edits in ae1710c6a & 665764ca3. Per §17/§23, scores were NOT transferred to Candidate 157; all Candidate 156 receipts are preserved in holdout-4/CANDIDATE_156_*.json.",
+    "baseline_ref": "613adbd4340e34c3a326f3e445303d85cb48bf2d",
+    "artifacts": {
+      "holdout4_manifest": {
+        "path": "holdout-4/ACCEPTANCE_MANIFEST.json",
+        "sha256": "0952949107266c3ca018ba69b164b8bd0a1dbebd0944be8fa4ff3eb08c5859cd"
+      },
+      "slm_independent_manifest": {
+        "path": "holdout-4/SLM_INDEPENDENT_MANIFEST.json",
+        "sha256": "34dfcfd022cc441763ae7dd585aa59af943582256d951d0f8121674950815446"
+      },
+      "acceptance_criteria": {
+        "path": "holdout-4/ACCEPTANCE_CRITERIA.json",
+        "sha256": "11aec8906ab1b28f4e2a53a6a2c9f7d8e146ba4fed932cce130703de810a4b71"
+      },
+      "baseline_freeze": {
+        "path": "holdout-4/ACCEPTANCE_FREEZE.json",
+        "sha256": "cccecca1417f47dedfcb980841d8ac2b75665b4ab92388e88ddca570e51ecfe2"
+      },
+      "gold_generator": {
+        "path": "holdout-4/build_holdout.py",
+        "sha256": "ffc0ca0e4c2702c3a85a650f9902e4fa3902a19908a3789800467e80aeab1e91"
+      },
+      "candidate_freeze": {
+        "path": "holdout-4/CANDIDATE_FREEZE.json",
+        "sha256": "1f7cd1fd01788a1ff5c21bfe259e8bb230b9c35fb1d343356b45e957c18eb410"
+      }
+    },
+    "candidate_code": {
+      "head": "280cce79b52b5ba0d06bd73d2a2addc0bfe25889",
+      "branch": "feat/semantic-grounding-slm-recovery",
+      "candidate_commit": "c3e944d7fb7a86380738948d81ac6fdfdb514ed6",
+      "product_commit_sha": "c3e944d7fb7a86380738948d81ac6fdfdb514ed6",
+      "measured_system_tree_hash": "f3f04425378304b34e68a07d43df5d4f5a85c2a04ef90a08b6456c4403dafb4b",
+      "cache_version": "156",
+      "route_d_cache_policy": "156:route-d",
+      "semantic_environment_hash": "f9df4bf0c8bd458a278d2692567fa3e096340ae37ff5493730dff4067c0f5e19"
+    }
+  },
+  "historical_candidate_157_holdout5_oracle_bug": {
+    "note": "Holdout-5 on Candidate 157 (4c1b94b61 / detached d27b78de5) achieved 63/72 valid completed, 24/30 SLM fallback, 24/30 SLM independent-2, 26/26 and 10/10 negative safe, 10/10 UI scenarios, 0 product defects, but holdout-5/build_holdout.py mistakenly called tet() at L[0] instead of tri_pyr_rect() at L[1] for P04/P05/S07 (causing 3 manifest-side MATHEMATICALLY_INVALID flags). Retired untouched per §17 without post-hoc oracle edits.",
+    "baseline_ref": "3c77b35eec388a67518fd528fc56f6c53ef5948c",
+    "artifacts": {
+      "holdout5_manifest": {
+        "path": "holdout-5/ACCEPTANCE_MANIFEST.json",
+        "sha256": "b3c43bcf3e43dc3733dbff40ecf18b8856d17a5e76fcc5f8abb3c8f23d3527df"
+      },
+      "slm_independent_2_manifest": {
+        "path": "holdout-5/SLM_INDEPENDENT_MANIFEST.json",
+        "sha256": "c96fc57157f0a61e96cc47864e62ecc38ada519ab4647c381f7bc69fd4da5bec"
+      },
+      "acceptance_criteria": {
+        "path": "holdout-5/ACCEPTANCE_CRITERIA.json",
+        "sha256": "1ead53d66b9e22114ee5ca7d968e08e93c297181d6177d79119b48d971951f78"
+      },
+      "baseline_freeze": {
+        "path": "holdout-5/ACCEPTANCE_FREEZE.json",
+        "sha256": "82cb035dcaedb43e42bafbb485b0e7a0e93ea05329170cced0a32e21c4613e7d"
+      },
+      "gold_generator": {
+        "path": "holdout-5/build_holdout.py",
+        "sha256": "ec7dfc8a26bf88c0ce43ffdd93700b4dd017f7ee16f11aed39800d0a65881340"
+      },
+      "candidate_freeze": {
+        "path": "holdout-5/CANDIDATE_FREEZE.json",
+        "sha256": "51430daafe3078cd2c7adbf0757889a7fdafc7aa85405e129409fa80c9c02a52"
+      },
+      "oracle_bug_disclosure_receipt": {
+        "path": "holdout-5/CANDIDATE_157_HOLDOUT5_ORACLE_BUG_RECEIPT.json",
+        "sha256": "ebb917ce7a28a05081712f4b82b3cd417bf56e071f99be0f7ff1510943dbcd6a"
+      }
+    }
+  },
+  "harness": {
+    "version": "axo-live-acceptance-harness/1",
+    "scene_oracle_sha256": "a73bc2cf7d26795862fe3fadf2d04d6a0ca803ad92a4acac50ba0e50f9bb40cb",
+    "aggregate_sha256": "35827769d78a8121b1daf6d127eddf13507e957161fc13ad1f35de7f3195340c",
+    "freeze_acceptance_sha256": "42d35544fef85ae04f7172b7589a06ea3df2df5101f73b107728f6d1f5446613",
+    "live_browser_acceptance_sha256": "43c3de17100dbbd79d57fb001b5beacb387e658a9fdcbd4ae5f52323f40135fc",
+    "ui_scenarios_sha256": "55e4f6a4cf894b211aee64bfb2b7aaed867798860ce7aa905a8ccc877eb6bf4d"
+  },
+  "exposure": {
+    "external_independence": "NOT_MEASURED",
+    "normalized_prior_strings": 29423,
+    "training_corpus_included": true,
+    "holdout6_containment_matches": 0,
+    "slm_independent3_containment_matches": 0,
+    "cross_set_overlap_matches": 0,
+    "single_shot": true,
+    "author_also_fixes_product": true
+  },
+  "baseline_code": {
+    "head": "4c1b94b61cdd8b1747059829a9d487b1749e1383",
+    "branch": "feat/semantic-grounding-slm-recovery",
+    "candidate_commit": "4c1b94b61cdd8b1747059829a9d487b1749e1383",
+    "product_commit_sha": "4c1b94b61cdd8b1747059829a9d487b1749e1383",
+    "measured_system_tree_hash": "3152f3829fbe4744baa298b0ee147648cd1cb666103baabcb1497cb9ffb525d5",
+    "cache_version": "157",
+    "route_d_cache_policy": "157:route-d",
+    "semantic_environment_hash": "f9df4bf0c8bd458a278d2692567fa3e096340ae37ff5493730dff4067c0f5e19",
+    "parser_version": "local-geometry-parser/3",
+    "slm_extractor_version": "local-slm-extractor/6",
+    "slm_validator_version": "slm-grounding-validator/6"
+  },
+  "model": {
+    "key": "qwen3-0.6b-axo-v9-q4_k_m",
+    "sha256": "73f1484b08b97ed2a1f44e32bcf6610210c7fda51567c4cd0a03d98dffc6cc35",
+    "llama_cpp_release": "b12470"
+  },
+  "baseline_counts": {
+    "valid_total": 72,
+    "in_scope": 72,
+    "parser_complete": 41,
+    "slm_required": 31,
+    "preregistered_slm_targets": 12,
+    "preregistered_slm_targets_in_slm_required": 12,
+    "separate": 0,
+    "negative": 26
+  },
+  "slm_independent_counts": {
+    "positive": 30,
+    "negative": 10
+  },
+  "candidate_code": {
+    "head": "f3b23f773c1d9fb8c1121f06a250134bf409b523",
+    "branch": "feat/semantic-grounding-slm-recovery",
+    "candidate_commit": "4c1b94b61cdd8b1747059829a9d487b1749e1383",
+    "product_commit_sha": "4c1b94b61cdd8b1747059829a9d487b1749e1383",
+    "measured_system_tree_hash": "3152f3829fbe4744baa298b0ee147648cd1cb666103baabcb1497cb9ffb525d5",
+    "cache_version": "157",
+    "route_d_cache_policy": "157:route-d",
+    "semantic_environment_hash": "f9df4bf0c8bd458a278d2692567fa3e096340ae37ff5493730dff4067c0f5e19",
+    "parser_version": "local-geometry-parser/3",
+    "slm_extractor_version": "local-slm-extractor/6",
+    "slm_validator_version": "slm-grounding-validator/6"
+  },
+  "candidate_counts": {
+    "valid_total": 72,
+    "in_scope": 72,
+    "parser_complete": 41,
+    "slm_required": 31,
+    "preregistered_slm_targets": 12,
+    "preregistered_slm_targets_in_slm_required": 12,
+    "separate": 0,
+    "negative": 26
+  }
+}

@@ -1,0 +1,253 @@
+{
+  "run_id": "verified-section-intersection-dihedral-local",
+  "generated_at_utc": "2026-11-13T11:35:59.957987+00:00",
+  "head": "a74aa3325b61337e301e8df7b728a66f86fdc266",
+  "cases": 24,
+  "as_expected": 24,
+  "unexpected": [],
+  "unit_tests": [
+    "backend/tests/geometry/test_section_intersection_local.py"
+  ],
+  "rows": [
+    {
+      "category": "positive_section_xac_dinh",
+      "text": "Cho hình chóp S.ABCD có đáy ABCD là hình vuông cạnh a, SA vuông góc với mặt phẳng đáy và SA = a. Gọi M là trung điểm của SC. Xác định thiết diện của hình chóp cắt bởi mặt phẳng (ABM).",
+      "expected": "SERVED",
+      "got": "SERVED",
+      "ok": true,
+      "reason": null,
+      "sections": 1,
+      "intersection_lines": 0
+    },
+    {
+      "category": "positive_section_dung",
+      "text": "Cho hình chóp S.ABCD có đáy ABCD là hình vuông cạnh a, SA vuông góc với mặt phẳng đáy và SA = a. Gọi M là trung điểm của SC. Dựng thiết diện của hình chóp cắt bởi mặt phẳng (ABM).",
+      "expected": "SERVED",
+      "got": "SERVED",
+      "ok": true,
+      "reason": null,
+      "sections": 1,
+      "intersection_lines": 0
+    },
+    {
+      "category": "positive_section_tim_tao_boi",
+      "text": "Cho hình chóp S.ABCD có đáy ABCD là hình vuông cạnh a, SA vuông góc với mặt phẳng đáy và SA = a. Gọi M là trung điểm của SC. Tìm thiết diện của hình chóp tạo bởi mặt phẳng (ABM).",
+      "expected": "SERVED",
+      "got": "SERVED",
+      "ok": true,
+      "reason": null,
+      "sections": 1,
+      "intersection_lines": 0
+    },
+    {
+      "category": "positive_section_named_solid",
+      "text": "Cho hình chóp S.ABCD có đáy ABCD là hình vuông cạnh a, SA vuông góc với mặt phẳng đáy và SA = a. Gọi M là trung điểm của SC. Xác định thiết diện của hình chóp S.ABCD cắt bởi mặt phẳng (ABM).",
+      "expected": "SERVED",
+      "got": "SERVED",
+      "ok": true,
+      "reason": null,
+      "sections": 1,
+      "intersection_lines": 0
+    },
+    {
+      "category": "positive_section_no_word_mat_phang",
+      "text": "Cho hình chóp S.ABCD có đáy ABCD là hình vuông cạnh a, SA vuông góc với mặt phẳng đáy và SA = a. Gọi M là trung điểm của SC. Xác định thiết diện của hình chóp cắt bởi (ABM).",
+      "expected": "SERVED",
+      "got": "SERVED",
+      "ok": true,
+      "reason": null,
+      "sections": 1,
+      "intersection_lines": 0
+    },
+    {
+      "category": "positive_section_area",
+      "text": "Cho hình chóp S.ABCD có đáy ABCD là hình vuông cạnh a, SA vuông góc với mặt phẳng đáy và SA = a. Gọi M là trung điểm của SC. Tính diện tích thiết diện của hình chóp cắt bởi mặt phẳng (ABM).",
+      "expected": "SERVED",
+      "got": "SERVED",
+      "ok": true,
+      "reason": null,
+      "sections": 1,
+      "intersection_lines": 0
+    },
+    {
+      "category": "positive_section_prime_unicode",
+      "text": "Cho hình lập phương ABCD.A′B′C′D′ có cạnh bằng a. Xác định thiết diện của hình lập phương cắt bởi mặt phẳng (A′BD).",
+      "expected": "SERVED",
+      "got": "SERVED",
+      "ok": true,
+      "reason": null,
+      "sections": 1,
+      "intersection_lines": 0
+    },
+    {
+      "category": "positive_intersection_tim",
+      "text": "Cho hình chóp S.ABCD có đáy ABCD là hình vuông cạnh a, SA vuông góc với mặt phẳng đáy và SA = a. Tìm giao tuyến của hai mặt phẳng (SAC) và (SBD).",
+      "expected": "SERVED",
+      "got": "SERVED",
+      "ok": true,
+      "reason": null,
+      "sections": 0,
+      "intersection_lines": 1
+    },
+    {
+      "category": "positive_intersection_xac_dinh",
+      "text": "Cho hình chóp S.ABCD có đáy ABCD là hình vuông cạnh a, SA vuông góc với mặt phẳng đáy và SA = a. Xác định giao tuyến của hai mặt phẳng (SAB) và (SCD).",
+      "expected": "SERVED",
+      "got": "SERVED",
+      "ok": true,
+      "reason": null,
+      "sections": 0,
+      "intersection_lines": 1
+    },
+    {
+      "category": "positive_intersection_dung_mp",
+      "text": "Cho hình chóp S.ABCD có đáy ABCD là hình vuông cạnh a, SA vuông góc với mặt phẳng đáy và SA = a. Dựng giao tuyến của mặt phẳng (SAD) và mặt phẳng (SBC).",
+      "expected": "SERVED",
+      "got": "SERVED",
+      "ok": true,
+      "reason": null,
+      "sections": 0,
+      "intersection_lines": 1
+    },
+    {
+      "category": "positive_intersection_named_line",
+      "text": "Cho hình chóp S.ABCD có đáy ABCD là hình vuông cạnh a, SA vuông góc với mặt phẳng đáy và SA = a. Gọi d là giao tuyến của (SAB) và (SCD).",
+      "expected": "SERVED",
+      "got": "SERVED",
+      "ok": true,
+      "reason": null,
+      "sections": 0,
+      "intersection_lines": 1
+    },
+    {
+      "category": "reordered_clauses",
+      "text": "Cho hình chóp S.ABCD có SA vuông góc với mặt phẳng đáy, đáy ABCD là hình vuông cạnh a và SA = a. Gọi M là trung điểm của SC. Dựng thiết diện của hình chóp cắt bởi mặt phẳng (ABM).",
+      "expected": "SERVED",
+      "got": "SERVED",
+      "ok": true,
+      "reason": null,
+      "sections": 1,
+      "intersection_lines": 0
+    },
+    {
+      "category": "renamed_vertices",
+      "text": "Cho hình chóp T.MNPQ có đáy MNPQ là hình vuông cạnh a, TM vuông góc với mặt phẳng đáy và TM = a. Tìm giao tuyến của hai mặt phẳng (TMN) và (TPQ).",
+      "expected": "SERVED",
+      "got": "SERVED",
+      "ok": true,
+      "reason": null,
+      "sections": 0,
+      "intersection_lines": 1
+    },
+    {
+      "category": "negative_question_form_goal_as_premise",
+      "text": "Cho hình chóp S.ABCD có đáy ABCD là hình vuông cạnh a, SA vuông góc với mặt phẳng đáy và SA = a. Gọi M là trung điểm của SC. Mặt phẳng (ABM) cắt hình chóp theo thiết diện là hình gì?",
+      "expected": "NOT_SERVED",
+      "got": "NOT_SERVED",
+      "ok": true,
+      "reason": "LIVE_AI_DISABLED",
+      "sections": 0,
+      "intersection_lines": 0
+    },
+    {
+      "category": "negative_missing_parentheses",
+      "text": "Cho hình chóp S.ABCD có đáy ABCD là hình vuông cạnh a, SA vuông góc với mặt phẳng đáy và SA = a. Gọi M là trung điểm của SC. Xác định thiết diện của hình chóp cắt bởi mặt phẳng ABM.",
+      "expected": "NOT_SERVED",
+      "got": "NOT_SERVED",
+      "ok": true,
+      "reason": "LIVE_AI_DISABLED",
+      "sections": 0,
+      "intersection_lines": 0
+    },
+    {
+      "category": "negative_unknown_point",
+      "text": "Cho hình chóp S.ABCD có đáy ABCD là hình vuông cạnh a, SA vuông góc với mặt phẳng đáy và SA = a. Xác định thiết diện của hình chóp cắt bởi mặt phẳng (XYZ).",
+      "expected": "NOT_SERVED",
+      "got": "NOT_SERVED",
+      "ok": true,
+      "reason": "UNDERDETERMINED_POINT",
+      "sections": 0,
+      "intersection_lines": 0
+    },
+    {
+      "category": "negative_collinear_points",
+      "text": "Cho hình chóp S.ABCD có đáy ABCD là hình vuông cạnh a, SA vuông góc với mặt phẳng đáy và SA = a. Gọi M là trung điểm của AC. Xác định thiết diện của hình chóp cắt bởi mặt phẳng (AMC).",
+      "expected": "NOT_SERVED",
+      "got": "NOT_SERVED",
+      "ok": true,
+      "reason": "COLLINEAR_POINTS",
+      "sections": 0,
+      "intersection_lines": 0
+    },
+    {
+      "category": "negative_other_solid",
+      "text": "Cho hình chóp S.ABCD có đáy ABCD là hình vuông cạnh a, SA vuông góc với mặt phẳng đáy và SA = a. Xác định thiết diện của hình chóp T.ABCD cắt bởi mặt phẳng (SAB).",
+      "expected": "NOT_SERVED",
+      "got": "NOT_SERVED",
+      "ok": true,
+      "reason": "LIVE_AI_DISABLED",
+      "sections": 0,
+      "intersection_lines": 0
+    },
+    {
+      "category": "negative_same_plane_twice",
+      "text": "Cho hình chóp S.ABCD có đáy ABCD là hình vuông cạnh a, SA vuông góc với mặt phẳng đáy và SA = a. Xác định giao tuyến của hai mặt phẳng (SAB) và (SBA).",
+      "expected": "NOT_SERVED",
+      "got": "NOT_SERVED",
+      "ok": true,
+      "reason": "LIVE_AI_DISABLED",
+      "sections": 0,
+      "intersection_lines": 0
+    },
+    {
+      "category": "negative_parallel_planes",
+      "text": "Cho hình lập phương ABCD.A'B'C'D' có cạnh bằng a. Xác định giao tuyến của hai mặt phẳng (ABC) và (A'B'C').",
+      "expected": "NOT_SERVED",
+      "got": "NOT_SERVED",
+      "ok": true,
+      "reason": "PARALLEL_PLANES",
+      "sections": 0,
+      "intersection_lines": 0
+    },
+    {
+      "category": "ambiguous_unnamed_plane",
+      "text": "Cho hình chóp S.ABCD có đáy ABCD là hình vuông cạnh a, SA vuông góc với mặt phẳng đáy và SA = a. Gọi M là trung điểm của SC. Xác định thiết diện của hình chóp cắt bởi mặt phẳng đi qua M và song song với đáy.",
+      "expected": "NOT_SERVED",
+      "got": "NOT_SERVED",
+      "ok": true,
+      "reason": "LIVE_AI_DISABLED",
+      "sections": 0,
+      "intersection_lines": 0
+    },
+    {
+      "category": "contradictory_premises",
+      "text": "Cho hình chóp S.ABCD có đáy ABCD là hình vuông cạnh a, SA vuông góc với mặt phẳng đáy, SA = a và SA = 2a. Gọi M là trung điểm của SC. Dựng thiết diện của hình chóp cắt bởi mặt phẳng (ABM).",
+      "expected": "NOT_SERVED",
+      "got": "NOT_SERVED",
+      "ok": true,
+      "reason": "INCONSISTENT_FACTS",
+      "sections": 0,
+      "intersection_lines": 0
+    },
+    {
+      "category": "diagram_dependent",
+      "text": "Cho hình chóp S.ABCD như hình vẽ. Gọi M là trung điểm của SC. Dựng thiết diện của hình chóp cắt bởi mặt phẳng (ABM).",
+      "expected": "NOT_SERVED",
+      "got": "NOT_SERVED",
+      "ok": true,
+      "reason": "LIVE_AI_DISABLED",
+      "sections": 0,
+      "intersection_lines": 0
+    },
+    {
+      "category": "multiple_goals_section_and_intersection",
+      "text": "Cho hình chóp S.ABCD có đáy ABCD là hình vuông cạnh a, SA vuông góc với mặt phẳng đáy và SA = a. Gọi M là trung điểm của SC. Xác định giao tuyến của hai mặt phẳng (SAB) và (SCD). Dựng thiết diện của hình chóp cắt bởi mặt phẳng (ABM).",
+      "expected": "SERVED",
+      "got": "SERVED",
+      "ok": true,
+      "reason": null,
+      "sections": 1,
+      "intersection_lines": 1
+    }
+  ]
+}

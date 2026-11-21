@@ -1,0 +1,187 @@
+{
+  "run_id": "compositional-semantics-simulation-goals",
+  "generated_at_utc": "2026-11-14T03:09:44.904460+00:00",
+  "product_commit": "379d33969ef0cb0e418d979ab211a00799f44834",
+  "measured_system": "b652e635d5497dc36bf6d55ff4a34c20a16302d01c154b59b039efd65170921e",
+  "environment": {
+    "ALLOW_LIVE_AI": "0",
+    "HYBRID_ROUTE_MODE": "local-first",
+    "live_ai_calls": 0
+  },
+  "head": "54268761eacadaca07d0d8cd2dea0d07c39a5d62",
+  "command": "python docs/evaluation/geometry/runs/compositional-semantics-simulation-goals/tools/semantic_compare.py <archive of 1a9ee8b0c>/backend <out>",
+  "dataset_partition": "DEVELOPMENT (agent-written corpus of this run, tools/compositional_dev_corpus.py)",
+  "oracle_status": "AGENT_DIAGNOSTIC: expectations written from geometry and the documented scope before measurement",
+  "items": 8,
+  "pass": 7,
+  "rows": [
+    {
+      "case_id": "COMP:mc_section_one_sentence",
+      "group": "multi_clause",
+      "text_sha256": "c7c13f4c2acff6e371a06552963a6b8958110dad60626532118f291a18fa3b6b",
+      "expected": "SERVE",
+      "goal": "section",
+      "numeric": null,
+      "before": {
+        "status": "REFUSED",
+        "code": "LIVE_AI_DISABLED",
+        "root_cause": "SOURCE_PROVENANCE_MISSING"
+      },
+      "after": {
+        "status": "SERVED",
+        "code": null,
+        "root_cause": null,
+        "source_goal_completion": null
+      },
+      "verdict": "PASS"
+    },
+    {
+      "case_id": "COMP:mc_section_split",
+      "group": "multi_clause",
+      "text_sha256": "337fea1ecaca934ea75f6162b931fb55ea13ff894e3be660d3edda4706dfa7c9",
+      "expected": "SERVE",
+      "goal": "section",
+      "numeric": null,
+      "before": {
+        "status": "SERVED",
+        "code": null,
+        "root_cause": null
+      },
+      "after": {
+        "status": "SERVED",
+        "code": null,
+        "root_cause": null,
+        "source_goal_completion": null
+      },
+      "verdict": "PASS"
+    },
+    {
+      "case_id": "COMP:mc_extra_unread",
+      "group": "silent_loss_negative",
+      "text_sha256": "12178a2b77d3487d0b009360e171e97c69dfa2474f8bf9edf1f981cf03aee761",
+      "expected": "REFUSE",
+      "goal": null,
+      "numeric": null,
+      "before": {
+        "status": "REFUSED",
+        "code": "LIVE_AI_DISABLED",
+        "root_cause": "SOURCE_PROVENANCE_MISSING"
+      },
+      "after": {
+        "status": "REFUSED",
+        "code": "LIVE_AI_DISABLED",
+        "root_cause": "FREE_POINT_UNDERDETERMINED",
+        "source_goal_completion": null
+      },
+      "verdict": "PASS"
+    },
+    {
+      "case_id": "COMP:mc_extra_unread2",
+      "group": "silent_loss_negative",
+      "text_sha256": "295f23806f356a5f8fe81f87111c7b76c6dc9f4512c9f8c58ccd5418e8bc5de3",
+      "expected": "REFUSE",
+      "goal": null,
+      "numeric": null,
+      "before": {
+        "status": "REFUSED",
+        "code": "LIVE_AI_DISABLED",
+        "root_cause": "SOURCE_PROVENANCE_MISSING"
+      },
+      "after": {
+        "status": "REFUSED",
+        "code": "LIVE_AI_DISABLED",
+        "root_cause": "INCOMPLETE_FACT_EXTRACTION",
+        "source_goal_completion": null
+      },
+      "verdict": "PASS"
+    },
+    {
+      "case_id": "COMP:mc_distance_extra_unread",
+      "group": "silent_loss_negative",
+      "text_sha256": "47a0cba79311d4d71ac35efaa09299ec6d4a8a06bc65cf863e0298a565c2cdb7",
+      "expected": "REFUSE",
+      "goal": null,
+      "numeric": null,
+      "before": {
+        "status": "REFUSED",
+        "code": "LIVE_AI_DISABLED",
+        "root_cause": "SOURCE_PROVENANCE_MISSING"
+      },
+      "after": {
+        "status": "REFUSED",
+        "code": "LIVE_AI_DISABLED",
+        "root_cause": "INCOMPLETE_FACT_EXTRACTION",
+        "source_goal_completion": null
+      },
+      "verdict": "PASS"
+    },
+    {
+      "case_id": "COMP:mc_distance",
+      "group": "multi_clause",
+      "text_sha256": "70a3c93c7f458b67c85e90f5c2150cc41c2a78cba0c701634ddc9fb1776ed65c",
+      "expected": "SERVE",
+      "goal": "distance",
+      "numeric": null,
+      "before": {
+        "status": "SERVED",
+        "code": null,
+        "root_cause": null
+      },
+      "after": {
+        "status": "SERVED",
+        "code": null,
+        "root_cause": null,
+        "source_goal_completion": null
+      },
+      "verdict": "PASS"
+    },
+    {
+      "case_id": "COMP:mc_decimal_value",
+      "group": "multi_clause",
+      "text_sha256": "35c23328f08b62ecd555be3202aca2edffda19eab2fb6e27a77997854bf4158c",
+      "expected": "SERVE",
+      "goal": "distance",
+      "numeric": null,
+      "before": {
+        "status": "REFUSED",
+        "code": "LIVE_AI_DISABLED",
+        "root_cause": "UNRECOGNIZED_GEOMETRIC_ENTITY"
+      },
+      "after": {
+        "status": "REFUSED",
+        "code": "LIVE_AI_DISABLED",
+        "root_cause": "UNRECOGNIZED_GEOMETRIC_ENTITY",
+        "source_goal_completion": null
+      },
+      "verdict": "FAIL"
+    },
+    {
+      "case_id": "COMP:mc_label_list",
+      "group": "multi_clause",
+      "text_sha256": "0f9d560423dd79e17f9ee8e8ff3a403c450159727f38e8d0960bcec7274e8874",
+      "expected": "SERVE",
+      "goal": "distance",
+      "numeric": null,
+      "before": {
+        "status": "SERVED",
+        "code": null,
+        "root_cause": null
+      },
+      "after": {
+        "status": "SERVED",
+        "code": null,
+        "root_cause": null,
+        "source_goal_completion": null
+      },
+      "verdict": "PASS"
+    }
+  ],
+  "pytest": "backend/tests/geometry/test_compositional_semantics_goals.py (comma-joined parts, label lists, decimals, brackets)",
+  "silent_parser_losses_now_detected": [
+    "COMP:mc_extra_unread",
+    "COMP:mc_extra_unread2",
+    "COMP:mc_distance_extra_unread",
+    "COMP:dp_projection_unnamed_image",
+    "REAL27:vmmu_r460"
+  ]
+}

@@ -1,0 +1,281 @@
+{
+  "run_id": "verified-section-intersection-dihedral-local",
+  "generated_at_utc": "2026-11-13T11:28:15.303324+00:00",
+  "head": "a74aa3325b61337e301e8df7b728a66f86fdc266",
+  "oracle": "AGENT_DIAGNOSTIC: exact Fractions + envelope Gram G written here, independent of the construction code",
+  "probe_class": "SYNTHETIC_DEVELOPMENT_PROBES (agent-written)",
+  "before_ref": "ffc62f6fe (run start)",
+  "mutation_summary": {
+    "flip_angle_ray": {
+      "applied": 12,
+      "caught": 12
+    },
+    "section_vertex_off_plane": {
+      "applied": 9,
+      "caught": 9
+    },
+    "section_vertex_order_swapped": {
+      "applied": 9,
+      "caught": 8
+    },
+    "section_vertex_replaced_by_wrong_edge_point": {
+      "applied": 9,
+      "caught": 9
+    },
+    "intersection_direction_tilted": {
+      "applied": 5,
+      "caught": 5
+    },
+    "intersection_point_moved": {
+      "applied": 5,
+      "caught": 5
+    },
+    "altitude_wrong_foot": {
+      "applied": 4,
+      "caught": 4
+    }
+  },
+  "rows": [
+    {
+      "probe": "altitude_face_perp_equilateral",
+      "goal": "altitude",
+      "text": "Cho hình chóp S.ABCD có đáy ABCD là hình vuông cạnh a, tam giác SAB đều và nằm trong mặt phẳng vuông góc với mặt phẳng đáy. Tính thể tích khối chóp S.ABCD.",
+      "before": {
+        "status": "SERVED",
+        "answers": {
+          "q1": "a³√3/6"
+        },
+        "reason": null,
+        "checks": [],
+        "failed_checks": []
+      },
+      "after": {
+        "status": "SERVED",
+        "answers": {
+          "q1": "a³√3/6"
+        },
+        "reason": null,
+        "checks": [
+          {
+            "check": "altitude_foot_on_base_plane",
+            "ok": true
+          },
+          {
+            "check": "altitude_perpendicular_to_base_in_G",
+            "ok": true
+          },
+          {
+            "check": "altitude_apex_is_the_solid_apex",
+            "ok": true
+          },
+          {
+            "check": "altitude_foot_on_face_base_intersection_line",
+            "ok": true
+          },
+          {
+            "check": "altitude_face_perpendicular_to_base_in_G",
+            "ok": true
+          }
+        ],
+        "failed_checks": [],
+        "objects": {
+          "sections": [],
+          "intersection_lines": 0,
+          "altitude": true,
+          "angle_relation": null
+        },
+        "mutations_caught": {
+          "altitude_wrong_foot": true
+        }
+      }
+    },
+    {
+      "probe": "altitude_face_perp_symbol",
+      "goal": "altitude",
+      "text": "Cho hình chóp S.ABCD có đáy ABCD là hình vuông cạnh a. Mặt bên SAB là tam giác đều và (SAB) ⊥ (ABCD). Tính thể tích khối chóp S.ABCD.",
+      "before": {
+        "status": "SERVED",
+        "answers": {
+          "q1": "a³√3/6"
+        },
+        "reason": null,
+        "checks": [],
+        "failed_checks": []
+      },
+      "after": {
+        "status": "SERVED",
+        "answers": {
+          "q1": "a³√3/6"
+        },
+        "reason": null,
+        "checks": [
+          {
+            "check": "altitude_foot_on_base_plane",
+            "ok": true
+          },
+          {
+            "check": "altitude_perpendicular_to_base_in_G",
+            "ok": true
+          },
+          {
+            "check": "altitude_apex_is_the_solid_apex",
+            "ok": true
+          },
+          {
+            "check": "altitude_foot_on_face_base_intersection_line",
+            "ok": true
+          },
+          {
+            "check": "altitude_face_perpendicular_to_base_in_G",
+            "ok": true
+          }
+        ],
+        "failed_checks": [],
+        "objects": {
+          "sections": [],
+          "intersection_lines": 0,
+          "altitude": true,
+          "angle_relation": null
+        },
+        "mutations_caught": {
+          "altitude_wrong_foot": true
+        }
+      }
+    },
+    {
+      "probe": "altitude_face_perp_triangle_base",
+      "goal": "altitude",
+      "text": "Cho hình chóp S.ABC có đáy ABC là tam giác đều cạnh a, tam giác SBC đều và nằm trong mặt phẳng vuông góc với mặt phẳng đáy. Tính thể tích khối chóp S.ABC.",
+      "before": {
+        "status": "SERVED",
+        "answers": {
+          "q1": "a³/8"
+        },
+        "reason": null,
+        "checks": [],
+        "failed_checks": []
+      },
+      "after": {
+        "status": "SERVED",
+        "answers": {
+          "q1": "a³/8"
+        },
+        "reason": null,
+        "checks": [
+          {
+            "check": "altitude_foot_on_base_plane",
+            "ok": true
+          },
+          {
+            "check": "altitude_perpendicular_to_base_in_G",
+            "ok": true
+          },
+          {
+            "check": "altitude_apex_is_the_solid_apex",
+            "ok": true
+          },
+          {
+            "check": "altitude_foot_on_face_base_intersection_line",
+            "ok": true
+          },
+          {
+            "check": "altitude_face_perpendicular_to_base_in_G",
+            "ok": true
+          }
+        ],
+        "failed_checks": [],
+        "objects": {
+          "sections": [],
+          "intersection_lines": 0,
+          "altitude": true,
+          "angle_relation": null
+        },
+        "mutations_caught": {
+          "altitude_wrong_foot": true
+        }
+      }
+    },
+    {
+      "probe": "altitude_regular_pyramid",
+      "goal": "altitude",
+      "text": "Cho hình chóp tứ giác đều S.ABCD có cạnh đáy bằng a, cạnh bên bằng 2a. Tính thể tích khối chóp S.ABCD.",
+      "before": {
+        "status": "SERVED",
+        "answers": {
+          "q1": "a³√14/6"
+        },
+        "reason": null,
+        "checks": [],
+        "failed_checks": []
+      },
+      "after": {
+        "status": "SERVED",
+        "answers": {
+          "q1": "a³√14/6"
+        },
+        "reason": null,
+        "checks": [
+          {
+            "check": "altitude_foot_on_base_plane",
+            "ok": true
+          },
+          {
+            "check": "altitude_perpendicular_to_base_in_G",
+            "ok": true
+          },
+          {
+            "check": "altitude_apex_is_the_solid_apex",
+            "ok": true
+          }
+        ],
+        "failed_checks": [],
+        "objects": {
+          "sections": [],
+          "intersection_lines": 0,
+          "altitude": true,
+          "angle_relation": null
+        },
+        "mutations_caught": {
+          "altitude_wrong_foot": true
+        }
+      }
+    },
+    {
+      "probe": "altitude_already_drawn_SA",
+      "goal": "altitude",
+      "text": "Cho hình chóp S.ABCD có đáy ABCD là hình vuông cạnh a, SA vuông góc với mặt phẳng đáy và SA = a. Tính thể tích khối chóp S.ABCD.",
+      "before": {
+        "status": "SERVED",
+        "answers": {
+          "q1": "a³/3"
+        },
+        "reason": null,
+        "checks": [],
+        "failed_checks": []
+      },
+      "after": {
+        "status": "SERVED",
+        "answers": {
+          "q1": "a³/3"
+        },
+        "reason": null,
+        "checks": [],
+        "failed_checks": [],
+        "objects": {
+          "sections": [],
+          "intersection_lines": 0,
+          "altitude": false,
+          "angle_relation": null
+        },
+        "mutations_caught": {}
+      }
+    }
+  ],
+  "with_altitude_after": [
+    "altitude_face_perp_equilateral",
+    "altitude_face_perp_symbol",
+    "altitude_face_perp_triangle_base",
+    "altitude_regular_pyramid"
+  ],
+  "check_failures_after": 0
+}

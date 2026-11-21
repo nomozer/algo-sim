@@ -1,0 +1,29 @@
+{
+  "run_id": "proof-soundness-generalized-angle-invariance",
+  "generated_at_utc": "2026-11-14T12:35:21.414052+00:00",
+  "product_commit": "c54db0da0c792c2ba0399acc8e9df992d2d270c3",
+  "measured_system": "610b4ee1e3227bc44f0659aea5d0dfc7f7a827aff622605db2b9571fb980fb80",
+  "cache_version": "137",
+  "environment": {
+    "ALLOW_LIVE_AI": "0",
+    "HYBRID_ROUTE_MODE": "local-first",
+    "live_ai_calls": 0
+  },
+  "head": "94281be581617a67921f295474dbd8e698dade4b",
+  "bump": "136 → 137",
+  "why": "stricter verifier (goal / witness / value binding), adapter proof ↔ scene binding and changed served envelopes (certificate /2, new served goals) under an unchanged Route D key; 136 rows may carry /1 certificates",
+  "tests": [
+    "test_cache_proof_soundness_invalidation.py (adversarial /1 row under 136 ⇒ recomputed /2; control under 137 replays)",
+    "test_cache_target_invariance_invalidation.py",
+    "test_cache_semantic_guard_invalidation.py",
+    "test_cache_identity.py",
+    "test_current_state_identity.py"
+  ],
+  "pytest": {
+    "command": "python -m pytest -q tests/test_cache_proof_soundness_invalidation.py tests/test_cache_identity.py tests/test_current_state_identity.py",
+    "exit_code": 0,
+    "summary": "20 passed, 1 warning in 6.17s"
+  },
+  "pins_moved": 22,
+  "identity_lock": "regenerated (scripts/lock_cache_identity.py)"
+}

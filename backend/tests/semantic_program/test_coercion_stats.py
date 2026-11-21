@@ -14,7 +14,6 @@ from app.simulation.semantic_program.contract import (
     SemanticProgramSpec,
     canonical_condition,
     canonical_const_int,
-    canonical_container_name,
     canonical_spec_version,
 )
 
@@ -47,24 +46,6 @@ def test_spec_version_sai_phien_ban_KHONG_dem():
 def test_spec_version_bool_KHONG_dem():
     """`True` là subclass của `int` — chặn tường minh, và không tính là gộp."""
     canonical_spec_version(True)
-    assert CS.tong_coercion() == 0
-
-
-# ── container ──────────────────────────────────────────────────────────────
-def test_container_var_bi_gop_thi_dem_len():
-    assert canonical_container_name({"kind": "var", "name": "stack"}) == "stack"
-    assert CS.coercion_report()[CS.LOP_CONTAINER_REF] == 1
-
-
-def test_container_ten_tran_KHONG_dem():
-    assert canonical_container_name("stack") == "stack"
-    assert CS.tong_coercion() == 0
-
-
-def test_container_bieu_thuc_bi_tu_choi_KHONG_dem():
-    """Từ chối có dạy ≠ gộp thành công."""
-    with pytest.raises(ValueError):
-        canonical_container_name({"kind": "index", "container": "a", "index": 0})
     assert CS.tong_coercion() == 0
 
 
@@ -148,27 +129,21 @@ def test_bon_lop_khop_voi_so_bien_chuan_hoa_trong_contract():
 
 
 def test_dem_qua_ca_mot_chuong_trinh_that():
-    """Đường đi thật: cả BỐN lớp nổ trong MỘT lần dựng `SemanticProgramSpec`.
+    """Đường đi thật: các lớp nổ trong MỘT lần dựng `SemanticProgramSpec`.
 
-    Đây là ca dựng đúng chân dung lỗi mà SEALED `7e5df014…` phơi ra: một chương
-    trình viết đúng nghĩa nhưng sai cách viết ở bốn chỗ khác nhau. Trước khi có
-    bốn biên chuẩn hoá, chương trình này bị vứt sạch.
+    Một chương trình viết đúng nghĩa nhưng sai cách viết ở nhiều chỗ khác nhau. (/13: bỏ ngăn xếp và lớp
+    container — từ vựng ấy đã gỡ; ba lớp còn lại vẫn nổ trên cùng chương trình.)
     """
     spec = SemanticProgramSpec.model_validate({
         "spec_version": 1.0,                                    # ← lớp 1
-        "title": "Kiểm ngoặc",
+        "title": "Kiểm cờ",
         "memory_declarations": [
-            {"name": "stack", "type": "stack", "element_type": "str",
-             "initial_value": []},
             {"name": "hop_le", "type": "bool", "initial_value": True},
         ],
         "statements": [
             {"kind": "if",
              "condition": {"kind": "var", "name": "hop_le"},     # ← lớp 3
              "then_body": [
-                 {"kind": "push",
-                  "container": {"kind": "var", "name": "stack"},  # ← lớp 2
-                  "val": {"kind": "literal", "value": "("}},
                  {"kind": "for_range", "loop_var": "i",
                   "start": {"kind": "literal", "value": 0},
                   "end": {"kind": "literal", "value": 3},
@@ -177,23 +152,14 @@ def test_dem_qua_ca_mot_chuong_trinh_that():
              ],
              "else_body": []},
         ],
-        "visual_bindings": {},
     })
     assert spec.spec_version == "1.0"
     assert CS.coercion_report() == {
         CS.LOP_SPEC_VERSION: 1,
-        CS.LOP_CONTAINER_REF: 1,
         CS.LOP_CONDITION_BOOL: 1,
         CS.LOP_CONST_INT: 1,
-        # Lớp thứ NĂM (Phase 5A) — `0` là con số ĐÚNG ở đây, không phải chỗ
-        # trống cần lấp: chương trình Tin học này không có `construct_solid`,
-        # nên biên `faces` chưa từng chạy. So TOÀN BỘ dict thay vì so từng khoá
-        # là có chủ đích — thêm một lớp mà quên nghĩ xem nó có nổ trong ca này
-        # không thì test sẽ ĐỎ, và đó đúng là lúc phải dừng lại nghĩ.
+        # `0` là con số ĐÚNG: không có `construct_solid` (biên `faces`) và không có ô toán hạng hình học nào. So
+        # TOÀN BỘ dict là có chủ đích — thêm một lớp mà quên nghĩ xem nó có nổ ở đây thì test ĐỎ.
         CS.LOP_FACE_SYMBOL: 0,
-        # Lớp thứ SÁU (2026-09-01) — `0` cũng là con số ĐÚNG, cùng lý do: đây
-        # là chương trình Tin học, không có một ô toán hạng hình học nào để
-        # `canonical_geometry_name` gỡ bọc. Dòng này viết ra vì khối chú thích
-        # ngay trên bảo phải dừng lại nghĩ, và nghĩ xong thì câu trả lời là 0.
         CS.LOP_GEOMETRY_REF: 0,
     }

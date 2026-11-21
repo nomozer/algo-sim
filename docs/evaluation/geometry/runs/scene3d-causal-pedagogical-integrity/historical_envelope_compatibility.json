@@ -1,0 +1,30 @@
+{
+  "run_id": "scene3d-causal-pedagogical-integrity",
+  "generated_at_utc": "2026-11-14T15:39:13.820636+00:00",
+  "product_commit": "a2874d273959970faa501879f4f9dbfe20c93975",
+  "measured_system": "225f4bba5a8765ccd1c12507ce6dbd0bab25d69d02263148cf94752f921e2b56",
+  "cache_version": "138",
+  "dataset_partition": "DEVELOPMENT (agent-written corpus, exposed REAL27, exposed probes); never H-1 or locked W2/W3",
+  "environment": {
+    "ALLOW_LIVE_AI": "0",
+    "HYBRID_ROUTE_MODE": "local-first",
+    "live_ai_calls": 0
+  },
+  "head": "6da2795a493d6097add56294832f0d5a7ea1ef13",
+  "previous_run_receipts_checked": 101,
+  "previous_run_receipts_changed": [],
+  "fixture_bundles": {
+    "kept_unchanged": [
+      "proof-soundness-generalized-angle-invariance/fixtures-lineage-proof-soundness",
+      "scene3d-causal-pedagogical-integrity/fixtures-causal-pedagogical"
+    ],
+    "current": "scene3d-causal-pedagogical-integrity/fixtures-trace-method",
+    "supersession_logs": [
+      "logs/fixture_bundle_supersession.json",
+      "logs/fixture_bundle_supersession_trace.json"
+    ]
+  },
+  "contract_versions_changed": [],
+  "backward_compatibility": "additive fields only (trace_derivation, justification theorem, angle_construction on 90°); consumers that ignore them behave as before",
+  "verdict": "PASS"
+}

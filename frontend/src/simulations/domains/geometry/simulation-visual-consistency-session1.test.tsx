@@ -6,6 +6,7 @@ import {
   doanNhuongCanh,
   dongBoNetDayManHinh,
   lamMuotLechNhan,
+  nhanChuaToiCho,
   tinhViTriNhanDiem,
   updateCanonicalEdgeVisibility,
 } from "./scene3d-view";
@@ -458,6 +459,16 @@ describe("Session 1 (P2–P5) — Unified Geometry Visual System & Curved Solid 
     expect(buoc.length).toBeGreaterThan(3);                                                  // several frames, not one jump
     expect(buoc[0]).toBeLessThanOrEqual(20);
     expect(lamMuotLechNhan(dich, dich)).toEqual(dich);                                       // settled: stays exactly put
+
+    // 4d. /11 (U08): the on-demand render loop stays awake exactly while a label glides. One frame after a camera jump
+    //     (reset view) leaves the label mid-way — the next unrelated render used to move it 4–8 px.
+    expect(nhanChuaToiCho(lamMuotLechNhan({ dx: 12, dy: -30 }, dich), dich)).toBe(true);
+    let g = { dx: 12, dy: -30 }, khung = 0;
+    do { g = lamMuotLechNhan(g, dich); khung++; } while (nhanChuaToiCho(g, dich) && khung < 50);
+    expect(g).toEqual(dich);
+    expect(khung).toBeGreaterThan(3);
+    expect(khung).toBeLessThan(50);                                                          // terminates (snap < 0.5 px)
+    expect(nhanChuaToiCho(dich, dich)).toBe(false);
 
     // 5. Outward radial & right-angle-avoiding vertex label placement
     const placed = tinhViTriNhanDiem(

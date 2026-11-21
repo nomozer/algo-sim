@@ -1,0 +1,174 @@
+{
+ "schema": "axo-v11-v17-pointer/1",
+ "text": "Cho hình chóp S.ABC có đáy ABC là tam giác đều cạnh 2a, SB vuông góc với (ABC), SB = a. Hãy mô phỏng hình chóp.",
+ "browser": "playwright chromium",
+ "root_cause": "the measurement chip .geo3d-so-do (role=button, pointer-events:auto) sits at the canvas centre and receives pointerdown; OrbitControls listens on the canvas, so a drag starting on the chip never reached it",
+ "fix": "b15fd9e92 scene3d-view.tsx: a drag that starts on an overlay and moves >= 4 px is forwarded to the canvas (synthetic pointerdown at the start point + pointermove); a click without movement stays on the chip",
+ "traces": {
+  "baseline_pre_fix_dist": [
+   {
+    "where": "centre",
+    "delay_ms": 0,
+    "rotated": false,
+    "frame_pixel_diff": 0,
+    "labels_moved": 0,
+    "aria_pressed_after_click": null,
+    "element_under_start": "geo3d-so-do la-net-khuat"
+   },
+   {
+    "where": "centre",
+    "delay_ms": 500,
+    "rotated": false,
+    "frame_pixel_diff": 0,
+    "labels_moved": 0,
+    "aria_pressed_after_click": null,
+    "element_under_start": "geo3d-so-do la-net-khuat"
+   },
+   {
+    "where": "centre",
+    "delay_ms": 1500,
+    "rotated": false,
+    "frame_pixel_diff": 0,
+    "labels_moved": 0,
+    "aria_pressed_after_click": null,
+    "element_under_start": "geo3d-so-do la-net-khuat"
+   },
+   {
+    "where": "centre",
+    "delay_ms": 3000,
+    "rotated": false,
+    "frame_pixel_diff": 0,
+    "labels_moved": 0,
+    "aria_pressed_after_click": null,
+    "element_under_start": "geo3d-so-do la-net-khuat"
+   },
+   {
+    "where": "empty",
+    "delay_ms": 0,
+    "rotated": true,
+    "frame_pixel_diff": 0.09301,
+    "labels_moved": 4,
+    "aria_pressed_after_click": null,
+    "element_under_start": ""
+   },
+   {
+    "where": "chip_click",
+    "delay_ms": null,
+    "rotated": null,
+    "frame_pixel_diff": 0,
+    "labels_moved": null,
+    "aria_pressed_after_click": "false",
+    "element_under_start": null
+   }
+  ],
+  "baseline": [
+   {
+    "where": "centre",
+    "delay_ms": 0,
+    "rotated": false,
+    "frame_pixel_diff": 0.00037,
+    "labels_moved": 0,
+    "aria_pressed_after_click": null,
+    "element_under_start": "geo3d-so-do la-net-khuat"
+   },
+   {
+    "where": "centre",
+    "delay_ms": 500,
+    "rotated": false,
+    "frame_pixel_diff": 0,
+    "labels_moved": 0,
+    "aria_pressed_after_click": null,
+    "element_under_start": "geo3d-so-do la-net-khuat"
+   },
+   {
+    "where": "centre",
+    "delay_ms": 1500,
+    "rotated": false,
+    "frame_pixel_diff": 0,
+    "labels_moved": 0,
+    "aria_pressed_after_click": null,
+    "element_under_start": "geo3d-so-do la-net-khuat"
+   },
+   {
+    "where": "centre",
+    "delay_ms": 3000,
+    "rotated": false,
+    "frame_pixel_diff": 0,
+    "labels_moved": 0,
+    "aria_pressed_after_click": null,
+    "element_under_start": "geo3d-so-do la-net-khuat"
+   },
+   {
+    "where": "empty",
+    "delay_ms": 0,
+    "rotated": true,
+    "frame_pixel_diff": 0.09275,
+    "labels_moved": 4,
+    "aria_pressed_after_click": null,
+    "element_under_start": ""
+   }
+  ],
+  "after_fix": [
+   {
+    "where": "centre",
+    "delay_ms": 0,
+    "rotated": true,
+    "frame_pixel_diff": 0.09269,
+    "labels_moved": 4,
+    "aria_pressed_after_click": null,
+    "element_under_start": "geo3d-so-do la-net-khuat"
+   },
+   {
+    "where": "centre",
+    "delay_ms": 500,
+    "rotated": true,
+    "frame_pixel_diff": 0.09307,
+    "labels_moved": 4,
+    "aria_pressed_after_click": null,
+    "element_under_start": "geo3d-so-do la-net-khuat"
+   },
+   {
+    "where": "centre",
+    "delay_ms": 1500,
+    "rotated": true,
+    "frame_pixel_diff": 0.09304,
+    "labels_moved": 4,
+    "aria_pressed_after_click": null,
+    "element_under_start": "geo3d-so-do la-net-khuat"
+   },
+   {
+    "where": "centre",
+    "delay_ms": 3000,
+    "rotated": true,
+    "frame_pixel_diff": 0.093,
+    "labels_moved": 4,
+    "aria_pressed_after_click": null,
+    "element_under_start": "geo3d-so-do la-net-khuat"
+   },
+   {
+    "where": "empty",
+    "delay_ms": 0,
+    "rotated": true,
+    "frame_pixel_diff": 0.09267,
+    "labels_moved": 4,
+    "aria_pressed_after_click": null,
+    "element_under_start": ""
+   },
+   {
+    "where": "chip_click",
+    "delay_ms": null,
+    "rotated": null,
+    "frame_pixel_diff": 0,
+    "labels_moved": null,
+    "aria_pressed_after_click": "false",
+    "element_under_start": null
+   }
+  ]
+ },
+ "centre_drag_rotated": {
+  "baseline_pre_fix_dist": "0/4",
+  "baseline": "0/4",
+  "after_fix": "4/4"
+ },
+ "chip_click_aria_pressed_note": "false in both the pre-fix build and the fixed build: pre-existing, not a regression"
+}

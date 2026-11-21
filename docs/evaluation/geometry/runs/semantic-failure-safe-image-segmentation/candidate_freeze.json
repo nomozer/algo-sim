@@ -1,0 +1,42 @@
+{
+  "run_id": "semantic-failure-safe-image-segmentation",
+  "generated_at_utc": "2026-11-14T01:22:58.632176+00:00",
+  "head": "28ff3631b5ebb79d17c90a8f4d4cf0bcb85e7ff6",
+  "branch": "feat/local-first-geometry-understanding",
+  "freeze_commit_field": "1dd7bfb3bdd95a4cff42f9cc964ec7085705feda",
+  "freeze_stored_in": "18a7ba00850e6e5a82aed8bd5876576f30e4992e",
+  "product_commit": "7315cf3b033f78fce1409085c6eeab720f83c967",
+  "measured_system": {
+    "paths": [
+      "backend/app",
+      "frontend/src/simulations/domains/semantic",
+      "frontend/src/simulations/domains/semantic/semantic_program.schema.json"
+    ],
+    "so_file": 116,
+    "tree_hash": "1f62a4a47bb72071e861d894a5e08ce27877c47dee1f896353b6f40c83ab1077",
+    "khai": "Băm nội dung toàn bộ mã SẢN PHẨM của hệ được đo. Harness (scripts/tests/docs) KHÔNG nằm trong đây, nên bộ đo được phép cứng cáp thêm mà không phải đóng băng lại candidate."
+  },
+  "cache_version": "134",
+  "cache_version_bumped": false,
+  "cache_reason": "only SERVED rows are reused (main._served_route_d); local_diagnostics is attached to refusals only; texts newly served by the parser repairs were refused before (never cached); previously served texts produce the same envelopes (full pytest incl. hybrid-preview fixtures unchanged); image segmentation acts before analysis and changes no analysis cache key",
+  "contracts_unchanged": [
+    "geometry-fact-planner/26",
+    "geometry-functions/33",
+    "geometry-function-engine/24",
+    "height-invariance-certificate/2",
+    "output-policy/1",
+    "hybrid-route-d-simulation/4",
+    "typed-fact-next/2"
+  ],
+  "source_gate_changed": false,
+  "measured_files": {
+    "before": 115,
+    "after": 116,
+    "added": "backend/app/ai/local_failure_diagnostics.py"
+  },
+  "previous_candidate": {
+    "stored_in": "8852c4070",
+    "measured_system": "040de2fd63fb687203610918160b1170ad025117b2d221acf12ef25215bd831c"
+  },
+  "freeze_verify_in_regression": "PASS"
+}

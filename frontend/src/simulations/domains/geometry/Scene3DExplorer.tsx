@@ -734,6 +734,13 @@ export function Scene3DExplorer({
                         <>
                           {m.label && m.label !== m.notation && <span className="geo3d-dai-luong-ten">{m.label}</span>}
                           <span className="geo3d-dai-luong-so"><MathDisplay text={chuSo} /></span>
+                          {m.exactValueDisplay && m.exactValueDisplay !== m.valueDisplay && (
+                            <span className="geo3d-dai-luong-ten" data-analysis-exact={m.id}>
+                              {" (chính xác: "}
+                              <MathDisplay text={m.exactValueDisplay} />
+                              {")"}
+                            </span>
+                          )}
                         </>
                       );
                       return (

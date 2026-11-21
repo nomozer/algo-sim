@@ -1,0 +1,370 @@
+{
+  "browser": "157.0.8103.78",
+  "headless": true,
+  "backend": "measured_app loopback, HYBRID_ROUTE_MODE=local-first, ALLOW_LIVE_AI=0",
+  "category": "AUTOMATED_BROWSER_NOT_HUMAN_STUDY",
+  "rows": [
+    {
+      "case": "section_pyramid",
+      "goal": "section",
+      "viewport": "1920x1080",
+      "status": "SERVED",
+      "first_model_ms": 548,
+      "timeline_steps": 7,
+      "goal_object_id": "td_sec",
+      "construction_only_at_conclusion": true,
+      "camera": {
+        "snapshot_available": true,
+        "orbit_changes_camera": true,
+        "zoom_changes_camera": true,
+        "reset_available": true,
+        "reset_returns_to_initial": true,
+        "orbit_ms": 271.1000000014901
+      },
+      "selection": {
+        "chip_available": true,
+        "chip_id": "td_sec",
+        "selected_id": "td_sec",
+        "selects": true
+      },
+      "answer_text_on_page": [],
+      "cos2_text_on_page": false,
+      "horizontal_overflow_px": 0,
+      "step_button_min_px": 28,
+      "page_errors": [],
+      "pass": true
+    },
+    {
+      "case": "section_pyramid",
+      "goal": "section",
+      "viewport": "1366x768",
+      "status": "SERVED",
+      "first_model_ms": 468,
+      "timeline_steps": 7,
+      "goal_object_id": "td_sec",
+      "construction_only_at_conclusion": true,
+      "camera": {
+        "snapshot_available": true,
+        "orbit_changes_camera": true,
+        "zoom_changes_camera": true,
+        "reset_available": true,
+        "reset_returns_to_initial": true,
+        "orbit_ms": 259.1000000014901
+      },
+      "selection": {
+        "chip_available": true,
+        "chip_id": "td_sec",
+        "selected_id": "td_sec",
+        "selects": true
+      },
+      "answer_text_on_page": [],
+      "cos2_text_on_page": false,
+      "horizontal_overflow_px": 0,
+      "step_button_min_px": 28,
+      "page_errors": [],
+      "pass": true
+    },
+    {
+      "case": "section_pyramid",
+      "goal": "section",
+      "viewport": "768x1024",
+      "status": "SERVED",
+      "first_model_ms": 531,
+      "timeline_steps": 7,
+      "goal_object_id": "td_sec",
+      "construction_only_at_conclusion": true,
+      "camera": {
+        "snapshot_available": true,
+        "orbit_changes_camera": true,
+        "zoom_changes_camera": true,
+        "reset_available": true,
+        "reset_returns_to_initial": true,
+        "orbit_ms": 226.40000000223517
+      },
+      "selection": {
+        "chip_available": true,
+        "chip_id": "td_sec",
+        "selected_id": "td_sec",
+        "selects": true
+      },
+      "answer_text_on_page": [],
+      "cos2_text_on_page": false,
+      "horizontal_overflow_px": 0,
+      "step_button_min_px": 40,
+      "page_errors": [],
+      "pass": true
+    },
+    {
+      "case": "section_pyramid",
+      "goal": "section",
+      "viewport": "390x844",
+      "status": "SERVED",
+      "first_model_ms": 545,
+      "timeline_steps": 7,
+      "goal_object_id": "td_sec",
+      "construction_only_at_conclusion": true,
+      "camera": {
+        "snapshot_available": true,
+        "orbit_changes_camera": true,
+        "zoom_changes_camera": true,
+        "reset_available": true,
+        "reset_returns_to_initial": true,
+        "orbit_ms": 130.10000000149012
+      },
+      "selection": {
+        "chip_available": true,
+        "chip_id": "td_sec",
+        "selected_id": "td_sec",
+        "selects": true
+      },
+      "answer_text_on_page": [],
+      "cos2_text_on_page": false,
+      "horizontal_overflow_px": 0,
+      "step_button_min_px": 40,
+      "page_errors": [],
+      "pass": true
+    },
+    {
+      "case": "section_cube_hexagon",
+      "goal": "section",
+      "viewport": "1366x768",
+      "status": "SERVED",
+      "first_model_ms": 435,
+      "timeline_steps": 9,
+      "goal_object_id": "td_sec",
+      "construction_only_at_conclusion": true,
+      "camera": {
+        "snapshot_available": true,
+        "orbit_changes_camera": true,
+        "zoom_changes_camera": true,
+        "reset_available": true,
+        "reset_returns_to_initial": true,
+        "orbit_ms": 282.3999999985099
+      },
+      "selection": {
+        "chip_available": true,
+        "chip_id": "td_sec",
+        "selected_id": "td_sec",
+        "selects": true
+      },
+      "answer_text_on_page": [],
+      "cos2_text_on_page": false,
+      "horizontal_overflow_px": 0,
+      "step_button_min_px": 28,
+      "page_errors": [],
+      "pass": true
+    },
+    {
+      "case": "intersection_SAB_SCD",
+      "goal": "intersection",
+      "viewport": "1920x1080",
+      "status": "SERVED",
+      "first_model_ms": 489,
+      "timeline_steps": 6,
+      "goal_object_id": "gt_g_il2",
+      "construction_only_at_conclusion": true,
+      "camera": {
+        "snapshot_available": true,
+        "orbit_changes_camera": true,
+        "zoom_changes_camera": true,
+        "reset_available": true,
+        "reset_returns_to_initial": true,
+        "orbit_ms": 257
+      },
+      "selection": {
+        "chip_available": true,
+        "chip_id": "gt_g_il2",
+        "selected_id": "gt_g_il2",
+        "selects": true
+      },
+      "answer_text_on_page": [],
+      "cos2_text_on_page": false,
+      "horizontal_overflow_px": 0,
+      "step_button_min_px": 28,
+      "page_errors": [],
+      "pass": true
+    },
+    {
+      "case": "intersection_SAB_SCD",
+      "goal": "intersection",
+      "viewport": "1366x768",
+      "status": "SERVED",
+      "first_model_ms": 453,
+      "timeline_steps": 6,
+      "goal_object_id": "gt_g_il2",
+      "construction_only_at_conclusion": true,
+      "camera": {
+        "snapshot_available": true,
+        "orbit_changes_camera": true,
+        "zoom_changes_camera": true,
+        "reset_available": true,
+        "reset_returns_to_initial": true,
+        "orbit_ms": 225.70000000298023
+      },
+      "selection": {
+        "chip_available": true,
+        "chip_id": "gt_g_il2",
+        "selected_id": "gt_g_il2",
+        "selects": true
+      },
+      "answer_text_on_page": [],
+      "cos2_text_on_page": false,
+      "horizontal_overflow_px": 0,
+      "step_button_min_px": 28,
+      "page_errors": [],
+      "pass": true
+    },
+    {
+      "case": "intersection_SAB_SCD",
+      "goal": "intersection",
+      "viewport": "768x1024",
+      "status": "SERVED",
+      "first_model_ms": 442,
+      "timeline_steps": 6,
+      "goal_object_id": "gt_g_il2",
+      "construction_only_at_conclusion": true,
+      "camera": {
+        "snapshot_available": true,
+        "orbit_changes_camera": true,
+        "zoom_changes_camera": true,
+        "reset_available": true,
+        "reset_returns_to_initial": true,
+        "orbit_ms": 209.19999999925494
+      },
+      "selection": {
+        "chip_available": true,
+        "chip_id": "gt_g_il2",
+        "selected_id": "gt_g_il2",
+        "selects": true
+      },
+      "answer_text_on_page": [],
+      "cos2_text_on_page": false,
+      "horizontal_overflow_px": 0,
+      "step_button_min_px": 40,
+      "page_errors": [],
+      "pass": true
+    },
+    {
+      "case": "intersection_SAB_SCD",
+      "goal": "intersection",
+      "viewport": "390x844",
+      "status": "SERVED",
+      "first_model_ms": 380,
+      "timeline_steps": 6,
+      "goal_object_id": "gt_g_il2",
+      "construction_only_at_conclusion": true,
+      "camera": {
+        "snapshot_available": true,
+        "orbit_changes_camera": true,
+        "zoom_changes_camera": true,
+        "reset_available": true,
+        "reset_returns_to_initial": true,
+        "orbit_ms": 137.30000000074506
+      },
+      "selection": {
+        "chip_available": true,
+        "chip_id": "gt_g_il2",
+        "selected_id": "gt_g_il2",
+        "selects": true
+      },
+      "answer_text_on_page": [],
+      "cos2_text_on_page": false,
+      "horizontal_overflow_px": 0,
+      "step_button_min_px": 40,
+      "page_errors": [],
+      "pass": true
+    },
+    {
+      "case": "intersection_SAC_SBD",
+      "goal": "intersection",
+      "viewport": "1366x768",
+      "status": "SERVED",
+      "first_model_ms": 593,
+      "timeline_steps": 7,
+      "goal_object_id": "gt_g_il2",
+      "construction_only_at_conclusion": true,
+      "camera": {
+        "snapshot_available": true,
+        "orbit_changes_camera": true,
+        "zoom_changes_camera": true,
+        "reset_available": true,
+        "reset_returns_to_initial": true,
+        "orbit_ms": 307.19999999925494
+      },
+      "selection": {
+        "chip_available": true,
+        "chip_id": "gt_g_il2",
+        "selected_id": "gt_g_il2",
+        "selects": true
+      },
+      "answer_text_on_page": [],
+      "cos2_text_on_page": false,
+      "horizontal_overflow_px": 0,
+      "step_button_min_px": 28,
+      "page_errors": [],
+      "pass": true
+    },
+    {
+      "case": "altitude_face_perp",
+      "goal": "altitude",
+      "viewport": "1366x768",
+      "status": "SERVED",
+      "first_model_ms": 462,
+      "timeline_steps": 3,
+      "goal_object_id": null,
+      "construction_only_at_conclusion": true,
+      "camera": {
+        "snapshot_available": true,
+        "orbit_changes_camera": true,
+        "zoom_changes_camera": true,
+        "reset_available": true,
+        "reset_returns_to_initial": true,
+        "orbit_ms": 144.80000000074506
+      },
+      "selection": {
+        "chip_available": true,
+        "chip_id": "khoi_S_ABCD",
+        "selected_id": "khoi_S_ABCD",
+        "selects": true
+      },
+      "answer_text_on_page": [],
+      "cos2_text_on_page": false,
+      "horizontal_overflow_px": 0,
+      "step_button_min_px": 28,
+      "page_errors": [],
+      "pass": true
+    },
+    {
+      "case": "planes_60_not_120",
+      "goal": "angle",
+      "viewport": "1366x768",
+      "status": "SERVED",
+      "first_model_ms": 386,
+      "timeline_steps": 6,
+      "goal_object_id": null,
+      "construction_only_at_conclusion": true,
+      "camera": {
+        "snapshot_available": true,
+        "orbit_changes_camera": true,
+        "zoom_changes_camera": true,
+        "reset_available": true,
+        "reset_returns_to_initial": true,
+        "orbit_ms": 217.20000000298023
+      },
+      "selection": {
+        "chip_available": true,
+        "chip_id": "mp2_q1",
+        "selected_id": "mp2_q1",
+        "selects": true
+      },
+      "answer_text_on_page": [],
+      "cos2_text_on_page": false,
+      "horizontal_overflow_px": 0,
+      "step_button_min_px": 28,
+      "page_errors": [],
+      "pass": true
+    }
+  ],
+  "passed": 12,
+  "total": 12
+}

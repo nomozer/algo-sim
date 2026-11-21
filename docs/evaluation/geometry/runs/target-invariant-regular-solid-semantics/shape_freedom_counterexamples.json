@@ -1,0 +1,143 @@
+{
+  "run_id": "target-invariant-regular-solid-semantics",
+  "generated_at_utc": "2026-11-14T07:25:58.179662+00:00",
+  "product_commit": "bdc34a89e32c77fd73bff7b38b72d3a3496657e1",
+  "measured_system": "2a18f935e4c29462b0495ff6b0fec46df88e215e0bedcaba84668ec202af62d1",
+  "cache_version": "136",
+  "environment": {
+    "ALLOW_LIVE_AI": "0",
+    "HYBRID_ROUTE_MODE": "local-first",
+    "live_ai_calls": 0
+  },
+  "head": "bcba912e82661ccc8b186e6d93cd2bf7928f06bc",
+  "rows": [
+    {
+      "case_id": "COMP:ti_varying_line_plane",
+      "text_sha256": "c765b5f4a1f4b0c890e98425d7766e8c628c77c8759ba8fd79d41a26a5de0f6e",
+      "expected": "REFUSE",
+      "before": {
+        "status": "REFUSED",
+        "code": "MISSING_DIMENSION",
+        "answers": null
+      },
+      "after": {
+        "status": "REFUSED",
+        "code": "MISSING_DIMENSION",
+        "answers": null
+      },
+      "after_root_cause": "SHAPE_FREEDOM_UNCERTIFIED"
+    },
+    {
+      "case_id": "COMP:ti_height_free",
+      "text_sha256": "3ce1a474b8788e0f4a42279b6c80b03555c6475a5b554de05b40d5e3178458ea",
+      "expected": "REFUSE",
+      "before": {
+        "status": "REFUSED",
+        "code": "MISSING_DIMENSION",
+        "answers": null
+      },
+      "after": {
+        "status": "REFUSED",
+        "code": "MISSING_DIMENSION",
+        "answers": null
+      },
+      "after_root_cause": "SHAPE_FREEDOM_UNCERTIFIED"
+    },
+    {
+      "case_id": "COMP:ti_absolute_volume",
+      "text_sha256": "cde34f10add2c1f9d3efc811afa99a0ddbb45b15a7e85a81fcad2b7fdce5e0d3",
+      "expected": "REFUSE",
+      "before": {
+        "status": "REFUSED",
+        "code": "MISSING_DIMENSION",
+        "answers": null
+      },
+      "after": {
+        "status": "REFUSED",
+        "code": "MISSING_DIMENSION",
+        "answers": null
+      },
+      "after_root_cause": "INSUFFICIENT_CONSTRAINTS"
+    },
+    {
+      "case_id": "COMP:tet_not_regular",
+      "text_sha256": "02ea211f211c19ac89f8bd659682404acc658084aadd7895cb6241c3d0bac9f3",
+      "expected": "REFUSE",
+      "before": {
+        "status": "REFUSED",
+        "code": "MISSING_DIMENSION",
+        "answers": null
+      },
+      "after": {
+        "status": "REFUSED",
+        "code": "MISSING_DIMENSION",
+        "answers": null
+      },
+      "after_root_cause": "SHAPE_FREEDOM_UNCERTIFIED"
+    },
+    {
+      "case_id": "COMP:tet_regular_pyramid_only",
+      "text_sha256": "5ccdb7d248cd377a32c9d953599a30d6a96991acfba72f031b37a999b389fb9b",
+      "expected": "REFUSE",
+      "before": {
+        "status": "REFUSED",
+        "code": "MISSING_DIMENSION",
+        "answers": null
+      },
+      "after": {
+        "status": "REFUSED",
+        "code": "MISSING_DIMENSION",
+        "answers": null
+      },
+      "after_root_cause": "SHAPE_FREEDOM_UNCERTIFIED"
+    },
+    {
+      "case_id": "COMP:tet_conflict",
+      "text_sha256": "22ab83456bcdaf0afde5ff74152fccb79f0f1688545beb7794176806d08ecc4d",
+      "expected": "REFUSE",
+      "before": {
+        "status": "REFUSED",
+        "code": "LIVE_AI_DISABLED",
+        "answers": null
+      },
+      "after": {
+        "status": "REFUSED",
+        "code": "LIVE_AI_DISABLED",
+        "answers": null
+      },
+      "after_root_cause": "SOURCE_PROVENANCE_MISSING"
+    },
+    {
+      "case_id": "COMP:scale_height_free",
+      "text_sha256": "729659686b20e121c2686329e11f330155163ee071e6c3d09c569990f52d21cf",
+      "expected": "REFUSE",
+      "before": {
+        "status": "REFUSED",
+        "code": "MISSING_DIMENSION",
+        "answers": null
+      },
+      "after": {
+        "status": "REFUSED",
+        "code": "MISSING_DIMENSION",
+        "answers": null
+      },
+      "after_root_cause": "SHAPE_FREEDOM_UNCERTIFIED"
+    },
+    {
+      "case_id": "COMP:scale_absolute_volume",
+      "text_sha256": "be44e6144852f2eb33eac3ccb4fa84edd32dd68dc538551fc87fff9b8bcd419a",
+      "expected": "REFUSE",
+      "before": {
+        "status": "REFUSED",
+        "code": "MISSING_DIMENSION",
+        "answers": null
+      },
+      "after": {
+        "status": "REFUSED",
+        "code": "MISSING_DIMENSION",
+        "answers": null
+      },
+      "after_root_cause": "INSUFFICIENT_CONSTRAINTS"
+    }
+  ]
+}

@@ -1,0 +1,42 @@
+{
+  "run_id": "parallel-ingestion-reasoning",
+  "date": "2026-11-09",
+  "branch": "integration/parallel-ingestion-reasoning",
+  "common_base_sha": "d79565b52ec19a7b1a75be28c09bb43cc0f6d146",
+  "main": "bb046fa22aceff47abe22aa783aa64fc65caee13 (= origin/main; not modified)",
+  "merged_to_main": false,
+  "pushed": false,
+  "execution": "two background agents in two isolated worktrees, run concurrently, coordinated by one session",
+  "workstreams": {
+    "A": {"branch": "feat/adaptive-local-ocr-fallback", "head": "25a0986029f09f991282d88f6d9f466a36b44a64",
+          "report": "docs/evaluation/geometry/runs/adaptive-local-ocr-fallback/ADAPTIVE_LOCAL_OCR_REPORT.md",
+          "verdict": "LOCAL_OCR_DIAGNOSTIC_ONLY"},
+    "B": {"branch": "feat/hybrid-reasoning-generalization", "head": "756697dc7aecd6cd03a889e3f2a67f0783919b75",
+          "report": "docs/evaluation/geometry/runs/hybrid-reasoning-generalization/HYBRID_REASONING_GENERALIZATION_REPORT.md",
+          "verdict": "HYBRID_REASONING_IMPROVEMENT_VERIFIED"}
+  },
+  "integration_commits": [
+    {"sha": "6889a31f8", "role": "merge --no-ff of A (25a098602) onto d79565b52"},
+    {"sha": "60bba4624", "role": "merge --no-ff of B (756697dc7)"},
+    {"sha": "d2d89376a", "role": "comment-only fix in region_detector.py (crop_holds_all_content covers noise blocks)"},
+    {"sha": "452210a9c", "role": "candidate re-freeze + K-1/R-1/S-2 template measured_system sync"}
+  ],
+  "candidate": {"so_file": 106, "measured_system_tree_hash": "0e815f39c8d02203d73ce332faa7f167c8344ef925f6adc547bbe37bae472a7c",
+                "product_commit": "d2d89376a053d3b06a78f2ec8cc5300e62df2707"},
+  "cache_version": {"before": "132", "after": "132", "bumped": false,
+                    "reason": "A: no model-surface change; B: only REFUSED->SERVED or refusal-code changes, cache stores SERVED rows only, 47 previously served rows identical"},
+  "baseline_t3": {"commit": "d79565b52", "verdict": "FULL_PRODUCT_GATE_PASS", "pytest": "13994 passed, 7 skipped, 3 deselected, 9 xfailed, 0 failed",
+                  "vitest": "2000/2000 (136 files)", "build": "PASS", "demo": "5/5", "crash_surface": "6/6",
+                  "freeze_verify": "MATCH 6290986dee3d1336", "log_sha256": "4b5cf07d49f9b0171e07f5bdb9c299c365451297e3c79c572aa6bcddcaf37e3a"},
+  "integration_t3": {"commit": "37ec2db57", "worktree": "clean detached", "verdict": "FULL_PRODUCT_GATE_PASS",
+                     "pytest": "14023 passed, 7 skipped, 3 deselected, 15 xfailed, 0 failed (= base 13994 + A 6 + B 23; xfail 9 + B 6 strict)",
+                     "vitest": "2000/2000 (136 files)", "build": "PASS", "demo": "5/5", "crash_surface": "6/6, 0 thrown",
+                     "freeze_verify": "MATCH 0e815f39c8d02203", "log_sha256": "90601078298a9668a41348fc04309df355359bba517cffd5aa370aa45380373c"},
+  "measurement": {
+    "MEASUREMENT_CLASS": "OFFLINE_PARALLEL_WORKSTREAM_INTEGRATION",
+    "HELD_OUT_CLAIM": "NONE (INDEPENDENT_H1_VALIDATION = NOT_MEASURED)",
+    "EVALUATOR_INDEPENDENCE": "NONE (agents and coordinator are the same model family in one session)",
+    "live_provider_calls": 0
+  },
+  "verdicts": {"A": "LOCAL_OCR_DIAGNOSTIC_ONLY", "B": "HYBRID_REASONING_IMPROVEMENT_VERIFIED", "integration": "PARALLEL_CANDIDATES_INTEGRATION_VERIFIED (offline)"}
+}

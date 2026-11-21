@@ -1,0 +1,37 @@
+{
+  "run_id": "controlled-vision-real-image-validation",
+  "generated_at_utc": "2026-11-12T17:21:26.111231+00:00",
+  "start_head": "44807b13bffe608153bc58e453a3bc9c37703485",
+  "start_head_is_ancestor_of_head": true,
+  "sealed_candidate_is_ancestor_of_start": true,
+  "candidate_at_start": {
+    "commit": "fb87f076649a53aa7ed165d362cc736d48c62c14",
+    "product_commit": "7b170021451a86c56a2eebadcdd0f0f088fcc229",
+    "measured_system": "a068b6f6586c1b120bd8350dbe706f5681ab71fd7da57502c34f940140268921",
+    "files": 115,
+    "cache_version": "132"
+  },
+  "handoff_values_match": {
+    "product_commit": true,
+    "measured_system": true,
+    "files": true,
+    "cache_version": true
+  },
+  "start_verification_observed": "At session start (2026-11-12 19:05 local) `freeze_evaluation_candidate.py --verify` printed a match for 115 files a068b6f6586c1b12; the tree had no tracked changes (root-repo untracked ocr_reconcile.py is outside this worktree).",
+  "product_changes_since_start": [
+    " 1 file changed, 24 insertions(+), 1 deletion(-)"
+  ],
+  "commits_since_start": [
+    "5019a72fa docs(evaluation): re-bind pending owner-approval templates to the refrozen candidate",
+    "a78b1e087 chore(eval): freeze evaluation candidate after reread-bleed fix",
+    "835786746 docs(evaluation): preserve controlled-vision corpus, OCR baseline and publication classification",
+    "c53be83db fix(ingestion): trim neighbour glyphs bleeding into OCR reread crops"
+  ],
+  "prior_regression_at_start": {
+    "backend": "14259 passed, 7 skipped, 3 deselected, 15 xfailed",
+    "frontend": "2018 passed",
+    "publication_head": "97 pending, BLOCKED",
+    "overall": "BLOCKED_GATES_REMAIN",
+    "source": "real-image-ocr-vision-comparative-acceptance/full_regression_summary.json (not re-used as this run's result)"
+  }
+}

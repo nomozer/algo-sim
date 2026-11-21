@@ -1,0 +1,101 @@
+{
+  "schema": "algosim-external-image-source-inventory/1",
+  "generated_at_utc": "2026-11-09T19:03:44.273137+00:00",
+  "acquisition_policy": {
+    "allow_live_ai": 0,
+    "bypassed_paywall_or_captcha": false,
+    "synthetic_images_used_as_substitutes": false,
+    "unverified_license_committed_to_git": false
+  },
+  "sources_investigated": [
+    {
+      "source_id": "SRC-01-HOIDAP247",
+      "domain_or_repo": "hoidap247.com (cdn.hoidap247.com / img.hoidap247.com)",
+      "category": "Vietnamese Q&A forum — camera photos & exam screenshots + student notebook solutions",
+      "access_status": "ACCESSIBLE_PUBLIC_HTTPS",
+      "license_status": "LICENSE_UNVERIFIED",
+      "reuse_policy": "Local offline evaluation only in gitignored cache; zero image files committed to Git.",
+      "threads_inspected_count": 34,
+      "candidate_images_downloaded": 34,
+      "eligible_corpus_images_retained": 18,
+      "excluded_images_count": 16,
+      "breakdown": "8 Group A printed problems (4 REAL_CAPTURED_EXTERNAL camera photos + 4 DIGITAL_DOCUMENT_RENDER) + 10 Group B handwritten images (1 B1 complete handwritten problem + 9 B2 handwritten solutions/diagrams)."
+    },
+    {
+      "source_id": "SRC-02-VMMU",
+      "domain_or_repo": "huggingface.co/datasets/anvo25/vmmu",
+      "category": "Research benchmark — Vietnamese Multimodal Multitask Understanding (official high-school Math exam scans & figure crops)",
+      "access_status": "ACCESSIBLE_PUBLIC_HF_PARQUET_AND_API",
+      "license_status": "MIT",
+      "reuse_policy": "Open MIT license; raw PNGs stored in local cache with full URL + SHA-256 provenance.",
+      "rows_inspected_count": 35,
+      "candidate_images_downloaded": 14,
+      "eligible_corpus_images_retained": 14,
+      "excluded_images_count": 0,
+      "breakdown": "7 Group A3 full printed geometry exam items (with multiple-choice keys) + 7 Group D upstream figure-only diagram crops."
+    },
+    {
+      "source_id": "SRC-03-UIT-HWDB-LINE",
+      "domain_or_repo": "huggingface.co/datasets/HungNguyen29/UIT-HWDB-line",
+      "category": "Research dataset — Human-verified Vietnamese unconstrained handwritten text lines",
+      "access_status": "ACCESSIBLE_PUBLIC_HF_PARQUET",
+      "license_status": "OPEN_ACADEMIC_PUBLIC_HF_DATASET",
+      "reuse_policy": "Used strictly as Group B3 Vietnamese handwriting OCR baseline (never counted as geometry problems).",
+      "rows_inspected_count": 20,
+      "candidate_images_downloaded": 6,
+      "eligible_corpus_images_retained": 6,
+      "excluded_images_count": 0,
+      "breakdown": "6 human-verified cursive Vietnamese handwritten line images (`uit_hwdb_test_r0, r3, r5, r10, r11, r12`)."
+    },
+    {
+      "source_id": "SRC-04-HOC24-VIETJACK-TOANMATH",
+      "domain_or_repo": "hoc24.vn / vietjack.com / loigiaihay.com / toanmath.com",
+      "category": "Vietnamese education portals & school exam repositories",
+      "access_status": "INSPECTED_TEXT_OR_PDF_OR_HOTLINK_RESTRICTED",
+      "license_status": "LICENSE_UNVERIFIED",
+      "reuse_policy": "Skipped where math content was HTML/MathJax DOM text rather than raster problem photos or lacked direct static image URLs.",
+      "threads_inspected_count": 18,
+      "candidate_images_downloaded": 0,
+      "eligible_corpus_images_retained": 0,
+      "excluded_images_count": 0,
+      "reason_not_used": "Rendered HTML/LaTeX or multi-megabyte full-exam PDFs rather than standalone student/exam image uploads."
+    },
+    {
+      "source_id": "SRC-05-NAMED-RESEARCH-DATASETS-AUDIT",
+      "domain_or_repo": "VietHTR-Line / Viet-Geometry-VQA (HuggingFace & GitHub search)",
+      "category": "Named candidate research datasets from Section IV.1.1",
+      "access_status": "NOT_PUBLICLY_HOSTED_UNDER_EXACT_SLUG",
+      "license_status": "NOT_APPLICABLE",
+      "reuse_policy": "Substituted with verified accessible `anvo25/vmmu` (MIT) and `HungNguyen29/UIT-HWDB-line` per Section XVI directive.",
+      "queries_checked": 8,
+      "candidate_images_downloaded": 0,
+      "eligible_corpus_images_retained": 0,
+      "excluded_images_count": 0,
+      "reason_not_used": "No public anonymous HuggingFace/GitHub dataset matched `VietHTR-Line` or `Viet-Geometry-VQA` without private registration; pivoted cleanly to `anvo25/vmmu` and `HungNguyen29/UIT-HWDB-line`."
+    }
+  ],
+  "gate_a_funnel_summary": {
+    "total_urls_and_dataset_rows_inspected": 115,
+    "accessible_external_image_urls_verified": 54,
+    "permitted_for_local_research_download": 54,
+    "downloaded_successfully_count": 54,
+    "excluded_after_visual_screening_count": 16,
+    "eligible_distinct_corpus_images_count": 38,
+    "diagnostic_local_subcrops_not_counted_in_corpus": 1,
+    "by_modality": {
+      "PRINTED": 15,
+      "HANDWRITTEN": 16,
+      "PRINTED_DIAGRAM_ONLY": 7
+    },
+    "by_image_type": {
+      "REAL_CAPTURED_EXTERNAL": 4,
+      "DIGITAL_DOCUMENT_RENDER": 18,
+      "HANDWRITTEN_EXTERNAL": 16,
+      "SYNTHETIC_IMAGE": 0
+    },
+    "ocr_evaluation_eligible_count": 31,
+    "region_detection_eligible_count": 32,
+    "complete_problem_end_to_end_eligible_count": 16,
+    "solution_or_diagram_or_line_non_e2e_count": 22
+  }
+}

@@ -1,0 +1,635 @@
+[
+ {
+  "case_id": "C05",
+  "live_status": "REFUSED",
+  "live_reason": "UNGROUNDED_VALUE",
+  "parse_status": "LOCAL_PARSE_PARTIAL",
+  "parse_reason": "UNGROUNDED_VALUE",
+  "unparsed_facts": [],
+  "unparsed_goals": [],
+  "unresolved_refs": [],
+  "v3_changed": false,
+  "v3_rules": [],
+  "v3_text": null,
+  "v3_parse_status": null,
+  "v3_parse_reason": null,
+  "v3_unparsed_facts": null,
+  "v3_unparsed_goals": null
+ },
+ {
+  "case_id": "C07",
+  "live_status": "REFUSED",
+  "live_reason": "SOURCE_OBJECT_MISMATCH",
+  "parse_status": "LOCAL_PARSE_PARTIAL",
+  "parse_reason": "REQUEST_NOT_ANSWERED",
+  "unparsed_facts": [],
+  "unparsed_goals": [],
+  "unresolved_refs": [],
+  "v3_changed": true,
+  "v3_rules": [
+   "VN07_IMPLICIT_MAT_DAY_PERP"
+  ],
+  "v3_text": "Hỏi diện tích đáy FGH của hình chóp A.FGH bằng bao nhiêu, biết tam giác FGH vuông tại F, FG = 12, FH = 7, AF vuông góc với (FGH) và AF = 5?",
+  "v3_parse_status": "LOCAL_PARSE_PARTIAL",
+  "v3_parse_reason": "REQUEST_NOT_ANSWERED",
+  "v3_unparsed_facts": [],
+  "v3_unparsed_goals": []
+ },
+ {
+  "case_id": "C08",
+  "live_status": "SERVED",
+  "live_reason": null,
+  "parse_status": "LOCAL_PARSE_PARTIAL",
+  "parse_reason": "SOURCE_PREMISE_UNREAD",
+  "unparsed_facts": [],
+  "unparsed_goals": [],
+  "unresolved_refs": [],
+  "v3_changed": true,
+  "v3_rules": [
+   "VN06_SOLID_SEP_DAY"
+  ],
+  "v3_text": "Vẽ hình giúp em khối chóp L.BDHJ có đáy BDHJ là hình chữ nhật, BD = 10, BJ = 5, LB = 7 và LB ⊥ (BDHJ).",
+  "v3_parse_status": "LOCAL_PARSE_PARTIAL",
+  "v3_parse_reason": "SOURCE_PREMISE_UNREAD",
+  "v3_unparsed_facts": [],
+  "v3_unparsed_goals": []
+ },
+ {
+  "case_id": "C09",
+  "live_status": "SERVED",
+  "live_reason": null,
+  "parse_status": "LOCAL_PARSE_PARTIAL",
+  "parse_reason": "QUESTION_CONTEXT_UNSUPPORTED",
+  "unparsed_facts": [],
+  "unparsed_goals": [],
+  "unresolved_refs": [],
+  "v3_changed": true,
+  "v3_rules": [
+   "VN17_QUESTION_FIRST_WITH_PREMISES",
+   "VN06_CHAINED_SEGMENT_EQ",
+   "VN03_BARE_PRISM",
+   "VN05_HAY_TIM_GOAL"
+  ],
+  "v3_text": "Cho hình lăng trụ đứng ACD.FGH với đáy ACD là tam giác vuông cân tại A có AC = AD = 8 và AF = 9. Tính thể tích lăng trụ đứng ACD.FGH.",
+  "v3_parse_status": "LOCAL_PARSE_PARTIAL",
+  "v3_parse_reason": "NOT_ASKED_IN_SOURCE",
+  "v3_unparsed_facts": [],
+  "v3_unparsed_goals": []
+ },
+ {
+  "case_id": "C10",
+  "live_status": "REFUSED",
+  "live_reason": "AMBIGUOUS_FACT",
+  "parse_status": "LOCAL_PARSE_PARTIAL",
+  "parse_reason": "UNGROUNDED_VALUE",
+  "unparsed_facts": [],
+  "unparsed_goals": [],
+  "unresolved_refs": [],
+  "v3_changed": true,
+  "v3_rules": [
+   "VN06_CUBE_CANH_BANG",
+   "VN09_SPLIT_COORDINATED_GOALS",
+   "VN09_CAPITALIZE_SPLIT_GOALS"
+  ],
+  "v3_text": "Dựng hình lập phương HJKN.H'J'K'N' có cạnh bằng 11. Tính diện tích mặt HJKN.",
+  "v3_parse_status": "LOCAL_PARSE_PARTIAL",
+  "v3_parse_reason": "UNPARSED_GOAL_CANDIDATE",
+  "v3_unparsed_facts": [],
+  "v3_unparsed_goals": [
+   "Tính diện tích mặt HJKN"
+  ]
+ },
+ {
+  "case_id": "M03",
+  "live_status": "SERVED",
+  "live_reason": null,
+  "parse_status": "LOCAL_PARSE_PARTIAL",
+  "parse_reason": "REQUEST_NOT_ANSWERED",
+  "unparsed_facts": [],
+  "unparsed_goals": [],
+  "unresolved_refs": [],
+  "v3_changed": true,
+  "v3_rules": [
+   "VN09_SPLIT_COORDINATED_GOALS",
+   "VN09_CAPITALIZE_SPLIT_GOALS"
+  ],
+  "v3_text": "Cho hình chóp N.DFPR có đáy DFPR là hình chữ nhật. Biết DF = 8, DR = 5. Đường cao ND vuông góc với mặt phẳng đáy và ND = 9. Hãy biểu diễn hình chóp. Tính thể tích.",
+  "v3_parse_status": "LOCAL_PARSE_PARTIAL",
+  "v3_parse_reason": "UNPARSED_GOAL_CANDIDATE",
+  "v3_unparsed_facts": [],
+  "v3_unparsed_goals": [
+   "Tính thể tích"
+  ]
+ },
+ {
+  "case_id": "M04",
+  "live_status": "SERVED",
+  "live_reason": null,
+  "parse_status": "LOCAL_PARSE_PARTIAL",
+  "parse_reason": "NOT_ASKED_IN_SOURCE",
+  "unparsed_facts": [],
+  "unparsed_goals": [],
+  "unresolved_refs": [],
+  "v3_changed": true,
+  "v3_rules": [
+   "VN03_BARE_PRISM",
+   "VN06_IMPLICIT_VOLUME_SOLID"
+  ],
+  "v3_text": "Cho hình lăng trụ đứng DHJ.D'H'J' có tam giác đáy DHJ vuông tại D. Độ dài DH = 11, DJ = 6. Cạnh bên DD' = 8. Vẽ hình lăng trụ và tính thể tích khối lăng trụ DHJ.D'H'J'.",
+  "v3_parse_status": "LOCAL_PARSE_PARTIAL",
+  "v3_parse_reason": "NOT_ASKED_IN_SOURCE",
+  "v3_unparsed_facts": [],
+  "v3_unparsed_goals": []
+ },
+ {
+  "case_id": "M07",
+  "live_status": "SERVED",
+  "live_reason": null,
+  "parse_status": "LOCAL_PARSE_PARTIAL",
+  "parse_reason": "NOT_ASKED_IN_SOURCE",
+  "unparsed_facts": [],
+  "unparsed_goals": [],
+  "unresolved_refs": [],
+  "v3_changed": false,
+  "v3_rules": [],
+  "v3_text": null,
+  "v3_parse_status": null,
+  "v3_parse_reason": null,
+  "v3_unparsed_facts": null,
+  "v3_unparsed_goals": null
+ },
+ {
+  "case_id": "R02",
+  "live_status": "SERVED",
+  "live_reason": null,
+  "parse_status": "LOCAL_PARSE_PARTIAL",
+  "parse_reason": "REQUEST_NOT_ANSWERED",
+  "unparsed_facts": [],
+  "unparsed_goals": [],
+  "unresolved_refs": [],
+  "v3_changed": true,
+  "v3_rules": [
+   "VN03_BARE_PRISM",
+   "VN09_SPLIT_COORDINATED_GOALS",
+   "VN09_CAPITALIZE_SPLIT_GOALS"
+  ],
+  "v3_text": "Cho hình lăng trụ đứng EKL.E'K'L' có đáy EKL vuông tại E, EK = 8, EL = 12, EE' = 9. Dựng khối lăng trụ trên. Tính thể tích.",
+  "v3_parse_status": "LOCAL_PARSE_PARTIAL",
+  "v3_parse_reason": "UNPARSED_GOAL_CANDIDATE",
+  "v3_unparsed_facts": [],
+  "v3_unparsed_goals": [
+   "Tính thể tích"
+  ]
+ },
+ {
+  "case_id": "R06",
+  "live_status": "REFUSED",
+  "live_reason": "SOURCE_OBJECT_MISMATCH",
+  "parse_status": "LOCAL_PARSE_PARTIAL",
+  "parse_reason": "UNPARSED_GOAL_CANDIDATE",
+  "unparsed_facts": [],
+  "unparsed_goals": [
+   "Tính diện tích đáy của hình chóp đã cho"
+  ],
+  "unresolved_refs": [],
+  "v3_changed": true,
+  "v3_rules": [
+   "VN07_IMPLICIT_MAT_DAY_PERP"
+  ],
+  "v3_text": "Cho hình chóp D.MNP có đáy MNP vuông tại M, MN = 12, MP = 9, DM vuông góc với (MNP) và DM = 8. Tính diện tích đáy của hình chóp đã cho.",
+  "v3_parse_status": "LOCAL_PARSE_PARTIAL",
+  "v3_parse_reason": "UNPARSED_GOAL_CANDIDATE",
+  "v3_unparsed_facts": [],
+  "v3_unparsed_goals": [
+   "Tính diện tích đáy của hình chóp đã cho"
+  ]
+ },
+ {
+  "case_id": "P01",
+  "live_status": "SERVED",
+  "live_reason": null,
+  "parse_status": "LOCAL_PARSE_PARTIAL",
+  "parse_reason": "UNPARSED_FACT_CANDIDATE",
+  "unparsed_facts": [
+   "Cho tứ diện DEGK có DE, DG, DK vuông góc với nhau từng đôi một và DE = 5, DG = 6, DK = 11"
+  ],
+  "unparsed_goals": [],
+  "unresolved_refs": [],
+  "v3_changed": false,
+  "v3_rules": [],
+  "v3_text": null,
+  "v3_parse_status": null,
+  "v3_parse_reason": null,
+  "v3_unparsed_facts": null,
+  "v3_unparsed_goals": null
+ },
+ {
+  "case_id": "P02",
+  "live_status": "SERVED",
+  "live_reason": null,
+  "parse_status": "LOCAL_PARSE_PARTIAL",
+  "parse_reason": "UNPARSED_FACT_CANDIDATE",
+  "unparsed_facts": [
+   "Tứ diện EFHL có ba cạnh EF, EH, EL vuông góc từng đôi, EF = 4, EH = 9, EL = 10"
+  ],
+  "unparsed_goals": [],
+  "unresolved_refs": [],
+  "v3_changed": false,
+  "v3_rules": [],
+  "v3_text": null,
+  "v3_parse_status": null,
+  "v3_parse_reason": null,
+  "v3_unparsed_facts": null,
+  "v3_unparsed_goals": null
+ },
+ {
+  "case_id": "P03",
+  "live_status": "SERVED",
+  "live_reason": null,
+  "parse_status": "LOCAL_PARSE_PARTIAL",
+  "parse_reason": "SOURCE_PREMISE_UNREAD",
+  "unparsed_facts": [],
+  "unparsed_goals": [],
+  "unresolved_refs": [],
+  "v3_changed": false,
+  "v3_rules": [],
+  "v3_text": null,
+  "v3_parse_status": null,
+  "v3_parse_reason": null,
+  "v3_unparsed_facts": null,
+  "v3_unparsed_goals": null
+ },
+ {
+  "case_id": "P08",
+  "live_status": "REFUSED",
+  "live_reason": "QUESTION_CONTEXT_UNSUPPORTED",
+  "parse_status": "LOCAL_PARSE_PARTIAL",
+  "parse_reason": "QUESTION_CONTEXT_UNSUPPORTED",
+  "unparsed_facts": [],
+  "unparsed_goals": [],
+  "unresolved_refs": [],
+  "v3_changed": true,
+  "v3_rules": [
+   "VN07_IMPLICIT_MAT_DAY_PERP"
+  ],
+  "v3_text": "Cho hình chóp V.JLXY có đáy JLXY là hình vuông cạnh 7; hai mặt phẳng (VJL) và (VJY) cùng vuông góc với (JLXY), VJ = 12. Tính thể tích khối chóp V.JLXY.",
+  "v3_parse_status": "LOCAL_PARSE_PARTIAL",
+  "v3_parse_reason": "QUESTION_CONTEXT_UNSUPPORTED",
+  "v3_unparsed_facts": [],
+  "v3_unparsed_goals": []
+ },
+ {
+  "case_id": "P09",
+  "live_status": "SERVED",
+  "live_reason": null,
+  "parse_status": "LOCAL_PARSE_PARTIAL",
+  "parse_reason": "SOURCE_PREMISE_UNREAD",
+  "unparsed_facts": [],
+  "unparsed_goals": [],
+  "unresolved_refs": [],
+  "v3_changed": false,
+  "v3_rules": [],
+  "v3_text": null,
+  "v3_parse_status": null,
+  "v3_parse_reason": null,
+  "v3_unparsed_facts": null,
+  "v3_unparsed_goals": null
+ },
+ {
+  "case_id": "S02",
+  "live_status": "REFUSED",
+  "live_reason": "AMBIGUOUS_FACT",
+  "parse_status": "LOCAL_PARSE_PARTIAL",
+  "parse_reason": "UNPARSED_GOAL_CANDIDATE",
+  "unparsed_facts": [],
+  "unparsed_goals": [
+   "Tính thể tích khối tứ diện theo a"
+  ],
+  "unresolved_refs": [],
+  "v3_changed": false,
+  "v3_rules": [],
+  "v3_text": null,
+  "v3_parse_status": null,
+  "v3_parse_reason": null,
+  "v3_unparsed_facts": null,
+  "v3_unparsed_goals": null
+ },
+ {
+  "case_id": "S04",
+  "live_status": "SERVED",
+  "live_reason": null,
+  "parse_status": "LOCAL_PARSE_PARTIAL",
+  "parse_reason": "UNPARSED_GOAL_CANDIDATE",
+  "unparsed_facts": [],
+  "unparsed_goals": [
+   "Tính thể tích khối lăng trụ theo a"
+  ],
+  "unresolved_refs": [],
+  "v3_changed": true,
+  "v3_rules": [
+   "VN03_BARE_PRISM"
+  ],
+  "v3_text": "Cho hình lăng trụ đứng GPR.KUV có đáy GPR vuông tại G, GP = 3a, GR = 4a, GK = 7a. Tính thể tích khối lăng trụ theo a.",
+  "v3_parse_status": "LOCAL_PARSE_PARTIAL",
+  "v3_parse_reason": "UNPARSED_GOAL_CANDIDATE",
+  "v3_unparsed_facts": [],
+  "v3_unparsed_goals": [
+   "Tính thể tích khối lăng trụ theo a"
+  ]
+ },
+ {
+  "case_id": "Q01b",
+  "live_status": "REFUSED",
+  "live_reason": "OUT_OF_SCOPE",
+  "parse_status": "LOCAL_PARSE_PARTIAL",
+  "parse_reason": "QUESTION_CONTEXT_UNSUPPORTED",
+  "unparsed_facts": [],
+  "unparsed_goals": [],
+  "unresolved_refs": [],
+  "v3_changed": true,
+  "v3_rules": [
+   "VN17_QUESTION_FIRST_WITH_PREMISES",
+   "VN05_HAY_TIM_GOAL"
+  ],
+  "v3_text": "Cho khối chóp B.EFGH với đáy EFGH là hình chữ nhật có EF = 4 và EH = 9, BE = 10 và đường cao là BE. Tính thể tích khối chóp B.EFGH.",
+  "v3_parse_status": "LOCAL_PARSE_PARTIAL",
+  "v3_parse_reason": "UNPARSED_FACT_CANDIDATE",
+  "v3_unparsed_facts": [
+   "Cho khối chóp B.EFGH với đáy EFGH là hình chữ nhật có EF = 4 và EH = 9, BE = 10 và đường cao là BE"
+  ],
+  "v3_unparsed_goals": []
+ },
+ {
+  "case_id": "Q02b",
+  "live_status": "SERVED",
+  "live_reason": null,
+  "parse_status": "LOCAL_PARSE_PARTIAL",
+  "parse_reason": "UNPARSED_FACT_CANDIDATE",
+  "unparsed_facts": [
+   "Tứ diện MNQU có ba cạnh MN, MQ, MU vuông góc với nhau từng đôi một"
+  ],
+  "unparsed_goals": [],
+  "unresolved_refs": [],
+  "v3_changed": true,
+  "v3_rules": [
+   "VN16_BARE_SIMULATION_REQUEST",
+   "VN07_SEMICOLON_TO_COMMA"
+  ],
+  "v3_text": "Tứ diện MNQU có ba cạnh MN, MQ, MU vuông góc với nhau từng đôi một, MN = 5, MQ = 7, MU = 9. Vẽ hình.",
+  "v3_parse_status": "LOCAL_PARSE_PARTIAL",
+  "v3_parse_reason": "UNPARSED_FACT_CANDIDATE",
+  "v3_unparsed_facts": [
+   "Tứ diện MNQU có ba cạnh MN, MQ, MU vuông góc với nhau từng đôi một, MN = 5, MQ = 7, MU = 9"
+  ],
+  "v3_unparsed_goals": []
+ },
+ {
+  "case_id": "L01",
+  "live_status": "SERVED",
+  "live_reason": null,
+  "parse_status": "LOCAL_PARSE_PARTIAL",
+  "parse_reason": "NOT_ASKED_IN_SOURCE",
+  "unparsed_facts": [],
+  "unparsed_goals": [],
+  "unresolved_refs": [],
+  "v3_changed": true,
+  "v3_rules": [
+   "VN03_TRONG_XET"
+  ],
+  "v3_text": "Cho hình chóp D.HJKL. Đáy HJKL là hình chữ nhật với HJ = 6, HL = 10. Cạnh bên DH vuông góc với mặt phẳng (HJKL). Độ dài DH = 8. Tính thể tích khối chóp D.HJKL.",
+  "v3_parse_status": "LOCAL_PARSE_PARTIAL",
+  "v3_parse_reason": "NOT_ASKED_IN_SOURCE",
+  "v3_unparsed_facts": [],
+  "v3_unparsed_goals": []
+ },
+ {
+  "case_id": "L02",
+  "live_status": "SERVED",
+  "live_reason": null,
+  "parse_status": "LOCAL_PARSE_PARTIAL",
+  "parse_reason": "UNPARSED_FACT_CANDIDATE",
+  "unparsed_facts": [
+   "Cạnh bên BH có độ dài bằng 9"
+  ],
+  "unparsed_goals": [],
+  "unresolved_refs": [],
+  "v3_changed": true,
+  "v3_rules": [
+   "VN03_TRONG_XET",
+   "VN03_BARE_PRISM",
+   "VN05_LAT_EDGE_DO_DAI"
+  ],
+  "v3_text": "Cho hình lăng trụ đứng BDE.HJK. Tam giác đáy BDE vuông tại B. Độ dài BD = 5, BE = 10. BH=9. Tính thể tích khối lăng trụ BDE.HJK.",
+  "v3_parse_status": "LOCAL_PARSE_PARTIAL",
+  "v3_parse_reason": "NOT_ASKED_IN_SOURCE",
+  "v3_unparsed_facts": [],
+  "v3_unparsed_goals": []
+ },
+ {
+  "case_id": "L03",
+  "live_status": "SERVED",
+  "live_reason": null,
+  "parse_status": "LOCAL_PARSE_PARTIAL",
+  "parse_reason": "NOT_ASKED_IN_SOURCE",
+  "unparsed_facts": [],
+  "unparsed_goals": [],
+  "unresolved_refs": [],
+  "v3_changed": true,
+  "v3_rules": [
+   "VN03_XET_TU_DIEN"
+  ],
+  "v3_text": "Cho tứ diện NPRV. Các cạnh NP, NR, NV đôi một vuông góc. Độ dài NP = 5, NR = 8, NV = 12. Tính thể tích khối tứ diện NPRV.",
+  "v3_parse_status": "LOCAL_PARSE_PARTIAL",
+  "v3_parse_reason": "NOT_ASKED_IN_SOURCE",
+  "v3_unparsed_facts": [],
+  "v3_unparsed_goals": []
+ },
+ {
+  "case_id": "L04",
+  "live_status": "SERVED",
+  "live_reason": null,
+  "parse_status": "LOCAL_PARSE_PARTIAL",
+  "parse_reason": "NOT_ASKED_IN_SOURCE",
+  "unparsed_facts": [],
+  "unparsed_goals": [],
+  "unresolved_refs": [],
+  "v3_changed": true,
+  "v3_rules": [
+   "VN05_VUONG_GOC_MAT_DAY_PAREN"
+  ],
+  "v3_text": "Cho hình chóp E.KLMN với đáy KLMN là hình vuông. Độ dài KL = 7. Cạnh bên EK vuông góc với (KLMN) và có độ dài là 9. Tính thể tích khối chóp E.KLMN.",
+  "v3_parse_status": "LOCAL_PARSE_PARTIAL",
+  "v3_parse_reason": "NOT_ASKED_IN_SOURCE",
+  "v3_unparsed_facts": [],
+  "v3_unparsed_goals": []
+ },
+ {
+  "case_id": "L05",
+  "live_status": "SERVED",
+  "live_reason": null,
+  "parse_status": "LOCAL_PARSE_PARTIAL",
+  "parse_reason": "NOT_ASKED_IN_SOURCE",
+  "unparsed_facts": [],
+  "unparsed_goals": [],
+  "unresolved_refs": [],
+  "v3_changed": true,
+  "v3_rules": [
+   "VN17_QUESTION_FIRST_WITH_PREMISES",
+   "VN06_RIGHT_PRISM_CANH_BEN",
+   "VN05_HAY_TIM_GOAL"
+  ],
+  "v3_text": "Cho khối lăng trụ đứng CEF.KLM biết tam giác CEF vuông tại C có độ dài CE = 8, CF = 9 và cạnh bên CK = 6. Tính thể tích khối lăng trụ đứng CEF.KLM.",
+  "v3_parse_status": "LOCAL_PARSE_PARTIAL",
+  "v3_parse_reason": "NOT_ASKED_IN_SOURCE",
+  "v3_unparsed_facts": [],
+  "v3_unparsed_goals": []
+ },
+ {
+  "case_id": "L06",
+  "live_status": "REFUSED",
+  "live_reason": "AMBIGUOUS_FACT",
+  "parse_status": "LOCAL_PARSE_PARTIAL",
+  "parse_reason": "UNPARSED_GOAL_CANDIDATE",
+  "unparsed_facts": [
+   "Cho tứ diện PQRW với ba cạnh PQ, PR, PW vuông góc từng đôi, có độ dài tương ứng là 3a, 4a và 7a"
+  ],
+  "unparsed_goals": [
+   "Tính thể tích khối tứ diện theo a"
+  ],
+  "unresolved_refs": [],
+  "v3_changed": true,
+  "v3_rules": [
+   "VN14_RESPECTIVE_VALUES"
+  ],
+  "v3_text": "Cho tứ diện PQRW với PQ, PR, PW đôi một vuông góc, PQ = 3a, PR = 4a, PW = 7a. Tính thể tích khối tứ diện theo a.",
+  "v3_parse_status": "LOCAL_PARSE_PARTIAL",
+  "v3_parse_reason": "UNPARSED_GOAL_CANDIDATE",
+  "v3_unparsed_facts": [],
+  "v3_unparsed_goals": [
+   "Tính thể tích khối tứ diện theo a"
+  ]
+ },
+ {
+  "case_id": "L07",
+  "live_status": "SERVED",
+  "live_reason": null,
+  "parse_status": "LOCAL_PARSE_PARTIAL",
+  "parse_reason": "NOT_ASKED_IN_SOURCE",
+  "unparsed_facts": [],
+  "unparsed_goals": [],
+  "unresolved_refs": [],
+  "v3_changed": true,
+  "v3_rules": [
+   "VN03_TRONG_XET"
+  ],
+  "v3_text": "Cho hình chóp G.PRST có đáy PRST là hình vuông. Độ dài GP = 8 và GP vuông góc với (PRST), cạnh đáy PR = 5. Hãy vẽ hình chóp G.PRST.",
+  "v3_parse_status": "LOCAL_PARSE_PARTIAL",
+  "v3_parse_reason": "NOT_ASKED_IN_SOURCE",
+  "v3_unparsed_facts": [],
+  "v3_unparsed_goals": []
+ },
+ {
+  "case_id": "L08",
+  "live_status": "SERVED",
+  "live_reason": null,
+  "parse_status": "LOCAL_PARSE_PARTIAL",
+  "parse_reason": "UNPARSED_FACT_CANDIDATE",
+  "unparsed_facts": [
+   "Cạnh bên DM có độ dài là 5"
+  ],
+  "unparsed_goals": [],
+  "unresolved_refs": [],
+  "v3_changed": true,
+  "v3_rules": [
+   "VN03_TRONG_XET",
+   "VN03_BARE_PRISM"
+  ],
+  "v3_text": "Cho hình lăng trụ đứng DFG.MNP. Tam giác đáy DFG vuông tại D. Độ dài DF = 6, DG = 8. Cạnh bên DM có độ dài là 5. Tính độ dài FG.",
+  "v3_parse_status": "LOCAL_PARSE_PARTIAL",
+  "v3_parse_reason": "UNPARSED_FACT_CANDIDATE",
+  "v3_unparsed_facts": [
+   "Cạnh bên DM có độ dài là 5"
+  ],
+  "v3_unparsed_goals": []
+ },
+ {
+  "case_id": "L09",
+  "live_status": "SERVED",
+  "live_reason": null,
+  "parse_status": "LOCAL_PARSE_PARTIAL",
+  "parse_reason": "NOT_ASKED_IN_SOURCE",
+  "unparsed_facts": [],
+  "unparsed_goals": [],
+  "unresolved_refs": [],
+  "v3_changed": true,
+  "v3_rules": [
+   "VN03_TRONG_XET"
+  ],
+  "v3_text": "Cho hình hộp chữ nhật CDGK.C'D'G'K'. Độ dài CD = 5, CK = 6, CC' = 11. Tính thể tích khối hộp chữ nhật CDGK.C'D'G'K'.",
+  "v3_parse_status": "LOCAL_PARSE_PARTIAL",
+  "v3_parse_reason": "NOT_ASKED_IN_SOURCE",
+  "v3_unparsed_facts": [],
+  "v3_unparsed_goals": []
+ },
+ {
+  "case_id": "L10",
+  "live_status": "SERVED",
+  "live_reason": null,
+  "parse_status": "LOCAL_PARSE_PARTIAL",
+  "parse_reason": "NOT_ASKED_IN_SOURCE",
+  "unparsed_facts": [],
+  "unparsed_goals": [],
+  "unresolved_refs": [],
+  "v3_changed": true,
+  "v3_rules": [
+   "VN03_TRONG_XET"
+  ],
+  "v3_text": "Cho hình chóp H.TUVW có đáy TUVW là hình vuông cạnh 8. Đường thẳng HT vuông góc với mặt phẳng (TUVW) và độ dài HT = 8. Tính góc giữa HU và (TUVW).",
+  "v3_parse_status": "LOCAL_PARSE_PARTIAL",
+  "v3_parse_reason": "NOT_ASKED_IN_SOURCE",
+  "v3_unparsed_facts": [],
+  "v3_unparsed_goals": []
+ },
+ {
+  "case_id": "L11",
+  "live_status": "SERVED",
+  "live_reason": null,
+  "parse_status": "LOCAL_PARSE_PARTIAL",
+  "parse_reason": "NOT_ASKED_IN_SOURCE",
+  "unparsed_facts": [],
+  "unparsed_goals": [],
+  "unresolved_refs": [],
+  "v3_changed": true,
+  "v3_rules": [
+   "VN03_XET_TU_DIEN"
+  ],
+  "v3_text": "Cho tứ diện RSTX. Các cạnh RS, RT, RX đôi một vuông góc. Độ dài RS = 8, RT = 15, RX = 6. Tính độ dài ST.",
+  "v3_parse_status": "LOCAL_PARSE_PARTIAL",
+  "v3_parse_reason": "NOT_ASKED_IN_SOURCE",
+  "v3_unparsed_facts": [],
+  "v3_unparsed_goals": []
+ },
+ {
+  "case_id": "L12",
+  "live_status": "SERVED",
+  "live_reason": null,
+  "parse_status": "LOCAL_PARSE_PARTIAL",
+  "parse_reason": "UNPARSED_FACT_CANDIDATE",
+  "unparsed_facts": [
+   "Xét hình lập phương EFHL.E'F'H'L' có độ dài cạnh bằng 7"
+  ],
+  "unparsed_goals": [],
+  "unresolved_refs": [],
+  "v3_changed": true,
+  "v3_rules": [
+   "VN03_TRONG_XET"
+  ],
+  "v3_text": "Cho hình lập phương EFHL.E'F'H'L' có độ dài cạnh bằng 7. Tính độ dài đường chéo EH'.",
+  "v3_parse_status": "LOCAL_PARSE_PARTIAL",
+  "v3_parse_reason": "UNPARSED_FACT_CANDIDATE",
+  "v3_unparsed_facts": [
+   "Cho hình lập phương EFHL.E'F'H'L' có độ dài cạnh bằng 7"
+  ],
+  "v3_unparsed_goals": []
+ }
+]

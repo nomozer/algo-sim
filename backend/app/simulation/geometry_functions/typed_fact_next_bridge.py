@@ -136,11 +136,47 @@ def _kiem_pham_vi_tien_de(p: TypedFactNextPayload, solids: dict[str, Any]) -> li
         except TypedFactNextValidationError as e:
             raise TuChoi(e.code, e.detail) from None
 
+    desc_by_id = {d.described_id: d for d in getattr(p, "described_points", ())}
+
+    def _desc_leaf_refs(ref: str, seen: set[str] | None = None) -> list[str]:
+        if not is_described_ref(ref):
+            return [ref]
+        did = ref.strip()[1:]
+        d = desc_by_id.get(did)
+        if d is None or (seen and did in seen):
+            return []
+        nxt_seen = (seen or set()) | {did}
+        raw = [*d.point_operands(), *(d.plane or ()), *(d.polygon or ())]
+        return [leaf for x in raw for leaf in _desc_leaf_refs(x, nxt_seen)]
+
     def ref_owners(ref, scope=None):
+        if is_described_ref(ref):
+            leaf_sets = [owners.get(identity(leaf, scope), set()) for leaf in _desc_leaf_refs(ref)]
+            return set.intersection(*leaf_sets) if leaf_sets and all(leaf_sets) else set()
         return owners.get(identity(ref, scope), set())
     outputs = CONSTRUCTED_OUTPUTS
     new_names = {_ref(prem.args[outputs[prem.kind]]) for prem in p.premises
-                 if prem.kind in outputs and outputs[prem.kind] in prem.args}
+                 if prem.kind in outputs and isinstance(prem.args.get(outputs[prem.kind]), str)
+                 and not is_described_ref(prem.args[outputs[prem.kind]])}
+    # A secondary vertex-subset pyramid (`B'.ACC'A'`, `A'.ABC`, `O.MNP`, `M.ABC`) borrows vertices/outputs from its host solid.
+    host_vertex_sets = {
+        sid: ({s.canonical_vertex(v) for v in s.local_vertices()} | new_names)
+        for sid, s in solids.items()
+    }
+    solid_local_canon = {sid: {s.canonical_vertex(v) for v in s.local_vertices()} for sid, s in solids.items()}
+    derived_subsolids = {
+        sid for sid, s in solids.items()
+        if s.solid_type == "pyramid" and any(
+            h_sid != sid
+            and solid_local_canon[sid] <= host_vertex_sets[h_sid]
+            and (
+                solids[h_sid].solid_type != "pyramid"
+                or len(solid_local_canon[h_sid]) > len(solid_local_canon[sid])
+                or (bool(solid_local_canon[sid] & new_names) and not (solid_local_canon[h_sid] & new_names))
+            )
+            for h_sid in solids
+        )
+    }
     anchored_spheres: dict[str, str] = {}
     for sid, s in solids.items():
         host = s.circumscribes or getattr(s, "inscribed_in", None)
@@ -172,6 +208,8 @@ def _kiem_pham_vi_tien_de(p: TypedFactNextPayload, solids: dict[str, Any]) -> li
         refs = [(key, ref) for key, shape in schema.items() if shape.startswith('ref') and key in prem.args
                 for ref in (prem.args[key] if shape.startswith('refs') else [prem.args[key]])]
         for _key, ref in refs:
+            if is_described_ref(ref):
+                continue
             explicit, label = parse_qualified_ref(ref)
             if explicit is not None and explicit not in solids:
                 raise TuChoi('UNKNOWN_SOLID_ID', f'{fid}: khối {explicit!r} chưa được khai báo', (fid,))
@@ -199,17 +237,21 @@ def _kiem_pham_vi_tien_de(p: TypedFactNextPayload, solids: dict[str, Any]) -> li
         changed = False
         for prem, _fid, sid, refs in records:
             output = outputs.get(prem.kind)
-            if not output:
+            if not output or not isinstance(prem.args.get(output), str) or is_described_ref(prem.args[output]):
                 continue
             candidates = common([(key, ref) for key, ref in refs if key != output], sid)
             if sid is not None:
                 candidates &= {sid}
             label = identity(prem.args[output], sid)
             if label in vertices:
-                # A shared-face subsolid may name a point constructed on its parent's edge (e.g. a midpoint).
-                # A projection's existing foreign foot is not a fresh point definition.
-                candidates = {s for s in candidates if s in vertices[label] or output == 'point'
-                              and any(frozenset((s, other)) in (shared_faces | circumscribed) for other in vertices[label])}
+                # A shared-face or derived vertex-subset subsolid may name a point constructed on its parent solid.
+                # An existing foreign vertex is only reused for a fresh host output when the foreign vertex lives solely on derived subsolids.
+                candidates = {
+                    s for s in candidates
+                    if s in vertices[label]
+                    or (vertices[label] <= derived_subsolids and s not in derived_subsolids)
+                    or (output == 'point' and any(frozenset((s, other)) in (shared_faces | circumscribed) for other in vertices[label]))
+                }
             before = set(owners.get(label, set()))
             owners.setdefault(label, set()).update(candidates)
             changed |= before != owners[label]
@@ -240,13 +282,17 @@ def _kiem_pham_vi_tien_de(p: TypedFactNextPayload, solids: dict[str, Any]) -> li
         if sid is None and known and not set.intersection(*known):
             raise TuChoi('SOURCE_OBJECT_MISMATCH', f'{fid}: premise trộn thực thể của nhiều khối', (fid,))
         if sid is None and len(candidates) > 1:
+            non_sub = candidates - derived_subsolids
+            if len(non_sub) == 1:
+                candidates = non_sub
+        if sid is None and len(candidates) > 1:
             named = {s for s in candidates if re.search(rf"(?<![\w']){re.escape(solids[s].notation)}(?![\w'])",
                                                        chuan_hoa(prem.quote))}
             if len(named) != 1:
                 raise TuChoi('AMBIGUOUS_REFERENCE', f'{fid}: thiếu phạm vi khối không mơ hồ', (fid,))
             candidates = named
         checked.append({'premise_id':fid,'declared_solid_id':prem.solid_id,'resolved_solid_ids':sorted({sid} if sid else candidates),
-                        'vertices':sorted({_ref(ref) for _key, ref in refs}),'quote':prem.quote})
+                        'vertices':sorted({ref.strip() if is_described_ref(ref) else _ref(ref) for _key, ref in refs}),'quote':prem.quote})
     # S8: every other scoped object of `scope_records` (sections, relation sides, simulation and measurement goals) is
     # bound by the same constructed-point ownership: an unqualified operand owned only by other solids contradicts its
     # scope. Unowned labels (unnamed section points, undeclared names) stay the routes' own refusals.
@@ -288,23 +334,91 @@ def _operand(t: dict[str, Any], key: str, n: int) -> list[str] | None:
 
 def _mo_ta_phang(p: TypedFactNextPayload) -> dict[str, dict[str, Any]]:
     """R-1 (layer 1): described id → the planner's description of that unnamed point, `{"point_kind", "points"}` with the
-    labels flat in the Registry descriptor contract's input order — exactly what a route B question / section fact carries,
-    so the SAME planner, Source Gate and engine read it (no second path). A described point whose operand is itself
-    described is refused: the Source Gate certifies one description per question (`BRIDGE_UNSUPPORTED_DESCRIBED_POINT`)."""
-    out: dict[str, dict[str, Any]] = {}
-    for d in getattr(p, "described_points", ()):
-        if any(is_described_ref(x) for x in d.point_operands()):
-            raise TuChoi("BRIDGE_UNSUPPORTED_DESCRIBED_POINT", f"@{d.described_id}: điểm được mô tả qua một điểm được mô "
-                         "tả khác chưa có chứng chỉ nguồn", (d.described_id,))
-        labels = [x for k, shape in DESCRIBED_POINT_FIELDS[d.kind].items()
-                  for x in ([getattr(d, k)] if shape == "pt" else getattr(d, k))]
-        out[d.described_id] = {"point_kind": d.kind, "points": _refs(labels), "quote": d.quote}
-    return out
+    labels flat in the Registry descriptor contract's input order — so the SAME planner, Source Gate and engine read it
+    (no second path). Resolves topologically in DAG order (supporting any Registry descriptor or `POINT_DEFINITIONS`
+    and nested/line-endpoint `arg_items` up to depth 2)."""
+    import copy
+    import re
+    from .registry import PlanningContract, _P1, chuan_hoa, descriptor_contracts
+
+    by_id = {d.described_id: d for d in getattr(p, "described_points", ())}
+    memo: dict[str, dict[str, Any]] = {}
+
+    def _build(d_id: str, stack: set[str]) -> dict[str, Any]:
+        if d_id in memo:
+            return memo[d_id]
+        if d_id in stack or d_id not in by_id:
+            raise TuChoi("BRIDGE_UNSUPPORTED_DESCRIBED_POINT", f"@{d_id}: điểm được mô tả không hợp lệ", (d_id,))
+        d = by_id[d_id]
+        dcs = [c for c in descriptor_contracts(d.kind) if isinstance(c, PlanningContract)]
+        if not dcs:
+            raise TuChoi("UNSUPPORTED_CAPABILITY", f"@{d.described_id}: chưa có hợp đồng cho {d.kind}", (d.described_id,))
+        ops_refs = [x for x in d.point_operands() if is_described_ref(x)]
+        if not ops_refs:
+            labels = [x for k, shape in DESCRIBED_POINT_FIELDS[d.kind].items()
+                      for x in ([getattr(d, k)] if shape == "pt" else getattr(d, k))]
+            res = {"point_kind": d.kind, "points": _refs(labels), "quote": d.quote}
+            memo[d_id] = res
+            return res
+        new_stack = stack | {d_id}
+        children: dict[str, dict[str, Any]] = {}
+        for ref in ops_refs:
+            sub = _build(ref.strip()[1:], new_stack)
+            if "point_tree" in sub:
+                raise TuChoi("BRIDGE_UNSUPPORTED_DESCRIBED_POINT",
+                             f"@{d.described_id}: chỉ hỗ trợ điểm mô tả lồng tối đa 2 tầng", (d.described_id,))
+            if chuan_hoa(sub["quote"]) not in chuan_hoa(d.quote):
+                raise TuChoi("SOURCE_OBJECT_MISMATCH",
+                             f"@{d.described_id}: cụm mô tả {sub['quote']!r} không nằm trong {d.quote!r}",
+                             (d.described_id,))
+            inner_dcs = [c for c in descriptor_contracts(sub["point_kind"])
+                         if isinstance(c, PlanningContract) and isinstance(c.phrase, str)]
+            if not inner_dcs or not any(re.fullmatch(c.phrase.replace("{P}", _P1), chuan_hoa(sub["quote"]), re.I)
+                                        for c in inner_dcs):
+                raise TuChoi("BRIDGE_UNSUPPORTED_DESCRIBED_POINT",
+                             f"@{d.described_id}: điểm được mô tả qua một điểm được mô tả khác chưa có chứng chỉ nguồn",
+                             (d.described_id,))
+            children[ref] = sub
+        if (d.kind in ("orthogonal_projection", "orthogonal_projection_line") and is_described_ref(d.point)
+                and (d.kind == "orthogonal_projection" or not any(is_described_ref(x) for x in d.line))):
+            inner = children[d.point]
+            target_labels = list(d.plane if d.kind == "orthogonal_projection" else d.line)
+            res = {
+                "point_kind": d.kind,
+                "points": _refs(target_labels),
+                "point_tree": copy.deepcopy({"point_kind": inner["point_kind"], "points": list(inner["points"])}),
+                "quote": d.quote,
+            }
+            memo[d_id] = res
+            return res
+        arg_items: list[Any] = []
+        named_points: list[str] = []
+        for k, shape in DESCRIBED_POINT_FIELDS[d.kind].items():
+            vals = [getattr(d, k)] if shape == "pt" else list(getattr(d, k))
+            for v in vals:
+                if is_described_ref(v):
+                    sub = children[v]
+                    arg_items.append({"point_kind": sub["point_kind"], "points": list(sub["points"])})
+                else:
+                    lbl = _ref(v)
+                    arg_items.append(lbl)
+                    named_points.append(lbl)
+        res = {
+            "point_kind": d.kind,
+            "points": named_points,
+            "point_tree": {"arg_items": arg_items},
+            "quote": d.quote,
+        }
+        memo[d_id] = res
+        return res
+
+    return {d.described_id: _build(d.described_id, set()) for d in getattr(p, "described_points", ())}
 
 
 def _mo_ta_cua(ref: str, mo_ta: dict[str, dict[str, Any]], consumer_quote: str, where: str) -> dict[str, Any]:
-    """The flat description of `@id`, whose describing phrase must lie inside the quote of what uses it (provenance: the
+    """The description of `@id`, whose describing phrase must lie inside the quote of what uses it (provenance: the
     phrase the Source Gate reads in that quote is the one the extractor declared)."""
+    import copy
     from .registry import chuan_hoa
 
     d = mo_ta.get(ref.strip()[1:])
@@ -312,40 +426,87 @@ def _mo_ta_cua(ref: str, mo_ta: dict[str, dict[str, Any]], consumer_quote: str, 
         raise TuChoi("UNKNOWN_DERIVED_REFERENCE", f"{where}: điểm mô tả {ref!r} không được khai", (where,))
     if chuan_hoa(d["quote"]) not in chuan_hoa(consumer_quote):
         raise TuChoi("SOURCE_OBJECT_MISMATCH", f"{where}: cụm mô tả {d['quote']!r} không nằm trong câu dùng nó", (where,))
-    return {"point_kind": d["point_kind"], "points": list(d["points"])}
+    res: dict[str, Any] = {"point_kind": d["point_kind"], "points": list(d["points"])}
+    if "point_tree" in d:
+        res["point_tree"] = copy.deepcopy(d["point_tree"])
+    return res
 
 
 def _cau_hoi_mo_ta(g, mo_ta: dict[str, dict[str, Any]]) -> dict[str, Any] | None:
-    """A measurement goal with ONE described point operand → route B's described question (the described point first,
-    `points_a` the named partner on a line through it, `points_b` the rest), or None when no operand is described. The
-    planner's goal contracts then decide whether those operands fill a goal (`_doc_toan_hang_mo_ta`)."""
+    """A measurement goal with one or more described point operands → route B's described question (`point_kind`/
+    `point_tree` for legacy single-slot goals, or `goal_trees` for derived-line and multi-described goals)."""
     t = g.target
     used = [(k, x) for k in DESCRIBED_GOAL_KEYS if k in t
             for x in (t[k] if isinstance(t[k], (list, tuple)) else [t[k]]) if is_described_ref(x)]
     if not used:
         return None
-    if len(used) != 1:
-        raise TuChoi("BRIDGE_UNSUPPORTED_DESCRIBED_POINT", f"{g.goal_id}: hai điểm được mô tả trong một mục tiêu chưa có "
-                     "chứng chỉ nguồn", (g.goal_id,))
-    key, ref = used[0]
-    desc = _mo_ta_cua(ref, mo_ta, g.quote, g.goal_id)
-    rest = lambda k: [_ref(x) for x in t[k] if not is_described_ref(x)]      # noqa: E731
     keys = set(t) - {"solid", "solid_id"}
+    if len(used) == 1:
+        key, ref = used[0]
+        desc = _mo_ta_cua(ref, mo_ta, g.quote, g.goal_id)
+        has_arg_items = isinstance(desc.get("point_tree"), dict) and "arg_items" in desc["point_tree"]
+        if (
+            not has_arg_items
+            and not (g.goal_type == "distance" and keys in ({"point", "line"}, {"line", "plane"}) and key == "line")
+            and not (g.goal_type == "distance" and keys == {"line1", "line2"})
+        ):
+            rest = lambda k: [_ref(x) for x in t[k] if not is_described_ref(x)]      # noqa: E731
+            if g.goal_type == "distance" and keys == {"point", "plane"}:
+                return {"quantity": "distance", **desc, "points_b": _refs(t["plane"])}
+            if g.goal_type == "distance" and keys == {"point", "line"} and key == "point":
+                return {"quantity": "distance", **desc, "points_b": _refs(t["line"])}
+            if g.goal_type == "distance" and keys == {"segment"}:
+                return {"quantity": "length", **desc, "points_b": rest("segment")}
+            if g.goal_type == "angle" and keys == {"line", "plane"} and key == "line":
+                return {"quantity": "angle", **desc, "points_a": rest("line"), "points_b": _refs(t["plane"])}
+            if g.goal_type == "angle" and keys == {"line1", "line2"} and key in ("line1", "line2"):
+                other = "line2" if key == "line1" else "line1"
+                return {"quantity": "angle", **desc, "points_a": rest(key), "points_b": _refs(t[other])}
+            if g.goal_type == "area" and keys == {"polygon"} and len(t["polygon"]) == 3:
+                return {"quantity": "area", **desc, "points_b": rest("polygon")}
+            raise TuChoi("BRIDGE_UNSUPPORTED_DESCRIBED_POINT", f"{g.goal_id}: điểm được mô tả ở toán hạng {key!r} của "
+                         f"{g.goal_type} chưa có hợp đồng mục tiêu", (g.goal_id,))
+
+    def node_of(val: str):
+        return _mo_ta_cua(val, mo_ta, g.quote, g.goal_id) if is_described_ref(val) else _ref(val)
+
+    def plane_pts(key: str) -> list[str]:
+        raw = t.get(key)
+        if not isinstance(raw, (list, tuple)) or any(is_described_ref(x) for x in raw):
+            raise TuChoi("BRIDGE_UNSUPPORTED_DESCRIBED_POINT",
+                         f"{g.goal_id}: điểm được mô tả ở toán hạng mặt phẳng {key!r} chưa có hợp đồng", (g.goal_id,))
+        pts = _refs(raw)
+        if len(pts) < 3 or len(set(pts)) != len(pts):
+            raise TuChoi("INVALID_MATH_GOAL", f"{g.goal_id}: mặt phẳng {key!r} thiếu đỉnh phân biệt", (g.goal_id,))
+        return pts
+
+    def line_items(key: str) -> list[Any]:
+        raw = t.get(key)
+        if not isinstance(raw, (list, tuple)) or len(raw) != 2 or len({x.strip() for x in raw}) != 2:
+            raise TuChoi("INVALID_MATH_GOAL", f"{g.goal_id}: đường {key!r} cần hai đầu mút phân biệt", (g.goal_id,))
+        return [node_of(x) for x in raw]
+
+    if g.goal_type == "distance" and keys == {"point", "line"}:
+        return {"quantity": "distance", "goal_trees": {"mode": "distance_point_line", "point": node_of(t["point"]), "line": line_items("line")}}
+    if g.goal_type == "distance" and keys == {"line", "plane"}:
+        return {"quantity": "distance", "goal_trees": {"mode": "distance_line_plane", "line": line_items("line"), "plane": plane_pts("plane")}}
     if g.goal_type == "distance" and keys == {"point", "plane"}:
-        return {"quantity": "distance", **desc, "points_b": _refs(t["plane"])}
-    if g.goal_type == "distance" and keys == {"point", "line"} and key == "point":
-        return {"quantity": "distance", **desc, "points_b": _refs(t["line"])}
+        return {"quantity": "distance", "goal_trees": {"mode": "distance_point_plane", "point": node_of(t["point"]), "plane": plane_pts("plane")}}
+    if g.goal_type == "distance" and keys == {"line1", "line2"}:
+        return {"quantity": "distance", "goal_trees": {"mode": "distance_lines", "line1": line_items("line1"), "line2": line_items("line2")}}
     if g.goal_type == "distance" and keys == {"segment"}:
-        return {"quantity": "length", **desc, "points_b": rest("segment")}
-    if g.goal_type == "angle" and keys == {"line", "plane"} and key == "line":
-        return {"quantity": "angle", **desc, "points_a": rest("line"), "points_b": _refs(t["plane"])}
-    if g.goal_type == "angle" and keys == {"line1", "line2"} and key in ("line1", "line2"):
-        other = "line2" if key == "line1" else "line1"
-        return {"quantity": "angle", **desc, "points_a": rest(key), "points_b": _refs(t[other])}
+        return {"quantity": "length", "goal_trees": {"mode": "length", "points": line_items("segment")}}
+    if g.goal_type == "angle" and keys == {"line", "plane"}:
+        return {"quantity": "angle", "goal_trees": {"mode": "angle_line_plane", "line": line_items("line"), "plane": plane_pts("plane")}}
+    if g.goal_type == "angle" and keys == {"line1", "line2"}:
+        return {"quantity": "angle", "goal_trees": {"mode": "angle_lines", "line1": line_items("line1"), "line2": line_items("line2")}}
     if g.goal_type == "area" and keys == {"polygon"} and len(t["polygon"]) == 3:
-        return {"quantity": "area", **desc, "points_b": rest("polygon")}
-    raise TuChoi("BRIDGE_UNSUPPORTED_DESCRIBED_POINT", f"{g.goal_id}: điểm được mô tả ở toán hạng {key!r} của "
-                 f"{g.goal_type} chưa có hợp đồng mục tiêu", (g.goal_id,))
+        raw_poly = t["polygon"]
+        if len({x.strip() for x in raw_poly}) != 3:
+            raise TuChoi("INVALID_MATH_GOAL", f"{g.goal_id}: tam giác cần ba đỉnh phân biệt", (g.goal_id,))
+        return {"quantity": "area", "goal_trees": {"mode": "area", "polygon": [node_of(x) for x in raw_poly]}}
+    raise TuChoi("BRIDGE_UNSUPPORTED_DESCRIBED_POINT",
+                 f"{g.goal_id}: mục tiêu {g.goal_type} với điểm được mô tả chưa có hợp đồng mục tiêu", (g.goal_id,))
 
 
 def _distance_question(g) -> dict[str, Any]:
@@ -391,20 +552,21 @@ def _la_mat_qua_ba_diem(sec: DerivedPlaneSectionSpec | DerivedPlaneSectionSpecV2
     """A `/2` plane given ONLY as "contains these three named points" — the plane (MNP), no relation to ground."""
     cs = getattr(sec, "constraints", ())
     return (sec.plane_kind == "constrained" and len(cs) == 1 and cs[0].kind == "contains_points"
-            and len(cs[0].operands) == 3)
+            and len(cs[0].operands) == 3 and not any(is_described_ref(p) for p in cs[0].operands))
 
 
 def _ten_mat_khai(sec: DerivedPlaneSectionSpec | DerivedPlaneSectionSpecV2) -> str:
-    """The plane name the scene must display: a three-point plane is named by its points, "(MNP)"."""
+    """The plane name the scene must display: a three-point plane is its three points `(MNP)`."""
     return "".join(_refs(sec.constraints[0].operands)) if _la_mat_qua_ba_diem(sec) else sec.plane_name
 
 
 def _mat_fact(sec: DerivedPlaneSectionSpec | DerivedPlaneSectionSpecV2, solids: dict[str, Any],
-              asked: list[str], mo_ta: dict[str, dict[str, Any]] | None = None) -> dict[str, Any]:
+              asked: list[str], mo_ta: dict[str, dict[str, Any]] | None = None,
+              extra_quotes: tuple[str, ...] | list[str] = ()) -> dict[str, Any]:
     """The section fact's PLANE (shared by `/1` and `/2`). A described through-point (R-1) becomes route B's described
     point of a relation plane: `point_kind` + `points` instead of `point`."""
     if sec.plane_kind == "constrained":                # C17: the stated relations only — witnesses are the planner's
-        if any(is_described_ref(p) for c in sec.constraints for p in c.operands):
+        if any(is_described_ref(p) for c in sec.constraints if c.kind != "contains_points" for p in c.operands):
             raise TuChoi("BRIDGE_UNSUPPORTED_DESCRIBED_POINT", f"{sec.section_id}: điểm mô tả trong ràng buộc mặt chưa hỗ trợ",
                          (sec.section_id,))
         if _la_mat_qua_ba_diem(sec):
@@ -417,11 +579,31 @@ def _mat_fact(sec: DerivedPlaneSectionSpec | DerivedPlaneSectionSpecV2, solids: 
                              (sec.section_id,))
             return {"id": sec.section_id, "kind": "section", "role": "question" if asked else "premise",
                     "quotes": [sec.quote, *asked], "solid": solids[sec.target_solid_id].notation, "points": pts}
+        quote_ctx = "\n".join([sec.quote, *extra_quotes])
+        cs_out: list[dict[str, Any]] = []
+        for c in sec.constraints:
+            if c.kind == "contains_points" and any(is_described_ref(p) for p in c.operands):
+                items = [
+                    _mo_ta_cua(p, mo_ta or {}, quote_ctx, sec.section_id) if is_described_ref(p) else _ref(p)
+                    for p in c.operands
+                ]
+                cs_out.append({
+                    "kind": c.kind,
+                    "points": [x for x in items if isinstance(x, str)],
+                    "point_items": items,
+                })
+            else:
+                cs_out.append({"kind": c.kind, "points": _refs(c.operands)})
+        explicit_pname = (
+            getattr(sec, "plane_name", None)
+            if (not hasattr(sec, "model_fields_set") or "plane_name" in sec.model_fields_set)
+            else None
+        )
         f = {"id": sec.section_id, "kind": "section", "role": "question" if asked else "premise",
              "quotes": [sec.quote, *asked], "solid": solids[sec.target_solid_id].notation,
-             "plane_constraints": [{"kind": c.kind, "points": _refs(c.operands)} for c in sec.constraints]}
-        if sec.plane_name is not None:
-            f["plane_name"] = sec.plane_name
+             "plane_constraints": cs_out}
+        if explicit_pname is not None:
+            f["plane_name"] = explicit_pname
         return f
     rel = _PLANE_RELATION.get(sec.plane_kind)
     if rel is None:
@@ -432,17 +614,22 @@ def _mat_fact(sec: DerivedPlaneSectionSpec | DerivedPlaneSectionSpecV2, solids: 
     f: dict[str, Any] = {"id": sec.section_id, "kind": "section", "role": "question" if asked else "premise",
                          "quotes": [sec.quote, *asked], "solid": solids[sec.target_solid_id].notation,
                          **qua, "plane_relation": rel}
-    if getattr(sec, "plane_name", None) is not None:
+    explicit_pname = (
+        getattr(sec, "plane_name", None)
+        if (not hasattr(sec, "model_fields_set") or "plane_name" in sec.model_fields_set)
+        else None
+    )
+    if explicit_pname is not None:
         import re as _re
-        if not _re.fullmatch(r"(?:[A-Z][0-9]*'?|[α-ω]'?)", str(sec.plane_name)):
+        if not _re.fullmatch(r"(?:[A-Z][0-9]*'?|[α-ω]'?)", str(explicit_pname)):
             raise TuChoi("SOURCE_OBJECT_MISMATCH", f"{sec.section_id}: tên mặt đã khai không khớp mặt được Source Gate xác minh", (sec.section_id,))
-        f["plane_name"] = sec.plane_name
+        f["plane_name"] = explicit_pname
     if rel == "parallel":
         f["points_b"] = _refs(sec.parallel_plane)
     elif rel == "perpendicular":
         f["points_b"] = _refs(sec.perpendicular_line)
     else:
-        f.update(points_a=_refs(sec.parallel_line_a), points_b=_refs(sec.parallel_line_b), plane_name=sec.plane_name)
+        f.update(points_a=_refs(sec.parallel_line_a), points_b=_refs(sec.parallel_line_b))
     return f
 
 
@@ -465,6 +652,12 @@ def _v2_plane_def_quotes(sec: DerivedPlaneSectionSpec | DerivedPlaneSectionSpecV
     )
     cac_mau = (_QUA_SONG_SONG, _DIEM_TRUOC_SONG_SONG, _QUA_VUONG_DUONG, _DIEM_TRUOC_VUONG_DUONG,
                _QUA_HAI_DUONG, _DIEM_TRUOC_HAI_DUONG)
+    if getattr(sec, "plane_kind", None) == "constrained":
+        con_pat = re.compile(
+            rf"(?:(?:mặt\s+phẳng|mp)\s*)?\((?P<ten>{re.escape(str(ten))})\)\s*(?:là\s+mặt\s+phẳng\s+)?(?:(?:đi\s+)?qua|chứa)\b",
+            re.IGNORECASE,
+        )
+        cac_mau = (*cac_mau, con_pat)
     qn = chuan_hoa(sec.quote)
     if any(m["ten"] == ten for mau in cac_mau for m in mau.finditer(qn)):
         return []
@@ -498,7 +691,8 @@ def _section_fact_v2(sec: DerivedPlaneSectionSpecV2, solids: dict[str, Any], ask
                      problem_text: str | None = None, mo_ta: dict[str, dict[str, Any]] | None = None) -> dict[str, Any]:
     """`/2`: stated intersections are the stated cuts (names aligned, None = stated but unnamed); the planner may derive
     the vertex of an UNSTATED lateral edge where a closed boundary is required (D6); a declared boundary is verified."""
-    f = _mat_fact(sec, solids, asked, mo_ta)
+    extra = _v2_plane_def_quotes(sec, problem_text)
+    f = _mat_fact(sec, solids, asked, mo_ta, extra_quotes=extra)
     if _la_mat_qua_ba_diem(sec):
         # The engine derives every vertex of a three-point section; stated cuts / a declared boundary have no carrier on
         # that function yet — refused, never silently dropped.
@@ -506,7 +700,7 @@ def _section_fact_v2(sec: DerivedPlaneSectionSpecV2, solids: dict[str, Any], ask
             raise TuChoi("UNSUPPORTED_CAPABILITY", f"{sec.section_id}: giao điểm/biên khai sẵn trên mặt qua ba điểm chưa hỗ trợ",
                          (sec.section_id,))
         return f
-    if extra := _v2_plane_def_quotes(sec, problem_text):
+    if extra:
         f["quotes"] = list(dict.fromkeys([*extra, *f["quotes"]]))
     f["cut_edges"] = [_refs(s.edge) for s in sec.stated_intersections]
     if any(s.point for s in sec.stated_intersections):
@@ -620,6 +814,18 @@ def _phan_cong(p: TypedFactNextPayload, solids: dict[str, Any]) -> list[dict[str
     return out
 
 
+def _output_policies_from_payload(p: TypedFactNextPayload) -> dict[str, dict[str, Any]]:
+    return {
+        g.goal_id: {
+            **({"requested_unit": g.requested_unit} if getattr(g, "requested_unit", None) else {}),
+            **({"rounding": dict(g.rounding)} if getattr(g, "rounding", None) else {}),
+            "quote": g.quote,
+        }
+        for g in p.math_goals
+        if getattr(g, "requested_unit", None) or getattr(g, "rounding", None)
+    }
+
+
 def _ket_cau_noi(p: TypedFactNextPayload, facts: list[dict[str, Any]], version: str, scoped: Any) -> dict[str, Any]:
     khong = [g.goal_id for g in p.simulation_goals if g.kind in _NO_NEW_FACT_GOALS]
     return {"facts": facts, "bridge": {"version": version, "goals_without_new_facts": khong,
@@ -627,6 +833,7 @@ def _ket_cau_noi(p: TypedFactNextPayload, facts: list[dict[str, Any]], version: 
                                        "validated_premise_scopes": scoped,
                                        "declared_length_unit": p.length_unit,
                                        "declared_plane_names": {s.section_id: _ten_mat_khai(s) for s in p.derived_sections},
+                                       "output_policies": _output_policies_from_payload(p),
                                        "problem_text": p.problem_text}}
 
 
@@ -662,6 +869,26 @@ def _bridge(p: TypedFactNextPayload, section_fact, version: str, v2: bool) -> di
     curved = {s.solid_id for s in p.solids if s.solid_type not in ("pyramid", "prism")}
     poly_solids = [x for x in solids.values() if x.solid_type in ("pyramid", "prism")]
     poly_ids = {x.solid_id for x in poly_solids}
+    constructed_outs = {
+        _ref(prem.args[CONSTRUCTED_OUTPUTS[prem.kind]])
+        for prem in p.premises
+        if prem.kind in CONSTRUCTED_OUTPUTS
+        and isinstance(prem.args.get(CONSTRUCTED_OUTPUTS[prem.kind]), str)
+        and not is_described_ref(prem.args[CONSTRUCTED_OUTPUTS[prem.kind]])
+    }
+    poly_root_solids = [
+        x for x in poly_solids
+        if not (
+            x.solid_type == "pyramid"
+            and any(
+                h is not x
+                and {x.canonical_vertex(v) for v in x.local_vertices()}
+                <= ({h.canonical_vertex(v) for v in h.local_vertices()} | constructed_outs)
+                and (h.solid_type != "pyramid" or len(h.local_vertices()) > len(x.local_vertices()))
+                for h in poly_solids
+            )
+        )
+    ]
     sphere_anchor: dict[str, tuple[str, str, list[str]]] = {}
     for s in p.solids:
         if s.circumscribes is not None:
@@ -777,6 +1004,23 @@ def _bridge(p: TypedFactNextPayload, section_fact, version: str, v2: bool) -> di
                 f["value"] = str(a["side"])
         elif k in ("rectangle", "base_is_rectangle"):
             f = {"kind": "polygon_shape", "points": _refs(a["vertices"]), "shape": "rectangle"}
+        elif k == "parallelogram":
+            f = {"kind": "polygon_shape", "points": _refs(a["vertices"]), "shape": "parallelogram"}
+        elif k == "rhombus":
+            f = {
+                "kind": "polygon_shape",
+                "points": _refs(a["vertices"]),
+                "shape": "rhombus",
+                **({"value": str(a["side"])} if a.get("side") is not None else {}),
+            }
+        elif k in ("trapezoid", "isosceles_trapezoid"):
+            f = {
+                "kind": "polygon_shape",
+                "points": _refs(a["vertices"]),
+                "shape": k,
+                "points_a": _refs(a["base_a"]),
+                "points_b": _refs(a["base_b"]),
+            }
         elif k in ("right_angle", "base_is_right_triangle"):
             at = _ref(a["right_at"] if "vertices" in a else a["vertex"])
             f = {"kind": "right_angle", "at": at,
@@ -786,8 +1030,8 @@ def _bridge(p: TypedFactNextPayload, section_fact, version: str, v2: bool) -> di
         elif k == "height":
             sid = a.get("solid") or prem.solid_id
             sol = solids.get(sid or "")
-            if sol is None and sid is None and len(poly_solids) == 1:
-                sol = poly_solids[0]
+            if sol is None and sid is None and len(poly_root_solids) == 1:
+                sol = poly_root_solids[0]
             f = {"kind": "length", "measure": "height",
                  "solid": curved_sym.get(sol.solid_id, sol.notation) if sol else sid,
                  "value": str(a["value"])}
@@ -802,8 +1046,8 @@ def _bridge(p: TypedFactNextPayload, section_fact, version: str, v2: bool) -> di
         elif k == "altitude":
             sid = a.get("solid") or prem.solid_id
             sol = solids.get(sid or "")
-            if sol is None and sid is None and len(poly_solids) == 1:
-                sol = poly_solids[0]
+            if sol is None and sid is None and len(poly_root_solids) == 1:
+                sol = poly_root_solids[0]
             f = {"kind": "altitude", "points": [_ref(a["apex"]), _ref(a["foot"])],
                  "solid": sol.notation if sol else sid}
         elif k in ("midpoint", "point_is_midpoint"):
@@ -813,16 +1057,69 @@ def _bridge(p: TypedFactNextPayload, section_fact, version: str, v2: bool) -> di
                  "points": _refs(a["segment"]), "value": str(a["ratio"])}
         elif k in ("centroid", "point_is_centroid"):
             f = {"kind": "point_def", "point_kind": "centroid", "point": _ref(a["point"]), "points": _refs(a["polygon"])}
-        elif k in ("orthogonal_projection", "point_is_foot"):
-            f = {"kind": "projection", "point": _ref(a["point"]), "points": _refs(a["plane"]), "at": _ref(a["image"])}
-        elif k == "orthogonal_projection_line":
-            f = {"kind": "projection", "point": _ref(a["point"]), "points": _refs(a["line"]), "at": _ref(a["image"])}
+        elif k in ("orthogonal_projection", "point_is_foot", "orthogonal_projection_line"):
+            target_key = "line" if k == "orthogonal_projection_line" else "plane"
+            prem_slots: dict[str, Any] = {}
+            f = {"kind": "projection", "points": _refs(a[target_key])}
+            if is_described_ref(a["point"]):
+                prem_slots["point"] = mo_ta[a["point"].strip()[1:]]
+            else:
+                f["point"] = _ref(a["point"])
+            if is_described_ref(a["image"]):
+                prem_slots["image"] = mo_ta[a["image"].strip()[1:]]
+            else:
+                f["at"] = _ref(a["image"])
+            if prem_slots:
+                f["goal_trees"] = {"premise_slots": prem_slots}
+        elif k == "point_reflection":
+            prem_slots = {}
+            f = {"kind": "point_reflection", "at": _ref(a["image"])}
+            if is_described_ref(a["point"]):
+                prem_slots["point"] = mo_ta[a["point"].strip()[1:]]
+            else:
+                f["point"] = _ref(a["point"])
+            if is_described_ref(a["center"]):
+                prem_slots["center"] = mo_ta[a["center"].strip()[1:]]
+            else:
+                f["points"] = [_ref(a["center"])]
+            if prem_slots:
+                f["goal_trees"] = {"premise_slots": prem_slots}
         elif k == "intersect_line_line":
             f = {"kind": "point_def", "point_kind": "intersect_line_line", "point": _ref(a["point"]),
                  "points_a": _refs(a["line1"]), "points_b": _refs(a["line2"])}
         elif k == "intersect_line_plane":
             f = {"kind": "point_def", "point_kind": "intersect_line_plane", "point": _ref(a["point"]),
                  "points_a": _refs(a["line"]), "points_b": _refs(a["plane"])}
+        elif k == "line_plane_angle":
+            f = {"kind": "line_plane_angle", "points_a": _refs(a["line"]), "points_b": _refs(a["plane"]),
+                 "value": str(a["value"]), **({"angle_unit": str(a["unit"])} if a.get("unit") else {})}
+        elif k == "plane_plane_angle":
+            f = {"kind": "plane_plane_angle", "points_a": _refs(a["plane1"]), "points_b": _refs(a["plane2"]),
+                 "value": str(a["value"]), **({"angle_unit": str(a["unit"])} if a.get("unit") else {})}
+        elif k == "dihedral_angle":
+            f = {"kind": "dihedral_angle", "point": _ref(a["point_a"]), "points": _refs(a["edge"]),
+                 "at": _ref(a["point_b"]), "value": str(a["value"]),
+                 **({"angle_unit": str(a["unit"])} if a.get("unit") else {})}
+        elif k == "line_line_angle":
+            f = {"kind": "line_line_angle", "points_a": _refs(a["line1"]), "points_b": _refs(a["line2"]),
+                 "value": str(a["value"]), **({"angle_unit": str(a["unit"])} if a.get("unit") else {})}
+        elif k == "vertex_angle":
+            f = {"kind": "vertex_angle", "at": _ref(a["vertex"]), "points": _refs(a["rays"]),
+                 "value": str(a["value"]), **({"angle_unit": str(a["unit"])} if a.get("unit") else {})}
+        elif k == "face_area":
+            f = {"kind": "polygon_area", "points": _refs(a["polygon"]), "value": str(a["value"]),
+                 **({"shape": str(a["shape"])} if a.get("shape") and a.get("shape") != "polygon" else {})}
+        elif k == "solid_volume":
+            sid = a.get("solid") or prem.solid_id
+            sol = solids.get(sid or "")
+            if sol is None and sid is None and len(poly_root_solids) == 1:
+                sol = poly_root_solids[0]
+            f = {"kind": "solid_volume",
+                 "solid": curved_sym.get(sol.solid_id, sol.notation) if sol else sid,
+                 "value": str(a["value"])}
+        elif k == "segment_ratio":
+            f = {"kind": "segment_ratio", "points_a": _refs(a["segment_a"]), "points_b": _refs(a["segment_b"]),
+                 "value": str(a["ratio"])}
         else:
             raise TuChoi("BRIDGE_UNSUPPORTED_PREMISE", f"{fid}: giả thiết {k!r} chưa có ánh xạ sang TypedFact", (fid,))
         facts.append({"id": _alloc_fact_id(fid, "prem"), "role": "premise", "quotes": q, **f})
@@ -863,10 +1160,23 @@ def _bridge(p: TypedFactNextPayload, section_fact, version: str, v2: bool) -> di
     for g in p.simulation_goals:
         if g.kind == "construct_plane_section":
             asked.setdefault(g.target_section_id, []).append(g.quote)
+        elif g.kind == "construct_intersection_line":
+            # `/2` additive: the planner's existing `intersection_line` question (the facts route has served it since
+            # hybrid-v2); the Source Gate grounds both planes in the quote, the engine proves the line exists and is unique.
+            pa, pb = ([_ref(x) for x in pl] for pl in g.target_planes)
+            facts.append({"id": g.goal_id, "kind": "intersection_line", "role": "question", "quotes": [g.quote],
+                          "points_a": pa, "points_b": pb})
+    sec_area_asked: dict[str, list[str]] = {}
+    for g in p.math_goals:
+        if g.goal_type == "area" and isinstance(g.target, dict) and "section_id" in g.target:
+            sec_area_asked.setdefault(g.target["section_id"], []).append(g.quote)
     for sec in p.derived_sections:
+        sec_asked = list(asked.get(sec.section_id, []))
+        if not sec_asked and v2 and _la_mat_qua_ba_diem(sec) and "thiết diện" not in sec.quote.casefold():
+            sec_asked = list(sec_area_asked.get(sec.section_id, []))
         facts.append(
-            section_fact(sec, solids, asked.get(sec.section_id, []), p.problem_text, mo_ta)
-            if v2 else section_fact(sec, solids, asked.get(sec.section_id, []))
+            section_fact(sec, solids, sec_asked, p.problem_text, mo_ta)
+            if v2 else section_fact(sec, solids, sec_asked)
         )
 
     derived = {}
@@ -901,6 +1211,12 @@ def _bridge(p: TypedFactNextPayload, section_fact, version: str, v2: bool) -> di
         elif g.kind == "residual_volume":
             facts.append({**q, "quantity": "residual_volume",
                           "solid_refs": [solid_fact(g.parent_solid_id, g.goal_id), solid_fact(g.cut_solid_id, g.goal_id)]})
+        elif v2 and g.kind == "length_ratio":
+            facts.append({**q, "quantity": "length_ratio",
+                          "points_a": _refs(g.numerator_segment), "points_b": _refs(g.denominator_segment)})
+        elif v2 and g.kind == "area_ratio":
+            facts.append({**q, "quantity": "area_ratio",
+                          "points_a": _refs(g.numerator_polygon), "points_b": _refs(g.denominator_polygon)})
         elif (is_poly_sphere_composite or is_axial_sphere_composite) and g.kind == "measurement" and measurement_scope(p, g) in curved:
             if set(g.target) <= {"solid", "solid_id"} and g.goal_type in ("volume", "area", "lateral_area", "radius"):
                 msid = measurement_scope(p, g)
@@ -928,14 +1244,20 @@ def _bridge(p: TypedFactNextPayload, section_fact, version: str, v2: bool) -> di
                     raise TuChoi("UNKNOWN_SOLID_ID", f"{g.goal_id}: khối {g_solid!r} không có", (g.goal_id,))
                 if g_solid != sec.target_solid_id:
                     raise TuChoi("SOURCE_OBJECT_MISMATCH", f"{g.goal_id}: khối {g_solid!r} không khớp khối của thiết diện {sec.section_id!r}", (g.goal_id,))
-            f = _mat_fact(sec, solids, [], mo_ta)
-            if _la_mat_qua_ba_diem(sec):     # "diện tích thiết diện đó": the plane is named where the section is stated
-                q["quotes"] = list(dict.fromkeys([g.quote, sec.quote]))
+            extra = _v2_plane_def_quotes(sec, p.problem_text) if v2 else []
+            f = _mat_fact(sec, solids, [], mo_ta, extra_quotes=extra)
+            if _la_mat_qua_ba_diem(sec) or (
+                sec.plane_kind == "constrained" and any(is_described_ref(op) for c in sec.constraints for op in c.operands)
+            ):     # "diện tích thiết diện đó": the plane is named where the section is stated
+                q["quotes"] = list(dict.fromkeys([g.quote, sec.quote, *extra]))
             facts.append({**q, "quantity": "area", **{k: f[k] for k in ("solid", "point", "point_kind", "points",
-                                                                         "plane_relation", "points_b", "points_a",
-                                                                         "plane_name", "plane_constraints") if k in f}})
+                                                                         "point_tree", "plane_relation", "points_b",
+                                                                         "points_a", "plane_name",
+                                                                         "plane_constraints") if k in f}})
         elif v2 and (described := _cau_hoi_mo_ta(g, mo_ta)) is not None:
             facts.append({**q, **described})
+        elif v2 and g.goal_type == "area" and isinstance(g.target, dict) and "polygon" in g.target:
+            facts.append({**q, "quantity": "area", "points": _refs(g.target["polygon"])})
         elif v2 and g.goal_type == "distance":
             facts.append({**q, **_distance_question(g)})
         elif v2 and g.goal_type == "angle":
@@ -949,4 +1271,48 @@ def _bridge(p: TypedFactNextPayload, section_fact, version: str, v2: bool) -> di
                                        "validated_premise_scopes": scoped,
                                        "declared_length_unit": p.length_unit,
                                        "declared_plane_names": {s.section_id: _ten_mat_khai(s) for s in p.derived_sections},
+                                       "output_policies": _output_policies_from_payload(p),
                                        "problem_text": p.problem_text}}
+
+
+def quantity_premise_provenance(p: Any) -> list[dict[str, Any]]:
+    """Extract `SOURCE_QUANTITY` dimension & span provenance for all quantity premises in `p` without rewriting premises."""
+    from app.simulation.geometry.expression import FactRole, parse_quantity_expr
+    from .typed_fact_next import parse_typed_fact_next_v2, premise_slot_dimension
+
+    if isinstance(p, dict):
+        p = parse_typed_fact_next_v2(p)
+
+    records: list[dict[str, Any]] = []
+    text = p.problem_text or ""
+    for idx, prem in enumerate(p.premises, 1):
+        fid = f"p{idx}"
+        q_pos = text.find(prem.quote)
+        for field_name in ("value", "side", "ratio"):
+            if field_name not in prem.args or prem.args[field_name] is None:
+                continue
+            slot_dim = premise_slot_dimension(prem.kind, field_name)
+            if slot_dim is None:
+                continue
+            raw_val = str(prem.args[field_name])
+            in_q = prem.quote.rfind(raw_val)
+            base_off = (q_pos + in_q) if (q_pos >= 0 and in_q >= 0) else 0
+            qexpr = parse_quantity_expr(
+                raw_val,
+                base_offset=base_off,
+                allow_signed=False,
+                allow_unit=False,
+                role=FactRole.SOURCE_QUANTITY,
+            )
+            records.append({
+                "premise_id": fid,
+                "kind": prem.kind,
+                "field": field_name,
+                "slot_dimension": slot_dim.name,
+                "role": qexpr.provenance.role.value,
+                "original_expr": qexpr.provenance.original_expr,
+                "normalized_expr": qexpr.provenance.normalized_expr,
+                "source_span": list(qexpr.provenance.source_span),
+                "operand_spans": [[k, s, e] for k, s, e in qexpr.provenance.operand_spans],
+            })
+    return records

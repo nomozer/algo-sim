@@ -1,0 +1,2014 @@
+{
+ "objects": [
+  {
+   "id": "OABC",
+   "label": "Hình chóp C.OAB",
+   "notation": "C.OAB",
+   "reference": "C.OAB",
+   "role": "Đỉnh C, đáy OAB",
+   "display_label": "Hình chóp C.OAB",
+   "type": "solid",
+   "render": "mesh",
+   "display_role": "visual_owner",
+   "origin": "derived",
+   "producer": "construct_solid",
+   "depends": [
+    "A",
+    "B",
+    "C",
+    "O"
+   ],
+   "dependency_edges": [
+    {
+     "source_id": "A",
+     "relation": "topological"
+    },
+    {
+     "source_id": "B",
+     "relation": "topological"
+    },
+    {
+     "source_id": "C",
+     "relation": "topological"
+    },
+    {
+     "source_id": "O",
+     "relation": "topological"
+    }
+   ],
+   "parent": null,
+   "display_group": [
+    "construction",
+    "solid"
+   ],
+   "visual_transform": {
+    "translate": [
+     0,
+     0,
+     0
+    ],
+    "scale": 1
+   },
+   "source": {
+    "instruction": "construct_solid"
+   },
+   "formation_roles": [
+    "CLOSE_SOLID"
+   ],
+   "vertices": [
+    [
+     "0",
+     "0",
+     "0"
+    ],
+    [
+     "2",
+     "0",
+     "0"
+    ],
+    [
+     "0",
+     "2",
+     "0"
+    ],
+    [
+     "0",
+     "0",
+     "2"
+    ]
+   ],
+   "vertex_ids": [
+    "O",
+    "A",
+    "B",
+    "C"
+   ],
+   "faces": [
+    [
+     0,
+     1,
+     2
+    ],
+    [
+     0,
+     1,
+     3
+    ],
+    [
+     0,
+     2,
+     3
+    ],
+    [
+     1,
+     2,
+     3
+    ]
+   ],
+   "computational_depends": [
+    "A",
+    "B",
+    "C",
+    "O"
+   ],
+   "visible_prerequisites": [
+    "A",
+    "B",
+    "C",
+    "O"
+   ],
+   "construction_lineage": {
+    "mode": "direct_euclidean_primitive",
+    "producer": "construct_solid"
+   },
+   "edge_ownership": [
+    {
+     "edge_id": "OABC::edge:O-A",
+     "endpoint_ids": [
+      "O",
+      "A"
+     ],
+     "adjacent_surface_ids": [
+      "OABC::face:0",
+      "OABC::face:1"
+     ]
+    },
+    {
+     "edge_id": "OABC::edge:A-B",
+     "endpoint_ids": [
+      "A",
+      "B"
+     ],
+     "adjacent_surface_ids": [
+      "OABC::face:0",
+      "OABC::face:3"
+     ]
+    },
+    {
+     "edge_id": "OABC::edge:O-B",
+     "endpoint_ids": [
+      "O",
+      "B"
+     ],
+     "adjacent_surface_ids": [
+      "OABC::face:0",
+      "OABC::face:2"
+     ]
+    },
+    {
+     "edge_id": "OABC::edge:A-C",
+     "endpoint_ids": [
+      "A",
+      "C"
+     ],
+     "adjacent_surface_ids": [
+      "OABC::face:1",
+      "OABC::face:3"
+     ]
+    },
+    {
+     "edge_id": "OABC::edge:O-C",
+     "endpoint_ids": [
+      "O",
+      "C"
+     ],
+     "adjacent_surface_ids": [
+      "OABC::face:1",
+      "OABC::face:2"
+     ]
+    },
+    {
+     "edge_id": "OABC::edge:B-C",
+     "endpoint_ids": [
+      "B",
+      "C"
+     ],
+     "adjacent_surface_ids": [
+      "OABC::face:2",
+      "OABC::face:3"
+     ]
+    }
+   ],
+   "surfaces": [
+    {
+     "surface_id": "OABC::face:0",
+     "vertex_indices": [
+      0,
+      1,
+      2
+     ],
+     "boundary_edge_ids": [
+      "OABC::edge:O-A",
+      "OABC::edge:A-B",
+      "OABC::edge:O-B"
+     ],
+     "surface_role": "SOLID_FACE",
+     "occludes_edges": true
+    },
+    {
+     "surface_id": "OABC::face:1",
+     "vertex_indices": [
+      0,
+      1,
+      3
+     ],
+     "boundary_edge_ids": [
+      "OABC::edge:O-A",
+      "OABC::edge:A-C",
+      "OABC::edge:O-C"
+     ],
+     "surface_role": "SOLID_FACE",
+     "occludes_edges": true
+    },
+    {
+     "surface_id": "OABC::face:2",
+     "vertex_indices": [
+      0,
+      2,
+      3
+     ],
+     "boundary_edge_ids": [
+      "OABC::edge:O-B",
+      "OABC::edge:B-C",
+      "OABC::edge:O-C"
+     ],
+     "surface_role": "SOLID_FACE",
+     "occludes_edges": true
+    },
+    {
+     "surface_id": "OABC::face:3",
+     "vertex_indices": [
+      1,
+      2,
+      3
+     ],
+     "boundary_edge_ids": [
+      "OABC::edge:A-B",
+      "OABC::edge:B-C",
+      "OABC::edge:A-C"
+     ],
+     "surface_role": "SOLID_FACE",
+     "occludes_edges": true
+    }
+   ]
+  },
+  {
+   "id": "R",
+   "label": "Bán kính «Khối cầu tâm M, đi qua O»",
+   "notation": null,
+   "reference": "Bán kính khối cong",
+   "role": "Bán kính",
+   "display_label": "Bán kính «Khối cầu tâm M, đi qua O»",
+   "type": "quantity",
+   "render": "readout",
+   "display_role": "measurement",
+   "origin": "derived",
+   "producer": "measure.radius",
+   "depends": [
+    "circumsphere"
+   ],
+   "dependency_edges": [
+    {
+     "source_id": "circumsphere",
+     "relation": "structural"
+    }
+   ],
+   "parent": null,
+   "display_group": [
+    "construction",
+    "measurement"
+   ],
+   "visual_transform": {
+    "translate": [
+     0,
+     0,
+     0
+    ],
+    "scale": 1
+   },
+   "source": {
+    "instruction": "measure.radius"
+   },
+   "formation_roles": [],
+   "value": "√3",
+   "exact": {
+    "kind": "radical",
+    "coefficient": "1",
+    "radicand": 3
+   },
+   "measured_quantity": {
+    "quantity_kind": "radius",
+    "producer": "measure.radius",
+    "subject_ids": [
+     "circumsphere"
+    ],
+    "subject_labels": [
+     "Khối cầu tâm M, đi qua O"
+    ],
+    "subject_types": [
+     "curved_solid"
+    ],
+    "value": "√3",
+    "exact": {
+     "kind": "radical",
+     "coefficient": "1",
+     "radicand": 3
+    },
+    "certified_relation": null
+   },
+   "computational_depends": [
+    "circumsphere"
+   ],
+   "visible_prerequisites": [
+    "circumsphere"
+   ],
+   "occludes_edges": false,
+   "formula": {
+    "text": "Bán kính khối cong = √3",
+    "references": []
+   }
+  },
+  {
+   "id": "vec_OB",
+   "label": "Vectơ từ O đến B",
+   "notation": "OB",
+   "reference": "OB",
+   "role": "Vectơ",
+   "display_label": "Vectơ từ O đến B",
+   "type": "vector3",
+   "render": "non_visual",
+   "display_role": "non_visual",
+   "origin": "derived",
+   "producer": "vector_from_points",
+   "depends": [
+    "B",
+    "O"
+   ],
+   "dependency_edges": [
+    {
+     "source_id": "B",
+     "relation": "topological"
+    },
+    {
+     "source_id": "O",
+     "relation": "topological"
+    }
+   ],
+   "parent": null,
+   "display_group": [
+    "construction"
+   ],
+   "visual_transform": {
+    "translate": [
+     0,
+     0,
+     0
+    ],
+    "scale": 1
+   },
+   "source": {
+    "instruction": "vector_from_points"
+   },
+   "formation_roles": [],
+   "xyz": [
+    "0",
+    "2",
+    "0"
+   ],
+   "computational_depends": [
+    "B",
+    "O"
+   ],
+   "visible_prerequisites": [
+    "B",
+    "O"
+   ],
+   "construction_lineage": {
+    "mode": "direct_euclidean_primitive",
+    "producer": "vector_from_points"
+   },
+   "occludes_edges": false
+  },
+  {
+   "id": "vec_OC",
+   "label": "Vectơ từ O đến C",
+   "notation": "OC",
+   "reference": "OC",
+   "role": "Vectơ",
+   "display_label": "Vectơ từ O đến C",
+   "type": "vector3",
+   "render": "non_visual",
+   "display_role": "non_visual",
+   "origin": "derived",
+   "producer": "vector_from_points",
+   "depends": [
+    "C",
+    "O"
+   ],
+   "dependency_edges": [
+    {
+     "source_id": "C",
+     "relation": "topological"
+    },
+    {
+     "source_id": "O",
+     "relation": "topological"
+    }
+   ],
+   "parent": null,
+   "display_group": [
+    "construction"
+   ],
+   "visual_transform": {
+    "translate": [
+     0,
+     0,
+     0
+    ],
+    "scale": 1
+   },
+   "source": {
+    "instruction": "vector_from_points"
+   },
+   "formation_roles": [],
+   "xyz": [
+    "0",
+    "0",
+    "2"
+   ],
+   "computational_depends": [
+    "C",
+    "O"
+   ],
+   "visible_prerequisites": [
+    "C",
+    "O"
+   ],
+   "construction_lineage": {
+    "mode": "direct_euclidean_primitive",
+    "producer": "vector_from_points"
+   },
+   "occludes_edges": false
+  },
+  {
+   "id": "O",
+   "label": "Điểm O",
+   "notation": "O",
+   "reference": "O",
+   "role": "Điểm",
+   "display_label": "Điểm O",
+   "type": "point3",
+   "render": "point_marker",
+   "display_role": "visual_owner",
+   "origin": "free",
+   "producer": null,
+   "depends": [],
+   "dependency_edges": [],
+   "parent": "OABC",
+   "display_group": [
+    "given"
+   ],
+   "visual_transform": {
+    "translate": [
+     0,
+     0,
+     0
+    ],
+    "scale": 1
+   },
+   "source": {
+    "fact_id": "vertex_O",
+    "assumption": "oa_ob_oc_perpendicular"
+   },
+   "formation_roles": [],
+   "xyz": [
+    "0",
+    "0",
+    "0"
+   ],
+   "computational_depends": [],
+   "visible_prerequisites": [],
+   "occludes_edges": false
+  },
+  {
+   "id": "A",
+   "label": "Điểm A",
+   "notation": "A",
+   "reference": "A",
+   "role": "Điểm",
+   "display_label": "Điểm A",
+   "type": "point3",
+   "render": "point_marker",
+   "display_role": "visual_owner",
+   "origin": "free",
+   "producer": null,
+   "depends": [],
+   "dependency_edges": [],
+   "parent": "OABC",
+   "display_group": [
+    "given"
+   ],
+   "visual_transform": {
+    "translate": [
+     0,
+     0,
+     0
+    ],
+    "scale": 1
+   },
+   "source": {
+    "fact_id": "oa_length",
+    "assumption": "oa_ob_oc_perpendicular"
+   },
+   "formation_roles": [],
+   "xyz": [
+    "2",
+    "0",
+    "0"
+   ],
+   "computational_depends": [],
+   "visible_prerequisites": [],
+   "occludes_edges": false
+  },
+  {
+   "id": "B",
+   "label": "Điểm B",
+   "notation": "B",
+   "reference": "B",
+   "role": "Điểm",
+   "display_label": "Điểm B",
+   "type": "point3",
+   "render": "point_marker",
+   "display_role": "visual_owner",
+   "origin": "free",
+   "producer": null,
+   "depends": [],
+   "dependency_edges": [],
+   "parent": "OABC",
+   "display_group": [
+    "given"
+   ],
+   "visual_transform": {
+    "translate": [
+     0,
+     0,
+     0
+    ],
+    "scale": 1
+   },
+   "source": {
+    "fact_id": "ob_length",
+    "assumption": "oa_ob_oc_perpendicular"
+   },
+   "formation_roles": [],
+   "xyz": [
+    "0",
+    "2",
+    "0"
+   ],
+   "computational_depends": [],
+   "visible_prerequisites": [],
+   "occludes_edges": false
+  },
+  {
+   "id": "C",
+   "label": "Điểm C",
+   "notation": "C",
+   "reference": "C",
+   "role": "Điểm",
+   "display_label": "Điểm C",
+   "type": "point3",
+   "render": "point_marker",
+   "display_role": "visual_owner",
+   "origin": "free",
+   "producer": null,
+   "depends": [],
+   "dependency_edges": [],
+   "parent": "OABC",
+   "display_group": [
+    "given"
+   ],
+   "visual_transform": {
+    "translate": [
+     0,
+     0,
+     0
+    ],
+    "scale": 1
+   },
+   "source": {
+    "fact_id": "oc_length",
+    "assumption": "oa_ob_oc_perpendicular"
+   },
+   "formation_roles": [],
+   "xyz": [
+    "0",
+    "0",
+    "2"
+   ],
+   "computational_depends": [],
+   "visible_prerequisites": [],
+   "occludes_edges": false
+  },
+  {
+   "id": "A_prime",
+   "label": "Điểm A' (2,2,0) = A + OB",
+   "notation": "A′",
+   "reference": "A′",
+   "role": "Ảnh của A qua phép tịnh tiến theo OB",
+   "display_label": "Điểm A' (2,2,0) = A + OB",
+   "type": "point3",
+   "render": "point_marker",
+   "display_role": "visual_owner",
+   "origin": "derived",
+   "producer": "construct_point.translate",
+   "depends": [
+    "A",
+    "vec_OB"
+   ],
+   "dependency_edges": [
+    {
+     "source_id": "A",
+     "relation": "topological"
+    },
+    {
+     "source_id": "vec_OB",
+     "relation": "topological",
+     "is_non_visual_carrier": true,
+     "resolved_visible_sources": [
+      "B",
+      "O"
+     ]
+    }
+   ],
+   "parent": null,
+   "display_group": [
+    "construction"
+   ],
+   "visual_transform": {
+    "translate": [
+     0,
+     0,
+     0
+    ],
+    "scale": 1
+   },
+   "source": {
+    "instruction": "construct_point.translate"
+   },
+   "formation_roles": [
+    "CONSTRUCT_AUXILIARY_GEOMETRY"
+   ],
+   "xyz": [
+    "2",
+    "2",
+    "0"
+   ],
+   "computational_depends": [
+    "A",
+    "vec_OB"
+   ],
+   "visible_prerequisites": [
+    "A",
+    "B",
+    "O"
+   ],
+   "construction_lineage": {
+    "mode": "vector_translation",
+    "base_point_id": "A",
+    "vector_id": "vec_OB",
+    "visible_prerequisites": [
+     "A",
+     "B",
+     "O"
+    ]
+   },
+   "occludes_edges": false
+  },
+  {
+   "id": "D",
+   "label": "Điểm D (2,2,2) = A' + OC, đỉnh đối diện O của hình hộp",
+   "notation": "D",
+   "reference": "D",
+   "role": "Ảnh của A′ qua phép tịnh tiến theo OC",
+   "display_label": "Điểm D (2,2,2) = A' + OC, đỉnh đối diện O của hình hộp",
+   "type": "point3",
+   "render": "point_marker",
+   "display_role": "visual_owner",
+   "origin": "derived",
+   "producer": "construct_point.translate",
+   "depends": [
+    "A_prime",
+    "vec_OC"
+   ],
+   "dependency_edges": [
+    {
+     "source_id": "A_prime",
+     "relation": "topological"
+    },
+    {
+     "source_id": "vec_OC",
+     "relation": "topological",
+     "is_non_visual_carrier": true,
+     "resolved_visible_sources": [
+      "C",
+      "O"
+     ]
+    }
+   ],
+   "parent": null,
+   "display_group": [
+    "construction"
+   ],
+   "visual_transform": {
+    "translate": [
+     0,
+     0,
+     0
+    ],
+    "scale": 1
+   },
+   "source": {
+    "instruction": "construct_point.translate"
+   },
+   "formation_roles": [
+    "CONSTRUCT_AUXILIARY_GEOMETRY"
+   ],
+   "xyz": [
+    "2",
+    "2",
+    "2"
+   ],
+   "computational_depends": [
+    "A_prime",
+    "vec_OC"
+   ],
+   "visible_prerequisites": [
+    "A_prime",
+    "C",
+    "O"
+   ],
+   "construction_lineage": {
+    "mode": "vector_translation",
+    "base_point_id": "A_prime",
+    "vector_id": "vec_OC",
+    "visible_prerequisites": [
+     "A_prime",
+     "C",
+     "O"
+    ]
+   },
+   "occludes_edges": false
+  },
+  {
+   "id": "M",
+   "label": "Tâm M của mặt cầu ngoại tiếp (trung điểm OD)",
+   "notation": "M",
+   "reference": "M",
+   "role": "Trung điểm của O và D",
+   "display_label": "Tâm M của mặt cầu ngoại tiếp (trung điểm OD)",
+   "type": "point3",
+   "render": "point_marker",
+   "display_role": "visual_owner",
+   "origin": "derived",
+   "producer": "construct_point.midpoint",
+   "depends": [
+    "D",
+    "O"
+   ],
+   "dependency_edges": [
+    {
+     "source_id": "D",
+     "relation": "topological"
+    },
+    {
+     "source_id": "O",
+     "relation": "topological"
+    }
+   ],
+   "parent": null,
+   "display_group": [
+    "construction"
+   ],
+   "visual_transform": {
+    "translate": [
+     0,
+     0,
+     0
+    ],
+    "scale": 1
+   },
+   "source": {
+    "instruction": "construct_point.midpoint"
+   },
+   "formation_roles": [
+    "CONSTRUCT_AUXILIARY_GEOMETRY"
+   ],
+   "xyz": [
+    "1",
+    "1",
+    "1"
+   ],
+   "computational_depends": [
+    "D",
+    "O"
+   ],
+   "visible_prerequisites": [
+    "D",
+    "O"
+   ],
+   "construction_lineage": {
+    "mode": "direct_euclidean_primitive",
+    "producer": "construct_point.midpoint"
+   },
+   "occludes_edges": false
+  },
+  {
+   "id": "circumsphere",
+   "label": "Mặt cầu ngoại tiếp tứ diện OABC",
+   "notation": null,
+   "reference": "Khối cầu tâm M, đi qua O",
+   "role": "Khối cầu tâm M, đi qua O",
+   "display_label": "Mặt cầu ngoại tiếp tứ diện OABC",
+   "type": "curved_solid",
+   "render": "curved_solid",
+   "display_role": "visual_owner",
+   "origin": "derived",
+   "producer": "construct_curved_solid.ball",
+   "depends": [
+    "M",
+    "O"
+   ],
+   "dependency_edges": [
+    {
+     "source_id": "M",
+     "relation": "topological"
+    },
+    {
+     "source_id": "O",
+     "relation": "topological"
+    }
+   ],
+   "parent": null,
+   "display_group": [
+    "construction"
+   ],
+   "visual_transform": {
+    "translate": [
+     0,
+     0,
+     0
+    ],
+    "scale": 1
+   },
+   "source": {
+    "instruction": "construct_curved_solid.ball"
+   },
+   "formation_roles": [
+    "CLOSE_SOLID"
+   ],
+   "curved_kind": "ball",
+   "anchor": [
+    "1",
+    "1",
+    "1"
+   ],
+   "apex_or_top": null,
+   "rim_point": [
+    "0",
+    "0",
+    "0"
+   ],
+   "radius_sq": "3",
+   "height_sq": "0",
+   "computational_depends": [
+    "M",
+    "O"
+   ],
+   "visible_prerequisites": [
+    "M",
+    "O"
+   ],
+   "construction_lineage": {
+    "mode": "direct_euclidean_primitive",
+    "producer": "construct_curved_solid.ball"
+   },
+   "occludes_edges": false
+  },
+  {
+   "id": "face_OAB",
+   "label": "Mặt OAB",
+   "notation": "OAB",
+   "reference": "OAB",
+   "role": "Đa giác O, A, B",
+   "display_label": "Mặt OAB",
+   "type": "polygon3",
+   "render": "polygon",
+   "display_role": "visual_owner",
+   "origin": "derived",
+   "producer": "construct_polygon",
+   "depends": [
+    "A",
+    "B",
+    "O"
+   ],
+   "dependency_edges": [
+    {
+     "source_id": "A",
+     "relation": "topological"
+    },
+    {
+     "source_id": "B",
+     "relation": "topological"
+    },
+    {
+     "source_id": "O",
+     "relation": "topological"
+    }
+   ],
+   "parent": "OABC",
+   "display_group": [
+    "construction",
+    "face"
+   ],
+   "visual_transform": {
+    "translate": [
+     0,
+     0,
+     0
+    ],
+    "scale": 1
+   },
+   "source": {
+    "instruction": "construct_polygon"
+   },
+   "formation_roles": [
+    "CONSTRUCT_AUXILIARY_GEOMETRY"
+   ],
+   "vertices": [
+    [
+     "0",
+     "0",
+     "0"
+    ],
+    [
+     "2",
+     "0",
+     "0"
+    ],
+    [
+     "0",
+     "2",
+     "0"
+    ]
+   ],
+   "vertex_ids": [
+    "O",
+    "A",
+    "B"
+   ],
+   "computational_depends": [
+    "A",
+    "B",
+    "O"
+   ],
+   "visible_prerequisites": [
+    "A",
+    "B",
+    "O"
+   ],
+   "construction_lineage": {
+    "mode": "direct_euclidean_primitive",
+    "producer": "construct_polygon"
+   },
+   "occludes_edges": false,
+   "surface_role": "BASE_REGION",
+   "boundary_edge_ids": [
+    "OABC::edge:O-A",
+    "OABC::edge:A-B",
+    "OABC::edge:O-B"
+   ]
+  },
+  {
+   "id": "face_OAC",
+   "label": "Mặt OAC",
+   "notation": "OAC",
+   "reference": "OAC",
+   "role": "Đa giác O, A, C",
+   "display_label": "Mặt OAC",
+   "type": "polygon3",
+   "render": "polygon",
+   "display_role": "visual_owner",
+   "origin": "derived",
+   "producer": "construct_polygon",
+   "depends": [
+    "A",
+    "C",
+    "O"
+   ],
+   "dependency_edges": [
+    {
+     "source_id": "A",
+     "relation": "topological"
+    },
+    {
+     "source_id": "C",
+     "relation": "topological"
+    },
+    {
+     "source_id": "O",
+     "relation": "topological"
+    }
+   ],
+   "parent": "OABC",
+   "display_group": [
+    "construction",
+    "face"
+   ],
+   "visual_transform": {
+    "translate": [
+     0,
+     0,
+     0
+    ],
+    "scale": 1
+   },
+   "source": {
+    "instruction": "construct_polygon"
+   },
+   "formation_roles": [
+    "CONSTRUCT_AUXILIARY_GEOMETRY"
+   ],
+   "vertices": [
+    [
+     "0",
+     "0",
+     "0"
+    ],
+    [
+     "2",
+     "0",
+     "0"
+    ],
+    [
+     "0",
+     "0",
+     "2"
+    ]
+   ],
+   "vertex_ids": [
+    "O",
+    "A",
+    "C"
+   ],
+   "computational_depends": [
+    "A",
+    "C",
+    "O"
+   ],
+   "visible_prerequisites": [
+    "A",
+    "C",
+    "O"
+   ],
+   "construction_lineage": {
+    "mode": "direct_euclidean_primitive",
+    "producer": "construct_polygon"
+   },
+   "occludes_edges": false,
+   "surface_role": "BASE_REGION",
+   "boundary_edge_ids": [
+    "OABC::edge:O-A",
+    "OABC::edge:A-C",
+    "OABC::edge:O-C"
+   ]
+  },
+  {
+   "id": "face_OBC",
+   "label": "Mặt OBC",
+   "notation": "OBC",
+   "reference": "OBC",
+   "role": "Đa giác O, B, C",
+   "display_label": "Mặt OBC",
+   "type": "polygon3",
+   "render": "polygon",
+   "display_role": "visual_owner",
+   "origin": "derived",
+   "producer": "construct_polygon",
+   "depends": [
+    "B",
+    "C",
+    "O"
+   ],
+   "dependency_edges": [
+    {
+     "source_id": "B",
+     "relation": "topological"
+    },
+    {
+     "source_id": "C",
+     "relation": "topological"
+    },
+    {
+     "source_id": "O",
+     "relation": "topological"
+    }
+   ],
+   "parent": "OABC",
+   "display_group": [
+    "construction",
+    "face"
+   ],
+   "visual_transform": {
+    "translate": [
+     0,
+     0,
+     0
+    ],
+    "scale": 1
+   },
+   "source": {
+    "instruction": "construct_polygon"
+   },
+   "formation_roles": [
+    "CONSTRUCT_AUXILIARY_GEOMETRY"
+   ],
+   "vertices": [
+    [
+     "0",
+     "0",
+     "0"
+    ],
+    [
+     "0",
+     "2",
+     "0"
+    ],
+    [
+     "0",
+     "0",
+     "2"
+    ]
+   ],
+   "vertex_ids": [
+    "O",
+    "B",
+    "C"
+   ],
+   "computational_depends": [
+    "B",
+    "C",
+    "O"
+   ],
+   "visible_prerequisites": [
+    "B",
+    "C",
+    "O"
+   ],
+   "construction_lineage": {
+    "mode": "direct_euclidean_primitive",
+    "producer": "construct_polygon"
+   },
+   "occludes_edges": false,
+   "surface_role": "BASE_REGION",
+   "boundary_edge_ids": [
+    "OABC::edge:O-B",
+    "OABC::edge:B-C",
+    "OABC::edge:O-C"
+   ]
+  },
+  {
+   "id": "face_ABC",
+   "label": "Mặt ABC",
+   "notation": "ABC",
+   "reference": "ABC",
+   "role": "Đa giác A, B, C",
+   "display_label": "Mặt ABC",
+   "type": "polygon3",
+   "render": "polygon",
+   "display_role": "visual_owner",
+   "origin": "derived",
+   "producer": "construct_polygon",
+   "depends": [
+    "A",
+    "B",
+    "C"
+   ],
+   "dependency_edges": [
+    {
+     "source_id": "A",
+     "relation": "topological"
+    },
+    {
+     "source_id": "B",
+     "relation": "topological"
+    },
+    {
+     "source_id": "C",
+     "relation": "topological"
+    }
+   ],
+   "parent": "OABC",
+   "display_group": [
+    "construction",
+    "face"
+   ],
+   "visual_transform": {
+    "translate": [
+     0,
+     0,
+     0
+    ],
+    "scale": 1
+   },
+   "source": {
+    "instruction": "construct_polygon"
+   },
+   "formation_roles": [
+    "CONSTRUCT_AUXILIARY_GEOMETRY"
+   ],
+   "vertices": [
+    [
+     "2",
+     "0",
+     "0"
+    ],
+    [
+     "0",
+     "2",
+     "0"
+    ],
+    [
+     "0",
+     "0",
+     "2"
+    ]
+   ],
+   "vertex_ids": [
+    "A",
+    "B",
+    "C"
+   ],
+   "computational_depends": [
+    "A",
+    "B",
+    "C"
+   ],
+   "visible_prerequisites": [
+    "A",
+    "B",
+    "C"
+   ],
+   "construction_lineage": {
+    "mode": "direct_euclidean_primitive",
+    "producer": "construct_polygon"
+   },
+   "occludes_edges": false,
+   "surface_role": "BASE_REGION",
+   "boundary_edge_ids": [
+    "OABC::edge:A-B",
+    "OABC::edge:B-C",
+    "OABC::edge:A-C"
+   ]
+  }
+ ],
+ "events": [
+  {
+   "step_index": 0,
+   "action": "INIT",
+   "object": null,
+   "depends": [],
+   "explanation": "Khởi tạo mô phỏng và nạp trạng thái ban đầu của bộ nhớ.",
+   "display_label": "Bước dựng hình",
+   "semantic_kind": "EXPLANATION",
+   "details": {},
+   "learner_text": "Đặt các điểm đề cho vào không gian."
+  },
+  {
+   "step_index": 1,
+   "action": "MEASURE",
+   "object": "vec_OB",
+   "depends": [
+    "O",
+    "B"
+   ],
+   "explanation": "Lấy vectơ OB.",
+   "display_label": "Vectơ từ O đến B",
+   "semantic_kind": "MEASUREMENT",
+   "details": {
+    "value": {
+     "kind": "point3",
+     "xyz": [
+      "0",
+      "2",
+      "0"
+     ]
+    }
+   },
+   "learner_text": "Lấy vectơ từ O đến B.",
+   "visible_prerequisites": [
+    "B",
+    "O"
+   ]
+  },
+  {
+   "step_index": 2,
+   "action": "MEASURE",
+   "object": "vec_OC",
+   "depends": [
+    "O",
+    "C"
+   ],
+   "explanation": "Lấy vectơ OC.",
+   "display_label": "Vectơ từ O đến C",
+   "semantic_kind": "MEASUREMENT",
+   "details": {
+    "value": {
+     "kind": "point3",
+     "xyz": [
+      "0",
+      "0",
+      "2"
+     ]
+    }
+   },
+   "learner_text": "Lấy vectơ từ O đến C.",
+   "visible_prerequisites": [
+    "C",
+    "O"
+   ]
+  },
+  {
+   "step_index": 3,
+   "action": "CREATE",
+   "object": "A_prime",
+   "depends": [
+    "A",
+    "vec_OB"
+   ],
+   "explanation": "Dựng điểm A′ = (2, 2, 0).",
+   "display_label": "Điểm A' (2,2,0) = A + OB",
+   "semantic_kind": "GEOMETRY_CONSTRUCTION",
+   "details": {
+    "label": "Điểm A' (2,2,0) = A + OB",
+    "toa_do": [
+     "2",
+     "2",
+     "0"
+    ]
+   },
+   "learner_text": "Dựng điểm A' (2,2,0) = A + OB.",
+   "visible_prerequisites": [
+    "A",
+    "B",
+    "O"
+   ]
+  },
+  {
+   "step_index": 4,
+   "action": "CREATE",
+   "object": "D",
+   "depends": [
+    "A_prime",
+    "vec_OC"
+   ],
+   "explanation": "Dựng điểm D = (2, 2, 2).",
+   "display_label": "Điểm D (2,2,2) = A' + OC, đỉnh đối diện O của hình hộp",
+   "semantic_kind": "GEOMETRY_CONSTRUCTION",
+   "details": {
+    "label": "Điểm D (2,2,2) = A' + OC, đỉnh đối diện O của hình hộp",
+    "toa_do": [
+     "2",
+     "2",
+     "2"
+    ]
+   },
+   "learner_text": "Dựng điểm D (2,2,2) = A' + OC, đỉnh đối diện O của hình hộp.",
+   "visible_prerequisites": [
+    "A_prime",
+    "C",
+    "O"
+   ]
+  },
+  {
+   "step_index": 5,
+   "action": "CREATE",
+   "object": "M",
+   "depends": [
+    "O",
+    "D"
+   ],
+   "explanation": "Dựng điểm M = (1, 1, 1).",
+   "display_label": "Tâm M của mặt cầu ngoại tiếp (trung điểm OD)",
+   "semantic_kind": "GEOMETRY_CONSTRUCTION",
+   "details": {
+    "label": "Tâm M của mặt cầu ngoại tiếp (trung điểm OD)",
+    "toa_do": [
+     "1",
+     "1",
+     "1"
+    ]
+   },
+   "learner_text": "Dựng tâm M của mặt cầu ngoại tiếp (trung điểm OD).",
+   "visible_prerequisites": [
+    "D",
+    "O"
+   ]
+  },
+  {
+   "step_index": 6,
+   "action": "CREATE",
+   "object": "circumsphere",
+   "depends": [
+    "M",
+    "O"
+   ],
+   "explanation": "Dựng khối cầu: tâm M, đi qua O.",
+   "display_label": "Mặt cầu ngoại tiếp tứ diện OABC",
+   "semantic_kind": "GEOMETRY_CONSTRUCTION",
+   "details": {
+    "label": "Mặt cầu ngoại tiếp tứ diện OABC",
+    "loai": "ball",
+    "neo": [
+     "M",
+     "O"
+    ]
+   },
+   "learner_text": "Dựng mặt cầu ngoại tiếp tứ diện OABC.",
+   "visible_prerequisites": [
+    "M",
+    "O"
+   ]
+  },
+  {
+   "step_index": 7,
+   "action": "CREATE",
+   "object": "face_OAB",
+   "depends": [
+    "O",
+    "A",
+    "B"
+   ],
+   "explanation": "Dựng Mặt OAB.",
+   "display_label": "Mặt OAB",
+   "semantic_kind": "GEOMETRY_CONSTRUCTION",
+   "details": {
+    "label": "Mặt OAB",
+    "dinh": [
+     "O",
+     "A",
+     "B"
+    ]
+   },
+   "learner_text": "Dựng mặt OAB.",
+   "visible_prerequisites": [
+    "A",
+    "B",
+    "O"
+   ]
+  },
+  {
+   "step_index": 8,
+   "action": "CREATE",
+   "object": "face_OAC",
+   "depends": [
+    "O",
+    "A",
+    "C"
+   ],
+   "explanation": "Dựng Mặt OAC.",
+   "display_label": "Mặt OAC",
+   "semantic_kind": "GEOMETRY_CONSTRUCTION",
+   "details": {
+    "label": "Mặt OAC",
+    "dinh": [
+     "O",
+     "A",
+     "C"
+    ]
+   },
+   "learner_text": "Dựng mặt OAC.",
+   "visible_prerequisites": [
+    "A",
+    "C",
+    "O"
+   ]
+  },
+  {
+   "step_index": 9,
+   "action": "CREATE",
+   "object": "face_OBC",
+   "depends": [
+    "O",
+    "B",
+    "C"
+   ],
+   "explanation": "Dựng Mặt OBC.",
+   "display_label": "Mặt OBC",
+   "semantic_kind": "GEOMETRY_CONSTRUCTION",
+   "details": {
+    "label": "Mặt OBC",
+    "dinh": [
+     "O",
+     "B",
+     "C"
+    ]
+   },
+   "learner_text": "Dựng mặt OBC.",
+   "visible_prerequisites": [
+    "B",
+    "C",
+    "O"
+   ]
+  },
+  {
+   "step_index": 10,
+   "action": "CREATE",
+   "object": "face_ABC",
+   "depends": [
+    "A",
+    "B",
+    "C"
+   ],
+   "explanation": "Dựng Mặt ABC.",
+   "display_label": "Mặt ABC",
+   "semantic_kind": "GEOMETRY_CONSTRUCTION",
+   "details": {
+    "label": "Mặt ABC",
+    "dinh": [
+     "A",
+     "B",
+     "C"
+    ]
+   },
+   "learner_text": "Dựng mặt ABC.",
+   "visible_prerequisites": [
+    "A",
+    "B",
+    "C"
+   ]
+  },
+  {
+   "step_index": 11,
+   "action": "CREATE",
+   "object": "OABC",
+   "depends": [
+    "O",
+    "A",
+    "B",
+    "C"
+   ],
+   "explanation": "Dựng khối Tứ diện OABC từ 4 đỉnh và 4 mặt.",
+   "display_label": "Hình chóp C.OAB",
+   "semantic_kind": "GEOMETRY_CONSTRUCTION",
+   "details": {
+    "label": "Tứ diện OABC",
+    "dinh": [
+     "O",
+     "A",
+     "B",
+     "C"
+    ],
+    "so_mat": 4
+   },
+   "learner_text": "Dựng hình chóp C.OAB (4 đỉnh, 4 mặt).",
+   "visible_prerequisites": [
+    "A",
+    "B",
+    "C",
+    "O"
+   ]
+  },
+  {
+   "step_index": 12,
+   "action": "MEASURE",
+   "object": "R",
+   "depends": [
+    "circumsphere"
+   ],
+   "explanation": "Tính bán kính của Khối cầu tâm M, đi qua O: √3.",
+   "display_label": "Bán kính «Khối cầu tâm M, đi qua O»",
+   "semantic_kind": "FINAL_RESULT",
+   "details": {
+    "value": {
+     "kind": "radical",
+     "coefficient": "1",
+     "radicand": 3
+    }
+   },
+   "learner_text": "Bán kính «Khối cầu tâm M, đi qua O» bằng √3.",
+   "visible_prerequisites": [
+    "circumsphere"
+   ],
+   "measured_quantity": {
+    "quantity_kind": "radius",
+    "producer": "measure.radius",
+    "subject_ids": [
+     "circumsphere"
+    ],
+    "subject_labels": [
+     "Khối cầu tâm M, đi qua O"
+    ],
+    "subject_types": [
+     "curved_solid"
+    ],
+    "value": "√3",
+    "exact": {
+     "kind": "radical",
+     "coefficient": "1",
+     "radicand": 3
+    },
+    "certified_relation": null
+   }
+  }
+ ],
+ "formation": {
+  "steps": [
+   {
+    "step_index": 0,
+    "visible_ids": [
+     "A",
+     "B",
+     "C",
+     "O"
+    ],
+    "focus_ids": [],
+    "readout_ids": [],
+    "learner_text": "Đặt các điểm đề cho vào không gian.",
+    "semantic_kind": "EXPLANATION",
+    "geometry_progress": [],
+    "formation_roles": [
+     "DECLARE_ENTITIES"
+    ]
+   },
+   {
+    "step_index": 1,
+    "visible_ids": [
+     "A",
+     "B",
+     "C",
+     "O",
+     "vec_OB"
+    ],
+    "focus_ids": [
+     "vec_OB"
+    ],
+    "readout_ids": [],
+    "learner_text": "Lấy vectơ từ O đến B.",
+    "semantic_kind": "MEASUREMENT",
+    "geometry_progress": [],
+    "formation_roles": [],
+    "visible_prerequisites": [
+     "B",
+     "O"
+    ]
+   },
+   {
+    "step_index": 2,
+    "visible_ids": [
+     "A",
+     "B",
+     "C",
+     "O",
+     "vec_OB",
+     "vec_OC"
+    ],
+    "focus_ids": [
+     "vec_OC"
+    ],
+    "readout_ids": [],
+    "learner_text": "Lấy vectơ từ O đến C.",
+    "semantic_kind": "MEASUREMENT",
+    "geometry_progress": [],
+    "formation_roles": [],
+    "visible_prerequisites": [
+     "C",
+     "O"
+    ]
+   },
+   {
+    "step_index": 3,
+    "visible_ids": [
+     "A",
+     "A_prime",
+     "B",
+     "C",
+     "O",
+     "vec_OB",
+     "vec_OC"
+    ],
+    "focus_ids": [
+     "A_prime"
+    ],
+    "readout_ids": [],
+    "learner_text": "Dựng điểm A' (2,2,0) = A + OB.",
+    "semantic_kind": "GEOMETRY_CONSTRUCTION",
+    "geometry_progress": [],
+    "formation_roles": [
+     "CONSTRUCT_AUXILIARY_GEOMETRY"
+    ],
+    "visible_prerequisites": [
+     "A",
+     "B",
+     "O"
+    ]
+   },
+   {
+    "step_index": 4,
+    "visible_ids": [
+     "A",
+     "A_prime",
+     "B",
+     "C",
+     "D",
+     "O",
+     "vec_OB",
+     "vec_OC"
+    ],
+    "focus_ids": [
+     "D"
+    ],
+    "readout_ids": [],
+    "learner_text": "Dựng điểm D (2,2,2) = A' + OC, đỉnh đối diện O của hình hộp.",
+    "semantic_kind": "GEOMETRY_CONSTRUCTION",
+    "geometry_progress": [],
+    "formation_roles": [
+     "CONSTRUCT_AUXILIARY_GEOMETRY"
+    ],
+    "visible_prerequisites": [
+     "A_prime",
+     "C",
+     "O"
+    ]
+   },
+   {
+    "step_index": 5,
+    "visible_ids": [
+     "A",
+     "A_prime",
+     "B",
+     "C",
+     "D",
+     "M",
+     "O",
+     "vec_OB",
+     "vec_OC"
+    ],
+    "focus_ids": [
+     "M"
+    ],
+    "readout_ids": [],
+    "learner_text": "Dựng tâm M của mặt cầu ngoại tiếp (trung điểm OD).",
+    "semantic_kind": "GEOMETRY_CONSTRUCTION",
+    "geometry_progress": [],
+    "formation_roles": [
+     "CONSTRUCT_AUXILIARY_GEOMETRY"
+    ],
+    "visible_prerequisites": [
+     "D",
+     "O"
+    ]
+   },
+   {
+    "step_index": 6,
+    "visible_ids": [
+     "A",
+     "A_prime",
+     "B",
+     "C",
+     "D",
+     "M",
+     "O",
+     "circumsphere",
+     "vec_OB",
+     "vec_OC"
+    ],
+    "focus_ids": [
+     "circumsphere"
+    ],
+    "readout_ids": [],
+    "learner_text": "Dựng mặt cầu ngoại tiếp tứ diện OABC.",
+    "semantic_kind": "GEOMETRY_CONSTRUCTION",
+    "geometry_progress": [],
+    "formation_roles": [
+     "CLOSE_SOLID"
+    ],
+    "visible_prerequisites": [
+     "M",
+     "O"
+    ]
+   },
+   {
+    "step_index": 7,
+    "visible_ids": [
+     "A",
+     "A_prime",
+     "B",
+     "C",
+     "D",
+     "M",
+     "O",
+     "circumsphere",
+     "face_OAB",
+     "vec_OB",
+     "vec_OC"
+    ],
+    "focus_ids": [
+     "face_OAB"
+    ],
+    "readout_ids": [],
+    "learner_text": "Dựng mặt OAB.",
+    "semantic_kind": "GEOMETRY_CONSTRUCTION",
+    "geometry_progress": [],
+    "formation_roles": [
+     "CONSTRUCT_AUXILIARY_GEOMETRY"
+    ],
+    "visible_prerequisites": [
+     "A",
+     "B",
+     "O"
+    ]
+   },
+   {
+    "step_index": 8,
+    "visible_ids": [
+     "A",
+     "A_prime",
+     "B",
+     "C",
+     "D",
+     "M",
+     "O",
+     "circumsphere",
+     "face_OAB",
+     "face_OAC",
+     "vec_OB",
+     "vec_OC"
+    ],
+    "focus_ids": [
+     "face_OAC"
+    ],
+    "readout_ids": [],
+    "learner_text": "Dựng mặt OAC.",
+    "semantic_kind": "GEOMETRY_CONSTRUCTION",
+    "geometry_progress": [],
+    "formation_roles": [
+     "CONSTRUCT_AUXILIARY_GEOMETRY"
+    ],
+    "visible_prerequisites": [
+     "A",
+     "C",
+     "O"
+    ]
+   },
+   {
+    "step_index": 9,
+    "visible_ids": [
+     "A",
+     "A_prime",
+     "B",
+     "C",
+     "D",
+     "M",
+     "O",
+     "circumsphere",
+     "face_OAB",
+     "face_OAC",
+     "face_OBC",
+     "vec_OB",
+     "vec_OC"
+    ],
+    "focus_ids": [
+     "face_OBC"
+    ],
+    "readout_ids": [],
+    "learner_text": "Dựng mặt OBC.",
+    "semantic_kind": "GEOMETRY_CONSTRUCTION",
+    "geometry_progress": [],
+    "formation_roles": [
+     "CONSTRUCT_AUXILIARY_GEOMETRY"
+    ],
+    "visible_prerequisites": [
+     "B",
+     "C",
+     "O"
+    ]
+   },
+   {
+    "step_index": 10,
+    "visible_ids": [
+     "A",
+     "A_prime",
+     "B",
+     "C",
+     "D",
+     "M",
+     "O",
+     "circumsphere",
+     "face_ABC",
+     "face_OAB",
+     "face_OAC",
+     "face_OBC",
+     "vec_OB",
+     "vec_OC"
+    ],
+    "focus_ids": [
+     "face_ABC"
+    ],
+    "readout_ids": [],
+    "learner_text": "Dựng mặt ABC.",
+    "semantic_kind": "GEOMETRY_CONSTRUCTION",
+    "geometry_progress": [],
+    "formation_roles": [
+     "CONSTRUCT_AUXILIARY_GEOMETRY"
+    ],
+    "visible_prerequisites": [
+     "A",
+     "B",
+     "C"
+    ]
+   },
+   {
+    "step_index": 11,
+    "visible_ids": [
+     "A",
+     "A_prime",
+     "B",
+     "C",
+     "D",
+     "M",
+     "O",
+     "OABC",
+     "circumsphere",
+     "face_ABC",
+     "face_OAB",
+     "face_OAC",
+     "face_OBC",
+     "vec_OB",
+     "vec_OC"
+    ],
+    "focus_ids": [
+     "OABC"
+    ],
+    "readout_ids": [],
+    "learner_text": "Dựng hình chóp C.OAB (4 đỉnh, 4 mặt).",
+    "semantic_kind": "GEOMETRY_CONSTRUCTION",
+    "geometry_progress": [],
+    "formation_roles": [
+     "CLOSE_SOLID"
+    ],
+    "visible_prerequisites": [
+     "A",
+     "B",
+     "C",
+     "O"
+    ]
+   },
+   {
+    "step_index": 12,
+    "visible_ids": [
+     "A",
+     "A_prime",
+     "B",
+     "C",
+     "D",
+     "M",
+     "O",
+     "OABC",
+     "R",
+     "circumsphere",
+     "face_ABC",
+     "face_OAB",
+     "face_OAC",
+     "face_OBC",
+     "vec_OB",
+     "vec_OC"
+    ],
+    "focus_ids": [
+     "R"
+    ],
+    "readout_ids": [
+     "R"
+    ],
+    "learner_text": "Bán kính «Khối cầu tâm M, đi qua O» bằng √3.",
+    "semantic_kind": "FINAL_RESULT",
+    "geometry_progress": [],
+    "formation_roles": [],
+    "visible_prerequisites": [
+     "circumsphere"
+    ]
+   }
+  ]
+ },
+ "free_objects": [
+  "A",
+  "B",
+  "C",
+  "O"
+ ],
+ "unused_auxiliary_ids": [],
+ "diagnostics": [
+  "ANNOTATION_UNBOUND R: measure radius has no registered anchor"
+ ],
+ "khai": "Dữ liệu CẢNH cho renderer. Mọi số là chuỗi phân số CHÍNH XÁC; hoá float là việc của renderer, ở bước cuối trước GPU. Mặt phẳng và đường thẳng KHÔNG có biên — renderer tự quyết kích thước dựa trên `depends`."
+}

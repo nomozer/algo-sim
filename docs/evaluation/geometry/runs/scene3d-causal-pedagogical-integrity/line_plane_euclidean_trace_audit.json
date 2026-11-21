@@ -1,0 +1,42 @@
+{
+  "run_id": "scene3d-causal-pedagogical-integrity",
+  "generated_at_utc": "2026-11-14T15:39:13.820636+00:00",
+  "product_commit": "a2874d273959970faa501879f4f9dbfe20c93975",
+  "measured_system": "225f4bba5a8765ccd1c12507ce6dbd0bab25d69d02263148cf94752f921e2b56",
+  "cache_version": "138",
+  "dataset_partition": "DEVELOPMENT (agent-written corpus, exposed REAL27, exposed probes); never H-1 or locked W2/W3",
+  "environment": {
+    "ALLOW_LIVE_AI": "0",
+    "HYBRID_ROUTE_MODE": "local-first",
+    "live_ai_calls": 0
+  },
+  "head": "6da2795a493d6097add56294832f0d5a7ea1ef13",
+  "command": "python docs/evaluation/geometry/runs/scene3d-causal-pedagogical-integrity/tools/scene_sweep.py <backend> <out>",
+  "before_backend": "archive of 9d0949b09/backend",
+  "after_backend": "frozen candidate backend",
+  "oracle": "tools/causal_audit.py (reads only the serialized scene)",
+  "route_d_section_points": "no Route D section vertex is an `intersect_line_plane` point object: sections are kernel `section` objects, explained edge by edge",
+  "edges": {
+    "before": {
+      "PARALLEL_LINE_PLANE_INTERSECTION": 137,
+      "None": 18
+    },
+    "after": {
+      "PARALLEL_LINE_PLANE_INTERSECTION": 137,
+      "COPLANAR_TRACE_INTERSECTION": 16,
+      "None": 2
+    }
+  },
+  "remaining_without_reason": [
+    {
+      "case": "PROBES:compound_contains_parallel",
+      "learner_text": "Trên mặt SDA, nối đỉnh D với giao điểm thuộc cạnh SA."
+    },
+    {
+      "case": "PROBES:compound_contains_parallel",
+      "learner_text": "Trên mặt SAB, nối giao điểm thuộc cạnh SA với đỉnh B."
+    }
+  ],
+  "example": null,
+  "catalog_samples": "algebraic_line_plane_intersection lineage disclosed by 9d5e9b408; coplanar replacement integrated in the library (b5810dcc3)"
+}

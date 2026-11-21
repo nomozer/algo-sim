@@ -1,0 +1,4442 @@
+{
+ "schema": "axo-slm20-audit/1",
+ "rows": [
+  {
+   "case_id": "V02",
+   "intent": "SIMULATE_ONLY",
+   "input": "Cho hình chóp S.ABCD có đáy là hình vuông ABCD cạnh 2a, cạnh bên SA vuông góc với đáy và SA = 3a. Vẽ hình chóp S.ABCD.",
+   "parser": {
+    "status": "LOCAL_PARSE_AMBIGUOUS",
+    "reason_code": "AMBIGUOUS_FACT",
+    "has_payload": true,
+    "unparsed_goal": [],
+    "unparsed_fact": []
+   },
+   "slm": {
+    "ok": false,
+    "reason_code": "AMBIGUOUS_FACT",
+    "reason_detail": "[{'op': 'unresolved', 'reason': 'SLM marked clause 0 as ambiguous.'}]",
+    "failure_taxonomy": "SLM_UNRESOLVED",
+    "raw_model_output": "{\"s\":[0,\"pyr\",\"S.ABCD\",0],\"r\":[],\"g\":[],\"u\":[{\"c\":0,\"k\":\"ambig\"}]}",
+    "wire_payload": null,
+    "grounding_status": "SLM_REPORTED_UNRESOLVED",
+    "accepted_ops": [],
+    "rejected_ops": [
+     {
+      "op": "unresolved",
+      "reason": "SLM marked clause 0 as ambiguous."
+     }
+    ],
+    "normalization": {
+     "normalizer_version": "slm-verified-normalizer/3",
+     "changed": true,
+     "typo_detected": false,
+     "ambiguity_flags": [],
+     "applied_rule_ids": [
+      "VN06_CUBE_CANH_BANG",
+      "VN07_CANH_BEN_PERP_PREFIX",
+      "VN07_IMPLICIT_MAT_DAY_PERP"
+     ],
+     "steps": [
+      {
+       "rule_id": "VN06_CUBE_CANH_BANG",
+       "transformation_rule_id": "VN06_CUBE_CANH_BANG",
+       "original_text": "hình vuông ABCD cạnh 2a",
+       "original_span": [
+        31,
+        54
+       ],
+       "original_clause_id": 1,
+       "normalized_text": "hình vuông ABCD có cạnh bằng 2a",
+       "original_excerpt": "hình vuông ABCD cạnh 2a",
+       "normalized_excerpt": "hình vuông ABCD có cạnh bằng 2a",
+       "original_entity_refs": [
+        "ABCD"
+       ],
+       "scope": "LOCAL_ENTITY",
+       "polarity": "AFFIRMATIVE",
+       "semantic_equivalence_evidence": "explicit_co_canh_bang",
+       "validation_status": "VALIDATED_MEANING_PRESERVING",
+       "validation_result": "VALIDATED_MEANING_PRESERVING",
+       "ambiguity_status": "UNAMBIGUOUS"
+      },
+      {
+       "rule_id": "VN07_CANH_BEN_PERP_PREFIX",
+       "transformation_rule_id": "VN07_CANH_BEN_PERP_PREFIX",
+       "original_text": ", cạnh bên SA vuông góc",
+       "original_span": [
+        54,
+        77
+       ],
+       "original_clause_id": 1,
+       "normalized_text": ", SA vuông góc",
+       "original_excerpt": ", cạnh bên SA vuông góc",
+       "normalized_excerpt": ", SA vuông góc",
+       "original_entity_refs": [
+        "SA"
+       ],
+       "scope": "LOCAL_CLAUSE",
+       "polarity": "AFFIRMATIVE",
+       "semantic_equivalence_evidence": "remove_redundant_canh_ben_before_perp",
+       "validation_status": "VALIDATED_MEANING_PRESERVING",
+       "validation_result": "VALIDATED_MEANING_PRESERVING",
+       "ambiguity_status": "UNAMBIGUOUS"
+      },
+      {
+       "rule_id": "VN07_IMPLICIT_MAT_DAY_PERP",
+       "transformation_rule_id": "VN07_IMPLICIT_MAT_DAY_PERP",
+       "original_text": "ên SA vuông góc với đáy",
+       "original_span": [
+        62,
+        85
+       ],
+       "original_clause_id": 1,
+       "normalized_text": "vuông góc với (ABCD)",
+       "original_excerpt": "ên SA vuông góc với đáy",
+       "normalized_excerpt": "vuông góc với (ABCD)",
+       "original_entity_refs": [
+        "SA"
+       ],
+       "scope": "SOLID_BASE",
+       "polarity": "AFFIRMATIVE",
+       "semantic_equivalence_evidence": "resolve_unique_base_in_perpendicular",
+       "validation_status": "VALIDATED_MEANING_PRESERVING",
+       "validation_result": "VALIDATED_MEANING_PRESERVING",
+       "ambiguity_status": "UNAMBIGUOUS"
+      }
+     ]
+    },
+    "lowered_payload": null
+   },
+   "arm_A_product": {
+    "status": "REFUSED",
+    "extraction_mode": "LOCAL_SLM_GROUNDING_REJECTED",
+    "code": "AMBIGUOUS_FACT",
+    "slm_ops": [],
+    "oracle": null
+   },
+   "arm_B_slm_payload": {
+    "status": "NOT_RUN",
+    "why": "SLM output not lowered (no payload)"
+   },
+   "arm_D_gold_intent": {
+    "status": "NOT_RUN",
+    "why": "SLM output not lowered (no payload)"
+   },
+   "arm_C_parser_facts_gold_intent": {
+    "status": "REFUSED",
+    "code": "AMBIGUOUS_FACT",
+    "answers": null,
+    "failure_stage": "deterministic_route",
+    "oracle": null
+   },
+   "arm_E_downstream_canonical": {
+    "text": "Cho hình chóp S.ABCD có đáy ABCD là hình vuông cạnh 2a, SA vuông góc với đáy và SA = 3a. Hãy mô phỏng hình chóp.",
+    "status": "SERVED",
+    "extraction_mode": "LOCAL_DETERMINISTIC_PARSER",
+    "code": null,
+    "slm_ops": [],
+    "oracle": {
+     "scene_validation": "MATHEMATICALLY_VALID",
+     "issues": [],
+     "numeric": null
+    }
+   },
+   "seconds": 6.0
+  },
+  {
+   "case_id": "V05",
+   "intent": "SIMULATE_ONLY",
+   "input": "Cho hình chóp tứ giác đều S.ABCD có tất cả các cạnh đều bằng a. Hãy mô phỏng hình chóp.",
+   "parser": {
+    "status": "LOCAL_PARSE_PARTIAL",
+    "reason_code": "UNPARSED_FACT_CANDIDATE",
+    "has_payload": false,
+    "unparsed_goal": [],
+    "unparsed_fact": [
+     "Cho hình chóp tứ giác đều S.ABCD có tất cả các cạnh đều bằng a"
+    ]
+   },
+   "slm": {
+    "ok": false,
+    "reason_code": "AMBIGUOUS_FACT",
+    "reason_detail": "[{'op': 'unresolved', 'reason': 'SLM marked clause 0 as ambiguous.'}]",
+    "failure_taxonomy": "SLM_UNRESOLVED",
+    "raw_model_output": "{\"s\":[0,\"pyr\",\"S.ABCD\",1],\"r\":[{\"c\":0,\"p\":\"len\",\"a\":\"S.ABCD\",\"q\":\"a\"}],\"g\":[],\"u\":[{\"c\":0,\"k\":\"ambig\"}]}",
+    "wire_payload": null,
+    "grounding_status": "SLM_REPORTED_UNRESOLVED",
+    "accepted_ops": [],
+    "rejected_ops": [
+     {
+      "op": "unresolved",
+      "reason": "SLM marked clause 0 as ambiguous."
+     }
+    ],
+    "normalization": {
+     "normalizer_version": "slm-verified-normalizer/3",
+     "changed": false,
+     "typo_detected": false,
+     "ambiguity_flags": [],
+     "applied_rule_ids": [],
+     "steps": []
+    },
+    "lowered_payload": null
+   },
+   "arm_A_product": {
+    "status": "REFUSED",
+    "extraction_mode": "LOCAL_SLM_GROUNDING_REJECTED",
+    "code": "AMBIGUOUS_FACT",
+    "slm_ops": [],
+    "oracle": null
+   },
+   "arm_B_slm_payload": {
+    "status": "NOT_RUN",
+    "why": "SLM output not lowered (no payload)"
+   },
+   "arm_D_gold_intent": {
+    "status": "NOT_RUN",
+    "why": "SLM output not lowered (no payload)"
+   },
+   "arm_C_parser_facts_gold_intent": {
+    "status": "NOT_CONSTRUCTED",
+    "why": "parser built no payload (LOCAL_PARSE_PARTIAL)"
+   },
+   "arm_E_downstream_canonical": {
+    "text": "Cho hình chóp tứ giác đều S.ABCD có cạnh đáy bằng a và cạnh bên bằng a. Hãy mô phỏng hình chóp.",
+    "status": "SERVED",
+    "extraction_mode": "LOCAL_DETERMINISTIC_PARSER",
+    "code": null,
+    "slm_ops": [],
+    "oracle": {
+     "scene_validation": "MATHEMATICALLY_VALID",
+     "issues": [],
+     "numeric": null
+    }
+   },
+   "seconds": 3.4
+  },
+  {
+   "case_id": "V06",
+   "intent": "SIMULATE_ONLY",
+   "input": "Cho tứ diện đều ABCD cạnh a. Hãy mô phỏng tứ diện.",
+   "parser": {
+    "status": "LOCAL_PARSE_COMPLETE",
+    "reason_code": null,
+    "has_payload": true,
+    "unparsed_goal": [],
+    "unparsed_fact": []
+   },
+   "slm": {
+    "ok": false,
+    "reason_code": "AMBIGUOUS_FACT",
+    "reason_detail": "[{'op': 'unresolved', 'reason': 'SLM marked clause 0 as ambiguous.'}]",
+    "failure_taxonomy": "SLM_UNRESOLVED",
+    "raw_model_output": "{\"s\":[0,\"pyr\",\"A.BCD\",1],\"r\":[{\"c\":0,\"p\":\"len\",\"a\":\"A.BCD\",\"q\":\"a\"}],\"g\":[],\"u\":[{\"c\":0,\"k\":\"ambig\"}]}",
+    "wire_payload": null,
+    "grounding_status": "SLM_REPORTED_UNRESOLVED",
+    "accepted_ops": [],
+    "rejected_ops": [
+     {
+      "op": "unresolved",
+      "reason": "SLM marked clause 0 as ambiguous."
+     }
+    ],
+    "normalization": {
+     "normalizer_version": "slm-verified-normalizer/3",
+     "changed": false,
+     "typo_detected": false,
+     "ambiguity_flags": [],
+     "applied_rule_ids": [],
+     "steps": []
+    },
+    "lowered_payload": null
+   },
+   "arm_A_product": {
+    "status": "SERVED",
+    "extraction_mode": "LOCAL_DETERMINISTIC_PARSER",
+    "code": null,
+    "slm_ops": [],
+    "oracle": {
+     "scene_validation": "MATHEMATICALLY_VALID",
+     "issues": [],
+     "numeric": null
+    }
+   },
+   "arm_B_slm_payload": {
+    "status": "NOT_RUN",
+    "why": "SLM output not lowered (no payload)"
+   },
+   "arm_D_gold_intent": {
+    "status": "NOT_RUN",
+    "why": "SLM output not lowered (no payload)"
+   },
+   "arm_C_parser_facts_gold_intent": {
+    "status": "SERVED",
+    "code": null,
+    "answers": {},
+    "failure_stage": null,
+    "oracle": {
+     "scene_validation": "MATHEMATICALLY_VALID",
+     "issues": [],
+     "numeric": null
+    }
+   },
+   "arm_E_downstream_canonical": {
+    "text": "Cho tứ diện đều ABCD cạnh a. Hãy mô phỏng hình.",
+    "status": "SERVED",
+    "extraction_mode": "LOCAL_DETERMINISTIC_PARSER",
+    "code": null,
+    "slm_ops": [],
+    "oracle": {
+     "scene_validation": "MATHEMATICALLY_VALID",
+     "issues": [],
+     "numeric": null
+    }
+   },
+   "seconds": 1.7
+  },
+  {
+   "case_id": "V08",
+   "intent": "SIMULATE_ONLY",
+   "input": "Cho hình lập phương ABCD.A'B'C'D' cạnh a. Hãy mô phỏng hình lập phương.",
+   "parser": {
+    "status": "LOCAL_PARSE_COMPLETE",
+    "reason_code": null,
+    "has_payload": true,
+    "unparsed_goal": [],
+    "unparsed_fact": []
+   },
+   "slm": {
+    "ok": false,
+    "reason_code": "AMBIGUOUS_FACT",
+    "reason_detail": "[{'op': 'unresolved', 'reason': 'SLM marked clause 0 as ambiguous.'}]",
+    "failure_taxonomy": "SLM_UNRESOLVED",
+    "raw_model_output": "{\"s\":[0,\"cube\",\"ABCD.A'B'C'D'\",1],\"r\":[{\"c\":0,\"p\":\"len\",\"a\":\"AA'\",\"q\":\"a\"}],\"g\":[],\"u\":[{\"c\":0,\"k\":\"ambig\"}]}",
+    "wire_payload": null,
+    "grounding_status": "SLM_REPORTED_UNRESOLVED",
+    "accepted_ops": [],
+    "rejected_ops": [
+     {
+      "op": "unresolved",
+      "reason": "SLM marked clause 0 as ambiguous."
+     }
+    ],
+    "normalization": {
+     "normalizer_version": "slm-verified-normalizer/3",
+     "changed": true,
+     "typo_detected": false,
+     "ambiguity_flags": [],
+     "applied_rule_ids": [
+      "VN06_CUBE_CANH_BANG"
+     ],
+     "steps": [
+      {
+       "rule_id": "VN06_CUBE_CANH_BANG",
+       "transformation_rule_id": "VN06_CUBE_CANH_BANG",
+       "original_text": "hình lập phương ABCD.A'B'C'D' cạnh a",
+       "original_span": [
+        4,
+        40
+       ],
+       "original_clause_id": 0,
+       "normalized_text": "hình lập phương ABCD.A'B'C'D' có cạnh bằng a",
+       "original_excerpt": "hình lập phương ABCD.A'B'C'D' cạnh a",
+       "normalized_excerpt": "hình lập phương ABCD.A'B'C'D' có cạnh bằng a",
+       "original_entity_refs": [
+        "ABCD",
+        "A'B'C'D'"
+       ],
+       "scope": "LOCAL_ENTITY",
+       "polarity": "AFFIRMATIVE",
+       "semantic_equivalence_evidence": "explicit_co_canh_bang",
+       "validation_status": "VALIDATED_MEANING_PRESERVING",
+       "validation_result": "VALIDATED_MEANING_PRESERVING",
+       "ambiguity_status": "UNAMBIGUOUS"
+      }
+     ]
+    },
+    "lowered_payload": null
+   },
+   "arm_A_product": {
+    "status": "SERVED",
+    "extraction_mode": "LOCAL_DETERMINISTIC_PARSER",
+    "code": null,
+    "slm_ops": [],
+    "oracle": {
+     "scene_validation": "MATHEMATICALLY_VALID",
+     "issues": [],
+     "numeric": null
+    }
+   },
+   "arm_B_slm_payload": {
+    "status": "NOT_RUN",
+    "why": "SLM output not lowered (no payload)"
+   },
+   "arm_D_gold_intent": {
+    "status": "NOT_RUN",
+    "why": "SLM output not lowered (no payload)"
+   },
+   "arm_C_parser_facts_gold_intent": {
+    "status": "SERVED",
+    "code": null,
+    "answers": {},
+    "failure_stage": null,
+    "oracle": {
+     "scene_validation": "MATHEMATICALLY_VALID",
+     "issues": [],
+     "numeric": null
+    }
+   },
+   "arm_E_downstream_canonical": {
+    "text": "Cho hình lập phương ABCD.A'B'C'D' cạnh a. Hãy mô phỏng hình.",
+    "status": "SERVED",
+    "extraction_mode": "LOCAL_DETERMINISTIC_PARSER",
+    "code": null,
+    "slm_ops": [],
+    "oracle": {
+     "scene_validation": "MATHEMATICALLY_VALID",
+     "issues": [],
+     "numeric": null
+    }
+   },
+   "seconds": 1.8
+  },
+  {
+   "case_id": "V09",
+   "intent": "SIMULATE_ONLY",
+   "input": "Cho hình hộp chữ nhật ABCD.A'B'C'D' có AB = 2, AD = 3, AA' = 4. Hãy mô phỏng hình hộp.",
+   "parser": {
+    "status": "LOCAL_PARSE_COMPLETE",
+    "reason_code": null,
+    "has_payload": true,
+    "unparsed_goal": [],
+    "unparsed_fact": []
+   },
+   "slm": {
+    "ok": true,
+    "reason_code": null,
+    "reason_detail": "",
+    "failure_taxonomy": "NONE",
+    "raw_model_output": "{\"s\":[0,\"box\",\"ABCD.A'B'C'D'\",1],\"r\":[{\"c\":0,\"p\":\"len\",\"a\":\"AB\",\"q\":\"2\"},{\"c\":0,\"p\":\"len\",\"a\":\"AD\",\"q\":\"3\"},{\"c\":0,\"p\":\"len\",\"a\":\"AA'\",\"q\":\"4\"}],\"g\":[],\"u\":[]}",
+    "wire_payload": {
+     "schema_version": "typed-fact-next/2",
+     "problem_text": "Cho hình hộp chữ nhật ABCD.A'B'C'D' có AB = 2, AD = 3, AA' = 4. Hãy mô phỏng hình hộp.",
+     "length_unit": "1",
+     "solids": [
+      {
+       "solid_id": "s1",
+       "solid_type": "prism",
+       "notation": "ABCD.A'B'C'D'",
+       "quote": "Cho hình hộp chữ nhật ABCD.A'B'C'D' có AB = 2"
+      }
+     ],
+     "premises": [
+      {
+       "kind": "right_prism",
+       "args": [
+        "base=A,B,C,D",
+        "top=A',B',C',D'"
+       ],
+       "quote": "Cho hình hộp chữ nhật ABCD.A'B'C'D'",
+       "solid_id": "s1"
+      },
+      {
+       "kind": "rectangle",
+       "args": [
+        "vertices=A,B,C,D"
+       ],
+       "quote": "Cho hình hộp chữ nhật ABCD.A'B'C'D'",
+       "solid_id": "s1"
+      },
+      {
+       "kind": "segment_length",
+       "args": [
+        "segment=A,B",
+        "value=2"
+       ],
+       "quote": "AB = 2",
+       "solid_id": "s1"
+      },
+      {
+       "kind": "segment_length",
+       "args": [
+        "segment=A,D",
+        "value=3"
+       ],
+       "quote": "AD = 3",
+       "solid_id": "s1"
+      },
+      {
+       "kind": "segment_length",
+       "args": [
+        "segment=A,A'",
+        "value=4"
+       ],
+       "quote": "AA' = 4",
+       "solid_id": "s1"
+      }
+     ],
+     "derived_sections": [],
+     "relations": [],
+     "simulation_goals": [
+      {
+       "goal_id": "sg1",
+       "kind": "construct_object",
+       "quote": "Hãy mô phỏng hình hộp",
+       "target_solid_id": "s1"
+      }
+     ],
+     "math_goals": []
+    },
+    "grounding_status": "GROUNDED_AND_LOWERED",
+    "accepted_ops": [
+     {
+      "kind": "right_prism",
+      "clause_id": "parser_reconciled"
+     },
+     {
+      "kind": "rectangle",
+      "clause_id": "parser_reconciled"
+     },
+     {
+      "kind": "segment_length",
+      "clause_id": "parser_reconciled"
+     },
+     {
+      "kind": "segment_length",
+      "clause_id": "parser_reconciled"
+     },
+     {
+      "kind": "segment_length",
+      "clause_id": "parser_reconciled"
+     }
+    ],
+    "rejected_ops": [],
+    "normalization": {
+     "normalizer_version": "slm-verified-normalizer/3",
+     "changed": false,
+     "typo_detected": false,
+     "ambiguity_flags": [],
+     "applied_rule_ids": [],
+     "steps": []
+    },
+    "lowered_payload": {
+     "schema_version": "typed-fact-next/2",
+     "problem_text": "Cho hình hộp chữ nhật ABCD.A'B'C'D' có AB = 2, AD = 3, AA' = 4. Hãy mô phỏng hình hộp.",
+     "length_unit": "1",
+     "solids": [
+      {
+       "solid_id": "s1",
+       "solid_type": "prism",
+       "notation": "ABCD.A'B'C'D'",
+       "quote": "Cho hình hộp chữ nhật ABCD.A'B'C'D' có AB = 2"
+      }
+     ],
+     "premises": [
+      {
+       "kind": "right_prism",
+       "args": {
+        "base": [
+         "A",
+         "B",
+         "C",
+         "D"
+        ],
+        "top": [
+         "A'",
+         "B'",
+         "C'",
+         "D'"
+        ]
+       },
+       "quote": "Cho hình hộp chữ nhật ABCD.A'B'C'D'",
+       "solid_id": "s1"
+      },
+      {
+       "kind": "rectangle",
+       "args": {
+        "vertices": [
+         "A",
+         "B",
+         "C",
+         "D"
+        ]
+       },
+       "quote": "Cho hình hộp chữ nhật ABCD.A'B'C'D'",
+       "solid_id": "s1"
+      },
+      {
+       "kind": "segment_length",
+       "args": {
+        "segment": [
+         "A",
+         "B"
+        ],
+        "value": "2"
+       },
+       "quote": "AB = 2",
+       "solid_id": "s1"
+      },
+      {
+       "kind": "segment_length",
+       "args": {
+        "segment": [
+         "A",
+         "D"
+        ],
+        "value": "3"
+       },
+       "quote": "AD = 3",
+       "solid_id": "s1"
+      },
+      {
+       "kind": "segment_length",
+       "args": {
+        "segment": [
+         "A",
+         "A'"
+        ],
+        "value": "4"
+       },
+       "quote": "AA' = 4",
+       "solid_id": "s1"
+      }
+     ],
+     "derived_sections": [],
+     "relations": [],
+     "simulation_goals": [
+      {
+       "goal_id": "sg1",
+       "kind": "construct_object",
+       "quote": "Hãy mô phỏng hình hộp",
+       "target_solid_id": "s1"
+      }
+     ],
+     "math_goals": []
+    }
+   },
+   "arm_A_product": {
+    "status": "SERVED",
+    "extraction_mode": "LOCAL_DETERMINISTIC_PARSER",
+    "code": null,
+    "slm_ops": [],
+    "oracle": {
+     "scene_validation": "MATHEMATICALLY_VALID",
+     "issues": [],
+     "numeric": null
+    }
+   },
+   "arm_B_slm_payload": {
+    "status": "SERVED",
+    "code": null,
+    "answers": {},
+    "failure_stage": null,
+    "source_gate": "VERIFIED",
+    "oracle": {
+     "scene_validation": "MATHEMATICALLY_VALID",
+     "issues": [],
+     "numeric": null
+    }
+   },
+   "arm_D_gold_intent": {
+    "status": "SERVED",
+    "code": null,
+    "answers": {},
+    "failure_stage": null,
+    "source_gate": "VERIFIED",
+    "math_goals_removed": 0,
+    "oracle": {
+     "scene_validation": "MATHEMATICALLY_VALID",
+     "issues": [],
+     "numeric": null
+    }
+   },
+   "arm_C_parser_facts_gold_intent": {
+    "status": "SERVED",
+    "code": null,
+    "answers": {},
+    "failure_stage": null,
+    "oracle": {
+     "scene_validation": "MATHEMATICALLY_VALID",
+     "issues": [],
+     "numeric": null
+    }
+   },
+   "arm_E_downstream_canonical": {
+    "text": "Cho hình hộp chữ nhật ABCD.A'B'C'D' có AB = 2, AD = 3, AA' = 4. Hãy mô phỏng hình.",
+    "status": "SERVED",
+    "extraction_mode": "LOCAL_DETERMINISTIC_PARSER",
+    "code": null,
+    "slm_ops": [],
+    "oracle": {
+     "scene_validation": "MATHEMATICALLY_VALID",
+     "issues": [],
+     "numeric": null
+    }
+   },
+   "seconds": 2.9
+  },
+  {
+   "case_id": "V10",
+   "intent": "SIMULATE_ONLY",
+   "input": "Cho lăng trụ đứng ABC.A'B'C' có đáy là tam giác ABC vuông cân tại A, AB = AC = a, cạnh bên AA' = 2a. Hãy mô phỏng lăng trụ.",
+   "parser": {
+    "status": "LOCAL_PARSE_COMPLETE",
+    "reason_code": null,
+    "has_payload": true,
+    "unparsed_goal": [],
+    "unparsed_fact": []
+   },
+   "slm": {
+    "ok": true,
+    "reason_code": null,
+    "reason_detail": "",
+    "failure_taxonomy": "NONE",
+    "raw_model_output": "{\"s\":[0,\"pri\",\"ABC.A'B'C'\",1],\"r\":[{\"c\":0,\"p\":\"right_iso_tri\",\"a\":\"ABC\",\"pt\":\"A\"},{\"c\":0,\"p\":\"len\",\"a\":\"AB\",\"q\":\"a\"},{\"c\":0,\"p\":\"len\",\"a\":\"AC\",\"q\":\"a\"},{\"c\":0,\"p\":\"len\",\"a\":\"AA'\",\"q\":\"2a\"}],\"g\":[],\"u\":[]}",
+    "wire_payload": {
+     "schema_version": "typed-fact-next/2",
+     "problem_text": "Cho hình lăng trụ đứng ABC.A'B'C' có đáy là tam giác ABC vuông cân tại A, AB = a, AC = a, AA' = 2a. Hãy mô phỏng lăng trụ.",
+     "length_unit": "a",
+     "solids": [
+      {
+       "solid_id": "s1",
+       "solid_type": "prism",
+       "notation": "ABC.A'B'C'",
+       "quote": "Cho hình lăng trụ đứng ABC.A'B'C' có đáy là tam giác ABC vuông cân tại A"
+      }
+     ],
+     "premises": [
+      {
+       "kind": "right_prism",
+       "args": [
+        "base=A,B,C",
+        "top=A',B',C'"
+       ],
+       "quote": "Cho hình lăng trụ đứng ABC.A'B'C'",
+       "solid_id": "s1"
+      },
+      {
+       "kind": "right_angle",
+       "args": [
+        "vertex=A",
+        "rays=B,C"
+       ],
+       "quote": "tam giác ABC vuông cân tại A",
+       "solid_id": "s1"
+      },
+      {
+       "kind": "equal_length",
+       "args": [
+        "segment_a=A,B",
+        "segment_b=A,C"
+       ],
+       "quote": "tam giác ABC vuông cân tại A",
+       "solid_id": "s1"
+      },
+      {
+       "kind": "segment_length",
+       "args": [
+        "segment=A,B",
+        "value=a"
+       ],
+       "quote": "AB = a",
+       "solid_id": "s1"
+      },
+      {
+       "kind": "segment_length",
+       "args": [
+        "segment=A,C",
+        "value=a"
+       ],
+       "quote": "AC = a",
+       "solid_id": "s1"
+      },
+      {
+       "kind": "segment_length",
+       "args": [
+        "segment=A,A'",
+        "value=2a"
+       ],
+       "quote": "AA' = 2a",
+       "solid_id": "s1"
+      }
+     ],
+     "derived_sections": [],
+     "relations": [],
+     "simulation_goals": [
+      {
+       "goal_id": "sg1",
+       "kind": "construct_object",
+       "quote": "Hãy mô phỏng lăng trụ",
+       "target_solid_id": "s1"
+      }
+     ],
+     "math_goals": []
+    },
+    "grounding_status": "GROUNDED_AND_LOWERED",
+    "accepted_ops": [
+     {
+      "kind": "right_prism",
+      "clause_id": "parser_reconciled"
+     },
+     {
+      "kind": "right_angle",
+      "clause_id": "parser_reconciled"
+     },
+     {
+      "kind": "equal_length",
+      "clause_id": "parser_reconciled"
+     },
+     {
+      "kind": "segment_length",
+      "clause_id": "parser_reconciled"
+     },
+     {
+      "kind": "segment_length",
+      "clause_id": "parser_reconciled"
+     },
+     {
+      "kind": "segment_length",
+      "clause_id": "parser_reconciled"
+     }
+    ],
+    "rejected_ops": [],
+    "normalization": {
+     "normalizer_version": "slm-verified-normalizer/3",
+     "changed": true,
+     "typo_detected": false,
+     "ambiguity_flags": [],
+     "applied_rule_ids": [
+      "VN06_CHAINED_SEGMENT_EQ",
+      "VN06_RIGHT_PRISM_CANH_BEN",
+      "VN03_BARE_PRISM"
+     ],
+     "steps": [
+      {
+       "rule_id": "VN06_CHAINED_SEGMENT_EQ",
+       "transformation_rule_id": "VN06_CHAINED_SEGMENT_EQ",
+       "original_text": "AB = AC = a",
+       "original_span": [
+        69,
+        80
+       ],
+       "original_clause_id": 1,
+       "normalized_text": "AB = a, AC = a",
+       "original_excerpt": "AB = AC = a",
+       "normalized_excerpt": "AB = a, AC = a",
+       "original_entity_refs": [
+        "AB",
+        "AC"
+       ],
+       "scope": "LOCAL_ENTITY",
+       "polarity": "AFFIRMATIVE",
+       "semantic_equivalence_evidence": "expand_chained_segment_equality",
+       "validation_status": "VALIDATED_MEANING_PRESERVING",
+       "validation_result": "VALIDATED_MEANING_PRESERVING",
+       "ambiguity_status": "UNAMBIGUOUS"
+      },
+      {
+       "rule_id": "VN06_RIGHT_PRISM_CANH_BEN",
+       "transformation_rule_id": "VN06_RIGHT_PRISM_CANH_BEN",
+       "original_text": "cạnh bên AA' = 2a",
+       "original_span": [
+        82,
+        99
+       ],
+       "original_clause_id": 1,
+       "normalized_text": "AA' = 2a",
+       "original_excerpt": "cạnh bên AA' = 2a",
+       "normalized_excerpt": "AA' = 2a",
+       "original_entity_refs": [
+        "AA'"
+       ],
+       "scope": "PRISM_LATERAL_EDGE",
+       "polarity": "AFFIRMATIVE",
+       "semantic_equivalence_evidence": "right_prism_named_lateral_edge",
+       "validation_status": "VALIDATED_MEANING_PRESERVING",
+       "validation_result": "VALIDATED_MEANING_PRESERVING",
+       "ambiguity_status": "UNAMBIGUOUS"
+      },
+      {
+       "rule_id": "VN03_BARE_PRISM",
+       "transformation_rule_id": "VN03_BARE_PRISM",
+       "original_text": "Cho lăng trụ đứng",
+       "original_span": [
+        0,
+        17
+       ],
+       "original_clause_id": 0,
+       "normalized_text": "Cho hình lăng trụ đứng",
+       "original_excerpt": "Cho lăng trụ đứng",
+       "normalized_excerpt": "Cho hình lăng trụ đứng",
+       "original_entity_refs": [],
+       "scope": "SOLID_DECLARATION",
+       "polarity": "AFFIRMATIVE",
+       "semantic_equivalence_evidence": "insert_implicit_hinh_noun_before_lang_tru",
+       "validation_status": "VALIDATED_MEANING_PRESERVING",
+       "validation_result": "VALIDATED_MEANING_PRESERVING",
+       "ambiguity_status": "UNAMBIGUOUS"
+      }
+     ]
+    },
+    "lowered_payload": {
+     "schema_version": "typed-fact-next/2",
+     "problem_text": "Cho hình lăng trụ đứng ABC.A'B'C' có đáy là tam giác ABC vuông cân tại A, AB = a, AC = a, AA' = 2a. Hãy mô phỏng lăng trụ.",
+     "length_unit": "a",
+     "solids": [
+      {
+       "solid_id": "s1",
+       "solid_type": "prism",
+       "notation": "ABC.A'B'C'",
+       "quote": "Cho hình lăng trụ đứng ABC.A'B'C' có đáy là tam giác ABC vuông cân tại A"
+      }
+     ],
+     "premises": [
+      {
+       "kind": "right_prism",
+       "args": {
+        "base": [
+         "A",
+         "B",
+         "C"
+        ],
+        "top": [
+         "A'",
+         "B'",
+         "C'"
+        ]
+       },
+       "quote": "Cho hình lăng trụ đứng ABC.A'B'C'",
+       "solid_id": "s1"
+      },
+      {
+       "kind": "right_angle",
+       "args": {
+        "vertex": "A",
+        "rays": [
+         "B",
+         "C"
+        ]
+       },
+       "quote": "tam giác ABC vuông cân tại A",
+       "solid_id": "s1"
+      },
+      {
+       "kind": "equal_length",
+       "args": {
+        "segment_a": [
+         "A",
+         "B"
+        ],
+        "segment_b": [
+         "A",
+         "C"
+        ]
+       },
+       "quote": "tam giác ABC vuông cân tại A",
+       "solid_id": "s1"
+      },
+      {
+       "kind": "segment_length",
+       "args": {
+        "segment": [
+         "A",
+         "B"
+        ],
+        "value": "a"
+       },
+       "quote": "AB = a",
+       "solid_id": "s1"
+      },
+      {
+       "kind": "segment_length",
+       "args": {
+        "segment": [
+         "A",
+         "C"
+        ],
+        "value": "a"
+       },
+       "quote": "AC = a",
+       "solid_id": "s1"
+      },
+      {
+       "kind": "segment_length",
+       "args": {
+        "segment": [
+         "A",
+         "A'"
+        ],
+        "value": "2a"
+       },
+       "quote": "AA' = 2a",
+       "solid_id": "s1"
+      }
+     ],
+     "derived_sections": [],
+     "relations": [],
+     "simulation_goals": [
+      {
+       "goal_id": "sg1",
+       "kind": "construct_object",
+       "quote": "Hãy mô phỏng lăng trụ",
+       "target_solid_id": "s1"
+      }
+     ],
+     "math_goals": []
+    }
+   },
+   "arm_A_product": {
+    "status": "SERVED",
+    "extraction_mode": "LOCAL_DETERMINISTIC_PARSER",
+    "code": null,
+    "slm_ops": [],
+    "oracle": {
+     "scene_validation": "MATHEMATICALLY_VALID",
+     "issues": [],
+     "numeric": null
+    }
+   },
+   "arm_B_slm_payload": {
+    "status": "SERVED",
+    "code": null,
+    "answers": {},
+    "failure_stage": null,
+    "source_gate": "VERIFIED",
+    "oracle": {
+     "scene_validation": "MATHEMATICALLY_VALID",
+     "issues": [],
+     "numeric": null
+    }
+   },
+   "arm_D_gold_intent": {
+    "status": "SERVED",
+    "code": null,
+    "answers": {},
+    "failure_stage": null,
+    "source_gate": "VERIFIED",
+    "math_goals_removed": 0,
+    "oracle": {
+     "scene_validation": "MATHEMATICALLY_VALID",
+     "issues": [],
+     "numeric": null
+    }
+   },
+   "arm_C_parser_facts_gold_intent": {
+    "status": "SERVED",
+    "code": null,
+    "answers": {},
+    "failure_stage": null,
+    "oracle": {
+     "scene_validation": "MATHEMATICALLY_VALID",
+     "issues": [],
+     "numeric": null
+    }
+   },
+   "arm_E_downstream_canonical": {
+    "text": "Cho lăng trụ đứng ABC.A'B'C' có đáy là tam giác ABC vuông cân tại A, AB = AC = a, cạnh bên AA' = 2a. Hãy mô phỏng hình lăng trụ.",
+    "status": "SERVED",
+    "extraction_mode": "LOCAL_DETERMINISTIC_PARSER",
+    "code": null,
+    "slm_ops": [],
+    "oracle": {
+     "scene_validation": "MATHEMATICALLY_VALID",
+     "issues": [],
+     "numeric": null
+    }
+   },
+   "seconds": 3.3
+  },
+  {
+   "case_id": "V11",
+   "intent": "SIMULATE_ONLY",
+   "input": "Cho lăng trụ tam giác đều ABC.A'B'C' có cạnh đáy bằng a và cạnh bên bằng a. Hãy mô phỏng lăng trụ.",
+   "parser": {
+    "status": "LOCAL_PARSE_COMPLETE",
+    "reason_code": null,
+    "has_payload": true,
+    "unparsed_goal": [],
+    "unparsed_fact": []
+   },
+   "slm": {
+    "ok": false,
+    "reason_code": "AMBIGUOUS_FACT",
+    "reason_detail": "[{'op': 'unresolved', 'reason': 'SLM marked clause 0 as ambiguous.'}]",
+    "failure_taxonomy": "SLM_UNRESOLVED",
+    "raw_model_output": "{\"s\":[0,\"pri\",\"ABC.A'B'C'\",1],\"r\":[{\"c\":0,\"p\":\"reg_poly\",\"a\":\"ABC\",\"q\":\"a\"},{\"c\":0,\"p\":\"reg_poly\",\"a\":\"A'B'C'\"},{\"c\":0,\"p\":\"reg_poly\",\"a\":\"ABC\",\"q\":\"a\"}],\"g\":[],\"u\":[{\"c\":0,\"k\":\"ambig\"}]}",
+    "wire_payload": null,
+    "grounding_status": "SLM_REPORTED_UNRESOLVED",
+    "accepted_ops": [],
+    "rejected_ops": [
+     {
+      "op": "unresolved",
+      "reason": "SLM marked clause 0 as ambiguous."
+     }
+    ],
+    "normalization": {
+     "normalizer_version": "slm-verified-normalizer/3",
+     "changed": false,
+     "typo_detected": false,
+     "ambiguity_flags": [],
+     "applied_rule_ids": [],
+     "steps": []
+    },
+    "lowered_payload": null
+   },
+   "arm_A_product": {
+    "status": "SERVED",
+    "extraction_mode": "LOCAL_DETERMINISTIC_PARSER",
+    "code": null,
+    "slm_ops": [],
+    "oracle": {
+     "scene_validation": "MATHEMATICALLY_VALID",
+     "issues": [],
+     "numeric": null
+    }
+   },
+   "arm_B_slm_payload": {
+    "status": "NOT_RUN",
+    "why": "SLM output not lowered (no payload)"
+   },
+   "arm_D_gold_intent": {
+    "status": "NOT_RUN",
+    "why": "SLM output not lowered (no payload)"
+   },
+   "arm_C_parser_facts_gold_intent": {
+    "status": "SERVED",
+    "code": null,
+    "answers": {},
+    "failure_stage": null,
+    "oracle": {
+     "scene_validation": "MATHEMATICALLY_VALID",
+     "issues": [],
+     "numeric": null
+    }
+   },
+   "arm_E_downstream_canonical": {
+    "text": "Cho lăng trụ tam giác đều ABC.A'B'C' có cạnh đáy bằng a và cạnh bên bằng a. Hãy mô phỏng hình lăng trụ.",
+    "status": "SERVED",
+    "extraction_mode": "LOCAL_DETERMINISTIC_PARSER",
+    "code": null,
+    "slm_ops": [],
+    "oracle": {
+     "scene_validation": "MATHEMATICALLY_VALID",
+     "issues": [],
+     "numeric": null
+    }
+   },
+   "seconds": 2.8
+  },
+  {
+   "case_id": "V14",
+   "intent": "SIMULATE_ONLY",
+   "input": "Cho hình chóp S.ABC có đáy là tam giác ABC cân tại A, AB = AC = a, góc BAC = 120°, SA vuông góc với đáy, SA = 2a. Hãy dựng hình chóp.",
+   "parser": {
+    "status": "LOCAL_PARSE_COMPLETE",
+    "reason_code": null,
+    "has_payload": true,
+    "unparsed_goal": [],
+    "unparsed_fact": []
+   },
+   "slm": {
+    "ok": false,
+    "reason_code": "AMBIGUOUS_FACT",
+    "reason_detail": "[{'op': 'unresolved', 'reason': 'SLM marked clause 0 as ambiguous.'}]",
+    "failure_taxonomy": "SLM_UNRESOLVED",
+    "raw_model_output": "{\"s\":[0,\"pyr\",\"S.ABC\",0],\"r\":[{\"c\":0,\"p\":\"iso_tri\",\"a\":\"ABC\",\"pt\":\"A\"},{\"c\":0,\"p\":\"len\",\"a\":\"AB\",\"q\":\"a\"},{\"c\":1,\"p\":\"ang_vtx\",\"a\":\"BAC\",\"pt\":\"A\",\"q\":\"120°\"},{\"c\":1,\"p\":\"perp_lp\",\"a\":\"SA\",\"b\":\"ABC\"},{\"c\":1,\"p\":\"len\",\"a\":\"SA\",\"q\":\"2a\"}],\"g\":[],\"u\":[{\"c\":0,\"k\":\"ambig\"}]}",
+    "wire_payload": null,
+    "grounding_status": "SLM_REPORTED_UNRESOLVED",
+    "accepted_ops": [],
+    "rejected_ops": [
+     {
+      "op": "unresolved",
+      "reason": "SLM marked clause 0 as ambiguous."
+     }
+    ],
+    "normalization": {
+     "normalizer_version": "slm-verified-normalizer/3",
+     "changed": true,
+     "typo_detected": false,
+     "ambiguity_flags": [],
+     "applied_rule_ids": [
+      "VN06_CHAINED_SEGMENT_EQ",
+      "VN07_IMPLICIT_MAT_DAY_PERP",
+      "VN09_SPLIT_COORDINATED_GOALS"
+     ],
+     "steps": [
+      {
+       "rule_id": "VN06_CHAINED_SEGMENT_EQ",
+       "transformation_rule_id": "VN06_CHAINED_SEGMENT_EQ",
+       "original_text": "AB = AC = a",
+       "original_span": [
+        54,
+        65
+       ],
+       "original_clause_id": 1,
+       "normalized_text": "AB = a, AC = a",
+       "original_excerpt": "AB = AC = a",
+       "normalized_excerpt": "AB = a, AC = a",
+       "original_entity_refs": [
+        "AB",
+        "AC"
+       ],
+       "scope": "LOCAL_ENTITY",
+       "polarity": "AFFIRMATIVE",
+       "semantic_equivalence_evidence": "expand_chained_segment_equality",
+       "validation_status": "VALIDATED_MEANING_PRESERVING",
+       "validation_result": "VALIDATED_MEANING_PRESERVING",
+       "ambiguity_status": "UNAMBIGUOUS"
+      },
+      {
+       "rule_id": "VN07_IMPLICIT_MAT_DAY_PERP",
+       "transformation_rule_id": "VN07_IMPLICIT_MAT_DAY_PERP",
+       "original_text": "vuông góc với đáy",
+       "original_span": [
+        86,
+        103
+       ],
+       "original_clause_id": 1,
+       "normalized_text": "vuông góc với (ABC)",
+       "original_excerpt": "vuông góc với đáy",
+       "normalized_excerpt": "vuông góc với (ABC)",
+       "original_entity_refs": [],
+       "scope": "SOLID_BASE",
+       "polarity": "AFFIRMATIVE",
+       "semantic_equivalence_evidence": "resolve_unique_base_in_perpendicular",
+       "validation_status": "VALIDATED_MEANING_PRESERVING",
+       "validation_result": "VALIDATED_MEANING_PRESERVING",
+       "ambiguity_status": "UNAMBIGUOUS"
+      },
+      {
+       "rule_id": "VN09_SPLIT_COORDINATED_GOALS",
+       "transformation_rule_id": "VN09_SPLIT_COORDINATED_GOALS",
+       "original_text": ", ",
+       "original_span": [
+        65,
+        67
+       ],
+       "original_clause_id": 1,
+       "normalized_text": ". ",
+       "original_excerpt": ", ",
+       "normalized_excerpt": ". ",
+       "original_entity_refs": [],
+       "scope": "MULTI_GOAL",
+       "polarity": "AFFIRMATIVE",
+       "semantic_equivalence_evidence": "split_coordinated_multi_goals",
+       "validation_status": "VALIDATED_MEANING_PRESERVING",
+       "validation_result": "VALIDATED_MEANING_PRESERVING",
+       "ambiguity_status": "UNAMBIGUOUS"
+      }
+     ]
+    },
+    "lowered_payload": null
+   },
+   "arm_A_product": {
+    "status": "SERVED",
+    "extraction_mode": "LOCAL_DETERMINISTIC_PARSER",
+    "code": null,
+    "slm_ops": [],
+    "oracle": {
+     "scene_validation": "MATHEMATICALLY_VALID",
+     "issues": [],
+     "numeric": null
+    }
+   },
+   "arm_B_slm_payload": {
+    "status": "NOT_RUN",
+    "why": "SLM output not lowered (no payload)"
+   },
+   "arm_D_gold_intent": {
+    "status": "NOT_RUN",
+    "why": "SLM output not lowered (no payload)"
+   },
+   "arm_C_parser_facts_gold_intent": {
+    "status": "SERVED",
+    "code": null,
+    "answers": {},
+    "failure_stage": null,
+    "oracle": {
+     "scene_validation": "MATHEMATICALLY_VALID",
+     "issues": [],
+     "numeric": null
+    }
+   },
+   "arm_E_downstream_canonical": {
+    "text": "Cho hình chóp S.ABC có đáy là tam giác ABC cân tại A, AB = AC = a, góc BAC = 120°, SA vuông góc với đáy, SA = 2a. Hãy mô phỏng hình chóp.",
+    "status": "SERVED",
+    "extraction_mode": "LOCAL_DETERMINISTIC_PARSER",
+    "code": null,
+    "slm_ops": [],
+    "oracle": {
+     "scene_validation": "MATHEMATICALLY_VALID",
+     "issues": [],
+     "numeric": null
+    }
+   },
+   "seconds": 5.2
+  },
+  {
+   "case_id": "V16",
+   "intent": "SIMULATE_ONLY",
+   "input": "Bài 3. Trong không gian, cho hình chóp S.ABCD có đáy ABCD là hình chữ nhật, AB = a, BC = 2a. Cạnh bên SA vuông góc với mặt phẳng đáy và SA = 2a. Gọi M là trung điểm của cạnh SD và N là trung điểm của cạnh SC. Hãy mô phỏng hình chóp và các điểm M, N.",
+   "parser": {
+    "status": "LOCAL_PARSE_PARTIAL",
+    "reason_code": "UNPARSED_FACT_CANDIDATE",
+    "has_payload": false,
+    "unparsed_goal": [],
+    "unparsed_fact": [
+     "Trong không gian, cho hình chóp S.ABCD có đáy ABCD là hình chữ nhật, AB = a, BC = 2a"
+    ]
+   },
+   "slm": {
+    "ok": false,
+    "reason_code": "AMBIGUOUS_FACT",
+    "reason_detail": "[{'op': 'unresolved', 'reason': 'SLM marked clause 3 as ambiguous.'}]",
+    "failure_taxonomy": "SLM_UNRESOLVED",
+    "raw_model_output": "{\"s\":[1,\"pyr\",\"S.ABCD\",0],\"r\":[{\"c\":1,\"p\":\"rect\",\"a\":\"ABCD\"},{\"c\":1,\"p\":\"len\",\"a\":\"AB\",\"q\":\"a\"},{\"c\":1,\"p\":\"len\",\"a\":\"BC\",\"q\":\"2a\"},{\"c\":2,\"p\":\"perp_lp\",\"a\":\"SA\",\"b\":\"ABCD\"},{\"c\":2,\"p\":\"len\",\"a\":\"SA\",\"q\":\"2a\"},{\"c\":3,\"p\":\"mid\",\"pt\":\"M\",\"a\":\"SD\"},{\"c\":3,\"p\":\"mid\",\"pt\":\"N\",\"a\":\"SC\"}],\"g\":[],\"u\":[{\"c\":3,\"k\":\"ambig\"}]}",
+    "wire_payload": null,
+    "grounding_status": "SLM_REPORTED_UNRESOLVED",
+    "accepted_ops": [],
+    "rejected_ops": [
+     {
+      "op": "unresolved",
+      "reason": "SLM marked clause 3 as ambiguous."
+     }
+    ],
+    "normalization": {
+     "normalizer_version": "slm-verified-normalizer/3",
+     "changed": false,
+     "typo_detected": false,
+     "ambiguity_flags": [],
+     "applied_rule_ids": [],
+     "steps": []
+    },
+    "lowered_payload": null
+   },
+   "arm_A_product": {
+    "status": "REFUSED",
+    "extraction_mode": "LOCAL_SLM_GROUNDING_REJECTED",
+    "code": "AMBIGUOUS_FACT",
+    "slm_ops": [],
+    "oracle": null
+   },
+   "arm_B_slm_payload": {
+    "status": "NOT_RUN",
+    "why": "SLM output not lowered (no payload)"
+   },
+   "arm_D_gold_intent": {
+    "status": "NOT_RUN",
+    "why": "SLM output not lowered (no payload)"
+   },
+   "arm_C_parser_facts_gold_intent": {
+    "status": "NOT_CONSTRUCTED",
+    "why": "parser built no payload (LOCAL_PARSE_PARTIAL)"
+   },
+   "arm_E_downstream_canonical": {
+    "text": "Cho hình chóp S.ABCD có đáy ABCD là hình chữ nhật, AB = a, BC = 2a. Cạnh bên SA vuông góc với mặt phẳng đáy và SA = 2a. Gọi M là trung điểm của cạnh SD và N là trung điểm của cạnh SC. Hãy mô phỏng hình chóp.",
+    "status": "SERVED",
+    "extraction_mode": "LOCAL_DETERMINISTIC_PARSER",
+    "code": null,
+    "slm_ops": [],
+    "oracle": {
+     "scene_validation": "MATHEMATICALLY_VALID",
+     "issues": [],
+     "numeric": null
+    }
+   },
+   "seconds": 10.6
+  },
+  {
+   "case_id": "V19",
+   "intent": "SIMULATE_ONLY",
+   "input": "Cho tứ diện ABCD có AB, AC, AD đôi một vuông góc, AB = AC = AD = a. Hãy mô phỏng tứ diện ABCD.",
+   "parser": {
+    "status": "LOCAL_PARSE_COMPLETE",
+    "reason_code": null,
+    "has_payload": true,
+    "unparsed_goal": [],
+    "unparsed_fact": []
+   },
+   "slm": {
+    "ok": false,
+    "reason_code": "AMBIGUOUS_FACT",
+    "reason_detail": "[{'op': 'unresolved', 'reason': 'SLM marked clause 0 as ambiguous.'}]",
+    "failure_taxonomy": "SLM_UNRESOLVED",
+    "raw_model_output": "{\"s\":[0,\"pyr\",\"A.BCD\",0],\"r\":[],\"g\":[],\"u\":[{\"c\":0,\"k\":\"ambig\"}]}",
+    "wire_payload": null,
+    "grounding_status": "SLM_REPORTED_UNRESOLVED",
+    "accepted_ops": [],
+    "rejected_ops": [
+     {
+      "op": "unresolved",
+      "reason": "SLM marked clause 0 as ambiguous."
+     }
+    ],
+    "normalization": {
+     "normalizer_version": "slm-verified-normalizer/3",
+     "changed": true,
+     "typo_detected": false,
+     "ambiguity_flags": [],
+     "applied_rule_ids": [
+      "VN06_CHAINED_SEGMENT_EQ"
+     ],
+     "steps": [
+      {
+       "rule_id": "VN06_CHAINED_SEGMENT_EQ",
+       "transformation_rule_id": "VN06_CHAINED_SEGMENT_EQ",
+       "original_text": "AB = AC = AD = a",
+       "original_span": [
+        50,
+        66
+       ],
+       "original_clause_id": 0,
+       "normalized_text": "AB = a, AC = a, AD = a",
+       "original_excerpt": "AB = AC = AD = a",
+       "normalized_excerpt": "AB = a, AC = a, AD = a",
+       "original_entity_refs": [
+        "AB",
+        "AC",
+        "AD"
+       ],
+       "scope": "LOCAL_ENTITY",
+       "polarity": "AFFIRMATIVE",
+       "semantic_equivalence_evidence": "expand_chained_segment_equality",
+       "validation_status": "VALIDATED_MEANING_PRESERVING",
+       "validation_result": "VALIDATED_MEANING_PRESERVING",
+       "ambiguity_status": "UNAMBIGUOUS"
+      }
+     ]
+    },
+    "lowered_payload": null
+   },
+   "arm_A_product": {
+    "status": "SERVED",
+    "extraction_mode": "LOCAL_DETERMINISTIC_PARSER",
+    "code": null,
+    "slm_ops": [],
+    "oracle": {
+     "scene_validation": "MATHEMATICALLY_VALID",
+     "issues": [],
+     "numeric": null
+    }
+   },
+   "arm_B_slm_payload": {
+    "status": "NOT_RUN",
+    "why": "SLM output not lowered (no payload)"
+   },
+   "arm_D_gold_intent": {
+    "status": "NOT_RUN",
+    "why": "SLM output not lowered (no payload)"
+   },
+   "arm_C_parser_facts_gold_intent": {
+    "status": "SERVED",
+    "code": null,
+    "answers": {},
+    "failure_stage": null,
+    "oracle": {
+     "scene_validation": "MATHEMATICALLY_VALID",
+     "issues": [],
+     "numeric": null
+    }
+   },
+   "arm_E_downstream_canonical": {
+    "text": "Cho tứ diện ABCD có AB, AC, AD đôi một vuông góc, AB = AC = AD = a. Hãy mô phỏng hình.",
+    "status": "SERVED",
+    "extraction_mode": "LOCAL_DETERMINISTIC_PARSER",
+    "code": null,
+    "slm_ops": [],
+    "oracle": {
+     "scene_validation": "MATHEMATICALLY_VALID",
+     "issues": [],
+     "numeric": null
+    }
+   },
+   "seconds": 1.4
+  },
+  {
+   "case_id": "V26",
+   "intent": "SIMULATE_ONLY",
+   "input": "Cho hình hộp chữ nhật ABCD.A'B'C'D' có AB = a, AD = 2a, AA' = 3a. Mô phỏng hình hộp chữ nhật đó.",
+   "parser": {
+    "status": "LOCAL_PARSE_COMPLETE",
+    "reason_code": null,
+    "has_payload": true,
+    "unparsed_goal": [],
+    "unparsed_fact": []
+   },
+   "slm": {
+    "ok": true,
+    "reason_code": null,
+    "reason_detail": "",
+    "failure_taxonomy": "NONE",
+    "raw_model_output": "{\"s\":[0,\"box\",\"ABCD.A'B'C'D'\",1],\"r\":[{\"c\":0,\"p\":\"len\",\"a\":\"AB\",\"q\":\"a\"},{\"c\":0,\"p\":\"len\",\"a\":\"AD\",\"q\":\"2a\"},{\"c\":0,\"p\":\"len\",\"a\":\"AA'\",\"q\":\"3a\"}],\"g\":[],\"u\":[]}",
+    "wire_payload": {
+     "schema_version": "typed-fact-next/2",
+     "problem_text": "Cho hình hộp chữ nhật ABCD.A'B'C'D' có AB = a, AD = 2a, AA' = 3a. Mô phỏng hình hộp chữ nhật đó.",
+     "length_unit": "a",
+     "solids": [
+      {
+       "solid_id": "s1",
+       "solid_type": "prism",
+       "notation": "ABCD.A'B'C'D'",
+       "quote": "Cho hình hộp chữ nhật ABCD.A'B'C'D' có AB = a"
+      }
+     ],
+     "premises": [
+      {
+       "kind": "right_prism",
+       "args": [
+        "base=A,B,C,D",
+        "top=A',B',C',D'"
+       ],
+       "quote": "Cho hình hộp chữ nhật ABCD.A'B'C'D'",
+       "solid_id": "s1"
+      },
+      {
+       "kind": "rectangle",
+       "args": [
+        "vertices=A,B,C,D"
+       ],
+       "quote": "Cho hình hộp chữ nhật ABCD.A'B'C'D'",
+       "solid_id": "s1"
+      },
+      {
+       "kind": "segment_length",
+       "args": [
+        "segment=A,B",
+        "value=a"
+       ],
+       "quote": "AB = a",
+       "solid_id": "s1"
+      },
+      {
+       "kind": "segment_length",
+       "args": [
+        "segment=A,D",
+        "value=2a"
+       ],
+       "quote": "AD = 2a",
+       "solid_id": "s1"
+      },
+      {
+       "kind": "segment_length",
+       "args": [
+        "segment=A,A'",
+        "value=3a"
+       ],
+       "quote": "AA' = 3a",
+       "solid_id": "s1"
+      }
+     ],
+     "derived_sections": [],
+     "relations": [],
+     "simulation_goals": [
+      {
+       "goal_id": "sg1",
+       "kind": "construct_object",
+       "quote": "Mô phỏng hình hộp chữ nhật đó",
+       "target_solid_id": "s1"
+      }
+     ],
+     "math_goals": []
+    },
+    "grounding_status": "GROUNDED_AND_LOWERED",
+    "accepted_ops": [
+     {
+      "kind": "right_prism",
+      "clause_id": "parser_reconciled"
+     },
+     {
+      "kind": "rectangle",
+      "clause_id": "parser_reconciled"
+     },
+     {
+      "kind": "segment_length",
+      "clause_id": "parser_reconciled"
+     },
+     {
+      "kind": "segment_length",
+      "clause_id": "parser_reconciled"
+     },
+     {
+      "kind": "segment_length",
+      "clause_id": "parser_reconciled"
+     }
+    ],
+    "rejected_ops": [],
+    "normalization": {
+     "normalizer_version": "slm-verified-normalizer/3",
+     "changed": false,
+     "typo_detected": false,
+     "ambiguity_flags": [],
+     "applied_rule_ids": [],
+     "steps": []
+    },
+    "lowered_payload": {
+     "schema_version": "typed-fact-next/2",
+     "problem_text": "Cho hình hộp chữ nhật ABCD.A'B'C'D' có AB = a, AD = 2a, AA' = 3a. Mô phỏng hình hộp chữ nhật đó.",
+     "length_unit": "a",
+     "solids": [
+      {
+       "solid_id": "s1",
+       "solid_type": "prism",
+       "notation": "ABCD.A'B'C'D'",
+       "quote": "Cho hình hộp chữ nhật ABCD.A'B'C'D' có AB = a"
+      }
+     ],
+     "premises": [
+      {
+       "kind": "right_prism",
+       "args": {
+        "base": [
+         "A",
+         "B",
+         "C",
+         "D"
+        ],
+        "top": [
+         "A'",
+         "B'",
+         "C'",
+         "D'"
+        ]
+       },
+       "quote": "Cho hình hộp chữ nhật ABCD.A'B'C'D'",
+       "solid_id": "s1"
+      },
+      {
+       "kind": "rectangle",
+       "args": {
+        "vertices": [
+         "A",
+         "B",
+         "C",
+         "D"
+        ]
+       },
+       "quote": "Cho hình hộp chữ nhật ABCD.A'B'C'D'",
+       "solid_id": "s1"
+      },
+      {
+       "kind": "segment_length",
+       "args": {
+        "segment": [
+         "A",
+         "B"
+        ],
+        "value": "a"
+       },
+       "quote": "AB = a",
+       "solid_id": "s1"
+      },
+      {
+       "kind": "segment_length",
+       "args": {
+        "segment": [
+         "A",
+         "D"
+        ],
+        "value": "2a"
+       },
+       "quote": "AD = 2a",
+       "solid_id": "s1"
+      },
+      {
+       "kind": "segment_length",
+       "args": {
+        "segment": [
+         "A",
+         "A'"
+        ],
+        "value": "3a"
+       },
+       "quote": "AA' = 3a",
+       "solid_id": "s1"
+      }
+     ],
+     "derived_sections": [],
+     "relations": [],
+     "simulation_goals": [
+      {
+       "goal_id": "sg1",
+       "kind": "construct_object",
+       "quote": "Mô phỏng hình hộp chữ nhật đó",
+       "target_solid_id": "s1"
+      }
+     ],
+     "math_goals": []
+    }
+   },
+   "arm_A_product": {
+    "status": "SERVED",
+    "extraction_mode": "LOCAL_DETERMINISTIC_PARSER",
+    "code": null,
+    "slm_ops": [],
+    "oracle": {
+     "scene_validation": "MATHEMATICALLY_VALID",
+     "issues": [],
+     "numeric": null
+    }
+   },
+   "arm_B_slm_payload": {
+    "status": "SERVED",
+    "code": null,
+    "answers": {},
+    "failure_stage": null,
+    "source_gate": "VERIFIED",
+    "oracle": {
+     "scene_validation": "MATHEMATICALLY_VALID",
+     "issues": [],
+     "numeric": null
+    }
+   },
+   "arm_D_gold_intent": {
+    "status": "SERVED",
+    "code": null,
+    "answers": {},
+    "failure_stage": null,
+    "source_gate": "VERIFIED",
+    "math_goals_removed": 0,
+    "oracle": {
+     "scene_validation": "MATHEMATICALLY_VALID",
+     "issues": [],
+     "numeric": null
+    }
+   },
+   "arm_C_parser_facts_gold_intent": {
+    "status": "SERVED",
+    "code": null,
+    "answers": {},
+    "failure_stage": null,
+    "oracle": {
+     "scene_validation": "MATHEMATICALLY_VALID",
+     "issues": [],
+     "numeric": null
+    }
+   },
+   "arm_E_downstream_canonical": {
+    "text": "Cho hình hộp chữ nhật ABCD.A'B'C'D' có AB = a, AD = 2a, AA' = 3a. Hãy mô phỏng hình.",
+    "status": "SERVED",
+    "extraction_mode": "LOCAL_DETERMINISTIC_PARSER",
+    "code": null,
+    "slm_ops": [],
+    "oracle": {
+     "scene_validation": "MATHEMATICALLY_VALID",
+     "issues": [],
+     "numeric": null
+    }
+   },
+   "seconds": 2.7
+  },
+  {
+   "case_id": "V28",
+   "intent": "SIMULATE_ONLY",
+   "input": "Cho hình chóp đều S.ABC có cạnh đáy bằng a, cạnh bên bằng a√2. Hãy mô phỏng hình chóp đều đó.",
+   "parser": {
+    "status": "LOCAL_PARSE_COMPLETE",
+    "reason_code": null,
+    "has_payload": true,
+    "unparsed_goal": [],
+    "unparsed_fact": []
+   },
+   "slm": {
+    "ok": false,
+    "reason_code": "AMBIGUOUS_FACT",
+    "reason_detail": "[{'op': 'unresolved', 'reason': 'SLM marked clause 0 as ambiguous.'}]",
+    "failure_taxonomy": "SLM_UNRESOLVED",
+    "raw_model_output": "{\"s\":[0,\"pyr\",\"S.ABC\",1],\"r\":[{\"c\":0,\"p\":\"reg_poly\",\"a\":\"ABC\",\"q\":\"a\"},{\"c\":0,\"p\":\"len\",\"a\":\"SA\",\"q\":\"a√2\"}],\"g\":[],\"u\":[{\"c\":0,\"k\":\"ambig\"}]}",
+    "wire_payload": null,
+    "grounding_status": "SLM_REPORTED_UNRESOLVED",
+    "accepted_ops": [],
+    "rejected_ops": [
+     {
+      "op": "unresolved",
+      "reason": "SLM marked clause 0 as ambiguous."
+     }
+    ],
+    "normalization": {
+     "normalizer_version": "slm-verified-normalizer/3",
+     "changed": false,
+     "typo_detected": false,
+     "ambiguity_flags": [],
+     "applied_rule_ids": [],
+     "steps": []
+    },
+    "lowered_payload": null
+   },
+   "arm_A_product": {
+    "status": "SERVED",
+    "extraction_mode": "LOCAL_DETERMINISTIC_PARSER",
+    "code": null,
+    "slm_ops": [],
+    "oracle": {
+     "scene_validation": "MATHEMATICALLY_VALID",
+     "issues": [],
+     "numeric": null
+    }
+   },
+   "arm_B_slm_payload": {
+    "status": "NOT_RUN",
+    "why": "SLM output not lowered (no payload)"
+   },
+   "arm_D_gold_intent": {
+    "status": "NOT_RUN",
+    "why": "SLM output not lowered (no payload)"
+   },
+   "arm_C_parser_facts_gold_intent": {
+    "status": "SERVED",
+    "code": null,
+    "answers": {},
+    "failure_stage": null,
+    "oracle": {
+     "scene_validation": "MATHEMATICALLY_VALID",
+     "issues": [],
+     "numeric": null
+    }
+   },
+   "arm_E_downstream_canonical": {
+    "text": "Cho hình chóp đều S.ABC có cạnh đáy bằng a, cạnh bên bằng a√2. Hãy mô phỏng hình chóp.",
+    "status": "SERVED",
+    "extraction_mode": "LOCAL_DETERMINISTIC_PARSER",
+    "code": null,
+    "slm_ops": [],
+    "oracle": {
+     "scene_validation": "MATHEMATICALLY_VALID",
+     "issues": [],
+     "numeric": null
+    }
+   },
+   "seconds": 2.3
+  },
+  {
+   "case_id": "Q03",
+   "intent": "SIMULATE_AND_QUERY",
+   "input": "Cho hình lập phương ABCD.A'B'C'D' cạnh a. Hãy mô phỏng hình lập phương và tính khoảng cách giữa hai đường thẳng AA' và BD.",
+   "parser": {
+    "status": "LOCAL_PARSE_COMPLETE",
+    "reason_code": null,
+    "has_payload": true,
+    "unparsed_goal": [],
+    "unparsed_fact": []
+   },
+   "slm": {
+    "ok": true,
+    "reason_code": null,
+    "reason_detail": "",
+    "failure_taxonomy": "NONE",
+    "raw_model_output": "{\"s\":[0,\"cube\",\"ABCD.A'B'C'D'\",1],\"r\":[{\"c\":0,\"p\":\"len\",\"a\":\"AA'\",\"q\":\"a\"}],\"g\":[{\"c\":1,\"t\":\"dist_line_line\",\"a\":\"AA'\",\"b\":\"BD\"}],\"u\":[]}",
+    "wire_payload": {
+     "schema_version": "typed-fact-next/2",
+     "problem_text": "Cho hình lập phương ABCD.A'B'C'D' có cạnh bằng a. Hãy mô phỏng hình lập phương và tính khoảng cách giữa hai đường thẳng AA' và BD.",
+     "length_unit": "a",
+     "solids": [
+      {
+       "solid_id": "s1",
+       "solid_type": "prism",
+       "notation": "ABCD.A'B'C'D'",
+       "quote": "Cho hình lập phương ABCD.A'B'C'D' có cạnh bằng a"
+      }
+     ],
+     "premises": [
+      {
+       "kind": "right_prism",
+       "args": [
+        "base=A,B,C,D",
+        "top=A',B',C',D'"
+       ],
+       "quote": "Cho hình lập phương ABCD.A'B'C'D' có cạnh bằng a",
+       "solid_id": "s1"
+      },
+      {
+       "kind": "regular_polygon",
+       "args": [
+        "vertices=A,B,C,D",
+        "side=a"
+       ],
+       "quote": "Cho hình lập phương ABCD.A'B'C'D' có cạnh bằng a",
+       "solid_id": "s1"
+      },
+      {
+       "kind": "segment_length",
+       "args": [
+        "segment=A,A'",
+        "value=a"
+       ],
+       "quote": "Cho hình lập phương ABCD.A'B'C'D' có cạnh bằng a",
+       "solid_id": "s1"
+      }
+     ],
+     "derived_sections": [],
+     "relations": [],
+     "simulation_goals": [
+      {
+       "goal_id": "sg1",
+       "kind": "construct_object",
+       "quote": "Hãy mô phỏng hình lập phương",
+       "target_solid_id": "s1"
+      }
+     ],
+     "math_goals": [
+      {
+       "goal_id": "q1",
+       "kind": "measurement",
+       "quote": "Hãy mô phỏng hình lập phương và tính khoảng cách giữa hai đường thẳng AA' và BD",
+       "goal_type": "distance",
+       "solid_id": "s1",
+       "target": [
+        "line1=A,A'",
+        "line2=B,D"
+       ]
+      }
+     ]
+    },
+    "grounding_status": "GROUNDED_AND_LOWERED",
+    "accepted_ops": [
+     {
+      "kind": "right_prism",
+      "clause_id": "parser_reconciled"
+     },
+     {
+      "kind": "regular_polygon",
+      "clause_id": "parser_reconciled"
+     },
+     {
+      "kind": "segment_length",
+      "clause_id": "parser_reconciled"
+     },
+     {
+      "kind": "goal:dist_line_line",
+      "clause_id": 1
+     }
+    ],
+    "rejected_ops": [],
+    "normalization": {
+     "normalizer_version": "slm-verified-normalizer/3",
+     "changed": true,
+     "typo_detected": false,
+     "ambiguity_flags": [],
+     "applied_rule_ids": [
+      "VN06_CUBE_CANH_BANG"
+     ],
+     "steps": [
+      {
+       "rule_id": "VN06_CUBE_CANH_BANG",
+       "transformation_rule_id": "VN06_CUBE_CANH_BANG",
+       "original_text": "hình lập phương ABCD.A'B'C'D' cạnh a",
+       "original_span": [
+        4,
+        40
+       ],
+       "original_clause_id": 0,
+       "normalized_text": "hình lập phương ABCD.A'B'C'D' có cạnh bằng a",
+       "original_excerpt": "hình lập phương ABCD.A'B'C'D' cạnh a",
+       "normalized_excerpt": "hình lập phương ABCD.A'B'C'D' có cạnh bằng a",
+       "original_entity_refs": [
+        "ABCD",
+        "A'B'C'D'"
+       ],
+       "scope": "LOCAL_ENTITY",
+       "polarity": "AFFIRMATIVE",
+       "semantic_equivalence_evidence": "explicit_co_canh_bang",
+       "validation_status": "VALIDATED_MEANING_PRESERVING",
+       "validation_result": "VALIDATED_MEANING_PRESERVING",
+       "ambiguity_status": "UNAMBIGUOUS"
+      }
+     ]
+    },
+    "lowered_payload": {
+     "schema_version": "typed-fact-next/2",
+     "problem_text": "Cho hình lập phương ABCD.A'B'C'D' có cạnh bằng a. Hãy mô phỏng hình lập phương và tính khoảng cách giữa hai đường thẳng AA' và BD.",
+     "length_unit": "a",
+     "solids": [
+      {
+       "solid_id": "s1",
+       "solid_type": "prism",
+       "notation": "ABCD.A'B'C'D'",
+       "quote": "Cho hình lập phương ABCD.A'B'C'D' có cạnh bằng a"
+      }
+     ],
+     "premises": [
+      {
+       "kind": "right_prism",
+       "args": {
+        "base": [
+         "A",
+         "B",
+         "C",
+         "D"
+        ],
+        "top": [
+         "A'",
+         "B'",
+         "C'",
+         "D'"
+        ]
+       },
+       "quote": "Cho hình lập phương ABCD.A'B'C'D' có cạnh bằng a",
+       "solid_id": "s1"
+      },
+      {
+       "kind": "regular_polygon",
+       "args": {
+        "vertices": [
+         "A",
+         "B",
+         "C",
+         "D"
+        ],
+        "side": "a"
+       },
+       "quote": "Cho hình lập phương ABCD.A'B'C'D' có cạnh bằng a",
+       "solid_id": "s1"
+      },
+      {
+       "kind": "segment_length",
+       "args": {
+        "segment": [
+         "A",
+         "A'"
+        ],
+        "value": "a"
+       },
+       "quote": "Cho hình lập phương ABCD.A'B'C'D' có cạnh bằng a",
+       "solid_id": "s1"
+      }
+     ],
+     "derived_sections": [],
+     "relations": [],
+     "simulation_goals": [
+      {
+       "goal_id": "sg1",
+       "kind": "construct_object",
+       "quote": "Hãy mô phỏng hình lập phương",
+       "target_solid_id": "s1"
+      }
+     ],
+     "math_goals": [
+      {
+       "goal_id": "q1",
+       "kind": "measurement",
+       "quote": "Hãy mô phỏng hình lập phương và tính khoảng cách giữa hai đường thẳng AA' và BD",
+       "goal_type": "distance",
+       "solid_id": "s1",
+       "target": {
+        "line1": [
+         "A",
+         "A'"
+        ],
+        "line2": [
+         "B",
+         "D"
+        ]
+       }
+      }
+     ]
+    }
+   },
+   "arm_A_product": {
+    "status": "SERVED",
+    "extraction_mode": "LOCAL_DETERMINISTIC_PARSER",
+    "code": null,
+    "slm_ops": [],
+    "oracle": {
+     "scene_validation": "MATHEMATICALLY_VALID",
+     "issues": [],
+     "numeric": "CORRECT"
+    }
+   },
+   "arm_B_slm_payload": {
+    "status": "SERVED",
+    "code": null,
+    "answers": {
+     "q1": "a√2/2"
+    },
+    "failure_stage": null,
+    "source_gate": "VERIFIED",
+    "oracle": {
+     "scene_validation": "MATHEMATICALLY_VALID",
+     "issues": [],
+     "numeric": "CORRECT"
+    }
+   },
+   "arm_D_gold_intent": {
+    "status": "SERVED",
+    "code": null,
+    "answers": {
+     "q1": "a√2/2"
+    },
+    "failure_stage": null,
+    "source_gate": "VERIFIED",
+    "math_goals_removed": 0,
+    "oracle": {
+     "scene_validation": "MATHEMATICALLY_VALID",
+     "issues": [],
+     "numeric": "CORRECT"
+    }
+   },
+   "arm_C_parser_facts_gold_intent": {
+    "status": "SERVED",
+    "code": null,
+    "answers": {
+     "q1": "a√2/2"
+    },
+    "failure_stage": null,
+    "oracle": {
+     "scene_validation": "MATHEMATICALLY_VALID",
+     "issues": [],
+     "numeric": "CORRECT"
+    }
+   },
+   "arm_E_downstream_canonical": {
+    "text": "Cho hình lập phương ABCD.A'B'C'D' cạnh a. Tính khoảng cách giữa hai đường thẳng AA' và BD.",
+    "status": "SERVED",
+    "extraction_mode": "LOCAL_DETERMINISTIC_PARSER",
+    "code": null,
+    "slm_ops": [],
+    "oracle": {
+     "scene_validation": "MATHEMATICALLY_VALID",
+     "issues": [],
+     "numeric": "CORRECT"
+    }
+   },
+   "seconds": 2.4
+  },
+  {
+   "case_id": "Q04",
+   "intent": "SIMULATE_AND_QUERY",
+   "input": "Cho hình chóp S.ABCD có đáy ABCD là hình chữ nhật, AB = a, AD = a√3, SA ⊥ (ABCD), SA = a. Hãy mô phỏng và biểu diễn góc giữa đường thẳng SC và mặt phẳng (ABCD).",
+   "parser": {
+    "status": "LOCAL_PARSE_PARTIAL",
+    "reason_code": "NOT_ASKED_IN_SOURCE",
+    "has_payload": false,
+    "unparsed_goal": [],
+    "unparsed_fact": []
+   },
+   "slm": {
+    "ok": true,
+    "reason_code": null,
+    "reason_detail": "",
+    "failure_taxonomy": "NONE",
+    "raw_model_output": "{\"s\":[0,\"pyr\",\"S.ABCD\",0],\"r\":[{\"c\":0,\"p\":\"rect\",\"a\":\"ABCD\"},{\"c\":0,\"p\":\"len\",\"a\":\"AB\",\"q\":\"a\"},{\"c\":0,\"p\":\"len\",\"a\":\"AD\",\"q\":\"a√3\"},{\"c\":0,\"p\":\"perp_lp\",\"a\":\"SA\",\"b\":\"ABCD\"},{\"c\":0,\"p\":\"len\",\"a\":\"SA\",\"q\":\"a\"}],\"g\":[{\"c\":1,\"t\":\"ang_lp\",\"a\":\"SC\",\"b\":\"ABCD\"}],\"u\":[]}",
+    "wire_payload": {
+     "schema_version": "typed-fact-next/2",
+     "problem_text": "Cho hình chóp S.ABCD có đáy ABCD là hình chữ nhật, AB = a, AD = a√3, SA ⊥ (ABCD), SA = a. Hãy mô phỏng và biểu diễn góc giữa đường thẳng SC và mặt phẳng (ABCD).",
+     "length_unit": "a",
+     "solids": [
+      {
+       "solid_id": "s1",
+       "solid_type": "pyramid",
+       "notation": "S.ABCD",
+       "quote": "Cho hình chóp S.ABCD có đáy ABCD là hình chữ nhật"
+      }
+     ],
+     "premises": [
+      {
+       "kind": "rectangle",
+       "args": [
+        "vertices=A,B,C,D"
+       ],
+       "quote": "Cho hình chóp S.ABCD có đáy ABCD là hình chữ nhật",
+       "solid_id": "s1"
+      },
+      {
+       "kind": "segment_length",
+       "args": [
+        "segment=A,B",
+        "value=a"
+       ],
+       "quote": "AB = a",
+       "solid_id": "s1"
+      },
+      {
+       "kind": "segment_length",
+       "args": [
+        "segment=A,D",
+        "value=a√3"
+       ],
+       "quote": "AD = a√3",
+       "solid_id": "s1"
+      },
+      {
+       "kind": "perpendicular_line_plane",
+       "args": [
+        "line=S,A",
+        "plane=A,B,C,D"
+       ],
+       "quote": "SA ⊥ (ABCD)",
+       "solid_id": "s1"
+      },
+      {
+       "kind": "segment_length",
+       "args": [
+        "segment=S,A",
+        "value=a"
+       ],
+       "quote": "SA = a",
+       "solid_id": "s1"
+      }
+     ],
+     "derived_sections": [],
+     "relations": [],
+     "simulation_goals": [
+      {
+       "goal_id": "sg1",
+       "kind": "construct_object",
+       "quote": "Cho hình chóp S.ABCD có đáy ABCD là hình chữ nhật",
+       "target_solid_id": "s1"
+      }
+     ],
+     "math_goals": [
+      {
+       "goal_id": "q1",
+       "kind": "measurement",
+       "quote": "Hãy mô phỏng và biểu diễn góc giữa đường thẳng SC và mặt phẳng (ABCD)",
+       "goal_type": "angle",
+       "solid_id": "s1",
+       "target": [
+        "line=S,C",
+        "plane=A,B,C,D"
+       ]
+      }
+     ]
+    },
+    "grounding_status": "GROUNDED_AND_LOWERED",
+    "accepted_ops": [
+     {
+      "kind": "rectangle",
+      "clause_id": 0
+     },
+     {
+      "kind": "segment_length",
+      "clause_id": 0
+     },
+     {
+      "kind": "segment_length",
+      "clause_id": 0
+     },
+     {
+      "kind": "perpendicular_line_plane",
+      "clause_id": 0
+     },
+     {
+      "kind": "segment_length",
+      "clause_id": 0
+     },
+     {
+      "kind": "goal:ang_lp",
+      "clause_id": 1
+     }
+    ],
+    "rejected_ops": [],
+    "normalization": {
+     "normalizer_version": "slm-verified-normalizer/3",
+     "changed": false,
+     "typo_detected": false,
+     "ambiguity_flags": [],
+     "applied_rule_ids": [],
+     "steps": []
+    },
+    "lowered_payload": {
+     "schema_version": "typed-fact-next/2",
+     "problem_text": "Cho hình chóp S.ABCD có đáy ABCD là hình chữ nhật, AB = a, AD = a√3, SA ⊥ (ABCD), SA = a. Hãy mô phỏng và biểu diễn góc giữa đường thẳng SC và mặt phẳng (ABCD).",
+     "length_unit": "a",
+     "solids": [
+      {
+       "solid_id": "s1",
+       "solid_type": "pyramid",
+       "notation": "S.ABCD",
+       "quote": "Cho hình chóp S.ABCD có đáy ABCD là hình chữ nhật"
+      }
+     ],
+     "premises": [
+      {
+       "kind": "rectangle",
+       "args": {
+        "vertices": [
+         "A",
+         "B",
+         "C",
+         "D"
+        ]
+       },
+       "quote": "Cho hình chóp S.ABCD có đáy ABCD là hình chữ nhật",
+       "solid_id": "s1"
+      },
+      {
+       "kind": "segment_length",
+       "args": {
+        "segment": [
+         "A",
+         "B"
+        ],
+        "value": "a"
+       },
+       "quote": "AB = a",
+       "solid_id": "s1"
+      },
+      {
+       "kind": "segment_length",
+       "args": {
+        "segment": [
+         "A",
+         "D"
+        ],
+        "value": "a√3"
+       },
+       "quote": "AD = a√3",
+       "solid_id": "s1"
+      },
+      {
+       "kind": "perpendicular_line_plane",
+       "args": {
+        "line": [
+         "S",
+         "A"
+        ],
+        "plane": [
+         "A",
+         "B",
+         "C",
+         "D"
+        ]
+       },
+       "quote": "SA ⊥ (ABCD)",
+       "solid_id": "s1"
+      },
+      {
+       "kind": "segment_length",
+       "args": {
+        "segment": [
+         "S",
+         "A"
+        ],
+        "value": "a"
+       },
+       "quote": "SA = a",
+       "solid_id": "s1"
+      }
+     ],
+     "derived_sections": [],
+     "relations": [],
+     "simulation_goals": [
+      {
+       "goal_id": "sg1",
+       "kind": "construct_object",
+       "quote": "Cho hình chóp S.ABCD có đáy ABCD là hình chữ nhật",
+       "target_solid_id": "s1"
+      }
+     ],
+     "math_goals": [
+      {
+       "goal_id": "q1",
+       "kind": "measurement",
+       "quote": "Hãy mô phỏng và biểu diễn góc giữa đường thẳng SC và mặt phẳng (ABCD)",
+       "goal_type": "angle",
+       "solid_id": "s1",
+       "target": {
+        "line": [
+         "S",
+         "C"
+        ],
+        "plane": [
+         "A",
+         "B",
+         "C",
+         "D"
+        ]
+       }
+      }
+     ]
+    }
+   },
+   "arm_A_product": {
+    "status": "REFUSED",
+    "extraction_mode": "LOCAL_SLM_GROUNDED",
+    "code": "NOT_ASKED_IN_SOURCE",
+    "slm_ops": [
+     "rectangle",
+     "segment_length",
+     "segment_length",
+     "perpendicular_line_plane",
+     "segment_length",
+     "goal:ang_lp"
+    ],
+    "oracle": null
+   },
+   "arm_B_slm_payload": {
+    "status": "REFUSED",
+    "code": "NOT_ASKED_IN_SOURCE",
+    "answers": null,
+    "failure_stage": "deterministic_route",
+    "source_gate": "NOT_CERTIFIED",
+    "oracle": null
+   },
+   "arm_D_gold_intent": {
+    "status": "REFUSED",
+    "code": "NOT_ASKED_IN_SOURCE",
+    "answers": null,
+    "failure_stage": "deterministic_route",
+    "source_gate": "NOT_CERTIFIED",
+    "math_goals_removed": 0,
+    "oracle": null
+   },
+   "arm_C_parser_facts_gold_intent": {
+    "status": "NOT_CONSTRUCTED",
+    "why": "parser built no payload (LOCAL_PARSE_PARTIAL)"
+   },
+   "arm_E_downstream_canonical": {
+    "text": "Cho hình chóp S.ABCD có đáy ABCD là hình chữ nhật, AB = a, AD = a√3, SA ⊥ (ABCD), SA = a. Tính góc giữa đường thẳng SC và mặt phẳng (ABCD).",
+    "status": "SERVED",
+    "extraction_mode": "LOCAL_DETERMINISTIC_PARSER",
+    "code": null,
+    "slm_ops": [],
+    "oracle": {
+     "scene_validation": "MATHEMATICALLY_VALID",
+     "issues": [],
+     "numeric": "CORRECT"
+    }
+   },
+   "seconds": 10.4
+  },
+  {
+   "case_id": "Q05",
+   "intent": "SIMULATE_AND_QUERY",
+   "input": "Mô phỏng hình chóp S.ABCD có đáy là hình vuông cạnh 2a, SA vuông góc với đáy, SA = 2a và biểu diễn khoảng cách từ S đến mặt phẳng (ABCD).",
+   "parser": {
+    "status": "LOCAL_PARSE_PARTIAL",
+    "reason_code": "UNGROUNDED_VALUE",
+    "has_payload": false,
+    "unparsed_goal": [],
+    "unparsed_fact": []
+   },
+   "slm": {
+    "ok": true,
+    "reason_code": null,
+    "reason_detail": "",
+    "failure_taxonomy": "NONE",
+    "raw_model_output": "{\"s\":[0,\"pyr\",\"S.ABCD\",0],\"r\":[{\"c\":0,\"p\":\"reg_poly\",\"a\":\"ABCD\",\"q\":\"2a\"},{\"c\":0,\"p\":\"perp_lp\",\"a\":\"SA\",\"b\":\"ABCD\"},{\"c\":0,\"p\":\"len\",\"a\":\"SA\",\"q\":\"2a\"}],\"g\":[{\"c\":0,\"t\":\"dist_pt_plane\",\"a\":\"S\",\"b\":\"ABCD\"}],\"u\":[]}",
+    "wire_payload": {
+     "schema_version": "typed-fact-next/2",
+     "problem_text": "Mô phỏng hình chóp S.ABCD có đáy là hình vuông cạnh 2a, SA vuông góc với (ABCD), SA = 2a và biểu diễn khoảng cách từ S đến mặt phẳng (ABCD).",
+     "length_unit": "a",
+     "solids": [
+      {
+       "solid_id": "s1",
+       "solid_type": "pyramid",
+       "notation": "S.ABCD",
+       "quote": "Mô phỏng hình chóp S.ABCD có đáy là hình vuông cạnh 2a"
+      }
+     ],
+     "premises": [
+      {
+       "kind": "regular_polygon",
+       "args": [
+        "vertices=A,B,C,D",
+        "side=2a"
+       ],
+       "quote": "Mô phỏng hình chóp S.ABCD có đáy là hình vuông cạnh 2a, SA vuông góc với (ABCD), SA = 2a và biểu diễn khoảng cách từ S đến mặt phẳng (ABCD)",
+       "solid_id": "s1"
+      },
+      {
+       "kind": "perpendicular_line_plane",
+       "args": [
+        "line=S,A",
+        "plane=A,B,C,D"
+       ],
+       "quote": "SA vuông góc với (ABCD)",
+       "solid_id": "s1"
+      },
+      {
+       "kind": "segment_length",
+       "args": [
+        "segment=S,A",
+        "value=2a"
+       ],
+       "quote": "SA = 2a",
+       "solid_id": "s1"
+      }
+     ],
+     "derived_sections": [],
+     "relations": [],
+     "simulation_goals": [
+      {
+       "goal_id": "sg1",
+       "kind": "construct_object",
+       "quote": "Mô phỏng hình chóp S.ABCD có đáy là hình vuông cạnh 2a",
+       "target_solid_id": "s1"
+      }
+     ],
+     "math_goals": [
+      {
+       "goal_id": "q1",
+       "kind": "measurement",
+       "quote": "SA vuông góc với (ABCD)",
+       "goal_type": "distance",
+       "solid_id": "s1",
+       "target": [
+        "point=S",
+        "plane=A,B,C,D"
+       ]
+      }
+     ]
+    },
+    "grounding_status": "GROUNDED_AND_LOWERED",
+    "accepted_ops": [
+     {
+      "kind": "regular_polygon",
+      "clause_id": 0
+     },
+     {
+      "kind": "perpendicular_line_plane",
+      "clause_id": 0
+     },
+     {
+      "kind": "segment_length",
+      "clause_id": 0
+     },
+     {
+      "kind": "goal:dist_pt_plane",
+      "clause_id": 0
+     }
+    ],
+    "rejected_ops": [],
+    "normalization": {
+     "normalizer_version": "slm-verified-normalizer/3",
+     "changed": true,
+     "typo_detected": false,
+     "ambiguity_flags": [],
+     "applied_rule_ids": [
+      "VN07_IMPLICIT_MAT_DAY_PERP"
+     ],
+     "steps": [
+      {
+       "rule_id": "VN07_IMPLICIT_MAT_DAY_PERP",
+       "transformation_rule_id": "VN07_IMPLICIT_MAT_DAY_PERP",
+       "original_text": "vuông góc với đáy",
+       "original_span": [
+        59,
+        76
+       ],
+       "original_clause_id": 1,
+       "normalized_text": "vuông góc với (ABCD)",
+       "original_excerpt": "vuông góc với đáy",
+       "normalized_excerpt": "vuông góc với (ABCD)",
+       "original_entity_refs": [],
+       "scope": "SOLID_BASE",
+       "polarity": "AFFIRMATIVE",
+       "semantic_equivalence_evidence": "resolve_unique_base_in_perpendicular",
+       "validation_status": "VALIDATED_MEANING_PRESERVING",
+       "validation_result": "VALIDATED_MEANING_PRESERVING",
+       "ambiguity_status": "UNAMBIGUOUS"
+      }
+     ]
+    },
+    "lowered_payload": {
+     "schema_version": "typed-fact-next/2",
+     "problem_text": "Mô phỏng hình chóp S.ABCD có đáy là hình vuông cạnh 2a, SA vuông góc với (ABCD), SA = 2a và biểu diễn khoảng cách từ S đến mặt phẳng (ABCD).",
+     "length_unit": "a",
+     "solids": [
+      {
+       "solid_id": "s1",
+       "solid_type": "pyramid",
+       "notation": "S.ABCD",
+       "quote": "Mô phỏng hình chóp S.ABCD có đáy là hình vuông cạnh 2a"
+      }
+     ],
+     "premises": [
+      {
+       "kind": "regular_polygon",
+       "args": {
+        "vertices": [
+         "A",
+         "B",
+         "C",
+         "D"
+        ],
+        "side": "2a"
+       },
+       "quote": "Mô phỏng hình chóp S.ABCD có đáy là hình vuông cạnh 2a, SA vuông góc với (ABCD), SA = 2a và biểu diễn khoảng cách từ S đến mặt phẳng (ABCD)",
+       "solid_id": "s1"
+      },
+      {
+       "kind": "perpendicular_line_plane",
+       "args": {
+        "line": [
+         "S",
+         "A"
+        ],
+        "plane": [
+         "A",
+         "B",
+         "C",
+         "D"
+        ]
+       },
+       "quote": "SA vuông góc với (ABCD)",
+       "solid_id": "s1"
+      },
+      {
+       "kind": "segment_length",
+       "args": {
+        "segment": [
+         "S",
+         "A"
+        ],
+        "value": "2a"
+       },
+       "quote": "SA = 2a",
+       "solid_id": "s1"
+      }
+     ],
+     "derived_sections": [],
+     "relations": [],
+     "simulation_goals": [
+      {
+       "goal_id": "sg1",
+       "kind": "construct_object",
+       "quote": "Mô phỏng hình chóp S.ABCD có đáy là hình vuông cạnh 2a",
+       "target_solid_id": "s1"
+      }
+     ],
+     "math_goals": [
+      {
+       "goal_id": "q1",
+       "kind": "measurement",
+       "quote": "SA vuông góc với (ABCD)",
+       "goal_type": "distance",
+       "solid_id": "s1",
+       "target": {
+        "point": "S",
+        "plane": [
+         "A",
+         "B",
+         "C",
+         "D"
+        ]
+       }
+      }
+     ]
+    }
+   },
+   "arm_A_product": {
+    "status": "REFUSED",
+    "extraction_mode": "LOCAL_SLM_GROUNDED",
+    "code": "AMBIGUOUS_VALUE_QUOTE",
+    "slm_ops": [
+     "regular_polygon",
+     "perpendicular_line_plane",
+     "segment_length",
+     "goal:dist_pt_plane"
+    ],
+    "oracle": null
+   },
+   "arm_B_slm_payload": {
+    "status": "REFUSED",
+    "code": "AMBIGUOUS_VALUE_QUOTE",
+    "answers": null,
+    "failure_stage": "deterministic_route",
+    "source_gate": "NOT_CERTIFIED",
+    "oracle": null
+   },
+   "arm_D_gold_intent": {
+    "status": "REFUSED",
+    "code": "AMBIGUOUS_VALUE_QUOTE",
+    "answers": null,
+    "failure_stage": "deterministic_route",
+    "source_gate": "NOT_CERTIFIED",
+    "math_goals_removed": 0,
+    "oracle": null
+   },
+   "arm_C_parser_facts_gold_intent": {
+    "status": "NOT_CONSTRUCTED",
+    "why": "parser built no payload (LOCAL_PARSE_PARTIAL)"
+   },
+   "arm_E_downstream_canonical": {
+    "text": "Cho hình chóp S.ABCD có đáy là hình vuông cạnh 2a, SA vuông góc với đáy, SA = 2a. Tính khoảng cách từ S đến mặt phẳng (ABCD).",
+    "status": "SERVED",
+    "extraction_mode": "LOCAL_DETERMINISTIC_PARSER",
+    "code": null,
+    "slm_ops": [],
+    "oracle": {
+     "scene_validation": "MATHEMATICALLY_VALID",
+     "issues": [],
+     "numeric": "CORRECT"
+    }
+   },
+   "seconds": 6.9
+  },
+  {
+   "case_id": "Q08",
+   "intent": "SIMULATE_AND_QUERY",
+   "input": "Cho hình hộp chữ nhật ABCD.A'B'C'D' có AB = 1, AD = 2, AA' = 2. Vẽ hình hộp và tính độ dài đường chéo AC'.",
+   "parser": {
+    "status": "LOCAL_PARSE_COMPLETE",
+    "reason_code": null,
+    "has_payload": true,
+    "unparsed_goal": [],
+    "unparsed_fact": []
+   },
+   "slm": {
+    "ok": true,
+    "reason_code": null,
+    "reason_detail": "",
+    "failure_taxonomy": "NONE",
+    "raw_model_output": "{\"s\":[0,\"box\",\"ABCD.A'B'C'D'\",1],\"r\":[{\"c\":0,\"p\":\"len\",\"a\":\"AB\",\"q\":\"1\"},{\"c\":0,\"p\":\"len\",\"a\":\"AD\",\"q\":\"2\"},{\"c\":0,\"p\":\"len\",\"a\":\"AA'\",\"q\":\"2\"}],\"g\":[{\"c\":1,\"t\":\"len\",\"a\":\"AC'\"}],\"u\":[]}",
+    "wire_payload": {
+     "schema_version": "typed-fact-next/2",
+     "problem_text": "Cho hình hộp chữ nhật ABCD.A'B'C'D' có AB = 1, AD = 2, AA' = 2. Vẽ hình hộp và tính độ dài đường chéo AC'.",
+     "length_unit": "1",
+     "solids": [
+      {
+       "solid_id": "s1",
+       "solid_type": "prism",
+       "notation": "ABCD.A'B'C'D'",
+       "quote": "Cho hình hộp chữ nhật ABCD.A'B'C'D' có AB = 1"
+      }
+     ],
+     "premises": [
+      {
+       "kind": "right_prism",
+       "args": [
+        "base=A,B,C,D",
+        "top=A',B',C',D'"
+       ],
+       "quote": "Cho hình hộp chữ nhật ABCD.A'B'C'D'",
+       "solid_id": "s1"
+      },
+      {
+       "kind": "rectangle",
+       "args": [
+        "vertices=A,B,C,D"
+       ],
+       "quote": "Cho hình hộp chữ nhật ABCD.A'B'C'D'",
+       "solid_id": "s1"
+      },
+      {
+       "kind": "segment_length",
+       "args": [
+        "segment=A,B",
+        "value=1"
+       ],
+       "quote": "AB = 1",
+       "solid_id": "s1"
+      },
+      {
+       "kind": "segment_length",
+       "args": [
+        "segment=A,D",
+        "value=2"
+       ],
+       "quote": "AD = 2",
+       "solid_id": "s1"
+      },
+      {
+       "kind": "segment_length",
+       "args": [
+        "segment=A,A'",
+        "value=2"
+       ],
+       "quote": "AA' = 2",
+       "solid_id": "s1"
+      }
+     ],
+     "derived_sections": [],
+     "relations": [],
+     "simulation_goals": [
+      {
+       "goal_id": "sg1",
+       "kind": "construct_object",
+       "quote": "Vẽ hình hộp",
+       "target_solid_id": "s1"
+      }
+     ],
+     "math_goals": [
+      {
+       "goal_id": "q1",
+       "kind": "measurement",
+       "quote": "tính độ dài đường chéo AC'",
+       "goal_type": "distance",
+       "solid_id": "s1",
+       "target": [
+        "segment=A,C'"
+       ]
+      }
+     ]
+    },
+    "grounding_status": "GROUNDED_AND_LOWERED",
+    "accepted_ops": [
+     {
+      "kind": "right_prism",
+      "clause_id": "parser_reconciled"
+     },
+     {
+      "kind": "rectangle",
+      "clause_id": "parser_reconciled"
+     },
+     {
+      "kind": "segment_length",
+      "clause_id": "parser_reconciled"
+     },
+     {
+      "kind": "segment_length",
+      "clause_id": "parser_reconciled"
+     },
+     {
+      "kind": "segment_length",
+      "clause_id": "parser_reconciled"
+     },
+     {
+      "kind": "goal:len",
+      "clause_id": 1
+     }
+    ],
+    "rejected_ops": [],
+    "normalization": {
+     "normalizer_version": "slm-verified-normalizer/3",
+     "changed": false,
+     "typo_detected": false,
+     "ambiguity_flags": [],
+     "applied_rule_ids": [],
+     "steps": []
+    },
+    "lowered_payload": {
+     "schema_version": "typed-fact-next/2",
+     "problem_text": "Cho hình hộp chữ nhật ABCD.A'B'C'D' có AB = 1, AD = 2, AA' = 2. Vẽ hình hộp và tính độ dài đường chéo AC'.",
+     "length_unit": "1",
+     "solids": [
+      {
+       "solid_id": "s1",
+       "solid_type": "prism",
+       "notation": "ABCD.A'B'C'D'",
+       "quote": "Cho hình hộp chữ nhật ABCD.A'B'C'D' có AB = 1"
+      }
+     ],
+     "premises": [
+      {
+       "kind": "right_prism",
+       "args": {
+        "base": [
+         "A",
+         "B",
+         "C",
+         "D"
+        ],
+        "top": [
+         "A'",
+         "B'",
+         "C'",
+         "D'"
+        ]
+       },
+       "quote": "Cho hình hộp chữ nhật ABCD.A'B'C'D'",
+       "solid_id": "s1"
+      },
+      {
+       "kind": "rectangle",
+       "args": {
+        "vertices": [
+         "A",
+         "B",
+         "C",
+         "D"
+        ]
+       },
+       "quote": "Cho hình hộp chữ nhật ABCD.A'B'C'D'",
+       "solid_id": "s1"
+      },
+      {
+       "kind": "segment_length",
+       "args": {
+        "segment": [
+         "A",
+         "B"
+        ],
+        "value": "1"
+       },
+       "quote": "AB = 1",
+       "solid_id": "s1"
+      },
+      {
+       "kind": "segment_length",
+       "args": {
+        "segment": [
+         "A",
+         "D"
+        ],
+        "value": "2"
+       },
+       "quote": "AD = 2",
+       "solid_id": "s1"
+      },
+      {
+       "kind": "segment_length",
+       "args": {
+        "segment": [
+         "A",
+         "A'"
+        ],
+        "value": "2"
+       },
+       "quote": "AA' = 2",
+       "solid_id": "s1"
+      }
+     ],
+     "derived_sections": [],
+     "relations": [],
+     "simulation_goals": [
+      {
+       "goal_id": "sg1",
+       "kind": "construct_object",
+       "quote": "Vẽ hình hộp",
+       "target_solid_id": "s1"
+      }
+     ],
+     "math_goals": [
+      {
+       "goal_id": "q1",
+       "kind": "measurement",
+       "quote": "tính độ dài đường chéo AC'",
+       "goal_type": "distance",
+       "solid_id": "s1",
+       "target": {
+        "segment": [
+         "A",
+         "C'"
+        ]
+       }
+      }
+     ]
+    }
+   },
+   "arm_A_product": {
+    "status": "SERVED",
+    "extraction_mode": "LOCAL_DETERMINISTIC_PARSER",
+    "code": null,
+    "slm_ops": [],
+    "oracle": {
+     "scene_validation": "MATHEMATICALLY_VALID",
+     "issues": [],
+     "numeric": "CORRECT"
+    }
+   },
+   "arm_B_slm_payload": {
+    "status": "SERVED",
+    "code": null,
+    "answers": {
+     "q1": "3"
+    },
+    "failure_stage": null,
+    "source_gate": "VERIFIED",
+    "oracle": {
+     "scene_validation": "MATHEMATICALLY_VALID",
+     "issues": [],
+     "numeric": "CORRECT"
+    }
+   },
+   "arm_D_gold_intent": {
+    "status": "SERVED",
+    "code": null,
+    "answers": {
+     "q1": "3"
+    },
+    "failure_stage": null,
+    "source_gate": "VERIFIED",
+    "math_goals_removed": 0,
+    "oracle": {
+     "scene_validation": "MATHEMATICALLY_VALID",
+     "issues": [],
+     "numeric": "CORRECT"
+    }
+   },
+   "arm_C_parser_facts_gold_intent": {
+    "status": "SERVED",
+    "code": null,
+    "answers": {
+     "q1": "3"
+    },
+    "failure_stage": null,
+    "oracle": {
+     "scene_validation": "MATHEMATICALLY_VALID",
+     "issues": [],
+     "numeric": "CORRECT"
+    }
+   },
+   "arm_E_downstream_canonical": {
+    "text": "Cho hình hộp chữ nhật ABCD.A'B'C'D' có AB = 1, AD = 2, AA' = 2. Tính độ dài đoạn thẳng AC'.",
+    "status": "SERVED",
+    "extraction_mode": "LOCAL_DETERMINISTIC_PARSER",
+    "code": null,
+    "slm_ops": [],
+    "oracle": {
+     "scene_validation": "MATHEMATICALLY_VALID",
+     "issues": [],
+     "numeric": "CORRECT"
+    }
+   },
+   "seconds": 9.5
+  },
+  {
+   "case_id": "Q10",
+   "intent": "SIMULATE_AND_QUERY",
+   "input": "Cho hình chóp S.ABC có đáy ABC là tam giác vuông tại A, AB = a, AC = 2a, SA vuông góc với (ABC), SA = 2a. Hãy biểu diễn hình chóp và tính thể tích.",
+   "parser": {
+    "status": "LOCAL_PARSE_PARTIAL",
+    "reason_code": "REQUEST_NOT_ANSWERED",
+    "has_payload": false,
+    "unparsed_goal": [],
+    "unparsed_fact": []
+   },
+   "slm": {
+    "ok": true,
+    "reason_code": null,
+    "reason_detail": "",
+    "failure_taxonomy": "NONE",
+    "raw_model_output": "{\"s\":[0,\"pyr\",\"S.ABC\",0],\"r\":[{\"c\":0,\"p\":\"right_tri\",\"a\":\"ABC\",\"pt\":\"A\"},{\"c\":0,\"p\":\"len\",\"a\":\"AB\",\"q\":\"a\"},{\"c\":0,\"p\":\"len\",\"a\":\"AC\",\"q\":\"2a\"},{\"c\":0,\"p\":\"perp_lp\",\"a\":\"SA\",\"b\":\"ABC\"},{\"c\":0,\"p\":\"len\",\"a\":\"SA\",\"q\":\"2a\"}],\"g\":[{\"c\":1,\"t\":\"vol\",\"tgt\":\"S.ABC\"}],\"u\":[]}",
+    "wire_payload": {
+     "schema_version": "typed-fact-next/2",
+     "problem_text": "Cho hình chóp S.ABC có đáy ABC là tam giác vuông tại A, AB = a, AC = 2a, SA vuông góc với (ABC), SA = 2a. Hãy biểu diễn hình chóp và tính thể tích.",
+     "length_unit": "a",
+     "solids": [
+      {
+       "solid_id": "s1",
+       "solid_type": "pyramid",
+       "notation": "S.ABC",
+       "quote": "Cho hình chóp S.ABC có đáy ABC là tam giác vuông tại A"
+      }
+     ],
+     "premises": [
+      {
+       "kind": "right_angle",
+       "args": [
+        "vertex=A",
+        "rays=B,C"
+       ],
+       "quote": "Cho hình chóp S.ABC có đáy ABC là tam giác vuông tại A",
+       "solid_id": "s1"
+      },
+      {
+       "kind": "segment_length",
+       "args": [
+        "segment=A,B",
+        "value=a"
+       ],
+       "quote": "AB = a",
+       "solid_id": "s1"
+      },
+      {
+       "kind": "segment_length",
+       "args": [
+        "segment=A,C",
+        "value=2a"
+       ],
+       "quote": "AC = 2a",
+       "solid_id": "s1"
+      },
+      {
+       "kind": "perpendicular_line_plane",
+       "args": [
+        "line=S,A",
+        "plane=A,B,C"
+       ],
+       "quote": "SA vuông góc với (ABC)",
+       "solid_id": "s1"
+      },
+      {
+       "kind": "segment_length",
+       "args": [
+        "segment=S,A",
+        "value=2a"
+       ],
+       "quote": "SA = 2a",
+       "solid_id": "s1"
+      }
+     ],
+     "derived_sections": [],
+     "relations": [],
+     "simulation_goals": [
+      {
+       "goal_id": "sg1",
+       "kind": "construct_object",
+       "quote": "Hãy biểu diễn hình chóp",
+       "target_solid_id": "s1"
+      }
+     ],
+     "math_goals": [
+      {
+       "goal_id": "q1",
+       "kind": "measurement",
+       "quote": "tính thể tích",
+       "goal_type": "volume",
+       "solid_id": "s1",
+       "target": [
+        "solid_id=s1"
+       ]
+      }
+     ]
+    },
+    "grounding_status": "GROUNDED_AND_LOWERED",
+    "accepted_ops": [
+     {
+      "kind": "right_angle",
+      "clause_id": 0
+     },
+     {
+      "kind": "segment_length",
+      "clause_id": 0
+     },
+     {
+      "kind": "segment_length",
+      "clause_id": 0
+     },
+     {
+      "kind": "perpendicular_line_plane",
+      "clause_id": 0
+     },
+     {
+      "kind": "segment_length",
+      "clause_id": 0
+     },
+     {
+      "kind": "goal:vol",
+      "clause_id": 1
+     }
+    ],
+    "rejected_ops": [],
+    "normalization": {
+     "normalizer_version": "slm-verified-normalizer/3",
+     "changed": false,
+     "typo_detected": false,
+     "ambiguity_flags": [],
+     "applied_rule_ids": [],
+     "steps": []
+    },
+    "lowered_payload": {
+     "schema_version": "typed-fact-next/2",
+     "problem_text": "Cho hình chóp S.ABC có đáy ABC là tam giác vuông tại A, AB = a, AC = 2a, SA vuông góc với (ABC), SA = 2a. Hãy biểu diễn hình chóp và tính thể tích.",
+     "length_unit": "a",
+     "solids": [
+      {
+       "solid_id": "s1",
+       "solid_type": "pyramid",
+       "notation": "S.ABC",
+       "quote": "Cho hình chóp S.ABC có đáy ABC là tam giác vuông tại A"
+      }
+     ],
+     "premises": [
+      {
+       "kind": "right_angle",
+       "args": {
+        "vertex": "A",
+        "rays": [
+         "B",
+         "C"
+        ]
+       },
+       "quote": "Cho hình chóp S.ABC có đáy ABC là tam giác vuông tại A",
+       "solid_id": "s1"
+      },
+      {
+       "kind": "segment_length",
+       "args": {
+        "segment": [
+         "A",
+         "B"
+        ],
+        "value": "a"
+       },
+       "quote": "AB = a",
+       "solid_id": "s1"
+      },
+      {
+       "kind": "segment_length",
+       "args": {
+        "segment": [
+         "A",
+         "C"
+        ],
+        "value": "2a"
+       },
+       "quote": "AC = 2a",
+       "solid_id": "s1"
+      },
+      {
+       "kind": "perpendicular_line_plane",
+       "args": {
+        "line": [
+         "S",
+         "A"
+        ],
+        "plane": [
+         "A",
+         "B",
+         "C"
+        ]
+       },
+       "quote": "SA vuông góc với (ABC)",
+       "solid_id": "s1"
+      },
+      {
+       "kind": "segment_length",
+       "args": {
+        "segment": [
+         "S",
+         "A"
+        ],
+        "value": "2a"
+       },
+       "quote": "SA = 2a",
+       "solid_id": "s1"
+      }
+     ],
+     "derived_sections": [],
+     "relations": [],
+     "simulation_goals": [
+      {
+       "goal_id": "sg1",
+       "kind": "construct_object",
+       "quote": "Hãy biểu diễn hình chóp",
+       "target_solid_id": "s1"
+      }
+     ],
+     "math_goals": [
+      {
+       "goal_id": "q1",
+       "kind": "measurement",
+       "quote": "tính thể tích",
+       "goal_type": "volume",
+       "solid_id": "s1",
+       "target": {
+        "solid_id": "s1"
+       }
+      }
+     ]
+    }
+   },
+   "arm_A_product": {
+    "status": "SERVED",
+    "extraction_mode": "LOCAL_SLM_GROUNDED",
+    "code": null,
+    "slm_ops": [
+     "right_angle",
+     "segment_length",
+     "segment_length",
+     "perpendicular_line_plane",
+     "segment_length",
+     "goal:vol"
+    ],
+    "oracle": {
+     "scene_validation": "MATHEMATICALLY_VALID",
+     "issues": [],
+     "numeric": "CORRECT"
+    }
+   },
+   "arm_B_slm_payload": {
+    "status": "SERVED",
+    "code": null,
+    "answers": {
+     "q1": "2a³/3"
+    },
+    "failure_stage": null,
+    "source_gate": "VERIFIED",
+    "oracle": {
+     "scene_validation": "MATHEMATICALLY_VALID",
+     "issues": [],
+     "numeric": "CORRECT"
+    }
+   },
+   "arm_D_gold_intent": {
+    "status": "SERVED",
+    "code": null,
+    "answers": {
+     "q1": "2a³/3"
+    },
+    "failure_stage": null,
+    "source_gate": "VERIFIED",
+    "math_goals_removed": 0,
+    "oracle": {
+     "scene_validation": "MATHEMATICALLY_VALID",
+     "issues": [],
+     "numeric": "CORRECT"
+    }
+   },
+   "arm_C_parser_facts_gold_intent": {
+    "status": "NOT_CONSTRUCTED",
+    "why": "parser built no payload (LOCAL_PARSE_PARTIAL)"
+   },
+   "arm_E_downstream_canonical": {
+    "text": "Cho hình chóp S.ABC có đáy ABC là tam giác vuông tại A, AB = a, AC = 2a, SA vuông góc với (ABC), SA = 2a. Tính thể tích khối chóp S.ABC.",
+    "status": "SERVED",
+    "extraction_mode": "LOCAL_DETERMINISTIC_PARSER",
+    "code": null,
+    "slm_ops": [],
+    "oracle": {
+     "scene_validation": "MATHEMATICALLY_VALID",
+     "issues": [],
+     "numeric": "CORRECT"
+    }
+   },
+   "seconds": 17.4
+  },
+  {
+   "case_id": "C03",
+   "intent": "QUERY_WITH_SCENE",
+   "input": "Cho hình chóp tứ giác đều S.ABCD có tất cả các cạnh bằng a. Tính thể tích khối chóp S.ABCD.",
+   "parser": {
+    "status": "LOCAL_PARSE_PARTIAL",
+    "reason_code": "UNPARSED_FACT_CANDIDATE",
+    "has_payload": false,
+    "unparsed_goal": [],
+    "unparsed_fact": [
+     "Cho hình chóp tứ giác đều S.ABCD có tất cả các cạnh bằng a"
+    ]
+   },
+   "slm": {
+    "ok": true,
+    "reason_code": null,
+    "reason_detail": "",
+    "failure_taxonomy": "NONE",
+    "raw_model_output": "{\"s\":[0,\"pyr\",\"S.ABCD\",1],\"r\":[{\"c\":0,\"p\":\"len\",\"a\":\"S.ABCD\",\"q\":\"a\"}],\"g\":[{\"c\":1,\"t\":\"vol\",\"tgt\":\"S.ABCD\"}],\"u\":[]}",
+    "wire_payload": {
+     "schema_version": "typed-fact-next/2",
+     "problem_text": "Cho hình chóp tứ giác đều S.ABCD có tất cả các cạnh bằng a. Tính thể tích khối chóp S.ABCD.",
+     "length_unit": "a",
+     "solids": [
+      {
+       "solid_id": "s1",
+       "solid_type": "pyramid",
+       "notation": "S.ABCD",
+       "quote": "Cho hình chóp tứ giác đều S.ABCD có tất cả các cạnh bằng a"
+      }
+     ],
+     "premises": [
+      {
+       "kind": "regular_pyramid",
+       "args": [
+        "apex=S",
+        "base=A,B,C,D"
+       ],
+       "quote": "Cho hình chóp tứ giác đều S.ABCD có tất cả các cạnh bằng a",
+       "solid_id": "s1"
+      },
+      {
+       "kind": "segment_length",
+       "args": [
+        "segment=S,A",
+        "value=a"
+       ],
+       "quote": "Cho hình chóp tứ giác đều S.ABCD có tất cả các cạnh bằng a",
+       "solid_id": "s1"
+      }
+     ],
+     "derived_sections": [],
+     "relations": [],
+     "simulation_goals": [
+      {
+       "goal_id": "sg1",
+       "kind": "construct_object",
+       "quote": "Cho hình chóp tứ giác đều S.ABCD có tất cả các cạnh bằng a",
+       "target_solid_id": "s1"
+      }
+     ],
+     "math_goals": [
+      {
+       "goal_id": "q1",
+       "kind": "measurement",
+       "quote": "Tính thể tích khối chóp S.ABCD",
+       "goal_type": "volume",
+       "solid_id": "s1",
+       "target": [
+        "solid_id=s1"
+       ]
+      }
+     ]
+    },
+    "grounding_status": "GROUNDED_AND_LOWERED",
+    "accepted_ops": [
+     {
+      "kind": "regular_pyramid",
+      "clause_id": 0
+     },
+     {
+      "kind": "segment_length",
+      "clause_id": 0
+     },
+     {
+      "kind": "goal:vol",
+      "clause_id": 1
+     }
+    ],
+    "rejected_ops": [],
+    "normalization": {
+     "normalizer_version": "slm-verified-normalizer/3",
+     "changed": false,
+     "typo_detected": false,
+     "ambiguity_flags": [],
+     "applied_rule_ids": [],
+     "steps": []
+    },
+    "lowered_payload": {
+     "schema_version": "typed-fact-next/2",
+     "problem_text": "Cho hình chóp tứ giác đều S.ABCD có tất cả các cạnh bằng a. Tính thể tích khối chóp S.ABCD.",
+     "length_unit": "a",
+     "solids": [
+      {
+       "solid_id": "s1",
+       "solid_type": "pyramid",
+       "notation": "S.ABCD",
+       "quote": "Cho hình chóp tứ giác đều S.ABCD có tất cả các cạnh bằng a"
+      }
+     ],
+     "premises": [
+      {
+       "kind": "regular_pyramid",
+       "args": {
+        "apex": "S",
+        "base": [
+         "A",
+         "B",
+         "C",
+         "D"
+        ]
+       },
+       "quote": "Cho hình chóp tứ giác đều S.ABCD có tất cả các cạnh bằng a",
+       "solid_id": "s1"
+      },
+      {
+       "kind": "segment_length",
+       "args": {
+        "segment": [
+         "S",
+         "A"
+        ],
+        "value": "a"
+       },
+       "quote": "Cho hình chóp tứ giác đều S.ABCD có tất cả các cạnh bằng a",
+       "solid_id": "s1"
+      }
+     ],
+     "derived_sections": [],
+     "relations": [],
+     "simulation_goals": [
+      {
+       "goal_id": "sg1",
+       "kind": "construct_object",
+       "quote": "Cho hình chóp tứ giác đều S.ABCD có tất cả các cạnh bằng a",
+       "target_solid_id": "s1"
+      }
+     ],
+     "math_goals": [
+      {
+       "goal_id": "q1",
+       "kind": "measurement",
+       "quote": "Tính thể tích khối chóp S.ABCD",
+       "goal_type": "volume",
+       "solid_id": "s1",
+       "target": {
+        "solid_id": "s1"
+       }
+      }
+     ]
+    }
+   },
+   "arm_A_product": {
+    "status": "REFUSED",
+    "extraction_mode": "LOCAL_SLM_GROUNDED",
+    "code": "UNGROUNDED_VALUE",
+    "slm_ops": [
+     "regular_pyramid",
+     "segment_length",
+     "goal:vol"
+    ],
+    "oracle": null
+   },
+   "arm_B_slm_payload": {
+    "status": "REFUSED",
+    "code": "UNGROUNDED_VALUE",
+    "answers": null,
+    "failure_stage": "deterministic_route",
+    "source_gate": "NOT_CERTIFIED",
+    "oracle": null
+   },
+   "arm_D_gold_intent": {
+    "status": "REFUSED",
+    "code": "UNGROUNDED_VALUE",
+    "answers": null,
+    "failure_stage": "deterministic_route",
+    "source_gate": "NOT_CERTIFIED",
+    "math_goals_removed": 0,
+    "oracle": null
+   },
+   "arm_C_parser_facts_gold_intent": {
+    "status": "NOT_CONSTRUCTED",
+    "why": "parser built no payload (LOCAL_PARSE_PARTIAL)"
+   },
+   "arm_E_downstream_canonical": {
+    "text": "Cho hình chóp tứ giác đều S.ABCD có cạnh đáy bằng a và cạnh bên bằng a. Tính thể tích khối chóp S.ABCD.",
+    "status": "SERVED",
+    "extraction_mode": "LOCAL_DETERMINISTIC_PARSER",
+    "code": null,
+    "slm_ops": [],
+    "oracle": {
+     "scene_validation": "MATHEMATICALLY_VALID",
+     "issues": [],
+     "numeric": "CORRECT"
+    }
+   },
+   "seconds": 5.1
+  },
+  {
+   "case_id": "C25",
+   "intent": "QUERY_WITH_SCENE",
+   "input": "Hình chóp S.ABCD đáy hình vuông cạnh 4, SA vuông góc đáy, SA = 3. Tính thể tích.",
+   "parser": {
+    "status": "LOCAL_PARSE_PARTIAL",
+    "reason_code": "UNPARSED_GOAL_CANDIDATE",
+    "has_payload": false,
+    "unparsed_goal": [
+     "Tính thể tích"
+    ],
+    "unparsed_fact": [
+     "Hình chóp S.ABCD đáy hình vuông cạnh 4, SA vuông góc đáy, SA = 3"
+    ]
+   },
+   "slm": {
+    "ok": false,
+    "reason_code": "AMBIGUOUS_FACT",
+    "reason_detail": "[{'op': 'unresolved', 'reason': 'SLM marked clause 0 as ambiguous.'}]",
+    "failure_taxonomy": "SLM_UNRESOLVED",
+    "raw_model_output": "{\"s\":[0,\"pyr\",\"S.ABCD\",0],\"r\":[],\"g\":[],\"u\":[{\"c\":0,\"k\":\"ambig\"}]}",
+    "wire_payload": null,
+    "grounding_status": "SLM_REPORTED_UNRESOLVED",
+    "accepted_ops": [],
+    "rejected_ops": [
+     {
+      "op": "unresolved",
+      "reason": "SLM marked clause 0 as ambiguous."
+     }
+    ],
+    "normalization": {
+     "normalizer_version": "slm-verified-normalizer/3",
+     "changed": true,
+     "typo_detected": false,
+     "ambiguity_flags": [],
+     "applied_rule_ids": [
+      "VN06_IMPLICIT_BARE_SOLID",
+      "VN06_SOLID_SEP_DAY",
+      "VN06_IMPLICIT_BASE_LABEL_SHAPE",
+      "VN07_IMPLICIT_MAT_DAY_PERP"
+     ],
+     "steps": [
+      {
+       "rule_id": "VN06_IMPLICIT_BARE_SOLID",
+       "transformation_rule_id": "VN06_IMPLICIT_BARE_SOLID",
+       "original_text": "Hình chóp",
+       "original_span": [
+        0,
+        9
+       ],
+       "original_clause_id": 0,
+       "normalized_text": "Cho hình chóp",
+       "original_excerpt": "Hình chóp",
+       "normalized_excerpt": "Cho hình chóp",
+       "original_entity_refs": [],
+       "scope": "SOLID_OPENER",
+       "polarity": "AFFIRMATIVE",
+       "semantic_equivalence_evidence": "canonical_solid_opener_cho",
+       "validation_status": "VALIDATED_MEANING_PRESERVING",
+       "validation_result": "VALIDATED_MEANING_PRESERVING",
+       "ambiguity_status": "UNAMBIGUOUS"
+      },
+      {
+       "rule_id": "VN06_SOLID_SEP_DAY",
+       "transformation_rule_id": "VN06_SOLID_SEP_DAY",
+       "original_text": "S.ABCD ",
+       "original_span": [
+        10,
+        17
+       ],
+       "original_clause_id": 0,
+       "normalized_text": "S.ABCD có ",
+       "original_excerpt": "S.ABCD ",
+       "normalized_excerpt": "S.ABCD có ",
+       "original_entity_refs": [
+        "S.ABCD"
+       ],
+       "scope": "SOLID_OPENER",
+       "polarity": "AFFIRMATIVE",
+       "semantic_equivalence_evidence": "explicit_co_connector_after_solid",
+       "validation_status": "VALIDATED_MEANING_PRESERVING",
+       "validation_result": "VALIDATED_MEANING_PRESERVING",
+       "ambiguity_status": "UNAMBIGUOUS"
+      },
+      {
+       "rule_id": "VN06_IMPLICIT_BASE_LABEL_SHAPE",
+       "transformation_rule_id": "VN06_IMPLICIT_BASE_LABEL_SHAPE",
+       "original_text": "đáy hình vuông",
+       "original_span": [
+        17,
+        31
+       ],
+       "original_clause_id": 1,
+       "normalized_text": "đáy ABCD là hình vuông",
+       "original_excerpt": "đáy hình vuông",
+       "normalized_excerpt": "đáy ABCD là hình vuông",
+       "original_entity_refs": [],
+       "scope": "SOLID_BASE",
+       "polarity": "AFFIRMATIVE",
+       "semantic_equivalence_evidence": "bind_unique_solid_base_label_to_shape",
+       "validation_status": "VALIDATED_MEANING_PRESERVING",
+       "validation_result": "VALIDATED_MEANING_PRESERVING",
+       "ambiguity_status": "UNAMBIGUOUS"
+      },
+      {
+       "rule_id": "VN07_IMPLICIT_MAT_DAY_PERP",
+       "transformation_rule_id": "VN07_IMPLICIT_MAT_DAY_PERP",
+       "original_text": "vuông góc đáy",
+       "original_span": [
+        43,
+        56
+       ],
+       "original_clause_id": 1,
+       "normalized_text": "vuông góc với (ABCD)",
+       "original_excerpt": "vuông góc đáy",
+       "normalized_excerpt": "vuông góc với (ABCD)",
+       "original_entity_refs": [],
+       "scope": "SOLID_BASE",
+       "polarity": "AFFIRMATIVE",
+       "semantic_equivalence_evidence": "resolve_unique_base_in_perpendicular",
+       "validation_status": "VALIDATED_MEANING_PRESERVING",
+       "validation_result": "VALIDATED_MEANING_PRESERVING",
+       "ambiguity_status": "UNAMBIGUOUS"
+      }
+     ]
+    },
+    "lowered_payload": null
+   },
+   "arm_A_product": {
+    "status": "REFUSED",
+    "extraction_mode": "LOCAL_SLM_GROUNDING_REJECTED",
+    "code": "AMBIGUOUS_FACT",
+    "slm_ops": [],
+    "oracle": null
+   },
+   "arm_B_slm_payload": {
+    "status": "NOT_RUN",
+    "why": "SLM output not lowered (no payload)"
+   },
+   "arm_D_gold_intent": {
+    "status": "NOT_RUN",
+    "why": "SLM output not lowered (no payload)"
+   },
+   "arm_C_parser_facts_gold_intent": {
+    "status": "NOT_CONSTRUCTED",
+    "why": "parser built no payload (LOCAL_PARSE_PARTIAL)"
+   },
+   "arm_E_downstream_canonical": {
+    "text": "Cho hình chóp S.ABCD có đáy ABCD là hình vuông cạnh 4, SA vuông góc với đáy, SA = 3. Tính thể tích khối chóp S.ABCD.",
+    "status": "SERVED",
+    "extraction_mode": "LOCAL_DETERMINISTIC_PARSER",
+    "code": null,
+    "slm_ops": [],
+    "oracle": {
+     "scene_validation": "MATHEMATICALLY_VALID",
+     "issues": [],
+     "numeric": "CORRECT"
+    }
+   },
+   "seconds": 2.6
+  },
+  {
+   "case_id": "C26",
+   "intent": "QUERY_WITH_SCENE",
+   "input": "Câu 2 (2 điểm). Cho hình chóp S.ABCD có đáy ABCD là hình vuông cạnh a, SA vuông góc với mặt phẳng (ABCD) và SA = a√2. a) Tính thể tích khối chóp S.ABCD. b) Tính góc giữa đường thẳng SC và mặt phẳng (ABCD).",
+   "parser": {
+    "status": "LOCAL_PARSE_PARTIAL",
+    "reason_code": "SOURCE_PREMISE_UNREAD",
+    "has_payload": false,
+    "unparsed_goal": [],
+    "unparsed_fact": []
+   },
+   "slm": {
+    "ok": true,
+    "reason_code": null,
+    "reason_detail": "",
+    "failure_taxonomy": "NONE",
+    "raw_model_output": "{\"s\":[1,\"pyr\",\"S.ABCD\",0],\"r\":[{\"c\":1,\"p\":\"reg_poly\",\"a\":\"ABCD\",\"q\":\"a\"},{\"c\":1,\"p\":\"perp_lp\",\"a\":\"SA\",\"b\":\"ABCD\"},{\"c\":1,\"p\":\"len\",\"a\":\"SA\",\"q\":\"a√2\"}],\"g\":[{\"c\":2,\"t\":\"vol\",\"tgt\":\"S.ABCD\"},{\"c\":3,\"t\":\"ang_lp\",\"a\":\"SC\",\"b\":\"ABCD\"}],\"u\":[]}",
+    "wire_payload": {
+     "schema_version": "typed-fact-next/2",
+     "problem_text": "Câu 2 (2 điểm). Cho hình chóp S.ABCD có đáy ABCD là hình vuông cạnh a, SA vuông góc với mặt phẳng (ABCD) và SA = a√2. Tính thể tích khối chóp S.ABCD. Tính góc giữa đường thẳng SC và mặt phẳng (ABCD).",
+     "length_unit": "a",
+     "solids": [
+      {
+       "solid_id": "s1",
+       "solid_type": "pyramid",
+       "notation": "S.ABCD",
+       "quote": "Cho hình chóp S.ABCD có đáy ABCD là hình vuông cạnh a"
+      }
+     ],
+     "premises": [
+      {
+       "kind": "regular_polygon",
+       "args": [
+        "vertices=A,B,C,D",
+        "side=a"
+       ],
+       "quote": "Cho hình chóp S.ABCD có đáy ABCD là hình vuông cạnh a",
+       "solid_id": "s1"
+      },
+      {
+       "kind": "perpendicular_line_plane",
+       "args": [
+        "line=S,A",
+        "plane=A,B,C,D"
+       ],
+       "quote": "SA vuông góc với mặt phẳng (ABCD)",
+       "solid_id": "s1"
+      },
+      {
+       "kind": "segment_length",
+       "args": [
+        "segment=S,A",
+        "value=a√2"
+       ],
+       "quote": "SA = a√2",
+       "solid_id": "s1"
+      }
+     ],
+     "derived_sections": [],
+     "relations": [],
+     "simulation_goals": [
+      {
+       "goal_id": "sg1",
+       "kind": "construct_object",
+       "quote": "Cho hình chóp S.ABCD có đáy ABCD là hình vuông cạnh a",
+       "target_solid_id": "s1"
+      }
+     ],
+     "math_goals": [
+      {
+       "goal_id": "q1",
+       "kind": "measurement",
+       "quote": "Tính thể tích khối chóp S.ABCD",
+       "goal_type": "volume",
+       "solid_id": "s1",
+       "target": [
+        "solid_id=s1"
+       ]
+      },
+      {
+       "goal_id": "q2",
+       "kind": "measurement",
+       "quote": "Tính góc giữa đường thẳng SC và mặt phẳng (ABCD)",
+       "goal_type": "angle",
+       "solid_id": "s1",
+       "target": [
+        "line=S,C",
+        "plane=A,B,C,D"
+       ]
+      }
+     ]
+    },
+    "grounding_status": "GROUNDED_AND_LOWERED",
+    "accepted_ops": [
+     {
+      "kind": "regular_polygon",
+      "clause_id": 1
+     },
+     {
+      "kind": "perpendicular_line_plane",
+      "clause_id": 1
+     },
+     {
+      "kind": "segment_length",
+      "clause_id": 1
+     },
+     {
+      "kind": "goal:vol",
+      "clause_id": 2
+     },
+     {
+      "kind": "goal:ang_lp",
+      "clause_id": 3
+     }
+    ],
+    "rejected_ops": [],
+    "normalization": {
+     "normalizer_version": "slm-verified-normalizer/3",
+     "changed": true,
+     "typo_detected": false,
+     "ambiguity_flags": [],
+     "applied_rule_ids": [
+      "VN09_SPLIT_ENUM_GOALS",
+      "VN09_SPLIT_ENUM_GOALS"
+     ],
+     "steps": [
+      {
+       "rule_id": "VN09_SPLIT_ENUM_GOALS",
+       "transformation_rule_id": "VN09_SPLIT_ENUM_GOALS",
+       "original_text": " a) ",
+       "original_span": [
+        117,
+        121
+       ],
+       "original_clause_id": 3,
+       "normalized_text": " ",
+       "original_excerpt": " a) ",
+       "normalized_excerpt": " ",
+       "original_entity_refs": [],
+       "scope": "MULTI_GOAL",
+       "polarity": "AFFIRMATIVE",
+       "semantic_equivalence_evidence": "drop_enumerator_before_standalone_goal",
+       "validation_status": "VALIDATED_MEANING_PRESERVING",
+       "validation_result": "VALIDATED_MEANING_PRESERVING",
+       "ambiguity_status": "UNAMBIGUOUS"
+      },
+      {
+       "rule_id": "VN09_SPLIT_ENUM_GOALS",
+       "transformation_rule_id": "VN09_SPLIT_ENUM_GOALS",
+       "original_text": " b) ",
+       "original_span": [
+        152,
+        156
+       ],
+       "original_clause_id": 5,
+       "normalized_text": " ",
+       "original_excerpt": " b) ",
+       "normalized_excerpt": " ",
+       "original_entity_refs": [],
+       "scope": "MULTI_GOAL",
+       "polarity": "AFFIRMATIVE",
+       "semantic_equivalence_evidence": "drop_enumerator_before_standalone_goal",
+       "validation_status": "VALIDATED_MEANING_PRESERVING",
+       "validation_result": "VALIDATED_MEANING_PRESERVING",
+       "ambiguity_status": "UNAMBIGUOUS"
+      }
+     ]
+    },
+    "lowered_payload": {
+     "schema_version": "typed-fact-next/2",
+     "problem_text": "Câu 2 (2 điểm). Cho hình chóp S.ABCD có đáy ABCD là hình vuông cạnh a, SA vuông góc với mặt phẳng (ABCD) và SA = a√2. Tính thể tích khối chóp S.ABCD. Tính góc giữa đường thẳng SC và mặt phẳng (ABCD).",
+     "length_unit": "a",
+     "solids": [
+      {
+       "solid_id": "s1",
+       "solid_type": "pyramid",
+       "notation": "S.ABCD",
+       "quote": "Cho hình chóp S.ABCD có đáy ABCD là hình vuông cạnh a"
+      }
+     ],
+     "premises": [
+      {
+       "kind": "regular_polygon",
+       "args": {
+        "vertices": [
+         "A",
+         "B",
+         "C",
+         "D"
+        ],
+        "side": "a"
+       },
+       "quote": "Cho hình chóp S.ABCD có đáy ABCD là hình vuông cạnh a",
+       "solid_id": "s1"
+      },
+      {
+       "kind": "perpendicular_line_plane",
+       "args": {
+        "line": [
+         "S",
+         "A"
+        ],
+        "plane": [
+         "A",
+         "B",
+         "C",
+         "D"
+        ]
+       },
+       "quote": "SA vuông góc với mặt phẳng (ABCD)",
+       "solid_id": "s1"
+      },
+      {
+       "kind": "segment_length",
+       "args": {
+        "segment": [
+         "S",
+         "A"
+        ],
+        "value": "a√2"
+       },
+       "quote": "SA = a√2",
+       "solid_id": "s1"
+      }
+     ],
+     "derived_sections": [],
+     "relations": [],
+     "simulation_goals": [
+      {
+       "goal_id": "sg1",
+       "kind": "construct_object",
+       "quote": "Cho hình chóp S.ABCD có đáy ABCD là hình vuông cạnh a",
+       "target_solid_id": "s1"
+      }
+     ],
+     "math_goals": [
+      {
+       "goal_id": "q1",
+       "kind": "measurement",
+       "quote": "Tính thể tích khối chóp S.ABCD",
+       "goal_type": "volume",
+       "solid_id": "s1",
+       "target": {
+        "solid_id": "s1"
+       }
+      },
+      {
+       "goal_id": "q2",
+       "kind": "measurement",
+       "quote": "Tính góc giữa đường thẳng SC và mặt phẳng (ABCD)",
+       "goal_type": "angle",
+       "solid_id": "s1",
+       "target": {
+        "line": [
+         "S",
+         "C"
+        ],
+        "plane": [
+         "A",
+         "B",
+         "C",
+         "D"
+        ]
+       }
+      }
+     ]
+    }
+   },
+   "arm_A_product": {
+    "status": "REFUSED",
+    "extraction_mode": "LOCAL_SLM_GROUNDED",
+    "code": "SOURCE_PREMISE_UNREAD",
+    "slm_ops": [
+     "regular_polygon",
+     "perpendicular_line_plane",
+     "segment_length",
+     "goal:vol",
+     "goal:ang_lp"
+    ],
+    "oracle": null
+   },
+   "arm_B_slm_payload": {
+    "status": "REFUSED",
+    "code": "SOURCE_PREMISE_UNREAD",
+    "answers": null,
+    "failure_stage": "deterministic_route",
+    "source_gate": "NOT_CERTIFIED",
+    "oracle": null
+   },
+   "arm_D_gold_intent": {
+    "status": "REFUSED",
+    "code": "SOURCE_PREMISE_UNREAD",
+    "answers": null,
+    "failure_stage": "deterministic_route",
+    "source_gate": "NOT_CERTIFIED",
+    "math_goals_removed": 0,
+    "oracle": null
+   },
+   "arm_C_parser_facts_gold_intent": {
+    "status": "NOT_CONSTRUCTED",
+    "why": "parser built no payload (LOCAL_PARSE_PARTIAL)"
+   },
+   "arm_E_downstream_canonical": {
+    "text": "Cho hình chóp S.ABCD có đáy ABCD là hình vuông cạnh a, SA vuông góc với mặt phẳng (ABCD) và SA = a√2. Tính thể tích khối chóp S.ABCD. Tính góc giữa đường thẳng SC và mặt phẳng (ABCD).",
+    "status": "SERVED",
+    "extraction_mode": "LOCAL_DETERMINISTIC_PARSER",
+    "code": null,
+    "slm_ops": [],
+    "oracle": {
+     "scene_validation": "MATHEMATICALLY_VALID",
+     "issues": [],
+     "numeric": "CORRECT"
+    }
+   },
+   "seconds": 8.8
+  },
+  {
+   "case_id": "V13",
+   "intent": "SIMULATE_ONLY",
+   "input": "Cho hình chóp S.ABCD có đáy ABCD là hình bình hành, AB = 2a, AD = a, góc BAD bằng 60 độ, SA ⊥ (ABCD) và SA = a. Mô phỏng hình chóp.",
+   "parser": {
+    "status": "LOCAL_PARSE_AMBIGUOUS",
+    "reason_code": "AMBIGUOUS_FACT",
+    "has_payload": true,
+    "unparsed_goal": [],
+    "unparsed_fact": []
+   },
+   "slm": {
+    "ok": false,
+    "reason_code": "AMBIGUOUS_FACT",
+    "reason_detail": "[{'op': 'unresolved', 'reason': 'SLM marked clause 1 as ambiguous.'}]",
+    "failure_taxonomy": "SLM_UNRESOLVED",
+    "raw_model_output": "{\"s\":[0,\"pyr\",\"S.ABCD\",0],\"r\":[{\"c\":0,\"p\":\"para\",\"a\":\"ABCD\"},{\"c\":0,\"p\":\"len\",\"a\":\"AB\",\"q\":\"2a\"},{\"c\":0,\"p\":\"len\",\"a\":\"AD\",\"q\":\"a\"},{\"c\":1,\"p\":\"ang_vtx\",\"a\":\"BAD\",\"pt\":\"A\",\"q\":\"60°\"},{\"c\":1,\"p\":\"perp_lp\",\"a\":\"SA\",\"b\":\"ABCD\"},{\"c\":1,\"p\":\"len\",\"a\":\"SA\",\"q\":\"a\"}],\"g\":[],\"u\":[{\"c\":1,\"k\":\"ambig\"}]}",
+    "wire_payload": null,
+    "grounding_status": "SLM_REPORTED_UNRESOLVED",
+    "accepted_ops": [],
+    "rejected_ops": [
+     {
+      "op": "unresolved",
+      "reason": "SLM marked clause 1 as ambiguous."
+     }
+    ],
+    "normalization": {
+     "normalizer_version": "slm-verified-normalizer/3",
+     "changed": true,
+     "typo_detected": false,
+     "ambiguity_flags": [],
+     "applied_rule_ids": [
+      "VN01_DEG_WORD",
+      "VN09_SPLIT_COORDINATED_GOALS"
+     ],
+     "steps": [
+      {
+       "rule_id": "VN01_DEG_WORD",
+       "transformation_rule_id": "VN01_DEG_WORD",
+       "original_text": "60 độ",
+       "original_span": [
+        82,
+        87
+       ],
+       "original_clause_id": 1,
+       "normalized_text": "60°",
+       "original_excerpt": "60 độ",
+       "normalized_excerpt": "60°",
+       "original_entity_refs": [],
+       "scope": "TYPOGRAPHY",
+       "polarity": "AFFIRMATIVE",
+       "semantic_equivalence_evidence": "morphological_degree_unit_equivalence",
+       "validation_status": "VALIDATED_MEANING_PRESERVING",
+       "validation_result": "VALIDATED_MEANING_PRESERVING",
+       "ambiguity_status": "UNAMBIGUOUS"
+      },
+      {
+       "rule_id": "VN09_SPLIT_COORDINATED_GOALS",
+       "transformation_rule_id": "VN09_SPLIT_COORDINATED_GOALS",
+       "original_text": ", ",
+       "original_span": [
+        67,
+        69
+       ],
+       "original_clause_id": 1,
+       "normalized_text": ". ",
+       "original_excerpt": ", ",
+       "normalized_excerpt": ". ",
+       "original_entity_refs": [],
+       "scope": "MULTI_GOAL",
+       "polarity": "AFFIRMATIVE",
+       "semantic_equivalence_evidence": "split_coordinated_multi_goals",
+       "validation_status": "VALIDATED_MEANING_PRESERVING",
+       "validation_result": "VALIDATED_MEANING_PRESERVING",
+       "ambiguity_status": "UNAMBIGUOUS"
+      }
+     ]
+    },
+    "lowered_payload": null
+   },
+   "arm_A_product": {
+    "status": "REFUSED",
+    "extraction_mode": "LOCAL_DETERMINISTIC_PARSER",
+    "code": "AMBIGUOUS_FACT",
+    "slm_ops": [],
+    "oracle": null
+   },
+   "arm_B_slm_payload": {
+    "status": "NOT_RUN",
+    "why": "SLM output not lowered (no payload)"
+   },
+   "arm_D_gold_intent": {
+    "status": "NOT_RUN",
+    "why": "SLM output not lowered (no payload)"
+   },
+   "arm_C_parser_facts_gold_intent": {
+    "status": "REFUSED",
+    "code": "AMBIGUOUS_FACT",
+    "answers": null,
+    "failure_stage": "deterministic_route",
+    "oracle": null
+   },
+   "arm_E_downstream_canonical": {
+    "text": "Cho hình chóp S.ABCD có đáy ABCD là hình bình hành, AB = 2a, AD = a, góc BAD = 60°, SA ⊥ (ABCD) và SA = a. Hãy mô phỏng hình chóp.",
+    "status": "SERVED",
+    "extraction_mode": "LOCAL_DETERMINISTIC_PARSER",
+    "code": null,
+    "slm_ops": [],
+    "oracle": {
+     "scene_validation": "MATHEMATICALLY_VALID",
+     "issues": [],
+     "numeric": null
+    }
+   },
+   "seconds": 5.5
+  },
+  {
+   "case_id": "V18",
+   "intent": "SIMULATE_ONLY",
+   "input": "Cho hinh chop S.ABCD co day ABCD la hinh vuong canh a, SA vuong goc voi (ABCD), SA = a. Hay mo phong hinh chop.",
+   "parser": {
+    "status": "LOCAL_PARSE_UNSUPPORTED",
+    "reason_code": "GATE_OUT_OF_SCOPE",
+    "has_payload": false,
+    "unparsed_goal": [],
+    "unparsed_fact": [
+     "Cho hinh chop S.ABCD co day ABCD la hinh vuong canh a, SA vuong goc voi (ABCD), SA = a"
+    ]
+   },
+   "slm": {
+    "ok": false,
+    "reason_code": "AMBIGUOUS_FACT",
+    "reason_detail": "[{'op': 'unresolved', 'reason': 'SLM marked clause 0 as ambiguous.'}]",
+    "failure_taxonomy": "SLM_UNRESOLVED",
+    "raw_model_output": "{\"s\":[0,\"pyr\",\"S.ABCD\",0],\"r\":[],\"g\":[],\"u\":[{\"c\":0,\"k\":\"ambig\"}]}",
+    "wire_payload": null,
+    "grounding_status": "SLM_REPORTED_UNRESOLVED",
+    "accepted_ops": [],
+    "rejected_ops": [
+     {
+      "op": "unresolved",
+      "reason": "SLM marked clause 0 as ambiguous."
+     }
+    ],
+    "normalization": {
+     "normalizer_version": "slm-verified-normalizer/3",
+     "changed": false,
+     "typo_detected": false,
+     "ambiguity_flags": [],
+     "applied_rule_ids": [],
+     "steps": []
+    },
+    "lowered_payload": null
+   },
+   "arm_A_product": {
+    "status": "REFUSED",
+    "extraction_mode": "LOCAL_DETERMINISTIC_PARSER",
+    "code": "gate_out_of_scope",
+    "slm_ops": [],
+    "oracle": null
+   },
+   "arm_B_slm_payload": {
+    "status": "NOT_RUN",
+    "why": "SLM output not lowered (no payload)"
+   },
+   "arm_D_gold_intent": {
+    "status": "NOT_RUN",
+    "why": "SLM output not lowered (no payload)"
+   },
+   "arm_C_parser_facts_gold_intent": {
+    "status": "NOT_CONSTRUCTED",
+    "why": "parser built no payload (LOCAL_PARSE_UNSUPPORTED)"
+   },
+   "arm_E_downstream_canonical": {
+    "text": "Cho hình chóp S.ABCD có đáy ABCD là hình vuông cạnh a, SA vuông góc với (ABCD), SA = a. Hãy mô phỏng hình chóp.",
+    "status": "SERVED",
+    "extraction_mode": "LOCAL_DETERMINISTIC_PARSER",
+    "code": null,
+    "slm_ops": [],
+    "oracle": {
+     "scene_validation": "MATHEMATICALLY_VALID",
+     "issues": [],
+     "numeric": null
+    }
+   },
+   "seconds": 1.2
+  },
+  {
+   "case_id": "C24",
+   "intent": "QUERY_WITH_SCENE",
+   "input": "Cho hinh chop S.ABC co day ABC la tam giac deu canh a, SA vuong goc voi (ABC), SA = a. Tinh the tich khoi chop S.ABC.",
+   "parser": {
+    "status": "LOCAL_PARSE_UNSUPPORTED",
+    "reason_code": "GATE_OUT_OF_SCOPE",
+    "has_payload": false,
+    "unparsed_goal": [],
+    "unparsed_fact": [
+     "Cho hinh chop S.ABC co day ABC la tam giac deu canh a, SA vuong goc voi (ABC), SA = a"
+    ]
+   },
+   "slm": {
+    "ok": false,
+    "reason_code": "AMBIGUOUS_FACT",
+    "reason_detail": "[{'op': 'unresolved', 'reason': 'SLM marked clause 0 as ambiguous.'}]",
+    "failure_taxonomy": "SLM_UNRESOLVED",
+    "raw_model_output": "{\"s\":[0,\"pyr\",\"S.ABC\",0],\"r\":[{\"c\":0,\"p\":\"len\",\"a\":\"SA\",\"q\":\"a\"},{\"c\":0,\"p\":\"len\",\"a\":\"SA\",\"q\":\"a\"}],\"g\":[],\"u\":[{\"c\":0,\"k\":\"ambig\"}]}",
+    "wire_payload": null,
+    "grounding_status": "SLM_REPORTED_UNRESOLVED",
+    "accepted_ops": [],
+    "rejected_ops": [
+     {
+      "op": "unresolved",
+      "reason": "SLM marked clause 0 as ambiguous."
+     }
+    ],
+    "normalization": {
+     "normalizer_version": "slm-verified-normalizer/3",
+     "changed": false,
+     "typo_detected": false,
+     "ambiguity_flags": [],
+     "applied_rule_ids": [],
+     "steps": []
+    },
+    "lowered_payload": null
+   },
+   "arm_A_product": {
+    "status": "REFUSED",
+    "extraction_mode": "LOCAL_DETERMINISTIC_PARSER",
+    "code": "gate_out_of_scope",
+    "slm_ops": [],
+    "oracle": null
+   },
+   "arm_B_slm_payload": {
+    "status": "NOT_RUN",
+    "why": "SLM output not lowered (no payload)"
+   },
+   "arm_D_gold_intent": {
+    "status": "NOT_RUN",
+    "why": "SLM output not lowered (no payload)"
+   },
+   "arm_C_parser_facts_gold_intent": {
+    "status": "NOT_CONSTRUCTED",
+    "why": "parser built no payload (LOCAL_PARSE_UNSUPPORTED)"
+   },
+   "arm_E_downstream_canonical": {
+    "text": "Cho hình chóp S.ABC có đáy ABC là tam giác đều cạnh a, SA vuông góc với (ABC), SA = a. Tính thể tích khối chóp S.ABC.",
+    "status": "SERVED",
+    "extraction_mode": "LOCAL_DETERMINISTIC_PARSER",
+    "code": null,
+    "slm_ops": [],
+    "oracle": {
+     "scene_validation": "MATHEMATICALLY_VALID",
+     "issues": [],
+     "numeric": "CORRECT"
+    }
+   },
+   "seconds": 2.4
+  },
+  {
+   "case_id": "C20",
+   "intent": "QUERY_WITH_SCENE",
+   "input": "Cho hình lập phương ABCD.A'B'C'D'. Tính góc giữa hai đường thẳng AB' và BC'.",
+   "parser": {
+    "status": "LOCAL_PARSE_COMPLETE",
+    "reason_code": null,
+    "has_payload": true,
+    "unparsed_goal": [],
+    "unparsed_fact": []
+   },
+   "slm": {
+    "ok": true,
+    "reason_code": null,
+    "reason_detail": "",
+    "failure_taxonomy": "NONE",
+    "raw_model_output": "{\"s\":[0,\"cube\",\"ABCD.A'B'C'D'\",1],\"r\":[{\"c\":0,\"p\":\"reg_poly\",\"a\":\"ABCD\"},{\"c\":0,\"p\":\"reg_poly\",\"a\":\"A'B'C'D'\"}],\"g\":[{\"c\":1,\"t\":\"ang_ll\",\"a\":\"AB'\",\"b\":\"BC'\"}],\"u\":[]}",
+    "wire_payload": {
+     "schema_version": "typed-fact-next/2",
+     "problem_text": "Cho hình lập phương ABCD.A'B'C'D'. Tính góc giữa hai đường thẳng AB' và BC'.",
+     "length_unit": "1",
+     "solids": [
+      {
+       "solid_id": "s1",
+       "solid_type": "prism",
+       "notation": "ABCD.A'B'C'D'",
+       "quote": "Cho hình lập phương ABCD.A'B'C'D'"
+      }
+     ],
+     "premises": [
+      {
+       "kind": "right_prism",
+       "args": [
+        "base=A,B,C,D",
+        "top=A',B',C',D'"
+       ],
+       "quote": "Cho hình lập phương ABCD.A'B'C'D'",
+       "solid_id": "s1"
+      },
+      {
+       "kind": "regular_polygon",
+       "args": [
+        "vertices=A,B,C,D"
+       ],
+       "quote": "Cho hình lập phương ABCD.A'B'C'D'",
+       "solid_id": "s1"
+      }
+     ],
+     "derived_sections": [],
+     "relations": [],
+     "simulation_goals": [
+      {
+       "goal_id": "sg1",
+       "kind": "construct_object",
+       "quote": "Cho hình lập phương ABCD.A'B'C'D'",
+       "target_solid_id": "s1"
+      }
+     ],
+     "math_goals": [
+      {
+       "goal_id": "q1",
+       "kind": "measurement",
+       "quote": "Tính góc giữa hai đường thẳng AB' và BC'",
+       "goal_type": "angle",
+       "solid_id": "s1",
+       "target": [
+        "line1=A,B'",
+        "line2=B,C'"
+       ]
+      }
+     ]
+    },
+    "grounding_status": "GROUNDED_AND_LOWERED",
+    "accepted_ops": [
+     {
+      "kind": "right_prism",
+      "clause_id": "parser_reconciled"
+     },
+     {
+      "kind": "regular_polygon",
+      "clause_id": "parser_reconciled"
+     },
+     {
+      "kind": "goal:ang_ll",
+      "clause_id": 1
+     }
+    ],
+    "rejected_ops": [],
+    "normalization": {
+     "normalizer_version": "slm-verified-normalizer/3",
+     "changed": false,
+     "typo_detected": false,
+     "ambiguity_flags": [],
+     "applied_rule_ids": [],
+     "steps": []
+    },
+    "lowered_payload": {
+     "schema_version": "typed-fact-next/2",
+     "problem_text": "Cho hình lập phương ABCD.A'B'C'D'. Tính góc giữa hai đường thẳng AB' và BC'.",
+     "length_unit": "1",
+     "solids": [
+      {
+       "solid_id": "s1",
+       "solid_type": "prism",
+       "notation": "ABCD.A'B'C'D'",
+       "quote": "Cho hình lập phương ABCD.A'B'C'D'"
+      }
+     ],
+     "premises": [
+      {
+       "kind": "right_prism",
+       "args": {
+        "base": [
+         "A",
+         "B",
+         "C",
+         "D"
+        ],
+        "top": [
+         "A'",
+         "B'",
+         "C'",
+         "D'"
+        ]
+       },
+       "quote": "Cho hình lập phương ABCD.A'B'C'D'",
+       "solid_id": "s1"
+      },
+      {
+       "kind": "regular_polygon",
+       "args": {
+        "vertices": [
+         "A",
+         "B",
+         "C",
+         "D"
+        ]
+       },
+       "quote": "Cho hình lập phương ABCD.A'B'C'D'",
+       "solid_id": "s1"
+      }
+     ],
+     "derived_sections": [],
+     "relations": [],
+     "simulation_goals": [
+      {
+       "goal_id": "sg1",
+       "kind": "construct_object",
+       "quote": "Cho hình lập phương ABCD.A'B'C'D'",
+       "target_solid_id": "s1"
+      }
+     ],
+     "math_goals": [
+      {
+       "goal_id": "q1",
+       "kind": "measurement",
+       "quote": "Tính góc giữa hai đường thẳng AB' và BC'",
+       "goal_type": "angle",
+       "solid_id": "s1",
+       "target": {
+        "line1": [
+         "A",
+         "B'"
+        ],
+        "line2": [
+         "B",
+         "C'"
+        ]
+       }
+      }
+     ]
+    }
+   },
+   "arm_A_product": {
+    "status": "REFUSED",
+    "extraction_mode": "LOCAL_DETERMINISTIC_PARSER",
+    "code": "MISSING_DIMENSION",
+    "slm_ops": [],
+    "oracle": null
+   },
+   "arm_B_slm_payload": {
+    "status": "REFUSED",
+    "code": "MISSING_DIMENSION",
+    "answers": null,
+    "failure_stage": "deterministic_route",
+    "source_gate": "NOT_CERTIFIED",
+    "oracle": null
+   },
+   "arm_D_gold_intent": {
+    "status": "REFUSED",
+    "code": "MISSING_DIMENSION",
+    "answers": null,
+    "failure_stage": "deterministic_route",
+    "source_gate": "NOT_CERTIFIED",
+    "math_goals_removed": 0,
+    "oracle": null
+   },
+   "arm_C_parser_facts_gold_intent": {
+    "status": "REFUSED",
+    "code": "MISSING_DIMENSION",
+    "answers": null,
+    "failure_stage": "deterministic_route",
+    "oracle": null
+   },
+   "arm_E_downstream_canonical": {
+    "text": "Cho hình lập phương ABCD.A'B'C'D' cạnh a. Tính góc giữa hai đường thẳng AB' và BC'.",
+    "status": "SERVED",
+    "extraction_mode": "LOCAL_DETERMINISTIC_PARSER",
+    "code": null,
+    "slm_ops": [],
+    "oracle": {
+     "scene_validation": "MATHEMATICALLY_VALID",
+     "issues": [],
+     "numeric": "CORRECT"
+    }
+   },
+   "seconds": 5.2
+  }
+ ]
+}

@@ -1,0 +1,19 @@
+{
+  "run_id": "semantic-to-scene3d-verified-simulation",
+  "generated_at_utc": "2026-11-13T06:30:52.433030+00:00",
+  "head": "6e3989ba5dda57f3b3369551592d832aff9251a1",
+  "start_head": "8a5a54e37b47e47f11e9eb5eae371e7cf2d5d76e",
+  "branch": "feat/local-first-geometry-understanding",
+  "start_candidate": {
+    "manifest_commit": "dcad65e5e22e41412c38264f941225e830be66ea",
+    "product_commit": "1c9c264891d6439518f9721a8ba0aa8a738cc74c",
+    "measured_system": "1cc979f559a632c30b97636e4b47532139b6205199ddbe97fc6fb6c6e9e16c28",
+    "files": 115,
+    "cache_version": "132"
+  },
+  "verified_at_start": "freeze_evaluation_candidate.py --verify matched 1cc979f559a632c3 (115 files) on a clean tree; CACHE_VERSION 132; branch feat/local-first-geometry-understanding (VERIFIED FACT, session log)",
+  "commits_since_start": [
+    "6e3989ba5 feat(parser): read projection feet named by a descriptor, lateral faces perpendicular to the base and late polygon sides",
+    "5958df73d feat(scene3d): construct the studied angle of every served non-right angle measure"
+  ]
+}

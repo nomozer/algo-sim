@@ -14,7 +14,9 @@ import {
   ghiChuGiaTriDung,
   hopLeScene3D,
   narrationAt,
+  phanTichToanHocCuaCanh,
   solutionAt,
+  soDoGocDacBiet,
   tapKetQuaCuoi,
   type Scene3D,
   type SceneObject,
@@ -332,6 +334,23 @@ describe("Hybrid Preview Contract v2 — 41 fixtures & F1–F6", () => {
       if (!r.ok) throw new Error(r.reason);
       const byId = Object.fromEntries(hybridViewCua(r.envelope)!.answers.map((a) => [a.quantity_id, giaTriDapSo(a)]));
       expect(byId).toEqual({ kq_f4: "a³√6/6", kq_f5: "1/4" });
+    });
+
+    it("bảng phân tích: mục tiêu góc với cos² đặc biệt hiện số đo độ duy nhất, giữ cos² làm chứng chỉ chính xác", () => {
+      const r = docPhanHoiHybrid(loadFixture("served-H03_REGULAR_SQUARE_PYRAMID_ROLE_LENGTHS.json").response);
+      if (!r.ok) throw new Error(r.reason);
+      const bang = phanTichToanHocCuaCanh(r.envelope.scene3d as Scene3D, hybridViewCua(r.envelope));
+      const goc = bang.requestedResults.find((m) => m.id === "kq_f5");
+      expect(goc).toMatchObject({ valueDisplay: "60°", exactValueDisplay: "cos² = 1/4" });
+      expect(goc!.notation!.startsWith("cos²")).toBe(false);
+      expect(goc!.label).toMatch(/^Góc /u);
+      // Đáp số không phải góc giữ nguyên.
+      expect(bang.requestedResults.find((m) => m.id === "kq_f4")?.valueDisplay).toBe("a³√6/6");
+    });
+
+    it("số đo góc từ cos²: chỉ năm giá trị Niven, miền [0°, 90°]; ngoài bảng không quy đổi", () => {
+      expect(["1", "3/4", "1/2", "1/4", "0", "2/8", "6/8"].map(soDoGocDacBiet)).toEqual(["0°", "30°", "45°", "60°", "90°", "60°", "30°"]);
+      expect(["1/12", "5/4", "-1/4", "a", "", "1/0"].map(soDoGocDacBiet)).toEqual([null, null, null, null, null, null]);
     });
 
     it("biên vận chuyển từ chối: hệ số lệch đại lượng cảnh, đơn vị lệch, length_unit lệch, schema lạ, phản hồi cổng", () => {

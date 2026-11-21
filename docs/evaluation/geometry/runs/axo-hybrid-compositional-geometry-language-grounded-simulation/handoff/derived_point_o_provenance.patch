@@ -1,0 +1,26 @@
+--- a/backend/app/simulation/geometry_functions/engine.py
++++ b/backend/app/simulation/geometry_functions/engine.py
+@@ -5134,6 +5134,23 @@
+                 else:
+                     lenh.append(P.declare_point(ir_name(t), self.pts[t], t))
+                     khai.append(P.memory_declaration(ir_name(t), "point3", provenance="LAYOUT_DERIVED"))
++            elif t == self.tam and self.root is not None and len(self.root.base) == 4:
++                base_pts = self.root.base
++                lenh.append({
++                    "kind": "construct_point",
++                    "target_var": ir_name(t),
++                    "label": t,
++                    "expr": {"kind": "midpoint", "a": ir_name(base_pts[0]), "b": ir_name(base_pts[2])},
++                })
++                khai.append(P.memory_declaration(ir_name(t), "point3"))
++            elif t == self.tam and self.root is not None and len(self.root.base) == 3:
++                base_pts = self.root.base
++                m_bc = ir_name(t) + "_mid_" + ir_name(base_pts[1]) + ir_name(base_pts[2])
++                lenh.append({"kind": "construct_point", "target_var": m_bc,
++                             "expr": {"kind": "midpoint", "a": ir_name(base_pts[1]), "b": ir_name(base_pts[2])}})
++                lenh.append({"kind": "construct_point", "target_var": ir_name(t), "label": t,
++                             "expr": {"kind": "divide_segment", "a": ir_name(base_pts[0]), "b": m_bc, "ratio": "2/3"}})
++                khai += [P.memory_declaration(m_bc, "point3"), P.memory_declaration(ir_name(t), "point3")]
+             else:
+                 lenh.append(P.declare_point(ir_name(t), self.pts[t], t))
+                 khai.append(P.memory_declaration(ir_name(t), "point3", provenance="LAYOUT_DERIVED"))

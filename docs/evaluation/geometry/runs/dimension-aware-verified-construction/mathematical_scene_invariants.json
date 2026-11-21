@@ -1,0 +1,225 @@
+{
+  "schema": "algosim-stage-p1c-mathematical-scene-invariants/1",
+  "phase": "phase_9_scene3d_integration_invariants",
+  "run_id": "dimension-aware-verified-construction",
+  "stage": "stage_p1c",
+  "generated_by": "trig-kernel-audit",
+  "generated_at": "2026-11-15T11:52:00Z",
+  "generated_at_utc": "2026-11-15T11:52:00Z",
+  "branch": "feat/local-first-geometry-understanding",
+  "git_head_sha": "b04bed0f83e02ac27416814bea08fa830ee91461",
+  "head": "b04bed0f83e02ac27416814bea08fa830ee91461",
+  "product_commit": "32bdaa1df3dd7606b59b8c3cd8411578c4206d54",
+  "product_commit_rule": "product-paths-excluding-test-only/1",
+  "measured_system_hash": "b1403b91fd81410f9586c5676f541911540b4bc4bb0d7bf40204d17538623e59",
+  "measured_system_file_count": 120,
+  "baseline_measured_system_hash": "c25f9695828888987db2ab7990c4ff135da4d01c6b9d968f898c36728a0ae436",
+  "cache_version": "140",
+  "route_d_cache_policy": "140:route-d",
+  "semantic_environment_hash": "6233c43c395c9b493d31d3dbb5d0ca952604730f6185cf541d2f179c077f955b",
+  "provider_call_count": 0,
+  "schema_versions": {
+    "expression_model": "dimension-expression/1",
+    "typed_fact_next": "typed-fact-next/2",
+    "typed_fact_next_bridge": "typed-fact-next-bridge/2",
+    "registry": "geometry-functions/33",
+    "planner": "geometry-fact-planner/26",
+    "engine": "geometry-function-engine/24",
+    "local_geometry_parser": "local-geometry-parser/2",
+    "adaptive_input_router": "adaptive-input-router/1",
+    "determinacy_audit": "mathematical-determinacy-audit/1",
+    "trig_construction_certificates": "trig-construction-certificate/1",
+    "output_policy": "output-policy/1",
+    "hybrid_adapter": "hybrid-simulation-adapter/4",
+    "route_d_envelope": "hybrid-route-d-simulation/4"
+  },
+  "environment": {
+    "ALLOW_LIVE_AI": "0",
+    "HYBRID_ROUTE_MODE": "local-first",
+    "PYTHONPATH": "backend",
+    "python_executable": "D:/Documents/projects/algo-sim/backend/.venv/Scripts/python.exe -B",
+    "live_ai_calls": 0,
+    "sealed_h1_rows_opened": 0,
+    "locked_w2_w3_rows_read": 0
+  },
+  "zero_case_id_hardcode_verified": {
+    "scanned_path": "backend/app/**/*.py",
+    "forbidden_tokens": [
+      "vmmu_",
+      "r460",
+      "r463",
+      "r537",
+      "r266",
+      "r411"
+    ],
+    "hits": 0
+  },
+  "dataset_partition": "DEVELOPMENT_EXPOSED_AND_SCENE3D_INVARIANT_PROBES (zero access to sealed H-1 or locked W2/W3)",
+  "test_command": "D:/Documents/projects/algo-sim/backend/.venv/Scripts/python.exe -B -m pytest -q backend/tests/geometry/test_trig_verified_construction.py -k 'phase_9_scene3d_invariants'",
+  "source_provenance": {
+    "scene3d_modules": [
+      "backend/app/simulation/semantic_program/scene3d.py",
+      "backend/app/simulation/semantic_program/simulation_state.py",
+      "backend/app/simulation/geometry_functions/certificates.py",
+      "backend/app/simulation/geometry_functions/output_policy.py",
+      "frontend/src/simulations/domains/geometry/scene3d-semantic-policy.ts"
+    ],
+    "test_suite": "backend/tests/geometry/test_trig_verified_construction.py"
+  },
+  "mathematical_oracle": "Scene3D must faithfully reflect exact rational coordinates over the SPD Gram chart `G ∈ Q^{3×3}`: (1) explicit `perpendicular_line_plane` premises (`SA ⊥ (ABC)` on `vmmu_r460`) emit `exact-gram-line-plane-orthogonality/1` `GIVEN` witnesses (`scene_perpendicular_witness_ids == ['canh_ben_S_A']`), whereas `prism(..., right=True)` (`vmmu_r463`) enforces lateral-edge orthogonality (`AA' ⊥ (ABCD)`) directly via the right-prism topology without a separate `perpendicular_line_plane` witness (`scene_perpendicular_witness_ids == []`); (2) internal trigonometric squares (`sin², cos²`) and certificate midpoint witnesses (`_aux_diag_mid`, `_aux_dih_foot`) never leak as bogus scene objects; (3) `output-policy/1` governs formatted degree/rounded display while preserving exact `Radical`/`Fraction` kernel values (`category == 'result'`); (4) asked `90°` (`cos²=0`) goals never attach premise `perpendicular_witness` spoilers to the queried line/plane; (5) uniquely determined trigonometric heights omit `scene_configuration` (`None`), distinguishing exact scenes from representative free-scale scenes.",
+  "expected_behavior": "Preserve all 5 Phase 9 Scene3D invariants across `vmmu_r460`, `vmmu_r463`, `vmmu_r537`, degree-formatted angle goals, and `90°` right-angle goals.",
+  "actual_behavior": "Verified across `vmmu_r460` (points `['A','B','C','S']`, `scene_perpendicular_witness_ids == ['canh_ben_S_A']`, `scene_configuration=None`), `vmmu_r463` (points `['A',\"A'\",'B',\"B'\",'C',\"C'\",'D',\"D'\"]`, right-prism `prism(right=True)` with `scene_perpendicular_witness_ids == []`, zero `_aux_diag_mid` leak, `scene_configuration=None`), `45°` degree-policy probe (`output-policy/1` with `exact_answer='cos²=1/2'`), and `90°` (`cos²=0`) right-angle hiding probe (`scene_perpendicular_witness_ids == ['canh_ben_S_A']`).",
+  "verdict": "PASS",
+  "scene_probes": {
+    "r460_scene_summary": {
+      "parse_status": "LOCAL_PARSE_COMPLETE",
+      "envelope_status": "ok",
+      "route_d_status": "SERVED",
+      "reason_code": null,
+      "failure_category": null,
+      "answers": {
+        "q1": "a³√2/3"
+      },
+      "answer_exact": {
+        "q1": {
+          "coef": "√2/3",
+          "dim": 3,
+          "unit": "a"
+        }
+      },
+      "scene_configuration": null,
+      "provider_calls": 0,
+      "trig_certificates_count": 2,
+      "trig_identities": [
+        "pythagoras_equal_legs",
+        "pythagoras_equal_legs"
+      ],
+      "scene_object_count": 10,
+      "scene_point_labels": [
+        "A",
+        "B",
+        "C",
+        "S"
+      ],
+      "scene_perpendicular_witness_ids": [
+        "canh_ben_S_A"
+      ]
+    },
+    "r463_scene_summary": {
+      "parse_status": "LOCAL_PARSE_COMPLETE",
+      "envelope_status": "ok",
+      "route_d_status": "SERVED",
+      "reason_code": null,
+      "failure_category": null,
+      "answers": {
+        "q1": "4a³√3"
+      },
+      "answer_exact": {
+        "q1": {
+          "coef": "4√3",
+          "dim": 3,
+          "unit": "a"
+        }
+      },
+      "scene_configuration": null,
+      "provider_calls": 0,
+      "trig_certificates_count": 2,
+      "trig_identities": [
+        "p = h * cot(alpha)",
+        "rhombus_half_diagonal_cos"
+      ],
+      "scene_object_count": 10,
+      "scene_point_labels": [
+        "A",
+        "A_prime",
+        "B",
+        "B_prime",
+        "C",
+        "C_prime",
+        "D",
+        "D_prime"
+      ],
+      "scene_perpendicular_witness_ids": []
+    },
+    "degree_output_policy_probe": {
+      "parse_status": "LOCAL_PARSE_COMPLETE",
+      "envelope_status": "ok",
+      "route_d_status": "SERVED",
+      "reason_code": null,
+      "failure_category": null,
+      "answers": {
+        "q1": "45°"
+      },
+      "answer_exact": {
+        "q1": {
+          "coef": "1/2",
+          "dim": 0,
+          "unit": null,
+          "exact_symbolic": "cos²=1/2",
+          "output_policy": {
+            "schema_version": "output-policy/1",
+            "exact_answer": "cos²=1/2",
+            "requested_unit": "deg",
+            "requested_formatting": {
+              "kind": "exact_special_angle_deg",
+              "degrees": 45
+            },
+            "rounded_display": "45°"
+          }
+        }
+      },
+      "scene_configuration": null,
+      "provider_calls": 0,
+      "trig_certificates_count": 2,
+      "trig_identities": [
+        "pythagoras_equal_legs",
+        "pythagoras_equal_legs"
+      ],
+      "scene_object_count": 12,
+      "scene_point_labels": [
+        "A",
+        "B",
+        "C",
+        "S"
+      ],
+      "scene_perpendicular_witness_ids": [
+        "canh_ben_S_A"
+      ]
+    },
+    "right_angle_goal_hiding_probe": {
+      "parse_status": "LOCAL_PARSE_COMPLETE",
+      "envelope_status": "ok",
+      "route_d_status": "SERVED",
+      "reason_code": null,
+      "failure_category": null,
+      "answers": {
+        "q1": "cos²=0"
+      },
+      "answer_exact": {
+        "q1": {
+          "coef": "0",
+          "dim": 0,
+          "unit": null
+        }
+      },
+      "scene_configuration": null,
+      "provider_calls": 0,
+      "trig_certificates_count": 2,
+      "trig_identities": [
+        "pythagoras_equal_legs",
+        "pythagoras_equal_legs"
+      ],
+      "scene_object_count": 12,
+      "scene_point_labels": [
+        "A",
+        "B",
+        "C",
+        "S"
+      ],
+      "scene_perpendicular_witness_ids": [
+        "canh_ben_S_A"
+      ]
+    }
+  },
+  "baseline_product_commit": "d222e6d9b582d54fc42397a9593f52eb6fd77f18"
+}

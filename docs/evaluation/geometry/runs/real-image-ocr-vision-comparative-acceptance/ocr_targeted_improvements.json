@@ -1,0 +1,29 @@
+{
+  "run_id": "real-image-ocr-vision-comparative-acceptance",
+  "head": "70b22cc7167d8e2372d606547c3e398b199fb101",
+  "measured_system": [
+    "a068b6f6586c1b120bd8350dbe706f5681ab71fd7da57502c34f940140268921",
+    115
+  ],
+  "allow_live_ai": 0,
+  "ground_truth_authority": "AGENT_TRANSCRIBED_UNVERIFIED",
+  "independent_h1": "NOT_MEASURED",
+  "classification": "DERIVED_FROM_REFERENCED_MEASUREMENTS_NOT_A_NEW_MEASUREMENT",
+  "recognition_algorithm_change": false,
+  "ocr_model_change": false,
+  "development_images_used_for_tuning": [],
+  "frozen_evaluation_images_used_for_tuning": [],
+  "reason": "New corpus is too small and predominantly outside solver scope; no image-specific heuristics warranted.",
+  "product_fixes": [
+    "worker exit/protocol/reaping",
+    "codepoint-correct spans",
+    "confirmation reset after edit",
+    "target-bound worded dimension conflict check",
+    "prepare session guard runs off the event loop",
+    "plain reviewed status label"
+  ],
+  "before_after_recognition": "NO_RECOGNITION_ALGORITHM_CHANGE: current receipts preserve initial 4ab43853 measurements in logs/initial-*.json",
+  "false_acceptance_before_after": "Not a population estimate; mock dimension conflicts missed3/3 before,0/3 after (adaptive_hybrid_comparison.json)",
+  "geometry_expansion": false,
+  "wrong_served_new": "No automatic result on eight images; all corrected attempts unserved"
+}

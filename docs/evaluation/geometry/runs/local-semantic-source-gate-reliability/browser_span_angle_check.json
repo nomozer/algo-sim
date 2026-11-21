@@ -1,0 +1,54 @@
+{
+  "browser": "157.0.8103.78",
+  "category": "AUTOMATED_BROWSER_NOT_HUMAN_STUDY",
+  "evidence_kind": "FIXTURE prepare response + real UI, real /api/analyze (local-first, no provider call)",
+  "backendPort": 8767,
+  "rows": [
+    {
+      "viewport": "1440x900",
+      "prepare": "FIXTURE_SPLIT_SPANS",
+      "spansBefore": 2,
+      "extendShown": true,
+      "spansAfterExtend": 1,
+      "merged": "4BCD- A'B'C'D'",
+      "spansAfterRestore": 2,
+      "restoreGivesOriginalText": true,
+      "correctedDraftIsExpected": true,
+      "analyzeStatus": "SERVED",
+      "servedAnswers": {
+        "q1": "cos²=1/4"
+      },
+      "canvas": true,
+      "mathAnalysisPanelMounted": false,
+      "servedAngleTextOnPage": false,
+      "horizontalOverflowPx": 0,
+      "errors": [],
+      "angleTextSeen": [],
+      "pass": true
+    },
+    {
+      "viewport": "390x844",
+      "prepare": "FIXTURE_SPLIT_SPANS",
+      "spansBefore": 2,
+      "extendShown": true,
+      "spansAfterExtend": 1,
+      "merged": "4BCD- A'B'C'D'",
+      "spansAfterRestore": 2,
+      "restoreGivesOriginalText": true,
+      "correctedDraftIsExpected": true,
+      "analyzeStatus": "SERVED",
+      "servedAnswers": {
+        "q1": "cos²=1/4"
+      },
+      "canvas": true,
+      "mathAnalysisPanelMounted": false,
+      "servedAngleTextOnPage": false,
+      "horizontalOverflowPx": 0,
+      "errors": [],
+      "angleTextSeen": [],
+      "pass": true
+    }
+  ],
+  "passed": 2,
+  "total": 2
+}

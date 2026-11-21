@@ -37,7 +37,7 @@ from collections import Counter
 #: `test_coercion_stats.py::test_bon_lop_khop_voi_so_bien_chuan_hoa_trong_contract`,
 #: và cái khoá ấy đếm bằng cách soi chính `contract.py` chứ không chép tay.
 LOP_SPEC_VERSION = "spec_version_so_thanh_chuoi"
-LOP_CONTAINER_REF = "container_var_thanh_ten"
+# (/13) `LOP_CONTAINER_REF` ("container_var_thanh_ten") đã gỡ cùng `canonical_container_name`.
 LOP_CONDITION_BOOL = "bien_bool_thanh_menh_de"
 LOP_CONST_INT = "step_literal_thanh_so_tran"
 #: Mặt của khối khai bằng TÊN ĐỈNH (`["S","A","B"]`) thay vì chỉ số (`[4,0,1]`).
@@ -61,7 +61,7 @@ LOP_FACE_SYMBOL = "mat_khoi_ten_dinh_thanh_chi_so"
 LOP_GEOMETRY_REF = "toan_hang_hinh_hoc_var_thanh_ten"
 
 LOP_HOP_LE: frozenset[str] = frozenset(
-    {LOP_SPEC_VERSION, LOP_CONTAINER_REF, LOP_CONDITION_BOOL, LOP_CONST_INT,
+    {LOP_SPEC_VERSION, LOP_CONDITION_BOOL, LOP_CONST_INT,
      LOP_FACE_SYMBOL, LOP_GEOMETRY_REF}
 )
 

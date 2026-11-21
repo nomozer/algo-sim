@@ -1,0 +1,972 @@
+{
+  "schema": "algosim-phase1-failure-taxonomy-audit/1",
+  "run_id": "dimension-aware-verified-construction",
+  "phase": "phase_1_failure_taxonomy_correctness",
+  "generated_at_utc": "2026-11-15T07:24:18Z",
+  "branch": "feat/local-first-geometry-understanding",
+  "head": "b04bed0f83e02ac27416814bea08fa830ee91461",
+  "product_commit": "32bdaa1df3dd7606b59b8c3cd8411578c4206d54",
+  "measured_system_hash": "b1403b91fd81410f9586c5676f541911540b4bc4bb0d7bf40204d17538623e59",
+  "measured_system_file_count": 120,
+  "baseline_measured_system_hash": "c25f9695828888987db2ab7990c4ff135da4d01c6b9d968f898c36728a0ae436",
+  "cache_version": "140",
+  "route_d_cache_policy": "140:route-d",
+  "dataset_partition": "DEVELOPMENT (exposed REAL27 development cases from grounded-vietnamese-geometry-understanding and synthetic orthogonal taxonomy probes; never sealed H-1 or locked W2/W3)",
+  "environment": {
+    "ALLOW_LIVE_AI": "0",
+    "HYBRID_ROUTE_MODE": "local-first",
+    "PYTHONPATH": "backend",
+    "live_ai_calls": 0
+  },
+  "test_command": "python -B -m pytest backend/tests/geometry/test_failure_taxonomy_and_api_contract.py backend/tests/geometry/test_grounded_vietnamese_understanding.py backend/tests/geometry/test_semantic_failure_diagnostics.py backend/tests/geometry/test_adaptive_input_router.py backend/tests/test_cache_semantic_guard_invalidation.py backend/tests/test_hybrid_preview_contract.py backend/tests/test_hybrid_product_integration.py backend/tests/geometry/test_hybrid_cutover_verification.py backend/tests/geometry/test_adapter4_response.py backend/tests/test_learner_messages.py backend/tests/geometry/test_reusable_base_geometry_families.py backend/tests/geometry/test_certified_scale_normalization.py -q && npx --prefix frontend tsc --noEmit && npx --prefix frontend vitest run src/components/failure-taxonomy-ui-contract.test.tsx src/components/hybrid-preview-contract.test.tsx src/components/hybrid-product-integration.test.tsx src/components/refusal-contract.test.tsx src/components/learner-error.test.tsx src/components/photo-problem-flow.test.ts src/components/axo-error-experience.test.tsx src/components/axo-runtime-recovery.test.tsx src/components/v28-ux-functional.test.tsx src/components/analyze-error-message.test.ts",
+  "expected_behavior": "Failure classification separates 4 orthogonal domain dimensions plus infrastructure availability without guessing mathematical determinacy: (1) SEMANTIC_COMPLETENESS (SEMANTIC_INPUT_INCOMPLETE, SEMANTIC_ENTITY_UNRESOLVED), (2) MATHEMATICAL_DETERMINACY (MATHEMATICALLY_UNDERDETERMINED emitted ONLY when all source clauses/values are completely parsed AND non-uniqueness is mathematically certified via a two-model Exact-Kernel divergence witness, homothety positive-degree witness, or 0-unconsumed-constraint free locus), (3) IMPLEMENTATION_CAPABILITY (CAPABILITY_UNSUPPORTED when exact domain is exceeded OR when constructive/deductive rules fail while unconsumed premises remain or determinacy is unproved, never advising students to add missing hypotheses and never claiming the problem statement is wrong), (4) CONTRADICTORY_CONSTRAINTS (proven geometric/algebraic contradiction among verified premises), and (5) INFRASTRUCTURE_AVAILABILITY (INFRASTRUCTURE_UNAVAILABLE).",
+  "actual_behavior": "Stage P0 implemented and verified (268 backend pytest passed, 191 frontend Vitest passed, tsc --noEmit 0 errors, 0 live AI calls): (1) determinacy_audit.py ('mathematical-determinacy-audit/1') gates MISSING_DIMENSION / UNDERDETERMINED_POINT / FOOT_NOT_DETERMINED / AMBIGUOUS_FACT[missing_operand:dimension] so MATHEMATICALLY_UNDERDETERMINED ('PROVED_UNDERDETERMINED') is emitted ONLY with a machine-certified non-uniqueness witness (TWO_VALID_REALIZATIONS_DIVERGE, HOMOTHETY_SCALE_DEGREE_POSITIVE, EXPLICIT_FREE_LOCUS_ZERO_UNCONSUMED_FACTS, or MULTI_ROOT_OR_MIRROR_BRANCH_DIVERGENCE); (2) In Stage P0 (before Stage P1 trig construction lands), uniquely determined REAL27 cases vmmu_r460 (5 unconsumed constraints p1..p5) and vmmu_r463 (3 unconsumed constraints p3..p5) are no longer misclassified as INSUFFICIENT_CONSTRAINTS / MATHEMATICALLY_UNDERDETERMINED — both classify as failure_dimension='IMPLEMENTATION_CAPABILITY', taxonomy_class='CAPABILITY_UNSUPPORTED', determinacy_status='UNPROVED_DUE_TO_CAPABILITY_GAP', root_cause='UNSUPPORTED_DEDUCTION', envelope.failure_category='capability_gap', envelope.refusal_cause='UNKNOWN', rewrite_may_help=False, and never advise learners to add missing premises; (3) vmmu_r537 ('diện tích đáy bằng a²') classifies as SEMANTIC_INPUT_INCOMPLETE and slices the exact unread subphrase 'diện tích đáy bằng a²' instead of quoting the entire exam stem; (4) All 7 true underdetermined probes + DEV37 underdetermined cases are certified PROVED_UNDERDETERMINED with concrete counterexample models or locus witnesses and envelope.refusal_cause='SOURCE'; (5) Local-complete contradictions (e.g. square side a with AB=2a) classify as CONTRADICTORY_CONSTRAINTS (determinacy_status='NO_VALID_REALIZATION', envelope.refusal_cause='SOURCE') while keeping /api/route-d/preview byte-identical.",
+  "mathematical_oracle": "Symbolic Euclidean / Gram-determinant oracle + Constructive Two-Model Counterexample Soundness Theorem: For a LOCAL_PARSE_COMPLETE problem with verified call set P and quantitative goal G, G is proven MATHEMATICALLY_UNDERDETERMINED iff either (W1) two Exact-Kernel-certified models M1, M2 satisfy 100% of P (dung.kiem() == True and kernel_check == True) and yield distinct exact values val_G(M1) != val_G(M2) in Fraction/Radical arithmetic, (W2) P contains 0 dimensional premises (homothety-invariant under X -> k*X for all k > 0), at least one model M0 satisfies P at unit scale, and deg(G) = BAC_DAI_LUONG[G] > 0 so val_G(k*M0) = k^deg(G)*val_G(M0) varies strictly with k, (W3) P has 0 unconsumed non-structural constraints and an explicit 1-DOF locus witness (PLANE_NOT_UNIQUE pencil, FIGURE_NOT_UNIQUE unfixed apex foot, or curved solid with 1 open parameter and 0 unconsumed calls), or (W4) AMBIGUOUS_FACT has >=2 verified distinct roots/mirror branches with distinct goal values. For vmmu_r460, unique Euclidean solution gives V = (sqrt(2)/3)*a^3 (0 diverging model pairs; 5 unconsumed calls p1..p5). For vmmu_r463, unique Euclidean solution gives V = 4*sqrt(3)*a^3 (0 diverging model pairs; 3 unconsumed constraint calls p3, p4, p5). For vmmu_r537 (regular square pyramid S.ABCD, lateral edge a, base area S_ABCD = a^2, asking point-to-plane distance d(A, (SBC))), AB = a, AO = SO = a*sqrt(2)/2, midpoint M of BC gives OM = a/2, SM = a*sqrt(3)/2, d(O, (SBC)) = a*sqrt(6)/6, and since AD // (SBC), unique exact distance d(A, (SBC)) = 2*d(O, (SBC)) = a*sqrt(6)/3 ('a√6/3', VMMU key C). For vmmu_r266 (purely numeric inputs SA = 3, AB = 3, CB = 4, angle ABC = 30 deg, SA perp base), Euclidean volume is V = (1/3)*(1/2*3*4*sin 30 deg)*3 = 3 (VMMU key D), while third side AC = sqrt(25 - 12*sqrt(3)) and inner product <BA, BC> = 6*sqrt(3) not in Q exit the current rational Gram chart (EXACT_DOMAIN_EXCEEDED).",
+  "source_provenance": {
+    "candidate_manifest": "docs/evaluation/semantic-benchmark/EVALUATION_CANDIDATE.json",
+    "prior_run_report": "docs/evaluation/geometry/runs/grounded-vietnamese-geometry-understanding/AXO_GROUNDED_VIETNAMESE_GEOMETRY_UNDERSTANDING_REPORT.md",
+    "prior_run_acceptance": "docs/evaluation/geometry/runs/grounded-vietnamese-geometry-understanding/real27_acceptance_before_after.json",
+    "prior_run_root_cause_matrix": "docs/evaluation/geometry/runs/grounded-vietnamese-geometry-understanding/real27_root_cause_matrix.json",
+    "prior_run_derive_script": "docs/evaluation/geometry/runs/grounded-vietnamese-geometry-understanding/tools/derive_receipts.py",
+    "inspected_product_files": [
+      "backend/app/ai/local_geometry_parser.py",
+      "backend/app/ai/local_failure_diagnostics.py",
+      "backend/app/ai/adaptive_input_router.py",
+      "backend/app/ai/hybrid_preview.py",
+      "backend/app/ai/adapter4_route.py",
+      "backend/app/ai/function_route.py",
+      "backend/app/simulation/geometry_functions/planner.py",
+      "backend/app/simulation/geometry_functions/registry.py",
+      "backend/app/simulation/geometry_functions/engine.py",
+      "backend/app/simulation/geometry_functions/target_invariance.py",
+      "backend/app/simulation/error_codes.py",
+      "backend/app/learner_messages.py",
+      "frontend/src/components/ProblemInput.tsx",
+      "frontend/src/components/SimulationWorkspace.tsx",
+      "frontend/src/components/photo-problem-flow.ts"
+    ]
+  },
+  "verdict": "STAGE_P0_GATE_A_VERIFIED_SIX_ORTHOGONAL_STATES_SEPARATED_ZERO_FALSE_UNDERDETERMINED",
+  "root_cause_findings": [
+    {
+      "finding_id": "TAX-RC-1",
+      "title": "engine.py conflates constructive deduction gaps with missing source data under a single MISSING_DIMENSION code",
+      "exact_locations": [
+        "backend/app/simulation/geometry_functions/engine.py:918 (_hinh_binh_hanh_thoi raises MISSING_DIMENSION on vmmu_r463)",
+        "backend/app/simulation/geometry_functions/engine.py:1151-1175,1287 (_tam_giac lacks right-isosceles hypotenuse->legs branch and raises MISSING_DIMENSION on vmmu_r460)",
+        "backend/app/simulation/geometry_functions/engine.py:6096-6141 (_dung_mot_nhanh / dung_tu_loi_goi returns MISSING_DIMENSION without determinacy_audit)"
+      ],
+      "mechanism": "When _Dung fails to place a base or apex coordinate, it raises TuChoi('MISSING_DIMENSION', ...) regardless of whether extracted constraints (right_angle, equal_length, segment_length, vertex_angle, line_plane_angle) remain unconsumed in self.calls - self.dung. On vmmu_r460, self.dung is empty while p1..p5 are unconsumed; on vmmu_r463, d_ac=[12] is derived by _suy_do_dai_day_tu_goc(773-794) from AA'=2a and 30 deg, yet _hinh_binh_hanh_thoi(905-918) only accepts side or both diagonals and ignores p4: vertex_angle(A;B,D=60 deg), raising MISSING_DIMENSION."
+    },
+    {
+      "finding_id": "TAX-RC-2",
+      "title": "Downstream adapter, diagnostics, evaluation scripts, and Home UI unconditionally collapse MISSING_DIMENSION into INSUFFICIENT_CONSTRAINTS / MATHEMATICALLY_UNDERDETERMINED",
+      "exact_locations": [
+        "backend/app/ai/hybrid_preview.py:86-90,158-177 (classify_refusal maps MISSING_DIMENSION -> group=MISSING_DATA, failure_category=insufficient_specification)",
+        "backend/app/ai/local_failure_diagnostics.py:78,201-216 (diagnose maps group==MISSING_DATA -> root_cause=INSUFFICIENT_CONSTRAINTS except 0-length angle check SHAPE_FREEDOM_UNCERTIFIED)",
+        "docs/evaluation/geometry/runs/grounded-vietnamese-geometry-understanding/tools/derive_receipts.py:217,220 (maps INSUFFICIENT_CONSTRAINTS and even SOURCE_CONFLICT -> MATHEMATICALLY_UNDERDETERMINED)",
+        "frontend/src/components/ProblemInput.tsx:104-105,120-122 (describeHomeRefusal tells learner 'Đề bài chưa đủ dữ kiện để dựng hình' + 'bổ sung dữ kiện còn thiếu' even when refusal_cause === 'UNKNOWN')"
+      ],
+      "mechanism": "Even on SHAPE_FREEDOM_UNCERTIFIED (commit d222e6d9b), adapter4_route.py:254-261 constructs envelope BEFORE adaptive_input_router.py calls diagnose(), so HTTP 200 envelope still carries failure_category='insufficient_specification' and learner_reason advising that givens do not uniquely determine the figure. Worse, ProblemInput.tsx omits the W17 section 15.3 F6 guard (refusal_cause === 'SOURCE') enforced in SimulationWorkspace.tsx:3418."
+    },
+    {
+      "finding_id": "TAX-RC-3",
+      "title": "UNREAD_VALUE and deterministic capability clauses in partial parses blur semantic completeness, capability, and learner guidance",
+      "exact_locations": [
+        "backend/app/ai/local_failure_diagnostics.py:134-152 (vals = UNREAD_VALUE@offset sets INCOMPLETE_FACT_EXTRACTION with full clause excerpt and rewrite_may_help=True)",
+        "backend/app/ai/local_failure_diagnostics.py:73-76,242-269 (FREE_POINT_UNDERDETERMINED has no target-divergence proof yet; DESCRIBED_POINT_IN_PREMISE_UNSUPPORTED unmapped in task taxonomy)",
+        "frontend/src/components/ProblemInput.tsx:196-202 (hardcodes title 'Hệ thống chưa hiểu hết đề bài' even when local_understanding.rewrite_may_help === false for UNSUPPORTED_POINT_CONSTRUCTION)"
+      ],
+      "mechanism": "On vmmu_r537 ('diện tích đáy bằng a²'), UNREAD_VALUE@89 leaves subs=[], so _cause quotes the entire 117-char sentence and sets rewrite_may_help=True even though the student wrote standard Vietnamese mathematical notation 'a²'. On vmmu_r277 (reflection), local_understanding correctly sets root_cause='UNSUPPORTED_POINT_CONSTRUCTION' and rewrite_may_help=False, yet ProblemInput.tsx:199 titles the card 'Hệ thống chưa hiểu hết đề bài'."
+    },
+    {
+      "finding_id": "TAX-RC-4",
+      "title": "Contradictory constraints on verified local parses lack refusal_cause='SOURCE' on non-zero-length contradictions and learner_messages.py retains legacy Informatics copy",
+      "exact_locations": [
+        "backend/app/ai/hybrid_preview.py:173-176 (sets refusal_cause='SOURCE' ONLY on NON_POSITIVE_LENGTH)",
+        "frontend/src/components/ProblemInput.tsx:59-70,106-108 (shows 'Đề bài chưa được hỗ trợ' when refusal_cause !== 'SOURCE')",
+        "frontend/src/components/SimulationWorkspace.tsx:3322-3330 (GEOMETRY_REFUSAL_TEXT only lists INCONSISTENT_FACTS and CURVED_PLANE_DOES_NOT_CUT among 36 INVALID_DATA codes)",
+        "backend/app/learner_messages.py:22-28 (GATE_OUT_OF_SCOPE and GATE_NOT_SIMULATION_SUITABLE still mention 'tìm kiếm, sắp xếp, số nhị phân, cổng logic')"
+      ],
+      "mechanism": "When local_geometry_parser achieves LOCAL_PARSE_COMPLETE (0 unread clauses/values) and Source Gate verifies every quote, an INVALID_DATA refusal from _Dung/kernel (e.g. square side a with AB=2a, slant shorter than perpendicular foot, parallel line-plane intersection, non-coplanar polygon) is a proven contradiction among stated constraints, yet envelope.refusal_cause='UNKNOWN' causes Home to display 'Đề bài chưa được hỗ trợ'."
+    }
+  ],
+  "real27_refused_12_audit": [
+    {
+      "case_id": "vmmu_r460",
+      "source_sha256": "eeef7ddcad1956475fdfdf31fc2078ac40c7aeb676dcfae948e95dc2000cd85a",
+      "parse_status_current": "LOCAL_PARSE_COMPLETE",
+      "current_http_status": 200,
+      "current_terminal_code": "MISSING_DIMENSION",
+      "current_root_cause": "INSUFFICIENT_CONSTRAINTS",
+      "current_envelope_category": "insufficient_specification",
+      "mathematical_truth": "UNIQUELY_DETERMINED (V = a^3*sqrt(2)/3)",
+      "counterexample_diverging_models": 0,
+      "unconsumed_calls_at_failure": [
+        "s1:pyramid",
+        "p1:right_angle",
+        "p2:equal_length",
+        "p3:segment_length",
+        "p4:perpendicular_line_plane",
+        "p5:equal_length"
+      ],
+      "orthogonal_dimension_if_refused": "IMPLEMENTATION_CAPABILITY",
+      "canonical_taxonomy_if_refused": "CAPABILITY_UNSUPPORTED",
+      "determinacy_status_if_refused": "UNPROVED_DUE_TO_CAPABILITY_GAP",
+      "wave2_target_after_trig_kernel": "SERVED (exact answer a³√2/3)"
+    },
+    {
+      "case_id": "vmmu_r463",
+      "source_sha256": "d5b7213d8d1ec5e8e2a775f79368034cb363cc61ccc0bd25383a68cc276b8bd3",
+      "parse_status_current": "LOCAL_PARSE_COMPLETE",
+      "current_http_status": 200,
+      "current_terminal_code": "MISSING_DIMENSION",
+      "current_root_cause": "INSUFFICIENT_CONSTRAINTS",
+      "current_envelope_category": "insufficient_specification",
+      "mathematical_truth": "UNIQUELY_DETERMINED (V = 4a^3*sqrt(3))",
+      "counterexample_diverging_models": 0,
+      "unconsumed_calls_at_failure": [
+        "s1:prism",
+        "p2:rhombus",
+        "p4:vertex_angle",
+        "p3:line_plane_angle",
+        "p5:segment_length"
+      ],
+      "orthogonal_dimension_if_refused": "IMPLEMENTATION_CAPABILITY",
+      "canonical_taxonomy_if_refused": "CAPABILITY_UNSUPPORTED",
+      "determinacy_status_if_refused": "UNPROVED_DUE_TO_CAPABILITY_GAP",
+      "wave2_target_after_trig_kernel": "SERVED (exact answer 4a³√3)"
+    },
+    {
+      "case_id": "vmmu_r537",
+      "source_sha256": "8b6a844c5ab49083138e6faedf8f6792fb0d3cb49a76e110ccde5f2b0ebdc80c",
+      "parse_status_current": "LOCAL_PARSE_PARTIAL",
+      "current_http_status": 503,
+      "current_terminal_code": "LIVE_AI_DISABLED",
+      "current_root_cause": "INCOMPLETE_FACT_EXTRACTION",
+      "current_envelope_category": null,
+      "mathematical_truth": "UNIQUELY_DETERMINED (point-to-plane distance d(A, (SBC)) = a*sqrt(6)/3, VMMU key C)",
+      "orthogonal_dimension_if_refused": "SEMANTIC_COMPLETENESS",
+      "canonical_taxonomy_if_refused": "SEMANTIC_INPUT_INCOMPLETE",
+      "determinacy_status_if_refused": "NOT_EVALUATED_SEMANTIC_INCOMPLETE",
+      "wave2_target_after_expr_dim": "SERVED (exact answer a√6/3 via polygon_area 'a²' + SQUARE_AREA_TO_SIDE + point-to-plane distance)"
+    },
+    {
+      "case_id": "vmmu_r266",
+      "source_sha256": "1e83a2eec97786ccdd033a1d744cdbb083f690e7bfd096b5a5cbbc2615879dc2",
+      "parse_status_current": "LOCAL_PARSE_COMPLETE",
+      "current_http_status": 200,
+      "current_terminal_code": "EXACT_DOMAIN_EXCEEDED",
+      "current_root_cause": "PLANNER_COMPOSITION_UNSUPPORTED",
+      "current_envelope_category": "capability_gap",
+      "mathematical_truth": "UNIQUELY_DETERMINED_IRRATIONAL_GRAM_CHART (numeric SA=3, AB=3, CB=4, angle ABC=30 deg -> V=3 [key D], while AC=sqrt(25 - 12*sqrt(3)) and <BA,BC>=6*sqrt(3) not in Q)",
+      "orthogonal_dimension_if_refused": "IMPLEMENTATION_CAPABILITY",
+      "canonical_taxonomy_if_refused": "CAPABILITY_UNSUPPORTED",
+      "determinacy_status_if_refused": "PROVED_DETERMINATE_EXACT_DOMAIN_EXCEEDED"
+    },
+    {
+      "case_id": "vmmu_r277",
+      "source_sha256": "9cc7353c9dd163e7190cb38347dd7a1aca2dabad29d3eb7c7cdba4ba8d81888e",
+      "parse_status_current": "LOCAL_PARSE_PARTIAL",
+      "current_http_status": 503,
+      "current_terminal_code": "LIVE_AI_DISABLED",
+      "current_root_cause": "UNSUPPORTED_POINT_CONSTRUCTION",
+      "current_envelope_category": null,
+      "mathematical_truth": "DETERMINACY_UNPROVED_REFLECTION_PRIMITIVE_MISSING",
+      "orthogonal_dimension_if_refused": "IMPLEMENTATION_CAPABILITY",
+      "canonical_taxonomy_if_refused": "CAPABILITY_UNSUPPORTED",
+      "determinacy_status_if_refused": "UNPROVED_DUE_TO_CAPABILITY_GAP"
+    },
+    {
+      "case_id": "vmmu_r491",
+      "source_sha256": "ccf866f6e06a328aa73adaca5eb5c95cbd247aca3f2c821dc11d3e84cab8ac3d",
+      "parse_status_current": "LOCAL_PARSE_PARTIAL",
+      "current_http_status": 503,
+      "current_terminal_code": "LIVE_AI_DISABLED",
+      "current_root_cause": "FREE_POINT_UNDERDETERMINED",
+      "current_envelope_category": null,
+      "mathematical_truth": "FIGURE_HAS_1DOF_TARGET_INVARIANCE_UNPROVED (point I on BC; target invariance not proved or refuted)",
+      "orthogonal_dimension_if_refused": "IMPLEMENTATION_CAPABILITY",
+      "canonical_taxonomy_if_refused": "CAPABILITY_UNSUPPORTED",
+      "determinacy_status_if_refused": "UNPROVED_DUE_TO_CAPABILITY_GAP"
+    },
+    {
+      "case_id": "vmmu_r254",
+      "source_sha256": "1b71b6ac60aedac7043c9a7c928ed4fa2b3d7229c6bef98432bea0446d00105d",
+      "parse_status_current": "LOCAL_PARSE_PARTIAL",
+      "current_http_status": 503,
+      "current_terminal_code": "LIVE_AI_DISABLED",
+      "current_root_cause": "DESCRIBED_POINT_IN_PREMISE_UNSUPPORTED",
+      "current_envelope_category": null,
+      "orthogonal_dimension_if_refused": "SEMANTIC_COMPLETENESS",
+      "canonical_taxonomy_if_refused": "SEMANTIC_ENTITY_UNRESOLVED",
+      "determinacy_status_if_refused": "NOT_EVALUATED_SEMANTIC_INCOMPLETE"
+    },
+    {
+      "case_id": "vmmu_r461",
+      "source_sha256": "809ff614e1cd0c7592adc9eea4ba87dab2a4947566019da16a6d8ec9cc1fde74",
+      "parse_status_current": "LOCAL_PARSE_PARTIAL",
+      "current_http_status": 503,
+      "current_terminal_code": "LIVE_AI_DISABLED",
+      "current_root_cause": "UNRECOGNIZED_GEOMETRIC_ENTITY",
+      "current_envelope_category": null,
+      "orthogonal_dimension_if_refused": "SEMANTIC_COMPLETENESS",
+      "canonical_taxonomy_if_refused": "SEMANTIC_ENTITY_UNRESOLVED",
+      "determinacy_status_if_refused": "NOT_EVALUATED_SEMANTIC_INCOMPLETE"
+    },
+    {
+      "case_id": "vmmu_r475",
+      "source_sha256": "33abd4b25c729c465d2ee1740f6f063514d834d02e35c6d1323a875b9f69b601",
+      "parse_status_current": "LOCAL_PARSE_PARTIAL",
+      "current_http_status": 503,
+      "current_terminal_code": "LIVE_AI_DISABLED",
+      "current_root_cause": "UNRECOGNIZED_GEOMETRIC_ENTITY",
+      "current_envelope_category": null,
+      "orthogonal_dimension_if_refused": "SEMANTIC_COMPLETENESS",
+      "canonical_taxonomy_if_refused": "SEMANTIC_ENTITY_UNRESOLVED",
+      "determinacy_status_if_refused": "NOT_EVALUATED_SEMANTIC_INCOMPLETE"
+    },
+    {
+      "case_id": "vmmu_r256",
+      "source_sha256": "b3c99ebccab872eab209179785d9c8940a1c36ce6c58a6ac2b94262810394950",
+      "parse_status_current": "LOCAL_PARSE_PARTIAL",
+      "current_http_status": 503,
+      "current_terminal_code": "LIVE_AI_DISABLED",
+      "current_root_cause": "UNRECOGNIZED_GOAL",
+      "current_envelope_category": null,
+      "orthogonal_dimension_if_refused": "SEMANTIC_COMPLETENESS",
+      "canonical_taxonomy_if_refused": "SEMANTIC_INPUT_INCOMPLETE",
+      "determinacy_status_if_refused": "NOT_EVALUATED_SEMANTIC_INCOMPLETE"
+    },
+    {
+      "case_id": "vmmu_r488",
+      "source_sha256": "7a9d2a6349ee313907d1dfa7bf3b2c9b8822c4543212968a5400e9e44cb35d66",
+      "parse_status_current": "LOCAL_PARSE_PARTIAL",
+      "current_http_status": 503,
+      "current_terminal_code": "LIVE_AI_DISABLED",
+      "current_root_cause": "UNRECOGNIZED_GOAL",
+      "current_envelope_category": null,
+      "orthogonal_dimension_if_refused": "SEMANTIC_COMPLETENESS",
+      "canonical_taxonomy_if_refused": "SEMANTIC_INPUT_INCOMPLETE",
+      "determinacy_status_if_refused": "NOT_EVALUATED_SEMANTIC_INCOMPLETE"
+    },
+    {
+      "case_id": "vmmu_r513",
+      "source_sha256": "49464028330e78ad4de5b4bffbf81beee0779b43eedb8ff554a50b6713e03685",
+      "parse_status_current": "LOCAL_PARSE_PARTIAL",
+      "current_http_status": 503,
+      "current_terminal_code": "LIVE_AI_DISABLED",
+      "current_root_cause": "INCOMPLETE_FACT_EXTRACTION",
+      "current_envelope_category": null,
+      "orthogonal_dimension_if_refused": "SEMANTIC_COMPLETENESS",
+      "canonical_taxonomy_if_refused": "SEMANTIC_INPUT_INCOMPLETE",
+      "determinacy_status_if_refused": "NOT_EVALUATED_SEMANTIC_INCOMPLETE"
+    }
+  ],
+  "orthogonal_taxonomy_specification": {
+    "dimensions": {
+      "SEMANTIC_COMPLETENESS": {
+        "classes": [
+          "SEMANTIC_INPUT_INCOMPLETE",
+          "SEMANTIC_ENTITY_UNRESOLVED"
+        ],
+        "entry_condition": "parse_status in (LOCAL_PARSE_PARTIAL, LOCAL_PARSE_UNSUPPORTED excluding GATE_OUT_OF_SCOPE) or Source Gate refusal in SOURCE_UNVERIFIED / EXTRACTION_FAILED where a source clause, goal, value, or entity reference was not grounded into verified TypedFactNext /2.",
+        "sub_mapping": {
+          "SEMANTIC_INPUT_INCOMPLETE": [
+            "INCOMPLETE_FACT_EXTRACTION",
+            "UNRECOGNIZED_RELATION",
+            "UNRECOGNIZED_GOAL",
+            "SOURCE_PROVENANCE_MISSING",
+            "DIAGRAM_DEPENDENT_FACT"
+          ],
+          "SEMANTIC_ENTITY_UNRESOLVED": [
+            "UNRESOLVED_REFERENCE",
+            "UNRECOGNIZED_GEOMETRIC_ENTITY",
+            "DESCRIBED_POINT_IN_PREMISE_UNSUPPORTED"
+          ]
+        }
+      },
+      "MATHEMATICAL_DETERMINACY": {
+        "classes": [
+          "MATHEMATICALLY_UNDERDETERMINED"
+        ],
+        "strict_entry_gate": "NEVER inferred from constructive failure alone. Requires 0 unread clauses and 0 unread values (LOCAL_PARSE_COMPLETE or LOCAL_PARSE_AMBIGUOUS) AND a positive machine-verified non-uniqueness certificate from determinacy_audit.py:",
+        "certified_witness_kinds": [
+          "TWO_VALID_REALIZATIONS_DIVERGE: >=2 Euclidean realizations certified by _dung_mot_nhanh (passing do_dai consistency + dung.kiem() on 100% of calls + kernel_check) yield distinct exact goal answers (or non-isometric metrics when asks == []), covering free height (h^2 in {1,4}), open base edges/diagonals (rational Pythagorean triples for rhombus/isosceles/trapezoid/rectangle/parallelogram), and open segment parameters.",
+          "HOMOTHETY_SCALE_DEGREE_POSITIVE: 0 dimensional premises in calls, >=1 valid unit-scale model certified, and >=1 asked goal has positive homogeneity degree BAC_DAI_LUONG[fn] > 0 (or UnresolvedSpec missing_operand[dimension] when asked goal has positive homogeneity degree and 0 dimensional premises exist).",
+          "EXPLICIT_FREE_LOCUS_ZERO_UNCONSUMED_FACTS: PLANE_NOT_UNIQUE (1-DOF plane pencil with 0 unconsumed plane constraints), FIGURE_NOT_UNIQUE (unfixed apex foot with volume invariant), or curved_solid missing height/radius with 0 unconsumed non-structural calls.",
+          "MULTI_ROOT_OR_MIRROR_BRANCH_DIVERGENCE: AMBIGUOUS_FACT where >=2 positive quadratic roots or mirror apex sign branches satisfy all calls and produce distinct goal values."
+        ]
+      },
+      "IMPLEMENTATION_CAPABILITY": {
+        "classes": [
+          "CAPABILITY_UNSUPPORTED"
+        ],
+        "sub_scopes": {
+          "DETERMINACY_PROVED_OR_KNOWN_PRIMITIVE_MISSING": "EXACT_DOMAIN_EXCEEDED, UNSUPPORTED_CAPABILITY, UNSUPPORTED_BASE_SHAPE, UNSUPPORTED_CENTROID, UNSUPPORTED_MULTIPLE_BASES, UNSUPPORTED_MULTIPLE_HEIGHTS, UNSUPPORTED_IRRATIONAL_LAYOUT, UNSUPPORTED_POINT_CONSTRUCTION, UNSUPPORTED_GOAL_KIND, UNSUPPORTED_GOAL_FUNCTION, PROOF_UNVERIFIABLE, NEGATED_CLAUSE, CONDITIONAL_CLAUSE, BRIDGE_UNSUPPORTED_*, CURVED_*_UNSUPPORTED, OUT_OF_SCOPE (Route D escape).",
+          "DETERMINACY_UNPROVED_DEDUCTION_OR_INVARIANCE_GAP": "MISSING_DIMENSION, UNDERDETERMINED_POINT, FOOT_NOT_DETERMINED, or FREE_POINT_UNDERDETERMINED when determinacy_audit finds 0 diverging model pairs (e.g. unconsumed angle/metric/equality constraints remain as in vmmu_r460 and vmmu_r463, or single valid model is constant across trials without a formal invariance proof as in SHAPE_FREEDOM_UNCERTIFIED)."
+        },
+        "learner_copy_invariants": [
+          "NEVER tell the learner 'Đề chưa cho đủ dữ kiện' or 'bổ sung dữ kiện còn thiếu'.",
+          "NEVER tell the learner 'đề bài sai' or 'dữ kiện mâu thuẫn'.",
+          "Always set rewrite_may_help = False and refusal_cause = 'UNKNOWN'."
+        ]
+      },
+      "CONTRADICTORY_CONSTRAINTS": {
+        "classes": [
+          "CONTRADICTORY_CONSTRAINTS"
+        ],
+        "entry_condition": "Source-Gate-verified premises trigger INVALID_DATA geometric/algebraic impossibility (INCONSISTENT_FACTS, NON_POSITIVE_LENGTH, DEGENERATE_SOLID, DEGENERATE_POINTS, COLLINEAR_POINTS, NON_COPLANAR_POINTS, PARALLEL_NO_INTERSECTION, SKEW_NO_INTERSECTION, PLANE_DOES_NOT_CUT, CURVED_PLANE_DOES_NOT_CUT, NO_CIRCUMSCRIBED_SPHERE, NO_INSCRIBED_SPHERE, SKEW_CLAIM_CONTRADICTED).",
+        "learner_copy_invariants": [
+          "On LOCAL_PARSE_COMPLETE (100% source-verified clauses), set envelope.refusal_cause = 'SOURCE' so UI shows 'Dữ kiện đề bài chưa nhất quán'; on provider/preview payloads where extraction completeness is unproved, keep refusal_cause = 'UNKNOWN' (preserving test_hybrid_preview_contract.py).",
+          "State neutrally that no valid figure simultaneously satisfies all stated constraints; never emit 'đề bài sai' on unproved or capability failures."
+        ]
+      },
+      "INFRASTRUCTURE_AVAILABILITY": {
+        "classes": [
+          "INFRASTRUCTURE_UNAVAILABLE"
+        ],
+        "entry_condition": "Operational, configuration, quota-ledger, or live-provider unavailability (MISSING_API_KEY, LIVE_AI_DISABLED when fallback/live AI is required, STAGING_CORPUS_UNAVAILABLE, INVALID_HYBRID_ROUTE_MODE, USAGE_LEDGER_UNAVAILABLE, HYBRID_DEADLINE_EXCEEDED, PROVIDER_*)."
+      }
+    },
+    "surgical_wave2_implementation_map": [
+      {
+        "file": "backend/app/simulation/geometry_functions/determinacy_audit.py",
+        "action": "NEW_MODULE (owned exclusively by @taxonomy-api)",
+        "purpose": "Pure deterministic audit_determinacy(problem_text, plan, auxiliary, read_quotes, refused_result) returning {status: 'PROVED_UNDERDETERMINED' | 'UNPROVED_DUE_TO_CAPABILITY_GAP', witness_kind, counterexample_models, unconsumed_constraint_ids} using _dung_mot_nhanh trials (free_h2_sample, rational Pythagorean shape_units on open base edges/diagonals, homothety scale degree check, and explicit locus check) with strict cap <= 8 fast kernel probes and 0 float arithmetic."
+      },
+      {
+        "file": "backend/app/simulation/geometry_functions/engine.py",
+        "lines": "6096-6145 (disjoint from @expr-dim-audit 585-665,760-785,1230-1345,2038-2045,3200-3210,4520-4542 and @trig-kernel-audit 696-759,786-816,896-920,1162-1225,1679-1895,2160-2210,6170-6204)",
+        "action": "Record consumed_call_ids from dung.dung on TuChoi at line 6098 and attach determinacy_audit = audit_determinacy(...) to res0.details at line 6141 while keeping res0.code unchanged (preserving all low-level route_d.refusal.code locks)."
+      },
+      {
+        "file": "backend/app/ai/hybrid_preview.py",
+        "lines": "158-189",
+        "action": "Extend classify_refusal(code, planner=None, *, adapter=False, problem_text='', details=None, local_complete=False): when code in (MISSING_DIMENSION, UNDERDETERMINED_POINT, FOOT_NOT_DETERMINED) and details.determinacy_audit.status == 'UNPROVED_DUE_TO_CAPABILITY_GAP', return RefusalClass('CAPABILITY', 'capability_gap', 'UNKNOWN', capability_message); when local_complete is True and (determinacy_audit.status == 'PROVED_UNDERDETERMINED' or group == 'INVALID_DATA'), set refusal_cause='SOURCE' while keeping /api/route-d/preview (local_complete=False) byte-compatible with test_hybrid_preview_contract.py (preserving exact 6-key set on envelope)."
+      },
+      {
+        "file": "backend/app/ai/adapter4_route.py",
+        "lines": "254-264 (disjoint from @trig-kernel-audit 184-206,362-378)",
+        "action": "Pass details=result.details to classify_refusal in refuse()."
+      },
+      {
+        "file": "backend/app/ai/local_failure_diagnostics.py",
+        "lines": "1-271 (owned exclusively by @taxonomy-api)",
+        "action": "Keep DIAG_VERSION='local-failure-diagnostics/1' for test compatibility and add orthogonal fields failure_dimension, taxonomy_class, determinacy_status, witness_kind, unconsumed_constraint_ids. Map UNPROVED_DUE_TO_CAPABILITY_GAP to root_cause='UNSUPPORTED_DEDUCTION' (or 'SHAPE_FREEDOM_UNCERTIFIED' when single model is constant across trials), failure_dimension='IMPLEMENTATION_CAPABILITY', taxonomy_class='CAPABILITY_UNSUPPORTED', rewrite_may_help=False. Map FREE_POINT_UNDERDETERMINED without divergence proof to IMPLEMENTATION_CAPABILITY / CAPABILITY_UNSUPPORTED (determinacy_status='UNPROVED_DUE_TO_CAPABILITY_GAP'). Fix UNREAD_VALUE excerpt extraction (lines 136-152) to slice the unread value token/phrase and set rewrite_may_help=False when the unread token is an algebraic power/expression pattern."
+      },
+      {
+        "file": "backend/app/ai/adaptive_input_router.py",
+        "lines": "415-485 (owned exclusively by @taxonomy-api)",
+        "action": "Pass local_complete=(local_res.status == LOCAL_PARSE_COMPLETE) / synchronize response['envelope'] with local_diagnostics & determinacy_audit on LOCAL_PARSE_COMPLETE and LOCAL_PARSE_AMBIGUOUS (including setting capability_gap when UnresolvedSpec missing_operand[dimension] occurs on scale-free goals)."
+      },
+      {
+        "file": "backend/app/learner_messages.py",
+        "lines": "20-35 (owned exclusively by @taxonomy-api)",
+        "action": "Replace stale Informatics examples ('tìm kiếm, sắp xếp, số nhị phân, cổng logic') in GATE_OUT_OF_SCOPE and GATE_NOT_SIMULATION_SUITABLE with 3D spatial geometry scope copy."
+      }
+    ]
+  },
+  "stage_p0_verification": {
+    "real27_served_count_before_p1": 15,
+    "real27_total": 27,
+    "dev37_served_count": 28,
+    "dev37_total": 37,
+    "real27_p0_outcomes": [
+      {
+        "case_id": "vmmu_r247",
+        "status": "SERVED",
+        "parse_status": "LOCAL_PARSE_COMPLETE",
+        "answers": {
+          "q1": "3a"
+        },
+        "provider_calls": 0
+      },
+      {
+        "case_id": "vmmu_r254",
+        "status": "REFUSED",
+        "parse_status": "LOCAL_PARSE_PARTIAL",
+        "terminal_reason": "LIVE_AI_DISABLED",
+        "root_cause": "DESCRIBED_POINT_IN_PREMISE_UNSUPPORTED",
+        "failure_dimension": "SEMANTIC_COMPLETENESS",
+        "taxonomy_class": "SEMANTIC_ENTITY_UNRESOLVED",
+        "determinacy_status": "NOT_EVALUATED_SEMANTIC_INCOMPLETE",
+        "determinacy_scope_note": "Còn đối tượng, điểm mô tả hoặc tham chiếu trong đề chưa được phân giải.",
+        "witness_kind": null,
+        "unconsumed_constraint_ids": [],
+        "envelope_failure_category": null,
+        "envelope_refusal_cause": null,
+        "learner_summary": {
+          "message": "Đề mô tả một điểm chưa được đặt tên; hệ thống chưa đọc được điểm đó.",
+          "unread_excerpts": [
+            "Hình chiếu vuông góc của B' lên mặt phẳng (ABC) trùng với trọng tâm của tam giác ABC"
+          ],
+          "rewrite_may_help": true
+        },
+        "envelope_learner_reason": null,
+        "provider_calls": 0
+      },
+      {
+        "case_id": "vmmu_r256",
+        "status": "REFUSED",
+        "parse_status": "LOCAL_PARSE_PARTIAL",
+        "terminal_reason": "LIVE_AI_DISABLED",
+        "root_cause": "UNRECOGNIZED_GOAL",
+        "failure_dimension": "SEMANTIC_COMPLETENESS",
+        "taxonomy_class": "SEMANTIC_INPUT_INCOMPLETE",
+        "determinacy_status": "NOT_EVALUATED_SEMANTIC_INCOMPLETE",
+        "determinacy_scope_note": "Còn mệnh đề, số đo hoặc câu hỏi trong đề chưa được trích xuất đầy đủ.",
+        "witness_kind": null,
+        "unconsumed_constraint_ids": [],
+        "envelope_failure_category": null,
+        "envelope_refusal_cause": null,
+        "learner_summary": {
+          "message": "Hệ thống chưa xác định được đề hỏi gì.",
+          "unread_excerpts": [
+            "Tính khoảng cách từ A đên (SBC)"
+          ],
+          "rewrite_may_help": true
+        },
+        "envelope_learner_reason": null,
+        "provider_calls": 0
+      },
+      {
+        "case_id": "vmmu_r258",
+        "status": "SERVED",
+        "parse_status": "LOCAL_PARSE_COMPLETE",
+        "answers": {
+          "q1": "cos²=1/3"
+        },
+        "provider_calls": 0
+      },
+      {
+        "case_id": "vmmu_r266",
+        "status": "REFUSED",
+        "parse_status": "LOCAL_PARSE_COMPLETE",
+        "terminal_reason": "EXACT_DOMAIN_EXCEEDED",
+        "root_cause": "PLANNER_COMPOSITION_UNSUPPORTED",
+        "failure_dimension": "IMPLEMENTATION_CAPABILITY",
+        "taxonomy_class": "CAPABILITY_UNSUPPORTED",
+        "determinacy_status": "PROVED_DETERMINATE_EXACT_DOMAIN_EXCEEDED",
+        "determinacy_scope_note": "Hình xác định nhưng số đo hoặc tích vô hướng vượt ngoài miền đại số hữu tỉ/căn bậc hai hiện tại.",
+        "witness_kind": null,
+        "unconsumed_constraint_ids": [],
+        "envelope_failure_category": "capability_gap",
+        "envelope_refusal_cause": "UNKNOWN",
+        "learner_summary": {
+          "message": "Bài này cần một phép dựng mà hệ thống chưa hỗ trợ.",
+          "unread_excerpts": [],
+          "rewrite_may_help": false
+        },
+        "envelope_learner_reason": "Đề này cần một phép dựng hoặc một dạng câu hỏi mà hệ chưa hỗ trợ, nên hệ không dựng một hình gần đúng.",
+        "provider_calls": 0
+      },
+      {
+        "case_id": "vmmu_r270",
+        "status": "SERVED",
+        "parse_status": "LOCAL_PARSE_COMPLETE",
+        "answers": {
+          "q1": "a³√3/2"
+        },
+        "provider_calls": 0
+      },
+      {
+        "case_id": "vmmu_r273",
+        "status": "SERVED",
+        "parse_status": "LOCAL_PARSE_COMPLETE",
+        "answers": {
+          "q1": "a³"
+        },
+        "provider_calls": 0
+      },
+      {
+        "case_id": "vmmu_r277",
+        "status": "REFUSED",
+        "parse_status": "LOCAL_PARSE_PARTIAL",
+        "terminal_reason": "LIVE_AI_DISABLED",
+        "root_cause": "UNSUPPORTED_POINT_CONSTRUCTION",
+        "failure_dimension": "IMPLEMENTATION_CAPABILITY",
+        "taxonomy_class": "CAPABILITY_UNSUPPORTED",
+        "determinacy_status": "UNPROVED_DUE_TO_CAPABILITY_GAP",
+        "determinacy_scope_note": "Hệ chưa có đủ phép dựng hoặc chứng chỉ suy diễn để kết luận tính xác định duy nhất của bài toán.",
+        "witness_kind": null,
+        "unconsumed_constraint_ids": [],
+        "envelope_failure_category": null,
+        "envelope_refusal_cause": null,
+        "learner_summary": {
+          "message": "Đề dùng một phép dựng điểm mà hệ thống chưa hỗ trợ.",
+          "unread_excerpts": [
+            "Gọi M, N, P lần lượt là điểm đối xứng với điểm O qua trung điểm ba cạnh AB, BC, CA của tam giác ABC"
+          ],
+          "rewrite_may_help": false
+        },
+        "envelope_learner_reason": null,
+        "provider_calls": 0
+      },
+      {
+        "case_id": "vmmu_r284",
+        "status": "SERVED",
+        "parse_status": "LOCAL_PARSE_COMPLETE",
+        "answers": {
+          "q1": "a√21/7"
+        },
+        "provider_calls": 0
+      },
+      {
+        "case_id": "vmmu_r295",
+        "status": "SERVED",
+        "parse_status": "LOCAL_PARSE_COMPLETE",
+        "answers": {
+          "q1": "cos²=1/4"
+        },
+        "provider_calls": 0
+      },
+      {
+        "case_id": "vmmu_r298",
+        "status": "SERVED",
+        "parse_status": "LOCAL_PARSE_COMPLETE",
+        "answers": {
+          "q1": "2a³√6"
+        },
+        "provider_calls": 0
+      },
+      {
+        "case_id": "vmmu_r375",
+        "status": "SERVED",
+        "parse_status": "LOCAL_PARSE_COMPLETE",
+        "answers": {
+          "q1": "√17"
+        },
+        "provider_calls": 0
+      },
+      {
+        "case_id": "vmmu_r460",
+        "status": "REFUSED",
+        "parse_status": "LOCAL_PARSE_COMPLETE",
+        "terminal_reason": "MISSING_DIMENSION",
+        "root_cause": "UNSUPPORTED_DEDUCTION",
+        "failure_dimension": "IMPLEMENTATION_CAPABILITY",
+        "taxonomy_class": "CAPABILITY_UNSUPPORTED",
+        "determinacy_status": "UNPROVED_DUE_TO_CAPABILITY_GAP",
+        "determinacy_scope_note": "Không tìm được cặp mô hình hợp lệ cho kết quả khác nhau; còn giả thiết chưa được suy diễn hết hoặc hệ chưa chứng minh được tính xác định duy nhất của bài toán.",
+        "witness_kind": "NO_DIVERGING_REALIZATION_PAIR_FOUND",
+        "unconsumed_constraint_ids": [
+          "p1",
+          "p2",
+          "p3",
+          "p4",
+          "p5"
+        ],
+        "envelope_failure_category": "capability_gap",
+        "envelope_refusal_cause": "UNKNOWN",
+        "learner_summary": {
+          "message": "Hệ thống đã đọc các giả thiết của đề nhưng chưa hỗ trợ suy diễn tất định từ tổ hợp quan hệ này.",
+          "unread_excerpts": [],
+          "rewrite_may_help": false
+        },
+        "envelope_learner_reason": "Hệ đã đọc các giả thiết trong đề nhưng chưa có quy tắc suy diễn tất định cho tổ hợp quan hệ này, nên dừng lại thay vì dựng một hình gần đúng.",
+        "provider_calls": 0
+      },
+      {
+        "case_id": "vmmu_r461",
+        "status": "REFUSED",
+        "parse_status": "LOCAL_PARSE_PARTIAL",
+        "terminal_reason": "LIVE_AI_DISABLED",
+        "root_cause": "UNRECOGNIZED_GEOMETRIC_ENTITY",
+        "failure_dimension": "SEMANTIC_COMPLETENESS",
+        "taxonomy_class": "SEMANTIC_ENTITY_UNRESOLVED",
+        "determinacy_status": "NOT_EVALUATED_SEMANTIC_INCOMPLETE",
+        "determinacy_scope_note": "Còn đối tượng, điểm mô tả hoặc tham chiếu trong đề chưa được phân giải.",
+        "witness_kind": null,
+        "unconsumed_constraint_ids": [],
+        "envelope_failure_category": null,
+        "envelope_refusal_cause": null,
+        "learner_summary": {
+          "message": "Hệ thống chưa đọc được một điểm hoặc một đối tượng hình học trong đề.",
+          "unread_excerpts": [
+            "Lấy phần hình quạt người ta gián sao cho cạnh AM và AN trùng nhau thành một cái mũ hình nón không đáy với đỉnh A"
+          ],
+          "rewrite_may_help": true
+        },
+        "envelope_learner_reason": null,
+        "provider_calls": 0
+      },
+      {
+        "case_id": "vmmu_r463",
+        "status": "REFUSED",
+        "parse_status": "LOCAL_PARSE_COMPLETE",
+        "terminal_reason": "MISSING_DIMENSION",
+        "root_cause": "UNSUPPORTED_DEDUCTION",
+        "failure_dimension": "IMPLEMENTATION_CAPABILITY",
+        "taxonomy_class": "CAPABILITY_UNSUPPORTED",
+        "determinacy_status": "UNPROVED_DUE_TO_CAPABILITY_GAP",
+        "determinacy_scope_note": "Không tìm được cặp mô hình hợp lệ cho kết quả khác nhau; còn giả thiết chưa được suy diễn hết hoặc hệ chưa chứng minh được tính xác định duy nhất của bài toán.",
+        "witness_kind": "NO_DIVERGING_REALIZATION_PAIR_FOUND",
+        "unconsumed_constraint_ids": [
+          "p2",
+          "p3",
+          "p4",
+          "p5"
+        ],
+        "envelope_failure_category": "capability_gap",
+        "envelope_refusal_cause": "UNKNOWN",
+        "learner_summary": {
+          "message": "Hệ thống đã đọc các giả thiết của đề nhưng chưa hỗ trợ suy diễn tất định từ tổ hợp quan hệ này.",
+          "unread_excerpts": [],
+          "rewrite_may_help": false
+        },
+        "envelope_learner_reason": "Hệ đã đọc các giả thiết trong đề nhưng chưa có quy tắc suy diễn tất định cho tổ hợp quan hệ này, nên dừng lại thay vì dựng một hình gần đúng.",
+        "provider_calls": 0
+      },
+      {
+        "case_id": "vmmu_r475",
+        "status": "REFUSED",
+        "parse_status": "LOCAL_PARSE_UNSUPPORTED",
+        "terminal_reason": "LIVE_AI_DISABLED",
+        "root_cause": "UNRECOGNIZED_GEOMETRIC_ENTITY",
+        "failure_dimension": "SEMANTIC_COMPLETENESS",
+        "taxonomy_class": "SEMANTIC_ENTITY_UNRESOLVED",
+        "determinacy_status": "NOT_EVALUATED_SEMANTIC_INCOMPLETE",
+        "determinacy_scope_note": "Còn đối tượng, điểm mô tả hoặc tham chiếu trong đề chưa được phân giải.",
+        "witness_kind": null,
+        "unconsumed_constraint_ids": [],
+        "envelope_failure_category": null,
+        "envelope_refusal_cause": null,
+        "learner_summary": {
+          "message": "Hệ thống chưa đọc được một điểm hoặc một đối tượng hình học trong đề.",
+          "unread_excerpts": [
+            "Người ta từ từ thả vào cốc nước viên bi và khối nón sao cho đỉnh khối nón nằm trên mặt cầu (như hình vẽ) thì thấy nước…"
+          ],
+          "rewrite_may_help": true
+        },
+        "envelope_learner_reason": null,
+        "provider_calls": 0
+      },
+      {
+        "case_id": "vmmu_r476",
+        "status": "SERVED",
+        "parse_status": "LOCAL_PARSE_COMPLETE",
+        "answers": {
+          "q1": "cos²=3/4"
+        },
+        "provider_calls": 0
+      },
+      {
+        "case_id": "vmmu_r488",
+        "status": "REFUSED",
+        "parse_status": "LOCAL_PARSE_PARTIAL",
+        "terminal_reason": "LIVE_AI_DISABLED",
+        "root_cause": "UNRECOGNIZED_GOAL",
+        "failure_dimension": "SEMANTIC_COMPLETENESS",
+        "taxonomy_class": "SEMANTIC_INPUT_INCOMPLETE",
+        "determinacy_status": "NOT_EVALUATED_SEMANTIC_INCOMPLETE",
+        "determinacy_scope_note": "Còn mệnh đề, số đo hoặc câu hỏi trong đề chưa được trích xuất đầy đủ.",
+        "witness_kind": null,
+        "unconsumed_constraint_ids": [],
+        "envelope_failure_category": null,
+        "envelope_refusal_cause": null,
+        "learner_summary": {
+          "message": "Hệ thống chưa xác định được đề hỏi gì.",
+          "unread_excerpts": [
+            "Thể tích của khối chóp B'.ACC'A' bằng"
+          ],
+          "rewrite_may_help": true
+        },
+        "envelope_learner_reason": null,
+        "provider_calls": 0
+      },
+      {
+        "case_id": "vmmu_r491",
+        "status": "REFUSED",
+        "parse_status": "LOCAL_PARSE_PARTIAL",
+        "terminal_reason": "LIVE_AI_DISABLED",
+        "root_cause": "FREE_POINT_UNDERDETERMINED",
+        "failure_dimension": "IMPLEMENTATION_CAPABILITY",
+        "taxonomy_class": "CAPABILITY_UNSUPPORTED",
+        "determinacy_status": "UNPROVED_DUE_TO_CAPABILITY_GAP",
+        "determinacy_scope_note": "Hệ chưa có đủ phép dựng hoặc chứng chỉ suy diễn để kết luận tính xác định duy nhất của bài toán.",
+        "witness_kind": null,
+        "unconsumed_constraint_ids": [],
+        "envelope_failure_category": null,
+        "envelope_refusal_cause": null,
+        "learner_summary": {
+          "message": "Một điểm trong đề di động hoặc chỉ được nêu thuộc một đối tượng; hệ thống chưa hỗ trợ kiểm chứng trên điểm tự do này.",
+          "unread_excerpts": [
+            "Hình chiếu vuông góc của A' lên mặt phẳng (ABC) là điểm I thuộc cạnh BC"
+          ],
+          "rewrite_may_help": false
+        },
+        "envelope_learner_reason": null,
+        "provider_calls": 0
+      },
+      {
+        "case_id": "vmmu_r492",
+        "status": "SERVED",
+        "parse_status": "LOCAL_PARSE_COMPLETE",
+        "answers": {
+          "q1": "cos²=1/4"
+        },
+        "provider_calls": 0
+      },
+      {
+        "case_id": "vmmu_r498",
+        "status": "SERVED",
+        "parse_status": "LOCAL_PARSE_COMPLETE",
+        "answers": {
+          "q1": "cos²=1/4"
+        },
+        "provider_calls": 0
+      },
+      {
+        "case_id": "vmmu_r513",
+        "status": "REFUSED",
+        "parse_status": "LOCAL_PARSE_PARTIAL",
+        "terminal_reason": "LIVE_AI_DISABLED",
+        "root_cause": "INCOMPLETE_FACT_EXTRACTION",
+        "failure_dimension": "SEMANTIC_COMPLETENESS",
+        "taxonomy_class": "SEMANTIC_INPUT_INCOMPLETE",
+        "determinacy_status": "NOT_EVALUATED_SEMANTIC_INCOMPLETE",
+        "determinacy_scope_note": "Còn mệnh đề, số đo hoặc câu hỏi trong đề chưa được trích xuất đầy đủ.",
+        "witness_kind": null,
+        "unconsumed_constraint_ids": [],
+        "envelope_failure_category": null,
+        "envelope_refusal_cause": null,
+        "learner_summary": {
+          "message": "Hệ thống chưa đọc hết các dữ kiện trong đề.",
+          "unread_excerpts": [],
+          "rewrite_may_help": true
+        },
+        "envelope_learner_reason": null,
+        "provider_calls": 0
+      },
+      {
+        "case_id": "vmmu_r520",
+        "status": "SERVED",
+        "parse_status": "LOCAL_PARSE_COMPLETE",
+        "answers": {
+          "q1": "cos²=1/2"
+        },
+        "provider_calls": 0
+      },
+      {
+        "case_id": "vmmu_r537",
+        "status": "REFUSED",
+        "parse_status": "LOCAL_PARSE_PARTIAL",
+        "terminal_reason": "LIVE_AI_DISABLED",
+        "root_cause": "INCOMPLETE_FACT_EXTRACTION",
+        "failure_dimension": "SEMANTIC_COMPLETENESS",
+        "taxonomy_class": "SEMANTIC_INPUT_INCOMPLETE",
+        "determinacy_status": "NOT_EVALUATED_SEMANTIC_INCOMPLETE",
+        "determinacy_scope_note": "Còn mệnh đề, số đo hoặc câu hỏi trong đề chưa được trích xuất đầy đủ.",
+        "witness_kind": null,
+        "unconsumed_constraint_ids": [],
+        "envelope_failure_category": null,
+        "envelope_refusal_cause": null,
+        "learner_summary": {
+          "message": "Hệ thống chưa đọc hết các dữ kiện trong đề.",
+          "unread_excerpts": [
+            "diện tích đáy bằng a²"
+          ],
+          "rewrite_may_help": true
+        },
+        "envelope_learner_reason": null,
+        "provider_calls": 0
+      },
+      {
+        "case_id": "vmmu_r538",
+        "status": "SERVED",
+        "parse_status": "LOCAL_PARSE_COMPLETE",
+        "answers": {
+          "q1": "cos²=3/4"
+        },
+        "provider_calls": 0
+      },
+      {
+        "case_id": "vmmu_r559",
+        "status": "SERVED",
+        "parse_status": "LOCAL_PARSE_COMPLETE",
+        "answers": {
+          "q1": "cos²=1/12"
+        },
+        "provider_calls": 0
+      },
+      {
+        "case_id": "vmmu_r695",
+        "status": "SERVED",
+        "parse_status": "LOCAL_PARSE_COMPLETE",
+        "answers": {
+          "q1": "2/3"
+        },
+        "provider_calls": 0
+      }
+    ],
+    "dev37_refused_outcomes": [
+      {
+        "case_id": "goal_proof_only",
+        "parse_status": "LOCAL_PARSE_COMPLETE",
+        "terminal_reason": "OUT_OF_SCOPE",
+        "root_cause": "UNSUPPORTED_GOAL_KIND",
+        "failure_dimension": "IMPLEMENTATION_CAPABILITY",
+        "taxonomy_class": "CAPABILITY_UNSUPPORTED",
+        "determinacy_status": "NOT_EVALUATED_KNOWN_CAPABILITY_BOUNDARY",
+        "witness_kind": null,
+        "counterexample_models": [],
+        "envelope_failure_category": "capability_gap",
+        "envelope_refusal_cause": "UNKNOWN",
+        "envelope_learner_reason": "Hệ chưa hỗ trợ yêu cầu chứng minh hình học; hiện chỉ dựng hình và tính các đại lượng hình học không gian."
+      },
+      {
+        "case_id": "pair_point_as_goal",
+        "parse_status": "LOCAL_PARSE_PARTIAL",
+        "terminal_reason": "LIVE_AI_DISABLED",
+        "root_cause": "UNRECOGNIZED_GOAL",
+        "failure_dimension": "SEMANTIC_COMPLETENESS",
+        "taxonomy_class": "SEMANTIC_INPUT_INCOMPLETE",
+        "determinacy_status": "NOT_EVALUATED_SEMANTIC_INCOMPLETE",
+        "witness_kind": null,
+        "counterexample_models": [],
+        "envelope_failure_category": null,
+        "envelope_refusal_cause": null,
+        "envelope_learner_reason": null
+      },
+      {
+        "case_id": "pair_plane_underdetermined",
+        "parse_status": "LOCAL_PARSE_PARTIAL",
+        "terminal_reason": "LIVE_AI_DISABLED",
+        "root_cause": "UNRECOGNIZED_GEOMETRIC_ENTITY",
+        "failure_dimension": "SEMANTIC_COMPLETENESS",
+        "taxonomy_class": "SEMANTIC_ENTITY_UNRESOLVED",
+        "determinacy_status": "NOT_EVALUATED_SEMANTIC_INCOMPLETE",
+        "witness_kind": null,
+        "counterexample_models": [],
+        "envelope_failure_category": null,
+        "envelope_refusal_cause": null,
+        "envelope_learner_reason": null
+      },
+      {
+        "case_id": "ref_undefined_plane",
+        "parse_status": "LOCAL_PARSE_PARTIAL",
+        "terminal_reason": "LIVE_AI_DISABLED",
+        "root_cause": "UNRESOLVED_REFERENCE",
+        "failure_dimension": "SEMANTIC_COMPLETENESS",
+        "taxonomy_class": "SEMANTIC_ENTITY_UNRESOLVED",
+        "determinacy_status": "NOT_EVALUATED_SEMANTIC_INCOMPLETE",
+        "witness_kind": null,
+        "counterexample_models": [],
+        "envelope_failure_category": null,
+        "envelope_refusal_cause": null,
+        "envelope_learner_reason": null
+      },
+      {
+        "case_id": "sec_do_P_cat",
+        "parse_status": "LOCAL_PARSE_PARTIAL",
+        "terminal_reason": "LIVE_AI_DISABLED",
+        "root_cause": "UNRECOGNIZED_GOAL",
+        "failure_dimension": "SEMANTIC_COMPLETENESS",
+        "taxonomy_class": "SEMANTIC_INPUT_INCOMPLETE",
+        "determinacy_status": "NOT_EVALUATED_SEMANTIC_INCOMPLETE",
+        "witness_kind": null,
+        "counterexample_models": [],
+        "envelope_failure_category": null,
+        "envelope_refusal_cause": null,
+        "envelope_learner_reason": null
+      },
+      {
+        "case_id": "diagram_benign",
+        "parse_status": "LOCAL_PARSE_PARTIAL",
+        "terminal_reason": "LIVE_AI_DISABLED",
+        "root_cause": "INCOMPLETE_FACT_EXTRACTION",
+        "failure_dimension": "SEMANTIC_COMPLETENESS",
+        "taxonomy_class": "SEMANTIC_INPUT_INCOMPLETE",
+        "determinacy_status": "NOT_EVALUATED_SEMANTIC_INCOMPLETE",
+        "witness_kind": null,
+        "counterexample_models": [],
+        "envelope_failure_category": null,
+        "envelope_refusal_cause": null,
+        "envelope_learner_reason": null
+      },
+      {
+        "case_id": "diagram_dependent",
+        "parse_status": "LOCAL_PARSE_PARTIAL",
+        "terminal_reason": "LIVE_AI_DISABLED",
+        "root_cause": "DIAGRAM_DEPENDENT_FACT",
+        "failure_dimension": "SEMANTIC_COMPLETENESS",
+        "taxonomy_class": "SEMANTIC_INPUT_INCOMPLETE",
+        "determinacy_status": "NOT_EVALUATED_SEMANTIC_INCOMPLETE",
+        "witness_kind": null,
+        "counterexample_models": [],
+        "envelope_failure_category": null,
+        "envelope_refusal_cause": null,
+        "envelope_learner_reason": null
+      },
+      {
+        "case_id": "missing_dimension",
+        "parse_status": "LOCAL_PARSE_AMBIGUOUS",
+        "terminal_reason": "AMBIGUOUS_FACT",
+        "root_cause": "INSUFFICIENT_CONSTRAINTS",
+        "failure_dimension": "MATHEMATICAL_DETERMINACY",
+        "taxonomy_class": "MATHEMATICALLY_UNDERDETERMINED",
+        "determinacy_status": "PROVED_UNDERDETERMINED",
+        "witness_kind": "TWO_VALID_REALIZATIONS_DIVERGE",
+        "counterexample_models": [
+          {
+            "trial": "scale=1,h2=1",
+            "answers": {
+              "q1": "1/3"
+            },
+            "answer_exact": {
+              "q1": {
+                "coef": "1/3",
+                "dim": 0,
+                "unit": null
+              }
+            }
+          },
+          {
+            "trial": "scale=2,h2=4",
+            "answers": {
+              "q1": "8/3"
+            },
+            "answer_exact": {
+              "q1": {
+                "coef": "8/3",
+                "dim": 0,
+                "unit": null
+              }
+            }
+          }
+        ],
+        "envelope_failure_category": "insufficient_specification",
+        "envelope_refusal_cause": "SOURCE",
+        "envelope_learner_reason": "Các dữ kiện đã nêu trong đề chưa xác định duy nhất đại lượng hoặc hình cần dựng (tồn tại nhiều hình hợp lệ thỏa mọi giả thiết nhưng cho kết quả khác nhau). Em hãy kiểm tra và bổ sung số đo còn thiếu trong đề rồi gửi lại."
+      },
+      {
+        "case_id": "inconsistent",
+        "parse_status": "LOCAL_PARSE_COMPLETE",
+        "terminal_reason": "INCONSISTENT_FACTS",
+        "root_cause": "SOURCE_CONFLICT",
+        "failure_dimension": "CONTRADICTORY_CONSTRAINTS",
+        "taxonomy_class": "CONTRADICTORY_CONSTRAINTS",
+        "determinacy_status": "NO_VALID_REALIZATION",
+        "witness_kind": null,
+        "counterexample_models": [],
+        "envelope_failure_category": "geometry_generation_failed",
+        "envelope_refusal_cause": "SOURCE",
+        "envelope_learner_reason": "Các dữ kiện dùng để dựng hình mâu thuẫn nhau hoặc làm hình suy biến, nên không có hình nào thoả tất cả. AlgoSim dừng lại thay vì dựng một hình sai."
+      }
+    ],
+    "backend_pytest_passed": 263,
+    "frontend_vitest_passed": 191
+  },
+  "baseline_product_commit": "d222e6d9b582d54fc42397a9593f52eb6fd77f18",
+  "stage_observed_measured_system_hash": "e1d06448e0ea9d15dfdc8098f46898240a891622d9e32368865f0ee3c966e9ef",
+  "stage_observed_measured_system_file_count": 118,
+  "stage_observed_cache_version": "139",
+  "stage_4a_remediation": {
+    "remediated_at_utc": "2026-11-15T16:35:00Z",
+    "previous_measured_system_hash": "7a15dc2e59a869c8c898458359a97a772760ae8eb89e7a75460a7625d0d6b488",
+    "current_measured_system_hash": "b1403b91fd81410f9586c5676f541911540b4bc4bb0d7bf40204d17538623e59",
+    "measured_system_file_count": 120,
+    "summary": "Stage 4A remediation added exact rational _free_tilt_sample realization trials in engine.py (_Dung._dinh_nghieng_thu_nghiem) and determinacy_audit.py (MAX_COUNTEREXAMPLE_TRIALS=12) to constructively prove non-uniqueness on unanchored oblique prisms (volumes {30, 24}) and single line-perp-line pyramids such as SA perp BC without SA perp (ABCD) (volumes {16, 64/5}), plus enforced the section 4.4 soundness guard so NO_VALID_VARIATION_CONSTRUCTED (valid_count < 2 and unconsumed_constraint_ids == []) never reclassifies MISSING_DATA as capability_gap and reports determinacy_status='UNPROVED_NO_VALID_VARIATION' with refusal_cause='UNKNOWN'."
+  }
+}

@@ -1,0 +1,369 @@
+{
+  "browser": "157.0.8103.78",
+  "headless": true,
+  "backend": "measured_app loopback, HYBRID_ROUTE_MODE=local-first, ALLOW_LIVE_AI=0",
+  "note": "host desktop, headless; first_model_ms = send click → canvas with a timeline (includes local parse + solve + scene build); step_ms = click → 2 animation frames",
+  "rows": [
+    {
+      "case": "angle_line_plane",
+      "viewport": "1920x1080",
+      "first_model_ms": 489,
+      "step_ms": [
+        90.5,
+        130.6000000005588,
+        164.3999999994412,
+        117.70000000018626,
+        104.59999999962747
+      ],
+      "orbit_ms": 195.20000000018626,
+      "heap_mb": 26.299842834472656
+    },
+    {
+      "case": "angle_line_plane",
+      "viewport": "1366x768",
+      "first_model_ms": 386,
+      "step_ms": [
+        65.6000000005588,
+        69.8999999994412,
+        82.20000000018626,
+        82.8999999994412,
+        89.69999999925494
+      ],
+      "orbit_ms": 146.70000000018626,
+      "heap_mb": 19.830105781555176
+    },
+    {
+      "case": "angle_line_plane",
+      "viewport": "768x1024",
+      "first_model_ms": 366,
+      "step_ms": [
+        68,
+        85.90000000037253,
+        81.79999999981374,
+        76.20000000018626,
+        91.59999999962747
+      ],
+      "orbit_ms": 152,
+      "heap_mb": 27.002788543701172
+    },
+    {
+      "case": "angle_line_plane",
+      "viewport": "390x844",
+      "first_model_ms": 366,
+      "step_ms": [
+        62.5,
+        65.5,
+        80.19999999925494,
+        77.20000000018626,
+        89.90000000037253
+      ],
+      "orbit_ms": 137.90000000037253,
+      "heap_mb": 25.74475860595703
+    },
+    {
+      "case": "dihedral",
+      "viewport": "1920x1080",
+      "first_model_ms": 463,
+      "step_ms": [
+        94.40000000037253,
+        100.29999999981374,
+        89.70000000018626,
+        110.70000000018626,
+        106.8999999994412
+      ],
+      "orbit_ms": 258.79999999981374,
+      "heap_mb": 23.819372177124023
+    },
+    {
+      "case": "dihedral",
+      "viewport": "1366x768",
+      "first_model_ms": 372,
+      "step_ms": [
+        60.60000000055879,
+        70,
+        83.40000000037253,
+        83,
+        95.5
+      ],
+      "orbit_ms": 152.79999999981374,
+      "heap_mb": 20.94471549987793
+    },
+    {
+      "case": "dihedral",
+      "viewport": "768x1024",
+      "first_model_ms": 393,
+      "step_ms": [
+        62.299999999813735,
+        77.09999999962747,
+        80.6000000005588,
+        81.1000000005588,
+        94.79999999981374
+      ],
+      "orbit_ms": 131.40000000037253,
+      "heap_mb": 27.14216899871826
+    },
+    {
+      "case": "dihedral",
+      "viewport": "390x844",
+      "first_model_ms": 386,
+      "step_ms": [
+        62.5,
+        72.1000000005588,
+        79.90000000037253,
+        83,
+        93.59999999962747
+      ],
+      "orbit_ms": 144.70000000018626,
+      "heap_mb": 26.411471366882324
+    },
+    {
+      "case": "skew_lines_angle",
+      "viewport": "1366x768",
+      "first_model_ms": 476,
+      "step_ms": [
+        69.5,
+        80.79999999981374,
+        93.20000000018626,
+        97.70000000018626,
+        117.70000000018626
+      ],
+      "orbit_ms": 152.09999999962747,
+      "heap_mb": 22.816049575805664
+    },
+    {
+      "case": "tetra_line_plane",
+      "viewport": "1366x768",
+      "first_model_ms": 352,
+      "step_ms": [
+        59.700000000186265,
+        67.70000000018626,
+        75.40000000037253,
+        76,
+        88.3999999994412
+      ],
+      "orbit_ms": 123.79999999981374,
+      "heap_mb": 23.66212272644043
+    },
+    {
+      "case": "distance_point_plane",
+      "viewport": "1366x768",
+      "first_model_ms": 409,
+      "step_ms": [
+        75,
+        106.6000000005588,
+        91.6000000005588,
+        102.90000000037253,
+        95.8999999994412
+      ],
+      "orbit_ms": 144.79999999981374,
+      "heap_mb": 19.356457710266113
+    },
+    {
+      "case": "centroid_foot_volume",
+      "viewport": "1366x768",
+      "first_model_ms": 351,
+      "step_ms": [
+        59,
+        71,
+        66.3999999994412,
+        73.09999999962747,
+        75.20000000018626,
+        97.29999999981374
+      ],
+      "orbit_ms": 88.29999999981374,
+      "heap_mb": 22.757311820983887
+    }
+  ],
+  "physical_low_end": "PHYSICAL_LOW_END_NOT_MEASURED",
+  "backend_stage_timing": {
+    "method": "in-process, warm, one call per statement; local parse includes its Stage 8 (bridge, planner, Source Gate); route_total = parse + bridge + planner + gate + exact kernel + scene build",
+    "median_local_parse_ms": 10.304700000233424,
+    "median_route_total_ms": 32.6959000003626,
+    "max_route_total_ms": 46.43830000077287,
+    "median_envelope_kb": 34.5234375,
+    "rows": [
+      {
+        "case": "probe:angle_line_plane",
+        "local_parse_incl_stage8_ms": 245.54429999989225,
+        "route_total_ms": 46.43830000077287,
+        "envelope_bytes": 35420,
+        "objects": 14
+      },
+      {
+        "case": "probe:angle_line_plane_lateral",
+        "local_parse_incl_stage8_ms": 10.379000000284577,
+        "route_total_ms": 32.7887000003102,
+        "envelope_bytes": 35464,
+        "objects": 14
+      },
+      {
+        "case": "probe:angle_line_plane_tetra",
+        "local_parse_incl_stage8_ms": 9.896500000650121,
+        "route_total_ms": 27.817499999400752,
+        "envelope_bytes": 25971,
+        "objects": 9
+      },
+      {
+        "case": "probe:angle_line_line_cross",
+        "local_parse_incl_stage8_ms": 10.883999999350635,
+        "route_total_ms": 33.20549999989453,
+        "envelope_bytes": 35060,
+        "objects": 14
+      },
+      {
+        "case": "probe:angle_line_line_skew",
+        "local_parse_incl_stage8_ms": 10.826799999449577,
+        "route_total_ms": 34.56749999986641,
+        "envelope_bytes": 48554,
+        "objects": 18
+      },
+      {
+        "case": "probe:angle_right",
+        "local_parse_incl_stage8_ms": 10.00590000057855,
+        "route_total_ms": 31.48460000011255,
+        "envelope_bytes": 35180,
+        "objects": 14
+      },
+      {
+        "case": "probe:dihedral_pyramid",
+        "local_parse_incl_stage8_ms": 9.212599999955273,
+        "route_total_ms": 30.664900000374473,
+        "envelope_bytes": 35558,
+        "objects": 14
+      },
+      {
+        "case": "probe:dihedral_prism",
+        "local_parse_incl_stage8_ms": 9.195700000418583,
+        "route_total_ms": 29.69169999960286,
+        "envelope_bytes": 42691,
+        "objects": 15
+      },
+      {
+        "case": "probe:distance_point_plane",
+        "local_parse_incl_stage8_ms": 9.265100000448001,
+        "route_total_ms": 28.751400000146532,
+        "envelope_bytes": 32710,
+        "objects": 13
+      },
+      {
+        "case": "probe:distance_point_line",
+        "local_parse_incl_stage8_ms": 10.890700000345532,
+        "route_total_ms": 33.335299999635026,
+        "envelope_bytes": 36653,
+        "objects": 14
+      },
+      {
+        "case": "probe:distance_skew_lines",
+        "local_parse_incl_stage8_ms": 11.110600000392878,
+        "route_total_ms": 34.266999999999825,
+        "envelope_bytes": 35163,
+        "objects": 14
+      },
+      {
+        "case": "probe:distance_skew_cuboid",
+        "local_parse_incl_stage8_ms": 11.293900000055146,
+        "route_total_ms": 36.05470000002242,
+        "envelope_bytes": 49471,
+        "objects": 18
+      },
+      {
+        "case": "probe:projection_named",
+        "local_parse_incl_stage8_ms": 11.925499999961175,
+        "route_total_ms": 32.65499999997701,
+        "envelope_bytes": 36119,
+        "objects": 14
+      },
+      {
+        "case": "probe:midpoint_length",
+        "local_parse_incl_stage8_ms": 11.744600000383798,
+        "route_total_ms": 30.819099999462196,
+        "envelope_bytes": 33013,
+        "objects": 13
+      },
+      {
+        "case": "probe:volume_pyramid",
+        "local_parse_incl_stage8_ms": 9.03440000001865,
+        "route_total_ms": 30.28730000005453,
+        "envelope_bytes": 29439,
+        "objects": 12
+      },
+      {
+        "case": "probe:volume_regular_pyramid",
+        "local_parse_incl_stage8_ms": 9.356399999887799,
+        "route_total_ms": 27.345700000296347,
+        "envelope_bytes": 29932,
+        "objects": 13
+      },
+      {
+        "case": "probe:centroid_foot",
+        "local_parse_incl_stage8_ms": 12.298499999815249,
+        "route_total_ms": 32.73680000074819,
+        "envelope_bytes": 35284,
+        "objects": 13
+      },
+      {
+        "case": "probe:face_perp_base",
+        "local_parse_incl_stage8_ms": 9.500000000116415,
+        "route_total_ms": 28.55100000033417,
+        "envelope_bytes": 29741,
+        "objects": 12
+      },
+      {
+        "case": "probe:late_square_side",
+        "local_parse_incl_stage8_ms": 8.699999999407737,
+        "route_total_ms": 28.94410000044445,
+        "envelope_bytes": 32491,
+        "objects": 13
+      },
+      {
+        "case": "controlled_vision:vmmu_r247",
+        "local_parse_incl_stage8_ms": 10.488400000213005,
+        "route_total_ms": 34.94959999989078,
+        "envelope_bytes": 49625,
+        "objects": 18
+      },
+      {
+        "case": "controlled_vision:vmmu_r270",
+        "local_parse_incl_stage8_ms": 10.628200000610377,
+        "route_total_ms": 35.70659999968484,
+        "envelope_bytes": 38631,
+        "objects": 13
+      },
+      {
+        "case": "controlled_vision:vmmu_r273",
+        "local_parse_incl_stage8_ms": 9.370900000249094,
+        "route_total_ms": 29.24410000014177,
+        "envelope_bytes": 27853,
+        "objects": 10
+      },
+      {
+        "case": "controlled_vision:vmmu_r298",
+        "local_parse_incl_stage8_ms": 14.240399999835063,
+        "route_total_ms": 38.850900000397814,
+        "envelope_bytes": 37148,
+        "objects": 13
+      },
+      {
+        "case": "controlled_vision:vmmu_r375",
+        "local_parse_incl_stage8_ms": 9.226899999703164,
+        "route_total_ms": 30.597200000556768,
+        "envelope_bytes": 32719,
+        "objects": 14
+      },
+      {
+        "case": "controlled_vision:vmmu_r476",
+        "local_parse_incl_stage8_ms": 9.161599999970349,
+        "route_total_ms": 42.36280000077386,
+        "envelope_bytes": 35623,
+        "objects": 14
+      },
+      {
+        "case": "controlled_vision:vmmu_r492",
+        "local_parse_incl_stage8_ms": 10.230400000182271,
+        "route_total_ms": 33.48580000056245,
+        "envelope_bytes": 44151,
+        "objects": 15
+      }
+    ]
+  }
+}

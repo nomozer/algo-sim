@@ -1,0 +1,83 @@
+{
+  "run_id": "semantic-failure-safe-image-segmentation",
+  "generated_at_utc": "2026-11-13T17:27:25.127687+00:00",
+  "head": "7315cf3b033f78fce1409085c6eeab720f83c967",
+  "environment": {
+    "ALLOW_LIVE_AI": "0"
+  },
+  "band_choice_deterministic": true,
+  "stale_or_foreign_band_id": "refused with AMBIGUOUS_PROBLEM_BOUNDARIES and no candidates (test_a_stale_band_choice_is_refused_not_guessed)",
+  "chosen_band_only_is_cut": "test_two_option_groups_in_one_region_ask_the_learner_to_choose (the crop is exactly the chosen rectangle)",
+  "browser": [
+    {
+      "viewport": "1920x1080",
+      "pick_2_target_vs_neighbour": [
+        1,
+        0.10588235294117647
+      ],
+      "repick_1_target_vs_neighbour": [
+        1,
+        0.07317073170731707
+      ],
+      "review_shows_neighbour": false,
+      "analyzed_text_target_vs_neighbour": [
+        1,
+        0.07317073170731707
+      ],
+      "analyze_status": "SERVED"
+    },
+    {
+      "viewport": "1366x768",
+      "pick_2_target_vs_neighbour": [
+        1,
+        0.10588235294117647
+      ],
+      "repick_1_target_vs_neighbour": [
+        1,
+        0.07317073170731707
+      ],
+      "review_shows_neighbour": false,
+      "analyzed_text_target_vs_neighbour": [
+        1,
+        0.07317073170731707
+      ],
+      "analyze_status": "SERVED"
+    },
+    {
+      "viewport": "768x1024",
+      "pick_2_target_vs_neighbour": [
+        1,
+        0.10588235294117647
+      ],
+      "repick_1_target_vs_neighbour": [
+        1,
+        0.07317073170731707
+      ],
+      "review_shows_neighbour": false,
+      "analyzed_text_target_vs_neighbour": [
+        1,
+        0.07317073170731707
+      ],
+      "analyze_status": "SERVED"
+    },
+    {
+      "viewport": "390x844",
+      "pick_2_target_vs_neighbour": [
+        1,
+        0.10588235294117647
+      ],
+      "repick_1_target_vs_neighbour": [
+        1,
+        0.07317073170731707
+      ],
+      "review_shows_neighbour": false,
+      "analyzed_text_target_vs_neighbour": [
+        1,
+        0.07317073170731707
+      ],
+      "analyze_status": "SERVED"
+    }
+  ],
+  "cache": "OCR results are cached per image BYTES: a band is new bytes, so its OCR, spans and offsets are its own; the analysis cache key is the confirmed text, so another problem's text is another key; the frontend reducer replaces the assist state on every prepare response (photo-problem-flow 'from-prepare')",
+  "neighbour_containment_note": "5-gram containment ≈ 0.07–0.11 of the neighbour's statement is shared boilerplate ('Cho hình …', option letters), not its facts"
+}

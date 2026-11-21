@@ -866,6 +866,79 @@ def _repair_simulation_goal_target_refs(out: dict[str, Any]) -> None:
             sg["target_refs"] = [tok]
 
 
+def _repair_unresolved_clarifications(out: dict[str, Any], text: str) -> None:
+    """Preserve verbatim clarification entries when accompanied by cascading secondary items or incomplete goals."""
+    unres = out.get("unresolved")
+    if not isinstance(unres, list) or not unres:
+        return
+    primaries = [
+        p for p in unres
+        if isinstance(p, dict)
+        and p.get("kind") in ("ambiguous", "missing_operand")
+        and isinstance(p.get("quote"), str)
+        and p["quote"]
+        and p["quote"] in text
+        and p.get("missing_roles")
+        and p.get("candidate_relations")
+    ]
+    if primaries:
+        def _is_redundant_companion(u: Any) -> bool:
+            if not isinstance(u, dict):
+                return False
+            uq = str(u.get("quote") or "")
+            for p in primaries:
+                if p is u:
+                    continue
+                pq = p["quote"]
+                subj = p.get("subject_ref")
+                has_subj = bool(subj and re.search(rf"(?<![\w']){re.escape(str(subj))}(?![\w'])", uq))
+                if "..." in uq and uq not in text and has_subj:
+                    return True
+                if not u.get("missing_roles") and not u.get("candidate_relations") and uq:
+                    if u.get("kind") in ("ambiguous", "missing_operand") and uq in pq:
+                        return True
+                    if has_subj and uq in text and re.match(
+                        r"^\s*(?:mô\s+phỏng|vẽ|dựng|hiển\s+thị|biểu\s+diễn|minh\s+ho[ạa])\b", uq, re.IGNORECASE
+                    ):
+                        lo = min(text.index(uq), text.index(pq))
+                        hi = max(text.index(uq) + len(uq), text.index(pq) + len(pq))
+                        if not re.search(r"[.?!;]\s", text[lo:hi]):
+                            return True
+            return False
+
+        out["unresolved"] = unres = [u for u in unres if not _is_redundant_companion(u)]
+    mgs = out.get("math_goals")
+    if not isinstance(mgs, list) or not mgs:
+        return
+    kept_mgs: list[Any] = []
+    for mg in mgs:
+        if not isinstance(mg, dict):
+            kept_mgs.append(mg)
+            continue
+        mg_quote = str(mg.get("quote") or "")
+        target = mg.get("target")
+        shapes = GOAL_OPERAND_SHAPES.get(mg.get("goal_type"))
+        target_keys = set(target) - {"solid", "solid_id"} if isinstance(target, dict) else set()
+        shape_valid = bool(shapes and any(set(s) == target_keys for s in shapes))
+        if not shape_valid and mg_quote and mg_quote in text:
+            matched = next(
+                (
+                    u for u in unres
+                    if isinstance(u, dict)
+                    and u.get("kind") in ("missing_operand", "ambiguous")
+                    and isinstance(u.get("quote"), str)
+                    and u["quote"]
+                    and u["quote"] in mg_quote
+                ),
+                None,
+            )
+            if matched is not None:
+                matched["quote"] = mg_quote
+                continue
+        kept_mgs.append(mg)
+    out["math_goals"] = kept_mgs
+
+
 def _repair_observed_wire_shapes(out: dict[str, Any]) -> dict[str, Any]:
     text = out.get("problem_text")
     if not isinstance(text, str):
@@ -876,6 +949,7 @@ def _repair_observed_wire_shapes(out: dict[str, Any]) -> dict[str, Any]:
     _repair_square_premises(out, text)
     _repair_restated_premises(out, text, single)
     _repair_simulation_goal_target_refs(out)
+    _repair_unresolved_clarifications(out, text)
     return out
 
 
@@ -970,10 +1044,9 @@ def extract_typed_fact_next_v2(problem_text: str, extractor: Extractor) -> Extra
         # Validate before NonEmptyText strips whitespace in the canonical model.
         if raw.get("problem_text") != problem_text:
             return ExtractionResult(None, "REPLAY_SOURCE_IDENTITY_MISMATCH", diagnostics)
-        references = tuple(_check_quotes(raw, problem_text))
         if "source_references" not in raw:
             raw = _repair_observed_wire_shapes(deepcopy(raw))
-            references = tuple(_check_quotes(raw, problem_text))
+        references = tuple(_check_quotes(raw, problem_text))
         payload = parse_typed_fact_next_v2(raw).model_copy(update={"problem_text": problem_text})
         _check_premise_roles(payload, problem_text)
     except (TypedFactNextValidationError, _TuChoiAI) as exc:

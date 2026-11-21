@@ -1,0 +1,38 @@
+{
+  "run_id": "local-semantic-source-gate-reliability",
+  "generated_at_utc": "2026-11-13T04:54:20.249879+00:00",
+  "parser": {
+    "source": "parser_latency_before_after.json",
+    "median_of_statement_medians_ms": {
+      "before": 1.7164500000035332,
+      "after": 3.507599999920785
+    },
+    "per_statement_after_over_before": {
+      "median": 0.9851678890212496,
+      "max": 11.35122912759248,
+      "min": 0.44896076054489037
+    },
+    "p95_ms": {
+      "before": 11.70959999990373,
+      "after": 13.424799999938841
+    },
+    "sum_of_statement_medians_ms": {
+      "before": 95.1121499998635,
+      "after": 134.00945000000775
+    },
+    "reading": "18 of 25 statements cost the same (ratio 0.94-1.08). The 7 that grew (1.6x-11x, at most ~15 ms) are the statements whose parse now goes further: more facts read and Stage 8 (bridge, planner, Source Gate) reached. One got faster. Milliseconds against seconds of OCR."
+  },
+  "prepare_image": {
+    "source": "image_to_scene3d_before_after.json",
+    "note": "medians from two separate sessions on the same machine; not a controlled comparison — no regression is claimed or excluded beyond that"
+  },
+  "concurrency": {
+    "source": "sqlite_concurrency_before_after.json",
+    "health_probe_max_ms_at_8": {
+      "before": 8518.60079999824,
+      "after": 587.4394999991637
+    }
+  },
+  "memory": "NOT_MEASURED: no new process, model or cache; the threadpool reuses AnyIO's default worker limit",
+  "rust_or_prewarm": "not done (forbidden by the task)"
+}

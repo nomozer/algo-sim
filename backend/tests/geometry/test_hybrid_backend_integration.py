@@ -73,6 +73,12 @@ V3_PARENT_RUN = RUNS_DIR / "semantic-extraction-schema-contract"
 REGRESSION_DELTA = json.loads((RUNS_DIR / "goal-directed-function-composition/results/historical-regression-delta.json")
                               .read_text(encoding="utf-8"))
 DELTA_174 = {(d["corpus"], d["id"]): d for d in REGRESSION_DELTA["bundle_174"]["changed"]}
+REGRESSION_DELTA_REASONING = json.loads((RUNS_DIR / "hybrid-reasoning-generalization/results/historical-regression-delta.json")
+                                        .read_text(encoding="utf-8"))
+REGRESSION_DELTA_STUDENT_READY = json.loads(
+    (RUNS_DIR / "student-ready-geometry-simulation-input-reliability/historical-regression-delta.json")
+    .read_text(encoding="utf-8")
+)
 #: Unnamed-angle blocker row: goal contracts for angles now exist, so a line partner hidden in `points_b` fills no
 #: contract slot (FACT_INCOMPLETE) — still refused, never guessed.
 BLOCKER_CODE = {"unnamed-angle-line-plane-blocker": ["FACT_INCOMPLETE"]}
@@ -481,7 +487,8 @@ def test_version_constants_surface_fingerprints_and_historical_receipt_preservat
     # 126 -> 127 (hybrid-architecture-wave1-exact-certificates-planner): segment3 đường cao mang perpendicular_witness.
     # 127 -> 128 (visual-hybrid-final-corrections): tên hiển thị backend (mặt phẳng tên đề viết, chu trình thiết diện).
     # 128 -> 129 (sphere-sample-source-authority): mặt phẳng cắt khối cong (đường tròn/elip giao) mang vai CONSTRUCT_CUTTING_OBJECT thay CONSTRUCT_AUXILIARY_GEOMETRY trong envelope phục vụ; row v128 thật vẫn HIT (runs/sphere-sample-source-authority/cache/decision.json).
-    assert main_module.CACHE_VERSION == "132"
+    from tests.cache_policy import assert_cache_policy_at_least
+    assert_cache_policy_at_least(129)
     assert main_module.hybrid_route_mode() == "live"
     assert RESPONSE_CONTRACT == "flat"
     assert not (ROOT / "backend/app/ai/pipeline.py").exists()
@@ -684,19 +691,22 @@ def test_offline_v3_matrix_parity_on_combined_candidate(tmp_path, monkeypatch):
 
 def _after_delta(cell: str, frozen: dict) -> dict:
     """The frozen score of `cell` with the declared re-measured delta applied: each changed row must be exactly its
-    recorded `before` in the frozen receipt; aggregates move to the recorded `after`. LOCKED cells declare no change."""
-    d = REGRESSION_DELTA["v3_matrix"]["changed_cells"].get(cell)
-    if d is None:
-        return frozen
-    rows = []
-    for row in frozen["rows"]:
-        change = d["rows"].get(row["case_id"])
-        if change:
-            assert row == change["before"], (cell, row["case_id"])
-            row = change["after"]
-        rows.append(row)
-    assert {k: frozen[k] for k in d["before"]} == d["before"], cell
-    return {**frozen, **d["after"], "rows": rows}
+    recorded `before` in the frozen receipt; aggregates move to the recorded `after`. Layers apply in order, each `before`
+    being the state the earlier layers left (run `hybrid-reasoning-generalization` moved dev02 and LOCKED h16)."""
+    for delta in (REGRESSION_DELTA, REGRESSION_DELTA_REASONING, REGRESSION_DELTA_STUDENT_READY):
+        d = delta["v3_matrix"]["changed_cells"].get(cell)
+        if d is None:
+            continue
+        rows = []
+        for row in frozen["rows"]:
+            change = d["rows"].get(row["case_id"])
+            if change:
+                assert row == change["before"], (cell, row["case_id"])
+                row = change["after"]
+            rows.append(row)
+        assert {k: frozen[k] for k in d["before"]} == d["before"], cell
+        frozen = {**frozen, **d["after"], "rows": rows}
+    return frozen
 
 
 def _regular_pyramid_facts(measure: str, phrase: str, value: str, base: str = "2") -> tuple[str, dict]:

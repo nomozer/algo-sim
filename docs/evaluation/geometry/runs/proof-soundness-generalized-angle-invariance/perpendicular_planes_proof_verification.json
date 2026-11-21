@@ -1,0 +1,81 @@
+{
+  "run_id": "proof-soundness-generalized-angle-invariance",
+  "generated_at_utc": "2026-11-14T12:35:21.414052+00:00",
+  "product_commit": "c54db0da0c792c2ba0399acc8e9df992d2d270c3",
+  "measured_system": "610b4ee1e3227bc44f0659aea5d0dfc7f7a827aff622605db2b9571fb980fb80",
+  "cache_version": "137",
+  "environment": {
+    "ALLOW_LIVE_AI": "0",
+    "HYBRID_ROUTE_MODE": "local-first",
+    "live_ai_calls": 0
+  },
+  "head": "94281be581617a67921f295474dbd8e698dade4b",
+  "rule": "PERP_PLANES: d ⊂ P, d ⊥ Q ⇒ ∠(P, Q) = 90°",
+  "cases": {
+    "pp_base": {
+      "row": {
+        "case_id": "COMP:pp_base",
+        "text_sha256": "fc4fa108be81e27f604e3c2cd5765da98ce9189fe833cba3f26958caa1b01162",
+        "expected": "SERVE",
+        "before": {
+          "status": "REFUSED",
+          "code": "MISSING_DIMENSION",
+          "answers": null
+        },
+        "after": {
+          "status": "SERVED",
+          "code": null,
+          "answers": {
+            "q1": "cos²=0"
+          }
+        },
+        "after_root_cause": null
+      },
+      "proof_rules": [
+        "SOURCE_LINE_PERP_PLANE",
+        "PERP_PLANES"
+      ],
+      "cos_sq": "0",
+      "witness": null,
+      "verified": true,
+      "hand_check_two_shapes": [
+        "0",
+        "0"
+      ]
+    },
+    "pp_lateral": {
+      "row": {
+        "case_id": "COMP:pp_lateral",
+        "text_sha256": "4c0b5ff541e5c6e9bbd11ee6b4aaef030417706da076032e2cea85ed661d81d6",
+        "expected": "SERVE",
+        "before": {
+          "status": "REFUSED",
+          "code": "MISSING_DIMENSION",
+          "answers": null
+        },
+        "after": {
+          "status": "SERVED",
+          "code": null,
+          "answers": {
+            "q1": "cos²=0"
+          }
+        },
+        "after_root_cause": null
+      },
+      "proof_rules": [
+        "RIGHT_ANGLE",
+        "SOURCE_LINE_PERP_PLANE",
+        "PERP_PLANE_TO_LINE",
+        "PERP_TWO_LINES",
+        "PERP_PLANES"
+      ],
+      "cos_sq": "0",
+      "witness": null,
+      "verified": true,
+      "hand_check_two_shapes": [
+        "0",
+        "0"
+      ]
+    }
+  }
+}

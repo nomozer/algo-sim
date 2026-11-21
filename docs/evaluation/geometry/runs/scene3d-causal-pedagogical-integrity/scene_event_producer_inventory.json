@@ -1,0 +1,35 @@
+{
+  "run_id": "scene3d-causal-pedagogical-integrity",
+  "generated_at_utc": "2026-11-14T15:39:13.820636+00:00",
+  "product_commit": "a2874d273959970faa501879f4f9dbfe20c93975",
+  "measured_system": "225f4bba5a8765ccd1c12507ce6dbd0bab25d69d02263148cf94752f921e2b56",
+  "cache_version": "138",
+  "dataset_partition": "DEVELOPMENT (agent-written corpus, exposed REAL27, exposed probes); never H-1 or locked W2/W3",
+  "environment": {
+    "ALLOW_LIVE_AI": "0",
+    "HYBRID_ROUTE_MODE": "local-first",
+    "live_ai_calls": 0
+  },
+  "head": "6da2795a493d6097add56294832f0d5a7ea1ef13",
+  "served_scenes": 111,
+  "events_by_action_and_kind": {
+    "CREATE/GEOMETRY_CONSTRUCTION": 626,
+    "EXTEND/GEOMETRY_CONSTRUCTION": 155,
+    "INIT/EXPLANATION": 111,
+    "MEASURE/FINAL_RESULT": 73,
+    "MEASURE/MEASUREMENT": 72,
+    "STEP/GEOMETRY_CONSTRUCTION": 40
+  },
+  "construction_lineage_modes": {
+    "direct_euclidean_primitive": 942,
+    "vector_translation": 72
+  },
+  "producers": {
+    "events / formation.steps": "backend/app/simulation/semantic_program/scene3d.py (build_scene3d) + geometry_functions/construction_continuity.py",
+    "depends / computational_depends / visible_prerequisites / construction_lineage": "semantic_program/simulation_state.py",
+    "MEASURE explanations / measured_quantity": "semantic_program/geometry_exec.py (phan_loai_quan_he_do), scene3d.py (_giai_thich_do)",
+    "section reasons": "simulation_state.py (_canh_song_song_thiet_dien, _vet_giao_tuyen_thiet_dien) → scene3d.py",
+    "unused auxiliary": "simulation_state._tim_phu_tro_du_thua, recomputed on Route D by function_route._tinh_lai_phu_tro_du_thua",
+    "angle constructions / right-angle markers": "semantic_program/quantity_annotations.py"
+  }
+}

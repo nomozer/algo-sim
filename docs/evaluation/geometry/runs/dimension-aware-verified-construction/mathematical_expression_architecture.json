@@ -1,0 +1,553 @@
+{
+  "schema": "algosim-phases-3-4-5-mathematical-expression-architecture/2",
+  "run_id": "dimension-aware-verified-construction",
+  "phase": "phases_3_4_5_expression_dimension_source_gate_post_implementation_verification",
+  "stage": "stage_p1b",
+  "generated_by": "expr-dim-audit",
+  "generated_at": "2026-11-15T10:40:55Z",
+  "generated_at_utc": "2026-11-15T10:40:55Z",
+  "branch": "feat/local-first-geometry-understanding",
+  "git_head_sha": "b04bed0f83e02ac27416814bea08fa830ee91461",
+  "head": "b04bed0f83e02ac27416814bea08fa830ee91461",
+  "product_commit": "32bdaa1df3dd7606b59b8c3cd8411578c4206d54",
+  "product_commit_rule": "product-paths-excluding-test-only/1",
+  "measured_system_hash": "b1403b91fd81410f9586c5676f541911540b4bc4bb0d7bf40204d17538623e59",
+  "measured_system_file_count": 120,
+  "baseline_measured_system_hash": "c25f9695828888987db2ab7990c4ff135da4d01c6b9d968f898c36728a0ae436",
+  "corpus_id": "DEVELOPMENT_EXPOSED_STAGE_P1B_ARCHITECTURE_AND_VERIFICATION",
+  "dataset_manifest_sha256": "15486cd57a491060f6cdbc39ebd46c3c0c820b83cae645060554e9d8edee8141",
+  "provider_call_count": 0,
+  "cache_version": "140",
+  "cache_policy": "140:route-d",
+  "route_d_cache_policy": "140:route-d",
+  "planned_stage_p1c_cache_version": "140",
+  "schema_versions": {
+    "expression_model": "dimension-expression/1",
+    "typed_fact_next": "typed-fact-next/2",
+    "typed_fact_next_bridge": "typed-fact-next-bridge/2",
+    "registry": "geometry-functions/33",
+    "planner": "geometry-fact-planner/26",
+    "engine": "geometry-function-engine/24",
+    "local_geometry_parser": "local-geometry-parser/2",
+    "ocr_reconcile": "layout-aware-ocr-reconcile/1",
+    "determinacy_audit": "mathematical-determinacy-audit/1",
+    "trig_construction_certificates": "trig-construction-certificate/1",
+    "output_policy": "output-policy/1",
+    "hybrid_adapter": "hybrid-simulation-adapter/4",
+    "route_d_envelope": "hybrid-route-d-simulation/4"
+  },
+  "dataset_partition": "DEVELOPMENT_EXPOSED_ONLY (exposed REAL27 vmmu_r537, COMP112, DEV37, and Stage P1b dimensional/parser/Source-Gate probes); zero access to sealed H-1 or locked W2/W3",
+  "environment": {
+    "ALLOW_LIVE_AI": "0",
+    "HYBRID_ROUTE_MODE": "local-first",
+    "PYTHONPATH": "backend",
+    "python_executable": "D:/Documents/projects/algo-sim/backend/.venv/Scripts/python.exe -B",
+    "live_ai_calls": 0,
+    "sealed_h1_rows_opened": 0,
+    "locked_w2_w3_rows_read": 0
+  },
+  "test_command": "D:/Documents/projects/algo-sim/backend/.venv/Scripts/python.exe -B -m pytest -q backend/tests/simulation/test_dimension_expression_safety.py backend/tests/geometry/test_reusable_ratio_and_inverse_angle_geometry.py backend/tests/geometry/test_failure_taxonomy_and_api_contract.py backend/tests/geometry/test_grounded_vietnamese_understanding.py backend/tests/geometry/test_local_semantic_coverage.py backend/tests/geometry/test_local_geometry_parser.py backend/tests/geometry/test_ai_function_route.py",
+  "expected_behavior": "Audit all existing numeric/symbolic expression, Vietnamese parser, TypedFactNext /2, Source Gate, Planner, Exact Kernel, scale-normalization, and OCR modules in local-first-geometry-understanding without modifying backend/ or frontend/; diagnose all root-cause blockers on exposed development cases (including vmmu_r537 and area/volume/power/radical/decimal cases in REAL27/COMP112/DEV37); design a minimal, exact extension over existing Fraction and Radical kernel types (zero second CAS) covering Dimension algebra, context-driven symbol typing, structured QuantityExpr AST with exact spans, Vietnamese quantity relation binding, UNREAD_VALUE preservation, and Source Gate / FactRole separation.",
+  "actual_behavior": "Stage P1a + Stage P1b (including P1b-1..P1b-5 hardening) implemented and verified end-to-end (59/59 passed in test_dimension_expression_safety.py, 1112 passed across parser/Source-Gate/ask-grammar regression suites, 0 live AI calls, 0 publication-safety findings): (1) backend/app/simulation/geometry/expression.py ('dimension-expression/1') implements Dimension(length_exp, angle_exp), MeasurementUnit (mm/cm/dm/m/km), FactRole, 23-ask GOAL_DEGREES in exact parity with registry.REGISTRY and engine.BAC_DAI_LUONG, structured QuantityExpr AST with exact source_span, context-driven SymbolEnvironment (with Non-Length Single-Symbol Guard), and exact evaluation directly over Fraction and Radical (zero second CAS); (2) typed_fact_next.py, typed_fact_next_bridge.py, and planner.py add planner-only 'solid_volume' and quantity_premise_provenance while preserving all 5 frozen provider schema SHA-256s byte-identically; (3) registry.py wires dimension-aware Source Gate (SG-1..SG-8), enforces premise unit-vs-slot dimension agreement and single metric base scale across mm/cm/dm/m/km ('INCONSISTENT_FACTS'), guards hallucinated polygon_area.shape keywords ('square', 'rectangle', 'equilateral_triangle') BEFORE the unnamed-base return ('PREDICATE_NOT_IN_QUOTE'), fixes greedy optional-paren role capture on area clauses, supports glued scalar coefficients ('AD = 2BC') and role-ordered segment ratios ('tỉ số giữa cạnh bên và cạnh đáy bằng 3/2'), and blocks dimension mismatches and conflicting symbol dimensions; (4) engine.py binds SymbolEnvironment across all quantity calls, blocks uncertified area/volume derivations, executes certified derivations (SQUARE_AREA_TO_SIDE, EQUILATERAL_TRIANGLE_AREA_TO_SIDE, PYRAMID_VOLUME_AND_BASE_TO_HEIGHT, PYRAMID_VOLUME_AND_HEIGHT_TO_SQUARE_SIDE, PRISM_VOLUME_AND_BASE_TO_HEIGHT) with VERIFIED_DERIVED_QUANTITY records, and tags illustrative scale choices as ILLUSTRATIVE_CONSTRUCTION_QUANTITY; (5) local_geometry_parser.py ('local-geometry-parser/2') parses squared/cubic/radical/decimal/parenthesized Vietnamese quantity expressions and preserves trailing metric units so wrong-dimension/mixed-base unit conflicts fail closed with 'INCONSISTENT_FACTS' (0 provider calls), while keeping UNREAD_VALUE@ on unparseable values; (6) ocr_reconcile.py classifies '²³' as math tokens, detects broken superscripts ('a2', 'a3', 'a”'), and normalizes metric units ('mm2' -> 'mm²'); (7) exposed case vmmu_r537 serves exact answer 'a√6/3' (key C) with zero case-ID hardcoding.",
+  "mathematical_oracle": "Exact arithmetic over Q and single-radical extensions Q(sqrt(n)) via backend/app/simulation/geometry/radical.py (Fraction, Radical) and SPD Gram metric in backend/app/simulation/geometry_functions/engine.py. Hand-derived oracle for exposed case vmmu_r537 (regular square pyramid S.ABCD, lateral edge SA = a, base area S_ABCD = a²): certified square base + certified a : L^1 > 0 => derived base side AB = sqrt(a²) = a; diagonal AC = a√2 => AO² = a²/2; altitude SO² = SA² - AO² = a²/2; midpoint M of BC gives OM² = a²/4, SM² = SO² + OM² = 3a²/4; d(O, (SBC)) = SO·OM/SM = a√6/6; since AD || BC in (SBC) and O is midpoint of AC, d(A, (SBC)) = 2·d(O, (SBC)) = a√6/3 (matches VMMU dataset answer key C).",
+  "source_provenance": {
+    "inspected_backend_modules": [
+      "backend/app/simulation/geometry/radical.py",
+      "backend/app/simulation/geometry/exact.py",
+      "backend/app/simulation/semantic_program/scale_normalization.py",
+      "backend/app/simulation/semantic_program/segment_relation.py",
+      "backend/app/simulation/geometry_functions/typed_fact_next.py",
+      "backend/app/simulation/geometry_functions/typed_fact_next_bridge.py",
+      "backend/app/simulation/geometry_functions/registry.py",
+      "backend/app/simulation/geometry_functions/planner.py",
+      "backend/app/simulation/geometry_functions/engine.py",
+      "backend/app/simulation/error_codes.py",
+      "backend/app/ai/local_geometry_parser.py",
+      "backend/app/ai/adaptive_input_router.py",
+      "backend/app/ai/adapter4_route.py",
+      "backend/app/ai/hybrid_preview.py",
+      "backend/app/ingestion/ocr_reconcile.py"
+    ],
+    "inspected_development_artifacts": [
+      "docs/evaluation/geometry/runs/grounded-vietnamese-geometry-understanding/AXO_GROUNDED_VIETNAMESE_GEOMETRY_UNDERSTANDING_REPORT.md",
+      "docs/evaluation/geometry/runs/grounded-vietnamese-geometry-understanding/real27_acceptance_before_after.json",
+      "docs/evaluation/geometry/runs/grounded-vietnamese-geometry-understanding/real27_root_cause_matrix.json",
+      "docs/evaluation/geometry/runs/grounded-vietnamese-geometry-understanding/fact_completeness_verification.json",
+      "docs/evaluation/geometry/runs/grounded-vietnamese-geometry-understanding/local_text_to_simulation_acceptance.json",
+      "docs/evaluation/geometry/runs/grounded-vietnamese-geometry-understanding/local_image_to_simulation_acceptance.json",
+      "docs/evaluation/geometry/runs/grounded-vietnamese-geometry-understanding/tools/compositional_dev_corpus.py",
+      "docs/evaluation/geometry/runs/controlled-vision-real-image-validation/new_in_scope_image_manifest.json"
+    ],
+    "sealed_holdout_files_accessed": 0,
+    "locked_w2_w3_files_accessed": 0,
+    "candidate_manifest": "docs/evaluation/semantic-benchmark/EVALUATION_CANDIDATE.json",
+    "candidate_manifest_sha256": "15486cd57a491060f6cdbc39ebd46c3c0c820b83cae645060554e9d8edee8141",
+    "prior_real27_receipt_sha256": "9a35613d0079451413a7e3334f46363658848c339539867ebd6590ae406bae68",
+    "stage_p1b_implemented_modules": [
+      "backend/app/simulation/geometry/expression.py",
+      "backend/app/simulation/geometry_functions/typed_fact_next.py",
+      "backend/app/simulation/geometry_functions/typed_fact_next_bridge.py",
+      "backend/app/simulation/geometry_functions/planner.py",
+      "backend/app/simulation/geometry_functions/registry.py",
+      "backend/app/simulation/geometry_functions/engine.py",
+      "backend/app/ai/local_geometry_parser.py",
+      "backend/app/ingestion/ocr_reconcile.py"
+    ],
+    "stage_p1b_test_suite": "backend/tests/simulation/test_dimension_expression_safety.py"
+  },
+  "codebase_audit_map": {
+    "kernel_exact_numbers": {
+      "file": "backend/app/simulation/geometry/radical.py",
+      "lines": "1-575",
+      "existing_primitives": [
+        "Radical(he: Fraction, can: int, mu: int = 0)",
+        "ExactNumber = Union[Fraction, Radical]",
+        "radical(can, he)",
+        "sqrt_rational(q)",
+        "square(x)",
+        "multiply(a, b)",
+        "add(a, b)",
+        "times_rational(x, k)",
+        "divided_by_rational(x, k)",
+        "parse_exact(s)",
+        "display(x)"
+      ],
+      "audit_finding": "Already provides exact rational and square-free radical arithmetic with zero float approximation. Must be reused directly as the sole numeric evaluation substrate (no second CAS)."
+    },
+    "legacy_ir_scale_and_segment_helpers": {
+      "files": [
+        "backend/app/simulation/semantic_program/scale_normalization.py (lines 1-410)",
+        "backend/app/simulation/semantic_program/segment_relation.py (lines 1-524)"
+      ],
+      "audit_finding": "Operate only on RequestContract / IR compatibility surfaces, not on Route D TypedFactNext /2 -> Registry /33 -> Engine /24."
+    },
+    "local_vietnamese_parser": {
+      "file": "backend/app/ai/local_geometry_parser.py",
+      "key_locations": {
+        "_VAL_and_canon_val": "lines 138-148",
+        "_solid_dimension_items": "lines 161-185",
+        "_PREMISE_VALUE_RE_and_unread_values": "lines 634-675",
+        "pyramid_and_prism_height": "lines 990-1005, 1240-1254",
+        "face_area_named_and_unnamed_base": "lines 1739-1780",
+        "segment_ratio_and_length_assignments": "lines 2129-2230",
+        "clause_completeness_guards": "lines 3896-3920"
+      },
+      "audit_findings": [
+        "_VAL (line 138) rejects superscripts '²'/'³', caret powers '^2'/'^3', parenthesized expressions '(2a)²'/'a/(2²)', radical denominators 'a/√3', and symbols other than 'a'.",
+        "Line 1769 added 'diện tích (của)? (mặt)? đáy (bằng|là|=) {_VAL}', which never matched 'a²' because _VAL rejected '²'; _PREMISE_VALUE_RE (line 634) detected 'a²' and correctly forced UNREAD_VALUE -> LOCAL_PARSE_PARTIAL.",
+        "No 'solid_volume' premise rule exists yet for 'Thể tích hình chóp bằng a³/3'.",
+        "'height' rule on pyramids (line 990) only matches 'chiều cao' inside regular-pyramid declarations (missing 'độ dài đường cao bằng a√3' and standalone height sentences).",
+        "'segment_ratio' (line 2131) only matches 'AB = k CD' with integer/rational k, missing 'tỉ số (hai cạnh) AB và CD bằng 2/3', 'AB/CD = 2/3', role-ordered ratios, and explicit ambiguity detection on unordered 'tỉ số hai cạnh bằng 2/3'."
+      ]
+    },
+    "typed_fact_contract_and_bridge": {
+      "files": [
+        "backend/app/simulation/geometry_functions/typed_fact_next.py (lines 374-439)",
+        "backend/app/simulation/geometry_functions/typed_fact_next_bridge.py (lines 895-925)"
+      ],
+      "audit_findings": [
+        "_hinh_dung(value, 'value') at typed_fact_next.py:423 already accepts any non-empty string, so TypedFactNextV2 wire shape needs no breaking change.",
+        "_ARGS_LOI has 'face_area', 'segment_length', 'height', 'segment_ratio', 'divide_segment', and angle kinds, but lacks 'solid_volume' (needed for 'Thể tích hình chóp bằng a³/3')."
+      ]
+    },
+    "registry_and_source_gate": {
+      "file": "backend/app/simulation/geometry_functions/registry.py",
+      "key_locations": {
+        "NUMBER_PATTERN_SO_doc_so": "lines 108-145",
+        "PolygonAreaArgs_and_SegmentRatioArgs": "lines 364-390, 999-1005",
+        "_so_nhom_and_closed_sentence_grammar": "lines 1513-1855",
+        "_C_DIENTICH_greedy_paren_bug": "lines 1614-1621",
+        "_so_theo_vai_tro_role_grounding": "lines 2036-2064, 3136-3165",
+        "premise_number_coverage_kiem_so_tien_de": "lines 3639-3675",
+        "unit_classification_phan_loai_don_vi": "lines 4908-4980",
+        "_DIEN_TICH_PREMISE_RE_and_area_grounding": "lines 7405-7463",
+        "_TI_SO_DOAN_RE_and_ratio_grounding": "lines 7465-7530",
+        "_cau_tien_de_dong_hop_le": "lines 7680-7770"
+      },
+      "audit_findings": [
+        "CRITICAL BUG 1 (Dimensional blindness): doc_so(s) returns (coeff_sq: Fraction, co_a: bool) with boolean co_a restricted to symbol 'a' at exponent 1. Consequently, 'a²' and 'a³' fail NUMBER_PATTERN (SCHEMA_INVALID), while 'polygon_area(ABCD, \"4a\")' alongside 'SA = a' passes doc_so as co_a=True and is mis-interpreted by engine.py as 4a².",
+        "CRITICAL BUG 2 (Greedy optional parenthesis in _C_DIENTICH & _DIEN_TICH_PREMISE_RE, lines 1619 & 7410): '(?:\\s*(?:\\(\\s*)?(?:cm|dm|mm|m)?(?:²|\\^2|2)?(?:\\s*\\))?)?' makes '\\(', unit, exponent, and '\\)' independently optional, so it greedily consumes ' (' before '(tham khảo hình bên dưới)' in vmmu_r537, breaking _C_HET in _phan_tich_cau and causing _so_theo_vai_tro to fail with UNGROUNDED_VALUE on 'có độ dài cạnh bên bằng a'.",
+        "Unit classification (_DON_VI, _phan_loai_don_vi, _don_vi_met_cua_de, lines 4865-4980) already cleanly classifies mm/cm/dm/m, cm²..m², cm³..m³, độ/radian, đvđd/đvdt/đvtt and enforces single-metric-unit consistency without speculative unit conversion."
+      ]
+    },
+    "planner_and_exact_kernel": {
+      "files": [
+        "backend/app/simulation/geometry_functions/planner.py (lines 95-206, 715-745, 1035-1105, 1284-1355)",
+        "backend/app/simulation/geometry_functions/engine.py (lines 580-737, 3198-3230, 4367-4376, 4489-4545, 5768-5860)"
+      ],
+      "audit_findings": [
+        "planner.py already keeps polygon_area as a distinct fact call (never rewriting it to regular_polygon.side). Adding solid_volume passthrough preserves the exact same SOURCE_QUANTITY invariant.",
+        "engine.py:do_dai (lines 592-662) already derives side² from polygon_area for square, equilateral_triangle, and rectangle+1-side, and verifies polygon_area post-construction in _dung_khong (line 3200), but records no explicit VERIFIED_DERIVED_QUANTITY certificate in trace/derived_quantities, lacks right-triangle area-to-leg derivation, and lacks solid_volume-to-height derivation.",
+        "engine.py:_don_vi (lines 4520-4531) checks homogeneity via boolean doc_so(...)[1] and hardcodes return 'a', whereas _hien_thi_ky_hieu(x, bac, ky_hieu) (line 4533) and adapter4_route.py (line 304) already support arbitrary length-unit symbol strings ky_hieu."
+      ]
+    },
+    "ocr_expression_handling": {
+      "file": "backend/app/ingestion/ocr_reconcile.py",
+      "lines": "35-120, 296-338",
+      "audit_findings": [
+        "_MATH_CHAR_RE (line 42) omits '²' and '³', so is_mathlike('a²') returns False, and norm_math (lines 83-84) omits 'mm' in '([cdk]?m)[23]' ('mm2'/'mm3').",
+        "In local_image_to_simulation_acceptance.json, vmmu_r537 had OCR reading 'a”' vs 'a²' (sp22) and vmmu_r254 had '27√13a3/2' vs '27√13a³/2' (sp58). Expanding norm_math to '([cdkm]?m)[23]', adding '²³' to _MATH_CHAR_RE, flagging Unicode-bounded '(?<![^\\W\\d_])[a-z][23”\"](?![^\\W_])' superscript-loss corruptions in _SHARED_CORRUPTION_RE, and classifying EXPONENT_SUPERSCRIPT_DISAGREEMENT prevents unverified superscript loss from ever being marked verified without false positives on metric units ('mm2', 'cm2') or Vietnamese prose ('\"chóp\"')."
+      ]
+    }
+  },
+  "exposed_development_case_audit": {
+    "vmmu_r537": {
+      "partition": "REAL27 (DEVELOPMENT_EXPOSED)",
+      "statement": "Câu 39: Cho hình chóp tứ giác đều S.ABCD có độ dài cạnh bên bằng a và diện tích đáy bằng a² (tham khảo hình bên dưới). Khoảng cách từ A đến mặt phẳng (SBC) bằng",
+      "dataset_answer_key": "C (a√6/3)",
+      "root_cause_blockers_found": [
+        {
+          "blocker_id": "R537-B1",
+          "stage": "local_geometry_parser._VAL + registry.NUMBER_PATTERN/_SO/doc_so",
+          "detail": "'a²' is not recognized by degree-1 _VAL (line 138), leaving 'a²' unread in _unread_values (UNREAD_VALUE@89 -> LOCAL_PARSE_PARTIAL) and rejected by NUMBER_PATTERN if extracted."
+        },
+        {
+          "blocker_id": "R537-B2",
+          "stage": "registry._C_DIENTICH (line 1619) & _DIEN_TICH_PREMISE_RE (line 7410)",
+          "detail": "Optional unit suffix '(?:\\s*(?:\\(\\s*)?(?:cm|dm|mm|m)?(?:²|\\^2|2)?(?:\\s*\\))?)?' greedily consumes ' (' from '(tham khảo hình bên dưới)', causing _phan_tich_cau to return None and _so_theo_vai_tro to fail with UNGROUNDED_VALUE on 'có độ dài cạnh bên bằng a'."
+        }
+      ],
+      "end_to_end_verification_probe": "Read-only probe removing '(tham khảo hình bên dưới)' and substituting unit scale 1 produced status=SERVED, answer='√6/3' -> with symbolic scale restoration ky_hieu='a' and BAC_DAI_LUONG['ask_distance_point_plane']=1, exact output is 'a√6/3' (matches key C) with zero other blockers on both text and user-confirmed image routes."
+    },
+    "other_exposed_cases_checked": [
+      {
+        "case_id": "COMP:gv_unread_area_in_a",
+        "current_status": "LOCAL_PARSE_PARTIAL (UNREAD_VALUE on 'a²')",
+        "post_wave2_expected": "SERVED ('a√6/3') — capability expansion supersedes prior negative-completeness placeholder (tracked via 'superseded' metadata in this run's copy of compositional_dev_corpus.py, while genuinely unreadable expressions like 'diện tích đáy bằng a²ln2' test UNREAD_VALUE negative completeness)."
+      },
+      {
+        "case_id": "COMP:gv_base_area_regular",
+        "current_status": "SERVED ('4√7/3')",
+        "post_wave2_expected": "SERVED ('4√7/3') — preserved with explicit VERIFIED_DERIVED_QUANTITY record SQUARE_AREA_TO_SIDE."
+      },
+      {
+        "case_id": "COMP:gv_base_area_impossible",
+        "current_status": "REFUSED (INCONSISTENT_FACTS)",
+        "post_wave2_expected": "REFUSED (INCONSISTENT_FACTS) — preserved."
+      },
+      {
+        "case_id": "COMP:mc_decimal_value",
+        "current_status": "SERVED (SA = 3,5 parsed as 7/2)",
+        "post_wave2_expected": "SERVED — preserved; minimal pair '3,5,6' rejected as non-decimal list."
+      },
+      {
+        "case_id": "REAL27:vmmu_r273",
+        "current_status": "SERVED (BC = a√3, AB = a, SA = 2a√3 -> volume)",
+        "post_wave2_expected": "SERVED — preserved."
+      },
+      {
+        "case_id": "REAL27:vmmu_r254",
+        "current_status": "LOCAL_PARSE_PARTIAL on sub-tetrahedron goal ('AA' = 2√13a' parses cleanly)",
+        "post_wave2_expected": "'2√13a' continues to parse as 2·√13·a (LENGTH)."
+      }
+    ]
+  },
+  "phase_3_dimension_expression_design": {
+    "target_module": "backend/app/simulation/geometry/expression.py",
+    "kernel_reuse_contract": "Imports ONLY Fraction (stdlib) and Radical, ExactNumber, radical, sqrt_rational, square, multiply, add, times_rational, divided_by_rational from app.simulation.geometry.radical. Zero float evaluation, zero sympy/external CAS.",
+    "dimension_system": {
+      "class": "Dimension(length_exp: int = 0, is_angle: bool = False)",
+      "canonical_constants": {
+        "SCALAR": {
+          "length_exp": 0,
+          "is_angle": false
+        },
+        "LENGTH": {
+          "length_exp": 1,
+          "is_angle": false
+        },
+        "AREA": {
+          "length_exp": 2,
+          "is_angle": false
+        },
+        "VOLUME": {
+          "length_exp": 3,
+          "is_angle": false
+        },
+        "ANGLE": {
+          "length_exp": 0,
+          "is_angle": true
+        }
+      },
+      "algebraic_rules": {
+        "add_sub": "d1 == d2 -> d1; else raise ExprDimensionError('DIMENSION_MISMATCH') (blocks L + L^2, ANGLE + SCALAR)",
+        "mul": "if not d1.is_angle and not d2.is_angle -> Dimension(d1.length_exp + d2.length_exp, False); SCALAR * ANGLE -> ANGLE; ANGLE * ANGLE or ANGLE * L^k (k!=0) -> DIMENSION_MISMATCH",
+        "div": "if not d1.is_angle and not d2.is_angle -> Dimension(d1.length_exp - d2.length_exp, False); ANGLE / SCALAR -> ANGLE; ANGLE / ANGLE -> SCALAR; else -> DIMENSION_MISMATCH",
+        "pow_int": "if d.is_angle and exp != 1 -> DIMENSION_MISMATCH; else -> Dimension(d.length_exp * exp, False)",
+        "sqrt": "if not d.is_angle and d.length_exp % 2 == 0 -> Dimension(d.length_exp // 2, False); else -> raise ExprDimensionError('FRACTIONAL_DIMENSION') (blocks √(3a) when a: LENGTH)"
+      },
+      "measurement_unit_separation": {
+        "class": "MeasurementUnit(raw_unit: str, canonical_unit: str, base_metric_unit: str | None, dimension: Dimension)",
+        "supported_units": {
+          "LENGTH": [
+            "mm",
+            "cm",
+            "dm",
+            "m",
+            "đvđd"
+          ],
+          "AREA": [
+            "mm²",
+            "cm²",
+            "dm²",
+            "m²",
+            "đvdt"
+          ],
+          "VOLUME": [
+            "mm³",
+            "cm³",
+            "dm³",
+            "m³",
+            "đvtt"
+          ],
+          "ANGLE": [
+            "°",
+            "độ",
+            "rad",
+            "radian"
+          ]
+        },
+        "policy": "Validates unit.dimension == slot_dimension and enforces problem-wide single base_metric_unit consistency (reusing registry._don_vi_met_cua_de); performs ZERO speculative unit conversion (mixing cm and m refuses fail-closed)."
+      }
+    },
+    "expression_ast_and_provenance": {
+      "provenance_class": "ExprProvenance(raw_text: str, normalized_text: str, span_start: int, span_end: int, unit: MeasurementUnit | None, operand_spans: tuple[tuple[str, int, int], ...])",
+      "ast_nodes": [
+        "IntLit(value: int, span: tuple[int, int])",
+        "DecLit(value: Fraction, raw: str, span: tuple[int, int])",
+        "SymRef(name: str, span: tuple[int, int])",
+        "UnaryNeg(operand: ExprNode, span: tuple[int, int])",
+        "BinOp(op: Literal['+', '-', '*', '/'], left: ExprNode, right: ExprNode, implicit_mul: bool, span: tuple[int, int])",
+        "PowOp(base: ExprNode, exp: int, span: tuple[int, int])",
+        "SqrtOp(radicand: ExprNode, span: tuple[int, int])"
+      ],
+      "precedence_highest_to_lowest": [
+        "1. Atoms & Grouping: (expr), √(expr), sqrt(expr), IntLit, DecLit, SymRef",
+        "2. Exponentiation: postfix '²', '³' and infix '^' with integer exponent (binds tighter than implicit mul, unary '-', and '/'; so 2a² = 2*(a²), (2a)² = (2*a)², a²/2 = (a²)/2, -a² = -(a²))",
+        "3. Bare Radical & Unary Sign: prefix '√<numeric_atom>' (binds ONLY to contiguous integer/decimal literal when unparenthesized, so √3a = (√3)*a and 2√13a = 2*(√13)*a, whereas √a = SqrtOp(SymRef('a')) and √(3a) = SqrtOp(3*a)) and unary '-'",
+        "4. Multiplicative (left-associative): explicit '*', implicit juxtaposition (2a, a√3, 2(a)), and '/' (so 3/2a = (3/2)*a, 2a/3 = (2*a)/3, a/(2²) = a/4, 1/(2a) = (1/2)*a^-1)",
+        "5. Additive (left-associative): '+', '-'"
+      ],
+      "minimal_pairs_guaranteed": {
+        "sqrt_3a_vs_a_sqrt_3": {
+          "√(3a)": "SqrtOp(BinOp('*', IntLit(3), SymRef('a'))) -> radicand has L^1 and odd symbol power a^1 -> REJECTED (INCONSISTENT_FACTS / FRACTIONAL_DIMENSION)",
+          "a√3": "BinOp('*', SymRef('a'), SqrtOp(IntLit(3))) -> Radical(1, 3) * a^1 of Dimension.LENGTH -> ACCEPTED",
+          "√3a": "BinOp('*', SqrtOp(IntLit(3)), SymRef('a')) -> Radical(1, 3) * a^1 of Dimension.LENGTH -> ACCEPTED"
+        },
+        "2a_sq_vs_paren_2a_sq": {
+          "2a²": "BinOp('*', IntLit(2), PowOp(SymRef('a'), 2)) -> coeff=Fraction(2), a^2, Dimension.AREA",
+          "(2a)²": "PowOp(BinOp('*', IntLit(2), SymRef('a')), 2) -> coeff=Fraction(4), a^2, Dimension.AREA"
+        },
+        "a_sq_div_2_vs_a_div_2_sq": {
+          "a²/2": "BinOp('/', PowOp(SymRef('a'), 2), IntLit(2)) -> coeff=Fraction(1, 2), a^2, Dimension.AREA",
+          "a/(2²)": "BinOp('/', SymRef('a'), PowOp(IntLit(2), 2)) -> coeff=Fraction(1, 4), a^1, Dimension.LENGTH"
+        },
+        "decimal_3_5_vs_list_3_5_6": {
+          "3,5": "DecLit(Fraction(7, 2), '3,5') via lookaround (?<![\\d][.,])(?<!\\d)\\d+[.,]\\d+(?![.,]\\d)",
+          "3,5,6": "Rejected as single expression (unexpected comma token); in prose, tokenized as three separate integers 3, 5, 6 so _unread_values catches unread list items."
+        },
+        "domain_and_sign_guards": {
+          "√(-4)": "SqrtOp(UnaryNeg(IntLit(4))) -> sign == NEGATIVE -> REJECTED (INCONSISTENT_FACTS / NEGATIVE_RADICAND)",
+          "a/(2-2)": "Denominator coeff == 0 -> REJECTED (INCONSISTENT_FACTS / DIVISION_BY_ZERO)",
+          "a + a²": "L^1 + L^2 -> REJECTED (INCONSISTENT_FACTS / DIMENSION_MISMATCH)",
+          "a + a√3": "Radical(1,1) + Radical(1,3) not single-monomial ExactNumber -> REJECTED (EXACT_DOMAIN_EXCEEDED)"
+        }
+      }
+    },
+    "context_driven_symbol_typing": {
+      "class": "SymbolEnvironment",
+      "principle": "Symbol names ('a', 'x', 'V', 'h', 'R') NEVER determine dimension. Every geometric slot declares its target Dimension: segment_length/side/height/radius -> LENGTH (L^1), polygon_area -> AREA (L^2), solid_volume -> VOLUME (L^3), segment_ratio/divide_segment/trig_value -> SCALAR (L^0), degree_angle -> ANGLE.",
+      "unification_algorithm": [
+        "1. Collect all (call_id, field, ast, target_dim) across the problem.",
+        "2. For each symbolic expression in slot L^m, extract net symbol exponents; if a single symbol s appears with net exponent k != 0, constrain k * dim(s) = m => dim(s) = L^(m/k) when k divides m, else fail closed (INCONSISTENT_FACTS).",
+        "3. If the same symbol s receives conflicting dimensions across slots (e.g. SA = a gives dim(a) = L^1 while polygon_area = 4a gives dim(a) = L^2), fail closed (INCONSISTENT_FACTS).",
+        "4. Homogeneity & non-length symbol guard (replaces boolean _don_vi): (a) Zero symbols across all slots -> purely numeric mode (ky_hieu = None). (b) Unique symbol u with inferred dim(u) == LENGTH (L^1) -> ALL positive-degree metric slots (L^k, k in {1,2,3}) MUST evaluate to coeff * u^k with that unique u : L^1 > 0, while SCALAR/ANGLE slots (k=0) MUST evaluate to u^0 (symbol-free); engine sets ky_hieu = u and formats answers via _hien_thi_ky_hieu(val, bac, u). (c) Single-premise non-length symbol guard: if a symbol s has inferred dim(s) in {AREA (L^2), VOLUME (L^3)} and NO u : L^1 exists (e.g. single premise polygon_area(ABCD, 'S') or solid_volume = 'V'), the kernel MUST NEVER coerce s into ky_hieu : L^1 (which would miscompute cube volume from face area S as S³ instead of S√S). Any derived side/height root or coordinate chart placement requiring fractional symbol power (S^(1/2), S^(3/2), V^(1/3)) or any metric goal whose degree BAC_DAI_LUONG[ask_fn] > 0 requires a non-integer power of s MUST fail closed with EXACT_DOMAIN_EXCEEDED; only dimensionless scale-invariant goals (L^0, where s cancels completely) are admissible when certified by target_invariance. (d) Mixing numeric and symbolic metric premises or using >=2 unlinked symbols ('a' and 'b') raises NON_HOMOGENEOUS_LENGTHS; free symbols in SCALAR/ANGLE slots ('tỉ số bằng 2x') raise UNGROUNDED_VALUE."
+      ]
+    }
+  },
+  "frozen_provider_schema_and_version_locks": {
+    "pinned_component_versions_unchanged": {
+      "REGISTRY_VERSION": "geometry-functions/33",
+      "PLANNER_VERSION": "geometry-fact-planner/26",
+      "ENGINE_VERSION": "geometry-function-engine/24",
+      "rationale": "Pinned across AGENTS.md §3 and 8 regression suites; capability expansion bumps CACHE_VERSION 139 -> 140, LOCAL_GEOMETRY_PARSER_VERSION -> 'local-geometry-parser/2', adds EXPRESSION_MODEL_VERSION = 'dimension-expression/1' to runtime_identity.py hybrid_surface, and updates backend/cache_identity.lock.json via lock_cache_identity.py."
+    },
+    "byte_identical_provider_fingerprints": {
+      "NUMBER_PATTERN": "registry.NUMBER_PATTERN (registry.py:108) MUST remain byte-identical so fact_extraction.surface_fingerprint('v3') == '4bff35bbf690a9973b2b7834019b908d507bbbb4277928e36d12dcff657e226f' is preserved; introduce a separate QUANTITY_PATTERN / AfterValidator(_validate_quantity_expr_str) for expression validation.",
+      "ExactNumber_json_schema": "registry.ExactNumber (registry.py:109-111) MUST preserve its exact JSON schema {'description': 'độ dài CHÉP từ đề: số dương (4, 2/3, √3, 3√3/4) hoặc theo ký hiệu a (a, 2a, a√3, a√3/2)', 'type': 'string'} (via AfterValidator + WithJsonSchema) so TypedFact.model_json_schema() ('aa9d93eeac…'), surface_fingerprint('flat') ('485d3834db…'), function_calling.surface_fingerprint() ('7ea511a6e3…'), and registry.function_declarations() ('5ceb0f999d…') remain byte-identical.",
+      "planner_FactKind_json_schema": "Adding 'solid_volume' to planner.FactKind (planner.py:95-107) MUST remain behind WithJsonSchema({'enum': list(FLAT_FACT_KINDS), 'type': 'string'}) and solid_volume in REGISTRY MUST set provider_offered=False."
+    }
+  },
+  "phase_4_vietnamese_parsing_and_ocr_design": {
+    "local_parser_touchpoints": {
+      "file": "backend/app/ai/local_geometry_parser.py",
+      "expression_span_scanner": "Replace linear _VAL regex with balanced/bounded expression span matcher _EXPR_SPAN backed by expression.parse_quantity_expr(candidate). Any clause matching a quantity relation header whose value fails parse_quantity_expr emits NO premise and leaves the raw token uncovered so _unread_values (expanded to cover general expressions/symbols after '=', 'bằng', 'là', 'cạnh') flags UNREAD_VALUE -> LOCAL_PARSE_PARTIAL (never LOCAL_PARSE_COMPLETE).",
+      "canonical_vietnamese_bindings": [
+        {
+          "example": "Diện tích đáy bằng a²",
+          "rule": "Unnamed base area on unique declared solid (lines 1769-1779) upgraded to _EXPR_SPAN + optional area unit (cm²/dm²/mm²/m²/đvdt) without greedy '(' consumption",
+          "emitted_premise": "{'kind': 'face_area', 'args': {'polygon': base_vertices, 'value': norm_expr, 'shape': 'polygon'}}",
+          "slot_dimension": "AREA"
+        },
+        {
+          "example": "Diện tích tam giác ABC bằng a²/2",
+          "rule": "Named polygon/face area (lines 1740-1765) upgraded to _EXPR_SPAN + optional area unit",
+          "emitted_premise": "{'kind': 'face_area', 'args': {'polygon': ['A','B','C'], 'value': 'a²/2', 'shape': 'triangle'}}",
+          "slot_dimension": "AREA"
+        },
+        {
+          "example": "Thể tích hình chóp bằng a³/3",
+          "rule": "New clause rule 2j: 'thể tích (của)? (hình|khối) (chóp|lăng trụ|tứ diện|hộp|lập phương) (<notation>)? (bằng|là|=) <_EXPR_SPAN>' (outside question starters 'Tính/Tìm/Hỏi' and outside 'bằng bao nhiêu/?')",
+          "emitted_premise": "{'kind': 'solid_volume', 'args': {'solid': solid_id, 'value': 'a³/3'}}",
+          "slot_dimension": "VOLUME"
+        },
+        {
+          "example": "Cạnh đáy bằng 2a",
+          "rule": "Both inline _solid_dimension_items (lines 161-185) and standalone/later-clause '(độ dài)? cạnh đáy (bằng|là|=) <_EXPR_SPAN>' on unique declared regular solid/rhombus base",
+          "emitted_premise": "{'kind': 'regular_polygon', 'args': {'vertices': base_vertices, 'side': '2a'}}",
+          "slot_dimension": "LENGTH"
+        },
+        {
+          "example": "Độ dài đường cao bằng a√3",
+          "rule": "Unified clause-level height rule '(độ dài (của)?)? (chiều|đường) cao (của (hình|khối) ...)? (bằng|là|=) <_EXPR_SPAN>' on unique or named declared solid (generalizing lines 990 & 1240)",
+          "emitted_premise": "{'kind': 'height', 'args': {'solid': solid_id, 'value': 'a√3'}}",
+          "slot_dimension": "LENGTH"
+        },
+        {
+          "example": "Tỉ số hai cạnh AB và CD bằng 2/3 / Tỉ số giữa cạnh bên và cạnh đáy bằng 2/3 / Tỉ số hai cạnh bằng 2/3",
+          "rule": "Extended segment_ratio rule (lines 2130+): (a) named ordered pair 'tỉ số (độ dài)? (giữa|của)? (hai)? (cạnh|đoạn thẳng)? <AB> và <CD> (bằng|là|=) <_EXPR_SPAN>' or '<AB>/<CD> (bằng|=) <_EXPR_SPAN>' -> segment_ratio(AB, CD, val); (b) role-ordered pair on regular pyramid/prism 'tỉ số (độ dài)? (giữa|của) cạnh bên và cạnh đáy (bằng|là|=) <_EXPR_SPAN>' -> segment_ratio(lateral, base_edge, val); (c) unordered/unnamed 'tỉ số hai cạnh (bằng|là|=) <_EXPR_SPAN>' -> UnresolvedSpec(kind='ambiguous', reason='AMBIGUOUS_REFERENCE') -> LOCAL_PARSE_AMBIGUOUS (never guessed, never dropped).",
+          "emitted_premise": "{'kind': 'segment_ratio', 'args': {'segment_a': ..., 'segment_b': ..., 'ratio': '2/3'}} or UnresolvedSpec",
+          "slot_dimension": "SCALAR"
+        }
+      ]
+    },
+    "ocr_expression_fidelity": {
+      "file": "backend/app/ingestion/ocr_reconcile.py",
+      "changes": [
+        "Expand metric-unit superscript normalization in norm_math (lines 83-84) from r'(?<![A-Za-z])([cdk]?m)2(?![0-9])' / '3' to Unicode-letter-bounded r'(?<![^\\W\\d_])([cdkm]?m)2(?![0-9])' / '3' so 'mm2' -> 'mm²' and 'mm3' -> 'mm³' normalize alongside cm/dm/km/m before has_shared_corruption(tok) runs.",
+        "Include '²³' in _MATH_CHAR_RE (line 42) so tokens like 'a²', 'a³' are classified as math tokens requiring cross-engine agreement.",
+        "Add Unicode-letter-bounded r'(?<![^\\W\\d_])[a-z][23”\"](?![^\\W_])' to _SHARED_CORRUPTION_RE (line 36) so standalone or post-coefficient broken superscripts ('a2', 'a3', '2a2', '27√13a3/2', 'a”', 'a\"') are never auto-verified without user confirmation, while metric units ('mm2', 'cm2', '4mm3'), multi-letter tokens ('scene3d'), and Vietnamese quoted prose ('\"chóp\"', '\"góc\"') never false-trigger.",
+        "Add EXPONENT_SUPERSCRIPT_DISAGREEMENT to _classify_math_disagreement (line 296) when readings differ on '²'/'³'/'^'."
+      ]
+    }
+  },
+  "phase_5_source_gate_and_fact_roles_design": {
+    "fact_roles": {
+      "enum_name": "FactRole",
+      "values": {
+        "SOURCE_QUANTITY": "Verbatim-quoted premise quantity verified by registry.kiem_nguon against source text and slot Dimension (e.g. polygon_area(ABCD, 'a²'), solid_volume('S.ABCD', 'a³/3'), segment_length(['S','A'], 'a')). NEVER rewritten into derived premises before or during Source Gate.",
+        "VERIFIED_DERIVED_QUANTITY": "Exact quantity derived deterministically inside Engine from validated SOURCE_QUANTITY + certified geometric shape/topology calls, carrying rule_id, premise_call_ids, exact_value_sq, and positivity_certificate.",
+        "ILLUSTRATIVE_CONSTRUCTION_QUANTITY": "Gauge/similarity unit choice (e.g. symbolic_length_unit u = 1 for coordinate chart, or certified target/height-invariant sample gauge), explicitly tagged so learners/consumers never treat it as a given or derived metric fact.",
+        "UNVERIFIED_CANDIDATE": "Pre-gate extraction candidate, unread parser token (UNREAD_VALUE), or disputed OCR math span; hard-blocked from entering Planner/Engine execution."
+      }
+    },
+    "source_gate_fixes_and_extensions": {
+      "file": "backend/app/simulation/geometry_functions/registry.py",
+      "items": [
+        "Fix greedy optional-parenthesis bug in _C_DIENTICH (line 1619) and _DIEN_TICH_PREMISE_RE (line 7410): require an actual area unit token inside optional '(...)' -> r'(?:\\s*(?:\\(\\s*(?:(?:cm|dm|mm|m)(?:²|\\^2|2)|đvdt)\\s*\\)|(?:(?:cm|dm|mm|m)(?:²|\\^2|2)|đvdt)(?![\\w\\'])))?'.",
+        "Keep registry.NUMBER_PATTERN (line 108) and ExactNumber JSON schema (lines 109-111) byte-identical (preserving all frozen provider fingerprints); introduce separate QUANTITY_PATTERN + AfterValidator(_validate_quantity_expr_str) + WithJsonSchema on ExactNumber, and upgrade _SO / _so_nhom / _doc_nhom to parse structured expressions via simulation/geometry/expression.py while preserving exact quote-position anchoring (_so_neo, _so_theo_vai_tro, _kiem_so_tien_de).",
+        "Enforce SymbolEnvironment cross-call dimension & homogeneity check inside kiem_nguon / _don_vi so polygon_area rejects L^1 ('4a' when a: LENGTH), solid_volume requires L^3 ('a³/3'), segment_ratio requires L^0 ('2/3'), and segment_length/height/side require L^1 ('2a', 'a√3').",
+        "Add SolidVolumeArgs, _F('solid_volume', ..., provider_offered=False), _C_THETICH in _phan_tich_cau/_cau_tien_de_dong_hop_le, and _kiem_the_tich_khoi_dung_nguon.",
+        "Extend _TI_SO_DOAN_RE and _C_TISO_DOAN with 'tỉ số (độ dài)? (giữa|của)? (hai)? (cạnh|đoạn thẳng)? <AB> và <CD> (bằng|là|=) <expr>' and role-ordered 'tỉ số (độ dài)? (giữa|của) cạnh bên và cạnh đáy (bằng|là|=) <expr>'."
+      ]
+    },
+    "certified_derivation_rules": [
+      {
+        "rule_id": "SQUARE_AREA_TO_SIDE",
+        "premises_required": [
+          "polygon_area(P, E) [SOURCE_QUANTITY, dim=AREA]",
+          "regular_polygon(P, n=4) or polygon_area.shape=='square' [CERTIFIED_SHAPE]",
+          "positivity_certificate on scale symbol u : L^1 > 0 (or numeric E > 0)"
+        ],
+        "formula_in_gram_kernel": "side_sq = E_unit (verified rational > 0 via _sqrt_q(E_unit²)); side_symbolic = sqrt(E_unit) * u^1",
+        "role_emitted": "VERIFIED_DERIVED_QUANTITY",
+        "source_premise_preserved": true
+      },
+      {
+        "rule_id": "EQUILATERAL_TRIANGLE_AREA_TO_SIDE",
+        "premises_required": [
+          "polygon_area(P, E) [SOURCE_QUANTITY, dim=AREA]",
+          "regular_polygon(P, n=3) or polygon_area.shape=='equilateral_triangle' [CERTIFIED_SHAPE]",
+          "positivity_certificate on scale symbol u : L^1 > 0 (or numeric E > 0)"
+        ],
+        "formula_in_gram_kernel": "side_sq = _sqrt_q((16/3) * E_unit²) in Q_{>0}",
+        "role_emitted": "VERIFIED_DERIVED_QUANTITY",
+        "source_premise_preserved": true
+      },
+      {
+        "rule_id": "RECTANGLE_AREA_AND_SIDE_TO_ADJACENT_SIDE",
+        "premises_required": [
+          "polygon_area(P, E) [SOURCE_QUANTITY, dim=AREA]",
+          "rectangle(P) or right_prism lateral face [CERTIFIED_SHAPE]",
+          "adjacent side d1_sq > 0 [SOURCE_QUANTITY or VERIFIED_DERIVED_QUANTITY]"
+        ],
+        "formula_in_gram_kernel": "d2_sq = E_unit² / d1_sq in Q_{>0}",
+        "role_emitted": "VERIFIED_DERIVED_QUANTITY",
+        "source_premise_preserved": true
+      },
+      {
+        "rule_id": "RIGHT_TRIANGLE_AREA_TO_LEG",
+        "premises_required": [
+          "polygon_area([A,B,C], E) [SOURCE_QUANTITY, dim=AREA]",
+          "certified right angle at vertex V in {A,B,C} (right_angle / perpendicular_lines / perpendicular_line_plane)",
+          "either one leg d1_sq > 0 (gives d2_sq = 4*E_unit² / d1_sq) or equal_length on the two legs at V (gives leg_sq = 2 * _sqrt_q(E_unit²))"
+        ],
+        "formula_in_gram_kernel": "d2_sq = 4 * E_unit² / d1_sq or leg_sq = 2 * E_unit in Q_{>0}",
+        "role_emitted": "VERIFIED_DERIVED_QUANTITY",
+        "source_premise_preserved": true
+      },
+      {
+        "rule_id": "SOLID_VOLUME_AND_BASE_AREA_TO_HEIGHT",
+        "premises_required": [
+          "solid_volume(S, V) [SOURCE_QUANTITY, dim=VOLUME]",
+          "placed non-degenerate base of S with Gram area² B_sq > 0",
+          "positivity_certificate on scale symbol u : L^1 > 0 (or numeric V > 0)"
+        ],
+        "formula_in_gram_kernel": "pyramid: h_sq = 9 * V_unit² / B_sq; prism: h_sq = V_unit² / B_sq (plus post-construction _dung_khong check _tt2_khoi(S) == V_unit²)",
+        "role_emitted": "VERIFIED_DERIVED_QUANTITY",
+        "source_premise_preserved": true
+      }
+    ]
+  },
+  "wave_2_non_colliding_ownership_and_sequencing": {
+    "exclusive_files_expr_dim": [
+      "backend/app/simulation/geometry/expression.py (NEW)",
+      "backend/app/simulation/geometry_functions/typed_fact_next.py",
+      "backend/app/simulation/geometry_functions/typed_fact_next_bridge.py",
+      "backend/app/ingestion/ocr_reconcile.py",
+      "backend/tests/simulation/test_dimension_expression_safety.py (NEW)"
+    ],
+    "shared_files_partition": {
+      "backend/app/ai/local_geometry_parser.py": "Sequenced cleanly: Wave 2a @expr-dim-audit lands Phase 4 (_EXPR_SPAN, _PREMISE_VALUE_RE, face_area, solid_volume, height, cạnh đáy, segment_ratio) and bumps LOCAL_GEOMETRY_PARSER_VERSION = 'local-geometry-parser/2'; Wave 2b @trig-kernel-audit lands Rule RT-F (sin/cos/tan/cot premise clauses lines 1935-2127 and _resolve_late_regular_polygon_dimension lines 4215-4234, also recognizing solid_volume as metric scale).",
+      "backend/app/simulation/geometry_functions/registry.py": "Partitioned on disjoint line ranges (REGISTRY_VERSION stays pinned at 'geometry-functions/33'): @expr-dim-audit owns lines 108-145 (QUANTITY_PATTERN + ExactNumber AfterValidator/WithJsonSchema keeping NUMBER_PATTERN byte-identical), 364-395 & 999-1006 (SolidVolumeArgs & slot dimensions), 1513-1625 (_so_nhom, _C_DIENTICH fix, _C_THETICH, _C_TISO_DOAN), 3640-3670 & 4920-4945 (SymbolEnvironment dimension homogeneity), and 7405-7770 (_DIEN_TICH_PREMISE_RE fix, _kiem_the_tich_khoi_dung_nguon, _TI_SO_DOAN_RE); @trig-kernel-audit owns lines 7397-7403 (trig/angle Source Gate regex).",
+      "backend/app/simulation/geometry_functions/planner.py": "Partitioned cleanly (PLANNER_VERSION stays pinned at 'geometry-fact-planner/26'): @expr-dim-audit adds only 'solid_volume' fact passthrough behind WithJsonSchema({'enum': list(FLAT_FACT_KINDS), 'type': 'string'}) (lines 95-107, 293, 724, 1044, 1072, 1290); @trig-kernel-audit requires zero planner edits (or disjoint trig/angle composition if needed).",
+      "backend/app/simulation/geometry_functions/engine.py": "Partitioned on disjoint line ranges (ENGINE_VERSION stays pinned at 'geometry-function-engine/24'): @expr-dim-audit owns lines 585-665 (polygon_area VERIFIED_DERIVED_QUANTITY records & right-triangle rule), height lookup + _dung_khong solid_volume check (lines 760-785, 1230-1240, 1335-1345, 2038-2045, 3200-3210), and _don_vi SymbolEnvironment + single-premise non-length symbol guard (lines 4520-4542); @trig-kernel-audit owns lines 696-759, 786-816, 896-920, 1162-1225, 1679-1895, 2160-2210, 6170-6204.",
+      "cache_and_identity_bump": "Single coordinated Wave 2 lock step: bump CACHE_VERSION 139 -> 140 in adapter4_route.py, add EXPRESSION_MODEL_VERSION = 'dimension-expression/1' (and trig/solver surface tag if any) to runtime_identity.py hybrid_surface, and regenerate backend/cache_identity.lock.json via lock_cache_identity.py."
+    }
+  },
+  "stage_p1b_post_implementation_verification": {
+    "status": "IMPLEMENTED_AND_VERIFIED",
+    "frozen_provider_schema_hashes": {
+      "fact_extraction_flat": "485d3834db8b18cfdb24143bfbb14deb8f5b7a9d74cb612d48db8c08252e507a",
+      "fact_extraction_v3": "4bff35bbf690a9973b2b7834019b908d507bbbb4277928e36d12dcff657e226f",
+      "function_calling": "7ea511a6e3828c9adcc8402aa2d7d6b1d433e67a01ec4329c3009c46af652b25",
+      "planner_typed_fact_schema": "aa9d93eeac9f1659af8e5acd42af1904b7aaed674a8ab0f56f0c7dd8b2ad4ee8",
+      "registry_function_declarations": "5ceb0f999d4d7c1ee37c02207ea6470a7f972a168d6c52fa597392934d86f169"
+    },
+    "frozen_provider_hashes_unchanged": true,
+    "zero_second_cas_verified": true,
+    "zero_case_id_hardcoding_verified": true,
+    "test_summary": {
+      "dimension_expression_safety_passed": 59,
+      "ocr_and_stage_p1a_trig_cache_passed": 82,
+      "parser_and_source_gate_regression_passed": 1112,
+      "combined_regression_unexpected_failures": 0,
+      "expected_pre_p1c_candidate_refreeze_diff_only": "test_hybrid_backend_integration.py::test_version_constants_surface_fingerprints_and_historical_receipt_preservation (EVALUATION_CANDIDATE.json stays pinned to baseline c25f9695... until Stage P1c candidate freeze)"
+    }
+  },
+  "verdict": "STAGE_P1B_ARCHITECTURE_IMPLEMENTED_AND_VERIFIED_GATES_C_D_E_GREEN",
+  "baseline_product_commit": "d222e6d9b582d54fc42397a9593f52eb6fd77f18",
+  "stage_observed_measured_system_hash": "da96b0cb9ab42619b950fb1aaa8670caab9a0839821347ef0bbcf65bcfb44caf",
+  "stage_observed_measured_system_file_count": 120,
+  "stage_observed_cache_version": "139"
+}

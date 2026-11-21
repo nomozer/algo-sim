@@ -1,0 +1,93 @@
+{
+  "schema": "algosim-agent-image-reference-provenance/1",
+  "authority": "AGENT_TRANSCRIBED_UNVERIFIED",
+  "human_verified": false,
+  "method": "Agent visually read each original cached image with view_image; contact sheets used only for candidate triage. No OCR output was used to write these references.",
+  "reference_scope": "TARGET_QUESTION_PROSE_AND_CHOICES_EXCLUDING_DIAGRAM_LABELS_PAGE_FOOTERS_AND_ADJACENT_CROPPED_FRAGMENTS",
+  "notation_policy": "Unicode math transcription: radicals use √, fractions use numerator/denominator, superscripts use Unicode; line breaks and spacing are editorial. These conventions can affect character error scores.",
+  "mathematical_oracle_status": "UNKNOWN",
+  "dataset_answer_key_authority": "UPSTREAM_UNVERIFIED_NOT_MATHEMATICAL_ORACLE",
+  "viewed_at_utc_date": "2026-11-11",
+  "items": [
+    {
+      "case_id": "new_vmmu_full_r310",
+      "row_idx": 310,
+      "ground_truth_text": "Câu 9: Khối bát diện đều (như hình vẽ bên dưới) thuộc loại nào?\nA. {3;5}. B. {5;3}. C. {3;4}. D. {4;3}.",
+      "critical_fact_texts": ["Khối bát diện đều", "{3;4}"],
+      "geometry_domain": "3d_regular_polyhedron_classification",
+      "diagram_description": "Unlabelled wireframe regular octahedron; hidden edges dashed.",
+      "diagram_embedded_facts": [],
+      "has_fraction_or_radical": false
+    },
+    {
+      "case_id": "new_vmmu_full_r322",
+      "row_idx": 322,
+      "ground_truth_text": "Câu 37: Một hình hộp chữ nhật có chiều cao là 90 cm, đáy hộp là hình chữ nhật có chiều rộng là 50 cm và chiều dài là 80 cm. Trong khối hộp có chứa nước, mực nước so với đáy hộp có chiều cao là 40 cm. Hỏi khi đặt vào khối hộp một khối trụ có chiều cao bằng chiều cao khối hộp và bán kính đáy là 20 cm theo phương thẳng đứng thì chiều cao của mực nước so với đáy là bao nhiêu?\nA. 58,32 cm. B. 48,32 cm. C. 78,32 cm. D. 68,32 cm.",
+      "critical_fact_texts": ["90 cm", "50 cm", "80 cm", "40 cm", "20 cm", "khối trụ"],
+      "geometry_domain": "3d_cuboid_cylinder_water_displacement",
+      "diagram_description": "Two cuboids show water before and after a vertical cylinder is inserted.",
+      "diagram_embedded_facts": [],
+      "has_fraction_or_radical": false
+    },
+    {
+      "case_id": "new_vmmu_full_r327",
+      "row_idx": 327,
+      "ground_truth_text": "Câu 1: Hình nào dưới đây không phải là hình đa diện?\nA. B. C. D.",
+      "critical_fact_texts": ["không phải là hình đa diện"],
+      "geometry_domain": "3d_polyhedron_visual_classification",
+      "diagram_description": "Four answer-option wireframes labelled A, B, C, D; diagram topology is essential to the answer.",
+      "diagram_embedded_facts": ["The four alternatives are drawings rather than textual descriptions; text-only transcription cannot encode their topology."],
+      "has_fraction_or_radical": false
+    },
+    {
+      "case_id": "new_vmmu_full_r440",
+      "row_idx": 440,
+      "ground_truth_text": "Câu 44. Phần không gian bên trong của chai nước ngọt có hình dạng như hình bên.\nBiết bán kính đáy bằng R = 5cm, bán kính cổ r = 2cm, AB = 3cm, BC = 6cm, CD = 16cm. Thể tích phần không gian bên trong của chai nước ngọt đó bằng\nA. 495π (cm³). B. 462π (cm³). C. 490π (cm³). D. 412π (cm³).",
+      "critical_fact_texts": ["R = 5cm", "r = 2cm", "AB = 3cm", "BC = 6cm", "CD = 16cm"],
+      "geometry_domain": "3d_cylinder_conical_frustum_composite_volume",
+      "diagram_description": "Bottle built from a large cylinder DC, tapered section CB and narrow neck BA; R and r radius labels.",
+      "diagram_embedded_facts": ["The component shapes and axial ordering D-C-B-A are supplied by the drawing."],
+      "has_fraction_or_radical": false
+    },
+    {
+      "case_id": "new_vmmu_full_r445",
+      "row_idx": 445,
+      "ground_truth_text": "Câu 39: Một công ty xây nhà xưởng dạng hình hộp chữ nhật có diện tích mặt sàn là 1458m² và chiều cao cố định. Họ xây các bức tường xung quanh và bên trong để ngăn nhà xưởng thành ba phòng hình chữ nhật có kích thước như nhau (không kể trần nhà). Vậy cần phải xây các phòng theo kích thước bao nhiêu để tiết kiệm chi phí nhất (bỏ qua độ dày các bức tường)?\nA. 18m × 27m. B. 16m × 24m. C. 12m × 40,5m. D. 9m × 54m.",
+      "critical_fact_texts": ["1458m²", "chiều cao cố định", "ba phòng hình chữ nhật", "kích thước như nhau"],
+      "geometry_domain": "3d_cuboid_partition_wall_optimization",
+      "diagram_description": "A cuboid is divided into three adjacent rectangular rooms by two internal vertical walls.",
+      "diagram_embedded_facts": ["The arrangement of the three rooms is shown in the drawing."],
+      "has_fraction_or_radical": false
+    },
+    {
+      "case_id": "new_vmmu_full_r446",
+      "row_idx": 446,
+      "ground_truth_text": "Câu 21. Cho hình chóp S.ABC có SA ⊥ (ABC), SA = 2. Tam giác ABC vuông cân tại A, BC = 2√2. Gọi M là trung điểm của AB (tham khảo hình vẽ).\nKhoảng cách từ M đến mặt phẳng (SBC) bằng\nA. 2√3. B. 2√3/3. C. √3/3. D. √3/2.",
+      "critical_fact_texts": ["S.ABC", "SA ⊥ (ABC)", "SA = 2", "vuông cân tại A", "BC = 2√2", "M là trung điểm của AB", "mặt phẳng (SBC)"],
+      "geometry_domain": "3d_pyramid_midpoint_point_plane_distance",
+      "diagram_description": "Pyramid S.ABC with M on AB; vertex labels S, A, B, C, M and hidden base edges.",
+      "diagram_embedded_facts": [],
+      "has_fraction_or_radical": true
+    },
+    {
+      "case_id": "new_vmmu_full_r448",
+      "row_idx": 448,
+      "ground_truth_text": "Câu 44. Một xe bồn chở nước có bồn nước gồm hai nửa hình cầu đường kính 18 dm và một hình trụ có chiều cao 36 dm (như hình vẽ). Thể tích của bồn đã cho bằng\nA. 9216π dm³. B. 1024π/9 dm³. C. 3888π dm³. D. 16π/243 dm³.",
+      "critical_fact_texts": ["hai nửa hình cầu", "đường kính 18 dm", "hình trụ", "chiều cao 36 dm"],
+      "geometry_domain": "3d_cylinder_hemisphere_composite_volume",
+      "diagram_description": "Capsule tank with diameter 18dm and central cylinder length 36dm; adjacent tanker photograph.",
+      "diagram_embedded_facts": [],
+      "has_fraction_or_radical": true
+    },
+    {
+      "case_id": "new_vmmu_full_r450",
+      "row_idx": 450,
+      "ground_truth_text": "Câu 32. Người ta ghép 5 khối lập phương cạnh a để được khối hộp chữ thập (tham khảo hình bên dưới). Tính diện tích toàn phần Sₜₚ của khối chữ thập đó.\nA. Sₜₚ = 30a². B. Sₜₚ = 12a². C. Sₜₚ = 20a². D. Sₜₚ = 22a².",
+      "critical_fact_texts": ["5 khối lập phương cạnh a", "diện tích toàn phần", "22a²"],
+      "geometry_domain": "3d_composite_cube_cross_surface_area",
+      "diagram_description": "Five cubes arranged as a planar cross, with one central cube sharing four faces with the other four cubes.",
+      "diagram_embedded_facts": ["The face-sharing arrangement of the five cubes comes from the drawing."],
+      "has_fraction_or_radical": false
+    }
+  ]
+}

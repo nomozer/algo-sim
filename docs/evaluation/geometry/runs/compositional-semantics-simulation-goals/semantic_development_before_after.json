@@ -1,0 +1,68 @@
+{
+  "run_id": "compositional-semantics-simulation-goals",
+  "generated_at_utc": "2026-11-14T03:09:44.904460+00:00",
+  "product_commit": "379d33969ef0cb0e418d979ab211a00799f44834",
+  "measured_system": "b652e635d5497dc36bf6d55ff4a34c20a16302d01c154b59b039efd65170921e",
+  "environment": {
+    "ALLOW_LIVE_AI": "0",
+    "HYBRID_ROUTE_MODE": "local-first",
+    "live_ai_calls": 0
+  },
+  "head": "54268761eacadaca07d0d8cd2dea0d07c39a5d62",
+  "command": "python docs/evaluation/geometry/runs/compositional-semantics-simulation-goals/tools/semantic_compare.py <archive of 1a9ee8b0c>/backend <out>",
+  "dataset_partition": "DEVELOPMENT ONLY (COMP, DEV37 agent-written; REAL27, PROBES exposed)",
+  "oracle_status": "AGENT_DIAGNOSTIC: expectations written from geometry and the documented scope before measurement",
+  "served": {
+    "COMP": {
+      "before": {
+        "items": 43,
+        "served": 8
+      },
+      "after": {
+        "items": 43,
+        "served": 20
+      }
+    },
+    "DEV37": {
+      "before": {
+        "items": 37,
+        "served": 23
+      },
+      "after": {
+        "items": 37,
+        "served": 27
+      }
+    },
+    "REAL27": {
+      "before": {
+        "items": 27,
+        "served": 8
+      },
+      "after": {
+        "items": 27,
+        "served": 9
+      }
+    },
+    "PROBES": {
+      "before": {
+        "items": 39,
+        "served": 22
+      },
+      "after": {
+        "items": 39,
+        "served": 23
+      }
+    }
+  },
+  "comp_expectations_met": {
+    "before": 29,
+    "after": 41,
+    "of": 43
+  },
+  "previously_served_changed": [],
+  "superseded_previous_expectations": {
+    "DEV37:goal_cos_unsupported": "previous oracle REFUSED UNSUPPORTED_GOAL_FUNCTION; this task's product decision serves the angle with the number NOT_ANSWERED",
+    "DEV37:goal_tan_unsupported": "same",
+    "DEV37:order_goal_first": "previous oracle REFUSED UNRESOLVED_REFERENCE; the plane-after-question order is now read"
+  }
+}

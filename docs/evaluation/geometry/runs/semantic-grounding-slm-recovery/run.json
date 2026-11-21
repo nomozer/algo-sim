@@ -1,0 +1,166 @@
+{
+  "schema": "axo-evaluation-run/2",
+  "run_id": "semantic-grounding-slm-recovery",
+  "wave_id": "AXO_HYBRID_SEMANTIC_GROUNDING_SLM_RECOVERY",
+  "campaign": "AXO HYBRID /16",
+  "date": "2026-11-21",
+  "branch": "feat/semantic-grounding-slm-recovery",
+  "base_commit": "c4ae9dd1f",
+  "candidate": {
+    "product_commit": "4c1b94b61cdd8b1747059829a9d487b1749e1383",
+    "product_commit_short": "4c1b94b61",
+    "candidate_freeze_commit": "39c95599e9ddc2efc7cc3455ae2505384af63e21",
+    "full_t3_head": "d27b78de5",
+    "live_acceptance_head": "b28783e31",
+    "measured_system_tree_hash": "3152f3829fbe4744baa298b0ee147648cd1cb666103baabcb1497cb9ffb525d5",
+    "measured_files": 127,
+    "cache_version": "157",
+    "route_d_cache_policy": "157:route-d",
+    "semantic_environment_hash": "f9df4bf0c8bd458a278d2692567fa3e096340ae37ff5493730dff4067c0f5e19",
+    "default_route_mode": "live",
+    "parser_version": "local-geometry-parser/3",
+    "slm_extractor_version": "local-slm-extractor/6",
+    "slm_validator_version": "slm-grounding-validator/6",
+    "harness_version": "axo-live-acceptance-harness/1"
+  },
+  "model": {
+    "key": "qwen3-0.6b-axo-v9-q4_k_m",
+    "name": "Qwen3-0.6B-AxoV9-Q4_K_M",
+    "sha256": "73f1484b08b97ed2a1f44e32bcf6610210c7fda51567c4cd0a03d98dffc6cc35",
+    "runtime": "llama.cpp b12470",
+    "system_prompt_modified": false,
+    "finetuned": false,
+    "ablation_decision": "RETAIN_AXOV9_NO_FINETUNE_NEEDED"
+  },
+  "v15_baseline": {
+    "REGISTERED_SLM_SCORE_V15": "5/38 (0.1316)",
+    "SLM_GATE_V15": "FAIL",
+    "preserved_unmodified": true,
+    "reconciliation_file": "VERDICT_RECONCILIATION_V15.json",
+    "reconciliation_sha256": "06b19f33406ea27aadc8e330883d5c7b2eeb222e8e86ac6e638ce12d8923a0ab"
+  },
+  "active_acceptance_set": "holdout-6",
+  "prior_disclosed_runs": {
+    "candidate_156_holdout4": {
+      "product_commit": "c3e944d7fb7a86380738948d81ac6fdfdb514ed6",
+      "tree_hash": "f3f04425378304b34e68a07d43df5d4f5a85c2a04ef90a08b6456c4403dafb4b",
+      "cache_version": "156",
+      "full_t3_verdict": "FULL_PRODUCT_GATE_FAIL",
+      "full_t3_failed_pytests": 4,
+      "ui_scenarios_passed": "9/10",
+      "live_text_acceptance": "64/72",
+      "slm_fallback": "22/30",
+      "slm_independent_1": "25/30",
+      "score_transferred": false,
+      "receipt": "holdout-4/CANDIDATE_156_FULL_T3_RECEIPT.json"
+    },
+    "candidate_157_holdout5": {
+      "product_commit": "4c1b94b61cdd8b1747059829a9d487b1749e1383",
+      "cache_version": "157",
+      "live_text_acceptance": "63/72 (0.875)",
+      "slm_fallback": "24/30 (0.80)",
+      "slm_independent_2": "24/30 (0.80)",
+      "generator_bug_cases": ["P04", "P05", "S07"],
+      "retired_untouched_per_sec17": true,
+      "receipt": "holdout-5/CANDIDATE_157_HOLDOUT5_ORACLE_BUG_RECEIPT.json"
+    }
+  },
+  "scores": {
+    "END_TO_END_SYSTEM_SCORE": {
+      "completed": 64,
+      "total_positive": 72,
+      "rate": 0.8888888888888888
+    },
+    "CANDIDATE_FALLBACK_SCORE": {
+      "verified_live_slm_scenes": 23,
+      "candidate_slm_routed_total": 31,
+      "rate": 0.7419354838709677,
+      "preregistered_targets_served": 11,
+      "preregistered_targets_total": 12
+    },
+    "INDEPENDENT_SLM_SCORE": {
+      "verified_scenes": 21,
+      "positive_total": 30,
+      "rate": 0.7,
+      "extraction_correctness": 0.7333333333333333,
+      "grounding_correctness": 0.7333333333333333,
+      "negative_safe_refused": 10,
+      "negative_total": 10,
+      "false_assertions_served": 0,
+      "invalid_relations_served": 0,
+      "gate_pass": true
+    },
+    "LEGACY_BASELINE_STRATUM_SCORE": {
+      "verified_live_slm_scenes": 23,
+      "candidate_slm_routed_total": 31,
+      "completed_deterministically_on_candidate": 0,
+      "rate": 0.7419354838709677
+    }
+  },
+  "safety_and_ui": {
+    "negative_safe_refused": 26,
+    "negative_total": 26,
+    "wrong_served": 0,
+    "grounding_violations_served": 0,
+    "unverified_relations_served": 0,
+    "fabricated_numeric_goals": 0,
+    "served_numeric_mismatch": 0,
+    "ui_scenarios_passed": 10,
+    "ui_scenarios_total": 10,
+    "external_ai_calls_reported": 0,
+    "browser_external_requests": 0,
+    "proxy_intercepted": 0,
+    "tcp_heartbeats": 586,
+    "tcp_non_loopback_records": 0
+  },
+  "full_t3": {
+    "verdict": "FULL_PRODUCT_GATE_PASS",
+    "exit_code": 0,
+    "duration_s": 1411.3,
+    "backend_pytest": "15162 passed, 0 failed, 8 skipped, 9 deselected, 12 xfailed",
+    "frontend_vitest": "203 files, 2345 passed, 0 failed",
+    "typecheck_build": "PASS",
+    "demo_replay": "5/5 + 1/1 reduced",
+    "demo_crash_surface": "6/6 (0 unexpected 500)",
+    "log_sha256": "4ec0202412e38c95f1fc7b7f5fb7f88646a926d4ee1ffb1cc989232a107cfbbe"
+  },
+  "verdicts": {
+    "REGISTERED_SLM_SCORE_V15": "5/38 (0.1316)",
+    "SLM_GATE_V15": "FAIL",
+    "SEMANTIC_REWRITE_SAFETY_VERIFIED": true,
+    "SOURCE_GROUNDING_VERIFIED": true,
+    "SYSTEM_TEXT_COMPLETION_THRESHOLD_MET": true,
+    "SLM_FALLBACK_GATE_MET": true,
+    "SLM_INDEPENDENT_CAPABILITY_GATE_MET": true,
+    "COMPOSITE_LIVE_TEXT_ACCEPTED": true,
+    "LOCAL_TEXT_MODEL1_VERIFIED": true,
+    "LOCAL_VISION_REPLACEMENT_VERIFIED": false,
+    "FULL_GEMINI_ROLE_REPLACEMENT_VERIFIED": false,
+    "FULL_PRODUCT_GATE_PASS": true,
+    "MAIN_MERGE_READY": false,
+    "MAIN_MERGE_COMPLETED": false,
+    "REMOTE_PUSH_COMPLETED": false,
+    "AUTHORITATIVE_DETACHED_COMPLIANCE": "NOT_VERIFIED",
+    "EXTERNAL_INDEPENDENCE": "NOT_MEASURED"
+  },
+  "artifacts": {
+    "VERDICT_RECONCILIATION_V15.json": "06b19f33406ea27aadc8e330883d5c7b2eeb222e8e86ac6e638ce12d8923a0ab",
+    "SEMANTIC_REWRITE_SAFETY_AUDIT.json": "be8d2b97a2a4c73d718bc665ad311e2f8344ed694ce968794c445df47ace2b4",
+    "SLM_ROOT_CAUSE_ABLATION.json": "9f15330eafbd5ae5c486db58912266d4d8566db306aa4d188a0c8f524199af3e",
+    "LANGUAGE_GAP_RECOVERY.json": "7032d919892b55ee5690e68c30469d411858df4814c3936b31a4868831960838",
+    "ACCEPTANCE_FREEZE.json": "924234d71d501abbe427c40fe40d16453801bb854b637e9a391acce8f00172f5",
+    "FULL_T3_RECEIPT.json": "f7a5adab65537c96aa816b276bada6698f237c4ce76df4c2046fb3f13471c449",
+    "LIVE_TEXT_ACCEPTANCE_RESULTS.json": "71b5d8626725e8bdb2d7fa8cd4a39054e2ef04f6232fba4845390e35c156df6f",
+    "SLM_CAPABILITY_AUDIT.json": "99a2aa66bfd8bc89a1ff311da0036e93f480cc484aa5744854a4419414ca8ba2",
+    "holdout-6/ACCEPTANCE_MANIFEST.json": "f5423a44d64e34984bc3580e4c34c9d1f8529b6fd070d6d705fda2726235a0f2",
+    "holdout-6/SLM_INDEPENDENT_MANIFEST.json": "eca2456dfab2f245d3b54506d3686b9d7834bd0e21e0bda1ba62fdbb7e393f5d",
+    "holdout-6/ACCEPTANCE_CRITERIA.json": "d5c33952a24dbcebee23e582d1b3063c6be4b2b05856604381216cebdc2e41d9",
+    "holdout-6/ACCEPTANCE_FREEZE.json": "2b3e895940923a77d89160e74fc6a57dcd50ed7e5ea7127d3a8759ee47647797",
+    "holdout-6/CANDIDATE_FREEZE.json": "8e0ce1e801da0ba8436b5bf2ec5886ee73b02c5a863141fd76c4dd8840529319",
+    "holdout-6/build_holdout.py": "2f69ff05f7a301100b315ab15a8641d130e1de1e04db4b4102bd4656425b5b6e",
+    "holdout-5/CANDIDATE_157_HOLDOUT5_ORACLE_BUG_RECEIPT.json": "ebb917ce7a28a05081712f4b82b3cd417bf56e071f99be0f7ff1510943dbcd6a",
+    "holdout-4/CANDIDATE_156_FULL_T3_RECEIPT.json": "aa1418041c8551b919e5975ee9da6cc5a419958f4fb58dd75a40c0d161bbc061",
+    "holdout-4/CANDIDATE_156_LIVE_TEXT_ACCEPTANCE_RESULTS.json": "f62380dcd6edcd7bfc32f14d9beba22f4735738321ac615db519ec987cec9061",
+    "holdout-4/CANDIDATE_156_SLM_CAPABILITY_AUDIT.json": "653a12fb58f09c9d5947fb52f39639487d4ab0596e7cf496a3988ae5f19681df"
+  }
+}

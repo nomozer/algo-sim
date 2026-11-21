@@ -1,0 +1,1566 @@
+{
+  "schema": "axo-local-perception-validation/1",
+  "cache_version": "153",
+  "product_commit": "df31847d30d6da9ab3892e41ea5692a7cb5c2704",
+  "evidence": "Two independent local OCR readers, structured prepare receipt, analyzed plot and shared browser scene checks.",
+  "required_modality_gate": {
+    "LOCAL_RASTER_INPUT_VERIFIED": false,
+    "LOCAL_SCANNED_PDF_VERIFIED": false,
+    "VISUAL_GROUNDING_VERIFIED": false
+  },
+  "diagram_evidence_policy": "Diagram observations are candidates with separate regions; unverified diagram facts require review.",
+  "geometry_from_diagram_only": "NOT_VERIFIED",
+  "real_photo_and_physical_camera": "NOT_MEASURED",
+  "development_ocr_receipt": {
+    "classification": "development probes, outside prospective acceptance",
+    "samples": [
+      {
+        "probe": "raster",
+        "http": 200,
+        "status": "ready",
+        "reason": null,
+        "verbatim_cube": true,
+        "page": null,
+        "raster_pages": null,
+        "text_regions": 2,
+        "diagram_classification": "NO_DIAGRAM",
+        "diagram_candidates": 0,
+        "route": "LOCAL_OCR_VERIFIED",
+        "blocking_reasons": [],
+        "metrics": {
+          "vlm_calls": 0,
+          "used_vlm": false,
+          "used_local_ocr": true,
+          "raw_input_bytes": 21278,
+          "vlm_payload_bytes": 0,
+          "uncropped_baseline_bytes": 34751,
+          "local_ocr_ms": 19.59,
+          "local_parse_ms": 498.317,
+          "processing_ms": 4594.94
+        }
+      },
+      {
+        "probe": "raster_to_scene",
+        "http": 200,
+        "cache": "miss",
+        "route_d_status": "SERVED",
+        "answers": {
+          "q1": "64"
+        },
+        "verified_input_provenance": {
+          "contract_version": "verified-input-provenance/1",
+          "origin": "local_ocr_auto_verified",
+          "declared_origin": "local_ocr_auto_verified",
+          "edited_from_raw_ocr": false,
+          "counted_as_unmodified_auto_ocr": true,
+          "raw_ocr_text_sha256": "3043a6c6cf3a394d3ef9ac7d989d6f775d3daa9398d02f788a49162e5a9d1278",
+          "confirmed_text_sha256": "3043a6c6cf3a394d3ef9ac7d989d6f775d3daa9398d02f788a49162e5a9d1278",
+          "prepared_region_sha256": "779d3a56bf6f16c8bf8de41ccbf560d1f6985730ce113d11dbbff740ac2f79ed",
+          "confirmed_span_count": null,
+          "selected_candidate_id": null,
+          "selected_bbox": [
+            0.0,
+            0.0,
+            1.0,
+            1.0
+          ]
+        },
+        "gemini_calls": 0,
+        "objects": 16
+      },
+      {
+        "probe": "scanned_pdf",
+        "http": 200,
+        "status": "ready",
+        "reason": null,
+        "verbatim_cube": true,
+        "page": 1,
+        "raster_pages": [
+          1
+        ],
+        "text_regions": 2,
+        "diagram_classification": "NO_DIAGRAM",
+        "diagram_candidates": 0,
+        "route": "LOCAL_OCR_VERIFIED",
+        "blocking_reasons": [],
+        "metrics": {
+          "vlm_calls": 0,
+          "used_vlm": false,
+          "used_local_ocr": true,
+          "raw_input_bytes": 1299581,
+          "vlm_payload_bytes": 0,
+          "uncropped_baseline_bytes": 58057,
+          "local_ocr_ms": 11.83,
+          "local_parse_ms": 0.095,
+          "processing_ms": 2455.3
+        }
+      },
+      {
+        "probe": "scanned_pdf_to_scene",
+        "http": 200,
+        "cache": "hit",
+        "route_d_status": "SERVED",
+        "answers": {
+          "q1": "64"
+        },
+        "verified_input_provenance": {
+          "contract_version": "verified-input-provenance/1",
+          "origin": "local_ocr_auto_verified",
+          "declared_origin": "local_ocr_auto_verified",
+          "edited_from_raw_ocr": false,
+          "counted_as_unmodified_auto_ocr": true,
+          "raw_ocr_text_sha256": "3043a6c6cf3a394d3ef9ac7d989d6f775d3daa9398d02f788a49162e5a9d1278",
+          "confirmed_text_sha256": "3043a6c6cf3a394d3ef9ac7d989d6f775d3daa9398d02f788a49162e5a9d1278",
+          "prepared_region_sha256": "6daa49cf4f0f898724268fcb588ce22f9a3393ec0cedb64bc1920c1045637bb7",
+          "confirmed_span_count": null,
+          "selected_candidate_id": null,
+          "selected_bbox": [
+            0.0283,
+            0.4057,
+            0.5681,
+            0.241
+          ]
+        },
+        "gemini_calls": 0,
+        "objects": 16
+      },
+      {
+        "probe": "multi_page_scan_choice",
+        "http": 200,
+        "status": "needs_selection",
+        "reason": "MULTIPLE_SCANNED_PAGES",
+        "verbatim_cube": false,
+        "page": null,
+        "raster_pages": [],
+        "text_regions": 0,
+        "diagram_classification": null,
+        "diagram_candidates": 0,
+        "route": null,
+        "blocking_reasons": [],
+        "metrics": {
+          "vlm_calls": 0,
+          "used_vlm": false,
+          "raw_input_bytes": 1299904,
+          "vlm_payload_bytes": 0,
+          "uncropped_baseline_bytes": 0,
+          "processing_ms": 5.39
+        }
+      },
+      {
+        "probe": "scan_page_2",
+        "http": 200,
+        "status": "ready",
+        "reason": null,
+        "verbatim_cube": true,
+        "page": 2,
+        "raster_pages": [
+          2
+        ],
+        "text_regions": 2,
+        "diagram_classification": "NO_DIAGRAM",
+        "diagram_candidates": 0,
+        "route": "LOCAL_OCR_VERIFIED",
+        "blocking_reasons": [],
+        "metrics": {
+          "vlm_calls": 0,
+          "used_vlm": false,
+          "used_local_ocr": true,
+          "raw_input_bytes": 1299904,
+          "vlm_payload_bytes": 0,
+          "uncropped_baseline_bytes": 58057,
+          "local_ocr_ms": 5.66,
+          "local_parse_ms": 0.061,
+          "processing_ms": 155.13
+        }
+      },
+      {
+        "probe": "mixed_pdf_text_and_image",
+        "http": 200,
+        "status": "needs_confirmation",
+        "reason": "DIAGRAM_FACT_REVIEW_REQUIRED",
+        "verbatim_cube": false,
+        "page": 1,
+        "raster_pages": [],
+        "text_regions": 0,
+        "diagram_classification": null,
+        "diagram_candidates": 0,
+        "route": null,
+        "blocking_reasons": [],
+        "metrics": {
+          "vlm_calls": 0,
+          "used_vlm": false,
+          "raw_input_bytes": 2231441,
+          "vlm_payload_bytes": 0,
+          "uncropped_baseline_bytes": 0,
+          "processing_ms": 16.92
+        }
+      },
+      {
+        "probe": "formula",
+        "http": 200,
+        "status": "ready",
+        "reason": null,
+        "verbatim_cube": false,
+        "page": null,
+        "raster_pages": null,
+        "text_regions": 2,
+        "diagram_classification": "NO_DIAGRAM",
+        "diagram_candidates": 0,
+        "route": "LOCAL_OCR_VERIFIED",
+        "blocking_reasons": [],
+        "metrics": {
+          "vlm_calls": 0,
+          "used_vlm": false,
+          "used_local_ocr": true,
+          "raw_input_bytes": 24582,
+          "vlm_payload_bytes": 0,
+          "uncropped_baseline_bytes": 45753,
+          "local_ocr_ms": 401.46,
+          "local_parse_ms": 104.09,
+          "processing_ms": 1796.78
+        }
+      },
+      {
+        "probe": "diagram_labels",
+        "http": 200,
+        "status": "ready",
+        "reason": null,
+        "verbatim_cube": true,
+        "page": null,
+        "raster_pages": null,
+        "text_regions": 2,
+        "diagram_classification": "DIAGRAM_LABELS_ONLY_CONSISTENT",
+        "diagram_candidates": 3,
+        "route": "LOCAL_OCR_VERIFIED",
+        "blocking_reasons": [],
+        "metrics": {
+          "vlm_calls": 0,
+          "used_vlm": false,
+          "used_local_ocr": true,
+          "raw_input_bytes": 26677,
+          "vlm_payload_bytes": 0,
+          "uncropped_baseline_bytes": 49226,
+          "local_ocr_ms": 14.18,
+          "local_parse_ms": 0.095,
+          "processing_ms": 1215.91
+        }
+      },
+      {
+        "probe": "diagram_only",
+        "http": 200,
+        "status": "rejected",
+        "reason": "IMAGE_NOT_READABLE",
+        "verbatim_cube": false,
+        "page": null,
+        "raster_pages": null,
+        "text_regions": 3,
+        "diagram_classification": "NO_DIAGRAM",
+        "diagram_candidates": 0,
+        "route": "LOCAL_OCR_REJECTED",
+        "blocking_reasons": [
+          "SECOND_READER_MISSING"
+        ],
+        "metrics": {
+          "vlm_calls": 0,
+          "used_vlm": false,
+          "used_local_ocr": true,
+          "raw_input_bytes": 7223,
+          "vlm_payload_bytes": 0,
+          "uncropped_baseline_bytes": 21897,
+          "local_ocr_ms": 75.82,
+          "processing_ms": 732.74
+        }
+      },
+      {
+        "probe": "blur",
+        "http": 200,
+        "status": "needs_selection",
+        "reason": "MULTIPLE_PROBLEMS_DETECTED",
+        "verbatim_cube": false,
+        "page": null,
+        "raster_pages": null,
+        "text_regions": 0,
+        "diagram_classification": null,
+        "diagram_candidates": 0,
+        "route": null,
+        "blocking_reasons": [],
+        "metrics": {
+          "vlm_calls": 0,
+          "used_vlm": false,
+          "raw_input_bytes": 32676,
+          "vlm_payload_bytes": 0,
+          "uncropped_baseline_bytes": 15787,
+          "processing_ms": 1162.77
+        }
+      },
+      {
+        "probe": "skew",
+        "http": 200,
+        "status": "needs_confirmation",
+        "reason": "LOCAL_OCR_REVIEW_REQUIRED",
+        "verbatim_cube": true,
+        "page": null,
+        "raster_pages": null,
+        "text_regions": 2,
+        "diagram_classification": "NO_DIAGRAM",
+        "diagram_candidates": 0,
+        "route": "LOCAL_OCR_NEEDS_CONFIRMATION",
+        "blocking_reasons": [
+          "SECOND_READER_MISSING",
+          "UNCERTAIN_SPANS"
+        ],
+        "metrics": {
+          "vlm_calls": 0,
+          "used_vlm": false,
+          "used_local_ocr": true,
+          "raw_input_bytes": 32158,
+          "vlm_payload_bytes": 0,
+          "uncropped_baseline_bytes": 39957,
+          "local_ocr_ms": 191.38,
+          "processing_ms": 1412.84
+        }
+      },
+      {
+        "probe": "close_labels",
+        "http": 200,
+        "status": "ready",
+        "reason": null,
+        "verbatim_cube": true,
+        "page": null,
+        "raster_pages": null,
+        "text_regions": 2,
+        "diagram_classification": "DIAGRAM_LABELS_ONLY_CONSISTENT",
+        "diagram_candidates": 2,
+        "route": "LOCAL_OCR_VERIFIED",
+        "blocking_reasons": [],
+        "metrics": {
+          "vlm_calls": 0,
+          "used_vlm": false,
+          "used_local_ocr": true,
+          "raw_input_bytes": 26527,
+          "vlm_payload_bytes": 0,
+          "uncropped_baseline_bytes": 49053,
+          "local_ocr_ms": 7.92,
+          "local_parse_ms": 0.082,
+          "processing_ms": 1023.33
+        }
+      },
+      {
+        "probe": "perpendicular_symbol",
+        "http": 200,
+        "status": "needs_confirmation",
+        "reason": "LOCAL_OCR_REVIEW_REQUIRED",
+        "verbatim_cube": false,
+        "page": null,
+        "raster_pages": null,
+        "text_regions": 2,
+        "diagram_classification": "NO_DIAGRAM",
+        "diagram_candidates": 0,
+        "route": "LOCAL_OCR_NEEDS_CONFIRMATION",
+        "blocking_reasons": [
+          "UNCERTAIN_SPANS"
+        ],
+        "metrics": {
+          "vlm_calls": 0,
+          "used_vlm": false,
+          "used_local_ocr": true,
+          "raw_input_bytes": 22209,
+          "vlm_payload_bytes": 0,
+          "uncropped_baseline_bytes": 40506,
+          "local_ocr_ms": 46.66,
+          "processing_ms": 1096.88
+        }
+      },
+      {
+        "probe": "out_of_scope",
+        "http": 200,
+        "status": "rejected",
+        "reason": "UNSUPPORTED_PROBLEM",
+        "verbatim_cube": false,
+        "page": null,
+        "raster_pages": null,
+        "text_regions": 1,
+        "diagram_classification": "NO_DIAGRAM",
+        "diagram_candidates": 0,
+        "route": "LOCAL_OCR_VERIFIED",
+        "blocking_reasons": [],
+        "metrics": {
+          "vlm_calls": 0,
+          "used_vlm": false,
+          "used_local_ocr": true,
+          "raw_input_bytes": 9878,
+          "vlm_payload_bytes": 0,
+          "uncropped_baseline_bytes": 21575,
+          "local_ocr_ms": 5.98,
+          "processing_ms": 1126.31
+        }
+      },
+      {
+        "probe": "diagram_text_conflict",
+        "http": 200,
+        "status": "needs_confirmation",
+        "reason": "DIAGRAM_FACT_REVIEW_REQUIRED",
+        "verbatim_cube": true,
+        "page": null,
+        "raster_pages": null,
+        "text_regions": 2,
+        "diagram_classification": "DIAGRAM_HAS_MEASUREMENTS",
+        "diagram_candidates": 4,
+        "route": "LOCAL_OCR_NEEDS_CONFIRMATION",
+        "blocking_reasons": [
+          "DIAGRAM_FACTS_UNVERIFIED"
+        ],
+        "metrics": {
+          "vlm_calls": 0,
+          "used_vlm": false,
+          "used_local_ocr": true,
+          "raw_input_bytes": 29239,
+          "vlm_payload_bytes": 0,
+          "uncropped_baseline_bytes": 51504,
+          "local_ocr_ms": 7.73,
+          "processing_ms": 872.15
+        }
+      },
+      {
+        "probe": "unreadable",
+        "http": 200,
+        "status": "rejected",
+        "reason": "IMAGE_NOT_READABLE",
+        "verbatim_cube": false,
+        "page": null,
+        "raster_pages": null,
+        "text_regions": 0,
+        "diagram_classification": "NO_DIAGRAM",
+        "diagram_candidates": 0,
+        "route": "LOCAL_OCR_REJECTED",
+        "blocking_reasons": [
+          "NO_TEXT_DETECTED",
+          "SECOND_READER_MISSING"
+        ],
+        "metrics": {
+          "vlm_calls": 0,
+          "used_vlm": false,
+          "used_local_ocr": true,
+          "raw_input_bytes": 2048,
+          "vlm_payload_bytes": 0,
+          "uncropped_baseline_bytes": 7427,
+          "local_ocr_ms": 0.2,
+          "processing_ms": 1100.66
+        }
+      },
+      {
+        "probe": "prompt_injection",
+        "http": 200,
+        "status": "needs_confirmation",
+        "reason": "LOCAL_OCR_REVIEW_REQUIRED",
+        "verbatim_cube": false,
+        "page": null,
+        "raster_pages": null,
+        "text_regions": 1,
+        "diagram_classification": "NO_DIAGRAM",
+        "diagram_candidates": 0,
+        "route": "LOCAL_OCR_NEEDS_CONFIRMATION",
+        "blocking_reasons": [
+          "UNCERTAIN_SPANS"
+        ],
+        "metrics": {
+          "vlm_calls": 0,
+          "used_vlm": false,
+          "used_local_ocr": true,
+          "raw_input_bytes": 10981,
+          "vlm_payload_bytes": 0,
+          "uncropped_baseline_bytes": 21103,
+          "local_ocr_ms": 9.13,
+          "processing_ms": 1310.76
+        }
+      },
+      {
+        "probe": "illustrative_diagram",
+        "http": 200,
+        "status": "needs_confirmation",
+        "reason": "LOCAL_OCR_REVIEW_REQUIRED",
+        "verbatim_cube": false,
+        "page": null,
+        "raster_pages": null,
+        "text_regions": 3,
+        "diagram_classification": "DIAGRAM_LABELS_ONLY_CONSISTENT",
+        "diagram_candidates": 2,
+        "route": "LOCAL_OCR_NEEDS_CONFIRMATION",
+        "blocking_reasons": [
+          "UNCERTAIN_SPANS"
+        ],
+        "metrics": {
+          "vlm_calls": 0,
+          "used_vlm": false,
+          "used_local_ocr": true,
+          "raw_input_bytes": 30937,
+          "vlm_payload_bytes": 0,
+          "uncropped_baseline_bytes": 55536,
+          "local_ocr_ms": 11.94,
+          "processing_ms": 698.83
+        }
+      },
+      {
+        "backend_guard_external_attempts": []
+      }
+    ],
+    "sha256": {
+      ".superpowers/v14-ocr-api-dev.jsonl": "8711b8c6b611610092b56bf7936d396d60a5c2b3c4ddb5839562e75cbdf776b2"
+    }
+  },
+  "by_modality": {
+    "digital_pdf": {
+      "positive": 1,
+      "served": 0,
+      "completed": 0,
+      "negative": 0,
+      "negative_safely_refused": 0
+    },
+    "docx": {
+      "positive": 1,
+      "served": 0,
+      "completed": 0,
+      "negative": 0,
+      "negative_safely_refused": 0
+    },
+    "mixed_pdf": {
+      "positive": 1,
+      "served": 0,
+      "completed": 0,
+      "negative": 0,
+      "negative_safely_refused": 0
+    },
+    "raster_image": {
+      "positive": 5,
+      "served": 0,
+      "completed": 0,
+      "negative": 5,
+      "negative_safely_refused": 5
+    },
+    "scanned_pdf": {
+      "positive": 2,
+      "served": 0,
+      "completed": 0,
+      "negative": 0,
+      "negative_safely_refused": 0
+    }
+  },
+  "prepare_latency_ms": {
+    "digital_pdf": {
+      "n": 1,
+      "p50": 206,
+      "p95": 206
+    },
+    "docx": {
+      "n": 1,
+      "p50": 114,
+      "p95": 114
+    },
+    "mixed_pdf": {
+      "n": 1,
+      "p50": 178,
+      "p95": 178
+    },
+    "raster_image": {
+      "n": 10,
+      "p50": 1737.0,
+      "p95": 12536
+    },
+    "scanned_pdf": {
+      "n": 2,
+      "p50": 3995.5,
+      "p95": 4700
+    }
+  },
+  "local_ocr_latency_ms": {
+    "n": 12,
+    "p50": 17.625,
+    "p95": 868.55
+  },
+  "diagram_to_scene_latency_ms": "NOT_MEASURED",
+  "first_interactive_frame_ms": "NOT_MEASURED",
+  "network": {
+    "browser_external_requests": 0,
+    "proxy_intercepted": 0,
+    "tcp_heartbeats": 771,
+    "tcp_non_loopback_records": 0,
+    "physical_internet_disconnect": "NOT_MEASURED",
+    "external_ai_calls_reported": 0,
+    "prepare_vlm_calls_reported": 0
+  },
+  "cases": [
+    {
+      "case_id": "I01",
+      "modality": "raster_image",
+      "tags": [
+        "plain_text"
+      ],
+      "expected": "SERVE",
+      "preparation": {
+        "http": 200,
+        "ms": 12536,
+        "status": "needs_confirmation",
+        "reason": "LOCAL_OCR_REVIEW_REQUIRED",
+        "selected_first_page": false,
+        "input_route": "LOCAL_OCR_NEEDS_CONFIRMATION",
+        "page": null,
+        "selected_bbox": [
+          0,
+          0.0611,
+          0.9467,
+          0.3472
+        ],
+        "text_regions": [
+          [
+            41,
+            14,
+            1363,
+            60
+          ],
+          [
+            37,
+            59,
+            483,
+            114
+          ]
+        ],
+        "diagram_classification": "NO_DIAGRAM",
+        "diagram_candidates": 0,
+        "uncertainty_codes": [
+          "SINGLE_READER_TOKEN",
+          "SINGLE_READER_TOKEN",
+          "SINGLE_READER_TOKEN",
+          "SINGLE_READER_TOKEN",
+          "SINGLE_READER_TOKEN",
+          "SINGLE_READER_TOKEN",
+          "SINGLE_READER_TOKEN",
+          "SINGLE_READER_TOKEN"
+        ],
+        "original_text_match": false,
+        "metrics": {
+          "vlm_calls": 0,
+          "used_vlm": false,
+          "used_local_ocr": true,
+          "raw_input_bytes": 21943,
+          "vlm_payload_bytes": 0,
+          "uncropped_baseline_bytes": 37153,
+          "local_ocr_ms": 868.55,
+          "processing_ms": 11101.99
+        },
+        "scene_cache": null
+      },
+      "analysis_input_provenance": null,
+      "scene": {
+        "scene_served": false,
+        "route_status": "UNKNOWN",
+        "reason_code": null,
+        "mathematical_validation": "NOT_SERVED",
+        "visual_ok": null,
+        "interaction_ok": null,
+        "completed": false
+      }
+    },
+    {
+      "case_id": "I02",
+      "modality": "raster_image",
+      "tags": [
+        "formula"
+      ],
+      "expected": "SERVE",
+      "preparation": {
+        "http": 200,
+        "ms": 2251,
+        "status": "needs_confirmation",
+        "reason": "LOCAL_OCR_REVIEW_REQUIRED",
+        "selected_first_page": false,
+        "input_route": "LOCAL_OCR_NEEDS_CONFIRMATION",
+        "page": null,
+        "selected_bbox": [
+          0,
+          0.0417,
+          0.9093,
+          0.3667
+        ],
+        "text_regions": [
+          [
+            42,
+            17,
+            1304,
+            68
+          ],
+          [
+            43,
+            68,
+            389,
+            115
+          ]
+        ],
+        "diagram_classification": "NO_DIAGRAM",
+        "diagram_candidates": 0,
+        "uncertainty_codes": [
+          "SINGLE_READER_TOKEN"
+        ],
+        "original_text_match": false,
+        "metrics": {
+          "vlm_calls": 0,
+          "used_vlm": false,
+          "used_local_ocr": true,
+          "raw_input_bytes": 20227,
+          "vlm_payload_bytes": 0,
+          "uncropped_baseline_bytes": 34230,
+          "local_ocr_ms": 44.22,
+          "processing_ms": 1957.26
+        },
+        "scene_cache": null
+      },
+      "analysis_input_provenance": null,
+      "scene": {
+        "scene_served": false,
+        "route_status": "UNKNOWN",
+        "reason_code": null,
+        "mathematical_validation": "NOT_SERVED",
+        "visual_ok": null,
+        "interaction_ok": null,
+        "completed": false
+      }
+    },
+    {
+      "case_id": "I03",
+      "modality": "raster_image",
+      "tags": [
+        "diagram_labels",
+        "right_angle_mark",
+        "illustrative_diagram"
+      ],
+      "expected": "SERVE",
+      "preparation": {
+        "http": 200,
+        "ms": 1635,
+        "status": "ready",
+        "reason": null,
+        "selected_first_page": false,
+        "input_route": "LOCAL_OCR_VERIFIED",
+        "page": null,
+        "selected_bbox": [
+          0,
+          0,
+          1,
+          1
+        ],
+        "text_regions": [
+          [
+            41,
+            35,
+            1400,
+            83
+          ],
+          [
+            39,
+            80,
+            629,
+            131
+          ]
+        ],
+        "diagram_classification": "DIAGRAM_LABELS_ONLY_CONSISTENT",
+        "diagram_candidates": 4,
+        "uncertainty_codes": [],
+        "original_text_match": true,
+        "metrics": {
+          "vlm_calls": 0,
+          "used_vlm": false,
+          "used_local_ocr": true,
+          "raw_input_bytes": 29961,
+          "vlm_payload_bytes": 0,
+          "uncropped_baseline_bytes": 61007,
+          "local_ocr_ms": 14.9,
+          "local_parse_ms": 5.637,
+          "processing_ms": 1479.26
+        },
+        "scene_cache": "none"
+      },
+      "analysis_input_provenance": {
+        "contract_version": "verified-input-provenance/1",
+        "origin": "local_ocr_auto_verified",
+        "declared_origin": "local_ocr_auto_verified",
+        "edited_from_raw_ocr": false,
+        "counted_as_unmodified_auto_ocr": true,
+        "raw_ocr_text_sha256": "a9f65ab08d0111e8097cfa3416e5dedceb576056eb392c97796279edd4c251c7",
+        "confirmed_text_sha256": "a9f65ab08d0111e8097cfa3416e5dedceb576056eb392c97796279edd4c251c7",
+        "prepared_region_sha256": "21ef1e643a0bf1da6061ef6ea4b494cf8c710a37df80e75460fee35c754d12cf",
+        "confirmed_span_count": null,
+        "selected_candidate_id": null,
+        "selected_bbox": null
+      },
+      "scene": {
+        "scene_served": false,
+        "route_status": "REFUSED",
+        "reason_code": "SOURCE_PREMISE_UNREAD",
+        "mathematical_validation": "NOT_SERVED",
+        "visual_ok": null,
+        "interaction_ok": null,
+        "completed": false
+      }
+    },
+    {
+      "case_id": "I04",
+      "modality": "raster_image",
+      "tags": [
+        "blurred"
+      ],
+      "expected": "SERVE",
+      "preparation": {
+        "http": 200,
+        "ms": 1478,
+        "status": "needs_confirmation",
+        "reason": "LOCAL_OCR_REVIEW_REQUIRED",
+        "selected_first_page": false,
+        "input_route": "LOCAL_OCR_NEEDS_CONFIRMATION",
+        "page": null,
+        "selected_bbox": [
+          0,
+          0.0611,
+          0.9713,
+          0.3278
+        ],
+        "text_regions": [
+          [
+            37,
+            5,
+            1398,
+            68
+          ],
+          [
+            39,
+            61,
+            111,
+            105
+          ]
+        ],
+        "diagram_classification": "NO_DIAGRAM",
+        "diagram_candidates": 0,
+        "uncertainty_codes": [
+          "FRACTION_STRUCTURE_LOSS",
+          "FRACTION_STRUCTURE_LOSS"
+        ],
+        "original_text_match": true,
+        "metrics": {
+          "vlm_calls": 0,
+          "used_vlm": false,
+          "used_local_ocr": true,
+          "raw_input_bytes": 29009,
+          "vlm_payload_bytes": 0,
+          "uncropped_baseline_bytes": 21587,
+          "local_ocr_ms": 12.57,
+          "processing_ms": 1378.07
+        },
+        "scene_cache": null
+      },
+      "analysis_input_provenance": null,
+      "scene": {
+        "scene_served": false,
+        "route_status": "UNKNOWN",
+        "reason_code": null,
+        "mathematical_validation": "NOT_SERVED",
+        "visual_ok": null,
+        "interaction_ok": null,
+        "completed": false
+      }
+    },
+    {
+      "case_id": "I05",
+      "modality": "raster_image",
+      "tags": [
+        "skewed"
+      ],
+      "expected": "SERVE",
+      "preparation": {
+        "http": 200,
+        "ms": 5429,
+        "status": "needs_confirmation",
+        "reason": "LOCAL_OCR_REVIEW_REQUIRED",
+        "selected_first_page": false,
+        "input_route": "LOCAL_OCR_NEEDS_CONFIRMATION",
+        "page": null,
+        "selected_bbox": [
+          0,
+          0,
+          0.934,
+          0.6028
+        ],
+        "text_regions": [
+          [
+            22,
+            0,
+            1229,
+            167
+          ],
+          [
+            31,
+            113,
+            429,
+            207
+          ]
+        ],
+        "diagram_classification": "NO_DIAGRAM",
+        "diagram_candidates": 0,
+        "uncertainty_codes": [
+          "AMBIGUOUS_DIACRITIC_RESTORATION",
+          "SAME_FAMILY_AGREEMENT_ONLY",
+          "SAME_FAMILY_AGREEMENT_ONLY",
+          "SAME_FAMILY_AGREEMENT_ONLY",
+          "MATH_TOKEN_DISAGREEMENT",
+          "SAME_FAMILY_AGREEMENT_ONLY"
+        ],
+        "original_text_match": false,
+        "metrics": {
+          "vlm_calls": 0,
+          "used_vlm": false,
+          "used_local_ocr": true,
+          "raw_input_bytes": 36713,
+          "vlm_payload_bytes": 0,
+          "uncropped_baseline_bytes": 39012,
+          "local_ocr_ms": 1034.99,
+          "processing_ms": 5209.05
+        },
+        "scene_cache": null
+      },
+      "analysis_input_provenance": null,
+      "scene": {
+        "scene_served": false,
+        "route_status": "UNKNOWN",
+        "reason_code": null,
+        "mathematical_validation": "NOT_SERVED",
+        "visual_ok": null,
+        "interaction_ok": null,
+        "completed": false
+      }
+    },
+    {
+      "case_id": "I06",
+      "modality": "raster_image",
+      "tags": [
+        "diagram_only_missing_dimensions",
+        "nearby_labels"
+      ],
+      "expected": "SAFE_REFUSE",
+      "preparation": {
+        "http": 200,
+        "ms": 1270,
+        "status": "needs_confirmation",
+        "reason": "LOCAL_OCR_REVIEW_REQUIRED",
+        "selected_first_page": false,
+        "input_route": "LOCAL_OCR_NEEDS_CONFIRMATION",
+        "page": null,
+        "selected_bbox": [
+          0,
+          0.0161,
+          0.7093,
+          0.8968
+        ],
+        "text_regions": [
+          [
+            41,
+            21,
+            1002,
+            73
+          ]
+        ],
+        "diagram_classification": "DIAGRAM_LABELS_ONLY_CONSISTENT",
+        "diagram_candidates": 4,
+        "uncertainty_codes": [
+          "AMBIGUOUS_DIACRITIC_RESTORATION"
+        ],
+        "original_text_match": true,
+        "metrics": {
+          "vlm_calls": 0,
+          "used_vlm": false,
+          "used_local_ocr": true,
+          "raw_input_bytes": 21428,
+          "vlm_payload_bytes": 0,
+          "uncropped_baseline_bytes": 46073,
+          "local_ocr_ms": 9.43,
+          "processing_ms": 1136.59
+        },
+        "scene_cache": null
+      },
+      "analysis_input_provenance": null,
+      "scene": {
+        "scene_served": false,
+        "route_status": "UNKNOWN",
+        "reason_code": null,
+        "mathematical_validation": "NOT_SERVED",
+        "visual_ok": null,
+        "interaction_ok": null,
+        "completed": false
+      }
+    },
+    {
+      "case_id": "I07",
+      "modality": "raster_image",
+      "tags": [
+        "out_of_scope"
+      ],
+      "expected": "SAFE_REFUSE",
+      "preparation": {
+        "http": 200,
+        "ms": 1402,
+        "status": "needs_confirmation",
+        "reason": "LOCAL_OCR_REVIEW_REQUIRED",
+        "selected_first_page": false,
+        "input_route": "LOCAL_OCR_NEEDS_CONFIRMATION",
+        "page": null,
+        "selected_bbox": [
+          0,
+          0.0417,
+          0.8967,
+          0.3472
+        ],
+        "text_regions": [
+          [
+            38,
+            15,
+            1292,
+            73
+          ],
+          [
+            42,
+            64,
+            130,
+            113
+          ]
+        ],
+        "diagram_classification": "NO_DIAGRAM",
+        "diagram_candidates": 0,
+        "uncertainty_codes": [
+          "AMBIGUOUS_DIACRITIC_RESTORATION",
+          "AMBIGUOUS_DIACRITIC_RESTORATION",
+          "AMBIGUOUS_DIACRITIC_RESTORATION",
+          "AMBIGUOUS_DIACRITIC_RESTORATION"
+        ],
+        "original_text_match": false,
+        "metrics": {
+          "vlm_calls": 0,
+          "used_vlm": false,
+          "used_local_ocr": true,
+          "raw_input_bytes": 16195,
+          "vlm_payload_bytes": 0,
+          "uncropped_baseline_bytes": 30337,
+          "local_ocr_ms": 22.23,
+          "processing_ms": 1285.28
+        },
+        "scene_cache": null
+      },
+      "analysis_input_provenance": null,
+      "scene": {
+        "scene_served": false,
+        "route_status": "UNKNOWN",
+        "reason_code": null,
+        "mathematical_validation": "NOT_SERVED",
+        "visual_ok": null,
+        "interaction_ok": null,
+        "completed": false
+      }
+    },
+    {
+      "case_id": "I08",
+      "modality": "raster_image",
+      "tags": [
+        "contradictory"
+      ],
+      "expected": "SAFE_REFUSE",
+      "preparation": {
+        "http": 200,
+        "ms": 1705,
+        "status": "ready",
+        "reason": null,
+        "selected_first_page": false,
+        "input_route": "LOCAL_OCR_VERIFIED",
+        "page": null,
+        "selected_bbox": [
+          0,
+          0.0611,
+          0.9713,
+          0.3472
+        ],
+        "text_regions": [
+          [
+            41,
+            11,
+            1396,
+            62
+          ],
+          [
+            41,
+            61,
+            497,
+            107
+          ]
+        ],
+        "diagram_classification": "NO_DIAGRAM",
+        "diagram_candidates": 0,
+        "uncertainty_codes": [],
+        "original_text_match": true,
+        "metrics": {
+          "vlm_calls": 0,
+          "used_vlm": false,
+          "used_local_ocr": true,
+          "raw_input_bytes": 19978,
+          "vlm_payload_bytes": 0,
+          "uncropped_baseline_bytes": 37054,
+          "local_ocr_ms": 9.18,
+          "local_parse_ms": 8.186,
+          "processing_ms": 1585.79
+        },
+        "scene_cache": "none"
+      },
+      "analysis_input_provenance": {
+        "contract_version": "verified-input-provenance/1",
+        "origin": "local_ocr_auto_verified",
+        "declared_origin": "local_ocr_auto_verified",
+        "edited_from_raw_ocr": false,
+        "counted_as_unmodified_auto_ocr": true,
+        "raw_ocr_text_sha256": "c87819e9e8e8721f970b9043f62ecb0021e9bd59b1aee4ad413a944de08546b8",
+        "confirmed_text_sha256": "c87819e9e8e8721f970b9043f62ecb0021e9bd59b1aee4ad413a944de08546b8",
+        "prepared_region_sha256": "404ddaee97afd3a7fd6549d242e89fb11d55121846cc124c613427ac2692aeed",
+        "confirmed_span_count": null,
+        "selected_candidate_id": null,
+        "selected_bbox": null
+      },
+      "scene": {
+        "scene_served": false,
+        "route_status": "REFUSED",
+        "reason_code": "UNGROUNDED_VALUE",
+        "mathematical_validation": "NOT_SERVED",
+        "visual_ok": null,
+        "interaction_ok": null,
+        "completed": false
+      }
+    },
+    {
+      "case_id": "I09",
+      "modality": "raster_image",
+      "tags": [
+        "unreadable"
+      ],
+      "expected": "SAFE_REFUSE",
+      "preparation": {
+        "http": 200,
+        "ms": 1798,
+        "status": "rejected",
+        "reason": "IMAGE_NOT_READABLE",
+        "selected_first_page": false,
+        "input_route": "LOCAL_OCR_REJECTED",
+        "page": null,
+        "selected_bbox": [
+          0,
+          0,
+          1,
+          1
+        ],
+        "text_regions": [],
+        "diagram_classification": "NO_DIAGRAM",
+        "diagram_candidates": 0,
+        "uncertainty_codes": [],
+        "original_text_match": false,
+        "metrics": {
+          "vlm_calls": 0,
+          "used_vlm": false,
+          "used_local_ocr": true,
+          "raw_input_bytes": 8004,
+          "vlm_payload_bytes": 0,
+          "uncropped_baseline_bytes": 10198,
+          "local_ocr_ms": 0.15,
+          "processing_ms": 1678.99
+        },
+        "scene_cache": null
+      },
+      "analysis_input_provenance": null,
+      "scene": {
+        "scene_served": false,
+        "route_status": "UNKNOWN",
+        "reason_code": null,
+        "mathematical_validation": "NOT_SERVED",
+        "visual_ok": null,
+        "interaction_ok": null,
+        "completed": false
+      }
+    },
+    {
+      "case_id": "I10",
+      "modality": "raster_image",
+      "tags": [
+        "prompt_injection"
+      ],
+      "expected": "SAFE_REFUSE",
+      "preparation": {
+        "http": 200,
+        "ms": 1769,
+        "status": "ready",
+        "reason": null,
+        "selected_first_page": false,
+        "input_route": "LOCAL_OCR_VERIFIED",
+        "page": null,
+        "selected_bbox": [
+          0,
+          0.0417,
+          0.978,
+          0.3472
+        ],
+        "text_regions": [
+          [
+            38,
+            14,
+            1415,
+            72
+          ],
+          [
+            41,
+            64,
+            239,
+            112
+          ]
+        ],
+        "diagram_classification": "NO_DIAGRAM",
+        "diagram_candidates": 0,
+        "uncertainty_codes": [],
+        "original_text_match": false,
+        "metrics": {
+          "vlm_calls": 0,
+          "used_vlm": false,
+          "used_local_ocr": true,
+          "raw_input_bytes": 20236,
+          "vlm_payload_bytes": 0,
+          "uncropped_baseline_bytes": 35021,
+          "local_ocr_ms": 15.43,
+          "local_parse_ms": 2.911,
+          "processing_ms": 1626.11
+        },
+        "scene_cache": "none"
+      },
+      "analysis_input_provenance": {
+        "contract_version": "verified-input-provenance/1",
+        "origin": "local_ocr_auto_verified",
+        "declared_origin": "local_ocr_auto_verified",
+        "edited_from_raw_ocr": false,
+        "counted_as_unmodified_auto_ocr": true,
+        "raw_ocr_text_sha256": "fd3651afbf0afd61870f74900507c11dbc4e783d25c3c88eb4f6b6c22e2c53e0",
+        "confirmed_text_sha256": "fd3651afbf0afd61870f74900507c11dbc4e783d25c3c88eb4f6b6c22e2c53e0",
+        "prepared_region_sha256": "45d8e0678bc555759300660f81a7d04da00e78dc1bc5c2669759cb0be3926f89",
+        "confirmed_span_count": null,
+        "selected_candidate_id": null,
+        "selected_bbox": null
+      },
+      "scene": {
+        "scene_served": false,
+        "route_status": "REFUSED",
+        "reason_code": "OUT_OF_SCOPE",
+        "mathematical_validation": "NOT_SERVED",
+        "visual_ok": null,
+        "interaction_ok": null,
+        "completed": false
+      }
+    },
+    {
+      "case_id": "P01",
+      "modality": "digital_pdf",
+      "tags": [
+        "digital_pdf"
+      ],
+      "expected": "SERVE",
+      "preparation": {
+        "http": 200,
+        "ms": 206,
+        "status": "ready",
+        "reason": null,
+        "selected_first_page": false,
+        "input_route": null,
+        "page": 1,
+        "selected_bbox": null,
+        "text_regions": [],
+        "diagram_classification": null,
+        "diagram_candidates": 0,
+        "uncertainty_codes": [],
+        "original_text_match": true,
+        "metrics": {
+          "vlm_calls": 0,
+          "used_vlm": false,
+          "raw_input_bytes": 585720,
+          "vlm_payload_bytes": 0,
+          "uncropped_baseline_bytes": 0,
+          "processing_ms": 48.09,
+          "local_parse_ms": 8.328
+        },
+        "scene_cache": "none"
+      },
+      "analysis_input_provenance": {
+        "contract_version": "verified-input-provenance/1",
+        "origin": "document_extracted",
+        "declared_origin": "document_extracted",
+        "edited_from_raw_ocr": false,
+        "counted_as_unmodified_auto_ocr": false,
+        "raw_ocr_text_sha256": null,
+        "confirmed_text_sha256": "1be18161d607bdb7dc567cbf17f09fbf7ce606b60a0fd0d8477458f69ada0265",
+        "prepared_region_sha256": null,
+        "confirmed_span_count": null,
+        "selected_candidate_id": "text-p1-1",
+        "selected_bbox": null
+      },
+      "scene": {
+        "scene_served": false,
+        "route_status": "REFUSED",
+        "reason_code": "AMBIGUOUS_FACT",
+        "mathematical_validation": "NOT_SERVED",
+        "visual_ok": null,
+        "interaction_ok": null,
+        "completed": false
+      }
+    },
+    {
+      "case_id": "P02",
+      "modality": "scanned_pdf",
+      "tags": [
+        "scanned_pdf"
+      ],
+      "expected": "SERVE",
+      "preparation": {
+        "http": 200,
+        "ms": 4700,
+        "status": "ready",
+        "reason": null,
+        "selected_first_page": false,
+        "input_route": "LOCAL_OCR_VERIFIED",
+        "page": 1,
+        "selected_bbox": [
+          0.0194,
+          0.1094,
+          0.9171,
+          0.1184
+        ],
+        "text_regions": [
+          [
+            62,
+            85,
+            1455,
+            142
+          ],
+          [
+            62,
+            134,
+            608,
+            189
+          ]
+        ],
+        "diagram_classification": "NO_DIAGRAM",
+        "diagram_candidates": 0,
+        "uncertainty_codes": [],
+        "original_text_match": true,
+        "metrics": {
+          "vlm_calls": 0,
+          "used_vlm": false,
+          "used_local_ocr": true,
+          "raw_input_bytes": 21952,
+          "vlm_payload_bytes": 0,
+          "uncropped_baseline_bytes": 87393,
+          "local_ocr_ms": 19.82,
+          "local_parse_ms": 6.765,
+          "processing_ms": 4488.53
+        },
+        "scene_cache": "none"
+      },
+      "analysis_input_provenance": {
+        "contract_version": "verified-input-provenance/1",
+        "origin": "local_ocr_auto_verified",
+        "declared_origin": "local_ocr_auto_verified",
+        "edited_from_raw_ocr": false,
+        "counted_as_unmodified_auto_ocr": true,
+        "raw_ocr_text_sha256": "1d0be06fbf59577d96bf0131a6b49176240a394b6afa57d4f15f006a098f6dfb",
+        "confirmed_text_sha256": "1d0be06fbf59577d96bf0131a6b49176240a394b6afa57d4f15f006a098f6dfb",
+        "prepared_region_sha256": "7aa4a667fb58cf3a917e87f1db5414d61718cfdca9e54e3eb50cbcf262824c6a",
+        "confirmed_span_count": null,
+        "selected_candidate_id": null,
+        "selected_bbox": null
+      },
+      "scene": {
+        "scene_served": false,
+        "route_status": "REFUSED",
+        "reason_code": "SOURCE_PREMISE_UNREAD",
+        "mathematical_validation": "NOT_SERVED",
+        "visual_ok": null,
+        "interaction_ok": null,
+        "completed": false
+      }
+    },
+    {
+      "case_id": "P03",
+      "modality": "scanned_pdf",
+      "tags": [
+        "multiple_pages"
+      ],
+      "expected": "SERVE",
+      "preparation": {
+        "http": 200,
+        "ms": 3291,
+        "status": "needs_confirmation",
+        "reason": "LOCAL_OCR_LOW_QUALITY",
+        "selected_first_page": true,
+        "input_route": "LOCAL_OCR_NEEDS_CONFIRMATION",
+        "page": 1,
+        "selected_bbox": [
+          0.0194,
+          0.1035,
+          0.9038,
+          0.1244
+        ],
+        "text_regions": [
+          [
+            65,
+            98,
+            1434,
+            152
+          ],
+          [
+            61,
+            147,
+            785,
+            206
+          ]
+        ],
+        "diagram_classification": "NO_DIAGRAM",
+        "diagram_candidates": 0,
+        "uncertainty_codes": [
+          "MATH_TOKEN_DISAGREEMENT",
+          "SINGLE_READER_TOKEN",
+          "AMBIGUOUS_DIACRITIC_RESTORATION",
+          "SINGLE_READER_TOKEN",
+          "AMBIGUOUS_DIACRITIC_RESTORATION",
+          "SINGLE_READER_TOKEN",
+          "SINGLE_READER_TOKEN",
+          "MULTIWORD_SLOT_MISMATCH",
+          "SINGLE_READER_TOKEN",
+          "AMBIGUOUS_DIACRITIC_RESTORATION"
+        ],
+        "original_text_match": false,
+        "metrics": {
+          "vlm_calls": 0,
+          "used_vlm": false,
+          "used_local_ocr": true,
+          "raw_input_bytes": 28924,
+          "vlm_payload_bytes": 0,
+          "uncropped_baseline_bytes": 90008,
+          "local_ocr_ms": 267.17,
+          "processing_ms": 2961.15
+        },
+        "scene_cache": null
+      },
+      "analysis_input_provenance": null,
+      "scene": {
+        "scene_served": false,
+        "route_status": "UNKNOWN",
+        "reason_code": null,
+        "mathematical_validation": "NOT_SERVED",
+        "visual_ok": null,
+        "interaction_ok": null,
+        "completed": false
+      }
+    },
+    {
+      "case_id": "P04",
+      "modality": "mixed_pdf",
+      "tags": [
+        "mixed_pdf"
+      ],
+      "expected": "SERVE",
+      "preparation": {
+        "http": 200,
+        "ms": 178,
+        "status": "needs_confirmation",
+        "reason": "DIAGRAM_FACT_REVIEW_REQUIRED",
+        "selected_first_page": false,
+        "input_route": null,
+        "page": 1,
+        "selected_bbox": null,
+        "text_regions": [],
+        "diagram_classification": null,
+        "diagram_candidates": 0,
+        "uncertainty_codes": [
+          "DIAGRAM_FACTS_UNVERIFIED"
+        ],
+        "original_text_match": true,
+        "metrics": {
+          "vlm_calls": 0,
+          "used_vlm": false,
+          "raw_input_bytes": 599030,
+          "vlm_payload_bytes": 0,
+          "uncropped_baseline_bytes": 0,
+          "processing_ms": 9.23
+        },
+        "scene_cache": null
+      },
+      "analysis_input_provenance": null,
+      "scene": {
+        "scene_served": false,
+        "route_status": "UNKNOWN",
+        "reason_code": null,
+        "mathematical_validation": "NOT_SERVED",
+        "visual_ok": null,
+        "interaction_ok": null,
+        "completed": false
+      }
+    },
+    {
+      "case_id": "D01",
+      "modality": "docx",
+      "tags": [
+        "digital_text"
+      ],
+      "expected": "SERVE",
+      "preparation": {
+        "http": 200,
+        "ms": 114,
+        "status": "ready",
+        "reason": null,
+        "selected_first_page": false,
+        "input_route": null,
+        "page": null,
+        "selected_bbox": null,
+        "text_regions": [],
+        "diagram_classification": null,
+        "diagram_candidates": 0,
+        "uncertainty_codes": [],
+        "original_text_match": true,
+        "metrics": {
+          "vlm_calls": 0,
+          "used_vlm": false,
+          "raw_input_bytes": 36699,
+          "vlm_payload_bytes": 0,
+          "uncropped_baseline_bytes": 0,
+          "processing_ms": 6.53,
+          "local_parse_ms": 3.442
+        },
+        "scene_cache": "none"
+      },
+      "analysis_input_provenance": {
+        "contract_version": "verified-input-provenance/1",
+        "origin": "document_extracted",
+        "declared_origin": "document_extracted",
+        "edited_from_raw_ocr": false,
+        "counted_as_unmodified_auto_ocr": false,
+        "raw_ocr_text_sha256": null,
+        "confirmed_text_sha256": "45b116eb48a6041da91d5c858758328f8cefdb90423073251e4bf660ea4302cd",
+        "prepared_region_sha256": null,
+        "confirmed_span_count": null,
+        "selected_candidate_id": "text-p1-1",
+        "selected_bbox": null
+      },
+      "scene": {
+        "scene_served": false,
+        "route_status": "REFUSED",
+        "reason_code": "QUESTION_LOCAL_GIVEN_UNVERIFIED",
+        "mathematical_validation": "NOT_SERVED",
+        "visual_ok": null,
+        "interaction_ok": null,
+        "completed": false
+      }
+    }
+  ]
+}

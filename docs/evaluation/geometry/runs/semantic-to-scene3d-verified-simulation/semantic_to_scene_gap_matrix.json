@@ -1,0 +1,1574 @@
+{
+  "run_id": "semantic-to-scene3d-verified-simulation",
+  "generated_at_utc": "2026-11-13T06:09:05.952370+00:00",
+  "head": "6e3989ba5dda57f3b3369551592d832aff9251a1",
+  "before_ref": "8a5a54e37 (start of this run)",
+  "probe_class": "SYNTHETIC_DEVELOPMENT_PROBES written by the agent, one goal type each; not an evaluation corpus",
+  "level_rule": "LEVEL1_BASE_ONLY = served with a solid; LEVEL2_GOAL_CONSTRUCTED = the studied object is in the scene (angle: angle_construction or right-angle witness; distance: foot witness / segment; projection: derived foot; section: section polygon; volume: the solid itself; height: certified altitude)",
+  "before_levels": {
+    "LEVEL1_BASE_ONLY": 8,
+    "LEVEL2_GOAL_CONSTRUCTED": 8,
+    "NOT_SERVED:LIVE_AI_DISABLED": 5,
+    "NOT_SERVED:AMBIGUOUS_FACT": 1,
+    "NOT_SERVED:OUT_OF_SCOPE": 1,
+    "NOT_SERVED:MISSING_DIMENSION": 1
+  },
+  "after_levels": {
+    "LEVEL2_GOAL_CONSTRUCTED": 18,
+    "NOT_SERVED:LIVE_AI_DISABLED": 3,
+    "LEVEL1_BASE_ONLY": 1,
+    "NOT_SERVED:OUT_OF_SCOPE": 1,
+    "NOT_SERVED:MISSING_DIMENSION": 1
+  },
+  "changed": [
+    {
+      "probe": "angle_line_plane",
+      "before": "LEVEL1_BASE_ONLY",
+      "after": "LEVEL2_GOAL_CONSTRUCTED"
+    },
+    {
+      "probe": "angle_line_plane_lateral",
+      "before": "LEVEL1_BASE_ONLY",
+      "after": "LEVEL2_GOAL_CONSTRUCTED"
+    },
+    {
+      "probe": "angle_line_plane_tetra",
+      "before": "LEVEL1_BASE_ONLY",
+      "after": "LEVEL2_GOAL_CONSTRUCTED"
+    },
+    {
+      "probe": "angle_line_line_cross",
+      "before": "LEVEL1_BASE_ONLY",
+      "after": "LEVEL2_GOAL_CONSTRUCTED"
+    },
+    {
+      "probe": "angle_line_line_skew",
+      "before": "LEVEL1_BASE_ONLY",
+      "after": "LEVEL2_GOAL_CONSTRUCTED"
+    },
+    {
+      "probe": "angle_right",
+      "before": "LEVEL1_BASE_ONLY",
+      "after": "LEVEL2_GOAL_CONSTRUCTED"
+    },
+    {
+      "probe": "dihedral_pyramid",
+      "before": "LEVEL1_BASE_ONLY",
+      "after": "LEVEL2_GOAL_CONSTRUCTED"
+    },
+    {
+      "probe": "dihedral_prism",
+      "before": "LEVEL1_BASE_ONLY",
+      "after": "LEVEL2_GOAL_CONSTRUCTED"
+    },
+    {
+      "probe": "centroid_foot",
+      "before": "NOT_SERVED:LIVE_AI_DISABLED",
+      "after": "LEVEL2_GOAL_CONSTRUCTED"
+    },
+    {
+      "probe": "face_perp_base",
+      "before": "NOT_SERVED:LIVE_AI_DISABLED",
+      "after": "LEVEL1_BASE_ONLY"
+    },
+    {
+      "probe": "late_square_side",
+      "before": "NOT_SERVED:AMBIGUOUS_FACT",
+      "after": "LEVEL2_GOAL_CONSTRUCTED"
+    }
+  ],
+  "rows": [
+    {
+      "probe": "angle_line_plane",
+      "goal": "angle",
+      "text": "Cho hình chóp S.ABCD có đáy ABCD là hình vuông cạnh a, SA vuông góc với mặt phẳng đáy và SA = a. Tính góc giữa đường thẳng SC và mặt phẳng (ABCD).",
+      "before": {
+        "goal": "angle",
+        "status": "SERVED",
+        "reason": null,
+        "types": {
+          "point3": 5,
+          "solid": 1,
+          "line3": 1,
+          "plane3": 1,
+          "quantity": 1,
+          "polygon3": 1,
+          "segment3": 4
+        },
+        "has_solid": true,
+        "derived_points": [],
+        "sections": [],
+        "goal_annotation": [
+          {
+            "kind": null,
+            "anchor": null,
+            "relation": null
+          }
+        ],
+        "angle_construction": [],
+        "height_witness": 1,
+        "chart_identity": true,
+        "unit_chosen_by_system": true,
+        "layout_derived_points": 5,
+        "steps": 7,
+        "diagnostics": [
+          "ANNOTATION_UNBOUND kq_q1: measure angle_cos_sq has no registered anchor"
+        ],
+        "level": "LEVEL1_BASE_ONLY"
+      },
+      "after": {
+        "goal": "angle",
+        "status": "SERVED",
+        "reason": null,
+        "types": {
+          "point3": 5,
+          "solid": 1,
+          "line3": 1,
+          "plane3": 1,
+          "quantity": 1,
+          "polygon3": 1,
+          "segment3": 4
+        },
+        "has_solid": true,
+        "derived_points": [],
+        "sections": [],
+        "goal_annotation": [
+          {
+            "kind": null,
+            "anchor": null,
+            "relation": null
+          }
+        ],
+        "angle_construction": [
+          "line_plane"
+        ],
+        "height_witness": 1,
+        "chart_identity": true,
+        "unit_chosen_by_system": true,
+        "layout_derived_points": 5,
+        "steps": 7,
+        "diagnostics": [
+          "ANNOTATION_UNBOUND kq_q1: measure angle_cos_sq has no registered anchor"
+        ],
+        "level": "LEVEL2_GOAL_CONSTRUCTED"
+      }
+    },
+    {
+      "probe": "angle_line_plane_lateral",
+      "goal": "angle",
+      "text": "Cho hình chóp S.ABCD có đáy ABCD là hình vuông cạnh a, SA vuông góc với mặt phẳng đáy và SA = a. Tính góc giữa đường thẳng SC và mặt phẳng (SAB).",
+      "before": {
+        "goal": "angle",
+        "status": "SERVED",
+        "reason": null,
+        "types": {
+          "point3": 5,
+          "solid": 1,
+          "line3": 1,
+          "plane3": 1,
+          "quantity": 1,
+          "polygon3": 1,
+          "segment3": 4
+        },
+        "has_solid": true,
+        "derived_points": [],
+        "sections": [],
+        "goal_annotation": [
+          {
+            "kind": null,
+            "anchor": null,
+            "relation": null
+          }
+        ],
+        "angle_construction": [],
+        "height_witness": 1,
+        "chart_identity": true,
+        "unit_chosen_by_system": true,
+        "layout_derived_points": 5,
+        "steps": 7,
+        "diagnostics": [
+          "ANNOTATION_UNBOUND kq_q1: measure angle_cos_sq has no registered anchor"
+        ],
+        "level": "LEVEL1_BASE_ONLY"
+      },
+      "after": {
+        "goal": "angle",
+        "status": "SERVED",
+        "reason": null,
+        "types": {
+          "point3": 5,
+          "solid": 1,
+          "line3": 1,
+          "plane3": 1,
+          "quantity": 1,
+          "polygon3": 1,
+          "segment3": 4
+        },
+        "has_solid": true,
+        "derived_points": [],
+        "sections": [],
+        "goal_annotation": [
+          {
+            "kind": null,
+            "anchor": null,
+            "relation": null
+          }
+        ],
+        "angle_construction": [
+          "line_plane"
+        ],
+        "height_witness": 1,
+        "chart_identity": true,
+        "unit_chosen_by_system": true,
+        "layout_derived_points": 5,
+        "steps": 7,
+        "diagnostics": [
+          "ANNOTATION_UNBOUND kq_q1: measure angle_cos_sq has no registered anchor"
+        ],
+        "level": "LEVEL2_GOAL_CONSTRUCTED"
+      }
+    },
+    {
+      "probe": "angle_line_plane_tetra",
+      "goal": "angle",
+      "text": "Cho tứ diện đều ABCD có cạnh bằng a. Tính góc giữa đường thẳng AB và mặt phẳng (BCD).",
+      "before": {
+        "goal": "angle",
+        "status": "SERVED",
+        "reason": null,
+        "types": {
+          "point3": 5,
+          "solid": 1,
+          "line3": 1,
+          "plane3": 1,
+          "quantity": 1
+        },
+        "has_solid": true,
+        "derived_points": [],
+        "sections": [],
+        "goal_annotation": [
+          {
+            "kind": null,
+            "anchor": null,
+            "relation": null
+          }
+        ],
+        "angle_construction": [],
+        "height_witness": 0,
+        "chart_identity": false,
+        "unit_chosen_by_system": true,
+        "layout_derived_points": 5,
+        "steps": 5,
+        "diagnostics": [
+          "ANNOTATION_UNBOUND kq_q1: measure angle_cos_sq has no registered anchor"
+        ],
+        "level": "LEVEL1_BASE_ONLY"
+      },
+      "after": {
+        "goal": "angle",
+        "status": "SERVED",
+        "reason": null,
+        "types": {
+          "point3": 5,
+          "solid": 1,
+          "line3": 1,
+          "plane3": 1,
+          "quantity": 1
+        },
+        "has_solid": true,
+        "derived_points": [],
+        "sections": [],
+        "goal_annotation": [
+          {
+            "kind": null,
+            "anchor": null,
+            "relation": null
+          }
+        ],
+        "angle_construction": [
+          "line_plane"
+        ],
+        "height_witness": 0,
+        "chart_identity": false,
+        "unit_chosen_by_system": true,
+        "layout_derived_points": 5,
+        "steps": 5,
+        "diagnostics": [
+          "ANNOTATION_UNBOUND kq_q1: measure angle_cos_sq has no registered anchor"
+        ],
+        "level": "LEVEL2_GOAL_CONSTRUCTED"
+      }
+    },
+    {
+      "probe": "angle_line_line_cross",
+      "goal": "angle",
+      "text": "Cho hình chóp S.ABCD có đáy ABCD là hình vuông cạnh a, SA vuông góc với mặt phẳng đáy và SA = a. Tính góc giữa hai đường thẳng SC và AC.",
+      "before": {
+        "goal": "angle",
+        "status": "SERVED",
+        "reason": null,
+        "types": {
+          "point3": 5,
+          "solid": 1,
+          "line3": 2,
+          "quantity": 1,
+          "polygon3": 1,
+          "segment3": 4
+        },
+        "has_solid": true,
+        "derived_points": [],
+        "sections": [],
+        "goal_annotation": [
+          {
+            "kind": null,
+            "anchor": null,
+            "relation": null
+          }
+        ],
+        "angle_construction": [],
+        "height_witness": 1,
+        "chart_identity": true,
+        "unit_chosen_by_system": true,
+        "layout_derived_points": 5,
+        "steps": 7,
+        "diagnostics": [
+          "ANNOTATION_UNBOUND kq_q1: measure angle_cos_sq has no registered anchor"
+        ],
+        "level": "LEVEL1_BASE_ONLY"
+      },
+      "after": {
+        "goal": "angle",
+        "status": "SERVED",
+        "reason": null,
+        "types": {
+          "point3": 5,
+          "solid": 1,
+          "line3": 2,
+          "quantity": 1,
+          "polygon3": 1,
+          "segment3": 4
+        },
+        "has_solid": true,
+        "derived_points": [],
+        "sections": [],
+        "goal_annotation": [
+          {
+            "kind": null,
+            "anchor": null,
+            "relation": null
+          }
+        ],
+        "angle_construction": [
+          "line_line"
+        ],
+        "height_witness": 1,
+        "chart_identity": true,
+        "unit_chosen_by_system": true,
+        "layout_derived_points": 5,
+        "steps": 7,
+        "diagnostics": [
+          "ANNOTATION_UNBOUND kq_q1: measure angle_cos_sq has no registered anchor"
+        ],
+        "level": "LEVEL2_GOAL_CONSTRUCTED"
+      }
+    },
+    {
+      "probe": "angle_line_line_skew",
+      "goal": "angle",
+      "text": "Cho hình lập phương ABCD.A'B'C'D' có cạnh bằng a. Tính góc giữa hai đường thẳng AC và A'D.",
+      "before": {
+        "goal": "angle",
+        "status": "SERVED",
+        "reason": null,
+        "types": {
+          "point3": 8,
+          "solid": 1,
+          "line3": 2,
+          "quantity": 1,
+          "polygon3": 2,
+          "segment3": 4
+        },
+        "has_solid": true,
+        "derived_points": [],
+        "sections": [],
+        "goal_annotation": [
+          {
+            "kind": null,
+            "anchor": null,
+            "relation": null
+          }
+        ],
+        "angle_construction": [],
+        "height_witness": 4,
+        "chart_identity": true,
+        "unit_chosen_by_system": true,
+        "layout_derived_points": 8,
+        "steps": 8,
+        "diagnostics": [
+          "ANNOTATION_UNBOUND kq_q1: measure angle_cos_sq has no registered anchor"
+        ],
+        "level": "LEVEL1_BASE_ONLY"
+      },
+      "after": {
+        "goal": "angle",
+        "status": "SERVED",
+        "reason": null,
+        "types": {
+          "point3": 8,
+          "solid": 1,
+          "line3": 2,
+          "quantity": 1,
+          "polygon3": 2,
+          "segment3": 4
+        },
+        "has_solid": true,
+        "derived_points": [],
+        "sections": [],
+        "goal_annotation": [
+          {
+            "kind": null,
+            "anchor": null,
+            "relation": null
+          }
+        ],
+        "angle_construction": [
+          "line_line_skew"
+        ],
+        "height_witness": 4,
+        "chart_identity": true,
+        "unit_chosen_by_system": true,
+        "layout_derived_points": 8,
+        "steps": 8,
+        "diagnostics": [
+          "ANNOTATION_UNBOUND kq_q1: measure angle_cos_sq has no registered anchor"
+        ],
+        "level": "LEVEL2_GOAL_CONSTRUCTED"
+      }
+    },
+    {
+      "probe": "angle_right",
+      "goal": "angle",
+      "text": "Cho hình chóp S.ABCD có đáy ABCD là hình vuông cạnh a, SA vuông góc với mặt phẳng đáy và SA = a. Tính góc giữa đường thẳng SA và mặt phẳng (ABCD).",
+      "before": {
+        "goal": "angle",
+        "status": "SERVED",
+        "reason": null,
+        "types": {
+          "point3": 5,
+          "solid": 1,
+          "line3": 1,
+          "plane3": 1,
+          "quantity": 1,
+          "polygon3": 1,
+          "segment3": 4
+        },
+        "has_solid": true,
+        "derived_points": [],
+        "sections": [],
+        "goal_annotation": [
+          {
+            "kind": "length",
+            "anchor": "segment",
+            "relation": null
+          }
+        ],
+        "angle_construction": [],
+        "height_witness": 1,
+        "chart_identity": true,
+        "unit_chosen_by_system": true,
+        "layout_derived_points": 5,
+        "steps": 7,
+        "diagnostics": [],
+        "level": "LEVEL1_BASE_ONLY"
+      },
+      "after": {
+        "goal": "angle",
+        "status": "SERVED",
+        "reason": null,
+        "types": {
+          "point3": 5,
+          "solid": 1,
+          "line3": 1,
+          "plane3": 1,
+          "quantity": 1,
+          "polygon3": 1,
+          "segment3": 4
+        },
+        "has_solid": true,
+        "derived_points": [],
+        "sections": [],
+        "goal_annotation": [
+          {
+            "kind": "angle",
+            "anchor": "witness",
+            "relation": "line_perpendicular_plane"
+          }
+        ],
+        "angle_construction": [],
+        "height_witness": 1,
+        "chart_identity": true,
+        "unit_chosen_by_system": true,
+        "layout_derived_points": 5,
+        "steps": 7,
+        "diagnostics": [],
+        "level": "LEVEL2_GOAL_CONSTRUCTED"
+      }
+    },
+    {
+      "probe": "dihedral_pyramid",
+      "goal": "angle",
+      "text": "Cho hình chóp S.ABCD có đáy ABCD là hình vuông cạnh a, SA vuông góc với mặt phẳng đáy và SA = a. Tính góc giữa mặt phẳng (SBC) và mặt phẳng (ABCD).",
+      "before": {
+        "goal": "angle",
+        "status": "SERVED",
+        "reason": null,
+        "types": {
+          "point3": 5,
+          "solid": 1,
+          "plane3": 2,
+          "quantity": 1,
+          "polygon3": 1,
+          "segment3": 4
+        },
+        "has_solid": true,
+        "derived_points": [],
+        "sections": [],
+        "goal_annotation": [
+          {
+            "kind": null,
+            "anchor": null,
+            "relation": null
+          }
+        ],
+        "angle_construction": [],
+        "height_witness": 1,
+        "chart_identity": true,
+        "unit_chosen_by_system": true,
+        "layout_derived_points": 5,
+        "steps": 7,
+        "diagnostics": [
+          "ANNOTATION_UNBOUND kq_q1: measure angle_cos_sq has no registered anchor"
+        ],
+        "level": "LEVEL1_BASE_ONLY"
+      },
+      "after": {
+        "goal": "angle",
+        "status": "SERVED",
+        "reason": null,
+        "types": {
+          "point3": 5,
+          "solid": 1,
+          "plane3": 2,
+          "quantity": 1,
+          "polygon3": 1,
+          "segment3": 4
+        },
+        "has_solid": true,
+        "derived_points": [],
+        "sections": [],
+        "goal_annotation": [
+          {
+            "kind": null,
+            "anchor": null,
+            "relation": null
+          }
+        ],
+        "angle_construction": [
+          "plane_plane"
+        ],
+        "height_witness": 1,
+        "chart_identity": true,
+        "unit_chosen_by_system": true,
+        "layout_derived_points": 5,
+        "steps": 7,
+        "diagnostics": [
+          "ANNOTATION_UNBOUND kq_q1: measure angle_cos_sq has no registered anchor"
+        ],
+        "level": "LEVEL2_GOAL_CONSTRUCTED"
+      }
+    },
+    {
+      "probe": "dihedral_prism",
+      "goal": "angle",
+      "text": "Cho hình lăng trụ đứng ABC.A'B'C' có đáy ABC là tam giác đều cạnh a, AA' = a. Tính góc giữa mặt phẳng (A'BC) và mặt phẳng (ABC).",
+      "before": {
+        "goal": "angle",
+        "status": "SERVED",
+        "reason": null,
+        "types": {
+          "point3": 6,
+          "solid": 1,
+          "plane3": 2,
+          "quantity": 1,
+          "polygon3": 2,
+          "segment3": 3
+        },
+        "has_solid": true,
+        "derived_points": [],
+        "sections": [],
+        "goal_annotation": [
+          {
+            "kind": null,
+            "anchor": null,
+            "relation": null
+          }
+        ],
+        "angle_construction": [],
+        "height_witness": 3,
+        "chart_identity": false,
+        "unit_chosen_by_system": true,
+        "layout_derived_points": 6,
+        "steps": 8,
+        "diagnostics": [
+          "ANNOTATION_UNBOUND kq_q1: measure angle_cos_sq has no registered anchor"
+        ],
+        "level": "LEVEL1_BASE_ONLY"
+      },
+      "after": {
+        "goal": "angle",
+        "status": "SERVED",
+        "reason": null,
+        "types": {
+          "point3": 6,
+          "solid": 1,
+          "plane3": 2,
+          "quantity": 1,
+          "polygon3": 2,
+          "segment3": 3
+        },
+        "has_solid": true,
+        "derived_points": [],
+        "sections": [],
+        "goal_annotation": [
+          {
+            "kind": null,
+            "anchor": null,
+            "relation": null
+          }
+        ],
+        "angle_construction": [
+          "plane_plane"
+        ],
+        "height_witness": 3,
+        "chart_identity": false,
+        "unit_chosen_by_system": true,
+        "layout_derived_points": 6,
+        "steps": 8,
+        "diagnostics": [
+          "ANNOTATION_UNBOUND kq_q1: measure angle_cos_sq has no registered anchor"
+        ],
+        "level": "LEVEL2_GOAL_CONSTRUCTED"
+      }
+    },
+    {
+      "probe": "distance_point_plane",
+      "goal": "distance",
+      "text": "Cho hình chóp S.ABCD có đáy ABCD là hình vuông cạnh a, SA vuông góc với mặt phẳng đáy và SA = a. Tính khoảng cách từ A đến mặt phẳng (SBC).",
+      "before": {
+        "goal": "distance",
+        "status": "SERVED",
+        "reason": null,
+        "types": {
+          "point3": 5,
+          "solid": 1,
+          "plane3": 1,
+          "quantity": 1,
+          "polygon3": 1,
+          "segment3": 4
+        },
+        "has_solid": true,
+        "derived_points": [],
+        "sections": [],
+        "goal_annotation": [
+          {
+            "kind": "distance",
+            "anchor": "witness",
+            "relation": null
+          }
+        ],
+        "angle_construction": [],
+        "height_witness": 1,
+        "chart_identity": true,
+        "unit_chosen_by_system": true,
+        "layout_derived_points": 5,
+        "steps": 6,
+        "diagnostics": [],
+        "level": "LEVEL2_GOAL_CONSTRUCTED"
+      },
+      "after": {
+        "goal": "distance",
+        "status": "SERVED",
+        "reason": null,
+        "types": {
+          "point3": 5,
+          "solid": 1,
+          "plane3": 1,
+          "quantity": 1,
+          "polygon3": 1,
+          "segment3": 4
+        },
+        "has_solid": true,
+        "derived_points": [],
+        "sections": [],
+        "goal_annotation": [
+          {
+            "kind": "distance",
+            "anchor": "witness",
+            "relation": null
+          }
+        ],
+        "angle_construction": [],
+        "height_witness": 1,
+        "chart_identity": true,
+        "unit_chosen_by_system": true,
+        "layout_derived_points": 5,
+        "steps": 6,
+        "diagnostics": [],
+        "level": "LEVEL2_GOAL_CONSTRUCTED"
+      }
+    },
+    {
+      "probe": "distance_point_line",
+      "goal": "distance",
+      "text": "Cho hình chóp S.ABCD có đáy ABCD là hình vuông cạnh a, SA vuông góc với mặt phẳng đáy và SA = a. Tính khoảng cách từ A đến đường thẳng SC.",
+      "before": {
+        "goal": "distance",
+        "status": "SERVED",
+        "reason": null,
+        "types": {
+          "point3": 6,
+          "solid": 1,
+          "line3": 1,
+          "quantity": 1,
+          "polygon3": 1,
+          "segment3": 4
+        },
+        "has_solid": true,
+        "derived_points": [
+          "H:construct_point.project_onto"
+        ],
+        "sections": [],
+        "goal_annotation": [
+          {
+            "kind": "length",
+            "anchor": "segment",
+            "relation": null
+          }
+        ],
+        "angle_construction": [],
+        "height_witness": 2,
+        "chart_identity": true,
+        "unit_chosen_by_system": true,
+        "layout_derived_points": 5,
+        "steps": 7,
+        "diagnostics": [],
+        "level": "LEVEL2_GOAL_CONSTRUCTED"
+      },
+      "after": {
+        "goal": "distance",
+        "status": "SERVED",
+        "reason": null,
+        "types": {
+          "point3": 6,
+          "solid": 1,
+          "line3": 1,
+          "quantity": 1,
+          "polygon3": 1,
+          "segment3": 4
+        },
+        "has_solid": true,
+        "derived_points": [
+          "H:construct_point.project_onto"
+        ],
+        "sections": [],
+        "goal_annotation": [
+          {
+            "kind": "length",
+            "anchor": "segment",
+            "relation": null
+          }
+        ],
+        "angle_construction": [],
+        "height_witness": 2,
+        "chart_identity": true,
+        "unit_chosen_by_system": true,
+        "layout_derived_points": 5,
+        "steps": 7,
+        "diagnostics": [],
+        "level": "LEVEL2_GOAL_CONSTRUCTED"
+      }
+    },
+    {
+      "probe": "distance_skew_lines",
+      "goal": "distance",
+      "text": "Cho hình chóp S.ABCD có đáy ABCD là hình vuông cạnh a, SA vuông góc với mặt phẳng đáy và SA = a. Tính khoảng cách giữa hai đường thẳng SB và AD.",
+      "before": {
+        "goal": "distance",
+        "status": "SERVED",
+        "reason": null,
+        "types": {
+          "point3": 5,
+          "solid": 1,
+          "line3": 2,
+          "quantity": 1,
+          "polygon3": 1,
+          "segment3": 4
+        },
+        "has_solid": true,
+        "derived_points": [],
+        "sections": [],
+        "goal_annotation": [
+          {
+            "kind": "distance",
+            "anchor": "witness",
+            "relation": "common_perpendicular"
+          }
+        ],
+        "angle_construction": [],
+        "height_witness": 1,
+        "chart_identity": true,
+        "unit_chosen_by_system": true,
+        "layout_derived_points": 5,
+        "steps": 7,
+        "diagnostics": [],
+        "level": "LEVEL2_GOAL_CONSTRUCTED"
+      },
+      "after": {
+        "goal": "distance",
+        "status": "SERVED",
+        "reason": null,
+        "types": {
+          "point3": 5,
+          "solid": 1,
+          "line3": 2,
+          "quantity": 1,
+          "polygon3": 1,
+          "segment3": 4
+        },
+        "has_solid": true,
+        "derived_points": [],
+        "sections": [],
+        "goal_annotation": [
+          {
+            "kind": "distance",
+            "anchor": "witness",
+            "relation": "common_perpendicular"
+          }
+        ],
+        "angle_construction": [],
+        "height_witness": 1,
+        "chart_identity": true,
+        "unit_chosen_by_system": true,
+        "layout_derived_points": 5,
+        "steps": 7,
+        "diagnostics": [],
+        "level": "LEVEL2_GOAL_CONSTRUCTED"
+      }
+    },
+    {
+      "probe": "distance_skew_cuboid",
+      "goal": "distance",
+      "text": "Cho hình hộp chữ nhật ABCD.A'B'C'D' có AB = a, BC = 2a và AA' = 3a. Tính khoảng cách giữa hai đường thẳng BD và A'C'.",
+      "before": {
+        "goal": "distance",
+        "status": "SERVED",
+        "reason": null,
+        "types": {
+          "point3": 8,
+          "solid": 1,
+          "line3": 2,
+          "quantity": 1,
+          "polygon3": 2,
+          "segment3": 4
+        },
+        "has_solid": true,
+        "derived_points": [],
+        "sections": [],
+        "goal_annotation": [
+          {
+            "kind": "distance",
+            "anchor": "witness",
+            "relation": "common_perpendicular"
+          }
+        ],
+        "angle_construction": [],
+        "height_witness": 4,
+        "chart_identity": false,
+        "unit_chosen_by_system": true,
+        "layout_derived_points": 8,
+        "steps": 8,
+        "diagnostics": [],
+        "level": "LEVEL2_GOAL_CONSTRUCTED"
+      },
+      "after": {
+        "goal": "distance",
+        "status": "SERVED",
+        "reason": null,
+        "types": {
+          "point3": 8,
+          "solid": 1,
+          "line3": 2,
+          "quantity": 1,
+          "polygon3": 2,
+          "segment3": 4
+        },
+        "has_solid": true,
+        "derived_points": [],
+        "sections": [],
+        "goal_annotation": [
+          {
+            "kind": "distance",
+            "anchor": "witness",
+            "relation": "common_perpendicular"
+          }
+        ],
+        "angle_construction": [],
+        "height_witness": 4,
+        "chart_identity": false,
+        "unit_chosen_by_system": true,
+        "layout_derived_points": 8,
+        "steps": 8,
+        "diagnostics": [],
+        "level": "LEVEL2_GOAL_CONSTRUCTED"
+      }
+    },
+    {
+      "probe": "projection_named",
+      "goal": "projection",
+      "text": "Cho hình chóp S.ABCD có đáy ABCD là hình vuông cạnh a, SA vuông góc với mặt phẳng đáy và SA = a. Gọi H là hình chiếu vuông góc của A trên SB. Tính độ dài AH.",
+      "before": {
+        "goal": "projection",
+        "status": "SERVED",
+        "reason": null,
+        "types": {
+          "point3": 6,
+          "solid": 1,
+          "line3": 1,
+          "quantity": 1,
+          "polygon3": 1,
+          "segment3": 4
+        },
+        "has_solid": true,
+        "derived_points": [
+          "H:construct_point.project_onto"
+        ],
+        "sections": [],
+        "goal_annotation": [
+          {
+            "kind": "length",
+            "anchor": "segment",
+            "relation": null
+          }
+        ],
+        "angle_construction": [],
+        "height_witness": 2,
+        "chart_identity": true,
+        "unit_chosen_by_system": true,
+        "layout_derived_points": 5,
+        "steps": 7,
+        "diagnostics": [],
+        "level": "LEVEL2_GOAL_CONSTRUCTED"
+      },
+      "after": {
+        "goal": "projection",
+        "status": "SERVED",
+        "reason": null,
+        "types": {
+          "point3": 6,
+          "solid": 1,
+          "line3": 1,
+          "quantity": 1,
+          "polygon3": 1,
+          "segment3": 4
+        },
+        "has_solid": true,
+        "derived_points": [
+          "H:construct_point.project_onto"
+        ],
+        "sections": [],
+        "goal_annotation": [
+          {
+            "kind": "length",
+            "anchor": "segment",
+            "relation": null
+          }
+        ],
+        "angle_construction": [],
+        "height_witness": 2,
+        "chart_identity": true,
+        "unit_chosen_by_system": true,
+        "layout_derived_points": 5,
+        "steps": 7,
+        "diagnostics": [],
+        "level": "LEVEL2_GOAL_CONSTRUCTED"
+      }
+    },
+    {
+      "probe": "midpoint_length",
+      "goal": "length",
+      "text": "Cho hình chóp S.ABCD có đáy ABCD là hình vuông cạnh a, SA vuông góc với mặt phẳng đáy và SA = a. Gọi M là trung điểm của SC. Tính độ dài AM.",
+      "before": {
+        "goal": "length",
+        "status": "SERVED",
+        "reason": null,
+        "types": {
+          "point3": 6,
+          "solid": 1,
+          "quantity": 1,
+          "polygon3": 1,
+          "segment3": 4
+        },
+        "has_solid": true,
+        "derived_points": [
+          "M:construct_point.midpoint"
+        ],
+        "sections": [],
+        "goal_annotation": [
+          {
+            "kind": "length",
+            "anchor": "segment",
+            "relation": null
+          }
+        ],
+        "angle_construction": [],
+        "height_witness": 1,
+        "chart_identity": true,
+        "unit_chosen_by_system": true,
+        "layout_derived_points": 5,
+        "steps": 6,
+        "diagnostics": [],
+        "level": "LEVEL2_GOAL_CONSTRUCTED"
+      },
+      "after": {
+        "goal": "length",
+        "status": "SERVED",
+        "reason": null,
+        "types": {
+          "point3": 6,
+          "solid": 1,
+          "quantity": 1,
+          "polygon3": 1,
+          "segment3": 4
+        },
+        "has_solid": true,
+        "derived_points": [
+          "M:construct_point.midpoint"
+        ],
+        "sections": [],
+        "goal_annotation": [
+          {
+            "kind": "length",
+            "anchor": "segment",
+            "relation": null
+          }
+        ],
+        "angle_construction": [],
+        "height_witness": 1,
+        "chart_identity": true,
+        "unit_chosen_by_system": true,
+        "layout_derived_points": 5,
+        "steps": 6,
+        "diagnostics": [],
+        "level": "LEVEL2_GOAL_CONSTRUCTED"
+      }
+    },
+    {
+      "probe": "volume_pyramid",
+      "goal": "volume",
+      "text": "Cho hình chóp S.ABCD có đáy ABCD là hình vuông cạnh a, SA vuông góc với mặt phẳng đáy và SA = a. Tính thể tích khối chóp S.ABCD.",
+      "before": {
+        "goal": "volume",
+        "status": "SERVED",
+        "reason": null,
+        "types": {
+          "point3": 5,
+          "solid": 1,
+          "quantity": 1,
+          "polygon3": 1,
+          "segment3": 4
+        },
+        "has_solid": true,
+        "derived_points": [],
+        "sections": [],
+        "goal_annotation": [
+          {
+            "kind": "volume",
+            "anchor": "solid",
+            "relation": null
+          }
+        ],
+        "angle_construction": [],
+        "height_witness": 1,
+        "chart_identity": true,
+        "unit_chosen_by_system": true,
+        "layout_derived_points": 5,
+        "steps": 5,
+        "diagnostics": [],
+        "level": "LEVEL2_GOAL_CONSTRUCTED"
+      },
+      "after": {
+        "goal": "volume",
+        "status": "SERVED",
+        "reason": null,
+        "types": {
+          "point3": 5,
+          "solid": 1,
+          "quantity": 1,
+          "polygon3": 1,
+          "segment3": 4
+        },
+        "has_solid": true,
+        "derived_points": [],
+        "sections": [],
+        "goal_annotation": [
+          {
+            "kind": "volume",
+            "anchor": "solid",
+            "relation": null
+          }
+        ],
+        "angle_construction": [],
+        "height_witness": 1,
+        "chart_identity": true,
+        "unit_chosen_by_system": true,
+        "layout_derived_points": 5,
+        "steps": 5,
+        "diagnostics": [],
+        "level": "LEVEL2_GOAL_CONSTRUCTED"
+      }
+    },
+    {
+      "probe": "volume_regular_pyramid",
+      "goal": "volume",
+      "text": "Cho hình chóp tứ giác đều S.ABCD có cạnh đáy bằng a, cạnh bên bằng 2a. Tính thể tích khối chóp S.ABCD.",
+      "before": {
+        "goal": "volume",
+        "status": "SERVED",
+        "reason": null,
+        "types": {
+          "point3": 6,
+          "solid": 1,
+          "quantity": 1,
+          "polygon3": 1,
+          "segment3": 4
+        },
+        "has_solid": true,
+        "derived_points": [],
+        "sections": [],
+        "goal_annotation": [
+          {
+            "kind": "volume",
+            "anchor": "solid",
+            "relation": null
+          }
+        ],
+        "angle_construction": [],
+        "height_witness": 0,
+        "chart_identity": false,
+        "unit_chosen_by_system": true,
+        "layout_derived_points": 6,
+        "steps": 5,
+        "diagnostics": [],
+        "level": "LEVEL2_GOAL_CONSTRUCTED"
+      },
+      "after": {
+        "goal": "volume",
+        "status": "SERVED",
+        "reason": null,
+        "types": {
+          "point3": 6,
+          "solid": 1,
+          "quantity": 1,
+          "polygon3": 1,
+          "segment3": 4
+        },
+        "has_solid": true,
+        "derived_points": [],
+        "sections": [],
+        "goal_annotation": [
+          {
+            "kind": "volume",
+            "anchor": "solid",
+            "relation": null
+          }
+        ],
+        "angle_construction": [],
+        "height_witness": 0,
+        "chart_identity": false,
+        "unit_chosen_by_system": true,
+        "layout_derived_points": 6,
+        "steps": 5,
+        "diagnostics": [],
+        "level": "LEVEL2_GOAL_CONSTRUCTED"
+      }
+    },
+    {
+      "probe": "section_midpoints",
+      "goal": "section",
+      "text": "Cho hình lập phương ABCD.A'B'C'D' có cạnh bằng a. Gọi M, N lần lượt là trung điểm của AB và AD. Xác định thiết diện của hình lập phương cắt bởi mặt phẳng (MNC').",
+      "before": {
+        "goal": "section",
+        "status": "REFUSED",
+        "reason": "LIVE_AI_DISABLED",
+        "types": {},
+        "has_solid": false,
+        "derived_points": [],
+        "sections": [],
+        "goal_annotation": [],
+        "angle_construction": [],
+        "height_witness": 0,
+        "chart_identity": true,
+        "unit_chosen_by_system": false,
+        "layout_derived_points": 0,
+        "steps": 0,
+        "diagnostics": [],
+        "level": "NOT_SERVED:LIVE_AI_DISABLED"
+      },
+      "after": {
+        "goal": "section",
+        "status": "REFUSED",
+        "reason": "LIVE_AI_DISABLED",
+        "types": {},
+        "has_solid": false,
+        "derived_points": [],
+        "sections": [],
+        "goal_annotation": [],
+        "angle_construction": [],
+        "height_witness": 0,
+        "chart_identity": true,
+        "unit_chosen_by_system": false,
+        "layout_derived_points": 0,
+        "steps": 0,
+        "diagnostics": [],
+        "level": "NOT_SERVED:LIVE_AI_DISABLED"
+      }
+    },
+    {
+      "probe": "section_plane_cut",
+      "goal": "section",
+      "text": "Cho hình chóp S.ABCD có đáy ABCD là hình vuông cạnh a, SA vuông góc với mặt phẳng đáy và SA = a. Gọi M là trung điểm của SC. Mặt phẳng (ABM) cắt hình chóp theo thiết diện là hình gì?",
+      "before": {
+        "goal": "section",
+        "status": "REFUSED",
+        "reason": "LIVE_AI_DISABLED",
+        "types": {},
+        "has_solid": false,
+        "derived_points": [],
+        "sections": [],
+        "goal_annotation": [],
+        "angle_construction": [],
+        "height_witness": 0,
+        "chart_identity": true,
+        "unit_chosen_by_system": false,
+        "layout_derived_points": 0,
+        "steps": 0,
+        "diagnostics": [],
+        "level": "NOT_SERVED:LIVE_AI_DISABLED"
+      },
+      "after": {
+        "goal": "section",
+        "status": "REFUSED",
+        "reason": "LIVE_AI_DISABLED",
+        "types": {},
+        "has_solid": false,
+        "derived_points": [],
+        "sections": [],
+        "goal_annotation": [],
+        "angle_construction": [],
+        "height_witness": 0,
+        "chart_identity": true,
+        "unit_chosen_by_system": false,
+        "layout_derived_points": 0,
+        "steps": 0,
+        "diagnostics": [],
+        "level": "NOT_SERVED:LIVE_AI_DISABLED"
+      }
+    },
+    {
+      "probe": "intersection_planes",
+      "goal": "intersection",
+      "text": "Cho hình chóp S.ABCD có đáy ABCD là hình vuông cạnh a, SA vuông góc với mặt phẳng đáy và SA = a. Xác định giao tuyến của hai mặt phẳng (SAB) và (SCD).",
+      "before": {
+        "goal": "intersection",
+        "status": "REFUSED",
+        "reason": "LIVE_AI_DISABLED",
+        "types": {},
+        "has_solid": false,
+        "derived_points": [],
+        "sections": [],
+        "goal_annotation": [],
+        "angle_construction": [],
+        "height_witness": 0,
+        "chart_identity": true,
+        "unit_chosen_by_system": false,
+        "layout_derived_points": 0,
+        "steps": 0,
+        "diagnostics": [],
+        "level": "NOT_SERVED:LIVE_AI_DISABLED"
+      },
+      "after": {
+        "goal": "intersection",
+        "status": "REFUSED",
+        "reason": "LIVE_AI_DISABLED",
+        "types": {},
+        "has_solid": false,
+        "derived_points": [],
+        "sections": [],
+        "goal_annotation": [],
+        "angle_construction": [],
+        "height_witness": 0,
+        "chart_identity": true,
+        "unit_chosen_by_system": false,
+        "layout_derived_points": 0,
+        "steps": 0,
+        "diagnostics": [],
+        "level": "NOT_SERVED:LIVE_AI_DISABLED"
+      }
+    },
+    {
+      "probe": "centroid_foot",
+      "goal": "height",
+      "text": "Cho hình chóp S.ABC có đáy ABC là tam giác đều cạnh a, hình chiếu vuông góc của S lên mặt phẳng (ABC) trùng với trọng tâm G của tam giác ABC, SA = 2a. Tính thể tích khối chóp S.ABC.",
+      "before": {
+        "goal": "height",
+        "status": "REFUSED",
+        "reason": "LIVE_AI_DISABLED",
+        "types": {},
+        "has_solid": false,
+        "derived_points": [],
+        "sections": [],
+        "goal_annotation": [],
+        "angle_construction": [],
+        "height_witness": 0,
+        "chart_identity": true,
+        "unit_chosen_by_system": false,
+        "layout_derived_points": 0,
+        "steps": 0,
+        "diagnostics": [],
+        "level": "NOT_SERVED:LIVE_AI_DISABLED"
+      },
+      "after": {
+        "goal": "height",
+        "status": "SERVED",
+        "reason": null,
+        "types": {
+          "point3": 6,
+          "solid": 1,
+          "segment3": 4,
+          "quantity": 1,
+          "polygon3": 1
+        },
+        "has_solid": true,
+        "derived_points": [
+          "G_mid_BC:construct_point.midpoint",
+          "G:construct_point.divide_segment"
+        ],
+        "sections": [],
+        "goal_annotation": [
+          {
+            "kind": "volume",
+            "anchor": "solid",
+            "relation": null
+          }
+        ],
+        "angle_construction": [],
+        "height_witness": 1,
+        "chart_identity": false,
+        "unit_chosen_by_system": true,
+        "layout_derived_points": 4,
+        "steps": 8,
+        "diagnostics": [],
+        "level": "LEVEL2_GOAL_CONSTRUCTED"
+      }
+    },
+    {
+      "probe": "face_perp_base",
+      "goal": "height",
+      "text": "Cho hình chóp S.ABCD có đáy ABCD là hình vuông cạnh a, tam giác SAB đều và nằm trong mặt phẳng vuông góc với mặt phẳng đáy. Tính thể tích khối chóp S.ABCD.",
+      "before": {
+        "goal": "height",
+        "status": "REFUSED",
+        "reason": "LIVE_AI_DISABLED",
+        "types": {},
+        "has_solid": false,
+        "derived_points": [],
+        "sections": [],
+        "goal_annotation": [],
+        "angle_construction": [],
+        "height_witness": 0,
+        "chart_identity": true,
+        "unit_chosen_by_system": false,
+        "layout_derived_points": 0,
+        "steps": 0,
+        "diagnostics": [],
+        "level": "NOT_SERVED:LIVE_AI_DISABLED"
+      },
+      "after": {
+        "goal": "height",
+        "status": "SERVED",
+        "reason": null,
+        "types": {
+          "point3": 5,
+          "solid": 1,
+          "quantity": 1,
+          "polygon3": 1,
+          "segment3": 4
+        },
+        "has_solid": true,
+        "derived_points": [],
+        "sections": [],
+        "goal_annotation": [
+          {
+            "kind": "volume",
+            "anchor": "solid",
+            "relation": null
+          }
+        ],
+        "angle_construction": [],
+        "height_witness": 0,
+        "chart_identity": false,
+        "unit_chosen_by_system": true,
+        "layout_derived_points": 5,
+        "steps": 5,
+        "diagnostics": [],
+        "level": "LEVEL1_BASE_ONLY"
+      }
+    },
+    {
+      "probe": "late_square_side",
+      "goal": "distance",
+      "text": "Cho hình chóp S.ABCD có SA ⊥ (ABCD), đáy ABCD là hình vuông, biết AB = 1, SA = 2. Khoảng cách từ điểm C đến mặt phẳng (SBD) bằng",
+      "before": {
+        "goal": "distance",
+        "status": "REFUSED",
+        "reason": "AMBIGUOUS_FACT",
+        "types": {},
+        "has_solid": false,
+        "derived_points": [],
+        "sections": [],
+        "goal_annotation": [],
+        "angle_construction": [],
+        "height_witness": 0,
+        "chart_identity": true,
+        "unit_chosen_by_system": false,
+        "layout_derived_points": 0,
+        "steps": 0,
+        "diagnostics": [],
+        "level": "NOT_SERVED:AMBIGUOUS_FACT"
+      },
+      "after": {
+        "goal": "distance",
+        "status": "SERVED",
+        "reason": null,
+        "types": {
+          "point3": 5,
+          "solid": 1,
+          "plane3": 1,
+          "quantity": 1,
+          "polygon3": 1,
+          "segment3": 4
+        },
+        "has_solid": true,
+        "derived_points": [],
+        "sections": [],
+        "goal_annotation": [
+          {
+            "kind": "distance",
+            "anchor": "witness",
+            "relation": null
+          }
+        ],
+        "angle_construction": [],
+        "height_witness": 1,
+        "chart_identity": false,
+        "unit_chosen_by_system": false,
+        "layout_derived_points": 5,
+        "steps": 6,
+        "diagnostics": [],
+        "level": "LEVEL2_GOAL_CONSTRUCTED"
+      }
+    },
+    {
+      "probe": "reflection_point",
+      "goal": "volume",
+      "text": "Cho tứ diện OABC có OA, OB, OC đôi một vuông góc, OA = a, OB = a, OC = a. Gọi M là điểm đối xứng với O qua trung điểm của AB. Tính thể tích tứ diện MABC.",
+      "before": {
+        "goal": "volume",
+        "status": "REFUSED",
+        "reason": "OUT_OF_SCOPE",
+        "types": {},
+        "has_solid": false,
+        "derived_points": [],
+        "sections": [],
+        "goal_annotation": [],
+        "angle_construction": [],
+        "height_witness": 0,
+        "chart_identity": true,
+        "unit_chosen_by_system": false,
+        "layout_derived_points": 0,
+        "steps": 0,
+        "diagnostics": [],
+        "level": "NOT_SERVED:OUT_OF_SCOPE"
+      },
+      "after": {
+        "goal": "volume",
+        "status": "REFUSED",
+        "reason": "OUT_OF_SCOPE",
+        "types": {},
+        "has_solid": false,
+        "derived_points": [],
+        "sections": [],
+        "goal_annotation": [],
+        "angle_construction": [],
+        "height_witness": 0,
+        "chart_identity": true,
+        "unit_chosen_by_system": false,
+        "layout_derived_points": 0,
+        "steps": 0,
+        "diagnostics": [],
+        "level": "NOT_SERVED:OUT_OF_SCOPE"
+      }
+    },
+    {
+      "probe": "scale_free_angle",
+      "goal": "angle",
+      "text": "Cho tứ diện đều ABCD. Gọi M là trung điểm của CD. Tính góc giữa hai đường thẳng AC và BM.",
+      "before": {
+        "goal": "angle",
+        "status": "REFUSED",
+        "reason": "MISSING_DIMENSION",
+        "types": {},
+        "has_solid": false,
+        "derived_points": [],
+        "sections": [],
+        "goal_annotation": [],
+        "angle_construction": [],
+        "height_witness": 0,
+        "chart_identity": true,
+        "unit_chosen_by_system": false,
+        "layout_derived_points": 0,
+        "steps": 0,
+        "diagnostics": [],
+        "level": "NOT_SERVED:MISSING_DIMENSION"
+      },
+      "after": {
+        "goal": "angle",
+        "status": "REFUSED",
+        "reason": "MISSING_DIMENSION",
+        "types": {},
+        "has_solid": false,
+        "derived_points": [],
+        "sections": [],
+        "goal_annotation": [],
+        "angle_construction": [],
+        "height_witness": 0,
+        "chart_identity": true,
+        "unit_chosen_by_system": false,
+        "layout_derived_points": 0,
+        "steps": 0,
+        "diagnostics": [],
+        "level": "NOT_SERVED:MISSING_DIMENSION"
+      }
+    }
+  ]
+}

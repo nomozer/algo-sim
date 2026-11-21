@@ -1,0 +1,310 @@
+{
+  "schema": "algosim-plane-constraint-run/1",
+  "run_id": "independent-geometry-plane-constraints",
+  "updated_at_utc": "2026-11-13T16:11:26.193340+00:00",
+  "start_head": "4222f021b28462bb8bccfe87d02288b321b0dc5f",
+  "head_at_manifest_write": "0ad317036e27c57c04423e2c0a690ae9d533226d",
+  "branch": "feat/local-first-geometry-understanding",
+  "product_commit": "697b097acc62e778a2668d1d74d304a778afc9ee",
+  "candidate_manifest_commit": "da06829fe1b8890a878056af57830f7c066719f0",
+  "measured_system": "040de2fd63fb687203610918160b1170ad025117b2d221acf12ef25215bd831c",
+  "measured_files": 115,
+  "cache_version": "134",
+  "contracts_unchanged": [
+    "geometry-fact-planner/26",
+    "geometry-functions/33",
+    "geometry-function-engine/24",
+    "height-invariance-certificate/2",
+    "output-policy/1",
+    "hybrid-route-d-simulation/4",
+    "typed-fact-next/2"
+  ],
+  "regression_verdict": "INCOMPLETE_OR_FAIL",
+  "regression_gates": {
+    "backend_pytest": "PASS",
+    "frontend_test_wave": "PASS",
+    "demo_replay": "PASS",
+    "crash_audit": "PASS",
+    "docs_ia": "PASS",
+    "publication_head": "FAIL",
+    "publication_range": "PASS",
+    "freeze_verify": "PASS"
+  },
+  "overall_verdict": "BLOCKED",
+  "overall_reason": "publication HEAD BLOCKED_PENDING_OWNER_REVIEW; FULL_RELEASE_GATE BLOCKED_GATES_REMAIN",
+  "development_probes": {
+    "as_expected_before": 15,
+    "as_expected_after": 35,
+    "probes": 39,
+    "sections_served_before": 2,
+    "sections_served_after": 22,
+    "section_probes": 25,
+    "wrong_served_after": 0
+  },
+  "mutations": {
+    "applied": 148,
+    "caught": 148
+  },
+  "browser_e2e": {
+    "passed": 14,
+    "total": 14
+  },
+  "locked_internal_holdouts": {
+    "LOCKED_W2": {
+      "before": {
+        "served_correct": 0,
+        "serve_cases": 48,
+        "wrong_served": 0,
+        "correct_refusal": 48,
+        "refuse_cases": 48
+      },
+      "after": {
+        "served_correct": 2,
+        "serve_cases": 48,
+        "wrong_served": 1,
+        "correct_refusal": 47,
+        "refuse_cases": 48
+      }
+    },
+    "LOCKED_W3": {
+      "before": {
+        "served_correct": 0,
+        "serve_cases": 72,
+        "wrong_served": 0,
+        "correct_refusal": 72,
+        "refuse_cases": 72
+      },
+      "after": {
+        "served_correct": 0,
+        "serve_cases": 72,
+        "wrong_served": 1,
+        "correct_refusal": 71,
+        "refuse_cases": 72
+      }
+    }
+  },
+  "locked_post_hoc": "the 2 served REFUSE cases are payload-origin negatives whose texts are valid; served geometry equals hand computation (2 texts now exposed)",
+  "new_locked_external_evaluation": "BLOCKED_DATA",
+  "independent_h1": "NOT_MEASURED",
+  "sealed_h1_rows_opened": 0,
+  "live_ai_calls": 0,
+  "physical_low_end": "NOT_MEASURED",
+  "merge_push_deploy": "NOT_PERFORMED",
+  "images_in_git": false,
+  "report": "AXO_INDEPENDENT_GEOMETRY_PLANE_CONSTRAINTS_REPORT.md",
+  "hash_policy": "SHA-256 of bytes with CRLF normalised to LF; excludes run.json itself",
+  "artifacts": {
+    "angle_semantics_audit.json": {
+      "sha256_lf": "df76b20287d21d3a15dd452298f089248f4b70468695546e0968614fd4a73875",
+      "bytes_lf": 4459
+    },
+    "AXO_INDEPENDENT_GEOMETRY_PLANE_CONSTRAINTS_REPORT.md": {
+      "sha256_lf": "8fc595ea1443da07a98056924a4b333e632497655b59b6d01fe11dc0289f7d0c",
+      "bytes_lf": 19214
+    },
+    "baseline_integrity.json": {
+      "sha256_lf": "70747228a4f07c7fd08d8ed920a132ac3d0a9c98f76266514208754a87ae5140",
+      "bytes_lf": 2200
+    },
+    "browser_construction_timeline.json": {
+      "sha256_lf": "2ce4865d7fb806c7b57488178478fc15abb3bb023c5a1c430942578726bb7fdf",
+      "bytes_lf": 26640
+    },
+    "browser_performance_profile.json": {
+      "sha256_lf": "afee928324fa6cca307cb855b27c241d6cb3b8b52b5444491acc4d9c2848d55b",
+      "bytes_lf": 5460
+    },
+    "candidate_freeze.json": {
+      "sha256_lf": "6365f35324c00de311aa99a1e2b9becd731ac8393e0cc2f24d3932bc9f3cd9d3",
+      "bytes_lf": 1934
+    },
+    "constraint_to_intersection_composition.json": {
+      "sha256_lf": "f4c0e7d9e8434a4f6c9879de76cd298ed2861f40f29242e580da89ba7c2c632a",
+      "bytes_lf": 940
+    },
+    "constraint_to_section_composition.json": {
+      "sha256_lf": "6741a248a57c24d6bb9c7e78e8883814a2c3206b4355dacff5d4e68c7b33c703",
+      "bytes_lf": 9881
+    },
+    "dataset_partition_audit.json": {
+      "sha256_lf": "925fb67875fc8502d8a4ae703275352c32c4a3765522f95378299c1a1276fcdf",
+      "bytes_lf": 3872
+    },
+    "diagram_association_evaluation.json": {
+      "sha256_lf": "d6491b1daab97faa66b6781e2734a6fff94fe09a70b138ef8e623359d0be2ac8",
+      "bytes_lf": 2465
+    },
+    "evaluation_ground_truth_status.json": {
+      "sha256_lf": "c02e1b8c9ebbfc28fc057af2b06be99cb77459dc1654669ceb2cd3e7df120065",
+      "bytes_lf": 829
+    },
+    "evaluation_preregistration.json": {
+      "sha256_lf": "7a4051637999232cbf78734cdecf8551b3240a4c866d2e93447cf232daed4d2d",
+      "bytes_lf": 4765
+    },
+    "existing_plane_constraint_capability_audit.json": {
+      "sha256_lf": "1f930af97200f79b1c5626fd8da244a843bf26ec1ff0653036e1a4dca7b870f1",
+      "bytes_lf": 1753
+    },
+    "full_regression_summary.json": {
+      "sha256_lf": "adc62a9c105395b32e453cb403e746e072d97c828be812499576b32f6ab52e63",
+      "bytes_lf": 21301
+    },
+    "geometry_mutation_verification.json": {
+      "sha256_lf": "791c351620c43de3cd197dd50ada2b3ddb1f190a55391bd7842e3e3840da530f",
+      "bytes_lf": 1364
+    },
+    "image_region_detection_evaluation.json": {
+      "sha256_lf": "7de046e84552822ea905dbe20bbc8e0615213d68230b2c16d65052c5ff9be951",
+      "bytes_lf": 81929
+    },
+    "local_image_to_simulation_acceptance.json": {
+      "sha256_lf": "2758ae2e71d87963a56728e42077464cb7746248351cb46104bcb152608535c3",
+      "bytes_lf": 19348
+    },
+    "local_text_to_simulation_acceptance.json": {
+      "sha256_lf": "5f3248dc2ab72c895ce46ea242415bfc411546fde2669fb8eeb70be49bd24039",
+      "bytes_lf": 11741
+    },
+    "logs/final-backend_pytest.json": {
+      "sha256_lf": "3b4e5a3cc56e92ad303787af8dc064dbb840ecff7e505760319000ca9b866b80",
+      "bytes_lf": 2260
+    },
+    "logs/final-crash_audit.json": {
+      "sha256_lf": "ecbb371800c580194798d959c3e111b59fbf1d2951934accfd874440bea8c731",
+      "bytes_lf": 2055
+    },
+    "logs/final-demo_replay.json": {
+      "sha256_lf": "7f7619de496e861f743b0cbbdcdbe3a0282fef9f9c9a832327e97d20c9eb6855",
+      "bytes_lf": 2100
+    },
+    "logs/final-docs_ia.json": {
+      "sha256_lf": "88295a45b0d63f95b6d3c058e601f7fc7276e33a89fb33f8c03fa9ce1abcf387",
+      "bytes_lf": 2121
+    },
+    "logs/final-freeze_verify.json": {
+      "sha256_lf": "ea22ea6dd5001d5447d1f36f8c805b335380b219f5d5eed2aff4509b01f5080e",
+      "bytes_lf": 2143
+    },
+    "logs/final-frontend_test_wave.json": {
+      "sha256_lf": "ae43d1b6a6731153ed4a9a6ddd7990ff319ffe9d892fa71fcefcdabb50332def",
+      "bytes_lf": 2102
+    },
+    "logs/final-publication_head.json": {
+      "sha256_lf": "f04bbcfb567119328a2d70fee231ca8c5ee6661e6fc06927d270ef94ef007bc5",
+      "bytes_lf": 2133
+    },
+    "logs/final-publication_range.json": {
+      "sha256_lf": "91fde4e921a5595cc2d679a6be672cb7968d3be01df0a815315e24e3e0ff39d1",
+      "bytes_lf": 2224
+    },
+    "logs/prior-k1-owner-approval.template.json": {
+      "sha256_lf": "ca8fb050779bc8d4871d0094ce9c5a1ce395e9dcc2b9de9ddab5c8e780f570a7",
+      "bytes_lf": 782
+    },
+    "logs/prior-r1-owner-approval.template.json": {
+      "sha256_lf": "e967ee042b7a31df250d7959f493c0a43359e2dc316b621c057f1de4d815d70f",
+      "bytes_lf": 782
+    },
+    "logs/prior-s2-owner-approval.template.json": {
+      "sha256_lf": "ec9881792db56789ac52dc774ab36c1a7ea3e03505629f8fb3a3c0f953139f5f",
+      "bytes_lf": 782
+    },
+    "ocr_to_scene_failure_attribution.json": {
+      "sha256_lf": "a1da36fc72feff099cf98bfdf940eb2ff1763b0cfda690a24377c3ae18e98976",
+      "bytes_lf": 19414
+    },
+    "pending_template_refresh.json": {
+      "sha256_lf": "8ba97da0261896ac12023e7f164ddead08ac1a93e162564235a9390c756cf615",
+      "bytes_lf": 3211
+    },
+    "performance_impact.json": {
+      "sha256_lf": "1f0b789400926fb1b576f416cd48fde9172425510f92bced7c5d77a6eb8d5c74",
+      "bytes_lf": 2429
+    },
+    "plane_constraint_grammar_tests.json": {
+      "sha256_lf": "a71e8dc4f6927be582c4b0aa24eb56310b33f3815ffe7d3f286d6f0e3437bb2f",
+      "bytes_lf": 25606
+    },
+    "plane_contradiction_and_degenerate_cases.json": {
+      "sha256_lf": "fa56e3f2e2f74050e0f751b7b1da972b7b6ab481d7ec8938647d09194981c313",
+      "bytes_lf": 2627
+    },
+    "plane_uniqueness_verification.json": {
+      "sha256_lf": "17d64ed2b9d76e57b6d6afc428934f80e3e0f1edd1602e63a805584a08b29c96",
+      "bytes_lf": 5198
+    },
+    "publication_gate_status.json": {
+      "sha256_lf": "31c5ed7166267a7d4e254fcac95c6da3f540e599b4cf910d2bbe67bb7a32e1db",
+      "bytes_lf": 1269
+    },
+    "resource_cleanup_audit.json": {
+      "sha256_lf": "2f378bcb831f586b28bd6b703992c1268efb40468d010b152e127d2a54f94251",
+      "bytes_lf": 3141
+    },
+    "scene3d_browser_e2e.json": {
+      "sha256_lf": "7a0f1924ae3986f8291ed341e363dcc515cdfc8c74123b0c2b9f237d903d7ce1",
+      "bytes_lf": 17073
+    },
+    "sealed_h1_status.json": {
+      "sha256_lf": "c9f31bb2c90e4ec59d311a677318579c04d9124eddce6bca2683d037f544268d",
+      "bytes_lf": 823
+    },
+    "source_grounding_verification.json": {
+      "sha256_lf": "f0bf37c66eab26c9748ac9c3aed390ee79f9ca2d03669dc2cec216997ea2097d",
+      "bytes_lf": 1770
+    },
+    "tools/acceptance_run.py": {
+      "sha256_lf": "1108da4239f458dad881587c9d617497888b343e412ac8d09ea7800050d440d9",
+      "bytes_lf": 1173
+    },
+    "tools/attribution.py": {
+      "sha256_lf": "a415b030a8814aa8688f4a49e76af83db8f2461ee6258060b7c5f9087accc7d2",
+      "bytes_lf": 3719
+    },
+    "tools/browser_plane_e2e.mjs": {
+      "sha256_lf": "fc0da82e04c4a67682903b7008b1cd63ada4619092039482000aafbec9d42a46",
+      "bytes_lf": 19276
+    },
+    "tools/eval_locked.py": {
+      "sha256_lf": "367aeb9e9c9d5ccf098248bd9016bf56503fe8d56808041cb3ff1d257038de8b",
+      "bytes_lf": 10171
+    },
+    "tools/finalize.py": {
+      "sha256_lf": "b0ae96c39463c018edfe785544b62bc03aa6a3ebddf09737acf73f4b21a55761",
+      "bytes_lf": 21097
+    },
+    "tools/phase0_protocol.py": {
+      "sha256_lf": "fcd468327c58a2346482d78f892070e250edb90df48f6b8261b19827ac25b71b",
+      "bytes_lf": 13312
+    },
+    "tools/plane_constraint_probes.py": {
+      "sha256_lf": "65ab51433a3918161ca48955e7e4c1d34a4ce4703b6ba399a99ffc17fe7da37d",
+      "bytes_lf": 10069
+    },
+    "tools/refresh_pending_templates.py": {
+      "sha256_lf": "ef0bb8fe2f79eeae420795d7dddad66402e7dc2bed84b28938461603ef54212c",
+      "bytes_lf": 3398
+    },
+    "tools/region_eval.py": {
+      "sha256_lf": "74e349e0629b66dd9c8283076ef82ae1b2e61348bbb27c61b6af8f83a27ae0aa",
+      "bytes_lf": 9546
+    },
+    "tools/run_full_regression.py": {
+      "sha256_lf": "015edbde27c1217ec00648829158b0f161121d7fc1f1d6dbc1c5c071ce02d53c",
+      "bytes_lf": 817
+    },
+    "tools/verify_plane_constraints.py": {
+      "sha256_lf": "3b268b06d727e3178b664d3254e52179a0267612b40e4f82f3ecdd11e36572da",
+      "bytes_lf": 12350
+    },
+    "tools/write_run_json.py": {
+      "sha256_lf": "814fcc6763cd8436fd7ab5c97d43c97f234739e31999645d1a34736003f3cc22",
+      "bytes_lf": 7065
+    },
+    "unseen_evaluation_results.json": {
+      "sha256_lf": "cd2b58774a667c432cc2ba63939c5718fdf979cbb2d6121e5fced8ec8396308f",
+      "bytes_lf": 152074
+    }
+  }
+}

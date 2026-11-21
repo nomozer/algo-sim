@@ -1,0 +1,93 @@
+{
+  "run_id": "compositional-semantics-simulation-goals",
+  "generated_at_utc": "2026-11-14T03:09:44.904460+00:00",
+  "product_commit": "379d33969ef0cb0e418d979ab211a00799f44834",
+  "measured_system": "b652e635d5497dc36bf6d55ff4a34c20a16302d01c154b59b039efd65170921e",
+  "environment": {
+    "ALLOW_LIVE_AI": "0",
+    "HYBRID_ROUTE_MODE": "local-first",
+    "live_ai_calls": 0
+  },
+  "head": "54268761eacadaca07d0d8cd2dea0d07c39a5d62",
+  "command": "python docs/evaluation/geometry/runs/compositional-semantics-simulation-goals/tools/semantic_compare.py <archive of 1a9ee8b0c>/backend <out>",
+  "dataset_partition": "DEVELOPMENT (agent-written corpus of this run, tools/compositional_dev_corpus.py)",
+  "oracle_status": "AGENT_DIAGNOSTIC: expectations written from geometry and the documented scope before measurement",
+  "items": 3,
+  "pass": 3,
+  "rows": [
+    {
+      "case_id": "COMP:order_plane_after_goal",
+      "group": "clause_order",
+      "text_sha256": "2cbc37ed89b88b178b42e0f68666abd32f465bb0ac22af5586b8b732067e3b4a",
+      "expected": "SERVE",
+      "goal": "section",
+      "numeric": null,
+      "before": {
+        "status": "REFUSED",
+        "code": "LIVE_AI_DISABLED",
+        "root_cause": "UNRECOGNIZED_GOAL"
+      },
+      "after": {
+        "status": "SERVED",
+        "code": null,
+        "root_cause": null,
+        "source_goal_completion": null
+      },
+      "verdict": "PASS"
+    },
+    {
+      "case_id": "COMP:order_plane_after_goal_sep",
+      "group": "clause_order",
+      "text_sha256": "cd18e9e59bade55c3fdc6c1730877a76895dbdd6c4b1738e6b24e4e3ab784c06",
+      "expected": "SERVE",
+      "goal": "section",
+      "numeric": null,
+      "before": {
+        "status": "REFUSED",
+        "code": "LIVE_AI_DISABLED",
+        "root_cause": "UNRECOGNIZED_RELATION"
+      },
+      "after": {
+        "status": "SERVED",
+        "code": null,
+        "root_cause": null,
+        "source_goal_completion": null
+      },
+      "verdict": "PASS"
+    },
+    {
+      "case_id": "COMP:order_plane_never_defined",
+      "group": "clause_order_negative",
+      "text_sha256": "ad967201c5fc140ebf27d1d780360aa5e1603e7acc04b8b029732c577bbc6e70",
+      "expected": "REFUSE",
+      "goal": null,
+      "numeric": null,
+      "before": {
+        "status": "REFUSED",
+        "code": "LIVE_AI_DISABLED",
+        "root_cause": "UNRESOLVED_REFERENCE"
+      },
+      "after": {
+        "status": "REFUSED",
+        "code": "LIVE_AI_DISABLED",
+        "root_cause": "UNRESOLVED_REFERENCE",
+        "source_goal_completion": null
+      },
+      "verdict": "PASS"
+    }
+  ],
+  "previous_corpora": {
+    "DEV37:order_one_sentence": {
+      "before": "REFUSED",
+      "after": "SERVED"
+    },
+    "DEV37:order_goal_first": {
+      "before": "REFUSED",
+      "after": "SERVED"
+    },
+    "PROBES:reordered_question_first": {
+      "before": "REFUSED",
+      "after": "SERVED"
+    }
+  }
+}

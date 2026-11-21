@@ -1,0 +1,242 @@
+{
+  "run_id": "semantic-failure-safe-image-segmentation",
+  "generated_at_utc": "2026-11-13T17:08:25.009249+00:00",
+  "head": "dcbedcb0d67971beb6ba5260a7553abe55de5ee1",
+  "environment": {
+    "ALLOW_LIVE_AI": "0"
+  },
+  "command": "python docs/evaluation/geometry/runs/semantic-failure-safe-image-segmentation/tools/scene_regression.py",
+  "dataset_partition": "DEVELOPMENT_EXPOSED probes of independent-geometry-plane-constraints (39) and verified-section-intersection-dihedral-local",
+  "oracle_status": "AGENT_DIAGNOSTIC exact checks (Fractions + envelope Gram G), independent of the construction code",
+  "plane_constraint_probes": {
+    "as_expected": 35,
+    "probes": 39,
+    "wrong_served": 0,
+    "failed_checks": 0,
+    "reference": "independent-geometry-plane-constraints: 35/39 as expected, 0 wrong served"
+  },
+  "section_intersection_dihedral_probes": {
+    "served": 31,
+    "probes": 36,
+    "checks": 124,
+    "failed": 0,
+    "rows": {
+      "angle_planes_SBC_SCD_60_not_120": {
+        "status": "SERVED",
+        "reason": null,
+        "checks": 3,
+        "failed": []
+      },
+      "angle_planes_SCD_SBC_swapped": {
+        "status": "SERVED",
+        "reason": null,
+        "checks": 3,
+        "failed": []
+      },
+      "angle_planes_renamed": {
+        "status": "SERVED",
+        "reason": null,
+        "checks": 3,
+        "failed": []
+      },
+      "angle_planes_SAB_SCD": {
+        "status": "SERVED",
+        "reason": null,
+        "checks": 3,
+        "failed": []
+      },
+      "angle_planes_SBD_SCD": {
+        "status": "SERVED",
+        "reason": null,
+        "checks": 3,
+        "failed": []
+      },
+      "angle_planes_SBC_ABCD": {
+        "status": "SERVED",
+        "reason": null,
+        "checks": 3,
+        "failed": []
+      },
+      "angle_planes_cube_A'BD_C'BD": {
+        "status": "SERVED",
+        "reason": null,
+        "checks": 3,
+        "failed": []
+      },
+      "angle_lines_SB_SD": {
+        "status": "SERVED",
+        "reason": null,
+        "checks": 2,
+        "failed": []
+      },
+      "angle_lines_skew_SB_CD": {
+        "status": "SERVED",
+        "reason": null,
+        "checks": 2,
+        "failed": []
+      },
+      "angle_lines_skew_cube": {
+        "status": "SERVED",
+        "reason": null,
+        "checks": 2,
+        "failed": []
+      },
+      "angle_line_plane_SC_ABCD": {
+        "status": "SERVED",
+        "reason": null,
+        "checks": 2,
+        "failed": []
+      },
+      "angle_tetra": {
+        "status": "SERVED",
+        "reason": null,
+        "checks": 2,
+        "failed": []
+      },
+      "section_cube_MNC'": {
+        "status": "SERVED",
+        "reason": null,
+        "checks": 5,
+        "failed": []
+      },
+      "section_pyramid_ABM": {
+        "status": "SERVED",
+        "reason": null,
+        "checks": 5,
+        "failed": []
+      },
+      "section_pyramid_area": {
+        "status": "SERVED",
+        "reason": null,
+        "checks": 5,
+        "failed": []
+      },
+      "section_cube_triangle": {
+        "status": "SERVED",
+        "reason": null,
+        "checks": 5,
+        "failed": []
+      },
+      "section_cube_hexagon": {
+        "status": "SERVED",
+        "reason": null,
+        "checks": 5,
+        "failed": []
+      },
+      "section_contains_edge": {
+        "status": "SERVED",
+        "reason": null,
+        "checks": 5,
+        "failed": []
+      },
+      "section_plane_is_face": {
+        "status": "SERVED",
+        "reason": null,
+        "checks": 5,
+        "failed": []
+      },
+      "section_through_vertex_and_edge_midpoints": {
+        "status": "SERVED",
+        "reason": null,
+        "checks": 5,
+        "failed": []
+      },
+      "section_renamed": {
+        "status": "SERVED",
+        "reason": null,
+        "checks": 5,
+        "failed": []
+      },
+      "section_collinear_refused": {
+        "status": "REFUSED",
+        "reason": "COLLINEAR_POINTS",
+        "checks": 0,
+        "failed": []
+      },
+      "section_unknown_point_refused": {
+        "status": "REFUSED",
+        "reason": "UNDERDETERMINED_POINT",
+        "checks": 0,
+        "failed": []
+      },
+      "section_question_form_unparsed": {
+        "status": "REFUSED",
+        "reason": "LIVE_AI_DISABLED",
+        "checks": 0,
+        "failed": []
+      },
+      "iline_SAB_SCD": {
+        "status": "SERVED",
+        "reason": null,
+        "checks": 6,
+        "failed": []
+      },
+      "iline_SAC_SBD": {
+        "status": "SERVED",
+        "reason": null,
+        "checks": 6,
+        "failed": []
+      },
+      "iline_named_d": {
+        "status": "SERVED",
+        "reason": null,
+        "checks": 6,
+        "failed": []
+      },
+      "iline_SAD_SBC": {
+        "status": "SERVED",
+        "reason": null,
+        "checks": 6,
+        "failed": []
+      },
+      "iline_cube_A'BD_C'BD": {
+        "status": "SERVED",
+        "reason": null,
+        "checks": 6,
+        "failed": []
+      },
+      "iline_parallel_refused": {
+        "status": "REFUSED",
+        "reason": "PARALLEL_PLANES",
+        "checks": 0,
+        "failed": []
+      },
+      "iline_same_plane_refused": {
+        "status": "REFUSED",
+        "reason": "CONTAINED_INFINITE_INTERSECTION",
+        "checks": 0,
+        "failed": []
+      },
+      "altitude_face_perp_equilateral": {
+        "status": "SERVED",
+        "reason": null,
+        "checks": 5,
+        "failed": []
+      },
+      "altitude_face_perp_symbol": {
+        "status": "SERVED",
+        "reason": null,
+        "checks": 5,
+        "failed": []
+      },
+      "altitude_face_perp_triangle_base": {
+        "status": "SERVED",
+        "reason": null,
+        "checks": 5,
+        "failed": []
+      },
+      "altitude_regular_pyramid": {
+        "status": "SERVED",
+        "reason": null,
+        "checks": 3,
+        "failed": []
+      },
+      "altitude_already_drawn_SA": {
+        "status": "SERVED",
+        "reason": null,
+        "checks": 0,
+        "failed": []
+      }
+    }
+  }
+}

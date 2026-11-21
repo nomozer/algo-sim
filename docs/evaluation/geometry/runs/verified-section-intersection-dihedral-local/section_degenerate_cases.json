@@ -1,0 +1,119 @@
+{
+  "run_id": "verified-section-intersection-dihedral-local",
+  "generated_at_utc": "2026-11-13T11:35:59.957987+00:00",
+  "head": "a74aa3325b61337e301e8df7b728a66f86fdc266",
+  "cases": [
+    {
+      "probe": "section_cube_MNC'",
+      "status": "SERVED",
+      "reason": null,
+      "section_vertices": [
+        5
+      ],
+      "failed_checks": []
+    },
+    {
+      "probe": "section_pyramid_ABM",
+      "status": "SERVED",
+      "reason": null,
+      "section_vertices": [
+        4
+      ],
+      "failed_checks": []
+    },
+    {
+      "probe": "section_pyramid_area",
+      "status": "SERVED",
+      "reason": null,
+      "section_vertices": [
+        4
+      ],
+      "failed_checks": []
+    },
+    {
+      "probe": "section_cube_triangle",
+      "status": "SERVED",
+      "reason": null,
+      "section_vertices": [
+        3
+      ],
+      "failed_checks": []
+    },
+    {
+      "probe": "section_cube_hexagon",
+      "status": "SERVED",
+      "reason": null,
+      "section_vertices": [
+        6
+      ],
+      "failed_checks": []
+    },
+    {
+      "probe": "section_contains_edge",
+      "status": "SERVED",
+      "reason": null,
+      "section_vertices": [
+        4
+      ],
+      "failed_checks": []
+    },
+    {
+      "probe": "section_plane_is_face",
+      "status": "SERVED",
+      "reason": null,
+      "section_vertices": [
+        4
+      ],
+      "failed_checks": []
+    },
+    {
+      "probe": "section_through_vertex_and_edge_midpoints",
+      "status": "SERVED",
+      "reason": null,
+      "section_vertices": [
+        4
+      ],
+      "failed_checks": []
+    },
+    {
+      "probe": "section_renamed",
+      "status": "SERVED",
+      "reason": null,
+      "section_vertices": [
+        4
+      ],
+      "failed_checks": []
+    },
+    {
+      "probe": "section_collinear_refused",
+      "status": "REFUSED",
+      "reason": "COLLINEAR_POINTS",
+      "section_vertices": null,
+      "failed_checks": []
+    },
+    {
+      "probe": "section_unknown_point_refused",
+      "status": "REFUSED",
+      "reason": "UNDERDETERMINED_POINT",
+      "section_vertices": null,
+      "failed_checks": []
+    },
+    {
+      "probe": "section_question_form_unparsed",
+      "status": "REFUSED",
+      "reason": "LIVE_AI_DISABLED",
+      "section_vertices": null,
+      "failed_checks": []
+    }
+  ],
+  "notes": {
+    "plane_is_a_face": "(ABC) of S.ABCD is the base plane: the section is that face (4 vertices), which is the intersection",
+    "contains_edge": "(ABC') contains edge AB: rectangle ABC'D'",
+    "triangle": "(A'BD): 3 vertices",
+    "hexagon": "(MNP) through three edge midpoints: 6 vertices",
+    "collinear": "COLLINEAR_POINTS refusal",
+    "unknown_point": "UNDERDETERMINED_POINT refusal",
+    "point_or_segment_intersection": "NOT_MEASURED through the local route: no supported phrasing names a plane that touches the solid in only a point or an edge without containing a face; the engine's closure certificate refuses a non-closed boundary",
+    "coincident_planes": "refused, but with the code PARALLEL_PLANES (safe, imprecise code — backlog)"
+  }
+}

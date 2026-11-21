@@ -1,0 +1,23 @@
+{
+  "schema": "algosim-vision-live-evaluation/1",
+  "run_id": "real-image-ocr-vision-comparative-acceptance",
+  "generated_at_utc": "2026-11-11T02:42:05.685379+00:00",
+  "allow_live_ai": 0,
+  "provider_calls": 0,
+  "independent_h1_validation": "NOT_MEASURED",
+  "status": "LIVE_VISION_NOT_MEASURED",
+  "authorization_status": "NOT_AUTHORIZED",
+  "paired_comparison_status": "NOT_MEASURED",
+  "provider": null,
+  "model": null,
+  "measured_cases": null,
+  "success_rate": null,
+  "cer": null,
+  "critical_token_error_rate": null,
+  "latency_ms": null,
+  "provider_usage": null,
+  "cost_usd": null,
+  "note": "Unknown measurements are null, not zero. provider_calls=0 is observed execution count for this offline task, not live success evidence.",
+  "simulated_vision_responses_used": false,
+  "prior_synthetic_vision_fixture": "Prior metric audit distinguishes injected vlm_calls=1 from real transport; no reuse as live evidence."
+}

@@ -1,0 +1,68 @@
+--- a/frontend/src/components/ProblemInput.tsx
++++ b/frontend/src/components/ProblemInput.tsx
+@@ -14,6 +14,7 @@
+   AxoClientError,
+   analyzeViaServer,
+   fetchHealth,
++  isAiAvailable,
+   prepareUnifiedInputViaServer,
+   type ClientFailureContract,
+   type ServerHealth,
+@@ -207,7 +208,7 @@
+           description: normalizeDisplayBrand(clientFailure.message),
+         };
+       case "NETWORK_UNREACHABLE":
+-        if (health === null || health === "loading" || health.hasKey) {
++        if (isAiAvailable(health)) {
+           return {
+             tone: "error",
+             title: "Không kết nối được máy chủ",
+@@ -289,13 +290,13 @@
+     /Không kết nối được máy chủ|Failed to fetch|NetworkError|Load failed/i.test(analysisError);
+   const isServiceUnavailable =
+     /chưa cấu hình|thiếu khóa|API key|503|chưa sẵn sàng/i.test(analysisError) ||
+-    (!isNetworkOffline && health !== "loading" && health !== null && !health.hasKey);
++    (!isNetworkOffline && health !== "loading" && health !== null && !isAiAvailable(health));
+   const isInputValidation =
+     /Đề bài quá ngắn|tối thiểu 10 ký tự|Chế độ lưu đệm chưa hỗ trợ|Chế độ kiểm chứng không dùng mạng/i.test(
+       analysisError,
+     );
+ 
+-  if (isNetworkOffline && (health === null || health === "loading" || health.hasKey)) {
++  if (isNetworkOffline && isAiAvailable(health)) {
+     return {
+       tone: "error",
+       title: "Không kết nối được máy chủ",
+@@ -1001,9 +1002,11 @@
+       <span className="composer-sr-only">
+         Máy chủ phân tích chưa chạy — vẫn dùng được các mô phỏng mẫu bên dưới
+       </span>
+-    ) : health !== "loading" && !health.hasKey ? (
++    ) : health !== "loading" && !isAiAvailable(health) ? (
+       <span className="composer-sr-only">
+-        Máy chủ thiếu khóa AI — vẫn dùng được các mô phỏng mẫu bên dưới
++        {health.localOnlyMode
++          ? "Mô hình AI cục bộ chưa sẵn sàng — vẫn dùng được các mô phỏng mẫu bên dưới"
++          : "Máy chủ thiếu khóa AI — vẫn dùng được các mô phỏng mẫu bên dưới"}
+       </span>
+     ) : null;
+ 
+--- a/frontend/src/llm/client.ts
++++ b/frontend/src/llm/client.ts
+@@ -13,6 +13,16 @@
+   ok: boolean;
+   hasKey: boolean;
+   cachedProblems: number;
++  aiAvailable?: boolean;
++  localOnlyMode?: boolean;
++  localSlmReady?: boolean;
++  localSlmModel?: string | null;
++  routeMode?: string;
++}
++
++export function isAiAvailable(health: ServerHealth | null | "loading"): boolean {
++  if (health === null || health === "loading") return true;
++  return Boolean(health.aiAvailable ?? (health.hasKey || (health.localOnlyMode && health.localSlmReady)));
+ }
+ 
+ const CONNECT_HELP =

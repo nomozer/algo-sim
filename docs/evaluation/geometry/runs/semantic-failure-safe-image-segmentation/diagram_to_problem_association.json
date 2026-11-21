@@ -1,0 +1,224 @@
+{
+  "run_id": "semantic-failure-safe-image-segmentation",
+  "generated_at_utc": "2026-11-13T17:27:25.127687+00:00",
+  "head": "7315cf3b033f78fce1409085c6eeab720f83c967",
+  "environment": {
+    "ALLOW_LIVE_AI": "0"
+  },
+  "method": "for every synthetic multi-problem page: the product's detector, the option-group bands of its prepared image and the product's _band_blocks — does each band hold a figure block of its own, is any figure block shared by two bands",
+  "rows": [
+    {
+      "set": "COMPOSITE_2",
+      "id": "vmmu_r247+vmmu_r254",
+      "problems": 2,
+      "bands": 2,
+      "bands_with_own_figure": 2,
+      "figure_blocks_shared_by_two_bands": 0
+    },
+    {
+      "set": "COMPOSITE_2",
+      "id": "vmmu_r256+vmmu_r258",
+      "problems": 2,
+      "bands": 2,
+      "bands_with_own_figure": 2,
+      "figure_blocks_shared_by_two_bands": 0
+    },
+    {
+      "set": "COMPOSITE_2",
+      "id": "vmmu_r266+vmmu_r270",
+      "problems": 2,
+      "bands": 2,
+      "bands_with_own_figure": 2,
+      "figure_blocks_shared_by_two_bands": 0
+    },
+    {
+      "set": "COMPOSITE_2",
+      "id": "vmmu_r273+vmmu_r277",
+      "problems": 2,
+      "bands": 2,
+      "bands_with_own_figure": 2,
+      "figure_blocks_shared_by_two_bands": 0
+    },
+    {
+      "set": "COMPOSITE_2",
+      "id": "vmmu_r284+vmmu_r295",
+      "problems": 2,
+      "bands": 2,
+      "bands_with_own_figure": 2,
+      "figure_blocks_shared_by_two_bands": 0
+    },
+    {
+      "set": "COMPOSITE_2",
+      "id": "vmmu_r298+vmmu_r375",
+      "problems": 2,
+      "bands": 2,
+      "bands_with_own_figure": 2,
+      "figure_blocks_shared_by_two_bands": 0
+    },
+    {
+      "set": "COMPOSITE_2",
+      "id": "vmmu_r460+vmmu_r461",
+      "problems": 2,
+      "bands": 2,
+      "bands_with_own_figure": 2,
+      "figure_blocks_shared_by_two_bands": 0
+    },
+    {
+      "set": "COMPOSITE_2",
+      "id": "vmmu_r463+vmmu_r475",
+      "problems": 2,
+      "bands": 2,
+      "bands_with_own_figure": 2,
+      "figure_blocks_shared_by_two_bands": 0
+    },
+    {
+      "set": "COMPOSITE_2",
+      "id": "vmmu_r476+vmmu_r488",
+      "problems": 2,
+      "bands": 2,
+      "bands_with_own_figure": 2,
+      "figure_blocks_shared_by_two_bands": 0
+    },
+    {
+      "set": "COMPOSITE_2",
+      "id": "vmmu_r491+vmmu_r492",
+      "problems": 2,
+      "bands": 2,
+      "bands_with_own_figure": 2,
+      "figure_blocks_shared_by_two_bands": 0
+    },
+    {
+      "set": "COMPOSITE_2",
+      "id": "vmmu_r498+vmmu_r513",
+      "problems": 2,
+      "bands": 2,
+      "bands_with_own_figure": 2,
+      "figure_blocks_shared_by_two_bands": 0
+    },
+    {
+      "set": "COMPOSITE_2",
+      "id": "vmmu_r520+vmmu_r537",
+      "problems": 2,
+      "bands": 2,
+      "bands_with_own_figure": 2,
+      "figure_blocks_shared_by_two_bands": 0
+    },
+    {
+      "set": "COMPOSITE_3",
+      "id": "vmmu_r247+vmmu_r254+vmmu_r256",
+      "problems": 3,
+      "bands": 3,
+      "bands_with_own_figure": 2,
+      "figure_blocks_shared_by_two_bands": 0
+    },
+    {
+      "set": "COMPOSITE_3",
+      "id": "vmmu_r258+vmmu_r266+vmmu_r270",
+      "problems": 3,
+      "bands": 3,
+      "bands_with_own_figure": 3,
+      "figure_blocks_shared_by_two_bands": 0
+    },
+    {
+      "set": "COMPOSITE_3",
+      "id": "vmmu_r273+vmmu_r277+vmmu_r284",
+      "problems": 3,
+      "bands": 3,
+      "bands_with_own_figure": 3,
+      "figure_blocks_shared_by_two_bands": 0
+    },
+    {
+      "set": "COMPOSITE_3",
+      "id": "vmmu_r295+vmmu_r298+vmmu_r375",
+      "problems": 3,
+      "bands": 3,
+      "bands_with_own_figure": 3,
+      "figure_blocks_shared_by_two_bands": 0
+    },
+    {
+      "set": "COMPOSITE_3",
+      "id": "vmmu_r460+vmmu_r461+vmmu_r463",
+      "problems": 3,
+      "bands": 3,
+      "bands_with_own_figure": 3,
+      "figure_blocks_shared_by_two_bands": 0
+    },
+    {
+      "set": "COMPOSITE_3",
+      "id": "vmmu_r475+vmmu_r476+vmmu_r488",
+      "problems": 3,
+      "bands": 3,
+      "bands_with_own_figure": 3,
+      "figure_blocks_shared_by_two_bands": 0
+    },
+    {
+      "set": "COMPOSITE_3",
+      "id": "vmmu_r491+vmmu_r492+vmmu_r498",
+      "problems": 3,
+      "bands": 3,
+      "bands_with_own_figure": 3,
+      "figure_blocks_shared_by_two_bands": 0
+    },
+    {
+      "set": "COMPOSITE_3",
+      "id": "vmmu_r513+vmmu_r520+vmmu_r537",
+      "problems": 3,
+      "bands": 3,
+      "bands_with_own_figure": 3,
+      "figure_blocks_shared_by_two_bands": 0
+    },
+    {
+      "set": "SIDE_BY_SIDE",
+      "id": "vmmu_r247|vmmu_r254",
+      "problems": 2,
+      "bands": 2,
+      "bands_with_own_figure": 2,
+      "figure_blocks_shared_by_two_bands": 0
+    },
+    {
+      "set": "SIDE_BY_SIDE",
+      "id": "vmmu_r256|vmmu_r258",
+      "problems": 2,
+      "bands": 2,
+      "bands_with_own_figure": 2,
+      "figure_blocks_shared_by_two_bands": 0
+    },
+    {
+      "set": "SIDE_BY_SIDE",
+      "id": "vmmu_r266|vmmu_r270",
+      "problems": 2,
+      "bands": 2,
+      "bands_with_own_figure": 2,
+      "figure_blocks_shared_by_two_bands": 0
+    },
+    {
+      "set": "SIDE_BY_SIDE",
+      "id": "vmmu_r273|vmmu_r277",
+      "problems": 2,
+      "bands": 2,
+      "bands_with_own_figure": 1,
+      "figure_blocks_shared_by_two_bands": 0
+    },
+    {
+      "set": "SIDE_BY_SIDE",
+      "id": "vmmu_r284|vmmu_r295",
+      "problems": 2,
+      "bands": 2,
+      "bands_with_own_figure": 2,
+      "figure_blocks_shared_by_two_bands": 0
+    },
+    {
+      "set": "SIDE_BY_SIDE",
+      "id": "vmmu_r298|vmmu_r375",
+      "problems": 2,
+      "bands": 0,
+      "bands_with_own_figure": 0,
+      "figure_blocks_shared_by_two_bands": 0
+    }
+  ],
+  "bands_with_own_figure": "56/58 bands",
+  "figure_blocks_shared_by_two_bands": 0,
+  "diagram_facts": "never a typed fact: the fidelity gate keeps figure-only facts out (unchanged); a figure is only kept with its problem's crop",
+  "dataset_partition": "DEVELOPMENT_EXPOSED crops (each holds exactly one figure) in synthetic layouts",
+  "oracle_status": "BY_CONSTRUCTION"
+}

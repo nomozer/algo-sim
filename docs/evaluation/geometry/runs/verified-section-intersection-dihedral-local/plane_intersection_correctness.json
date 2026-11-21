@@ -1,0 +1,351 @@
+{
+  "run_id": "verified-section-intersection-dihedral-local",
+  "generated_at_utc": "2026-11-13T11:28:15.287342+00:00",
+  "head": "a74aa3325b61337e301e8df7b728a66f86fdc266",
+  "oracle": "AGENT_DIAGNOSTIC: exact Fractions + envelope Gram G written here, independent of the construction code",
+  "probe_class": "SYNTHETIC_DEVELOPMENT_PROBES (agent-written)",
+  "before_ref": "ffc62f6fe (run start)",
+  "mutation_summary": {
+    "flip_angle_ray": {
+      "applied": 12,
+      "caught": 12
+    },
+    "section_vertex_off_plane": {
+      "applied": 9,
+      "caught": 9
+    },
+    "section_vertex_order_swapped": {
+      "applied": 9,
+      "caught": 8
+    },
+    "section_vertex_replaced_by_wrong_edge_point": {
+      "applied": 9,
+      "caught": 9
+    },
+    "intersection_direction_tilted": {
+      "applied": 5,
+      "caught": 5
+    },
+    "intersection_point_moved": {
+      "applied": 5,
+      "caught": 5
+    },
+    "altitude_wrong_foot": {
+      "applied": 4,
+      "caught": 4
+    }
+  },
+  "rows": [
+    {
+      "probe": "iline_SAB_SCD",
+      "goal": "intersection",
+      "text": "Cho hình chóp S.ABCD có đáy ABCD là hình vuông cạnh a, SA vuông góc với mặt phẳng đáy và SA = a. Xác định giao tuyến của hai mặt phẳng (SAB) và (SCD).",
+      "before": {
+        "status": "REFUSED",
+        "answers": null,
+        "reason": "LIVE_AI_DISABLED",
+        "checks": [],
+        "failed_checks": []
+      },
+      "after": {
+        "status": "SERVED",
+        "answers": {},
+        "reason": null,
+        "checks": [
+          {
+            "check": "intersection_line_has_two_source_planes",
+            "ok": true
+          },
+          {
+            "check": "intersection_point_on_plane",
+            "ok": true
+          },
+          {
+            "check": "intersection_direction_in_plane",
+            "ok": true
+          },
+          {
+            "check": "intersection_point_on_plane",
+            "ok": true
+          },
+          {
+            "check": "intersection_direction_in_plane",
+            "ok": true
+          },
+          {
+            "check": "intersection_direction_nonzero",
+            "ok": true
+          }
+        ],
+        "failed_checks": [],
+        "objects": {
+          "sections": [],
+          "intersection_lines": 1,
+          "altitude": false,
+          "angle_relation": null
+        },
+        "mutations_caught": {
+          "intersection_direction_tilted": true,
+          "intersection_point_moved": true
+        }
+      }
+    },
+    {
+      "probe": "iline_SAC_SBD",
+      "goal": "intersection",
+      "text": "Cho hình chóp S.ABCD có đáy ABCD là hình vuông cạnh a, SA vuông góc với mặt phẳng đáy và SA = a. Tìm giao tuyến của hai mặt phẳng (SAC) và (SBD).",
+      "before": {
+        "status": "REFUSED",
+        "answers": null,
+        "reason": "LIVE_AI_DISABLED",
+        "checks": [],
+        "failed_checks": []
+      },
+      "after": {
+        "status": "SERVED",
+        "answers": {},
+        "reason": null,
+        "checks": [
+          {
+            "check": "intersection_line_has_two_source_planes",
+            "ok": true
+          },
+          {
+            "check": "intersection_point_on_plane",
+            "ok": true
+          },
+          {
+            "check": "intersection_direction_in_plane",
+            "ok": true
+          },
+          {
+            "check": "intersection_point_on_plane",
+            "ok": true
+          },
+          {
+            "check": "intersection_direction_in_plane",
+            "ok": true
+          },
+          {
+            "check": "intersection_direction_nonzero",
+            "ok": true
+          }
+        ],
+        "failed_checks": [],
+        "objects": {
+          "sections": [],
+          "intersection_lines": 1,
+          "altitude": false,
+          "angle_relation": null
+        },
+        "mutations_caught": {
+          "intersection_direction_tilted": true,
+          "intersection_point_moved": true
+        }
+      }
+    },
+    {
+      "probe": "iline_named_d",
+      "goal": "intersection",
+      "text": "Cho hình chóp S.ABCD có đáy ABCD là hình vuông cạnh a, SA vuông góc với mặt phẳng đáy và SA = a. Gọi d là giao tuyến của (SAB) và (SCD).",
+      "before": {
+        "status": "REFUSED",
+        "answers": null,
+        "reason": "LIVE_AI_DISABLED",
+        "checks": [],
+        "failed_checks": []
+      },
+      "after": {
+        "status": "SERVED",
+        "answers": {},
+        "reason": null,
+        "checks": [
+          {
+            "check": "intersection_line_has_two_source_planes",
+            "ok": true
+          },
+          {
+            "check": "intersection_point_on_plane",
+            "ok": true
+          },
+          {
+            "check": "intersection_direction_in_plane",
+            "ok": true
+          },
+          {
+            "check": "intersection_point_on_plane",
+            "ok": true
+          },
+          {
+            "check": "intersection_direction_in_plane",
+            "ok": true
+          },
+          {
+            "check": "intersection_direction_nonzero",
+            "ok": true
+          }
+        ],
+        "failed_checks": [],
+        "objects": {
+          "sections": [],
+          "intersection_lines": 1,
+          "altitude": false,
+          "angle_relation": null
+        },
+        "mutations_caught": {
+          "intersection_direction_tilted": true,
+          "intersection_point_moved": true
+        }
+      }
+    },
+    {
+      "probe": "iline_SAD_SBC",
+      "goal": "intersection",
+      "text": "Cho hình chóp S.ABCD có đáy ABCD là hình vuông cạnh a, SA vuông góc với mặt phẳng đáy và SA = a. Dựng giao tuyến của mặt phẳng (SAD) và mặt phẳng (SBC).",
+      "before": {
+        "status": "REFUSED",
+        "answers": null,
+        "reason": "LIVE_AI_DISABLED",
+        "checks": [],
+        "failed_checks": []
+      },
+      "after": {
+        "status": "SERVED",
+        "answers": {},
+        "reason": null,
+        "checks": [
+          {
+            "check": "intersection_line_has_two_source_planes",
+            "ok": true
+          },
+          {
+            "check": "intersection_point_on_plane",
+            "ok": true
+          },
+          {
+            "check": "intersection_direction_in_plane",
+            "ok": true
+          },
+          {
+            "check": "intersection_point_on_plane",
+            "ok": true
+          },
+          {
+            "check": "intersection_direction_in_plane",
+            "ok": true
+          },
+          {
+            "check": "intersection_direction_nonzero",
+            "ok": true
+          }
+        ],
+        "failed_checks": [],
+        "objects": {
+          "sections": [],
+          "intersection_lines": 1,
+          "altitude": false,
+          "angle_relation": null
+        },
+        "mutations_caught": {
+          "intersection_direction_tilted": true,
+          "intersection_point_moved": true
+        }
+      }
+    },
+    {
+      "probe": "iline_cube_A'BD_C'BD",
+      "goal": "intersection",
+      "text": "Cho hình lập phương ABCD.A'B'C'D' có cạnh bằng a. Tìm giao tuyến của hai mặt phẳng (A'BD) và (C'BD).",
+      "before": {
+        "status": "REFUSED",
+        "answers": null,
+        "reason": "LIVE_AI_DISABLED",
+        "checks": [],
+        "failed_checks": []
+      },
+      "after": {
+        "status": "SERVED",
+        "answers": {},
+        "reason": null,
+        "checks": [
+          {
+            "check": "intersection_line_has_two_source_planes",
+            "ok": true
+          },
+          {
+            "check": "intersection_point_on_plane",
+            "ok": true
+          },
+          {
+            "check": "intersection_direction_in_plane",
+            "ok": true
+          },
+          {
+            "check": "intersection_point_on_plane",
+            "ok": true
+          },
+          {
+            "check": "intersection_direction_in_plane",
+            "ok": true
+          },
+          {
+            "check": "intersection_direction_nonzero",
+            "ok": true
+          }
+        ],
+        "failed_checks": [],
+        "objects": {
+          "sections": [],
+          "intersection_lines": 1,
+          "altitude": false,
+          "angle_relation": null
+        },
+        "mutations_caught": {
+          "intersection_direction_tilted": true,
+          "intersection_point_moved": true
+        }
+      }
+    },
+    {
+      "probe": "iline_parallel_refused",
+      "goal": "intersection",
+      "text": "Cho hình lập phương ABCD.A'B'C'D' có cạnh bằng a. Xác định giao tuyến của hai mặt phẳng (ABC) và (A'B'C').",
+      "before": {
+        "status": "REFUSED",
+        "answers": null,
+        "reason": "LIVE_AI_DISABLED",
+        "checks": [],
+        "failed_checks": []
+      },
+      "after": {
+        "status": "REFUSED",
+        "answers": null,
+        "reason": "PARALLEL_PLANES",
+        "checks": [],
+        "failed_checks": []
+      }
+    },
+    {
+      "probe": "iline_same_plane_refused",
+      "goal": "intersection",
+      "text": "Cho hình lập phương ABCD.A'B'C'D' có cạnh bằng a. Xác định giao tuyến của hai mặt phẳng (ABC) và (ACD).",
+      "before": {
+        "status": "REFUSED",
+        "answers": null,
+        "reason": "LIVE_AI_DISABLED",
+        "checks": [],
+        "failed_checks": []
+      },
+      "after": {
+        "status": "REFUSED",
+        "answers": null,
+        "reason": "PARALLEL_PLANES",
+        "checks": [],
+        "failed_checks": []
+      }
+    }
+  ],
+  "served_after": 5,
+  "served_before": 0,
+  "check_failures_after": 0
+}

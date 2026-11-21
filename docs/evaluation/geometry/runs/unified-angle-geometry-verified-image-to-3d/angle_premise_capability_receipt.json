@@ -1,0 +1,185 @@
+{
+  "schema": "algosim-angle-premise-capability-receipt/1",
+  "generated_at_utc": "2026-11-10T03:58:20.632504+00:00",
+  "product_commit": "c61a3589782bde35b69e8376d8ebf136314e47f3",
+  "head_commit": "c61a3589782bde35b69e8376d8ebf136314e47f3",
+  "measured_system_tree_hash": "69bb83ba51b834f68c106bc4d3948dc02ca35af05eca0d8f50c0e0e4cf047cb4",
+  "measured_system_file_count": 108,
+  "code_version": {
+    "typed_fact_next": "typed-fact-next/2",
+    "bridge": "typed-fact-next-bridge/2",
+    "planner": "geometry-fact-planner/26",
+    "registry": "geometry-functions/33",
+    "engine": "geometry-function-engine/24",
+    "adapter": "hybrid-simulation-adapter/4",
+    "envelope": "hybrid-route-d-simulation/4",
+    "local_parser": "local-geometry-parser/1",
+    "adaptive_router": "adaptive-input-router/1",
+    "cache_version": "132"
+  },
+  "input_or_case_hash": "1d4083aa9c48888a6c446cc2c5128d5b8a0150415b6aa0313f8a73b553461566",
+  "oracle": "Exact algebraic rational/radical closed-form height/base deduction + fail-closed refusal verification",
+  "test_command": "pytest backend/tests/geometry/test_angle_premise_and_dihedral_geometry.py -v",
+  "test_environment": {
+    "os": "Windows-11-10.0.26100-SP0",
+    "python": "3.12.10",
+    "cpu_logical_cores": 12,
+    "allow_live_ai": 0,
+    "live_gemini_calls": 0,
+    "benchmark_tier": "HOST_BENCHMARK_OFFLINE"
+  },
+  "expected_behavior": "All positive angle-premise classes solve exact with valid Scene3D; non-unique circle foot, conflicting angles, irrational degrees, and missing base fail closed.",
+  "actual_behavior": "pos=6/6, neg=5/5.",
+  "verdict": "PASS",
+  "capability_matrix": {
+    "supported": [
+      "line_plane_angle (30°, 45°, 60°) -> height or horizontal projection deduction, equal-angle circumcenter foot",
+      "plane_plane_angle (30°, 45°, 60°, 90°) -> unoriented [0°, 90°] lateral-face/base height deduction",
+      "dihedral_angle [P, edge, Q] (30°, 45°, 60°, 90°, 120°, 135°, 150°) -> oriented half-plane cos sign verification & overhanging apex support",
+      "line_line_angle & vertex_angle (30°, 45°, 60°, 90°, 120°, 135°, 150°) -> exact rational Gram dot product"
+    ],
+    "unsupported_fail_closed": [
+      "Irrational trigonometric degrees outside {30°, 45°, 60°, 90°, 120°, 135°, 150°} -> EXACT_DOMAIN_EXCEEDED",
+      "Slant segment length + line-plane angle without unique foot constraint (locus is a circle) -> UNDERDETERMINED_POINT (no arbitrary Scene3D)",
+      "Bare dihedral edge angle without specifying half-planes [P, edge, Q] -> AMBIGUOUS_FACT",
+      "Inverse base-edge deduction from lateral-plane-to-lateral-plane angle or skew-line non-orthogonal angle -> CAPABILITY_GAP / MISSING_DIMENSION",
+      "Asking angle measure in degrees ('số đo góc theo độ') rather than exact cos² -> QUESTION_CONTEXT_UNSUPPORTED"
+    ]
+  },
+  "positive_cases": [
+    {
+      "case_id": "ANG-LP-01",
+      "status": "SERVED",
+      "answers": [
+        "a³√3/3"
+      ],
+      "expected_answers": [
+        "a³√3/3"
+      ],
+      "oracle_exact_match": true,
+      "scene3d_12_checks_passed": true
+    },
+    {
+      "case_id": "ANG-LP-02",
+      "status": "SERVED",
+      "answers": [
+        "a√10/5",
+        "a³√2/3"
+      ],
+      "expected_answers": [
+        "a³√2/3",
+        "a√10/5"
+      ],
+      "oracle_exact_match": true,
+      "scene3d_12_checks_passed": true
+    },
+    {
+      "case_id": "ANG-LP-03-PRISM-INV",
+      "status": "SERVED",
+      "answers": [
+        "a³√3/2"
+      ],
+      "expected_answers": [
+        "a³√3/2"
+      ],
+      "oracle_exact_match": true,
+      "scene3d_12_checks_passed": true
+    },
+    {
+      "case_id": "ANG-LP-04-CIRCUMCENTER",
+      "status": "SERVED",
+      "answers": [
+        "40"
+      ],
+      "expected_answers": [
+        "40"
+      ],
+      "oracle_exact_match": true,
+      "scene3d_12_checks_passed": true
+    },
+    {
+      "case_id": "ANG-PP-01",
+      "status": "SERVED",
+      "answers": [
+        "a³√3"
+      ],
+      "expected_answers": [
+        "a³√3"
+      ],
+      "oracle_exact_match": true,
+      "scene3d_12_checks_passed": true
+    },
+    {
+      "case_id": "ANG-VTX-01-RENAMED",
+      "status": "SERVED",
+      "answers": [
+        "2a³√3"
+      ],
+      "expected_answers": [
+        "2a³√3"
+      ],
+      "oracle_exact_match": true,
+      "scene3d_12_checks_passed": true
+    }
+  ],
+  "negative_cases": [
+    {
+      "case_id": "ANG-NEG-NONUNIQUE-FOOT",
+      "case_sha256": "6226c026de782636d462b3d47c49f04b2723273871be1b5df5080fb94966b1ef",
+      "status": "REFUSED",
+      "reason_code": "UNDERDETERMINED_POINT",
+      "allowed_codes": [
+        "AMBIGUOUS_FACT",
+        "UNDERDETERMINED_POINT"
+      ],
+      "arbitrary_scene3d_emitted": false,
+      "passed": true
+    },
+    {
+      "case_id": "ANG-NEG-CONFLICT",
+      "case_sha256": "faf03d37f486f1d97725c341723a9e2a1aa4ee1bee68c6fd70294102b757eae3",
+      "status": "REFUSED",
+      "reason_code": "INCONSISTENT_FACTS",
+      "allowed_codes": [
+        "INCONSISTENT_FACTS"
+      ],
+      "arbitrary_scene3d_emitted": false,
+      "passed": true
+    },
+    {
+      "case_id": "ANG-NEG-PERP-OBLIQUE",
+      "case_sha256": "f43bd1741b714b0fb86755c78c96b7455b88a8beacc7833fc16b4ce857aee030",
+      "status": "REFUSED",
+      "reason_code": "INCONSISTENT_FACTS",
+      "allowed_codes": [
+        "INCONSISTENT_FACTS"
+      ],
+      "arbitrary_scene3d_emitted": false,
+      "passed": true
+    },
+    {
+      "case_id": "ANG-NEG-IRRATIONAL-DEG",
+      "case_sha256": "1d25559dad8dbe41d5cd706850847057e96e08acff89bf1f49bd30d7b0e36fa5",
+      "status": "REFUSED",
+      "reason_code": "EXACT_DOMAIN_EXCEEDED",
+      "allowed_codes": [
+        "EXACT_DOMAIN_EXCEEDED",
+        "LIVE_AI_DISABLED"
+      ],
+      "arbitrary_scene3d_emitted": false,
+      "passed": true
+    },
+    {
+      "case_id": "ANG-NEG-MISSING-BASE",
+      "case_sha256": "c17c498e9880d4b02d5e2d2734ed678c2f862ca7715d42a3f0a83caa6ff9f7a4",
+      "status": "REFUSED",
+      "reason_code": "AMBIGUOUS_FACT",
+      "allowed_codes": [
+        "AMBIGUOUS_FACT",
+        "MISSING_DIMENSION"
+      ],
+      "arbitrary_scene3d_emitted": false,
+      "passed": true
+    }
+  ]
+}

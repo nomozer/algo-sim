@@ -8,7 +8,7 @@ from __future__ import annotations
 import re
 from typing import Annotated, Any, ClassVar, Literal
 
-from pydantic import BaseModel, ConfigDict, Field, StringConstraints, model_validator
+from pydantic import BaseModel, ConfigDict, Field, StringConstraints, WithJsonSchema, model_validator
 
 from app.simulation.geometry_functions.registry import Label
 from app.simulation.semantic_program.measure_contract import NGHIA_VU_DO
@@ -183,7 +183,19 @@ KIND_ALLOWED_FIELDS_V2 = {
         'circumscribes': ['kind', 'quote', 'relation_id', 'solid_a', 'solid_b'],
         'inscribed_in': ['kind', 'quote', 'relation_id', 'solid_a', 'solid_b'],
         'tangent_to': ['contact_ref', 'entity_b', 'kind', 'quote', 'relation_id', 'solid_a', 'solid_b'],
-    }
+    },
+    # run `verified-section-intersection-dihedral-local` (`/2` additive, `/1` snapshot untouched): the intersection line
+    # of two planes the source names is a CONSTRUCTION goal — the line is the engine's output, never an input.
+    'simulation_goal_v2': {
+        **KIND_ALLOWED_FIELDS['simulation_goal'],
+        'construct_intersection_line': ['goal_id', 'kind', 'quote', 'target_planes', 'target_solid_id'],
+    },
+    'math_goal_v2': {
+        **KIND_ALLOWED_FIELDS['math_goal'],
+        'measurement': ['goal_id', 'goal_type', 'kind', 'quote', 'requested_unit', 'rounding', 'solid_id', 'target'],
+        'length_ratio': ['denominator_segment', 'goal_id', 'kind', 'numerator_segment', 'quote', 'rounding', 'solid_id'],
+        'area_ratio': ['denominator_polygon', 'goal_id', 'kind', 'numerator_polygon', 'quote', 'rounding', 'solid_id'],
+    },
 }
 GOAL_OPERAND_SHAPES = {'point': 'ref',
  'segment': 'refs2=',
@@ -210,7 +222,9 @@ GOAL_TARGET_ALTERNATIVES = {'distance': [['segment'],
  'area': [['polygon'], ['section_id'], ['solid']]}
 
 _KIND_GROUPS = {"MathGoalSpec": ("math_goal", "INVALID_MATH_GOAL"),
+                "MathGoalSpecV2": ("math_goal_v2", "INVALID_MATH_GOAL"),
                 "SimulationGoalSpec": ("simulation_goal", "INVALID_SIMULATION_GOAL"),
+                "SimulationGoalSpecV2": ("simulation_goal_v2", "INVALID_SIMULATION_GOAL"),
                 "GeometricRelationSpec": ("relation", "INVALID_RELATION_SPEC"),
                 "GeometricRelationSpecV2": ("relation_v2", "INVALID_RELATION_SPEC")}
 
@@ -253,7 +267,7 @@ class ClosedNextModel(BaseModel):
     @classmethod
     def _closed_kind_fields(cls, value):
         policy = _KIND_GROUPS.get(cls.__name__)  # S4: one per-kind field applicability authority
-        table = KIND_ALLOWED_FIELDS_V2 if policy and policy[0] == "relation_v2" else KIND_ALLOWED_FIELDS
+        table = KIND_ALLOWED_FIELDS_V2 if policy and policy[0].endswith("_v2") else KIND_ALLOWED_FIELDS
         if policy and isinstance(value, dict) and value.get("kind") in table[policy[0]]:
             unexpected = set(value) - set(table[policy[0]][value["kind"]])
             if unexpected:
@@ -374,8 +388,21 @@ _ARGS_LOI = {
     "centroid": {"point": "ref", "polygon": "refs3"},
     "orthogonal_projection": {"point": "ref", "image": "ref", "plane": "refs3"},
     "orthogonal_projection_line": {"point": "ref", "image": "ref", "line": "refs2="},
+    "point_reflection": {"point": "ref", "center": "ref", "image": "ref"},
     "intersect_line_line": {"point": "ref", "line1": "refs2=", "line2": "refs2="},
     "intersect_line_plane": {"point": "ref", "line": "refs2=", "plane": "refs3"},
+    "line_plane_angle": {"line": "refs2=", "plane": "refs3", "value": "value", "unit": "id?"},
+    "plane_plane_angle": {"plane1": "refs3", "plane2": "refs3", "value": "value", "unit": "id?"},
+    "dihedral_angle": {"point_a": "ref", "edge": "refs2=", "point_b": "ref", "value": "value", "unit": "id?"},
+    "line_line_angle": {"line1": "refs2=", "line2": "refs2=", "value": "value", "unit": "id?"},
+    "vertex_angle": {"vertex": "ref", "rays": "refs2=", "value": "value", "unit": "id?"},
+    "parallelogram": {"vertices": "refs4="},
+    "rhombus": {"vertices": "refs4=", "side": "value?"},
+    "trapezoid": {"vertices": "refs4=", "base_a": "refs2=", "base_b": "refs2="},
+    "isosceles_trapezoid": {"vertices": "refs4=", "base_a": "refs2=", "base_b": "refs2="},
+    "face_area": {"polygon": "refs3", "value": "value", "shape": "id?"},
+    "solid_volume": {"value": "value", "solid": "id?"},
+    "segment_ratio": {"segment_a": "refs2=", "segment_b": "refs2=", "ratio": "value"},
 }
 for _alias, _goc in (("base_is_square", "regular_polygon"), ("base_is_equilateral_triangle", "regular_polygon"),
                      ("base_is_regular_polygon", "regular_polygon"), ("base_is_rectangle", "rectangle"),
@@ -388,6 +415,31 @@ for _alias, _goc in (("base_is_square", "regular_polygon"), ("base_is_equilatera
 _ARGS_GOC_VUONG = ({"vertices": "refs3=", "right_at": "ref"}, {"vertex": "ref", "rays": "refs2="})
 
 
+def premise_slot_dimension(kind: str, field_name: str = "value"):
+    """Return the exact `Dimension` expected by a `PremiseSpec` quantity field (`None` for non-quantity fields)."""
+    from app.simulation.geometry.expression import ANGLE, AREA, LENGTH, SCALAR, VOLUME
+
+    canon = {
+        "base_is_square": "regular_polygon",
+        "base_is_equilateral_triangle": "regular_polygon",
+        "base_is_regular_polygon": "regular_polygon",
+        "point_divides_segment": "divide_segment",
+    }.get(kind, kind)
+    if canon in ("regular_polygon", "rhombus") and field_name == "side":
+        return LENGTH
+    if canon in ("segment_length", "height") and field_name == "value":
+        return LENGTH
+    if canon == "face_area" and field_name == "value":
+        return AREA
+    if canon == "solid_volume" and field_name == "value":
+        return VOLUME
+    if canon in ("segment_ratio", "divide_segment") and field_name == "ratio":
+        return SCALAR
+    if canon in ("line_plane_angle", "plane_plane_angle", "dihedral_angle", "line_line_angle", "vertex_angle") and field_name == "value":
+        return ANGLE
+    return None
+
+
 def _hinh_dung(value: Any, shape: str) -> bool:
     if shape == "ref":      # a described ref passes here; the payload checks it is declared and where it stands (R-1)
         return isinstance(value, str) and (_QUALIFIED_REF_RE.match(value.strip()) is not None or is_described_ref(value))
@@ -397,7 +449,7 @@ def _hinh_dung(value: Any, shape: str) -> bool:
                 and (len(value) == n if exact else len(value) >= n))
     if shape == "value":
         return isinstance(value, int) and not isinstance(value, bool) or isinstance(value, str) and bool(value.strip())
-    return isinstance(value, str) and re.fullmatch(r"[A-Za-z0-9_.:-]+", value) is not None      # "id"
+    return isinstance(value, str) and re.fullmatch(r"[A-Za-z0-9_.:'-]+", value) is not None      # "id"
 
 
 def _kiem_args(kind: str, args: dict[str, Any]) -> None:
@@ -581,7 +633,10 @@ class PlaneConstraintSpec(ClosedNextModel):
     @model_validator(mode="after")
     def _validate_operands(self) -> "PlaneConstraintSpec":
         lo, hi = PLANE_CONSTRAINT_ARITY[self.kind]
-        refs = [parse_qualified_ref(p) for p in self.operands]
+        refs = [
+            p.strip() if (self.kind == "contains_points" and is_described_ref(p)) else parse_qualified_ref(p)
+            for p in self.operands
+        ]
         if not lo <= len(refs) <= hi or len(set(refs)) != len(refs):
             raise TypedFactNextValidationError(
                 "INVALID_DERIVED_SECTION", f"plane constraint {self.kind} needs {lo}..{hi} distinct labels")
@@ -854,6 +909,61 @@ class MathGoalSpec(ClosedNextModel):
         return self
 
 
+class MathGoalSpecV2(MathGoalSpec):
+    """`typed-fact-next/2` mathematical goal supporting output policies (`requested_unit`, `rounding`) and affine/area ratios."""
+
+    kind: Literal["volume_ratio", "residual_volume", "measurement", "length_ratio", "area_ratio"]
+    numerator_segment: tuple[NonEmptyText, NonEmptyText] | None = None
+    denominator_segment: tuple[NonEmptyText, NonEmptyText] | None = None
+    numerator_polygon: tuple[NonEmptyText, ...] | None = None
+    denominator_polygon: tuple[NonEmptyText, ...] | None = None
+    requested_unit: Literal["deg"] | None = None
+    rounding: dict[str, Any] | None = None
+
+    @model_validator(mode="after")
+    def _validate_v2_math_goal(self) -> "MathGoalSpecV2":
+        if self.kind == "length_ratio":
+            if not self.numerator_segment or not self.denominator_segment:
+                raise TypedFactNextValidationError(
+                    "INVALID_MATH_GOAL",
+                    f"Math goal {self.goal_id!r} ('length_ratio') requires 'numerator_segment' and 'denominator_segment'.",
+                )
+            for seg_key, seg in (("numerator_segment", self.numerator_segment), ("denominator_segment", self.denominator_segment)):
+                if not _hinh_dung(seg, "refs2=") or len(set(seg)) != 2:
+                    raise TypedFactNextValidationError("INVALID_MATH_GOAL", f"{self.goal_id}: malformed {seg_key!r}")
+        elif self.kind == "area_ratio":
+            if not self.numerator_polygon or not self.denominator_polygon:
+                raise TypedFactNextValidationError(
+                    "INVALID_MATH_GOAL",
+                    f"Math goal {self.goal_id!r} ('area_ratio') requires 'numerator_polygon' and 'denominator_polygon'.",
+                )
+            for poly_key, poly in (("numerator_polygon", self.numerator_polygon), ("denominator_polygon", self.denominator_polygon)):
+                if not _hinh_dung(poly, "refs3") or len(set(poly)) != len(poly):
+                    raise TypedFactNextValidationError("INVALID_MATH_GOAL", f"{self.goal_id}: malformed {poly_key!r}")
+        if self.requested_unit is not None and (self.kind != "measurement" or self.goal_type != "angle"):
+            raise TypedFactNextValidationError(
+                "INVALID_MATH_GOAL",
+                f"Math goal {self.goal_id!r}: 'requested_unit' is only applicable to angle measurement goals.",
+            )
+        if self.rounding is not None:
+            mode = self.rounding.get("mode") if isinstance(self.rounding, dict) else None
+            dec = self.rounding.get("decimals") if isinstance(self.rounding, dict) else None
+            sep = self.rounding.get("decimal_separator", ",") if isinstance(self.rounding, dict) else None
+            if (
+                mode != "ROUND_HALF_UP"
+                or not isinstance(dec, int)
+                or isinstance(dec, bool)
+                or not (0 <= dec <= 6)
+                or sep not in (",", ".")
+                or not (set(self.rounding) <= {"mode", "decimals", "decimal_separator"})
+            ):
+                raise TypedFactNextValidationError(
+                    "INVALID_MATH_GOAL",
+                    f"Math goal {self.goal_id!r}: invalid 'rounding' specification {self.rounding!r}.",
+                )
+        return self
+
+
 class DerivedObjectIdentity(ClosedNextModel):
     """Deterministic identity record for an automatically derived geometric object."""
 
@@ -868,13 +978,20 @@ class DerivedObjectIdentity(ClosedNextModel):
     provenance: dict[str, Any] = Field(default_factory=dict)
 
 
+LengthUnitSymbol = Annotated[
+    str,
+    StringConstraints(strip_whitespace=True, pattern=r"^(?:1|[a-z])$"),
+    WithJsonSchema({"enum": ["1", "a"], "type": "string"}),
+]
+
+
 class TypedFactNextPayload(ClosedNextModel):
     """Top-level `typed-fact-next/1` simulation-first contract payload."""
 
     _VERSION: ClassVar[str] = TYPED_FACT_NEXT_SCHEMA_VERSION
     schema_version: str
     problem_text: NonEmptyText
-    length_unit: Literal["1", "a"] | None = None
+    length_unit: LengthUnitSymbol | None = None
     solids: tuple[SolidSpec, ...] = ()
     premises: tuple[PremiseSpec, ...] = ()
     derived_sections: tuple[DerivedPlaneSectionSpec, ...] = ()
@@ -1010,9 +1127,18 @@ def _strings(value: Any):
         yield value
 
 
+POINT_RELATION_PREMISE_DESCRIBED_SLOTS: dict[str, tuple[str, ...]] = {
+    "orthogonal_projection": ("point", "image"),
+    "point_is_foot": ("point", "image"),
+    "orthogonal_projection_line": ("point", "image"),
+    "point_reflection": ("point", "center"),
+}
+
+
 def described_ref_uses(p: "TypedFactNextPayload") -> list[tuple[str, str]]:
     """`(consumer, described id)` of every described ref standing where one may (R-1): a measurement goal's point operand,
-    a section's `through_point`, a point operand of another described point (consumer `@id`)."""
+    a section's `through_point`, a `contains_points` constraint operand, a point operand of another described point, or a
+    single-point operand of an eligible point-relation premise (`projection`, `point_reflection`)."""
     uses: list[tuple[str, str]] = []
     for mg in p.math_goals:
         if mg.kind == "measurement":
@@ -1021,6 +1147,16 @@ def described_ref_uses(p: "TypedFactNextPayload") -> list[tuple[str, str]]:
                 uses += [(mg.goal_id, x.strip()[1:]) for x in (v if isinstance(v, (list, tuple)) else [v])
                          if is_described_ref(x)]
     uses += [(s.section_id, s.through_point.strip()[1:]) for s in p.derived_sections if is_described_ref(s.through_point)]
+    for s in p.derived_sections:
+        for c in getattr(s, "constraints", ()):
+            if c.kind == "contains_points":
+                uses += [(s.section_id, x.strip()[1:]) for x in c.operands if is_described_ref(x)]
+    for i, prem in enumerate(p.premises, 1):
+        if prem.kind in POINT_RELATION_PREMISE_DESCRIBED_SLOTS:
+            for slot in POINT_RELATION_PREMISE_DESCRIBED_SLOTS[prem.kind]:
+                v = prem.args.get(slot)
+                if is_described_ref(v):
+                    uses.append((f"p{i}", v.strip()[1:]))
     for d in getattr(p, "described_points", ()):
         uses += [(f"@{d.described_id}", x.strip()[1:]) for x in d.point_operands() if is_described_ref(x)]
     return uses
@@ -1057,7 +1193,8 @@ GOAL_OPERAND_KEYS = ("segment", "point", "plane", "line", "line1", "line2", "pol
 CONSTRUCTED_OUTPUTS = {"midpoint": "point", "point_is_midpoint": "point", "divide_segment": "point",
                        "point_divides_segment": "point", "centroid": "point", "point_is_centroid": "point",
                        "intersect_line_line": "point", "intersect_line_plane": "point",
-                       "orthogonal_projection": "image", "point_is_foot": "image", "orthogonal_projection_line": "image"}
+                       "orthogonal_projection": "image", "point_is_foot": "image", "orthogonal_projection_line": "image",
+                       "point_reflection": "image"}
 
 
 def split_edge_key(key: str) -> tuple[str, str]:
@@ -1110,6 +1247,7 @@ def canonical_vertex_ref(p: "TypedFactNextPayload", ref: str, scope: str | None 
 def _described_consumer_scopes(p: "TypedFactNextPayload") -> dict[str, set[str | None]]:
     consumer_scope = {mg.goal_id: measurement_scope(p, mg) for mg in p.math_goals if mg.kind == "measurement"}
     consumer_scope |= {s.section_id: s.target_solid_id for s in p.derived_sections}
+    consumer_scope |= {f"p{i}": prem.solid_id or resolve_solid_name(p, prem.args.get("solid")) for i, prem in enumerate(p.premises, 1)}
     uses = described_ref_uses(p)
     out: dict[str, set[str | None]] = {}
     for d in getattr(p, "described_points", ()):
@@ -1125,6 +1263,15 @@ def _described_consumer_scopes(p: "TypedFactNextPayload") -> dict[str, set[str |
 
 def _validate_goal_identities(p: "TypedFactNextPayload") -> None:
     for goal in p.math_goals:
+        if goal.kind in ("length_ratio", "area_ratio"):
+            scope = goal.solid_id
+            for key in ("numerator_segment", "denominator_segment", "numerator_polygon", "denominator_polygon"):
+                refs = getattr(goal, key, None)
+                if refs:
+                    identities = [ref.strip() if is_described_ref(ref) else canonical_vertex_ref(p, ref, scope) for ref in refs]
+                    if len(set(identities)) != len(identities):
+                        raise TypedFactNextValidationError("INVALID_MATH_GOAL", f"{goal.goal_id}: repeated identity in {key!r}")
+            continue
         if goal.kind != "measurement":
             continue
         scope = measurement_scope(p, goal)
@@ -1150,7 +1297,8 @@ def constructed_names(p: "TypedFactNextPayload") -> set[str]:
     """Labels the payload itself introduces as constructed points (premise outputs, named section points)."""
     root_labels = {v for s in p.solids for v in (*s.local_vertices(), *map(s.canonical_vertex, s.local_vertices()))}
     names = {parse_qualified_ref(prem.args[out])[1] for prem in p.premises
-             if (out := CONSTRUCTED_OUTPUTS.get(prem.kind)) and isinstance(prem.args.get(out), str)}
+             if (out := CONSTRUCTED_OUTPUTS.get(prem.kind)) and isinstance(prem.args.get(out), str)
+             and not is_described_ref(prem.args[out])}
     for sec in p.derived_sections:
         names.update(getattr(sec, "named_intersections", {}).values())
         names.update(s.point for s in getattr(sec, "stated_intersections", ()) if s.point)
@@ -1174,7 +1322,8 @@ def scope_records(p: "TypedFactNextPayload") -> list[tuple[str, str, str | None,
         else:
             shape = _ARGS_LOI.get(prem.kind, {})
         refs =[r for key, s in shape.items() if s.startswith("ref") and key in prem.args
-                for r in (prem.args[key] if s.startswith("refs") else [prem.args[key]]) if isinstance(r, str)]
+                for r in (prem.args[key] if s.startswith("refs") else [prem.args[key]])
+                if isinstance(r, str) and not is_described_ref(r)]
         recs.append(("premise", f"p{i}", prem.solid_id or resolve_solid_name(p, prem.args.get("solid")), refs, False))
     for sec in p.derived_sections:
         refs = [x for x in (sec.through_point, *(sec.parallel_plane or ()), *(sec.perpendicular_line or ()),
@@ -1203,8 +1352,19 @@ def scope_records(p: "TypedFactNextPayload") -> list[tuple[str, str, str | None,
         scope = parents.get(g.derived_solid_id) if g.kind == "construct_derived_solid" else \
             g.target_solid_id or (section.target_solid_id if section else None)
         refs = [x for x in (g.apex_ref, *g.target_refs) if x and x not in ids]
+        # S5 S7 S8: the labels of a `/2` intersection goal's two planes are scoped like target_refs.
+        refs += [x for pl in (getattr(g, "target_planes", None) or ()) for x in pl if x not in ids]
         recs.append(("simulation_goal", g.goal_id, scope, refs, False))
     for mg in p.math_goals:
+        if mg.kind in ("length_ratio", "area_ratio"):
+            refs = [
+                x
+                for key in ("numerator_segment", "denominator_segment", "numerator_polygon", "denominator_polygon")
+                for x in (getattr(mg, key, None) or ())
+                if not is_described_ref(x)
+            ]
+            recs.append(("math_goal", mg.goal_id, mg.solid_id, refs, False))
+            continue
         if mg.kind != "measurement":
             continue
         t = mg.target
@@ -1359,6 +1519,9 @@ def _validate_declared_solid_scope(p: "TypedFactNextPayload", known: set[str]) -
             if mg.kind == "residual_volume" and mg.cut_solid_id in parents:              # S3: a derived cut's ancestry
                 one_solid(mg.goal_id, mg.parent_solid_id, parents[mg.cut_solid_id])
             continue
+        if mg.kind in ("length_ratio", "area_ratio"):
+            declared(mg.solid_id, mg.goal_id)                                            # S1
+            continue
         t = mg.target
         for key in GOAL_OPERAND_KEYS:                                                    # S11
             v = t.get(key)
@@ -1505,6 +1668,37 @@ class DescribedPointSpec(ClosedNextModel):
                      for x in ([getattr(self, k)] if shape == "pt" else getattr(self, k)))
 
 
+class SimulationGoalSpecV2(SimulationGoalSpec):
+    """`/2` simulation goal: `/1` kinds plus `construct_intersection_line` — the line where two planes, each named by three
+    labels in the source ("giao tuyến của (SAB) và (SCD)"), meet. Only the two planes are input; whether they meet in one
+    line, are parallel or coincide is decided and proven by the engine (planner `intersection_line`)."""
+
+    kind: Literal[
+        "construct_object",
+        "construct_plane_section",
+        "construct_derived_solid",
+        "highlight_geometry",
+        "construction_sequence",
+        "construct_intersection_line",
+    ]
+    target_planes: tuple[tuple[NonEmptyText, NonEmptyText, NonEmptyText],
+                         tuple[NonEmptyText, NonEmptyText, NonEmptyText]] | None = None
+
+    @model_validator(mode="after")
+    def _validate_intersection_goal(self) -> "SimulationGoalSpecV2":
+        if (self.kind == "construct_intersection_line") != (self.target_planes is not None):
+            raise TypedFactNextValidationError(
+                "INVALID_SIMULATION_GOAL",
+                f"Simulation goal {self.goal_id!r}: exactly 'construct_intersection_line' carries 'target_planes'.")
+        if self.target_planes is not None:
+            planes = [tuple(parse_qualified_ref(x) for x in pl) for pl in self.target_planes]
+            if any(len(set(pl)) != 3 for pl in planes) or set(planes[0]) == set(planes[1]):
+                raise TypedFactNextValidationError(
+                    "INVALID_SIMULATION_GOAL",
+                    f"Simulation goal {self.goal_id!r}: two distinct planes of three distinct labels each are required.")
+        return self
+
+
 class TypedFactNextPayloadV2(TypedFactNextPayload):
     """`typed-fact-next/2` (run `hybrid-contract-v2`, owner D1): `/1` with the section split into stated intersections
     and an optional declared boundary, plus `/2` composite geometric relations (`GeometricRelationSpecV2`) and the
@@ -1513,6 +1707,8 @@ class TypedFactNextPayloadV2(TypedFactNextPayload):
     _VERSION: ClassVar[str] = TYPED_FACT_NEXT_V2_SCHEMA_VERSION
     derived_sections: tuple[DerivedPlaneSectionSpecV2, ...] = ()
     relations: tuple[GeometricRelationSpecV2, ...] = ()
+    simulation_goals: tuple[SimulationGoalSpecV2, ...] = ()
+    math_goals: tuple[MathGoalSpecV2, ...] = ()
     unresolved: tuple[UnresolvedSpec, ...] = ()
     described_points: tuple[DescribedPointSpec, ...] = ()
 

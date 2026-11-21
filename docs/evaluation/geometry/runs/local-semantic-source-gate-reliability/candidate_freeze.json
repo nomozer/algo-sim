@@ -1,0 +1,33 @@
+{
+  "run_id": "local-semantic-source-gate-reliability",
+  "generated_at_utc": "2026-11-13T04:54:20.249879+00:00",
+  "head": "506213a67faec77a6cf3c94c53842fac746d7059",
+  "branch": "feat/local-first-geometry-understanding",
+  "freeze_commit_field": "dcad65e5e22e41412c38264f941225e830be66ea",
+  "freeze_stored_in": "be3467457",
+  "product_commit": "1c9c264891d6439518f9721a8ba0aa8a738cc74c",
+  "measured_system": {
+    "paths": [
+      "backend/app",
+      "frontend/src/simulations/domains/semantic",
+      "frontend/src/simulations/domains/semantic/semantic_program.schema.json"
+    ],
+    "so_file": 115,
+    "tree_hash": "1cc979f559a632c30b97636e4b47532139b6205199ddbe97fc6fb6c6e9e16c28",
+    "khai": "Băm nội dung toàn bộ mã SẢN PHẨM của hệ được đo. Harness (scripts/tests/docs) KHÔNG nằm trong đây, nên bộ đo được phép cứng cáp thêm mà không phải đóng băng lại candidate."
+  },
+  "cache_version": "132",
+  "cache_version_bumped": false,
+  "why_no_bump": "backend/tests/test_cache_identity.py passes against cache_identity.lock.json: the fingerprinted model surface (prompts, grammar card, schema, capability table, TypedFactNext and Hybrid surfaces) did not change. Cached rows hold only SERVED results; a parse that newly completes reaches the solver instead of a cached result.",
+  "contracts_unchanged": [
+    "geometry-fact-planner/26",
+    "geometry-functions/33",
+    "geometry-function-engine/24",
+    "height-invariance-certificate/2",
+    "output-policy/1"
+  ],
+  "previous_candidate": {
+    "commit": "835786746c1252fa162e9bc967b651d97252e720",
+    "measured_system": "cd9b9f518805d30522ee7c488dd834d3b05ea08d3e78d86c82da13c735a8a58a"
+  }
+}

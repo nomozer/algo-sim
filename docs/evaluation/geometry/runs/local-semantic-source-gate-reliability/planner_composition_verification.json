@@ -1,0 +1,70 @@
+{
+  "run_id": "local-semantic-source-gate-reliability",
+  "generated_at_utc": "2026-11-13T04:54:20.249879+00:00",
+  "contracts_unchanged": [
+    "geometry-fact-planner/26",
+    "geometry-functions/33",
+    "geometry-function-engine/24",
+    "height-invariance-certificate/2",
+    "output-policy/1"
+  ],
+  "planner_or_registry_function_added": false,
+  "served_after": [
+    {
+      "case_id": "vmmu_r247",
+      "answer": {
+        "q1": "3a"
+      },
+      "expected": "3a"
+    },
+    {
+      "case_id": "vmmu_r270",
+      "answer": {
+        "q1": "a³√3/2"
+      },
+      "expected": "a³√3/2"
+    },
+    {
+      "case_id": "vmmu_r273",
+      "answer": {
+        "q1": "a³"
+      },
+      "expected": "a³"
+    },
+    {
+      "case_id": "vmmu_r298",
+      "answer": {
+        "q1": "2a³√6"
+      },
+      "expected": "V = 2√6a³"
+    },
+    {
+      "case_id": "vmmu_r375",
+      "answer": {
+        "q1": "√17"
+      },
+      "expected": "√17"
+    },
+    {
+      "case_id": "vmmu_r476",
+      "answer": {
+        "q1": "cos²=3/4"
+      },
+      "expected": "30°"
+    },
+    {
+      "case_id": "vmmu_r492",
+      "answer": {
+        "q1": "cos²=1/4"
+      },
+      "expected": "60°"
+    }
+  ],
+  "composition": "Newly served cases use existing registry functions chosen by the deterministic planner from the typed facts (regular solid + segment length + volume); no per-case handler, no AI choosing a function.",
+  "wrong_served": [],
+  "fresh_wrong_served": {
+    "text": [],
+    "image": []
+  },
+  "classification": "VERIFIED_FACT (answers vs dataset key on exposed items); generalisation NOT_ESTABLISHED"
+}

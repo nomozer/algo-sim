@@ -1,0 +1,143 @@
+{
+  "run_id": "real-image-ocr-vision-comparative-acceptance",
+  "head": "6bb22fa3bb183ad28cdf1395c99e5eb375fac97c",
+  "measured_system": [
+    "2de49852b24a869b957645ac9520b19f674bbf11d344612f30448305ab682a3d",
+    115
+  ],
+  "allow_live_ai": 0,
+  "ground_truth_authority": "AGENT_TRANSCRIBED_UNVERIFIED",
+  "independent_h1": "NOT_MEASURED",
+  "phase": "before",
+  "endpoint": "http://127.0.0.1:8768",
+  "rounds": [
+    {
+      "round": 0,
+      "elapsed_ms": 7795.607799998834,
+      "requests": [
+        {
+          "http_status": 200,
+          "elapsed_ms": 5292.8870000032475,
+          "prepare_status": "ready",
+          "reason_code": null
+        },
+        {
+          "http_status": 200,
+          "elapsed_ms": 7424.602500002948,
+          "prepare_status": "needs_confirmation",
+          "reason_code": "LOCAL_OCR_REVIEW_REQUIRED"
+        }
+      ]
+    },
+    {
+      "round": 1,
+      "elapsed_ms": 3910.4931999972905,
+      "requests": [
+        {
+          "http_status": 200,
+          "elapsed_ms": 3611.9495000020834,
+          "prepare_status": "ready",
+          "reason_code": null
+        },
+        {
+          "http_status": 200,
+          "elapsed_ms": 1603.2678999981727,
+          "prepare_status": "needs_confirmation",
+          "reason_code": "LOCAL_OCR_REVIEW_REQUIRED"
+        }
+      ]
+    },
+    {
+      "round": 2,
+      "elapsed_ms": 4600.3856000024825,
+      "requests": [
+        {
+          "http_status": 200,
+          "elapsed_ms": 2031.1899000007543,
+          "prepare_status": "ready",
+          "reason_code": null
+        },
+        {
+          "http_status": 200,
+          "elapsed_ms": 2229.137399997853,
+          "prepare_status": "needs_confirmation",
+          "reason_code": "LOCAL_OCR_REVIEW_REQUIRED"
+        }
+      ]
+    },
+    {
+      "round": 3,
+      "elapsed_ms": 3852.861000006669,
+      "requests": [
+        {
+          "http_status": 200,
+          "elapsed_ms": 1889.5858999967459,
+          "prepare_status": "ready",
+          "reason_code": null
+        },
+        {
+          "http_status": 200,
+          "elapsed_ms": 1664.0108999999939,
+          "prepare_status": "needs_confirmation",
+          "reason_code": "LOCAL_OCR_REVIEW_REQUIRED"
+        }
+      ]
+    },
+    {
+      "round": 4,
+      "elapsed_ms": 4489.965000000666,
+      "requests": [
+        {
+          "http_status": 200,
+          "elapsed_ms": 2467.675500003679,
+          "prepare_status": "ready",
+          "reason_code": null
+        },
+        {
+          "http_status": 200,
+          "elapsed_ms": 1712.4285999962012,
+          "prepare_status": "needs_confirmation",
+          "reason_code": "LOCAL_OCR_REVIEW_REQUIRED"
+        }
+      ]
+    }
+  ],
+  "exception_events": {
+    "events": []
+  },
+  "current_resources": {
+    "time": 49153.6825994,
+    "fastapi": {
+      "rss_mib": 130.8203125,
+      "process_lifetime_peak_rss_mib": 160.26953125
+    },
+    "launcher_pid": 15208,
+    "descendants": [
+      {
+        "pid": 15208,
+        "parent_pid": 22864,
+        "exe": "python.exe",
+        "rss_mib": 4.21484375,
+        "process_lifetime_peak_rss_mib": 4.21484375
+      },
+      {
+        "pid": 14344,
+        "parent_pid": 15208,
+        "exe": "conhost.exe",
+        "rss_mib": 7.78125,
+        "process_lifetime_peak_rss_mib": 7.78515625
+      },
+      {
+        "pid": 1956,
+        "parent_pid": 15208,
+        "exe": "python.exe",
+        "rss_mib": 187.5234375,
+        "process_lifetime_peak_rss_mib": 731.765625
+      }
+    ],
+    "descendant_rss_mib": 199.51953125,
+    "combined_rss_mib": 330.33984375
+  },
+  "provider_calls": 0,
+  "raw_error_messages_recorded": false
+}

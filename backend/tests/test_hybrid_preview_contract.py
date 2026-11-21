@@ -214,6 +214,18 @@ _NOT_REFUSAL = {
     'SCHEMA_TRANSLATION', 'BOUNDED_RULE_COMPOSITION', 'GENERALIZED_PRIMITIVE_COMPOSITION',
     'SOURCE_EXPLICIT_SEQUENCE', 'REGISTERED_DECOMPOSITION', 'DISCOVERED_FUNCTION_COMPOSITION', 'SEARCH_EXHAUSTED', 'MISSING_PRIMITIVE',
     'SOURCE_GROUNDING_PROOF', 'GEOMETRIC_RELATION_PROOF', 'KERNEL_EXECUTION_PROOF', 'RESULT_CERTIFICATE',
+    'HEIGHT_INVARIANT_ILLUSTRATIVE',  # served scene_configuration.kind, not a refusal
+    # served similarity-scale scene_configuration values (run `certified-scale-cache-safety`), not refusals
+    'SIMILARITY_SCALE_ILLUSTRATIVE', 'REPRESENTATIVE_SIMILARITY_SCALE', 'INTERNAL_CONSTRUCTION_CONVENTION',
+    # served target-invariance scene_configuration values and certificate levels (run `target-invariant-regular-solid-semantics`)
+    'TARGET_INVARIANT_ILLUSTRATIVE', 'REPRESENTATIVE_OF_A_NON_UNIQUE_FIGURE', 'MATHEMATICALLY_PROVEN', 'ENGINE_DOMAIN_CERTIFIED',
+    # served derived-quantity provenance / rules & expression.py internal error-tag constants (run `dimension-aware-verified-construction`)
+    'VERIFIED_DERIVED_QUANTITY', 'ILLUSTRATIVE_CONSTRUCTION_QUANTITY',
+    'SQUARE_AREA_TO_SIDE', 'EQUILATERAL_TRIANGLE_AREA_TO_SIDE', 'RECTANGLE_AREA_AND_SIDE_TO_ADJACENT_SIDE',
+    'RIGHT_TRIANGLE_AREA_TO_LEG', 'SOLID_VOLUME_AND_HEIGHT_TO_BASE_SIDE', 'SOLID_VOLUME_AND_BASE_AREA_TO_HEIGHT',
+    'RIGHT_ISOSCELES_HYPOTENUSE_TO_LEGS', 'RIGHT_TRIANGLE_RATIO_HYPOTENUSE_TO_LEGS',
+    'RHOMBUS_DIAGONAL_AND_ANGLE_TO_SIDE', 'SQUARE_DIAGONAL_TO_SIDE', 'REGULAR_PYRAMID_ANGLE_TO_BASE_SIDE',
+    'ZERO_DIVISOR', 'UNGROUNDED_SYMBOL', 'NON_POSITIVE_QUANTITY',
 }
 _ROUTE_D_SOURCES = ('app/simulation/geometry_functions/registry.py', 'app/simulation/geometry_functions/planner.py',
                     'app/simulation/geometry_functions/engine.py', 'app/simulation/geometry_functions/__init__.py',

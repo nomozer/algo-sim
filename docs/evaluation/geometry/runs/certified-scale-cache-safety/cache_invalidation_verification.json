@@ -1,0 +1,23 @@
+{
+  "run_id": "certified-scale-cache-safety",
+  "generated_at_utc": "2026-11-14T05:40:52.234783+00:00",
+  "product_commit": "902a3171c1a625c2741f0c6886d0328584dfb89e",
+  "measured_system": "243d932765f7d4065394f91c6b4f25972f8232ba9228aec89d4c63a244c1976b",
+  "cache_version": "135",
+  "environment": {
+    "ALLOW_LIVE_AI": "0",
+    "HYBRID_ROUTE_MODE": "local-first",
+    "live_ai_calls": 0
+  },
+  "head": "4bb423b48393605355be39e4d8dc4386ad9b3946",
+  "pins_moved_134_to_135": 15,
+  "identity_lock": "backend/cache_identity.lock.json regenerated (scripts/lock_cache_identity.py)",
+  "current_state_identity_table": "updated",
+  "tests": [
+    "test_cache_semantic_guard_invalidation.py",
+    "test_cache_identity.py",
+    "test_current_state_identity.py",
+    "earlier invalidation tests (rows ≤ 134 MISS)"
+  ],
+  "regression_gate": "PASS"
+}

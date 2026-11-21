@@ -1,0 +1,85 @@
+{
+  "schema": "axo-model1-replacement-audit/1",
+  "campaign": "AXO HYBRID /13",
+  "branch": "feat/local-model1-finalization-test-consolidation",
+  "verified_at_commit": "787be5445",
+  "route_mode_audited": "local-only-scoped",
+  "model1_stack": {
+    "stage_1_deterministic_parser": "app.ai.local_geometry_parser.parse_geometry_problem_locally",
+    "stage_2_local_slm": "Qwen3-0.6B-AxoV9-Q4_K_M via llama.cpp + app.ai.local_slm_extractor",
+    "gemini_text_extraction_invocations_under_local_only": 0
+  },
+  "cloud_dependencies_audited": {
+    "backend/app/ai/gemini.py": "Cloud transport wrapper (GEMINI_MODEL=gemini-2.5-flash); bypassed under HYBRID_ROUTE_MODE=local-only-scoped and guarded by ALLOW_LIVE_AI=0.",
+    "backend/app/ai/hybrid_offline.py": "Routes text analysis in local-only-scoped directly to adaptive_input_router.route_text_input_local_slm without calling Gemini.",
+    "backend/app/ingestion/image_extraction.py": "Calls app.ai.gemini.call_gemini for raster image / scanned-PDF transcription; local dual-OCR remains LOCAL_OCR_DIAGNOSTIC_ONLY.",
+    "backend/app/main.py": "POST /api/image/extract and POST /api/input/prepare (raster image / scan fallback) fail closed with HTTP 503 LOCAL_ONLY_CLOUD_VISION_DISABLED (Cache-Control: no-store) when hybrid_route_mode() is local-only."
+  },
+  "modalities": [
+    {
+      "modality": "text",
+      "endpoint": "POST /api/analyze",
+      "gemini_calls": 0,
+      "http_status": 200,
+      "route_d_status": "SERVED",
+      "verified_answer": "4",
+      "model1_replaced_locally": true,
+      "notes": "Local deterministic parser + Qwen3-0.6B-AxoV9 local SLM handle all supported text geometry flows offline."
+    },
+    {
+      "modality": "digital_docx",
+      "endpoint": "POST /api/input/prepare -> POST /api/analyze",
+      "gemini_calls": 0,
+      "vlm_calls": 0,
+      "http_status": 200,
+      "prepare_status": "ready",
+      "route_d_status": "SERVED",
+      "verified_answer": "16",
+      "model1_replaced_locally": true,
+      "notes": "app.ingestion.document_reader.extract_docx_structured extracts UTF-8 prose and OMML deterministically without external API calls."
+    },
+    {
+      "modality": "digital_pdf",
+      "endpoint": "POST /api/input/prepare -> POST /api/analyze",
+      "gemini_calls": 0,
+      "vlm_calls": 0,
+      "http_status": 200,
+      "prepare_status": "ready",
+      "route_d_status": "SERVED",
+      "verified_answer": "36",
+      "model1_replaced_locally": true,
+      "notes": "app.ingestion.document_reader.extract_pdf_structured extracts embedded text layer via PyMuPDF deterministically with 0 VLM calls."
+    },
+    {
+      "modality": "raster_image_and_scanned_pdf",
+      "endpoints": [
+        "POST /api/input/prepare",
+        "POST /api/image/extract"
+      ],
+      "gemini_calls": 0,
+      "http_status": 503,
+      "reason_code": "LOCAL_ONLY_CLOUD_VISION_DISABLED",
+      "cache_control": "no-store",
+      "model1_replaced_locally": false,
+      "notes": "Fail-closed in local-only-scoped without external leakage. Image OCR/VLM still requires Gemini Vision in live mode because LOCAL_OCR_PRODUCTION_STATUS = LOCAL_OCR_DIAGNOSTIC_ONLY."
+    }
+  ],
+  "health_endpoint": {
+    "endpoint": "GET /api/health",
+    "http_status": 200,
+    "ok": true,
+    "routeMode": "local-only-scoped",
+    "localOnlyMode": true,
+    "hasKey": false
+  },
+  "verdict": {
+    "text_understanding_model1_replaced": true,
+    "digital_document_ingestion_local": true,
+    "vision_ocr_replaced_locally": false,
+    "fail_closed_zero_external_leakage_verified": true
+  },
+  "verification_test": {
+    "file": "backend/tests/test_model1_replacement_audit.py",
+    "result": "1 passed in 3.80s"
+  }
+}

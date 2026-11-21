@@ -1,0 +1,58 @@
+{
+  "classification": "CURRENT_PENDING_TEMPLATE_METADATA_REFRESH_NOT_HUMAN_APPROVAL",
+  "reason": "test_s2_student_language_pilot_runner requires pending templates to bind the current runtime; AXO HYBRID /9 added v3 normalizer closure, v9 compact extraction/runtime optimizations (AxoV9-Q4_K_M), and opt-in local-only product routing across 7 owned backend files (CACHE_VERSION 145 unchanged).",
+  "runtime_identity_measured_system": "a7a6bc4157d02018d5a67e5ee408469f22795385f920444eafc39d4772fa8330",
+  "rows": [
+    {
+      "study": "K-1",
+      "template": "docs/evaluation/geometry/runs/hybrid-master-backend-replacement/k1-owner-approval.template.json",
+      "before": {
+        "measured_system": "113a6a7cf6bbc15ac23119150b805437e785d2b0714b26c2157d147514c2ef67",
+        "measured_system_tree_hash": "113a6a7cf6bbc15ac23119150b805437e785d2b0714b26c2157d147514c2ef67"
+      },
+      "after": {
+        "measured_system": "a7a6bc4157d02018d5a67e5ee408469f22795385f920444eafc39d4772fa8330",
+        "measured_system_tree_hash": "a7a6bc4157d02018d5a67e5ee408469f22795385f920444eafc39d4772fa8330"
+      },
+      "original_saved_as": "logs/prior-k1-owner-approval.template.json",
+      "original_sha256": "ff98e6b001ed7f75f7c4cbb5a77c0058b6034abda67eaf79a7c8247672260674",
+      "new_sha256": "2644a62e1c18566ce38a080f76771697346c3a6d30134a1c70fb9ade5e5bd85e",
+      "owner_decision": "PENDING_OWNER_DECISION",
+      "paid_project_confirmed": false
+    },
+    {
+      "study": "S-2",
+      "template": "docs/evaluation/geometry/runs/hybrid-master-backend-replacement/s2-owner-approval.template.json",
+      "before": {
+        "measured_system": "113a6a7cf6bbc15ac23119150b805437e785d2b0714b26c2157d147514c2ef67",
+        "measured_system_tree_hash": "113a6a7cf6bbc15ac23119150b805437e785d2b0714b26c2157d147514c2ef67"
+      },
+      "after": {
+        "measured_system": "a7a6bc4157d02018d5a67e5ee408469f22795385f920444eafc39d4772fa8330",
+        "measured_system_tree_hash": "a7a6bc4157d02018d5a67e5ee408469f22795385f920444eafc39d4772fa8330"
+      },
+      "original_saved_as": "logs/prior-s2-owner-approval.template.json",
+      "original_sha256": "e5d462dc9663d46dcea8b24eccd5ce3a38460e490e90f7fd1f24301385fe4d5a",
+      "new_sha256": "0d48b6aa12a108f1006067befef27d1a4c378ec55d45c2e19e4b53bd941b3a78",
+      "owner_decision": "PENDING_OWNER_DECISION",
+      "paid_project_confirmed": false
+    },
+    {
+      "study": "R-1",
+      "template": "docs/evaluation/geometry/runs/hybrid-master-backend-replacement/r1-owner-approval.template.json",
+      "before": {
+        "measured_system": "113a6a7cf6bbc15ac23119150b805437e785d2b0714b26c2157d147514c2ef67",
+        "measured_system_tree_hash": "113a6a7cf6bbc15ac23119150b805437e785d2b0714b26c2157d147514c2ef67"
+      },
+      "after": {
+        "measured_system": "a7a6bc4157d02018d5a67e5ee408469f22795385f920444eafc39d4772fa8330",
+        "measured_system_tree_hash": "a7a6bc4157d02018d5a67e5ee408469f22795385f920444eafc39d4772fa8330"
+      },
+      "original_saved_as": "logs/prior-r1-owner-approval.template.json",
+      "original_sha256": "42703d3fedb3256399afc1011fefb12c14c3afcf336dada07eda7e6f3d0c2bf7",
+      "new_sha256": "985ac461167243810a5dbdd0a3b1ebc8dc07b405126ca59c73cef4f514a4f972",
+      "owner_decision": "PENDING_OWNER_DECISION",
+      "paid_project_confirmed": false
+    }
+  ]
+}

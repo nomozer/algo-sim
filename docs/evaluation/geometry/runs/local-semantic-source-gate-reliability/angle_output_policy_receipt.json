@@ -1,0 +1,21 @@
+{
+  "run_id": "local-semantic-source-gate-reliability",
+  "generated_at_utc": "2026-11-13T04:54:20.249879+00:00",
+  "backend": {
+    "output_policy": "output-policy/1 unchanged",
+    "rule": "degrees only when the source asks for a measure in degrees ('số đo góc', 'theo độ') and cos² is one of 1, 3/4, 1/2, 1/4, 0; otherwise the exact cos² is served",
+    "observed": {
+      "'Tính góc giữa hai đường thẳng AC và A'D' (cube)": "cos²=1/4",
+      "'Tính số đo góc giữa …'": "60°"
+    },
+    "versioned_change": false
+  },
+  "frontend": {
+    "change": "scene3d-model.ts soDoGocDacBiet / COS2_DO_DAC_BIET: a requested angle served as a special cos² is labelled 'Góc …' with the degree value and keeps 'cos² = …' as the exact value; no branch guessing (angles between lines/planes lie in [0°, 90°], where cos² determines the angle)",
+    "tests": [
+      "frontend/src/components/hybrid-preview-contract.test.tsx (2 tests)"
+    ],
+    "reach_on_product_path": "NOT_VISIBLE: browser_span_angle_check.json shows the shipped workspace hides the final answer (simulation first) and does not mount the Scene3DExplorer analysis panel that renders requestedResults. The change is correct but has no learner-visible effect on the current workspace."
+  },
+  "classification": "VERIFIED_FACT"
+}

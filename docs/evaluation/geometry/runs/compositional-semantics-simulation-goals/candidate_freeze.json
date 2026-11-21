@@ -1,0 +1,46 @@
+{
+  "run_id": "compositional-semantics-simulation-goals",
+  "generated_at_utc": "2026-11-14T03:10:58.735682+00:00",
+  "head": "28fe108d673b1af058f743abdb012d835ceaa7ce",
+  "branch": "feat/local-first-geometry-understanding",
+  "freeze_commit_field": "07f29a83aa69250949dc250ad57d26548b5bd271",
+  "freeze_stored_in": "54268761eacadaca07d0d8cd2dea0d07c39a5d62",
+  "product_commit": "379d33969ef0cb0e418d979ab211a00799f44834",
+  "measured_system": {
+    "paths": [
+      "backend/app",
+      "frontend/src/simulations/domains/semantic",
+      "frontend/src/simulations/domains/semantic/semantic_program.schema.json"
+    ],
+    "so_file": 116,
+    "tree_hash": "b652e635d5497dc36bf6d55ff4a34c20a16302d01c154b59b039efd65170921e",
+    "khai": "Băm nội dung toàn bộ mã SẢN PHẨM của hệ được đo. Harness (scripts/tests/docs) KHÔNG nằm trong đây, nên bộ đo được phép cứng cáp thêm mà không phải đóng băng lại candidate."
+  },
+  "cache_version": "134",
+  "cache_version_bumped": false,
+  "cache_reason": "only SERVED rows are reused (main._served_route_d); every newly served text was refused before (never cached); no previously served text changed status or answers on any corpus; source_goal_completion appears only on trigonometric-value questions (previously refused)",
+  "contracts_unchanged": [
+    "geometry-fact-planner/26",
+    "geometry-functions/33",
+    "geometry-function-engine/24",
+    "height-invariance-certificate/2",
+    "output-policy/1",
+    "hybrid-route-d-simulation/4",
+    "typed-fact-next/2"
+  ],
+  "source_gate_changed": "closed-grammar additions only (named-plane definition clause; trigonometric value of an angle read as the angle object and reported NOT_ANSWERED); verification policy unchanged; registry /33 unchanged",
+  "measured_files": {
+    "before": 116,
+    "after": 116
+  },
+  "previous_candidate": {
+    "stored_in": "18a7ba008",
+    "measured_system": "1f62a4a47bb72071e861d894a5e08ce27877c47dee1f896353b6f40c83ab1077"
+  },
+  "freezes_in_this_run": {
+    "cf12c59e1": "after 13f1b482c (measured cb16082a…)",
+    "9b16af799": "after 379d33969 (measured b652e635…, frozen on a dirty tree — backend_pytest attempt 1 FAIL, commit 07f29a83a)",
+    "54268761e": "same measured system on a clean tree (final)"
+  },
+  "freeze_verify_in_regression": "PASS"
+}

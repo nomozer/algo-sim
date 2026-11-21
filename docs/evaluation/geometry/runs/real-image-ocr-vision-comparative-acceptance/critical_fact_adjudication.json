@@ -1,0 +1,28 @@
+{
+  "run_id": "real-image-ocr-vision-comparative-acceptance",
+  "head": "70b22cc7167d8e2372d606547c3e398b199fb101",
+  "measured_system": [
+    "a068b6f6586c1b120bd8350dbe706f5681ab71fd7da57502c34f940140268921",
+    115
+  ],
+  "allow_live_ai": 0,
+  "ground_truth_authority": "AGENT_TRANSCRIBED_UNVERIFIED",
+  "independent_h1": "NOT_MEASURED",
+  "classification": "DERIVED_FROM_REFERENCED_MEASUREMENTS_NOT_A_NEW_MEASUREMENT",
+  "status": "AGENT_ROLE_REVIEW_NOT_HUMAN_VERIFICATION",
+  "excluded_choice_entries": [
+    [
+      "new_vmmu_full_r310",
+      "{3;4}"
+    ],
+    [
+      "new_vmmu_full_r450",
+      "22a²"
+    ]
+  ],
+  "evaluation_premise_and_goal_substring_proxy": {
+    "found": 19,
+    "total": 27
+  },
+  "reason": "Manifest critical_fact_texts contains two expected choice answers. Preserve the frozen manifest, exclude those strings from input-fact recall claims."
+}

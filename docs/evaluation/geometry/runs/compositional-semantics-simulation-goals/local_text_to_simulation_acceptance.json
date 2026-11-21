@@ -1,0 +1,489 @@
+{
+  "run_id": "compositional-semantics-simulation-goals",
+  "generated_at_utc": "2026-11-14T02:20:42.822055+00:00",
+  "head": "30fe2ee126919584dfb024141d86d2079b642cfd",
+  "reference_status": "AGENT_TRANSCRIBED_UNVERIFIED; answer oracle = dataset key",
+  "input": "agent transcription (statement only), route_text_input",
+  "grading_note": "source_goal_completion ⇒ GOAL_VISUALIZATION_READY_NUMERIC_NOT_ANSWERED (never a numeric answer)",
+  "numeric_source_goal_not_answered": [
+    "vmmu_r498"
+  ],
+  "outcomes": {
+    "TEXT_INPUT_SIMULATION": 9,
+    "UNSUPPORTED": 14,
+    "SAFE_REFUSAL": 4
+  },
+  "levels": {
+    "GOAL_CONSTRUCTION_VERIFIED": 9,
+    "None": 18
+  },
+  "grades": {
+    "SERVED_MATCHES_DATASET_KEY": 8,
+    "NOT_SERVED": 18,
+    "GOAL_VISUALIZATION_READY_NUMERIC_NOT_ANSWERED": 1
+  },
+  "wrong_scene_served": [],
+  "broken_invariants": 0,
+  "interactive_simulation_verified": "per-image browser interaction NOT_MEASURED; the browser E2E (scene3d_interaction_browser_e2e.json) covers the same scene types from text input",
+  "rows": [
+    {
+      "case_id": "vmmu_r247",
+      "partition_now": "DEVELOPMENT_EXPOSED",
+      "tags": [
+        "cuboid",
+        "distance_line_line"
+      ],
+      "outcome": "TEXT_INPUT_SIMULATION",
+      "reason": null,
+      "simulation": {
+        "goal": "distance",
+        "level": "GOAL_CONSTRUCTION_VERIFIED",
+        "invariant_checks": 0,
+        "invariant_failures": 0,
+        "angle_construction": null,
+        "objects": 18
+      },
+      "grade": "SERVED_MATCHES_DATASET_KEY",
+      "ms": 292.9920999999922
+    },
+    {
+      "case_id": "vmmu_r254",
+      "partition_now": "DEVELOPMENT_EXPOSED",
+      "tags": [
+        "oblique_prism",
+        "volume"
+      ],
+      "outcome": "UNSUPPORTED",
+      "reason": "LIVE_AI_DISABLED",
+      "simulation": {
+        "level": null
+      },
+      "grade": "NOT_SERVED",
+      "ms": 5.859399999735615
+    },
+    {
+      "case_id": "vmmu_r256",
+      "partition_now": "DEVELOPMENT_EXPOSED",
+      "tags": [
+        "pyramid",
+        "distance_point_plane"
+      ],
+      "outcome": "UNSUPPORTED",
+      "reason": "LIVE_AI_DISABLED",
+      "simulation": {
+        "level": null
+      },
+      "grade": "NOT_SERVED",
+      "ms": 3.932699999950273
+    },
+    {
+      "case_id": "vmmu_r258",
+      "partition_now": "DEVELOPMENT_EXPOSED",
+      "tags": [
+        "pyramid",
+        "dihedral"
+      ],
+      "outcome": "SAFE_REFUSAL",
+      "reason": "MISSING_DIMENSION",
+      "simulation": {
+        "level": null
+      },
+      "grade": "NOT_SERVED",
+      "ms": 34.81419999980062
+    },
+    {
+      "case_id": "vmmu_r266",
+      "partition_now": "DEVELOPMENT_EXPOSED",
+      "tags": [
+        "pyramid",
+        "volume"
+      ],
+      "outcome": "SAFE_REFUSAL",
+      "reason": "EXACT_DOMAIN_EXCEEDED",
+      "simulation": {
+        "level": null
+      },
+      "grade": "NOT_SERVED",
+      "ms": 25.411799999801588
+    },
+    {
+      "case_id": "vmmu_r270",
+      "partition_now": "DEVELOPMENT_EXPOSED",
+      "tags": [
+        "right_prism",
+        "volume",
+        "inverse_from_angle"
+      ],
+      "outcome": "TEXT_INPUT_SIMULATION",
+      "reason": null,
+      "simulation": {
+        "goal": "volume",
+        "level": "GOAL_CONSTRUCTION_VERIFIED",
+        "invariant_checks": 0,
+        "invariant_failures": 0,
+        "angle_construction": null,
+        "objects": 13
+      },
+      "grade": "SERVED_MATCHES_DATASET_KEY",
+      "ms": 40.70739999997386
+    },
+    {
+      "case_id": "vmmu_r273",
+      "partition_now": "DEVELOPMENT_EXPOSED",
+      "tags": [
+        "pyramid",
+        "volume"
+      ],
+      "outcome": "TEXT_INPUT_SIMULATION",
+      "reason": null,
+      "simulation": {
+        "goal": "volume",
+        "level": "GOAL_CONSTRUCTION_VERIFIED",
+        "invariant_checks": 0,
+        "invariant_failures": 0,
+        "angle_construction": null,
+        "objects": 10
+      },
+      "grade": "SERVED_MATCHES_DATASET_KEY",
+      "ms": 33.18650000028356
+    },
+    {
+      "case_id": "vmmu_r277",
+      "partition_now": "DEVELOPMENT_EXPOSED",
+      "tags": [
+        "tetrahedron",
+        "volume",
+        "point_reflection"
+      ],
+      "outcome": "UNSUPPORTED",
+      "reason": "LIVE_AI_DISABLED",
+      "simulation": {
+        "level": null
+      },
+      "grade": "NOT_SERVED",
+      "ms": 4.076900000200112
+    },
+    {
+      "case_id": "vmmu_r284",
+      "partition_now": "DEVELOPMENT_EXPOSED",
+      "tags": [
+        "pyramid",
+        "distance_point_plane"
+      ],
+      "outcome": "UNSUPPORTED",
+      "reason": "LIVE_AI_DISABLED",
+      "simulation": {
+        "level": null
+      },
+      "grade": "NOT_SERVED",
+      "ms": 7.1259999999711
+    },
+    {
+      "case_id": "vmmu_r295",
+      "partition_now": "DEVELOPMENT_EXPOSED",
+      "tags": [
+        "cuboid",
+        "angle_line_plane"
+      ],
+      "outcome": "UNSUPPORTED",
+      "reason": "LIVE_AI_DISABLED",
+      "simulation": {
+        "level": null
+      },
+      "grade": "NOT_SERVED",
+      "ms": 5.801599999813334
+    },
+    {
+      "case_id": "vmmu_r298",
+      "partition_now": "DEVELOPMENT_EXPOSED",
+      "tags": [
+        "regular_prism",
+        "volume",
+        "inverse_from_angle"
+      ],
+      "outcome": "TEXT_INPUT_SIMULATION",
+      "reason": null,
+      "simulation": {
+        "goal": "volume",
+        "level": "GOAL_CONSTRUCTION_VERIFIED",
+        "invariant_checks": 0,
+        "invariant_failures": 0,
+        "angle_construction": null,
+        "objects": 13
+      },
+      "grade": "SERVED_MATCHES_DATASET_KEY",
+      "ms": 47.651999999743566
+    },
+    {
+      "case_id": "vmmu_r375",
+      "partition_now": "DEVELOPMENT_EXPOSED",
+      "tags": [
+        "regular_pyramid",
+        "distance_point_plane"
+      ],
+      "outcome": "TEXT_INPUT_SIMULATION",
+      "reason": null,
+      "simulation": {
+        "goal": "distance",
+        "level": "GOAL_CONSTRUCTION_VERIFIED",
+        "invariant_checks": 0,
+        "invariant_failures": 0,
+        "angle_construction": null,
+        "objects": 14
+      },
+      "grade": "SERVED_MATCHES_DATASET_KEY",
+      "ms": 36.39320000002044
+    },
+    {
+      "case_id": "vmmu_r460",
+      "partition_now": "DEVELOPMENT_EXPOSED",
+      "tags": [
+        "pyramid",
+        "volume",
+        "hypotenuse_given"
+      ],
+      "outcome": "UNSUPPORTED",
+      "reason": "LIVE_AI_DISABLED",
+      "simulation": {
+        "level": null
+      },
+      "grade": "NOT_SERVED",
+      "ms": 4.409000000123342
+    },
+    {
+      "case_id": "vmmu_r461",
+      "partition_now": "DEVELOPMENT_EXPOSED",
+      "tags": [
+        "cone",
+        "applied"
+      ],
+      "outcome": "UNSUPPORTED",
+      "reason": "LIVE_AI_DISABLED",
+      "simulation": {
+        "level": null
+      },
+      "grade": "NOT_SERVED",
+      "ms": 5.585299999893323
+    },
+    {
+      "case_id": "vmmu_r463",
+      "partition_now": "DEVELOPMENT_EXPOSED",
+      "tags": [
+        "right_prism",
+        "volume",
+        "inverse_from_angle"
+      ],
+      "outcome": "UNSUPPORTED",
+      "reason": "LIVE_AI_DISABLED",
+      "simulation": {
+        "level": null
+      },
+      "grade": "NOT_SERVED",
+      "ms": 3.575199999886536
+    },
+    {
+      "case_id": "vmmu_r475",
+      "partition_now": "DEVELOPMENT_EXPOSED",
+      "tags": [
+        "cylinder_sphere_cone",
+        "applied"
+      ],
+      "outcome": "UNSUPPORTED",
+      "reason": "LIVE_AI_DISABLED",
+      "simulation": {
+        "level": null
+      },
+      "grade": "NOT_SERVED",
+      "ms": 5.855700000211073
+    },
+    {
+      "case_id": "vmmu_r476",
+      "partition_now": "DEVELOPMENT_EXPOSED",
+      "tags": [
+        "pyramid",
+        "dihedral"
+      ],
+      "outcome": "TEXT_INPUT_SIMULATION",
+      "reason": null,
+      "simulation": {
+        "goal": "angle",
+        "level": "GOAL_CONSTRUCTION_VERIFIED",
+        "invariant_checks": 3,
+        "invariant_failures": 0,
+        "angle_construction": "plane_plane",
+        "objects": 14
+      },
+      "grade": "SERVED_MATCHES_DATASET_KEY",
+      "ms": 66.69539999984408
+    },
+    {
+      "case_id": "vmmu_r488",
+      "partition_now": "DEVELOPMENT_EXPOSED",
+      "tags": [
+        "right_prism",
+        "volume",
+        "inverse_from_angle"
+      ],
+      "outcome": "UNSUPPORTED",
+      "reason": "LIVE_AI_DISABLED",
+      "simulation": {
+        "level": null
+      },
+      "grade": "NOT_SERVED",
+      "ms": 4.0702999999666645
+    },
+    {
+      "case_id": "vmmu_r491",
+      "partition_now": "DEVELOPMENT_EXPOSED",
+      "tags": [
+        "oblique_prism",
+        "distance_point_plane"
+      ],
+      "outcome": "UNSUPPORTED",
+      "reason": "LIVE_AI_DISABLED",
+      "simulation": {
+        "level": null
+      },
+      "grade": "NOT_SERVED",
+      "ms": 4.538600000159931
+    },
+    {
+      "case_id": "vmmu_r492",
+      "partition_now": "DEVELOPMENT_EXPOSED",
+      "tags": [
+        "right_prism",
+        "angle_line_plane"
+      ],
+      "outcome": "TEXT_INPUT_SIMULATION",
+      "reason": null,
+      "simulation": {
+        "goal": "angle",
+        "level": "GOAL_CONSTRUCTION_VERIFIED",
+        "invariant_checks": 2,
+        "invariant_failures": 0,
+        "angle_construction": "line_plane",
+        "objects": 15
+      },
+      "grade": "SERVED_MATCHES_DATASET_KEY",
+      "ms": 37.69560000000638
+    },
+    {
+      "case_id": "vmmu_r498",
+      "partition_now": "DEVELOPMENT_EXPOSED",
+      "tags": [
+        "regular_prism",
+        "dihedral"
+      ],
+      "outcome": "TEXT_INPUT_SIMULATION",
+      "reason": null,
+      "simulation": {
+        "goal": "angle",
+        "level": "GOAL_CONSTRUCTION_VERIFIED",
+        "invariant_checks": 3,
+        "invariant_failures": 0,
+        "angle_construction": "plane_plane",
+        "objects": 18
+      },
+      "grade": "GOAL_VISUALIZATION_READY_NUMERIC_NOT_ANSWERED",
+      "ms": 38.780799999585724,
+      "grade_dataset_key_comparison": "SERVED_NOT_COMPARABLE_NEEDS_ADJUDICATION"
+    },
+    {
+      "case_id": "vmmu_r513",
+      "partition_now": "DEVELOPMENT_EXPOSED",
+      "tags": [
+        "cuboid",
+        "distance_point_plane"
+      ],
+      "outcome": "UNSUPPORTED",
+      "reason": "LIVE_AI_DISABLED",
+      "simulation": {
+        "level": null
+      },
+      "grade": "NOT_SERVED",
+      "ms": 8.5414000000128
+    },
+    {
+      "case_id": "vmmu_r520",
+      "partition_now": "DEVELOPMENT_EXPOSED",
+      "tags": [
+        "pyramid",
+        "dihedral"
+      ],
+      "outcome": "SAFE_REFUSAL",
+      "reason": "MISSING_DIMENSION",
+      "simulation": {
+        "level": null
+      },
+      "grade": "NOT_SERVED",
+      "ms": 33.839800000350806
+    },
+    {
+      "case_id": "vmmu_r537",
+      "partition_now": "DEVELOPMENT_EXPOSED",
+      "tags": [
+        "regular_pyramid",
+        "distance_point_plane"
+      ],
+      "outcome": "UNSUPPORTED",
+      "reason": "LIVE_AI_DISABLED",
+      "simulation": {
+        "level": null
+      },
+      "grade": "NOT_SERVED",
+      "ms": 4.971399999703863
+    },
+    {
+      "case_id": "vmmu_r538",
+      "partition_now": "DEVELOPMENT_EXPOSED",
+      "tags": [
+        "regular_pyramid",
+        "angle_line_plane"
+      ],
+      "outcome": "UNSUPPORTED",
+      "reason": "LIVE_AI_DISABLED",
+      "simulation": {
+        "level": null
+      },
+      "grade": "NOT_SERVED",
+      "ms": 3.8571000000047206
+    },
+    {
+      "case_id": "vmmu_r559",
+      "partition_now": "PREVIOUS_RUN_FRESH_VIEWED",
+      "tags": [
+        "regular_tetrahedron",
+        "angle_line_line",
+        "cosine_output",
+        "scale_free"
+      ],
+      "outcome": "SAFE_REFUSAL",
+      "reason": "MISSING_DIMENSION",
+      "simulation": {
+        "level": null
+      },
+      "grade": "NOT_SERVED",
+      "ms": 36.67630000018107
+    },
+    {
+      "case_id": "vmmu_r695",
+      "partition_now": "PREVIOUS_RUN_FRESH_VIEWED_AND_RULE_TARGETED",
+      "tags": [
+        "pyramid",
+        "distance_point_plane"
+      ],
+      "outcome": "TEXT_INPUT_SIMULATION",
+      "reason": null,
+      "simulation": {
+        "goal": "distance",
+        "level": "GOAL_CONSTRUCTION_VERIFIED",
+        "invariant_checks": 0,
+        "invariant_failures": 0,
+        "angle_construction": null,
+        "objects": 13
+      },
+      "grade": "SERVED_MATCHES_DATASET_KEY",
+      "ms": 33.29519999988406
+    }
+  ]
+}

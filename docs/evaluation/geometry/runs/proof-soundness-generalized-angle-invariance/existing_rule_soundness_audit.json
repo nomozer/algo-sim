@@ -1,0 +1,166 @@
+{
+  "run_id": "proof-soundness-generalized-angle-invariance",
+  "generated_at_utc": "2026-11-14T12:35:21.414052+00:00",
+  "product_commit": "c54db0da0c792c2ba0399acc8e9df992d2d270c3",
+  "measured_system": "610b4ee1e3227bc44f0659aea5d0dfc7f7a827aff622605db2b9571fb980fb80",
+  "cache_version": "137",
+  "environment": {
+    "ALLOW_LIVE_AI": "0",
+    "HYBRID_ROUTE_MODE": "local-first",
+    "live_ai_calls": 0
+  },
+  "head": "94281be581617a67921f295474dbd8e698dade4b",
+  "rules": [
+    "RIGHT_ANGLE",
+    "PERPENDICULAR_LINES",
+    "SOURCE_LINE_PERP_PLANE",
+    "PERP_PLANE_TO_LINE",
+    "PERP_TWO_LINES",
+    "TRIANGLE_SHAPE_FIXED",
+    "PLANE_ANGLE",
+    "PERP_PLANES",
+    "LINE_PLANE_ANGLE",
+    "LINE_PERP_PLANE_ANGLE",
+    "LINE_ANGLE",
+    "LINES_PERPENDICULAR"
+  ],
+  "mutations": [
+    {
+      "rule": "RIGHT_ANGLE",
+      "text_sha256": "6b90d1f10b05b6bf6e9218c3f6f1b8484bdfe3a0bc2f4c1367ce0329fb493db4",
+      "original_verified": true,
+      "mutant_verified": false,
+      "failed_step": "t1",
+      "reason": "conclusion is not the perpendicularity the call states"
+    },
+    {
+      "rule": "PERPENDICULAR_LINES",
+      "text_sha256": "56bc3a24c326d553def94278b208df5d8a85e3a7e74491827609843365cacda5",
+      "original_verified": true,
+      "mutant_verified": false,
+      "failed_step": "t2",
+      "reason": "conclusion is not the perpendicularity the call states"
+    },
+    {
+      "rule": "SOURCE_LINE_PERP_PLANE",
+      "text_sha256": "6b90d1f10b05b6bf6e9218c3f6f1b8484bdfe3a0bc2f4c1367ce0329fb493db4",
+      "original_verified": true,
+      "mutant_verified": false,
+      "failed_step": "t2",
+      "reason": "conclusion differs from the call or is degenerate"
+    },
+    {
+      "rule": "PERP_PLANE_TO_LINE",
+      "text_sha256": "6b90d1f10b05b6bf6e9218c3f6f1b8484bdfe3a0bc2f4c1367ce0329fb493db4",
+      "original_verified": true,
+      "mutant_verified": false,
+      "failed_step": "t3",
+      "reason": "the other line does not lie in the plane"
+    },
+    {
+      "rule": "PERP_TWO_LINES",
+      "text_sha256": "6b90d1f10b05b6bf6e9218c3f6f1b8484bdfe3a0bc2f4c1367ce0329fb493db4",
+      "original_verified": true,
+      "mutant_verified": false,
+      "failed_step": "t6",
+      "reason": "the two lines do not span exactly this plane, or the line lies in it"
+    },
+    {
+      "rule": "TRIANGLE_SHAPE_FIXED",
+      "text_sha256": "6b90d1f10b05b6bf6e9218c3f6f1b8484bdfe3a0bc2f4c1367ce0329fb493db4",
+      "original_verified": true,
+      "mutant_verified": false,
+      "failed_step": "t9",
+      "reason": "the right angle is not proven between the two legs at that vertex"
+    },
+    {
+      "rule": "TRIANGLE_SHAPE_FIXED",
+      "text_sha256": "6b90d1f10b05b6bf6e9218c3f6f1b8484bdfe3a0bc2f4c1367ce0329fb493db4",
+      "original_verified": true,
+      "mutant_verified": false,
+      "failed_step": "t9",
+      "reason": "cos² of the fixed angle differs from what the premises give"
+    },
+    {
+      "rule": "PLANE_ANGLE",
+      "text_sha256": "6b90d1f10b05b6bf6e9218c3f6f1b8484bdfe3a0bc2f4c1367ce0329fb493db4",
+      "original_verified": true,
+      "mutant_verified": false,
+      "failed_step": "t8",
+      "reason": "planes, their common line or the angle witness are malformed"
+    },
+    {
+      "rule": "PLANE_ANGLE",
+      "text_sha256": "6b90d1f10b05b6bf6e9218c3f6f1b8484bdfe3a0bc2f4c1367ce0329fb493db4",
+      "original_verified": true,
+      "mutant_verified": false,
+      "failed_step": "t8",
+      "reason": "the rays are not proven perpendicular to the common line"
+    },
+    {
+      "rule": "PLANE_ANGLE",
+      "text_sha256": "6b90d1f10b05b6bf6e9218c3f6f1b8484bdfe3a0bc2f4c1367ce0329fb493db4",
+      "original_verified": true,
+      "mutant_verified": false,
+      "failed_step": "t8",
+      "reason": "planes, their common line or the angle witness are malformed"
+    },
+    {
+      "rule": "PERP_PLANES",
+      "text_sha256": "fc4fa108be81e27f604e3c2cd5765da98ce9189fe833cba3f26958caa1b01162",
+      "original_verified": true,
+      "mutant_verified": false,
+      "failed_step": "t8",
+      "reason": "no line of one plane is proven perpendicular to the other plane"
+    },
+    {
+      "rule": "LINE_PLANE_ANGLE",
+      "text_sha256": "2c1c3291072ceaa3f8c4d0ee79d8360e5792c359532e193af8feb91921e3c71c",
+      "original_verified": true,
+      "mutant_verified": false,
+      "failed_step": "t8",
+      "reason": "the witness is not the line with its orthogonal projection on the plane"
+    },
+    {
+      "rule": "LINE_PERP_PLANE_ANGLE",
+      "text_sha256": "a6f4e826f97e600e55e7fc437847ecb3ce1dee96a2aae5dcda0bb30bb64eaa14",
+      "original_verified": true,
+      "mutant_verified": false,
+      "failed_step": "t8",
+      "reason": "the line is not proven perpendicular to the plane"
+    },
+    {
+      "rule": "LINE_ANGLE",
+      "text_sha256": "94e7b2d7963f1a5364ec58c6791406586bc5512d5d8df168bd8dc61a4df2d718",
+      "original_verified": true,
+      "mutant_verified": false,
+      "failed_step": "t8",
+      "reason": "the rays are not the two asked lines from their common vertex"
+    },
+    {
+      "rule": "LINES_PERPENDICULAR",
+      "text_sha256": "5cd1e7bc9915ca42042d9e1f406430e28351e0f99b976080e4437507a5d87bb7",
+      "original_verified": true,
+      "mutant_verified": false,
+      "failed_step": "t8",
+      "reason": "the lines are not proven perpendicular"
+    }
+  ],
+  "caught": "15/15",
+  "rules_covered": [
+    "LINES_PERPENDICULAR",
+    "LINE_ANGLE",
+    "LINE_PERP_PLANE_ANGLE",
+    "LINE_PLANE_ANGLE",
+    "PERPENDICULAR_LINES",
+    "PERP_PLANES",
+    "PERP_PLANE_TO_LINE",
+    "PERP_TWO_LINES",
+    "PLANE_ANGLE",
+    "RIGHT_ANGLE",
+    "SOURCE_LINE_PERP_PLANE",
+    "TRIANGLE_SHAPE_FIXED"
+  ],
+  "all_rules_covered": true,
+  "verdict": "PASS"
+}

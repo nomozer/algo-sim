@@ -1,0 +1,71 @@
+{
+  "run_id": "verified-section-intersection-dihedral-local",
+  "generated_at_utc": "2026-11-13T11:28:15.330925+00:00",
+  "head": "a74aa3325b61337e301e8df7b728a66f86fdc266",
+  "oracle": "AGENT_DIAGNOSTIC: exact Fractions + envelope Gram G written here, independent of the construction code",
+  "probe_class": "SYNTHETIC_DEVELOPMENT_PROBES (agent-written)",
+  "before_ref": "ffc62f6fe (run start)",
+  "mutation_summary": {
+    "flip_angle_ray": {
+      "applied": 12,
+      "caught": 12
+    },
+    "section_vertex_off_plane": {
+      "applied": 9,
+      "caught": 9
+    },
+    "section_vertex_order_swapped": {
+      "applied": 9,
+      "caught": 8
+    },
+    "section_vertex_replaced_by_wrong_edge_point": {
+      "applied": 9,
+      "caught": 9
+    },
+    "intersection_direction_tilted": {
+      "applied": 5,
+      "caught": 5
+    },
+    "intersection_point_moved": {
+      "applied": 5,
+      "caught": 5
+    },
+    "altitude_wrong_foot": {
+      "applied": 4,
+      "caught": 4
+    }
+  },
+  "served_scenes_after": 31,
+  "checks_total": 124,
+  "checks_failed": 0,
+  "checks_by_kind": {
+    "angle_signed_cos_nonnegative": 12,
+    "angle_cos_sq_equals_measure": 12,
+    "plane_angle_rays_perpendicular_to_common_line": 7,
+    "section_vertices_on_cutting_plane": 9,
+    "section_vertices_on_solid_edges": 9,
+    "section_vertices_distinct": 9,
+    "section_polygon_convex_cyclic_order": 9,
+    "section_edges_lie_in_solid_faces": 9,
+    "intersection_line_has_two_source_planes": 5,
+    "intersection_point_on_plane": 10,
+    "intersection_direction_in_plane": 10,
+    "intersection_direction_nonzero": 5,
+    "altitude_foot_on_base_plane": 4,
+    "altitude_perpendicular_to_base_in_G": 4,
+    "altitude_apex_is_the_solid_apex": 4,
+    "altitude_foot_on_face_base_intersection_line": 3,
+    "altitude_face_perpendicular_to_base_in_G": 3
+  },
+  "before_failed_checks": {
+    "angle_planes_SBC_SCD_60_not_120": [
+      "angle_signed_cos_nonnegative"
+    ],
+    "angle_planes_SCD_SBC_swapped": [
+      "angle_signed_cos_nonnegative"
+    ],
+    "angle_planes_renamed": [
+      "angle_signed_cos_nonnegative"
+    ]
+  }
+}

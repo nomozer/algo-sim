@@ -1,0 +1,45 @@
+{
+  "name": "frontend_test_wave",
+  "command": "npm.cmd run test:wave",
+  "argv": [
+    "npm.cmd",
+    "run",
+    "test:wave"
+  ],
+  "cwd": "D:\\Documents\\projects\\algo-sim\\.superpowers\\worktrees\\local-first-geometry-understanding\\frontend",
+  "started_at_utc": "2026-11-14T05:33:23.418237+00:00",
+  "start_snapshot": {
+    "head_commit": "5997fe74bfb97c53bbe41e551298acc082f5b50b",
+    "product_paths_sha256": "5360a7aa4f71f739924bd0823fa888d93cee1044c62eb0d9e61dbe6eb3bf8b12",
+    "product_path_count": 337,
+    "hash_policy": "tracked backend/app + frontend/src, LF normalized; includes tests",
+    "working_product_source_sha256": "a223d9606b506be1450d4ee305943befb8c4e751294b3670727259c667ce5fc5",
+    "working_product_source_count": 194,
+    "working_source_policy": "all working backend/app + frontend/src including untracked; skip pycache and freeze TEST_ONLY_GLOBS"
+  },
+  "ended_at_utc": "2026-11-14T05:34:25.418942+00:00",
+  "duration_seconds": 61.734,
+  "exit_code": 0,
+  "raw_output_sha256": "8dcb53d224b6a2a1edd916e2ddb37f3b60fd17fdb48e045f5fe9a72a68e28093",
+  "raw_output_bytes": 11500,
+  "raw_output_retention": "ignored local .superpowers only; never staged",
+  "end_snapshot": {
+    "head_commit": "5997fe74bfb97c53bbe41e551298acc082f5b50b",
+    "product_paths_sha256": "5360a7aa4f71f739924bd0823fa888d93cee1044c62eb0d9e61dbe6eb3bf8b12",
+    "product_path_count": 337,
+    "hash_policy": "tracked backend/app + frontend/src, LF normalized; includes tests",
+    "working_product_source_sha256": "a223d9606b506be1450d4ee305943befb8c4e751294b3670727259c667ce5fc5",
+    "working_product_source_count": 194,
+    "working_source_policy": "all working backend/app + frontend/src including untracked; skip pycache and freeze TEST_ONLY_GLOBS"
+  },
+  "summary_lines": [
+    "Test Files  141 passed (141)",
+    "Tests  2056 passed (2056)",
+    "Duration  52.42s (transform 5.28s, setup 1.63s, import 29.43s, tests 45.26s, environment 13ms)",
+    "✓ built in 3.94s"
+  ],
+  "failure_node_ids": [],
+  "typescript_errors": 0,
+  "source_unchanged_during_command": true,
+  "verdict": "PASS"
+}

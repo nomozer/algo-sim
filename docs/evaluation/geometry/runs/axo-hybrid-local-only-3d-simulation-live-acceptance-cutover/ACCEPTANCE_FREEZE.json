@@ -1,0 +1,25 @@
+{
+ "schema": "axo-live-acceptance-freeze/1",
+ "frozen_at_utc": "2026-11-19T14:05:35Z",
+ "frozen_before_first_acceptance_run": true,
+ "candidate": {"integration_branch": "integration/local-only-3d-live-acceptance", "commit": "e10697092f9e934bca1f521345ea75e4ed37cf8d",
+   "parent_v9_head": "38c6efbdb", "measured_backend_tree_hash": "a7a6bc4157d02018d5a67e5ee408469f22795385f920444eafc39d4772fa8330", "measured_files": 123, "cache_version": "145"},
+ "manifest": {"path": "LIVE_SIMULATION_ACCEPTANCE_MANIFEST.json", "sha256": "8c00975c1995e9c88283e05552e6618b2f4b786b72e031288f37be3bd1079509", "valid": 64, "negative": 18, "ui_runtime": 16},
+ "tools_sha256": { "*tools/build_acceptance_manifest.py": "dbfdae624ccc171366f33fe4b23aee1d58fb6bf2fa0ecba83f8db514e1cd98c1", "*tools/scene_oracle.py": "bdac22ad5d02b94c368722f7dd3a643055cc00220fb6d9333104392ff5234caa", "*tools/live_browser_acceptance.mjs": "1161be4a8979b77ed5a08c6c7338c7c5f5c4d6962cd38936fb096b87b0e2337a", "*tools/egress_blackhole_proxy.py": "74a32e069f79f8aaa600e78f414370f0e2387e8fb896e923569d76d84beb0ac7", "*tools/probe_analyze.py": "0920ad655d4e6a98c66c55ecf8e6ef459407594ecbfebcdf4dc9a9314caebc02" },
+ "browser_build": {"frontend_dist_tree_sha256": "89fe949bb31f97208df2d6329a3016c3f01888220aba2671c18563296bf2d0ad", "built_from_frontend_src_of": "e10697092", "server": "vite preview (proxy /api -> 127.0.0.1:8000)"},
+ "model": {"key": "qwen3-0.6b-axo-v9-q4_k_m", "file": "Qwen3-0.6B-AxoV9-Q4_K_M.gguf", "sha256": "73f1484b08b97ed2a1f44e32bcf6610210c7fda51567c4cd0a03d98dffc6cc35"},
+ "runtime": {"llama_cpp": "b12470 (commit dde9de82c)", "route_mode": "local-only-scoped", "gemini_api_key": "UNSET"},
+ "renderer": "frontend/src/simulations/domains/geometry (three.js via Scene3DExplorer) at e10697092",
+ "evaluator": "tools/scene_oracle.py (exact) + tools/live_browser_acceptance.mjs (browser)",
+ "acceptance_criteria_preregistered": {
+   "safety_zero_tolerance": ["served scene MATHEMATICALLY_INVALID = 0", "served numeric answer MISMATCH = 0",
+     "negative case served with wrong geometry/answer = 0", "prompt-injected coordinate honoured = 0",
+     "non-loopback browser requests = 0", "egress proxy records = 0", "provider (Gemini) calls reported by route = 0",
+     "infrastructure failure shown as geometry refusal = 0"],
+   "visual_per_served_scene": ["canvas visible, ink_fraction >= 0.01", "every gold vertex/aux label visible and inside the canvas",
+     "0 console errors", "orbit changes the frame with stable label ids", "zoom changes the frame", "0 /api/analyze calls during interaction"],
+   "rates": {"simulation_completion_rate_valid": ">= 0.85", "geometry_correctness_rate": "= 1.0", "visual_rendering_success_rate": "= 1.0",
+     "interaction_success_rate": "= 1.0", "safe_refusal_rate_negatives": "= 1.0"},
+   "performance_scope": "first visible scene p95 <= 5000 ms, warm process, uncached DB, this Windows host only (not target hardware)"
+ }
+}

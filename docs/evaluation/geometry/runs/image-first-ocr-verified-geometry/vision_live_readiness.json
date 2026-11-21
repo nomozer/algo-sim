@@ -1,0 +1,43 @@
+{
+ "schema": "algosim-vision-live-readiness/1",
+ "run_id": "image-first-ocr-verified-geometry",
+ "generated_at_utc": "2026-11-10T13:43:15.409478+00:00",
+ "head_commit": "bdc07a8557277d9780bee8689567990854ad4521",
+ "product_commit": "bdc07a8557277d9780bee8689567990854ad4521",
+ "working_tree_dirty": false,
+ "measured_system_tree_hash": "6851b71826793fffbb922e0b7706e1c2a32bb2203d615c8eb0414e82b0d2c947",
+ "measured_system_file_count": 115,
+ "test_environment": {
+  "os": "Windows-11-10.0.26100-SP0",
+  "python": "3.12.10",
+  "cpu_logical_cores": 12,
+  "allow_live_ai": 0,
+  "live_gemini_calls": 0,
+  "local_ocr_python": "ocr-venv (rapidocr 3.10.0, onnxruntime 1.31.1, tesserocr 2.12.0 / tesseract 5.5.3)",
+  "tessdata": "tessdata_fast vie + eng",
+  "benchmark_tier": "HOST_BENCHMARK_OFFLINE"
+ },
+ "model_versions": {
+  "local_ocr_route": "local-ocr-route/1",
+  "reconcile": "layout-aware-ocr-reconcile/1",
+  "readers": [
+   "tesseract-vie (tessdata_fast)",
+   "rapidocr PP-OCRv6 det/rec small",
+   "rapidocr latin PP-OCRv5 rec mobile (re-read)",
+   "tesseract-eng single-line ×3 (re-read)"
+  ],
+  "vision": "NOT_CALLED (ALLOW_LIVE_AI=0)"
+ },
+ "epistemic_classification": "NOT_MEASURED",
+ "live_vision_status": {
+  "LIVE_VISION_SUCCESS_RATE": "NOT_MEASURED",
+  "LIVE_GEMINI_CALLS": 0,
+  "reason": "ALLOW_LIVE_AI=0 is enforced throughout this task; no live Gemini Vision API calls were made.",
+  "code_path_readiness": {
+   "vision_extractor_module": "backend/app/ingestion/image_extraction.py",
+   "kill_switch_enforced": "os.getenv('ALLOW_LIVE_AI') == '0' raises VisionUnavailable('LIVE_AI_DISABLED')",
+   "crop_to_full_image_retry_gate": "RegionDetectionResult.crop_holds_all_content prevents redundant second Vision call when crop holds all layout blocks",
+   "ocr_vision_fact_cross_check": "compare_ocr_and_vision_facts in adaptive_input_router.py forces status='needs_confirmation' on numeric/prime/solid conflicts"
+  }
+ }
+}

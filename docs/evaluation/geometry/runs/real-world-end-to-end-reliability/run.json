@@ -1,0 +1,95 @@
+{
+  "schema": "algosim-run-manifest/1",
+  "run_id": "real-world-end-to-end-reliability",
+  "wave_id": "REAL_WORLD_END_TO_END_RELIABILITY",
+  "task": "ALGOSIM — REAL-WORLD END-TO-END RELIABILITY & HYBRID GAP CLOSURE",
+  "branch": "feat/local-first-geometry-understanding",
+  "baseline_head_commit": "8d0fde3378c9b087bdbbc4c66e1a40aad3b532cc",
+  "baseline_product_commit": "c61a3589782bde35b69e8376d8ebf136314e47f3",
+  "product_commit": "7994da7a64c8dc288c4de972df2d8d1db65e0c20",
+  "head_commit_at_generation": "e838ab50d06d3ac0d5b02a98b9e3083ea0bfd5e6",
+  "measured_system_tree_hash": "3754cbd18f58ddfb913fb61efd3dd078b0767770cff935a975cc8c258a1859fa",
+  "measured_system_file_count": 108,
+  "generated_at_utc": "2026-11-10T05:23:33.997720+00:00",
+  "live_gemini_calls": 0,
+  "allow_live_ai": 0,
+  "verdict": "PASS_OFFLINE_CANDIDATE_READY",
+  "measurement_status": "OFFLINE_VERIFIED (LIVE_VISION_NOT_MEASURED; INDEPENDENT_H1_NOT_MEASURED; PHYSICAL_LOW_END_NOT_MEASURED)",
+  "corrects": [
+    "unified-angle-geometry-verified-image-to-3d (ext02/ext03#1 MISSING_DIMENSION were false refusals)"
+  ],
+  "independent_h1_validation": "NOT_MEASURED",
+  "receipts": {
+    "baseline_verification_receipt.json": {
+      "sha256": "3cddd2d1f894ea48fe391e01423f890e8ebfda9ea86bbbaa6a9ee4c02b955d9f",
+      "verdict": "PASS"
+    },
+    "external17_before_after_comparison.json": {
+      "sha256": "ac56da78fff801f2dc55a9e4012166b00e1b96230fd88c4d568b3725878cd521",
+      "verdict": "PASS"
+    },
+    "external17_case_diagnostics.json": {
+      "sha256": "ee7c52653b0e248267ad3b63ba4791f961d4f43c61ec732a4b94fc941b1b20cf",
+      "verdict": "PASS"
+    },
+    "full_regression_summary.json": {
+      "sha256": "2d07d5f7803783266fe71e4a1553fa89942cc3ef63f44271251b1f15ca8786ee",
+      "verdict": "PASS"
+    },
+    "image_ingestion_end_to_end_receipt.json": {
+      "sha256": "1623c5863677b9785bd1c78a423bf5e9ba07b571c072d50a1705d18afe2087ab",
+      "verdict": "PASS"
+    },
+    "independent_h1_readiness.json": {
+      "sha256": "652768d307f5a61a74fc17916101321175d213c3835969ed06fd3b6cba4a9ab0",
+      "verdict": "NOT_MEASURED"
+    },
+    "live_ai_disabled_root_cause_analysis.json": {
+      "sha256": "037fc534933ea225ff55225182754eb67894685202ab1abad661c65cc3162b90",
+      "verdict": "PASS"
+    },
+    "low_end_performance_receipt.json": {
+      "sha256": "4e2d801032335526c058433b79ca451f80681c114d584ca6c02c98e87e1045e2",
+      "verdict": "PASS_HOST_AND_CONSTRAINED_MEASURED"
+    },
+    "mathematical_oracle_verification.json": {
+      "sha256": "8273cf727a79e33fc25c0444fbc9bf5310fda088efbd2735b5d886d02938a277",
+      "verdict": "PASS"
+    },
+    "ocr_fidelity_safety_receipt.json": {
+      "sha256": "d0e66183efbe6133ef4801ff08c5979a3913a73218d36c24da0ef87002c7c9f7",
+      "verdict": "PASS"
+    },
+    "parser_semantic_gap_closure.json": {
+      "sha256": "16748198a602957f7731b29d744e1cebe423635f2aed4ba09803bc2d467f3dd8",
+      "verdict": "PASS"
+    },
+    "planner_kernel_capability_closure.json": {
+      "sha256": "42bb3fc701e9fa8fcc4c05d2f94fd3975bb86f3eaa7e7e4684a6891bca6c7818",
+      "verdict": "PASS"
+    },
+    "scene3d_browser_acceptance.json": {
+      "sha256": "73f0d0b549ef9b1f521e2ca0fb246ce8ab48e98207782316b2550cf6412ab55c",
+      "verdict": "PASS"
+    },
+    "typed_facts_bridge_gap_closure.json": {
+      "sha256": "88f45fd9aeeaf481bd0c42185facc1bbbee057b0e89e148df253a2730db31e06",
+      "verdict": "DOCUMENTED_NOT_FIXED"
+    },
+    "vision_fallback_offline_receipt.json": {
+      "sha256": "6fa0f7543d532bbeb26747c4e309386882ae96df7110a6078cb7f05fdc8f8f9b",
+      "verdict": "PASS"
+    },
+    "vision_live_readiness.json": {
+      "sha256": "e5c706278051a3ac7dd273a50747a5fd3a75334a64a7684573cd8861ae010f4e",
+      "verdict": "BLOCKED_PENDING_OWNER_APPROVAL"
+    }
+  },
+  "tools": [
+    "tools/evaluate_real_world_reliability.py",
+    "tools/e2e_browser_acceptance.mjs"
+  ],
+  "raw_artifacts": [
+    "scene3d_browser_e2e_raw.json"
+  ]
+}

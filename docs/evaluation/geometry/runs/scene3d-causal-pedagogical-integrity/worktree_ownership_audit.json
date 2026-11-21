@@ -1,0 +1,29 @@
+{
+  "run_id": "scene3d-causal-pedagogical-integrity",
+  "generated_at_utc": "2026-11-14T15:39:13.820636+00:00",
+  "product_commit": "a2874d273959970faa501879f4f9dbfe20c93975",
+  "measured_system": "225f4bba5a8765ccd1c12507ce6dbd0bab25d69d02263148cf94752f921e2b56",
+  "cache_version": "138",
+  "dataset_partition": "DEVELOPMENT (agent-written corpus, exposed REAL27, exposed probes); never H-1 or locked W2/W3",
+  "environment": {
+    "ALLOW_LIVE_AI": "0",
+    "HYBRID_ROUTE_MODE": "local-first",
+    "live_ai_calls": 0
+  },
+  "head": "6da2795a493d6097add56294832f0d5a7ea1ef13",
+  "implementation_worktree": {
+    "branch": "feat/local-first-geometry-understanding",
+    "head": "6da2795a493d6097add56294832f0d5a7ea1ef13"
+  },
+  "frontend_library_worktree": {
+    "path": "axo-geometry-library",
+    "branch": "feat/axo-geometry-library-verification",
+    "head": "aecd3daa5a9ca289e3521ac40c7be6ad8f1e60eb",
+    "uncommitted_entries_of_another_session": 78,
+    "access": "read-only via `git show <commit>:<path>`; never switched, reset, cleaned or edited",
+    "integration_commit_of_backend_handoff": "b5810dcc3 (fix(axo): integrate verified backend geometry contracts)"
+  },
+  "merge_base": "bb046fa22aceff47abe22aa783aa64fc65caee13",
+  "files_of_other_sessions_edited": 0,
+  "this_branch_frontend_copies": "scene3d-circumsphere-fixture.json / scene3d-regression-archetypes-fixtures.json left as they are on this branch (frontend-owned static fixtures; the library has integrated their fixes)"
+}

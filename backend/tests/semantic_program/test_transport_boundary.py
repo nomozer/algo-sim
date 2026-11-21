@@ -169,41 +169,24 @@ def _chuong_trinh(binding_kieu: str = "point") -> dict:
     ("so_do", "radical"),       # `Radical` — số đo vô tỉ (√3)
 ])
 def test_envelope_THAT_serialize_duoc(kieu, mong_kind):
-    """Ca từng 500. Dựng envelope bằng đúng đường sản phẩm rồi `json.dumps`."""
+    """Ca từng 500. Dựng envelope bằng đúng đường sản phẩm rồi `json.dumps`.
+
+    (/13) Khung không còn hộp giá trị 2D (đường hiển thị container đã gỡ), nên phần "giá trị → (scalar, exact)" được
+    kiểm thẳng ở biên `transport_pair` trên chính giá trị cuối của lượt chạy — cùng biên mà cảnh 3D dùng."""
     v = validate_semantic_program(_chuong_trinh(kieu))
     assert v.ok, v.error
     env = compile_semantic_program_to_envelope(v.spec)
     json.dumps(env, ensure_ascii=False)      # ← dòng từng ném TypeError
 
-    hop = [o for f in env["config"]["frames"] for o in f["objects"]
-           if o["type"] == "value_box"]
-    assert hop, "không có hộp giá trị nào — ca kiểm không chạm được chỗ cần chạm"
-    cuoi = hop[-1]
-    assert isinstance(cuoi["value"], (str, int, float)), \
-        "`value` phải là SCALAR — frontend làm String(v)"
-    assert cuoi.get("exact", {}).get("kind") == mong_kind, \
-        "cấu trúc chính xác không đi kèm"
+    cuoi = SemanticProgramInterpreter().execute(v.spec).final_memory["A" if kieu == "point" else "d"]
+    hien, exact = transport_pair(cuoi)
+    assert isinstance(hien, (str, int, float)), "`value` phải là SCALAR — frontend làm String(v)"
+    assert (exact or {}).get("kind") == mong_kind, "cấu trúc chính xác không đi kèm"
 
 
 def test_gia_tri_JSON_native_KHONG_moc_them_exact():
-    """Bài Tin học: `value_box` gắn một `int` thì không được đẻ ra `exact`."""
-    ct = {
-        "spec_version": "1.0", "simulation_id": "algo.x",
-        "title": "Đếm phần tử", "description": "Đếm rồi hiện số.",
-        "pedagogical_intent": "Cho thấy biến đếm đổi giá trị.",
-        "memory_declarations": [{"name": "m", "type": "int", "initial_value": 3}],
-        "statements": [{"kind": "assign", "target_var": "m",
-                        "expr": {"kind": "literal", "value": 5}}],
-        "visual_bindings": {"containers": [], "pointers": [],
-                            "value_boxes": [{"box_id": "b", "var_ref": "m",
-                                             "label": "m"}]},
-    }
-    v = validate_semantic_program(ct)
-    assert v.ok, v.error
-    env = compile_semantic_program_to_envelope(v.spec)
-    hop = [o for f in env["config"]["frames"] for o in f["objects"]
-           if o["type"] == "value_box"][-1]
-    assert hop["value"] == 5 and "exact" not in hop
+    """Một `int` thì không được đẻ ra `exact` — bọc nó vào dict là hình dạng thứ hai cho cùng một thứ."""
+    assert transport_pair(5) == (5, None)
 
 
 # ══ CỔNG ════════════════════════════════════════════════════════════════
@@ -235,12 +218,11 @@ def test_duong_CACHE_ghi_va_doc_lai_duoc():
 
     blob = json.dumps(env, ensure_ascii=False)        # ghi cache
     lai = json.loads(blob)                            # đọc lại
-    assert lai["config"]["title"] == env["config"]["title"]
-    hop = [o for f in lai["config"]["frames"] for o in f["objects"]
-           if o["type"] == "value_box"][-1]
-    assert hop["exact"]["kind"] == "radical"
-    assert hop["exact"]["radicand"] == 3               # d = √3
-    assert hop["value"] == "√3"
+    assert lai == env
+    hien, exact = transport_pair(SemanticProgramInterpreter().execute(v.spec).final_memory["d"])
+    assert json.loads(json.dumps(exact)) == exact     # cấu trúc chính xác cũng đi qua cache nguyên vẹn
+    assert exact["kind"] == "radical" and exact["radicand"] == 3   # d = √3
+    assert hien == "√3"
 
 
 # ══ ④ REPLAY ARTIFACT MATRIX — chương trình THẬT mô hình đã sinh ════════

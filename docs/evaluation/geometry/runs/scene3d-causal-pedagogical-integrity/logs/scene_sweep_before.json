@@ -1,0 +1,9572 @@
+{
+ "backend": "before-9d0949b09",
+ "texts": 185,
+ "rows": {
+  "COMP:mc_section_one_sentence": {
+   "status": "SERVED",
+   "audit": {
+    "violations": {},
+    "violation_count": 0,
+    "objects": 18,
+    "events": 15,
+    "steps": 15,
+    "orphans_independent": [],
+    "unused_auxiliary_flagged": [],
+    "orphans_not_flagged": []
+   },
+   "measures": [
+    {
+     "object": "derived_H_vec",
+     "step": 5,
+     "generic": false,
+     "has_measured_quantity": false
+    },
+    {
+     "object": "derived_H1_vec",
+     "step": 7,
+     "generic": false,
+     "has_measured_quantity": false
+    }
+   ],
+   "fingerprint": {
+    "answer_exact": {},
+    "points": {
+     "A": [
+      "0",
+      "0",
+      "0"
+     ],
+     "B": [
+      "1",
+      "0",
+      "0"
+     ],
+     "C": [
+      "1",
+      "1",
+      "0"
+     ],
+     "D": [
+      "0",
+      "1",
+      "0"
+     ],
+     "S": [
+      "0",
+      "0",
+      "1"
+     ],
+     "M": [
+      "0",
+      "0",
+      "1/2"
+     ],
+     "H": [
+      "1",
+      "0",
+      "1/2"
+     ],
+     "H1": [
+      "1",
+      "1",
+      "1/2"
+     ]
+    },
+    "sections": {
+     "td_sec": null
+    },
+    "angle_constructions": {},
+    "certificate": {
+     "schema": null,
+     "verified": []
+    }
+   },
+   "section_edges": [
+    {
+     "theorem": "PARALLEL_LINE_PLANE_INTERSECTION",
+     "learner_text": "Trên mặt SAB, nối giao điểm thuộc cạnh SA với giao điểm thuộc cạnh SB.",
+     "justification_text": "Vì (P) song song với AB và AB nằm trong mặt (SAB), nên giao tuyến của (P) với mặt (SAB) song song với AB."
+    },
+    {
+     "theorem": "PARALLEL_LINE_PLANE_INTERSECTION",
+     "learner_text": "Trên mặt SBC, nối giao điểm thuộc cạnh SB với giao điểm thuộc cạnh SC.",
+     "justification_text": "Vì (P) song song với BC và BC nằm trong mặt (SBC), nên giao tuyến của (P) với mặt (SBC) song song với BC."
+    },
+    {
+     "theorem": "PARALLEL_LINE_PLANE_INTERSECTION",
+     "learner_text": "Trên mặt SCD, nối giao điểm thuộc cạnh SC với giao điểm thuộc cạnh SD.",
+     "justification_text": "Vì (P) song song với CD và CD nằm trong mặt (SCD), nên giao tuyến của (P) với mặt (SCD) song song với CD."
+    },
+    {
+     "theorem": "PARALLEL_LINE_PLANE_INTERSECTION",
+     "learner_text": "Trên mặt SDA, nối giao điểm thuộc cạnh SD với giao điểm thuộc cạnh SA.",
+     "justification_text": "Vì (P) song song với DA và DA nằm trong mặt (SDA), nên giao tuyến của (P) với mặt (SDA) song song với DA."
+    }
+   ],
+   "right_angle_drawn": {},
+   "scene_sha256": "ce895121db6bd7968a6ba35fb32ba42231df623da4bafc067c10c5b7cdd5746c"
+  },
+  "COMP:mc_section_split": {
+   "status": "SERVED",
+   "audit": {
+    "violations": {},
+    "violation_count": 0,
+    "objects": 18,
+    "events": 15,
+    "steps": 15,
+    "orphans_independent": [],
+    "unused_auxiliary_flagged": [],
+    "orphans_not_flagged": []
+   },
+   "measures": [
+    {
+     "object": "derived_H_vec",
+     "step": 5,
+     "generic": false,
+     "has_measured_quantity": false
+    },
+    {
+     "object": "derived_H1_vec",
+     "step": 7,
+     "generic": false,
+     "has_measured_quantity": false
+    }
+   ],
+   "fingerprint": {
+    "answer_exact": {},
+    "points": {
+     "A": [
+      "0",
+      "0",
+      "0"
+     ],
+     "B": [
+      "1",
+      "0",
+      "0"
+     ],
+     "C": [
+      "1",
+      "1",
+      "0"
+     ],
+     "D": [
+      "0",
+      "1",
+      "0"
+     ],
+     "S": [
+      "0",
+      "0",
+      "1"
+     ],
+     "M": [
+      "0",
+      "0",
+      "1/2"
+     ],
+     "H": [
+      "1",
+      "0",
+      "1/2"
+     ],
+     "H1": [
+      "1",
+      "1",
+      "1/2"
+     ]
+    },
+    "sections": {
+     "td_sec": null
+    },
+    "angle_constructions": {},
+    "certificate": {
+     "schema": null,
+     "verified": []
+    }
+   },
+   "section_edges": [
+    {
+     "theorem": "PARALLEL_LINE_PLANE_INTERSECTION",
+     "learner_text": "Trên mặt SAB, nối giao điểm thuộc cạnh SA với giao điểm thuộc cạnh SB.",
+     "justification_text": "Vì (P) song song với AB và AB nằm trong mặt (SAB), nên giao tuyến của (P) với mặt (SAB) song song với AB."
+    },
+    {
+     "theorem": "PARALLEL_LINE_PLANE_INTERSECTION",
+     "learner_text": "Trên mặt SBC, nối giao điểm thuộc cạnh SB với giao điểm thuộc cạnh SC.",
+     "justification_text": "Vì (P) song song với BC và BC nằm trong mặt (SBC), nên giao tuyến của (P) với mặt (SBC) song song với BC."
+    },
+    {
+     "theorem": "PARALLEL_LINE_PLANE_INTERSECTION",
+     "learner_text": "Trên mặt SCD, nối giao điểm thuộc cạnh SC với giao điểm thuộc cạnh SD.",
+     "justification_text": "Vì (P) song song với CD và CD nằm trong mặt (SCD), nên giao tuyến của (P) với mặt (SCD) song song với CD."
+    },
+    {
+     "theorem": "PARALLEL_LINE_PLANE_INTERSECTION",
+     "learner_text": "Trên mặt SDA, nối giao điểm thuộc cạnh SD với giao điểm thuộc cạnh SA.",
+     "justification_text": "Vì (P) song song với DA và DA nằm trong mặt (SDA), nên giao tuyến của (P) với mặt (SDA) song song với DA."
+    }
+   ],
+   "right_angle_drawn": {},
+   "scene_sha256": "ce895121db6bd7968a6ba35fb32ba42231df623da4bafc067c10c5b7cdd5746c"
+  },
+  "COMP:mc_section_renamed": {
+   "status": "SERVED",
+   "audit": {
+    "violations": {},
+    "violation_count": 0,
+    "objects": 18,
+    "events": 15,
+    "steps": 15,
+    "orphans_independent": [],
+    "unused_auxiliary_flagged": [],
+    "orphans_not_flagged": []
+   },
+   "measures": [
+    {
+     "object": "derived_H1_vec",
+     "step": 5,
+     "generic": false,
+     "has_measured_quantity": false
+    },
+    {
+     "object": "derived_H2_vec",
+     "step": 7,
+     "generic": false,
+     "has_measured_quantity": false
+    }
+   ],
+   "fingerprint": {
+    "answer_exact": {},
+    "points": {
+     "E": [
+      "0",
+      "0",
+      "0"
+     ],
+     "F": [
+      "1",
+      "0",
+      "0"
+     ],
+     "G": [
+      "1",
+      "1",
+      "0"
+     ],
+     "H": [
+      "0",
+      "1",
+      "0"
+     ],
+     "T": [
+      "0",
+      "0",
+      "1"
+     ],
+     "K": [
+      "0",
+      "0",
+      "1/2"
+     ],
+     "H1": [
+      "1",
+      "0",
+      "1/2"
+     ],
+     "H2": [
+      "1",
+      "1",
+      "1/2"
+     ]
+    },
+    "sections": {
+     "td_sec": null
+    },
+    "angle_constructions": {},
+    "certificate": {
+     "schema": null,
+     "verified": []
+    }
+   },
+   "section_edges": [
+    {
+     "theorem": "PARALLEL_LINE_PLANE_INTERSECTION",
+     "learner_text": "Trên mặt TEF, nối giao điểm thuộc cạnh TE với giao điểm thuộc cạnh TF.",
+     "justification_text": "Vì (Q) song song với EF và EF nằm trong mặt (TEF), nên giao tuyến của (Q) với mặt (TEF) song song với EF."
+    },
+    {
+     "theorem": "PARALLEL_LINE_PLANE_INTERSECTION",
+     "learner_text": "Trên mặt TFG, nối giao điểm thuộc cạnh TF với giao điểm thuộc cạnh TG.",
+     "justification_text": "Vì (Q) song song với FG và FG nằm trong mặt (TFG), nên giao tuyến của (Q) với mặt (TFG) song song với FG."
+    },
+    {
+     "theorem": "PARALLEL_LINE_PLANE_INTERSECTION",
+     "learner_text": "Trên mặt TGH, nối giao điểm thuộc cạnh TG với giao điểm thuộc cạnh TH.",
+     "justification_text": "Vì (Q) song song với GH và GH nằm trong mặt (TGH), nên giao tuyến của (Q) với mặt (TGH) song song với GH."
+    },
+    {
+     "theorem": "PARALLEL_LINE_PLANE_INTERSECTION",
+     "learner_text": "Trên mặt THE, nối giao điểm thuộc cạnh TH với giao điểm thuộc cạnh TE.",
+     "justification_text": "Vì (Q) song song với HE và HE nằm trong mặt (THE), nên giao tuyến của (Q) với mặt (THE) song song với HE."
+    }
+   ],
+   "right_angle_drawn": {},
+   "scene_sha256": "6ff2cdf5e62caf7b5c540e4a8505a6c45f40fef4aaf780778a37104cd7fa98b0"
+  },
+  "COMP:mc_section_greek": {
+   "status": "SERVED",
+   "audit": {
+    "violations": {},
+    "violation_count": 0,
+    "objects": 18,
+    "events": 15,
+    "steps": 15,
+    "orphans_independent": [],
+    "unused_auxiliary_flagged": [],
+    "orphans_not_flagged": []
+   },
+   "measures": [
+    {
+     "object": "derived_H_vec",
+     "step": 5,
+     "generic": false,
+     "has_measured_quantity": false
+    },
+    {
+     "object": "derived_H1_vec",
+     "step": 7,
+     "generic": false,
+     "has_measured_quantity": false
+    }
+   ],
+   "fingerprint": {
+    "answer_exact": {},
+    "points": {
+     "A": [
+      "0",
+      "0",
+      "0"
+     ],
+     "B": [
+      "1",
+      "0",
+      "0"
+     ],
+     "C": [
+      "1",
+      "1",
+      "0"
+     ],
+     "D": [
+      "0",
+      "1",
+      "0"
+     ],
+     "S": [
+      "0",
+      "0",
+      "1"
+     ],
+     "M": [
+      "0",
+      "0",
+      "1/2"
+     ],
+     "H": [
+      "1",
+      "0",
+      "1/2"
+     ],
+     "H1": [
+      "1",
+      "1",
+      "1/2"
+     ]
+    },
+    "sections": {
+     "td_sec": null
+    },
+    "angle_constructions": {},
+    "certificate": {
+     "schema": null,
+     "verified": []
+    }
+   },
+   "section_edges": [
+    {
+     "theorem": "PARALLEL_LINE_PLANE_INTERSECTION",
+     "learner_text": "Trên mặt SAB, nối giao điểm thuộc cạnh SA với giao điểm thuộc cạnh SB.",
+     "justification_text": "Vì (α) song song với AB và AB nằm trong mặt (SAB), nên giao tuyến của (α) với mặt (SAB) song song với AB."
+    },
+    {
+     "theorem": "PARALLEL_LINE_PLANE_INTERSECTION",
+     "learner_text": "Trên mặt SBC, nối giao điểm thuộc cạnh SB với giao điểm thuộc cạnh SC.",
+     "justification_text": "Vì (α) song song với BC và BC nằm trong mặt (SBC), nên giao tuyến của (α) với mặt (SBC) song song với BC."
+    },
+    {
+     "theorem": "PARALLEL_LINE_PLANE_INTERSECTION",
+     "learner_text": "Trên mặt SCD, nối giao điểm thuộc cạnh SC với giao điểm thuộc cạnh SD.",
+     "justification_text": "Vì (α) song song với CD và CD nằm trong mặt (SCD), nên giao tuyến của (α) với mặt (SCD) song song với CD."
+    },
+    {
+     "theorem": "PARALLEL_LINE_PLANE_INTERSECTION",
+     "learner_text": "Trên mặt SDA, nối giao điểm thuộc cạnh SD với giao điểm thuộc cạnh SA.",
+     "justification_text": "Vì (α) song song với DA và DA nằm trong mặt (SDA), nên giao tuyến của (α) với mặt (SDA) song song với DA."
+    }
+   ],
+   "right_angle_drawn": {},
+   "scene_sha256": "d59739578bc4729bd20a0692890f1cf5c1d02557aad839098c2a43daea0a02dc"
+  },
+  "COMP:mc_extra_unread": {
+   "status": "REFUSED"
+  },
+  "COMP:mc_extra_unread2": {
+   "status": "REFUSED"
+  },
+  "COMP:mc_distance_extra_unread": {
+   "status": "REFUSED"
+  },
+  "COMP:mc_distance": {
+   "status": "SERVED",
+   "audit": {
+    "violations": {},
+    "violation_count": 0,
+    "objects": 13,
+    "events": 6,
+    "steps": 6,
+    "orphans_independent": [],
+    "unused_auxiliary_flagged": [],
+    "orphans_not_flagged": []
+   },
+   "measures": [
+    {
+     "object": "kq_q1",
+     "step": 5,
+     "generic": false,
+     "has_measured_quantity": true
+    }
+   ],
+   "fingerprint": {
+    "answer_exact": {
+     "q1": {
+      "coef": "√2/2",
+      "dim": 1,
+      "unit": "a"
+     }
+    },
+    "points": {
+     "A": [
+      "0",
+      "0",
+      "0"
+     ],
+     "B": [
+      "1",
+      "0",
+      "0"
+     ],
+     "C": [
+      "1",
+      "1",
+      "0"
+     ],
+     "D": [
+      "0",
+      "1",
+      "0"
+     ],
+     "S": [
+      "0",
+      "0",
+      "1"
+     ]
+    },
+    "sections": {},
+    "angle_constructions": {},
+    "certificate": {
+     "schema": null,
+     "verified": []
+    }
+   },
+   "section_edges": [],
+   "right_angle_drawn": {},
+   "scene_sha256": "36c91075ae2b65ff244a0581d913602b3b827960fbc962935937b0508475c6fc"
+  },
+  "COMP:mc_decimal_value": {
+   "status": "SERVED",
+   "audit": {
+    "violations": {},
+    "violation_count": 0,
+    "objects": 13,
+    "events": 6,
+    "steps": 6,
+    "orphans_independent": [],
+    "unused_auxiliary_flagged": [],
+    "orphans_not_flagged": []
+   },
+   "measures": [
+    {
+     "object": "kq_q1",
+     "step": 5,
+     "generic": false,
+     "has_measured_quantity": true
+    }
+   ],
+   "fingerprint": {
+    "answer_exact": {
+     "q1": {
+      "coef": "14√65/65",
+      "dim": 0,
+      "unit": null
+     }
+    },
+    "points": {
+     "A": [
+      "0",
+      "0",
+      "0"
+     ],
+     "B": [
+      "1",
+      "0",
+      "0"
+     ],
+     "C": [
+      "1",
+      "1",
+      "0"
+     ],
+     "D": [
+      "0",
+      "1",
+      "0"
+     ],
+     "S": [
+      "0",
+      "0",
+      "1"
+     ]
+    },
+    "sections": {},
+    "angle_constructions": {},
+    "certificate": {
+     "schema": null,
+     "verified": []
+    }
+   },
+   "section_edges": [],
+   "right_angle_drawn": {},
+   "scene_sha256": "bb76689e933e751b59cf6778e5f0a906fddfedf8d8b9639b153c89cd677eaedf"
+  },
+  "COMP:mc_label_list": {
+   "status": "SERVED",
+   "audit": {
+    "violations": {},
+    "violation_count": 0,
+    "objects": 15,
+    "events": 8,
+    "steps": 8,
+    "orphans_independent": [
+     "N"
+    ],
+    "unused_auxiliary_flagged": [
+     "N"
+    ],
+    "orphans_not_flagged": []
+   },
+   "measures": [
+    {
+     "object": "kq_q1",
+     "step": 7,
+     "generic": false,
+     "has_measured_quantity": true
+    }
+   ],
+   "fingerprint": {
+    "answer_exact": {
+     "q1": {
+      "coef": "1/2",
+      "dim": 1,
+      "unit": "a"
+     }
+    },
+    "points": {
+     "A": [
+      "0",
+      "0",
+      "0"
+     ],
+     "B": [
+      "1",
+      "0",
+      "0"
+     ],
+     "C": [
+      "1",
+      "1",
+      "0"
+     ],
+     "D": [
+      "0",
+      "1",
+      "0"
+     ],
+     "S": [
+      "0",
+      "0",
+      "1"
+     ],
+     "M": [
+      "1/2",
+      "0",
+      "1/2"
+     ],
+     "N": [
+      "0",
+      "1/2",
+      "1/2"
+     ]
+    },
+    "sections": {},
+    "angle_constructions": {},
+    "certificate": {
+     "schema": null,
+     "verified": []
+    }
+   },
+   "section_edges": [],
+   "right_angle_drawn": {},
+   "scene_sha256": "d0741318a7469fa2ef0b0b124f9f643c32db64429c0367e3f575efbbb675fd7d"
+  },
+  "COMP:order_plane_after_goal": {
+   "status": "SERVED",
+   "audit": {
+    "violations": {},
+    "violation_count": 0,
+    "objects": 18,
+    "events": 15,
+    "steps": 15,
+    "orphans_independent": [],
+    "unused_auxiliary_flagged": [],
+    "orphans_not_flagged": []
+   },
+   "measures": [
+    {
+     "object": "derived_H_vec",
+     "step": 5,
+     "generic": false,
+     "has_measured_quantity": false
+    },
+    {
+     "object": "derived_H1_vec",
+     "step": 7,
+     "generic": false,
+     "has_measured_quantity": false
+    }
+   ],
+   "fingerprint": {
+    "answer_exact": {},
+    "points": {
+     "A": [
+      "0",
+      "0",
+      "0"
+     ],
+     "B": [
+      "1",
+      "0",
+      "0"
+     ],
+     "C": [
+      "1",
+      "1",
+      "0"
+     ],
+     "D": [
+      "0",
+      "1",
+      "0"
+     ],
+     "S": [
+      "0",
+      "0",
+      "1"
+     ],
+     "M": [
+      "0",
+      "0",
+      "1/2"
+     ],
+     "H": [
+      "1",
+      "0",
+      "1/2"
+     ],
+     "H1": [
+      "1",
+      "1",
+      "1/2"
+     ]
+    },
+    "sections": {
+     "td_sec": null
+    },
+    "angle_constructions": {},
+    "certificate": {
+     "schema": null,
+     "verified": []
+    }
+   },
+   "section_edges": [
+    {
+     "theorem": "PARALLEL_LINE_PLANE_INTERSECTION",
+     "learner_text": "Trên mặt SAB, nối giao điểm thuộc cạnh SA với giao điểm thuộc cạnh SB.",
+     "justification_text": "Vì (P) song song với AB và AB nằm trong mặt (SAB), nên giao tuyến của (P) với mặt (SAB) song song với AB."
+    },
+    {
+     "theorem": "PARALLEL_LINE_PLANE_INTERSECTION",
+     "learner_text": "Trên mặt SBC, nối giao điểm thuộc cạnh SB với giao điểm thuộc cạnh SC.",
+     "justification_text": "Vì (P) song song với BC và BC nằm trong mặt (SBC), nên giao tuyến của (P) với mặt (SBC) song song với BC."
+    },
+    {
+     "theorem": "PARALLEL_LINE_PLANE_INTERSECTION",
+     "learner_text": "Trên mặt SCD, nối giao điểm thuộc cạnh SC với giao điểm thuộc cạnh SD.",
+     "justification_text": "Vì (P) song song với CD và CD nằm trong mặt (SCD), nên giao tuyến của (P) với mặt (SCD) song song với CD."
+    },
+    {
+     "theorem": "PARALLEL_LINE_PLANE_INTERSECTION",
+     "learner_text": "Trên mặt SDA, nối giao điểm thuộc cạnh SD với giao điểm thuộc cạnh SA.",
+     "justification_text": "Vì (P) song song với DA và DA nằm trong mặt (SDA), nên giao tuyến của (P) với mặt (SDA) song song với DA."
+    }
+   ],
+   "right_angle_drawn": {},
+   "scene_sha256": "ce895121db6bd7968a6ba35fb32ba42231df623da4bafc067c10c5b7cdd5746c"
+  },
+  "COMP:order_plane_after_goal_sep": {
+   "status": "SERVED",
+   "audit": {
+    "violations": {},
+    "violation_count": 0,
+    "objects": 18,
+    "events": 15,
+    "steps": 15,
+    "orphans_independent": [],
+    "unused_auxiliary_flagged": [],
+    "orphans_not_flagged": []
+   },
+   "measures": [
+    {
+     "object": "derived_H_vec",
+     "step": 5,
+     "generic": false,
+     "has_measured_quantity": false
+    },
+    {
+     "object": "derived_H1_vec",
+     "step": 7,
+     "generic": false,
+     "has_measured_quantity": false
+    }
+   ],
+   "fingerprint": {
+    "answer_exact": {},
+    "points": {
+     "A": [
+      "0",
+      "0",
+      "0"
+     ],
+     "B": [
+      "1",
+      "0",
+      "0"
+     ],
+     "C": [
+      "1",
+      "1",
+      "0"
+     ],
+     "D": [
+      "0",
+      "1",
+      "0"
+     ],
+     "S": [
+      "0",
+      "0",
+      "1"
+     ],
+     "M": [
+      "0",
+      "0",
+      "1/2"
+     ],
+     "H": [
+      "1",
+      "0",
+      "1/2"
+     ],
+     "H1": [
+      "1",
+      "1",
+      "1/2"
+     ]
+    },
+    "sections": {
+     "td_sec": null
+    },
+    "angle_constructions": {},
+    "certificate": {
+     "schema": null,
+     "verified": []
+    }
+   },
+   "section_edges": [
+    {
+     "theorem": "PARALLEL_LINE_PLANE_INTERSECTION",
+     "learner_text": "Trên mặt SAB, nối giao điểm thuộc cạnh SA với giao điểm thuộc cạnh SB.",
+     "justification_text": "Vì (P) song song với AB và AB nằm trong mặt (SAB), nên giao tuyến của (P) với mặt (SAB) song song với AB."
+    },
+    {
+     "theorem": "PARALLEL_LINE_PLANE_INTERSECTION",
+     "learner_text": "Trên mặt SBC, nối giao điểm thuộc cạnh SB với giao điểm thuộc cạnh SC.",
+     "justification_text": "Vì (P) song song với BC và BC nằm trong mặt (SBC), nên giao tuyến của (P) với mặt (SBC) song song với BC."
+    },
+    {
+     "theorem": "PARALLEL_LINE_PLANE_INTERSECTION",
+     "learner_text": "Trên mặt SCD, nối giao điểm thuộc cạnh SC với giao điểm thuộc cạnh SD.",
+     "justification_text": "Vì (P) song song với CD và CD nằm trong mặt (SCD), nên giao tuyến của (P) với mặt (SCD) song song với CD."
+    },
+    {
+     "theorem": "PARALLEL_LINE_PLANE_INTERSECTION",
+     "learner_text": "Trên mặt SDA, nối giao điểm thuộc cạnh SD với giao điểm thuộc cạnh SA.",
+     "justification_text": "Vì (P) song song với DA và DA nằm trong mặt (SDA), nên giao tuyến của (P) với mặt (SDA) song song với DA."
+    }
+   ],
+   "right_angle_drawn": {},
+   "scene_sha256": "ce895121db6bd7968a6ba35fb32ba42231df623da4bafc067c10c5b7cdd5746c"
+  },
+  "COMP:order_plane_never_defined": {
+   "status": "REFUSED"
+  },
+  "COMP:order_premises_swapped": {
+   "status": "SERVED",
+   "audit": {
+    "violations": {},
+    "violation_count": 0,
+    "objects": 13,
+    "events": 6,
+    "steps": 6,
+    "orphans_independent": [],
+    "unused_auxiliary_flagged": [],
+    "orphans_not_flagged": []
+   },
+   "measures": [
+    {
+     "object": "kq_q1",
+     "step": 5,
+     "generic": false,
+     "has_measured_quantity": true
+    }
+   ],
+   "fingerprint": {
+    "answer_exact": {
+     "q1": {
+      "coef": "√2/2",
+      "dim": 1,
+      "unit": "a"
+     }
+    },
+    "points": {
+     "A": [
+      "0",
+      "0",
+      "0"
+     ],
+     "B": [
+      "1",
+      "0",
+      "0"
+     ],
+     "C": [
+      "1",
+      "1",
+      "0"
+     ],
+     "D": [
+      "0",
+      "1",
+      "0"
+     ],
+     "S": [
+      "0",
+      "0",
+      "1"
+     ]
+    },
+    "sections": {},
+    "angle_constructions": {},
+    "certificate": {
+     "schema": null,
+     "verified": []
+    }
+   },
+   "section_edges": [],
+   "right_angle_drawn": {},
+   "scene_sha256": "36c91075ae2b65ff244a0581d913602b3b827960fbc962935937b0508475c6fc"
+  },
+  "COMP:dp_named_midpoint_goal": {
+   "status": "SERVED",
+   "audit": {
+    "violations": {},
+    "violation_count": 0,
+    "objects": 14,
+    "events": 7,
+    "steps": 7,
+    "orphans_independent": [],
+    "unused_auxiliary_flagged": [],
+    "orphans_not_flagged": []
+   },
+   "measures": [
+    {
+     "object": "kq_q1",
+     "step": 6,
+     "generic": false,
+     "has_measured_quantity": true
+    }
+   ],
+   "fingerprint": {
+    "answer_exact": {
+     "q1": {
+      "coef": "1/2",
+      "dim": 1,
+      "unit": "a"
+     }
+    },
+    "points": {
+     "A": [
+      "0",
+      "0",
+      "0"
+     ],
+     "B": [
+      "1",
+      "0",
+      "0"
+     ],
+     "C": [
+      "1",
+      "1",
+      "0"
+     ],
+     "D": [
+      "0",
+      "1",
+      "0"
+     ],
+     "S": [
+      "0",
+      "0",
+      "1"
+     ],
+     "M": [
+      "1/2",
+      "1/2",
+      "1/2"
+     ]
+    },
+    "sections": {},
+    "angle_constructions": {},
+    "certificate": {
+     "schema": null,
+     "verified": []
+    }
+   },
+   "section_edges": [],
+   "right_angle_drawn": {},
+   "scene_sha256": "84ea91ae02fc60abb2099171190309272a02d37922e44b5ae769308175902c79"
+  },
+  "COMP:dp_unnamed_midpoint_goal": {
+   "status": "SERVED",
+   "audit": {
+    "violations": {},
+    "violation_count": 0,
+    "objects": 14,
+    "events": 7,
+    "steps": 7,
+    "orphans_independent": [],
+    "unused_auxiliary_flagged": [],
+    "orphans_not_flagged": []
+   },
+   "measures": [
+    {
+     "object": "kq_q1",
+     "step": 6,
+     "generic": false,
+     "has_measured_quantity": true
+    }
+   ],
+   "fingerprint": {
+    "answer_exact": {
+     "q1": {
+      "coef": "1/2",
+      "dim": 1,
+      "unit": "a"
+     }
+    },
+    "points": {
+     "A": [
+      "0",
+      "0",
+      "0"
+     ],
+     "B": [
+      "1",
+      "0",
+      "0"
+     ],
+     "C": [
+      "1",
+      "1",
+      "0"
+     ],
+     "D": [
+      "0",
+      "1",
+      "0"
+     ],
+     "S": [
+      "0",
+      "0",
+      "1"
+     ],
+     "M": [
+      "1/2",
+      "1/2",
+      "1/2"
+     ]
+    },
+    "sections": {},
+    "angle_constructions": {},
+    "certificate": {
+     "schema": null,
+     "verified": []
+    }
+   },
+   "section_edges": [],
+   "right_angle_drawn": {},
+   "scene_sha256": "db0ee7d8d2333371f7587dadafa1c6d31be6ba5949e858f10f52e0e7201bfa09"
+  },
+  "COMP:dp_unnamed_centroid_goal": {
+   "status": "SERVED",
+   "audit": {
+    "violations": {},
+    "violation_count": 0,
+    "objects": 15,
+    "events": 8,
+    "steps": 8,
+    "orphans_independent": [],
+    "unused_auxiliary_flagged": [],
+    "orphans_not_flagged": []
+   },
+   "measures": [
+    {
+     "object": "kq_q1",
+     "step": 7,
+     "generic": false,
+     "has_measured_quantity": true
+    }
+   ],
+   "fingerprint": {
+    "answer_exact": {
+     "q1": {
+      "coef": "1/3",
+      "dim": 1,
+      "unit": "a"
+     }
+    },
+    "points": {
+     "A": [
+      "0",
+      "0",
+      "0"
+     ],
+     "B": [
+      "1",
+      "0",
+      "0"
+     ],
+     "C": [
+      "1",
+      "1",
+      "0"
+     ],
+     "D": [
+      "0",
+      "1",
+      "0"
+     ],
+     "S": [
+      "0",
+      "0",
+      "1"
+     ],
+     "G_mid_CS": [
+      "1/2",
+      "1/2",
+      "1/2"
+     ],
+     "G": [
+      "2/3",
+      "1/3",
+      "1/3"
+     ]
+    },
+    "sections": {},
+    "angle_constructions": {},
+    "certificate": {
+     "schema": null,
+     "verified": []
+    }
+   },
+   "section_edges": [],
+   "right_angle_drawn": {},
+   "scene_sha256": "a07b04abb0388aef056d091d6e43ebdf5a5d5c9543eb1563bf84f89b37225949"
+  },
+  "COMP:dp_unnamed_through_point": {
+   "status": "REFUSED"
+  },
+  "COMP:dp_free_point": {
+   "status": "REFUSED"
+  },
+  "COMP:dp_free_point_goi": {
+   "status": "REFUSED"
+  },
+  "COMP:dp_midpoint_as_goal": {
+   "status": "REFUSED"
+  },
+  "COMP:dp_reflection": {
+   "status": "REFUSED"
+  },
+  "COMP:dp_projection_unnamed_image": {
+   "status": "REFUSED"
+  },
+  "COMP:dp_redefined_conflict": {
+   "status": "REFUSED"
+  },
+  "COMP:goal_angle_line_plane": {
+   "status": "SERVED",
+   "audit": {
+    "violations": {},
+    "violation_count": 0,
+    "objects": 12,
+    "events": 7,
+    "steps": 7,
+    "orphans_independent": [],
+    "unused_auxiliary_flagged": [],
+    "orphans_not_flagged": []
+   },
+   "measures": [
+    {
+     "object": "kq_q1",
+     "step": 6,
+     "generic": false,
+     "has_measured_quantity": true
+    }
+   ],
+   "fingerprint": {
+    "answer_exact": {
+     "q1": {
+      "coef": "1/2",
+      "dim": 0,
+      "unit": null
+     }
+    },
+    "points": {
+     "A": [
+      "0",
+      "0",
+      "0"
+     ],
+     "B": [
+      "1",
+      "0",
+      "0"
+     ],
+     "C": [
+      "0",
+      "1",
+      "0"
+     ],
+     "S": [
+      "0",
+      "0",
+      "1"
+     ]
+    },
+    "sections": {},
+    "angle_constructions": {
+     "kq_q1": {
+      "relation": "line_plane",
+      "vertex": [
+       "1",
+       "0",
+       "0"
+      ],
+      "vertex_id": "B"
+     }
+    },
+    "certificate": {
+     "schema": null,
+     "verified": []
+    }
+   },
+   "section_edges": [],
+   "right_angle_drawn": {},
+   "scene_sha256": "7a15d52953a32896520af8a4b4659ed84fbfa7be1ef1c1c259f7503c1e67d329"
+  },
+  "COMP:goal_cos_line_plane": {
+   "status": "SERVED",
+   "audit": {
+    "violations": {},
+    "violation_count": 0,
+    "objects": 12,
+    "events": 7,
+    "steps": 7,
+    "orphans_independent": [],
+    "unused_auxiliary_flagged": [],
+    "orphans_not_flagged": []
+   },
+   "measures": [
+    {
+     "object": "kq_q1",
+     "step": 6,
+     "generic": false,
+     "has_measured_quantity": true
+    }
+   ],
+   "fingerprint": {
+    "answer_exact": {
+     "q1": {
+      "coef": "1/2",
+      "dim": 0,
+      "unit": null
+     }
+    },
+    "points": {
+     "A": [
+      "0",
+      "0",
+      "0"
+     ],
+     "B": [
+      "1",
+      "0",
+      "0"
+     ],
+     "C": [
+      "0",
+      "1",
+      "0"
+     ],
+     "S": [
+      "0",
+      "0",
+      "1"
+     ]
+    },
+    "sections": {},
+    "angle_constructions": {
+     "kq_q1": {
+      "relation": "line_plane",
+      "vertex": [
+       "1",
+       "0",
+       "0"
+      ],
+      "vertex_id": "B"
+     }
+    },
+    "certificate": {
+     "schema": null,
+     "verified": []
+    }
+   },
+   "section_edges": [],
+   "right_angle_drawn": {},
+   "scene_sha256": "7a15d52953a32896520af8a4b4659ed84fbfa7be1ef1c1c259f7503c1e67d329"
+  },
+  "COMP:goal_cos_spelled": {
+   "status": "SERVED",
+   "audit": {
+    "violations": {},
+    "violation_count": 0,
+    "objects": 12,
+    "events": 7,
+    "steps": 7,
+    "orphans_independent": [],
+    "unused_auxiliary_flagged": [],
+    "orphans_not_flagged": []
+   },
+   "measures": [
+    {
+     "object": "kq_q1",
+     "step": 6,
+     "generic": false,
+     "has_measured_quantity": true
+    }
+   ],
+   "fingerprint": {
+    "answer_exact": {
+     "q1": {
+      "coef": "1/2",
+      "dim": 0,
+      "unit": null
+     }
+    },
+    "points": {
+     "A": [
+      "0",
+      "0",
+      "0"
+     ],
+     "B": [
+      "1",
+      "0",
+      "0"
+     ],
+     "C": [
+      "0",
+      "1",
+      "0"
+     ],
+     "S": [
+      "0",
+      "0",
+      "1"
+     ]
+    },
+    "sections": {},
+    "angle_constructions": {
+     "kq_q1": {
+      "relation": "line_plane",
+      "vertex": [
+       "1",
+       "0",
+       "0"
+      ],
+      "vertex_id": "B"
+     }
+    },
+    "certificate": {
+     "schema": null,
+     "verified": []
+    }
+   },
+   "section_edges": [],
+   "right_angle_drawn": {},
+   "scene_sha256": "7a15d52953a32896520af8a4b4659ed84fbfa7be1ef1c1c259f7503c1e67d329"
+  },
+  "COMP:goal_tan_line_plane": {
+   "status": "SERVED",
+   "audit": {
+    "violations": {},
+    "violation_count": 0,
+    "objects": 12,
+    "events": 7,
+    "steps": 7,
+    "orphans_independent": [],
+    "unused_auxiliary_flagged": [],
+    "orphans_not_flagged": []
+   },
+   "measures": [
+    {
+     "object": "kq_q1",
+     "step": 6,
+     "generic": false,
+     "has_measured_quantity": true
+    }
+   ],
+   "fingerprint": {
+    "answer_exact": {
+     "q1": {
+      "coef": "1/2",
+      "dim": 0,
+      "unit": null
+     }
+    },
+    "points": {
+     "A": [
+      "0",
+      "0",
+      "0"
+     ],
+     "B": [
+      "1",
+      "0",
+      "0"
+     ],
+     "C": [
+      "0",
+      "1",
+      "0"
+     ],
+     "S": [
+      "0",
+      "0",
+      "1"
+     ]
+    },
+    "sections": {},
+    "angle_constructions": {
+     "kq_q1": {
+      "relation": "line_plane",
+      "vertex": [
+       "1",
+       "0",
+       "0"
+      ],
+      "vertex_id": "B"
+     }
+    },
+    "certificate": {
+     "schema": null,
+     "verified": []
+    }
+   },
+   "section_edges": [],
+   "right_angle_drawn": {},
+   "scene_sha256": "7a15d52953a32896520af8a4b4659ed84fbfa7be1ef1c1c259f7503c1e67d329"
+  },
+  "COMP:goal_sin_mc_stem": {
+   "status": "SERVED",
+   "audit": {
+    "violations": {},
+    "violation_count": 0,
+    "objects": 12,
+    "events": 7,
+    "steps": 7,
+    "orphans_independent": [],
+    "unused_auxiliary_flagged": [],
+    "orphans_not_flagged": []
+   },
+   "measures": [
+    {
+     "object": "kq_q1",
+     "step": 6,
+     "generic": false,
+     "has_measured_quantity": true
+    }
+   ],
+   "fingerprint": {
+    "answer_exact": {
+     "q1": {
+      "coef": "1/2",
+      "dim": 0,
+      "unit": null
+     }
+    },
+    "points": {
+     "A": [
+      "0",
+      "0",
+      "0"
+     ],
+     "B": [
+      "1",
+      "0",
+      "0"
+     ],
+     "C": [
+      "0",
+      "1",
+      "0"
+     ],
+     "S": [
+      "0",
+      "0",
+      "1"
+     ]
+    },
+    "sections": {},
+    "angle_constructions": {
+     "kq_q1": {
+      "relation": "line_plane",
+      "vertex": [
+       "1",
+       "0",
+       "0"
+      ],
+      "vertex_id": "B"
+     }
+    },
+    "certificate": {
+     "schema": null,
+     "verified": []
+    }
+   },
+   "section_edges": [],
+   "right_angle_drawn": {},
+   "scene_sha256": "7a15d52953a32896520af8a4b4659ed84fbfa7be1ef1c1c259f7503c1e67d329"
+  },
+  "COMP:goal_cos_planes": {
+   "status": "SERVED",
+   "audit": {
+    "violations": {},
+    "violation_count": 0,
+    "objects": 18,
+    "events": 8,
+    "steps": 8,
+    "orphans_independent": [],
+    "unused_auxiliary_flagged": [],
+    "orphans_not_flagged": []
+   },
+   "measures": [
+    {
+     "object": "kq_q1",
+     "step": 7,
+     "generic": false,
+     "has_measured_quantity": true
+    }
+   ],
+   "fingerprint": {
+    "answer_exact": {
+     "q1": {
+      "coef": "1/4",
+      "dim": 0,
+      "unit": null
+     }
+    },
+    "points": {
+     "A": [
+      "0",
+      "0",
+      "0"
+     ],
+     "B": [
+      "1",
+      "0",
+      "0"
+     ],
+     "C": [
+      "1",
+      "1",
+      "0"
+     ],
+     "D": [
+      "0",
+      "1",
+      "0"
+     ],
+     "A_prime": [
+      "0",
+      "0",
+      "1"
+     ],
+     "B_prime": [
+      "1",
+      "0",
+      "1"
+     ],
+     "C_prime": [
+      "1",
+      "1",
+      "1"
+     ],
+     "D_prime": [
+      "0",
+      "1",
+      "1"
+     ]
+    },
+    "sections": {},
+    "angle_constructions": {
+     "kq_q1": {
+      "relation": "plane_plane",
+      "vertex": [
+       "1",
+       "0",
+       "0"
+      ],
+      "vertex_id": "B"
+     }
+    },
+    "certificate": {
+     "schema": null,
+     "verified": []
+    }
+   },
+   "section_edges": [],
+   "right_angle_drawn": {},
+   "scene_sha256": "b43800f20f552a3d78797feccbf2ee2bc950c5456581ccd698e01107c44cafb1"
+  },
+  "COMP:goal_cos_lines": {
+   "status": "SERVED",
+   "audit": {
+    "violations": {},
+    "violation_count": 0,
+    "objects": 18,
+    "events": 8,
+    "steps": 8,
+    "orphans_independent": [],
+    "unused_auxiliary_flagged": [],
+    "orphans_not_flagged": []
+   },
+   "measures": [
+    {
+     "object": "kq_q1",
+     "step": 7,
+     "generic": false,
+     "has_measured_quantity": true
+    }
+   ],
+   "fingerprint": {
+    "answer_exact": {
+     "q1": {
+      "coef": "1/4",
+      "dim": 0,
+      "unit": null
+     }
+    },
+    "points": {
+     "A": [
+      "0",
+      "0",
+      "0"
+     ],
+     "B": [
+      "1",
+      "0",
+      "0"
+     ],
+     "C": [
+      "1",
+      "1",
+      "0"
+     ],
+     "D": [
+      "0",
+      "1",
+      "0"
+     ],
+     "A_prime": [
+      "0",
+      "0",
+      "1"
+     ],
+     "B_prime": [
+      "1",
+      "0",
+      "1"
+     ],
+     "C_prime": [
+      "1",
+      "1",
+      "1"
+     ],
+     "D_prime": [
+      "0",
+      "1",
+      "1"
+     ]
+    },
+    "sections": {},
+    "angle_constructions": {
+     "kq_q1": {
+      "relation": "line_line_skew",
+      "vertex": [
+       "1",
+       "1",
+       "0"
+      ],
+      "vertex_id": "C"
+     }
+    },
+    "certificate": {
+     "schema": null,
+     "verified": []
+    }
+   },
+   "section_edges": [],
+   "right_angle_drawn": {},
+   "scene_sha256": "ff1ff05569ad9baa28adea5276ad9aaa7ba50d4acff49196f23705370a659280"
+  },
+  "COMP:goal_tan_right_angle": {
+   "status": "SERVED",
+   "audit": {
+    "violations": {},
+    "violation_count": 0,
+    "objects": 14,
+    "events": 7,
+    "steps": 7,
+    "orphans_independent": [],
+    "unused_auxiliary_flagged": [],
+    "orphans_not_flagged": []
+   },
+   "measures": [
+    {
+     "object": "kq_q1",
+     "step": 6,
+     "generic": false,
+     "has_measured_quantity": true
+    }
+   ],
+   "fingerprint": {
+    "answer_exact": {
+     "q1": {
+      "coef": "0",
+      "dim": 0,
+      "unit": null
+     }
+    },
+    "points": {
+     "A": [
+      "0",
+      "0",
+      "0"
+     ],
+     "B": [
+      "1",
+      "0",
+      "0"
+     ],
+     "C": [
+      "1",
+      "1",
+      "0"
+     ],
+     "D": [
+      "0",
+      "1",
+      "0"
+     ],
+     "S": [
+      "0",
+      "0",
+      "1"
+     ]
+    },
+    "sections": {},
+    "angle_constructions": {},
+    "certificate": {
+     "schema": null,
+     "verified": []
+    }
+   },
+   "section_edges": [],
+   "right_angle_drawn": {
+    "kq_q1": "line_perpendicular_plane"
+   },
+   "scene_sha256": "3646aa9a03073e6a938c203f1672796064b5ecef2bf6de439b2befc703442914"
+  },
+  "COMP:goal_cos_scale_free": {
+   "status": "SERVED",
+   "audit": {
+    "violations": {},
+    "violation_count": 0,
+    "objects": 10,
+    "events": 6,
+    "steps": 6,
+    "orphans_independent": [],
+    "unused_auxiliary_flagged": [],
+    "orphans_not_flagged": []
+   },
+   "measures": [
+    {
+     "object": "kq_q1",
+     "step": 5,
+     "generic": false,
+     "has_measured_quantity": true
+    }
+   ],
+   "fingerprint": {
+    "answer_exact": {
+     "q1": {
+      "coef": "1/12",
+      "dim": 0,
+      "unit": null
+     }
+    },
+    "points": {
+     "B": [
+      "0",
+      "0",
+      "0"
+     ],
+     "C": [
+      "1",
+      "0",
+      "0"
+     ],
+     "D": [
+      "0",
+      "1",
+      "0"
+     ],
+     "A": [
+      "1/3",
+      "1/3",
+      "1"
+     ],
+     "M": [
+      "1/2",
+      "1/2",
+      "0"
+     ],
+     "O": [
+      "1/3",
+      "1/3",
+      "0"
+     ]
+    },
+    "sections": {},
+    "angle_constructions": {
+     "kq_q1": {
+      "relation": "line_line_skew",
+      "vertex": [
+       "1",
+       "0",
+       "0"
+      ],
+      "vertex_id": "C"
+     }
+    },
+    "certificate": {
+     "schema": "similarity-scale-certificate/1",
+     "verified": []
+    }
+   },
+   "section_edges": [],
+   "right_angle_drawn": {},
+   "scene_sha256": "f953c5518141104cbd687c8a9b745ef75b7bc2ca39c53e7ab449066505a5e957"
+  },
+  "COMP:goal_cos_of_length_neg": {
+   "status": "REFUSED"
+  },
+  "COMP:goal_cos_squared_neg": {
+   "status": "REFUSED"
+  },
+  "COMP:goal_cos_given_premise_neg": {
+   "status": "REFUSED"
+  },
+  "COMP:goal_cos_wrong_object_neg": {
+   "status": "REFUSED"
+  },
+  "COMP:proof_only": {
+   "status": "REFUSED"
+  },
+  "COMP:proof_premise_not_given": {
+   "status": "REFUSED"
+  },
+  "COMP:amb_plane_not_unique": {
+   "status": "REFUSED"
+  },
+  "COMP:contra_two_lengths": {
+   "status": "REFUSED"
+  },
+  "COMP:contra_skew_intersection": {
+   "status": "REFUSED"
+  },
+  "COMP:diagram_fact": {
+   "status": "REFUSED"
+  },
+  "COMP:scale_iso_planes": {
+   "status": "SERVED",
+   "audit": {
+    "violations": {},
+    "violation_count": 0,
+    "objects": 12,
+    "events": 7,
+    "steps": 7,
+    "orphans_independent": [],
+    "unused_auxiliary_flagged": [],
+    "orphans_not_flagged": []
+   },
+   "measures": [
+    {
+     "object": "kq_q1",
+     "step": 6,
+     "generic": false,
+     "has_measured_quantity": true
+    }
+   ],
+   "fingerprint": {
+    "answer_exact": {
+     "q1": {
+      "coef": "1/3",
+      "dim": 0,
+      "unit": null
+     }
+    },
+    "points": {
+     "A": [
+      "0",
+      "0",
+      "0"
+     ],
+     "B": [
+      "1",
+      "0",
+      "0"
+     ],
+     "C": [
+      "0",
+      "1",
+      "0"
+     ],
+     "S": [
+      "0",
+      "0",
+      "1"
+     ]
+    },
+    "sections": {},
+    "angle_constructions": {
+     "kq_q1": {
+      "relation": "plane_plane",
+      "vertex": [
+       "1/2",
+       "0",
+       "1/2"
+      ],
+      "vertex_id": null
+     }
+    },
+    "certificate": {
+     "schema": "similarity-scale-certificate/1",
+     "verified": []
+    }
+   },
+   "section_edges": [],
+   "right_angle_drawn": {},
+   "scene_sha256": "9c8e996e86c9fc2b151cc538f06bc90b908f5ba89421b95c9b4cf192e7cb340b"
+  },
+  "COMP:scale_iso_tan": {
+   "status": "SERVED",
+   "audit": {
+    "violations": {},
+    "violation_count": 0,
+    "objects": 12,
+    "events": 7,
+    "steps": 7,
+    "orphans_independent": [],
+    "unused_auxiliary_flagged": [],
+    "orphans_not_flagged": []
+   },
+   "measures": [
+    {
+     "object": "kq_q1",
+     "step": 6,
+     "generic": false,
+     "has_measured_quantity": true
+    }
+   ],
+   "fingerprint": {
+    "answer_exact": {
+     "q1": {
+      "coef": "1/3",
+      "dim": 0,
+      "unit": null
+     }
+    },
+    "points": {
+     "A": [
+      "0",
+      "0",
+      "0"
+     ],
+     "B": [
+      "1",
+      "0",
+      "0"
+     ],
+     "C": [
+      "0",
+      "1",
+      "0"
+     ],
+     "S": [
+      "0",
+      "0",
+      "1"
+     ]
+    },
+    "sections": {},
+    "angle_constructions": {
+     "kq_q1": {
+      "relation": "plane_plane",
+      "vertex": [
+       "1/2",
+       "0",
+       "1/2"
+      ],
+      "vertex_id": null
+     }
+    },
+    "certificate": {
+     "schema": "similarity-scale-certificate/1",
+     "verified": []
+    }
+   },
+   "section_edges": [],
+   "right_angle_drawn": {},
+   "scene_sha256": "9c8e996e86c9fc2b151cc538f06bc90b908f5ba89421b95c9b4cf192e7cb340b"
+  },
+  "COMP:scale_iso_line_plane": {
+   "status": "SERVED",
+   "audit": {
+    "violations": {},
+    "violation_count": 0,
+    "objects": 12,
+    "events": 7,
+    "steps": 7,
+    "orphans_independent": [],
+    "unused_auxiliary_flagged": [],
+    "orphans_not_flagged": []
+   },
+   "measures": [
+    {
+     "object": "kq_q1",
+     "step": 6,
+     "generic": false,
+     "has_measured_quantity": true
+    }
+   ],
+   "fingerprint": {
+    "answer_exact": {
+     "q1": {
+      "coef": "1/2",
+      "dim": 0,
+      "unit": null
+     }
+    },
+    "points": {
+     "A": [
+      "0",
+      "0",
+      "0"
+     ],
+     "B": [
+      "1",
+      "0",
+      "0"
+     ],
+     "C": [
+      "0",
+      "1",
+      "0"
+     ],
+     "S": [
+      "0",
+      "0",
+      "1"
+     ]
+    },
+    "sections": {},
+    "angle_constructions": {
+     "kq_q1": {
+      "relation": "line_plane",
+      "vertex": [
+       "1",
+       "0",
+       "0"
+      ],
+      "vertex_id": "B"
+     }
+    },
+    "certificate": {
+     "schema": "similarity-scale-certificate/1",
+     "verified": []
+    }
+   },
+   "section_edges": [],
+   "right_angle_drawn": {},
+   "scene_sha256": "bc05d9a14b181dabec08b74bec977b909460adada603c27cc5da653bc78c3ad2"
+  },
+  "COMP:scale_iso_renamed": {
+   "status": "SERVED",
+   "audit": {
+    "violations": {},
+    "violation_count": 0,
+    "objects": 12,
+    "events": 7,
+    "steps": 7,
+    "orphans_independent": [],
+    "unused_auxiliary_flagged": [],
+    "orphans_not_flagged": []
+   },
+   "measures": [
+    {
+     "object": "kq_q1",
+     "step": 6,
+     "generic": false,
+     "has_measured_quantity": true
+    }
+   ],
+   "fingerprint": {
+    "answer_exact": {
+     "q1": {
+      "coef": "1/3",
+      "dim": 0,
+      "unit": null
+     }
+    },
+    "points": {
+     "X": [
+      "0",
+      "0",
+      "0"
+     ],
+     "Y": [
+      "1",
+      "0",
+      "0"
+     ],
+     "Z": [
+      "0",
+      "1",
+      "0"
+     ],
+     "T": [
+      "0",
+      "0",
+      "1"
+     ]
+    },
+    "sections": {},
+    "angle_constructions": {
+     "kq_q1": {
+      "relation": "plane_plane",
+      "vertex": [
+       "1/2",
+       "0",
+       "1/2"
+      ],
+      "vertex_id": null
+     }
+    },
+    "certificate": {
+     "schema": "similarity-scale-certificate/1",
+     "verified": []
+    }
+   },
+   "section_edges": [],
+   "right_angle_drawn": {},
+   "scene_sha256": "83d08052e129de29541d4e9c51989a041dacd424c9f8242be225f4015cd1815f"
+  },
+  "COMP:scale_iso_with_length": {
+   "status": "SERVED",
+   "audit": {
+    "violations": {},
+    "violation_count": 0,
+    "objects": 12,
+    "events": 7,
+    "steps": 7,
+    "orphans_independent": [],
+    "unused_auxiliary_flagged": [],
+    "orphans_not_flagged": []
+   },
+   "measures": [
+    {
+     "object": "kq_q1",
+     "step": 6,
+     "generic": false,
+     "has_measured_quantity": true
+    }
+   ],
+   "fingerprint": {
+    "answer_exact": {
+     "q1": {
+      "coef": "1/3",
+      "dim": 0,
+      "unit": null
+     }
+    },
+    "points": {
+     "A": [
+      "0",
+      "0",
+      "0"
+     ],
+     "B": [
+      "1",
+      "0",
+      "0"
+     ],
+     "C": [
+      "0",
+      "1",
+      "0"
+     ],
+     "S": [
+      "0",
+      "0",
+      "1"
+     ]
+    },
+    "sections": {},
+    "angle_constructions": {
+     "kq_q1": {
+      "relation": "plane_plane",
+      "vertex": [
+       "1/2",
+       "0",
+       "1/2"
+      ],
+      "vertex_id": null
+     }
+    },
+    "certificate": {
+     "schema": null,
+     "verified": []
+    }
+   },
+   "section_edges": [],
+   "right_angle_drawn": {},
+   "scene_sha256": "d912e94428a5026ed34ae3e968f33df04e5adf0b47bf04f9cf9f3eaf1bf933ef"
+  },
+  "COMP:scale_shape_free": {
+   "status": "SERVED",
+   "audit": {
+    "violations": {},
+    "violation_count": 0,
+    "objects": 12,
+    "events": 7,
+    "steps": 7,
+    "orphans_independent": [],
+    "unused_auxiliary_flagged": [],
+    "orphans_not_flagged": []
+   },
+   "measures": [
+    {
+     "object": "kq_q1",
+     "step": 6,
+     "generic": false,
+     "has_measured_quantity": true
+    }
+   ],
+   "fingerprint": {
+    "answer_exact": {
+     "q1": {
+      "coef": "1/2",
+      "dim": 0,
+      "unit": null
+     }
+    },
+    "points": {
+     "A": [
+      "0",
+      "0",
+      "0"
+     ],
+     "B": [
+      "1",
+      "0",
+      "0"
+     ],
+     "C": [
+      "0",
+      "1",
+      "0"
+     ],
+     "S": [
+      "0",
+      "0",
+      "1"
+     ]
+    },
+    "sections": {},
+    "angle_constructions": {
+     "kq_q1": {
+      "relation": "plane_plane",
+      "vertex": [
+       "1",
+       "0",
+       "0"
+      ],
+      "vertex_id": "B"
+     }
+    },
+    "certificate": {
+     "schema": "target-invariance-certificate/2",
+     "verified": [
+      true
+     ]
+    }
+   },
+   "section_edges": [],
+   "right_angle_drawn": {},
+   "scene_sha256": "314f8d34081ef8c7b227d6569546d17c1f25c031d23385368b5d5837f28909ec"
+  },
+  "COMP:scale_height_free": {
+   "status": "REFUSED"
+  },
+  "COMP:scale_absolute_volume": {
+   "status": "REFUSED"
+  },
+  "COMP:scale_regular_tetra_no_side": {
+   "status": "SERVED",
+   "audit": {
+    "violations": {},
+    "violation_count": 0,
+    "objects": 10,
+    "events": 6,
+    "steps": 6,
+    "orphans_independent": [],
+    "unused_auxiliary_flagged": [],
+    "orphans_not_flagged": []
+   },
+   "measures": [
+    {
+     "object": "kq_q1",
+     "step": 5,
+     "generic": false,
+     "has_measured_quantity": true
+    }
+   ],
+   "fingerprint": {
+    "answer_exact": {
+     "q1": {
+      "coef": "1/12",
+      "dim": 0,
+      "unit": null
+     }
+    },
+    "points": {
+     "B": [
+      "0",
+      "0",
+      "0"
+     ],
+     "C": [
+      "1",
+      "0",
+      "0"
+     ],
+     "D": [
+      "0",
+      "1",
+      "0"
+     ],
+     "A": [
+      "1/3",
+      "1/3",
+      "1"
+     ],
+     "M": [
+      "1/2",
+      "1/2",
+      "0"
+     ],
+     "O": [
+      "1/3",
+      "1/3",
+      "0"
+     ]
+    },
+    "sections": {},
+    "angle_constructions": {
+     "kq_q1": {
+      "relation": "line_line_skew",
+      "vertex": [
+       "1",
+       "0",
+       "0"
+      ],
+      "vertex_id": "C"
+     }
+    },
+    "certificate": {
+     "schema": "similarity-scale-certificate/1",
+     "verified": []
+    }
+   },
+   "section_edges": [],
+   "right_angle_drawn": {},
+   "scene_sha256": "f953c5518141104cbd687c8a9b745ef75b7bc2ca39c53e7ab449066505a5e957"
+  },
+  "COMP:ti_right_b_planes": {
+   "status": "SERVED",
+   "audit": {
+    "violations": {},
+    "violation_count": 0,
+    "objects": 12,
+    "events": 7,
+    "steps": 7,
+    "orphans_independent": [],
+    "unused_auxiliary_flagged": [],
+    "orphans_not_flagged": []
+   },
+   "measures": [
+    {
+     "object": "kq_q1",
+     "step": 6,
+     "generic": false,
+     "has_measured_quantity": true
+    }
+   ],
+   "fingerprint": {
+    "answer_exact": {
+     "q1": {
+      "coef": "1/2",
+      "dim": 0,
+      "unit": null
+     }
+    },
+    "points": {
+     "A": [
+      "0",
+      "0",
+      "0"
+     ],
+     "B": [
+      "1",
+      "0",
+      "0"
+     ],
+     "C": [
+      "0",
+      "1",
+      "0"
+     ],
+     "S": [
+      "0",
+      "0",
+      "1"
+     ]
+    },
+    "sections": {},
+    "angle_constructions": {
+     "kq_q1": {
+      "relation": "plane_plane",
+      "vertex": [
+       "1",
+       "0",
+       "0"
+      ],
+      "vertex_id": "B"
+     }
+    },
+    "certificate": {
+     "schema": "target-invariance-certificate/2",
+     "verified": [
+      true
+     ]
+    }
+   },
+   "section_edges": [],
+   "right_angle_drawn": {},
+   "scene_sha256": "314f8d34081ef8c7b227d6569546d17c1f25c031d23385368b5d5837f28909ec"
+  },
+  "COMP:ti_right_b_tan": {
+   "status": "SERVED",
+   "audit": {
+    "violations": {},
+    "violation_count": 0,
+    "objects": 12,
+    "events": 7,
+    "steps": 7,
+    "orphans_independent": [],
+    "unused_auxiliary_flagged": [],
+    "orphans_not_flagged": []
+   },
+   "measures": [
+    {
+     "object": "kq_q1",
+     "step": 6,
+     "generic": false,
+     "has_measured_quantity": true
+    }
+   ],
+   "fingerprint": {
+    "answer_exact": {
+     "q1": {
+      "coef": "1/2",
+      "dim": 0,
+      "unit": null
+     }
+    },
+    "points": {
+     "A": [
+      "0",
+      "0",
+      "0"
+     ],
+     "B": [
+      "1",
+      "0",
+      "0"
+     ],
+     "C": [
+      "0",
+      "1",
+      "0"
+     ],
+     "S": [
+      "0",
+      "0",
+      "1"
+     ]
+    },
+    "sections": {},
+    "angle_constructions": {
+     "kq_q1": {
+      "relation": "plane_plane",
+      "vertex": [
+       "1",
+       "0",
+       "0"
+      ],
+      "vertex_id": "B"
+     }
+    },
+    "certificate": {
+     "schema": "target-invariance-certificate/2",
+     "verified": [
+      true
+     ]
+    }
+   },
+   "section_edges": [],
+   "right_angle_drawn": {},
+   "scene_sha256": "314f8d34081ef8c7b227d6569546d17c1f25c031d23385368b5d5837f28909ec"
+  },
+  "COMP:ti_renamed": {
+   "status": "SERVED",
+   "audit": {
+    "violations": {},
+    "violation_count": 0,
+    "objects": 12,
+    "events": 7,
+    "steps": 7,
+    "orphans_independent": [],
+    "unused_auxiliary_flagged": [],
+    "orphans_not_flagged": []
+   },
+   "measures": [
+    {
+     "object": "kq_q1",
+     "step": 6,
+     "generic": false,
+     "has_measured_quantity": true
+    }
+   ],
+   "fingerprint": {
+    "answer_exact": {
+     "q1": {
+      "coef": "1/2",
+      "dim": 0,
+      "unit": null
+     }
+    },
+    "points": {
+     "X": [
+      "0",
+      "0",
+      "0"
+     ],
+     "Y": [
+      "1",
+      "0",
+      "0"
+     ],
+     "Z": [
+      "0",
+      "1",
+      "0"
+     ],
+     "T": [
+      "0",
+      "0",
+      "1"
+     ]
+    },
+    "sections": {},
+    "angle_constructions": {
+     "kq_q1": {
+      "relation": "plane_plane",
+      "vertex": [
+       "1",
+       "0",
+       "0"
+      ],
+      "vertex_id": "Y"
+     }
+    },
+    "certificate": {
+     "schema": "target-invariance-certificate/2",
+     "verified": [
+      true
+     ]
+    }
+   },
+   "section_edges": [],
+   "right_angle_drawn": {},
+   "scene_sha256": "6f621bf67a4d5f3662117efc0bb64f8ecdcbbc73c261ca1932c400d20af33ce8"
+  },
+  "COMP:ti_varying_line_plane": {
+   "status": "REFUSED"
+  },
+  "COMP:ti_height_free": {
+   "status": "REFUSED"
+  },
+  "COMP:ti_absolute_volume": {
+   "status": "REFUSED"
+  },
+  "COMP:tet_lines": {
+   "status": "SERVED",
+   "audit": {
+    "violations": {},
+    "violation_count": 0,
+    "objects": 10,
+    "events": 6,
+    "steps": 6,
+    "orphans_independent": [],
+    "unused_auxiliary_flagged": [],
+    "orphans_not_flagged": []
+   },
+   "measures": [
+    {
+     "object": "kq_q1",
+     "step": 5,
+     "generic": false,
+     "has_measured_quantity": true
+    }
+   ],
+   "fingerprint": {
+    "answer_exact": {
+     "q1": {
+      "coef": "1/12",
+      "dim": 0,
+      "unit": null
+     }
+    },
+    "points": {
+     "B": [
+      "0",
+      "0",
+      "0"
+     ],
+     "C": [
+      "1",
+      "0",
+      "0"
+     ],
+     "D": [
+      "0",
+      "1",
+      "0"
+     ],
+     "A": [
+      "1/3",
+      "1/3",
+      "1"
+     ],
+     "M": [
+      "1/2",
+      "1/2",
+      "0"
+     ],
+     "O": [
+      "1/3",
+      "1/3",
+      "0"
+     ]
+    },
+    "sections": {},
+    "angle_constructions": {
+     "kq_q1": {
+      "relation": "line_line_skew",
+      "vertex": [
+       "1",
+       "0",
+       "0"
+      ],
+      "vertex_id": "C"
+     }
+    },
+    "certificate": {
+     "schema": "similarity-scale-certificate/1",
+     "verified": []
+    }
+   },
+   "section_edges": [],
+   "right_angle_drawn": {},
+   "scene_sha256": "f953c5518141104cbd687c8a9b745ef75b7bc2ca39c53e7ab449066505a5e957"
+  },
+  "COMP:tet_cos_mc": {
+   "status": "SERVED",
+   "audit": {
+    "violations": {},
+    "violation_count": 0,
+    "objects": 10,
+    "events": 6,
+    "steps": 6,
+    "orphans_independent": [],
+    "unused_auxiliary_flagged": [],
+    "orphans_not_flagged": []
+   },
+   "measures": [
+    {
+     "object": "kq_q1",
+     "step": 5,
+     "generic": false,
+     "has_measured_quantity": true
+    }
+   ],
+   "fingerprint": {
+    "answer_exact": {
+     "q1": {
+      "coef": "1/12",
+      "dim": 0,
+      "unit": null
+     }
+    },
+    "points": {
+     "B": [
+      "0",
+      "0",
+      "0"
+     ],
+     "C": [
+      "1",
+      "0",
+      "0"
+     ],
+     "D": [
+      "0",
+      "1",
+      "0"
+     ],
+     "A": [
+      "1/3",
+      "1/3",
+      "1"
+     ],
+     "M": [
+      "1/2",
+      "1/2",
+      "0"
+     ],
+     "O": [
+      "1/3",
+      "1/3",
+      "0"
+     ]
+    },
+    "sections": {},
+    "angle_constructions": {
+     "kq_q1": {
+      "relation": "line_line_skew",
+      "vertex": [
+       "1",
+       "0",
+       "0"
+      ],
+      "vertex_id": "C"
+     }
+    },
+    "certificate": {
+     "schema": "similarity-scale-certificate/1",
+     "verified": []
+    }
+   },
+   "section_edges": [],
+   "right_angle_drawn": {},
+   "scene_sha256": "f953c5518141104cbd687c8a9b745ef75b7bc2ca39c53e7ab449066505a5e957"
+  },
+  "COMP:tet_renamed": {
+   "status": "SERVED",
+   "audit": {
+    "violations": {},
+    "violation_count": 0,
+    "objects": 10,
+    "events": 6,
+    "steps": 6,
+    "orphans_independent": [],
+    "unused_auxiliary_flagged": [],
+    "orphans_not_flagged": []
+   },
+   "measures": [
+    {
+     "object": "kq_q1",
+     "step": 5,
+     "generic": false,
+     "has_measured_quantity": true
+    }
+   ],
+   "fingerprint": {
+    "answer_exact": {
+     "q1": {
+      "coef": "1/12",
+      "dim": 0,
+      "unit": null
+     }
+    },
+    "points": {
+     "Q": [
+      "0",
+      "0",
+      "0"
+     ],
+     "R": [
+      "1",
+      "0",
+      "0"
+     ],
+     "S": [
+      "0",
+      "1",
+      "0"
+     ],
+     "P": [
+      "1/3",
+      "1/3",
+      "1"
+     ],
+     "K": [
+      "1/2",
+      "1/2",
+      "0"
+     ],
+     "O": [
+      "1/3",
+      "1/3",
+      "0"
+     ]
+    },
+    "sections": {},
+    "angle_constructions": {
+     "kq_q1": {
+      "relation": "line_line_skew",
+      "vertex": [
+       "1",
+       "0",
+       "0"
+      ],
+      "vertex_id": "R"
+     }
+    },
+    "certificate": {
+     "schema": "similarity-scale-certificate/1",
+     "verified": []
+    }
+   },
+   "section_edges": [],
+   "right_angle_drawn": {},
+   "scene_sha256": "14edfd4de4b6a792286a1d6b0ad4af96f225f033ca30926c20d9cb295cd9e44d"
+  },
+  "COMP:tet_with_side": {
+   "status": "SERVED",
+   "audit": {
+    "violations": {},
+    "violation_count": 0,
+    "objects": 10,
+    "events": 6,
+    "steps": 6,
+    "orphans_independent": [],
+    "unused_auxiliary_flagged": [],
+    "orphans_not_flagged": []
+   },
+   "measures": [
+    {
+     "object": "kq_q1",
+     "step": 5,
+     "generic": false,
+     "has_measured_quantity": true
+    }
+   ],
+   "fingerprint": {
+    "answer_exact": {
+     "q1": {
+      "coef": "1/12",
+      "dim": 0,
+      "unit": null
+     }
+    },
+    "points": {
+     "B": [
+      "0",
+      "0",
+      "0"
+     ],
+     "C": [
+      "1",
+      "0",
+      "0"
+     ],
+     "D": [
+      "0",
+      "1",
+      "0"
+     ],
+     "A": [
+      "1/3",
+      "1/3",
+      "1"
+     ],
+     "M": [
+      "1/2",
+      "1/2",
+      "0"
+     ],
+     "O": [
+      "1/3",
+      "1/3",
+      "0"
+     ]
+    },
+    "sections": {},
+    "angle_constructions": {
+     "kq_q1": {
+      "relation": "line_line_skew",
+      "vertex": [
+       "1",
+       "0",
+       "0"
+      ],
+      "vertex_id": "C"
+     }
+    },
+    "certificate": {
+     "schema": null,
+     "verified": []
+    }
+   },
+   "section_edges": [],
+   "right_angle_drawn": {},
+   "scene_sha256": "f9edcfa0e45061eeae4cb73093726433010285f2fc56798e41b50bf42b96b069"
+  },
+  "COMP:tet_edge_face": {
+   "status": "SERVED",
+   "audit": {
+    "violations": {},
+    "violation_count": 0,
+    "objects": 9,
+    "events": 5,
+    "steps": 5,
+    "orphans_independent": [],
+    "unused_auxiliary_flagged": [],
+    "orphans_not_flagged": []
+   },
+   "measures": [
+    {
+     "object": "kq_q1",
+     "step": 4,
+     "generic": false,
+     "has_measured_quantity": true
+    }
+   ],
+   "fingerprint": {
+    "answer_exact": {
+     "q1": {
+      "coef": "1/3",
+      "dim": 0,
+      "unit": null
+     }
+    },
+    "points": {
+     "B": [
+      "0",
+      "0",
+      "0"
+     ],
+     "C": [
+      "1",
+      "0",
+      "0"
+     ],
+     "D": [
+      "0",
+      "1",
+      "0"
+     ],
+     "A": [
+      "1/3",
+      "1/3",
+      "1"
+     ],
+     "O": [
+      "1/3",
+      "1/3",
+      "0"
+     ]
+    },
+    "sections": {},
+    "angle_constructions": {
+     "kq_q1": {
+      "relation": "line_plane",
+      "vertex": [
+       "0",
+       "0",
+       "0"
+      ],
+      "vertex_id": "B"
+     }
+    },
+    "certificate": {
+     "schema": "similarity-scale-certificate/1",
+     "verified": []
+    }
+   },
+   "section_edges": [],
+   "right_angle_drawn": {},
+   "scene_sha256": "049f2fd8e43bda6cb6604adf942bcf6ddd291d94028b339d54214ddb81848fd3"
+  },
+  "COMP:tet_not_regular": {
+   "status": "REFUSED"
+  },
+  "COMP:tet_regular_pyramid_only": {
+   "status": "REFUSED"
+  },
+  "COMP:tet_conflict": {
+   "status": "REFUSED"
+  },
+  "COMP:pa_ratio2_planes": {
+   "status": "SERVED",
+   "audit": {
+    "violations": {},
+    "violation_count": 0,
+    "objects": 12,
+    "events": 7,
+    "steps": 7,
+    "orphans_independent": [],
+    "unused_auxiliary_flagged": [],
+    "orphans_not_flagged": []
+   },
+   "measures": [
+    {
+     "object": "kq_q1",
+     "step": 6,
+     "generic": false,
+     "has_measured_quantity": true
+    }
+   ],
+   "fingerprint": {
+    "answer_exact": {
+     "q1": {
+      "coef": "1/5",
+      "dim": 0,
+      "unit": null
+     }
+    },
+    "points": {
+     "A": [
+      "0",
+      "0",
+      "0"
+     ],
+     "B": [
+      "1",
+      "0",
+      "0"
+     ],
+     "C": [
+      "0",
+      "1",
+      "0"
+     ],
+     "S": [
+      "0",
+      "0",
+      "1"
+     ]
+    },
+    "sections": {},
+    "angle_constructions": {
+     "kq_q1": {
+      "relation": "plane_plane",
+      "vertex": [
+       "1",
+       "0",
+       "0"
+      ],
+      "vertex_id": "B"
+     }
+    },
+    "certificate": {
+     "schema": "target-invariance-certificate/2",
+     "verified": [
+      true
+     ]
+    }
+   },
+   "section_edges": [],
+   "right_angle_drawn": {},
+   "scene_sha256": "de2ad0afed3afbd0d2987c1563c3feac0f2e866e1ae0ad629b64ce1f4d6840e0"
+  },
+  "COMP:pa_ratio2_tan": {
+   "status": "SERVED",
+   "audit": {
+    "violations": {},
+    "violation_count": 0,
+    "objects": 12,
+    "events": 7,
+    "steps": 7,
+    "orphans_independent": [],
+    "unused_auxiliary_flagged": [],
+    "orphans_not_flagged": []
+   },
+   "measures": [
+    {
+     "object": "kq_q1",
+     "step": 6,
+     "generic": false,
+     "has_measured_quantity": true
+    }
+   ],
+   "fingerprint": {
+    "answer_exact": {
+     "q1": {
+      "coef": "1/5",
+      "dim": 0,
+      "unit": null
+     }
+    },
+    "points": {
+     "A": [
+      "0",
+      "0",
+      "0"
+     ],
+     "B": [
+      "1",
+      "0",
+      "0"
+     ],
+     "C": [
+      "0",
+      "1",
+      "0"
+     ],
+     "S": [
+      "0",
+      "0",
+      "1"
+     ]
+    },
+    "sections": {},
+    "angle_constructions": {
+     "kq_q1": {
+      "relation": "plane_plane",
+      "vertex": [
+       "1",
+       "0",
+       "0"
+      ],
+      "vertex_id": "B"
+     }
+    },
+    "certificate": {
+     "schema": "target-invariance-certificate/2",
+     "verified": [
+      true
+     ]
+    }
+   },
+   "section_edges": [],
+   "right_angle_drawn": {},
+   "scene_sha256": "de2ad0afed3afbd0d2987c1563c3feac0f2e866e1ae0ad629b64ce1f4d6840e0"
+  },
+  "COMP:pa_source_perp_lines": {
+   "status": "SERVED",
+   "audit": {
+    "violations": {},
+    "violation_count": 0,
+    "objects": 12,
+    "events": 7,
+    "steps": 7,
+    "orphans_independent": [],
+    "unused_auxiliary_flagged": [],
+    "orphans_not_flagged": []
+   },
+   "measures": [
+    {
+     "object": "kq_q1",
+     "step": 6,
+     "generic": false,
+     "has_measured_quantity": true
+    }
+   ],
+   "fingerprint": {
+    "answer_exact": {
+     "q1": {
+      "coef": "1/2",
+      "dim": 0,
+      "unit": null
+     }
+    },
+    "points": {
+     "A": [
+      "0",
+      "0",
+      "0"
+     ],
+     "B": [
+      "1",
+      "0",
+      "0"
+     ],
+     "C": [
+      "0",
+      "1",
+      "0"
+     ],
+     "S": [
+      "0",
+      "0",
+      "1"
+     ]
+    },
+    "sections": {},
+    "angle_constructions": {
+     "kq_q1": {
+      "relation": "plane_plane",
+      "vertex": [
+       "1",
+       "0",
+       "0"
+      ],
+      "vertex_id": "B"
+     }
+    },
+    "certificate": {
+     "schema": "target-invariance-certificate/2",
+     "verified": [
+      true
+     ]
+    }
+   },
+   "section_edges": [],
+   "right_angle_drawn": {},
+   "scene_sha256": "a0225750b453f9ae60eddb130703d6d7fe9d5f34bc70167c6756d9fd46412127"
+  },
+  "COMP:pp_base": {
+   "status": "SERVED",
+   "audit": {
+    "violations": {},
+    "violation_count": 0,
+    "objects": 12,
+    "events": 7,
+    "steps": 7,
+    "orphans_independent": [],
+    "unused_auxiliary_flagged": [],
+    "orphans_not_flagged": []
+   },
+   "measures": [
+    {
+     "object": "kq_q1",
+     "step": 6,
+     "generic": false,
+     "has_measured_quantity": true
+    }
+   ],
+   "fingerprint": {
+    "answer_exact": {
+     "q1": {
+      "coef": "0",
+      "dim": 0,
+      "unit": null
+     }
+    },
+    "points": {
+     "A": [
+      "0",
+      "0",
+      "0"
+     ],
+     "B": [
+      "1",
+      "0",
+      "0"
+     ],
+     "C": [
+      "0",
+      "1",
+      "0"
+     ],
+     "S": [
+      "0",
+      "0",
+      "1"
+     ]
+    },
+    "sections": {},
+    "angle_constructions": {},
+    "certificate": {
+     "schema": "target-invariance-certificate/2",
+     "verified": [
+      true
+     ]
+    }
+   },
+   "section_edges": [],
+   "right_angle_drawn": {
+    "kq_q1": null
+   },
+   "scene_sha256": "a847eb62e459122f09ceac5f70db5b44e147daf655031ebe33746f79f0b180e6"
+  },
+  "COMP:pp_lateral": {
+   "status": "SERVED",
+   "audit": {
+    "violations": {},
+    "violation_count": 0,
+    "objects": 12,
+    "events": 7,
+    "steps": 7,
+    "orphans_independent": [],
+    "unused_auxiliary_flagged": [],
+    "orphans_not_flagged": []
+   },
+   "measures": [
+    {
+     "object": "kq_q1",
+     "step": 6,
+     "generic": false,
+     "has_measured_quantity": true
+    }
+   ],
+   "fingerprint": {
+    "answer_exact": {
+     "q1": {
+      "coef": "0",
+      "dim": 0,
+      "unit": null
+     }
+    },
+    "points": {
+     "A": [
+      "0",
+      "0",
+      "0"
+     ],
+     "B": [
+      "1",
+      "0",
+      "0"
+     ],
+     "C": [
+      "0",
+      "1",
+      "0"
+     ],
+     "S": [
+      "0",
+      "0",
+      "1"
+     ]
+    },
+    "sections": {},
+    "angle_constructions": {},
+    "certificate": {
+     "schema": "target-invariance-certificate/2",
+     "verified": [
+      true
+     ]
+    }
+   },
+   "section_edges": [],
+   "right_angle_drawn": {
+    "kq_q1": null
+   },
+   "scene_sha256": "19004e559c538207647b9640ff863a2a8b61dd67d597ebd2a26a1fc5ab15bf5f"
+  },
+  "COMP:lp_isosceles": {
+   "status": "SERVED",
+   "audit": {
+    "violations": {},
+    "violation_count": 0,
+    "objects": 12,
+    "events": 7,
+    "steps": 7,
+    "orphans_independent": [],
+    "unused_auxiliary_flagged": [],
+    "orphans_not_flagged": []
+   },
+   "measures": [
+    {
+     "object": "kq_q1",
+     "step": 6,
+     "generic": false,
+     "has_measured_quantity": true
+    }
+   ],
+   "fingerprint": {
+    "answer_exact": {
+     "q1": {
+      "coef": "1/2",
+      "dim": 0,
+      "unit": null
+     }
+    },
+    "points": {
+     "A": [
+      "0",
+      "0",
+      "0"
+     ],
+     "B": [
+      "1",
+      "0",
+      "0"
+     ],
+     "C": [
+      "0",
+      "1",
+      "0"
+     ],
+     "S": [
+      "0",
+      "0",
+      "1"
+     ]
+    },
+    "sections": {},
+    "angle_constructions": {
+     "kq_q1": {
+      "relation": "line_plane",
+      "vertex": [
+       "1",
+       "0",
+       "0"
+      ],
+      "vertex_id": "B"
+     }
+    },
+    "certificate": {
+     "schema": "target-invariance-certificate/2",
+     "verified": [
+      true
+     ]
+    }
+   },
+   "section_edges": [],
+   "right_angle_drawn": {},
+   "scene_sha256": "599e065eb5acb0cbc38bef274264d4baaead2d5b1be97810685bd564bd2f851c"
+  },
+  "COMP:lp_ratio2": {
+   "status": "SERVED",
+   "audit": {
+    "violations": {},
+    "violation_count": 0,
+    "objects": 12,
+    "events": 7,
+    "steps": 7,
+    "orphans_independent": [],
+    "unused_auxiliary_flagged": [],
+    "orphans_not_flagged": []
+   },
+   "measures": [
+    {
+     "object": "kq_q1",
+     "step": 6,
+     "generic": false,
+     "has_measured_quantity": true
+    }
+   ],
+   "fingerprint": {
+    "answer_exact": {
+     "q1": {
+      "coef": "1/5",
+      "dim": 0,
+      "unit": null
+     }
+    },
+    "points": {
+     "A": [
+      "0",
+      "0",
+      "0"
+     ],
+     "B": [
+      "1",
+      "0",
+      "0"
+     ],
+     "C": [
+      "0",
+      "1",
+      "0"
+     ],
+     "S": [
+      "0",
+      "0",
+      "1"
+     ]
+    },
+    "sections": {},
+    "angle_constructions": {
+     "kq_q1": {
+      "relation": "line_plane",
+      "vertex": [
+       "1",
+       "0",
+       "0"
+      ],
+      "vertex_id": "B"
+     }
+    },
+    "certificate": {
+     "schema": "target-invariance-certificate/2",
+     "verified": [
+      true
+     ]
+    }
+   },
+   "section_edges": [],
+   "right_angle_drawn": {},
+   "scene_sha256": "a24aec775df0190c30230d65a85d317c41b686eb6ec8fc3b2bc6a71ea09360f3"
+  },
+  "COMP:lp_perpendicular": {
+   "status": "SERVED",
+   "audit": {
+    "violations": {},
+    "violation_count": 0,
+    "objects": 12,
+    "events": 7,
+    "steps": 7,
+    "orphans_independent": [],
+    "unused_auxiliary_flagged": [],
+    "orphans_not_flagged": []
+   },
+   "measures": [
+    {
+     "object": "kq_q1",
+     "step": 6,
+     "generic": false,
+     "has_measured_quantity": true
+    }
+   ],
+   "fingerprint": {
+    "answer_exact": {
+     "q1": {
+      "coef": "0",
+      "dim": 0,
+      "unit": null
+     }
+    },
+    "points": {
+     "A": [
+      "0",
+      "0",
+      "0"
+     ],
+     "B": [
+      "1",
+      "0",
+      "0"
+     ],
+     "C": [
+      "0",
+      "1",
+      "0"
+     ],
+     "S": [
+      "0",
+      "0",
+      "1"
+     ]
+    },
+    "sections": {},
+    "angle_constructions": {},
+    "certificate": {
+     "schema": "target-invariance-certificate/2",
+     "verified": [
+      true
+     ]
+    }
+   },
+   "section_edges": [],
+   "right_angle_drawn": {
+    "kq_q1": "line_perpendicular_plane"
+   },
+   "scene_sha256": "0eed16a8b23e8a8ff42370c825f01d65f2aae1b3f8f8aa3fe72f3317eaf1eabc"
+  },
+  "COMP:lp_renamed": {
+   "status": "SERVED",
+   "audit": {
+    "violations": {},
+    "violation_count": 0,
+    "objects": 12,
+    "events": 7,
+    "steps": 7,
+    "orphans_independent": [],
+    "unused_auxiliary_flagged": [],
+    "orphans_not_flagged": []
+   },
+   "measures": [
+    {
+     "object": "kq_q1",
+     "step": 6,
+     "generic": false,
+     "has_measured_quantity": true
+    }
+   ],
+   "fingerprint": {
+    "answer_exact": {
+     "q1": {
+      "coef": "1/5",
+      "dim": 0,
+      "unit": null
+     }
+    },
+    "points": {
+     "X": [
+      "0",
+      "0",
+      "0"
+     ],
+     "Y": [
+      "1",
+      "0",
+      "0"
+     ],
+     "Z": [
+      "0",
+      "1",
+      "0"
+     ],
+     "T": [
+      "0",
+      "0",
+      "1"
+     ]
+    },
+    "sections": {},
+    "angle_constructions": {
+     "kq_q1": {
+      "relation": "line_plane",
+      "vertex": [
+       "1",
+       "0",
+       "0"
+      ],
+      "vertex_id": "Y"
+     }
+    },
+    "certificate": {
+     "schema": "target-invariance-certificate/2",
+     "verified": [
+      true
+     ]
+    }
+   },
+   "section_edges": [],
+   "right_angle_drawn": {},
+   "scene_sha256": "84e5cb88c989383724c31369a2adead0d1f97dea79da3ed751c7b309980b6a0c"
+  },
+  "COMP:ll_meeting": {
+   "status": "SERVED",
+   "audit": {
+    "violations": {},
+    "violation_count": 0,
+    "objects": 12,
+    "events": 7,
+    "steps": 7,
+    "orphans_independent": [],
+    "unused_auxiliary_flagged": [],
+    "orphans_not_flagged": []
+   },
+   "measures": [
+    {
+     "object": "kq_q1",
+     "step": 6,
+     "generic": false,
+     "has_measured_quantity": true
+    }
+   ],
+   "fingerprint": {
+    "answer_exact": {
+     "q1": {
+      "coef": "1/2",
+      "dim": 0,
+      "unit": null
+     }
+    },
+    "points": {
+     "A": [
+      "0",
+      "0",
+      "0"
+     ],
+     "B": [
+      "1",
+      "0",
+      "0"
+     ],
+     "C": [
+      "0",
+      "1",
+      "0"
+     ],
+     "S": [
+      "0",
+      "0",
+      "1"
+     ]
+    },
+    "sections": {},
+    "angle_constructions": {
+     "kq_q1": {
+      "relation": "line_line",
+      "vertex": [
+       "0",
+       "0",
+       "1"
+      ],
+      "vertex_id": "S"
+     }
+    },
+    "certificate": {
+     "schema": "target-invariance-certificate/2",
+     "verified": [
+      true
+     ]
+    }
+   },
+   "section_edges": [],
+   "right_angle_drawn": {},
+   "scene_sha256": "4e16d7749b8b0148eec66f46f43178431432201470791cfe5b9b11ecc4d02912"
+  },
+  "COMP:ll_perpendicular": {
+   "status": "SERVED",
+   "audit": {
+    "violations": {},
+    "violation_count": 0,
+    "objects": 12,
+    "events": 7,
+    "steps": 7,
+    "orphans_independent": [],
+    "unused_auxiliary_flagged": [],
+    "orphans_not_flagged": []
+   },
+   "measures": [
+    {
+     "object": "kq_q1",
+     "step": 6,
+     "generic": false,
+     "has_measured_quantity": true
+    }
+   ],
+   "fingerprint": {
+    "answer_exact": {
+     "q1": {
+      "coef": "0",
+      "dim": 0,
+      "unit": null
+     }
+    },
+    "points": {
+     "A": [
+      "0",
+      "0",
+      "0"
+     ],
+     "B": [
+      "1",
+      "0",
+      "0"
+     ],
+     "C": [
+      "0",
+      "1",
+      "0"
+     ],
+     "S": [
+      "0",
+      "0",
+      "1"
+     ]
+    },
+    "sections": {},
+    "angle_constructions": {},
+    "certificate": {
+     "schema": "target-invariance-certificate/2",
+     "verified": [
+      true
+     ]
+    }
+   },
+   "section_edges": [],
+   "right_angle_drawn": {
+    "kq_q1": "line_perpendicular_line"
+   },
+   "scene_sha256": "2d69b2291bb2bcbbca036bda5e0a71da3040569cd34512d7ee51d8c7f94a39e7"
+  },
+  "COMP:ll_skew_perpendicular": {
+   "status": "SERVED",
+   "audit": {
+    "violations": {},
+    "violation_count": 0,
+    "objects": 12,
+    "events": 7,
+    "steps": 7,
+    "orphans_independent": [],
+    "unused_auxiliary_flagged": [],
+    "orphans_not_flagged": []
+   },
+   "measures": [
+    {
+     "object": "kq_q1",
+     "step": 6,
+     "generic": false,
+     "has_measured_quantity": true
+    }
+   ],
+   "fingerprint": {
+    "answer_exact": {
+     "q1": {
+      "coef": "0",
+      "dim": 0,
+      "unit": null
+     }
+    },
+    "points": {
+     "A": [
+      "0",
+      "0",
+      "0"
+     ],
+     "B": [
+      "1",
+      "0",
+      "0"
+     ],
+     "C": [
+      "0",
+      "1",
+      "0"
+     ],
+     "S": [
+      "0",
+      "0",
+      "1"
+     ]
+    },
+    "sections": {},
+    "angle_constructions": {},
+    "certificate": {
+     "schema": "target-invariance-certificate/2",
+     "verified": [
+      true
+     ]
+    }
+   },
+   "section_edges": [],
+   "right_angle_drawn": {
+    "kq_q1": null
+   },
+   "scene_sha256": "513ac31c22e0da4060937e9004ce01a8d40b3a9573b2673b9e566d3e359e3924"
+  },
+  "COMP:ll_skew_varying": {
+   "status": "REFUSED"
+  },
+  "COMP:lp_varying_lateral": {
+   "status": "REFUSED"
+  },
+  "COMP:lp_no_ratio": {
+   "status": "REFUSED"
+  },
+  "COMP:pa_prism_out_of_domain": {
+   "status": "REFUSED"
+  },
+  "DEV37:goal_volume_tinh": {
+   "status": "SERVED",
+   "audit": {
+    "violations": {},
+    "violation_count": 0,
+    "objects": 12,
+    "events": 5,
+    "steps": 5,
+    "orphans_independent": [],
+    "unused_auxiliary_flagged": [],
+    "orphans_not_flagged": []
+   },
+   "measures": [
+    {
+     "object": "kq_q1",
+     "step": 4,
+     "generic": false,
+     "has_measured_quantity": true
+    }
+   ],
+   "fingerprint": {
+    "answer_exact": {
+     "q1": {
+      "coef": "1/3",
+      "dim": 3,
+      "unit": "a"
+     }
+    },
+    "points": {
+     "A": [
+      "0",
+      "0",
+      "0"
+     ],
+     "B": [
+      "1",
+      "0",
+      "0"
+     ],
+     "C": [
+      "1",
+      "1",
+      "0"
+     ],
+     "D": [
+      "0",
+      "1",
+      "0"
+     ],
+     "S": [
+      "0",
+      "0",
+      "1"
+     ]
+    },
+    "sections": {},
+    "angle_constructions": {},
+    "certificate": {
+     "schema": null,
+     "verified": []
+    }
+   },
+   "section_edges": [],
+   "right_angle_drawn": {},
+   "scene_sha256": "cb8d40c3cf362e7718ab186eeb556ece5f7356e0f5db309a5d2d548f0d8f9ee8"
+  },
+  "DEV37:goal_volume_stem": {
+   "status": "SERVED",
+   "audit": {
+    "violations": {},
+    "violation_count": 0,
+    "objects": 12,
+    "events": 5,
+    "steps": 5,
+    "orphans_independent": [],
+    "unused_auxiliary_flagged": [],
+    "orphans_not_flagged": []
+   },
+   "measures": [
+    {
+     "object": "kq_q1",
+     "step": 4,
+     "generic": false,
+     "has_measured_quantity": true
+    }
+   ],
+   "fingerprint": {
+    "answer_exact": {
+     "q1": {
+      "coef": "1/3",
+      "dim": 3,
+      "unit": "a"
+     }
+    },
+    "points": {
+     "A": [
+      "0",
+      "0",
+      "0"
+     ],
+     "B": [
+      "1",
+      "0",
+      "0"
+     ],
+     "C": [
+      "1",
+      "1",
+      "0"
+     ],
+     "D": [
+      "0",
+      "1",
+      "0"
+     ],
+     "S": [
+      "0",
+      "0",
+      "1"
+     ]
+    },
+    "sections": {},
+    "angle_constructions": {},
+    "certificate": {
+     "schema": null,
+     "verified": []
+    }
+   },
+   "section_edges": [],
+   "right_angle_drawn": {},
+   "scene_sha256": "cb8d40c3cf362e7718ab186eeb556ece5f7356e0f5db309a5d2d548f0d8f9ee8"
+  },
+  "DEV37:goal_volume_da_cho": {
+   "status": "SERVED",
+   "audit": {
+    "violations": {},
+    "violation_count": 0,
+    "objects": 12,
+    "events": 5,
+    "steps": 5,
+    "orphans_independent": [],
+    "unused_auxiliary_flagged": [],
+    "orphans_not_flagged": []
+   },
+   "measures": [
+    {
+     "object": "kq_q1",
+     "step": 4,
+     "generic": false,
+     "has_measured_quantity": true
+    }
+   ],
+   "fingerprint": {
+    "answer_exact": {
+     "q1": {
+      "coef": "1/3",
+      "dim": 3,
+      "unit": "a"
+     }
+    },
+    "points": {
+     "A": [
+      "0",
+      "0",
+      "0"
+     ],
+     "B": [
+      "1",
+      "0",
+      "0"
+     ],
+     "C": [
+      "1",
+      "1",
+      "0"
+     ],
+     "D": [
+      "0",
+      "1",
+      "0"
+     ],
+     "S": [
+      "0",
+      "0",
+      "1"
+     ]
+    },
+    "sections": {},
+    "angle_constructions": {},
+    "certificate": {
+     "schema": null,
+     "verified": []
+    }
+   },
+   "section_edges": [],
+   "right_angle_drawn": {},
+   "scene_sha256": "cb8d40c3cf362e7718ab186eeb556ece5f7356e0f5db309a5d2d548f0d8f9ee8"
+  },
+  "DEV37:goal_volume_theo_a": {
+   "status": "SERVED",
+   "audit": {
+    "violations": {},
+    "violation_count": 0,
+    "objects": 12,
+    "events": 5,
+    "steps": 5,
+    "orphans_independent": [],
+    "unused_auxiliary_flagged": [],
+    "orphans_not_flagged": []
+   },
+   "measures": [
+    {
+     "object": "kq_q1",
+     "step": 4,
+     "generic": false,
+     "has_measured_quantity": true
+    }
+   ],
+   "fingerprint": {
+    "answer_exact": {
+     "q1": {
+      "coef": "1/3",
+      "dim": 3,
+      "unit": "a"
+     }
+    },
+    "points": {
+     "A": [
+      "0",
+      "0",
+      "0"
+     ],
+     "B": [
+      "1",
+      "0",
+      "0"
+     ],
+     "C": [
+      "1",
+      "1",
+      "0"
+     ],
+     "D": [
+      "0",
+      "1",
+      "0"
+     ],
+     "S": [
+      "0",
+      "0",
+      "1"
+     ]
+    },
+    "sections": {},
+    "angle_constructions": {},
+    "certificate": {
+     "schema": null,
+     "verified": []
+    }
+   },
+   "section_edges": [],
+   "right_angle_drawn": {},
+   "scene_sha256": "cb8d40c3cf362e7718ab186eeb556ece5f7356e0f5db309a5d2d548f0d8f9ee8"
+  },
+  "DEV37:goal_distance_tinh": {
+   "status": "SERVED",
+   "audit": {
+    "violations": {},
+    "violation_count": 0,
+    "objects": 13,
+    "events": 6,
+    "steps": 6,
+    "orphans_independent": [],
+    "unused_auxiliary_flagged": [],
+    "orphans_not_flagged": []
+   },
+   "measures": [
+    {
+     "object": "kq_q1",
+     "step": 5,
+     "generic": false,
+     "has_measured_quantity": true
+    }
+   ],
+   "fingerprint": {
+    "answer_exact": {
+     "q1": {
+      "coef": "√2/2",
+      "dim": 1,
+      "unit": "a"
+     }
+    },
+    "points": {
+     "A": [
+      "0",
+      "0",
+      "0"
+     ],
+     "B": [
+      "1",
+      "0",
+      "0"
+     ],
+     "C": [
+      "1",
+      "1",
+      "0"
+     ],
+     "D": [
+      "0",
+      "1",
+      "0"
+     ],
+     "S": [
+      "0",
+      "0",
+      "1"
+     ]
+    },
+    "sections": {},
+    "angle_constructions": {},
+    "certificate": {
+     "schema": null,
+     "verified": []
+    }
+   },
+   "section_edges": [],
+   "right_angle_drawn": {},
+   "scene_sha256": "36c91075ae2b65ff244a0581d913602b3b827960fbc962935937b0508475c6fc"
+  },
+  "DEV37:goal_distance_stem": {
+   "status": "SERVED",
+   "audit": {
+    "violations": {},
+    "violation_count": 0,
+    "objects": 13,
+    "events": 6,
+    "steps": 6,
+    "orphans_independent": [],
+    "unused_auxiliary_flagged": [],
+    "orphans_not_flagged": []
+   },
+   "measures": [
+    {
+     "object": "kq_q1",
+     "step": 5,
+     "generic": false,
+     "has_measured_quantity": true
+    }
+   ],
+   "fingerprint": {
+    "answer_exact": {
+     "q1": {
+      "coef": "√2/2",
+      "dim": 1,
+      "unit": "a"
+     }
+    },
+    "points": {
+     "A": [
+      "0",
+      "0",
+      "0"
+     ],
+     "B": [
+      "1",
+      "0",
+      "0"
+     ],
+     "C": [
+      "1",
+      "1",
+      "0"
+     ],
+     "D": [
+      "0",
+      "1",
+      "0"
+     ],
+     "S": [
+      "0",
+      "0",
+      "1"
+     ]
+    },
+    "sections": {},
+    "angle_constructions": {},
+    "certificate": {
+     "schema": null,
+     "verified": []
+    }
+   },
+   "section_edges": [],
+   "right_angle_drawn": {},
+   "scene_sha256": "36c91075ae2b65ff244a0581d913602b3b827960fbc962935937b0508475c6fc"
+  },
+  "DEV37:goal_angle_tinh": {
+   "status": "SERVED",
+   "audit": {
+    "violations": {},
+    "violation_count": 0,
+    "objects": 14,
+    "events": 7,
+    "steps": 7,
+    "orphans_independent": [],
+    "unused_auxiliary_flagged": [],
+    "orphans_not_flagged": []
+   },
+   "measures": [
+    {
+     "object": "kq_q1",
+     "step": 6,
+     "generic": false,
+     "has_measured_quantity": true
+    }
+   ],
+   "fingerprint": {
+    "answer_exact": {
+     "q1": {
+      "coef": "2/3",
+      "dim": 0,
+      "unit": null
+     }
+    },
+    "points": {
+     "A": [
+      "0",
+      "0",
+      "0"
+     ],
+     "B": [
+      "1",
+      "0",
+      "0"
+     ],
+     "C": [
+      "1",
+      "1",
+      "0"
+     ],
+     "D": [
+      "0",
+      "1",
+      "0"
+     ],
+     "S": [
+      "0",
+      "0",
+      "1"
+     ]
+    },
+    "sections": {},
+    "angle_constructions": {
+     "kq_q1": {
+      "relation": "line_plane",
+      "vertex": [
+       "1",
+       "1",
+       "0"
+      ],
+      "vertex_id": "C"
+     }
+    },
+    "certificate": {
+     "schema": null,
+     "verified": []
+    }
+   },
+   "section_edges": [],
+   "right_angle_drawn": {},
+   "scene_sha256": "06be48678ee5daada03c6cf750fc58c9472b4433b4d2fb405ab68fba26dabb3b"
+  },
+  "DEV37:goal_angle_stem": {
+   "status": "SERVED",
+   "audit": {
+    "violations": {},
+    "violation_count": 0,
+    "objects": 14,
+    "events": 7,
+    "steps": 7,
+    "orphans_independent": [],
+    "unused_auxiliary_flagged": [],
+    "orphans_not_flagged": []
+   },
+   "measures": [
+    {
+     "object": "kq_q1",
+     "step": 6,
+     "generic": false,
+     "has_measured_quantity": true
+    }
+   ],
+   "fingerprint": {
+    "answer_exact": {
+     "q1": {
+      "coef": "2/3",
+      "dim": 0,
+      "unit": null
+     }
+    },
+    "points": {
+     "A": [
+      "0",
+      "0",
+      "0"
+     ],
+     "B": [
+      "1",
+      "0",
+      "0"
+     ],
+     "C": [
+      "1",
+      "1",
+      "0"
+     ],
+     "D": [
+      "0",
+      "1",
+      "0"
+     ],
+     "S": [
+      "0",
+      "0",
+      "1"
+     ]
+    },
+    "sections": {},
+    "angle_constructions": {
+     "kq_q1": {
+      "relation": "line_plane",
+      "vertex": [
+       "1",
+       "1",
+       "0"
+      ],
+      "vertex_id": "C"
+     }
+    },
+    "certificate": {
+     "schema": null,
+     "verified": []
+    }
+   },
+   "section_edges": [],
+   "right_angle_drawn": {},
+   "scene_sha256": "06be48678ee5daada03c6cf750fc58c9472b4433b4d2fb405ab68fba26dabb3b"
+  },
+  "DEV37:goal_angle_stem_day": {
+   "status": "SERVED",
+   "audit": {
+    "violations": {},
+    "violation_count": 0,
+    "objects": 14,
+    "events": 7,
+    "steps": 7,
+    "orphans_independent": [],
+    "unused_auxiliary_flagged": [],
+    "orphans_not_flagged": []
+   },
+   "measures": [
+    {
+     "object": "kq_q1",
+     "step": 6,
+     "generic": false,
+     "has_measured_quantity": true
+    }
+   ],
+   "fingerprint": {
+    "answer_exact": {
+     "q1": {
+      "coef": "2/3",
+      "dim": 0,
+      "unit": null
+     }
+    },
+    "points": {
+     "A": [
+      "0",
+      "0",
+      "0"
+     ],
+     "B": [
+      "1",
+      "0",
+      "0"
+     ],
+     "C": [
+      "1",
+      "1",
+      "0"
+     ],
+     "D": [
+      "0",
+      "1",
+      "0"
+     ],
+     "S": [
+      "0",
+      "0",
+      "1"
+     ]
+    },
+    "sections": {},
+    "angle_constructions": {
+     "kq_q1": {
+      "relation": "line_plane",
+      "vertex": [
+       "1",
+       "1",
+       "0"
+      ],
+      "vertex_id": "C"
+     }
+    },
+    "certificate": {
+     "schema": null,
+     "verified": []
+    }
+   },
+   "section_edges": [],
+   "right_angle_drawn": {},
+   "scene_sha256": "06be48678ee5daada03c6cf750fc58c9472b4433b4d2fb405ab68fba26dabb3b"
+  },
+  "DEV37:goal_cos_unsupported": {
+   "status": "SERVED",
+   "audit": {
+    "violations": {},
+    "violation_count": 0,
+    "objects": 14,
+    "events": 7,
+    "steps": 7,
+    "orphans_independent": [],
+    "unused_auxiliary_flagged": [],
+    "orphans_not_flagged": []
+   },
+   "measures": [
+    {
+     "object": "kq_q1",
+     "step": 6,
+     "generic": false,
+     "has_measured_quantity": true
+    }
+   ],
+   "fingerprint": {
+    "answer_exact": {
+     "q1": {
+      "coef": "2/3",
+      "dim": 0,
+      "unit": null
+     }
+    },
+    "points": {
+     "A": [
+      "0",
+      "0",
+      "0"
+     ],
+     "B": [
+      "1",
+      "0",
+      "0"
+     ],
+     "C": [
+      "1",
+      "1",
+      "0"
+     ],
+     "D": [
+      "0",
+      "1",
+      "0"
+     ],
+     "S": [
+      "0",
+      "0",
+      "1"
+     ]
+    },
+    "sections": {},
+    "angle_constructions": {
+     "kq_q1": {
+      "relation": "line_plane",
+      "vertex": [
+       "1",
+       "1",
+       "0"
+      ],
+      "vertex_id": "C"
+     }
+    },
+    "certificate": {
+     "schema": null,
+     "verified": []
+    }
+   },
+   "section_edges": [],
+   "right_angle_drawn": {},
+   "scene_sha256": "06be48678ee5daada03c6cf750fc58c9472b4433b4d2fb405ab68fba26dabb3b"
+  },
+  "DEV37:goal_tan_unsupported": {
+   "status": "SERVED",
+   "audit": {
+    "violations": {},
+    "violation_count": 0,
+    "objects": 14,
+    "events": 7,
+    "steps": 7,
+    "orphans_independent": [],
+    "unused_auxiliary_flagged": [],
+    "orphans_not_flagged": []
+   },
+   "measures": [
+    {
+     "object": "kq_q1",
+     "step": 6,
+     "generic": false,
+     "has_measured_quantity": true
+    }
+   ],
+   "fingerprint": {
+    "answer_exact": {
+     "q1": {
+      "coef": "2/3",
+      "dim": 0,
+      "unit": null
+     }
+    },
+    "points": {
+     "A": [
+      "0",
+      "0",
+      "0"
+     ],
+     "B": [
+      "1",
+      "0",
+      "0"
+     ],
+     "C": [
+      "1",
+      "1",
+      "0"
+     ],
+     "D": [
+      "0",
+      "1",
+      "0"
+     ],
+     "S": [
+      "0",
+      "0",
+      "1"
+     ]
+    },
+    "sections": {},
+    "angle_constructions": {
+     "kq_q1": {
+      "relation": "line_plane",
+      "vertex": [
+       "1",
+       "1",
+       "0"
+      ],
+      "vertex_id": "C"
+     }
+    },
+    "certificate": {
+     "schema": null,
+     "verified": []
+    }
+   },
+   "section_edges": [],
+   "right_angle_drawn": {},
+   "scene_sha256": "06be48678ee5daada03c6cf750fc58c9472b4433b4d2fb405ab68fba26dabb3b"
+  },
+  "DEV37:goal_proof_only": {
+   "status": "REFUSED"
+  },
+  "DEV37:pair_point_definition": {
+   "status": "SERVED",
+   "audit": {
+    "violations": {},
+    "violation_count": 0,
+    "objects": 14,
+    "events": 7,
+    "steps": 7,
+    "orphans_independent": [],
+    "unused_auxiliary_flagged": [],
+    "orphans_not_flagged": []
+   },
+   "measures": [
+    {
+     "object": "kq_q1",
+     "step": 6,
+     "generic": false,
+     "has_measured_quantity": true
+    }
+   ],
+   "fingerprint": {
+    "answer_exact": {
+     "q1": {
+      "coef": "√2/4",
+      "dim": 1,
+      "unit": "a"
+     }
+    },
+    "points": {
+     "A": [
+      "0",
+      "0",
+      "0"
+     ],
+     "B": [
+      "1",
+      "0",
+      "0"
+     ],
+     "C": [
+      "1",
+      "1",
+      "0"
+     ],
+     "D": [
+      "0",
+      "1",
+      "0"
+     ],
+     "S": [
+      "0",
+      "0",
+      "1"
+     ],
+     "M": [
+      "0",
+      "0",
+      "1/2"
+     ]
+    },
+    "sections": {},
+    "angle_constructions": {},
+    "certificate": {
+     "schema": null,
+     "verified": []
+    }
+   },
+   "section_edges": [],
+   "right_angle_drawn": {},
+   "scene_sha256": "91cd80973f7a799d59b6cc1e711378aa1e53eb8fb3891bc078f0a08a635ed150"
+  },
+  "DEV37:pair_point_as_goal": {
+   "status": "REFUSED"
+  },
+  "DEV37:pair_plane_determined": {
+   "status": "SERVED",
+   "audit": {
+    "violations": {},
+    "violation_count": 0,
+    "objects": 18,
+    "events": 15,
+    "steps": 15,
+    "orphans_independent": [],
+    "unused_auxiliary_flagged": [],
+    "orphans_not_flagged": []
+   },
+   "measures": [
+    {
+     "object": "derived_H_vec",
+     "step": 5,
+     "generic": false,
+     "has_measured_quantity": false
+    },
+    {
+     "object": "derived_H1_vec",
+     "step": 7,
+     "generic": false,
+     "has_measured_quantity": false
+    }
+   ],
+   "fingerprint": {
+    "answer_exact": {},
+    "points": {
+     "A": [
+      "0",
+      "0",
+      "0"
+     ],
+     "B": [
+      "1",
+      "0",
+      "0"
+     ],
+     "C": [
+      "1",
+      "1",
+      "0"
+     ],
+     "D": [
+      "0",
+      "1",
+      "0"
+     ],
+     "S": [
+      "0",
+      "0",
+      "1"
+     ],
+     "M": [
+      "0",
+      "0",
+      "1/2"
+     ],
+     "H": [
+      "1",
+      "0",
+      "1/2"
+     ],
+     "H1": [
+      "1",
+      "1",
+      "1/2"
+     ]
+    },
+    "sections": {
+     "td_sec": null
+    },
+    "angle_constructions": {},
+    "certificate": {
+     "schema": null,
+     "verified": []
+    }
+   },
+   "section_edges": [
+    {
+     "theorem": "PARALLEL_LINE_PLANE_INTERSECTION",
+     "learner_text": "Trên mặt SAB, nối giao điểm thuộc cạnh SA với giao điểm thuộc cạnh SB.",
+     "justification_text": "Vì (P) song song với AB và AB nằm trong mặt (SAB), nên giao tuyến của (P) với mặt (SAB) song song với AB."
+    },
+    {
+     "theorem": "PARALLEL_LINE_PLANE_INTERSECTION",
+     "learner_text": "Trên mặt SBC, nối giao điểm thuộc cạnh SB với giao điểm thuộc cạnh SC.",
+     "justification_text": "Vì (P) song song với BC và BC nằm trong mặt (SBC), nên giao tuyến của (P) với mặt (SBC) song song với BC."
+    },
+    {
+     "theorem": "PARALLEL_LINE_PLANE_INTERSECTION",
+     "learner_text": "Trên mặt SCD, nối giao điểm thuộc cạnh SC với giao điểm thuộc cạnh SD.",
+     "justification_text": "Vì (P) song song với CD và CD nằm trong mặt (SCD), nên giao tuyến của (P) với mặt (SCD) song song với CD."
+    },
+    {
+     "theorem": "PARALLEL_LINE_PLANE_INTERSECTION",
+     "learner_text": "Trên mặt SDA, nối giao điểm thuộc cạnh SD với giao điểm thuộc cạnh SA.",
+     "justification_text": "Vì (P) song song với DA và DA nằm trong mặt (SDA), nên giao tuyến của (P) với mặt (SDA) song song với DA."
+    }
+   ],
+   "right_angle_drawn": {},
+   "scene_sha256": "18750c75b991b128222a5fa5275cb5c70d19031d16b71652c85e1e816abaada3"
+  },
+  "DEV37:pair_plane_underdetermined": {
+   "status": "REFUSED"
+  },
+  "DEV37:ref_undefined_plane": {
+   "status": "REFUSED"
+  },
+  "DEV37:ref_mp_abbrev": {
+   "status": "SERVED",
+   "audit": {
+    "violations": {},
+    "violation_count": 0,
+    "objects": 18,
+    "events": 15,
+    "steps": 15,
+    "orphans_independent": [],
+    "unused_auxiliary_flagged": [],
+    "orphans_not_flagged": []
+   },
+   "measures": [
+    {
+     "object": "derived_H_vec",
+     "step": 5,
+     "generic": false,
+     "has_measured_quantity": false
+    },
+    {
+     "object": "derived_H1_vec",
+     "step": 7,
+     "generic": false,
+     "has_measured_quantity": false
+    }
+   ],
+   "fingerprint": {
+    "answer_exact": {},
+    "points": {
+     "A": [
+      "0",
+      "0",
+      "0"
+     ],
+     "B": [
+      "1",
+      "0",
+      "0"
+     ],
+     "C": [
+      "1",
+      "1",
+      "0"
+     ],
+     "D": [
+      "0",
+      "1",
+      "0"
+     ],
+     "S": [
+      "0",
+      "0",
+      "1"
+     ],
+     "M": [
+      "0",
+      "0",
+      "1/2"
+     ],
+     "H": [
+      "1",
+      "0",
+      "1/2"
+     ],
+     "H1": [
+      "1",
+      "1",
+      "1/2"
+     ]
+    },
+    "sections": {
+     "td_sec": null
+    },
+    "angle_constructions": {},
+    "certificate": {
+     "schema": null,
+     "verified": []
+    }
+   },
+   "section_edges": [
+    {
+     "theorem": "PARALLEL_LINE_PLANE_INTERSECTION",
+     "learner_text": "Trên mặt SAB, nối giao điểm thuộc cạnh SA với giao điểm thuộc cạnh SB.",
+     "justification_text": "Vì (P) song song với AB và AB nằm trong mặt (SAB), nên giao tuyến của (P) với mặt (SAB) song song với AB."
+    },
+    {
+     "theorem": "PARALLEL_LINE_PLANE_INTERSECTION",
+     "learner_text": "Trên mặt SBC, nối giao điểm thuộc cạnh SB với giao điểm thuộc cạnh SC.",
+     "justification_text": "Vì (P) song song với BC và BC nằm trong mặt (SBC), nên giao tuyến của (P) với mặt (SBC) song song với BC."
+    },
+    {
+     "theorem": "PARALLEL_LINE_PLANE_INTERSECTION",
+     "learner_text": "Trên mặt SCD, nối giao điểm thuộc cạnh SC với giao điểm thuộc cạnh SD.",
+     "justification_text": "Vì (P) song song với CD và CD nằm trong mặt (SCD), nên giao tuyến của (P) với mặt (SCD) song song với CD."
+    },
+    {
+     "theorem": "PARALLEL_LINE_PLANE_INTERSECTION",
+     "learner_text": "Trên mặt SDA, nối giao điểm thuộc cạnh SD với giao điểm thuộc cạnh SA.",
+     "justification_text": "Vì (P) song song với DA và DA nằm trong mặt (SDA), nên giao tuyến của (P) với mặt (SDA) song song với DA."
+    }
+   ],
+   "right_angle_drawn": {},
+   "scene_sha256": "ce895121db6bd7968a6ba35fb32ba42231df623da4bafc067c10c5b7cdd5746c"
+  },
+  "DEV37:ref_relative_clause_point": {
+   "status": "SERVED",
+   "audit": {
+    "violations": {},
+    "violation_count": 0,
+    "objects": 18,
+    "events": 15,
+    "steps": 15,
+    "orphans_independent": [],
+    "unused_auxiliary_flagged": [],
+    "orphans_not_flagged": []
+   },
+   "measures": [
+    {
+     "object": "derived_H_vec",
+     "step": 5,
+     "generic": false,
+     "has_measured_quantity": false
+    },
+    {
+     "object": "derived_H1_vec",
+     "step": 7,
+     "generic": false,
+     "has_measured_quantity": false
+    }
+   ],
+   "fingerprint": {
+    "answer_exact": {},
+    "points": {
+     "A": [
+      "0",
+      "0",
+      "0"
+     ],
+     "B": [
+      "1",
+      "0",
+      "0"
+     ],
+     "C": [
+      "1",
+      "1",
+      "0"
+     ],
+     "D": [
+      "0",
+      "1",
+      "0"
+     ],
+     "S": [
+      "0",
+      "0",
+      "1"
+     ],
+     "M": [
+      "0",
+      "0",
+      "1/2"
+     ],
+     "H": [
+      "1",
+      "0",
+      "1/2"
+     ],
+     "H1": [
+      "1",
+      "1",
+      "1/2"
+     ]
+    },
+    "sections": {
+     "td_sec": null
+    },
+    "angle_constructions": {},
+    "certificate": {
+     "schema": null,
+     "verified": []
+    }
+   },
+   "section_edges": [
+    {
+     "theorem": "PARALLEL_LINE_PLANE_INTERSECTION",
+     "learner_text": "Trên mặt SAB, nối giao điểm thuộc cạnh SA với giao điểm thuộc cạnh SB.",
+     "justification_text": "Vì (P) song song với AB và AB nằm trong mặt (SAB), nên giao tuyến của (P) với mặt (SAB) song song với AB."
+    },
+    {
+     "theorem": "PARALLEL_LINE_PLANE_INTERSECTION",
+     "learner_text": "Trên mặt SBC, nối giao điểm thuộc cạnh SB với giao điểm thuộc cạnh SC.",
+     "justification_text": "Vì (P) song song với BC và BC nằm trong mặt (SBC), nên giao tuyến của (P) với mặt (SBC) song song với BC."
+    },
+    {
+     "theorem": "PARALLEL_LINE_PLANE_INTERSECTION",
+     "learner_text": "Trên mặt SCD, nối giao điểm thuộc cạnh SC với giao điểm thuộc cạnh SD.",
+     "justification_text": "Vì (P) song song với CD và CD nằm trong mặt (SCD), nên giao tuyến của (P) với mặt (SCD) song song với CD."
+    },
+    {
+     "theorem": "PARALLEL_LINE_PLANE_INTERSECTION",
+     "learner_text": "Trên mặt SDA, nối giao điểm thuộc cạnh SD với giao điểm thuộc cạnh SA.",
+     "justification_text": "Vì (P) song song với DA và DA nằm trong mặt (SDA), nên giao tuyến của (P) với mặt (SDA) song song với DA."
+    }
+   ],
+   "right_angle_drawn": {},
+   "scene_sha256": "ce895121db6bd7968a6ba35fb32ba42231df623da4bafc067c10c5b7cdd5746c"
+  },
+  "DEV37:ref_unnamed_point_in_plane": {
+   "status": "SERVED",
+   "audit": {
+    "violations": {},
+    "violation_count": 0,
+    "objects": 18,
+    "events": 15,
+    "steps": 15,
+    "orphans_independent": [],
+    "unused_auxiliary_flagged": [],
+    "orphans_not_flagged": []
+   },
+   "measures": [
+    {
+     "object": "derived_H_vec",
+     "step": 5,
+     "generic": false,
+     "has_measured_quantity": false
+    },
+    {
+     "object": "derived_H1_vec",
+     "step": 7,
+     "generic": false,
+     "has_measured_quantity": false
+    }
+   ],
+   "fingerprint": {
+    "answer_exact": {},
+    "points": {
+     "A": [
+      "0",
+      "0",
+      "0"
+     ],
+     "B": [
+      "1",
+      "0",
+      "0"
+     ],
+     "C": [
+      "1",
+      "1",
+      "0"
+     ],
+     "D": [
+      "0",
+      "1",
+      "0"
+     ],
+     "S": [
+      "0",
+      "0",
+      "1"
+     ],
+     "M": [
+      "0",
+      "0",
+      "1/2"
+     ],
+     "H": [
+      "1",
+      "0",
+      "1/2"
+     ],
+     "H1": [
+      "1",
+      "1",
+      "1/2"
+     ]
+    },
+    "sections": {
+     "td_sec": null
+    },
+    "angle_constructions": {},
+    "certificate": {
+     "schema": null,
+     "verified": []
+    }
+   },
+   "section_edges": [
+    {
+     "theorem": "PARALLEL_LINE_PLANE_INTERSECTION",
+     "learner_text": "Trên mặt SAB, nối giao điểm thuộc cạnh SA với giao điểm thuộc cạnh SB.",
+     "justification_text": "Vì (P) song song với AB và AB nằm trong mặt (SAB), nên giao tuyến của (P) với mặt (SAB) song song với AB."
+    },
+    {
+     "theorem": "PARALLEL_LINE_PLANE_INTERSECTION",
+     "learner_text": "Trên mặt SBC, nối giao điểm thuộc cạnh SB với giao điểm thuộc cạnh SC.",
+     "justification_text": "Vì (P) song song với BC và BC nằm trong mặt (SBC), nên giao tuyến của (P) với mặt (SBC) song song với BC."
+    },
+    {
+     "theorem": "PARALLEL_LINE_PLANE_INTERSECTION",
+     "learner_text": "Trên mặt SCD, nối giao điểm thuộc cạnh SC với giao điểm thuộc cạnh SD.",
+     "justification_text": "Vì (P) song song với CD và CD nằm trong mặt (SCD), nên giao tuyến của (P) với mặt (SCD) song song với CD."
+    },
+    {
+     "theorem": "PARALLEL_LINE_PLANE_INTERSECTION",
+     "learner_text": "Trên mặt SDA, nối giao điểm thuộc cạnh SD với giao điểm thuộc cạnh SA.",
+     "justification_text": "Vì (P) song song với DA và DA nằm trong mặt (SDA), nên giao tuyến của (P) với mặt (SDA) song song với DA."
+    }
+   ],
+   "right_angle_drawn": {},
+   "scene_sha256": "0ff94621acdd1b9f2f1067f3eb34c86e5664a2a290a6e51357b233c43bb50dcf"
+  },
+  "DEV37:ref_goi_plane": {
+   "status": "SERVED",
+   "audit": {
+    "violations": {},
+    "violation_count": 0,
+    "objects": 18,
+    "events": 15,
+    "steps": 15,
+    "orphans_independent": [],
+    "unused_auxiliary_flagged": [],
+    "orphans_not_flagged": []
+   },
+   "measures": [
+    {
+     "object": "derived_H_vec",
+     "step": 5,
+     "generic": false,
+     "has_measured_quantity": false
+    },
+    {
+     "object": "derived_H1_vec",
+     "step": 7,
+     "generic": false,
+     "has_measured_quantity": false
+    }
+   ],
+   "fingerprint": {
+    "answer_exact": {},
+    "points": {
+     "A": [
+      "0",
+      "0",
+      "0"
+     ],
+     "B": [
+      "1",
+      "0",
+      "0"
+     ],
+     "C": [
+      "1",
+      "1",
+      "0"
+     ],
+     "D": [
+      "0",
+      "1",
+      "0"
+     ],
+     "S": [
+      "0",
+      "0",
+      "1"
+     ],
+     "M": [
+      "0",
+      "0",
+      "1/2"
+     ],
+     "H": [
+      "1",
+      "0",
+      "1/2"
+     ],
+     "H1": [
+      "1",
+      "1",
+      "1/2"
+     ]
+    },
+    "sections": {
+     "td_sec": null
+    },
+    "angle_constructions": {},
+    "certificate": {
+     "schema": null,
+     "verified": []
+    }
+   },
+   "section_edges": [
+    {
+     "theorem": "PARALLEL_LINE_PLANE_INTERSECTION",
+     "learner_text": "Trên mặt SAB, nối giao điểm thuộc cạnh SA với giao điểm thuộc cạnh SB.",
+     "justification_text": "Vì (α) song song với AB và AB nằm trong mặt (SAB), nên giao tuyến của (α) với mặt (SAB) song song với AB."
+    },
+    {
+     "theorem": "PARALLEL_LINE_PLANE_INTERSECTION",
+     "learner_text": "Trên mặt SBC, nối giao điểm thuộc cạnh SB với giao điểm thuộc cạnh SC.",
+     "justification_text": "Vì (α) song song với BC và BC nằm trong mặt (SBC), nên giao tuyến của (α) với mặt (SBC) song song với BC."
+    },
+    {
+     "theorem": "PARALLEL_LINE_PLANE_INTERSECTION",
+     "learner_text": "Trên mặt SCD, nối giao điểm thuộc cạnh SC với giao điểm thuộc cạnh SD.",
+     "justification_text": "Vì (α) song song với CD và CD nằm trong mặt (SCD), nên giao tuyến của (α) với mặt (SCD) song song với CD."
+    },
+    {
+     "theorem": "PARALLEL_LINE_PLANE_INTERSECTION",
+     "learner_text": "Trên mặt SDA, nối giao điểm thuộc cạnh SD với giao điểm thuộc cạnh SA.",
+     "justification_text": "Vì (α) song song với DA và DA nằm trong mặt (SDA), nên giao tuyến của (α) với mặt (SDA) song song với DA."
+    }
+   ],
+   "right_angle_drawn": {},
+   "scene_sha256": "d59739578bc4729bd20a0692890f1cf5c1d02557aad839098c2a43daea0a02dc"
+  },
+  "DEV37:order_one_sentence": {
+   "status": "SERVED",
+   "audit": {
+    "violations": {},
+    "violation_count": 0,
+    "objects": 18,
+    "events": 15,
+    "steps": 15,
+    "orphans_independent": [],
+    "unused_auxiliary_flagged": [],
+    "orphans_not_flagged": []
+   },
+   "measures": [
+    {
+     "object": "derived_H_vec",
+     "step": 5,
+     "generic": false,
+     "has_measured_quantity": false
+    },
+    {
+     "object": "derived_H1_vec",
+     "step": 7,
+     "generic": false,
+     "has_measured_quantity": false
+    }
+   ],
+   "fingerprint": {
+    "answer_exact": {},
+    "points": {
+     "A": [
+      "0",
+      "0",
+      "0"
+     ],
+     "B": [
+      "1",
+      "0",
+      "0"
+     ],
+     "C": [
+      "1",
+      "1",
+      "0"
+     ],
+     "D": [
+      "0",
+      "1",
+      "0"
+     ],
+     "S": [
+      "0",
+      "0",
+      "1"
+     ],
+     "M": [
+      "0",
+      "0",
+      "1/2"
+     ],
+     "H": [
+      "1",
+      "0",
+      "1/2"
+     ],
+     "H1": [
+      "1",
+      "1",
+      "1/2"
+     ]
+    },
+    "sections": {
+     "td_sec": null
+    },
+    "angle_constructions": {},
+    "certificate": {
+     "schema": null,
+     "verified": []
+    }
+   },
+   "section_edges": [
+    {
+     "theorem": "PARALLEL_LINE_PLANE_INTERSECTION",
+     "learner_text": "Trên mặt SAB, nối giao điểm thuộc cạnh SA với giao điểm thuộc cạnh SB.",
+     "justification_text": "Vì (P) song song với AB và AB nằm trong mặt (SAB), nên giao tuyến của (P) với mặt (SAB) song song với AB."
+    },
+    {
+     "theorem": "PARALLEL_LINE_PLANE_INTERSECTION",
+     "learner_text": "Trên mặt SBC, nối giao điểm thuộc cạnh SB với giao điểm thuộc cạnh SC.",
+     "justification_text": "Vì (P) song song với BC và BC nằm trong mặt (SBC), nên giao tuyến của (P) với mặt (SBC) song song với BC."
+    },
+    {
+     "theorem": "PARALLEL_LINE_PLANE_INTERSECTION",
+     "learner_text": "Trên mặt SCD, nối giao điểm thuộc cạnh SC với giao điểm thuộc cạnh SD.",
+     "justification_text": "Vì (P) song song với CD và CD nằm trong mặt (SCD), nên giao tuyến của (P) với mặt (SCD) song song với CD."
+    },
+    {
+     "theorem": "PARALLEL_LINE_PLANE_INTERSECTION",
+     "learner_text": "Trên mặt SDA, nối giao điểm thuộc cạnh SD với giao điểm thuộc cạnh SA.",
+     "justification_text": "Vì (P) song song với DA và DA nằm trong mặt (SDA), nên giao tuyến của (P) với mặt (SDA) song song với DA."
+    }
+   ],
+   "right_angle_drawn": {},
+   "scene_sha256": "ce895121db6bd7968a6ba35fb32ba42231df623da4bafc067c10c5b7cdd5746c"
+  },
+  "DEV37:order_semicolon": {
+   "status": "SERVED",
+   "audit": {
+    "violations": {},
+    "violation_count": 0,
+    "objects": 18,
+    "events": 15,
+    "steps": 15,
+    "orphans_independent": [],
+    "unused_auxiliary_flagged": [],
+    "orphans_not_flagged": []
+   },
+   "measures": [
+    {
+     "object": "derived_H_vec",
+     "step": 5,
+     "generic": false,
+     "has_measured_quantity": false
+    },
+    {
+     "object": "derived_H1_vec",
+     "step": 7,
+     "generic": false,
+     "has_measured_quantity": false
+    }
+   ],
+   "fingerprint": {
+    "answer_exact": {},
+    "points": {
+     "A": [
+      "0",
+      "0",
+      "0"
+     ],
+     "B": [
+      "1",
+      "0",
+      "0"
+     ],
+     "C": [
+      "1",
+      "1",
+      "0"
+     ],
+     "D": [
+      "0",
+      "1",
+      "0"
+     ],
+     "S": [
+      "0",
+      "0",
+      "1"
+     ],
+     "M": [
+      "0",
+      "0",
+      "1/2"
+     ],
+     "H": [
+      "1",
+      "0",
+      "1/2"
+     ],
+     "H1": [
+      "1",
+      "1",
+      "1/2"
+     ]
+    },
+    "sections": {
+     "td_sec": null
+    },
+    "angle_constructions": {},
+    "certificate": {
+     "schema": null,
+     "verified": []
+    }
+   },
+   "section_edges": [
+    {
+     "theorem": "PARALLEL_LINE_PLANE_INTERSECTION",
+     "learner_text": "Trên mặt SAB, nối giao điểm thuộc cạnh SA với giao điểm thuộc cạnh SB.",
+     "justification_text": "Vì (P) song song với AB và AB nằm trong mặt (SAB), nên giao tuyến của (P) với mặt (SAB) song song với AB."
+    },
+    {
+     "theorem": "PARALLEL_LINE_PLANE_INTERSECTION",
+     "learner_text": "Trên mặt SBC, nối giao điểm thuộc cạnh SB với giao điểm thuộc cạnh SC.",
+     "justification_text": "Vì (P) song song với BC và BC nằm trong mặt (SBC), nên giao tuyến của (P) với mặt (SBC) song song với BC."
+    },
+    {
+     "theorem": "PARALLEL_LINE_PLANE_INTERSECTION",
+     "learner_text": "Trên mặt SCD, nối giao điểm thuộc cạnh SC với giao điểm thuộc cạnh SD.",
+     "justification_text": "Vì (P) song song với CD và CD nằm trong mặt (SCD), nên giao tuyến của (P) với mặt (SCD) song song với CD."
+    },
+    {
+     "theorem": "PARALLEL_LINE_PLANE_INTERSECTION",
+     "learner_text": "Trên mặt SDA, nối giao điểm thuộc cạnh SD với giao điểm thuộc cạnh SA.",
+     "justification_text": "Vì (P) song song với DA và DA nằm trong mặt (SDA), nên giao tuyến của (P) với mặt (SDA) song song với DA."
+    }
+   ],
+   "right_angle_drawn": {},
+   "scene_sha256": "ce895121db6bd7968a6ba35fb32ba42231df623da4bafc067c10c5b7cdd5746c"
+  },
+  "DEV37:order_goal_first": {
+   "status": "SERVED",
+   "audit": {
+    "violations": {},
+    "violation_count": 0,
+    "objects": 18,
+    "events": 15,
+    "steps": 15,
+    "orphans_independent": [],
+    "unused_auxiliary_flagged": [],
+    "orphans_not_flagged": []
+   },
+   "measures": [
+    {
+     "object": "derived_H_vec",
+     "step": 5,
+     "generic": false,
+     "has_measured_quantity": false
+    },
+    {
+     "object": "derived_H1_vec",
+     "step": 7,
+     "generic": false,
+     "has_measured_quantity": false
+    }
+   ],
+   "fingerprint": {
+    "answer_exact": {},
+    "points": {
+     "A": [
+      "0",
+      "0",
+      "0"
+     ],
+     "B": [
+      "1",
+      "0",
+      "0"
+     ],
+     "C": [
+      "1",
+      "1",
+      "0"
+     ],
+     "D": [
+      "0",
+      "1",
+      "0"
+     ],
+     "S": [
+      "0",
+      "0",
+      "1"
+     ],
+     "M": [
+      "0",
+      "0",
+      "1/2"
+     ],
+     "H": [
+      "1",
+      "0",
+      "1/2"
+     ],
+     "H1": [
+      "1",
+      "1",
+      "1/2"
+     ]
+    },
+    "sections": {
+     "td_sec": null
+    },
+    "angle_constructions": {},
+    "certificate": {
+     "schema": null,
+     "verified": []
+    }
+   },
+   "section_edges": [
+    {
+     "theorem": "PARALLEL_LINE_PLANE_INTERSECTION",
+     "learner_text": "Trên mặt SAB, nối giao điểm thuộc cạnh SA với giao điểm thuộc cạnh SB.",
+     "justification_text": "Vì (P) song song với AB và AB nằm trong mặt (SAB), nên giao tuyến của (P) với mặt (SAB) song song với AB."
+    },
+    {
+     "theorem": "PARALLEL_LINE_PLANE_INTERSECTION",
+     "learner_text": "Trên mặt SBC, nối giao điểm thuộc cạnh SB với giao điểm thuộc cạnh SC.",
+     "justification_text": "Vì (P) song song với BC và BC nằm trong mặt (SBC), nên giao tuyến của (P) với mặt (SBC) song song với BC."
+    },
+    {
+     "theorem": "PARALLEL_LINE_PLANE_INTERSECTION",
+     "learner_text": "Trên mặt SCD, nối giao điểm thuộc cạnh SC với giao điểm thuộc cạnh SD.",
+     "justification_text": "Vì (P) song song với CD và CD nằm trong mặt (SCD), nên giao tuyến của (P) với mặt (SCD) song song với CD."
+    },
+    {
+     "theorem": "PARALLEL_LINE_PLANE_INTERSECTION",
+     "learner_text": "Trên mặt SDA, nối giao điểm thuộc cạnh SD với giao điểm thuộc cạnh SA.",
+     "justification_text": "Vì (P) song song với DA và DA nằm trong mặt (SDA), nên giao tuyến của (P) với mặt (SDA) song song với DA."
+    }
+   ],
+   "right_angle_drawn": {},
+   "scene_sha256": "ce895121db6bd7968a6ba35fb32ba42231df623da4bafc067c10c5b7cdd5746c"
+  },
+  "DEV37:order_renamed": {
+   "status": "SERVED",
+   "audit": {
+    "violations": {},
+    "violation_count": 0,
+    "objects": 18,
+    "events": 15,
+    "steps": 15,
+    "orphans_independent": [],
+    "unused_auxiliary_flagged": [],
+    "orphans_not_flagged": []
+   },
+   "measures": [
+    {
+     "object": "derived_H_vec",
+     "step": 5,
+     "generic": false,
+     "has_measured_quantity": false
+    },
+    {
+     "object": "derived_H1_vec",
+     "step": 7,
+     "generic": false,
+     "has_measured_quantity": false
+    }
+   ],
+   "fingerprint": {
+    "answer_exact": {},
+    "points": {
+     "M": [
+      "0",
+      "0",
+      "0"
+     ],
+     "N": [
+      "1",
+      "0",
+      "0"
+     ],
+     "P": [
+      "1",
+      "1",
+      "0"
+     ],
+     "Q": [
+      "0",
+      "1",
+      "0"
+     ],
+     "T": [
+      "0",
+      "0",
+      "1"
+     ],
+     "K": [
+      "0",
+      "0",
+      "1/2"
+     ],
+     "H": [
+      "1",
+      "0",
+      "1/2"
+     ],
+     "H1": [
+      "1",
+      "1",
+      "1/2"
+     ]
+    },
+    "sections": {
+     "td_sec": null
+    },
+    "angle_constructions": {},
+    "certificate": {
+     "schema": null,
+     "verified": []
+    }
+   },
+   "section_edges": [
+    {
+     "theorem": "PARALLEL_LINE_PLANE_INTERSECTION",
+     "learner_text": "Trên mặt TMN, nối giao điểm thuộc cạnh TM với giao điểm thuộc cạnh TN.",
+     "justification_text": "Vì (P) song song với MN và MN nằm trong mặt (TMN), nên giao tuyến của (P) với mặt (TMN) song song với MN."
+    },
+    {
+     "theorem": "PARALLEL_LINE_PLANE_INTERSECTION",
+     "learner_text": "Trên mặt TNP, nối giao điểm thuộc cạnh TN với giao điểm thuộc cạnh TP.",
+     "justification_text": "Vì (P) song song với NP và NP nằm trong mặt (TNP), nên giao tuyến của (P) với mặt (TNP) song song với NP."
+    },
+    {
+     "theorem": "PARALLEL_LINE_PLANE_INTERSECTION",
+     "learner_text": "Trên mặt TPQ, nối giao điểm thuộc cạnh TP với giao điểm thuộc cạnh TQ.",
+     "justification_text": "Vì (P) song song với PQ và PQ nằm trong mặt (TPQ), nên giao tuyến của (P) với mặt (TPQ) song song với PQ."
+    },
+    {
+     "theorem": "PARALLEL_LINE_PLANE_INTERSECTION",
+     "learner_text": "Trên mặt TQM, nối giao điểm thuộc cạnh TQ với giao điểm thuộc cạnh TM.",
+     "justification_text": "Vì (P) song song với QM và QM nằm trong mặt (TQM), nên giao tuyến của (P) với mặt (TQM) song song với QM."
+    }
+   ],
+   "right_angle_drawn": {},
+   "scene_sha256": "3abb4e384bc3bd2b18350b97029d49b3d5c96c1dd0ac7099745929a7b6a71259"
+  },
+  "DEV37:sec_hinh_gi_question": {
+   "status": "SERVED",
+   "audit": {
+    "violations": {},
+    "violation_count": 0,
+    "objects": 18,
+    "events": 15,
+    "steps": 15,
+    "orphans_independent": [],
+    "unused_auxiliary_flagged": [],
+    "orphans_not_flagged": []
+   },
+   "measures": [
+    {
+     "object": "derived_H_vec",
+     "step": 5,
+     "generic": false,
+     "has_measured_quantity": false
+    },
+    {
+     "object": "derived_H1_vec",
+     "step": 7,
+     "generic": false,
+     "has_measured_quantity": false
+    }
+   ],
+   "fingerprint": {
+    "answer_exact": {},
+    "points": {
+     "A": [
+      "0",
+      "0",
+      "0"
+     ],
+     "B": [
+      "1",
+      "0",
+      "0"
+     ],
+     "C": [
+      "1",
+      "1",
+      "0"
+     ],
+     "D": [
+      "0",
+      "1",
+      "0"
+     ],
+     "S": [
+      "0",
+      "0",
+      "1"
+     ],
+     "M": [
+      "0",
+      "0",
+      "1/2"
+     ],
+     "H": [
+      "1",
+      "0",
+      "1/2"
+     ],
+     "H1": [
+      "1",
+      "1",
+      "1/2"
+     ]
+    },
+    "sections": {
+     "td_sec": null
+    },
+    "angle_constructions": {},
+    "certificate": {
+     "schema": null,
+     "verified": []
+    }
+   },
+   "section_edges": [
+    {
+     "theorem": "PARALLEL_LINE_PLANE_INTERSECTION",
+     "learner_text": "Trên mặt SAB, nối giao điểm thuộc cạnh SA với giao điểm thuộc cạnh SB.",
+     "justification_text": "Vì (P) song song với AB và AB nằm trong mặt (SAB), nên giao tuyến của (P) với mặt (SAB) song song với AB."
+    },
+    {
+     "theorem": "PARALLEL_LINE_PLANE_INTERSECTION",
+     "learner_text": "Trên mặt SBC, nối giao điểm thuộc cạnh SB với giao điểm thuộc cạnh SC.",
+     "justification_text": "Vì (P) song song với BC và BC nằm trong mặt (SBC), nên giao tuyến của (P) với mặt (SBC) song song với BC."
+    },
+    {
+     "theorem": "PARALLEL_LINE_PLANE_INTERSECTION",
+     "learner_text": "Trên mặt SCD, nối giao điểm thuộc cạnh SC với giao điểm thuộc cạnh SD.",
+     "justification_text": "Vì (P) song song với CD và CD nằm trong mặt (SCD), nên giao tuyến của (P) với mặt (SCD) song song với CD."
+    },
+    {
+     "theorem": "PARALLEL_LINE_PLANE_INTERSECTION",
+     "learner_text": "Trên mặt SDA, nối giao điểm thuộc cạnh SD với giao điểm thuộc cạnh SA.",
+     "justification_text": "Vì (P) song song với DA và DA nằm trong mặt (SDA), nên giao tuyến của (P) với mặt (SDA) song song với DA."
+    }
+   ],
+   "right_angle_drawn": {},
+   "scene_sha256": "ce895121db6bd7968a6ba35fb32ba42231df623da4bafc067c10c5b7cdd5746c"
+  },
+  "DEV37:sec_do_P_cat": {
+   "status": "REFUSED"
+  },
+  "DEV37:sec_area_stem": {
+   "status": "SERVED",
+   "audit": {
+    "violations": {},
+    "violation_count": 0,
+    "objects": 19,
+    "events": 16,
+    "steps": 16,
+    "orphans_independent": [],
+    "unused_auxiliary_flagged": [],
+    "orphans_not_flagged": []
+   },
+   "measures": [
+    {
+     "object": "derived_H_vec",
+     "step": 5,
+     "generic": false,
+     "has_measured_quantity": false
+    },
+    {
+     "object": "derived_H1_vec",
+     "step": 7,
+     "generic": false,
+     "has_measured_quantity": false
+    },
+    {
+     "object": "kq_q1",
+     "step": 15,
+     "generic": false,
+     "has_measured_quantity": true
+    }
+   ],
+   "fingerprint": {
+    "answer_exact": {
+     "q1": {
+      "coef": "1/4",
+      "dim": 2,
+      "unit": "a"
+     }
+    },
+    "points": {
+     "A": [
+      "0",
+      "0",
+      "0"
+     ],
+     "B": [
+      "1",
+      "0",
+      "0"
+     ],
+     "C": [
+      "1",
+      "1",
+      "0"
+     ],
+     "D": [
+      "0",
+      "1",
+      "0"
+     ],
+     "S": [
+      "0",
+      "0",
+      "1"
+     ],
+     "M": [
+      "0",
+      "0",
+      "1/2"
+     ],
+     "H": [
+      "1",
+      "0",
+      "1/2"
+     ],
+     "H1": [
+      "1",
+      "1",
+      "1/2"
+     ]
+    },
+    "sections": {
+     "td_sec": null
+    },
+    "angle_constructions": {},
+    "certificate": {
+     "schema": null,
+     "verified": []
+    }
+   },
+   "section_edges": [
+    {
+     "theorem": "PARALLEL_LINE_PLANE_INTERSECTION",
+     "learner_text": "Trên mặt SAB, nối giao điểm thuộc cạnh SA với giao điểm thuộc cạnh SB.",
+     "justification_text": "Vì (P) song song với AB và AB nằm trong mặt (SAB), nên giao tuyến của (P) với mặt (SAB) song song với AB."
+    },
+    {
+     "theorem": "PARALLEL_LINE_PLANE_INTERSECTION",
+     "learner_text": "Trên mặt SBC, nối giao điểm thuộc cạnh SB với giao điểm thuộc cạnh SC.",
+     "justification_text": "Vì (P) song song với BC và BC nằm trong mặt (SBC), nên giao tuyến của (P) với mặt (SBC) song song với BC."
+    },
+    {
+     "theorem": "PARALLEL_LINE_PLANE_INTERSECTION",
+     "learner_text": "Trên mặt SCD, nối giao điểm thuộc cạnh SC với giao điểm thuộc cạnh SD.",
+     "justification_text": "Vì (P) song song với CD và CD nằm trong mặt (SCD), nên giao tuyến của (P) với mặt (SCD) song song với CD."
+    },
+    {
+     "theorem": "PARALLEL_LINE_PLANE_INTERSECTION",
+     "learner_text": "Trên mặt SDA, nối giao điểm thuộc cạnh SD với giao điểm thuộc cạnh SA.",
+     "justification_text": "Vì (P) song song với DA và DA nằm trong mặt (SDA), nên giao tuyến của (P) với mặt (SDA) song song với DA."
+    }
+   ],
+   "right_angle_drawn": {},
+   "scene_sha256": "83fae16243dca9c83f5e174eddcae9fbb9e6c43f2d415a0c1905191dade489cf"
+  },
+  "DEV37:int_goal": {
+   "status": "SERVED",
+   "audit": {
+    "violations": {},
+    "violation_count": 0,
+    "objects": 14,
+    "events": 7,
+    "steps": 7,
+    "orphans_independent": [
+     "gt_g_il2"
+    ],
+    "unused_auxiliary_flagged": [
+     "gt_g_il2"
+    ],
+    "orphans_not_flagged": []
+   },
+   "measures": [],
+   "fingerprint": {
+    "answer_exact": {},
+    "points": {
+     "A": [
+      "0",
+      "0",
+      "0"
+     ],
+     "B": [
+      "1",
+      "0",
+      "0"
+     ],
+     "C": [
+      "1",
+      "1",
+      "0"
+     ],
+     "D": [
+      "0",
+      "1",
+      "0"
+     ],
+     "S": [
+      "0",
+      "0",
+      "1"
+     ]
+    },
+    "sections": {},
+    "angle_constructions": {},
+    "certificate": {
+     "schema": null,
+     "verified": []
+    }
+   },
+   "section_edges": [],
+   "right_angle_drawn": {},
+   "scene_sha256": "4e5148cec461d34319c3438db434e6b744c475ca86464b42b8a17fa0f1124257"
+  },
+  "DEV37:int_goal_mp": {
+   "status": "SERVED",
+   "audit": {
+    "violations": {},
+    "violation_count": 0,
+    "objects": 14,
+    "events": 7,
+    "steps": 7,
+    "orphans_independent": [
+     "gt_g_il2"
+    ],
+    "unused_auxiliary_flagged": [
+     "gt_g_il2"
+    ],
+    "orphans_not_flagged": []
+   },
+   "measures": [],
+   "fingerprint": {
+    "answer_exact": {},
+    "points": {
+     "A": [
+      "0",
+      "0",
+      "0"
+     ],
+     "B": [
+      "1",
+      "0",
+      "0"
+     ],
+     "C": [
+      "1",
+      "1",
+      "0"
+     ],
+     "D": [
+      "0",
+      "1",
+      "0"
+     ],
+     "S": [
+      "0",
+      "0",
+      "1"
+     ]
+    },
+    "sections": {},
+    "angle_constructions": {},
+    "certificate": {
+     "schema": null,
+     "verified": []
+    }
+   },
+   "section_edges": [],
+   "right_angle_drawn": {},
+   "scene_sha256": "4e5148cec461d34319c3438db434e6b744c475ca86464b42b8a17fa0f1124257"
+  },
+  "DEV37:multi_goals": {
+   "status": "SERVED",
+   "audit": {
+    "violations": {},
+    "violation_count": 0,
+    "objects": 14,
+    "events": 7,
+    "steps": 7,
+    "orphans_independent": [],
+    "unused_auxiliary_flagged": [],
+    "orphans_not_flagged": []
+   },
+   "measures": [
+    {
+     "object": "kq_q2",
+     "step": 5,
+     "generic": false,
+     "has_measured_quantity": true
+    },
+    {
+     "object": "kq_q1",
+     "step": 6,
+     "generic": false,
+     "has_measured_quantity": true
+    }
+   ],
+   "fingerprint": {
+    "answer_exact": {
+     "q2": {
+      "coef": "√2/2",
+      "dim": 1,
+      "unit": "a"
+     },
+     "q1": {
+      "coef": "1/3",
+      "dim": 3,
+      "unit": "a"
+     }
+    },
+    "points": {
+     "A": [
+      "0",
+      "0",
+      "0"
+     ],
+     "B": [
+      "1",
+      "0",
+      "0"
+     ],
+     "C": [
+      "1",
+      "1",
+      "0"
+     ],
+     "D": [
+      "0",
+      "1",
+      "0"
+     ],
+     "S": [
+      "0",
+      "0",
+      "1"
+     ]
+    },
+    "sections": {},
+    "angle_constructions": {},
+    "certificate": {
+     "schema": null,
+     "verified": []
+    }
+   },
+   "section_edges": [],
+   "right_angle_drawn": {},
+   "scene_sha256": "5ebc6de03cc0ae3c58bf37904d4045324c634f5aff93c10e9a3a68cccd1e2e95"
+  },
+  "DEV37:diagram_benign": {
+   "status": "REFUSED"
+  },
+  "DEV37:diagram_dependent": {
+   "status": "REFUSED"
+  },
+  "DEV37:missing_dimension": {
+   "status": "REFUSED"
+  },
+  "DEV37:inconsistent": {
+   "status": "REFUSED"
+  },
+  "DEV37:elliptical_role": {
+   "status": "REFUSED"
+  },
+  "DEV37:cube_stem_distance": {
+   "status": "SERVED",
+   "audit": {
+    "violations": {},
+    "violation_count": 0,
+    "objects": 18,
+    "events": 8,
+    "steps": 8,
+    "orphans_independent": [],
+    "unused_auxiliary_flagged": [],
+    "orphans_not_flagged": []
+   },
+   "measures": [
+    {
+     "object": "kq_q1",
+     "step": 7,
+     "generic": false,
+     "has_measured_quantity": true
+    }
+   ],
+   "fingerprint": {
+    "answer_exact": {
+     "q1": {
+      "coef": "√2",
+      "dim": 1,
+      "unit": "a"
+     }
+    },
+    "points": {
+     "A": [
+      "0",
+      "0",
+      "0"
+     ],
+     "B": [
+      "1",
+      "0",
+      "0"
+     ],
+     "C": [
+      "1",
+      "1",
+      "0"
+     ],
+     "D": [
+      "0",
+      "1",
+      "0"
+     ],
+     "A_prime": [
+      "0",
+      "0",
+      "1"
+     ],
+     "B_prime": [
+      "1",
+      "0",
+      "1"
+     ],
+     "C_prime": [
+      "1",
+      "1",
+      "1"
+     ],
+     "D_prime": [
+      "0",
+      "1",
+      "1"
+     ]
+    },
+    "sections": {},
+    "angle_constructions": {},
+    "certificate": {
+     "schema": null,
+     "verified": []
+    }
+   },
+   "section_edges": [],
+   "right_angle_drawn": {},
+   "scene_sha256": "c4f4afb15f7b01b3ab2bb47d95df9067ca32d8f615ffb6d1f13c20a9c8df4fe7"
+  },
+  "REAL27:vmmu_r247": {
+   "status": "SERVED",
+   "audit": {
+    "violations": {},
+    "violation_count": 0,
+    "objects": 18,
+    "events": 8,
+    "steps": 8,
+    "orphans_independent": [],
+    "unused_auxiliary_flagged": [],
+    "orphans_not_flagged": []
+   },
+   "measures": [
+    {
+     "object": "kq_q1",
+     "step": 7,
+     "generic": false,
+     "has_measured_quantity": true
+    }
+   ],
+   "fingerprint": {
+    "answer_exact": {
+     "q1": {
+      "coef": "3",
+      "dim": 1,
+      "unit": "a"
+     }
+    },
+    "points": {
+     "A": [
+      "0",
+      "0",
+      "0"
+     ],
+     "B": [
+      "1",
+      "0",
+      "0"
+     ],
+     "C": [
+      "1",
+      "1",
+      "0"
+     ],
+     "D": [
+      "0",
+      "1",
+      "0"
+     ],
+     "A_prime": [
+      "0",
+      "0",
+      "1"
+     ],
+     "B_prime": [
+      "1",
+      "0",
+      "1"
+     ],
+     "C_prime": [
+      "1",
+      "1",
+      "1"
+     ],
+     "D_prime": [
+      "0",
+      "1",
+      "1"
+     ]
+    },
+    "sections": {},
+    "angle_constructions": {},
+    "certificate": {
+     "schema": null,
+     "verified": []
+    }
+   },
+   "section_edges": [],
+   "right_angle_drawn": {},
+   "scene_sha256": "0dd2a05e022f36fe936a85f13e01e35fc29ca9fb1a28b8ee78947a53f11aa820"
+  },
+  "REAL27:vmmu_r254": {
+   "status": "REFUSED"
+  },
+  "REAL27:vmmu_r256": {
+   "status": "REFUSED"
+  },
+  "REAL27:vmmu_r258": {
+   "status": "SERVED",
+   "audit": {
+    "violations": {},
+    "violation_count": 0,
+    "objects": 12,
+    "events": 7,
+    "steps": 7,
+    "orphans_independent": [],
+    "unused_auxiliary_flagged": [],
+    "orphans_not_flagged": []
+   },
+   "measures": [
+    {
+     "object": "kq_q1",
+     "step": 6,
+     "generic": false,
+     "has_measured_quantity": true
+    }
+   ],
+   "fingerprint": {
+    "answer_exact": {
+     "q1": {
+      "coef": "1/3",
+      "dim": 0,
+      "unit": null
+     }
+    },
+    "points": {
+     "A": [
+      "0",
+      "0",
+      "0"
+     ],
+     "B": [
+      "1",
+      "0",
+      "0"
+     ],
+     "C": [
+      "0",
+      "1",
+      "0"
+     ],
+     "S": [
+      "0",
+      "0",
+      "1"
+     ]
+    },
+    "sections": {},
+    "angle_constructions": {
+     "kq_q1": {
+      "relation": "plane_plane",
+      "vertex": [
+       "1/2",
+       "0",
+       "1/2"
+      ],
+      "vertex_id": null
+     }
+    },
+    "certificate": {
+     "schema": "similarity-scale-certificate/1",
+     "verified": []
+    }
+   },
+   "section_edges": [],
+   "right_angle_drawn": {},
+   "scene_sha256": "9c8e996e86c9fc2b151cc538f06bc90b908f5ba89421b95c9b4cf192e7cb340b"
+  },
+  "REAL27:vmmu_r266": {
+   "status": "REFUSED"
+  },
+  "REAL27:vmmu_r270": {
+   "status": "SERVED",
+   "audit": {
+    "violations": {},
+    "violation_count": 0,
+    "objects": 13,
+    "events": 6,
+    "steps": 6,
+    "orphans_independent": [],
+    "unused_auxiliary_flagged": [],
+    "orphans_not_flagged": []
+   },
+   "measures": [
+    {
+     "object": "kq_q1",
+     "step": 5,
+     "generic": false,
+     "has_measured_quantity": true
+    }
+   ],
+   "fingerprint": {
+    "answer_exact": {
+     "q1": {
+      "coef": "√3/2",
+      "dim": 3,
+      "unit": "a"
+     }
+    },
+    "points": {
+     "A": [
+      "0",
+      "0",
+      "0"
+     ],
+     "B": [
+      "1",
+      "0",
+      "0"
+     ],
+     "C": [
+      "0",
+      "1",
+      "0"
+     ],
+     "A_prime": [
+      "0",
+      "0",
+      "1"
+     ],
+     "B_prime": [
+      "1",
+      "0",
+      "1"
+     ],
+     "C_prime": [
+      "0",
+      "1",
+      "1"
+     ]
+    },
+    "sections": {},
+    "angle_constructions": {},
+    "certificate": {
+     "schema": null,
+     "verified": []
+    }
+   },
+   "section_edges": [],
+   "right_angle_drawn": {},
+   "scene_sha256": "a62cade0953b252a7bed60b03f2b0eb7fbb83c68f8ae715f6025dcd3697096e0"
+  },
+  "REAL27:vmmu_r273": {
+   "status": "SERVED",
+   "audit": {
+    "violations": {},
+    "violation_count": 0,
+    "objects": 10,
+    "events": 5,
+    "steps": 5,
+    "orphans_independent": [],
+    "unused_auxiliary_flagged": [],
+    "orphans_not_flagged": []
+   },
+   "measures": [
+    {
+     "object": "kq_q1",
+     "step": 4,
+     "generic": false,
+     "has_measured_quantity": true
+    }
+   ],
+   "fingerprint": {
+    "answer_exact": {
+     "q1": {
+      "coef": "1",
+      "dim": 3,
+      "unit": "a"
+     }
+    },
+    "points": {
+     "A": [
+      "0",
+      "0",
+      "0"
+     ],
+     "B": [
+      "1",
+      "0",
+      "0"
+     ],
+     "C": [
+      "0",
+      "1",
+      "0"
+     ],
+     "S": [
+      "0",
+      "0",
+      "1"
+     ]
+    },
+    "sections": {},
+    "angle_constructions": {},
+    "certificate": {
+     "schema": null,
+     "verified": []
+    }
+   },
+   "section_edges": [],
+   "right_angle_drawn": {},
+   "scene_sha256": "22b73a853b5915478dca6d04f43a77c7136a8f8d63aa4b4106bca1605e92e677"
+  },
+  "REAL27:vmmu_r277": {
+   "status": "REFUSED"
+  },
+  "REAL27:vmmu_r284": {
+   "status": "REFUSED"
+  },
+  "REAL27:vmmu_r295": {
+   "status": "REFUSED"
+  },
+  "REAL27:vmmu_r298": {
+   "status": "SERVED",
+   "audit": {
+    "violations": {},
+    "violation_count": 0,
+    "objects": 13,
+    "events": 6,
+    "steps": 6,
+    "orphans_independent": [],
+    "unused_auxiliary_flagged": [],
+    "orphans_not_flagged": []
+   },
+   "measures": [
+    {
+     "object": "kq_q1",
+     "step": 5,
+     "generic": false,
+     "has_measured_quantity": true
+    }
+   ],
+   "fingerprint": {
+    "answer_exact": {
+     "q1": {
+      "coef": "2√6",
+      "dim": 3,
+      "unit": "a"
+     }
+    },
+    "points": {
+     "A": [
+      "0",
+      "0",
+      "0"
+     ],
+     "B": [
+      "1",
+      "0",
+      "0"
+     ],
+     "C": [
+      "0",
+      "1",
+      "0"
+     ],
+     "A_prime": [
+      "0",
+      "0",
+      "1"
+     ],
+     "B_prime": [
+      "1",
+      "0",
+      "1"
+     ],
+     "C_prime": [
+      "0",
+      "1",
+      "1"
+     ]
+    },
+    "sections": {},
+    "angle_constructions": {},
+    "certificate": {
+     "schema": null,
+     "verified": []
+    }
+   },
+   "section_edges": [],
+   "right_angle_drawn": {},
+   "scene_sha256": "97c0f0bf42534df798bb2dc545ca8486e924bbd10d6754c62c49347768c6f082"
+  },
+  "REAL27:vmmu_r375": {
+   "status": "SERVED",
+   "audit": {
+    "violations": {},
+    "violation_count": 0,
+    "objects": 14,
+    "events": 6,
+    "steps": 6,
+    "orphans_independent": [],
+    "unused_auxiliary_flagged": [],
+    "orphans_not_flagged": []
+   },
+   "measures": [
+    {
+     "object": "kq_q1",
+     "step": 5,
+     "generic": false,
+     "has_measured_quantity": true
+    }
+   ],
+   "fingerprint": {
+    "answer_exact": {
+     "q1": {
+      "coef": "√17",
+      "dim": 0,
+      "unit": null
+     }
+    },
+    "points": {
+     "A": [
+      "0",
+      "0",
+      "0"
+     ],
+     "B": [
+      "1",
+      "0",
+      "0"
+     ],
+     "C": [
+      "1",
+      "1",
+      "0"
+     ],
+     "D": [
+      "0",
+      "1",
+      "0"
+     ],
+     "S": [
+      "1/2",
+      "1/2",
+      "1"
+     ],
+     "O": [
+      "1/2",
+      "1/2",
+      "0"
+     ]
+    },
+    "sections": {},
+    "angle_constructions": {},
+    "certificate": {
+     "schema": null,
+     "verified": []
+    }
+   },
+   "section_edges": [],
+   "right_angle_drawn": {},
+   "scene_sha256": "bf6e2cc905dc2718802a0847de20dff2261ab05ee6f516e33c918dbdb92e6146"
+  },
+  "REAL27:vmmu_r460": {
+   "status": "REFUSED"
+  },
+  "REAL27:vmmu_r461": {
+   "status": "REFUSED"
+  },
+  "REAL27:vmmu_r463": {
+   "status": "REFUSED"
+  },
+  "REAL27:vmmu_r475": {
+   "status": "REFUSED"
+  },
+  "REAL27:vmmu_r476": {
+   "status": "SERVED",
+   "audit": {
+    "violations": {},
+    "violation_count": 0,
+    "objects": 14,
+    "events": 7,
+    "steps": 7,
+    "orphans_independent": [],
+    "unused_auxiliary_flagged": [],
+    "orphans_not_flagged": []
+   },
+   "measures": [
+    {
+     "object": "kq_q1",
+     "step": 6,
+     "generic": false,
+     "has_measured_quantity": true
+    }
+   ],
+   "fingerprint": {
+    "answer_exact": {
+     "q1": {
+      "coef": "3/4",
+      "dim": 0,
+      "unit": null
+     }
+    },
+    "points": {
+     "A": [
+      "0",
+      "0",
+      "0"
+     ],
+     "B": [
+      "1",
+      "0",
+      "0"
+     ],
+     "C": [
+      "1",
+      "1",
+      "0"
+     ],
+     "D": [
+      "0",
+      "1",
+      "0"
+     ],
+     "S": [
+      "0",
+      "0",
+      "1"
+     ]
+    },
+    "sections": {},
+    "angle_constructions": {
+     "kq_q1": {
+      "relation": "plane_plane",
+      "vertex": [
+       "0",
+       "1",
+       "0"
+      ],
+      "vertex_id": "D"
+     }
+    },
+    "certificate": {
+     "schema": null,
+     "verified": []
+    }
+   },
+   "section_edges": [],
+   "right_angle_drawn": {},
+   "scene_sha256": "38dd8d059715b958890ab037b5c74ad4bd009bf6a3769fef1114bb7fa3bcb3df"
+  },
+  "REAL27:vmmu_r488": {
+   "status": "REFUSED"
+  },
+  "REAL27:vmmu_r491": {
+   "status": "REFUSED"
+  },
+  "REAL27:vmmu_r492": {
+   "status": "SERVED",
+   "audit": {
+    "violations": {},
+    "violation_count": 0,
+    "objects": 15,
+    "events": 8,
+    "steps": 8,
+    "orphans_independent": [],
+    "unused_auxiliary_flagged": [],
+    "orphans_not_flagged": []
+   },
+   "measures": [
+    {
+     "object": "kq_q1",
+     "step": 7,
+     "generic": false,
+     "has_measured_quantity": true
+    }
+   ],
+   "fingerprint": {
+    "answer_exact": {
+     "q1": {
+      "coef": "1/4",
+      "dim": 0,
+      "unit": null
+     }
+    },
+    "points": {
+     "A": [
+      "0",
+      "0",
+      "0"
+     ],
+     "B": [
+      "1",
+      "0",
+      "0"
+     ],
+     "C": [
+      "0",
+      "1",
+      "0"
+     ],
+     "A_prime": [
+      "0",
+      "0",
+      "1"
+     ],
+     "B_prime": [
+      "1",
+      "0",
+      "1"
+     ],
+     "C_prime": [
+      "0",
+      "1",
+      "1"
+     ]
+    },
+    "sections": {},
+    "angle_constructions": {
+     "kq_q1": {
+      "relation": "line_plane",
+      "vertex": [
+       "0",
+       "1",
+       "1"
+      ],
+      "vertex_id": "C_prime"
+     }
+    },
+    "certificate": {
+     "schema": null,
+     "verified": []
+    }
+   },
+   "section_edges": [],
+   "right_angle_drawn": {},
+   "scene_sha256": "670aefcbda2956a9190e14cc81ac7bc074411863eb0247aa9ba0a549ccf811a3"
+  },
+  "REAL27:vmmu_r498": {
+   "status": "SERVED",
+   "audit": {
+    "violations": {},
+    "violation_count": 0,
+    "objects": 18,
+    "events": 8,
+    "steps": 8,
+    "orphans_independent": [],
+    "unused_auxiliary_flagged": [],
+    "orphans_not_flagged": []
+   },
+   "measures": [
+    {
+     "object": "kq_q1",
+     "step": 7,
+     "generic": false,
+     "has_measured_quantity": true
+    }
+   ],
+   "fingerprint": {
+    "answer_exact": {
+     "q1": {
+      "coef": "1/4",
+      "dim": 0,
+      "unit": null
+     }
+    },
+    "points": {
+     "A": [
+      "0",
+      "0",
+      "0"
+     ],
+     "B": [
+      "1",
+      "0",
+      "0"
+     ],
+     "C": [
+      "1",
+      "1",
+      "0"
+     ],
+     "D": [
+      "0",
+      "1",
+      "0"
+     ],
+     "A_prime": [
+      "0",
+      "0",
+      "1"
+     ],
+     "B_prime": [
+      "1",
+      "0",
+      "1"
+     ],
+     "C_prime": [
+      "1",
+      "1",
+      "1"
+     ],
+     "D_prime": [
+      "0",
+      "1",
+      "1"
+     ]
+    },
+    "sections": {},
+    "angle_constructions": {
+     "kq_q1": {
+      "relation": "plane_plane",
+      "vertex": [
+       "1",
+       "0",
+       "0"
+      ],
+      "vertex_id": "B"
+     }
+    },
+    "certificate": {
+     "schema": null,
+     "verified": []
+    }
+   },
+   "section_edges": [],
+   "right_angle_drawn": {},
+   "scene_sha256": "b43800f20f552a3d78797feccbf2ee2bc950c5456581ccd698e01107c44cafb1"
+  },
+  "REAL27:vmmu_r513": {
+   "status": "REFUSED"
+  },
+  "REAL27:vmmu_r520": {
+   "status": "SERVED",
+   "audit": {
+    "violations": {},
+    "violation_count": 0,
+    "objects": 12,
+    "events": 7,
+    "steps": 7,
+    "orphans_independent": [],
+    "unused_auxiliary_flagged": [],
+    "orphans_not_flagged": []
+   },
+   "measures": [
+    {
+     "object": "kq_q1",
+     "step": 6,
+     "generic": false,
+     "has_measured_quantity": true
+    }
+   ],
+   "fingerprint": {
+    "answer_exact": {
+     "q1": {
+      "coef": "1/2",
+      "dim": 0,
+      "unit": null
+     }
+    },
+    "points": {
+     "A": [
+      "0",
+      "0",
+      "0"
+     ],
+     "B": [
+      "1",
+      "0",
+      "0"
+     ],
+     "C": [
+      "0",
+      "1",
+      "0"
+     ],
+     "S": [
+      "0",
+      "0",
+      "1"
+     ]
+    },
+    "sections": {},
+    "angle_constructions": {
+     "kq_q1": {
+      "relation": "plane_plane",
+      "vertex": [
+       "1",
+       "0",
+       "0"
+      ],
+      "vertex_id": "B"
+     }
+    },
+    "certificate": {
+     "schema": "target-invariance-certificate/2",
+     "verified": [
+      true
+     ]
+    }
+   },
+   "section_edges": [],
+   "right_angle_drawn": {},
+   "scene_sha256": "314f8d34081ef8c7b227d6569546d17c1f25c031d23385368b5d5837f28909ec"
+  },
+  "REAL27:vmmu_r537": {
+   "status": "REFUSED"
+  },
+  "REAL27:vmmu_r538": {
+   "status": "REFUSED"
+  },
+  "REAL27:vmmu_r559": {
+   "status": "SERVED",
+   "audit": {
+    "violations": {},
+    "violation_count": 0,
+    "objects": 10,
+    "events": 6,
+    "steps": 6,
+    "orphans_independent": [],
+    "unused_auxiliary_flagged": [],
+    "orphans_not_flagged": []
+   },
+   "measures": [
+    {
+     "object": "kq_q1",
+     "step": 5,
+     "generic": false,
+     "has_measured_quantity": true
+    }
+   ],
+   "fingerprint": {
+    "answer_exact": {
+     "q1": {
+      "coef": "1/12",
+      "dim": 0,
+      "unit": null
+     }
+    },
+    "points": {
+     "B": [
+      "0",
+      "0",
+      "0"
+     ],
+     "C": [
+      "1",
+      "0",
+      "0"
+     ],
+     "D": [
+      "0",
+      "1",
+      "0"
+     ],
+     "A": [
+      "1/3",
+      "1/3",
+      "1"
+     ],
+     "M": [
+      "1/2",
+      "1/2",
+      "0"
+     ],
+     "O": [
+      "1/3",
+      "1/3",
+      "0"
+     ]
+    },
+    "sections": {},
+    "angle_constructions": {
+     "kq_q1": {
+      "relation": "line_line_skew",
+      "vertex": [
+       "1",
+       "0",
+       "0"
+      ],
+      "vertex_id": "C"
+     }
+    },
+    "certificate": {
+     "schema": "similarity-scale-certificate/1",
+     "verified": []
+    }
+   },
+   "section_edges": [],
+   "right_angle_drawn": {},
+   "scene_sha256": "f953c5518141104cbd687c8a9b745ef75b7bc2ca39c53e7ab449066505a5e957"
+  },
+  "REAL27:vmmu_r695": {
+   "status": "SERVED",
+   "audit": {
+    "violations": {},
+    "violation_count": 0,
+    "objects": 13,
+    "events": 6,
+    "steps": 6,
+    "orphans_independent": [],
+    "unused_auxiliary_flagged": [],
+    "orphans_not_flagged": []
+   },
+   "measures": [
+    {
+     "object": "kq_q1",
+     "step": 5,
+     "generic": false,
+     "has_measured_quantity": true
+    }
+   ],
+   "fingerprint": {
+    "answer_exact": {
+     "q1": {
+      "coef": "2/3",
+      "dim": 0,
+      "unit": null
+     }
+    },
+    "points": {
+     "A": [
+      "0",
+      "0",
+      "0"
+     ],
+     "B": [
+      "1",
+      "0",
+      "0"
+     ],
+     "C": [
+      "1",
+      "1",
+      "0"
+     ],
+     "D": [
+      "0",
+      "1",
+      "0"
+     ],
+     "S": [
+      "0",
+      "0",
+      "1"
+     ]
+    },
+    "sections": {},
+    "angle_constructions": {},
+    "certificate": {
+     "schema": null,
+     "verified": []
+    }
+   },
+   "section_edges": [],
+   "right_angle_drawn": {},
+   "scene_sha256": "450e4950a12de4f46d3e26b74c7b5325d7f7acb677d520f4d309ee65195b35ab"
+  },
+  "PROBES:par_plane_named": {
+   "status": "SERVED",
+   "audit": {
+    "violations": {},
+    "violation_count": 0,
+    "objects": 18,
+    "events": 15,
+    "steps": 15,
+    "orphans_independent": [],
+    "unused_auxiliary_flagged": [],
+    "orphans_not_flagged": []
+   },
+   "measures": [
+    {
+     "object": "derived_H_vec",
+     "step": 5,
+     "generic": false,
+     "has_measured_quantity": false
+    },
+    {
+     "object": "derived_H1_vec",
+     "step": 7,
+     "generic": false,
+     "has_measured_quantity": false
+    }
+   ],
+   "fingerprint": {
+    "answer_exact": {},
+    "points": {
+     "A": [
+      "0",
+      "0",
+      "0"
+     ],
+     "B": [
+      "1",
+      "0",
+      "0"
+     ],
+     "C": [
+      "1",
+      "1",
+      "0"
+     ],
+     "D": [
+      "0",
+      "1",
+      "0"
+     ],
+     "S": [
+      "0",
+      "0",
+      "1"
+     ],
+     "M": [
+      "0",
+      "0",
+      "1/2"
+     ],
+     "H": [
+      "1",
+      "0",
+      "1/2"
+     ],
+     "H1": [
+      "1",
+      "1",
+      "1/2"
+     ]
+    },
+    "sections": {
+     "td_sec": null
+    },
+    "angle_constructions": {},
+    "certificate": {
+     "schema": null,
+     "verified": []
+    }
+   },
+   "section_edges": [
+    {
+     "theorem": "PARALLEL_LINE_PLANE_INTERSECTION",
+     "learner_text": "Trên mặt SAB, nối giao điểm thuộc cạnh SA với giao điểm thuộc cạnh SB.",
+     "justification_text": "Vì (P) song song với AB và AB nằm trong mặt (SAB), nên giao tuyến của (P) với mặt (SAB) song song với AB."
+    },
+    {
+     "theorem": "PARALLEL_LINE_PLANE_INTERSECTION",
+     "learner_text": "Trên mặt SBC, nối giao điểm thuộc cạnh SB với giao điểm thuộc cạnh SC.",
+     "justification_text": "Vì (P) song song với BC và BC nằm trong mặt (SBC), nên giao tuyến của (P) với mặt (SBC) song song với BC."
+    },
+    {
+     "theorem": "PARALLEL_LINE_PLANE_INTERSECTION",
+     "learner_text": "Trên mặt SCD, nối giao điểm thuộc cạnh SC với giao điểm thuộc cạnh SD.",
+     "justification_text": "Vì (P) song song với CD và CD nằm trong mặt (SCD), nên giao tuyến của (P) với mặt (SCD) song song với CD."
+    },
+    {
+     "theorem": "PARALLEL_LINE_PLANE_INTERSECTION",
+     "learner_text": "Trên mặt SDA, nối giao điểm thuộc cạnh SD với giao điểm thuộc cạnh SA.",
+     "justification_text": "Vì (P) song song với DA và DA nằm trong mặt (SDA), nên giao tuyến của (P) với mặt (SDA) song song với DA."
+    }
+   ],
+   "right_angle_drawn": {},
+   "scene_sha256": "ce895121db6bd7968a6ba35fb32ba42231df623da4bafc067c10c5b7cdd5746c"
+  },
+  "PROBES:par_plane_base_word": {
+   "status": "SERVED",
+   "audit": {
+    "violations": {},
+    "violation_count": 0,
+    "objects": 18,
+    "events": 15,
+    "steps": 15,
+    "orphans_independent": [],
+    "unused_auxiliary_flagged": [],
+    "orphans_not_flagged": []
+   },
+   "measures": [
+    {
+     "object": "derived_H_vec",
+     "step": 5,
+     "generic": false,
+     "has_measured_quantity": false
+    },
+    {
+     "object": "derived_H1_vec",
+     "step": 7,
+     "generic": false,
+     "has_measured_quantity": false
+    }
+   ],
+   "fingerprint": {
+    "answer_exact": {},
+    "points": {
+     "A": [
+      "0",
+      "0",
+      "0"
+     ],
+     "B": [
+      "1",
+      "0",
+      "0"
+     ],
+     "C": [
+      "1",
+      "1",
+      "0"
+     ],
+     "D": [
+      "0",
+      "1",
+      "0"
+     ],
+     "S": [
+      "0",
+      "0",
+      "1"
+     ],
+     "M": [
+      "0",
+      "0",
+      "1/2"
+     ],
+     "H": [
+      "1",
+      "0",
+      "1/2"
+     ],
+     "H1": [
+      "1",
+      "1",
+      "1/2"
+     ]
+    },
+    "sections": {
+     "td_sec": null
+    },
+    "angle_constructions": {},
+    "certificate": {
+     "schema": null,
+     "verified": []
+    }
+   },
+   "section_edges": [
+    {
+     "theorem": "PARALLEL_LINE_PLANE_INTERSECTION",
+     "learner_text": "Trên mặt SAB, nối giao điểm thuộc cạnh SA với giao điểm thuộc cạnh SB.",
+     "justification_text": "Vì (P) song song với AB và AB nằm trong mặt (SAB), nên giao tuyến của (P) với mặt (SAB) song song với AB."
+    },
+    {
+     "theorem": "PARALLEL_LINE_PLANE_INTERSECTION",
+     "learner_text": "Trên mặt SBC, nối giao điểm thuộc cạnh SB với giao điểm thuộc cạnh SC.",
+     "justification_text": "Vì (P) song song với BC và BC nằm trong mặt (SBC), nên giao tuyến của (P) với mặt (SBC) song song với BC."
+    },
+    {
+     "theorem": "PARALLEL_LINE_PLANE_INTERSECTION",
+     "learner_text": "Trên mặt SCD, nối giao điểm thuộc cạnh SC với giao điểm thuộc cạnh SD.",
+     "justification_text": "Vì (P) song song với CD và CD nằm trong mặt (SCD), nên giao tuyến của (P) với mặt (SCD) song song với CD."
+    },
+    {
+     "theorem": "PARALLEL_LINE_PLANE_INTERSECTION",
+     "learner_text": "Trên mặt SDA, nối giao điểm thuộc cạnh SD với giao điểm thuộc cạnh SA.",
+     "justification_text": "Vì (P) song song với DA và DA nằm trong mặt (SDA), nên giao tuyến của (P) với mặt (SDA) song song với DA."
+    }
+   ],
+   "right_angle_drawn": {},
+   "scene_sha256": "ce895121db6bd7968a6ba35fb32ba42231df623da4bafc067c10c5b7cdd5746c"
+  },
+  "PROBES:par_plane_base_word2": {
+   "status": "SERVED",
+   "audit": {
+    "violations": {},
+    "violation_count": 0,
+    "objects": 18,
+    "events": 15,
+    "steps": 15,
+    "orphans_independent": [],
+    "unused_auxiliary_flagged": [],
+    "orphans_not_flagged": []
+   },
+   "measures": [
+    {
+     "object": "derived_H_vec",
+     "step": 5,
+     "generic": false,
+     "has_measured_quantity": false
+    },
+    {
+     "object": "derived_H1_vec",
+     "step": 7,
+     "generic": false,
+     "has_measured_quantity": false
+    }
+   ],
+   "fingerprint": {
+    "answer_exact": {},
+    "points": {
+     "A": [
+      "0",
+      "0",
+      "0"
+     ],
+     "B": [
+      "1",
+      "0",
+      "0"
+     ],
+     "C": [
+      "1",
+      "1",
+      "0"
+     ],
+     "D": [
+      "0",
+      "1",
+      "0"
+     ],
+     "S": [
+      "0",
+      "0",
+      "1"
+     ],
+     "M": [
+      "0",
+      "0",
+      "1/2"
+     ],
+     "H": [
+      "1",
+      "0",
+      "1/2"
+     ],
+     "H1": [
+      "1",
+      "1",
+      "1/2"
+     ]
+    },
+    "sections": {
+     "td_sec": null
+    },
+    "angle_constructions": {},
+    "certificate": {
+     "schema": null,
+     "verified": []
+    }
+   },
+   "section_edges": [
+    {
+     "theorem": "PARALLEL_LINE_PLANE_INTERSECTION",
+     "learner_text": "Trên mặt SAB, nối giao điểm thuộc cạnh SA với giao điểm thuộc cạnh SB.",
+     "justification_text": "Vì (P) song song với AB và AB nằm trong mặt (SAB), nên giao tuyến của (P) với mặt (SAB) song song với AB."
+    },
+    {
+     "theorem": "PARALLEL_LINE_PLANE_INTERSECTION",
+     "learner_text": "Trên mặt SBC, nối giao điểm thuộc cạnh SB với giao điểm thuộc cạnh SC.",
+     "justification_text": "Vì (P) song song với BC và BC nằm trong mặt (SBC), nên giao tuyến của (P) với mặt (SBC) song song với BC."
+    },
+    {
+     "theorem": "PARALLEL_LINE_PLANE_INTERSECTION",
+     "learner_text": "Trên mặt SCD, nối giao điểm thuộc cạnh SC với giao điểm thuộc cạnh SD.",
+     "justification_text": "Vì (P) song song với CD và CD nằm trong mặt (SCD), nên giao tuyến của (P) với mặt (SCD) song song với CD."
+    },
+    {
+     "theorem": "PARALLEL_LINE_PLANE_INTERSECTION",
+     "learner_text": "Trên mặt SDA, nối giao điểm thuộc cạnh SD với giao điểm thuộc cạnh SA.",
+     "justification_text": "Vì (P) song song với DA và DA nằm trong mặt (SDA), nên giao tuyến của (P) với mặt (SDA) song song với DA."
+    }
+   ],
+   "right_angle_drawn": {},
+   "scene_sha256": "ce895121db6bd7968a6ba35fb32ba42231df623da4bafc067c10c5b7cdd5746c"
+  },
+  "PROBES:par_plane_qua_dung": {
+   "status": "SERVED",
+   "audit": {
+    "violations": {},
+    "violation_count": 0,
+    "objects": 18,
+    "events": 15,
+    "steps": 15,
+    "orphans_independent": [],
+    "unused_auxiliary_flagged": [],
+    "orphans_not_flagged": []
+   },
+   "measures": [
+    {
+     "object": "derived_H_vec",
+     "step": 5,
+     "generic": false,
+     "has_measured_quantity": false
+    },
+    {
+     "object": "derived_H1_vec",
+     "step": 7,
+     "generic": false,
+     "has_measured_quantity": false
+    }
+   ],
+   "fingerprint": {
+    "answer_exact": {},
+    "points": {
+     "A": [
+      "0",
+      "0",
+      "0"
+     ],
+     "B": [
+      "1",
+      "0",
+      "0"
+     ],
+     "C": [
+      "1",
+      "1",
+      "0"
+     ],
+     "D": [
+      "0",
+      "1",
+      "0"
+     ],
+     "S": [
+      "0",
+      "0",
+      "1"
+     ],
+     "M": [
+      "0",
+      "0",
+      "1/2"
+     ],
+     "H": [
+      "1",
+      "0",
+      "1/2"
+     ],
+     "H1": [
+      "1",
+      "1",
+      "1/2"
+     ]
+    },
+    "sections": {
+     "td_sec": null
+    },
+    "angle_constructions": {},
+    "certificate": {
+     "schema": null,
+     "verified": []
+    }
+   },
+   "section_edges": [
+    {
+     "theorem": "PARALLEL_LINE_PLANE_INTERSECTION",
+     "learner_text": "Trên mặt SAB, nối giao điểm thuộc cạnh SA với giao điểm thuộc cạnh SB.",
+     "justification_text": "Vì (α) song song với AB và AB nằm trong mặt (SAB), nên giao tuyến của (α) với mặt (SAB) song song với AB."
+    },
+    {
+     "theorem": "PARALLEL_LINE_PLANE_INTERSECTION",
+     "learner_text": "Trên mặt SBC, nối giao điểm thuộc cạnh SB với giao điểm thuộc cạnh SC.",
+     "justification_text": "Vì (α) song song với BC và BC nằm trong mặt (SBC), nên giao tuyến của (α) với mặt (SBC) song song với BC."
+    },
+    {
+     "theorem": "PARALLEL_LINE_PLANE_INTERSECTION",
+     "learner_text": "Trên mặt SCD, nối giao điểm thuộc cạnh SC với giao điểm thuộc cạnh SD.",
+     "justification_text": "Vì (α) song song với CD và CD nằm trong mặt (SCD), nên giao tuyến của (α) với mặt (SCD) song song với CD."
+    },
+    {
+     "theorem": "PARALLEL_LINE_PLANE_INTERSECTION",
+     "learner_text": "Trên mặt SDA, nối giao điểm thuộc cạnh SD với giao điểm thuộc cạnh SA.",
+     "justification_text": "Vì (α) song song với DA và DA nằm trong mặt (SDA), nên giao tuyến của (α) với mặt (SDA) song song với DA."
+    }
+   ],
+   "right_angle_drawn": {},
+   "scene_sha256": "d59739578bc4729bd20a0692890f1cf5c1d02557aad839098c2a43daea0a02dc"
+  },
+  "PROBES:par_plane_goi": {
+   "status": "SERVED",
+   "audit": {
+    "violations": {},
+    "violation_count": 0,
+    "objects": 18,
+    "events": 15,
+    "steps": 15,
+    "orphans_independent": [],
+    "unused_auxiliary_flagged": [],
+    "orphans_not_flagged": []
+   },
+   "measures": [
+    {
+     "object": "derived_H_vec",
+     "step": 5,
+     "generic": false,
+     "has_measured_quantity": false
+    },
+    {
+     "object": "derived_H1_vec",
+     "step": 7,
+     "generic": false,
+     "has_measured_quantity": false
+    }
+   ],
+   "fingerprint": {
+    "answer_exact": {},
+    "points": {
+     "A": [
+      "0",
+      "0",
+      "0"
+     ],
+     "B": [
+      "1",
+      "0",
+      "0"
+     ],
+     "C": [
+      "1",
+      "1",
+      "0"
+     ],
+     "D": [
+      "0",
+      "1",
+      "0"
+     ],
+     "S": [
+      "0",
+      "0",
+      "1"
+     ],
+     "M": [
+      "0",
+      "0",
+      "1/2"
+     ],
+     "H": [
+      "1",
+      "0",
+      "1/2"
+     ],
+     "H1": [
+      "1",
+      "1",
+      "1/2"
+     ]
+    },
+    "sections": {
+     "td_sec": null
+    },
+    "angle_constructions": {},
+    "certificate": {
+     "schema": null,
+     "verified": []
+    }
+   },
+   "section_edges": [
+    {
+     "theorem": "PARALLEL_LINE_PLANE_INTERSECTION",
+     "learner_text": "Trên mặt SAB, nối giao điểm thuộc cạnh SA với giao điểm thuộc cạnh SB.",
+     "justification_text": "Vì (P) song song với AB và AB nằm trong mặt (SAB), nên giao tuyến của (P) với mặt (SAB) song song với AB."
+    },
+    {
+     "theorem": "PARALLEL_LINE_PLANE_INTERSECTION",
+     "learner_text": "Trên mặt SBC, nối giao điểm thuộc cạnh SB với giao điểm thuộc cạnh SC.",
+     "justification_text": "Vì (P) song song với BC và BC nằm trong mặt (SBC), nên giao tuyến của (P) với mặt (SBC) song song với BC."
+    },
+    {
+     "theorem": "PARALLEL_LINE_PLANE_INTERSECTION",
+     "learner_text": "Trên mặt SCD, nối giao điểm thuộc cạnh SC với giao điểm thuộc cạnh SD.",
+     "justification_text": "Vì (P) song song với CD và CD nằm trong mặt (SCD), nên giao tuyến của (P) với mặt (SCD) song song với CD."
+    },
+    {
+     "theorem": "PARALLEL_LINE_PLANE_INTERSECTION",
+     "learner_text": "Trên mặt SDA, nối giao điểm thuộc cạnh SD với giao điểm thuộc cạnh SA.",
+     "justification_text": "Vì (P) song song với DA và DA nằm trong mặt (SDA), nên giao tuyến của (P) với mặt (SDA) song song với DA."
+    }
+   ],
+   "right_angle_drawn": {},
+   "scene_sha256": "ce895121db6bd7968a6ba35fb32ba42231df623da4bafc067c10c5b7cdd5746c"
+  },
+  "PROBES:par_plane_lateral": {
+   "status": "SERVED",
+   "audit": {
+    "violations": {},
+    "violation_count": 0,
+    "objects": 18,
+    "events": 15,
+    "steps": 15,
+    "orphans_independent": [],
+    "unused_auxiliary_flagged": [],
+    "orphans_not_flagged": []
+   },
+   "measures": [
+    {
+     "object": "derived_H_vec",
+     "step": 5,
+     "generic": false,
+     "has_measured_quantity": false
+    },
+    {
+     "object": "derived_H1_vec",
+     "step": 7,
+     "generic": false,
+     "has_measured_quantity": false
+    }
+   ],
+   "fingerprint": {
+    "answer_exact": {},
+    "points": {
+     "A": [
+      "0",
+      "0",
+      "0"
+     ],
+     "B": [
+      "1",
+      "0",
+      "0"
+     ],
+     "C": [
+      "1",
+      "1",
+      "0"
+     ],
+     "D": [
+      "0",
+      "1",
+      "0"
+     ],
+     "S": [
+      "0",
+      "0",
+      "1"
+     ],
+     "M": [
+      "0",
+      "1/2",
+      "0"
+     ],
+     "H": [
+      "0",
+      "1/2",
+      "-1"
+     ],
+     "H1": [
+      "1",
+      "1/2",
+      "-1"
+     ]
+    },
+    "sections": {
+     "td_sec": null
+    },
+    "angle_constructions": {},
+    "certificate": {
+     "schema": null,
+     "verified": []
+    }
+   },
+   "section_edges": [
+    {
+     "theorem": "PARALLEL_LINE_PLANE_INTERSECTION",
+     "learner_text": "Trên mặt ABCD, nối giao điểm thuộc cạnh BC với giao điểm thuộc cạnh AD.",
+     "justification_text": "Vì (P) song song với AB và AB nằm trong mặt (ABCD), nên giao tuyến của (P) với mặt (ABCD) song song với AB."
+    },
+    {
+     "theorem": "PARALLEL_LINE_PLANE_INTERSECTION",
+     "learner_text": "Trên mặt SDA, nối giao điểm thuộc cạnh AD với giao điểm thuộc cạnh SD.",
+     "justification_text": "Vì (P) song song với AS và AS nằm trong mặt (SDA), nên giao tuyến của (P) với mặt (SDA) song song với AS."
+    },
+    {
+     "theorem": "PARALLEL_LINE_PLANE_INTERSECTION",
+     "learner_text": "Trên mặt SCD, nối giao điểm thuộc cạnh SD với giao điểm thuộc cạnh SC.",
+     "justification_text": "Vì (P) song song với CD và CD nằm trong mặt (SCD), nên giao tuyến của (P) với mặt (SCD) song song với CD."
+    },
+    {
+     "theorem": "PARALLEL_LINE_PLANE_INTERSECTION",
+     "learner_text": "Trên mặt SBC, nối giao điểm thuộc cạnh SC với giao điểm thuộc cạnh BC.",
+     "justification_text": "Vì (P) song song với SB và SB nằm trong mặt (SBC), nên giao tuyến của (P) với mặt (SBC) song song với SB."
+    }
+   ],
+   "right_angle_drawn": {},
+   "scene_sha256": "e7bf1b6e6ce73b92514472c6b788681134881859bfd933abf403b6b8cbf60b64"
+  },
+  "PROBES:par_plane_renamed": {
+   "status": "SERVED",
+   "audit": {
+    "violations": {},
+    "violation_count": 0,
+    "objects": 18,
+    "events": 15,
+    "steps": 15,
+    "orphans_independent": [],
+    "unused_auxiliary_flagged": [],
+    "orphans_not_flagged": []
+   },
+   "measures": [
+    {
+     "object": "derived_H_vec",
+     "step": 5,
+     "generic": false,
+     "has_measured_quantity": false
+    },
+    {
+     "object": "derived_H1_vec",
+     "step": 7,
+     "generic": false,
+     "has_measured_quantity": false
+    }
+   ],
+   "fingerprint": {
+    "answer_exact": {},
+    "points": {
+     "M": [
+      "0",
+      "0",
+      "0"
+     ],
+     "N": [
+      "1",
+      "0",
+      "0"
+     ],
+     "P": [
+      "1",
+      "1",
+      "0"
+     ],
+     "Q": [
+      "0",
+      "1",
+      "0"
+     ],
+     "T": [
+      "0",
+      "0",
+      "1"
+     ],
+     "K": [
+      "0",
+      "0",
+      "1/2"
+     ],
+     "H": [
+      "1",
+      "0",
+      "1/2"
+     ],
+     "H1": [
+      "1",
+      "1",
+      "1/2"
+     ]
+    },
+    "sections": {
+     "td_sec": null
+    },
+    "angle_constructions": {},
+    "certificate": {
+     "schema": null,
+     "verified": []
+    }
+   },
+   "section_edges": [
+    {
+     "theorem": "PARALLEL_LINE_PLANE_INTERSECTION",
+     "learner_text": "Trên mặt TMN, nối giao điểm thuộc cạnh TM với giao điểm thuộc cạnh TN.",
+     "justification_text": "Vì (P) song song với MN và MN nằm trong mặt (TMN), nên giao tuyến của (P) với mặt (TMN) song song với MN."
+    },
+    {
+     "theorem": "PARALLEL_LINE_PLANE_INTERSECTION",
+     "learner_text": "Trên mặt TNP, nối giao điểm thuộc cạnh TN với giao điểm thuộc cạnh TP.",
+     "justification_text": "Vì (P) song song với NP và NP nằm trong mặt (TNP), nên giao tuyến của (P) với mặt (TNP) song song với NP."
+    },
+    {
+     "theorem": "PARALLEL_LINE_PLANE_INTERSECTION",
+     "learner_text": "Trên mặt TPQ, nối giao điểm thuộc cạnh TP với giao điểm thuộc cạnh TQ.",
+     "justification_text": "Vì (P) song song với PQ và PQ nằm trong mặt (TPQ), nên giao tuyến của (P) với mặt (TPQ) song song với PQ."
+    },
+    {
+     "theorem": "PARALLEL_LINE_PLANE_INTERSECTION",
+     "learner_text": "Trên mặt TQM, nối giao điểm thuộc cạnh TQ với giao điểm thuộc cạnh TM.",
+     "justification_text": "Vì (P) song song với QM và QM nằm trong mặt (TQM), nên giao tuyến của (P) với mặt (TQM) song song với QM."
+    }
+   ],
+   "right_angle_drawn": {},
+   "scene_sha256": "3abb4e384bc3bd2b18350b97029d49b3d5c96c1dd0ac7099745929a7b6a71259"
+  },
+  "PROBES:par_plane_cube": {
+   "status": "SERVED",
+   "audit": {
+    "violations": {},
+    "violation_count": 0,
+    "objects": 22,
+    "events": 15,
+    "steps": 15,
+    "orphans_independent": [],
+    "unused_auxiliary_flagged": [],
+    "orphans_not_flagged": []
+   },
+   "measures": [
+    {
+     "object": "derived_H_vec",
+     "step": 6,
+     "generic": false,
+     "has_measured_quantity": false
+    },
+    {
+     "object": "derived_H1_vec",
+     "step": 8,
+     "generic": false,
+     "has_measured_quantity": false
+    }
+   ],
+   "fingerprint": {
+    "answer_exact": {},
+    "points": {
+     "A": [
+      "0",
+      "0",
+      "0"
+     ],
+     "B": [
+      "1",
+      "0",
+      "0"
+     ],
+     "C": [
+      "1",
+      "1",
+      "0"
+     ],
+     "D": [
+      "0",
+      "1",
+      "0"
+     ],
+     "A_prime": [
+      "0",
+      "0",
+      "1"
+     ],
+     "B_prime": [
+      "1",
+      "0",
+      "1"
+     ],
+     "C_prime": [
+      "1",
+      "1",
+      "1"
+     ],
+     "D_prime": [
+      "0",
+      "1",
+      "1"
+     ],
+     "M": [
+      "0",
+      "0",
+      "1/2"
+     ],
+     "H": [
+      "1",
+      "0",
+      "-1/2"
+     ],
+     "H1": [
+      "0",
+      "1",
+      "-1/2"
+     ]
+    },
+    "sections": {
+     "td_sec": null
+    },
+    "angle_constructions": {},
+    "certificate": {
+     "schema": null,
+     "verified": []
+    }
+   },
+   "section_edges": [
+    {
+     "theorem": null,
+     "learner_text": "Trên mặt ABCD, nối giao điểm thuộc cạnh AB với giao điểm thuộc cạnh AD.",
+     "justification_text": null
+    },
+    {
+     "theorem": null,
+     "learner_text": "Trên mặt DAA′D′, nối giao điểm thuộc cạnh AD với giao điểm thuộc cạnh AA′.",
+     "justification_text": null
+    },
+    {
+     "theorem": null,
+     "learner_text": "Trên mặt ABB′A′, nối giao điểm thuộc cạnh AA′ với giao điểm thuộc cạnh AB.",
+     "justification_text": null
+    }
+   ],
+   "right_angle_drawn": {},
+   "scene_sha256": "f7b354413d2cc6fbe597eeee7b8aa7223c3985fe87c464df6049238549e88e87"
+  },
+  "PROBES:par_plane_area": {
+   "status": "SERVED",
+   "audit": {
+    "violations": {},
+    "violation_count": 0,
+    "objects": 19,
+    "events": 16,
+    "steps": 16,
+    "orphans_independent": [],
+    "unused_auxiliary_flagged": [],
+    "orphans_not_flagged": []
+   },
+   "measures": [
+    {
+     "object": "derived_H_vec",
+     "step": 5,
+     "generic": false,
+     "has_measured_quantity": false
+    },
+    {
+     "object": "derived_H1_vec",
+     "step": 7,
+     "generic": false,
+     "has_measured_quantity": false
+    },
+    {
+     "object": "kq_q1",
+     "step": 15,
+     "generic": false,
+     "has_measured_quantity": true
+    }
+   ],
+   "fingerprint": {
+    "answer_exact": {
+     "q1": {
+      "coef": "1/4",
+      "dim": 2,
+      "unit": "a"
+     }
+    },
+    "points": {
+     "A": [
+      "0",
+      "0",
+      "0"
+     ],
+     "B": [
+      "1",
+      "0",
+      "0"
+     ],
+     "C": [
+      "1",
+      "1",
+      "0"
+     ],
+     "D": [
+      "0",
+      "1",
+      "0"
+     ],
+     "S": [
+      "0",
+      "0",
+      "1"
+     ],
+     "M": [
+      "0",
+      "0",
+      "1/2"
+     ],
+     "H": [
+      "1",
+      "0",
+      "1/2"
+     ],
+     "H1": [
+      "1",
+      "1",
+      "1/2"
+     ]
+    },
+    "sections": {
+     "td_sec": null
+    },
+    "angle_constructions": {},
+    "certificate": {
+     "schema": null,
+     "verified": []
+    }
+   },
+   "section_edges": [
+    {
+     "theorem": "PARALLEL_LINE_PLANE_INTERSECTION",
+     "learner_text": "Trên mặt SAB, nối giao điểm thuộc cạnh SA với giao điểm thuộc cạnh SB.",
+     "justification_text": "Vì (P) song song với AB và AB nằm trong mặt (SAB), nên giao tuyến của (P) với mặt (SAB) song song với AB."
+    },
+    {
+     "theorem": "PARALLEL_LINE_PLANE_INTERSECTION",
+     "learner_text": "Trên mặt SBC, nối giao điểm thuộc cạnh SB với giao điểm thuộc cạnh SC.",
+     "justification_text": "Vì (P) song song với BC và BC nằm trong mặt (SBC), nên giao tuyến của (P) với mặt (SBC) song song với BC."
+    },
+    {
+     "theorem": "PARALLEL_LINE_PLANE_INTERSECTION",
+     "learner_text": "Trên mặt SCD, nối giao điểm thuộc cạnh SC với giao điểm thuộc cạnh SD.",
+     "justification_text": "Vì (P) song song với CD và CD nằm trong mặt (SCD), nên giao tuyến của (P) với mặt (SCD) song song với CD."
+    },
+    {
+     "theorem": "PARALLEL_LINE_PLANE_INTERSECTION",
+     "learner_text": "Trên mặt SDA, nối giao điểm thuộc cạnh SD với giao điểm thuộc cạnh SA.",
+     "justification_text": "Vì (P) song song với DA và DA nằm trong mặt (SDA), nên giao tuyến của (P) với mặt (SDA) song song với DA."
+    }
+   ],
+   "right_angle_drawn": {},
+   "scene_sha256": "83fae16243dca9c83f5e174eddcae9fbb9e6c43f2d415a0c1905191dade489cf"
+  },
+  "PROBES:par_plane_point_on_plane": {
+   "status": "REFUSED"
+  },
+  "PROBES:par_plane_triangle": {
+   "status": "SERVED",
+   "audit": {
+    "violations": {},
+    "violation_count": 0,
+    "objects": 16,
+    "events": 14,
+    "steps": 14,
+    "orphans_independent": [],
+    "unused_auxiliary_flagged": [],
+    "orphans_not_flagged": []
+   },
+   "measures": [
+    {
+     "object": "derived_H_vec",
+     "step": 5,
+     "generic": false,
+     "has_measured_quantity": false
+    },
+    {
+     "object": "derived_H1_vec",
+     "step": 7,
+     "generic": false,
+     "has_measured_quantity": false
+    }
+   ],
+   "fingerprint": {
+    "answer_exact": {},
+    "points": {
+     "A": [
+      "0",
+      "0",
+      "0"
+     ],
+     "B": [
+      "1",
+      "0",
+      "0"
+     ],
+     "C": [
+      "0",
+      "1",
+      "0"
+     ],
+     "S": [
+      "0",
+      "0",
+      "1"
+     ],
+     "M": [
+      "1/2",
+      "0",
+      "1/2"
+     ],
+     "H": [
+      "3/2",
+      "0",
+      "1/2"
+     ],
+     "H1": [
+      "1/2",
+      "1",
+      "1/2"
+     ]
+    },
+    "sections": {
+     "td_sec": null
+    },
+    "angle_constructions": {},
+    "certificate": {
+     "schema": null,
+     "verified": []
+    }
+   },
+   "section_edges": [
+    {
+     "theorem": "PARALLEL_LINE_PLANE_INTERSECTION",
+     "learner_text": "Trên mặt SAB, nối giao điểm thuộc cạnh SA với giao điểm thuộc cạnh SB.",
+     "justification_text": "Vì (P) song song với AB và AB nằm trong mặt (SAB), nên giao tuyến của (P) với mặt (SAB) song song với AB."
+    },
+    {
+     "theorem": "PARALLEL_LINE_PLANE_INTERSECTION",
+     "learner_text": "Trên mặt SBC, nối giao điểm thuộc cạnh SB với giao điểm thuộc cạnh SC.",
+     "justification_text": "Vì (P) song song với BC và BC nằm trong mặt (SBC), nên giao tuyến của (P) với mặt (SBC) song song với BC."
+    },
+    {
+     "theorem": "PARALLEL_LINE_PLANE_INTERSECTION",
+     "learner_text": "Trên mặt SCA, nối giao điểm thuộc cạnh SC với giao điểm thuộc cạnh SA.",
+     "justification_text": "Vì (P) song song với CA và CA nằm trong mặt (SCA), nên giao tuyến của (P) với mặt (SCA) song song với CA."
+    }
+   ],
+   "right_angle_drawn": {},
+   "scene_sha256": "2ab0ef6804d9e52e46e3fd86b4853e04206b25a9aea793417a30e174088a8016"
+  },
+  "PROBES:perp_line_SA": {
+   "status": "SERVED",
+   "audit": {
+    "violations": {},
+    "violation_count": 0,
+    "objects": 21,
+    "events": 18,
+    "steps": 18,
+    "orphans_independent": [],
+    "unused_auxiliary_flagged": [],
+    "orphans_not_flagged": []
+   },
+   "measures": [
+    {
+     "object": "derived_H2_vec",
+     "step": 8,
+     "generic": false,
+     "has_measured_quantity": false
+    },
+    {
+     "object": "derived_H3_vec",
+     "step": 10,
+     "generic": false,
+     "has_measured_quantity": false
+    }
+   ],
+   "fingerprint": {
+    "answer_exact": {},
+    "points": {
+     "A": [
+      "0",
+      "0",
+      "0"
+     ],
+     "B": [
+      "1",
+      "0",
+      "0"
+     ],
+     "C": [
+      "1",
+      "1",
+      "0"
+     ],
+     "D": [
+      "0",
+      "1",
+      "0"
+     ],
+     "S": [
+      "0",
+      "0",
+      "1"
+     ],
+     "H": [
+      "0",
+      "0",
+      "0"
+     ],
+     "H1": [
+      "0",
+      "0",
+      "0"
+     ],
+     "M": [
+      "0",
+      "0",
+      "1/2"
+     ],
+     "H2": [
+      "1",
+      "0",
+      "1/2"
+     ],
+     "H3": [
+      "1",
+      "1",
+      "1/2"
+     ]
+    },
+    "sections": {
+     "td_sec": null
+    },
+    "angle_constructions": {},
+    "certificate": {
+     "schema": null,
+     "verified": []
+    }
+   },
+   "section_edges": [
+    {
+     "theorem": "PARALLEL_LINE_PLANE_INTERSECTION",
+     "learner_text": "Trên mặt SAB, nối giao điểm thuộc cạnh SA với giao điểm thuộc cạnh SB.",
+     "justification_text": "Vì (P) song song với AB và AB nằm trong mặt (SAB), nên giao tuyến của (P) với mặt (SAB) song song với AB."
+    },
+    {
+     "theorem": "PARALLEL_LINE_PLANE_INTERSECTION",
+     "learner_text": "Trên mặt SBC, nối giao điểm thuộc cạnh SB với giao điểm thuộc cạnh SC.",
+     "justification_text": "Vì (P) song song với BC và BC nằm trong mặt (SBC), nên giao tuyến của (P) với mặt (SBC) song song với BC."
+    },
+    {
+     "theorem": "PARALLEL_LINE_PLANE_INTERSECTION",
+     "learner_text": "Trên mặt SCD, nối giao điểm thuộc cạnh SC với giao điểm thuộc cạnh SD.",
+     "justification_text": "Vì (P) song song với CD và CD nằm trong mặt (SCD), nên giao tuyến của (P) với mặt (SCD) song song với CD."
+    },
+    {
+     "theorem": "PARALLEL_LINE_PLANE_INTERSECTION",
+     "learner_text": "Trên mặt SDA, nối giao điểm thuộc cạnh SD với giao điểm thuộc cạnh SA.",
+     "justification_text": "Vì (P) song song với DA và DA nằm trong mặt (SDA), nên giao tuyến của (P) với mặt (SDA) song song với DA."
+    }
+   ],
+   "right_angle_drawn": {},
+   "scene_sha256": "fd1e10b3d3bca0068f406b57f0d0970523f40240846f40f4ed5afc6ff6ae9847"
+  },
+  "PROBES:perp_line_word": {
+   "status": "SERVED",
+   "audit": {
+    "violations": {},
+    "violation_count": 0,
+    "objects": 21,
+    "events": 18,
+    "steps": 18,
+    "orphans_independent": [],
+    "unused_auxiliary_flagged": [],
+    "orphans_not_flagged": []
+   },
+   "measures": [
+    {
+     "object": "derived_H2_vec",
+     "step": 8,
+     "generic": false,
+     "has_measured_quantity": false
+    },
+    {
+     "object": "derived_H3_vec",
+     "step": 10,
+     "generic": false,
+     "has_measured_quantity": false
+    }
+   ],
+   "fingerprint": {
+    "answer_exact": {},
+    "points": {
+     "A": [
+      "0",
+      "0",
+      "0"
+     ],
+     "B": [
+      "1",
+      "0",
+      "0"
+     ],
+     "C": [
+      "1",
+      "1",
+      "0"
+     ],
+     "D": [
+      "0",
+      "1",
+      "0"
+     ],
+     "S": [
+      "0",
+      "0",
+      "1"
+     ],
+     "H": [
+      "0",
+      "0",
+      "0"
+     ],
+     "H1": [
+      "0",
+      "0",
+      "0"
+     ],
+     "M": [
+      "0",
+      "0",
+      "1/2"
+     ],
+     "H2": [
+      "1",
+      "0",
+      "1/2"
+     ],
+     "H3": [
+      "1",
+      "1",
+      "1/2"
+     ]
+    },
+    "sections": {
+     "td_sec": null
+    },
+    "angle_constructions": {},
+    "certificate": {
+     "schema": null,
+     "verified": []
+    }
+   },
+   "section_edges": [
+    {
+     "theorem": "PARALLEL_LINE_PLANE_INTERSECTION",
+     "learner_text": "Trên mặt SAB, nối giao điểm thuộc cạnh SA với giao điểm thuộc cạnh SB.",
+     "justification_text": "Vì (P) song song với AB và AB nằm trong mặt (SAB), nên giao tuyến của (P) với mặt (SAB) song song với AB."
+    },
+    {
+     "theorem": "PARALLEL_LINE_PLANE_INTERSECTION",
+     "learner_text": "Trên mặt SBC, nối giao điểm thuộc cạnh SB với giao điểm thuộc cạnh SC.",
+     "justification_text": "Vì (P) song song với BC và BC nằm trong mặt (SBC), nên giao tuyến của (P) với mặt (SBC) song song với BC."
+    },
+    {
+     "theorem": "PARALLEL_LINE_PLANE_INTERSECTION",
+     "learner_text": "Trên mặt SCD, nối giao điểm thuộc cạnh SC với giao điểm thuộc cạnh SD.",
+     "justification_text": "Vì (P) song song với CD và CD nằm trong mặt (SCD), nên giao tuyến của (P) với mặt (SCD) song song với CD."
+    },
+    {
+     "theorem": "PARALLEL_LINE_PLANE_INTERSECTION",
+     "learner_text": "Trên mặt SDA, nối giao điểm thuộc cạnh SD với giao điểm thuộc cạnh SA.",
+     "justification_text": "Vì (P) song song với DA và DA nằm trong mặt (SDA), nên giao tuyến của (P) với mặt (SDA) song song với DA."
+    }
+   ],
+   "right_angle_drawn": {},
+   "scene_sha256": "fd1e10b3d3bca0068f406b57f0d0970523f40240846f40f4ed5afc6ff6ae9847"
+  },
+  "PROBES:perp_line_cube_edge": {
+   "status": "SERVED",
+   "audit": {
+    "violations": {},
+    "violation_count": 0,
+    "objects": 25,
+    "events": 19,
+    "steps": 19,
+    "orphans_independent": [],
+    "unused_auxiliary_flagged": [],
+    "orphans_not_flagged": []
+   },
+   "measures": [
+    {
+     "object": "derived_H2_vec",
+     "step": 9,
+     "generic": false,
+     "has_measured_quantity": false
+    },
+    {
+     "object": "derived_H3_vec",
+     "step": 11,
+     "generic": false,
+     "has_measured_quantity": false
+    }
+   ],
+   "fingerprint": {
+    "answer_exact": {},
+    "points": {
+     "A": [
+      "0",
+      "0",
+      "0"
+     ],
+     "B": [
+      "1",
+      "0",
+      "0"
+     ],
+     "C": [
+      "1",
+      "1",
+      "0"
+     ],
+     "D": [
+      "0",
+      "1",
+      "0"
+     ],
+     "A_prime": [
+      "0",
+      "0",
+      "1"
+     ],
+     "B_prime": [
+      "1",
+      "0",
+      "1"
+     ],
+     "C_prime": [
+      "1",
+      "1",
+      "1"
+     ],
+     "D_prime": [
+      "0",
+      "1",
+      "1"
+     ],
+     "H": [
+      "0",
+      "0",
+      "0"
+     ],
+     "H1": [
+      "0",
+      "0",
+      "0"
+     ],
+     "M": [
+      "0",
+      "0",
+      "1/2"
+     ],
+     "H2": [
+      "1",
+      "0",
+      "1/2"
+     ],
+     "H3": [
+      "1",
+      "1",
+      "1/2"
+     ]
+    },
+    "sections": {
+     "td_sec": null
+    },
+    "angle_constructions": {},
+    "certificate": {
+     "schema": null,
+     "verified": []
+    }
+   },
+   "section_edges": [
+    {
+     "theorem": "PARALLEL_LINE_PLANE_INTERSECTION",
+     "learner_text": "Trên mặt ABB′A′, nối giao điểm thuộc cạnh BB′ với giao điểm thuộc cạnh AA′.",
+     "justification_text": "Vì (P) song song với AB và AB nằm trong mặt (ABB′A′), nên giao tuyến của (P) với mặt (ABB′A′) song song với AB."
+    },
+    {
+     "theorem": "PARALLEL_LINE_PLANE_INTERSECTION",
+     "learner_text": "Trên mặt DAA′D′, nối giao điểm thuộc cạnh AA′ với giao điểm thuộc cạnh DD′.",
+     "justification_text": "Vì (P) song song với DA và DA nằm trong mặt (DAA′D′), nên giao tuyến của (P) với mặt (DAA′D′) song song với DA."
+    },
+    {
+     "theorem": "PARALLEL_LINE_PLANE_INTERSECTION",
+     "learner_text": "Trên mặt CDD′C′, nối giao điểm thuộc cạnh DD′ với giao điểm thuộc cạnh CC′.",
+     "justification_text": "Vì (P) song song với CD và CD nằm trong mặt (CDD′C′), nên giao tuyến của (P) với mặt (CDD′C′) song song với CD."
+    },
+    {
+     "theorem": "PARALLEL_LINE_PLANE_INTERSECTION",
+     "learner_text": "Trên mặt BCC′B′, nối giao điểm thuộc cạnh CC′ với giao điểm thuộc cạnh BB′.",
+     "justification_text": "Vì (P) song song với BC và BC nằm trong mặt (BCC′B′), nên giao tuyến của (P) với mặt (BCC′B′) song song với BC."
+    }
+   ],
+   "right_angle_drawn": {},
+   "scene_sha256": "e52eb40f9133d574349181fca908fff06850f6126b9f258a46b722d191e994f6"
+  },
+  "PROBES:perp_line_cube_diagonal": {
+   "status": "SERVED",
+   "audit": {
+    "violations": {},
+    "violation_count": 0,
+    "objects": 24,
+    "events": 17,
+    "steps": 17,
+    "orphans_independent": [],
+    "unused_auxiliary_flagged": [],
+    "orphans_not_flagged": []
+   },
+   "measures": [
+    {
+     "object": "derived_H2_vec",
+     "step": 8,
+     "generic": false,
+     "has_measured_quantity": false
+    },
+    {
+     "object": "derived_H3_vec",
+     "step": 10,
+     "generic": false,
+     "has_measured_quantity": false
+    }
+   ],
+   "fingerprint": {
+    "answer_exact": {},
+    "points": {
+     "A": [
+      "0",
+      "0",
+      "0"
+     ],
+     "B": [
+      "1",
+      "0",
+      "0"
+     ],
+     "C": [
+      "1",
+      "1",
+      "0"
+     ],
+     "D": [
+      "0",
+      "1",
+      "0"
+     ],
+     "A_prime": [
+      "0",
+      "0",
+      "1"
+     ],
+     "B_prime": [
+      "1",
+      "0",
+      "1"
+     ],
+     "C_prime": [
+      "1",
+      "1",
+      "1"
+     ],
+     "D_prime": [
+      "0",
+      "1",
+      "1"
+     ],
+     "H": [
+      "1/3",
+      "1/3",
+      "1/3"
+     ],
+     "H1": [
+      "2/3",
+      "2/3",
+      "2/3"
+     ],
+     "H2": [
+      "5/3",
+      "-1/3",
+      "-1/3"
+     ],
+     "H3": [
+      "4/3",
+      "1/3",
+      "-2/3"
+     ]
+    },
+    "sections": {
+     "td_sec": null
+    },
+    "angle_constructions": {},
+    "certificate": {
+     "schema": null,
+     "verified": []
+    }
+   },
+   "section_edges": [
+    {
+     "theorem": null,
+     "learner_text": "Trên mặt ABCD, nối đỉnh B với đỉnh D.",
+     "justification_text": null
+    },
+    {
+     "theorem": null,
+     "learner_text": "Trên mặt DAA′D′, nối đỉnh D với đỉnh A′.",
+     "justification_text": null
+    },
+    {
+     "theorem": null,
+     "learner_text": "Trên mặt ABB′A′, nối đỉnh A′ với đỉnh B.",
+     "justification_text": null
+    }
+   ],
+   "right_angle_drawn": {},
+   "scene_sha256": "78642052b1e41481b0c021b75f52f9fefcca95dffa86febfe5a0d364deeaca4c"
+  },
+  "PROBES:perp_bisector_plane": {
+   "status": "REFUSED"
+  },
+  "PROBES:perp_line_degenerate": {
+   "status": "REFUSED"
+  },
+  "PROBES:line_point_contains_first": {
+   "status": "SERVED",
+   "audit": {
+    "violations": {},
+    "violation_count": 0,
+    "objects": 14,
+    "events": 11,
+    "steps": 11,
+    "orphans_independent": [],
+    "unused_auxiliary_flagged": [],
+    "orphans_not_flagged": []
+   },
+   "measures": [],
+   "fingerprint": {
+    "answer_exact": {},
+    "points": {
+     "A": [
+      "0",
+      "0",
+      "0"
+     ],
+     "B": [
+      "1",
+      "0",
+      "0"
+     ],
+     "C": [
+      "1",
+      "1",
+      "0"
+     ],
+     "D": [
+      "0",
+      "1",
+      "0"
+     ],
+     "S": [
+      "0",
+      "0",
+      "1"
+     ],
+     "M": [
+      "1/2",
+      "1/2",
+      "1/2"
+     ]
+    },
+    "sections": {
+     "td_sec": null
+    },
+    "angle_constructions": {},
+    "certificate": {
+     "schema": null,
+     "verified": []
+    }
+   },
+   "section_edges": [
+    {
+     "theorem": "PARALLEL_LINE_PLANE_INTERSECTION",
+     "learner_text": "Trên mặt ABCD, nối đỉnh A với đỉnh B.",
+     "justification_text": "Vì (ABM) song song với CD và CD nằm trong mặt (ABCD), nên giao tuyến của (ABM) với mặt (ABCD) song song với CD."
+    },
+    {
+     "theorem": null,
+     "learner_text": "Trên mặt SBC, nối đỉnh B với giao điểm thuộc cạnh SC.",
+     "justification_text": null
+    },
+    {
+     "theorem": "PARALLEL_LINE_PLANE_INTERSECTION",
+     "learner_text": "Trên mặt SCD, nối giao điểm thuộc cạnh SC với giao điểm thuộc cạnh SD.",
+     "justification_text": "Vì (ABM) song song với CD và CD nằm trong mặt (SCD), nên giao tuyến của (ABM) với mặt (SCD) song song với CD."
+    },
+    {
+     "theorem": null,
+     "learner_text": "Trên mặt SDA, nối giao điểm thuộc cạnh SD với đỉnh A.",
+     "justification_text": null
+    }
+   ],
+   "right_angle_drawn": {},
+   "scene_sha256": "e0d22e48eeaee4c7b300cfed51ef2f49541993fc0405dcc8239a778db3b6ee60"
+  },
+  "PROBES:line_point_through_first": {
+   "status": "SERVED",
+   "audit": {
+    "violations": {},
+    "violation_count": 0,
+    "objects": 14,
+    "events": 11,
+    "steps": 11,
+    "orphans_independent": [],
+    "unused_auxiliary_flagged": [],
+    "orphans_not_flagged": []
+   },
+   "measures": [],
+   "fingerprint": {
+    "answer_exact": {},
+    "points": {
+     "A": [
+      "0",
+      "0",
+      "0"
+     ],
+     "B": [
+      "1",
+      "0",
+      "0"
+     ],
+     "C": [
+      "1",
+      "1",
+      "0"
+     ],
+     "D": [
+      "0",
+      "1",
+      "0"
+     ],
+     "S": [
+      "0",
+      "0",
+      "1"
+     ],
+     "M": [
+      "1/2",
+      "1/2",
+      "1/2"
+     ]
+    },
+    "sections": {
+     "td_sec": null
+    },
+    "angle_constructions": {},
+    "certificate": {
+     "schema": null,
+     "verified": []
+    }
+   },
+   "section_edges": [
+    {
+     "theorem": "PARALLEL_LINE_PLANE_INTERSECTION",
+     "learner_text": "Trên mặt ABCD, nối đỉnh A với đỉnh B.",
+     "justification_text": "Vì (ABM) song song với CD và CD nằm trong mặt (ABCD), nên giao tuyến của (ABM) với mặt (ABCD) song song với CD."
+    },
+    {
+     "theorem": null,
+     "learner_text": "Trên mặt SBC, nối đỉnh B với giao điểm thuộc cạnh SC.",
+     "justification_text": null
+    },
+    {
+     "theorem": "PARALLEL_LINE_PLANE_INTERSECTION",
+     "learner_text": "Trên mặt SCD, nối giao điểm thuộc cạnh SC với giao điểm thuộc cạnh SD.",
+     "justification_text": "Vì (ABM) song song với CD và CD nằm trong mặt (SCD), nên giao tuyến của (ABM) với mặt (SCD) song song với CD."
+    },
+    {
+     "theorem": null,
+     "learner_text": "Trên mặt SDA, nối giao điểm thuộc cạnh SD với đỉnh A.",
+     "justification_text": null
+    }
+   ],
+   "right_angle_drawn": {},
+   "scene_sha256": "e0d22e48eeaee4c7b300cfed51ef2f49541993fc0405dcc8239a778db3b6ee60"
+  },
+  "PROBES:line_point_on_line": {
+   "status": "REFUSED"
+  },
+  "PROBES:two_intersecting_lines": {
+   "status": "SERVED",
+   "audit": {
+    "violations": {},
+    "violation_count": 0,
+    "objects": 17,
+    "events": 10,
+    "steps": 10,
+    "orphans_independent": [],
+    "unused_auxiliary_flagged": [],
+    "orphans_not_flagged": []
+   },
+   "measures": [],
+   "fingerprint": {
+    "answer_exact": {},
+    "points": {
+     "A": [
+      "0",
+      "0",
+      "0"
+     ],
+     "B": [
+      "1",
+      "0",
+      "0"
+     ],
+     "C": [
+      "1",
+      "1",
+      "0"
+     ],
+     "D": [
+      "0",
+      "1",
+      "0"
+     ],
+     "A_prime": [
+      "0",
+      "0",
+      "1"
+     ],
+     "B_prime": [
+      "1",
+      "0",
+      "1"
+     ],
+     "C_prime": [
+      "1",
+      "1",
+      "1"
+     ],
+     "D_prime": [
+      "0",
+      "1",
+      "1"
+     ]
+    },
+    "sections": {
+     "td_sec": null
+    },
+    "angle_constructions": {},
+    "certificate": {
+     "schema": null,
+     "verified": []
+    }
+   },
+   "section_edges": [
+    {
+     "theorem": null,
+     "learner_text": "Trên mặt A′B′C′D′, nối đỉnh B′ với đỉnh D′.",
+     "justification_text": null
+    },
+    {
+     "theorem": null,
+     "learner_text": "Trên mặt DAA′D′, nối đỉnh D′ với đỉnh A.",
+     "justification_text": null
+    },
+    {
+     "theorem": null,
+     "learner_text": "Trên mặt ABB′A′, nối đỉnh A với đỉnh B′.",
+     "justification_text": null
+    }
+   ],
+   "right_angle_drawn": {},
+   "scene_sha256": "d75f9ed5765a79e16b7f47f9aefa11c2df54674d71c0572159ed364a96c23661"
+  },
+  "PROBES:two_parallel_lines": {
+   "status": "REFUSED"
+  },
+  "PROBES:two_lines_skew": {
+   "status": "REFUSED"
+  },
+  "PROBES:two_lines_same": {
+   "status": "REFUSED"
+  },
+  "PROBES:through_point_parallel_two_lines": {
+   "status": "SERVED",
+   "audit": {
+    "violations": {},
+    "violation_count": 0,
+    "objects": 18,
+    "events": 15,
+    "steps": 15,
+    "orphans_independent": [],
+    "unused_auxiliary_flagged": [],
+    "orphans_not_flagged": []
+   },
+   "measures": [
+    {
+     "object": "derived_H_vec",
+     "step": 5,
+     "generic": false,
+     "has_measured_quantity": false
+    },
+    {
+     "object": "derived_H1_vec",
+     "step": 7,
+     "generic": false,
+     "has_measured_quantity": false
+    }
+   ],
+   "fingerprint": {
+    "answer_exact": {},
+    "points": {
+     "A": [
+      "0",
+      "0",
+      "0"
+     ],
+     "B": [
+      "1",
+      "0",
+      "0"
+     ],
+     "C": [
+      "1",
+      "1",
+      "0"
+     ],
+     "D": [
+      "0",
+      "1",
+      "0"
+     ],
+     "S": [
+      "0",
+      "0",
+      "1"
+     ],
+     "M": [
+      "0",
+      "0",
+      "1/2"
+     ],
+     "H": [
+      "1",
+      "0",
+      "1/2"
+     ],
+     "H1": [
+      "0",
+      "1",
+      "1/2"
+     ]
+    },
+    "sections": {
+     "td_sec": null
+    },
+    "angle_constructions": {},
+    "certificate": {
+     "schema": null,
+     "verified": []
+    }
+   },
+   "section_edges": [
+    {
+     "theorem": "PARALLEL_LINE_PLANE_INTERSECTION",
+     "learner_text": "Trên mặt SAB, nối giao điểm thuộc cạnh SA với giao điểm thuộc cạnh SB.",
+     "justification_text": "Vì (P) song song với AB và AB nằm trong mặt (SAB), nên giao tuyến của (P) với mặt (SAB) song song với AB."
+    },
+    {
+     "theorem": "PARALLEL_LINE_PLANE_INTERSECTION",
+     "learner_text": "Trên mặt SBC, nối giao điểm thuộc cạnh SB với giao điểm thuộc cạnh SC.",
+     "justification_text": "Vì (P) song song với BC và BC nằm trong mặt (SBC), nên giao tuyến của (P) với mặt (SBC) song song với BC."
+    },
+    {
+     "theorem": "PARALLEL_LINE_PLANE_INTERSECTION",
+     "learner_text": "Trên mặt SCD, nối giao điểm thuộc cạnh SC với giao điểm thuộc cạnh SD.",
+     "justification_text": "Vì (P) song song với CD và CD nằm trong mặt (SCD), nên giao tuyến của (P) với mặt (SCD) song song với CD."
+    },
+    {
+     "theorem": "PARALLEL_LINE_PLANE_INTERSECTION",
+     "learner_text": "Trên mặt SDA, nối giao điểm thuộc cạnh SD với giao điểm thuộc cạnh SA.",
+     "justification_text": "Vì (P) song song với DA và DA nằm trong mặt (SDA), nên giao tuyến của (P) với mặt (SDA) song song với DA."
+    }
+   ],
+   "right_angle_drawn": {},
+   "scene_sha256": "ea3c259949dec19997af9a5d05eb9b6e9736005a3b45716acc1481dca1ff2eec"
+  },
+  "PROBES:under_parallel_one_line": {
+   "status": "REFUSED"
+  },
+  "PROBES:under_perpendicular_plane": {
+   "status": "REFUSED"
+  },
+  "PROBES:under_contains_one_line": {
+   "status": "REFUSED"
+  },
+  "PROBES:under_any_plane": {
+   "status": "REFUSED"
+  },
+  "PROBES:compound_contains_parallel": {
+   "status": "SERVED",
+   "audit": {
+    "violations": {},
+    "violation_count": 0,
+    "objects": 15,
+    "events": 11,
+    "steps": 11,
+    "orphans_independent": [],
+    "unused_auxiliary_flagged": [],
+    "orphans_not_flagged": []
+   },
+   "measures": [
+    {
+     "object": "derived_H_vec",
+     "step": 4,
+     "generic": false,
+     "has_measured_quantity": false
+    }
+   ],
+   "fingerprint": {
+    "answer_exact": {},
+    "points": {
+     "A": [
+      "0",
+      "0",
+      "0"
+     ],
+     "B": [
+      "1",
+      "0",
+      "0"
+     ],
+     "C": [
+      "1",
+      "1",
+      "0"
+     ],
+     "D": [
+      "0",
+      "1",
+      "0"
+     ],
+     "S": [
+      "0",
+      "0",
+      "1"
+     ],
+     "H": [
+      "2",
+      "1",
+      "-1"
+     ]
+    },
+    "sections": {
+     "td_sec": null
+    },
+    "angle_constructions": {},
+    "certificate": {
+     "schema": null,
+     "verified": []
+    }
+   },
+   "section_edges": [
+    {
+     "theorem": null,
+     "learner_text": "Trên mặt ABCD, nối đỉnh B với đỉnh D.",
+     "justification_text": null
+    },
+    {
+     "theorem": null,
+     "learner_text": "Trên mặt SDA, nối đỉnh D với giao điểm thuộc cạnh SA.",
+     "justification_text": null
+    },
+    {
+     "theorem": null,
+     "learner_text": "Trên mặt SAB, nối giao điểm thuộc cạnh SA với đỉnh B.",
+     "justification_text": null
+    }
+   ],
+   "right_angle_drawn": {},
+   "scene_sha256": "0775fc4974a051d79ed9f572af7f6cb260063a12469f21de615514813990f7ce"
+  },
+  "PROBES:compound_contains_parallel_not_unique": {
+   "status": "REFUSED"
+  },
+  "PROBES:compound_contains_perpendicular_face": {
+   "status": "REFUSED"
+  },
+  "PROBES:compound_contains_perpendicular": {
+   "status": "SERVED",
+   "audit": {
+    "violations": {},
+    "violation_count": 0,
+    "objects": 17,
+    "events": 14,
+    "steps": 14,
+    "orphans_independent": [],
+    "unused_auxiliary_flagged": [],
+    "orphans_not_flagged": []
+   },
+   "measures": [
+    {
+     "object": "derived_H1_vec",
+     "step": 6,
+     "generic": false,
+     "has_measured_quantity": false
+    }
+   ],
+   "fingerprint": {
+    "answer_exact": {},
+    "points": {
+     "A": [
+      "0",
+      "0",
+      "0"
+     ],
+     "B": [
+      "1",
+      "0",
+      "0"
+     ],
+     "C": [
+      "1",
+      "1",
+      "0"
+     ],
+     "D": [
+      "0",
+      "1",
+      "0"
+     ],
+     "S": [
+      "0",
+      "0",
+      "1"
+     ],
+     "H": [
+      "0",
+      "1/2",
+      "1/2"
+     ],
+     "H1": [
+      "0",
+      "-1/2",
+      "-1/2"
+     ]
+    },
+    "sections": {
+     "td_sec": null
+    },
+    "angle_constructions": {},
+    "certificate": {
+     "schema": null,
+     "verified": []
+    }
+   },
+   "section_edges": [
+    {
+     "theorem": "PARALLEL_LINE_PLANE_INTERSECTION",
+     "learner_text": "Trên mặt ABCD, nối đỉnh A với đỉnh B.",
+     "justification_text": "Vì (P) song song với CD và CD nằm trong mặt (ABCD), nên giao tuyến của (P) với mặt (ABCD) song song với CD."
+    },
+    {
+     "theorem": null,
+     "learner_text": "Trên mặt SBC, nối đỉnh B với giao điểm thuộc cạnh SC.",
+     "justification_text": null
+    },
+    {
+     "theorem": "PARALLEL_LINE_PLANE_INTERSECTION",
+     "learner_text": "Trên mặt SCD, nối giao điểm thuộc cạnh SC với giao điểm thuộc cạnh SD.",
+     "justification_text": "Vì (P) song song với CD và CD nằm trong mặt (SCD), nên giao tuyến của (P) với mặt (SCD) song song với CD."
+    },
+    {
+     "theorem": null,
+     "learner_text": "Trên mặt SDA, nối giao điểm thuộc cạnh SD với đỉnh A.",
+     "justification_text": null
+    }
+   ],
+   "right_angle_drawn": {},
+   "scene_sha256": "f516ed3b803f916798937de4413f994ed0d50f3bba231c50fe4ef67d11f942a1"
+  },
+  "PROBES:reordered_question_first": {
+   "status": "SERVED",
+   "audit": {
+    "violations": {},
+    "violation_count": 0,
+    "objects": 18,
+    "events": 15,
+    "steps": 15,
+    "orphans_independent": [],
+    "unused_auxiliary_flagged": [],
+    "orphans_not_flagged": []
+   },
+   "measures": [
+    {
+     "object": "derived_H_vec",
+     "step": 5,
+     "generic": false,
+     "has_measured_quantity": false
+    },
+    {
+     "object": "derived_H1_vec",
+     "step": 7,
+     "generic": false,
+     "has_measured_quantity": false
+    }
+   ],
+   "fingerprint": {
+    "answer_exact": {},
+    "points": {
+     "A": [
+      "0",
+      "0",
+      "0"
+     ],
+     "B": [
+      "1",
+      "0",
+      "0"
+     ],
+     "C": [
+      "1",
+      "1",
+      "0"
+     ],
+     "D": [
+      "0",
+      "1",
+      "0"
+     ],
+     "S": [
+      "0",
+      "0",
+      "1"
+     ],
+     "M": [
+      "0",
+      "0",
+      "1/2"
+     ],
+     "H": [
+      "1",
+      "0",
+      "1/2"
+     ],
+     "H1": [
+      "1",
+      "1",
+      "1/2"
+     ]
+    },
+    "sections": {
+     "td_sec": null
+    },
+    "angle_constructions": {},
+    "certificate": {
+     "schema": null,
+     "verified": []
+    }
+   },
+   "section_edges": [
+    {
+     "theorem": "PARALLEL_LINE_PLANE_INTERSECTION",
+     "learner_text": "Trên mặt SAB, nối giao điểm thuộc cạnh SA với giao điểm thuộc cạnh SB.",
+     "justification_text": "Vì (P) song song với AB và AB nằm trong mặt (SAB), nên giao tuyến của (P) với mặt (SAB) song song với AB."
+    },
+    {
+     "theorem": "PARALLEL_LINE_PLANE_INTERSECTION",
+     "learner_text": "Trên mặt SBC, nối giao điểm thuộc cạnh SB với giao điểm thuộc cạnh SC.",
+     "justification_text": "Vì (P) song song với BC và BC nằm trong mặt (SBC), nên giao tuyến của (P) với mặt (SBC) song song với BC."
+    },
+    {
+     "theorem": "PARALLEL_LINE_PLANE_INTERSECTION",
+     "learner_text": "Trên mặt SCD, nối giao điểm thuộc cạnh SC với giao điểm thuộc cạnh SD.",
+     "justification_text": "Vì (P) song song với CD và CD nằm trong mặt (SCD), nên giao tuyến của (P) với mặt (SCD) song song với CD."
+    },
+    {
+     "theorem": "PARALLEL_LINE_PLANE_INTERSECTION",
+     "learner_text": "Trên mặt SDA, nối giao điểm thuộc cạnh SD với giao điểm thuộc cạnh SA.",
+     "justification_text": "Vì (P) song song với DA và DA nằm trong mặt (SDA), nên giao tuyến của (P) với mặt (SDA) song song với DA."
+    }
+   ],
+   "right_angle_drawn": {},
+   "scene_sha256": "ce895121db6bd7968a6ba35fb32ba42231df623da4bafc067c10c5b7cdd5746c"
+  },
+  "PROBES:unicode_prime": {
+   "status": "SERVED",
+   "audit": {
+    "violations": {},
+    "violation_count": 0,
+    "objects": 25,
+    "events": 19,
+    "steps": 19,
+    "orphans_independent": [],
+    "unused_auxiliary_flagged": [],
+    "orphans_not_flagged": []
+   },
+   "measures": [
+    {
+     "object": "derived_H2_vec",
+     "step": 9,
+     "generic": false,
+     "has_measured_quantity": false
+    },
+    {
+     "object": "derived_H3_vec",
+     "step": 11,
+     "generic": false,
+     "has_measured_quantity": false
+    }
+   ],
+   "fingerprint": {
+    "answer_exact": {},
+    "points": {
+     "A": [
+      "0",
+      "0",
+      "0"
+     ],
+     "B": [
+      "1",
+      "0",
+      "0"
+     ],
+     "C": [
+      "1",
+      "1",
+      "0"
+     ],
+     "D": [
+      "0",
+      "1",
+      "0"
+     ],
+     "A_prime": [
+      "0",
+      "0",
+      "1"
+     ],
+     "B_prime": [
+      "1",
+      "0",
+      "1"
+     ],
+     "C_prime": [
+      "1",
+      "1",
+      "1"
+     ],
+     "D_prime": [
+      "0",
+      "1",
+      "1"
+     ],
+     "H": [
+      "0",
+      "0",
+      "0"
+     ],
+     "H1": [
+      "0",
+      "0",
+      "0"
+     ],
+     "M": [
+      "0",
+      "0",
+      "1/2"
+     ],
+     "H2": [
+      "1",
+      "0",
+      "1/2"
+     ],
+     "H3": [
+      "1",
+      "1",
+      "1/2"
+     ]
+    },
+    "sections": {
+     "td_sec": null
+    },
+    "angle_constructions": {},
+    "certificate": {
+     "schema": null,
+     "verified": []
+    }
+   },
+   "section_edges": [
+    {
+     "theorem": "PARALLEL_LINE_PLANE_INTERSECTION",
+     "learner_text": "Trên mặt ABB′A′, nối giao điểm thuộc cạnh BB′ với giao điểm thuộc cạnh AA′.",
+     "justification_text": "Vì (P) song song với AB và AB nằm trong mặt (ABB′A′), nên giao tuyến của (P) với mặt (ABB′A′) song song với AB."
+    },
+    {
+     "theorem": "PARALLEL_LINE_PLANE_INTERSECTION",
+     "learner_text": "Trên mặt DAA′D′, nối giao điểm thuộc cạnh AA′ với giao điểm thuộc cạnh DD′.",
+     "justification_text": "Vì (P) song song với DA và DA nằm trong mặt (DAA′D′), nên giao tuyến của (P) với mặt (DAA′D′) song song với DA."
+    },
+    {
+     "theorem": "PARALLEL_LINE_PLANE_INTERSECTION",
+     "learner_text": "Trên mặt CDD′C′, nối giao điểm thuộc cạnh DD′ với giao điểm thuộc cạnh CC′.",
+     "justification_text": "Vì (P) song song với CD và CD nằm trong mặt (CDD′C′), nên giao tuyến của (P) với mặt (CDD′C′) song song với CD."
+    },
+    {
+     "theorem": "PARALLEL_LINE_PLANE_INTERSECTION",
+     "learner_text": "Trên mặt BCC′B′, nối giao điểm thuộc cạnh CC′ với giao điểm thuộc cạnh BB′.",
+     "justification_text": "Vì (P) song song với BC và BC nằm trong mặt (BCC′B′), nên giao tuyến của (P) với mặt (BCC′B′) song song với BC."
+    }
+   ],
+   "right_angle_drawn": {},
+   "scene_sha256": "e52eb40f9133d574349181fca908fff06850f6126b9f258a46b722d191e994f6"
+  },
+  "PROBES:diagram_dependent": {
+   "status": "REFUSED"
+  },
+  "PROBES:goal_as_premise": {
+   "status": "REFUSED"
+  },
+  "PROBES:multiple_goals": {
+   "status": "SERVED",
+   "audit": {
+    "violations": {},
+    "violation_count": 0,
+    "objects": 19,
+    "events": 16,
+    "steps": 16,
+    "orphans_independent": [],
+    "unused_auxiliary_flagged": [],
+    "orphans_not_flagged": []
+   },
+   "measures": [
+    {
+     "object": "derived_H_vec",
+     "step": 5,
+     "generic": false,
+     "has_measured_quantity": false
+    },
+    {
+     "object": "derived_H1_vec",
+     "step": 7,
+     "generic": false,
+     "has_measured_quantity": false
+    },
+    {
+     "object": "kq_q1",
+     "step": 15,
+     "generic": false,
+     "has_measured_quantity": true
+    }
+   ],
+   "fingerprint": {
+    "answer_exact": {
+     "q1": {
+      "coef": "1/4",
+      "dim": 2,
+      "unit": "a"
+     }
+    },
+    "points": {
+     "A": [
+      "0",
+      "0",
+      "0"
+     ],
+     "B": [
+      "1",
+      "0",
+      "0"
+     ],
+     "C": [
+      "1",
+      "1",
+      "0"
+     ],
+     "D": [
+      "0",
+      "1",
+      "0"
+     ],
+     "S": [
+      "0",
+      "0",
+      "1"
+     ],
+     "M": [
+      "0",
+      "0",
+      "1/2"
+     ],
+     "H": [
+      "1",
+      "0",
+      "1/2"
+     ],
+     "H1": [
+      "1",
+      "1",
+      "1/2"
+     ]
+    },
+    "sections": {
+     "td_sec": null
+    },
+    "angle_constructions": {},
+    "certificate": {
+     "schema": null,
+     "verified": []
+    }
+   },
+   "section_edges": [
+    {
+     "theorem": "PARALLEL_LINE_PLANE_INTERSECTION",
+     "learner_text": "Trên mặt SAB, nối giao điểm thuộc cạnh SA với giao điểm thuộc cạnh SB.",
+     "justification_text": "Vì (P) song song với AB và AB nằm trong mặt (SAB), nên giao tuyến của (P) với mặt (SAB) song song với AB."
+    },
+    {
+     "theorem": "PARALLEL_LINE_PLANE_INTERSECTION",
+     "learner_text": "Trên mặt SBC, nối giao điểm thuộc cạnh SB với giao điểm thuộc cạnh SC.",
+     "justification_text": "Vì (P) song song với BC và BC nằm trong mặt (SBC), nên giao tuyến của (P) với mặt (SBC) song song với BC."
+    },
+    {
+     "theorem": "PARALLEL_LINE_PLANE_INTERSECTION",
+     "learner_text": "Trên mặt SCD, nối giao điểm thuộc cạnh SC với giao điểm thuộc cạnh SD.",
+     "justification_text": "Vì (P) song song với CD và CD nằm trong mặt (SCD), nên giao tuyến của (P) với mặt (SCD) song song với CD."
+    },
+    {
+     "theorem": "PARALLEL_LINE_PLANE_INTERSECTION",
+     "learner_text": "Trên mặt SDA, nối giao điểm thuộc cạnh SD với giao điểm thuộc cạnh SA.",
+     "justification_text": "Vì (P) song song với DA và DA nằm trong mặt (SDA), nên giao tuyến của (P) với mặt (SDA) song song với DA."
+    }
+   ],
+   "right_angle_drawn": {},
+   "scene_sha256": "83fae16243dca9c83f5e174eddcae9fbb9e6c43f2d415a0c1905191dade489cf"
+  },
+  "PROBES:intersection_with_derived_plane": {
+   "status": "REFUSED"
+  }
+ }
+}

@@ -1,0 +1,126 @@
+{
+  "run_id": "controlled-vision-real-image-validation",
+  "classification": "DERIVED_FROM_REFERENCED_MEASUREMENTS_NOT_A_NEW_MEASUREMENT",
+  "generated_at_utc": "2026-11-12T17:24:15.995941+00:00",
+  "sources": [
+    "ocr_worker_resource_profile.json",
+    "cold_process_benchmark.json",
+    "concurrent_upload_reliability.json"
+  ],
+  "peak_rss_mib_by_state": {
+    "cold_model_cache_miss": {
+      "fastapi_peak_rss_mib": {
+        "n": 10,
+        "p50": 200.515625,
+        "p95_nearest_rank": 214.43359375
+      },
+      "ocr_process_tree_peak_rss_mib": {
+        "n": 10,
+        "p50": 425.17578125,
+        "p95_nearest_rank": 504.72265625
+      },
+      "combined_process_tree_peak_rss_mib": {
+        "n": 10,
+        "p50": 622.685546875,
+        "p95_nearest_rank": 707.07421875
+      }
+    },
+    "warm_model_cache_miss": {
+      "fastapi_peak_rss_mib": {
+        "n": 10,
+        "p50": 190.318359375,
+        "p95_nearest_rank": 213.42578125
+      },
+      "ocr_process_tree_peak_rss_mib": {
+        "n": 10,
+        "p50": 614.5703125,
+        "p95_nearest_rank": 744.53125
+      },
+      "combined_process_tree_peak_rss_mib": {
+        "n": 10,
+        "p50": 798.681640625,
+        "p95_nearest_rank": 930.4453125
+      }
+    },
+    "cache_hit": {
+      "fastapi_peak_rss_mib": {
+        "n": 10,
+        "p50": 184.60546875,
+        "p95_nearest_rank": 195.58203125
+      },
+      "ocr_process_tree_peak_rss_mib": {
+        "n": 10,
+        "p50": 220.34375,
+        "p95_nearest_rank": 220.34375
+      },
+      "combined_process_tree_peak_rss_mib": {
+        "n": 10,
+        "p50": 404.94921875,
+        "p95_nearest_rank": 415.92578125
+      }
+    }
+  },
+  "fresh_process_whole_lifetime_combined_peak_mib": {
+    "n": 5,
+    "p50": 628.0625,
+    "p95_nearest_rank": 683.65234375
+  },
+  "concurrency_combined_peak_mib": {
+    "1": {
+      "n": 3,
+      "p50": 759.96484375,
+      "p95_nearest_rank": 1005.57421875
+    },
+    "2": {
+      "n": 3,
+      "p50": 924.98828125,
+      "p95_nearest_rank": 1016.921875
+    },
+    "4": {
+      "n": 3,
+      "p50": 982.640625,
+      "p95_nearest_rank": 1022.9140625
+    },
+    "8": {
+      "n": 3,
+      "p50": 754.72265625,
+      "p95_nearest_rank": 849.58984375
+    }
+  },
+  "worker_crash_recovery": {
+    "killed_launcher_pid": 21808,
+    "tree_pids_before_kill": [
+      21808,
+      22452,
+      2520
+    ],
+    "orphan_python_pids_1s_after_kill": [],
+    "next_request_http_status": 200,
+    "next_request_prepare_status": "ready",
+    "next_request_ms": 4763.405800000328,
+    "next_request_cold_worker": true,
+    "pass": true
+  },
+  "after_explicit_shutdown": {
+    "tree_pids_before_shutdown": [
+      18796,
+      20308,
+      14080
+    ],
+    "orphan_python_pids_1s_after_shutdown": [],
+    "current": {
+      "time": 21963.3449195,
+      "fastapi": {
+        "rss_mib": 181.90625,
+        "process_lifetime_peak_rss_mib": 324.953125
+      },
+      "launcher_pid": null,
+      "descendants": [],
+      "descendant_rss_mib": 0,
+      "combined_rss_mib": 181.90625
+    }
+  },
+  "method": "Sum of working sets (RSS); shared pages may be counted more than once. Sampled every 25 ms, so the peak is a lower bound. Includes FastAPI and all descendants, excludes the browser and this client.",
+  "process_tree": "LOCAL_OCR_PYTHON is a Windows venv launcher; the interpreter holding the OCR models is its child. Every descendant of the FastAPI process is sampled and listed by exe name.",
+  "not_zero": "OCR memory lives in the OCR interpreter process tree; FastAPI RSS alone does not show it."
+}

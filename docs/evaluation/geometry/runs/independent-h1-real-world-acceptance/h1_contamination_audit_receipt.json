@@ -1,0 +1,98 @@
+{
+  "schema": "algosim-h1-contamination-audit-receipt/1",
+  "generated_at_utc": "2026-11-09T14:20:24.883799+00:00",
+  "product_commit_sha": "87497d79a6537681b91c3f06fffea86a7e593a02",
+  "external_h1_corpus_scanned": false,
+  "status": "SCANNER_VERIFIED_8_LAYERS_AWAITING_EXTERNAL_CORPUS",
+  "layers_implemented": [
+    "1_exact_verbatim",
+    "2_normalized_text",
+    "3_number_stripped_template",
+    "4_isomorphic_vertex_renaming",
+    "5_scale_factor_transform",
+    "6_construction_relation_graph",
+    "7_intermediate_construction_sequence",
+    "8_solution_or_expected_answer_leakage"
+  ],
+  "eight_layer_probe_verification": {
+    "PROBE_L1_EXACT_DEV": {
+      "expected_layer": "exact_verbatim",
+      "detected": true,
+      "hit_count": 3,
+      "sample_hits": [
+        "backend/tests/geometry/fixtures/paraphrase_cases.json",
+        "backend/tests/geometry/fixtures/text_to_functions_cases.json",
+        "docs/evaluation/geometry/runs/hybrid-ab-pilot-readiness/inputs/pilot_cases.json"
+      ]
+    },
+    "PROBE_L2_NORMALIZED": {
+      "expected_layer": "normalized_text",
+      "detected": true,
+      "hit_count": 3,
+      "sample_hits": [
+        "backend/tests/geometry/fixtures/paraphrase_cases.json",
+        "backend/tests/geometry/fixtures/text_to_functions_cases.json",
+        "docs/evaluation/geometry/runs/hybrid-ab-pilot-readiness/inputs/pilot_cases.json"
+      ]
+    },
+    "PROBE_L3_NUM_STRIPPED": {
+      "expected_layer": "number_stripped_template",
+      "detected": true,
+      "hit_count": 3,
+      "sample_hits": [
+        "backend/tests/geometry/fixtures/paraphrase_cases.json",
+        "backend/tests/geometry/fixtures/text_to_functions_cases.json",
+        "docs/evaluation/geometry/runs/hybrid-ab-pilot-readiness/inputs/pilot_cases.json"
+      ]
+    },
+    "PROBE_L4_VERTEX_RENAMED": {
+      "expected_layer": "isomorphic_vertex_renaming",
+      "detected": true,
+      "hit_count": 3,
+      "sample_hits": [
+        "backend/tests/geometry/fixtures/paraphrase_cases.json",
+        "backend/tests/geometry/fixtures/text_to_functions_cases.json",
+        "docs/evaluation/geometry/runs/hybrid-ab-pilot-readiness/inputs/pilot_cases.json"
+      ]
+    },
+    "PROBE_L5_SCALED": {
+      "expected_layer": "scale_factor_transform",
+      "detected": true,
+      "hit_count": 3,
+      "sample_hits": [
+        "backend/tests/geometry/fixtures/paraphrase_cases.json",
+        "backend/tests/geometry/fixtures/text_to_functions_cases.json",
+        "docs/evaluation/geometry/runs/hybrid-ab-pilot-readiness/inputs/pilot_cases.json"
+      ]
+    },
+    "PROBE_L6_RELATION_GRAPH": {
+      "expected_layer": "construction_relation_graph",
+      "detected": true,
+      "hit_count": 3,
+      "sample_hits": [
+        "backend/tests/geometry/fixtures/paraphrase_cases.json",
+        "backend/tests/geometry/fixtures/text_to_functions_cases.json",
+        "docs/evaluation/geometry/runs/hybrid-ab-pilot-readiness/inputs/pilot_cases.json"
+      ]
+    },
+    "PROBE_L7_CONSTRUCTION_SEQUENCE": {
+      "expected_layer": "intermediate_construction_sequence",
+      "detected": true,
+      "hit_count": 39,
+      "sample_hits": [
+        "backend/tests/geometry/fixtures/geometry_expansion_cases.json",
+        "backend/tests/geometry/fixtures/paraphrase_cases.json",
+        "backend/tests/geometry/fixtures/text_to_functions_cases.json"
+      ]
+    },
+    "PROBE_L8_SOLUTION_LEAK": {
+      "expected_layer": "solution_or_expected_answer_leakage",
+      "detected": true,
+      "hit_count": 1,
+      "sample_hits": [
+        "SELF_INLINE_SOLUTION_LEAK"
+      ]
+    }
+  },
+  "all_eight_probes_detected": true
+}

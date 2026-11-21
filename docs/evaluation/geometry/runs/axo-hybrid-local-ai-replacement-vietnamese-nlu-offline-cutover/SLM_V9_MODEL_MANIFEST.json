@@ -1,0 +1,78 @@
+{
+  "schema": "slm-v9-model-manifest/1",
+  "generated_at_utc": "2026-11-19T10:50:00+00:00",
+  "external_ai_calls": 0,
+  "active_v9_model": {
+    "model_key": "qwen3-0.6b-axo-v9-q4_k_m",
+    "role": "finetuned",
+    "filename": "Qwen3-0.6B-AxoV9-Q4_K_M.gguf",
+    "storage_path_outside_git": "C:\\Users\\Bunny\\AppData\\Local\\axo-slm\\models\\qwen3-0.6b-axo-v9-q4_k_m\\Qwen3-0.6B-AxoV9-Q4_K_M.gguf",
+    "size_bytes": 396704736,
+    "sha256": "73f1484b08b97ed2a1f44e32bcf6610210c7fda51567c4cd0a03d98dffc6cc35",
+    "repo_id": "local/Qwen3-0.6B-AxoV9-LoRA-Merged",
+    "revision": "c1899de289a04d12100db370d81485cdf75e47ca+axo-v9-lora",
+    "license": "Apache-2.0",
+    "family": "qwen3",
+    "param_count_b": 0.6,
+    "quantization": "Q4_K_M",
+    "supports_thinking": true,
+    "selected_checkpoint_epoch": 3,
+    "selection_split": "val_v9.jsonl (126 disjoint items; val_loss=0.0203; 0 holdout leakage)"
+  },
+  "runtime_pin": {
+    "runtime_version": "local-slm-runtime/4",
+    "cache_namespace": "HYBRID_V9_LOCAL_SLM",
+    "llama_cpp_release": "b12470",
+    "llama_cpp_asset": "llama-b12470-bin-win-cpu-x64.zip",
+    "llama_cpp_sha256": "fc83371644b501647c253ca1e42277795eca7ed15851a218b20294275b45d67f",
+    "llama_cpp_license": "MIT",
+    "batch_flags": ["-b", "512", "-ub", "512"],
+    "default_ctx_size": 2048,
+    "default_max_tokens_v9": 256,
+    "default_threads": 6
+  },
+  "training_provenance": {
+    "base_repo": "Qwen/Qwen3-0.6B",
+    "base_revision": "c1899de289a04d12100db370d81485cdf75e47ca",
+    "hardware": "NVIDIA GeForce GTX 1650 (torch 2.6.0+cu124, CUDA 12.4)",
+    "trainable_params": 10092544,
+    "all_params": 606142464,
+    "train_jsonl": {
+      "path": "C:\\Users\\Bunny\\AppData\\Local\\axo-slm\\training\\datasets_v9\\train_v9.jsonl",
+      "sha256": "4432a5c7bb470750df84c5d8eaa1cde9212849e1cd0f354af8954aa05a882342",
+      "total": 474,
+      "positives": 386,
+      "negatives": 88
+    },
+    "val_jsonl": {
+      "path": "C:\\Users\\Bunny\\AppData\\Local\\axo-slm\\training\\datasets_v9\\val_v9.jsonl",
+      "sha256": "86e25ae9561ff878fe2a453ed40d4f80f5721e742935c6e7534170710bdc42e8",
+      "total": 126,
+      "positives": 94,
+      "negatives": 32
+    },
+    "anti_leakage": {
+      "external_corpora_checked": 565,
+      "exact_normalized_overlaps_external": 0,
+      "structural_skeleton_overlaps_external": 0,
+      "train_val_family_overlaps": 0,
+      "train_val_structural_skeleton_overlaps": 0
+    }
+  },
+  "preserved_rollback_models": {
+    "v7_finetuned": {
+      "model_key": "qwen3-0.6b-axo-v7-q4_k_m",
+      "filename": "Qwen3-0.6B-AxoV7-Q4_K_M.gguf",
+      "size_bytes": 396704736,
+      "sha256": "36e784d135627225e0b9c11b097c9a36222ee1e0e3f6f1d6116cc3060ac5e148",
+      "rollback_command": "python backend/scripts/provision_local_slm.py --rollback v7"
+    },
+    "qwen3_base_q4km": {
+      "model_key": "qwen3-0.6b-q4_k_m",
+      "filename": "Qwen3-0.6B-Q4_K_M.gguf",
+      "size_bytes": 396705472,
+      "sha256": "ac2d97712095a558e31573f62f466a3f9d93990898b0ec79d7c974c1780d524a",
+      "rollback_command": "python backend/scripts/provision_local_slm.py --rollback orig"
+    }
+  }
+}

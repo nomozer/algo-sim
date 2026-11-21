@@ -1,0 +1,40 @@
+{
+  "name": "publication_head",
+  "command": "D:\\Documents\\projects\\algo-sim\\backend\\.venv\\Scripts\\python.exe backend/scripts/check_publication_safety.py --head",
+  "argv": [
+    "D:\\Documents\\projects\\algo-sim\\backend\\.venv\\Scripts\\python.exe",
+    "backend/scripts/check_publication_safety.py",
+    "--head"
+  ],
+  "cwd": "D:\\Documents\\projects\\algo-sim\\.superpowers\\worktrees\\local-first-geometry-understanding",
+  "started_at_utc": "2026-11-14T02:53:41.579781+00:00",
+  "start_snapshot": {
+    "head_commit": "186d92c9dee72ba4feedeaeaaa40f812fd24eaf8",
+    "product_paths_sha256": "8c48efac06306253f2eb7d953c833a1d32b562fd2d2d74a9001e989c1bb44cf3",
+    "product_path_count": 337,
+    "hash_policy": "tracked backend/app + frontend/src, LF normalized; includes tests",
+    "working_product_source_sha256": "0f5674e417de01ef43a122580b77af014bf0ac68890340e5aa527aef6efb027f",
+    "working_product_source_count": 194,
+    "working_source_policy": "all working backend/app + frontend/src including untracked; skip pycache and freeze TEST_ONLY_GLOBS"
+  },
+  "ended_at_utc": "2026-11-14T02:56:55.672264+00:00",
+  "duration_seconds": 193.844,
+  "exit_code": 1,
+  "raw_output_sha256": "6efaf8a535e25bf70358b0e957e333cb2f0e6f8bf24726dd42cfb0a2368dc194",
+  "raw_output_bytes": 22481,
+  "raw_output_retention": "ignored local .superpowers only; never staged",
+  "end_snapshot": {
+    "head_commit": "186d92c9dee72ba4feedeaeaaa40f812fd24eaf8",
+    "product_paths_sha256": "8c48efac06306253f2eb7d953c833a1d32b562fd2d2d74a9001e989c1bb44cf3",
+    "product_path_count": 337,
+    "hash_policy": "tracked backend/app + frontend/src, LF normalized; includes tests",
+    "working_product_source_sha256": "0f5674e417de01ef43a122580b77af014bf0ac68890340e5aa527aef6efb027f",
+    "working_product_source_count": 194,
+    "working_source_policy": "all working backend/app + frontend/src including untracked; skip pycache and freeze TEST_ONLY_GLOBS"
+  },
+  "summary_lines": [
+    "SUMMARY scanned=31271 messages=0 violations=97 pending_exception=97 verdict=BLOCKED"
+  ],
+  "source_unchanged_during_command": true,
+  "verdict": "FAIL"
+}

@@ -1,0 +1,412 @@
+{
+  "schema": "axo-evaluation-run/2",
+  "run_id": "model1-final-text-acceptance",
+  "wave_id": "AXO_HYBRID_MODEL1_FINAL_TEXT_ACCEPTANCE",
+  "campaign": "AXO HYBRID /19",
+  "date": "2026-11-21",
+  "branch": "feat/model1-final-text-acceptance",
+  "base_commit": "cf0b646f5734bab7201941477f2e56c1e0145a39",
+  "measured_commit": "b10c0a1e4022dfd5af93aeb6ebf75de61078a901",
+  "main_commit": "bc6ff5e333e32d1d53dc7435fba64fe12b6dd651",
+  "origin_main_commit": "bc6ff5e333e32d1d53dc7435fba64fe12b6dd651",
+  "main_untracked_folder_preserved": {
+    "path": "docs/evaluation/geometry/runs/post-merge-cleanup-closure/",
+    "files": 6,
+    "touched": false
+  },
+  "worktree": ".superpowers/worktrees/simulation-intent-slm-recovery (shared, reused per owner policy); authoritative measurement executed in temporary detached worktree measure-model1-c158 (verified clean and removed)",
+  "candidate": {
+    "id": 158,
+    "product_commit": "2bb0211a1057c5d2a503f8a1f19e96cf84decff5",
+    "evaluation_candidate_commit_field": "35a17644acb11ea8a0853afb5b7cdc1814f37df8",
+    "freeze_commit": "b92b68a94b67d24dc016ddc358506adad5c7f1e3",
+    "tree_hash": "bdb737bba9ab94d0274b57e25089c01d4cb47935d5989658e7c13aad1e79b132",
+    "measured_files": 127,
+    "cache_version": "158",
+    "route_d_cache_policy": "158:route-d",
+    "semantic_environment_hash": "f9df4bf0c8bd458a278d2692567fa3e096340ae37ff5493730dff4067c0f5e19",
+    "default_route_mode": "live",
+    "product_change_in_this_run": false
+  },
+  "model": {
+    "key": "qwen3-0.6b-axo-v9-q4_k_m",
+    "sha256": "73f1484b08b97ed2a1f44e32bcf6610210c7fda51567c4cd0a03d98dffc6cc35",
+    "runtime": "llama.cpp b12470 (dde9de82c), win-cpu-x64",
+    "finetuned_in_this_run": false,
+    "system_prompt_modified": false
+  },
+  "live_ai_calls": 0,
+  "external_network_calls": 0,
+  "exceptions_granted": 0,
+  "commits": [
+    {
+      "sha": "98163cce55620c3c4725ea5ed378c6e0fa523e00",
+      "kind": "preregistration_freeze",
+      "subject": "test(eval): preregister and freeze holdout-7 (58+22 hand-written text cases) for candidate 158 before any run"
+    },
+    {
+      "sha": "b10c0a1e4022dfd5af93aeb6ebf75de61078a901",
+      "kind": "checkout_eol_fix",
+      "subject": "chore(git): preserve LF line endings on frozen V12_ACCEPTANCE_MANIFEST.json for clean Windows checkouts"
+    }
+  ],
+  "measurements": {
+    "authoritative_full_t3": {
+      "receipt": "AUTHORITATIVE_FULL_T3_RECEIPT.json",
+      "verdict": "FULL_PRODUCT_GATE_PASS",
+      "exit_code": 0,
+      "duration_s": 1346.9,
+      "backend_pytest_passed": 15178,
+      "backend_pytest_failed": 0,
+      "frontend_vitest_files_passed": 203,
+      "frontend_vitest_tests_passed": 2345,
+      "frontend_vitest_failed": 0,
+      "typecheck_build": "PASS",
+      "demo_replay": "5/5+1/1",
+      "demo_crash_surface": "6/6 (0 unexpected 500s)",
+      "log": "D:/tmp/axo19/t3_authoritative/full-t3.log",
+      "log_sha256": "95b1b4dbb2c546b39d8db7d2a9dfcc823f8b47ed809869283a4596eb62949a7b"
+    },
+    "prospective_text_acceptance": {
+      "report": "PROSPECTIVE_TEXT_ACCEPTANCE.json",
+      "set": "holdout-7",
+      "evidence_class": "B_PROSPECTIVE_INTERNAL (hand-written by /19 agent; EXTERNAL_INDEPENDENCE = NOT_MEASURED)",
+      "totals": {
+        "positive": 58,
+        "served": 46,
+        "completed": 46,
+        "completion_rate": 0.7931034482758621,
+        "negative": 22,
+        "negative_safely_refused": 22
+      },
+      "wilson_95": {
+        "END_TO_END_SYSTEM_SCORE": {
+          "k": 46,
+          "n": 58,
+          "rate": 0.7931,
+          "ci95_low": 0.6723,
+          "ci95_high": 0.8775
+        },
+        "CANDIDATE_FALLBACK_SCORE": {
+          "k": 3,
+          "n": 15,
+          "rate": 0.2,
+          "ci95_low": 0.0705,
+          "ci95_high": 0.4519
+        },
+        "INDEPENDENT_SLM_SCORE": {
+          "k": 25,
+          "n": 58,
+          "rate": 0.431,
+          "ci95_low": 0.3118,
+          "ci95_high": 0.5588
+        },
+        "NEGATIVE_SAFE_REFUSAL": {
+          "k": 22,
+          "n": 22,
+          "rate": 1.0,
+          "ci95_low": 0.8513,
+          "ci95_high": 1.0
+        }
+      },
+      "end_to_end_system_score": 0.7931034482758621,
+      "candidate_fallback_score": 0.2,
+      "legacy_baseline_stratum_score": 0.21428571428571427,
+      "independent_slm_score": 0.43103448275862066,
+      "oracle_summary": {
+        "MATHEMATICALLY_VALID": 46,
+        "NOT_SERVED": 34
+      },
+      "safety_zero_violations": true,
+      "ui_scenarios_passed": "10/10",
+      "network": {
+        "external_ai_calls_reported": 0,
+        "browser_external_requests": 0,
+        "proxy_intercepted": 0,
+        "tcp_heartbeats": 321,
+        "tcp_non_loopback_records": 0,
+        "physical_internet_disconnect": "NOT_MEASURED",
+        "proxy_selfcheck_records_separate_file": 2,
+        "proxy_selfcheck_sha256": "27b0c46cce19b00e443682116ae86541db9e5cf2fc9dc37d4ae7e7634dcfb012",
+        "egress_proxy_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "tcp_egress_sha256": "7a6d56e41284aa11ffe3c727eb838e433964665eb7f6bcbd4c1ae15526b833ce",
+        "cache_hit_or_replay_count_in_browser_run": 0
+      },
+      "performance": {
+        "schema": "axo-performance-report/1",
+        "harness_version": "axo-live-acceptance-harness/1",
+        "scope_note": "Measured on Windows dev host only; no cross-hardware claims.",
+        "uncached_live_latency_ms": {
+          "deterministic_parser_complete_served": {
+            "n": 43,
+            "min_ms": 126.0,
+            "p50_ms": 147.0,
+            "p95_ms": 332.0,
+            "max_ms": 720.0
+          },
+          "slm_required_stratum_deterministic_or_normalizer_rescued": {
+            "n": 0,
+            "min_ms": null,
+            "p50_ms": null,
+            "p95_ms": null,
+            "max_ms": null
+          },
+          "live_slm_contributed_served": {
+            "n": 3,
+            "min_ms": 3991.0,
+            "p50_ms": 4377.0,
+            "p95_ms": 8075.0,
+            "max_ms": 8075.0
+          },
+          "rejected_valid_cases": {
+            "n": 12,
+            "min_ms": 1275.0,
+            "p50_ms": 2991.0,
+            "p95_ms": 3869.0,
+            "max_ms": 3996.0
+          },
+          "rejected_negative_cases": {
+            "n": 22,
+            "min_ms": 70.0,
+            "p50_ms": 109.5,
+            "p95_ms": 1694.0,
+            "max_ms": 3053.0
+          }
+        },
+        "warm_cache_hit_ms": {
+          "n": 4,
+          "min_ms": 28.7,
+          "p50_ms": 38.7,
+          "p95_ms": 56.5,
+          "max_ms": 56.5
+        },
+        "concurrency": {
+          "conc_2_deterministic": {
+            "workers": 2,
+            "statuses": [
+              200,
+              200
+            ],
+            "all_200": true,
+            "wall_ms": 68.1,
+            "request_stats": {
+              "n": 2,
+              "min_ms": 62.4,
+              "p50_ms": 64.7,
+              "p95_ms": 67.1,
+              "max_ms": 67.1
+            }
+          },
+          "conc_4_deterministic": {
+            "workers": 4,
+            "statuses": [
+              200,
+              200,
+              200,
+              200
+            ],
+            "all_200": true,
+            "wall_ms": 147.4,
+            "request_stats": {
+              "n": 4,
+              "min_ms": 112.2,
+              "p50_ms": 118.0,
+              "p95_ms": 145.1,
+              "max_ms": 145.1
+            }
+          },
+          "conc_2_mixed_slm_and_det": {
+            "workers": 2,
+            "statuses": [
+              200,
+              200
+            ],
+            "all_200": true,
+            "wall_ms": 82.0,
+            "request_stats": {
+              "n": 2,
+              "min_ms": 51.6,
+              "p50_ms": 66.3,
+              "p95_ms": 81.1,
+              "max_ms": 81.1
+            }
+          }
+        },
+        "resource_peaks_from_stack_sampler": {
+          "chromium": {
+            "samples": 158,
+            "max_pid_count": 4,
+            "peak_ws_mb": 602.8,
+            "peak_private_mb": 474.5,
+            "max_cpu_s": 369.88
+          },
+          "llama": {
+            "samples": 158,
+            "max_pid_count": 1,
+            "peak_ws_mb": 901.8,
+            "peak_private_mb": 593.6,
+            "max_cpu_s": 339.23
+          },
+          "backend": {
+            "samples": 158,
+            "max_pid_count": 2,
+            "peak_ws_mb": 122.2,
+            "peak_private_mb": 102.5,
+            "max_cpu_s": 23.94
+          }
+        }
+      },
+      "identity_mismatches": []
+    },
+    "slm_independent_capability_audit": {
+      "report": "SLM_CAPABILITY_AUDIT.json",
+      "allow_parser_reconcile": false,
+      "summary": {
+        "verified_scenes": 25,
+        "positive_total": 58,
+        "rate": 0.43103448275862066,
+        "extraction_correctness": 0.6379310344827587,
+        "grounding_correctness": 0.5517241379310345,
+        "negative_safe_refused": 22,
+        "negative_total": 22,
+        "false_assertions_served": 0,
+        "invalid_relations_served": 0,
+        "thresholds": {
+          "verified_scene_rate_min": 0.6,
+          "min_verified_scenes": 35,
+          "negative_safe_refusal_rate_min": 1.0,
+          "false_assertions_max": 0,
+          "invalid_relations_max": 0
+        },
+        "gate_pass": false
+      }
+    },
+    "gemini_compatibility": {
+      "report": "GEMINI_LIVE_COMPATIBILITY_AUDIT.json",
+      "offline_corpora": 5,
+      "offline_total_cases": 82,
+      "offline_changed_cases": 0,
+      "offline_crashes": 0,
+      "offline_verdict": "OFFLINE_DOWNSTREAM_COMPATIBILITY_PARITY_VERIFIED",
+      "live_gemini_api_smoke": "NOT_MEASURED"
+    }
+  },
+  "verdicts": {
+    "CANDIDATE158_IDENTITY_VERIFIED": true,
+    "AUTHORITATIVE_DETACHED_COMPLIANCE": "VERIFIED",
+    "FULL_PRODUCT_GATE_PASS": true,
+    "PROSPECTIVE_TEXT_ACCEPTANCE": "FAIL",
+    "SYSTEM_TEXT_COMPLETION_THRESHOLD_MET": false,
+    "SLM_FALLBACK_GATE_MET": false,
+    "SLM_INDEPENDENT_CAPABILITY_GATE_MET": false,
+    "SOURCE_GROUNDING_VERIFIED": true,
+    "NEGATIVE_SAFETY_GATE_MET": true,
+    "SEMANTIC_REWRITE_SAFETY_VERIFIED": "NOT_MEASURED",
+    "COMPOSITE_LIVE_TEXT_ACCEPTED": false,
+    "LOCAL_TEXT_MODEL1_VERIFIED": {
+      "candidate_157": true,
+      "candidate_158": false
+    },
+    "LOCAL_VISION_REPLACEMENT_VERIFIED": false,
+    "FULL_GEMINI_ROLE_REPLACEMENT_VERIFIED": false,
+    "EXTERNAL_INDEPENDENCE": "NOT_MEASURED",
+    "OFFLINE_GEMINI_DOWNSTREAM_COMPATIBILITY": "PASS_82_OF_82",
+    "LIVE_GEMINI_API_SMOKE": "NOT_MEASURED",
+    "PUBLICATION_SAFETY_GATE_PASS": "BLOCKED_OWNER_DECISION",
+    "MAIN_MERGE_READY": false,
+    "MAIN_MERGE_COMPLETED": false,
+    "REMOTE_PUSH_COMPLETED": false,
+    "FINAL": "NOT_READY_FOR_MODEL1_TEXT_REPLACEMENT"
+  },
+  "publication": {
+    "main_baseline_hits": 96,
+    "branch_introduced_hits": 12,
+    "branch_introduced_path_blob_pairs": 11,
+    "new_hits_introduced_by_v19": 0,
+    "true_secret_exposures": 0
+  },
+  "owner_decisions_pending": [
+    "H7-Fail",
+    "D1",
+    "D2",
+    "D3",
+    "D4",
+    "D5",
+    "D6",
+    "D7"
+  ],
+  "artifacts": {
+    "AUTHORITATIVE_FULL_T3_RECEIPT.json": {
+      "sha256": "64062babd75362163f9c39072a6a94a07c5a1c1b43b824c153ee0350f719d6df",
+      "bytes": 3297
+    },
+    "FINAL_MASTER_REPORT.md": {
+      "sha256": "a0ab5aa7aa582715a5bc19da7f2359be4ee17730c85dcf03239ff78ccc051d75",
+      "bytes": 15042
+    },
+    "GEMINI_LIVE_COMPATIBILITY_AUDIT.json": {
+      "sha256": "49a38f7cb0e2e8ba20a0fc89f8b90acc5ecf3590e5f10024671dfd3aaa138220",
+      "bytes": 3492
+    },
+    "HANDOFF_STATE.md": {
+      "sha256": "7828e1d1d2e0a27d2d1de3c211cce0ffb6bea9288912f47124324ce57ec191c7",
+      "bytes": 3128
+    },
+    "holdout-7/ACCEPTANCE_CRITERIA.json": {
+      "sha256": "a2c236d6cdd809680dc108a3c53a4c0e3703fe584bfa6e2b5f1fe455953a159e",
+      "bytes": 3194
+    },
+    "holdout-7/ACCEPTANCE_FREEZE.json": {
+      "sha256": "b4e902e5d4bc0df77b25d888d55877862ac7c3fd44726af757fc3a205ddce51d",
+      "bytes": 18200
+    },
+    "holdout-7/ACCEPTANCE_MANIFEST.json": {
+      "sha256": "fe5dbf8c77ec29e4f82bb85ba95083f6eae15061a0662cedc673fabad8b71b0e",
+      "bytes": 78860
+    },
+    "holdout-7/build_holdout.py": {
+      "sha256": "5897b0692bf114f3280acb716d1b917a9519b7beeec06d3744c87c70623562e2",
+      "bytes": 32417
+    },
+    "holdout-7/CANDIDATE_FREEZE.json": {
+      "sha256": "92abff9725b4da0c7c7ddef5a7afb78a62b273174e1360b48247243ac379e449",
+      "bytes": 18167
+    },
+    "holdout-7/check_exposure.py": {
+      "sha256": "9412fa1145960d9d459790a81017ace31237f1ed9daeaff5be99b3682d247371",
+      "bytes": 2148
+    },
+    "holdout-7/check_relations.py": {
+      "sha256": "84fb5fa81b5bc0c813c02054bba60d93ee492acf78880b60b55020bf0ac77981",
+      "bytes": 2219
+    },
+    "holdout-7/EXPOSURE_CHECK.json": {
+      "sha256": "a9129afca80bfb2929d5052671dd4ed8f165ae6f61f237471de041fa7504aa17",
+      "bytes": 7665
+    },
+    "holdout-7/PROVENANCE.json": {
+      "sha256": "34ec3ad62b4ae369f6b6df59e8136ac8efba63f560fdc871ac818f27639d47f2",
+      "bytes": 1860
+    },
+    "INDEPENDENT_EVIDENCE_STATUS.md": {
+      "sha256": "d6f39ce41630172a7a155ec8d46a16be7f0b927da8f17245a6fcc34839db21d6",
+      "bytes": 2774
+    },
+    "MERGE_READINESS_AND_ROLLBACK_AUDIT.md": {
+      "sha256": "4a0be72ad08e956ccfd2967b5a5f06736ed7449f1266c4075d9d3c668b32ed6f",
+      "bytes": 8156
+    },
+    "PROSPECTIVE_TEXT_ACCEPTANCE.json": {
+      "sha256": "f6fbfdb56b0e72131a32ac3c8bde2f55b5e794831ef18b58cd4e89485089003c",
+      "bytes": 25338
+    },
+    "PUBLICATION_SAFETY_STATUS.json": {
+      "sha256": "cfc1b4b24a599a3657245b6b1bdf740535920e591bda13c6a8d6e804c69c804c",
+      "bytes": 1149
+    },
+    "SLM_CAPABILITY_AUDIT.json": {
+      "sha256": "378ce0d0353b5729848c1e2a2de15ed1896da1eeb25693199e493d2b495a3f2e",
+      "bytes": 62682
+    }
+  }
+}

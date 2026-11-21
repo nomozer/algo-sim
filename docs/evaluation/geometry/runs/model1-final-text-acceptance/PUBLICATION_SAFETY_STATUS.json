@@ -1,0 +1,29 @@
+{
+  "schema": "axo-publication-safety-status/1",
+  "run_id": "model1-final-text-acceptance",
+  "date": "2026-11-21",
+  "detector": "backend/scripts/check_publication_safety.py",
+  "prior_classification": "docs/evaluation/geometry/runs/model1-final-acceptance-premerge/PUBLICATION_SAFETY_CLOSURE.json",
+  "proposal_unchanged": "docs/evaluation/geometry/runs/model1-final-acceptance-premerge/PUBLICATION_EXCEPTION_PROPOSAL.json",
+  "checks": {
+    "range_cf0b646f5_to_b10c0a1e4": {
+      "exit_code": 0,
+      "output": [
+        "SUMMARY scanned=9 messages=2 violations=0 pending_exception=0 verdict=PASS"
+      ]
+    },
+    "range_bc6ff5e33_to_b10c0a1e4": {
+      "exit_code": 1,
+      "violation_count": 12,
+      "summary": "SUMMARY scanned=4446 messages=404 violations=12 pending_exception=0 verdict=BLOCKED"
+    }
+  },
+  "main_baseline_hits": 96,
+  "branch_introduced_hits": 12,
+  "branch_introduced_path_blob_pairs": 11,
+  "new_hits_introduced_by_v19": 0,
+  "true_secret_exposures": 0,
+  "owner_exceptions_granted": 0,
+  "gate_status": "BLOCKED_OWNER_DECISION",
+  "re_scan_required_after_final_docs_commit": true
+}

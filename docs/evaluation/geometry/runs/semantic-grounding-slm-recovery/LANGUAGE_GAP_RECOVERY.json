@@ -1,0 +1,133 @@
+{
+  "schema": "axo-language-gap-recovery/1",
+  "run_id": "semantic-grounding-slm-recovery",
+  "model_key": "qwen3-0.6b-axo-v9-q4_k_m",
+  "model_sha256": "73f1484b08b97ed2a1f44e32bcf6610210c7fda51567c4cd0a03d98dffc6cc35",
+  "llama_cpp_release": "b12470",
+  "system_prompt_modified": false,
+  "denominator_preservation_policy": {
+    "description": "Family A / M05 pairwise perpendicular paraphrases ('vuông góc với nhau từng đôi một', 'ba cạnh ... đôi một vuông góc', 'Ba đoạn thẳng ... tạo thành tứ diện') were intentionally kept out of deterministic local_geometry_parser.py so they route through AxoV9 (LOCAL_SLM_GROUNDED) rather than collapsing the Holdout-4 SLM-required denominator.",
+    "slm_kept_families": [
+      "A01 (vuông góc với nhau từng đôi một)",
+      "A02 (vuông góc với nhau từng đôi + embedded Vẽ tứ diện)",
+      "A03 (ba cạnh ... vuông góc từng đôi)",
+      "A05 (Ba đoạn thẳng AB, AC, AD đôi một vuông góc tạo thành tứ diện ABCD)",
+      "M05 (Trong không gian, cho tứ diện ... có ba cạnh ... đôi một vuông góc với nhau + Vẽ hình tứ diện)"
+    ]
+  },
+  "owning_layer_fixes": {
+    "B18": {
+      "root_cause": "Exact Kernel engine.py::_mot_buoc raised UNSUPPORTED_PLANE on perpendicular_line_plane(OA, OBC) before _dinh_tu_ba_canh_ben placed apex O; dense multi-predicate clause OA ⊥ (OBC), OB ⊥ OC, OA=4, OB=5, OC=6 was unsplit for AxoV9; local_geometry_parser 2c could capture non-3-vertex targets.",
+      "files": [
+        "backend/app/simulation/geometry_functions/engine.py",
+        "backend/app/ai/local_geometry_parser.py",
+        "backend/app/ai/local_slm_extractor.py"
+      ],
+      "safety_preserved": [
+        "B18 missing OC -> REFUSED (MISSING_DIMENSION)",
+        "B18 contradictory PR=1 / AB=1 -> REFUSED (INCONSISTENT_FACTS)"
+      ]
+    },
+    "E02": {
+      "root_cause": "Source Gate registry._C_VAI required 'của/hình/khối' before 'lăng trụ' in height clauses and lacked 3-vertex-only unnamed right-angle prism base resolution ('đáy vuông tại M').",
+      "files": [
+        "backend/app/simulation/geometry_functions/registry.py",
+        "backend/app/ai/local_geometry_parser.py"
+      ],
+      "safety_preserved": [
+        "4-vertex unnamed prism base ('R.EFGH / DEFG.HIJK có đáy vuông tại ...') -> REFUSED"
+      ]
+    },
+    "G08": {
+      "root_cause": "Source Gate registry._C_KHOI_HOI and v3 normalizer VN05 missed polite question starter 'Hãy cho biết ...'; local_geometry_parser lacked 'với đáy ...' prefix cleanup and polite question verbs.",
+      "files": [
+        "backend/app/simulation/geometry_functions/registry.py",
+        "backend/app/ai/slm_verified_normalizer.py",
+        "backend/app/ai/local_geometry_parser.py",
+        "backend/app/ai/local_slm_extractor.py"
+      ],
+      "safety_preserved": [
+        "Bare 'Cho biết ...' (without 'hãy' or explicit pronoun) remains refused by Source Gate and deterministic parser."
+      ]
+    },
+    "M06": {
+      "root_cause": "Exam header prefixes ('Đề bài:', 'Yêu cầu:', 'Trong không gian,') not uniformly handled as benign/lead markers across compositional analyzer, deterministic parser, Source Gate, and SLM _GOAL_VERB_RE (which treated 'Yêu cầu: vẽ hình' as a metric goal).",
+      "files": [
+        "backend/app/ai/compositional_clause_analysis.py",
+        "backend/app/ai/local_geometry_parser.py",
+        "backend/app/simulation/geometry_functions/registry.py",
+        "backend/app/ai/local_slm_extractor.py"
+      ],
+      "safety_preserved": [
+        "Negated simulation request ('Không cần vẽ hình', 'Đừng vẽ hình') remains refused."
+      ]
+    },
+    "A01_A02_A03_A05_M05_SLM_CLOSURE": {
+      "root_cause": "AxoV9 stopped after emitting clause-0 relations or flagged standalone sim clauses as ambig; sim_only GBNF root had literal '[goallist]' inside quotes causing INVALID_JSON at char 261; dense pair-perp + assignments needed offset-preserving splitting; '_DENSE_PAIR_PERP_ASSIGN_RE' and guarded prompt canonicalization enabled shared-apex tetrahedron lowering + 3-pair closure without parser reconciliation.",
+      "files": [
+        "backend/app/ai/local_slm_extractor.py"
+      ],
+      "safety_preserved": [
+        "Guard against sentence_has_unsafe_polarity_or_role keeps N01/N02/N03 untouched and safely refused.",
+        "allow_parser_reconcile=False verified on all 13 exposed cases in isolated AxoV9 mode."
+      ]
+    },
+    "derived_section_ratio_and_grammar": {
+      "root_cause": "m_two_unshared could capture 'hai khối chóp S.MNPQ và S.ABCD' during derived-section volume_ratio clauses; early validator exit on REJECTED_NO_GROUNDED_GOAL reported /3 instead of val_ver (/6 in v9); dense split commas shifted existing multi-clause SLM tests.",
+      "files": [
+        "backend/app/ai/local_geometry_parser.py",
+        "backend/app/ai/local_slm_extractor.py"
+      ]
+    }
+  },
+  "exposed_baseline_verification": {
+    "source_runs": [
+      "grounded-geometry-language-recovery/holdout-3",
+      "local-model1-recovery-offline-vision/holdout-2 (B18)"
+    ],
+    "router_path": {
+      "entry": "route_text_input_local_slm(model_key='v9', closure_mode='v9', normalizer_version='v3', allow_download=False, use_cache=False)",
+      "positive_served": 9,
+      "positive_total": 9,
+      "negative_refused": 4,
+      "negative_total": 4,
+      "cases": [
+        {"case_id": "A01", "expected": "SERVE", "status": "SERVED", "extraction_mode": "LOCAL_SLM_GROUNDED", "answers": {}},
+        {"case_id": "A02", "expected": "SERVE", "status": "SERVED", "extraction_mode": "LOCAL_SLM_GROUNDED", "answers": {}},
+        {"case_id": "A03", "expected": "SERVE", "status": "SERVED", "extraction_mode": "LOCAL_SLM_GROUNDED", "answers": {"q1": "4/3"}},
+        {"case_id": "A05", "expected": "SERVE", "status": "SERVED", "extraction_mode": "LOCAL_SLM_GROUNDED", "answers": {}},
+        {"case_id": "B18", "expected": "SERVE", "status": "SERVED", "extraction_mode": "LOCAL_DETERMINISTIC_PARSER", "answers": {"q1": "20"}},
+        {"case_id": "E02", "expected": "SERVE", "status": "SERVED", "extraction_mode": "LOCAL_DETERMINISTIC_PARSER", "answers": {"q1": "15"}},
+        {"case_id": "G08", "expected": "SERVE", "status": "SERVED", "extraction_mode": "LOCAL_PARSER_AFTER_V3_NORMALIZER", "answers": {"q1": "12"}},
+        {"case_id": "M05", "expected": "SERVE", "status": "SERVED", "extraction_mode": "LOCAL_SLM_GROUNDED", "answers": {}},
+        {"case_id": "M06", "expected": "SERVE", "status": "SERVED", "extraction_mode": "LOCAL_DETERMINISTIC_PARSER", "answers": {}},
+        {"case_id": "N01", "expected": "REFUSE", "status": "REFUSED", "extraction_mode": "LOCAL_SLM_GROUNDING_REJECTED", "reason_code": "INCONSISTENT_FACTS"},
+        {"case_id": "N02", "expected": "REFUSE", "status": "REFUSED", "extraction_mode": "LOCAL_SLM_GROUNDING_REJECTED", "reason_code": "AMBIGUOUS_FACT"},
+        {"case_id": "N03", "expected": "REFUSE", "status": "REFUSED", "extraction_mode": "LOCAL_SLM_GROUNDING_REJECTED", "reason_code": "AMBIGUOUS_FACT"},
+        {"case_id": "N10", "expected": "REFUSE", "status": "REFUSED", "extraction_mode": "LOCAL_DETERMINISTIC_PARSER", "reason_code": "MISSING_DIMENSION"}
+      ]
+    },
+    "isolated_axov9_path": {
+      "entry": "run_local_slm_extraction(v3.canonical_text, model_key='v9', closure_mode='v9', normalizer_version='v3', use_cache=False, allow_download=False, allow_parser_reconcile=False) -> run_hybrid_offline",
+      "positive_served": 9,
+      "positive_total": 9,
+      "negative_refused": 4,
+      "negative_total": 4,
+      "cases": [
+        {"case_id": "A01", "expected": "SERVE", "status": "SERVED", "answers": {}},
+        {"case_id": "A02", "expected": "SERVE", "status": "SERVED", "answers": {}},
+        {"case_id": "A03", "expected": "SERVE", "status": "SERVED", "answers": {"q1": "4/3"}},
+        {"case_id": "A05", "expected": "SERVE", "status": "SERVED", "answers": {}},
+        {"case_id": "B18", "expected": "SERVE", "status": "SERVED", "answers": {"q1": "20"}},
+        {"case_id": "E02", "expected": "SERVE", "status": "SERVED", "answers": {"q1": "15"}},
+        {"case_id": "G08", "expected": "SERVE", "status": "SERVED", "answers": {"q1": "12"}},
+        {"case_id": "M05", "expected": "SERVE", "status": "SERVED", "answers": {}},
+        {"case_id": "M06", "expected": "SERVE", "status": "SERVED", "answers": {}},
+        {"case_id": "N01", "expected": "REFUSE", "status": "REFUSED", "reason_code": "INCONSISTENT_FACTS"},
+        {"case_id": "N02", "expected": "REFUSE", "status": "REFUSED", "reason_code": "AMBIGUOUS_FACT"},
+        {"case_id": "N03", "expected": "REFUSE", "status": "REFUSED", "reason_code": "AMBIGUOUS_FACT"},
+        {"case_id": "N10", "expected": "REFUSE", "status": "REFUSED", "reason_code": "MISSING_DIMENSION"}
+      ]
+    }
+  }
+}

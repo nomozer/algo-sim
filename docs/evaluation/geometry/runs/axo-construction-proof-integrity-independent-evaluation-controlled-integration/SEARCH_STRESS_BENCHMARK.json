@@ -1,0 +1,63 @@
+{
+  "depth_scaling": [
+    {
+      "expanded_states": 4,
+      "pending_steps": 2,
+      "proof_nodes": 7,
+      "search_ms": 19.02,
+      "status": "GOAL_VERIFIED"
+    },
+    {
+      "expanded_states": 6,
+      "pending_steps": 4,
+      "proof_nodes": 9,
+      "search_ms": 23.181,
+      "status": "GOAL_VERIFIED"
+    },
+    {
+      "expanded_states": 10,
+      "pending_steps": 8,
+      "proof_nodes": 13,
+      "search_ms": 30.168,
+      "status": "GOAL_VERIFIED"
+    },
+    {
+      "expanded_states": 14,
+      "pending_steps": 12,
+      "proof_nodes": 17,
+      "search_ms": 35.188,
+      "status": "GOAL_VERIFIED"
+    },
+    {
+      "expanded_states": 18,
+      "pending_steps": 16,
+      "proof_nodes": 21,
+      "search_ms": 58.343,
+      "status": "GOAL_VERIFIED"
+    },
+    {
+      "expanded_states": 22,
+      "pending_steps": 20,
+      "proof_nodes": 25,
+      "search_ms": 57.406,
+      "status": "GOAL_VERIFIED"
+    }
+  ],
+  "e2e_stage_timing_ms": {
+    "arm_a2_legacy_total_ms": 28.494,
+    "arm_a2_status": "SERVED",
+    "arm_c_bridge_and_source_gate_ms": 33.969,
+    "arm_c_dynamic_search_ms": 11.866,
+    "arm_c_e2e_total_ms": 47.04,
+    "arm_c_e2e_verified": true,
+    "arm_c_l0_l4_strict_verify_ms": 0.986,
+    "arm_c_scene3d_compile_ms": 0.219
+  },
+  "generated_at_utc": "2026-11-19T04:35:50Z",
+  "resource_limit_checks": {
+    "max_expanded_states_1_status": "SEARCH_RESOURCE_LIMIT",
+    "tight_timeout_status": "SEARCH_TIMEOUT",
+    "zero_false_contradictory_on_budget_exhaustion": true
+  },
+  "schema": "axo-search-stress-benchmark/1"
+}

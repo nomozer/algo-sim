@@ -1,0 +1,39 @@
+{
+  "run_id": "certified-scale-cache-safety",
+  "generated_at_utc": "2026-11-14T05:40:52.234783+00:00",
+  "product_commit": "902a3171c1a625c2741f0c6886d0328584dfb89e",
+  "measured_system": "243d932765f7d4065394f91c6b4f25972f8232ba9228aec89d4c63a244c1976b",
+  "cache_version": "135",
+  "environment": {
+    "ALLOW_LIVE_AI": "0",
+    "HYBRID_ROUTE_MODE": "local-first",
+    "live_ai_calls": 0
+  },
+  "head": "4bb423b48393605355be39e4d8dc4386ad9b3946",
+  "cache_path": "POST /api/analyze → prepare_local_first_hybrid(text).cache_key → _cache_lookup(key, ROUTE_D_CACHE_POLICY) → _served_route_d (status SERVED only) → returned WITHOUT re-running parser / gate / engine",
+  "key_inputs": [
+    "route",
+    "router_version",
+    "parser_version (constant local-geometry-parser/1)",
+    "model",
+    "extraction surface fingerprint",
+    "preview_surface (version strings)",
+    "response_contract",
+    "source text"
+  ],
+  "key_excludes": [
+    "local parse status (computed AFTER the lookup)",
+    "any fingerprint of verification behaviour"
+  ],
+  "finding": "compositional-semantics-simulation-goals tightened the parser sub-clause guard and the adapter angle binding without changing any key input and kept CACHE_VERSION 134 ⇒ a row served by the earlier code for a text the guard now refuses would be replayed (STALE_BYPASS reproduced)",
+  "previous_run_claim_corrected": "'only SERVED rows are cached ⇒ no bump' was insufficient when a guard becomes STRICTER",
+  "remediation": "CACHE_VERSION 134 → 135 (ROUTE_D_CACHE_POLICY 135:route-d); every row written under 134 MISSES",
+  "not_chosen": {
+    "revalidation_on_read": "would re-run the local route on every hit (cache pointless for local-first) and cannot revalidate provider-extracted rows without their payload",
+    "source_fingerprint_in_key": "conflicts with the declared cache-identity lock (surface fingerprints ↔ CACHE_VERSION); the bump is the repository's protocol"
+  },
+  "impact": {
+    "invalidated": "all Route D rows of policy 134:route-d (first request per text recomputes; local-first texts ~25 ms, provider texts cost one extraction)",
+    "compatibility": "envelope /4 and contracts unchanged"
+  }
+}

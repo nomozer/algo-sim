@@ -1,0 +1,247 @@
+{
+  "run_id": "target-invariant-regular-solid-semantics",
+  "generated_at_utc": "2026-11-14T07:25:58.179662+00:00",
+  "product_commit": "bdc34a89e32c77fd73bff7b38b72d3a3496657e1",
+  "measured_system": "2a18f935e4c29462b0495ff6b0fec46df88e215e0bedcaba84668ec202af62d1",
+  "cache_version": "136",
+  "environment": {
+    "ALLOW_LIVE_AI": "0",
+    "HYBRID_ROUTE_MODE": "local-first",
+    "live_ai_calls": 0
+  },
+  "head": "bcba912e82661ccc8b186e6d93cd2bf7928f06bc",
+  "statement": "for every configuration satisfying the cited facts and every value of the free parameters, ∠((SBC),(ABC)) = ∠SBA of triangle SAB, right isosceles at A",
+  "certificate": {
+    "schema_version": "target-invariance-certificate/1",
+    "certification_level": "MATHEMATICALLY_PROVEN",
+    "representative_level": "ENGINE_DOMAIN_CERTIFIED",
+    "goals": [
+      {
+        "schema_version": "target-invariance-certificate/1",
+        "status": "PROVEN",
+        "goal_id": "q1",
+        "certification_level": "MATHEMATICALLY_PROVEN",
+        "claim": "for every configuration satisfying the cited facts, ∠(BCS, ABC) = ∠(SBA) of a triangle whose shape the facts fix",
+        "free_parameters": "every parameter not constrained by the cited facts (the figure need not be unique)",
+        "non_degeneracy": [
+          "the two planes share exactly the line BC",
+          "S, A lie off BC (distinct labels of the planes)",
+          "triangle BSA has three distinct vertices"
+        ],
+        "steps": [
+          {
+            "id": "t1",
+            "rule": "RIGHT_ANGLE",
+            "premises": [
+              "p1"
+            ],
+            "conclusion": {
+              "perpendicular": [
+                [
+                  "A",
+                  "B"
+                ],
+                [
+                  "B",
+                  "C"
+                ]
+              ]
+            }
+          },
+          {
+            "id": "t2",
+            "rule": "SOURCE_LINE_PERP_PLANE",
+            "premises": [
+              "p2"
+            ],
+            "conclusion": {
+              "line_perp_plane": [
+                [
+                  "A",
+                  "S"
+                ],
+                [
+                  "A",
+                  "B",
+                  "C"
+                ]
+              ]
+            }
+          },
+          {
+            "id": "t3",
+            "rule": "PERP_PLANE_TO_LINE",
+            "premises": [
+              "t2"
+            ],
+            "conclusion": {
+              "perpendicular": [
+                [
+                  "A",
+                  "S"
+                ],
+                [
+                  "A",
+                  "B"
+                ]
+              ]
+            }
+          },
+          {
+            "id": "t5",
+            "rule": "PERP_PLANE_TO_LINE",
+            "premises": [
+              "t2"
+            ],
+            "conclusion": {
+              "perpendicular": [
+                [
+                  "A",
+                  "S"
+                ],
+                [
+                  "B",
+                  "C"
+                ]
+              ]
+            }
+          },
+          {
+            "id": "t6",
+            "rule": "PERP_TWO_LINES",
+            "premises": [
+              "t1",
+              "t5"
+            ],
+            "conclusion": {
+              "line_perp_plane": [
+                [
+                  "B",
+                  "C"
+                ],
+                [
+                  "A",
+                  "B",
+                  "S"
+                ]
+              ]
+            }
+          },
+          {
+            "id": "t7",
+            "rule": "PERP_PLANE_TO_LINE",
+            "premises": [
+              "t6"
+            ],
+            "conclusion": {
+              "perpendicular": [
+                [
+                  "B",
+                  "C"
+                ],
+                [
+                  "B",
+                  "S"
+                ]
+              ]
+            }
+          },
+          {
+            "id": "t8",
+            "rule": "PLANE_ANGLE",
+            "premises": [
+              "t7",
+              "t1"
+            ],
+            "conclusion": {
+              "angle_of_planes": [
+                [
+                  "B",
+                  "C",
+                  "S"
+                ],
+                [
+                  "A",
+                  "B",
+                  "C"
+                ]
+              ],
+              "equals_angle": [
+                "B",
+                "S",
+                "A"
+              ],
+              "intersection": [
+                "B",
+                "C"
+              ]
+            }
+          },
+          {
+            "id": "t9",
+            "rule": "TRIANGLE_SHAPE_FIXED",
+            "premises": [
+              "t3",
+              "p3"
+            ],
+            "conclusion": {
+              "triangle": [
+                "B",
+                "S",
+                "A"
+              ],
+              "by": "RIGHT_ISOSCELES_AT_A"
+            }
+          }
+        ],
+        "rules": [
+          "RIGHT_ANGLE",
+          "PERPENDICULAR_LINES",
+          "PERP_PLANE_TO_LINE",
+          "PERP_TWO_LINES",
+          "PLANE_ANGLE",
+          "TRIANGLE_SHAPE_FIXED"
+        ],
+        "independent_verification": {
+          "verified": true,
+          "failed_step": null,
+          "reason": "every step re-derived from the calls"
+        }
+      }
+    ],
+    "witnesses": [
+      {
+        "scale": "1",
+        "shape_lengths": "2",
+        "status": "SERVED",
+        "same_exact_answers": true
+      },
+      {
+        "scale": "1",
+        "shape_lengths": "5",
+        "status": "SERVED",
+        "same_exact_answers": true
+      },
+      {
+        "scale": "1",
+        "shape_lengths": "1/2",
+        "status": "SERVED",
+        "same_exact_answers": true
+      },
+      {
+        "scale": "3",
+        "shape_lengths": "1",
+        "status": "SERVED",
+        "same_exact_answers": true
+      }
+    ]
+  },
+  "independent_verifier": [
+    {
+      "verified": true,
+      "failed_step": null,
+      "reason": "every step re-derived from the calls"
+    }
+  ],
+  "not_numeric": "the proof is symbolic over labels; the witnesses (shape 2, 5, 1/2, scale 3) are regression checks only"
+}

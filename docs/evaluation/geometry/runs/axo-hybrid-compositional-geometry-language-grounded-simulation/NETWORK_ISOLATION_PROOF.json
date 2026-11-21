@@ -1,0 +1,18 @@
+{
+  "schema": "axo-v12-network-isolation-proof/1",
+  "external_ai_calls": 0,
+  "gemini_invocations": 0,
+  "silent_cloud_fallbacks": 0,
+  "browser_external_requests": 0,
+  "egress_blackhole_proxy": {
+    "port": 18999,
+    "selfcheck_ok": true,
+    "selfcheck_logged_records": 2,
+    "stack_intercepted_records": 0
+  },
+  "tcp_sampler": {
+    "heartbeats": 763,
+    "non_loopback_records": 0
+  },
+  "env_enforcement": "HYBRID_ROUTE_MODE=local-only-scoped; ALLOW_LIVE_AI=0; GEMINI_API_KEY unset; HTTP(S)_PROXY/ALL_PROXY->127.0.0.1:18999"
+}

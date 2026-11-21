@@ -1,0 +1,599 @@
+{
+ "schema": "algosim-student-confirmation-flow-receipt/1",
+ "run_id": "image-first-ocr-verified-geometry",
+ "generated_at_utc": "2026-11-10T13:43:15.565257+00:00",
+ "head_commit": "bdc07a8557277d9780bee8689567990854ad4521",
+ "product_commit": "bdc07a8557277d9780bee8689567990854ad4521",
+ "working_tree_dirty": false,
+ "measured_system_tree_hash": "6851b71826793fffbb922e0b7706e1c2a32bb2203d615c8eb0414e82b0d2c947",
+ "measured_system_file_count": 115,
+ "test_environment": {
+  "os": "Windows-11-10.0.26100-SP0",
+  "python": "3.12.10",
+  "cpu_logical_cores": 12,
+  "allow_live_ai": 0,
+  "live_gemini_calls": 0,
+  "local_ocr_python": "ocr-venv (rapidocr 3.10.0, onnxruntime 1.31.1, tesserocr 2.12.0 / tesseract 5.5.3)",
+  "tessdata": "tessdata_fast vie + eng",
+  "benchmark_tier": "HOST_BENCHMARK_OFFLINE"
+ },
+ "model_versions": {
+  "local_ocr_route": "local-ocr-route/1",
+  "reconcile": "layout-aware-ocr-reconcile/1",
+  "readers": [
+   "tesseract-vie (tessdata_fast)",
+   "rapidocr PP-OCRv6 det/rec small",
+   "rapidocr latin PP-OCRv5 rec mobile (re-read)",
+   "tesseract-eng single-line ×3 (re-read)"
+  ],
+  "vision": "NOT_CALLED (ALLOW_LIVE_AI=0)"
+ },
+ "epistemic_classification": "VERIFIED FACT",
+ "confirmation_ux_contract": {
+  "frontend_component": "frontend/src/components/PhotoProblemPanel.tsx (#photo-span-review)",
+  "state_reducer": "frontend/src/components/photo-problem-flow.ts (edit-span, confirm-span)",
+  "backend_builder": "backend/app/ingestion/local_ocr_route.py (review_items)",
+  "features": [
+   "Base64 JPEG crop preview (`.photo-span-crop`) padded by 6px around each disputed span's bounding box",
+   "1-click alternative chips (`.photo-span-alt`) from competing OCR readers and prime-drop recovery",
+   "Inline span input (`.photo-span-input`) splicing edits back into `draftText` by exact `(span_start, span_end)` offsets while shifting subsequent spans deterministically",
+   "1-click 'Đúng rồi' / 'Hình không có thêm dữ kiện' confirmation button (`.photo-span-ok`)",
+   "Hard blocker (`assistBlocker`) keeping `#btn-confirm-extracted-build` disabled until every blocking span is reviewed AND `#chk-confirm-extracted-text` is checked"
+  ]
+ },
+ "supported_printed_simulation_summary": {
+  "supported_printed_instances_requiring_confirmation": 10,
+  "solved_after_targeted_confirmation": 10,
+  "solve_rate_after_targeted_confirmation": 1.0,
+  "median_actions_per_problem": 3.0,
+  "median_text_edits_per_problem": 1.0,
+  "median_chars_typed_per_problem": 3.0,
+  "median_full_retype_chars": 179.0,
+  "median_keystroke_saving_ratio": 0.989
+ },
+ "per_case_simulation": [
+  {
+   "case_key": "ext_prt_02_hd_q_7922924",
+   "printed_or_handwritten": "PRINTED",
+   "grade": "SERVED_CORRECT",
+   "answers": {
+    "q1": "6"
+   },
+   "reason_code": null,
+   "actions": 2,
+   "edits_count": 0,
+   "edits": [],
+   "confirms": 2,
+   "diagram_confirms": 0,
+   "chars_typed": 0,
+   "full_retype_chars": 166,
+   "keystroke_saving_ratio": 1.0
+  },
+  {
+   "case_key": "ext_prt_03_hd_q_7907931#1",
+   "printed_or_handwritten": "PRINTED",
+   "grade": "SERVED_CORRECT",
+   "answers": {
+    "q1": "a√2/2"
+   },
+   "reason_code": null,
+   "actions": 3,
+   "edits_count": 1,
+   "edits": [
+    {
+     "span_id": "sp17",
+     "from": "⊥(ABCD).",
+     "to": "⊥ (ABCD).",
+     "chosen_from_alternatives": false
+    }
+   ],
+   "confirms": 2,
+   "diagram_confirms": 0,
+   "chars_typed": 9,
+   "full_retype_chars": 115,
+   "keystroke_saving_ratio": 0.9217
+  },
+  {
+   "case_key": "ext_prt_03_hd_q_7907931#2",
+   "printed_or_handwritten": "PRINTED",
+   "grade": "SERVED_CORRECT",
+   "answers": {
+    "q1": "a³/4"
+   },
+   "reason_code": null,
+   "actions": 7,
+   "edits_count": 3,
+   "edits": [
+    {
+     "span_id": "sp60",
+     "from": "N;P",
+     "to": "N; P",
+     "chosen_from_alternatives": false
+    },
+    {
+     "span_id": "sp56",
+     "from": "SA=",
+     "to": "SA =",
+     "chosen_from_alternatives": false
+    },
+    {
+     "span_id": "sp54",
+     "from": "⊥(ABC)",
+     "to": "⊥ (ABC)",
+     "chosen_from_alternatives": false
+    }
+   ],
+   "confirms": 4,
+   "diagram_confirms": 0,
+   "chars_typed": 15,
+   "full_retype_chars": 173,
+   "keystroke_saving_ratio": 0.9133
+  },
+  {
+   "case_key": "ext_prt_04_hd_q_8436784",
+   "printed_or_handwritten": "PRINTED",
+   "grade": "SERVED_CORRECT",
+   "answers": {
+    "q1": "1/2"
+   },
+   "reason_code": null,
+   "actions": 1,
+   "edits_count": 0,
+   "edits": [],
+   "confirms": 1,
+   "diagram_confirms": 0,
+   "chars_typed": 0,
+   "full_retype_chars": 266,
+   "keystroke_saving_ratio": 1.0
+  },
+  {
+   "case_key": "ext_prt_05_hd_q_7451806",
+   "printed_or_handwritten": "PRINTED",
+   "grade": "SERVED_CORRECT",
+   "answers": {
+    "q1": "6/5"
+   },
+   "reason_code": null,
+   "actions": 10,
+   "edits_count": 1,
+   "edits": [
+    {
+     "span_id": "sp73",
+     "from": "S;S2",
+     "to": "S1; S2",
+     "chosen_from_alternatives": false
+    }
+   ],
+   "confirms": 9,
+   "diagram_confirms": 0,
+   "chars_typed": 6,
+   "full_retype_chars": 391,
+   "keystroke_saving_ratio": 0.9847
+  },
+  {
+   "case_key": "ext_prt_06_hd_q_1084979",
+   "printed_or_handwritten": "PRINTED",
+   "grade": "SERVED_CORRECT",
+   "answers": {
+    "q2": "a√15/5",
+    "q1": "a³√15/4"
+   },
+   "reason_code": null,
+   "actions": 5,
+   "edits_count": 2,
+   "edits": [
+    {
+     "span_id": "sp45",
+     "from": "CC",
+     "to": "CC'",
+     "chosen_from_alternatives": true
+    },
+    {
+     "span_id": "sp18",
+     "from": "AA'=",
+     "to": "AA' =",
+     "chosen_from_alternatives": false
+    }
+   ],
+   "confirms": 3,
+   "diagram_confirms": 0,
+   "chars_typed": 5,
+   "full_retype_chars": 298,
+   "keystroke_saving_ratio": 0.9832
+  },
+  {
+   "case_key": "ext_prt_07_hd_q_7958052",
+   "printed_or_handwritten": "PRINTED",
+   "grade": "SERVED_CORRECT",
+   "answers": {
+    "q1": "4,7"
+   },
+   "reason_code": null,
+   "actions": 8,
+   "edits_count": 3,
+   "edits": [
+    {
+     "span_id": "sp39",
+     "from": "417.",
+     "to": "",
+     "chosen_from_alternatives": false
+    },
+    {
+     "span_id": "sp17",
+     "from": "A",
+     "to": "Â",
+     "chosen_from_alternatives": false
+    },
+    {
+     "span_id": "sp6",
+     "from": "t",
+     "to": "",
+     "chosen_from_alternatives": false
+    }
+   ],
+   "confirms": 5,
+   "diagram_confirms": 0,
+   "chars_typed": 1,
+   "full_retype_chars": 149,
+   "keystroke_saving_ratio": 0.9933
+  },
+  {
+   "case_key": "ext_prt_08_hd_q_7509702",
+   "printed_or_handwritten": "PRINTED",
+   "grade": "REFUSED_OR_NOT_SERVED",
+   "answers": null,
+   "reason_code": "LIVE_AI_DISABLED",
+   "actions": 11,
+   "edits_count": 6,
+   "edits": [
+    {
+     "span_id": "sp47",
+     "from": "ñn",
+     "to": "lần",
+     "chosen_from_alternatives": false
+    },
+    {
+     "span_id": "sp46",
+     "from": "M,N",
+     "to": "M, N",
+     "chosen_from_alternatives": false
+    },
+    {
+     "span_id": "sp45",
+     "from": "Ggi",
+     "to": "Gọi",
+     "chosen_from_alternatives": false
+    },
+    {
+     "span_id": "sp41",
+     "from": "11.Cho",
+     "to": "11. Cho",
+     "chosen_from_alternatives": false
+    },
+    {
+     "span_id": "sp35",
+     "from": "SA+SB+SC+SD.",
+     "to": "SA + SB + SC + SD.",
+     "chosen_from_alternatives": false
+    },
+    {
+     "span_id": "sp33",
+     "from": "0, Tỉnh",
+     "to": "O. Tính",
+     "chosen_from_alternatives": false
+    }
+   ],
+   "confirms": 4,
+   "diagram_confirms": 1,
+   "chars_typed": 42,
+   "full_retype_chars": 582,
+   "keystroke_saving_ratio": 0.9278
+  },
+  {
+   "case_key": "ext_prt_09_vmmu_page_r4",
+   "printed_or_handwritten": "PRINTED",
+   "grade": "SERVED_CORRECT",
+   "answers": {
+    "q1": "2"
+   },
+   "reason_code": null,
+   "actions": 3,
+   "edits_count": 0,
+   "edits": [],
+   "confirms": 2,
+   "diagram_confirms": 1,
+   "chars_typed": 0,
+   "full_retype_chars": 180,
+   "keystroke_saving_ratio": 1.0
+  },
+  {
+   "case_key": "ext_prt_10_vmmu_page_r7",
+   "printed_or_handwritten": "PRINTED",
+   "grade": "REFUSED_OR_NOT_SERVED",
+   "answers": null,
+   "reason_code": "LIVE_AI_DISABLED",
+   "actions": 9,
+   "edits_count": 1,
+   "edits": [
+    {
+     "span_id": "sp82",
+     "from": "(0#",
+     "to": "(như",
+     "chosen_from_alternatives": false
+    }
+   ],
+   "confirms": 8,
+   "diagram_confirms": 0,
+   "chars_typed": 4,
+   "full_retype_chars": 407,
+   "keystroke_saving_ratio": 0.9902
+  },
+  {
+   "case_key": "ext_prt_11_vmmu_page_r10",
+   "printed_or_handwritten": "PRINTED",
+   "grade": "SERVED_CORRECT",
+   "answers": {
+    "q1": "30°"
+   },
+   "reason_code": null,
+   "actions": 1,
+   "edits_count": 0,
+   "edits": [],
+   "confirms": 1,
+   "diagram_confirms": 0,
+   "chars_typed": 0,
+   "full_retype_chars": 178,
+   "keystroke_saving_ratio": 1.0
+  },
+  {
+   "case_key": "ext_prt_12_vmmu_page_r11",
+   "printed_or_handwritten": "PRINTED",
+   "grade": "SERVED_CORRECT",
+   "answers": {
+    "q1": "2√3"
+   },
+   "reason_code": null,
+   "actions": 2,
+   "edits_count": 1,
+   "edits": [
+    {
+     "span_id": "sp27",
+     "from": "12(cm2).",
+     "to": "12(cm²).",
+     "chosen_from_alternatives": false
+    }
+   ],
+   "confirms": 1,
+   "diagram_confirms": 0,
+   "chars_typed": 8,
+   "full_retype_chars": 210,
+   "keystroke_saving_ratio": 0.9619
+  },
+  {
+   "case_key": "ext_prt_13_vmmu_page_r25",
+   "printed_or_handwritten": "PRINTED",
+   "grade": "REFUSED_OR_NOT_SERVED",
+   "answers": null,
+   "reason_code": "LIVE_AI_DISABLED",
+   "actions": 4,
+   "edits_count": 1,
+   "edits": [
+    {
+     "span_id": "sp39",
+     "from": "7",
+     "to": "",
+     "chosen_from_alternatives": false
+    }
+   ],
+   "confirms": 2,
+   "diagram_confirms": 1,
+   "chars_typed": 0,
+   "full_retype_chars": 305,
+   "keystroke_saving_ratio": 1.0
+  },
+  {
+   "case_key": "ext_prt_14_vmmu_page_r26",
+   "printed_or_handwritten": "PRINTED",
+   "grade": "REFUSED_OR_NOT_SERVED",
+   "answers": null,
+   "reason_code": "LIVE_AI_DISABLED",
+   "actions": 2,
+   "edits_count": 1,
+   "edits": [
+    {
+     "span_id": "sp24",
+     "from": "cậu",
+     "to": "cầu",
+     "chosen_from_alternatives": false
+    }
+   ],
+   "confirms": 0,
+   "diagram_confirms": 1,
+   "chars_typed": 3,
+   "full_retype_chars": 347,
+   "keystroke_saving_ratio": 0.9914
+  },
+  {
+   "case_key": "ext_prt_15_vmmu_page_r28",
+   "printed_or_handwritten": "PRINTED",
+   "grade": "REFUSED_OR_NOT_SERVED",
+   "answers": null,
+   "reason_code": "LIVE_AI_DISABLED",
+   "actions": 3,
+   "edits_count": 2,
+   "edits": [
+    {
+     "span_id": "sp41",
+     "from": "40cm",
+     "to": "",
+     "chosen_from_alternatives": false
+    },
+    {
+     "span_id": "sp33",
+     "from": "20√3p",
+     "to": "20√3π",
+     "chosen_from_alternatives": false
+    }
+   ],
+   "confirms": 0,
+   "diagram_confirms": 1,
+   "chars_typed": 5,
+   "full_retype_chars": 237,
+   "keystroke_saving_ratio": 0.9789
+  },
+  {
+   "case_key": "ext_hw_b1_01_hd_a_6043187",
+   "printed_or_handwritten": "HANDWRITTEN",
+   "grade": "REFUSED_OR_NOT_SERVED",
+   "answers": null,
+   "reason_code": "LIVE_AI_DISABLED",
+   "actions": 24,
+   "edits_count": 23,
+   "edits": [
+    {
+     "span_id": "sp42",
+     "from": "thi",
+     "to": "",
+     "chosen_from_alternatives": false
+    },
+    {
+     "span_id": "sp40",
+     "from": "60°",
+     "to": "",
+     "chosen_from_alternatives": false
+    },
+    {
+     "span_id": "sp38",
+     "from": "tay",
+     "to": "",
+     "chosen_from_alternatives": false
+    },
+    {
+     "span_id": "sp37",
+     "from": ".",
+     "to": "",
+     "chosen_from_alternatives": false
+    },
+    {
+     "span_id": "sp35",
+     "from": "y8i",
+     "to": "",
+     "chosen_from_alternatives": false
+    },
+    {
+     "span_id": "sp34",
+     "from": "BC",
+     "to": "",
+     "chosen_from_alternatives": false
+    },
+    {
+     "span_id": "sp32",
+     "from": "duing",
+     "to": "",
+     "chosen_from_alternatives": false
+    },
+    {
+     "span_id": "sp31",
+     "from": "a",
+     "to": "",
+     "chosen_from_alternatives": false
+    },
+    {
+     "span_id": "sp29",
+     "from": "g",
+     "to": "",
+     "chosen_from_alternatives": false
+    },
+    {
+     "span_id": "sp28",
+     "from": "c",
+     "to": "",
+     "chosen_from_alternatives": false
+    },
+    {
+     "span_id": "sp26",
+     "from": "g",
+     "to": "",
+     "chosen_from_alternatives": false
+    },
+    {
+     "span_id": "sp24",
+     "from": "s",
+     "to": "",
+     "chosen_from_alternatives": false
+    },
+    {
+     "span_id": "sp23",
+     "from": "√",
+     "to": "",
+     "chosen_from_alternatives": false
+    },
+    {
+     "span_id": "sp21",
+     "from": "=",
+     "to": "",
+     "chosen_from_alternatives": false
+    },
+    {
+     "span_id": "sp20",
+     "from": "AC",
+     "to": "",
+     "chosen_from_alternatives": false
+    },
+    {
+     "span_id": "sp19",
+     "from": "|",
+     "to": "",
+     "chosen_from_alternatives": false
+    },
+    {
+     "span_id": "sp17",
+     "from": "=",
+     "to": "",
+     "chosen_from_alternatives": false
+    },
+    {
+     "span_id": "sp16",
+     "from": "AB",
+     "to": "",
+     "chosen_from_alternatives": false
+    },
+    {
+     "span_id": "sp15",
+     "from": "13",
+     "to": "",
+     "chosen_from_alternatives": false
+    },
+    {
+     "span_id": "sp11",
+     "from": "dam",
+     "to": "",
+     "chosen_from_alternatives": false
+    },
+    {
+     "span_id": "sp7",
+     "from": "_8Ð-",
+     "to": "có",
+     "chosen_from_alternatives": false
+    },
+    {
+     "span_id": "sp6",
+     "from": "ABCA'BC",
+     "to": "ABC.A'B'C'",
+     "chosen_from_alternatives": false
+    },
+    {
+     "span_id": "sp5",
+     "from": "đảng -",
+     "to": "đứng",
+     "chosen_from_alternatives": false
+    }
+   ],
+   "confirms": 1,
+   "diagram_confirms": 0,
+   "chars_typed": 16,
+   "full_retype_chars": 171,
+   "keystroke_saving_ratio": 0.9064
+  }
+ ]
+}

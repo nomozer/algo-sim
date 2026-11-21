@@ -1,0 +1,692 @@
+{
+  "run_id": "scene3d-causal-pedagogical-integrity",
+  "generated_at_utc": "2026-11-14T15:39:13.820636+00:00",
+  "product_commit": "a2874d273959970faa501879f4f9dbfe20c93975",
+  "measured_system": "225f4bba5a8765ccd1c12507ce6dbd0bab25d69d02263148cf94752f921e2b56",
+  "cache_version": "138",
+  "dataset_partition": "DEVELOPMENT (agent-written corpus, exposed REAL27, exposed probes); never H-1 or locked W2/W3",
+  "environment": {
+    "ALLOW_LIVE_AI": "0",
+    "HYBRID_ROUTE_MODE": "local-first",
+    "live_ai_calls": 0
+  },
+  "head": "6da2795a493d6097add56294832f0d5a7ea1ef13",
+  "schema": "algosim-scene3d-causal-run/1",
+  "start_head": "9d0949b0935888ba097d661c79ca2f792ee5490b",
+  "head_at_manifest_write": "6da2795a493d6097add56294832f0d5a7ea1ef13",
+  "branch": "feat/local-first-geometry-understanding",
+  "candidate_manifest_commit": "63456520328eeb7a02c612908358438cbd5ee134",
+  "contracts_unchanged": [
+    "geometry-fact-planner/26",
+    "geometry-functions/33",
+    "geometry-function-engine/24",
+    "angle-construction/1",
+    "target-invariance-certificate/2",
+    "output-policy/1",
+    "hybrid-route-d-simulation/4",
+    "typed-fact-next/2"
+  ],
+  "regression_gates": {
+    "backend_pytest": "PASS",
+    "frontend_test_wave": "PASS",
+    "demo_replay": "PASS",
+    "crash_audit": "PASS",
+    "docs_ia": "PASS",
+    "publication_head": "FAIL",
+    "publication_range": "PASS",
+    "freeze_verify": "PASS"
+  },
+  "regression_verdict": "INCOMPLETE_OR_FAIL",
+  "overall_verdict": "BLOCKED",
+  "overall_reason": "publication HEAD BLOCKED_PENDING_OWNER_REVIEW; FULL_RELEASE_GATE BLOCKED_GATES_REMAIN",
+  "browser_e2e": "43/43",
+  "acceptance": {
+    "text": {
+      "SERVED_MATCHES_DATASET_KEY": 9,
+      "NOT_SERVED": 15,
+      "GOAL_VISUALIZATION_READY_NUMERIC_NOT_ANSWERED": 3
+    },
+    "image": {
+      "NOT_SERVED": 20,
+      "GOAL_VISUALIZATION_READY_NUMERIC_NOT_ANSWERED": 3,
+      "SERVED_MATCHES_DATASET_KEY": 4
+    }
+  },
+  "causal_mutations": "12/12",
+  "independent_generalization": "NOT_MEASURED",
+  "h1": "NOT_MEASURED",
+  "live_ai_calls": 0,
+  "merge_push_deploy": "NOT_PERFORMED",
+  "report": "AXO_SCENE3D_CAUSAL_PEDAGOGICAL_INTEGRITY_REPORT.md",
+  "hash_policy": "SHA-256 LF-normalised; excludes run.json",
+  "artifacts": {
+    "auxiliary_construction_verification.json": {
+      "sha256_lf": "d10b9bd0ce874869f3eb4ccb4574156284eeae5be3277dea37b2662555eb12c7",
+      "bytes_lf": 1209
+    },
+    "AXO_SCENE3D_CAUSAL_PEDAGOGICAL_INTEGRITY_REPORT.md": {
+      "sha256_lf": "2aadaeedf8cbdb0bad09b459428a3bdec6d7720d5bc848f4a5cd0a5806224084",
+      "bytes_lf": 15315
+    },
+    "baseline_candidate_integrity.json": {
+      "sha256_lf": "0b628f8593c52a6d39b0b4ed382b8888ffa8478a8c19b8d9f65ec2974de6058b",
+      "bytes_lf": 1119
+    },
+    "browser_construction_timeline.json": {
+      "sha256_lf": "a5637d9e8a22781f2abecaa18c189741a40848e35195cb9593858e790bc7f6fc",
+      "bytes_lf": 92362
+    },
+    "browser_performance_profile.json": {
+      "sha256_lf": "07253d65c7bffd2b5e9bdd5588b2b28fcb2833cb6438e42b70ab765c674be23c",
+      "bytes_lf": 15043
+    },
+    "cache_identity_verification.json": {
+      "sha256_lf": "389eae9cced3e3dfa1d968a10276ada17e0a0bd2d54ef86a712f59c34e4a3d09",
+      "bytes_lf": 1254
+    },
+    "candidate_freeze.json": {
+      "sha256_lf": "96d92097836bc6ddf46f7bdc2a06bbc30343dbd9808f122ca915fb647ee07ded",
+      "bytes_lf": 1174
+    },
+    "catalog_fixture_provenance.json": {
+      "sha256_lf": "20a0f8c8cb672634afab18cfd362497112350ee175bec55cafeb5781ef973df7",
+      "bytes_lf": 16645
+    },
+    "catalog_regeneration_diff.json": {
+      "sha256_lf": "ca7bf0f196af3e2f1f042ebc8f94fa40b0501acb56ed9dc85fd1f63408f90a09",
+      "bytes_lf": 3522
+    },
+    "causal_birth_order_before_after.json": {
+      "sha256_lf": "52a230a52c9684c31b937bb301da4d69040572c0c8c2bd4f021d6e3dd4078f69",
+      "bytes_lf": 1305
+    },
+    "causal_mutation_tests.json": {
+      "sha256_lf": "60f60d7c5e089465e24d2bb3a672292670ac85ae3980001833149a65dee91c2e",
+      "bytes_lf": 2357
+    },
+    "circumsphere_hidden_dependency_audit.json": {
+      "sha256_lf": "fa43257dc08ad44b3c7fad3a57d3c66a0b5aa0c1ba40cd944f1035975fceacbc",
+      "bytes_lf": 1555
+    },
+    "coincident_elements_timeline_verification.json": {
+      "sha256_lf": "7716ac92e7e194e2414b0fbea9a690cddb398a440d4a167cb0a73a77b4c7717f",
+      "bytes_lf": 1578
+    },
+    "dependency_semantics_audit.json": {
+      "sha256_lf": "f372c6191b514e6fe3a04650d63125177be928dec1daac70ba2ebfc2b156c22c",
+      "bytes_lf": 1614
+    },
+    "fixtures-causal-pedagogical/gate-body-invalid.json": {
+      "sha256_lf": "f761381880d7e20227a1c1f2b9d41522bd5f2aafac0ca00eeaab20a50c646af9",
+      "bytes_lf": 1320
+    },
+    "fixtures-causal-pedagogical/gate-disabled.json": {
+      "sha256_lf": "bc9a483206fb1e4344d8d680166232a0b151a7cd38f369b633e88f01d64e77ef",
+      "bytes_lf": 1303
+    },
+    "fixtures-causal-pedagogical/gate-fixture-missing.json": {
+      "sha256_lf": "e984f036f842e26f9bf93daf30236cc8d294bb521c08334f8a0eccd01e2a2983",
+      "bytes_lf": 1394
+    },
+    "fixtures-causal-pedagogical/gate-forbidden.json": {
+      "sha256_lf": "2cc82e3090d97f90b79062f2fa0cd73b91bb0b311fb273ec3b9103ab52438f42",
+      "bytes_lf": 1321
+    },
+    "fixtures-causal-pedagogical/manifest.json": {
+      "sha256_lf": "7b3a9604b9745c70a3b6f6a72f9450c6a8bbd8dc9172228bc0fd590e989b3d9c",
+      "bytes_lf": 21123
+    },
+    "fixtures-causal-pedagogical/refusal-capability-conditional.json": {
+      "sha256_lf": "8dc42245097ca4840e27dc37feb3bcf0e60584b24ca581767cd015365a764158",
+      "bytes_lf": 3807
+    },
+    "fixtures-causal-pedagogical/refusal-capability-escape-unsupported.json": {
+      "sha256_lf": "2b808813a8ffc8f8d9ae329e2481151d0153b5af7bbd65553880bf9eb911aca3",
+      "bytes_lf": 3778
+    },
+    "fixtures-causal-pedagogical/refusal-capability-negated-question.json": {
+      "sha256_lf": "370f89b1747adea82457122e14565d54bbf9557e863453943224d3d6a40981c5",
+      "bytes_lf": 3827
+    },
+    "fixtures-causal-pedagogical/refusal-capability-unsupported.json": {
+      "sha256_lf": "0282e59542f67ed7ec4be4024a204c350db8b66a43f5111b56cf0358f30d8a61",
+      "bytes_lf": 3932
+    },
+    "fixtures-causal-pedagogical/refusal-extraction-fact-incomplete.json": {
+      "sha256_lf": "d1eb06cbabf142142def471991d7c4fc5b2d92d94e5e9e648ba5803905a3765e",
+      "bytes_lf": 3793
+    },
+    "fixtures-causal-pedagogical/refusal-extraction-not-json.json": {
+      "sha256_lf": "8ebf1e1c41c6f9f704e07a8d0983a0512208df266c9cba4ba134638b3356b74d",
+      "bytes_lf": 2736
+    },
+    "fixtures-causal-pedagogical/refusal-inconclusive-figure.json": {
+      "sha256_lf": "77ea1df9ca8fd80a0e779ce327a239d5fbca9cf3447a5a2a85c348e7a94daf76",
+      "bytes_lf": 3786
+    },
+    "fixtures-causal-pedagogical/refusal-inconclusive-negated.json": {
+      "sha256_lf": "18e0580b07d6d05bc1d38d63293349dc0ba56220d422ae917669185546c9759f",
+      "bytes_lf": 4830
+    },
+    "fixtures-causal-pedagogical/refusal-inconclusive-proof-only.json": {
+      "sha256_lf": "27db58d7fb28080beef35827cc0e7c2beb649eb1fe5c5f2b7247ef847cdd1eb6",
+      "bytes_lf": 4585
+    },
+    "fixtures-causal-pedagogical/refusal-integrity-identity.json": {
+      "sha256_lf": "1c662867597ecb054d057eef7ccefecc36293d38f89ef45e9c1a34e277bbc0d1",
+      "bytes_lf": 4615
+    },
+    "fixtures-causal-pedagogical/refusal-integrity-proof-status.json": {
+      "sha256_lf": "9ffcd22dbb8a735739ce5981607195ed4f61d2bec481fc4e6820560871b5785b",
+      "bytes_lf": 4615
+    },
+    "fixtures-causal-pedagogical/refusal-integrity-surface.json": {
+      "sha256_lf": "3e23f58f81421d287ff47f68a2f5d6672153c9468f8a80907d25ce98417ad6b1",
+      "bytes_lf": 4595
+    },
+    "fixtures-causal-pedagogical/refusal-invalid-collinear.json": {
+      "sha256_lf": "11024036d930544e5e2797d292ef49d228b9f8d1c13aa2403823fe67509107df",
+      "bytes_lf": 3957
+    },
+    "fixtures-causal-pedagogical/refusal-invalid-contradiction.json": {
+      "sha256_lf": "4b3df494ed7b43f3c7375be7a41250bcdd8a18ee0fca45865c09ca5f9a5956d6",
+      "bytes_lf": 3779
+    },
+    "fixtures-causal-pedagogical/refusal-invalid-zero-length.json": {
+      "sha256_lf": "0eb9e4fa15a926a260559a579d04531c8378c7baf9a99f6e5ce6b4f5d2269d63",
+      "bytes_lf": 3648
+    },
+    "fixtures-causal-pedagogical/refusal-invalid-zero-not-in-text.json": {
+      "sha256_lf": "d04a99aa8b75726c45bfb068ed68ad95cb4cbdcf48b7608ee44982b240a0c190",
+      "bytes_lf": 3624
+    },
+    "fixtures-causal-pedagogical/refusal-missing-ambiguous.json": {
+      "sha256_lf": "106fa51c6b0c42263371dda5a8b21d45f03c836418cf7b786bcc435182cb32a2",
+      "bytes_lf": 3967
+    },
+    "fixtures-causal-pedagogical/refusal-missing-dimension.json": {
+      "sha256_lf": "94952da6e7600ac8bd4b5f27d0f440c1799fc6923bfff23401c633caf569024c",
+      "bytes_lf": 3808
+    },
+    "fixtures-causal-pedagogical/refusal-missing-underdetermined.json": {
+      "sha256_lf": "6930f9925999d834a90f7018aed399539a6b036953a413ff3ddb77fff3042175",
+      "bytes_lf": 3817
+    },
+    "fixtures-causal-pedagogical/refusal-result-engine-self-check.json": {
+      "sha256_lf": "af5bbc44cfb60a83deebd93928adb72c9bef3b1e60f20efac7a9e011ab70cf7c",
+      "bytes_lf": 3977
+    },
+    "fixtures-causal-pedagogical/refusal-result-kernel-check.json": {
+      "sha256_lf": "2ad567ced206ffcef1e47ec1fe2d430df8d71d7e69e7dd63c5dc56b7fb1382ce",
+      "bytes_lf": 4568
+    },
+    "fixtures-causal-pedagogical/refusal-result-scene-metric.json": {
+      "sha256_lf": "59526390f6476411ff1fd2c866a5498061b7937b67906dc1d61f22fb38caf444",
+      "bytes_lf": 4564
+    },
+    "fixtures-causal-pedagogical/refusal-source-goal-as-premise.json": {
+      "sha256_lf": "6cfa3e189c20dc4333473546bfa02ca8053e1f86ef46c4479c3c78c9c0943deb",
+      "bytes_lf": 3747
+    },
+    "fixtures-causal-pedagogical/refusal-source-object-mismatch.json": {
+      "sha256_lf": "dfd4eaebdb57453613b8d7d88a505867c675156f5320294be3a577017914caff",
+      "bytes_lf": 3797
+    },
+    "fixtures-causal-pedagogical/refusal-source-request-unanswered.json": {
+      "sha256_lf": "58b41914d30012c900cf0d78f57a540010b30769bcd08ee39bb6f5a45cfe2fda",
+      "bytes_lf": 3971
+    },
+    "fixtures-causal-pedagogical/served-H01_CUBE.json": {
+      "sha256_lf": "49d5b637b0174fd407f7fc9e22b9577613478f511b7469265c963b461ba9826a",
+      "bytes_lf": 81020
+    },
+    "fixtures-causal-pedagogical/served-H02_CUBOID_DISTANCE.json": {
+      "sha256_lf": "f9b771048caef163dc25823512a891bc00d9230284d7034270b1a60c6e07a17e",
+      "bytes_lf": 88135
+    },
+    "fixtures-causal-pedagogical/served-H03_REGULAR_SQUARE_PYRAMID_ROLE_LENGTHS.json": {
+      "sha256_lf": "05c7cd72006322a667a2018a884552b87c6913784d8c798fb95319e50fca1f4e",
+      "bytes_lf": 70876
+    },
+    "fixtures-causal-pedagogical/served-H07_PROOF_GOAL_NOT_PREMISE_BUT_CHECKED.json": {
+      "sha256_lf": "0712df01a13fa6240841ac401f35db3b602c38c1632e5ef9470dc264901b01f8",
+      "bytes_lf": 48953
+    },
+    "fixtures-causal-pedagogical/served-H11_SKEW_DISTANCE_COMPOSITION.json": {
+      "sha256_lf": "88cffb187f3be07cdb5eb0c8c72f9659bfdbbadabb22f3bb39d754f7af72ec73",
+      "bytes_lf": 80525
+    },
+    "fixtures-causal-pedagogical/served-H12_PROJECTION_MIDPOINT_ANGLE.json": {
+      "sha256_lf": "911e71082b4c7a5791db5a138e140f6b582e80278f9257db85f30e66e573f3fa",
+      "bytes_lf": 74170
+    },
+    "fixtures-causal-pedagogical/served-H14_REGULAR_TETRAHEDRON.json": {
+      "sha256_lf": "1ab51dc86931b55ef5e80473649ef881c060989c613f802c6a0fd8fe9833b49f",
+      "bytes_lf": 31952
+    },
+    "fixtures-causal-pedagogical/served-intersection-SAB-SCD.json": {
+      "sha256_lf": "7160a1bb6b49d4aa003a50b9b0a3bfa0baf6a4b31c2e1d3ede52928caf194c87",
+      "bytes_lf": 60791
+    },
+    "fixtures-causal-pedagogical/served-pyramid-midpoint-area-AB.json": {
+      "sha256_lf": "c19d917561893f9e530806db358195954ff2ca89128451ac9532718dc3137cba",
+      "bytes_lf": 63688
+    },
+    "fixtures-causal-pedagogical/served-pyramid-projection-and-unnamed-midpoint-area.json": {
+      "sha256_lf": "d8b0dee043ce2c9e97c8aa811ab3543563427099d1421f99804ff2d7b71c05d4",
+      "bytes_lf": 74806
+    },
+    "fixtures-causal-pedagogical/served-pyramid-shared-midpoint-area-and-distance.json": {
+      "sha256_lf": "91e508f9486f015dbe65dec137bd4f81dcd0a824e1666daeeef7719932543df3",
+      "bytes_lf": 77323
+    },
+    "fixtures-causal-pedagogical/served-section-MAB-trapezoid.json": {
+      "sha256_lf": "91934fbb23994096cf4a5fa32bdf9819c93e3514ddec2545afb16bb6a5861c76",
+      "bytes_lf": 82893
+    },
+    "fixtures-trace-method/gate-body-invalid.json": {
+      "sha256_lf": "b645bc0cabea09e30d996d6c264303e65285125a48bc1ce375d64060a46025c4",
+      "bytes_lf": 1320
+    },
+    "fixtures-trace-method/gate-disabled.json": {
+      "sha256_lf": "91fe2f20e55b87b69c0797fb872254f917ca90e458aa43c110bcad5384cd5812",
+      "bytes_lf": 1303
+    },
+    "fixtures-trace-method/gate-fixture-missing.json": {
+      "sha256_lf": "f56d811e1a6b2e8ed0b8143c6c9196b76f5b5856c42260494503003d27eb3a48",
+      "bytes_lf": 1394
+    },
+    "fixtures-trace-method/gate-forbidden.json": {
+      "sha256_lf": "0530d4c1870ce342d00f8b9b8fc0fafa3b16830037ee644f765c2d59f875023e",
+      "bytes_lf": 1321
+    },
+    "fixtures-trace-method/manifest.json": {
+      "sha256_lf": "dbf1ac828cdc82642fde6ff86baeaaae254a0c6ceb1756544c377bf1ea547e85",
+      "bytes_lf": 21123
+    },
+    "fixtures-trace-method/refusal-capability-conditional.json": {
+      "sha256_lf": "92c5a0474d7f86b9f7837fff1362d82aff48ddcaac35b91dd7ff2901c8cbc85f",
+      "bytes_lf": 3807
+    },
+    "fixtures-trace-method/refusal-capability-escape-unsupported.json": {
+      "sha256_lf": "20248d01807937ebb757e9a1fd395b0d6003756ef8f1f885801e8d6de9360160",
+      "bytes_lf": 3778
+    },
+    "fixtures-trace-method/refusal-capability-negated-question.json": {
+      "sha256_lf": "f94f6c36d6d172171df80b25a8e9838a4f4344fb35345bd326a9af4805e6bc23",
+      "bytes_lf": 3827
+    },
+    "fixtures-trace-method/refusal-capability-unsupported.json": {
+      "sha256_lf": "f51c79da16a08e3b1ad78683d3acd2488eb5c4cac60603452d4fc5ec32ffe109",
+      "bytes_lf": 3932
+    },
+    "fixtures-trace-method/refusal-extraction-fact-incomplete.json": {
+      "sha256_lf": "df2f891882807277144105de8f8dbb0ccbeadc44e44b4f990fba0c30a3905fa0",
+      "bytes_lf": 3793
+    },
+    "fixtures-trace-method/refusal-extraction-not-json.json": {
+      "sha256_lf": "fda3f6b6e19a597d88e1288620873786a762361aee976ab4d12b82568864a2b1",
+      "bytes_lf": 2736
+    },
+    "fixtures-trace-method/refusal-inconclusive-figure.json": {
+      "sha256_lf": "4490d88186ab23d18f727c79f5410624b0524e6384a36a586c02c1f78106ccff",
+      "bytes_lf": 3786
+    },
+    "fixtures-trace-method/refusal-inconclusive-negated.json": {
+      "sha256_lf": "7892dd891264b114e953537da7ddb6aeb1653ab5bc25f48126729113c5338caf",
+      "bytes_lf": 4830
+    },
+    "fixtures-trace-method/refusal-inconclusive-proof-only.json": {
+      "sha256_lf": "4fd4b300322198072bb7f67b04a2b0a729fa653b61ddc0016c66d0bb8cdebf8f",
+      "bytes_lf": 4585
+    },
+    "fixtures-trace-method/refusal-integrity-identity.json": {
+      "sha256_lf": "4df9a992c35f40ad84da9b5432164a3649aa5677927f9f94ac10e288efd89734",
+      "bytes_lf": 4615
+    },
+    "fixtures-trace-method/refusal-integrity-proof-status.json": {
+      "sha256_lf": "ee90ddb8b43a738a626c2fb7256a889d677adfd93747a6484b77b538ab901bd2",
+      "bytes_lf": 4615
+    },
+    "fixtures-trace-method/refusal-integrity-surface.json": {
+      "sha256_lf": "d2e2c7111f4df585e291e218fa63c282835e12d6ea4371da99f0217b691a7ba7",
+      "bytes_lf": 4595
+    },
+    "fixtures-trace-method/refusal-invalid-collinear.json": {
+      "sha256_lf": "292a51fcb1e02b65d76988dd659330b8e37163d1ce245ab6b99eab5895ef5fe2",
+      "bytes_lf": 3957
+    },
+    "fixtures-trace-method/refusal-invalid-contradiction.json": {
+      "sha256_lf": "cd45295d40dc371c6302f6bf1e65ebfb51c1ca5b55d36d2066a465885539bb9b",
+      "bytes_lf": 3779
+    },
+    "fixtures-trace-method/refusal-invalid-zero-length.json": {
+      "sha256_lf": "230a69531ce13ac584750c56e98a45c17bfb5b9bb7ea0619f99f55766b64a1d0",
+      "bytes_lf": 3648
+    },
+    "fixtures-trace-method/refusal-invalid-zero-not-in-text.json": {
+      "sha256_lf": "cd6192e28f560f7226fb192634d0ea2409bd5e33e08bc974d525777e97f7fc99",
+      "bytes_lf": 3624
+    },
+    "fixtures-trace-method/refusal-missing-ambiguous.json": {
+      "sha256_lf": "7b5d8b048fe03a08c104d57604ec5531f52fd378dd1d6ecbde3329f5a08705ac",
+      "bytes_lf": 3967
+    },
+    "fixtures-trace-method/refusal-missing-dimension.json": {
+      "sha256_lf": "d25fd26b147879d57fc10c1f07488fdd46f933fede0b9026ef557615b5b5b1a6",
+      "bytes_lf": 3808
+    },
+    "fixtures-trace-method/refusal-missing-underdetermined.json": {
+      "sha256_lf": "719e2605971fee89326e099d5e82e2dc4aac4fafb60a0e9e88239ed95a64540b",
+      "bytes_lf": 3817
+    },
+    "fixtures-trace-method/refusal-result-engine-self-check.json": {
+      "sha256_lf": "2cab51158f26acb3b8e859343b3dc01c610089bab0772b34ed7994c4a842ac97",
+      "bytes_lf": 3977
+    },
+    "fixtures-trace-method/refusal-result-kernel-check.json": {
+      "sha256_lf": "109c0056ccf9f7440053d82252d0e6b91bfc957c9f562ef7c3d2ff85bbaef63c",
+      "bytes_lf": 4568
+    },
+    "fixtures-trace-method/refusal-result-scene-metric.json": {
+      "sha256_lf": "fcea52045fba2f4947a21f65e2eeba26bed6caba5aec70fba087270dba6383bf",
+      "bytes_lf": 4564
+    },
+    "fixtures-trace-method/refusal-source-goal-as-premise.json": {
+      "sha256_lf": "652c3ff3ef630e467d1967874db96049d365c5b9397f281dc58d673645d44781",
+      "bytes_lf": 3747
+    },
+    "fixtures-trace-method/refusal-source-object-mismatch.json": {
+      "sha256_lf": "6a1c3cf5d9882f138d055c3a7a742891379b40376e721f960fa1c5451ffffe54",
+      "bytes_lf": 3797
+    },
+    "fixtures-trace-method/refusal-source-request-unanswered.json": {
+      "sha256_lf": "3d4063731fa2738a7edd423fd654ee11d80becb2e319b4d9d1bbd07ffba4af1f",
+      "bytes_lf": 3971
+    },
+    "fixtures-trace-method/served-H01_CUBE.json": {
+      "sha256_lf": "2b55c09c9d54858b30f04458d6b16ab1a2a91d97d73e87ad0ad69b5737d0db5f",
+      "bytes_lf": 81020
+    },
+    "fixtures-trace-method/served-H02_CUBOID_DISTANCE.json": {
+      "sha256_lf": "31ef95cb39dee50302fa9cb241ec138ee6bb6c422e7bcb0b141fc88fc33a5e00",
+      "bytes_lf": 88135
+    },
+    "fixtures-trace-method/served-H03_REGULAR_SQUARE_PYRAMID_ROLE_LENGTHS.json": {
+      "sha256_lf": "96e9f55f111e9d2b072fdb3b7dfba34770be43c5a5460b5743f4d79736e76132",
+      "bytes_lf": 70876
+    },
+    "fixtures-trace-method/served-H07_PROOF_GOAL_NOT_PREMISE_BUT_CHECKED.json": {
+      "sha256_lf": "025403de85080cd34d7ae42d288f671f206d11c646040cb75bfce777c736b78f",
+      "bytes_lf": 48953
+    },
+    "fixtures-trace-method/served-H11_SKEW_DISTANCE_COMPOSITION.json": {
+      "sha256_lf": "6566bf3f07409b97828f593f8f8c5166f1bcc044392be6ec250d6d1329ad9358",
+      "bytes_lf": 80525
+    },
+    "fixtures-trace-method/served-H12_PROJECTION_MIDPOINT_ANGLE.json": {
+      "sha256_lf": "b7a1ce0d3cada1d53037dd54d16e58ed5e1de6fd1d942d8af3bfaa5959e8f3e7",
+      "bytes_lf": 74170
+    },
+    "fixtures-trace-method/served-H14_REGULAR_TETRAHEDRON.json": {
+      "sha256_lf": "66f79a3fab86b67108cc148731b89c44cf0416e6ec23abcdc894a6a63ef551e6",
+      "bytes_lf": 31952
+    },
+    "fixtures-trace-method/served-intersection-SAB-SCD.json": {
+      "sha256_lf": "bcb93c44694a1bb004b04ae74e0ddd863f5157a95f4b24ee86ebf1c27a07a4b1",
+      "bytes_lf": 60791
+    },
+    "fixtures-trace-method/served-pyramid-midpoint-area-AB.json": {
+      "sha256_lf": "565e3db25b287298740f9238a9464172bde261cfcf0cbb8ae72a98caa3a5df4a",
+      "bytes_lf": 63688
+    },
+    "fixtures-trace-method/served-pyramid-projection-and-unnamed-midpoint-area.json": {
+      "sha256_lf": "2a68a3dbab7f4af7e15f6dc4c62474722d239ddec29e1dd7b275d50e9f3dd8d6",
+      "bytes_lf": 74806
+    },
+    "fixtures-trace-method/served-pyramid-shared-midpoint-area-and-distance.json": {
+      "sha256_lf": "e79b5ffedf78bc033ec2fe8c62a9a1aeba8878dde23e26998fa0eb6dba7eca70",
+      "bytes_lf": 77323
+    },
+    "fixtures-trace-method/served-section-MAB-trapezoid.json": {
+      "sha256_lf": "1929f1ef5b23d9bc99e898858b6ce956acdea1a6d7149793927ad2920e295490",
+      "bytes_lf": 85080
+    },
+    "frontend_handoff_status.json": {
+      "sha256_lf": "d579db3c26cfb0ca5ed11fd427a5df5a6eb2f9d323f7151895904188f7fd88f8",
+      "bytes_lf": 1833
+    },
+    "full_regression_summary.json": {
+      "sha256_lf": "5a6acc35b0cca465df7354f28303f0ef6660e1709f6c556213fb65123af0a19b",
+      "bytes_lf": 21299
+    },
+    "global_scene_causality_audit.json": {
+      "sha256_lf": "1f567bef7a96112061025982e9e6e4b24db5d9e55368b1572af1fe979835811e",
+      "bytes_lf": 1396
+    },
+    "historical_envelope_compatibility.json": {
+      "sha256_lf": "a359a9e8add1e3d2cc8908300f3509f06db3edb049ac853961b3c629438dcfca",
+      "bytes_lf": 1309
+    },
+    "holdout_protection_audit.json": {
+      "sha256_lf": "64ece154c94bee2ca0098f3322b9419f187e0a30ce4631ae5670b6dfcc56b9b9",
+      "bytes_lf": 1089
+    },
+    "line_plane_euclidean_trace_audit.json": {
+      "sha256_lf": "75f4efad9171e1248b40b37761d6cd0c719ba513313c6f90247c5297e652a7c1",
+      "bytes_lf": 1790
+    },
+    "local_image_to_simulation_acceptance.json": {
+      "sha256_lf": "95b63e99b43902e35012ef0bc8d36a3773722dd19706218caff9080f772e4634",
+      "bytes_lf": 20546
+    },
+    "local_text_to_simulation_acceptance.json": {
+      "sha256_lf": "a431e3acd6a2011cac9d2bbd729545b59773beb6d2777fd9817da2fb5a36920a",
+      "bytes_lf": 13090
+    },
+    "logs/e2e-first-attempt/browser_construction_timeline.json": {
+      "sha256_lf": "a5955b8fbbe0ef2063a5c7cb47dab0dcfb527db79763e5bdda8a1478aacfa917",
+      "bytes_lf": 78289
+    },
+    "logs/e2e-first-attempt/browser_performance_profile.json": {
+      "sha256_lf": "3a516e045830b7741a3c18bc63df29bad65b199ce1000b494706184df259c16c",
+      "bytes_lf": 14995
+    },
+    "logs/e2e-first-attempt/resource_cleanup_audit.json": {
+      "sha256_lf": "b55f941b7a43805ed804385c2c045e42a655baeb67d218d3f81a13130aa6d6d2",
+      "bytes_lf": 4090
+    },
+    "logs/e2e-first-attempt/scene3d_browser_e2e.json": {
+      "sha256_lf": "669d709082acba0f5ece9731cc037fdcd80e32285050108ee64400dab0290ae3",
+      "bytes_lf": 78598
+    },
+    "logs/e2e-second-attempt/browser_construction_timeline.json": {
+      "sha256_lf": "b7f24bbcf753eb64ec0ba3b617ba3af2cbf336b4f5fa264fd7ce6c90572b0691",
+      "bytes_lf": 78383
+    },
+    "logs/e2e-second-attempt/browser_performance_profile.json": {
+      "sha256_lf": "8774b6711d7d95ae87ab3d27ca46b7c1b2b8abfd320aff09cb188a3e08c23196",
+      "bytes_lf": 15129
+    },
+    "logs/e2e-second-attempt/resource_cleanup_audit.json": {
+      "sha256_lf": "951a9f8e1254c37068e689daf5ef3ca26788e10dae4a5eceddb3f2bf4d2dd3c3",
+      "bytes_lf": 4087
+    },
+    "logs/e2e-second-attempt/scene3d_browser_e2e.json": {
+      "sha256_lf": "c5c37dfdaa4d6065a7e9859800dd3613e610d35f3b02714d09834c6fca0a9d1b",
+      "bytes_lf": 78649
+    },
+    "logs/final-backend_pytest.json": {
+      "sha256_lf": "de96a28f4ceedf64ec89750aaae031e991e2846c70619e3ed70be9876b936890",
+      "bytes_lf": 2260
+    },
+    "logs/final-crash_audit.json": {
+      "sha256_lf": "1ded2278d8237e5f5a3b3e864a119e010ea8e732bfb557f0f769b3e3223a3b9e",
+      "bytes_lf": 2055
+    },
+    "logs/final-demo_replay.json": {
+      "sha256_lf": "17db4badface956c4bbfd30c265c87c612617b3f01534dccfcaccb48a1d4d948",
+      "bytes_lf": 2100
+    },
+    "logs/final-docs_ia.json": {
+      "sha256_lf": "aad5b10612db4145090080d2cc2d1e1813cafc0594c169d5e78fdfb2c864bd06",
+      "bytes_lf": 2121
+    },
+    "logs/final-freeze_verify.json": {
+      "sha256_lf": "5d28cd0045e2d83ea6b679129fdf190f8be21a3327a89d7ac6d12a5181a44f90",
+      "bytes_lf": 2143
+    },
+    "logs/final-frontend_test_wave.json": {
+      "sha256_lf": "949a5fa0eee41cc1e793cc8bd4a89908be04cfcfa5d73f224741dcbf5ad6216e",
+      "bytes_lf": 2102
+    },
+    "logs/final-publication_head.json": {
+      "sha256_lf": "61851f567527a0540b1958490fd2b110cdf32926a953a6f39c54ccb95b3df9c4",
+      "bytes_lf": 2132
+    },
+    "logs/final-publication_range.json": {
+      "sha256_lf": "24854a2cf1baf2ef7e9e2af07f71f5c6859910dd538024b1196851b41013b9eb",
+      "bytes_lf": 2226
+    },
+    "logs/fixture_bundle_supersession.json": {
+      "sha256_lf": "d528cff7a372599f205aa716599ef08e4930821c932d0b31a6e0be588d6def9b",
+      "bytes_lf": 624
+    },
+    "logs/fixture_bundle_supersession_trace.json": {
+      "sha256_lf": "9b5a07230d809fef264705064e91487397080683a324c56dab9d32d065afc2e4",
+      "bytes_lf": 793
+    },
+    "logs/prior-k1-owner-approval.template.json": {
+      "sha256_lf": "9dc81469e0b56cad01215e0b0ef411a0084f0b0b605f71e017ff9df8f19d649a",
+      "bytes_lf": 782
+    },
+    "logs/prior-r1-owner-approval.template.json": {
+      "sha256_lf": "b8260a54d21263a931a99916b3f4367ee85f36cc906eea07350b4269ac0d200b",
+      "bytes_lf": 782
+    },
+    "logs/prior-s2-owner-approval.template.json": {
+      "sha256_lf": "f8d23df1142985f5a1c38e902393845279e95fc4ab7ffa4a7a311c3585516fc0",
+      "bytes_lf": 782
+    },
+    "logs/scene_sweep_after.json": {
+      "sha256_lf": "e7611c340c01ae4590cf3b78c3d916b465fb0d880b3285d4f376d9dc39c7a6d2",
+      "bytes_lf": 194722
+    },
+    "logs/scene_sweep_before.json": {
+      "sha256_lf": "85f09c8b639f9c71d092d9b844783a872ab40e25959971e4eed808836471ca06",
+      "bytes_lf": 190961
+    },
+    "measure_explanation_before_after.json": {
+      "sha256_lf": "b10e158bde38c1dbfe363042c1fc68aa159f7dc062be318920fcaa438d005cf3",
+      "bytes_lf": 1401
+    },
+    "measure_source_provenance.json": {
+      "sha256_lf": "effb987cf81349373df0e2190141696d617eaacef70436097d85cbd08d5038e1",
+      "bytes_lf": 1022
+    },
+    "orphan_object_classification.json": {
+      "sha256_lf": "5309306f9b5c2e2ed3e933e6ff9aaec9ab8855fe73a1408dc308cd2d87262f5a",
+      "bytes_lf": 1383
+    },
+    "pending_template_refresh.json": {
+      "sha256_lf": "156eaebd18f00f9abac0f9c98eaa5670f0b2776edc9b6fb8f3500ef2ec2e6a67",
+      "bytes_lf": 3300
+    },
+    "performance_impact.json": {
+      "sha256_lf": "3ad3187e9715dee14e3f51c70310e745329ad1765c1ad2284254231b3a384446",
+      "bytes_lf": 39490
+    },
+    "proof_to_scene_binding_regression.json": {
+      "sha256_lf": "a476c5fc4bbb964aa679d946906da8d6179ecc2dc4a41fad7d61d7b548e83295",
+      "bytes_lf": 938
+    },
+    "publication_gate_status.json": {
+      "sha256_lf": "c978e52c9be86f8cd88b834e6df1988bf47fac427ecb166b6c5a4fbc751360dd",
+      "bytes_lf": 1281
+    },
+    "resource_cleanup_audit.json": {
+      "sha256_lf": "ec1b7407a17078e88c743303c2e7476892d64aeecc5598fd3b884fd65ec03892",
+      "bytes_lf": 5520
+    },
+    "right_angle_visualization_verification.json": {
+      "sha256_lf": "43ab0e36980cfa2ade3ca39026b8e07234e21964d9f2da13aa1e529ba99ec619",
+      "bytes_lf": 1753
+    },
+    "scene3d_browser_e2e.json": {
+      "sha256_lf": "87d6efba9b9e795b2823e0a3b2d56736d39d4e7293a2fc12696a69204e81a48c",
+      "bytes_lf": 92788
+    },
+    "scene_event_producer_inventory.json": {
+      "sha256_lf": "0dae43c22a9309367f736d3ba64a4cb0a2ef71ae61585458673301588a8e3a16",
+      "bytes_lf": 1736
+    },
+    "section_geometry_regression.json": {
+      "sha256_lf": "826ab81e9859bad5b7baf6384ee9ffed74e2d24a09f8f7d751f77fbb0e6ddc9c",
+      "bytes_lf": 4808
+    },
+    "semantic_compare_rows.json": {
+      "sha256_lf": "afeac0d06503c541844dc3b115831ebb4b2598963dc8b23519ab434729bfbd1a",
+      "bytes_lf": 362123
+    },
+    "tools/acceptance.py": {
+      "sha256_lf": "90fec8e50192a6089439819523792529ad8849c7baf5d6908e683d19ecdaa833",
+      "bytes_lf": 2569
+    },
+    "tools/catalog_regeneration.py": {
+      "sha256_lf": "75d1709ab98340803139bacee9aca226d22586c6b63ff88376b94bb24233cff3",
+      "bytes_lf": 4216
+    },
+    "tools/causal_audit.py": {
+      "sha256_lf": "878df7b25318c4ddf80b2618bc7c3b7ee8e4827b0a9cdb4bbd4049fc3729a2a2",
+      "bytes_lf": 8341
+    },
+    "tools/causal_mutations.py": {
+      "sha256_lf": "0080d8ba937be5e93f6a980731c1bc3f357d41a20ec1825f599ccbaf9e2808f0",
+      "bytes_lf": 6536
+    },
+    "tools/compositional_dev_corpus.py": {
+      "sha256_lf": "9806dd480159e992b309b9c9f4bbb671554fa86f839a5e8ff4798570586e2937",
+      "bytes_lf": 22588
+    },
+    "tools/derived_receipts.py": {
+      "sha256_lf": "43cfc000d42705188a5812214a645a65995cee73530e3023266267a25917f9b3",
+      "bytes_lf": 29275
+    },
+    "tools/fixture_provenance.py": {
+      "sha256_lf": "3abedbb066818e9920ed60959955f9ea6e8fb20b8e53cb05721c930d67cdfb7d",
+      "bytes_lf": 4831
+    },
+    "tools/perf.py": {
+      "sha256_lf": "a5e8cd212a0029af4bffa0d379ed86031b016c5577b3237df01ee4e9c2d352af",
+      "bytes_lf": 8435
+    },
+    "tools/refresh_pending_templates.py": {
+      "sha256_lf": "ef0bb8fe2f79eeae420795d7dddad66402e7dc2bed84b28938461603ef54212c",
+      "bytes_lf": 3398
+    },
+    "tools/run_full_regression.py": {
+      "sha256_lf": "01d221ad345a795eef38ccac431ad37a7a215d534fb1542cad01dddc056ac6b9",
+      "bytes_lf": 815
+    },
+    "tools/scene3d_goal_e2e.mjs": {
+      "sha256_lf": "daf1c8a125cca0b8441147fe7001dadcfbcdfd31a1f742371e89d645626d1078",
+      "bytes_lf": 26937
+    },
+    "tools/scene_sweep.py": {
+      "sha256_lf": "56fa88127474448b47b53d69472c9ac22e2a4ff3f6d6c084b0c6d6c68cf17236",
+      "bytes_lf": 5464
+    },
+    "tools/semantic_compare.py": {
+      "sha256_lf": "a6a0471090aa49025aff1bc78a65c79e0d70feb61fe13a54f862f6ad3477b350",
+      "bytes_lf": 5103
+    },
+    "v9415_issue_reproduction_matrix.json": {
+      "sha256_lf": "afec9f774106b116725c17bbae03d2eb3979eda38001eb439771ec9496832c63",
+      "bytes_lf": 3989
+    },
+    "worktree_ownership_audit.json": {
+      "sha256_lf": "485d3e11ab3ee10cc0efb64742f3939527d81a1005567330d939a6f18e5961fc",
+      "bytes_lf": 1498
+    }
+  }
+}

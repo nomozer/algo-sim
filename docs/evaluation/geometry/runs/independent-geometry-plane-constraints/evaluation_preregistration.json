@@ -1,0 +1,76 @@
+{
+  "schema": "algosim-plane-constraint-evaluation-preregistration/1",
+  "run_id": "independent-geometry-plane-constraints",
+  "registered_at_utc": "2026-11-13T12:59:07.530446+00:00",
+  "head_at_registration": "4222f021b28462bb8bccfe87d02288b321b0dc5f",
+  "start_candidate": {
+    "commit": "cf058f0eeda111a9cea02e61dde3e872d74f20f2",
+    "product_commit": "ea4b2a1970c538b7b4e863ee49ca434499d8a97e",
+    "measured_system": "dc834af0001169e6962b655b8953c9694eb4a8c5718e59995f152d5c3fc93d29"
+  },
+  "sets": {
+    "LOCKED_W2": {
+      "source_run": "hybrid-v2-independent-vietnamese-section-holdout-wave2",
+      "input": "hybrid-v2-independent-vietnamese-section-holdout-wave2/inputs/holdout-wave2.json",
+      "input_sha256": "1104be2ad8d4c5c96363f3648bc3c57dfcef5af4334c714e9cc94fc466f38e2d",
+      "oracle": "hybrid-v2-independent-vietnamese-section-holdout-wave2/oracle/expected.json",
+      "oracle_sha256": "5efbe57de91c31e18995e679ae6f0ecd69c366ea6bf148ee96255d4cfae7c844",
+      "cases": 96,
+      "serve": 48,
+      "refuse": 48,
+      "case_ids_sha256": "3c7a665b0bebd418a20f3ed9eeceae6cd2583edbd4107c4fe2738edc3d452b60"
+    },
+    "LOCKED_W3": {
+      "source_run": "hybrid-v2-independent-vietnamese-geometry-holdout-wave3",
+      "input": "hybrid-v2-independent-vietnamese-geometry-holdout-wave3/inputs/holdout-wave3.json",
+      "input_sha256": "cf2d3fd759b6a94c4eae2545a4a409e50859ff28e861f797609b6a259fe4dee0",
+      "oracle": "hybrid-v2-independent-vietnamese-geometry-holdout-wave3/oracle/expected.json",
+      "oracle_sha256": "9cabeb19ae0d10e1112795097e7ed18e0b0b3aa7bc18700a9d60813a0cbcf9df",
+      "cases": 144,
+      "serve": 72,
+      "refuse": 72,
+      "case_ids_sha256": "7349c13a1a03007c3e0fafb5c9d495265726f296c63dad3aee8246e32f87d4f0"
+    }
+  },
+  "claim_class": "FRESH_TO_LOCAL_PARSER_INTERNAL_AI_CURATED_HOLDOUT — not new external data, not human-adjudicated, not H-1",
+  "pipeline": "for each case: text = case['problem_text'] only (payloads, labels and oracle never reach the product) → route_text_input(text, allow_live_ai=False) on the frozen candidate → envelope",
+  "when": "exactly once, after the final product freeze of this run, for BOTH the start product (archive of ea4b2a197) and the final candidate; no product change after either execution; any later change makes both suites DEVELOPMENT_EXPOSED",
+  "scoring": {
+    "served": "route status SERVED with an envelope scene3d",
+    "SERVE_case_correct_iff": [
+      "the scene holds exactly one closed `section` object (the section asked) — otherwise WRONG_SERVED if a section is drawn, NOT_SERVED_GOAL_MISSING if none",
+      "independent recheck (exact Fractions, envelope coordinates and Gram metric): each section vertex lies on the cutting plane of the other vertices, on one solid edge or at one solid vertex",
+      "multiset of boundary descriptors (VERTEX label | EDGE sorted labels + canonical t) equals the oracle boundary",
+      "cyclic order equals the oracle ring up to rotation or reversal (orientation is not part of the contract)",
+      "vertex count equals the oracle vertex_count",
+      "area² recomputed from the drawn polygon equals oracle area_squared (symbolic unit a: coefficient at a = 1)"
+    ],
+    "SERVE_case_outcomes": [
+      "SERVED_CORRECT",
+      "WRONG_SERVED",
+      "NOT_SERVED (reason code recorded)",
+      "ROUTE_ERROR (counts as failure)"
+    ],
+    "REFUSE_case_outcomes": [
+      "CORRECT_REFUSAL (any non-served outcome, reason code recorded)",
+      "WRONG_SERVED (anything served)"
+    ],
+    "answer_text": "never compared: Axo does not print answers; correctness is judged on the constructed geometry only"
+  },
+  "headline_metrics": [
+    "wrong_served per suite (target 0)",
+    "SERVED_CORRECT / SERVE cases per suite, stratum and plane relation",
+    "CORRECT_REFUSAL / REFUSE cases per suite",
+    "before → after on the same protocol"
+  ],
+  "out_of_scope_reporting": "curved families (cylinder, cone) and categories the curators marked unrepresentable are reported separately, never folded into the polyhedral rate",
+  "ambiguity": "a case whose oracle entry is missing or malformed is reported ORACLE_UNAVAILABLE and excluded from rates, listed by id",
+  "deduplication": "after the freeze, before execution: character 5-gram Jaccard between every development probe of this run and every locked text, computed by script; only ids and scores are printed",
+  "forbidden": [
+    "reading any locked problem text or oracle entry before execution",
+    "editing product code after execution and keeping the 'fresh' label",
+    "using the 94 sealed H-1 rows",
+    "live AI"
+  ],
+  "browser_scope": "browser interaction is measured on development probes only (scene3d_browser_e2e.json), not per locked case"
+}

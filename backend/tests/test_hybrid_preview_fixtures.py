@@ -35,7 +35,33 @@ ROOT = Path(__file__).resolve().parents[2]
 #: Superseded by run `hybrid-backend-reliability` (product 05cf4db1): `served-intersection-SAB-SCD` narrates its
 #: intersection line as "Dựng đường thẳng cần dùng." instead of the kernel repr `Line3(point=Vec3(…))` (2 narrations of
 #: `envelope.config`); every other fixture differs only by producer identity. The continuity bundle stays unchanged.
-FIXTURES = ROOT / 'docs/evaluation/geometry/runs/hybrid-backend-reliability/fixtures-adapter-2-narration'
+#: Superseded by run `semantic-to-scene3d-verified-simulation` (CACHE_VERSION 133): `served-H03_…` and `served-H12_…` carry
+#: `angle_construction` on their angle quantity (the construction of the studied angle); every other fixture differs only
+#: by producer identity. Earlier bundles stay unchanged.
+#: Superseded by run `verified-section-intersection-dihedral-local` (CACHE_VERSION 134): angle constructions declare
+#: `angle_domain` and pyramid volumes whose altitude the scene does not draw carry `altitude_construction`; every other
+#: difference is producer identity. Earlier bundles stay unchanged.
+#: Superseded by run `proof-soundness-generalized-angle-invariance` (CACHE_VERSION 137): served fixtures carry the
+#: construction lineage added by commit 9d5e9b408 (`visible_prerequisites`, `computational_depends`, `construction_lineage`,
+#: `unused_auxiliary_ids`, `measured_quantity`, named narrations); answers, coordinates and refusal/gate fixtures are
+#: unchanged. The dihedral-altitude bundle stays unchanged as the evidence it was.
+#: Superseded by run `scene3d-causal-pedagogical-integrity` (CACHE_VERSION 138): `served-intersection-SAB-SCD` no longer
+#: flags its ASKED intersection line as an unused auxiliary; every other fixture differs only by producer identity.
+#: The lineage bundle stays unchanged as the evidence it was.
+#: Superseded within the same run: `served-section-MAB-trapezoid` carries trace-method reasons on its section edges
+#: (`trace_derivation`, `COPLANAR_TRACE_INTERSECTION`); geometry unchanged. The causal-pedagogical bundle stays unchanged.
+#: Superseded by run `dimension-aware-verified-construction` (CACHE_VERSION 140): 7 served fixtures carry additive
+#: `dimension-expression/1` symbolic quantity metadata; answers, coordinates, expected contracts and refusal/gate
+#: fixtures are unchanged. The trace-method bundle stays unchanged as the evidence it was.
+#: Superseded by run `axo-hybrid-local-model1-finalization-test-consolidation` (CACHE_VERSION 150): the IR container
+#: vocabulary of the informatics domain was pruned, so every served fixture's `route_d.geometry_ir` no longer carries
+#: the always-null `element_type`/`key_type`/`val_type` per declaration nor an empty `visual_bindings` (no frontend
+#: reader — checked). Scenes, answers, expected contracts and refusal/gate fixtures are unchanged. The
+#: dimension-aware bundle stays unchanged as the evidence it was.
+#: Superseded within the same run (CACHE_VERSION 152): `served-H03_REGULAR_SQUARE_PYRAMID_ROLE_LENGTHS` and
+#: `served-H14_REGULAR_TETRAHEDRON` construct their base centre explicitly (§19) instead of `LAYOUT_DERIVED`, and `_VAT_MO_PHONG`
+#: tightens back to role-verified segment terms; the cache 150 bundle stays unchanged as the evidence it was.
+FIXTURES = ROOT / 'docs/evaluation/geometry/runs/axo-hybrid-local-model1-finalization-test-consolidation/fixtures-hybrid-preview-v152'
 #: The superseded bundle — the one that predates the route D version bump the identity-restore test is about.
 OLD_FIXTURES = ROOT / 'docs/evaluation/geometry/runs/hybrid-preview-contract-hardening/fixtures-adapter-2'
 SCRIPT = ROOT / 'backend/scripts/export_hybrid_preview_fixtures.py'

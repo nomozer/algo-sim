@@ -1,0 +1,539 @@
+{
+  "run_id": "proof-soundness-generalized-angle-invariance",
+  "generated_at_utc": "2026-11-14T11:47:01.331600+00:00",
+  "method": "cos² from scene point3 coordinates with the scene chart_metric Gram G (lines: uᵀGv; planes: covectors with G⁻¹; line–plane: 1 − (n·u)²/(nᵀG⁻¹n · uᵀGu)); independent of the kernel's measure",
+  "items": {
+    "ti_right_b_planes": {
+      "goal": "ask_angle_plane_plane",
+      "operands": [
+        [
+          "S",
+          "B",
+          "C"
+        ],
+        [
+          "A",
+          "B",
+          "C"
+        ]
+      ],
+      "chart_metric": [
+        [
+          "1",
+          "1",
+          "0"
+        ],
+        [
+          "1",
+          "2",
+          "0"
+        ],
+        [
+          "0",
+          "0",
+          "1"
+        ]
+      ],
+      "scene_cos_sq": "1/2",
+      "served_cos_sq": "1/2",
+      "ok": true,
+      "scene_kind": "TARGET_INVARIANT_ILLUSTRATIVE"
+    },
+    "ti_right_b_tan": {
+      "goal": "ask_angle_plane_plane",
+      "operands": [
+        [
+          "S",
+          "B",
+          "C"
+        ],
+        [
+          "A",
+          "B",
+          "C"
+        ]
+      ],
+      "chart_metric": [
+        [
+          "1",
+          "1",
+          "0"
+        ],
+        [
+          "1",
+          "2",
+          "0"
+        ],
+        [
+          "0",
+          "0",
+          "1"
+        ]
+      ],
+      "scene_cos_sq": "1/2",
+      "served_cos_sq": "1/2",
+      "ok": true,
+      "scene_kind": "TARGET_INVARIANT_ILLUSTRATIVE"
+    },
+    "ti_renamed": {
+      "goal": "ask_angle_plane_plane",
+      "operands": [
+        [
+          "T",
+          "Y",
+          "Z"
+        ],
+        [
+          "X",
+          "Y",
+          "Z"
+        ]
+      ],
+      "chart_metric": [
+        [
+          "1",
+          "1",
+          "0"
+        ],
+        [
+          "1",
+          "2",
+          "0"
+        ],
+        [
+          "0",
+          "0",
+          "1"
+        ]
+      ],
+      "scene_cos_sq": "1/2",
+      "served_cos_sq": "1/2",
+      "ok": true,
+      "scene_kind": "TARGET_INVARIANT_ILLUSTRATIVE"
+    },
+    "pa_ratio2_planes": {
+      "goal": "ask_angle_plane_plane",
+      "operands": [
+        [
+          "S",
+          "B",
+          "C"
+        ],
+        [
+          "A",
+          "B",
+          "C"
+        ]
+      ],
+      "chart_metric": [
+        [
+          "1",
+          "1",
+          "0"
+        ],
+        [
+          "1",
+          "2",
+          "0"
+        ],
+        [
+          "0",
+          "0",
+          "4"
+        ]
+      ],
+      "scene_cos_sq": "1/5",
+      "served_cos_sq": "1/5",
+      "ok": true,
+      "scene_kind": "TARGET_INVARIANT_ILLUSTRATIVE"
+    },
+    "pa_ratio2_tan": {
+      "goal": "ask_angle_plane_plane",
+      "operands": [
+        [
+          "S",
+          "B",
+          "C"
+        ],
+        [
+          "A",
+          "B",
+          "C"
+        ]
+      ],
+      "chart_metric": [
+        [
+          "1",
+          "1",
+          "0"
+        ],
+        [
+          "1",
+          "2",
+          "0"
+        ],
+        [
+          "0",
+          "0",
+          "4"
+        ]
+      ],
+      "scene_cos_sq": "1/5",
+      "served_cos_sq": "1/5",
+      "ok": true,
+      "scene_kind": "TARGET_INVARIANT_ILLUSTRATIVE"
+    },
+    "pa_source_perp_lines": {
+      "goal": "ask_angle_plane_plane",
+      "operands": [
+        [
+          "S",
+          "B",
+          "C"
+        ],
+        [
+          "A",
+          "B",
+          "C"
+        ]
+      ],
+      "chart_metric": [
+        [
+          "1",
+          "1",
+          "0"
+        ],
+        [
+          "1",
+          "2",
+          "0"
+        ],
+        [
+          "0",
+          "0",
+          "1"
+        ]
+      ],
+      "scene_cos_sq": "1/2",
+      "served_cos_sq": "1/2",
+      "ok": true,
+      "scene_kind": "TARGET_INVARIANT_ILLUSTRATIVE"
+    },
+    "pp_base": {
+      "goal": "ask_angle_plane_plane",
+      "operands": [
+        [
+          "S",
+          "A",
+          "C"
+        ],
+        [
+          "A",
+          "B",
+          "C"
+        ]
+      ],
+      "chart_metric": [
+        [
+          "1",
+          "1",
+          "0"
+        ],
+        [
+          "1",
+          "2",
+          "0"
+        ],
+        [
+          "0",
+          "0",
+          "1"
+        ]
+      ],
+      "scene_cos_sq": "0",
+      "served_cos_sq": "0",
+      "ok": true,
+      "scene_kind": "TARGET_INVARIANT_ILLUSTRATIVE"
+    },
+    "pp_lateral": {
+      "goal": "ask_angle_plane_plane",
+      "operands": [
+        [
+          "S",
+          "B",
+          "C"
+        ],
+        [
+          "S",
+          "A",
+          "B"
+        ]
+      ],
+      "chart_metric": [
+        [
+          "1",
+          "1",
+          "0"
+        ],
+        [
+          "1",
+          "2",
+          "0"
+        ],
+        [
+          "0",
+          "0",
+          "1"
+        ]
+      ],
+      "scene_cos_sq": "0",
+      "served_cos_sq": "0",
+      "ok": true,
+      "scene_kind": "TARGET_INVARIANT_ILLUSTRATIVE"
+    },
+    "lp_isosceles": {
+      "goal": "ask_angle_line_plane",
+      "operands": [
+        [
+          "S",
+          "B"
+        ],
+        [
+          "A",
+          "B",
+          "C"
+        ]
+      ],
+      "chart_metric": [
+        [
+          "1",
+          "1",
+          "0"
+        ],
+        [
+          "1",
+          "2",
+          "0"
+        ],
+        [
+          "0",
+          "0",
+          "1"
+        ]
+      ],
+      "scene_cos_sq": "1/2",
+      "served_cos_sq": "1/2",
+      "ok": true,
+      "scene_kind": "TARGET_INVARIANT_ILLUSTRATIVE"
+    },
+    "lp_ratio2": {
+      "goal": "ask_angle_line_plane",
+      "operands": [
+        [
+          "S",
+          "B"
+        ],
+        [
+          "A",
+          "B",
+          "C"
+        ]
+      ],
+      "chart_metric": [
+        [
+          "1",
+          "1",
+          "0"
+        ],
+        [
+          "1",
+          "2",
+          "0"
+        ],
+        [
+          "0",
+          "0",
+          "4"
+        ]
+      ],
+      "scene_cos_sq": "1/5",
+      "served_cos_sq": "1/5",
+      "ok": true,
+      "scene_kind": "TARGET_INVARIANT_ILLUSTRATIVE"
+    },
+    "lp_perpendicular": {
+      "goal": "ask_angle_line_plane",
+      "operands": [
+        [
+          "S",
+          "A"
+        ],
+        [
+          "A",
+          "B",
+          "C"
+        ]
+      ],
+      "chart_metric": [
+        [
+          "1",
+          "1",
+          "0"
+        ],
+        [
+          "1",
+          "2",
+          "0"
+        ],
+        [
+          "0",
+          "0",
+          "1"
+        ]
+      ],
+      "scene_cos_sq": "0",
+      "served_cos_sq": "0",
+      "ok": true,
+      "scene_kind": "TARGET_INVARIANT_ILLUSTRATIVE"
+    },
+    "lp_renamed": {
+      "goal": "ask_angle_line_plane",
+      "operands": [
+        [
+          "T",
+          "Y"
+        ],
+        [
+          "X",
+          "Y",
+          "Z"
+        ]
+      ],
+      "chart_metric": [
+        [
+          "1",
+          "1",
+          "0"
+        ],
+        [
+          "1",
+          "2",
+          "0"
+        ],
+        [
+          "0",
+          "0",
+          "4"
+        ]
+      ],
+      "scene_cos_sq": "1/5",
+      "served_cos_sq": "1/5",
+      "ok": true,
+      "scene_kind": "TARGET_INVARIANT_ILLUSTRATIVE"
+    },
+    "ll_meeting": {
+      "goal": "ask_angle_lines",
+      "operands": [
+        [
+          "S",
+          "B"
+        ],
+        [
+          "S",
+          "A"
+        ]
+      ],
+      "chart_metric": [
+        [
+          "1",
+          "1",
+          "0"
+        ],
+        [
+          "1",
+          "2",
+          "0"
+        ],
+        [
+          "0",
+          "0",
+          "1"
+        ]
+      ],
+      "scene_cos_sq": "1/2",
+      "served_cos_sq": "1/2",
+      "ok": true,
+      "scene_kind": "TARGET_INVARIANT_ILLUSTRATIVE"
+    },
+    "ll_perpendicular": {
+      "goal": "ask_angle_lines",
+      "operands": [
+        [
+          "S",
+          "B"
+        ],
+        [
+          "B",
+          "C"
+        ]
+      ],
+      "chart_metric": [
+        [
+          "1",
+          "1",
+          "0"
+        ],
+        [
+          "1",
+          "2",
+          "0"
+        ],
+        [
+          "0",
+          "0",
+          "1"
+        ]
+      ],
+      "scene_cos_sq": "0",
+      "served_cos_sq": "0",
+      "ok": true,
+      "scene_kind": "TARGET_INVARIANT_ILLUSTRATIVE"
+    },
+    "ll_skew_perpendicular": {
+      "goal": "ask_angle_lines",
+      "operands": [
+        [
+          "S",
+          "A"
+        ],
+        [
+          "B",
+          "C"
+        ]
+      ],
+      "chart_metric": [
+        [
+          "1",
+          "1",
+          "0"
+        ],
+        [
+          "1",
+          "2",
+          "0"
+        ],
+        [
+          "0",
+          "0",
+          "1"
+        ]
+      ],
+      "scene_cos_sq": "0",
+      "served_cos_sq": "0",
+      "ok": true,
+      "scene_kind": "TARGET_INVARIANT_ILLUSTRATIVE"
+    }
+  },
+  "checked": 15,
+  "agree": 15
+}

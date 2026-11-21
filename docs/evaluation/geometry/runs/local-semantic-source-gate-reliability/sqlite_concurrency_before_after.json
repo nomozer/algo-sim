@@ -1,0 +1,149 @@
+{
+  "run_id": "local-semantic-source-gate-reliability",
+  "generated_at_utc": "2026-11-13T04:54:20.249879+00:00",
+  "root_cause": "Synchronous OCR and region detection ran on the event loop inside async /api/input/prepare while the request's get_caller session held an uncommitted write (session row flushed, committed at teardown). With the loop blocked, other requests waited on the SQLite write lock past the 5 s busy timeout -> SQLITE_BUSY.",
+  "fix": "backend/app/ingestion/unified_input.py runs detect_problem_regions, count_problem_headers_on_page and run_local_ocr_route through starlette run_in_threadpool (commit d6b38b172)",
+  "regression_test": "backend/tests/test_input_prepare_concurrency.py::test_prepare_keeps_the_event_loop_free_while_local_ocr_runs",
+  "before": {
+    "1": {
+      "prepare_200": 5,
+      "auth_me_5xx": 0,
+      "prepare_5xx": 0,
+      "prepare_401": 0,
+      "prepare_401_after_auth_me_5xx": 0,
+      "transport_errors": 0,
+      "prepare_ms_p50": 2398.6928000012995,
+      "health_max_ms": 2841.67940000043,
+      "server_exception_types": []
+    },
+    "2": {
+      "prepare_200": 10,
+      "auth_me_5xx": 0,
+      "prepare_5xx": 0,
+      "prepare_401": 0,
+      "prepare_401_after_auth_me_5xx": 0,
+      "transport_errors": 0,
+      "prepare_ms_p50": 3490.5236000013247,
+      "health_max_ms": 4545.656999998755,
+      "server_exception_types": []
+    },
+    "4": {
+      "prepare_200": 20,
+      "auth_me_5xx": 0,
+      "prepare_5xx": 0,
+      "prepare_401": 0,
+      "prepare_401_after_auth_me_5xx": 0,
+      "transport_errors": 0,
+      "prepare_ms_p50": 3898.9080499995907,
+      "health_max_ms": 8203.0629999972,
+      "server_exception_types": []
+    },
+    "8": {
+      "prepare_200": 24,
+      "auth_me_5xx": 10,
+      "prepare_5xx": 6,
+      "prepare_401": 8,
+      "prepare_401_after_auth_me_5xx": 8,
+      "transport_errors": 2,
+      "prepare_ms_p50": 3532.0391500008554,
+      "health_max_ms": 8518.60079999824,
+      "server_exception_types": [
+        "SQLITE_BUSY"
+      ]
+    }
+  },
+  "after": {
+    "1": {
+      "prepare_200": 5,
+      "auth_me_5xx": 0,
+      "prepare_5xx": 0,
+      "prepare_401": 0,
+      "prepare_401_after_auth_me_5xx": 0,
+      "transport_errors": 0,
+      "prepare_ms_p50": 2512.1502000001783,
+      "health_max_ms": 486.5070000014384,
+      "server_exception_types": []
+    },
+    "2": {
+      "prepare_200": 10,
+      "auth_me_5xx": 0,
+      "prepare_5xx": 0,
+      "prepare_401": 0,
+      "prepare_401_after_auth_me_5xx": 0,
+      "transport_errors": 0,
+      "prepare_ms_p50": 3711.791200001244,
+      "health_max_ms": 389.7141000015836,
+      "server_exception_types": []
+    },
+    "4": {
+      "prepare_200": 20,
+      "auth_me_5xx": 0,
+      "prepare_5xx": 0,
+      "prepare_401": 0,
+      "prepare_401_after_auth_me_5xx": 0,
+      "transport_errors": 0,
+      "prepare_ms_p50": 7332.96854999935,
+      "health_max_ms": 490.8872000014526,
+      "server_exception_types": []
+    },
+    "8": {
+      "prepare_200": 40,
+      "auth_me_5xx": 0,
+      "prepare_5xx": 0,
+      "prepare_401": 0,
+      "prepare_401_after_auth_me_5xx": 0,
+      "transport_errors": 0,
+      "prepare_ms_p50": 13257.010549999904,
+      "health_max_ms": 587.4394999991637,
+      "server_exception_types": []
+    }
+  },
+  "after_repeat": {
+    "1": {
+      "prepare_200": 10,
+      "auth_me_5xx": 0,
+      "prepare_5xx": 0,
+      "prepare_401": 0,
+      "prepare_401_after_auth_me_5xx": 0,
+      "transport_errors": 0,
+      "prepare_ms_p50": 2015.9960500004672,
+      "health_max_ms": 359.08109999945736,
+      "server_exception_types": []
+    },
+    "2": {
+      "prepare_200": 20,
+      "auth_me_5xx": 0,
+      "prepare_5xx": 0,
+      "prepare_401": 0,
+      "prepare_401_after_auth_me_5xx": 0,
+      "transport_errors": 0,
+      "prepare_ms_p50": 3768.8058000003366,
+      "health_max_ms": 487.82109999956447,
+      "server_exception_types": []
+    },
+    "4": {
+      "prepare_200": 40,
+      "auth_me_5xx": 0,
+      "prepare_5xx": 0,
+      "prepare_401": 0,
+      "prepare_401_after_auth_me_5xx": 0,
+      "transport_errors": 0,
+      "prepare_ms_p50": 6885.133550000319,
+      "health_max_ms": 543.8052999998035,
+      "server_exception_types": []
+    },
+    "8": {
+      "prepare_200": 80,
+      "auth_me_5xx": 0,
+      "prepare_5xx": 0,
+      "prepare_401": 0,
+      "prepare_401_after_auth_me_5xx": 0,
+      "transport_errors": 0,
+      "prepare_ms_p50": 13009.837550000157,
+      "health_max_ms": 685.8481000017491,
+      "server_exception_types": []
+    }
+  },
+  "throughput_note": "Prepare latency at 8 simultaneous uploads is ~13 s after the fix: OCR work is CPU bound and queues. The fix removes errors and keeps the server responsive (/api/health max < 0.7 s); it does not add OCR throughput.",
+  "classification": "VERIFIED_FACT (loopback measured_app, own SQLite file, scripted uploads)"
+}

@@ -1,0 +1,337 @@
+{
+  "artifacts": {
+    "BASELINE_AND_OWNERSHIP_AUDIT.md": {
+      "bytes_lf": 3180,
+      "sha256_lf": "46e9cf78683fcd9efb32e043c647a79492732f27b69348a359800cea0ce1f0e7"
+    },
+    "CONSTRUCTION_BACKEND_INTEGRATION_REPORT.md": {
+      "bytes_lf": 3397,
+      "sha256_lf": "03469d9ee9b82ccd95c91fbf865cb793c8b70b80b47a95f7ea3ab175bf2159d5"
+    },
+    "CONSTRUCTION_GOAL_SEMANTICS.md": {
+      "bytes_lf": 3213,
+      "sha256_lf": "b9b350eac1ba99f1ef1c31ac0ed548cf49b5daaad43c16b222fde1144ce4a7c1"
+    },
+    "CONSTRUCTION_INTEGRATION_DESIGN.md": {
+      "bytes_lf": 3343,
+      "sha256_lf": "2374e3d2af64fbd259c175da43711f102a05c79cd05518a4d5eb15f1f2cf6b23"
+    },
+    "CONSTRUCTION_NOVELTY_RECLASSIFICATION.json": {
+      "bytes_lf": 56073,
+      "sha256_lf": "00d3242c2dd5c80511221e53196adc6cf5dcd556b55cd2928dd334c37cb01a06"
+    },
+    "CONSTRUCTION_RELEASE_READINESS_DECISION.md": {
+      "bytes_lf": 5938,
+      "sha256_lf": "99d4d67cc67cf4b1d63f40ce1ebad70d9a39c77f63071cbdb65ad0b481085d20"
+    },
+    "CONSTRUCTION_V1_BENCHMARK_RECONCILIATION.md": {
+      "bytes_lf": 3686,
+      "sha256_lf": "9589ebbb395d16c0beee007e111d515f14aff8b144aa8547c839c912e00a9705"
+    },
+    "CONSTRUCTION_V1_METRIC_RECONCILIATION.json": {
+      "bytes_lf": 30726,
+      "sha256_lf": "6f511fa0b5050262bf2bd8fb4a5667ad0481d6b9aeffaed9de99a9363f6e957d"
+    },
+    "CONSTRUCTION_V2_REGRESSION_REPORT.md": {
+      "bytes_lf": 3364,
+      "sha256_lf": "67de63204334658411872f83da67cd826fa7caab9f383ab637672a8eede82440"
+    },
+    "FAIR_PLANNER_COMPARISON_DESIGN.md": {
+      "bytes_lf": 3492,
+      "sha256_lf": "1d7f8fe1ce01cf4d4bd9f67e3a8feea7ea046c82a6a3933ce5b6ab1aec6bb935"
+    },
+    "FAIR_PLANNER_COMPARISON_RESULTS.json": {
+      "bytes_lf": 68912,
+      "sha256_lf": "d6f215dc17fc24a5ca8c66ed1da51c43b5187570f1f28fe7f70e359fd713434d"
+    },
+    "FINAL_MASTER_REPORT.md": {
+      "bytes_lf": 16695,
+      "sha256_lf": "420a13226b80cb32f1c89eb7c8bc4919e8ebd8180c332716fa546ad374ec6bf8"
+    },
+    "GEOMETRY_INVARIANCE_RESULTS.json": {
+      "bytes_lf": 3103,
+      "sha256_lf": "445d6302dd70969ae80fe85fc9f9a68c8a86b09fc564193f04bb0c79c06cc2f7"
+    },
+    "INDEPENDENT_CONSTRUCTION_EVALUATION.json": {
+      "bytes_lf": 39092,
+      "sha256_lf": "8a4751092706857adbdd84cb4ccd79d843808201bb566955fbf14563a77063c4"
+    },
+    "INDEPENDENT_CONSTRUCTION_HOLDOUT_MANIFEST.json": {
+      "bytes_lf": 38804,
+      "sha256_lf": "3911c423d799c5eddc670dce977b53267b41b3435d58c350b7d7f119153cf52b"
+    },
+    "MODEL2_DETERMINISTIC_BASELINE.md": {
+      "bytes_lf": 2815,
+      "sha256_lf": "3c31c2b7bb09cda228d6070fdaf07c06319f730ec5e520c5384fa6a27b377cc4"
+    },
+    "ORACLE_ISOLATION_REPORT.md": {
+      "bytes_lf": 2300,
+      "sha256_lf": "a763fab8c721accbf6152628650114d897441a4898d06cd32402eb4dae3b1509"
+    },
+    "PRESENTATION_STEP_VALIDATION.md": {
+      "bytes_lf": 2200,
+      "sha256_lf": "d9838135975b589f57fce459aa80f97975b0a6cb72407f42456a2375d55bd867"
+    },
+    "PROOF_INTEGRITY_AUDIT.md": {
+      "bytes_lf": 6251,
+      "sha256_lf": "0b37ab3edd4bcebc9dbe2b5f3aef4fe3ba12049bac68362bc0fe2a42715c876a"
+    },
+    "PROOF_MUTATION_TEST_RESULTS.json": {
+      "bytes_lf": 8506,
+      "sha256_lf": "0382b2ce70ab92b00a6354cf38c0b8f31bc3fae1992087b7042f93c846e85640"
+    },
+    "SCENE3D_INTEGRATION_REPORT.md": {
+      "bytes_lf": 2471,
+      "sha256_lf": "586619a3bb217c631666f9cb2125aeba12bed7e733c5e6547b11202678f9da84"
+    },
+    "SEARCH_STRESS_BENCHMARK.json": {
+      "bytes_lf": 1561,
+      "sha256_lf": "53a17817352e3fdfa3abbc44cb0523ef5ed1bc237bbf6f731d82dc97dae58318"
+    },
+    "handoff/backend_adapter4_dynamic_construction_flag.patch": {
+      "bytes_lf": 1185,
+      "sha256_lf": "8258349aed28545689dc48ea9db6c736174fc4cfcf1b62f53dbbae5f2648c309"
+    },
+    "handoff/frontend_scene3d_multiplan_switcher.patch": {
+      "bytes_lf": 1945,
+      "sha256_lf": "f653bcfcb8580062c3c50ebe9fa3bb3dafd0701503fd581d56384769533feb5a"
+    }
+  },
+  "branch": "feat/local-first-geometry-understanding",
+  "candidate_v2": {
+    "candidate_v2_freeze_sha256": "26c9b505fc7796ed9ff6a5c9578701978e92b9c1d6726a8208916a9ea3dca60c",
+    "package": "backend/experimental/construction_planner",
+    "versions": {
+      "benchmark_evaluator": "construction-benchmark-evaluator/2",
+      "construction_operator": "construction-operator/1",
+      "dynamic_planner": "dynamic-construction-planner/2",
+      "exact_verifier": "construction-exact-verifier/2",
+      "integration_adapter": "dynamic-construction-integration-adapter/1",
+      "model2_selector": "model2-deterministic-selector/1",
+      "presentation_graph": "presentation-step-graph/1",
+      "presentation_validator": "presentation-step-validator/1",
+      "proof_graph": "verified-construction-graph/1",
+      "scene3d_bridge": "construction-scene3d-bridge/1",
+      "verified_input_bridge": "verified-input-bridge/1"
+    }
+  },
+  "classification": "OFFLINE_CONSTRUCTION_PROOF_INTEGRITY_EVALUATION_AND_INTEGRATION_HANDOFF",
+  "environment": {
+    "ALLOW_LIVE_AI": "0",
+    "GEMINI_API_KEY": "",
+    "HYBRID_ROUTE_MODE_DEFAULT": "live",
+    "PYTHONUTF8": "1",
+    "external_ai_calls": 0
+  },
+  "generated_at_utc": "2026-11-19T04:54:41Z",
+  "metrics_summary": {
+    "fair_4arm_comparison": {
+      "arm_a1_original_product": {
+        "avg_ms": 21.949,
+        "multi_plan_cases": "0/33",
+        "negative_ok_p_strict": "6/7",
+        "positive_ok_p_strict": "26/33",
+        "positive_with_derived_aux_witness_in_scene": "1/33",
+        "source_gate_failures_on_positive": 6,
+        "total_ok_p_metric": "33/40"
+      },
+      "arm_a2_equivalent_verified_product": {
+        "avg_ms": 17.666,
+        "multi_plan_cases": "0/33",
+        "negative_ok_p_strict": "6/7",
+        "positive_ok_p_strict": "32/33",
+        "positive_with_derived_aux_witness_in_scene": "2/33",
+        "source_gate_failures_on_positive": 0,
+        "total_ok_p_metric": "39/40"
+      },
+      "arm_b_dynamic_v1": {
+        "avg_planner_only_ms": 38.513
+      },
+      "arm_c_dynamic_v2": {
+        "avg_e2e_bridge_plus_plan_plus_verify_ms": 85.641,
+        "avg_planner_only_ms": 65.463,
+        "group_e_multi_plan_verified": "5/5",
+        "positive_strict_ok": "33/33",
+        "positive_verified_l0_l4": "33/33",
+        "positive_with_witness_ok": "33/33",
+        "total_ok_p_strict": "40/40"
+      }
+    },
+    "geometry_invariance": {
+      "all_9_transforms_passed": true,
+      "passed_transforms": 9,
+      "total_transforms": 9
+    },
+    "independent_holdout_single_shot": {
+      "arm_a2_expressible_subset_passed": "17/17",
+      "avg_search_ms": 134.17,
+      "by_family": {
+        "Cuboid_122": "10/11",
+        "Negative_Contradictory": "3/4",
+        "Negative_Degenerate": "3/4",
+        "Negative_Missing": "3/4",
+        "Negative_Unsupported": "2/4",
+        "ObliquePrism_Gram": "6/6",
+        "RegSq_1_1": "7/7",
+        "RegSq_1_2": "1/2",
+        "RegTri_1_1": "5/5",
+        "RegTri_1_2": "1/1",
+        "RightRect_1_2_2": "6/6",
+        "RightTri_1_2_2": "6/6"
+      },
+      "negative_passed": "11/16",
+      "overall_pass_rate": "53/60",
+      "positive_passed": "42/44",
+      "status_distribution": {
+        "CONTRADICTORY_CONSTRAINTS": 3,
+        "DEGENERATE_CONSTRUCTION": 3,
+        "GOAL_VERIFIED": 42,
+        "MISSING_PRECONDITION": 4,
+        "NO_PLAN_FOUND_WITHIN_BUDGET": 6,
+        "UNSUPPORTED_OPERATOR": 2
+      },
+      "total_cases": 60,
+      "total_passed": 53
+    },
+    "novelty_counts": {
+      "N0_EXISTING_COMPLETE_RECIPE": 4,
+      "N1_EXPLICIT_CONSTRUCTION_SCHEDULING": 12,
+      "N2_OPERATOR_COMPOSITION": 22,
+      "N3_IMPLICIT_AUXILIARY_DISCOVERY": 17,
+      "N4_ALTERNATIVE_VERIFIED_STRATEGY": 14,
+      "N5_UNSUPPORTED_CAPABILITY": 1,
+      "NEGATIVE_REFUSAL": 6
+    },
+    "oracle_isolation": {
+      "alt_volume_answer": "a³√3/12",
+      "ast_oracle_parameter_hits": [],
+      "c01_answer": "a√21/7",
+      "deterministic_replay_sha256_c01": "d2ba32353460872a9154b66ff1d278cf6e9ed5e32dc8b3240bc33ae24dd5431f",
+      "different_goal_same_frame_diverge": true,
+      "wrong_oracle_cannot_alter_planner_output": true,
+      "zero_oracle_params_in_planner_verifier": true
+    },
+    "proof_mutation_audit": {
+      "oracle_isolation_passed": true,
+      "total_mutation_scenarios": 12,
+      "v1_bypassed_but_v2_caught": 11,
+      "v2_rejected_count": 12,
+      "v2_rejection_rate": "12/12"
+    },
+    "pytest_full_backend": {
+      "deselected": 3,
+      "duration_s": 770.27,
+      "failed": 0,
+      "passed": 15070,
+      "skipped": 7,
+      "xfailed": 12
+    },
+    "pytest_v1_v2_targeted": {
+      "duration_s": 13.78,
+      "failed": 0,
+      "passed": 34
+    },
+    "search_stress": {
+      "depth_scaling": [
+        {
+          "expanded_states": 4,
+          "pending_steps": 2,
+          "proof_nodes": 7,
+          "search_ms": 19.02,
+          "status": "GOAL_VERIFIED"
+        },
+        {
+          "expanded_states": 6,
+          "pending_steps": 4,
+          "proof_nodes": 9,
+          "search_ms": 23.181,
+          "status": "GOAL_VERIFIED"
+        },
+        {
+          "expanded_states": 10,
+          "pending_steps": 8,
+          "proof_nodes": 13,
+          "search_ms": 30.168,
+          "status": "GOAL_VERIFIED"
+        },
+        {
+          "expanded_states": 14,
+          "pending_steps": 12,
+          "proof_nodes": 17,
+          "search_ms": 35.188,
+          "status": "GOAL_VERIFIED"
+        },
+        {
+          "expanded_states": 18,
+          "pending_steps": 16,
+          "proof_nodes": 21,
+          "search_ms": 58.343,
+          "status": "GOAL_VERIFIED"
+        },
+        {
+          "expanded_states": 22,
+          "pending_steps": 20,
+          "proof_nodes": 25,
+          "search_ms": 57.406,
+          "status": "GOAL_VERIFIED"
+        }
+      ],
+      "e2e_stage_timing_ms": {
+        "arm_a2_legacy_total_ms": 28.494,
+        "arm_a2_status": "SERVED",
+        "arm_c_bridge_and_source_gate_ms": 33.969,
+        "arm_c_dynamic_search_ms": 11.866,
+        "arm_c_e2e_total_ms": 47.04,
+        "arm_c_e2e_verified": true,
+        "arm_c_l0_l4_strict_verify_ms": 0.986,
+        "arm_c_scene3d_compile_ms": 0.219
+      },
+      "generated_at_utc": "2026-11-19T04:35:50Z",
+      "resource_limit_checks": {
+        "max_expanded_states_1_status": "SEARCH_RESOURCE_LIMIT",
+        "tight_timeout_status": "SEARCH_TIMEOUT",
+        "zero_false_contradictory_on_budget_exhaustion": true
+      },
+      "schema": "axo-search-stress-benchmark/1"
+    },
+    "v1_reconciliation": {
+      "policy_P_metric_coincident_zero_valid": {
+        "baseline_a_scalar_or_refusal_ok": "33/40",
+        "hardened_cand_c_v2": "40/40",
+        "historical_cand_b_v1": "39/40 (39/40 because /1 forcibly injected connect_segment(A,A) onto 'Tính AA.')"
+      },
+      "policy_P_strict_segment_construction": {
+        "baseline_a_strict_segment_or_refusal_ok": "32/40 (D02 served '0a' instead of refusing segment construction)",
+        "hardened_cand_c_v2": "40/40",
+        "historical_cand_b_v1_behavior_ok": "40/40 (refused correctly; status label CONTRADICTORY_CONSTRAINTS corrected to DEGENERATE_CONSTRUCTION)"
+      }
+    }
+  },
+  "product_baseline": {
+    "cache_version": "145",
+    "freeze_commit": "9a9352d586caa360f82052ba1b76fe9b4227f26c",
+    "measured_files_count": 123,
+    "measured_system_sha256": "113a6a7cf6bbc15ac23119150b805437e785d2b0714b26c2157d147514c2ef67",
+    "product_commit": "6310113f2202bc3a4919406b26fad08cb09b38c9",
+    "product_modified_in_construction_v2": false
+  },
+  "range_base_commit": "a0f573913a03a3d08a16e308663a654b454ff9c3",
+  "run_id": "axo-construction-proof-integrity-independent-evaluation-controlled-integration",
+  "safety_and_ownership": {
+    "backend_app_files_modified": 0,
+    "external_independence": "NOT_MEASURED",
+    "frontend_files_modified": 0,
+    "gate_f7_backend_product": "BLOCKED_OWNERSHIP",
+    "gate_f8_frontend_scene3d": "PASS_ARTIFACT_ONLY",
+    "handoff_patches_git_apply_check": true,
+    "integration_status": "BLOCKED_OWNERSHIP",
+    "oracle_provenance_class": "INTERNAL_POST_FREEZE_INDEPENDENT_SYNTHESIS",
+    "v1_immutability_intact": true
+  },
+  "schema": "axo-evaluation-run/2",
+  "v1_baseline_commit": "418dd89f88aed7bcd2a2eb8dbc376077345fd37a",
+  "verdict": {
+    "decision_rationale": "Proof integrity (12/12 mutations), geometric invariance (9/9), oracle isolation, Source-Gate bridge, multi-plan validator (5/5 Group E), holdout single-shot (53/60 overall, 42/44 positive, 0 wrong answers), integration adapter, and full backend regression (15070/0) all pass; Level 3 awaits owner application of handoff patches on BLOCKED_OWNERSHIP backend/app/** and frontend/.",
+    "readiness_level": "Level 2 — BACKEND_INTEGRATION_READY"
+  }
+}

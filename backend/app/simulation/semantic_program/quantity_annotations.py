@@ -63,7 +63,8 @@ def gan_so_do(spec: Any, final_memory: dict[str, Any], contract: Any,
         if o["type"] != "quantity":
             continue
         kq = _gan_mot(o["id"], dinh_nghia.get(o["id"]), khai.get(o["id"]), loai, final_memory, de, duong_vuong_goc_chung)
-        if isinstance(kq, dict) and kq.get("anchor") == "witness":
+        # Chỉ KHOẢNG CÁCH mới là độ dài của đoạn đã dựng; nhân chứng góc vuông không được đổi thành nhãn độ dài.
+        if isinstance(kq, dict) and kq.get("anchor") == "witness" and kq.get("kind") == "distance":
             kq = _bam_doan_da_dung(kq, loai, final_memory, doan)
         if isinstance(kq, dict):
             gan[o["id"]] = kq
@@ -81,7 +82,302 @@ def gan_so_do(spec: Any, final_memory: dict[str, Any], contract: Any,
         else:
             da_co[k] = q
     _gan_chung_chi_vuong_goc_doan(objects, final_memory)
+    chan_doan += gan_dung_goc(dinh_nghia, objects, final_memory)
+    chan_doan += gan_duong_cao(dinh_nghia, objects, final_memory)
     return gan, chan_doan
+
+
+#: Hợp đồng `angle_construction` trên vật `quantity` đo góc KHÁC 90°, và góc 90° mà `_goc_vuong` không neo được dấu
+#: (hai mặt phẳng vuông góc, hai đường chéo nhau vuông góc — run `scene3d-causal-pedagogical-integrity`).
+ANGLE_CONSTRUCTION_SCHEMA = "angle-construction/1"
+
+
+def gan_dung_goc(dinh_nghia: dict[Any, Any], objects: list[dict[str, Any]], mem: dict[str, Any]) -> list[str]:
+    """Semantic-to-Scene3D — PHÉP DỰNG của góc mà đề hỏi, không phải con số của nó.
+
+    Với mỗi đại lượng `measure.angle_cos(_sq)` khác 0, dựng chính xác (kernel, metric khung) đối tượng mà học sinh cần
+    nhìn: góc đường–mặt = đường ∩ mặt, hình chiếu vuông góc của một điểm của đường xuống mặt và góc giữa đường với hình
+    chiếu; góc hai đường cắt nhau = đỉnh tại giao điểm; hai đường chéo nhau = đường song song qua một điểm của đường
+    thứ nhất; góc hai mặt = hai tia vuông góc với giao tuyến tại cùng một điểm. Chỉ ghép primitive có sẵn
+    (`intersect_*`, `project_point_onto_*`), và PHÁT khi cos² của góc dựng được BẰNG ĐÚNG giá trị kernel đã đo — sai một
+    kiểm tra ⇒ không phát, chẩn đoán `ANGLE_CONSTRUCTION_UNBOUND`. Không mang giá trị số: frontend chỉ vẽ phép dựng."""
+    by_id = {o["id"]: o for o in objects}
+    co_ten = [(o["id"], mem[o["id"]]) for o in objects
+              if o.get("type") == "point3" and isinstance(mem.get(o["id"]), Vec3) and ky_hieu_toan(o["id"]) is not None]
+    chan_doan: list[str] = []
+    for o in objects:
+        expr = getattr(dinh_nghia.get(o["id"]), "expr", None)
+        if (o.get("type") != "quantity" or getattr(expr, "kind", None) != "measure"
+                or expr.quantity not in ("angle_cos", "angle_cos_sq")):
+            continue
+        v = mem.get(o["id"])
+        if v is None or (v == 0 and not _vuong_khong_neo(mem.get(expr.of), mem.get(expr.wrt))):
+            continue                  # a right angle at a meeting point is the `_goc_vuong` marker
+        try:
+            c2 = v if expr.quantity == "angle_cos_sq" else square(v)
+            kq = _dung_goc(expr.of, expr.wrt, Fraction(str(c2)), mem, by_id, co_ten)
+        except (GeometryError, TypeError, ValueError, ZeroDivisionError) as e:
+            kq = f"construction failed: {type(e).__name__}"
+        if isinstance(kq, dict):
+            o["angle_construction"] = kq
+        else:
+            chan_doan.append(f"ANGLE_CONSTRUCTION_UNBOUND {o['id']}: {kq}")
+    return chan_doan
+
+
+#: Hợp đồng `altitude_construction` trên vật `quantity` đo THỂ TÍCH của một hình chóp chưa có đường cao được chứng nhận.
+ALTITUDE_CONSTRUCTION_SCHEMA = "altitude-construction/1"
+
+
+def gan_duong_cao(dinh_nghia: dict[Any, Any], objects: list[dict[str, Any]], mem: dict[str, Any]) -> list[str]:
+    """verified-section-intersection-dihedral-local — ĐƯỜNG CAO của hình chóp mà thể tích dùng, khi cảnh chưa vẽ nó.
+
+    Chân H là hình chiếu vuông góc CHÍNH XÁC của đỉnh lên mặt phẳng đáy (kernel, metric khung) — không chọn A, B hay
+    trung điểm nào. Phát khi: H trên mặt đáy, SH ⟂ hai phương của đáy theo G, SH ≠ 0. Nếu H nằm trên đường thẳng chứa
+    một cạnh đáy XY và mặt bên SXY vuông góc với đáy (kiểm chính xác: pháp tuyến hai mặt trực giao theo G), phép dựng
+    ghi lý do sách giáo khoa: H thuộc giao tuyến XY của mặt bên với đáy (chân có thể nằm ngoài đoạn XY). Đường cao đã
+    là một đoạn ĐÃ VẼ từ đỉnh tới đúng điểm chân (SA ⟂ đáy, SO của chóp đều, SG…) ⇒ không phát lần hai. Không mang con số."""
+    chan_doan: list[str] = []
+    by_id = {o["id"]: o for o in objects}
+    co_ten = {o["id"]: mem[o["id"]] for o in objects
+              if o.get("type") == "point3" and isinstance(mem.get(o["id"]), Vec3) and ky_hieu_toan(o["id"]) is not None}
+    day = next((o for o in objects if o.get("type") == "polygon3" and "CONSTRUCT_BASE" in (o.get("formation_roles") or ())), None)
+    for o in objects:
+        expr = getattr(dinh_nghia.get(o["id"]), "expr", None)
+        if o.get("type") != "quantity" or getattr(expr, "kind", None) != "measure" or expr.quantity != "volume":
+            continue
+        khoi = by_id.get(expr.of) or {}
+        if khoi.get("type") != "solid" or khoi.get("shape_class") != "PYRAMID_LIKE" or day is None:
+            continue
+        dinh_day = list(day.get("vertex_ids") or ())
+        dinh = [v for v in khoi.get("vertex_ids") or () if v not in dinh_day]
+        if len(dinh) != 1 or len(dinh_day) < 3 or not all(isinstance(mem.get(v), Vec3) for v in [*dinh, *dinh_day]):
+            chan_doan.append(f"ALTITUDE_CONSTRUCTION_UNBOUND {o['id']}: not a single apex over the constructed base")
+            continue
+        s_ten = dinh[0]
+        kq = _dung_duong_cao(s_ten, dinh_day, day["id"], mem, co_ten)
+        chan = Vec3.of(*(Fraction(x) for x in kq["foot"])) if isinstance(kq, dict) else None
+        if chan is not None and any(o2.get("type") == "segment3" and s_ten in (o2.get("endpoint_ids") or ())
+                                    and any(mem.get(x) == chan for x in o2.get("endpoint_ids") or () if x != s_ten)
+                                    for o2 in objects):
+            continue                                        # the altitude is already a drawn segment (SA, SO, SG…)
+        if isinstance(kq, dict):
+            o["altitude_construction"] = kq
+        else:
+            chan_doan.append(f"ALTITUDE_CONSTRUCTION_UNBOUND {o['id']}: {kq}")
+    return chan_doan
+
+
+def _dung_duong_cao(s_ten: str, dinh_day: list[str], day_id: str, mem: dict[str, Any],
+                    co_ten: dict[str, Vec3]) -> dict[str, Any] | str:
+    s_p = mem[s_ten]
+    pts = [mem[v] for v in dinh_day]
+    mp = Plane3.through(pts[0], pts[1], pts[2])
+    if any(mp.signed_eval(q) != 0 for q in pts):
+        return "the base is not planar"
+    h = K.project_point_onto_plane(s_p, mp)
+    leg = s_p - h
+    if leg.is_zero():
+        return "the apex lies in the base plane"
+    if mp.signed_eval(h) != 0 or any(_m.dot(leg, w) != 0 for w in _phuong_trong_mat(mp)):
+        return "the foot is not an orthogonal foot in the frame metric"
+    out: dict[str, Any] = {"schema": ALTITUDE_CONSTRUCTION_SCHEMA, "apex_id": s_ten, "from": _xau(s_p), "foot": _xau(h),
+                           "on": day_id, "checks": ["foot_on_base_plane", "altitude_orthogonal_to_base"]}
+    if (ten_h := next((n for n, q in co_ten.items() if q == h), None)) is not None:
+        out["foot_id"] = ten_h
+    n = len(dinh_day)
+    for i in range(n):                                    # the base edge whose line carries the foot, if any
+        x, y = dinh_day[i], dinh_day[(i + 1) % n]
+        canh = Line3.through(mem[x], mem[y])
+        if not _tren_duong(h, canh):
+            continue
+        mat_ben = Plane3.through(s_p, mem[x], mem[y])
+        vuong = _m.dot(_m.normal_vector(mat_ben.normal), _m.normal_vector(mp.normal)) == 0
+        if not vuong:
+            continue
+        t = _m.dot(h - mem[x], mem[y] - mem[x]) / _m.norm_sq(mem[y] - mem[x])
+        toi = x if h != mem[x] else y
+        out.update({"base_edge": [x, y], "face": [s_ten, x, y], "foot_on_edge_segment": bool(0 <= t <= 1),
+                    "marker": {"u": _xau(mem[toi] - h), "v": _xau(leg), "u_to": toi}})
+        out["checks"] += ["foot_on_face_base_intersection_line", "face_perpendicular_to_base"]
+        break
+    else:
+        toi = next((v for v in dinh_day if mem[v] != h), dinh_day[0])
+        out["marker"] = {"u": _xau(mem[toi] - h), "v": _xau(leg), "u_to": toi}
+    return out
+
+
+def _vuong_khong_neo(a: Any, b: Any) -> bool:
+    """A 90° angle `_goc_vuong` has no point to mark: two planes (the angle lives on their common line) or two lines that
+    do not meet and are not parallel (skew — drawn with a parallel through a point of the first line)."""
+    if isinstance(a, Plane3) and isinstance(b, Plane3):
+        return True
+    da, db = _duong(a), _duong(b)
+    if da is None or db is None or da.direction.cross(db.direction).is_zero():
+        return False
+    try:
+        K.intersect_line_line(da, db)
+    except GeometryError:
+        return True
+    return False
+
+
+def _cos2(u: Vec3, w: Vec3) -> Fraction:
+    return _m.dot(u, w) ** 2 / (_m.norm_sq(u) * _m.norm_sq(w))
+
+
+#: Miền của MỌI góc đề hỏi được hỗ trợ (`ask_angle_lines / _line_plane / _plane_plane`): góc KHÔNG định hướng trong
+#: [0°, 90°] (`measure.degrees`, quy ước SGK). Nhị diện có hướng (0°, 180°) chỉ là DỮ KIỆN (`dihedral_angle`), không bao
+#: giờ là câu hỏi. cos² không phân biệt 60° với 120° (cùng 1/4): phép dựng phải vẽ đúng góc nhọn/vuông, không vẽ góc bù.
+GOC_MIEN = "[0°, 90°]"
+
+
+def _khong_tu(o: Vec3, p1: Vec3, ten2: str | None, p2: Vec3,
+              co_ten: list[tuple[str, Vec3]]) -> tuple[str | None, Vec3]:
+    """Hai tia O→p1, O→p2 mở thành góc TÙ ⇒ thay tia thứ hai bằng tia ĐỐI của nó (vẫn trên cùng đường / cùng mặt
+    phẳng, cùng gốc), ưu tiên một điểm có tên nằm trên tia đối. Góc giữa hai đường / hai mặt là góc không tù."""
+    if _m.dot(p1 - o, p2 - o) >= 0:
+        return ten2, p2
+    d = o - p2
+    co = next(((n, x) for n, x in co_ten if x != o and (x - o).cross(d).is_zero() and _m.dot(x - o, d) > 0), None)
+    return co if co else (None, o + d)
+
+
+def _goc_dung(o: Vec3, a: Vec3, b: Vec3, c2: Fraction) -> str | None:
+    """Chứng chỉ của góc vẽ ra: cos CÓ DẤU ≥ 0 (không vẽ góc bù) VÀ cos² bằng đúng giá trị kernel đo."""
+    if _m.dot(a - o, b - o) < 0:
+        return "the drawn rays open the obtuse supplement of the asked angle"
+    if _cos2(a - o, b - o) != c2:
+        return "the constructed angle does not reproduce the measured cos²"
+    return None
+
+
+def _tren_duong(p: Vec3, d: Line3) -> bool:
+    return (p - d.point).cross(d.direction).is_zero()
+
+
+def _diem_tren(d: Line3, tru: Vec3 | None, co_ten: list[tuple[str, Vec3]]) -> tuple[str | None, Vec3]:
+    """Điểm CÓ TÊN đầu tiên (thứ tự cảnh) trên đường, khác `tru`; không có ⇒ một điểm không tên của chính đường."""
+    for n, p in co_ten:
+        if p != tru and _tren_duong(p, d):
+            return n, p
+    return None, (d.point if d.point != tru else d.at(1))
+
+
+def _ten_cua(p: Vec3, co_ten: list[tuple[str, Vec3]]) -> str | None:
+    return next((n for n, q in co_ten if q == p), None)
+
+
+def _dau(p: Vec3, ten: str | None) -> dict[str, Any]:
+    return {"to": _xau(p), **({"to_id": ten} if ten else {})}
+
+
+def _phuong_trong_mat(mp: Plane3) -> list[Vec3]:
+    """Hai phương độc lập NẰM TRONG mặt phẳng (n·d = 0 — phép ghép covector, không phụ thuộc metric)."""
+    ds = [mp.normal.cross(Vec3.of(*e)) for e in ((1, 0, 0), (0, 1, 0), (0, 0, 1))]
+    ds = [d for d in ds if not d.is_zero()]
+    hai = next(((a, b) for i, a in enumerate(ds) for b in ds[i + 1:] if not a.cross(b).is_zero()), None)
+    if hai is None:
+        raise GeometryError("ERR_VECTO_KHONG", "plane has no two independent directions")
+    return list(hai)
+
+
+def _dung_goc(ten_a: str, ten_b: str, c2: Fraction, mem: dict[str, Any], by_id: dict[str, dict[str, Any]],
+              co_ten: list[tuple[str, Vec3]]) -> dict[str, Any] | str:
+    a, b = mem.get(ten_a), mem.get(ten_b)
+    if isinstance(a, Plane3) and _duong(b) is not None:
+        ten_a, ten_b, a, b = ten_b, ten_a, b, a
+    da, db = _duong(a), _duong(b)
+    if da is not None and isinstance(b, Plane3):
+        return _goc_duong_mat(da, b, ten_b, c2, co_ten)
+    if da is not None and db is not None:
+        return _goc_hai_duong(da, db, ten_b, c2, co_ten)
+    if isinstance(a, Plane3) and isinstance(b, Plane3):
+        return _goc_hai_mat(a, b, c2, co_ten)
+    return f"no construction for an angle between {by_id.get(ten_a, {}).get('type')} and {by_id.get(ten_b, {}).get('type')}"
+
+
+def _goc_duong_mat(d: Line3, mp: Plane3, ten_mp: str, c2: Fraction, co_ten: list[tuple[str, Vec3]]) -> dict[str, Any] | str:
+    o = K.intersect_line_plane(d, mp)                    # song song / nằm trong ⇒ GeometryError (góc 0, không có đỉnh)
+    ten_p, p = _diem_tren(d, o, co_ten)
+    h = K.project_point_onto_plane(p, mp)
+    if h == o:
+        return "the projection of the line is a point (right angle belongs to _goc_vuong)"
+    if mp.signed_eval(h) != 0 or any(_m.dot(p - h, w) != 0 for w in _phuong_trong_mat(mp)):
+        return "the projection foot is not an orthogonal foot in the frame metric"
+    if (loi := _goc_dung(o, p, h, c2)) is not None:
+        return loi
+    return {"schema": ANGLE_CONSTRUCTION_SCHEMA, "relation": "line_plane", "angle_domain": GOC_MIEN,
+            "vertex": _xau(o), **({"vertex_id": n} if (n := _ten_cua(o, co_ten)) else {}),
+            "arms": [_dau(p, ten_p), _dau(h, _ten_cua(h, co_ten))],
+            "perpendicular": {"from": _xau(p), "foot": _xau(h), "on": ten_mp, "u": _xau(o - h), "v": _xau(p - h)},
+            "checks": ["vertex_on_line_and_plane", "foot_on_plane", "leg_orthogonal_to_plane", "drawn_angle_not_obtuse",
+                       "cos_sq_matches_measure"]}
+
+
+def _goc_hai_duong(d1: Line3, d2: Line3, ten_d2: str, c2: Fraction, co_ten: list[tuple[str, Vec3]]) -> dict[str, Any] | str:
+    try:
+        o = K.intersect_line_line(d1, d2)
+    except GeometryError:
+        if d1.direction.cross(d2.direction).is_zero():
+            return "parallel lines: the angle is 0 and has no vertex to construct"
+        o = None
+    if o is not None:
+        (t1, p1), (t2, p2) = _diem_tren(d1, o, co_ten), _diem_tren(d2, o, co_ten)
+        t2, p2 = _khong_tu(o, p1, t2, p2, co_ten)
+        if not _tren_duong(p2, d2) or (loi := _goc_dung(o, p1, p2, c2)) is not None:
+            return loi or "the second ray left its line"
+        return {"schema": ANGLE_CONSTRUCTION_SCHEMA, "relation": "line_line", "angle_domain": GOC_MIEN,
+                "vertex": _xau(o), **({"vertex_id": n} if (n := _ten_cua(o, co_ten)) else {}),
+                "arms": [_dau(p1, t1), _dau(p2, t2)],
+                "checks": ["vertex_on_both_lines", "drawn_angle_not_obtuse", "cos_sq_matches_measure"]}
+    # Chéo nhau: góc là góc giữa d1 và một đường song song với d2 qua một điểm A của d1 (đường phụ, không phải dữ
+    # kiện). Ưu tiên cách sách giáo khoa: một ĐOẠN CÓ TÊN AY ∥ d2 với A trên d1 (A′D ∥ B′C); không có ⇒ A + phương d2.
+    cap = next(((n, x, m, y) for n, x in co_ten if _tren_duong(x, d1)
+                for m, y in co_ten if y != x and not _tren_duong(y, d1) and (y - x).cross(d2.direction).is_zero()), None)
+    if cap is not None:
+        ten_a, a, ten_q, q = cap
+    else:
+        ten_a, a = _diem_tren(d1, None, co_ten)
+        ten_q, q = None, a + d2.direction
+    t1, p1 = _diem_tren(d1, a, co_ten)
+    ten_q, q = _khong_tu(a, p1, ten_q, q, co_ten)
+    if not (q - a).cross(d2.direction).is_zero():
+        return "the helper is not parallel to the second line"
+    if (loi := _goc_dung(a, p1, q, c2)) is not None:
+        return loi
+    return {"schema": ANGLE_CONSTRUCTION_SCHEMA, "relation": "line_line_skew", "angle_domain": GOC_MIEN,
+            "vertex": _xau(a), **({"vertex_id": ten_a} if ten_a else {}),
+            "arms": [_dau(p1, t1), _dau(q, ten_q)],
+            "parallel": {"through": _xau(a), "to": _xau(q), "of": ten_d2},
+            "checks": ["helper_parallel_to_second_line", "drawn_angle_not_obtuse", "cos_sq_matches_measure"]}
+
+
+def _goc_hai_mat(m1: Plane3, m2: Plane3, c2: Fraction, co_ten: list[tuple[str, Vec3]]) -> dict[str, Any] | str:
+    e = K.intersect_plane_plane(m1, m2)                    # song song / trùng ⇒ GeometryError
+    x1 = next(((n, p) for n, p in co_ten if m1.signed_eval(p) == 0 and not _tren_duong(p, e)), None)
+    x2 = next(((n, p) for n, p in co_ten if m2.signed_eval(p) == 0 and not _tren_duong(p, e)), None)
+    if x1 is None or x2 is None:
+        return "each plane needs a named point off the common line"
+    m = K.project_point_onto_line(x1[1], e)
+    w = x2[1] - m
+    a2 = w - e.direction.scale(_m.dot(w, e.direction) / _m.norm_sq(e.direction))
+    a1 = x1[1] - m
+    ten_q, q = _khong_tu(m, x1[1], _ten_cua(m + a2, co_ten), m + a2, co_ten)
+    a2 = q - m
+    if (a2.is_zero() or _m.dot(a1, e.direction) != 0 or _m.dot(a2, e.direction) != 0
+            or m1.signed_eval(m) != 0 or m2.signed_eval(m) != 0 or m2.signed_eval(q) != 0):
+        return "the plane-angle rays are not perpendicular to the common line inside their planes"
+    if (loi := _goc_dung(m, x1[1], q, c2)) is not None:
+        return loi
+    ten_e = next((n for n, p in co_ten if p != m and _tren_duong(p, e)), None)
+    huong = (dict(co_ten)[ten_e] - m) if ten_e else e.direction
+    return {"schema": ANGLE_CONSTRUCTION_SCHEMA, "relation": "plane_plane", "angle_domain": GOC_MIEN,
+            "vertex": _xau(m), **({"vertex_id": n} if (n := _ten_cua(m, co_ten)) else {}),
+            "arms": [_dau(x1[1], x1[0]), _dau(q, ten_q)],
+            "edge": {"direction": _xau(huong), **({"toward_id": ten_e} if ten_e else {})},
+            "checks": ["vertex_on_common_line", "rays_in_their_planes", "rays_orthogonal_to_common_line",
+                       "drawn_angle_not_obtuse", "cos_sq_matches_measure"]}
 
 
 def _gan_chung_chi_vuong_goc_doan(objects: list[dict[str, Any]], mem: dict[str, Any]) -> None:

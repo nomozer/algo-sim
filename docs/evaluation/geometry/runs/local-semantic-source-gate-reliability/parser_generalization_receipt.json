@@ -1,0 +1,72 @@
+{
+  "run_id": "local-semantic-source-gate-reliability",
+  "generated_at_utc": "2026-11-13T04:54:20.249879+00:00",
+  "rules": [
+    {
+      "rule": "solid dimension list",
+      "code": "local_geometry_parser._solid_dimension_items / _DIM_FIRST_RE / _DIM_NEXT_RE",
+      "covers": "'cạnh đáy …, cạnh bên …' in either order, optional 'độ dài (của)', 'đều bằng/là/='; regular pyramid and right/regular prism",
+      "stops": "at the first gap or a repeated attribute; each later item quotes its own text so the gate attributes every value once",
+      "tests": [
+        "backend/tests/geometry/test_local_semantic_coverage.py::test_regular_solid_dimension_lists_serve_the_hand_derived_answer",
+        "backend/tests/geometry/test_local_semantic_coverage.py::test_dimension_items_stop_at_the_first_gap_and_never_repeat_an_attribute",
+        "backend/tests/geometry/test_local_semantic_coverage.py::test_contradicting_lateral_edge_is_refused_not_served",
+        "backend/tests/geometry/test_local_semantic_coverage.py::test_unsupported_dimension_word_still_fails_closed"
+      ]
+    },
+    {
+      "rule": "bare segment equality",
+      "code": "local_geometry_parser._BARE_SEGMENT_EQUALITY_RE",
+      "covers": "'SA = AB (= …)' as equal_length premises with their own quote",
+      "rejects": "degenerate (SA = AA), repeated (SA = AS), scaled (SA = 2AB)",
+      "tests": [
+        "backend/tests/geometry/test_local_semantic_coverage.py::test_bare_segment_equality_is_read_as_congruence_with_its_own_quote",
+        "backend/tests/geometry/test_local_semantic_coverage.py::test_degenerate_repeated_or_scaled_equalities_are_not_congruences",
+        "backend/tests/geometry/test_local_semantic_coverage.py::test_scale_free_equality_problem_refuses_safely_instead_of_inventing_a_length"
+      ]
+    },
+    {
+      "rule": "volume goal wording",
+      "covers": "'thể tích (V) (của) …', bare 'lăng trụ'",
+      "rejects": "a volume goal naming a solid that was never declared",
+      "tests": [
+        "backend/tests/geometry/test_local_semantic_coverage.py::test_volume_goal_without_khoi_or_with_named_variable",
+        "backend/tests/geometry/test_local_semantic_coverage.py::test_volume_goal_naming_an_undeclared_solid_stays_unparsed"
+      ]
+    },
+    {
+      "rule": "right / right-isosceles triangle vertex 'ở X'",
+      "tests": [
+        "backend/tests/geometry/test_local_semantic_coverage.py::test_right_triangle_vertex_with_o_or_tai"
+      ]
+    },
+    {
+      "rule": "Source Gate: '… theo a bằng' is a question tail; a value closes at 'biết' or a new capitalised clause",
+      "code": "registry._HOI_CUOI_DE, registry._DUOI_BANG",
+      "rejects": "'theo a bằng 2a³' (an assignment, not a question); 'AB = 2 BC', disjunction 'hoặc'",
+      "tests": [
+        "backend/tests/geometry/test_local_semantic_coverage.py::test_multiple_choice_question_with_theo_a_tail_is_asked",
+        "backend/tests/geometry/test_local_semantic_coverage.py::test_theo_a_tail_with_a_value_is_an_assignment_not_a_question",
+        "backend/tests/geometry/test_local_semantic_coverage.py::test_value_closed_by_bien_and_by_a_new_capitalised_sentence",
+        "backend/tests/geometry/test_local_semantic_coverage.py::test_value_boundary_does_not_accept_multiples_or_disjunctions"
+      ]
+    }
+  ],
+  "not_per_case": "No rule names a case id, a vertex label set or an expected answer; every rule is exercised by synthetic statements different from the 17 (tests above) and fails closed on counterexamples.",
+  "ab_evidence": {
+    "text_route_before": {
+      "LOCAL_SOLVED": 4,
+      "LIVE_AI_DISABLED (local parse incomplete)": 17,
+      "EXACT_KERNEL_GAP": 1,
+      "NEEDS_CONFIRMATION": 1
+    },
+    "text_route_after": {
+      "LOCAL_SOLVED": 7,
+      "LIVE_AI_DISABLED (local parse incomplete)": 13,
+      "EXACT_KERNEL_GAP": 2,
+      "NEEDS_CONFIRMATION": 1
+    },
+    "wrong_served_after": []
+  },
+  "generalisation_claim": "NOT_ESTABLISHED: the 23 transcriptions were exposed; the fresh sample had 2 in-scope items and neither was served (see fresh_external_evaluation.json)"
+}

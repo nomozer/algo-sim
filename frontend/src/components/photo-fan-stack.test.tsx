@@ -240,6 +240,9 @@ describe("Gửi đa ảnh có thứ tự & chống race condition theo request_i
       missing_regions: [],
       candidates: [],
       provenance: {
+        input_route: "LOCAL_OCR_VERIFIED",
+        raw_ocr_text_sha256: "a".repeat(64),
+        prepared_region_sha256: "b".repeat(64),
         source_attachment_ids: (req.attachments ?? []).map((item) => item.attachment_id),
       },
       request_id: req.request_id,
@@ -280,6 +283,13 @@ describe("Gửi đa ảnh có thứ tự & chống race condition theo request_i
       { id: "att-3", order: 2, name: "hinh-ve-3.jpg" },
     ]);
     expect(analyzeSpy).toHaveBeenCalledTimes(1);
+    expect(analyzeSpy.mock.calls[0]?.[0]).toMatchObject({
+      source_provenance: {
+        origin: "local_ocr_auto_verified",
+        raw_ocr_text_sha256: "a".repeat(64),
+        prepared_region_sha256: "b".repeat(64),
+      },
+    });
   });
 
   it("runComposerSubmit: bỏ qua phản hồi prepare cũ nếu requestIdRef đã chuyển sang request mới", async () => {

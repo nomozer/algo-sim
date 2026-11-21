@@ -1,0 +1,123 @@
+{
+ "schema": "axo-e2e-simulation-performance/1",
+ "host": "Windows 11 Pro dev host, 15.78 GiB RAM, CPU only (llama.cpp b12470, 6 threads)",
+ "browser": {
+  "browser_version": "151.0.7922.34",
+  "base": "http://127.0.0.1:4173",
+  "viewport": "1366x768",
+  "started_utc": "2026-11-19T14:58:19.736Z"
+ },
+ "definitions": {
+  "backend_total_ms": "route_d.adaptive_telemetry.total_ms (server side)",
+  "http_round_trip_ms": "click on Dựng hình → responseEnd of POST /api/analyze (Resource Timing, page clock)",
+  "first_visible_scene_ms": "click → first WebGL draw call after the response arrived",
+  "first_interactive_frame_ms": "click → first WebGL draw after a pointer drag started as soon as the canvas was visible (includes ~0.5 s of harness waits)"
+ },
+ "pass2": {
+  "served_scenes": {
+   "backend_total_ms": {
+    "n": 40,
+    "p50": 47.9,
+    "p95": 85.7,
+    "max": 875.206
+   },
+   "http_round_trip_ms": {
+    "n": 40,
+    "p50": 132.4,
+    "p95": 191.0,
+    "max": 1093
+   },
+   "first_visible_scene_ms": {
+    "n": 40,
+    "p50": 255.9,
+    "p95": 455.6,
+    "max": 1454.7
+   },
+   "first_interactive_frame_ms": {
+    "n": 39,
+    "p50": 1113.5,
+    "p95": 1340.6,
+    "max": 2518.6
+   }
+  },
+  "deterministic_route_backend_ms": {
+   "n": 47,
+   "p50": 47.1,
+   "p95": 117.8,
+   "max": 875.206
+  },
+  "slm_route_backend_ms": {
+   "n": 28,
+   "p50": 3774.4,
+   "p95": 8347.4,
+   "max": 10312.074
+  },
+  "slm_route_round_trip_ms": {
+   "n": 28,
+   "p50": 3842.1,
+   "p95": 8425.2,
+   "max": 10403.6
+  },
+  "all_requests_round_trip_ms": {
+   "n": 82,
+   "p50": 142.4,
+   "p95": 6030.7,
+   "max": 10403.6
+  }
+ },
+ "pass1_with_keepalive_bug": {
+  "served_scenes": {
+   "backend_total_ms": {
+    "n": 38,
+    "p50": 92.6,
+    "p95": 4113.7,
+    "max": 5289.696
+   },
+   "http_round_trip_ms": {
+    "n": 38,
+    "p50": 245.1,
+    "p95": 8453.1,
+    "max": 9029.3
+   },
+   "first_visible_scene_ms": {
+    "n": 38,
+    "p50": 414.4,
+    "p95": 8827.0,
+    "max": 9456
+   },
+   "first_interactive_frame_ms": {
+    "n": 37,
+    "p50": 1481.2,
+    "p95": 11725.0,
+    "max": 24119
+   }
+  },
+  "deterministic_route_backend_ms": {
+   "n": 45,
+   "p50": 79.5,
+   "p95": 3868.2,
+   "max": 5289.696
+  },
+  "slm_route_backend_ms": {
+   "n": 15,
+   "p50": 3273.4,
+   "p95": 21164.9,
+   "max": 22323.862
+  },
+  "slm_route_round_trip_ms": {
+   "n": 15,
+   "p50": 3320.1,
+   "p95": 21262.2,
+   "max": 22416.4
+  },
+  "all_requests_round_trip_ms": {
+   "n": 79,
+   "p50": 324.3,
+   "p95": 49882.0,
+   "max": 52959.6
+  }
+ },
+ "cold_start": "pass2 V01 (first request after backend start): backend 875 ms, first visible 1455 ms; llama-server cold load measured in U14 restart ≈ 6.2 s total request",
+ "target_reference": "p95 ≤ 5000 ms first visible scene: met for served scenes on this host (p95 455.6 ms, all deterministic route); SLM route round trip p95 8425 ms (no SLM scene was served)",
+ "physical_target_hardware_4_8_gib": "NOT_MEASURED"
+}

@@ -1,0 +1,61 @@
+{
+  "schema": "receipt-reconciliation/1",
+  "rows_checked": 11,
+  "source_of_truth": "before_metrics.json + after_metrics.json",
+  "mismatches": [
+    {
+      "class_id": "class_06_multi_text_regions",
+      "field": "before_prepare_ms",
+      "report": 1139.4,
+      "receipt": 1224.07
+    },
+    {
+      "class_id": "class_06_multi_text_regions",
+      "field": "after_prepare_ms",
+      "report": 670.48,
+      "receipt": 781.21
+    },
+    {
+      "class_id": "class_07_text_and_diagram",
+      "field": "before_prepare_ms",
+      "report": 1154.22,
+      "receipt": 1139.4
+    },
+    {
+      "class_id": "class_07_text_and_diagram",
+      "field": "after_prepare_ms",
+      "report": 679.66,
+      "receipt": 670.11
+    },
+    {
+      "class_id": "class_08_multi_problem_page",
+      "field": "before_prepare_ms",
+      "report": 1240.32,
+      "receipt": 2769.65
+    },
+    {
+      "class_id": "class_08_multi_problem_page",
+      "field": "after_prepare_ms",
+      "report": 753.03,
+      "receipt": 1646.14
+    },
+    {
+      "class_id": "class_09_diagram_only",
+      "field": "vlm_calls",
+      "report": 1,
+      "receipt": 2
+    },
+    {
+      "class_id": "class_09_diagram_only",
+      "field": "before_prepare_ms",
+      "report": 637.56,
+      "receipt": 883.67
+    },
+    {
+      "class_id": "class_09_diagram_only",
+      "field": "after_prepare_ms",
+      "report": 382.13,
+      "receipt": 455.8
+    }
+  ]
+}

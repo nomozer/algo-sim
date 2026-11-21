@@ -1,0 +1,42 @@
+{
+  "run_id": "target-invariant-regular-solid-semantics",
+  "generated_at_utc": "2026-11-14T07:25:58.179662+00:00",
+  "product_commit": "bdc34a89e32c77fd73bff7b38b72d3a3496657e1",
+  "measured_system": "2a18f935e4c29462b0495ff6b0fec46df88e215e0bedcaba84668ec202af62d1",
+  "cache_version": "136",
+  "environment": {
+    "ALLOW_LIVE_AI": "0",
+    "HYBRID_ROUTE_MODE": "local-first",
+    "live_ai_calls": 0
+  },
+  "head": "bcba912e82661ccc8b186e6d93cd2bf7928f06bc",
+  "dataset_partition": "DEVELOPMENT_EXPOSED (REAL27)",
+  "status": "SERVED",
+  "answer_exact": {
+    "q1": {
+      "coef": "1/12",
+      "dim": 0,
+      "unit": null
+    }
+  },
+  "scene_kind": "SIMILARITY_SCALE_ILLUSTRATIVE",
+  "source_goal_completion": {
+    "schema_version": "source-goal-completion/1",
+    "source_goal_fully_satisfied": false,
+    "numeric_answer_shown": false,
+    "goals": [
+      {
+        "goal_id": "q1",
+        "source_request": "TRIGONOMETRIC_VALUE_OF_ANGLE",
+        "function": "cos",
+        "simulation_objective": "ANGLE_CONSTRUCTED_AND_VERIFIED",
+        "state": "GOAL_VISUALIZATION_READY",
+        "numeric_source_goal": "NOT_ANSWERED",
+        "value_defined": true
+      }
+    ]
+  },
+  "hand_check": "edge 1: AC·BM with BM median of BCD: cos(AC, BM) = √3/6 ⇒ cos² = 1/12",
+  "midpoint": "M of CD built by the kernel midpoint primitive (checked by the independent scene checker)",
+  "verdict": "SERVED_SIMILARITY_SCALE (numeric cos NOT_ANSWERED)"
+}

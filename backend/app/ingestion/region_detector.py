@@ -106,6 +106,8 @@ class ImageQualityReport:
     is_low_light: bool
     is_blank_or_unreadable: bool
     enhanced_low_light: bool
+    has_shadow: bool = False
+    enhanced_shadow: bool = False
 
 
 @dataclass(frozen=True)
@@ -127,6 +129,25 @@ class RegionDetectionResult:
     has_associated_figure: bool
     completeness_confidence: float
     ambiguous_multi_problem: bool
+    #: Crop chứa TRỌN mọi khối bố cục của trang (kể cả khối nhiễu) và trang chưa bị cắt nền bàn ⇒ ảnh đầy đủ chỉ
+    #: thêm lề trống, đọc lại vô ích.
+    crop_holds_all_content: bool = False
+    #: Gốc toạ độ của `prepared_image` trong ảnh làm việc (nơi `blocks` được đo), để OCR local
+    #: đặt hộp bao chữ/hình vào cùng hệ toạ độ. `(0, 0)` khi `prepared_image` là cả trang làm việc.
+    prepared_origin: tuple[int, int] = (0, 0)
+    #: Kích thước vùng nguồn (trong ảnh làm việc) trước khi mã hoá `prepared_image` (có thể bị thu nhỏ).
+    prepared_source_size: tuple[int, int] | None = None
+
+    def prepared_figure_bboxes(self) -> tuple[tuple[int, int, int, int], ...]:
+        ox, oy = self.prepared_origin
+        sw, sh = self.prepared_source_size or (self.prepared_image.width, self.prepared_image.height)
+        kx = self.prepared_image.width / float(max(1, sw))
+        ky = self.prepared_image.height / float(max(1, sh))
+        return tuple(
+            (int((b.bbox.x0 - ox) * kx), int((b.bbox.y0 - oy) * ky), int((b.bbox.x1 - ox) * kx), int((b.bbox.y1 - oy) * ky))
+            for b in self.blocks
+            if b.kind == "figure"
+        )
 
 
 def _encode_rgb_to_normalized(
@@ -184,7 +205,7 @@ def _histogram_percentile(hist: list[int], total: int, pct: float) -> int:
 
 
 def assess_and_enhance_image(rgb: Image.Image) -> tuple[Image.Image, ImageQualityReport]:
-    """Đánh giá chất lượng sáng/nét và nâng sáng nhẹ khi ảnh chụp thiếu sáng."""
+    """Đánh giá chất lượng sáng/nét, cân bằng bóng đổ cục bộ và nâng sáng khi ảnh chụp thiếu sáng."""
     w, h = rgb.size
     sample = rgb
     if max(w, h) > 640:
@@ -194,19 +215,67 @@ def assess_and_enhance_image(rgb: Image.Image) -> tuple[Image.Image, ImageQualit
     hist = gray.histogram()
     total = sample.size[0] * sample.size[1]
     mean_luma = ImageStat.Stat(gray).mean[0] if total > 0 else 0.0
+    p1 = _histogram_percentile(hist, total, 0.005)
     p5 = _histogram_percentile(hist, total, 0.05)
     p95 = _histogram_percentile(hist, total, 0.95)
-    dyn = max(0, p95 - p5)
+    p99 = _histogram_percentile(hist, total, 0.995)
+    dyn = max(0, p95 - p5, p99 - p1)
     edges = gray.filter(ImageFilter.FIND_EDGES)
     edge_energy = ImageStat.Stat(edges).mean[0] if total > 0 else 0.0
 
-    is_blank = dyn < 12 and edge_energy < 1.8
-    is_low_light = (mean_luma < 108.0 or p95 < 175) and not is_blank
+    is_blank = (p95 - p5) < 12 and (p99 - p1) < 18 and edge_energy < 1.8
+
+    # Phát hiện bóng đổ không đều (uneven illumination / shadow) trên nền giấy trung tính ở vùng trung tâm.
+    has_shadow = False
+    enhanced_shadow = False
+    gw, gh = 80, 60
+    bg_v_bytes = b""
+    bg_s_bytes = b""
+    v_p90 = 240
+    if not is_blank and w >= 120 and h >= 120:
+        small_hsv = sample.resize((gw, gh), Image.Resampling.BILINEAR).convert("HSV")
+        _, s_ch, v_ch = small_hsv.split()
+        bg_v = v_ch.filter(ImageFilter.MaxFilter(5)).filter(ImageFilter.BoxBlur(2))
+        bg_s = s_ch.filter(ImageFilter.MinFilter(5)).filter(ImageFilter.BoxBlur(2))
+        bg_v_bytes = bg_v.tobytes()
+        bg_s_bytes = bg_s.tobytes()
+        central_paper_v: list[int] = []
+        x_min, x_max = gw // 5, (gw * 4) // 5
+        y_min, y_max = gh // 6, (gh * 5) // 6
+        for gy in range(y_min, y_max):
+            row_off = gy * gw
+            for gx in range(x_min, x_max):
+                idx = row_off + gx
+                if bg_s_bytes[idx] <= 68 and bg_v_bytes[idx] >= 65:
+                    central_paper_v.append(bg_v_bytes[idx])
+        if len(central_paper_v) >= (gw * gh) // 6:
+            central_paper_v.sort()
+            v_p10 = central_paper_v[len(central_paper_v) // 10]
+            v_p90 = central_paper_v[(len(central_paper_v) * 9) // 10]
+            has_shadow = v_p90 >= 170 and v_p10 <= 145 and (v_p90 - v_p10) >= 52
+
+    is_low_light = ((mean_luma < 108.0 or p95 < 175) and not is_blank) or has_shadow
 
     enhanced = False
     out_rgb = rgb
-    if is_low_light and dyn >= 14:
-        stretched = ImageOps.autocontrast(rgb, cutoff=(0.4, 0.4))
+    if has_shadow and bg_v_bytes and bg_s_bytes:
+        alpha_grid = bytearray(gw * gh)
+        target_v = float(max(210, v_p90))
+        for idx in range(gw * gh):
+            lv = bg_v_bytes[idx]
+            ls = bg_s_bytes[idx]
+            if ls <= 68 and 65 <= lv < v_p90:
+                gain = min(2.9, target_v / float(max(65, lv)))
+                alpha_grid[idx] = min(255, max(0, int(round(((gain - 1.0) / 2.0) * 255.0))))
+        alpha_small = Image.frombytes("L", (gw, gh), bytes(alpha_grid)).filter(ImageFilter.BoxBlur(2))
+        alpha_full = alpha_small.resize((w, h), Image.Resampling.BILINEAR)
+        alpha_rgb = Image.merge("RGB", (alpha_full, alpha_full, alpha_full))
+        delta = ImageChops.multiply(rgb, alpha_rgb)
+        out_rgb = ImageChops.add(rgb, ImageChops.add(delta, delta))
+        enhanced = True
+        enhanced_shadow = True
+    elif is_low_light and dyn >= 14:
+        stretched = ImageOps.autocontrast(rgb, cutoff=(0.2, 0.2))
         # Nâng gamma nhẹ (0.82) để kéo nền giấy tối lên sáng rõ mà giữ nguyên nét mực đậm.
         lut = [min(255, int(round(((i / 255.0) ** 0.82) * 255.0))) for i in range(256)]
         out_rgb = stretched.point(lut * 3)
@@ -221,6 +290,8 @@ def assess_and_enhance_image(rgb: Image.Image) -> tuple[Image.Image, ImageQualit
         is_low_light=is_low_light,
         is_blank_or_unreadable=is_blank,
         enhanced_low_light=enhanced,
+        has_shadow=has_shadow,
+        enhanced_shadow=enhanced_shadow,
     )
 
 
@@ -286,8 +357,12 @@ def detect_page_boundary(rgb: Image.Image) -> tuple[BoundingBox, bool]:
 
     # Tìm thành phần liên thông lớn nhất của mặt giấy để không lấy nhầm vật sáng lẻ ở góc bàn.
     paper_mask = bytearray(gw * gh)
+    shadow_paper_s = max(32, i_s_med + 20)
+    shadow_paper_v = max(72, b_v_med + 16)
     for idx in range(gw * gh):
-        if v_bytes[idx] >= v_thresh and s_bytes[idx] <= s_thresh:
+        if (v_bytes[idx] >= v_thresh and s_bytes[idx] <= s_thresh) or (
+            colored_desk and s_bytes[idx] <= shadow_paper_s and v_bytes[idx] >= shadow_paper_v
+        ):
             paper_mask[idx] = 1
 
     visited = bytearray(gw * gh)
@@ -358,6 +433,32 @@ def detect_page_boundary(rgb: Image.Image) -> tuple[BoundingBox, bool]:
     )
     if trimmed.width < 80 or trimmed.height < 80:
         return full, False
+
+    # Bảo vệ chống cắt nhầm dải giấy xám gắn trên nền đệm trắng (#FFFFFF): trang giữ lại phải chứa >= 85% mực thích nghi.
+    ink_chk, isx, isy = _adaptive_ink_image(rgb, max_side=360)
+    iw, ih = ink_chk.size
+    idata = ink_chk.tobytes()
+    mx = max(1, int(round(iw * 0.025)))
+    my = max(1, int(round(ih * 0.025)))
+    px = max(2, int(round(iw * 0.03)))
+    py = max(2, int(round(ih * 0.03)))
+    tx0 = max(0, int(trimmed.x0 / isx) - px)
+    ty0 = max(0, int(trimmed.y0 / isy) - py)
+    tx1 = min(iw, int(math.ceil(trimmed.x1 / isx)) + px)
+    ty1 = min(ih, int(math.ceil(trimmed.y1 / isy)) + py)
+    tot_ink = 0
+    kept_ink = 0
+    for yy in range(my, ih - my):
+        row_off = yy * iw
+        in_y = ty0 <= yy < ty1
+        for xx in range(mx, iw - mx):
+            if idata[row_off + xx]:
+                tot_ink += 1
+                if in_y and tx0 <= xx < tx1:
+                    kept_ink += 1
+    if tot_ink >= 50 and (kept_ink / float(tot_ink)) < 0.85:
+        return full, False
+
     return trimmed, True
 
 
@@ -679,6 +780,50 @@ def _expand_to_clear_ink_border(
     return cur
 
 
+def _has_faint_ink_outside_bbox(
+    rgb: Image.Image,
+    bbox: BoundingBox,
+    *,
+    max_side: int = 640,
+    faint_contrast_thresh: int = 6,
+    min_faint_pixels: int = 8,
+) -> bool:
+    """Kiểm tra có nét chữ/ký hiệu mờ (`diff >= 6`, dưới ngưỡng nhị phân 20) nằm ngoài `bbox` hay không."""
+    w, h = rgb.size
+    if w <= 0 or h <= 0:
+        return False
+    work = ImageOps.grayscale(rgb)
+    if max(w, h) > max_side:
+        scale = max_side / float(max(w, h))
+        work = work.resize(
+            (max(16, int(round(w * scale))), max(16, int(round(h * scale)))),
+            Image.Resampling.BILINEAR,
+        )
+    iw, ih = work.size
+    sx, sy = w / float(iw), h / float(ih)
+    blur_radius = max(8, min(22, max(iw, ih) // 32))
+    diff = ImageChops.subtract(work.filter(ImageFilter.BoxBlur(blur_radius)), work)
+    bx0 = max(0, int(math.floor(bbox.x0 / sx)))
+    by0 = max(0, int(math.floor(bbox.y0 / sy)))
+    bx1 = min(iw, int(math.ceil(bbox.x1 / sx)))
+    by1 = min(ih, int(math.ceil(bbox.y1 / sy)))
+    margin_x = max(2, int(round(iw * 0.025)))
+    margin_y = max(2, int(round(ih * 0.025)))
+    diff_bytes = diff.tobytes()
+    faint_count = 0
+    for y in range(margin_y, ih - margin_y):
+        row_off = y * iw
+        in_y = by0 <= y < by1
+        for x in range(margin_x, iw - margin_x):
+            if in_y and bx0 <= x < bx1:
+                continue
+            if diff_bytes[row_off + x] >= faint_contrast_thresh:
+                faint_count += 1
+                if faint_count >= min_faint_pixels:
+                    return True
+    return False
+
+
 def _group_problem_clusters(
     blocks: list[LayoutBlock],
     img_w: int,
@@ -786,6 +931,33 @@ def _group_problem_clusters(
         cbox, ctexts, cfigs = merged_clusters[best_idx]
         merged_clusters[best_idx] = (cbox.union(fb.bbox), ctexts, cfigs + [fb])
 
+    # Ghép bố cục sandwich 1 bài thi (`[Thân đề trên] -> [Hình vẽ ở giữa] -> [Câu hỏi / Đáp án A.B.C.D bên dưới]`):
+    # Khi hình vẽ nằm kẹp sát giữa hai cụm chữ và cụm dưới chỉ là dòng câu hỏi / phương án ngắn không có hình riêng.
+    if len(merged_clusters) >= 2:
+        bridged: list[tuple[BoundingBox, list[LayoutBlock], list[LayoutBlock]]] = [merged_clusters[0]]
+        max_fig_gap = max(45, int(round(img_h * 0.06)))
+        for cur_box, cur_texts, cur_figs in merged_clusters[1:]:
+            prev_box, prev_texts, prev_figs = bridged[-1]
+            if prev_texts and cur_texts and (not prev_figs or not cur_figs) and (prev_figs or cur_figs):
+                t_y0_prev = min(tb.bbox.y0 for tb in prev_texts)
+                t_y1_prev = max(tb.bbox.y1 for tb in prev_texts)
+                t_y0_cur = min(tb.bbox.y0 for tb in cur_texts)
+                t_y1_cur = max(tb.bbox.y1 for tb in cur_texts)
+                cur_text_h = t_y1_cur - t_y0_cur
+                has_sandwich_fig = cur_text_h <= img_h * 0.24 and any(
+                    fb.bbox.y0 >= t_y0_prev - 8
+                    and fb.bbox.y1 >= t_y1_prev
+                    and fb.bbox.y0 <= t_y0_cur
+                    and (fb.bbox.y0 - t_y1_prev) <= max_fig_gap
+                    and (t_y0_cur - fb.bbox.y1) <= max_fig_gap
+                    for fb in (prev_figs + cur_figs)
+                )
+                if has_sandwich_fig:
+                    bridged[-1] = (prev_box.union(cur_box), prev_texts + cur_texts, prev_figs + cur_figs)
+                    continue
+            bridged.append((cur_box, cur_texts, cur_figs))
+        merged_clusters = bridged
+
     return merged_clusters
 
 
@@ -828,7 +1000,7 @@ def detect_problem_regions(
         else enhanced_rgb
     )
 
-    pre_blocks, _, _, _ = _segment_layout_blocks(working_rgb)
+    pre_blocks, pre_ink_mask, pre_sx, pre_sy = _segment_layout_blocks(working_rgb)
     has_text_for_skew = sum(b.ink_pixels for b in pre_blocks if b.kind == "text") >= 350
     if has_text_for_skew:
         working_rgb, skew_angle, deskew_applied = estimate_and_correct_skew(working_rgb)
@@ -844,12 +1016,18 @@ def detect_problem_regions(
         if quality.enhanced_low_light
         else normalized
     )
-    # Trang làm việc (đã tách nền bàn học / xoay thẳng khi tin cậy).
-    page_work_norm = (
-        _encode_rgb_to_normalized(working_rgb, normalized)
-        if (quality.enhanced_low_light or desk_trimmed or deskew_applied)
-        else normalized
-    )
+    _page_work_norm_cache: NormalizedImage | None = None
+
+    def _get_page_work_norm() -> NormalizedImage:
+        nonlocal _page_work_norm_cache
+        if _page_work_norm_cache is None:
+            if not desk_trimmed and not deskew_applied:
+                _page_work_norm_cache = full_orig_norm
+            elif quality.enhanced_low_light or desk_trimmed or deskew_applied:
+                _page_work_norm_cache = _encode_rgb_to_normalized(working_rgb, normalized)
+            else:
+                _page_work_norm_cache = normalized
+        return _page_work_norm_cache
 
     def _to_orig_bbox(wbox: BoundingBox) -> BoundingBox:
         base_box = page_bbox if desk_trimmed else BoundingBox(0, 0, orig_w, orig_h)
@@ -873,14 +1051,17 @@ def detect_problem_regions(
             )
         return wbox
 
-    blocks, ink_mask, sx, sy = _segment_layout_blocks(working_rgb)
+    if deskew_applied:
+        blocks, ink_mask, sx, sy = _segment_layout_blocks(working_rgb)
+    else:
+        blocks, ink_mask, sx, sy = pre_blocks, pre_ink_mask, pre_sx, pre_sy
     meaningful = [b for b in blocks if b.kind != "noise"]
     total_meaningful_ink = sum(b.ink_pixels for b in meaningful)
 
     if not meaningful or total_meaningful_ink <= 0:
         return RegionDetectionResult(
             full_image=full_orig_norm,
-            prepared_image=page_work_norm,
+            prepared_image=_get_page_work_norm(),
             quality=quality,
             page_bbox=page_bbox,
             desk_trimmed=desk_trimmed,
@@ -964,7 +1145,7 @@ def detect_problem_regions(
         any_fig = any(c.has_figure for c in candidates)
         return RegionDetectionResult(
             full_image=full_orig_norm,
-            prepared_image=page_work_norm,
+            prepared_image=_get_page_work_norm(),
             quality=quality,
             page_bbox=page_bbox,
             desk_trimmed=desk_trimmed,
@@ -978,6 +1159,7 @@ def detect_problem_regions(
             has_associated_figure=any_fig,
             completeness_confidence=0.85,
             ambiguous_multi_problem=ambiguous,
+            prepared_source_size=(work_w, work_h),
         )
 
     # Bảo toàn dữ kiện toán học (§13): nếu chỉ có 1 bài mà diện tích crop tiết kiệm < 15%
@@ -1002,7 +1184,7 @@ def detect_problem_regions(
     ):
         return RegionDetectionResult(
             full_image=full_orig_norm,
-            prepared_image=page_work_norm,
+            prepared_image=_get_page_work_norm(),
             quality=quality,
             page_bbox=page_bbox,
             desk_trimmed=desk_trimmed,
@@ -1016,6 +1198,7 @@ def detect_problem_regions(
             has_associated_figure=chosen.has_figure,
             completeness_confidence=round(ink_coverage, 3),
             ambiguous_multi_problem=False,
+            prepared_source_size=(work_w, work_h),
         )
 
     cropped_rgb = working_rgb.crop((chosen.bbox.x0, chosen.bbox.y0, chosen.bbox.x1, chosen.bbox.y1))
@@ -1037,4 +1220,20 @@ def detect_problem_regions(
         has_associated_figure=chosen.has_figure,
         completeness_confidence=chosen.completeness_confidence,
         ambiguous_multi_problem=False,
+        prepared_origin=(chosen.bbox.x0, chosen.bbox.y0),
+        prepared_source_size=(chosen.bbox.x1 - chosen.bbox.x0, chosen.bbox.y1 - chosen.bbox.y0),
+        # Đã cắt nền bàn ⇒ phần ngoài trang chưa được phân khối: không khẳng định được. Khối "nhiễu" (dòng sát
+        # mép, số trang) cũng phải nằm trong crop — một dòng cuối bị xếp nhầm là nhiễu mép vẫn được đọc lại.
+        # Đồng thời yêu cầu diện tích crop >= 25% trang (`area_ratio >= 0.25`) để tránh trường hợp bộ tách khối
+        # bỏ sót dòng chữ mờ/mảnh ở phần còn lại của trang làm `all(...)` đúng tầm thường trên một vùng cắt quá nhỏ.
+        crop_holds_all_content=(
+            not desk_trimmed
+            and area_ratio >= 0.25
+            and all(
+                chosen.bbox.x0 <= b.bbox.x0 and chosen.bbox.y0 <= b.bbox.y0
+                and b.bbox.x1 <= chosen.bbox.x1 and b.bbox.y1 <= chosen.bbox.y1
+                for b in blocks
+            )
+            and not _has_faint_ink_outside_bbox(working_rgb, chosen.bbox)
+        ),
     )

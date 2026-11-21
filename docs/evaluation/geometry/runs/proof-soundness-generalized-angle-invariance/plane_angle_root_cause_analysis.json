@@ -1,0 +1,29 @@
+{
+  "run_id": "proof-soundness-generalized-angle-invariance",
+  "generated_at_utc": "2026-11-14T12:35:21.414052+00:00",
+  "product_commit": "c54db0da0c792c2ba0399acc8e9df992d2d270c3",
+  "measured_system": "610b4ee1e3227bc44f0659aea5d0dfc7f7a827aff622605db2b9571fb980fb80",
+  "cache_version": "137",
+  "environment": {
+    "ALLOW_LIVE_AI": "0",
+    "HYBRID_ROUTE_MODE": "local-first",
+    "live_ai_calls": 0
+  },
+  "head": "94281be581617a67921f295474dbd8e698dade4b",
+  "root_cause": "an unstructured angle triple whose vertex convention (first) differs from the notation of the claim (middle), and a verifier that checked steps internally but not against the asked goal, the witness vertex or the kernel value",
+  "counterexample_SA_eq_2AB": {
+    "angle_at_B_SBA": "1/5",
+    "angle_at_S_BSA": "4/5",
+    "plane_angle_hand": "1/5",
+    "same_on_another_c": "1/5",
+    "reading": "cos² 1/5 at B (the plane angle, independent of c) vs 4/5 at S"
+  },
+  "fix": [
+    "structured witness {vertex, ray_1, ray_2, domain}",
+    "goal binding (goal_id + asked planes/lines)",
+    "shape fixed AT the witness vertex",
+    "stated cos² recomputed",
+    "engine TI-6 kernel value binding",
+    "adapter: drawn angle = witness"
+  ]
+}

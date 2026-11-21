@@ -1,0 +1,109 @@
+{
+  "name": "backend_pytest",
+  "command": "D:\\Documents\\projects\\algo-sim\\backend\\.venv\\Scripts\\python.exe -m pytest -c backend/pytest.ini backend/tests -q",
+  "argv": [
+    "D:\\Documents\\projects\\algo-sim\\backend\\.venv\\Scripts\\python.exe",
+    "-m",
+    "pytest",
+    "-c",
+    "backend/pytest.ini",
+    "backend/tests",
+    "-q"
+  ],
+  "cwd": "D:\\Documents\\projects\\algo-sim\\.superpowers\\worktrees\\local-first-geometry-understanding",
+  "started_at_utc": "2026-11-15T16:42:18.317939+00:00",
+  "start_snapshot": {
+    "head_commit": "35053da80ea125582d15eda71cd70f7dbcb85165",
+    "product_paths_sha256": "e46701604bc1e670189efc7d90f13d6092fb43972f8b7f49dd0922d6bdd64e1d",
+    "product_path_count": 342,
+    "hash_policy": "tracked backend/app + frontend/src, LF normalized; includes tests",
+    "working_product_source_sha256": "b343cdbafd0f0d2c4e2e0b76755a1f80facbac571b13ab9c43403b68a94446a8",
+    "working_product_source_count": 198,
+    "working_source_policy": "all working backend/app + frontend/src including untracked; skip pycache and freeze TEST_ONLY_GLOBS"
+  },
+  "ended_at_utc": "2026-11-15T16:52:30.410290+00:00",
+  "duration_seconds": 611.844,
+  "exit_code": 0,
+  "raw_output_sha256": "2b583ea2fa80be2a100f50b11db07cc17ccb1166b188d7ab8c301de40633391b",
+  "raw_output_bytes": 17346,
+  "raw_output_retention": "ignored local .superpowers only; never staged",
+  "end_snapshot": {
+    "head_commit": "35053da80ea125582d15eda71cd70f7dbcb85165",
+    "product_paths_sha256": "e46701604bc1e670189efc7d90f13d6092fb43972f8b7f49dd0922d6bdd64e1d",
+    "product_path_count": 342,
+    "hash_policy": "tracked backend/app + frontend/src, LF normalized; includes tests",
+    "working_product_source_sha256": "b343cdbafd0f0d2c4e2e0b76755a1f80facbac571b13ab9c43403b68a94446a8",
+    "working_product_source_count": 198,
+    "working_source_policy": "all working backend/app + frontend/src including untracked; skip pycache and freeze TEST_ONLY_GLOBS"
+  },
+  "counts": {
+    "passed": 14825,
+    "skipped": 7,
+    "deselected": 3,
+    "xfailed": 17
+  },
+  "summary": "14825 passed, 7 skipped, 3 deselected, 17 xfailed, 1 warning in 608.07s (0:10:08)",
+  "failure_node_ids": [],
+  "source_unchanged_during_command": true,
+  "verdict": "PASS",
+  "previous_attempts": [
+    {
+      "name": "backend_pytest",
+      "command": "D:\\Documents\\projects\\algo-sim\\backend\\.venv\\Scripts\\python.exe -m pytest -c backend/pytest.ini backend/tests -q",
+      "argv": [
+        "D:\\Documents\\projects\\algo-sim\\backend\\.venv\\Scripts\\python.exe",
+        "-m",
+        "pytest",
+        "-c",
+        "backend/pytest.ini",
+        "backend/tests",
+        "-q"
+      ],
+      "cwd": "D:\\Documents\\projects\\algo-sim\\.superpowers\\worktrees\\local-first-geometry-understanding",
+      "started_at_utc": "2026-11-15T15:42:40.446059+00:00",
+      "start_snapshot": {
+        "head_commit": "22606ed7493a661dc2f7563a45be846bc81295d4",
+        "product_paths_sha256": "2c6905ae1ecd344d5b2976460b7c1e3dfca60a87bcdef1e6024d36ad10c9cb80",
+        "product_path_count": 342,
+        "hash_policy": "tracked backend/app + frontend/src, LF normalized; includes tests",
+        "working_product_source_sha256": "8fe15858aa68eded0651a255ade2f3a737ede2f1b97a6a154cdce73ee9e9da8d",
+        "working_product_source_count": 198,
+        "working_source_policy": "all working backend/app + frontend/src including untracked; skip pycache and freeze TEST_ONLY_GLOBS"
+      },
+      "ended_at_utc": "2026-11-15T15:52:52.427486+00:00",
+      "duration_seconds": 611.704,
+      "exit_code": 1,
+      "raw_output_sha256": "2704bb6dceaa725a1349d1093b9b65eabb16c784041ca5eafb167f35fffe0934",
+      "raw_output_bytes": 28980,
+      "raw_output_retention": "ignored local .superpowers only; never staged",
+      "end_snapshot": {
+        "head_commit": "22606ed7493a661dc2f7563a45be846bc81295d4",
+        "product_paths_sha256": "2c6905ae1ecd344d5b2976460b7c1e3dfca60a87bcdef1e6024d36ad10c9cb80",
+        "product_path_count": 342,
+        "hash_policy": "tracked backend/app + frontend/src, LF normalized; includes tests",
+        "working_product_source_sha256": "8fe15858aa68eded0651a255ade2f3a737ede2f1b97a6a154cdce73ee9e9da8d",
+        "working_product_source_count": 198,
+        "working_source_policy": "all working backend/app + frontend/src including untracked; skip pycache and freeze TEST_ONLY_GLOBS"
+      },
+      "counts": {
+        "failed": 7,
+        "passed": 14813,
+        "skipped": 7,
+        "deselected": 3,
+        "xfailed": 17
+      },
+      "summary": "7 failed, 14813 passed, 7 skipped, 3 deselected, 17 xfailed, 1 warning in 607.95s (0:10:07)",
+      "failure_node_ids": [
+        "backend\\tests\\geometry\\test_compositional_semantics_goals.py::test_trigonometric_wording_never_answers_another_object_or_becomes_a_fact[Cho",
+        "backend\\tests\\geometry\\test_hybrid4_mathematical_reliability.py::test_source_gate_kernel_and_adapter_agree_with_independent_oracle[oblique-prism]",
+        "backend\\tests\\geometry\\test_hybrid4_mathematical_reliability.py::test_intersection_degeneracy_and_relation_edge_cases_match_hand_oracles[line-perp-line-is-not-height]",
+        "backend\\tests\\geometry\\test_scope_census_closure.py::test_census_inventory_complete",
+        "backend\\tests\\geometry\\test_text_to_geometry_functions.py::test_registry_dong_va_khai_bao_ham_khong_co_toa_do",
+        "backend\\tests\\test_hybrid_preview_api.py::test_health_with_preview_off_never_loads_route_d",
+        "backend\\tests\\test_hybrid_preview_fixtures.py::test_committed_fixtures_regenerate_identically_from_the_endpoint"
+      ],
+      "source_unchanged_during_command": true,
+      "verdict": "FAIL"
+    }
+  ]
+}

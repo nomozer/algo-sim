@@ -34,7 +34,7 @@ import pytest
 from app.simulation.error_codes import ErrorCode
 from app.simulation.semantic_program.domain_profile import (
     DOMAIN_HINH_HOC,
-    DOMAIN_TIN_HOC,
+    DOMAIN_NGOAI_PHAM_VI,
     _MANH_MOI_NGHIA_VU,
     co_duong_thuc_thi,
     detect_domain,
@@ -88,7 +88,7 @@ def test_de_CO_NANG_LUC_qua_ca_HAI_ve_cong(de, kind):
 def test_de_TIN_HOC_KHONG_bi_keo_sang_hinh_hoc(de):
     """Phủ quyết Tin học đứng trước danh từ khối — bảo vệ ở tầng miền, nên
     `co_duong_thuc_thi` không bao giờ được gọi tới cho nhóm này."""
-    assert detect_domain(de) == DOMAIN_TIN_HOC, de
+    assert detect_domain(de) == DOMAIN_NGOAI_PHAM_VI, de
     assert not co_duong_thuc_thi(de, detect_domain(de)), de
 
 
@@ -156,7 +156,7 @@ def test_khong_manh_moi_thi_KHONG_mien():
     assert not co_duong_thuc_thi("Cho hình lập phương ABCD.A'B'C'D'.",
                                  DOMAIN_HINH_HOC)
     assert not co_duong_thuc_thi(
-        "Cho hình chóp S.ABC. Tính thể tích.", DOMAIN_TIN_HOC)
+        "Cho hình chóp S.ABC. Tính thể tích.", DOMAIN_NGOAI_PHAM_VI)
 
 
 # ══ BỘ CHẤM MỆNH ĐỀ: HỎI CHECKER, KHÔNG TÌM `True` ═══════════════════════

@@ -1,0 +1,18 @@
+diff --git a/backend/app/simulation/geometry_functions/registry.py b/backend/app/simulation/geometry_functions/registry.py
+index 0000000..1111111 100644
+--- a/backend/app/simulation/geometry_functions/registry.py
++++ b/backend/app/simulation/geometry_functions/registry.py
+@@ -9402,11 +9402,11 @@
+                     prism_noun = (rf'(?:(?:cho|xét)\s+)?(?:(?:hình|khối)\s+)?(?:lăng trụ(?:\s+(?:đứng|đều|xiên))?'
+                                   rf'(?:\s+(?P<dagiac>{"|".join(da_giac)}))?(?:\s+(?:đứng|đều|xiên))?|hình hộp chữ nhật)\s+{solid}[.\s]*')
+                     atomic_forms = {
+-                        'pyramid': rf'(?:(?:cho|xét)\s+)?(?:hình|khối) chóp\s+{solid}[.\s]*',
++                        'pyramid': rf'(?:(?:cho|xét|một|ta\s+có)\s+)?(?:hình|khối) chóp\s+{solid}[.\s]*',
+                         'regular_pyramid': reg_pyr,
+                         'prism': prism_noun,
+                         'regular_polygon': rf'(?:đáy\s+{labels}\s+là\s+)?{shape}[.\s]*',
+-                        'rectangle': rf'(?:cho\s+)?(?:hình hộp chữ nhật\s+{solid}|(?:đáy\s+{labels}\s+là\s+)?hình chữ nhật\s*(?:{labels})?)[.\s]*',
++                        'rectangle': rf'(?:(?:đề\s+yêu\s+cầu\s+khảo\s+sát|cho|xét|một)\s+)?(?:hình hộp chữ nhật\s+{solid}|(?:đáy\s+{labels}\s+là\s+)?hình chữ nhật\s*(?:{labels})?)[.\s]*',
+                         'parallelogram': rf'(?:(?:có\s+)?(?:mặt\s+)?đáy(?:\s+{labels})?\s+là\s+(?:một\s+)?)?hình bình hành(?:\s+{labels})?[.\s]*',
+                         'rhombus': rf'(?:(?:có\s+)?(?:mặt\s+)?đáy(?:\s+{labels})?\s+là\s+(?:một\s+)?)?hình thoi(?:\s+{labels})?(?:\s+(?:có\s+)?cạnh\s*(?:bằng|=)?\s*{number})?[.\s]*',
+                         'trapezoid': rf'(?:(?:có\s+)?(?:mặt\s+)?đáy(?:\s+{labels})?\s+là\s+(?:một\s+)?)?hình thang(?:\s+vuông)?(?:\s+{labels})?(?:\s+(?:với|có)\s+hai\s+đáy(?:\s+là)?\s+{_P1}{_P1}\s+(?:và|,)\s+{_P1}{_P1}|\s*\(\s*{_P1}{_P1}\s*(?://|∥|song\s+song(?:\s+với)?)\s*{_P1}{_P1}\s*\))?[.\s]*',

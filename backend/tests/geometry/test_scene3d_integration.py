@@ -81,19 +81,15 @@ def test_CUNG_chuong_trinh_cho_CUNG_scene3d():
     assert a == b
 
 
-def test_bai_TIN_HOC_khong_co_scene3d():
+def test_chuong_trinh_KHONG_co_vat_hinh_hoc_thi_khong_co_scene3d():
     """Cảnh rỗng ⇒ `None`, không phải `{"objects": []}`. Một khung 3D trống
-    không nói được gì, và bày nó ra là mời người học đi tìm thứ không có."""
+    không nói được gì, và bày nó ra là mời người học đi tìm thứ không có.
+    (/13: bản trước dùng bài Tin học "tìm max" trên mảng; luật được khoá bằng một chương trình chỉ có vô hướng.)"""
     spec = SemanticProgramSpec.model_validate({
-        "spec_version": "1.0", "title": "Tìm số lớn nhất",
-        "memory_declarations": [
-            {"name": "day", "type": "array", "initial_value": [3, 1, 2]},
-            {"name": "max_val", "type": "int", "initial_value": 0},
-        ],
-        "statements": [{"kind": "assign", "target_var": "max_val",
-                        "expr": {"kind": "index", "container": "day",
-                                 "index": {"kind": "literal", "value": 0}}}],
-        "visual_bindings": {},
+        "spec_version": "1.0", "title": "Chỉ vô hướng",
+        "memory_declarations": [{"name": "k", "type": "int", "initial_value": 0}],
+        "statements": [{"kind": "assign", "target_var": "k",
+                        "expr": {"kind": "literal", "value": 3}}],
     })
     assert _dung_scene3d(spec) is None
 

@@ -1,0 +1,532 @@
+{
+  "run_id": "independent-geometry-plane-constraints",
+  "generated_at_utc": "2026-11-13T15:50:38.290641+00:00",
+  "head": "48409e243e8a9c9ed82523bcc7eaca874831ba3d",
+  "items": 27,
+  "first_failing_layer_counts": {
+    "CRITICAL_FACTS_OCR": 2,
+    "LOCAL_PARSER_OR_SOURCE_GATE": 19,
+    "CONFIRMATION_OR_OTHER": 2,
+    "NONE": 4
+  },
+  "learner_confirmation_burden": {
+    "flagged_spans_total": 100,
+    "edits_total": 26,
+    "class": "SCRIPTED_NOT_REAL_STUDENT"
+  },
+  "reading": "an item fails at the parser / Source Gate when even the agent's correct transcription is not served; OCR is blamed only when the transcription would serve and a critical fact is missing",
+  "ground_truth": "AGENT_TRANSCRIBED_UNVERIFIED; region AGENT_ANNOTATED_UNVERIFIED",
+  "rows": [
+    {
+      "case_id": "vmmu_r247",
+      "IMAGE_REGION_CORRECT": true,
+      "OCR_TEXT_CORRECT": "NOT_MEASURED_PER_IMAGE (aggregate CER in earlier runs)",
+      "CRITICAL_FACTS_CORRECT": false,
+      "missing_facts": [
+        "solid: ABCD.A'B'C'D'"
+      ],
+      "SOURCE_GATE_ACCEPTED_ON_TRANSCRIPTION": true,
+      "text_reason": null,
+      "GOAL_CONSTRUCTION_VERIFIED": false,
+      "INTERACTIVE_SCENE_VERIFIED": "NOT_MEASURED_PER_IMAGE (browser E2E covers the scene types from text)",
+      "first_failing_layer": "CRITICAL_FACTS_OCR",
+      "image_reason": "LIVE_AI_DISABLED",
+      "confirmation": {
+        "flagged_spans": 7,
+        "edits": 2,
+        "confirms": 4
+      }
+    },
+    {
+      "case_id": "vmmu_r254",
+      "IMAGE_REGION_CORRECT": true,
+      "OCR_TEXT_CORRECT": "NOT_MEASURED_PER_IMAGE (aggregate CER in earlier runs)",
+      "CRITICAL_FACTS_CORRECT": false,
+      "missing_facts": [
+        "solid: ABC.A'B'C'",
+        "length: AA'=2√13a",
+        "goal: A'ABC"
+      ],
+      "SOURCE_GATE_ACCEPTED_ON_TRANSCRIPTION": false,
+      "text_reason": "LIVE_AI_DISABLED",
+      "GOAL_CONSTRUCTION_VERIFIED": false,
+      "INTERACTIVE_SCENE_VERIFIED": "NOT_MEASURED_PER_IMAGE (browser E2E covers the scene types from text)",
+      "first_failing_layer": "LOCAL_PARSER_OR_SOURCE_GATE",
+      "image_reason": "LIVE_AI_DISABLED",
+      "confirmation": {
+        "flagged_spans": 9,
+        "edits": 6,
+        "confirms": 2
+      }
+    },
+    {
+      "case_id": "vmmu_r256",
+      "IMAGE_REGION_CORRECT": true,
+      "OCR_TEXT_CORRECT": "NOT_MEASURED_PER_IMAGE (aggregate CER in earlier runs)",
+      "CRITICAL_FACTS_CORRECT": false,
+      "missing_facts": [
+        "relation: (SAB)⊥(ABCD)",
+        "goal: khoảng cách từ A",
+        "goal: (SBC)"
+      ],
+      "SOURCE_GATE_ACCEPTED_ON_TRANSCRIPTION": false,
+      "text_reason": "LIVE_AI_DISABLED",
+      "GOAL_CONSTRUCTION_VERIFIED": false,
+      "INTERACTIVE_SCENE_VERIFIED": "NOT_MEASURED_PER_IMAGE (browser E2E covers the scene types from text)",
+      "first_failing_layer": "LOCAL_PARSER_OR_SOURCE_GATE",
+      "image_reason": "LIVE_AI_DISABLED",
+      "confirmation": {
+        "flagged_spans": 6,
+        "edits": 1,
+        "confirms": 4
+      }
+    },
+    {
+      "case_id": "vmmu_r258",
+      "IMAGE_REGION_CORRECT": true,
+      "OCR_TEXT_CORRECT": "NOT_MEASURED_PER_IMAGE (aggregate CER in earlier runs)",
+      "CRITICAL_FACTS_CORRECT": true,
+      "missing_facts": [],
+      "SOURCE_GATE_ACCEPTED_ON_TRANSCRIPTION": false,
+      "text_reason": "LIVE_AI_DISABLED",
+      "GOAL_CONSTRUCTION_VERIFIED": false,
+      "INTERACTIVE_SCENE_VERIFIED": "NOT_MEASURED_PER_IMAGE (browser E2E covers the scene types from text)",
+      "first_failing_layer": "LOCAL_PARSER_OR_SOURCE_GATE",
+      "image_reason": "LIVE_AI_DISABLED",
+      "confirmation": {
+        "flagged_spans": 4,
+        "edits": 1,
+        "confirms": 2
+      }
+    },
+    {
+      "case_id": "vmmu_r266",
+      "IMAGE_REGION_CORRECT": true,
+      "OCR_TEXT_CORRECT": "NOT_MEASURED_PER_IMAGE (aggregate CER in earlier runs)",
+      "CRITICAL_FACTS_CORRECT": true,
+      "missing_facts": [],
+      "SOURCE_GATE_ACCEPTED_ON_TRANSCRIPTION": false,
+      "text_reason": "EXACT_DOMAIN_EXCEEDED",
+      "GOAL_CONSTRUCTION_VERIFIED": false,
+      "INTERACTIVE_SCENE_VERIFIED": "NOT_MEASURED_PER_IMAGE (browser E2E covers the scene types from text)",
+      "first_failing_layer": "LOCAL_PARSER_OR_SOURCE_GATE",
+      "image_reason": "LIVE_AI_DISABLED",
+      "confirmation": {
+        "flagged_spans": 3,
+        "edits": 0,
+        "confirms": 3
+      }
+    },
+    {
+      "case_id": "vmmu_r270",
+      "IMAGE_REGION_CORRECT": true,
+      "OCR_TEXT_CORRECT": "NOT_MEASURED_PER_IMAGE (aggregate CER in earlier runs)",
+      "CRITICAL_FACTS_CORRECT": true,
+      "missing_facts": [],
+      "SOURCE_GATE_ACCEPTED_ON_TRANSCRIPTION": true,
+      "text_reason": null,
+      "GOAL_CONSTRUCTION_VERIFIED": false,
+      "INTERACTIVE_SCENE_VERIFIED": "NOT_MEASURED_PER_IMAGE (browser E2E covers the scene types from text)",
+      "first_failing_layer": "CONFIRMATION_OR_OTHER",
+      "image_reason": "LIVE_AI_DISABLED",
+      "confirmation": {
+        "flagged_spans": 4,
+        "edits": 1,
+        "confirms": 2
+      }
+    },
+    {
+      "case_id": "vmmu_r273",
+      "IMAGE_REGION_CORRECT": true,
+      "OCR_TEXT_CORRECT": "NOT_MEASURED_PER_IMAGE (aggregate CER in earlier runs)",
+      "CRITICAL_FACTS_CORRECT": true,
+      "missing_facts": [],
+      "SOURCE_GATE_ACCEPTED_ON_TRANSCRIPTION": true,
+      "text_reason": null,
+      "GOAL_CONSTRUCTION_VERIFIED": true,
+      "INTERACTIVE_SCENE_VERIFIED": "NOT_MEASURED_PER_IMAGE (browser E2E covers the scene types from text)",
+      "first_failing_layer": "NONE",
+      "image_reason": null,
+      "confirmation": {
+        "flagged_spans": 3,
+        "edits": 0,
+        "confirms": 2
+      }
+    },
+    {
+      "case_id": "vmmu_r277",
+      "IMAGE_REGION_CORRECT": true,
+      "OCR_TEXT_CORRECT": "NOT_MEASURED_PER_IMAGE (aggregate CER in earlier runs)",
+      "CRITICAL_FACTS_CORRECT": true,
+      "missing_facts": [],
+      "SOURCE_GATE_ACCEPTED_ON_TRANSCRIPTION": false,
+      "text_reason": "LIVE_AI_DISABLED",
+      "GOAL_CONSTRUCTION_VERIFIED": false,
+      "INTERACTIVE_SCENE_VERIFIED": "NOT_MEASURED_PER_IMAGE (browser E2E covers the scene types from text)",
+      "first_failing_layer": "LOCAL_PARSER_OR_SOURCE_GATE",
+      "image_reason": "LIVE_AI_DISABLED",
+      "confirmation": {
+        "flagged_spans": 5,
+        "edits": 0,
+        "confirms": 5
+      }
+    },
+    {
+      "case_id": "vmmu_r284",
+      "IMAGE_REGION_CORRECT": true,
+      "OCR_TEXT_CORRECT": "NOT_MEASURED_PER_IMAGE (aggregate CER in earlier runs)",
+      "CRITICAL_FACTS_CORRECT": false,
+      "missing_facts": [
+        "solid: S.ABCD",
+        "length: hình vuông cạnh a",
+        "relation: SAB là tam giác đều"
+      ],
+      "SOURCE_GATE_ACCEPTED_ON_TRANSCRIPTION": false,
+      "text_reason": "LIVE_AI_DISABLED",
+      "GOAL_CONSTRUCTION_VERIFIED": false,
+      "INTERACTIVE_SCENE_VERIFIED": "NOT_MEASURED_PER_IMAGE (browser E2E covers the scene types from text)",
+      "first_failing_layer": "LOCAL_PARSER_OR_SOURCE_GATE",
+      "image_reason": "LIVE_AI_DISABLED",
+      "confirmation": {
+        "flagged_spans": 6,
+        "edits": 3,
+        "confirms": 2
+      }
+    },
+    {
+      "case_id": "vmmu_r295",
+      "IMAGE_REGION_CORRECT": true,
+      "OCR_TEXT_CORRECT": "NOT_MEASURED_PER_IMAGE (aggregate CER in earlier runs)",
+      "CRITICAL_FACTS_CORRECT": true,
+      "missing_facts": [],
+      "SOURCE_GATE_ACCEPTED_ON_TRANSCRIPTION": false,
+      "text_reason": "LIVE_AI_DISABLED",
+      "GOAL_CONSTRUCTION_VERIFIED": false,
+      "INTERACTIVE_SCENE_VERIFIED": "NOT_MEASURED_PER_IMAGE (browser E2E covers the scene types from text)",
+      "first_failing_layer": "LOCAL_PARSER_OR_SOURCE_GATE",
+      "image_reason": "LIVE_AI_DISABLED",
+      "confirmation": {
+        "flagged_spans": 4,
+        "edits": 3,
+        "confirms": 0
+      }
+    },
+    {
+      "case_id": "vmmu_r298",
+      "IMAGE_REGION_CORRECT": true,
+      "OCR_TEXT_CORRECT": "NOT_MEASURED_PER_IMAGE (aggregate CER in earlier runs)",
+      "CRITICAL_FACTS_CORRECT": true,
+      "missing_facts": [],
+      "SOURCE_GATE_ACCEPTED_ON_TRANSCRIPTION": true,
+      "text_reason": null,
+      "GOAL_CONSTRUCTION_VERIFIED": true,
+      "INTERACTIVE_SCENE_VERIFIED": "NOT_MEASURED_PER_IMAGE (browser E2E covers the scene types from text)",
+      "first_failing_layer": "NONE",
+      "image_reason": null,
+      "confirmation": {
+        "flagged_spans": 3,
+        "edits": 0,
+        "confirms": 2
+      }
+    },
+    {
+      "case_id": "vmmu_r375",
+      "IMAGE_REGION_CORRECT": true,
+      "OCR_TEXT_CORRECT": "NOT_MEASURED_PER_IMAGE (aggregate CER in earlier runs)",
+      "CRITICAL_FACTS_CORRECT": false,
+      "missing_facts": [
+        "goal: Khoảng cách từ S"
+      ],
+      "SOURCE_GATE_ACCEPTED_ON_TRANSCRIPTION": true,
+      "text_reason": null,
+      "GOAL_CONSTRUCTION_VERIFIED": false,
+      "INTERACTIVE_SCENE_VERIFIED": "NOT_MEASURED_PER_IMAGE (browser E2E covers the scene types from text)",
+      "first_failing_layer": "CRITICAL_FACTS_OCR",
+      "image_reason": "LIVE_AI_DISABLED",
+      "confirmation": {
+        "flagged_spans": 1,
+        "edits": 0,
+        "confirms": 0
+      }
+    },
+    {
+      "case_id": "vmmu_r460",
+      "IMAGE_REGION_CORRECT": true,
+      "OCR_TEXT_CORRECT": "NOT_MEASURED_PER_IMAGE (aggregate CER in earlier runs)",
+      "CRITICAL_FACTS_CORRECT": false,
+      "missing_facts": [
+        "relation: vuông cân ở B"
+      ],
+      "SOURCE_GATE_ACCEPTED_ON_TRANSCRIPTION": false,
+      "text_reason": "LIVE_AI_DISABLED",
+      "GOAL_CONSTRUCTION_VERIFIED": false,
+      "INTERACTIVE_SCENE_VERIFIED": "NOT_MEASURED_PER_IMAGE (browser E2E covers the scene types from text)",
+      "first_failing_layer": "LOCAL_PARSER_OR_SOURCE_GATE",
+      "image_reason": "LIVE_AI_DISABLED",
+      "confirmation": {
+        "flagged_spans": 1,
+        "edits": 0,
+        "confirms": 0
+      }
+    },
+    {
+      "case_id": "vmmu_r461",
+      "IMAGE_REGION_CORRECT": true,
+      "OCR_TEXT_CORRECT": "NOT_MEASURED_PER_IMAGE (aggregate CER in earlier runs)",
+      "CRITICAL_FACTS_CORRECT": true,
+      "missing_facts": [],
+      "SOURCE_GATE_ACCEPTED_ON_TRANSCRIPTION": false,
+      "text_reason": "LIVE_AI_DISABLED",
+      "GOAL_CONSTRUCTION_VERIFIED": false,
+      "INTERACTIVE_SCENE_VERIFIED": "NOT_MEASURED_PER_IMAGE (browser E2E covers the scene types from text)",
+      "first_failing_layer": "LOCAL_PARSER_OR_SOURCE_GATE",
+      "image_reason": "LIVE_AI_DISABLED",
+      "confirmation": {
+        "flagged_spans": 2,
+        "edits": 0,
+        "confirms": 1
+      }
+    },
+    {
+      "case_id": "vmmu_r463",
+      "IMAGE_REGION_CORRECT": true,
+      "OCR_TEXT_CORRECT": "NOT_MEASURED_PER_IMAGE (aggregate CER in earlier runs)",
+      "CRITICAL_FACTS_CORRECT": true,
+      "missing_facts": [],
+      "SOURCE_GATE_ACCEPTED_ON_TRANSCRIPTION": false,
+      "text_reason": "LIVE_AI_DISABLED",
+      "GOAL_CONSTRUCTION_VERIFIED": false,
+      "INTERACTIVE_SCENE_VERIFIED": "NOT_MEASURED_PER_IMAGE (browser E2E covers the scene types from text)",
+      "first_failing_layer": "LOCAL_PARSER_OR_SOURCE_GATE",
+      "image_reason": "LIVE_AI_DISABLED",
+      "confirmation": {
+        "flagged_spans": 4,
+        "edits": 0,
+        "confirms": 4
+      }
+    },
+    {
+      "case_id": "vmmu_r475",
+      "IMAGE_REGION_CORRECT": true,
+      "OCR_TEXT_CORRECT": "NOT_MEASURED_PER_IMAGE (aggregate CER in earlier runs)",
+      "CRITICAL_FACTS_CORRECT": true,
+      "missing_facts": [],
+      "SOURCE_GATE_ACCEPTED_ON_TRANSCRIPTION": false,
+      "text_reason": "LIVE_AI_DISABLED",
+      "GOAL_CONSTRUCTION_VERIFIED": false,
+      "INTERACTIVE_SCENE_VERIFIED": "NOT_MEASURED_PER_IMAGE (browser E2E covers the scene types from text)",
+      "first_failing_layer": "LOCAL_PARSER_OR_SOURCE_GATE",
+      "image_reason": "LIVE_AI_DISABLED",
+      "confirmation": {
+        "flagged_spans": 2,
+        "edits": 0,
+        "confirms": 1
+      }
+    },
+    {
+      "case_id": "vmmu_r476",
+      "IMAGE_REGION_CORRECT": true,
+      "OCR_TEXT_CORRECT": "NOT_MEASURED_PER_IMAGE (aggregate CER in earlier runs)",
+      "CRITICAL_FACTS_CORRECT": true,
+      "missing_facts": [],
+      "SOURCE_GATE_ACCEPTED_ON_TRANSCRIPTION": true,
+      "text_reason": null,
+      "GOAL_CONSTRUCTION_VERIFIED": true,
+      "INTERACTIVE_SCENE_VERIFIED": "NOT_MEASURED_PER_IMAGE (browser E2E covers the scene types from text)",
+      "first_failing_layer": "NONE",
+      "image_reason": null,
+      "confirmation": {
+        "flagged_spans": 5,
+        "edits": 0,
+        "confirms": 4
+      }
+    },
+    {
+      "case_id": "vmmu_r488",
+      "IMAGE_REGION_CORRECT": true,
+      "OCR_TEXT_CORRECT": "NOT_MEASURED_PER_IMAGE (aggregate CER in earlier runs)",
+      "CRITICAL_FACTS_CORRECT": false,
+      "missing_facts": [
+        "angle: bằng 60°"
+      ],
+      "SOURCE_GATE_ACCEPTED_ON_TRANSCRIPTION": false,
+      "text_reason": "LIVE_AI_DISABLED",
+      "GOAL_CONSTRUCTION_VERIFIED": false,
+      "INTERACTIVE_SCENE_VERIFIED": "NOT_MEASURED_PER_IMAGE (browser E2E covers the scene types from text)",
+      "first_failing_layer": "LOCAL_PARSER_OR_SOURCE_GATE",
+      "image_reason": "LIVE_AI_DISABLED",
+      "confirmation": {
+        "flagged_spans": 2,
+        "edits": 1,
+        "confirms": 0
+      }
+    },
+    {
+      "case_id": "vmmu_r491",
+      "IMAGE_REGION_CORRECT": true,
+      "OCR_TEXT_CORRECT": "NOT_MEASURED_PER_IMAGE (aggregate CER in earlier runs)",
+      "CRITICAL_FACTS_CORRECT": true,
+      "missing_facts": [],
+      "SOURCE_GATE_ACCEPTED_ON_TRANSCRIPTION": false,
+      "text_reason": "LIVE_AI_DISABLED",
+      "GOAL_CONSTRUCTION_VERIFIED": false,
+      "INTERACTIVE_SCENE_VERIFIED": "NOT_MEASURED_PER_IMAGE (browser E2E covers the scene types from text)",
+      "first_failing_layer": "LOCAL_PARSER_OR_SOURCE_GATE",
+      "image_reason": "LIVE_AI_DISABLED",
+      "confirmation": {
+        "flagged_spans": 4,
+        "edits": 0,
+        "confirms": 3
+      }
+    },
+    {
+      "case_id": "vmmu_r492",
+      "IMAGE_REGION_CORRECT": true,
+      "OCR_TEXT_CORRECT": "NOT_MEASURED_PER_IMAGE (aggregate CER in earlier runs)",
+      "CRITICAL_FACTS_CORRECT": true,
+      "missing_facts": [],
+      "SOURCE_GATE_ACCEPTED_ON_TRANSCRIPTION": true,
+      "text_reason": null,
+      "GOAL_CONSTRUCTION_VERIFIED": true,
+      "INTERACTIVE_SCENE_VERIFIED": "NOT_MEASURED_PER_IMAGE (browser E2E covers the scene types from text)",
+      "first_failing_layer": "NONE",
+      "image_reason": null,
+      "confirmation": {
+        "flagged_spans": 2,
+        "edits": 0,
+        "confirms": 1
+      }
+    },
+    {
+      "case_id": "vmmu_r498",
+      "IMAGE_REGION_CORRECT": true,
+      "OCR_TEXT_CORRECT": "NOT_MEASURED_PER_IMAGE (aggregate CER in earlier runs)",
+      "CRITICAL_FACTS_CORRECT": false,
+      "missing_facts": [
+        "solid: ABCD.A'B'C'D'",
+        "goal: (ABC')"
+      ],
+      "SOURCE_GATE_ACCEPTED_ON_TRANSCRIPTION": false,
+      "text_reason": "LIVE_AI_DISABLED",
+      "GOAL_CONSTRUCTION_VERIFIED": false,
+      "INTERACTIVE_SCENE_VERIFIED": "NOT_MEASURED_PER_IMAGE (browser E2E covers the scene types from text)",
+      "first_failing_layer": "LOCAL_PARSER_OR_SOURCE_GATE",
+      "image_reason": "LIVE_AI_DISABLED",
+      "confirmation": {
+        "flagged_spans": 4,
+        "edits": 2,
+        "confirms": 1
+      }
+    },
+    {
+      "case_id": "vmmu_r513",
+      "IMAGE_REGION_CORRECT": true,
+      "OCR_TEXT_CORRECT": "NOT_MEASURED_PER_IMAGE (aggregate CER in earlier runs)",
+      "CRITICAL_FACTS_CORRECT": true,
+      "missing_facts": [],
+      "SOURCE_GATE_ACCEPTED_ON_TRANSCRIPTION": false,
+      "text_reason": "LIVE_AI_DISABLED",
+      "GOAL_CONSTRUCTION_VERIFIED": false,
+      "INTERACTIVE_SCENE_VERIFIED": "NOT_MEASURED_PER_IMAGE (browser E2E covers the scene types from text)",
+      "first_failing_layer": "LOCAL_PARSER_OR_SOURCE_GATE",
+      "image_reason": "LIVE_AI_DISABLED",
+      "confirmation": {
+        "flagged_spans": 2,
+        "edits": 0,
+        "confirms": 1
+      }
+    },
+    {
+      "case_id": "vmmu_r520",
+      "IMAGE_REGION_CORRECT": true,
+      "OCR_TEXT_CORRECT": "NOT_MEASURED_PER_IMAGE (aggregate CER in earlier runs)",
+      "CRITICAL_FACTS_CORRECT": true,
+      "missing_facts": [],
+      "SOURCE_GATE_ACCEPTED_ON_TRANSCRIPTION": false,
+      "text_reason": "MISSING_DIMENSION",
+      "GOAL_CONSTRUCTION_VERIFIED": false,
+      "INTERACTIVE_SCENE_VERIFIED": "NOT_MEASURED_PER_IMAGE (browser E2E covers the scene types from text)",
+      "first_failing_layer": "LOCAL_PARSER_OR_SOURCE_GATE",
+      "image_reason": "LIVE_AI_DISABLED",
+      "confirmation": {
+        "flagged_spans": 5,
+        "edits": 3,
+        "confirms": 1
+      }
+    },
+    {
+      "case_id": "vmmu_r537",
+      "IMAGE_REGION_CORRECT": true,
+      "OCR_TEXT_CORRECT": "NOT_MEASURED_PER_IMAGE (aggregate CER in earlier runs)",
+      "CRITICAL_FACTS_CORRECT": false,
+      "missing_facts": [
+        "length: diện tích đáy bằng a²"
+      ],
+      "SOURCE_GATE_ACCEPTED_ON_TRANSCRIPTION": false,
+      "text_reason": "LIVE_AI_DISABLED",
+      "GOAL_CONSTRUCTION_VERIFIED": false,
+      "INTERACTIVE_SCENE_VERIFIED": "NOT_MEASURED_PER_IMAGE (browser E2E covers the scene types from text)",
+      "first_failing_layer": "LOCAL_PARSER_OR_SOURCE_GATE",
+      "image_reason": "LIVE_AI_DISABLED",
+      "confirmation": {
+        "flagged_spans": 4,
+        "edits": 1,
+        "confirms": 2
+      }
+    },
+    {
+      "case_id": "vmmu_r538",
+      "IMAGE_REGION_CORRECT": true,
+      "OCR_TEXT_CORRECT": "NOT_MEASURED_PER_IMAGE (aggregate CER in earlier runs)",
+      "CRITICAL_FACTS_CORRECT": true,
+      "missing_facts": [],
+      "SOURCE_GATE_ACCEPTED_ON_TRANSCRIPTION": false,
+      "text_reason": "LIVE_AI_DISABLED",
+      "GOAL_CONSTRUCTION_VERIFIED": false,
+      "INTERACTIVE_SCENE_VERIFIED": "NOT_MEASURED_PER_IMAGE (browser E2E covers the scene types from text)",
+      "first_failing_layer": "LOCAL_PARSER_OR_SOURCE_GATE",
+      "image_reason": "LIVE_AI_DISABLED",
+      "confirmation": {
+        "flagged_spans": 3,
+        "edits": 0,
+        "confirms": 2
+      }
+    },
+    {
+      "case_id": "vmmu_r559",
+      "IMAGE_REGION_CORRECT": null,
+      "OCR_TEXT_CORRECT": "NOT_MEASURED_PER_IMAGE (aggregate CER in earlier runs)",
+      "CRITICAL_FACTS_CORRECT": null,
+      "missing_facts": [],
+      "SOURCE_GATE_ACCEPTED_ON_TRANSCRIPTION": false,
+      "text_reason": "LIVE_AI_DISABLED",
+      "GOAL_CONSTRUCTION_VERIFIED": false,
+      "INTERACTIVE_SCENE_VERIFIED": "NOT_MEASURED_PER_IMAGE (browser E2E covers the scene types from text)",
+      "first_failing_layer": "LOCAL_PARSER_OR_SOURCE_GATE",
+      "image_reason": "LIVE_AI_DISABLED",
+      "confirmation": {
+        "flagged_spans": 2,
+        "edits": 0,
+        "confirms": 1
+      }
+    },
+    {
+      "case_id": "vmmu_r695",
+      "IMAGE_REGION_CORRECT": null,
+      "OCR_TEXT_CORRECT": "NOT_MEASURED_PER_IMAGE (aggregate CER in earlier runs)",
+      "CRITICAL_FACTS_CORRECT": null,
+      "missing_facts": [],
+      "SOURCE_GATE_ACCEPTED_ON_TRANSCRIPTION": true,
+      "text_reason": null,
+      "GOAL_CONSTRUCTION_VERIFIED": false,
+      "INTERACTIVE_SCENE_VERIFIED": "NOT_MEASURED_PER_IMAGE (browser E2E covers the scene types from text)",
+      "first_failing_layer": "CONFIRMATION_OR_OTHER",
+      "image_reason": "LIVE_AI_DISABLED",
+      "confirmation": {
+        "flagged_spans": 3,
+        "edits": 2,
+        "confirms": 0
+      }
+    }
+  ]
+}

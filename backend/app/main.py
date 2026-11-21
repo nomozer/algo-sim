@@ -895,12 +895,134 @@ MISSING_KEY_MSG = (
 #       Exact Geometry Kernel -> Adapter `/4`), gỡ bỏ orchestrator `LLM_ONLY`, Compiler C và toàn bộ prompt sinh mã cũ.
 #       Bump `CACHE_VERSION` lên `132` (`ROUTE_D_CACHE_POLICY = "132:route-d"`) bảo đảm cách ly hai chiều: mọi hàng
 #       cache `131` (cả `LLM_ONLY` lẫn `131:route-d`) đều MISS và không bao giờ nhiễm sang kết quả Hybrid chính thức.
-CACHE_VERSION = "132"
+# 133 — 2026-11-13 (semantic-to-scene3d-verified-simulation): vật `quantity` đo góc khác 90° mang `angle_construction`
+#       (phép dựng chính xác của góc đề hỏi — đỉnh, hai cạnh, chân hình chiếu / đoạn song song / tia vuông góc giao
+#       tuyến), và nhân chứng góc vuông không còn bị đổi nhầm thành nhãn độ dài. Envelope phục vụ đổi ⇒ row
+#       `132:route-d` phải MISS (`tests/test_cache_angle_construction_invalidation.py`).
+# 134 — 2026-11-13 (verified-section-intersection-dihedral-local): phép dựng góc không bao giờ vẽ góc bù (cos có dấu
+#       ≥ 0, `angle_domain`), thể tích hình chóp mang `altitude_construction` khi cảnh chưa vẽ đường cao. Envelope phục vụ
+#       đổi ⇒ row `133:route-d` phải MISS (`tests/test_cache_dihedral_altitude_invalidation.py`).
+# 135 — 2026-11-14 (certified-scale-cache-safety): khoá cache Route D tính TRƯỚC parser, chỉ từ chuỗi phiên bản + đề.
+#       Run `compositional-semantics-simulation-goals` siết guard (mệnh đề phụ phải được đọc, góc vẽ ràng vào điểm đã
+#       kiểm) mà không đổi chuỗi nào và giữ 134 ⇒ một cảnh cũ cho đề nay bị từ chối vẫn được phát lại, bỏ qua guard.
+#       Mọi row `134:route-d` phải MISS (`tests/test_cache_semantic_guard_invalidation.py`, qua `/api/analyze` thật).
+# 136 — 2026-11-14 (target-invariant-regular-solid-semantics): chuẩn hoá tỉ lệ nay TỪ CHỐI khi có ≥ 2 neo độ cao
+#       (nhánh dấu chưa xét) — guard siết; "tứ diện đều" không cạnh mang phép bằng nhau định nghĩa; tên hiển thị GEO-BE-001.
+#       Mọi row `135:route-d` phải MISS (`tests/test_cache_target_invariance_invalidation.py`).
+# 137 — 2026-11-14 (proof-soundness-generalized-angle-invariance): `target-invariance-certificate/2` — nhân chứng góc có
+#       cấu trúc (đỉnh + hai tia), chứng chỉ gắn mục tiêu, cos² gắn vào nhân, góc vẽ gắn vào nhân chứng; thêm mặt phẳng
+#       vuông góc, góc đường–mặt, góc hai đường (kể cả chéo nhau). Guard siết, envelope đổi; mọi row `136:route-d` phải
+#       MISS (`tests/test_cache_proof_soundness_invalidation.py`).
+# 138 — 2026-11-14 (scene3d-causal-pedagogical-integrity): envelope phục vụ đổi — cờ `is_unused_auxiliary` tính lại với
+#       mục tiêu của đề (vật đề nêu, giao tuyến đề hỏi không còn bị gắn cờ), đại lượng/vectơ tự do (R đề cho) ra khỏi
+#       `visible_prerequisites`, góc 90° giữa hai mặt / hai đường chéo nhau có `angle_construction`; adapter siết ràng
+#       buộc loại góc vuông. Mọi row `137:route-d` phải MISS (`tests/test_cache_causal_pedagogical_invalidation.py`).
+# 139 — 2026-11-15 (grounded-vietnamese-geometry-understanding): bộ đọc cục bộ + Source Gate đổi quyết định trên cùng đề —
+#       đáy không tên gắn theo thứ tự mệnh đề, "góc giữa cạnh bên và mặt đáy" của chóp đều, lăng trụ viết liền không dấu
+#       chấm, "tam giác XYZ cân" có góc vuông đã chứng minh, diện tích đáy không tên; một giá trị tiền đề không trích dẫn
+#       nào đọc ⇒ không còn COMPLETE. Khoá Route D không đổi ⇒ mọi row `138:route-d` phải MISS
+#       (`tests/test_cache_grounded_understanding_invalidation.py`).
+# 140 — 2026-11-15 (dimension-aware-verified-construction): đại số thứ nguyên chính xác (`expression.py`), tiền đề diện
+#       tích / thể tích / lượng giác tiếng Việt (`local-geometry-parser/2`), dựng hình lượng giác & tam giác vuông có chứng
+#       chỉ kiểm máy (`trig-construction-certificate/1`) gắn vào `route_d` và kiểm tại `adapter4_route.py`, cùng mở rộng
+#       vân tay ngữ nghĩa `hybrid_surface`. Mọi row `139:route-d` phải MISS
+#       (`tests/test_cache_dimension_trig_invalidation.py`).
+# 141 — 2026-11-16 (simulation-first-mvp-stabilization): `hop_dong_to_po_da_khai` nhận lăng trụ viết liền có dấu phẩy
+#       (`ABCDA'B'C'D'`, cùng quy tắc `_tach_lang_tru_lien`) nên `Scene3D` khôi phục đủ mặt đáy, mặt trên, cạnh bên kèm
+#       `perpendicular_witness` và 6 bước dựng nhân quả thay vì khung suy biến 10 đối tượng. Mọi row `140:route-d` phải MISS
+#       (`tests/geometry/test_undotted_prism_scene3d_topology.py`).
+# 142 — 2026-11-16 (planner-autonomous-composition-and-search-efficiency): planner khử trùng phép dựng đồng vai trong cùng
+#       mục tiêu (vd đường Euler @orthocenter/@circumcenter giảm 10 → 8 phép phụ, loại điểm phụ trùng H4 == H trong Scene3D),
+#       siết kiểm chứng độ dài/góc trên đường dẫn xuất (`ask_distance_lines`) và nối trích dẫn tái sử dụng đa luật; khoá
+#       cache chỉ băm chuỗi phiên bản nên mọi row `141:route-d` phải MISS
+#       (`tests/geometry/test_planner_autonomous_composition.py`).
+# 143 — 2026-11-16 (unified-geometry-understanding-ocr-autonomous-planning): mở rộng bộ đọc cục bộ tổ hợp
+#       đệ quy (depth<=3), tách câu ghép/trắc nghiệm, A4 chứa `@id` trong `contains_points`, và đối chiếu OCR hai họ
+#       có kiểm chứng hình học (`layout-aware-ocr-reconcile/2`).
+# 144 — 2026-11-17 (real-world-geometry-input-verified-simulation): cổng nguồn `_cac_moc_cau` đồng bộ biên câu hỏi viết
+#       hoa khuyết dấu chấm (vd `vmmu_r513`: `NOT_ASKED_IN_SOURCE` → `MISSING_DIMENSION` kèm `determinacy_audit`), OCR
+#       họ hai kênh `layout-aware-ocr-reconcile/3` / `local-ocr-route/2` / `local-ocr-worker/3`, và hợp đồng provenance
+#       `verified-input-provenance/1`; mọi row `143:route-d` phải MISS (`tests/geometry/test_real_world_input_verified_simulation.py`).
+# 146 — 2026-11-20 (axo-hybrid-simulation-intent-generalization-grounded-slm-recovery): Source Gate `_VAT_MO_PHONG`
+#       nhận danh từ khối/hình có nhãn ("mô phỏng hình chóp S.ABCD", "chỉ cần vẽ hình, không cần tính toán"), bộ đọc
+#       cục bộ chọn đích yêu cầu mô phỏng theo nhãn/loại khối và phủ đủ mệnh đề, SLM `local-slm-extractor/5` hạ 0 mục
+#       tiêu số cho đề chỉ-mô-phỏng. Khoá Route D không băm Source Gate, và `local-geometry-parser/2` không đổi ⇒ mọi row
+#       `145:route-d` phải MISS (`tests/test_cache_simulation_intent_invalidation.py`).
+# 147 — 2026-11-20 (axo-hybrid-compositional-geometry-language-grounded-simulation):
+#       cô lập cache Route D sau khi mở rộng parser mệnh đề phức hợp
+#       (`local-geometry-parser/3`), extractor (`local-slm-extractor/6`), Source Gate
+#       phức hợp (`geometry-functions/33`), domain gate không dấu và căn khung camera
+#       Scene3D (`V11-VIS-1`); bản ghi `146:route-d` cũ phải MISS
+#       (`tests/geometry/test_cache_v12_compositional_invalidation.py`).
+# 148 — 2026-11-20 (axo-hybrid-local-model1-finalization-test-consolidation, merge of main): a served section's
+#       `ordered_vertex_*`, `polygon` and `vertex_sources` are permuted together (index i = the same vertex) and the
+#       cycle is read from the cutting plane's name ((MNP) ⇒ MNPQ). A `147:route-d` row may carry names rotated away
+#       from their coordinates, which main's frontend reads as a false right angle (`SA ⊥ SC tại S` on (SAC)) ⇒ MISS
+#       (`tests/geometry/test_backend_geometry_handoff_resolution.py`).
+# 149 — 2026-11-20 (axo-hybrid-local-model1-finalization-test-consolidation, scope compliance): the informatics domain
+#       leaves the product — `detect_domain` answers `hinh_hoc` | `out_of_scope` (was `tin_hoc`), its obligation set,
+#       snake_case naming descriptions and `SEMANTIC_ANALYZE_SCHEMA` are deleted, so the hashed `analyze_schema` surface
+#       changes. Served scenes are unchanged; a `148:route-d` row MISSES by the lock rule
+#       (`tests/semantic_program/test_domain_string.py`).
+# 150 — 2026-11-20 (axo-hybrid-local-model1-finalization-test-consolidation, scope compliance step B): the IR loses the
+#       informatics container vocabulary — container memory types, container statements/expressions/conditions,
+#       `visual_bindings`, the eleven informatics obligations and their checkers, the full grammar card — so the hashed
+#       synthesis schema and grammar surface change. The geometry card is byte-identical and served scenes unchanged
+#       (samples regenerate identically); a `149:route-d` row MISSES by the lock rule
+#       (`tests/semantic_program/test_taxonomy_frozen.py`).
+# 151 — 2026-11-21 (axo-hybrid-local-model1-finalization-test-consolidation): Model 1 residual closures (§6.D),
+#       unit similarity representative policy `UNIT_SIMILARITY_REPRESENTATIVE` for unitless similarity-determined
+#       `SIMULATE_ONLY` solids (§17), explicit geometric construction of derived polygon center `O` without
+#       `LAYOUT_DERIVED` (§19), and missing-data `route-d-clarification/1` surfacing across parser & SLM refusals
+#       (§6.G); `150:route-d` rows MISS (`tests/geometry/test_v13_similarity_and_provenance.py`).
+# 152 — 2026-11-21 (axo-hybrid-local-model1-finalization-test-consolidation, T3 gate fix): tighten `_VAT_MO_PHONG` to
+#       role-verified segment terms only so calling diagonals edges returns `REFUSED` (`test_route_d_student_language`),
+#       and restore clause-level `cent` GBNF rule emission in `local-slm-extractor/6` when `c_segs` is empty
+#       (`test_slm_v9_language_closure_and_security`); `151:route-d` rows MISS.
+# 153 — 2026-11-21 (local-model1-recovery-offline-vision): local domain and source-role parsing,
+#       underdetermined-prism clarification, and OCR/document source provenance changed.
+# 154 — 2026-11-21 (local-model1-recovery-offline-vision, takeover): "⟂" (U+27C2) is read as "⊥" by
+#       `normalize_problem_text`; the Source Gate closed grammar reads "trong đó" as a data lead, a sentence opening with a
+#       request for a quantity of the solid itself ("Tính thể tích khối chóp … biết / có …") and a locative solid after the
+#       asked object. A sentence that bound no role before may now bind one ⇒ `153:route-d` rows MISS
+#       (`tests/geometry/test_model1_residual_phrasings.py::test_v14_cache_policy_isolates_cache_153_rows`).
+# 155 — 2026-11-21 (grounded-geometry-language-recovery): `slm-verified-normalizer` composition rules `VN12`–`VN17`
+#       (pairwise perpendicular edges from a vertex / three right angles, one segment with length and perpendicularity,
+#       named altitude, ordered list-value alignment, prism height form, bare drawing request, question-first sentence
+#       reordered premises-first) and the Source Gate reading "không đôi một / cùng … vuông góc" as a negation. A
+#       `154:route-d` row may hold a scene served from a negated pairwise perpendicularity ⇒ MISS
+#       (`tests/geometry/test_model1_residual_phrasings.py::test_v15_cache_policy_isolates_cache_154_rows`).
+# 156 — 2026-11-21 (semantic-grounding-slm-recovery): two-layer semantic rewrite safety checks against original source
+#       spans, deferring incomplete non-base `perpendicular_line_plane` checks in `engine._mot_buoc` (B18), reading bare
+#       prism height + 3-vertex unnamed right prism base (E02), polite `"Hãy cho biết …"` questions (G08), exam header
+#       prefixes (`"Đề bài: / Yêu cầu:"`), and `local-slm-extractor/6` dense clause splitting / carrier grammar / 3-pair
+#       closure ⇒ MISS (`tests/geometry/test_model1_residual_phrasings.py::test_cache_156_policy_isolates_cache_155_rows`).
+# 157 — 2026-11-21 (semantic-grounding-slm-recovery, T3 alignment): restore 4 Source Gate (`registry.py`) invariants:
+#       remove imperative `đừng/chớ` from `_KHONG_KHANG_DINH` so `_LOAI_TRU_YEU_CAU` returns `NEGATED_CLAUSE`; scope
+#       `liệu` in `_HOI_QUAN_HE` with `(?![^,;:?]*\?)` so endswith(`?`) remains load-bearing; check `ambiguous_base`
+#       before `SOURCE_OBJECT_MISMATCH` in `_kiem_mat_chung`; move `"trong không gian,"` lead strip from `_GIAN_DAN`
+#       into `_kiem_vung_tien_de` ⇒ MISS (`tests/geometry/test_model1_residual_phrasings.py::test_cache_157_policy_isolates_cache_156_rows`).
+# 158 — 2026-11-21 (model1-integration-readiness, routing integrity): `local_geometry_parser.py` reads "Độ dài XY = v"
+#       as a premise (the length-goal rule no longer fires on an assignment) and the pairwise-perpendicular synonym
+#       "… vuông góc (với nhau) từng đôi (một)"; texts the SLM served are now served by the parser ⇒ the extraction
+#       route of a cached envelope changes ⇒ MISS
+#       (`tests/geometry/test_parser_routing_integrity.py::test_cache_158_policy_isolates_cache_157_rows`).
+CACHE_VERSION = "158"
 
 #: Hai chế độ hợp lệ của kiến trúc chính thức Hybrid `/4` do máy chủ sở hữu:
 #: - `live` (mặc định): trích xuất có cấu trúc qua Gemini (`typed-fact-next/2`) khi cấu hình `GEMINI_API_KEY`.
 #: - `staging-replay`: chạy đường `/4` với kho trích xuất đã ghi (`HYBRID_REPLAY_CORPUS`), đánh dấu mô phỏng tường minh.
-HYBRID_ROUTE_MODES = ("live", "staging-replay")
+HYBRID_ROUTE_MODES = (
+    "live",
+    "staging-replay",
+    "local-first",
+    "local-slm",
+    "offline-lab",
+    "local-shadow",
+    "local-only-scoped",
+    "local-only-general",
+)
+LOCAL_ONLY_HYBRID_MODES = ("local-slm", "offline-lab", "local-only-scoped", "local-only-general")
 
 
 def hybrid_route_mode() -> str:
@@ -913,6 +1035,62 @@ def hybrid_route_mode() -> str:
     return cleaned if cleaned in HYBRID_ROUTE_MODES else "invalid"
 
 
+class InputSourceProvenance(BaseModel):
+    """Nguồn gốc văn bản đã xác minh gửi lên `/api/analyze` — không bao giờ dùng để nới Source Gate."""
+
+    model_config = ConfigDict(extra="forbid")
+    origin: Literal[
+        "direct_text",
+        "local_ocr_auto_verified",
+        "local_ocr_student_confirmed",
+        "vision_auto_verified",
+        "vision_student_confirmed",
+        "document_extracted",
+    ] = "direct_text"
+    raw_ocr_text_sha256: str | None = Field(default=None, pattern=r"^[0-9a-fA-F]{64}$")
+    prepared_region_sha256: str | None = Field(default=None, pattern=r"^[0-9a-fA-F]{64}$")
+    student_edited: bool | None = None
+    confirmed_span_count: int | None = Field(default=None, ge=0, le=200)
+    selected_candidate_id: str | None = Field(default=None, max_length=120)
+    selected_bbox: tuple[float, float, float, float] | None = None
+
+
+def build_verified_input_provenance(
+    text: str,
+    source_provenance: InputSourceProvenance | None,
+) -> dict[str, Any] | None:
+    """Tính provenance tất định; văn bản do học sinh sửa không bao giờ được tính là auto-OCR nguyên gốc."""
+    if source_provenance is None:
+        return None
+    confirmed_sha = hashlib.sha256(text.encode("utf-8")).hexdigest()
+    raw_sha = source_provenance.raw_ocr_text_sha256.lower() if source_provenance.raw_ocr_text_sha256 else None
+    edited_from_raw_ocr = bool(raw_sha and confirmed_sha != raw_sha) or bool(source_provenance.student_edited)
+    effective_origin = source_provenance.origin
+    if edited_from_raw_ocr:
+        if effective_origin == "local_ocr_auto_verified":
+            effective_origin = "local_ocr_student_confirmed"
+        elif effective_origin == "vision_auto_verified":
+            effective_origin = "vision_student_confirmed"
+    return {
+        "contract_version": "verified-input-provenance/1",
+        "origin": effective_origin,
+        "declared_origin": source_provenance.origin,
+        "edited_from_raw_ocr": edited_from_raw_ocr,
+        "counted_as_unmodified_auto_ocr": (
+            effective_origin in ("local_ocr_auto_verified", "vision_auto_verified")
+            and not edited_from_raw_ocr
+        ),
+        "raw_ocr_text_sha256": raw_sha,
+        "confirmed_text_sha256": confirmed_sha,
+        "prepared_region_sha256": (
+            source_provenance.prepared_region_sha256.lower() if source_provenance.prepared_region_sha256 else None
+        ),
+        "confirmed_span_count": source_provenance.confirmed_span_count,
+        "selected_candidate_id": source_provenance.selected_candidate_id,
+        "selected_bbox": list(source_provenance.selected_bbox) if source_provenance.selected_bbox is not None else None,
+    }
+
+
 class InputPayload(BaseModel):
     """Đầu vào chuẩn hóa — M4 thêm document/code/image, contract không đổi."""
 
@@ -920,6 +1098,7 @@ class InputPayload(BaseModel):
     content: str
     filename: str | None = None
     mime_type: str | None = None
+    source_provenance: InputSourceProvenance | None = None
 
 
 class AnalyzeBody(BaseModel):
@@ -1005,20 +1184,44 @@ def _cache_lookup(session, key: str, policy_version: str | None = None) -> Simul
 
 @app.get("/api/health")
 def health():
+    from app.ai.hybrid_offline import build_local_ai_ux_descriptor, local_slm_ready_status
+
     with SessionLocal() as session:
         count = session.query(SimulationCache).count()
         patterns = session.query(SimulationPattern).count()
         reuse = read_metrics(session)
-    return {
+    route_mode = hybrid_route_mode()
+    local_stat = local_slm_ready_status(os.environ, route_mode)
+    has_key = bool(os.getenv("GEMINI_API_KEY"))
+    ai_available = (
+        bool(local_stat["localSlmReady"])
+        if local_stat["localOnlyMode"]
+        else (has_key and os.getenv("ALLOW_LIVE_AI") != "0")
+    )
+    payload: dict[str, Any] = {
         "ok": True,
-        "hasKey": bool(os.getenv("GEMINI_API_KEY")),
+        "hasKey": has_key,
         "cachedProblems": count,
         "patterns": patterns,
         "reuse": reuse,
         "db": db_dialect(),
         # M17-RC1 §A — danh tính runtime để phát hiện container chạy code cũ.
         "runtime": runtime_identity(),
+        "routeMode": route_mode,
+        "localOnlyMode": local_stat["localOnlyMode"],
+        "localSlmReady": local_stat["localSlmReady"],
+        "localSlmModel": local_stat["localSlmModel"],
+        "extractionBackend": local_stat["extractionBackend"],
+        "aiAvailable": ai_available,
     }
+    if local_stat["localOnlyMode"]:
+        ux_body = payload if local_stat["localSlmReady"] else {"reason_code": "MODEL_RUNTIME_UNAVAILABLE"}
+        payload["local_ai_ux"] = build_local_ai_ux_descriptor(
+            status_code=200,
+            body=ux_body,
+            local_only=True,
+        )
+    return payload
 
 
 @app.get("/api/diagnostics/runtime")
@@ -1175,48 +1378,104 @@ _HYBRID_PROVIDER_502_CODES = frozenset({
     "PROVIDER_ERROR", "PROVIDER_BLOCKED", "PROVIDER_REFUSED", "NO_CANDIDATE",
     "PROVIDER_RESPONSE_INVALID", "MALFORMED_RESPONSE_PART", "JSON_INVALID",
     "RESPONSE_TRUNCATED", "MAX_TOKENS", "SCHEMA_VERSION_MISMATCH",
-    "REPLAY_SOURCE_IDENTITY_MISMATCH",
+    "REPLAY_SOURCE_IDENTITY_MISMATCH", "LOCAL_SLM_RESPONSE_INVALID",
 })
 
 
-def _hybrid_infra_error(code: str) -> JSONResponse:
+def _hybrid_infra_error(code: str, local: dict | None = None, *, local_only: bool = False) -> JSONResponse:
     """Ánh xạ sự cố hạ tầng / cấu hình / nhà cung cấp trên tuyến Hybrid sang lỗi HTTP có thể khôi phục.
-    Tuyệt đối không gán nhãn thành từ chối toán học và không rò rỉ khóa API hay stack trace."""
+    Tuyệt đối không gán nhãn thành từ chối toán học và không rò rỉ khóa API hay stack trace.
+
+    `local` (chẩn đoán của tuyến cục bộ khi nó đọc thiếu đề và lối dự phòng AI bị khoá): lời báo nói PHẦN NÀO của đề
+    chưa đọc được thay vì chỉ "live AI bị khoá"; phân loại vẫn là INFRASTRUCTURE_FAILURE, mã máy ở `local_understanding`."""
     headers = {"Cache-Control": "no-store"}
-    if code == "HYBRID_DEADLINE_EXCEEDED":
+    if code in ("HYBRID_DEADLINE_EXCEEDED", "LOCAL_SLM_TIMEOUT"):
         status, msg = 504, "Quá trình trích xuất và dựng hình vượt quá thời gian cho phép. Em hãy thử gửi lại đề bài."
     elif code == "LIVE_AI_DISABLED":
         status, msg = 503, "Chế độ trích xuất trực tiếp (live AI) đang bị khoá bởi cấu hình máy chủ (ALLOW_LIVE_AI=0)."
     elif code == "INVALID_HYBRID_ROUTE_MODE":
-        status, msg = 503, "Chế độ định tuyến Hybrid trên máy chủ không hợp lệ. Chỉ chấp nhận 'live' (mặc định) hoặc 'staging-replay'."
+        status, msg = 503, "Chế độ định tuyến Hybrid trên máy chủ không hợp lệ."
+    elif code == "LOCAL_ONLY_GENERAL_NOT_APPROVED":
+        status, msg = 503, "Chế độ cục bộ mở rộng toàn phần chưa được kích hoạt trên máy chủ."
+    elif code == "LOCAL_ONLY_CLOUD_VISION_DISABLED":
+        status, msg = 503, "Chế độ chạy hoàn toàn trên máy không gửi ảnh tới dịch vụ đọc ảnh đám mây. Em hãy gõ đề hoặc tải tệp DOCX/PDF có chữ."
     elif code == "MISSING_API_KEY":
         status, msg = 503, MISSING_KEY_MSG
     elif code == "STAGING_CORPUS_UNAVAILABLE":
         status, msg = 503, "Kho dữ liệu phát lại Hybrid (staging) chưa sẵn sàng trên máy chủ. Vui lòng kiểm tra cấu hình hoặc thử lại sau."
+    elif code in ("MODEL_RUNTIME_UNAVAILABLE", "MODEL_CHECKSUM_MISMATCH", "LOCAL_SLM_BUSY", "LOCAL_SLM_PROCESS_CRASHED", "INVALID_LOCAL_SLM_MODEL"):
+        status, msg = 503, "Mô hình ngôn ngữ cục bộ (Local SLM) chưa sẵn sàng hoặc đang quá tải trên máy chủ. Vui lòng kiểm tra provisioning hoặc thử lại sau."
     elif code in _HYBRID_PROVIDER_502_CODES:
         status, msg = 502, "Dịch vụ trích xuất đề bài đang gặp sự cố kết nối hoặc phản hồi chưa hợp lệ. Em hãy thử gửi lại sau ít phút."
     else:
         status, msg = 503, "Hệ thống gặp sự cố kỹ thuật tạm thời khi xử lý đề bài. Em hãy thử gửi lại sau."
-    return JSONResponse(
-        status_code=status,
-        headers=headers,
-        content={"error": msg, "reason_code": code, "failure_kind": "INFRASTRUCTURE_FAILURE"},
-    )
+    content: dict[str, Any] = {
+        "error": msg,
+        "reason_code": code,
+        "failure_kind": "INFRASTRUCTURE_FAILURE",
+        "failure_dimension": "INFRASTRUCTURE_AVAILABILITY",
+        "taxonomy_class": "INFRASTRUCTURE_UNAVAILABLE",
+    }
+    if local_only:
+        from app.ai.hybrid_offline import build_local_ai_ux_descriptor
+
+        ux_desc = build_local_ai_ux_descriptor(status_code=status, body=content, local_only=True)
+        content["local_ai_ux"] = ux_desc
+        content["error"] = ux_desc["learner_message"]
+    summary = (local or {}).get("learner_summary") if code in ("LIVE_AI_DISABLED", "MISSING_API_KEY") else None
+    if summary and isinstance(local, dict):
+        seen = "".join(f" Phần chưa đọc được: «{t}»." for t in summary["unread_excerpts"])
+        if code == "MISSING_API_KEY":
+            tail = (
+                " Máy chủ chưa bật kết nối đọc đề bằng AI nên chưa đọc thêm được; em có thể viết phần đó rõ hơn rồi gửi lại."
+                if summary.get("rewrite_may_help")
+                else " Máy chủ chưa bật kết nối đọc đề bằng AI nên chưa xử lý thêm được bài này."
+            )
+        else:
+            tail = (
+                " Máy chủ đang tắt chế độ đọc đề bằng AI nên chưa đọc thêm được; em có thể viết phần đó rõ hơn rồi gửi lại."
+                if summary.get("rewrite_may_help")
+                else " Máy chủ đang tắt chế độ đọc đề bằng AI nên chưa xử lý thêm được bài này."
+            )
+        content["error"] = f"{summary['message']}{seen}{tail}"
+        content["local_understanding"] = {
+            "root_cause": local.get("root_cause"),
+            "failure_dimension": local.get("failure_dimension"),
+            "taxonomy_class": local.get("taxonomy_class"),
+            "determinacy_status": local.get("determinacy_status"),
+            **summary,
+        }
+    return JSONResponse(status_code=status, headers=headers, content=content)
 
 
-async def _analyze_hybrid_route(text: str, mode: str, api_key: str | None, algosim_session: str | None) -> Any:
-    """Tuyến thực thi chính thức duy nhất của AlgoSim (`HYBRID_ROUTE_MODE` = `live` mặc định | `staging-replay`).
+async def _analyze_hybrid_route(
+    text: str,
+    mode: str,
+    api_key: str | None,
+    algosim_session: str | None,
+    source_provenance: InputSourceProvenance | None = None,
+) -> Any:
+    """Tuyến thực thi chính thức duy nhất của AlgoSim (`HYBRID_ROUTE_MODE` = `live` mặc định | `staging-replay` | local-only).
     Tuyệt đối không còn bất kỳ nhánh hay fallback nào về `LLM_ONLY`."""
     if mode not in HYBRID_ROUTE_MODES:
         return _hybrid_infra_error("INVALID_HYBRID_ROUTE_MODE")
-    if mode == "live" and os.getenv("ALLOW_LIVE_AI") == "0":
+    is_local_only = mode in LOCAL_ONLY_HYBRID_MODES
+    if mode == "local-only-general" and os.getenv("AXO_ALLOW_GENERAL_LOCAL_CUTOVER") != "1":
+        return _hybrid_infra_error("LOCAL_ONLY_GENERAL_NOT_APPROVED", local_only=True)
+    use_local_first = mode == "local-first" or (mode == "live" and os.getenv("HYBRID_LOCAL_FIRST") == "1")
+    if mode in ("live", "local-shadow") and not use_local_first and os.getenv("ALLOW_LIVE_AI") == "0":
         return _hybrid_infra_error("LIVE_AI_DISABLED")
 
     from starlette.concurrency import run_in_threadpool
 
     from app.ai.hybrid_offline import (
         HYBRID_INFRASTRUCTURE_CODES,
+        build_local_ai_ux_descriptor,
         prepare_live_hybrid,
+        prepare_local_first_hybrid,
+        prepare_local_shadow_hybrid,
+        prepare_local_slm_hybrid,
+        prepare_local_slm_v9_hybrid,
         prepare_staging_replay,
         resolve_hybrid_gemini_model,
     )
@@ -1226,6 +1485,16 @@ async def _analyze_hybrid_route(text: str, mode: str, api_key: str | None, algos
         plan = await run_in_threadpool(prepare_staging_replay, text, corpus_path)
         if plan is None:
             return _hybrid_infra_error("STAGING_CORPUS_UNAVAILABLE")
+    elif mode == "local-slm":
+        plan = await run_in_threadpool(prepare_local_slm_hybrid, text)
+    elif mode in ("offline-lab", "local-only-scoped", "local-only-general"):
+        plan = await run_in_threadpool(lambda: prepare_local_slm_v9_hybrid(text, mode_tag=mode))
+    elif mode == "local-shadow":
+        model_name = resolve_hybrid_gemini_model()
+        plan = await run_in_threadpool(prepare_local_shadow_hybrid, text, model=model_name)
+    elif use_local_first:
+        model_name = resolve_hybrid_gemini_model()
+        plan = await run_in_threadpool(prepare_local_first_hybrid, text, model=model_name)
     else:
         model_name = resolve_hybrid_gemini_model()
         plan = await run_in_threadpool(prepare_live_hybrid, text, model=model_name)
@@ -1244,15 +1513,21 @@ async def _analyze_hybrid_route(text: str, mode: str, api_key: str | None, algos
                 state = "hit"
 
     if response is None:
-        if mode == "live" and not api_key:
+        if mode in ("live", "local-shadow") and not use_local_first and not api_key:
             return _hybrid_infra_error("MISSING_API_KEY")
 
         ngoai = _ngoai_pham_vi(text)
         if ngoai is not None:
-            return JSONResponse(content=attach_learner_reason(ngoai), headers={"Cache-Control": "no-store"})
+            ngoai_body = attach_learner_reason(ngoai)
+            if is_local_only:
+                ngoai_body = {
+                    **ngoai_body,
+                    "local_ai_ux": build_local_ai_ux_descriptor(status_code=200, body=ngoai_body, local_only=True),
+                }
+            return JSONResponse(content=ngoai_body, headers={"Cache-Control": "no-store"})
 
-        if mode == "staging-replay":
-            result = await run_in_threadpool(plan.run)
+        if mode == "staging-replay" or is_local_only:
+            result = await run_in_threadpool(lambda: plan.run())
         else:
             def _finite_pos_env(env_key: str, default: float) -> float:
                 raw = os.getenv(env_key)
@@ -1266,9 +1541,20 @@ async def _analyze_hybrid_route(text: str, mode: str, api_key: str | None, algos
 
             per_attempt = _finite_pos_env("HYBRID_LIVE_TIMEOUT_SECONDS", 60.0)
             deadline = _finite_pos_env("HYBRID_LIVE_DEADLINE_SECONDS", per_attempt * 3.0)
-            result = await run_in_threadpool(
-                lambda: plan.run(api_key or "", per_attempt_timeout_s=per_attempt, deadline_seconds=deadline)
-            )
+            if use_local_first:
+                allow_live = os.getenv("ALLOW_LIVE_AI") != "0"
+                result = await run_in_threadpool(
+                    lambda: plan.run(
+                        api_key,
+                        allow_live_ai=allow_live,
+                        per_attempt_timeout_s=per_attempt,
+                        deadline_seconds=deadline,
+                    )
+                )
+            else:
+                result = await run_in_threadpool(
+                    lambda: plan.run(api_key or "", per_attempt_timeout_s=per_attempt, deadline_seconds=deadline)
+                )
         code = str(result.receipt.get("code") or "")
         fkind = result.receipt.get("failure_kind")
         obs = DiagnosticObserver(text) if bat_telemetry() else None
@@ -1279,7 +1565,9 @@ async def _analyze_hybrid_route(text: str, mode: str, api_key: str | None, algos
                 or (mode == "live" and code in ("SCHEMA_VERSION_MISMATCH", "REPLAY_SOURCE_IDENTITY_MISMATCH"))):
             if obs is not None:
                 obs.ket_thuc(None)
-            return _hybrid_infra_error(code or "ROUTE_INTERNAL_ERROR")
+            return _hybrid_infra_error(code or "ROUTE_INTERNAL_ERROR",
+                                       ((result.response or {}).get("route_d") or {}).get("local_diagnostics"),
+                                       local_only=is_local_only)
         response = result.response
         if obs is not None:
             obs.ket_thuc(response.get("envelope") if isinstance(response, dict) else None)
@@ -1294,7 +1582,18 @@ async def _analyze_hybrid_route(text: str, mode: str, api_key: str | None, algos
                     session.rollback()
 
     # The guest trial / daily quota of a SERVED result is charged by the usage ledger (`_analyze_counted`).
-    return JSONResponse(content=response, headers={"Cache-Control": "no-store", "X-Algosim-Cache": state})
+    verified_provenance = build_verified_input_provenance(text, source_provenance)
+    out_response = (
+        {**response, "input_provenance": verified_provenance}
+        if verified_provenance is not None and isinstance(response, dict)
+        else response
+    )
+    if is_local_only and isinstance(out_response, dict):
+        out_response = {
+            **out_response,
+            "local_ai_ux": build_local_ai_ux_descriptor(status_code=200, body=out_response, local_only=True),
+        }
+    return JSONResponse(content=out_response, headers={"Cache-Control": "no-store", "X-Algosim-Cache": state})
 
 
 @app.post("/api/analyze")
@@ -1355,7 +1654,10 @@ async def _analyze_once(body: AnalyzeBody, algosim_session: str | None):
             },
         )
 
-    api_key = os.getenv("GEMINI_API_KEY")
+    if che_do_hybrid == "local-only-general" and os.getenv("AXO_ALLOW_GENERAL_LOCAL_CUTOVER") != "1":
+        return _hybrid_infra_error("LOCAL_ONLY_GENERAL_NOT_APPROVED", local_only=True)
+
+    api_key = None if che_do_hybrid in LOCAL_ONLY_HYBRID_MODES else os.getenv("GEMINI_API_KEY")
     try:
         text = await ingest_to_text(
             body.input.type,
@@ -1375,7 +1677,20 @@ async def _analyze_once(body: AnalyzeBody, algosim_session: str | None):
             content={"error": "Nội dung đề quá ngắn — hãy nhập/chọn đầy đủ bài toán."},
         )
 
-    return await _analyze_hybrid_route(text, che_do_hybrid, api_key, algosim_session)
+    if body.input.source_provenance is not None:
+        return await _analyze_hybrid_route(
+            text,
+            che_do_hybrid,
+            api_key,
+            algosim_session,
+            source_provenance=body.input.source_provenance,
+        )
+    return await _analyze_hybrid_route(
+        text,
+        che_do_hybrid,
+        api_key,
+        algosim_session,
+    )
 
 
 @app.post("/api/image/extract")
@@ -1399,6 +1714,9 @@ async def image_extract(
         anh = normalize_image(decode_image_base64(body.content), body.mime_type, body.rotation)
     except ImageRejected as err:
         return JSONResponse(status_code=400, content={"error": str(err), "reason_code": err.code})
+
+    if hybrid_route_mode() in LOCAL_ONLY_HYBRID_MODES:
+        return _hybrid_infra_error("LOCAL_ONLY_CLOUD_VISION_DISABLED", local_only=True)
 
     if os.getenv("ALLOW_LIVE_AI") == "0":   # the same emergency stop as `/api/analyze`: before cache and provider
         return _hybrid_infra_error("LIVE_AI_DISABLED")
@@ -1435,18 +1753,23 @@ async def input_prepare(
     Tài liệu có text layer sạch (PDF text / DOCX + công thức OMML) được đọc tất định với 0 lượt gọi AI;
     chỉ ảnh hoặc trang scan mới đi qua phát hiện vùng CV nhẹ rồi gọi VLM khi cần.
     """
-    chan = _cong_luot_thu(algosim_session)
+    from starlette.concurrency import run_in_threadpool
+
+    # SQLite may wait for another response's transaction cleanup on this event loop.
+    chan = await run_in_threadpool(_cong_luot_thu, algosim_session)
     if chan is not None:
         return chan
 
     from app.ingestion.document_reader import InputPrepareRejected
     from app.ingestion.unified_input import (
         LiveVisionDisabledError,
+        LocalOnlyCloudVisionDisabledError,
         MissingVisionKeyError,
         prepare_unified_input,
     )
 
-    api_key = os.getenv("GEMINI_API_KEY")
+    local_only = hybrid_route_mode() in LOCAL_ONLY_HYBRID_MODES
+    api_key = None if local_only else os.getenv("GEMINI_API_KEY")
     try:
         ket_qua = await prepare_unified_input(
             content=body.content,
@@ -1458,6 +1781,7 @@ async def input_prepare(
             selected_candidate_id=body.selected_candidate_id,
             api_key=api_key,
             cache_version=CACHE_VERSION,
+            local_only=local_only,
         )
     except InputPrepareRejected as err:
         err_payload: dict[str, Any] = {"error": str(err), "reason_code": err.code}
@@ -1468,6 +1792,8 @@ async def input_prepare(
             headers={"Cache-Control": "no-store"},
             content=err_payload,
         )
+    except LocalOnlyCloudVisionDisabledError:
+        return _hybrid_infra_error("LOCAL_ONLY_CLOUD_VISION_DISABLED", local_only=True)
     except LiveVisionDisabledError:
         return _hybrid_infra_error("LIVE_AI_DISABLED")
     except MissingVisionKeyError:

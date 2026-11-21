@@ -1,0 +1,35 @@
+{
+  "schema": "axo-full-t3-receipt/1",
+  "run_id": "local-model1-recovery-offline-vision",
+  "candidate": {
+    "head": "11fb74fae7a231de6df7dca9cf5151edc4fc0e24",
+    "product_commit_sha": "5c65f795e88312956b05ee483ea57ff37359c69c",
+    "measured_system_tree_hash": "7988f838a2d8b9bc2fed2102c8ca465d211d08771541cddb498962e293ec6b3c",
+    "measured_files": 127,
+    "cache_version": "154",
+    "route_d_cache_policy": "154:route-d",
+    "evaluation_candidate_frozen_on_clean_tree": true,
+    "tracked_tree_clean_at_start": true,
+    "worktree": "existing shared worktree .superpowers/worktrees/simulation-intent-slm-recovery (the owner's instruction for this run forbids creating a new worktree; the tracked tree was clean)"
+  },
+  "command": "cd frontend && npm run test:full",
+  "env": {
+    "ALLOW_LIVE_AI": "0",
+    "ALGO_SIM_PYTHON": "D:/Documents/projects/algo-sim/backend/.venv/Scripts/python.exe",
+    "LOCAL_SLM_CACHE_DIR": "hard links of the provisioned cache (AxoV9 sha256 73f1484b08b97ed2a1f44e32bcf6610210c7fda51567c4cd0a03d98dffc6cc35, llama.cpp b12470)"
+  },
+  "started_at": "2026-11-21T10:03:49+07:00",
+  "exit_code": 0,
+  "duration_s": 1202.3,
+  "verdict": "FULL_PRODUCT_GATE_PASS",
+  "gates": {
+    "backend_pytest": {"passed": 15078, "failed": 0, "skipped": 8, "deselected": 9, "xfailed": 12, "seconds": 1065.9},
+    "frontend_vitest": {"files": 203, "tests_passed": 2345, "failed": 0, "seconds": 126.4},
+    "typecheck_build": {"status": "PASS", "seconds": 8.9},
+    "demo_replay": {"status": "PASS", "seconds": 0.7},
+    "demo_crash_surface": {"status": "PASS", "seconds": 0.4}
+  },
+  "environment_note": "frontend/dist held two preview builds created by the previous session's sandbox account, which this account cannot delete; they were moved to D:/tmp/codex-v14-dist-preview before this run (they remain the evidence of the CACHE 153 browser run).",
+  "log": ".superpowers/offline-logs/local-model1-recovery-offline-vision/full-t3-c154/full-t3.log",
+  "log_sha256": "889857cd6f00b65209e3eda93cc7b0af13e59f063c8d0c6203c036fdb20abf92"
+}

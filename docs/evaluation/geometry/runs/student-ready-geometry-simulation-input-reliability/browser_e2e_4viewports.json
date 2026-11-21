@@ -1,0 +1,203 @@
+{
+  "schema": "axo-student-ready-browser-e2e/1",
+  "run_id": "student-ready-geometry-simulation-input-reliability",
+  "generated_at_utc": "2026-11-17T10:14:29Z",
+  "category": "AUTOMATED_BROWSER_NOT_HUMAN_STUDY",
+  "frontend_integration": "BLOCKED_OWNERSHIP",
+  "gate_c": "BLOCKED_OWNERSHIP",
+  "provenance": {
+    "git_head_sha": "4c463d154885e99ad9bf07e3898d11c619eb63c4",
+    "product_commit": "ac0ea63dd462c92a8736b607764d1df552d29329",
+    "measured_system_hash": "8a88dbfe9ddc35e38639c7c81e8c7741b1ea1dd1cd848bc9e7dc6bf16885b0c6",
+    "measured_system_file_count": 120,
+    "cache_version": "145",
+    "route_d_cache_policy": "145:route-d",
+    "frontend_dist_dir": "frontend/dist",
+    "loopback_mode": "HYBRID_ROUTE_MODE=local-first, ALLOW_LIVE_AI=0, GEMINI_API_KEY=\"\"",
+    "health_has_key": false,
+    "live_provider_calls": 0,
+    "temp_files_cleaned_up": true,
+    "fatal_error": null
+  },
+  "viewports": [
+    {
+      "viewport": "1920x1080",
+      "reg_status": 200,
+      "vmmu_r254": {
+        "served": true,
+        "answer_verified_hidden": "9a³√13/2",
+        "steps": 8,
+        "spoiler_pass": true,
+        "canvas_w": 1560,
+        "canvas_h": 1034,
+        "overflow_px": 0
+      },
+      "vmmu_r277": {
+        "served": true,
+        "answer_verified_hidden": "8a³",
+        "steps": 12,
+        "spoiler_pass": true,
+        "stale_prev": false
+      },
+      "mode_a_trig": {
+        "served": true,
+        "numeric_goal_note": true,
+        "spoiler_pass": true
+      },
+      "ocr_confirmation": {
+        "prepare_status": "needs_confirmation",
+        "served": true,
+        "answer_verified_hidden": "a√6/3"
+      },
+      "honest_refusal": {
+        "status": "unsupported",
+        "category": "capability_gap",
+        "reason_code": "EXACT_DOMAIN_EXCEEDED",
+        "canvas_count": 0,
+        "toast_clean": true,
+        "toast_text": "Axo chưa hỗ trợ phép dựng này\nĐề này cần một phép dựng hoặc một dạng câu hỏi mà hệ chưa hỗ trợ, nên hệ không dựng một hình gần đúng. Bạn có thể thử các bài về thiết diện, khoảng cách, góc hoặc thể tích."
+      },
+      "page_errors": [],
+      "console_errors": [],
+      "failed_requests": [],
+      "pass": true
+    },
+    {
+      "viewport": "1366x768",
+      "reg_status": 200,
+      "vmmu_r254": {
+        "served": true,
+        "answer_verified_hidden": "9a³√13/2",
+        "steps": 8,
+        "spoiler_pass": true,
+        "canvas_w": 1006,
+        "canvas_h": 722,
+        "overflow_px": 0
+      },
+      "vmmu_r277": {
+        "served": true,
+        "answer_verified_hidden": "8a³",
+        "steps": 12,
+        "spoiler_pass": true,
+        "stale_prev": false
+      },
+      "mode_a_trig": {
+        "served": true,
+        "numeric_goal_note": true,
+        "spoiler_pass": true
+      },
+      "ocr_confirmation": {
+        "prepare_status": "needs_confirmation",
+        "served": true,
+        "answer_verified_hidden": "a√6/3"
+      },
+      "honest_refusal": {
+        "status": "unsupported",
+        "category": "capability_gap",
+        "reason_code": "EXACT_DOMAIN_EXCEEDED",
+        "canvas_count": 0,
+        "toast_clean": true,
+        "toast_text": "Axo chưa hỗ trợ phép dựng này\nĐề này cần một phép dựng hoặc một dạng câu hỏi mà hệ chưa hỗ trợ, nên hệ không dựng một hình gần đúng. Bạn có thể thử các bài về thiết diện, khoảng cách, góc hoặc thể tích."
+      },
+      "page_errors": [],
+      "console_errors": [],
+      "failed_requests": [],
+      "pass": true
+    },
+    {
+      "viewport": "768x1024",
+      "reg_status": 200,
+      "vmmu_r254": {
+        "served": true,
+        "answer_verified_hidden": "9a³√13/2",
+        "steps": 8,
+        "spoiler_pass": true,
+        "canvas_w": 472,
+        "canvas_h": 978,
+        "overflow_px": 0
+      },
+      "vmmu_r277": {
+        "served": true,
+        "answer_verified_hidden": "8a³",
+        "steps": 12,
+        "spoiler_pass": true,
+        "stale_prev": false
+      },
+      "mode_a_trig": {
+        "served": true,
+        "numeric_goal_note": true,
+        "spoiler_pass": true
+      },
+      "ocr_confirmation": {
+        "prepare_status": "needs_confirmation",
+        "served": true,
+        "answer_verified_hidden": "a√6/3"
+      },
+      "honest_refusal": {
+        "status": "unsupported",
+        "category": "capability_gap",
+        "reason_code": "EXACT_DOMAIN_EXCEEDED",
+        "canvas_count": 0,
+        "toast_clean": true,
+        "toast_text": "Axo chưa hỗ trợ phép dựng này\nĐề này cần một phép dựng hoặc một dạng câu hỏi mà hệ chưa hỗ trợ, nên hệ không dựng một hình gần đúng. Bạn có thể thử các bài về thiết diện, khoảng cách, góc hoặc thể tích."
+      },
+      "page_errors": [],
+      "console_errors": [],
+      "failed_requests": [],
+      "pass": true
+    },
+    {
+      "viewport": "390x844",
+      "reg_status": 200,
+      "vmmu_r254": {
+        "served": true,
+        "answer_verified_hidden": "9a³√13/2",
+        "steps": 8,
+        "spoiler_pass": true,
+        "canvas_w": 390,
+        "canvas_h": 438,
+        "overflow_px": 0
+      },
+      "vmmu_r277": {
+        "served": true,
+        "answer_verified_hidden": "8a³",
+        "steps": 12,
+        "spoiler_pass": true,
+        "stale_prev": false
+      },
+      "mode_a_trig": {
+        "served": true,
+        "numeric_goal_note": true,
+        "spoiler_pass": true
+      },
+      "ocr_confirmation": {
+        "prepare_status": "needs_confirmation",
+        "served": true,
+        "answer_verified_hidden": "a√6/3"
+      },
+      "honest_refusal": {
+        "status": "unsupported",
+        "category": "capability_gap",
+        "reason_code": "EXACT_DOMAIN_EXCEEDED",
+        "canvas_count": 0,
+        "toast_clean": true,
+        "toast_text": "Axo chưa hỗ trợ phép dựng này\nĐề này cần một phép dựng hoặc một dạng câu hỏi mà hệ chưa hỗ trợ, nên hệ không dựng một hình gần đúng. Bạn có thể thử các bài về thiết diện, khoảng cách, góc hoặc thể tích."
+      },
+      "page_errors": [],
+      "console_errors": [],
+      "failed_requests": [],
+      "pass": true
+    }
+  ],
+  "multi_problem_sheet_1366x768": {
+    "prepare_status": "needs_selection",
+    "candidate_count": 2,
+    "picked_status": "ready",
+    "zero_neighbor_bleed": true,
+    "pass": true
+  },
+  "camera_orbit_1920x1080": {
+    "changed": true
+  },
+  "verdict": "PASS"
+}

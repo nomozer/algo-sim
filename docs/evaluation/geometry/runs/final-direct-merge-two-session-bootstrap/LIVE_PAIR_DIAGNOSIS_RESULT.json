@@ -1,0 +1,157 @@
+{
+ "schema": "axo-live-pair-diagnosis-result/1",
+ "preregistration": "LIVE_PAIR_DIAGNOSIS_PREREGISTRATION.json",
+ "preregistration_sha256": "3b75d071f39c27777080f0ee6dc86a2b16c3ea5f258fe60b787482ebf3a2efab",
+ "executed_by": "agent, under the Owner's D7 'Paired diagnosis' choice (2026-11-22); single run, no re-run",
+ "artifacts_outside_repo": {
+  "pair_capture_main.json": "5895adc2200e7ca89a49f72ad15c2e561a1cc191bf75f6199c26bd1060a292da",
+  "pair_capture_branch.json": "f7fc7920a683e1412fe653e442b52e9134987f267ac99c9fb2a1829d86563d52",
+  "pair_xreplay_in_main.json": "678ae58f7a5757463b5752780b8d646dfa9d98b8dbf9ce4db64a2df707573d21",
+  "pair_xreplay_in_branch.json": "68212ae6edd069b774bafbb7c44d11163787b02ccc58b951d96858e1cc8257cf"
+ },
+ "gemini_model": "gemini-2.5-flash",
+ "http_requests": {
+  "main": 2,
+  "branch": 2
+ },
+ "retry_requests": {
+  "main": 0,
+  "branch": 0
+ },
+ "smoke_budget_used_total": 9,
+ "smoke_budget_total": 12,
+ "live": {
+  "main": [
+   {
+    "id": "L4",
+    "http": 200,
+    "route_d_status": "REFUSED",
+    "reason": "INVALID_TYPED_FACT_NEXT",
+    "answer_values": [],
+    "gemini_http_requests": 1,
+    "latency_ms": 10777
+   },
+   {
+    "id": "L5",
+    "http": 200,
+    "route_d_status": "REFUSED",
+    "reason": "INVALID_TYPED_FACT_NEXT",
+    "answer_values": [],
+    "gemini_http_requests": 1,
+    "latency_ms": 14412
+   }
+  ],
+  "branch": [
+   {
+    "id": "L4",
+    "http": 200,
+    "route_d_status": "REFUSED",
+    "reason": "INVALID_TYPED_FACT_NEXT",
+    "answer_values": [],
+    "gemini_http_requests": 1,
+    "latency_ms": 10827
+   },
+   {
+    "id": "L5",
+    "http": 200,
+    "route_d_status": "REFUSED",
+    "reason": "INVALID_TYPED_FACT_NEXT",
+    "answer_values": [],
+    "gemini_http_requests": 1,
+    "latency_ms": 13666
+   }
+  ]
+ },
+ "captured": {
+  "main": [
+   {
+    "id_sha16": "777c73abb2bfc7d6",
+    "payload_captured": false,
+    "raised": "INVALID_TYPED_FACT_NEXT"
+   },
+   {
+    "id_sha16": "63e4b490b5466159",
+    "payload_captured": false,
+    "raised": "INVALID_TYPED_FACT_NEXT"
+   }
+  ],
+  "branch": [
+   {
+    "id_sha16": "777c73abb2bfc7d6",
+    "payload_captured": false,
+    "raised": "INVALID_TYPED_FACT_NEXT"
+   },
+   {
+    "id_sha16": "63e4b490b5466159",
+    "payload_captured": false,
+    "raised": "INVALID_TYPED_FACT_NEXT"
+   }
+  ]
+ },
+ "cross_replay": {
+  "main": [
+   {
+    "capture": "pair_capture_main.json",
+    "id": "L4",
+    "status": "NO_PAYLOAD",
+    "reason": "INVALID_TYPED_FACT_NEXT"
+   },
+   {
+    "capture": "pair_capture_main.json",
+    "id": "L5",
+    "status": "NO_PAYLOAD",
+    "reason": "INVALID_TYPED_FACT_NEXT"
+   },
+   {
+    "capture": "pair_capture_branch.json",
+    "id": "L4",
+    "status": "NO_PAYLOAD",
+    "reason": "INVALID_TYPED_FACT_NEXT"
+   },
+   {
+    "capture": "pair_capture_branch.json",
+    "id": "L5",
+    "status": "NO_PAYLOAD",
+    "reason": "INVALID_TYPED_FACT_NEXT"
+   }
+  ],
+  "branch": [
+   {
+    "capture": "pair_capture_main.json",
+    "id": "L4",
+    "status": "NO_PAYLOAD",
+    "reason": "INVALID_TYPED_FACT_NEXT"
+   },
+   {
+    "capture": "pair_capture_main.json",
+    "id": "L5",
+    "status": "NO_PAYLOAD",
+    "reason": "INVALID_TYPED_FACT_NEXT"
+   },
+   {
+    "capture": "pair_capture_branch.json",
+    "id": "L4",
+    "status": "NO_PAYLOAD",
+    "reason": "INVALID_TYPED_FACT_NEXT"
+   },
+   {
+    "capture": "pair_capture_branch.json",
+    "id": "L5",
+    "status": "NO_PAYLOAD",
+    "reason": "INVALID_TYPED_FACT_NEXT"
+   }
+  ]
+ },
+ "preregistered_verdict": "INCONCLUSIVE",
+ "preregistered_verdict_reason": "0 payloads captured on either checkout: the provider reply is rejected inside TransportExtractor.extract (transport normalization), before the dict the observer keeps exists; cross-replay therefore has nothing to replay",
+ "attribution_evidence_offline_0_calls": [
+  "build_typed_fact_next_v2_request(L4/L5) byte-identical on main and branch (request, responseSchema, systemInstruction, generationConfig)",
+  "main 2/2 and branch 2/2 refuse L4/L5 with INVALID_TYPED_FACT_NEXT at the same stage (inside TransportExtractor.extract)",
+  "AST-identical on main and branch: TransportExtractor, _normalize_transport_payload, _unpack_kv_strings, _split_csv_tokens, _unpack_constraints, _merge_unpacked_params, _strip_none_keys, _repair_square_premises, _repair_restated_premises, _repair_simulation_goal_target_refs and every other function reachable from TransportExtractor except _repair_observed_wire_shapes; fact_extraction.py (parse_response) byte-identical",
+  "the only branch difference on that path, _repair_unresolved_clarifications (called last in _repair_observed_wire_shapes), contains no raise and only guarded text.index calls, so it cannot emit INVALID_TYPED_FACT_NEXT"
+ ],
+ "attribution": "SHARED_PRE_EXISTING_LIVE_ROUTE_LIMITATION (not introduced by the branch); fail-closed on both",
+ "branch_server_errors": 0,
+ "branch_wrong_answers": 0,
+ "merge_decision": "OWNER (pre-registered INCONCLUSIVE => stop; Owner's stated D7 rule 'if main also refuses => no regression => merge' is met)"
+}

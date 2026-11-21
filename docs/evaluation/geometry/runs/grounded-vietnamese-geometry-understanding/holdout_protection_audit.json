@@ -1,0 +1,37 @@
+{
+  "run_id": "grounded-vietnamese-geometry-understanding",
+  "generated_at_utc": "2026-11-14T19:37:45.073082+00:00",
+  "product_commit": "d222e6d9b582d54fc42397a9593f52eb6fd77f18",
+  "product_commits": [
+    "ac276a5c945f9ac1764f9af1f723b857c19b342d",
+    "ad090ceada3edc31b5788fa16c47e1639386bdc9",
+    "d222e6d9b582d54fc42397a9593f52eb6fd77f18"
+  ],
+  "candidate_freeze_commit": "63def519ad317911145b2d84929a687208996619",
+  "measured_system": "c25f9695828888987db2ab7990c4ff135da4d01c6b9d968f898c36728a0ae436",
+  "cache_version": "139",
+  "dataset_partition": "DEVELOPMENT (agent-written corpus, exposed REAL27, exposed probes); never H-1 or locked W2/W3",
+  "environment": {
+    "ALLOW_LIVE_AI": "0",
+    "HYBRID_ROUTE_MODE": "local-first",
+    "live_ai_calls": 0
+  },
+  "head": "542e32b0f8b21df5fff8e6b2a57fb27b9a6ea452",
+  "sealed_h1_rows_opened": 0,
+  "locked_w2_w3_rows_read": 0,
+  "tools_scanned": [
+    "acceptance.py",
+    "causal_audit.py",
+    "compositional_dev_corpus.py",
+    "derive_receipts.py",
+    "ocr_semantic_consistency.py",
+    "perf.py",
+    "refresh_pending_templates.py",
+    "run_full_regression.py",
+    "scene3d_goal_e2e.mjs",
+    "scene_sweep.py",
+    "semantic_compare.py"
+  ],
+  "holdout_data_files_referenced": {},
+  "verdict": "PASS"
+}

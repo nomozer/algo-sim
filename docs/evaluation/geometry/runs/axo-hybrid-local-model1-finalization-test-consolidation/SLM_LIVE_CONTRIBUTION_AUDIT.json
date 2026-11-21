@@ -1,0 +1,45 @@
+{
+  "schema": "axo-slm-live-contribution-audit/1",
+  "provenance_rule": "Counts as SLM_CONTRIBUTED only if in candidate SLM_REQUIRED, completed (SERVED+oracle+numeric+visual+interaction), route_d.extraction_mode starts with LOCAL_SLM, and live without cache or replay.",
+  "candidate_stratum_counts": {
+    "in_scope_total": 100,
+    "PARSER_COMPLETE": 75,
+    "SLM_REQUIRED": 25
+  },
+  "p2_baseline_stratum_counts": {
+    "PARSER_COMPLETE": 64,
+    "SLM_REQUIRED": 36
+  },
+  "slm_recovery": {
+    "slm_required_total": 25,
+    "SLM_CONTRIBUTED_verified_scenes": 7,
+    "SLM_VERIFIED_SCENE_RATE": 0.28,
+    "slm_contributed_case_ids": [
+      "H017",
+      "H024",
+      "H034",
+      "H063",
+      "H068",
+      "H091",
+      "H094"
+    ],
+    "normalizer_or_det_rescued_within_candidate_slm_required": [],
+    "DETERMINISTIC_ONLY_rescues_from_p2_baseline_count": 11,
+    "DETERMINISTIC_ONLY_rescues_from_p2_baseline_ids": [
+      "H020",
+      "H030",
+      "H031",
+      "H038",
+      "H054",
+      "H060",
+      "H062",
+      "H067",
+      "H088",
+      "H092",
+      "H095"
+    ],
+    "preregistered_slm_targets_total": 35,
+    "preregistered_slm_targets_completed": 23,
+    "preregistered_slm_targets_slm_contributed": 5
+  }
+}

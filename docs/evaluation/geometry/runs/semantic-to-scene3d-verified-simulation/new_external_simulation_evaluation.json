@@ -1,0 +1,47 @@
+{
+  "run_id": "semantic-to-scene3d-verified-simulation",
+  "generated_at_utc": "2026-11-13T06:30:52.433030+00:00",
+  "head": "6e3989ba5dda57f3b3369551592d832aff9251a1",
+  "status": "NOT_MEASURED_ON_UNSEEN_DATA",
+  "why": "No unseen in-scope item was available without opening the 94 sealed H-1 rows, which this run must not open. The two fresh items of the previous run were viewed there; r695 is now rule-targeted (late square side) and therefore exposed.",
+  "previous_fresh_items_rerun": [
+    {
+      "case_id": "vmmu_r559",
+      "partition_now": "PREVIOUS_RUN_FRESH_VIEWED",
+      "tags": [
+        "regular_tetrahedron",
+        "angle_line_line",
+        "cosine_output",
+        "scale_free"
+      ],
+      "outcome": "UNSUPPORTED",
+      "reason": "LIVE_AI_DISABLED",
+      "simulation": {
+        "level": null
+      },
+      "grade": "NOT_SERVED",
+      "ms": 7.080300000779971
+    },
+    {
+      "case_id": "vmmu_r695",
+      "partition_now": "PREVIOUS_RUN_FRESH_VIEWED_AND_RULE_TARGETED",
+      "tags": [
+        "pyramid",
+        "distance_point_plane"
+      ],
+      "outcome": "TEXT_INPUT_SIMULATION",
+      "reason": null,
+      "simulation": {
+        "goal": "distance",
+        "level": "GOAL_CONSTRUCTION_VERIFIED",
+        "invariant_checks": 4,
+        "invariant_failures": 0,
+        "angle_construction": null,
+        "objects": 13
+      },
+      "grade": "SERVED_MATCHES_DATASET_KEY",
+      "ms": 30.087000000094122
+    }
+  ],
+  "sealed_pool_untouched": 94
+}

@@ -29,9 +29,11 @@ hình học. Nghĩa vụ nhận cả hai (không có cái nào hiện giờ) s�
 ─── FAIL-SAFE CỦA BỘ NHẬN MIỀN ───────────────────────────────────────────────
 
 `detect_domain` là **suy đoán**, và nó được thiết kế để đoán sai về phía an
-toàn: không đủ dấu hiệu ⇒ trả `tin_hoc`, tức **đúng hành vi hiện tại**. 24
-target Tin học không thể bị bộ nhận miền làm hỏng, vì cửa duy nhất nó mở là cửa
-đi sang hình học.
+toàn: không đủ dấu hiệu ⇒ trả `out_of_scope` — đề bị từ chối ở cổng trước
+provider (`GATE_OUT_OF_SCOPE`), không bị đoán thành hình học. Sản phẩm chỉ có
+MỘT miền (hình học không gian); miền Tin học đã gỡ hẳn (/13: nhãn `tin_hoc`, tập
+nghĩa vụ và schema `analyze` riêng của nó không còn). Các dấu hiệu lập trình bên
+dưới vẫn giữ — chúng là bằng chứng một đề KHÔNG phải bài hình học.
 
 Đường đo (`run_geometry_dev_evaluation.py`) **không dùng** bộ nhận miền — nó
 truyền `domain` thẳng. Phép đo không được phụ thuộc vào một suy đoán.
@@ -43,9 +45,12 @@ import re
 
 from .obligations import OBLIGATION_KINDS
 
-DOMAIN_TIN_HOC = "tin_hoc"
 DOMAIN_HINH_HOC = "hinh_hoc"
-DOMAINS = (DOMAIN_TIN_HOC, DOMAIN_HINH_HOC)
+#: Mọi thứ không phải bài hình học không gian. Không phải một miền sản phẩm: không có tập nghĩa vụ, schema hay
+#: tuyến nào cho nó — chỉ có từ chối (`GATE_OUT_OF_SCOPE`). Thay nhãn `tin_hoc` cũ (/13); giá trị chỉ sống trong
+#: backend, không đi qua API hay cache.
+DOMAIN_NGOAI_PHAM_VI = "out_of_scope"
+DOMAINS = (DOMAIN_HINH_HOC, DOMAIN_NGOAI_PHAM_VI)
 
 
 def geometry_obligation_kinds() -> frozenset[str]:
@@ -56,19 +61,11 @@ def geometry_obligation_kinds() -> frozenset[str]:
     )
 
 
-def tin_hoc_obligation_kinds() -> frozenset[str]:
-    """Phần bù. Nghĩa vụ dùng được ở CẢ HAI miền sẽ có mặt ở cả hai tập."""
-    geo = geometry_obligation_kinds()
-    return frozenset(
-        k for k, chu_the in OBLIGATION_KINDS.items()
-        if k not in geo or not (chu_the <= GEOMETRY_TYPES)
-    )
-
-
 def obligation_kinds_for(domain: str) -> frozenset[str]:
+    """Nghĩa vụ được phép khai cho `domain`. Ngoài phạm vi ⇒ rỗng: không có gì để kiểm, đề bị từ chối."""
     if domain == DOMAIN_HINH_HOC:
         return geometry_obligation_kinds()
-    return tin_hoc_obligation_kinds()
+    return frozenset()
 
 
 #: MANH MỐI VĂN BẢN → NGHĨA VỤ CHÍNH TẮC. Khoá phải có checker thật.
@@ -194,7 +191,8 @@ def co_duong_thuc_thi(text: str, domain: str) -> bool:
 INPUT_FACT_KINDS_HINH_HOC = ("float", "int", "str", "bool")
 
 
-# ── Bộ nhận miền — TẤT ĐỊNH, và cố ý thiên về `tin_hoc` ───────────────────
+# ── Bộ nhận miền — TẤT ĐỊNH, và cố ý thiên về `out_of_scope` ──────────────
+# (Lịch sử đo bên dưới nhắc "đề Tin học": đó là các đề lập trình mượn từ hình học mà cổng phải TỪ CHỐI.)
 #
 # Hai hạng dấu hiệu, khác nhau ở mức RIÊNG BIỆT chứ không ở độ "quan trọng":
 #
@@ -289,6 +287,12 @@ _MANH_DANH_TU_KHOI = (
     "khối cầu", "khối nón", "khối trụ",
 )
 
+# A bare mathematical solid noun requires its full apex/base notation.
+_NAMED_PYRAMID = re.compile(
+    r"(?<![\w'])(?i:ch[oó]p)\s+[A-Z]\d*'?\.(?:[A-Z]\d*'?){3,6}(?![\w'.])"
+)
+
+
 #: Giữ tên cũ: nhiều test và bảng đồng bộ đọc nó như "toàn bộ cụm mạnh".
 _DAU_HIEU_MANH = _MANH_QUAN_HE + _MANH_DANH_TU_KHOI
 _DAU_HIEU_YEU = (
@@ -330,7 +334,7 @@ _DAU_HIEU_YEU = (
 # Tin học, nên *"viết chương trình dựng thiết diện"* vẫn phải là hình học.
 #
 # Không đề nào trong 10 bài dev hình học chứa một cụm nào dưới đây (đã kiểm).
-_DAU_HIEU_TIN_HOC = (
+_DAU_HIEU_NGOAI_PHAM_VI = (
     "viết chương trình", "thuật toán", "ngăn xếp", "hàng đợi", "mảng",
     "duyệt", "sắp xếp", "đồ thị", "bfs", "dfs", "đệ quy", "vòng lặp",
     "cấu trúc dữ liệu", "độ phức tạp", "truy vấn", "cơ sở dữ liệu",
@@ -621,7 +625,7 @@ def khop_ky_hieu(ten_hop_dong: str, ung_vien: set[str]) -> str | None:
 
 
 def detect_domain(text: str) -> str:
-    """Đoán miền của một đề. Không chắc ⇒ `tin_hoc` (= hành vi hiện tại).
+    """Đề có phải bài hình học không gian không. Không chắc ⇒ `out_of_scope` (từ chối, không đoán).
 
     KHÔNG dùng ở đường đo. Nó nhận diện **từ ngữ**, không nhận diện **bài
     toán** — giới hạn ấy vẫn còn, và vẫn phải đọc kèm.
@@ -630,11 +634,11 @@ def detect_domain(text: str) -> str:
 
     1. có cụm MẠNH  ⇒ `hinh_hoc`. Dứt khoát: `thiết diện`, `hình chóp`, `tứ
        diện` không xuất hiện trong đề Tin học.
-    2. đủ 3 cụm YẾU **và không có dấu hiệu Tin học** ⇒ `hinh_hoc`.
-    3. còn lại ⇒ `tin_hoc` (fail-safe).
+    2. đủ 3 cụm YẾU **và không có dấu hiệu lập trình/ngoài phạm vi** ⇒ `hinh_hoc`.
+    3. còn lại ⇒ `out_of_scope` (fail-safe).
 
-    Luật 2 mang mệnh đề phủ quyết vì bản không có nó kéo nhầm 4/5 đề Tin học
-    hợp lệ có mượn từ vựng hình học — xem `_DAU_HIEU_TIN_HOC` để biết phép đo
+    Luật 2 mang mệnh đề phủ quyết vì bản không có nó kéo nhầm 4/5 đề lập trình
+    có mượn từ vựng hình học — xem `_DAU_HIEU_NGOAI_PHAM_VI` để biết phép đo
     và vì sao phủ quyết chứ không nâng ngưỡng.
 
     Bản cũ ghi ở đây rằng kéo nhầm là *"thất bại lộ ra ở C₁a chứ không âm
@@ -642,8 +646,12 @@ def detect_domain(text: str) -> str:
     **NGOÀI DANH MỤC MÔ PHỎNG** trên một đề hệ vốn mô phỏng được.
     """
     if not text:
-        return DOMAIN_TIN_HOC
+        return DOMAIN_NGOAI_PHAM_VI
     t = text.lower()
+    # /12 (A2): controlled diacritic-free detection ONLY when no Vietnamese diacritics appear;
+    # accented inputs keep the exact untouched matching path below.
+    if _khong_dau(t) == t:
+        return _detect_diacritic_free(t, text)
     # BỐN MỨC, không còn ba (sửa 2026-08-29 — xem `_MANH_QUAN_HE`).
     #
     # Cụm QUAN HỆ thắng cả phủ quyết Tin học; danh từ KHỐI thì không. Bản cũ
@@ -651,10 +659,54 @@ def detect_domain(text: str) -> str:
     # vì có một danh từ khối.
     if any(d in t for d in _MANH_QUAN_HE):
         return DOMAIN_HINH_HOC
-    if any(d in t for d in _DAU_HIEU_TIN_HOC):
-        return DOMAIN_TIN_HOC
-    if any(d in t for d in _MANH_DANH_TU_KHOI):
+    if any(d in t for d in _DAU_HIEU_NGOAI_PHAM_VI):
+        return DOMAIN_NGOAI_PHAM_VI
+    if _NAMED_PYRAMID.search(text) or any(d in t for d in _MANH_DANH_TU_KHOI):
         return DOMAIN_HINH_HOC
     if sum(1 for d in _DAU_HIEU_YEU if d in t) >= 3:
         return DOMAIN_HINH_HOC
-    return DOMAIN_TIN_HOC
+    return DOMAIN_NGOAI_PHAM_VI
+
+
+_DAU = str.maketrans("đ", "d")
+_ASCII_GEOM_NOTATION_RE = re.compile(r"(?<![A-Za-z])[A-Z][0-9']*(?:\.[A-Z][0-9']*|[A-Z]{2,5})(?![a-z])")
+_ASCII_DECOY_EXTRA = (
+    "mang hinh", "con lac", "lo xo", "bien do", "dao dong",
+    "cay khung", "thuat toan", "kruskal", "dijkstra",
+    "van toc", "gia toc", "dong dien", "mach dien",
+    "phuong trinh", "tich phan", "dao ham", "xac suat",
+    "code", "html", "sql", "javascript", "java",
+)
+
+
+def _khong_dau(s: str) -> str:
+    import unicodedata
+    return "".join(c for c in unicodedata.normalize("NFD", s.translate(_DAU)) if unicodedata.category(c) != "Mn")
+
+
+def _co_cum_tu(t: str, phrase: str) -> bool:
+    if any(sym in phrase for sym in ("⊥", "∥", "//")):
+        return phrase in t
+    return bool(re.search(rf"(?<![\w']){re.escape(phrase)}(?![\w'])", t))
+
+
+def _detect_diacritic_free(t: str, raw_text: str) -> str:
+    """Controlled word-boundary diacritic-free domain detection (A2: 0 decoy false positives)."""
+    if any(_co_cum_tu(t, p) for p in _ASCII_DECOY_EXTRA) or any(
+        _co_cum_tu(t, _khong_dau(d)) for d in _DAU_HIEU_NGOAI_PHAM_VI
+    ):
+        return DOMAIN_NGOAI_PHAM_VI
+    if _NAMED_PYRAMID.search(raw_text):
+        return DOMAIN_HINH_HOC
+    has_notation = bool(_ASCII_GEOM_NOTATION_RE.search(raw_text))
+    weak_stripped = tuple(
+        _khong_dau(d) for d in _DAU_HIEU_YEU if d != "đáy"
+    ) + ("mat day", "canh day", "day la")
+    weak_hits = sum(1 for d in weak_stripped if _co_cum_tu(t, d))
+    if any(_co_cum_tu(t, _khong_dau(d)) for d in _MANH_QUAN_HE) and (has_notation or weak_hits >= 1):
+        return DOMAIN_HINH_HOC
+    if any(_co_cum_tu(t, _khong_dau(d)) for d in _MANH_DANH_TU_KHOI) and (has_notation or weak_hits >= 2):
+        return DOMAIN_HINH_HOC
+    if weak_hits >= 3 and (has_notation or weak_hits >= 4):
+        return DOMAIN_HINH_HOC
+    return DOMAIN_NGOAI_PHAM_VI

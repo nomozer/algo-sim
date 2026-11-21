@@ -1,0 +1,110 @@
+{
+ "schema": "axo-live-gemini-smoke-result/1",
+ "preregistration_sha256": "73084ffa6d9ba57aa8dfe4627c0e92fee7056a37005818a57508b5c13afdc84a",
+ "checkout_backend": "D:\\Documents\\projects\\algo-sim\\.superpowers\\worktrees\\live-smoke-c158\\backend",
+ "module": "D:\\Documents\\projects\\algo-sim\\.superpowers\\worktrees\\live-smoke-c158\\backend\\app\\main.py",
+ "gemini_model": "gemini-2.5-flash",
+ "budget": {
+  "cap": 12,
+  "http_requests": 5,
+  "logical_calls": 5,
+  "retry_requests": 0,
+  "transient_hits": 0,
+  "aborted": false
+ },
+ "stop": null,
+ "match": 3,
+ "blockers": [],
+ "verdict": "INCONCLUSIVE",
+ "rows": [
+  {
+   "id": "L1",
+   "http": 200,
+   "route_d_status": "SERVED",
+   "reason": null,
+   "answer_values": [
+    "12/5"
+   ],
+   "expected_answer_values": [
+    "12/5"
+   ],
+   "gemini_http_requests": 1,
+   "latency_ms": 9458,
+   "n_scene_objects": 17,
+   "class": "MATCH"
+  },
+  {
+   "id": "L2",
+   "http": 200,
+   "route_d_status": "SERVED",
+   "reason": null,
+   "answer_values": [
+    "cos²=32/41"
+   ],
+   "expected_answer_values": [
+    "cos²=32/41"
+   ],
+   "gemini_http_requests": 1,
+   "latency_ms": 5765,
+   "n_scene_objects": 14,
+   "class": "MATCH"
+  },
+  {
+   "id": "L3",
+   "http": 200,
+   "route_d_status": "SERVED",
+   "reason": null,
+   "answer_values": [
+    "4√2/3"
+   ],
+   "expected_answer_values": [
+    "4√2/3"
+   ],
+   "gemini_http_requests": 1,
+   "latency_ms": 9648,
+   "n_scene_objects": 15,
+   "class": "MATCH"
+  },
+  {
+   "id": "L4",
+   "http": 200,
+   "route_d_status": "REFUSED",
+   "reason": "INVALID_TYPED_FACT_NEXT",
+   "answer_values": [],
+   "expected_answer_values": [
+    "12"
+   ],
+   "gemini_http_requests": 1,
+   "latency_ms": 10430,
+   "n_scene_objects": 0,
+   "class": "SAFE_REFUSAL"
+  },
+  {
+   "id": "L5",
+   "http": 200,
+   "route_d_status": "REFUSED",
+   "reason": "INVALID_TYPED_FACT_NEXT",
+   "answer_values": [],
+   "expected_answer_values": [
+    "1/8",
+    "7a³/24"
+   ],
+   "gemini_http_requests": 1,
+   "latency_ms": 13283,
+   "n_scene_objects": 0,
+   "class": "SAFE_REFUSAL"
+  },
+  {
+   "id": "N1",
+   "http": 200,
+   "route_d_status": null,
+   "reason": "gate_out_of_scope",
+   "answer_values": [],
+   "expected_answer_values": [],
+   "gemini_http_requests": 0,
+   "latency_ms": 45,
+   "n_scene_objects": 0,
+   "class": "GATE_OK"
+  }
+ ]
+}

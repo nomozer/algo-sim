@@ -1,0 +1,210 @@
+{
+  "schema": "algosim-hybrid-gap-prioritization-revised/1",
+  "generated_at_utc": "2026-11-09T19:05:02.186832+00:00",
+  "policy_compliance": {
+    "mass_g2_g3_implementation_performed_in_this_wave": false,
+    "unverified_63_to_69_claim_asserted": false,
+    "authoritative_dev72_baseline": "56/62 in-scope positive solved locally (0 AI) + 10/10 negative refused = 66/72 aligned; 6 open strict XFAILs (`PL5, PA3, MG5, SE3, MG9, RE10`)."
+  },
+  "prioritized_gaps": [
+    {
+      "priority_rank": 1,
+      "canonical_gap_id": "EXT-GAP-ANGLE-PREMISE",
+      "canonical_case_ids": [
+        "ext_prt_01_hd_q_5259753",
+        "ext_prt_06_hd_q_1084979",
+        "ext_hw_01_hd_a_6043187"
+      ],
+      "source_problem": "Cho hình chóp S.ABCD có đáy là hình vuông cạnh a, SA ⊥ (ABCD) và SB tạo với đáy một góc 60°.",
+      "expected_mathematical_behavior": "Derive apex height `SA = AB * tan(60°) = a√3` from line-plane angle `(SB, (ABCD)) = ∠SBA = 60°` when `A` is the orthogonal projection of `S` onto `(ABCD)`.",
+      "actual_failure": "Local Parser returns `LOCAL_PARSE_PARTIAL` (`unparsed_AngleClause`); `Registry /33` has `ask_angle_line_plane` as a goal query (`bac = 0`), not an inverse height-fixing premise.",
+      "responsible_layer": "Local Geometry Parser + TypedFactNext /2 Premise Schema + Registry /33 + Engine /24",
+      "existing_primitives": [
+        "ask_angle_line_plane",
+        "altitude_from_side",
+        "Radical(Fraction, radicand)"
+      ],
+      "required_new_primitives": [
+        "line_plane_angle_deg premise (`30°, 45°, 60°`)",
+        "dihedral_angle_deg premise (`30°, 45°, 60°`)",
+        "exact tangent radical height builder"
+      ],
+      "correctness_risk": "MEDIUM — must verify `foot(S, base) = A` before identifying `∠(SB, base) = ∠SBA` and restrict to exact constructible angles `{30°, 45°, 60°}`.",
+      "estimated_performance_impact": "NEGLIGIBLE (`< 0.2 ms` exact `Radical` arithmetic, `0 MB` RAM).",
+      "external_examples_affected_count": 3
+    },
+    {
+      "priority_rank": 2,
+      "canonical_gap_id": "CURRICULUM-FAMILY-1",
+      "canonical_case_ids": [
+        "ext_prt_04_hd_q_8436784",
+        "ext_prt_06_hd_q_1084979"
+      ],
+      "source_problem": "Đáy ABCD là hình thang vuông tại A và B (hoặc hình thang với AD // BC, AD = 2BC); đáy ABC là tam giác cân tại C.",
+      "expected_mathematical_behavior": "Place 4-vertex right/isosceles trapezoid or isosceles triangle base in exact `Fraction`/`Radical` 2D chart coordinates and certify parallel/perpendicular sides in `kiem_khang_dinh_loai_hinh`.",
+      "actual_failure": "Refused fail-closed (`MISSING_DIMENSION` / `LOCAL_PARSE_PARTIAL`) because `engine.py` base chart templates cover square, rectangle, right/equilateral triangle, and 3-side Heron triangle, but not `right_trapezoid` or `isosceles_trapezoid`.",
+      "responsible_layer": "TypedFactNext /2 + Source Gate (`registry.py`) + Exact Kernel (`engine.py` base layout)",
+      "existing_primitives": [
+        "parallel_lines",
+        "perpendicular_lines",
+        "equal_length",
+        "Gram exact metric"
+      ],
+      "required_new_primitives": [
+        "base_right_trapezoid(A,B,C,D, right_at=(A,B), bases=(AD,BC))",
+        "base_isosceles_trapezoid(A,B,C,D)"
+      ],
+      "correctness_risk": "LOW-MEDIUM — vertex ordering (`AD // BC` vs `AB // CD`) and convexity orientation must be certified in `kiem_khang_dinh_loai_hinh`.",
+      "estimated_performance_impact": "NEGLIGIBLE (`< 0.3 ms`, `O(1)` coordinate placement).",
+      "external_examples_affected_count": 2
+    },
+    {
+      "priority_rank": 3,
+      "canonical_gap_id": "CURRICULUM-FAMILY-2",
+      "canonical_case_ids": [
+        "ext_prt_07_hd_q_7958052",
+        "ext_prt_05_hd_q_7451806"
+      ],
+      "source_problem": "Đáy ABC có AB = 5, AC = 6, Â = 60° (hoặc đáy ABCD là hình thoi cạnh a, góc BAD = 60°).",
+      "expected_mathematical_behavior": "Place general triangle with `∠BAC ∈ {30°, 45°, 60°, 120°, 135°, 150°}` via Law of Cosines or rhombus `(AB=BC=CD=DA, ∠BAD=60°)` in `(1, √3)` radical chart.",
+      "actual_failure": "Local Parser stops at `Â = 60°` / `hình bình hành`; `engine.py` lacks 2-side + included-angle and rhombus `60°/120°` base builders.",
+      "responsible_layer": "Local Geometry Parser + Registry /33 + Exact Kernel (`engine.py`)",
+      "existing_primitives": [
+        "base_equilateral_triangle",
+        "Radical exact arithmetic"
+      ],
+      "required_new_primitives": [
+        "base_rhombus_angle(A,B,C,D, side, angle_deg)",
+        "base_triangle_sas_angle(A,B,C, ab, ac, angle_a_deg)"
+      ],
+      "correctness_risk": "LOW — exact `cos(60°) = 1/2`, `sin(60°) = √3/2` stays within single-square-root `Radical(a, 3)` domain.",
+      "estimated_performance_impact": "NEGLIGIBLE (`< 0.3 ms`).",
+      "external_examples_affected_count": 2
+    },
+    {
+      "priority_rank": 4,
+      "canonical_gap_id": "DEV72-G2",
+      "canonical_case_ids": [
+        "PL5",
+        "PA3",
+        "HB35"
+      ],
+      "source_problem": "Khoảng cách từ điểm A đến đường thẳng đi qua B và trung điểm của SC (`@m1` inside `line` operand).",
+      "expected_mathematical_behavior": "Lower `line=[B, @m1]` in `bridge_v2` by materializing `midpoint(S, C) -> _M1` before `ask_distance_point_line(A, B, _M1)`.",
+      "actual_failure": "`bridge_v2` rejects `@m1` inside `line` tuple (`BRIDGE_UNSUPPORTED_DESCRIBED_POINT` / `BRIDGE_INVALID_REFERENCE`).",
+      "responsible_layer": "Bridge v2 (`typed_fact_next_bridge.py`) + Source Gate `effect-chain` span verifier",
+      "existing_primitives": [
+        "DescribedPointSpec",
+        "midpoint",
+        "ask_distance_point_line"
+      ],
+      "required_new_primitives": [
+        "Line-operand `@id` lowering in `_distance_question` / `_angle_question`"
+      ],
+      "correctness_risk": "LOW-MEDIUM — must preserve verbatim quote ownership in `Source Gate`.",
+      "estimated_performance_impact": "NEGLIGIBLE (`< 0.5 ms`).",
+      "external_examples_affected_count": 0
+    },
+    {
+      "priority_rank": 5,
+      "canonical_gap_id": "DEV72-G3",
+      "canonical_case_ids": [
+        "MG5"
+      ],
+      "source_problem": "Khoảng cách giữa trung điểm của SA và trung điểm của BC (`@m1` and `@n1` in one `distance` goal).",
+      "expected_mathematical_behavior": "Materialize both `@m1` and `@n1` in topological order and compute exact segment length `|_M1 _N1|`.",
+      "actual_failure": "`bridge_v2` permits at most one `@id` per goal (`BRIDGE_UNSUPPORTED_DESCRIBED_POINT`).",
+      "responsible_layer": "Bridge v2 (`typed_fact_next_bridge.py`) + Source Gate",
+      "existing_primitives": [
+        "DescribedPointSpec",
+        "ask_length"
+      ],
+      "required_new_primitives": [
+        "Dual-`@id` goal lowering with disjoint quote-span check"
+      ],
+      "correctness_risk": "LOW-MEDIUM — guard against aliasing identical unnamed descriptions to distinct points.",
+      "estimated_performance_impact": "NEGLIGIBLE (`< 0.5 ms`).",
+      "external_examples_affected_count": 0
+    },
+    {
+      "priority_rank": 6,
+      "canonical_gap_id": "CURRICULUM-FAMILY-3",
+      "canonical_case_ids": [
+        "ext_prt_05_hd_q_7451806"
+      ],
+      "source_problem": "Gọi E là điểm thuộc cạnh SC sao cho SE = 3EC (`k = 3/4`).",
+      "expected_mathematical_behavior": "Place `E = (1 - 3/4)*S + (3/4)*C` via `point_on_segment_ratio(E, S, C, Fraction(3, 4))`.",
+      "actual_failure": "Local Parser handles midpoints (`1/2`) and centroids (`2/3`), not general `SE = m*EC` rational ratios.",
+      "responsible_layer": "Local Geometry Parser + Source Gate ratio grammar",
+      "existing_primitives": [
+        "divide_segment / affine Fraction combination in `engine.py`"
+      ],
+      "required_new_primitives": [
+        "General `X thuộc cạnh AB sao cho AX = p*XB` grammar in `registry.py` & `local_geometry_parser.py`"
+      ],
+      "correctness_risk": "LOW — must enforce `0 < k < 1` for `thuộc cạnh` vs `thuộc tia đối`.",
+      "estimated_performance_impact": "NEGLIGIBLE (`< 0.2 ms`).",
+      "external_examples_affected_count": 1
+    },
+    {
+      "priority_rank": 7,
+      "canonical_gap_id": "DEV72-G4",
+      "canonical_case_ids": [
+        "SE3",
+        "HB36"
+      ],
+      "source_problem": "Mặt phẳng (Q) đi qua ba điểm M, N, P. Tính diện tích thiết diện tạo bởi (Q) và hình chóp.",
+      "expected_mathematical_behavior": "Bind symbolic plane alias `(Q) := plane(M, N, P)` so Source Gate accepts `(Q)` in the section goal.",
+      "actual_failure": "`bridge_v2` lowers `(Q)` to `(MNP)`, which `mat_cat_dung_nguon` refuses as `SOURCE_OBJECT_MISMATCH`.",
+      "responsible_layer": "Bridge v2 + Source Gate (`registry.py::mat_cat_dung_nguon`)",
+      "existing_primitives": [
+        "construct_plane_section",
+        "named plane_defs"
+      ],
+      "required_new_primitives": [
+        "Explicit `plane_alias` provenance token in `section_cut` certificate"
+      ],
+      "correctness_risk": "LOW.",
+      "estimated_performance_impact": "NEGLIGIBLE.",
+      "external_examples_affected_count": 0
+    },
+    {
+      "priority_rank": 8,
+      "canonical_gap_id": "DEV72-G6_AND_G7",
+      "canonical_case_ids": [
+        "MG9",
+        "HB37",
+        "RE10",
+        "HB38"
+      ],
+      "source_problem": "3+ property-defined points (`orthocenter`/`circumcenter`) in one problem (`MG9`) or nested projection of `@h1` (`RE10`).",
+      "expected_mathematical_behavior": "Prune dominated candidate plans before `MAX_EFFECT_CANDIDATES=48` / `MAX_MEMORY_DECLARATIONS=32` and allow depth-2 over `@orthocenter`.",
+      "actual_failure": "`PLAN_TOO_LARGE` / `IR_MEMORY_BUDGET_EXCEEDED` (`MG9`) and `BRIDGE_UNSUPPORTED_DESCRIBED_POINT` (`RE10`).",
+      "responsible_layer": "Planner `/26` + Bridge v2",
+      "existing_primitives": [
+        "orthocenter",
+        "circumcenter",
+        "depth-2 projection composition"
+      ],
+      "required_new_primitives": [
+        "Memoized sub-construct sharing in IR emitter + inner property-point lowering"
+      ],
+      "correctness_risk": "MEDIUM.",
+      "estimated_performance_impact": "LOW (`< 3 ms` bounded search).",
+      "external_examples_affected_count": 0
+    }
+  ],
+  "next_wave_implementation_design_trapezoid_and_rhombus": {
+    "scope": "Design specification only (per Section X: no mass implementation in this wave).",
+    "1_right_and_isosceles_trapezoid_design": {
+      "contract": "Extend `PremiseSpec` / `Registry` with `right_trapezoid_base(vertices=[A,B,C,D], parallel_bases=[AD,BC], right_vertices=[A,B])` and `isosceles_trapezoid_base(vertices=[A,B,C,D], parallel_bases=[AD,BC])`.",
+      "coordinate_chart": "Place `A=(0,0,0)`, `B=(0,h,0)` (`h = AB`), `D=(ad,0,0)`, `C=(bc,h,0)` for right trapezoid (`AD // BC`, `∠DAB = ∠ABC = 90°`), requiring exact `AB, AD, BC` (or `CD` via `h² = CD² - (AD - BC)²` certified square-free radical). For isosceles trapezoid (`AD // BC`, `AB = CD`), set `A=(0,0,0)`, `D=(ad,0,0)`, `B=((ad-bc)/2, h, 0)`, `C=((ad+bc)/2, h, 0)` with `h = √(AB² - ((ad-bc)/2)²)`.",
+      "source_gate_invariants": "Require explicit parallel-base clause (`đáy lớn / đáy nhỏ` or `AD // BC`) plus right-angle vertices (`vuông tại A và B`) in verbatim quote; refuse `PLANE_NOT_UNIQUE` / `MISSING_DIMENSION` if parallel pair is unspecified."
+    },
+    "2_rhombus_60_120_design": {
+      "contract": "Add `rhombus_base_with_angle(vertices=[A,B,C,D], side=a, vertex=A, angle_deg=60|120)` (or diagonal lengths `AC, BD`).",
+      "coordinate_chart": "For `∠BAD = 60°` and side `a`: `A=(0,0,0)`, `B=(a,0,0)`, `D=(a/2, a√3/2, 0)`, `C=(3a/2, a√3/2, 0)` in exact `Radical(Fraction, 3)` coordinates; for `∠BAD = 120°`, swap `60° <-> 120°` (`D=(-a/2, a√3/2, 0)`). Certify `|AB|²=|BC|²=|CD|²=|DA|²=a²` and `cos²(∠BAD) ∈ {1/4}` in `kiem_khang_dinh_loai_hinh`.",
+      "source_gate_invariants": "Match `đáy ABCD là hình thoi cạnh <val>, góc <V> bằng 60°|120°` (or `tam giác ABC đều`) without guessing acute vs obtuse vertex when angle vertex is unnamed (`AMBIGUOUS_FACT`)."
+    }
+  }
+}

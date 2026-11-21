@@ -1,0 +1,835 @@
+{
+ "schema": "axo17-routing-ablation-scores/1",
+ "oracle": "docs/evaluation/geometry/harness/live-acceptance/scene_oracle.py",
+ "arms": {
+  "A": {
+   "by_source": {
+    "holdout-6/ACCEPTANCE_MANIFEST.json": {
+     "positive": 72,
+     "completed": 64,
+     "served_positive": 64,
+     "math_invalid_served": 0,
+     "numeric_mismatch_served": 0,
+     "negative": 26,
+     "negative_served": 0,
+     "slm_inferences": 47,
+     "slm_invoked_cases": 47,
+     "slm_contributed_completed": 23,
+     "http_5xx": 0,
+     "latency_completed_ms": {
+      "n": 64,
+      "p50": 135.4,
+      "p95": 7162.6,
+      "max": 8311.3
+     },
+     "latency_slm_completed_ms": {
+      "n": 23,
+      "p50": 5852.4,
+      "p95": 8212.1,
+      "max": 8311.3
+     }
+    },
+    "holdout-6/SLM_INDEPENDENT_MANIFEST.json": {
+     "positive": 30,
+     "completed": 28,
+     "served_positive": 28,
+     "math_invalid_served": 0,
+     "numeric_mismatch_served": 0,
+     "negative": 10,
+     "negative_served": 0,
+     "slm_inferences": 12,
+     "slm_invoked_cases": 12,
+     "slm_contributed_completed": 3,
+     "http_5xx": 0,
+     "latency_completed_ms": {
+      "n": 28,
+      "p50": 114.8,
+      "p95": 5028.1,
+      "max": 5878.3
+     },
+     "latency_slm_completed_ms": {
+      "n": 3,
+      "p50": 5028.1,
+      "p95": 5878.3,
+      "max": 5878.3
+     }
+    }
+   },
+   "total": {
+    "positive": 102,
+    "completed": 92,
+    "served_positive": 92,
+    "math_invalid_served": 0,
+    "numeric_mismatch_served": 0,
+    "negative": 36,
+    "negative_served": 0,
+    "slm_inferences": 59,
+    "slm_invoked_cases": 59,
+    "slm_contributed_completed": 26,
+    "http_5xx": 0
+   },
+   "summary": {
+    "arm": "A",
+    "cases": 138,
+    "slm_inferences_total": 59,
+    "wall_s": 270.1
+   }
+  },
+  "B": {
+   "by_source": {
+    "holdout-6/ACCEPTANCE_MANIFEST.json": {
+     "positive": 72,
+     "completed": 64,
+     "served_positive": 64,
+     "math_invalid_served": 0,
+     "numeric_mismatch_served": 0,
+     "negative": 26,
+     "negative_served": 0,
+     "slm_inferences": 36,
+     "slm_invoked_cases": 36,
+     "slm_contributed_completed": 12,
+     "http_5xx": 0,
+     "latency_completed_ms": {
+      "n": 64,
+      "p50": 115.7,
+      "p95": 5101.5,
+      "max": 5457.7
+     },
+     "latency_slm_completed_ms": {
+      "n": 12,
+      "p50": 4844.4,
+      "p95": 5308.7,
+      "max": 5457.7
+     }
+    },
+    "holdout-6/SLM_INDEPENDENT_MANIFEST.json": {
+     "positive": 30,
+     "completed": 28,
+     "served_positive": 28,
+     "math_invalid_served": 0,
+     "numeric_mismatch_served": 0,
+     "negative": 10,
+     "negative_served": 0,
+     "slm_inferences": 11,
+     "slm_invoked_cases": 11,
+     "slm_contributed_completed": 2,
+     "http_5xx": 0,
+     "latency_completed_ms": {
+      "n": 28,
+      "p50": 93.8,
+      "p95": 4097.7,
+      "max": 4415.9
+     },
+     "latency_slm_completed_ms": {
+      "n": 2,
+      "p50": 4256.8,
+      "p95": 4415.9,
+      "max": 4415.9
+     }
+    }
+   },
+   "total": {
+    "positive": 102,
+    "completed": 92,
+    "served_positive": 92,
+    "math_invalid_served": 0,
+    "numeric_mismatch_served": 0,
+    "negative": 36,
+    "negative_served": 0,
+    "slm_inferences": 47,
+    "slm_invoked_cases": 47,
+    "slm_contributed_completed": 14,
+    "http_5xx": 0
+   },
+   "summary": {
+    "arm": "B",
+    "cases": 138,
+    "slm_inferences_total": 47,
+    "wall_s": 168.5
+   }
+  },
+  "C": {
+   "by_source": {
+    "holdout-6/ACCEPTANCE_MANIFEST.json": {
+     "positive": 72,
+     "completed": 55,
+     "served_positive": 55,
+     "math_invalid_served": 0,
+     "numeric_mismatch_served": 0,
+     "negative": 26,
+     "negative_served": 0,
+     "slm_inferences": 97,
+     "slm_invoked_cases": 97,
+     "slm_contributed_completed": 55,
+     "http_5xx": 0,
+     "latency_completed_ms": {
+      "n": 55,
+      "p50": 4751.4,
+      "p95": 7273.2,
+      "max": 9375.5
+     },
+     "latency_slm_completed_ms": {
+      "n": 55,
+      "p50": 4751.4,
+      "p95": 7273.2,
+      "max": 9375.5
+     }
+    },
+    "holdout-6/SLM_INDEPENDENT_MANIFEST.json": {
+     "positive": 30,
+     "completed": 21,
+     "served_positive": 21,
+     "math_invalid_served": 0,
+     "numeric_mismatch_served": 0,
+     "negative": 10,
+     "negative_served": 0,
+     "slm_inferences": 40,
+     "slm_invoked_cases": 40,
+     "slm_contributed_completed": 21,
+     "http_5xx": 0,
+     "latency_completed_ms": {
+      "n": 21,
+      "p50": 4770.1,
+      "p95": 8718.9,
+      "max": 11083.3
+     },
+     "latency_slm_completed_ms": {
+      "n": 21,
+      "p50": 4770.1,
+      "p95": 8718.9,
+      "max": 11083.3
+     }
+    }
+   },
+   "total": {
+    "positive": 102,
+    "completed": 76,
+    "served_positive": 76,
+    "math_invalid_served": 0,
+    "numeric_mismatch_served": 0,
+    "negative": 36,
+    "negative_served": 0,
+    "slm_inferences": 137,
+    "slm_invoked_cases": 137,
+    "slm_contributed_completed": 76,
+    "http_5xx": 0
+   },
+   "summary": {
+    "arm": "C",
+    "cases": 138,
+    "slm_inferences_total": 137,
+    "wall_s": 586.5
+   }
+  }
+ },
+ "per_case_differences": [
+  {
+   "source": "holdout-6/ACCEPTANCE_MANIFEST.json",
+   "case_id": "T01",
+   "expected": "SERVE",
+   "A": {
+    "served": true,
+    "oracle": "MATHEMATICALLY_VALID",
+    "numeric": "CORRECT",
+    "completed": true,
+    "mode": "LOCAL_DETERMINISTIC_PARSER",
+    "reason": null,
+    "slm": 0,
+    "ms": 919.6,
+    "http": 200
+   },
+   "B": {
+    "served": true,
+    "oracle": "MATHEMATICALLY_VALID",
+    "numeric": "CORRECT",
+    "completed": true,
+    "mode": "LOCAL_DETERMINISTIC_PARSER",
+    "reason": null,
+    "slm": 0,
+    "ms": 877.5,
+    "http": 200
+   },
+   "C": {
+    "served": false,
+    "oracle": "NOT_SERVED",
+    "numeric": null,
+    "completed": false,
+    "mode": "LOCAL_SLM_GROUNDING_REJECTED",
+    "reason": "AMBIGUOUS_FACT",
+    "slm": 1,
+    "ms": 6798.3,
+    "http": 200
+   }
+  },
+  {
+   "source": "holdout-6/ACCEPTANCE_MANIFEST.json",
+   "case_id": "T06",
+   "expected": "SERVE",
+   "A": {
+    "served": true,
+    "oracle": "MATHEMATICALLY_VALID",
+    "numeric": "CORRECT",
+    "completed": true,
+    "mode": "LOCAL_DETERMINISTIC_PARSER",
+    "reason": null,
+    "slm": 0,
+    "ms": 131.3,
+    "http": 200
+   },
+   "B": {
+    "served": true,
+    "oracle": "MATHEMATICALLY_VALID",
+    "numeric": "CORRECT",
+    "completed": true,
+    "mode": "LOCAL_DETERMINISTIC_PARSER",
+    "reason": null,
+    "slm": 0,
+    "ms": 136.6,
+    "http": 200
+   },
+   "C": {
+    "served": false,
+    "oracle": "NOT_SERVED",
+    "numeric": null,
+    "completed": false,
+    "mode": "LOCAL_SLM_GROUNDED",
+    "reason": "AMBIGUOUS_VALUE_QUOTE",
+    "slm": 1,
+    "ms": 2613.0,
+    "http": 200
+   }
+  },
+  {
+   "source": "holdout-6/ACCEPTANCE_MANIFEST.json",
+   "case_id": "C02",
+   "expected": "SERVE",
+   "A": {
+    "served": true,
+    "oracle": "MATHEMATICALLY_VALID",
+    "numeric": null,
+    "completed": true,
+    "mode": "LOCAL_DETERMINISTIC_PARSER",
+    "reason": null,
+    "slm": 0,
+    "ms": 88.5,
+    "http": 200
+   },
+   "B": {
+    "served": true,
+    "oracle": "MATHEMATICALLY_VALID",
+    "numeric": null,
+    "completed": true,
+    "mode": "LOCAL_DETERMINISTIC_PARSER",
+    "reason": null,
+    "slm": 0,
+    "ms": 81.4,
+    "http": 200
+   },
+   "C": {
+    "served": false,
+    "oracle": "NOT_SERVED",
+    "numeric": null,
+    "completed": false,
+    "mode": "LOCAL_SLM_GROUNDING_REJECTED",
+    "reason": "AMBIGUOUS_FACT",
+    "slm": 1,
+    "ms": 1576.9,
+    "http": 200
+   }
+  },
+  {
+   "source": "holdout-6/ACCEPTANCE_MANIFEST.json",
+   "case_id": "C04",
+   "expected": "SERVE",
+   "A": {
+    "served": true,
+    "oracle": "MATHEMATICALLY_VALID",
+    "numeric": "CORRECT",
+    "completed": true,
+    "mode": "LOCAL_PARSER_AFTER_V3_NORMALIZER",
+    "reason": null,
+    "slm": 0,
+    "ms": 128.7,
+    "http": 200
+   },
+   "B": {
+    "served": true,
+    "oracle": "MATHEMATICALLY_VALID",
+    "numeric": "CORRECT",
+    "completed": true,
+    "mode": "LOCAL_PARSER_AFTER_V3_NORMALIZER",
+    "reason": null,
+    "slm": 0,
+    "ms": 107.3,
+    "http": 200
+   },
+   "C": {
+    "served": false,
+    "oracle": "NOT_SERVED",
+    "numeric": null,
+    "completed": false,
+    "mode": "LOCAL_SLM_GROUNDING_REJECTED",
+    "reason": "AMBIGUOUS_FACT",
+    "slm": 1,
+    "ms": 5067.0,
+    "http": 200
+   }
+  },
+  {
+   "source": "holdout-6/ACCEPTANCE_MANIFEST.json",
+   "case_id": "M01",
+   "expected": "SERVE",
+   "A": {
+    "served": true,
+    "oracle": "MATHEMATICALLY_VALID",
+    "numeric": "CORRECT",
+    "completed": true,
+    "mode": "LOCAL_DETERMINISTIC_PARSER",
+    "reason": null,
+    "slm": 0,
+    "ms": 111.2,
+    "http": 200
+   },
+   "B": {
+    "served": true,
+    "oracle": "MATHEMATICALLY_VALID",
+    "numeric": "CORRECT",
+    "completed": true,
+    "mode": "LOCAL_DETERMINISTIC_PARSER",
+    "reason": null,
+    "slm": 0,
+    "ms": 91.3,
+    "http": 200
+   },
+   "C": {
+    "served": false,
+    "oracle": "NOT_SERVED",
+    "numeric": null,
+    "completed": false,
+    "mode": "LOCAL_SLM_GROUNDING_REJECTED",
+    "reason": "AMBIGUOUS_FACT",
+    "slm": 1,
+    "ms": 3850.4,
+    "http": 200
+   }
+  },
+  {
+   "source": "holdout-6/ACCEPTANCE_MANIFEST.json",
+   "case_id": "R01",
+   "expected": "SERVE",
+   "A": {
+    "served": true,
+    "oracle": "MATHEMATICALLY_VALID",
+    "numeric": null,
+    "completed": true,
+    "mode": "LOCAL_DETERMINISTIC_PARSER",
+    "reason": null,
+    "slm": 0,
+    "ms": 101.7,
+    "http": 200
+   },
+   "B": {
+    "served": true,
+    "oracle": "MATHEMATICALLY_VALID",
+    "numeric": null,
+    "completed": true,
+    "mode": "LOCAL_DETERMINISTIC_PARSER",
+    "reason": null,
+    "slm": 0,
+    "ms": 90.8,
+    "http": 200
+   },
+   "C": {
+    "served": false,
+    "oracle": "NOT_SERVED",
+    "numeric": null,
+    "completed": false,
+    "mode": "LOCAL_SLM_GROUNDED",
+    "reason": "AMBIGUOUS_VALUE_QUOTE",
+    "slm": 1,
+    "ms": 4184.9,
+    "http": 200
+   }
+  },
+  {
+   "source": "holdout-6/ACCEPTANCE_MANIFEST.json",
+   "case_id": "R03",
+   "expected": "SERVE",
+   "A": {
+    "served": true,
+    "oracle": "MATHEMATICALLY_VALID",
+    "numeric": "CORRECT",
+    "completed": true,
+    "mode": "LOCAL_DETERMINISTIC_PARSER",
+    "reason": null,
+    "slm": 0,
+    "ms": 113.9,
+    "http": 200
+   },
+   "B": {
+    "served": true,
+    "oracle": "MATHEMATICALLY_VALID",
+    "numeric": "CORRECT",
+    "completed": true,
+    "mode": "LOCAL_DETERMINISTIC_PARSER",
+    "reason": null,
+    "slm": 0,
+    "ms": 107.3,
+    "http": 200
+   },
+   "C": {
+    "served": false,
+    "oracle": "NOT_SERVED",
+    "numeric": null,
+    "completed": false,
+    "mode": "LOCAL_SLM_GROUNDING_REJECTED",
+    "reason": "AMBIGUOUS_FACT",
+    "slm": 1,
+    "ms": 2012.2,
+    "http": 200
+   }
+  },
+  {
+   "source": "holdout-6/ACCEPTANCE_MANIFEST.json",
+   "case_id": "P10",
+   "expected": "SERVE",
+   "A": {
+    "served": true,
+    "oracle": "MATHEMATICALLY_VALID",
+    "numeric": "CORRECT",
+    "completed": true,
+    "mode": "LOCAL_DETERMINISTIC_PARSER",
+    "reason": null,
+    "slm": 0,
+    "ms": 108.5,
+    "http": 200
+   },
+   "B": {
+    "served": true,
+    "oracle": "MATHEMATICALLY_VALID",
+    "numeric": "CORRECT",
+    "completed": true,
+    "mode": "LOCAL_DETERMINISTIC_PARSER",
+    "reason": null,
+    "slm": 0,
+    "ms": 87.6,
+    "http": 200
+   },
+   "C": {
+    "served": false,
+    "oracle": "NOT_SERVED",
+    "numeric": null,
+    "completed": false,
+    "mode": "LOCAL_SLM_GROUNDING_REJECTED",
+    "reason": "AMBIGUOUS_FACT",
+    "slm": 1,
+    "ms": 5005.0,
+    "http": 200
+   }
+  },
+  {
+   "source": "holdout-6/ACCEPTANCE_MANIFEST.json",
+   "case_id": "Q01a",
+   "expected": "SERVE",
+   "A": {
+    "served": true,
+    "oracle": "MATHEMATICALLY_VALID",
+    "numeric": "CORRECT",
+    "completed": true,
+    "mode": "LOCAL_DETERMINISTIC_PARSER",
+    "reason": null,
+    "slm": 0,
+    "ms": 90.7,
+    "http": 200
+   },
+   "B": {
+    "served": true,
+    "oracle": "MATHEMATICALLY_VALID",
+    "numeric": "CORRECT",
+    "completed": true,
+    "mode": "LOCAL_DETERMINISTIC_PARSER",
+    "reason": null,
+    "slm": 0,
+    "ms": 175.3,
+    "http": 200
+   },
+   "C": {
+    "served": false,
+    "oracle": "NOT_SERVED",
+    "numeric": null,
+    "completed": false,
+    "mode": "LOCAL_SLM_GROUNDING_REJECTED",
+    "reason": "INCONSISTENT_FACTS",
+    "slm": 1,
+    "ms": 3096.1,
+    "http": 200
+   }
+  },
+  {
+   "source": "holdout-6/SLM_INDEPENDENT_MANIFEST.json",
+   "case_id": "I01",
+   "expected": "SERVE",
+   "A": {
+    "served": true,
+    "oracle": "MATHEMATICALLY_VALID",
+    "numeric": "CORRECT",
+    "completed": true,
+    "mode": "LOCAL_DETERMINISTIC_PARSER",
+    "reason": null,
+    "slm": 0,
+    "ms": 111.5,
+    "http": 200
+   },
+   "B": {
+    "served": true,
+    "oracle": "MATHEMATICALLY_VALID",
+    "numeric": "CORRECT",
+    "completed": true,
+    "mode": "LOCAL_DETERMINISTIC_PARSER",
+    "reason": null,
+    "slm": 0,
+    "ms": 77.9,
+    "http": 200
+   },
+   "C": {
+    "served": false,
+    "oracle": "NOT_SERVED",
+    "numeric": null,
+    "completed": false,
+    "mode": "LOCAL_SLM_GROUNDING_REJECTED",
+    "reason": "AMBIGUOUS_FACT",
+    "slm": 1,
+    "ms": 3630.6,
+    "http": 200
+   }
+  },
+  {
+   "source": "holdout-6/SLM_INDEPENDENT_MANIFEST.json",
+   "case_id": "I02",
+   "expected": "SERVE",
+   "A": {
+    "served": true,
+    "oracle": "MATHEMATICALLY_VALID",
+    "numeric": "CORRECT",
+    "completed": true,
+    "mode": "LOCAL_DETERMINISTIC_PARSER",
+    "reason": null,
+    "slm": 0,
+    "ms": 126.2,
+    "http": 200
+   },
+   "B": {
+    "served": true,
+    "oracle": "MATHEMATICALLY_VALID",
+    "numeric": "CORRECT",
+    "completed": true,
+    "mode": "LOCAL_DETERMINISTIC_PARSER",
+    "reason": null,
+    "slm": 0,
+    "ms": 75.9,
+    "http": 200
+   },
+   "C": {
+    "served": false,
+    "oracle": "NOT_SERVED",
+    "numeric": null,
+    "completed": false,
+    "mode": "LOCAL_SLM_GROUNDING_REJECTED",
+    "reason": "INCONSISTENT_FACTS",
+    "slm": 1,
+    "ms": 1661.3,
+    "http": 200
+   }
+  },
+  {
+   "source": "holdout-6/SLM_INDEPENDENT_MANIFEST.json",
+   "case_id": "I06",
+   "expected": "SERVE",
+   "A": {
+    "served": true,
+    "oracle": "MATHEMATICALLY_VALID",
+    "numeric": null,
+    "completed": true,
+    "mode": "LOCAL_DETERMINISTIC_PARSER",
+    "reason": null,
+    "slm": 0,
+    "ms": 82.0,
+    "http": 200
+   },
+   "B": {
+    "served": true,
+    "oracle": "MATHEMATICALLY_VALID",
+    "numeric": null,
+    "completed": true,
+    "mode": "LOCAL_DETERMINISTIC_PARSER",
+    "reason": null,
+    "slm": 0,
+    "ms": 98.6,
+    "http": 200
+   },
+   "C": {
+    "served": false,
+    "oracle": "NOT_SERVED",
+    "numeric": null,
+    "completed": false,
+    "mode": "LOCAL_SLM_GROUNDING_REJECTED",
+    "reason": "INCONSISTENT_FACTS",
+    "slm": 1,
+    "ms": 1936.2,
+    "http": 200
+   }
+  },
+  {
+   "source": "holdout-6/SLM_INDEPENDENT_MANIFEST.json",
+   "case_id": "I10",
+   "expected": "SERVE",
+   "A": {
+    "served": true,
+    "oracle": "MATHEMATICALLY_VALID",
+    "numeric": "CORRECT",
+    "completed": true,
+    "mode": "LOCAL_DETERMINISTIC_PARSER",
+    "reason": null,
+    "slm": 0,
+    "ms": 132.7,
+    "http": 200
+   },
+   "B": {
+    "served": true,
+    "oracle": "MATHEMATICALLY_VALID",
+    "numeric": "CORRECT",
+    "completed": true,
+    "mode": "LOCAL_DETERMINISTIC_PARSER",
+    "reason": null,
+    "slm": 0,
+    "ms": 117.8,
+    "http": 200
+   },
+   "C": {
+    "served": false,
+    "oracle": "NOT_SERVED",
+    "numeric": null,
+    "completed": false,
+    "mode": "LOCAL_SLM_GROUNDING_REJECTED",
+    "reason": "AMBIGUOUS_FACT",
+    "slm": 1,
+    "ms": 4170.5,
+    "http": 200
+   }
+  },
+  {
+   "source": "holdout-6/SLM_INDEPENDENT_MANIFEST.json",
+   "case_id": "I13",
+   "expected": "SERVE",
+   "A": {
+    "served": true,
+    "oracle": "MATHEMATICALLY_VALID",
+    "numeric": "CORRECT",
+    "completed": true,
+    "mode": "LOCAL_DETERMINISTIC_PARSER",
+    "reason": null,
+    "slm": 0,
+    "ms": 93.5,
+    "http": 200
+   },
+   "B": {
+    "served": true,
+    "oracle": "MATHEMATICALLY_VALID",
+    "numeric": "CORRECT",
+    "completed": true,
+    "mode": "LOCAL_DETERMINISTIC_PARSER",
+    "reason": null,
+    "slm": 0,
+    "ms": 82.9,
+    "http": 200
+   },
+   "C": {
+    "served": false,
+    "oracle": "NOT_SERVED",
+    "numeric": null,
+    "completed": false,
+    "mode": "LOCAL_SLM_GROUNDING_REJECTED",
+    "reason": "INCONSISTENT_FACTS",
+    "slm": 1,
+    "ms": 2173.3,
+    "http": 200
+   }
+  },
+  {
+   "source": "holdout-6/SLM_INDEPENDENT_MANIFEST.json",
+   "case_id": "I14",
+   "expected": "SERVE",
+   "A": {
+    "served": true,
+    "oracle": "MATHEMATICALLY_VALID",
+    "numeric": null,
+    "completed": true,
+    "mode": "LOCAL_DETERMINISTIC_PARSER",
+    "reason": null,
+    "slm": 0,
+    "ms": 86.7,
+    "http": 200
+   },
+   "B": {
+    "served": true,
+    "oracle": "MATHEMATICALLY_VALID",
+    "numeric": null,
+    "completed": true,
+    "mode": "LOCAL_DETERMINISTIC_PARSER",
+    "reason": null,
+    "slm": 0,
+    "ms": 71.9,
+    "http": 200
+   },
+   "C": {
+    "served": false,
+    "oracle": "NOT_SERVED",
+    "numeric": null,
+    "completed": false,
+    "mode": "LOCAL_SLM_GROUNDING_REJECTED",
+    "reason": "INCONSISTENT_FACTS",
+    "slm": 1,
+    "ms": 1594.5,
+    "http": 200
+   }
+  },
+  {
+   "source": "holdout-6/SLM_INDEPENDENT_MANIFEST.json",
+   "case_id": "I27",
+   "expected": "SERVE",
+   "A": {
+    "served": true,
+    "oracle": "MATHEMATICALLY_VALID",
+    "numeric": "CORRECT",
+    "completed": true,
+    "mode": "LOCAL_DETERMINISTIC_PARSER",
+    "reason": null,
+    "slm": 0,
+    "ms": 107.7,
+    "http": 200
+   },
+   "B": {
+    "served": true,
+    "oracle": "MATHEMATICALLY_VALID",
+    "numeric": "CORRECT",
+    "completed": true,
+    "mode": "LOCAL_DETERMINISTIC_PARSER",
+    "reason": null,
+    "slm": 0,
+    "ms": 109.0,
+    "http": 200
+   },
+   "C": {
+    "served": false,
+    "oracle": "NOT_SERVED",
+    "numeric": null,
+    "completed": false,
+    "mode": "LOCAL_SLM_GROUNDED",
+    "reason": "AMBIGUOUS_VALUE_QUOTE",
+    "slm": 1,
+    "ms": 6505.2,
+    "http": 200
+   }
+  }
+ ]
+}

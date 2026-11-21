@@ -1,0 +1,3 @@
+{"label": "health", "hasKey": false, "routeMode": "local-only-scoped", "localOnlyMode": true, "localSlmReady": true, "localSlmModel": "qwen3-0.6b-axo-v7-q4_k_m", "aiAvailable": true, "ux_state": "READY_OFFLINE", "scenario": "probe"}
+{"label": "deterministic", "http": 200, "ms": 573.8, "route_status": "SERVED", "extraction_mode": "LOCAL_DETERMINISTIC_PARSER", "reason_code": null, "ux_state": "SERVED_OFFLINE_VERIFIED", "learner_error": null, "slm_model": null, "scenario": "probe"}
+{"label": "slm", "http": 200, "ms": 8019.5, "route_status": "REFUSED", "extraction_mode": "LOCAL_SLM_GROUNDED", "reason_code": "SOURCE_OBJECT_MISMATCH", "ux_state": "CLARIFICATION_NEEDED", "learner_error": null, "slm_model": null, "scenario": "probe"}

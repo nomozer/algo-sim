@@ -1,0 +1,131 @@
+{
+  "run_id": "proof-soundness-generalized-angle-invariance",
+  "generated_at_utc": "2026-11-14T12:35:21.414052+00:00",
+  "product_commit": "c54db0da0c792c2ba0399acc8e9df992d2d270c3",
+  "measured_system": "610b4ee1e3227bc44f0659aea5d0dfc7f7a827aff622605db2b9571fb980fb80",
+  "cache_version": "137",
+  "environment": {
+    "ALLOW_LIVE_AI": "0",
+    "HYBRID_ROUTE_MODE": "local-first",
+    "live_ai_calls": 0
+  },
+  "head": "94281be581617a67921f295474dbd8e698dade4b",
+  "rules": [
+    "LINE_ANGLE (common vertex)",
+    "LINES_PERPENDICULAR (also skew lines: of directions)"
+  ],
+  "cases": {
+    "ll_meeting": {
+      "row": {
+        "case_id": "COMP:ll_meeting",
+        "text_sha256": "94e7b2d7963f1a5364ec58c6791406586bc5512d5d8df168bd8dc61a4df2d718",
+        "expected": "SERVE",
+        "before": {
+          "status": "REFUSED",
+          "code": "MISSING_DIMENSION",
+          "answers": null
+        },
+        "after": {
+          "status": "SERVED",
+          "code": null,
+          "answers": {
+            "q1": "cos²=1/2"
+          }
+        },
+        "after_root_cause": null
+      },
+      "proof_rules": [
+        "SOURCE_LINE_PERP_PLANE",
+        "PERP_PLANE_TO_LINE",
+        "LINE_ANGLE",
+        "TRIANGLE_SHAPE_FIXED"
+      ],
+      "cos_sq": "1/2",
+      "witness": {
+        "vertex": "S",
+        "ray_1": [
+          "S",
+          "B"
+        ],
+        "ray_2": [
+          "S",
+          "A"
+        ],
+        "domain": "UNORIENTED_LINE_ANGLE_0_90"
+      },
+      "verified": true,
+      "hand_check_two_shapes": [
+        "1/2",
+        "1/2"
+      ]
+    },
+    "ll_perpendicular": {
+      "row": {
+        "case_id": "COMP:ll_perpendicular",
+        "text_sha256": "5a148c995a9115d5e03a09f2ecac4954004d0516a7a9069734fc6bebb07f8a4c",
+        "expected": "SERVE",
+        "before": {
+          "status": "REFUSED",
+          "code": "MISSING_DIMENSION",
+          "answers": null
+        },
+        "after": {
+          "status": "SERVED",
+          "code": null,
+          "answers": {
+            "q1": "cos²=0"
+          }
+        },
+        "after_root_cause": null
+      },
+      "proof_rules": [
+        "RIGHT_ANGLE",
+        "SOURCE_LINE_PERP_PLANE",
+        "PERP_PLANE_TO_LINE",
+        "PERP_TWO_LINES",
+        "PERP_PLANE_TO_LINE",
+        "LINES_PERPENDICULAR"
+      ],
+      "cos_sq": "0",
+      "witness": null,
+      "verified": true,
+      "hand_check_two_shapes": [
+        "0",
+        "0"
+      ]
+    },
+    "ll_skew_perpendicular": {
+      "row": {
+        "case_id": "COMP:ll_skew_perpendicular",
+        "text_sha256": "5cd1e7bc9915ca42042d9e1f406430e28351e0f99b976080e4437507a5d87bb7",
+        "expected": "SERVE",
+        "before": {
+          "status": "REFUSED",
+          "code": "MISSING_DIMENSION",
+          "answers": null
+        },
+        "after": {
+          "status": "SERVED",
+          "code": null,
+          "answers": {
+            "q1": "cos²=0"
+          }
+        },
+        "after_root_cause": null
+      },
+      "proof_rules": [
+        "SOURCE_LINE_PERP_PLANE",
+        "PERP_PLANE_TO_LINE",
+        "LINES_PERPENDICULAR"
+      ],
+      "cos_sq": "0",
+      "witness": null,
+      "verified": true,
+      "hand_check_two_shapes": [
+        "0",
+        "0"
+      ]
+    }
+  },
+  "skew_not_perpendicular": "no parallel-transport rule: refused (ll_skew_varying)"
+}

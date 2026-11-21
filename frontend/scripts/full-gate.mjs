@@ -82,7 +82,7 @@ export function resolvePython({ repo, explicit, env = process.env, required = RE
 export function runGate(g) {
   const r = spawnSync(g.cmd[0], g.cmd[1], {
     cwd: g.cwd, stdio: "inherit", shell: Boolean(g.shell),
-    env: { ...process.env, PYTHONIOENCODING: "utf-8" },
+    env: { ...process.env, PYTHONIOENCODING: "utf-8", ALGO_SIM_PYTHON: python },
   });
   return { ok: r.status === 0, status: r.status, error: r.error?.code ?? null };
 }

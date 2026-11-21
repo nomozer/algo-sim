@@ -1,0 +1,81 @@
+{
+  "schema": "axo-evaluation-run/2",
+  "run_id": "model1-integration-readiness",
+  "wave_id": "AXO_HYBRID_MODEL1_INTEGRATION_READINESS",
+  "campaign": "AXO HYBRID /17",
+  "date": "2026-11-21",
+  "branch": "feat/model1-integration-readiness",
+  "base_commit": "3a39a1ea4c6e6afa417468acd8ab97954178e2a2",
+  "main_commit": "bc6ff5e333e32d1d53dc7435fba64fe12b6dd651",
+  "main_is_ancestor": true,
+  "worktree": ".superpowers/worktrees/simulation-intent-slm-recovery (shared, reused per owner policy)",
+  "audited_baseline": {
+    "candidate": 157,
+    "product_commit": "4c1b94b61cdd8b1747059829a9d487b1749e1383",
+    "freeze_commit": "39c95599e9ddc2efc7cc3455ae2505384af63e21",
+    "tree_hash": "3152f3829fbe4744baa298b0ee147648cd1cb666103baabcb1497cb9ffb525d5",
+    "cache_version": "157",
+    "integrity": "VERIFIED"
+  },
+  "candidate": {
+    "candidate": 158,
+    "product_commit": "2bb0211a1",
+    "evaluation_candidate_commit_field": "35a17644acb11ea8a0853afb5b7cdc1814f37df8",
+    "freeze_commit": "b92b68a94b67d24dc016ddc358506adad5c7f1e3",
+    "tree_hash": "bdb737bba9ab94d0274b57e25089c01d4cb47935d5989658e7c13aad1e79b132",
+    "measured_files": 127,
+    "cache_version": "158",
+    "route_d_cache_policy": "158:route-d",
+    "semantic_environment_hash": "f9df4bf0c8bd458a278d2692567fa3e096340ae37ff5493730dff4067c0f5e19",
+    "default_route_mode": "live",
+    "frontend_changed_vs_157": false
+  },
+  "model": {
+    "key": "qwen3-0.6b-axo-v9-q4_k_m",
+    "sha256": "73f1484b08b97ed2a1f44e32bcf6610210c7fda51567c4cd0a03d98dffc6cc35",
+    "runtime": "llama.cpp b12470 (dde9de82c), win-cpu-x64",
+    "finetuned_in_this_run": false,
+    "system_prompt_modified": false
+  },
+  "live_ai_calls": 0,
+  "external_network_calls": 0,
+  "commits": [
+    {"sha": "2bb0211a1", "kind": "product", "subject": "fix(parser,cache): read length assignments and the pairwise-perpendicular synonym deterministically, bump cache version 158"},
+    {"sha": "35a17644a", "kind": "evidence", "subject": "docs(eval): record candidate 157 integrity audit, residual triage, independent-validation protocol and draft integration plan"},
+    {"sha": "b92b68a94", "kind": "freeze", "subject": "chore(eval): freeze evaluation candidate 158"}
+  ],
+  "measurements": {
+    "routing_ablation": "PARSER_SLM_ROUTING_AUDIT.json (arms A, B, C, P, BP, A158; results/arms/*/rows.jsonl)",
+    "full_t3": "FULL_T3_RECEIPT.json (FULL_PRODUCT_GATE_PASS on b92b68a94)",
+    "runtime": "RUNTIME_CAPACITY_REPORT.json (results/load/)",
+    "exposure": "every evaluation set used is exposed; no prospective acceptance was run"
+  },
+  "corrections": [
+    {"target": "semantic-grounding-slm-recovery/run.json → artifacts.SEMANTIC_REWRITE_SAFETY_AUDIT.json (and FINAL_MASTER_REPORT.md §3.1)", "issue": "digest recorded with 63 hex characters", "correct": "be8d2b97a2a4c73d718bc665ad311e2f8344ed694ce968794c445df747ace2b4", "registered": "docs/EVIDENCE_INDEX.md CORRECTED_BY"},
+    {"target": "semantic-grounding-slm-recovery LIVE_TEXT_ACCEPTANCE_RESULTS.json → performance.concurrency", "issue": "conc_* probes re-sent already analyzed prompts (cache hits); they did not measure SLM concurrency", "correct": "RUNTIME_CAPACITY_REPORT.json", "registered": "docs/EVIDENCE_INDEX.md CORRECTED_BY"},
+    {"target": "commit message of 2bb0211a1", "issue": "'deterministic completion 319 -> 356/530' is the parser-only figure (v3 step not included)", "correct": "PARSER_SLM_ROUTING_AUDIT.json → parser_only_all_exposed"}
+  ],
+  "verdicts": {
+    "CANDIDATE157_INTEGRITY_VERIFIED": true,
+    "PARSER_SLM_ROUTING_INTEGRITY_VERIFIED": true,
+    "METRIC_DRIVEN_ROUTING_BIAS_RESOLVED": true,
+    "RESIDUAL_FAILURES_CLASSIFIED": true,
+    "EXTERNAL_INDEPENDENCE": "NOT_MEASURED",
+    "DEV_HOST_PERFORMANCE_MEASURED": true,
+    "TARGET_HARDWARE_PERFORMANCE_MEASURED": false,
+    "MULTIUSER_CAPACITY_VERIFIED": false,
+    "PRODUCTION_CAPACITY_VERIFIED": false,
+    "MODEL1_TEXT_ARCHITECTURE_COMPATIBLE": true,
+    "LOCAL_TEXT_MODEL1_VERIFIED": {"candidate_157": true, "candidate_158": "NOT_VERIFIED"},
+    "LOCAL_VISION_REPLACEMENT_VERIFIED": false,
+    "FULL_GEMINI_ROLE_REPLACEMENT_VERIFIED": false,
+    "AUTHORITATIVE_DETACHED_COMPLIANCE": "NOT_VERIFIED",
+    "FULL_PRODUCT_GATE_PASS": true,
+    "INTEGRATION_PLAN_READY": true,
+    "MAIN_MERGE_READY": false,
+    "MAIN_MERGE_COMPLETED": false,
+    "REMOTE_PUSH_COMPLETED": false,
+    "OVERALL": "READINESS_WITH_EXPLICIT_BLOCKERS"
+  },
+  "owner_decisions_pending": ["D1 merge scope (Option A / B)", "D2 candidate 157 or 158", "D3 detached-worktree compliance", "D4 publication-safety exceptions", "D5 independent evaluator / data", "D6 deployment (Linux runtime, GGUF hosting, deadline, target hardware)"]
+}

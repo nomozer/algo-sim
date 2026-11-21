@@ -1,0 +1,13 @@
+{
+  "run_id": "verified-section-intersection-dihedral-local",
+  "generated_at_utc": "2026-11-13T11:35:59.957987+00:00",
+  "head": "a74aa3325b61337e301e8df7b728a66f86fdc266",
+  "backend_tests": "backend/tests/geometry/test_angle_construction_domain.py — 60°/120° (SBC)/(SCD) both plane orders; renamed T.MNPQ; synthetic half-planes at 45°/135° (cos² 1/2 both) drawn acute; wrong cos value refused; lines whose named points open 135° drawn at 45°; parallel and coincident planes have no construction",
+  "frontend_tests": "frontend/src/simulations/domains/geometry/scene3d-angle-construction.test.ts — (SBC)/(SCD) rays meet at 60°; second ray reflected to the supplement ⇒ not drawn; missing angle_domain ⇒ not drawn",
+  "red_before_fix": "15 of 18 new backend tests failed before 420851be6 (session log)",
+  "mutation_flip_angle_ray": {
+    "applied": 12,
+    "caught": 12
+  },
+  "independent_recheck": "verify_constructions.py signed-cos check: before 3 obtuse constructions (SBC/SCD, swapped order, renamed), after 0"
+}

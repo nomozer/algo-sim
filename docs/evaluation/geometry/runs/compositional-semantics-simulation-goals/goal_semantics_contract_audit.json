@@ -1,0 +1,33 @@
+{
+  "run_id": "compositional-semantics-simulation-goals",
+  "generated_at_utc": "2026-11-14T03:09:44.904460+00:00",
+  "product_commit": "379d33969ef0cb0e418d979ab211a00799f44834",
+  "measured_system": "b652e635d5497dc36bf6d55ff4a34c20a16302d01c154b59b039efd65170921e",
+  "environment": {
+    "ALLOW_LIVE_AI": "0",
+    "HYBRID_ROUTE_MODE": "local-first",
+    "live_ai_calls": 0
+  },
+  "head": "54268761eacadaca07d0d8cd2dea0d07c39a5d62",
+  "contracts_unchanged": [
+    "geometry-fact-planner/26",
+    "geometry-functions/33",
+    "geometry-function-engine/24",
+    "height-invariance-certificate/2",
+    "output-policy/1",
+    "hybrid-route-d-simulation/4",
+    "typed-fact-next/2"
+  ],
+  "added": {
+    "route_d.source_goal_completion": "source-goal-completion/1, OPTIONAL key of /4 (precedent scene_configuration): present only when a served angle answers a trigonometric-value question; consumers that ignore it are unaffected; the frontend validates it and rejects a record claiming the goal answered or a number shown"
+  },
+  "states": {
+    "GOAL_NOT_UNDERSTOOD": "local_diagnostics root UNRECOGNIZED_GOAL",
+    "GOAL_UNSUPPORTED": "UNSUPPORTED_GOAL_FUNCTION / UNSUPPORTED_GOAL_KIND",
+    "GEOMETRY_UNDERDETERMINED": "INSUFFICIENT_CONSTRAINTS / FREE_POINT_UNDERDETERMINED / SCALE_NORMALIZATION_UNSUPPORTED (capability)",
+    "GOAL_VISUALIZATION_READY": "source_goal_completion.goals[].state",
+    "VERIFIED_INTERACTIVE_SIMULATION": "status SERVED + Source Gate VERIFIED + kernel_check",
+    "NUMERIC_SOURCE_GOAL_NOT_ANSWERED": "source_goal_completion.goals[].numeric_source_goal = NOT_ANSWERED, source_goal_fully_satisfied = false"
+  },
+  "output_policy_2": "NOT OPENED: the completion state fits /4 as an optional key; no value is displayed (no-answer surface)"
+}

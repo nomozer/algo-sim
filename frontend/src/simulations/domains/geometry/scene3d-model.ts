@@ -289,6 +289,12 @@ export interface SceneObject {
   /** Review I1 — điểm dựng bằng hình chiếu vuông góc: đoạn vuông góc PHỤ từ `from` tới chân (= chính điểm này) +
    *  hai phương ký hiệu vuông góc, do backend tính (cùng dạng `QuantityAnnotation.witness`). Không phải cạnh khối. */
   perpendicular_witness?: QuantityAnnotation["witness"];
+  /** Semantic-to-Scene3D — phép dựng CHÍNH XÁC của góc khác 90° mà đề hỏi (backend `gan_dung_goc`): đỉnh, hai cạnh,
+   *  chân hình chiếu / đoạn song song / tia vuông góc giao tuyến. Không mang con số; phía này chỉ vẽ. */
+  angle_construction?: AngleConstruction;
+  /** Run thiết diện–giao tuyến–nhị diện (2026-11-13) — đường cao của hình chóp mà thể tích dùng khi cảnh chưa vẽ nó: chân =
+   *  hình chiếu chính xác của đỉnh lên đáy (backend `gan_duong_cao`), kèm cạnh đáy / mặt bên khi mặt bên ⟂ đáy. Không con số. */
+  altitude_construction?: AltitudeConstruction;
   /**
    * HÌNH CONG — tham số ngữ nghĩa, **không phải lưới**.
    *
@@ -743,6 +749,42 @@ export interface FormationStep {
 
 export interface SceneFormation {
   steps: FormationStep[];
+}
+
+/** `angle-construction/1` — phép dựng của một góc đo được (khác 90°). Toạ độ chính xác, đã tự kiểm ở backend:
+ *  đỉnh trên cả hai vật, cos² của góc dựng bằng đúng giá trị kernel đo. `to_id` vắng ⇒ điểm phụ không tên. */
+export interface AngleConstruction {
+  schema: "angle-construction/1";
+  relation: "line_plane" | "line_line" | "line_line_skew" | "plane_plane";
+  /** Miền của góc đề hỏi: mọi góc được hỗ trợ là góc KHÔNG định hướng trong [0°, 90°]; hai tia không bao giờ mở góc tù
+   *  (cos² không phân biệt 60° với 120°). Vắng ⇒ phép dựng từ trước khi có chứng chỉ dấu: không vẽ (fail-closed). */
+  angle_domain?: "[0°, 90°]";
+  vertex: ExactVec3;
+  vertex_id?: string;
+  arms: [{ to: ExactVec3; to_id?: string }, { to: ExactVec3; to_id?: string }];
+  /** `line_plane`: đoạn từ một điểm của đường tới CHÂN hình chiếu trên mặt; `u` trong mặt (chân → đỉnh), `v` = điểm − chân. */
+  perpendicular?: { from: ExactVec3; foot: ExactVec3; on: string; u: ExactVec3; v: ExactVec3 };
+  /** `line_line_skew`: đoạn qua đỉnh song song với đường thứ hai (`of`). */
+  parallel?: { through: ExactVec3; to: ExactVec3; of: string };
+  /** `plane_plane`: phương giao tuyến tại đỉnh — hai tia vuông góc với nó. */
+  edge?: { direction: ExactVec3; toward_id?: string };
+  checks: string[];
+}
+
+/** `altitude-construction/1` — đường cao từ đỉnh `apex_id` tới chân `foot` trên đáy `on`; `marker` là dấu vuông góc tại chân
+ *  (`u` dọc đáy tới điểm có tên `u_to`, `v` = đỉnh − chân). `base_edge`/`face`: chân nằm trên giao tuyến của mặt bên ⟂ đáy. */
+export interface AltitudeConstruction {
+  schema: "altitude-construction/1";
+  apex_id: string;
+  from: ExactVec3;
+  foot: ExactVec3;
+  foot_id?: string;
+  on: string;
+  marker: { u: ExactVec3; v: ExactVec3; u_to: string };
+  base_edge?: [string, string];
+  face?: [string, string, string];
+  foot_on_edge_segment?: boolean;
+  checks: string[];
 }
 
 /** W17 §15.4 — gắn kết đại lượng ↔ chủ thể hình học (backend sở hữu nghĩa). */
@@ -2263,12 +2305,32 @@ export interface RouteDSimulationSummary {
   }[] | null;
 }
 
+/**
+ * cos²φ hữu tỉ → số đo độ của góc KHÔNG định hướng giữa đường/mặt (φ ∈ [0°, 90°], cos φ ≥ 0 ⇒ không có nhánh thứ hai).
+ * Chỉ năm giá trị có số đo độ hữu tỉ (định lý Niven; cùng bảng `output-policy/1`). Ngoài bảng ⇒ `null`:
+ * không arccos, không làm tròn. Không dùng cho góc nhị diện (0°, 180°), vốn không phải mục tiêu `ask_angle_*`.
+ */
+export const COS2_DO_DAC_BIET: Readonly<Record<string, string>> = {
+  "0/1": "90°", "1/4": "60°", "1/2": "45°", "3/4": "30°", "1/1": "0°",
+};
+
+export function soDoGocDacBiet(cos2: string): string | null {
+  const m = /^\s*(\d+)(?:\s*\/\s*(\d+))?\s*$/u.exec(cos2 ?? "");
+  if (!m) return null;
+  const p = BigInt(m[1]);
+  const q = BigInt(m[2] ?? "1");
+  if (q === 0n) return null;
+  const g = gcdBigIntModel(p, q) || 1n;
+  return COS2_DO_DAC_BIET[`${p / g}/${q / g}`] ?? null;
+}
+
 export interface MucPhanTichToan {
   id: string;
   category: LoaiThongTin;
   label: string;
   notation: string | null;
   valueDisplay: string | null;
+  exactValueDisplay?: string | null;
   formula: string | null;
   basisLabels: string[];
   entityId: string | null;
@@ -2322,7 +2384,7 @@ export function phanLoaiVat(
 export function phanTichToanHocCuaCanh(
   scene: Scene3D,
   hybrid?: {
-    answers?: readonly { quantity_id: string; symbolic: string; dim: number; unit: string | null }[];
+    answers?: readonly { quantity_id: string; symbolic: string; exact_symbolic?: string; dim: number; unit: string | null }[];
     observations?: readonly { check_id: string; group: "goal" | "negated"; relation: string; evidence_state: string }[];
   } | null,
   routeD?: RouteDSimulationSummary | null,
@@ -2340,6 +2402,11 @@ export function phanTichToanHocCuaCanh(
 
   const hybridAnsById = new Map(
     (hybrid?.answers ?? []).map((a) => [a.quantity_id, a.symbolic]),
+  );
+  const hybridExactById = new Map(
+    (hybrid?.answers ?? [])
+      .filter((a) => typeof a.exact_symbolic === "string" && a.exact_symbolic.trim().length > 0)
+      .map((a) => [a.quantity_id, a.exact_symbolic!.trim()]),
   );
   const routeGoalByKernelVar = new Map<string, RouteDMathGoalView>();
   for (const g of routeD?.math_goals ?? []) {
@@ -2468,12 +2535,19 @@ export function phanTichToanHocCuaCanh(
     daGomKq.add(o.id);
     const isUnder = prov === "UNDERDETERMINED";
     const cf = isUnder ? null : coherentFormula(scene, o);
+    const valDisp = isUnder ? "Chưa đủ dữ kiện xác định duy nhất" : hienGiaTri(o);
+    const exactDisp = !isUnder ? (hybridExactById.get(o.id) ?? null) : null;
+    // The kernel answers an angle goal with its exact cos² (`cos²(ℓ, (P))`). Such goals are angles between lines /
+    // a line and a plane / two planes, which lie in [0°, 90°], so cos ≥ 0 and cos² fixes the angle: the student sees
+    // the degree when cos² is one of the five rational ones, with cos² kept as the exact certificate.
+    const doGoc = !isUnder && /^cos²\(/u.test(o.notation ?? "") ? soDoGocDacBiet(valDisp) : null;
     requestedResults.push({
       id: o.id,
       category: "REQUESTED_RESULT",
-      label: o.label,
-      notation: o.notation ?? null,
-      valueDisplay: isUnder ? "Chưa đủ dữ kiện xác định duy nhất" : hienGiaTri(o),
+      label: doGoc ? o.label.replace(/^Côsin\s+bình\s+phương\s+của\s+góc/u, "Góc") : o.label,
+      notation: doGoc ? (o.notation ?? "").replace(/^cos²/u, "") : (o.notation ?? null),
+      valueDisplay: doGoc ?? valDisp,
+      ...(doGoc ? { exactValueDisplay: `cos² = ${valDisp}` } : exactDisp && exactDisp !== valDisp ? { exactValueDisplay: exactDisp } : {}),
       formula: cf && cf.references.length > 0 ? cf.text : null,
       basisLabels: numericalBasis(scene, o).map(tenNgan),
       entityId: o.id,

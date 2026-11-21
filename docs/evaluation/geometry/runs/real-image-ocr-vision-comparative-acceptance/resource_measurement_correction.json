@@ -1,0 +1,52 @@
+{
+  "run_id": "real-image-ocr-vision-comparative-acceptance",
+  "head": "70b22cc7167d8e2372d606547c3e398b199fb101",
+  "measured_system": [
+    "a068b6f6586c1b120bd8350dbe706f5681ab71fd7da57502c34f940140268921",
+    115
+  ],
+  "allow_live_ai": 0,
+  "ground_truth_authority": "AGENT_TRANSCRIBED_UNVERIFIED",
+  "independent_h1": "NOT_MEASURED",
+  "classification": "DERIVED_FROM_REFERENCED_MEASUREMENTS_NOT_A_NEW_MEASUREMENT",
+  "corrects": "ocr_worker_resource_profile.json::concurrent_uploads.failure_cause",
+  "original_observation": "5/20 HTTP500 on the measured precursor4ab43853; this observation is retained",
+  "original_causal_attribution": "UNSUPPORTED: original failure_surface.json has no SQLite exception event",
+  "source_mechanism": "Controlled SQLite-lock regression test failed with sqlite3.OperationalError when the synchronous session guard blocked event-loop cleanup; moved guard to existing run_in_threadpool; test passes",
+  "exact_cause_of_original_5xx": "UNKNOWN: current bounded HTTP reproduction did not reproduce the original failures",
+  "subsequent_before_fix_http_statuses": [
+    200,
+    200,
+    200,
+    200,
+    200,
+    200,
+    200,
+    200,
+    200,
+    200
+  ],
+  "subsequent_after_fix_http_statuses": [
+    200,
+    200,
+    200,
+    200,
+    200,
+    200,
+    200,
+    200,
+    200,
+    200
+  ],
+  "causal_improvement_claim": false,
+  "first_hand_log_observation": "NOT_RECOVERABLE_AS_ARTIFACT: the session that ran the precursor benchmark read the server traceback of one HTTP500 (sqlite3 'database is locked' on UPDATE auth_sessions inside the prepare session guard) and an ad-hoc repeat with new guest sessions failed 4/30. That log was overwritten by later server restarts and no receipt was written, so it is recorded here as testimony, not evidence.",
+  "final_candidate_concurrent_uploads": {
+    "requests": 20,
+    "http_200": 20,
+    "http_5xx": 0,
+    "server_exception_events": [],
+    "failure_cause": "NO_FAILURE_OBSERVED"
+  },
+  "final_candidate_head": "70b22cc7167d8e2372d606547c3e398b199fb101",
+  "final_load_acceptance": "LIMITED: sealed candidate 20/20 with 0 captured server exceptions (two simultaneous new-session uploads, 10 rounds, SQLite). Sustained or wider concurrent load and PostgreSQL remain NOT_MEASURED"
+}

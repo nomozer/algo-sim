@@ -1,0 +1,257 @@
+{
+  "schema": "algosim-planner-composition-verification/1",
+  "generated_at_utc": "2026-11-10T03:58:21.083939+00:00",
+  "product_commit": "c61a3589782bde35b69e8376d8ebf136314e47f3",
+  "head_commit": "c61a3589782bde35b69e8376d8ebf136314e47f3",
+  "measured_system_tree_hash": "69bb83ba51b834f68c106bc4d3948dc02ca35af05eca0d8f50c0e0e4cf047cb4",
+  "measured_system_file_count": 108,
+  "code_version": {
+    "typed_fact_next": "typed-fact-next/2",
+    "bridge": "typed-fact-next-bridge/2",
+    "planner": "geometry-fact-planner/26",
+    "registry": "geometry-functions/33",
+    "engine": "geometry-function-engine/24",
+    "adapter": "hybrid-simulation-adapter/4",
+    "envelope": "hybrid-route-d-simulation/4",
+    "local_parser": "local-geometry-parser/1",
+    "adaptive_router": "adaptive-input-router/1",
+    "cache_version": "132"
+  },
+  "input_or_case_hash": "eb2cf2499a0b3d494e4d0c5e9c591942040734ed45d941a00bbdacf1712487d4",
+  "oracle": "AST/source scan for problem-specific handlers + Planner /26 call-graph & search_telemetry inspection",
+  "test_command": "pytest backend/tests/geometry/test_angle_premise_and_dihedral_geometry.py backend/tests/geometry/test_reusable_base_geometry_families.py backend/tests/geometry/test_production_dynamic_composition.py -q",
+  "test_environment": {
+    "os": "Windows-11-10.0.26100-SP0",
+    "python": "3.12.10",
+    "cpu_logical_cores": 12,
+    "allow_live_ai": 0,
+    "live_gemini_calls": 0,
+    "benchmark_tier": "HOST_BENCHMARK_OFFLINE"
+  },
+  "expected_behavior": "0 problem-specific handlers or case_id branches in backend/app; Planner /26 composes reusable Registry /33 primitives across base shapes, angles, projections, midpoints, distances, and volumes.",
+  "actual_behavior": "hardcode_hits=0, composed_cases=14, dynamic_rhombus_projection_status=SERVED (classification=DISCOVERED_FUNCTION_COMPOSITION).",
+  "verdict": "PASS",
+  "problem_specific_handler_hits_in_product_code": [],
+  "composed_cases": [
+    {
+      "case_id": "ANG-LP-01",
+      "primitive_chain": [
+        "pyramid",
+        "regular_polygon",
+        "perpendicular_line_plane",
+        "line_plane_angle",
+        "ask_volume"
+      ],
+      "distinct_primitives_composed": 5,
+      "auxiliary_certificates": [],
+      "provider_calls": 0
+    },
+    {
+      "case_id": "ANG-LP-02",
+      "primitive_chain": [
+        "pyramid",
+        "regular_polygon",
+        "perpendicular_line_plane",
+        "line_plane_angle",
+        "ask_volume",
+        "ask_distance_point_plane"
+      ],
+      "distinct_primitives_composed": 6,
+      "auxiliary_certificates": [],
+      "provider_calls": 0
+    },
+    {
+      "case_id": "ANG-LP-03-PRISM-INV",
+      "primitive_chain": [
+        "prism",
+        "right_angle",
+        "segment_length",
+        "line_plane_angle",
+        "segment_length",
+        "ask_volume"
+      ],
+      "distinct_primitives_composed": 5,
+      "auxiliary_certificates": [],
+      "provider_calls": 0
+    },
+    {
+      "case_id": "ANG-LP-04-CIRCUMCENTER",
+      "primitive_chain": [
+        "pyramid",
+        "right_angle",
+        "segment_length",
+        "segment_length",
+        "line_plane_angle",
+        "line_plane_angle",
+        "line_plane_angle",
+        "ask_volume"
+      ],
+      "distinct_primitives_composed": 5,
+      "auxiliary_certificates": [],
+      "provider_calls": 0
+    },
+    {
+      "case_id": "ANG-PP-01",
+      "primitive_chain": [
+        "pyramid",
+        "regular_polygon",
+        "perpendicular_line_plane",
+        "plane_plane_angle",
+        "ask_volume"
+      ],
+      "distinct_primitives_composed": 5,
+      "auxiliary_certificates": [],
+      "provider_calls": 0
+    },
+    {
+      "case_id": "ANG-VTX-01-RENAMED",
+      "primitive_chain": [
+        "pyramid",
+        "rhombus",
+        "vertex_angle",
+        "perpendicular_line_plane",
+        "segment_length",
+        "ask_volume"
+      ],
+      "distinct_primitives_composed": 6,
+      "auxiliary_certificates": [],
+      "provider_calls": 0
+    },
+    {
+      "case_id": "FAM1-RTRAP-01",
+      "primitive_chain": [
+        "pyramid",
+        "right_angle",
+        "right_angle",
+        "segment_length",
+        "segment_length",
+        "segment_length",
+        "perpendicular_line_plane",
+        "segment_length",
+        "ask_volume",
+        "ask_distance_point_plane"
+      ],
+      "distinct_primitives_composed": 6,
+      "auxiliary_certificates": [],
+      "provider_calls": 0
+    },
+    {
+      "case_id": "FAM1-RTRAP-02-OBLIQUE-LEG-COMPOSED",
+      "primitive_chain": [
+        "pyramid",
+        "right_angle",
+        "right_angle",
+        "segment_length",
+        "segment_length",
+        "segment_length",
+        "perpendicular_line_plane",
+        "line_plane_angle",
+        "ask_volume"
+      ],
+      "distinct_primitives_composed": 6,
+      "auxiliary_certificates": [],
+      "provider_calls": 0
+    },
+    {
+      "case_id": "FAM1-ITRAP-01",
+      "primitive_chain": [
+        "prism",
+        "isosceles_trapezoid",
+        "vertex_angle",
+        "segment_length",
+        "segment_length",
+        "segment_length",
+        "ask_volume"
+      ],
+      "distinct_primitives_composed": 5,
+      "auxiliary_certificates": [],
+      "provider_calls": 0
+    },
+    {
+      "case_id": "FAM1-ISOTRI-ALT-01",
+      "primitive_chain": [
+        "pyramid",
+        "equal_length",
+        "segment_length",
+        "perpendicular_line_plane",
+        "line_plane_angle",
+        "orthogonal_projection_line",
+        "segment_length",
+        "ask_volume"
+      ],
+      "distinct_primitives_composed": 7,
+      "auxiliary_certificates": [],
+      "provider_calls": 0
+    },
+    {
+      "case_id": "FAM2-RHOM-60-COMPOSED",
+      "primitive_chain": [
+        "pyramid",
+        "rhombus",
+        "vertex_angle",
+        "perpendicular_line_plane",
+        "line_plane_angle",
+        "ask_volume"
+      ],
+      "distinct_primitives_composed": 6,
+      "auxiliary_certificates": [],
+      "provider_calls": 0
+    },
+    {
+      "case_id": "FAM2-RHOM-DIAGS",
+      "primitive_chain": [
+        "pyramid",
+        "rhombus",
+        "segment_length",
+        "segment_length",
+        "intersect_line_line",
+        "perpendicular_line_plane",
+        "segment_length",
+        "ask_volume"
+      ],
+      "distinct_primitives_composed": 6,
+      "auxiliary_certificates": [],
+      "provider_calls": 0
+    },
+    {
+      "case_id": "FAM2-PARALLELOGRAM-60",
+      "primitive_chain": [
+        "prism",
+        "parallelogram",
+        "vertex_angle",
+        "segment_length",
+        "segment_length",
+        "segment_length",
+        "ask_volume"
+      ],
+      "distinct_primitives_composed": 5,
+      "auxiliary_certificates": [],
+      "provider_calls": 0
+    },
+    {
+      "case_id": "FAM2-TRI-SAS-120",
+      "primitive_chain": [
+        "pyramid",
+        "vertex_angle",
+        "segment_length",
+        "segment_length",
+        "perpendicular_line_plane",
+        "segment_length",
+        "ask_volume"
+      ],
+      "distinct_primitives_composed": 5,
+      "auxiliary_certificates": [],
+      "provider_calls": 0
+    }
+  ],
+  "dynamic_depth2_over_new_rhombus_base": {
+    "status": "SERVED",
+    "answers": {
+      "q1": "a√14/4"
+    },
+    "classification": "DISCOVERED_FUNCTION_COMPOSITION",
+    "search_generated_steps": [
+      "q1_aux2"
+    ]
+  }
+}

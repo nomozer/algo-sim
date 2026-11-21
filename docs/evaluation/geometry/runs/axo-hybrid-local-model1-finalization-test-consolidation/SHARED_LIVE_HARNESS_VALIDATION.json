@@ -1,0 +1,117 @@
+{
+  "schema": "axo-shared-live-harness-validation/1",
+  "harness_version": "axo-live-acceptance-harness/1",
+  "harness_dir": "docs/evaluation/geometry/harness/live-acceptance/",
+  "self_test": "backend/tests/geometry/test_shared_live_harness.py (4 tests)",
+  "tools": [
+    {
+      "file": "aggregate.py",
+      "sha256": "6bb76471757c688e5744f91f0da39330a0da2f25c93b95983a018f74840ae559",
+      "from_12": "tools\\aggregate_v12.py",
+      "byte_identical_to_12": false
+    },
+    {
+      "file": "egress_blackhole_proxy.py",
+      "sha256": "a2c186af22e7ea1fcd943aed047ce32956b91a31986476d4ac467c9458eae6e8",
+      "from_12": "tools\\egress_blackhole_proxy.py",
+      "byte_identical_to_12": true
+    },
+    {
+      "file": "harness_paths.mjs",
+      "sha256": "64d55f8cb74750a1f963d2148b0fa7da94ba860cb1425cde7a9f1c542db618a6",
+      "from_12": null,
+      "byte_identical_to_12": false
+    },
+    {
+      "file": "live_browser_acceptance.mjs",
+      "sha256": "6e0d76bcf8d9137cdddc4dbee82cdd2893ef3bdd6ce011fa2b800fb9cde7f1c7",
+      "from_12": "tools\\live_browser_acceptance_v12.mjs",
+      "byte_identical_to_12": false
+    },
+    {
+      "file": "perf_bench.py",
+      "sha256": "efe694ba9ebe56703b312d45db6867a9e9c94e7fe7ecaa0032734286021e1bae",
+      "from_12": "tools\\v12_perf_bench.py",
+      "byte_identical_to_12": false
+    },
+    {
+      "file": "scene_oracle.py",
+      "sha256": "5ee7e950beca40ba69c8ce3d17f16a56bddf4ebf8cb3d798aa45a399015250dd",
+      "from_12": "tools\\scene_oracle.py",
+      "byte_identical_to_12": false
+    },
+    {
+      "file": "stack_memory_sampler.ps1",
+      "sha256": "b1bec437fc32b4a79c35151f0bf2abbfb9832f844cdb838b0219334fd9b7ee02",
+      "from_12": "tools\\stack_memory_sampler.ps1",
+      "byte_identical_to_12": true
+    },
+    {
+      "file": "tcp_egress_sampler.ps1",
+      "sha256": "7c17e3fff372487fbee2cb4766250f6a6b59c9fbde179b768a5e13332aea9afb",
+      "from_12": "tools\\tcp_egress_sampler.ps1",
+      "byte_identical_to_12": true
+    },
+    {
+      "file": "ui_scenarios.mjs",
+      "sha256": "6986dcdd61d7e53b491381acefa4471ed1292456dce4aa948c32992010d52879",
+      "from_12": "tools\\v12_ui_scenarios.mjs",
+      "byte_identical_to_12": false
+    }
+  ],
+  "changes_vs_12_copies": [
+    "no default output anywhere: --out-dir (browser, aggregate) / explicit out path (oracle, bench) required and refused when non-empty/existing",
+    "aggregate inputs named by --layout (v12 = frozen /12 names, generic = shared names); outputs never into the input run dir",
+    "browser scripts: env-var defaults pointing into the run dir removed; args parsed by harness_paths.mjs",
+    "evaluator account labels and schemas lost the 'v12' prefix; harness_version added to every output"
+  ],
+  "equivalence_on_frozen_12_evidence": {
+    "scene_oracle_replay": {
+      "results": 139,
+      "equal_to_SCENE_ORACLE_VERIFICATION": true,
+      "counts": {
+        "MATHEMATICALLY_VALID": 88,
+        "MATHEMATICALLY_INVALID": 0,
+        "VALIDATION_ERROR": 0,
+        "NOT_SERVED": 51
+      }
+    },
+    "aggregate_replay": {
+      "layout": "v12",
+      "args": "--proxy-selfcheck-ok --proxy-selfcheck-records 2 (as /12 ran it)",
+      "equal_ignoring_schema_and_harness_version": [
+        "LIVE_ACCEPTANCE_RESULTS",
+        "SLM_LIVE_CONTRIBUTION_AUDIT",
+        "VISUAL_AND_INTERACTION_ACCEPTANCE",
+        "NETWORK_ISOLATION_PROOF"
+      ],
+      "headline": {
+        "completed_in_scope": "88/105",
+        "SIMULATION_COMPLETION_RATE": 0.8381,
+        "SLM_VERIFIED_SCENE_RATE": 0.5312,
+        "slm_contributed": "17/32",
+        "wrong_served": 0
+      }
+    },
+    "overwrite_refusal": {
+      "aggregate_non_empty_out_dir": "REFUSED",
+      "oracle_existing_out": "REFUSED",
+      "browser_non_empty_out_dir": "REFUSED (node, checked by hand)",
+      "browser_missing_out_dir": "REFUSED"
+    }
+  },
+  "fault_injection": [
+    {
+      "mutation": "aggregate: SLM provenance requires a cache hit instead of none",
+      "self_test": "RED",
+      "restored": "GREEN"
+    },
+    {
+      "mutation": "aggregate: completion ignores numeric_ok",
+      "self_test": "GREEN",
+      "note": "data-neutral on /12 (no served numeric mismatch) — not a witness; recorded so it is not mistaken for one"
+    }
+  ],
+  "not_exercised_here": "the browser scripts' page logic is unchanged from /12 apart from argument parsing; they are first exercised end to end by the /13 live acceptance (P7)",
+  "SHARED_HARNESS_VERIFIED": true
+}

@@ -1,0 +1,39 @@
+--- a/backend/app/simulation/semantic_program/domain_profile.py	2026-11-20 01:47:37.609098600 +0700
++++ b/backend/app/simulation/semantic_program/domain_profile.py	2026-11-20 01:47:37.754430200 +0700
+@@ -644,6 +644,11 @@
+     if not text:
+         return DOMAIN_TIN_HOC
+     t = text.lower()
++    # Proposed in /11 (owner handoff): a problem typed WITHOUT any Vietnamese diacritic ("Cho hinh chop S.ABCD …") is
++    # matched against the diacritic-stripped phrase lists; a text with even one diacritic keeps exact matching, so the
++    # stripped forms never widen the gate for normally written Vietnamese.
++    if _khong_dau(t) == t:
++        return _detect_stripped(t)
+     # BỐN MỨC, không còn ba (sửa 2026-08-29 — xem `_MANH_QUAN_HE`).
+     #
+     # Cụm QUAN HỆ thắng cả phủ quyết Tin học; danh từ KHỐI thì không. Bản cũ
+@@ -658,3 +663,24 @@
+     if sum(1 for d in _DAU_HIEU_YEU if d in t) >= 3:
+         return DOMAIN_HINH_HOC
+     return DOMAIN_TIN_HOC
++
++
++_DAU = str.maketrans("đ", "d")
++
++
++def _khong_dau(s: str) -> str:
++    import unicodedata
++    return "".join(c for c in unicodedata.normalize("NFD", s.translate(_DAU)) if unicodedata.category(c) != "Mn")
++
++
++def _detect_stripped(t: str) -> str:
++    """`detect_domain` on a diacritic-free text: same four levels over stripped phrase lists."""
++    if any(_khong_dau(d) in t for d in _MANH_QUAN_HE):
++        return DOMAIN_HINH_HOC
++    if any(_khong_dau(d) in t for d in _DAU_HIEU_TIN_HOC):
++        return DOMAIN_TIN_HOC
++    if any(_khong_dau(d) in t for d in _MANH_DANH_TU_KHOI):
++        return DOMAIN_HINH_HOC
++    if sum(1 for d in _DAU_HIEU_YEU if _khong_dau(d) in t) >= 3:
++        return DOMAIN_HINH_HOC
++    return DOMAIN_TIN_HOC

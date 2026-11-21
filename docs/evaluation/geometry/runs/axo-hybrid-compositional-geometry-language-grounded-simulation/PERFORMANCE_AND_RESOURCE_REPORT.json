@@ -1,0 +1,234 @@
+{
+  "schema": "axo-v12-performance-report/1",
+  "scope_note": "Measured on Windows dev host only; no cross-hardware claims.",
+  "uncached_live_latency_ms": {
+    "deterministic_parser_complete_served": {
+      "n": 71,
+      "min_ms": 117.0,
+      "p50_ms": 152.0,
+      "p95_ms": 413.0,
+      "max_ms": 969.0
+    },
+    "slm_required_stratum_deterministic_or_normalizer_rescued": {
+      "n": 0,
+      "min_ms": null,
+      "p50_ms": null,
+      "p95_ms": null,
+      "max_ms": null
+    },
+    "live_slm_contributed_served": {
+      "n": 17,
+      "min_ms": 3010.0,
+      "p50_ms": 4511.0,
+      "p95_ms": 6703.0,
+      "max_ms": 9148.0
+    },
+    "rejected_valid_cases": {
+      "n": 23,
+      "min_ms": 89.0,
+      "p50_ms": 2053.0,
+      "p95_ms": 4180.0,
+      "max_ms": 7923.0
+    },
+    "rejected_negative_cases": {
+      "n": 28,
+      "min_ms": 75.0,
+      "p50_ms": 240.5,
+      "p95_ms": 3433.0,
+      "max_ms": 4103.0
+    }
+  },
+  "warm_cache_hit_ms": {
+    "n": 4,
+    "min_ms": 56.0,
+    "p50_ms": 65.6,
+    "p95_ms": 69.1,
+    "max_ms": 69.1
+  },
+  "concurrency": {
+    "conc_2_deterministic": {
+      "workers": 2,
+      "statuses": [
+        200,
+        200
+      ],
+      "all_200": true,
+      "wall_ms": 73.1,
+      "request_stats": {
+        "n": 2,
+        "min_ms": 55.8,
+        "p50_ms": 63.9,
+        "p95_ms": 71.9,
+        "max_ms": 71.9
+      }
+    },
+    "conc_4_deterministic": {
+      "workers": 4,
+      "statuses": [
+        200,
+        200,
+        200,
+        200
+      ],
+      "all_200": true,
+      "wall_ms": 211.4,
+      "request_stats": {
+        "n": 4,
+        "min_ms": 139.7,
+        "p50_ms": 170.0,
+        "p95_ms": 209.3,
+        "max_ms": 209.3
+      }
+    },
+    "conc_2_mixed_slm_and_det": {
+      "workers": 2,
+      "statuses": [
+        200,
+        200
+      ],
+      "all_200": true,
+      "wall_ms": 93.9,
+      "request_stats": {
+        "n": 2,
+        "min_ms": 82.9,
+        "p50_ms": 87.5,
+        "p95_ms": 92.1,
+        "max_ms": 92.1
+      }
+    }
+  },
+  "resource_peaks_from_stack_sampler": {
+    "llama": {
+      "samples": 402,
+      "max_pid_count": 1,
+      "peak_ws_mb": 914.4,
+      "peak_private_mb": 592.6,
+      "max_cpu_s": 887.31
+    },
+    "backend": {
+      "samples": 402,
+      "max_pid_count": 2,
+      "peak_ws_mb": 126.6,
+      "peak_private_mb": 106.6,
+      "max_cpu_s": 39.92
+    },
+    "chromium": {
+      "samples": 402,
+      "max_pid_count": 4,
+      "peak_ws_mb": 626.2,
+      "peak_private_mb": 486.1,
+      "max_cpu_s": 765.42
+    }
+  },
+  "backend_cold_boot_to_health_ms_main_run": 3705.6,
+  "backend_cold_boot_to_health_ms_perf_probe": 3516.6,
+  "health_snapshot": {
+    "ok": true,
+    "hasKey": false,
+    "cachedProblems": 88,
+    "patterns": 0,
+    "reuse": {
+      "compose_new_count": 88,
+      "exact_cache_hits": 23,
+      "estimated_llm_calls_saved": 23
+    },
+    "db": "sqlite",
+    "runtime": {
+      "route_policy": {
+        "default_route_mode": "HYBRID",
+        "fingerprint": null
+      },
+      "hybrid_route": {
+        "mode": "local-only-scoped",
+        "enabled": true,
+        "simulated": false,
+        "local_only": true,
+        "local_slm_model_key": "qwen3-0.6b-axo-v9-q4_k_m",
+        "local_slm_provisioned": true,
+        "extraction_mode": "LOCAL_ONLY_V9_SCOPED",
+        "local_parser_version": "local-geometry-parser/3",
+        "adaptive_router_version": "adaptive-input-router/1",
+        "registry_version": "geometry-functions/33",
+        "planner_version": "geometry-fact-planner/26",
+        "engine_version": "geometry-function-engine/24",
+        "adapter_version": "hybrid-simulation-adapter/4",
+        "envelope_version": "hybrid-route-d-simulation/4",
+        "response_contract": "typed-fact-next/2",
+        "extraction_surface": "33197a45e0620d94a669047b47907479d1e7f07b1dc76e7c6abd75ada7a6df14",
+        "gemini_model": "gemini-2.5-flash",
+        "allow_live_ai": false,
+        "replay_corpus_configured": false
+      },
+      "hybrid_route_mode": "local-only-scoped",
+      "hybrid_route_d_preview": {
+        "enabled": false
+      },
+      "git_sha": "unknown",
+      "build_timestamp": "unknown",
+      "cache_version": "147",
+      "domain": "hinh_hoc",
+      "expression_count": 11,
+      "construct_statement_count": 9,
+      "measure_count": 7,
+      "obligation_count": 12,
+      "stable_capability_hash": "a2e8131eeeab638f0567b8962317c3d92c9d5a7a0b4ee9e2e74bbcb78d62751a",
+      "skills": {
+        "tren_dia": {
+          "transcribe": "b499dc7a29fec4a387074b89ccbce393970fdef69348641cff2d60ba850570d6"
+        },
+        "da_nap": {},
+        "cu": [],
+        "grammar_card": "9b8506e6883154a1f08bb90a1e7a51999ce0df6bf5a9ba4b4d61fc4757d2b750",
+        "tong": "cb272862541ae2dcdeb4ede7535c4b36f14e6abc739321ff32ae60fea592a385"
+      },
+      "semantic_telemetry": "0",
+      "gemini_model": "gemini-2.5-flash",
+      "dev_reload": "0",
+      "simulation_id": "generic.semantic_program",
+      "expressions": [
+        "divide_segment",
+        "intersect_line_line",
+        "intersect_line_plane",
+        "intersect_plane_curved",
+        "intersect_plane_curved_ellipse",
+        "intersect_plane_plane",
+        "midpoint",
+        "plane_perpendicular_to_line",
+        "project_onto",
+        "translate",
+        "vector_from_points"
+      ],
+      "construct_statements": [
+        "construct_curved_solid",
+        "construct_line",
+        "construct_plane",
+        "construct_plane_from_equation",
+        "construct_point",
+        "construct_polygon",
+        "construct_section",
+        "construct_segment",
+        "construct_solid"
+      ],
+      "measures": [
+        "angle_cos",
+        "angle_cos_sq",
+        "area",
+        "distance",
+        "lateral_area",
+        "radius",
+        "volume"
+      ]
+    },
+    "routeMode": "local-only-scoped",
+    "localOnlyMode": true,
+    "localSlmReady": true,
+    "localSlmModel": "qwen3-0.6b-axo-v9-q4_k_m",
+    "extractionBackend": "local_slm_v9",
+    "aiAvailable": true,
+    "local_ai_ux": {
+      "ux_state": "READY_OFFLINE",
+      "learner_title": "Sẵn sàng dựng hình ngoại tuyến",
+      "learner_message": "Hệ thống đang chạy bằng mô hình trên máy, không cần khóa kết nối đám mây."
+    }
+  }
+}

@@ -161,7 +161,14 @@ def test_registry_dong_va_khai_bao_ham_khong_co_toa_do():
         # hybrid-master curved slice (registry /23, /26): planner-only, route A provider surface unchanged
         "curved_solid", "sphere_tangent_plane", "ask_curved_volume", "ask_lateral_area", "ask_surface_area", "ask_radius",
         "curved_section", "curved_subsolid", "ask_curved_section_area", "ask_curved_section_radius",
-        "ask_curved_volume_ratio", "ask_curved_residual_volume"}
+        "ask_curved_volume_ratio", "ask_curved_residual_volume",
+        # unified-angle-geometry-verified-image-to-3d: planner-only, route A provider surface unchanged
+        "line_plane_angle", "plane_plane_angle", "dihedral_angle", "line_line_angle", "vertex_angle",
+        "parallelogram", "rhombus", "trapezoid", "isosceles_trapezoid",
+        # formal-correctness-real-world-acceptance & dimension-aware-verified-construction: planner-only, route A provider surface unchanged
+        "polygon_area", "solid_volume", "segment_ratio", "ask_length_ratio", "ask_area_ratio",
+        # student-ready-geometry-simulation-input-reliability: planner-only, route A provider surface unchanged
+        "point_reflection"}
     txt = json.dumps(decl, ensure_ascii=False).lower()
     for cam in ("xyz", "coord", "toạ độ", "tọa độ", "\"x\"", "position"):
         assert cam not in txt, cam

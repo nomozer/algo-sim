@@ -1,0 +1,116 @@
+{
+  "run_id": "simulation-first-mvp-stabilization",
+  "generated_at_utc": "2026-11-16T02:42:56Z",
+  "schema": "axo-simulation-first-mvp-stabilization-run/1",
+  "branch": "feat/local-first-geometry-understanding",
+  "start_head": "9f8fc53e6b9269ec4ff0d7197096ef470e4c8532",
+  "product_commit": "4d81be4b85e164c8596d2e9b53351b5df0a244f0",
+  "candidate_freeze_commit": "077e3671ac2fdaa4cb9ddb584a583e92667cda21",
+  "candidate_commit_field": "4d81be4b85e164c8596d2e9b53351b5df0a244f0",
+  "measured_system": "beb18ce56298f1022f628fd923dffd98c0134b2d1ffd9cbc5b87efa280a408b3",
+  "measured_files": 120,
+  "cache_version": "141",
+  "semantic_environment_hash": "6233c43c395c9b493d31d3dbb5d0ca952604730f6185cf541d2f179c077f955b",
+  "environment": {
+    "ALLOW_LIVE_AI": "0",
+    "GEMINI_API_KEY": "EMPTY",
+    "live_ai_calls": 0
+  },
+  "dataset_partition": "DEVELOPMENT (exposed VMMU r537/r460/r463 audits, 9-family Scene3D matrix, synthetic multi-problem OCR sheet, offline regression gates); never sealed H-1 or locked W2/W3",
+  "corrects": [
+    "dimension-aware-verified-construction"
+  ],
+  "correction_scope": "Prose-summary transcription errors on lines 34, 205, 214, 215 of AXO_DIMENSION_AWARE_VERIFIED_CONSTRUCTION_REPORT.md (AGENTS.md Section 4 Correction Layer); zero historical files modified in byte",
+  "contracts": {
+    "local_geometry_parser": "local-geometry-parser/2",
+    "typed_fact_next": "typed-fact-next/2",
+    "planner": "geometry-fact-planner/26",
+    "registry": "geometry-functions/33",
+    "engine": "geometry-function-engine/24",
+    "envelope": "hybrid-route-d-simulation/4",
+    "output_policy": "output-policy/1",
+    "route_d_cache_policy": "141:route-d"
+  },
+  "verdicts": {
+    "PRODUCT_TECHNICAL_VERDICT": "PASS",
+    "SIMULATION_READINESS": "READY_WITHIN_SUPPORTED_SCOPE",
+    "INTERNAL_PILOT_READINESS": "READY_FOR_CONTROLLED_INTERNAL_PILOT",
+    "FULL_RELEASE_GATE": "BLOCKED_GATES_REMAIN",
+    "blocked_reasons": [
+      "INDEPENDENT_H1_VALIDATION = NOT_MEASURED",
+      "REAL_STUDENT_USABILITY = NOT_MEASURED (browser E2E is AUTOMATED_BROWSER_NOT_HUMAN_STUDY)",
+      "PHYSICAL_LOW_END = PHYSICAL_LOW_END_NOT_MEASURED",
+      "LIVE_CAMPAIGN_APPROVAL (K-1/S-2/R-1) = PENDING_OWNER_DECISION",
+      "AXO_GEOMETRY_LIBRARY (FE-2/3/4/6) = BLOCKED_OWNERSHIP",
+      "PUBLICATION_HEAD = BLOCKED_PENDING_OWNER_REVIEW (97 historical pending items, 0 new violations)"
+    ]
+  },
+  "regression_gates": {
+    "backend_pytest": "PASS",
+    "frontend_test_wave": "PASS",
+    "demo_replay": "PASS",
+    "crash_audit": "PASS",
+    "hybrid_preview_fixtures": "PASS",
+    "docs_ia": "PASS",
+    "publication_range": "PASS",
+    "publication_head": "PASS",
+    "freeze_verify": "PASS",
+    "cache_lock_verify": "PASS"
+  },
+  "student_pilot_e2e_verdict": "PASS",
+  "zero_hardcode_scan": "PASS",
+  "artifacts": {
+    "FINAL_STABILIZATION_REPORT.md": {
+      "sha256": "46459453fc4c779de6254b7b133ff3f41b14fd49b90a03bfde3f94b4bfdbaea1",
+      "bytes": 16663
+    },
+    "FRONTEND_HANDOFF_STATUS.md": {
+      "sha256": "5f68ce88ce518a1c3c7483371bb953a635fe6c4c4d8055acf1b476a8f1fb9ecc",
+      "bytes": 4876
+    },
+    "logs/prior-k1-owner-approval.template.json": {
+      "sha256": "3750a41e115c0af384469d638c913cf26340f05dfff12c16c8ec89953016172a",
+      "bytes": 782
+    },
+    "logs/prior-r1-owner-approval.template.json": {
+      "sha256": "75096d07005a57d110dd93abcc058b5f82ba208a358aa452d15731aeb1ba0062",
+      "bytes": 782
+    },
+    "logs/prior-s2-owner-approval.template.json": {
+      "sha256": "9d27ed200a205355c51f43868dd8cb498db2513b9a141988b521d87694ebe03e",
+      "bytes": 782
+    },
+    "MATH_TRUTH_AUDIT.md": {
+      "sha256": "1dcce4628982c9b8f9bad34b036261e761f0f05cb34db616d3985b116f7818a1",
+      "bytes": 16840
+    },
+    "pending_template_refresh.json": {
+      "sha256": "407902abb86f61d03c13e859a27e748f6c919b4537cc1acb72753b84a8ef136d",
+      "bytes": 3324
+    },
+    "REGRESSION_SUMMARY.json": {
+      "sha256": "081c7b7f9a94c6c3f6be3db6ee825ce63a6b181ea366a4ac354823cd067f6e80",
+      "bytes": 11111
+    },
+    "SIMULATION_INTEGRITY_REPORT.md": {
+      "sha256": "170af6996a7b53e34a0dbfd43dc279d74a9f9ecf7439862035a8299fc25d13c9",
+      "bytes": 8903
+    },
+    "STUDENT_PILOT_E2E.json": {
+      "sha256": "3c1e38bd16bd2e2eda0432f818f1bf86226407b6765b88d54b28edaef2ccf813",
+      "bytes": 19303
+    },
+    "tools/build_regression_summary.py": {
+      "sha256": "7bb632394de6890d3d2a75a2eeb02b5ad32b4e75ad96179c65ac16a010785e32",
+      "bytes": 15734
+    },
+    "tools/refresh_pending_templates.py": {
+      "sha256": "348e11740ff3f023cda2715b56bef941a6fdd8ebfe37016d34eb598c0bc380e5",
+      "bytes": 3165
+    },
+    "tools/student_pilot_e2e.mjs": {
+      "sha256": "389b6f37a0b2124ce828ba2a1371a47a38783d21499982650fe88c7f90f7b9e0",
+      "bytes": 54751
+    }
+  }
+}

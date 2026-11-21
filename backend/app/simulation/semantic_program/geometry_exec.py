@@ -187,6 +187,66 @@ def la_dai_luong_do(gt: Any, kieu_khai: str | None) -> bool:
     return isinstance(gt, (Fraction, Radical)) and kieu_khai in KIEU_DAI_LUONG
 
 
+def phan_loai_quan_he_do(
+    qty: str, val: Any, obj_a: Any, obj_b: Any
+) -> str | None:
+    """Phân loại ý nghĩa hình học ĐƯỢC CHỨNG NHẬN từ loại phép đo, giá trị chính xác và kiểu thực thi.
+
+    Không bao giờ suy từ tên biến hay gán mọi giá trị `0` thành vuông góc.
+    """
+    if isinstance(val, bool):
+        return None
+    if qty == "angle_cos_sq":
+        if val == 0:
+            if isinstance(obj_a, Line3) and isinstance(obj_b, Line3):
+                return "perpendicular_lines"
+            if isinstance(obj_a, Plane3) and isinstance(obj_b, Plane3):
+                return "perpendicular_planes"
+            if (isinstance(obj_a, Line3) and isinstance(obj_b, Plane3)) or (
+                isinstance(obj_a, Plane3) and isinstance(obj_b, Line3)
+            ):
+                return "perpendicular_line_plane"
+        elif val == 1:
+            if isinstance(obj_a, Line3) and isinstance(obj_b, Line3):
+                return "parallel_lines"
+            if isinstance(obj_a, Plane3) and isinstance(obj_b, Plane3):
+                return "parallel_planes"
+            if (isinstance(obj_a, Line3) and isinstance(obj_b, Plane3)) or (
+                isinstance(obj_a, Plane3) and isinstance(obj_b, Line3)
+            ):
+                return "parallel_line_plane"
+        return None
+    if qty == "angle_cos":
+        if isinstance(obj_a, Vec3) and isinstance(obj_b, Vec3):
+            if val == 0:
+                return "orthogonal_vectors"
+            if val == 1:
+                return "same_direction_vectors"
+            if val == -1:
+                return "opposite_direction_vectors"
+        return None
+    if qty == "distance" and val == 0:
+        if isinstance(obj_a, Vec3) and isinstance(obj_b, Vec3):
+            return "coincident_points"
+        if (isinstance(obj_a, Vec3) and isinstance(obj_b, Line3)) or (
+            isinstance(obj_a, Line3) and isinstance(obj_b, Vec3)
+        ):
+            return "point_on_line"
+        if (isinstance(obj_a, Vec3) and isinstance(obj_b, Plane3)) or (
+            isinstance(obj_a, Plane3) and isinstance(obj_b, Vec3)
+        ):
+            return "point_on_plane"
+        if isinstance(obj_a, Line3) and isinstance(obj_b, Line3):
+            return "coplanar_intersecting_or_coincident_lines"
+        if (isinstance(obj_a, Line3) and isinstance(obj_b, Plane3)) or (
+            isinstance(obj_a, Plane3) and isinstance(obj_b, Line3)
+        ):
+            return "line_intersects_or_in_plane"
+        if isinstance(obj_a, Plane3) and isinstance(obj_b, Plane3):
+            return "intersecting_or_coincident_planes"
+    return None
+
+
 def chuan_hoa_dai_luong(kieu_khai: str | None, raw: Any, *,
                         mien_hinh_hoc: bool) -> Any:
     """`initial_value` VÔ HƯỚNG → miền số chính xác. Đọc không được ⇒ GIỮ NGUYÊN.

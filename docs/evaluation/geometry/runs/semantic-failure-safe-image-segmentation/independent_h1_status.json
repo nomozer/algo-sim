@@ -1,0 +1,12 @@
+{
+  "run_id": "semantic-failure-safe-image-segmentation",
+  "generated_at_utc": "2026-11-13T17:27:25.127687+00:00",
+  "head": "7315cf3b033f78fce1409085c6eeab720f83c967",
+  "environment": {
+    "ALLOW_LIVE_AI": "0"
+  },
+  "status": "NOT_MEASURED",
+  "sealed_rows": 94,
+  "opened": 0,
+  "why": "no independent selector, transcriber or scorer"
+}

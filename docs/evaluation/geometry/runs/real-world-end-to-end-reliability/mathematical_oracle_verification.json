@@ -1,0 +1,117 @@
+{
+  "schema": "algosim-mathematical-oracle-verification/1",
+  "generated_at_utc": "2026-11-10T05:19:28.931936+00:00",
+  "product_commit": "7994da7a64c8dc288c4de972df2d8d1db65e0c20",
+  "head_commit": "e838ab50d06d3ac0d5b02a98b9e3083ea0bfd5e6",
+  "measured_system_tree_hash": "3754cbd18f58ddfb913fb61efd3dd078b0767770cff935a975cc8c258a1859fa",
+  "measured_system_file_count": 108,
+  "code_version": {
+    "typed_fact_next": "typed-fact-next/2",
+    "bridge": "typed-fact-next-bridge/2",
+    "planner": "geometry-fact-planner/26",
+    "registry": "geometry-functions/33",
+    "engine": "geometry-function-engine/24",
+    "adapter": "hybrid-simulation-adapter/4",
+    "envelope": "hybrid-route-d-simulation/4",
+    "local_parser": "local-geometry-parser/1",
+    "adaptive_router": "adaptive-input-router/1",
+    "cache_version": "132"
+  },
+  "input_or_case_hash": "f5928fc7ad8f4473a87a790dee4fe30fb9e57d57efb474e7797558128b19022a",
+  "oracle": "Independent hand derivations (+ printed multiple-choice keys where present) + stated-height cross-check",
+  "test_command": "python docs/evaluation/geometry/runs/real-world-end-to-end-reliability/tools/evaluate_real_world_reliability.py",
+  "test_environment": {
+    "os": "Windows-11-10.0.26100-SP0",
+    "python": "3.12.10",
+    "cpu_logical_cores": 12,
+    "allow_live_ai": 0,
+    "live_gemini_calls": 0,
+    "benchmark_tier": "HOST_BENCHMARK_OFFLINE"
+  },
+  "expected_behavior": "Every served External17 answer equals the independent oracle; invariant answers equal the answer obtained with arbitrary stated heights.",
+  "actual_behavior": "served=6, matches=6, stated_height_crosscheck={\"ext02_with_AA'=2\": '6', \"ext02_with_AA'=7\": '6'}",
+  "verdict": "PASS",
+  "run_id": "real-world-end-to-end-reliability",
+  "wave_id": "REAL_WORLD_END_TO_END_RELIABILITY",
+  "baseline_head_commit": "8d0fde3378c9b087bdbbc4c66e1a40aad3b532cc",
+  "baseline_product_commit": "c61a3589782bde35b69e8376d8ebf136314e47f3",
+  "case_ids": [
+    "ext_prt_01_hd_q_5259753#1",
+    "ext_prt_02_hd_q_7922924#1",
+    "ext_prt_03_hd_q_7907931#1",
+    "ext_prt_03_hd_q_7907931#2",
+    "ext_prt_09_vmmu_page_r4#1",
+    "ext_hw_b1_01_hd_a_6043187#1"
+  ],
+  "measurement_status": "MEASURED_OFFLINE",
+  "oracle_provenance": "Derivations written by the implementing agent (not an independent human reviewer) — ORACLE_SELF_DERIVED; MC keys printed in the source for ext02 (D.6), ext09 (B.2).",
+  "served_checks": [
+    {
+      "case_id": "ext_prt_01_hd_q_5259753#1",
+      "engine": "a³√3/3",
+      "oracle": "a³√3/3",
+      "derivation": "SA = AB·tan60° = a√3; V = (1/3)·a²·a√3 = a³√3/3",
+      "match": true,
+      "scene_unique": true
+    },
+    {
+      "case_id": "ext_prt_02_hd_q_7922924#1",
+      "engine": "6",
+      "oracle": "6",
+      "derivation": "BC ⊥ AB (vuông cân tại B) và BC ⊥ BB' ⇒ BC ⊥ (ABB'A'); d = CB = AB = 6, độc lập chiều cao lăng trụ; đáp án in trong đề: D. 6",
+      "match": true,
+      "scene_unique": false
+    },
+    {
+      "case_id": "ext_prt_03_hd_q_7907931#1",
+      "engine": "a√2/2",
+      "oracle": "a√2/2",
+      "derivation": "O = tâm hình vuông; BO ⊥ AC, BO ⊥ SA ⇒ BO ⊥ (SAC); d = BO = a√2/2, độc lập SA",
+      "match": true,
+      "scene_unique": false
+    },
+    {
+      "case_id": "ext_prt_03_hd_q_7907931#2",
+      "engine": "a³/4",
+      "oracle": "a³/4",
+      "derivation": "S_ABC = a²√3/4; V = (1/3)·(a²√3/4)·a√3 = a³/4",
+      "match": true,
+      "scene_unique": true
+    },
+    {
+      "case_id": "ext_prt_09_vmmu_page_r4#1",
+      "engine": "2",
+      "oracle": "2",
+      "derivation": "S_ABC = (1/2)·2·2 = 2; V = (1/3)·2·3 = 2; đáp án in: B. 2",
+      "match": true,
+      "scene_unique": true
+    },
+    {
+      "case_id": "ext_hw_b1_01_hd_a_6043187#1",
+      "engine": "a³√3",
+      "oracle": "a³√3",
+      "derivation": "BC = a√2, S = a²√2/2; CC' = BC·tan60° = a√6; V = a²√2/2·a√6 = a³√3",
+      "match": true,
+      "scene_unique": true
+    }
+  ],
+  "stated_height_crosscheck": {
+    "ext02_with_AA'=2": "6",
+    "ext02_with_AA'=7": "6"
+  },
+  "unsolved_oracles": {
+    "ext_prt_04_hd_q_8436784#1": "1/2",
+    "ext_prt_05_hd_q_7451806#1": "ORACLE_NOT_DERIVED_IN_RUN",
+    "ext_prt_06_hd_q_1084979#1": "V = a³√15/4; d(AM,NP) ORACLE_NOT_DERIVED_IN_RUN",
+    "ext_prt_07_hd_q_7958052#1": "15√93/31 ≈ 4,7",
+    "ext_prt_08_hd_q_7509702#1": "4·SO⃗ (vector)",
+    "ext_prt_10_vmmu_page_r7#1": "ORACLE_NOT_DERIVED_IN_RUN",
+    "ext_prt_11_vmmu_page_r10#1": "30°",
+    "ext_prt_12_vmmu_page_r11#1": "2√3",
+    "ext_prt_13_vmmu_page_r25#1": "ORACLE_NOT_DERIVED_IN_RUN",
+    "ext_prt_14_vmmu_page_r26#1": "ORACLE_NOT_DERIVED_IN_RUN",
+    "ext_prt_15_vmmu_page_r28#1": "NOT_RECOVERABLE_FROM_TEXT"
+  },
+  "invariance_probe_pass": 11,
+  "invariance_probe_total": 11
+}

@@ -1,0 +1,142 @@
+{
+  "schema": "algosim-stage-p1c-proof-certificate-mutation-tests/1",
+  "phase": "phase_8_11_4_adversarial_proof_certificate_mutations",
+  "run_id": "dimension-aware-verified-construction",
+  "stage": "stage_p1c",
+  "generated_by": "trig-kernel-audit",
+  "generated_at": "2026-11-15T11:52:00Z",
+  "generated_at_utc": "2026-11-15T11:52:00Z",
+  "branch": "feat/local-first-geometry-understanding",
+  "git_head_sha": "b04bed0f83e02ac27416814bea08fa830ee91461",
+  "head": "b04bed0f83e02ac27416814bea08fa830ee91461",
+  "product_commit": "32bdaa1df3dd7606b59b8c3cd8411578c4206d54",
+  "product_commit_rule": "product-paths-excluding-test-only/1",
+  "measured_system_hash": "b1403b91fd81410f9586c5676f541911540b4bc4bb0d7bf40204d17538623e59",
+  "measured_system_file_count": 120,
+  "baseline_measured_system_hash": "c25f9695828888987db2ab7990c4ff135da4d01c6b9d968f898c36728a0ae436",
+  "cache_version": "140",
+  "route_d_cache_policy": "140:route-d",
+  "semantic_environment_hash": "6233c43c395c9b493d31d3dbb5d0ca952604730f6185cf541d2f179c077f955b",
+  "provider_call_count": 0,
+  "schema_versions": {
+    "expression_model": "dimension-expression/1",
+    "typed_fact_next": "typed-fact-next/2",
+    "typed_fact_next_bridge": "typed-fact-next-bridge/2",
+    "registry": "geometry-functions/33",
+    "planner": "geometry-fact-planner/26",
+    "engine": "geometry-function-engine/24",
+    "local_geometry_parser": "local-geometry-parser/2",
+    "adaptive_input_router": "adaptive-input-router/1",
+    "determinacy_audit": "mathematical-determinacy-audit/1",
+    "trig_construction_certificates": "trig-construction-certificate/1",
+    "output_policy": "output-policy/1",
+    "hybrid_adapter": "hybrid-simulation-adapter/4",
+    "route_d_envelope": "hybrid-route-d-simulation/4"
+  },
+  "environment": {
+    "ALLOW_LIVE_AI": "0",
+    "HYBRID_ROUTE_MODE": "local-first",
+    "PYTHONPATH": "backend",
+    "python_executable": "D:/Documents/projects/algo-sim/backend/.venv/Scripts/python.exe -B",
+    "live_ai_calls": 0,
+    "sealed_h1_rows_opened": 0,
+    "locked_w2_w3_rows_read": 0
+  },
+  "zero_case_id_hardcode_verified": {
+    "scanned_path": "backend/app/**/*.py",
+    "forbidden_tokens": [
+      "vmmu_",
+      "r460",
+      "r463",
+      "r537",
+      "r266",
+      "r411"
+    ],
+    "hits": 0
+  },
+  "dataset_partition": "SYNTHETIC_ADVERSARIAL_CERTIFICATE_MUTATION_SUITE (zero access to sealed H-1 or locked W2/W3)",
+  "test_command": "D:/Documents/projects/algo-sim/backend/.venv/Scripts/python.exe -B -m pytest -q backend/tests/geometry/test_trig_verified_construction.py -k 'adversarial_mutation or deductive_two_lines_in_plane or adapter4_preserves'",
+  "source_provenance": {
+    "verifier_module": "backend/app/simulation/geometry_functions/trig_construction_certificates.py",
+    "adapter_binding_module": "backend/app/ai/adapter4_route.py",
+    "test_suite": "backend/tests/geometry/test_trig_verified_construction.py"
+  },
+  "mathematical_oracle": "A valid `trig-construction-certificate/1` must satisfy 5 independent soundness obligations simultaneously: (1) rational SPD Gram metric (`det_1 > 0, det_2 > 0, det_3 > 0`, zero floats); (2) incidence & role topology (`hypotenuse = {V_adj, V_opp}`, `adjacent_leg = {V_right, V_adj}` containing `angle_witness.vertex`, `opposite_leg = {V_right, V_opp}` excluding `angle_witness.vertex` — catching swaps even at 45° where leg lengths coincide); (3) deductive perpendicularity from source calls (including coplanar scalar triple product `== 0` for `deductive_two_lines_in_plane`) AND `<V_adj-V_right, V_opp-V_right>_G == 0`; (4) deductive + metric angle witness (including exact orthogonal foot ray check `NON_PROJECTION_BASE_RAY` on `line_plane_angle`); (5) non-circular symbolic re-evaluation matching `trig_identity`, `exact_length_expr`, `dimension == 'LENGTH'`, and `scene3d` coordinates.",
+  "expected_behavior": "Independently reject every tampered certificate — even when numeric lengths coincide at 45° or Gram coordinates are accidentally orthogonal — and fail closed at Adapter `/4` with `reason_code='RESULT_BINDING_UNVERIFIED'`, while keeping non-trig envelopes byte-clean.",
+  "actual_behavior": "All 9 adversarial mutation classes (singular/float Gram, mutated `right_angle_vertex`, 45° swapped legs & hypotenuse, swapped angle rays & `NON_PROJECTION_BASE_RAY`, accidental Gram orthogonality without deductive premise `UNPROVEN_RIGHT_ANGLE`, 45° swapped `sin`/`cos` `trig_identity`, wrong `dimension`/`exact_length_expr`, tampered positivity/uniqueness flags, circular `known_inputs` / forged quote / tampered `scene_objects`), plus `#30` §2.1 positive & negative `deductive_two_lines_in_plane` coplanarity checks and Adapter `/4` `RESULT_BINDING_UNVERIFIED` tamper/desync gates passed 100%.",
+  "verdict": "PASS",
+  "mutation_classes_verified": [
+    {
+      "id": "M1",
+      "name": "non_spd_or_float_gram_metric",
+      "rejected_codes": [
+        "NON_SPD_METRIC",
+        "FLOAT_APPROXIMATION_FORBIDDEN"
+      ]
+    },
+    {
+      "id": "M2",
+      "name": "mutated_right_angle_vertex",
+      "rejected_codes": [
+        "RIGHT_ANGLE_VERTEX_MISMATCH"
+      ]
+    },
+    {
+      "id": "M3",
+      "name": "swapped_legs_at_45_deg_numeric_coincidence_and_swapped_hypotenuse",
+      "rejected_codes": [
+        "MISMATCHED_ADJACENT_LEG",
+        "MISMATCHED_HYPOTENUSE"
+      ]
+    },
+    {
+      "id": "M4",
+      "name": "swapped_angle_rays_and_non_projection_base_ray",
+      "rejected_codes": [
+        "ANGLE_WITNESS_RAY_MISMATCH",
+        "NON_PROJECTION_BASE_RAY"
+      ]
+    },
+    {
+      "id": "M5",
+      "name": "accidental_gram_orthogonality_and_non_coplanar_two_lines_in_plane",
+      "rejected_codes": [
+        "UNPROVEN_RIGHT_ANGLE"
+      ]
+    },
+    {
+      "id": "M6",
+      "name": "swapped_sin_cos_identity_at_45_deg_numeric_coincidence",
+      "rejected_codes": [
+        "TRIG_IDENTITY_ROLE_MISMATCH"
+      ]
+    },
+    {
+      "id": "M7",
+      "name": "wrong_dimension_and_tampered_exact_length_expr",
+      "rejected_codes": [
+        "WRONG_DIMENSION",
+        "EXACT_LENGTH_EXPR_MISMATCH"
+      ]
+    },
+    {
+      "id": "M8",
+      "name": "tampered_positivity_domain_and_single_branch_uniqueness",
+      "rejected_codes": [
+        "POSITIVITY_DOMAIN_INVALID",
+        "BRANCH_UNIQUENESS_INVALID"
+      ]
+    },
+    {
+      "id": "M9",
+      "name": "circular_known_inputs_forged_quote_scene_tamper_and_adapter4_desync",
+      "rejected_codes": [
+        "CIRCULAR_KNOWN_INPUT",
+        "SOURCE_PREMISE_QUOTES_MISMATCH",
+        "MISMATCHED_HYPOTENUSE",
+        "RESULT_BINDING_UNVERIFIED"
+      ]
+    }
+  ],
+  "baseline_product_commit": "d222e6d9b582d54fc42397a9593f52eb6fd77f18"
+}

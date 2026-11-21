@@ -17,7 +17,6 @@ from pydantic import (
 from .coercion_stats import (
     LOP_CONDITION_BOOL,
     LOP_CONST_INT,
-    LOP_CONTAINER_REF,
     LOP_FACE_SYMBOL,
     LOP_GEOMETRY_REF,
     LOP_SPEC_VERSION,
@@ -54,47 +53,7 @@ def canonical_spec_version(v: Any) -> Any:
         return str(v)
     return v
 
-def canonical_container_name(v: Any) -> Any:
-    """BIÊN CHUẨN HOÁ THAM CHIẾU CONTAINER — `{"kind":"var","name":X}` ⇒ `X`.
-
-    Vì sao tồn tại: probe E2E sản phẩm (2026-08-23) cho thấy đề "kiểm tra chuỗi
-    ngoặc bằng ngăn xếp" đi hết tới `stage_semantic_program`, dựng đúng nghĩa vụ
-    `membership(chuoi_ngoac, witness=is_valid)`, rồi chết với **4 lỗi cùng một
-    lớp**: LLM viết `container: {"kind":"var","name":"stack"}` còn schema đòi
-    `container: "stack"`. Hai cách viết CÙNG MỘT tham chiếu. Lớp lỗi này cũng có
-    trong SEALED `7e5df014…`, đứng ngay sau `spec_version` về số case bị giết.
-
-    RANH GIỚI — chỉ nhận `var`. Mọi biểu thức khác (`index`, `arith`, `length`,
-    `map_get`…) vẫn bị từ chối: container là một TÊN, không phải biểu thức cần
-    tính. Nới tới mức nhận biểu thức thì interpreter phải đánh giá nó để biết
-    đang thao tác trên vùng nhớ nào — một ngữ nghĩa khác hẳn, không thuộc phạm vi
-    bản vá này.
-    """
-    if isinstance(v, dict):
-        if v.get("kind") == "var":
-            ten = v.get("name")
-            if isinstance(ten, str) and ten:
-                ghi_coercion(LOP_CONTAINER_REF)
-                return ten
-        # TỪ CHỐI CÓ DẠY, không để Pydantic nói "Input should be a valid string".
-        #
-        # Vì sao thông báo phải nằm ở ĐÂY chứ không ở prompt hay thẻ văn phạm:
-        # cả hai bề mặt ấy đều có ngân sách byte (`test_prompt_size_guard`,
-        # `test_grammar_card`) và cả hai guard nói cùng một câu — luật nào mã
-        # hoá được thì để validator giữ. Luật này mã hoá được trọn vẹn, nên viết
-        # nó thành văn xuôi ở nơi khác là trả giá hai lần: tốn ngân sách, mà vẫn
-        # chỉ là GỢI Ý. Ở đây nó là RÀNG BUỘC, và câu chữ đi thẳng vào telemetry
-        # (§5) nơi người sửa thật sự đọc nó.
-        raise ValueError(
-            f"`container` nhận TÊN một mục trong memory_declarations, không "
-            f"nhận biểu thức (nhận kind={v.get('kind')!r}). Cần một tập/bảng "
-            f"hằng thì khai nó thành một mục có initial_value rồi gọi bằng tên."
-        )
-    return v
-
-
-#: Tên container. Nhận cả tên trần lẫn tham chiếu biến, nội bộ luôn là chuỗi.
-ContainerName = Annotated[str, BeforeValidator(canonical_container_name)]
+# (/13) `canonical_container_name` / `ContainerName` đã gỡ cùng từ vựng container của miền Tin học.
 
 
 def canonical_geometry_name(v: Any) -> Any:
@@ -179,13 +138,12 @@ ConstInt = Annotated[int, BeforeValidator(canonical_const_int)]
 
 # ── 1. Kiểu dữ liệu bộ nhớ (Memory Types) ──────────────────────────────────
 ScalarType = Literal["int", "str", "bool", "float"]
-ContainerType = Literal[
-    "array", "stack", "queue", "matrix", "map", "set", "tree_node", "graph"
-]
 MemoryType = Literal[
     "int", "str", "bool", "float",
-    "array", "stack", "queue", "matrix", "map", "set", "tree_node", "graph",
-    "node_ref", "null",
+    # (/13) kiểu container (array/stack/queue/matrix/map/set/tree_node/graph) và `node_ref` của miền Tin học đã gỡ.
+    # `null` Ở LẠI: một chương trình hình học đã PHỤC VỤ thật khai nó
+    # (`docs/evaluation/geometry/phase7a-pilot-sau-71/5-goc-lan1.json`), nên nó không phải từ vựng riêng Tin học.
+    "null",
     # ── MIỀN HÌNH HỌC KHÔNG GIAN (2026-08-24, Bước 3 của MIGRATION_PLAN) ────
     # Sáu kiểu, đóng như phần trên. Chúng chở ĐỐI TƯỢNG, không chở TOẠ ĐỘ KẾT
     # QUẢ: `point3` khai được `A(0,0,0)` mà đề cho, nhưng giao điểm của hai
@@ -287,9 +245,6 @@ class MemoryDeclaration(BaseModel):
     name: str = Field(..., description="Tên định danh biến/container trong bộ nhớ")
     type: CheckedMemoryType = Field(..., description="Kiểu dữ liệu ngữ nghĩa")
     initial_value: Any = Field(None, description="Giá trị khởi tạo ban đầu")
-    element_type: Optional[MemoryType] = Field(None, description="Kiểu phần tử nếu là array/stack/queue/set")
-    key_type: Optional[ScalarType] = Field(None, description="Kiểu khóa nếu là map")
-    val_type: Optional[MemoryType] = Field(None, description="Kiểu giá trị nếu là map")
     source_fact_id: Optional[str] = Field(
         None,
         description=(
@@ -324,17 +279,6 @@ class LiteralExpr(BaseModel):
 class VarRefExpr(BaseModel):
     kind: Literal["var"] = "var"
     name: str = Field(..., description="Tên biến tham chiếu")
-
-class IndexRefExpr(BaseModel):
-    kind: Literal["index"] = "index"
-    container: ContainerName = Field(..., description="Tên container (array/matrix)")
-    index: ValueExpr = Field(..., description="Chỉ số hoặc chỉ số dòng")
-    second_index: Optional[ValueExpr] = Field(None, description="Chỉ số cột nếu là ma trận 2D")
-
-class FieldRefExpr(BaseModel):
-    kind: Literal["field"] = "field"
-    target: ValueExpr = Field(..., description="Biểu thức trả về node_ref hoặc record")
-    field: Literal["left", "right", "val", "data"] = Field(..., description="Tên trường truy xuất")
 
 def tu_choi_phep_chia_khong_nguyen(v: Any) -> Any:
     """`/` KHÔNG được ánh xạ sang `//`, và đây là chỗ nói vì sao.
@@ -372,25 +316,6 @@ class UnaryArithExpr(BaseModel):
     kind: Literal["unary"] = "unary"
     op: Literal["-"] = Field(..., description="Toán tử đảo dấu")
     expr: ValueExpr = Field(..., description="Biểu thức con")
-
-class LengthExpr(BaseModel):
-    kind: Literal["length"] = "length"
-    container: ContainerName = Field(..., description="Tên container cần lấy kích thước")
-
-class PeekExpr(BaseModel):
-    kind: Literal["peek"] = "peek"
-    container: ContainerName = Field(..., description="Tên stack hoặc queue cần nhìn phần tử đầu")
-
-class MapGetExpr(BaseModel):
-    kind: Literal["map_get"] = "map_get"
-    container: ContainerName = Field(..., description="Tên map")
-    key: ValueExpr = Field(..., description="Khóa cần tra cứu")
-    default: Optional[ValueExpr] = Field(None, description="Giá trị mặc định nếu không tìm thấy khóa")
-
-class NeighborsExpr(BaseModel):
-    kind: Literal["neighbors"] = "neighbors"
-    graph: str = Field(..., description="Tên graph")
-    node: ValueExpr = Field(..., description="Đỉnh cần lấy danh sách kề")
 
 # ── Biểu thức HÌNH HỌC (Bước 3) ────────────────────────────────────────────
 #
@@ -713,14 +638,8 @@ ValueExpr = Annotated[
                   Tag("intersect_plane_curved_ellipse")],
         Annotated[MeasureExpr, Tag("measure")],
         Annotated[VarRefExpr, Tag("var")],
-        Annotated[IndexRefExpr, Tag("index")],
-        Annotated[FieldRefExpr, Tag("field")],
         Annotated[BinaryArithExpr, Tag("arith")],
         Annotated[UnaryArithExpr, Tag("unary")],
-        Annotated[LengthExpr, Tag("length")],
-        Annotated[PeekExpr, Tag("peek")],
-        Annotated[MapGetExpr, Tag("map_get")],
-        Annotated[NeighborsExpr, Tag("neighbors")],
     ],
     Discriminator("kind"),
 ]
@@ -784,12 +703,8 @@ PointExpr = Annotated[
 ]
 
 # Rebuild models for recursive references
-IndexRefExpr.model_rebuild()
-FieldRefExpr.model_rebuild()
 BinaryArithExpr.model_rebuild()
 UnaryArithExpr.model_rebuild()
-MapGetExpr.model_rebuild()
-NeighborsExpr.model_rebuild()
 
 
 # ── 3. Biểu thức điều kiện đóng (Closed Condition Expressions) ──────────────
@@ -809,24 +724,11 @@ class NotCond(BaseModel):
     kind: Literal["not"] = "not"
     expr: ConditionExpr = Field(..., description="Điều kiện phủ định")
 
-class IsEmptyCond(BaseModel):
-    kind: Literal["is_empty"] = "is_empty"
-    container: ContainerName = Field(..., description="Tên container kiểm tra rỗng")
-
-class ContainsCond(BaseModel):
-    kind: Literal["contains"] = "contains"
-    container: ContainerName = Field(..., description="Tên container/set/map")
-    item: ValueExpr = Field(..., description="Phần tử hoặc khóa cần kiểm tra tồn tại")
-
-class IsNullCond(BaseModel):
-    kind: Literal["is_null"] = "is_null"
-    expr: ValueExpr = Field(..., description="Biểu thức kiểm tra null")
-
 #: Biểu thức GIÁ TRỊ có thể mang sẵn một giá trị đúng/sai. Chỉ những dạng này
-#: mới được gấp thành điều kiện — `arith`/`length`/`neighbors` thì không, vì
-#: `2+3` dùng làm điều kiện là lỗi kiểu thật, và im lặng bọc nó thành
-#: `2+3 == true` sẽ đẩy lỗi xuống sâu hơn với thông báo khó hiểu hơn.
-_DANG_MANG_BOOL = ("var", "field", "index", "map_get", "literal")
+#: mới được gấp thành điều kiện — `arith` thì không, vì `2+3` dùng làm điều kiện
+#: là lỗi kiểu thật, và im lặng bọc nó thành `2+3 == true` sẽ đẩy lỗi xuống sâu
+#: hơn với thông báo khó hiểu hơn. (/13: `field`/`index`/`map_get` đã gỡ cùng từ vựng container.)
+_DANG_MANG_BOOL = ("var", "literal")
 
 
 def canonical_condition(v: Any) -> Any:
@@ -860,9 +762,6 @@ ConditionExpr = Annotated[
         Annotated[CompareCond, Tag("compare")],
         Annotated[LogicCond, Tag("logic")],
         Annotated[NotCond, Tag("not")],
-        Annotated[IsEmptyCond, Tag("is_empty")],
-        Annotated[ContainsCond, Tag("contains")],
-        Annotated[IsNullCond, Tag("is_null")],
     ],
     Discriminator("kind"),
     BeforeValidator(canonical_condition),
@@ -877,55 +776,6 @@ class AssignStmt(BaseModel):
     kind: Literal["assign"] = "assign"
     target_var: str = Field(..., description="Tên biến nhận kết quả")
     expr: ValueExpr = Field(..., description="Biểu thức giá trị gán vào")
-
-class WriteIndexStmt(BaseModel):
-    kind: Literal["write_index"] = "write_index"
-    container: ContainerName = Field(..., description="Tên container (array/matrix)")
-    index: ValueExpr = Field(..., description="Chỉ số hoặc chỉ số dòng")
-    second_index: Optional[ValueExpr] = Field(None, description="Chỉ số cột nếu là ma trận 2D")
-    val: ValueExpr = Field(..., description="Giá trị ghi vào")
-
-class MapSetStmt(BaseModel):
-    kind: Literal["map_set"] = "map_set"
-    container: ContainerName = Field(..., description="Tên map")
-    key: ValueExpr = Field(..., description="Khóa cần gán")
-    val: ValueExpr = Field(..., description="Giá trị gán")
-
-class SwapStmt(BaseModel):
-    kind: Literal["swap"] = "swap"
-    container: ContainerName = Field(..., description="Tên container hoán đổi (array)")
-    idx_a: ValueExpr = Field(..., description="Chỉ số A")
-    idx_b: ValueExpr = Field(..., description="Chỉ số B")
-
-class PushStmt(BaseModel):
-    kind: Literal["push"] = "push"
-    container: ContainerName = Field(..., description="Tên stack hoặc array")
-    val: ValueExpr = Field(..., description="Phần tử đẩy vào")
-
-class PopStmt(BaseModel):
-    kind: Literal["pop"] = "pop"
-    container: ContainerName = Field(..., description="Tên stack")
-    dest_var: Optional[str] = Field(None, description="Biến nhận phần tử lấy ra (nếu có)")
-
-class EnqueueStmt(BaseModel):
-    kind: Literal["enqueue"] = "enqueue"
-    container: ContainerName = Field(..., description="Tên queue")
-    val: ValueExpr = Field(..., description="Phần tử thêm vào hàng đợi")
-
-class DequeueStmt(BaseModel):
-    kind: Literal["dequeue"] = "dequeue"
-    container: ContainerName = Field(..., description="Tên queue")
-    dest_var: Optional[str] = Field(None, description="Biến nhận phần tử lấy ra")
-
-class SetInsertStmt(BaseModel):
-    kind: Literal["set_insert"] = "set_insert"
-    container: ContainerName = Field(..., description="Tên set")
-    val: ValueExpr = Field(..., description="Phần tử thêm vào tập hợp")
-
-class SetRemoveStmt(BaseModel):
-    kind: Literal["set_remove"] = "set_remove"
-    container: ContainerName = Field(..., description="Tên set")
-    val: ValueExpr = Field(..., description="Phần tử xóa khỏi tập hợp")
 
 class IfStmt(BaseModel):
     kind: Literal["if"] = "if"
@@ -945,12 +795,6 @@ class ForRangeStmt(BaseModel):
     start: ValueExpr = Field(..., description="Giá trị bắt đầu")
     end: ValueExpr = Field(..., description="Giá trị kết thúc (exclusive)")
     step: ConstInt = Field(1, description="Bước nhảy (mặc định 1)")
-    body: list[SemanticStatement] = Field(..., description="Thân vòng lặp")
-
-class ForEachStmt(BaseModel):
-    kind: Literal["for_each"] = "for_each"
-    item_var: str = Field(..., description="Biến nhận từng phần tử")
-    container_or_expr: Union[str, ValueExpr] = Field(..., description="Tên container hoặc biểu thức danh sách")
     body: list[SemanticStatement] = Field(..., description="Thân vòng lặp")
 
 class BreakStmt(BaseModel):
@@ -1502,19 +1346,9 @@ SemanticStatement = Annotated[
         Annotated[ConstructPolygonStmt, Tag("construct_polygon")],
         Annotated[ConstructSectionStmt, Tag("construct_section")],
         Annotated[ConstructCurvedSolidStmt, Tag("construct_curved_solid")],
-        Annotated[WriteIndexStmt, Tag("write_index")],
-        Annotated[MapSetStmt, Tag("map_set")],
-        Annotated[SwapStmt, Tag("swap")],
-        Annotated[PushStmt, Tag("push")],
-        Annotated[PopStmt, Tag("pop")],
-        Annotated[EnqueueStmt, Tag("enqueue")],
-        Annotated[DequeueStmt, Tag("dequeue")],
-        Annotated[SetInsertStmt, Tag("set_insert")],
-        Annotated[SetRemoveStmt, Tag("set_remove")],
         Annotated[IfStmt, Tag("if")],
         Annotated[WhileStmt, Tag("while")],
         Annotated[ForRangeStmt, Tag("for_range")],
-        Annotated[ForEachStmt, Tag("for_each")],
         Annotated[BreakStmt, Tag("break")],
         Annotated[ReturnStmt, Tag("return")],
     ],
@@ -1524,66 +1358,12 @@ SemanticStatement = Annotated[
 IfStmt.model_rebuild()
 WhileStmt.model_rebuild()
 ForRangeStmt.model_rebuild()
-ForEachStmt.model_rebuild()
 
 
-# ── 5. Tiếp hợp hiển thị trực quan (Visual Bindings 0..N) ───────────────────
-class VisualContainerBinding(BaseModel):
-    semantic_id: str = Field(..., description="Tên container trong Semantic Memory")
-    primitive: Literal[
-        "array_strip", "stack_view", "queue_view", "table_grid",
-        "tree_element", "bit_register", "bar_chart", "graph_view",
-        # `map_view` thêm 2026-08-23 — CÙNG LÝ DO với `graph_view`: `map` là một
-        # `MemoryType` đã được admit mà hợp đồng thị giác không có cách nào biểu
-        # diễn. Cổng bề mặt học sinh phơi ra điều đó trên fixture #18 ("Bảng đếm
-        # tần suất ký tự"): chương trình dựng `freq` suốt lượt chạy, còn màn hình
-        # không bao giờ có bảng nào — bài mang tên "bảng tần suất" mà không hiện
-        # bảng. Mở vì một LỚP TRẠNG THÁI đã admit là hợp lệ; nguồn phát hiện là
-        # DEV, không phải một ca SEALED (`test_primitive_set_frozen.py`).
-        "map_view",
-    ] = Field(..., description="Visual primitive tương ứng trong DSL")
-    label: str = Field(..., description="Nhãn hiển thị trên canvas")
-
-    # ── Tham chiếu TRẠNG THÁI cho `graph_view` (2026-08-21) ──────────────────
-    #
-    # VÌ SAO CÓ HAI TRƯỜNG NÀY: `graph_view` phải tô được đỉnh nào đã thăm và
-    # đỉnh nào đang xét, nếu không mô phỏng BFS chỉ còn là một hàng đợi đổi số.
-    # Nhưng renderer TUYỆT ĐỐI không được tự suy ra điều đó bằng cách chạy lại
-    # BFS/DFS — làm thế là dựng một engine thứ hai trong tầng trình bày, đúng
-    # thứ R0 cấm.
-    #
-    # Cách giữ cả hai: chương trình KHAI BÁO biến nào mang trạng thái ấy, và
-    # adapter đọc thẳng từ `memory_snapshot`. Cùng khuôn với
-    # `VisualPointerBinding.var_ref` — một liên kết khai báo, không phải suy diễn.
-    visited_ref: Optional[str] = Field(
-        None,
-        description=(
-            "Tên biến (set/array) chứa các đỉnh ĐÃ THĂM. Chỉ có nghĩa với "
-            "`graph_view`. Không khai thì đồ thị vẽ không tô trạng thái."
-        ),
-    )
-    current_ref: Optional[str] = Field(
-        None,
-        description=(
-            "Tên biến chứa đỉnh ĐANG XÉT. Chỉ có nghĩa với `graph_view`."
-        ),
-    )
-
-class VisualPointerBinding(BaseModel):
-    pointer_id: str = Field(..., description="ID của con trỏ hiển thị")
-    var_ref: str = Field(..., description="Tên biến trong Semantic Memory cần theo dõi")
-    target_container: ContainerName = Field(..., description="Container mà con trỏ neo vào")
-    label: str = Field(..., description="Ký tự nhãn con trỏ (vd: 'i', 'left')")
-
-class VisualValueBoxBinding(BaseModel):
-    box_id: str = Field(..., description="ID của hộp giá trị")
-    var_ref: str = Field(..., description="Tên biến cần hiển thị")
-    label: str = Field(..., description="Nhãn của hộp giá trị (vd: 'Ký tự hiện tại', 'Kết quả')")
-
-class VisualBindings(BaseModel):
-    containers: list[VisualContainerBinding] = Field(default_factory=list, description="Danh sách binding container")
-    pointers: list[VisualPointerBinding] = Field(default_factory=list, description="Danh sách binding con trỏ")
-    value_boxes: list[VisualValueBoxBinding] = Field(default_factory=list, description="Danh sách binding hộp giá trị")
+# ── 5. (/13) Tiếp hợp hiển thị container đã gỡ ──────────────────────────────
+# `visual_bindings` (array_strip/stack_view/queue_view/graph_view…, con trỏ, hộp giá trị) là đường lên màn hình 2D của
+# miền Tin học. Cảnh hình học đi bằng `scene3d`, không qua nó. Payload cũ còn gửi `"visual_bindings": {}` vẫn parse
+# được (Pydantic bỏ qua trường lạ), nhưng IR không còn cách nào khai một container hiển thị.
 
 
 # ── 6. Toàn bộ đặc tả SemanticProgramSpec ──────────────────────────────────
@@ -1600,7 +1380,6 @@ class SemanticProgramSpec(BaseModel):
     description: Optional[str] = Field(None, max_length=1000, description="Mô tả ngắn gọn")
     memory_declarations: list[MemoryDeclaration] = Field(..., description="Khai báo các vùng nhớ và biến")
     statements: list[SemanticStatement] = Field(..., description="Tập các câu lệnh thuật toán")
-    visual_bindings: VisualBindings = Field(default_factory=VisualBindings, description="Khai báo liên kết hiển thị trực quan")
     pedagogical_intent: Optional[str] = Field(None, max_length=500, description="Ý đồ sư phạm / tóm tắt cấp cao (Tier 2 narration)")
 
     @model_validator(mode="before")

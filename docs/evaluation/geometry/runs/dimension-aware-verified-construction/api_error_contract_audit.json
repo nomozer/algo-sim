@@ -1,0 +1,335 @@
+{
+  "schema": "algosim-phase2-api-error-contract-audit/1",
+  "run_id": "dimension-aware-verified-construction",
+  "phase": "phase_2_api_error_contract_audit",
+  "generated_at_utc": "2026-11-15T07:24:18Z",
+  "branch": "feat/local-first-geometry-understanding",
+  "head": "b04bed0f83e02ac27416814bea08fa830ee91461",
+  "product_commit": "32bdaa1df3dd7606b59b8c3cd8411578c4206d54",
+  "measured_system_hash": "b1403b91fd81410f9586c5676f541911540b4bc4bb0d7bf40204d17538623e59",
+  "measured_system_file_count": 120,
+  "baseline_measured_system_hash": "c25f9695828888987db2ab7990c4ff135da4d01c6b9d968f898c36728a0ae436",
+  "cache_version": "140",
+  "route_d_cache_policy": "140:route-d",
+  "dataset_partition": "DEVELOPMENT (authenticated in-memory TestClient(app) probes across route modes local-first/live/staging-replay on solvable, complete-refusal vmmu_r460, and partial-parse vmmu_r537/vmmu_r277 inputs; never sealed H-1 or locked W2/W3)",
+  "environment": {
+    "ALLOW_LIVE_AI": "0",
+    "PYTHONPATH": "backend",
+    "live_ai_calls": 0
+  },
+  "test_command": "python -B -m pytest backend/tests/geometry/test_failure_taxonomy_and_api_contract.py backend/tests/geometry/test_grounded_vietnamese_understanding.py backend/tests/geometry/test_semantic_failure_diagnostics.py backend/tests/geometry/test_adaptive_input_router.py backend/tests/test_cache_semantic_guard_invalidation.py backend/tests/test_hybrid_preview_contract.py backend/tests/test_hybrid_product_integration.py backend/tests/geometry/test_hybrid_cutover_verification.py backend/tests/geometry/test_adapter4_response.py backend/tests/test_learner_messages.py backend/tests/geometry/test_reusable_base_geometry_families.py backend/tests/geometry/test_certified_scale_normalization.py -q",
+  "expected_behavior": "HTTP 503 (Cache-Control: no-store, failure_kind='INFRASTRUCTURE_FAILURE') is emitted ONLY when an operational dependency or live AI fallback required to continue processing is unavailable (LIVE_AI_DISABLED when ALLOW_LIVE_AI=0, MISSING_API_KEY when ALLOW_LIVE_AI!=0 and API key is absent, STAGING_CORPUS_UNAVAILABLE, INVALID_HYBRID_ROUTE_MODE, USAGE_LEDGER_UNAVAILABLE, maintenance_mode, VisionProviderUnavailable, SMTP failure). Complete/ambiguous local-first refusals (LOCAL_PARSE_COMPLETE, LOCAL_PARSE_AMBIGUOUS, GATE_OUT_OF_SCOPE) return HTTP 200 structured envelopes (envelope.status='unsupported', route_d.status='REFUSED', Cache-Control: no-store) with 0 provider calls. When HYBRID_LOCAL_FIRST=1 with HYBRID_ROUTE_MODE=live and ALLOW_LIVE_AI=0, solvable and complete-refusal geometry problems still execute locally with 0 AI calls instead of failing before local-first dispatch. When fallback is blocked by MISSING_API_KEY (ALLOW_LIVE_AI=1, empty key), reason_code is MISSING_API_KEY (not misreported as LIVE_AI_DISABLED) and still carries local_understanding diagnostics.",
+  "actual_behavior": "Stage P0 Phase 2 fixes implemented and verified while preserving all locked 503 contract tests: (1) Fixed API-1 & API-3 in hybrid_offline.py, adaptive_input_router.py, and main.py: when ALLOW_LIVE_AI=1 and GEMINI_API_KEY is empty on a LOCAL_PARSE_PARTIAL input, POST /api/analyze now returns HTTP 503 with reason_code='MISSING_API_KEY' (no longer misreported as LIVE_AI_DISABLED), failure_kind='INFRASTRUCTURE_FAILURE', failure_dimension='INFRASTRUCTURE_AVAILABILITY', taxonomy_class='INFRASTRUCTURE_UNAVAILABLE', clean Vietnamese error text (0 _TECH regex matches), and structured local_understanding; (2) Fixed API-2 in main.py:1248-1255: when HYBRID_ROUTE_MODE=live and HYBRID_LOCAL_FIRST=1 with ALLOW_LIVE_AI=0, local-first execution runs BEFORE the live AI kill-switch, serving solvable LOCAL_PARSE_COMPLETE problems as HTTP 200 SERVED (0 AI calls) and complete refusals (e.g. vmmu_r460) as HTTP 200 structured envelopes, while keeping plain 503 LIVE_AI_DISABLED when HYBRID_LOCAL_FIRST is unset; (3) Preserved locked HTTP 503 + LIVE_AI_DISABLED + local_understanding contract on LOCAL_PARSE_PARTIAL under HYBRID_ROUTE_MODE=local-first + ALLOW_LIVE_AI=0.",
+  "mathematical_oracle": "Deterministic HTTP status & JSON schema state machine over (HYBRID_ROUTE_MODE, HYBRID_LOCAL_FIRST, ALLOW_LIVE_AI, api_key_present, LocalParseResult.status): (1) LOCAL_PARSE_COMPLETE -> SERVED (HTTP 200, route_d.status='SERVED') or REFUSED (HTTP 200, envelope.status='unsupported', route_d.status='REFUSED'); (2) LOCAL_PARSE_AMBIGUOUS -> REFUSED (HTTP 200, envelope.status='unsupported', reason_code='AMBIGUOUS_FACT'); (3) LOCAL_PARSE_UNSUPPORTED + GATE_OUT_OF_SCOPE -> HTTP 200 (envelope.status='unsupported', error_code='gate_out_of_scope'); (4) LOCAL_PARSE_PARTIAL or non-gate LOCAL_PARSE_UNSUPPORTED when fallback blocked -> HTTP 503 Cache-Control: no-store, failure_kind='INFRASTRUCTURE_FAILURE', retryable=false, reason_code='LIVE_AI_DISABLED' (iff ALLOW_LIVE_AI=='0') else 'MISSING_API_KEY' (iff not api_key), carrying local_understanding with orthogonal failure_dimension and taxonomy_class.",
+  "source_provenance": {
+    "candidate_manifest": "docs/evaluation/semantic-benchmark/EVALUATION_CANDIDATE.json",
+    "inspected_backend_files": [
+      "backend/app/main.py",
+      "backend/app/ai/route_policy.py",
+      "backend/app/ai/hybrid_offline.py",
+      "backend/app/ai/adaptive_input_router.py",
+      "backend/app/ai/local_failure_diagnostics.py",
+      "backend/app/accounts/router.py",
+      "backend/app/idempotency.py",
+      "backend/app/ingestion/unified_input.py"
+    ],
+    "locked_contract_tests_inspected": [
+      "backend/tests/geometry/test_grounded_vietnamese_understanding.py:192-215",
+      "backend/tests/geometry/test_semantic_failure_diagnostics.py:38-51",
+      "backend/tests/geometry/test_adaptive_input_router.py:145-165",
+      "backend/tests/test_cache_semantic_guard_invalidation.py:45-55",
+      "backend/tests/test_hybrid_product_integration.py:175-230",
+      "frontend/src/components/photo-problem-flow.test.ts:143-160",
+      "frontend/scripts/verify-hybrid-product-e2e.mjs:588-596"
+    ]
+  },
+  "verdict": "STAGE_P0_GATE_B_BACKEND_API_503_CONTRACT_VERIFIED",
+  "http_503_producer_inventory": [
+    {
+      "id": "P503-01",
+      "location": "backend/app/main.py:1153",
+      "endpoint": "POST /api/analyze (legacy offline fixture parameter)",
+      "condition": "body.offline is True without matching fixture",
+      "reason_code": "OFFLINE_FIXTURE_REQUIRED",
+      "legitimate_503": true
+    },
+    {
+      "id": "P503-02",
+      "location": "backend/app/main.py:1248-1249 (_hybrid_infra_error)",
+      "endpoint": "POST /api/analyze",
+      "condition": "HYBRID_ROUTE_MODE not in ('live', 'staging-replay', 'local-first')",
+      "reason_code": "INVALID_HYBRID_ROUTE_MODE",
+      "failure_kind": "INFRASTRUCTURE_FAILURE",
+      "legitimate_503": true,
+      "note": "main.py:1225 message currently omits 'local-first' in error text; keep message safe (no raw env/code leak to learner where tested)."
+    },
+    {
+      "id": "P503-03",
+      "location": "backend/app/main.py:1250-1251 (_hybrid_infra_error)",
+      "endpoint": "POST /api/analyze",
+      "condition": "mode == 'live' and ALLOW_LIVE_AI == '0'",
+      "reason_code": "LIVE_AI_DISABLED",
+      "failure_kind": "INFRASTRUCTURE_FAILURE",
+      "legitimate_503": "CONDITIONAL_BUG_WHEN_HYBRID_LOCAL_FIRST_1",
+      "bug_id": "API-BUG-2",
+      "detail": "Evaluated BEFORE line 1263 (use_local_first = mode == 'local-first' or HYBRID_LOCAL_FIRST == '1'). When HYBRID_ROUTE_MODE=live and HYBRID_LOCAL_FIRST=1 and ALLOW_LIVE_AI=0, even solvable local geometry problems fail 503 instead of running local-first with 0 AI calls. Note: when HYBRID_ROUTE_MODE=live and HYBRID_LOCAL_FIRST!='1', returning plain 503 LIVE_AI_DISABLED without local_understanding IS test-locked by test_grounded_vietnamese_understanding.py:212-215."
+    },
+    {
+      "id": "P503-04",
+      "location": "backend/app/main.py:1267-1268 (_hybrid_infra_error)",
+      "endpoint": "POST /api/analyze",
+      "condition": "mode == 'staging-replay' and corpus missing/unreadable",
+      "reason_code": "STAGING_CORPUS_UNAVAILABLE",
+      "failure_kind": "INFRASTRUCTURE_FAILURE",
+      "legitimate_503": true
+    },
+    {
+      "id": "P503-05",
+      "location": "backend/app/main.py:1290-1291 (_hybrid_infra_error)",
+      "endpoint": "POST /api/analyze",
+      "condition": "mode == 'live' and not use_local_first and not api_key",
+      "reason_code": "MISSING_API_KEY",
+      "failure_kind": "INFRASTRUCTURE_FAILURE",
+      "legitimate_503": true
+    },
+    {
+      "id": "P503-06",
+      "location": "backend/app/main.py:1331-1337 + adaptive_input_router.py:489-556 + hybrid_offline.py:474",
+      "endpoint": "POST /api/analyze (use_local_first=True)",
+      "condition": "local_res.status in (LOCAL_PARSE_PARTIAL, non-gate LOCAL_PARSE_UNSUPPORTED) and live fallback cannot run (ALLOW_LIVE_AI==0 or missing api_key) or live provider raises technical error",
+      "reason_code": "LIVE_AI_DISABLED (current bug conflates MISSING_API_KEY into LIVE_AI_DISABLED)",
+      "failure_kind": "INFRASTRUCTURE_FAILURE",
+      "legitimate_503": "YES_FOR_BLOCKED_FALLBACK_WITH_BUG_API_1_AND_API_3",
+      "bug_id": "API-BUG-1, API-BUG-3",
+      "detail": "hybrid_offline.py:474 computes allow_fallback = allow_live_ai and bool(api_key), erasing the distinction between ALLOW_LIVE_AI=0 (LIVE_AI_DISABLED) and ALLOW_LIVE_AI=1 + missing key (MISSING_API_KEY). main.py:1235 only attaches local_understanding when code == 'LIVE_AI_DISABLED'."
+    },
+    {
+      "id": "P503-07",
+      "location": "backend/app/main.py:1380-1383 (_hybrid_infra_error)",
+      "endpoint": "POST /api/analyze",
+      "condition": "reserve_analysis_usage raises DB exception",
+      "reason_code": "USAGE_LEDGER_UNAVAILABLE",
+      "failure_kind": "INFRASTRUCTURE_FAILURE",
+      "legitimate_503": true
+    },
+    {
+      "id": "P503-08",
+      "location": "backend/app/main.py:1401 (_hybrid_infra_error)",
+      "endpoint": "POST /api/analyze (document/non-text path)",
+      "condition": "invalid hybrid route mode",
+      "reason_code": "INVALID_HYBRID_ROUTE_MODE",
+      "failure_kind": "INFRASTRUCTURE_FAILURE",
+      "legitimate_503": true
+    },
+    {
+      "id": "P503-09",
+      "location": "backend/app/main.py:1424",
+      "endpoint": "POST /api/analyze (document ingest)",
+      "condition": "document extraction requires missing API key",
+      "reason_code": "MISSING_API_KEY (legacy error shape)",
+      "legitimate_503": true
+    },
+    {
+      "id": "P503-10",
+      "location": "backend/app/main.py:1458-1479",
+      "endpoint": "POST /api/image/extract",
+      "condition": "ALLOW_LIVE_AI == '0' or missing API key or VisionProviderUnavailable",
+      "reason_code": "LIVE_AI_DISABLED / MISSING_API_KEY / VISION_PROVIDER_UNAVAILABLE",
+      "legitimate_503": true
+    },
+    {
+      "id": "P503-11",
+      "location": "backend/app/main.py:1529-1559",
+      "endpoint": "POST /api/input/prepare (image OCR)",
+      "condition": "ALLOW_LIVE_AI == '0' or missing API key or VisionProviderUnavailable",
+      "reason_code": "LIVE_AI_DISABLED / MISSING_API_KEY / VISION_PROVIDER_UNAVAILABLE",
+      "legitimate_503": true
+    },
+    {
+      "id": "P503-12..15",
+      "location": "backend/app/accounts/router.py:429, 780, 836, 1434",
+      "endpoint": "/api/analyze quota gate, /api/auth/register, /api/auth/login, /api/auth/forgot-password",
+      "condition": "system maintenance_mode enabled (429, 780, 836) or SMTP delivery failure (1434)",
+      "reason_code": "maintenance_mode / email_delivery_failed",
+      "legitimate_503": true
+    }
+  ],
+  "observed_mode_matrix_evidence": [
+    {
+      "config": {
+        "HYBRID_ROUTE_MODE": "local-first",
+        "HYBRID_LOCAL_FIRST": "0",
+        "ALLOW_LIVE_AI": "0",
+        "api_key_set": false
+      },
+      "SOLVABLE_square_pyramid": {
+        "http_status": 200,
+        "route_d_status": "SERVED"
+      },
+      "COMPLETE_REFUSAL_vmmu_r460": {
+        "http_status": 200,
+        "route_d_status": "REFUSED",
+        "code": "MISSING_DIMENSION"
+      },
+      "PARTIAL_vmmu_r537": {
+        "http_status": 503,
+        "reason_code": "LIVE_AI_DISABLED",
+        "failure_kind": "INFRASTRUCTURE_FAILURE",
+        "has_local_understanding": true
+      }
+    },
+    {
+      "config": {
+        "HYBRID_ROUTE_MODE": "local-first",
+        "HYBRID_LOCAL_FIRST": "0",
+        "ALLOW_LIVE_AI": "1",
+        "api_key_set": false
+      },
+      "SOLVABLE_square_pyramid": {
+        "http_status": 200,
+        "route_d_status": "SERVED"
+      },
+      "COMPLETE_REFUSAL_vmmu_r460": {
+        "http_status": 200,
+        "route_d_status": "REFUSED",
+        "code": "MISSING_DIMENSION"
+      },
+      "PARTIAL_vmmu_r537": {
+        "http_status": 503,
+        "reason_code": "LIVE_AI_DISABLED (BUG API-1: should be MISSING_API_KEY!)",
+        "failure_kind": "INFRASTRUCTURE_FAILURE",
+        "has_local_understanding": true
+      }
+    },
+    {
+      "config": {
+        "HYBRID_ROUTE_MODE": "live",
+        "HYBRID_LOCAL_FIRST": "1",
+        "ALLOW_LIVE_AI": "0",
+        "api_key_set": false
+      },
+      "SOLVABLE_square_pyramid": {
+        "http_status": 503,
+        "reason_code": "LIVE_AI_DISABLED (BUG API-2: blocked before use_local_first!)"
+      },
+      "COMPLETE_REFUSAL_vmmu_r460": {
+        "http_status": 503,
+        "reason_code": "LIVE_AI_DISABLED (BUG API-2)"
+      },
+      "PARTIAL_vmmu_r537": {
+        "http_status": 503,
+        "reason_code": "LIVE_AI_DISABLED",
+        "has_local_understanding": false
+      }
+    },
+    {
+      "config": {
+        "HYBRID_ROUTE_MODE": "live",
+        "HYBRID_LOCAL_FIRST": "0",
+        "ALLOW_LIVE_AI": "0",
+        "api_key_set": false
+      },
+      "SOLVABLE_square_pyramid": {
+        "http_status": 503,
+        "reason_code": "LIVE_AI_DISABLED",
+        "has_local_understanding": false,
+        "note": "Locked by test_grounded_vietnamese_understanding.py:212-215"
+      }
+    }
+  ],
+  "contract_change_impact_analysis": {
+    "status_change_503_to_200_or_422_on_local_first_partial_parse": {
+      "decision": "BLOCKED_CONTRACT_CHANGE_IN_FALLBACK_MODE",
+      "reason": "In HYBRID_ROUTE_MODE='local-first' (where AI fallback is part of the route design and only blocked operationally by ALLOW_LIVE_AI=0), 5 existing test suites explicitly assert HTTP 503 + reason_code='LIVE_AI_DISABLED' + failure_kind='INFRASTRUCTURE_FAILURE' + local_understanding: test_grounded_vietnamese_understanding.py:203, test_semantic_failure_diagnostics.py:42, test_adaptive_input_router.py:154, photo-problem-flow.test.ts:148, verify-hybrid-product-e2e.mjs:592. Furthermore, AGENTS.md section 3 mandates never mislabeling a blocked live fallback as a final mathematical refusal when live extraction could have parsed the unread clause.",
+      "safe_compatible_resolution": "1) Keep HTTP 200 (envelope.status='unsupported', route_d.status='REFUSED', Cache-Control: no-store) for ALL complete/ambiguous local parses and domain-gate refusals; 2) Keep HTTP 503 (Cache-Control: no-store, failure_kind='INFRASTRUCTURE_FAILURE', retryable=false) when LOCAL_PARSE_PARTIAL / non-gate LOCAL_PARSE_UNSUPPORTED requires live AI fallback that is blocked by ALLOW_LIVE_AI=0 or MISSING_API_KEY, enriched with local_understanding carrying orthogonal failure_dimension, taxonomy_class, root_cause, unread_excerpts, and rewrite_may_help; 3) Confirm frontend client.ts:157 already treats HTTP 503 as non-transient (0 automatic retries), idempotency.py:100 does not cache 503, main.py:1341 does not cache REFUSED 200 or 503, and usage ledger refunds quota on both."
+    },
+    "surgical_p0_api_fixes": [
+      {
+        "fix_id": "API-FIX-1",
+        "files": [
+          "backend/app/ai/hybrid_offline.py:465-485",
+          "backend/app/ai/adaptive_input_router.py:390-556",
+          "backend/app/main.py:1234-1243"
+        ],
+        "change": "Pass allow_live_ai and api_key separately (or fallback_block_reason='LIVE_AI_DISABLED' vs 'MISSING_API_KEY') from LocalFirstHybridRun.run into route_text_input so ALLOW_LIVE_AI=1 + empty key emits reason_code='MISSING_API_KEY' (instead of LIVE_AI_DISABLED), and attach local_understanding + learner-safe explanation in _hybrid_infra_error for BOTH LIVE_AI_DISABLED and MISSING_API_KEY, plus explicit retryable=False and orthogonal taxonomy fields inside local_understanding."
+      },
+      {
+        "fix_id": "API-FIX-2",
+        "files": [
+          "backend/app/main.py:1248-1275"
+        ],
+        "change": "Compute use_local_first = (mode == 'local-first' or os.getenv('HYBRID_LOCAL_FIRST') == '1') BEFORE line 1250 so 'if mode == live and not use_local_first and os.getenv(ALLOW_LIVE_AI) == 0' preserves test_the_kill_switch_without_a_local_parse_keeps_its_plain_message (mode='live', HYBRID_LOCAL_FIRST!='1') while allowing HYBRID_LOCAL_FIRST=1 to serve solvable problems locally with 0 AI calls when ALLOW_LIVE_AI=0."
+      },
+      {
+        "fix_id": "API-FIX-3",
+        "files": [
+          "backend/app/SimulationCache & output-policy/1 check"
+        ],
+        "change": "Preserve output-policy/1 (backend/app/simulation/geometry_functions/output_policy.py) and exact 6-key envelope contract on HTTP 200 refusals; never store HTTP 200 REFUSED or HTTP 503 in SimulationCache or Idempotency replay (for 5xx)."
+      }
+    ]
+  },
+  "stage_p0_verified_http_probes": [
+    {
+      "scenario": "local-first + ALLOW_LIVE_AI=1 + empty GEMINI_API_KEY + LOCAL_PARSE_PARTIAL",
+      "http_status": 503,
+      "body": {
+        "error": "Hệ thống chưa đọc được một quan hệ hoặc số đo trong giả thiết của đề. Phần chưa đọc được: «chu vi tam giác SAB bằng 5a». Máy chủ chưa bật kết nối đọc đề bằng AI nên chưa đọc thêm được; em có thể viết phần đó rõ hơn rồi gửi lại.",
+        "reason_code": "MISSING_API_KEY",
+        "failure_kind": "INFRASTRUCTURE_FAILURE",
+        "failure_dimension": "INFRASTRUCTURE_AVAILABILITY",
+        "taxonomy_class": "INFRASTRUCTURE_UNAVAILABLE",
+        "local_understanding": {
+          "root_cause": "UNRECOGNIZED_RELATION",
+          "failure_dimension": "SEMANTIC_COMPLETENESS",
+          "taxonomy_class": "SEMANTIC_INPUT_INCOMPLETE",
+          "determinacy_status": "NOT_EVALUATED_SEMANTIC_INCOMPLETE",
+          "message": "Hệ thống chưa đọc được một quan hệ hoặc số đo trong giả thiết của đề.",
+          "unread_excerpts": [
+            "chu vi tam giác SAB bằng 5a"
+          ],
+          "rewrite_may_help": true
+        }
+      }
+    },
+    {
+      "scenario": "live + HYBRID_LOCAL_FIRST=1 + ALLOW_LIVE_AI=0 + LOCAL_PARSE_COMPLETE solvable",
+      "http_status": 200,
+      "route_d_status": "SERVED",
+      "envelope_status": "ok",
+      "answers": {
+        "q1": "a³/3"
+      }
+    },
+    {
+      "scenario": "live + HYBRID_LOCAL_FIRST=1 + ALLOW_LIVE_AI=0 + REAL27:vmmu_r460",
+      "http_status": 200,
+      "route_d_status": "REFUSED",
+      "envelope": {
+        "status": "unsupported",
+        "reason_code": "MISSING_DIMENSION",
+        "reason": "Hệ đã đọc các giả thiết trong đề nhưng chưa có quy tắc suy diễn tất định cho tổ hợp quan hệ này, nên dừng lại thay vì dựng một hình gần đúng.",
+        "learner_reason": "Hệ đã đọc các giả thiết trong đề nhưng chưa có quy tắc suy diễn tất định cho tổ hợp quan hệ này, nên dừng lại thay vì dựng một hình gần đúng.",
+        "failure_category": "capability_gap",
+        "refusal_cause": "UNKNOWN"
+      },
+      "taxonomy_class": "CAPABILITY_UNSUPPORTED",
+      "determinacy_status": "UNPROVED_DUE_TO_CAPABILITY_GAP"
+    },
+    {
+      "scenario": "live (HYBRID_LOCAL_FIRST unset) + ALLOW_LIVE_AI=0 kill-switch",
+      "http_status": 503,
+      "body": {
+        "error": "Chế độ trích xuất trực tiếp (live AI) đang bị khoá bởi cấu hình máy chủ (ALLOW_LIVE_AI=0).",
+        "reason_code": "LIVE_AI_DISABLED",
+        "failure_kind": "INFRASTRUCTURE_FAILURE",
+        "failure_dimension": "INFRASTRUCTURE_AVAILABILITY",
+        "taxonomy_class": "INFRASTRUCTURE_UNAVAILABLE"
+      }
+    }
+  ],
+  "baseline_product_commit": "d222e6d9b582d54fc42397a9593f52eb6fd77f18",
+  "stage_observed_measured_system_hash": "e1d06448e0ea9d15dfdc8098f46898240a891622d9e32368865f0ee3c966e9ef",
+  "stage_observed_measured_system_file_count": 118,
+  "stage_observed_cache_version": "139"
+}

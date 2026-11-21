@@ -1,0 +1,993 @@
+{
+ "schema": "HISTORICAL_REGRESSION_REMEASURE/1",
+ "model_calls": 0,
+ "v3_matrix": {
+  "baseline": "docs/evaluation/geometry/runs/semantic-extraction-v3-runtime-revision/results/offline",
+  "applies_after": "docs/evaluation/geometry/runs/goal-directed-function-composition/results/historical-regression-delta.json",
+  "cells_compared": 8,
+  "changed_cells": {
+   "gold-flat-PILOT": {
+    "before": {
+     "e2e": {
+      "CORRECT_COMPLETE": 3,
+      "FALSE_REFUSAL_CAPABILITY_GAP": 4,
+      "SAFE_REFUSAL": 5
+     },
+     "refusal_codes": {
+      "MISSING_DIMENSION": 1,
+      "SOURCE_PREMISE_UNREAD": 1,
+      "SOURCE_OBJECT_MISMATCH": 1,
+      "OUT_OF_SCOPE": 4,
+      "CONDITIONAL_CLAUSE": 1,
+      "NOT_ASKED_IN_SOURCE": 1
+     },
+     "counts": {
+      "goal_match": 16,
+      "goal_match_expressible": 11,
+      "premise_match": 53,
+      "premises_required": 53,
+      "premise_live_matched": 53,
+      "premises_live": 53,
+      "schema_gap_flagged": 1,
+      "operand_correct": 8,
+      "solid_correct": 6,
+      "intent_match": 16,
+      "requests_gold": 16,
+      "requests_expressible": 11,
+      "schema_gap_requests": 1,
+      "operand_required": 8,
+      "solid_required": 6,
+      "rows": 12,
+      "parsed_rows": 12,
+      "hallucinated_entity_rows": 0
+     },
+     "multi_goal": {
+      "total": 4,
+      "complete": 4
+     }
+    },
+    "after": {
+     "e2e": {
+      "CORRECT_COMPLETE": 4,
+      "FALSE_REFUSAL_CAPABILITY_GAP": 3,
+      "SAFE_REFUSAL": 5
+     },
+     "refusal_codes": {
+      "SOURCE_PREMISE_UNREAD": 1,
+      "SOURCE_OBJECT_MISMATCH": 1,
+      "OUT_OF_SCOPE": 4,
+      "CONDITIONAL_CLAUSE": 1,
+      "NOT_ASKED_IN_SOURCE": 1
+     },
+     "counts": {
+      "goal_match": 16,
+      "goal_match_expressible": 11,
+      "premise_match": 53,
+      "premises_required": 53,
+      "premise_live_matched": 53,
+      "premises_live": 53,
+      "schema_gap_flagged": 1,
+      "operand_correct": 8,
+      "solid_correct": 6,
+      "intent_match": 16,
+      "requests_gold": 16,
+      "requests_expressible": 11,
+      "schema_gap_requests": 1,
+      "operand_required": 8,
+      "solid_required": 6,
+      "rows": 12,
+      "parsed_rows": 12,
+      "hallucinated_entity_rows": 0
+     },
+     "multi_goal": {
+      "total": 4,
+      "complete": 4
+     }
+    },
+    "rows": {
+     "dev02": {
+      "before": {
+       "case_id": "dev02",
+       "extraction": {
+        "ambiguous_flags": 0,
+        "complete_goals": true,
+        "correct": true,
+        "extra_premises": 0,
+        "extra_questions": 0,
+        "goal_match": 2,
+        "goal_match_expressible": 2,
+        "intent_match": 2,
+        "invented_entities": [],
+        "n_live": 9,
+        "non_dict_facts": 0,
+        "operand_correct": 1,
+        "operand_required": 1,
+        "parse_ok": true,
+        "premise_live_matched": 7,
+        "premise_match": 7,
+        "premises_live": 7,
+        "premises_required": 7,
+        "requests_expressible": 2,
+        "requests_gold": 2,
+        "schema_gap_approximated": 0,
+        "schema_gap_flagged": 0,
+        "schema_gap_requests": 0,
+        "solid_correct": 1,
+        "solid_required": 1,
+        "ungrounded_quote_facts": 0
+       },
+       "route_code": "MISSING_DIMENSION",
+       "served": {
+        "classification": "FALSE_REFUSAL_CAPABILITY_GAP",
+        "extra_count": 0,
+        "matched": [],
+        "missing": []
+       }
+      },
+      "after": {
+       "case_id": "dev02",
+       "extraction": {
+        "parse_ok": true,
+        "n_live": 9,
+        "non_dict_facts": 0,
+        "requests_gold": 2,
+        "intent_match": 2,
+        "goal_match": 2,
+        "requests_expressible": 2,
+        "goal_match_expressible": 2,
+        "premises_required": 7,
+        "premise_match": 7,
+        "premises_live": 7,
+        "premise_live_matched": 7,
+        "extra_questions": 0,
+        "extra_premises": 0,
+        "ungrounded_quote_facts": 0,
+        "ambiguous_flags": 0,
+        "schema_gap_requests": 0,
+        "schema_gap_flagged": 0,
+        "schema_gap_approximated": 0,
+        "complete_goals": true,
+        "correct": true,
+        "invented_entities": [],
+        "operand_required": 1,
+        "operand_correct": 1,
+        "solid_required": 1,
+        "solid_correct": 1
+       },
+       "served": {
+        "classification": "CORRECT_COMPLETE",
+        "matched": [
+         "r1",
+         "r2"
+        ],
+        "missing": [],
+        "extra_count": 0
+       },
+       "route_code": null
+      }
+     }
+    }
+   },
+   "replay-flat-PILOT": {
+    "before": {
+     "e2e": {
+      "CORRECT_COMPLETE": 3,
+      "FALSE_REFUSAL_CAPABILITY_GAP": 4,
+      "SAFE_REFUSAL": 5
+     },
+     "refusal_codes": {
+      "MISSING_DIMENSION": 1,
+      "SOURCE_PREMISE_UNREAD": 1,
+      "SOURCE_OBJECT_MISMATCH": 1,
+      "OUT_OF_SCOPE": 4,
+      "CONDITIONAL_CLAUSE": 1,
+      "NOT_ASKED_IN_SOURCE": 1
+     },
+     "counts": {
+      "goal_match": 16,
+      "goal_match_expressible": 11,
+      "premise_match": 53,
+      "premises_required": 53,
+      "premise_live_matched": 53,
+      "premises_live": 53,
+      "schema_gap_flagged": 1,
+      "operand_correct": 8,
+      "solid_correct": 6,
+      "intent_match": 16,
+      "requests_gold": 16,
+      "requests_expressible": 11,
+      "schema_gap_requests": 1,
+      "operand_required": 8,
+      "solid_required": 6,
+      "rows": 12,
+      "parsed_rows": 12,
+      "hallucinated_entity_rows": 0
+     },
+     "multi_goal": {
+      "total": 4,
+      "complete": 4
+     }
+    },
+    "after": {
+     "e2e": {
+      "CORRECT_COMPLETE": 4,
+      "FALSE_REFUSAL_CAPABILITY_GAP": 3,
+      "SAFE_REFUSAL": 5
+     },
+     "refusal_codes": {
+      "SOURCE_PREMISE_UNREAD": 1,
+      "SOURCE_OBJECT_MISMATCH": 1,
+      "OUT_OF_SCOPE": 4,
+      "CONDITIONAL_CLAUSE": 1,
+      "NOT_ASKED_IN_SOURCE": 1
+     },
+     "counts": {
+      "goal_match": 16,
+      "goal_match_expressible": 11,
+      "premise_match": 53,
+      "premises_required": 53,
+      "premise_live_matched": 53,
+      "premises_live": 53,
+      "schema_gap_flagged": 1,
+      "operand_correct": 8,
+      "solid_correct": 6,
+      "intent_match": 16,
+      "requests_gold": 16,
+      "requests_expressible": 11,
+      "schema_gap_requests": 1,
+      "operand_required": 8,
+      "solid_required": 6,
+      "rows": 12,
+      "parsed_rows": 12,
+      "hallucinated_entity_rows": 0
+     },
+     "multi_goal": {
+      "total": 4,
+      "complete": 4
+     }
+    },
+    "rows": {
+     "dev02": {
+      "before": {
+       "case_id": "dev02",
+       "extraction": {
+        "ambiguous_flags": 0,
+        "complete_goals": true,
+        "correct": true,
+        "extra_premises": 0,
+        "extra_questions": 0,
+        "goal_match": 2,
+        "goal_match_expressible": 2,
+        "intent_match": 2,
+        "invented_entities": [],
+        "n_live": 9,
+        "non_dict_facts": 0,
+        "operand_correct": 1,
+        "operand_required": 1,
+        "parse_ok": true,
+        "premise_live_matched": 7,
+        "premise_match": 7,
+        "premises_live": 7,
+        "premises_required": 7,
+        "requests_expressible": 2,
+        "requests_gold": 2,
+        "schema_gap_approximated": 0,
+        "schema_gap_flagged": 0,
+        "schema_gap_requests": 0,
+        "solid_correct": 1,
+        "solid_required": 1,
+        "ungrounded_quote_facts": 0
+       },
+       "route_code": "MISSING_DIMENSION",
+       "served": {
+        "classification": "FALSE_REFUSAL_CAPABILITY_GAP",
+        "extra_count": 0,
+        "matched": [],
+        "missing": []
+       }
+      },
+      "after": {
+       "case_id": "dev02",
+       "extraction": {
+        "parse_ok": true,
+        "n_live": 9,
+        "non_dict_facts": 0,
+        "requests_gold": 2,
+        "intent_match": 2,
+        "goal_match": 2,
+        "requests_expressible": 2,
+        "goal_match_expressible": 2,
+        "premises_required": 7,
+        "premise_match": 7,
+        "premises_live": 7,
+        "premise_live_matched": 7,
+        "extra_questions": 0,
+        "extra_premises": 0,
+        "ungrounded_quote_facts": 0,
+        "ambiguous_flags": 0,
+        "schema_gap_requests": 0,
+        "schema_gap_flagged": 0,
+        "schema_gap_approximated": 0,
+        "complete_goals": true,
+        "correct": true,
+        "invented_entities": [],
+        "operand_required": 1,
+        "operand_correct": 1,
+        "solid_required": 1,
+        "solid_correct": 1
+       },
+       "served": {
+        "classification": "CORRECT_COMPLETE",
+        "matched": [
+         "r1",
+         "r2"
+        ],
+        "missing": [],
+        "extra_count": 0
+       },
+       "route_code": null
+      }
+     }
+    }
+   },
+   "gold-v3-PILOT": {
+    "before": {
+     "e2e": {
+      "CORRECT_COMPLETE": 3,
+      "FALSE_REFUSAL_CAPABILITY_GAP": 4,
+      "SAFE_REFUSAL": 5
+     },
+     "refusal_codes": {
+      "MISSING_DIMENSION": 1,
+      "SOURCE_PREMISE_UNREAD": 1,
+      "SOURCE_OBJECT_MISMATCH": 1,
+      "OUT_OF_SCOPE": 4,
+      "CONDITIONAL_CLAUSE": 1,
+      "NOT_ASKED_IN_SOURCE": 1
+     },
+     "counts": {
+      "goal_match": 16,
+      "goal_match_expressible": 11,
+      "premise_match": 53,
+      "premises_required": 53,
+      "premise_live_matched": 53,
+      "premises_live": 53,
+      "schema_gap_flagged": 1,
+      "operand_correct": 8,
+      "solid_correct": 6,
+      "intent_match": 16,
+      "requests_gold": 16,
+      "requests_expressible": 11,
+      "schema_gap_requests": 1,
+      "operand_required": 8,
+      "solid_required": 6,
+      "rows": 12,
+      "parsed_rows": 12,
+      "hallucinated_entity_rows": 0
+     },
+     "multi_goal": {
+      "total": 4,
+      "complete": 4
+     }
+    },
+    "after": {
+     "e2e": {
+      "CORRECT_COMPLETE": 4,
+      "FALSE_REFUSAL_CAPABILITY_GAP": 3,
+      "SAFE_REFUSAL": 5
+     },
+     "refusal_codes": {
+      "SOURCE_PREMISE_UNREAD": 1,
+      "SOURCE_OBJECT_MISMATCH": 1,
+      "OUT_OF_SCOPE": 4,
+      "CONDITIONAL_CLAUSE": 1,
+      "NOT_ASKED_IN_SOURCE": 1
+     },
+     "counts": {
+      "goal_match": 16,
+      "goal_match_expressible": 11,
+      "premise_match": 53,
+      "premises_required": 53,
+      "premise_live_matched": 53,
+      "premises_live": 53,
+      "schema_gap_flagged": 1,
+      "operand_correct": 8,
+      "solid_correct": 6,
+      "intent_match": 16,
+      "requests_gold": 16,
+      "requests_expressible": 11,
+      "schema_gap_requests": 1,
+      "operand_required": 8,
+      "solid_required": 6,
+      "rows": 12,
+      "parsed_rows": 12,
+      "hallucinated_entity_rows": 0
+     },
+     "multi_goal": {
+      "total": 4,
+      "complete": 4
+     }
+    },
+    "rows": {
+     "dev02": {
+      "before": {
+       "case_id": "dev02",
+       "extraction": {
+        "ambiguous_flags": 0,
+        "complete_goals": true,
+        "correct": true,
+        "extra_premises": 0,
+        "extra_questions": 0,
+        "goal_match": 2,
+        "goal_match_expressible": 2,
+        "intent_match": 2,
+        "invented_entities": [],
+        "n_live": 9,
+        "non_dict_facts": 0,
+        "operand_correct": 1,
+        "operand_required": 1,
+        "parse_ok": true,
+        "premise_live_matched": 7,
+        "premise_match": 7,
+        "premises_live": 7,
+        "premises_required": 7,
+        "requests_expressible": 2,
+        "requests_gold": 2,
+        "schema_gap_approximated": 0,
+        "schema_gap_flagged": 0,
+        "schema_gap_requests": 0,
+        "solid_correct": 1,
+        "solid_required": 1,
+        "ungrounded_quote_facts": 0
+       },
+       "route_code": "MISSING_DIMENSION",
+       "served": {
+        "classification": "FALSE_REFUSAL_CAPABILITY_GAP",
+        "extra_count": 0,
+        "matched": [],
+        "missing": []
+       }
+      },
+      "after": {
+       "case_id": "dev02",
+       "extraction": {
+        "parse_ok": true,
+        "n_live": 9,
+        "non_dict_facts": 0,
+        "requests_gold": 2,
+        "intent_match": 2,
+        "goal_match": 2,
+        "requests_expressible": 2,
+        "goal_match_expressible": 2,
+        "premises_required": 7,
+        "premise_match": 7,
+        "premises_live": 7,
+        "premise_live_matched": 7,
+        "extra_questions": 0,
+        "extra_premises": 0,
+        "ungrounded_quote_facts": 0,
+        "ambiguous_flags": 0,
+        "schema_gap_requests": 0,
+        "schema_gap_flagged": 0,
+        "schema_gap_approximated": 0,
+        "complete_goals": true,
+        "correct": true,
+        "invented_entities": [],
+        "operand_required": 1,
+        "operand_correct": 1,
+        "solid_required": 1,
+        "solid_correct": 1
+       },
+       "served": {
+        "classification": "CORRECT_COMPLETE",
+        "matched": [
+         "r1",
+         "r2"
+        ],
+        "missing": [],
+        "extra_count": 0
+       },
+       "route_code": null
+      }
+     }
+    }
+   },
+   "replay-v3-PILOT": {
+    "before": {
+     "e2e": {
+      "CORRECT_COMPLETE": 3,
+      "FALSE_REFUSAL_CAPABILITY_GAP": 4,
+      "SAFE_REFUSAL": 5
+     },
+     "refusal_codes": {
+      "MISSING_DIMENSION": 1,
+      "SOURCE_PREMISE_UNREAD": 1,
+      "SOURCE_OBJECT_MISMATCH": 1,
+      "OUT_OF_SCOPE": 4,
+      "CONDITIONAL_CLAUSE": 1,
+      "NOT_ASKED_IN_SOURCE": 1
+     },
+     "counts": {
+      "goal_match": 16,
+      "goal_match_expressible": 11,
+      "premise_match": 53,
+      "premises_required": 53,
+      "premise_live_matched": 53,
+      "premises_live": 53,
+      "schema_gap_flagged": 1,
+      "operand_correct": 8,
+      "solid_correct": 6,
+      "intent_match": 16,
+      "requests_gold": 16,
+      "requests_expressible": 11,
+      "schema_gap_requests": 1,
+      "operand_required": 8,
+      "solid_required": 6,
+      "rows": 12,
+      "parsed_rows": 12,
+      "hallucinated_entity_rows": 0
+     },
+     "multi_goal": {
+      "total": 4,
+      "complete": 4
+     }
+    },
+    "after": {
+     "e2e": {
+      "CORRECT_COMPLETE": 4,
+      "FALSE_REFUSAL_CAPABILITY_GAP": 3,
+      "SAFE_REFUSAL": 5
+     },
+     "refusal_codes": {
+      "SOURCE_PREMISE_UNREAD": 1,
+      "SOURCE_OBJECT_MISMATCH": 1,
+      "OUT_OF_SCOPE": 4,
+      "CONDITIONAL_CLAUSE": 1,
+      "NOT_ASKED_IN_SOURCE": 1
+     },
+     "counts": {
+      "goal_match": 16,
+      "goal_match_expressible": 11,
+      "premise_match": 53,
+      "premises_required": 53,
+      "premise_live_matched": 53,
+      "premises_live": 53,
+      "schema_gap_flagged": 1,
+      "operand_correct": 8,
+      "solid_correct": 6,
+      "intent_match": 16,
+      "requests_gold": 16,
+      "requests_expressible": 11,
+      "schema_gap_requests": 1,
+      "operand_required": 8,
+      "solid_required": 6,
+      "rows": 12,
+      "parsed_rows": 12,
+      "hallucinated_entity_rows": 0
+     },
+     "multi_goal": {
+      "total": 4,
+      "complete": 4
+     }
+    },
+    "rows": {
+     "dev02": {
+      "before": {
+       "case_id": "dev02",
+       "extraction": {
+        "ambiguous_flags": 0,
+        "complete_goals": true,
+        "correct": true,
+        "extra_premises": 0,
+        "extra_questions": 0,
+        "goal_match": 2,
+        "goal_match_expressible": 2,
+        "intent_match": 2,
+        "invented_entities": [],
+        "n_live": 9,
+        "non_dict_facts": 0,
+        "operand_correct": 1,
+        "operand_required": 1,
+        "parse_ok": true,
+        "premise_live_matched": 7,
+        "premise_match": 7,
+        "premises_live": 7,
+        "premises_required": 7,
+        "requests_expressible": 2,
+        "requests_gold": 2,
+        "schema_gap_approximated": 0,
+        "schema_gap_flagged": 0,
+        "schema_gap_requests": 0,
+        "solid_correct": 1,
+        "solid_required": 1,
+        "ungrounded_quote_facts": 0
+       },
+       "route_code": "MISSING_DIMENSION",
+       "served": {
+        "classification": "FALSE_REFUSAL_CAPABILITY_GAP",
+        "extra_count": 0,
+        "matched": [],
+        "missing": []
+       }
+      },
+      "after": {
+       "case_id": "dev02",
+       "extraction": {
+        "parse_ok": true,
+        "n_live": 9,
+        "non_dict_facts": 0,
+        "requests_gold": 2,
+        "intent_match": 2,
+        "goal_match": 2,
+        "requests_expressible": 2,
+        "goal_match_expressible": 2,
+        "premises_required": 7,
+        "premise_match": 7,
+        "premises_live": 7,
+        "premise_live_matched": 7,
+        "extra_questions": 0,
+        "extra_premises": 0,
+        "ungrounded_quote_facts": 0,
+        "ambiguous_flags": 0,
+        "schema_gap_requests": 0,
+        "schema_gap_flagged": 0,
+        "schema_gap_approximated": 0,
+        "complete_goals": true,
+        "correct": true,
+        "invented_entities": [],
+        "operand_required": 1,
+        "operand_correct": 1,
+        "solid_required": 1,
+        "solid_correct": 1
+       },
+       "served": {
+        "classification": "CORRECT_COMPLETE",
+        "matched": [
+         "r1",
+         "r2"
+        ],
+        "missing": [],
+        "extra_count": 0
+       },
+       "route_code": null
+      }
+     }
+    }
+   },
+   "gold-flat-LOCKED": {
+    "before": {
+     "e2e": {
+      "CORRECT_COMPLETE": 6,
+      "FALSE_REFUSAL_CAPABILITY_GAP": 14,
+      "FORM_MISMATCH": 3,
+      "SAFE_REFUSAL": 1
+     },
+     "refusal_codes": {
+      "AMBIGUOUS_FACT": 1,
+      "MISSING_DIMENSION": 3,
+      "NOT_ASKED_IN_SOURCE": 5,
+      "OBJECT_NOT_IN_QUOTE": 1,
+      "OUT_OF_SCOPE": 3,
+      "PREDICATE_NOT_IN_QUOTE": 1,
+      "UNSUPPORTED_MULTIPLE_BASES": 1
+     },
+     "counts": {
+      "goal_match": 49,
+      "goal_match_expressible": 43,
+      "hallucinated_entity_rows": 0,
+      "intent_match": 49,
+      "operand_correct": 31,
+      "operand_required": 31,
+      "parsed_rows": 24,
+      "premise_live_matched": 99,
+      "premise_match": 99,
+      "premises_live": 99,
+      "premises_required": 99,
+      "requests_expressible": 43,
+      "requests_gold": 49,
+      "rows": 24,
+      "schema_gap_flagged": 5,
+      "schema_gap_requests": 5,
+      "solid_correct": 33,
+      "solid_required": 33
+     },
+     "multi_goal": {
+      "complete": 23,
+      "total": 23
+     }
+    },
+    "after": {
+     "e2e": {
+      "CORRECT_COMPLETE": 7,
+      "FALSE_REFUSAL_CAPABILITY_GAP": 13,
+      "SAFE_REFUSAL": 1,
+      "FORM_MISMATCH": 3
+     },
+     "refusal_codes": {
+      "OUT_OF_SCOPE": 3,
+      "MISSING_DIMENSION": 2,
+      "NOT_ASKED_IN_SOURCE": 5,
+      "PREDICATE_NOT_IN_QUOTE": 1,
+      "OBJECT_NOT_IN_QUOTE": 1,
+      "UNSUPPORTED_MULTIPLE_BASES": 1,
+      "AMBIGUOUS_FACT": 1
+     },
+     "counts": {
+      "goal_match": 49,
+      "goal_match_expressible": 43,
+      "premise_match": 99,
+      "premises_required": 99,
+      "premise_live_matched": 99,
+      "premises_live": 99,
+      "schema_gap_flagged": 5,
+      "operand_correct": 31,
+      "solid_correct": 33,
+      "intent_match": 49,
+      "requests_gold": 49,
+      "requests_expressible": 43,
+      "schema_gap_requests": 5,
+      "operand_required": 31,
+      "solid_required": 33,
+      "rows": 24,
+      "parsed_rows": 24,
+      "hallucinated_entity_rows": 0
+     },
+     "multi_goal": {
+      "total": 23,
+      "complete": 23
+     }
+    },
+    "rows": {
+     "h16": {
+      "before": {
+       "case_id": "h16",
+       "extraction": {
+        "ambiguous_flags": 0,
+        "complete_goals": true,
+        "correct": true,
+        "extra_premises": 0,
+        "extra_questions": 0,
+        "goal_match": 2,
+        "goal_match_expressible": 2,
+        "intent_match": 2,
+        "invented_entities": [],
+        "n_live": 9,
+        "non_dict_facts": 0,
+        "operand_correct": 1,
+        "operand_required": 1,
+        "parse_ok": true,
+        "premise_live_matched": 7,
+        "premise_match": 7,
+        "premises_live": 7,
+        "premises_required": 7,
+        "requests_expressible": 2,
+        "requests_gold": 2,
+        "schema_gap_approximated": 0,
+        "schema_gap_flagged": 0,
+        "schema_gap_requests": 0,
+        "solid_correct": 1,
+        "solid_required": 1,
+        "ungrounded_quote_facts": 0
+       },
+       "route_code": "MISSING_DIMENSION",
+       "served": {
+        "classification": "FALSE_REFUSAL_CAPABILITY_GAP",
+        "extra_count": 0,
+        "matched": [],
+        "missing": []
+       }
+      },
+      "after": {
+       "case_id": "h16",
+       "extraction": {
+        "parse_ok": true,
+        "n_live": 9,
+        "non_dict_facts": 0,
+        "requests_gold": 2,
+        "intent_match": 2,
+        "goal_match": 2,
+        "requests_expressible": 2,
+        "goal_match_expressible": 2,
+        "premises_required": 7,
+        "premise_match": 7,
+        "premises_live": 7,
+        "premise_live_matched": 7,
+        "extra_questions": 0,
+        "extra_premises": 0,
+        "ungrounded_quote_facts": 0,
+        "ambiguous_flags": 0,
+        "schema_gap_requests": 0,
+        "schema_gap_flagged": 0,
+        "schema_gap_approximated": 0,
+        "complete_goals": true,
+        "correct": true,
+        "invented_entities": [],
+        "operand_required": 1,
+        "operand_correct": 1,
+        "solid_required": 1,
+        "solid_correct": 1
+       },
+       "served": {
+        "classification": "CORRECT_COMPLETE",
+        "matched": [
+         "r1",
+         "r2"
+        ],
+        "missing": [],
+        "extra_count": 0
+       },
+       "route_code": null
+      }
+     }
+    }
+   },
+   "replay-flat-LOCKED": {
+    "before": {
+     "e2e": {
+      "CORRECT_COMPLETE": 6,
+      "FALSE_REFUSAL_CAPABILITY_GAP": 14,
+      "FORM_MISMATCH": 3,
+      "SAFE_REFUSAL": 1
+     },
+     "refusal_codes": {
+      "AMBIGUOUS_FACT": 1,
+      "MISSING_DIMENSION": 3,
+      "NOT_ASKED_IN_SOURCE": 5,
+      "OBJECT_NOT_IN_QUOTE": 1,
+      "OUT_OF_SCOPE": 3,
+      "PREDICATE_NOT_IN_QUOTE": 1,
+      "UNSUPPORTED_MULTIPLE_BASES": 1
+     },
+     "counts": {
+      "goal_match": 49,
+      "goal_match_expressible": 43,
+      "hallucinated_entity_rows": 0,
+      "intent_match": 49,
+      "operand_correct": 31,
+      "operand_required": 31,
+      "parsed_rows": 24,
+      "premise_live_matched": 99,
+      "premise_match": 99,
+      "premises_live": 99,
+      "premises_required": 99,
+      "requests_expressible": 43,
+      "requests_gold": 49,
+      "rows": 24,
+      "schema_gap_flagged": 5,
+      "schema_gap_requests": 5,
+      "solid_correct": 33,
+      "solid_required": 33
+     },
+     "multi_goal": {
+      "complete": 23,
+      "total": 23
+     }
+    },
+    "after": {
+     "e2e": {
+      "CORRECT_COMPLETE": 7,
+      "FALSE_REFUSAL_CAPABILITY_GAP": 13,
+      "SAFE_REFUSAL": 1,
+      "FORM_MISMATCH": 3
+     },
+     "refusal_codes": {
+      "OUT_OF_SCOPE": 3,
+      "MISSING_DIMENSION": 2,
+      "NOT_ASKED_IN_SOURCE": 5,
+      "PREDICATE_NOT_IN_QUOTE": 1,
+      "OBJECT_NOT_IN_QUOTE": 1,
+      "UNSUPPORTED_MULTIPLE_BASES": 1,
+      "AMBIGUOUS_FACT": 1
+     },
+     "counts": {
+      "goal_match": 49,
+      "goal_match_expressible": 43,
+      "premise_match": 99,
+      "premises_required": 99,
+      "premise_live_matched": 99,
+      "premises_live": 99,
+      "schema_gap_flagged": 5,
+      "operand_correct": 31,
+      "solid_correct": 33,
+      "intent_match": 49,
+      "requests_gold": 49,
+      "requests_expressible": 43,
+      "schema_gap_requests": 5,
+      "operand_required": 31,
+      "solid_required": 33,
+      "rows": 24,
+      "parsed_rows": 24,
+      "hallucinated_entity_rows": 0
+     },
+     "multi_goal": {
+      "total": 23,
+      "complete": 23
+     }
+    },
+    "rows": {
+     "h16": {
+      "before": {
+       "case_id": "h16",
+       "extraction": {
+        "ambiguous_flags": 0,
+        "complete_goals": true,
+        "correct": true,
+        "extra_premises": 0,
+        "extra_questions": 0,
+        "goal_match": 2,
+        "goal_match_expressible": 2,
+        "intent_match": 2,
+        "invented_entities": [],
+        "n_live": 9,
+        "non_dict_facts": 0,
+        "operand_correct": 1,
+        "operand_required": 1,
+        "parse_ok": true,
+        "premise_live_matched": 7,
+        "premise_match": 7,
+        "premises_live": 7,
+        "premises_required": 7,
+        "requests_expressible": 2,
+        "requests_gold": 2,
+        "schema_gap_approximated": 0,
+        "schema_gap_flagged": 0,
+        "schema_gap_requests": 0,
+        "solid_correct": 1,
+        "solid_required": 1,
+        "ungrounded_quote_facts": 0
+       },
+       "route_code": "MISSING_DIMENSION",
+       "served": {
+        "classification": "FALSE_REFUSAL_CAPABILITY_GAP",
+        "extra_count": 0,
+        "matched": [],
+        "missing": []
+       }
+      },
+      "after": {
+       "case_id": "h16",
+       "extraction": {
+        "parse_ok": true,
+        "n_live": 9,
+        "non_dict_facts": 0,
+        "requests_gold": 2,
+        "intent_match": 2,
+        "goal_match": 2,
+        "requests_expressible": 2,
+        "goal_match_expressible": 2,
+        "premises_required": 7,
+        "premise_match": 7,
+        "premises_live": 7,
+        "premise_live_matched": 7,
+        "extra_questions": 0,
+        "extra_premises": 0,
+        "ungrounded_quote_facts": 0,
+        "ambiguous_flags": 0,
+        "schema_gap_requests": 0,
+        "schema_gap_flagged": 0,
+        "schema_gap_approximated": 0,
+        "complete_goals": true,
+        "correct": true,
+        "invented_entities": [],
+        "operand_required": 1,
+        "operand_correct": 1,
+        "solid_required": 1,
+        "solid_correct": 1
+       },
+       "served": {
+        "classification": "CORRECT_COMPLETE",
+        "matched": [
+         "r1",
+         "r2"
+        ],
+        "missing": [],
+        "extra_count": 0
+       },
+       "route_code": null
+      }
+     }
+    }
+   }
+  }
+ }
+}

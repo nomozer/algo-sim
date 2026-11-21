@@ -1,0 +1,19 @@
+{
+  "run_id": "semantic-failure-safe-image-segmentation",
+  "generated_at_utc": "2026-11-13T16:58:18.691725+00:00",
+  "before_this_run": {
+    "clause_segmentation": "split_into_clauses: sentence ends, ';' and clause-level separators; each clause classified MAPPED_FACT / MAPPED_GOAL / BENIGN_DISCOURSE / UNPARSED_FACT_CANDIDATE / UNPARSED_GOAL_CANDIDATE / UNRESOLVED_REFERENCE with offsets (SourceCoverageReport)",
+    "where_exposed": "route_d.adaptive_telemetry.source_coverage (clause list) and route_d.refusal.fallback_reason (UNPARSED_GOAL_CANDIDATE, SOURCE_GATE_MISMATCH:<code>:<reason>, SCHEMA_VALIDATION_FAILED:…)",
+    "terminal_reason": "route_d.refusal.code = LIVE_AI_DISABLED for every local parse that is not complete while live AI is off (adaptive_input_router Case 4) — the code names the blocked fallback, not what was unread",
+    "missing": [
+      "no root cause separate from the terminal reason",
+      "no responsible layer (first loss vs detector vs decider)",
+      "no clause TYPE (relation / definition / goal …)",
+      "no downstream dependency (a goal on an unread plane looked like an unread goal)",
+      "no distinction 'understood but unsupported' (cos/tan of an angle, proofs) vs 'not understood'",
+      "Case 2 refusals (local parse complete, planner/kernel refused) carried no layer attribution"
+    ]
+  },
+  "added_in_this_run": "backend/app/ai/local_failure_diagnostics.py → route_d.local_diagnostics on refusals only (local-failure-diagnostics/1): root_cause, first_loss_layer, detected_by, decided_by, fallback, per-clause type/status/failure_reason/downstream_dependency/offsets; refusal codes grouped with hybrid_preview.classify_refusal (no new public code)",
+  "cache": "refusals are never cached (main._served_route_d serves SERVED rows only); the field is absent on served responses"
+}

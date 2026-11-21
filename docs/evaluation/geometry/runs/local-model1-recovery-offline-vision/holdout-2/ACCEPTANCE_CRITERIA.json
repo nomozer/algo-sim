@@ -1,0 +1,62 @@
+{
+  "schema": "axo-acceptance-criteria/1",
+  "run_id": "holdout-2",
+  "manifest": {
+    "path": "ACCEPTANCE_MANIFEST.json",
+    "sha256": "9759be6f9cd7c8eb3aa9644e7f004b94daac6000eee9f279f19fbbbc833dec67"
+  },
+  "harness": {
+    "version": "axo-live-acceptance-harness/1",
+    "scene_oracle_sha256": "a73bc2cf7d26795862fe3fadf2d04d6a0ca803ad92a4acac50ba0e50f9bb40cb",
+    "gold_generator_sha256": "201e4f0458e0fae76fc005ab8dd156dada0bf059ea3472ac7cca4b7729ee0549"
+  },
+  "exposure": {
+    "external_independence": "NOT_MEASURED",
+    "normalized_prior_strings": 28818,
+    "training_corpus_included": true,
+    "normalized_containment_matches": 0,
+    "single_shot": true
+  },
+  "runtime": {
+    "route_mode": "local-only-scoped",
+    "allow_live_ai": false,
+    "model": "AxoV9",
+    "gguf_sha256": "73f1484b08b97ed2a1f44e32bcf6610210c7fda51567c4cd0a03d98dffc6cc35",
+    "llama_cpp_release": "b12470",
+    "require_fresh_cache": true,
+    "cloud_fallback": false
+  },
+  "primary": {
+    "completion_rate_min": 0.85,
+    "population": "all positive text and attachment cases",
+    "completion": "served with correct source facts, exact scene and answers, visual and interaction pass"
+  },
+  "slm": {
+    "completion_rate_min": 0.3,
+    "min_live_verified_scenes": 5,
+    "population": "baseline SLM_REQUIRED text cases; final-candidate strata reported separately",
+    "cache_and_replay_credit": false
+  },
+  "modalities": {
+    "explicit_per_modality_live_metrics": true,
+    "positive_completion_rate_min": 0.85,
+    "required": [
+      "digital_pdf",
+      "docx",
+      "mixed_pdf",
+      "raster_image",
+      "scanned_pdf",
+      "text"
+    ]
+  },
+  "safety": {
+    "all_negative_safe": true,
+    "external_ai_calls": 0,
+    "wrong_served": 0,
+    "grounding_violations_served": 0,
+    "unverified_relations_served": 0,
+    "fabricated_numeric_goals": 0,
+    "served_numeric_mismatch": 0
+  },
+  "candidate_consistency": "same committed product, cache, model and runtime for live acceptance and Full T3"
+}

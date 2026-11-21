@@ -1,0 +1,93 @@
+{
+  "schema": "algosim-ocr-fidelity-real-world-receipt/1",
+  "generated_at_utc": "2026-11-09T14:20:25.879073+00:00",
+  "product_commit_sha": "87497d79a6537681b91c3f06fffea86a7e593a02",
+  "local_ocr_production_status": "LOCAL_OCR_DIAGNOSTIC_ONLY",
+  "real_world_ocr_benchmark_status": "NOT_MEASURED_ON_REAL_CAMERA_PHOTOS",
+  "synthetic_22_item_benchmark_summary": {
+    "tesseract_5_5_3_vie_lstm": {
+      "vietnamese_word_accuracy_pct": 97.67,
+      "math_token_recall_pct": 53.39,
+      "single_engine_fidelity_pass_count": "0/22"
+    },
+    "rapidocr_3_10_pp_ocrv5_latin": {
+      "vietnamese_word_accuracy_pct": 53.07,
+      "math_token_recall_pct": 90.48,
+      "single_engine_fidelity_pass_count": "0/22 (drops Vietnamese vowel diacritics)"
+    },
+    "dual_engine_zero_ground_truth_reconciled": {
+      "clean_images_passing_all_6_fidelity_gates": "1/22 (`s05_dau_tieng_viet` clean)",
+      "degraded_images_passing_autonomous_zero_ai": "0/22 (`s05_dau_tieng_viet_degraded` strictly refused by `is_degraded_image` gate)",
+      "wrong_served_count": 0
+    }
+  },
+  "forensic_audit_section_vi_3_2_case_a_s05": {
+    "why_degraded_had_fewer_surface_corruptions_than_clean": "In `s05_dau_tieng_viet` (clean), crisp high-contrast prime glyphs (`′`) immediately adjacent to uppercase letters `B′C′D′` caused Tesseract's LSTM glyph segmenter to merge `C′` into the ligature `Œ 7` and `D′` into `D”` (`ABCD.A'B'Œ 7D”`). In `s05_dau_tieng_viet_degraded`, slight blur/downsampling softened the thin prime stroke on `A′` so it vanished (`A`), while `B′C′D′` avoided the `Œ 7` ligature split (`ABCD.AB'C'D'`). Crucially, BOTH single-engine outputs fail `verify_ocr_input_fidelity` (`ABCD.AB'C'D'` is rejected by `INVALID_SOLID_NOTATION` and `primed_labels` mismatch), and `reconcile_dual_ocr_texts` refuses `s05_degraded` via `is_degraded_image=True` (`DEGRADED_IMAGE_REQUIRES_VISION_FALLBACK`).",
+    "previous_wave_defect_identified": "In the previous wave (`correctness-ocr-performance-optimization`), `Case_A_Local_OCR_Verified_Zero_AI` passed a synthetic clean text string (`clean_ocr_text`) into `route_image_or_prepare_outcome` rather than the actual recorded OCR strings (`s05_dau_tieng_viet`). Furthermore, `s05_dau_tieng_viet`'s line-plane intersection clause ('Gọi I là giao điểm của AC\\' và mặt phẳng (A\\'BD)') was missing from named point premises in `local_geometry_parser.py`.",
+    "s05_clean_ground_truth": "Cho hình hộp chữ nhật ABCD.A′B′C′D′ có AB = 3, AD = 4, AA′ = 5. Gọi I là giao điểm của AC′ và mặt phẳng (A′BD). Tính độ dài đoạn thẳng AI.",
+    "s05_clean_tesseract_raw": "Câu 1. Cho hình hộp chữ nhật ABCD.A'B'Œ 7D” có AB = 3, AD = 4, AA' = 5. Gọi I là giao điểm của AC' và mặt phẳng (A'BD). Tính độ dài đoạn thẳng AI.",
+    "s05_clean_rapidocr_raw": "Câu 1. Cho hình hp chū nht ABCD.A'B'C'D' có AB = 3, AD = 4, AA′ = 5. Gi I là giao dim cūa AC' và mt phng (A'BD). Tính d dài doan thng AI.",
+    "s05_degraded_tesseract_raw": "Câu 1. Cho hình hộp chữ nhật ABCD.AB'C'D' có AB = 3, AD = 4, AA' = 5. Gọi I là giao điểm của AC' và mặt phẳng (A'BD). Tính độ dài đoạn thẳng AI.",
+    "s05_degraded_rapidocr_raw": "Câu 1. Cho hinh hp chū nht ABCD.A'B'C'D' có AB = 3, AD = 4, AA' = 5. Gąi I là giao dim ca AC′ và mt phng (A'BD). Tính d dài doan thng AI.",
+    "single_engine_tesseract_clean_fidelity_passed": false,
+    "single_engine_tesseract_clean_failed_checks": [
+      "vertex_and_solid_consistency",
+      "dimension_and_number_fidelity",
+      "goal_sentence_completeness",
+      "source_span_coverage"
+    ],
+    "single_engine_tesseract_degraded_fidelity_passed": false,
+    "single_engine_tesseract_degraded_failed_checks": [
+      "vertex_and_solid_consistency",
+      "dimension_and_number_fidelity",
+      "goal_sentence_completeness",
+      "source_span_coverage"
+    ],
+    "single_engine_rapidocr_clean_fidelity_passed": false,
+    "single_engine_rapidocr_clean_failed_checks": [
+      "vertex_and_solid_consistency",
+      "goal_sentence_completeness",
+      "source_span_coverage"
+    ],
+    "dual_engine_reconciliation_clean": {
+      "reconciled": true,
+      "used_ground_truth": false,
+      "repairs": [
+        {
+          "corrupted_token": "ABCD.A'B'Œ 7D”",
+          "repaired_token": "ABCD.A'B'C'D'",
+          "evidence": "secondary_ocr_exact_solid_match"
+        }
+      ],
+      "reconciled_text": "Câu 1. Cho hình hộp chữ nhật ABCD.A'B'C'D' có AB = 3, AD = 4, AA' = 5. Gọi I là giao điểm của AC' và mặt phẳng (A'BD). Tính độ dài đoạn thẳng AI.",
+      "chosen_route": "LOCAL_OCR_VERIFIED_ZERO_AI",
+      "status": "SERVED",
+      "answers": {
+        "q1": "5√2/3"
+      },
+      "total_provider_calls": 0
+    },
+    "dual_engine_reconciliation_degraded": {
+      "reconciled": false,
+      "reason_code": "DEGRADED_IMAGE_REQUIRES_VISION_FALLBACK",
+      "chosen_route_after_rejection": "VISION_THEN_LOCAL_DETERMINISTIC",
+      "status_after_vision_fallback": "SERVED",
+      "gemini_vision_calls": 1
+    }
+  },
+  "thirteen_symbol_error_classes_audit": {
+    "1_primed_vertices_A_prime": "CAUGHT_BY_FIDELITY_AND_CONFLICT_GATE",
+    "2_subscripts_d1_M1": "CAUGHT_BY_FIDELITY_AND_CONFLICT_GATE",
+    "3_radicals_sqrt": "CAUGHT_BY_FIDELITY_AND_CONFLICT_GATE (`2V3` rejected; `√2` vs `√3` conflict caught)",
+    "4_equality_assignments": "CAUGHT_BY_FIDELITY_AND_CONFLICT_GATE (`SA=3` vs `SA=8` conflict caught)",
+    "5_perpendicular_symbol": "CAUGHT_BY_FIDELITY_AND_CONFLICT_GATE (`⊥` vs `∥` conflict caught)",
+    "6_parallel_symbol": "CAUGHT_BY_FIDELITY_AND_CONFLICT_GATE",
+    "7_angle_and_degree": "CAUGHT_BY_FIDELITY_AND_CONFLICT_GATE (`60°` vs `30°` conflict caught)",
+    "8_fractions": "CAUGHT_BY_FIDELITY_AND_CONFLICT_GATE (`1/2` vs `1/3` conflict caught)",
+    "9_comma_decimals": "CAUGHT_BY_FIDELITY_AND_CONFLICT_GATE (`3,5` rejected)",
+    "10_negative_or_zero_lengths": "CAUGHT_BY_FIDELITY_AND_CONFLICT_GATE (`SA=-3`, `SA=0` rejected)",
+    "11_solid_notation_dot": "CAUGHT_BY_FIDELITY_AND_CONFLICT_GATE (`ABCD.A'B°C'D'` rejected unless dual-engine repaired)",
+    "12_plane_parentheses": "CAUGHT_BY_FIDELITY_AND_CONFLICT_GATE (`(ABC)` vs `(A'BC)` conflict caught)",
+    "13_symbolic_variables_a_R_h": "CAUGHT_BY_FIDELITY_AND_CONFLICT_GATE"
+  }
+}

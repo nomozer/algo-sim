@@ -1,0 +1,100 @@
+{
+  "run_id": "compositional-semantics-simulation-goals",
+  "generated_at_utc": "2026-11-14T03:09:44.904460+00:00",
+  "product_commit": "379d33969ef0cb0e418d979ab211a00799f44834",
+  "measured_system": "b652e635d5497dc36bf6d55ff4a34c20a16302d01c154b59b039efd65170921e",
+  "environment": {
+    "ALLOW_LIVE_AI": "0",
+    "HYBRID_ROUTE_MODE": "local-first",
+    "live_ai_calls": 0
+  },
+  "head": "54268761eacadaca07d0d8cd2dea0d07c39a5d62",
+  "command": "python docs/evaluation/geometry/runs/compositional-semantics-simulation-goals/tools/semantic_compare.py <archive of 1a9ee8b0c>/backend <out>",
+  "dataset_partition": "DEVELOPMENT (agent-written corpus of this run, tools/compositional_dev_corpus.py)",
+  "oracle_status": "AGENT_DIAGNOSTIC: expectations written from geometry and the documented scope before measurement",
+  "items": 4,
+  "pass": 4,
+  "rows": [
+    {
+      "case_id": "COMP:dp_midpoint_as_goal",
+      "group": "premise_vs_goal",
+      "text_sha256": "16f8bc9a3d4a1b6877978fb4b9f0e85dc7aeeedd897a0e7eba5dad3d346b7ba1",
+      "expected": "REFUSE",
+      "goal": null,
+      "numeric": null,
+      "before": {
+        "status": "REFUSED",
+        "code": "LIVE_AI_DISABLED",
+        "root_cause": "UNRECOGNIZED_GOAL"
+      },
+      "after": {
+        "status": "REFUSED",
+        "code": "LIVE_AI_DISABLED",
+        "root_cause": "UNRECOGNIZED_GOAL",
+        "source_goal_completion": null
+      },
+      "verdict": "PASS"
+    },
+    {
+      "case_id": "COMP:goal_cos_given_premise_neg",
+      "group": "premise_vs_goal",
+      "text_sha256": "914c021b64b59713e036f8c734e37feb1405d65071d6712062bfdf62d2811c1d",
+      "expected": "REFUSE",
+      "goal": null,
+      "numeric": null,
+      "before": {
+        "status": "REFUSED",
+        "code": "LIVE_AI_DISABLED",
+        "root_cause": "SOURCE_PROVENANCE_MISSING"
+      },
+      "after": {
+        "status": "REFUSED",
+        "code": "LIVE_AI_DISABLED",
+        "root_cause": "SOURCE_PROVENANCE_MISSING",
+        "source_goal_completion": null
+      },
+      "verdict": "PASS"
+    },
+    {
+      "case_id": "COMP:proof_only",
+      "group": "proof",
+      "text_sha256": "7117842cd9476c0f6056e1b1fdd190e5fa787f9a378e27843a72dbd8822f3e16",
+      "expected": "REFUSE",
+      "goal": null,
+      "numeric": null,
+      "before": {
+        "status": "REFUSED",
+        "code": "OUT_OF_SCOPE",
+        "root_cause": "UNSUPPORTED_GOAL_KIND"
+      },
+      "after": {
+        "status": "REFUSED",
+        "code": "OUT_OF_SCOPE",
+        "root_cause": "UNSUPPORTED_GOAL_KIND",
+        "source_goal_completion": null
+      },
+      "verdict": "PASS"
+    },
+    {
+      "case_id": "COMP:proof_premise_not_given",
+      "group": "premise_vs_goal",
+      "text_sha256": "c0688c280f4016cf3bfb40038d68454bfb22bc30725de462408a81326177442c",
+      "expected": "REFUSE",
+      "goal": null,
+      "numeric": null,
+      "before": {
+        "status": "REFUSED",
+        "code": "OUT_OF_SCOPE",
+        "root_cause": "UNSUPPORTED_GOAL_KIND"
+      },
+      "after": {
+        "status": "REFUSED",
+        "code": "OUT_OF_SCOPE",
+        "root_cause": "UNSUPPORTED_GOAL_KIND",
+        "source_goal_completion": null
+      },
+      "verdict": "PASS"
+    }
+  ],
+  "rule": "a proof request is read and refused UNSUPPORTED_GOAL_KIND (PROOF_NOT_PROVIDED); the proved relation is never a premise"
+}

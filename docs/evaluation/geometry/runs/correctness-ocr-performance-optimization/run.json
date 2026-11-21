@@ -1,0 +1,34 @@
+{
+  "schema": "algo-sim-evaluation-run-manifest/1",
+  "run_id": "correctness-ocr-performance-optimization",
+  "task_title": "ALGOSIM — CORRECTNESS HARDENING, LOCAL OCR & LOW-END PERFORMANCE OPTIMIZATION",
+  "generated_at": "2026-11-09T13:02:42.602007+00:00",
+  "git": {
+    "branch": "feat/local-first-geometry-understanding",
+    "commit": "f96db02eb11ac80ed48c755155313710edcba588",
+    "tree": "a96642deb9c85aa18d36137b07f6f6b5cdf30a5a"
+  },
+  "environment": {
+    "ALLOW_LIVE_AI": "0",
+    "live_provider_calls": 0,
+    "parser_version": "local-geometry-parser/1",
+    "router_version": "adaptive-input-router/1",
+    "local_ocr_production_status": "LOCAL_OCR_DIAGNOSTIC_ONLY",
+    "rust_feasibility_decision": "NO_RUST_NEEDED"
+  },
+  "gates": {
+    "Gate_A_Mathematical_Correctness_and_Parser_Integrity": "PASS",
+    "Gate_B_Image_Region_Detection_Local_OCR_and_Vision_Fallback": "PASS",
+    "Gate_C_Low_End_Performance_and_Memory_Stability": "PASS",
+    "Gate_D_Rust_Feasibility_Evidence_Decision": "PASS (NO_RUST_NEEDED)"
+  },
+  "artifacts": {
+    "mathematical_oracle_audit_receipt.json": "e4710e878085e3a96fcc4d3d006e324f214296824fb81450adae5b23891b6b0f",
+    "local_parser_integrity_receipt.json": "8cf00d1005872b143634241ed834a5e19601379d34cc53a4177e8a9be3754810",
+    "image_region_detection_receipt.json": "233d237fb68db1b7a1f067287e0926efb39bdda170d5f5eb225e14adad0fb357",
+    "local_ocr_pretrained_comparison_receipt.json": "086e437b1330ad615064d90123cafa8f90abea23d678ef6cbbccb52baa24d1e1",
+    "adaptive_vision_fallback_receipt.json": "5a1da7d1905f032157ebda8f5ec8b2d7db3dca309deee7b949e7595837d00c42",
+    "low_end_performance_receipt.json": "33104a3f6cb04c84babe814bd934f60c60c50d9c175525a3d9d2daeded321dd1",
+    "rust_feasibility_receipt.json": "c37a5abcaf23278e9f22ef123b8155086cb7484369d61374c8cccdf1a68d3d3a"
+  }
+}

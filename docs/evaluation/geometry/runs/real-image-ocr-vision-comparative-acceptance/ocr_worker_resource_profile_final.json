@@ -1,0 +1,1418 @@
+{
+  "run_id": "real-image-ocr-vision-comparative-acceptance",
+  "head": "70b22cc7167d8e2372d606547c3e398b199fb101",
+  "measured_system": [
+    "a068b6f6586c1b120bd8350dbe706f5681ab71fd7da57502c34f940140268921",
+    115
+  ],
+  "allow_live_ai": 0,
+  "ground_truth_authority": "AGENT_TRANSCRIBED_UNVERIFIED",
+  "independent_h1": "NOT_MEASURED",
+  "units": "MiB",
+  "host": {
+    "logical_cpus": 12,
+    "total_physical_mib": 16163.3046875,
+    "available_physical_mib_at_start": 1915.66796875,
+    "available_physical_mib_at_end": 2335.828125,
+    "whole_machine_cpu_busy_fraction_during_benchmark": 0.8891350250046305,
+    "isolation": "SHARED_DEVELOPER_WORKSTATION_NOT_ISOLATED: other applications were running; figures describe this host under that load"
+  },
+  "rows": [
+    {
+      "mode": "cold_model_cache_miss",
+      "sample": 0,
+      "image": "hd_q_5259753.jpg",
+      "sample_count": 224,
+      "fastapi_peak_rss_mib": 129.06640625,
+      "ocr_process_tree_peak_rss_mib": 479.74609375,
+      "combined_process_tree_peak_rss_mib": 608.65234375,
+      "descendant_processes": [
+        {
+          "pid": 14916,
+          "parent_pid": 18492,
+          "exe": "python.exe",
+          "peak_rss_mib": 468.09765625
+        },
+        {
+          "pid": 5636,
+          "parent_pid": 18492,
+          "exe": "conhost.exe",
+          "peak_rss_mib": 7.51953125
+        },
+        {
+          "pid": 18492,
+          "parent_pid": 7692,
+          "exe": "python.exe",
+          "peak_rss_mib": 4.12890625
+        }
+      ],
+      "ocr_cache_entries": 2
+    },
+    {
+      "mode": "cold_model_cache_miss",
+      "sample": 1,
+      "image": "vmmu_page_r11_Math_0303_test_059_question_39_page_4_key_B_vqa.png",
+      "sample_count": 118,
+      "fastapi_peak_rss_mib": 147.19140625,
+      "ocr_process_tree_peak_rss_mib": 366.09765625,
+      "combined_process_tree_peak_rss_mib": 496.328125,
+      "descendant_processes": [
+        {
+          "pid": 10024,
+          "parent_pid": 14872,
+          "exe": "python.exe",
+          "peak_rss_mib": 354.43359375
+        },
+        {
+          "pid": 7724,
+          "parent_pid": 14872,
+          "exe": "conhost.exe",
+          "peak_rss_mib": 7.52734375
+        },
+        {
+          "pid": 14872,
+          "parent_pid": 7692,
+          "exe": "python.exe",
+          "peak_rss_mib": 4.13671875
+        }
+      ],
+      "ocr_cache_entries": 2
+    },
+    {
+      "mode": "cold_model_cache_miss",
+      "sample": 2,
+      "image": "hd_q_5259753.jpg",
+      "sample_count": 134,
+      "fastapi_peak_rss_mib": 130.19921875,
+      "ocr_process_tree_peak_rss_mib": 508.80078125,
+      "combined_process_tree_peak_rss_mib": 638.72265625,
+      "descendant_processes": [
+        {
+          "pid": 5680,
+          "parent_pid": 15304,
+          "exe": "python.exe",
+          "peak_rss_mib": 497.1484375
+        },
+        {
+          "pid": 17276,
+          "parent_pid": 15880,
+          "exe": "python.exe",
+          "peak_rss_mib": 157.90625
+        },
+        {
+          "pid": 7036,
+          "parent_pid": 15304,
+          "exe": "conhost.exe",
+          "peak_rss_mib": 7.51953125
+        },
+        {
+          "pid": 13712,
+          "parent_pid": 15880,
+          "exe": "conhost.exe",
+          "peak_rss_mib": 7.046875
+        },
+        {
+          "pid": 15304,
+          "parent_pid": 7692,
+          "exe": "python.exe",
+          "peak_rss_mib": 4.1328125
+        }
+      ],
+      "ocr_cache_entries": 2
+    },
+    {
+      "mode": "cold_model_cache_miss",
+      "sample": 3,
+      "image": "vmmu_page_r11_Math_0303_test_059_question_39_page_4_key_B_vqa.png",
+      "sample_count": 192,
+      "fastapi_peak_rss_mib": 143.26171875,
+      "ocr_process_tree_peak_rss_mib": 338.40234375,
+      "combined_process_tree_peak_rss_mib": 468.23046875,
+      "descendant_processes": [
+        {
+          "pid": 7552,
+          "parent_pid": 14248,
+          "exe": "python.exe",
+          "peak_rss_mib": 326.75
+        },
+        {
+          "pid": 18492,
+          "parent_pid": 14248,
+          "exe": "conhost.exe",
+          "peak_rss_mib": 7.51953125
+        },
+        {
+          "pid": 14248,
+          "parent_pid": 7692,
+          "exe": "python.exe",
+          "peak_rss_mib": 4.1328125
+        }
+      ],
+      "ocr_cache_entries": 2
+    },
+    {
+      "mode": "cold_model_cache_miss",
+      "sample": 4,
+      "image": "hd_q_5259753.jpg",
+      "sample_count": 137,
+      "fastapi_peak_rss_mib": 130.22265625,
+      "ocr_process_tree_peak_rss_mib": 497.62109375,
+      "combined_process_tree_peak_rss_mib": 627.84375,
+      "descendant_processes": [
+        {
+          "pid": 18152,
+          "parent_pid": 15400,
+          "exe": "python.exe",
+          "peak_rss_mib": 485.953125
+        },
+        {
+          "pid": 3700,
+          "parent_pid": 15400,
+          "exe": "conhost.exe",
+          "peak_rss_mib": 7.53125
+        },
+        {
+          "pid": 15400,
+          "parent_pid": 7692,
+          "exe": "python.exe",
+          "peak_rss_mib": 4.13671875
+        }
+      ],
+      "ocr_cache_entries": 2
+    },
+    {
+      "mode": "cold_model_cache_miss",
+      "sample": 5,
+      "image": "vmmu_page_r11_Math_0303_test_059_question_39_page_4_key_B_vqa.png",
+      "sample_count": 207,
+      "fastapi_peak_rss_mib": 148.640625,
+      "ocr_process_tree_peak_rss_mib": 348.27734375,
+      "combined_process_tree_peak_rss_mib": 479.171875,
+      "descendant_processes": [
+        {
+          "pid": 3124,
+          "parent_pid": 14876,
+          "exe": "python.exe",
+          "peak_rss_mib": 336.625
+        },
+        {
+          "pid": 11232,
+          "parent_pid": 14876,
+          "exe": "conhost.exe",
+          "peak_rss_mib": 7.51953125
+        },
+        {
+          "pid": 14876,
+          "parent_pid": 7692,
+          "exe": "python.exe",
+          "peak_rss_mib": 4.1328125
+        }
+      ],
+      "ocr_cache_entries": 2
+    },
+    {
+      "mode": "cold_model_cache_miss",
+      "sample": 6,
+      "image": "hd_q_5259753.jpg",
+      "sample_count": 275,
+      "fastapi_peak_rss_mib": 131.73828125,
+      "ocr_process_tree_peak_rss_mib": 537.78125,
+      "combined_process_tree_peak_rss_mib": 669.5078125,
+      "descendant_processes": [
+        {
+          "pid": 9224,
+          "parent_pid": 9616,
+          "exe": "python.exe",
+          "peak_rss_mib": 526.1171875
+        },
+        {
+          "pid": 6960,
+          "parent_pid": 9616,
+          "exe": "conhost.exe",
+          "peak_rss_mib": 7.52734375
+        },
+        {
+          "pid": 9616,
+          "parent_pid": 7692,
+          "exe": "python.exe",
+          "peak_rss_mib": 4.13671875
+        }
+      ],
+      "ocr_cache_entries": 2
+    },
+    {
+      "mode": "cold_model_cache_miss",
+      "sample": 7,
+      "image": "vmmu_page_r11_Math_0303_test_059_question_39_page_4_key_B_vqa.png",
+      "sample_count": 186,
+      "fastapi_peak_rss_mib": 158.8828125,
+      "ocr_process_tree_peak_rss_mib": 324.3359375,
+      "combined_process_tree_peak_rss_mib": 455.375,
+      "descendant_processes": [
+        {
+          "pid": 5368,
+          "parent_pid": 13508,
+          "exe": "python.exe",
+          "peak_rss_mib": 312.67578125
+        },
+        {
+          "pid": 15740,
+          "parent_pid": 13508,
+          "exe": "conhost.exe",
+          "peak_rss_mib": 7.52734375
+        },
+        {
+          "pid": 13508,
+          "parent_pid": 7692,
+          "exe": "python.exe",
+          "peak_rss_mib": 4.1328125
+        }
+      ],
+      "ocr_cache_entries": 2
+    },
+    {
+      "mode": "cold_model_cache_miss",
+      "sample": 8,
+      "image": "hd_q_5259753.jpg",
+      "sample_count": 163,
+      "fastapi_peak_rss_mib": 132.33203125,
+      "ocr_process_tree_peak_rss_mib": 519.61328125,
+      "combined_process_tree_peak_rss_mib": 651.9453125,
+      "descendant_processes": [
+        {
+          "pid": 4776,
+          "parent_pid": 14464,
+          "exe": "python.exe",
+          "peak_rss_mib": 507.92578125
+        },
+        {
+          "pid": 12524,
+          "parent_pid": 14464,
+          "exe": "conhost.exe",
+          "peak_rss_mib": 7.5234375
+        },
+        {
+          "pid": 14464,
+          "parent_pid": 7692,
+          "exe": "python.exe",
+          "peak_rss_mib": 4.1640625
+        }
+      ],
+      "ocr_cache_entries": 2
+    },
+    {
+      "mode": "cold_model_cache_miss",
+      "sample": 9,
+      "image": "vmmu_page_r11_Math_0303_test_059_question_39_page_4_key_B_vqa.png",
+      "sample_count": 239,
+      "fastapi_peak_rss_mib": 152.96484375,
+      "ocr_process_tree_peak_rss_mib": 374.58984375,
+      "combined_process_tree_peak_rss_mib": 506.9765625,
+      "descendant_processes": [
+        {
+          "pid": 18248,
+          "parent_pid": 13368,
+          "exe": "python.exe",
+          "peak_rss_mib": 362.9375
+        },
+        {
+          "pid": 16172,
+          "parent_pid": 12696,
+          "exe": "python.exe",
+          "peak_rss_mib": 206.140625
+        },
+        {
+          "pid": 18448,
+          "parent_pid": 12696,
+          "exe": "conhost.exe",
+          "peak_rss_mib": 7.953125
+        },
+        {
+          "pid": 9768,
+          "parent_pid": 13368,
+          "exe": "conhost.exe",
+          "peak_rss_mib": 7.5234375
+        },
+        {
+          "pid": 13368,
+          "parent_pid": 7692,
+          "exe": "python.exe",
+          "peak_rss_mib": 4.12890625
+        },
+        {
+          "pid": 12696,
+          "parent_pid": 7692,
+          "exe": "python.exe",
+          "peak_rss_mib": 0.03125
+        }
+      ],
+      "ocr_cache_entries": 2
+    },
+    {
+      "mode": "warm_model_cache_miss",
+      "sample": 0,
+      "image": "hd_q_5259753.jpg",
+      "sample_count": 80,
+      "fastapi_peak_rss_mib": 132.390625,
+      "ocr_process_tree_peak_rss_mib": 740.36328125,
+      "combined_process_tree_peak_rss_mib": 872.75390625,
+      "descendant_processes": [
+        {
+          "pid": 18248,
+          "parent_pid": 13368,
+          "exe": "python.exe",
+          "peak_rss_mib": 728.7109375
+        },
+        {
+          "pid": 9768,
+          "parent_pid": 13368,
+          "exe": "conhost.exe",
+          "peak_rss_mib": 7.5234375
+        },
+        {
+          "pid": 13368,
+          "parent_pid": 7692,
+          "exe": "python.exe",
+          "peak_rss_mib": 4.12890625
+        }
+      ],
+      "ocr_cache_entries": 2
+    },
+    {
+      "mode": "warm_model_cache_miss",
+      "sample": 1,
+      "image": "vmmu_page_r11_Math_0303_test_059_question_39_page_4_key_B_vqa.png",
+      "sample_count": 82,
+      "fastapi_peak_rss_mib": 144.8984375,
+      "ocr_process_tree_peak_rss_mib": 473.51171875,
+      "combined_process_tree_peak_rss_mib": 605.5625,
+      "descendant_processes": [
+        {
+          "pid": 18248,
+          "parent_pid": 13368,
+          "exe": "python.exe",
+          "peak_rss_mib": 461.859375
+        },
+        {
+          "pid": 9768,
+          "parent_pid": 13368,
+          "exe": "conhost.exe",
+          "peak_rss_mib": 7.5234375
+        },
+        {
+          "pid": 13368,
+          "parent_pid": 7692,
+          "exe": "python.exe",
+          "peak_rss_mib": 4.12890625
+        }
+      ],
+      "ocr_cache_entries": 2
+    },
+    {
+      "mode": "warm_model_cache_miss",
+      "sample": 2,
+      "image": "hd_q_5259753.jpg",
+      "sample_count": 86,
+      "fastapi_peak_rss_mib": 132.53515625,
+      "ocr_process_tree_peak_rss_mib": 742.76953125,
+      "combined_process_tree_peak_rss_mib": 875.29296875,
+      "descendant_processes": [
+        {
+          "pid": 18248,
+          "parent_pid": 13368,
+          "exe": "python.exe",
+          "peak_rss_mib": 731.14453125
+        },
+        {
+          "pid": 9768,
+          "parent_pid": 13368,
+          "exe": "conhost.exe",
+          "peak_rss_mib": 7.5234375
+        },
+        {
+          "pid": 13368,
+          "parent_pid": 7692,
+          "exe": "python.exe",
+          "peak_rss_mib": 4.1015625
+        }
+      ],
+      "ocr_cache_entries": 2
+    },
+    {
+      "mode": "warm_model_cache_miss",
+      "sample": 3,
+      "image": "vmmu_page_r11_Math_0303_test_059_question_39_page_4_key_B_vqa.png",
+      "sample_count": 74,
+      "fastapi_peak_rss_mib": 146.19140625,
+      "ocr_process_tree_peak_rss_mib": 472.22265625,
+      "combined_process_tree_peak_rss_mib": 604.54296875,
+      "descendant_processes": [
+        {
+          "pid": 18248,
+          "parent_pid": 13368,
+          "exe": "python.exe",
+          "peak_rss_mib": 460.59765625
+        },
+        {
+          "pid": 9768,
+          "parent_pid": 13368,
+          "exe": "conhost.exe",
+          "peak_rss_mib": 7.5234375
+        },
+        {
+          "pid": 13368,
+          "parent_pid": 7692,
+          "exe": "python.exe",
+          "peak_rss_mib": 4.1015625
+        }
+      ],
+      "ocr_cache_entries": 2
+    },
+    {
+      "mode": "warm_model_cache_miss",
+      "sample": 4,
+      "image": "hd_q_5259753.jpg",
+      "sample_count": 83,
+      "fastapi_peak_rss_mib": 133.3515625,
+      "ocr_process_tree_peak_rss_mib": 734.25,
+      "combined_process_tree_peak_rss_mib": 867.1328125,
+      "descendant_processes": [
+        {
+          "pid": 18248,
+          "parent_pid": 13368,
+          "exe": "python.exe",
+          "peak_rss_mib": 722.625
+        },
+        {
+          "pid": 9768,
+          "parent_pid": 13368,
+          "exe": "conhost.exe",
+          "peak_rss_mib": 7.5234375
+        },
+        {
+          "pid": 13368,
+          "parent_pid": 7692,
+          "exe": "python.exe",
+          "peak_rss_mib": 4.1015625
+        }
+      ],
+      "ocr_cache_entries": 2
+    },
+    {
+      "mode": "warm_model_cache_miss",
+      "sample": 5,
+      "image": "vmmu_page_r11_Math_0303_test_059_question_39_page_4_key_B_vqa.png",
+      "sample_count": 78,
+      "fastapi_peak_rss_mib": 159.65234375,
+      "ocr_process_tree_peak_rss_mib": 502.62109375,
+      "combined_process_tree_peak_rss_mib": 634.80078125,
+      "descendant_processes": [
+        {
+          "pid": 18248,
+          "parent_pid": 13368,
+          "exe": "python.exe",
+          "peak_rss_mib": 490.99609375
+        },
+        {
+          "pid": 9768,
+          "parent_pid": 13368,
+          "exe": "conhost.exe",
+          "peak_rss_mib": 7.5234375
+        },
+        {
+          "pid": 13368,
+          "parent_pid": 7692,
+          "exe": "python.exe",
+          "peak_rss_mib": 4.1015625
+        }
+      ],
+      "ocr_cache_entries": 2
+    },
+    {
+      "mode": "warm_model_cache_miss",
+      "sample": 6,
+      "image": "hd_q_5259753.jpg",
+      "sample_count": 92,
+      "fastapi_peak_rss_mib": 132.45703125,
+      "ocr_process_tree_peak_rss_mib": 736.375,
+      "combined_process_tree_peak_rss_mib": 868.765625,
+      "descendant_processes": [
+        {
+          "pid": 18248,
+          "parent_pid": 13368,
+          "exe": "python.exe",
+          "peak_rss_mib": 724.75
+        },
+        {
+          "pid": 9768,
+          "parent_pid": 13368,
+          "exe": "conhost.exe",
+          "peak_rss_mib": 7.5234375
+        },
+        {
+          "pid": 13368,
+          "parent_pid": 7692,
+          "exe": "python.exe",
+          "peak_rss_mib": 4.1015625
+        }
+      ],
+      "ocr_cache_entries": 2
+    },
+    {
+      "mode": "warm_model_cache_miss",
+      "sample": 7,
+      "image": "vmmu_page_r11_Math_0303_test_059_question_39_page_4_key_B_vqa.png",
+      "sample_count": 84,
+      "fastapi_peak_rss_mib": 142.0390625,
+      "ocr_process_tree_peak_rss_mib": 502.6640625,
+      "combined_process_tree_peak_rss_mib": 635.06640625,
+      "descendant_processes": [
+        {
+          "pid": 18248,
+          "parent_pid": 13368,
+          "exe": "python.exe",
+          "peak_rss_mib": 491.0390625
+        },
+        {
+          "pid": 9768,
+          "parent_pid": 13368,
+          "exe": "conhost.exe",
+          "peak_rss_mib": 7.5234375
+        },
+        {
+          "pid": 13368,
+          "parent_pid": 7692,
+          "exe": "python.exe",
+          "peak_rss_mib": 4.1015625
+        }
+      ],
+      "ocr_cache_entries": 2
+    },
+    {
+      "mode": "warm_model_cache_miss",
+      "sample": 8,
+      "image": "hd_q_5259753.jpg",
+      "sample_count": 65,
+      "fastapi_peak_rss_mib": 132.58984375,
+      "ocr_process_tree_peak_rss_mib": 742.3203125,
+      "combined_process_tree_peak_rss_mib": 874.89453125,
+      "descendant_processes": [
+        {
+          "pid": 18248,
+          "parent_pid": 13368,
+          "exe": "python.exe",
+          "peak_rss_mib": 730.6953125
+        },
+        {
+          "pid": 9768,
+          "parent_pid": 13368,
+          "exe": "conhost.exe",
+          "peak_rss_mib": 7.5234375
+        },
+        {
+          "pid": 13368,
+          "parent_pid": 7692,
+          "exe": "python.exe",
+          "peak_rss_mib": 4.1015625
+        }
+      ],
+      "ocr_cache_entries": 2
+    },
+    {
+      "mode": "warm_model_cache_miss",
+      "sample": 9,
+      "image": "vmmu_page_r11_Math_0303_test_059_question_39_page_4_key_B_vqa.png",
+      "sample_count": 81,
+      "fastapi_peak_rss_mib": 148.390625,
+      "ocr_process_tree_peak_rss_mib": 473.43359375,
+      "combined_process_tree_peak_rss_mib": 606.02734375,
+      "descendant_processes": [
+        {
+          "pid": 18248,
+          "parent_pid": 13368,
+          "exe": "python.exe",
+          "peak_rss_mib": 461.80859375
+        },
+        {
+          "pid": 9768,
+          "parent_pid": 13368,
+          "exe": "conhost.exe",
+          "peak_rss_mib": 7.5234375
+        },
+        {
+          "pid": 13368,
+          "parent_pid": 7692,
+          "exe": "python.exe",
+          "peak_rss_mib": 4.1015625
+        }
+      ],
+      "ocr_cache_entries": 2
+    },
+    {
+      "mode": "cache_hit",
+      "sample": 0,
+      "image": "hd_q_5259753.jpg",
+      "sample_count": 9,
+      "fastapi_peak_rss_mib": 133.52734375,
+      "ocr_process_tree_peak_rss_mib": 219.390625,
+      "combined_process_tree_peak_rss_mib": 352.91796875,
+      "descendant_processes": [
+        {
+          "pid": 18248,
+          "parent_pid": 13368,
+          "exe": "python.exe",
+          "peak_rss_mib": 207.765625
+        },
+        {
+          "pid": 9768,
+          "parent_pid": 13368,
+          "exe": "conhost.exe",
+          "peak_rss_mib": 7.5234375
+        },
+        {
+          "pid": 13368,
+          "parent_pid": 7692,
+          "exe": "python.exe",
+          "peak_rss_mib": 4.1015625
+        }
+      ],
+      "ocr_cache_entries": 4
+    },
+    {
+      "mode": "cache_hit",
+      "sample": 1,
+      "image": "vmmu_page_r11_Math_0303_test_059_question_39_page_4_key_B_vqa.png",
+      "sample_count": 13,
+      "fastapi_peak_rss_mib": 149.60546875,
+      "ocr_process_tree_peak_rss_mib": 219.390625,
+      "combined_process_tree_peak_rss_mib": 368.99609375,
+      "descendant_processes": [
+        {
+          "pid": 18248,
+          "parent_pid": 13368,
+          "exe": "python.exe",
+          "peak_rss_mib": 207.765625
+        },
+        {
+          "pid": 9768,
+          "parent_pid": 13368,
+          "exe": "conhost.exe",
+          "peak_rss_mib": 7.5234375
+        },
+        {
+          "pid": 13368,
+          "parent_pid": 7692,
+          "exe": "python.exe",
+          "peak_rss_mib": 4.1015625
+        }
+      ],
+      "ocr_cache_entries": 4
+    },
+    {
+      "mode": "cache_hit",
+      "sample": 2,
+      "image": "hd_q_5259753.jpg",
+      "sample_count": 9,
+      "fastapi_peak_rss_mib": 133.171875,
+      "ocr_process_tree_peak_rss_mib": 219.390625,
+      "combined_process_tree_peak_rss_mib": 352.5625,
+      "descendant_processes": [
+        {
+          "pid": 18248,
+          "parent_pid": 13368,
+          "exe": "python.exe",
+          "peak_rss_mib": 207.765625
+        },
+        {
+          "pid": 9768,
+          "parent_pid": 13368,
+          "exe": "conhost.exe",
+          "peak_rss_mib": 7.5234375
+        },
+        {
+          "pid": 13368,
+          "parent_pid": 7692,
+          "exe": "python.exe",
+          "peak_rss_mib": 4.1015625
+        }
+      ],
+      "ocr_cache_entries": 4
+    },
+    {
+      "mode": "cache_hit",
+      "sample": 3,
+      "image": "vmmu_page_r11_Math_0303_test_059_question_39_page_4_key_B_vqa.png",
+      "sample_count": 14,
+      "fastapi_peak_rss_mib": 153.81640625,
+      "ocr_process_tree_peak_rss_mib": 219.390625,
+      "combined_process_tree_peak_rss_mib": 373.20703125,
+      "descendant_processes": [
+        {
+          "pid": 18248,
+          "parent_pid": 13368,
+          "exe": "python.exe",
+          "peak_rss_mib": 207.765625
+        },
+        {
+          "pid": 9768,
+          "parent_pid": 13368,
+          "exe": "conhost.exe",
+          "peak_rss_mib": 7.5234375
+        },
+        {
+          "pid": 13368,
+          "parent_pid": 7692,
+          "exe": "python.exe",
+          "peak_rss_mib": 4.1015625
+        }
+      ],
+      "ocr_cache_entries": 4
+    },
+    {
+      "mode": "cache_hit",
+      "sample": 4,
+      "image": "hd_q_5259753.jpg",
+      "sample_count": 10,
+      "fastapi_peak_rss_mib": 134.21875,
+      "ocr_process_tree_peak_rss_mib": 219.390625,
+      "combined_process_tree_peak_rss_mib": 353.609375,
+      "descendant_processes": [
+        {
+          "pid": 18248,
+          "parent_pid": 13368,
+          "exe": "python.exe",
+          "peak_rss_mib": 207.765625
+        },
+        {
+          "pid": 9768,
+          "parent_pid": 13368,
+          "exe": "conhost.exe",
+          "peak_rss_mib": 7.5234375
+        },
+        {
+          "pid": 13368,
+          "parent_pid": 7692,
+          "exe": "python.exe",
+          "peak_rss_mib": 4.1015625
+        }
+      ],
+      "ocr_cache_entries": 4
+    },
+    {
+      "mode": "cache_hit",
+      "sample": 5,
+      "image": "vmmu_page_r11_Math_0303_test_059_question_39_page_4_key_B_vqa.png",
+      "sample_count": 14,
+      "fastapi_peak_rss_mib": 148.98828125,
+      "ocr_process_tree_peak_rss_mib": 219.390625,
+      "combined_process_tree_peak_rss_mib": 368.37890625,
+      "descendant_processes": [
+        {
+          "pid": 18248,
+          "parent_pid": 13368,
+          "exe": "python.exe",
+          "peak_rss_mib": 207.765625
+        },
+        {
+          "pid": 9768,
+          "parent_pid": 13368,
+          "exe": "conhost.exe",
+          "peak_rss_mib": 7.5234375
+        },
+        {
+          "pid": 13368,
+          "parent_pid": 7692,
+          "exe": "python.exe",
+          "peak_rss_mib": 4.1015625
+        }
+      ],
+      "ocr_cache_entries": 4
+    },
+    {
+      "mode": "cache_hit",
+      "sample": 6,
+      "image": "hd_q_5259753.jpg",
+      "sample_count": 9,
+      "fastapi_peak_rss_mib": 133.41796875,
+      "ocr_process_tree_peak_rss_mib": 219.390625,
+      "combined_process_tree_peak_rss_mib": 352.80859375,
+      "descendant_processes": [
+        {
+          "pid": 18248,
+          "parent_pid": 13368,
+          "exe": "python.exe",
+          "peak_rss_mib": 207.765625
+        },
+        {
+          "pid": 9768,
+          "parent_pid": 13368,
+          "exe": "conhost.exe",
+          "peak_rss_mib": 7.5234375
+        },
+        {
+          "pid": 13368,
+          "parent_pid": 7692,
+          "exe": "python.exe",
+          "peak_rss_mib": 4.1015625
+        }
+      ],
+      "ocr_cache_entries": 4
+    },
+    {
+      "mode": "cache_hit",
+      "sample": 7,
+      "image": "vmmu_page_r11_Math_0303_test_059_question_39_page_4_key_B_vqa.png",
+      "sample_count": 15,
+      "fastapi_peak_rss_mib": 141.640625,
+      "ocr_process_tree_peak_rss_mib": 219.390625,
+      "combined_process_tree_peak_rss_mib": 361.03125,
+      "descendant_processes": [
+        {
+          "pid": 18248,
+          "parent_pid": 13368,
+          "exe": "python.exe",
+          "peak_rss_mib": 207.765625
+        },
+        {
+          "pid": 9768,
+          "parent_pid": 13368,
+          "exe": "conhost.exe",
+          "peak_rss_mib": 7.5234375
+        },
+        {
+          "pid": 13368,
+          "parent_pid": 7692,
+          "exe": "python.exe",
+          "peak_rss_mib": 4.1015625
+        }
+      ],
+      "ocr_cache_entries": 4
+    },
+    {
+      "mode": "cache_hit",
+      "sample": 8,
+      "image": "hd_q_5259753.jpg",
+      "sample_count": 10,
+      "fastapi_peak_rss_mib": 134.9296875,
+      "ocr_process_tree_peak_rss_mib": 219.390625,
+      "combined_process_tree_peak_rss_mib": 354.3203125,
+      "descendant_processes": [
+        {
+          "pid": 18248,
+          "parent_pid": 13368,
+          "exe": "python.exe",
+          "peak_rss_mib": 207.765625
+        },
+        {
+          "pid": 9768,
+          "parent_pid": 13368,
+          "exe": "conhost.exe",
+          "peak_rss_mib": 7.5234375
+        },
+        {
+          "pid": 13368,
+          "parent_pid": 7692,
+          "exe": "python.exe",
+          "peak_rss_mib": 4.1015625
+        }
+      ],
+      "ocr_cache_entries": 4
+    },
+    {
+      "mode": "cache_hit",
+      "sample": 9,
+      "image": "vmmu_page_r11_Math_0303_test_059_question_39_page_4_key_B_vqa.png",
+      "sample_count": 15,
+      "fastapi_peak_rss_mib": 146.63671875,
+      "ocr_process_tree_peak_rss_mib": 219.390625,
+      "combined_process_tree_peak_rss_mib": 366.02734375,
+      "descendant_processes": [
+        {
+          "pid": 18248,
+          "parent_pid": 13368,
+          "exe": "python.exe",
+          "peak_rss_mib": 207.765625
+        },
+        {
+          "pid": 9768,
+          "parent_pid": 13368,
+          "exe": "conhost.exe",
+          "peak_rss_mib": 7.5234375
+        },
+        {
+          "pid": 13368,
+          "parent_pid": 7692,
+          "exe": "python.exe",
+          "peak_rss_mib": 4.1015625
+        }
+      ],
+      "ocr_cache_entries": 4
+    }
+  ],
+  "summary_peak_by_mode": {
+    "cold_model_cache_miss": {
+      "fastapi_peak_rss_mib": {
+        "n": 10,
+        "p50": 137.796875,
+        "p95_nearest_rank": 158.8828125
+      },
+      "ocr_process_tree_peak_rss_mib": {
+        "n": 10,
+        "p50": 427.16796875,
+        "p95_nearest_rank": 537.78125
+      },
+      "combined_process_tree_peak_rss_mib": {
+        "n": 10,
+        "p50": 557.814453125,
+        "p95_nearest_rank": 669.5078125
+      }
+    },
+    "warm_model_cache_miss": {
+      "fastapi_peak_rss_mib": {
+        "n": 10,
+        "p50": 137.6953125,
+        "p95_nearest_rank": 159.65234375
+      },
+      "ocr_process_tree_peak_rss_mib": {
+        "n": 10,
+        "p50": 618.45703125,
+        "p95_nearest_rank": 742.76953125
+      },
+      "combined_process_tree_peak_rss_mib": {
+        "n": 10,
+        "p50": 751.099609375,
+        "p95_nearest_rank": 875.29296875
+      }
+    },
+    "cache_hit": {
+      "fastapi_peak_rss_mib": {
+        "n": 10,
+        "p50": 138.28515625,
+        "p95_nearest_rank": 153.81640625
+      },
+      "ocr_process_tree_peak_rss_mib": {
+        "n": 10,
+        "p50": 219.390625,
+        "p95_nearest_rank": 219.390625
+      },
+      "combined_process_tree_peak_rss_mib": {
+        "n": 10,
+        "p50": 357.67578125,
+        "p95_nearest_rank": 373.20703125
+      }
+    }
+  },
+  "concurrent_uploads": {
+    "simultaneous_uploads": 2,
+    "rounds": [
+      {
+        "round": 0,
+        "wall_ms": 7341.178099999979,
+        "per_request_ms": [
+          6637.0356000002175,
+          6624.705600000198
+        ],
+        "statuses": [
+          200,
+          200
+        ],
+        "sample_count": 143,
+        "fastapi_peak_rss_mib": 160.25,
+        "ocr_process_tree_peak_rss_mib": 742.8828125,
+        "combined_process_tree_peak_rss_mib": 877.6796875,
+        "descendant_processes": [
+          {
+            "pid": 18248,
+            "parent_pid": 13368,
+            "exe": "python.exe",
+            "peak_rss_mib": 731.2578125
+          },
+          {
+            "pid": 9768,
+            "parent_pid": 13368,
+            "exe": "conhost.exe",
+            "peak_rss_mib": 7.5234375
+          },
+          {
+            "pid": 13368,
+            "parent_pid": 7692,
+            "exe": "python.exe",
+            "peak_rss_mib": 4.1015625
+          }
+        ]
+      },
+      {
+        "round": 1,
+        "wall_ms": 8060.094799999661,
+        "per_request_ms": [
+          3736.913700000059,
+          3800.8779000001596
+        ],
+        "statuses": [
+          200,
+          200
+        ],
+        "sample_count": 143,
+        "fastapi_peak_rss_mib": 153.84375,
+        "ocr_process_tree_peak_rss_mib": 735.1484375,
+        "combined_process_tree_peak_rss_mib": 869.33203125,
+        "descendant_processes": [
+          {
+            "pid": 18248,
+            "parent_pid": 13368,
+            "exe": "python.exe",
+            "peak_rss_mib": 723.5234375
+          },
+          {
+            "pid": 9768,
+            "parent_pid": 13368,
+            "exe": "conhost.exe",
+            "peak_rss_mib": 7.5234375
+          },
+          {
+            "pid": 13368,
+            "parent_pid": 7692,
+            "exe": "python.exe",
+            "peak_rss_mib": 4.1015625
+          }
+        ]
+      },
+      {
+        "round": 2,
+        "wall_ms": 10857.181599999876,
+        "per_request_ms": [
+          9469.978699999956,
+          9525.71190000026
+        ],
+        "statuses": [
+          200,
+          200
+        ],
+        "sample_count": 171,
+        "fastapi_peak_rss_mib": 154.3984375,
+        "ocr_process_tree_peak_rss_mib": 743.20703125,
+        "combined_process_tree_peak_rss_mib": 877.39453125,
+        "descendant_processes": [
+          {
+            "pid": 18248,
+            "parent_pid": 13368,
+            "exe": "python.exe",
+            "peak_rss_mib": 731.58203125
+          },
+          {
+            "pid": 9768,
+            "parent_pid": 13368,
+            "exe": "conhost.exe",
+            "peak_rss_mib": 7.5234375
+          },
+          {
+            "pid": 13368,
+            "parent_pid": 7692,
+            "exe": "python.exe",
+            "peak_rss_mib": 4.1015625
+          }
+        ]
+      },
+      {
+        "round": 3,
+        "wall_ms": 11199.794300000121,
+        "per_request_ms": [
+          3898.8485999998375,
+          6621.588299999985
+        ],
+        "statuses": [
+          200,
+          200
+        ],
+        "sample_count": 190,
+        "fastapi_peak_rss_mib": 151.1640625,
+        "ocr_process_tree_peak_rss_mib": 742.69140625,
+        "combined_process_tree_peak_rss_mib": 877.171875,
+        "descendant_processes": [
+          {
+            "pid": 18248,
+            "parent_pid": 13368,
+            "exe": "python.exe",
+            "peak_rss_mib": 731.06640625
+          },
+          {
+            "pid": 9768,
+            "parent_pid": 13368,
+            "exe": "conhost.exe",
+            "peak_rss_mib": 7.5234375
+          },
+          {
+            "pid": 13368,
+            "parent_pid": 7692,
+            "exe": "python.exe",
+            "peak_rss_mib": 4.1015625
+          }
+        ]
+      },
+      {
+        "round": 4,
+        "wall_ms": 5570.464099999754,
+        "per_request_ms": [
+          5066.563599999881,
+          5079.31759999974
+        ],
+        "statuses": [
+          200,
+          200
+        ],
+        "sample_count": 120,
+        "fastapi_peak_rss_mib": 150.09765625,
+        "ocr_process_tree_peak_rss_mib": 684.3359375,
+        "combined_process_tree_peak_rss_mib": 819.13671875,
+        "descendant_processes": [
+          {
+            "pid": 18248,
+            "parent_pid": 13368,
+            "exe": "python.exe",
+            "peak_rss_mib": 672.7109375
+          },
+          {
+            "pid": 9768,
+            "parent_pid": 13368,
+            "exe": "conhost.exe",
+            "peak_rss_mib": 7.5234375
+          },
+          {
+            "pid": 13368,
+            "parent_pid": 7692,
+            "exe": "python.exe",
+            "peak_rss_mib": 4.1015625
+          }
+        ]
+      },
+      {
+        "round": 5,
+        "wall_ms": 4328.320299999632,
+        "per_request_ms": [
+          3974.760399999923,
+          3965.6003000000055
+        ],
+        "statuses": [
+          200,
+          200
+        ],
+        "sample_count": 98,
+        "fastapi_peak_rss_mib": 141.67578125,
+        "ocr_process_tree_peak_rss_mib": 743.33203125,
+        "combined_process_tree_peak_rss_mib": 878.73046875,
+        "descendant_processes": [
+          {
+            "pid": 18248,
+            "parent_pid": 13368,
+            "exe": "python.exe",
+            "peak_rss_mib": 731.70703125
+          },
+          {
+            "pid": 9768,
+            "parent_pid": 13368,
+            "exe": "conhost.exe",
+            "peak_rss_mib": 7.5234375
+          },
+          {
+            "pid": 13368,
+            "parent_pid": 7692,
+            "exe": "python.exe",
+            "peak_rss_mib": 4.1015625
+          }
+        ]
+      },
+      {
+        "round": 6,
+        "wall_ms": 4184.982999999647,
+        "per_request_ms": [
+          1912.213800000245,
+          1949.0129000000707
+        ],
+        "statuses": [
+          200,
+          200
+        ],
+        "sample_count": 99,
+        "fastapi_peak_rss_mib": 150.671875,
+        "ocr_process_tree_peak_rss_mib": 743.17578125,
+        "combined_process_tree_peak_rss_mib": 878.1796875,
+        "descendant_processes": [
+          {
+            "pid": 18248,
+            "parent_pid": 13368,
+            "exe": "python.exe",
+            "peak_rss_mib": 731.55078125
+          },
+          {
+            "pid": 9768,
+            "parent_pid": 13368,
+            "exe": "conhost.exe",
+            "peak_rss_mib": 7.5234375
+          },
+          {
+            "pid": 13368,
+            "parent_pid": 7692,
+            "exe": "python.exe",
+            "peak_rss_mib": 4.1015625
+          }
+        ]
+      },
+      {
+        "round": 7,
+        "wall_ms": 4201.493199999732,
+        "per_request_ms": [
+          2218.39510000018,
+          1686.4862000002177
+        ],
+        "statuses": [
+          200,
+          200
+        ],
+        "sample_count": 100,
+        "fastapi_peak_rss_mib": 161.23046875,
+        "ocr_process_tree_peak_rss_mib": 698.75390625,
+        "combined_process_tree_peak_rss_mib": 833.80078125,
+        "descendant_processes": [
+          {
+            "pid": 18248,
+            "parent_pid": 13368,
+            "exe": "python.exe",
+            "peak_rss_mib": 687.12890625
+          },
+          {
+            "pid": 9768,
+            "parent_pid": 13368,
+            "exe": "conhost.exe",
+            "peak_rss_mib": 7.5234375
+          },
+          {
+            "pid": 13368,
+            "parent_pid": 7692,
+            "exe": "python.exe",
+            "peak_rss_mib": 4.1015625
+          }
+        ]
+      },
+      {
+        "round": 8,
+        "wall_ms": 4154.4371999998475,
+        "per_request_ms": [
+          1914.4232000003285,
+          1954.164100000071
+        ],
+        "statuses": [
+          200,
+          200
+        ],
+        "sample_count": 99,
+        "fastapi_peak_rss_mib": 152.47265625,
+        "ocr_process_tree_peak_rss_mib": 742.9296875,
+        "combined_process_tree_peak_rss_mib": 878.03515625,
+        "descendant_processes": [
+          {
+            "pid": 18248,
+            "parent_pid": 13368,
+            "exe": "python.exe",
+            "peak_rss_mib": 731.3046875
+          },
+          {
+            "pid": 9768,
+            "parent_pid": 13368,
+            "exe": "conhost.exe",
+            "peak_rss_mib": 7.5234375
+          },
+          {
+            "pid": 13368,
+            "parent_pid": 7692,
+            "exe": "python.exe",
+            "peak_rss_mib": 4.1015625
+          }
+        ]
+      },
+      {
+        "round": 9,
+        "wall_ms": 4007.4494000000414,
+        "per_request_ms": [
+          3701.408100000208,
+          3689.643899999737
+        ],
+        "statuses": [
+          200,
+          200
+        ],
+        "sample_count": 97,
+        "fastapi_peak_rss_mib": 141.83984375,
+        "ocr_process_tree_peak_rss_mib": 742.8203125,
+        "combined_process_tree_peak_rss_mib": 877.765625,
+        "descendant_processes": [
+          {
+            "pid": 18248,
+            "parent_pid": 13368,
+            "exe": "python.exe",
+            "peak_rss_mib": 731.1953125
+          },
+          {
+            "pid": 9768,
+            "parent_pid": 13368,
+            "exe": "conhost.exe",
+            "peak_rss_mib": 7.5234375
+          },
+          {
+            "pid": 13368,
+            "parent_pid": 7692,
+            "exe": "python.exe",
+            "peak_rss_mib": 4.1015625
+          }
+        ]
+      }
+    ],
+    "requests": 20,
+    "http_200": 20,
+    "http_5xx": 0,
+    "wall_ms_all_200_rounds": {
+      "n": 10,
+      "p50": 4949.392199999693,
+      "p95_nearest_rank": 11199.794300000121
+    },
+    "database": "SQLite file (development default); PostgreSQL NOT_MEASURED",
+    "server_exception_events": [],
+    "failure_cause": "NO_FAILURE_OBSERVED"
+  },
+  "worker_crash_recovery": {
+    "killed_launcher_pid": 13368,
+    "tree_pids_before_kill": [
+      13368,
+      9768,
+      18248
+    ],
+    "orphan_python_pids_1s_after_kill": [],
+    "next_request_http_status": 200,
+    "next_request_prepare_status": "ready",
+    "next_request_ms": 4480.08770000024,
+    "next_request_cold_worker": true,
+    "pass": true
+  },
+  "after_explicit_worker_shutdown": {
+    "tree_pids_before_shutdown": [
+      12000,
+      5420,
+      19660
+    ],
+    "orphan_python_pids_1s_after_shutdown": [],
+    "current": {
+      "time": 2406.5414953,
+      "fastapi": {
+        "rss_mib": 134.921875,
+        "process_lifetime_peak_rss_mib": 162.109375
+      },
+      "launcher_pid": null,
+      "descendants": [],
+      "descendant_rss_mib": 0,
+      "combined_rss_mib": 134.921875
+    }
+  },
+  "process_tree_note": "LOCAL_OCR_PYTHON is a Windows venv launcher; the interpreter holding the OCR models is its child. Every descendant of the FastAPI process is sampled and listed by exe name.",
+  "combined_memory_note": "Sum of working sets (RSS); shared pages may be counted more than once. Sampled every 25 ms, so the peak is a lower bound. Includes FastAPI and all descendants, excludes the browser and this client.",
+  "supersedes": "The first profile in this run sampled only Popen.pid (the 4 MiB launcher) and is not retained; its combined peak of ~135-163 MiB excluded the OCR interpreter.",
+  "physical_low_end": "PHYSICAL_LOW_END_NOT_MEASURED"
+}

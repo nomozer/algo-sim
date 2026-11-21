@@ -1,0 +1,322 @@
+{
+  "schema": "slm-v9-training-run/1",
+  "generated_at_utc": "2026-11-19T09:51:19.279108+00:00",
+  "external_ai_calls": 0,
+  "hardware": {
+    "gpu_name": "NVIDIA GeForce GTX 1650",
+    "torch": "2.6.0+cu124",
+    "cuda": "12.4"
+  },
+  "dataset": {
+    "train_count": 474,
+    "val_count": 126
+  },
+  "model_params": {
+    "base_repo": "Qwen/Qwen3-0.6B",
+    "base_revision": "c1899de289a04d12100db370d81485cdf75e47ca",
+    "trainable_params": 10092544,
+    "all_params": 606142464
+  },
+  "epoch_history": [
+    {
+      "epoch": 0,
+      "train_loss": null,
+      "val_loss": 0.3277,
+      "val_metrics": {
+        "schema": "slm-v9-val-score/1",
+        "total": 126,
+        "json_valid": 124,
+        "json_valid_rate": 0.9841,
+        "positives_total": 94,
+        "positives_grounded": 10,
+        "positives_served": 0,
+        "positives_oracle_exact": 0,
+        "positive_served_exact_rate": 0.0,
+        "negatives_total": 32,
+        "negatives_safe_refused": 32,
+        "negative_safe_refusal_rate": 1.0,
+        "wrong_served_count": 0,
+        "overall_correct": 32,
+        "overall_accuracy_rate": 0.254,
+        "per_family": {
+          "VL01_FACE_PERP_RECT_ANG_DIST": {
+            "total": 24,
+            "json_valid": 24,
+            "grounded": 10,
+            "correct": 0,
+            "wrong_served": 0
+          },
+          "VL02_RHOM_MID_SKEW_DIST": {
+            "total": 24,
+            "json_valid": 24,
+            "grounded": 0,
+            "correct": 0,
+            "wrong_served": 0
+          },
+          "VL03_PRISM_PROJ_AREA": {
+            "total": 20,
+            "json_valid": 18,
+            "grounded": 0,
+            "correct": 0,
+            "wrong_served": 0
+          },
+          "VL04_MIXED_NEG_ADVERSARIAL": {
+            "total": 24,
+            "json_valid": 24,
+            "grounded": 0,
+            "correct": 24,
+            "wrong_served": 0
+          },
+          "VL9_MULTI_GOAL_DISJOINT": {
+            "total": 14,
+            "json_valid": 14,
+            "grounded": 0,
+            "correct": 0,
+            "wrong_served": 0
+          },
+          "VL9_TETRA_PRISM_RECT_DISJOINT": {
+            "total": 12,
+            "json_valid": 12,
+            "grounded": 0,
+            "correct": 0,
+            "wrong_served": 0
+          },
+          "VL9_NEG_DISJOINT": {
+            "total": 8,
+            "json_valid": 8,
+            "grounded": 0,
+            "correct": 8,
+            "wrong_served": 0
+          }
+        }
+      }
+    },
+    {
+      "epoch": 1,
+      "train_loss": 0.0429,
+      "val_loss": 0.0205,
+      "val_metrics": {
+        "schema": "slm-v9-val-score/1",
+        "total": 126,
+        "json_valid": 126,
+        "json_valid_rate": 1.0,
+        "positives_total": 94,
+        "positives_grounded": 90,
+        "positives_served": 66,
+        "positives_oracle_exact": 66,
+        "positive_served_exact_rate": 0.7021,
+        "negatives_total": 32,
+        "negatives_safe_refused": 32,
+        "negative_safe_refusal_rate": 1.0,
+        "wrong_served_count": 0,
+        "overall_correct": 98,
+        "overall_accuracy_rate": 0.7778,
+        "per_family": {
+          "VL01_FACE_PERP_RECT_ANG_DIST": {
+            "total": 24,
+            "json_valid": 24,
+            "grounded": 24,
+            "correct": 0,
+            "wrong_served": 0
+          },
+          "VL02_RHOM_MID_SKEW_DIST": {
+            "total": 24,
+            "json_valid": 24,
+            "grounded": 24,
+            "correct": 24,
+            "wrong_served": 0
+          },
+          "VL03_PRISM_PROJ_AREA": {
+            "total": 20,
+            "json_valid": 20,
+            "grounded": 18,
+            "correct": 18,
+            "wrong_served": 0
+          },
+          "VL04_MIXED_NEG_ADVERSARIAL": {
+            "total": 24,
+            "json_valid": 24,
+            "grounded": 0,
+            "correct": 24,
+            "wrong_served": 0
+          },
+          "VL9_MULTI_GOAL_DISJOINT": {
+            "total": 14,
+            "json_valid": 14,
+            "grounded": 14,
+            "correct": 14,
+            "wrong_served": 0
+          },
+          "VL9_TETRA_PRISM_RECT_DISJOINT": {
+            "total": 12,
+            "json_valid": 12,
+            "grounded": 10,
+            "correct": 10,
+            "wrong_served": 0
+          },
+          "VL9_NEG_DISJOINT": {
+            "total": 8,
+            "json_valid": 8,
+            "grounded": 0,
+            "correct": 8,
+            "wrong_served": 0
+          }
+        }
+      },
+      "adapter_dir": "C:\\Users\\Bunny\\AppData\\Local\\axo-slm\\adapters\\qwen3-0.6b-axo-v9-lora\\epoch_1"
+    },
+    {
+      "epoch": 2,
+      "train_loss": 0.0025,
+      "val_loss": 0.0251,
+      "val_metrics": {
+        "schema": "slm-v9-val-score/1",
+        "total": 126,
+        "json_valid": 126,
+        "json_valid_rate": 1.0,
+        "positives_total": 94,
+        "positives_grounded": 69,
+        "positives_served": 57,
+        "positives_oracle_exact": 57,
+        "positive_served_exact_rate": 0.6064,
+        "negatives_total": 32,
+        "negatives_safe_refused": 32,
+        "negative_safe_refusal_rate": 1.0,
+        "wrong_served_count": 0,
+        "overall_correct": 89,
+        "overall_accuracy_rate": 0.7063,
+        "per_family": {
+          "VL01_FACE_PERP_RECT_ANG_DIST": {
+            "total": 24,
+            "json_valid": 24,
+            "grounded": 20,
+            "correct": 8,
+            "wrong_served": 0
+          },
+          "VL02_RHOM_MID_SKEW_DIST": {
+            "total": 24,
+            "json_valid": 24,
+            "grounded": 24,
+            "correct": 24,
+            "wrong_served": 0
+          },
+          "VL03_PRISM_PROJ_AREA": {
+            "total": 20,
+            "json_valid": 20,
+            "grounded": 10,
+            "correct": 10,
+            "wrong_served": 0
+          },
+          "VL04_MIXED_NEG_ADVERSARIAL": {
+            "total": 24,
+            "json_valid": 24,
+            "grounded": 0,
+            "correct": 24,
+            "wrong_served": 0
+          },
+          "VL9_MULTI_GOAL_DISJOINT": {
+            "total": 14,
+            "json_valid": 14,
+            "grounded": 7,
+            "correct": 7,
+            "wrong_served": 0
+          },
+          "VL9_TETRA_PRISM_RECT_DISJOINT": {
+            "total": 12,
+            "json_valid": 12,
+            "grounded": 8,
+            "correct": 8,
+            "wrong_served": 0
+          },
+          "VL9_NEG_DISJOINT": {
+            "total": 8,
+            "json_valid": 8,
+            "grounded": 0,
+            "correct": 8,
+            "wrong_served": 0
+          }
+        }
+      },
+      "adapter_dir": "C:\\Users\\Bunny\\AppData\\Local\\axo-slm\\adapters\\qwen3-0.6b-axo-v9-lora\\epoch_2"
+    },
+    {
+      "epoch": 3,
+      "train_loss": 0.0002,
+      "val_loss": 0.0203,
+      "val_metrics": {
+        "schema": "slm-v9-val-score/1",
+        "total": 126,
+        "json_valid": 126,
+        "json_valid_rate": 1.0,
+        "positives_total": 94,
+        "positives_grounded": 80,
+        "positives_served": 70,
+        "positives_oracle_exact": 70,
+        "positive_served_exact_rate": 0.7447,
+        "negatives_total": 32,
+        "negatives_safe_refused": 32,
+        "negative_safe_refusal_rate": 1.0,
+        "wrong_served_count": 0,
+        "overall_correct": 102,
+        "overall_accuracy_rate": 0.8095,
+        "per_family": {
+          "VL01_FACE_PERP_RECT_ANG_DIST": {
+            "total": 24,
+            "json_valid": 24,
+            "grounded": 20,
+            "correct": 10,
+            "wrong_served": 0
+          },
+          "VL02_RHOM_MID_SKEW_DIST": {
+            "total": 24,
+            "json_valid": 24,
+            "grounded": 24,
+            "correct": 24,
+            "wrong_served": 0
+          },
+          "VL03_PRISM_PROJ_AREA": {
+            "total": 20,
+            "json_valid": 20,
+            "grounded": 10,
+            "correct": 10,
+            "wrong_served": 0
+          },
+          "VL04_MIXED_NEG_ADVERSARIAL": {
+            "total": 24,
+            "json_valid": 24,
+            "grounded": 0,
+            "correct": 24,
+            "wrong_served": 0
+          },
+          "VL9_MULTI_GOAL_DISJOINT": {
+            "total": 14,
+            "json_valid": 14,
+            "grounded": 14,
+            "correct": 14,
+            "wrong_served": 0
+          },
+          "VL9_TETRA_PRISM_RECT_DISJOINT": {
+            "total": 12,
+            "json_valid": 12,
+            "grounded": 12,
+            "correct": 12,
+            "wrong_served": 0
+          },
+          "VL9_NEG_DISJOINT": {
+            "total": 8,
+            "json_valid": 8,
+            "grounded": 0,
+            "correct": 8,
+            "wrong_served": 0
+          }
+        }
+      },
+      "adapter_dir": "C:\\Users\\Bunny\\AppData\\Local\\axo-slm\\adapters\\qwen3-0.6b-axo-v9-lora\\epoch_3"
+    }
+  ],
+  "selected_epoch": 3,
+  "peak_cuda_memory_mib": "NOT_MEASURED_ON_EXPORT_ONLY_RESUME",
+  "training_wall_time_s": 9804.3,
+  "frozen_v7_sha256_unchanged": "36e784d135627225e0b9c11b097c9a36222ee1e0e3f6f1d6116cc3060ac5e148",
+  "frozen_orig_sha256_unchanged": "ac2d97712095a558e31573f62f466a3f9d93990898b0ec79d7c974c1780d524a"
+}

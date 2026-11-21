@@ -1,0 +1,1244 @@
+{
+  "candidate_per_file_sha256": {
+    "__init__.py": "38ccabdc17075a0775745bd1a6e8c9529a7a40b0e6fa8676804407da18b48419",
+    "construction_graph.py": "cc4591598a8025940d06310e93d31b943dd7fa9942e78f2939a674bdcfd0e68d",
+    "construction_objects.py": "4b9a4867cf8788436b395755416189e93e90d1d1b6e23c600d72aa95cbbc965c",
+    "construction_operators.py": "84cd328b82bb949722cb69a1e44c8b5cde873068fa3e0581aef0b98d7bd4349c",
+    "construction_search.py": "efef3f5f0fcf1cdbac25e5ad75bf234123095452457525cd50674f7b5d313bd0",
+    "construction_serializer.py": "2c2a7c787ed2885c98e1a633caea9c0883a6c15d3ad4b75661b5fb8f6add2a5b",
+    "construction_state.py": "eb17e330eb2491de068827b80d922eb56390e6501b933ad3d7b3b106155d5f3c",
+    "construction_verifier.py": "7825bc5c39805baece483ccf1e4bf6be0add4450f172a988a7a6fcf61668d97f",
+    "geometry_invariance.py": "456a8e895cb0dcc2f941b6feeeb98b1fbf6fa7b35f60e998116486d89eae60b2",
+    "integration_adapter.py": "6b4b27edb840ce40698288b0e1665a040aa3940947d85873c859f5784877341d",
+    "model2_interface.py": "62bb4827a18fe87b38777de004ac4cef8c6b89f3b472bf8043cf2a2b0069f7a0",
+    "presentation_validator.py": "bb3703868706ae2934bb5e334842627a1789e9138bd6ce9030d16cf386e2b1a1",
+    "scene3d_bridge.py": "e85335e22f4bf08cccda30a8973bbd276a0af639c84cee9fedab2512e670c5ed",
+    "verified_input_bridge.py": "48be57387305bd1ff4b5dd713a65ec322443722cb990b811f2e2da8cc9600135"
+  },
+  "candidate_v2_freeze_sha256": "26c9b505fc7796ed9ff6a5c9578701978e92b9c1d6726a8208916a9ea3dca60c",
+  "cases": [
+    {
+      "case_id": "H01_cuboid_space_diagonal_ac_prime",
+      "expected_status": "GOAL_VERIFIED",
+      "family": "Cuboid_122",
+      "goal_spec": {
+        "goal_kind": "segment_length",
+        "length_unit": "a",
+        "operands": {
+          "a": "A",
+          "b": "C'"
+        }
+      },
+      "independent_oracle": "3a",
+      "problem_text": "Cho hình hộp chữ nhật ABCD.A'B'C'D' có AB = a, AD = 2a, AA' = 2a. Tính độ dài đoạn AC'",
+      "tags": []
+    },
+    {
+      "case_id": "H02_cuboid_dist_A_A_prime_BD",
+      "expected_status": "GOAL_VERIFIED",
+      "family": "Cuboid_122",
+      "goal_spec": {
+        "goal_kind": "distance_point_plane",
+        "length_unit": "a",
+        "operands": {
+          "plane": [
+            "A'",
+            "B",
+            "D"
+          ],
+          "point": "A"
+        }
+      },
+      "independent_oracle": "a√6/3",
+      "problem_text": "Cho hình hộp chữ nhật ABCD.A'B'C'D' có AB = a, AD = 2a, AA' = 2a. Tính khoảng cách từ A đến (A'BD)",
+      "tags": []
+    },
+    {
+      "case_id": "H03_cuboid_midpoint_dist_to_A_prime_BD",
+      "expected_status": "GOAL_VERIFIED",
+      "family": "Cuboid_122",
+      "goal_spec": {
+        "goal_kind": "distance_point_plane",
+        "length_unit": "a",
+        "operands": {
+          "plane": [
+            "A'",
+            "B",
+            "D"
+          ],
+          "point": "M"
+        }
+      },
+      "independent_oracle": "a√6/2",
+      "problem_text": "Cho hình hộp chữ nhật ABCD.A'B'C'D' có AB = a, AD = 2a, AA' = 2a. Gọi M là trung điểm C'D'. Tính khoảng cách từ M đến (A'BD)",
+      "tags": []
+    },
+    {
+      "case_id": "H04_cuboid_skew_dist_A_prime_B_and_B_prime_C",
+      "expected_status": "GOAL_VERIFIED",
+      "family": "Cuboid_122",
+      "goal_spec": {
+        "goal_kind": "distance_skew_lines",
+        "length_unit": "a",
+        "operands": {
+          "line1": [
+            "A'",
+            "B"
+          ],
+          "line2": [
+            "B'",
+            "C"
+          ]
+        }
+      },
+      "independent_oracle": "a√6/3",
+      "problem_text": "Cho hình hộp chữ nhật ABCD.A'B'C'D' có AB = a, AD = 2a, AA' = 2a. Tính khoảng cách giữa hai đường thẳng chéo nhau A'B và B'C",
+      "tags": [
+        "multi_plan"
+      ]
+    },
+    {
+      "case_id": "H05_cuboid_angle_AC_prime_ABCD",
+      "expected_status": "GOAL_VERIFIED",
+      "family": "Cuboid_122",
+      "goal_spec": {
+        "goal_kind": "angle_line_plane",
+        "length_unit": "a",
+        "operands": {
+          "line": [
+            "A",
+            "C'"
+          ],
+          "plane": [
+            "A",
+            "B",
+            "C",
+            "D"
+          ]
+        }
+      },
+      "independent_oracle": "cos²=5/9",
+      "problem_text": "Cho hình hộp chữ nhật ABCD.A'B'C'D' có AB = a, AD = 2a, AA' = 2a. Tính góc giữa AC' và (ABCD)",
+      "tags": []
+    },
+    {
+      "case_id": "H06_cuboid_dihedral_A_prime_BD_and_ABCD",
+      "expected_status": "GOAL_VERIFIED",
+      "family": "Cuboid_122",
+      "goal_spec": {
+        "goal_kind": "angle_plane_plane",
+        "length_unit": "a",
+        "operands": {
+          "plane1": [
+            "A'",
+            "B",
+            "D"
+          ],
+          "plane2": [
+            "A",
+            "B",
+            "C",
+            "D"
+          ]
+        }
+      },
+      "independent_oracle": "cos²=1/6",
+      "problem_text": "Cho hình hộp chữ nhật ABCD.A'B'C'D' có AB = a, AD = 2a, AA' = 2a. Tính góc giữa hai mặt phẳng (A'BD) và (ABCD)",
+      "tags": []
+    },
+    {
+      "case_id": "H07_cuboid_section_area_ACC_prime",
+      "expected_status": "GOAL_VERIFIED",
+      "family": "Cuboid_122",
+      "goal_spec": {
+        "goal_kind": "section_area",
+        "length_unit": "a",
+        "operands": {
+          "plane": [
+            "A",
+            "C",
+            "C'"
+          ]
+        }
+      },
+      "independent_oracle": "2√5a²",
+      "problem_text": "Cho hình hộp chữ nhật ABCD.A'B'C'D' có AB = a, AD = 2a, AA' = 2a. Tính diện tích thiết diện cắt bởi (ACC')",
+      "tags": []
+    },
+    {
+      "case_id": "H08_cuboid_sub_volume_B_prime_A_prime_BD",
+      "expected_status": "GOAL_VERIFIED",
+      "family": "Cuboid_122",
+      "goal_spec": {
+        "goal_kind": "solid_volume",
+        "length_unit": "a",
+        "operands": {
+          "apex": "B'",
+          "base": [
+            "A'",
+            "B",
+            "D"
+          ]
+        }
+      },
+      "independent_oracle": "2a³/3",
+      "problem_text": "Cho hình hộp chữ nhật ABCD.A'B'C'D' có AB = a, AD = 2a, AA' = 2a. Tính thể tích khối chóp B'.A'BD",
+      "tags": []
+    },
+    {
+      "case_id": "H09_cuboid_dist_C_line_BD_prime",
+      "expected_status": "GOAL_VERIFIED",
+      "family": "Cuboid_122",
+      "goal_spec": {
+        "goal_kind": "distance_point_line",
+        "length_unit": "a",
+        "operands": {
+          "line": [
+            "B",
+            "D'"
+          ],
+          "point": "C"
+        }
+      },
+      "independent_oracle": "2a√5/3",
+      "problem_text": "Cho hình hộp chữ nhật ABCD.A'B'C'D' có AB = a, AD = 2a, AA' = 2a. Tính khoảng cách từ C đến BD'",
+      "tags": []
+    },
+    {
+      "case_id": "H10_reg_sq_volume_edge_a",
+      "expected_status": "GOAL_VERIFIED",
+      "family": "RegSq_1_1",
+      "goal_spec": {
+        "goal_kind": "solid_volume",
+        "length_unit": "a",
+        "operands": {
+          "apex": "S",
+          "base": [
+            "A",
+            "B",
+            "C",
+            "D"
+          ]
+        }
+      },
+      "independent_oracle": "a³√2/6",
+      "problem_text": "Cho hình chóp tứ giác đều S.ABCD có cạnh đáy bằng a, cạnh bên bằng a. Tính thể tích khối chóp S.ABCD",
+      "tags": []
+    },
+    {
+      "case_id": "H11_reg_sq_dist_A_SBC_edge_a",
+      "expected_status": "GOAL_VERIFIED",
+      "family": "RegSq_1_1",
+      "goal_spec": {
+        "goal_kind": "distance_point_plane",
+        "length_unit": "a",
+        "operands": {
+          "plane": [
+            "S",
+            "B",
+            "C"
+          ],
+          "point": "A"
+        }
+      },
+      "independent_oracle": "a√6/3",
+      "problem_text": "Cho hình chóp tứ giác đều S.ABCD có cạnh đáy bằng a, cạnh bên bằng a. Tính khoảng cách từ A đến (SBC)",
+      "tags": []
+    },
+    {
+      "case_id": "H12_reg_sq_dihedral_SBC_ABCD_edge_a",
+      "expected_status": "GOAL_VERIFIED",
+      "family": "RegSq_1_1",
+      "goal_spec": {
+        "goal_kind": "angle_plane_plane",
+        "length_unit": "a",
+        "operands": {
+          "plane1": [
+            "S",
+            "B",
+            "C"
+          ],
+          "plane2": [
+            "A",
+            "B",
+            "C",
+            "D"
+          ]
+        }
+      },
+      "independent_oracle": "cos²=1/3",
+      "problem_text": "Cho hình chóp tứ giác đều S.ABCD có cạnh đáy bằng a, cạnh bên bằng a. Tính góc giữa hai mặt phẳng (SBC) và (ABCD)",
+      "tags": []
+    },
+    {
+      "case_id": "H13_reg_sq_skew_SA_BC_multiplan",
+      "expected_status": "GOAL_VERIFIED",
+      "family": "RegSq_1_1",
+      "goal_spec": {
+        "goal_kind": "distance_skew_lines",
+        "length_unit": "a",
+        "operands": {
+          "line1": [
+            "S",
+            "A"
+          ],
+          "line2": [
+            "B",
+            "C"
+          ]
+        }
+      },
+      "independent_oracle": "a√6/3",
+      "problem_text": "Cho hình chóp tứ giác đều S.ABCD có cạnh đáy bằng a, cạnh bên bằng a. Tính khoảng cách giữa SA và BC",
+      "tags": [
+        "multi_plan"
+      ]
+    },
+    {
+      "case_id": "H14_reg_sq_midpoints_MN_length",
+      "expected_status": "GOAL_VERIFIED",
+      "family": "RegSq_1_1",
+      "goal_spec": {
+        "goal_kind": "segment_length",
+        "length_unit": "a",
+        "operands": {
+          "a": "M",
+          "b": "N"
+        }
+      },
+      "independent_oracle": "a√3/2",
+      "problem_text": "Cho hình chóp tứ giác đều S.ABCD có cạnh đáy bằng a, cạnh bên bằng a. Gọi M là trung điểm SC, N là trung điểm AD. Tính MN",
+      "tags": []
+    },
+    {
+      "case_id": "H15_reg_sq_divide_SK_third_dist_ABCD",
+      "expected_status": "GOAL_VERIFIED",
+      "family": "RegSq_1_1",
+      "goal_spec": {
+        "goal_kind": "distance_point_plane",
+        "length_unit": "a",
+        "operands": {
+          "plane": [
+            "A",
+            "B",
+            "C",
+            "D"
+          ],
+          "point": "K"
+        }
+      },
+      "independent_oracle": "a√2/3",
+      "problem_text": "Cho hình chóp tứ giác đều S.ABCD có cạnh đáy bằng a, cạnh bên bằng a. K thuộc SA với SK = 1/3 SA. Tính khoảng cách từ K đến (ABCD)",
+      "tags": []
+    },
+    {
+      "case_id": "H16_reg_sq_1_2_angle_SA_ABCD",
+      "expected_status": "GOAL_VERIFIED",
+      "family": "RegSq_1_2",
+      "goal_spec": {
+        "goal_kind": "angle_line_plane",
+        "length_unit": "a",
+        "operands": {
+          "line": [
+            "S",
+            "A"
+          ],
+          "plane": [
+            "A",
+            "B",
+            "C",
+            "D"
+          ]
+        }
+      },
+      "independent_oracle": "cos²=1/8",
+      "problem_text": "Cho hình chóp tứ giác đều S.ABCD có cạnh đáy bằng a, cạnh bên bằng 2a. Tính góc giữa SA và (ABCD)",
+      "tags": []
+    },
+    {
+      "case_id": "H17_reg_sq_1_2_dist_O_to_SD",
+      "expected_status": "GOAL_VERIFIED",
+      "family": "RegSq_1_2",
+      "goal_spec": {
+        "goal_kind": "distance_point_line",
+        "length_unit": "a",
+        "operands": {
+          "line": [
+            "S",
+            "D"
+          ],
+          "point": "O_ac"
+        }
+      },
+      "independent_oracle": "a√7/4",
+      "problem_text": "Cho hình chóp tứ giác đều S.ABCD có cạnh đáy bằng a, cạnh bên bằng 2a. Tính khoảng cách từ tâm đáy đến SD",
+      "tags": []
+    },
+    {
+      "case_id": "H18_reg_sq_angle_SA_BC_skew",
+      "expected_status": "GOAL_VERIFIED",
+      "family": "RegSq_1_1",
+      "goal_spec": {
+        "goal_kind": "angle_lines",
+        "length_unit": "a",
+        "operands": {
+          "line1": [
+            "S",
+            "A"
+          ],
+          "line2": [
+            "B",
+            "C"
+          ]
+        }
+      },
+      "independent_oracle": "60°",
+      "problem_text": "Cho hình chóp tứ giác đều S.ABCD có cạnh đáy bằng a, cạnh bên bằng a. Tính góc giữa SA và BC",
+      "tags": []
+    },
+    {
+      "case_id": "H19_reg_tet_skew_SA_BC",
+      "expected_status": "GOAL_VERIFIED",
+      "family": "RegTri_1_1",
+      "goal_spec": {
+        "goal_kind": "distance_skew_lines",
+        "length_unit": "a",
+        "operands": {
+          "line1": [
+            "S",
+            "A"
+          ],
+          "line2": [
+            "B",
+            "C"
+          ]
+        }
+      },
+      "independent_oracle": "a√2/2",
+      "problem_text": "Cho hình chóp tam giác đều S.ABC có cạnh đáy bằng a, cạnh bên bằng a. Tính khoảng cách giữa SA và BC",
+      "tags": [
+        "multi_plan"
+      ]
+    },
+    {
+      "case_id": "H20_reg_tet_dist_A_SBC",
+      "expected_status": "GOAL_VERIFIED",
+      "family": "RegTri_1_1",
+      "goal_spec": {
+        "goal_kind": "distance_point_plane",
+        "length_unit": "a",
+        "operands": {
+          "plane": [
+            "S",
+            "B",
+            "C"
+          ],
+          "point": "A"
+        }
+      },
+      "independent_oracle": "a√6/3",
+      "problem_text": "Cho hình chóp tam giác đều S.ABC có cạnh đáy bằng a, cạnh bên bằng a. Tính khoảng cách từ A đến (SBC)",
+      "tags": []
+    },
+    {
+      "case_id": "H21_reg_tet_dihedral_SBC_ABC",
+      "expected_status": "GOAL_VERIFIED",
+      "family": "RegTri_1_1",
+      "goal_spec": {
+        "goal_kind": "angle_plane_plane",
+        "length_unit": "a",
+        "operands": {
+          "plane1": [
+            "S",
+            "B",
+            "C"
+          ],
+          "plane2": [
+            "A",
+            "B",
+            "C"
+          ]
+        }
+      },
+      "independent_oracle": "cos²=1/9",
+      "problem_text": "Cho hình chóp tam giác đều S.ABC có cạnh đáy bằng a, cạnh bên bằng a. Tính góc giữa (SBC) và (ABC)",
+      "tags": []
+    },
+    {
+      "case_id": "H22_reg_tri_1_2_volume",
+      "expected_status": "GOAL_VERIFIED",
+      "family": "RegTri_1_2",
+      "goal_spec": {
+        "goal_kind": "solid_volume",
+        "length_unit": "a",
+        "operands": {
+          "apex": "S",
+          "base": [
+            "A",
+            "B",
+            "C"
+          ]
+        }
+      },
+      "independent_oracle": "a³√11/12",
+      "problem_text": "Cho hình chóp tam giác đều S.ABC có cạnh đáy bằng a, cạnh bên bằng 2a. Tính thể tích khối chóp S.ABC",
+      "tags": []
+    },
+    {
+      "case_id": "H23_reg_tet_bimedian_MN",
+      "expected_status": "GOAL_VERIFIED",
+      "family": "RegTri_1_1",
+      "goal_spec": {
+        "goal_kind": "segment_length",
+        "length_unit": "a",
+        "operands": {
+          "a": "M",
+          "b": "N"
+        }
+      },
+      "independent_oracle": "a√2/2",
+      "problem_text": "Cho hình chóp tam giác đều S.ABC có cạnh đáy bằng a, cạnh bên bằng a. Tính độ dài đoạn nối trung điểm SA và BC",
+      "tags": []
+    },
+    {
+      "case_id": "H24_reg_tet_centroid_to_midpoint",
+      "expected_status": "GOAL_VERIFIED",
+      "family": "RegTri_1_1",
+      "goal_spec": {
+        "goal_kind": "segment_length",
+        "length_unit": "a",
+        "operands": {
+          "a": "G",
+          "b": "M"
+        }
+      },
+      "independent_oracle": "a/2",
+      "problem_text": "Cho hình chóp tam giác đều S.ABC có cạnh đáy bằng a, cạnh bên bằng a. Gọi G là trọng tâm tam giác SBC, M là trung điểm AB. Tính GM",
+      "tags": []
+    },
+    {
+      "case_id": "H25_right_rect_dist_A_SBD",
+      "expected_status": "GOAL_VERIFIED",
+      "family": "RightRect_1_2_2",
+      "goal_spec": {
+        "goal_kind": "distance_point_plane",
+        "length_unit": "a",
+        "operands": {
+          "plane": [
+            "S",
+            "B",
+            "D"
+          ],
+          "point": "A"
+        }
+      },
+      "independent_oracle": "a√6/3",
+      "problem_text": "Cho hình chóp S.ABCD có đáy ABCD là hình chữ nhật với AB = a, AD = 2a. Cạnh bên SA vuông góc với (ABCD) và SA = 2a. Tính khoảng cách từ A đến (SBD)",
+      "tags": [
+        "multi_plan"
+      ]
+    },
+    {
+      "case_id": "H26_right_rect_mid_SC_to_SBD",
+      "expected_status": "GOAL_VERIFIED",
+      "family": "RightRect_1_2_2",
+      "goal_spec": {
+        "goal_kind": "distance_point_plane",
+        "length_unit": "a",
+        "operands": {
+          "plane": [
+            "S",
+            "B",
+            "D"
+          ],
+          "point": "M"
+        }
+      },
+      "independent_oracle": "a√6/6",
+      "problem_text": "Cho hình chóp S.ABCD có đáy ABCD là hình chữ nhật với AB = a, AD = 2a. Cạnh bên SA vuông góc với (ABCD) và SA = 2a. M là trung điểm SC. Tính khoảng cách từ M đến (SBD)",
+      "tags": []
+    },
+    {
+      "case_id": "H27_right_rect_dist_D_SBC_parallel_transfer",
+      "expected_status": "GOAL_VERIFIED",
+      "family": "RightRect_1_2_2",
+      "goal_spec": {
+        "goal_kind": "distance_point_plane",
+        "length_unit": "a",
+        "operands": {
+          "plane": [
+            "S",
+            "B",
+            "C"
+          ],
+          "point": "D"
+        }
+      },
+      "independent_oracle": "2a√5/5",
+      "problem_text": "Cho hình chóp S.ABCD có đáy ABCD là hình chữ nhật với AB = a, AD = 2a. Cạnh bên SA vuông góc với (ABCD) và SA = 2a. Tính khoảng cách từ D đến (SBC)",
+      "tags": []
+    },
+    {
+      "case_id": "H28_right_rect_skew_SA_BD",
+      "expected_status": "GOAL_VERIFIED",
+      "family": "RightRect_1_2_2",
+      "goal_spec": {
+        "goal_kind": "distance_skew_lines",
+        "length_unit": "a",
+        "operands": {
+          "line1": [
+            "S",
+            "A"
+          ],
+          "line2": [
+            "B",
+            "D"
+          ]
+        }
+      },
+      "independent_oracle": "2a√5/5",
+      "problem_text": "Cho hình chóp S.ABCD có đáy ABCD là hình chữ nhật với AB = a, AD = 2a. Cạnh bên SA vuông góc với (ABCD) và SA = 2a. Tính khoảng cách giữa SA và BD",
+      "tags": [
+        "multi_plan"
+      ]
+    },
+    {
+      "case_id": "H29_right_rect_angle_SC_ABCD",
+      "expected_status": "GOAL_VERIFIED",
+      "family": "RightRect_1_2_2",
+      "goal_spec": {
+        "goal_kind": "angle_line_plane",
+        "length_unit": "a",
+        "operands": {
+          "line": [
+            "S",
+            "C"
+          ],
+          "plane": [
+            "A",
+            "B",
+            "C",
+            "D"
+          ]
+        }
+      },
+      "independent_oracle": "cos²=5/9",
+      "problem_text": "Cho hình chóp S.ABCD có đáy ABCD là hình chữ nhật với AB = a, AD = 2a. Cạnh bên SA vuông góc với (ABCD) và SA = 2a. Tính góc giữa SC và (ABCD)",
+      "tags": []
+    },
+    {
+      "case_id": "H30_right_rect_divide_quarter_midpoint_KN",
+      "expected_status": "GOAL_VERIFIED",
+      "family": "RightRect_1_2_2",
+      "goal_spec": {
+        "goal_kind": "segment_length",
+        "length_unit": "a",
+        "operands": {
+          "a": "K",
+          "b": "N"
+        }
+      },
+      "independent_oracle": "a√101/4",
+      "problem_text": "Cho hình chóp S.ABCD có đáy ABCD là hình chữ nhật với AB = a, AD = 2a. Cạnh bên SA vuông góc với (ABCD) và SA = 2a. K thuộc SB với SK = 1/4 SB, N là trung điểm CD. Tính KN",
+      "tags": []
+    },
+    {
+      "case_id": "H31_oblique_prism_volume_A_prime_ABC",
+      "expected_status": "GOAL_VERIFIED",
+      "family": "ObliquePrism_Gram",
+      "goal_spec": {
+        "goal_kind": "solid_volume",
+        "length_unit": "a",
+        "operands": {
+          "apex": "A'",
+          "base": [
+            "A",
+            "B",
+            "C"
+          ]
+        }
+      },
+      "independent_oracle": "a³√3/12",
+      "problem_text": "Cho hình lăng trụ ABC.A'B'C' có đáy ABC là tam giác đều cạnh a. Gọi H là trung điểm của BC, A'H vuông góc với (ABC) và A'H = a. Tính thể tích khối chóp A'.ABC",
+      "tags": []
+    },
+    {
+      "case_id": "H32_oblique_prism_AA_prime_length",
+      "expected_status": "GOAL_VERIFIED",
+      "family": "ObliquePrism_Gram",
+      "goal_spec": {
+        "goal_kind": "segment_length",
+        "length_unit": "a",
+        "operands": {
+          "a": "A",
+          "b": "A'"
+        }
+      },
+      "independent_oracle": "a√7/2",
+      "problem_text": "Cho hình lăng trụ ABC.A'B'C' có đáy ABC là tam giác đều cạnh a. Gọi H là trung điểm của BC, A'H vuông góc với (ABC) và A'H = a. Tính độ dài cạnh bên AA'",
+      "tags": []
+    },
+    {
+      "case_id": "H33_oblique_prism_angle_AA_prime_ABC",
+      "expected_status": "GOAL_VERIFIED",
+      "family": "ObliquePrism_Gram",
+      "goal_spec": {
+        "goal_kind": "angle_line_plane",
+        "length_unit": "a",
+        "operands": {
+          "line": [
+            "A",
+            "A'"
+          ],
+          "plane": [
+            "A",
+            "B",
+            "C"
+          ]
+        }
+      },
+      "independent_oracle": "cos²=3/7",
+      "problem_text": "Cho hình lăng trụ ABC.A'B'C' có đáy ABC là tam giác đều cạnh a. Gọi H là trung điểm của BC, A'H vuông góc với (ABC) và A'H = a. Tính góc giữa cạnh bên AA' và (ABC)",
+      "tags": []
+    },
+    {
+      "case_id": "H34_oblique_prism_dist_A_to_BCC_prime_B_prime",
+      "expected_status": "GOAL_VERIFIED",
+      "family": "ObliquePrism_Gram",
+      "goal_spec": {
+        "goal_kind": "distance_point_plane",
+        "length_unit": "a",
+        "operands": {
+          "plane": [
+            "B",
+            "C",
+            "C'"
+          ],
+          "point": "A"
+        }
+      },
+      "independent_oracle": "a√21/7",
+      "problem_text": "Cho hình lăng trụ ABC.A'B'C' có đáy ABC là tam giác đều cạnh a. Gọi H là trung điểm của BC, A'H vuông góc với (ABC) và A'H = a. Tính khoảng cách từ A đến (BCC'B')",
+      "tags": []
+    },
+    {
+      "case_id": "H35_oblique_prism_midpoint_MN_length",
+      "expected_status": "GOAL_VERIFIED",
+      "family": "ObliquePrism_Gram",
+      "goal_spec": {
+        "goal_kind": "segment_length",
+        "length_unit": "a",
+        "operands": {
+          "a": "M",
+          "b": "N"
+        }
+      },
+      "independent_oracle": "a√2",
+      "problem_text": "Cho hình lăng trụ ABC.A'B'C' có đáy ABC là tam giác đều cạnh a. Gọi H là trung điểm của BC, A'H vuông góc với (ABC) và A'H = a. M là trung điểm A'B', N là trung điểm AC. Tính MN",
+      "tags": []
+    },
+    {
+      "case_id": "H36_oblique_prism_perp_dihedral_A_prime_BC_ABC_90deg",
+      "expected_status": "GOAL_VERIFIED",
+      "family": "ObliquePrism_Gram",
+      "goal_spec": {
+        "goal_kind": "angle_plane_plane",
+        "length_unit": "a",
+        "operands": {
+          "plane1": [
+            "A'",
+            "B",
+            "C"
+          ],
+          "plane2": [
+            "A",
+            "B",
+            "C"
+          ]
+        }
+      },
+      "independent_oracle": "90°",
+      "problem_text": "Cho hình lăng trụ ABC.A'B'C' có đáy ABC là tam giác đều cạnh a. Gọi H là trung điểm của BC, A'H vuông góc với (ABC) và A'H = a. Tính góc giữa (A'BC) và (ABC)",
+      "tags": [
+        "boundary_90deg"
+      ]
+    },
+    {
+      "case_id": "H37_right_tri_122_dist_A_SBC",
+      "expected_status": "GOAL_VERIFIED",
+      "family": "RightTri_1_2_2",
+      "goal_spec": {
+        "goal_kind": "distance_point_plane",
+        "length_unit": "a",
+        "operands": {
+          "plane": [
+            "S",
+            "B",
+            "C"
+          ],
+          "point": "A"
+        }
+      },
+      "independent_oracle": "2a√5/5",
+      "problem_text": "Cho hình chóp S.ABC có đáy ABC là tam giác vuông tại B với AB = a, BC = 2a. Cạnh bên SA vuông góc với (ABC) và SA = 2a. Tính khoảng cách từ A đến (SBC)",
+      "tags": []
+    },
+    {
+      "case_id": "H38_right_tri_122_skew_BC_SA",
+      "expected_status": "GOAL_VERIFIED",
+      "family": "RightTri_1_2_2",
+      "goal_spec": {
+        "goal_kind": "distance_skew_lines",
+        "length_unit": "a",
+        "operands": {
+          "line1": [
+            "B",
+            "C"
+          ],
+          "line2": [
+            "S",
+            "A"
+          ]
+        }
+      },
+      "independent_oracle": "a",
+      "problem_text": "Cho hình chóp S.ABC có đáy ABC là tam giác vuông tại B với AB = a, BC = 2a. Cạnh bên SA vuông góc với (ABC) và SA = 2a. Tính khoảng cách giữa BC và SA",
+      "tags": []
+    },
+    {
+      "case_id": "H39_right_tri_122_boundary_angle_BC_SAB_90deg",
+      "expected_status": "GOAL_VERIFIED",
+      "family": "RightTri_1_2_2",
+      "goal_spec": {
+        "goal_kind": "angle_line_plane",
+        "length_unit": "a",
+        "operands": {
+          "line": [
+            "B",
+            "C"
+          ],
+          "plane": [
+            "S",
+            "A",
+            "B"
+          ]
+        }
+      },
+      "independent_oracle": "90°",
+      "problem_text": "Cho hình chóp S.ABC có đáy ABC là tam giác vuông tại B với AB = a, BC = 2a. Cạnh bên SA vuông góc với (ABC) và SA = 2a. Tính góc giữa BC và (SAB)",
+      "tags": [
+        "boundary_90deg"
+      ]
+    },
+    {
+      "case_id": "H40_right_tri_122_boundary_angle_mid_line_0deg",
+      "expected_status": "GOAL_VERIFIED",
+      "family": "RightTri_1_2_2",
+      "goal_spec": {
+        "goal_kind": "angle_line_plane",
+        "length_unit": "a",
+        "operands": {
+          "line": [
+            "M",
+            "N"
+          ],
+          "plane": [
+            "A",
+            "B",
+            "C"
+          ]
+        }
+      },
+      "independent_oracle": "0°",
+      "problem_text": "Cho hình chóp S.ABC có đáy ABC là tam giác vuông tại B với AB = a, BC = 2a. Cạnh bên SA vuông góc với (ABC) và SA = 2a. Tính góc giữa đường thẳng MN và (ABC)",
+      "tags": [
+        "boundary_0deg"
+      ]
+    },
+    {
+      "case_id": "H41_near_degenerate_divide_1_20",
+      "expected_status": "GOAL_VERIFIED",
+      "family": "RightTri_1_2_2",
+      "goal_spec": {
+        "goal_kind": "segment_length",
+        "length_unit": "a",
+        "operands": {
+          "a": "S",
+          "b": "K"
+        }
+      },
+      "independent_oracle": "a√1601/20",
+      "problem_text": "Cho hình chóp S.ABC có đáy ABC là tam giác vuông tại B với AB = a, BC = 2a. Cạnh bên SA vuông góc với (ABC) và SA = 2a. K thuộc AB sao cho AK = 1/20 AB. Tính SK",
+      "tags": [
+        "near_degenerate_fraction"
+      ]
+    },
+    {
+      "case_id": "H42_near_degenerate_divide_19_20_dist_plane",
+      "expected_status": "GOAL_VERIFIED",
+      "family": "RightTri_1_2_2",
+      "goal_spec": {
+        "goal_kind": "distance_point_plane",
+        "length_unit": "a",
+        "operands": {
+          "plane": [
+            "A",
+            "B",
+            "C"
+          ],
+          "point": "K"
+        }
+      },
+      "independent_oracle": "19a/10",
+      "problem_text": "Cho hình chóp S.ABC có đáy ABC là tam giác vuông tại B với AB = a, BC = 2a. Cạnh bên SA vuông góc với (ABC) và SA = 2a. K thuộc SA sao cho SK = 1/20 SA. Tính khoảng cách từ K đến (ABC)",
+      "tags": [
+        "near_degenerate_fraction"
+      ]
+    },
+    {
+      "case_id": "H43_long_chain_cuboid_7step_dist",
+      "expected_status": "GOAL_VERIFIED",
+      "family": "Cuboid_122",
+      "goal_spec": {
+        "goal_kind": "distance_point_plane",
+        "length_unit": "a",
+        "operands": {
+          "plane": [
+            "A'",
+            "B",
+            "D"
+          ],
+          "point": "R"
+        }
+      },
+      "independent_oracle": "11a√6/72",
+      "problem_text": "Cho hình hộp chữ nhật ABCD.A'B'C'D' có AB = a, AD = 2a, AA' = 2a. Dựng dãy trung điểm M, N, P, Q, chia K, L và trung điểm R. Tính d(R, (A'BD))",
+      "tags": [
+        "long_chain"
+      ]
+    },
+    {
+      "case_id": "H44_coincident_point_distance_diag_intersections",
+      "expected_status": "GOAL_VERIFIED",
+      "family": "Cuboid_122",
+      "goal_spec": {
+        "goal_kind": "point_distance",
+        "length_unit": "a",
+        "operands": {
+          "a": "O1",
+          "b": "O2"
+        }
+      },
+      "independent_oracle": "0",
+      "problem_text": "Cho hình hộp chữ nhật ABCD.A'B'C'D' có AB = a, AD = 2a, AA' = 2a. O1 là trung điểm AC, O2 là trung điểm BD. Tính khoảng cách giữa O1 và O2",
+      "tags": [
+        "coincident_point_distance"
+      ]
+    },
+    {
+      "case_id": "HN01_missing_pyramid_height",
+      "expected_status": "MISSING_PRECONDITION",
+      "family": "Negative_Missing",
+      "goal_spec": {
+        "goal_kind": "solid_volume",
+        "length_unit": "a",
+        "operands": {
+          "apex": "S",
+          "base": [
+            "A",
+            "B",
+            "C"
+          ]
+        }
+      },
+      "independent_oracle": null,
+      "problem_text": "Cho hình chóp S.ABC có đáy ABC là tam giác vuông cân tại B, AB = a. Tính V(S.ABC)",
+      "tags": []
+    },
+    {
+      "case_id": "HN02_missing_right_rect_sa_length",
+      "expected_status": "MISSING_PRECONDITION",
+      "family": "Negative_Missing",
+      "goal_spec": {
+        "goal_kind": "distance_point_plane",
+        "length_unit": "a",
+        "operands": {
+          "plane": [
+            "S",
+            "B",
+            "D"
+          ],
+          "point": "A"
+        }
+      },
+      "independent_oracle": null,
+      "problem_text": "Cho hình chóp S.ABCD có đáy ABCD là hình chữ nhật AB = a, AD = 2a, SA vuông góc với (ABCD). Tính d(A, (SBD))",
+      "tags": []
+    },
+    {
+      "case_id": "HN03_missing_reg_sq_lateral_edge",
+      "expected_status": "MISSING_PRECONDITION",
+      "family": "Negative_Missing",
+      "goal_spec": {
+        "goal_kind": "distance_point_plane",
+        "length_unit": "a",
+        "operands": {
+          "plane": [
+            "S",
+            "B",
+            "C"
+          ],
+          "point": "A"
+        }
+      },
+      "independent_oracle": null,
+      "problem_text": "Cho hình chóp tứ giác đều S.ABCD có cạnh đáy bằng a. Tính d(A, (SBC))",
+      "tags": []
+    },
+    {
+      "case_id": "HN04_unknown_undeclared_point_goal",
+      "expected_status": "MISSING_PRECONDITION",
+      "family": "Negative_Missing",
+      "goal_spec": {
+        "goal_kind": "segment_length",
+        "length_unit": "a",
+        "operands": {
+          "a": "S",
+          "b": "Z_MISSING"
+        }
+      },
+      "independent_oracle": null,
+      "problem_text": "Cho hình hộp chữ nhật ABCD.A'B'C'D' có AB = a, AD = 2a, AA' = 2a. Tính độ dài Z_MISSING",
+      "tags": []
+    },
+    {
+      "case_id": "HN05_degenerate_coincident_segment_construction",
+      "expected_status": "DEGENERATE_CONSTRUCTION",
+      "family": "Negative_Degenerate",
+      "goal_spec": {
+        "goal_kind": "segment_length",
+        "length_unit": "a",
+        "operands": {
+          "a": "O1",
+          "b": "O2"
+        }
+      },
+      "independent_oracle": null,
+      "problem_text": "Cho hình hộp chữ nhật ABCD.A'B'C'D' có AB = a, AD = 2a, AA' = 2a. Dựng đoạn thẳng nối O1 và O2",
+      "tags": []
+    },
+    {
+      "case_id": "HN06_degenerate_collinear_three_points_plane",
+      "expected_status": "DEGENERATE_CONSTRUCTION",
+      "family": "Negative_Degenerate",
+      "goal_spec": {
+        "goal_kind": "distance_point_plane",
+        "length_unit": "a",
+        "operands": {
+          "plane": [
+            "A",
+            "M",
+            "B"
+          ],
+          "point": "S"
+        }
+      },
+      "independent_oracle": null,
+      "problem_text": "Cho hình hộp chữ nhật ABCD.A'B'C'D' có AB = a, AD = 2a, AA' = 2a. Dựng mặt phẳng qua ba điểm thẳng hàng A, M, B",
+      "tags": []
+    },
+    {
+      "case_id": "HN07_degenerate_parallel_lines_intersect",
+      "expected_status": "DEGENERATE_CONSTRUCTION",
+      "family": "Negative_Degenerate",
+      "goal_spec": {
+        "goal_kind": "construct_point",
+        "length_unit": "a",
+        "operands": {
+          "target_object_id": "I"
+        }
+      },
+      "independent_oracle": null,
+      "problem_text": "Cho hình hộp chữ nhật ABCD.A'B'C'D' có AB = a, AD = 2a, AA' = 2a. Tìm giao điểm AB và CD song song",
+      "tags": []
+    },
+    {
+      "case_id": "HN08_degenerate_line_parallel_plane_intersect",
+      "expected_status": "DEGENERATE_CONSTRUCTION",
+      "family": "Negative_Degenerate",
+      "goal_spec": {
+        "goal_kind": "construct_point",
+        "length_unit": "a",
+        "operands": {
+          "target_object_id": "I"
+        }
+      },
+      "independent_oracle": null,
+      "problem_text": "Cho hình hộp chữ nhật ABCD.A'B'C'D' có AB = a, AD = 2a, AA' = 2a. Tìm giao điểm A'B' và (ABCD)",
+      "tags": []
+    },
+    {
+      "case_id": "HN09_contradictory_reg_sq_slant_too_short",
+      "expected_status": "CONTRADICTORY_CONSTRAINTS",
+      "family": "Negative_Contradictory",
+      "goal_spec": {
+        "goal_kind": "solid_volume",
+        "length_unit": "a",
+        "operands": {
+          "apex": "S",
+          "base": [
+            "A",
+            "B",
+            "C",
+            "D"
+          ]
+        }
+      },
+      "independent_oracle": null,
+      "problem_text": "Cho hình chóp tứ giác đều S.ABCD có cạnh đáy bằng 2a, cạnh bên bằng a. Tính V(S.ABCD)",
+      "tags": []
+    },
+    {
+      "case_id": "HN10_contradictory_triangle_ineq",
+      "expected_status": "CONTRADICTORY_CONSTRAINTS",
+      "family": "Negative_Contradictory",
+      "goal_spec": {
+        "goal_kind": "solid_volume",
+        "length_unit": "a",
+        "operands": {
+          "apex": "S",
+          "base": [
+            "A",
+            "B",
+            "C"
+          ]
+        }
+      },
+      "independent_oracle": null,
+      "problem_text": "Cho hình chóp S.ABC có AB = a, BC = 2a, AC = 5a, SA vuông góc (ABC), SA = a. Tính V(S.ABC)",
+      "tags": []
+    },
+    {
+      "case_id": "HN11_contradictory_conflicting_edge",
+      "expected_status": "CONTRADICTORY_CONSTRAINTS",
+      "family": "Negative_Contradictory",
+      "goal_spec": {
+        "goal_kind": "solid_volume",
+        "length_unit": "a",
+        "operands": {
+          "apex": "S",
+          "base": [
+            "A",
+            "B",
+            "C"
+          ]
+        }
+      },
+      "independent_oracle": null,
+      "problem_text": "Cho hình chóp S.ABC có đáy tam giác vuông cân tại B, AB = a, BC = 3a, SA vuông góc (ABC), SA = a. Tính V(S.ABC)",
+      "tags": []
+    },
+    {
+      "case_id": "HN12_contradictory_zero_edge",
+      "expected_status": "CONTRADICTORY_CONSTRAINTS",
+      "family": "Negative_Contradictory",
+      "goal_spec": {
+        "goal_kind": "solid_volume",
+        "length_unit": "a",
+        "operands": {
+          "apex": "S",
+          "base": [
+            "A",
+            "B",
+            "C"
+          ]
+        }
+      },
+      "independent_oracle": null,
+      "problem_text": "Cho hình chóp S.ABC có đáy tam giác vuông cân tại B, AB = a, SA vuông góc (ABC), SA = 0. Tính V(S.ABC)",
+      "tags": []
+    },
+    {
+      "case_id": "HN13_unsupported_circumscribed_sphere_radius",
+      "expected_status": "UNSUPPORTED_OPERATOR",
+      "family": "Negative_Unsupported",
+      "goal_spec": {
+        "goal_kind": "circumscribed_sphere_radius",
+        "length_unit": "a",
+        "operands": {
+          "solid": "ABCD.A'B'C'D'"
+        }
+      },
+      "independent_oracle": null,
+      "problem_text": "Cho hình hộp chữ nhật ABCD.A'B'C'D' có AB = a, AD = 2a, AA' = 2a. Tính bán kính mặt cầu ngoại tiếp",
+      "tags": []
+    },
+    {
+      "case_id": "HN14_unsupported_inscribed_sphere_radius",
+      "expected_status": "UNSUPPORTED_OPERATOR",
+      "family": "Negative_Unsupported",
+      "goal_spec": {
+        "goal_kind": "inscribed_sphere_radius",
+        "length_unit": "a",
+        "operands": {
+          "solid": "S.ABC"
+        }
+      },
+      "independent_oracle": null,
+      "problem_text": "Cho hình chóp tam giác đều S.ABC có cạnh đáy bằng a, cạnh bên bằng a. Tính bán kính mặt cầu nội tiếp",
+      "tags": []
+    },
+    {
+      "case_id": "HN15_unsupported_tangent_cylinder",
+      "expected_status": "UNSUPPORTED_OPERATOR",
+      "family": "Negative_Unsupported",
+      "goal_spec": {
+        "goal_kind": "unsupported_goal",
+        "length_unit": "a",
+        "operands": {
+          "kind": "cylinder_area"
+        }
+      },
+      "independent_oracle": null,
+      "problem_text": "Cho hình chóp S.ABC có đáy ABC là tam giác vuông cân tại B, AB = a, SA vuông góc với (ABC), SA = a. Tính diện tích xung quanh hình trụ nội tiếp",
+      "tags": []
+    },
+    {
+      "case_id": "HN16_unsupported_locus_extrema",
+      "expected_status": "UNSUPPORTED_OPERATOR",
+      "family": "Negative_Unsupported",
+      "goal_spec": {
+        "goal_kind": "unsupported_goal",
+        "length_unit": "a",
+        "operands": {
+          "kind": "locus_max_distance"
+        }
+      },
+      "independent_oracle": null,
+      "problem_text": "Cho hình chóp S.ABCD có đáy ABCD là hình vuông cạnh a, SA vuông góc với (ABCD), SA = a. Tìm giá trị lớn nhất khoảng cách khi M di động trên SC",
+      "tags": []
+    }
+  ],
+  "external_independence": "NOT_MEASURED",
+  "family_counts": {
+    "Cuboid_122": 11,
+    "Negative_Contradictory": 4,
+    "Negative_Degenerate": 4,
+    "Negative_Missing": 4,
+    "Negative_Unsupported": 4,
+    "ObliquePrism_Gram": 6,
+    "RegSq_1_1": 7,
+    "RegSq_1_2": 2,
+    "RegTri_1_1": 5,
+    "RegTri_1_2": 1,
+    "RightRect_1_2_2": 6,
+    "RightTri_1_2_2": 6
+  },
+  "frozen_candidate_version": "dynamic-construction-planner/2",
+  "generated_at_utc": "2026-11-19T04:35:40Z",
+  "negative_cases": 16,
+  "positive_cases": 44,
+  "provenance_class": "INTERNAL_POST_FREEZE_INDEPENDENT_SYNTHESIS",
+  "schema": "axo-independent-construction-holdout-manifest/1",
+  "total_cases": 60
+}

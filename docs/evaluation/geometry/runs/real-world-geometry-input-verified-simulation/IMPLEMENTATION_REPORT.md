@@ -1,0 +1,34 @@
+# IMPLEMENTATION_REPORT — Nâng Cấp OCR Thực Tế, Hợp Đồng Xác Nhận & Cổng Nguồn (`CACHE_VERSION = 144`)
+
+- **Run ID:** `real-world-geometry-input-verified-simulation`
+- **Branch:** `feat/local-first-geometry-understanding`
+- **Product Commits (`ce280140b` → `HEAD`):** `6de23b196b711674b2610c8436ef617195947fa7`, `0dcc3840a5e7ff88989911d76a14e3b17e1a4821`, `b806e359fcceb268c065013d5cf7fb2ff278f1c1`
+- **Clean Frozen Candidate Commit:** `003104fd5a116f38f05fe200d013b7e9ba93a05a` (`120` file đo, `measured_system = e1c6428ed558a722442e0f32b362fb41d053795a81cf92a4c267d48e2bbd7a04`, `cay_lam_viec_sach = true`, `SEALED = DA_NIEM_PHONG`)
+- **Cache Policy:** `CACHE_VERSION = "144"` · `ROUTE_D_CACHE_POLICY = "144:route-d"` · `semantic_environment_hash = 6233c43c395c9b493d31d3dbb5d0ca952604730f6185cf541d2f179c077f955b`
+
+---
+
+## 1. Các Thay Đổi Mã Nguồn Theo Từng Mô-đun
+
+| Mô-đun | Phiên bản / Thành phần | Thay đổi kỹ thuật cốt lõi | Kiểm chứng khóa |
+|---|---|---|---|
+| `backend/app/ingestion/local_ocr_worker.py` | `LOCAL_OCR_WORKER_VERSION = "local-ocr-worker/4"` | Mở rộng `pad_x = max(3, min(14, int(0.12 * h_box)))` trong `_reread` tránh cắt xén nét rìa ký tự chữ cao (`AB`, `AM`); siết `_strip_edge_bleed` cho nét phẩy trên phải (`c["h"] <= max(4, int(0.45 * h))`, `c["y1"] <= int(0.55 * h)`, `c["w"] <= max(4, int(0.16 * w))`) vừa bảo vệ phẩy trên (`A'`, `C'`) vừa gọt sạch CC nhiễu cao sát biên; bổ sung `has_equals_bars` vào `_analyze_crop_glyph_topology` (`=` vs `-`); xuất timing chi tiết từng chặng (`decode_ms`, `crop_ms`, `topology_ms`, `latin_rec_ms`, `tess_eng_ms`, `tess_vie_ms`). | `test_worker_edge_bleed_protects_upper_prime_and_detects_equals_bars` + `12/12` `glyph_topology` |
+| `backend/app/ingestion/local_ocr.py` | `LOCAL_OCR_WORKER_VERSION = "local-ocr-worker/4"` | Đồng bộ phiên bản worker `local-ocr-worker/4` vào khóa `_RAW_OCR_CACHE` (`32`) & `_REREAD_CACHE` (`512`) tách biệt; khử trùng lặp tọa độ box ngay trước khi gửi worker; truyền `decode_ms` lên route. | `test_reread_cache_deduplication_and_worker_version_isolation` + `test_local_ocr_worker_lifecycle.py` |
+| `backend/app/ingestion/ocr_reconcile.py` | `OCR_RECONCILE_VERSION = "layout-aware-ocr-reconcile/3"` | **(1) Chặn crop-reread overvote:** thêm `primary_agrees = (not r_norm) or ("rapidocr" in best_readers)` để nhiễu crop hẹp (`ABCE`, `ABCL`, `4M`, `4`, `1B`) không thể tự xác minh đè lên `rapidocr` chính xác, đồng thời giữ hiển thị văn bản `rapidocr` gốc khi còn bất đồng (`ABCD` vs `ABCE`, `60°` vs `60`). **(2) Bỏ bypass non-ASCII:** bỏ `or any(ord(c) > 127 for c in r_clean)` giúp `_restore_prose` tự sửa lỗi đọc sai có dấu ngoài từ điển (`"khói"` → `"khối"`) và gắn cờ mơ hồ dấu (`"cậu"` → `AMBIGUOUS_DIACRITIC_RESTORATION`). **(3) `º -> °` & bố cục:** bổ sung `600º` vào `_SHARED_CORRUPTION_RE`, chuẩn hóa `º -> °` trong `_format_unit_superscripts`; `_detect_choice_bands` chạy trước `in_fig` với dấu câu bắt buộc (`[.,):]`); giữ văn xuôi & đáp án ngoài `diagram_tokens`; mở rộng `_split_glued_words` (`phng(A'BC)`, `ABCD.A'B'C'D'có`, `⊥(ABCD)`, `AA'=`, `B,SA`) nhưng giữ bẫy `S,ABCD`; hỗ trợ `equals_parallel_bars` & homoglyph serif (`4->A, 8->B, "->'`). | `test_crop_reread_cannot_overvote_primary_and_prose_restoration`, `test_equals_topology_upper_homoglyph_and_negative_safety_guards`, `0` false auto-accepts |
+| `backend/app/ingestion/local_ocr_route.py` | `LOCAL_OCR_ROUTE_VERSION = "local-ocr-route/2"` | Giải mã ảnh PIL một lần duy nhất trong `review_items` (`_crop_data_url_img`); đưa `decode_ms`, `tesseract_ms`, `rapidocr_ms`, `reconcile_only_ms`, và `reread_breakdown` vào `rec["timing"]`. | `test_image_first_local_ocr.py` |
+| `backend/app/ingestion/unified_input.py` | `confirmation_contract_version = "ocr-confirmation-provenance/1"` | Bổ sung `confirmation_contract_version`, `raw_ocr_text_sha256`, `prepared_text_sha256`, `prepared_region_sha256` vào provenance của cả `_local_ocr_outcome` lẫn nhánh Vision `_process_normalized_visual_page`. | `test_image_first_local_ocr.py` |
+| `backend/app/main.py` | `verified-input-provenance/1`, `CACHE_VERSION = "144"` | Thêm `InputSourceProvenance` tùy chọn trên `InputPayload`, hàm `build_verified_input_provenance` tự động hạ cấp mọi khai báo đã chỉnh tay so với `raw_ocr_text_sha256` về `*_student_confirmed` với `counted_as_unmodified_auto_ocr = False`; giữ tương thích 4 tham số của `_analyze_once`; nâng `CACHE_VERSION = "144"` (`ROUTE_D_CACHE_POLICY = "144:route-d"`). | `test_confirmation_provenance_edited_cache_key_and_144_invalidation` |
+| `backend/app/ai/local_geometry_parser.py` | `normalize_problem_text` | Chuẩn hóa bảo toàn độ dài `(?<=\d)º -> °` để `60º` sau xác nhận vào parser đúng `60°`. | `test_real_world_input_verified_simulation.py` |
+| `backend/app/simulation/geometry_functions/registry.py` | `chuan_hoa`, `_CAU_NGAT`, `_MO_DAU_MUC_DE`, `_cac_moc_cau`, `_kiem_vung_tien_de` | **(1) `chuan_hoa`:** chuẩn hóa `º -> °`. **(2) `_CAU_NGAT`:** cho phép tách câu sau dấu chấm dính chữ câu hỏi viết hoa (`).Tính` → tách câu trong khi bảo toàn `S.ABCD` và số thập phân `2.5`). **(3) `_MO_DAU_MUC_DE` & `_kiem_vung_tien_de`:** dùng `de[dau:]` để bỏ phần đầu mục đề dạng `"43. Cho..."` / `"43: Cho..."` chỉ khi ở đầu chuỗi hoặc đầu dòng (chặn sai ở `"SA = 43. Cho..."` vẫn trả `REFUSED`). **(4) `_cac_moc_cau`:** nhận diện ranh giới câu hỏi viết hoa khuyết dấu chấm (như `vmmu_r513`), đồng thời chặn tách sau bullet (`a)`, `1)`, `Câu 4:`) hoặc mệnh đề `Nếu ...`. | `test_bare_item_header_sticky_period_and_degree_ordinal`, `test_source_gate_missing_period_alignment_and_vision_fallback_mock` |
+
+---
+
+## 2. Quyết Định Không Thay Đổi Kiến Trúc & Bất Biến Bảo Toàn
+
+1. **Giữ nguyên hoàn toàn Hybrid `/4`:** Không thêm mô hình OCR GPU nặng, không để AI chọn hàm hay sinh chương trình riêng theo đề, không sửa `_EffectResolver` chỉ để làm đẹp `MG9`, không nới `MAX_MEMORY_DECLARATIONS = 32` (`MG9` tiếp tục fail-closed `IR_MEMORY_BUDGET_EXCEEDED`), và không mở `H-1` / `W2` / `W3`.
+2. **Khóa 4 bề mặt trích xuất (`locked_surfaces.all_match = true`):**
+   - `function_calling`: `7ea511a6e3828c9adcc8402aa2d7d6b1d433e67a01ec4329c3009c46af652b25`
+   - `fact_extraction_flat`: `485d3834db8b18cfdb24143bfbb14deb8f5b7a9d74cb612d48db8c08252e507a`
+   - `fact_extraction_v3`: `4bff35bbf690a9973b2b7834019b908d507bbbb4277928e36d12dcff657e226f`
+   - `typed_fact_next`: `33197a45e0620d94a669047b47907479d1e7f07b1dc76e7c6abd75ada7a6df14`
+3. **Ranh giới sở hữu & hồ sơ mẫu chờ C21:** `D:\Documents\projects\axo-geometry-library` (`FE-2/3/4/6`) và `frontend/public/favicon.svg` giữ nguyên `0` sửa đổi (`git diff ce280140b..003104fd5 -- frontend/` rỗng); `backend/cache_identity.lock.json` khớp `CACHE_VERSION = 144`; 3 template C21 `{k1,r1,s2}-owner-approval.template.json` và `pending_template_refresh.json` đã đồng bộ `e1c6428ed558a722442e0f32b362fb41d053795a81cf92a4c267d48e2bbd7a04` (giữ nguyên `PENDING_OWNER_DECISION`, `paid_project_confirmed: false`).

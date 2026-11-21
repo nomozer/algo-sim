@@ -1,0 +1,117 @@
+{
+  "schema": "axo-v12-diacritic-free-domain-eval/1",
+  "a2_decision": "Integrated controlled word-boundary _detect_diacritic_free into domain_profile.py with decoy veto",
+  "test_s1_diacritic_free_offline_status": "PASSED (0 leakage of s1_diacritic_offline)",
+  "metrics": {
+    "in_domain_tp": 8,
+    "in_domain_total": 8,
+    "out_of_domain_fp": 0,
+    "out_of_domain_total": 12,
+    "tp_rate": 1.0,
+    "fp_rate": 0.0
+  },
+  "in_domain_cases": [
+    {
+      "id": "S37_hist",
+      "domain": "hinh_hoc",
+      "text": "Mo phong hinh lap phuong ABCD.A'B'C'D' canh 2."
+    },
+    {
+      "id": "S38_hist",
+      "domain": "hinh_hoc",
+      "text": "Hay dung hinh chop S.ABC co day ABC la tam giac deu canh a, SA vuong goc voi day, SA = 2a."
+    },
+    {
+      "id": "C24_hist",
+      "domain": "hinh_hoc",
+      "text": "Hinh chop S.ABCD co day ABCD la hinh vuong canh 2, SA vuong goc voi day, SA = 3. Tinh the tich khoi chop."
+    },
+    {
+      "id": "DEV_D1",
+      "domain": "hinh_hoc",
+      "text": "Cho lang tru dung ABC.A'B'C' co day la tam giac vuong tai A, AB = 3, AC = 4, AA' = 5. Tinh the tich."
+    },
+    {
+      "id": "DEV_D2",
+      "domain": "hinh_hoc",
+      "text": "Ve tu dien deu MNPQ co canh bang 3."
+    },
+    {
+      "id": "DEV_D3",
+      "domain": "hinh_hoc",
+      "text": "Cho hinh hop chu nhat MNPQ.M'N'P'Q' co MN = 2, MQ = 3, MM' = 4. Tinh do dai MP'."
+    },
+    {
+      "id": "DEV_D4",
+      "domain": "hinh_hoc",
+      "text": "Hinh chop S.ABC co SA, AB, AC doi mot vuong goc va SA = AB = AC = 2. Tinh khoang cach tu A den (SBC)."
+    },
+    {
+      "id": "DEV_D5",
+      "domain": "hinh_hoc",
+      "text": "Hay mo phong hinh chop tu giac deu S.ABCD co canh day bang 2 va chieu cao bang 3."
+    }
+  ],
+  "out_of_domain_cases": [
+    {
+      "id": "DEC_BARE_1",
+      "domain": "tin_hoc",
+      "text": "hinh"
+    },
+    {
+      "id": "DEC_BARE_2",
+      "domain": "tin_hoc",
+      "text": "canh"
+    },
+    {
+      "id": "DEC_BARE_3",
+      "domain": "tin_hoc",
+      "text": "goc"
+    },
+    {
+      "id": "DEC_BARE_4",
+      "domain": "tin_hoc",
+      "text": "hinh anh canh dep va goc nhin rong"
+    },
+    {
+      "id": "DEC_CS_1",
+      "domain": "tin_hoc",
+      "text": "Cho mang hinh chu nhat kich thuoc 3x4, tim duong di ngan nhat qua cac o."
+    },
+    {
+      "id": "DEC_CS_2",
+      "domain": "tin_hoc",
+      "text": "Tim canh nho nhat trong do thi co huong 5 dinh bang thuat toan Kruskal."
+    },
+    {
+      "id": "DEC_CS_3",
+      "domain": "tin_hoc",
+      "text": "Viet chuong trinh python tinh the tich hinh chop S.ABCD bang cong thuc."
+    },
+    {
+      "id": "DEC_CS_4",
+      "domain": "tin_hoc",
+      "text": "Dung bfs duyet do thi hinh lang tru 6 dinh va in ra duong di."
+    },
+    {
+      "id": "DEC_PHYS_1",
+      "domain": "tin_hoc",
+      "text": "Tinh goc quay con lac lo xo co bien do 4cm sau 2 giay."
+    },
+    {
+      "id": "DEC_ALG_1",
+      "domain": "tin_hoc",
+      "text": "Giai phuong trinh x^2 - 5x + 6 = 0 va tim nghiem duong."
+    },
+    {
+      "id": "DEC_OOS_1",
+      "domain": "tin_hoc",
+      "text": "Toi muon xem hinh minh hoa mot con meo ngoi tren ban."
+    },
+    {
+      "id": "DEC_CSS_1",
+      "domain": "tin_hoc",
+      "text": "Calculate bounding box edge length and corner angle in HTML layout."
+    }
+  ]
+}

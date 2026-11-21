@@ -34,8 +34,10 @@ export interface HybridAnswerView {
   quantity_id: string;
   /** Exact coefficient checked against the scene at transport; retained for history revalidation. */
   coefficient?: string;
-  /** Đáp số dạng chữ của backend, vd `a³√3/3`. */
+  /** Đáp số dạng chữ của backend, vd `a³√3/3` (hoặc bản đã qua `output_policy` như `4,7`, `30°`). */
   symbolic: string;
+  /** Biểu thức chính xác gốc từ `route_d.output_policy[id].exact_symbolic` khi `symbolic` là bản làm tròn hoặc quy đổi độ. */
+  exact_symbolic?: string;
   /** Bậc theo đơn vị ký hiệu (0 ⇒ không thứ nguyên / đề dùng số). */
   dim: number;
   unit: string | null;
@@ -107,6 +109,81 @@ export interface HybridPreviewView {
    *  (`scene3d-model.ts`, `scene3d-semantic-policy.ts`); chỉ phần tử `verified: true` hoặc có trích dẫn mới qua. */
   source_provenance?: HybridSourceProvenanceEntry[];
   relation_certificates?: HybridRelationCertificateEntry[];
+  /** Có khi đề KHÔNG xác định duy nhất hình (đáp số đã kiểm bất biến): cảnh chỉ là minh họa, phải nói rõ với học sinh. */
+  scene_configuration?: HybridSceneConfiguration;
+  /** Có khi đề hỏi một GIÁ TRỊ (côsin, tang …) của góc: cảnh dựng và kiểm chứng góc, giá trị ấy không được trả lời. */
+  source_goal_completion?: HybridSourceGoalCompletion;
+}
+
+/** `route_d.source_goal_completion` (`source-goal-completion/1`) — mục tiêu số của đề CHƯA được trả lời. */
+export interface HybridSourceGoalCompletion {
+  schema_version: "source-goal-completion/1";
+  source_goal_fully_satisfied: false;
+  numeric_answer_shown: false;
+  goals: { goal_id: string; function: "cos" | "sin" | "tan" | "cot"; state: "GOAL_VISUALIZATION_READY";
+    numeric_source_goal: "NOT_ANSWERED"; value_defined?: boolean | null }[];
+}
+
+const HAM_LUONG_GIAC: Record<string, string> = { cos: "côsin", sin: "sin", tan: "tang", cot: "côtang" };
+
+/** `null` = hợp lệ (hoặc vắng). Bản ghi tự xưng đã trả lời / đã hiện số, hay sai dạng ⇒ từ chối view. */
+function kiemSourceGoalCompletion(raw: unknown): string | null {
+  if (raw === undefined) return null;
+  if (!laDoiTuong(raw) || raw.schema_version !== "source-goal-completion/1" || raw.source_goal_fully_satisfied !== false
+    || raw.numeric_answer_shown !== false || !Array.isArray(raw.goals) || raw.goals.length === 0
+    || raw.goals.some((g) => !laDoiTuong(g) || typeof g.goal_id !== "string" || typeof g.function !== "string"
+      || !(g.function in HAM_LUONG_GIAC) || g.state !== "GOAL_VISUALIZATION_READY" || g.numeric_source_goal !== "NOT_ANSWERED"))
+    return "source_goal_completion sai dạng";
+  return null;
+}
+
+/** Câu cho học sinh khi đề hỏi giá trị lượng giác của góc: hình dựng góc ấy, không tính hộ giá trị. `null` khi không có. */
+export function cauMucTieuSoChuaTraLoi(view: HybridPreviewView | null | undefined): string | null {
+  const c = view?.source_goal_completion;
+  if (!c || c.source_goal_fully_satisfied !== false || !c.goals.length) return null;
+  const ten = [...new Set(c.goals.map((g) => HAM_LUONG_GIAC[g.function]).filter(Boolean))].join(", ");
+  return `Đề hỏi giá trị ${ten} của góc. Hình dưới đây dựng và kiểm chứng đúng góc đó để em quan sát; `
+    + `Axo không tính hộ giá trị ${ten}.`;
+}
+
+/** `route_d.scene_configuration` — hình không duy nhất; chỉ một loại đã có chứng chỉ bất biến ở backend. */
+export interface HybridSceneConfiguration {
+  unique: false;
+  kind: "HEIGHT_INVARIANT_ILLUSTRATIVE" | "SIMILARITY_SCALE_ILLUSTRATIVE" | "TARGET_INVARIANT_ILLUSTRATIVE";
+  free_parameter: string;
+  free_for: string[];
+}
+
+// `SIMILARITY_SCALE_ILLUSTRATIVE` (run `certified-scale-cache-safety`): the source states no length; the figure is fixed
+// up to similarity and the scale drawn is an internal construction convention, never a source length.
+// `TARGET_INVARIANT_ILLUSTRATIVE` (run `target-invariant-regular-solid-semantics`): the source does not fix the figure's
+// shape; the asked angle is PROVEN the same for every admissible figure and the drawn one is only an illustration.
+const LOAI_CAU_HINH_MINH_HOA = new Set(["HEIGHT_INVARIANT_ILLUSTRATIVE", "SIMILARITY_SCALE_ILLUSTRATIVE",
+  "TARGET_INVARIANT_ILLUSTRATIVE"]);
+
+/** `null` = hợp lệ (hoặc vắng). Hình không duy nhất mà thiếu nhãn rõ ràng ⇒ từ chối view, không hiển thị như hình duy nhất. */
+function kiemSceneConfiguration(raw: unknown): string | null {
+  if (raw === undefined) return null;
+  if (!laDoiTuong(raw) || raw.unique !== false || typeof raw.kind !== "string" || !LOAI_CAU_HINH_MINH_HOA.has(raw.kind)
+    || typeof raw.free_parameter !== "string" || !Array.isArray(raw.free_for)
+    || raw.free_for.some((x) => typeof x !== "string")) return "scene_configuration sai dạng";
+  return null;
+}
+
+/** Câu cho học sinh khi hình chỉ là minh họa (đáp số không phụ thuộc phần đề bỏ ngỏ), hoặc `null` khi hình duy nhất. */
+export function cauCauHinhMinhHoa(view: HybridPreviewView | null | undefined): string | null {
+  const c = view?.scene_configuration;
+  if (!c || c.unique !== false) return null;
+  if (c.kind === "TARGET_INVARIANT_ILLUSTRATIVE") {
+    return "Đề không xác định duy nhất hình này nên hình dưới đây chỉ là một hình minh họa: góc đề hỏi đã được chứng "
+      + "minh là như nhau trên mọi hình thỏa đề, nhưng hình dạng và độ dài vẽ trên hình không phải dữ kiện của đề.";
+  }
+  if (c.kind === "SIMILARITY_SCALE_ILLUSTRATIVE") {
+    return "Đề không cho độ dài nào nên kích thước của hình dưới đây chỉ là một tỉ lệ minh họa: góc và tỉ số đề hỏi đã "
+      + "được kiểm là không phụ thuộc tỉ lệ, nhưng độ dài vẽ trên hình không phải dữ kiện của đề.";
+  }
+  return "Đề không cho chiều cao nên hình dưới đây chỉ là một hình minh họa: đáp số đã được kiểm là không phụ thuộc "
+    + "chiều cao, nhưng độ cao vẽ trên hình không phải dữ kiện của đề.";
 }
 
 export interface HybridSectionView {
@@ -610,9 +687,20 @@ function kiemSectionsCore(sections: unknown, scene: Scene3D): string | null {
   return null;
 }
 
+const MISSING_DATA_CLARIFICATION_CODES = new Set([
+  "AMBIGUOUS_FACT",
+  "MISSING_DIMENSION",
+  "UNDERDETERMINED_POINT",
+  "FOOT_NOT_DETERMINED",
+  "PLANE_NOT_UNIQUE",
+  "AMBIGUOUS_REFERENCE",
+  "SECTION_NOT_CLOSED_ON_LATERAL_EDGES",
+]);
+
 function kiemClarification(
   rawClar: unknown,
   refusalCode: string,
+  allowMissingDataCodes = false,
 ): { ok: true; view: HybridClarificationView } | { ok: false; reason: string } {
   if (!laDoiTuong(rawClar) || rawClar.schema_version !== HYBRID_CLARIFICATION_SCHEMA) {
     return { ok: false, reason: "clarification sai schema_version" };
@@ -630,7 +718,10 @@ function kiemClarification(
     return { ok: false, reason: "clarification lệch nlu_class" };
   }
   const expectedCode = typedKind === "unsupported" ? "OUT_OF_SCOPE" : "AMBIGUOUS_FACT";
-  if (refusalCode !== expectedCode) {
+  const codeAllowed = allowMissingDataCodes && typedKind !== "unsupported"
+    ? MISSING_DATA_CLARIFICATION_CODES.has(refusalCode)
+    : refusalCode === expectedCode;
+  if (!codeAllowed) {
     return { ok: false, reason: "clarification lệch mã từ chối" };
   }
   if (typeof rawClar.quote !== "string" || !rawClar.quote.trim()) {
@@ -707,6 +798,10 @@ export function dungHybridView(routeD: unknown, scene: Scene3D): { view: HybridP
     if (error) return { reason: error };
     const provError = kiemProvenanceAdapter4(routeD);
     if (provError) return { reason: provError };
+    const cfgError = kiemSceneConfiguration(routeD.scene_configuration);
+    if (cfgError) return { reason: cfgError };
+    const sgcError = kiemSourceGoalCompletion(routeD.source_goal_completion);
+    if (sgcError) return { reason: sgcError };
   } else if (!laDoiTuong(id) || id.adapter_version !== HYBRID_PREVIEW_ADAPTER) return { reason: "adapter_version không được hỗ trợ" };
 
   // §4 — length_unit của route_d phải đúng là length_unit của cảnh (một nguồn).
@@ -718,6 +813,7 @@ export function dungHybridView(routeD: unknown, scene: Scene3D): { view: HybridP
   const answers: HybridAnswerView[] = [];
   const ans = routeD.answers ?? {};
   const exact = routeD.answer_exact ?? {};
+  const outPolicy = laDoiTuong(routeD.output_policy) ? routeD.output_policy : null;
   if (!laDoiTuong(ans) || !laDoiTuong(exact)) return { reason: "answers/answer_exact sai dạng" };
   if (v4 && JSON.stringify(Object.keys(ans).sort()) !== JSON.stringify(Object.keys(exact).sort())) return { reason: "answers/answer_exact lệch" };
   for (const [k, sym] of Object.entries(ans)) {
@@ -734,7 +830,24 @@ export function dungHybridView(routeD: unknown, scene: Scene3D): { view: HybridP
     const giaTri = giaTriCanh(scene, qid);
     // Hình dựng ở a = 1 ⇒ giá trị trên cảnh = hệ số. Lệch ⇒ đáp số không thuộc cảnh này.
     if (giaTri == null || giaTri !== gon(ex.coef)) return { reason: `đáp số ${k} không khớp đại lượng ${qid} của cảnh` };
-    answers.push({ quantity_id: qid, coefficient: giaTri, symbolic: sym, dim, unit });
+    const pol =
+      (laDoiTuong(ex.output_policy) ? ex.output_policy : null)
+      ?? (outPolicy && laDoiTuong(outPolicy[k]) ? outPolicy[k] : null);
+    const rawExactSym =
+      pol && typeof pol.exact_answer === "string" && pol.exact_answer.trim()
+        ? pol.exact_answer.trim()
+        : pol && typeof pol.exact_symbolic === "string" && pol.exact_symbolic.trim()
+          ? pol.exact_symbolic.trim()
+          : undefined;
+    const exactSym = rawExactSym && rawExactSym !== sym.trim() ? rawExactSym : undefined;
+    answers.push({
+      quantity_id: qid,
+      coefficient: giaTri,
+      symbolic: sym,
+      ...(exactSym ? { exact_symbolic: exactSym } : {}),
+      dim,
+      unit,
+    });
   }
 
   const planner = routeD.planner;
@@ -771,7 +884,11 @@ export function dungHybridView(routeD: unknown, scene: Scene3D): { view: HybridP
     ...(v4 && routeD.source_provenance !== undefined
       ? { source_provenance: structuredClone(routeD.source_provenance) as HybridSourceProvenanceEntry[] } : {}),
     ...(v4 && routeD.relation_certificates !== undefined
-      ? { relation_certificates: structuredClone(routeD.relation_certificates) as HybridRelationCertificateEntry[] } : {}) } };
+      ? { relation_certificates: structuredClone(routeD.relation_certificates) as HybridRelationCertificateEntry[] } : {}),
+    ...(v4 && routeD.scene_configuration !== undefined
+      ? { scene_configuration: structuredClone(routeD.scene_configuration) as HybridSceneConfiguration } : {}),
+    ...(v4 && routeD.source_goal_completion !== undefined
+      ? { source_goal_completion: structuredClone(routeD.source_goal_completion) as HybridSourceGoalCompletion } : {}) } };
 }
 
 /**
@@ -797,6 +914,11 @@ export function docPhanHoiHybrid(raw: unknown): KetQuaPhanHoiHybrid {
       }
       if ("clarification" in raw.route_d.refusal && raw.route_d.refusal.clarification !== undefined) {
         const clar = kiemClarification(raw.route_d.refusal.clarification, raw.route_d.refusal.code);
+        if (!clar.ok) return clar;
+        return { ok: true, envelope: { ...envelope, clarification: clar.view } };
+      }
+      if ("clarification" in raw.route_d && raw.route_d.clarification !== undefined) {
+        const clar = kiemClarification(raw.route_d.clarification, raw.route_d.refusal.code, true);
         if (!clar.ok) return clar;
         return { ok: true, envelope: { ...envelope, clarification: clar.view } };
       }
@@ -827,6 +949,10 @@ export function kiemHybridView(view: unknown, scene: Scene3D | undefined): strin
     if (error) return error;
     const provError = kiemProvenanceAdapter4(view);
     if (provError) return provError;
+    const cfgError = kiemSceneConfiguration(view.scene_configuration);
+    if (cfgError) return cfgError;
+    const sgcError = kiemSourceGoalCompletion(view.source_goal_completion);
+    if (sgcError) return sgcError;
   }
   if (!Array.isArray(view.answers) || !Array.isArray(view.observations)) return "hybrid_preview sai dạng";
   const daCo = new Set<string>();
@@ -842,6 +968,9 @@ export function kiemHybridView(view: unknown, scene: Scene3D | undefined): strin
     if (a.coefficient !== undefined && (typeof a.coefficient !== "string"
       || gon(a.coefficient) !== giaTriCanh(scene, String(a.quantity_id)))) {
       return "hệ số đáp số không khớp đại lượng của cảnh";
+    }
+    if (a.exact_symbolic !== undefined && (typeof a.exact_symbolic !== "string" || !a.exact_symbolic.trim())) {
+      return "exact_symbolic của đáp số sai dạng";
     }
   }
   const buocCuoi = Math.max(0, ...scene.events.map((e) => e.step_index));

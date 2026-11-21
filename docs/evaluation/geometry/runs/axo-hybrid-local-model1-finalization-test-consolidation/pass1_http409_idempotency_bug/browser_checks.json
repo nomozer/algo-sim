@@ -1,0 +1,5105 @@
+{
+  "schema": "axo-browser-checks/1",
+  "harness_version": "axo-live-acceptance-harness/1",
+  "base": "http://127.0.0.1:4173/app",
+  "total_cases": 140,
+  "served_count": 48,
+  "initial_visual_pass": 48,
+  "interaction_pass": 48,
+  "external_requests_count": 0,
+  "external_requests": [],
+  "console_error_cases": [
+    "H004",
+    "H005",
+    "H006",
+    "H007",
+    "H008",
+    "H009",
+    "H010",
+    "H012",
+    "H013",
+    "H014",
+    "H015",
+    "H016",
+    "H017",
+    "H018",
+    "H019",
+    "H020",
+    "H022",
+    "H023",
+    "H024",
+    "H025",
+    "H026",
+    "H027",
+    "H028",
+    "H029",
+    "H030",
+    "H033",
+    "H034",
+    "H035",
+    "H036",
+    "H037",
+    "H038",
+    "H039",
+    "H040",
+    "H046",
+    "H047",
+    "H048",
+    "H049",
+    "H050",
+    "H059",
+    "H060",
+    "H066",
+    "H067",
+    "H068",
+    "H069",
+    "H070",
+    "H090",
+    "H098",
+    "H099",
+    "H100",
+    "HD02",
+    "HD03",
+    "HD04",
+    "HD06",
+    "HN01",
+    "HN02",
+    "HN03",
+    "HN04",
+    "HN05",
+    "HN06",
+    "HN07",
+    "HN08",
+    "HN10",
+    "HN11",
+    "HN12",
+    "HN13",
+    "HN14",
+    "HN15",
+    "HN16",
+    "HN17",
+    "HN18",
+    "HN20",
+    "HN21",
+    "HN22",
+    "HN23",
+    "HN24",
+    "HN25",
+    "HN26",
+    "HN27",
+    "HN28"
+  ],
+  "results": [
+    {
+      "case_id": "H001",
+      "group": "valid",
+      "expected_behavior": "SERVE",
+      "route_status": "SERVED",
+      "extraction_mode": "LOCAL_DETERMINISTIC_PARSER",
+      "http": 200,
+      "ms": 545,
+      "surface": "SCENE",
+      "initial_visual_ok": true,
+      "stale_vs_previous": false,
+      "has_canvas": true,
+      "canvas_rect": {
+        "w": 735,
+        "h": 822
+      },
+      "label_texts": [
+        "M",
+        "N",
+        "P",
+        "Q",
+        "T"
+      ],
+      "label_positions": {
+        "M": [
+          542,
+          320
+        ],
+        "N": [
+          371,
+          515
+        ],
+        "P": [
+          815,
+          626
+        ],
+        "Q": [
+          886,
+          379
+        ],
+        "T": [
+          550,
+          197
+        ]
+      },
+      "outside_initial_labels": [],
+      "missing_gold_labels": [],
+      "vertex_marker_count": 5,
+      "outside_initial_ndc_vertices": [],
+      "camera_position": [
+        11.879012124648721,
+        5.714921938402135,
+        6.704497258199995
+      ],
+      "progress_text": "Bước 5/5",
+      "canvas_ink_fraction": 0.93621,
+      "interactions": {
+        "ok": true,
+        "orbit_ok": true,
+        "orbit_label_shift_px": 202.8,
+        "orbit_cam_delta": 6.784,
+        "zoom_ok": true,
+        "zoom_cam_delta": 1.093,
+        "step_status": "ok",
+        "reset_ok": true,
+        "outside_after_reset": [],
+        "extra_analyze_requests": 0
+      },
+      "console_errors": []
+    },
+    {
+      "case_id": "H002",
+      "group": "valid",
+      "expected_behavior": "SERVE",
+      "route_status": "SERVED",
+      "extraction_mode": "LOCAL_DETERMINISTIC_PARSER",
+      "http": 200,
+      "ms": 141,
+      "surface": "SCENE",
+      "initial_visual_ok": true,
+      "stale_vs_previous": false,
+      "has_canvas": true,
+      "canvas_rect": {
+        "w": 735,
+        "h": 822
+      },
+      "label_texts": [
+        "E",
+        "F",
+        "G",
+        "H",
+        "L"
+      ],
+      "label_positions": {
+        "E": [
+          526,
+          342
+        ],
+        "F": [
+          373,
+          479
+        ],
+        "G": [
+          780,
+          654
+        ],
+        "H": [
+          888,
+          457
+        ],
+        "L": [
+          527,
+          174
+        ]
+      },
+      "outside_initial_labels": [],
+      "missing_gold_labels": [],
+      "vertex_marker_count": 5,
+      "outside_initial_ndc_vertices": [],
+      "camera_position": [
+        10.94512868508794,
+        7.933810021568771,
+        8.55953759205141
+      ],
+      "progress_text": "Bước 5/5",
+      "canvas_ink_fraction": 0.93616,
+      "interactions": {
+        "ok": true,
+        "orbit_ok": true,
+        "orbit_label_shift_px": 161.2,
+        "orbit_cam_delta": 7.057,
+        "zoom_ok": true,
+        "zoom_cam_delta": 1.116,
+        "step_status": "ok",
+        "reset_ok": true,
+        "outside_after_reset": [],
+        "extra_analyze_requests": 0
+      },
+      "console_errors": []
+    },
+    {
+      "case_id": "H003",
+      "group": "valid",
+      "expected_behavior": "SERVE",
+      "route_status": null,
+      "extraction_mode": null,
+      "http": 200,
+      "ms": 126,
+      "surface": "NO_SCENE",
+      "reason_code": "gate_out_of_scope",
+      "canvas_count": 0,
+      "toast": "Đề bài chưa được hỗ trợ | Bài này thuộc môn học khác, không nằm trong phần Axo mô phỏng. Hệ thống nói thẳng thay vì dựng một hình vẽ trông giống mô phỏng nhưng không dựa trên cơ chế nào. Axo tập trung vào hình học không gian — bạn thử một bài về giao tuyến, thiết diện, quan hệ song song – vuông góc, khoảng cách hoặc thể tích nhé. Bạn có thể thử các bài về thiết diện, khoảng cách, góc hoặc thể tích.",
+      "console_errors": []
+    },
+    {
+      "case_id": "H004",
+      "group": "valid",
+      "expected_behavior": "SERVE",
+      "route_status": null,
+      "extraction_mode": null,
+      "http": 409,
+      "ms": 68,
+      "surface": "NO_SCENE",
+      "reason_code": null,
+      "canvas_count": 0,
+      "toast": "Máy chủ trả về lỗi khi phân tích | Mã lượt gửi này đã dùng cho một đề khác.",
+      "console_errors": [
+        "console.error: Failed to load resource: the server responded with a status of 409 (Conflict)"
+      ]
+    },
+    {
+      "case_id": "H005",
+      "group": "valid",
+      "expected_behavior": "SERVE",
+      "route_status": null,
+      "extraction_mode": null,
+      "http": 409,
+      "ms": 50,
+      "surface": "NO_SCENE",
+      "reason_code": null,
+      "canvas_count": 0,
+      "toast": "Máy chủ trả về lỗi khi phân tích | Mã lượt gửi này đã dùng cho một đề khác.",
+      "console_errors": [
+        "console.error: Failed to load resource: the server responded with a status of 409 (Conflict)"
+      ]
+    },
+    {
+      "case_id": "H006",
+      "group": "valid",
+      "expected_behavior": "SERVE",
+      "route_status": null,
+      "extraction_mode": null,
+      "http": 409,
+      "ms": 62,
+      "surface": "NO_SCENE",
+      "reason_code": null,
+      "canvas_count": 0,
+      "toast": "Máy chủ trả về lỗi khi phân tích | Mã lượt gửi này đã dùng cho một đề khác.",
+      "console_errors": [
+        "console.error: Failed to load resource: the server responded with a status of 409 (Conflict)"
+      ]
+    },
+    {
+      "case_id": "H007",
+      "group": "valid",
+      "expected_behavior": "SERVE",
+      "route_status": null,
+      "extraction_mode": null,
+      "http": 409,
+      "ms": 63,
+      "surface": "NO_SCENE",
+      "reason_code": null,
+      "canvas_count": 0,
+      "toast": "Máy chủ trả về lỗi khi phân tích | Mã lượt gửi này đã dùng cho một đề khác.",
+      "console_errors": [
+        "console.error: Failed to load resource: the server responded with a status of 409 (Conflict)"
+      ]
+    },
+    {
+      "case_id": "H008",
+      "group": "valid",
+      "expected_behavior": "SERVE",
+      "route_status": null,
+      "extraction_mode": null,
+      "http": 409,
+      "ms": 55,
+      "surface": "NO_SCENE",
+      "reason_code": null,
+      "canvas_count": 0,
+      "toast": "Máy chủ trả về lỗi khi phân tích | Mã lượt gửi này đã dùng cho một đề khác.",
+      "console_errors": [
+        "console.error: Failed to load resource: the server responded with a status of 409 (Conflict)"
+      ]
+    },
+    {
+      "case_id": "H009",
+      "group": "valid",
+      "expected_behavior": "SERVE",
+      "route_status": null,
+      "extraction_mode": null,
+      "http": 409,
+      "ms": 51,
+      "surface": "NO_SCENE",
+      "reason_code": null,
+      "canvas_count": 0,
+      "toast": "Máy chủ trả về lỗi khi phân tích | Mã lượt gửi này đã dùng cho một đề khác.",
+      "console_errors": [
+        "console.error: Failed to load resource: the server responded with a status of 409 (Conflict)"
+      ]
+    },
+    {
+      "case_id": "H010",
+      "group": "valid",
+      "expected_behavior": "SERVE",
+      "route_status": null,
+      "extraction_mode": null,
+      "http": 409,
+      "ms": 58,
+      "surface": "NO_SCENE",
+      "reason_code": null,
+      "canvas_count": 0,
+      "toast": "Máy chủ trả về lỗi khi phân tích | Mã lượt gửi này đã dùng cho một đề khác.",
+      "console_errors": [
+        "console.error: Failed to load resource: the server responded with a status of 409 (Conflict)"
+      ]
+    },
+    {
+      "case_id": "H011",
+      "group": "valid",
+      "expected_behavior": "SERVE",
+      "route_status": "REFUSED",
+      "extraction_mode": "LOCAL_SLM_GROUNDED",
+      "http": 200,
+      "ms": 4360,
+      "surface": "NO_SCENE",
+      "reason_code": null,
+      "canvas_count": 0,
+      "toast": "Đề bài chưa được hỗ trợ | Hệ chưa đối chiếu được đầy đủ dữ kiện với đề bài nên tạm dừng dựng hình. Bạn có thể thử các bài về thiết diện, khoảng cách, góc hoặc thể tích.",
+      "console_errors": []
+    },
+    {
+      "case_id": "H012",
+      "group": "valid",
+      "expected_behavior": "SERVE",
+      "route_status": null,
+      "extraction_mode": null,
+      "http": 409,
+      "ms": 59,
+      "surface": "NO_SCENE",
+      "reason_code": null,
+      "canvas_count": 0,
+      "toast": "Máy chủ trả về lỗi khi phân tích | Mã lượt gửi này đã dùng cho một đề khác.",
+      "console_errors": [
+        "console.error: Failed to load resource: the server responded with a status of 409 (Conflict)"
+      ]
+    },
+    {
+      "case_id": "H013",
+      "group": "valid",
+      "expected_behavior": "SERVE",
+      "route_status": null,
+      "extraction_mode": null,
+      "http": 409,
+      "ms": 51,
+      "surface": "NO_SCENE",
+      "reason_code": null,
+      "canvas_count": 0,
+      "toast": "Máy chủ trả về lỗi khi phân tích | Mã lượt gửi này đã dùng cho một đề khác.",
+      "console_errors": [
+        "console.error: Failed to load resource: the server responded with a status of 409 (Conflict)"
+      ]
+    },
+    {
+      "case_id": "H014",
+      "group": "valid",
+      "expected_behavior": "SERVE",
+      "route_status": null,
+      "extraction_mode": null,
+      "http": 409,
+      "ms": 56,
+      "surface": "NO_SCENE",
+      "reason_code": null,
+      "canvas_count": 0,
+      "toast": "Máy chủ trả về lỗi khi phân tích | Mã lượt gửi này đã dùng cho một đề khác.",
+      "console_errors": [
+        "console.error: Failed to load resource: the server responded with a status of 409 (Conflict)"
+      ]
+    },
+    {
+      "case_id": "H015",
+      "group": "valid",
+      "expected_behavior": "SERVE",
+      "route_status": null,
+      "extraction_mode": null,
+      "http": 409,
+      "ms": 55,
+      "surface": "NO_SCENE",
+      "reason_code": null,
+      "canvas_count": 0,
+      "toast": "Máy chủ trả về lỗi khi phân tích | Mã lượt gửi này đã dùng cho một đề khác.",
+      "console_errors": [
+        "console.error: Failed to load resource: the server responded with a status of 409 (Conflict)"
+      ]
+    },
+    {
+      "case_id": "H016",
+      "group": "valid",
+      "expected_behavior": "SERVE",
+      "route_status": null,
+      "extraction_mode": null,
+      "http": 409,
+      "ms": 55,
+      "surface": "NO_SCENE",
+      "reason_code": null,
+      "canvas_count": 0,
+      "toast": "Máy chủ trả về lỗi khi phân tích | Mã lượt gửi này đã dùng cho một đề khác.",
+      "console_errors": [
+        "console.error: Failed to load resource: the server responded with a status of 409 (Conflict)"
+      ]
+    },
+    {
+      "case_id": "H017",
+      "group": "valid",
+      "expected_behavior": "SERVE",
+      "route_status": null,
+      "extraction_mode": null,
+      "http": 409,
+      "ms": 52,
+      "surface": "NO_SCENE",
+      "reason_code": null,
+      "canvas_count": 0,
+      "toast": "Máy chủ trả về lỗi khi phân tích | Mã lượt gửi này đã dùng cho một đề khác.",
+      "console_errors": [
+        "console.error: Failed to load resource: the server responded with a status of 409 (Conflict)"
+      ]
+    },
+    {
+      "case_id": "H018",
+      "group": "valid",
+      "expected_behavior": "SERVE",
+      "route_status": null,
+      "extraction_mode": null,
+      "http": 409,
+      "ms": 54,
+      "surface": "NO_SCENE",
+      "reason_code": null,
+      "canvas_count": 0,
+      "toast": "Máy chủ trả về lỗi khi phân tích | Mã lượt gửi này đã dùng cho một đề khác.",
+      "console_errors": [
+        "console.error: Failed to load resource: the server responded with a status of 409 (Conflict)"
+      ]
+    },
+    {
+      "case_id": "H019",
+      "group": "valid",
+      "expected_behavior": "SERVE",
+      "route_status": null,
+      "extraction_mode": null,
+      "http": 409,
+      "ms": 61,
+      "surface": "NO_SCENE",
+      "reason_code": null,
+      "canvas_count": 0,
+      "toast": "Máy chủ trả về lỗi khi phân tích | Mã lượt gửi này đã dùng cho một đề khác.",
+      "console_errors": [
+        "console.error: Failed to load resource: the server responded with a status of 409 (Conflict)"
+      ]
+    },
+    {
+      "case_id": "H020",
+      "group": "valid",
+      "expected_behavior": "SERVE",
+      "route_status": null,
+      "extraction_mode": null,
+      "http": 409,
+      "ms": 57,
+      "surface": "NO_SCENE",
+      "reason_code": null,
+      "canvas_count": 0,
+      "toast": "Máy chủ trả về lỗi khi phân tích | Mã lượt gửi này đã dùng cho một đề khác.",
+      "console_errors": [
+        "console.error: Failed to load resource: the server responded with a status of 409 (Conflict)"
+      ]
+    },
+    {
+      "case_id": "H021",
+      "group": "valid",
+      "expected_behavior": "SERVE",
+      "route_status": "REFUSED",
+      "extraction_mode": "LOCAL_SLM_GROUNDING_REJECTED",
+      "http": 200,
+      "ms": 1400,
+      "surface": "NO_SCENE",
+      "reason_code": null,
+      "canvas_count": 0,
+      "toast": "Đề bài chưa được hỗ trợ | Hệ thống chưa thể tạo mô phỏng đã kiểm chứng từ nội dung đề hiện tại. Bạn có thể thử các bài về thiết diện, khoảng cách, góc hoặc thể tích.",
+      "console_errors": []
+    },
+    {
+      "case_id": "H022",
+      "group": "valid",
+      "expected_behavior": "SERVE",
+      "route_status": null,
+      "extraction_mode": null,
+      "http": 409,
+      "ms": 67,
+      "surface": "NO_SCENE",
+      "reason_code": null,
+      "canvas_count": 0,
+      "toast": "Máy chủ trả về lỗi khi phân tích | Mã lượt gửi này đã dùng cho một đề khác.",
+      "console_errors": [
+        "console.error: Failed to load resource: the server responded with a status of 409 (Conflict)"
+      ]
+    },
+    {
+      "case_id": "H023",
+      "group": "valid",
+      "expected_behavior": "SERVE",
+      "route_status": null,
+      "extraction_mode": null,
+      "http": 409,
+      "ms": 55,
+      "surface": "NO_SCENE",
+      "reason_code": null,
+      "canvas_count": 0,
+      "toast": "Máy chủ trả về lỗi khi phân tích | Mã lượt gửi này đã dùng cho một đề khác.",
+      "console_errors": [
+        "console.error: Failed to load resource: the server responded with a status of 409 (Conflict)"
+      ]
+    },
+    {
+      "case_id": "H024",
+      "group": "valid",
+      "expected_behavior": "SERVE",
+      "route_status": null,
+      "extraction_mode": null,
+      "http": 409,
+      "ms": 60,
+      "surface": "NO_SCENE",
+      "reason_code": null,
+      "canvas_count": 0,
+      "toast": "Máy chủ trả về lỗi khi phân tích | Mã lượt gửi này đã dùng cho một đề khác.",
+      "console_errors": [
+        "console.error: Failed to load resource: the server responded with a status of 409 (Conflict)"
+      ]
+    },
+    {
+      "case_id": "H025",
+      "group": "valid",
+      "expected_behavior": "SERVE",
+      "route_status": null,
+      "extraction_mode": null,
+      "http": 409,
+      "ms": 53,
+      "surface": "NO_SCENE",
+      "reason_code": null,
+      "canvas_count": 0,
+      "toast": "Máy chủ trả về lỗi khi phân tích | Mã lượt gửi này đã dùng cho một đề khác.",
+      "console_errors": [
+        "console.error: Failed to load resource: the server responded with a status of 409 (Conflict)"
+      ]
+    },
+    {
+      "case_id": "H026",
+      "group": "valid",
+      "expected_behavior": "SERVE",
+      "route_status": null,
+      "extraction_mode": null,
+      "http": 409,
+      "ms": 54,
+      "surface": "NO_SCENE",
+      "reason_code": null,
+      "canvas_count": 0,
+      "toast": "Máy chủ trả về lỗi khi phân tích | Mã lượt gửi này đã dùng cho một đề khác.",
+      "console_errors": [
+        "console.error: Failed to load resource: the server responded with a status of 409 (Conflict)"
+      ]
+    },
+    {
+      "case_id": "H027",
+      "group": "valid",
+      "expected_behavior": "SERVE",
+      "route_status": null,
+      "extraction_mode": null,
+      "http": 409,
+      "ms": 58,
+      "surface": "NO_SCENE",
+      "reason_code": null,
+      "canvas_count": 0,
+      "toast": "Máy chủ trả về lỗi khi phân tích | Mã lượt gửi này đã dùng cho một đề khác.",
+      "console_errors": [
+        "console.error: Failed to load resource: the server responded with a status of 409 (Conflict)"
+      ]
+    },
+    {
+      "case_id": "H028",
+      "group": "valid",
+      "expected_behavior": "SERVE",
+      "route_status": null,
+      "extraction_mode": null,
+      "http": 409,
+      "ms": 49,
+      "surface": "NO_SCENE",
+      "reason_code": null,
+      "canvas_count": 0,
+      "toast": "Máy chủ trả về lỗi khi phân tích | Mã lượt gửi này đã dùng cho một đề khác.",
+      "console_errors": [
+        "console.error: Failed to load resource: the server responded with a status of 409 (Conflict)"
+      ]
+    },
+    {
+      "case_id": "H029",
+      "group": "valid",
+      "expected_behavior": "SERVE",
+      "route_status": null,
+      "extraction_mode": null,
+      "http": 409,
+      "ms": 53,
+      "surface": "NO_SCENE",
+      "reason_code": null,
+      "canvas_count": 0,
+      "toast": "Máy chủ trả về lỗi khi phân tích | Mã lượt gửi này đã dùng cho một đề khác.",
+      "console_errors": [
+        "console.error: Failed to load resource: the server responded with a status of 409 (Conflict)"
+      ]
+    },
+    {
+      "case_id": "H030",
+      "group": "valid",
+      "expected_behavior": "SERVE",
+      "route_status": null,
+      "extraction_mode": null,
+      "http": 409,
+      "ms": 74,
+      "surface": "NO_SCENE",
+      "reason_code": null,
+      "canvas_count": 0,
+      "toast": "Máy chủ trả về lỗi khi phân tích | Mã lượt gửi này đã dùng cho một đề khác.",
+      "console_errors": [
+        "console.error: Failed to load resource: the server responded with a status of 409 (Conflict)"
+      ]
+    },
+    {
+      "case_id": "H031",
+      "group": "valid",
+      "expected_behavior": "SERVE",
+      "route_status": "SERVED",
+      "extraction_mode": "LOCAL_DETERMINISTIC_PARSER",
+      "http": 200,
+      "ms": 148,
+      "surface": "SCENE",
+      "initial_visual_ok": true,
+      "stale_vs_previous": false,
+      "has_canvas": true,
+      "canvas_rect": {
+        "w": 735,
+        "h": 822
+      },
+      "label_texts": [
+        "M",
+        "N",
+        "P",
+        "T"
+      ],
+      "label_positions": {
+        "M": [
+          598,
+          560
+        ],
+        "N": [
+          470,
+          679
+        ],
+        "P": [
+          793,
+          647
+        ],
+        "T": [
+          593,
+          150
+        ]
+      },
+      "outside_initial_labels": [],
+      "missing_gold_labels": [],
+      "vertex_marker_count": 4,
+      "outside_initial_ndc_vertices": [],
+      "camera_position": [
+        6.313462304794423,
+        2.6289574521239354,
+        3.2314743463329965
+      ],
+      "progress_text": "Bước 5/5",
+      "canvas_ink_fraction": 0.93173,
+      "interactions": {
+        "ok": true,
+        "orbit_ok": true,
+        "orbit_label_shift_px": 130.4,
+        "orbit_cam_delta": 3.771,
+        "zoom_ok": true,
+        "zoom_cam_delta": 0.636,
+        "step_status": "ok",
+        "reset_ok": true,
+        "outside_after_reset": [],
+        "extra_analyze_requests": 0
+      },
+      "console_errors": []
+    },
+    {
+      "case_id": "H032",
+      "group": "valid",
+      "expected_behavior": "SERVE",
+      "route_status": "REFUSED",
+      "extraction_mode": "LOCAL_SLM_GROUNDING_REJECTED",
+      "http": 200,
+      "ms": 1256,
+      "surface": "NO_SCENE",
+      "reason_code": null,
+      "canvas_count": 0,
+      "toast": "Đề bài có chỗ cần viết rõ hơn | Trong “Mô phỏng tứ diện OABC trong đó ba cạnh OA, OB, OC đôi một vuông góc và OA = 2, OB = 4, OC = 1.”, bạn hãy nói rõ quan hệ hình học. Bạn có thể bổ sung hoặc viết rõ phần đó ngay trên ô nhập rồi nhấn Dựng hình.",
+      "console_errors": []
+    },
+    {
+      "case_id": "H033",
+      "group": "valid",
+      "expected_behavior": "SERVE",
+      "route_status": null,
+      "extraction_mode": null,
+      "http": 409,
+      "ms": 61,
+      "surface": "NO_SCENE",
+      "reason_code": null,
+      "canvas_count": 0,
+      "toast": "Máy chủ trả về lỗi khi phân tích | Mã lượt gửi này đã dùng cho một đề khác.",
+      "console_errors": [
+        "console.error: Failed to load resource: the server responded with a status of 409 (Conflict)"
+      ]
+    },
+    {
+      "case_id": "H034",
+      "group": "valid",
+      "expected_behavior": "SERVE",
+      "route_status": null,
+      "extraction_mode": null,
+      "http": 409,
+      "ms": 55,
+      "surface": "NO_SCENE",
+      "reason_code": null,
+      "canvas_count": 0,
+      "toast": "Máy chủ trả về lỗi khi phân tích | Mã lượt gửi này đã dùng cho một đề khác.",
+      "console_errors": [
+        "console.error: Failed to load resource: the server responded with a status of 409 (Conflict)"
+      ]
+    },
+    {
+      "case_id": "H035",
+      "group": "valid",
+      "expected_behavior": "SERVE",
+      "route_status": null,
+      "extraction_mode": null,
+      "http": 409,
+      "ms": 51,
+      "surface": "NO_SCENE",
+      "reason_code": null,
+      "canvas_count": 0,
+      "toast": "Máy chủ trả về lỗi khi phân tích | Mã lượt gửi này đã dùng cho một đề khác.",
+      "console_errors": [
+        "console.error: Failed to load resource: the server responded with a status of 409 (Conflict)"
+      ]
+    },
+    {
+      "case_id": "H036",
+      "group": "valid",
+      "expected_behavior": "SERVE",
+      "route_status": null,
+      "extraction_mode": null,
+      "http": 409,
+      "ms": 56,
+      "surface": "NO_SCENE",
+      "reason_code": null,
+      "canvas_count": 0,
+      "toast": "Máy chủ trả về lỗi khi phân tích | Mã lượt gửi này đã dùng cho một đề khác.",
+      "console_errors": [
+        "console.error: Failed to load resource: the server responded with a status of 409 (Conflict)"
+      ]
+    },
+    {
+      "case_id": "H037",
+      "group": "valid",
+      "expected_behavior": "SERVE",
+      "route_status": null,
+      "extraction_mode": null,
+      "http": 409,
+      "ms": 54,
+      "surface": "NO_SCENE",
+      "reason_code": null,
+      "canvas_count": 0,
+      "toast": "Máy chủ trả về lỗi khi phân tích | Mã lượt gửi này đã dùng cho một đề khác.",
+      "console_errors": [
+        "console.error: Failed to load resource: the server responded with a status of 409 (Conflict)"
+      ]
+    },
+    {
+      "case_id": "H038",
+      "group": "valid",
+      "expected_behavior": "SERVE",
+      "route_status": null,
+      "extraction_mode": null,
+      "http": 409,
+      "ms": 51,
+      "surface": "NO_SCENE",
+      "reason_code": null,
+      "canvas_count": 0,
+      "toast": "Máy chủ trả về lỗi khi phân tích | Mã lượt gửi này đã dùng cho một đề khác.",
+      "console_errors": [
+        "console.error: Failed to load resource: the server responded with a status of 409 (Conflict)"
+      ]
+    },
+    {
+      "case_id": "H039",
+      "group": "valid",
+      "expected_behavior": "SERVE",
+      "route_status": null,
+      "extraction_mode": null,
+      "http": 409,
+      "ms": 53,
+      "surface": "NO_SCENE",
+      "reason_code": null,
+      "canvas_count": 0,
+      "toast": "Máy chủ trả về lỗi khi phân tích | Mã lượt gửi này đã dùng cho một đề khác.",
+      "console_errors": [
+        "console.error: Failed to load resource: the server responded with a status of 409 (Conflict)"
+      ]
+    },
+    {
+      "case_id": "H040",
+      "group": "valid",
+      "expected_behavior": "SERVE",
+      "route_status": null,
+      "extraction_mode": null,
+      "http": 409,
+      "ms": 52,
+      "surface": "NO_SCENE",
+      "reason_code": null,
+      "canvas_count": 0,
+      "toast": "Máy chủ trả về lỗi khi phân tích | Mã lượt gửi này đã dùng cho một đề khác.",
+      "console_errors": [
+        "console.error: Failed to load resource: the server responded with a status of 409 (Conflict)"
+      ]
+    },
+    {
+      "case_id": "H041",
+      "group": "valid",
+      "expected_behavior": "SERVE",
+      "route_status": "SERVED",
+      "extraction_mode": "LOCAL_DETERMINISTIC_PARSER",
+      "http": 200,
+      "ms": 161,
+      "surface": "SCENE",
+      "initial_visual_ok": true,
+      "stale_vs_previous": false,
+      "has_canvas": true,
+      "canvas_rect": {
+        "w": 735,
+        "h": 822
+      },
+      "label_texts": [
+        "M",
+        "N",
+        "P",
+        "Q",
+        "T"
+      ],
+      "label_positions": {
+        "M": [
+          577,
+          457
+        ],
+        "N": [
+          438,
+          583
+        ],
+        "P": [
+          704,
+          681
+        ],
+        "Q": [
+          823,
+          527
+        ],
+        "T": [
+          591,
+          151
+        ]
+      },
+      "outside_initial_labels": [],
+      "missing_gold_labels": [],
+      "vertex_marker_count": 5,
+      "outside_initial_ndc_vertices": [],
+      "camera_position": [
+        9.174817443138517,
+        5.85181109225031,
+        5.733431050128503
+      ],
+      "progress_text": "Bước 5/5",
+      "canvas_ink_fraction": 0.9337,
+      "interactions": {
+        "ok": true,
+        "orbit_ok": true,
+        "orbit_label_shift_px": 127.5,
+        "orbit_cam_delta": 5.907,
+        "zoom_ok": true,
+        "zoom_cam_delta": 0.986,
+        "step_status": "ok",
+        "reset_ok": true,
+        "outside_after_reset": [],
+        "extra_analyze_requests": 0
+      },
+      "console_errors": []
+    },
+    {
+      "case_id": "H042",
+      "group": "valid",
+      "expected_behavior": "SERVE",
+      "route_status": "SERVED",
+      "extraction_mode": "LOCAL_DETERMINISTIC_PARSER",
+      "http": 200,
+      "ms": 179,
+      "surface": "SCENE",
+      "initial_visual_ok": true,
+      "stale_vs_previous": false,
+      "has_canvas": true,
+      "canvas_rect": {
+        "w": 735,
+        "h": 822
+      },
+      "label_texts": [
+        "E",
+        "F",
+        "G",
+        "H",
+        "L"
+      ],
+      "label_positions": {
+        "E": [
+          584,
+          472
+        ],
+        "F": [
+          455,
+          592
+        ],
+        "G": [
+          707,
+          672
+        ],
+        "H": [
+          808,
+          540
+        ],
+        "L": [
+          577,
+          166
+        ]
+      },
+      "outside_initial_labels": [],
+      "missing_gold_labels": [],
+      "vertex_marker_count": 5,
+      "outside_initial_ndc_vertices": [],
+      "camera_position": [
+        6.554113446475959,
+        4.1538376770813175,
+        4.182894237340329
+      ],
+      "progress_text": "Bước 7/7",
+      "canvas_ink_fraction": 0.93289,
+      "interactions": {
+        "ok": true,
+        "orbit_ok": true,
+        "orbit_label_shift_px": 118.2,
+        "orbit_cam_delta": 4.377,
+        "zoom_ok": true,
+        "zoom_cam_delta": 0.658,
+        "step_status": "ok",
+        "reset_ok": true,
+        "outside_after_reset": [],
+        "extra_analyze_requests": 0
+      },
+      "console_errors": []
+    },
+    {
+      "case_id": "H043",
+      "group": "valid",
+      "expected_behavior": "SERVE",
+      "route_status": "SERVED",
+      "extraction_mode": "LOCAL_DETERMINISTIC_PARSER",
+      "http": 200,
+      "ms": 187,
+      "surface": "SCENE",
+      "initial_visual_ok": true,
+      "stale_vs_previous": false,
+      "has_canvas": true,
+      "canvas_rect": {
+        "w": 735,
+        "h": 822
+      },
+      "label_texts": [
+        "A",
+        "B",
+        "C",
+        "D",
+        "S",
+        "H"
+      ],
+      "label_positions": {
+        "A": [
+          683,
+          394
+        ],
+        "B": [
+          373,
+          468
+        ],
+        "C": [
+          519,
+          653
+        ],
+        "D": [
+          887,
+          530
+        ],
+        "S": [
+          676,
+          175
+        ],
+        "H": [
+          571,
+          265
+        ]
+      },
+      "outside_initial_labels": [],
+      "missing_gold_labels": [],
+      "vertex_marker_count": 6,
+      "outside_initial_ndc_vertices": [],
+      "camera_position": [
+        6.476701589916746,
+        9.936887305952391,
+        4.565757369976856
+      ],
+      "progress_text": "Bước 7/7",
+      "canvas_ink_fraction": 0.93622,
+      "interactions": {
+        "ok": true,
+        "orbit_ok": true,
+        "orbit_label_shift_px": 245.7,
+        "orbit_cam_delta": 6.261,
+        "zoom_ok": true,
+        "zoom_cam_delta": 0.984,
+        "step_status": "ok",
+        "reset_ok": true,
+        "outside_after_reset": [],
+        "extra_analyze_requests": 0
+      },
+      "console_errors": []
+    },
+    {
+      "case_id": "H044",
+      "group": "valid",
+      "expected_behavior": "SERVE",
+      "route_status": "SERVED",
+      "extraction_mode": "LOCAL_DETERMINISTIC_PARSER",
+      "http": 200,
+      "ms": 165,
+      "surface": "SCENE",
+      "initial_visual_ok": true,
+      "stale_vs_previous": false,
+      "has_canvas": true,
+      "canvas_rect": {
+        "w": 735,
+        "h": 822
+      },
+      "label_texts": [
+        "I",
+        "J",
+        "K",
+        "L",
+        "S",
+        "Q"
+      ],
+      "label_positions": {
+        "I": [
+          581,
+          403
+        ],
+        "J": [
+          415,
+          543
+        ],
+        "K": [
+          714,
+          682
+        ],
+        "L": [
+          849,
+          482
+        ],
+        "S": [
+          600,
+          154
+        ],
+        "Q": [
+          713,
+          308
+        ]
+      },
+      "outside_initial_labels": [],
+      "missing_gold_labels": [],
+      "vertex_marker_count": 6,
+      "outside_initial_ndc_vertices": [],
+      "camera_position": [
+        5.266190857809936,
+        3.410255223819589,
+        3.6774605718732887
+      ],
+      "progress_text": "Bước 8/8",
+      "canvas_ink_fraction": 0.93534,
+      "interactions": {
+        "ok": true,
+        "orbit_ok": true,
+        "orbit_label_shift_px": 150,
+        "orbit_cam_delta": 3.309,
+        "zoom_ok": true,
+        "zoom_cam_delta": 0.554,
+        "step_status": "ok",
+        "reset_ok": true,
+        "outside_after_reset": [],
+        "extra_analyze_requests": 0
+      },
+      "console_errors": []
+    },
+    {
+      "case_id": "H045",
+      "group": "valid",
+      "expected_behavior": "SERVE",
+      "route_status": "REFUSED",
+      "extraction_mode": "LOCAL_DETERMINISTIC_PARSER",
+      "http": 200,
+      "ms": 133,
+      "surface": "NO_SCENE",
+      "reason_code": null,
+      "canvas_count": 0,
+      "toast": "Axo chưa hỗ trợ phép dựng này | Đề này cần một phép dựng hoặc một dạng câu hỏi mà hệ chưa hỗ trợ, nên hệ không dựng một hình gần đúng. Bạn có thể thử các bài về thiết diện, khoảng cách, góc hoặc thể tích.",
+      "console_errors": []
+    },
+    {
+      "case_id": "H046",
+      "group": "valid",
+      "expected_behavior": "SERVE",
+      "route_status": null,
+      "extraction_mode": null,
+      "http": 409,
+      "ms": 48,
+      "surface": "NO_SCENE",
+      "reason_code": null,
+      "canvas_count": 0,
+      "toast": "Máy chủ trả về lỗi khi phân tích | Mã lượt gửi này đã dùng cho một đề khác.",
+      "console_errors": [
+        "console.error: Failed to load resource: the server responded with a status of 409 (Conflict)"
+      ]
+    },
+    {
+      "case_id": "H047",
+      "group": "valid",
+      "expected_behavior": "SERVE",
+      "route_status": null,
+      "extraction_mode": null,
+      "http": 409,
+      "ms": 66,
+      "surface": "NO_SCENE",
+      "reason_code": null,
+      "canvas_count": 0,
+      "toast": "Máy chủ trả về lỗi khi phân tích | Mã lượt gửi này đã dùng cho một đề khác.",
+      "console_errors": [
+        "console.error: Failed to load resource: the server responded with a status of 409 (Conflict)"
+      ]
+    },
+    {
+      "case_id": "H048",
+      "group": "valid",
+      "expected_behavior": "SERVE",
+      "route_status": null,
+      "extraction_mode": null,
+      "http": 409,
+      "ms": 53,
+      "surface": "NO_SCENE",
+      "reason_code": null,
+      "canvas_count": 0,
+      "toast": "Máy chủ trả về lỗi khi phân tích | Mã lượt gửi này đã dùng cho một đề khác.",
+      "console_errors": [
+        "console.error: Failed to load resource: the server responded with a status of 409 (Conflict)"
+      ]
+    },
+    {
+      "case_id": "H049",
+      "group": "valid",
+      "expected_behavior": "SERVE",
+      "route_status": null,
+      "extraction_mode": null,
+      "http": 409,
+      "ms": 58,
+      "surface": "NO_SCENE",
+      "reason_code": null,
+      "canvas_count": 0,
+      "toast": "Máy chủ trả về lỗi khi phân tích | Mã lượt gửi này đã dùng cho một đề khác.",
+      "console_errors": [
+        "console.error: Failed to load resource: the server responded with a status of 409 (Conflict)"
+      ]
+    },
+    {
+      "case_id": "H050",
+      "group": "valid",
+      "expected_behavior": "SERVE",
+      "route_status": null,
+      "extraction_mode": null,
+      "http": 409,
+      "ms": 66,
+      "surface": "NO_SCENE",
+      "reason_code": null,
+      "canvas_count": 0,
+      "toast": "Máy chủ trả về lỗi khi phân tích | Mã lượt gửi này đã dùng cho một đề khác.",
+      "console_errors": [
+        "console.error: Failed to load resource: the server responded with a status of 409 (Conflict)"
+      ]
+    },
+    {
+      "case_id": "H051",
+      "group": "valid",
+      "expected_behavior": "SERVE",
+      "route_status": "SERVED",
+      "extraction_mode": "LOCAL_DETERMINISTIC_PARSER",
+      "http": 200,
+      "ms": 157,
+      "surface": "SCENE",
+      "initial_visual_ok": true,
+      "stale_vs_previous": false,
+      "has_canvas": true,
+      "canvas_rect": {
+        "w": 735,
+        "h": 822
+      },
+      "label_texts": [
+        "I",
+        "J",
+        "K",
+        "L",
+        "I'",
+        "J'",
+        "K'",
+        "L'"
+      ],
+      "label_positions": {
+        "I": [
+          410,
+          494
+        ],
+        "J": [
+          597,
+          677
+        ],
+        "K": [
+          851,
+          535
+        ],
+        "L": [
+          642,
+          439
+        ],
+        "I'": [
+          376,
+          212
+        ],
+        "J'": [
+          597,
+          292
+        ],
+        "K'": [
+          864,
+          213
+        ],
+        "L'": [
+          643,
+          158
+        ]
+      },
+      "outside_initial_labels": [],
+      "missing_gold_labels": [],
+      "vertex_marker_count": 8,
+      "outside_initial_ndc_vertices": [],
+      "camera_position": [
+        4.911764841079977,
+        -2.282360435402461,
+        3.3811750332268353
+      ],
+      "progress_text": "Bước 7/7",
+      "canvas_ink_fraction": 0.94315,
+      "interactions": {
+        "ok": true,
+        "orbit_ok": true,
+        "orbit_label_shift_px": 231.4,
+        "orbit_cam_delta": 3.391,
+        "zoom_ok": true,
+        "zoom_cam_delta": 0.521,
+        "step_status": "ok",
+        "reset_ok": true,
+        "outside_after_reset": [],
+        "extra_analyze_requests": 0
+      },
+      "console_errors": []
+    },
+    {
+      "case_id": "H052",
+      "group": "valid",
+      "expected_behavior": "SERVE",
+      "route_status": "SERVED",
+      "extraction_mode": "LOCAL_PARSER_AFTER_V3_NORMALIZER",
+      "http": 200,
+      "ms": 147,
+      "surface": "SCENE",
+      "initial_visual_ok": true,
+      "stale_vs_previous": false,
+      "has_canvas": true,
+      "canvas_rect": {
+        "w": 735,
+        "h": 822
+      },
+      "label_texts": [
+        "P",
+        "Q",
+        "R",
+        "S",
+        "P'",
+        "Q'",
+        "R'",
+        "S'"
+      ],
+      "label_positions": {
+        "P": [
+          388,
+          457
+        ],
+        "Q": [
+          516,
+          583
+        ],
+        "R": [
+          866,
+          410
+        ],
+        "S": [
+          735,
+          315
+        ],
+        "P'": [
+          368,
+          353
+        ],
+        "Q'": [
+          497,
+          471
+        ],
+        "R'": [
+          886,
+          297
+        ],
+        "S'": [
+          733,
+          228
+        ]
+      },
+      "outside_initial_labels": [],
+      "missing_gold_labels": [],
+      "vertex_marker_count": 8,
+      "outside_initial_ndc_vertices": [],
+      "camera_position": [
+        6.519700889375637,
+        -2.6315789804840017,
+        4.660072986564673
+      ],
+      "progress_text": "Bước 6/6",
+      "canvas_ink_fraction": 0.93388,
+      "interactions": {
+        "ok": true,
+        "orbit_ok": true,
+        "orbit_label_shift_px": 230.3,
+        "orbit_cam_delta": 4.611,
+        "zoom_ok": true,
+        "zoom_cam_delta": 0.835,
+        "step_status": "ok",
+        "reset_ok": true,
+        "outside_after_reset": [],
+        "extra_analyze_requests": 0
+      },
+      "console_errors": []
+    },
+    {
+      "case_id": "H053",
+      "group": "valid",
+      "expected_behavior": "SERVE",
+      "route_status": "SERVED",
+      "extraction_mode": "LOCAL_DETERMINISTIC_PARSER",
+      "http": 200,
+      "ms": 157,
+      "surface": "SCENE",
+      "initial_visual_ok": true,
+      "stale_vs_previous": false,
+      "has_canvas": true,
+      "canvas_rect": {
+        "w": 735,
+        "h": 822
+      },
+      "label_texts": [
+        "E",
+        "F",
+        "G",
+        "H",
+        "E'",
+        "F'",
+        "G'",
+        "H'"
+      ],
+      "label_positions": {
+        "E": [
+          411,
+          517
+        ],
+        "F": [
+          601,
+          678
+        ],
+        "G": [
+          850,
+          537
+        ],
+        "H": [
+          640,
+          440
+        ],
+        "E'": [
+          373,
+          212
+        ],
+        "F'": [
+          596,
+          292
+        ],
+        "G'": [
+          885,
+          223
+        ],
+        "H'": [
+          641,
+          156
+        ]
+      },
+      "outside_initial_labels": [],
+      "missing_gold_labels": [],
+      "vertex_marker_count": 8,
+      "outside_initial_ndc_vertices": [],
+      "camera_position": [
+        7.367647261619967,
+        -3.4235406531036947,
+        5.071762549840253
+      ],
+      "progress_text": "Bước 8/8",
+      "canvas_ink_fraction": 0.94307,
+      "interactions": {
+        "ok": true,
+        "orbit_ok": true,
+        "orbit_label_shift_px": 236.4,
+        "orbit_cam_delta": 5.183,
+        "zoom_ok": true,
+        "zoom_cam_delta": 0.734,
+        "step_status": "ok",
+        "reset_ok": true,
+        "outside_after_reset": [],
+        "extra_analyze_requests": 0
+      },
+      "console_errors": []
+    },
+    {
+      "case_id": "H054",
+      "group": "valid",
+      "expected_behavior": "SERVE",
+      "route_status": "SERVED",
+      "extraction_mode": "LOCAL_DETERMINISTIC_PARSER",
+      "http": 200,
+      "ms": 162,
+      "surface": "SCENE",
+      "initial_visual_ok": true,
+      "stale_vs_previous": false,
+      "has_canvas": true,
+      "canvas_rect": {
+        "w": 735,
+        "h": 822
+      },
+      "label_texts": [
+        "A",
+        "B",
+        "C",
+        "D",
+        "S",
+        "O"
+      ],
+      "label_positions": {
+        "A": [
+          553,
+          425
+        ],
+        "B": [
+          412,
+          591
+        ],
+        "C": [
+          783,
+          679
+        ],
+        "D": [
+          852,
+          480
+        ],
+        "S": [
+          557,
+          152
+        ],
+        "O": [
+          654,
+          547
+        ]
+      },
+      "outside_initial_labels": [],
+      "missing_gold_labels": [],
+      "vertex_marker_count": 6,
+      "outside_initial_ndc_vertices": [],
+      "camera_position": [
+        5.531642213790004,
+        2.5698791574470334,
+        3.0607853329337202
+      ],
+      "progress_text": "Bước 7/7",
+      "canvas_ink_fraction": 0.93625,
+      "interactions": {
+        "ok": true,
+        "orbit_ok": true,
+        "orbit_label_shift_px": 159.8,
+        "orbit_cam_delta": 3.246,
+        "zoom_ok": true,
+        "zoom_cam_delta": 0.532,
+        "step_status": "ok",
+        "reset_ok": true,
+        "outside_after_reset": [],
+        "extra_analyze_requests": 0
+      },
+      "console_errors": []
+    },
+    {
+      "case_id": "H055",
+      "group": "valid",
+      "expected_behavior": "SERVE",
+      "route_status": "SERVED",
+      "extraction_mode": "LOCAL_PARSER_AFTER_V3_NORMALIZER",
+      "http": 200,
+      "ms": 153,
+      "surface": "SCENE",
+      "initial_visual_ok": true,
+      "stale_vs_previous": false,
+      "has_canvas": true,
+      "canvas_rect": {
+        "w": 735,
+        "h": 822
+      },
+      "label_texts": [
+        "M",
+        "N",
+        "P",
+        "Q",
+        "T",
+        "I",
+        "H"
+      ],
+      "label_positions": {
+        "M": [
+          422,
+          430
+        ],
+        "N": [
+          439,
+          648
+        ],
+        "P": [
+          887,
+          593
+        ],
+        "Q": [
+          758,
+          404
+        ],
+        "T": [
+          415,
+          186
+        ],
+        "I": [
+          628,
+          356
+        ],
+        "H": [
+          635,
+          516
+        ]
+      },
+      "outside_initial_labels": [],
+      "missing_gold_labels": [],
+      "vertex_marker_count": 7,
+      "outside_initial_ndc_vertices": [],
+      "camera_position": [
+        10.445258117556918,
+        0.21679138965041034,
+        5.242215200072602
+      ],
+      "progress_text": "Bước 8/8",
+      "canvas_ink_fraction": 0.93564,
+      "interactions": {
+        "ok": true,
+        "orbit_ok": true,
+        "orbit_label_shift_px": 223.6,
+        "orbit_cam_delta": 5.811,
+        "zoom_ok": true,
+        "zoom_cam_delta": 0.933,
+        "step_status": "ok",
+        "reset_ok": true,
+        "outside_after_reset": [],
+        "extra_analyze_requests": 0
+      },
+      "console_errors": []
+    },
+    {
+      "case_id": "H056",
+      "group": "valid",
+      "expected_behavior": "SERVE",
+      "route_status": "SERVED",
+      "extraction_mode": "LOCAL_DETERMINISTIC_PARSER",
+      "http": 200,
+      "ms": 153,
+      "surface": "SCENE",
+      "initial_visual_ok": true,
+      "stale_vs_previous": false,
+      "has_canvas": true,
+      "canvas_rect": {
+        "w": 735,
+        "h": 822
+      },
+      "label_texts": [
+        "E",
+        "F",
+        "G",
+        "H",
+        "L"
+      ],
+      "label_positions": {
+        "E": [
+          554,
+          403
+        ],
+        "F": [
+          432,
+          587
+        ],
+        "G": [
+          761,
+          680
+        ],
+        "H": [
+          835,
+          462
+        ],
+        "L": [
+          555,
+          151
+        ]
+      },
+      "outside_initial_labels": [],
+      "missing_gold_labels": [],
+      "vertex_marker_count": 5,
+      "outside_initial_ndc_vertices": [],
+      "camera_position": [
+        8.057125516354635,
+        3.767342929225401,
+        6.1507259921902
+      ],
+      "progress_text": "Bước 7/7",
+      "canvas_ink_fraction": 0.8315,
+      "interactions": {
+        "ok": true,
+        "orbit_ok": true,
+        "orbit_label_shift_px": 148.9,
+        "orbit_cam_delta": 4.749,
+        "zoom_ok": true,
+        "zoom_cam_delta": 0.768,
+        "step_status": "ok",
+        "reset_ok": true,
+        "outside_after_reset": [],
+        "extra_analyze_requests": 0
+      },
+      "console_errors": []
+    },
+    {
+      "case_id": "H057",
+      "group": "valid",
+      "expected_behavior": "SERVE",
+      "route_status": "SERVED",
+      "extraction_mode": "LOCAL_DETERMINISTIC_PARSER",
+      "http": 200,
+      "ms": 217,
+      "surface": "SCENE",
+      "initial_visual_ok": true,
+      "stale_vs_previous": false,
+      "has_canvas": true,
+      "canvas_rect": {
+        "w": 735,
+        "h": 822
+      },
+      "label_texts": [
+        "A",
+        "B",
+        "C",
+        "D",
+        "S"
+      ],
+      "label_positions": {
+        "A": [
+          515,
+          455
+        ],
+        "B": [
+          420,
+          549
+        ],
+        "C": [
+          760,
+          678
+        ],
+        "D": [
+          831,
+          563
+        ],
+        "S": [
+          512,
+          152
+        ]
+      },
+      "outside_initial_labels": [],
+      "missing_gold_labels": [],
+      "vertex_marker_count": 5,
+      "outside_initial_ndc_vertices": [],
+      "camera_position": [
+        8.358061306150809,
+        6.07034745946864,
+        6.48870753743387
+      ],
+      "progress_text": "Bước 6/6",
+      "canvas_ink_fraction": 0.93402,
+      "interactions": {
+        "ok": true,
+        "orbit_ok": true,
+        "orbit_label_shift_px": 127.2,
+        "orbit_cam_delta": 5.78,
+        "zoom_ok": true,
+        "zoom_cam_delta": 0.874,
+        "step_status": "ok",
+        "reset_ok": true,
+        "outside_after_reset": [],
+        "extra_analyze_requests": 0
+      },
+      "console_errors": []
+    },
+    {
+      "case_id": "H058",
+      "group": "valid",
+      "expected_behavior": "SERVE",
+      "route_status": "REFUSED",
+      "extraction_mode": "LOCAL_SLM_GROUNDED",
+      "http": 200,
+      "ms": 1977,
+      "surface": "NO_SCENE",
+      "reason_code": null,
+      "canvas_count": 0,
+      "toast": "Đề bài chưa được hỗ trợ | Hệ chưa đối chiếu được đầy đủ dữ kiện với đề bài nên tạm dừng dựng hình. Bạn có thể thử các bài về thiết diện, khoảng cách, góc hoặc thể tích.",
+      "console_errors": []
+    },
+    {
+      "case_id": "H059",
+      "group": "valid",
+      "expected_behavior": "SERVE",
+      "route_status": null,
+      "extraction_mode": null,
+      "http": 409,
+      "ms": 56,
+      "surface": "NO_SCENE",
+      "reason_code": null,
+      "canvas_count": 0,
+      "toast": "Máy chủ trả về lỗi khi phân tích | Mã lượt gửi này đã dùng cho một đề khác.",
+      "console_errors": [
+        "console.error: Failed to load resource: the server responded with a status of 409 (Conflict)"
+      ]
+    },
+    {
+      "case_id": "H060",
+      "group": "valid",
+      "expected_behavior": "SERVE",
+      "route_status": null,
+      "extraction_mode": null,
+      "http": 409,
+      "ms": 52,
+      "surface": "NO_SCENE",
+      "reason_code": null,
+      "canvas_count": 0,
+      "toast": "Máy chủ trả về lỗi khi phân tích | Mã lượt gửi này đã dùng cho một đề khác.",
+      "console_errors": [
+        "console.error: Failed to load resource: the server responded with a status of 409 (Conflict)"
+      ]
+    },
+    {
+      "case_id": "H061",
+      "group": "valid",
+      "expected_behavior": "SERVE",
+      "route_status": "SERVED",
+      "extraction_mode": "LOCAL_DETERMINISTIC_PARSER",
+      "http": 200,
+      "ms": 170,
+      "surface": "SCENE",
+      "initial_visual_ok": true,
+      "stale_vs_previous": false,
+      "has_canvas": true,
+      "canvas_rect": {
+        "w": 735,
+        "h": 822
+      },
+      "label_texts": [
+        "A",
+        "B",
+        "C",
+        "O",
+        "H"
+      ],
+      "label_positions": {
+        "A": [
+          370,
+          432
+        ],
+        "B": [
+          765,
+          608
+        ],
+        "C": [
+          801,
+          373
+        ],
+        "O": [
+          635,
+          245
+        ],
+        "H": [
+          651,
+          465
+        ]
+      },
+      "outside_initial_labels": [],
+      "missing_gold_labels": [],
+      "vertex_marker_count": 5,
+      "outside_initial_ndc_vertices": [],
+      "camera_position": [
+        7.0564754183722584,
+        -4.350557701214591,
+        3.4439872748933156
+      ],
+      "progress_text": "Bước 6/6",
+      "canvas_ink_fraction": 0.93121,
+      "interactions": {
+        "ok": true,
+        "orbit_ok": true,
+        "orbit_label_shift_px": 170.3,
+        "orbit_cam_delta": 5.083,
+        "zoom_ok": true,
+        "zoom_cam_delta": 0.793,
+        "step_status": "ok",
+        "reset_ok": true,
+        "outside_after_reset": [],
+        "extra_analyze_requests": 0
+      },
+      "console_errors": []
+    },
+    {
+      "case_id": "H062",
+      "group": "valid",
+      "expected_behavior": "SERVE",
+      "route_status": "SERVED",
+      "extraction_mode": "LOCAL_DETERMINISTIC_PARSER",
+      "http": 200,
+      "ms": 167,
+      "surface": "SCENE",
+      "initial_visual_ok": true,
+      "stale_vs_previous": false,
+      "has_canvas": true,
+      "canvas_rect": {
+        "w": 735,
+        "h": 822
+      },
+      "label_texts": [
+        "E",
+        "F",
+        "G",
+        "H",
+        "L"
+      ],
+      "label_positions": {
+        "E": [
+          582,
+          468
+        ],
+        "F": [
+          449,
+          587
+        ],
+        "G": [
+          710,
+          672
+        ],
+        "H": [
+          816,
+          534
+        ],
+        "L": [
+          577,
+          165
+        ]
+      },
+      "outside_initial_labels": [],
+      "missing_gold_labels": [],
+      "vertex_marker_count": 5,
+      "outside_initial_ndc_vertices": [],
+      "camera_position": [
+        3.164444398268993,
+        2.011902082405744,
+        1.9986415818319516
+      ],
+      "progress_text": "Bước 7/7",
+      "canvas_ink_fraction": 0.93335,
+      "interactions": {
+        "ok": true,
+        "orbit_ok": true,
+        "orbit_label_shift_px": 120.2,
+        "orbit_cam_delta": 2.05,
+        "zoom_ok": true,
+        "zoom_cam_delta": 0.338,
+        "step_status": "ok",
+        "reset_ok": true,
+        "outside_after_reset": [],
+        "extra_analyze_requests": 0
+      },
+      "console_errors": []
+    },
+    {
+      "case_id": "H063",
+      "group": "valid",
+      "expected_behavior": "SERVE",
+      "route_status": "SERVED",
+      "extraction_mode": "LOCAL_SLM_GROUNDED",
+      "http": 200,
+      "ms": 3203,
+      "surface": "SCENE",
+      "initial_visual_ok": true,
+      "stale_vs_previous": false,
+      "has_canvas": true,
+      "canvas_rect": {
+        "w": 735,
+        "h": 822
+      },
+      "label_texts": [
+        "A",
+        "B",
+        "C",
+        "A'",
+        "B'",
+        "C'"
+      ],
+      "label_positions": {
+        "A": [
+          405,
+          491
+        ],
+        "B": [
+          743,
+          678
+        ],
+        "C": [
+          786,
+          431
+        ],
+        "A'": [
+          370,
+          223
+        ],
+        "B'": [
+          742,
+          325
+        ],
+        "C'": [
+          793,
+          182
+        ]
+      },
+      "outside_initial_labels": [],
+      "missing_gold_labels": [],
+      "vertex_marker_count": 6,
+      "outside_initial_ndc_vertices": [],
+      "camera_position": [
+        5.206038844121911,
+        -3.334153352192648,
+        3.6885308123420337
+      ],
+      "progress_text": "Bước 5/5",
+      "canvas_ink_fraction": 0.93842,
+      "interactions": {
+        "ok": true,
+        "orbit_ok": true,
+        "orbit_label_shift_px": 207.6,
+        "orbit_cam_delta": 3.827,
+        "zoom_ok": true,
+        "zoom_cam_delta": 0.593,
+        "step_status": "ok",
+        "reset_ok": true,
+        "outside_after_reset": [],
+        "extra_analyze_requests": 0
+      },
+      "console_errors": []
+    },
+    {
+      "case_id": "H064",
+      "group": "valid",
+      "expected_behavior": "SERVE",
+      "route_status": "SERVED",
+      "extraction_mode": "LOCAL_DETERMINISTIC_PARSER",
+      "http": 200,
+      "ms": 157,
+      "surface": "SCENE",
+      "initial_visual_ok": true,
+      "stale_vs_previous": false,
+      "has_canvas": true,
+      "canvas_rect": {
+        "w": 735,
+        "h": 822
+      },
+      "label_texts": [
+        "A",
+        "B",
+        "C",
+        "D"
+      ],
+      "label_positions": {
+        "A": [
+          585,
+          487
+        ],
+        "B": [
+          495,
+          620
+        ],
+        "C": [
+          772,
+          678
+        ],
+        "D": [
+          597,
+          152
+        ]
+      },
+      "outside_initial_labels": [],
+      "missing_gold_labels": [],
+      "vertex_marker_count": 4,
+      "outside_initial_ndc_vertices": [],
+      "camera_position": [
+        6.987937440563958,
+        2.9294309930134275,
+        4.096419614589239
+      ],
+      "progress_text": "Bước 5/5",
+      "canvas_ink_fraction": 0.93014,
+      "interactions": {
+        "ok": true,
+        "orbit_ok": true,
+        "orbit_label_shift_px": 103.6,
+        "orbit_cam_delta": 4.081,
+        "zoom_ok": true,
+        "zoom_cam_delta": 0.734,
+        "step_status": "ok",
+        "reset_ok": true,
+        "outside_after_reset": [],
+        "extra_analyze_requests": 0
+      },
+      "console_errors": []
+    },
+    {
+      "case_id": "H065",
+      "group": "valid",
+      "expected_behavior": "SERVE",
+      "route_status": "REFUSED",
+      "extraction_mode": "LOCAL_SLM_GROUNDED",
+      "http": 200,
+      "ms": 4077,
+      "surface": "NO_SCENE",
+      "reason_code": null,
+      "canvas_count": 0,
+      "toast": "Đề bài chưa được hỗ trợ | Hệ chưa đối chiếu được đầy đủ dữ kiện với đề bài nên tạm dừng dựng hình. Bạn có thể thử các bài về thiết diện, khoảng cách, góc hoặc thể tích.",
+      "console_errors": []
+    },
+    {
+      "case_id": "H066",
+      "group": "valid",
+      "expected_behavior": "SERVE",
+      "route_status": null,
+      "extraction_mode": null,
+      "http": 409,
+      "ms": 255,
+      "surface": "NO_SCENE",
+      "reason_code": null,
+      "canvas_count": 0,
+      "toast": "Máy chủ trả về lỗi khi phân tích | Mã lượt gửi này đã dùng cho một đề khác.",
+      "console_errors": [
+        "console.error: Failed to load resource: the server responded with a status of 409 (Conflict)"
+      ]
+    },
+    {
+      "case_id": "H067",
+      "group": "valid",
+      "expected_behavior": "SERVE",
+      "route_status": null,
+      "extraction_mode": null,
+      "http": 409,
+      "ms": 58,
+      "surface": "NO_SCENE",
+      "reason_code": null,
+      "canvas_count": 0,
+      "toast": "Máy chủ trả về lỗi khi phân tích | Mã lượt gửi này đã dùng cho một đề khác.",
+      "console_errors": [
+        "console.error: Failed to load resource: the server responded with a status of 409 (Conflict)"
+      ]
+    },
+    {
+      "case_id": "H068",
+      "group": "valid",
+      "expected_behavior": "SERVE",
+      "route_status": null,
+      "extraction_mode": null,
+      "http": 409,
+      "ms": 64,
+      "surface": "NO_SCENE",
+      "reason_code": null,
+      "canvas_count": 0,
+      "toast": "Máy chủ trả về lỗi khi phân tích | Mã lượt gửi này đã dùng cho một đề khác.",
+      "console_errors": [
+        "console.error: Failed to load resource: the server responded with a status of 409 (Conflict)"
+      ]
+    },
+    {
+      "case_id": "H069",
+      "group": "valid",
+      "expected_behavior": "SERVE",
+      "route_status": null,
+      "extraction_mode": null,
+      "http": 409,
+      "ms": 56,
+      "surface": "NO_SCENE",
+      "reason_code": null,
+      "canvas_count": 0,
+      "toast": "Máy chủ trả về lỗi khi phân tích | Mã lượt gửi này đã dùng cho một đề khác.",
+      "console_errors": [
+        "console.error: Failed to load resource: the server responded with a status of 409 (Conflict)"
+      ]
+    },
+    {
+      "case_id": "H070",
+      "group": "valid",
+      "expected_behavior": "SERVE",
+      "route_status": null,
+      "extraction_mode": null,
+      "http": 409,
+      "ms": 51,
+      "surface": "NO_SCENE",
+      "reason_code": null,
+      "canvas_count": 0,
+      "toast": "Máy chủ trả về lỗi khi phân tích | Mã lượt gửi này đã dùng cho một đề khác.",
+      "console_errors": [
+        "console.error: Failed to load resource: the server responded with a status of 409 (Conflict)"
+      ]
+    },
+    {
+      "case_id": "H071",
+      "group": "valid",
+      "expected_behavior": "SERVE",
+      "route_status": "SERVED",
+      "extraction_mode": "LOCAL_DETERMINISTIC_PARSER",
+      "http": 200,
+      "ms": 139,
+      "surface": "SCENE",
+      "initial_visual_ok": true,
+      "stale_vs_previous": false,
+      "has_canvas": true,
+      "canvas_rect": {
+        "w": 735,
+        "h": 822
+      },
+      "label_texts": [
+        "A",
+        "B",
+        "C",
+        "D",
+        "S"
+      ],
+      "label_positions": {
+        "A": [
+          545,
+          351
+        ],
+        "B": [
+          373,
+          522
+        ],
+        "C": [
+          819,
+          624
+        ],
+        "D": [
+          886,
+          402
+        ],
+        "S": [
+          552,
+          194
+        ]
+      },
+      "outside_initial_labels": [],
+      "missing_gold_labels": [],
+      "vertex_marker_count": 5,
+      "outside_initial_ndc_vertices": [],
+      "camera_position": [
+        14.80698049816436,
+        7.058878295743187,
+        7.170115894427241
+      ],
+      "progress_text": "Bước 5/5",
+      "canvas_ink_fraction": 0.9361,
+      "interactions": {
+        "ok": true,
+        "orbit_ok": true,
+        "orbit_label_shift_px": 199.5,
+        "orbit_cam_delta": 8.569,
+        "zoom_ok": true,
+        "zoom_cam_delta": 1.329,
+        "step_status": "ok",
+        "reset_ok": true,
+        "outside_after_reset": [],
+        "extra_analyze_requests": 0
+      },
+      "console_errors": []
+    },
+    {
+      "case_id": "H072",
+      "group": "valid",
+      "expected_behavior": "SERVE",
+      "route_status": "SERVED",
+      "extraction_mode": "LOCAL_DETERMINISTIC_PARSER",
+      "http": 200,
+      "ms": 145,
+      "surface": "SCENE",
+      "initial_visual_ok": true,
+      "stale_vs_previous": false,
+      "has_canvas": true,
+      "canvas_rect": {
+        "w": 735,
+        "h": 822
+      },
+      "label_texts": [
+        "M",
+        "N",
+        "P",
+        "Q",
+        "T",
+        "H"
+      ],
+      "label_positions": {
+        "M": [
+          686,
+          327
+        ],
+        "N": [
+          370,
+          415
+        ],
+        "P": [
+          522,
+          642
+        ],
+        "Q": [
+          887,
+          493
+        ],
+        "T": [
+          678,
+          181
+        ],
+        "H": [
+          620,
+          218
+        ]
+      },
+      "outside_initial_labels": [],
+      "missing_gold_labels": [],
+      "vertex_marker_count": 6,
+      "outside_initial_ndc_vertices": [],
+      "camera_position": [
+        3.047749464801524,
+        4.638312465154322,
+        2.8838749767695466
+      ],
+      "progress_text": "Bước 7/7",
+      "canvas_ink_fraction": 0.93586,
+      "interactions": {
+        "ok": true,
+        "orbit_ok": true,
+        "orbit_label_shift_px": 236.9,
+        "orbit_cam_delta": 2.822,
+        "zoom_ok": true,
+        "zoom_cam_delta": 0.486,
+        "step_status": "ok",
+        "reset_ok": true,
+        "outside_after_reset": [],
+        "extra_analyze_requests": 0
+      },
+      "console_errors": []
+    },
+    {
+      "case_id": "H073",
+      "group": "valid",
+      "expected_behavior": "SERVE",
+      "route_status": "SERVED",
+      "extraction_mode": "LOCAL_DETERMINISTIC_PARSER",
+      "http": 200,
+      "ms": 146,
+      "surface": "SCENE",
+      "initial_visual_ok": true,
+      "stale_vs_previous": false,
+      "has_canvas": true,
+      "canvas_rect": {
+        "w": 735,
+        "h": 822
+      },
+      "label_texts": [
+        "E",
+        "F",
+        "G",
+        "H",
+        "L"
+      ],
+      "label_positions": {
+        "E": [
+          579,
+          404
+        ],
+        "F": [
+          414,
+          549
+        ],
+        "G": [
+          715,
+          682
+        ],
+        "H": [
+          848,
+          486
+        ],
+        "L": [
+          575,
+          159
+        ]
+      },
+      "outside_initial_labels": [],
+      "missing_gold_labels": [],
+      "vertex_marker_count": 5,
+      "outside_initial_ndc_vertices": [],
+      "camera_position": [
+        10.532381715619872,
+        6.820510447639178,
+        7.354921143746577
+      ],
+      "progress_text": "Bước 7/7",
+      "canvas_ink_fraction": 0.9353,
+      "interactions": {
+        "ok": true,
+        "orbit_ok": true,
+        "orbit_label_shift_px": 152.8,
+        "orbit_cam_delta": 6.722,
+        "zoom_ok": true,
+        "zoom_cam_delta": 1.044,
+        "step_status": "ok",
+        "reset_ok": true,
+        "outside_after_reset": [],
+        "extra_analyze_requests": 0
+      },
+      "console_errors": []
+    },
+    {
+      "case_id": "H074",
+      "group": "valid",
+      "expected_behavior": "SERVE",
+      "route_status": "SERVED",
+      "extraction_mode": "LOCAL_DETERMINISTIC_PARSER",
+      "http": 200,
+      "ms": 166,
+      "surface": "SCENE",
+      "initial_visual_ok": true,
+      "stale_vs_previous": false,
+      "has_canvas": true,
+      "canvas_rect": {
+        "w": 735,
+        "h": 822
+      },
+      "label_texts": [
+        "A",
+        "B",
+        "C",
+        "D",
+        "R",
+        "K"
+      ],
+      "label_positions": {
+        "A": [
+          553,
+          398
+        ],
+        "B": [
+          381,
+          497
+        ],
+        "C": [
+          772,
+          680
+        ],
+        "D": [
+          877,
+          476
+        ],
+        "R": [
+          540,
+          154
+        ],
+        "K": [
+          651,
+          264
+        ]
+      },
+      "outside_initial_labels": [],
+      "missing_gold_labels": [],
+      "vertex_marker_count": 6,
+      "outside_initial_ndc_vertices": [],
+      "camera_position": [
+        5.583334956092394,
+        4.030858454334867,
+        4.556830162562739
+      ],
+      "progress_text": "Bước 8/8",
+      "canvas_ink_fraction": 0.93691,
+      "interactions": {
+        "ok": true,
+        "orbit_ok": true,
+        "orbit_label_shift_px": 160.7,
+        "orbit_cam_delta": 3.633,
+        "zoom_ok": true,
+        "zoom_cam_delta": 0.564,
+        "step_status": "ok",
+        "reset_ok": true,
+        "outside_after_reset": [],
+        "extra_analyze_requests": 0
+      },
+      "console_errors": []
+    },
+    {
+      "case_id": "H075",
+      "group": "valid",
+      "expected_behavior": "SERVE",
+      "route_status": "SERVED",
+      "extraction_mode": "LOCAL_DETERMINISTIC_PARSER",
+      "http": 200,
+      "ms": 165,
+      "surface": "SCENE",
+      "initial_visual_ok": true,
+      "stale_vs_previous": false,
+      "has_canvas": true,
+      "canvas_rect": {
+        "w": 735,
+        "h": 822
+      },
+      "label_texts": [
+        "A",
+        "B",
+        "C",
+        "S"
+      ],
+      "label_positions": {
+        "A": [
+          655,
+          507
+        ],
+        "B": [
+          517,
+          617
+        ],
+        "C": [
+          743,
+          629
+        ],
+        "S": [
+          620,
+          155
+        ]
+      },
+      "outside_initial_labels": [],
+      "missing_gold_labels": [],
+      "vertex_marker_count": 4,
+      "outside_initial_ndc_vertices": [],
+      "camera_position": [
+        7.063332151317244,
+        4.222354286397824,
+        6.503452326412811
+      ],
+      "progress_text": "Bước 7/7",
+      "canvas_ink_fraction": 0.92838,
+      "interactions": {
+        "ok": true,
+        "orbit_ok": true,
+        "orbit_label_shift_px": 94,
+        "orbit_cam_delta": 4.628,
+        "zoom_ok": true,
+        "zoom_cam_delta": 0.802,
+        "step_status": "ok",
+        "reset_ok": true,
+        "outside_after_reset": [],
+        "extra_analyze_requests": 0
+      },
+      "console_errors": []
+    },
+    {
+      "case_id": "H076",
+      "group": "valid",
+      "expected_behavior": "SERVE",
+      "route_status": "SERVED",
+      "extraction_mode": "LOCAL_DETERMINISTIC_PARSER",
+      "http": 200,
+      "ms": 158,
+      "surface": "SCENE",
+      "initial_visual_ok": true,
+      "stale_vs_previous": false,
+      "has_canvas": true,
+      "canvas_rect": {
+        "w": 735,
+        "h": 822
+      },
+      "label_texts": [
+        "A",
+        "B",
+        "C",
+        "D"
+      ],
+      "label_positions": {
+        "A": [
+          582,
+          339
+        ],
+        "B": [
+          397,
+          494
+        ],
+        "C": [
+          867,
+          677
+        ],
+        "D": [
+          592,
+          158
+        ]
+      },
+      "outside_initial_labels": [],
+      "missing_gold_labels": [],
+      "vertex_marker_count": 4,
+      "outside_initial_ndc_vertices": [],
+      "camera_position": [
+        7.423116958244439,
+        4.919713170284062,
+        4.6987446388296235
+      ],
+      "progress_text": "Bước 5/5",
+      "canvas_ink_fraction": 0.93319,
+      "interactions": {
+        "ok": true,
+        "orbit_ok": true,
+        "orbit_label_shift_px": 166.6,
+        "orbit_cam_delta": 4.353,
+        "zoom_ok": true,
+        "zoom_cam_delta": 0.806,
+        "step_status": "ok",
+        "reset_ok": true,
+        "outside_after_reset": [],
+        "extra_analyze_requests": 0
+      },
+      "console_errors": []
+    },
+    {
+      "case_id": "H077",
+      "group": "valid",
+      "expected_behavior": "SERVE",
+      "route_status": "SERVED",
+      "extraction_mode": "LOCAL_DETERMINISTIC_PARSER",
+      "http": 200,
+      "ms": 136,
+      "surface": "SCENE",
+      "initial_visual_ok": true,
+      "stale_vs_previous": false,
+      "has_canvas": true,
+      "canvas_rect": {
+        "w": 735,
+        "h": 822
+      },
+      "label_texts": [
+        "M",
+        "N",
+        "P",
+        "I",
+        "H"
+      ],
+      "label_positions": {
+        "M": [
+          440,
+          325
+        ],
+        "N": [
+          579,
+          682
+        ],
+        "P": [
+          834,
+          391
+        ],
+        "I": [
+          734,
+          256
+        ],
+        "H": [
+          730,
+          430
+        ]
+      },
+      "outside_initial_labels": [],
+      "missing_gold_labels": [],
+      "vertex_marker_count": 5,
+      "outside_initial_ndc_vertices": [],
+      "camera_position": [
+        5.073719082171166,
+        -0.5380944610886702,
+        2.5545985712551835
+      ],
+      "progress_text": "Bước 6/6",
+      "canvas_ink_fraction": 0.93194,
+      "interactions": {
+        "ok": true,
+        "orbit_ok": true,
+        "orbit_label_shift_px": 271,
+        "orbit_cam_delta": 2.55,
+        "zoom_ok": true,
+        "zoom_cam_delta": 0.415,
+        "step_status": "ok",
+        "reset_ok": true,
+        "outside_after_reset": [],
+        "extra_analyze_requests": 0
+      },
+      "console_errors": []
+    },
+    {
+      "case_id": "H078",
+      "group": "valid",
+      "expected_behavior": "SERVE",
+      "route_status": "SERVED",
+      "extraction_mode": "LOCAL_DETERMINISTIC_PARSER",
+      "http": 200,
+      "ms": 173,
+      "surface": "SCENE",
+      "initial_visual_ok": true,
+      "stale_vs_previous": false,
+      "has_canvas": true,
+      "canvas_rect": {
+        "w": 735,
+        "h": 822
+      },
+      "label_texts": [
+        "E",
+        "F",
+        "G",
+        "L",
+        "O"
+      ],
+      "label_positions": {
+        "E": [
+          474,
+          366
+        ],
+        "F": [
+          420,
+          678
+        ],
+        "G": [
+          840,
+          496
+        ],
+        "L": [
+          576,
+          150
+        ],
+        "O": [
+          582,
+          514
+        ]
+      },
+      "outside_initial_labels": [],
+      "missing_gold_labels": [],
+      "vertex_marker_count": 5,
+      "outside_initial_ndc_vertices": [],
+      "camera_position": [
+        4.229280797163229,
+        0.7216878366250005,
+        2.8735391929195533
+      ],
+      "progress_text": "Bước 6/6",
+      "canvas_ink_fraction": 0.93401,
+      "interactions": {
+        "ok": true,
+        "orbit_ok": true,
+        "orbit_label_shift_px": 209.6,
+        "orbit_cam_delta": 2.078,
+        "zoom_ok": true,
+        "zoom_cam_delta": 0.369,
+        "step_status": "ok",
+        "reset_ok": true,
+        "outside_after_reset": [],
+        "extra_analyze_requests": 0
+      },
+      "console_errors": []
+    },
+    {
+      "case_id": "H079",
+      "group": "valid",
+      "expected_behavior": "SERVE",
+      "route_status": "SERVED",
+      "extraction_mode": "LOCAL_DETERMINISTIC_PARSER",
+      "http": 200,
+      "ms": 196,
+      "surface": "SCENE",
+      "initial_visual_ok": true,
+      "stale_vs_previous": false,
+      "has_canvas": true,
+      "canvas_rect": {
+        "w": 735,
+        "h": 822
+      },
+      "label_texts": [
+        "A",
+        "B",
+        "C",
+        "A'",
+        "B'",
+        "C'"
+      ],
+      "label_positions": {
+        "A": [
+          415,
+          502
+        ],
+        "B": [
+          725,
+          681
+        ],
+        "C": [
+          782,
+          443
+        ],
+        "A'": [
+          375,
+          226
+        ],
+        "B'": [
+          735,
+          305
+        ],
+        "C'": [
+          789,
+          172
+        ]
+      },
+      "outside_initial_labels": [],
+      "missing_gold_labels": [],
+      "vertex_marker_count": 6,
+      "outside_initial_ndc_vertices": [],
+      "camera_position": [
+        7.123148871794033,
+        -4.662155400438847,
+        5.216567520569813
+      ],
+      "progress_text": "Bước 7/7",
+      "canvas_ink_fraction": 0.93878,
+      "interactions": {
+        "ok": true,
+        "orbit_ok": true,
+        "orbit_label_shift_px": 207.9,
+        "orbit_cam_delta": 5.342,
+        "zoom_ok": true,
+        "zoom_cam_delta": 0.796,
+        "step_status": "ok",
+        "reset_ok": true,
+        "outside_after_reset": [],
+        "extra_analyze_requests": 0
+      },
+      "console_errors": []
+    },
+    {
+      "case_id": "H080",
+      "group": "valid",
+      "expected_behavior": "SERVE",
+      "route_status": "SERVED",
+      "extraction_mode": "LOCAL_DETERMINISTIC_PARSER",
+      "http": 200,
+      "ms": 157,
+      "surface": "SCENE",
+      "initial_visual_ok": true,
+      "stale_vs_previous": false,
+      "has_canvas": true,
+      "canvas_rect": {
+        "w": 735,
+        "h": 822
+      },
+      "label_texts": [
+        "P",
+        "Q",
+        "R",
+        "S",
+        "P'",
+        "Q'",
+        "R'",
+        "S'",
+        "H"
+      ],
+      "label_positions": {
+        "P": [
+          407,
+          515
+        ],
+        "Q": [
+          601,
+          680
+        ],
+        "R": [
+          847,
+          539
+        ],
+        "S": [
+          638,
+          439
+        ],
+        "P'": [
+          373,
+          211
+        ],
+        "Q'": [
+          589,
+          291
+        ],
+        "R'": [
+          885,
+          223
+        ],
+        "S'": [
+          643,
+          157
+        ],
+        "H": [
+          553,
+          403
+        ]
+      },
+      "outside_initial_labels": [],
+      "missing_gold_labels": [],
+      "vertex_marker_count": 9,
+      "outside_initial_ndc_vertices": [],
+      "camera_position": [
+        2.4558824205399885,
+        -1.1411802177012305,
+        1.6905875166134177
+      ],
+      "progress_text": "Bước 7/7",
+      "canvas_ink_fraction": 0.94317,
+      "interactions": {
+        "ok": true,
+        "orbit_ok": true,
+        "orbit_label_shift_px": 244.1,
+        "orbit_cam_delta": 1.727,
+        "zoom_ok": true,
+        "zoom_cam_delta": 0.245,
+        "step_status": "ok",
+        "reset_ok": true,
+        "outside_after_reset": [],
+        "extra_analyze_requests": 0
+      },
+      "console_errors": []
+    },
+    {
+      "case_id": "H081",
+      "group": "valid",
+      "expected_behavior": "SERVE",
+      "route_status": "SERVED",
+      "extraction_mode": "LOCAL_DETERMINISTIC_PARSER",
+      "http": 200,
+      "ms": 140,
+      "surface": "SCENE",
+      "initial_visual_ok": true,
+      "stale_vs_previous": false,
+      "has_canvas": true,
+      "canvas_rect": {
+        "w": 735,
+        "h": 822
+      },
+      "label_texts": [
+        "E",
+        "F",
+        "G",
+        "H",
+        "E'",
+        "F'",
+        "G'",
+        "H'"
+      ],
+      "label_positions": {
+        "E": [
+          427,
+          558
+        ],
+        "F": [
+          566,
+          681
+        ],
+        "G": [
+          834,
+          537
+        ],
+        "H": [
+          680,
+          465
+        ],
+        "E'": [
+          386,
+          212
+        ],
+        "F'": [
+          547,
+          267
+        ],
+        "G'": [
+          870,
+          199
+        ],
+        "H'": [
+          691,
+          153
+        ]
+      },
+      "outside_initial_labels": [],
+      "missing_gold_labels": [],
+      "vertex_marker_count": 8,
+      "outside_initial_ndc_vertices": [],
+      "camera_position": [
+        6.317669456226539,
+        -2.9620544794423775,
+        4.736979281357743
+      ],
+      "progress_text": "Bước 5/5",
+      "canvas_ink_fraction": 0.94257,
+      "interactions": {
+        "ok": true,
+        "orbit_ok": true,
+        "orbit_label_shift_px": 209.7,
+        "orbit_cam_delta": 4.664,
+        "zoom_ok": true,
+        "zoom_cam_delta": 0.688,
+        "step_status": "ok",
+        "reset_ok": true,
+        "outside_after_reset": [],
+        "extra_analyze_requests": 0
+      },
+      "console_errors": []
+    },
+    {
+      "case_id": "H082",
+      "group": "valid",
+      "expected_behavior": "SERVE",
+      "route_status": "SERVED",
+      "extraction_mode": "LOCAL_DETERMINISTIC_PARSER",
+      "http": 200,
+      "ms": 128,
+      "surface": "SCENE",
+      "initial_visual_ok": true,
+      "stale_vs_previous": false,
+      "has_canvas": true,
+      "canvas_rect": {
+        "w": 735,
+        "h": 822
+      },
+      "label_texts": [
+        "I",
+        "J",
+        "K",
+        "L",
+        "I'",
+        "J'",
+        "K'",
+        "L'"
+      ],
+      "label_positions": {
+        "I": [
+          397,
+          411
+        ],
+        "J": [
+          537,
+          628
+        ],
+        "K": [
+          860,
+          489
+        ],
+        "L": [
+          682,
+          321
+        ],
+        "I'": [
+          375,
+          269
+        ],
+        "J'": [
+          519,
+          476
+        ],
+        "K'": [
+          888,
+          339
+        ],
+        "L'": [
+          673,
+          190
+        ]
+      },
+      "outside_initial_labels": [],
+      "missing_gold_labels": [],
+      "vertex_marker_count": 8,
+      "outside_initial_ndc_vertices": [],
+      "camera_position": [
+        9.603387986391464,
+        -2.3898181006962815,
+        7.147567450953928
+      ],
+      "progress_text": "Bước 7/7",
+      "canvas_ink_fraction": 0.88855,
+      "interactions": {
+        "ok": true,
+        "orbit_ok": true,
+        "orbit_label_shift_px": 206.9,
+        "orbit_cam_delta": 5.734,
+        "zoom_ok": true,
+        "zoom_cam_delta": 0.965,
+        "step_status": "ok",
+        "reset_ok": true,
+        "outside_after_reset": [],
+        "extra_analyze_requests": 0
+      },
+      "console_errors": []
+    },
+    {
+      "case_id": "H083",
+      "group": "valid",
+      "expected_behavior": "SERVE",
+      "route_status": "SERVED",
+      "extraction_mode": "LOCAL_DETERMINISTIC_PARSER",
+      "http": 200,
+      "ms": 146,
+      "surface": "SCENE",
+      "initial_visual_ok": true,
+      "stale_vs_previous": false,
+      "has_canvas": true,
+      "canvas_rect": {
+        "w": 735,
+        "h": 822
+      },
+      "label_texts": [
+        "E",
+        "F",
+        "G",
+        "H",
+        "L",
+        "O"
+      ],
+      "label_positions": {
+        "E": [
+          375,
+          552
+        ],
+        "F": [
+          879,
+          615
+        ],
+        "G": [
+          874,
+          355
+        ],
+        "H": [
+          512,
+          323
+        ],
+        "L": [
+          660,
+          237
+        ],
+        "O": [
+          656,
+          460
+        ]
+      },
+      "outside_initial_labels": [],
+      "missing_gold_labels": [],
+      "vertex_marker_count": 6,
+      "outside_initial_ndc_vertices": [],
+      "camera_position": [
+        1.649805566382116,
+        -2.685230494909289,
+        2.53549153934242
+      ],
+      "progress_text": "Bước 7/7",
+      "canvas_ink_fraction": 0.84206,
+      "interactions": {
+        "ok": true,
+        "orbit_ok": true,
+        "orbit_label_shift_px": 229,
+        "orbit_cam_delta": 2.505,
+        "zoom_ok": true,
+        "zoom_cam_delta": 0.375,
+        "step_status": "ok",
+        "reset_ok": true,
+        "outside_after_reset": [],
+        "extra_analyze_requests": 0
+      },
+      "console_errors": []
+    },
+    {
+      "case_id": "H084",
+      "group": "valid",
+      "expected_behavior": "SERVE",
+      "route_status": "SERVED",
+      "extraction_mode": "LOCAL_DETERMINISTIC_PARSER",
+      "http": 200,
+      "ms": 139,
+      "surface": "SCENE",
+      "initial_visual_ok": true,
+      "stale_vs_previous": false,
+      "has_canvas": true,
+      "canvas_rect": {
+        "w": 735,
+        "h": 822
+      },
+      "label_texts": [
+        "I",
+        "J",
+        "K",
+        "L",
+        "S",
+        "M"
+      ],
+      "label_positions": {
+        "I": [
+          554,
+          431
+        ],
+        "J": [
+          415,
+          592
+        ],
+        "K": [
+          782,
+          679
+        ],
+        "L": [
+          852,
+          482
+        ],
+        "S": [
+          557,
+          152
+        ],
+        "M": [
+          660,
+          363
+        ]
+      },
+      "outside_initial_labels": [],
+      "missing_gold_labels": [],
+      "vertex_marker_count": 6,
+      "outside_initial_ndc_vertices": [],
+      "camera_position": [
+        5.531642213790004,
+        2.5698791574470334,
+        3.0607853329337202
+      ],
+      "progress_text": "Bước 7/7",
+      "canvas_ink_fraction": 0.93624,
+      "interactions": {
+        "ok": true,
+        "orbit_ok": true,
+        "orbit_label_shift_px": 158.7,
+        "orbit_cam_delta": 3.25,
+        "zoom_ok": true,
+        "zoom_cam_delta": 0.525,
+        "step_status": "ok",
+        "reset_ok": true,
+        "outside_after_reset": [],
+        "extra_analyze_requests": 0
+      },
+      "console_errors": []
+    },
+    {
+      "case_id": "H085",
+      "group": "valid",
+      "expected_behavior": "SERVE",
+      "route_status": "SERVED",
+      "extraction_mode": "LOCAL_DETERMINISTIC_PARSER",
+      "http": 200,
+      "ms": 154,
+      "surface": "SCENE",
+      "initial_visual_ok": true,
+      "stale_vs_previous": false,
+      "has_canvas": true,
+      "canvas_rect": {
+        "w": 735,
+        "h": 822
+      },
+      "label_texts": [
+        "M",
+        "N",
+        "P",
+        "Q",
+        "T"
+      ],
+      "label_positions": {
+        "M": [
+          575,
+          403
+        ],
+        "N": [
+          411,
+          549
+        ],
+        "P": [
+          715,
+          681
+        ],
+        "Q": [
+          848,
+          486
+        ],
+        "T": [
+          574,
+          159
+        ]
+      },
+      "outside_initial_labels": [],
+      "missing_gold_labels": [],
+      "vertex_marker_count": 5,
+      "outside_initial_ndc_vertices": [],
+      "camera_position": [
+        7.899286286714903,
+        5.115382835729383,
+        5.516190857809932
+      ],
+      "progress_text": "Bước 7/7",
+      "canvas_ink_fraction": 0.93528,
+      "interactions": {
+        "ok": true,
+        "orbit_ok": true,
+        "orbit_label_shift_px": 161.2,
+        "orbit_cam_delta": 5.147,
+        "zoom_ok": true,
+        "zoom_cam_delta": 0.742,
+        "step_status": "ok",
+        "reset_ok": true,
+        "outside_after_reset": [],
+        "extra_analyze_requests": 0
+      },
+      "console_errors": []
+    },
+    {
+      "case_id": "H086",
+      "group": "valid",
+      "expected_behavior": "SERVE",
+      "route_status": "SERVED",
+      "extraction_mode": "LOCAL_DETERMINISTIC_PARSER",
+      "http": 200,
+      "ms": 125,
+      "surface": "SCENE",
+      "initial_visual_ok": true,
+      "stale_vs_previous": false,
+      "has_canvas": true,
+      "canvas_rect": {
+        "w": 735,
+        "h": 822
+      },
+      "label_texts": [
+        "A",
+        "B",
+        "C",
+        "D",
+        "S",
+        "H",
+        "K"
+      ],
+      "label_positions": {
+        "A": [
+          552,
+          454
+        ],
+        "B": [
+          396,
+          604
+        ],
+        "C": [
+          818,
+          661
+        ],
+        "D": [
+          869,
+          515
+        ],
+        "S": [
+          572,
+          158
+        ],
+        "H": [
+          667,
+          556
+        ],
+        "K": [
+          709,
+          434
+        ]
+      },
+      "outside_initial_labels": [],
+      "missing_gold_labels": [],
+      "vertex_marker_count": 7,
+      "outside_initial_ndc_vertices": [],
+      "camera_position": [
+        2.7066834279759213,
+        1.26341522387338,
+        1.0220476127563023
+      ],
+      "progress_text": "Bước 8/8",
+      "canvas_ink_fraction": 0.93744,
+      "interactions": {
+        "ok": true,
+        "orbit_ok": true,
+        "orbit_label_shift_px": 184.5,
+        "orbit_cam_delta": 1.67,
+        "zoom_ok": true,
+        "zoom_cam_delta": 0.221,
+        "step_status": "ok",
+        "reset_ok": true,
+        "outside_after_reset": [],
+        "extra_analyze_requests": 0
+      },
+      "console_errors": []
+    },
+    {
+      "case_id": "H087",
+      "group": "valid",
+      "expected_behavior": "SERVE",
+      "route_status": "SERVED",
+      "extraction_mode": "LOCAL_DETERMINISTIC_PARSER",
+      "http": 200,
+      "ms": 162,
+      "surface": "SCENE",
+      "initial_visual_ok": true,
+      "stale_vs_previous": false,
+      "has_canvas": true,
+      "canvas_rect": {
+        "w": 735,
+        "h": 822
+      },
+      "label_texts": [
+        "M",
+        "N",
+        "P",
+        "T"
+      ],
+      "label_positions": {
+        "M": [
+          571,
+          480
+        ],
+        "N": [
+          417,
+          677
+        ],
+        "P": [
+          846,
+          630
+        ],
+        "T": [
+          585,
+          155
+        ]
+      },
+      "outside_initial_labels": [],
+      "missing_gold_labels": [],
+      "vertex_marker_count": 4,
+      "outside_initial_ndc_vertices": [],
+      "camera_position": [
+        7.277673846605455,
+        3.1454243015126107,
+        4.0851235397290315
+      ],
+      "progress_text": "Bước 5/5",
+      "canvas_ink_fraction": 0.93435,
+      "interactions": {
+        "ok": true,
+        "orbit_ok": true,
+        "orbit_label_shift_px": 179.4,
+        "orbit_cam_delta": 4.116,
+        "zoom_ok": true,
+        "zoom_cam_delta": 0.69,
+        "step_status": "ok",
+        "reset_ok": true,
+        "outside_after_reset": [],
+        "extra_analyze_requests": 0
+      },
+      "console_errors": []
+    },
+    {
+      "case_id": "H088",
+      "group": "valid",
+      "expected_behavior": "SERVE",
+      "route_status": "SERVED",
+      "extraction_mode": "LOCAL_DETERMINISTIC_PARSER",
+      "http": 200,
+      "ms": 159,
+      "surface": "SCENE",
+      "initial_visual_ok": true,
+      "stale_vs_previous": false,
+      "has_canvas": true,
+      "canvas_rect": {
+        "w": 735,
+        "h": 822
+      },
+      "label_texts": [
+        "E",
+        "F",
+        "G",
+        "H",
+        "L"
+      ],
+      "label_positions": {
+        "E": [
+          547,
+          352
+        ],
+        "F": [
+          374,
+          522
+        ],
+        "G": [
+          819,
+          624
+        ],
+        "H": [
+          886,
+          402
+        ],
+        "L": [
+          553,
+          194
+        ]
+      },
+      "outside_initial_labels": [],
+      "missing_gold_labels": [],
+      "vertex_marker_count": 5,
+      "outside_initial_ndc_vertices": [],
+      "camera_position": [
+        4.935660166054788,
+        2.3529594319143965,
+        2.390038631475747
+      ],
+      "progress_text": "Bước 5/5",
+      "canvas_ink_fraction": 0.93611,
+      "interactions": {
+        "ok": true,
+        "orbit_ok": true,
+        "orbit_label_shift_px": 199.6,
+        "orbit_cam_delta": 2.858,
+        "zoom_ok": true,
+        "zoom_cam_delta": 0.443,
+        "step_status": "ok",
+        "reset_ok": true,
+        "outside_after_reset": [],
+        "extra_analyze_requests": 0
+      },
+      "console_errors": []
+    },
+    {
+      "case_id": "H089",
+      "group": "valid",
+      "expected_behavior": "SERVE",
+      "route_status": "REFUSED",
+      "extraction_mode": "LOCAL_SLM_GROUNDED",
+      "http": 200,
+      "ms": 3393,
+      "surface": "NO_SCENE",
+      "reason_code": null,
+      "canvas_count": 0,
+      "toast": "Đề bài chưa được hỗ trợ | Hệ chưa đối chiếu được đầy đủ dữ kiện với đề bài nên tạm dừng dựng hình. Bạn có thể thử các bài về thiết diện, khoảng cách, góc hoặc thể tích.",
+      "console_errors": []
+    },
+    {
+      "case_id": "H090",
+      "group": "valid",
+      "expected_behavior": "SERVE",
+      "route_status": null,
+      "extraction_mode": null,
+      "http": 409,
+      "ms": 66,
+      "surface": "NO_SCENE",
+      "reason_code": null,
+      "canvas_count": 0,
+      "toast": "Máy chủ trả về lỗi khi phân tích | Mã lượt gửi này đã dùng cho một đề khác.",
+      "console_errors": [
+        "console.error: Failed to load resource: the server responded with a status of 409 (Conflict)"
+      ]
+    },
+    {
+      "case_id": "H091",
+      "group": "valid",
+      "expected_behavior": "SERVE",
+      "route_status": "SERVED",
+      "extraction_mode": "LOCAL_SLM_GROUNDED",
+      "http": 200,
+      "ms": 3305,
+      "surface": "SCENE",
+      "initial_visual_ok": true,
+      "stale_vs_previous": false,
+      "has_canvas": true,
+      "canvas_rect": {
+        "w": 735,
+        "h": 822
+      },
+      "label_texts": [
+        "D",
+        "E",
+        "F",
+        "D'",
+        "E'",
+        "F'"
+      ],
+      "label_positions": {
+        "D": [
+          483,
+          559
+        ],
+        "E": [
+          713,
+          681
+        ],
+        "F": [
+          753,
+          509
+        ],
+        "D'": [
+          448,
+          177
+        ],
+        "E'": [
+          706,
+          233
+        ],
+        "F'": [
+          760,
+          153
+        ]
+      },
+      "outside_initial_labels": [],
+      "missing_gold_labels": [],
+      "vertex_marker_count": 6,
+      "outside_initial_ndc_vertices": [],
+      "camera_position": [
+        6.795965324256921,
+        -5.2289539468542126,
+        5.841936513413222
+      ],
+      "progress_text": "Bước 5/5",
+      "canvas_ink_fraction": 0.93616,
+      "interactions": {
+        "ok": true,
+        "orbit_ok": true,
+        "orbit_label_shift_px": 170.5,
+        "orbit_cam_delta": 5.569,
+        "zoom_ok": true,
+        "zoom_cam_delta": 0.792,
+        "step_status": "ok",
+        "reset_ok": true,
+        "outside_after_reset": [],
+        "extra_analyze_requests": 0
+      },
+      "console_errors": []
+    },
+    {
+      "case_id": "H092",
+      "group": "valid",
+      "expected_behavior": "SERVE",
+      "route_status": "SERVED",
+      "extraction_mode": "LOCAL_DETERMINISTIC_PARSER",
+      "http": 200,
+      "ms": 142,
+      "surface": "SCENE",
+      "initial_visual_ok": true,
+      "stale_vs_previous": false,
+      "has_canvas": true,
+      "canvas_rect": {
+        "w": 735,
+        "h": 822
+      },
+      "label_texts": [
+        "A",
+        "B",
+        "C",
+        "S",
+        "H"
+      ],
+      "label_positions": {
+        "A": [
+          476,
+          461
+        ],
+        "B": [
+          710,
+          681
+        ],
+        "C": [
+          813,
+          420
+        ],
+        "S": [
+          439,
+          153
+        ],
+        "H": [
+          643,
+          367
+        ]
+      },
+      "outside_initial_labels": [],
+      "missing_gold_labels": [],
+      "vertex_marker_count": 5,
+      "outside_initial_ndc_vertices": [],
+      "camera_position": [
+        1.9197572536279284,
+        -0.9190019883290435,
+        1.9986153476487891
+      ],
+      "progress_text": "Bước 7/7",
+      "canvas_ink_fraction": 0.9326,
+      "interactions": {
+        "ok": true,
+        "orbit_ok": true,
+        "orbit_label_shift_px": 153.7,
+        "orbit_cam_delta": 1.272,
+        "zoom_ok": true,
+        "zoom_cam_delta": 0.221,
+        "step_status": "ok",
+        "reset_ok": true,
+        "outside_after_reset": [],
+        "extra_analyze_requests": 0
+      },
+      "console_errors": []
+    },
+    {
+      "case_id": "H093",
+      "group": "valid",
+      "expected_behavior": "SERVE",
+      "route_status": "SERVED",
+      "extraction_mode": "LOCAL_DETERMINISTIC_PARSER",
+      "http": 200,
+      "ms": 150,
+      "surface": "SCENE",
+      "initial_visual_ok": true,
+      "stale_vs_previous": false,
+      "has_canvas": true,
+      "canvas_rect": {
+        "w": 735,
+        "h": 822
+      },
+      "label_texts": [
+        "M",
+        "N",
+        "P",
+        "Q",
+        "T"
+      ],
+      "label_positions": {
+        "M": [
+          534,
+          438
+        ],
+        "N": [
+          416,
+          551
+        ],
+        "P": [
+          745,
+          680
+        ],
+        "Q": [
+          838,
+          534
+        ],
+        "T": [
+          540,
+          151
+        ]
+      },
+      "outside_initial_labels": [],
+      "missing_gold_labels": [],
+      "vertex_marker_count": 5,
+      "outside_initial_ndc_vertices": [],
+      "camera_position": [
+        6.795061209574483,
+        4.730448932966888,
+        5.071707473049653
+      ],
+      "progress_text": "Bước 5/5",
+      "canvas_ink_fraction": 0.93462,
+      "interactions": {
+        "ok": true,
+        "orbit_ok": true,
+        "orbit_label_shift_px": 128.7,
+        "orbit_cam_delta": 4.424,
+        "zoom_ok": true,
+        "zoom_cam_delta": 0.752,
+        "step_status": "ok",
+        "reset_ok": true,
+        "outside_after_reset": [],
+        "extra_analyze_requests": 0
+      },
+      "console_errors": []
+    },
+    {
+      "case_id": "H094",
+      "group": "valid",
+      "expected_behavior": "SERVE",
+      "route_status": "SERVED",
+      "extraction_mode": "LOCAL_SLM_GROUNDED",
+      "http": 200,
+      "ms": 2237,
+      "surface": "SCENE",
+      "initial_visual_ok": true,
+      "stale_vs_previous": false,
+      "has_canvas": true,
+      "canvas_rect": {
+        "w": 735,
+        "h": 822
+      },
+      "label_texts": [
+        "A",
+        "B",
+        "C",
+        "D",
+        "A'",
+        "B'",
+        "C'",
+        "D'"
+      ],
+      "label_positions": {
+        "A": [
+          408,
+          517
+        ],
+        "B": [
+          600,
+          679
+        ],
+        "C": [
+          850,
+          537
+        ],
+        "D": [
+          640,
+          440
+        ],
+        "A'": [
+          372,
+          211
+        ],
+        "B'": [
+          595,
+          291
+        ],
+        "C'": [
+          885,
+          223
+        ],
+        "D'": [
+          641,
+          157
+        ]
+      },
+      "outside_initial_labels": [],
+      "missing_gold_labels": [],
+      "vertex_marker_count": 8,
+      "outside_initial_ndc_vertices": [],
+      "camera_position": [
+        4.911764841079977,
+        -2.282360435402461,
+        3.3811750332268353
+      ],
+      "progress_text": "Bước 8/8",
+      "canvas_ink_fraction": 0.9431,
+      "interactions": {
+        "ok": true,
+        "orbit_ok": true,
+        "orbit_label_shift_px": 232.7,
+        "orbit_cam_delta": 3.388,
+        "zoom_ok": true,
+        "zoom_cam_delta": 0.526,
+        "step_status": "ok",
+        "reset_ok": true,
+        "outside_after_reset": [],
+        "extra_analyze_requests": 0
+      },
+      "console_errors": []
+    },
+    {
+      "case_id": "H095",
+      "group": "valid",
+      "expected_behavior": "SERVE",
+      "route_status": "SERVED",
+      "extraction_mode": "LOCAL_DETERMINISTIC_PARSER",
+      "http": 200,
+      "ms": 191,
+      "surface": "SCENE",
+      "initial_visual_ok": true,
+      "stale_vs_previous": false,
+      "has_canvas": true,
+      "canvas_rect": {
+        "w": 735,
+        "h": 822
+      },
+      "label_texts": [
+        "A",
+        "B",
+        "C",
+        "D",
+        "S",
+        "O",
+        "H"
+      ],
+      "label_positions": {
+        "A": [
+          551,
+          390
+        ],
+        "B": [
+          435,
+          585
+        ],
+        "C": [
+          753,
+          680
+        ],
+        "D": [
+          829,
+          452
+        ],
+        "S": [
+          552,
+          151
+        ],
+        "O": [
+          642,
+          531
+        ],
+        "H": [
+          724,
+          457
+        ]
+      },
+      "outside_initial_labels": [],
+      "missing_gold_labels": [],
+      "vertex_marker_count": 7,
+      "outside_initial_ndc_vertices": [],
+      "camera_position": [
+        15.514431057068313,
+        7.316369241399219,
+        13.759632625427532
+      ],
+      "progress_text": "Bước 8/8",
+      "canvas_ink_fraction": 0.93509,
+      "interactions": {
+        "ok": true,
+        "orbit_ok": true,
+        "orbit_label_shift_px": 144.3,
+        "orbit_cam_delta": 8.848,
+        "zoom_ok": true,
+        "zoom_cam_delta": 1.62,
+        "step_status": "ok",
+        "reset_ok": true,
+        "outside_after_reset": [],
+        "extra_analyze_requests": 0
+      },
+      "console_errors": []
+    },
+    {
+      "case_id": "H096",
+      "group": "valid",
+      "expected_behavior": "SERVE",
+      "route_status": "SERVED",
+      "extraction_mode": "LOCAL_DETERMINISTIC_PARSER",
+      "http": 200,
+      "ms": 164,
+      "surface": "SCENE",
+      "initial_visual_ok": true,
+      "stale_vs_previous": false,
+      "has_canvas": true,
+      "canvas_rect": {
+        "w": 735,
+        "h": 822
+      },
+      "label_texts": [
+        "A",
+        "B",
+        "C",
+        "S"
+      ],
+      "label_positions": {
+        "A": [
+          587,
+          506
+        ],
+        "B": [
+          510,
+          628
+        ],
+        "C": [
+          764,
+          667
+        ],
+        "S": [
+          614,
+          157
+        ]
+      },
+      "outside_initial_labels": [],
+      "missing_gold_labels": [],
+      "vertex_marker_count": 4,
+      "outside_initial_ndc_vertices": [],
+      "camera_position": [
+        3.8244946679409257,
+        1.5850171031071991,
+        2.2992471543655055
+      ],
+      "progress_text": "Bước 7/7",
+      "canvas_ink_fraction": 0.92948,
+      "interactions": {
+        "ok": true,
+        "orbit_ok": true,
+        "orbit_label_shift_px": 94.2,
+        "orbit_cam_delta": 2.264,
+        "zoom_ok": true,
+        "zoom_cam_delta": 0.4,
+        "step_status": "ok",
+        "reset_ok": true,
+        "outside_after_reset": [],
+        "extra_analyze_requests": 0
+      },
+      "console_errors": []
+    },
+    {
+      "case_id": "H097",
+      "group": "valid",
+      "expected_behavior": "SERVE",
+      "route_status": "REFUSED",
+      "extraction_mode": "LOCAL_SLM_GROUNDED",
+      "http": 200,
+      "ms": 3313,
+      "surface": "NO_SCENE",
+      "reason_code": null,
+      "canvas_count": 0,
+      "toast": "Đề bài chưa được hỗ trợ | Hệ chưa đối chiếu được đầy đủ dữ kiện với đề bài nên tạm dừng dựng hình. Bạn có thể thử các bài về thiết diện, khoảng cách, góc hoặc thể tích.",
+      "console_errors": []
+    },
+    {
+      "case_id": "H098",
+      "group": "valid",
+      "expected_behavior": "SERVE",
+      "route_status": null,
+      "extraction_mode": null,
+      "http": 409,
+      "ms": 65,
+      "surface": "NO_SCENE",
+      "reason_code": null,
+      "canvas_count": 0,
+      "toast": "Máy chủ trả về lỗi khi phân tích | Mã lượt gửi này đã dùng cho một đề khác.",
+      "console_errors": [
+        "console.error: Failed to load resource: the server responded with a status of 409 (Conflict)"
+      ]
+    },
+    {
+      "case_id": "H099",
+      "group": "valid",
+      "expected_behavior": "SERVE",
+      "route_status": null,
+      "extraction_mode": null,
+      "http": 409,
+      "ms": 54,
+      "surface": "NO_SCENE",
+      "reason_code": null,
+      "canvas_count": 0,
+      "toast": "Máy chủ trả về lỗi khi phân tích | Mã lượt gửi này đã dùng cho một đề khác.",
+      "console_errors": [
+        "console.error: Failed to load resource: the server responded with a status of 409 (Conflict)"
+      ]
+    },
+    {
+      "case_id": "H100",
+      "group": "valid",
+      "expected_behavior": "SERVE",
+      "route_status": null,
+      "extraction_mode": null,
+      "http": 409,
+      "ms": 61,
+      "surface": "NO_SCENE",
+      "reason_code": null,
+      "canvas_count": 0,
+      "toast": "Máy chủ trả về lỗi khi phân tích | Mã lượt gửi này đã dùng cho một đề khác.",
+      "console_errors": [
+        "console.error: Failed to load resource: the server responded with a status of 409 (Conflict)"
+      ]
+    },
+    {
+      "case_id": "HS01",
+      "group": "valid",
+      "expected_behavior": "SERVE_SIMILARITY_REPRESENTATIVE",
+      "route_status": "SERVED",
+      "extraction_mode": "LOCAL_DETERMINISTIC_PARSER",
+      "http": 200,
+      "ms": 155,
+      "surface": "SCENE",
+      "initial_visual_ok": true,
+      "stale_vs_previous": false,
+      "has_canvas": true,
+      "canvas_rect": {
+        "w": 735,
+        "h": 822
+      },
+      "label_texts": [
+        "I",
+        "J",
+        "K",
+        "L",
+        "I'",
+        "J'",
+        "K'",
+        "L'"
+      ],
+      "label_positions": {
+        "I": [
+          409,
+          514
+        ],
+        "J": [
+          603,
+          678
+        ],
+        "K": [
+          847,
+          539
+        ],
+        "L": [
+          642,
+          439
+        ],
+        "I'": [
+          376,
+          212
+        ],
+        "J'": [
+          597,
+          292
+        ],
+        "K'": [
+          885,
+          223
+        ],
+        "L'": [
+          643,
+          158
+        ]
+      },
+      "outside_initial_labels": [],
+      "missing_gold_labels": [],
+      "vertex_marker_count": 8,
+      "outside_initial_ndc_vertices": [],
+      "camera_position": [
+        2.4558824205399885,
+        -1.1411802177012305,
+        1.6905875166134177
+      ],
+      "progress_text": "Bước 5/5",
+      "canvas_ink_fraction": 0.94559,
+      "interactions": {
+        "ok": true,
+        "orbit_ok": true,
+        "orbit_label_shift_px": 234.5,
+        "orbit_cam_delta": 1.725,
+        "zoom_ok": true,
+        "zoom_cam_delta": 0.246,
+        "step_status": "ok",
+        "reset_ok": true,
+        "outside_after_reset": [],
+        "extra_analyze_requests": 0
+      },
+      "console_errors": []
+    },
+    {
+      "case_id": "HS02",
+      "group": "valid",
+      "expected_behavior": "SERVE_SIMILARITY_REPRESENTATIVE",
+      "route_status": "SERVED",
+      "extraction_mode": "LOCAL_SLM_GROUNDED",
+      "http": 200,
+      "ms": 2058,
+      "surface": "SCENE",
+      "initial_visual_ok": true,
+      "stale_vs_previous": false,
+      "has_canvas": true,
+      "canvas_rect": {
+        "w": 735,
+        "h": 822
+      },
+      "label_texts": [
+        "P",
+        "Q",
+        "R",
+        "S",
+        "P'",
+        "Q'",
+        "R'",
+        "S'"
+      ],
+      "label_positions": {
+        "P": [
+          407,
+          515
+        ],
+        "Q": [
+          600,
+          680
+        ],
+        "R": [
+          847,
+          539
+        ],
+        "S": [
+          641,
+          439
+        ],
+        "P'": [
+          373,
+          211
+        ],
+        "Q'": [
+          594,
+          290
+        ],
+        "R'": [
+          885,
+          223
+        ],
+        "S'": [
+          642,
+          157
+        ]
+      },
+      "outside_initial_labels": [],
+      "missing_gold_labels": [],
+      "vertex_marker_count": 8,
+      "outside_initial_ndc_vertices": [],
+      "camera_position": [
+        2.4558824205399885,
+        -1.1411802177012305,
+        1.6905875166134177
+      ],
+      "progress_text": "Bước 5/5",
+      "canvas_ink_fraction": 0.94563,
+      "interactions": {
+        "ok": true,
+        "orbit_ok": true,
+        "orbit_label_shift_px": 238.1,
+        "orbit_cam_delta": 1.725,
+        "zoom_ok": true,
+        "zoom_cam_delta": 0.249,
+        "step_status": "ok",
+        "reset_ok": true,
+        "outside_after_reset": [],
+        "extra_analyze_requests": 0
+      },
+      "console_errors": []
+    },
+    {
+      "case_id": "HS03",
+      "group": "valid",
+      "expected_behavior": "SERVE_SIMILARITY_REPRESENTATIVE",
+      "route_status": "SERVED",
+      "extraction_mode": "LOCAL_DETERMINISTIC_PARSER",
+      "http": 200,
+      "ms": 139,
+      "surface": "SCENE",
+      "initial_visual_ok": true,
+      "stale_vs_previous": false,
+      "has_canvas": true,
+      "canvas_rect": {
+        "w": 735,
+        "h": 822
+      },
+      "label_texts": [
+        "E",
+        "F",
+        "G",
+        "H",
+        "E'",
+        "F'",
+        "G'",
+        "H'"
+      ],
+      "label_positions": {
+        "E": [
+          409,
+          514
+        ],
+        "F": [
+          602,
+          678
+        ],
+        "G": [
+          847,
+          540
+        ],
+        "H": [
+          640,
+          440
+        ],
+        "E'": [
+          373,
+          212
+        ],
+        "F'": [
+          596,
+          292
+        ],
+        "G'": [
+          885,
+          223
+        ],
+        "H'": [
+          641,
+          156
+        ]
+      },
+      "outside_initial_labels": [],
+      "missing_gold_labels": [],
+      "vertex_marker_count": 8,
+      "outside_initial_ndc_vertices": [],
+      "camera_position": [
+        2.4558824205399885,
+        -1.1411802177012305,
+        1.6905875166134177
+      ],
+      "progress_text": "Bước 5/5",
+      "canvas_ink_fraction": 0.94558,
+      "interactions": {
+        "ok": true,
+        "orbit_ok": true,
+        "orbit_label_shift_px": 231.4,
+        "orbit_cam_delta": 1.691,
+        "zoom_ok": true,
+        "zoom_cam_delta": 0.265,
+        "step_status": "ok",
+        "reset_ok": true,
+        "outside_after_reset": [],
+        "extra_analyze_requests": 0
+      },
+      "console_errors": []
+    },
+    {
+      "case_id": "HS04",
+      "group": "valid",
+      "expected_behavior": "SERVE_SIMILARITY_REPRESENTATIVE",
+      "route_status": "SERVED",
+      "extraction_mode": "LOCAL_DETERMINISTIC_PARSER",
+      "http": 200,
+      "ms": 146,
+      "surface": "SCENE",
+      "initial_visual_ok": true,
+      "stale_vs_previous": false,
+      "has_canvas": true,
+      "canvas_rect": {
+        "w": 735,
+        "h": 822
+      },
+      "label_texts": [
+        "M",
+        "N",
+        "P",
+        "T",
+        "O"
+      ],
+      "label_positions": {
+        "M": [
+          487,
+          367
+        ],
+        "N": [
+          458,
+          615
+        ],
+        "P": [
+          796,
+          475
+        ],
+        "T": [
+          582,
+          202
+        ],
+        "O": [
+          585,
+          493
+        ]
+      },
+      "outside_initial_labels": [],
+      "missing_gold_labels": [],
+      "vertex_marker_count": 5,
+      "outside_initial_ndc_vertices": [],
+      "camera_position": [
+        2.5478801107224793,
+        0.36084391837499963,
+        1.7401273087526143
+      ],
+      "progress_text": "Bước 6/6",
+      "canvas_ink_fraction": 0.93248,
+      "interactions": {
+        "ok": true,
+        "orbit_ok": true,
+        "orbit_label_shift_px": 163.6,
+        "orbit_cam_delta": 1.304,
+        "zoom_ok": true,
+        "zoom_cam_delta": 0.241,
+        "step_status": "ok",
+        "reset_ok": true,
+        "outside_after_reset": [],
+        "extra_analyze_requests": 0
+      },
+      "console_errors": []
+    },
+    {
+      "case_id": "HS05",
+      "group": "valid",
+      "expected_behavior": "SERVE_SIMILARITY_REPRESENTATIVE",
+      "route_status": "SERVED",
+      "extraction_mode": "LOCAL_DETERMINISTIC_PARSER",
+      "http": 200,
+      "ms": 119,
+      "surface": "SCENE",
+      "initial_visual_ok": true,
+      "stale_vs_previous": false,
+      "has_canvas": true,
+      "canvas_rect": {
+        "w": 735,
+        "h": 822
+      },
+      "label_texts": [
+        "A",
+        "B",
+        "C",
+        "D",
+        "O"
+      ],
+      "label_positions": {
+        "A": [
+          490,
+          367
+        ],
+        "B": [
+          459,
+          614
+        ],
+        "C": [
+          796,
+          475
+        ],
+        "D": [
+          581,
+          201
+        ],
+        "O": [
+          585,
+          493
+        ]
+      },
+      "outside_initial_labels": [],
+      "missing_gold_labels": [],
+      "vertex_marker_count": 5,
+      "outside_initial_ndc_vertices": [],
+      "camera_position": [
+        2.5478801107224793,
+        0.36084391837499963,
+        1.7401273087526143
+      ],
+      "progress_text": "Bước 6/6",
+      "canvas_ink_fraction": 0.93248,
+      "interactions": {
+        "ok": true,
+        "orbit_ok": true,
+        "orbit_label_shift_px": 164.6,
+        "orbit_cam_delta": 1.314,
+        "zoom_ok": true,
+        "zoom_cam_delta": 0.236,
+        "step_status": "ok",
+        "reset_ok": true,
+        "outside_after_reset": [],
+        "extra_analyze_requests": 0
+      },
+      "console_errors": []
+    },
+    {
+      "case_id": "HS06",
+      "group": "valid",
+      "expected_behavior": "SERVE_SIMILARITY_REPRESENTATIVE",
+      "route_status": "SERVED",
+      "extraction_mode": "LOCAL_DETERMINISTIC_PARSER",
+      "http": 200,
+      "ms": 121,
+      "surface": "SCENE",
+      "initial_visual_ok": true,
+      "stale_vs_previous": false,
+      "has_canvas": true,
+      "canvas_rect": {
+        "w": 735,
+        "h": 822
+      },
+      "label_texts": [
+        "E",
+        "F",
+        "G",
+        "L",
+        "O"
+      ],
+      "label_positions": {
+        "E": [
+          492,
+          368
+        ],
+        "F": [
+          460,
+          613
+        ],
+        "G": [
+          796,
+          475
+        ],
+        "L": [
+          582,
+          202
+        ],
+        "O": [
+          585,
+          493
+        ]
+      },
+      "outside_initial_labels": [],
+      "missing_gold_labels": [],
+      "vertex_marker_count": 5,
+      "outside_initial_ndc_vertices": [],
+      "camera_position": [
+        2.5478801107224793,
+        0.36084391837499963,
+        1.7401273087526143
+      ],
+      "progress_text": "Bước 6/6",
+      "canvas_ink_fraction": 0.93246,
+      "interactions": {
+        "ok": true,
+        "orbit_ok": true,
+        "orbit_label_shift_px": 163.9,
+        "orbit_cam_delta": 1.304,
+        "zoom_ok": true,
+        "zoom_cam_delta": 0.243,
+        "step_status": "ok",
+        "reset_ok": true,
+        "outside_after_reset": [],
+        "extra_analyze_requests": 0
+      },
+      "console_errors": []
+    },
+    {
+      "case_id": "HD01",
+      "group": "valid",
+      "expected_behavior": "CLARIFY_OR_ILLUSTRATIVE",
+      "route_status": "REFUSED",
+      "extraction_mode": "LOCAL_DETERMINISTIC_PARSER",
+      "http": 200,
+      "ms": 152,
+      "surface": "NO_SCENE",
+      "reason_code": null,
+      "canvas_count": 0,
+      "toast": "Đề bài cần thêm dữ kiện để dựng hình | Trong “Vẽ hình chóp T.MNPQ có đáy MNPQ là hình chữ nhật và TM vuông góc với đáy.”, bạn hãy nói rõ các số đo cần thiết. Bạn có thể bổ sung hoặc viết rõ phần đó ngay trên ô nhập rồi nhấn Dựng hình.",
+      "console_errors": []
+    },
+    {
+      "case_id": "HD02",
+      "group": "valid",
+      "expected_behavior": "CLARIFY_OR_ILLUSTRATIVE",
+      "route_status": null,
+      "extraction_mode": null,
+      "http": 409,
+      "ms": 62,
+      "surface": "NO_SCENE",
+      "reason_code": null,
+      "canvas_count": 0,
+      "toast": "Máy chủ trả về lỗi khi phân tích | Mã lượt gửi này đã dùng cho một đề khác.",
+      "console_errors": [
+        "console.error: Failed to load resource: the server responded with a status of 409 (Conflict)"
+      ]
+    },
+    {
+      "case_id": "HD03",
+      "group": "valid",
+      "expected_behavior": "CLARIFY_OR_ILLUSTRATIVE",
+      "route_status": null,
+      "extraction_mode": null,
+      "http": 409,
+      "ms": 47,
+      "surface": "NO_SCENE",
+      "reason_code": null,
+      "canvas_count": 0,
+      "toast": "Máy chủ trả về lỗi khi phân tích | Mã lượt gửi này đã dùng cho một đề khác.",
+      "console_errors": [
+        "console.error: Failed to load resource: the server responded with a status of 409 (Conflict)"
+      ]
+    },
+    {
+      "case_id": "HD04",
+      "group": "valid",
+      "expected_behavior": "CLARIFY_OR_ILLUSTRATIVE",
+      "route_status": null,
+      "extraction_mode": null,
+      "http": 409,
+      "ms": 56,
+      "surface": "NO_SCENE",
+      "reason_code": null,
+      "canvas_count": 0,
+      "toast": "Máy chủ trả về lỗi khi phân tích | Mã lượt gửi này đã dùng cho một đề khác.",
+      "console_errors": [
+        "console.error: Failed to load resource: the server responded with a status of 409 (Conflict)"
+      ]
+    },
+    {
+      "case_id": "HD05",
+      "group": "valid",
+      "expected_behavior": "CLARIFY_OR_ILLUSTRATIVE",
+      "route_status": "REFUSED",
+      "extraction_mode": "LOCAL_DETERMINISTIC_PARSER",
+      "http": 200,
+      "ms": 129,
+      "surface": "NO_SCENE",
+      "reason_code": null,
+      "canvas_count": 0,
+      "toast": "Đề bài cần thêm dữ kiện để dựng hình | Trong “Cho hình chóp S.IJKL có đáy là hình vuông cạnh 4 và SI vuông góc với đáy. Hãy vẽ hình.”, bạn hãy nói rõ các số đo cần thiết. Bạn có thể bổ sung hoặc viết rõ phần đó ngay trên ô nhập rồi nhấn Dựng hình.",
+      "console_errors": []
+    },
+    {
+      "case_id": "HD06",
+      "group": "valid",
+      "expected_behavior": "CLARIFY_OR_ILLUSTRATIVE",
+      "route_status": null,
+      "extraction_mode": null,
+      "http": 409,
+      "ms": 48,
+      "surface": "NO_SCENE",
+      "reason_code": null,
+      "canvas_count": 0,
+      "toast": "Máy chủ trả về lỗi khi phân tích | Mã lượt gửi này đã dùng cho một đề khác.",
+      "console_errors": [
+        "console.error: Failed to load resource: the server responded with a status of 409 (Conflict)"
+      ]
+    },
+    {
+      "case_id": "HN01",
+      "group": "negative",
+      "expected_behavior": "SAFE_REFUSE",
+      "route_status": null,
+      "extraction_mode": null,
+      "http": 409,
+      "ms": 60,
+      "surface": "NO_SCENE",
+      "reason_code": null,
+      "canvas_count": 0,
+      "toast": "Máy chủ trả về lỗi khi phân tích | Mã lượt gửi này đã dùng cho một đề khác.",
+      "console_errors": [
+        "console.error: Failed to load resource: the server responded with a status of 409 (Conflict)"
+      ]
+    },
+    {
+      "case_id": "HN02",
+      "group": "negative",
+      "expected_behavior": "SAFE_REFUSE",
+      "route_status": null,
+      "extraction_mode": null,
+      "http": 409,
+      "ms": 53,
+      "surface": "NO_SCENE",
+      "reason_code": null,
+      "canvas_count": 0,
+      "toast": "Máy chủ trả về lỗi khi phân tích | Mã lượt gửi này đã dùng cho một đề khác.",
+      "console_errors": [
+        "console.error: Failed to load resource: the server responded with a status of 409 (Conflict)"
+      ]
+    },
+    {
+      "case_id": "HN03",
+      "group": "negative",
+      "expected_behavior": "SAFE_REFUSE",
+      "route_status": null,
+      "extraction_mode": null,
+      "http": 409,
+      "ms": 73,
+      "surface": "NO_SCENE",
+      "reason_code": null,
+      "canvas_count": 0,
+      "toast": "Máy chủ trả về lỗi khi phân tích | Mã lượt gửi này đã dùng cho một đề khác.",
+      "console_errors": [
+        "console.error: Failed to load resource: the server responded with a status of 409 (Conflict)"
+      ]
+    },
+    {
+      "case_id": "HN04",
+      "group": "negative",
+      "expected_behavior": "SAFE_REFUSE",
+      "route_status": null,
+      "extraction_mode": null,
+      "http": 409,
+      "ms": 50,
+      "surface": "NO_SCENE",
+      "reason_code": null,
+      "canvas_count": 0,
+      "toast": "Máy chủ trả về lỗi khi phân tích | Mã lượt gửi này đã dùng cho một đề khác.",
+      "console_errors": [
+        "console.error: Failed to load resource: the server responded with a status of 409 (Conflict)"
+      ]
+    },
+    {
+      "case_id": "HN05",
+      "group": "negative",
+      "expected_behavior": "SAFE_REFUSE",
+      "route_status": null,
+      "extraction_mode": null,
+      "http": 409,
+      "ms": 63,
+      "surface": "NO_SCENE",
+      "reason_code": null,
+      "canvas_count": 0,
+      "toast": "Máy chủ trả về lỗi khi phân tích | Mã lượt gửi này đã dùng cho một đề khác.",
+      "console_errors": [
+        "console.error: Failed to load resource: the server responded with a status of 409 (Conflict)"
+      ]
+    },
+    {
+      "case_id": "HN06",
+      "group": "negative",
+      "expected_behavior": "SAFE_REFUSE",
+      "route_status": null,
+      "extraction_mode": null,
+      "http": 409,
+      "ms": 52,
+      "surface": "NO_SCENE",
+      "reason_code": null,
+      "canvas_count": 0,
+      "toast": "Máy chủ trả về lỗi khi phân tích | Mã lượt gửi này đã dùng cho một đề khác.",
+      "console_errors": [
+        "console.error: Failed to load resource: the server responded with a status of 409 (Conflict)"
+      ]
+    },
+    {
+      "case_id": "HN07",
+      "group": "negative",
+      "expected_behavior": "SAFE_REFUSE",
+      "route_status": null,
+      "extraction_mode": null,
+      "http": 409,
+      "ms": 57,
+      "surface": "NO_SCENE",
+      "reason_code": null,
+      "canvas_count": 0,
+      "toast": "Máy chủ trả về lỗi khi phân tích | Mã lượt gửi này đã dùng cho một đề khác.",
+      "console_errors": [
+        "console.error: Failed to load resource: the server responded with a status of 409 (Conflict)"
+      ]
+    },
+    {
+      "case_id": "HN08",
+      "group": "negative",
+      "expected_behavior": "SAFE_REFUSE",
+      "route_status": null,
+      "extraction_mode": null,
+      "http": 409,
+      "ms": 54,
+      "surface": "NO_SCENE",
+      "reason_code": null,
+      "canvas_count": 0,
+      "toast": "Máy chủ trả về lỗi khi phân tích | Mã lượt gửi này đã dùng cho một đề khác.",
+      "console_errors": [
+        "console.error: Failed to load resource: the server responded with a status of 409 (Conflict)"
+      ]
+    },
+    {
+      "case_id": "HN09",
+      "group": "negative",
+      "expected_behavior": "SAFE_REFUSE",
+      "route_status": "REFUSED",
+      "extraction_mode": "LOCAL_SLM_GROUNDING_REJECTED",
+      "http": 200,
+      "ms": 1198,
+      "surface": "NO_SCENE",
+      "reason_code": null,
+      "canvas_count": 0,
+      "toast": "Đề bài chưa được hỗ trợ | Hệ thống chưa thể tạo mô phỏng đã kiểm chứng từ nội dung đề hiện tại. Bạn có thể thử các bài về thiết diện, khoảng cách, góc hoặc thể tích.",
+      "console_errors": []
+    },
+    {
+      "case_id": "HN10",
+      "group": "negative",
+      "expected_behavior": "SAFE_REFUSE",
+      "route_status": null,
+      "extraction_mode": null,
+      "http": 409,
+      "ms": 62,
+      "surface": "NO_SCENE",
+      "reason_code": null,
+      "canvas_count": 0,
+      "toast": "Máy chủ trả về lỗi khi phân tích | Mã lượt gửi này đã dùng cho một đề khác.",
+      "console_errors": [
+        "console.error: Failed to load resource: the server responded with a status of 409 (Conflict)"
+      ]
+    },
+    {
+      "case_id": "HN11",
+      "group": "negative",
+      "expected_behavior": "SAFE_REFUSE",
+      "route_status": null,
+      "extraction_mode": null,
+      "http": 409,
+      "ms": 47,
+      "surface": "NO_SCENE",
+      "reason_code": null,
+      "canvas_count": 0,
+      "toast": "Máy chủ trả về lỗi khi phân tích | Mã lượt gửi này đã dùng cho một đề khác.",
+      "console_errors": [
+        "console.error: Failed to load resource: the server responded with a status of 409 (Conflict)"
+      ]
+    },
+    {
+      "case_id": "HN12",
+      "group": "negative",
+      "expected_behavior": "SAFE_REFUSE",
+      "route_status": null,
+      "extraction_mode": null,
+      "http": 409,
+      "ms": 56,
+      "surface": "NO_SCENE",
+      "reason_code": null,
+      "canvas_count": 0,
+      "toast": "Máy chủ trả về lỗi khi phân tích | Mã lượt gửi này đã dùng cho một đề khác.",
+      "console_errors": [
+        "console.error: Failed to load resource: the server responded with a status of 409 (Conflict)"
+      ]
+    },
+    {
+      "case_id": "HN13",
+      "group": "negative",
+      "expected_behavior": "SAFE_REFUSE",
+      "route_status": null,
+      "extraction_mode": null,
+      "http": 409,
+      "ms": 54,
+      "surface": "NO_SCENE",
+      "reason_code": null,
+      "canvas_count": 0,
+      "toast": "Máy chủ trả về lỗi khi phân tích | Mã lượt gửi này đã dùng cho một đề khác.",
+      "console_errors": [
+        "console.error: Failed to load resource: the server responded with a status of 409 (Conflict)"
+      ]
+    },
+    {
+      "case_id": "HN14",
+      "group": "negative",
+      "expected_behavior": "SAFE_REFUSE",
+      "route_status": null,
+      "extraction_mode": null,
+      "http": 409,
+      "ms": 57,
+      "surface": "NO_SCENE",
+      "reason_code": null,
+      "canvas_count": 0,
+      "toast": "Máy chủ trả về lỗi khi phân tích | Mã lượt gửi này đã dùng cho một đề khác.",
+      "console_errors": [
+        "console.error: Failed to load resource: the server responded with a status of 409 (Conflict)"
+      ]
+    },
+    {
+      "case_id": "HN15",
+      "group": "negative",
+      "expected_behavior": "SAFE_REFUSE",
+      "route_status": null,
+      "extraction_mode": null,
+      "http": 409,
+      "ms": 53,
+      "surface": "NO_SCENE",
+      "reason_code": null,
+      "canvas_count": 0,
+      "toast": "Máy chủ trả về lỗi khi phân tích | Mã lượt gửi này đã dùng cho một đề khác.",
+      "console_errors": [
+        "console.error: Failed to load resource: the server responded with a status of 409 (Conflict)"
+      ]
+    },
+    {
+      "case_id": "HN16",
+      "group": "negative",
+      "expected_behavior": "SAFE_REFUSE",
+      "route_status": null,
+      "extraction_mode": null,
+      "http": 409,
+      "ms": 55,
+      "surface": "NO_SCENE",
+      "reason_code": null,
+      "canvas_count": 0,
+      "toast": "Máy chủ trả về lỗi khi phân tích | Mã lượt gửi này đã dùng cho một đề khác.",
+      "console_errors": [
+        "console.error: Failed to load resource: the server responded with a status of 409 (Conflict)"
+      ]
+    },
+    {
+      "case_id": "HN17",
+      "group": "negative",
+      "expected_behavior": "SAFE_REFUSE",
+      "route_status": null,
+      "extraction_mode": null,
+      "http": 409,
+      "ms": 56,
+      "surface": "NO_SCENE",
+      "reason_code": null,
+      "canvas_count": 0,
+      "toast": "Máy chủ trả về lỗi khi phân tích | Mã lượt gửi này đã dùng cho một đề khác.",
+      "console_errors": [
+        "console.error: Failed to load resource: the server responded with a status of 409 (Conflict)"
+      ]
+    },
+    {
+      "case_id": "HN18",
+      "group": "negative",
+      "expected_behavior": "SAFE_REFUSE",
+      "route_status": null,
+      "extraction_mode": null,
+      "http": 409,
+      "ms": 47,
+      "surface": "NO_SCENE",
+      "reason_code": null,
+      "canvas_count": 0,
+      "toast": "Máy chủ trả về lỗi khi phân tích | Mã lượt gửi này đã dùng cho một đề khác.",
+      "console_errors": [
+        "console.error: Failed to load resource: the server responded with a status of 409 (Conflict)"
+      ]
+    },
+    {
+      "case_id": "HN19",
+      "group": "negative",
+      "expected_behavior": "SAFE_REFUSE",
+      "route_status": "REFUSED",
+      "extraction_mode": "LOCAL_SLM_GROUNDED",
+      "http": 200,
+      "ms": 1674,
+      "surface": "NO_SCENE",
+      "reason_code": null,
+      "canvas_count": 0,
+      "toast": "Đề bài chưa được hỗ trợ | Hệ chưa đối chiếu được đầy đủ dữ kiện với đề bài nên tạm dừng dựng hình. Bạn có thể thử các bài về thiết diện, khoảng cách, góc hoặc thể tích.",
+      "console_errors": []
+    },
+    {
+      "case_id": "HN20",
+      "group": "negative",
+      "expected_behavior": "SAFE_REFUSE",
+      "route_status": null,
+      "extraction_mode": null,
+      "http": 409,
+      "ms": 53,
+      "surface": "NO_SCENE",
+      "reason_code": null,
+      "canvas_count": 0,
+      "toast": "Máy chủ trả về lỗi khi phân tích | Mã lượt gửi này đã dùng cho một đề khác.",
+      "console_errors": [
+        "console.error: Failed to load resource: the server responded with a status of 409 (Conflict)"
+      ]
+    },
+    {
+      "case_id": "HN21",
+      "group": "negative",
+      "expected_behavior": "SAFE_REFUSE",
+      "route_status": null,
+      "extraction_mode": null,
+      "http": 409,
+      "ms": 62,
+      "surface": "NO_SCENE",
+      "reason_code": null,
+      "canvas_count": 0,
+      "toast": "Máy chủ trả về lỗi khi phân tích | Mã lượt gửi này đã dùng cho một đề khác.",
+      "console_errors": [
+        "console.error: Failed to load resource: the server responded with a status of 409 (Conflict)"
+      ]
+    },
+    {
+      "case_id": "HN22",
+      "group": "negative",
+      "expected_behavior": "SAFE_REFUSE",
+      "route_status": null,
+      "extraction_mode": null,
+      "http": 409,
+      "ms": 60,
+      "surface": "NO_SCENE",
+      "reason_code": null,
+      "canvas_count": 0,
+      "toast": "Máy chủ trả về lỗi khi phân tích | Mã lượt gửi này đã dùng cho một đề khác.",
+      "console_errors": [
+        "console.error: Failed to load resource: the server responded with a status of 409 (Conflict)"
+      ]
+    },
+    {
+      "case_id": "HN23",
+      "group": "negative",
+      "expected_behavior": "SAFE_REFUSE",
+      "route_status": null,
+      "extraction_mode": null,
+      "http": 409,
+      "ms": 73,
+      "surface": "NO_SCENE",
+      "reason_code": null,
+      "canvas_count": 0,
+      "toast": "Máy chủ trả về lỗi khi phân tích | Mã lượt gửi này đã dùng cho một đề khác.",
+      "console_errors": [
+        "console.error: Failed to load resource: the server responded with a status of 409 (Conflict)"
+      ]
+    },
+    {
+      "case_id": "HN24",
+      "group": "negative",
+      "expected_behavior": "SAFE_REFUSE",
+      "route_status": null,
+      "extraction_mode": null,
+      "http": 409,
+      "ms": 59,
+      "surface": "NO_SCENE",
+      "reason_code": null,
+      "canvas_count": 0,
+      "toast": "Máy chủ trả về lỗi khi phân tích | Mã lượt gửi này đã dùng cho một đề khác.",
+      "console_errors": [
+        "console.error: Failed to load resource: the server responded with a status of 409 (Conflict)"
+      ]
+    },
+    {
+      "case_id": "HN25",
+      "group": "negative",
+      "expected_behavior": "SAFE_REFUSE",
+      "route_status": null,
+      "extraction_mode": null,
+      "http": 409,
+      "ms": 56,
+      "surface": "NO_SCENE",
+      "reason_code": null,
+      "canvas_count": 0,
+      "toast": "Máy chủ trả về lỗi khi phân tích | Mã lượt gửi này đã dùng cho một đề khác.",
+      "console_errors": [
+        "console.error: Failed to load resource: the server responded with a status of 409 (Conflict)"
+      ]
+    },
+    {
+      "case_id": "HN26",
+      "group": "negative",
+      "expected_behavior": "SAFE_REFUSE",
+      "route_status": null,
+      "extraction_mode": null,
+      "http": 409,
+      "ms": 55,
+      "surface": "NO_SCENE",
+      "reason_code": null,
+      "canvas_count": 0,
+      "toast": "Máy chủ trả về lỗi khi phân tích | Mã lượt gửi này đã dùng cho một đề khác.",
+      "console_errors": [
+        "console.error: Failed to load resource: the server responded with a status of 409 (Conflict)"
+      ]
+    },
+    {
+      "case_id": "HN27",
+      "group": "negative",
+      "expected_behavior": "SAFE_REFUSE_OR_CORRECT_SERVE",
+      "route_status": null,
+      "extraction_mode": null,
+      "http": 409,
+      "ms": 57,
+      "surface": "NO_SCENE",
+      "reason_code": null,
+      "canvas_count": 0,
+      "toast": "Máy chủ trả về lỗi khi phân tích | Mã lượt gửi này đã dùng cho một đề khác.",
+      "console_errors": [
+        "console.error: Failed to load resource: the server responded with a status of 409 (Conflict)"
+      ]
+    },
+    {
+      "case_id": "HN28",
+      "group": "negative",
+      "expected_behavior": "SAFE_REFUSE",
+      "route_status": null,
+      "extraction_mode": null,
+      "http": 409,
+      "ms": 58,
+      "surface": "NO_SCENE",
+      "reason_code": null,
+      "canvas_count": 0,
+      "toast": "Máy chủ trả về lỗi khi phân tích | Mã lượt gửi này đã dùng cho một đề khác.",
+      "console_errors": [
+        "console.error: Failed to load resource: the server responded with a status of 409 (Conflict)"
+      ]
+    }
+  ]
+}

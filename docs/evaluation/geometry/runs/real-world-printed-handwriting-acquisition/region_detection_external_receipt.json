@@ -1,0 +1,1600 @@
+{
+  "schema": "algosim-region-detection-external-receipt/1",
+  "generated_at_utc": "2026-11-09T19:03:48.041880+00:00",
+  "evaluated_images_count": 38,
+  "bugs_discovered_and_fixed_on_external_data": [
+    {
+      "bug_id": "BUG-R1-DESK-TRIM-INK-LOSS",
+      "affected_external_images": [
+        "hd_q_1084979.jpg"
+      ],
+      "root_cause": "`detect_page_boundary` picked the smooth white background pad `[25, 385, 3047, 476]` below a full-bleed gray paper strip (`[0, 0, 3072, 487]`), cropping away 100% of the printed problem text (`CER = 1.0000`).",
+      "minimal_fix": "Added adaptive ink-retention guard (`retained_ink_ratio >= 0.85`) in `backend/app/ingestion/region_detector.py::detect_page_boundary`.",
+      "before_after_effect": "Selected bbox recovered `[25, 385, 3047, 476] -> [0, 9, 3072, 496]`; RapidOCR PP-OCRv6 CER improved `1.0000 -> 0.1074`; premise truncation eliminated (`1/38 -> 0/38`)."
+    },
+    {
+      "bug_id": "BUG-R2-SANDWICH-FIGURE-FALSE-MULTI-PROBLEM",
+      "affected_external_images": [
+        "hd_q_7922924.jpg",
+        "vmmu_page_r4_Math_0445_test_258_question_14_page_2_key_B_vqa.png",
+        "vmmu_page_r7_Math_0307_test_059_question_49_page_6_key_A_vqa.png",
+        "vmmu_page_r10_Math_0020_test_004_question_30_page_4_key_C_vqa.png",
+        "vmmu_page_r11_Math_0303_test_059_question_39_page_4_key_B_vqa.png"
+      ],
+      "root_cause": "Single exam items with `[Top Problem Stem] -> [Middle 3D Figure] -> [Bottom Question / Choices A.B.C.D.]` exceeded `gap_y` across the figure height and split into 2 clusters (`ambiguous_multi_problem = True`).",
+      "minimal_fix": "Added sandwich-figure bridging in `region_detector.py::_group_problem_clusters` when an intervening figure block sits between an upper cluster and a continuation/options lower cluster lacking a new `Câu/Bài` header.",
+      "before_after_effect": "False multi-problem splits reduced `5/15 -> 0/15` on single-problem printed images while genuine multi-problem page `hd_q_7509702.jpg` (`Câu 2` + `Câu 3`) remains `ambiguous_multi_problem = True` (`candidates_count = 2`)."
+    }
+  ],
+  "summary": {
+    "premise_truncation_before_fix_count": 1,
+    "premise_truncation_after_fix_count": 0,
+    "false_multi_problem_splits_before_fix_count": 5,
+    "false_multi_problem_splits_after_fix_count": 0,
+    "true_multi_problem_detected_annotated_page": "hd_q_7509702.jpg (ambiguous_multi_problem=True, candidates=2)",
+    "preprocess_ms_p50": 14.235,
+    "preprocess_ms_p95": 47.891,
+    "region_detect_ms_p50": 65.14,
+    "region_detect_ms_p95": 234.268
+  },
+  "per_image": [
+    {
+      "image_id": "ext_prt_01_hd_q_5259753",
+      "filename": "hd_q_5259753.jpg",
+      "corpus_subgroup": "A1_PRINTED_CAMERA_CAPTURED",
+      "image_type": "REAL_CAPTURED_EXTERNAL",
+      "has_geometry_diagram": false,
+      "before_fix": {
+        "selected_bbox": [
+          0,
+          0,
+          1024,
+          180
+        ],
+        "desk_trimmed": false,
+        "ambiguous_multi_problem": false,
+        "candidates_count": 1,
+        "has_associated_figure": false
+      },
+      "after_fix": {
+        "selected_bbox": [
+          0,
+          0,
+          1024,
+          180
+        ],
+        "used_crop": false,
+        "used_fallback_full_image": true,
+        "has_associated_figure": false,
+        "ambiguous_multi_problem": false,
+        "candidates_count": 1,
+        "desk_trimmed": false,
+        "crop_holds_all_content": false,
+        "completeness_confidence": 1.0,
+        "preprocess_ms": 15.658,
+        "region_detect_ms": 22.382
+      },
+      "truncated_premise_before_fix": false,
+      "truncated_premise_after_fix": false,
+      "false_multi_problem_split_before_fix": false,
+      "false_multi_problem_split_after_fix": false
+    },
+    {
+      "image_id": "ext_prt_02_hd_q_7922924",
+      "filename": "hd_q_7922924.jpg",
+      "corpus_subgroup": "A2_PRINTED_DIGITAL_EXAM_RENDER",
+      "image_type": "DIGITAL_DOCUMENT_RENDER",
+      "has_geometry_diagram": true,
+      "before_fix": {
+        "selected_bbox": [
+          0,
+          0,
+          1024,
+          290
+        ],
+        "desk_trimmed": false,
+        "ambiguous_multi_problem": true,
+        "candidates_count": 2,
+        "has_associated_figure": true
+      },
+      "after_fix": {
+        "selected_bbox": [
+          0,
+          0,
+          1024,
+          290
+        ],
+        "used_crop": false,
+        "used_fallback_full_image": true,
+        "has_associated_figure": true,
+        "ambiguous_multi_problem": false,
+        "candidates_count": 1,
+        "desk_trimmed": false,
+        "crop_holds_all_content": false,
+        "completeness_confidence": 1.0,
+        "preprocess_ms": 3.718,
+        "region_detect_ms": 29.622
+      },
+      "truncated_premise_before_fix": false,
+      "truncated_premise_after_fix": false,
+      "false_multi_problem_split_before_fix": true,
+      "false_multi_problem_split_after_fix": false
+    },
+    {
+      "image_id": "ext_prt_03_hd_q_7907931",
+      "filename": "hd_q_7907931.jpg",
+      "corpus_subgroup": "A2_PRINTED_DIGITAL_EXAM_RENDER",
+      "image_type": "DIGITAL_DOCUMENT_RENDER",
+      "has_geometry_diagram": false,
+      "before_fix": {
+        "selected_bbox": [
+          0,
+          0,
+          1024,
+          178
+        ],
+        "desk_trimmed": false,
+        "ambiguous_multi_problem": false,
+        "candidates_count": 1,
+        "has_associated_figure": false
+      },
+      "after_fix": {
+        "selected_bbox": [
+          0,
+          0,
+          1024,
+          178
+        ],
+        "used_crop": false,
+        "used_fallback_full_image": true,
+        "has_associated_figure": false,
+        "ambiguous_multi_problem": false,
+        "candidates_count": 1,
+        "desk_trimmed": false,
+        "crop_holds_all_content": false,
+        "completeness_confidence": 1.0,
+        "preprocess_ms": 2.444,
+        "region_detect_ms": 21.118
+      },
+      "truncated_premise_before_fix": false,
+      "truncated_premise_after_fix": false,
+      "false_multi_problem_split_before_fix": false,
+      "false_multi_problem_split_after_fix": false
+    },
+    {
+      "image_id": "ext_prt_04_hd_q_8436784",
+      "filename": "hd_q_8436784.jpg",
+      "corpus_subgroup": "A2_PRINTED_DIGITAL_EXAM_RENDER",
+      "image_type": "DIGITAL_DOCUMENT_RENDER",
+      "has_geometry_diagram": false,
+      "before_fix": {
+        "selected_bbox": [
+          0,
+          0,
+          1024,
+          169
+        ],
+        "desk_trimmed": false,
+        "ambiguous_multi_problem": false,
+        "candidates_count": 1,
+        "has_associated_figure": false
+      },
+      "after_fix": {
+        "selected_bbox": [
+          0,
+          0,
+          1024,
+          169
+        ],
+        "used_crop": false,
+        "used_fallback_full_image": true,
+        "has_associated_figure": false,
+        "ambiguous_multi_problem": false,
+        "candidates_count": 1,
+        "desk_trimmed": false,
+        "crop_holds_all_content": false,
+        "completeness_confidence": 1.0,
+        "preprocess_ms": 2.103,
+        "region_detect_ms": 20.061
+      },
+      "truncated_premise_before_fix": false,
+      "truncated_premise_after_fix": false,
+      "false_multi_problem_split_before_fix": false,
+      "false_multi_problem_split_after_fix": false
+    },
+    {
+      "image_id": "ext_prt_05_hd_q_7451806",
+      "filename": "hd_q_7451806.jpg",
+      "corpus_subgroup": "A2_PRINTED_DIGITAL_EXAM_RENDER",
+      "image_type": "DIGITAL_DOCUMENT_RENDER",
+      "has_geometry_diagram": false,
+      "before_fix": {
+        "selected_bbox": [
+          0,
+          0,
+          1024,
+          198
+        ],
+        "desk_trimmed": false,
+        "ambiguous_multi_problem": false,
+        "candidates_count": 1,
+        "has_associated_figure": false
+      },
+      "after_fix": {
+        "selected_bbox": [
+          0,
+          0,
+          1024,
+          198
+        ],
+        "used_crop": false,
+        "used_fallback_full_image": true,
+        "has_associated_figure": false,
+        "ambiguous_multi_problem": false,
+        "candidates_count": 1,
+        "desk_trimmed": false,
+        "crop_holds_all_content": false,
+        "completeness_confidence": 1.0,
+        "preprocess_ms": 2.845,
+        "region_detect_ms": 24.997
+      },
+      "truncated_premise_before_fix": false,
+      "truncated_premise_after_fix": false,
+      "false_multi_problem_split_before_fix": false,
+      "false_multi_problem_split_after_fix": false
+    },
+    {
+      "image_id": "ext_prt_06_hd_q_1084979",
+      "filename": "hd_q_1084979.jpg",
+      "corpus_subgroup": "A1_PRINTED_CAMERA_CAPTURED",
+      "image_type": "REAL_CAPTURED_EXTERNAL",
+      "has_geometry_diagram": false,
+      "before_fix": {
+        "selected_bbox": [
+          25,
+          385,
+          3047,
+          476
+        ],
+        "desk_trimmed": true,
+        "ambiguous_multi_problem": false,
+        "candidates_count": 1,
+        "has_associated_figure": false
+      },
+      "after_fix": {
+        "selected_bbox": [
+          0,
+          9,
+          3072,
+          496
+        ],
+        "used_crop": true,
+        "used_fallback_full_image": false,
+        "has_associated_figure": false,
+        "ambiguous_multi_problem": false,
+        "candidates_count": 1,
+        "desk_trimmed": false,
+        "crop_holds_all_content": true,
+        "completeness_confidence": 0.98,
+        "preprocess_ms": 86.685,
+        "region_detect_ms": 97.649
+      },
+      "truncated_premise_before_fix": true,
+      "truncated_premise_after_fix": false,
+      "false_multi_problem_split_before_fix": false,
+      "false_multi_problem_split_after_fix": false
+    },
+    {
+      "image_id": "ext_prt_07_hd_q_7958052",
+      "filename": "hd_q_7958052.jpg",
+      "corpus_subgroup": "A1_PRINTED_CAMERA_CAPTURED",
+      "image_type": "REAL_CAPTURED_EXTERNAL",
+      "has_geometry_diagram": false,
+      "before_fix": {
+        "selected_bbox": [
+          0,
+          0,
+          1024,
+          71
+        ],
+        "desk_trimmed": false,
+        "ambiguous_multi_problem": false,
+        "candidates_count": 1,
+        "has_associated_figure": false
+      },
+      "after_fix": {
+        "selected_bbox": [
+          0,
+          0,
+          1024,
+          71
+        ],
+        "used_crop": false,
+        "used_fallback_full_image": true,
+        "has_associated_figure": false,
+        "ambiguous_multi_problem": false,
+        "candidates_count": 1,
+        "desk_trimmed": false,
+        "crop_holds_all_content": false,
+        "completeness_confidence": 1.0,
+        "preprocess_ms": 1.036,
+        "region_detect_ms": 5.357
+      },
+      "truncated_premise_before_fix": false,
+      "truncated_premise_after_fix": false,
+      "false_multi_problem_split_before_fix": false,
+      "false_multi_problem_split_after_fix": false
+    },
+    {
+      "image_id": "ext_prt_08_hd_q_7509702",
+      "filename": "hd_q_7509702.jpg",
+      "corpus_subgroup": "A1_PRINTED_CAMERA_CAPTURED",
+      "image_type": "REAL_CAPTURED_EXTERNAL",
+      "has_geometry_diagram": true,
+      "before_fix": {
+        "selected_bbox": [
+          0,
+          0,
+          1024,
+          1280
+        ],
+        "desk_trimmed": false,
+        "ambiguous_multi_problem": true,
+        "candidates_count": 2,
+        "has_associated_figure": true
+      },
+      "after_fix": {
+        "selected_bbox": [
+          0,
+          0,
+          1024,
+          1280
+        ],
+        "used_crop": false,
+        "used_fallback_full_image": true,
+        "has_associated_figure": true,
+        "ambiguous_multi_problem": true,
+        "candidates_count": 2,
+        "desk_trimmed": false,
+        "crop_holds_all_content": false,
+        "completeness_confidence": 0.85,
+        "preprocess_ms": 18.664,
+        "region_detect_ms": 234.268
+      },
+      "truncated_premise_before_fix": false,
+      "truncated_premise_after_fix": false,
+      "false_multi_problem_split_before_fix": false,
+      "false_multi_problem_split_after_fix": false
+    },
+    {
+      "image_id": "ext_prt_09_vmmu_page_r4",
+      "filename": "vmmu_page_r4_Math_0445_test_258_question_14_page_2_key_B_vqa.png",
+      "corpus_subgroup": "A3_VMMU_EXAM_SCAN_MIT",
+      "image_type": "DIGITAL_DOCUMENT_RENDER",
+      "has_geometry_diagram": true,
+      "before_fix": {
+        "selected_bbox": [
+          0,
+          0,
+          2484,
+          1604
+        ],
+        "desk_trimmed": false,
+        "ambiguous_multi_problem": true,
+        "candidates_count": 2,
+        "has_associated_figure": true
+      },
+      "after_fix": {
+        "selected_bbox": [
+          0,
+          0,
+          2484,
+          1604
+        ],
+        "used_crop": false,
+        "used_fallback_full_image": true,
+        "has_associated_figure": true,
+        "ambiguous_multi_problem": true,
+        "candidates_count": 2,
+        "desk_trimmed": false,
+        "crop_holds_all_content": false,
+        "completeness_confidence": 0.85,
+        "preprocess_ms": 82.449,
+        "region_detect_ms": 116.902
+      },
+      "truncated_premise_before_fix": false,
+      "truncated_premise_after_fix": false,
+      "false_multi_problem_split_before_fix": true,
+      "false_multi_problem_split_after_fix": true
+    },
+    {
+      "image_id": "ext_prt_10_vmmu_page_r7",
+      "filename": "vmmu_page_r7_Math_0307_test_059_question_49_page_6_key_A_vqa.png",
+      "corpus_subgroup": "A3_VMMU_EXAM_SCAN_MIT",
+      "image_type": "DIGITAL_DOCUMENT_RENDER",
+      "has_geometry_diagram": true,
+      "before_fix": {
+        "selected_bbox": [
+          0,
+          0,
+          2481,
+          1030
+        ],
+        "desk_trimmed": false,
+        "ambiguous_multi_problem": true,
+        "candidates_count": 2,
+        "has_associated_figure": true
+      },
+      "after_fix": {
+        "selected_bbox": [
+          0,
+          0,
+          2481,
+          1030
+        ],
+        "used_crop": false,
+        "used_fallback_full_image": true,
+        "has_associated_figure": true,
+        "ambiguous_multi_problem": false,
+        "candidates_count": 1,
+        "desk_trimmed": false,
+        "crop_holds_all_content": false,
+        "completeness_confidence": 1.0,
+        "preprocess_ms": 47.891,
+        "region_detect_ms": 81.408
+      },
+      "truncated_premise_before_fix": false,
+      "truncated_premise_after_fix": false,
+      "false_multi_problem_split_before_fix": true,
+      "false_multi_problem_split_after_fix": false
+    },
+    {
+      "image_id": "ext_prt_11_vmmu_page_r10",
+      "filename": "vmmu_page_r10_Math_0020_test_004_question_30_page_4_key_C_vqa.png",
+      "corpus_subgroup": "A3_VMMU_EXAM_SCAN_MIT",
+      "image_type": "DIGITAL_DOCUMENT_RENDER",
+      "has_geometry_diagram": true,
+      "before_fix": {
+        "selected_bbox": [
+          0,
+          0,
+          2481,
+          1022
+        ],
+        "desk_trimmed": false,
+        "ambiguous_multi_problem": true,
+        "candidates_count": 2,
+        "has_associated_figure": true
+      },
+      "after_fix": {
+        "selected_bbox": [
+          0,
+          0,
+          2481,
+          1022
+        ],
+        "used_crop": false,
+        "used_fallback_full_image": true,
+        "has_associated_figure": true,
+        "ambiguous_multi_problem": false,
+        "candidates_count": 1,
+        "desk_trimmed": false,
+        "crop_holds_all_content": false,
+        "completeness_confidence": 1.0,
+        "preprocess_ms": 34.702,
+        "region_detect_ms": 80.443
+      },
+      "truncated_premise_before_fix": false,
+      "truncated_premise_after_fix": false,
+      "false_multi_problem_split_before_fix": true,
+      "false_multi_problem_split_after_fix": false
+    },
+    {
+      "image_id": "ext_prt_12_vmmu_page_r11",
+      "filename": "vmmu_page_r11_Math_0303_test_059_question_39_page_4_key_B_vqa.png",
+      "corpus_subgroup": "A3_VMMU_EXAM_SCAN_MIT",
+      "image_type": "DIGITAL_DOCUMENT_RENDER",
+      "has_geometry_diagram": true,
+      "before_fix": {
+        "selected_bbox": [
+          0,
+          0,
+          2481,
+          891
+        ],
+        "desk_trimmed": false,
+        "ambiguous_multi_problem": true,
+        "candidates_count": 2,
+        "has_associated_figure": true
+      },
+      "after_fix": {
+        "selected_bbox": [
+          0,
+          0,
+          2481,
+          891
+        ],
+        "used_crop": false,
+        "used_fallback_full_image": true,
+        "has_associated_figure": true,
+        "ambiguous_multi_problem": false,
+        "candidates_count": 1,
+        "desk_trimmed": false,
+        "crop_holds_all_content": false,
+        "completeness_confidence": 1.0,
+        "preprocess_ms": 29.357,
+        "region_detect_ms": 71.008
+      },
+      "truncated_premise_before_fix": false,
+      "truncated_premise_after_fix": false,
+      "false_multi_problem_split_before_fix": true,
+      "false_multi_problem_split_after_fix": false
+    },
+    {
+      "image_id": "ext_prt_13_vmmu_page_r25",
+      "filename": "vmmu_page_r25_Math_0143_test_024_question_48_page_6_key_B_vqa.png",
+      "corpus_subgroup": "A3_VMMU_EXAM_SCAN_MIT",
+      "image_type": "DIGITAL_DOCUMENT_RENDER",
+      "has_geometry_diagram": true,
+      "before_fix": {
+        "selected_bbox": [
+          216,
+          0,
+          2379,
+          644
+        ],
+        "desk_trimmed": false,
+        "ambiguous_multi_problem": false,
+        "candidates_count": 1,
+        "has_associated_figure": true
+      },
+      "after_fix": {
+        "selected_bbox": [
+          216,
+          0,
+          2379,
+          644
+        ],
+        "used_crop": true,
+        "used_fallback_full_image": false,
+        "has_associated_figure": true,
+        "ambiguous_multi_problem": false,
+        "candidates_count": 1,
+        "desk_trimmed": false,
+        "crop_holds_all_content": true,
+        "completeness_confidence": 0.98,
+        "preprocess_ms": 34.188,
+        "region_detect_ms": 75.952
+      },
+      "truncated_premise_before_fix": false,
+      "truncated_premise_after_fix": false,
+      "false_multi_problem_split_before_fix": false,
+      "false_multi_problem_split_after_fix": false
+    },
+    {
+      "image_id": "ext_prt_14_vmmu_page_r26",
+      "filename": "vmmu_page_r26_Math_0120_test_020_question_40_page_7_key_B_vqa.png",
+      "corpus_subgroup": "A3_VMMU_EXAM_SCAN_MIT",
+      "image_type": "DIGITAL_DOCUMENT_RENDER",
+      "has_geometry_diagram": true,
+      "before_fix": {
+        "selected_bbox": [
+          0,
+          0,
+          2550,
+          931
+        ],
+        "desk_trimmed": false,
+        "ambiguous_multi_problem": false,
+        "candidates_count": 1,
+        "has_associated_figure": true
+      },
+      "after_fix": {
+        "selected_bbox": [
+          0,
+          0,
+          2550,
+          931
+        ],
+        "used_crop": false,
+        "used_fallback_full_image": true,
+        "has_associated_figure": true,
+        "ambiguous_multi_problem": false,
+        "candidates_count": 1,
+        "desk_trimmed": false,
+        "crop_holds_all_content": false,
+        "completeness_confidence": 1.0,
+        "preprocess_ms": 32.513,
+        "region_detect_ms": 72.826
+      },
+      "truncated_premise_before_fix": false,
+      "truncated_premise_after_fix": false,
+      "false_multi_problem_split_before_fix": false,
+      "false_multi_problem_split_after_fix": false
+    },
+    {
+      "image_id": "ext_prt_15_vmmu_page_r28",
+      "filename": "vmmu_page_r28_Math_0399_test_080_question_35_page_5_key_A_vqa.png",
+      "corpus_subgroup": "A3_VMMU_EXAM_SCAN_MIT",
+      "image_type": "DIGITAL_DOCUMENT_RENDER",
+      "has_geometry_diagram": true,
+      "before_fix": {
+        "selected_bbox": [
+          0,
+          0,
+          2481,
+          606
+        ],
+        "desk_trimmed": false,
+        "ambiguous_multi_problem": false,
+        "candidates_count": 1,
+        "has_associated_figure": false
+      },
+      "after_fix": {
+        "selected_bbox": [
+          0,
+          0,
+          2481,
+          606
+        ],
+        "used_crop": false,
+        "used_fallback_full_image": true,
+        "has_associated_figure": false,
+        "ambiguous_multi_problem": false,
+        "candidates_count": 1,
+        "desk_trimmed": false,
+        "crop_holds_all_content": false,
+        "completeness_confidence": 1.0,
+        "preprocess_ms": 19.723,
+        "region_detect_ms": 46.992
+      },
+      "truncated_premise_before_fix": false,
+      "truncated_premise_after_fix": false,
+      "false_multi_problem_split_before_fix": false,
+      "false_multi_problem_split_after_fix": false
+    },
+    {
+      "image_id": "ext_hw_b1_01_hd_a_6043187",
+      "filename": "hd_a_6043187.jpg",
+      "corpus_subgroup": "B1_HANDWRITTEN_PROBLEM_STATEMENT",
+      "image_type": "HANDWRITTEN_EXTERNAL",
+      "has_geometry_diagram": true,
+      "before_fix": {
+        "selected_bbox": [
+          0,
+          0,
+          1024,
+          954
+        ],
+        "desk_trimmed": false,
+        "ambiguous_multi_problem": false,
+        "candidates_count": 1,
+        "has_associated_figure": true
+      },
+      "after_fix": {
+        "selected_bbox": [
+          0,
+          0,
+          1024,
+          954
+        ],
+        "used_crop": false,
+        "used_fallback_full_image": true,
+        "has_associated_figure": true,
+        "ambiguous_multi_problem": false,
+        "candidates_count": 1,
+        "desk_trimmed": false,
+        "crop_holds_all_content": false,
+        "completeness_confidence": 1.0,
+        "preprocess_ms": 14.235,
+        "region_detect_ms": 112.766
+      },
+      "truncated_premise_before_fix": false,
+      "truncated_premise_after_fix": false,
+      "false_multi_problem_split_before_fix": false,
+      "false_multi_problem_split_after_fix": false
+    },
+    {
+      "image_id": "ext_hw_b2_01_hd_a_8349383",
+      "filename": "hd_a_8349383.jpg",
+      "corpus_subgroup": "B2_HANDWRITTEN_SOLUTION_OR_DIAGRAM_ONLY",
+      "image_type": "HANDWRITTEN_EXTERNAL",
+      "has_geometry_diagram": true,
+      "before_fix": {
+        "selected_bbox": [
+          0,
+          0,
+          1024,
+          1005
+        ],
+        "desk_trimmed": false,
+        "ambiguous_multi_problem": false,
+        "candidates_count": 1,
+        "has_associated_figure": true
+      },
+      "after_fix": {
+        "selected_bbox": [
+          0,
+          0,
+          1024,
+          1005
+        ],
+        "used_crop": false,
+        "used_fallback_full_image": true,
+        "has_associated_figure": true,
+        "ambiguous_multi_problem": false,
+        "candidates_count": 1,
+        "desk_trimmed": false,
+        "crop_holds_all_content": false,
+        "completeness_confidence": 1.0,
+        "preprocess_ms": 17.1,
+        "region_detect_ms": 122.535
+      },
+      "truncated_premise_before_fix": false,
+      "truncated_premise_after_fix": false,
+      "false_multi_problem_split_before_fix": false,
+      "false_multi_problem_split_after_fix": false
+    },
+    {
+      "image_id": "ext_hw_b2_02_hd_a_7509702_2",
+      "filename": "hd_a_7509702_2.jpg",
+      "corpus_subgroup": "B2_HANDWRITTEN_SOLUTION_OR_DIAGRAM_ONLY",
+      "image_type": "HANDWRITTEN_EXTERNAL",
+      "has_geometry_diagram": true,
+      "before_fix": {
+        "selected_bbox": [
+          0,
+          0,
+          1024,
+          1104
+        ],
+        "desk_trimmed": false,
+        "ambiguous_multi_problem": true,
+        "candidates_count": 3,
+        "has_associated_figure": true
+      },
+      "after_fix": {
+        "selected_bbox": [
+          0,
+          0,
+          1024,
+          1104
+        ],
+        "used_crop": false,
+        "used_fallback_full_image": true,
+        "has_associated_figure": true,
+        "ambiguous_multi_problem": true,
+        "candidates_count": 2,
+        "desk_trimmed": false,
+        "crop_holds_all_content": false,
+        "completeness_confidence": 0.85,
+        "preprocess_ms": 15.899,
+        "region_detect_ms": 109.899
+      },
+      "truncated_premise_before_fix": false,
+      "truncated_premise_after_fix": false,
+      "false_multi_problem_split_before_fix": false,
+      "false_multi_problem_split_after_fix": false
+    },
+    {
+      "image_id": "ext_hw_b2_03_hd_a_7594768_2",
+      "filename": "hd_a_7594768_2.jpg",
+      "corpus_subgroup": "B2_HANDWRITTEN_SOLUTION_OR_DIAGRAM_ONLY",
+      "image_type": "HANDWRITTEN_EXTERNAL",
+      "has_geometry_diagram": false,
+      "before_fix": {
+        "selected_bbox": [
+          6,
+          5,
+          701,
+          590
+        ],
+        "desk_trimmed": true,
+        "ambiguous_multi_problem": false,
+        "candidates_count": 1,
+        "has_associated_figure": true
+      },
+      "after_fix": {
+        "selected_bbox": [
+          0,
+          0,
+          1024,
+          753
+        ],
+        "used_crop": false,
+        "used_fallback_full_image": true,
+        "has_associated_figure": true,
+        "ambiguous_multi_problem": true,
+        "candidates_count": 2,
+        "desk_trimmed": false,
+        "crop_holds_all_content": false,
+        "completeness_confidence": 0.85,
+        "preprocess_ms": 11.013,
+        "region_detect_ms": 101.579
+      },
+      "truncated_premise_before_fix": false,
+      "truncated_premise_after_fix": false,
+      "false_multi_problem_split_before_fix": false,
+      "false_multi_problem_split_after_fix": false
+    },
+    {
+      "image_id": "ext_hw_b2_04_hd_a_7594768_1",
+      "filename": "hd_a_7594768_1.jpg",
+      "corpus_subgroup": "B2_HANDWRITTEN_SOLUTION_OR_DIAGRAM_ONLY",
+      "image_type": "HANDWRITTEN_EXTERNAL",
+      "has_geometry_diagram": true,
+      "before_fix": {
+        "selected_bbox": [
+          0,
+          0,
+          1024,
+          852
+        ],
+        "desk_trimmed": false,
+        "ambiguous_multi_problem": true,
+        "candidates_count": 2,
+        "has_associated_figure": true
+      },
+      "after_fix": {
+        "selected_bbox": [
+          0,
+          0,
+          1024,
+          852
+        ],
+        "used_crop": false,
+        "used_fallback_full_image": true,
+        "has_associated_figure": true,
+        "ambiguous_multi_problem": false,
+        "candidates_count": 1,
+        "desk_trimmed": false,
+        "crop_holds_all_content": false,
+        "completeness_confidence": 1.0,
+        "preprocess_ms": 14.217,
+        "region_detect_ms": 93.544
+      },
+      "truncated_premise_before_fix": false,
+      "truncated_premise_after_fix": false,
+      "false_multi_problem_split_before_fix": false,
+      "false_multi_problem_split_after_fix": false
+    },
+    {
+      "image_id": "ext_hw_b2_05_hd_a_1084979_1",
+      "filename": "hd_a_1084979_1.jpg",
+      "corpus_subgroup": "B2_HANDWRITTEN_SOLUTION_OR_DIAGRAM_ONLY",
+      "image_type": "HANDWRITTEN_EXTERNAL",
+      "has_geometry_diagram": false,
+      "before_fix": {
+        "selected_bbox": [
+          0,
+          0,
+          1024,
+          1820
+        ],
+        "desk_trimmed": false,
+        "ambiguous_multi_problem": true,
+        "candidates_count": 2,
+        "has_associated_figure": true
+      },
+      "after_fix": {
+        "selected_bbox": [
+          0,
+          0,
+          1024,
+          1820
+        ],
+        "used_crop": false,
+        "used_fallback_full_image": true,
+        "has_associated_figure": true,
+        "ambiguous_multi_problem": true,
+        "candidates_count": 2,
+        "desk_trimmed": false,
+        "crop_holds_all_content": false,
+        "completeness_confidence": 0.85,
+        "preprocess_ms": 27.269,
+        "region_detect_ms": 166.25
+      },
+      "truncated_premise_before_fix": false,
+      "truncated_premise_after_fix": false,
+      "false_multi_problem_split_before_fix": false,
+      "false_multi_problem_split_after_fix": false
+    },
+    {
+      "image_id": "ext_hw_b2_06_hd_a_1084979_2",
+      "filename": "hd_a_1084979_2.jpg",
+      "corpus_subgroup": "B2_HANDWRITTEN_SOLUTION_OR_DIAGRAM_ONLY",
+      "image_type": "HANDWRITTEN_EXTERNAL",
+      "has_geometry_diagram": false,
+      "before_fix": {
+        "selected_bbox": [
+          155,
+          99,
+          1017,
+          1578
+        ],
+        "desk_trimmed": true,
+        "ambiguous_multi_problem": true,
+        "candidates_count": 2,
+        "has_associated_figure": true
+      },
+      "after_fix": {
+        "selected_bbox": [
+          0,
+          0,
+          1024,
+          1820
+        ],
+        "used_crop": false,
+        "used_fallback_full_image": true,
+        "has_associated_figure": true,
+        "ambiguous_multi_problem": false,
+        "candidates_count": 1,
+        "desk_trimmed": false,
+        "crop_holds_all_content": false,
+        "completeness_confidence": 1.0,
+        "preprocess_ms": 26.7,
+        "region_detect_ms": 362.01
+      },
+      "truncated_premise_before_fix": false,
+      "truncated_premise_after_fix": false,
+      "false_multi_problem_split_before_fix": false,
+      "false_multi_problem_split_after_fix": false
+    },
+    {
+      "image_id": "ext_hw_b2_07_hd_a_1084979_3",
+      "filename": "hd_a_1084979_3.jpg",
+      "corpus_subgroup": "B2_HANDWRITTEN_SOLUTION_OR_DIAGRAM_ONLY",
+      "image_type": "HANDWRITTEN_EXTERNAL",
+      "has_geometry_diagram": true,
+      "before_fix": {
+        "selected_bbox": [
+          0,
+          0,
+          1024,
+          1820
+        ],
+        "desk_trimmed": false,
+        "ambiguous_multi_problem": false,
+        "candidates_count": 1,
+        "has_associated_figure": true
+      },
+      "after_fix": {
+        "selected_bbox": [
+          0,
+          0,
+          1024,
+          1820
+        ],
+        "used_crop": false,
+        "used_fallback_full_image": true,
+        "has_associated_figure": true,
+        "ambiguous_multi_problem": false,
+        "candidates_count": 1,
+        "desk_trimmed": false,
+        "crop_holds_all_content": false,
+        "completeness_confidence": 1.0,
+        "preprocess_ms": 27.55,
+        "region_detect_ms": 274.402
+      },
+      "truncated_premise_before_fix": false,
+      "truncated_premise_after_fix": false,
+      "false_multi_problem_split_before_fix": false,
+      "false_multi_problem_split_after_fix": false
+    },
+    {
+      "image_id": "ext_hw_b2_08_hd_a_171471_1",
+      "filename": "hd_a_171471_1.jpg",
+      "corpus_subgroup": "B2_HANDWRITTEN_SOLUTION_OR_DIAGRAM_ONLY",
+      "image_type": "HANDWRITTEN_EXTERNAL",
+      "has_geometry_diagram": true,
+      "before_fix": {
+        "selected_bbox": [
+          0,
+          0,
+          1024,
+          1820
+        ],
+        "desk_trimmed": false,
+        "ambiguous_multi_problem": false,
+        "candidates_count": 1,
+        "has_associated_figure": true
+      },
+      "after_fix": {
+        "selected_bbox": [
+          0,
+          0,
+          1024,
+          1820
+        ],
+        "used_crop": false,
+        "used_fallback_full_image": true,
+        "has_associated_figure": true,
+        "ambiguous_multi_problem": false,
+        "candidates_count": 1,
+        "desk_trimmed": false,
+        "crop_holds_all_content": false,
+        "completeness_confidence": 1.0,
+        "preprocess_ms": 29.088,
+        "region_detect_ms": 134.988
+      },
+      "truncated_premise_before_fix": false,
+      "truncated_premise_after_fix": false,
+      "false_multi_problem_split_before_fix": false,
+      "false_multi_problem_split_after_fix": false
+    },
+    {
+      "image_id": "ext_hw_b2_09_hd_a_10810_3",
+      "filename": "hd_a_10810_3.jpg",
+      "corpus_subgroup": "B2_HANDWRITTEN_SOLUTION_OR_DIAGRAM_ONLY",
+      "image_type": "HANDWRITTEN_EXTERNAL",
+      "has_geometry_diagram": true,
+      "before_fix": {
+        "selected_bbox": [
+          138,
+          0,
+          803,
+          576
+        ],
+        "desk_trimmed": false,
+        "ambiguous_multi_problem": false,
+        "candidates_count": 1,
+        "has_associated_figure": true
+      },
+      "after_fix": {
+        "selected_bbox": [
+          138,
+          0,
+          803,
+          576
+        ],
+        "used_crop": true,
+        "used_fallback_full_image": false,
+        "has_associated_figure": true,
+        "ambiguous_multi_problem": false,
+        "candidates_count": 1,
+        "desk_trimmed": false,
+        "crop_holds_all_content": false,
+        "completeness_confidence": 0.98,
+        "preprocess_ms": 8.242,
+        "region_detect_ms": 64.195
+      },
+      "truncated_premise_before_fix": false,
+      "truncated_premise_after_fix": false,
+      "false_multi_problem_split_before_fix": false,
+      "false_multi_problem_split_after_fix": false
+    },
+    {
+      "image_id": "ext_hw_b3_01_uit_hwdb_r0",
+      "filename": "uit_hwdb_test_r0.png",
+      "corpus_subgroup": "B3_HANDWRITTEN_BENCHMARK_LINE",
+      "image_type": "HANDWRITTEN_EXTERNAL",
+      "has_geometry_diagram": false,
+      "before_fix": {
+        "selected_bbox": [
+          0,
+          0,
+          2048,
+          172
+        ],
+        "desk_trimmed": false,
+        "ambiguous_multi_problem": false,
+        "candidates_count": 1,
+        "has_associated_figure": true
+      },
+      "after_fix": {
+        "selected_bbox": [
+          0,
+          0,
+          2048,
+          172
+        ],
+        "used_crop": false,
+        "used_fallback_full_image": true,
+        "has_associated_figure": true,
+        "ambiguous_multi_problem": false,
+        "candidates_count": 1,
+        "desk_trimmed": false,
+        "crop_holds_all_content": false,
+        "completeness_confidence": 1.0,
+        "preprocess_ms": 4.408,
+        "region_detect_ms": 15.964
+      },
+      "truncated_premise_before_fix": false,
+      "truncated_premise_after_fix": false,
+      "false_multi_problem_split_before_fix": false,
+      "false_multi_problem_split_after_fix": false
+    },
+    {
+      "image_id": "ext_hw_b3_02_uit_hwdb_r3",
+      "filename": "uit_hwdb_test_r3.png",
+      "corpus_subgroup": "B3_HANDWRITTEN_BENCHMARK_LINE",
+      "image_type": "HANDWRITTEN_EXTERNAL",
+      "has_geometry_diagram": false,
+      "before_fix": {
+        "selected_bbox": [
+          0,
+          0,
+          2048,
+          139
+        ],
+        "desk_trimmed": false,
+        "ambiguous_multi_problem": false,
+        "candidates_count": 1,
+        "has_associated_figure": true
+      },
+      "after_fix": {
+        "selected_bbox": [
+          0,
+          0,
+          2048,
+          139
+        ],
+        "used_crop": false,
+        "used_fallback_full_image": true,
+        "has_associated_figure": true,
+        "ambiguous_multi_problem": false,
+        "candidates_count": 1,
+        "desk_trimmed": false,
+        "crop_holds_all_content": false,
+        "completeness_confidence": 1.0,
+        "preprocess_ms": 3.471,
+        "region_detect_ms": 10.296
+      },
+      "truncated_premise_before_fix": false,
+      "truncated_premise_after_fix": false,
+      "false_multi_problem_split_before_fix": false,
+      "false_multi_problem_split_after_fix": false
+    },
+    {
+      "image_id": "ext_hw_b3_03_uit_hwdb_r5",
+      "filename": "uit_hwdb_test_r5.png",
+      "corpus_subgroup": "B3_HANDWRITTEN_BENCHMARK_LINE",
+      "image_type": "HANDWRITTEN_EXTERNAL",
+      "has_geometry_diagram": false,
+      "before_fix": {
+        "selected_bbox": [
+          0,
+          0,
+          2048,
+          156
+        ],
+        "desk_trimmed": false,
+        "ambiguous_multi_problem": false,
+        "candidates_count": 1,
+        "has_associated_figure": true
+      },
+      "after_fix": {
+        "selected_bbox": [
+          0,
+          0,
+          2048,
+          156
+        ],
+        "used_crop": false,
+        "used_fallback_full_image": true,
+        "has_associated_figure": true,
+        "ambiguous_multi_problem": false,
+        "candidates_count": 1,
+        "desk_trimmed": false,
+        "crop_holds_all_content": false,
+        "completeness_confidence": 1.0,
+        "preprocess_ms": 4.073,
+        "region_detect_ms": 14.881
+      },
+      "truncated_premise_before_fix": false,
+      "truncated_premise_after_fix": false,
+      "false_multi_problem_split_before_fix": false,
+      "false_multi_problem_split_after_fix": false
+    },
+    {
+      "image_id": "ext_hw_b3_04_uit_hwdb_r10",
+      "filename": "uit_hwdb_test_r10.png",
+      "corpus_subgroup": "B3_HANDWRITTEN_BENCHMARK_LINE",
+      "image_type": "HANDWRITTEN_EXTERNAL",
+      "has_geometry_diagram": false,
+      "before_fix": {
+        "selected_bbox": [
+          0,
+          0,
+          2048,
+          150
+        ],
+        "desk_trimmed": false,
+        "ambiguous_multi_problem": false,
+        "candidates_count": 1,
+        "has_associated_figure": true
+      },
+      "after_fix": {
+        "selected_bbox": [
+          0,
+          0,
+          2048,
+          150
+        ],
+        "used_crop": false,
+        "used_fallback_full_image": true,
+        "has_associated_figure": true,
+        "ambiguous_multi_problem": false,
+        "candidates_count": 1,
+        "desk_trimmed": false,
+        "crop_holds_all_content": false,
+        "completeness_confidence": 1.0,
+        "preprocess_ms": 4.02,
+        "region_detect_ms": 14.477
+      },
+      "truncated_premise_before_fix": false,
+      "truncated_premise_after_fix": false,
+      "false_multi_problem_split_before_fix": false,
+      "false_multi_problem_split_after_fix": false
+    },
+    {
+      "image_id": "ext_hw_b3_05_uit_hwdb_r11",
+      "filename": "uit_hwdb_test_r11.png",
+      "corpus_subgroup": "B3_HANDWRITTEN_BENCHMARK_LINE",
+      "image_type": "HANDWRITTEN_EXTERNAL",
+      "has_geometry_diagram": false,
+      "before_fix": {
+        "selected_bbox": [
+          0,
+          0,
+          2048,
+          157
+        ],
+        "desk_trimmed": false,
+        "ambiguous_multi_problem": false,
+        "candidates_count": 1,
+        "has_associated_figure": true
+      },
+      "after_fix": {
+        "selected_bbox": [
+          0,
+          0,
+          2048,
+          157
+        ],
+        "used_crop": false,
+        "used_fallback_full_image": true,
+        "has_associated_figure": true,
+        "ambiguous_multi_problem": false,
+        "candidates_count": 1,
+        "desk_trimmed": false,
+        "crop_holds_all_content": false,
+        "completeness_confidence": 1.0,
+        "preprocess_ms": 3.932,
+        "region_detect_ms": 15.521
+      },
+      "truncated_premise_before_fix": false,
+      "truncated_premise_after_fix": false,
+      "false_multi_problem_split_before_fix": false,
+      "false_multi_problem_split_after_fix": false
+    },
+    {
+      "image_id": "ext_hw_b3_06_uit_hwdb_r12",
+      "filename": "uit_hwdb_test_r12.png",
+      "corpus_subgroup": "B3_HANDWRITTEN_BENCHMARK_LINE",
+      "image_type": "HANDWRITTEN_EXTERNAL",
+      "has_geometry_diagram": false,
+      "before_fix": {
+        "selected_bbox": [
+          0,
+          0,
+          2048,
+          178
+        ],
+        "desk_trimmed": false,
+        "ambiguous_multi_problem": false,
+        "candidates_count": 1,
+        "has_associated_figure": true
+      },
+      "after_fix": {
+        "selected_bbox": [
+          0,
+          0,
+          2048,
+          178
+        ],
+        "used_crop": false,
+        "used_fallback_full_image": true,
+        "has_associated_figure": true,
+        "ambiguous_multi_problem": false,
+        "candidates_count": 1,
+        "desk_trimmed": false,
+        "crop_holds_all_content": false,
+        "completeness_confidence": 1.0,
+        "preprocess_ms": 4.127,
+        "region_detect_ms": 18.339
+      },
+      "truncated_premise_before_fix": false,
+      "truncated_premise_after_fix": false,
+      "false_multi_problem_split_before_fix": false,
+      "false_multi_problem_split_after_fix": false
+    },
+    {
+      "image_id": "ext_diag_01_vmmu_crop_r4",
+      "filename": "vmmu_crop_r4_Math_0445_test_258_question_14_page_2_key_B_vqa.png",
+      "corpus_subgroup": "D_PRINTED_DIAGRAM_ONLY",
+      "image_type": "DIGITAL_DOCUMENT_RENDER",
+      "has_geometry_diagram": true,
+      "before_fix": {
+        "selected_bbox": [
+          235,
+          0,
+          1283,
+          804
+        ],
+        "desk_trimmed": false,
+        "ambiguous_multi_problem": false,
+        "candidates_count": 1,
+        "has_associated_figure": true
+      },
+      "after_fix": {
+        "selected_bbox": [
+          235,
+          0,
+          1283,
+          804
+        ],
+        "used_crop": true,
+        "used_fallback_full_image": false,
+        "has_associated_figure": true,
+        "ambiguous_multi_problem": false,
+        "candidates_count": 1,
+        "desk_trimmed": false,
+        "crop_holds_all_content": true,
+        "completeness_confidence": 0.98,
+        "preprocess_ms": 34.967,
+        "region_detect_ms": 65.14
+      },
+      "truncated_premise_before_fix": false,
+      "truncated_premise_after_fix": false,
+      "false_multi_problem_split_before_fix": false,
+      "false_multi_problem_split_after_fix": false
+    },
+    {
+      "image_id": "ext_diag_02_vmmu_crop_r7",
+      "filename": "vmmu_crop_r7_Math_0307_test_059_question_49_page_6_key_A_vqa.png",
+      "corpus_subgroup": "D_PRINTED_DIAGRAM_ONLY",
+      "image_type": "DIGITAL_DOCUMENT_RENDER",
+      "has_geometry_diagram": true,
+      "before_fix": {
+        "selected_bbox": [
+          103,
+          0,
+          941,
+          590
+        ],
+        "desk_trimmed": false,
+        "ambiguous_multi_problem": false,
+        "candidates_count": 1,
+        "has_associated_figure": true
+      },
+      "after_fix": {
+        "selected_bbox": [
+          103,
+          0,
+          941,
+          590
+        ],
+        "used_crop": true,
+        "used_fallback_full_image": false,
+        "has_associated_figure": true,
+        "ambiguous_multi_problem": false,
+        "candidates_count": 1,
+        "desk_trimmed": false,
+        "crop_holds_all_content": false,
+        "completeness_confidence": 0.98,
+        "preprocess_ms": 13.268,
+        "region_detect_ms": 38.698
+      },
+      "truncated_premise_before_fix": false,
+      "truncated_premise_after_fix": false,
+      "false_multi_problem_split_before_fix": false,
+      "false_multi_problem_split_after_fix": false
+    },
+    {
+      "image_id": "ext_diag_03_vmmu_crop_r10",
+      "filename": "vmmu_crop_r10_Math_0020_test_004_question_30_page_4_key_C_vqa.png",
+      "corpus_subgroup": "D_PRINTED_DIAGRAM_ONLY",
+      "image_type": "DIGITAL_DOCUMENT_RENDER",
+      "has_geometry_diagram": true,
+      "before_fix": {
+        "selected_bbox": [
+          264,
+          0,
+          1119,
+          724
+        ],
+        "desk_trimmed": false,
+        "ambiguous_multi_problem": false,
+        "candidates_count": 1,
+        "has_associated_figure": true
+      },
+      "after_fix": {
+        "selected_bbox": [
+          264,
+          0,
+          1119,
+          724
+        ],
+        "used_crop": true,
+        "used_fallback_full_image": false,
+        "has_associated_figure": true,
+        "ambiguous_multi_problem": false,
+        "candidates_count": 1,
+        "desk_trimmed": false,
+        "crop_holds_all_content": true,
+        "completeness_confidence": 0.98,
+        "preprocess_ms": 27.144,
+        "region_detect_ms": 56.766
+      },
+      "truncated_premise_before_fix": false,
+      "truncated_premise_after_fix": false,
+      "false_multi_problem_split_before_fix": false,
+      "false_multi_problem_split_after_fix": false
+    },
+    {
+      "image_id": "ext_diag_04_vmmu_crop_r11",
+      "filename": "vmmu_crop_r11_Math_0303_test_059_question_39_page_4_key_B_vqa.png",
+      "corpus_subgroup": "D_PRINTED_DIAGRAM_ONLY",
+      "image_type": "DIGITAL_DOCUMENT_RENDER",
+      "has_geometry_diagram": true,
+      "before_fix": {
+        "selected_bbox": [
+          253,
+          0,
+          752,
+          533
+        ],
+        "desk_trimmed": false,
+        "ambiguous_multi_problem": false,
+        "candidates_count": 1,
+        "has_associated_figure": true
+      },
+      "after_fix": {
+        "selected_bbox": [
+          253,
+          0,
+          752,
+          533
+        ],
+        "used_crop": true,
+        "used_fallback_full_image": false,
+        "has_associated_figure": true,
+        "ambiguous_multi_problem": false,
+        "candidates_count": 1,
+        "desk_trimmed": false,
+        "crop_holds_all_content": true,
+        "completeness_confidence": 0.98,
+        "preprocess_ms": 12.243,
+        "region_detect_ms": 67.027
+      },
+      "truncated_premise_before_fix": false,
+      "truncated_premise_after_fix": false,
+      "false_multi_problem_split_before_fix": false,
+      "false_multi_problem_split_after_fix": false
+    },
+    {
+      "image_id": "ext_diag_05_vmmu_crop_r25",
+      "filename": "vmmu_crop_r25_Math_0143_test_024_question_48_page_6_key_B_vqa.png",
+      "corpus_subgroup": "D_PRINTED_DIAGRAM_ONLY",
+      "image_type": "DIGITAL_DOCUMENT_RENDER",
+      "has_geometry_diagram": true,
+      "before_fix": {
+        "selected_bbox": [
+          0,
+          0,
+          1254,
+          391
+        ],
+        "desk_trimmed": false,
+        "ambiguous_multi_problem": true,
+        "candidates_count": 2,
+        "has_associated_figure": true
+      },
+      "after_fix": {
+        "selected_bbox": [
+          0,
+          0,
+          1254,
+          391
+        ],
+        "used_crop": false,
+        "used_fallback_full_image": true,
+        "has_associated_figure": true,
+        "ambiguous_multi_problem": true,
+        "candidates_count": 2,
+        "desk_trimmed": false,
+        "crop_holds_all_content": false,
+        "completeness_confidence": 0.85,
+        "preprocess_ms": 11.051,
+        "region_detect_ms": 54.151
+      },
+      "truncated_premise_before_fix": false,
+      "truncated_premise_after_fix": false,
+      "false_multi_problem_split_before_fix": false,
+      "false_multi_problem_split_after_fix": false
+    },
+    {
+      "image_id": "ext_diag_06_vmmu_crop_r26",
+      "filename": "vmmu_crop_r26_Math_0120_test_020_question_40_page_7_key_B_vqa.png",
+      "corpus_subgroup": "D_PRINTED_DIAGRAM_ONLY",
+      "image_type": "DIGITAL_DOCUMENT_RENDER",
+      "has_geometry_diagram": true,
+      "before_fix": {
+        "selected_bbox": [
+          186,
+          4,
+          922,
+          533
+        ],
+        "desk_trimmed": false,
+        "ambiguous_multi_problem": false,
+        "candidates_count": 1,
+        "has_associated_figure": true
+      },
+      "after_fix": {
+        "selected_bbox": [
+          186,
+          4,
+          922,
+          533
+        ],
+        "used_crop": true,
+        "used_fallback_full_image": false,
+        "has_associated_figure": true,
+        "ambiguous_multi_problem": false,
+        "candidates_count": 1,
+        "desk_trimmed": false,
+        "crop_holds_all_content": true,
+        "completeness_confidence": 0.98,
+        "preprocess_ms": 14.938,
+        "region_detect_ms": 69.813
+      },
+      "truncated_premise_before_fix": false,
+      "truncated_premise_after_fix": false,
+      "false_multi_problem_split_before_fix": false,
+      "false_multi_problem_split_after_fix": false
+    },
+    {
+      "image_id": "ext_diag_07_vmmu_crop_r28",
+      "filename": "vmmu_crop_r28_Math_0399_test_080_question_35_page_5_key_A_vqa.png",
+      "corpus_subgroup": "D_PRINTED_DIAGRAM_ONLY",
+      "image_type": "DIGITAL_DOCUMENT_RENDER",
+      "has_geometry_diagram": true,
+      "before_fix": {
+        "selected_bbox": [
+          159,
+          0,
+          521,
+          297
+        ],
+        "desk_trimmed": false,
+        "ambiguous_multi_problem": false,
+        "candidates_count": 1,
+        "has_associated_figure": true
+      },
+      "after_fix": {
+        "selected_bbox": [
+          159,
+          0,
+          521,
+          297
+        ],
+        "used_crop": true,
+        "used_fallback_full_image": false,
+        "has_associated_figure": true,
+        "ambiguous_multi_problem": false,
+        "candidates_count": 1,
+        "desk_trimmed": false,
+        "crop_holds_all_content": false,
+        "completeness_confidence": 0.98,
+        "preprocess_ms": 3.973,
+        "region_detect_ms": 21.564
+      },
+      "truncated_premise_before_fix": false,
+      "truncated_premise_after_fix": false,
+      "false_multi_problem_split_before_fix": false,
+      "false_multi_problem_split_after_fix": false
+    }
+  ]
+}

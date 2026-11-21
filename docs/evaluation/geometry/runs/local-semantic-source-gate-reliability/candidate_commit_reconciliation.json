@@ -1,0 +1,16 @@
+{
+  "run_id": "local-semantic-source-gate-reliability",
+  "generated_at_utc": "2026-11-13T04:54:20.249879+00:00",
+  "question": "Two SHAs were quoted for the controlled-vision candidate: 835786746 and a78b1e087. Which is the candidate?",
+  "answer": "Both, in different roles. 835786746 is the HEAD at freeze time and is what EVALUATION_CANDIDATE.json records as `commit`; a78b1e087 is the child commit that stores that manifest. They measure the same product (product commit c53be83db, measured_system cd9b9f51…).",
+  "evidence": {
+    "manifest_commit_field_at_start": "835786746c1252fa162e9bc967b651d97252e720",
+    "manifest_product_commit_at_start": "c53be83db71089b47b59b2ec7155b8e8552e1752",
+    "a78b1e087_parent": "835786746c1252fa162e9bc967b651d97252e720",
+    "a78b1e087_changes_only": [
+      "docs/evaluation/semantic-benchmark/EVALUATION_CANDIDATE.json"
+    ]
+  },
+  "mislabel": "controlled-vision run.json named the storing commit as the candidate; that is a labelling slip, not two candidates. The previous run's receipts are immutable and are not edited; this receipt is the correction layer.",
+  "classification": "VERIFIED_FACT"
+}

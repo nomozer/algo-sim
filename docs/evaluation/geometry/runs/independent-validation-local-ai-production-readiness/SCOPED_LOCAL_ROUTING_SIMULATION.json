@@ -1,0 +1,55 @@
+{
+  "schema": "scoped-local-routing-simulation/1",
+  "generated_at_utc": "2026-11-18T18:39:18.696817+00:00",
+  "policy_version": "scoped-local-routing-sim/1",
+  "production_route_default_preserved": "HYBRID_ROUTE_MODE=live",
+  "silent_cloud_fallback_allowed": false,
+  "primary_model_check": {
+    "model_key": "qwen3-0.6b-axo-v7-q4_k_m",
+    "ok": true,
+    "code": "OK",
+    "sha256": "36e784d135627225e0b9c11b097c9a36222ee1e0e3f6f1d6116cc3060ac5e148"
+  },
+  "rollback_model_check": {
+    "model_key": "qwen3-0.6b-q4_k_m",
+    "ok": true,
+    "code": "OK",
+    "sha256": "ac2d97712095a558e31573f62f466a3f9d93990898b0ec79d7c974c1780d524a"
+  },
+  "v7_holdout_simulation": {
+    "split": "SLM_V7_HOLDOUT_112",
+    "total": 112,
+    "routing_decisions": {
+      "DETERMINISTIC_FAST_PATH": 43,
+      "ELIGIBLE_LOCAL_PRIMARY": 57,
+      "OUT_OF_SCOPED_PRIMARY_ENVELOPE": 5,
+      "UNSUPPORTED": 6,
+      "SAFE_REFUSAL": 1
+    },
+    "post_gate_outcomes": {
+      "SERVED_VERIFIED": 74,
+      "DO_NOT_SERVE": 26,
+      "GATED_OUT_OR_SAFE_REFUSED": 12
+    },
+    "wrong_served_within_scoped_envelope": 0,
+    "wrong_served_raw_frozen_evi": 5
+  },
+  "unseen_corpora_simulation": {
+    "split": "PERMISSIBLE_UNSEEN_77",
+    "total": 77,
+    "routing_decisions": {
+      "DETERMINISTIC_FAST_PATH": 31,
+      "ELIGIBLE_LOCAL_PRIMARY": 28,
+      "CLARIFICATION_OR_REFUSAL": 8,
+      "UNSUPPORTED": 9,
+      "OUT_OF_SCOPED_PRIMARY_ENVELOPE": 1
+    },
+    "post_gate_outcomes": {
+      "SERVED_VERIFIED": 25,
+      "DO_NOT_SERVE": 34,
+      "GATED_OUT_OR_SAFE_REFUSED": 18
+    },
+    "wrong_served_within_scoped_envelope": 0,
+    "wrong_served_raw_frozen_evi": 0
+  }
+}

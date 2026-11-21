@@ -1,0 +1,275 @@
+{
+  "schema": "algosim-phase0-head-candidate-reconciliation/1",
+  "run_id": "dimension-aware-verified-construction",
+  "phase": "phase_0_baseline_integrity",
+  "generated_at_utc": "2026-11-15T05:31:00Z",
+  "branch": "feat/local-first-geometry-understanding",
+  "head": "b04bed0f83e02ac27416814bea08fa830ee91461",
+  "prior_regression_head": "542e32b0f8b21df5fff8e6b2a57fb27b9a6ea452",
+  "candidate_commit": "cbcd8af2d4ce667d93378699971acdae7d7905ae",
+  "candidate_freeze_commit": "63def519ad317911145b2d84929a687208996619",
+  "product_commit": "32bdaa1df3dd7606b59b8c3cd8411578c4206d54",
+  "measured_system_hash": "b1403b91fd81410f9586c5676f541911540b4bc4bb0d7bf40204d17538623e59",
+  "measured_system": "b1403b91fd81410f9586c5676f541911540b4bc4bb0d7bf40204d17538623e59",
+  "measured_system_files": 120,
+  "cache_version": "140",
+  "dataset_partition": "GOVERNANCE_ONLY (git diff 542e32b0f8..b04bed0f8 and cbcd8af2d..b04bed0f8 path classification and candidate hash reconciliation); never sealed H-1 or locked W2/W3",
+  "environment": {
+    "ALLOW_LIVE_AI": "0",
+    "PYTHONPATH": "backend",
+    "live_ai_calls": 0
+  },
+  "test_command": "git diff --stat 542e32b0f8..b04bed0f8 && git diff --name-status 542e32b0f8..b04bed0f8 && D:/Documents/projects/algo-sim/backend/.venv/Scripts/python.exe -B backend/scripts/freeze_evaluation_candidate.py --verify",
+  "expected_behavior": "Commit range 542e32b0f8..b04bed0f8 modifies only documentation, living indices, and grounded-vietnamese-geometry-understanding evaluation artifacts (0 backend/app, 0 frontend/src, and 0 test files), so product_commit d222e6d9b582d54fc42397a9593f52eb6fd77f18 and measured_system_hash c25f9695828888987db2ab7990c4ff135da4d01c6b9d968f898c36728a0ae436 remain identical between regression snapshot 542e32b0f8 and HEAD b04bed0f8.",
+  "actual_behavior": "542e32b0f8b21df5fff8e6b2a57fb27b9a6ea452 is the direct parent of HEAD b04bed0f83e02ac27416814bea08fa830ee91461 (single linear documentation commit). git diff 542e32b0f8..b04bed0f8 changed 43 files (6226 insertions, 9 deletions: 38 added, 5 modified), all 43 classified as DOCS_OR_EVIDENCE (4 living docs at docs/{AI_CONTEXT_BUNDLE,CURRENT_STATE,EVIDENCE_INDEX,OPEN_ISSUES}.md and 39 artifacts/tools under docs/evaluation/geometry/runs/grounded-vietnamese-geometry-understanding/). Zero product source or test files changed; freeze_evaluation_candidate.py --verify exited 0 on HEAD with 117 product files and tree hash c25f9695828888987db2ab7990c4ff135da4d01c6b9d968f898c36728a0ae436.",
+  "mathematical_oracle": "Exact Git tree/diff path classification against freeze_evaluation_candidate.py PRODUCT_ROOTS (backend/app, frontend/src) and SHA-256 LF-normalized tree hash equivalence across commits cbcd8af2d, 63def519a, 542e32b0f8, and b04bed0f8.",
+  "source_provenance": {
+    "git_range_inspected": "542e32b0f8b21df5fff8e6b2a57fb27b9a6ea452..b04bed0f83e02ac27416814bea08fa830ee91461",
+    "candidate_manifest": "docs/evaluation/semantic-benchmark/EVALUATION_CANDIDATE.json",
+    "prior_regression_summary": "docs/evaluation/geometry/runs/grounded-vietnamese-geometry-understanding/full_regression_summary.json",
+    "prior_run_manifest": "docs/evaluation/geometry/runs/grounded-vietnamese-geometry-understanding/run.json"
+  },
+  "range": "542e32b0f8..b04bed0f8",
+  "ancestry": "542e32b0f8b21df5fff8e6b2a57fb27b9a6ea452 is the direct parent of b04bed0f83e02ac27416814bea08fa830ee91461 (linear, 1 commit)",
+  "diff_stat_summary": {
+    "files_changed": 43,
+    "insertions": 6226,
+    "deletions": 9,
+    "added_files": 38,
+    "modified_files": 5
+  },
+  "files": [
+    {
+      "status": "M",
+      "path": "docs/AI_CONTEXT_BUNDLE.md",
+      "class": "DOCS_OR_EVIDENCE"
+    },
+    {
+      "status": "M",
+      "path": "docs/CURRENT_STATE.md",
+      "class": "DOCS_OR_EVIDENCE"
+    },
+    {
+      "status": "M",
+      "path": "docs/EVIDENCE_INDEX.md",
+      "class": "DOCS_OR_EVIDENCE"
+    },
+    {
+      "status": "M",
+      "path": "docs/OPEN_ISSUES.md",
+      "class": "DOCS_OR_EVIDENCE"
+    },
+    {
+      "status": "A",
+      "path": "docs/evaluation/geometry/runs/grounded-vietnamese-geometry-understanding/AXO_GROUNDED_VIETNAMESE_GEOMETRY_UNDERSTANDING_REPORT.md",
+      "class": "DOCS_OR_EVIDENCE"
+    },
+    {
+      "status": "A",
+      "path": "docs/evaluation/geometry/runs/grounded-vietnamese-geometry-understanding/baseline_candidate_integrity.json",
+      "class": "DOCS_OR_EVIDENCE"
+    },
+    {
+      "status": "A",
+      "path": "docs/evaluation/geometry/runs/grounded-vietnamese-geometry-understanding/candidate_freeze.json",
+      "class": "DOCS_OR_EVIDENCE"
+    },
+    {
+      "status": "A",
+      "path": "docs/evaluation/geometry/runs/grounded-vietnamese-geometry-understanding/clause_level_semantic_coverage.json",
+      "class": "DOCS_OR_EVIDENCE"
+    },
+    {
+      "status": "A",
+      "path": "docs/evaluation/geometry/runs/grounded-vietnamese-geometry-understanding/cross_clause_reference_tests.json",
+      "class": "DOCS_OR_EVIDENCE"
+    },
+    {
+      "status": "A",
+      "path": "docs/evaluation/geometry/runs/grounded-vietnamese-geometry-understanding/entity_resolution_before_after.json",
+      "class": "DOCS_OR_EVIDENCE"
+    },
+    {
+      "status": "A",
+      "path": "docs/evaluation/geometry/runs/grounded-vietnamese-geometry-understanding/fact_completeness_verification.json",
+      "class": "DOCS_OR_EVIDENCE"
+    },
+    {
+      "status": "A",
+      "path": "docs/evaluation/geometry/runs/grounded-vietnamese-geometry-understanding/frontend_handoff_reconciliation.json",
+      "class": "DOCS_OR_EVIDENCE"
+    },
+    {
+      "status": "A",
+      "path": "docs/evaluation/geometry/runs/grounded-vietnamese-geometry-understanding/full_regression_summary.json",
+      "class": "DOCS_OR_EVIDENCE"
+    },
+    {
+      "status": "A",
+      "path": "docs/evaluation/geometry/runs/grounded-vietnamese-geometry-understanding/goal_extraction_before_after.json",
+      "class": "DOCS_OR_EVIDENCE"
+    },
+    {
+      "status": "A",
+      "path": "docs/evaluation/geometry/runs/grounded-vietnamese-geometry-understanding/grounded_semantic_representation.json",
+      "class": "DOCS_OR_EVIDENCE"
+    },
+    {
+      "status": "A",
+      "path": "docs/evaluation/geometry/runs/grounded-vietnamese-geometry-understanding/head_candidate_reconciliation.json",
+      "class": "DOCS_OR_EVIDENCE"
+    },
+    {
+      "status": "A",
+      "path": "docs/evaluation/geometry/runs/grounded-vietnamese-geometry-understanding/holdout_protection_audit.json",
+      "class": "DOCS_OR_EVIDENCE"
+    },
+    {
+      "status": "A",
+      "path": "docs/evaluation/geometry/runs/grounded-vietnamese-geometry-understanding/independent_evaluation_status.json",
+      "class": "DOCS_OR_EVIDENCE"
+    },
+    {
+      "status": "A",
+      "path": "docs/evaluation/geometry/runs/grounded-vietnamese-geometry-understanding/logs/final-backend_pytest.json",
+      "class": "DOCS_OR_EVIDENCE"
+    },
+    {
+      "status": "A",
+      "path": "docs/evaluation/geometry/runs/grounded-vietnamese-geometry-understanding/logs/final-crash_audit.json",
+      "class": "DOCS_OR_EVIDENCE"
+    },
+    {
+      "status": "A",
+      "path": "docs/evaluation/geometry/runs/grounded-vietnamese-geometry-understanding/logs/final-demo_replay.json",
+      "class": "DOCS_OR_EVIDENCE"
+    },
+    {
+      "status": "A",
+      "path": "docs/evaluation/geometry/runs/grounded-vietnamese-geometry-understanding/logs/final-docs_ia.json",
+      "class": "DOCS_OR_EVIDENCE"
+    },
+    {
+      "status": "A",
+      "path": "docs/evaluation/geometry/runs/grounded-vietnamese-geometry-understanding/logs/final-freeze_verify.json",
+      "class": "DOCS_OR_EVIDENCE"
+    },
+    {
+      "status": "A",
+      "path": "docs/evaluation/geometry/runs/grounded-vietnamese-geometry-understanding/logs/final-frontend_build.txt",
+      "class": "DOCS_OR_EVIDENCE"
+    },
+    {
+      "status": "A",
+      "path": "docs/evaluation/geometry/runs/grounded-vietnamese-geometry-understanding/logs/final-frontend_test_wave.json",
+      "class": "DOCS_OR_EVIDENCE"
+    },
+    {
+      "status": "A",
+      "path": "docs/evaluation/geometry/runs/grounded-vietnamese-geometry-understanding/logs/final-frontend_vitest_full.txt",
+      "class": "DOCS_OR_EVIDENCE"
+    },
+    {
+      "status": "A",
+      "path": "docs/evaluation/geometry/runs/grounded-vietnamese-geometry-understanding/logs/final-publication_head.json",
+      "class": "DOCS_OR_EVIDENCE"
+    },
+    {
+      "status": "A",
+      "path": "docs/evaluation/geometry/runs/grounded-vietnamese-geometry-understanding/logs/final-publication_range.json",
+      "class": "DOCS_OR_EVIDENCE"
+    },
+    {
+      "status": "A",
+      "path": "docs/evaluation/geometry/runs/grounded-vietnamese-geometry-understanding/multi_problem_source_isolation.json",
+      "class": "DOCS_OR_EVIDENCE"
+    },
+    {
+      "status": "A",
+      "path": "docs/evaluation/geometry/runs/grounded-vietnamese-geometry-understanding/publication_gate_status.json",
+      "class": "DOCS_OR_EVIDENCE"
+    },
+    {
+      "status": "A",
+      "path": "docs/evaluation/geometry/runs/grounded-vietnamese-geometry-understanding/real27_acceptance_before_after.json",
+      "class": "DOCS_OR_EVIDENCE"
+    },
+    {
+      "status": "A",
+      "path": "docs/evaluation/geometry/runs/grounded-vietnamese-geometry-understanding/real27_root_cause_matrix.json",
+      "class": "DOCS_OR_EVIDENCE"
+    },
+    {
+      "status": "A",
+      "path": "docs/evaluation/geometry/runs/grounded-vietnamese-geometry-understanding/run.json",
+      "class": "DOCS_OR_EVIDENCE"
+    },
+    {
+      "status": "A",
+      "path": "docs/evaluation/geometry/runs/grounded-vietnamese-geometry-understanding/semantic_cache_invalidation.json",
+      "class": "DOCS_OR_EVIDENCE"
+    },
+    {
+      "status": "A",
+      "path": "docs/evaluation/geometry/runs/grounded-vietnamese-geometry-understanding/semantic_development_corpus_manifest.json",
+      "class": "DOCS_OR_EVIDENCE"
+    },
+    {
+      "status": "A",
+      "path": "docs/evaluation/geometry/runs/grounded-vietnamese-geometry-understanding/semantic_negative_metamorphic_tests.json",
+      "class": "DOCS_OR_EVIDENCE"
+    },
+    {
+      "status": "A",
+      "path": "docs/evaluation/geometry/runs/grounded-vietnamese-geometry-understanding/semantic_pipeline_architecture_audit.json",
+      "class": "DOCS_OR_EVIDENCE"
+    },
+    {
+      "status": "A",
+      "path": "docs/evaluation/geometry/runs/grounded-vietnamese-geometry-understanding/semantic_planner_integration.json",
+      "class": "DOCS_OR_EVIDENCE"
+    },
+    {
+      "status": "A",
+      "path": "docs/evaluation/geometry/runs/grounded-vietnamese-geometry-understanding/source_gate_integrity.json",
+      "class": "DOCS_OR_EVIDENCE"
+    },
+    {
+      "status": "A",
+      "path": "docs/evaluation/geometry/runs/grounded-vietnamese-geometry-understanding/source_span_provenance_audit.json",
+      "class": "DOCS_OR_EVIDENCE"
+    },
+    {
+      "status": "M",
+      "path": "docs/evaluation/geometry/runs/grounded-vietnamese-geometry-understanding/tools/derive_receipts.py",
+      "class": "DOCS_OR_EVIDENCE"
+    },
+    {
+      "status": "A",
+      "path": "docs/evaluation/geometry/runs/grounded-vietnamese-geometry-understanding/tools/write_run_manifest.py",
+      "class": "DOCS_OR_EVIDENCE"
+    },
+    {
+      "status": "A",
+      "path": "docs/evaluation/geometry/runs/grounded-vietnamese-geometry-understanding/wrong_scene_served_audit.json",
+      "class": "DOCS_OR_EVIDENCE"
+    }
+  ],
+  "counts": {
+    "DOCS_OR_EVIDENCE": 43,
+    "PRODUCT_SOURCE": 0,
+    "TEST_ONLY": 0
+  },
+  "product_changes_in_range": [],
+  "test_changes_in_range": [],
+  "baseline_regression_needed": false,
+  "reason": "b04bed0f83e02ac27416814bea08fa830ee91461 only records grounded-vietnamese-geometry-understanding report, derived receipts, run manifest, and living docs on top of 542e32b0f8b21df5fff8e6b2a57fb27b9a6ea452; frozen candidate c25f969582888898… (117 files) matches HEAD identically.",
+  "verdict": "RECONCILED_DOCS_ONLY_NO_PRODUCT_DRIFT",
+  "start_head": "b04bed0f83e02ac27416814bea08fa830ee91461",
+  "start_product_commit": "d222e6d9b582d54fc42397a9593f52eb6fd77f18",
+  "start_candidate_commit": "cbcd8af2d4ce667d93378699971acdae7d7905ae",
+  "start_candidate_freeze_commit": "63def519ad317911145b2d84929a687208996619",
+  "start_measured_system": "c25f9695828888987db2ab7990c4ff135da4d01c6b9d968f898c36728a0ae436",
+  "start_measured_system_files": 117,
+  "start_cache_version": "139"
+}

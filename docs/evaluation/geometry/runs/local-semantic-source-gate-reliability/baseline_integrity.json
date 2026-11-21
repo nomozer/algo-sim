@@ -1,0 +1,28 @@
+{
+  "run_id": "local-semantic-source-gate-reliability",
+  "generated_at_utc": "2026-11-13T04:54:20.249879+00:00",
+  "start_head": "c5bb73f5144ebed1808ba5654588737ab5ecca0a",
+  "start_head_is_ancestor_of_head": true,
+  "candidate_at_start": {
+    "commit": "835786746c1252fa162e9bc967b651d97252e720",
+    "product_commit": "c53be83db71089b47b59b2ec7155b8e8552e1752",
+    "measured_system": "cd9b9f518805d30522ee7c488dd834d3b05ea08d3e78d86c82da13c735a8a58a",
+    "files": 115,
+    "cache_version": "132"
+  },
+  "verified_at_start": "freeze_evaluation_candidate.py --verify matched cd9b9f518805d305 (115 files) on a clean tree before any change (VERIFIED FACT, session log)",
+  "commits_since_start": [
+    "506213a67 eval: real-browser check of OCR span extend/restore on the production build",
+    "0c947b246 eval: record fresh external diagnostic, parser latency and regression wrapper",
+    "9f2314e11 eval: freeze fresh external manifest before running the candidate on it",
+    "9ba56f9d8 eval: pre-register fresh external diagnostic sample before download",
+    "51877ed8f docs(evaluation): re-bind pending owner-approval templates to the refrozen candidate",
+    "be3467457 chore(eval): freeze evaluation candidate after local semantic coverage and ingestion fixes",
+    "dcad65e5e docs(evaluation): record semantic-17 traces, sqlite concurrency, before/after and OCR hold audit",
+    "1c9c26489 feat(parser): accept \"vuông (cân) ở X\" and close a value at a new clause without punctuation",
+    "81bcb5d0f feat(frontend): extend an OCR span over the next word and show special angle goals in degrees",
+    "d6b38b172 fix(ingestion): run local OCR and region detection off the event loop",
+    "262ff46d5 feat(parser): read regular-solid dimension lists, bare segment equality and wider volume goals"
+  ],
+  "product_diff_since_start": " 10 files changed, 350 insertions(+), 59 deletions(-)"
+}

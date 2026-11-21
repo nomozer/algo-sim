@@ -1,0 +1,99 @@
+{
+  "schema": "algosim-full-regression-summary/1",
+  "generated_at_utc": "2026-11-10T05:23:33.657778+00:00",
+  "product_commit": "7994da7a64c8dc288c4de972df2d8d1db65e0c20",
+  "head_commit": "e838ab50d06d3ac0d5b02a98b9e3083ea0bfd5e6",
+  "measured_system_tree_hash": "3754cbd18f58ddfb913fb61efd3dd078b0767770cff935a975cc8c258a1859fa",
+  "measured_system_file_count": 108,
+  "code_version": {
+    "typed_fact_next": "typed-fact-next/2",
+    "bridge": "typed-fact-next-bridge/2",
+    "planner": "geometry-fact-planner/26",
+    "registry": "geometry-functions/33",
+    "engine": "geometry-function-engine/24",
+    "adapter": "hybrid-simulation-adapter/4",
+    "envelope": "hybrid-route-d-simulation/4",
+    "local_parser": "local-geometry-parser/1",
+    "adaptive_router": "adaptive-input-router/1",
+    "cache_version": "132"
+  },
+  "input_or_case_hash": "778e39edc09410ce096faaa5f1d8daaea37c6d98f44f1d2013e9216bd3e811fc",
+  "oracle": "Recorded exit codes / pass counts of the listed commands (executed by the agent in this run)",
+  "test_command": "see suites[*].command",
+  "test_environment": {
+    "os": "Windows-11-10.0.26100-SP0",
+    "python": "3.12.10",
+    "cpu_logical_cores": 12,
+    "allow_live_ai": 0,
+    "live_gemini_calls": 0,
+    "benchmark_tier": "HOST_BENCHMARK_OFFLINE"
+  },
+  "expected_behavior": "0 unexpected failures across backend, frontend, browser and demo audits.",
+  "actual_behavior": "{\"backend_full\": \"14153 passed, 0 failed, 9 skipped, 1 deselected, 15 xfailed\", \"frontend_wave\": \"138 files, 2010/2010 vitest passed; build OK\", \"browser_e2e_real_backend\": \"12/12 + image upload pass\", \"axo_branding_browser\": \"9/9\", \"demo_replay\": \"5/5 (+1/1 reduced chain)\", \"demo_crash_surface\": \"6/6, 0 uncaught (=500)\", \"docs_information_architecture\": \"PASS (0 broken links, 0 stale CODE_INDEX paths)\", \"publication_safety\": \"scanned=43 violations=0\", \"candidate_freeze\": \"MATCH (108 files, 3754cbd18f58ddfb…), clean tree at freeze\"}",
+  "verdict": "PASS",
+  "run_id": "real-world-end-to-end-reliability",
+  "wave_id": "REAL_WORLD_END_TO_END_RELIABILITY",
+  "baseline_head_commit": "8d0fde3378c9b087bdbbc4c66e1a40aad3b532cc",
+  "baseline_product_commit": "c61a3589782bde35b69e8376d8ebf136314e47f3",
+  "case_ids": [
+    "backend_full",
+    "frontend_wave",
+    "browser_e2e_real_backend",
+    "axo_branding_browser",
+    "demo_replay",
+    "demo_crash_surface",
+    "docs_information_architecture",
+    "publication_safety",
+    "candidate_freeze"
+  ],
+  "measurement_status": "MEASURED_OFFLINE",
+  "oracle_provenance": "Exit codes and test counts of pytest, vitest, tsc, vite build, Playwright Chrome E2E, demo replay, crash audit, docs IA audit, publication safety, and freeze --verify",
+  "measured_at_head": "e838ab50d (candidate frozen, freeze --verify MATCH)",
+  "suites": {
+    "backend_full": {
+      "command": "pytest -m \"not live_provider and not external_evidence\" -q -p no:cacheprovider (ALLOW_LIVE_AI=0)",
+      "result": "14153 passed, 0 failed, 9 skipped, 1 deselected, 15 xfailed",
+      "verdict": "PASS"
+    },
+    "frontend_wave": {
+      "command": "npm run test:wave (vitest + tsc + vite build)",
+      "result": "138 files, 2010/2010 vitest passed; build OK",
+      "verdict": "PASS"
+    },
+    "browser_e2e_real_backend": {
+      "command": "node tools/e2e_browser_acceptance.mjs <dist> 8771 scene3d_browser_e2e_raw.json <image>",
+      "result": "12/12 + image upload pass",
+      "verdict": "PASS"
+    },
+    "axo_branding_browser": {
+      "command": "node frontend/scripts/axo-branding-browser-check.mjs --dist <dist> --out <fresh> --expect-axo",
+      "result": "9/9",
+      "verdict": "PASS"
+    },
+    "demo_replay": {
+      "command": "python backend/scripts/replay_demo_cases.py",
+      "result": "5/5 (+1/1 reduced chain)",
+      "verdict": "PASS"
+    },
+    "demo_crash_surface": {
+      "command": "python backend/scripts/audit_demo_crash_surface.py",
+      "result": "6/6, 0 uncaught (=500)",
+      "verdict": "PASS"
+    },
+    "docs_information_architecture": {
+      "command": "python backend/scripts/audit_docs_information_architecture.py",
+      "result": "PASS (0 broken links, 0 stale CODE_INDEX paths)",
+      "verdict": "PASS"
+    },
+    "publication_safety": {
+      "command": "python backend/scripts/check_publication_safety.py --range 8d0fde3378c9b087bdbbc4c66e1a40aad3b532cc..HEAD",
+      "result": "scanned=43 violations=0",
+      "verdict": "PASS"
+    },
+    "candidate_freeze": {
+      "command": "python backend/scripts/freeze_evaluation_candidate.py --verify",
+      "result": "MATCH (108 files, 3754cbd18f58ddfb…), clean tree at freeze",
+      "verdict": "PASS"
+    }
+  }
+}

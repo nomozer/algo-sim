@@ -1,0 +1,30 @@
+{
+  "run_id": "certified-scale-cache-safety",
+  "generated_at_utc": "2026-11-14T05:40:52.234783+00:00",
+  "product_commit": "902a3171c1a625c2741f0c6886d0328584dfb89e",
+  "measured_system": "243d932765f7d4065394f91c6b4f25972f8232ba9228aec89d4c63a244c1976b",
+  "cache_version": "135",
+  "environment": {
+    "ALLOW_LIVE_AI": "0",
+    "HYBRID_ROUTE_MODE": "local-first",
+    "live_ai_calls": 0
+  },
+  "head": "4bb423b48393605355be39e4d8dc4386ad9b3946",
+  "schema": "similarity-scale-certificate/1",
+  "obligations": {
+    "PO-1": "no non-ask call outside the dimensionless-valued set carries a number",
+    "PO-2": "every ask in SCALE_FREE_ASKS",
+    "PO-3": "one internal unit on the first base edge of the first solid ⇒ engine SERVED with no free height (unique configuration)",
+    "PO-4": "units 2 and 5 rebuild SERVED with identical exact answers (witness, not proof)",
+    "PO-5": "unit never a call / premise / provenance; scene_configuration SIMILARITY_SCALE_ILLUSTRATIVE, source_length_supplied false"
+  },
+  "argument": "homothety-invariant premises + uniqueness at one fixed length ⇒ one similarity class ⇒ similarity-invariant goals single-valued",
+  "example": {
+    "text_sha256": "f829a1ffdf57de9a86bca66037bec49d527af6ed3ef096b0bd2c54da6aa87c25",
+    "after": {
+      "q1": "cos²=1/3"
+    },
+    "hand_check": "A origin, AB = AC = SA = 1: normals (0,1,0) and (1,1,1) ⇒ cos² = 1/3"
+  },
+  "pytest": "backend/tests/geometry/test_certified_scale_normalization.py (10 passed, 2 strict xfail documenting a pre-existing clause-order limitation)"
+}

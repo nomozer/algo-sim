@@ -153,12 +153,15 @@ def test_the_van_pham_GOI_DUNG_TEN_truong_nay():
     nhận bất kỳ biểu thức nào — đúng cái hiểu đã đẻ ra `arith(B + D)`."""
     from app.simulation.semantic_program.grammar_card import grammar_card
 
-    dong = [d for d in grammar_card().splitlines()
-            if d.strip().startswith("construct_point:")]
+    # (/13) Chỉ còn thẻ hình học; dòng lệnh ở đó mang nhãn `[LỆNH]` trước tên.
+    def _lenh(ten):
+        return [d for d in grammar_card().splitlines()
+                if d.strip().removeprefix("[LỆNH]").strip().startswith(f"{ten}:")]
+
+    dong = _lenh("construct_point")
     assert dong and "phép dựng ĐIỂM" in dong[0], dong
     # `assign` KHÔNG bị đổi nhãn — nó thật sự nhận mọi biểu thức.
-    ga = [d for d in grammar_card().splitlines()
-          if d.strip().startswith("assign:")]
+    ga = _lenh("assign")
     assert ga and "biểu thức" in ga[0]
 
 

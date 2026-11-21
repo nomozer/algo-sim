@@ -1,0 +1,52 @@
+{
+  "schema": "algosim-image-license-and-provenance-audit/1",
+  "generated_at_utc": "2026-11-09T19:03:44.273137+00:00",
+  "audit_verdict": "COMPLIANT_NO_UNVERIFIED_IMAGES_IN_GIT",
+  "permission_matrix_by_source": [
+    {
+      "source_domain": "huggingface.co/datasets/anvo25/vmmu",
+      "item_count": 14,
+      "license_status": "MIT",
+      "publicly_viewable": true,
+      "download_permitted": true,
+      "internal_research_permitted": true,
+      "repo_commit_permitted": true,
+      "redistribution_permitted": true,
+      "actual_storage": "Stored in gitignored `.superpowers/external_image_cache/` (not committed to keep Git lightweight per Section IV.1.5)."
+    },
+    {
+      "source_domain": "huggingface.co/datasets/HungNguyen29/UIT-HWDB-line",
+      "item_count": 6,
+      "license_status": "OPEN_ACADEMIC_PUBLIC_HF_DATASET",
+      "publicly_viewable": true,
+      "download_permitted": true,
+      "internal_research_permitted": true,
+      "repo_commit_permitted": false,
+      "redistribution_permitted": false,
+      "actual_storage": "Stored strictly in gitignored `.superpowers/external_image_cache/`; only row index, URL, SHA-256, and transcription committed."
+    },
+    {
+      "source_domain": "hoidap247.com",
+      "item_count": 18,
+      "license_status": "LICENSE_UNVERIFIED",
+      "publicly_viewable": true,
+      "download_permitted": true,
+      "internal_research_permitted": true,
+      "repo_commit_permitted": false,
+      "redistribution_permitted": false,
+      "actual_storage": "Stored strictly in gitignored `.superpowers/external_image_cache/`; zero image bytes committed to repository."
+    }
+  ],
+  "pii_and_privacy_audit": {
+    "checked_all_38_eligible_images_visually": true,
+    "student_names_or_phone_numbers_found": 0,
+    "redaction_required_count": 0,
+    "notes": "Notebook photos contain only math equations and 3D wireframe sketches; printed items contain only exam question stems and public teacher watermarks (`Gv. Trần Quốc Nghĩa`)."
+  },
+  "git_repository_cleanliness_check": {
+    "any_external_image_tracked_in_git": false,
+    "license_verified_open_count": 14,
+    "license_mit_strict_count": 14,
+    "license_unverified_count": 18
+  }
+}

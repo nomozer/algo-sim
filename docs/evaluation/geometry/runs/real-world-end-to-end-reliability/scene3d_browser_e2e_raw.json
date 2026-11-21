@@ -1,0 +1,408 @@
+{
+  "browser": "157.0.8103.38",
+  "provider_calls": 0,
+  "results": [
+    {
+      "id": "served_unique",
+      "viewport": "1440x900@1",
+      "expected": "SERVED",
+      "serverStatus": "SERVED",
+      "httpStatus": 200,
+      "elapsedMs": 2507,
+      "view": "workspace",
+      "active": true,
+      "analysisError": null,
+      "unsupported": false,
+      "hasCanvas": true,
+      "note": null,
+      "bodyHasRawTraceback": false,
+      "bodyHasRawReasonCode": false,
+      "bodyHasPhotoCopy": false,
+      "bodyHasAnalyzeAiCopy": false,
+      "orbit": {
+        "fps": 145.1,
+        "canvasStable": true,
+        "heapMB": 16.79
+      },
+      "api": [
+        {
+          "path": "/api/analyze",
+          "status": 200
+        }
+      ],
+      "consoleErrors": [],
+      "pageErrors": [],
+      "pass": true
+    },
+    {
+      "id": "served_height_invariant_ext02",
+      "viewport": "1440x900@1",
+      "expected": "SERVED",
+      "serverStatus": "SERVED",
+      "httpStatus": 200,
+      "elapsedMs": 2477,
+      "view": "workspace",
+      "active": true,
+      "analysisError": null,
+      "unsupported": false,
+      "hasCanvas": true,
+      "note": "Đề không cho chiều cao nên hình dưới đây chỉ là một hình minh họa: đáp số đã được kiểm là không phụ thuộc chiều cao, nhưng độ cao vẽ trên hình không phải dữ kiện của đề.",
+      "bodyHasRawTraceback": false,
+      "bodyHasRawReasonCode": false,
+      "bodyHasPhotoCopy": false,
+      "bodyHasAnalyzeAiCopy": false,
+      "orbit": {
+        "fps": 140.2,
+        "canvasStable": true,
+        "heapMB": 18.33
+      },
+      "api": [
+        {
+          "path": "/api/analyze",
+          "status": 200
+        }
+      ],
+      "consoleErrors": [],
+      "pageErrors": [],
+      "pass": true
+    },
+    {
+      "id": "served_ratio_point",
+      "viewport": "1440x900@1",
+      "expected": "SERVED",
+      "serverStatus": "SERVED",
+      "httpStatus": 200,
+      "elapsedMs": 2447,
+      "view": "workspace",
+      "active": true,
+      "analysisError": null,
+      "unsupported": false,
+      "hasCanvas": true,
+      "note": null,
+      "bodyHasRawTraceback": false,
+      "bodyHasRawReasonCode": false,
+      "bodyHasPhotoCopy": false,
+      "bodyHasAnalyzeAiCopy": false,
+      "orbit": {
+        "fps": 138.2,
+        "canvasStable": true,
+        "heapMB": 16.96
+      },
+      "api": [
+        {
+          "path": "/api/analyze",
+          "status": 200
+        }
+      ],
+      "consoleErrors": [],
+      "pageErrors": [],
+      "pass": true
+    },
+    {
+      "id": "refused_missing_dimension",
+      "viewport": "1440x900@1",
+      "expected": "REFUSED",
+      "serverStatus": "REFUSED",
+      "httpStatus": 200,
+      "elapsedMs": 1348,
+      "view": "home",
+      "active": false,
+      "analysisError": null,
+      "unsupported": true,
+      "hasCanvas": false,
+      "note": null,
+      "bodyHasRawTraceback": false,
+      "bodyHasRawReasonCode": false,
+      "bodyHasPhotoCopy": false,
+      "bodyHasAnalyzeAiCopy": false,
+      "orbit": null,
+      "api": [
+        {
+          "path": "/api/analyze",
+          "status": 200
+        }
+      ],
+      "consoleErrors": [],
+      "pageErrors": [],
+      "pass": true
+    },
+    {
+      "id": "refused_non_unique_foot",
+      "viewport": "1440x900@1",
+      "expected": "REFUSED",
+      "serverStatus": "REFUSED",
+      "httpStatus": 200,
+      "elapsedMs": 1347,
+      "view": "home",
+      "active": false,
+      "analysisError": null,
+      "unsupported": true,
+      "hasCanvas": false,
+      "note": null,
+      "bodyHasRawTraceback": false,
+      "bodyHasRawReasonCode": false,
+      "bodyHasPhotoCopy": false,
+      "bodyHasAnalyzeAiCopy": false,
+      "orbit": null,
+      "api": [
+        {
+          "path": "/api/analyze",
+          "status": 200
+        }
+      ],
+      "consoleErrors": [],
+      "pageErrors": [],
+      "pass": true
+    },
+    {
+      "id": "refused_out_of_scope_needs_ai",
+      "viewport": "1440x900@1",
+      "expected": "REFUSED",
+      "serverStatus": null,
+      "httpStatus": 503,
+      "elapsedMs": 1311,
+      "view": "home",
+      "active": false,
+      "analysisError": "Đề này cần bước phân tích bằng AI, nhưng bước đó đang tạm tắt trên máy chủ. Hệ chỉ tự giải được các dạng đề quen thuộc khi không có AI — em thử diễn đạt lại theo cách trong sách giáo khoa, hoặc quay lại sau.",
+      "unsupported": false,
+      "hasCanvas": false,
+      "note": null,
+      "bodyHasRawTraceback": false,
+      "bodyHasRawReasonCode": false,
+      "bodyHasPhotoCopy": false,
+      "bodyHasAnalyzeAiCopy": true,
+      "orbit": null,
+      "api": [
+        {
+          "path": "/api/analyze",
+          "status": 503
+        }
+      ],
+      "consoleErrors": [
+        "Failed to load resource: the server responded with a status of 503 (Service Unavailable)"
+      ],
+      "pageErrors": [],
+      "pass": true
+    },
+    {
+      "id": "served_unique",
+      "viewport": "1440x900@1.1",
+      "expected": "SERVED",
+      "serverStatus": "SERVED",
+      "httpStatus": 200,
+      "elapsedMs": 2371,
+      "view": "workspace",
+      "active": true,
+      "analysisError": null,
+      "unsupported": false,
+      "hasCanvas": true,
+      "note": null,
+      "bodyHasRawTraceback": false,
+      "bodyHasRawReasonCode": false,
+      "bodyHasPhotoCopy": false,
+      "bodyHasAnalyzeAiCopy": false,
+      "orbit": {
+        "fps": 145.2,
+        "canvasStable": true,
+        "heapMB": 16.71
+      },
+      "api": [
+        {
+          "path": "/api/analyze",
+          "status": 200
+        }
+      ],
+      "consoleErrors": [],
+      "pageErrors": [],
+      "pass": true
+    },
+    {
+      "id": "served_height_invariant_ext02",
+      "viewport": "1440x900@1.1",
+      "expected": "SERVED",
+      "serverStatus": "SERVED",
+      "httpStatus": 200,
+      "elapsedMs": 2498,
+      "view": "workspace",
+      "active": true,
+      "analysisError": null,
+      "unsupported": false,
+      "hasCanvas": true,
+      "note": "Đề không cho chiều cao nên hình dưới đây chỉ là một hình minh họa: đáp số đã được kiểm là không phụ thuộc chiều cao, nhưng độ cao vẽ trên hình không phải dữ kiện của đề.",
+      "bodyHasRawTraceback": false,
+      "bodyHasRawReasonCode": false,
+      "bodyHasPhotoCopy": false,
+      "bodyHasAnalyzeAiCopy": false,
+      "orbit": {
+        "fps": 118,
+        "canvasStable": true,
+        "heapMB": 17.95
+      },
+      "api": [
+        {
+          "path": "/api/analyze",
+          "status": 200
+        }
+      ],
+      "consoleErrors": [],
+      "pageErrors": [],
+      "pass": true
+    },
+    {
+      "id": "served_ratio_point",
+      "viewport": "1440x900@1.1",
+      "expected": "SERVED",
+      "serverStatus": "SERVED",
+      "httpStatus": 200,
+      "elapsedMs": 2690,
+      "view": "workspace",
+      "active": true,
+      "analysisError": null,
+      "unsupported": false,
+      "hasCanvas": true,
+      "note": null,
+      "bodyHasRawTraceback": false,
+      "bodyHasRawReasonCode": false,
+      "bodyHasPhotoCopy": false,
+      "bodyHasAnalyzeAiCopy": false,
+      "orbit": {
+        "fps": 100.4,
+        "canvasStable": true,
+        "heapMB": 18.53
+      },
+      "api": [
+        {
+          "path": "/api/analyze",
+          "status": 200
+        }
+      ],
+      "consoleErrors": [],
+      "pageErrors": [],
+      "pass": true
+    },
+    {
+      "id": "refused_missing_dimension",
+      "viewport": "1440x900@1.1",
+      "expected": "REFUSED",
+      "serverStatus": "REFUSED",
+      "httpStatus": 200,
+      "elapsedMs": 1440,
+      "view": "home",
+      "active": false,
+      "analysisError": null,
+      "unsupported": true,
+      "hasCanvas": false,
+      "note": null,
+      "bodyHasRawTraceback": false,
+      "bodyHasRawReasonCode": false,
+      "bodyHasPhotoCopy": false,
+      "bodyHasAnalyzeAiCopy": false,
+      "orbit": null,
+      "api": [
+        {
+          "path": "/api/analyze",
+          "status": 200
+        }
+      ],
+      "consoleErrors": [],
+      "pageErrors": [],
+      "pass": true
+    },
+    {
+      "id": "refused_non_unique_foot",
+      "viewport": "1440x900@1.1",
+      "expected": "REFUSED",
+      "serverStatus": "REFUSED",
+      "httpStatus": 200,
+      "elapsedMs": 2201,
+      "view": "home",
+      "active": false,
+      "analysisError": null,
+      "unsupported": true,
+      "hasCanvas": false,
+      "note": null,
+      "bodyHasRawTraceback": false,
+      "bodyHasRawReasonCode": false,
+      "bodyHasPhotoCopy": false,
+      "bodyHasAnalyzeAiCopy": false,
+      "orbit": null,
+      "api": [
+        {
+          "path": "/api/analyze",
+          "status": 200
+        }
+      ],
+      "consoleErrors": [],
+      "pageErrors": [],
+      "pass": true
+    },
+    {
+      "id": "refused_out_of_scope_needs_ai",
+      "viewport": "1440x900@1.1",
+      "expected": "REFUSED",
+      "serverStatus": null,
+      "httpStatus": 503,
+      "elapsedMs": 1529,
+      "view": "home",
+      "active": false,
+      "analysisError": "Đề này cần bước phân tích bằng AI, nhưng bước đó đang tạm tắt trên máy chủ. Hệ chỉ tự giải được các dạng đề quen thuộc khi không có AI — em thử diễn đạt lại theo cách trong sách giáo khoa, hoặc quay lại sau.",
+      "unsupported": false,
+      "hasCanvas": false,
+      "note": null,
+      "bodyHasRawTraceback": false,
+      "bodyHasRawReasonCode": false,
+      "bodyHasPhotoCopy": false,
+      "bodyHasAnalyzeAiCopy": true,
+      "orbit": null,
+      "api": [
+        {
+          "path": "/api/analyze",
+          "status": 503
+        }
+      ],
+      "consoleErrors": [
+        "Failed to load resource: the server responded with a status of 503 (Service Unavailable)"
+      ],
+      "pageErrors": [],
+      "pass": true
+    }
+  ],
+  "imageCase": {
+    "fileInputFound": true,
+    "active": false,
+    "hasCanvas": false,
+    "bodyHasRawTraceback": false,
+    "api": [
+      {
+        "path": "/api/health",
+        "status": 200
+      },
+      {
+        "path": "/api/auth/me",
+        "status": 200
+      },
+      {
+        "path": "/api/input/prepare",
+        "status": 503
+      },
+      {
+        "path": "/api/health",
+        "status": 200
+      },
+      {
+        "path": "/api/health",
+        "status": 200
+      }
+    ],
+    "consoleErrors": [
+      "Failed to load resource: the server responded with a status of 503 (Service Unavailable)"
+    ],
+    "pageErrors": [],
+    "pass": true
+  },
+  "summary": {
+    "pass": 12,
+    "total": 12,
+    "imagePass": true
+  }
+}

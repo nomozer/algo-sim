@@ -1,0 +1,621 @@
+{
+  "schema": "axo-evaluation-freeze/1",
+  "harness_version": "axo-live-acceptance-harness/1",
+  "phase_mode": "candidate_bind",
+  "baseline_ref": null,
+  "frozen_before_any_product_change": false,
+  "code": {
+    "head": "b10c0a1e4022dfd5af93aeb6ebf75de61078a901",
+    "branch": "HEAD",
+    "candidate_commit": "35a17644acb11ea8a0853afb5b7cdc1814f37df8",
+    "product_commit_sha": "2bb0211a1057c5d2a503f8a1f19e96cf84decff5",
+    "measured_system_tree_hash": "bdb737bba9ab94d0274b57e25089c01d4cb47935d5989658e7c13aad1e79b132",
+    "cache_version": "158",
+    "route_d_cache_policy": "158:route-d",
+    "semantic_environment_hash": "f9df4bf0c8bd458a278d2692567fa3e096340ae37ff5493730dff4067c0f5e19",
+    "parser_version": "local-geometry-parser/3",
+    "slm_extractor_version": "local-slm-extractor/6",
+    "slm_validator_version": "slm-grounding-validator/6"
+  },
+  "model": {
+    "key": "qwen3-0.6b-axo-v9-q4_k_m",
+    "sha256": "73f1484b08b97ed2a1f44e32bcf6610210c7fda51567c4cd0a03d98dffc6cc35",
+    "llama_cpp_release": "b12470"
+  },
+  "inputs": {
+    "manifest_sha256": "fe5dbf8c77ec29e4f82bb85ba95083f6eae15061a0662cedc673fabad8b71b0e",
+    "criteria_sha256": "a2c236d6cdd809680dc108a3c53a4c0e3703fe584bfa6e2b5f1fe455953a159e"
+  },
+  "counts": {
+    "valid_total": 58,
+    "in_scope": 58,
+    "parser_complete": 44,
+    "slm_required": 14,
+    "preregistered_slm_targets": 0,
+    "preregistered_slm_targets_in_slm_required": 0,
+    "separate": 0,
+    "negative": 22
+  },
+  "rows": [
+    {
+      "case_id": "T01",
+      "intent": "QUERY_WITH_SCENE",
+      "in_scope": true,
+      "preregistered_slm_target": false,
+      "parse_raw": "LOCAL_PARSE_COMPLETE",
+      "parse_v3": "LOCAL_PARSE_COMPLETE",
+      "v3_changed": true,
+      "stratum": "PARSER_COMPLETE"
+    },
+    {
+      "case_id": "T02",
+      "intent": "QUERY_WITH_SCENE",
+      "in_scope": true,
+      "preregistered_slm_target": false,
+      "parse_raw": "LOCAL_PARSE_COMPLETE",
+      "parse_v3": null,
+      "v3_changed": false,
+      "stratum": "PARSER_COMPLETE"
+    },
+    {
+      "case_id": "T03",
+      "intent": "QUERY_WITH_SCENE",
+      "in_scope": true,
+      "preregistered_slm_target": false,
+      "parse_raw": "LOCAL_PARSE_COMPLETE",
+      "parse_v3": "LOCAL_PARSE_COMPLETE",
+      "v3_changed": true,
+      "stratum": "PARSER_COMPLETE"
+    },
+    {
+      "case_id": "T04",
+      "intent": "QUERY_WITH_SCENE",
+      "in_scope": true,
+      "preregistered_slm_target": false,
+      "parse_raw": "LOCAL_PARSE_COMPLETE",
+      "parse_v3": null,
+      "v3_changed": false,
+      "stratum": "PARSER_COMPLETE"
+    },
+    {
+      "case_id": "T05",
+      "intent": "QUERY_WITH_SCENE",
+      "in_scope": true,
+      "preregistered_slm_target": false,
+      "parse_raw": "LOCAL_PARSE_COMPLETE",
+      "parse_v3": null,
+      "v3_changed": false,
+      "stratum": "PARSER_COMPLETE"
+    },
+    {
+      "case_id": "T06",
+      "intent": "QUERY_WITH_SCENE",
+      "in_scope": true,
+      "preregistered_slm_target": false,
+      "parse_raw": "LOCAL_PARSE_PARTIAL",
+      "parse_v3": "LOCAL_PARSE_PARTIAL",
+      "v3_changed": true,
+      "stratum": "SLM_REQUIRED"
+    },
+    {
+      "case_id": "T07",
+      "intent": "QUERY_WITH_SCENE",
+      "in_scope": true,
+      "preregistered_slm_target": false,
+      "parse_raw": "LOCAL_PARSE_COMPLETE",
+      "parse_v3": "LOCAL_PARSE_COMPLETE",
+      "v3_changed": true,
+      "stratum": "PARSER_COMPLETE"
+    },
+    {
+      "case_id": "T08",
+      "intent": "QUERY_WITH_SCENE",
+      "in_scope": true,
+      "preregistered_slm_target": false,
+      "parse_raw": "LOCAL_PARSE_COMPLETE",
+      "parse_v3": null,
+      "v3_changed": false,
+      "stratum": "PARSER_COMPLETE"
+    },
+    {
+      "case_id": "T09",
+      "intent": "QUERY_WITH_SCENE",
+      "in_scope": true,
+      "preregistered_slm_target": false,
+      "parse_raw": "LOCAL_PARSE_COMPLETE",
+      "parse_v3": "LOCAL_PARSE_COMPLETE",
+      "v3_changed": true,
+      "stratum": "PARSER_COMPLETE"
+    },
+    {
+      "case_id": "T10",
+      "intent": "QUERY_WITH_SCENE",
+      "in_scope": true,
+      "preregistered_slm_target": false,
+      "parse_raw": "LOCAL_PARSE_COMPLETE",
+      "parse_v3": null,
+      "v3_changed": false,
+      "stratum": "PARSER_COMPLETE"
+    },
+    {
+      "case_id": "T11",
+      "intent": "QUERY_WITH_SCENE",
+      "in_scope": true,
+      "preregistered_slm_target": false,
+      "parse_raw": "LOCAL_PARSE_COMPLETE",
+      "parse_v3": null,
+      "v3_changed": false,
+      "stratum": "PARSER_COMPLETE"
+    },
+    {
+      "case_id": "T12",
+      "intent": "QUERY_WITH_SCENE",
+      "in_scope": true,
+      "preregistered_slm_target": false,
+      "parse_raw": "LOCAL_PARSE_PARTIAL",
+      "parse_v3": "LOCAL_PARSE_COMPLETE",
+      "v3_changed": true,
+      "stratum": "PARSER_COMPLETE"
+    },
+    {
+      "case_id": "T13",
+      "intent": "SIMULATE_ONLY",
+      "in_scope": true,
+      "preregistered_slm_target": false,
+      "parse_raw": "LOCAL_PARSE_COMPLETE",
+      "parse_v3": "LOCAL_PARSE_COMPLETE",
+      "v3_changed": true,
+      "stratum": "PARSER_COMPLETE"
+    },
+    {
+      "case_id": "T14",
+      "intent": "QUERY_WITH_SCENE",
+      "in_scope": true,
+      "preregistered_slm_target": false,
+      "parse_raw": "LOCAL_PARSE_PARTIAL",
+      "parse_v3": "LOCAL_PARSE_COMPLETE",
+      "v3_changed": true,
+      "stratum": "PARSER_COMPLETE"
+    },
+    {
+      "case_id": "T15",
+      "intent": "QUERY_WITH_SCENE",
+      "in_scope": true,
+      "preregistered_slm_target": false,
+      "parse_raw": "LOCAL_PARSE_COMPLETE",
+      "parse_v3": "LOCAL_PARSE_COMPLETE",
+      "v3_changed": true,
+      "stratum": "PARSER_COMPLETE"
+    },
+    {
+      "case_id": "T16",
+      "intent": "QUERY_WITH_SCENE",
+      "in_scope": true,
+      "preregistered_slm_target": false,
+      "parse_raw": "LOCAL_PARSE_COMPLETE",
+      "parse_v3": null,
+      "v3_changed": false,
+      "stratum": "PARSER_COMPLETE"
+    },
+    {
+      "case_id": "T17",
+      "intent": "QUERY_WITH_SCENE",
+      "in_scope": true,
+      "preregistered_slm_target": false,
+      "parse_raw": "LOCAL_PARSE_COMPLETE",
+      "parse_v3": null,
+      "v3_changed": false,
+      "stratum": "PARSER_COMPLETE"
+    },
+    {
+      "case_id": "E01",
+      "intent": "QUERY_WITH_SCENE",
+      "in_scope": true,
+      "preregistered_slm_target": false,
+      "parse_raw": "LOCAL_PARSE_COMPLETE",
+      "parse_v3": "LOCAL_PARSE_COMPLETE",
+      "v3_changed": true,
+      "stratum": "PARSER_COMPLETE"
+    },
+    {
+      "case_id": "E02",
+      "intent": "QUERY_WITH_SCENE",
+      "in_scope": true,
+      "preregistered_slm_target": false,
+      "parse_raw": "LOCAL_PARSE_COMPLETE",
+      "parse_v3": "LOCAL_PARSE_PARTIAL",
+      "v3_changed": true,
+      "stratum": "PARSER_COMPLETE"
+    },
+    {
+      "case_id": "E03",
+      "intent": "QUERY_WITH_SCENE",
+      "in_scope": true,
+      "preregistered_slm_target": false,
+      "parse_raw": "LOCAL_PARSE_COMPLETE",
+      "parse_v3": null,
+      "v3_changed": false,
+      "stratum": "PARSER_COMPLETE"
+    },
+    {
+      "case_id": "E04",
+      "intent": "QUERY_WITH_SCENE",
+      "in_scope": true,
+      "preregistered_slm_target": false,
+      "parse_raw": "LOCAL_PARSE_COMPLETE",
+      "parse_v3": "LOCAL_PARSE_PARTIAL",
+      "v3_changed": true,
+      "stratum": "PARSER_COMPLETE"
+    },
+    {
+      "case_id": "E05",
+      "intent": "QUERY_WITH_SCENE",
+      "in_scope": true,
+      "preregistered_slm_target": false,
+      "parse_raw": "LOCAL_PARSE_COMPLETE",
+      "parse_v3": "LOCAL_PARSE_PARTIAL",
+      "v3_changed": true,
+      "stratum": "PARSER_COMPLETE"
+    },
+    {
+      "case_id": "E06",
+      "intent": "QUERY_WITH_SCENE",
+      "in_scope": true,
+      "preregistered_slm_target": false,
+      "parse_raw": "LOCAL_PARSE_COMPLETE",
+      "parse_v3": null,
+      "v3_changed": false,
+      "stratum": "PARSER_COMPLETE"
+    },
+    {
+      "case_id": "E07",
+      "intent": "QUERY_WITH_SCENE",
+      "in_scope": true,
+      "preregistered_slm_target": false,
+      "parse_raw": "LOCAL_PARSE_COMPLETE",
+      "parse_v3": "LOCAL_PARSE_PARTIAL",
+      "v3_changed": true,
+      "stratum": "PARSER_COMPLETE"
+    },
+    {
+      "case_id": "E08",
+      "intent": "QUERY_WITH_SCENE",
+      "in_scope": true,
+      "preregistered_slm_target": false,
+      "parse_raw": "LOCAL_PARSE_COMPLETE",
+      "parse_v3": "LOCAL_PARSE_COMPLETE",
+      "v3_changed": true,
+      "stratum": "PARSER_COMPLETE"
+    },
+    {
+      "case_id": "E09",
+      "intent": "QUERY_WITH_SCENE",
+      "in_scope": true,
+      "preregistered_slm_target": false,
+      "parse_raw": "LOCAL_PARSE_COMPLETE",
+      "parse_v3": "LOCAL_PARSE_PARTIAL",
+      "v3_changed": true,
+      "stratum": "PARSER_COMPLETE"
+    },
+    {
+      "case_id": "E10",
+      "intent": "QUERY_WITH_SCENE",
+      "in_scope": true,
+      "preregistered_slm_target": false,
+      "parse_raw": "LOCAL_PARSE_COMPLETE",
+      "parse_v3": "LOCAL_PARSE_PARTIAL",
+      "v3_changed": true,
+      "stratum": "PARSER_COMPLETE"
+    },
+    {
+      "case_id": "E11",
+      "intent": "QUERY_WITH_SCENE",
+      "in_scope": true,
+      "preregistered_slm_target": false,
+      "parse_raw": "LOCAL_PARSE_COMPLETE",
+      "parse_v3": "LOCAL_PARSE_PARTIAL",
+      "v3_changed": true,
+      "stratum": "PARSER_COMPLETE"
+    },
+    {
+      "case_id": "E12",
+      "intent": "QUERY_WITH_SCENE",
+      "in_scope": true,
+      "preregistered_slm_target": false,
+      "parse_raw": "LOCAL_PARSE_COMPLETE",
+      "parse_v3": "LOCAL_PARSE_PARTIAL",
+      "v3_changed": true,
+      "stratum": "PARSER_COMPLETE"
+    },
+    {
+      "case_id": "E13",
+      "intent": "QUERY_WITH_SCENE",
+      "in_scope": true,
+      "preregistered_slm_target": false,
+      "parse_raw": "LOCAL_PARSE_COMPLETE",
+      "parse_v3": "LOCAL_PARSE_COMPLETE",
+      "v3_changed": true,
+      "stratum": "PARSER_COMPLETE"
+    },
+    {
+      "case_id": "E14",
+      "intent": "QUERY_WITH_SCENE",
+      "in_scope": true,
+      "preregistered_slm_target": false,
+      "parse_raw": "LOCAL_PARSE_COMPLETE",
+      "parse_v3": "LOCAL_PARSE_PARTIAL",
+      "v3_changed": true,
+      "stratum": "PARSER_COMPLETE"
+    },
+    {
+      "case_id": "E15",
+      "intent": "QUERY_WITH_SCENE",
+      "in_scope": true,
+      "preregistered_slm_target": false,
+      "parse_raw": "LOCAL_PARSE_COMPLETE",
+      "parse_v3": null,
+      "v3_changed": false,
+      "stratum": "PARSER_COMPLETE"
+    },
+    {
+      "case_id": "E16",
+      "intent": "QUERY_WITH_SCENE",
+      "in_scope": true,
+      "preregistered_slm_target": false,
+      "parse_raw": "LOCAL_PARSE_COMPLETE",
+      "parse_v3": "LOCAL_PARSE_PARTIAL",
+      "v3_changed": true,
+      "stratum": "PARSER_COMPLETE"
+    },
+    {
+      "case_id": "G01",
+      "intent": "QUERY_WITH_SCENE",
+      "in_scope": true,
+      "preregistered_slm_target": false,
+      "parse_raw": "LOCAL_PARSE_PARTIAL",
+      "parse_v3": null,
+      "v3_changed": false,
+      "stratum": "SLM_REQUIRED"
+    },
+    {
+      "case_id": "G02",
+      "intent": "QUERY_WITH_SCENE",
+      "in_scope": true,
+      "preregistered_slm_target": false,
+      "parse_raw": "LOCAL_PARSE_COMPLETE",
+      "parse_v3": "LOCAL_PARSE_COMPLETE",
+      "v3_changed": true,
+      "stratum": "PARSER_COMPLETE"
+    },
+    {
+      "case_id": "G03",
+      "intent": "SIMULATE_ONLY",
+      "in_scope": true,
+      "preregistered_slm_target": false,
+      "parse_raw": "LOCAL_PARSE_PARTIAL",
+      "parse_v3": null,
+      "v3_changed": false,
+      "stratum": "SLM_REQUIRED"
+    },
+    {
+      "case_id": "G04",
+      "intent": "SIMULATE_ONLY",
+      "in_scope": true,
+      "preregistered_slm_target": false,
+      "parse_raw": "LOCAL_PARSE_COMPLETE",
+      "parse_v3": "LOCAL_PARSE_COMPLETE",
+      "v3_changed": true,
+      "stratum": "PARSER_COMPLETE"
+    },
+    {
+      "case_id": "G05",
+      "intent": "QUERY_WITH_SCENE",
+      "in_scope": true,
+      "preregistered_slm_target": false,
+      "parse_raw": "LOCAL_PARSE_COMPLETE",
+      "parse_v3": null,
+      "v3_changed": false,
+      "stratum": "PARSER_COMPLETE"
+    },
+    {
+      "case_id": "G06",
+      "intent": "QUERY_WITH_SCENE",
+      "in_scope": true,
+      "preregistered_slm_target": false,
+      "parse_raw": "LOCAL_PARSE_PARTIAL",
+      "parse_v3": "LOCAL_PARSE_PARTIAL",
+      "v3_changed": true,
+      "stratum": "SLM_REQUIRED"
+    },
+    {
+      "case_id": "G07",
+      "intent": "QUERY_WITH_SCENE",
+      "in_scope": true,
+      "preregistered_slm_target": false,
+      "parse_raw": "LOCAL_PARSE_COMPLETE",
+      "parse_v3": "LOCAL_PARSE_COMPLETE",
+      "v3_changed": true,
+      "stratum": "PARSER_COMPLETE"
+    },
+    {
+      "case_id": "G08",
+      "intent": "QUERY_WITH_SCENE",
+      "in_scope": true,
+      "preregistered_slm_target": false,
+      "parse_raw": "LOCAL_PARSE_PARTIAL",
+      "parse_v3": null,
+      "v3_changed": false,
+      "stratum": "SLM_REQUIRED"
+    },
+    {
+      "case_id": "G09",
+      "intent": "QUERY_WITH_SCENE",
+      "in_scope": true,
+      "preregistered_slm_target": false,
+      "parse_raw": "LOCAL_PARSE_COMPLETE",
+      "parse_v3": "LOCAL_PARSE_COMPLETE",
+      "v3_changed": true,
+      "stratum": "PARSER_COMPLETE"
+    },
+    {
+      "case_id": "G10",
+      "intent": "QUERY_WITH_SCENE",
+      "in_scope": true,
+      "preregistered_slm_target": false,
+      "parse_raw": "LOCAL_PARSE_COMPLETE",
+      "parse_v3": null,
+      "v3_changed": false,
+      "stratum": "PARSER_COMPLETE"
+    },
+    {
+      "case_id": "G11",
+      "intent": "QUERY_WITH_SCENE",
+      "in_scope": true,
+      "preregistered_slm_target": false,
+      "parse_raw": "LOCAL_PARSE_PARTIAL",
+      "parse_v3": "LOCAL_PARSE_PARTIAL",
+      "v3_changed": true,
+      "stratum": "SLM_REQUIRED"
+    },
+    {
+      "case_id": "G12",
+      "intent": "QUERY_WITH_SCENE",
+      "in_scope": true,
+      "preregistered_slm_target": false,
+      "parse_raw": "LOCAL_PARSE_COMPLETE",
+      "parse_v3": "LOCAL_PARSE_COMPLETE",
+      "v3_changed": true,
+      "stratum": "PARSER_COMPLETE"
+    },
+    {
+      "case_id": "G13",
+      "intent": "QUERY_WITH_SCENE",
+      "in_scope": true,
+      "preregistered_slm_target": false,
+      "parse_raw": "LOCAL_PARSE_COMPLETE",
+      "parse_v3": "LOCAL_PARSE_COMPLETE",
+      "v3_changed": true,
+      "stratum": "PARSER_COMPLETE"
+    },
+    {
+      "case_id": "G14",
+      "intent": "SIMULATE_ONLY",
+      "in_scope": true,
+      "preregistered_slm_target": false,
+      "parse_raw": "LOCAL_PARSE_COMPLETE",
+      "parse_v3": null,
+      "v3_changed": false,
+      "stratum": "PARSER_COMPLETE"
+    },
+    {
+      "case_id": "G15",
+      "intent": "QUERY_WITH_SCENE",
+      "in_scope": true,
+      "preregistered_slm_target": false,
+      "parse_raw": "LOCAL_PARSE_COMPLETE",
+      "parse_v3": null,
+      "v3_changed": false,
+      "stratum": "PARSER_COMPLETE"
+    },
+    {
+      "case_id": "C01",
+      "intent": "QUERY_WITH_SCENE",
+      "in_scope": true,
+      "preregistered_slm_target": false,
+      "parse_raw": "LOCAL_PARSE_PARTIAL",
+      "parse_v3": "LOCAL_PARSE_PARTIAL",
+      "v3_changed": true,
+      "stratum": "SLM_REQUIRED"
+    },
+    {
+      "case_id": "C02",
+      "intent": "QUERY_WITH_SCENE",
+      "in_scope": true,
+      "preregistered_slm_target": false,
+      "parse_raw": "LOCAL_PARSE_COMPLETE",
+      "parse_v3": "LOCAL_PARSE_COMPLETE",
+      "v3_changed": true,
+      "stratum": "PARSER_COMPLETE"
+    },
+    {
+      "case_id": "C03",
+      "intent": "SIMULATE_ONLY",
+      "in_scope": true,
+      "preregistered_slm_target": false,
+      "parse_raw": "LOCAL_PARSE_PARTIAL",
+      "parse_v3": "LOCAL_PARSE_PARTIAL",
+      "v3_changed": true,
+      "stratum": "SLM_REQUIRED"
+    },
+    {
+      "case_id": "C04",
+      "intent": "QUERY_WITH_SCENE",
+      "in_scope": true,
+      "preregistered_slm_target": false,
+      "parse_raw": "LOCAL_PARSE_PARTIAL",
+      "parse_v3": null,
+      "v3_changed": false,
+      "stratum": "SLM_REQUIRED"
+    },
+    {
+      "case_id": "C05",
+      "intent": "QUERY_WITH_SCENE",
+      "in_scope": true,
+      "preregistered_slm_target": false,
+      "parse_raw": "LOCAL_PARSE_PARTIAL",
+      "parse_v3": "LOCAL_PARSE_PARTIAL",
+      "v3_changed": true,
+      "stratum": "SLM_REQUIRED"
+    },
+    {
+      "case_id": "C06",
+      "intent": "QUERY_WITH_SCENE",
+      "in_scope": true,
+      "preregistered_slm_target": false,
+      "parse_raw": "LOCAL_PARSE_PARTIAL",
+      "parse_v3": "LOCAL_PARSE_PARTIAL",
+      "v3_changed": true,
+      "stratum": "SLM_REQUIRED"
+    },
+    {
+      "case_id": "C07",
+      "intent": "SIMULATE_ONLY",
+      "in_scope": true,
+      "preregistered_slm_target": false,
+      "parse_raw": "LOCAL_PARSE_PARTIAL",
+      "parse_v3": "LOCAL_PARSE_PARTIAL",
+      "v3_changed": true,
+      "stratum": "SLM_REQUIRED"
+    },
+    {
+      "case_id": "C08",
+      "intent": "QUERY_WITH_SCENE",
+      "in_scope": true,
+      "preregistered_slm_target": false,
+      "parse_raw": "LOCAL_PARSE_PARTIAL",
+      "parse_v3": "LOCAL_PARSE_PARTIAL",
+      "v3_changed": true,
+      "stratum": "SLM_REQUIRED"
+    },
+    {
+      "case_id": "C09",
+      "intent": "QUERY_WITH_SCENE",
+      "in_scope": true,
+      "preregistered_slm_target": false,
+      "parse_raw": "LOCAL_PARSE_COMPLETE",
+      "parse_v3": "LOCAL_PARSE_COMPLETE",
+      "v3_changed": true,
+      "stratum": "PARSER_COMPLETE"
+    },
+    {
+      "case_id": "C10",
+      "intent": "QUERY_WITH_SCENE",
+      "in_scope": true,
+      "preregistered_slm_target": false,
+      "parse_raw": "LOCAL_PARSE_PARTIAL",
+      "parse_v3": "LOCAL_PARSE_PARTIAL",
+      "v3_changed": true,
+      "stratum": "SLM_REQUIRED"
+    }
+  ]
+}

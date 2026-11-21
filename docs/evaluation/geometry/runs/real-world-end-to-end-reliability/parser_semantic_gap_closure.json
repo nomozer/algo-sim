@@ -1,0 +1,92 @@
+{
+  "schema": "algosim-parser-semantic-gap-closure/1",
+  "generated_at_utc": "2026-11-10T05:19:28.648098+00:00",
+  "product_commit": "7994da7a64c8dc288c4de972df2d8d1db65e0c20",
+  "head_commit": "e838ab50d06d3ac0d5b02a98b9e3083ea0bfd5e6",
+  "measured_system_tree_hash": "3754cbd18f58ddfb913fb61efd3dd078b0767770cff935a975cc8c258a1859fa",
+  "measured_system_file_count": 108,
+  "code_version": {
+    "typed_fact_next": "typed-fact-next/2",
+    "bridge": "typed-fact-next-bridge/2",
+    "planner": "geometry-fact-planner/26",
+    "registry": "geometry-functions/33",
+    "engine": "geometry-function-engine/24",
+    "adapter": "hybrid-simulation-adapter/4",
+    "envelope": "hybrid-route-d-simulation/4",
+    "local_parser": "local-geometry-parser/1",
+    "adaptive_router": "adaptive-input-router/1",
+    "cache_version": "132"
+  },
+  "input_or_case_hash": "e97c0742af10a07b9a2ef9230ae2c9d81eefd8e8ea0539db7e36b15db402f1a8",
+  "oracle": "Hand oracle: S(0,0,2), B(2,0,0), C(2,2,0) ⇒ M(1,0,1), E = S + 3/4·SC⃗ = (3/2,3/2,1/2); ME² = 1/4+9/4+1/4 = 11/4",
+  "test_command": "pytest backend/tests/geometry/test_real_world_end_to_end_reliability.py -k ratio -q",
+  "test_environment": {
+    "os": "Windows-11-10.0.26100-SP0",
+    "python": "3.12.10",
+    "cpu_logical_cores": 12,
+    "allow_live_ai": 0,
+    "live_gemini_calls": 0,
+    "benchmark_tier": "HOST_BENCHMARK_OFFLINE"
+  },
+  "expected_behavior": "Part-to-part ratio 'E thuộc cạnh SC sao cho SE = 3EC' maps to the existing divide_segment primitive (k/(k+1)); malformed part pairs fail closed.",
+  "actual_behavior": "probes passed 2/2",
+  "verdict": "PASS",
+  "run_id": "real-world-end-to-end-reliability",
+  "wave_id": "REAL_WORLD_END_TO_END_RELIABILITY",
+  "baseline_head_commit": "8d0fde3378c9b087bdbbc4c66e1a40aad3b532cc",
+  "baseline_product_commit": "c61a3589782bde35b69e8376d8ebf136314e47f3",
+  "case_ids": [
+    "ratio_SE_3EC_length",
+    "ratio_bad_parts_fail_closed"
+  ],
+  "measurement_status": "MEASURED_OFFLINE",
+  "oracle_provenance": "Independent coordinate hand derivation: S(0,0,2), B(2,0,0), C(2,2,0) ⇒ M(1,0,1), E=(3/2,3/2,1/2) ⇒ ME=√11/2",
+  "changes": [
+    "local_geometry_parser stage 5b-3 part-to-part ratio → point_divides_segment; Stage 7k '=' guard accepts the span only when that premise was built"
+  ],
+  "probes": {
+    "ratio_SE_3EC_length": {
+      "expected": {
+        "status": "SERVED",
+        "answer": "√11/2"
+      },
+      "actual": {
+        "status": "SERVED",
+        "reason_code": null,
+        "fallback_reason": null,
+        "answer": "√11/2",
+        "scene_configuration": null,
+        "scene3d_continuity_errors": [],
+        "chosen_route": "LOCAL_DETERMINISTIC_HYBRID",
+        "provider_calls": 0,
+        "elapsed_ms": 38.068
+      },
+      "pass": true
+    },
+    "ratio_bad_parts_fail_closed": {
+      "expected": {
+        "status": "NOT_SERVED",
+        "answer": null
+      },
+      "actual": {
+        "status": "REFUSED",
+        "reason_code": "LIVE_AI_DISABLED",
+        "fallback_reason": "UNPARSED_FACT_CANDIDATE",
+        "answer": null,
+        "scene_configuration": null,
+        "scene3d_continuity_errors": null,
+        "chosen_route": "FAIL_CLOSED_LIVE_AI_DISABLED",
+        "provider_calls": 0,
+        "elapsed_ms": 3.51
+      },
+      "pass": true
+    }
+  },
+  "remaining_parser_gaps_documented_not_fixed": [
+    "'Â = 60°' hat-angle notation (ext07)",
+    "noun-phrase goals without 'Tính' ('Khoảng cách … bằng', ext07/ext12)",
+    "compound 'Tính A và B' with heterogeneous goals (ext06)",
+    "'Mặt phẳng (P) và đường thẳng d cắt nhau tại I' word order (ext05)"
+  ],
+  "reason_not_fixed": "Each fix alone serves 0 additional External17 cases (root causes lie in Source Gate / Kernel / output policy); deferred to avoid unverified grammar growth."
+}

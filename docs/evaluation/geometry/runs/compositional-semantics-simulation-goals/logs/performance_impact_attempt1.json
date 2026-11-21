@@ -1,0 +1,487 @@
+{
+  "run_id": "compositional-semantics-simulation-goals",
+  "generated_at_utc": "2026-11-14T02:37:59.018764+00:00",
+  "head": "30fe2ee126919584dfb024141d86d2079b642cfd",
+  "environment": {
+    "ALLOW_LIVE_AI": "0",
+    "host": "developer desktop, shared, not isolated"
+  },
+  "command": "python docs/evaluation/geometry/runs/compositional-semantics-simulation-goals/tools/perf.py <before_backend>",
+  "summary": {
+    "before": {
+      "text_refused_median_ms": 1.97,
+      "text_served_median_ms": 24.11,
+      "diagnose_call_ms": 0.11642299999948591,
+      "prepare_single_median_ms": 2672.97,
+      "prepare_composite_median_ms": 3754.61
+    },
+    "after": {
+      "text_refused_median_ms": 3.44,
+      "text_served_median_ms": 38.1,
+      "diagnose_call_ms": 0.24391800000103103,
+      "prepare_single_median_ms": 6271.32,
+      "prepare_composite_median_ms": 5961.28
+    }
+  },
+  "rows": {
+    "before": {
+      "text": {
+        "mc_section_one_sentence": {
+          "ms": 2.307200000359444,
+          "status": "REFUSED"
+        },
+        "mc_section_split": {
+          "ms": 37.26170000027196,
+          "status": "SERVED"
+        },
+        "mc_section_renamed": {
+          "ms": 2.346499999475782,
+          "status": "REFUSED"
+        },
+        "mc_section_greek": {
+          "ms": 1.8202000001110719,
+          "status": "REFUSED"
+        },
+        "mc_extra_unread": {
+          "ms": 1.8841999999494874,
+          "status": "REFUSED"
+        },
+        "mc_extra_unread2": {
+          "ms": 1.83999999990192,
+          "status": "REFUSED"
+        },
+        "mc_distance_extra_unread": {
+          "ms": 1.8656999991435441,
+          "status": "REFUSED"
+        },
+        "mc_distance": {
+          "ms": 21.031399999628775,
+          "status": "SERVED"
+        },
+        "mc_decimal_value": {
+          "ms": 1.7566999995324295,
+          "status": "REFUSED"
+        },
+        "mc_label_list": {
+          "ms": 25.871400000141875,
+          "status": "SERVED"
+        },
+        "order_plane_after_goal": {
+          "ms": 1.8609999997352134,
+          "status": "REFUSED"
+        },
+        "order_plane_after_goal_sep": {
+          "ms": 1.9305000005260808,
+          "status": "REFUSED"
+        },
+        "order_plane_never_defined": {
+          "ms": 1.8448999999236548,
+          "status": "REFUSED"
+        },
+        "order_premises_swapped": {
+          "ms": 21.4388999993389,
+          "status": "SERVED"
+        },
+        "dp_named_midpoint_goal": {
+          "ms": 24.072199999864097,
+          "status": "SERVED"
+        },
+        "dp_unnamed_midpoint_goal": {
+          "ms": 24.156399999810674,
+          "status": "SERVED"
+        },
+        "dp_unnamed_centroid_goal": {
+          "ms": 23.102799999833223,
+          "status": "SERVED"
+        },
+        "dp_unnamed_through_point": {
+          "ms": 1.8067000000883127,
+          "status": "REFUSED"
+        },
+        "dp_free_point": {
+          "ms": 1.8270999999003834,
+          "status": "REFUSED"
+        },
+        "dp_free_point_goi": {
+          "ms": 1.7764000003808178,
+          "status": "REFUSED"
+        },
+        "dp_midpoint_as_goal": {
+          "ms": 2.007199999752629,
+          "status": "REFUSED"
+        },
+        "dp_reflection": {
+          "ms": 1.9847999992634868,
+          "status": "REFUSED"
+        },
+        "dp_projection_unnamed_image": {
+          "ms": 1.7951999998331303,
+          "status": "REFUSED"
+        },
+        "dp_redefined_conflict": {
+          "ms": 16.25080000030721,
+          "status": "REFUSED"
+        },
+        "goal_angle_line_plane": {
+          "ms": 26.33389999937208,
+          "status": "SERVED"
+        },
+        "goal_cos_line_plane": {
+          "ms": 1.9020999998247134,
+          "status": "REFUSED"
+        },
+        "goal_cos_spelled": {
+          "ms": 1.8930000005639158,
+          "status": "REFUSED"
+        },
+        "goal_tan_line_plane": {
+          "ms": 2.1006000006309478,
+          "status": "REFUSED"
+        },
+        "goal_sin_mc_stem": {
+          "ms": 2.1343000007618684,
+          "status": "REFUSED"
+        },
+        "goal_cos_planes": {
+          "ms": 2.114499999152031,
+          "status": "REFUSED"
+        },
+        "goal_cos_lines": {
+          "ms": 2.4131000000124914,
+          "status": "REFUSED"
+        },
+        "goal_tan_right_angle": {
+          "ms": 2.048299999842129,
+          "status": "REFUSED"
+        },
+        "goal_cos_scale_free": {
+          "ms": 2.283200000420038,
+          "status": "REFUSED"
+        },
+        "goal_cos_of_length_neg": {
+          "ms": 1.966099999663129,
+          "status": "REFUSED"
+        },
+        "goal_cos_squared_neg": {
+          "ms": 1.8353000004935893,
+          "status": "REFUSED"
+        },
+        "goal_cos_given_premise_neg": {
+          "ms": 1.9652000000860426,
+          "status": "REFUSED"
+        },
+        "goal_cos_wrong_object_neg": {
+          "ms": 1.9577000002755085,
+          "status": "REFUSED"
+        },
+        "proof_only": {
+          "ms": 3.4916000004159287,
+          "status": "REFUSED"
+        },
+        "proof_premise_not_given": {
+          "ms": 3.6406999997780076,
+          "status": "REFUSED"
+        },
+        "amb_plane_not_unique": {
+          "ms": 2.031100000749575,
+          "status": "REFUSED"
+        },
+        "contra_two_lengths": {
+          "ms": 12.996800000109943,
+          "status": "REFUSED"
+        },
+        "contra_skew_intersection": {
+          "ms": 14.128100000561972,
+          "status": "REFUSED"
+        },
+        "diagram_fact": {
+          "ms": 1.753900000039721,
+          "status": "REFUSED"
+        },
+        "_diagnose_ms": 0.11642299999948591
+      },
+      "prepare": {
+        "vmmu_r247": {
+          "ms": 4657.429899999443,
+          "status": "needs_confirmation",
+          "set": "REAL_SINGLE"
+        },
+        "vmmu_r254": {
+          "ms": 2470.8551000003354,
+          "status": "needs_confirmation",
+          "set": "REAL_SINGLE"
+        },
+        "vmmu_r256": {
+          "ms": 2875.0921999999264,
+          "status": "needs_confirmation",
+          "set": "REAL_SINGLE"
+        },
+        "vmmu_r258": {
+          "ms": 1788.3620000002338,
+          "status": "needs_confirmation",
+          "set": "REAL_SINGLE"
+        },
+        "vmmu_r266": {
+          "ms": 1903.7743999997474,
+          "status": "needs_confirmation",
+          "set": "REAL_SINGLE"
+        },
+        "vmmu_r270": {
+          "ms": 3834.716800000024,
+          "status": "needs_confirmation",
+          "set": "REAL_SINGLE"
+        },
+        "vmmu_r247+vmmu_r254": {
+          "ms": 3497.935299999881,
+          "status": "needs_selection",
+          "set": "COMPOSITE_2"
+        },
+        "vmmu_r256+vmmu_r258": {
+          "ms": 3814.126500000384,
+          "status": "needs_selection",
+          "set": "COMPOSITE_2"
+        },
+        "vmmu_r266+vmmu_r270": {
+          "ms": 4319.632399999136,
+          "status": "needs_selection",
+          "set": "COMPOSITE_2"
+        },
+        "vmmu_r273+vmmu_r277": {
+          "ms": 3695.0957999997627,
+          "status": "needs_selection",
+          "set": "COMPOSITE_2"
+        }
+      }
+    },
+    "after": {
+      "text": {
+        "mc_section_one_sentence": {
+          "ms": 66.07859999985521,
+          "status": "SERVED"
+        },
+        "mc_section_split": {
+          "ms": 41.2490999997317,
+          "status": "SERVED"
+        },
+        "mc_section_renamed": {
+          "ms": 43.87560000031954,
+          "status": "SERVED"
+        },
+        "mc_section_greek": {
+          "ms": 37.919000000329106,
+          "status": "SERVED"
+        },
+        "mc_extra_unread": {
+          "ms": 2.2681000000375207,
+          "status": "REFUSED"
+        },
+        "mc_extra_unread2": {
+          "ms": 2.4757000001045526,
+          "status": "REFUSED"
+        },
+        "mc_distance_extra_unread": {
+          "ms": 2.399699999841687,
+          "status": "REFUSED"
+        },
+        "mc_distance": {
+          "ms": 30.2614000001995,
+          "status": "SERVED"
+        },
+        "mc_decimal_value": {
+          "ms": 3.0314000005091657,
+          "status": "REFUSED"
+        },
+        "mc_label_list": {
+          "ms": 54.572400000324706,
+          "status": "SERVED"
+        },
+        "order_plane_after_goal": {
+          "ms": 39.91519999999582,
+          "status": "SERVED"
+        },
+        "order_plane_after_goal_sep": {
+          "ms": 43.10520000035467,
+          "status": "SERVED"
+        },
+        "order_plane_never_defined": {
+          "ms": 2.015899999605608,
+          "status": "REFUSED"
+        },
+        "order_premises_swapped": {
+          "ms": 38.28160000011849,
+          "status": "SERVED"
+        },
+        "dp_named_midpoint_goal": {
+          "ms": 39.31979999924806,
+          "status": "SERVED"
+        },
+        "dp_unnamed_midpoint_goal": {
+          "ms": 32.170799999221344,
+          "status": "SERVED"
+        },
+        "dp_unnamed_centroid_goal": {
+          "ms": 32.35560000030091,
+          "status": "SERVED"
+        },
+        "dp_unnamed_through_point": {
+          "ms": 3.69330000012269,
+          "status": "REFUSED"
+        },
+        "dp_free_point": {
+          "ms": 3.485000000182481,
+          "status": "REFUSED"
+        },
+        "dp_free_point_goi": {
+          "ms": 3.694300000461226,
+          "status": "REFUSED"
+        },
+        "dp_midpoint_as_goal": {
+          "ms": 4.954400000315218,
+          "status": "REFUSED"
+        },
+        "dp_reflection": {
+          "ms": 2.608900000268477,
+          "status": "REFUSED"
+        },
+        "dp_projection_unnamed_image": {
+          "ms": 3.438799999457842,
+          "status": "REFUSED"
+        },
+        "dp_redefined_conflict": {
+          "ms": 21.42909999929543,
+          "status": "REFUSED"
+        },
+        "goal_angle_line_plane": {
+          "ms": 26.07019999959448,
+          "status": "SERVED"
+        },
+        "goal_cos_line_plane": {
+          "ms": 41.60830000000715,
+          "status": "SERVED"
+        },
+        "goal_cos_spelled": {
+          "ms": 29.76120000039373,
+          "status": "SERVED"
+        },
+        "goal_tan_line_plane": {
+          "ms": 28.700799999569426,
+          "status": "SERVED"
+        },
+        "goal_sin_mc_stem": {
+          "ms": 29.17079999951966,
+          "status": "SERVED"
+        },
+        "goal_cos_planes": {
+          "ms": 54.614600000604696,
+          "status": "SERVED"
+        },
+        "goal_cos_lines": {
+          "ms": 32.22790000017994,
+          "status": "SERVED"
+        },
+        "goal_tan_right_angle": {
+          "ms": 27.784899999460322,
+          "status": "SERVED"
+        },
+        "goal_cos_scale_free": {
+          "ms": 34.35150000041176,
+          "status": "REFUSED"
+        },
+        "goal_cos_of_length_neg": {
+          "ms": 3.165600000102131,
+          "status": "REFUSED"
+        },
+        "goal_cos_squared_neg": {
+          "ms": 2.6668999998946674,
+          "status": "REFUSED"
+        },
+        "goal_cos_given_premise_neg": {
+          "ms": 2.487200000359735,
+          "status": "REFUSED"
+        },
+        "goal_cos_wrong_object_neg": {
+          "ms": 2.343999999538937,
+          "status": "REFUSED"
+        },
+        "proof_only": {
+          "ms": 6.4794999998412095,
+          "status": "REFUSED"
+        },
+        "proof_premise_not_given": {
+          "ms": 5.306000000018685,
+          "status": "REFUSED"
+        },
+        "amb_plane_not_unique": {
+          "ms": 3.8134999995236285,
+          "status": "REFUSED"
+        },
+        "contra_two_lengths": {
+          "ms": 23.775699999532662,
+          "status": "REFUSED"
+        },
+        "contra_skew_intersection": {
+          "ms": 23.34900000005291,
+          "status": "REFUSED"
+        },
+        "diagram_fact": {
+          "ms": 2.264400000058231,
+          "status": "REFUSED"
+        },
+        "_diagnose_ms": 0.24391800000103103
+      },
+      "prepare": {
+        "vmmu_r247": {
+          "ms": 8921.962200000053,
+          "status": "needs_confirmation",
+          "set": "REAL_SINGLE"
+        },
+        "vmmu_r254": {
+          "ms": 6679.255499999272,
+          "status": "needs_confirmation",
+          "set": "REAL_SINGLE"
+        },
+        "vmmu_r256": {
+          "ms": 5863.388699999632,
+          "status": "needs_confirmation",
+          "set": "REAL_SINGLE"
+        },
+        "vmmu_r258": {
+          "ms": 3557.90640000032,
+          "status": "needs_confirmation",
+          "set": "REAL_SINGLE"
+        },
+        "vmmu_r266": {
+          "ms": 3326.675599999362,
+          "status": "needs_confirmation",
+          "set": "REAL_SINGLE"
+        },
+        "vmmu_r270": {
+          "ms": 7794.989299999543,
+          "status": "needs_confirmation",
+          "set": "REAL_SINGLE"
+        },
+        "vmmu_r247+vmmu_r254": {
+          "ms": 5581.554700000197,
+          "status": "needs_selection",
+          "set": "COMPOSITE_2"
+        },
+        "vmmu_r256+vmmu_r258": {
+          "ms": 8070.976800000608,
+          "status": "needs_selection",
+          "set": "COMPOSITE_2"
+        },
+        "vmmu_r266+vmmu_r270": {
+          "ms": 6341.00269999999,
+          "status": "needs_selection",
+          "set": "COMPOSITE_2"
+        },
+        "vmmu_r273+vmmu_r277": {
+          "ms": 5143.42840000063,
+          "status": "needs_selection",
+          "set": "COMPOSITE_2"
+        }
+      }
+    }
+  },
+  "physical_low_end": "PHYSICAL_LOW_END_NOT_MEASURED"
+}

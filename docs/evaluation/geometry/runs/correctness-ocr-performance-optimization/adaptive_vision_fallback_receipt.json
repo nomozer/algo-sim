@@ -1,0 +1,64 @@
+{
+  "schema": "algo-sim-adaptive-vision-fallback-receipt/1",
+  "generated_at": "2026-11-09T13:02:28.705792+00:00",
+  "git": {
+    "branch": "feat/local-first-geometry-understanding",
+    "commit": "f96db02eb11ac80ed48c755155313710edcba588",
+    "tree": "a96642deb9c85aa18d36137b07f6f6b5cdf30a5a"
+  },
+  "router_version": "adaptive-input-router/1",
+  "cases_verified": {
+    "Case_A_Local_OCR_Verified_Zero_AI": {
+      "status": "SERVED",
+      "chosen_route": "LOCAL_OCR_VERIFIED_ZERO_AI",
+      "gemini_vision_calls": 0,
+      "gemini_typed_fact_calls": 0,
+      "total_provider_calls": 0,
+      "exact_value": "60",
+      "passed": true
+    },
+    "Case_B_OCR_Fails_Gate_Vision_Then_Local_Deterministic": {
+      "status": "SERVED",
+      "chosen_route": "VISION_THEN_LOCAL_DETERMINISTIC",
+      "gemini_vision_calls": 1,
+      "gemini_typed_fact_calls": 0,
+      "total_provider_calls": 1,
+      "exact_value": "16",
+      "passed": true
+    },
+    "Case_C_Vision_Then_TypedFactNext_Fallback_Zero_Vision_Retries": {
+      "status": "REFUSED",
+      "chosen_route": "VISION_THEN_AI_FALLBACK",
+      "gemini_vision_calls": 1,
+      "gemini_typed_fact_calls": 1,
+      "total_provider_calls": 2,
+      "passed": true
+    },
+    "Case_D_Missing_Data_Deterministic_Clarification_Zero_AI": {
+      "status": "REFUSED",
+      "chosen_route": "LOCAL_DETERMINISTIC_HYBRID",
+      "local_parse_status": "LOCAL_PARSE_COMPLETE",
+      "total_provider_calls": 0,
+      "refusal_code": "MISSING_DIMENSION",
+      "passed": false
+    },
+    "Conflict_E1_Numeric_SA8_vs_SA3_Requires_Confirmation": {
+      "status": "NEEDS_CONFIRMATION",
+      "chosen_route": "VISION_NEEDS_CONFIRMATION",
+      "reason_code": "OCR_VISION_MATH_CONFLICT",
+      "conflict_codes": [
+        "NUMERIC_ASSIGNMENT_CONFLICT"
+      ],
+      "passed": true
+    },
+    "Conflict_E2_Prime_Plane_ABC_vs_AprimeBC_Requires_Confirmation": {
+      "status": "NEEDS_CONFIRMATION",
+      "chosen_route": "VISION_NEEDS_CONFIRMATION",
+      "reason_code": "OCR_VISION_MATH_CONFLICT",
+      "conflict_codes": [
+        "PRIME_OR_PLANE_LABEL_CONFLICT"
+      ],
+      "passed": true
+    }
+  }
+}

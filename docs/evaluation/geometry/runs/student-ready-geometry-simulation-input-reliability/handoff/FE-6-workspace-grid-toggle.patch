@@ -1,0 +1,13 @@
+diff --git a/frontend/src/components/SimulationWorkspace.tsx b/frontend/src/components/SimulationWorkspace.tsx
+index c9da6d0..391bb09 100644
+--- a/frontend/src/components/SimulationWorkspace.tsx
++++ b/frontend/src/components/SimulationWorkspace.tsx
+@@ -1543,7 +1543,7 @@ export function AxoWorkspaceV62({
+                   isPlaying={dangPhat}
+                   annotationView={annotationView}
+                   auxiliaryShown={hinhPhu}
+-                  gridShown={false}
++                  gridShown={luoi}
+                   xray={xray}
+                   shellShown={showShell}
+                   planeShown={showPlane}

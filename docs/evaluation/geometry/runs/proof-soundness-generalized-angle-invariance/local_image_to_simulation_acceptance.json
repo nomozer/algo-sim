@@ -1,0 +1,724 @@
+{
+  "run_id": "proof-soundness-generalized-angle-invariance",
+  "generated_at_utc": "2026-11-14T11:51:49.144136+00:00",
+  "head": "244d4b0223017c8eb217dcaf0872d188d663a96f",
+  "reference_status": "AGENT_TRANSCRIBED_UNVERIFIED; answer oracle = dataset key",
+  "input": "image → /api/input/prepare (local OCR) → scripted confirmation of flagged spans only (SCRIPTED_NOT_REAL_STUDENT) → /api/analyze",
+  "upload_to_first_model_note": "server-side path only (prepare + analyze); browser render adds ~0.4 s (frontend_performance_profile.json)",
+  "grading_note": "source_goal_completion ⇒ GOAL_VISUALIZATION_READY_NUMERIC_NOT_ANSWERED (never a numeric answer)",
+  "numeric_source_goal_not_answered": [
+    "vmmu_r258",
+    "vmmu_r498",
+    "vmmu_r559"
+  ],
+  "outcomes": {
+    "UNSUPPORTED": 20,
+    "USER_CONFIRMED_SIMULATION": 7
+  },
+  "levels": {
+    "None": 20,
+    "GOAL_CONSTRUCTION_VERIFIED": 7
+  },
+  "grades": {
+    "NOT_SERVED": 20,
+    "GOAL_VISUALIZATION_READY_NUMERIC_NOT_ANSWERED": 3,
+    "SERVED_MATCHES_DATASET_KEY": 4
+  },
+  "wrong_scene_served": [],
+  "broken_invariants": 0,
+  "interactive_simulation_verified": "per-image browser interaction NOT_MEASURED; the browser E2E (scene3d_interaction_browser_e2e.json) covers the same scene types from text input",
+  "rows": [
+    {
+      "case_id": "vmmu_r247",
+      "partition_now": "DEVELOPMENT_EXPOSED",
+      "prepare_status": "needs_confirmation",
+      "outcome": "UNSUPPORTED",
+      "reason": "LIVE_AI_DISABLED",
+      "confirmation_burden": {
+        "flagged_spans": 7,
+        "edits": [
+          {
+            "span_id": "sp13",
+            "from": "a,BC",
+            "to": "a, BC",
+            "chosen_from_alternatives": false
+          },
+          {
+            "span_id": "sp8",
+            "from": "4BCD-",
+            "to": "ABCD.",
+            "chosen_from_alternatives": false
+          }
+        ],
+        "confirms": 4
+      },
+      "simulation": {
+        "level": null
+      },
+      "grade": "NOT_SERVED",
+      "upload_to_prepared_ms": 7591.489900005399,
+      "upload_to_first_model_ms": null
+    },
+    {
+      "case_id": "vmmu_r254",
+      "partition_now": "DEVELOPMENT_EXPOSED",
+      "prepare_status": "needs_confirmation",
+      "outcome": "UNSUPPORTED",
+      "reason": "LIVE_AI_DISABLED",
+      "confirmation_burden": {
+        "flagged_spans": 9,
+        "edits": [
+          {
+            "span_id": "sp64",
+            "from": "8",
+            "to": "",
+            "chosen_from_alternatives": false
+          },
+          {
+            "span_id": "sp58",
+            "from": "27√13a3/2",
+            "to": "27√13a³/2",
+            "chosen_from_alternatives": false
+          },
+          {
+            "span_id": "sp60",
+            "from": "C. D. 27√13a3/2",
+            "to": "C. 99√13a³/8. D. 27√13a³/2",
+            "chosen_from_alternatives": false
+          },
+          {
+            "span_id": "sp62",
+            "from": "C. D. 27√13a3/2",
+            "to": "C. 99√13a³/8. D. 27√13a³/2",
+            "chosen_from_alternatives": false
+          },
+          {
+            "span_id": "sp9",
+            "from": "AA=",
+            "to": "AA' =",
+            "chosen_from_alternatives": false
+          },
+          {
+            "span_id": "sp7",
+            "from": "ABC.A##€©#",
+            "to": "ABC.A'B'C'",
+            "chosen_from_alternatives": false
+          }
+        ],
+        "confirms": 2
+      },
+      "simulation": {
+        "level": null
+      },
+      "grade": "NOT_SERVED",
+      "upload_to_prepared_ms": 2682.208099999116,
+      "upload_to_first_model_ms": null
+    },
+    {
+      "case_id": "vmmu_r256",
+      "partition_now": "DEVELOPMENT_EXPOSED",
+      "prepare_status": "needs_confirmation",
+      "outcome": "UNSUPPORTED",
+      "reason": "LIVE_AI_DISABLED",
+      "confirmation_burden": {
+        "flagged_spans": 6,
+        "edits": [
+          {
+            "span_id": "sp45",
+            "from": "7",
+            "to": "",
+            "chosen_from_alternatives": false
+          }
+        ],
+        "confirms": 4
+      },
+      "simulation": {
+        "level": null
+      },
+      "grade": "NOT_SERVED",
+      "upload_to_prepared_ms": 3151.854799994908,
+      "upload_to_first_model_ms": null
+    },
+    {
+      "case_id": "vmmu_r258",
+      "partition_now": "DEVELOPMENT_EXPOSED",
+      "prepare_status": "needs_confirmation",
+      "outcome": "USER_CONFIRMED_SIMULATION",
+      "reason": null,
+      "confirmation_burden": {
+        "flagged_spans": 4,
+        "edits": [
+          {
+            "span_id": "sp42",
+            "from": "D.V2.",
+            "to": "D. √2.",
+            "chosen_from_alternatives": false
+          }
+        ],
+        "confirms": 2
+      },
+      "simulation": {
+        "goal": "angle",
+        "level": "GOAL_CONSTRUCTION_VERIFIED",
+        "invariant_checks": 3,
+        "invariant_failures": 0,
+        "angle_construction": "plane_plane",
+        "objects": 12
+      },
+      "grade": "GOAL_VISUALIZATION_READY_NUMERIC_NOT_ANSWERED",
+      "upload_to_prepared_ms": 2085.4059000048437,
+      "upload_to_first_model_ms": 2566.9928999996046,
+      "grade_dataset_key_comparison": "SERVED_NOT_COMPARABLE_NEEDS_ADJUDICATION"
+    },
+    {
+      "case_id": "vmmu_r266",
+      "partition_now": "DEVELOPMENT_EXPOSED",
+      "prepare_status": "needs_confirmation",
+      "outcome": "UNSUPPORTED",
+      "reason": "LIVE_AI_DISABLED",
+      "confirmation_burden": {
+        "flagged_spans": 3,
+        "edits": [],
+        "confirms": 3
+      },
+      "simulation": {
+        "level": null
+      },
+      "grade": "NOT_SERVED",
+      "upload_to_prepared_ms": 2060.904700003448,
+      "upload_to_first_model_ms": null
+    },
+    {
+      "case_id": "vmmu_r270",
+      "partition_now": "DEVELOPMENT_EXPOSED",
+      "prepare_status": "needs_confirmation",
+      "outcome": "UNSUPPORTED",
+      "reason": "LIVE_AI_DISABLED",
+      "confirmation_burden": {
+        "flagged_spans": 4,
+        "edits": [
+          {
+            "span_id": "sp23",
+            "from": "phng(A'BC)",
+            "to": "phẳng (A'BC)",
+            "chosen_from_alternatives": false
+          }
+        ],
+        "confirms": 2
+      },
+      "simulation": {
+        "level": null
+      },
+      "grade": "NOT_SERVED",
+      "upload_to_prepared_ms": 3891.614500003925,
+      "upload_to_first_model_ms": null
+    },
+    {
+      "case_id": "vmmu_r273",
+      "partition_now": "DEVELOPMENT_EXPOSED",
+      "prepare_status": "needs_confirmation",
+      "outcome": "USER_CONFIRMED_SIMULATION",
+      "reason": null,
+      "confirmation_burden": {
+        "flagged_spans": 3,
+        "edits": [],
+        "confirms": 2
+      },
+      "simulation": {
+        "goal": "volume",
+        "level": "GOAL_CONSTRUCTION_VERIFIED",
+        "invariant_checks": 0,
+        "invariant_failures": 0,
+        "angle_construction": null,
+        "objects": 10
+      },
+      "grade": "SERVED_MATCHES_DATASET_KEY",
+      "upload_to_prepared_ms": 1900.7303999969736,
+      "upload_to_first_model_ms": 2155.071199995291
+    },
+    {
+      "case_id": "vmmu_r277",
+      "partition_now": "DEVELOPMENT_EXPOSED",
+      "prepare_status": "needs_confirmation",
+      "outcome": "UNSUPPORTED",
+      "reason": "LIVE_AI_DISABLED",
+      "confirmation_burden": {
+        "flagged_spans": 5,
+        "edits": [],
+        "confirms": 5
+      },
+      "simulation": {
+        "level": null
+      },
+      "grade": "NOT_SERVED",
+      "upload_to_prepared_ms": 2172.839599996223,
+      "upload_to_first_model_ms": null
+    },
+    {
+      "case_id": "vmmu_r284",
+      "partition_now": "DEVELOPMENT_EXPOSED",
+      "prepare_status": "needs_confirmation",
+      "outcome": "UNSUPPORTED",
+      "reason": "LIVE_AI_DISABLED",
+      "confirmation_burden": {
+        "flagged_spans": 6,
+        "edits": [
+          {
+            "span_id": "sp14",
+            "from": "S",
+            "to": "",
+            "chosen_from_alternatives": false
+          },
+          {
+            "span_id": "sp8",
+            "from": "g",
+            "to": "có",
+            "chosen_from_alternatives": false
+          },
+          {
+            "span_id": "sp7",
+            "from": ",Š.48ŒD",
+            "to": "S.ABCD",
+            "chosen_from_alternatives": false
+          }
+        ],
+        "confirms": 2
+      },
+      "simulation": {
+        "level": null
+      },
+      "grade": "NOT_SERVED",
+      "upload_to_prepared_ms": 2520.7096000012825,
+      "upload_to_first_model_ms": null
+    },
+    {
+      "case_id": "vmmu_r295",
+      "partition_now": "DEVELOPMENT_EXPOSED",
+      "prepare_status": "needs_confirmation",
+      "outcome": "UNSUPPORTED",
+      "reason": "LIVE_AI_DISABLED",
+      "confirmation_burden": {
+        "flagged_spans": 4,
+        "edits": [
+          {
+            "span_id": "sp27",
+            "from": "CA'và",
+            "to": "CA' và",
+            "chosen_from_alternatives": false
+          },
+          {
+            "span_id": "sp18",
+            "from": "√6(",
+            "to": "√6 (",
+            "chosen_from_alternatives": false
+          },
+          {
+            "span_id": "sp8",
+            "from": "ABCD.A'B'C'D'có",
+            "to": "ABCD.A'B'C'D' có",
+            "chosen_from_alternatives": false
+          }
+        ],
+        "confirms": 0
+      },
+      "simulation": {
+        "level": null
+      },
+      "grade": "NOT_SERVED",
+      "upload_to_prepared_ms": 1675.7825000022422,
+      "upload_to_first_model_ms": null
+    },
+    {
+      "case_id": "vmmu_r298",
+      "partition_now": "DEVELOPMENT_EXPOSED",
+      "prepare_status": "needs_confirmation",
+      "outcome": "USER_CONFIRMED_SIMULATION",
+      "reason": null,
+      "confirmation_burden": {
+        "flagged_spans": 3,
+        "edits": [],
+        "confirms": 2
+      },
+      "simulation": {
+        "goal": "volume",
+        "level": "GOAL_CONSTRUCTION_VERIFIED",
+        "invariant_checks": 0,
+        "invariant_failures": 0,
+        "angle_construction": null,
+        "objects": 13
+      },
+      "grade": "SERVED_MATCHES_DATASET_KEY",
+      "upload_to_prepared_ms": 2108.6665999973775,
+      "upload_to_first_model_ms": 2386.806999995315
+    },
+    {
+      "case_id": "vmmu_r375",
+      "partition_now": "DEVELOPMENT_EXPOSED",
+      "prepare_status": "needs_confirmation",
+      "outcome": "UNSUPPORTED",
+      "reason": "LIVE_AI_DISABLED",
+      "confirmation_burden": {
+        "flagged_spans": 1,
+        "edits": [],
+        "confirms": 0
+      },
+      "simulation": {
+        "level": null
+      },
+      "grade": "NOT_SERVED",
+      "upload_to_prepared_ms": 2351.483200000075,
+      "upload_to_first_model_ms": null
+    },
+    {
+      "case_id": "vmmu_r460",
+      "partition_now": "DEVELOPMENT_EXPOSED",
+      "prepare_status": "needs_confirmation",
+      "outcome": "UNSUPPORTED",
+      "reason": "LIVE_AI_DISABLED",
+      "confirmation_burden": {
+        "flagged_spans": 1,
+        "edits": [],
+        "confirms": 0
+      },
+      "simulation": {
+        "level": null
+      },
+      "grade": "NOT_SERVED",
+      "upload_to_prepared_ms": 2355.162100000598,
+      "upload_to_first_model_ms": null
+    },
+    {
+      "case_id": "vmmu_r461",
+      "partition_now": "DEVELOPMENT_EXPOSED",
+      "prepare_status": "needs_confirmation",
+      "outcome": "UNSUPPORTED",
+      "reason": "LIVE_AI_DISABLED",
+      "confirmation_burden": {
+        "flagged_spans": 2,
+        "edits": [],
+        "confirms": 1
+      },
+      "simulation": {
+        "level": null
+      },
+      "grade": "NOT_SERVED",
+      "upload_to_prepared_ms": 2854.3653000015183,
+      "upload_to_first_model_ms": null
+    },
+    {
+      "case_id": "vmmu_r463",
+      "partition_now": "DEVELOPMENT_EXPOSED",
+      "prepare_status": "needs_confirmation",
+      "outcome": "UNSUPPORTED",
+      "reason": "LIVE_AI_DISABLED",
+      "confirmation_burden": {
+        "flagged_spans": 4,
+        "edits": [],
+        "confirms": 4
+      },
+      "simulation": {
+        "level": null
+      },
+      "grade": "NOT_SERVED",
+      "upload_to_prepared_ms": 1992.3105999987456,
+      "upload_to_first_model_ms": null
+    },
+    {
+      "case_id": "vmmu_r475",
+      "partition_now": "DEVELOPMENT_EXPOSED",
+      "prepare_status": "needs_confirmation",
+      "outcome": "UNSUPPORTED",
+      "reason": "LIVE_AI_DISABLED",
+      "confirmation_burden": {
+        "flagged_spans": 2,
+        "edits": [],
+        "confirms": 1
+      },
+      "simulation": {
+        "level": null
+      },
+      "grade": "NOT_SERVED",
+      "upload_to_prepared_ms": 2441.60489999922,
+      "upload_to_first_model_ms": null
+    },
+    {
+      "case_id": "vmmu_r476",
+      "partition_now": "DEVELOPMENT_EXPOSED",
+      "prepare_status": "needs_confirmation",
+      "outcome": "USER_CONFIRMED_SIMULATION",
+      "reason": null,
+      "confirmation_burden": {
+        "flagged_spans": 5,
+        "edits": [],
+        "confirms": 4
+      },
+      "simulation": {
+        "goal": "angle",
+        "level": "GOAL_CONSTRUCTION_VERIFIED",
+        "invariant_checks": 3,
+        "invariant_failures": 0,
+        "angle_construction": "plane_plane",
+        "objects": 14
+      },
+      "grade": "SERVED_MATCHES_DATASET_KEY",
+      "upload_to_prepared_ms": 2200.1124000016716,
+      "upload_to_first_model_ms": 2452.1850000019185
+    },
+    {
+      "case_id": "vmmu_r488",
+      "partition_now": "DEVELOPMENT_EXPOSED",
+      "prepare_status": "needs_confirmation",
+      "outcome": "UNSUPPORTED",
+      "reason": "LIVE_AI_DISABLED",
+      "confirmation_burden": {
+        "flagged_spans": 2,
+        "edits": [
+          {
+            "span_id": "sp30",
+            "from": "600",
+            "to": "60°",
+            "chosen_from_alternatives": true
+          }
+        ],
+        "confirms": 0
+      },
+      "simulation": {
+        "level": null
+      },
+      "grade": "NOT_SERVED",
+      "upload_to_prepared_ms": 1842.1071999982814,
+      "upload_to_first_model_ms": null
+    },
+    {
+      "case_id": "vmmu_r491",
+      "partition_now": "DEVELOPMENT_EXPOSED",
+      "prepare_status": "needs_confirmation",
+      "outcome": "UNSUPPORTED",
+      "reason": "LIVE_AI_DISABLED",
+      "confirmation_burden": {
+        "flagged_spans": 4,
+        "edits": [],
+        "confirms": 3
+      },
+      "simulation": {
+        "level": null
+      },
+      "grade": "NOT_SERVED",
+      "upload_to_prepared_ms": 2350.4082999934326,
+      "upload_to_first_model_ms": null
+    },
+    {
+      "case_id": "vmmu_r492",
+      "partition_now": "DEVELOPMENT_EXPOSED",
+      "prepare_status": "needs_confirmation",
+      "outcome": "USER_CONFIRMED_SIMULATION",
+      "reason": null,
+      "confirmation_burden": {
+        "flagged_spans": 2,
+        "edits": [],
+        "confirms": 1
+      },
+      "simulation": {
+        "goal": "angle",
+        "level": "GOAL_CONSTRUCTION_VERIFIED",
+        "invariant_checks": 2,
+        "invariant_failures": 0,
+        "angle_construction": "line_plane",
+        "objects": 15
+      },
+      "grade": "SERVED_MATCHES_DATASET_KEY",
+      "upload_to_prepared_ms": 2960.2081999983056,
+      "upload_to_first_model_ms": 3230.7967000015196
+    },
+    {
+      "case_id": "vmmu_r498",
+      "partition_now": "DEVELOPMENT_EXPOSED",
+      "prepare_status": "needs_confirmation",
+      "outcome": "USER_CONFIRMED_SIMULATION",
+      "reason": null,
+      "confirmation_burden": {
+        "flagged_spans": 4,
+        "edits": [
+          {
+            "span_id": "sp31",
+            "from": "(ABCð",
+            "to": "(ABC')",
+            "chosen_from_alternatives": false
+          },
+          {
+            "span_id": "sp10",
+            "from": "ABCD.A##2#2#",
+            "to": "ABCD.A'B'C'D'",
+            "chosen_from_alternatives": false
+          }
+        ],
+        "confirms": 1
+      },
+      "simulation": {
+        "goal": "angle",
+        "level": "GOAL_CONSTRUCTION_VERIFIED",
+        "invariant_checks": 3,
+        "invariant_failures": 0,
+        "angle_construction": "plane_plane",
+        "objects": 18
+      },
+      "grade": "GOAL_VISUALIZATION_READY_NUMERIC_NOT_ANSWERED",
+      "upload_to_prepared_ms": 1930.4558000003453,
+      "upload_to_first_model_ms": 2205.8089999991353,
+      "grade_dataset_key_comparison": "SERVED_NOT_COMPARABLE_NEEDS_ADJUDICATION"
+    },
+    {
+      "case_id": "vmmu_r513",
+      "partition_now": "DEVELOPMENT_EXPOSED",
+      "prepare_status": "needs_confirmation",
+      "outcome": "UNSUPPORTED",
+      "reason": "LIVE_AI_DISABLED",
+      "confirmation_burden": {
+        "flagged_spans": 2,
+        "edits": [],
+        "confirms": 1
+      },
+      "simulation": {
+        "level": null
+      },
+      "grade": "NOT_SERVED",
+      "upload_to_prepared_ms": 3232.270199994673,
+      "upload_to_first_model_ms": null
+    },
+    {
+      "case_id": "vmmu_r520",
+      "partition_now": "DEVELOPMENT_EXPOSED",
+      "prepare_status": "needs_confirmation",
+      "outcome": "UNSUPPORTED",
+      "reason": "LIVE_AI_DISABLED",
+      "confirmation_burden": {
+        "flagged_spans": 5,
+        "edits": [
+          {
+            "span_id": "sp29",
+            "from": "(ABC)",
+            "to": "",
+            "chosen_from_alternatives": false
+          },
+          {
+            "span_id": "sp27",
+            "from": "(SBC)",
+            "to": "",
+            "chosen_from_alternatives": false
+          },
+          {
+            "span_id": "sp14",
+            "from": "B,SA",
+            "to": "B, SA",
+            "chosen_from_alternatives": false
+          }
+        ],
+        "confirms": 1
+      },
+      "simulation": {
+        "level": null
+      },
+      "grade": "NOT_SERVED",
+      "upload_to_prepared_ms": 2540.6876999986707,
+      "upload_to_first_model_ms": null
+    },
+    {
+      "case_id": "vmmu_r537",
+      "partition_now": "DEVELOPMENT_EXPOSED",
+      "prepare_status": "needs_confirmation",
+      "outcome": "UNSUPPORTED",
+      "reason": "LIVE_AI_DISABLED",
+      "confirmation_burden": {
+        "flagged_spans": 4,
+        "edits": [
+          {
+            "span_id": "sp22",
+            "from": "a”",
+            "to": "a²",
+            "chosen_from_alternatives": true
+          }
+        ],
+        "confirms": 2
+      },
+      "simulation": {
+        "level": null
+      },
+      "grade": "NOT_SERVED",
+      "upload_to_prepared_ms": 2031.0965000026044,
+      "upload_to_first_model_ms": null
+    },
+    {
+      "case_id": "vmmu_r538",
+      "partition_now": "DEVELOPMENT_EXPOSED",
+      "prepare_status": "needs_confirmation",
+      "outcome": "UNSUPPORTED",
+      "reason": "LIVE_AI_DISABLED",
+      "confirmation_burden": {
+        "flagged_spans": 3,
+        "edits": [],
+        "confirms": 2
+      },
+      "simulation": {
+        "level": null
+      },
+      "grade": "NOT_SERVED",
+      "upload_to_prepared_ms": 2748.5712000052445,
+      "upload_to_first_model_ms": null
+    },
+    {
+      "case_id": "vmmu_r559",
+      "partition_now": "PREVIOUS_RUN_FRESH_VIEWED",
+      "prepare_status": "needs_confirmation",
+      "outcome": "USER_CONFIRMED_SIMULATION",
+      "reason": null,
+      "confirmation_burden": {
+        "flagged_spans": 2,
+        "edits": [],
+        "confirms": 1
+      },
+      "simulation": {
+        "goal": "angle",
+        "level": "GOAL_CONSTRUCTION_VERIFIED",
+        "invariant_checks": 2,
+        "invariant_failures": 0,
+        "angle_construction": "line_line_skew",
+        "objects": 10
+      },
+      "grade": "GOAL_VISUALIZATION_READY_NUMERIC_NOT_ANSWERED",
+      "upload_to_prepared_ms": 1633.4454999960144,
+      "upload_to_first_model_ms": 1952.915399997437,
+      "grade_dataset_key_comparison": "SERVED_NOT_COMPARABLE_NEEDS_ADJUDICATION"
+    },
+    {
+      "case_id": "vmmu_r695",
+      "partition_now": "PREVIOUS_RUN_FRESH_VIEWED_AND_RULE_TARGETED",
+      "prepare_status": "needs_confirmation",
+      "outcome": "UNSUPPORTED",
+      "reason": "LIVE_AI_DISABLED",
+      "confirmation_burden": {
+        "flagged_spans": 3,
+        "edits": [
+          {
+            "span_id": "sp41",
+            "from": "A. √2/2 B. 23 C. 3 D.√2.",
+            "to": "A. √2/2. B. 2/3. C. 3/2. D. √2.",
+            "chosen_from_alternatives": false
+          },
+          {
+            "span_id": "sp9",
+            "from": "L",
+            "to": "⊥",
+            "chosen_from_alternatives": true
+          }
+        ],
+        "confirms": 0
+      },
+      "simulation": {
+        "level": null
+      },
+      "grade": "NOT_SERVED",
+      "upload_to_prepared_ms": 2202.27330000489,
+      "upload_to_first_model_ms": null
+    }
+  ]
+}

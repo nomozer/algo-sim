@@ -1,0 +1,146 @@
+{
+  "baseline": "6bb22fa3bb183ad28cdf1395c99e5eb375fac97c",
+  "head": "70b22cc7167d8e2372d606547c3e398b199fb101",
+  "product_commit": "7b170021451a86c56a2eebadcdd0f0f088fcc229",
+  "measured_system": [
+    "a068b6f6586c1b120bd8350dbe706f5681ab71fd7da57502c34f940140268921",
+    115
+  ],
+  "candidate_recorded_clean_at_freeze": true,
+  "cache_version": 132,
+  "all_product_path_changes_including_frontend_tests": [
+    "backend/app/ai/adaptive_input_router.py",
+    "backend/app/ingestion/local_ocr.py",
+    "backend/app/main.py",
+    "frontend/src/components/PhotoProblemPanel.tsx",
+    "frontend/src/components/photo-problem-flow.ts",
+    "frontend/src/components/photo-span-review.test.tsx"
+  ],
+  "simulation_geometry_changes": [],
+  "historical_prior_files_checked": 29,
+  "prior_files": [
+    {
+      "path": "docs/evaluation/geometry/runs/image-first-ocr-verified-geometry/ALGOSIM_IMAGE_FIRST_OCR_VERIFIED_GEOMETRY_REPORT.md",
+      "sha256_lf": "6be750f841c9a2af570659cc5ff181562cf217bddfd3bf912a0ff70e3326b233"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/image-first-ocr-verified-geometry/baseline_candidate_integrity.json",
+      "sha256_lf": "8ac1b173c8913cbc98d47b93186311ceb812fddcb75e56edde75c9c157c2942d"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/image-first-ocr-verified-geometry/diagram_dependency_audit.json",
+      "sha256_lf": "938a7b719fc28576647a489d9253745e9d24dc71a6421f39de7789fbfd2c76a3"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/image-first-ocr-verified-geometry/dual_ocr_reconciliation_receipt.json",
+      "sha256_lf": "74c4bf6101d4bae8350af6f8173694fc3ce0ce4e49e0e0dc9d80d03cad37f6e8"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/image-first-ocr-verified-geometry/external16_image_diagnostics.json",
+      "sha256_lf": "65b37b1fdf6ac5b8fec1e29e6b1defc0ab2dd857bebdf2ff68abeab6823462d0"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/image-first-ocr-verified-geometry/fidelity_false_rejection_analysis.json",
+      "sha256_lf": "deb5d5084b8707882ee48e2f1f12066a947aeecf92ec985afda3415a8dd4c875"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/image-first-ocr-verified-geometry/frontend_browser_e2e.json",
+      "sha256_lf": "0ed34f440c61f1aa72d44becf8f7d0fd830e86b1959a0fd0b9e55c49ff756b7a"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/image-first-ocr-verified-geometry/full_regression_summary.json",
+      "sha256_lf": "b4059d4066bfbf765758e48d8f8ad5bbbb7d914783deaf0c19ee77dddd564767"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/image-first-ocr-verified-geometry/handwritten_ocr_diagnostic.json",
+      "sha256_lf": "2511743957b05575c9f8c4f4c1d6c86fed3958725dab7f810eb5fa0ccd51bf3a"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/image-first-ocr-verified-geometry/local_ocr_raw_outputs.json",
+      "sha256_lf": "e2e94f7823b933e1baa664045c7fcf6ff5cdff30036d5542def8b22c7159fb51"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/image-first-ocr-verified-geometry/math_layout_recognition_receipt.json",
+      "sha256_lf": "753eef764ab24599cd759b69c810fdfd50af35cabd120d2d0272e458c486a6ba"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/image-first-ocr-verified-geometry/new_external_image_evaluation.json",
+      "sha256_lf": "ac82e26d2a6b5b6cf9a87356c4ce63b33704112df1792af98512e077f3c2bbcb"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/image-first-ocr-verified-geometry/new_external_local_ocr_raw_outputs.json",
+      "sha256_lf": "ccbfedbe74f91856616a17ee7ac67297cd6703effef71c8028ec3b07e739685d"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/image-first-ocr-verified-geometry/ocr_failure_root_causes.json",
+      "sha256_lf": "c3ba7940edd7354fa9c72f8e796f5ab5e69c704b5c76bb46f22b219e951592bf"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/image-first-ocr-verified-geometry/ocr_resource_performance.json",
+      "sha256_lf": "9bd16f24fc5e01a761d43d186f9650fcdc67f7fed085a1670ea0985d6238a872"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/image-first-ocr-verified-geometry/printed_ocr_before_after.json",
+      "sha256_lf": "e8442d858f6754a47f2264fee274beccc27907ad6cb9fa54ae3c5b51e14c85c3"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/image-first-ocr-verified-geometry/real_image_to_scene3d_acceptance.json",
+      "sha256_lf": "7da933be3c6738305bd2243e3833abdf79ca5f575ea885a6fb641ecf9e410aff"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/image-first-ocr-verified-geometry/region_aware_ocr_receipt.json",
+      "sha256_lf": "2a00e53aabdf8cced86142a92a569dbe4ded4e68cca8a8f2fec802cecc6701e2"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/image-first-ocr-verified-geometry/run.json",
+      "sha256_lf": "8d3b2591fc4c026a4b65f9af3f00b9cfd464a45cad0f81fdd093ec3012f2b849"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/image-first-ocr-verified-geometry/student_confirmation_flow_receipt.json",
+      "sha256_lf": "1afd76a4a455484b5fe59783fc66f8c91609d936343ac849bfcebf9e47e68e4b"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/image-first-ocr-verified-geometry/tools/build_ocr_lexicon.py",
+      "sha256_lf": "373784db43dd7f9110c282bcfe52c2f000457d82e97d367e28621144053586e1"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/image-first-ocr-verified-geometry/tools/e2e_browser_image_first.mjs",
+      "sha256_lf": "9b71590e09bc97410e10899e91132d49fde0907e9eac32c7176c10391be28cc3"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/image-first-ocr-verified-geometry/tools/evaluate_image_first_ocr.py",
+      "sha256_lf": "8fc1702db02d05ebf7f6c2bdcefda4d15a77541d4e61a62a0fc73a01ec3de878"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/image-first-ocr-verified-geometry/tools/fetch_new_vmmu.py",
+      "sha256_lf": "489041bbe395656a48c74f6fc8a5da6e16b4f24c7c44b76de7243bb8d1159d10"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/image-first-ocr-verified-geometry/tools/generate_all_receipts.py",
+      "sha256_lf": "c40dd9539ab287537dbcc1ba907137a359118fa9f79de6ba8838acb92e161e08"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/image-first-ocr-verified-geometry/tools/new_external_catalog.py",
+      "sha256_lf": "9343928fea50e4eebb511bfa6e340a5a0ac821e28fcf835019eec6e9d9fe40e8"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/image-first-ocr-verified-geometry/user_correction_cache_invalidation.json",
+      "sha256_lf": "83f491167e68ab110a02dfc208a2d8278977da27e5964b307538d93b7e553d49"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/image-first-ocr-verified-geometry/vision_fallback_offline_receipt.json",
+      "sha256_lf": "d4cf581dc25ed5f5f72e208decf30a75670bd90013de1e235e3f295c578c0559"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/image-first-ocr-verified-geometry/vision_live_readiness.json",
+      "sha256_lf": "32bb416c974a5130f059dd2adabd67f3b8bb2dd8416d381c98f4374c5767a2f1"
+    }
+  ],
+  "contracts_unchanged": [
+    "geometry-fact-planner/26",
+    "geometry-functions/33",
+    "geometry-function-engine/24",
+    "height-invariance-certificate/2",
+    "output-policy/1"
+  ]
+}

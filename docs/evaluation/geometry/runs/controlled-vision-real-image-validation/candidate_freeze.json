@@ -1,0 +1,70 @@
+{
+  "run_id": "controlled-vision-real-image-validation",
+  "generated_at_utc": "2026-11-12T17:21:26.111231+00:00",
+  "head": "5019a72fa0eb296002a24adb6e6dcd86d82a2c5d",
+  "branch": "feat/local-first-geometry-understanding",
+  "candidate_file": "docs/evaluation/semantic-benchmark/EVALUATION_CANDIDATE.json",
+  "freeze_commit": "835786746c1252fa162e9bc967b651d97252e720",
+  "product_commit": "c53be83db71089b47b59b2ec7155b8e8552e1752",
+  "measured_system": {
+    "paths": [
+      "backend/app",
+      "frontend/src/simulations/domains/semantic",
+      "frontend/src/simulations/domains/semantic/semantic_program.schema.json"
+    ],
+    "so_file": 115,
+    "tree_hash": "cd9b9f518805d30522ee7c488dd834d3b05ea08d3e78d86c82da13c735a8a58a",
+    "khai": "Băm nội dung toàn bộ mã SẢN PHẨM của hệ được đo. Harness (scripts/tests/docs) KHÔNG nằm trong đây, nên bộ đo được phép cứng cáp thêm mà không phải đóng băng lại candidate."
+  },
+  "cache_version": "132",
+  "contracts_unchanged": [
+    "geometry-fact-planner/26",
+    "geometry-functions/33",
+    "geometry-function-engine/24",
+    "height-invariance-certificate/2",
+    "output-policy/1"
+  ],
+  "frozen_working_tree_clean": true,
+  "verify_command": "cd backend && python scripts/freeze_evaluation_candidate.py --verify",
+  "test_commands": [
+    "python -m pytest -c backend/pytest.ini backend/tests -q",
+    "npm run test:wave (vitest run && tsc -b && vite build)",
+    "backend/scripts/replay_demo_cases.py --json",
+    "backend/scripts/audit_demo_crash_surface.py --json",
+    "backend/scripts/audit_docs_information_architecture.py --json",
+    "backend/scripts/check_publication_safety.py --head | --range",
+    "backend/scripts/freeze_evaluation_candidate.py --verify"
+  ],
+  "tool_versions": {
+    "python_backend": "3.12.10",
+    "node": "v26.13.0",
+    "ocr_interpreter": {
+      "rapidocr": "UNKNOWN",
+      "tesseract": "tesseract 5.5.3",
+      "tesserocr": "2.12.0",
+      "onnxruntime": "1.31.1",
+      "pillow": "13.0.0"
+    }
+  },
+  "ocr_models": {
+    "tesseract_lang": "vie (tessdata_fast)",
+    "vie_traineddata_sha256": "79df64caf7bcfb2a27df5042ecb6121e196eada34da774956995747636d5bfa1",
+    "rapidocr_models": "PP-OCRv6 det/rec small (package default); reread: PP-OCRv5 Latin mobile rec + Tesseract eng single line"
+  },
+  "evaluation_inputs": {
+    "manifest": "docs/evaluation/geometry/runs/controlled-vision-real-image-validation/new_in_scope_image_manifest.json",
+    "manifest_sha256_lf": "4e65026c63753600111cdf82ddf1026423069d95581145f842f2baf9a48f5d45",
+    "images": 25,
+    "ground_truth": "AGENT_TRANSCRIBED_UNVERIFIED",
+    "images_in_git": false
+  },
+  "known_limitations": [
+    "one dataset of rendered crops; no photos, handwriting or multi-problem pages",
+    "agent references; no H-1",
+    "no live Vision",
+    "no real students",
+    "SQLite only; 8 simultaneous new-session uploads produced SQLITE_BUSY failures",
+    "publication HEAD blocked pending Owner decision"
+  ],
+  "merge_push_deploy": "NOT_PERFORMED"
+}

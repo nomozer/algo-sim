@@ -1,0 +1,28 @@
+{
+  "schema": "axo-model1-text-role-matrix/1",
+  "run_id": "grounded-geometry-language-recovery",
+  "candidate": "cd2a21abc (CACHE 155)",
+  "evidence_set": "Holdout-3 live (66 positive, 22 negative, text only) and Full T3 PASS; 'PASS_ON_SET' means no failure observed in this set, not a general guarantee",
+  "roles": [
+    {"role": "Vietnamese geometry NLU", "requirement": "read textbook-style solid-geometry problems", "component": "local parser + VN normalizer + AxoV9", "evidence": "58/66 completed", "status": "PARTIAL", "gap": "pairwise-perpendicular synonyms, discourse headers"},
+    {"role": "Geometry entity extraction", "requirement": "solids and vertex labels", "component": "parser / AxoV9 / Source Gate entity checks", "evidence": "9 label sets incl. dotted labels; unknown objects (N16, N20) refused", "status": "PASS_ON_SET", "gap": "-"},
+    {"role": "Relation extraction", "requirement": "only asserted relations", "component": "parser + VN12-VN14 + Source Gate", "evidence": "families A-C 22/26 completed; negated relation N01 refused", "status": "PARTIAL", "gap": "family A synonyms (4 refusals)"},
+    {"role": "Symbolic quantity extraction", "requirement": "values with the symbolic unit a", "component": "parser + Exact Kernel", "evidence": "B04, C07, D05 completed", "status": "PASS_ON_SET", "gap": "-"},
+    {"role": "Simulation intent", "requirement": "draw-only requests without numeric goals", "component": "parser request grammar + VN16", "evidence": "family F 6/6; 0 fabricated numeric goals", "status": "PASS_ON_SET", "gap": "-"},
+    {"role": "Numeric goal interpretation", "requirement": "answer exactly what is asked", "component": "typed goals + planner + kernel", "evidence": "0 served numeric mismatch", "status": "PASS_ON_SET", "gap": "-"},
+    {"role": "Multi-clause composition", "requirement": "several clauses / sentences", "component": "VN13, VN17, parser", "evidence": "families B and G 15/16; M 4/6", "status": "PARTIAL", "gap": "M05, M06, G08"},
+    {"role": "Contextual references", "requirement": "'hình này', 'hình chóp này'", "component": "parser references, VN16 single-solid binding", "evidence": "F04, F06 completed", "status": "PASS_ON_SET", "gap": "-"},
+    {"role": "Missing-data handling", "requirement": "refuse or clarify underdetermined input", "component": "planner MISSING_DIMENSION, clarification", "evidence": "N09, N10, N11, N13 refused", "status": "PASS_ON_SET", "gap": "line ⊥ plane at a tetrahedron vertex plus one right angle is reported missing although determined (planner)"},
+    {"role": "Contradiction detection", "requirement": "refuse inconsistent data", "component": "kernel / Source Gate", "evidence": "N05, N08, N17, N21 refused", "status": "PASS_ON_SET", "gap": "-"},
+    {"role": "Source grounding", "requirement": "every served fact verified from the source", "component": "Source Gate (closed grammar, negation)", "evidence": "0 grounding violations served; negated pairwise perpendicularity refused since 155", "status": "PASS_ON_SET", "gap": "after a VN rewrite the gate reads the canonical text; each rewrite rule is a trusted step covered by no-fire tests"},
+    {"role": "Verified Typed Facts", "requirement": "typed-fact-next/2 contract", "component": "bridge", "evidence": "contract unchanged", "status": "PASS_ON_SET", "gap": "-"},
+    {"role": "Scene3D integration", "requirement": "valid, visible, interactive scenes", "component": "adapter /4 + browser", "evidence": "58/58 served scenes mathematically valid with visual and interaction pass", "status": "PASS_ON_SET", "gap": "-"}
+  ],
+  "verdicts": {
+    "LOCAL_TEXT_MODEL1_VERIFIED": false,
+    "reason": "the registered SLM gate fails (5/38 < 0.30) and text-scope gaps remain",
+    "LOCAL_VISION_REPLACEMENT_VERIFIED": false,
+    "FULL_GEMINI_ROLE_REPLACEMENT_VERIFIED": false,
+    "vision_note": "OCR/Vision development postponed by the owner; not measured in /15"
+  }
+}

@@ -1,0 +1,12 @@
+{
+  "schema": "axo-holdout-provenance/1",
+  "set": "holdout-3",
+  "author": "the /15 agent (Claude), 2026-11-21; the same agent fixes the product; EXTERNAL_INDEPENDENCE = NOT_MEASURED; not learner data",
+  "written_after": "the /14 report and FIRST_FAILING_LAYER_AUDIT.json (phrase families A-G named by the owner's /15 brief)",
+  "written_before": "any /15 product edit; Holdout-3 texts were never run on the product before the baseline freeze",
+  "disclosed_after_writing_before_freeze": [
+    "one deterministic probe of 31 fresh sentences (labels IJKL, U.VWXY, GHI.JKL) covering families A-G, run after the Holdout-3 texts were written; no Holdout-3 text was changed because of it",
+    "an independent read-only oracle review (ORACLE_REVIEW.json) changed N03, N15 and G08 before the freeze"
+  ],
+  "consequence": "Holdout-3 is prospective for the /15 fixes but targets the phrase families the fixes address; it measures recovery on new sentences of known families, not discovery of unknown ones."
+}

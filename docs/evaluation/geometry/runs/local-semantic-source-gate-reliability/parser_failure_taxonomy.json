@@ -1,0 +1,58 @@
+{
+  "run_id": "local-semantic-source-gate-reliability",
+  "generated_at_utc": "2026-11-13T04:54:20.249879+00:00",
+  "population": "the 17 polyhedron transcriptions the solver did not finish without AI (controlled-vision)",
+  "baseline": {
+    "PARSER_COVERAGE:UNPARSED_GOAL_CANDIDATE": 7,
+    "PARSER_COVERAGE:UNPARSED_FACT_CANDIDATE": 4,
+    "SOURCE_GATE:SOURCE_PREMISE_UNREAD": 2,
+    "SOURCE_GATE:NOT_ASKED_IN_SOURCE": 2,
+    "PARSER_COVERAGE:EMPTY_SOLIDS": 1,
+    "SOURCE_GATE:UNGROUNDED_VALUE": 1
+  },
+  "final": {
+    "PARSER_COVERAGE:UNPARSED_GOAL_CANDIDATE": 5,
+    "SOURCE_GATE:NOT_ASKED_IN_SOURCE": 2,
+    "NONE_LOCAL_PARSE_COMPLETE:None": 4,
+    "PARSER_COVERAGE:UNPARSED_FACT_CANDIDATE": 2,
+    "SOURCE_GATE:SOURCE_PREMISE_UNREAD": 1,
+    "PARSER_COVERAGE:EMPTY_SOLIDS": 1,
+    "SOURCE_GATE:QUESTION_CONTEXT_UNSUPPORTED": 1,
+    "SOURCE_GATE:UNGROUNDED_VALUE": 1
+  },
+  "parser_classes": {
+    "silent_drop_caught_by_gate": [
+      "vmmu_r375",
+      "vmmu_r537"
+    ],
+    "unparsed_goal_wording": [
+      "vmmu_r270",
+      "vmmu_r254",
+      "vmmu_r488",
+      "vmmu_r538",
+      "vmmu_r277",
+      "vmmu_r256"
+    ],
+    "unparsed_fact_construction": [
+      "vmmu_r284",
+      "vmmu_r491",
+      "vmmu_r256"
+    ],
+    "solid_notation": [
+      "vmmu_r463"
+    ],
+    "value_boundary_without_punctuation": [
+      "vmmu_r270",
+      "vmmu_r513"
+    ],
+    "bare_equality": [
+      "vmmu_r258"
+    ],
+    "dimension_list": [
+      "vmmu_r298",
+      "vmmu_r375",
+      "vmmu_r498"
+    ]
+  },
+  "guard_notes": "Each unparsed clause now carries the guard that held it (clause.notes, e.g. UNBACKED_EQUALS@i:ctx, NO_GOAL_RULE_MATCHED) in the coverage report."
+}

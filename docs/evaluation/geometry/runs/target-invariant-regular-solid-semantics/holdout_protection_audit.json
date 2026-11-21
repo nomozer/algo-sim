@@ -1,0 +1,28 @@
+{
+  "run_id": "target-invariant-regular-solid-semantics",
+  "generated_at_utc": "2026-11-14T07:25:58.179662+00:00",
+  "product_commit": "bdc34a89e32c77fd73bff7b38b72d3a3496657e1",
+  "measured_system": "2a18f935e4c29462b0495ff6b0fec46df88e215e0bedcaba84668ec202af62d1",
+  "cache_version": "136",
+  "environment": {
+    "ALLOW_LIVE_AI": "0",
+    "HYBRID_ROUTE_MODE": "local-first",
+    "live_ai_calls": 0
+  },
+  "head": "bcba912e82661ccc8b186e6d93cd2bf7928f06bc",
+  "sealed_h1_rows_opened": 0,
+  "locked_w2_w3_rows_read": 0,
+  "tools_scanned": [
+    "acceptance.py",
+    "compositional_dev_corpus.py",
+    "perf.py",
+    "refresh_pending_templates.py",
+    "run_full_regression.py",
+    "scene3d_goal_e2e.mjs",
+    "scene_invariants_run.py",
+    "semantic_compare.py"
+  ],
+  "h1_corpus_paths_referenced": [],
+  "w2_w3_locked_manifests_referenced": [],
+  "verdict": "PASS"
+}

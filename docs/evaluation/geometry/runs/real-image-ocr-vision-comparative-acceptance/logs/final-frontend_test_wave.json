@@ -1,0 +1,146 @@
+{
+  "name": "frontend_test_wave",
+  "command": "npm.cmd run test:wave",
+  "argv": [
+    "npm.cmd",
+    "run",
+    "test:wave"
+  ],
+  "cwd": "D:\\Documents\\projects\\algo-sim\\.superpowers\\worktrees\\local-first-geometry-understanding\\frontend",
+  "started_at_utc": "2026-11-12T11:15:29.263127+00:00",
+  "start_snapshot": {
+    "head_commit": "70b22cc7167d8e2372d606547c3e398b199fb101",
+    "product_paths_sha256": "d70ad2dc7a2857c6d31c71ff21501149694d61af8278c2593f0176e8db3c0162",
+    "product_path_count": 332,
+    "hash_policy": "tracked backend/app + frontend/src, LF normalized; includes tests",
+    "working_product_source_sha256": "12ee8ae8c0609699e991e12ba2ff748ee3f08a436ec3e4e907a5218278bea75b",
+    "working_product_source_count": 192,
+    "working_source_policy": "all working backend/app + frontend/src including untracked; skip pycache and freeze TEST_ONLY_GLOBS"
+  },
+  "ended_at_utc": "2026-11-12T11:16:26.899160+00:00",
+  "duration_seconds": 57.406,
+  "exit_code": 0,
+  "raw_output_sha256": "928f5f1e581cdf45d7297581eea2399fa0d81f48697d0fa9db98e85ec2cef03e",
+  "raw_output_bytes": 11205,
+  "raw_output_retention": "ignored local .superpowers only; never staged",
+  "end_snapshot": {
+    "head_commit": "70b22cc7167d8e2372d606547c3e398b199fb101",
+    "product_paths_sha256": "d70ad2dc7a2857c6d31c71ff21501149694d61af8278c2593f0176e8db3c0162",
+    "product_path_count": 332,
+    "hash_policy": "tracked backend/app + frontend/src, LF normalized; includes tests",
+    "working_product_source_sha256": "12ee8ae8c0609699e991e12ba2ff748ee3f08a436ec3e4e907a5218278bea75b",
+    "working_product_source_count": 192,
+    "working_source_policy": "all working backend/app + frontend/src including untracked; skip pycache and freeze TEST_ONLY_GLOBS"
+  },
+  "summary_lines": [
+    "Test Files  139 passed (139)",
+    "Tests  2018 passed (2018)",
+    "Duration  48.13s (transform 4.56s, setup 1.35s, import 25.14s, tests 45.38s, environment 12ms)",
+    "✓ built in 3.91s"
+  ],
+  "failure_node_ids": [],
+  "typescript_errors": 0,
+  "source_unchanged_during_command": true,
+  "verdict": "PASS",
+  "previous_attempts": [
+    {
+      "name": "frontend_test_wave",
+      "command": "npm.cmd run test:wave",
+      "argv": [
+        "npm.cmd",
+        "run",
+        "test:wave"
+      ],
+      "cwd": "D:\\Documents\\projects\\algo-sim\\.superpowers\\worktrees\\local-first-geometry-understanding\\frontend",
+      "started_at_utc": "2026-11-11T16:16:29.400587+00:00",
+      "start_snapshot": {
+        "head_commit": "6bb22fa3bb183ad28cdf1395c99e5eb375fac97c",
+        "product_paths_sha256": "2a23353abf1091bbdfb44a59832774550e44a6425653d7ae80c788491cfc4f46",
+        "product_path_count": 332,
+        "hash_policy": "tracked backend/app + frontend/src, LF normalized; includes tests",
+        "working_product_source_sha256": "1e32d7ca2a517bb264192ec7827ea3d452879241f02582152b3621c60e12a2fb",
+        "working_product_source_count": 192,
+        "working_source_policy": "all working backend/app + frontend/src including untracked; skip pycache and freeze TEST_ONLY_GLOBS"
+      },
+      "ended_at_utc": "2026-11-11T16:17:31.117626+00:00",
+      "duration_seconds": 61.359,
+      "exit_code": 1,
+      "raw_output_sha256": "39b753fb7897408bbb73c859549653f4ed618a7b50af829103d67c4b8726916e",
+      "raw_output_bytes": 11989,
+      "raw_output_retention": "ignored local .superpowers only; never staged",
+      "end_snapshot": {
+        "head_commit": "2969e9e762065955ac8b32df08515f24278634fe",
+        "product_paths_sha256": "2a23353abf1091bbdfb44a59832774550e44a6425653d7ae80c788491cfc4f46",
+        "product_path_count": 332,
+        "hash_policy": "tracked backend/app + frontend/src, LF normalized; includes tests",
+        "working_product_source_sha256": "1e32d7ca2a517bb264192ec7827ea3d452879241f02582152b3621c60e12a2fb",
+        "working_product_source_count": 192,
+        "working_source_policy": "all working backend/app + frontend/src including untracked; skip pycache and freeze TEST_ONLY_GLOBS"
+      },
+      "summary_lines": [
+        "Test Files  1 failed | 138 passed (139)",
+        "Tests  1 failed | 2017 passed (2018)",
+        "Duration  59.28s (transform 5.66s, setup 1.66s, import 31.07s, tests 53.30s, environment 13ms)"
+      ],
+      "failure_node_ids": [
+        "src/components/ui-hygiene.test.ts > UI hygiene — quét MÃ NGUỒN, không phụ thuộc route nào được test > KHÔNG emoji / ký tự Unicode làm icon trong bất kỳ component nào"
+      ],
+      "typescript_errors": 0,
+      "source_unchanged_during_command": true,
+      "verdict": "FAIL"
+    },
+    {
+      "name": "frontend_test_wave",
+      "command": "npm.cmd run test:wave",
+      "argv": [
+        "npm.cmd",
+        "run",
+        "test:wave"
+      ],
+      "cwd": "D:\\Documents\\projects\\algo-sim\\.superpowers\\worktrees\\local-first-geometry-understanding\\frontend",
+      "started_at_utc": "2026-11-12T11:04:51.101465+00:00",
+      "start_snapshot": {
+        "head_commit": "7b170021451a86c56a2eebadcdd0f0f088fcc229",
+        "product_paths_sha256": "d70ad2dc7a2857c6d31c71ff21501149694d61af8278c2593f0176e8db3c0162",
+        "product_path_count": 332,
+        "hash_policy": "tracked backend/app + frontend/src, LF normalized; includes tests",
+        "working_product_source_sha256": "12ee8ae8c0609699e991e12ba2ff748ee3f08a436ec3e4e907a5218278bea75b",
+        "working_product_source_count": 192,
+        "working_source_policy": "all working backend/app + frontend/src including untracked; skip pycache and freeze TEST_ONLY_GLOBS"
+      },
+      "ended_at_utc": "2026-11-12T11:05:40.630097+00:00",
+      "duration_seconds": 47.078,
+      "exit_code": 1,
+      "raw_output_sha256": "024dfc3b9d18e0108ec62759bd9d603c6a3f8eb740144b59ac3269582e8c7ab8",
+      "raw_output_bytes": 16678,
+      "raw_output_retention": "ignored local .superpowers only; never staged",
+      "end_snapshot": {
+        "head_commit": "7b170021451a86c56a2eebadcdd0f0f088fcc229",
+        "product_paths_sha256": "d70ad2dc7a2857c6d31c71ff21501149694d61af8278c2593f0176e8db3c0162",
+        "product_path_count": 332,
+        "hash_policy": "tracked backend/app + frontend/src, LF normalized; includes tests",
+        "working_product_source_sha256": "12ee8ae8c0609699e991e12ba2ff748ee3f08a436ec3e4e907a5218278bea75b",
+        "working_product_source_count": 192,
+        "working_source_policy": "all working backend/app + frontend/src including untracked; skip pycache and freeze TEST_ONLY_GLOBS"
+      },
+      "summary_lines": [
+        "Test Files  1 failed | 138 passed (139)",
+        "Tests  8 failed | 2010 passed (2018)",
+        "Duration  45.20s (transform 4.32s, setup 1.30s, import 24.16s, tests 42.37s, environment 10ms)"
+      ],
+      "failure_node_ids": [
+        "src/evidence-provenance.test.ts > năm trạng thái, không cái nào mặc định thành FRESH > E. nguồn sạch + đúng công cụ ⇒ FRESH (kiểm soát dương tính)",
+        "src/evidence-provenance.test.ts > năm trạng thái, không cái nào mặc định thành FRESH > A. nguồn đã đổi sau khi đo ⇒ STALE_SOURCE",
+        "src/evidence-provenance.test.ts > năm trạng thái, không cái nào mặc định thành FRESH > B. đo trên mã sản phẩm chưa commit ⇒ DIRTY_SOURCE",
+        "src/evidence-provenance.test.ts > năm trạng thái, không cái nào mặc định thành FRESH > D. hợp đồng xuất xứ cũ ⇒ INCOMPATIBLE_TOOL",
+        "src/evidence-provenance.test.ts > vòng TỰ THAM CHIẾU đã bị phá > C. thêm/sửa file BẰNG CHỨNG không đổi dấu vân tay nguồn",
+        "src/evidence-provenance.test.ts > vòng TỰ THAM CHIẾU đã bị phá > dấu vân tay TẤT ĐỊNH — gọi hai lần cho cùng kết quả",
+        "src/evidence-provenance.test.ts > vòng TỰ THAM CHIẾU đã bị phá > dấu vân tay PHÂN BIỆT ĐƯỢC — không phải băm của chuỗi rỗng",
+        "src/evidence-provenance.test.ts > vòng TỰ THAM CHIẾU đã bị phá > phán quyết KHÔNG còn đọc `head` làm khoá"
+      ],
+      "typescript_errors": 0,
+      "source_unchanged_during_command": true,
+      "verdict": "FAIL"
+    }
+  ]
+}

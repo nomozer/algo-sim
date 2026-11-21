@@ -1,0 +1,62 @@
+{
+  "run_id": "proof-soundness-generalized-angle-invariance",
+  "generated_at_utc": "2026-11-14T12:35:21.414052+00:00",
+  "product_commit": "c54db0da0c792c2ba0399acc8e9df992d2d270c3",
+  "measured_system": "610b4ee1e3227bc44f0659aea5d0dfc7f7a827aff622605db2b9571fb980fb80",
+  "cache_version": "137",
+  "environment": {
+    "ALLOW_LIVE_AI": "0",
+    "HYBRID_ROUTE_MODE": "local-first",
+    "live_ai_calls": 0
+  },
+  "head": "94281be581617a67921f295474dbd8e698dade4b",
+  "command": "python docs/evaluation/geometry/runs/proof-soundness-generalized-angle-invariance/tools/semantic_compare.py <archive of 9d5e9b408>/backend <out>",
+  "served": {
+    "COMP": {
+      "before": 38,
+      "after": 49
+    },
+    "DEV37": {
+      "before": 27,
+      "after": 27
+    },
+    "REAL27": {
+      "before": 12,
+      "after": 12
+    },
+    "PROBES": {
+      "before": 23,
+      "after": 23
+    }
+  },
+  "comp_expectations_met": {
+    "before": 70,
+    "after": 81,
+    "of": 82
+  },
+  "served_to_refused": [],
+  "answers_changed_on_served": [],
+  "refused_to_served": [
+    "COMP:pa_ratio2_planes",
+    "COMP:pa_ratio2_tan",
+    "COMP:pp_base",
+    "COMP:pp_lateral",
+    "COMP:lp_isosceles",
+    "COMP:lp_ratio2",
+    "COMP:lp_perpendicular",
+    "COMP:lp_renamed",
+    "COMP:ll_meeting",
+    "COMP:ll_perpendicular",
+    "COMP:ll_skew_perpendicular"
+  ],
+  "real27_root_causes_after": {
+    "DESCRIBED_POINT_IN_PREMISE_UNSUPPORTED": 1,
+    "UNRECOGNIZED_GOAL": 3,
+    "PLANNER_COMPOSITION_UNSUPPORTED": 1,
+    "UNSUPPORTED_POINT_CONSTRUCTION": 1,
+    "SOURCE_PROVENANCE_MISSING": 3,
+    "INCOMPLETE_FACT_EXTRACTION": 2,
+    "UNRECOGNIZED_GEOMETRIC_ENTITY": 3,
+    "FREE_POINT_UNDERDETERMINED": 1
+  }
+}

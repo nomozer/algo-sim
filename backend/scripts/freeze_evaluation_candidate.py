@@ -500,22 +500,14 @@ def _git(*args: str) -> str:
 
 def build() -> dict:
     from app.main import CACHE_VERSION
-    from app.simulation.semantic_program.contract import (
-        SPEC_VERSION,
-        VisualContainerBinding,
-    )
-    from app.simulation.semantic_program.obligations import (
-        AGGREGATE_OPS,
-        OBLIGATION_KINDS,
-        SEQUENCE_TRANSFORMS,
-    )
+    from app.simulation.semantic_program.contract import SPEC_VERSION
+    from app.simulation.semantic_program.obligations import OBLIGATION_KINDS
     from app.simulation.semantic_program.postconditions import CHECKERS
-    import typing
 
     taxonomy = {k: sorted(v) for k, v in sorted(OBLIGATION_KINDS.items())}
-    primitives = sorted(
-        typing.get_args(VisualContainerBinding.model_fields["primitive"].annotation)
-    )
+    # (/13) Không còn primitive hiển thị container (`VisualContainerBinding` đã gỡ cùng miền Tin học); tập rỗng được
+    # GHI chứ không bỏ trường, để manifest mới vẫn cùng hình dạng với các manifest cũ được kiểm theo luật của chúng.
+    primitives: list[str] = []
     schema_path = ROOT / "docs" / "schemas" / "semantic_program.schema.json"
     dev_path = BENCH / "dev" / "cases.json"
 
@@ -557,8 +549,9 @@ def build() -> dict:
         "taxonomy": {
             "so_nghia_vu": len(taxonomy),
             "kinds": sorted(taxonomy),
-            "aggregate_ops": sorted(AGGREGATE_OPS),
-            "sequence_transforms": sorted(SEQUENCE_TRANSFORMS),
+            # (/13) phép gộp / phép biến đổi dãy thuộc nghĩa vụ Tin học đã gỡ — ghi rỗng, cùng lý do `primitives`.
+            "aggregate_ops": [],
+            "sequence_transforms": [],
             "co_checker_server_owned": sorted(CHECKERS),
             "hash": _sha(json.dumps(taxonomy, ensure_ascii=False, sort_keys=True)),
         },

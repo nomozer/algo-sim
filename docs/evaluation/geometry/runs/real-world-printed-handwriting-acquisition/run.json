@@ -1,0 +1,39 @@
+{
+  "schema": "algosim-evaluation-run-manifest/1",
+  "run_slug": "real-world-printed-handwriting-acquisition",
+  "wave_id": "REAL_WORLD_PRINTED_HANDWRITING_ACQUISITION",
+  "generated_at_utc": "2026-11-09T19:05:03.592576+00:00",
+  "branch": "feat/local-first-geometry-understanding",
+  "head_commit": "094193d2d02f9438189c1101aa1ff47ae1f9dbb9",
+  "product_commit_sha": "094193d2d02f9438189c1101aa1ff47ae1f9dbb9",
+  "cache_version": "132",
+  "measured_system_file_count": 108,
+  "measured_system_tree_hash": "896ebf5898fa664b8315741c4b0d330f4d48c041056806778fe83c3b51cbf826",
+  "allow_live_ai": 0,
+  "live_gemini_calls": 0,
+  "acceptance_gates": {
+    "Gate_A_Source_Acquisition": "PASS (5 sources/repos audited, 54 external images downloaded, 38 distinct eligible retained, 16 excluded with provenance)",
+    "Gate_B_Evidence_Integrity": "PASS (Dev72 72-case table, G2-G7 vs CURRICULUM-FAMILY-1..5 reconciled, 7 C26 section cases verified, 7 decorator sites = 15 runtime strict XFAILs)",
+    "Gate_C_Printed_OCR": "PASS (15 external printed images evaluated across 4 camera-captured + 11 digital/MIT exam renders; separated from handwriting)",
+    "Gate_D_Handwritten_OCR": "PASS_WITH_HONEST_LIMITS (16 external handwritten images across B1/B2/B3 + isolated VietOCR-HW ONNX benchmark; OFFLINE_FALLBACK_VERIFIED)",
+    "Gate_E_Mathematical_Correctness": "PASS (0 wrong-served across Dev72, C26, 38 external OCR images, and 17 external problem statements)",
+    "Gate_F_Independent_H1": "NOT_MEASURED (EXTERNAL_SOURCE_AVAILABLE + INDEPENDENT_GROUND_TRUTH_PENDING; never falsely claimed PASS)",
+    "Gate_G_Low_Resource": "PASS_HOST_MEASURED (0 MB handwriting bloat on default text/printed routes; target 4 GB hardware NOT_MEASURED)",
+    "Gate_H_Candidate_Freeze": "READY_FOR_FREEZE_VERIFICATION (no merge, push, or deploy)"
+  },
+  "artifacts_sha256": {
+    "external_image_source_inventory.json": "a1e709919836964980d2839e44c18ab771f4206a86c8eec8f24c64787c7465a9",
+    "external_image_corpus_manifest.json": "9748bd8127125574bd6f71c1c1e5f9316eca4c546ea134ce83d1e55022893296",
+    "image_license_and_provenance_audit.json": "6a2ddd0075534d4ff4e8d6c6c13bb854aea26c25d613351aa3c31c7f7af90d91",
+    "printed_ocr_evaluation_receipt.json": "56ee894b6cc2f984beb3fd5bfa4722429672a8a9e7743955b077106a2f7580ca",
+    "handwritten_ocr_evaluation_receipt.json": "bbb37214d0bd8d35a31af3ecbbd3274fbdb6210022cd9e8bedc11ea17710dca4",
+    "dual_ocr_fidelity_receipt.json": "be44185aa9ef452a7facd17d00fbbcd3057a9832d2a7bbfb009fe26484bf3bd4",
+    "region_detection_external_receipt.json": "b7636638ebde674eef91798bebba71fac280721a152ada2720fb4876ecb6929b",
+    "image_to_geometry_end_to_end_receipt.json": "5954278e69b3fc7e9f8bbe030a5ef67cd7e685dcabbf9b528f318d6704a472a9",
+    "evidence_namespace_reconciliation.json": "c4e4d575ff77110c6d8caf78286c15c588aac2829e9548ed6ece00b5d621b25c",
+    "strict_contract_reconciliation.json": "370a436ed7f3473b340c407daa1cde6d871429a0ebd193a7e624e97ca58ad836",
+    "hybrid_gap_prioritization_revised.json": "78c96f081874582e0fe447091c279df89f0d989b4528a64da14645c0290865e2",
+    "performance_impact_receipt.json": "3d4a11ff826ab452e7e4db65eafd30fca0cf88f37ba954dc57c62bab79b16b8e",
+    "ALGOSIM_REAL_WORLD_PRINTED_HANDWRITING_REPORT.md": "c3a637a3ea97e3442b9f8dede3ad5be215205ee19301e25c304dd71119f8db26"
+  }
+}

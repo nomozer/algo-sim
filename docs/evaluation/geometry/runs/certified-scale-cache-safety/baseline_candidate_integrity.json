@@ -1,0 +1,21 @@
+{
+  "run_id": "certified-scale-cache-safety",
+  "generated_at_utc": "2026-11-14T05:40:52.234783+00:00",
+  "product_commit": "902a3171c1a625c2741f0c6886d0328584dfb89e",
+  "measured_system": "243d932765f7d4065394f91c6b4f25972f8232ba9228aec89d4c63a244c1976b",
+  "cache_version": "135",
+  "environment": {
+    "ALLOW_LIVE_AI": "0",
+    "HYBRID_ROUTE_MODE": "local-first",
+    "live_ai_calls": 0
+  },
+  "head": "4bb423b48393605355be39e4d8dc4386ad9b3946",
+  "start_head": "30884a2e850a660da57f39516d691394d4c7e192",
+  "start_product_commit": "379d33969",
+  "start_freeze_stored_in": "54268761e",
+  "start_measured_system": "b652e635d5497dc36bf6d55ff4a34c20a16302d01c154b59b039efd65170921e",
+  "start_files": 116,
+  "start_cache_version": "134",
+  "freeze_verify_at_start": "PASS",
+  "verdict": "VERIFIED_INTACT"
+}

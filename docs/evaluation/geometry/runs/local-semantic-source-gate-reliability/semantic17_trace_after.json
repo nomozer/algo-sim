@@ -1,0 +1,2117 @@
+{
+  "run_id": "local-semantic-source-gate-reliability",
+  "generated_at_utc": "2026-11-12T18:27:39.545828+00:00",
+  "head": "81bcb5d0fa5d981cc9065a543315038ccaa44126",
+  "measured_system_working_tree": "1cc979f559a632c30b97636e4b47532139b6205199ddbe97fc6fb6c6e9e16c28",
+  "input_manifest": "controlled-vision-real-image-validation/new_in_scope_image_manifest.json",
+  "reference_status": "AGENT_TRANSCRIBED_UNVERIFIED (not human verified, not H-1)",
+  "method": "Parser stages replayed in-process to keep partial typed facts; the downstream check runs Schema -> Bridge -> planner -> kiem_nguon on whatever the parser built.",
+  "cases": [
+    {
+      "case_id": "vmmu_r254",
+      "source_image_hash": "856efe3f31a1f628739b7e59dd4883eceef016f414fbec0d6563b8f384da6e15",
+      "problem_text": "Câu 45: Cho hình lăng trụ ABC.A'B'C' có AA' = 2√13a, tam giác ABC vuông tại C và ∠ABC = 30°, góc giữa cạnh bên CC' và mặt đáy (ABC) bằng 60°. Hình chiếu vuông góc của B' lên mặt phẳng (ABC) trùng với trọng tâm của tam giác ABC. Thể tích của khối tứ diện A'ABC theo a bằng",
+      "transcription_verification_status": "AGENT_TRANSCRIBED_UNVERIFIED",
+      "dataset_partition": "frozen_external_evaluation",
+      "problem_type": [
+        "oblique_prism",
+        "volume"
+      ],
+      "expected_answer": "9√13a³/2",
+      "oracle_status": "DATASET_KEY_NOT_INDEPENDENTLY_ADJUDICATED",
+      "previous_layer_label": "LOCAL_PARSER_COVERAGE",
+      "previous_reason_code": "UNPARSED_GOAL_CANDIDATE",
+      "local_parser": {
+        "status": "LOCAL_PARSE_PARTIAL",
+        "reason_code": "UNPARSED_GOAL_CANDIDATE",
+        "fallback_reason": "UNPARSED_GOAL_CANDIDATE"
+      },
+      "clauses": [
+        {
+          "index": 0,
+          "text": "Câu 45: Cho hình lăng trụ ABC.A'B'C' có AA' = 2√13a, tam giác ABC vuông tại C và ∠ABC = 30°, góc giữa cạnh bên CC' và mặt đáy (ABC) bằng 60°",
+          "classification": "MAPPED_FACT",
+          "notes": []
+        },
+        {
+          "index": 1,
+          "text": "Hình chiếu vuông góc của B' lên mặt phẳng (ABC) trùng với trọng tâm của tam giác ABC",
+          "classification": "UNPARSED_FACT_CANDIDATE",
+          "notes": [
+            "NO_FACT_RULE_MATCHED"
+          ]
+        },
+        {
+          "index": 2,
+          "text": "Thể tích của khối tứ diện A'ABC theo a bằng",
+          "classification": "UNPARSED_GOAL_CANDIDATE",
+          "notes": [
+            "NO_GOAL_RULE_MATCHED"
+          ]
+        }
+      ],
+      "typed_facts_built": {
+        "solids": [
+          {
+            "solid_id": "s1",
+            "solid_type": "prism",
+            "notation": "ABC.A'B'C'",
+            "quote": "Cho hình lăng trụ ABC.A'B'C'"
+          }
+        ],
+        "premises": [
+          {
+            "kind": "right_angle",
+            "args": {
+              "vertex": "C",
+              "rays": [
+                "A",
+                "B"
+              ]
+            },
+            "quote": "tam giác ABC vuông tại C",
+            "solid_id": "s1"
+          },
+          {
+            "kind": "line_plane_angle",
+            "args": {
+              "line": [
+                "C",
+                "C'"
+              ],
+              "plane": [
+                "A",
+                "B",
+                "C"
+              ],
+              "value": "60",
+              "unit": "deg"
+            },
+            "quote": "góc giữa cạnh bên CC' và mặt đáy (ABC) bằng 60°",
+            "solid_id": "s1"
+          },
+          {
+            "kind": "vertex_angle",
+            "args": {
+              "vertex": "B",
+              "rays": [
+                "A",
+                "C"
+              ],
+              "value": "30",
+              "unit": "deg"
+            },
+            "quote": "∠ABC = 30°",
+            "solid_id": "s1"
+          },
+          {
+            "kind": "segment_length",
+            "args": {
+              "segment": [
+                "A",
+                "A'"
+              ],
+              "value": "2a√13"
+            },
+            "quote": "AA' = 2√13a",
+            "solid_id": "s1"
+          }
+        ],
+        "described_points": [],
+        "relations": [],
+        "math_goals": [],
+        "unresolved": []
+      },
+      "downstream_on_built_facts": {
+        "schema": "VALID",
+        "bridge_facts": 5,
+        "bridge_ambiguities": null,
+        "planner": {
+          "calls": 5,
+          "goals": 0,
+          "negated": 0
+        },
+        "source_gate": "REFUSED:SOURCE_PREMISE_UNREAD",
+        "source_gate_reason": "tiền đề \"Hình chiếu vuông góc của B' lên mặt phẳng (ABC) trùng với trọng tâm của tam giác ABC.\" chưa được lời gọi nào đọc — có thể đổi hình; không dùng mô hình cũ",
+        "first_failure": "SOURCE_GATE"
+      },
+      "first_failure_layer": "PARSER_COVERAGE",
+      "solve_on_transcription_previous_run": "statement -> HTTP 503 / LIVE_AI_DISABLED; grade NOT_SERVED"
+    },
+    {
+      "case_id": "vmmu_r256",
+      "source_image_hash": "4ae1fd776fe4ff16f290eddd3e4a7699b943dec7b1cfa0235a401d113864ba07",
+      "problem_text": "Câu 38: Cho hình chóp S.ABCD có đáy ABCD là hình thoi cạnh bằng a, ∠BAD = 120°. Mặt bên SAB là tam giác đều và (SAB) ⊥ (ABCD) (tham khảo hình vẽ). Tính khoảng cách từ A đên (SBC)",
+      "transcription_verification_status": "AGENT_TRANSCRIBED_UNVERIFIED",
+      "dataset_partition": "frozen_external_evaluation",
+      "problem_type": [
+        "pyramid",
+        "distance_point_plane"
+      ],
+      "expected_answer": "a√15/5",
+      "oracle_status": "DATASET_KEY_NOT_INDEPENDENTLY_ADJUDICATED",
+      "previous_layer_label": "LOCAL_PARSER_COVERAGE",
+      "previous_reason_code": "UNPARSED_GOAL_CANDIDATE",
+      "local_parser": {
+        "status": "LOCAL_PARSE_PARTIAL",
+        "reason_code": "UNPARSED_GOAL_CANDIDATE",
+        "fallback_reason": "UNPARSED_GOAL_CANDIDATE"
+      },
+      "clauses": [
+        {
+          "index": 0,
+          "text": "Câu 38: Cho hình chóp S.ABCD có đáy ABCD là hình thoi cạnh bằng a, ∠BAD = 120°",
+          "classification": "MAPPED_FACT",
+          "notes": []
+        },
+        {
+          "index": 1,
+          "text": "Mặt bên SAB là tam giác đều và (SAB) ⊥ (ABCD) (tham khảo hình vẽ)",
+          "classification": "UNPARSED_FACT_CANDIDATE",
+          "notes": [
+            "NO_FACT_RULE_MATCHED"
+          ]
+        },
+        {
+          "index": 2,
+          "text": "Tính khoảng cách từ A đên (SBC)",
+          "classification": "UNPARSED_GOAL_CANDIDATE",
+          "notes": [
+            "NO_GOAL_RULE_MATCHED"
+          ]
+        }
+      ],
+      "typed_facts_built": {
+        "solids": [
+          {
+            "solid_id": "s1",
+            "solid_type": "pyramid",
+            "notation": "S.ABCD",
+            "quote": "Cho hình chóp S.ABCD"
+          }
+        ],
+        "premises": [
+          {
+            "kind": "rhombus",
+            "args": {
+              "vertices": [
+                "A",
+                "B",
+                "C",
+                "D"
+              ],
+              "side": "a"
+            },
+            "quote": "đáy ABCD là hình thoi cạnh bằng a",
+            "solid_id": "s1"
+          },
+          {
+            "kind": "vertex_angle",
+            "args": {
+              "vertex": "A",
+              "rays": [
+                "B",
+                "D"
+              ],
+              "value": "120",
+              "unit": "deg"
+            },
+            "quote": "∠BAD = 120°",
+            "solid_id": "s1"
+          }
+        ],
+        "described_points": [],
+        "relations": [],
+        "math_goals": [],
+        "unresolved": []
+      },
+      "downstream_on_built_facts": {
+        "schema": "VALID",
+        "bridge_facts": 3,
+        "bridge_ambiguities": null,
+        "planner": {
+          "calls": 3,
+          "goals": 0,
+          "negated": 0
+        },
+        "source_gate": "REFUSED:SOURCE_PREMISE_UNREAD",
+        "source_gate_reason": "tiền đề 'Mặt bên SAB là tam giác đều và (SAB) ⊥ (ABCD) (tham khảo hình vẽ).' chưa được lời gọi nào đọc — có thể đổi hình; không dùng mô hình cũ",
+        "first_failure": "SOURCE_GATE"
+      },
+      "first_failure_layer": "PARSER_COVERAGE",
+      "solve_on_transcription_previous_run": "statement -> HTTP 503 / LIVE_AI_DISABLED; grade NOT_SERVED"
+    },
+    {
+      "case_id": "vmmu_r258",
+      "source_image_hash": "5d01fa15116c70e493c30230068dbee2f3d3375cd6a36bbc4ac673e0b820ac3e",
+      "problem_text": "Câu 30. Cho hình chóp S.ABC có đáy là tam giác vuông cân tại A, SA vuông góc với đáy và SA = AB (tham khảo hình vẽ). Tang của góc giữa hai mặt phẳng (SBC) và (SBA) bằng",
+      "transcription_verification_status": "AGENT_TRANSCRIBED_UNVERIFIED",
+      "dataset_partition": "frozen_external_evaluation",
+      "problem_type": [
+        "pyramid",
+        "dihedral"
+      ],
+      "expected_answer": "√2",
+      "oracle_status": "DATASET_KEY_NOT_INDEPENDENTLY_ADJUDICATED",
+      "previous_layer_label": "LOCAL_PARSER_COVERAGE",
+      "previous_reason_code": "UNPARSED_FACT_CANDIDATE",
+      "local_parser": {
+        "status": "LOCAL_PARSE_PARTIAL",
+        "reason_code": "NOT_ASKED_IN_SOURCE",
+        "fallback_reason": "SOURCE_GATE_MISMATCH:NOT_ASKED_IN_SOURCE:q1: 'góc giữa hai mặt phẳng (SBC) và (SBA)' không hỏi đối tượng này nguyên vẹn (không có từ hỏi gắn với nó, đã gán giá trị, hay bị bổ nghĩa / đặt điều kiện) — không trả lời điều đề không hỏi"
+      },
+      "clauses": [
+        {
+          "index": 0,
+          "text": "Câu 30",
+          "classification": "BENIGN_DISCOURSE",
+          "notes": []
+        },
+        {
+          "index": 1,
+          "text": "Cho hình chóp S.ABC có đáy là tam giác vuông cân tại A, SA vuông góc với đáy và SA = AB (tham khảo hình vẽ)",
+          "classification": "MAPPED_FACT",
+          "notes": []
+        },
+        {
+          "index": 2,
+          "text": "Tang của góc giữa hai mặt phẳng (SBC) và (SBA) bằng",
+          "classification": "MAPPED_GOAL",
+          "notes": []
+        }
+      ],
+      "typed_facts_built": {
+        "solids": [
+          {
+            "solid_id": "s1",
+            "solid_type": "pyramid",
+            "notation": "S.ABC",
+            "quote": "Cho hình chóp S.ABC"
+          }
+        ],
+        "premises": [
+          {
+            "kind": "right_angle",
+            "args": {
+              "vertex": "A",
+              "rays": [
+                "B",
+                "C"
+              ]
+            },
+            "quote": "S.ABC có đáy là tam giác vuông cân tại A",
+            "solid_id": "s1"
+          },
+          {
+            "kind": "equal_length",
+            "args": {
+              "segment_a": [
+                "A",
+                "B"
+              ],
+              "segment_b": [
+                "A",
+                "C"
+              ]
+            },
+            "quote": "S.ABC có đáy là tam giác vuông cân tại A",
+            "solid_id": "s1"
+          },
+          {
+            "kind": "perpendicular_line_plane",
+            "args": {
+              "line": [
+                "S",
+                "A"
+              ],
+              "plane": [
+                "A",
+                "B",
+                "C"
+              ]
+            },
+            "quote": "SA vuông góc với đáy",
+            "solid_id": "s1"
+          },
+          {
+            "kind": "equal_length",
+            "args": {
+              "segment_a": [
+                "S",
+                "A"
+              ],
+              "segment_b": [
+                "A",
+                "B"
+              ]
+            },
+            "quote": "SA = AB",
+            "solid_id": "s1"
+          }
+        ],
+        "described_points": [],
+        "relations": [],
+        "math_goals": [
+          {
+            "goal_id": "q1",
+            "kind": "measurement",
+            "goal_type": "angle",
+            "target": {
+              "plane1": [
+                "S",
+                "B",
+                "C"
+              ],
+              "plane2": [
+                "S",
+                "B",
+                "A"
+              ]
+            },
+            "solid_id": "s1",
+            "quote": "góc giữa hai mặt phẳng (SBC) và (SBA)"
+          }
+        ],
+        "unresolved": []
+      },
+      "downstream_on_built_facts": {
+        "schema": "VALID",
+        "bridge_facts": 6,
+        "bridge_ambiguities": null,
+        "planner": {
+          "calls": 6,
+          "goals": 0,
+          "negated": 0
+        },
+        "source_gate": "REFUSED:NOT_ASKED_IN_SOURCE",
+        "source_gate_reason": "q1: 'góc giữa hai mặt phẳng (SBC) và (SBA)' không hỏi đối tượng này nguyên vẹn (không có từ hỏi gắn với nó, đã gán giá trị, hay bị bổ nghĩa / đặt điều kiện) — không trả lời điều đề không hỏi",
+        "first_failure": "SOURCE_GATE"
+      },
+      "first_failure_layer": "SOURCE_GATE",
+      "solve_on_transcription_previous_run": "statement -> HTTP 503 / LIVE_AI_DISABLED; grade NOT_SERVED"
+    },
+    {
+      "case_id": "vmmu_r270",
+      "source_image_hash": "705dbd934e5568029737ad457ba0776d1eb47dd0ca420bc712081b0810bc3c25",
+      "problem_text": "Câu 43. Cho lăng trụ đứng ABC.A'B'C' có đáy ABC là tam giác vuông cân tại B với BC = a biết mặt phẳng (A'BC) hợp với đáy (ABC) một góc 60° (tham khảo hình bên). Tính thể tích lăng trụ ABC.A'B'C'.",
+      "transcription_verification_status": "AGENT_TRANSCRIBED_UNVERIFIED",
+      "dataset_partition": "development",
+      "problem_type": [
+        "right_prism",
+        "volume",
+        "inverse_from_angle"
+      ],
+      "expected_answer": "a³√3/2",
+      "oracle_status": "DATASET_KEY_NOT_INDEPENDENTLY_ADJUDICATED",
+      "previous_layer_label": "LOCAL_PARSER_COVERAGE",
+      "previous_reason_code": "UNPARSED_GOAL_CANDIDATE",
+      "local_parser": {
+        "status": "LOCAL_PARSE_COMPLETE",
+        "reason_code": null,
+        "fallback_reason": ""
+      },
+      "clauses": [
+        {
+          "index": 0,
+          "text": "Câu 43",
+          "classification": "BENIGN_DISCOURSE",
+          "notes": []
+        },
+        {
+          "index": 1,
+          "text": "Cho lăng trụ đứng ABC.A'B'C' có đáy ABC là tam giác vuông cân tại B với BC = a biết mặt phẳng (A'BC) hợp với đáy (ABC) một góc 60° (tham khảo hình bên)",
+          "classification": "MAPPED_FACT",
+          "notes": []
+        },
+        {
+          "index": 2,
+          "text": "Tính thể tích lăng trụ ABC.A'B'C'",
+          "classification": "MAPPED_GOAL",
+          "notes": []
+        }
+      ],
+      "typed_facts_built": {
+        "solids": [
+          {
+            "solid_id": "s1",
+            "solid_type": "prism",
+            "notation": "ABC.A'B'C'",
+            "quote": "Cho lăng trụ đứng ABC.A'B'C'"
+          }
+        ],
+        "premises": [
+          {
+            "kind": "right_prism",
+            "args": {
+              "base": [
+                "A",
+                "B",
+                "C"
+              ],
+              "top": [
+                "A'",
+                "B'",
+                "C'"
+              ]
+            },
+            "quote": "Cho lăng trụ đứng ABC.A'B'C'",
+            "solid_id": "s1"
+          },
+          {
+            "kind": "right_angle",
+            "args": {
+              "vertex": "B",
+              "rays": [
+                "A",
+                "C"
+              ]
+            },
+            "quote": "ABC.A'B'C' có đáy ABC là tam giác vuông cân tại B",
+            "solid_id": "s1"
+          },
+          {
+            "kind": "equal_length",
+            "args": {
+              "segment_a": [
+                "B",
+                "A"
+              ],
+              "segment_b": [
+                "B",
+                "C"
+              ]
+            },
+            "quote": "ABC.A'B'C' có đáy ABC là tam giác vuông cân tại B",
+            "solid_id": "s1"
+          },
+          {
+            "kind": "plane_plane_angle",
+            "args": {
+              "plane1": [
+                "A'",
+                "B",
+                "C"
+              ],
+              "plane2": [
+                "A",
+                "B",
+                "C"
+              ],
+              "value": "60",
+              "unit": "deg"
+            },
+            "quote": "biết mặt phẳng (A'BC) hợp với đáy (ABC) một góc 60°",
+            "solid_id": "s1"
+          },
+          {
+            "kind": "segment_length",
+            "args": {
+              "segment": [
+                "B",
+                "C"
+              ],
+              "value": "a"
+            },
+            "quote": "BC = a",
+            "solid_id": "s1"
+          }
+        ],
+        "described_points": [],
+        "relations": [],
+        "math_goals": [
+          {
+            "goal_id": "q1",
+            "kind": "measurement",
+            "goal_type": "volume",
+            "target": {
+              "solid_id": "s1"
+            },
+            "solid_id": "s1",
+            "quote": "Tính thể tích lăng trụ ABC.A'B'C'"
+          }
+        ],
+        "unresolved": []
+      },
+      "downstream_on_built_facts": {
+        "schema": "VALID",
+        "bridge_facts": 6,
+        "bridge_ambiguities": null,
+        "planner": {
+          "calls": 6,
+          "goals": 0,
+          "negated": 0
+        },
+        "source_gate": "ACCEPTED"
+      },
+      "first_failure_layer": "NONE_LOCAL_PARSE_COMPLETE",
+      "solve_on_transcription_previous_run": "statement -> HTTP 503 / LIVE_AI_DISABLED; grade NOT_SERVED"
+    },
+    {
+      "case_id": "vmmu_r277",
+      "source_image_hash": "ac19cfdf164dccdb077a643049d51939a39c9ac88cdadf0e9970fbd2b3227990",
+      "problem_text": "Câu 44. Cho tứ diện OABC vuông tại O có OA = 2a, OB = 3a, OC = 4a. Gọi M, N, P lần lượt là điểm đối xứng với điểm O qua trung điểm ba cạnh AB, BC, CA của tam giác ABC. Thể tích của tứ diện OMNP bằng",
+      "transcription_verification_status": "AGENT_TRANSCRIBED_UNVERIFIED",
+      "dataset_partition": "frozen_external_evaluation",
+      "problem_type": [
+        "tetrahedron",
+        "volume",
+        "point_reflection"
+      ],
+      "expected_answer": "8a³",
+      "oracle_status": "DATASET_KEY_NOT_INDEPENDENTLY_ADJUDICATED",
+      "previous_layer_label": "LOCAL_PARSER_COVERAGE",
+      "previous_reason_code": "UNPARSED_GOAL_CANDIDATE",
+      "local_parser": {
+        "status": "LOCAL_PARSE_PARTIAL",
+        "reason_code": "UNPARSED_GOAL_CANDIDATE",
+        "fallback_reason": "UNPARSED_GOAL_CANDIDATE"
+      },
+      "clauses": [
+        {
+          "index": 0,
+          "text": "Câu 44",
+          "classification": "BENIGN_DISCOURSE",
+          "notes": []
+        },
+        {
+          "index": 1,
+          "text": "Cho tứ diện OABC vuông tại O có OA = 2a, OB = 3a, OC = 4a",
+          "classification": "MAPPED_FACT",
+          "notes": []
+        },
+        {
+          "index": 2,
+          "text": "Gọi M, N, P lần lượt là điểm đối xứng với điểm O qua trung điểm ba cạnh AB, BC, CA của tam giác ABC",
+          "classification": "UNPARSED_FACT_CANDIDATE",
+          "notes": [
+            "NO_FACT_RULE_MATCHED"
+          ]
+        },
+        {
+          "index": 3,
+          "text": "Thể tích của tứ diện OMNP bằng",
+          "classification": "UNPARSED_GOAL_CANDIDATE",
+          "notes": [
+            "NO_GOAL_RULE_MATCHED"
+          ]
+        }
+      ],
+      "typed_facts_built": {
+        "solids": [
+          {
+            "solid_id": "s1",
+            "solid_type": "pyramid",
+            "notation": "O.ABC",
+            "quote": "Cho tứ diện OABC"
+          }
+        ],
+        "premises": [
+          {
+            "kind": "segment_length",
+            "args": {
+              "segment": [
+                "O",
+                "A"
+              ],
+              "value": "2a"
+            },
+            "quote": "OA = 2a",
+            "solid_id": "s1"
+          },
+          {
+            "kind": "segment_length",
+            "args": {
+              "segment": [
+                "O",
+                "B"
+              ],
+              "value": "3a"
+            },
+            "quote": "OB = 3a",
+            "solid_id": "s1"
+          },
+          {
+            "kind": "segment_length",
+            "args": {
+              "segment": [
+                "O",
+                "C"
+              ],
+              "value": "4a"
+            },
+            "quote": "OC = 4a",
+            "solid_id": "s1"
+          }
+        ],
+        "described_points": [],
+        "relations": [],
+        "math_goals": [],
+        "unresolved": []
+      },
+      "downstream_on_built_facts": {
+        "schema": "VALID",
+        "bridge_facts": 4,
+        "bridge_ambiguities": null,
+        "planner": {
+          "calls": 4,
+          "goals": 0,
+          "negated": 0
+        },
+        "source_gate": "REFUSED:SOURCE_PREMISE_UNREAD",
+        "source_gate_reason": "tiền đề 'Cho tứ diện OABC vuông tại O có OA = 2a, OB = 3a, OC = 4a.' chưa được lời gọi nào đọc — có thể đổi hình; không dùng mô hình cũ",
+        "first_failure": "SOURCE_GATE"
+      },
+      "first_failure_layer": "PARSER_COVERAGE",
+      "solve_on_transcription_previous_run": "statement -> HTTP 503 / LIVE_AI_DISABLED; grade NOT_SERVED"
+    },
+    {
+      "case_id": "vmmu_r284",
+      "source_image_hash": "fa7b52ad0200b069e572877d033ba371f8724a7f32ce69416b937e932fb68417",
+      "problem_text": "Câu 36. Cho hình chóp S.ABCD có đáy là hình vuông cạnh a, mặt bên SAB là tam giác đều và nằm trong mặt phẳng vuông góc với mặt phẳng đáy (minh họa như hình vẽ bên). Khoảng cách từ A đến mặt phẳng (SBD) bằng",
+      "transcription_verification_status": "AGENT_TRANSCRIBED_UNVERIFIED",
+      "dataset_partition": "development",
+      "problem_type": [
+        "pyramid",
+        "distance_point_plane"
+      ],
+      "expected_answer": "√21a/7",
+      "oracle_status": "DATASET_KEY_NOT_INDEPENDENTLY_ADJUDICATED",
+      "previous_layer_label": "LOCAL_PARSER_COVERAGE",
+      "previous_reason_code": "UNPARSED_FACT_CANDIDATE",
+      "local_parser": {
+        "status": "LOCAL_PARSE_PARTIAL",
+        "reason_code": "UNPARSED_FACT_CANDIDATE",
+        "fallback_reason": "UNPARSED_FACT_CANDIDATE"
+      },
+      "clauses": [
+        {
+          "index": 0,
+          "text": "Câu 36",
+          "classification": "BENIGN_DISCOURSE",
+          "notes": []
+        },
+        {
+          "index": 1,
+          "text": "Cho hình chóp S.ABCD có đáy là hình vuông cạnh a, mặt bên SAB là tam giác đều và nằm trong mặt phẳng vuông góc với mặt phẳng đáy (minh họa như hình vẽ bên)",
+          "classification": "UNPARSED_FACT_CANDIDATE",
+          "notes": [
+            "UNBACKED_PERPENDICULAR"
+          ]
+        },
+        {
+          "index": 2,
+          "text": "Khoảng cách từ A đến mặt phẳng (SBD) bằng",
+          "classification": "MAPPED_GOAL",
+          "notes": []
+        }
+      ],
+      "typed_facts_built": {
+        "solids": [
+          {
+            "solid_id": "s1",
+            "solid_type": "pyramid",
+            "notation": "S.ABCD",
+            "quote": "Cho hình chóp S.ABCD"
+          }
+        ],
+        "premises": [
+          {
+            "kind": "regular_polygon",
+            "args": {
+              "vertices": [
+                "A",
+                "B",
+                "C",
+                "D"
+              ],
+              "side": "a"
+            },
+            "quote": "S.ABCD có đáy là hình vuông cạnh a",
+            "solid_id": "s1"
+          }
+        ],
+        "described_points": [],
+        "relations": [],
+        "math_goals": [
+          {
+            "goal_id": "q1",
+            "kind": "measurement",
+            "goal_type": "distance",
+            "target": {
+              "point": "A",
+              "plane": [
+                "S",
+                "B",
+                "D"
+              ]
+            },
+            "solid_id": "s1",
+            "quote": "Khoảng cách từ A đến mặt phẳng (SBD) bằng"
+          }
+        ],
+        "unresolved": []
+      },
+      "downstream_on_built_facts": {
+        "schema": "VALID",
+        "bridge_facts": 3,
+        "bridge_ambiguities": null,
+        "planner": {
+          "calls": 3,
+          "goals": 0,
+          "negated": 0
+        },
+        "source_gate": "REFUSED:UNGROUNDED_VALUE",
+        "source_gate_reason": "p1: 'S.ABCD có đáy là hình vuông cạnh a' không gắn a với vai trò của ô này trong một câu đọc trọn",
+        "first_failure": "SOURCE_GATE"
+      },
+      "first_failure_layer": "PARSER_COVERAGE",
+      "solve_on_transcription_previous_run": "statement -> HTTP 503 / LIVE_AI_DISABLED; grade NOT_SERVED"
+    },
+    {
+      "case_id": "vmmu_r298",
+      "source_image_hash": "43ce23b449bd796d206b5b74d38daaaa1997ebeb7fe35b2bc88a6de5bf4d3f3b",
+      "problem_text": "Câu 42. Cho hình lăng trụ tam giác đều ABC.A'B'C' có cạnh đáy bằng 2a, góc giữa hai đường thẳng AB' và BC' bằng 60° (tham khảo hình vẽ bên dưới). Tính thể tích V của khối lăng trụ đó.",
+      "transcription_verification_status": "AGENT_TRANSCRIBED_UNVERIFIED",
+      "dataset_partition": "frozen_external_evaluation",
+      "problem_type": [
+        "regular_prism",
+        "volume",
+        "inverse_from_angle"
+      ],
+      "expected_answer": "V = 2√6a³",
+      "oracle_status": "DATASET_KEY_NOT_INDEPENDENTLY_ADJUDICATED",
+      "previous_layer_label": "LOCAL_PARSER_COVERAGE",
+      "previous_reason_code": "UNPARSED_GOAL_CANDIDATE",
+      "local_parser": {
+        "status": "LOCAL_PARSE_COMPLETE",
+        "reason_code": null,
+        "fallback_reason": ""
+      },
+      "clauses": [
+        {
+          "index": 0,
+          "text": "Câu 42",
+          "classification": "BENIGN_DISCOURSE",
+          "notes": []
+        },
+        {
+          "index": 1,
+          "text": "Cho hình lăng trụ tam giác đều ABC.A'B'C' có cạnh đáy bằng 2a, góc giữa hai đường thẳng AB' và BC' bằng 60° (tham khảo hình vẽ bên dưới)",
+          "classification": "MAPPED_FACT",
+          "notes": []
+        },
+        {
+          "index": 2,
+          "text": "Tính thể tích V của khối lăng trụ đó",
+          "classification": "MAPPED_GOAL",
+          "notes": []
+        }
+      ],
+      "typed_facts_built": {
+        "solids": [
+          {
+            "solid_id": "s1",
+            "solid_type": "prism",
+            "notation": "ABC.A'B'C'",
+            "quote": "Cho hình lăng trụ tam giác đều ABC.A'B'C'"
+          }
+        ],
+        "premises": [
+          {
+            "kind": "right_prism",
+            "args": {
+              "base": [
+                "A",
+                "B",
+                "C"
+              ],
+              "top": [
+                "A'",
+                "B'",
+                "C'"
+              ]
+            },
+            "quote": "Cho hình lăng trụ tam giác đều ABC.A'B'C'",
+            "solid_id": "s1"
+          },
+          {
+            "kind": "regular_polygon",
+            "args": {
+              "vertices": [
+                "A",
+                "B",
+                "C"
+              ],
+              "side": "2a"
+            },
+            "quote": "Cho hình lăng trụ tam giác đều ABC.A'B'C' có cạnh đáy bằng 2a",
+            "solid_id": "s1"
+          },
+          {
+            "kind": "line_line_angle",
+            "args": {
+              "line1": [
+                "A",
+                "B'"
+              ],
+              "line2": [
+                "B",
+                "C'"
+              ],
+              "value": "60",
+              "unit": "deg"
+            },
+            "quote": "góc giữa hai đường thẳng AB' và BC' bằng 60°",
+            "solid_id": "s1"
+          }
+        ],
+        "described_points": [],
+        "relations": [],
+        "math_goals": [
+          {
+            "goal_id": "q1",
+            "kind": "measurement",
+            "goal_type": "volume",
+            "target": {
+              "solid_id": "s1"
+            },
+            "solid_id": "s1",
+            "quote": "Tính thể tích V của khối lăng trụ đó"
+          }
+        ],
+        "unresolved": []
+      },
+      "downstream_on_built_facts": {
+        "schema": "VALID",
+        "bridge_facts": 4,
+        "bridge_ambiguities": null,
+        "planner": {
+          "calls": 4,
+          "goals": 0,
+          "negated": 0
+        },
+        "source_gate": "ACCEPTED"
+      },
+      "first_failure_layer": "NONE_LOCAL_PARSE_COMPLETE",
+      "solve_on_transcription_previous_run": "statement -> HTTP 503 / LIVE_AI_DISABLED; grade NOT_SERVED"
+    },
+    {
+      "case_id": "vmmu_r375",
+      "source_image_hash": "25ae1f68af866e7fd6e72adacae51b6ab8e9a63579a20d99c5a1e881d6454632",
+      "problem_text": "Câu 36. Cho hình chóp tứ giác đều S.ABCD có độ dài cạnh đáy bằng 4 và độ dài cạnh bên bằng 5 (tham khảo hình vẽ). Khoảng cách từ S đến mặt phẳng (ABCD) bằng",
+      "transcription_verification_status": "AGENT_TRANSCRIBED_UNVERIFIED",
+      "dataset_partition": "frozen_external_evaluation",
+      "problem_type": [
+        "regular_pyramid",
+        "distance_point_plane"
+      ],
+      "expected_answer": "√17",
+      "oracle_status": "DATASET_KEY_NOT_INDEPENDENTLY_ADJUDICATED",
+      "previous_layer_label": "SOURCE_GATE",
+      "previous_reason_code": "SOURCE_PREMISE_UNREAD",
+      "local_parser": {
+        "status": "LOCAL_PARSE_COMPLETE",
+        "reason_code": null,
+        "fallback_reason": ""
+      },
+      "clauses": [
+        {
+          "index": 0,
+          "text": "Câu 36",
+          "classification": "BENIGN_DISCOURSE",
+          "notes": []
+        },
+        {
+          "index": 1,
+          "text": "Cho hình chóp tứ giác đều S.ABCD có độ dài cạnh đáy bằng 4 và độ dài cạnh bên bằng 5 (tham khảo hình vẽ)",
+          "classification": "MAPPED_FACT",
+          "notes": []
+        },
+        {
+          "index": 2,
+          "text": "Khoảng cách từ S đến mặt phẳng (ABCD) bằng",
+          "classification": "MAPPED_GOAL",
+          "notes": []
+        }
+      ],
+      "typed_facts_built": {
+        "solids": [
+          {
+            "solid_id": "s1",
+            "solid_type": "pyramid",
+            "notation": "S.ABCD",
+            "quote": "Cho hình chóp tứ giác đều S.ABCD"
+          }
+        ],
+        "premises": [
+          {
+            "kind": "regular_pyramid",
+            "args": {
+              "apex": "S",
+              "base": [
+                "A",
+                "B",
+                "C",
+                "D"
+              ]
+            },
+            "quote": "Cho hình chóp tứ giác đều S.ABCD",
+            "solid_id": "s1"
+          },
+          {
+            "kind": "regular_polygon",
+            "args": {
+              "vertices": [
+                "A",
+                "B",
+                "C",
+                "D"
+              ],
+              "side": "4"
+            },
+            "quote": "Cho hình chóp tứ giác đều S.ABCD có độ dài cạnh đáy bằng 4",
+            "solid_id": "s1"
+          },
+          {
+            "kind": "segment_length",
+            "args": {
+              "segment": [
+                "S",
+                "A"
+              ],
+              "value": "5"
+            },
+            "quote": "độ dài cạnh bên bằng 5",
+            "solid_id": "s1"
+          }
+        ],
+        "described_points": [],
+        "relations": [],
+        "math_goals": [
+          {
+            "goal_id": "q1",
+            "kind": "measurement",
+            "goal_type": "distance",
+            "target": {
+              "point": "S",
+              "plane": [
+                "A",
+                "B",
+                "C",
+                "D"
+              ]
+            },
+            "solid_id": "s1",
+            "quote": "Khoảng cách từ S đến mặt phẳng (ABCD) bằng"
+          }
+        ],
+        "unresolved": []
+      },
+      "downstream_on_built_facts": {
+        "schema": "VALID",
+        "bridge_facts": 4,
+        "bridge_ambiguities": null,
+        "planner": {
+          "calls": 4,
+          "goals": 0,
+          "negated": 0
+        },
+        "source_gate": "ACCEPTED"
+      },
+      "first_failure_layer": "NONE_LOCAL_PARSE_COMPLETE",
+      "solve_on_transcription_previous_run": "statement -> HTTP 503 / LIVE_AI_DISABLED; grade NOT_SERVED"
+    },
+    {
+      "case_id": "vmmu_r460",
+      "source_image_hash": "2d7d95a5919f62abdca1e967b62b319f36e00eeb4c6bebb99f64697f5dc002b0",
+      "problem_text": "Câu 33: Cho hình chóp S.ABC có đáy ABC là tam giác vuông cân ở B, cạnh AC = 2a. Cạnh SA vuông góc với mặt đáy (ABC), tam giác SAB cân. Thể tích khối chóp S.ABC theo a bằng",
+      "transcription_verification_status": "AGENT_TRANSCRIBED_UNVERIFIED",
+      "dataset_partition": "frozen_external_evaluation",
+      "problem_type": [
+        "pyramid",
+        "volume",
+        "hypotenuse_given"
+      ],
+      "expected_answer": "a³√2/3",
+      "oracle_status": "DATASET_KEY_NOT_INDEPENDENTLY_ADJUDICATED",
+      "previous_layer_label": "SOURCE_GATE",
+      "previous_reason_code": "NOT_ASKED_IN_SOURCE",
+      "local_parser": {
+        "status": "LOCAL_PARSE_PARTIAL",
+        "reason_code": "SOURCE_PREMISE_UNREAD",
+        "fallback_reason": "SOURCE_GATE_MISMATCH:SOURCE_PREMISE_UNREAD:tiền đề 'Cạnh SA vuông góc với mặt đáy (ABC), tam giác SAB cân.' chưa được lời gọi nào đọc — có thể đổi hình; không dùng mô hình cũ"
+      },
+      "clauses": [
+        {
+          "index": 0,
+          "text": "Câu 33: Cho hình chóp S.ABC có đáy ABC là tam giác vuông cân ở B, cạnh AC = 2a",
+          "classification": "MAPPED_FACT",
+          "notes": []
+        },
+        {
+          "index": 1,
+          "text": "Cạnh SA vuông góc với mặt đáy (ABC), tam giác SAB cân",
+          "classification": "MAPPED_FACT",
+          "notes": []
+        },
+        {
+          "index": 2,
+          "text": "Thể tích khối chóp S.ABC theo a bằng",
+          "classification": "MAPPED_GOAL",
+          "notes": []
+        }
+      ],
+      "typed_facts_built": {
+        "solids": [
+          {
+            "solid_id": "s1",
+            "solid_type": "pyramid",
+            "notation": "S.ABC",
+            "quote": "Cho hình chóp S.ABC"
+          }
+        ],
+        "premises": [
+          {
+            "kind": "right_angle",
+            "args": {
+              "vertex": "B",
+              "rays": [
+                "A",
+                "C"
+              ]
+            },
+            "quote": "S.ABC có đáy ABC là tam giác vuông cân ở B",
+            "solid_id": "s1"
+          },
+          {
+            "kind": "equal_length",
+            "args": {
+              "segment_a": [
+                "B",
+                "A"
+              ],
+              "segment_b": [
+                "B",
+                "C"
+              ]
+            },
+            "quote": "S.ABC có đáy ABC là tam giác vuông cân ở B",
+            "solid_id": "s1"
+          },
+          {
+            "kind": "segment_length",
+            "args": {
+              "segment": [
+                "A",
+                "C"
+              ],
+              "value": "2a"
+            },
+            "quote": "AC = 2a",
+            "solid_id": "s1"
+          },
+          {
+            "kind": "perpendicular_line_plane",
+            "args": {
+              "line": [
+                "S",
+                "A"
+              ],
+              "plane": [
+                "A",
+                "B",
+                "C"
+              ]
+            },
+            "quote": "Cạnh SA vuông góc với mặt đáy",
+            "solid_id": "s1"
+          }
+        ],
+        "described_points": [],
+        "relations": [],
+        "math_goals": [
+          {
+            "goal_id": "q1",
+            "kind": "measurement",
+            "goal_type": "volume",
+            "target": {
+              "solid_id": "s1"
+            },
+            "solid_id": "s1",
+            "quote": "Thể tích khối chóp S.ABC theo a bằng"
+          }
+        ],
+        "unresolved": []
+      },
+      "downstream_on_built_facts": {
+        "schema": "VALID",
+        "bridge_facts": 6,
+        "bridge_ambiguities": null,
+        "planner": {
+          "calls": 6,
+          "goals": 0,
+          "negated": 0
+        },
+        "source_gate": "REFUSED:SOURCE_PREMISE_UNREAD",
+        "source_gate_reason": "tiền đề 'Cạnh SA vuông góc với mặt đáy (ABC), tam giác SAB cân.' chưa được lời gọi nào đọc — có thể đổi hình; không dùng mô hình cũ",
+        "first_failure": "SOURCE_GATE"
+      },
+      "first_failure_layer": "SOURCE_GATE",
+      "solve_on_transcription_previous_run": "statement -> HTTP 503 / LIVE_AI_DISABLED; grade NOT_SERVED"
+    },
+    {
+      "case_id": "vmmu_r463",
+      "source_image_hash": "9486f6c7b72b70af84b119dc9c93726f69a9fed50de548a0acea00ec5fb73431",
+      "problem_text": "Câu 43. Cho khối lăng trụ đứng ABCDA'B'C'D' có đáy ABCD là hình thoi, ∠BAD = 60°, cạnh bên AA' = 2a và AC' hợp với đáy góc 30°. Thể tích khối lăng trụ đã cho bằng",
+      "transcription_verification_status": "AGENT_TRANSCRIBED_UNVERIFIED",
+      "dataset_partition": "frozen_external_evaluation",
+      "problem_type": [
+        "right_prism",
+        "volume",
+        "inverse_from_angle"
+      ],
+      "expected_answer": "4√3a³",
+      "oracle_status": "DATASET_KEY_NOT_INDEPENDENTLY_ADJUDICATED",
+      "previous_layer_label": "LOCAL_PARSER_COVERAGE",
+      "previous_reason_code": "EMPTY_SOLIDS",
+      "local_parser": {
+        "status": "LOCAL_PARSE_PARTIAL",
+        "reason_code": "EMPTY_SOLIDS",
+        "fallback_reason": "SCHEMA_VALIDATION_FAILED:EMPTY_SOLIDS:EMPTY_SOLIDS: TypedFactNextPayload requires at least one declared solid."
+      },
+      "clauses": [
+        {
+          "index": 0,
+          "text": "Câu 43",
+          "classification": "BENIGN_DISCOURSE",
+          "notes": []
+        },
+        {
+          "index": 1,
+          "text": "Cho khối lăng trụ đứng ABCDA'B'C'D' có đáy ABCD là hình thoi, ∠BAD = 60°, cạnh bên AA' = 2a và AC' hợp với đáy góc 30°",
+          "classification": "UNPARSED_FACT_CANDIDATE",
+          "notes": [
+            "UNBACKED_ANGLE@99:hợp với đáy góc 30°"
+          ]
+        },
+        {
+          "index": 2,
+          "text": "Thể tích khối lăng trụ đã cho bằng",
+          "classification": "UNPARSED_GOAL_CANDIDATE",
+          "notes": [
+            "NO_GOAL_RULE_MATCHED"
+          ]
+        }
+      ],
+      "typed_facts_built": {
+        "solids": [],
+        "premises": [
+          {
+            "kind": "rhombus",
+            "args": {
+              "vertices": [
+                "A",
+                "B",
+                "C",
+                "D"
+              ]
+            },
+            "quote": "đáy ABCD là hình thoi",
+            "solid_id": "s1"
+          },
+          {
+            "kind": "vertex_angle",
+            "args": {
+              "vertex": "A",
+              "rays": [
+                "B",
+                "D"
+              ],
+              "value": "60",
+              "unit": "deg"
+            },
+            "quote": "∠BAD = 60°",
+            "solid_id": "s1"
+          },
+          {
+            "kind": "segment_length",
+            "args": {
+              "segment": [
+                "A",
+                "A'"
+              ],
+              "value": "2a"
+            },
+            "quote": "AA' = 2a",
+            "solid_id": "s1"
+          }
+        ],
+        "described_points": [],
+        "relations": [],
+        "math_goals": [],
+        "unresolved": []
+      },
+      "downstream_on_built_facts": {
+        "first_failure": "PARSER_COVERAGE",
+        "schema": "NO_SOLID"
+      },
+      "first_failure_layer": "PARSER_COVERAGE",
+      "solve_on_transcription_previous_run": "statement -> HTTP 503 / LIVE_AI_DISABLED; grade NOT_SERVED"
+    },
+    {
+      "case_id": "vmmu_r488",
+      "source_image_hash": "accfebbcd9af6e31ed7ad46dab68c6e9fa34cace2e46dc15affb3772acb928f2",
+      "problem_text": "Câu 43: Cho hình lăng trụ đứng ABC.A'B'C' có đáy ABC là tam giác vuông, AB = BC = a. Biết góc giữa hai mặt phẳng (ACC') và (AB'C') bằng 60° (tham khảo hình vẽ bên). Thể tích của khối chóp B'.ACC'A' bằng",
+      "transcription_verification_status": "AGENT_TRANSCRIBED_UNVERIFIED",
+      "dataset_partition": "development",
+      "problem_type": [
+        "right_prism",
+        "volume",
+        "inverse_from_angle"
+      ],
+      "expected_answer": "a³/3",
+      "oracle_status": "DATASET_KEY_NOT_INDEPENDENTLY_ADJUDICATED",
+      "previous_layer_label": "LOCAL_PARSER_COVERAGE",
+      "previous_reason_code": "UNPARSED_GOAL_CANDIDATE",
+      "local_parser": {
+        "status": "LOCAL_PARSE_PARTIAL",
+        "reason_code": "UNPARSED_GOAL_CANDIDATE",
+        "fallback_reason": "UNPARSED_GOAL_CANDIDATE"
+      },
+      "clauses": [
+        {
+          "index": 0,
+          "text": "Câu 43: Cho hình lăng trụ đứng ABC.A'B'C' có đáy ABC là tam giác vuông, AB = BC = a",
+          "classification": "MAPPED_FACT",
+          "notes": []
+        },
+        {
+          "index": 1,
+          "text": "Biết góc giữa hai mặt phẳng (ACC') và (AB'C') bằng 60° (tham khảo hình vẽ bên)",
+          "classification": "MAPPED_FACT",
+          "notes": []
+        },
+        {
+          "index": 2,
+          "text": "Thể tích của khối chóp B'.ACC'A' bằng",
+          "classification": "UNPARSED_GOAL_CANDIDATE",
+          "notes": [
+            "NO_GOAL_RULE_MATCHED"
+          ]
+        }
+      ],
+      "typed_facts_built": {
+        "solids": [
+          {
+            "solid_id": "s1",
+            "solid_type": "prism",
+            "notation": "ABC.A'B'C'",
+            "quote": "Cho hình lăng trụ đứng ABC.A'B'C'"
+          }
+        ],
+        "premises": [
+          {
+            "kind": "right_prism",
+            "args": {
+              "base": [
+                "A",
+                "B",
+                "C"
+              ],
+              "top": [
+                "A'",
+                "B'",
+                "C'"
+              ]
+            },
+            "quote": "Cho hình lăng trụ đứng ABC.A'B'C'",
+            "solid_id": "s1"
+          },
+          {
+            "kind": "segment_length",
+            "args": {
+              "segment": [
+                "A",
+                "B"
+              ],
+              "value": "a"
+            },
+            "quote": "AB = BC = a",
+            "solid_id": "s1"
+          },
+          {
+            "kind": "segment_length",
+            "args": {
+              "segment": [
+                "B",
+                "C"
+              ],
+              "value": "a"
+            },
+            "quote": "AB = BC = a",
+            "solid_id": "s1"
+          },
+          {
+            "kind": "plane_plane_angle",
+            "args": {
+              "plane1": [
+                "A",
+                "C",
+                "C'"
+              ],
+              "plane2": [
+                "A",
+                "B'",
+                "C'"
+              ],
+              "value": "60",
+              "unit": "deg"
+            },
+            "quote": "Biết góc giữa hai mặt phẳng (ACC') và (AB'C') bằng 60°",
+            "solid_id": "s1"
+          }
+        ],
+        "described_points": [],
+        "relations": [],
+        "math_goals": [],
+        "unresolved": []
+      },
+      "downstream_on_built_facts": {
+        "schema": "VALID",
+        "bridge_facts": 4,
+        "bridge_ambiguities": null,
+        "planner": {
+          "calls": 4,
+          "goals": 0,
+          "negated": 0
+        },
+        "source_gate": "REFUSED:SOURCE_PREMISE_UNREAD",
+        "source_gate_reason": "tiền đề \"Cho hình lăng trụ đứng ABC.A'B'C' có đáy ABC là tam giác vuông, AB = BC = a.\" chưa được lời gọi nào đọc — có thể đổi hình; không dùng mô hình cũ",
+        "first_failure": "SOURCE_GATE"
+      },
+      "first_failure_layer": "PARSER_COVERAGE",
+      "solve_on_transcription_previous_run": "statement -> HTTP 503 / LIVE_AI_DISABLED; grade NOT_SERVED"
+    },
+    {
+      "case_id": "vmmu_r491",
+      "source_image_hash": "5b6d73596d6a0ea092379669260cbe5dc97efb2e5d68acc4b79fc391499e279e",
+      "problem_text": "Câu 36: Cho hình lăng trụ ABC.A'B'C' có đáy ABC là tam giác vuông tại A, AB = a, AC = 2a (tham khảo hình bên). Hình chiếu vuông góc của A' lên mặt phẳng (ABC) là điểm I thuộc cạnh BC. Khoảng cách từ A tới mặt phẳng (A'BC) bằng",
+      "transcription_verification_status": "AGENT_TRANSCRIBED_UNVERIFIED",
+      "dataset_partition": "frozen_external_evaluation",
+      "problem_type": [
+        "oblique_prism",
+        "distance_point_plane"
+      ],
+      "expected_answer": "2√5/5 a",
+      "oracle_status": "DATASET_KEY_NOT_INDEPENDENTLY_ADJUDICATED",
+      "previous_layer_label": "LOCAL_PARSER_COVERAGE",
+      "previous_reason_code": "UNPARSED_FACT_CANDIDATE",
+      "local_parser": {
+        "status": "LOCAL_PARSE_PARTIAL",
+        "reason_code": "UNPARSED_FACT_CANDIDATE",
+        "fallback_reason": "UNPARSED_FACT_CANDIDATE"
+      },
+      "clauses": [
+        {
+          "index": 0,
+          "text": "Câu 36: Cho hình lăng trụ ABC.A'B'C' có đáy ABC là tam giác vuông tại A, AB = a, AC = 2a (tham khảo hình bên)",
+          "classification": "MAPPED_FACT",
+          "notes": []
+        },
+        {
+          "index": 1,
+          "text": "Hình chiếu vuông góc của A' lên mặt phẳng (ABC) là điểm I thuộc cạnh BC",
+          "classification": "UNPARSED_FACT_CANDIDATE",
+          "notes": [
+            "NO_FACT_RULE_MATCHED"
+          ]
+        },
+        {
+          "index": 2,
+          "text": "Khoảng cách từ A tới mặt phẳng (A'BC) bằng",
+          "classification": "MAPPED_GOAL",
+          "notes": []
+        }
+      ],
+      "typed_facts_built": {
+        "solids": [
+          {
+            "solid_id": "s1",
+            "solid_type": "prism",
+            "notation": "ABC.A'B'C'",
+            "quote": "Cho hình lăng trụ ABC.A'B'C'"
+          }
+        ],
+        "premises": [
+          {
+            "kind": "right_angle",
+            "args": {
+              "vertex": "A",
+              "rays": [
+                "B",
+                "C"
+              ]
+            },
+            "quote": "ABC.A'B'C' có đáy ABC là tam giác vuông tại A",
+            "solid_id": "s1"
+          },
+          {
+            "kind": "segment_length",
+            "args": {
+              "segment": [
+                "A",
+                "B"
+              ],
+              "value": "a"
+            },
+            "quote": "AB = a",
+            "solid_id": "s1"
+          },
+          {
+            "kind": "segment_length",
+            "args": {
+              "segment": [
+                "A",
+                "C"
+              ],
+              "value": "2a"
+            },
+            "quote": "AC = 2a",
+            "solid_id": "s1"
+          }
+        ],
+        "described_points": [],
+        "relations": [],
+        "math_goals": [
+          {
+            "goal_id": "q1",
+            "kind": "measurement",
+            "goal_type": "distance",
+            "target": {
+              "point": "A",
+              "plane": [
+                "A'",
+                "B",
+                "C"
+              ]
+            },
+            "solid_id": "s1",
+            "quote": "Khoảng cách từ A tới mặt phẳng (A'BC) bằng"
+          }
+        ],
+        "unresolved": []
+      },
+      "downstream_on_built_facts": {
+        "schema": "VALID",
+        "bridge_facts": 5,
+        "bridge_ambiguities": null,
+        "planner": {
+          "calls": 5,
+          "goals": 0,
+          "negated": 0
+        },
+        "source_gate": "REFUSED:SOURCE_PREMISE_UNREAD",
+        "source_gate_reason": "tiền đề \"Hình chiếu vuông góc của A' lên mặt phẳng (ABC) là điểm I thuộc cạnh BC.\" chưa được lời gọi nào đọc — có thể đổi hình; không dùng mô hình cũ",
+        "first_failure": "SOURCE_GATE"
+      },
+      "first_failure_layer": "PARSER_COVERAGE",
+      "solve_on_transcription_previous_run": "statement -> HTTP 503 / LIVE_AI_DISABLED; grade NOT_SERVED"
+    },
+    {
+      "case_id": "vmmu_r498",
+      "source_image_hash": "8c89fd4b08710ada6841e1cd843bade3c61c3dfb7a1fcc938a217432fd8388bb",
+      "problem_text": "Câu 26: Cho hình lăng trụ tứ giác đều ABCD.A'B'C'D' có cạnh đáy bằng a, cạnh bên bằng a√3. Tính cosin của góc giữa hai mặt phẳng (ABCD) và (ABC')?",
+      "transcription_verification_status": "AGENT_TRANSCRIBED_UNVERIFIED",
+      "dataset_partition": "frozen_external_evaluation",
+      "problem_type": [
+        "regular_prism",
+        "dihedral"
+      ],
+      "expected_answer": "1/2",
+      "oracle_status": "DATASET_KEY_NOT_INDEPENDENTLY_ADJUDICATED",
+      "previous_layer_label": "SOURCE_GATE",
+      "previous_reason_code": "NOT_ASKED_IN_SOURCE",
+      "local_parser": {
+        "status": "LOCAL_PARSE_PARTIAL",
+        "reason_code": "NOT_ASKED_IN_SOURCE",
+        "fallback_reason": "SOURCE_GATE_MISMATCH:NOT_ASKED_IN_SOURCE:q1: \"góc giữa hai mặt phẳng (ABCD) và (ABC')\" không hỏi đối tượng này nguyên vẹn (không có từ hỏi gắn với nó, đã gán giá trị, hay bị bổ nghĩa / đặt điều kiện) — không trả lời điều đề không hỏi"
+      },
+      "clauses": [
+        {
+          "index": 0,
+          "text": "Câu 26: Cho hình lăng trụ tứ giác đều ABCD.A'B'C'D' có cạnh đáy bằng a, cạnh bên bằng a√3",
+          "classification": "MAPPED_FACT",
+          "notes": []
+        },
+        {
+          "index": 1,
+          "text": "Tính cosin của góc giữa hai mặt phẳng (ABCD) và (ABC')",
+          "classification": "MAPPED_GOAL",
+          "notes": []
+        }
+      ],
+      "typed_facts_built": {
+        "solids": [
+          {
+            "solid_id": "s1",
+            "solid_type": "prism",
+            "notation": "ABCD.A'B'C'D'",
+            "quote": "Cho hình lăng trụ tứ giác đều ABCD.A'B'C'D'"
+          }
+        ],
+        "premises": [
+          {
+            "kind": "right_prism",
+            "args": {
+              "base": [
+                "A",
+                "B",
+                "C",
+                "D"
+              ],
+              "top": [
+                "A'",
+                "B'",
+                "C'",
+                "D'"
+              ]
+            },
+            "quote": "Cho hình lăng trụ tứ giác đều ABCD.A'B'C'D'",
+            "solid_id": "s1"
+          },
+          {
+            "kind": "segment_length",
+            "args": {
+              "segment": [
+                "A",
+                "A'"
+              ],
+              "value": "a√3"
+            },
+            "quote": "cạnh bên bằng a√3",
+            "solid_id": "s1"
+          },
+          {
+            "kind": "regular_polygon",
+            "args": {
+              "vertices": [
+                "A",
+                "B",
+                "C",
+                "D"
+              ],
+              "side": "a"
+            },
+            "quote": "Cho hình lăng trụ tứ giác đều ABCD.A'B'C'D' có cạnh đáy bằng a",
+            "solid_id": "s1"
+          }
+        ],
+        "described_points": [],
+        "relations": [],
+        "math_goals": [
+          {
+            "goal_id": "q1",
+            "kind": "measurement",
+            "goal_type": "angle",
+            "target": {
+              "plane1": [
+                "A",
+                "B",
+                "C",
+                "D"
+              ],
+              "plane2": [
+                "A",
+                "B",
+                "C'"
+              ]
+            },
+            "solid_id": "s1",
+            "quote": "góc giữa hai mặt phẳng (ABCD) và (ABC')"
+          }
+        ],
+        "unresolved": []
+      },
+      "downstream_on_built_facts": {
+        "schema": "VALID",
+        "bridge_facts": 4,
+        "bridge_ambiguities": null,
+        "planner": {
+          "calls": 4,
+          "goals": 0,
+          "negated": 0
+        },
+        "source_gate": "REFUSED:NOT_ASKED_IN_SOURCE",
+        "source_gate_reason": "q1: \"góc giữa hai mặt phẳng (ABCD) và (ABC')\" không hỏi đối tượng này nguyên vẹn (không có từ hỏi gắn với nó, đã gán giá trị, hay bị bổ nghĩa / đặt điều kiện) — không trả lời điều đề không hỏi",
+        "first_failure": "SOURCE_GATE"
+      },
+      "first_failure_layer": "SOURCE_GATE",
+      "solve_on_transcription_previous_run": "statement -> HTTP 503 / LIVE_AI_DISABLED; grade NOT_SERVED"
+    },
+    {
+      "case_id": "vmmu_r513",
+      "source_image_hash": "0af1a28125ee26cfeb023801070050fe9669b48745a620b0dd0645c2f9807918",
+      "problem_text": "Câu 39: Cho hình hộp chữ nhật ABCD.A'B'C'D' có cạnh AA' = 1, AB = 2 Khoảng cách từ điểm A' đến mặt phẳng ADC'B' bằng.",
+      "transcription_verification_status": "AGENT_TRANSCRIBED_UNVERIFIED",
+      "dataset_partition": "development",
+      "problem_type": [
+        "cuboid",
+        "distance_point_plane"
+      ],
+      "expected_answer": "2√5/5",
+      "oracle_status": "DATASET_KEY_NOT_INDEPENDENTLY_ADJUDICATED",
+      "previous_layer_label": "SOURCE_GATE",
+      "previous_reason_code": "UNGROUNDED_VALUE",
+      "local_parser": {
+        "status": "LOCAL_PARSE_PARTIAL",
+        "reason_code": "QUESTION_CONTEXT_UNSUPPORTED",
+        "fallback_reason": "SOURCE_GATE_MISMATCH:QUESTION_CONTEXT_UNSUPPORTED:phần dữ kiện/đổi giả thiết trong câu hỏi chưa được đọc trọn; không dùng mô hình cũ"
+      },
+      "clauses": [
+        {
+          "index": 0,
+          "text": "Câu 39: Cho hình hộp chữ nhật ABCD.A'B'C'D' có cạnh AA' = 1, AB = 2 Khoảng cách từ điểm A' đến mặt phẳng ADC'B' bằng",
+          "classification": "MAPPED_FACT",
+          "notes": []
+        }
+      ],
+      "typed_facts_built": {
+        "solids": [
+          {
+            "solid_id": "s1",
+            "solid_type": "prism",
+            "notation": "ABCD.A'B'C'D'",
+            "quote": "Cho hình hộp chữ nhật ABCD.A'B'C'D'"
+          }
+        ],
+        "premises": [
+          {
+            "kind": "right_prism",
+            "args": {
+              "base": [
+                "A",
+                "B",
+                "C",
+                "D"
+              ],
+              "top": [
+                "A'",
+                "B'",
+                "C'",
+                "D'"
+              ]
+            },
+            "quote": "Cho hình hộp chữ nhật ABCD.A'B'C'D'",
+            "solid_id": "s1"
+          },
+          {
+            "kind": "rectangle",
+            "args": {
+              "vertices": [
+                "A",
+                "B",
+                "C",
+                "D"
+              ]
+            },
+            "quote": "Cho hình hộp chữ nhật ABCD.A'B'C'D'",
+            "solid_id": "s1"
+          },
+          {
+            "kind": "segment_length",
+            "args": {
+              "segment": [
+                "A",
+                "A'"
+              ],
+              "value": "1"
+            },
+            "quote": "AA' = 1",
+            "solid_id": "s1"
+          },
+          {
+            "kind": "segment_length",
+            "args": {
+              "segment": [
+                "A",
+                "B"
+              ],
+              "value": "2"
+            },
+            "quote": "AB = 2",
+            "solid_id": "s1"
+          }
+        ],
+        "described_points": [],
+        "relations": [],
+        "math_goals": [],
+        "unresolved": []
+      },
+      "downstream_on_built_facts": {
+        "schema": "VALID",
+        "bridge_facts": 4,
+        "bridge_ambiguities": null,
+        "planner": {
+          "calls": 4,
+          "goals": 0,
+          "negated": 0
+        },
+        "source_gate": "REFUSED:QUESTION_CONTEXT_UNSUPPORTED",
+        "source_gate_reason": "phần dữ kiện/đổi giả thiết trong câu hỏi chưa được đọc trọn; không dùng mô hình cũ",
+        "first_failure": "SOURCE_GATE"
+      },
+      "first_failure_layer": "SOURCE_GATE",
+      "solve_on_transcription_previous_run": "statement -> HTTP 503 / LIVE_AI_DISABLED; grade NOT_SERVED"
+    },
+    {
+      "case_id": "vmmu_r520",
+      "source_image_hash": "311375e19c83bc5285ab8565f38cc0a3b1febf0030fdb3bd9f087f1e9413fa29",
+      "problem_text": "Câu 30. Cho hình chóp S.ABC có đáy là tam giác vuông tại B, SA vuông góc với đáy và SA = AB (tham khảo hình bên). Góc giữa hai mặt phẳng (SBC) và (ABC) bằng",
+      "transcription_verification_status": "AGENT_TRANSCRIBED_UNVERIFIED",
+      "dataset_partition": "frozen_external_evaluation",
+      "problem_type": [
+        "pyramid",
+        "dihedral"
+      ],
+      "expected_answer": "45°",
+      "oracle_status": "DATASET_KEY_NOT_INDEPENDENTLY_ADJUDICATED",
+      "previous_layer_label": "LOCAL_PARSER_COVERAGE",
+      "previous_reason_code": "UNPARSED_FACT_CANDIDATE",
+      "local_parser": {
+        "status": "LOCAL_PARSE_COMPLETE",
+        "reason_code": null,
+        "fallback_reason": ""
+      },
+      "clauses": [
+        {
+          "index": 0,
+          "text": "Câu 30",
+          "classification": "BENIGN_DISCOURSE",
+          "notes": []
+        },
+        {
+          "index": 1,
+          "text": "Cho hình chóp S.ABC có đáy là tam giác vuông tại B, SA vuông góc với đáy và SA = AB (tham khảo hình bên)",
+          "classification": "MAPPED_FACT",
+          "notes": []
+        },
+        {
+          "index": 2,
+          "text": "Góc giữa hai mặt phẳng (SBC) và (ABC) bằng",
+          "classification": "MAPPED_GOAL",
+          "notes": []
+        }
+      ],
+      "typed_facts_built": {
+        "solids": [
+          {
+            "solid_id": "s1",
+            "solid_type": "pyramid",
+            "notation": "S.ABC",
+            "quote": "Cho hình chóp S.ABC"
+          }
+        ],
+        "premises": [
+          {
+            "kind": "right_angle",
+            "args": {
+              "vertex": "B",
+              "rays": [
+                "A",
+                "C"
+              ]
+            },
+            "quote": "S.ABC có đáy là tam giác vuông tại B",
+            "solid_id": "s1"
+          },
+          {
+            "kind": "perpendicular_line_plane",
+            "args": {
+              "line": [
+                "S",
+                "A"
+              ],
+              "plane": [
+                "A",
+                "B",
+                "C"
+              ]
+            },
+            "quote": "SA vuông góc với đáy",
+            "solid_id": "s1"
+          },
+          {
+            "kind": "equal_length",
+            "args": {
+              "segment_a": [
+                "S",
+                "A"
+              ],
+              "segment_b": [
+                "A",
+                "B"
+              ]
+            },
+            "quote": "SA = AB",
+            "solid_id": "s1"
+          }
+        ],
+        "described_points": [],
+        "relations": [],
+        "math_goals": [
+          {
+            "goal_id": "q1",
+            "kind": "measurement",
+            "goal_type": "angle",
+            "target": {
+              "plane1": [
+                "S",
+                "B",
+                "C"
+              ],
+              "plane2": [
+                "A",
+                "B",
+                "C"
+              ]
+            },
+            "solid_id": "s1",
+            "quote": "Góc giữa hai mặt phẳng (SBC) và (ABC)"
+          }
+        ],
+        "unresolved": []
+      },
+      "downstream_on_built_facts": {
+        "schema": "VALID",
+        "bridge_facts": 5,
+        "bridge_ambiguities": null,
+        "planner": {
+          "calls": 5,
+          "goals": 0,
+          "negated": 0
+        },
+        "source_gate": "ACCEPTED"
+      },
+      "first_failure_layer": "NONE_LOCAL_PARSE_COMPLETE",
+      "solve_on_transcription_previous_run": "statement -> HTTP 503 / LIVE_AI_DISABLED; grade NOT_SERVED"
+    },
+    {
+      "case_id": "vmmu_r537",
+      "source_image_hash": "c8ad01b6fc3796b2c5853ee3270239b565d37d7bd40dd47ace149e48b2c82f14",
+      "problem_text": "Câu 39: Cho hình chóp tứ giác đều S.ABCD có độ dài cạnh bên bằng a và diện tích đáy bằng a² (tham khảo hình bên dưới). Khoảng cách từ A đến mặt phẳng (SBC) bằng",
+      "transcription_verification_status": "AGENT_TRANSCRIBED_UNVERIFIED",
+      "dataset_partition": "frozen_external_evaluation",
+      "problem_type": [
+        "regular_pyramid",
+        "distance_point_plane"
+      ],
+      "expected_answer": "a√6/3",
+      "oracle_status": "DATASET_KEY_NOT_INDEPENDENTLY_ADJUDICATED",
+      "previous_layer_label": "SOURCE_GATE",
+      "previous_reason_code": "SOURCE_PREMISE_UNREAD",
+      "local_parser": {
+        "status": "LOCAL_PARSE_PARTIAL",
+        "reason_code": "UNGROUNDED_VALUE",
+        "fallback_reason": "SOURCE_GATE_MISMATCH:UNGROUNDED_VALUE:p2: 'Cho hình chóp tứ giác đều S.ABCD có độ dài cạnh bên bằng a' không gắn a với vai trò của ô này trong một câu đọc trọn"
+      },
+      "clauses": [
+        {
+          "index": 0,
+          "text": "Câu 39: Cho hình chóp tứ giác đều S.ABCD có độ dài cạnh bên bằng a và diện tích đáy bằng a² (tham khảo hình bên dưới)",
+          "classification": "MAPPED_FACT",
+          "notes": []
+        },
+        {
+          "index": 1,
+          "text": "Khoảng cách từ A đến mặt phẳng (SBC) bằng",
+          "classification": "MAPPED_GOAL",
+          "notes": []
+        }
+      ],
+      "typed_facts_built": {
+        "solids": [
+          {
+            "solid_id": "s1",
+            "solid_type": "pyramid",
+            "notation": "S.ABCD",
+            "quote": "Cho hình chóp tứ giác đều S.ABCD"
+          }
+        ],
+        "premises": [
+          {
+            "kind": "regular_pyramid",
+            "args": {
+              "apex": "S",
+              "base": [
+                "A",
+                "B",
+                "C",
+                "D"
+              ]
+            },
+            "quote": "Cho hình chóp tứ giác đều S.ABCD",
+            "solid_id": "s1"
+          },
+          {
+            "kind": "segment_length",
+            "args": {
+              "segment": [
+                "S",
+                "A"
+              ],
+              "value": "a"
+            },
+            "quote": "Cho hình chóp tứ giác đều S.ABCD có độ dài cạnh bên bằng a",
+            "solid_id": "s1"
+          }
+        ],
+        "described_points": [],
+        "relations": [],
+        "math_goals": [
+          {
+            "goal_id": "q1",
+            "kind": "measurement",
+            "goal_type": "distance",
+            "target": {
+              "point": "A",
+              "plane": [
+                "S",
+                "B",
+                "C"
+              ]
+            },
+            "solid_id": "s1",
+            "quote": "Khoảng cách từ A đến mặt phẳng (SBC) bằng"
+          }
+        ],
+        "unresolved": []
+      },
+      "downstream_on_built_facts": {
+        "schema": "VALID",
+        "bridge_facts": 3,
+        "bridge_ambiguities": null,
+        "planner": {
+          "calls": 4,
+          "goals": 0,
+          "negated": 0
+        },
+        "source_gate": "REFUSED:UNGROUNDED_VALUE",
+        "source_gate_reason": "p2: 'Cho hình chóp tứ giác đều S.ABCD có độ dài cạnh bên bằng a' không gắn a với vai trò của ô này trong một câu đọc trọn",
+        "first_failure": "SOURCE_GATE"
+      },
+      "first_failure_layer": "SOURCE_GATE",
+      "solve_on_transcription_previous_run": "statement -> HTTP 503 / LIVE_AI_DISABLED; grade NOT_SERVED"
+    },
+    {
+      "case_id": "vmmu_r538",
+      "source_image_hash": "0dfc3b2af5921f4446404de7f9823f15b4f96a932ee37bfafa99143aa7fc777a",
+      "problem_text": "Câu 26. Cho hình chóp tam giác đều S.ABC và có cạnh đáy bằng a, cạnh bên bằng 2a/3 (tham khảo hình vẽ bên). Góc giữa cạnh bên và mặt đáy bằng",
+      "transcription_verification_status": "AGENT_TRANSCRIBED_UNVERIFIED",
+      "dataset_partition": "frozen_external_evaluation",
+      "problem_type": [
+        "regular_pyramid",
+        "angle_line_plane"
+      ],
+      "expected_answer": "30°",
+      "oracle_status": "DATASET_KEY_NOT_INDEPENDENTLY_ADJUDICATED",
+      "previous_layer_label": "LOCAL_PARSER_COVERAGE",
+      "previous_reason_code": "UNPARSED_GOAL_CANDIDATE",
+      "local_parser": {
+        "status": "LOCAL_PARSE_PARTIAL",
+        "reason_code": "UNPARSED_GOAL_CANDIDATE",
+        "fallback_reason": "UNPARSED_GOAL_CANDIDATE"
+      },
+      "clauses": [
+        {
+          "index": 0,
+          "text": "Câu 26",
+          "classification": "BENIGN_DISCOURSE",
+          "notes": []
+        },
+        {
+          "index": 1,
+          "text": "Cho hình chóp tam giác đều S.ABC và có cạnh đáy bằng a, cạnh bên bằng 2a/3 (tham khảo hình vẽ bên)",
+          "classification": "MAPPED_FACT",
+          "notes": []
+        },
+        {
+          "index": 2,
+          "text": "Góc giữa cạnh bên và mặt đáy bằng",
+          "classification": "UNPARSED_GOAL_CANDIDATE",
+          "notes": [
+            "NO_GOAL_RULE_MATCHED"
+          ]
+        }
+      ],
+      "typed_facts_built": {
+        "solids": [
+          {
+            "solid_id": "s1",
+            "solid_type": "pyramid",
+            "notation": "S.ABC",
+            "quote": "Cho hình chóp tam giác đều S.ABC"
+          }
+        ],
+        "premises": [
+          {
+            "kind": "regular_pyramid",
+            "args": {
+              "apex": "S",
+              "base": [
+                "A",
+                "B",
+                "C"
+              ]
+            },
+            "quote": "Cho hình chóp tam giác đều S.ABC",
+            "solid_id": "s1"
+          },
+          {
+            "kind": "regular_polygon",
+            "args": {
+              "vertices": [
+                "A",
+                "B",
+                "C"
+              ],
+              "side": "a"
+            },
+            "quote": "Cho hình chóp tam giác đều S.ABC và có cạnh đáy bằng a",
+            "solid_id": "s1"
+          },
+          {
+            "kind": "segment_length",
+            "args": {
+              "segment": [
+                "S",
+                "A"
+              ],
+              "value": "2a/3"
+            },
+            "quote": "cạnh bên bằng 2a/3",
+            "solid_id": "s1"
+          }
+        ],
+        "described_points": [],
+        "relations": [],
+        "math_goals": [],
+        "unresolved": []
+      },
+      "downstream_on_built_facts": {
+        "schema": "VALID",
+        "bridge_facts": 3,
+        "bridge_ambiguities": null,
+        "planner": {
+          "calls": 3,
+          "goals": 0,
+          "negated": 0
+        },
+        "source_gate": "REFUSED:SOURCE_PREMISE_UNREAD",
+        "source_gate_reason": "tiền đề 'Góc giữa cạnh bên và mặt đáy bằng' chưa được lời gọi nào đọc — có thể đổi hình; không dùng mô hình cũ",
+        "first_failure": "SOURCE_GATE"
+      },
+      "first_failure_layer": "PARSER_COVERAGE",
+      "solve_on_transcription_previous_run": "statement -> HTTP 503 / LIVE_AI_DISABLED; grade NOT_SERVED"
+    }
+  ]
+}

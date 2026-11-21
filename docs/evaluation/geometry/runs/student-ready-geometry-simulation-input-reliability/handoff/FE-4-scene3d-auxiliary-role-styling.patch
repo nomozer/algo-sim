@@ -1,0 +1,82 @@
+diff --git a/frontend/src/simulations/domains/geometry/scene3d-view.tsx b/frontend/src/simulations/domains/geometry/scene3d-view.tsx
+index ef7073f..455694c 100644
+--- a/frontend/src/simulations/domains/geometry/scene3d-view.tsx
++++ b/frontend/src/simulations/domains/geometry/scene3d-view.tsx
+@@ -1694,11 +1694,12 @@ export function datCoDauDinh(
+     const loai = x.userData?.dauDinh ?? (x.userData?.vungBam ? "bam" : null);
+     if (!loai) return;
+     x.getWorldPosition(p).applyMatrix4(cam.matrixWorldInverse);
+-    const stepRole = loai === "thuong" && clampedPulse > 0.005
++    const stepRole = (loai === "thuong" || loai === "phu") && clampedPulse > 0.005
+       ? (x.parent?.userData?.stepHighlightRole as "new" | "dep" | undefined)
+       : undefined;
++    const auxScale = loai === "phu" ? 0.72 : 1;
+     const stepDotScale = stepRole === "new" ? 1 + 0.22 * clampedPulse : stepRole === "dep" ? 1 + 0.09 * clampedPulse : 1;
+-    const banKinhPx = loai === "bam" ? banKinhBamPx(rongCss) : (coDauDinhPx(loai === "chon", rongCss) / 2) * stepDotScale;
++    const banKinhPx = loai === "bam" ? banKinhBamPx(rongCss) : (coDauDinhPx(loai === "chon", rongCss) / 2) * auxScale * stepDotScale;
+     const goc0 = ((x as THREE.Mesh).geometry as THREE.SphereGeometry).parameters.radius;
+     x.parent?.getWorldScale(s);
+     x.scale.setScalar((banKinhPx * donViMoiPx(-p.z, cam.fov, caoCss)) / (goc0 * (s.x || 1)));
+@@ -1936,13 +1937,21 @@ export function buildObject3D(
+     // `visible = false` KHÔNG dùng được: `Raycaster` bỏ qua vật vô hình. Nên
+     // proxy phải "được vẽ" mà không để lại gì — `colorWrite: false` +
+     // `depthWrite: false`.
++    const isAuxPoint =
++      (o.formation_roles ?? []).includes("CONSTRUCT_AUXILIARY_GEOMETRY")
++      && !(o.display_group ?? []).includes("given")
++      && !(o.display_group ?? []).includes("target");
+     const nhom = new THREE.Group();
+     const m = new THREE.MeshStandardMaterial({
+-      color: o.origin === "free" ? net(MAU.free) : net(MAU.derived),
++      color: o.origin === "free" ? net(MAU.free) : (isAuxPoint ? 0x64748b : net(MAU.derived)),
+     });
+     const mesh = new THREE.Mesh(new THREE.SphereGeometry(BAN_KINH_NHIN, 16, 12), m);
+     // Cỡ THẬT theo px màn hình đặt mỗi khung (`datCoDauDinh`, w11).
+-    mesh.userData.dauDinh = noiBat === "dich" || interactionMode === "selected" ? "chon" : "thuong";
++    mesh.userData.dauDinh =
++      noiBat === "dich" || interactionMode === "selected" ? "chon" : isAuxPoint ? "phu" : "thuong";
++    if (isAuxPoint) {
++      mesh.userData.semanticPointRole = "auxiliary_point";
++    }
+     nhom.add(mesh);
+     const proxy = new THREE.Mesh(
+       new THREE.SphereGeometry(banKinhBam, 8, 6),
+@@ -7380,6 +7389,38 @@ export function Scene3DWorkspace({
+     if (nhomThamChieuHopDong) {
+       goc.add(nhomThamChieuHopDong);
+     }
++    if (sectionShown || auxiliaryShown) {
++      const auxTraceGroup = new THREE.Group();
++      auxTraceGroup.name = "trace_auxiliary_points";
++      const seenAux = new Set<string>();
++      for (const ev of scene.events) {
++        if (ev.step_index > buoc) continue;
++        const just = (ev.details as { justification?: { auxiliary_points?: unknown[] } } | undefined)?.justification;
++        const auxPts = Array.isArray(just?.auxiliary_points) ? just.auxiliary_points : [];
++        for (const apRaw of auxPts) {
++          if (!apRaw || typeof apRaw !== "object") continue;
++          const ap = apRaw as { name?: unknown; xyz?: unknown };
++          const apName = typeof ap.name === "string" ? ap.name.trim() : "";
++          if (!apName || !Array.isArray(ap.xyz) || ap.xyz.length < 3) continue;
++          const key = `${apName}:${ap.xyz.join(",")}`;
++          if (seenAux.has(key)) continue;
++          seenAux.add(key);
++          const pos = toVec3(ap.xyz as [string | number, string | number, string | number]);
++          const dot = new THREE.Mesh(
++            new THREE.SphereGeometry(BAN_KINH_NHIN, 12, 10),
++            new THREE.MeshStandardMaterial({ color: 0x64748b }),
++          );
++          dot.name = `aux_trace:${apName}`;
++          dot.userData.dauDinh = "phu";
++          dot.userData.semanticPointRole = "trace_auxiliary_point";
++          dot.position.set(...pos);
++          auxTraceGroup.add(dot);
++        }
++      }
++      if (auxTraceGroup.children.length > 0) {
++        goc.add(auxTraceGroup);
++      }
++    }
+     if (typeof window !== "undefined") {
+       (window as any).__geo3d_rendered_object_ids = daDung;
+       (window as any).__geo3d_contract_reference_ids = nhomThamChieuHopDong

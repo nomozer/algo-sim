@@ -1,0 +1,39 @@
+{
+ "schema": "axo-v12-acceptance-criteria/1",
+ "registered_before_any_v12_code_change": true,
+ "branch_head_at_registration": "c4420478610d2818b3f7a9d132c94475a7d412a9",
+ "manifest": {
+  "path": "V12_ACCEPTANCE_MANIFEST.json",
+  "sha256": "f2fabd0b43fbe1d2cab1c1eeecdd2e143bf162cdd825b75b44bf209e38f13a86",
+  "valid_total": 111,
+  "in_scope": 105,
+  "underdetermined_diagnostic": 6,
+  "negative": 28,
+  "ui_scenarios": 8,
+  "preregistered_slm_targets": 33
+ },
+ "primary": {
+  "SIMULATION_COMPLETION_RATE_in_scope": ">= 0.85 (served scene that passes exact oracle, initial + interactive browser render criteria, and numeric accuracy when asked)"
+ },
+ "slm_recovery": {
+  "stratum": "SLM_REQUIRED = in-scope cases whose deterministic-parser-only dry run on the evaluated candidate is not LOCAL_PARSE_COMPLETE (reported alongside the preregistered P2 baseline dry run and preregistered_slm_target subset)",
+  "SLM_VERIFIED_SCENE_RATE": ">= 0.30 AND >= 5 SLM-provenance verified scenes in SLM_REQUIRED",
+  "provenance_rule": "counts for Model 1 (SLM_CONTRIBUTED) only if route_d.extraction_mode starts with LOCAL_SLM and response was generated live without cache or replay; parser fixes rescuing cases from /11 or P2 baseline are reported separately as DETERMINISTIC_ONLY system progress, never credited as SLM_CONTRIBUTED"
+ },
+ "safety_zero_tolerance": [
+  "wrong_served = 0",
+  "grounding_violations_served = 0",
+  "unverified_relations_served = 0",
+  "fabricated_numeric_goals = 0",
+  "served_numeric_mismatch = 0",
+  "external_ai_calls = 0",
+  "gemini_invocations = 0",
+  "silent_cloud_fallbacks = 0"
+ ],
+ "visual": "every completed scene: canvas ink >= 1%, initial camera pose fits all solid vertices & gold labels inside visible canvas bounds BEFORE reset/orbit, 0 console errors, no stale scene across problem changes",
+ "interaction": "1.0 every registered orbit/zoom/reset/step/responsive viewport operation passes",
+ "safe_refusal": "negatives = 1.0 refused (except prompt injection which may safely refuse or serve exact uncorrupted geometry cleanly)",
+ "underdetermined": "reported separately (VD01..VD06): D02/D03 similarity cases classified cleanly per §17; kernel locked per A4",
+ "performance_scope": "measured on Windows dev host only; separate deterministic, SLM, mixed, cold/warm, idle-to-SLM, concurrency, rejected latencies & memory; no cross-hardware claim",
+ "external_independence": "NOT_MEASURED (author-constructed)"
+}

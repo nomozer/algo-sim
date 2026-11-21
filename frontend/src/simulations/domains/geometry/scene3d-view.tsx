@@ -76,7 +76,7 @@ import {
   veTrenKhung,
 } from "./scene3d-presentation";
 import {
-  type KhungNhin, type LoaiKhoiTamXoay, type LocateObjectKind, type OccluderSphereMesh, type OccluderTriangleMesh, type SmartLocateStatus, type TamXoayOnDinh,
+  type KhungNhin, type LoaiKhoiTamXoay, type LocateObjectKind, type OccluderSphereMesh, type OccluderTriangleMesh, type SmartLocateStatus, type TamXoayOnDinh, type VungAnToanNdc,
   chonHuongNhin, computeSmartLocateCamera, hopBaoCuaDiem, huongLenHienThi, khungAnToanCanDoiTam, khungNhinQuanhTam,
   khungNhinSuPham, khungNhinVua, tiLeHinhChieu, tinhTamXoayTuKhoi, khoangGanToiThieu, khoangTuaTheoHuong,
 } from "./scene3d-camera";
@@ -94,6 +94,7 @@ import {
   witnessesShown,
 } from "./scene3d-annotations";
 import { namTrenDoanDaVe, nhanChungDoanHopLe } from "./scene3d-witness-gate";
+import { altitudeConstructionsAt, angleArcPoints, angleConstructionsAt, type AngleConstructionShown } from "./scene3d-angle-construction";
 import { auxiliaryHiddenAt, auxiliaryObjects } from "./scene3d-auxiliary";
 import { maTranKhung4 } from "./scene3d-chart";
 import {
@@ -4022,6 +4023,55 @@ export function vatNhanChung(
   return g;
 }
 
+/** Semantic-to-Scene3D — vẽ PHÉP DỰNG của góc đề hỏi (`scene3d-angle-construction`): hai cạnh nét đứt (trừ phần đã là
+ *  nét của hình), cung góc tại đỉnh, đoạn tới chân hình chiếu và dấu vuông góc. Không nhãn, không con số; không bắt cú
+ *  bấm chọn. Mọi toạ độ là của backend (đã kiểm lại fail-closed); ở đây chỉ chọn cỡ hiển thị. */
+export function vatDungGoc(s: AngleConstructionShown, diemNen: Vec3[] = [], doanCo: readonly [Vec3, Vec3][] = []): THREE.Group {
+  const g = new THREE.Group();
+  g.name = `angle_construction:${s.id}`;
+  const dk = duongKinhCanh(diemNen);
+  const chuKy = dk > 0 ? Math.max(0.045, Math.min(0.16, dk * 0.034)) : 0.12;
+  const mau = MAU_VAI_TRO.dich;
+  const netDut = (a: Vec3, b: Vec3, phu = false) => {
+    const l = new THREE.Line(new THREE.BufferGeometry().setFromPoints([new THREE.Vector3(...a), new THREE.Vector3(...b)]),
+      new THREE.LineDashedMaterial({ color: phu ? MAU.line : mau, dashSize: chuKy,
+        gapSize: chuKy * PHONG_CACH_SCENE3D.dash.witnessGapRatio, depthTest: false, transparent: true, opacity: DO_DUC.witness }));
+    l.computeLineDistances();
+    l.userData.angle_construction_leg = true;
+    return l;
+  };
+  const ve: THREE.Object3D[] = [];
+  s.arms.forEach((dau, i) => {
+    if (!namTrenDoanDaVe(s.vertex, dau, doanCo)) ve.push(netDut(s.vertex, dau, i === 1 && Boolean(s.parallelHelper)));
+  });
+  if (s.perpendicular && !namTrenDoanDaVe(s.perpendicular[0], s.perpendicular[1], doanCo)) {
+    ve.push(netDut(s.perpendicular[0], s.perpendicular[1], true));
+  }
+  const ngan = Math.min(...s.arms.map((a) => Math.hypot(a[0] - s.vertex[0], a[1] - s.vertex[1], a[2] - s.vertex[2])));
+  const r = Math.min(ngan * 0.3, dk > 0 ? dk * 0.09 : 0.3);
+  const cung = angleArcPoints(s, r);
+  if (cung.length > 1) {
+    const l = new THREE.Line(new THREE.BufferGeometry().setFromPoints(cung.map((p) => new THREE.Vector3(...p))),
+      new THREE.LineBasicMaterial({ color: mau, depthTest: false, transparent: true, opacity: 0.95 }));
+    l.name = `angle_arc:${s.id}`;
+    l.userData.angle_arc = true;
+    ve.push(l);
+  }
+  for (const m of s.rightAngles) {
+    const lu = Math.hypot(...m.u), lv = Math.hypot(...m.v);
+    if (!(lu > 0 && lv > 0)) continue;
+    const c = Math.min(lv * 0.18, dk > 0 ? dk * 0.04 : 0.15);
+    ve.push(dauGocVuong(m.at, m.u.map((x) => x / lu) as Vec3, m.v.map((x) => x / lv) as Vec3, c,
+      PHONG_CACH_SCENE3D.rightAngle.maxLegRatio * lv, mau, g));
+  }
+  for (const x of ve) {
+    x.renderOrder = 10;
+    x.raycast = () => {};
+    g.add(x);
+  }
+  return g;
+}
+
 /** Vùng một lớp phủ khác đang che khung (`data-che-khung`: nút nổi, ô soi, ngăn kéo) — nhãn
  *  số đo không được nằm dưới nó. Toạ độ px trong khung `goc`. */
 function vungCheKhung(goc: DOMRect): LabelRect[] {
@@ -4123,6 +4173,42 @@ export function lamMuotLechNhan(
   return { dx: truoc.dx + (dich.dx - truoc.dx) * k, dy: truoc.dy + (dich.dy - truoc.dy) * k };
 }
 
+/** /11 (U08): the drawn offset has not landed on its target yet ⇒ the render loop must schedule another frame. */
+export function nhanChuaToiCho(lech: { dx: number; dy: number }, dich: { dx: number; dy: number }): boolean {
+  return lech.dx !== dich.dx || lech.dy !== dich.dy;
+}
+
+/**
+ * Compensates safe camera NDC framing bounds by pixel label padding and lens-shift (`setViewOffset`) so
+ * projected vertices and 2D labels fit inside the canvas before user orbit/reset (`V11-VIS-1`).
+ */
+export function tinhVungAnToanKhungNhin(
+  tc: {
+    tiLeDoc: number;
+    tiLeNgang: number;
+    dichTamNgang: number;
+    dichTamDoc: number;
+  },
+  w: number,
+  h: number,
+): VungAnToanNdc {
+  const safeW = Math.max(w, 1);
+  const safeH = Math.max(h, 1);
+  const padX = Math.min(0.22, 48 / safeW);
+  const padTop = Math.min(0.24, 52 / safeH);
+  const padBot = Math.min(0.22, 46 / safeH);
+  const screenXMin = -Math.min(0.88, 1 - padX);
+  const screenXMax = Math.min(0.88, 1 - padX);
+  const screenYMin = -Math.min(0.86, 1 - padBot);
+  const screenYMax = Math.min(0.86, 1 - padTop);
+  return {
+    xMin: Math.min(-0.18, Math.max(-tc.tiLeNgang, screenXMin - tc.dichTamNgang)),
+    xMax: Math.max(0.18, Math.min(tc.tiLeNgang, screenXMax - tc.dichTamNgang)),
+    yMin: Math.min(-0.18, Math.max(-tc.tiLeDoc, screenYMin - tc.dichTamDoc)),
+    yMax: Math.max(0.18, Math.min(tc.tiLeDoc, screenYMax - tc.dichTamDoc)),
+  };
+}
+
 export function tinhViTriNhanDiem(
   diem: readonly { id: string; x: number; y: number; w: number; h: number }[],
   canh2d: readonly { ax: number; ay: number; bx: number; by: number }[],
@@ -4131,7 +4217,7 @@ export function tinhViTriNhanDiem(
    *  hướng cũ được cộng tối đa `THUONG_GIU_HUONG` điểm, đủ để hai phía tương đương không đổi qua lại giữa các khung khi
    *  xoay, quá nhỏ để thắng một va chạm thật (phạt tới ~77 điểm khi đè lên nét). */
   huongTruoc?: Map<string, number>,
-  khung?: { w: number; h: number },
+  khung?: { w: number; h: number; pad?: number },
   vungChe?: readonly LabelRect[],
 ): Map<string, { x: number; y: number; duoi: boolean }> {
   const ra = new Map<string, { x: number; y: number; duoi: boolean }>();
@@ -4237,10 +4323,15 @@ export function tinhViTriNhanDiem(
         }
       }
 
-      if (khung && khung.w > 40 && khung.h > 40) {
-        const padB = 6;
-        if (lx < padB || lx + cw > khung.w - padB || ly < padB || ly + ch > khung.h - padB) {
-          score -= 120;
+      // Merge of /12 (graded overflow penalty, clamped below) and main (placed-label + occluder penalties).
+      if (khung && khung.w > 0 && khung.h > 0) {
+        const pad = khung.pad ?? 8;
+        const over = Math.max(0, pad - lx)
+          + Math.max(0, lx + cw - (khung.w - pad))
+          + Math.max(0, pad - ly)
+          + Math.max(0, ly + ch - (khung.h - pad));
+        if (over > 0) {
+          score -= 180 + over * 10;
         }
       }
 
@@ -4258,6 +4349,12 @@ export function tinhViTriNhanDiem(
         bestLy = ly;
         bestTheta = theta;
       }
+    }
+
+    if (khung && khung.w > 0 && khung.h > 0) {
+      const pad = khung.pad ?? 8;
+      bestLx = Math.max(pad, Math.min(Math.max(pad, khung.w - pad - cw), bestLx));
+      bestLy = Math.max(pad, Math.min(Math.max(pad, khung.h - pad - ch), bestLy));
     }
 
     huongTruoc?.set(p.id, bestTheta);
@@ -5409,6 +5506,9 @@ export function Scene3DWorkspace({
     let controlsInteracting = false;
     let khoangTuaHienTai: number | null = null;
     let lastInteractionWakeMs = 0;
+    //: /11 (U08): some label is still gliding toward its slot (`lamMuotLechNhan` moves half the gap per frame); the
+    //: render loop must stay awake until it lands, or it freezes mid-way and the NEXT unrelated render moves it.
+    let nhanDangTruot = false;
     let wakeRenderLoop = () => {};
     const danhDauNguoiDungChinhCam = () => {
       if (!dangDatKhungTuDong) userAdjustedCamera = true;
@@ -5490,6 +5590,31 @@ export function Scene3DWorkspace({
       renderer.domElement.dispatchEvent(new WheelEvent("wheel", e));
     };
     container.addEventListener("wheel", chuyenWheelVeCanvas, { passive: false });
+    // V17 (/11, pointer trace in run `axo-hybrid-simulation-intent-generalization-grounded-slm-recovery`): a measurement
+    // chip at the canvas centre took the pointerdown, so OrbitControls never started and a drag there did not rotate.
+    // Same contract as the wheel: an overlay keeps its pointer events (a click still selects), but a DRAG that starts on
+    // it (moved >= 4 px) is handed to the canvas from its start point, so OrbitControls captures and rotates.
+    let keoTuLopPhu: { id: number; x: number; y: number; type: string; button: number; buttons: number } | null = null;
+    const batDauKeoTuLopPhu = (e: PointerEvent) => {
+      keoTuLopPhu = e.target !== renderer.domElement && e.isPrimary
+        ? { id: e.pointerId, x: e.clientX, y: e.clientY, type: e.pointerType, button: e.button, buttons: e.buttons }
+        : null;
+    };
+    const chuyenKeoVeCanvas = (e: PointerEvent) => {
+      const s = keoTuLopPhu;
+      if (!s || e.pointerId !== s.id || Math.hypot(e.clientX - s.x, e.clientY - s.y) < 4) return;
+      keoTuLopPhu = null;
+      const chung = { bubbles: true, cancelable: true, composed: true, pointerId: s.id, pointerType: s.type, isPrimary: true };
+      renderer.domElement.dispatchEvent(new PointerEvent("pointerdown",
+        { ...chung, clientX: s.x, clientY: s.y, button: s.button, buttons: s.buttons }));
+      renderer.domElement.dispatchEvent(new PointerEvent("pointermove",
+        { ...chung, clientX: e.clientX, clientY: e.clientY, button: -1, buttons: e.buttons }));
+    };
+    const huyKeoTuLopPhu = () => { keoTuLopPhu = null; };
+    container.addEventListener("pointerdown", batDauKeoTuLopPhu);
+    container.addEventListener("pointermove", chuyenKeoVeCanvas);
+    container.addEventListener("pointerup", huyKeoTuLopPhu);
+    container.addEventListener("pointercancel", huyKeoTuLopPhu);
     renderer.domElement.addEventListener("webglcontextlost", xuLyMatNguCanhWebgl, false);
     renderer.domElement.addEventListener("webglcontextrestored", xuLyKhoiPhucNguCanhWebgl, false);
     if (typeof document !== "undefined") {
@@ -5754,10 +5879,13 @@ export function Scene3DWorkspace({
         ungVienDiem2d.push({ el, id, x, y, w: cw, h: ch, uuTien: Number(el.dataset.uuTien ?? "1") });
       }
       const vungChe = vungCheKhung(renderer.domElement.getBoundingClientRect());
-      const viTriToiUu = tinhViTriNhanDiem(ungVienDiem2d, canh2d, gocVuongPts, huongNhanRef.current, { w, h }, vungChe);
+      const viTriToiUu = tinhViTriNhanDiem(ungVienDiem2d, canh2d, gocVuongPts, huongNhanRef.current, { w, h, pad: 8 }, vungChe);
+      nhanDangTruot = false;
       for (const u of ungVienDiem2d) {
         const dich = viTriToiUu.get(u.id) ?? { x: u.x - (u.w || 18) / 2, y: u.y - 1.4 * (u.h || 18), duoi: false };
-        const lech = lamMuotLechNhan(lechNhanRef.current.get(u.id), { dx: dich.x - u.x, dy: dich.y - u.y });
+        const muc = { dx: dich.x - u.x, dy: dich.y - u.y };
+        const lech = lamMuotLechNhan(lechNhanRef.current.get(u.id), muc);
+        if (nhanChuaToiCho(lech, muc)) nhanDangTruot = true;
         lechNhanRef.current.set(u.id, lech);
         const pos = { x: u.x + lech.dx, y: u.y + lech.dy, duoi: dich.duoi };
         u.el.style.transform = `translate(${Math.round(pos.x)}px,${Math.round(pos.y)}px)`;
@@ -6265,7 +6393,7 @@ export function Scene3DWorkspace({
 
     let rafId = 0;
     const isAnimationActive = (controlsChanged: boolean): boolean => {
-      if (controlsChanged || controlsInteracting) return true;
+      if (controlsChanged || controlsInteracting || nhanDangTruot) return true;
       if (cameraTween?.active) return true;
       const nowMs = typeof performance !== "undefined" ? performance.now() : Date.now();
       if (nowMs - lastInteractionWakeMs < 260) return true;
@@ -7218,6 +7346,10 @@ export function Scene3DWorkspace({
       renderer.domElement.removeEventListener("wheel", xuLyDoiDieuKhien);
       renderer.domElement.removeEventListener("wheel", onManualCamStart);
       container.removeEventListener("wheel", chuyenWheelVeCanvas);
+      container.removeEventListener("pointerdown", batDauKeoTuLopPhu);
+      container.removeEventListener("pointermove", chuyenKeoVeCanvas);
+      container.removeEventListener("pointerup", huyKeoTuLopPhu);
+      container.removeEventListener("pointercancel", huyKeoTuLopPhu);
       renderer.domElement.removeEventListener("webglcontextlost", xuLyMatNguCanhWebgl);
       renderer.domElement.removeEventListener("webglcontextrestored", xuLyKhoiPhucNguCanhWebgl);
       dieuKhien.removeEventListener("start", danhDauNguoiDungChinhCam);
@@ -7276,6 +7408,8 @@ export function Scene3DWorkspace({
           "__geo3d_reset_occlusion_performance",
           "__geo3d_fat_line_summary",
           "__geo3d_witness_ids",
+          "__geo3d_angle_construction_ids",
+          "__geo3d_altitude_construction_ids",
           "__geo3d_grid_visible",
           "__geo3d_grid_subordinated",
           "__geo3d_axes_visible",
@@ -7388,6 +7522,19 @@ export function Scene3DWorkspace({
       nhom.add(vatNhanChung(w, diemToanCanh, mau, diu, doanCo, diemCoTen));
     }
     if (typeof window !== "undefined") (window as any).__geo3d_witness_ids = ds.map((w) => w.id);
+    // Semantic-to-Scene3D: phép dựng của góc đề hỏi, từ bước kết luận của đại lượng (không lộ con số).
+    const coMat = new Set(objectsAt(scene, buoc).map((o) => o.id));
+    const dungGoc = angleConstructionsAt(scene, buoc, coMat);
+    for (const g of dungGoc) nhom.add(vatDungGoc(g, diemToanCanh, doanCo));
+    if (typeof window !== "undefined") (window as any).__geo3d_angle_construction_ids = dungGoc.map((g) => g.id);
+    // Đường cao của hình chóp mà thể tích dùng (chân = hình chiếu chính xác; giao tuyến của mặt bên ⟂ đáy): cùng cách vẽ
+    // với đoạn vuông góc của nhân chứng — nét đứt đỉnh → chân, dấu vuông góc, phần kéo dài cạnh đáy khi chân ở ngoài.
+    const duongCao = altitudeConstructionsAt(scene, buoc, coMat);
+    for (const h of duongCao) {
+      nhom.add(vatNhanChung({ id: `altitude:${h.id}`, vai: "hinh_chieu", from: h.from, foot: h.foot, u: h.u, v: h.v, uTo: h.uTo },
+        diemToanCanh, undefined, false, doanCo, diemCoTen));
+    }
+    if (typeof window !== "undefined") (window as any).__geo3d_altitude_construction_ids = duongCao.map((h) => h.id);
     scheduleCommitRender();
   }, [scene, buoc, nhanSoDo, coMatNhan, tuongTac, tang, tapNoiBat, annotationView.hiddenIds, webglEpoch]);
 

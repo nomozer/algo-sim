@@ -1,0 +1,124 @@
+{
+  "schema": "axo-performance-report/1",
+  "harness_version": "axo-live-acceptance-harness/1",
+  "scope_note": "Measured on Windows dev host only; no cross-hardware claims.",
+  "uncached_live_latency_ms": {
+    "deterministic_parser_complete_served": {
+      "n": 74,
+      "min_ms": 97.0,
+      "p50_ms": 154.0,
+      "p95_ms": 373.0,
+      "max_ms": 616.0
+    },
+    "slm_required_stratum_deterministic_or_normalizer_rescued": {
+      "n": 0,
+      "min_ms": null,
+      "p50_ms": null,
+      "p95_ms": null,
+      "max_ms": null
+    },
+    "live_slm_contributed_served": {
+      "n": 8,
+      "min_ms": 1607.0,
+      "p50_ms": 2980.5,
+      "p95_ms": 3843.0,
+      "max_ms": 3843.0
+    },
+    "rejected_valid_cases": {
+      "n": 25,
+      "min_ms": 81.0,
+      "p50_ms": 1491.0,
+      "p95_ms": 8727.0,
+      "max_ms": 9443.0
+    },
+    "rejected_negative_cases": {
+      "n": 28,
+      "min_ms": 85.0,
+      "p50_ms": 184.0,
+      "p95_ms": 3624.0,
+      "max_ms": 8925.0
+    }
+  },
+  "warm_cache_hit_ms": {
+    "n": 4,
+    "min_ms": 38.0,
+    "p50_ms": 43.4,
+    "p95_ms": 58.2,
+    "max_ms": 58.2
+  },
+  "concurrency": {
+    "conc_2_deterministic": {
+      "workers": 2,
+      "statuses": [
+        200,
+        200
+      ],
+      "all_200": true,
+      "wall_ms": 112.7,
+      "request_stats": {
+        "n": 2,
+        "min_ms": 97.0,
+        "p50_ms": 104.2,
+        "p95_ms": 111.4,
+        "max_ms": 111.4
+      }
+    },
+    "conc_4_deterministic": {
+      "workers": 4,
+      "statuses": [
+        200,
+        200,
+        200,
+        200
+      ],
+      "all_200": true,
+      "wall_ms": 208.3,
+      "request_stats": {
+        "n": 4,
+        "min_ms": 161.3,
+        "p50_ms": 203.3,
+        "p95_ms": 205.5,
+        "max_ms": 205.5
+      }
+    },
+    "conc_2_mixed_slm_and_det": {
+      "workers": 2,
+      "statuses": [
+        200,
+        200
+      ],
+      "all_200": true,
+      "wall_ms": 95.5,
+      "request_stats": {
+        "n": 2,
+        "min_ms": 80.2,
+        "p50_ms": 86.9,
+        "p95_ms": 93.7,
+        "max_ms": 93.7
+      }
+    }
+  },
+  "resource_peaks_from_stack_sampler": {
+    "chromium": {
+      "samples": 289,
+      "max_pid_count": 4,
+      "peak_ws_mb": 626.4,
+      "peak_private_mb": 491.0,
+      "max_cpu_s": 763.16
+    },
+    "backend": {
+      "samples": 289,
+      "max_pid_count": 2,
+      "peak_ws_mb": 126.3,
+      "peak_private_mb": 105.5,
+      "max_cpu_s": 40.06
+    },
+    "llama": {
+      "samples": 289,
+      "max_pid_count": 1,
+      "peak_ws_mb": 910.5,
+      "peak_private_mb": 589.5,
+      "max_cpu_s": 598.19
+    }
+  }
+}

@@ -1,0 +1,95 @@
+{
+  "schema": "algosim-hybrid-capability-prioritization/1",
+  "generated_at_utc": "2026-11-09T14:20:36.812697+00:00",
+  "product_commit_sha": "87497d79a6537681b91c3f06fffea86a7e593a02",
+  "current_supported_coverage": {
+    "held_out_46": "46/46 (100.0%)",
+    "dev_matrix_72": "63/72 (87.5%)",
+    "s2_r1_65": "65/65 (100.0%)",
+    "total_offline_gold_183": "174/183 (95.08%) with 0 wrong-served"
+  },
+  "prioritized_gaps": [
+    {
+      "gap_id": "DEV72-G2",
+      "rank": 1,
+      "selected_for_next_wave": true,
+      "title": "Isosceles/equilateral triangle altitude & right/isosceles trapezoid base metric templates",
+      "cases_unlocked_in_dev72": 3,
+      "curriculum_frequency_grade_11_12": "VERY_HIGH (core textbook & national exam base polygons: hình thang vuông, hình thang cân, tam giác cân)",
+      "root_cause_layers": [
+        "TypedFactNext /2 (`PremiseKind` / `local_geometry_parser.py` base polygon clauses)",
+        "Planner /26 & Registry /33 (`right_trapezoid`, `isosceles_trapezoid`, `isosceles_triangle_altitude`)",
+        "Exact Kernel /24 (`engine.py` planar base coordinate templates over `Fraction`/`Radical`)"
+      ],
+      "exact_arithmetic_tractability": "HIGH (purely quadratic/rational over `Q(sqrt(d))`, zero transcendental functions)",
+      "wrong_answer_risk": "LOW (all base edge & diagonal lengths are verified by Gram certificates before serving)",
+      "low_end_performance_impact": "NEGLIGIBLE (< 1 ms per problem)"
+    },
+    {
+      "gap_id": "DEV72-G3",
+      "rank": 2,
+      "selected_for_next_wave": true,
+      "title": "Rhombus / parallelogram base with acute/obtuse angle (`60°`, `120°`) & pyramid with lateral face `⊥` base",
+      "cases_unlocked_in_dev72": 3,
+      "curriculum_frequency_grade_11_12": "VERY_HIGH (extremely common Vietnamese exam family: đáy là hình thoi góc 60°, mặt bên (SAB) vuông góc với đáy)",
+      "root_cause_layers": [
+        "TypedFactNext /2 & `local_geometry_parser.py` (`rhombus_angle`, `perpendicular_planes((SAB), (ABCD))`)",
+        "Planner /26 & Registry /33 (altitude foot derivation onto intersection line `AB`)",
+        "Exact Kernel /24 (`engine.py` special-angle cosine lookup `cos(60°) = 1/2`, `sin(60°) = √3/2`)"
+      ],
+      "exact_arithmetic_tractability": "HIGH (closed-form in `Q(√3)` for standard `30°/45°/60°/120°` exam angles)",
+      "wrong_answer_risk": "LOW (fails closed on non-special angles outside `{30°, 45°, 60°, 90°, 120°, 135°, 150°}`)",
+      "low_end_performance_impact": "NEGLIGIBLE (< 1 ms per problem)"
+    },
+    {
+      "gap_id": "DEV72-G4",
+      "rank": 3,
+      "selected_for_next_wave": false,
+      "title": "Point-ratio interpolation on segment (`SM/SA = k`, `점 chia đoạn theo tỉ số`) & centroid/incenter coordinates",
+      "cases_unlocked_in_dev72": 1,
+      "curriculum_frequency_grade_11_12": "HIGH (used in Simson volume ratios, section planes through ratio points)",
+      "root_cause_layers": [
+        "TypedFactNext /2 (`DescribedPointKind` / `PremiseKind` for `point_on_segment_ratio`)",
+        "Exact Kernel /24 (`engine.py` affine combination `(1 - k)*A + k*B` over `Radical`)"
+      ],
+      "exact_arithmetic_tractability": "HIGH (linear affine combination over `Fraction`/`Radical`)",
+      "wrong_answer_risk": "LOW",
+      "low_end_performance_impact": "NEGLIGIBLE"
+    },
+    {
+      "gap_id": "DEV72-G6",
+      "rank": 4,
+      "selected_for_next_wave": false,
+      "title": "Oblique prism & frustum general metric synthesis (`hình chóp cụt đều`, oblique lateral edge angle)",
+      "cases_unlocked_in_dev72": 1,
+      "curriculum_frequency_grade_11_12": "MEDIUM",
+      "root_cause_layers": [
+        "Planner /26 & Registry /33 (`regular_frustum` volume/height/slant-height composition)",
+        "Exact Kernel /24 (`engine.py` frustum coordinate frame)"
+      ],
+      "exact_arithmetic_tractability": "MEDIUM_HIGH",
+      "wrong_answer_risk": "LOW_MEDIUM",
+      "low_end_performance_impact": "NEGLIGIBLE"
+    },
+    {
+      "gap_id": "DEV72-G7",
+      "rank": 5,
+      "selected_for_next_wave": false,
+      "title": "Constrained plane sections defined by parallel-to-two-skew-lines or angle constraint",
+      "cases_unlocked_in_dev72": 1,
+      "curriculum_frequency_grade_11_12": "MEDIUM_LOW (advanced olympiad/grade-11 section problems)",
+      "root_cause_layers": [
+        "Planner /26 & Exact Kernel /24 (plane normal synthesis from cross product of two direction vectors + boundary polygon clipping)",
+        "Adapter /4 (`construction_continuity.py` step trace for auxiliary parallel lines)"
+      ],
+      "exact_arithmetic_tractability": "MEDIUM",
+      "wrong_answer_risk": "MEDIUM (requires strict boundary-intersection ordering certificate)",
+      "low_end_performance_impact": "LOW (< 5 ms)"
+    }
+  ],
+  "selected_top_2_for_next_development_wave": [
+    "DEV72-G2",
+    "DEV72-G3"
+  ],
+  "selection_rationale": "Together, `DEV72-G2` (trapezoid & isosceles triangle base templates) and `DEV72-G3` (rhombus 60°/120° base & lateral face perpendicular to base) unlock 6 of the 9 remaining `DEV72` cases (raising `DEV72` coverage from 63/72 [87.5%] to 69/72 [95.8%]) while remaining 100% within closed-form exact `Fraction`/`Radical` arithmetic with zero GPU/AI overhead."
+}

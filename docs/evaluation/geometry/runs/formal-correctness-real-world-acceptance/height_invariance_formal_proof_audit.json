@@ -1,0 +1,71 @@
+{
+  "schema": "algosim-height-invariance-formal-proof-audit/1",
+  "generated_at_utc": "2026-11-10T10:07:02.945923+00:00",
+  "product_commit": "d20d7fdcdd6c5759f74ff737f331c2e548923eba",
+  "head_commit": "d20d7fdcdd6c5759f74ff737f331c2e548923eba",
+  "measured_system_tree_hash": "fb4f4992da8764930954a44f24e121ddca6cf1f3a270039773f6dbbf8b1b5c05",
+  "measured_system_file_count": 110,
+  "code_version": {
+    "typed_fact_next": "typed-fact-next/2",
+    "bridge": "typed-fact-next-bridge/2",
+    "planner": "geometry-fact-planner/26",
+    "registry": "geometry-functions/33",
+    "engine": "geometry-function-engine/24",
+    "adapter": "hybrid-simulation-adapter/4",
+    "envelope": "hybrid-route-d-simulation/4",
+    "local_parser": "local-geometry-parser/1",
+    "adaptive_router": "adaptive-input-router/1",
+    "cache_version": "132"
+  },
+  "input_or_case_hash": "d280c06e58e1df134ee7524b15d43ec96b63d3758e581f39039a9047ec39008f",
+  "oracle": "Exact algebraic polynomial identity P(t) - c Q(t) == 0 over Q[t] with degree bound deg <= 2 < N_samples = 5 on positive half-line t = h^2 > 0",
+  "test_command": "pytest backend/tests/geometry/test_height_invariance_formal_certification.py -q",
+  "test_environment": {
+    "os": "Windows-11-10.0.26100-SP0",
+    "python": "3.12.10",
+    "cpu_logical_cores": 12,
+    "allow_live_ai": 0,
+    "live_gemini_calls": 0,
+    "benchmark_tier": "HOST_BENCHMARK_OFFLINE"
+  },
+  "expected_behavior": "Formal proof audit establishes exact sufficient conditions (PO-1..PO-8) under which symbolic rational-function identity in t = h² > 0 holds globally, and rejects any construction outside the affine-coordinate DAG.",
+  "actual_behavior": "8 obligations PO-1..PO-8 formally specified and enforced in height_invariance.py (height-invariance-certificate/2); positives=9/9; negatives=8/8",
+  "verdict": "PASS",
+  "run_id": "formal-correctness-real-world-acceptance",
+  "wave_id": "FORMAL_CORRECTNESS_REAL_WORLD_ACCEPTANCE",
+  "baseline_head_commit": "cc166865e4d4f1116014d9f1a68d9d050bf0dc9a",
+  "baseline_product_commit": "7994da7a64c8dc288c4de972df2d8d1db65e0c20",
+  "case_ids": [
+    "pos_ext02_right_prism_point_plane",
+    "pos_ext03_pyramid_point_plane",
+    "pos_prism_line_line",
+    "pos_midpoint_base_edge_to_vertical_plane",
+    "pos_vertical_planes_angle",
+    "pos_point_to_vertical_line",
+    "pos_ext04_affine_length_ratio",
+    "pos_ext05_section_area_ratio",
+    "pos_ext07_height_invariant_rounded",
+    "neg_dependent_distance_A_to_SBC",
+    "neg_volume_without_height",
+    "neg_lateral_length_SC",
+    "neg_mixed_invariant_and_dependent",
+    "neg_angle_SC_ABCD",
+    "neg_base_dimension_missing",
+    "neg_midpoint_to_slanted_plane_SAD",
+    "neg_non_unique_foot_oblique"
+  ],
+  "measurement_status": "MEASURED_OFFLINE",
+  "oracle_provenance": "Symbolic rational-function degree bound theorem in t = h² (Gram matrix determinant lemma) + 8 machine-checked obligations PO-1..PO-8",
+  "evidence_classification": "VERIFIED FACT",
+  "theorem_statement": "Let K be a single polyhedral solid whose affine chart has base coordinates in R^2 independent of height h > 0 and vertical axis e_3 with metric Gram matrix G(t) = G_base (+) diag(t) where t = h^2 > 0. If every point/line/plane in the construction DAG is formed solely by affine operations (solid vertices, midpoint, divide_segment with constant ratio, centroid, line/plane intersection, parallel line/plane) or metric projection onto the base plane (z=0), then every point coordinate vector in the chart is independent of t. Consequently, every inner product u^T G(t) v is an affine polynomial in t of degree <= 1, every Gram determinant is affine in t of degree <= 1 (by the matrix determinant lemma since G(t) - G(0) has rank 1), and each whitelisted goal squared g(t)^2 = P(t)/Q(t) has polynomial numerator/denominator degrees (deg P, deg Q) <= (2, 2). Therefore P(t) - c Q(t) == 0 over Q[t] (and agrees at N = 5 witness points t in {1, 4, 9, 25, 49}, 5 > 2) with Q(t) > 0 for all t > 0 implies g(t)^2 = c identically for all h > 0.",
+  "gaps_in_prior_5_sample_heuristic_and_fixes": [
+    {
+      "gap": "Prior implementation restricted goal operands to solid vertices (`labels <= verts`), blocking valid invariant goals on affine-constructed points (e.g., midpoint M of SB to (SAC), or affine ratios KC/KB, S1/S2), while lacking an explicit check that intermediate construction calls in the DAG did not depend nonlinearly on h.",
+      "fix": "Replaced vertex-only heuristic with Obligation PO-2 (`PO_AFFINE_COORDINATES_T_INDEPENDENT`): symbolically traces the full construction DAG over Q[t] to verify every point/line/plane/section has t-independent chart coordinates and forbids any metric 3D projection (`altitude_foot`, `perp_line`, `plane_perp_line`) whose coordinates depend on t."
+    },
+    {
+      "gap": "Prior certificate relied on 5-sample numerical coincidence without symbolic polynomial coefficients P(t), Q(t) or an independent zero-engine certificate verifier.",
+      "fix": "Implemented exact polynomial algebra over Q[t] (`height-invariance-certificate/2`) with 8 explicit obligations (`PO_SINGLE_FREE_HEIGHT_ORTHOGONAL_CHART` through `PO_INTERPRETER_CROSS_CHECK`) and standalone `verify_height_invariance_certificate(cert)`."
+    }
+  ]
+}

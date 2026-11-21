@@ -1,0 +1,98 @@
+{
+  "schema": "algosim-phase0-holdout-protection-audit/1",
+  "run_id": "dimension-aware-verified-construction",
+  "phase": "phase_0_baseline_integrity",
+  "generated_at_utc": "2026-11-15T05:31:00Z",
+  "branch": "feat/local-first-geometry-understanding",
+  "head": "b04bed0f83e02ac27416814bea08fa830ee91461",
+  "product_commit": "32bdaa1df3dd7606b59b8c3cd8411578c4206d54",
+  "candidate_freeze_commit": "63def519ad317911145b2d84929a687208996619",
+  "measured_system_hash": "b1403b91fd81410f9586c5676f541911540b4bc4bb0d7bf40204d17538623e59",
+  "measured_system": "b1403b91fd81410f9586c5676f541911540b4bc4bb0d7bf40204d17538623e59",
+  "measured_system_files": 120,
+  "cache_version": "140",
+  "dataset_partition": "DEVELOPMENT ONLY permitted for engineering/audit/regression (exposed REAL27, synthetic probes, unit/metamorphic suites); SEALED H-1 and LOCKED W2/W3 verified untouched via CLI/git-tree metadata with zero problem contents read",
+  "environment": {
+    "ALLOW_LIVE_AI": "0",
+    "PYTHONPATH": "backend",
+    "live_ai_calls": 0
+  },
+  "test_command": "D:/Documents/projects/algo-sim/backend/.venv/Scripts/python.exe -B backend/scripts/score_independent_holdout_equivalence.py integrity && git ls-tree HEAD docs/evaluation/geometry/holdout docs/evaluation/geometry/runs/hybrid-v2-independent-vietnamese-section-holdout-wave2/inputs docs/evaluation/geometry/runs/hybrid-v2-independent-vietnamese-section-holdout-wave2/oracle docs/evaluation/geometry/runs/hybrid-v2-independent-vietnamese-geometry-holdout-wave3/inputs docs/evaluation/geometry/runs/hybrid-v2-independent-vietnamese-geometry-holdout-wave3/oracle && git diff --name-only 83fdc3071..HEAD -- docs/evaluation/geometry/holdout docs/evaluation/geometry/runs/hybrid-v2-independent-vietnamese-section-holdout-wave2 docs/evaluation/geometry/runs/hybrid-v2-independent-vietnamese-geometry-holdout-wave3",
+  "expected_behavior": "score_independent_holdout_equivalence.py integrity exits 0 with status=AWAITING_INDEPENDENT_CORPUS, h1_measurement=NOT_MEASURED, and live_provider_calls=0; git tree blob SHA-1s for sealed holdout and locked W2/W3 input/oracle files show zero modifications across branch history; sealed_h1_rows_opened=0 and locked_w2_w3_rows_read=0.",
+  "actual_behavior": "score_independent_holdout_equivalence.py integrity exited 0 (schema=h1-corpus-integrity/1, status=AWAITING_INDEPENDENT_CORPUS, h1_authoring_independence=NOT_ESTABLISHED, h1_measurement=NOT_MEASURED, corpus_present=false, live_provider_calls=0, candidate_manifest_sha256=15486cd57a491060f6cdbc39ebd46c3c0c820b83cae645060554e9d8edee8141). Git object-tree metadata checks (git ls-tree HEAD and git diff --name-only 83fdc3071..HEAD, without opening or reading any sealed/locked problem files) confirmed 0 diffs on docs/evaluation/geometry/holdout/* and locked W2/W3 inputs/oracles. sealed_h1_rows_opened=0, locked_w2_w3_rows_read=0.",
+  "mathematical_oracle": "Git object-tree blob SHA-1 invariance (git ls-tree HEAD and zero-diff range verification), preregistered SHA-256 hashes recorded in docs/evaluation/geometry/runs/independent-geometry-plane-constraints/evaluation_preregistration.json, and deterministic h1-corpus-integrity/1 check in backend/scripts/score_independent_holdout_equivalence.py.",
+  "source_provenance": {
+    "integrity_cli": "backend/scripts/score_independent_holdout_equivalence.py",
+    "preregistration_reference": "docs/evaluation/geometry/runs/independent-geometry-plane-constraints/evaluation_preregistration.json",
+    "living_state_reference": "docs/CURRENT_STATE.md",
+    "prior_holdout_receipt": "docs/evaluation/geometry/runs/grounded-vietnamese-geometry-understanding/holdout_protection_audit.json"
+  },
+  "sealed_h1_rows_opened": 0,
+  "locked_w2_w3_rows_read": 0,
+  "live_provider_calls": 0,
+  "h1_integrity_cli_result": {
+    "schema": "h1-corpus-integrity/1",
+    "status": "AWAITING_INDEPENDENT_CORPUS",
+    "h1_authoring_independence": "NOT_ESTABLISHED",
+    "h1_measurement": "NOT_MEASURED",
+    "corpus_present": false,
+    "candidate_manifest_sha256": "15486cd57a491060f6cdbc39ebd46c3c0c820b83cae645060554e9d8edee8141",
+    "live_provider_calls": 0
+  },
+  "git_tree_blobs_at_head_metadata_only": {
+    "docs/evaluation/geometry/holdout/HOLDOUT_SEAL.json": {
+      "git_blob_sha1": "60bf7a5ec46499f3601d778e3d79c0f9c7c0c9de",
+      "content_opened": false
+    },
+    "docs/evaluation/geometry/holdout/cases.json": {
+      "git_blob_sha1": "56a0de36e6ebb9b73b3141afc8a7f81f632aff27",
+      "content_opened": false
+    },
+    "docs/evaluation/geometry/holdout/pool.json": {
+      "git_blob_sha1": "d74c08c45ad19e48c862ab27a080c5079e74ff29",
+      "content_opened": false
+    },
+    "docs/evaluation/geometry/runs/hybrid-v2-independent-vietnamese-section-holdout-wave2/inputs/holdout-wave2.json": {
+      "git_blob_sha1": "fd7e1038e5798b457fa5ec95f641fb0f27b10f0c",
+      "preregistered_sha256": "1104be2ad8d4c5c96363f3648bc3c57dfcef5af4334c714e9cc94fc466f38e2d",
+      "content_opened": false
+    },
+    "docs/evaluation/geometry/runs/hybrid-v2-independent-vietnamese-section-holdout-wave2/oracle/expected.json": {
+      "git_blob_sha1": "1f3130b9ce7d528cfd40e32aaf8ac98b8e0af35b",
+      "preregistered_sha256": "5efbe57de91c31e18995e679ae6f0ecd69c366ea6bf148ee96255d4cfae7c844",
+      "content_opened": false
+    },
+    "docs/evaluation/geometry/runs/hybrid-v2-independent-vietnamese-geometry-holdout-wave3/inputs/holdout-wave3.json": {
+      "git_blob_sha1": "a94ef85078f729a03151606074186c394a29bef5",
+      "preregistered_sha256": "cf2d3fd759b6a94c4eae2545a4a409e50859ff28e861f797609b6a259fe4dee0",
+      "content_opened": false
+    },
+    "docs/evaluation/geometry/runs/hybrid-v2-independent-vietnamese-geometry-holdout-wave3/oracle/expected.json": {
+      "git_blob_sha1": "1a60c1c741c6583cc00b0f052960bc5be41001a3",
+      "preregistered_sha256": "9cabeb19ae0d10e1112795097e7ed18e0b0b3aa7bc18700a9d60813a0cbcf9df",
+      "content_opened": false
+    }
+  },
+  "holdout_diffs_in_83fdc3071_to_head": [],
+  "verdict": "PASS",
+  "start_product_commit": "d222e6d9b582d54fc42397a9593f52eb6fd77f18",
+  "start_measured_system_hash": "c25f9695828888987db2ab7990c4ff135da4d01c6b9d968f898c36728a0ae436",
+  "start_cache_version": "139",
+  "final_stage4a_tool_scan": {
+    "head_at_scan": "35053da80ea125582d15eda71cd70f7dbcb85165",
+    "tools_scanned": [
+      "compositional_dev_corpus.py",
+      "evaluate_step26_wave3b.py",
+      "isolated_perf_study.py",
+      "refresh_pending_templates.py",
+      "resource_cleanup_audit.py",
+      "run_full_regression.py",
+      "scene3d_browser_e2e.mjs"
+    ],
+    "holdout_data_files_referenced": {},
+    "sealed_h1_rows_opened": 0,
+    "locked_w2_w3_rows_read": 0,
+    "live_ai_calls": 0,
+    "verdict": "PASS"
+  }
+}

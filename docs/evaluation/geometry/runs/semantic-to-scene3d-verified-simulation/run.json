@@ -1,0 +1,406 @@
+{
+  "schema": "algosim-semantic-to-scene3d-run/1",
+  "run_id": "semantic-to-scene3d-verified-simulation",
+  "updated_at_utc": "2026-11-13T10:55:15.733735+00:00",
+  "start_head": "8a5a54e37b47e47f11e9eb5eae371e7cf2d5d76e",
+  "head_at_manifest_write": "8da3ea754a4925929a74b5ca6376b52c451cae1c",
+  "branch": "feat/local-first-geometry-understanding",
+  "product_commit": "70e393fd846fcd35b585b9ce28c1e3262e8fd3b0",
+  "candidate_manifest_commit": "fe835d424672203fc72fedeb786e9ad22457704b",
+  "measured_system": "b222260d9a59bfc0b44aa5cf6021e0a9e1a7ad49b39c288844fa00b1b4117b64",
+  "measured_files": 115,
+  "cache_version": "133",
+  "contracts_unchanged": [
+    "geometry-fact-planner/26",
+    "geometry-functions/33",
+    "geometry-function-engine/24",
+    "height-invariance-certificate/2",
+    "output-policy/1",
+    "hybrid-route-d-simulation/4"
+  ],
+  "regression_verdict": "INCOMPLETE_OR_FAIL",
+  "regression_gates": {
+    "frontend_test_wave": "PASS",
+    "demo_replay": "PASS",
+    "crash_audit": "PASS",
+    "backend_pytest": "PASS",
+    "docs_ia": "PASS",
+    "publication_head": "FAIL",
+    "publication_range": "FAIL",
+    "freeze_verify": "PASS"
+  },
+  "overall_verdict": "BLOCKED",
+  "overall_reason": "publication HEAD BLOCKED_PENDING_OWNER_REVIEW; FULL_RELEASE_GATE BLOCKED_GATES_REMAIN",
+  "goal_levels": {
+    "before": {
+      "LEVEL1_BASE_ONLY": 8,
+      "LEVEL2_GOAL_CONSTRUCTED": 8,
+      "NOT_SERVED:LIVE_AI_DISABLED": 5,
+      "NOT_SERVED:AMBIGUOUS_FACT": 1,
+      "NOT_SERVED:OUT_OF_SCOPE": 1,
+      "NOT_SERVED:MISSING_DIMENSION": 1
+    },
+    "after": {
+      "LEVEL2_GOAL_CONSTRUCTED": 18,
+      "NOT_SERVED:LIVE_AI_DISABLED": 3,
+      "LEVEL1_BASE_ONLY": 1,
+      "NOT_SERVED:OUT_OF_SCOPE": 1,
+      "NOT_SERVED:MISSING_DIMENSION": 1
+    }
+  },
+  "invariants": {
+    "served_scenes": 26,
+    "checks": 95,
+    "failed": 0
+  },
+  "browser_e2e": {
+    "passed": 12,
+    "total": 12
+  },
+  "unseen_evaluation": "NOT_MEASURED",
+  "independent_h1": "NOT_MEASURED",
+  "live_ai_calls": 0,
+  "physical_low_end": "NOT_MEASURED",
+  "merge_push_deploy": "NOT_PERFORMED",
+  "images_in_git": false,
+  "report": "AXO_SEMANTIC_TO_SCENE3D_VERIFIED_SIMULATION_REPORT.md",
+  "hash_policy": "SHA-256 of bytes with CRLF normalised to LF; excludes run.json itself",
+  "artifacts": {
+    "AXO_SEMANTIC_TO_SCENE3D_VERIFIED_SIMULATION_REPORT.md": {
+      "sha256_lf": "d5e4e009ee57477cf2f134184b7e27307bdef6320042719c9c478fa22cc07b42",
+      "bytes_lf": 16795
+    },
+    "baseline_candidate_integrity.json": {
+      "sha256_lf": "f020780e7367bc1769d7bd780e26c06a8f23027acb4849cf630cca3129344dda",
+      "bytes_lf": 1066
+    },
+    "candidate_freeze.json": {
+      "sha256_lf": "0ebc6fd10864e0fb0e0dce10c5d8ddb2de1622d5cf67961159191408a223f5cd",
+      "bytes_lf": 1418
+    },
+    "construction_contract_verification.json": {
+      "sha256_lf": "3a334cc3d360da17dbdac9043e61f6e71c10dccda18657ca0ef184bba38b57c6",
+      "bytes_lf": 1502
+    },
+    "construction_dependency_graph_tests.json": {
+      "sha256_lf": "314b8fbe2c69724d63e978d329cace470a634de4706176e62e100e8be39b0d72",
+      "bytes_lf": 4228
+    },
+    "construction_timeline_e2e.json": {
+      "sha256_lf": "9f6fd7559cf5eedad9db0badcd6eb6a6c2408413694d413cc12c7c495335ab1b",
+      "bytes_lf": 15931
+    },
+    "existing_scene3d_capability_audit.json": {
+      "sha256_lf": "421577eec7a59db022c2fad569d6a014ef36392691df9cb7db63b512850096ed",
+      "bytes_lf": 2999
+    },
+    "fixtures-angle-construction/gate-body-invalid.json": {
+      "sha256_lf": "cb54684ca77f76f035eb2a113647ffa50dc7d6482679f42fcde08b16835bebd2",
+      "bytes_lf": 1320
+    },
+    "fixtures-angle-construction/gate-disabled.json": {
+      "sha256_lf": "50ee5e95e3ee4d90d9279c0f99bb721981ce96f4eec22d453a0d1d13ef1a3ef2",
+      "bytes_lf": 1303
+    },
+    "fixtures-angle-construction/gate-fixture-missing.json": {
+      "sha256_lf": "b0e34a59e1bbe521c816e91f66ca40542a8f069c894fd8d07a1656520fe5fccd",
+      "bytes_lf": 1394
+    },
+    "fixtures-angle-construction/gate-forbidden.json": {
+      "sha256_lf": "816390117615998b9b1e1b5b572d25801afb4858e54510e39e40152fa379cfa8",
+      "bytes_lf": 1321
+    },
+    "fixtures-angle-construction/manifest.json": {
+      "sha256_lf": "ace62868bcc761fc1dfc913840aa630264565c7ed47d20385eb1001d7303496a",
+      "bytes_lf": 21123
+    },
+    "fixtures-angle-construction/refusal-capability-conditional.json": {
+      "sha256_lf": "f4cef9ffa93acc1ff1be5987ba54b8f1b0537e5a51181c6a7b96ee7b143e221a",
+      "bytes_lf": 3807
+    },
+    "fixtures-angle-construction/refusal-capability-escape-unsupported.json": {
+      "sha256_lf": "c0efa0d7e3cbeb7c77b8140b5d799d7a06586d3b699456138595a81568ad14af",
+      "bytes_lf": 3778
+    },
+    "fixtures-angle-construction/refusal-capability-negated-question.json": {
+      "sha256_lf": "6a4bd168ab0944ce85f301b098cf2778c238b3224cb9229b04ae3af1958fbccb",
+      "bytes_lf": 3827
+    },
+    "fixtures-angle-construction/refusal-capability-unsupported.json": {
+      "sha256_lf": "5c490358b0762edad43e36b953abcbf31dd293a3966ed7f72f06eeef41b7f79f",
+      "bytes_lf": 3932
+    },
+    "fixtures-angle-construction/refusal-extraction-fact-incomplete.json": {
+      "sha256_lf": "b1ae623559aef240d0526849008c8c60ec9c7555c5e3e129a4d48288e5d7b522",
+      "bytes_lf": 3793
+    },
+    "fixtures-angle-construction/refusal-extraction-not-json.json": {
+      "sha256_lf": "e69419fce729e050c7085235f19d5102c3803f0091f3c746cf6b4d9bdba1268e",
+      "bytes_lf": 2736
+    },
+    "fixtures-angle-construction/refusal-inconclusive-figure.json": {
+      "sha256_lf": "9093a2d20f1481fea9bae827665143ec7c1f5facd5f9bd2b8df51b4d201a6ecc",
+      "bytes_lf": 3786
+    },
+    "fixtures-angle-construction/refusal-inconclusive-negated.json": {
+      "sha256_lf": "9c39c825b6cc77f792e5f127b61f75cbbe18414095f709f2627fdc4b829938dc",
+      "bytes_lf": 4830
+    },
+    "fixtures-angle-construction/refusal-inconclusive-proof-only.json": {
+      "sha256_lf": "4fc782fe8bb11f89676d544124ea22528da07a22bc89e315606b6336f9d8c285",
+      "bytes_lf": 4585
+    },
+    "fixtures-angle-construction/refusal-integrity-identity.json": {
+      "sha256_lf": "3ff2310a15e15196ddd9f597467643402163bb9d63886151ab154c80342bc6c8",
+      "bytes_lf": 4615
+    },
+    "fixtures-angle-construction/refusal-integrity-proof-status.json": {
+      "sha256_lf": "283aecace1997361be66539429e2200f584e0490af91c5f8e07624f1ae803800",
+      "bytes_lf": 4615
+    },
+    "fixtures-angle-construction/refusal-integrity-surface.json": {
+      "sha256_lf": "428c77442db288c217db6e1b0bbd27c2a20dbd7c5e6ae329eef95c2893d93072",
+      "bytes_lf": 4595
+    },
+    "fixtures-angle-construction/refusal-invalid-collinear.json": {
+      "sha256_lf": "15286d6421f829c176d6ac4283a91b4beb73ae3d1308ada86c9e6dcad8b9a894",
+      "bytes_lf": 3957
+    },
+    "fixtures-angle-construction/refusal-invalid-contradiction.json": {
+      "sha256_lf": "e941895bdc02fe4810a84025a4f92501be405b54e4c7685bad90591ce003f3a3",
+      "bytes_lf": 3779
+    },
+    "fixtures-angle-construction/refusal-invalid-zero-length.json": {
+      "sha256_lf": "6c0d329aed16db2b15b7b81e081fa2fb6e63539a778435591c74c7bf324a1bdf",
+      "bytes_lf": 3648
+    },
+    "fixtures-angle-construction/refusal-invalid-zero-not-in-text.json": {
+      "sha256_lf": "9f63bf40b1551fe208c4f6d37989dc3a64a3529967df94bf90680288063a7413",
+      "bytes_lf": 3624
+    },
+    "fixtures-angle-construction/refusal-missing-ambiguous.json": {
+      "sha256_lf": "9930f7e0d40a87ce4293f3976413a3c691dc6bb2831ad4cc9829935217916cd1",
+      "bytes_lf": 3967
+    },
+    "fixtures-angle-construction/refusal-missing-dimension.json": {
+      "sha256_lf": "c3a99d453d6f87df5d47fd449e726f406b29840f8eb5cd09de0b7ec15e8f3338",
+      "bytes_lf": 3808
+    },
+    "fixtures-angle-construction/refusal-missing-underdetermined.json": {
+      "sha256_lf": "3d96a8a3f856210ee84d614720119f823f2387f6a96736d451426309a0a384b0",
+      "bytes_lf": 3817
+    },
+    "fixtures-angle-construction/refusal-result-engine-self-check.json": {
+      "sha256_lf": "e80ed8a36fc452fe88f2cda8ffde03ab155e13734112245dd189d5ddba07e878",
+      "bytes_lf": 3977
+    },
+    "fixtures-angle-construction/refusal-result-kernel-check.json": {
+      "sha256_lf": "09503f252571c5ee220d42c82279e6ea8eaa150d638d93d193a77d5663444341",
+      "bytes_lf": 4568
+    },
+    "fixtures-angle-construction/refusal-result-scene-metric.json": {
+      "sha256_lf": "1fbf3fae5ab04b88dd9e67da85fbf21ae7a63e83bedbdd1a55696563ee93db24",
+      "bytes_lf": 4564
+    },
+    "fixtures-angle-construction/refusal-source-goal-as-premise.json": {
+      "sha256_lf": "fb8e1bb2bfd191edc4b5d0c018b4a5cd252f01b4e20a95a019f94fb7c1327974",
+      "bytes_lf": 3747
+    },
+    "fixtures-angle-construction/refusal-source-object-mismatch.json": {
+      "sha256_lf": "234d7f01ed4768a522d1d184f1d3ec6dbb8e06a8344520ffbfea4aca3284aeff",
+      "bytes_lf": 3797
+    },
+    "fixtures-angle-construction/refusal-source-request-unanswered.json": {
+      "sha256_lf": "c94fca1c16a1398e4123f52f305b5fb7dbf7b42654671eb0de3a496c595d572e",
+      "bytes_lf": 3971
+    },
+    "fixtures-angle-construction/served-H01_CUBE.json": {
+      "sha256_lf": "607d5c59213a810342871cb2e992e136a00dce19036c3a970a1c306ac5e46414",
+      "bytes_lf": 73490
+    },
+    "fixtures-angle-construction/served-H02_CUBOID_DISTANCE.json": {
+      "sha256_lf": "0b2fd90022434d0aaae1da995969801db90871b16285d328134d0b4d8bda76f4",
+      "bytes_lf": 80004
+    },
+    "fixtures-angle-construction/served-H03_REGULAR_SQUARE_PYRAMID_ROLE_LENGTHS.json": {
+      "sha256_lf": "f7836bce1a8e046c4d07fc8def5c965260407b10964f5226949686b1168d2366",
+      "bytes_lf": 62973
+    },
+    "fixtures-angle-construction/served-H07_PROOF_GOAL_NOT_PREMISE_BUT_CHECKED.json": {
+      "sha256_lf": "b0a6c774a8bb79602374cc0c7fd570f9bfb0b1aa1f69591bac630225e260a9a4",
+      "bytes_lf": 44865
+    },
+    "fixtures-angle-construction/served-H11_SKEW_DISTANCE_COMPOSITION.json": {
+      "sha256_lf": "758c6727f2a38c4dd3cf4229e25800407ab76c627f2bfff0a70f0e24ff736511",
+      "bytes_lf": 73384
+    },
+    "fixtures-angle-construction/served-H12_PROJECTION_MIDPOINT_ANGLE.json": {
+      "sha256_lf": "85a802792d90b04c9ec9282aaa21e5fbd1b47ad2259d7933ab0d16458142bc6e",
+      "bytes_lf": 66397
+    },
+    "fixtures-angle-construction/served-H14_REGULAR_TETRAHEDRON.json": {
+      "sha256_lf": "49b27a3370e930e4d09c00b238e5dafcaedd668938ef285c4ccd8e6c80e5a325",
+      "bytes_lf": 29743
+    },
+    "fixtures-angle-construction/served-intersection-SAB-SCD.json": {
+      "sha256_lf": "2318241fe8853d80b5dceee4cec73a5d9bd9234d5c5cceed446326dff83f9276",
+      "bytes_lf": 55367
+    },
+    "fixtures-angle-construction/served-pyramid-midpoint-area-AB.json": {
+      "sha256_lf": "2226097ecee908e23d14a85a7714b3bc49d33e346ecc5bfc6bf98c2685b6dfdf",
+      "bytes_lf": 57907
+    },
+    "fixtures-angle-construction/served-pyramid-projection-and-unnamed-midpoint-area.json": {
+      "sha256_lf": "5e7aa8120728f0b62a4b007884874658333a53bd95e8732aa6807a64985df9d4",
+      "bytes_lf": 67804
+    },
+    "fixtures-angle-construction/served-pyramid-shared-midpoint-area-and-distance.json": {
+      "sha256_lf": "c03363af91ce6b90eea892061a9a27d28784289700ba6ca497fcaad0c1191178",
+      "bytes_lf": 69697
+    },
+    "fixtures-angle-construction/served-section-MAB-trapezoid.json": {
+      "sha256_lf": "6c9d2b882c6c61fcd8a6ecc10317dbc277ab9c13e74bf9f0cd1be5b4946e3a31",
+      "bytes_lf": 77041
+    },
+    "frontend_performance_profile.json": {
+      "sha256_lf": "8bf18de471e11bd9ad91427e60e88784e1bf6302c2858e83f0c9d9cdfdb9dd66",
+      "bytes_lf": 10403
+    },
+    "full_regression_summary.json": {
+      "sha256_lf": "d977a9fb24460a137d38fdd8c7be57a3fbd22b36ec4cd303c0480fd4b79294a3",
+      "bytes_lf": 34071
+    },
+    "geometry_primitive_correctness.json": {
+      "sha256_lf": "5bea0a68f164177355cf12cb21b44430b277ee123717328a7ccbddb79e41e1f1",
+      "bytes_lf": 1468
+    },
+    "goal_construction_coverage.json": {
+      "sha256_lf": "fa22d511afe5d08c2d3706b7ca827cbb3f4c6fb9f625622a55a6f7aae0a20f9c",
+      "bytes_lf": 1499
+    },
+    "image_to_simulation_acceptance.json": {
+      "sha256_lf": "e9a880c2ad7aa0c9a0f9b7342c394a0fe1cc946b0cefa131817deb2374a8aef2",
+      "bytes_lf": 19344
+    },
+    "independent_h1_status.json": {
+      "sha256_lf": "15c9ab4093c6d0d5336b2b10ffe1fe4a99ebc6fcf8ca566989dfb75157760b59",
+      "bytes_lf": 350
+    },
+    "logs/final-backend_pytest.json": {
+      "sha256_lf": "8e0e3a030da85d9760fa66c0fcb7e8ef3aa0465e3f9653c82ca2c3d9e9807719",
+      "bytes_lf": 4880
+    },
+    "logs/final-crash_audit.json": {
+      "sha256_lf": "a26070ee2b1754fb23f4aae9db6f6b4b57f3f95a25bc2f2f5d5f589223484bd4",
+      "bytes_lf": 2041
+    },
+    "logs/final-demo_replay.json": {
+      "sha256_lf": "9f147a240a5d77eba98fddef44703130adc9b2c559885a281f47297e2679f96d",
+      "bytes_lf": 2086
+    },
+    "logs/final-docs_ia.json": {
+      "sha256_lf": "1a6d9a7d12b1b99a606f90cc1281e57f6408c58db5731fbd8c4b11f3f8c16d76",
+      "bytes_lf": 4408
+    },
+    "logs/final-freeze_verify.json": {
+      "sha256_lf": "db28c2cd7b55839cab1a7a0e3ad3ffa73e831751a544bbfe5fba39581c2d806f",
+      "bytes_lf": 4448
+    },
+    "logs/final-frontend_test_wave.json": {
+      "sha256_lf": "9833ad80a90b950498d91165d70a20cfa4debdf09646cb8b2121722c97c25fa7",
+      "bytes_lf": 2102
+    },
+    "logs/final-publication_head.json": {
+      "sha256_lf": "7f00a5385443f64f71f128d1bc9146117877f8eb7b46819973ffc7a75e638593",
+      "bytes_lf": 4428
+    },
+    "logs/final-publication_range.json": {
+      "sha256_lf": "33baa46c35d6cafe504cd02de9c558c76705a7d8a1344450eef03b17a41690ce",
+      "bytes_lf": 4623
+    },
+    "logs/prior-k1-owner-approval.template.json": {
+      "sha256_lf": "6bbca9271ebd849e25fe0e364e077955bcb21b751639eaf3952b4e1c066eafa4",
+      "bytes_lf": 782
+    },
+    "logs/prior-r1-owner-approval.template.json": {
+      "sha256_lf": "adfad8e56e60e0f0fdbd49aaa47b6819371466e36e4ea179f1daece2ecc9c0af",
+      "bytes_lf": 782
+    },
+    "logs/prior-s2-owner-approval.template.json": {
+      "sha256_lf": "ad573ec4de843fde3b10c23825c3863569468f5a74f8d084c6b5a32c67ae375f",
+      "bytes_lf": 782
+    },
+    "new_external_simulation_evaluation.json": {
+      "sha256_lf": "067c8ad8d9a20aa39ac9c1be8aed381a9a1daf2830f1cd2abf8d8c2df43a6fda",
+      "bytes_lf": 1489
+    },
+    "parametric_geometry_safety.json": {
+      "sha256_lf": "e3ae7c800eab4e5b1d00f45676d25edc383eb419915e57d7587f24deb17ac5d8",
+      "bytes_lf": 6600
+    },
+    "pending_template_refresh.json": {
+      "sha256_lf": "f65e981fe0285cfb30580d52f7ed4d59488f2dfe2715fa36bd25965420164d3e",
+      "bytes_lf": 3234
+    },
+    "projection_and_intersection_verification.json": {
+      "sha256_lf": "ed109ca20de97abd9bab2ff27abd65d4e736e175a9163d410a9a134303ce0adc",
+      "bytes_lf": 1490
+    },
+    "publication_gate_status.json": {
+      "sha256_lf": "fdf69e034a5fc2ca619f25baf00c836a03c262a975b01888f25110985681e393",
+      "bytes_lf": 1448
+    },
+    "resource_cleanup_audit.json": {
+      "sha256_lf": "1a4106f4a550b429662707ae9f6973e0aee63c2f5a56fe748cdee51d016a10f8",
+      "bytes_lf": 2672
+    },
+    "scene3d_interaction_browser_e2e.json": {
+      "sha256_lf": "288f0ea9d7d351a62ccf969beec6e4b9cc600cbb9e7515d736cfcf4abae86c04",
+      "bytes_lf": 9901
+    },
+    "scene3d_mathematical_invariants.json": {
+      "sha256_lf": "7d752de8a50881e77d605b9243b77b4365c6b8c794906bf9b3e4ed502c31bb9c",
+      "bytes_lf": 16493
+    },
+    "semantic_to_scene_gap_matrix.json": {
+      "sha256_lf": "a9d0f02824835acb2faff9c47881f922d447041c49e75a76e7e4b9e75b0e26ba",
+      "bytes_lf": 44346
+    },
+    "text_to_simulation_acceptance.json": {
+      "sha256_lf": "5f9a57dc01e877ed2587f3fc0b62bc8775ed5f017306253f121d02786a98aea3",
+      "bytes_lf": 11741
+    },
+    "tools/browser_simulation_e2e.mjs": {
+      "sha256_lf": "cf541efe7a57e185fdc5cacb839edf6b0b0ef8d1f8209f297a5f74378c237b1e",
+      "bytes_lf": 14651
+    },
+    "tools/finalize.py": {
+      "sha256_lf": "fd06345edd00e7f8929541262033d4ee3350388940a4b011619262baac05c6c0",
+      "bytes_lf": 20852
+    },
+    "tools/refresh_pending_templates.py": {
+      "sha256_lf": "237aff85bb6c1903ec3f62ef8e11b1817e2b8a6ecb2849830f84aac8244b78d2",
+      "bytes_lf": 3119
+    },
+    "tools/run_full_regression.py": {
+      "sha256_lf": "3f85c722daa2b9a3740abe3754dedbcb1d97fc833131e0161942aaf58d5d01e6",
+      "bytes_lf": 818
+    },
+    "tools/scene_capability_audit.py": {
+      "sha256_lf": "da09802d2a8682ea1ab925a1653160fde7c5a46d66bb5079cceaf703992e9d1d",
+      "bytes_lf": 10064
+    },
+    "tools/scene_invariants.py": {
+      "sha256_lf": "354198d66bffff59b97826c4ce1f429df15556b0eb4f423ada58a49c59be8177",
+      "bytes_lf": 9584
+    },
+    "tools/simulation_acceptance.py": {
+      "sha256_lf": "cc3388419cdfe7eb93b449c88921d2a4b4e8d8735f9da28a303b5d9962860723",
+      "bytes_lf": 8611
+    },
+    "tools/write_run_json.py": {
+      "sha256_lf": "e36d2a3983438e8a57bd97e4319f7a172b72ceafff1f61b8f853b4695cec8a7a",
+      "bytes_lf": 5752
+    }
+  }
+}

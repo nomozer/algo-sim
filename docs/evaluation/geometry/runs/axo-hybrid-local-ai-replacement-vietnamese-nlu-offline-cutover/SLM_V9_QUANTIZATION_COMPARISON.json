@@ -1,0 +1,218 @@
+{
+  "schema": "slm-v9-quantization-comparison/1",
+  "generated_at_utc": "2026-11-19T09:51:19.280123+00:00",
+  "val_dataset": "C:\\Users\\Bunny\\AppData\\Local\\axo-slm\\training\\datasets_v9\\val_v9.jsonl",
+  "q4_k_m_gguf": {
+    "path": "C:\\Users\\Bunny\\AppData\\Local\\axo-slm\\models\\qwen3-0.6b-axo-v9-q4_k_m\\Qwen3-0.6B-AxoV9-Q4_K_M.gguf",
+    "size_bytes": 396704736,
+    "sha256": "73f1484b08b97ed2a1f44e32bcf6610210c7fda51567c4cd0a03d98dffc6cc35"
+  },
+  "models": {
+    "axov7_q4km_baseline_under_v9_closure": {
+      "schema": "slm-v9-val-score/1",
+      "total": 126,
+      "json_valid": 126,
+      "json_valid_rate": 1.0,
+      "positives_total": 94,
+      "positives_grounded": 77,
+      "positives_served": 70,
+      "positives_oracle_exact": 70,
+      "positive_served_exact_rate": 0.7447,
+      "negatives_total": 32,
+      "negatives_safe_refused": 32,
+      "negative_safe_refusal_rate": 1.0,
+      "wrong_served_count": 0,
+      "overall_correct": 102,
+      "overall_accuracy_rate": 0.8095,
+      "per_family": {
+        "VL01_FACE_PERP_RECT_ANG_DIST": {
+          "total": 24,
+          "json_valid": 24,
+          "grounded": 24,
+          "correct": 24,
+          "wrong_served": 0
+        },
+        "VL02_RHOM_MID_SKEW_DIST": {
+          "total": 24,
+          "json_valid": 24,
+          "grounded": 24,
+          "correct": 24,
+          "wrong_served": 0
+        },
+        "VL03_PRISM_PROJ_AREA": {
+          "total": 20,
+          "json_valid": 20,
+          "grounded": 17,
+          "correct": 17,
+          "wrong_served": 0
+        },
+        "VL04_MIXED_NEG_ADVERSARIAL": {
+          "total": 24,
+          "json_valid": 24,
+          "grounded": 0,
+          "correct": 24,
+          "wrong_served": 0
+        },
+        "VL9_MULTI_GOAL_DISJOINT": {
+          "total": 14,
+          "json_valid": 14,
+          "grounded": 0,
+          "correct": 0,
+          "wrong_served": 0
+        },
+        "VL9_TETRA_PRISM_RECT_DISJOINT": {
+          "total": 12,
+          "json_valid": 12,
+          "grounded": 12,
+          "correct": 5,
+          "wrong_served": 0
+        },
+        "VL9_NEG_DISJOINT": {
+          "total": 8,
+          "json_valid": 8,
+          "grounded": 0,
+          "correct": 8,
+          "wrong_served": 0
+        }
+      }
+    },
+    "axov9_merged_fp16_hf": {
+      "schema": "slm-v9-val-score/1",
+      "total": 126,
+      "json_valid": 126,
+      "json_valid_rate": 1.0,
+      "positives_total": 94,
+      "positives_grounded": 80,
+      "positives_served": 70,
+      "positives_oracle_exact": 70,
+      "positive_served_exact_rate": 0.7447,
+      "negatives_total": 32,
+      "negatives_safe_refused": 32,
+      "negative_safe_refusal_rate": 1.0,
+      "wrong_served_count": 0,
+      "overall_correct": 102,
+      "overall_accuracy_rate": 0.8095,
+      "per_family": {
+        "VL01_FACE_PERP_RECT_ANG_DIST": {
+          "total": 24,
+          "json_valid": 24,
+          "grounded": 20,
+          "correct": 10,
+          "wrong_served": 0
+        },
+        "VL02_RHOM_MID_SKEW_DIST": {
+          "total": 24,
+          "json_valid": 24,
+          "grounded": 24,
+          "correct": 24,
+          "wrong_served": 0
+        },
+        "VL03_PRISM_PROJ_AREA": {
+          "total": 20,
+          "json_valid": 20,
+          "grounded": 10,
+          "correct": 10,
+          "wrong_served": 0
+        },
+        "VL04_MIXED_NEG_ADVERSARIAL": {
+          "total": 24,
+          "json_valid": 24,
+          "grounded": 0,
+          "correct": 24,
+          "wrong_served": 0
+        },
+        "VL9_MULTI_GOAL_DISJOINT": {
+          "total": 14,
+          "json_valid": 14,
+          "grounded": 14,
+          "correct": 14,
+          "wrong_served": 0
+        },
+        "VL9_TETRA_PRISM_RECT_DISJOINT": {
+          "total": 12,
+          "json_valid": 12,
+          "grounded": 12,
+          "correct": 12,
+          "wrong_served": 0
+        },
+        "VL9_NEG_DISJOINT": {
+          "total": 8,
+          "json_valid": 8,
+          "grounded": 0,
+          "correct": 8,
+          "wrong_served": 0
+        }
+      }
+    },
+    "axov9_q4km_gguf": {
+      "schema": "slm-v9-val-score/1",
+      "total": 126,
+      "json_valid": 126,
+      "json_valid_rate": 1.0,
+      "positives_total": 94,
+      "positives_grounded": 94,
+      "positives_served": 94,
+      "positives_oracle_exact": 94,
+      "positive_served_exact_rate": 1.0,
+      "negatives_total": 32,
+      "negatives_safe_refused": 32,
+      "negative_safe_refusal_rate": 1.0,
+      "wrong_served_count": 0,
+      "overall_correct": 126,
+      "overall_accuracy_rate": 1.0,
+      "per_family": {
+        "VL01_FACE_PERP_RECT_ANG_DIST": {
+          "total": 24,
+          "json_valid": 24,
+          "grounded": 24,
+          "correct": 24,
+          "wrong_served": 0
+        },
+        "VL02_RHOM_MID_SKEW_DIST": {
+          "total": 24,
+          "json_valid": 24,
+          "grounded": 24,
+          "correct": 24,
+          "wrong_served": 0
+        },
+        "VL03_PRISM_PROJ_AREA": {
+          "total": 20,
+          "json_valid": 20,
+          "grounded": 20,
+          "correct": 20,
+          "wrong_served": 0
+        },
+        "VL04_MIXED_NEG_ADVERSARIAL": {
+          "total": 24,
+          "json_valid": 24,
+          "grounded": 0,
+          "correct": 24,
+          "wrong_served": 0
+        },
+        "VL9_MULTI_GOAL_DISJOINT": {
+          "total": 14,
+          "json_valid": 14,
+          "grounded": 14,
+          "correct": 14,
+          "wrong_served": 0
+        },
+        "VL9_TETRA_PRISM_RECT_DISJOINT": {
+          "total": 12,
+          "json_valid": 12,
+          "grounded": 12,
+          "correct": 12,
+          "wrong_served": 0
+        },
+        "VL9_NEG_DISJOINT": {
+          "total": 8,
+          "json_valid": 8,
+          "grounded": 0,
+          "correct": 8,
+          "wrong_served": 0
+        }
+      }
+    }
+  },
+  "promotion_gate_passed": true,
+  "decision": "PROMOTE_AXOV9_Q4_K_M_AS_V9_LOCAL_MODEL"
+}

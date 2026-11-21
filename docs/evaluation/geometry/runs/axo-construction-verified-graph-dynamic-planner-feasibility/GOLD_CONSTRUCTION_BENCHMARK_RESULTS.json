@@ -1,0 +1,3202 @@
+{
+  "candidate_identity": "dynamic-construction-planner/1",
+  "cases": [
+    {
+      "baseline_a": {
+        "answer": "a√2",
+        "calls": [
+          "pyramid",
+          "right_angle",
+          "equal_length",
+          "segment_length",
+          "perpendicular_line_plane",
+          "segment_length",
+          "ask_length"
+        ],
+        "code": null,
+        "constructed_aux_witness_in_scene": false,
+        "elapsed_ms": 268.41,
+        "math_or_refusal_correct": true,
+        "peak_memory_kib": 3412.64,
+        "planner_classification": "SOURCE_EXPLICIT_SEQUENCE",
+        "status": "SERVED"
+      },
+      "candidate_b": {
+        "answer": "a√2",
+        "best_operators": [
+          "goal.segment_length"
+        ],
+        "failure_code": null,
+        "l0_l4_scene_verified": true,
+        "oracle_match": true,
+        "plans": [
+          {
+            "answer": "a√2",
+            "answer_exact": {
+              "coef": "√2",
+              "dim": 1,
+              "text": "a√2",
+              "unit": "a"
+            },
+            "auxiliary_count": 0,
+            "auxiliary_object_ids": [],
+            "l0_l4_passed": true,
+            "node_count": 7,
+            "operator_lineage": [],
+            "presentation_step_count": 2,
+            "rank": 1,
+            "score_tuple": [
+              0.0,
+              0,
+              0,
+              2,
+              "()::()"
+            ]
+          }
+        ],
+        "plans_count": 1,
+        "status": "GOAL_VERIFIED"
+      },
+      "case_id": "A01_sb_length_right_pyramid",
+      "expected_status": "GOAL_VERIFIED",
+      "group": "Group_A",
+      "independent_oracle": "a√2",
+      "passed": true
+    },
+    {
+      "baseline_a": {
+        "answer": "a√7/2",
+        "calls": [
+          "pyramid",
+          "regular_polygon",
+          "segment_length",
+          "perpendicular_line_plane",
+          "segment_length",
+          "midpoint",
+          "ask_length"
+        ],
+        "code": null,
+        "constructed_aux_witness_in_scene": false,
+        "elapsed_ms": 70.895,
+        "math_or_refusal_correct": true,
+        "peak_memory_kib": 135.66,
+        "planner_classification": "SOURCE_EXPLICIT_SEQUENCE",
+        "status": "SERVED"
+      },
+      "candidate_b": {
+        "answer": "a√7/2",
+        "best_operators": [
+          "op.midpoint_segment",
+          "op.connect_segment",
+          "goal.segment_length"
+        ],
+        "failure_code": null,
+        "l0_l4_scene_verified": true,
+        "oracle_match": true,
+        "plans": [
+          {
+            "answer": "a√7/2",
+            "answer_exact": {
+              "coef": "√7/2",
+              "dim": 1,
+              "text": "a√7/2",
+              "unit": "a"
+            },
+            "auxiliary_count": 1,
+            "auxiliary_object_ids": [
+              "seg_S_M"
+            ],
+            "l0_l4_passed": true,
+            "node_count": 6,
+            "operator_lineage": [
+              "op.midpoint_segment(a=B,b=C)",
+              "op.connect_segment(a=S,b=M)"
+            ],
+            "presentation_step_count": 4,
+            "rank": 1,
+            "score_tuple": [
+              1.5,
+              1,
+              2,
+              4,
+              "('op.connect_segment', 'op.midpoint_segment')::('pt(1/2,1/2,0)', 'seg(pt(0,0,1);pt(1/2,1/2,0))')"
+            ]
+          }
+        ],
+        "plans_count": 1,
+        "status": "GOAL_VERIFIED"
+      },
+      "case_id": "A02_midpoint_sm_equilateral",
+      "expected_status": "GOAL_VERIFIED",
+      "group": "Group_A",
+      "independent_oracle": "a√7/2",
+      "passed": true
+    },
+    {
+      "baseline_a": {
+        "answer": "a√41/3",
+        "calls": [
+          "pyramid",
+          "regular_polygon",
+          "segment_length",
+          "perpendicular_line_plane",
+          "segment_length",
+          "centroid",
+          "ask_length"
+        ],
+        "code": null,
+        "constructed_aux_witness_in_scene": false,
+        "elapsed_ms": 76.021,
+        "math_or_refusal_correct": true,
+        "peak_memory_kib": 190.79,
+        "planner_classification": "SOURCE_EXPLICIT_SEQUENCE",
+        "status": "SERVED"
+      },
+      "candidate_b": {
+        "answer": "a√41/3",
+        "best_operators": [
+          "op.triangle_centroid",
+          "op.connect_segment",
+          "goal.segment_length"
+        ],
+        "failure_code": null,
+        "l0_l4_scene_verified": true,
+        "oracle_match": true,
+        "plans": [
+          {
+            "answer": "a√41/3",
+            "answer_exact": {
+              "coef": "√41/3",
+              "dim": 1,
+              "text": "a√41/3",
+              "unit": "a"
+            },
+            "auxiliary_count": 1,
+            "auxiliary_object_ids": [
+              "seg_S_G"
+            ],
+            "l0_l4_passed": true,
+            "node_count": 7,
+            "operator_lineage": [
+              "op.triangle_centroid(a=A,b=B,c=C)",
+              "op.connect_segment(a=S,b=G)"
+            ],
+            "presentation_step_count": 4,
+            "rank": 1,
+            "score_tuple": [
+              1.5,
+              1,
+              2,
+              4,
+              "('op.connect_segment', 'op.triangle_centroid')::('pt(2/3,1/3,0)', 'seg(pt(0,0,1);pt(2/3,1/3,0))')"
+            ]
+          }
+        ],
+        "plans_count": 1,
+        "status": "GOAL_VERIFIED"
+      },
+      "case_id": "A03_centroid_sg_square_base",
+      "expected_status": "GOAL_VERIFIED",
+      "group": "Group_A",
+      "independent_oracle": "a√41/3",
+      "passed": true
+    },
+    {
+      "baseline_a": {
+        "answer": "a√3/2",
+        "calls": [
+          "pyramid",
+          "right_angle",
+          "equal_length",
+          "segment_length",
+          "perpendicular_line_plane",
+          "segment_length",
+          "midpoint",
+          "ask_length"
+        ],
+        "code": null,
+        "constructed_aux_witness_in_scene": false,
+        "elapsed_ms": 61.136,
+        "math_or_refusal_correct": true,
+        "peak_memory_kib": 153.66,
+        "planner_classification": "SOURCE_EXPLICIT_SEQUENCE",
+        "status": "SERVED"
+      },
+      "candidate_b": {
+        "answer": "a√3/2",
+        "best_operators": [
+          "op.midpoint_segment",
+          "op.connect_segment",
+          "goal.segment_length"
+        ],
+        "failure_code": null,
+        "l0_l4_scene_verified": true,
+        "oracle_match": true,
+        "plans": [
+          {
+            "answer": "a√3/2",
+            "answer_exact": {
+              "coef": "√3/2",
+              "dim": 1,
+              "text": "a√3/2",
+              "unit": "a"
+            },
+            "auxiliary_count": 1,
+            "auxiliary_object_ids": [
+              "seg_A_M"
+            ],
+            "l0_l4_passed": true,
+            "node_count": 6,
+            "operator_lineage": [
+              "op.midpoint_segment(a=S,b=C)",
+              "op.connect_segment(a=A,b=M)"
+            ],
+            "presentation_step_count": 4,
+            "rank": 1,
+            "score_tuple": [
+              1.5,
+              1,
+              2,
+              4,
+              "('op.connect_segment', 'op.midpoint_segment')::('pt(0,1/2,1/2)', 'seg(pt(0,0,0);pt(0,1/2,1/2))')"
+            ]
+          }
+        ],
+        "plans_count": 1,
+        "status": "GOAL_VERIFIED"
+      },
+      "case_id": "A04_midpoint_am_right_B",
+      "expected_status": "GOAL_VERIFIED",
+      "group": "Group_A",
+      "independent_oracle": "a√3/2",
+      "passed": true
+    },
+    {
+      "baseline_a": {
+        "answer": "a³/3",
+        "calls": [
+          "pyramid",
+          "right_angle",
+          "equal_length",
+          "segment_length",
+          "perpendicular_line_plane",
+          "segment_length",
+          "ask_volume"
+        ],
+        "code": null,
+        "constructed_aux_witness_in_scene": false,
+        "elapsed_ms": 58.278,
+        "math_or_refusal_correct": true,
+        "peak_memory_kib": 145.3,
+        "planner_classification": "SOURCE_EXPLICIT_SEQUENCE",
+        "status": "SERVED"
+      },
+      "candidate_b": {
+        "answer": "a³/3",
+        "best_operators": [
+          "goal.solid_volume"
+        ],
+        "failure_code": null,
+        "l0_l4_scene_verified": true,
+        "oracle_match": true,
+        "plans": [
+          {
+            "answer": "a³/3",
+            "answer_exact": {
+              "coef": "1/3",
+              "dim": 3,
+              "text": "a³/3",
+              "unit": "a"
+            },
+            "auxiliary_count": 0,
+            "auxiliary_object_ids": [],
+            "l0_l4_passed": true,
+            "node_count": 7,
+            "operator_lineage": [],
+            "presentation_step_count": 2,
+            "rank": 1,
+            "score_tuple": [
+              0.0,
+              0,
+              0,
+              2,
+              "()::()"
+            ]
+          }
+        ],
+        "plans_count": 1,
+        "status": "GOAL_VERIFIED"
+      },
+      "case_id": "A05_volume_pyramid_right_B",
+      "expected_status": "GOAL_VERIFIED",
+      "group": "Group_A",
+      "independent_oracle": "a³/3",
+      "passed": true
+    },
+    {
+      "baseline_a": {
+        "answer": "a³√3/4",
+        "calls": [
+          "pyramid",
+          "regular_polygon",
+          "segment_length",
+          "perpendicular_line_plane",
+          "segment_length",
+          "ask_volume"
+        ],
+        "code": null,
+        "constructed_aux_witness_in_scene": false,
+        "elapsed_ms": 54.068,
+        "math_or_refusal_correct": true,
+        "peak_memory_kib": 135.65,
+        "planner_classification": "SOURCE_EXPLICIT_SEQUENCE",
+        "status": "SERVED"
+      },
+      "candidate_b": {
+        "answer": "a³√3/4",
+        "best_operators": [
+          "goal.solid_volume"
+        ],
+        "failure_code": null,
+        "l0_l4_scene_verified": true,
+        "oracle_match": true,
+        "plans": [
+          {
+            "answer": "a³√3/4",
+            "answer_exact": {
+              "coef": "√3/4",
+              "dim": 3,
+              "text": "a³√3/4",
+              "unit": "a"
+            },
+            "auxiliary_count": 0,
+            "auxiliary_object_ids": [],
+            "l0_l4_passed": true,
+            "node_count": 7,
+            "operator_lineage": [],
+            "presentation_step_count": 2,
+            "rank": 1,
+            "score_tuple": [
+              0.0,
+              0,
+              0,
+              2,
+              "()::()"
+            ]
+          }
+        ],
+        "plans_count": 1,
+        "status": "GOAL_VERIFIED"
+      },
+      "case_id": "A06_volume_equilateral_pyramid",
+      "expected_status": "GOAL_VERIFIED",
+      "group": "Group_A",
+      "independent_oracle": "a³√3/4",
+      "passed": true
+    },
+    {
+      "baseline_a": {
+        "answer": "cos²=1/3",
+        "calls": [
+          "pyramid",
+          "regular_polygon",
+          "segment_length",
+          "perpendicular_line_plane",
+          "segment_length",
+          "ask_angle_line_plane"
+        ],
+        "code": null,
+        "constructed_aux_witness_in_scene": false,
+        "elapsed_ms": 62.966,
+        "math_or_refusal_correct": true,
+        "peak_memory_kib": 144.7,
+        "planner_classification": "SOURCE_EXPLICIT_SEQUENCE",
+        "status": "SERVED"
+      },
+      "candidate_b": {
+        "answer": "cos=√3/3",
+        "best_operators": [
+          "op.intersect_line_plane",
+          "goal.angle_line_plane"
+        ],
+        "failure_code": null,
+        "l0_l4_scene_verified": true,
+        "oracle_match": true,
+        "plans": [
+          {
+            "answer": "cos=√3/3",
+            "answer_exact": {
+              "cos_sq": "1/3",
+              "dim": 0,
+              "text": "cos=√3/3",
+              "unit": ""
+            },
+            "auxiliary_count": 0,
+            "auxiliary_object_ids": [],
+            "l0_l4_passed": true,
+            "node_count": 10,
+            "operator_lineage": [
+              "op.intersect_line_plane(line=ln_S_C,plane=day_ABCD)",
+              "op.connect_segment(a=C,b=A)"
+            ],
+            "presentation_step_count": 3,
+            "rank": 1,
+            "score_tuple": [
+              1.6,
+              0,
+              2,
+              3,
+              "('op.intersect_line_plane',)::()"
+            ]
+          }
+        ],
+        "plans_count": 1,
+        "status": "GOAL_VERIFIED"
+      },
+      "case_id": "A07_angle_sc_base_square",
+      "expected_status": "GOAL_VERIFIED",
+      "group": "Group_A",
+      "independent_oracle": "cos=√3/3",
+      "passed": true
+    },
+    {
+      "baseline_a": {
+        "answer": "cos²=1/2",
+        "calls": [
+          "pyramid",
+          "right_angle",
+          "equal_length",
+          "segment_length",
+          "perpendicular_line_plane",
+          "segment_length",
+          "ask_angle_line_plane"
+        ],
+        "code": null,
+        "constructed_aux_witness_in_scene": false,
+        "elapsed_ms": 60.535,
+        "math_or_refusal_correct": true,
+        "peak_memory_kib": 152.04,
+        "planner_classification": "SOURCE_EXPLICIT_SEQUENCE",
+        "status": "SERVED"
+      },
+      "candidate_b": {
+        "answer": "45°",
+        "best_operators": [
+          "op.intersect_line_plane",
+          "goal.angle_line_plane"
+        ],
+        "failure_code": null,
+        "l0_l4_scene_verified": true,
+        "oracle_match": true,
+        "plans": [
+          {
+            "answer": "45°",
+            "answer_exact": {
+              "cos_sq": "1/2",
+              "dim": 0,
+              "text": "45°",
+              "unit": ""
+            },
+            "auxiliary_count": 0,
+            "auxiliary_object_ids": [],
+            "l0_l4_passed": true,
+            "node_count": 9,
+            "operator_lineage": [
+              "op.intersect_line_plane(line=ln_S_B,plane=day_ABC)"
+            ],
+            "presentation_step_count": 3,
+            "rank": 1,
+            "score_tuple": [
+              1.1,
+              0,
+              1,
+              3,
+              "('op.intersect_line_plane',)::()"
+            ]
+          }
+        ],
+        "plans_count": 1,
+        "status": "GOAL_VERIFIED"
+      },
+      "case_id": "A08_angle_sb_base_right",
+      "expected_status": "GOAL_VERIFIED",
+      "group": "Group_A",
+      "independent_oracle": "45°",
+      "passed": true
+    },
+    {
+      "baseline_a": {
+        "answer": "a√6/2",
+        "calls": [
+          "prism",
+          "regular_polygon",
+          "segment_length",
+          "intersect_line_line",
+          "ask_length"
+        ],
+        "code": null,
+        "constructed_aux_witness_in_scene": false,
+        "elapsed_ms": 66.867,
+        "math_or_refusal_correct": true,
+        "peak_memory_kib": 181.58,
+        "planner_classification": "SOURCE_EXPLICIT_SEQUENCE",
+        "status": "SERVED"
+      },
+      "candidate_b": {
+        "answer": "a√6/2",
+        "best_operators": [
+          "op.line_through_points",
+          "op.line_through_points",
+          "op.intersect_coplanar_lines",
+          "op.connect_segment",
+          "goal.segment_length"
+        ],
+        "failure_code": null,
+        "l0_l4_scene_verified": true,
+        "oracle_match": true,
+        "plans": [
+          {
+            "answer": "a√6/2",
+            "answer_exact": {
+              "coef": "√6/2",
+              "dim": 1,
+              "text": "a√6/2",
+              "unit": "a"
+            },
+            "auxiliary_count": 1,
+            "auxiliary_object_ids": [
+              "seg_A'_O"
+            ],
+            "l0_l4_passed": true,
+            "node_count": 10,
+            "operator_lineage": [
+              "op.line_through_points(a=A,b=C)",
+              "op.line_through_points(a=B,b=D)",
+              "op.intersect_coplanar_lines(line1=ln_AC,line2=ln_BD)",
+              "op.connect_segment(a=A',b=O)"
+            ],
+            "presentation_step_count": 6,
+            "rank": 1,
+            "score_tuple": [
+              2.8,
+              1,
+              4,
+              6,
+              "('op.connect_segment', 'op.intersect_coplanar_lines', 'op.line_through_points', 'op.line_through_points')::('ln(p=0,0,0|d=1,1,0)', 'ln(p=0,1,0|d=1,-1,0)', 'pt(1/2,1/2,0)', 'seg(pt(0,0,1);pt(1/2,1/2,0))')"
+            ]
+          }
+        ],
+        "plans_count": 1,
+        "status": "GOAL_VERIFIED"
+      },
+      "case_id": "A09_cube_face_diagonal_intersection_midpoint",
+      "expected_status": "GOAL_VERIFIED",
+      "group": "Group_A",
+      "independent_oracle": "a√6/2",
+      "passed": true
+    },
+    {
+      "baseline_a": {
+        "answer": null,
+        "calls": [
+          "prism",
+          "regular_polygon",
+          "segment_length",
+          "section",
+          "ask_section_area"
+        ],
+        "code": "SOURCE_OBJECT_MISMATCH",
+        "constructed_aux_witness_in_scene": false,
+        "elapsed_ms": 5.538,
+        "math_or_refusal_correct": false,
+        "peak_memory_kib": 33.08,
+        "planner_classification": "SOURCE_EXPLICIT_SEQUENCE",
+        "status": "REFUSED"
+      },
+      "candidate_b": {
+        "answer": "a²√2",
+        "best_operators": [
+          "op.plane_through_three_points",
+          "op.polyhedron_plane_section",
+          "goal.section_area"
+        ],
+        "failure_code": null,
+        "l0_l4_scene_verified": true,
+        "oracle_match": true,
+        "plans": [
+          {
+            "answer": "a²√2",
+            "answer_exact": {
+              "coef": "√2",
+              "dim": 2,
+              "text": "a²√2",
+              "unit": "a"
+            },
+            "auxiliary_count": 0,
+            "auxiliary_object_ids": [],
+            "l0_l4_passed": true,
+            "node_count": 12,
+            "operator_lineage": [
+              "op.plane_through_three_points(a=B,b=D,c=D')",
+              "op.polyhedron_plane_section(plane=mp_target,solid=solid_main)"
+            ],
+            "presentation_step_count": 4,
+            "rank": 1,
+            "score_tuple": [
+              2.3,
+              0,
+              2,
+              4,
+              "('op.plane_through_three_points', 'op.polyhedron_plane_section')::('pl(1,1,0,-1)', 'sec(pt(0,1,0),pt(0,1,1),pt(1,0,1),pt(1,0,0))')"
+            ]
+          }
+        ],
+        "plans_count": 1,
+        "status": "GOAL_VERIFIED"
+      },
+      "case_id": "A10_cube_section_diagonal_plane",
+      "expected_status": "GOAL_VERIFIED",
+      "group": "Group_A",
+      "independent_oracle": "a²√2",
+      "passed": true
+    },
+    {
+      "baseline_a": {
+        "answer": null,
+        "calls": [
+          "pyramid",
+          "regular_polygon",
+          "segment_length",
+          "perpendicular_line_plane",
+          "segment_length",
+          "segment_ratio",
+          "midpoint",
+          "ask_length"
+        ],
+        "code": "UNDERDETERMINED_POINT",
+        "constructed_aux_witness_in_scene": false,
+        "elapsed_ms": 677.514,
+        "math_or_refusal_correct": false,
+        "peak_memory_kib": 394.97,
+        "planner_classification": "SOURCE_EXPLICIT_SEQUENCE",
+        "status": "REFUSED"
+      },
+      "candidate_b": {
+        "answer": "a√21/2",
+        "best_operators": [
+          "op.divide_segment_ratio",
+          "op.midpoint_segment",
+          "op.connect_segment",
+          "goal.segment_length"
+        ],
+        "failure_code": null,
+        "l0_l4_scene_verified": true,
+        "oracle_match": true,
+        "plans": [
+          {
+            "answer": "a√21/2",
+            "answer_exact": {
+              "coef": "√21/2",
+              "dim": 1,
+              "text": "a√21/2",
+              "unit": "a"
+            },
+            "auxiliary_count": 1,
+            "auxiliary_object_ids": [
+              "seg_K_M"
+            ],
+            "l0_l4_passed": true,
+            "node_count": 8,
+            "operator_lineage": [
+              "op.divide_segment_ratio(a=S,b=A)",
+              "op.midpoint_segment(a=B,b=C)",
+              "op.connect_segment(a=K,b=M)"
+            ],
+            "presentation_step_count": 5,
+            "rank": 1,
+            "score_tuple": [
+              2.5,
+              1,
+              3,
+              5,
+              "('op.connect_segment', 'op.divide_segment_ratio', 'op.midpoint_segment')::('pt(0,0,2/3)', 'pt(1,1/2,0)', 'seg(pt(0,0,2/3);pt(1,1/2,0))')"
+            ]
+          }
+        ],
+        "plans_count": 1,
+        "status": "GOAL_VERIFIED"
+      },
+      "case_id": "B01_divide_segment_ratio_length",
+      "expected_status": "GOAL_VERIFIED",
+      "group": "Group_B",
+      "independent_oracle": "a√21/2",
+      "passed": true
+    },
+    {
+      "baseline_a": {
+        "answer": null,
+        "calls": [
+          "pyramid",
+          "right_angle",
+          "equal_length",
+          "segment_length",
+          "perpendicular_line_plane",
+          "segment_length",
+          "point_reflection",
+          "ask_length"
+        ],
+        "code": "SOURCE_OBJECT_MISMATCH",
+        "constructed_aux_witness_in_scene": false,
+        "elapsed_ms": 19.58,
+        "math_or_refusal_correct": false,
+        "peak_memory_kib": 194.81,
+        "planner_classification": "SOURCE_EXPLICIT_SEQUENCE",
+        "status": "REFUSED"
+      },
+      "candidate_b": {
+        "answer": "a√5",
+        "best_operators": [
+          "op.point_reflection",
+          "op.connect_segment",
+          "goal.segment_length"
+        ],
+        "failure_code": null,
+        "l0_l4_scene_verified": true,
+        "oracle_match": true,
+        "plans": [
+          {
+            "answer": "a√5",
+            "answer_exact": {
+              "coef": "√5",
+              "dim": 1,
+              "text": "a√5",
+              "unit": "a"
+            },
+            "auxiliary_count": 1,
+            "auxiliary_object_ids": [
+              "seg_S_P"
+            ],
+            "l0_l4_passed": true,
+            "node_count": 6,
+            "operator_lineage": [
+              "op.point_reflection(center=B,point=A)",
+              "op.connect_segment(a=S,b=P)"
+            ],
+            "presentation_step_count": 4,
+            "rank": 1,
+            "score_tuple": [
+              1.7,
+              1,
+              2,
+              4,
+              "('op.connect_segment', 'op.point_reflection')::('pt(2,0,0)', 'seg(pt(0,0,1);pt(2,0,0))')"
+            ]
+          }
+        ],
+        "plans_count": 1,
+        "status": "GOAL_VERIFIED"
+      },
+      "case_id": "B02_point_reflection_distance",
+      "expected_status": "GOAL_VERIFIED",
+      "group": "Group_B",
+      "independent_oracle": "a√5",
+      "passed": true
+    },
+    {
+      "baseline_a": {
+        "answer": "cos²=3/7",
+        "calls": [
+          "pyramid",
+          "regular_polygon",
+          "segment_length",
+          "perpendicular_line_plane",
+          "segment_length",
+          "ask_angle_plane_plane"
+        ],
+        "code": null,
+        "constructed_aux_witness_in_scene": false,
+        "elapsed_ms": 56.674,
+        "math_or_refusal_correct": true,
+        "peak_memory_kib": 137.88,
+        "planner_classification": "SOURCE_EXPLICIT_SEQUENCE",
+        "status": "SERVED"
+      },
+      "candidate_b": {
+        "answer": "cos²=3/7",
+        "best_operators": [
+          "op.construct_dihedral_linear_angle",
+          "goal.angle_plane_plane"
+        ],
+        "failure_code": null,
+        "l0_l4_scene_verified": true,
+        "oracle_match": true,
+        "plans": [
+          {
+            "answer": "cos²=3/7",
+            "answer_exact": {
+              "cos_sq": "3/7",
+              "dim": 0,
+              "text": "cos²=3/7",
+              "unit": ""
+            },
+            "auxiliary_count": 3,
+            "auxiliary_object_ids": [
+              "pl_dihedral",
+              "ray_p1",
+              "ray_p2"
+            ],
+            "l0_l4_passed": true,
+            "node_count": 10,
+            "operator_lineage": [
+              "op.intersect_planes(plane1=mat_SBC,plane2=day_ABC)",
+              "op.construct_dihedral_linear_angle(edge=ln_B_C,plane1=mat_SBC,plane2=day_ABC)"
+            ],
+            "presentation_step_count": 3,
+            "rank": 1,
+            "score_tuple": [
+              2.8,
+              3,
+              2,
+              3,
+              "('op.construct_dihedral_linear_angle',)::('ln(p=0,-1,0|d=1,1,0)', 'ln(p=0,-1,2|d=1,1,-2)', 'pl(1,-1,0,-1)')"
+            ]
+          },
+          {
+            "answer": "cos²=3/7",
+            "answer_exact": {
+              "cos_sq": "3/7",
+              "dim": 0,
+              "text": "cos²=3/7",
+              "unit": ""
+            },
+            "auxiliary_count": 4,
+            "auxiliary_object_ids": [
+              "M_S_edge",
+              "ln_S_M_edge",
+              "pl_orth_ASM_S_edge",
+              "seg_S_M_edge"
+            ],
+            "l0_l4_passed": true,
+            "node_count": 14,
+            "operator_lineage": [
+              "op.intersect_planes(plane1=mat_SBC,plane2=day_ABC)",
+              "op.project_point_to_line(line=ln_B_C,point=S)",
+              "op.plane_through_three_points(a=A,b=S,c=M_S_edge)",
+              "op.deduce_line_perp_plane_two_lines(line=ln_B_C,planar_line1=ln_S_M_edge,planar_line2=ln_S_A,plane=pl_orth_ASM_S_edge)"
+            ],
+            "presentation_step_count": 6,
+            "rank": 2,
+            "score_tuple": [
+              3.6,
+              4,
+              4,
+              6,
+              "('op.deduce_line_perp_plane_two_lines', 'op.intersect_planes', 'op.plane_through_three_points', 'op.project_point_to_line')::('ln(p=0,0,1|d=1,1,-2)', 'pl(1,-1,0,0)', 'pt(1/2,1/2,0)', 'seg(pt(0,0,1);pt(1/2,1/2,0))')"
+            ]
+          }
+        ],
+        "plans_count": 2,
+        "status": "GOAL_VERIFIED"
+      },
+      "case_id": "B03_dihedral_linear_angle_equilateral",
+      "expected_status": "GOAL_VERIFIED",
+      "group": "Group_B",
+      "independent_oracle": "cos²=3/7",
+      "passed": true
+    },
+    {
+      "baseline_a": {
+        "answer": "cos²=1/3",
+        "calls": [
+          "prism",
+          "regular_polygon",
+          "segment_length",
+          "ask_angle_plane_plane"
+        ],
+        "code": null,
+        "constructed_aux_witness_in_scene": false,
+        "elapsed_ms": 54.799,
+        "math_or_refusal_correct": true,
+        "peak_memory_kib": 155.05,
+        "planner_classification": "SOURCE_EXPLICIT_SEQUENCE",
+        "status": "SERVED"
+      },
+      "candidate_b": {
+        "answer": "cos²=1/3",
+        "best_operators": [
+          "op.plane_through_three_points",
+          "op.intersect_planes",
+          "op.construct_dihedral_linear_angle",
+          "goal.angle_plane_plane"
+        ],
+        "failure_code": null,
+        "l0_l4_scene_verified": true,
+        "oracle_match": true,
+        "plans": [
+          {
+            "answer": "cos²=1/3",
+            "answer_exact": {
+              "cos_sq": "1/3",
+              "dim": 0,
+              "text": "cos²=1/3",
+              "unit": ""
+            },
+            "auxiliary_count": 3,
+            "auxiliary_object_ids": [
+              "pl_dihedral",
+              "ray_p1",
+              "ray_p2"
+            ],
+            "l0_l4_passed": true,
+            "node_count": 14,
+            "operator_lineage": [
+              "op.plane_through_three_points(a=B,b=D,c=A')",
+              "op.intersect_planes(plane1=mp_target_1,plane2=day_ABCD)",
+              "op.construct_dihedral_linear_angle(edge=delta_inter,plane1=mp_target_1,plane2=day_ABCD)"
+            ],
+            "presentation_step_count": 5,
+            "rank": 1,
+            "score_tuple": [
+              3.6,
+              3,
+              3,
+              5,
+              "('op.construct_dihedral_linear_angle', 'op.intersect_planes', 'op.plane_through_three_points')::('ln(p=0,-1,0|d=1,1,0)', 'ln(p=0,-1,2|d=1,1,-2)', 'ln(p=0,1,0|d=1,-1,0)', 'pl(1,-1,0,-1)', 'pl(1,1,1,-1)')"
+            ]
+          },
+          {
+            "answer": "cos²=1/3",
+            "answer_exact": {
+              "cos_sq": "1/3",
+              "dim": 0,
+              "text": "cos²=1/3",
+              "unit": ""
+            },
+            "auxiliary_count": 4,
+            "auxiliary_object_ids": [
+              "M_A'_edge",
+              "ln_A'_M_edge",
+              "pl_orth_AA'M_A'_edge",
+              "seg_A'_M_edge"
+            ],
+            "l0_l4_passed": true,
+            "node_count": 17,
+            "operator_lineage": [
+              "op.plane_through_three_points(a=B,b=D,c=A')",
+              "op.intersect_planes(plane1=mp_target_1,plane2=day_ABCD)",
+              "op.project_point_to_line(line=delta_inter,point=A')",
+              "op.plane_through_three_points(a=A,b=A',c=M_A'_edge)",
+              "op.deduce_line_perp_plane_two_lines(line=delta_inter,planar_line1=ln_A'_M_edge,planar_line2=ln_A_A',plane=pl_orth_AA'M_A'_edge)"
+            ],
+            "presentation_step_count": 7,
+            "rank": 2,
+            "score_tuple": [
+              4.4,
+              4,
+              5,
+              7,
+              "('op.deduce_line_perp_plane_two_lines', 'op.intersect_planes', 'op.plane_through_three_points', 'op.plane_through_three_points', 'op.project_point_to_line')::('ln(p=0,0,1|d=1,1,-2)', 'ln(p=0,1,0|d=1,-1,0)', 'pl(1,-1,0,0)', 'pl(1,1,1,-1)', 'pt(1/2,1/2,0)', 'seg(pt(0,0,1);pt(1/2,1/2,0))')"
+            ]
+          }
+        ],
+        "plans_count": 2,
+        "status": "GOAL_VERIFIED"
+      },
+      "case_id": "B04_dihedral_linear_angle_cube",
+      "expected_status": "GOAL_VERIFIED",
+      "group": "Group_B",
+      "independent_oracle": "cos²=1/3",
+      "passed": true
+    },
+    {
+      "baseline_a": {
+        "answer": "cos²=1/4",
+        "calls": [
+          "prism",
+          "regular_polygon",
+          "segment_length",
+          "ask_angle_lines"
+        ],
+        "code": null,
+        "constructed_aux_witness_in_scene": false,
+        "elapsed_ms": 59.786,
+        "math_or_refusal_correct": true,
+        "peak_memory_kib": 159.59,
+        "planner_classification": "SOURCE_EXPLICIT_SEQUENCE",
+        "status": "SERVED"
+      },
+      "candidate_b": {
+        "answer": "60°",
+        "best_operators": [
+          "op.line_through_points",
+          "op.line_through_points",
+          "op.line_parallel_through_point",
+          "goal.angle_lines"
+        ],
+        "failure_code": null,
+        "l0_l4_scene_verified": true,
+        "oracle_match": true,
+        "plans": [
+          {
+            "answer": "60°",
+            "answer_exact": {
+              "cos_sq": "1/4",
+              "dim": 0,
+              "text": "60°",
+              "unit": ""
+            },
+            "auxiliary_count": 1,
+            "auxiliary_object_ids": [
+              "par_dt_target_1_B"
+            ],
+            "l0_l4_passed": true,
+            "node_count": 8,
+            "operator_lineage": [
+              "op.line_through_points(a=A,b=B')",
+              "op.line_through_points(a=B,b=C')",
+              "op.line_parallel_through_point(line=dt_target_1,point=B)"
+            ],
+            "presentation_step_count": 5,
+            "rank": 1,
+            "score_tuple": [
+              2.5,
+              1,
+              3,
+              5,
+              "('op.line_parallel_through_point', 'op.line_through_points', 'op.line_through_points')::('ln(p=0,0,-1|d=1,0,1)', 'ln(p=0,0,0|d=1,0,1)', 'ln(p=1,0,0|d=0,1,1)')"
+            ]
+          },
+          {
+            "answer": "60°",
+            "answer_exact": {
+              "cos_sq": "1/4",
+              "dim": 0,
+              "text": "60°",
+              "unit": ""
+            },
+            "auxiliary_count": 1,
+            "auxiliary_object_ids": [
+              "par_dt_target_2_A"
+            ],
+            "l0_l4_passed": true,
+            "node_count": 8,
+            "operator_lineage": [
+              "op.line_through_points(a=A,b=B')",
+              "op.line_through_points(a=B,b=C')",
+              "op.line_parallel_through_point(line=dt_target_2,point=A)"
+            ],
+            "presentation_step_count": 5,
+            "rank": 2,
+            "score_tuple": [
+              2.5,
+              1,
+              3,
+              5,
+              "('op.line_parallel_through_point', 'op.line_through_points', 'op.line_through_points')::('ln(p=0,0,0|d=0,1,1)', 'ln(p=0,0,0|d=1,0,1)', 'ln(p=1,0,0|d=0,1,1)')"
+            ]
+          }
+        ],
+        "plans_count": 2,
+        "status": "GOAL_VERIFIED"
+      },
+      "case_id": "B05_skew_angle_cube_parallel_transfer",
+      "expected_status": "GOAL_VERIFIED",
+      "group": "Group_B",
+      "independent_oracle": "60°",
+      "passed": true
+    },
+    {
+      "baseline_a": {
+        "answer": null,
+        "calls": [
+          "pyramid",
+          "regular_polygon",
+          "segment_length",
+          "perpendicular_line_plane",
+          "segment_length",
+          "segment_ratio",
+          "ask_distance_point_plane"
+        ],
+        "code": "UNDERDETERMINED_POINT",
+        "constructed_aux_witness_in_scene": false,
+        "elapsed_ms": 741.438,
+        "math_or_refusal_correct": false,
+        "peak_memory_kib": 429.1,
+        "planner_classification": "SOURCE_EXPLICIT_SEQUENCE",
+        "status": "REFUSED"
+      },
+      "candidate_b": {
+        "answer": "a√10/10",
+        "best_operators": [
+          "op.divide_segment_ratio",
+          "op.project_point_to_plane",
+          "goal.distance_point_plane"
+        ],
+        "failure_code": null,
+        "l0_l4_scene_verified": true,
+        "oracle_match": true,
+        "plans": [
+          {
+            "answer": "a√10/10",
+            "answer_exact": {
+              "coef": "√10/10",
+              "dim": 1,
+              "text": "a√10/10",
+              "unit": "a"
+            },
+            "auxiliary_count": 3,
+            "auxiliary_object_ids": [
+              "H_K",
+              "ln_K_H",
+              "seg_K_H"
+            ],
+            "l0_l4_passed": true,
+            "node_count": 10,
+            "operator_lineage": [
+              "op.divide_segment_ratio(a=S,b=A)",
+              "op.project_point_to_plane(plane=mat_SBC,point=K)"
+            ],
+            "presentation_step_count": 4,
+            "rank": 1,
+            "score_tuple": [
+              2.8,
+              3,
+              2,
+              4,
+              "('op.divide_segment_ratio', 'op.project_point_to_plane')::('ln(p=0,0,2/3|d=1,0,1/9)', 'pt(0,0,2/3)', 'pt(3/10,0,7/10)', 'seg(pt(0,0,2/3);pt(3/10,0,7/10))')"
+            ]
+          },
+          {
+            "answer": "a√10/10",
+            "answer_exact": {
+              "coef": "√10/10",
+              "dim": 1,
+              "text": "a√10/10",
+              "unit": "a"
+            },
+            "auxiliary_count": 5,
+            "auxiliary_object_ids": [
+              "K_alt_K",
+              "ln_K_K",
+              "ln_K_M",
+              "seg_K_K",
+              "seg_K_M"
+            ],
+            "l0_l4_passed": true,
+            "node_count": 17,
+            "operator_lineage": [
+              "op.divide_segment_ratio(a=S,b=A)",
+              "op.project_point_to_line(line=ln_B_C,point=K)",
+              "op.deduce_line_perp_plane_two_lines(line=ln_B_C,planar_line1=ln_K_M,planar_line2=ln_S_A,plane=mat_SAB)",
+              "op.project_point_to_line(line=ln_S_B,point=K)",
+              "op.deduce_line_perp_plane_two_lines(anchor_on_plane=K_alt_K,line=ln_K_K,planar_line1=ln_B_C,planar_line2=ln_S_B,plane=mat_SBC)"
+            ],
+            "presentation_step_count": 7,
+            "rank": 2,
+            "score_tuple": [
+              4.4,
+              5,
+              5,
+              7,
+              "('op.deduce_line_perp_plane_two_lines', 'op.deduce_line_perp_plane_two_lines', 'op.divide_segment_ratio', 'op.project_point_to_line', 'op.project_point_to_line')::('ln(p=0,0,2/3|d=1,0,-2/3)', 'ln(p=0,0,2/3|d=1,0,1/9)', 'pt(0,0,2/3)', 'pt(3/10,0,7/10)', 'seg(pt(0,0,2/3);pt(1,0,0))', 'seg(pt(0,0,2/3);pt(3/10,0,7/10))')"
+            ]
+          },
+          {
+            "answer": "a√10/10",
+            "answer_exact": {
+              "coef": "√10/10",
+              "dim": 1,
+              "text": "a√10/10",
+              "unit": "a"
+            },
+            "auxiliary_count": 5,
+            "auxiliary_object_ids": [
+              "K_alt_K",
+              "ln_K_K",
+              "ln_K_M",
+              "seg_K_K",
+              "seg_K_M"
+            ],
+            "l0_l4_passed": true,
+            "node_count": 17,
+            "operator_lineage": [
+              "op.divide_segment_ratio(a=S,b=A)",
+              "op.project_point_to_line(line=ln_B_C,point=K)",
+              "op.deduce_line_perp_plane_two_lines(line=ln_B_C,planar_line1=ln_K_M,planar_line2=ln_S_A,plane=mat_SAB)",
+              "op.project_point_to_line(line=ln_S_B,point=K)",
+              "op.project_point_to_line(line=ln_S_C,point=K)",
+              "op.deduce_line_perp_plane_two_lines(anchor_on_plane=K_alt_K,line=ln_K_K,planar_line1=ln_B_C,planar_line2=ln_S_B,plane=mat_SBC)"
+            ],
+            "presentation_step_count": 7,
+            "rank": 3,
+            "score_tuple": [
+              5.7,
+              5,
+              6,
+              7,
+              "('op.deduce_line_perp_plane_two_lines', 'op.deduce_line_perp_plane_two_lines', 'op.divide_segment_ratio', 'op.project_point_to_line', 'op.project_point_to_line')::('ln(p=0,0,2/3|d=1,0,1/9)', 'ln(p=0,0,2/3|d=1,1,2/9)', 'pt(0,0,2/3)', 'pt(3/10,0,7/10)', 'seg(pt(0,0,2/3);pt(3/10,0,7/10))', 'seg(pt(0,0,2/3);pt(3/11,3/11,8/11))')"
+            ]
+          }
+        ],
+        "plans_count": 3,
+        "status": "GOAL_VERIFIED"
+      },
+      "case_id": "B06_divide_segment_plus_point_plane_distance",
+      "expected_status": "GOAL_VERIFIED",
+      "group": "Group_B",
+      "independent_oracle": "a√10/10",
+      "passed": true
+    },
+    {
+      "baseline_a": {
+        "answer": null,
+        "calls": [
+          "pyramid",
+          "right_angle",
+          "equal_length",
+          "segment_length",
+          "perpendicular_line_plane",
+          "segment_length",
+          "point_reflection",
+          "centroid",
+          "ask_length"
+        ],
+        "code": "SOURCE_OBJECT_MISMATCH",
+        "constructed_aux_witness_in_scene": false,
+        "elapsed_ms": 11.838,
+        "math_or_refusal_correct": false,
+        "peak_memory_kib": 53.41,
+        "planner_classification": "SOURCE_EXPLICIT_SEQUENCE",
+        "status": "REFUSED"
+      },
+      "candidate_b": {
+        "answer": "a√17/3",
+        "best_operators": [
+          "op.point_reflection",
+          "op.triangle_centroid",
+          "op.connect_segment",
+          "goal.segment_length"
+        ],
+        "failure_code": null,
+        "l0_l4_scene_verified": true,
+        "oracle_match": true,
+        "plans": [
+          {
+            "answer": "a√17/3",
+            "answer_exact": {
+              "coef": "√17/3",
+              "dim": 1,
+              "text": "a√17/3",
+              "unit": "a"
+            },
+            "auxiliary_count": 1,
+            "auxiliary_object_ids": [
+              "seg_A_G"
+            ],
+            "l0_l4_passed": true,
+            "node_count": 8,
+            "operator_lineage": [
+              "op.point_reflection(center=C,point=A)",
+              "op.triangle_centroid(a=S,b=B,c=P)",
+              "op.connect_segment(a=A,b=G)"
+            ],
+            "presentation_step_count": 5,
+            "rank": 1,
+            "score_tuple": [
+              2.7,
+              1,
+              3,
+              5,
+              "('op.connect_segment', 'op.point_reflection', 'op.triangle_centroid')::('pt(0,2,0)', 'pt(1/3,2/3,1/3)', 'seg(pt(0,0,0);pt(1/3,2/3,1/3))')"
+            ]
+          }
+        ],
+        "plans_count": 1,
+        "status": "GOAL_VERIFIED"
+      },
+      "case_id": "B07_reflection_plus_centroid_length",
+      "expected_status": "GOAL_VERIFIED",
+      "group": "Group_B",
+      "independent_oracle": "a√17/3",
+      "passed": true
+    },
+    {
+      "baseline_a": {
+        "answer": "4a",
+        "calls": [
+          "prism",
+          "regular_polygon",
+          "segment_length",
+          "segment_length",
+          "midpoint",
+          "midpoint",
+          "intersect_line_plane",
+          "ask_length"
+        ],
+        "code": null,
+        "constructed_aux_witness_in_scene": false,
+        "elapsed_ms": 106.029,
+        "math_or_refusal_correct": true,
+        "peak_memory_kib": 163.37,
+        "planner_classification": "SOURCE_EXPLICIT_SEQUENCE",
+        "status": "SERVED"
+      },
+      "candidate_b": {
+        "answer": "4a",
+        "best_operators": [
+          "op.midpoint_segment",
+          "op.midpoint_segment",
+          "op.plane_through_three_points",
+          "op.intersect_line_plane",
+          "op.connect_segment",
+          "goal.segment_length"
+        ],
+        "failure_code": null,
+        "l0_l4_scene_verified": true,
+        "oracle_match": true,
+        "plans": [
+          {
+            "answer": "4a",
+            "answer_exact": {
+              "coef": "4",
+              "dim": 1,
+              "text": "4a",
+              "unit": "a"
+            },
+            "auxiliary_count": 1,
+            "auxiliary_object_ids": [
+              "seg_B_I"
+            ],
+            "l0_l4_passed": true,
+            "node_count": 14,
+            "operator_lineage": [
+              "op.midpoint_segment(a=A',b=B')",
+              "op.midpoint_segment(a=B',b=C')",
+              "op.plane_through_three_points(a=A,b=M,c=N)",
+              "op.intersect_line_plane(line=ln_B_B',plane=pl_AMN)",
+              "op.connect_segment(a=B,b=I)"
+            ],
+            "presentation_step_count": 7,
+            "rank": 1,
+            "score_tuple": [
+              4.4,
+              1,
+              5,
+              7,
+              "('op.connect_segment', 'op.intersect_line_plane', 'op.midpoint_segment', 'op.midpoint_segment', 'op.plane_through_three_points')::('pl(1,0,-1/2,0)', 'pt(1,0,2)', 'pt(1/2,0,1)', 'pt(1/2,1/2,1)', 'seg(pt(1,0,0);pt(1,0,2))')"
+            ]
+          }
+        ],
+        "plans_count": 1,
+        "status": "GOAL_VERIFIED"
+      },
+      "case_id": "B08_intersection_point_derived_plane_prism",
+      "expected_status": "GOAL_VERIFIED",
+      "group": "Group_B",
+      "independent_oracle": "4a",
+      "passed": true
+    },
+    {
+      "baseline_a": {
+        "answer": null,
+        "calls": [
+          "prism",
+          "regular_polygon",
+          "segment_length",
+          "midpoint",
+          "midpoint",
+          "midpoint",
+          "midpoint",
+          "centroid",
+          "midpoint",
+          "midpoint",
+          "centroid",
+          "midpoint",
+          "midpoint",
+          "midpoint",
+          "centroid",
+          "midpoint",
+          "midpoint",
+          "midpoint",
+          "midpoint",
+          "centroid",
+          "midpoint",
+          "midpoint",
+          "ask_length"
+        ],
+        "code": "IR_MEMORY_BUDGET_EXCEEDED",
+        "constructed_aux_witness_in_scene": false,
+        "elapsed_ms": 296.881,
+        "math_or_refusal_correct": false,
+        "peak_memory_kib": 179.59,
+        "planner_classification": "SOURCE_EXPLICIT_SEQUENCE",
+        "status": "REFUSED"
+      },
+      "candidate_b": {
+        "answer": "a√3/2",
+        "best_operators": [
+          "op.midpoint_segment",
+          "op.midpoint_segment",
+          "op.midpoint_segment",
+          "op.midpoint_segment",
+          "op.midpoint_segment",
+          "op.midpoint_segment",
+          "op.midpoint_segment",
+          "op.midpoint_segment",
+          "op.midpoint_segment",
+          "op.midpoint_segment",
+          "op.midpoint_segment",
+          "op.midpoint_segment",
+          "op.triangle_centroid",
+          "op.triangle_centroid",
+          "op.triangle_centroid",
+          "op.triangle_centroid",
+          "op.midpoint_segment",
+          "op.midpoint_segment",
+          "op.midpoint_segment",
+          "op.connect_segment",
+          "goal.segment_length"
+        ],
+        "failure_code": null,
+        "l0_l4_scene_verified": true,
+        "oracle_match": true,
+        "plans": [
+          {
+            "answer": "a√3/2",
+            "answer_exact": {
+              "coef": "√3/2",
+              "dim": 1,
+              "text": "a√3/2",
+              "unit": "a"
+            },
+            "auxiliary_count": 1,
+            "auxiliary_object_ids": [
+              "seg_A_M19"
+            ],
+            "l0_l4_passed": true,
+            "node_count": 29,
+            "operator_lineage": [
+              "op.midpoint_segment(a=A,b=B)",
+              "op.midpoint_segment(a=B,b=C)",
+              "op.midpoint_segment(a=C,b=D)",
+              "op.midpoint_segment(a=D,b=A)",
+              "op.midpoint_segment(a=A',b=B')",
+              "op.midpoint_segment(a=B',b=C')",
+              "op.midpoint_segment(a=C',b=D')",
+              "op.midpoint_segment(a=D',b=A')",
+              "op.midpoint_segment(a=A,b=A')",
+              "op.midpoint_segment(a=B,b=B')",
+              "op.midpoint_segment(a=C,b=C')",
+              "op.midpoint_segment(a=D,b=D')",
+              "op.triangle_centroid(a=M1,b=M2,c=M3)",
+              "op.triangle_centroid(a=M4,b=M5,c=M6)",
+              "op.triangle_centroid(a=M7,b=M8,c=M9)",
+              "op.triangle_centroid(a=M10,b=M11,c=M12)",
+              "op.midpoint_segment(a=M13,b=M14)",
+              "op.midpoint_segment(a=M15,b=M16)",
+              "op.midpoint_segment(a=M17,b=M18)",
+              "op.connect_segment(a=A,b=M19)"
+            ],
+            "presentation_step_count": 22,
+            "rank": 1,
+            "score_tuple": [
+              19.5,
+              1,
+              20,
+              22,
+              "('op.connect_segment', 'op.midpoint_segment', 'op.midpoint_segment', 'op.midpoint_segment', 'op.midpoint_segment', 'op.midpoint_segment', 'op.midpoint_segment', 'op.midpoint_segment', 'op.midpoint_segment', 'op.midpoint_segment', 'op.midpoint_segment', 'op.midpoint_segment', 'op.midpoint_segment', 'op.midpoint_segment', 'op.midpoint_segment', 'op.midpoint_segment', 'op.triangle_centroid', 'op.triangle_centroid', 'op.triangle_centroid', 'op.triangle_centroid')::('pt(0,0,1/2)', 'pt(0,1,1/2)', 'pt(0,1/2,0)', 'pt(0,1/2,1)', 'pt(1,0,1/2)', 'pt(1,1,1/2)', 'pt(1,1/2,0)', 'pt(1,1/2,1)', 'pt(1/2,0,0)', 'pt(1/2,0,1)', 'pt(1/2,1,0)', 'pt(1/2,1,1)', 'pt(1/2,1/2,1/2)', 'pt(1/2,1/3,2/3)', 'pt(1/6,1/2,5/6)', 'pt(2/3,1/2,0)', 'pt(2/3,2/3,1/2)', 'pt(5/12,7/12,2/3)', 'pt(7/12,5/12,1/3)', 'seg(pt(0,0,0);pt(1/2,1/2,1/2))')"
+            ]
+          }
+        ],
+        "plans_count": 1,
+        "status": "GOAL_VERIFIED"
+      },
+      "case_id": "B09_deep_19step_chain_exceeds_32_ir_slots",
+      "expected_status": "GOAL_VERIFIED",
+      "group": "Group_B",
+      "independent_oracle": "a√3/2",
+      "passed": true
+    },
+    {
+      "baseline_a": {
+        "answer": "a²√5/8",
+        "calls": [
+          "pyramid",
+          "regular_polygon",
+          "segment_length",
+          "perpendicular_line_plane",
+          "segment_length",
+          "midpoint",
+          "midpoint",
+          "midpoint",
+          "ask_area"
+        ],
+        "code": null,
+        "constructed_aux_witness_in_scene": false,
+        "elapsed_ms": 80.01,
+        "math_or_refusal_correct": true,
+        "peak_memory_kib": 158.15,
+        "planner_classification": "SOURCE_EXPLICIT_SEQUENCE",
+        "status": "SERVED"
+      },
+      "candidate_b": {
+        "answer": "a²√5/8",
+        "best_operators": [
+          "op.divide_segment_ratio",
+          "op.divide_segment_ratio",
+          "op.connect_segment",
+          "op.connect_segment",
+          "op.connect_segment",
+          "goal.polygon_area"
+        ],
+        "failure_code": null,
+        "l0_l4_scene_verified": true,
+        "oracle_match": true,
+        "plans": [
+          {
+            "answer": "a²√5/8",
+            "answer_exact": {
+              "coef": "√5/8",
+              "dim": 2,
+              "text": "a²√5/8",
+              "unit": "a"
+            },
+            "auxiliary_count": 3,
+            "auxiliary_object_ids": [
+              "seg_A_M",
+              "seg_M_N",
+              "seg_N_A"
+            ],
+            "l0_l4_passed": true,
+            "node_count": 10,
+            "operator_lineage": [
+              "op.divide_segment_ratio(a=S,b=B)",
+              "op.divide_segment_ratio(a=S,b=C)",
+              "op.divide_segment_ratio(a=S,b=D)",
+              "op.connect_segment(a=A,b=M)",
+              "op.connect_segment(a=M,b=N)",
+              "op.connect_segment(a=N,b=A)"
+            ],
+            "presentation_step_count": 7,
+            "rank": 1,
+            "score_tuple": [
+              4.5,
+              3,
+              6,
+              7,
+              "('op.connect_segment', 'op.connect_segment', 'op.connect_segment', 'op.divide_segment_ratio', 'op.divide_segment_ratio')::('pt(1/2,0,1/2)', 'pt(1/2,1/2,1/2)', 'seg(pt(0,0,0);pt(1/2,0,1/2))', 'seg(pt(0,0,0);pt(1/2,1/2,1/2))', 'seg(pt(1/2,0,1/2);pt(1/2,1/2,1/2))')"
+            ]
+          }
+        ],
+        "plans_count": 1,
+        "status": "GOAL_VERIFIED"
+      },
+      "case_id": "B10_derived_polygon_area_after_ratio",
+      "expected_status": "GOAL_VERIFIED",
+      "group": "Group_B",
+      "independent_oracle": "a²√5/8",
+      "passed": true
+    },
+    {
+      "baseline_a": {
+        "answer": "a√21/7",
+        "calls": [
+          "pyramid",
+          "regular_polygon",
+          "segment_length",
+          "perpendicular_line_plane",
+          "segment_length",
+          "ask_distance_point_plane"
+        ],
+        "code": null,
+        "constructed_aux_witness_in_scene": false,
+        "elapsed_ms": 53.95,
+        "math_or_refusal_correct": true,
+        "peak_memory_kib": 104.58,
+        "planner_classification": "SOURCE_EXPLICIT_SEQUENCE",
+        "status": "SERVED"
+      },
+      "candidate_b": {
+        "answer": "a√21/7",
+        "best_operators": [
+          "op.project_point_to_plane",
+          "goal.distance_point_plane"
+        ],
+        "failure_code": null,
+        "l0_l4_scene_verified": true,
+        "oracle_match": true,
+        "plans": [
+          {
+            "answer": "a√21/7",
+            "answer_exact": {
+              "coef": "√21/7",
+              "dim": 1,
+              "text": "a√21/7",
+              "unit": "a"
+            },
+            "auxiliary_count": 3,
+            "auxiliary_object_ids": [
+              "H_A",
+              "ln_A_H",
+              "seg_A_H"
+            ],
+            "l0_l4_passed": true,
+            "node_count": 8,
+            "operator_lineage": [
+              "op.project_point_to_plane(plane=mat_SBC,point=A)"
+            ],
+            "presentation_step_count": 3,
+            "rank": 1,
+            "score_tuple": [
+              1.8,
+              3,
+              1,
+              3,
+              "('op.project_point_to_plane',)::('ln(p=0,0,0|d=1,1,3/2)', 'pt(2/7,2/7,3/7)', 'seg(pt(0,0,0);pt(2/7,2/7,3/7))')"
+            ]
+          },
+          {
+            "answer": "a√21/7",
+            "answer_exact": {
+              "coef": "√21/7",
+              "dim": 1,
+              "text": "a√21/7",
+              "unit": "a"
+            },
+            "auxiliary_count": 8,
+            "auxiliary_object_ids": [
+              "K_alt_A",
+              "M_A",
+              "ln_A_K",
+              "ln_A_M",
+              "ln_S_M_A",
+              "pl_SAM_A",
+              "seg_A_K",
+              "seg_A_M"
+            ],
+            "l0_l4_passed": true,
+            "node_count": 15,
+            "operator_lineage": [
+              "op.project_point_to_line(line=ln_B_C,point=A)",
+              "op.line_through_points(a=S,b=M_A)",
+              "op.plane_through_three_points(a=S,b=A,c=M_A)",
+              "op.deduce_line_perp_plane_two_lines(line=ln_B_C,planar_line1=ln_A_M,planar_line2=ln_S_A,plane=pl_SAM_A)",
+              "op.project_point_to_line(line=ln_S_M_A,point=A)",
+              "op.deduce_line_perp_plane_two_lines(anchor_on_plane=K_alt_A,line=ln_A_K,planar_line1=ln_B_C,planar_line2=ln_S_M_A,plane=mat_SBC)"
+            ],
+            "presentation_step_count": 8,
+            "rank": 2,
+            "score_tuple": [
+              4.8,
+              8,
+              6,
+              8,
+              "('op.deduce_line_perp_plane_two_lines', 'op.deduce_line_perp_plane_two_lines', 'op.line_through_points', 'op.plane_through_three_points', 'op.project_point_to_line', 'op.project_point_to_line')::('ln(p=0,0,0|d=1,1,0)', 'ln(p=0,0,0|d=1,1,3/2)', 'ln(p=0,0,1|d=1,1,-2)', 'pl(1,-1,0,0)', 'pt(1/2,1/2,0)', 'pt(2/7,2/7,3/7)', 'seg(pt(0,0,0);pt(1/2,1/2,0))', 'seg(pt(0,0,0);pt(2/7,2/7,3/7))')"
+            ]
+          }
+        ],
+        "plans_count": 2,
+        "status": "GOAL_VERIFIED"
+      },
+      "case_id": "C01_aux_foot_d_A_SBC_equilateral",
+      "expected_status": "GOAL_VERIFIED",
+      "group": "Group_C",
+      "independent_oracle": "a√21/7",
+      "passed": true
+    },
+    {
+      "baseline_a": {
+        "answer": "a√3/3",
+        "calls": [
+          "pyramid",
+          "regular_polygon",
+          "segment_length",
+          "perpendicular_line_plane",
+          "segment_length",
+          "ask_distance_point_plane"
+        ],
+        "code": null,
+        "constructed_aux_witness_in_scene": false,
+        "elapsed_ms": 58.144,
+        "math_or_refusal_correct": true,
+        "peak_memory_kib": 105.53,
+        "planner_classification": "SOURCE_EXPLICIT_SEQUENCE",
+        "status": "SERVED"
+      },
+      "candidate_b": {
+        "answer": "a√3/3",
+        "best_operators": [
+          "op.plane_through_three_points",
+          "op.project_point_to_plane",
+          "goal.distance_point_plane"
+        ],
+        "failure_code": null,
+        "l0_l4_scene_verified": true,
+        "oracle_match": true,
+        "plans": [
+          {
+            "answer": "a√3/3",
+            "answer_exact": {
+              "coef": "√3/3",
+              "dim": 1,
+              "text": "a√3/3",
+              "unit": "a"
+            },
+            "auxiliary_count": 3,
+            "auxiliary_object_ids": [
+              "H_A",
+              "ln_A_H",
+              "seg_A_H"
+            ],
+            "l0_l4_passed": true,
+            "node_count": 7,
+            "operator_lineage": [
+              "op.plane_through_three_points(a=S,b=B,c=D)",
+              "op.project_point_to_plane(plane=mp_target,point=A)"
+            ],
+            "presentation_step_count": 4,
+            "rank": 1,
+            "score_tuple": [
+              2.6,
+              3,
+              2,
+              4,
+              "('op.plane_through_three_points', 'op.project_point_to_plane')::('ln(p=0,0,0|d=1,1,1)', 'pl(1,1,1,-1)', 'pt(1/3,1/3,1/3)', 'seg(pt(0,0,0);pt(1/3,1/3,1/3))')"
+            ]
+          }
+        ],
+        "plans_count": 1,
+        "status": "GOAL_VERIFIED"
+      },
+      "case_id": "C02_aux_foot_d_A_SBD_square",
+      "expected_status": "GOAL_VERIFIED",
+      "group": "Group_C",
+      "independent_oracle": "a√3/3",
+      "passed": true
+    },
+    {
+      "baseline_a": {
+        "answer": "a√2/2",
+        "calls": [
+          "pyramid",
+          "regular_polygon",
+          "segment_length",
+          "perpendicular_line_plane",
+          "segment_length",
+          "ask_distance_line_plane"
+        ],
+        "code": null,
+        "constructed_aux_witness_in_scene": false,
+        "elapsed_ms": 63.904,
+        "math_or_refusal_correct": true,
+        "peak_memory_kib": 126.26,
+        "planner_classification": "SOURCE_EXPLICIT_SEQUENCE",
+        "status": "SERVED"
+      },
+      "candidate_b": {
+        "answer": "a√2/2",
+        "best_operators": [
+          "op.deduce_parallel_line_plane_transfer",
+          "op.project_point_to_plane",
+          "goal.distance_line_plane"
+        ],
+        "failure_code": null,
+        "l0_l4_scene_verified": true,
+        "oracle_match": true,
+        "plans": [
+          {
+            "answer": "a√2/2",
+            "answer_exact": {
+              "coef": "√2/2",
+              "dim": 1,
+              "text": "a√2/2",
+              "unit": "a"
+            },
+            "auxiliary_count": 3,
+            "auxiliary_object_ids": [
+              "H_A",
+              "ln_A_H",
+              "seg_A_H"
+            ],
+            "l0_l4_passed": true,
+            "node_count": 11,
+            "operator_lineage": [
+              "op.deduce_parallel_line_plane_transfer(line=ln_A_B,plane=mat_SCD,sample_point=A)",
+              "op.project_point_to_plane(plane=mat_SCD,point=A)"
+            ],
+            "presentation_step_count": 4,
+            "rank": 1,
+            "score_tuple": [
+              2.3,
+              3,
+              2,
+              4,
+              "('op.deduce_parallel_line_plane_transfer', 'op.project_point_to_plane')::('ln(p=0,0,0|d=0,1,1)', 'pt(0,1/2,1/2)', 'seg(pt(0,0,0);pt(0,1/2,1/2))')"
+            ]
+          },
+          {
+            "answer": "a√2/2",
+            "answer_exact": {
+              "coef": "√2/2",
+              "dim": 1,
+              "text": "a√2/2",
+              "unit": "a"
+            },
+            "auxiliary_count": 3,
+            "auxiliary_object_ids": [
+              "H_B",
+              "ln_B_H",
+              "seg_B_H"
+            ],
+            "l0_l4_passed": true,
+            "node_count": 11,
+            "operator_lineage": [
+              "op.deduce_parallel_line_plane_transfer(line=ln_A_B,plane=mat_SCD,sample_point=B)",
+              "op.project_point_to_plane(plane=mat_SCD,point=B)"
+            ],
+            "presentation_step_count": 4,
+            "rank": 2,
+            "score_tuple": [
+              2.3,
+              3,
+              2,
+              4,
+              "('op.deduce_parallel_line_plane_transfer', 'op.project_point_to_plane')::('ln(p=1,0,0|d=0,1,1)', 'pt(1,1/2,1/2)', 'seg(pt(1,0,0);pt(1,1/2,1/2))')"
+            ]
+          },
+          {
+            "answer": "a√2/2",
+            "answer_exact": {
+              "coef": "√2/2",
+              "dim": 1,
+              "text": "a√2/2",
+              "unit": "a"
+            },
+            "auxiliary_count": 3,
+            "auxiliary_object_ids": [
+              "K_alt_A",
+              "ln_A_K",
+              "seg_A_K"
+            ],
+            "l0_l4_passed": true,
+            "node_count": 18,
+            "operator_lineage": [
+              "op.deduce_parallel_line_plane_transfer(line=ln_A_B,plane=mat_SCD,sample_point=A)",
+              "op.project_point_to_line(line=ln_C_D,point=A)",
+              "op.deduce_line_perp_plane_two_lines(line=ln_C_D,planar_line1=ln_D_A,planar_line2=ln_S_A,plane=mat_SDA)",
+              "op.project_point_to_line(line=ln_S_D,point=A)",
+              "op.deduce_line_perp_plane_two_lines(anchor_on_plane=K_alt_A,line=ln_A_K,planar_line1=ln_C_D,planar_line2=ln_S_D,plane=mat_SCD)"
+            ],
+            "presentation_step_count": 6,
+            "rank": 3,
+            "score_tuple": [
+              3.9,
+              3,
+              5,
+              6,
+              "('op.deduce_line_perp_plane_two_lines', 'op.deduce_line_perp_plane_two_lines', 'op.deduce_parallel_line_plane_transfer', 'op.project_point_to_line')::('ln(p=0,0,0|d=0,1,1)', 'pt(0,1/2,1/2)', 'seg(pt(0,0,0);pt(0,1/2,1/2))')"
+            ]
+          }
+        ],
+        "plans_count": 3,
+        "status": "GOAL_VERIFIED"
+      },
+      "case_id": "C03_aux_parallel_line_plane_transfer",
+      "expected_status": "GOAL_VERIFIED",
+      "group": "Group_C",
+      "independent_oracle": "a√2/2",
+      "passed": true
+    },
+    {
+      "baseline_a": {
+        "answer": "a√3/3",
+        "calls": [
+          "prism",
+          "regular_polygon",
+          "segment_length",
+          "ask_distance_lines"
+        ],
+        "code": null,
+        "constructed_aux_witness_in_scene": false,
+        "elapsed_ms": 67.283,
+        "math_or_refusal_correct": true,
+        "peak_memory_kib": 135.52,
+        "planner_classification": "SOURCE_EXPLICIT_SEQUENCE",
+        "status": "SERVED"
+      },
+      "candidate_b": {
+        "answer": "a√3/3",
+        "best_operators": [
+          "op.line_through_points",
+          "op.line_through_points",
+          "op.common_perpendicular_skew_lines",
+          "goal.distance_skew_lines"
+        ],
+        "failure_code": null,
+        "l0_l4_scene_verified": true,
+        "oracle_match": true,
+        "plans": [
+          {
+            "answer": "a√3/3",
+            "answer_exact": {
+              "coef": "√3/3",
+              "dim": 1,
+              "text": "a√3/3",
+              "unit": "a"
+            },
+            "auxiliary_count": 4,
+            "auxiliary_object_ids": [
+              "P1_perp",
+              "P2_perp",
+              "ln_common_perp",
+              "seg_common_perp"
+            ],
+            "l0_l4_passed": true,
+            "node_count": 8,
+            "operator_lineage": [
+              "op.line_through_points(a=A,b=B')",
+              "op.line_through_points(a=B,b=C')",
+              "op.common_perpendicular_skew_lines(line1=dt_target_1,line2=dt_target_2)"
+            ],
+            "presentation_step_count": 5,
+            "rank": 1,
+            "score_tuple": [
+              3.2,
+              4,
+              3,
+              5,
+              "('op.common_perpendicular_skew_lines', 'op.line_through_points', 'op.line_through_points')::('ln(p=0,-2/3,4/3|d=1,1,-1)', 'ln(p=0,0,0|d=1,0,1)', 'ln(p=1,0,0|d=0,1,1)', 'pt(1,1/3,1/3)', 'pt(2/3,0,2/3)', 'seg(pt(1,1/3,1/3);pt(2/3,0,2/3))')"
+            ]
+          },
+          {
+            "answer": "a√3/3",
+            "answer_exact": {
+              "coef": "√3/3",
+              "dim": 1,
+              "text": "a√3/3",
+              "unit": "a"
+            },
+            "auxiliary_count": 4,
+            "auxiliary_object_ids": [
+              "H_B",
+              "ln_B_H",
+              "pl_par_skew_2",
+              "seg_B_H"
+            ],
+            "l0_l4_passed": true,
+            "node_count": 9,
+            "operator_lineage": [
+              "op.line_through_points(a=A,b=B')",
+              "op.line_through_points(a=B,b=C')",
+              "op.plane_through_line_parallel_line(host_line=dt_target_1,parallel_to_line=dt_target_2)",
+              "op.project_point_to_plane(plane=pl_par_skew_2,point=B)"
+            ],
+            "presentation_step_count": 6,
+            "rank": 2,
+            "score_tuple": [
+              4.6,
+              4,
+              4,
+              6,
+              "('op.line_through_points', 'op.line_through_points', 'op.plane_through_line_parallel_line', 'op.project_point_to_plane')::('ln(p=0,-1,1|d=1,1,-1)', 'ln(p=0,0,0|d=1,0,1)', 'ln(p=1,0,0|d=0,1,1)', 'pl(1,1,-1,0)', 'pt(2/3,-1/3,1/3)', 'seg(pt(1,0,0);pt(2/3,-1/3,1/3))')"
+            ]
+          },
+          {
+            "answer": "a√3/3",
+            "answer_exact": {
+              "coef": "√3/3",
+              "dim": 1,
+              "text": "a√3/3",
+              "unit": "a"
+            },
+            "auxiliary_count": 4,
+            "auxiliary_object_ids": [
+              "H_A",
+              "ln_A_H",
+              "pl_par_skew_1",
+              "seg_A_H"
+            ],
+            "l0_l4_passed": true,
+            "node_count": 9,
+            "operator_lineage": [
+              "op.line_through_points(a=A,b=B')",
+              "op.line_through_points(a=B,b=C')",
+              "op.plane_through_line_parallel_line(host_line=dt_target_2,parallel_to_line=dt_target_1)",
+              "op.project_point_to_plane(plane=pl_par_skew_1,point=A)"
+            ],
+            "presentation_step_count": 6,
+            "rank": 3,
+            "score_tuple": [
+              4.6,
+              4,
+              4,
+              6,
+              "('op.line_through_points', 'op.line_through_points', 'op.plane_through_line_parallel_line', 'op.project_point_to_plane')::('ln(p=0,0,0|d=1,0,1)', 'ln(p=0,0,0|d=1,1,-1)', 'ln(p=1,0,0|d=0,1,1)', 'pl(1,1,-1,-1)', 'pt(1/3,1/3,-1/3)', 'seg(pt(0,0,0);pt(1/3,1/3,-1/3))')"
+            ]
+          }
+        ],
+        "plans_count": 3,
+        "status": "GOAL_VERIFIED"
+      },
+      "case_id": "C04_aux_skew_lines_cube_ABp_BCp",
+      "expected_status": "GOAL_VERIFIED",
+      "group": "Group_C",
+      "independent_oracle": "a√3/3",
+      "passed": true
+    },
+    {
+      "baseline_a": {
+        "answer": "a√2/2",
+        "calls": [
+          "pyramid",
+          "regular_polygon",
+          "segment_length",
+          "perpendicular_line_plane",
+          "segment_length",
+          "ask_distance_lines"
+        ],
+        "code": null,
+        "constructed_aux_witness_in_scene": false,
+        "elapsed_ms": 80.998,
+        "math_or_refusal_correct": true,
+        "peak_memory_kib": 126.87,
+        "planner_classification": "SOURCE_EXPLICIT_SEQUENCE",
+        "status": "SERVED"
+      },
+      "candidate_b": {
+        "answer": "a√2/2",
+        "best_operators": [
+          "op.line_through_points",
+          "op.common_perpendicular_skew_lines",
+          "goal.distance_skew_lines"
+        ],
+        "failure_code": null,
+        "l0_l4_scene_verified": true,
+        "oracle_match": true,
+        "plans": [
+          {
+            "answer": "a√2/2",
+            "answer_exact": {
+              "coef": "√2/2",
+              "dim": 1,
+              "text": "a√2/2",
+              "unit": "a"
+            },
+            "auxiliary_count": 3,
+            "auxiliary_object_ids": [
+              "P2_perp",
+              "ln_common_perp",
+              "seg_common_perp"
+            ],
+            "l0_l4_passed": true,
+            "node_count": 10,
+            "operator_lineage": [
+              "op.line_through_points(a=B,b=D)",
+              "op.common_perpendicular_skew_lines(line1=ln_S_A,line2=dt_target_2)"
+            ],
+            "presentation_step_count": 4,
+            "rank": 1,
+            "score_tuple": [
+              2.6,
+              3,
+              2,
+              4,
+              "('op.common_perpendicular_skew_lines', 'op.line_through_points')::('ln(p=0,0,0|d=1,1,0)', 'ln(p=0,1,0|d=1,-1,0)', 'pt(1/2,1/2,0)', 'seg(pt(0,0,0);pt(1/2,1/2,0))')"
+            ]
+          },
+          {
+            "answer": "a√2/2",
+            "answer_exact": {
+              "coef": "√2/2",
+              "dim": 1,
+              "text": "a√2/2",
+              "unit": "a"
+            },
+            "auxiliary_count": 4,
+            "auxiliary_object_ids": [
+              "H_B",
+              "ln_B_H",
+              "pl_par_skew_2",
+              "seg_B_H"
+            ],
+            "l0_l4_passed": true,
+            "node_count": 11,
+            "operator_lineage": [
+              "op.line_through_points(a=B,b=D)",
+              "op.plane_through_line_parallel_line(host_line=ln_S_A,parallel_to_line=dt_target_2)",
+              "op.project_point_to_plane(plane=pl_par_skew_2,point=B)"
+            ],
+            "presentation_step_count": 5,
+            "rank": 2,
+            "score_tuple": [
+              4.0,
+              4,
+              3,
+              5,
+              "('op.line_through_points', 'op.plane_through_line_parallel_line', 'op.project_point_to_plane')::('ln(p=0,-1,0|d=1,1,0)', 'ln(p=0,1,0|d=1,-1,0)', 'pl(1,1,0,0)', 'pt(1/2,-1/2,0)', 'seg(pt(1,0,0);pt(1/2,-1/2,0))')"
+            ]
+          },
+          {
+            "answer": "a√2/2",
+            "answer_exact": {
+              "coef": "√2/2",
+              "dim": 1,
+              "text": "a√2/2",
+              "unit": "a"
+            },
+            "auxiliary_count": 4,
+            "auxiliary_object_ids": [
+              "H_A",
+              "ln_A_H",
+              "pl_par_skew_1",
+              "seg_A_H"
+            ],
+            "l0_l4_passed": true,
+            "node_count": 11,
+            "operator_lineage": [
+              "op.line_through_points(a=B,b=D)",
+              "op.plane_through_line_parallel_line(host_line=dt_target_2,parallel_to_line=ln_S_A)",
+              "op.project_point_to_plane(plane=pl_par_skew_1,point=A)"
+            ],
+            "presentation_step_count": 5,
+            "rank": 3,
+            "score_tuple": [
+              4.0,
+              4,
+              3,
+              5,
+              "('op.line_through_points', 'op.plane_through_line_parallel_line', 'op.project_point_to_plane')::('ln(p=0,0,0|d=1,1,0)', 'ln(p=0,1,0|d=1,-1,0)', 'pl(1,1,0,-1)', 'pt(1/2,1/2,0)', 'seg(pt(0,0,0);pt(1/2,1/2,0))')"
+            ]
+          }
+        ],
+        "plans_count": 3,
+        "status": "GOAL_VERIFIED"
+      },
+      "case_id": "C05_aux_skew_lines_pyramid_SA_BD",
+      "expected_status": "GOAL_VERIFIED",
+      "group": "Group_C",
+      "independent_oracle": "a√2/2",
+      "passed": true
+    },
+    {
+      "baseline_a": {
+        "answer": "a√6/3",
+        "calls": [
+          "pyramid",
+          "right_angle",
+          "equal_length",
+          "segment_length",
+          "perpendicular_line_plane",
+          "segment_length",
+          "orthogonal_projection_line",
+          "ask_length"
+        ],
+        "code": null,
+        "constructed_aux_witness_in_scene": false,
+        "elapsed_ms": 71.342,
+        "math_or_refusal_correct": true,
+        "peak_memory_kib": 142.86,
+        "planner_classification": "REGISTERED_DECOMPOSITION",
+        "status": "SERVED"
+      },
+      "candidate_b": {
+        "answer": "a√6/3",
+        "best_operators": [
+          "op.project_point_to_line",
+          "goal.distance_point_line"
+        ],
+        "failure_code": null,
+        "l0_l4_scene_verified": true,
+        "oracle_match": true,
+        "plans": [
+          {
+            "answer": "a√6/3",
+            "answer_exact": {
+              "coef": "√6/3",
+              "dim": 1,
+              "text": "a√6/3",
+              "unit": "a"
+            },
+            "auxiliary_count": 3,
+            "auxiliary_object_ids": [
+              "H_A",
+              "ln_A_H",
+              "seg_A_H"
+            ],
+            "l0_l4_passed": true,
+            "node_count": 8,
+            "operator_lineage": [
+              "op.project_point_to_line(line=ln_S_C,point=A)"
+            ],
+            "presentation_step_count": 3,
+            "rank": 1,
+            "score_tuple": [
+              1.3,
+              3,
+              1,
+              3,
+              "('op.project_point_to_line',)::('ln(p=0,0,0|d=0,1,2)', 'pt(0,1/3,2/3)', 'seg(pt(0,0,0);pt(0,1/3,2/3))')"
+            ]
+          }
+        ],
+        "plans_count": 1,
+        "status": "GOAL_VERIFIED"
+      },
+      "case_id": "C06_aux_point_to_line_foot",
+      "expected_status": "GOAL_VERIFIED",
+      "group": "Group_C",
+      "independent_oracle": "a√6/3",
+      "passed": true
+    },
+    {
+      "baseline_a": {
+        "answer": "cos²=9/10",
+        "calls": [
+          "pyramid",
+          "regular_polygon",
+          "segment_length",
+          "perpendicular_line_plane",
+          "segment_length",
+          "ask_angle_line_plane"
+        ],
+        "code": null,
+        "constructed_aux_witness_in_scene": false,
+        "elapsed_ms": 62.082,
+        "math_or_refusal_correct": true,
+        "peak_memory_kib": 121.41,
+        "planner_classification": "SOURCE_EXPLICIT_SEQUENCE",
+        "status": "SERVED"
+      },
+      "candidate_b": {
+        "answer": "cos²=9/10",
+        "best_operators": [
+          "op.plane_through_three_points",
+          "op.intersect_line_plane",
+          "op.project_point_to_plane",
+          "goal.angle_line_plane"
+        ],
+        "failure_code": null,
+        "l0_l4_scene_verified": true,
+        "oracle_match": true,
+        "plans": [
+          {
+            "answer": "cos²=9/10",
+            "answer_exact": {
+              "cos_sq": "9/10",
+              "dim": 0,
+              "text": "cos²=9/10",
+              "unit": ""
+            },
+            "auxiliary_count": 3,
+            "auxiliary_object_ids": [
+              "H_B",
+              "ln_B_H",
+              "seg_B_H"
+            ],
+            "l0_l4_passed": true,
+            "node_count": 11,
+            "operator_lineage": [
+              "op.plane_through_three_points(a=S,b=A,c=C)",
+              "op.intersect_line_plane(line=ln_S_B,plane=mp_target)",
+              "op.project_point_to_plane(plane=mp_target,point=B)",
+              "op.connect_segment(a=S,b=H_B)"
+            ],
+            "presentation_step_count": 5,
+            "rank": 1,
+            "score_tuple": [
+              4.2,
+              3,
+              4,
+              5,
+              "('op.intersect_line_plane', 'op.plane_through_three_points', 'op.project_point_to_plane')::('ln(p=0,1,0|d=1,-1,0)', 'pl(1,-1,0,0)', 'pt(1/2,1/2,0)', 'seg(pt(1,0,0);pt(1/2,1/2,0))')"
+            ]
+          }
+        ],
+        "plans_count": 1,
+        "status": "GOAL_VERIFIED"
+      },
+      "case_id": "C07_aux_angle_line_plane_SB_SAC",
+      "expected_status": "GOAL_VERIFIED",
+      "group": "Group_C",
+      "independent_oracle": "cos²=9/10",
+      "passed": true
+    },
+    {
+      "baseline_a": {
+        "answer": null,
+        "calls": [
+          "pyramid",
+          "regular_polygon",
+          "segment_length",
+          "perpendicular_line_plane",
+          "segment_length",
+          "midpoint",
+          "translate_point",
+          "translate_point",
+          "ask_section_area"
+        ],
+        "code": "SOURCE_OBJECT_MISMATCH",
+        "constructed_aux_witness_in_scene": false,
+        "elapsed_ms": 15.948,
+        "math_or_refusal_correct": false,
+        "peak_memory_kib": 90.36,
+        "planner_classification": "REGISTERED_DECOMPOSITION",
+        "status": "REFUSED"
+      },
+      "candidate_b": {
+        "answer": "a²√3/16",
+        "best_operators": [
+          "op.midpoint_segment",
+          "op.plane_through_point_parallel_plane",
+          "op.polyhedron_plane_section",
+          "goal.section_area"
+        ],
+        "failure_code": null,
+        "l0_l4_scene_verified": true,
+        "oracle_match": true,
+        "plans": [
+          {
+            "answer": "a²√3/16",
+            "answer_exact": {
+              "coef": "√3/16",
+              "dim": 2,
+              "text": "a²√3/16",
+              "unit": "a"
+            },
+            "auxiliary_count": 0,
+            "auxiliary_object_ids": [],
+            "l0_l4_passed": true,
+            "node_count": 10,
+            "operator_lineage": [
+              "op.midpoint_segment(a=S,b=A)",
+              "op.plane_through_point_parallel_plane(plane=day_ABC,point=M)",
+              "op.polyhedron_plane_section(plane=pl_sec,solid=solid_main)"
+            ],
+            "presentation_step_count": 5,
+            "rank": 1,
+            "score_tuple": [
+              3.9,
+              0,
+              3,
+              5,
+              "('op.midpoint_segment', 'op.plane_through_point_parallel_plane', 'op.polyhedron_plane_section')::('pl(0,0,1,-1/2)', 'pt(0,0,1/2)', 'sec(pt(0,0,1/2),pt(0,1/2,1/2),pt(1/2,0,1/2))')"
+            ]
+          }
+        ],
+        "plans_count": 1,
+        "status": "GOAL_VERIFIED"
+      },
+      "case_id": "C08_aux_parallel_plane_section_through_midpoint",
+      "expected_status": "GOAL_VERIFIED",
+      "group": "Group_C",
+      "independent_oracle": "a²√3/16",
+      "passed": true
+    },
+    {
+      "baseline_a": {
+        "answer": null,
+        "calls": [
+          "pyramid",
+          "right_angle",
+          "equal_length",
+          "segment_length",
+          "perpendicular_line_plane",
+          "ask_distance_point_plane"
+        ],
+        "code": "MISSING_DIMENSION",
+        "constructed_aux_witness_in_scene": false,
+        "elapsed_ms": 193.062,
+        "math_or_refusal_correct": true,
+        "peak_memory_kib": 205.85,
+        "planner_classification": "SOURCE_EXPLICIT_SEQUENCE",
+        "status": "REFUSED"
+      },
+      "candidate_b": {
+        "answer": null,
+        "best_operators": [],
+        "failure_code": "MISSING_PRECONDITION",
+        "l0_l4_scene_verified": false,
+        "oracle_match": true,
+        "plans": [],
+        "plans_count": 0,
+        "status": "MISSING_PRECONDITION"
+      },
+      "case_id": "D01_missing_height_precondition",
+      "expected_status": "MISSING_PRECONDITION",
+      "group": "Group_D",
+      "independent_oracle": null,
+      "passed": true
+    },
+    {
+      "baseline_a": {
+        "answer": "0a",
+        "calls": [
+          "pyramid",
+          "right_angle",
+          "equal_length",
+          "segment_length",
+          "perpendicular_line_plane",
+          "segment_length",
+          "ask_length"
+        ],
+        "code": null,
+        "constructed_aux_witness_in_scene": false,
+        "elapsed_ms": 53.099,
+        "math_or_refusal_correct": false,
+        "peak_memory_kib": 116.58,
+        "planner_classification": "SOURCE_EXPLICIT_SEQUENCE",
+        "status": "SERVED"
+      },
+      "candidate_b": {
+        "answer": null,
+        "best_operators": [],
+        "failure_code": "DEGENERATE_COINCIDENT_POINTS",
+        "l0_l4_scene_verified": false,
+        "oracle_match": true,
+        "plans": [],
+        "plans_count": 0,
+        "status": "CONTRADICTORY_CONSTRAINTS"
+      },
+      "case_id": "D02_degenerate_coincident_points",
+      "expected_status": "CONTRADICTORY_CONSTRAINTS",
+      "group": "Group_D",
+      "independent_oracle": null,
+      "passed": true
+    },
+    {
+      "baseline_a": {
+        "answer": null,
+        "calls": [
+          "pyramid",
+          "right_angle",
+          "equal_length",
+          "segment_length",
+          "perpendicular_line_plane",
+          "segment_length",
+          "midpoint",
+          "ask_distance_point_plane"
+        ],
+        "code": "SOURCE_OBJECT_MISMATCH",
+        "constructed_aux_witness_in_scene": false,
+        "elapsed_ms": 9.35,
+        "math_or_refusal_correct": true,
+        "peak_memory_kib": 44.27,
+        "planner_classification": "SOURCE_EXPLICIT_SEQUENCE",
+        "status": "REFUSED"
+      },
+      "candidate_b": {
+        "answer": null,
+        "best_operators": [],
+        "failure_code": "DEGENERATE_COLLINEAR_POINTS",
+        "l0_l4_scene_verified": false,
+        "oracle_match": true,
+        "plans": [],
+        "plans_count": 0,
+        "status": "CONTRADICTORY_CONSTRAINTS"
+      },
+      "case_id": "D03_degenerate_collinear_plane",
+      "expected_status": "CONTRADICTORY_CONSTRAINTS",
+      "group": "Group_D",
+      "independent_oracle": null,
+      "passed": true
+    },
+    {
+      "baseline_a": {
+        "answer": null,
+        "calls": [
+          "pyramid",
+          "regular_polygon",
+          "segment_length",
+          "perpendicular_line_plane",
+          "segment_length",
+          "intersect_line_plane",
+          "ask_length"
+        ],
+        "code": "ROLE_NOT_IN_QUOTE",
+        "constructed_aux_witness_in_scene": false,
+        "elapsed_ms": 10.129,
+        "math_or_refusal_correct": true,
+        "peak_memory_kib": 47.67,
+        "planner_classification": "SOURCE_EXPLICIT_SEQUENCE",
+        "status": "REFUSED"
+      },
+      "candidate_b": {
+        "answer": null,
+        "best_operators": [],
+        "failure_code": "DEGENERATE_PARALLEL_NO_INTERSECTION",
+        "l0_l4_scene_verified": false,
+        "oracle_match": true,
+        "plans": [],
+        "plans_count": 0,
+        "status": "CONTRADICTORY_CONSTRAINTS"
+      },
+      "case_id": "D04_degenerate_parallel_no_intersection",
+      "expected_status": "CONTRADICTORY_CONSTRAINTS",
+      "group": "Group_D",
+      "independent_oracle": null,
+      "passed": true
+    },
+    {
+      "baseline_a": {
+        "answer": null,
+        "calls": [
+          "pyramid",
+          "segment_length",
+          "segment_length",
+          "segment_length",
+          "perpendicular_line_plane",
+          "segment_length",
+          "ask_distance_point_plane"
+        ],
+        "code": "INCONSISTENT_FACTS",
+        "constructed_aux_witness_in_scene": false,
+        "elapsed_ms": 38.784,
+        "math_or_refusal_correct": true,
+        "peak_memory_kib": 76.92,
+        "planner_classification": "SOURCE_EXPLICIT_SEQUENCE",
+        "status": "REFUSED"
+      },
+      "candidate_b": {
+        "answer": null,
+        "best_operators": [],
+        "failure_code": "CONTRADICTORY_CONSTRAINTS",
+        "l0_l4_scene_verified": false,
+        "oracle_match": true,
+        "plans": [],
+        "plans_count": 0,
+        "status": "CONTRADICTORY_CONSTRAINTS"
+      },
+      "case_id": "D05_contradictory_triangle_inequality",
+      "expected_status": "CONTRADICTORY_CONSTRAINTS",
+      "group": "Group_D",
+      "independent_oracle": null,
+      "passed": true
+    },
+    {
+      "baseline_a": {
+        "answer": null,
+        "calls": [
+          "pyramid",
+          "right_angle",
+          "equal_length",
+          "segment_length",
+          "perpendicular_line_plane",
+          "segment_length",
+          "unsupported"
+        ],
+        "code": "OUT_OF_SCOPE",
+        "constructed_aux_witness_in_scene": false,
+        "elapsed_ms": 8.742,
+        "math_or_refusal_correct": true,
+        "peak_memory_kib": 41.21,
+        "planner_classification": "SOURCE_EXPLICIT_SEQUENCE",
+        "status": "REFUSED"
+      },
+      "candidate_b": {
+        "answer": null,
+        "best_operators": [],
+        "failure_code": "UNSUPPORTED_OPERATOR",
+        "l0_l4_scene_verified": false,
+        "oracle_match": true,
+        "plans": [],
+        "plans_count": 0,
+        "status": "UNSUPPORTED_OPERATOR"
+      },
+      "case_id": "D06_unsupported_curved_tangent_sphere",
+      "expected_status": "UNSUPPORTED_OPERATOR",
+      "group": "Group_D",
+      "independent_oracle": null,
+      "passed": true
+    },
+    {
+      "baseline_a": {
+        "answer": null,
+        "calls": [
+          "pyramid",
+          "segment_length",
+          "segment_length",
+          "ask_volume"
+        ],
+        "code": "MISSING_DIMENSION",
+        "constructed_aux_witness_in_scene": false,
+        "elapsed_ms": 250.28,
+        "math_or_refusal_correct": true,
+        "peak_memory_kib": 130.89,
+        "planner_classification": "SOURCE_EXPLICIT_SEQUENCE",
+        "status": "REFUSED"
+      },
+      "candidate_b": {
+        "answer": null,
+        "best_operators": [],
+        "failure_code": "MISSING_PRECONDITION",
+        "l0_l4_scene_verified": false,
+        "oracle_match": true,
+        "plans": [],
+        "plans_count": 0,
+        "status": "MISSING_PRECONDITION"
+      },
+      "case_id": "D07_missing_base_right_angle_underdetermined",
+      "expected_status": "MISSING_PRECONDITION",
+      "group": "Group_D",
+      "independent_oracle": null,
+      "passed": true
+    },
+    {
+      "baseline_a": {
+        "answer": "a√21/7",
+        "calls": [
+          "pyramid",
+          "regular_polygon",
+          "segment_length",
+          "perpendicular_line_plane",
+          "segment_length",
+          "ask_distance_point_plane"
+        ],
+        "code": null,
+        "constructed_aux_witness_in_scene": false,
+        "elapsed_ms": 53.004,
+        "math_or_refusal_correct": true,
+        "peak_memory_kib": 105.75,
+        "planner_classification": "SOURCE_EXPLICIT_SEQUENCE",
+        "status": "SERVED"
+      },
+      "candidate_b": {
+        "answer": "a√21/7",
+        "best_operators": [
+          "op.project_point_to_plane",
+          "goal.distance_point_plane"
+        ],
+        "failure_code": null,
+        "l0_l4_scene_verified": true,
+        "oracle_match": true,
+        "plans": [
+          {
+            "answer": "a√21/7",
+            "answer_exact": {
+              "coef": "√21/7",
+              "dim": 1,
+              "text": "a√21/7",
+              "unit": "a"
+            },
+            "auxiliary_count": 3,
+            "auxiliary_object_ids": [
+              "H_A",
+              "ln_A_H",
+              "seg_A_H"
+            ],
+            "l0_l4_passed": true,
+            "node_count": 8,
+            "operator_lineage": [
+              "op.project_point_to_plane(plane=mat_SBC,point=A)"
+            ],
+            "presentation_step_count": 3,
+            "rank": 1,
+            "score_tuple": [
+              1.8,
+              3,
+              1,
+              3,
+              "('op.project_point_to_plane',)::('ln(p=0,0,0|d=1,1,3/2)', 'pt(2/7,2/7,3/7)', 'seg(pt(0,0,0);pt(2/7,2/7,3/7))')"
+            ]
+          },
+          {
+            "answer": "a√21/7",
+            "answer_exact": {
+              "coef": "√21/7",
+              "dim": 1,
+              "text": "a√21/7",
+              "unit": "a"
+            },
+            "auxiliary_count": 8,
+            "auxiliary_object_ids": [
+              "K_alt_A",
+              "M_A",
+              "ln_A_K",
+              "ln_A_M",
+              "ln_S_M_A",
+              "pl_SAM_A",
+              "seg_A_K",
+              "seg_A_M"
+            ],
+            "l0_l4_passed": true,
+            "node_count": 15,
+            "operator_lineage": [
+              "op.project_point_to_line(line=ln_B_C,point=A)",
+              "op.line_through_points(a=S,b=M_A)",
+              "op.plane_through_three_points(a=S,b=A,c=M_A)",
+              "op.deduce_line_perp_plane_two_lines(line=ln_B_C,planar_line1=ln_A_M,planar_line2=ln_S_A,plane=pl_SAM_A)",
+              "op.project_point_to_line(line=ln_S_M_A,point=A)",
+              "op.deduce_line_perp_plane_two_lines(anchor_on_plane=K_alt_A,line=ln_A_K,planar_line1=ln_B_C,planar_line2=ln_S_M_A,plane=mat_SBC)"
+            ],
+            "presentation_step_count": 8,
+            "rank": 2,
+            "score_tuple": [
+              4.8,
+              8,
+              6,
+              8,
+              "('op.deduce_line_perp_plane_two_lines', 'op.deduce_line_perp_plane_two_lines', 'op.line_through_points', 'op.plane_through_three_points', 'op.project_point_to_line', 'op.project_point_to_line')::('ln(p=0,0,0|d=1,1,0)', 'ln(p=0,0,0|d=1,1,3/2)', 'ln(p=0,0,1|d=1,1,-2)', 'pl(1,-1,0,0)', 'pt(1/2,1/2,0)', 'pt(2/7,2/7,3/7)', 'seg(pt(0,0,0);pt(1/2,1/2,0))', 'seg(pt(0,0,0);pt(2/7,2/7,3/7))')"
+            ]
+          }
+        ],
+        "plans_count": 2,
+        "status": "GOAL_VERIFIED"
+      },
+      "case_id": "E01_multiplan_d_A_SBC_equilateral",
+      "expected_status": "GOAL_VERIFIED",
+      "group": "Group_E",
+      "independent_oracle": "a√21/7",
+      "passed": true
+    },
+    {
+      "baseline_a": {
+        "answer": "a√2/2",
+        "calls": [
+          "pyramid",
+          "right_angle",
+          "equal_length",
+          "segment_length",
+          "perpendicular_line_plane",
+          "segment_length",
+          "ask_distance_point_plane"
+        ],
+        "code": null,
+        "constructed_aux_witness_in_scene": false,
+        "elapsed_ms": 55.726,
+        "math_or_refusal_correct": true,
+        "peak_memory_kib": 110.17,
+        "planner_classification": "SOURCE_EXPLICIT_SEQUENCE",
+        "status": "SERVED"
+      },
+      "candidate_b": {
+        "answer": "a√2/2",
+        "best_operators": [
+          "op.project_point_to_plane",
+          "goal.distance_point_plane"
+        ],
+        "failure_code": null,
+        "l0_l4_scene_verified": true,
+        "oracle_match": true,
+        "plans": [
+          {
+            "answer": "a√2/2",
+            "answer_exact": {
+              "coef": "√2/2",
+              "dim": 1,
+              "text": "a√2/2",
+              "unit": "a"
+            },
+            "auxiliary_count": 3,
+            "auxiliary_object_ids": [
+              "H_A",
+              "ln_A_H",
+              "seg_A_H"
+            ],
+            "l0_l4_passed": true,
+            "node_count": 8,
+            "operator_lineage": [
+              "op.project_point_to_plane(plane=mat_SBC,point=A)"
+            ],
+            "presentation_step_count": 3,
+            "rank": 1,
+            "score_tuple": [
+              1.8,
+              3,
+              1,
+              3,
+              "('op.project_point_to_plane',)::('ln(p=0,0,0|d=1,0,1)', 'pt(1/2,0,1/2)', 'seg(pt(0,0,0);pt(1/2,0,1/2))')"
+            ]
+          },
+          {
+            "answer": "a√2/2",
+            "answer_exact": {
+              "coef": "√2/2",
+              "dim": 1,
+              "text": "a√2/2",
+              "unit": "a"
+            },
+            "auxiliary_count": 3,
+            "auxiliary_object_ids": [
+              "K_alt_A",
+              "ln_A_K",
+              "seg_A_K"
+            ],
+            "l0_l4_passed": true,
+            "node_count": 15,
+            "operator_lineage": [
+              "op.project_point_to_line(line=ln_B_C,point=A)",
+              "op.deduce_line_perp_plane_two_lines(line=ln_B_C,planar_line1=ln_A_B,planar_line2=ln_S_A,plane=mat_SAB)",
+              "op.project_point_to_line(line=ln_S_B,point=A)",
+              "op.deduce_line_perp_plane_two_lines(anchor_on_plane=K_alt_A,line=ln_A_K,planar_line1=ln_B_C,planar_line2=ln_S_B,plane=mat_SBC)"
+            ],
+            "presentation_step_count": 5,
+            "rank": 2,
+            "score_tuple": [
+              3.4,
+              3,
+              4,
+              5,
+              "('op.deduce_line_perp_plane_two_lines', 'op.deduce_line_perp_plane_two_lines', 'op.project_point_to_line')::('ln(p=0,0,0|d=1,0,1)', 'pt(1/2,0,1/2)', 'seg(pt(0,0,0);pt(1/2,0,1/2))')"
+            ]
+          }
+        ],
+        "plans_count": 2,
+        "status": "GOAL_VERIFIED"
+      },
+      "case_id": "E02_multiplan_d_A_SBC_right_B",
+      "expected_status": "GOAL_VERIFIED",
+      "group": "Group_E",
+      "independent_oracle": "a√2/2",
+      "passed": true
+    },
+    {
+      "baseline_a": {
+        "answer": "a",
+        "calls": [
+          "pyramid",
+          "right_angle",
+          "equal_length",
+          "segment_length",
+          "perpendicular_line_plane",
+          "segment_length",
+          "ask_distance_lines"
+        ],
+        "code": null,
+        "constructed_aux_witness_in_scene": false,
+        "elapsed_ms": 66.624,
+        "math_or_refusal_correct": true,
+        "peak_memory_kib": 128.48,
+        "planner_classification": "SOURCE_EXPLICIT_SEQUENCE",
+        "status": "SERVED"
+      },
+      "candidate_b": {
+        "answer": "a",
+        "best_operators": [
+          "op.common_perpendicular_skew_lines",
+          "goal.distance_skew_lines"
+        ],
+        "failure_code": null,
+        "l0_l4_scene_verified": true,
+        "oracle_match": true,
+        "plans": [
+          {
+            "answer": "a",
+            "answer_exact": {
+              "coef": "1",
+              "dim": 1,
+              "text": "a",
+              "unit": "a"
+            },
+            "auxiliary_count": 0,
+            "auxiliary_object_ids": [],
+            "l0_l4_passed": true,
+            "node_count": 10,
+            "operator_lineage": [
+              "op.common_perpendicular_skew_lines(line1=ln_S_A,line2=ln_B_C)"
+            ],
+            "presentation_step_count": 3,
+            "rank": 1,
+            "score_tuple": [
+              2.0,
+              0,
+              1,
+              3,
+              "('op.common_perpendicular_skew_lines',)::()"
+            ]
+          },
+          {
+            "answer": "a",
+            "answer_exact": {
+              "coef": "1",
+              "dim": 1,
+              "text": "a",
+              "unit": "a"
+            },
+            "auxiliary_count": 1,
+            "auxiliary_object_ids": [
+              "pl_par_skew_1"
+            ],
+            "l0_l4_passed": true,
+            "node_count": 10,
+            "operator_lineage": [
+              "op.plane_through_line_parallel_line(host_line=ln_B_C,parallel_to_line=ln_S_A)",
+              "op.project_point_to_plane(plane=pl_par_skew_1,point=A)"
+            ],
+            "presentation_step_count": 4,
+            "rank": 2,
+            "score_tuple": [
+              3.4,
+              1,
+              2,
+              4,
+              "('op.plane_through_line_parallel_line', 'op.project_point_to_plane')::('pl(1,1,0,-1)',)"
+            ]
+          },
+          {
+            "answer": "a",
+            "answer_exact": {
+              "coef": "1",
+              "dim": 1,
+              "text": "a",
+              "unit": "a"
+            },
+            "auxiliary_count": 1,
+            "auxiliary_object_ids": [
+              "pl_par_skew_2"
+            ],
+            "l0_l4_passed": true,
+            "node_count": 10,
+            "operator_lineage": [
+              "op.plane_through_line_parallel_line(host_line=ln_S_A,parallel_to_line=ln_B_C)",
+              "op.project_point_to_plane(plane=pl_par_skew_2,point=B)"
+            ],
+            "presentation_step_count": 4,
+            "rank": 3,
+            "score_tuple": [
+              3.4,
+              1,
+              2,
+              4,
+              "('op.plane_through_line_parallel_line', 'op.project_point_to_plane')::('pl(1,1,0,0)',)"
+            ]
+          }
+        ],
+        "plans_count": 3,
+        "status": "GOAL_VERIFIED"
+      },
+      "case_id": "E03_multiplan_skew_d_SA_BC",
+      "expected_status": "GOAL_VERIFIED",
+      "group": "Group_E",
+      "independent_oracle": "a",
+      "passed": true
+    },
+    {
+      "baseline_a": {
+        "answer": "cos²=1/4",
+        "calls": [
+          "prism",
+          "regular_polygon",
+          "segment_length",
+          "ask_angle_lines"
+        ],
+        "code": null,
+        "constructed_aux_witness_in_scene": false,
+        "elapsed_ms": 62.717,
+        "math_or_refusal_correct": true,
+        "peak_memory_kib": 135.28,
+        "planner_classification": "SOURCE_EXPLICIT_SEQUENCE",
+        "status": "SERVED"
+      },
+      "candidate_b": {
+        "answer": "60°",
+        "best_operators": [
+          "op.line_through_points",
+          "op.line_through_points",
+          "op.line_parallel_through_point",
+          "goal.angle_lines"
+        ],
+        "failure_code": null,
+        "l0_l4_scene_verified": true,
+        "oracle_match": true,
+        "plans": [
+          {
+            "answer": "60°",
+            "answer_exact": {
+              "cos_sq": "1/4",
+              "dim": 0,
+              "text": "60°",
+              "unit": ""
+            },
+            "auxiliary_count": 1,
+            "auxiliary_object_ids": [
+              "par_dt_target_1_B"
+            ],
+            "l0_l4_passed": true,
+            "node_count": 8,
+            "operator_lineage": [
+              "op.line_through_points(a=A,b=B')",
+              "op.line_through_points(a=B,b=C')",
+              "op.line_parallel_through_point(line=dt_target_1,point=B)"
+            ],
+            "presentation_step_count": 5,
+            "rank": 1,
+            "score_tuple": [
+              2.5,
+              1,
+              3,
+              5,
+              "('op.line_parallel_through_point', 'op.line_through_points', 'op.line_through_points')::('ln(p=0,0,-1|d=1,0,1)', 'ln(p=0,0,0|d=1,0,1)', 'ln(p=1,0,0|d=0,1,1)')"
+            ]
+          },
+          {
+            "answer": "60°",
+            "answer_exact": {
+              "cos_sq": "1/4",
+              "dim": 0,
+              "text": "60°",
+              "unit": ""
+            },
+            "auxiliary_count": 1,
+            "auxiliary_object_ids": [
+              "par_dt_target_2_A"
+            ],
+            "l0_l4_passed": true,
+            "node_count": 8,
+            "operator_lineage": [
+              "op.line_through_points(a=A,b=B')",
+              "op.line_through_points(a=B,b=C')",
+              "op.line_parallel_through_point(line=dt_target_2,point=A)"
+            ],
+            "presentation_step_count": 5,
+            "rank": 2,
+            "score_tuple": [
+              2.5,
+              1,
+              3,
+              5,
+              "('op.line_parallel_through_point', 'op.line_through_points', 'op.line_through_points')::('ln(p=0,0,0|d=0,1,1)', 'ln(p=0,0,0|d=1,0,1)', 'ln(p=1,0,0|d=0,1,1)')"
+            ]
+          }
+        ],
+        "plans_count": 2,
+        "status": "GOAL_VERIFIED"
+      },
+      "case_id": "E04_multiplan_skew_angle_cube_symmetric_anchors",
+      "expected_status": "GOAL_VERIFIED",
+      "group": "Group_E",
+      "independent_oracle": "60°",
+      "passed": true
+    },
+    {
+      "baseline_a": {
+        "answer": "cos²=3/7",
+        "calls": [
+          "pyramid",
+          "regular_polygon",
+          "segment_length",
+          "perpendicular_line_plane",
+          "segment_length",
+          "ask_angle_plane_plane"
+        ],
+        "code": null,
+        "constructed_aux_witness_in_scene": false,
+        "elapsed_ms": 56.936,
+        "math_or_refusal_correct": true,
+        "peak_memory_kib": 113.47,
+        "planner_classification": "SOURCE_EXPLICIT_SEQUENCE",
+        "status": "SERVED"
+      },
+      "candidate_b": {
+        "answer": "cos²=3/7",
+        "best_operators": [
+          "op.construct_dihedral_linear_angle",
+          "goal.angle_plane_plane"
+        ],
+        "failure_code": null,
+        "l0_l4_scene_verified": true,
+        "oracle_match": true,
+        "plans": [
+          {
+            "answer": "cos²=3/7",
+            "answer_exact": {
+              "cos_sq": "3/7",
+              "dim": 0,
+              "text": "cos²=3/7",
+              "unit": ""
+            },
+            "auxiliary_count": 3,
+            "auxiliary_object_ids": [
+              "pl_dihedral",
+              "ray_p1",
+              "ray_p2"
+            ],
+            "l0_l4_passed": true,
+            "node_count": 10,
+            "operator_lineage": [
+              "op.intersect_planes(plane1=mat_SBC,plane2=day_ABC)",
+              "op.construct_dihedral_linear_angle(edge=ln_B_C,plane1=mat_SBC,plane2=day_ABC)"
+            ],
+            "presentation_step_count": 3,
+            "rank": 1,
+            "score_tuple": [
+              2.8,
+              3,
+              2,
+              3,
+              "('op.construct_dihedral_linear_angle',)::('ln(p=0,-1,0|d=1,1,0)', 'ln(p=0,-1,2|d=1,1,-2)', 'pl(1,-1,0,-1)')"
+            ]
+          },
+          {
+            "answer": "cos²=3/7",
+            "answer_exact": {
+              "cos_sq": "3/7",
+              "dim": 0,
+              "text": "cos²=3/7",
+              "unit": ""
+            },
+            "auxiliary_count": 4,
+            "auxiliary_object_ids": [
+              "M_S_edge",
+              "ln_S_M_edge",
+              "pl_orth_ASM_S_edge",
+              "seg_S_M_edge"
+            ],
+            "l0_l4_passed": true,
+            "node_count": 14,
+            "operator_lineage": [
+              "op.intersect_planes(plane1=mat_SBC,plane2=day_ABC)",
+              "op.project_point_to_line(line=ln_B_C,point=S)",
+              "op.plane_through_three_points(a=A,b=S,c=M_S_edge)",
+              "op.deduce_line_perp_plane_two_lines(line=ln_B_C,planar_line1=ln_S_M_edge,planar_line2=ln_S_A,plane=pl_orth_ASM_S_edge)"
+            ],
+            "presentation_step_count": 6,
+            "rank": 2,
+            "score_tuple": [
+              3.6,
+              4,
+              4,
+              6,
+              "('op.deduce_line_perp_plane_two_lines', 'op.intersect_planes', 'op.plane_through_three_points', 'op.project_point_to_line')::('ln(p=0,0,1|d=1,1,-2)', 'pl(1,-1,0,0)', 'pt(1/2,1/2,0)', 'seg(pt(0,0,1);pt(1/2,1/2,0))')"
+            ]
+          }
+        ],
+        "plans_count": 2,
+        "status": "GOAL_VERIFIED"
+      },
+      "case_id": "E05_multiplan_dihedral_linear_vs_synthetic",
+      "expected_status": "GOAL_VERIFIED",
+      "group": "Group_E",
+      "independent_oracle": "cos²=3/7",
+      "passed": true
+    }
+  ],
+  "exact_verifier_identity": "construction-exact-verifier/1",
+  "generated_at_utc": "2026-11-19T00:51:00Z",
+  "git_commit": "498f354608c45ce98ba4f75a0222afbe56139ce2",
+  "graph_schema_version": "verified-construction-graph/1",
+  "operator_inventory_version": "construction-operator/1",
+  "run_id": "axo-construction-verified-graph-dynamic-planner-feasibility",
+  "schema": "axo-gold-construction-benchmark-results/1",
+  "search_algorithm": "bounded_best_first_dependency_aware_search",
+  "search_budget": {
+    "max_candidate_operators": 600,
+    "max_depth": 8,
+    "max_expanded_states": 250,
+    "max_graph_nodes": 96,
+    "max_memory_mb": 128.0,
+    "max_plans": 3,
+    "max_wall_clock_ms": 2000.0
+  },
+  "summary": {
+    "baseline_a_math_or_refusal_ok": "32/40",
+    "baseline_a_positive_served": "26/33",
+    "baseline_a_positive_with_aux_witness": "0/33",
+    "candidate_b_negative_refused_safely": "7/7",
+    "candidate_b_passed_total": "40/40",
+    "candidate_b_positive_verified": "33/33",
+    "negative_or_unsupported_cases": 7,
+    "positive_cases": 33,
+    "total_cases": 40
+  },
+  "test_seed": 0
+}

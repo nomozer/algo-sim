@@ -1,0 +1,717 @@
+[
+ {
+  "phase": "server_start_1",
+  "startup_ms": 3701.4,
+  "llama_running_before_first_request": false
+ },
+ {
+  "phase": "cold_start_slm",
+  "concurrency": 1,
+  "n": 1,
+  "wall_s": 0.64,
+  "throughput_rps": 1.56,
+  "http_200": 1,
+  "by_status": {
+   "200:SERVED": 1
+  },
+  "busy_503": 0,
+  "no_store_on_errors": true,
+  "e2e_ms_200": {
+   "n": 1,
+   "p50": 640.6,
+   "p95": 640.6,
+   "p99": "NOT_COMPUTED_n<100",
+   "max": 640.6
+  },
+  "slm_queue_wait_ms": {
+   "n": 0,
+   "p50": null,
+   "max": null
+  },
+  "slm_inference_ms": {
+   "n": 0,
+   "p50": null,
+   "p95": null
+  }
+ },
+ {
+  "phase": "after_cold_start",
+  "llama_pids": []
+ },
+ {
+  "phase": "warm_slm_c1",
+  "concurrency": 1,
+  "n": 6,
+  "wall_s": 24.2,
+  "throughput_rps": 0.248,
+  "http_200": 6,
+  "by_status": {
+   "200:SERVED": 4,
+   "200:REFUSED": 2
+  },
+  "busy_503": 0,
+  "no_store_on_errors": true,
+  "e2e_ms_200": {
+   "n": 6,
+   "p50": 4519.4,
+   "p95": 6859.7,
+   "p99": "NOT_COMPUTED_n<100",
+   "max": 6859.7
+  },
+  "slm_queue_wait_ms": {
+   "n": 0,
+   "p50": null,
+   "max": null
+  },
+  "slm_inference_ms": {
+   "n": 0,
+   "p50": null,
+   "p95": null
+  }
+ },
+ {
+  "phase": "det_c1",
+  "concurrency": 1,
+  "n": 10,
+  "wall_s": 1.05,
+  "throughput_rps": 9.564,
+  "http_200": 10,
+  "by_status": {
+   "200:SERVED": 10
+  },
+  "busy_503": 0,
+  "no_store_on_errors": true,
+  "e2e_ms_200": {
+   "n": 10,
+   "p50": 101.2,
+   "p95": 165.5,
+   "p99": "NOT_COMPUTED_n<100",
+   "max": 165.5
+  },
+  "slm_queue_wait_ms": {
+   "n": 0,
+   "p50": null,
+   "max": null
+  },
+  "slm_inference_ms": {
+   "n": 0,
+   "p50": null,
+   "p95": null
+  }
+ },
+ {
+  "phase": "det_c2",
+  "concurrency": 2,
+  "n": 10,
+  "wall_s": 0.75,
+  "throughput_rps": 13.257,
+  "http_200": 10,
+  "by_status": {
+   "200:SERVED": 10
+  },
+  "busy_503": 0,
+  "no_store_on_errors": true,
+  "e2e_ms_200": {
+   "n": 10,
+   "p50": 141.5,
+   "p95": 265.4,
+   "p99": "NOT_COMPUTED_n<100",
+   "max": 265.4
+  },
+  "slm_queue_wait_ms": {
+   "n": 0,
+   "p50": null,
+   "max": null
+  },
+  "slm_inference_ms": {
+   "n": 0,
+   "p50": null,
+   "p95": null
+  }
+ },
+ {
+  "phase": "det_c5",
+  "concurrency": 5,
+  "n": 20,
+  "wall_s": 1.97,
+  "throughput_rps": 10.144,
+  "http_200": 20,
+  "by_status": {
+   "200:SERVED": 20
+  },
+  "busy_503": 0,
+  "no_store_on_errors": true,
+  "e2e_ms_200": {
+   "n": 20,
+   "p50": 459.6,
+   "p95": 695.6,
+   "p99": "NOT_COMPUTED_n<100",
+   "max": 742.1
+  },
+  "slm_queue_wait_ms": {
+   "n": 0,
+   "p50": null,
+   "max": null
+  },
+  "slm_inference_ms": {
+   "n": 0,
+   "p50": null,
+   "p95": null
+  }
+ },
+ {
+  "phase": "det_c10",
+  "concurrency": 10,
+  "n": 30,
+  "wall_s": 2.83,
+  "throughput_rps": 10.601,
+  "http_200": 30,
+  "by_status": {
+   "200:SERVED": 30
+  },
+  "busy_503": 0,
+  "no_store_on_errors": true,
+  "e2e_ms_200": {
+   "n": 30,
+   "p50": 759.5,
+   "p95": 1652.7,
+   "p99": "NOT_COMPUTED_n<100",
+   "max": 1878.3
+  },
+  "slm_queue_wait_ms": {
+   "n": 0,
+   "p50": null,
+   "max": null
+  },
+  "slm_inference_ms": {
+   "n": 0,
+   "p50": null,
+   "p95": null
+  }
+ },
+ {
+  "phase": "slm_c2",
+  "concurrency": 2,
+  "n": 8,
+  "wall_s": 33.16,
+  "throughput_rps": 0.241,
+  "http_200": 8,
+  "by_status": {
+   "200:SERVED": 6,
+   "200:REFUSED": 2
+  },
+  "busy_503": 0,
+  "no_store_on_errors": true,
+  "e2e_ms_200": {
+   "n": 8,
+   "p50": 8969.1,
+   "p95": 10999.8,
+   "p99": "NOT_COMPUTED_n<100",
+   "max": 10999.8
+  },
+  "slm_queue_wait_ms": {
+   "n": 0,
+   "p50": null,
+   "max": null
+  },
+  "slm_inference_ms": {
+   "n": 0,
+   "p50": null,
+   "p95": null
+  }
+ },
+ {
+  "phase": "slm_c5",
+  "concurrency": 5,
+  "n": 10,
+  "wall_s": 15.16,
+  "throughput_rps": 0.66,
+  "http_200": 4,
+  "by_status": {
+   "200:REFUSED": 2,
+   "503:LOCAL_SLM_BUSY": 6,
+   "200:SERVED": 2
+  },
+  "busy_503": 6,
+  "no_store_on_errors": true,
+  "e2e_ms_200": {
+   "n": 4,
+   "p50": 9315.1,
+   "p95": 15153.5,
+   "p99": "NOT_COMPUTED_n<100",
+   "max": 15153.5
+  },
+  "slm_queue_wait_ms": {
+   "n": 0,
+   "p50": null,
+   "max": null
+  },
+  "slm_inference_ms": {
+   "n": 0,
+   "p50": null,
+   "p95": null
+  }
+ },
+ {
+  "phase": "slm_c10",
+  "concurrency": 10,
+  "n": 20,
+  "wall_s": 17.0,
+  "throughput_rps": 1.177,
+  "http_200": 13,
+  "by_status": {
+   "200:SERVED": 12,
+   "503:LOCAL_SLM_BUSY": 7,
+   "200:REFUSED": 1
+  },
+  "busy_503": 7,
+  "no_store_on_errors": true,
+  "e2e_ms_200": {
+   "n": 13,
+   "p50": 900.0,
+   "p95": 12857.3,
+   "p99": "NOT_COMPUTED_n<100",
+   "max": 16983.7
+  },
+  "slm_queue_wait_ms": {
+   "n": 0,
+   "p50": null,
+   "max": null
+  },
+  "slm_inference_ms": {
+   "n": 0,
+   "p50": null,
+   "p95": null
+  },
+  "health_probe_ms": {
+   "n": 31,
+   "failed": 0,
+   "p50": 23.1,
+   "max": 427.6
+  }
+ },
+ {
+  "phase": "mixed_c5",
+  "concurrency": 5,
+  "n": 20,
+  "wall_s": 18.14,
+  "throughput_rps": 1.103,
+  "http_200": 16,
+  "by_status": {
+   "200:SERVED": 15,
+   "503:LOCAL_SLM_BUSY": 4,
+   "200:REFUSED": 1
+  },
+  "busy_503": 4,
+  "no_store_on_errors": true,
+  "e2e_ms_200": {
+   "n": 16,
+   "p50": 259.4,
+   "p95": 13255.3,
+   "p99": "NOT_COMPUTED_n<100",
+   "max": 17380.0
+  },
+  "slm_queue_wait_ms": {
+   "n": 0,
+   "p50": null,
+   "max": null
+  },
+  "slm_inference_ms": {
+   "n": 0,
+   "p50": null,
+   "p95": null
+  },
+  "health_probe_ms": {
+   "n": 34,
+   "failed": 0,
+   "p50": 23.3,
+   "max": 161.5
+  }
+ },
+ {
+  "phase": "mixed_c10",
+  "concurrency": 10,
+  "n": 30,
+  "wall_s": 18.62,
+  "throughput_rps": 1.611,
+  "http_200": 26,
+  "by_status": {
+   "200:SERVED": 24,
+   "503:LOCAL_SLM_BUSY": 4,
+   "200:REFUSED": 2
+  },
+  "busy_503": 4,
+  "no_store_on_errors": true,
+  "e2e_ms_200": {
+   "n": 26,
+   "p50": 929.9,
+   "p95": 13415.4,
+   "p99": "NOT_COMPUTED_n<100",
+   "max": 18612.2
+  },
+  "slm_queue_wait_ms": {
+   "n": 0,
+   "p50": null,
+   "max": null
+  },
+  "slm_inference_ms": {
+   "n": 0,
+   "p50": null,
+   "p95": null
+  },
+  "health_probe_ms": {
+   "n": 34,
+   "failed": 0,
+   "p50": 23.4,
+   "max": 278.9
+  }
+ },
+ {
+  "phase": "refusal_c5",
+  "concurrency": 5,
+  "n": 20,
+  "wall_s": 11.89,
+  "throughput_rps": 1.683,
+  "http_200": 12,
+  "by_status": {
+   "200:REFUSED": 11,
+   "200:None": 1,
+   "503:LOCAL_SLM_BUSY": 8
+  },
+  "busy_503": 8,
+  "no_store_on_errors": true,
+  "e2e_ms_200": {
+   "n": 12,
+   "p50": 214.8,
+   "p95": 8121.9,
+   "p99": "NOT_COMPUTED_n<100",
+   "max": 11793.9
+  },
+  "slm_queue_wait_ms": {
+   "n": 0,
+   "p50": null,
+   "max": null
+  },
+  "slm_inference_ms": {
+   "n": 0,
+   "p50": null,
+   "p95": null
+  }
+ },
+ {
+  "phase": "cache_hit_c5",
+  "concurrency": 5,
+  "n": 20,
+  "wall_s": 0.91,
+  "throughput_rps": 22.09,
+  "http_200": 20,
+  "by_status": {
+   "200:SERVED": 20
+  },
+  "busy_503": 0,
+  "no_store_on_errors": true,
+  "e2e_ms_200": {
+   "n": 20,
+   "p50": 212.9,
+   "p95": 341.9,
+   "p99": "NOT_COMPUTED_n<100",
+   "max": 400.4
+  },
+  "slm_queue_wait_ms": {
+   "n": 0,
+   "p50": null,
+   "max": null
+  },
+  "slm_inference_ms": {
+   "n": 0,
+   "p50": null,
+   "p95": null
+  }
+ },
+ {
+  "phase": "kill_llama_idle",
+  "killed": [
+   19776
+  ],
+  "first_after": {
+   "phase": "kill_idle_next",
+   "kind": "slm",
+   "t_start": 42620.16,
+   "http": 200,
+   "cache_control": "no-store",
+   "replayed": null,
+   "route_status": "SERVED",
+   "extraction_mode": "LOCAL_SLM_GROUNDED",
+   "reason_code": null,
+   "failure_kind": null,
+   "chosen_route": "LOCAL_SLM_FALLBACK",
+   "slm_queue_wait_ms": null,
+   "slm_inference_ms": null,
+   "server_load_time_ms": null,
+   "ms": 4874.9
+  },
+  "second_after": {
+   "phase": "kill_idle_next2",
+   "kind": "slm",
+   "t_start": 42625.036,
+   "http": 200,
+   "cache_control": "no-store",
+   "replayed": null,
+   "route_status": "SERVED",
+   "extraction_mode": "LOCAL_SLM_GROUNDED",
+   "reason_code": null,
+   "failure_kind": null,
+   "chosen_route": "LOCAL_SLM_FALLBACK",
+   "slm_queue_wait_ms": null,
+   "slm_inference_ms": null,
+   "server_load_time_ms": null,
+   "ms": 5022.6
+  },
+  "llama_pids_after": [
+   17040
+  ]
+ },
+ {
+  "phase": "kill_llama_mid_inference",
+  "killed": [
+   17040
+  ],
+  "in_flight": {
+   "phase": "kill_mid",
+   "kind": "slm",
+   "t_start": 42630.326,
+   "http": 503,
+   "cache_control": "no-store",
+   "replayed": null,
+   "route_status": null,
+   "extraction_mode": null,
+   "reason_code": "LOCAL_SLM_PROCESS_CRASHED",
+   "failure_kind": "INFRASTRUCTURE_FAILURE",
+   "chosen_route": null,
+   "slm_queue_wait_ms": null,
+   "slm_inference_ms": null,
+   "server_load_time_ms": null,
+   "ms": 3407.4
+  },
+  "next_request": {
+   "phase": "kill_mid_next",
+   "kind": "slm",
+   "t_start": 42633.902,
+   "http": 200,
+   "cache_control": "no-store",
+   "replayed": null,
+   "route_status": "REFUSED",
+   "extraction_mode": "LOCAL_SLM_GROUNDING_REJECTED",
+   "reason_code": "AMBIGUOUS_FACT",
+   "failure_kind": null,
+   "chosen_route": "LOCAL_SLM_FALLBACK",
+   "slm_queue_wait_ms": null,
+   "slm_inference_ms": null,
+   "server_load_time_ms": null,
+   "ms": 6444.9
+  },
+  "resubmit_same_text": {
+   "phase": "kill_mid_resubmit_same_text",
+   "kind": "slm",
+   "t_start": 42640.347,
+   "http": 200,
+   "cache_control": "no-store",
+   "replayed": null,
+   "route_status": "SERVED",
+   "extraction_mode": "LOCAL_SLM_GROUNDED",
+   "reason_code": null,
+   "failure_kind": null,
+   "chosen_route": "LOCAL_SLM_FALLBACK",
+   "slm_queue_wait_ms": null,
+   "slm_inference_ms": null,
+   "server_load_time_ms": null,
+   "ms": 5044.2
+  }
+ },
+ {
+  "phase": "client_disconnect",
+  "abandoned": {
+   "phase": "client_disconnect",
+   "kind": "slm",
+   "t_start": 42645.571,
+   "http": null,
+   "client_error": "ReadTimeout",
+   "ms": 1010.0
+  },
+  "health_after": 200,
+  "resend_same_text": {
+   "phase": "client_disconnect_resend",
+   "kind": "slm",
+   "t_start": 42658.759,
+   "http": 200,
+   "cache_control": "no-store",
+   "replayed": null,
+   "route_status": "SERVED",
+   "extraction_mode": "LOCAL_SLM_GROUNDED",
+   "reason_code": null,
+   "failure_kind": null,
+   "chosen_route": "LOCAL_SLM_FALLBACK",
+   "slm_queue_wait_ms": null,
+   "slm_inference_ms": null,
+   "server_load_time_ms": null,
+   "ms": 36.5
+  }
+ },
+ {
+  "phase": "repeated_submission",
+  "same_key": [
+   {
+    "phase": "dup_same_key",
+    "kind": "slm",
+    "t_start": 42659.063,
+    "http": 200,
+    "cache_control": "no-store",
+    "replayed": null,
+    "route_status": "REFUSED",
+    "extraction_mode": "LOCAL_SLM_GROUNDED",
+    "reason_code": null,
+    "failure_kind": null,
+    "chosen_route": "LOCAL_SLM_FALLBACK",
+    "slm_queue_wait_ms": null,
+    "slm_inference_ms": null,
+    "server_load_time_ms": null,
+    "ms": 3940.9
+   },
+   {
+    "phase": "dup_same_key",
+    "kind": "slm",
+    "t_start": 42659.082,
+    "http": 200,
+    "cache_control": "no-store",
+    "replayed": "true",
+    "route_status": "REFUSED",
+    "extraction_mode": "LOCAL_SLM_GROUNDED",
+    "reason_code": null,
+    "failure_kind": null,
+    "chosen_route": "LOCAL_SLM_FALLBACK",
+    "slm_queue_wait_ms": null,
+    "slm_inference_ms": null,
+    "server_load_time_ms": null,
+    "ms": 3923.7
+   }
+  ],
+  "no_key": [
+   {
+    "phase": "dup_no_key",
+    "kind": "slm",
+    "t_start": 42663.293,
+    "http": 200,
+    "cache_control": "no-store",
+    "replayed": null,
+    "route_status": "SERVED",
+    "extraction_mode": "LOCAL_SLM_GROUNDED",
+    "reason_code": null,
+    "failure_kind": null,
+    "chosen_route": "LOCAL_SLM_FALLBACK",
+    "slm_queue_wait_ms": null,
+    "slm_inference_ms": null,
+    "server_load_time_ms": null,
+    "ms": 4410.6
+   },
+   {
+    "phase": "dup_no_key",
+    "kind": "slm",
+    "t_start": 42663.294,
+    "http": 200,
+    "cache_control": "no-store",
+    "replayed": null,
+    "route_status": "SERVED",
+    "extraction_mode": "LOCAL_SLM_GROUNDED",
+    "reason_code": null,
+    "failure_kind": null,
+    "chosen_route": "LOCAL_SLM_FALLBACK",
+    "slm_queue_wait_ms": null,
+    "slm_inference_ms": null,
+    "server_load_time_ms": null,
+    "ms": 4419.6
+   }
+  ]
+ },
+ {
+  "phase": "server_start_2_after_restart",
+  "startup_ms": 3573.0
+ },
+ {
+  "phase": "backend_restart",
+  "cache_hit_after_restart": {
+   "phase": "restart_cache_hit",
+   "kind": "cache",
+   "t_start": 42673.305,
+   "http": 200,
+   "cache_control": "no-store",
+   "replayed": null,
+   "route_status": "REFUSED",
+   "extraction_mode": "LOCAL_SLM_GROUNDED",
+   "reason_code": null,
+   "failure_kind": null,
+   "chosen_route": "LOCAL_SLM_FALLBACK",
+   "slm_queue_wait_ms": null,
+   "slm_inference_ms": null,
+   "server_load_time_ms": null,
+   "ms": 7129.8
+  },
+  "first_slm_after_restart": {
+   "phase": "restart_cold_slm",
+   "kind": "slm",
+   "t_start": 42680.435,
+   "http": 200,
+   "cache_control": "no-store",
+   "replayed": null,
+   "route_status": "SERVED",
+   "extraction_mode": "LOCAL_PARSER_AFTER_V3_NORMALIZER",
+   "reason_code": null,
+   "failure_kind": null,
+   "chosen_route": "LOCAL_DETERMINISTIC_HYBRID",
+   "slm_queue_wait_ms": null,
+   "slm_inference_ms": null,
+   "server_load_time_ms": null,
+   "ms": 149.4
+  }
+ },
+ {
+  "phase": "server_start_3_unprovisioned",
+  "startup_ms": 3138.1
+ },
+ {
+  "phase": "runtime_unprovisioned",
+  "slm_request": {
+   "phase": "unprovisioned_slm",
+   "kind": "slm",
+   "t_start": 42685.666,
+   "http": 200,
+   "cache_control": "no-store",
+   "replayed": null,
+   "route_status": "SERVED",
+   "extraction_mode": "LOCAL_PARSER_AFTER_V3_NORMALIZER",
+   "reason_code": null,
+   "failure_kind": null,
+   "chosen_route": "LOCAL_DETERMINISTIC_HYBRID",
+   "slm_queue_wait_ms": null,
+   "slm_inference_ms": null,
+   "server_load_time_ms": null,
+   "ms": 545.8
+  },
+  "det_request": {
+   "phase": "unprovisioned_det",
+   "kind": "det",
+   "t_start": 42686.212,
+   "http": 200,
+   "cache_control": "no-store",
+   "replayed": null,
+   "route_status": "SERVED",
+   "extraction_mode": "LOCAL_DETERMINISTIC_PARSER",
+   "reason_code": null,
+   "failure_kind": null,
+   "chosen_route": "LOCAL_DETERMINISTIC_HYBRID",
+   "slm_queue_wait_ms": null,
+   "slm_inference_ms": null,
+   "server_load_time_ms": null,
+   "ms": 110.5
+  }
+ }
+]

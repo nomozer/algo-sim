@@ -1,0 +1,88 @@
+{
+  "schema": "algosim-real-world-vision-corpus/1",
+  "corpus_status": "TEMPLATE_AWAITING_REAL_CAMERA_AND_SCAN_CAPTURES",
+  "required_categories": [
+    "printed_exam_sheet",
+    "textbook_workbook_page",
+    "student_phone_photo_angled_shadow",
+    "crease_fold_perspective_distortion",
+    "mixed_diagram_and_text",
+    "multi_problem_page",
+    "negative_non_math_blurry_diagram_only"
+  ],
+  "math_symbol_inventory": [
+    "√",
+    "π",
+    "°",
+    "⊥",
+    "∥",
+    "∠",
+    "△",
+    "∈",
+    "⊂",
+    "∩",
+    "'",
+    "subscripts_A1_B1",
+    "fractions_p_over_q"
+  ],
+  "live_vision_budget_policy": {
+    "default_allow_live_ai": 0,
+    "model_pinned": "gemini-2.5-flash",
+    "max_requests_per_campaign": 60,
+    "max_usd_per_campaign": 1.0,
+    "owner_approval_required": "APPROVED_BY_USER"
+  },
+  "images": [
+    {
+      "image_id": "RW-001",
+      "file_path": "images/rw_001_printed_exam.jpg",
+      "category": "printed_exam_sheet",
+      "source_type": "real_camera_capture",
+      "capture_metadata": {
+        "device": "Smartphone rear camera",
+        "resolution_px": [
+          3024,
+          4032
+        ],
+        "lighting": "indoor_fluorescent",
+        "perspective_skew_deg": 4.5
+      },
+      "expected_outcome": "SERVE",
+      "target_bbox": [
+        120,
+        340,
+        2890,
+        980
+      ],
+      "ground_truth_text": "Cho hình chóp S.ABCD có đáy ABCD là hình vuông cạnh 4, SA ⊥ (ABCD), SA = 2√3. Tính thể tích khối chóp S.ABCD.",
+      "math_symbols_present": [
+        "⊥",
+        "√"
+      ],
+      "expected_exact_oracle": {
+        "volume": [
+          "32√3/3"
+        ]
+      },
+      "provenance": "Ảnh chụp đề kiểm tra thực tế (chưa thu thập — mẫu schema)."
+    },
+    {
+      "image_id": "RW-002",
+      "file_path": "images/rw_002_diagram_only.jpg",
+      "category": "negative_non_math_blurry_diagram_only",
+      "source_type": "real_camera_capture",
+      "capture_metadata": {
+        "device": "Smartphone rear camera",
+        "resolution_px": [
+          3024,
+          4032
+        ],
+        "lighting": "low_light_shadow",
+        "perspective_skew_deg": 8.0
+      },
+      "expected_outcome": "REJECT",
+      "rejection_code": "IMAGE_HAS_NO_TEXT",
+      "provenance": "Ảnh chỉ có hình vẽ không có lời đề (mẫu schema)."
+    }
+  ]
+}

@@ -88,6 +88,26 @@ def _dich_khoang_cach_diem_duong(canh: dict[str, Any], auxiliary: tuple[dict, ..
                 canh["formation"]["steps"][e["step_index"]]["learner_text"] = e["learner_text"]
 
 
+def _tinh_lai_phu_tro_du_thua(state: dict[str, Any], r: KetQuaTuyen) -> None:
+    """Run `scene3d-causal-pedagogical-integrity`: "unused auxiliary" is decided only once the source's goals are known.
+
+    `build_simulation_state` computes it with no targets (its third argument here is topology), so an object the SOURCE
+    states but no goal consumes ("Gọi M, N …" with only M used) and an asked intersection line ("Tìm giao tuyến …") were
+    flagged unused. The sinks are the engine's targets plus every object a source-gated call constructs (trace entries
+    citing a call of `r.calls`); only what the system added and nothing reaches is an unused auxiliary."""
+    from app.simulation.geometry_functions.engine import ir_name
+    from app.simulation.semantic_program.simulation_state import _tim_phu_tro_du_thua
+
+    objs = state["scene"]["objects"]
+    call_ids = {c["id"] for c in r.calls if isinstance(c, dict) and c.get("id")}
+    stated = {ir_name(t["object"]) for t in r.trace
+              if isinstance(t.get("object"), str) and set(t.get("calls") or ()) & call_ids}
+    for o in objs:
+        o.pop("is_unused_auxiliary", None)
+    state["unused_auxiliary_ids"] = _tim_phu_tro_du_thua(objs, state["dependencies"], r.exec_result.final_memory,
+                                                         sorted({*r.targets, *stated}))
+
+
 def _ke_diem_dung(canh: dict[str, Any], vai: dict[str, str]) -> None:
     """Lời kể bước dựng một điểm: nói PHÉP DỰNG từ producer + ký hiệu toán hạng, thay "Dựng M." (run
     `pedagogical-construction-sequencing`). Producer khác dùng vai do `display_names` đã phát; thiếu ký hiệu ⇒ giữ lời cũ.
@@ -546,6 +566,7 @@ def run_function_route(problem_text: str, plan: Any, auxiliary: tuple[dict, ...]
             # CONTRACT-BE-1: the third argument carries topology, not obligations, so `targets` came out empty and the
             # asked quantity read as `intermediate` while its event was FINAL_RESULT; the engine names what the source asks.
             state["targets"] = list(r.targets)
+            _tinh_lai_phu_tro_du_thua(state, r)
             # Presentation of the certified auxiliary binding; no new geometry or semantic authority.
             aux_ids = ({ir_name(p) for d in two_line for p in d['labels']}
                        | {ir_name(d['label']) for d in auxiliary if d.get('effect_binding') and d.get('fresh')}
@@ -692,7 +713,15 @@ def run_typed_fact_next_planner_route(raw: Any) -> KetQuaTuyen:
 def chay_sau_cau_noi(b: dict[str, Any]) -> KetQuaTuyen:
     """The ONE route after a TypedFactNext bridge (`/1` and `/2`, run `hybrid-contract-v2`): planner → Source Gate →
     engine → Scene3D (`run_fact_route`), then the declared length unit and plane names checked against the gated output."""
-    r = run_fact_route(b["bridge"]["problem_text"], {"facts": b["facts"]})
+    from app.simulation.geometry_functions.output_policy import apply_output_policies_to_result
+    from app.simulation.geometry_functions.registry import _CHINH_SACH_XUAT
+
+    out_pols = b["bridge"].get("output_policies")
+    tok = _CHINH_SACH_XUAT.set(out_pols)
+    try:
+        r = run_fact_route(b["bridge"]["problem_text"], {"facts": b["facts"]})
+    finally:
+        _CHINH_SACH_XUAT.reset(tok)
     r.planner = {**(r.planner or {}), "bridge": {k: v for k, v in b["bridge"].items() if k != "problem_text"}}
     unit = b["bridge"]["declared_length_unit"]
     if r.status == "SERVED" and unit is not None and unit != (r.length_unit or "1"):
@@ -708,6 +737,7 @@ def chay_sau_cau_noi(b: dict[str, Any]) -> KetQuaTuyen:
             if plane.get("display_label") != f"({name})":
                 return KetQuaTuyen("REFUSED", "SOURCE_OBJECT_MISMATCH", "tên mặt đã khai không khớp mặt được Source Gate xác minh",
                                    planner=r.planner)
+        r = apply_output_policies_to_result(r, out_pols)
     return r
 
 

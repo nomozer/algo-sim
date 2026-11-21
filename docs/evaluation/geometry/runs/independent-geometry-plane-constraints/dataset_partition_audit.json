@@ -1,0 +1,63 @@
+{
+  "run_id": "independent-geometry-plane-constraints",
+  "generated_at_utc": "2026-11-13T12:59:07.530446+00:00",
+  "DEVELOPMENT_EXPOSED": {
+    "acceptance_27": "25 controlled-vision VMMU crops + 2 fresh VMMU items (r559, r695), all read while writing rules",
+    "vmmu_math_rows_seen": "177 rows seen by earlier runs + 137 screened by controlled-vision + 48 fresh-sampled (see sealed_h1_status.json for the rest)",
+    "synthetic_probes": "every probe of semantic-to-scene3d-verified-simulation and verified-section-intersection-dihedral-local",
+    "local_parser_benchmark_suites": [
+      "Dev72",
+      "HeldOut46",
+      "K-1",
+      "R-1",
+      "S-2",
+      "RenamedAndParaphrased8"
+    ],
+    "unit_test_texts": "every problem text inside backend/tests"
+  },
+  "NEW_DIAGNOSTIC_DEVELOPMENT": "agent-written probes of this run (tools/plane_constraint_probes.py), development from birth",
+  "INTERNAL_LOCKED_EVALUATION": {
+    "LOCKED_W2": {
+      "source_run": "hybrid-v2-independent-vietnamese-section-holdout-wave2",
+      "input": "hybrid-v2-independent-vietnamese-section-holdout-wave2/inputs/holdout-wave2.json",
+      "input_sha256": "1104be2ad8d4c5c96363f3648bc3c57dfcef5af4334c714e9cc94fc466f38e2d",
+      "oracle": "hybrid-v2-independent-vietnamese-section-holdout-wave2/oracle/expected.json",
+      "oracle_sha256": "5efbe57de91c31e18995e679ae6f0ecd69c366ea6bf148ee96255d4cfae7c844",
+      "cases": 96,
+      "serve": 48,
+      "refuse": 48,
+      "case_ids_sha256": "3c7a665b0bebd418a20f3ed9eeceae6cd2583edbd4107c4fe2738edc3d452b60"
+    },
+    "LOCKED_W3": {
+      "source_run": "hybrid-v2-independent-vietnamese-geometry-holdout-wave3",
+      "input": "hybrid-v2-independent-vietnamese-geometry-holdout-wave3/inputs/holdout-wave3.json",
+      "input_sha256": "cf2d3fd759b6a94c4eae2545a4a409e50859ff28e861f797609b6a259fe4dee0",
+      "oracle": "hybrid-v2-independent-vietnamese-geometry-holdout-wave3/oracle/expected.json",
+      "oracle_sha256": "9cabeb19ae0d10e1112795097e7ed18e0b0b3aa7bc18700a9d60813a0cbcf9df",
+      "cases": 144,
+      "serve": 72,
+      "refuse": 72,
+      "case_ids_sha256": "7349c13a1a03007c3e0fafb5c9d495265726f296c63dad3aee8246e32f87d4f0"
+    },
+    "class": "AI_CURATED_PROCEDURAL_INDEPENDENCE (isolated curator sessions with a file firewall, rational oracle written from first principles)",
+    "not_new": "both suites were curated in earlier runs and executed there through the Gemini-payload route; their problem texts later fed Source Gate wording work (hybrid-v2-wave2-source-gate-language-generalization, hybrid-v2-w3-f1-cross-sentence-plane-grounding)",
+    "fresh_to": "the local Vietnamese parser: its benchmark suites are listed above and no run executed these texts through route_text_input (grep of run tools)",
+    "agent_exposure_before_registration": [
+      "wave2 corpus-provenance.md §1-§2: the per-case design table (family, relation, plane spec such as '(M) ⊥ SB', oracle vertex count / area²) — not the wording",
+      "case schema keys and strata/family/question-type counts of both inputs (printed by script)",
+      "wave2 scoring-contract.md §1-§3"
+    ],
+    "texts_read_by_agent": 0
+  },
+  "NEW_LOCKED_EVALUATION": {
+    "status": "BLOCKED_DATA",
+    "sources_checked": {
+      "anvo25/vmmu (MIT)": "Math rows exhausted: 456 = 177 earlier + 137 controlled-vision + 48 fresh + 94 sealed",
+      "ViExam": "same paper (arXiv 2508.13680) as VMMU: same data",
+      "VNHSGE (github Xdao85/VNHSGE)": "no LICENSE file (404); usage rights not stated",
+      "roshansk23/Vietnam_HighSchool_Exam_Dataset (HF)": "license tag 'cc' without version, text only (figures dropped), mirrors VNHSGE"
+    },
+    "consequence": "no external, rights-cleared, unexposed in-scope set exists in this run; generalization to new external problems stays NOT_MEASURED"
+  },
+  "SEALED_H1_94": "sealed_h1_status.json"
+}

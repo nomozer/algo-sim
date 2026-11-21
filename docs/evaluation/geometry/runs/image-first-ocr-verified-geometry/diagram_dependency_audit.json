@@ -1,0 +1,1974 @@
+{
+ "schema": "algosim-diagram-dependency-audit/1",
+ "run_id": "image-first-ocr-verified-geometry",
+ "generated_at_utc": "2026-11-10T13:43:14.619820+00:00",
+ "head_commit": "bdc07a8557277d9780bee8689567990854ad4521",
+ "product_commit": "bdc07a8557277d9780bee8689567990854ad4521",
+ "working_tree_dirty": false,
+ "measured_system_tree_hash": "6851b71826793fffbb922e0b7706e1c2a32bb2203d615c8eb0414e82b0d2c947",
+ "measured_system_file_count": 115,
+ "test_environment": {
+  "os": "Windows-11-10.0.26100-SP0",
+  "python": "3.12.10",
+  "cpu_logical_cores": 12,
+  "allow_live_ai": 0,
+  "live_gemini_calls": 0,
+  "local_ocr_python": "ocr-venv (rapidocr 3.10.0, onnxruntime 1.31.1, tesserocr 2.12.0 / tesseract 5.5.3)",
+  "tessdata": "tessdata_fast vie + eng",
+  "benchmark_tier": "HOST_BENCHMARK_OFFLINE"
+ },
+ "model_versions": {
+  "local_ocr_route": "local-ocr-route/1",
+  "reconcile": "layout-aware-ocr-reconcile/1",
+  "readers": [
+   "tesseract-vie (tessdata_fast)",
+   "rapidocr PP-OCRv6 det/rec small",
+   "rapidocr latin PP-OCRv5 rec mobile (re-read)",
+   "tesseract-eng single-line ×3 (re-read)"
+  ],
+  "vision": "NOT_CALLED (ALLOW_LIVE_AI=0)"
+ },
+ "epistemic_classification": "VERIFIED FACT",
+ "diagram_classification_policy": {
+  "NO_DIAGRAM": "No embedded figure box detected (`blocking = False`).",
+  "DIAGRAM_LABELS_ONLY_CONSISTENT": "Figure contains only vertex labels already present in the problem text (`blocking = False`).",
+  "DIAGRAM_LABELS_UNMATCHED": "Figure contains labels not matched in the stem text (`blocking = True` -> 1-click diagram confirmation).",
+  "DIAGRAM_HAS_MEASUREMENTS": "Figure contains numeric/angle/perpendicular symbols (`blocking = True` -> requires student verification).",
+  "DIAGRAM_REFERENCED_BY_TEXT": "Stem text explicitly references the figure (`như hình vẽ`, `tham khảo hình bên`, `hình bên`; `blocking = True` -> requires 1-click student confirmation that the figure adds no unstated measurements).",
+  "DIAGRAM_PRESENT_UNREAD": "Embedded figure box detected with 0 OCR tokens read inside the figure (`blocking = True` -> 1-click diagram confirmation)."
+ },
+ "audit_summary": {
+  "total_images_audited": 28,
+  "images_with_figure_bbox": 21,
+  "diagram_only_fact_images_correctly_blocked": [
+   "ext_prt_15_vmmu_page_r28",
+   "new_ext_09_vmmu_ocr_r18",
+   "new_ext_10_vmmu_ocr_r21",
+   "new_ext_11_vmmu_ocr_r31",
+   "new_ext_12_vmmu_ocr_r3"
+  ],
+  "false_diagram_auto_solve_count": 0
+ },
+ "per_image_diagram_audit": [
+  {
+   "image_id": "ext_prt_01_hd_q_5259753",
+   "corpus": "external16",
+   "has_geometry_diagram_catalog": false,
+   "diagram_embedded_facts_catalog": [],
+   "figure_bboxes_prepared": [],
+   "diagram_classification": "NO_DIAGRAM",
+   "diagram_tokens": [],
+   "diagram_blocking": false
+  },
+  {
+   "image_id": "ext_prt_02_hd_q_7922924",
+   "corpus": "external16",
+   "has_geometry_diagram_catalog": true,
+   "diagram_embedded_facts_catalog": [
+    "Wireframe prism ABC.A'B'C' vertex labels only; height AA' omitted in statement"
+   ],
+   "figure_bboxes_prepared": [
+    [
+     428,
+     72,
+     666,
+     250
+    ]
+   ],
+   "diagram_classification": "DIAGRAM_LABELS_ONLY_CONSISTENT",
+   "diagram_tokens": [
+    {
+     "text": "A'",
+     "bbox": [
+      427,
+      77,
+      450,
+      96
+     ],
+     "reader": "rapidocr",
+     "in_figure_block": true
+    },
+    {
+     "text": "C'",
+     "bbox": [
+      640,
+      76,
+      664,
+      101
+     ],
+     "reader": "rapidocr",
+     "in_figure_block": true
+    },
+    {
+     "text": "B'",
+     "bbox": [
+      525,
+      118,
+      551,
+      139
+     ],
+     "reader": "rapidocr",
+     "in_figure_block": true
+    },
+    {
+     "text": "C",
+     "bbox": [
+      641,
+      185,
+      659,
+      203
+     ],
+     "reader": "rapidocr",
+     "in_figure_block": true
+    },
+    {
+     "text": "B",
+     "bbox": [
+      516,
+      231,
+      534,
+      249
+     ],
+     "reader": "rapidocr",
+     "in_figure_block": true
+    }
+   ],
+   "diagram_blocking": false
+  },
+  {
+   "image_id": "ext_prt_03_hd_q_7907931",
+   "corpus": "external16",
+   "has_geometry_diagram_catalog": false,
+   "diagram_embedded_facts_catalog": [],
+   "figure_bboxes_prepared": [],
+   "diagram_classification": "NO_DIAGRAM",
+   "diagram_tokens": [],
+   "diagram_blocking": false
+  },
+  {
+   "image_id": "ext_prt_04_hd_q_8436784",
+   "corpus": "external16",
+   "has_geometry_diagram_catalog": false,
+   "diagram_embedded_facts_catalog": [],
+   "figure_bboxes_prepared": [],
+   "diagram_classification": "NO_DIAGRAM",
+   "diagram_tokens": [],
+   "diagram_blocking": false
+  },
+  {
+   "image_id": "ext_prt_05_hd_q_7451806",
+   "corpus": "external16",
+   "has_geometry_diagram_catalog": false,
+   "diagram_embedded_facts_catalog": [],
+   "figure_bboxes_prepared": [],
+   "diagram_classification": "NO_DIAGRAM",
+   "diagram_tokens": [],
+   "diagram_blocking": false
+  },
+  {
+   "image_id": "ext_prt_06_hd_q_1084979",
+   "corpus": "external16",
+   "has_geometry_diagram_catalog": false,
+   "diagram_embedded_facts_catalog": [],
+   "figure_bboxes_prepared": [],
+   "diagram_classification": "NO_DIAGRAM",
+   "diagram_tokens": [],
+   "diagram_blocking": false
+  },
+  {
+   "image_id": "ext_prt_07_hd_q_7958052",
+   "corpus": "external16",
+   "has_geometry_diagram_catalog": false,
+   "diagram_embedded_facts_catalog": [
+    "Handwritten red ink '= 4,7.' written by student after the printed prompt"
+   ],
+   "figure_bboxes_prepared": [],
+   "diagram_classification": "NO_DIAGRAM",
+   "diagram_tokens": [],
+   "diagram_blocking": false
+  },
+  {
+   "image_id": "ext_prt_08_hd_q_7509702",
+   "corpus": "external16",
+   "has_geometry_diagram_catalog": true,
+   "diagram_embedded_facts_catalog": [
+    "Two printed parallelepiped diagrams for Câu 9 and Câu 12 + faint pencil working on right"
+   ],
+   "figure_bboxes_prepared": [
+    [
+     147,
+     73,
+     706,
+     549
+    ],
+    [
+     116,
+     802,
+     897,
+     1220
+    ]
+   ],
+   "diagram_classification": "DIAGRAM_HAS_MEASUREMENTS",
+   "diagram_tokens": [
+    {
+     "text": "Cu 9. Cho hi  D.AD.n đ nào sa đy đúng?",
+     "bbox": [
+      138,
+      132,
+      708,
+      187
+     ],
+     "reader": "rapidocr",
+     "in_figure_block": true
+    },
+    {
+     "text": "»Cu 12.Cho hinh hp ABCD.A'B'C'D'. Tinh tng AB+AD+A'C.",
+     "bbox": [
+      108,
+      869,
+      685,
+      924
+     ],
+     "reader": "rapidocr",
+     "in_figure_block": true
+    }
+   ],
+   "diagram_blocking": true
+  },
+  {
+   "image_id": "ext_prt_09_vmmu_page_r4",
+   "corpus": "external16",
+   "has_geometry_diagram_catalog": true,
+   "diagram_embedded_facts_catalog": [
+    "3D pyramid S.ABC wireframe matching text premises; upstream VMMU key = B (2)"
+   ],
+   "figure_bboxes_prepared": [
+    [
+     310,
+     675,
+     1211,
+     1445
+    ]
+   ],
+   "diagram_classification": "DIAGRAM_REFERENCED_BY_TEXT",
+   "diagram_tokens": [
+    {
+     "text": "S",
+     "bbox": [
+      507,
+      677,
+      563,
+      749
+     ],
+     "reader": "rapidocr",
+     "in_figure_block": true
+    },
+    {
+     "text": "C",
+     "bbox": [
+      1140,
+      1234,
+      1210,
+      1312
+     ],
+     "reader": "rapidocr",
+     "in_figure_block": true
+    },
+    {
+     "text": "B",
+     "bbox": [
+      306,
+      1374,
+      378,
+      1447
+     ],
+     "reader": "rapidocr",
+     "in_figure_block": true
+    }
+   ],
+   "diagram_blocking": true
+  },
+  {
+   "image_id": "ext_prt_10_vmmu_page_r7",
+   "corpus": "external16",
+   "has_geometry_diagram_catalog": true,
+   "diagram_embedded_facts_catalog": [
+    "Planar sector + 3D cone diagram; upstream VMMU key = A"
+   ],
+   "figure_bboxes_prepared": [
+    [
+     868,
+     278,
+     1613,
+     860
+    ]
+   ],
+   "diagram_classification": "DIAGRAM_LABELS_ONLY_CONSISTENT",
+   "diagram_tokens": [
+    {
+     "text": "B",
+     "bbox": [
+      864,
+      786,
+      910,
+      835
+     ],
+     "reader": "rapidocr",
+     "in_figure_block": true
+    },
+    {
+     "text": "C",
+     "bbox": [
+      1569,
+      796,
+      1608,
+      836
+     ],
+     "reader": "rapidocr",
+     "in_figure_block": true
+    },
+    {
+     "text": "H",
+     "bbox": [
+      1308,
+      813,
+      1359,
+      860
+     ],
+     "reader": "rapidocr",
+     "in_figure_block": true
+    }
+   ],
+   "diagram_blocking": false
+  },
+  {
+   "image_id": "ext_prt_11_vmmu_page_r10",
+   "corpus": "external16",
+   "has_geometry_diagram_catalog": true,
+   "diagram_embedded_facts_catalog": [
+    "3D prism ABC.A'B'C' wireframe; upstream VMMU key = C (30°, i.e. cos²=3/4)"
+   ],
+   "figure_bboxes_prepared": [
+    [
+     883,
+     209,
+     1613,
+     999
+    ]
+   ],
+   "diagram_classification": "DIAGRAM_LABELS_ONLY_CONSISTENT",
+   "diagram_tokens": [
+    {
+     "text": "A'",
+     "bbox": [
+      877,
+      198,
+      936,
+      244
+     ],
+     "reader": "rapidocr",
+     "in_figure_block": true
+    },
+    {
+     "text": "B'",
+     "bbox": [
+      1159,
+      379,
+      1217,
+      423
+     ],
+     "reader": "rapidocr",
+     "in_figure_block": true
+    },
+    {
+     "text": "C",
+     "bbox": [
+      1543,
+      743,
+      1579,
+      776
+     ],
+     "reader": "rapidocr",
+     "in_figure_block": true
+    },
+    {
+     "text": "B",
+     "bbox": [
+      1095,
+      873,
+      1140,
+      916
+     ],
+     "reader": "rapidocr",
+     "in_figure_block": true
+    }
+   ],
+   "diagram_blocking": false
+  },
+  {
+   "image_id": "ext_prt_12_vmmu_page_r11",
+   "corpus": "external16",
+   "has_geometry_diagram_catalog": true,
+   "diagram_embedded_facts_catalog": [
+    "3D prism ABC.A'B'C' wireframe; upstream VMMU key = B (2√3)"
+   ],
+   "figure_bboxes_prepared": [
+    [
+     1038,
+     185,
+     1458,
+     709
+    ]
+   ],
+   "diagram_classification": "DIAGRAM_LABELS_ONLY_CONSISTENT",
+   "diagram_tokens": [
+    {
+     "text": "A'",
+     "bbox": [
+      1032,
+      180,
+      1090,
+      234
+     ],
+     "reader": "rapidocr",
+     "in_figure_block": true
+    },
+    {
+     "text": "C'",
+     "bbox": [
+      1400,
+      175,
+      1455,
+      227
+     ],
+     "reader": "rapidocr",
+     "in_figure_block": true
+    },
+    {
+     "text": "B'",
+     "bbox": [
+      1190,
+      336,
+      1248,
+      388
+     ],
+     "reader": "rapidocr",
+     "in_figure_block": true
+    },
+    {
+     "text": "A",
+     "bbox": [
+      1036,
+      534,
+      1072,
+      575
+     ],
+     "reader": "rapidocr",
+     "in_figure_block": true
+    },
+    {
+     "text": "C",
+     "bbox": [
+      1414,
+      542,
+      1455,
+      587
+     ],
+     "reader": "rapidocr",
+     "in_figure_block": true
+    },
+    {
+     "text": "B",
+     "bbox": [
+      1194,
+      658,
+      1240,
+      708
+     ],
+     "reader": "rapidocr",
+     "in_figure_block": true
+    }
+   ],
+   "diagram_blocking": false
+  },
+  {
+   "image_id": "ext_prt_13_vmmu_page_r25",
+   "corpus": "external16",
+   "has_geometry_diagram_catalog": true,
+   "diagram_embedded_facts_catalog": [
+    "Horizontal cylinder with labels 0,25m, 1m, 3m; upstream VMMU key = B"
+   ],
+   "figure_bboxes_prepared": [
+    [
+     1280,
+     190,
+     1615,
+     489
+    ]
+   ],
+   "diagram_classification": "DIAGRAM_REFERENCED_BY_TEXT",
+   "diagram_tokens": [
+    {
+     "text": "0,25m",
+     "bbox": [
+      1346,
+      200,
+      1491,
+      255
+     ],
+     "reader": "rapidocr",
+     "in_figure_block": true
+    },
+    {
+     "text": "1m",
+     "bbox": [
+      1547,
+      311,
+      1620,
+      366
+     ],
+     "reader": "rapidocr",
+     "in_figure_block": true
+    }
+   ],
+   "diagram_blocking": true
+  },
+  {
+   "image_id": "ext_prt_14_vmmu_page_r26",
+   "corpus": "external16",
+   "has_geometry_diagram_catalog": true,
+   "diagram_embedded_facts_catalog": [
+    "Two tangent spheres inscribed in vertical cylinder; upstream VMMU key = B"
+   ],
+   "figure_bboxes_prepared": [
+    [
+     1067,
+     298,
+     1722,
+     788
+    ],
+    [
+     350,
+     310,
+     510,
+     454
+    ],
+    [
+     462,
+     405,
+     734,
+     669
+    ],
+    [
+     318,
+     584,
+     415,
+     705
+    ]
+   ],
+   "diagram_classification": "DIAGRAM_REFERENCED_BY_TEXT",
+   "diagram_tokens": [],
+   "diagram_blocking": true
+  },
+  {
+   "image_id": "ext_prt_15_vmmu_page_r28",
+   "corpus": "external16",
+   "has_geometry_diagram_catalog": true,
+   "diagram_embedded_facts_catalog": [
+    "Diagram-only heights '10cm' (cone) and '40cm' (cylinder) NOT present in body prose!"
+   ],
+   "figure_bboxes_prepared": [],
+   "diagram_classification": "DIAGRAM_REFERENCED_BY_TEXT",
+   "diagram_tokens": [],
+   "diagram_blocking": true
+  },
+  {
+   "image_id": "ext_hw_b1_01_hd_a_6043187",
+   "corpus": "external16",
+   "has_geometry_diagram_catalog": true,
+   "diagram_embedded_facts_catalog": [
+    "Hand-drawn 3D prism ABC.A'B'C' with right-angle mark at B and 60° arc at C', plus full handwritten derivation V = a³√3 below"
+   ],
+   "figure_bboxes_prepared": [
+    [
+     0,
+     0,
+     1024,
+     922
+    ],
+    [
+     0,
+     187,
+     212,
+     289
+    ],
+    [
+     0,
+     792,
+     378,
+     913
+    ]
+   ],
+   "diagram_classification": "DIAGRAM_LABELS_ONLY_CONSISTENT",
+   "diagram_tokens": [
+    {
+     "text": "A",
+     "bbox": [
+      74,
+      297,
+      122,
+      340
+     ],
+     "reader": "rapidocr",
+     "in_figure_block": false
+    },
+    {
+     "text": "A'",
+     "bbox": [
+      77,
+      447,
+      127,
+      498
+     ],
+     "reader": "rapidocr",
+     "in_figure_block": false
+    },
+    {
+     "text": "B′",
+     "bbox": [
+      199,
+      512,
+      248,
+      562
+     ],
+     "reader": "rapidocr",
+     "in_figure_block": false
+    },
+    {
+     "text": "B'C'",
+     "bbox": [
+      496,
+      645,
+      565,
+      704
+     ],
+     "reader": "rapidocr",
+     "in_figure_block": false
+    }
+   ],
+   "diagram_blocking": false
+  },
+  {
+   "image_id": "new_ext_01_vmmu_full_r313",
+   "corpus": "new_external",
+   "has_geometry_diagram_catalog": true,
+   "diagram_embedded_facts_catalog": [],
+   "figure_bboxes_prepared": [
+    [
+     1023,
+     150,
+     1536,
+     616
+    ],
+    [
+     201,
+     720,
+     466,
+     848
+    ],
+    [
+     1767,
+     720,
+     2001,
+     848
+    ]
+   ],
+   "diagram_classification": "DIAGRAM_REFERENCED_BY_TEXT",
+   "diagram_tokens": [
+    {
+     "text": "S",
+     "bbox": [
+      1040,
+      151,
+      1081,
+      199
+     ],
+     "reader": "rapidocr",
+     "in_figure_block": true
+    },
+    {
+     "text": "A",
+     "bbox": [
+      1026,
+      458,
+      1059,
+      495
+     ],
+     "reader": "rapidocr",
+     "in_figure_block": true
+    },
+    {
+     "text": "C",
+     "bbox": [
+      1498,
+      452,
+      1531,
+      486
+     ],
+     "reader": "rapidocr",
+     "in_figure_block": true
+    },
+    {
+     "text": "B",
+     "bbox": [
+      1134,
+      573,
+      1171,
+      615
+     ],
+     "reader": "rapidocr",
+     "in_figure_block": true
+    },
+    {
+     "text": "2√57a",
+     "bbox": [
+      278,
+      709,
+      443,
+      791
+     ],
+     "reader": "rapidocr",
+     "in_figure_block": true
+    },
+    {
+     "text": "5a",
+     "bbox": [
+      1845,
+      712,
+      1979,
+      789
+     ],
+     "reader": "rapidocr",
+     "in_figure_block": true
+    },
+    {
+     "text": "D.",
+     "bbox": [
+      1760,
+      757,
+      1826,
+      813
+     ],
+     "reader": "rapidocr",
+     "in_figure_block": true
+    },
+    {
+     "text": "19",
+     "bbox": [
+      325,
+      792,
+      396,
+      854
+     ],
+     "reader": "rapidocr",
+     "in_figure_block": true
+    },
+    {
+     "text": "19",
+     "bbox": [
+      1873,
+      794,
+      1945,
+      854
+     ],
+     "reader": "rapidocr",
+     "in_figure_block": true
+    }
+   ],
+   "diagram_blocking": true
+  },
+  {
+   "image_id": "new_ext_02_vmmu_full_r351",
+   "corpus": "new_external",
+   "has_geometry_diagram_catalog": true,
+   "diagram_embedded_facts_catalog": [],
+   "figure_bboxes_prepared": [
+    [
+     1593,
+     35,
+     1977,
+     372
+    ]
+   ],
+   "diagram_classification": "DIAGRAM_REFERENCED_BY_TEXT",
+   "diagram_tokens": [
+    {
+     "text": "DL",
+     "bbox": [
+      1691,
+      233,
+      1756,
+      268
+     ],
+     "reader": "rapidocr",
+     "in_figure_block": true
+    }
+   ],
+   "diagram_blocking": true
+  },
+  {
+   "image_id": "new_ext_03_vmmu_full_r387",
+   "corpus": "new_external",
+   "has_geometry_diagram_catalog": true,
+   "diagram_embedded_facts_catalog": [],
+   "figure_bboxes_prepared": [
+    [
+     1147,
+     197,
+     1598,
+     803
+    ],
+    [
+     232,
+     813,
+     435,
+     954
+    ],
+    [
+     775,
+     813,
+     962,
+     954
+    ],
+    [
+     1318,
+     813,
+     1520,
+     954
+    ]
+   ],
+   "diagram_classification": "DIAGRAM_REFERENCED_BY_TEXT",
+   "diagram_tokens": [
+    {
+     "text": "B",
+     "bbox": [
+      1371,
+      359,
+      1411,
+      396
+     ],
+     "reader": "rapidocr",
+     "in_figure_block": true
+    },
+    {
+     "text": "M",
+     "bbox": [
+      1550,
+      427,
+      1599,
+      471
+     ],
+     "reader": "rapidocr",
+     "in_figure_block": true
+    },
+    {
+     "text": "B",
+     "bbox": [
+      1376,
+      763,
+      1415,
+      804
+     ],
+     "reader": "rapidocr",
+     "in_figure_block": true
+    },
+    {
+     "text": "√21a",
+     "bbox": [
+      297,
+      817,
+      425,
+      890
+     ],
+     "reader": "rapidocr",
+     "in_figure_block": true
+    },
+    {
+     "text": "√2a",
+     "bbox": [
+      839,
+      809,
+      951,
+      894
+     ],
+     "reader": "rapidocr",
+     "in_figure_block": true
+    },
+    {
+     "text": "√2a",
+     "bbox": [
+      1388,
+      810,
+      1501,
+      894
+     ],
+     "reader": "rapidocr",
+     "in_figure_block": true
+    },
+    {
+     "text": "A.",
+     "bbox": [
+      227,
+      867,
+      290,
+      920
+     ],
+     "reader": "rapidocr",
+     "in_figure_block": true
+    },
+    {
+     "text": "B.",
+     "bbox": [
+      775,
+      865,
+      836,
+      919
+     ],
+     "reader": "rapidocr",
+     "in_figure_block": true
+    },
+    {
+     "text": "C.",
+     "bbox": [
+      1320,
+      862,
+      1386,
+      922
+     ],
+     "reader": "rapidocr",
+     "in_figure_block": true
+    },
+    {
+     "text": "7",
+     "bbox": [
+      336,
+      902,
+      382,
+      958
+     ],
+     "reader": "rapidocr",
+     "in_figure_block": true
+    },
+    {
+     "text": "2",
+     "bbox": [
+      870,
+      903,
+      917,
+      958
+     ],
+     "reader": "rapidocr",
+     "in_figure_block": true
+    },
+    {
+     "text": "4",
+     "bbox": [
+      1424,
+      903,
+      1465,
+      955
+     ],
+     "reader": "rapidocr",
+     "in_figure_block": true
+    }
+   ],
+   "diagram_blocking": true
+  },
+  {
+   "image_id": "new_ext_04_vmmu_full_r403",
+   "corpus": "new_external",
+   "has_geometry_diagram_catalog": true,
+   "diagram_embedded_facts_catalog": [],
+   "figure_bboxes_prepared": [
+    [
+     1007,
+     127,
+     1551,
+     511
+    ]
+   ],
+   "diagram_classification": "DIAGRAM_REFERENCED_BY_TEXT",
+   "diagram_tokens": [
+    {
+     "text": "S",
+     "bbox": [
+      1261,
+      120,
+      1301,
+      167
+     ],
+     "reader": "rapidocr",
+     "in_figure_block": true
+    },
+    {
+     "text": "M",
+     "bbox": [
+      1274,
+      289,
+      1313,
+      326
+     ],
+     "reader": "rapidocr",
+     "in_figure_block": true
+    },
+    {
+     "text": "B",
+     "bbox": [
+      1513,
+      348,
+      1549,
+      389
+     ],
+     "reader": "rapidocr",
+     "in_figure_block": true
+    },
+    {
+     "text": "N",
+     "bbox": [
+      1450,
+      415,
+      1489,
+      457
+     ],
+     "reader": "rapidocr",
+     "in_figure_block": true
+    },
+    {
+     "text": "C",
+     "bbox": [
+      1364,
+      467,
+      1404,
+      511
+     ],
+     "reader": "rapidocr",
+     "in_figure_block": true
+    }
+   ],
+   "diagram_blocking": true
+  },
+  {
+   "image_id": "new_ext_05_vmmu_full_r411",
+   "corpus": "new_external",
+   "has_geometry_diagram_catalog": true,
+   "diagram_embedded_facts_catalog": [],
+   "figure_bboxes_prepared": [
+    [
+     1004,
+     274,
+     1674,
+     969
+    ],
+    [
+     318,
+     346,
+     415,
+     467
+    ]
+   ],
+   "diagram_classification": "DIAGRAM_REFERENCED_BY_TEXT",
+   "diagram_tokens": [
+    {
+     "text": "S",
+     "bbox": [
+      1102,
+      275,
+      1156,
+      335
+     ],
+     "reader": "rapidocr",
+     "in_figure_block": true
+    },
+    {
+     "text": "C",
+     "bbox": [
+      1624,
+      617,
+      1674,
+      671
+     ],
+     "reader": "rapidocr",
+     "in_figure_block": true
+    },
+    {
+     "text": "A",
+     "bbox": [
+      1104,
+      635,
+      1143,
+      678
+     ],
+     "reader": "rapidocr",
+     "in_figure_block": true
+    },
+    {
+     "text": "B",
+     "bbox": [
+      1312,
+      838,
+      1368,
+      895
+     ],
+     "reader": "rapidocr",
+     "in_figure_block": true
+    }
+   ],
+   "diagram_blocking": true
+  },
+  {
+   "image_id": "new_ext_06_vmmu_full_r395",
+   "corpus": "new_external",
+   "has_geometry_diagram_catalog": true,
+   "diagram_embedded_facts_catalog": [],
+   "figure_bboxes_prepared": [
+    [
+     743,
+     300,
+     951,
+     663
+    ],
+    [
+     1032,
+     382,
+     1419,
+     642
+    ]
+   ],
+   "diagram_classification": "DIAGRAM_PRESENT_UNREAD",
+   "diagram_tokens": [],
+   "diagram_blocking": true
+  },
+  {
+   "image_id": "new_ext_07_vmmu_full_r412",
+   "corpus": "new_external",
+   "has_geometry_diagram_catalog": true,
+   "diagram_embedded_facts_catalog": [],
+   "figure_bboxes_prepared": [
+    [
+     294,
+     360,
+     404,
+     465
+    ],
+    [
+     837,
+     360,
+     946,
+     465
+    ],
+    [
+     1380,
+     360,
+     1489,
+     465
+    ],
+    [
+     1736,
+     360,
+     1846,
+     465
+    ]
+   ],
+   "diagram_classification": "DIAGRAM_REFERENCED_BY_TEXT",
+   "diagram_tokens": [
+    {
+     "text": "5",
+     "bbox": [
+      358,
+      352,
+      397,
+      403
+     ],
+     "reader": "rapidocr",
+     "in_figure_block": true
+    },
+    {
+     "text": "1",
+     "bbox": [
+      905,
+      355,
+      937,
+      400
+     ],
+     "reader": "rapidocr",
+     "in_figure_block": true
+    },
+    {
+     "text": "4",
+     "bbox": [
+      1451,
+      353,
+      1491,
+      403
+     ],
+     "reader": "rapidocr",
+     "in_figure_block": true
+    },
+    {
+     "text": "2",
+     "bbox": [
+      1799,
+      351,
+      1841,
+      404
+     ],
+     "reader": "rapidocr",
+     "in_figure_block": true
+    },
+    {
+     "text": "A.",
+     "bbox": [
+      285,
+      380,
+      351,
+      441
+     ],
+     "reader": "rapidocr",
+     "in_figure_block": true
+    },
+    {
+     "text": "-9",
+     "bbox": [
+      352,
+      394,
+      401,
+      473
+     ],
+     "reader": "rapidocr",
+     "in_figure_block": true
+    },
+    {
+     "text": "B.",
+     "bbox": [
+      830,
+      379,
+      897,
+      437
+     ],
+     "reader": "rapidocr",
+     "in_figure_block": true
+    },
+    {
+     "text": "C.",
+     "bbox": [
+      1379,
+      374,
+      1445,
+      441
+     ],
+     "reader": "rapidocr",
+     "in_figure_block": true
+    },
+    {
+     "text": "-9",
+     "bbox": [
+      1449,
+      391,
+      1494,
+      475
+     ],
+     "reader": "rapidocr",
+     "in_figure_block": true
+    },
+    {
+     "text": "D.",
+     "bbox": [
+      1726,
+      370,
+      1796,
+      439
+     ],
+     "reader": "rapidocr",
+     "in_figure_block": true
+    },
+    {
+     "text": "2",
+     "bbox": [
+      900,
+      420,
+      942,
+      473
+     ],
+     "reader": "rapidocr",
+     "in_figure_block": true
+    },
+    {
+     "text": "3",
+     "bbox": [
+      1800,
+      422,
+      1839,
+      473
+     ],
+     "reader": "rapidocr",
+     "in_figure_block": true
+    }
+   ],
+   "diagram_blocking": true
+  },
+  {
+   "image_id": "new_ext_08_vmmu_full_r424",
+   "corpus": "new_external",
+   "has_geometry_diagram_catalog": true,
+   "diagram_embedded_facts_catalog": [],
+   "figure_bboxes_prepared": [
+    [
+     1023,
+     337,
+     1458,
+     781
+    ],
+    [
+     201,
+     815,
+     450,
+     932
+    ],
+    [
+     697,
+     815,
+     946,
+     932
+    ],
+    [
+     1240,
+     815,
+     1489,
+     932
+    ]
+   ],
+   "diagram_classification": "DIAGRAM_HAS_MEASUREMENTS",
+   "diagram_tokens": [
+    {
+     "text": "3",
+     "bbox": [
+      353,
+      815,
+      395,
+      865
+     ],
+     "reader": "rapidocr",
+     "in_figure_block": true
+    },
+    {
+     "text": "4",
+     "bbox": [
+      850,
+      817,
+      890,
+      865
+     ],
+     "reader": "rapidocr",
+     "in_figure_block": true
+    },
+    {
+     "text": "5",
+     "bbox": [
+      1398,
+      817,
+      1435,
+      867
+     ],
+     "reader": "rapidocr",
+     "in_figure_block": true
+    },
+    {
+     "text": "二",
+     "bbox": [
+      315,
+      862,
+      353,
+      894
+     ],
+     "reader": "rapidocr",
+     "in_figure_block": true
+    },
+    {
+     "text": "二",
+     "bbox": [
+      353,
+      859,
+      398,
+      895
+     ],
+     "reader": "rapidocr",
+     "in_figure_block": true
+    },
+    {
+     "text": "π.",
+     "bbox": [
+      387,
+      857,
+      451,
+      900
+     ],
+     "reader": "rapidocr",
+     "in_figure_block": true
+    },
+    {
+     "text": "一",
+     "bbox": [
+      842,
+      859,
+      900,
+      896
+     ],
+     "reader": "rapidocr",
+     "in_figure_block": true
+    },
+    {
+     "text": "π.",
+     "bbox": [
+      882,
+      859,
+      944,
+      898
+     ],
+     "reader": "rapidocr",
+     "in_figure_block": true
+    },
+    {
+     "text": "二",
+     "bbox": [
+      1356,
+      859,
+      1398,
+      895
+     ],
+     "reader": "rapidocr",
+     "in_figure_block": true
+    },
+    {
+     "text": "π.",
+     "bbox": [
+      1430,
+      858,
+      1490,
+      901
+     ],
+     "reader": "rapidocr",
+     "in_figure_block": true
+    },
+    {
+     "text": "4",
+     "bbox": [
+      358,
+      889,
+      393,
+      936
+     ],
+     "reader": "rapidocr",
+     "in_figure_block": true
+    },
+    {
+     "text": "3",
+     "bbox": [
+      847,
+      886,
+      887,
+      940
+     ],
+     "reader": "rapidocr",
+     "in_figure_block": true
+    },
+    {
+     "text": "3",
+     "bbox": [
+      1396,
+      888,
+      1435,
+      940
+     ],
+     "reader": "rapidocr",
+     "in_figure_block": true
+    }
+   ],
+   "diagram_blocking": true
+  },
+  {
+   "image_id": "new_ext_09_vmmu_ocr_r18",
+   "corpus": "new_external",
+   "has_geometry_diagram_catalog": true,
+   "diagram_embedded_facts_catalog": [],
+   "figure_bboxes_prepared": [
+    [
+     992,
+     1152,
+     1489,
+     1619
+    ]
+   ],
+   "diagram_classification": "DIAGRAM_REFERENCED_BY_TEXT",
+   "diagram_tokens": [
+    {
+     "text": "F",
+     "bbox": [
+      1444,
+      1222,
+      1465,
+      1248
+     ],
+     "reader": "rapidocr",
+     "in_figure_block": true
+    },
+    {
+     "text": "B",
+     "bbox": [
+      1439,
+      1513,
+      1464,
+      1541
+     ],
+     "reader": "rapidocr",
+     "in_figure_block": true
+    }
+   ],
+   "diagram_blocking": true
+  },
+  {
+   "image_id": "new_ext_10_vmmu_ocr_r21",
+   "corpus": "new_external",
+   "has_geometry_diagram_catalog": true,
+   "diagram_embedded_facts_catalog": [],
+   "figure_bboxes_prepared": [
+    [
+     956,
+     143,
+     1690,
+     359
+    ]
+   ],
+   "diagram_classification": "DIAGRAM_REFERENCED_BY_TEXT",
+   "diagram_tokens": [
+    {
+     "text": "120cm",
+     "bbox": [
+      1264,
+      141,
+      1345,
+      172
+     ],
+     "reader": "rapidocr",
+     "in_figure_block": true
+    }
+   ],
+   "diagram_blocking": true
+  },
+  {
+   "image_id": "new_ext_11_vmmu_ocr_r31",
+   "corpus": "new_external",
+   "has_geometry_diagram_catalog": true,
+   "diagram_embedded_facts_catalog": [
+    "ABCD_RECTANGLE_PLUS_SEMICIRCLE_WINDOW",
+    "r_SEMICIRCLE_RADIUS",
+    "h_RECTANGLE_HEIGHT"
+   ],
+   "figure_bboxes_prepared": [
+    [
+     1069,
+     209,
+     1520,
+     699
+    ],
+    [
+     1364,
+     675,
+     1629,
+     769
+    ],
+    [
+     1907,
+     652,
+     2171,
+     769
+    ]
+   ],
+   "diagram_classification": "DIAGRAM_REFERENCED_BY_TEXT",
+   "diagram_tokens": [
+    {
+     "text": "D",
+     "bbox": [
+      1237,
+      211,
+      1269,
+      248
+     ],
+     "reader": "rapidocr",
+     "in_figure_block": true
+    },
+    {
+     "text": "E",
+     "bbox": [
+      1066,
+      363,
+      1102,
+      404
+     ],
+     "reader": "rapidocr",
+     "in_figure_block": true
+    },
+    {
+     "text": "C",
+     "bbox": [
+      1393,
+      374,
+      1428,
+      410
+     ],
+     "reader": "rapidocr",
+     "in_figure_block": true
+    },
+    {
+     "text": "h",
+     "bbox": [
+      1445,
+      471,
+      1475,
+      509
+     ],
+     "reader": "rapidocr",
+     "in_figure_block": true
+    },
+    {
+     "text": "A",
+     "bbox": [
+      1095,
+      599,
+      1124,
+      633
+     ],
+     "reader": "rapidocr",
+     "in_figure_block": true
+    },
+    {
+     "text": "B",
+     "bbox": [
+      1378,
+      595,
+      1415,
+      640
+     ],
+     "reader": "rapidocr",
+     "in_figure_block": true
+    },
+    {
+     "text": "4",
+     "bbox": [
+      1475,
+      654,
+      1515,
+      702
+     ],
+     "reader": "rapidocr",
+     "in_figure_block": true
+    },
+    {
+     "text": "2",
+     "bbox": [
+      2017,
+      651,
+      2058,
+      701
+     ],
+     "reader": "rapidocr",
+     "in_figure_block": true
+    },
+    {
+     "text": "C.",
+     "bbox": [
+      1354,
+      670,
+      1441,
+      741
+     ],
+     "reader": "rapidocr",
+     "in_figure_block": true
+    },
+    {
+     "text": "m.",
+     "bbox": [
+      1553,
+      687,
+      1631,
+      737
+     ],
+     "reader": "rapidocr",
+     "in_figure_block": true
+    },
+    {
+     "text": "D.",
+     "bbox": [
+      1894,
+      672,
+      1977,
+      738
+     ],
+     "reader": "rapidocr",
+     "in_figure_block": true
+    },
+    {
+     "text": "m.",
+     "bbox": [
+      2095,
+      691,
+      2173,
+      735
+     ],
+     "reader": "rapidocr",
+     "in_figure_block": true
+    },
+    {
+     "text": "π+4",
+     "bbox": [
+      1436,
+      721,
+      1553,
+      776
+     ],
+     "reader": "rapidocr",
+     "in_figure_block": true
+    },
+    {
+     "text": "4+π",
+     "bbox": [
+      1977,
+      720,
+      2097,
+      778
+     ],
+     "reader": "rapidocr",
+     "in_figure_block": true
+    }
+   ],
+   "diagram_blocking": true
+  },
+  {
+   "image_id": "new_ext_12_vmmu_ocr_r3",
+   "corpus": "new_external",
+   "has_geometry_diagram_catalog": false,
+   "diagram_embedded_facts_catalog": [
+    "VARIATION_TABLE_VALUES"
+   ],
+   "figure_bboxes_prepared": [
+    [
+     729,
+     557,
+     1769,
+     941
+    ]
+   ],
+   "diagram_classification": "DIAGRAM_REFERENCED_BY_TEXT",
+   "diagram_tokens": [
+    {
+     "text": "x",
+     "bbox": [
+      774,
+      585,
+      820,
+      632
+     ],
+     "reader": "rapidocr",
+     "in_figure_block": true
+    },
+    {
+     "text": "18",
+     "bbox": [
+      903,
+      588,
+      973,
+      626
+     ],
+     "reader": "rapidocr",
+     "in_figure_block": true
+    },
+    {
+     "text": "-2",
+     "bbox": [
+      1083,
+      573,
+      1154,
+      630
+     ],
+     "reader": "rapidocr",
+     "in_figure_block": true
+    },
+    {
+     "text": "0",
+     "bbox": [
+      1294,
+      576,
+      1334,
+      627
+     ],
+     "reader": "rapidocr",
+     "in_figure_block": true
+    },
+    {
+     "text": "2",
+     "bbox": [
+      1492,
+      575,
+      1537,
+      630
+     ],
+     "reader": "rapidocr",
+     "in_figure_block": true
+    },
+    {
+     "text": "+8",
+     "bbox": [
+      1672,
+      580,
+      1748,
+      625
+     ],
+     "reader": "rapidocr",
+     "in_figure_block": true
+    },
+    {
+     "text": "y'",
+     "bbox": [
+      759,
+      654,
+      824,
+      721
+     ],
+     "reader": "rapidocr",
+     "in_figure_block": true
+    },
+    {
+     "text": "十",
+     "bbox": [
+      965,
+      671,
+      1003,
+      710
+     ],
+     "reader": "rapidocr",
+     "in_figure_block": true
+    },
+    {
+     "text": "0",
+     "bbox": [
+      1108,
+      657,
+      1148,
+      707
+     ],
+     "reader": "rapidocr",
+     "in_figure_block": true
+    },
+    {
+     "text": "0",
+     "bbox": [
+      1294,
+      655,
+      1334,
+      705
+     ],
+     "reader": "rapidocr",
+     "in_figure_block": true
+    },
+    {
+     "text": "+",
+     "bbox": [
+      1386,
+      666,
+      1426,
+      705
+     ],
+     "reader": "rapidocr",
+     "in_figure_block": true
+    },
+    {
+     "text": "0",
+     "bbox": [
+      1494,
+      656,
+      1536,
+      709
+     ],
+     "reader": "rapidocr",
+     "in_figure_block": true
+    },
+    {
+     "text": "3",
+     "bbox": [
+      1099,
+      743,
+      1153,
+      803
+     ],
+     "reader": "rapidocr",
+     "in_figure_block": true
+    },
+    {
+     "text": "3",
+     "bbox": [
+      1493,
+      751,
+      1534,
+      803
+     ],
+     "reader": "rapidocr",
+     "in_figure_block": true
+    },
+    {
+     "text": "y",
+     "bbox": [
+      775,
+      803,
+      815,
+      855
+     ],
+     "reader": "rapidocr",
+     "in_figure_block": true
+    },
+    {
+     "text": "-8",
+     "bbox": [
+      898,
+      877,
+      963,
+      909
+     ],
+     "reader": "rapidocr",
+     "in_figure_block": true
+    },
+    {
+     "text": "-1",
+     "bbox": [
+      1286,
+      865,
+      1343,
+      910
+     ],
+     "reader": "rapidocr",
+     "in_figure_block": true
+    },
+    {
+     "text": "-8",
+     "bbox": [
+      1678,
+      872,
+      1748,
+      908
+     ],
+     "reader": "rapidocr",
+     "in_figure_block": true
+    }
+   ],
+   "diagram_blocking": true
+  }
+ ]
+}

@@ -1,0 +1,18 @@
+{
+  "run_id": "local-semantic-source-gate-reliability",
+  "generated_at_utc": "2026-11-13T04:54:20.249879+00:00",
+  "contract": "every typed fact cites a verbatim quote; every value occurrence in a premise sentence is attributed to exactly one call's quote; asked quantities must be asked in the source",
+  "changes": [
+    "_HOI_CUOI_DE accepts an optional 'theo <letter>' before 'bằng/là' at the end of the question only",
+    "_DUOI_BANG closes a value at 'biết' or at a capitalised new clause, so the next clause is not swallowed into the value"
+  ],
+  "weakened": false,
+  "why_not_weakened": "Both changes narrow where a value or a question ends; neither lets an unread premise or an unasked quantity pass. Counterexamples stay refused: 'theo a bằng 2a³' is not a question, 'AB = 2 BC' is not an equality of segments, a 'hoặc' disjunction is refused as NEGATED_CLAUSE.",
+  "tests": [
+    "backend/tests/geometry/test_local_semantic_coverage.py::test_theo_a_tail_with_a_value_is_an_assignment_not_a_question",
+    "backend/tests/geometry/test_local_semantic_coverage.py::test_value_boundary_does_not_accept_multiples_or_disjunctions",
+    "backend/tests (full suite, see full_regression_summary.json)"
+  ],
+  "wrong_served_after_on_exposed_set": [],
+  "classification": "VERIFIED_FACT for the tests; INFERENCE for 'no weakening' beyond the tested cases"
+}

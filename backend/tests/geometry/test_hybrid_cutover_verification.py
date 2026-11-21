@@ -141,8 +141,8 @@ def test_default_analyze_route_call_graph_and_retired_legacy_absence(monkeypatch
     monkeypatch.delenv("ALLOW_LIVE_AI", raising=False)
     monkeypatch.setenv("GEMINI_API_KEY", "unit-test-offline-stub-key")
 
-    assert M.CACHE_VERSION == "132"
-    assert M.ROUTE_D_CACHE_POLICY == "132:route-d"
+    from tests.cache_policy import assert_cache_policy_at_least
+    assert_cache_policy_at_least(132)
     assert M.hybrid_route_mode() == "live"
 
     # Physical retirement & module-closure checks

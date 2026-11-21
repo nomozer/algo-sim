@@ -1,0 +1,1859 @@
+{
+  "run_id": "real-image-ocr-vision-comparative-acceptance",
+  "head": "6bb22fa3bb183ad28cdf1395c99e5eb375fac97c",
+  "measured_system": [
+    "4ab43853edc030beda13ef017d4b6c51cf24127a0a41dd9149e640f4cffdbce3",
+    115
+  ],
+  "allow_live_ai": 0,
+  "ground_truth_authority": "AGENT_TRANSCRIBED_UNVERIFIED",
+  "independent_h1": "NOT_MEASURED",
+  "units": "ms",
+  "repeats_per_mode": 10,
+  "images": [
+    "hd_q_5259753.jpg",
+    "vmmu_page_r11_Math_0303_test_059_question_39_page_4_key_B_vqa.png"
+  ],
+  "server_states": {
+    "cold_model_cache_miss": "FastAPI process already serving; OCR worker stopped before the request (interpreter start + engine import + model load inside the request); all caches cleared",
+    "warm_model_cache_miss": "FastAPI process and OCR worker with loaded models alive; OCR and parser caches cleared",
+    "cache_hit": "same image bytes repeated; OCR result cache and parser cache populated; normalisation, region detection and reconciliation still execute"
+  },
+  "rows": [
+    {
+      "mode": "cold_model_cache_miss",
+      "sample": 0,
+      "elapsed_ms": 7916.122700000415,
+      "http_status": 200,
+      "prepare_status": "ready",
+      "metrics": {
+        "vlm_calls": 0,
+        "used_vlm": false,
+        "used_local_ocr": true,
+        "raw_input_bytes": 18008,
+        "vlm_payload_bytes": 0,
+        "uncropped_baseline_bytes": 24919,
+        "local_ocr_ms": 7813.49,
+        "local_parse_ms": 32.203,
+        "processing_ms": 7899.65
+      },
+      "server_ocr_route_timing": {
+        "ocr_ms": 7299.0,
+        "ocr_cached": false,
+        "cold_worker": true,
+        "reconcile_and_reread_ms": 514.49,
+        "reread_ms": 408.95,
+        "total_ms": 7813.49
+      },
+      "http_minus_server_processing_ms": 16.47270000041499,
+      "image": "hd_q_5259753.jpg",
+      "sampler_running": false
+    },
+    {
+      "mode": "cold_model_cache_miss",
+      "sample": 0,
+      "elapsed_ms": 6956.600299999991,
+      "http_status": 200,
+      "prepare_status": "ready",
+      "metrics": {
+        "vlm_calls": 0,
+        "used_vlm": false,
+        "used_local_ocr": true,
+        "raw_input_bytes": 18008,
+        "vlm_payload_bytes": 0,
+        "uncropped_baseline_bytes": 24919,
+        "local_ocr_ms": 6834.39,
+        "local_parse_ms": 44.076,
+        "processing_ms": 6933.32
+      },
+      "server_ocr_route_timing": {
+        "ocr_ms": 6288.94,
+        "ocr_cached": false,
+        "cold_worker": true,
+        "reconcile_and_reread_ms": 545.45,
+        "reread_ms": 443.87,
+        "total_ms": 6834.39
+      },
+      "http_minus_server_processing_ms": 23.280299999991257,
+      "image": "hd_q_5259753.jpg",
+      "sampler_running": true
+    },
+    {
+      "mode": "cold_model_cache_miss",
+      "sample": 1,
+      "elapsed_ms": 7822.0138999968185,
+      "http_status": 200,
+      "prepare_status": "needs_confirmation",
+      "metrics": {
+        "vlm_calls": 0,
+        "used_vlm": false,
+        "used_local_ocr": true,
+        "raw_input_bytes": 103189,
+        "vlm_payload_bytes": 0,
+        "uncropped_baseline_bytes": 130894,
+        "local_ocr_ms": 7574.53,
+        "processing_ms": 7805.11
+      },
+      "server_ocr_route_timing": {
+        "ocr_ms": 6447.93,
+        "ocr_cached": false,
+        "cold_worker": true,
+        "reconcile_and_reread_ms": 1126.6,
+        "reread_ms": 1055.83,
+        "total_ms": 7574.53
+      },
+      "http_minus_server_processing_ms": 16.903899996818836,
+      "image": "vmmu_page_r11_Math_0303_test_059_question_39_page_4_key_B_vqa.png",
+      "sampler_running": false
+    },
+    {
+      "mode": "cold_model_cache_miss",
+      "sample": 1,
+      "elapsed_ms": 6698.446199996397,
+      "http_status": 200,
+      "prepare_status": "needs_confirmation",
+      "metrics": {
+        "vlm_calls": 0,
+        "used_vlm": false,
+        "used_local_ocr": true,
+        "raw_input_bytes": 103189,
+        "vlm_payload_bytes": 0,
+        "uncropped_baseline_bytes": 130894,
+        "local_ocr_ms": 6466.98,
+        "processing_ms": 6662.85
+      },
+      "server_ocr_route_timing": {
+        "ocr_ms": 5930.99,
+        "ocr_cached": false,
+        "cold_worker": true,
+        "reconcile_and_reread_ms": 535.99,
+        "reread_ms": 490.52,
+        "total_ms": 6466.98
+      },
+      "http_minus_server_processing_ms": 35.596199996396535,
+      "image": "vmmu_page_r11_Math_0303_test_059_question_39_page_4_key_B_vqa.png",
+      "sampler_running": true
+    },
+    {
+      "mode": "cold_model_cache_miss",
+      "sample": 2,
+      "elapsed_ms": 4485.947200002556,
+      "http_status": 200,
+      "prepare_status": "ready",
+      "metrics": {
+        "vlm_calls": 0,
+        "used_vlm": false,
+        "used_local_ocr": true,
+        "raw_input_bytes": 18008,
+        "vlm_payload_bytes": 0,
+        "uncropped_baseline_bytes": 24919,
+        "local_ocr_ms": 4412.76,
+        "local_parse_ms": 32.621,
+        "processing_ms": 4476.86
+      },
+      "server_ocr_route_timing": {
+        "ocr_ms": 4087.83,
+        "ocr_cached": false,
+        "cold_worker": true,
+        "reconcile_and_reread_ms": 324.93,
+        "reread_ms": 259.54,
+        "total_ms": 4412.76
+      },
+      "http_minus_server_processing_ms": 9.087200002556528,
+      "image": "hd_q_5259753.jpg",
+      "sampler_running": false
+    },
+    {
+      "mode": "cold_model_cache_miss",
+      "sample": 2,
+      "elapsed_ms": 4612.794799999392,
+      "http_status": 200,
+      "prepare_status": "ready",
+      "metrics": {
+        "vlm_calls": 0,
+        "used_vlm": false,
+        "used_local_ocr": true,
+        "raw_input_bytes": 18008,
+        "vlm_payload_bytes": 0,
+        "uncropped_baseline_bytes": 24919,
+        "local_ocr_ms": 4537.15,
+        "local_parse_ms": 31.846,
+        "processing_ms": 4600.34
+      },
+      "server_ocr_route_timing": {
+        "ocr_ms": 4194.99,
+        "ocr_cached": false,
+        "cold_worker": true,
+        "reconcile_and_reread_ms": 342.16,
+        "reread_ms": 278.67,
+        "total_ms": 4537.15
+      },
+      "http_minus_server_processing_ms": 12.45479999939198,
+      "image": "hd_q_5259753.jpg",
+      "sampler_running": true
+    },
+    {
+      "mode": "cold_model_cache_miss",
+      "sample": 3,
+      "elapsed_ms": 4289.465000001655,
+      "http_status": 200,
+      "prepare_status": "needs_confirmation",
+      "metrics": {
+        "vlm_calls": 0,
+        "used_vlm": false,
+        "used_local_ocr": true,
+        "raw_input_bytes": 103189,
+        "vlm_payload_bytes": 0,
+        "uncropped_baseline_bytes": 130894,
+        "local_ocr_ms": 4132.65,
+        "processing_ms": 4275.62
+      },
+      "server_ocr_route_timing": {
+        "ocr_ms": 3609.08,
+        "ocr_cached": false,
+        "cold_worker": true,
+        "reconcile_and_reread_ms": 523.58,
+        "reread_ms": 472.03,
+        "total_ms": 4132.65
+      },
+      "http_minus_server_processing_ms": 13.845000001655535,
+      "image": "vmmu_page_r11_Math_0303_test_059_question_39_page_4_key_B_vqa.png",
+      "sampler_running": false
+    },
+    {
+      "mode": "cold_model_cache_miss",
+      "sample": 3,
+      "elapsed_ms": 4343.622999993386,
+      "http_status": 200,
+      "prepare_status": "needs_confirmation",
+      "metrics": {
+        "vlm_calls": 0,
+        "used_vlm": false,
+        "used_local_ocr": true,
+        "raw_input_bytes": 103189,
+        "vlm_payload_bytes": 0,
+        "uncropped_baseline_bytes": 130894,
+        "local_ocr_ms": 4174.96,
+        "processing_ms": 4330.96
+      },
+      "server_ocr_route_timing": {
+        "ocr_ms": 3507.65,
+        "ocr_cached": false,
+        "cold_worker": true,
+        "reconcile_and_reread_ms": 667.31,
+        "reread_ms": 615.04,
+        "total_ms": 4174.96
+      },
+      "http_minus_server_processing_ms": 12.66299999338571,
+      "image": "vmmu_page_r11_Math_0303_test_059_question_39_page_4_key_B_vqa.png",
+      "sampler_running": true
+    },
+    {
+      "mode": "cold_model_cache_miss",
+      "sample": 4,
+      "elapsed_ms": 4705.2946999974665,
+      "http_status": 200,
+      "prepare_status": "ready",
+      "metrics": {
+        "vlm_calls": 0,
+        "used_vlm": false,
+        "used_local_ocr": true,
+        "raw_input_bytes": 18008,
+        "vlm_payload_bytes": 0,
+        "uncropped_baseline_bytes": 24919,
+        "local_ocr_ms": 4637.83,
+        "local_parse_ms": 26.989,
+        "processing_ms": 4695.29
+      },
+      "server_ocr_route_timing": {
+        "ocr_ms": 4316.55,
+        "ocr_cached": false,
+        "cold_worker": true,
+        "reconcile_and_reread_ms": 321.28,
+        "reread_ms": 258.7,
+        "total_ms": 4637.83
+      },
+      "http_minus_server_processing_ms": 10.00469999746656,
+      "image": "hd_q_5259753.jpg",
+      "sampler_running": false
+    },
+    {
+      "mode": "cold_model_cache_miss",
+      "sample": 4,
+      "elapsed_ms": 4315.792100002,
+      "http_status": 200,
+      "prepare_status": "ready",
+      "metrics": {
+        "vlm_calls": 0,
+        "used_vlm": false,
+        "used_local_ocr": true,
+        "raw_input_bytes": 18008,
+        "vlm_payload_bytes": 0,
+        "uncropped_baseline_bytes": 24919,
+        "local_ocr_ms": 4243.17,
+        "local_parse_ms": 29.342,
+        "processing_ms": 4306.51
+      },
+      "server_ocr_route_timing": {
+        "ocr_ms": 3876.73,
+        "ocr_cached": false,
+        "cold_worker": true,
+        "reconcile_and_reread_ms": 366.43,
+        "reread_ms": 302.09,
+        "total_ms": 4243.17
+      },
+      "http_minus_server_processing_ms": 9.282100001999424,
+      "image": "hd_q_5259753.jpg",
+      "sampler_running": true
+    },
+    {
+      "mode": "cold_model_cache_miss",
+      "sample": 5,
+      "elapsed_ms": 4085.2186999982223,
+      "http_status": 200,
+      "prepare_status": "needs_confirmation",
+      "metrics": {
+        "vlm_calls": 0,
+        "used_vlm": false,
+        "used_local_ocr": true,
+        "raw_input_bytes": 103189,
+        "vlm_payload_bytes": 0,
+        "uncropped_baseline_bytes": 130894,
+        "local_ocr_ms": 3917.8,
+        "processing_ms": 4072.65
+      },
+      "server_ocr_route_timing": {
+        "ocr_ms": 3388.83,
+        "ocr_cached": false,
+        "cold_worker": true,
+        "reconcile_and_reread_ms": 528.96,
+        "reread_ms": 475.41,
+        "total_ms": 3917.8
+      },
+      "http_minus_server_processing_ms": 12.5686999982222,
+      "image": "vmmu_page_r11_Math_0303_test_059_question_39_page_4_key_B_vqa.png",
+      "sampler_running": false
+    },
+    {
+      "mode": "cold_model_cache_miss",
+      "sample": 5,
+      "elapsed_ms": 4190.264099997876,
+      "http_status": 200,
+      "prepare_status": "needs_confirmation",
+      "metrics": {
+        "vlm_calls": 0,
+        "used_vlm": false,
+        "used_local_ocr": true,
+        "raw_input_bytes": 103189,
+        "vlm_payload_bytes": 0,
+        "uncropped_baseline_bytes": 130894,
+        "local_ocr_ms": 4016.4,
+        "processing_ms": 4176.69
+      },
+      "server_ocr_route_timing": {
+        "ocr_ms": 3486.83,
+        "ocr_cached": false,
+        "cold_worker": true,
+        "reconcile_and_reread_ms": 529.57,
+        "reread_ms": 481.46,
+        "total_ms": 4016.4
+      },
+      "http_minus_server_processing_ms": 13.574099997876147,
+      "image": "vmmu_page_r11_Math_0303_test_059_question_39_page_4_key_B_vqa.png",
+      "sampler_running": true
+    },
+    {
+      "mode": "cold_model_cache_miss",
+      "sample": 6,
+      "elapsed_ms": 4220.3226999990875,
+      "http_status": 200,
+      "prepare_status": "ready",
+      "metrics": {
+        "vlm_calls": 0,
+        "used_vlm": false,
+        "used_local_ocr": true,
+        "raw_input_bytes": 18008,
+        "vlm_payload_bytes": 0,
+        "uncropped_baseline_bytes": 24919,
+        "local_ocr_ms": 4147.76,
+        "local_parse_ms": 28.166,
+        "processing_ms": 4211.3
+      },
+      "server_ocr_route_timing": {
+        "ocr_ms": 3792.67,
+        "ocr_cached": false,
+        "cold_worker": true,
+        "reconcile_and_reread_ms": 355.08,
+        "reread_ms": 282.05,
+        "total_ms": 4147.76
+      },
+      "http_minus_server_processing_ms": 9.022699999087308,
+      "image": "hd_q_5259753.jpg",
+      "sampler_running": false
+    },
+    {
+      "mode": "cold_model_cache_miss",
+      "sample": 6,
+      "elapsed_ms": 4238.14080000011,
+      "http_status": 200,
+      "prepare_status": "ready",
+      "metrics": {
+        "vlm_calls": 0,
+        "used_vlm": false,
+        "used_local_ocr": true,
+        "raw_input_bytes": 18008,
+        "vlm_payload_bytes": 0,
+        "uncropped_baseline_bytes": 24919,
+        "local_ocr_ms": 4167.36,
+        "local_parse_ms": 28.117,
+        "processing_ms": 4228.26
+      },
+      "server_ocr_route_timing": {
+        "ocr_ms": 3826.72,
+        "ocr_cached": false,
+        "cold_worker": true,
+        "reconcile_and_reread_ms": 340.64,
+        "reread_ms": 281.82,
+        "total_ms": 4167.36
+      },
+      "http_minus_server_processing_ms": 9.880800000109957,
+      "image": "hd_q_5259753.jpg",
+      "sampler_running": true
+    },
+    {
+      "mode": "cold_model_cache_miss",
+      "sample": 7,
+      "elapsed_ms": 4276.849200003198,
+      "http_status": 200,
+      "prepare_status": "needs_confirmation",
+      "metrics": {
+        "vlm_calls": 0,
+        "used_vlm": false,
+        "used_local_ocr": true,
+        "raw_input_bytes": 103189,
+        "vlm_payload_bytes": 0,
+        "uncropped_baseline_bytes": 130894,
+        "local_ocr_ms": 4109.73,
+        "processing_ms": 4265.29
+      },
+      "server_ocr_route_timing": {
+        "ocr_ms": 3582.67,
+        "ocr_cached": false,
+        "cold_worker": true,
+        "reconcile_and_reread_ms": 527.06,
+        "reread_ms": 456.83,
+        "total_ms": 4109.73
+      },
+      "http_minus_server_processing_ms": 11.559200003198384,
+      "image": "vmmu_page_r11_Math_0303_test_059_question_39_page_4_key_B_vqa.png",
+      "sampler_running": false
+    },
+    {
+      "mode": "cold_model_cache_miss",
+      "sample": 7,
+      "elapsed_ms": 4573.402399997576,
+      "http_status": 200,
+      "prepare_status": "needs_confirmation",
+      "metrics": {
+        "vlm_calls": 0,
+        "used_vlm": false,
+        "used_local_ocr": true,
+        "raw_input_bytes": 103189,
+        "vlm_payload_bytes": 0,
+        "uncropped_baseline_bytes": 130894,
+        "local_ocr_ms": 4404.39,
+        "processing_ms": 4559.53
+      },
+      "server_ocr_route_timing": {
+        "ocr_ms": 3840.53,
+        "ocr_cached": false,
+        "cold_worker": true,
+        "reconcile_and_reread_ms": 563.85,
+        "reread_ms": 512.59,
+        "total_ms": 4404.39
+      },
+      "http_minus_server_processing_ms": 13.872399997576395,
+      "image": "vmmu_page_r11_Math_0303_test_059_question_39_page_4_key_B_vqa.png",
+      "sampler_running": true
+    },
+    {
+      "mode": "cold_model_cache_miss",
+      "sample": 8,
+      "elapsed_ms": 4848.13540000323,
+      "http_status": 200,
+      "prepare_status": "ready",
+      "metrics": {
+        "vlm_calls": 0,
+        "used_vlm": false,
+        "used_local_ocr": true,
+        "raw_input_bytes": 18008,
+        "vlm_payload_bytes": 0,
+        "uncropped_baseline_bytes": 24919,
+        "local_ocr_ms": 4775.23,
+        "local_parse_ms": 30.294,
+        "processing_ms": 4838.27
+      },
+      "server_ocr_route_timing": {
+        "ocr_ms": 4452.62,
+        "ocr_cached": false,
+        "cold_worker": true,
+        "reconcile_and_reread_ms": 322.6,
+        "reread_ms": 254.74,
+        "total_ms": 4775.23
+      },
+      "http_minus_server_processing_ms": 9.865400003229297,
+      "image": "hd_q_5259753.jpg",
+      "sampler_running": false
+    },
+    {
+      "mode": "cold_model_cache_miss",
+      "sample": 8,
+      "elapsed_ms": 5103.6607999994885,
+      "http_status": 200,
+      "prepare_status": "ready",
+      "metrics": {
+        "vlm_calls": 0,
+        "used_vlm": false,
+        "used_local_ocr": true,
+        "raw_input_bytes": 18008,
+        "vlm_payload_bytes": 0,
+        "uncropped_baseline_bytes": 24919,
+        "local_ocr_ms": 5010.69,
+        "local_parse_ms": 33.245,
+        "processing_ms": 5087.8
+      },
+      "server_ocr_route_timing": {
+        "ocr_ms": 4630.64,
+        "ocr_cached": false,
+        "cold_worker": true,
+        "reconcile_and_reread_ms": 380.06,
+        "reread_ms": 287.24,
+        "total_ms": 5010.69
+      },
+      "http_minus_server_processing_ms": 15.860799999488336,
+      "image": "hd_q_5259753.jpg",
+      "sampler_running": true
+    },
+    {
+      "mode": "cold_model_cache_miss",
+      "sample": 9,
+      "elapsed_ms": 4751.2460999932955,
+      "http_status": 200,
+      "prepare_status": "needs_confirmation",
+      "metrics": {
+        "vlm_calls": 0,
+        "used_vlm": false,
+        "used_local_ocr": true,
+        "raw_input_bytes": 103189,
+        "vlm_payload_bytes": 0,
+        "uncropped_baseline_bytes": 130894,
+        "local_ocr_ms": 4588.53,
+        "processing_ms": 4738.45
+      },
+      "server_ocr_route_timing": {
+        "ocr_ms": 4033.67,
+        "ocr_cached": false,
+        "cold_worker": true,
+        "reconcile_and_reread_ms": 554.86,
+        "reread_ms": 493.7,
+        "total_ms": 4588.53
+      },
+      "http_minus_server_processing_ms": 12.796099993295684,
+      "image": "vmmu_page_r11_Math_0303_test_059_question_39_page_4_key_B_vqa.png",
+      "sampler_running": false
+    },
+    {
+      "mode": "cold_model_cache_miss",
+      "sample": 9,
+      "elapsed_ms": 5612.385899999936,
+      "http_status": 200,
+      "prepare_status": "needs_confirmation",
+      "metrics": {
+        "vlm_calls": 0,
+        "used_vlm": false,
+        "used_local_ocr": true,
+        "raw_input_bytes": 103189,
+        "vlm_payload_bytes": 0,
+        "uncropped_baseline_bytes": 130894,
+        "local_ocr_ms": 5391.4,
+        "processing_ms": 5599.92
+      },
+      "server_ocr_route_timing": {
+        "ocr_ms": 4742.63,
+        "ocr_cached": false,
+        "cold_worker": true,
+        "reconcile_and_reread_ms": 648.77,
+        "reread_ms": 594.43,
+        "total_ms": 5391.4
+      },
+      "http_minus_server_processing_ms": 12.465899999935573,
+      "image": "vmmu_page_r11_Math_0303_test_059_question_39_page_4_key_B_vqa.png",
+      "sampler_running": true
+    },
+    {
+      "mode": "warm_model_cache_miss",
+      "sample": 0,
+      "elapsed_ms": 2886.2111999987974,
+      "http_status": 200,
+      "prepare_status": "ready",
+      "metrics": {
+        "vlm_calls": 0,
+        "used_vlm": false,
+        "used_local_ocr": true,
+        "raw_input_bytes": 18008,
+        "vlm_payload_bytes": 0,
+        "uncropped_baseline_bytes": 24919,
+        "local_ocr_ms": 2801.52,
+        "local_parse_ms": 31.25,
+        "processing_ms": 2872.03
+      },
+      "server_ocr_route_timing": {
+        "ocr_ms": 2707.89,
+        "ocr_cached": false,
+        "cold_worker": false,
+        "reconcile_and_reread_ms": 93.63,
+        "reread_ms": 25.91,
+        "total_ms": 2801.52
+      },
+      "http_minus_server_processing_ms": 14.181199998797183,
+      "image": "hd_q_5259753.jpg",
+      "sampler_running": false
+    },
+    {
+      "mode": "warm_model_cache_miss",
+      "sample": 0,
+      "elapsed_ms": 2636.7338999989443,
+      "http_status": 200,
+      "prepare_status": "ready",
+      "metrics": {
+        "vlm_calls": 0,
+        "used_vlm": false,
+        "used_local_ocr": true,
+        "raw_input_bytes": 18008,
+        "vlm_payload_bytes": 0,
+        "uncropped_baseline_bytes": 24919,
+        "local_ocr_ms": 2505.41,
+        "local_parse_ms": 86.688,
+        "processing_ms": 2625.47
+      },
+      "server_ocr_route_timing": {
+        "ocr_ms": 2398.46,
+        "ocr_cached": false,
+        "cold_worker": false,
+        "reconcile_and_reread_ms": 106.95,
+        "reread_ms": 29.13,
+        "total_ms": 2505.41
+      },
+      "http_minus_server_processing_ms": 11.263899998944453,
+      "image": "hd_q_5259753.jpg",
+      "sampler_running": true
+    },
+    {
+      "mode": "warm_model_cache_miss",
+      "sample": 1,
+      "elapsed_ms": 2362.252899998566,
+      "http_status": 200,
+      "prepare_status": "needs_confirmation",
+      "metrics": {
+        "vlm_calls": 0,
+        "used_vlm": false,
+        "used_local_ocr": true,
+        "raw_input_bytes": 103189,
+        "vlm_payload_bytes": 0,
+        "uncropped_baseline_bytes": 130894,
+        "local_ocr_ms": 2160.69,
+        "processing_ms": 2336.71
+      },
+      "server_ocr_route_timing": {
+        "ocr_ms": 1719.0,
+        "ocr_cached": false,
+        "cold_worker": false,
+        "reconcile_and_reread_ms": 441.68,
+        "reread_ms": 365.65,
+        "total_ms": 2160.69
+      },
+      "http_minus_server_processing_ms": 25.5428999985661,
+      "image": "vmmu_page_r11_Math_0303_test_059_question_39_page_4_key_B_vqa.png",
+      "sampler_running": false
+    },
+    {
+      "mode": "warm_model_cache_miss",
+      "sample": 1,
+      "elapsed_ms": 2904.520299998694,
+      "http_status": 200,
+      "prepare_status": "needs_confirmation",
+      "metrics": {
+        "vlm_calls": 0,
+        "used_vlm": false,
+        "used_local_ocr": true,
+        "raw_input_bytes": 103189,
+        "vlm_payload_bytes": 0,
+        "uncropped_baseline_bytes": 130894,
+        "local_ocr_ms": 2596.91,
+        "processing_ms": 2882.55
+      },
+      "server_ocr_route_timing": {
+        "ocr_ms": 1944.89,
+        "ocr_cached": false,
+        "cold_worker": false,
+        "reconcile_and_reread_ms": 652.02,
+        "reread_ms": 582.9,
+        "total_ms": 2596.91
+      },
+      "http_minus_server_processing_ms": 21.970299998693918,
+      "image": "vmmu_page_r11_Math_0303_test_059_question_39_page_4_key_B_vqa.png",
+      "sampler_running": true
+    },
+    {
+      "mode": "warm_model_cache_miss",
+      "sample": 2,
+      "elapsed_ms": 2822.000100000878,
+      "http_status": 200,
+      "prepare_status": "ready",
+      "metrics": {
+        "vlm_calls": 0,
+        "used_vlm": false,
+        "used_local_ocr": true,
+        "raw_input_bytes": 18008,
+        "vlm_payload_bytes": 0,
+        "uncropped_baseline_bytes": 24919,
+        "local_ocr_ms": 2701.27,
+        "local_parse_ms": 41.985,
+        "processing_ms": 2790.5
+      },
+      "server_ocr_route_timing": {
+        "ocr_ms": 2598.28,
+        "ocr_cached": false,
+        "cold_worker": false,
+        "reconcile_and_reread_ms": 102.99,
+        "reread_ms": 30.67,
+        "total_ms": 2701.27
+      },
+      "http_minus_server_processing_ms": 31.500100000877865,
+      "image": "hd_q_5259753.jpg",
+      "sampler_running": false
+    },
+    {
+      "mode": "warm_model_cache_miss",
+      "sample": 2,
+      "elapsed_ms": 2654.872200000682,
+      "http_status": 200,
+      "prepare_status": "ready",
+      "metrics": {
+        "vlm_calls": 0,
+        "used_vlm": false,
+        "used_local_ocr": true,
+        "raw_input_bytes": 18008,
+        "vlm_payload_bytes": 0,
+        "uncropped_baseline_bytes": 24919,
+        "local_ocr_ms": 2572.26,
+        "local_parse_ms": 28.5,
+        "processing_ms": 2637.74
+      },
+      "server_ocr_route_timing": {
+        "ocr_ms": 2483.2,
+        "ocr_cached": false,
+        "cold_worker": false,
+        "reconcile_and_reread_ms": 89.06,
+        "reread_ms": 23.78,
+        "total_ms": 2572.26
+      },
+      "http_minus_server_processing_ms": 17.132200000682133,
+      "image": "hd_q_5259753.jpg",
+      "sampler_running": true
+    },
+    {
+      "mode": "warm_model_cache_miss",
+      "sample": 3,
+      "elapsed_ms": 2286.93740000017,
+      "http_status": 200,
+      "prepare_status": "needs_confirmation",
+      "metrics": {
+        "vlm_calls": 0,
+        "used_vlm": false,
+        "used_local_ocr": true,
+        "raw_input_bytes": 103189,
+        "vlm_payload_bytes": 0,
+        "uncropped_baseline_bytes": 130894,
+        "local_ocr_ms": 2110.1,
+        "processing_ms": 2270.36
+      },
+      "server_ocr_route_timing": {
+        "ocr_ms": 1835.9,
+        "ocr_cached": false,
+        "cold_worker": false,
+        "reconcile_and_reread_ms": 274.2,
+        "reread_ms": 222.55,
+        "total_ms": 2110.1
+      },
+      "http_minus_server_processing_ms": 16.577400000169746,
+      "image": "vmmu_page_r11_Math_0303_test_059_question_39_page_4_key_B_vqa.png",
+      "sampler_running": false
+    },
+    {
+      "mode": "warm_model_cache_miss",
+      "sample": 3,
+      "elapsed_ms": 2349.6852000025683,
+      "http_status": 200,
+      "prepare_status": "needs_confirmation",
+      "metrics": {
+        "vlm_calls": 0,
+        "used_vlm": false,
+        "used_local_ocr": true,
+        "raw_input_bytes": 103189,
+        "vlm_payload_bytes": 0,
+        "uncropped_baseline_bytes": 130894,
+        "local_ocr_ms": 2005.16,
+        "processing_ms": 2331.6
+      },
+      "server_ocr_route_timing": {
+        "ocr_ms": 1718.17,
+        "ocr_cached": false,
+        "cold_worker": false,
+        "reconcile_and_reread_ms": 286.99,
+        "reread_ms": 232.34,
+        "total_ms": 2005.16
+      },
+      "http_minus_server_processing_ms": 18.0852000025684,
+      "image": "vmmu_page_r11_Math_0303_test_059_question_39_page_4_key_B_vqa.png",
+      "sampler_running": true
+    },
+    {
+      "mode": "warm_model_cache_miss",
+      "sample": 4,
+      "elapsed_ms": 2369.3962000033935,
+      "http_status": 200,
+      "prepare_status": "ready",
+      "metrics": {
+        "vlm_calls": 0,
+        "used_vlm": false,
+        "used_local_ocr": true,
+        "raw_input_bytes": 18008,
+        "vlm_payload_bytes": 0,
+        "uncropped_baseline_bytes": 24919,
+        "local_ocr_ms": 2290.55,
+        "local_parse_ms": 34.018,
+        "processing_ms": 2355.27
+      },
+      "server_ocr_route_timing": {
+        "ocr_ms": 2204.65,
+        "ocr_cached": false,
+        "cold_worker": false,
+        "reconcile_and_reread_ms": 85.9,
+        "reread_ms": 22.05,
+        "total_ms": 2290.55
+      },
+      "http_minus_server_processing_ms": 14.126200003393478,
+      "image": "hd_q_5259753.jpg",
+      "sampler_running": false
+    },
+    {
+      "mode": "warm_model_cache_miss",
+      "sample": 4,
+      "elapsed_ms": 2531.3434999989113,
+      "http_status": 200,
+      "prepare_status": "ready",
+      "metrics": {
+        "vlm_calls": 0,
+        "used_vlm": false,
+        "used_local_ocr": true,
+        "raw_input_bytes": 18008,
+        "vlm_payload_bytes": 0,
+        "uncropped_baseline_bytes": 24919,
+        "local_ocr_ms": 2383.11,
+        "local_parse_ms": 103.27,
+        "processing_ms": 2521.01
+      },
+      "server_ocr_route_timing": {
+        "ocr_ms": 2178.32,
+        "ocr_cached": false,
+        "cold_worker": false,
+        "reconcile_and_reread_ms": 204.78,
+        "reread_ms": 85.5,
+        "total_ms": 2383.11
+      },
+      "http_minus_server_processing_ms": 10.333499998911066,
+      "image": "hd_q_5259753.jpg",
+      "sampler_running": true
+    },
+    {
+      "mode": "warm_model_cache_miss",
+      "sample": 5,
+      "elapsed_ms": 2467.29239999695,
+      "http_status": 200,
+      "prepare_status": "needs_confirmation",
+      "metrics": {
+        "vlm_calls": 0,
+        "used_vlm": false,
+        "used_local_ocr": true,
+        "raw_input_bytes": 103189,
+        "vlm_payload_bytes": 0,
+        "uncropped_baseline_bytes": 130894,
+        "local_ocr_ms": 2266.27,
+        "processing_ms": 2450.66
+      },
+      "server_ocr_route_timing": {
+        "ocr_ms": 1969.92,
+        "ocr_cached": false,
+        "cold_worker": false,
+        "reconcile_and_reread_ms": 296.35,
+        "reread_ms": 244.59,
+        "total_ms": 2266.27
+      },
+      "http_minus_server_processing_ms": 16.63239999694997,
+      "image": "vmmu_page_r11_Math_0303_test_059_question_39_page_4_key_B_vqa.png",
+      "sampler_running": false
+    },
+    {
+      "mode": "warm_model_cache_miss",
+      "sample": 5,
+      "elapsed_ms": 1935.298700002022,
+      "http_status": 200,
+      "prepare_status": "needs_confirmation",
+      "metrics": {
+        "vlm_calls": 0,
+        "used_vlm": false,
+        "used_local_ocr": true,
+        "raw_input_bytes": 103189,
+        "vlm_payload_bytes": 0,
+        "uncropped_baseline_bytes": 130894,
+        "local_ocr_ms": 1759.18,
+        "processing_ms": 1917.35
+      },
+      "server_ocr_route_timing": {
+        "ocr_ms": 1491.98,
+        "ocr_cached": false,
+        "cold_worker": false,
+        "reconcile_and_reread_ms": 267.2,
+        "reread_ms": 219.43,
+        "total_ms": 1759.18
+      },
+      "http_minus_server_processing_ms": 17.94870000202218,
+      "image": "vmmu_page_r11_Math_0303_test_059_question_39_page_4_key_B_vqa.png",
+      "sampler_running": true
+    },
+    {
+      "mode": "warm_model_cache_miss",
+      "sample": 6,
+      "elapsed_ms": 2222.4053000027197,
+      "http_status": 200,
+      "prepare_status": "ready",
+      "metrics": {
+        "vlm_calls": 0,
+        "used_vlm": false,
+        "used_local_ocr": true,
+        "raw_input_bytes": 18008,
+        "vlm_payload_bytes": 0,
+        "uncropped_baseline_bytes": 24919,
+        "local_ocr_ms": 2145.67,
+        "local_parse_ms": 33.033,
+        "processing_ms": 2212.05
+      },
+      "server_ocr_route_timing": {
+        "ocr_ms": 2054.39,
+        "ocr_cached": false,
+        "cold_worker": false,
+        "reconcile_and_reread_ms": 91.28,
+        "reread_ms": 24.36,
+        "total_ms": 2145.67
+      },
+      "http_minus_server_processing_ms": 10.35530000271956,
+      "image": "hd_q_5259753.jpg",
+      "sampler_running": false
+    },
+    {
+      "mode": "warm_model_cache_miss",
+      "sample": 6,
+      "elapsed_ms": 2589.2281999986153,
+      "http_status": 200,
+      "prepare_status": "ready",
+      "metrics": {
+        "vlm_calls": 0,
+        "used_vlm": false,
+        "used_local_ocr": true,
+        "raw_input_bytes": 18008,
+        "vlm_payload_bytes": 0,
+        "uncropped_baseline_bytes": 24919,
+        "local_ocr_ms": 2510.93,
+        "local_parse_ms": 26.915,
+        "processing_ms": 2578.89
+      },
+      "server_ocr_route_timing": {
+        "ocr_ms": 2424.38,
+        "ocr_cached": false,
+        "cold_worker": false,
+        "reconcile_and_reread_ms": 86.55,
+        "reread_ms": 23.25,
+        "total_ms": 2510.93
+      },
+      "http_minus_server_processing_ms": 10.338199998615437,
+      "image": "hd_q_5259753.jpg",
+      "sampler_running": true
+    },
+    {
+      "mode": "warm_model_cache_miss",
+      "sample": 7,
+      "elapsed_ms": 2785.688999996637,
+      "http_status": 200,
+      "prepare_status": "needs_confirmation",
+      "metrics": {
+        "vlm_calls": 0,
+        "used_vlm": false,
+        "used_local_ocr": true,
+        "raw_input_bytes": 103189,
+        "vlm_payload_bytes": 0,
+        "uncropped_baseline_bytes": 130894,
+        "local_ocr_ms": 2552.6,
+        "processing_ms": 2754.17
+      },
+      "server_ocr_route_timing": {
+        "ocr_ms": 2216.25,
+        "ocr_cached": false,
+        "cold_worker": false,
+        "reconcile_and_reread_ms": 336.36,
+        "reread_ms": 273.96,
+        "total_ms": 2552.6
+      },
+      "http_minus_server_processing_ms": 31.51899999663692,
+      "image": "vmmu_page_r11_Math_0303_test_059_question_39_page_4_key_B_vqa.png",
+      "sampler_running": false
+    },
+    {
+      "mode": "warm_model_cache_miss",
+      "sample": 7,
+      "elapsed_ms": 2211.2913000019034,
+      "http_status": 200,
+      "prepare_status": "needs_confirmation",
+      "metrics": {
+        "vlm_calls": 0,
+        "used_vlm": false,
+        "used_local_ocr": true,
+        "raw_input_bytes": 103189,
+        "vlm_payload_bytes": 0,
+        "uncropped_baseline_bytes": 130894,
+        "local_ocr_ms": 2038.75,
+        "processing_ms": 2195.21
+      },
+      "server_ocr_route_timing": {
+        "ocr_ms": 1695.28,
+        "ocr_cached": false,
+        "cold_worker": false,
+        "reconcile_and_reread_ms": 343.47,
+        "reread_ms": 278.46,
+        "total_ms": 2038.75
+      },
+      "http_minus_server_processing_ms": 16.0813000019034,
+      "image": "vmmu_page_r11_Math_0303_test_059_question_39_page_4_key_B_vqa.png",
+      "sampler_running": true
+    },
+    {
+      "mode": "warm_model_cache_miss",
+      "sample": 8,
+      "elapsed_ms": 2597.3807999980636,
+      "http_status": 200,
+      "prepare_status": "ready",
+      "metrics": {
+        "vlm_calls": 0,
+        "used_vlm": false,
+        "used_local_ocr": true,
+        "raw_input_bytes": 18008,
+        "vlm_payload_bytes": 0,
+        "uncropped_baseline_bytes": 24919,
+        "local_ocr_ms": 2504.12,
+        "local_parse_ms": 32.027,
+        "processing_ms": 2576.34
+      },
+      "server_ocr_route_timing": {
+        "ocr_ms": 2401.79,
+        "ocr_cached": false,
+        "cold_worker": false,
+        "reconcile_and_reread_ms": 102.34,
+        "reread_ms": 26.22,
+        "total_ms": 2504.12
+      },
+      "http_minus_server_processing_ms": 21.04079999806345,
+      "image": "hd_q_5259753.jpg",
+      "sampler_running": false
+    },
+    {
+      "mode": "warm_model_cache_miss",
+      "sample": 8,
+      "elapsed_ms": 2946.382599999197,
+      "http_status": 200,
+      "prepare_status": "ready",
+      "metrics": {
+        "vlm_calls": 0,
+        "used_vlm": false,
+        "used_local_ocr": true,
+        "raw_input_bytes": 18008,
+        "vlm_payload_bytes": 0,
+        "uncropped_baseline_bytes": 24919,
+        "local_ocr_ms": 2865.4,
+        "local_parse_ms": 34.524,
+        "processing_ms": 2934.15
+      },
+      "server_ocr_route_timing": {
+        "ocr_ms": 2740.92,
+        "ocr_cached": false,
+        "cold_worker": false,
+        "reconcile_and_reread_ms": 124.48,
+        "reread_ms": 38.73,
+        "total_ms": 2865.4
+      },
+      "http_minus_server_processing_ms": 12.232599999196736,
+      "image": "hd_q_5259753.jpg",
+      "sampler_running": true
+    },
+    {
+      "mode": "warm_model_cache_miss",
+      "sample": 9,
+      "elapsed_ms": 3012.4025000041,
+      "http_status": 200,
+      "prepare_status": "needs_confirmation",
+      "metrics": {
+        "vlm_calls": 0,
+        "used_vlm": false,
+        "used_local_ocr": true,
+        "raw_input_bytes": 103189,
+        "vlm_payload_bytes": 0,
+        "uncropped_baseline_bytes": 130894,
+        "local_ocr_ms": 2717.79,
+        "processing_ms": 2997.34
+      },
+      "server_ocr_route_timing": {
+        "ocr_ms": 2316.65,
+        "ocr_cached": false,
+        "cold_worker": false,
+        "reconcile_and_reread_ms": 401.14,
+        "reread_ms": 334.85,
+        "total_ms": 2717.79
+      },
+      "http_minus_server_processing_ms": 15.062500004100002,
+      "image": "vmmu_page_r11_Math_0303_test_059_question_39_page_4_key_B_vqa.png",
+      "sampler_running": false
+    },
+    {
+      "mode": "warm_model_cache_miss",
+      "sample": 9,
+      "elapsed_ms": 3053.724699995655,
+      "http_status": 200,
+      "prepare_status": "needs_confirmation",
+      "metrics": {
+        "vlm_calls": 0,
+        "used_vlm": false,
+        "used_local_ocr": true,
+        "raw_input_bytes": 103189,
+        "vlm_payload_bytes": 0,
+        "uncropped_baseline_bytes": 130894,
+        "local_ocr_ms": 2729.49,
+        "processing_ms": 3017.79
+      },
+      "server_ocr_route_timing": {
+        "ocr_ms": 2189.34,
+        "ocr_cached": false,
+        "cold_worker": false,
+        "reconcile_and_reread_ms": 540.15,
+        "reread_ms": 438.83,
+        "total_ms": 2729.49
+      },
+      "http_minus_server_processing_ms": 35.93469999565514,
+      "image": "vmmu_page_r11_Math_0303_test_059_question_39_page_4_key_B_vqa.png",
+      "sampler_running": true
+    },
+    {
+      "mode": "cache_hit",
+      "sample": 0,
+      "elapsed_ms": 128.14970000181347,
+      "http_status": 200,
+      "prepare_status": "ready",
+      "metrics": {
+        "vlm_calls": 0,
+        "used_vlm": false,
+        "used_local_ocr": true,
+        "raw_input_bytes": 18008,
+        "vlm_payload_bytes": 0,
+        "uncropped_baseline_bytes": 24919,
+        "local_ocr_ms": 67.25,
+        "local_parse_ms": 0.126,
+        "processing_ms": 115.26
+      },
+      "server_ocr_route_timing": {
+        "ocr_ms": 0.14,
+        "ocr_cached": true,
+        "cold_worker": false,
+        "reconcile_and_reread_ms": 67.11,
+        "reread_ms": 42.72,
+        "total_ms": 67.25
+      },
+      "http_minus_server_processing_ms": 12.889700001813466,
+      "image": "hd_q_5259753.jpg",
+      "sampler_running": false
+    },
+    {
+      "mode": "cache_hit",
+      "sample": 0,
+      "elapsed_ms": 129.90200000058394,
+      "http_status": 200,
+      "prepare_status": "ready",
+      "metrics": {
+        "vlm_calls": 0,
+        "used_vlm": false,
+        "used_local_ocr": true,
+        "raw_input_bytes": 18008,
+        "vlm_payload_bytes": 0,
+        "uncropped_baseline_bytes": 24919,
+        "local_ocr_ms": 70.1,
+        "local_parse_ms": 0.101,
+        "processing_ms": 112.28
+      },
+      "server_ocr_route_timing": {
+        "ocr_ms": 0.14,
+        "ocr_cached": true,
+        "cold_worker": false,
+        "reconcile_and_reread_ms": 69.95,
+        "reread_ms": 42.72,
+        "total_ms": 70.1
+      },
+      "http_minus_server_processing_ms": 17.622000000583938,
+      "image": "hd_q_5259753.jpg",
+      "sampler_running": true
+    },
+    {
+      "mode": "cache_hit",
+      "sample": 1,
+      "elapsed_ms": 250.7947999984026,
+      "http_status": 200,
+      "prepare_status": "needs_confirmation",
+      "metrics": {
+        "vlm_calls": 0,
+        "used_vlm": false,
+        "used_local_ocr": true,
+        "raw_input_bytes": 103189,
+        "vlm_payload_bytes": 0,
+        "uncropped_baseline_bytes": 130894,
+        "local_ocr_ms": 41.02,
+        "processing_ms": 234.73
+      },
+      "server_ocr_route_timing": {
+        "ocr_ms": 0.25,
+        "ocr_cached": true,
+        "cold_worker": false,
+        "reconcile_and_reread_ms": 40.77,
+        "reread_ms": 310.47,
+        "total_ms": 41.02
+      },
+      "http_minus_server_processing_ms": 16.064799998402606,
+      "image": "vmmu_page_r11_Math_0303_test_059_question_39_page_4_key_B_vqa.png",
+      "sampler_running": false
+    },
+    {
+      "mode": "cache_hit",
+      "sample": 1,
+      "elapsed_ms": 236.2319000021671,
+      "http_status": 200,
+      "prepare_status": "needs_confirmation",
+      "metrics": {
+        "vlm_calls": 0,
+        "used_vlm": false,
+        "used_local_ocr": true,
+        "raw_input_bytes": 103189,
+        "vlm_payload_bytes": 0,
+        "uncropped_baseline_bytes": 130894,
+        "local_ocr_ms": 53.48,
+        "processing_ms": 221.13
+      },
+      "server_ocr_route_timing": {
+        "ocr_ms": 0.26,
+        "ocr_cached": true,
+        "cold_worker": false,
+        "reconcile_and_reread_ms": 53.22,
+        "reread_ms": 310.47,
+        "total_ms": 53.48
+      },
+      "http_minus_server_processing_ms": 15.101900002167099,
+      "image": "vmmu_page_r11_Math_0303_test_059_question_39_page_4_key_B_vqa.png",
+      "sampler_running": true
+    },
+    {
+      "mode": "cache_hit",
+      "sample": 2,
+      "elapsed_ms": 114.22749999474036,
+      "http_status": 200,
+      "prepare_status": "ready",
+      "metrics": {
+        "vlm_calls": 0,
+        "used_vlm": false,
+        "used_local_ocr": true,
+        "raw_input_bytes": 18008,
+        "vlm_payload_bytes": 0,
+        "uncropped_baseline_bytes": 24919,
+        "local_ocr_ms": 58.32,
+        "local_parse_ms": 0.201,
+        "processing_ms": 98.12
+      },
+      "server_ocr_route_timing": {
+        "ocr_ms": 0.2,
+        "ocr_cached": true,
+        "cold_worker": false,
+        "reconcile_and_reread_ms": 58.12,
+        "reread_ms": 42.72,
+        "total_ms": 58.32
+      },
+      "http_minus_server_processing_ms": 16.10749999474035,
+      "image": "hd_q_5259753.jpg",
+      "sampler_running": false
+    },
+    {
+      "mode": "cache_hit",
+      "sample": 2,
+      "elapsed_ms": 106.30630000378005,
+      "http_status": 200,
+      "prepare_status": "ready",
+      "metrics": {
+        "vlm_calls": 0,
+        "used_vlm": false,
+        "used_local_ocr": true,
+        "raw_input_bytes": 18008,
+        "vlm_payload_bytes": 0,
+        "uncropped_baseline_bytes": 24919,
+        "local_ocr_ms": 62.03,
+        "local_parse_ms": 0.066,
+        "processing_ms": 96.09
+      },
+      "server_ocr_route_timing": {
+        "ocr_ms": 0.16,
+        "ocr_cached": true,
+        "cold_worker": false,
+        "reconcile_and_reread_ms": 61.87,
+        "reread_ms": 42.72,
+        "total_ms": 62.03
+      },
+      "http_minus_server_processing_ms": 10.216300003780049,
+      "image": "hd_q_5259753.jpg",
+      "sampler_running": true
+    },
+    {
+      "mode": "cache_hit",
+      "sample": 3,
+      "elapsed_ms": 264.71719999972265,
+      "http_status": 200,
+      "prepare_status": "needs_confirmation",
+      "metrics": {
+        "vlm_calls": 0,
+        "used_vlm": false,
+        "used_local_ocr": true,
+        "raw_input_bytes": 103189,
+        "vlm_payload_bytes": 0,
+        "uncropped_baseline_bytes": 130894,
+        "local_ocr_ms": 55.76,
+        "processing_ms": 250.64
+      },
+      "server_ocr_route_timing": {
+        "ocr_ms": 0.27,
+        "ocr_cached": true,
+        "cold_worker": false,
+        "reconcile_and_reread_ms": 55.49,
+        "reread_ms": 310.47,
+        "total_ms": 55.76
+      },
+      "http_minus_server_processing_ms": 14.077199999722666,
+      "image": "vmmu_page_r11_Math_0303_test_059_question_39_page_4_key_B_vqa.png",
+      "sampler_running": false
+    },
+    {
+      "mode": "cache_hit",
+      "sample": 3,
+      "elapsed_ms": 257.2044999978971,
+      "http_status": 200,
+      "prepare_status": "needs_confirmation",
+      "metrics": {
+        "vlm_calls": 0,
+        "used_vlm": false,
+        "used_local_ocr": true,
+        "raw_input_bytes": 103189,
+        "vlm_payload_bytes": 0,
+        "uncropped_baseline_bytes": 130894,
+        "local_ocr_ms": 56.1,
+        "processing_ms": 232.76
+      },
+      "server_ocr_route_timing": {
+        "ocr_ms": 0.27,
+        "ocr_cached": true,
+        "cold_worker": false,
+        "reconcile_and_reread_ms": 55.83,
+        "reread_ms": 310.47,
+        "total_ms": 56.1
+      },
+      "http_minus_server_processing_ms": 24.444499997897083,
+      "image": "vmmu_page_r11_Math_0303_test_059_question_39_page_4_key_B_vqa.png",
+      "sampler_running": true
+    },
+    {
+      "mode": "cache_hit",
+      "sample": 4,
+      "elapsed_ms": 102.09890000260202,
+      "http_status": 200,
+      "prepare_status": "ready",
+      "metrics": {
+        "vlm_calls": 0,
+        "used_vlm": false,
+        "used_local_ocr": true,
+        "raw_input_bytes": 18008,
+        "vlm_payload_bytes": 0,
+        "uncropped_baseline_bytes": 24919,
+        "local_ocr_ms": 57.3,
+        "local_parse_ms": 0.112,
+        "processing_ms": 90.91
+      },
+      "server_ocr_route_timing": {
+        "ocr_ms": 0.17,
+        "ocr_cached": true,
+        "cold_worker": false,
+        "reconcile_and_reread_ms": 57.12,
+        "reread_ms": 42.72,
+        "total_ms": 57.3
+      },
+      "http_minus_server_processing_ms": 11.188900002602026,
+      "image": "hd_q_5259753.jpg",
+      "sampler_running": false
+    },
+    {
+      "mode": "cache_hit",
+      "sample": 4,
+      "elapsed_ms": 99.6302999992622,
+      "http_status": 200,
+      "prepare_status": "ready",
+      "metrics": {
+        "vlm_calls": 0,
+        "used_vlm": false,
+        "used_local_ocr": true,
+        "raw_input_bytes": 18008,
+        "vlm_payload_bytes": 0,
+        "uncropped_baseline_bytes": 24919,
+        "local_ocr_ms": 56.04,
+        "local_parse_ms": 0.134,
+        "processing_ms": 88.68
+      },
+      "server_ocr_route_timing": {
+        "ocr_ms": 0.27,
+        "ocr_cached": true,
+        "cold_worker": false,
+        "reconcile_and_reread_ms": 55.76,
+        "reread_ms": 42.72,
+        "total_ms": 56.04
+      },
+      "http_minus_server_processing_ms": 10.9502999992622,
+      "image": "hd_q_5259753.jpg",
+      "sampler_running": true
+    },
+    {
+      "mode": "cache_hit",
+      "sample": 5,
+      "elapsed_ms": 198.27559999976074,
+      "http_status": 200,
+      "prepare_status": "needs_confirmation",
+      "metrics": {
+        "vlm_calls": 0,
+        "used_vlm": false,
+        "used_local_ocr": true,
+        "raw_input_bytes": 103189,
+        "vlm_payload_bytes": 0,
+        "uncropped_baseline_bytes": 130894,
+        "local_ocr_ms": 47.15,
+        "processing_ms": 184.4
+      },
+      "server_ocr_route_timing": {
+        "ocr_ms": 0.16,
+        "ocr_cached": true,
+        "cold_worker": false,
+        "reconcile_and_reread_ms": 46.99,
+        "reread_ms": 310.47,
+        "total_ms": 47.15
+      },
+      "http_minus_server_processing_ms": 13.875599999760738,
+      "image": "vmmu_page_r11_Math_0303_test_059_question_39_page_4_key_B_vqa.png",
+      "sampler_running": false
+    },
+    {
+      "mode": "cache_hit",
+      "sample": 5,
+      "elapsed_ms": 216.36690000013914,
+      "http_status": 200,
+      "prepare_status": "needs_confirmation",
+      "metrics": {
+        "vlm_calls": 0,
+        "used_vlm": false,
+        "used_local_ocr": true,
+        "raw_input_bytes": 103189,
+        "vlm_payload_bytes": 0,
+        "uncropped_baseline_bytes": 130894,
+        "local_ocr_ms": 46.82,
+        "processing_ms": 201.17
+      },
+      "server_ocr_route_timing": {
+        "ocr_ms": 0.25,
+        "ocr_cached": true,
+        "cold_worker": false,
+        "reconcile_and_reread_ms": 46.58,
+        "reread_ms": 310.47,
+        "total_ms": 46.82
+      },
+      "http_minus_server_processing_ms": 15.196900000139152,
+      "image": "vmmu_page_r11_Math_0303_test_059_question_39_page_4_key_B_vqa.png",
+      "sampler_running": true
+    },
+    {
+      "mode": "cache_hit",
+      "sample": 6,
+      "elapsed_ms": 115.20229999587173,
+      "http_status": 200,
+      "prepare_status": "ready",
+      "metrics": {
+        "vlm_calls": 0,
+        "used_vlm": false,
+        "used_local_ocr": true,
+        "raw_input_bytes": 18008,
+        "vlm_payload_bytes": 0,
+        "uncropped_baseline_bytes": 24919,
+        "local_ocr_ms": 63.26,
+        "local_parse_ms": 0.078,
+        "processing_ms": 96.4
+      },
+      "server_ocr_route_timing": {
+        "ocr_ms": 0.1,
+        "ocr_cached": true,
+        "cold_worker": false,
+        "reconcile_and_reread_ms": 63.16,
+        "reread_ms": 42.72,
+        "total_ms": 63.26
+      },
+      "http_minus_server_processing_ms": 18.80229999587172,
+      "image": "hd_q_5259753.jpg",
+      "sampler_running": false
+    },
+    {
+      "mode": "cache_hit",
+      "sample": 6,
+      "elapsed_ms": 149.62039999954868,
+      "http_status": 200,
+      "prepare_status": "ready",
+      "metrics": {
+        "vlm_calls": 0,
+        "used_vlm": false,
+        "used_local_ocr": true,
+        "raw_input_bytes": 18008,
+        "vlm_payload_bytes": 0,
+        "uncropped_baseline_bytes": 24919,
+        "local_ocr_ms": 75.62,
+        "local_parse_ms": 0.126,
+        "processing_ms": 137.55
+      },
+      "server_ocr_route_timing": {
+        "ocr_ms": 0.19,
+        "ocr_cached": true,
+        "cold_worker": false,
+        "reconcile_and_reread_ms": 75.43,
+        "reread_ms": 42.72,
+        "total_ms": 75.62
+      },
+      "http_minus_server_processing_ms": 12.07039999954867,
+      "image": "hd_q_5259753.jpg",
+      "sampler_running": true
+    },
+    {
+      "mode": "cache_hit",
+      "sample": 7,
+      "elapsed_ms": 193.47259999631206,
+      "http_status": 200,
+      "prepare_status": "needs_confirmation",
+      "metrics": {
+        "vlm_calls": 0,
+        "used_vlm": false,
+        "used_local_ocr": true,
+        "raw_input_bytes": 103189,
+        "vlm_payload_bytes": 0,
+        "uncropped_baseline_bytes": 130894,
+        "local_ocr_ms": 44.29,
+        "processing_ms": 182.08
+      },
+      "server_ocr_route_timing": {
+        "ocr_ms": 0.26,
+        "ocr_cached": true,
+        "cold_worker": false,
+        "reconcile_and_reread_ms": 44.03,
+        "reread_ms": 310.47,
+        "total_ms": 44.29
+      },
+      "http_minus_server_processing_ms": 11.392599996312043,
+      "image": "vmmu_page_r11_Math_0303_test_059_question_39_page_4_key_B_vqa.png",
+      "sampler_running": false
+    },
+    {
+      "mode": "cache_hit",
+      "sample": 7,
+      "elapsed_ms": 199.44889999896986,
+      "http_status": 200,
+      "prepare_status": "needs_confirmation",
+      "metrics": {
+        "vlm_calls": 0,
+        "used_vlm": false,
+        "used_local_ocr": true,
+        "raw_input_bytes": 103189,
+        "vlm_payload_bytes": 0,
+        "uncropped_baseline_bytes": 130894,
+        "local_ocr_ms": 43.49,
+        "processing_ms": 188.07
+      },
+      "server_ocr_route_timing": {
+        "ocr_ms": 0.35,
+        "ocr_cached": true,
+        "cold_worker": false,
+        "reconcile_and_reread_ms": 43.14,
+        "reread_ms": 310.47,
+        "total_ms": 43.49
+      },
+      "http_minus_server_processing_ms": 11.378899998969871,
+      "image": "vmmu_page_r11_Math_0303_test_059_question_39_page_4_key_B_vqa.png",
+      "sampler_running": true
+    },
+    {
+      "mode": "cache_hit",
+      "sample": 8,
+      "elapsed_ms": 104.99340000387747,
+      "http_status": 200,
+      "prepare_status": "ready",
+      "metrics": {
+        "vlm_calls": 0,
+        "used_vlm": false,
+        "used_local_ocr": true,
+        "raw_input_bytes": 18008,
+        "vlm_payload_bytes": 0,
+        "uncropped_baseline_bytes": 24919,
+        "local_ocr_ms": 62.34,
+        "local_parse_ms": 0.103,
+        "processing_ms": 93.22
+      },
+      "server_ocr_route_timing": {
+        "ocr_ms": 0.15,
+        "ocr_cached": true,
+        "cold_worker": false,
+        "reconcile_and_reread_ms": 62.19,
+        "reread_ms": 42.72,
+        "total_ms": 62.34
+      },
+      "http_minus_server_processing_ms": 11.77340000387747,
+      "image": "hd_q_5259753.jpg",
+      "sampler_running": false
+    },
+    {
+      "mode": "cache_hit",
+      "sample": 8,
+      "elapsed_ms": 117.13779999990948,
+      "http_status": 200,
+      "prepare_status": "ready",
+      "metrics": {
+        "vlm_calls": 0,
+        "used_vlm": false,
+        "used_local_ocr": true,
+        "raw_input_bytes": 18008,
+        "vlm_payload_bytes": 0,
+        "uncropped_baseline_bytes": 24919,
+        "local_ocr_ms": 61.67,
+        "local_parse_ms": 0.188,
+        "processing_ms": 104.6
+      },
+      "server_ocr_route_timing": {
+        "ocr_ms": 0.16,
+        "ocr_cached": true,
+        "cold_worker": false,
+        "reconcile_and_reread_ms": 61.52,
+        "reread_ms": 42.72,
+        "total_ms": 61.67
+      },
+      "http_minus_server_processing_ms": 12.537799999909481,
+      "image": "hd_q_5259753.jpg",
+      "sampler_running": true
+    },
+    {
+      "mode": "cache_hit",
+      "sample": 9,
+      "elapsed_ms": 320.7334999970044,
+      "http_status": 200,
+      "prepare_status": "needs_confirmation",
+      "metrics": {
+        "vlm_calls": 0,
+        "used_vlm": false,
+        "used_local_ocr": true,
+        "raw_input_bytes": 103189,
+        "vlm_payload_bytes": 0,
+        "uncropped_baseline_bytes": 130894,
+        "local_ocr_ms": 63.24,
+        "processing_ms": 284.08
+      },
+      "server_ocr_route_timing": {
+        "ocr_ms": 0.46,
+        "ocr_cached": true,
+        "cold_worker": false,
+        "reconcile_and_reread_ms": 62.79,
+        "reread_ms": 310.47,
+        "total_ms": 63.24
+      },
+      "http_minus_server_processing_ms": 36.65349999700442,
+      "image": "vmmu_page_r11_Math_0303_test_059_question_39_page_4_key_B_vqa.png",
+      "sampler_running": false
+    },
+    {
+      "mode": "cache_hit",
+      "sample": 9,
+      "elapsed_ms": 285.1139000049443,
+      "http_status": 200,
+      "prepare_status": "needs_confirmation",
+      "metrics": {
+        "vlm_calls": 0,
+        "used_vlm": false,
+        "used_local_ocr": true,
+        "raw_input_bytes": 103189,
+        "vlm_payload_bytes": 0,
+        "uncropped_baseline_bytes": 130894,
+        "local_ocr_ms": 60.6,
+        "processing_ms": 265.86
+      },
+      "server_ocr_route_timing": {
+        "ocr_ms": 0.27,
+        "ocr_cached": true,
+        "cold_worker": false,
+        "reconcile_and_reread_ms": 60.34,
+        "reread_ms": 310.47,
+        "total_ms": 60.6
+      },
+      "http_minus_server_processing_ms": 19.253900004944285,
+      "image": "vmmu_page_r11_Math_0303_test_059_question_39_page_4_key_B_vqa.png",
+      "sampler_running": true
+    }
+  ],
+  "summary_basis": "rows with sampler_running=false; the paired sampler_running=true rows feed only harness_sampler_ab and the memory profile",
+  "summary": {
+    "cold_model_cache_miss": {
+      "n": 10,
+      "p50": 4595.620950000011,
+      "p95_nearest_rank": 7916.122700000415
+    },
+    "warm_model_cache_miss": {
+      "n": 10,
+      "p50": 2532.3365999975067,
+      "p95_nearest_rank": 3012.4025000041
+    },
+    "cache_hit": {
+      "n": 10,
+      "p50": 160.81114999906276,
+      "p95_nearest_rank": 320.7334999970044
+    }
+  },
+  "summary_by_image": {
+    "cold_model_cache_miss": {
+      "hd_q_5259753.jpg": {
+        "n": 5,
+        "p50": 4705.2946999974665,
+        "p95_nearest_rank": 7916.122700000415
+      },
+      "vmmu_page_r11_Math_0303_test_059_question_39_page_4_key_B_vqa.png": {
+        "n": 5,
+        "p50": 4289.465000001655,
+        "p95_nearest_rank": 7822.0138999968185
+      }
+    },
+    "warm_model_cache_miss": {
+      "hd_q_5259753.jpg": {
+        "n": 5,
+        "p50": 2597.3807999980636,
+        "p95_nearest_rank": 2886.2111999987974
+      },
+      "vmmu_page_r11_Math_0303_test_059_question_39_page_4_key_B_vqa.png": {
+        "n": 5,
+        "p50": 2467.29239999695,
+        "p95_nearest_rank": 3012.4025000041
+      }
+    },
+    "cache_hit": {
+      "hd_q_5259753.jpg": {
+        "n": 5,
+        "p50": 114.22749999474036,
+        "p95_nearest_rank": 128.14970000181347
+      },
+      "vmmu_page_r11_Math_0303_test_059_question_39_page_4_key_B_vqa.png": {
+        "n": 5,
+        "p50": 250.7947999984026,
+        "p95_nearest_rank": 320.7334999970044
+      }
+    }
+  },
+  "summary_http_minus_server_processing_ms": {
+    "cold_model_cache_miss": {
+      "n": 10,
+      "p50": 12.063950000710292,
+      "p95_nearest_rank": 16.903899996818836
+    },
+    "warm_model_cache_miss": {
+      "n": 10,
+      "p50": 16.60489999855986,
+      "p95_nearest_rank": 31.51899999663692
+    },
+    "cache_hit": {
+      "n": 10,
+      "p50": 13.976399999741702,
+      "p95_nearest_rank": 36.65349999700442
+    }
+  },
+  "timing_boundary": "HTTP POST /api/input/prepare (loopback, new connection, session cookie obtained before the clock starts) through complete JSON body; excludes student dwell, /api/analyze and browser rendering",
+  "not_measured_here": [
+    "cold FastAPI process (see cold_process_benchmark.json)",
+    "browser upload-to-result (see frontend_browser_confirmation_audit.json)"
+  ],
+  "host": {
+    "logical_cpus": 12,
+    "total_physical_mib": 16163.3046875,
+    "available_physical_mib_at_start": 1749.78515625,
+    "available_physical_mib_at_end": 3001.9296875,
+    "whole_machine_cpu_busy_fraction_during_benchmark": 0.7971807763001406,
+    "isolation": "SHARED_DEVELOPER_WORKSTATION_NOT_ISOLATED: other applications were running; figures describe this host under that load"
+  },
+  "harness_sampler_ab": {
+    "cold_model_cache_miss": {
+      "sampler_paused": {
+        "n": 10,
+        "p50": 4595.620950000011,
+        "p95_nearest_rank": 7916.122700000415
+      },
+      "sampler_running": {
+        "n": 10,
+        "p50": 4593.098599998484,
+        "p95_nearest_rank": 6956.600299999991
+      }
+    },
+    "warm_model_cache_miss": {
+      "sampler_paused": {
+        "n": 10,
+        "p50": 2532.3365999975067,
+        "p95_nearest_rank": 3012.4025000041
+      },
+      "sampler_running": {
+        "n": 10,
+        "p50": 2612.98104999878,
+        "p95_nearest_rank": 3053.724699995655
+      }
+    },
+    "cache_hit": {
+      "sampler_paused": {
+        "n": 10,
+        "p50": 160.81114999906276,
+        "p95_nearest_rank": 320.7334999970044
+      },
+      "sampler_running": {
+        "n": 10,
+        "p50": 174.53464999925927,
+        "p95_nearest_rank": 285.1139000049443
+      }
+    }
+  },
+  "sampler_overhead": "the 25 ms process-tree sampler runs inside the FastAPI process; harness_sampler_ab compares the same workload with it paused and running"
+}

@@ -1,0 +1,681 @@
+{
+  "schema": "hybrid-capability-telemetry-metrics/1",
+  "live_gemini_requests": 0,
+  "versions": {
+    "registry": "geometry-functions/33",
+    "planner": "geometry-fact-planner/26",
+    "engine": "geometry-function-engine/24"
+  },
+  "registry_inventory": {
+    "total_registered_functions": 49,
+    "provider_offered_true": 31,
+    "provider_offered_false": 18,
+    "auxiliary_only_true": 1,
+    "provider_functions_exposed": 30
+  },
+  "candidate_inventory": {
+    "measured_system_paths": [
+      "backend/app",
+      "frontend/src/simulations/domains/semantic",
+      "frontend/src/simulations/domains/semantic/semantic_program.schema.json"
+    ],
+    "hashed_entries_so_file": 106,
+    "unique_measured_files": 105,
+    "backend_app_files": 100,
+    "frontend_semantic_files": 5,
+    "duplicate_explicit_path": "frontend/src/simulations/domains/semantic/semantic_program.schema.json",
+    "measured_system_tree_hash": "6e5e08c8a4ca0341b6c7c8ca57060fbaff74c7b86aa6ea3f12781005f494f8ed"
+  },
+  "composition_discriminating_probes": [
+    {
+      "case_id": "Case1_Direct_Primitive",
+      "status": "SERVED",
+      "envelope_status": "ok",
+      "reason_code": null,
+      "extraction_code": null,
+      "answers": {
+        "g_dist": "√2",
+        "g_vol": "8/3"
+      },
+      "certificate_verified": true,
+      "search_telemetry": {
+        "classification": "SOURCE_EXPLICIT_SEQUENCE",
+        "explored_states": 0,
+        "candidate_evaluations": 0,
+        "max_depth_reached": 0,
+        "pruned_nodes": 0,
+        "reused_intermediates": 0,
+        "planner_originated_steps": 0,
+        "source_defined_steps": 0,
+        "registered_decomposition_steps": 0,
+        "search_generated_steps": 0,
+        "normal_subgoals": []
+      },
+      "performance": {
+        "wall_ms": 551.414,
+        "extraction_validation_ms": 6.799,
+        "route_and_adapter_ms": 544.605,
+        "cpu_ms": 546.875,
+        "peak_memory_kb": 954.09
+      }
+    },
+    {
+      "case_id": "Case2_TwoStep_PointToLine",
+      "status": "SERVED",
+      "envelope_status": "ok",
+      "reason_code": null,
+      "extraction_code": null,
+      "answers": {
+        "g1": "√2"
+      },
+      "certificate_verified": true,
+      "search_telemetry": {
+        "classification": "REGISTERED_DECOMPOSITION",
+        "explored_states": 5,
+        "candidate_evaluations": 2,
+        "max_depth_reached": 0,
+        "pruned_nodes": 0,
+        "reused_intermediates": 0,
+        "planner_originated_steps": 1,
+        "source_defined_steps": 0,
+        "registered_decomposition_steps": 1,
+        "search_generated_steps": 0,
+        "normal_subgoals": []
+      },
+      "performance": {
+        "wall_ms": 99.316,
+        "extraction_validation_ms": 4.228,
+        "route_and_adapter_ms": 95.085,
+        "cpu_ms": 93.75,
+        "peak_memory_kb": 361.68
+      }
+    },
+    {
+      "case_id": "Case3a_Pyramid_MultiGoal_SharedFoot",
+      "status": "SERVED",
+      "envelope_status": "ok",
+      "reason_code": null,
+      "extraction_code": null,
+      "answers": {
+        "q1": "3/2",
+        "q2": "5/4"
+      },
+      "certificate_verified": true,
+      "search_telemetry": {
+        "classification": "REGISTERED_DECOMPOSITION",
+        "explored_states": 50,
+        "candidate_evaluations": 41,
+        "max_depth_reached": 0,
+        "pruned_nodes": 0,
+        "reused_intermediates": 2,
+        "planner_originated_steps": 8,
+        "source_defined_steps": 0,
+        "registered_decomposition_steps": 8,
+        "search_generated_steps": 0,
+        "normal_subgoals": []
+      },
+      "performance": {
+        "wall_ms": 295.702,
+        "extraction_validation_ms": 6.749,
+        "route_and_adapter_ms": 288.95,
+        "cpu_ms": 296.875,
+        "peak_memory_kb": 1165.24
+      }
+    },
+    {
+      "case_id": "Case3b_Prism_MultiGoal_SharedFoot",
+      "status": "SERVED",
+      "envelope_status": "ok",
+      "reason_code": null,
+      "extraction_code": null,
+      "answers": {
+        "q1": "25/4",
+        "q2": "33/8"
+      },
+      "certificate_verified": true,
+      "search_telemetry": {
+        "classification": "REGISTERED_DECOMPOSITION",
+        "explored_states": 50,
+        "candidate_evaluations": 41,
+        "max_depth_reached": 0,
+        "pruned_nodes": 0,
+        "reused_intermediates": 2,
+        "planner_originated_steps": 8,
+        "source_defined_steps": 0,
+        "registered_decomposition_steps": 8,
+        "search_generated_steps": 0,
+        "normal_subgoals": []
+      },
+      "performance": {
+        "wall_ms": 243.498,
+        "extraction_validation_ms": 7.813,
+        "route_and_adapter_ms": 235.682,
+        "cpu_ms": 250.0,
+        "peak_memory_kb": 1040.86
+      }
+    }
+  ],
+  "gap1_constrained_plane_coplanarity": {
+    "before_fix": {
+      "Gap1A_divide_segment_on_AB": {
+        "status": "REFUSED",
+        "reason_code": "ENGINE_SELF_CHECK_FAILED",
+        "rejected_normal_candidates": [
+          "S",
+          "A"
+        ],
+        "selected_point": "B"
+      },
+      "Gap1B_centroid_on_SAB": {
+        "status": "REFUSED",
+        "reason_code": "ENGINE_SELF_CHECK_FAILED",
+        "rejected_normal_candidates": [
+          "S",
+          "A"
+        ],
+        "selected_point": "B"
+      },
+      "Gap1C_projection_on_SB": {
+        "status": "REFUSED",
+        "reason_code": "ENGINE_SELF_CHECK_FAILED",
+        "rejected_normal_candidates": [
+          "S",
+          "A"
+        ],
+        "selected_point": "B"
+      },
+      "Gap1D_intersection_on_AC_BD": {
+        "status": "REFUSED",
+        "reason_code": "ENGINE_SELF_CHECK_FAILED",
+        "rejected_normal_candidates": [
+          "S",
+          "C"
+        ],
+        "selected_point": "A"
+      }
+    },
+    "after_fix": [
+      {
+        "case_id": "Gap1A_divide_segment_on_AB",
+        "status": "SERVED",
+        "envelope_status": "ok",
+        "reason_code": null,
+        "extraction_code": null,
+        "answers": {
+          "q1": "√5"
+        },
+        "certificate_verified": true,
+        "search_telemetry": {
+          "classification": "REGISTERED_DECOMPOSITION",
+          "explored_states": 0,
+          "candidate_evaluations": 0,
+          "max_depth_reached": 0,
+          "pruned_nodes": 0,
+          "reused_intermediates": 0,
+          "planner_originated_steps": 2,
+          "source_defined_steps": 0,
+          "registered_decomposition_steps": 2,
+          "search_generated_steps": 0,
+          "normal_subgoals": [
+            {
+              "need": "Normal(SAM)",
+              "candidates": 2,
+              "rejected_count": 3,
+              "rejected_points": [
+                "A",
+                "B",
+                "S"
+              ],
+              "selected_point": "C"
+            }
+          ]
+        },
+        "performance": {
+          "wall_ms": 246.82,
+          "extraction_validation_ms": 6.889,
+          "route_and_adapter_ms": 239.928,
+          "cpu_ms": 250.0,
+          "peak_memory_kb": 721.39
+        }
+      },
+      {
+        "case_id": "Gap1B_centroid_on_SAB",
+        "status": "SERVED",
+        "envelope_status": "ok",
+        "reason_code": null,
+        "extraction_code": null,
+        "answers": {
+          "q1": "√5"
+        },
+        "certificate_verified": true,
+        "search_telemetry": {
+          "classification": "REGISTERED_DECOMPOSITION",
+          "explored_states": 0,
+          "candidate_evaluations": 0,
+          "max_depth_reached": 0,
+          "pruned_nodes": 0,
+          "reused_intermediates": 0,
+          "planner_originated_steps": 2,
+          "source_defined_steps": 0,
+          "registered_decomposition_steps": 2,
+          "search_generated_steps": 0,
+          "normal_subgoals": [
+            {
+              "need": "Normal(SAG)",
+              "candidates": 2,
+              "rejected_count": 3,
+              "rejected_points": [
+                "A",
+                "B",
+                "S"
+              ],
+              "selected_point": "C"
+            }
+          ]
+        },
+        "performance": {
+          "wall_ms": 219.669,
+          "extraction_validation_ms": 5.881,
+          "route_and_adapter_ms": 213.785,
+          "cpu_ms": 218.75,
+          "peak_memory_kb": 768.26
+        }
+      },
+      {
+        "case_id": "Gap1C_projection_on_SB",
+        "status": "SERVED",
+        "envelope_status": "ok",
+        "reason_code": null,
+        "extraction_code": null,
+        "answers": {
+          "q1": "√5"
+        },
+        "certificate_verified": true,
+        "search_telemetry": {
+          "classification": "REGISTERED_DECOMPOSITION",
+          "explored_states": 0,
+          "candidate_evaluations": 0,
+          "max_depth_reached": 0,
+          "pruned_nodes": 0,
+          "reused_intermediates": 0,
+          "planner_originated_steps": 2,
+          "source_defined_steps": 0,
+          "registered_decomposition_steps": 2,
+          "search_generated_steps": 0,
+          "normal_subgoals": [
+            {
+              "need": "Normal(SAH)",
+              "candidates": 2,
+              "rejected_count": 3,
+              "rejected_points": [
+                "A",
+                "B",
+                "S"
+              ],
+              "selected_point": "C"
+            }
+          ]
+        },
+        "performance": {
+          "wall_ms": 228.202,
+          "extraction_validation_ms": 6.399,
+          "route_and_adapter_ms": 221.801,
+          "cpu_ms": 218.75,
+          "peak_memory_kb": 753.82
+        }
+      },
+      {
+        "case_id": "Gap1D_intersection_on_AC_BD",
+        "status": "SERVED",
+        "envelope_status": "ok",
+        "reason_code": null,
+        "extraction_code": null,
+        "answers": {
+          "q1": "√17/2"
+        },
+        "certificate_verified": true,
+        "search_telemetry": {
+          "classification": "REGISTERED_DECOMPOSITION",
+          "explored_states": 0,
+          "candidate_evaluations": 0,
+          "max_depth_reached": 0,
+          "pruned_nodes": 0,
+          "reused_intermediates": 0,
+          "planner_originated_steps": 2,
+          "source_defined_steps": 0,
+          "registered_decomposition_steps": 2,
+          "search_generated_steps": 0,
+          "normal_subgoals": [
+            {
+              "need": "Normal(SCO)",
+              "candidates": 2,
+              "rejected_count": 3,
+              "rejected_points": [
+                "A",
+                "C",
+                "S"
+              ],
+              "selected_point": "B"
+            }
+          ]
+        },
+        "performance": {
+          "wall_ms": 284.288,
+          "extraction_validation_ms": 6.158,
+          "route_and_adapter_ms": 278.127,
+          "cpu_ms": 281.25,
+          "peak_memory_kb": 799.61
+        }
+      }
+    ]
+  },
+  "gap2_c26_clarification_recovery": {
+    "before_fix": {
+      "S-2_strict_gold_projection_correct": {
+        "numerator": 26,
+        "denominator": 36
+      },
+      "S-2_correct_clarification": {
+        "numerator": 0,
+        "denominator": 6
+      },
+      "S-2_clarify_status_recovered": {
+        "numerator": 3,
+        "denominator": 6
+      },
+      "failing_s2_clarify_cases": [
+        {
+          "case_id": "S2-C-D05_projection_missing_target",
+          "observed_status": "REFUSED",
+          "hybrid_code": "QUOTE_NOT_IN_SOURCE",
+          "hybrid_outcome": "WRONG_REASON_REFUSAL"
+        },
+        {
+          "case_id": "S2-C-C04_angle_plane_missing",
+          "observed_status": "REFUSED",
+          "hybrid_code": "INVALID_MATH_GOAL",
+          "hybrid_outcome": "WRONG_REASON_REFUSAL"
+        },
+        {
+          "case_id": "S2-C-A01_goc_chieu",
+          "observed_status": "CLARIFY",
+          "hybrid_code": "AMBIGUOUS_FACT",
+          "hybrid_outcome": "WRONG_REASON_CLARIFICATION"
+        }
+      ]
+    },
+    "after_fix": {
+      "K-1": {
+        "study": "K-1",
+        "cases_total": 16,
+        "positive_served_oracle_exact": {
+          "numerator": 10,
+          "denominator": 10
+        },
+        "negative_refused_or_clarified": {
+          "numerator": 6,
+          "denominator": 6
+        },
+        "wrong_served": 0,
+        "strict_gold_projection_correct": 10,
+        "outcomes": {
+          "SERVED_WRONG": 4,
+          "WRONG_REASON_REFUSAL": 2,
+          "SERVED_CORRECT": 6,
+          "CORRECT_REFUSAL": 2,
+          "CORRECT_CLARIFICATION": 2
+        },
+        "latency_p50_ms": 39.412,
+        "latency_p95_ms": 57.373,
+        "clarify_cases": [
+          {
+            "case_id": "K-E01",
+            "expected_outcome": "CLARIFY",
+            "observed_status": "CLARIFY",
+            "hybrid_code": "AMBIGUOUS_FACT",
+            "end_to_end_correct": true,
+            "reason_verified": true,
+            "hybrid_outcome": "CORRECT_CLARIFICATION",
+            "latency_ms": 5.056
+          },
+          {
+            "case_id": "K-E02",
+            "expected_outcome": "CLARIFY",
+            "observed_status": "CLARIFY",
+            "hybrid_code": "AMBIGUOUS_FACT",
+            "end_to_end_correct": true,
+            "reason_verified": true,
+            "hybrid_outcome": "CORRECT_CLARIFICATION",
+            "latency_ms": 6.816
+          }
+        ]
+      },
+      "S-2": {
+        "study": "S-2",
+        "cases_total": 36,
+        "positive_served_oracle_exact": {
+          "numerator": 17,
+          "denominator": 18
+        },
+        "negative_refused_or_clarified": {
+          "numerator": 18,
+          "denominator": 18
+        },
+        "wrong_served": 0,
+        "strict_gold_projection_correct": 29,
+        "outcomes": {
+          "SERVED_CORRECT": 16,
+          "SERVED_WRONG": 1,
+          "CORRECT_CLARIFICATION": 3,
+          "WRONG_REASON_REFUSAL": 3,
+          "WRONG_REASON_CLARIFICATION": 2,
+          "CORRECT_REFUSAL": 10,
+          "FALSE_REFUSAL": 1
+        },
+        "latency_p50_ms": 13.102,
+        "latency_p95_ms": 27.648,
+        "clarify_cases": [
+          {
+            "case_id": "S2-C-A01_goc_chieu",
+            "expected_outcome": "CLARIFY",
+            "observed_status": "CLARIFY",
+            "hybrid_code": "AMBIGUOUS_FACT",
+            "end_to_end_correct": true,
+            "reason_verified": true,
+            "hybrid_outcome": "CORRECT_CLARIFICATION",
+            "latency_ms": 3.547
+          },
+          {
+            "case_id": "S2-C-D05_projection_missing_target",
+            "expected_outcome": "CLARIFY",
+            "observed_status": "CLARIFY",
+            "hybrid_code": "AMBIGUOUS_FACT",
+            "end_to_end_correct": true,
+            "reason_verified": true,
+            "hybrid_outcome": "CORRECT_CLARIFICATION",
+            "latency_ms": 3.307
+          },
+          {
+            "case_id": "S2-C-D06_unnamed_prism",
+            "expected_outcome": "CLARIFY",
+            "observed_status": "REFUSED",
+            "hybrid_code": "UNKNOWN_LABEL",
+            "end_to_end_correct": false,
+            "reason_verified": false,
+            "hybrid_outcome": "WRONG_REASON_REFUSAL",
+            "latency_ms": 2.354
+          },
+          {
+            "case_id": "S2-C-C04_angle_plane_missing",
+            "expected_outcome": "CLARIFY",
+            "observed_status": "CLARIFY",
+            "hybrid_code": "AMBIGUOUS_FACT",
+            "end_to_end_correct": true,
+            "reason_verified": true,
+            "hybrid_outcome": "CORRECT_CLARIFICATION",
+            "latency_ms": 3.584
+          },
+          {
+            "case_id": "S2-C-C05_draw_then_compute",
+            "expected_outcome": "CLARIFY",
+            "observed_status": "CLARIFY",
+            "hybrid_code": "AMBIGUOUS_FACT",
+            "end_to_end_correct": false,
+            "reason_verified": false,
+            "hybrid_outcome": "WRONG_REASON_CLARIFICATION",
+            "latency_ms": 3.346
+          },
+          {
+            "case_id": "S2-C-C06_square_without_side",
+            "expected_outcome": "CLARIFY",
+            "observed_status": "CLARIFY",
+            "hybrid_code": "AMBIGUOUS_FACT",
+            "end_to_end_correct": false,
+            "reason_verified": false,
+            "hybrid_outcome": "WRONG_REASON_CLARIFICATION",
+            "latency_ms": 3.412
+          }
+        ]
+      },
+      "R-1": {
+        "study": "R-1",
+        "cases_total": 18,
+        "positive_served_oracle_exact": {
+          "numerator": 13,
+          "denominator": 13
+        },
+        "negative_refused_or_clarified": {
+          "numerator": 5,
+          "denominator": 5
+        },
+        "wrong_served": 0,
+        "strict_gold_projection_correct": 12,
+        "outcomes": {
+          "SERVED_CORRECT": 10,
+          "SERVED_WRONG": 3,
+          "WRONG_REASON_CLARIFICATION": 1,
+          "WRONG_REASON_REFUSAL": 2,
+          "CORRECT_REFUSAL": 2
+        },
+        "latency_p50_ms": 21.345,
+        "latency_p95_ms": 59.875,
+        "clarify_cases": [
+          {
+            "case_id": "R1-E01",
+            "expected_outcome": "CLARIFY",
+            "observed_status": "CLARIFY",
+            "hybrid_code": "AMBIGUOUS_FACT",
+            "end_to_end_correct": false,
+            "reason_verified": false,
+            "hybrid_outcome": "WRONG_REASON_CLARIFICATION",
+            "latency_ms": 3.288
+          },
+          {
+            "case_id": "R1-E02",
+            "expected_outcome": "CLARIFY",
+            "observed_status": "REFUSED",
+            "hybrid_code": "SOURCE_OBJECT_MISMATCH",
+            "end_to_end_correct": false,
+            "reason_verified": false,
+            "hybrid_outcome": "WRONG_REASON_REFUSAL",
+            "latency_ms": 5.972
+          }
+        ]
+      },
+      "combined_70_positive_served_oracle_exact": {
+        "numerator": 40,
+        "denominator": 41
+      },
+      "combined_70_negative_refused_or_clarified": {
+        "numerator": 29,
+        "denominator": 29
+      },
+      "combined_70_wrong_served": 0,
+      "S-2_strict_gold_projection_correct": {
+        "numerator": 29,
+        "denominator": 36
+      },
+      "S-2_correct_clarification": {
+        "numerator": 3,
+        "denominator": 6
+      },
+      "S-2_clarify_status_recovered": {
+        "numerator": 5,
+        "denominator": 6
+      }
+    }
+  },
+  "gold_replay_verification": {
+    "K-1": {
+      "end_to_end_correct": {
+        "numerator": 16,
+        "denominator": 16,
+        "rate": 1.0
+      },
+      "hybrid_outcomes": {
+        "SERVED_CORRECT": 10,
+        "SERVED_WRONG": 0,
+        "CORRECT_REFUSAL": 4,
+        "FALSE_REFUSAL": 0,
+        "WRONG_REASON_REFUSAL": 0,
+        "CORRECT_CLARIFICATION": 2,
+        "WRONG_REASON_CLARIFICATION": 0,
+        "FALSE_CLARIFICATION": 0,
+        "REASON_NOT_VERIFIED": 0,
+        "INFRASTRUCTURE_FAILURE": 0
+      }
+    },
+    "S-2": {
+      "end_to_end_correct": {
+        "numerator": 35,
+        "denominator": 36,
+        "rate": 0.972222
+      },
+      "hybrid_outcomes": {
+        "SERVED_CORRECT": 17,
+        "SERVED_WRONG": 0,
+        "CORRECT_REFUSAL": 12,
+        "FALSE_REFUSAL": 1,
+        "WRONG_REASON_REFUSAL": 0,
+        "CORRECT_CLARIFICATION": 6,
+        "WRONG_REASON_CLARIFICATION": 0,
+        "FALSE_CLARIFICATION": 0,
+        "REASON_NOT_VERIFIED": 0,
+        "INFRASTRUCTURE_FAILURE": 0
+      }
+    },
+    "R-1": {
+      "end_to_end_correct": {
+        "numerator": 18,
+        "denominator": 18,
+        "rate": 1.0
+      },
+      "hybrid_outcomes": {
+        "SERVED_CORRECT": 13,
+        "SERVED_WRONG": 0,
+        "CORRECT_REFUSAL": 3,
+        "FALSE_REFUSAL": 0,
+        "WRONG_REASON_REFUSAL": 0,
+        "CORRECT_CLARIFICATION": 2,
+        "WRONG_REASON_CLARIFICATION": 0,
+        "FALSE_CLARIFICATION": 0,
+        "REASON_NOT_VERIFIED": 0,
+        "INFRASTRUCTURE_FAILURE": 0
+      }
+    }
+  },
+  "performance_summary": {
+    "profiled_cases_count": 8,
+    "cold_start_first_case_wall_ms": 551.414,
+    "cold_start_first_case_peak_memory_kb": 954.09,
+    "warm_steady_state_cases_count": 7,
+    "warm_wall_p50_ms": 243.498,
+    "warm_wall_p95_ms": 295.702,
+    "warm_cpu_p50_ms": 250.0,
+    "warm_peak_memory_max_kb": 1165.24,
+    "wall_p50_ms": 246.82,
+    "wall_p95_ms": 551.414,
+    "cpu_p50_ms": 250.0,
+    "peak_memory_max_kb": 1165.24
+  }
+}

@@ -1,0 +1,37 @@
+{
+  "schema": "algosim-ground-truth-verification-status/1",
+  "run_id": "controlled-vision-real-image-validation",
+  "generated_at_utc": "2026-11-12T12:24:30.173862+00:00",
+  "items": 25,
+  "human_verified": 0,
+  "agent_transcribed_unverified": 25,
+  "ocr_or_axo_output_used_as_reference": 0,
+  "transcription_method": "Agent read contact sheets and native-resolution crops of the cached images. No OCR text of these images had been inspected; the keyword screen stored only hit lists.",
+  "answer_oracle": {
+    "provenance": "DATASET_ANSWER_KEY (letter in the dataset id and ground_truth column)",
+    "agent_hand_derivations": 19,
+    "agent_derivations_agreeing_with_key": 19,
+    "agent_derivations_disagreeing": [],
+    "not_derived_by_agent": [
+      "vmmu_r254",
+      "vmmu_r277",
+      "vmmu_r298",
+      "vmmu_r461",
+      "vmmu_r475",
+      "vmmu_r488"
+    ],
+    "status": "The key is independent of Axo and of the agent but was not re-adjudicated by a human."
+  },
+  "source_glyph_corruption_cases": [
+    "vmmu_r254",
+    "vmmu_r498",
+    "vmmu_r520"
+  ],
+  "source_glyph_corruption_policy": "The reference carries the intended notation (prime, degree). An OCR that reproduces the corrupted glyph is counted as not recovering the fact, because the solver cannot use it.",
+  "independent_h1": "NOT_MEASURED",
+  "human_verification_required_for": [
+    "HUMAN_VERIFIED label",
+    "independent H-1 claim",
+    "any accuracy figure quoted outside this run"
+  ]
+}

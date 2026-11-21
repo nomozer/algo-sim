@@ -48,6 +48,10 @@ def violations(sc):
         plane = next(by[d] for d in sec['depends'] if by[d]['type'] == 'plane3')
         st = sec['steps'][e['details']['canh']]
         a, b = q(st['a']), q(st['b'])
+        if j.get('theorem') == 'COPLANAR_TRACE_INTERSECTION':
+            if not trace_holds(sec, plane, st, j, by):
+                bad.append((e['step_index'], 'trace', j))
+            continue
         names = re.findall(r"[A-Z][0-9]*[′']?", j['line'])
         if len(names) != 2 or any(n not in pos for n in names) or not j.get('verified_exact'):
             bad.append((e['step_index'], 'unresolved', j)); continue
@@ -61,6 +65,41 @@ def violations(sc):
     return bad, seen
 
 
+def trace_holds(sec, plane, st, j, by):
+    """Run `scene3d-causal-pedagogical-integrity`: a trace-method reason re-checked from the scene's own coordinates —
+    every derived point lies on the cutting plane, on its face plane and on its edge line; both endpoints of the edge lie
+    on the line through the two points the trace names; auxiliary points are exactly the off-segment derived points."""
+    q = lambda v: [Fraction(str(x)) for x in v]                                  # noqa: E731
+    solid = next(by[d] for d in sec['depends'] if by[d]['type'] == 'solid')
+    vs = [q(v) for v in solid['vertices']]
+    sub = lambda u, v: [u[i] - v[i] for i in range(3)]                           # noqa: E731
+    cr = lambda u, v: (u[1] * v[2] - u[2] * v[1], u[2] * v[0] - u[0] * v[2], u[0] * v[1] - u[1] * v[0])  # noqa: E731
+    dot = lambda u, v: sum(u[i] * v[i] for i in range(3))                       # noqa: E731
+    p0, n = q(plane['point']), q(plane['normal'])
+    td = st.get('trace_derivation') or {}
+    if not td.get('verified_exact') or j.get('verified_exact') is not True:
+        return False
+    derived = {d['index']: q(d['xyz']) for d in td['derivations']}
+    for d in td['derivations']:
+        x, f, (u, w) = q(d['xyz']), solid['faces'][d['face']], d['edge']
+        nf = cr(sub(vs[f[1]], vs[f[0]]), sub(vs[f[2]], vs[f[0]]))
+        if dot(n, sub(x, p0)) or dot(nf, sub(x, vs[f[0]])) or any(cr(sub(x, vs[u]), sub(vs[w], vs[u]))):
+            return False
+    def pos(ref):
+        if 'vertex' in ref:
+            return vs[ref['vertex']]
+        if 'id' in ref:
+            return q(by[ref['id']]['xyz'])
+        return derived[ref['derived']]
+    thr = [pos(r) for r in td['through']]
+    a, b = q(st['a']), q(st['b'])
+    if len(thr) == 2 and any(any(cr(sub(x, thr[0]), sub(thr[1], thr[0]))) for x in (a, b)):
+        return False
+    poly = [q(p) for p in sec['polygon']]
+    off = [q(d['xyz']) for d in td['derivations'] if not (d['on_edge_segment'] and q(d['xyz']) in poly)]
+    return sorted(off) == sorted(q(x['xyz']) for x in j.get('auxiliary_points') or ())
+
+
 @pytest.mark.parametrize('cid', SERVED)
 def test_every_emitted_justification_holds_exactly(cid):
     bad, _seen = violations(scene(cid))
@@ -70,8 +109,12 @@ def test_every_emitted_justification_holds_exactly(cid):
 def test_justifications_are_emitted_where_the_theorem_applies_and_only_there():
     # parallel-to-base cut: all three lateral intersections are parallel to base edges
     assert violations(scene('TP1.canon.area'))[1] == 3
-    # perpendicular cut of the same pyramid: only the face whose base edge is parallel to the cut is justified
-    assert violations(scene('TP3.canon.area'))[1] == 1
+    # perpendicular cut of the same pyramid: only the face whose base edge is parallel to the cut has the PARALLEL
+    # reason. Superseded count (run `scene3d-causal-pedagogical-integrity`): this asserted `seen == 1` when no other
+    # reason existed; the remaining edges now carry an exactly re-checked trace-method reason.
+    sc = scene('TP3.canon.area')
+    th = [(e.get('details') or {}).get('justification', {}).get('theorem') for e in sc['events'] if e.get('justification_text')]
+    assert th.count('PARALLEL_LINE_PLANE_INTERSECTION') == 1 and violations(sc)[0] == []
 
 
 def _synthetic(edge_in_plane: bool):

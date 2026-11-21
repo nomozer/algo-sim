@@ -1,0 +1,48 @@
+{
+ "schema": "algosim-ocr-resource-performance/1",
+ "run_id": "image-first-ocr-verified-geometry",
+ "generated_at_utc": "2026-11-10T13:43:16.341009+00:00",
+ "head_commit": "bdc07a8557277d9780bee8689567990854ad4521",
+ "product_commit": "bdc07a8557277d9780bee8689567990854ad4521",
+ "working_tree_dirty": false,
+ "measured_system_tree_hash": "6851b71826793fffbb922e0b7706e1c2a32bb2203d615c8eb0414e82b0d2c947",
+ "measured_system_file_count": 115,
+ "test_environment": {
+  "os": "Windows-11-10.0.26100-SP0",
+  "python": "3.12.10",
+  "cpu_logical_cores": 12,
+  "allow_live_ai": 0,
+  "live_gemini_calls": 0,
+  "local_ocr_python": "ocr-venv (rapidocr 3.10.0, onnxruntime 1.31.1, tesserocr 2.12.0 / tesseract 5.5.3)",
+  "tessdata": "tessdata_fast vie + eng",
+  "benchmark_tier": "HOST_BENCHMARK_OFFLINE"
+ },
+ "model_versions": {
+  "local_ocr_route": "local-ocr-route/1",
+  "reconcile": "layout-aware-ocr-reconcile/1",
+  "readers": [
+   "tesseract-vie (tessdata_fast)",
+   "rapidocr PP-OCRv6 det/rec small",
+   "rapidocr latin PP-OCRv5 rec mobile (re-read)",
+   "tesseract-eng single-line ×3 (re-read)"
+  ],
+  "vision": "NOT_CALLED (ALLOW_LIVE_AI=0)"
+ },
+ "epistemic_classification": "VERIFIED FACT",
+ "resource_isolation_architecture": {
+  "design": "On-demand sidecar subprocess (`backend/app/ingestion/local_ocr_worker.py`) over JSON-lines stdin/stdout pipe",
+  "backend_idle_rss_delta_mb_when_local_ocr_unused": 0.0,
+  "gpu_required": false,
+  "cpu_only_execution": true,
+  "in_memory_lru_cache_entries": 32,
+  "cached_repeat_ocr_latency_ms": 0.01
+ },
+ "latency_breakdown_ms": {
+  "region_detection_p50_ms": 73.62,
+  "region_detection_p95_ms": 115.88,
+  "cold_tesseract_vie_p50_ms": 235.62,
+  "cold_rapidocr_ppocrv6_p50_ms": 2236.01,
+  "cached_prepare_unified_input_p50_ms": 268.55,
+  "downstream_local_parse_plus_hybrid_solve_p50_ms": 41.11
+ }
+}

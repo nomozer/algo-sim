@@ -1,0 +1,362 @@
+{
+  "run_id": "real-image-ocr-vision-comparative-acceptance",
+  "head": "70b22cc7167d8e2372d606547c3e398b199fb101",
+  "measured_system": [
+    "a068b6f6586c1b120bd8350dbe706f5681ab71fd7da57502c34f940140268921",
+    115
+  ],
+  "allow_live_ai": 0,
+  "ground_truth_authority": "AGENT_TRANSCRIBED_UNVERIFIED",
+  "independent_h1": "NOT_MEASURED",
+  "classification": "DERIVED_FROM_REFERENCED_MEASUREMENTS_NOT_A_NEW_MEASUREMENT",
+  "mode": "MOCK_TRANSCRIPT_CONFLICT_ROUTING_ONLY",
+  "actual_provider_calls": 0,
+  "vision_recorded_replay": "NOT_MEASURED_NO_REAL_PROVIDER_RECORDING",
+  "vision_live": "LIVE_VISION_NOT_MEASURED",
+  "rows": [
+    {
+      "id": "coefficient_changed",
+      "expected_conflict": true,
+      "baseline_conflict": false,
+      "candidate": {
+        "has_conflict": true,
+        "requires_user_confirmation": true,
+        "conflict_codes": [
+          "NUMERIC_ASSIGNMENT_CONFLICT"
+        ],
+        "conflicts": [
+          {
+            "code": "NUMERIC_ASSIGNMENT_CONFLICT",
+            "ocr_values": [
+              [
+                "chiều cao",
+                "3a"
+              ],
+              [
+                "cạnh đáy",
+                "2a"
+              ]
+            ],
+            "vision_values": [
+              [
+                "chiều cao",
+                "3a"
+              ],
+              [
+                "cạnh đáy",
+                "a"
+              ]
+            ]
+          }
+        ],
+        "ocr_tokens": {
+          "solids": [
+            "S.ABCD"
+          ],
+          "primed_labels": [],
+          "subscript_labels": [],
+          "radicals": [],
+          "assignments": {},
+          "relations": [],
+          "planes": [],
+          "angles_degrees": [],
+          "fractions": [],
+          "decimals": [],
+          "negatives": [],
+          "variables": []
+        },
+        "vision_tokens": {
+          "solids": [
+            "S.ABCD"
+          ],
+          "primed_labels": [],
+          "subscript_labels": [],
+          "radicals": [],
+          "assignments": {},
+          "relations": [],
+          "planes": [],
+          "angles_degrees": [],
+          "fractions": [],
+          "decimals": [],
+          "negatives": [],
+          "variables": [
+            "a"
+          ]
+        }
+      }
+    },
+    {
+      "id": "height_changed",
+      "expected_conflict": true,
+      "baseline_conflict": false,
+      "candidate": {
+        "has_conflict": true,
+        "requires_user_confirmation": true,
+        "conflict_codes": [
+          "NUMERIC_ASSIGNMENT_CONFLICT"
+        ],
+        "conflicts": [
+          {
+            "code": "NUMERIC_ASSIGNMENT_CONFLICT",
+            "ocr_values": [
+              [
+                "chiều cao",
+                "3a"
+              ],
+              [
+                "cạnh đáy",
+                "2a"
+              ]
+            ],
+            "vision_values": [
+              [
+                "chiều cao",
+                "2a"
+              ],
+              [
+                "cạnh đáy",
+                "2a"
+              ]
+            ]
+          }
+        ],
+        "ocr_tokens": {
+          "solids": [
+            "S.ABCD"
+          ],
+          "primed_labels": [],
+          "subscript_labels": [],
+          "radicals": [],
+          "assignments": {},
+          "relations": [],
+          "planes": [],
+          "angles_degrees": [],
+          "fractions": [],
+          "decimals": [],
+          "negatives": [],
+          "variables": []
+        },
+        "vision_tokens": {
+          "solids": [
+            "S.ABCD"
+          ],
+          "primed_labels": [],
+          "subscript_labels": [],
+          "radicals": [],
+          "assignments": {},
+          "relations": [],
+          "planes": [],
+          "angles_degrees": [],
+          "fractions": [],
+          "decimals": [],
+          "negatives": [],
+          "variables": []
+        }
+      }
+    },
+    {
+      "id": "dimension_binding_swapped",
+      "expected_conflict": true,
+      "baseline_conflict": false,
+      "candidate": {
+        "has_conflict": true,
+        "requires_user_confirmation": true,
+        "conflict_codes": [
+          "NUMERIC_ASSIGNMENT_CONFLICT"
+        ],
+        "conflicts": [
+          {
+            "code": "NUMERIC_ASSIGNMENT_CONFLICT",
+            "ocr_values": [
+              [
+                "chiều cao",
+                "3a"
+              ],
+              [
+                "cạnh đáy",
+                "2a"
+              ]
+            ],
+            "vision_values": [
+              [
+                "chiều cao",
+                "2a"
+              ],
+              [
+                "cạnh đáy",
+                "3a"
+              ]
+            ]
+          }
+        ],
+        "ocr_tokens": {
+          "solids": [
+            "S.ABCD"
+          ],
+          "primed_labels": [],
+          "subscript_labels": [],
+          "radicals": [],
+          "assignments": {},
+          "relations": [],
+          "planes": [],
+          "angles_degrees": [],
+          "fractions": [],
+          "decimals": [],
+          "negatives": [],
+          "variables": []
+        },
+        "vision_tokens": {
+          "solids": [
+            "S.ABCD"
+          ],
+          "primed_labels": [],
+          "subscript_labels": [],
+          "radicals": [],
+          "assignments": {},
+          "relations": [],
+          "planes": [],
+          "angles_degrees": [],
+          "fractions": [],
+          "decimals": [],
+          "negatives": [],
+          "variables": []
+        }
+      }
+    },
+    {
+      "id": "exam_header_omitted",
+      "expected_conflict": false,
+      "baseline_conflict": false,
+      "candidate": {
+        "has_conflict": false,
+        "requires_user_confirmation": false,
+        "conflict_codes": [],
+        "conflicts": [],
+        "ocr_tokens": {
+          "solids": [
+            "S.ABCD"
+          ],
+          "primed_labels": [],
+          "subscript_labels": [],
+          "radicals": [],
+          "assignments": {},
+          "relations": [],
+          "planes": [],
+          "angles_degrees": [],
+          "fractions": [],
+          "decimals": [],
+          "negatives": [],
+          "variables": []
+        },
+        "vision_tokens": {
+          "solids": [
+            "S.ABCD"
+          ],
+          "primed_labels": [],
+          "subscript_labels": [],
+          "radicals": [],
+          "assignments": {},
+          "relations": [],
+          "planes": [],
+          "angles_degrees": [],
+          "fractions": [],
+          "decimals": [],
+          "negatives": [],
+          "variables": []
+        }
+      }
+    },
+    {
+      "id": "scalar_spacing",
+      "expected_conflict": false,
+      "baseline_conflict": false,
+      "candidate": {
+        "has_conflict": false,
+        "requires_user_confirmation": false,
+        "conflict_codes": [],
+        "conflicts": [],
+        "ocr_tokens": {
+          "solids": [
+            "S.ABCD"
+          ],
+          "primed_labels": [],
+          "subscript_labels": [],
+          "radicals": [],
+          "assignments": {},
+          "relations": [],
+          "planes": [],
+          "angles_degrees": [],
+          "fractions": [],
+          "decimals": [],
+          "negatives": [],
+          "variables": []
+        },
+        "vision_tokens": {
+          "solids": [
+            "S.ABCD"
+          ],
+          "primed_labels": [],
+          "subscript_labels": [],
+          "radicals": [],
+          "assignments": {},
+          "relations": [],
+          "planes": [],
+          "angles_degrees": [],
+          "fractions": [],
+          "decimals": [],
+          "negatives": [],
+          "variables": [
+            "a"
+          ]
+        }
+      }
+    },
+    {
+      "id": "same_dimensions_reordered",
+      "expected_conflict": false,
+      "baseline_conflict": false,
+      "candidate": {
+        "has_conflict": false,
+        "requires_user_confirmation": false,
+        "conflict_codes": [],
+        "conflicts": [],
+        "ocr_tokens": {
+          "solids": [
+            "S.ABCD"
+          ],
+          "primed_labels": [],
+          "subscript_labels": [],
+          "radicals": [],
+          "assignments": {},
+          "relations": [],
+          "planes": [],
+          "angles_degrees": [],
+          "fractions": [],
+          "decimals": [],
+          "negatives": [],
+          "variables": []
+        },
+        "vision_tokens": {
+          "solids": [
+            "S.ABCD"
+          ],
+          "primed_labels": [],
+          "subscript_labels": [],
+          "radicals": [],
+          "assignments": {},
+          "relations": [],
+          "planes": [],
+          "angles_degrees": [],
+          "fractions": [],
+          "decimals": [],
+          "negatives": [],
+          "variables": []
+        }
+      }
+    }
+  ],
+  "baseline_missed_conflicts": 3,
+  "candidate_missed_conflicts": 0,
+  "architecture_ranking": "DECISION_PENDING_LIVE_EVIDENCE",
+  "limitations": "Six authored development fixtures, not image recognition or live Vision accuracy"
+}

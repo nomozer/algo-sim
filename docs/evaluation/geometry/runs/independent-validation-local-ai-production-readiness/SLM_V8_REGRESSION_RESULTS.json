@@ -1,0 +1,229 @@
+{
+  "schema": "slm-v8-regression-results/1",
+  "generated_at_utc": "2026-11-18T19:00:02.083748+00:00",
+  "external_ai_calls": 0,
+  "evaluator_version": "axo-math-evaluator/2",
+  "runtime_version": "local-slm-runtime/3",
+  "cache_namespace": "HYBRID_V7_LOCAL_SLM",
+  "models": {
+    "original": "qwen3-0.6b-q4_k_m",
+    "finetuned": "qwen3-0.6b-axo-v7-q4_k_m"
+  },
+  "safety_invariants": {
+    "config_a_continuity_errors": 0,
+    "config_d_continuity_errors": 0,
+    "new_mode_a_leaks_above_config_a": 0,
+    "internal_token_leaks": 0,
+    "baseline_regression_count": 0,
+    "regressions": []
+  },
+  "baseline_suites": {
+    "NC_NL": {
+      "total": 21,
+      "positive_total": 21,
+      "negative_total": 0,
+      "config_a_positive_ok": 21,
+      "config_d_positive_ok": 21,
+      "config_a_negative_refused": 0,
+      "config_d_negative_refused": 0
+    },
+    "DEV37": {
+      "total": 37,
+      "positive_total": 30,
+      "negative_total": 7,
+      "config_a_positive_ok": 30,
+      "config_d_positive_ok": 30,
+      "config_a_negative_refused": 7,
+      "config_d_negative_refused": 7
+    },
+    "PROBES39": {
+      "total": 39,
+      "positive_total": 26,
+      "negative_total": 13,
+      "config_a_positive_ok": 23,
+      "config_d_positive_ok": 23,
+      "config_a_negative_refused": 13,
+      "config_d_negative_refused": 13
+    },
+    "S2_36": {
+      "total": 36,
+      "positive_total": 18,
+      "negative_total": 18,
+      "config_a_positive_ok": 16,
+      "config_d_positive_ok": 16,
+      "config_a_negative_refused": 18,
+      "config_d_negative_refused": 18
+    },
+    "COMP112": {
+      "total": 112,
+      "positive_total": 66,
+      "negative_total": 46,
+      "config_a_positive_ok": 66,
+      "config_d_positive_ok": 66,
+      "config_a_negative_refused": 44,
+      "config_d_negative_refused": 44,
+      "dual_reporting": {
+        "strict_frozen_labels_d": "66/66 pos + 44/46 neg",
+        "reconciled_historical_labels_total": "112/112 (dp_reflection & dp_projection_unnamed_image identical to Config A, slm_invoked=False)",
+        "new_mode_a_leaks_above_config_a": 0
+      }
+    },
+    "REAL27_TEXT": {
+      "total": 27,
+      "config_a_served": 21,
+      "config_d_served": 21,
+      "config_d_wrong_served": 0
+    },
+    "REAL27_IMAGES": {
+      "total": 27,
+      "config_a_served": 21,
+      "config_d_served": 21
+    },
+    "NC_GOLD": {
+      "total": 21,
+      "config_d_passed": 21
+    },
+    "AUTONOMOUS_NEGATIVES": {
+      "total": 11,
+      "config_d_refused": 11,
+      "false_served": 0
+    },
+    "RM72": {
+      "positive_served": "61/62",
+      "negative_refused": "10/10",
+      "false_served": 0
+    },
+    "frozen_unseen_vmmu20_separate": {
+      "ground_truth_status": "GROUND_TRUTH_UNVERIFIED",
+      "excluded_from_verified_accuracy": true,
+      "count": 19,
+      "config_d_served_unverified": 0
+    }
+  },
+  "historical_slm_suites_live_config_d_v2_reverified": {
+    "DEV_CALIBRATION_16": {
+      "positives_passed": "9/10",
+      "positives_ok": 9,
+      "positives_total": 10,
+      "negatives_safe": "6/6",
+      "negatives_ok": 6,
+      "negatives_total": 6,
+      "wrong_served": 0,
+      "continuity_errors": 0,
+      "internal_token_leaks": 0
+    },
+    "HOLDOUT_40": {
+      "positives_passed": "24/28",
+      "positives_ok": 24,
+      "positives_total": 28,
+      "negatives_safe": "12/12",
+      "negatives_ok": 12,
+      "negatives_total": 12,
+      "wrong_served": 0,
+      "continuity_errors": 0,
+      "internal_token_leaks": 0
+    },
+    "SLM_NEW_HOLDOUT_48": {
+      "positives_passed": "32/32",
+      "positives_ok": 32,
+      "positives_total": 32,
+      "negatives_safe": "16/16",
+      "negatives_ok": 16,
+      "negatives_total": 16,
+      "wrong_served": 0,
+      "continuity_errors": 0,
+      "internal_token_leaks": 0
+    },
+    "SLM_V7_HOLDOUT_112": {
+      "positives_passed": "74/80",
+      "positives_ok": 74,
+      "positives_total": 80,
+      "negatives_safe": "32/32",
+      "negatives_ok": 32,
+      "negatives_total": 32,
+      "wrong_served": 0,
+      "continuity_errors": 0,
+      "internal_token_leaks": 0
+    }
+  },
+  "security_and_runtime_16": {
+    "malformed_output": {
+      "ok": true
+    },
+    "model_crash": {
+      "ok": true
+    },
+    "model_timeout": {
+      "ok": true
+    },
+    "missing_model": {
+      "ok": true
+    },
+    "incorrect_checksum": {
+      "ok": true
+    },
+    "port_binding_failure": {
+      "ok": true,
+      "occupied_port_tested": 62974
+    },
+    "bounded_queue_overflow": {
+      "ok": true
+    },
+    "prompt_injection": {
+      "ok": true
+    },
+    "conflicting_premises": {
+      "ok": true
+    },
+    "unsupported_relation": {
+      "ok": true
+    },
+    "negation": {
+      "ok": true
+    },
+    "conditional_clauses": {
+      "ok": true
+    },
+    "ambiguous_references": {
+      "ok": true
+    },
+    "invalid_quantities": {
+      "ok": true
+    },
+    "concurrent_inference": {
+      "ok": true
+    },
+    "process_recovery_after_repeated_requests": {
+      "ok": true
+    }
+  },
+  "security_and_runtime_16_all_passed": true,
+  "slm_and_v8_pytest_modules": {
+    "modules": [
+      "backend/tests/geometry/test_local_slm_understanding.py",
+      "backend/tests/geometry/test_slm_compact_extraction.py",
+      "backend/tests/geometry/test_slm_language_closure.py",
+      "backend/tests/geometry/test_slm_finetuned_runtime.py",
+      "backend/tests/geometry/test_slm_math_evaluator_v2.py",
+      "backend/tests/geometry/test_source_gate_handoff_boundaries.py",
+      "backend/tests/geometry/test_scoped_local_routing_policy.py"
+    ],
+    "exit_code": 0,
+    "passed": true,
+    "duration_s": 44.95,
+    "summary_line": "91 passed, 1 warning in 44.03s"
+  },
+  "clean_tree_full_pytest": {
+    "status": "PASS",
+    "verified_on_commit": "6ca84e5367f7dd2e21f58978ef8d4c196c7959cb",
+    "short_commit": "6ca84e536",
+    "command": "pytest -c backend/pytest.ini backend/tests -q",
+    "passed": 15026,
+    "skipped": 7,
+    "deselected": 3,
+    "xfailed": 12,
+    "failed": 0,
+    "warnings": 1,
+    "duration_seconds": 702.93
+  }
+}

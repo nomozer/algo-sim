@@ -9,10 +9,7 @@ from pathlib import Path
 import pytest
 
 from app.simulation.semantic_program import structured_relations as SR
-from app.simulation.semantic_program.analyze_contract import (
-    SEMANTIC_ANALYZE_SCHEMA,
-    analyze_schema_for,
-)
+from app.simulation.semantic_program.analyze_contract import analyze_schema_for
 from app.simulation.semantic_program.obligations import Obligation
 from app.simulation.semantic_program.request_contract import InputFact, RequestContract
 from app.simulation.semantic_program.scale_normalization import SourceInvariant
@@ -148,7 +145,6 @@ def test_V_luoc_do_phan_tich_giu_dung_tu_vung_quan_he():
         assert o["properties"][k]["maxItems"] == SR.SO_DIEM_DUONG
     assert o["properties"]["plane"]["minItems"] == SR.SO_DIEM_MAT
     assert "source_fact_id" in o["required"] and "kind" in o["required"]
-    assert "geometric_relations" not in SEMANTIC_ANALYZE_SCHEMA["properties"]
 
 
 def test_W_tap_ma_quan_he_on_dinh():

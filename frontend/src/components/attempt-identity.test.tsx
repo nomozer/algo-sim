@@ -151,4 +151,44 @@ describe("submission attempt identity through the real submit path", () => {
     expect(ids).toContain(idB);
     expect(tabB.list().find((x) => x.id === idA)?.lastCursor).toBe(2);
   });
+
+  it("after a 200 mathematical refusal (needs_attention), the next submit with a shared requestIdRef sends a fresh Idempotency-Key instead of reusing the committed key", async () => {
+    const refusedRow = bundle.fixtures.find((f) => f.response.route_d?.status === "REFUSED")!;
+    const keys: (string | null)[] = [];
+    let calls = 0;
+    vi.spyOn(globalThis, "fetch").mockImplementation(async (_u, init) => {
+      calls += 1;
+      keys.push(new Headers(init?.headers).get("Idempotency-Key"));
+      return calls === 1 ? ok(refusedRow.response) : ok(row.response);
+    });
+    const requestIdRef = { current: null as string | null };
+    const lockRef = { current: false };
+    await runComposerSubmit({
+      canSubmit: true,
+      lockRef,
+      requestIdRef,
+      problemText: refusedRow.problem_text,
+      attachment: null,
+      health: null,
+      analyzeFn: (p, s, _r, id) => analyzeViaServer(p, s, { maxRetries: 0, baseDelayMs: 1 }, id),
+    });
+    const firstKey = keys[0];
+    expect(firstKey).toMatch(/^a[0-9a-f]{32}$/u);
+    expect(st().problemProcessingRecords[firstKey!]?.status).toBe("needs_attention");
+    expect(st().problemProcessingRecords[firstKey!]?.unsupported).not.toBeNull();
+
+    // Next submit with edited/different text on the SAME composer requestIdRef must NOT reuse firstKey (would trigger 409 IDEMPOTENCY_KEY_REUSED)
+    await runComposerSubmit({
+      canSubmit: true,
+      lockRef,
+      requestIdRef,
+      problemText: row.problem_text,
+      attachment: null,
+      health: null,
+      analyzeFn: (p, s, _r, id) => analyzeViaServer(p, s, { maxRetries: 0, baseDelayMs: 1 }, id),
+    });
+    expect(calls).toBe(2);
+    expect(keys[1]).toMatch(/^a[0-9a-f]{32}$/u);
+    expect(keys[1]).not.toBe(firstKey);
+  });
 });

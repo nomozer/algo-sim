@@ -1,0 +1,24 @@
+{
+  "run_id": "scene3d-causal-pedagogical-integrity",
+  "generated_at_utc": "2026-11-14T15:39:13.820636+00:00",
+  "product_commit": "a2874d273959970faa501879f4f9dbfe20c93975",
+  "measured_system": "225f4bba5a8765ccd1c12507ce6dbd0bab25d69d02263148cf94752f921e2b56",
+  "cache_version": "138",
+  "dataset_partition": "DEVELOPMENT (agent-written corpus, exposed REAL27, exposed probes); never H-1 or locked W2/W3",
+  "environment": {
+    "ALLOW_LIVE_AI": "0",
+    "HYBRID_ROUTE_MODE": "local-first",
+    "live_ai_calls": 0
+  },
+  "head": "6da2795a493d6097add56294832f0d5a7ea1ef13",
+  "start_head": "9d0949b0935888ba097d661c79ca2f792ee5490b",
+  "start_freeze": "f30363597",
+  "start_candidate_commit_field": "5481d5ddc",
+  "start_measured_system": "610b4ee1e3227bc44f0659aea5d0dfc7f7a827aff622605db2b9571fb980fb80",
+  "start_files": 117,
+  "start_cache_version": "137",
+  "freeze_verify_at_start": "PASS (run at the start of this run, HEAD 9d0949b09)",
+  "tree_clean_at_start": true,
+  "head_and_freeze_same_product_content": "YES at start (freeze --verify matched 610b4ee1…, 117 files)",
+  "verdict": "VERIFIED_INTACT"
+}

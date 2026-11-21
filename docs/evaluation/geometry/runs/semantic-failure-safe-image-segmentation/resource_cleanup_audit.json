@@ -1,0 +1,13 @@
+{
+  "run_id": "semantic-failure-safe-image-segmentation",
+  "generated_at_utc": "2026-11-13T17:27:25.127687+00:00",
+  "head": "7315cf3b033f78fce1409085c6eeab720f83c967",
+  "environment": {
+    "ALLOW_LIVE_AI": "0"
+  },
+  "frontend_changed_in_this_run": false,
+  "scene3d_memory": "NOT_REMEASURED: the frontend is unchanged in this run; the previous measurement (+3.2 MB over 12 analyses, INCONCLUSIVE) stands",
+  "band_previews": "inline base64 JPEG data URLs in the JSON response (no object URLs to revoke); at most one per candidate, ≤ 360 px",
+  "ocr_worker": "unchanged lifecycle; the option-group signal reuses the cached OCR of the same bytes",
+  "MEMORY_LEAK": "NOT_MEASURED_THIS_RUN"
+}

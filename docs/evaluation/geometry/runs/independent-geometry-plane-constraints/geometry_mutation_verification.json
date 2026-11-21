@@ -1,0 +1,51 @@
+{
+  "run_id": "independent-geometry-plane-constraints",
+  "generated_at_utc": "2026-11-13T15:42:11.531200+00:00",
+  "head": "697b097acc62e778a2668d1d74d304a778afc9ee",
+  "oracle_level": "AGENT_DIAGNOSTIC (independent code path: Fractions + envelope Gram G; same agent as the construction)",
+  "policy": "a mutation counts as caught when a check that passed on the served scene fails on the mutated one; reversing the cyclic order of a polygon is not an error (orientation is not in the contract) and is not applied",
+  "mutations": {
+    "plane_normal_changed": {
+      "applied": 22,
+      "caught": 22,
+      "missed": []
+    },
+    "plane_position_shifted": {
+      "applied": 22,
+      "caught": 22,
+      "missed": []
+    },
+    "point_on_plane_replaced": {
+      "applied": 18,
+      "caught": 18,
+      "missed": []
+    },
+    "section_vertex_dropped": {
+      "applied": 22,
+      "caught": 22,
+      "missed": []
+    },
+    "section_edges_connected_wrongly": {
+      "applied": 17,
+      "caught": 17,
+      "missed": []
+    },
+    "section_vertex_replaced": {
+      "applied": 22,
+      "caught": 22,
+      "missed": []
+    },
+    "provenance_removed": {
+      "applied": 22,
+      "caught": 22,
+      "missed": []
+    },
+    "angle_ray_flipped": {
+      "applied": 3,
+      "caught": 3,
+      "missed": []
+    }
+  },
+  "applied": 148,
+  "caught": 148
+}

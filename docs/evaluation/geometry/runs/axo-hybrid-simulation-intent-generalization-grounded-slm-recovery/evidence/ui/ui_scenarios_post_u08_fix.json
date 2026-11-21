@@ -1,0 +1,169 @@
+{
+ "schema": "axo-v11-ui-scenarios/1",
+ "browser": "151.0.7922.34",
+ "base": "http://127.0.0.1:4174",
+ "tag": "post_u08_fix",
+ "results": [
+  {
+   "scenario_id": "I04",
+   "pass": true,
+   "scene": "C09",
+   "second_reset_drift_vs_first_settled": [
+    {
+     "t": 100,
+     "max_drift_px": 0
+    },
+    {
+     "t": 300,
+     "max_drift_px": 0
+    },
+    {
+     "t": 600,
+     "max_drift_px": 0
+    },
+    {
+     "t": 1000,
+     "max_drift_px": 0
+    },
+    {
+     "t": 1800,
+     "max_drift_px": 0
+    },
+    {
+     "t": 3000,
+     "max_drift_px": 0
+    },
+    {
+     "t": 4500,
+     "max_drift_px": 0
+    }
+   ],
+   "first_reset_convergence": [
+    {
+     "t": 100,
+     "max_drift_px_vs_settled": 0
+    },
+    {
+     "t": 300,
+     "max_drift_px_vs_settled": 0
+    },
+    {
+     "t": 600,
+     "max_drift_px_vs_settled": 0
+    },
+    {
+     "t": 1000,
+     "max_drift_px_vs_settled": 0
+    },
+    {
+     "t": 1800,
+     "max_drift_px_vs_settled": 0
+    },
+    {
+     "t": 3000,
+     "max_drift_px_vs_settled": 0
+    },
+    {
+     "t": 4500,
+     "max_drift_px_vs_settled": 0
+    }
+   ],
+   "settled_first": {
+    "A": [
+     318,
+     508
+    ],
+    "B": [
+     407,
+     638
+    ],
+    "C": [
+     715,
+     457
+    ],
+    "D": [
+     624,
+     374
+    ],
+    "S": [
+     242,
+     161
+    ],
+    "kq_q1__foot1": [
+     437,
+     489
+    ]
+   },
+   "settled_second": {
+    "A": [
+     318,
+     508
+    ],
+    "B": [
+     407,
+     638
+    ],
+    "C": [
+     715,
+     457
+    ],
+    "D": [
+     624,
+     374
+    ],
+    "S": [
+     242,
+     161
+    ],
+    "kq_q1__foot1": [
+     437,
+     489
+    ]
+   }
+  },
+  {
+   "scenario_id": "I00_console_post_u08_fix",
+   "pass": true,
+   "console_errors": []
+  },
+  {
+   "scenario_id": "I07",
+   "pass": true,
+   "slow": "adhoc",
+   "fast": "S01",
+   "cancel_button": true,
+   "fast_surface": "SCENE",
+   "labels_at_render": [
+    "A",
+    "A_prime",
+    "B",
+    "B_prime",
+    "C",
+    "C_prime",
+    "D",
+    "D_prime"
+   ],
+   "labels_after_15s": [
+    "A",
+    "A_prime",
+    "B",
+    "B_prime",
+    "C",
+    "C_prime",
+    "D",
+    "D_prime"
+   ],
+   "gold": [
+    "A",
+    "A_prime",
+    "B",
+    "B_prime",
+    "C",
+    "C_prime",
+    "D",
+    "D_prime"
+   ],
+   "console_errors": []
+  }
+ ]
+}

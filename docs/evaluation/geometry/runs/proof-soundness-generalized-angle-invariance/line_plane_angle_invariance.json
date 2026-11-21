@@ -1,0 +1,179 @@
+{
+  "run_id": "proof-soundness-generalized-angle-invariance",
+  "generated_at_utc": "2026-11-14T12:35:21.414052+00:00",
+  "product_commit": "c54db0da0c792c2ba0399acc8e9df992d2d270c3",
+  "measured_system": "610b4ee1e3227bc44f0659aea5d0dfc7f7a827aff622605db2b9571fb980fb80",
+  "cache_version": "137",
+  "environment": {
+    "ALLOW_LIVE_AI": "0",
+    "HYBRID_ROUTE_MODE": "local-first",
+    "live_ai_calls": 0
+  },
+  "head": "94281be581617a67921f295474dbd8e698dade4b",
+  "rules": [
+    "LINE_PLANE_ANGLE (projection foot H, YH ⊥ Π)",
+    "LINE_PERP_PLANE_ANGLE"
+  ],
+  "cases": {
+    "lp_isosceles": {
+      "row": {
+        "case_id": "COMP:lp_isosceles",
+        "text_sha256": "2c1c3291072ceaa3f8c4d0ee79d8360e5792c359532e193af8feb91921e3c71c",
+        "expected": "SERVE",
+        "before": {
+          "status": "REFUSED",
+          "code": "MISSING_DIMENSION",
+          "answers": null
+        },
+        "after": {
+          "status": "SERVED",
+          "code": null,
+          "answers": {
+            "q1": "cos²=1/2"
+          }
+        },
+        "after_root_cause": null
+      },
+      "proof_rules": [
+        "SOURCE_LINE_PERP_PLANE",
+        "PERP_PLANE_TO_LINE",
+        "LINE_PLANE_ANGLE",
+        "TRIANGLE_SHAPE_FIXED"
+      ],
+      "cos_sq": "1/2",
+      "witness": {
+        "vertex": "B",
+        "ray_1": [
+          "B",
+          "S"
+        ],
+        "ray_2": [
+          "B",
+          "A"
+        ],
+        "domain": "UNORIENTED_LINE_ANGLE_0_90"
+      },
+      "verified": true,
+      "hand_check_two_shapes": [
+        "1/2",
+        "1/2"
+      ]
+    },
+    "lp_ratio2": {
+      "row": {
+        "case_id": "COMP:lp_ratio2",
+        "text_sha256": "b3128bc3b96271e4532b16ea30a3acfba334903dffb18da78dc819d7fe8a4818",
+        "expected": "SERVE",
+        "before": {
+          "status": "REFUSED",
+          "code": "MISSING_DIMENSION",
+          "answers": null
+        },
+        "after": {
+          "status": "SERVED",
+          "code": null,
+          "answers": {
+            "q1": "cos²=1/5"
+          }
+        },
+        "after_root_cause": null
+      },
+      "proof_rules": [
+        "SOURCE_LINE_PERP_PLANE",
+        "PERP_PLANE_TO_LINE",
+        "LINE_PLANE_ANGLE",
+        "TRIANGLE_SHAPE_FIXED"
+      ],
+      "cos_sq": "1/5",
+      "witness": {
+        "vertex": "B",
+        "ray_1": [
+          "B",
+          "S"
+        ],
+        "ray_2": [
+          "B",
+          "A"
+        ],
+        "domain": "UNORIENTED_LINE_ANGLE_0_90"
+      },
+      "verified": true,
+      "hand_check_two_shapes": [
+        "1/5",
+        "1/5"
+      ]
+    },
+    "lp_perpendicular": {
+      "row": {
+        "case_id": "COMP:lp_perpendicular",
+        "text_sha256": "a6f4e826f97e600e55e7fc437847ecb3ce1dee96a2aae5dcda0bb30bb64eaa14",
+        "expected": "SERVE",
+        "before": {
+          "status": "REFUSED",
+          "code": "MISSING_DIMENSION",
+          "answers": null
+        },
+        "after": {
+          "status": "SERVED",
+          "code": null,
+          "answers": {
+            "q1": "cos²=0"
+          }
+        },
+        "after_root_cause": null
+      },
+      "proof_rules": [
+        "SOURCE_LINE_PERP_PLANE",
+        "LINE_PERP_PLANE_ANGLE"
+      ],
+      "cos_sq": "0",
+      "witness": null,
+      "verified": true,
+      "hand_check_two_shapes": [
+        "0",
+        "0"
+      ]
+    },
+    "lp_renamed": {
+      "row": {
+        "case_id": "COMP:lp_renamed",
+        "text_sha256": "cf04b766f4ecf96c73aca9fe0cfe33d80ce20a079fa445a7aeab6a38a9847a4a",
+        "expected": "SERVE",
+        "before": {
+          "status": "REFUSED",
+          "code": "MISSING_DIMENSION",
+          "answers": null
+        },
+        "after": {
+          "status": "SERVED",
+          "code": null,
+          "answers": {
+            "q1": "cos²=1/5"
+          }
+        },
+        "after_root_cause": null
+      },
+      "proof_rules": [
+        "SOURCE_LINE_PERP_PLANE",
+        "PERP_PLANE_TO_LINE",
+        "LINE_PLANE_ANGLE",
+        "TRIANGLE_SHAPE_FIXED"
+      ],
+      "cos_sq": "1/5",
+      "witness": {
+        "vertex": "Y",
+        "ray_1": [
+          "Y",
+          "T"
+        ],
+        "ray_2": [
+          "Y",
+          "X"
+        ],
+        "domain": "UNORIENTED_LINE_ANGLE_0_90"
+      },
+      "verified": true,
+      "hand_check_two_shapes": null
+    }
+  }
+}

@@ -1,0 +1,26 @@
+{
+  "run_id": "target-invariant-regular-solid-semantics",
+  "generated_at_utc": "2026-11-14T07:25:58.179662+00:00",
+  "product_commit": "bdc34a89e32c77fd73bff7b38b72d3a3496657e1",
+  "measured_system": "2a18f935e4c29462b0495ff6b0fec46df88e215e0bedcaba84668ec202af62d1",
+  "cache_version": "136",
+  "environment": {
+    "ALLOW_LIVE_AI": "0",
+    "HYBRID_ROUTE_MODE": "local-first",
+    "live_ai_calls": 0
+  },
+  "head": "bcba912e82661ccc8b186e6d93cd2bf7928f06bc",
+  "test": "backend/tests/geometry/test_target_invariance_regular_solids.py::test_the_independent_verifier_catches_every_mutated_step",
+  "mutations": [
+    "unknown rule",
+    "wrong common line",
+    "wrong angle arms",
+    "right angle at the wrong vertex",
+    "removed dependency step",
+    "perpendicular to a line outside the plane",
+    "missing equal-legs premise",
+    "changed source fact (right angle at C)"
+  ],
+  "caught": "8/8",
+  "scene_mutations": "36/36"
+}

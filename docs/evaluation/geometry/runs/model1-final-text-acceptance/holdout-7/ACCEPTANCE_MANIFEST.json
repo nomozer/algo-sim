@@ -1,0 +1,4140 @@
+{
+ "schema": "axo-acceptance-manifest/2",
+ "run_id": "model1-final-text-acceptance",
+ "set": "holdout-7",
+ "dataset_provenance": "hand-written by the AXO HYBRID /19 agent from a fixed sampling plan before any case ran on candidate 158; not from earlier generators; prospective INTERNAL; EXTERNAL_INDEPENDENCE NOT_MEASURED; gold computed twice (closed form + independent coordinates), never from Axo",
+ "valid_cases": [
+  {
+   "case_id": "T01",
+   "phrase_family": "textbook_canonical",
+   "input_type": "text",
+   "original_input": "Cho hình chóp S.ABCD có đáy ABCD là hình chữ nhật với AB = 3, AD = 4, cạnh bên SA vuông góc với mặt phẳng đáy và SA = 6. Tính thể tích khối chóp S.ABCD.",
+   "simulation_intent": "QUERY_WITH_SCENE",
+   "geometric_family": "pyramid_quad",
+   "gold_entities": {
+    "solid_vertices": [
+     "S",
+     "A",
+     "B",
+     "C",
+     "D"
+    ],
+    "auxiliary_points": []
+   },
+   "gold_relations": [
+    [
+     "perp_lp",
+     "SA",
+     "ABC"
+    ],
+    [
+     "perp_ll",
+     "AB",
+     "AD"
+    ],
+    [
+     "par_ll",
+     "AB",
+     "DC"
+    ],
+    [
+     "par_ll",
+     "AD",
+     "BC"
+    ],
+    [
+     "len2",
+     "AB",
+     9
+    ],
+    [
+     "len2",
+     "AD",
+     16
+    ],
+    [
+     "len2",
+     "SA",
+     36
+    ]
+   ],
+   "metric_oracle": [
+    24.0
+   ],
+   "preregistered_slm_target": false,
+   "expected_counts": {
+    "vertices": 5,
+    "faces": 5
+   },
+   "expected_behavior": "SERVE",
+   "geometry_determinacy": "UNIQUE_GEOMETRY",
+   "validation_method": "EXACT_SCENE_ORACLE+BROWSER"
+  },
+  {
+   "case_id": "T02",
+   "phrase_family": "textbook_canonical",
+   "input_type": "text",
+   "original_input": "Cho hình chóp S.ABC có đáy ABC là tam giác vuông tại B, AB = 3, BC = 4, SA vuông góc với mặt phẳng (ABC) và SA = 5. Tính thể tích khối chóp S.ABC.",
+   "simulation_intent": "QUERY_WITH_SCENE",
+   "geometric_family": "pyramid_tri",
+   "gold_entities": {
+    "solid_vertices": [
+     "S",
+     "A",
+     "B",
+     "C"
+    ],
+    "auxiliary_points": []
+   },
+   "gold_relations": [
+    [
+     "perp_ll",
+     "BA",
+     "BC"
+    ],
+    [
+     "perp_lp",
+     "SA",
+     "ABC"
+    ],
+    [
+     "len2",
+     "BA",
+     9
+    ],
+    [
+     "len2",
+     "BC",
+     16
+    ],
+    [
+     "len2",
+     "SA",
+     25
+    ]
+   ],
+   "metric_oracle": [
+    10.0
+   ],
+   "preregistered_slm_target": false,
+   "expected_counts": {
+    "vertices": 4,
+    "faces": 4
+   },
+   "expected_behavior": "SERVE",
+   "geometry_determinacy": "UNIQUE_GEOMETRY",
+   "validation_method": "EXACT_SCENE_ORACLE+BROWSER"
+  },
+  {
+   "case_id": "T03",
+   "phrase_family": "textbook_canonical",
+   "input_type": "text",
+   "original_input": "Hình lăng trụ đứng ABC.A'B'C' có đáy là tam giác ABC vuông tại A, cạnh AB = 6, cạnh AC = 8, cạnh bên AA' = 10. Tính thể tích của khối lăng trụ này.",
+   "simulation_intent": "QUERY_WITH_SCENE",
+   "geometric_family": "prism_tri",
+   "gold_entities": {
+    "solid_vertices": [
+     "A",
+     "B",
+     "C",
+     "A'",
+     "B'",
+     "C'"
+    ],
+    "auxiliary_points": []
+   },
+   "gold_relations": [
+    [
+     "perp_ll",
+     "AB",
+     "AC"
+    ],
+    [
+     "perp_lp",
+     "AA'",
+     "ABC"
+    ],
+    [
+     "par_ll",
+     "AA'",
+     "BB'"
+    ],
+    [
+     "par_ll",
+     "AA'",
+     "CC'"
+    ],
+    [
+     "len2",
+     "AB",
+     36
+    ],
+    [
+     "len2",
+     "AC",
+     64
+    ],
+    [
+     "len2",
+     "AA'",
+     100
+    ]
+   ],
+   "metric_oracle": [
+    240.0
+   ],
+   "preregistered_slm_target": false,
+   "expected_counts": {
+    "vertices": 6,
+    "faces": 5
+   },
+   "expected_behavior": "SERVE",
+   "geometry_determinacy": "UNIQUE_GEOMETRY",
+   "validation_method": "EXACT_SCENE_ORACLE+BROWSER"
+  },
+  {
+   "case_id": "T04",
+   "phrase_family": "textbook_canonical",
+   "input_type": "text",
+   "original_input": "Cho hình lập phương ABCD.A'B'C'D' có cạnh bằng 5. Tính thể tích khối lập phương đó.",
+   "simulation_intent": "QUERY_WITH_SCENE",
+   "geometric_family": "cube",
+   "gold_entities": {
+    "solid_vertices": [
+     "A",
+     "B",
+     "C",
+     "D",
+     "A'",
+     "B'",
+     "C'",
+     "D'"
+    ],
+    "auxiliary_points": []
+   },
+   "gold_relations": [
+    [
+     "perp_ll",
+     "AB",
+     "AD"
+    ],
+    [
+     "perp_lp",
+     "AA'",
+     "ABC"
+    ],
+    [
+     "par_ll",
+     "AA'",
+     "BB'"
+    ],
+    [
+     "par_ll",
+     "AB",
+     "DC"
+    ],
+    [
+     "len2",
+     "AB",
+     25
+    ],
+    [
+     "len2",
+     "AD",
+     25
+    ],
+    [
+     "len2",
+     "AA'",
+     25
+    ]
+   ],
+   "metric_oracle": [
+    125.0
+   ],
+   "preregistered_slm_target": false,
+   "expected_counts": {
+    "vertices": 8,
+    "faces": 6
+   },
+   "expected_behavior": "SERVE",
+   "geometry_determinacy": "UNIQUE_GEOMETRY",
+   "validation_method": "EXACT_SCENE_ORACLE+BROWSER"
+  },
+  {
+   "case_id": "T05",
+   "phrase_family": "textbook_canonical",
+   "input_type": "text",
+   "original_input": "Cho hình hộp chữ nhật ABCD.A'B'C'D' có AB = 2, AD = 3 và AA' = 4. Tính độ dài đường chéo AC'.",
+   "simulation_intent": "QUERY_WITH_SCENE",
+   "geometric_family": "box",
+   "gold_entities": {
+    "solid_vertices": [
+     "A",
+     "B",
+     "C",
+     "D",
+     "A'",
+     "B'",
+     "C'",
+     "D'"
+    ],
+    "auxiliary_points": []
+   },
+   "gold_relations": [
+    [
+     "perp_ll",
+     "AB",
+     "AD"
+    ],
+    [
+     "perp_lp",
+     "AA'",
+     "ABC"
+    ],
+    [
+     "par_ll",
+     "AA'",
+     "BB'"
+    ],
+    [
+     "par_ll",
+     "AB",
+     "DC"
+    ],
+    [
+     "len2",
+     "AB",
+     4
+    ],
+    [
+     "len2",
+     "AD",
+     9
+    ],
+    [
+     "len2",
+     "AA'",
+     16
+    ]
+   ],
+   "metric_oracle": [
+    5.385164807134504
+   ],
+   "preregistered_slm_target": false,
+   "expected_counts": {
+    "vertices": 8,
+    "faces": 6
+   },
+   "expected_behavior": "SERVE",
+   "geometry_determinacy": "UNIQUE_GEOMETRY",
+   "validation_method": "EXACT_SCENE_ORACLE+BROWSER"
+  },
+  {
+   "case_id": "T06",
+   "phrase_family": "textbook_canonical",
+   "input_type": "text",
+   "original_input": "Cho tứ diện OABC, trong đó ba cạnh OA, OB, OC đôi một vuông góc; OA = 2, OB = 3, OC = 6. Tính thể tích của khối tứ diện.",
+   "simulation_intent": "QUERY_WITH_SCENE",
+   "geometric_family": "tetrahedron",
+   "gold_entities": {
+    "solid_vertices": [
+     "O",
+     "A",
+     "B",
+     "C"
+    ],
+    "auxiliary_points": []
+   },
+   "gold_relations": [
+    [
+     "perp_ll",
+     "OA",
+     "OB"
+    ],
+    [
+     "perp_ll",
+     "OB",
+     "OC"
+    ],
+    [
+     "perp_ll",
+     "OC",
+     "OA"
+    ],
+    [
+     "len2",
+     "OA",
+     4
+    ],
+    [
+     "len2",
+     "OB",
+     9
+    ],
+    [
+     "len2",
+     "OC",
+     36
+    ]
+   ],
+   "metric_oracle": [
+    6.0
+   ],
+   "preregistered_slm_target": false,
+   "expected_counts": {
+    "vertices": 4,
+    "faces": 4
+   },
+   "expected_behavior": "SERVE",
+   "geometry_determinacy": "UNIQUE_GEOMETRY",
+   "validation_method": "EXACT_SCENE_ORACLE+BROWSER"
+  },
+  {
+   "case_id": "T07",
+   "phrase_family": "textbook_canonical",
+   "input_type": "text",
+   "original_input": "Cho hình chóp S.ABCD có đáy là hình vuông cạnh 4, SA vuông góc với đáy và SA = 4. Tính góc giữa đường thẳng SC và mặt phẳng (ABCD).",
+   "simulation_intent": "QUERY_WITH_SCENE",
+   "geometric_family": "pyramid_quad",
+   "gold_entities": {
+    "solid_vertices": [
+     "S",
+     "A",
+     "B",
+     "C",
+     "D"
+    ],
+    "auxiliary_points": []
+   },
+   "gold_relations": [
+    [
+     "perp_lp",
+     "SA",
+     "ABC"
+    ],
+    [
+     "perp_ll",
+     "AB",
+     "AD"
+    ],
+    [
+     "par_ll",
+     "AB",
+     "DC"
+    ],
+    [
+     "par_ll",
+     "AD",
+     "BC"
+    ],
+    [
+     "len2",
+     "AB",
+     16
+    ],
+    [
+     "len2",
+     "AD",
+     16
+    ],
+    [
+     "len2",
+     "SA",
+     16
+    ]
+   ],
+   "metric_oracle": [
+    35.264389682754654
+   ],
+   "preregistered_slm_target": false,
+   "expected_counts": {
+    "vertices": 5,
+    "faces": 5
+   },
+   "expected_behavior": "SERVE",
+   "geometry_determinacy": "UNIQUE_GEOMETRY",
+   "validation_method": "EXACT_SCENE_ORACLE+BROWSER"
+  },
+  {
+   "case_id": "T08",
+   "phrase_family": "textbook_canonical",
+   "input_type": "text",
+   "original_input": "Cho hình chóp S.ABC có đáy ABC là tam giác đều cạnh 6, SA vuông góc với mặt phẳng (ABC) và SA = 4. Tính thể tích khối chóp S.ABC.",
+   "simulation_intent": "QUERY_WITH_SCENE",
+   "geometric_family": "pyramid_tri",
+   "gold_entities": {
+    "solid_vertices": [
+     "S",
+     "A",
+     "B",
+     "C"
+    ],
+    "auxiliary_points": []
+   },
+   "gold_relations": [
+    [
+     "perp_lp",
+     "SA",
+     "ABC"
+    ],
+    [
+     "len2",
+     "AB",
+     36
+    ],
+    [
+     "len2",
+     "AC",
+     36
+    ],
+    [
+     "len2",
+     "BC",
+     36
+    ],
+    [
+     "len2",
+     "SA",
+     16
+    ]
+   ],
+   "metric_oracle": [
+    20.784609690826528
+   ],
+   "preregistered_slm_target": false,
+   "expected_counts": {
+    "vertices": 4,
+    "faces": 4
+   },
+   "expected_behavior": "SERVE",
+   "geometry_determinacy": "UNIQUE_GEOMETRY",
+   "validation_method": "EXACT_SCENE_ORACLE+BROWSER"
+  },
+  {
+   "case_id": "T09",
+   "phrase_family": "textbook_canonical",
+   "input_type": "text",
+   "original_input": "Cho hình lăng trụ đứng ABC.A'B'C' có đáy là tam giác đều cạnh 4 và cạnh bên AA' = 3. Tính thể tích khối lăng trụ ABC.A'B'C'.",
+   "simulation_intent": "QUERY_WITH_SCENE",
+   "geometric_family": "prism_tri",
+   "gold_entities": {
+    "solid_vertices": [
+     "A",
+     "B",
+     "C",
+     "A'",
+     "B'",
+     "C'"
+    ],
+    "auxiliary_points": []
+   },
+   "gold_relations": [
+    [
+     "perp_lp",
+     "AA'",
+     "ABC"
+    ],
+    [
+     "par_ll",
+     "AA'",
+     "BB'"
+    ],
+    [
+     "par_ll",
+     "AA'",
+     "CC'"
+    ],
+    [
+     "len2",
+     "AB",
+     16
+    ],
+    [
+     "len2",
+     "AC",
+     16
+    ],
+    [
+     "len2",
+     "BC",
+     16
+    ],
+    [
+     "len2",
+     "AA'",
+     9
+    ]
+   ],
+   "metric_oracle": [
+    20.784609690826528
+   ],
+   "preregistered_slm_target": false,
+   "expected_counts": {
+    "vertices": 6,
+    "faces": 5
+   },
+   "expected_behavior": "SERVE",
+   "geometry_determinacy": "UNIQUE_GEOMETRY",
+   "validation_method": "EXACT_SCENE_ORACLE+BROWSER"
+  },
+  {
+   "case_id": "T10",
+   "phrase_family": "textbook_canonical",
+   "input_type": "text",
+   "original_input": "Cho hình chóp S.ABCD có đáy ABCD là hình vuông cạnh 6, SA ⊥ (ABCD), SA = 8. Tính độ dài SC.",
+   "simulation_intent": "QUERY_WITH_SCENE",
+   "geometric_family": "pyramid_quad",
+   "gold_entities": {
+    "solid_vertices": [
+     "S",
+     "A",
+     "B",
+     "C",
+     "D"
+    ],
+    "auxiliary_points": []
+   },
+   "gold_relations": [
+    [
+     "perp_lp",
+     "SA",
+     "ABC"
+    ],
+    [
+     "perp_ll",
+     "AB",
+     "AD"
+    ],
+    [
+     "par_ll",
+     "AB",
+     "DC"
+    ],
+    [
+     "par_ll",
+     "AD",
+     "BC"
+    ],
+    [
+     "len2",
+     "AB",
+     36
+    ],
+    [
+     "len2",
+     "AD",
+     36
+    ],
+    [
+     "len2",
+     "SA",
+     64
+    ]
+   ],
+   "metric_oracle": [
+    11.661903789690601
+   ],
+   "preregistered_slm_target": false,
+   "expected_counts": {
+    "vertices": 5,
+    "faces": 5
+   },
+   "expected_behavior": "SERVE",
+   "geometry_determinacy": "UNIQUE_GEOMETRY",
+   "validation_method": "EXACT_SCENE_ORACLE+BROWSER"
+  },
+  {
+   "case_id": "T11",
+   "phrase_family": "textbook_canonical",
+   "input_type": "text",
+   "original_input": "Cho hình chóp S.ABC có SA vuông góc với mặt phẳng (ABC), tam giác ABC vuông tại B, AB = 4, BC = 3, SA = 3. Tính diện tích tam giác ABC.",
+   "simulation_intent": "QUERY_WITH_SCENE",
+   "geometric_family": "pyramid_tri",
+   "gold_entities": {
+    "solid_vertices": [
+     "S",
+     "A",
+     "B",
+     "C"
+    ],
+    "auxiliary_points": []
+   },
+   "gold_relations": [
+    [
+     "perp_ll",
+     "BA",
+     "BC"
+    ],
+    [
+     "perp_lp",
+     "SA",
+     "ABC"
+    ],
+    [
+     "len2",
+     "BA",
+     16
+    ],
+    [
+     "len2",
+     "BC",
+     9
+    ],
+    [
+     "len2",
+     "SA",
+     9
+    ]
+   ],
+   "metric_oracle": [
+    6.0
+   ],
+   "preregistered_slm_target": false,
+   "expected_counts": {
+    "vertices": 4,
+    "faces": 4
+   },
+   "expected_behavior": "SERVE",
+   "geometry_determinacy": "UNIQUE_GEOMETRY",
+   "validation_method": "EXACT_SCENE_ORACLE+BROWSER"
+  },
+  {
+   "case_id": "T12",
+   "phrase_family": "textbook_canonical",
+   "input_type": "text",
+   "original_input": "Một hình hộp chữ nhật ABCD.A'B'C'D' có ba kích thước AB = 3, BC = 4, CC' = 5. Tính thể tích của khối hộp chữ nhật đó.",
+   "simulation_intent": "QUERY_WITH_SCENE",
+   "geometric_family": "box",
+   "gold_entities": {
+    "solid_vertices": [
+     "A",
+     "B",
+     "C",
+     "D",
+     "A'",
+     "B'",
+     "C'",
+     "D'"
+    ],
+    "auxiliary_points": []
+   },
+   "gold_relations": [
+    [
+     "perp_ll",
+     "AB",
+     "AD"
+    ],
+    [
+     "perp_lp",
+     "AA'",
+     "ABC"
+    ],
+    [
+     "par_ll",
+     "AA'",
+     "BB'"
+    ],
+    [
+     "par_ll",
+     "AB",
+     "DC"
+    ],
+    [
+     "len2",
+     "AB",
+     9
+    ],
+    [
+     "len2",
+     "AD",
+     16
+    ],
+    [
+     "len2",
+     "AA'",
+     25
+    ]
+   ],
+   "metric_oracle": [
+    60.0
+   ],
+   "preregistered_slm_target": false,
+   "expected_counts": {
+    "vertices": 8,
+    "faces": 6
+   },
+   "expected_behavior": "SERVE",
+   "geometry_determinacy": "UNIQUE_GEOMETRY",
+   "validation_method": "EXACT_SCENE_ORACLE+BROWSER"
+  },
+  {
+   "case_id": "T13",
+   "phrase_family": "textbook_canonical",
+   "input_type": "text",
+   "original_input": "Cho hình chóp S.ABCD có đáy ABCD là hình chữ nhật, AB = 2, BC = 5, SA vuông góc với đáy, SA = 3. Vẽ hình chóp S.ABCD.",
+   "simulation_intent": "SIMULATE_ONLY",
+   "geometric_family": "pyramid_quad",
+   "gold_entities": {
+    "solid_vertices": [
+     "S",
+     "A",
+     "B",
+     "C",
+     "D"
+    ],
+    "auxiliary_points": []
+   },
+   "gold_relations": [
+    [
+     "perp_lp",
+     "SA",
+     "ABC"
+    ],
+    [
+     "perp_ll",
+     "AB",
+     "AD"
+    ],
+    [
+     "par_ll",
+     "AB",
+     "DC"
+    ],
+    [
+     "par_ll",
+     "AD",
+     "BC"
+    ],
+    [
+     "len2",
+     "AB",
+     4
+    ],
+    [
+     "len2",
+     "AD",
+     25
+    ],
+    [
+     "len2",
+     "SA",
+     9
+    ]
+   ],
+   "metric_oracle": null,
+   "preregistered_slm_target": false,
+   "expected_counts": {
+    "vertices": 5,
+    "faces": 5
+   },
+   "expected_behavior": "SERVE",
+   "geometry_determinacy": "UNIQUE_GEOMETRY",
+   "validation_method": "EXACT_SCENE_ORACLE+BROWSER"
+  },
+  {
+   "case_id": "T14",
+   "phrase_family": "textbook_canonical",
+   "input_type": "text",
+   "original_input": "Cho tứ diện ABCD với các cạnh AB, AC, AD vuông góc với nhau từng đôi một. Biết AB = 3, AC = 4, AD = 12, hãy tính độ dài cạnh BC.",
+   "simulation_intent": "QUERY_WITH_SCENE",
+   "geometric_family": "tetrahedron",
+   "gold_entities": {
+    "solid_vertices": [
+     "A",
+     "B",
+     "C",
+     "D"
+    ],
+    "auxiliary_points": []
+   },
+   "gold_relations": [
+    [
+     "perp_ll",
+     "AB",
+     "AC"
+    ],
+    [
+     "perp_ll",
+     "AC",
+     "AD"
+    ],
+    [
+     "perp_ll",
+     "AD",
+     "AB"
+    ],
+    [
+     "len2",
+     "AB",
+     9
+    ],
+    [
+     "len2",
+     "AC",
+     16
+    ],
+    [
+     "len2",
+     "AD",
+     144
+    ]
+   ],
+   "metric_oracle": [
+    5.0
+   ],
+   "preregistered_slm_target": false,
+   "expected_counts": {
+    "vertices": 4,
+    "faces": 4
+   },
+   "expected_behavior": "SERVE",
+   "geometry_determinacy": "UNIQUE_GEOMETRY",
+   "validation_method": "EXACT_SCENE_ORACLE+BROWSER"
+  },
+  {
+   "case_id": "T15",
+   "phrase_family": "textbook_canonical",
+   "input_type": "text",
+   "original_input": "Cho hình chóp S.ABC có đáy là tam giác vuông cân tại A với AB = AC = 4, SA vuông góc với đáy và SA = 6. Tính thể tích khối chóp S.ABC.",
+   "simulation_intent": "QUERY_WITH_SCENE",
+   "geometric_family": "pyramid_tri",
+   "gold_entities": {
+    "solid_vertices": [
+     "S",
+     "A",
+     "B",
+     "C"
+    ],
+    "auxiliary_points": []
+   },
+   "gold_relations": [
+    [
+     "perp_ll",
+     "AB",
+     "AC"
+    ],
+    [
+     "perp_lp",
+     "SA",
+     "ABC"
+    ],
+    [
+     "len2",
+     "AB",
+     16
+    ],
+    [
+     "len2",
+     "AC",
+     16
+    ],
+    [
+     "len2",
+     "SA",
+     36
+    ]
+   ],
+   "metric_oracle": [
+    16.0
+   ],
+   "preregistered_slm_target": false,
+   "expected_counts": {
+    "vertices": 4,
+    "faces": 4
+   },
+   "expected_behavior": "SERVE",
+   "geometry_determinacy": "UNIQUE_GEOMETRY",
+   "validation_method": "EXACT_SCENE_ORACLE+BROWSER"
+  },
+  {
+   "case_id": "T16",
+   "phrase_family": "textbook_canonical",
+   "input_type": "text",
+   "original_input": "Cho khối chóp tứ giác đều S.ABCD với cạnh đáy 4 và đường cao bằng 6. Tính thể tích khối chóp này.",
+   "simulation_intent": "QUERY_WITH_SCENE",
+   "geometric_family": "pyramid_quad",
+   "gold_entities": {
+    "solid_vertices": [
+     "S",
+     "A",
+     "B",
+     "C",
+     "D"
+    ],
+    "auxiliary_points": []
+   },
+   "gold_relations": [
+    [
+     "perp_ll",
+     "AB",
+     "AD"
+    ],
+    [
+     "par_ll",
+     "AB",
+     "DC"
+    ],
+    [
+     "len2",
+     "AB",
+     16
+    ],
+    [
+     "len2",
+     "AD",
+     16
+    ],
+    [
+     "eq",
+     "SA",
+     "SB"
+    ],
+    [
+     "eq",
+     "SA",
+     "SC"
+    ],
+    [
+     "eq",
+     "SA",
+     "SD"
+    ],
+    [
+     "len2",
+     "SA",
+     44.0
+    ]
+   ],
+   "metric_oracle": [
+    32.0
+   ],
+   "preregistered_slm_target": false,
+   "expected_counts": {
+    "vertices": 5,
+    "faces": 5
+   },
+   "expected_behavior": "SERVE",
+   "geometry_determinacy": "UNIQUE_GEOMETRY",
+   "validation_method": "EXACT_SCENE_ORACLE+BROWSER"
+  },
+  {
+   "case_id": "T17",
+   "phrase_family": "textbook_canonical",
+   "input_type": "text",
+   "original_input": "Cho hình chóp tam giác đều S.ABC có cạnh đáy bằng 3 và cạnh bên bằng 2√3. Tính thể tích khối chóp S.ABC.",
+   "simulation_intent": "QUERY_WITH_SCENE",
+   "geometric_family": "pyramid_tri",
+   "gold_entities": {
+    "solid_vertices": [
+     "S",
+     "A",
+     "B",
+     "C"
+    ],
+    "auxiliary_points": []
+   },
+   "gold_relations": [
+    [
+     "len2",
+     "AB",
+     9
+    ],
+    [
+     "len2",
+     "AC",
+     9
+    ],
+    [
+     "len2",
+     "BC",
+     9
+    ],
+    [
+     "eq",
+     "SA",
+     "SB"
+    ],
+    [
+     "eq",
+     "SA",
+     "SC"
+    ],
+    [
+     "len2",
+     "SA",
+     12.0
+    ]
+   ],
+   "metric_oracle": [
+    3.8971143170299736
+   ],
+   "preregistered_slm_target": false,
+   "expected_counts": {
+    "vertices": 4,
+    "faces": 4
+   },
+   "expected_behavior": "SERVE",
+   "geometry_determinacy": "UNIQUE_GEOMETRY",
+   "validation_method": "EXACT_SCENE_ORACLE+BROWSER"
+  },
+  {
+   "case_id": "E01",
+   "phrase_family": "exam_wording",
+   "input_type": "text",
+   "original_input": "Cho khối chóp S.ABCD có đáy là hình vuông cạnh a, SA vuông góc với mặt phẳng đáy và SA = 3a. Thể tích của khối chóp đã cho bằng",
+   "simulation_intent": "QUERY_WITH_SCENE",
+   "geometric_family": "pyramid_quad",
+   "gold_entities": {
+    "solid_vertices": [
+     "S",
+     "A",
+     "B",
+     "C",
+     "D"
+    ],
+    "auxiliary_points": []
+   },
+   "gold_relations": [
+    [
+     "perp_lp",
+     "SA",
+     "ABC"
+    ],
+    [
+     "perp_ll",
+     "AB",
+     "AD"
+    ],
+    [
+     "par_ll",
+     "AB",
+     "DC"
+    ],
+    [
+     "par_ll",
+     "AD",
+     "BC"
+    ],
+    [
+     "len2",
+     "AB",
+     1
+    ],
+    [
+     "len2",
+     "AD",
+     1
+    ],
+    [
+     "len2",
+     "SA",
+     9
+    ]
+   ],
+   "metric_oracle": [
+    1.0
+   ],
+   "preregistered_slm_target": false,
+   "expected_counts": {
+    "vertices": 5,
+    "faces": 5
+   },
+   "expected_behavior": "SERVE",
+   "geometry_determinacy": "UNIQUE_GEOMETRY",
+   "validation_method": "EXACT_SCENE_ORACLE+BROWSER"
+  },
+  {
+   "case_id": "E02",
+   "phrase_family": "exam_wording",
+   "input_type": "text",
+   "original_input": "Cho khối lăng trụ đứng ABC.A'B'C' có đáy ABC là tam giác vuông tại B, AB = a, BC = 2a và AA' = 3a. Thể tích khối lăng trụ đã cho bằng",
+   "simulation_intent": "QUERY_WITH_SCENE",
+   "geometric_family": "prism_tri",
+   "gold_entities": {
+    "solid_vertices": [
+     "A",
+     "B",
+     "C",
+     "A'",
+     "B'",
+     "C'"
+    ],
+    "auxiliary_points": []
+   },
+   "gold_relations": [
+    [
+     "perp_ll",
+     "BA",
+     "BC"
+    ],
+    [
+     "perp_lp",
+     "AA'",
+     "ABC"
+    ],
+    [
+     "par_ll",
+     "AA'",
+     "BB'"
+    ],
+    [
+     "par_ll",
+     "AA'",
+     "CC'"
+    ],
+    [
+     "len2",
+     "BA",
+     1
+    ],
+    [
+     "len2",
+     "BC",
+     4
+    ],
+    [
+     "len2",
+     "AA'",
+     9
+    ]
+   ],
+   "metric_oracle": [
+    3.0
+   ],
+   "preregistered_slm_target": false,
+   "expected_counts": {
+    "vertices": 6,
+    "faces": 5
+   },
+   "expected_behavior": "SERVE",
+   "geometry_determinacy": "UNIQUE_GEOMETRY",
+   "validation_method": "EXACT_SCENE_ORACLE+BROWSER"
+  },
+  {
+   "case_id": "E03",
+   "phrase_family": "exam_wording",
+   "input_type": "text",
+   "original_input": "Cho hình chóp S.ABC có đáy ABC là tam giác vuông tại B, AB = a, BC = a√3, SA vuông góc với mặt phẳng (ABC) và SA = 2a. Tính thể tích khối chóp S.ABC theo a.",
+   "simulation_intent": "QUERY_WITH_SCENE",
+   "geometric_family": "pyramid_tri",
+   "gold_entities": {
+    "solid_vertices": [
+     "S",
+     "A",
+     "B",
+     "C"
+    ],
+    "auxiliary_points": []
+   },
+   "gold_relations": [
+    [
+     "perp_ll",
+     "BA",
+     "BC"
+    ],
+    [
+     "perp_lp",
+     "SA",
+     "ABC"
+    ],
+    [
+     "len2",
+     "BA",
+     1
+    ],
+    [
+     "len2",
+     "BC",
+     3
+    ],
+    [
+     "len2",
+     "SA",
+     4
+    ]
+   ],
+   "metric_oracle": [
+    0.5773502691896257
+   ],
+   "preregistered_slm_target": false,
+   "expected_counts": {
+    "vertices": 4,
+    "faces": 4
+   },
+   "expected_behavior": "SERVE",
+   "geometry_determinacy": "UNIQUE_GEOMETRY",
+   "validation_method": "EXACT_SCENE_ORACLE+BROWSER"
+  },
+  {
+   "case_id": "E04",
+   "phrase_family": "exam_wording",
+   "input_type": "text",
+   "original_input": "Cho khối lập phương ABCD.A'B'C'D' có cạnh bằng 3. Thể tích của khối lập phương đã cho bằng A. 9. B. 27. C. 81. D. 18.",
+   "simulation_intent": "QUERY_WITH_SCENE",
+   "geometric_family": "cube",
+   "gold_entities": {
+    "solid_vertices": [
+     "A",
+     "B",
+     "C",
+     "D",
+     "A'",
+     "B'",
+     "C'",
+     "D'"
+    ],
+    "auxiliary_points": []
+   },
+   "gold_relations": [
+    [
+     "perp_ll",
+     "AB",
+     "AD"
+    ],
+    [
+     "perp_lp",
+     "AA'",
+     "ABC"
+    ],
+    [
+     "par_ll",
+     "AA'",
+     "BB'"
+    ],
+    [
+     "par_ll",
+     "AB",
+     "DC"
+    ],
+    [
+     "len2",
+     "AB",
+     9
+    ],
+    [
+     "len2",
+     "AD",
+     9
+    ],
+    [
+     "len2",
+     "AA'",
+     9
+    ]
+   ],
+   "metric_oracle": [
+    27.0
+   ],
+   "preregistered_slm_target": false,
+   "expected_counts": {
+    "vertices": 8,
+    "faces": 6
+   },
+   "expected_behavior": "SERVE",
+   "geometry_determinacy": "UNIQUE_GEOMETRY",
+   "validation_method": "EXACT_SCENE_ORACLE+BROWSER"
+  },
+  {
+   "case_id": "E05",
+   "phrase_family": "exam_wording",
+   "input_type": "text",
+   "original_input": "Cho hình chóp S.ABCD có đáy ABCD là hình vuông cạnh a, SA vuông góc với mặt phẳng đáy và SA = a√2. Góc giữa đường thẳng SC và mặt phẳng (ABCD) bằng",
+   "simulation_intent": "QUERY_WITH_SCENE",
+   "geometric_family": "pyramid_quad",
+   "gold_entities": {
+    "solid_vertices": [
+     "S",
+     "A",
+     "B",
+     "C",
+     "D"
+    ],
+    "auxiliary_points": []
+   },
+   "gold_relations": [
+    [
+     "perp_lp",
+     "SA",
+     "ABC"
+    ],
+    [
+     "perp_ll",
+     "AB",
+     "AD"
+    ],
+    [
+     "par_ll",
+     "AB",
+     "DC"
+    ],
+    [
+     "par_ll",
+     "AD",
+     "BC"
+    ],
+    [
+     "len2",
+     "AB",
+     1
+    ],
+    [
+     "len2",
+     "AD",
+     1
+    ],
+    [
+     "len2",
+     "SA",
+     2
+    ]
+   ],
+   "metric_oracle": [
+    45.0
+   ],
+   "preregistered_slm_target": false,
+   "expected_counts": {
+    "vertices": 5,
+    "faces": 5
+   },
+   "expected_behavior": "SERVE",
+   "geometry_determinacy": "UNIQUE_GEOMETRY",
+   "validation_method": "EXACT_SCENE_ORACLE+BROWSER"
+  },
+  {
+   "case_id": "E06",
+   "phrase_family": "exam_wording",
+   "input_type": "text",
+   "original_input": "Cho hình hộp chữ nhật ABCD.A'B'C'D' có AB = a, AD = 2a, AA' = 2a. Tính thể tích khối hộp chữ nhật đã cho.",
+   "simulation_intent": "QUERY_WITH_SCENE",
+   "geometric_family": "box",
+   "gold_entities": {
+    "solid_vertices": [
+     "A",
+     "B",
+     "C",
+     "D",
+     "A'",
+     "B'",
+     "C'",
+     "D'"
+    ],
+    "auxiliary_points": []
+   },
+   "gold_relations": [
+    [
+     "perp_ll",
+     "AB",
+     "AD"
+    ],
+    [
+     "perp_lp",
+     "AA'",
+     "ABC"
+    ],
+    [
+     "par_ll",
+     "AA'",
+     "BB'"
+    ],
+    [
+     "par_ll",
+     "AB",
+     "DC"
+    ],
+    [
+     "len2",
+     "AB",
+     1
+    ],
+    [
+     "len2",
+     "AD",
+     4
+    ],
+    [
+     "len2",
+     "AA'",
+     4
+    ]
+   ],
+   "metric_oracle": [
+    4.0
+   ],
+   "preregistered_slm_target": false,
+   "expected_counts": {
+    "vertices": 8,
+    "faces": 6
+   },
+   "expected_behavior": "SERVE",
+   "geometry_determinacy": "UNIQUE_GEOMETRY",
+   "validation_method": "EXACT_SCENE_ORACLE+BROWSER"
+  },
+  {
+   "case_id": "E07",
+   "phrase_family": "exam_wording",
+   "input_type": "text",
+   "original_input": "Cho khối chóp S.ABC có SA ⊥ (ABC), SA = 2, tam giác ABC đều cạnh bằng 2. Thể tích khối chóp S.ABC bằng",
+   "simulation_intent": "QUERY_WITH_SCENE",
+   "geometric_family": "pyramid_tri",
+   "gold_entities": {
+    "solid_vertices": [
+     "S",
+     "A",
+     "B",
+     "C"
+    ],
+    "auxiliary_points": []
+   },
+   "gold_relations": [
+    [
+     "perp_lp",
+     "SA",
+     "ABC"
+    ],
+    [
+     "len2",
+     "AB",
+     4
+    ],
+    [
+     "len2",
+     "AC",
+     4
+    ],
+    [
+     "len2",
+     "BC",
+     4
+    ],
+    [
+     "len2",
+     "SA",
+     4
+    ]
+   ],
+   "metric_oracle": [
+    1.1547005383792515
+   ],
+   "preregistered_slm_target": false,
+   "expected_counts": {
+    "vertices": 4,
+    "faces": 4
+   },
+   "expected_behavior": "SERVE",
+   "geometry_determinacy": "UNIQUE_GEOMETRY",
+   "validation_method": "EXACT_SCENE_ORACLE+BROWSER"
+  },
+  {
+   "case_id": "E08",
+   "phrase_family": "exam_wording",
+   "input_type": "text",
+   "original_input": "Cho khối lăng trụ đứng ABC.A'B'C' có đáy là tam giác đều cạnh 2a và AA' = a√3. Thể tích của khối lăng trụ đã cho bằng",
+   "simulation_intent": "QUERY_WITH_SCENE",
+   "geometric_family": "prism_tri",
+   "gold_entities": {
+    "solid_vertices": [
+     "A",
+     "B",
+     "C",
+     "A'",
+     "B'",
+     "C'"
+    ],
+    "auxiliary_points": []
+   },
+   "gold_relations": [
+    [
+     "perp_lp",
+     "AA'",
+     "ABC"
+    ],
+    [
+     "par_ll",
+     "AA'",
+     "BB'"
+    ],
+    [
+     "par_ll",
+     "AA'",
+     "CC'"
+    ],
+    [
+     "len2",
+     "AB",
+     4
+    ],
+    [
+     "len2",
+     "AC",
+     4
+    ],
+    [
+     "len2",
+     "BC",
+     4
+    ],
+    [
+     "len2",
+     "AA'",
+     3
+    ]
+   ],
+   "metric_oracle": [
+    3.0
+   ],
+   "preregistered_slm_target": false,
+   "expected_counts": {
+    "vertices": 6,
+    "faces": 5
+   },
+   "expected_behavior": "SERVE",
+   "geometry_determinacy": "UNIQUE_GEOMETRY",
+   "validation_method": "EXACT_SCENE_ORACLE+BROWSER"
+  },
+  {
+   "case_id": "E09",
+   "phrase_family": "exam_wording",
+   "input_type": "text",
+   "original_input": "Cho hình chóp S.ABC có đáy là tam giác vuông tại A, AB = 3, AC = 4, SA vuông góc với đáy và SA = 12. Khoảng cách từ A đến mặt phẳng (SBC) bằng",
+   "simulation_intent": "QUERY_WITH_SCENE",
+   "geometric_family": "pyramid_tri",
+   "gold_entities": {
+    "solid_vertices": [
+     "S",
+     "A",
+     "B",
+     "C"
+    ],
+    "auxiliary_points": []
+   },
+   "gold_relations": [
+    [
+     "perp_ll",
+     "AB",
+     "AC"
+    ],
+    [
+     "perp_lp",
+     "SA",
+     "ABC"
+    ],
+    [
+     "len2",
+     "AB",
+     9
+    ],
+    [
+     "len2",
+     "AC",
+     16
+    ],
+    [
+     "len2",
+     "SA",
+     144
+    ]
+   ],
+   "metric_oracle": [
+    2.3533936216582085
+   ],
+   "preregistered_slm_target": false,
+   "expected_counts": {
+    "vertices": 4,
+    "faces": 4
+   },
+   "expected_behavior": "SERVE",
+   "geometry_determinacy": "UNIQUE_GEOMETRY",
+   "validation_method": "EXACT_SCENE_ORACLE+BROWSER"
+  },
+  {
+   "case_id": "E10",
+   "phrase_family": "exam_wording",
+   "input_type": "text",
+   "original_input": "Cho tứ diện OABC có OA, OB, OC đôi một vuông góc với nhau và OA = OB = OC = a. Thể tích khối tứ diện OABC bằng",
+   "simulation_intent": "QUERY_WITH_SCENE",
+   "geometric_family": "tetrahedron",
+   "gold_entities": {
+    "solid_vertices": [
+     "O",
+     "A",
+     "B",
+     "C"
+    ],
+    "auxiliary_points": []
+   },
+   "gold_relations": [
+    [
+     "perp_ll",
+     "OA",
+     "OB"
+    ],
+    [
+     "perp_ll",
+     "OB",
+     "OC"
+    ],
+    [
+     "perp_ll",
+     "OC",
+     "OA"
+    ],
+    [
+     "len2",
+     "OA",
+     1
+    ],
+    [
+     "len2",
+     "OB",
+     1
+    ],
+    [
+     "len2",
+     "OC",
+     1
+    ]
+   ],
+   "metric_oracle": [
+    0.16666666666666666
+   ],
+   "preregistered_slm_target": false,
+   "expected_counts": {
+    "vertices": 4,
+    "faces": 4
+   },
+   "expected_behavior": "SERVE",
+   "geometry_determinacy": "UNIQUE_GEOMETRY",
+   "validation_method": "EXACT_SCENE_ORACLE+BROWSER"
+  },
+  {
+   "case_id": "E11",
+   "phrase_family": "exam_wording",
+   "input_type": "text",
+   "original_input": "Cho hình lập phương ABCD.A'B'C'D' có cạnh bằng a. Góc giữa đường thẳng A'C và mặt phẳng (ABCD) bằng",
+   "simulation_intent": "QUERY_WITH_SCENE",
+   "geometric_family": "cube",
+   "gold_entities": {
+    "solid_vertices": [
+     "A",
+     "B",
+     "C",
+     "D",
+     "A'",
+     "B'",
+     "C'",
+     "D'"
+    ],
+    "auxiliary_points": []
+   },
+   "gold_relations": [
+    [
+     "perp_ll",
+     "AB",
+     "AD"
+    ],
+    [
+     "perp_lp",
+     "AA'",
+     "ABC"
+    ],
+    [
+     "par_ll",
+     "AA'",
+     "BB'"
+    ],
+    [
+     "par_ll",
+     "AB",
+     "DC"
+    ],
+    [
+     "len2",
+     "AB",
+     1
+    ],
+    [
+     "len2",
+     "AD",
+     1
+    ],
+    [
+     "len2",
+     "AA'",
+     1
+    ]
+   ],
+   "metric_oracle": [
+    35.264389682754654
+   ],
+   "preregistered_slm_target": false,
+   "expected_counts": {
+    "vertices": 8,
+    "faces": 6
+   },
+   "expected_behavior": "SERVE",
+   "geometry_determinacy": "UNIQUE_GEOMETRY",
+   "validation_method": "EXACT_SCENE_ORACLE+BROWSER"
+  },
+  {
+   "case_id": "E12",
+   "phrase_family": "exam_wording",
+   "input_type": "text",
+   "original_input": "Cho khối chóp S.ABCD có đáy ABCD là hình chữ nhật với AB = a, AD = a√3, SA vuông góc với mặt phẳng đáy và SA = 2a. Thể tích khối chóp S.ABCD bằng A. 2a³√3/3. B. a³√3. C. 2a³√3. D. a³√3/3.",
+   "simulation_intent": "QUERY_WITH_SCENE",
+   "geometric_family": "pyramid_quad",
+   "gold_entities": {
+    "solid_vertices": [
+     "S",
+     "A",
+     "B",
+     "C",
+     "D"
+    ],
+    "auxiliary_points": []
+   },
+   "gold_relations": [
+    [
+     "perp_lp",
+     "SA",
+     "ABC"
+    ],
+    [
+     "perp_ll",
+     "AB",
+     "AD"
+    ],
+    [
+     "par_ll",
+     "AB",
+     "DC"
+    ],
+    [
+     "par_ll",
+     "AD",
+     "BC"
+    ],
+    [
+     "len2",
+     "AB",
+     1
+    ],
+    [
+     "len2",
+     "AD",
+     3
+    ],
+    [
+     "len2",
+     "SA",
+     4
+    ]
+   ],
+   "metric_oracle": [
+    1.1547005383792515
+   ],
+   "preregistered_slm_target": false,
+   "expected_counts": {
+    "vertices": 5,
+    "faces": 5
+   },
+   "expected_behavior": "SERVE",
+   "geometry_determinacy": "UNIQUE_GEOMETRY",
+   "validation_method": "EXACT_SCENE_ORACLE+BROWSER"
+  },
+  {
+   "case_id": "E13",
+   "phrase_family": "exam_wording",
+   "input_type": "text",
+   "original_input": "Cho hình chóp S.ABCD có đáy là hình vuông cạnh 2a, SA vuông góc với đáy và góc giữa SC với mặt phẳng đáy bằng 45°. Tính thể tích khối chóp S.ABCD.",
+   "simulation_intent": "QUERY_WITH_SCENE",
+   "geometric_family": "pyramid_quad",
+   "gold_entities": {
+    "solid_vertices": [
+     "S",
+     "A",
+     "B",
+     "C",
+     "D"
+    ],
+    "auxiliary_points": []
+   },
+   "gold_relations": [
+    [
+     "perp_lp",
+     "SA",
+     "ABC"
+    ],
+    [
+     "perp_ll",
+     "AB",
+     "AD"
+    ],
+    [
+     "par_ll",
+     "AB",
+     "DC"
+    ],
+    [
+     "par_ll",
+     "AD",
+     "BC"
+    ],
+    [
+     "len2",
+     "AB",
+     4
+    ],
+    [
+     "len2",
+     "AD",
+     4
+    ],
+    [
+     "len2",
+     "SA",
+     8
+    ]
+   ],
+   "metric_oracle": [
+    3.771236166328254
+   ],
+   "preregistered_slm_target": false,
+   "expected_counts": {
+    "vertices": 5,
+    "faces": 5
+   },
+   "expected_behavior": "SERVE",
+   "geometry_determinacy": "UNIQUE_GEOMETRY",
+   "validation_method": "EXACT_SCENE_ORACLE+BROWSER"
+  },
+  {
+   "case_id": "E14",
+   "phrase_family": "exam_wording",
+   "input_type": "text",
+   "original_input": "Cho khối lăng trụ đứng ABC.A'B'C' có đáy ABC là tam giác vuông cân tại A, AB = 2 và AA' = 3. Thể tích khối lăng trụ đã cho bằng",
+   "simulation_intent": "QUERY_WITH_SCENE",
+   "geometric_family": "prism_tri",
+   "gold_entities": {
+    "solid_vertices": [
+     "A",
+     "B",
+     "C",
+     "A'",
+     "B'",
+     "C'"
+    ],
+    "auxiliary_points": []
+   },
+   "gold_relations": [
+    [
+     "perp_ll",
+     "AB",
+     "AC"
+    ],
+    [
+     "perp_lp",
+     "AA'",
+     "ABC"
+    ],
+    [
+     "par_ll",
+     "AA'",
+     "BB'"
+    ],
+    [
+     "par_ll",
+     "AA'",
+     "CC'"
+    ],
+    [
+     "len2",
+     "AB",
+     4
+    ],
+    [
+     "len2",
+     "AC",
+     4
+    ],
+    [
+     "len2",
+     "AA'",
+     9
+    ]
+   ],
+   "metric_oracle": [
+    6.0
+   ],
+   "preregistered_slm_target": false,
+   "expected_counts": {
+    "vertices": 6,
+    "faces": 5
+   },
+   "expected_behavior": "SERVE",
+   "geometry_determinacy": "UNIQUE_GEOMETRY",
+   "validation_method": "EXACT_SCENE_ORACLE+BROWSER"
+  },
+  {
+   "case_id": "E15",
+   "phrase_family": "exam_wording",
+   "input_type": "text",
+   "original_input": "Cho hình hộp chữ nhật ABCD.A'B'C'D' có AB = 4, AD = 3, AA' = 12. Độ dài đường chéo BD' bằng",
+   "simulation_intent": "QUERY_WITH_SCENE",
+   "geometric_family": "box",
+   "gold_entities": {
+    "solid_vertices": [
+     "A",
+     "B",
+     "C",
+     "D",
+     "A'",
+     "B'",
+     "C'",
+     "D'"
+    ],
+    "auxiliary_points": []
+   },
+   "gold_relations": [
+    [
+     "perp_ll",
+     "AB",
+     "AD"
+    ],
+    [
+     "perp_lp",
+     "AA'",
+     "ABC"
+    ],
+    [
+     "par_ll",
+     "AA'",
+     "BB'"
+    ],
+    [
+     "par_ll",
+     "AB",
+     "DC"
+    ],
+    [
+     "len2",
+     "AB",
+     16
+    ],
+    [
+     "len2",
+     "AD",
+     9
+    ],
+    [
+     "len2",
+     "AA'",
+     144
+    ]
+   ],
+   "metric_oracle": [
+    13.0
+   ],
+   "preregistered_slm_target": false,
+   "expected_counts": {
+    "vertices": 8,
+    "faces": 6
+   },
+   "expected_behavior": "SERVE",
+   "geometry_determinacy": "UNIQUE_GEOMETRY",
+   "validation_method": "EXACT_SCENE_ORACLE+BROWSER"
+  },
+  {
+   "case_id": "E16",
+   "phrase_family": "exam_wording",
+   "input_type": "text",
+   "original_input": "Cho khối chóp S.ABC có đáy là tam giác vuông cân tại B, AB = a, SA vuông góc với đáy và SA = a. Khoảng cách từ A đến mặt phẳng (SBC) bằng",
+   "simulation_intent": "QUERY_WITH_SCENE",
+   "geometric_family": "pyramid_tri",
+   "gold_entities": {
+    "solid_vertices": [
+     "S",
+     "A",
+     "B",
+     "C"
+    ],
+    "auxiliary_points": []
+   },
+   "gold_relations": [
+    [
+     "perp_ll",
+     "BA",
+     "BC"
+    ],
+    [
+     "perp_lp",
+     "SA",
+     "ABC"
+    ],
+    [
+     "len2",
+     "BA",
+     1
+    ],
+    [
+     "len2",
+     "BC",
+     1
+    ],
+    [
+     "len2",
+     "SA",
+     1
+    ]
+   ],
+   "metric_oracle": [
+    0.7071067811865475
+   ],
+   "preregistered_slm_target": false,
+   "expected_counts": {
+    "vertices": 4,
+    "faces": 4
+   },
+   "expected_behavior": "SERVE",
+   "geometry_determinacy": "UNIQUE_GEOMETRY",
+   "validation_method": "EXACT_SCENE_ORACLE+BROWSER"
+  },
+  {
+   "case_id": "G01",
+   "phrase_family": "teacher_wording",
+   "input_type": "text",
+   "original_input": "Cho hình chóp S.ABCD có đáy ABCD là hình vuông cạnh 3. Biết rằng cạnh bên SA vuông góc với mặt phẳng đáy và SA = 3. Hãy vẽ hình chóp và tính thể tích của nó.",
+   "simulation_intent": "QUERY_WITH_SCENE",
+   "geometric_family": "pyramid_quad",
+   "gold_entities": {
+    "solid_vertices": [
+     "S",
+     "A",
+     "B",
+     "C",
+     "D"
+    ],
+    "auxiliary_points": []
+   },
+   "gold_relations": [
+    [
+     "perp_lp",
+     "SA",
+     "ABC"
+    ],
+    [
+     "perp_ll",
+     "AB",
+     "AD"
+    ],
+    [
+     "par_ll",
+     "AB",
+     "DC"
+    ],
+    [
+     "par_ll",
+     "AD",
+     "BC"
+    ],
+    [
+     "len2",
+     "AB",
+     9
+    ],
+    [
+     "len2",
+     "AD",
+     9
+    ],
+    [
+     "len2",
+     "SA",
+     9
+    ]
+   ],
+   "metric_oracle": [
+    9.0
+   ],
+   "preregistered_slm_target": false,
+   "expected_counts": {
+    "vertices": 5,
+    "faces": 5
+   },
+   "expected_behavior": "SERVE",
+   "geometry_determinacy": "UNIQUE_GEOMETRY",
+   "validation_method": "EXACT_SCENE_ORACLE+BROWSER"
+  },
+  {
+   "case_id": "G02",
+   "phrase_family": "teacher_wording",
+   "input_type": "text",
+   "original_input": "Xét hình lăng trụ đứng ABC.A'B'C' với đáy ABC vuông tại C, CA = 5, CB = 12. Chiều cao của lăng trụ bằng 4. Tính thể tích khối lăng trụ ABC.A'B'C'.",
+   "simulation_intent": "QUERY_WITH_SCENE",
+   "geometric_family": "prism_tri",
+   "gold_entities": {
+    "solid_vertices": [
+     "A",
+     "B",
+     "C",
+     "A'",
+     "B'",
+     "C'"
+    ],
+    "auxiliary_points": []
+   },
+   "gold_relations": [
+    [
+     "perp_ll",
+     "CA",
+     "CB"
+    ],
+    [
+     "perp_lp",
+     "AA'",
+     "ABC"
+    ],
+    [
+     "par_ll",
+     "AA'",
+     "BB'"
+    ],
+    [
+     "par_ll",
+     "AA'",
+     "CC'"
+    ],
+    [
+     "len2",
+     "CA",
+     25
+    ],
+    [
+     "len2",
+     "CB",
+     144
+    ],
+    [
+     "len2",
+     "AA'",
+     16
+    ]
+   ],
+   "metric_oracle": [
+    120.0
+   ],
+   "preregistered_slm_target": false,
+   "expected_counts": {
+    "vertices": 6,
+    "faces": 5
+   },
+   "expected_behavior": "SERVE",
+   "geometry_determinacy": "UNIQUE_GEOMETRY",
+   "validation_method": "EXACT_SCENE_ORACLE+BROWSER"
+  },
+  {
+   "case_id": "G03",
+   "phrase_family": "teacher_wording",
+   "input_type": "text",
+   "original_input": "Trong không gian, cho tứ diện ABCD có ba cạnh AB, AC, AD đôi một vuông góc với nhau. Cho biết AB = 1, AC = 2 và AD = 3. Em hãy dựng tứ diện ABCD.",
+   "simulation_intent": "SIMULATE_ONLY",
+   "geometric_family": "tetrahedron",
+   "gold_entities": {
+    "solid_vertices": [
+     "A",
+     "B",
+     "C",
+     "D"
+    ],
+    "auxiliary_points": []
+   },
+   "gold_relations": [
+    [
+     "perp_ll",
+     "AB",
+     "AC"
+    ],
+    [
+     "perp_ll",
+     "AC",
+     "AD"
+    ],
+    [
+     "perp_ll",
+     "AD",
+     "AB"
+    ],
+    [
+     "len2",
+     "AB",
+     1
+    ],
+    [
+     "len2",
+     "AC",
+     4
+    ],
+    [
+     "len2",
+     "AD",
+     9
+    ]
+   ],
+   "metric_oracle": null,
+   "preregistered_slm_target": false,
+   "expected_counts": {
+    "vertices": 4,
+    "faces": 4
+   },
+   "expected_behavior": "SERVE",
+   "geometry_determinacy": "UNIQUE_GEOMETRY",
+   "validation_method": "EXACT_SCENE_ORACLE+BROWSER"
+  },
+  {
+   "case_id": "G04",
+   "phrase_family": "teacher_wording",
+   "input_type": "text",
+   "original_input": "Cho hình chóp S.ABC, đáy ABC là tam giác vuông tại B với BA = 6, BC = 8. Đường thẳng SA vuông góc với mặt phẳng (ABC) và SA = 10. Gọi M là trung điểm của SC. Hãy dựng hình chóp và điểm M.",
+   "simulation_intent": "SIMULATE_ONLY",
+   "geometric_family": "pyramid_tri",
+   "gold_entities": {
+    "solid_vertices": [
+     "S",
+     "A",
+     "B",
+     "C"
+    ],
+    "auxiliary_points": [
+     "M"
+    ]
+   },
+   "gold_relations": [
+    [
+     "perp_ll",
+     "BA",
+     "BC"
+    ],
+    [
+     "perp_lp",
+     "SA",
+     "ABC"
+    ],
+    [
+     "len2",
+     "BA",
+     36
+    ],
+    [
+     "len2",
+     "BC",
+     64
+    ],
+    [
+     "len2",
+     "SA",
+     100
+    ],
+    [
+     "mid",
+     "M",
+     "SC"
+    ]
+   ],
+   "metric_oracle": null,
+   "preregistered_slm_target": false,
+   "expected_counts": {
+    "vertices": 4,
+    "faces": 4
+   },
+   "expected_behavior": "SERVE",
+   "geometry_determinacy": "UNIQUE_GEOMETRY",
+   "validation_method": "EXACT_SCENE_ORACLE+BROWSER"
+  },
+  {
+   "case_id": "G05",
+   "phrase_family": "teacher_wording",
+   "input_type": "text",
+   "original_input": "Cho hình hộp chữ nhật ABCD.A'B'C'D'. Biết AB = 6, AD = 8 và AA' = 5. Tính độ dài đoạn AC'.",
+   "simulation_intent": "QUERY_WITH_SCENE",
+   "geometric_family": "box",
+   "gold_entities": {
+    "solid_vertices": [
+     "A",
+     "B",
+     "C",
+     "D",
+     "A'",
+     "B'",
+     "C'",
+     "D'"
+    ],
+    "auxiliary_points": []
+   },
+   "gold_relations": [
+    [
+     "perp_ll",
+     "AB",
+     "AD"
+    ],
+    [
+     "perp_lp",
+     "AA'",
+     "ABC"
+    ],
+    [
+     "par_ll",
+     "AA'",
+     "BB'"
+    ],
+    [
+     "par_ll",
+     "AB",
+     "DC"
+    ],
+    [
+     "len2",
+     "AB",
+     36
+    ],
+    [
+     "len2",
+     "AD",
+     64
+    ],
+    [
+     "len2",
+     "AA'",
+     25
+    ]
+   ],
+   "metric_oracle": [
+    11.180339887498949
+   ],
+   "preregistered_slm_target": false,
+   "expected_counts": {
+    "vertices": 8,
+    "faces": 6
+   },
+   "expected_behavior": "SERVE",
+   "geometry_determinacy": "UNIQUE_GEOMETRY",
+   "validation_method": "EXACT_SCENE_ORACLE+BROWSER"
+  },
+  {
+   "case_id": "G06",
+   "phrase_family": "teacher_wording",
+   "input_type": "text",
+   "original_input": "Cho hình chóp S.ABCD có đáy là hình chữ nhật ABCD, trong đó AB = 4 và AD = 6. Cạnh bên SA = 5 và vuông góc với mặt phẳng đáy. Hãy tính thể tích khối chóp.",
+   "simulation_intent": "QUERY_WITH_SCENE",
+   "geometric_family": "pyramid_quad",
+   "gold_entities": {
+    "solid_vertices": [
+     "S",
+     "A",
+     "B",
+     "C",
+     "D"
+    ],
+    "auxiliary_points": []
+   },
+   "gold_relations": [
+    [
+     "perp_lp",
+     "SA",
+     "ABC"
+    ],
+    [
+     "perp_ll",
+     "AB",
+     "AD"
+    ],
+    [
+     "par_ll",
+     "AB",
+     "DC"
+    ],
+    [
+     "par_ll",
+     "AD",
+     "BC"
+    ],
+    [
+     "len2",
+     "AB",
+     16
+    ],
+    [
+     "len2",
+     "AD",
+     36
+    ],
+    [
+     "len2",
+     "SA",
+     25
+    ]
+   ],
+   "metric_oracle": [
+    40.0
+   ],
+   "preregistered_slm_target": false,
+   "expected_counts": {
+    "vertices": 5,
+    "faces": 5
+   },
+   "expected_behavior": "SERVE",
+   "geometry_determinacy": "UNIQUE_GEOMETRY",
+   "validation_method": "EXACT_SCENE_ORACLE+BROWSER"
+  },
+  {
+   "case_id": "G07",
+   "phrase_family": "teacher_wording",
+   "input_type": "text",
+   "original_input": "Cho hình lập phương ABCD.A'B'C'D' có cạnh 4. Tính diện tích tam giác A'BD.",
+   "simulation_intent": "QUERY_WITH_SCENE",
+   "geometric_family": "cube",
+   "gold_entities": {
+    "solid_vertices": [
+     "A",
+     "B",
+     "C",
+     "D",
+     "A'",
+     "B'",
+     "C'",
+     "D'"
+    ],
+    "auxiliary_points": []
+   },
+   "gold_relations": [
+    [
+     "perp_ll",
+     "AB",
+     "AD"
+    ],
+    [
+     "perp_lp",
+     "AA'",
+     "ABC"
+    ],
+    [
+     "par_ll",
+     "AA'",
+     "BB'"
+    ],
+    [
+     "par_ll",
+     "AB",
+     "DC"
+    ],
+    [
+     "len2",
+     "AB",
+     16
+    ],
+    [
+     "len2",
+     "AD",
+     16
+    ],
+    [
+     "len2",
+     "AA'",
+     16
+    ]
+   ],
+   "metric_oracle": [
+    13.856406460551018
+   ],
+   "preregistered_slm_target": false,
+   "expected_counts": {
+    "vertices": 8,
+    "faces": 6
+   },
+   "expected_behavior": "SERVE",
+   "geometry_determinacy": "UNIQUE_GEOMETRY",
+   "validation_method": "EXACT_SCENE_ORACLE+BROWSER"
+  },
+  {
+   "case_id": "G08",
+   "phrase_family": "teacher_wording",
+   "input_type": "text",
+   "original_input": "Cho hình chóp S.ABC có đáy ABC là tam giác vuông tại A, biết AB = 5 và AC = 12. Hình chiếu vuông góc của S lên mặt phẳng (ABC) trùng với điểm A, SA = 6. Tính thể tích khối chóp S.ABC.",
+   "simulation_intent": "QUERY_WITH_SCENE",
+   "geometric_family": "pyramid_tri",
+   "gold_entities": {
+    "solid_vertices": [
+     "S",
+     "A",
+     "B",
+     "C"
+    ],
+    "auxiliary_points": []
+   },
+   "gold_relations": [
+    [
+     "perp_ll",
+     "AB",
+     "AC"
+    ],
+    [
+     "perp_lp",
+     "SA",
+     "ABC"
+    ],
+    [
+     "len2",
+     "AB",
+     25
+    ],
+    [
+     "len2",
+     "AC",
+     144
+    ],
+    [
+     "len2",
+     "SA",
+     36
+    ]
+   ],
+   "metric_oracle": [
+    60.0
+   ],
+   "preregistered_slm_target": false,
+   "expected_counts": {
+    "vertices": 4,
+    "faces": 4
+   },
+   "expected_behavior": "SERVE",
+   "geometry_determinacy": "UNIQUE_GEOMETRY",
+   "validation_method": "EXACT_SCENE_ORACLE+BROWSER"
+  },
+  {
+   "case_id": "G09",
+   "phrase_family": "teacher_wording",
+   "input_type": "text",
+   "original_input": "Cho lăng trụ đứng ABCD.A'B'C'D' có đáy ABCD là hình vuông cạnh 3 và cạnh bên bằng 7. Tính thể tích khối lăng trụ.",
+   "simulation_intent": "QUERY_WITH_SCENE",
+   "geometric_family": "box",
+   "gold_entities": {
+    "solid_vertices": [
+     "A",
+     "B",
+     "C",
+     "D",
+     "A'",
+     "B'",
+     "C'",
+     "D'"
+    ],
+    "auxiliary_points": []
+   },
+   "gold_relations": [
+    [
+     "perp_ll",
+     "AB",
+     "AD"
+    ],
+    [
+     "perp_lp",
+     "AA'",
+     "ABC"
+    ],
+    [
+     "par_ll",
+     "AA'",
+     "BB'"
+    ],
+    [
+     "par_ll",
+     "AB",
+     "DC"
+    ],
+    [
+     "len2",
+     "AB",
+     9
+    ],
+    [
+     "len2",
+     "AD",
+     9
+    ],
+    [
+     "len2",
+     "AA'",
+     49
+    ]
+   ],
+   "metric_oracle": [
+    63.0
+   ],
+   "preregistered_slm_target": false,
+   "expected_counts": {
+    "vertices": 8,
+    "faces": 6
+   },
+   "expected_behavior": "SERVE",
+   "geometry_determinacy": "UNIQUE_GEOMETRY",
+   "validation_method": "EXACT_SCENE_ORACLE+BROWSER"
+  },
+  {
+   "case_id": "G10",
+   "phrase_family": "teacher_wording",
+   "input_type": "text",
+   "original_input": "Cho tứ diện SABC có SA, SB, SC vuông góc với nhau từng đôi một, SA = 4, SB = 4, SC = 2. Tính khoảng cách từ S đến mặt phẳng (ABC).",
+   "simulation_intent": "QUERY_WITH_SCENE",
+   "geometric_family": "tetrahedron",
+   "gold_entities": {
+    "solid_vertices": [
+     "S",
+     "A",
+     "B",
+     "C"
+    ],
+    "auxiliary_points": []
+   },
+   "gold_relations": [
+    [
+     "perp_ll",
+     "SA",
+     "SB"
+    ],
+    [
+     "perp_ll",
+     "SB",
+     "SC"
+    ],
+    [
+     "perp_ll",
+     "SC",
+     "SA"
+    ],
+    [
+     "len2",
+     "SA",
+     16
+    ],
+    [
+     "len2",
+     "SB",
+     16
+    ],
+    [
+     "len2",
+     "SC",
+     4
+    ]
+   ],
+   "metric_oracle": [
+    1.6329931618554523
+   ],
+   "preregistered_slm_target": false,
+   "expected_counts": {
+    "vertices": 4,
+    "faces": 4
+   },
+   "expected_behavior": "SERVE",
+   "geometry_determinacy": "UNIQUE_GEOMETRY",
+   "validation_method": "EXACT_SCENE_ORACLE+BROWSER"
+  },
+  {
+   "case_id": "G11",
+   "phrase_family": "teacher_wording",
+   "input_type": "text",
+   "original_input": "Cho hình chóp S.ABCD đáy ABCD là hình chữ nhật, AB = 3, AD = 4. SA vuông góc với (ABCD) và SA = 5. Tính khoảng cách giữa hai điểm S và C.",
+   "simulation_intent": "QUERY_WITH_SCENE",
+   "geometric_family": "pyramid_quad",
+   "gold_entities": {
+    "solid_vertices": [
+     "S",
+     "A",
+     "B",
+     "C",
+     "D"
+    ],
+    "auxiliary_points": []
+   },
+   "gold_relations": [
+    [
+     "perp_lp",
+     "SA",
+     "ABC"
+    ],
+    [
+     "perp_ll",
+     "AB",
+     "AD"
+    ],
+    [
+     "par_ll",
+     "AB",
+     "DC"
+    ],
+    [
+     "par_ll",
+     "AD",
+     "BC"
+    ],
+    [
+     "len2",
+     "AB",
+     9
+    ],
+    [
+     "len2",
+     "AD",
+     16
+    ],
+    [
+     "len2",
+     "SA",
+     25
+    ]
+   ],
+   "metric_oracle": [
+    7.0710678118654755
+   ],
+   "preregistered_slm_target": false,
+   "expected_counts": {
+    "vertices": 5,
+    "faces": 5
+   },
+   "expected_behavior": "SERVE",
+   "geometry_determinacy": "UNIQUE_GEOMETRY",
+   "validation_method": "EXACT_SCENE_ORACLE+BROWSER"
+  },
+  {
+   "case_id": "G12",
+   "phrase_family": "teacher_wording",
+   "input_type": "text",
+   "original_input": "Bài toán: Cho hình lăng trụ đứng ABC.A'B'C' có tam giác ABC vuông tại B, BA = 3, BC = 4, AA' = 6. Yêu cầu: tính độ dài A'C.",
+   "simulation_intent": "QUERY_WITH_SCENE",
+   "geometric_family": "prism_tri",
+   "gold_entities": {
+    "solid_vertices": [
+     "A",
+     "B",
+     "C",
+     "A'",
+     "B'",
+     "C'"
+    ],
+    "auxiliary_points": []
+   },
+   "gold_relations": [
+    [
+     "perp_ll",
+     "BA",
+     "BC"
+    ],
+    [
+     "perp_lp",
+     "AA'",
+     "ABC"
+    ],
+    [
+     "par_ll",
+     "AA'",
+     "BB'"
+    ],
+    [
+     "par_ll",
+     "AA'",
+     "CC'"
+    ],
+    [
+     "len2",
+     "BA",
+     9
+    ],
+    [
+     "len2",
+     "BC",
+     16
+    ],
+    [
+     "len2",
+     "AA'",
+     36
+    ]
+   ],
+   "metric_oracle": [
+    7.810249675906654
+   ],
+   "preregistered_slm_target": false,
+   "expected_counts": {
+    "vertices": 6,
+    "faces": 5
+   },
+   "expected_behavior": "SERVE",
+   "geometry_determinacy": "UNIQUE_GEOMETRY",
+   "validation_method": "EXACT_SCENE_ORACLE+BROWSER"
+  },
+  {
+   "case_id": "G13",
+   "phrase_family": "teacher_wording",
+   "input_type": "text",
+   "original_input": "Cho hình chóp S.ABCD có đáy ABCD là hình vuông cạnh 2, SA vuông góc với đáy, SA = 2√3. Hãy xác định và tính góc giữa SB và mặt phẳng (ABCD).",
+   "simulation_intent": "QUERY_WITH_SCENE",
+   "geometric_family": "pyramid_quad",
+   "gold_entities": {
+    "solid_vertices": [
+     "S",
+     "A",
+     "B",
+     "C",
+     "D"
+    ],
+    "auxiliary_points": []
+   },
+   "gold_relations": [
+    [
+     "perp_lp",
+     "SA",
+     "ABC"
+    ],
+    [
+     "perp_ll",
+     "AB",
+     "AD"
+    ],
+    [
+     "par_ll",
+     "AB",
+     "DC"
+    ],
+    [
+     "par_ll",
+     "AD",
+     "BC"
+    ],
+    [
+     "len2",
+     "AB",
+     4
+    ],
+    [
+     "len2",
+     "AD",
+     4
+    ],
+    [
+     "len2",
+     "SA",
+     12
+    ]
+   ],
+   "metric_oracle": [
+    60.0
+   ],
+   "preregistered_slm_target": false,
+   "expected_counts": {
+    "vertices": 5,
+    "faces": 5
+   },
+   "expected_behavior": "SERVE",
+   "geometry_determinacy": "UNIQUE_GEOMETRY",
+   "validation_method": "EXACT_SCENE_ORACLE+BROWSER"
+  },
+  {
+   "case_id": "G14",
+   "phrase_family": "teacher_wording",
+   "input_type": "text",
+   "original_input": "Cho hình hộp chữ nhật MNPQ.M'N'P'Q' có MN = 3, MQ = 5 và MM' = 4. Vẽ hình hộp chữ nhật đó.",
+   "simulation_intent": "SIMULATE_ONLY",
+   "geometric_family": "box",
+   "gold_entities": {
+    "solid_vertices": [
+     "M",
+     "N",
+     "P",
+     "Q",
+     "M'",
+     "N'",
+     "P'",
+     "Q'"
+    ],
+    "auxiliary_points": []
+   },
+   "gold_relations": [
+    [
+     "perp_ll",
+     "MN",
+     "MQ"
+    ],
+    [
+     "perp_lp",
+     "MM'",
+     "MNP"
+    ],
+    [
+     "par_ll",
+     "MM'",
+     "NN'"
+    ],
+    [
+     "par_ll",
+     "MN",
+     "QP"
+    ],
+    [
+     "len2",
+     "MN",
+     9
+    ],
+    [
+     "len2",
+     "MQ",
+     25
+    ],
+    [
+     "len2",
+     "MM'",
+     16
+    ]
+   ],
+   "metric_oracle": null,
+   "preregistered_slm_target": false,
+   "expected_counts": {
+    "vertices": 8,
+    "faces": 6
+   },
+   "expected_behavior": "SERVE",
+   "geometry_determinacy": "UNIQUE_GEOMETRY",
+   "validation_method": "EXACT_SCENE_ORACLE+BROWSER"
+  },
+  {
+   "case_id": "G15",
+   "phrase_family": "teacher_wording",
+   "input_type": "text",
+   "original_input": "Cho hình chóp S.ABC có SA ⊥ (ABC). Tam giác ABC đều cạnh 3 và SA = 3. Gọi M là trung điểm BC. Tính độ dài SM.",
+   "simulation_intent": "QUERY_WITH_SCENE",
+   "geometric_family": "pyramid_tri",
+   "gold_entities": {
+    "solid_vertices": [
+     "S",
+     "A",
+     "B",
+     "C"
+    ],
+    "auxiliary_points": [
+     "M"
+    ]
+   },
+   "gold_relations": [
+    [
+     "perp_lp",
+     "SA",
+     "ABC"
+    ],
+    [
+     "len2",
+     "AB",
+     9
+    ],
+    [
+     "len2",
+     "AC",
+     9
+    ],
+    [
+     "len2",
+     "BC",
+     9
+    ],
+    [
+     "len2",
+     "SA",
+     9
+    ],
+    [
+     "mid",
+     "M",
+     "BC"
+    ]
+   ],
+   "metric_oracle": [
+    3.968626966596886
+   ],
+   "preregistered_slm_target": false,
+   "expected_counts": {
+    "vertices": 4,
+    "faces": 4
+   },
+   "expected_behavior": "SERVE",
+   "geometry_determinacy": "UNIQUE_GEOMETRY",
+   "validation_method": "EXACT_SCENE_ORACLE+BROWSER"
+  },
+  {
+   "case_id": "C01",
+   "phrase_family": "learner_colloquial",
+   "input_type": "text",
+   "original_input": "Mình có bài: hình chóp S.ABCD đáy là hình vuông cạnh 5, SA vuông góc đáy, SA = 6. Tính thể tích giúp mình với.",
+   "simulation_intent": "QUERY_WITH_SCENE",
+   "geometric_family": "pyramid_quad",
+   "gold_entities": {
+    "solid_vertices": [
+     "S",
+     "A",
+     "B",
+     "C",
+     "D"
+    ],
+    "auxiliary_points": []
+   },
+   "gold_relations": [
+    [
+     "perp_lp",
+     "SA",
+     "ABC"
+    ],
+    [
+     "perp_ll",
+     "AB",
+     "AD"
+    ],
+    [
+     "par_ll",
+     "AB",
+     "DC"
+    ],
+    [
+     "par_ll",
+     "AD",
+     "BC"
+    ],
+    [
+     "len2",
+     "AB",
+     25
+    ],
+    [
+     "len2",
+     "AD",
+     25
+    ],
+    [
+     "len2",
+     "SA",
+     36
+    ]
+   ],
+   "metric_oracle": [
+    50.0
+   ],
+   "preregistered_slm_target": false,
+   "expected_counts": {
+    "vertices": 5,
+    "faces": 5
+   },
+   "expected_behavior": "SERVE",
+   "geometry_determinacy": "UNIQUE_GEOMETRY",
+   "validation_method": "EXACT_SCENE_ORACLE+BROWSER"
+  },
+  {
+   "case_id": "C02",
+   "phrase_family": "learner_colloquial",
+   "input_type": "text",
+   "original_input": "Cho em hỏi: lăng trụ đứng ABC.A'B'C' đáy vuông tại A, AB = 3, AC = 4, AA' = 5 thì thể tích là bao nhiêu ạ?",
+   "simulation_intent": "QUERY_WITH_SCENE",
+   "geometric_family": "prism_tri",
+   "gold_entities": {
+    "solid_vertices": [
+     "A",
+     "B",
+     "C",
+     "A'",
+     "B'",
+     "C'"
+    ],
+    "auxiliary_points": []
+   },
+   "gold_relations": [
+    [
+     "perp_ll",
+     "AB",
+     "AC"
+    ],
+    [
+     "perp_lp",
+     "AA'",
+     "ABC"
+    ],
+    [
+     "par_ll",
+     "AA'",
+     "BB'"
+    ],
+    [
+     "par_ll",
+     "AA'",
+     "CC'"
+    ],
+    [
+     "len2",
+     "AB",
+     9
+    ],
+    [
+     "len2",
+     "AC",
+     16
+    ],
+    [
+     "len2",
+     "AA'",
+     25
+    ]
+   ],
+   "metric_oracle": [
+    30.0
+   ],
+   "preregistered_slm_target": false,
+   "expected_counts": {
+    "vertices": 6,
+    "faces": 5
+   },
+   "expected_behavior": "SERVE",
+   "geometry_determinacy": "UNIQUE_GEOMETRY",
+   "validation_method": "EXACT_SCENE_ORACLE+BROWSER"
+  },
+  {
+   "case_id": "C03",
+   "phrase_family": "learner_colloquial",
+   "input_type": "text",
+   "original_input": "Vẽ giúp mình hình lập phương ABCD.A'B'C'D' cạnh 6 nhé.",
+   "simulation_intent": "SIMULATE_ONLY",
+   "geometric_family": "cube",
+   "gold_entities": {
+    "solid_vertices": [
+     "A",
+     "B",
+     "C",
+     "D",
+     "A'",
+     "B'",
+     "C'",
+     "D'"
+    ],
+    "auxiliary_points": []
+   },
+   "gold_relations": [
+    [
+     "perp_ll",
+     "AB",
+     "AD"
+    ],
+    [
+     "perp_lp",
+     "AA'",
+     "ABC"
+    ],
+    [
+     "par_ll",
+     "AA'",
+     "BB'"
+    ],
+    [
+     "par_ll",
+     "AB",
+     "DC"
+    ],
+    [
+     "len2",
+     "AB",
+     36
+    ],
+    [
+     "len2",
+     "AD",
+     36
+    ],
+    [
+     "len2",
+     "AA'",
+     36
+    ]
+   ],
+   "metric_oracle": null,
+   "preregistered_slm_target": false,
+   "expected_counts": {
+    "vertices": 8,
+    "faces": 6
+   },
+   "expected_behavior": "SERVE",
+   "geometry_determinacy": "UNIQUE_GEOMETRY",
+   "validation_method": "EXACT_SCENE_ORACLE+BROWSER"
+  },
+  {
+   "case_id": "C04",
+   "phrase_family": "learner_colloquial",
+   "input_type": "text",
+   "original_input": "cho hinh chop S.ABC co day ABC vuong tai B, AB = 2, BC = 3, SA vuong goc voi day va SA = 4. tinh the tich khoi chop",
+   "simulation_intent": "QUERY_WITH_SCENE",
+   "geometric_family": "pyramid_tri",
+   "gold_entities": {
+    "solid_vertices": [
+     "S",
+     "A",
+     "B",
+     "C"
+    ],
+    "auxiliary_points": []
+   },
+   "gold_relations": [
+    [
+     "perp_ll",
+     "BA",
+     "BC"
+    ],
+    [
+     "perp_lp",
+     "SA",
+     "ABC"
+    ],
+    [
+     "len2",
+     "BA",
+     4
+    ],
+    [
+     "len2",
+     "BC",
+     9
+    ],
+    [
+     "len2",
+     "SA",
+     16
+    ]
+   ],
+   "metric_oracle": [
+    4.0
+   ],
+   "preregistered_slm_target": false,
+   "expected_counts": {
+    "vertices": 4,
+    "faces": 4
+   },
+   "expected_behavior": "SERVE",
+   "geometry_determinacy": "UNIQUE_GEOMETRY",
+   "validation_method": "EXACT_SCENE_ORACLE+BROWSER"
+  },
+  {
+   "case_id": "C05",
+   "phrase_family": "learner_colloquial",
+   "input_type": "text",
+   "original_input": "Tứ diện OABC có OA, OB, OC vuông góc đôi một nha, OA = 1, OB = 2, OC = 3. Thể tích bằng mấy vậy?",
+   "simulation_intent": "QUERY_WITH_SCENE",
+   "geometric_family": "tetrahedron",
+   "gold_entities": {
+    "solid_vertices": [
+     "O",
+     "A",
+     "B",
+     "C"
+    ],
+    "auxiliary_points": []
+   },
+   "gold_relations": [
+    [
+     "perp_ll",
+     "OA",
+     "OB"
+    ],
+    [
+     "perp_ll",
+     "OB",
+     "OC"
+    ],
+    [
+     "perp_ll",
+     "OC",
+     "OA"
+    ],
+    [
+     "len2",
+     "OA",
+     1
+    ],
+    [
+     "len2",
+     "OB",
+     4
+    ],
+    [
+     "len2",
+     "OC",
+     9
+    ]
+   ],
+   "metric_oracle": [
+    1.0
+   ],
+   "preregistered_slm_target": false,
+   "expected_counts": {
+    "vertices": 4,
+    "faces": 4
+   },
+   "expected_behavior": "SERVE",
+   "geometry_determinacy": "UNIQUE_GEOMETRY",
+   "validation_method": "EXACT_SCENE_ORACLE+BROWSER"
+  },
+  {
+   "case_id": "C06",
+   "phrase_family": "learner_colloquial",
+   "input_type": "text",
+   "original_input": "Bạn ơi, hình hộp chữ nhật ABCD.A'B'C'D' có AB = 1, AD = 2, AA' = 2 thì đường chéo AC' dài bao nhiêu?",
+   "simulation_intent": "QUERY_WITH_SCENE",
+   "geometric_family": "box",
+   "gold_entities": {
+    "solid_vertices": [
+     "A",
+     "B",
+     "C",
+     "D",
+     "A'",
+     "B'",
+     "C'",
+     "D'"
+    ],
+    "auxiliary_points": []
+   },
+   "gold_relations": [
+    [
+     "perp_ll",
+     "AB",
+     "AD"
+    ],
+    [
+     "perp_lp",
+     "AA'",
+     "ABC"
+    ],
+    [
+     "par_ll",
+     "AA'",
+     "BB'"
+    ],
+    [
+     "par_ll",
+     "AB",
+     "DC"
+    ],
+    [
+     "len2",
+     "AB",
+     1
+    ],
+    [
+     "len2",
+     "AD",
+     4
+    ],
+    [
+     "len2",
+     "AA'",
+     4
+    ]
+   ],
+   "metric_oracle": [
+    3.0
+   ],
+   "preregistered_slm_target": false,
+   "expected_counts": {
+    "vertices": 8,
+    "faces": 6
+   },
+   "expected_behavior": "SERVE",
+   "geometry_determinacy": "UNIQUE_GEOMETRY",
+   "validation_method": "EXACT_SCENE_ORACLE+BROWSER"
+  },
+  {
+   "case_id": "C07",
+   "phrase_family": "learner_colloquial",
+   "input_type": "text",
+   "original_input": "Thầy cho bài này: chóp S.ABCD đáy chữ nhật AB = 2, AD = 3, SA vuông góc (ABCD), SA = 4. Em muốn xem hình 3D của nó.",
+   "simulation_intent": "SIMULATE_ONLY",
+   "geometric_family": "pyramid_quad",
+   "gold_entities": {
+    "solid_vertices": [
+     "S",
+     "A",
+     "B",
+     "C",
+     "D"
+    ],
+    "auxiliary_points": []
+   },
+   "gold_relations": [
+    [
+     "perp_lp",
+     "SA",
+     "ABC"
+    ],
+    [
+     "perp_ll",
+     "AB",
+     "AD"
+    ],
+    [
+     "par_ll",
+     "AB",
+     "DC"
+    ],
+    [
+     "par_ll",
+     "AD",
+     "BC"
+    ],
+    [
+     "len2",
+     "AB",
+     4
+    ],
+    [
+     "len2",
+     "AD",
+     9
+    ],
+    [
+     "len2",
+     "SA",
+     16
+    ]
+   ],
+   "metric_oracle": null,
+   "preregistered_slm_target": false,
+   "expected_counts": {
+    "vertices": 5,
+    "faces": 5
+   },
+   "expected_behavior": "SERVE",
+   "geometry_determinacy": "UNIQUE_GEOMETRY",
+   "validation_method": "EXACT_SCENE_ORACLE+BROWSER"
+  },
+  {
+   "case_id": "C08",
+   "phrase_family": "learner_colloquial",
+   "input_type": "text",
+   "original_input": "Em cần tính góc giữa SC và đáy (ABC), biết hình chóp S.ABC có SA vuông góc với đáy, đáy ABC là tam giác vuông tại B với AB = 3, BC = 4 và SA = 5.",
+   "simulation_intent": "QUERY_WITH_SCENE",
+   "geometric_family": "pyramid_tri",
+   "gold_entities": {
+    "solid_vertices": [
+     "S",
+     "A",
+     "B",
+     "C"
+    ],
+    "auxiliary_points": []
+   },
+   "gold_relations": [
+    [
+     "perp_ll",
+     "BA",
+     "BC"
+    ],
+    [
+     "perp_lp",
+     "SA",
+     "ABC"
+    ],
+    [
+     "len2",
+     "BA",
+     9
+    ],
+    [
+     "len2",
+     "BC",
+     16
+    ],
+    [
+     "len2",
+     "SA",
+     25
+    ]
+   ],
+   "metric_oracle": [
+    45.0
+   ],
+   "preregistered_slm_target": false,
+   "expected_counts": {
+    "vertices": 4,
+    "faces": 4
+   },
+   "expected_behavior": "SERVE",
+   "geometry_determinacy": "UNIQUE_GEOMETRY",
+   "validation_method": "EXACT_SCENE_ORACLE+BROWSER"
+  },
+  {
+   "case_id": "C09",
+   "phrase_family": "learner_colloquial",
+   "input_type": "text",
+   "original_input": "hình lăng trụ đứng ABC.A'B'C' có đáy là tam giác đều cạnh 2, cạnh bên AA' = 5. tính thể tích lăng trụ",
+   "simulation_intent": "QUERY_WITH_SCENE",
+   "geometric_family": "prism_tri",
+   "gold_entities": {
+    "solid_vertices": [
+     "A",
+     "B",
+     "C",
+     "A'",
+     "B'",
+     "C'"
+    ],
+    "auxiliary_points": []
+   },
+   "gold_relations": [
+    [
+     "perp_lp",
+     "AA'",
+     "ABC"
+    ],
+    [
+     "par_ll",
+     "AA'",
+     "BB'"
+    ],
+    [
+     "par_ll",
+     "AA'",
+     "CC'"
+    ],
+    [
+     "len2",
+     "AB",
+     4
+    ],
+    [
+     "len2",
+     "AC",
+     4
+    ],
+    [
+     "len2",
+     "BC",
+     4
+    ],
+    [
+     "len2",
+     "AA'",
+     25
+    ]
+   ],
+   "metric_oracle": [
+    8.660254037844386
+   ],
+   "preregistered_slm_target": false,
+   "expected_counts": {
+    "vertices": 6,
+    "faces": 5
+   },
+   "expected_behavior": "SERVE",
+   "geometry_determinacy": "UNIQUE_GEOMETRY",
+   "validation_method": "EXACT_SCENE_ORACLE+BROWSER"
+  },
+  {
+   "case_id": "C10",
+   "phrase_family": "learner_colloquial",
+   "input_type": "text",
+   "original_input": "Khối lập phương ABCD.A'B'C'D' có đường chéo AC' bằng 3√3. Tính thể tích khối lập phương.",
+   "simulation_intent": "QUERY_WITH_SCENE",
+   "geometric_family": "cube",
+   "gold_entities": {
+    "solid_vertices": [
+     "A",
+     "B",
+     "C",
+     "D",
+     "A'",
+     "B'",
+     "C'",
+     "D'"
+    ],
+    "auxiliary_points": []
+   },
+   "gold_relations": [
+    [
+     "perp_ll",
+     "AB",
+     "AD"
+    ],
+    [
+     "perp_lp",
+     "AA'",
+     "ABC"
+    ],
+    [
+     "par_ll",
+     "AA'",
+     "BB'"
+    ],
+    [
+     "par_ll",
+     "AB",
+     "DC"
+    ],
+    [
+     "len2",
+     "AB",
+     9
+    ],
+    [
+     "len2",
+     "AD",
+     9
+    ],
+    [
+     "len2",
+     "AA'",
+     9
+    ]
+   ],
+   "metric_oracle": [
+    27.0
+   ],
+   "preregistered_slm_target": false,
+   "expected_counts": {
+    "vertices": 8,
+    "faces": 6
+   },
+   "expected_behavior": "SERVE",
+   "geometry_determinacy": "UNIQUE_GEOMETRY",
+   "validation_method": "EXACT_SCENE_ORACLE+BROWSER"
+  }
+ ],
+ "negative_cases": [
+  {
+   "case_id": "N01",
+   "phrase_family": "missing_data",
+   "input_type": "text",
+   "original_input": "Cho hình chóp S.ABCD có đáy ABCD là hình vuông cạnh 4 và SA vuông góc với mặt phẳng đáy. Tính thể tích khối chóp S.ABCD.",
+   "simulation_intent": "NEGATIVE",
+   "geometric_family": "negative_control",
+   "gold_entities": {
+    "solid_vertices": [],
+    "auxiliary_points": []
+   },
+   "gold_relations": [],
+   "metric_oracle": null,
+   "preregistered_slm_target": false,
+   "expected_counts": {},
+   "expected_behavior": "SAFE_REFUSE",
+   "geometry_determinacy": "MISSING_DATA",
+   "validation_method": "REFUSAL+BROWSER"
+  },
+  {
+   "case_id": "N02",
+   "phrase_family": "missing_data",
+   "input_type": "text",
+   "original_input": "Cho hình lăng trụ đứng ABC.A'B'C' có đáy ABC là tam giác vuông tại A với AB = 3. Biết AA' = 5. Tính thể tích khối lăng trụ.",
+   "simulation_intent": "NEGATIVE",
+   "geometric_family": "negative_control",
+   "gold_entities": {
+    "solid_vertices": [],
+    "auxiliary_points": []
+   },
+   "gold_relations": [],
+   "metric_oracle": null,
+   "preregistered_slm_target": false,
+   "expected_counts": {},
+   "expected_behavior": "SAFE_REFUSE",
+   "geometry_determinacy": "MISSING_DATA",
+   "validation_method": "REFUSAL+BROWSER"
+  },
+  {
+   "case_id": "N03",
+   "phrase_family": "missing_data",
+   "input_type": "text",
+   "original_input": "Cho hình hộp chữ nhật ABCD.A'B'C'D' có AB = 2 và AD = 3. Tính thể tích khối hộp.",
+   "simulation_intent": "NEGATIVE",
+   "geometric_family": "negative_control",
+   "gold_entities": {
+    "solid_vertices": [],
+    "auxiliary_points": []
+   },
+   "gold_relations": [],
+   "metric_oracle": null,
+   "preregistered_slm_target": false,
+   "expected_counts": {},
+   "expected_behavior": "SAFE_REFUSE",
+   "geometry_determinacy": "MISSING_DATA",
+   "validation_method": "REFUSAL+BROWSER"
+  },
+  {
+   "case_id": "N04",
+   "phrase_family": "missing_data",
+   "input_type": "text",
+   "original_input": "Cho tứ diện OABC có OA, OB, OC đôi một vuông góc, OA = 2, OB = 3. Tính thể tích khối tứ diện.",
+   "simulation_intent": "NEGATIVE",
+   "geometric_family": "negative_control",
+   "gold_entities": {
+    "solid_vertices": [],
+    "auxiliary_points": []
+   },
+   "gold_relations": [],
+   "metric_oracle": null,
+   "preregistered_slm_target": false,
+   "expected_counts": {},
+   "expected_behavior": "SAFE_REFUSE",
+   "geometry_determinacy": "MISSING_DATA",
+   "validation_method": "REFUSAL+BROWSER"
+  },
+  {
+   "case_id": "N05",
+   "phrase_family": "missing_data",
+   "input_type": "text",
+   "original_input": "Cho hình chóp S.ABC có đáy là tam giác đều cạnh 3 và SA = 4. Tính thể tích khối chóp S.ABC.",
+   "simulation_intent": "NEGATIVE",
+   "geometric_family": "negative_control",
+   "gold_entities": {
+    "solid_vertices": [],
+    "auxiliary_points": []
+   },
+   "gold_relations": [],
+   "metric_oracle": null,
+   "preregistered_slm_target": false,
+   "expected_counts": {},
+   "expected_behavior": "SAFE_REFUSE",
+   "geometry_determinacy": "MISSING_DATA",
+   "validation_method": "REFUSAL+BROWSER"
+  },
+  {
+   "case_id": "N06",
+   "phrase_family": "missing_data",
+   "input_type": "text",
+   "original_input": "Cho hình chóp S.ABCD có đáy là hình chữ nhật, SA vuông góc với đáy, SA = 3, AB = 4. Tính thể tích khối chóp.",
+   "simulation_intent": "NEGATIVE",
+   "geometric_family": "negative_control",
+   "gold_entities": {
+    "solid_vertices": [],
+    "auxiliary_points": []
+   },
+   "gold_relations": [],
+   "metric_oracle": null,
+   "preregistered_slm_target": false,
+   "expected_counts": {},
+   "expected_behavior": "SAFE_REFUSE",
+   "geometry_determinacy": "MISSING_DATA",
+   "validation_method": "REFUSAL+BROWSER"
+  },
+  {
+   "case_id": "N07",
+   "phrase_family": "contradiction",
+   "input_type": "text",
+   "original_input": "Cho hình chóp S.ABC có đáy ABC là tam giác vuông tại B, AB = 5, BC = 4 và AC = 3, SA vuông góc với đáy, SA = 2. Tính thể tích khối chóp.",
+   "simulation_intent": "NEGATIVE",
+   "geometric_family": "negative_control",
+   "gold_entities": {
+    "solid_vertices": [],
+    "auxiliary_points": []
+   },
+   "gold_relations": [],
+   "metric_oracle": null,
+   "preregistered_slm_target": false,
+   "expected_counts": {},
+   "expected_behavior": "SAFE_REFUSE",
+   "geometry_determinacy": "CONTRADICTION",
+   "validation_method": "REFUSAL+BROWSER"
+  },
+  {
+   "case_id": "N08",
+   "phrase_family": "contradiction",
+   "input_type": "text",
+   "original_input": "Cho hình lập phương ABCD.A'B'C'D' có AB = 2 và AA' = 3. Tính thể tích khối lập phương.",
+   "simulation_intent": "NEGATIVE",
+   "geometric_family": "negative_control",
+   "gold_entities": {
+    "solid_vertices": [],
+    "auxiliary_points": []
+   },
+   "gold_relations": [],
+   "metric_oracle": null,
+   "preregistered_slm_target": false,
+   "expected_counts": {},
+   "expected_behavior": "SAFE_REFUSE",
+   "geometry_determinacy": "CONTRADICTION",
+   "validation_method": "REFUSAL+BROWSER"
+  },
+  {
+   "case_id": "N09",
+   "phrase_family": "contradiction",
+   "input_type": "text",
+   "original_input": "Cho hình chóp S.ABCD có đáy ABCD là hình vuông với AB = 3 và BC = 5, SA vuông góc với đáy và SA = 4. Tính thể tích khối chóp S.ABCD.",
+   "simulation_intent": "NEGATIVE",
+   "geometric_family": "negative_control",
+   "gold_entities": {
+    "solid_vertices": [],
+    "auxiliary_points": []
+   },
+   "gold_relations": [],
+   "metric_oracle": null,
+   "preregistered_slm_target": false,
+   "expected_counts": {},
+   "expected_behavior": "SAFE_REFUSE",
+   "geometry_determinacy": "CONTRADICTION",
+   "validation_method": "REFUSAL+BROWSER"
+  },
+  {
+   "case_id": "N10",
+   "phrase_family": "contradiction",
+   "input_type": "text",
+   "original_input": "Cho tứ diện ABCD có AB, AC, AD đôi một vuông góc, AB = 3, AC = 4 và BC = 6. Tính thể tích khối tứ diện ABCD.",
+   "simulation_intent": "NEGATIVE",
+   "geometric_family": "negative_control",
+   "gold_entities": {
+    "solid_vertices": [],
+    "auxiliary_points": []
+   },
+   "gold_relations": [],
+   "metric_oracle": null,
+   "preregistered_slm_target": false,
+   "expected_counts": {},
+   "expected_behavior": "SAFE_REFUSE",
+   "geometry_determinacy": "CONTRADICTION",
+   "validation_method": "REFUSAL+BROWSER"
+  },
+  {
+   "case_id": "N11",
+   "phrase_family": "contradiction",
+   "input_type": "text",
+   "original_input": "Cho hình lăng trụ đứng ABC.A'B'C' có đáy là tam giác đều cạnh 2, AB = 3 và AA' = 4. Tính thể tích khối lăng trụ.",
+   "simulation_intent": "NEGATIVE",
+   "geometric_family": "negative_control",
+   "gold_entities": {
+    "solid_vertices": [],
+    "auxiliary_points": []
+   },
+   "gold_relations": [],
+   "metric_oracle": null,
+   "preregistered_slm_target": false,
+   "expected_counts": {},
+   "expected_behavior": "SAFE_REFUSE",
+   "geometry_determinacy": "CONTRADICTION",
+   "validation_method": "REFUSAL+BROWSER"
+  },
+  {
+   "case_id": "N12",
+   "phrase_family": "negation_condition_unsupported",
+   "input_type": "text",
+   "original_input": "Cho hình chóp S.ABCD có đáy ABCD là hình vuông cạnh 2. Nếu SA vuông góc với mặt phẳng đáy và SA = 3 thì thể tích khối chóp bằng bao nhiêu?",
+   "simulation_intent": "NEGATIVE",
+   "geometric_family": "negative_control",
+   "gold_entities": {
+    "solid_vertices": [],
+    "auxiliary_points": []
+   },
+   "gold_relations": [],
+   "metric_oracle": null,
+   "preregistered_slm_target": false,
+   "expected_counts": {},
+   "expected_behavior": "SAFE_REFUSE",
+   "geometry_determinacy": "CONDITIONAL_PREMISE",
+   "validation_method": "REFUSAL+BROWSER"
+  },
+  {
+   "case_id": "N13",
+   "phrase_family": "negation_condition_unsupported",
+   "input_type": "text",
+   "original_input": "Cho hình chóp S.ABC có đáy là tam giác vuông tại B, AB = 3, BC = 4, SA = 5 nhưng SA không vuông góc với mặt phẳng (ABC). Tính thể tích khối chóp S.ABC.",
+   "simulation_intent": "NEGATIVE",
+   "geometric_family": "negative_control",
+   "gold_entities": {
+    "solid_vertices": [],
+    "auxiliary_points": []
+   },
+   "gold_relations": [],
+   "metric_oracle": null,
+   "preregistered_slm_target": false,
+   "expected_counts": {},
+   "expected_behavior": "SAFE_REFUSE",
+   "geometry_determinacy": "NEGATED_PREMISE",
+   "validation_method": "REFUSAL+BROWSER"
+  },
+  {
+   "case_id": "N14",
+   "phrase_family": "negation_condition_unsupported",
+   "input_type": "text",
+   "original_input": "Cho tứ diện OABC có OA = 1, OB = 2, OC = 3 và OA, OB, OC không đôi một vuông góc. Tính thể tích khối tứ diện OABC.",
+   "simulation_intent": "NEGATIVE",
+   "geometric_family": "negative_control",
+   "gold_entities": {
+    "solid_vertices": [],
+    "auxiliary_points": []
+   },
+   "gold_relations": [],
+   "metric_oracle": null,
+   "preregistered_slm_target": false,
+   "expected_counts": {},
+   "expected_behavior": "SAFE_REFUSE",
+   "geometry_determinacy": "NEGATED_PREMISE",
+   "validation_method": "REFUSAL+BROWSER"
+  },
+  {
+   "case_id": "N15",
+   "phrase_family": "negation_condition_unsupported",
+   "input_type": "text",
+   "original_input": "Cho hình hộp ABCD.A'B'C'D' có AB = 2, AD = 3, AA' = 4, các mặt bên không phải hình chữ nhật. Tính thể tích khối hộp.",
+   "simulation_intent": "NEGATIVE",
+   "geometric_family": "negative_control",
+   "gold_entities": {
+    "solid_vertices": [],
+    "auxiliary_points": []
+   },
+   "gold_relations": [],
+   "metric_oracle": null,
+   "preregistered_slm_target": false,
+   "expected_counts": {},
+   "expected_behavior": "SAFE_REFUSE",
+   "geometry_determinacy": "NEGATED_PREMISE",
+   "validation_method": "REFUSAL+BROWSER"
+  },
+  {
+   "case_id": "N16",
+   "phrase_family": "negation_condition_unsupported",
+   "input_type": "text",
+   "original_input": "Giả sử hình chóp S.ABCD có đáy là hình vuông cạnh 4 và SA vuông góc với đáy. Khi SA thay đổi, tìm giá trị lớn nhất của thể tích khối chóp.",
+   "simulation_intent": "NEGATIVE",
+   "geometric_family": "negative_control",
+   "gold_entities": {
+    "solid_vertices": [],
+    "auxiliary_points": []
+   },
+   "gold_relations": [],
+   "metric_oracle": null,
+   "preregistered_slm_target": false,
+   "expected_counts": {},
+   "expected_behavior": "SAFE_REFUSE",
+   "geometry_determinacy": "UNSUPPORTED_REQUEST",
+   "validation_method": "REFUSAL+BROWSER"
+  },
+  {
+   "case_id": "N17",
+   "phrase_family": "negation_condition_unsupported",
+   "input_type": "text",
+   "original_input": "Cho hình chóp S.ABC có SA vuông góc với (ABC) và SA = 2. Chứng minh rằng tam giác SAB vuông tại A.",
+   "simulation_intent": "NEGATIVE",
+   "geometric_family": "negative_control",
+   "gold_entities": {
+    "solid_vertices": [],
+    "auxiliary_points": []
+   },
+   "gold_relations": [],
+   "metric_oracle": null,
+   "preregistered_slm_target": false,
+   "expected_counts": {},
+   "expected_behavior": "SAFE_REFUSE",
+   "geometry_determinacy": "UNSUPPORTED_REQUEST",
+   "validation_method": "REFUSAL+BROWSER"
+  },
+  {
+   "case_id": "N18",
+   "phrase_family": "other_subject",
+   "input_type": "text",
+   "original_input": "Trong không gian Oxyz, cho hai điểm A(1; 2; 3) và B(3; 0; −1). Tính độ dài đoạn thẳng AB.",
+   "simulation_intent": "NEGATIVE",
+   "geometric_family": "negative_control",
+   "gold_entities": {
+    "solid_vertices": [],
+    "auxiliary_points": []
+   },
+   "gold_relations": [],
+   "metric_oracle": null,
+   "preregistered_slm_target": false,
+   "expected_counts": {},
+   "expected_behavior": "SAFE_REFUSE",
+   "geometry_determinacy": "OUT_OF_DOMAIN",
+   "validation_method": "REFUSAL+BROWSER"
+  },
+  {
+   "case_id": "N19",
+   "phrase_family": "other_subject",
+   "input_type": "text",
+   "original_input": "Tính đạo hàm của hàm số y = x³ − 3x² + 2.",
+   "simulation_intent": "NEGATIVE",
+   "geometric_family": "negative_control",
+   "gold_entities": {
+    "solid_vertices": [],
+    "auxiliary_points": []
+   },
+   "gold_relations": [],
+   "metric_oracle": null,
+   "preregistered_slm_target": false,
+   "expected_counts": {},
+   "expected_behavior": "SAFE_REFUSE",
+   "geometry_determinacy": "OUT_OF_DOMAIN",
+   "validation_method": "REFUSAL+BROWSER"
+  },
+  {
+   "case_id": "N20",
+   "phrase_family": "other_subject",
+   "input_type": "text",
+   "original_input": "Một hộp có 5 viên bi đỏ và 3 viên bi xanh. Lấy ngẫu nhiên 2 viên. Tính xác suất để lấy được 2 viên bi đỏ.",
+   "simulation_intent": "NEGATIVE",
+   "geometric_family": "negative_control",
+   "gold_entities": {
+    "solid_vertices": [],
+    "auxiliary_points": []
+   },
+   "gold_relations": [],
+   "metric_oracle": null,
+   "preregistered_slm_target": false,
+   "expected_counts": {},
+   "expected_behavior": "SAFE_REFUSE",
+   "geometry_determinacy": "OUT_OF_DOMAIN",
+   "validation_method": "REFUSAL+BROWSER"
+  },
+  {
+   "case_id": "N21",
+   "phrase_family": "other_subject",
+   "input_type": "text",
+   "original_input": "Viết chương trình Python tính diện tích hình tròn bán kính r.",
+   "simulation_intent": "NEGATIVE",
+   "geometric_family": "negative_control",
+   "gold_entities": {
+    "solid_vertices": [],
+    "auxiliary_points": []
+   },
+   "gold_relations": [],
+   "metric_oracle": null,
+   "preregistered_slm_target": false,
+   "expected_counts": {},
+   "expected_behavior": "SAFE_REFUSE",
+   "geometry_determinacy": "OUT_OF_DOMAIN",
+   "validation_method": "REFUSAL+BROWSER"
+  },
+  {
+   "case_id": "N22",
+   "phrase_family": "other_subject",
+   "input_type": "text",
+   "original_input": "Cho hàm số f(x) = 2x + 1. Tính tích phân của f(x) từ 0 đến 1.",
+   "simulation_intent": "NEGATIVE",
+   "geometric_family": "negative_control",
+   "gold_entities": {
+    "solid_vertices": [],
+    "auxiliary_points": []
+   },
+   "gold_relations": [],
+   "metric_oracle": null,
+   "preregistered_slm_target": false,
+   "expected_counts": {},
+   "expected_behavior": "SAFE_REFUSE",
+   "geometry_determinacy": "OUT_OF_DOMAIN",
+   "validation_method": "REFUSAL+BROWSER"
+  }
+ ],
+ "attachment_cases": [],
+ "counts": {
+  "text_positive": 58,
+  "text_negative": 22,
+  "positive_by_stratum": {
+   "textbook_canonical": 17,
+   "exam_wording": 16,
+   "teacher_wording": 15,
+   "learner_colloquial": 10
+  }
+ }
+}

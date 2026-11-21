@@ -1,0 +1,21 @@
+{
+  "run_id": "verified-section-intersection-dihedral-local",
+  "generated_at_utc": "2026-11-13T11:35:59.957987+00:00",
+  "head": "a74aa3325b61337e301e8df7b728a66f86fdc266",
+  "conventions": {
+    "line_line": "non-oriented, [0°, 90°] (ask_angle_lines, measure.degrees)",
+    "line_plane": "[0°, 90°] (ask_angle_line_plane)",
+    "plane_plane": "non-oriented angle between planes, [0°, 90°] (ask_angle_plane_plane)",
+    "dihedral (oriented half-planes, (0°, 180°))": "premise fact only (dihedral_angle with point_a, edge, point_b); never an asked quantity, so no oriented dihedral is constructed"
+  },
+  "defect_found": "VERIFIED FACT: angle-construction/1 chose rays toward the first named points, so the angle between (SBC) and (SCD) of a pyramid with SA ⟂ base (60°) was drawn as the 120° dihedral B-SC-D; the cos²-only certificate passed it (cos² 60° = cos² 120° = 1/4)",
+  "before_obtuse_drawn": [
+    "angle_planes_SBC_SCD_60_not_120",
+    "angle_planes_SCD_SBC_swapped",
+    "angle_planes_renamed"
+  ],
+  "after_obtuse_drawn": [],
+  "fix": "commit 420851be6: second ray flipped to its opposite when the rays open an obtuse angle; certificate = signed cos ≥ 0 AND cos² = measured; angle_domain declared; renderer refuses obtuse rays or a missing domain",
+  "contract": "angle-construction/1 kept: additive field angle_domain, the meaning of arms (rays of the drawn angle) unchanged; old envelopes without the field are not drawn (fail-closed) and CACHE_VERSION 134 retires them",
+  "when_the_source_only_gives_planes": "the asked angle between planes is drawn acute; no half-plane is chosen as a claim about an oriented dihedral"
+}

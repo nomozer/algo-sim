@@ -1,0 +1,3 @@
+# Preserve exact LF bytes of frozen /12 manifest on Windows core.autocrlf=true checkouts
+# so frozen aggregate.py::_sha() reproduces f2fabd0b... without modifying frozen harness or Candidate 158.
+docs/evaluation/geometry/runs/axo-hybrid-compositional-geometry-language-grounded-simulation/V12_ACCEPTANCE_MANIFEST.json text eol=lf

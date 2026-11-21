@@ -1,0 +1,660 @@
+{
+  "run_id": "grounded-vietnamese-geometry-understanding",
+  "generated_at_utc": "2026-11-14T19:37:45.073082+00:00",
+  "product_commit": "d222e6d9b582d54fc42397a9593f52eb6fd77f18",
+  "product_commits": [
+    "ac276a5c945f9ac1764f9af1f723b857c19b342d",
+    "ad090ceada3edc31b5788fa16c47e1639386bdc9",
+    "d222e6d9b582d54fc42397a9593f52eb6fd77f18"
+  ],
+  "candidate_freeze_commit": "63def519ad317911145b2d84929a687208996619",
+  "measured_system": "c25f9695828888987db2ab7990c4ff135da4d01c6b9d968f898c36728a0ae436",
+  "cache_version": "139",
+  "dataset_partition": "DEVELOPMENT (agent-written corpus, exposed REAL27, exposed probes); never H-1 or locked W2/W3",
+  "environment": {
+    "ALLOW_LIVE_AI": "0",
+    "HYBRID_ROUTE_MODE": "local-first",
+    "live_ai_calls": 0
+  },
+  "head": "542e32b0f8b21df5fff8e6b2a57fb27b9a6ea452",
+  "negatives": [
+    {
+      "case_id": "gv_base_unnamed_subject_first",
+      "group": "gv_base_unnamed_negative",
+      "expect": "REFUSE",
+      "source_sha256": "8702fd282e8ef7baef2dd93666ed6591965e42c8397c4ee95d51544904cd18ef",
+      "before": {
+        "status": "REFUSED",
+        "code": "LIVE_AI_DISABLED",
+        "parse_status": "LOCAL_PARSE_PARTIAL",
+        "root_cause": "SOURCE_PROVENANCE_MISSING"
+      },
+      "after": {
+        "status": "REFUSED",
+        "code": "LIVE_AI_DISABLED",
+        "parse_status": "LOCAL_PARSE_PARTIAL",
+        "answers": null,
+        "root_cause": "SOURCE_PROVENANCE_MISSING"
+      },
+      "oracle": null,
+      "oracle_match": null,
+      "verdict": "PASS"
+    },
+    {
+      "case_id": "gv_cuboid_no_square",
+      "group": "gv_base_unnamed_negative",
+      "expect": "REFUSE",
+      "source_sha256": "e155fa72ca9c66bd7cd23ce18d67210601c0569c5034b599a50897745a8f1d5f",
+      "before": {
+        "status": "REFUSED",
+        "code": "MISSING_DIMENSION",
+        "parse_status": "LOCAL_PARSE_COMPLETE",
+        "root_cause": "INSUFFICIENT_CONSTRAINTS"
+      },
+      "after": {
+        "status": "REFUSED",
+        "code": "MISSING_DIMENSION",
+        "parse_status": "LOCAL_PARSE_COMPLETE",
+        "answers": null,
+        "root_cause": "INSUFFICIENT_CONSTRAINTS"
+      },
+      "oracle": null,
+      "oracle_match": null,
+      "verdict": "PASS"
+    },
+    {
+      "case_id": "gv_lateral_not_regular",
+      "group": "gv_lateral_edge_negative",
+      "expect": "REFUSE",
+      "source_sha256": "6b0ef34a5f2eecf7da37ab595f39feae1d6cc281e6697da11ffb74868d2f106d",
+      "before": {
+        "status": "REFUSED",
+        "code": "LIVE_AI_DISABLED",
+        "parse_status": "LOCAL_PARSE_PARTIAL",
+        "root_cause": "UNRECOGNIZED_GOAL"
+      },
+      "after": {
+        "status": "REFUSED",
+        "code": "AMBIGUOUS_FACT",
+        "parse_status": "LOCAL_PARSE_AMBIGUOUS",
+        "answers": null,
+        "root_cause": "QUESTION_PREMISE_AMBIGUITY"
+      },
+      "oracle": null,
+      "oracle_match": null,
+      "verdict": "PASS"
+    },
+    {
+      "case_id": "gv_lateral_no_height",
+      "group": "gv_lateral_edge_negative",
+      "expect": "REFUSE",
+      "source_sha256": "e6f05311030635396b1b62ba8d419a3a6aa4afa1afce273bc6ac65722cef3f66",
+      "before": {
+        "status": "REFUSED",
+        "code": "LIVE_AI_DISABLED",
+        "parse_status": "LOCAL_PARSE_PARTIAL",
+        "root_cause": "UNRECOGNIZED_GOAL"
+      },
+      "after": {
+        "status": "REFUSED",
+        "code": "MISSING_DIMENSION",
+        "parse_status": "LOCAL_PARSE_COMPLETE",
+        "answers": null,
+        "root_cause": "INSUFFICIENT_CONSTRAINTS"
+      },
+      "oracle": null,
+      "oracle_match": null,
+      "verdict": "PASS"
+    },
+    {
+      "case_id": "gv_prism_undotted_scrambled",
+      "group": "gv_entity_notation_negative",
+      "expect": "REFUSE",
+      "source_sha256": "974b93ee976ec06ab20f7c8ae7af5a484e00d84614c690fef63198c534cd3027",
+      "before": {
+        "status": "REFUSED",
+        "code": "LIVE_AI_DISABLED",
+        "parse_status": "LOCAL_PARSE_PARTIAL",
+        "root_cause": "UNRECOGNIZED_GOAL"
+      },
+      "after": {
+        "status": "REFUSED",
+        "code": "LIVE_AI_DISABLED",
+        "parse_status": "LOCAL_PARSE_PARTIAL",
+        "answers": null,
+        "root_cause": "UNRECOGNIZED_GOAL"
+      },
+      "oracle": null,
+      "oracle_match": null,
+      "verdict": "PASS"
+    },
+    {
+      "case_id": "gv_isosceles_no_right_angle",
+      "group": "gv_isosceles_negative",
+      "expect": "REFUSE",
+      "source_sha256": "1edc6966488602b7fb6fa6b3d82890f78db2697f09b9a4d03c0e863075846c1d",
+      "before": {
+        "status": "REFUSED",
+        "code": "LIVE_AI_DISABLED",
+        "parse_status": "LOCAL_PARSE_PARTIAL",
+        "root_cause": "INCOMPLETE_FACT_EXTRACTION"
+      },
+      "after": {
+        "status": "REFUSED",
+        "code": "LIVE_AI_DISABLED",
+        "parse_status": "LOCAL_PARSE_PARTIAL",
+        "answers": null,
+        "root_cause": "INCOMPLETE_FACT_EXTRACTION"
+      },
+      "oracle": null,
+      "oracle_match": null,
+      "verdict": "PASS"
+    },
+    {
+      "case_id": "gv_isosceles_base_only",
+      "group": "gv_isosceles_negative",
+      "expect": "REFUSE",
+      "source_sha256": "880d3d6a648b93db45bca4853c09bf08a0e52a7f12f3b3df7cc44ce938460f09",
+      "before": {
+        "status": "REFUSED",
+        "code": "LIVE_AI_DISABLED",
+        "parse_status": "LOCAL_PARSE_PARTIAL",
+        "root_cause": "UNRECOGNIZED_GEOMETRIC_ENTITY"
+      },
+      "after": {
+        "status": "REFUSED",
+        "code": "LIVE_AI_DISABLED",
+        "parse_status": "LOCAL_PARSE_PARTIAL",
+        "answers": null,
+        "root_cause": "UNRECOGNIZED_GEOMETRIC_ENTITY"
+      },
+      "oracle": null,
+      "oracle_match": null,
+      "verdict": "PASS"
+    },
+    {
+      "case_id": "gv_unread_perimeter",
+      "group": "gv_completeness_negative",
+      "expect": "REFUSE",
+      "source_sha256": "a84dc17eb8580acc1462559f5dc6e357a5d08d873cd1411ed9107f368672abe6",
+      "before": {
+        "status": "REFUSED",
+        "code": "LIVE_AI_DISABLED",
+        "parse_status": "LOCAL_PARSE_PARTIAL",
+        "root_cause": "SOURCE_PROVENANCE_MISSING"
+      },
+      "after": {
+        "status": "REFUSED",
+        "code": "LIVE_AI_DISABLED",
+        "parse_status": "LOCAL_PARSE_PARTIAL",
+        "answers": null,
+        "root_cause": "INCOMPLETE_FACT_EXTRACTION"
+      },
+      "oracle": null,
+      "oracle_match": null,
+      "verdict": "PASS"
+    },
+    {
+      "case_id": "gv_unread_area_in_a",
+      "group": "gv_completeness_negative",
+      "expect": "REFUSE",
+      "source_sha256": "8cd11f1e413c46eb3313dcead90095a371fcde0d291b72f531c1d23dae7d2957",
+      "before": {
+        "status": "REFUSED",
+        "code": "LIVE_AI_DISABLED",
+        "parse_status": "LOCAL_PARSE_PARTIAL",
+        "root_cause": "SOURCE_PROVENANCE_MISSING"
+      },
+      "after": {
+        "status": "REFUSED",
+        "code": "LIVE_AI_DISABLED",
+        "parse_status": "LOCAL_PARSE_PARTIAL",
+        "answers": null,
+        "root_cause": "INCOMPLETE_FACT_EXTRACTION"
+      },
+      "oracle": null,
+      "oracle_match": null,
+      "verdict": "PASS"
+    },
+    {
+      "case_id": "gv_base_area_impossible",
+      "group": "gv_base_area_negative",
+      "expect": "REFUSE",
+      "source_sha256": "5e88f1728d6ce5d37b325d8002fc0cc389b5b97fd6d63e5aa9b88b1d46198f3d",
+      "before": {
+        "status": "REFUSED",
+        "code": "LIVE_AI_DISABLED",
+        "parse_status": "LOCAL_PARSE_PARTIAL",
+        "root_cause": "SOURCE_PROVENANCE_MISSING"
+      },
+      "after": {
+        "status": "REFUSED",
+        "code": "INCONSISTENT_FACTS",
+        "parse_status": "LOCAL_PARSE_COMPLETE",
+        "answers": null,
+        "root_cause": "SOURCE_CONFLICT"
+      },
+      "oracle": null,
+      "oracle_match": null,
+      "verdict": "PASS"
+    },
+    {
+      "case_id": "gv_pair_point_on",
+      "group": "gv_minimal_pair",
+      "expect": "REFUSE",
+      "source_sha256": "a954d305315a3f25872bb1fec9b8f43a973968085ae8415e3460c05762e68054",
+      "before": {
+        "status": "REFUSED",
+        "code": "LIVE_AI_DISABLED",
+        "parse_status": "LOCAL_PARSE_PARTIAL",
+        "root_cause": "FREE_POINT_UNDERDETERMINED"
+      },
+      "after": {
+        "status": "REFUSED",
+        "code": "LIVE_AI_DISABLED",
+        "parse_status": "LOCAL_PARSE_PARTIAL",
+        "answers": null,
+        "root_cause": "FREE_POINT_UNDERDETERMINED"
+      },
+      "oracle": null,
+      "oracle_match": null,
+      "verdict": "PASS"
+    },
+    {
+      "case_id": "gv_pair_perp_proof",
+      "group": "gv_minimal_pair",
+      "expect": "REFUSE",
+      "source_sha256": "299f9aaeec59cb3fd34f615dce34063ad596cec7506365f9df4bc7a85ec0894f",
+      "before": {
+        "status": "REFUSED",
+        "code": "OUT_OF_SCOPE",
+        "parse_status": "LOCAL_PARSE_COMPLETE",
+        "root_cause": "UNSUPPORTED_GOAL_KIND"
+      },
+      "after": {
+        "status": "REFUSED",
+        "code": "OUT_OF_SCOPE",
+        "parse_status": "LOCAL_PARSE_COMPLETE",
+        "answers": null,
+        "root_cause": "UNSUPPORTED_GOAL_KIND"
+      },
+      "oracle": null,
+      "oracle_match": null,
+      "verdict": "PASS"
+    },
+    {
+      "case_id": "gv_pair_regular_pyramid",
+      "group": "gv_minimal_pair",
+      "expect": "REFUSE",
+      "source_sha256": "5ccdb7d248cd377a32c9d953599a30d6a96991acfba72f031b37a999b389fb9b",
+      "before": {
+        "status": "REFUSED",
+        "code": "MISSING_DIMENSION",
+        "parse_status": "LOCAL_PARSE_COMPLETE",
+        "root_cause": "SHAPE_FREEDOM_UNCERTIFIED"
+      },
+      "after": {
+        "status": "REFUSED",
+        "code": "MISSING_DIMENSION",
+        "parse_status": "LOCAL_PARSE_COMPLETE",
+        "answers": null,
+        "root_cause": "SHAPE_FREEDOM_UNCERTIFIED"
+      },
+      "oracle": null,
+      "oracle_match": null,
+      "verdict": "PASS"
+    },
+    {
+      "case_id": "gv_pair_section_shape_proof",
+      "group": "gv_minimal_pair",
+      "expect": "REFUSE",
+      "source_sha256": "090db22cdc5c59a3a4514fa7c25a7b6c7aa126a35449489b3eac2d5bbb9a38ca",
+      "before": {
+        "status": "REFUSED",
+        "code": "OUT_OF_SCOPE",
+        "parse_status": "LOCAL_PARSE_COMPLETE",
+        "root_cause": "UNSUPPORTED_GOAL_KIND"
+      },
+      "after": {
+        "status": "REFUSED",
+        "code": "OUT_OF_SCOPE",
+        "parse_status": "LOCAL_PARSE_COMPLETE",
+        "answers": null,
+        "root_cause": "UNSUPPORTED_GOAL_KIND"
+      },
+      "oracle": null,
+      "oracle_match": null,
+      "verdict": "PASS"
+    },
+    {
+      "case_id": "gv_contradiction",
+      "group": "gv_contradiction",
+      "expect": "REFUSE",
+      "source_sha256": "c124af4b782479cd4c5d8caff850706a852a162542c1773e62ec44c76f60b460",
+      "before": {
+        "status": "REFUSED",
+        "code": "INCONSISTENT_FACTS",
+        "parse_status": "LOCAL_PARSE_COMPLETE",
+        "root_cause": "SOURCE_CONFLICT"
+      },
+      "after": {
+        "status": "REFUSED",
+        "code": "INCONSISTENT_FACTS",
+        "parse_status": "LOCAL_PARSE_COMPLETE",
+        "answers": null,
+        "root_cause": "SOURCE_CONFLICT"
+      },
+      "oracle": null,
+      "oracle_match": null,
+      "verdict": "PASS"
+    },
+    {
+      "case_id": "gv_missing_height",
+      "group": "gv_contradiction",
+      "expect": "REFUSE",
+      "source_sha256": "b40a2378bd32df89e48ff43f9e400089050b2c03fa2eb01fcca5d53debc21aa5",
+      "before": {
+        "status": "REFUSED",
+        "code": "MISSING_DIMENSION",
+        "parse_status": "LOCAL_PARSE_COMPLETE",
+        "root_cause": "INSUFFICIENT_CONSTRAINTS"
+      },
+      "after": {
+        "status": "REFUSED",
+        "code": "MISSING_DIMENSION",
+        "parse_status": "LOCAL_PARSE_COMPLETE",
+        "answers": null,
+        "root_cause": "INSUFFICIENT_CONSTRAINTS"
+      },
+      "oracle": null,
+      "oracle_match": null,
+      "verdict": "PASS"
+    }
+  ],
+  "negatives_served": [],
+  "metamorphic": [
+    {
+      "case_id": "mc_section_split",
+      "same_as": "mc_section_one_sentence",
+      "answers": {},
+      "reference_answers": {},
+      "verdict": "PASS"
+    },
+    {
+      "case_id": "mc_section_renamed",
+      "same_as": "mc_section_one_sentence",
+      "answers": {},
+      "reference_answers": {},
+      "verdict": "PASS"
+    },
+    {
+      "case_id": "mc_section_greek",
+      "same_as": "mc_section_one_sentence",
+      "answers": {},
+      "reference_answers": {},
+      "verdict": "PASS"
+    },
+    {
+      "case_id": "order_plane_after_goal",
+      "same_as": "mc_section_split",
+      "answers": {},
+      "reference_answers": {},
+      "verdict": "PASS"
+    },
+    {
+      "case_id": "order_plane_after_goal_sep",
+      "same_as": "mc_section_split",
+      "answers": {},
+      "reference_answers": {},
+      "verdict": "PASS"
+    },
+    {
+      "case_id": "order_premises_swapped",
+      "same_as": "mc_distance",
+      "answers": {
+        "q1": "a√2/2"
+      },
+      "reference_answers": {
+        "q1": "a√2/2"
+      },
+      "verdict": "PASS"
+    },
+    {
+      "case_id": "goal_cos_spelled",
+      "same_as": "goal_cos_line_plane",
+      "answers": {
+        "q1": "cos²=1/2"
+      },
+      "reference_answers": {
+        "q1": "cos²=1/2"
+      },
+      "verdict": "PASS"
+    },
+    {
+      "case_id": "scale_iso_renamed",
+      "same_as": "scale_iso_planes",
+      "answers": {
+        "q1": "cos²=1/3"
+      },
+      "reference_answers": {
+        "q1": "cos²=1/3"
+      },
+      "verdict": "PASS"
+    },
+    {
+      "case_id": "scale_iso_with_length",
+      "same_as": "scale_iso_planes",
+      "answers": {
+        "q1": "cos²=1/3"
+      },
+      "reference_answers": {
+        "q1": "cos²=1/3"
+      },
+      "verdict": "PASS"
+    },
+    {
+      "case_id": "ti_renamed",
+      "same_as": "ti_right_b_planes",
+      "answers": {
+        "q1": "cos²=1/2"
+      },
+      "reference_answers": {
+        "q1": "cos²=1/2"
+      },
+      "verdict": "PASS"
+    },
+    {
+      "case_id": "tet_renamed",
+      "same_as": "tet_lines",
+      "answers": {
+        "q1": "cos²=1/12"
+      },
+      "reference_answers": {
+        "q1": "cos²=1/12"
+      },
+      "verdict": "PASS"
+    },
+    {
+      "case_id": "tet_with_side",
+      "same_as": "tet_lines",
+      "answers": {
+        "q1": "cos²=1/12"
+      },
+      "reference_answers": {
+        "q1": "cos²=1/12"
+      },
+      "verdict": "PASS"
+    },
+    {
+      "case_id": "lp_renamed",
+      "same_as": "lp_ratio2",
+      "answers": {
+        "q1": "cos²=1/5"
+      },
+      "reference_answers": {
+        "q1": "cos²=1/5"
+      },
+      "verdict": "PASS"
+    },
+    {
+      "case_id": "gv_base_unnamed_renamed",
+      "same_as": "gv_base_unnamed_face_after",
+      "answers": {
+        "q1": "a√21/7"
+      },
+      "reference_answers": {
+        "q1": "a√21/7"
+      },
+      "verdict": "PASS"
+    },
+    {
+      "case_id": "gv_base_unnamed_figref",
+      "same_as": "gv_base_unnamed_face_after",
+      "answers": {
+        "q1": "a√21/7"
+      },
+      "reference_answers": {
+        "q1": "a√21/7"
+      },
+      "verdict": "PASS"
+    },
+    {
+      "case_id": "gv_prism_dotted_same",
+      "same_as": "gv_prism_undotted",
+      "answers": {
+        "q1": "3√3"
+      },
+      "reference_answers": {
+        "q1": "3√3"
+      },
+      "verdict": "PASS"
+    },
+    {
+      "case_id": "gv_isosceles_explicit",
+      "same_as": "gv_isosceles_right_derived",
+      "answers": {
+        "q1": "a³/6"
+      },
+      "reference_answers": {
+        "q1": "a³/6"
+      },
+      "verdict": "PASS"
+    }
+  ],
+  "metamorphic_fails": [],
+  "minimal_pairs": [
+    {
+      "case_id": "mc_extra_unread",
+      "pair": "mc_section_one_sentence",
+      "expect": "REFUSE",
+      "status": "REFUSED",
+      "pair_expect": "SERVE",
+      "pair_status": "SERVED",
+      "verdict": "PASS"
+    },
+    {
+      "case_id": "mc_extra_unread2",
+      "pair": "mc_section_one_sentence",
+      "expect": "REFUSE",
+      "status": "REFUSED",
+      "pair_expect": "SERVE",
+      "pair_status": "SERVED",
+      "verdict": "PASS"
+    },
+    {
+      "case_id": "mc_distance_extra_unread",
+      "pair": "mc_distance",
+      "expect": "REFUSE",
+      "status": "REFUSED",
+      "pair_expect": "SERVE",
+      "pair_status": "SERVED",
+      "verdict": "PASS"
+    },
+    {
+      "case_id": "order_plane_never_defined",
+      "pair": "order_plane_after_goal",
+      "expect": "REFUSE",
+      "status": "REFUSED",
+      "pair_expect": "SERVE",
+      "pair_status": "SERVED",
+      "verdict": "PASS"
+    },
+    {
+      "case_id": "dp_unnamed_midpoint_goal",
+      "pair": "dp_named_midpoint_goal",
+      "expect": "SERVE",
+      "status": "SERVED",
+      "pair_expect": "SERVE",
+      "pair_status": "SERVED",
+      "verdict": "PASS"
+    },
+    {
+      "case_id": "dp_free_point",
+      "pair": "dp_named_midpoint_goal",
+      "expect": "REFUSE",
+      "status": "REFUSED",
+      "pair_expect": "SERVE",
+      "pair_status": "SERVED",
+      "verdict": "PASS"
+    },
+    {
+      "case_id": "dp_free_point_goi",
+      "pair": "dp_named_midpoint_goal",
+      "expect": "REFUSE",
+      "status": "REFUSED",
+      "pair_expect": "SERVE",
+      "pair_status": "SERVED",
+      "verdict": "PASS"
+    },
+    {
+      "case_id": "dp_midpoint_as_goal",
+      "pair": "dp_named_midpoint_goal",
+      "expect": "REFUSE",
+      "status": "REFUSED",
+      "pair_expect": "SERVE",
+      "pair_status": "SERVED",
+      "verdict": "PASS"
+    },
+    {
+      "case_id": "goal_cos_line_plane",
+      "pair": "goal_angle_line_plane",
+      "expect": "SERVE",
+      "status": "SERVED",
+      "pair_expect": "SERVE",
+      "pair_status": "SERVED",
+      "verdict": "PASS"
+    },
+    {
+      "case_id": "gv_pair_midpoint_premise",
+      "pair": "gv_pair_point_on",
+      "expect": "SERVE",
+      "status": "SERVED",
+      "pair_expect": "REFUSE",
+      "pair_status": "REFUSED",
+      "verdict": "PASS"
+    },
+    {
+      "case_id": "gv_pair_perp_premise",
+      "pair": "gv_pair_perp_proof",
+      "expect": "SERVE",
+      "status": "SERVED",
+      "pair_expect": "REFUSE",
+      "pair_status": "REFUSED",
+      "verdict": "PASS"
+    },
+    {
+      "case_id": "gv_pair_regular_pyramid",
+      "pair": "gv_pair_regular_tetra",
+      "expect": "REFUSE",
+      "status": "REFUSED",
+      "pair_expect": "SERVE",
+      "pair_status": "SERVED",
+      "verdict": "PASS"
+    }
+  ],
+  "minimal_pair_fails": [],
+  "unit_tests": {
+    "file": "backend/tests/geometry/test_grounded_vietnamese_understanding.py",
+    "red_baseline": "17 of the parser/gate tests failed on 83fdc3071; 3 of 4 learner-diagnostic tests failed before d222e6d9b (the 4th is a control)"
+  }
+}

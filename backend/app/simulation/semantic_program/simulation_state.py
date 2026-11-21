@@ -48,7 +48,11 @@ from .construction_binding import AUXILIARY, MATCHED, doi_chieu_phep_dung
 from .contract import SemanticProgramSpec
 from .display_names import ky_hieu_dai_luong, ten_hien_thi
 from .formation import gan_vai_tro_dung
-from .geometry_exec import la_dai_luong_do, la_doi_tuong_hinh_hoc
+from .geometry_exec import (
+    la_dai_luong_do,
+    la_doi_tuong_hinh_hoc,
+    phan_loai_quan_he_do,
+)
 from .hoisting import TIEN_TO_TAM
 from .quantity_annotations import chieu_cao_the_tich, doan_tren_canh, gan_so_do
 from .shape_constraint import doc_quan_he_cat
@@ -408,11 +412,47 @@ def _length_joins_vertices(name: str, vertices: list[str]) -> bool:
     )
 
 
+_NON_VISUAL_CARRIERS = frozenset({"vector3", "quantity"})
+
+
+def _unwrap_visible_sources(
+    sources: list[str],
+    object_types: dict[str, str],
+    dependencies: dict[str, list[str]],
+    *,
+    exclude_id: str | None = None,
+) -> list[str]:
+    """Khai triển các nguồn trung gian không hiển thị (`vector3`, `quantity`) về vật hiển thị."""
+    seen_expand: set[str] = set()
+    out: list[str] = []
+
+    def _visit(sid: str) -> None:
+        if sid == exclude_id:
+            return
+        stype = object_types.get(sid)
+        if stype in _NON_VISUAL_CARRIERS:
+            if sid in seen_expand:
+                return
+            seen_expand.add(sid)
+            sub_deps = dependencies.get(sid) or []
+            for sub in sub_deps:
+                _visit(sub)
+            # Run `scene3d-causal-pedagogical-integrity`: a carrier with no dependency is SOURCE DATA (the radius R the
+            # problem gives, a given vector) — a number, never a drawn prerequisite. It stays in `computational_depends`.
+            return
+        if sid not in out:
+            out.append(sid)
+
+    for src in sources:
+        _visit(src)
+    return out
+
+
 def typed_dependency_graph(
     spec: SemanticProgramSpec,
     scene: dict[str, Any],
     dependencies: dict[str, list[str]],
-) -> dict[str, list[dict[str, str]]]:
+) -> dict[str, list[dict[str, Any]]]:
     """Gắn loại provenance cho từng cạnh phụ thuộc của Scene3D.
 
     Đây là metadata trình bày additive. Đồ thị ``dependencies`` cũ vẫn giữ
@@ -434,10 +474,10 @@ def typed_dependency_graph(
         "vector3": "topological",
         "quantity": "numerical",
     }
-    result: dict[str, list[dict[str, str]]] = {}
+    result: dict[str, list[dict[str, Any]]] = {}
     for target, sources in dependencies.items():
         producer = str(provenance.get(target, {}).get("producer") or "")
-        edges: list[dict[str, str]] = []
+        edges: list[dict[str, Any]] = []
         for source in sources:
             source_type = object_types.get(source)
             relation = relation_by_type.get(source_type or "", "layout")
@@ -445,7 +485,17 @@ def typed_dependency_graph(
                 relation = "numerical"
             elif producer == "measure.volume" and source_type == "solid":
                 relation = "structural"
-            edges.append({"source_id": source, "relation": relation})
+            edge: dict[str, Any] = {"source_id": source, "relation": relation}
+            if source_type in _NON_VISUAL_CARRIERS:
+                edge["is_non_visual_carrier"] = True
+                if source_type == "vector3":
+                    edge["resolved_visible_sources"] = _unwrap_visible_sources(
+                        dependencies.get(source) or [source],
+                        object_types,
+                        dependencies,
+                        exclude_id=source,
+                    )
+            edges.append(edge)
         result[target] = edges
     return result
 
@@ -622,15 +672,21 @@ def build_scene(
             tho.append((ten, "quantity", _dai_luong(gt)))
             continue
         mac_dinh, noi_dung = than
-        tho.append((ten, _loai_ngu_nghia(mac_dinh, kieu.get(ten)), noi_dung))
+        kieu_khai = kieu.get(ten) or (
+            "vector3" if prov.get(ten, {}).get("producer") == "vector_from_points" else None
+        )
+        tho.append((ten, _loai_ngu_nghia(mac_dinh, kieu_khai), noi_dung))
 
     # ── LƯỢT 2: TÊN HIỂN THỊ, do tầng ngữ nghĩa quyết ────────────────────
     #
     # Khối mang bảng mặt + toạ độ để tầng tên gọi được LOẠI khối (chóp, lăng
     # trụ, hộp, lập phương) từ topology; thiết diện mang tên các điểm trùng
     # đỉnh của nó để được gọi bằng chu trình. Không suy gì từ tên bài.
-    diem_co_ten = {n: v for n, v in memory.items()
-                   if isinstance(v, Vec3) and kieu.get(n) == "point3"}
+    diem_co_ten = {
+        ten: memory[ten]
+        for ten, loai, _ in tho
+        if loai == "point3" and isinstance(memory.get(ten), Vec3)
+    }
 
     def _hinh(ten: str, loai: str) -> dict[str, Any]:
         gt = memory.get(ten)
@@ -641,7 +697,13 @@ def build_scene(
             ten_dinh = [next((n for n, v in diem_co_ten.items() if v == p), None)
                         for p in gt.polygon]
             if all(ten_dinh) and len(set(ten_dinh)) == len(ten_dinh):
-                return {"section_vertex_names": ten_dinh}
+                ten_dinh_clean = [n for n in ten_dinh if n is not None]
+                # Align cycle start/orientation if section label explicitly specifies one
+                lbl_hint = str(prov.get(ten, {}).get("label") or ten)
+                syms = [ky_hieu_dai_luong(n) or n.replace("'", "′") for n in ten_dinh_clean]
+                ten_dinh_clean, _ = _can_chinh_chu_trinh_dinh(
+                    ten_dinh_clean, syms, lbl_hint, _ten_mat_cat(ten, prov, memory))
+                return {"section_vertex_names": ten_dinh_clean}
         if loai == "plane3" and isinstance(gt, Plane3):
             # Điểm có tên nằm TRÊN mặt phẳng (chính xác) — để tên khai `(ABCD)` được kiểm, không rút thầm thành `(ABC)`.
             return {"points_on_plane": [n for n, v in diem_co_ten.items() if gt.signed_eval(v) == 0]}
@@ -809,12 +871,21 @@ def build_simulation_state(
     gan_vai_tro_dung(scene["objects"], spec, contract)
     _ky_hieu_dien_tich_thiet_dien(scene["objects"], contract)
     _canh_song_song_thiet_dien(scene["objects"])
+    _vet_giao_tuyen_thiet_dien(scene["objects"])
     # W17 §15.4: chủ thể của từng đại lượng — tầng ngữ nghĩa quyết (toán hạng phép đo, hoặc đoạn
     # đề gọi tên kiểm bằng khoảng cách chính xác); lớp chiếu này chỉ chở.
     so_do, chan_doan_so_do = gan_so_do(spec, exec_result.final_memory, contract, scene["objects"],
                                        duong_vuong_goc_chung=common_perpendicular_witness)
     chieu_cao = chieu_cao_the_tich(scene["objects"], exec_result.final_memory, so_do)
     dependencies = dependency_graph(spec)
+    prov = _provenance(spec)
+    _gan_measured_quantity(scene["objects"], exec_result.final_memory)
+    _gan_lineage_va_tien_quyet(scene["objects"], dependencies)
+    _gan_chu_trinh_canh_thiet_dien(scene["objects"], exec_result.final_memory, prov)
+    targets = sorted(_muc_tieu(contract))
+    unused_aux_ids = _tim_phu_tro_du_thua(
+        scene["objects"], dependencies, exec_result.final_memory, targets
+    )
     return {
         "scene": scene,
         "dependencies": dependencies,
@@ -832,7 +903,8 @@ def build_simulation_state(
         # `targets`: vật mà đề BẢO chứng minh/tính. Nhóm hiển thị `target` dẫn
         # xuất từ đây, nên học sinh phân biệt được *"cái phải chứng minh"* với
         # *"cái dựng ra để chứng minh"* — thứ nhìn hình vẽ phẳng không thấy.
-        "targets": sorted(_muc_tieu(contract)),
+        "targets": targets,
+        "unused_auxiliary_ids": unused_aux_ids,
         "provenance": _xuat_xu_hien_thi(spec, contract),
         "annotations": so_do,
         "annotation_diagnostics": chan_doan_so_do,
@@ -843,6 +915,252 @@ def build_simulation_state(
         "khai": "Trạng thái TRUNG GIAN cho renderer. Mọi số là chuỗi phân số "
                 "CHÍNH XÁC; hoá float là việc của renderer, ở bước cuối cùng.",
     }
+
+
+def _can_chinh_chu_trinh_dinh(
+    ids: list[str],
+    syms: list[str],
+    label_hint: str,
+    prefix_hint: str = "",
+) -> tuple[list[str], list[str]]:
+    """Xoay/đảo chu trình đỉnh thiết diện khi nhãn nguồn nêu đúng một hoán vị vòng.
+
+    Không nhãn nào nêu cả chu trình ⇒ đọc chu trình bắt đầu bằng tên mặt phẳng cắt (`prefix_hint`, vd `(MNP)` ⇒
+    `MNPQ` chứ không `NMQP`) khi các đỉnh ấy liên tiếp trên chu trình. Chỉ xoay/đảo — cùng một đa giác, cùng tập cạnh.
+    """
+    if len(ids) < 3 or len(ids) != len(syms):
+        return ids, syms
+    norm_syms = [s.replace("'", "′") for s in syms]
+    rev_ids = list(reversed(ids))
+    rev_syms = list(reversed(syms))
+    norm_rev = list(reversed(norm_syms))
+    cac_vong = ((ids, syms, norm_syms), (rev_ids, rev_syms, norm_rev))
+
+    def _tim(tokens: list[str], khop) -> tuple[list[str], list[str]] | None:
+        for tok in tokens:
+            for base_ids, base_syms, base_norm in cac_vong:
+                for idx in range(len(base_norm)):
+                    if khop(base_norm[idx:] + base_norm[:idx], tok):
+                        return base_ids[idx:] + base_ids[:idx], base_syms[idx:] + base_syms[:idx]
+        return None
+
+    def _tach(text: str) -> list[str]:
+        return re.findall(r"[A-Za-z0-9'′]+", (text or "").replace("'", "′"))
+
+    ca_vong = _tim(_tach(label_hint), lambda rot, tok: "".join(rot) == tok)
+    if ca_vong is not None:
+        return ca_vong
+    dau_vong = _tim(
+        _tach(prefix_hint),
+        lambda rot, tok: any("".join(rot[:k]) == tok for k in range(2, len(rot))),
+    )
+    return dau_vong if dau_vong is not None else (ids, syms)
+
+
+def _ten_mat_cat(ten: str, prov: dict[str, dict[str, Any]], memory: dict[str, Any]) -> str:
+    """Nhãn nguồn của (các) mặt phẳng cắt mà thiết diện `ten` dựa vào — gợi ý thứ tự đọc chu trình đỉnh."""
+    return " ".join(
+        str((prov.get(s) or {}).get("label") or "")
+        for s in (prov.get(ten) or {}).get("sources", [])
+        if isinstance(memory.get(s), Plane3)
+    )
+
+
+def _gan_measured_quantity(
+    objects: list[dict[str, Any]],
+    memory: dict[str, Any],
+) -> None:
+    """Gắn metadata `measured_quantity` có cấu trúc cho mọi đại lượng `measure.*`."""
+    by_id = {o["id"]: o for o in objects}
+    for o in objects:
+        if o.get("type") != "quantity":
+            continue
+        producer = str(o.get("producer") or "")
+        if not producer.startswith("measure."):
+            continue
+        qty_kind = producer.split(".", 1)[1]
+        sources = list(o.get("sources") or [])
+        subject_labels: list[str] = []
+        subject_types: list[str] = []
+        for sid in sources:
+            subj = by_id.get(sid) or {}
+            subject_labels.append(str(subj.get("reference") or subj.get("label") or sid))
+            subject_types.append(str(subj.get("type") or ""))
+        obj_a = memory.get(sources[0]) if len(sources) >= 1 else None
+        obj_b = memory.get(sources[1]) if len(sources) >= 2 else None
+        certified_relation = phan_loai_quan_he_do(qty_kind, memory.get(o["id"]), obj_a, obj_b)
+        o["measured_quantity"] = {
+            "quantity_kind": qty_kind,
+            "producer": producer,
+            "subject_ids": sources,
+            "subject_labels": subject_labels,
+            "subject_types": subject_types,
+            "value": o.get("value"),
+            "exact": o.get("exact"),
+            "certified_relation": certified_relation,
+        }
+
+
+def _gan_lineage_va_tien_quyet(
+    objects: list[dict[str, Any]],
+    dependencies: dict[str, list[str]],
+) -> None:
+    """Tách `computational_depends`, `visible_prerequisites` và `construction_lineage` trên từng vật."""
+    object_types = {str(o["id"]): str(o.get("type") or "") for o in objects if o.get("id")}
+    for o in objects:
+        oid = str(o["id"])
+        comp_deps = list(dependencies.get(oid, []))
+        vis_deps = _unwrap_visible_sources(comp_deps, object_types, dependencies, exclude_id=oid)
+        o["computational_depends"] = comp_deps
+        o["visible_prerequisites"] = vis_deps
+        if o.get("origin") == "derived" and o.get("type") != "quantity":
+            prod = str(o.get("producer") or "")
+            sources = list(o.get("sources") or [])
+            if prod in (
+                "construct_point.intersect_line_line",
+                "construct_point.intersect_lines",
+                "construct_point.line_line_intersection",
+            ):
+                o["construction_lineage"] = {
+                    "mode": "euclidean_coplanar_intersection",
+                    "coplanar_lines": sources,
+                }
+            elif prod == "construct_point.intersect_line_plane":
+                o["construction_lineage"] = {
+                    "mode": "algebraic_line_plane_intersection",
+                    "line_id": sources[0] if len(sources) > 0 else None,
+                    "plane_id": sources[1] if len(sources) > 1 else None,
+                    "pedagogical_limitation": (
+                        "Giao điểm được tính trực tiếp từ phương trình đường thẳng và mặt phẳng "
+                        "(chưa tách bước dựng đường phụ đồng phẳng trung gian)."
+                    ),
+                }
+            elif prod == "construct_point.translate":
+                o["construction_lineage"] = {
+                    "mode": "vector_translation",
+                    "base_point_id": sources[0] if len(sources) > 0 else None,
+                    "vector_id": sources[1] if len(sources) > 1 else None,
+                    "visible_prerequisites": list(vis_deps),
+                }
+            else:
+                o["construction_lineage"] = {
+                    "mode": "direct_euclidean_primitive",
+                    "producer": prod or None,
+                }
+
+
+def _gan_chu_trinh_canh_thiet_dien(
+    objects: list[dict[str, Any]],
+    memory: dict[str, Any],
+    prov: dict[str, dict[str, Any]],
+) -> None:
+    """Phát chu trình đỉnh và cạnh biên chuẩn cho thiết diện mà mọi đỉnh đã được đặt tên rõ."""
+    named_pts = [
+        o for o in objects if o.get("type") == "point3" and o.get("notation")
+    ]
+    unnamed_pts = [
+        memory.get(o["id"])
+        for o in objects
+        if o.get("type") == "point3" and not o.get("notation") and isinstance(memory.get(o["id"]), Vec3)
+    ]
+    for sec in objects:
+        if sec.get("type") != "section" or not sec.get("notation"):
+            continue
+        gt = memory.get(sec["id"])
+        if not isinstance(gt, Section) or len(gt.polygon) < 3:
+            continue
+        if any(any(up == pt for up in unnamed_pts) for pt in gt.polygon):
+            continue
+        matched = [
+            next((p for p in named_pts if memory.get(p["id"]) == pt), None)
+            for pt in gt.polygon
+        ]
+        if any(m is None for m in matched):
+            continue
+        ids = [str(m["id"]) for m in matched if m is not None]
+        if len(set(ids)) != len(ids):
+            continue
+        syms = [str(m.get("notation") or m["id"]) for m in matched if m is not None]
+        hint = f"{sec.get('notation') or ''} {(prov.get(sec['id']) or {}).get('label') or ''} {sec['id']}"
+        goc = list(ids)
+        ids, syms = _can_chinh_chu_trinh_dinh(ids, syms, hint, _ten_mat_cat(sec["id"], prov, memory))
+        n = len(syms)
+        # `ordered_vertex_ids[i]` IS `polygon[i]` and `vertex_sources[i]` for every consumer that pairs them by index
+        # (frontend edge/right-angle wording). Re-aligning the names without the coordinates read `SA ⊥ SC tại S`
+        # off the diagonal section (SAC) whose right angle is at A — permute all three together.
+        thu_tu = [goc.index(i) for i in ids]
+        for khoa in ("polygon", "vertex_sources"):
+            ds = sec.get(khoa)
+            if isinstance(ds, list) and len(ds) == n:
+                sec[khoa] = [ds[k] for k in thu_tu]
+        sec["ordered_vertex_ids"] = ids
+        sec["ordered_vertex_symbols"] = syms
+        sec["ordered_boundary_edges"] = [f"{syms[i]}{syms[(i + 1) % n]}" for i in range(n)]
+
+
+def _tim_phu_tro_du_thua(
+    objects: list[dict[str, Any]],
+    dependencies: dict[str, list[str]],
+    memory: dict[str, Any],
+    targets: list[str],
+) -> list[str]:
+    """Đánh dấu các vật dựng phụ không đi tới mục tiêu, đại lượng, khối hay đỉnh thiết diện nào."""
+    sinks: set[str] = set(targets)
+    has_terminal = bool(targets)
+    section_vertices: list[Vec3] = []
+    for o in objects:
+        otype = o.get("type")
+        if otype in (
+            "quantity",
+            "section",
+            "solid",
+            "curved_solid",
+            "polygon3",
+            "segment3",
+            "circle3",
+            "ellipse3",
+            "sphere3",
+            "plane3",
+        ):
+            sinks.add(o["id"])
+            if otype in ("quantity", "section"):
+                has_terminal = True
+        if otype == "section":
+            gt = memory.get(o["id"])
+            if isinstance(gt, Section):
+                section_vertices.extend(gt.polygon)
+    if section_vertices:
+        for o in objects:
+            if o.get("type") == "point3":
+                pt = memory.get(o["id"])
+                if isinstance(pt, Vec3) and any(pt == sv for sv in section_vertices):
+                    sinks.add(o["id"])
+    if not has_terminal:
+        derived_ids = [o["id"] for o in objects if o.get("origin") == "derived"]
+        if derived_ids:
+            sinks.add(derived_ids[-1])
+
+    reachable: set[str] = set()
+    stack = list(sinks)
+    while stack:
+        cur = stack.pop()
+        if cur in reachable:
+            continue
+        reachable.add(cur)
+        for dep in dependencies.get(cur) or ():
+            if dep not in reachable:
+                stack.append(dep)
+
+    unused: list[str] = []
+    for o in objects:
+        if (
+            o.get("origin") == "derived"
+            and o.get("type") in ("point3", "line3", "vector3")
+            and o["id"] not in reachable
+        ):
+            o["is_unused_auxiliary"] = True
+            unused.append(o["id"])
+    return unused
 
 
 def _canh_song_song_thiet_dien(objects: list[dict[str, Any]]) -> None:
@@ -885,6 +1203,133 @@ def _canh_song_song_thiet_dien(objects: list[dict[str, Any]]) -> None:
                     continue
                 st["parallel_face_edge"] = [face[i], face[(i + 1) % len(face)]]
                 break
+
+
+def _vet_giao_tuyen_thiet_dien(objects: list[dict[str, Any]]) -> None:
+    """Run `scene3d-causal-pedagogical-integrity` (GEO-BE-V9415-001) — the TRACE METHOD of the textbook, exactly.
+
+    A section edge with no parallel reason (`parallel_face_edge`) is explained by how its endpoints are FOUND: points of
+    the cutting plane Π known so far start as the named points of Π on the solid's face planes; a face plane holding two
+    known points carries the trace through them, and that trace meets each edge LINE of the face (two coplanar lines) in
+    a new point of Π, which lies on both faces of that edge — a section vertex on the segment, or an auxiliary point on
+    the extended edge. A face with one known point whose plane is parallel to a known trace carries the parallel through
+    it. Everything is affine incidence over ℚ (no metric). A step gets `trace_derivation` only when both endpoints are
+    derived and lie on the trace of its own face; otherwise nothing is claimed."""
+    by_id = {o["id"]: o for o in objects}
+    q = lambda v: tuple(Fraction(str(x)) for x in v)                                       # noqa: E731
+    hieu = lambda u, v: tuple(x - y for x, y in zip(u, v))                                 # noqa: E731
+    cheo = lambda u, v: (u[1] * v[2] - u[2] * v[1], u[2] * v[0] - u[0] * v[2], u[0] * v[1] - u[1] * v[0])  # noqa: E731
+    vo = lambda u, v: sum(x * y for x, y in zip(u, v))                                     # noqa: E731
+
+    def giao(p, d, r, e):                                   # p + s·d = r + t·e, coplanar, not parallel ⇒ (point, t)
+        w = cheo(d, e)
+        k = max(range(3), key=lambda i: abs(w[i]))
+        if w[k] == 0:
+            return None
+        rp = hieu(r, p)
+        s = cheo(rp, e)[k] / w[k]
+        t = cheo(rp, d)[k] / w[k]
+        x = tuple(pi + s * di for pi, di in zip(p, d))
+        return x if tuple(ri + t * ei for ri, ei in zip(r, e)) == x else None, t
+
+    for sec in objects:
+        if sec.get("type") != "section" or not sec.get("steps"):
+            continue
+        nguon = [by_id.get(x) for x in sec.get("sources") or []]
+        solid = next((o for o in nguon if o and o.get("type") == "solid"), None)
+        plane = next((o for o in nguon if o and o.get("type") == "plane3"), None)
+        if solid is None or plane is None:
+            continue
+        try:
+            verts = [q(v) for v in solid["vertices"]]
+            p0, n = q(plane["point"]), q(plane["normal"])
+            faces = [list(f) for f in solid["faces"]]
+            named = [(o["id"], q(o["xyz"])) for o in objects if o.get("type") == "point3" and o.get("xyz")]
+        except (KeyError, TypeError, ValueError, ZeroDivisionError):
+            continue
+        nm = [cheo(hieu(verts[f[1]], verts[f[0]]), hieu(verts[f[2]], verts[f[0]])) if len(f) >= 3 else (0, 0, 0) for f in faces]
+        tren_mat = lambda x, i: any(nm[i]) and vo(nm[i], hieu(x, verts[faces[i][0]])) == 0   # noqa: E731
+        trong_pi = lambda x: vo(n, hieu(x, p0)) == 0                                         # noqa: E731
+        known: list[dict[str, Any]] = []                     # {xyz, ref, faces, depth}
+        for vid, x in named:
+            mats = {i for i in range(len(faces)) if tren_mat(x, i)}
+            if trong_pi(x) and mats and all(k["xyz"] != x for k in known):
+                vi = next((j for j, v in enumerate(verts) if v == x), None)
+                known.append({"xyz": x, "ref": {"vertex": vi} if vi is not None else {"id": vid}, "faces": mats, "depth": 0})
+        for j, v in enumerate(verts):
+            if trong_pi(v) and all(k["xyz"] != v for k in known):
+                known.append({"xyz": v, "ref": {"vertex": j}, "faces": {i for i, f in enumerate(faces) if j in f}, "depth": 0})
+        derivations: list[dict[str, Any]] = []
+        traces: dict[int, dict[str, Any]] = {}
+        # Rounds (breadth first): a round only uses points and traces known when it starts, so every point is reached by
+        # the SHORTEST chain of coplanar intersections — the textbook construction, not whichever face came first.
+        for _ in range(2 * len(faces) + 2):
+            snap, tr_snap, moi = list(known), dict(traces), False
+            for i, f in enumerate(faces):
+                if i in traces or not any(nm[i]) or not any(cheo(nm[i], n)):
+                    continue
+                pts = [k for k in snap if i in k["faces"]]
+                cap = sorted(((max(u["depth"], w["depth"]), u["depth"] + w["depth"], iu, iw, u, w)
+                              for iu, u in enumerate(pts) for iw, w in enumerate(pts) if iu < iw and u["xyz"] != w["xyz"]),
+                             key=lambda c: c[:4])
+                if cap:
+                    _d, _s, _i, _j, u, w = cap[0]
+                    tr = {"through": [u["ref"], w["ref"]], "point": u["xyz"], "dir": hieu(w["xyz"], u["xyz"]), "depth": _d}
+                elif len(pts) == 1:
+                    ss = next((g for g, t in sorted(tr_snap.items(), key=lambda gt: gt[1]["depth"]) if vo(nm[i], t["dir"]) == 0), None)
+                    if ss is None:
+                        continue
+                    tr = {"through": [pts[0]["ref"]], "parallel_to_trace_of": ss, "point": pts[0]["xyz"],
+                          "dir": tr_snap[ss]["dir"], "depth": max(pts[0]["depth"], tr_snap[ss]["depth"])}
+                else:
+                    continue
+                traces[i] = tr
+                moi = True
+                for e in range(len(f)):
+                    x0, x1 = f[e], f[(e + 1) % len(f)]
+                    kq = giao(tr["point"], tr["dir"], verts[x0], hieu(verts[x1], verts[x0]))
+                    if kq is None or kq[0] is None:
+                        continue
+                    x, t = kq
+                    if not (trong_pi(x) and tren_mat(x, i)) or any(k["xyz"] == x for k in known):
+                        continue
+                    derivations.append({"xyz": [str(c) for c in x], "face": i, "trace": tr["through"],
+                                        **({"parallel_to_trace_of": tr["parallel_to_trace_of"]} if "parallel_to_trace_of" in tr else {}),
+                                        "edge": sorted((x0, x1)), "on_edge_segment": bool(0 <= t <= 1)})
+                    known.append({"xyz": x, "ref": {"derived": len(derivations) - 1}, "depth": tr["depth"] + 1,
+                                  "faces": {g for g, ff in enumerate(faces) if x0 in ff and x1 in ff}})
+            if not moi:
+                break
+        at = {k["xyz"]: k["ref"] for k in known}
+        for st in sec["steps"]:
+            mat = st.get("face_index")
+            if st.get("parallel_face_edge") or mat not in traces:
+                continue
+            try:
+                a, b = q(st["a"]), q(st["b"])
+            except (KeyError, TypeError, ValueError):
+                continue
+            tr = traces[mat]
+            if a not in at or b not in at or any(cheo(hieu(x, tr["point"]), tr["dir"]) != (0, 0, 0) for x in (a, b)):
+                continue
+            need: list[int] = []
+
+            def can(ref):
+                if "derived" in ref and ref["derived"] not in need:
+                    d = derivations[ref["derived"]]
+                    for r in d["trace"]:
+                        can(r)
+                    if "parallel_to_trace_of" in d:
+                        for r in traces[d["parallel_to_trace_of"]]["through"]:
+                            can(r)
+                    need.append(ref["derived"])
+            for r in (*tr["through"], at[a], at[b]):
+                can(r)
+            st["trace_derivation"] = {"face": mat, "through": tr["through"],
+                                      **({"parallel_to_trace_of": tr["parallel_to_trace_of"]} if "parallel_to_trace_of" in tr else {}),
+                                      "endpoints": [at[a], at[b]],
+                                      "derivations": [{**derivations[k], "index": k} for k in sorted(need)],
+                                      "verified_exact": True}
 
 
 def _ky_hieu_dien_tich_thiet_dien(objects: list[dict[str, Any]], contract: Any) -> None:

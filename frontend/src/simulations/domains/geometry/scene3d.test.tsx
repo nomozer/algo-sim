@@ -299,6 +299,11 @@ describe("(5D) ranh giới: renderer không suy luận hình học", () => {
       //
       // `./scene3d-witness-gate` THÊM 2026-10-26 (Owner P0 ký hiệu vuông góc), nói ra: CỔNG fail-closed. Đọc lại
       // nhân chứng backend phát và trả `boolean` — không dựng chân, không chọn phương, không trả toạ độ (test kế).
+      //
+      // `./scene3d-angle-construction` THÊM 2026-11-13 (semantic-to-scene3d-verified-simulation), nói ra: phép dựng
+      // góc đề hỏi do BACKEND dựng chính xác và tự kiểm (`gan_dung_goc`). Module THUẦN, không three: chỉ KIỂM LẠI
+      // fail-closed ở toạ độ thế giới (vuông góc / song song / chân là đầu cạnh) và nội suy một CUNG trình bày giữa
+      // hai cạnh backend phát. Không dựng điểm, đường hay mặt nào; không đáp số (test riêng ngay dưới).
       expect(["react", "three", "three/addons/controls/OrbitControls.js",
               "./scene3d-model", "./interaction-state",
               "./scene3d-subentities", "./pick-target",
@@ -306,7 +311,16 @@ describe("(5D) ranh giới: renderer không suy luận hình học", () => {
               "./scene3d-edge-visibility",
               "./polygon-triangulate", "./scene3d-roles",
               "./scene3d-annotations", "./scene3d-auxiliary", "./scene3d-chart",
-              "./scene3d-witness-gate", "./scene3d-semantic-policy"]).toContain(i);
+              "./scene3d-witness-gate", "./scene3d-semantic-policy", "./scene3d-angle-construction"]).toContain(i);
+    }
+  });
+
+  it("`scene3d-angle-construction` THUẦN: không three, không phép dựng hình học, không đọc giá trị đáp số", () => {
+    const src = readFileSync(join(__dirname, "scene3d-angle-construction.ts"), "utf8");
+    expect(src).not.toMatch(/from ["']three/);
+    for (const cam of ["intersect", "project_onto", "projectPoint", "midpoint", "predicates", "kernel", "Fraction",
+                       ".value", ".exact", "annotation"]) {
+      expect(src.includes(cam), `không được nhắc ${cam}`).toBe(false);
     }
   });
 

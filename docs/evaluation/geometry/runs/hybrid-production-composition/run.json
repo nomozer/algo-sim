@@ -1,0 +1,51 @@
+{
+  "run_id": "hybrid-production-composition",
+  "date": "2026-11-08",
+  "branch": "feat/hybrid-production-composition",
+  "baseline": "ad311e04372821c39f21f999d66316e99cc874ca (feat/hybrid-backend-capabilities verified candidate; main = origin/main = bb046fa22aceff47abe22aa783aa64fc65caee13)",
+  "merged": false,
+  "pushed": false,
+  "provider_calls": 0,
+  "commits": [
+    {
+      "sha": "93b0dfcef",
+      "role": "product & test: production dynamic function composition (_EffectResolver composed step search_generated provenance, intermediate reuse across goals, bounded depth-2 projection over descriptor point_tree in typed_fact_next_bridge.py, recursive effect-chain Source Gate & Exact Kernel verification) + 11 composition & ablation tests"
+    }
+  ],
+  "candidate": {
+    "measured_system_paths_count": 3,
+    "measured_system_hashed_entries_so_file": 106,
+    "measured_system_unique_files": 105,
+    "backend_app_files": 100,
+    "frontend_semantic_files": 5,
+    "duplicate_explicit_path": "frontend/src/simulations/domains/semantic/semantic_program.schema.json",
+    "measured_system_tree_hash": "93f69bdd2ebe7a1092acef466579f23c0626a7cd2bc6b9d24b9e840bb212d4a9"
+  },
+  "registry_inventory": {
+    "total_registered_functions": 49,
+    "provider_offered_true": 31,
+    "provider_offered_false": 18,
+    "auxiliary_only_true": 1,
+    "provider_functions_exposed": 30
+  },
+  "cache_version": {
+    "before": "132",
+    "after": "132",
+    "bumped": false,
+    "reason": "no prompt, schema, or provider surface change; changes affect only previously refused depth-2 projection-over-descriptor described_points paths; all existing served responses unchanged"
+  },
+  "phase0_verdict": "PREVIOUS_CANDIDATE_VERIFIED",
+  "phase1_verdict": "PRODUCTION_DYNAMIC_COMPOSITION_VERIFIED",
+  "measurement": {
+    "MEASUREMENT_CLASS": "OFFLINE_PRODUCTION_DYNAMIC_COMPOSITION_AND_ABLATION",
+    "HELD_OUT_CLAIM": "NONE (INDEPENDENT_H1_VALIDATION = NOT_MEASURED)",
+    "EVALUATOR_INDEPENDENCE": "NONE (same agent implemented and verified)",
+    "telemetry_receipt": "results/production_composition_metrics.json",
+    "families_verified": "Family A (A1 3-step, A2 4-step, A3 3-step), Family B (B1 shared intermediate across 2 goals, reused_intermediates=4), Family C (C1 ratio+centroid+proj pyramid, C2 4-step right prism), Family D (D1 Source Gate mismatch, D2 unsupported inner orthocenter, D3 collinear triangle, D4 depth cap & certificate tamper), Section VII Ablation (explicit premises REGISTERED_DECOMPOSITION vs ablated premises DISCOVERED_FUNCTION_COMPOSITION vs contract ablation REFUSED)",
+    "performance": "planner_cpu_p50_ms=1.782, planner_cpu_max_ms=3.957, route_warm_p50_ms=40.794, route_warm_p95_ms=55.332, route_cold_p50_ms=216.517, route_cold_first_case_ms=1599.860, peak_memory_max_kb=1891.28"
+  },
+  "live": {
+    "status": "LIVE_CALLS_ZERO_BY_DIRECTIVE",
+    "intentional_provider_calls": 0
+  }
+}

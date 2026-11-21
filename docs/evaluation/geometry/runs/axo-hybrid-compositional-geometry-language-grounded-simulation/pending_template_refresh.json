@@ -1,0 +1,76 @@
+{
+  "classification": "CURRENT_PENDING_TEMPLATE_METADATA_REFRESH_NOT_HUMAN_APPROVAL",
+  "reason": "test_s2_student_language_pilot_runner requires pending templates to bind the current runtime; AXO HYBRID /12 changed backend/app (compositional parser local-geometry-parser/3, compositional-clause-analyzer/1, local-slm-extractor/6, slm-grounding-validator/6, Source Gate geometry-functions/33, diacritic-free domain gate, CACHE_VERSION 147) and frontend/src (V11-VIS-1 Scene3D framing); metadata refresh only, not human approval.",
+  "runtime_identity_measured_system": "87a40770e14a730cbfafbf2a618ac747847c5f285ddd932057228816e39e73bd",
+  "rows": [
+    {
+      "study": "K-1",
+      "template": "docs/evaluation/geometry/runs/hybrid-master-backend-replacement/k1-owner-approval.template.json",
+      "before": {
+        "measured_system": "f3c185a08bf0f227fafc6621195017f3517d7227b20b93c7fdf86278103df40d",
+        "runner_sha256": "10bc64bb4b5533c6b1136611e5d55ee3de98260e69057df6ca3641ed1f16645c",
+        "paired_harness_sha256": "73a8270a0556ba09db711b38e8c4bad81f2b95cdbee1bd632f43e0f6153d7df6",
+        "scorer_sha256": "8c330bd493f9d401f579b6383f1a1df2bc9172eee2530cf187be2024801b5a2d",
+        "measured_system_tree_hash": "f3c185a08bf0f227fafc6621195017f3517d7227b20b93c7fdf86278103df40d"
+      },
+      "after": {
+        "measured_system": "87a40770e14a730cbfafbf2a618ac747847c5f285ddd932057228816e39e73bd",
+        "runner_sha256": "10bc64bb4b5533c6b1136611e5d55ee3de98260e69057df6ca3641ed1f16645c",
+        "paired_harness_sha256": "73a8270a0556ba09db711b38e8c4bad81f2b95cdbee1bd632f43e0f6153d7df6",
+        "scorer_sha256": "8c330bd493f9d401f579b6383f1a1df2bc9172eee2530cf187be2024801b5a2d",
+        "measured_system_tree_hash": "87a40770e14a730cbfafbf2a618ac747847c5f285ddd932057228816e39e73bd"
+      },
+      "original_saved_as": "logs/prior-k1-owner-approval.template.json",
+      "original_sha256": "b5ce55695cfdbd563b03b9934b38413aa035f9e094436c5595f9bf931d3cd7a9",
+      "new_sha256": "7f6a4fcf0e09ceab28a172eaa81482508e555d5d3c5d37ccc3ff4a325b6f7bfd",
+      "owner_decision": "PENDING_OWNER_DECISION",
+      "paid_project_confirmed": false
+    },
+    {
+      "study": "S-2",
+      "template": "docs/evaluation/geometry/runs/hybrid-master-backend-replacement/s2-owner-approval.template.json",
+      "before": {
+        "measured_system": "f3c185a08bf0f227fafc6621195017f3517d7227b20b93c7fdf86278103df40d",
+        "runner_sha256": "10bc64bb4b5533c6b1136611e5d55ee3de98260e69057df6ca3641ed1f16645c",
+        "paired_harness_sha256": "73a8270a0556ba09db711b38e8c4bad81f2b95cdbee1bd632f43e0f6153d7df6",
+        "scorer_sha256": "8c330bd493f9d401f579b6383f1a1df2bc9172eee2530cf187be2024801b5a2d",
+        "measured_system_tree_hash": "f3c185a08bf0f227fafc6621195017f3517d7227b20b93c7fdf86278103df40d"
+      },
+      "after": {
+        "measured_system": "87a40770e14a730cbfafbf2a618ac747847c5f285ddd932057228816e39e73bd",
+        "runner_sha256": "10bc64bb4b5533c6b1136611e5d55ee3de98260e69057df6ca3641ed1f16645c",
+        "paired_harness_sha256": "73a8270a0556ba09db711b38e8c4bad81f2b95cdbee1bd632f43e0f6153d7df6",
+        "scorer_sha256": "8c330bd493f9d401f579b6383f1a1df2bc9172eee2530cf187be2024801b5a2d",
+        "measured_system_tree_hash": "87a40770e14a730cbfafbf2a618ac747847c5f285ddd932057228816e39e73bd"
+      },
+      "original_saved_as": "logs/prior-s2-owner-approval.template.json",
+      "original_sha256": "134696052d53254d06dd9b29cbcfeea7b9e52dc0850c2a1532cf1ff85da2e702",
+      "new_sha256": "4a3ab93bcbb4be99079d0365bcb862385209b98432d73712802840874fff54c3",
+      "owner_decision": "PENDING_OWNER_DECISION",
+      "paid_project_confirmed": false
+    },
+    {
+      "study": "R-1",
+      "template": "docs/evaluation/geometry/runs/hybrid-master-backend-replacement/r1-owner-approval.template.json",
+      "before": {
+        "measured_system": "f3c185a08bf0f227fafc6621195017f3517d7227b20b93c7fdf86278103df40d",
+        "runner_sha256": "10bc64bb4b5533c6b1136611e5d55ee3de98260e69057df6ca3641ed1f16645c",
+        "paired_harness_sha256": "73a8270a0556ba09db711b38e8c4bad81f2b95cdbee1bd632f43e0f6153d7df6",
+        "scorer_sha256": "8c330bd493f9d401f579b6383f1a1df2bc9172eee2530cf187be2024801b5a2d",
+        "measured_system_tree_hash": "f3c185a08bf0f227fafc6621195017f3517d7227b20b93c7fdf86278103df40d"
+      },
+      "after": {
+        "measured_system": "87a40770e14a730cbfafbf2a618ac747847c5f285ddd932057228816e39e73bd",
+        "runner_sha256": "10bc64bb4b5533c6b1136611e5d55ee3de98260e69057df6ca3641ed1f16645c",
+        "paired_harness_sha256": "73a8270a0556ba09db711b38e8c4bad81f2b95cdbee1bd632f43e0f6153d7df6",
+        "scorer_sha256": "8c330bd493f9d401f579b6383f1a1df2bc9172eee2530cf187be2024801b5a2d",
+        "measured_system_tree_hash": "87a40770e14a730cbfafbf2a618ac747847c5f285ddd932057228816e39e73bd"
+      },
+      "original_saved_as": "logs/prior-r1-owner-approval.template.json",
+      "original_sha256": "ed18f17a3daceca36858793946a6a7016f4507fa57521e02d93fb1c9c33bf3d1",
+      "new_sha256": "9623e3f76dcf25f8ef3987809e33a23c617ecbd158ea19a5f9c6bb0d19796422",
+      "owner_decision": "PENDING_OWNER_DECISION",
+      "paid_project_confirmed": false
+    }
+  ]
+}

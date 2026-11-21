@@ -1,0 +1,58 @@
+{
+  "classification": "CURRENT_PENDING_TEMPLATE_METADATA_REFRESH_NOT_HUMAN_APPROVAL",
+  "reason": "cache 135, decimal values and certified similarity scale changed the measured system.",
+  "runtime_identity_measured_system": "243d932765f7d4065394f91c6b4f25972f8232ba9228aec89d4c63a244c1976b",
+  "rows": [
+    {
+      "study": "K-1",
+      "template": "docs/evaluation/geometry/runs/hybrid-master-backend-replacement/k1-owner-approval.template.json",
+      "before": {
+        "measured_system": "b652e635d5497dc36bf6d55ff4a34c20a16302d01c154b59b039efd65170921e",
+        "measured_system_tree_hash": "b652e635d5497dc36bf6d55ff4a34c20a16302d01c154b59b039efd65170921e"
+      },
+      "after": {
+        "measured_system": "243d932765f7d4065394f91c6b4f25972f8232ba9228aec89d4c63a244c1976b",
+        "measured_system_tree_hash": "243d932765f7d4065394f91c6b4f25972f8232ba9228aec89d4c63a244c1976b"
+      },
+      "original_saved_as": "logs/prior-k1-owner-approval.template.json",
+      "original_sha256": "3e3a71b72a8ac00ccf3668c9f9cfe0830309fccd8697f13b395538190c7abe2d",
+      "new_sha256": "074c8985cd3abccff83b47c7c583be2831b6a6b20f02124bc5f3f6502ca06abb",
+      "owner_decision": "PENDING_OWNER_DECISION",
+      "paid_project_confirmed": false
+    },
+    {
+      "study": "S-2",
+      "template": "docs/evaluation/geometry/runs/hybrid-master-backend-replacement/s2-owner-approval.template.json",
+      "before": {
+        "measured_system": "b652e635d5497dc36bf6d55ff4a34c20a16302d01c154b59b039efd65170921e",
+        "measured_system_tree_hash": "b652e635d5497dc36bf6d55ff4a34c20a16302d01c154b59b039efd65170921e"
+      },
+      "after": {
+        "measured_system": "243d932765f7d4065394f91c6b4f25972f8232ba9228aec89d4c63a244c1976b",
+        "measured_system_tree_hash": "243d932765f7d4065394f91c6b4f25972f8232ba9228aec89d4c63a244c1976b"
+      },
+      "original_saved_as": "logs/prior-s2-owner-approval.template.json",
+      "original_sha256": "5d448b91bed55964b6bb30890eeee8e662d7cd1d91c04277553ed1adfd2ecf72",
+      "new_sha256": "b424d97df8a945d7472b8234a3ced1916e16931634385d736224a82726caad47",
+      "owner_decision": "PENDING_OWNER_DECISION",
+      "paid_project_confirmed": false
+    },
+    {
+      "study": "R-1",
+      "template": "docs/evaluation/geometry/runs/hybrid-master-backend-replacement/r1-owner-approval.template.json",
+      "before": {
+        "measured_system": "b652e635d5497dc36bf6d55ff4a34c20a16302d01c154b59b039efd65170921e",
+        "measured_system_tree_hash": "b652e635d5497dc36bf6d55ff4a34c20a16302d01c154b59b039efd65170921e"
+      },
+      "after": {
+        "measured_system": "243d932765f7d4065394f91c6b4f25972f8232ba9228aec89d4c63a244c1976b",
+        "measured_system_tree_hash": "243d932765f7d4065394f91c6b4f25972f8232ba9228aec89d4c63a244c1976b"
+      },
+      "original_saved_as": "logs/prior-r1-owner-approval.template.json",
+      "original_sha256": "2e5ecaca2729d3a3f56b959aca5d49e9dd4b42450fc770c23d44be21f75ac43e",
+      "new_sha256": "108494f9385f1e6cd336708d170ac2876e2716124826cf51342b290104241fe1",
+      "owner_decision": "PENDING_OWNER_DECISION",
+      "paid_project_confirmed": false
+    }
+  ]
+}

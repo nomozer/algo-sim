@@ -1,0 +1,644 @@
+{
+  "schema": "axo-student-pilot-e2e/1",
+  "run_id": "simulation-first-mvp-stabilization",
+  "phase": "phase_d_e3_real_chromium_student_pilot_e2e",
+  "generated_at_utc": "2026-11-16T02:02:19Z",
+  "category": "AUTOMATED_BROWSER_NOT_HUMAN_STUDY",
+  "physical_low_end": "PHYSICAL_LOW_END_NOT_MEASURED",
+  "dataset_partition": "DEVELOPMENT_EXPOSED_AND_SYNTHETIC_E2E_PROBES_ONLY",
+  "provenance": {
+    "git_head_sha": "077e3671ac2fdaa4cb9ddb584a583e92667cda21",
+    "product_commit": "4d81be4b85e164c8596d2e9b53351b5df0a244f0",
+    "measured_system_hash": "beb18ce56298f1022f628fd923dffd98c0134b2d1ffd9cbc5b87efa280a408b3",
+    "measured_system_file_count": 120,
+    "cache_version": "141",
+    "route_d_cache_policy": "141:route-d",
+    "frontend_dist_dir": "frontend/dist",
+    "loopback_mode": "HYBRID_ROUTE_MODE=local-first, ALLOW_LIVE_AI=0, GEMINI_API_KEY=\"\"",
+    "health_has_key": false,
+    "live_provider_calls": 0,
+    "temp_files_cleaned_up": true,
+    "fatal_error": null
+  },
+  "d1_complete_student_journey": {
+    "pass": true,
+    "viewport": "1920x1080",
+    "signup_status": 200,
+    "light_mode": {
+      "selector": "BODY",
+      "bg": "rgb(246, 245, 244)",
+      "luminance": 0.961,
+      "is_light": true
+    },
+    "problem1_r537": {
+      "status": "SERVED",
+      "answer_q1_verified_hidden": "a√6/3",
+      "first_model_ms": 1391,
+      "camera": {
+        "snapshot_available": true,
+        "orbit_changes_camera": true,
+        "zoom_changes_camera": true,
+        "pan_changes_camera": true,
+        "reset_returns_to_initial": true,
+        "orbit_ms": 338,
+        "canvas_box": {
+          "x": 0,
+          "y": 46,
+          "width": 1560,
+          "height": 1034
+        }
+      },
+      "selections": {
+        "point": {
+          "id": "kq_q1__foot1",
+          "otype": "point3",
+          "selected_id": "kq_q1__foot1",
+          "selects": true,
+          "ctx_title": "Hình chiếu H",
+          "ctx_mounted": true,
+          "ctx_tech_token": null
+        },
+        "edge": {
+          "id": "kq_q1__perp_seg",
+          "otype": "segment3",
+          "selected_id": "kq_q1__perp_seg",
+          "selects": true,
+          "ctx_title": "Đoạn vuông góc AH",
+          "ctx_mounted": true,
+          "ctx_tech_token": null
+        },
+        "face": {
+          "id": "mp_q1",
+          "otype": "plane3",
+          "selected_id": "mp_q1",
+          "selects": true,
+          "ctx_title": "Mặt phẳng (SBC)",
+          "ctx_mounted": true,
+          "ctx_tech_token": null
+        },
+        "statement_len": 127
+      },
+      "timeline_steps": 6,
+      "explanation_step_count": 6,
+      "late_prerequisites": [],
+      "display_controls": {
+        "aux_ok": true,
+        "axes_ok": true,
+        "grid_checkbox_ok": true,
+        "xray_ok": true,
+        "aux": {
+          "h0": 2,
+          "h1": 0,
+          "h2": 2,
+          "r0": 16,
+          "r1": 18
+        },
+        "axes": {
+          "a0": false,
+          "a1": true,
+          "a2": false
+        },
+        "grid": {
+          "g0": true,
+          "g1": false,
+          "g2": true,
+          "workspace_hardcoded_gridShown": false
+        },
+        "xray": {
+          "p0": "false",
+          "p1": "true",
+          "p2": "false"
+        }
+      },
+      "spoiler": {
+        "leaked_answers": [],
+        "cos2_leak": false,
+        "abcd_picker_count": 0,
+        "witness_count": 1,
+        "angle_ctor_count": 0,
+        "pass": true
+      }
+    },
+    "problem2_r463_undotted_prism": {
+      "status": "SERVED",
+      "answer_q1_verified_hidden": "4a³√3",
+      "first_model_ms": 435,
+      "scene_object_count": 16,
+      "has_expected_prism_topology": true,
+      "scene_verified_perp_witness_ids": [
+        "canh_ben_A_A_prime",
+        "canh_ben_B_B_prime",
+        "canh_ben_C_C_prime",
+        "canh_ben_D_D_prime"
+      ],
+      "timeline_angle_ctor_ids": [],
+      "explanation_step_count": 4,
+      "foreign_rendered_ids": [],
+      "stale_previous_text": false,
+      "late_prerequisites": [],
+      "spoiler": {
+        "leaked_answers": [],
+        "cos2_leak": false,
+        "abcd_picker_count": 0,
+        "witness_count": 0,
+        "angle_ctor_count": 0,
+        "pass": true
+      }
+    },
+    "problem3_trace_section_why_drawer": {
+      "status": "SERVED",
+      "first_model_ms": 381,
+      "trace_aux_explained": true,
+      "why_drawer_excerpt": "        Giao tuyến trên từng mặt: (MNP) ∩ (ABCD) = NP, (MNP) ∩ (SCD), (MNP) ∩ (SAD), (MNP) ∩ (SAB), (MNP) ∩ (SBC) ⇒ khép kín miền thiết diện tạo bởi (MNP) (MNP) và mặt (ABCD) có chung N và P nên giao ",
+      "late_prerequisites": []
+    },
+    "page_errors": []
+  },
+  "d2_image_ocr_and_multiproblem": {
+    "pass": true,
+    "viewport": "1366x768",
+    "vlm_calls": 0,
+    "r537_ocr": {
+      "prepare_status": "needs_confirmation",
+      "preserves_a2": true,
+      "route_status": "SERVED",
+      "answer_q1_verified_hidden": "a√6/3",
+      "elapsed_ms": 4903,
+      "spoiler": {
+        "leaked_answers": [],
+        "cos2_leak": false,
+        "abcd_picker_count": 0,
+        "witness_count": 1,
+        "angle_ctor_count": 0,
+        "pass": true
+      }
+    },
+    "multisheet_ocr": {
+      "prepare_status": "needs_selection",
+      "candidate_count": 2,
+      "picked_status": "ready",
+      "raw_draft_preview": "Câu 1. Cho hình chóp S.ABCD có đáy ABCD là hình vuông cạnh 2a, SA vuông góc với mặt phẳng (ABCD) và SA = 2a. Tính thể tích khối chóp S.ABCD.",
+      "zero_neighbor_bleed": true,
+      "route_status": "SERVED",
+      "answer_q1_verified_hidden": "8a³/3",
+      "elapsed_ms": 4223,
+      "spoiler": {
+        "leaked_answers": [],
+        "cos2_leak": false,
+        "abcd_picker_count": 0,
+        "witness_count": 0,
+        "angle_ctor_count": 0,
+        "pass": true
+      }
+    },
+    "page_errors": []
+  },
+  "d3_responsive_4_viewports": [
+    {
+      "viewport": "1920x1080",
+      "light_mode": {
+        "selector": "BODY",
+        "bg": "rgb(246, 245, 244)",
+        "luminance": 0.961,
+        "is_light": true
+      },
+      "camera": {
+        "snapshot_available": true,
+        "orbit_changes_camera": true,
+        "zoom_changes_camera": true,
+        "pan_changes_camera": true,
+        "reset_returns_to_initial": true,
+        "orbit_ms": 299.4,
+        "canvas_box": {
+          "x": 0,
+          "y": 46,
+          "width": 1560,
+          "height": 1034
+        }
+      },
+      "transitions": [
+        {
+          "case": "cos_line_plane",
+          "pass": true,
+          "status": "SERVED",
+          "canvas_count": 1,
+          "canvas_w": 1560,
+          "canvas_h": 1034,
+          "toolbar_overlap_pct": 0.6,
+          "step_btn_min_px": 28,
+          "horizontal_overflow_px": 0,
+          "foreign_rendered_ids": [],
+          "stale_previous_premise": false,
+          "late_prerequisites": [],
+          "spoiler": {
+            "leaked_answers": [],
+            "cos2_leak": false,
+            "abcd_picker_count": 0,
+            "witness_count": 0,
+            "angle_ctor_count": 1,
+            "pass": true
+          }
+        },
+        {
+          "case": "r537_pyramid_distance",
+          "pass": true,
+          "status": "SERVED",
+          "canvas_count": 1,
+          "canvas_w": 1560,
+          "canvas_h": 1034,
+          "toolbar_overlap_pct": 0.6,
+          "step_btn_min_px": 28,
+          "horizontal_overflow_px": 0,
+          "foreign_rendered_ids": [],
+          "stale_previous_premise": false,
+          "late_prerequisites": [],
+          "spoiler": {
+            "leaked_answers": [],
+            "cos2_leak": false,
+            "abcd_picker_count": 0,
+            "witness_count": 1,
+            "angle_ctor_count": 0,
+            "pass": true
+          }
+        },
+        {
+          "case": "r463_undotted_prism_volume",
+          "pass": true,
+          "status": "SERVED",
+          "canvas_count": 1,
+          "canvas_w": 1560,
+          "canvas_h": 1034,
+          "toolbar_overlap_pct": 0.6,
+          "step_btn_min_px": 28,
+          "horizontal_overflow_px": 0,
+          "foreign_rendered_ids": [],
+          "stale_previous_premise": false,
+          "late_prerequisites": [],
+          "spoiler": {
+            "leaked_answers": [],
+            "cos2_leak": false,
+            "abcd_picker_count": 0,
+            "witness_count": 0,
+            "angle_ctor_count": 0,
+            "pass": true
+          }
+        }
+      ],
+      "page_errors": [],
+      "pass": true
+    },
+    {
+      "viewport": "1366x768",
+      "light_mode": {
+        "selector": "BODY",
+        "bg": "rgb(246, 245, 244)",
+        "luminance": 0.961,
+        "is_light": true
+      },
+      "camera": {
+        "snapshot_available": true,
+        "orbit_changes_camera": true,
+        "zoom_changes_camera": true,
+        "pan_changes_camera": true,
+        "reset_returns_to_initial": true,
+        "orbit_ms": 286.5,
+        "canvas_box": {
+          "x": 0,
+          "y": 46,
+          "width": 1006,
+          "height": 722
+        }
+      },
+      "transitions": [
+        {
+          "case": "cos_line_plane",
+          "pass": true,
+          "status": "SERVED",
+          "canvas_count": 1,
+          "canvas_w": 1006,
+          "canvas_h": 722,
+          "toolbar_overlap_pct": 1.2,
+          "step_btn_min_px": 28,
+          "horizontal_overflow_px": 0,
+          "foreign_rendered_ids": [],
+          "stale_previous_premise": false,
+          "late_prerequisites": [],
+          "spoiler": {
+            "leaked_answers": [],
+            "cos2_leak": false,
+            "abcd_picker_count": 0,
+            "witness_count": 0,
+            "angle_ctor_count": 1,
+            "pass": true
+          }
+        },
+        {
+          "case": "r537_pyramid_distance",
+          "pass": true,
+          "status": "SERVED",
+          "canvas_count": 1,
+          "canvas_w": 1006,
+          "canvas_h": 722,
+          "toolbar_overlap_pct": 1.2,
+          "step_btn_min_px": 28,
+          "horizontal_overflow_px": 0,
+          "foreign_rendered_ids": [],
+          "stale_previous_premise": false,
+          "late_prerequisites": [],
+          "spoiler": {
+            "leaked_answers": [],
+            "cos2_leak": false,
+            "abcd_picker_count": 0,
+            "witness_count": 1,
+            "angle_ctor_count": 0,
+            "pass": true
+          }
+        },
+        {
+          "case": "r463_undotted_prism_volume",
+          "pass": true,
+          "status": "SERVED",
+          "canvas_count": 1,
+          "canvas_w": 1006,
+          "canvas_h": 722,
+          "toolbar_overlap_pct": 1.2,
+          "step_btn_min_px": 28,
+          "horizontal_overflow_px": 0,
+          "foreign_rendered_ids": [],
+          "stale_previous_premise": false,
+          "late_prerequisites": [],
+          "spoiler": {
+            "leaked_answers": [],
+            "cos2_leak": false,
+            "abcd_picker_count": 0,
+            "witness_count": 0,
+            "angle_ctor_count": 0,
+            "pass": true
+          }
+        }
+      ],
+      "page_errors": [],
+      "pass": true
+    },
+    {
+      "viewport": "768x1024",
+      "light_mode": {
+        "selector": "BODY",
+        "bg": "rgb(246, 245, 244)",
+        "luminance": 0.961,
+        "is_light": true
+      },
+      "camera": {
+        "snapshot_available": true,
+        "orbit_changes_camera": true,
+        "zoom_changes_camera": true,
+        "pan_changes_camera": true,
+        "reset_returns_to_initial": true,
+        "orbit_ms": 303.4,
+        "canvas_box": {
+          "x": 0,
+          "y": 46,
+          "width": 472,
+          "height": 978
+        }
+      },
+      "transitions": [
+        {
+          "case": "cos_line_plane",
+          "pass": true,
+          "status": "SERVED",
+          "canvas_count": 1,
+          "canvas_w": 472,
+          "canvas_h": 978,
+          "toolbar_overlap_pct": 1.9,
+          "step_btn_min_px": 40,
+          "horizontal_overflow_px": 0,
+          "foreign_rendered_ids": [],
+          "stale_previous_premise": false,
+          "late_prerequisites": [],
+          "spoiler": {
+            "leaked_answers": [],
+            "cos2_leak": false,
+            "abcd_picker_count": 0,
+            "witness_count": 0,
+            "angle_ctor_count": 1,
+            "pass": true
+          }
+        },
+        {
+          "case": "r537_pyramid_distance",
+          "pass": true,
+          "status": "SERVED",
+          "canvas_count": 1,
+          "canvas_w": 472,
+          "canvas_h": 978,
+          "toolbar_overlap_pct": 1.9,
+          "step_btn_min_px": 40,
+          "horizontal_overflow_px": 0,
+          "foreign_rendered_ids": [],
+          "stale_previous_premise": false,
+          "late_prerequisites": [],
+          "spoiler": {
+            "leaked_answers": [],
+            "cos2_leak": false,
+            "abcd_picker_count": 0,
+            "witness_count": 1,
+            "angle_ctor_count": 0,
+            "pass": true
+          }
+        },
+        {
+          "case": "r463_undotted_prism_volume",
+          "pass": true,
+          "status": "SERVED",
+          "canvas_count": 1,
+          "canvas_w": 472,
+          "canvas_h": 978,
+          "toolbar_overlap_pct": 1.9,
+          "step_btn_min_px": 40,
+          "horizontal_overflow_px": 0,
+          "foreign_rendered_ids": [],
+          "stale_previous_premise": false,
+          "late_prerequisites": [],
+          "spoiler": {
+            "leaked_answers": [],
+            "cos2_leak": false,
+            "abcd_picker_count": 0,
+            "witness_count": 0,
+            "angle_ctor_count": 0,
+            "pass": true
+          }
+        }
+      ],
+      "page_errors": [],
+      "pass": true
+    },
+    {
+      "viewport": "390x844",
+      "light_mode": {
+        "selector": "BODY",
+        "bg": "rgb(246, 245, 244)",
+        "luminance": 0.961,
+        "is_light": true
+      },
+      "camera": {
+        "snapshot_available": true,
+        "orbit_changes_camera": true,
+        "zoom_changes_camera": true,
+        "pan_changes_camera": true,
+        "reset_returns_to_initial": true,
+        "orbit_ms": 188.9,
+        "canvas_box": {
+          "x": 0,
+          "y": 48,
+          "width": 390,
+          "height": 438
+        }
+      },
+      "transitions": [
+        {
+          "case": "cos_line_plane",
+          "pass": true,
+          "status": "SERVED",
+          "canvas_count": 1,
+          "canvas_w": 390,
+          "canvas_h": 438,
+          "toolbar_overlap_pct": 3.7,
+          "step_btn_min_px": 40,
+          "horizontal_overflow_px": 0,
+          "foreign_rendered_ids": [],
+          "stale_previous_premise": false,
+          "late_prerequisites": [],
+          "spoiler": {
+            "leaked_answers": [],
+            "cos2_leak": false,
+            "abcd_picker_count": 0,
+            "witness_count": 0,
+            "angle_ctor_count": 1,
+            "pass": true
+          }
+        },
+        {
+          "case": "r537_pyramid_distance",
+          "pass": true,
+          "status": "SERVED",
+          "canvas_count": 1,
+          "canvas_w": 390,
+          "canvas_h": 438,
+          "toolbar_overlap_pct": 3.7,
+          "step_btn_min_px": 40,
+          "horizontal_overflow_px": 0,
+          "foreign_rendered_ids": [],
+          "stale_previous_premise": false,
+          "late_prerequisites": [],
+          "spoiler": {
+            "leaked_answers": [],
+            "cos2_leak": false,
+            "abcd_picker_count": 0,
+            "witness_count": 1,
+            "angle_ctor_count": 0,
+            "pass": true
+          }
+        },
+        {
+          "case": "r463_undotted_prism_volume",
+          "pass": true,
+          "status": "SERVED",
+          "canvas_count": 1,
+          "canvas_w": 390,
+          "canvas_h": 438,
+          "toolbar_overlap_pct": 3.7,
+          "step_btn_min_px": 40,
+          "horizontal_overflow_px": 0,
+          "foreign_rendered_ids": [],
+          "stale_previous_premise": false,
+          "late_prerequisites": [],
+          "spoiler": {
+            "leaked_answers": [],
+            "cos2_leak": false,
+            "abcd_picker_count": 0,
+            "witness_count": 0,
+            "angle_ctor_count": 0,
+            "pass": true
+          }
+        }
+      ],
+      "page_errors": [],
+      "pass": true
+    }
+  ],
+  "d4_refusal_honesty": [
+    {
+      "case": "cap_oblique_triangle",
+      "expected_category": "capability_gap",
+      "actual_category": "capability_gap",
+      "reason_code": "EXACT_DOMAIN_EXCEEDED",
+      "http_status": 200,
+      "canvas_count": 0,
+      "timeline_count": 0,
+      "toast_text": "Axo chưa hỗ trợ phép dựng này\nĐề này cần một phép dựng hoặc một dạng câu hỏi mà hệ chưa hỗ trợ, nên hệ không dựng một hình gần đúng. Bạn có thể thử các bài về thiết diện, khoảng cách, góc hoặc thể tích.",
+      "machine_token": null,
+      "claimed_missing_data": false,
+      "advised_rewrite": false,
+      "pass": true
+    },
+    {
+      "case": "cap_non_special_70deg",
+      "expected_category": "capability_gap",
+      "actual_category": "capability_gap",
+      "reason_code": "EXACT_DOMAIN_EXCEEDED",
+      "http_status": 200,
+      "canvas_count": 0,
+      "timeline_count": 0,
+      "toast_text": "Axo chưa hỗ trợ phép dựng này\nĐề này cần một phép dựng hoặc một dạng câu hỏi mà hệ chưa hỗ trợ, nên hệ không dựng một hình gần đúng. Bạn có thể thử các bài về thiết diện, khoảng cách, góc hoặc thể tích.",
+      "machine_token": null,
+      "claimed_missing_data": false,
+      "advised_rewrite": false,
+      "pass": true
+    },
+    {
+      "case": "true_missing_dimension",
+      "expected_category": "insufficient_specification",
+      "actual_category": "insufficient_specification",
+      "reason_code": "AMBIGUOUS_FACT",
+      "http_status": 200,
+      "canvas_count": 0,
+      "timeline_count": 0,
+      "toast_text": "Đề bài chưa đủ dữ kiện để dựng hình\nCác dữ kiện đã nêu trong đề chưa xác định duy nhất đại lượng hoặc hình cần dựng (tồn tại nhiều hình hợp lệ thỏa mọi giả thiết nhưng cho kết quả khác nhau). Em hãy kiểm tra và bổ sung số đo còn thiếu trong đề rồi gửi lại. Bạn có thể bổ sung dữ kiện còn thiếu ngay trên ô nhập rồi nhấn Dựng hình.",
+      "machine_token": null,
+      "claimed_missing_data": true,
+      "advised_rewrite": true,
+      "pass": true
+    }
+  ],
+  "d5_zero_solver_spoiler_summary": {
+    "checks_run": 16,
+    "all_passed": true,
+    "any_answer_leak": false,
+    "any_abcd_picker_ui": false,
+    "checks_with_stage_witnesses": 10
+  },
+  "e3_latency_telemetry": {
+    "measurement_tag": "INCONCLUSIVE_SHARED_HOST_SWIFTSHADER",
+    "physical_low_end": "PHYSICAL_LOW_END_NOT_MEASURED",
+    "first_model_ms": {
+      "count": 17,
+      "median": 381,
+      "min": 245,
+      "max": 4903
+    },
+    "orbit_ms": {
+      "count": 5,
+      "median": 299.4,
+      "min": 188.9,
+      "max": 338
+    },
+    "timeline_next_ms": {
+      "count": 68,
+      "median": 123.95,
+      "min": 76.7,
+      "max": 251.7
+    }
+  },
+  "verdict": "PASS"
+}

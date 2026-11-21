@@ -1,0 +1,74 @@
+{
+  "schema": "axo-evaluation-run/2",
+  "run_id": "grounded-geometry-language-recovery",
+  "wave_id": "AXO_HYBRID_GROUNDED_GEOMETRY_LANGUAGE_RECOVERY",
+  "campaign": "AXO HYBRID /15",
+  "generated_at": "2026-11-21",
+  "classification": "NEW_PROSPECTIVE_TEXT_ACCEPTANCE + LANGUAGE_RECOVERY + SOURCE_GATE_NEGATION_FIX",
+  "branch": "feat/grounded-geometry-language-recovery",
+  "start_base_commit": "034d89681",
+  "main": "bc6ff5e33 (unchanged, not merged, not pushed)",
+  "scope": "text only; OCR/Vision development postponed by the owner",
+  "phase_commits": {
+    "holdout3_preregistration": "77cbce583",
+    "language_recovery_fix_cache155": "cd2a21abc",
+    "candidate155_refreeze": "9cf7dc57d",
+    "holdout3_candidate_bind": "06e0cd08b",
+    "holdout3_live_results": "657bb2592"
+  },
+  "candidate": {
+    "product_commit_sha": "cd2a21abce499ca82e0500f085bbc63e2934b65c",
+    "measured_system_tree_hash": "9867d39132faca013ab9865c8e7d29c6cb304bdaad24d9dae503f5ff3e9f6274",
+    "measured_files": 127,
+    "cache_version": "155",
+    "route_d_cache_policy": "155:route-d",
+    "model": {"key": "qwen3-0.6b-axo-v9-q4_k_m", "sha256": "73f1484b08b97ed2a1f44e32bcf6610210c7fda51567c4cd0a03d98dffc6cc35", "llama_cpp_release": "b12470"},
+    "route_mode_measured": "local-only-scoped",
+    "default_route_mode": "live (unchanged)",
+    "measurement_worktree": "shared worktree, clean tracked tree (not a detached worktree; owner instruction vs CLAUDE.md noted)"
+  },
+  "holdout3": {
+    "manifest_sha256": "a8427fcf4ef870197df473601eed58a7b52bf3952b1abb303c998d2969da5b7b",
+    "positive": 66, "negative": 22,
+    "baseline_cache154": {"parser_complete": 28, "slm_required": 38},
+    "candidate_cache155": {"parser_complete": 53, "slm_required": 13}
+  },
+  "verdicts": {
+    "FULL_PRODUCT_GATE_PASS": true,
+    "TEXT_SIMULATION_COMPLETION": "58/66 = 0.879 (>= 0.85)",
+    "SLM_GATE": "FAIL (5/38 = 0.13 < 0.30; 5 >= 5 scenes)",
+    "SAFETY": "22/22 negatives refused; 0 wrong / ungrounded / unverified / fabricated / numeric-mismatch served; 0 external calls",
+    "LIVE_TEXT_SIMULATION_ACCEPTED": false,
+    "LOCAL_TEXT_MODEL1_VERIFIED": false,
+    "LOCAL_VISION_REPLACEMENT_VERIFIED": false,
+    "FULL_GEMINI_ROLE_REPLACEMENT_VERIFIED": false,
+    "MAIN_MERGE_READY": false,
+    "MAIN_MERGE_COMPLETED": false,
+    "REMOTE_PUSH_COMPLETED": false,
+    "EXTERNAL_INDEPENDENCE": "NOT_MEASURED"
+  },
+  "evidence": [
+    "report.md",
+    "holdout-3/build_holdout.py",
+    "holdout-3/ACCEPTANCE_MANIFEST.json",
+    "holdout-3/ACCEPTANCE_CRITERIA.json",
+    "holdout-3/ACCEPTANCE_FREEZE.json",
+    "holdout-3/CANDIDATE_FREEZE.json",
+    "holdout-3/ORACLE_REVIEW.json",
+    "holdout-3/PROVENANCE.json",
+    "LANGUAGE_RECOVERY_AUDIT.json",
+    "LIVE_TEXT_ACCEPTANCE_RESULTS.json",
+    "SLM_CONTRIBUTION_AUDIT.json",
+    "MODEL1_TEXT_ROLE_MATRIX.json",
+    "FULL_T3_CACHE155_RECEIPT.json",
+    "refreeze-155/pending_template_refresh.json"
+  ],
+  "raw_receipts": ".superpowers/offline-logs/local-model1-recovery-offline-vision/candidate155-h3 (browser responses, screenshots, scene oracle, egress, memory, performance); .superpowers/offline-logs/grounded-geometry-language-recovery/full-t3-c155",
+  "corrects": "runs/local-model1-recovery-offline-vision/FIRST_FAILING_LAYER_AUDIT.json — the route replay with runtime=None was not free of model calls for parser-incomplete cases",
+  "owner_decisions_pending": [
+    "next deterministic rules (family A synonyms, discourse headers) and a planner rule for line ⊥ plane at a tetrahedron vertex, measured on a new prospective set",
+    "how SLM acceptance is judged once the deterministic system absorbs most of the SLM-required stratum (registered denominator kept)",
+    "OCR/Vision remains a condition for full Gemini role replacement and for merging main",
+    "accepting shared-worktree clean-tree measurement in place of the detached-worktree rule"
+  ]
+}

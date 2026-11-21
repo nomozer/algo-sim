@@ -1,0 +1,186 @@
+{
+  "run_id": "independent-geometry-plane-constraints",
+  "generated_at_utc": "2026-11-13T15:42:11.531200+00:00",
+  "head": "697b097acc62e778a2668d1d74d304a778afc9ee",
+  "rule": "a plane is built only when the stated constraints fix exactly one plane: the engine's affine-rank certificate (rank 2: unique; < 2: PLANE_NOT_UNIQUE; inconsistent: INCONSISTENT_FACTS) and, independently here, every served cutting plane is rechecked against the stated relation",
+  "served_with_checks": {
+    "par_plane_named": {
+      "checks": 7,
+      "failed": [],
+      "relation_checks": [
+        "cut_plane_through_stated_point",
+        "cut_plane_parallel_to_stated_plane"
+      ]
+    },
+    "par_plane_base_word": {
+      "checks": 7,
+      "failed": [],
+      "relation_checks": [
+        "cut_plane_through_stated_point",
+        "cut_plane_parallel_to_base"
+      ]
+    },
+    "par_plane_base_word2": {
+      "checks": 7,
+      "failed": [],
+      "relation_checks": [
+        "cut_plane_through_stated_point",
+        "cut_plane_parallel_to_base"
+      ]
+    },
+    "par_plane_qua_dung": {
+      "checks": 7,
+      "failed": [],
+      "relation_checks": [
+        "cut_plane_through_stated_point",
+        "cut_plane_parallel_to_stated_plane"
+      ]
+    },
+    "par_plane_goi": {
+      "checks": 7,
+      "failed": [],
+      "relation_checks": [
+        "cut_plane_through_stated_point",
+        "cut_plane_parallel_to_stated_plane"
+      ]
+    },
+    "par_plane_lateral": {
+      "checks": 7,
+      "failed": [],
+      "relation_checks": [
+        "cut_plane_through_stated_point",
+        "cut_plane_parallel_to_stated_plane"
+      ]
+    },
+    "par_plane_renamed": {
+      "checks": 7,
+      "failed": [],
+      "relation_checks": [
+        "cut_plane_through_stated_point",
+        "cut_plane_parallel_to_stated_plane"
+      ]
+    },
+    "par_plane_cube": {
+      "checks": 7,
+      "failed": [],
+      "relation_checks": [
+        "cut_plane_through_stated_point",
+        "cut_plane_parallel_to_stated_plane"
+      ]
+    },
+    "par_plane_area": {
+      "checks": 7,
+      "failed": [],
+      "relation_checks": [
+        "cut_plane_through_stated_point",
+        "cut_plane_parallel_to_stated_plane"
+      ]
+    },
+    "par_plane_triangle": {
+      "checks": 7,
+      "failed": [],
+      "relation_checks": [
+        "cut_plane_through_stated_point",
+        "cut_plane_parallel_to_stated_plane"
+      ]
+    },
+    "perp_line_SA": {
+      "checks": 7,
+      "failed": [],
+      "relation_checks": [
+        "cut_plane_through_stated_point",
+        "stated_line_perpendicular_to_cut_plane_in_G"
+      ]
+    },
+    "perp_line_word": {
+      "checks": 7,
+      "failed": [],
+      "relation_checks": [
+        "cut_plane_through_stated_point",
+        "stated_line_perpendicular_to_cut_plane_in_G"
+      ]
+    },
+    "perp_line_cube_edge": {
+      "checks": 7,
+      "failed": [],
+      "relation_checks": [
+        "cut_plane_through_stated_point",
+        "stated_line_perpendicular_to_cut_plane_in_G"
+      ]
+    },
+    "perp_line_cube_diagonal": {
+      "checks": 7,
+      "failed": [],
+      "relation_checks": [
+        "cut_plane_through_stated_point",
+        "stated_line_perpendicular_to_cut_plane_in_G"
+      ]
+    },
+    "line_point_contains_first": {
+      "checks": 6,
+      "failed": [],
+      "relation_checks": [
+        "cut_plane_contains_stated_line_and_point"
+      ]
+    },
+    "line_point_through_first": {
+      "checks": 6,
+      "failed": [],
+      "relation_checks": [
+        "cut_plane_contains_stated_line_and_point"
+      ]
+    },
+    "two_intersecting_lines": {
+      "checks": 6,
+      "failed": [],
+      "relation_checks": [
+        "cut_plane_contains_both_stated_lines"
+      ]
+    },
+    "through_point_parallel_two_lines": {
+      "checks": 7,
+      "failed": [],
+      "relation_checks": [
+        "cut_plane_through_stated_point",
+        "cut_plane_parallel_to_both_stated_lines"
+      ]
+    },
+    "compound_contains_parallel": {
+      "checks": 6,
+      "failed": [],
+      "relation_checks": [
+        "cut_plane_contains_line_parallel_to_stated_line"
+      ]
+    },
+    "compound_contains_perpendicular": {
+      "checks": 6,
+      "failed": [],
+      "relation_checks": [
+        "cut_plane_contains_stated_line_and_perpendicular_to_stated_plane_in_G"
+      ]
+    },
+    "unicode_prime": {
+      "checks": 7,
+      "failed": [],
+      "relation_checks": [
+        "cut_plane_through_stated_point",
+        "stated_line_perpendicular_to_cut_plane_in_G"
+      ]
+    },
+    "multiple_goals": {
+      "checks": 7,
+      "failed": [],
+      "relation_checks": [
+        "cut_plane_through_stated_point",
+        "cut_plane_parallel_to_stated_plane"
+      ]
+    }
+  },
+  "underdetermined_refused": {
+    "under_parallel_one_line": "LIVE_AI_DISABLED",
+    "under_perpendicular_plane": "LIVE_AI_DISABLED",
+    "under_contains_one_line": "LIVE_AI_DISABLED",
+    "under_any_plane": "LIVE_AI_DISABLED"
+  },
+  "underdetermined_reason_note": "underdetermined wordings are not read locally (refused LIVE_AI_DISABLED, i.e. not understood); the engine's PLANE_NOT_UNIQUE is reached when a read definition is underdetermined (compound_contains_parallel_not_unique)"
+}

@@ -1,0 +1,155 @@
+{
+  "schema": "algosim-scene3d-browser-acceptance/2",
+  "generated_at_utc": "2026-11-10T10:07:07.541737+00:00",
+  "product_commit": "d20d7fdcdd6c5759f74ff737f331c2e548923eba",
+  "head_commit": "d20d7fdcdd6c5759f74ff737f331c2e548923eba",
+  "measured_system_tree_hash": "fb4f4992da8764930954a44f24e121ddca6cf1f3a270039773f6dbbf8b1b5c05",
+  "measured_system_file_count": 110,
+  "code_version": {
+    "typed_fact_next": "typed-fact-next/2",
+    "bridge": "typed-fact-next-bridge/2",
+    "planner": "geometry-fact-planner/26",
+    "registry": "geometry-functions/33",
+    "engine": "geometry-function-engine/24",
+    "adapter": "hybrid-simulation-adapter/4",
+    "envelope": "hybrid-route-d-simulation/4",
+    "local_parser": "local-geometry-parser/1",
+    "adaptive_router": "adaptive-input-router/1",
+    "cache_version": "132"
+  },
+  "input_or_case_hash": "a028a9a26fae6092daf0a18d795509d84f239a0a0eef8d0c8e210f09acad8253",
+  "oracle": "12/12 served External17 scenes pass construction continuity; all browser E2E cases pass at 1440x900@1.0 and 1440x900@1.1 with 0 console/page errors; exact_symbolic preserved alongside rounded/degree answers.",
+  "test_command": "node docs/evaluation/geometry/runs/formal-correctness-real-world-acceptance/tools/e2e_browser_acceptance.mjs <dist> <port> <out.json> <image>",
+  "test_environment": {
+    "os": "Windows-11-10.0.26100-SP0",
+    "python": "3.12.10",
+    "cpu_logical_cores": 12,
+    "allow_live_ai": 0,
+    "live_gemini_calls": 0,
+    "benchmark_tier": "HOST_BENCHMARK_OFFLINE"
+  },
+  "expected_behavior": "Served -> canvas + illustrative note iff height-invariant + exact_symbolic preserved when output_policy applies; refused -> no scene, no raw tracebacks/codes; image upload with AI off -> no scene, then user edit -> resolves and renders 3D scene.",
+  "actual_behavior": "continuity_ok=True on 12/12 served External17 cases; browser={'pass': 22, 'total': 22, 'imagePass': True}; fps=122.5–145.1; heapMB<=23.32",
+  "verdict": "PASS",
+  "run_id": "formal-correctness-real-world-acceptance",
+  "wave_id": "FORMAL_CORRECTNESS_REAL_WORLD_ACCEPTANCE",
+  "baseline_head_commit": "cc166865e4d4f1116014d9f1a68d9d050bf0dc9a",
+  "baseline_product_commit": "7994da7a64c8dc288c4de972df2d8d1db65e0c20",
+  "case_ids": [
+    "ext_hw_b1_01_hd_a_6043187#1",
+    "ext_prt_01_hd_q_5259753#1",
+    "ext_prt_02_hd_q_7922924#1",
+    "ext_prt_03_hd_q_7907931#1",
+    "ext_prt_03_hd_q_7907931#2",
+    "ext_prt_04_hd_q_8436784#1",
+    "ext_prt_05_hd_q_7451806#1",
+    "ext_prt_06_hd_q_1084979#1",
+    "ext_prt_07_hd_q_7958052#1",
+    "ext_prt_09_vmmu_page_r4#1",
+    "ext_prt_11_vmmu_page_r10#1",
+    "ext_prt_12_vmmu_page_r11#1",
+    "ext02_height_invariant",
+    "ext03_1_height_invariant",
+    "ext04_affine_length_ratio",
+    "ext05_section_area_ratio",
+    "ext06_inverse_angle_compound",
+    "ext07_rounded_and_exact",
+    "ext11_degree_and_exact",
+    "ext12_face_area_premise",
+    "refused_missing_dimension",
+    "refused_non_unique_foot",
+    "refused_out_of_scope_vector",
+    "image_upload_and_edit_resolve"
+  ],
+  "measurement_status": "MEASURED_HOST_HEADLESS_CHROME",
+  "oracle_provenance": "validate_construction_continuity on all 12/17 served scenes + Playwright headless Chrome DOM/WebGL/network/console assertions at 100% and 110% zoom against live local uvicorn",
+  "evidence_classification": "VERIFIED FACT",
+  "scene3d_continuity_all_12_served": {
+    "ext_prt_01_hd_q_5259753#1": {
+      "continuity_errors": [],
+      "illustrative": false,
+      "answer": "a³√3/3",
+      "has_output_policy": false
+    },
+    "ext_prt_02_hd_q_7922924#1": {
+      "continuity_errors": [],
+      "illustrative": true,
+      "answer": "6",
+      "has_output_policy": false
+    },
+    "ext_prt_03_hd_q_7907931#1": {
+      "continuity_errors": [],
+      "illustrative": true,
+      "answer": "a√2/2",
+      "has_output_policy": false
+    },
+    "ext_prt_03_hd_q_7907931#2": {
+      "continuity_errors": [],
+      "illustrative": false,
+      "answer": "a³/4",
+      "has_output_policy": false
+    },
+    "ext_prt_04_hd_q_8436784#1": {
+      "continuity_errors": [],
+      "illustrative": true,
+      "answer": "1/2",
+      "has_output_policy": false
+    },
+    "ext_prt_05_hd_q_7451806#1": {
+      "continuity_errors": [],
+      "illustrative": true,
+      "answer": "6/5",
+      "has_output_policy": false
+    },
+    "ext_prt_06_hd_q_1084979#1": {
+      "continuity_errors": [],
+      "illustrative": false,
+      "answer": {
+        "q2": "a√15/5",
+        "q1": "a³√15/4"
+      },
+      "has_output_policy": false
+    },
+    "ext_prt_07_hd_q_7958052#1": {
+      "continuity_errors": [],
+      "illustrative": true,
+      "answer": "4,7",
+      "has_output_policy": true
+    },
+    "ext_prt_09_vmmu_page_r4#1": {
+      "continuity_errors": [],
+      "illustrative": false,
+      "answer": "2",
+      "has_output_policy": false
+    },
+    "ext_prt_11_vmmu_page_r10#1": {
+      "continuity_errors": [],
+      "illustrative": false,
+      "answer": "30°",
+      "has_output_policy": true
+    },
+    "ext_prt_12_vmmu_page_r11#1": {
+      "continuity_errors": [],
+      "illustrative": false,
+      "answer": "2√3",
+      "has_output_policy": false
+    },
+    "ext_hw_b1_01_hd_a_6043187#1": {
+      "continuity_errors": [],
+      "illustrative": false,
+      "answer": "a³√3",
+      "has_output_policy": false
+    }
+  },
+  "frontend_enhancement_in_this_run": "HybridAnswerView (hybrid-preview-adapter.ts) and MucPhanTichToan (scene3d-model.ts / Scene3DExplorer.tsx) now preserve and display exact_symbolic from route_d.output_policy alongside rounded/degree symbolic answers.",
+  "browser_raw_file": "scene3d_browser_e2e_raw.json",
+  "browser_summary": {
+    "pass": 22,
+    "total": 22,
+    "imagePass": true
+  },
+  "limitations": [
+    "headless Chrome on host GPU; not a physical low-end device",
+    "1440x900 at zoom 1.0 and 1.1"
+  ]
+}

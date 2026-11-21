@@ -12,6 +12,7 @@ import {
   AxoClientError,
   analyzeViaServer,
   fetchHealth,
+  isAiAvailable,
   prepareUnifiedInputViaServer,
   type ClientFailureContract,
   type ServerHealth,
@@ -29,6 +30,7 @@ import {
   splitAttachmentName,
   validateComposerFile,
   type ComposerAttachmentItem,
+  type InputPayload,
 } from "../llm/input";
 import type { AnalysisUnsupported } from "../core/types";
 import type { SimulationEnvelope } from "../simulations/types";
@@ -45,6 +47,7 @@ import { PhotoProblemPanel } from "./PhotoProblemPanel";
 import { PdfPreview, renderPdfFirstPageThumbnail } from "./PdfPreview";
 import { AxoScrollbar } from "./AxoScrollbar";
 import {
+  analyzeErrorMessage,
   canConfirmAssistText,
   initialUnifiedAssistState,
   photoReadErrorMessage,
@@ -56,20 +59,34 @@ const MISSING_PREMISE_CODES = new Set([
   "GIVEN_VALUE_NOT_IN_SOURCE",
   "ASSUMPTION_DETERMINES_ANSWER",
   "MISSING_CURVED_DIMENSION",
+  "MISSING_DIMENSION",
   "UNDERDETERMINED_POINT",
+  "FOOT_NOT_DETERMINED",
+  "PLANE_NOT_UNIQUE",
+  "FIGURE_NOT_UNIQUE",
 ]);
 
 const INCONSISTENT_PREMISE_CODES = new Set([
   "INCONSISTENT_FACTS",
   "SOURCE_SHAPE_CONTRADICTS_COORDINATES",
+  "QUESTION_LOCAL_GIVEN_CONFLICT",
+  "SKEW_CLAIM_CONTRADICTED",
 ]);
 
 const SOURCE_CONFLICT_CODES = new Set([
-  "NON_POSITIVE_LENGTH",
   "PLANE_DOES_NOT_CUT",
+  "PARALLEL_NO_INTERSECTION",
+  "SKEW_NO_INTERSECTION",
+  "LINE_PARALLEL_TO_PLANE",
   "PLANE_OVERDETERMINED",
   "COLLINEAR_PLANE",
   "CONCURRENT_BASE",
+  "DEGENERATE_SOLID",
+  "DEGENERATE_POINTS",
+  "COLLINEAR_POINTS",
+  "NON_COPLANAR_POINTS",
+  "NO_CIRCUMSCRIBED_SPHERE",
+  "NO_INSCRIBED_SPHERE",
 ]);
 
 function normalizeDisplayBrand(text: string): string {
@@ -99,21 +116,44 @@ export function describeHomeRefusal(
   const cat = rec.failure_category ?? "";
   const errCode = rec.error_code ?? "";
   const reasonCode = rec.reason_code ?? "";
+  const code = errCode || reasonCode;
   const cause = rec.refusal_cause;
+
+  // /11: a verified `route-d-clarification/1` question (checked by the hybrid adapter, no internal ids) states what the
+  // learner must add or clarify; it wins over the category label, which can say "capability gap" for missing data.
+  const clar = unsupported.clarification;
+  const question = clar?.question;
+  if (clar && question && clar.kind !== "unsupported") {
+    const missing = clar.nlu_class === "MISSING_DATA";
+    return {
+      title: missing ? "Đề bài cần thêm dữ kiện để dựng hình" : "Đề bài có chỗ cần viết rõ hơn",
+      body: normalizeDisplayBrand(question),
+      hint: "Bạn có thể bổ sung hoặc viết rõ phần đó ngay trên ô nhập rồi nhấn Dựng hình.",
+    };
+  }
 
   const isOutOfScope =
     cat === "out_of_scope" || errCode === "OUT_OF_SCOPE" || reasonCode === "not_geometry";
-  const isMissingPremise =
-    cat === "insufficient_specification" || MISSING_PREMISE_CODES.has(errCode);
-  const isInconsistentPremise =
-    INCONSISTENT_PREMISE_CODES.has(errCode) ||
-    (cause === "SOURCE" && SOURCE_CONFLICT_CODES.has(errCode));
   const isCapabilityGap =
     cat === "capability_gap" ||
     cat === "not_simulation_suitable" ||
     errCode === "UNSUPPORTED" ||
     reasonCode === "not_simulation_suitable" ||
     reasonCode === "requested_operation_uncovered";
+  // HFOI-F6: Only invite the learner to add missing premises when backend certified `refusal_cause === "SOURCE"`.
+  const isMissingPremise =
+    !isCapabilityGap &&
+    cause === "SOURCE" &&
+    (cat === "insufficient_specification" || MISSING_PREMISE_CODES.has(code));
+  const isUnverifiedInsufficient =
+    !isCapabilityGap &&
+    cause !== "SOURCE" &&
+    (cat === "insufficient_specification" || (!cat && MISSING_PREMISE_CODES.has(code)));
+  const isNonPositiveLength = cause === "SOURCE" && code === "NON_POSITIVE_LENGTH";
+  const isInconsistentPremise =
+    INCONSISTENT_PREMISE_CODES.has(errCode) ||
+    (cause === "SOURCE" &&
+      (INCONSISTENT_PREMISE_CODES.has(code) || SOURCE_CONFLICT_CODES.has(code)));
 
   let title = "Đề bài chưa được hỗ trợ";
   let hint = "Bạn có thể thử các bài về thiết diện, khoảng cách, góc hoặc thể tích.";
@@ -123,6 +163,11 @@ export function describeHomeRefusal(
   } else if (isMissingPremise) {
     title = "Đề bài chưa đủ dữ kiện để dựng hình";
     hint = "Bạn có thể bổ sung dữ kiện còn thiếu ngay trên ô nhập rồi nhấn Dựng hình.";
+  } else if (isUnverifiedInsufficient) {
+    title = "Hệ thống chưa xác định được duy nhất hình";
+  } else if (isNonPositiveLength) {
+    title = "Số đo độ dài trong đề cần lớn hơn 0";
+    hint = "Bạn có thể kiểm tra lại số đo độ dài dương trong đề ngay trên ô nhập.";
   } else if (isInconsistentPremise) {
     title = "Dữ kiện đề bài chưa nhất quán";
     hint = "Bạn có thể kiểm tra lại số liệu và quan hệ trong đề ngay trên ô nhập.";
@@ -181,7 +226,7 @@ export function describeComposerError(
           description: normalizeDisplayBrand(clientFailure.message),
         };
       case "NETWORK_UNREACHABLE":
-        if (health === null || health === "loading" || health.hasKey) {
+        if (isAiAvailable(health)) {
           return {
             tone: "error",
             title: "Không kết nối được máy chủ",
@@ -196,6 +241,24 @@ export function describeComposerError(
             "Máy chủ chưa bật kết nối AI cho đề tự nhập. Bạn vẫn có thể mở các mô hình mẫu bên dưới.",
         };
       case "SERVICE_UNAVAILABLE":
+        if (clientFailure.learnerDetail) {
+          return {
+            tone: "info",
+            title:
+              clientFailure.localUnderstanding?.rewriteMayHelp === false
+                ? "Đề bài dùng dữ kiện hệ thống chưa hỗ trợ xử lý cục bộ"
+                : "Hệ thống chưa hiểu hết đề bài",
+            description: normalizeDisplayBrand(clientFailure.learnerDetail),
+          };
+        }
+        // Local-only server: its 503 message is already learner Vietnamese (model missing / busy), not a cloud-key issue.
+        if (health !== null && health !== "loading" && health.localOnlyMode) {
+          return {
+            tone: "info",
+            title: "Bộ đọc đề trên máy chưa sẵn sàng",
+            description: normalizeDisplayBrand(clientFailure.message),
+          };
+        }
         return {
           tone: "info",
           title: "Dịch vụ phân tích đề hiện chưa sẵn sàng",
@@ -253,13 +316,13 @@ export function describeComposerError(
     /Không kết nối được máy chủ|Failed to fetch|NetworkError|Load failed/i.test(analysisError);
   const isServiceUnavailable =
     /chưa cấu hình|thiếu khóa|API key|503|chưa sẵn sàng/i.test(analysisError) ||
-    (!isNetworkOffline && health !== "loading" && health !== null && !health.hasKey);
+    (!isNetworkOffline && health !== "loading" && health !== null && !isAiAvailable(health));
   const isInputValidation =
     /Đề bài quá ngắn|tối thiểu 10 ký tự|Chế độ lưu đệm chưa hỗ trợ|Chế độ kiểm chứng không dùng mạng/i.test(
       analysisError,
     );
 
-  if (isNetworkOffline && (health === null || health === "loading" || health.hasKey)) {
+  if (isNetworkOffline && isAiAvailable(health)) {
     return {
       tone: "error",
       title: "Không kết nối được máy chủ",
@@ -293,11 +356,19 @@ export function describeComposerError(
   };
 }
 
+export function attachmentBatchSignature(
+  items: readonly ComposerAttachmentItem[],
+): string {
+  if (items.length === 0) return "";
+  return items.map((a) => `${a.id}:${a.name}:${a.size}`).join("|");
+}
+
 export interface RunComposerSubmitOptions {
   canSubmit: boolean;
   lockRef: { current: boolean };
   abortRef?: { current: AbortController | null };
   requestIdRef?: { current: string | null };
+  extractedBatchRef?: { current: string | null };
   problemText: string;
   attachment?: ComposerAttachmentItem | null;
   attachments?: ComposerAttachmentItem[];
@@ -482,6 +553,7 @@ export async function runComposerSubmit({
   lockRef,
   abortRef,
   requestIdRef,
+  extractedBatchRef,
   problemText,
   attachment = null,
   attachments,
@@ -494,21 +566,6 @@ export async function runComposerSubmit({
 }: RunComposerSubmitOptions): Promise<void> {
   if (!canSubmit || lockRef.current) return;
   lockRef.current = true;
-  // Một lần bấm gửi = một lần học. Nếu người dùng đang gửi lại ngay lượt vừa thất bại trong cùng khung nhập,
-  // giữ nguyên ID ổn định của lượt đó để cập nhật trạng thái mà không nhân bản bản ghi.
-  const reusableFailedId =
-    requestIdRef?.current &&
-    useAppStore.getState().problemProcessingRecords[requestIdRef.current]?.status ===
-      "needs_attention"
-      ? requestIdRef.current
-      : null;
-  const attemptId = reusableFailedId ?? newAttemptId();
-  if (requestIdRef) {
-    requestIdRef.current = attemptId;
-  }
-
-  const ctl = typeof AbortController !== "undefined" ? new AbortController() : null;
-  if (abortRef) abortRef.current = ctl;
 
   const targetAttachments =
     attachments && attachments.length > 0
@@ -517,10 +574,34 @@ export async function runComposerSubmit({
         ? [attachment]
         : [];
 
+  const batchSig = attachmentBatchSignature(targetAttachments);
+  // Which request failed decides the learner message: a photo read (`/api/input/prepare`) or the text analysis.
+  let stage: "prepare" | "analyze" = "prepare";
+
   const initialStatement =
     (typeof overridePreparedText === "string" ? overridePreparedText.trim() : problemText.trim()) ||
     targetAttachments[0]?.name ||
     "Bài toán đang xử lý";
+
+  // Một lần bấm gửi = một lần học. Chỉ tái sử dụng attemptId cho trường hợp gửi lại đúng đề vừa gặp
+  // lỗi hệ thống/hạ tầng (unsupported === null, HTTP non-2xx không bị khoá Idempotency-Key ở máy chủ);
+  // từ chối toán học (HTTP 200) đã ghi nhận Idempotency-Key và đổi đề phải luôn dùng mã mới.
+  const prevFailedRecord = requestIdRef?.current
+    ? useAppStore.getState().problemProcessingRecords[requestIdRef.current]
+    : undefined;
+  const reusableFailedId =
+    prevFailedRecord?.status === "needs_attention" &&
+    prevFailedRecord.unsupported === null &&
+    prevFailedRecord.problemStatement === initialStatement
+      ? requestIdRef!.current
+      : null;
+  const attemptId = reusableFailedId ?? newAttemptId();
+  if (requestIdRef) {
+    requestIdRef.current = attemptId;
+  }
+
+  const ctl = typeof AbortController !== "undefined" ? new AbortController() : null;
+  if (abortRef) abortRef.current = ctl;
 
   type DraftTabSlice = {
     view: string;
@@ -546,10 +627,24 @@ export async function runComposerSubmit({
 
   try {
     let finalProblemText = "";
+    let inputProvenance: InputPayload["source_provenance"];
 
     if (typeof overridePreparedText === "string") {
       finalProblemText = overridePreparedText.trim();
+      if (finalProblemText) {
+        store.setProblemText(finalProblemText);
+      }
+      if (extractedBatchRef && batchSig) {
+        extractedBatchRef.current = batchSig;
+      }
     } else if (targetAttachments.length === 0) {
+      finalProblemText = problemText.trim();
+    } else if (
+      extractedBatchRef?.current &&
+      extractedBatchRef.current === batchSig &&
+      !selectedCandidateId &&
+      problemText.trim().length > 0
+    ) {
       finalProblemText = problemText.trim();
     } else {
       const contents = await Promise.all(
@@ -635,14 +730,36 @@ export async function runComposerSubmit({
       }
 
       finalProblemText = prepared.problem_text.trim();
+      const { input_route, raw_ocr_text_sha256, prepared_region_sha256, selected_candidate_id } = prepared.provenance;
+      const candidateId = typeof selected_candidate_id === "string" ? selected_candidate_id : undefined;
+      if (input_route === "LOCAL_OCR_VERIFIED" && typeof raw_ocr_text_sha256 === "string"
+          && typeof prepared_region_sha256 === "string") {
+        inputProvenance = {
+          origin: "local_ocr_auto_verified", raw_ocr_text_sha256, prepared_region_sha256,
+          selected_candidate_id: candidateId,
+        };
+      } else if (prepared.source_kind !== "image" && candidateId && !prepared.metrics.used_vlm) {
+        inputProvenance = { origin: "document_extracted", selected_candidate_id: candidateId };
+      }
       useAppStore.getState().updateProblemProcessingStatement(attemptId, finalProblemText);
+      if (finalProblemText) {
+        store.setProblemText(finalProblemText);
+      }
+      if (extractedBatchRef && batchSig) {
+        extractedBatchRef.current = batchSig;
+      }
     }
 
+    stage = "analyze";
+    const httpAttemptId =
+      reusableFailedId && prevFailedRecord?.problemStatement !== finalProblemText
+        ? newAttemptId()
+        : attemptId;
     const result = await analyzeFn(
-      { type: "text", content: finalProblemText },
+      { type: "text", content: finalProblemText, ...(inputProvenance ? { source_provenance: inputProvenance } : {}) },
       ctl?.signal,
       undefined,
-      attemptId,
+      httpAttemptId,
     );
     if (ctl?.signal.aborted || wasOriginDraftTabClosed()) {
       useAppStore.getState().clearProblemProcessing(attemptId);
@@ -684,7 +801,7 @@ export async function runComposerSubmit({
     }
     const contract = err instanceof AxoClientError ? err.toContract() : null;
     const rawMsg = err instanceof Error ? err.message : String(err);
-    const safeMsg = photoReadErrorMessage(err) ?? rawMsg;
+    const safeMsg = (stage === "analyze" ? analyzeErrorMessage(err) : photoReadErrorMessage(err)) ?? rawMsg;
     store.setClientFailure(contract);
     store.setAnalysisError(safeMsg);
 
@@ -881,6 +998,7 @@ export function ProblemInput({
   const submittingRef = useRef(false);
   const analyzeAbortRef = useRef<AbortController | null>(null);
   const activePrepareRequestIdRef = useRef<string | null>(null);
+  const extractedBatchRef = useRef<string | null>(null);
   const activeSubmitPromiseRef = useRef<Promise<void> | null>(null);
   const cancellingRef = useRef(false);
   const [cancelling, setCancelling] = useState(false);
@@ -1543,6 +1661,7 @@ export function ProblemInput({
     }
 
     if (nextItems.length > 0) {
+      extractedBatchRef.current = null;
       dispatchAssist({ type: "reset" });
       setAttachments((prev) => [...prev, ...nextItems]);
       for (const item of nextItems) {
@@ -1584,6 +1703,7 @@ export function ProblemInput({
 
   function removeAttachment(id: string) {
     activePrepareRequestIdRef.current = null;
+    extractedBatchRef.current = null;
     dispatchAssist({ type: "reset" });
     const currentList = attachmentsRef.current;
     const removedIdx = currentList.findIndex((item) => item.id === id);
@@ -1641,6 +1761,7 @@ export function ProblemInput({
       lockRef: submittingRef,
       abortRef: analyzeAbortRef,
       requestIdRef: activePrepareRequestIdRef,
+      extractedBatchRef,
       problemText,
       attachment: readyAttachments[0] ?? null,
       attachments: readyAttachments,
@@ -1696,9 +1817,11 @@ export function ProblemInput({
       <span className="composer-sr-only">
         Máy chủ phân tích chưa chạy — vẫn dùng được các mô phỏng mẫu bên dưới
       </span>
-    ) : health !== "loading" && !health.hasKey ? (
+    ) : health !== "loading" && !isAiAvailable(health) ? (
       <span className="composer-sr-only">
-        Máy chủ thiếu khóa AI — vẫn dùng được các mô phỏng mẫu bên dưới
+        {health.localOnlyMode
+          ? "Mô hình AI cục bộ chưa sẵn sàng — vẫn dùng được các mô phỏng mẫu bên dưới"
+          : "Máy chủ thiếu khóa AI — vẫn dùng được các mô phỏng mẫu bên dưới"}
       </span>
     ) : null;
 
@@ -2433,6 +2556,10 @@ export function ProblemInput({
         onToggleConfirm={(value) => dispatchAssist({ type: "toggle-confirm", value })}
         onSubmitConfirmed={onSubmitConfirmedAssist}
         onDismiss={() => dispatchAssist({ type: "reset" })}
+        onEditSpan={(spanId, value) => dispatchAssist({ type: "edit-span", spanId, value })}
+        onConfirmSpan={(spanId) => dispatchAssist({ type: "confirm-span", spanId })}
+        onExtendSpan={(spanId) => dispatchAssist({ type: "extend-span", spanId })}
+        onRestoreSpan={(spanId) => dispatchAssist({ type: "restore-span", spanId })}
       />
 
       {(() => {

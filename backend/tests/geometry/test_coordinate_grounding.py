@@ -149,18 +149,17 @@ def test_doi_tuong_DAN_XUAT_khong_di_loi_toa_do(kieu):
     assert not kq.ok
 
 
-def test_TIN_HOC_khong_bi_anh_huong():
-    """Một `array` ghim về fact vẫn phải khớp TỪNG giá trị, kể cả `0`. Luật
-    toạ độ chỉ mở cho `point3`/`vector3`."""
+def test_VO_HUONG_ghim_ve_fact_khong_duoc_mien_luat_toa_do():
+    """Một vô hướng ghim về fact vẫn phải khớp giá trị. Luật toạ độ chỉ mở cho `point3`/`vector3`.
+    (/13: bản trước dùng `array` của miền Tin học — kiểu ấy đã gỡ; cùng ranh giới được khoá bằng `float`. Không
+    dùng `0` làm giá trị lệch: với vô hướng nó là hạt khởi tạo được miễn có chủ đích.)"""
     hd = RequestContract(input_facts=(
-        InputFact(fact_id="day", label="dãy", values=(1, 2, 3)),
+        InputFact(fact_id="sa", label="SA", values=(3,)),
     ))
     assert check_grounding(hd, _spec(
-        {"name": "a", "type": "array", "initial_value": [1, 2, 3],
-         "source_fact_id": "day"})).ok
+        {"name": "SA", "type": "float", "initial_value": 3, "source_fact_id": "sa"})).ok
     assert not check_grounding(hd, _spec(
-        {"name": "a", "type": "array", "initial_value": [1, 0, 3],
-         "source_fact_id": "day"})).ok
+        {"name": "SA", "type": "float", "initial_value": 7, "source_fact_id": "sa"})).ok
 
 
 # ══ ĐỐI CHỨNG TRÊN 5 CA THẬT CỦA PHASE 5.5 ══════════════════════════════

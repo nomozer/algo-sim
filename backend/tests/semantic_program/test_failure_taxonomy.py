@@ -101,7 +101,10 @@ def test_co_that_it_nhat_mot_nghia_vu_muc_yeu():
     # ⚠️ Hệ quả cho luận văn: `CURRENT_PRODUCT_GEOMETRY_CHECKERS` nay là 10,
     # còn `SEALED_GEOMETRY_CHECKERS` vẫn là 9. Mọi con số "safe serve rate"
     # lịch sử gắn với bản 9; so hai bên mà không nói rõ phiên bản là so hai hệ.
-    assert yeu == ["structural_traversal"], (
+    # (/13) `structural_traversal` — nghĩa vụ mức yếu cuối cùng — rời taxonomy cùng miền Tin học. Nay MỌI nghĩa vụ
+    # còn lại (đều là hình học) có checker server-owned, nên tầng yếu RỖNG: "safe serve rate" của hệ hiện hành không
+    # còn tách khỏi "executability rate" vì nghĩa vụ không kiểm được. Số lịch sử vẫn gắn bản taxonomy của chúng.
+    assert yeu == [], (
         f"tập nghĩa vụ mức yếu đã đổi: {yeu}. Thêm checker là tiến bộ THẬT — "
         "nhưng phải cập nhật luận văn, đừng để số cũ đứng nguyên."
     )

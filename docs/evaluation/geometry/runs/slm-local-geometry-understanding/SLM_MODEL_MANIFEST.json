@@ -1,0 +1,70 @@
+{
+  "schema": "slm-model-manifest/1",
+  "generated_at_utc": "2026-11-17T12:50:52.415379+00:00",
+  "runtime_version": "local-slm-runtime/1",
+  "extractor_version": "local-slm-extractor/1",
+  "grounding_validator_version": "slm-grounding-validator/1",
+  "grounding_envelope_version": "slm-grounding-envelope/1",
+  "cache_version": "145",
+  "product_commit_sha": "a182b54600752e57f3be408aad6a673bd9a0d41f",
+  "measured_system": {
+    "tree_hash": "771fe868279c814f9a913ab5120b8dba35c086b6f8e523112c95b4b837e2f542",
+    "so_file": 122
+  },
+  "runtime_spec": {
+    "release_tag": "b12470",
+    "asset_name": "llama-b12470-bin-win-cpu-x64.zip",
+    "url": "https://github.com/ggml-org/llama.cpp/releases/download/b12470/llama-b12470-bin-win-cpu-x64.zip",
+    "size_bytes": 25272394,
+    "sha256": "fc83371644b501647c253ca1e42277795eca7ed15851a218b20294275b45d67f",
+    "license": "MIT",
+    "server_binary_name": "llama-server.exe"
+  },
+  "models": {
+    "primary": {
+      "model_key": "qwen3-0.6b-q4_k_m",
+      "role": "primary",
+      "repo_id": "unsloth/Qwen3-0.6B-GGUF",
+      "revision": "50968a4468ef4233ed78cd7c3de230dd1d61a56b",
+      "filename": "Qwen3-0.6B-Q4_K_M.gguf",
+      "url": "https://huggingface.co/unsloth/Qwen3-0.6B-GGUF/resolve/50968a4468ef4233ed78cd7c3de230dd1d61a56b/Qwen3-0.6B-Q4_K_M.gguf",
+      "size_bytes": 396705472,
+      "sha256": "ac2d97712095a558e31573f62f466a3f9d93990898b0ec79d7c974c1780d524a",
+      "license": "Apache-2.0",
+      "family": "qwen3",
+      "param_count_b": 0.6,
+      "quantization": "Q4_K_M",
+      "supports_thinking": true
+    },
+    "comparator": {
+      "model_key": "qwen2.5-0.5b-instruct-q4_k_m",
+      "role": "comparator",
+      "repo_id": "Qwen/Qwen2.5-0.5B-Instruct-GGUF",
+      "revision": "9217f5db79a29953eb74d5343926648285ec7e67",
+      "filename": "qwen2.5-0.5b-instruct-q4_k_m.gguf",
+      "url": "https://huggingface.co/Qwen/Qwen2.5-0.5B-Instruct-GGUF/resolve/9217f5db79a29953eb74d5343926648285ec7e67/qwen2.5-0.5b-instruct-q4_k_m.gguf",
+      "size_bytes": 491400032,
+      "sha256": "74a4da8c9fdbcd15bd1f6d01d621410d31c6fc00986f5eb687824e7b93d7a9db",
+      "license": "Apache-2.0",
+      "family": "qwen2.5",
+      "param_count_b": 0.5,
+      "quantization": "Q4_K_M",
+      "supports_thinking": false
+    }
+  },
+  "holdout_disjointness_check": {
+    "checked_corpora": [
+      "COMP112",
+      "DEV37",
+      "DEV_CALIBRATION_16",
+      "FROZEN_VMMU20",
+      "NC_NL",
+      "PROBES39",
+      "REAL27",
+      "RM72",
+      "S2_36"
+    ],
+    "overlap_count": 0,
+    "overlaps": []
+  }
+}

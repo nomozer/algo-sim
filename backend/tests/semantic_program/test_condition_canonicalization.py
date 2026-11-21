@@ -52,8 +52,7 @@ def _var(ten: str) -> dict:
     "tho",
     [
         {"kind": "var", "name": "hop_le"},
-        {"kind": "field", "obj": {"kind": "var", "name": "nut"}, "field": "val"},
-        {"kind": "map_get", "container": "bang", "key": {"kind": "literal", "value": "a"}},
+        # (/13) `field`/`map_get` đã gỡ cùng từ vựng container.
         {"kind": "literal", "value": True},
     ],
 )
@@ -72,7 +71,8 @@ def test_gap_trong_logic_that_su_qua_duoc_pydantic():
             "kind": "logic",
             "op": "and",
             "left": _var("hop_le"),
-            "right": {"kind": "is_empty", "container": "ngan_xep"},
+            # (/13) vế phải từng là `is_empty(ngan_xep)` — điều kiện container đã gỡ; một so sánh giữ nguyên hình dạng.
+            "right": {"kind": "compare", "op": "<", "left": _var("k"), "right": {"kind": "literal", "value": 3}},
         }
     )
     assert c.left.kind == "compare"

@@ -61,6 +61,10 @@ class MissingVisionKeyError(RuntimeError):
     code = "MISSING_API_KEY"
 
 
+class LocalOnlyCloudVisionDisabledError(RuntimeError):
+    code = "LOCAL_ONLY_CLOUD_VISION_DISABLED"
+
+
 @dataclass(frozen=True)
 class UnifiedCandidateItem:
     candidate_id: str
@@ -127,7 +131,11 @@ class UnifiedPrepareOutcome:
         return out
 
 
-def _require_vision_key(api_key: str | None) -> str:
+def _require_vision_key(api_key: str | None, *, local_only: bool = False) -> str:
+    if local_only:
+        raise LocalOnlyCloudVisionDisabledError(
+            "Chế độ chạy hoàn toàn trên máy không gửi ảnh lên dịch vụ đọc ảnh đám mây."
+        )
     if os.getenv("ALLOW_LIVE_AI") == "0":
         raise LiveVisionDisabledError("Chế độ trích xuất trực tiếp đang tắt (ALLOW_LIVE_AI=0).")
     if not api_key:
@@ -159,6 +167,89 @@ def _text_candidates_to_items(
                 source_bbox=(bx, y_start, bw, max(0.01, h_cur)),
             )
         )
+    return tuple(items)
+
+
+#: A band candidate id: "<region id or page>~band-<k>" (run `semantic-failure-safe-image-segmentation`).
+_BAND_SEP = "~band-"
+
+
+def _band_id(region_id: str | None, k: int) -> str:
+    return f"{region_id or 'page'}{_BAND_SEP}{k}"
+
+
+def _parse_band_id(cid: str) -> tuple[str | None, int] | None:
+    if _BAND_SEP not in cid:
+        return None
+    region, _, k = cid.partition(_BAND_SEP)
+    return (None if region == "page" else region), int(k) if k.isdigit() else 0
+
+
+def _band_geometry(region_res: RegionDetectionResult, band: tuple[int, int, int, int]) -> tuple[float, float, float, float]:
+    """A band rectangle of the PREPARED image (pixels) in working-image coordinates."""
+    ox, oy = region_res.prepared_origin
+    sw, sh = region_res.prepared_source_size or (region_res.prepared_image.width, region_res.prepared_image.height)
+    kx = sw / float(max(1, region_res.prepared_image.width))
+    ky = sh / float(max(1, region_res.prepared_image.height))
+    return ox + band[0] * kx, oy + band[1] * ky, ox + band[2] * kx, oy + band[3] * ky
+
+
+def _band_blocks(region_res: RegionDetectionResult, band: tuple[int, int, int, int]):
+    """Layout blocks of one band: a block belongs to the band holding at least half of its area, so a figure whose box
+    spills over a cut is associated with ONE problem only."""
+    x0, y0, x1, y1 = _band_geometry(region_res, band)
+
+    def share(b) -> float:
+        w = max(0.0, min(b.bbox.x1, x1) - max(b.bbox.x0, x0))
+        h = max(0.0, min(b.bbox.y1, y1) - max(b.bbox.y0, y0))
+        area = max(1.0, float((b.bbox.x1 - b.bbox.x0) * (b.bbox.y1 - b.bbox.y0)))
+        return w * h / area
+
+    return tuple(b for b in region_res.blocks if share(b) >= 0.5)
+
+
+def _crop_to_band(region_res: RegionDetectionResult, band: tuple[int, int, int, int]) -> RegionDetectionResult:
+    """The prepared image cut to one band: the problem the learner chose, its own figure blocks only."""
+    import io as _io
+
+    from PIL import Image as _Image
+
+    im = _Image.open(_io.BytesIO(region_res.prepared_image.data)).convert("RGB")
+    crop = im.crop(tuple(band))
+    buf = _io.BytesIO()
+    crop.save(buf, format="PNG")
+    x0, y0, x1, y1 = _band_geometry(region_res, band)
+    blocks = _band_blocks(region_res, band)
+    return replace(region_res, prepared_image=normalize_image(buf.getvalue()), prepared_origin=(int(x0), int(y0)),
+                   prepared_source_size=(int(x1 - x0), max(1, int(y1 - y0))), blocks=blocks,
+                   has_associated_figure=any(b.kind == "figure" for b in blocks), used_crop=True)
+
+
+def _band_candidates(region_res: RegionDetectionResult, bands, region_id: str | None, *, id_prefix: str,
+                     page_number: int | None) -> tuple[UnifiedCandidateItem, ...]:
+    import base64 as _b64
+    import io as _io
+
+    from PIL import Image as _Image
+
+    im = _Image.open(_io.BytesIO(region_res.prepared_image.data)).convert("RGB")
+    items = []
+    for k, band in enumerate(bands, start=1):
+        crop = im.crop(tuple(band))
+        crop.thumbnail((360, 360))
+        buf = _io.BytesIO()
+        crop.save(buf, format="JPEG", quality=70)
+        has_fig = any(b.kind == "figure" for b in _band_blocks(region_res, band))
+        pos = (("cột trái" if band[0] == 0 else "cột phải" if band[2] >= im.width else f"cột {k}")
+               if any(b[0] > 0 for b in bands) else
+               ("phía trên" if k == 1 else ("phía dưới" if k == len(bands) else f"vị trí {k}")))
+        items.append(UnifiedCandidateItem(
+            candidate_id=f"{id_prefix}{_band_id(region_id, k)}",
+            label=f"Bài {k} ({pos}{' · kèm hình vẽ' if has_fig else ''})" + (f" · Trang {page_number}" if page_number is not None else ""),
+            preview_snippet="Vùng đề kèm hình minh họa" if has_fig else "Vùng văn bản bài toán",
+            preview_data_url="data:image/jpeg;base64," + _b64.b64encode(buf.getvalue()).decode("ascii"),
+            page_number=page_number, has_figure=has_fig,
+            source_bbox=(band[0] / max(1, im.width), band[1] / max(1, im.height), band[2] / max(1, im.width), band[3] / max(1, im.height))))
     return tuple(items)
 
 
@@ -197,6 +288,7 @@ def _finalize_text_problem(
     provenance_base: dict[str, Any],
     metrics_base: dict[str, Any],
     t0: float,
+    local_only: bool = False,
 ) -> UnifiedPrepareOutcome:
     merged = merge_supplemental_text(chosen.problem_text, directive)
     elapsed_ms = round((time.perf_counter() - t0) * 1000.0, 2)
@@ -238,12 +330,189 @@ def _finalize_text_problem(
             metrics=metrics,
         )
 
+    if local_only and prov["has_associated_figure"]:
+        message = "Tệp có hình hoặc ảnh kèm lời đề. Em kiểm tra và ghi rõ bằng chữ mọi dữ kiện chỉ có trong hình trước khi dựng."
+        return UnifiedPrepareOutcome(
+            status="needs_confirmation",
+            source_kind=source_kind,
+            problem_text=merged,
+            learner_message=message,
+            reason_code="DIAGRAM_FACT_REVIEW_REQUIRED",
+            flag_messages=(message,),
+            uncertain_tokens=({
+                "token": "", "alternatives": [], "location": "hình trong tài liệu",
+                "kind": "diagram", "reason_code": "DIAGRAM_FACTS_UNVERIFIED", "reason": message,
+                "source": "document_layout",
+            },),
+            provenance=prov,
+            metrics=metrics,
+        )
+
+    from app.ai.adaptive_input_router import ADAPTIVE_INPUT_ROUTER_VERSION
+    from app.ai.local_geometry_parser import parse_geometry_problem_locally
+
+    local_parse = parse_geometry_problem_locally(merged)
+    prov["local_geometry_parse"] = {
+        "parser_version": local_parse.parser_version,
+        "router_version": ADAPTIVE_INPUT_ROUTER_VERSION,
+        "local_parse_status": local_parse.status,
+        "local_parse_ready_for_zero_ai_hybrid": local_parse.status
+        in ("LOCAL_PARSE_COMPLETE", "LOCAL_PARSE_AMBIGUOUS"),
+        "local_parse_ms": round(local_parse.parse_latency_ms, 3),
+        "expected_downstream_typed_fact_ai_calls": (
+            0 if local_parse.status in ("LOCAL_PARSE_COMPLETE", "LOCAL_PARSE_AMBIGUOUS") else 1
+        ),
+    }
+    metrics["local_parse_ms"] = round(local_parse.parse_latency_ms, 3)
+
     return UnifiedPrepareOutcome(
         status="ready",
         source_kind=source_kind,
         problem_text=merged,
         provenance=prov,
         metrics=metrics,
+    )
+
+
+def _local_ocr_outcome(
+    rec: dict[str, Any],
+    region_res: RegionDetectionResult,
+    directive: UserComposerDirective,
+    *,
+    source_kind: Literal["image", "pdf", "docx"],
+    page_number: int | None,
+    selected_candidate_id: str | None,
+    prov_common: dict[str, Any],
+    raw_input_bytes: int,
+    uncropped_bytes: int,
+    t0: float,
+    vision_allowed: bool,
+    local_only: bool = False,
+) -> UnifiedPrepareOutcome:
+    """Kết quả tuyến OCR local: `ready` (đã xác minh, 0 AI) hoặc `needs_confirmation` (học sinh xác nhận từng chỗ)."""
+    from app.ingestion.local_ocr_route import review_items
+
+    full_text = rec.get("solve_text") or ""
+    metrics = {
+        "vlm_calls": 0,
+        "used_vlm": False,
+        "used_local_ocr": True,
+        "raw_input_bytes": raw_input_bytes,
+        "vlm_payload_bytes": 0,
+        "uncropped_baseline_bytes": uncropped_bytes,
+        "local_ocr_ms": (rec.get("timing") or {}).get("total_ms"),
+    }
+
+    def _done(**kw: Any) -> UnifiedPrepareOutcome:
+        metrics["processing_ms"] = round((time.perf_counter() - t0) * 1000.0, 2)
+        return UnifiedPrepareOutcome(source_kind=source_kind, provenance=prov_common, metrics=metrics, **kw)
+
+    if len(full_text.strip()) < 10:
+        prov_common["ocr_decision"] = "LOCAL_OCR_REJECT_UNREADABLE"
+        prov_common["input_route"] = "LOCAL_OCR_REJECTED"
+        reason = "IMAGE_NOT_READABLE"
+        if local_only and not full_text.strip() and (rec.get("diagram") or {}).get("tokens"):
+            reason = "MISSING_PROBLEM_TEXT"
+            prov_common["has_associated_figure"] = True
+        return _done(
+            status="rejected",
+            learner_message=REJECTION_MESSAGES[reason],
+            reason_code=reason,
+        )
+
+    # Nhiều bài trong cùng văn bản đọc được ⇒ học sinh chọn bài (OCR được cache theo ảnh, chọn lại không đọc lại).
+    split = split_text_into_problems(full_text, page_number=page_number, has_figure=prov_common.get("has_associated_figure", False))
+    chosen_text = full_text
+    if len(split) >= 2:
+        chosen, pool, ambig_msg = select_text_candidate(split, directive, selected_candidate_id)
+        if chosen is None:
+            return _done(
+                status="needs_selection",
+                learner_message=ambig_msg,
+                reason_code="MULTIPLE_PROBLEMS_DETECTED",
+                candidates=_text_candidates_to_items(pool, parent_bbox=prov_common.get("selected_bbox")),
+            )
+        chosen_text = chosen.problem_text
+    base_offset = full_text.find(chosen_text)
+    if base_offset < 0:
+        base_offset = full_text.replace("\n", " ").find(chosen_text.replace("\n", " "))
+    target_text = merge_supplemental_text(chosen_text, directive)
+    offsets_valid = base_offset >= 0 and len(target_text) == len(chosen_text)
+    ocr_decision = rec.get("ocr_decision") or (
+        "LOCAL_OCR_ACCEPT" if rec.get("extraction_verified") else "LOCAL_OCR_REVIEW_REQUIRED"
+    )
+    prov_common["ocr_decision"] = ocr_decision
+    prov_common["input_route"] = "LOCAL_OCR_VERIFIED" if rec.get("extraction_verified") else "LOCAL_OCR_NEEDS_CONFIRMATION"
+    prov_common["input_text_provenance"] = (
+        "LOCAL_OCR_CROSS_FAMILY_VERIFIED" if rec.get("extraction_verified") else "LOCAL_OCR_DRAFT_PENDING_STUDENT_CONFIRMATION"
+    )
+    prov_common["confirmation_contract_version"] = "ocr-confirmation-provenance/1"
+    prov_common["raw_ocr_text_sha256"] = hashlib.sha256(full_text.encode("utf-8")).hexdigest()
+    prov_common["prepared_text_sha256"] = hashlib.sha256(target_text.encode("utf-8")).hexdigest()
+    prov_common["prepared_region_sha256"] = region_res.prepared_image.sha256
+
+    if rec.get("extraction_verified"):
+        if detect_domain(target_text) != DOMAIN_HINH_HOC:
+            return _done(
+                status="rejected",
+                problem_text=target_text,
+                learner_message=REJECTION_MESSAGES["UNSUPPORTED_PROBLEM"],
+                reason_code="UNSUPPORTED_PROBLEM",
+            )
+        from app.ai.adaptive_input_router import ADAPTIVE_INPUT_ROUTER_VERSION
+        from app.ai.local_geometry_parser import parse_geometry_problem_locally
+
+        local_parse = parse_geometry_problem_locally(target_text)
+        prov_common["local_geometry_parse"] = {
+            "parser_version": local_parse.parser_version,
+            "router_version": ADAPTIVE_INPUT_ROUTER_VERSION,
+            "local_parse_status": local_parse.status,
+            "local_parse_ready_for_zero_ai_hybrid": local_parse.status in ("LOCAL_PARSE_COMPLETE", "LOCAL_PARSE_AMBIGUOUS"),
+            "local_parse_ms": round(local_parse.parse_latency_ms, 3),
+        }
+        metrics["local_parse_ms"] = round(local_parse.parse_latency_ms, 3)
+        return _done(status="ready", problem_text=target_text)
+
+    items = review_items(
+        rec,
+        region_res.prepared_image.data,
+        base_offset=base_offset if offsets_valid else 0,
+        text_len=len(target_text) if offsets_valid else None,
+    )
+    if not offsets_valid:
+        for it in items:
+            it["span_start"] = it["span_end"] = -1
+    n_spans = sum(1 for it in items if it.get("kind") != "diagram")
+    has_diagram_item = any(it.get("kind") == "diagram" for it in items)
+    if rec.get("low_quality"):
+        msg = (
+            "Ảnh khó đọc (chữ viết tay, mờ hoặc nghiêng) — máy chỉ đọc được bản nháp. Em kiểm tra kỹ, sửa trực tiếp "
+            "trong ô bên dưới hoặc chụp lại rõ hơn."
+        )
+        reason = "LOCAL_OCR_LOW_QUALITY"
+    elif n_spans:
+        msg = (
+            f"Máy đã đọc đề từ ảnh; còn {n_spans} chỗ chưa chắc chắn được đánh dấu. Em xem ảnh cắt từng chỗ, sửa nếu "
+            "cần rồi bấm Xác nhận — không cần gõ lại cả đề."
+        )
+        reason = "LOCAL_OCR_REVIEW_REQUIRED"
+    elif has_diagram_item:
+        msg = "Máy đã đọc đề từ ảnh. Đề có hình vẽ — em xác nhận hình không có thêm dữ kiện rồi bấm Xác nhận."
+        reason = "DIAGRAM_FACT_REVIEW_REQUIRED"
+    else:
+        msg = "Máy đã đọc đề từ ảnh — em kiểm tra nhanh rồi bấm Xác nhận."
+        reason = "LOCAL_OCR_REVIEW_REQUIRED"
+    if not vision_allowed:
+        prov_common["vision_fallback"] = (
+            "DISABLED_IN_LOCAL_ONLY_MODE" if local_only else "NOT_AVAILABLE_LIVE_AI_DISABLED_OR_NO_KEY"
+        )
+    return _done(
+        status="needs_confirmation",
+        problem_text=target_text,
+        learner_message=msg,
+        reason_code=reason,
+        flag_messages=(msg,),
+        uncertain_tokens=tuple(items),
     )
 
 
@@ -259,6 +528,7 @@ async def _process_normalized_visual_page(
     page_number: int | None,
     extra_provenance: dict[str, Any],
     t0: float,
+    local_only: bool = False,
 ) -> UnifiedPrepareOutcome:
     """Xử lý một trang ảnh chuẩn hóa qua phát hiện vùng CV nhẹ -> VLM khi cần -> hậu kiểm."""
     region_sel_id: str | None = None
@@ -266,10 +536,18 @@ async def _process_normalized_visual_page(
     if selected_candidate_id:
         if id_prefix and selected_candidate_id.startswith(id_prefix):
             region_sel_id = selected_candidate_id[len(id_prefix) :]
-        elif selected_candidate_id.startswith("region-"):
+        elif selected_candidate_id.startswith("region-") or _BAND_SEP in selected_candidate_id:
             region_sel_id = selected_candidate_id
+    band_sel = _parse_band_id(region_sel_id) if region_sel_id else None
+    if band_sel is not None:
+        region_sel_id = band_sel[0]          # the band lives inside this region (None: the page as the detector kept it)
 
-    region_res: RegionDetectionResult = detect_problem_regions(
+    # OCR and region detection are seconds of blocking work: off the event loop, so other requests (and their SQLite
+    # transactions) keep being served while one image is read (run `local-semantic-source-gate-reliability`).
+    from starlette.concurrency import run_in_threadpool
+
+    region_res: RegionDetectionResult = await run_in_threadpool(
+        detect_problem_regions,
         norm_img,
         target_problem_index=directive.target_problem_index,
         selected_region_id=region_sel_id,
@@ -301,7 +579,7 @@ async def _process_normalized_visual_page(
             source_kind=source_kind,
             learner_message=REJECTION_MESSAGES["IMAGE_NOT_READABLE"],
             reason_code="IMAGE_NOT_READABLE",
-            provenance=prov_common,
+            provenance={**prov_common, "ocr_decision": "LOCAL_OCR_REJECT_UNREADABLE"},
             metrics={
                 "vlm_calls": 0,
                 "used_vlm": False,
@@ -313,12 +591,38 @@ async def _process_normalized_visual_page(
         )
 
     # 2. Có nhiều vùng bài toán tách biệt rõ và chưa có chỉ dẫn chọn bài -> chạm chọn 1 bước, 0 lượt gọi VLM!
+    #    OCR local (nếu có) kiểm chứng bằng văn bản: cả trang chỉ có ≤ 1 tiêu đề "Câu/Bài N" ⇒ một bài bị bố cục
+    #    (hình vẽ chen giữa lời đề và câu hỏi) tách nhầm thành hai vùng — giữ nguyên trang, không bắt chọn.
+    #    (semantic-failure-safe-image-segmentation) and at most ONE multiple-choice option group: a page with no readable
+    #    header but two option groups holds two problems — the split stands and the learner chooses.
+    split_overruled = False
+    from app.ingestion.local_ocr_route import estimate_problem_signals
+
     if region_res.ambiguous_multi_problem and len(region_res.candidates) >= 2 and not selected_candidate_id:
+        page_sig = await run_in_threadpool(estimate_problem_signals, region_res.full_image.data)
+        n_headers = page_sig["headers"] if page_sig else None
+        if page_sig is not None and n_headers <= 1 and page_sig["option_groups"] <= 1:
+            split_overruled = True
+            prov_common["region_split_overruled_by_ocr_headers"] = n_headers
+            prov_common["region_option_groups_on_page"] = page_sig["option_groups"]
+    if region_res.ambiguous_multi_problem and len(region_res.candidates) >= 2 and not selected_candidate_id and not split_overruled:
         msg = (
             f"Không tìm thấy vùng Bài {directive.target_problem_number} trong ảnh. Em chạm chọn vùng bài muốn dựng nhé."
             if directive.target_problem_number is not None
             else f"Ảnh có {len(region_res.candidates)} vùng bài toán độc lập. Em chạm chọn vùng bài muốn dựng nhé."
         )
+        # (semantic-failure-safe-image-segmentation) when the page shows ≥ 2 stacked option groups, one band per group IS
+        # one problem with its own options; the detector's blocks may part a problem's text from its figure — offer bands
+        prep_sig = await run_in_threadpool(estimate_problem_signals, region_res.prepared_image.data)
+        if prep_sig and prep_sig["option_groups"] >= 2 and prep_sig.get("bands") and directive.target_problem_number is None:
+            return UnifiedPrepareOutcome(
+                status="needs_selection", source_kind=source_kind, reason_code="MULTIPLE_PROBLEMS_DETECTED",
+                learner_message=f"Ảnh có {len(prep_sig['bands'])} bài toán. Em chạm chọn bài muốn dựng nhé.",
+                candidates=_band_candidates(region_res, prep_sig["bands"], None, id_prefix=id_prefix, page_number=page_number),
+                provenance={**prov_common, "region_state": "MULTIPLE_PROBLEM_CANDIDATES", "option_groups": prep_sig["option_groups"],
+                            "detector_candidates": len(region_res.candidates)},
+                metrics={"vlm_calls": 0, "used_vlm": False, "raw_input_bytes": raw_input_bytes, "vlm_payload_bytes": 0,
+                         "uncropped_baseline_bytes": uncropped_bytes, "processing_ms": round((time.perf_counter() - t0) * 1000.0, 2)})
         return UnifiedPrepareOutcome(
             status="needs_selection",
             source_kind=source_kind,
@@ -327,7 +631,7 @@ async def _process_normalized_visual_page(
             candidates=_region_candidates_to_items(
                 region_res.candidates, page_number=page_number, id_prefix=id_prefix
             ),
-            provenance=prov_common,
+            provenance={**prov_common, "region_state": "MULTIPLE_PROBLEM_CANDIDATES"},
             metrics={
                 "vlm_calls": 0,
                 "used_vlm": False,
@@ -338,8 +642,70 @@ async def _process_normalized_visual_page(
             },
         )
 
-    # 3. Gọi VLM trên ảnh vùng đề đã chuẩn bị (có fallback tự động 1 lần về ảnh gốc nếu vùng crop bị thiếu).
-    vkey = _require_vision_key(api_key)
+    # 2b (semantic-failure-safe-image-segmentation). ONE region kept, but its OCR shows ≥ 2 multiple-choice option groups:
+    #    two problems were merged. Never send that region on: offer one band per problem (cut between a problem's last
+    #    option row and the next line), or — when the groups sit side by side — ask for a tighter photo. A chosen band
+    #    is recomputed deterministically from the same image and the same cached OCR.
+    sig = None
+    if band_sel is not None or not (region_res.ambiguous_multi_problem and not split_overruled and len(region_res.candidates) >= 2):
+        sig = await run_in_threadpool(estimate_problem_signals, region_res.prepared_image.data)
+    if band_sel is not None:
+        bands = (sig or {}).get("bands") or ()
+        if not 1 <= band_sel[1] <= len(bands):
+            return UnifiedPrepareOutcome(
+                status="needs_selection", source_kind=source_kind, reason_code="AMBIGUOUS_PROBLEM_BOUNDARIES",
+                learner_message="Vùng bài đã chọn không còn khớp với ảnh. Em chụp lại sát bài cần dựng nhé.",
+                candidates=(), provenance={**prov_common, "region_state": "AMBIGUOUS_PROBLEM_BOUNDARIES"},
+                metrics={"vlm_calls": 0, "used_vlm": False, "raw_input_bytes": raw_input_bytes, "vlm_payload_bytes": 0,
+                         "uncropped_baseline_bytes": uncropped_bytes, "processing_ms": round((time.perf_counter() - t0) * 1000.0, 2)})
+        region_res = _crop_to_band(region_res, bands[band_sel[1] - 1])
+        prov_common["region_state"] = "SINGLE_PROBLEM_CONFIRMED"
+        prov_common["selected_band"] = {"index": band_sel[1], "of": len(bands)}
+    elif sig is not None and sig["option_groups"] >= 2:
+        bands = sig.get("bands")
+        state = "MULTIPLE_PROBLEM_CANDIDATES" if bands else "AMBIGUOUS_PROBLEM_BOUNDARIES"
+        return UnifiedPrepareOutcome(
+            status="needs_selection", source_kind=source_kind,
+            reason_code="MULTIPLE_PROBLEMS_DETECTED" if bands else "AMBIGUOUS_PROBLEM_BOUNDARIES",
+            learner_message=(f"Ảnh có {len(bands)} bài toán. Em chạm chọn bài muốn dựng nhé." if bands else
+                             "Ảnh có nhiều bài toán nằm cạnh nhau. Em chụp lại sát bài cần dựng nhé."),
+            candidates=_band_candidates(region_res, bands, region_sel_id, id_prefix=id_prefix, page_number=page_number) if bands else (),
+            provenance={**prov_common, "region_state": state, "option_groups": sig["option_groups"]},
+            metrics={"vlm_calls": 0, "used_vlm": False, "raw_input_bytes": raw_input_bytes, "vlm_payload_bytes": 0,
+                     "uncropped_baseline_bytes": uncropped_bytes, "processing_ms": round((time.perf_counter() - t0) * 1000.0, 2)})
+
+    # 3. OCR local (Route A / D) trước Vision khi đã cấu hình: token toán chỉ được dùng khi hai họ engine
+    #    độc lập cùng đọc ra; còn lại học sinh xác nhận từng chỗ. Vision vẫn là đường đọc chính nếu được phép
+    #    và OCR local chưa xác minh được đề.
+    from app.ingestion.local_ocr_route import run_local_ocr_route
+
+    vision_allowed = (not local_only) and os.getenv("ALLOW_LIVE_AI") != "0" and bool(api_key)
+    local_rec = await run_in_threadpool(run_local_ocr_route, region_res.prepared_image.data, region_res.prepared_figure_bboxes())
+    if local_rec is not None:
+        if local_rec.get("ok"):
+            from app.ingestion.local_ocr_route import summarize_for_provenance
+
+            prov_common["local_ocr"] = summarize_for_provenance(local_rec)
+            if local_rec.get("extraction_verified") or not vision_allowed:
+                return _local_ocr_outcome(
+                    local_rec,
+                    region_res,
+                    directive,
+                    source_kind=source_kind,
+                    page_number=page_number,
+                    selected_candidate_id=selected_candidate_id,
+                    prov_common=prov_common,
+                    raw_input_bytes=raw_input_bytes,
+                    uncropped_bytes=uncropped_bytes,
+                    t0=t0,
+                    vision_allowed=vision_allowed,
+                    local_only=local_only,
+                )
+        else:
+            prov_common["local_ocr"] = {"ok": False, "reason": local_rec.get("reason")}
+
+    # 3b. Gọi VLM trên ảnh vùng đề đã chuẩn bị (có fallback tự động 1 lần về ảnh gốc nếu vùng crop bị thiếu).
+    vkey = _require_vision_key(api_key, local_only=local_only)
     vlm_calls = 0
     vlm_bytes = 0
     used_fallback = region_res.used_fallback_full_image
@@ -353,24 +719,59 @@ async def _process_normalized_visual_page(
     vlm_bytes += len(region_res.prepared_image.data)
 
     # Nếu vùng crop tự động bị VLM báo mất vùng (`missing_regions`) hoặc không đọc được, thử lại đúng 1 lần trên ảnh đầy đủ (§13, §14).
+    # Crop đã chứa trọn mọi khối nội dung ⇒ ảnh đầy đủ không có gì mới cho `missing_regions` /
+    # `MISSING_PROBLEM_TEXT`; chỉ `IMAGE_NOT_READABLE` (điểm ảnh khác) hoặc trường hợp VLM báo `missing_regions`
+    # trên một vùng cắt hẹp (`crop_area_ratio < 0.35`) còn đáng một lượt đọc lại toàn trang.
+    crop_area_ratio = region_res.selected_bbox.area / float(
+        max(1, region_res.full_image.width * region_res.full_image.height)
+    )
     need_full_retry = (
         used_crop
         and not used_fallback
         and region_res.prepared_image.sha256 != region_res.full_image.sha256
         and (
-            bool(ext_res.extraction.missing_regions)
-            or ext_res.assessment.rejection_code in ("IMAGE_NOT_READABLE", "MISSING_PROBLEM_TEXT")
+            ext_res.assessment.rejection_code == "IMAGE_NOT_READABLE"
+            or (
+                bool(ext_res.extraction.missing_regions)
+                and (not region_res.crop_holds_all_content or crop_area_ratio < 0.35)
+            )
+            or (
+                ext_res.assessment.rejection_code == "MISSING_PROBLEM_TEXT"
+                and not region_res.crop_holds_all_content
+            )
         )
     )
+    fallback_disagreement = False
     if need_full_retry:
-        ext_res = await extract_problem_from_image(
+        crop_ext_res = ext_res
+        full_ext_res = await extract_problem_from_image(
             region_res.full_image, vkey, cache_version=cache_version
         )
-        if not ext_res.cached:
+        if not full_ext_res.cached:
             vlm_calls += 1
         vlm_bytes += len(region_res.full_image.data)
         used_fallback = True
         used_crop = region_res.desk_trimmed
+        if crop_ext_res.assessment.status != "rejected" and full_ext_res.assessment.status == "rejected":
+            fallback_disagreement = True
+            prov_common["fallback_disagreement"] = True
+            prov_common["fallback_rejection_code"] = full_ext_res.assessment.rejection_code
+        else:
+            if crop_ext_res.assessment.status != "rejected" and full_ext_res.assessment.status != "rejected":
+                eq_pat = r"\b([A-Za-z][A-Za-z0-9\x27\u2032\u2033]{0,5})\s*=\s*([^\s,.;:]+)"
+                crop_eqs = {
+                    m.group(1): m.group(2)
+                    for m in re.finditer(eq_pat, crop_ext_res.assessment.problem_text)
+                }
+                full_eqs = {
+                    m.group(1): m.group(2)
+                    for m in re.finditer(eq_pat, full_ext_res.assessment.problem_text)
+                }
+                if any(k in full_eqs and full_eqs[k] != v for k, v in crop_eqs.items()):
+                    fallback_disagreement = True
+                    prov_common["fallback_disagreement"] = True
+                    prov_common["crop_problem_text"] = crop_ext_res.assessment.problem_text
+            ext_res = full_ext_res
 
     prov_common["used_crop"] = used_crop
     prov_common["used_fallback_full_image"] = used_fallback
@@ -473,6 +874,10 @@ async def _process_normalized_visual_page(
     prov_common["supplemental_merged"] = (
         bool(directive.supplemental_text) and target_text != assessment.problem_text
     )
+    prov_common["confirmation_contract_version"] = "ocr-confirmation-provenance/1"
+    prov_common["raw_ocr_text_sha256"] = hashlib.sha256(assessment.problem_text.encode("utf-8")).hexdigest()
+    prov_common["prepared_text_sha256"] = hashlib.sha256(target_text.encode("utf-8")).hexdigest()
+    prov_common["prepared_region_sha256"] = region_res.prepared_image.sha256
     prov_common["user_directive_applied"] = bool(
         directive.target_page
         or directive.target_problem_number
@@ -482,8 +887,10 @@ async def _process_normalized_visual_page(
     )
 
     # 6. Nếu có ký hiệu không chắc chắn hoặc cờ cần người học xác nhận (§16, §17), chỉ hiện khung xác nhận gọn cho văn bản đó.
-    if assessment.requires_confirmation:
+    if assessment.requires_confirmation or fallback_disagreement:
         flags = [FLAG_MESSAGES[f] for f in assessment.review_flags if f in FLAG_MESSAGES]
+        if fallback_disagreement and not flags:
+            flags = ["Kết quả đọc vùng cắt và toàn trang có điểm khác nhau — em kiểm tra nhanh trước khi dựng."]
         return UnifiedPrepareOutcome(
             status="needs_confirmation",
             source_kind=source_kind,
@@ -500,6 +907,22 @@ async def _process_normalized_visual_page(
             },
         )
 
+    from app.ai.adaptive_input_router import ADAPTIVE_INPUT_ROUTER_VERSION
+    from app.ai.local_geometry_parser import parse_geometry_problem_locally
+
+    local_parse = parse_geometry_problem_locally(target_text)
+    prov_common["local_geometry_parse"] = {
+        "parser_version": local_parse.parser_version,
+        "router_version": ADAPTIVE_INPUT_ROUTER_VERSION,
+        "local_parse_status": local_parse.status,
+        "local_parse_ready_for_zero_ai_hybrid": local_parse.status
+        in ("LOCAL_PARSE_COMPLETE", "LOCAL_PARSE_AMBIGUOUS"),
+        "local_parse_ms": round(local_parse.parse_latency_ms, 3),
+        "expected_downstream_typed_fact_ai_calls": (
+            0 if local_parse.status in ("LOCAL_PARSE_COMPLETE", "LOCAL_PARSE_AMBIGUOUS") else 1
+        ),
+    }
+
     return UnifiedPrepareOutcome(
         status="ready",
         source_kind=source_kind,
@@ -507,6 +930,7 @@ async def _process_normalized_visual_page(
         provenance=prov_common,
         metrics={
             **metrics_now,
+            "local_parse_ms": round(local_parse.parse_latency_ms, 3),
             "processing_ms": round((time.perf_counter() - t0) * 1000.0, 2),
         },
     )
@@ -521,12 +945,18 @@ async def _prepare_single_attachment(
     selected_candidate_id: str | None = None,
     api_key: str | None = None,
     cache_version: str | None = None,
+    predecoded: tuple[bytes, Literal["image", "pdf", "docx"], str] | None = None,
+    prenormalized_image: NormalizedImage | None = None,
+    local_only: bool = False,
 ) -> UnifiedPrepareOutcome:
     """Xử lý chuẩn bị trên một tệp đính kèm đơn lẻ."""
     t0 = time.perf_counter()
-    raw = decode_attachment_base64(content)
+    if predecoded is not None:
+        raw, kind, actual_mime = predecoded
+    else:
+        raw = decode_attachment_base64(content)
+        kind, actual_mime = sniff_input_file_kind(raw, declared_mime, filename)
     raw_len = len(raw)
-    kind, actual_mime = sniff_input_file_kind(raw, declared_mime, filename)
     directive = parse_user_composer_instruction(user_text)
 
     # Nếu ứng viên đã có sẵn `problem_text` từ bước tách văn bản trước đó, vẫn chạy lại trên tệp để xác thực tất định
@@ -534,10 +964,13 @@ async def _prepare_single_attachment(
 
     # ── NHÁNH A: ẢNH ĐỀ BÀI ──────────────────────────────────────────────────
     if kind == "image":
-        try:
-            norm = normalize_image(raw, actual_mime)
-        except ImageRejected as err:
-            raise InputPrepareRejected(err.code, str(err)) from err
+        if prenormalized_image is not None:
+            norm = prenormalized_image
+        else:
+            try:
+                norm = normalize_image(raw, actual_mime)
+            except ImageRejected as err:
+                raise InputPrepareRejected(err.code, str(err)) from err
         return await _process_normalized_visual_page(
             norm,
             directive,
@@ -549,6 +982,7 @@ async def _prepare_single_attachment(
             page_number=None,
             extra_provenance={"source_mime": actual_mime},
             t0=t0,
+            local_only=local_only,
         )
 
     # ── NHÁNH B & C: PDF (TEXT LAYER HOẶC SCAN) ──────────────────────────────
@@ -577,6 +1011,51 @@ async def _prepare_single_attachment(
             )
 
         geo_text_candidates = [c for c in all_text_candidates if c.is_geometry]
+
+        mixed_pages = (
+            local_only and bool(geo_text_candidates) and bool(scan_pages)
+            and not any(c.candidate_id == selected_candidate_id for c in geo_text_candidates)
+        )
+        scans_need_selection = len(scan_pages) >= 2 and chosen_scan_page is None and not geo_text_candidates
+        if mixed_pages or scans_need_selection:
+            page_items = [
+                UnifiedCandidateItem(
+                    candidate_id=f"pdf-scan-page-{sp.page_number}",
+                    label=f"Trang {sp.page_number} (bản scan)",
+                    preview_snippet="Chạm để đọc và trích xuất đề bài ở trang này",
+                    preview_data_url=None,
+                    page_number=sp.page_number,
+                    has_figure=sp.has_figure,
+                    problem_text=None,
+                )
+                for sp in scan_pages[:12]
+            ]
+            candidates = [*_text_candidates_to_items(geo_text_candidates), *page_items] if mixed_pages else page_items
+            return UnifiedPrepareOutcome(
+                status="needs_selection",
+                source_kind="pdf",
+                learner_message=(
+                    "Em chọn trang chứa đề bài cần dựng, hoặc gõ 'trang X' vào ô nhập nhé."
+                    if mixed_pages else
+                    f"Tệp PDF dạng scan có {len(scan_pages)} trang nội dung. "
+                    "Em chạm chọn trang chứa đề bài cần dựng (hoặc gõ 'trang X' vào ô nhập) nhé."
+                ),
+                reason_code="MULTIPLE_PROBLEMS_DETECTED" if mixed_pages else "MULTIPLE_SCANNED_PAGES",
+                candidates=tuple(sorted(candidates, key=lambda c: c.page_number or 0)),
+                provenance={
+                    "source_mime": actual_mime,
+                    "page_count": pdf_info.page_count,
+                    "rasterized_pages": [],
+                },
+                metrics={
+                    "vlm_calls": 0,
+                    "used_vlm": False,
+                    "raw_input_bytes": raw_len,
+                    "vlm_payload_bytes": 0,
+                    "uncropped_baseline_bytes": 0,
+                    "processing_ms": round((time.perf_counter() - t0) * 1000.0, 2),
+                },
+            )
 
         # Ưu tiên tuyệt đối text layer khi có bài hình học đọc được (0 lượt gọi VLM, 0 trang rasterize!).
         if geo_text_candidates or (all_text_candidates and not scan_pages):
@@ -618,6 +1097,7 @@ async def _prepare_single_attachment(
                 provenance_base=prov_pdf,
                 metrics_base=metrics_pdf,
                 t0=t0,
+                local_only=local_only,
             )
 
         # Trang scan: chỉ rasterize đúng trang cần thiết (§10.B).
@@ -627,45 +1107,6 @@ async def _prepare_single_attachment(
                 source_kind="pdf",
                 learner_message="Tệp PDF trống hoặc không có nội dung bài toán hình học đọc được.",
                 reason_code="EMPTY_PROBLEM_CONTENT",
-                provenance={
-                    "source_mime": actual_mime,
-                    "page_count": pdf_info.page_count,
-                    "rasterized_pages": [],
-                },
-                metrics={
-                    "vlm_calls": 0,
-                    "used_vlm": False,
-                    "raw_input_bytes": raw_len,
-                    "vlm_payload_bytes": 0,
-                    "uncropped_baseline_bytes": 0,
-                    "processing_ms": round((time.perf_counter() - t0) * 1000.0, 2),
-                },
-            )
-
-        # Nếu có >= 2 trang scan mà chưa chỉ định trang, yêu cầu chọn trang để không gửi toàn bộ PDF cho VLM (§10.B).
-        if len(scan_pages) >= 2 and chosen_scan_page is None:
-            page_items: list[UnifiedCandidateItem] = []
-            for sp in scan_pages[:12]:
-                page_items.append(
-                    UnifiedCandidateItem(
-                        candidate_id=f"pdf-scan-page-{sp.page_number}",
-                        label=f"Trang {sp.page_number} (bản scan)",
-                        preview_snippet="Chạm để đọc và trích xuất đề bài ở trang này",
-                        preview_data_url=None,
-                        page_number=sp.page_number,
-                        has_figure=True,
-                        problem_text=None,
-                    )
-                )
-            return UnifiedPrepareOutcome(
-                status="needs_selection",
-                source_kind="pdf",
-                learner_message=(
-                    f"Tệp PDF dạng scan có {len(scan_pages)} trang nội dung. "
-                    "Em chạm chọn trang chứa đề bài cần dựng (hoặc gõ 'trang X' vào ô nhập) nhé."
-                ),
-                reason_code="MULTIPLE_SCANNED_PAGES",
-                candidates=tuple(page_items),
                 provenance={
                     "source_mime": actual_mime,
                     "page_count": pdf_info.page_count,
@@ -698,6 +1139,7 @@ async def _prepare_single_attachment(
                 "rasterized_pages": [target_sp.page_number],
             },
             t0=t0,
+            local_only=local_only,
         )
 
     # ── NHÁNH D: DOCX (PARAGRAPH + TABLE + OMML + EMBEDDED MEDIA) ────────────
@@ -749,6 +1191,7 @@ async def _prepare_single_attachment(
                 "docx_image_fallback": True,
             },
             t0=t0,
+            local_only=local_only,
         )
 
     if not docx_res.full_text.strip():
@@ -813,6 +1256,7 @@ async def _prepare_single_attachment(
         provenance_base=prov_docx,
         metrics_base=metrics_docx,
         t0=t0,
+        local_only=local_only,
     )
 
 
@@ -1181,6 +1625,7 @@ async def prepare_unified_input(
     selected_candidate_id: str | None = None,
     api_key: str | None = None,
     cache_version: str | None = None,
+    local_only: bool = False,
 ) -> UnifiedPrepareOutcome:
     """Điểm vào thống nhất cho 1 hoặc nhiều tệp đính kèm khi người học bấm "Dựng hình"."""
     t0 = time.perf_counter()
@@ -1197,6 +1642,7 @@ async def prepare_unified_input(
             selected_candidate_id=selected_candidate_id,
             api_key=api_key,
             cache_version=cache_version,
+            local_only=local_only,
         )
         return _stamp_single_outcome(single_out, attachment_id="att-1", request_id=request_id)
 
@@ -1210,6 +1656,7 @@ async def prepare_unified_input(
                 selected_candidate_id=selected_candidate_id,
                 api_key=api_key,
                 cache_version=cache_version,
+                local_only=local_only,
             )
             return _stamp_single_outcome(single_out, attachment_id="att-1", request_id=request_id)
         raise InputPrepareRejected("EMPTY_ATTACHMENT_PAYLOAD", "Danh sách tệp đính kèm trống.")
@@ -1272,6 +1719,8 @@ async def prepare_unified_input(
             selected_candidate_id=inner_sel,
             api_key=api_key,
             cache_version=cache_version,
+            predecoded=decoded_cache[only_id],
+            local_only=local_only,
         )
         return _stamp_single_outcome(single_out, attachment_id=only_id, request_id=request_id)
 
@@ -1311,17 +1760,18 @@ async def prepare_unified_input(
             continue
 
         raw_bytes, kind, actual_mime = decoded_cache[aid]
+        prenorm_img: NormalizedImage | None = None
         if kind == "image":
             try:
-                norm = normalize_image(raw_bytes, actual_mime)
+                prenorm_img = normalize_image(raw_bytes, actual_mime)
             except ImageRejected as err:
                 raise InputPrepareRejected(err.code, str(err)) from err
-            if norm.sha256 in seen_image_hashes:
-                orig_id = seen_image_hashes[norm.sha256]
+            if prenorm_img.sha256 in seen_image_hashes:
+                orig_id = seen_image_hashes[prenorm_img.sha256]
                 duplicate_Target_map.setdefault(orig_id, []).append(aid)
                 deduplicated_attachment_ids.append(aid)
                 continue
-            seen_image_hashes[norm.sha256] = aid
+            seen_image_hashes[prenorm_img.sha256] = aid
 
         inner_sel_for_att = targeted_inner_id if aid == targeted_att_id else None
         out = await _prepare_single_attachment(
@@ -1332,6 +1782,9 @@ async def prepare_unified_input(
             selected_candidate_id=inner_sel_for_att,
             api_key=api_key,
             cache_version=cache_version,
+            predecoded=decoded_cache[aid],
+            prenormalized_image=prenorm_img,
+            local_only=local_only,
         )
 
         m = out.metrics
@@ -1617,6 +2070,9 @@ async def prepare_unified_input(
             if f not in combined_flags:
                 combined_flags.append(f)
         for ut in u.uncertain_tokens:
+            # Vị trí ký tự của OCR local chỉ đúng trong văn bản của chính tệp đó; ghép nhiều tệp ⇒ bỏ vị trí.
+            if len(ordered_text_units) > 1 and "span_start" in ut:
+                ut = {**ut, "span_start": -1, "span_end": -1}
             combined_uncertain.append(ut)
         for mr in u.missing_regions:
             if mr not in combined_missing:

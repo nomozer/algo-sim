@@ -1,0 +1,30 @@
+{
+  "run_id": "proof-soundness-generalized-angle-invariance",
+  "generated_at_utc": "2026-11-14T12:35:21.414052+00:00",
+  "product_commit": "c54db0da0c792c2ba0399acc8e9df992d2d270c3",
+  "measured_system": "610b4ee1e3227bc44f0659aea5d0dfc7f7a827aff622605db2b9571fb980fb80",
+  "cache_version": "137",
+  "environment": {
+    "ALLOW_LIVE_AI": "0",
+    "HYBRID_ROUTE_MODE": "local-first",
+    "live_ai_calls": 0
+  },
+  "head": "94281be581617a67921f295474dbd8e698dade4b",
+  "product_regression": "INCOMPLETE_OR_FAIL",
+  "publication_head": "BLOCKED_PENDING_OWNER_REVIEW",
+  "publication_head_scan": [
+    "SUMMARY scanned=31492 messages=0 violations=97 pending_exception=97 verdict=BLOCKED"
+  ],
+  "publication_range_scan_this_run": {
+    "range": "914dd41db..HEAD",
+    "summary_lines": [
+      "SUMMARY scanned=112 messages=8 violations=0 pending_exception=0 verdict=PASS"
+    ],
+    "scan_verdict": "PASS"
+  },
+  "governance": "BLOCKED_PENDING_OWNER_REVIEW",
+  "full_release_gate": "BLOCKED_GATES_REMAIN",
+  "historical_blob": "2bfce9c8… pending",
+  "findings_97": "not approved",
+  "agent_actions": "none (no approval, no wildcard, scan policy unchanged, no receipt deleted)"
+}

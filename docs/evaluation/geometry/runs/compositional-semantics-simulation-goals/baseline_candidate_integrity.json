@@ -1,0 +1,26 @@
+{
+  "run_id": "compositional-semantics-simulation-goals",
+  "generated_at_utc": "2026-11-14T03:09:44.904460+00:00",
+  "product_commit": "379d33969ef0cb0e418d979ab211a00799f44834",
+  "measured_system": "b652e635d5497dc36bf6d55ff4a34c20a16302d01c154b59b039efd65170921e",
+  "environment": {
+    "ALLOW_LIVE_AI": "0",
+    "HYBRID_ROUTE_MODE": "local-first",
+    "live_ai_calls": 0
+  },
+  "head": "54268761eacadaca07d0d8cd2dea0d07c39a5d62",
+  "start_head": "1a9ee8b0c60d6ab94d8b8bf45d688748410ff338",
+  "start_product_commit": "7315cf3b033f78fce1409085c6eeab720f83c967",
+  "start_measured_system": "1f62a4a47bb72071e861d894a5e08ce27877c47dee1f896353b6f40c83ab1077",
+  "start_measured_files": 116,
+  "start_freeze_stored_in": "18a7ba008",
+  "start_cache_version": "134",
+  "checks": {
+    "branch": "feat/local-first-geometry-understanding",
+    "product_commit_is_ancestor": true,
+    "freeze_commit_is_ancestor": true,
+    "freeze_verify_at_start": "PASS (Candidate khớp bản đã đóng băng: 116 file, 1f62a4a47bb72071…)",
+    "product_unchanged_since_7315cf3b0_at_start": "git diff 7315cf3b0 1a9ee8b0c -- backend/app frontend/src empty"
+  },
+  "verdict": "VERIFIED_INTACT"
+}

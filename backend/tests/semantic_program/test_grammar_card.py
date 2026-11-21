@@ -31,31 +31,9 @@ def _nhan_cua(alias) -> set[str]:
     return ra
 
 
-def test_the_liet_ke_DU_moi_statement_kind():
-    the = grammar_card()
-    thieu = [k for k in _nhan_cua(C.SemanticStatement) if f"  {k}:" not in the]
-    assert not thieu, (
-        f"thẻ thiếu statement kind: {thieu}. Mô hình sẽ không bao giờ biết "
-        "chúng tồn tại, và nó hỏng CÂM."
-    )
-
-
-def test_the_liet_ke_DU_moi_bieu_thuc_va_dieu_kien():
-    the = grammar_card()
-    for alias, ten in ((C.ValueExpr, "biểu thức"), (C.ConditionExpr, "điều kiện")):
-        thieu = [k for k in _nhan_cua(alias) if f"  {k}:" not in the]
-        assert not thieu, f"thẻ thiếu {ten} kind: {thieu}"
-
-
-def test_the_liet_ke_DU_moi_MemoryType_va_primitive():
-    the = grammar_card()
-    for t in typing.get_args(C.MemoryType):
-        assert t in the, f"thẻ thiếu MemoryType `{t}`"
-    prims = typing.get_args(
-        C.VisualContainerBinding.model_fields["primitive"].annotation
-    )
-    for p in prims:
-        assert p in the, f"thẻ thiếu visual primitive `{p}`"
+# (/13) Ba test "thẻ ĐẦY ĐỦ liệt kê mọi statement/biểu thức/điều kiện/MemoryType/primitive" đã gỡ cùng thẻ ấy. Thẻ
+# hình học CỐ Ý thu hẹp; tính đầy đủ của nó (mọi kiểu hình học khai được) khoá ở
+# `test_the_liet_ke_DU_moi_kieu_hinh_hoc_khai_duoc`, và thẻ sinh từ nguồn khoá ở `test_the_khong_phai_van_ban_viet_tay`.
 
 
 def test_the_neu_dung_ten_truong_cap_cao_nhat():
@@ -76,7 +54,8 @@ def test_the_CHAN_DUNG_cac_ten_mo_hinh_da_tu_bia():
 def test_the_du_gon_de_khong_thanh_nhoi_prompt():
     """Nó là hợp đồng giao diện, không phải chỗ chép luật. Phình lên nghĩa là ai
     đó đang nhồi văn xuôi vào — thứ đề tài này cố ý tránh."""
-    n = len(grammar_card().encode("utf-8"))
+    # (/13) Trần `n` của thẻ ĐẦY ĐỦ đã gỡ cùng thẻ ấy (miền Tin học); lịch sử các lần nâng giữ lại bên dưới. Trần có
+    # hiệu lực là `m` — thẻ hình học, thứ mô hình thật sự nhận.
     # 2600 → 3400 (2026-08-22): thêm nhãn KIỂU cho từng trường (`:tên`,
     # `:biểu thức`, `:khối lệnh`). Không phải văn xuôi — đó là thứ đã sửa 11+
     # case trượt vì mô hình điền biểu thức vào chỗ đòi tên biến.
@@ -210,11 +189,6 @@ def test_the_du_gon_de_khong_thanh_nhoi_prompt():
     # 6110 → 6230 byte, **+120**, do thêm trường provenance trong MemoryDeclaration / Point.
     # 6250 → 6450 (2026-09-25, RECTANGULAR_PYRAMID_BOUNDED_GEOMETRY_AND_VISUAL_SEMANTIC_REPAIR):
     # 6230 → 6375 byte, **+145**, thêm câu lệnh construct_segment.
-    assert n <= 6450, (
-        f"thẻ = {n} byte. Luật nào mã hoá được thì để validator giữ, đừng viết "
-        "vào thẻ."
-    )
-
     # ⚠️ Con số ở trên là thẻ ĐẦY ĐỦ, và **không phải thứ mô hình nhận**: đường
     # sản phẩm chỉ phát đề hình học, nên thẻ thật là `grammar_card("hinh_hoc")`.
     # Assert thứ hai này thêm 2026-09-03 để guard canh đúng cái được gửi đi —
@@ -422,10 +396,8 @@ def test_dong_xuat_xu_la_quy_tac_CHUNG():
     for cam in ("do_dai_", "vi_tri_diem", "doan_thang", "5/9", "1/3", "2/5",
                 "28/3", "AB", "GH", "CD", "EF"):
         assert cam not in d, f"dữ liệu ca đo `{cam}` lọt vào thẻ"
-    # Và nó phải THẬT SỰ nằm trong thẻ mô hình nhận.
+    # Và nó phải THẬT SỰ nằm trong thẻ mô hình nhận. (/13: bản đầy đủ — nơi nó KHÔNG được có — đã gỡ.)
     assert d in grammar_card("hinh_hoc")
-    # …nhưng KHÔNG nằm trong bản đầy đủ: bản ấy không phát đề hình học.
-    assert d not in grammar_card()
 
 
 def test_the_khong_phai_van_ban_viet_tay():
@@ -443,23 +415,20 @@ def test_the_liet_ke_GIA_TRI_cua_truong_enum():
     """Tên trường nói được *chỗ nào điền*, không nói được *điền gì*.
 
     Đo được ở lượt kiểm sau khi thêm thẻ: mô hình dựng đúng cấu trúc lồng nhưng
-    viết `op: "add"` thay vì `"+"`, nên chương trình vẫn trượt thẩm định.
+    viết `op: "add"` thay vì `"+"`, nên chương trình vẫn trượt thẩm định. (/13: chỉ còn thẻ hình học — nó không mời
+    điều kiện, nên khoá các toán tử số học mà nó có.)
     """
     the = grammar_card()
-    for gt in ("+", "//", "==", "<=", "and", "or"):
+    for gt in ("+", "//", "%"):
         assert gt in the, f"thẻ thiếu giá trị toán tử `{gt}`"
 
 
 def test_the_neu_KIEU_cua_tung_truong():
-    """Tên trường nói *chỗ nào điền*; kiểu nói *điền cái gì vào đó*.
-
-    Lượt pilot 3: mô hình nhét cả object biểu thức vào `index.container` —
-    trong khi nó là `str`, tức TÊN BIẾN. 11+ case trượt vì đúng nhầm lẫn này.
-    """
+    """Tên trường nói *chỗ nào điền*; kiểu nói *điền cái gì vào đó*. (/13: ví dụ `index.container` thuộc miền Tin học
+    đã gỡ; khoá trên các ô của thẻ hình học.)"""
     the = grammar_card()
-    assert "index: container:tên" in the, "thiếu nhãn kiểu cho `container`"
     assert "expr:biểu thức" in the
-    assert "body:khối lệnh" in the
+    assert "tên<point3>" in the
 
 
 def test_the_khong_gan_nhan_kieu_cho_truong_enum():

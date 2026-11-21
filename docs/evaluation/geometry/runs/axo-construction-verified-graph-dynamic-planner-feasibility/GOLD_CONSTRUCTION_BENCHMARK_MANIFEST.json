@@ -1,0 +1,3823 @@
+{
+  "candidate_identity": "dynamic-construction-planner/1",
+  "cases": [
+    {
+      "capability_label": "DIRECT_SOLID_EDGE_LENGTH",
+      "case_id": "A01_sb_length_right_pyramid",
+      "chart_premises": [
+        {
+          "at": "B",
+          "id": "p1",
+          "kind": "right_angle",
+          "points": [
+            "A",
+            "C"
+          ],
+          "quotes": [
+            "đáy ABC là tam giác vuông cân tại B"
+          ],
+          "role": "premise"
+        },
+        {
+          "id": "p2",
+          "kind": "equal_lengths",
+          "points_a": [
+            "B",
+            "A"
+          ],
+          "points_b": [
+            "B",
+            "C"
+          ],
+          "quotes": [
+            "đáy ABC là tam giác vuông cân tại B"
+          ],
+          "role": "premise"
+        },
+        {
+          "id": "p3",
+          "kind": "length",
+          "measure": "segment",
+          "points": [
+            "A",
+            "B"
+          ],
+          "quotes": [
+            "AB = a"
+          ],
+          "role": "premise",
+          "value": "a"
+        },
+        {
+          "id": "p4",
+          "kind": "perpendicular",
+          "points_a": [
+            "S",
+            "A"
+          ],
+          "points_b": [
+            "A",
+            "B",
+            "C"
+          ],
+          "quotes": [
+            "SA vuông góc với (ABC)"
+          ],
+          "role": "premise"
+        },
+        {
+          "id": "p5",
+          "kind": "length",
+          "measure": "segment",
+          "points": [
+            "S",
+            "A"
+          ],
+          "quotes": [
+            "SA = a"
+          ],
+          "role": "premise",
+          "value": "a"
+        }
+      ],
+      "expected_status": "GOAL_VERIFIED",
+      "goal_spec": {
+        "goal_kind": "segment_length",
+        "length_unit": "a",
+        "operands": {
+          "a": "S",
+          "b": "B"
+        }
+      },
+      "group": "Group_A",
+      "independent_oracle": "a√2",
+      "input_facts_sha256": "8c4c310918f32edc35713cabe04a0440a430d64ba4f6f5a10a6ccdcad138258b",
+      "min_expected_plans": 1,
+      "problem_text": "Cho hình chóp S.ABC có đáy ABC là tam giác vuông cân tại B, AB = a, SA vuông góc với (ABC), SA = a. Tính độ dài SB.",
+      "solid_spec": {
+        "apex": "S",
+        "base_vertices": [
+          "A",
+          "B",
+          "C"
+        ],
+        "quote": "Cho hình chóp S.ABC",
+        "solid_name": "S.ABC",
+        "solid_type": "pyramid"
+      },
+      "source_provenance": "Curriculum_G11_Pyramid_Metric"
+    },
+    {
+      "capability_label": "MIDPOINT_COMPOSITION",
+      "case_id": "A02_midpoint_sm_equilateral",
+      "chart_premises": [
+        {
+          "id": "p1",
+          "kind": "polygon_shape",
+          "points": [
+            "A",
+            "B",
+            "C"
+          ],
+          "quotes": [
+            "đáy ABC là tam giác đều cạnh a"
+          ],
+          "role": "premise",
+          "shape": "equilateral_triangle"
+        },
+        {
+          "id": "p2",
+          "kind": "length",
+          "measure": "segment",
+          "points": [
+            "A",
+            "B"
+          ],
+          "quotes": [
+            "đáy ABC là tam giác đều cạnh a"
+          ],
+          "role": "premise",
+          "value": "a"
+        },
+        {
+          "id": "p3",
+          "kind": "perpendicular",
+          "points_a": [
+            "S",
+            "A"
+          ],
+          "points_b": [
+            "A",
+            "B",
+            "C"
+          ],
+          "quotes": [
+            "SA vuông góc với (ABC)"
+          ],
+          "role": "premise"
+        },
+        {
+          "id": "p4",
+          "kind": "length",
+          "measure": "segment",
+          "points": [
+            "S",
+            "A"
+          ],
+          "quotes": [
+            "SA = a"
+          ],
+          "role": "premise",
+          "value": "a"
+        }
+      ],
+      "expected_status": "GOAL_VERIFIED",
+      "goal_spec": {
+        "goal_kind": "segment_length",
+        "length_unit": "a",
+        "operands": {
+          "a": "S",
+          "b": "M"
+        }
+      },
+      "group": "Group_A",
+      "independent_oracle": "a√7/2",
+      "input_facts_sha256": "cec05f4ecb4f242ac1e7ff649714e3fbc8f01ff2eff4ff7a660fceab9c10b09c",
+      "min_expected_plans": 1,
+      "problem_text": "Cho hình chóp S.ABC có đáy ABC là tam giác đều cạnh a, SA vuông góc với (ABC), SA = a. Gọi M là trung điểm BC. Tính SM.",
+      "solid_spec": {
+        "apex": "S",
+        "base_vertices": [
+          "A",
+          "B",
+          "C"
+        ],
+        "quote": "Cho hình chóp S.ABC",
+        "solid_name": "S.ABC",
+        "solid_type": "pyramid"
+      },
+      "source_provenance": "Curriculum_G11_Midpoint_Segment"
+    },
+    {
+      "capability_label": "CENTROID_COMPOSITION",
+      "case_id": "A03_centroid_sg_square_base",
+      "chart_premises": [
+        {
+          "id": "p1",
+          "kind": "polygon_shape",
+          "points": [
+            "A",
+            "B",
+            "C",
+            "D"
+          ],
+          "quotes": [
+            "đáy ABCD là hình vuông cạnh a"
+          ],
+          "role": "premise",
+          "shape": "square"
+        },
+        {
+          "id": "p2",
+          "kind": "length",
+          "measure": "segment",
+          "points": [
+            "A",
+            "B"
+          ],
+          "quotes": [
+            "đáy ABCD là hình vuông cạnh a"
+          ],
+          "role": "premise",
+          "value": "a"
+        },
+        {
+          "id": "p3",
+          "kind": "perpendicular",
+          "points_a": [
+            "S",
+            "A"
+          ],
+          "points_b": [
+            "A",
+            "B",
+            "C",
+            "D"
+          ],
+          "quotes": [
+            "SA vuông góc với (ABCD)"
+          ],
+          "role": "premise"
+        },
+        {
+          "id": "p4",
+          "kind": "length",
+          "measure": "segment",
+          "points": [
+            "S",
+            "A"
+          ],
+          "quotes": [
+            "SA = 2a"
+          ],
+          "role": "premise",
+          "value": "2a"
+        }
+      ],
+      "expected_status": "GOAL_VERIFIED",
+      "goal_spec": {
+        "goal_kind": "segment_length",
+        "length_unit": "a",
+        "operands": {
+          "a": "S",
+          "b": "G"
+        }
+      },
+      "group": "Group_A",
+      "independent_oracle": "a√41/3",
+      "input_facts_sha256": "278b10a9a9f0b00cf2225248a5338f74d6cf7f1906c062e15a2fd2c8c480ceb0",
+      "min_expected_plans": 1,
+      "problem_text": "Cho hình chóp S.ABCD có đáy ABCD là hình vuông cạnh a, SA vuông góc với (ABCD), SA = 2a. Gọi G là trọng tâm tam giác ABC. Tính SG.",
+      "solid_spec": {
+        "apex": "S",
+        "base_vertices": [
+          "A",
+          "B",
+          "C",
+          "D"
+        ],
+        "quote": "Cho hình chóp S.ABCD",
+        "solid_name": "S.ABCD",
+        "solid_type": "pyramid"
+      },
+      "source_provenance": "Curriculum_G11_Centroid"
+    },
+    {
+      "capability_label": "HYPOTENUSE_MEDIAN",
+      "case_id": "A04_midpoint_am_right_B",
+      "chart_premises": [
+        {
+          "at": "B",
+          "id": "p1",
+          "kind": "right_angle",
+          "points": [
+            "A",
+            "C"
+          ],
+          "quotes": [
+            "đáy ABC là tam giác vuông cân tại B"
+          ],
+          "role": "premise"
+        },
+        {
+          "id": "p2",
+          "kind": "equal_lengths",
+          "points_a": [
+            "B",
+            "A"
+          ],
+          "points_b": [
+            "B",
+            "C"
+          ],
+          "quotes": [
+            "đáy ABC là tam giác vuông cân tại B"
+          ],
+          "role": "premise"
+        },
+        {
+          "id": "p3",
+          "kind": "length",
+          "measure": "segment",
+          "points": [
+            "A",
+            "B"
+          ],
+          "quotes": [
+            "AB = a"
+          ],
+          "role": "premise",
+          "value": "a"
+        },
+        {
+          "id": "p4",
+          "kind": "perpendicular",
+          "points_a": [
+            "S",
+            "A"
+          ],
+          "points_b": [
+            "A",
+            "B",
+            "C"
+          ],
+          "quotes": [
+            "SA vuông góc với (ABC)"
+          ],
+          "role": "premise"
+        },
+        {
+          "id": "p5",
+          "kind": "length",
+          "measure": "segment",
+          "points": [
+            "S",
+            "A"
+          ],
+          "quotes": [
+            "SA = a"
+          ],
+          "role": "premise",
+          "value": "a"
+        }
+      ],
+      "expected_status": "GOAL_VERIFIED",
+      "goal_spec": {
+        "goal_kind": "segment_length",
+        "length_unit": "a",
+        "operands": {
+          "a": "A",
+          "b": "M"
+        }
+      },
+      "group": "Group_A",
+      "independent_oracle": "a√3/2",
+      "input_facts_sha256": "4e141e760006794f55df48100512650744cb98a3a1bc4b7a1c60edbf06ac44f3",
+      "min_expected_plans": 1,
+      "problem_text": "Cho hình chóp S.ABC có đáy ABC là tam giác vuông cân tại B, AB = a, SA vuông góc với (ABC), SA = a. Gọi M là trung điểm SC. Tính AM.",
+      "solid_spec": {
+        "apex": "S",
+        "base_vertices": [
+          "A",
+          "B",
+          "C"
+        ],
+        "quote": "Cho hình chóp S.ABC",
+        "solid_name": "S.ABC",
+        "solid_type": "pyramid"
+      },
+      "source_provenance": "Curriculum_G11_Midpoint_Segment"
+    },
+    {
+      "capability_label": "VOLUME_WITH_ALTITUDE_WITNESS",
+      "case_id": "A05_volume_pyramid_right_B",
+      "chart_premises": [
+        {
+          "at": "B",
+          "id": "p1",
+          "kind": "right_angle",
+          "points": [
+            "A",
+            "C"
+          ],
+          "quotes": [
+            "đáy ABC là tam giác vuông cân tại B"
+          ],
+          "role": "premise"
+        },
+        {
+          "id": "p2",
+          "kind": "equal_lengths",
+          "points_a": [
+            "B",
+            "A"
+          ],
+          "points_b": [
+            "B",
+            "C"
+          ],
+          "quotes": [
+            "đáy ABC là tam giác vuông cân tại B"
+          ],
+          "role": "premise"
+        },
+        {
+          "id": "p3",
+          "kind": "length",
+          "measure": "segment",
+          "points": [
+            "A",
+            "B"
+          ],
+          "quotes": [
+            "AB = a"
+          ],
+          "role": "premise",
+          "value": "a"
+        },
+        {
+          "id": "p4",
+          "kind": "perpendicular",
+          "points_a": [
+            "S",
+            "A"
+          ],
+          "points_b": [
+            "A",
+            "B",
+            "C"
+          ],
+          "quotes": [
+            "SA vuông góc với (ABC)"
+          ],
+          "role": "premise"
+        },
+        {
+          "id": "p5",
+          "kind": "length",
+          "measure": "segment",
+          "points": [
+            "S",
+            "A"
+          ],
+          "quotes": [
+            "SA = 2a"
+          ],
+          "role": "premise",
+          "value": "2a"
+        }
+      ],
+      "expected_status": "GOAL_VERIFIED",
+      "goal_spec": {
+        "goal_kind": "solid_volume",
+        "length_unit": "a",
+        "operands": {
+          "apex": "S",
+          "base": [
+            "A",
+            "B",
+            "C"
+          ]
+        }
+      },
+      "group": "Group_A",
+      "independent_oracle": "a³/3",
+      "input_facts_sha256": "97ee97246aa5060e8b7858ae40bf03fc929c6910d70157df7888b10fad5f4cec",
+      "min_expected_plans": 1,
+      "problem_text": "Cho hình chóp S.ABC có đáy ABC là tam giác vuông cân tại B, AB = a, SA vuông góc với (ABC), SA = 2a. Tính thể tích khối chóp S.ABC.",
+      "solid_spec": {
+        "apex": "S",
+        "base_vertices": [
+          "A",
+          "B",
+          "C"
+        ],
+        "quote": "Cho hình chóp S.ABC",
+        "solid_name": "S.ABC",
+        "solid_type": "pyramid"
+      },
+      "source_provenance": "Curriculum_G12_Solid_Volume"
+    },
+    {
+      "capability_label": "VOLUME_OBLIQUE_METRIC",
+      "case_id": "A06_volume_equilateral_pyramid",
+      "chart_premises": [
+        {
+          "id": "p1",
+          "kind": "polygon_shape",
+          "points": [
+            "A",
+            "B",
+            "C"
+          ],
+          "quotes": [
+            "đáy ABC là tam giác đều cạnh a"
+          ],
+          "role": "premise",
+          "shape": "equilateral_triangle"
+        },
+        {
+          "id": "p2",
+          "kind": "length",
+          "measure": "segment",
+          "points": [
+            "A",
+            "B"
+          ],
+          "quotes": [
+            "đáy ABC là tam giác đều cạnh a"
+          ],
+          "role": "premise",
+          "value": "a"
+        },
+        {
+          "id": "p3",
+          "kind": "perpendicular",
+          "points_a": [
+            "S",
+            "A"
+          ],
+          "points_b": [
+            "A",
+            "B",
+            "C"
+          ],
+          "quotes": [
+            "SA vuông góc với (ABC)"
+          ],
+          "role": "premise"
+        },
+        {
+          "id": "p4",
+          "kind": "length",
+          "measure": "segment",
+          "points": [
+            "S",
+            "A"
+          ],
+          "quotes": [
+            "SA = 3a"
+          ],
+          "role": "premise",
+          "value": "3a"
+        }
+      ],
+      "expected_status": "GOAL_VERIFIED",
+      "goal_spec": {
+        "goal_kind": "solid_volume",
+        "length_unit": "a",
+        "operands": {
+          "apex": "S",
+          "base": [
+            "A",
+            "B",
+            "C"
+          ]
+        }
+      },
+      "group": "Group_A",
+      "independent_oracle": "a³√3/4",
+      "input_facts_sha256": "7104f6620bab999506d7a91f0b11d130265bc23e8c035dd2084691099bee3c30",
+      "min_expected_plans": 1,
+      "problem_text": "Cho hình chóp S.ABC có đáy ABC là tam giác đều cạnh a, SA vuông góc với (ABC), SA = 3a. Tính thể tích khối chóp S.ABC.",
+      "solid_spec": {
+        "apex": "S",
+        "base_vertices": [
+          "A",
+          "B",
+          "C"
+        ],
+        "quote": "Cho hình chóp S.ABC",
+        "solid_name": "S.ABC",
+        "solid_type": "pyramid"
+      },
+      "source_provenance": "Curriculum_G12_Solid_Volume"
+    },
+    {
+      "capability_label": "ANGLE_LINE_PLANE_GIVEN_ALTITUDE",
+      "case_id": "A07_angle_sc_base_square",
+      "chart_premises": [
+        {
+          "id": "p1",
+          "kind": "polygon_shape",
+          "points": [
+            "A",
+            "B",
+            "C",
+            "D"
+          ],
+          "quotes": [
+            "đáy ABCD là hình vuông cạnh a"
+          ],
+          "role": "premise",
+          "shape": "square"
+        },
+        {
+          "id": "p2",
+          "kind": "length",
+          "measure": "segment",
+          "points": [
+            "A",
+            "B"
+          ],
+          "quotes": [
+            "đáy ABCD là hình vuông cạnh a"
+          ],
+          "role": "premise",
+          "value": "a"
+        },
+        {
+          "id": "p3",
+          "kind": "perpendicular",
+          "points_a": [
+            "S",
+            "A"
+          ],
+          "points_b": [
+            "A",
+            "B",
+            "C",
+            "D"
+          ],
+          "quotes": [
+            "SA vuông góc với (ABCD)"
+          ],
+          "role": "premise"
+        },
+        {
+          "id": "p4",
+          "kind": "length",
+          "measure": "segment",
+          "points": [
+            "S",
+            "A"
+          ],
+          "quotes": [
+            "SA = 2a"
+          ],
+          "role": "premise",
+          "value": "2a"
+        }
+      ],
+      "expected_status": "GOAL_VERIFIED",
+      "goal_spec": {
+        "goal_kind": "angle_line_plane",
+        "length_unit": "a",
+        "operands": {
+          "line": [
+            "S",
+            "C"
+          ],
+          "output_mode": "cos",
+          "plane": [
+            "A",
+            "B",
+            "C",
+            "D"
+          ]
+        }
+      },
+      "group": "Group_A",
+      "independent_oracle": "cos=√3/3",
+      "input_facts_sha256": "a368188cfc0b05b9370cb584b092eec8b66745747cddf737d249545a8a942b33",
+      "min_expected_plans": 1,
+      "problem_text": "Cho hình chóp S.ABCD có đáy ABCD là hình vuông cạnh a, SA vuông góc với (ABCD), SA = 2a. Tính góc giữa SC và (ABCD).",
+      "solid_spec": {
+        "apex": "S",
+        "base_vertices": [
+          "A",
+          "B",
+          "C",
+          "D"
+        ],
+        "quote": "Cho hình chóp S.ABCD",
+        "solid_name": "S.ABCD",
+        "solid_type": "pyramid"
+      },
+      "source_provenance": "Curriculum_G11_Line_Plane_Angle"
+    },
+    {
+      "capability_label": "ANGLE_LINE_PLANE_SPECIAL",
+      "case_id": "A08_angle_sb_base_right",
+      "chart_premises": [
+        {
+          "at": "B",
+          "id": "p1",
+          "kind": "right_angle",
+          "points": [
+            "A",
+            "C"
+          ],
+          "quotes": [
+            "đáy ABC là tam giác vuông cân tại B"
+          ],
+          "role": "premise"
+        },
+        {
+          "id": "p2",
+          "kind": "equal_lengths",
+          "points_a": [
+            "B",
+            "A"
+          ],
+          "points_b": [
+            "B",
+            "C"
+          ],
+          "quotes": [
+            "đáy ABC là tam giác vuông cân tại B"
+          ],
+          "role": "premise"
+        },
+        {
+          "id": "p3",
+          "kind": "length",
+          "measure": "segment",
+          "points": [
+            "A",
+            "B"
+          ],
+          "quotes": [
+            "AB = a"
+          ],
+          "role": "premise",
+          "value": "a"
+        },
+        {
+          "id": "p4",
+          "kind": "perpendicular",
+          "points_a": [
+            "S",
+            "A"
+          ],
+          "points_b": [
+            "A",
+            "B",
+            "C"
+          ],
+          "quotes": [
+            "SA vuông góc với (ABC)"
+          ],
+          "role": "premise"
+        },
+        {
+          "id": "p5",
+          "kind": "length",
+          "measure": "segment",
+          "points": [
+            "S",
+            "A"
+          ],
+          "quotes": [
+            "SA = a"
+          ],
+          "role": "premise",
+          "value": "a"
+        }
+      ],
+      "expected_status": "GOAL_VERIFIED",
+      "goal_spec": {
+        "goal_kind": "angle_line_plane",
+        "length_unit": "a",
+        "operands": {
+          "line": [
+            "S",
+            "B"
+          ],
+          "plane": [
+            "A",
+            "B",
+            "C"
+          ]
+        }
+      },
+      "group": "Group_A",
+      "independent_oracle": "45°",
+      "input_facts_sha256": "b9363a614d33cf1e235a71a2317a1c92568bcb195e6c3ac95938c2ea702376ee",
+      "min_expected_plans": 1,
+      "problem_text": "Cho hình chóp S.ABC có đáy ABC là tam giác vuông cân tại B, AB = a, SA vuông góc với (ABC), SA = a. Tính góc giữa SB và (ABC).",
+      "solid_spec": {
+        "apex": "S",
+        "base_vertices": [
+          "A",
+          "B",
+          "C"
+        ],
+        "quote": "Cho hình chóp S.ABC",
+        "solid_name": "S.ABC",
+        "solid_type": "pyramid"
+      },
+      "source_provenance": "Curriculum_G11_Line_Plane_Angle"
+    },
+    {
+      "capability_label": "LINE_LINE_INTERSECTION",
+      "case_id": "A09_cube_face_diagonal_intersection_midpoint",
+      "chart_premises": [
+        {
+          "id": "p1",
+          "kind": "polygon_shape",
+          "points": [
+            "A",
+            "B",
+            "C",
+            "D"
+          ],
+          "quotes": [
+            "Cho hình lập phương ABCD.A'B'C'D' cạnh a"
+          ],
+          "role": "premise",
+          "shape": "square",
+          "value": "a"
+        },
+        {
+          "id": "p2",
+          "kind": "length",
+          "measure": "segment",
+          "points": [
+            "A",
+            "A'"
+          ],
+          "quotes": [
+            "Cho hình lập phương ABCD.A'B'C'D' cạnh a"
+          ],
+          "role": "premise",
+          "value": "a"
+        }
+      ],
+      "expected_status": "GOAL_VERIFIED",
+      "goal_spec": {
+        "goal_kind": "segment_length",
+        "length_unit": "a",
+        "operands": {
+          "a": "A'",
+          "b": "O"
+        }
+      },
+      "group": "Group_A",
+      "independent_oracle": "a√6/2",
+      "input_facts_sha256": "02c5d10fad382213a3fe56556343a53453d8d984ee88aef7a1e3a0d407079577",
+      "min_expected_plans": 1,
+      "problem_text": "Cho hình lập phương ABCD.A'B'C'D' cạnh a. Gọi O là giao điểm AC và BD. Tính A'O.",
+      "solid_spec": {
+        "base_vertices": [
+          "A",
+          "B",
+          "C",
+          "D"
+        ],
+        "quote": "Cho hình lập phương ABCD.A'B'C'D' cạnh a",
+        "right": true,
+        "solid_name": "ABCD.A'B'C'D'",
+        "solid_type": "cube",
+        "top_vertices": [
+          "A'",
+          "B'",
+          "C'",
+          "D'"
+        ]
+      },
+      "source_provenance": "Curriculum_G11_Cube_Intersection"
+    },
+    {
+      "capability_label": "SECTION_AREA",
+      "case_id": "A10_cube_section_diagonal_plane",
+      "chart_premises": [
+        {
+          "id": "p1",
+          "kind": "polygon_shape",
+          "points": [
+            "A",
+            "B",
+            "C",
+            "D"
+          ],
+          "quotes": [
+            "Cho hình lập phương ABCD.A'B'C'D' cạnh a"
+          ],
+          "role": "premise",
+          "shape": "square",
+          "value": "a"
+        },
+        {
+          "id": "p2",
+          "kind": "length",
+          "measure": "segment",
+          "points": [
+            "A",
+            "A'"
+          ],
+          "quotes": [
+            "Cho hình lập phương ABCD.A'B'C'D' cạnh a"
+          ],
+          "role": "premise",
+          "value": "a"
+        }
+      ],
+      "expected_status": "GOAL_VERIFIED",
+      "goal_spec": {
+        "goal_kind": "section_area",
+        "length_unit": "a",
+        "operands": {
+          "plane": [
+            "B",
+            "D",
+            "D'"
+          ]
+        }
+      },
+      "group": "Group_A",
+      "independent_oracle": "a²√2",
+      "input_facts_sha256": "fb18a935603b1183633bc91bc35e0c842957679435cbf3021047a1f59590b718",
+      "min_expected_plans": 1,
+      "problem_text": "Cho hình lập phương ABCD.A'B'C'D' cạnh a. Tính diện tích thiết diện của (BDD') với ABCD.A'B'C'D'.",
+      "solid_spec": {
+        "base_vertices": [
+          "A",
+          "B",
+          "C",
+          "D"
+        ],
+        "quote": "Cho hình lập phương ABCD.A'B'C'D' cạnh a",
+        "right": true,
+        "solid_name": "ABCD.A'B'C'D'",
+        "solid_type": "cube",
+        "top_vertices": [
+          "A'",
+          "B'",
+          "C'",
+          "D'"
+        ]
+      },
+      "source_provenance": "Curriculum_G11_Section_Area"
+    },
+    {
+      "capability_label": "DIVIDE_SEGMENT_DYNAMIC_COMPOSITION",
+      "case_id": "B01_divide_segment_ratio_length",
+      "chart_premises": [
+        {
+          "id": "p1",
+          "kind": "polygon_shape",
+          "points": [
+            "A",
+            "B",
+            "C",
+            "D"
+          ],
+          "quotes": [
+            "đáy ABCD là hình vuông cạnh a"
+          ],
+          "role": "premise",
+          "shape": "square"
+        },
+        {
+          "id": "p2",
+          "kind": "length",
+          "measure": "segment",
+          "points": [
+            "A",
+            "B"
+          ],
+          "quotes": [
+            "đáy ABCD là hình vuông cạnh a"
+          ],
+          "role": "premise",
+          "value": "a"
+        },
+        {
+          "id": "p3",
+          "kind": "perpendicular",
+          "points_a": [
+            "S",
+            "A"
+          ],
+          "points_b": [
+            "A",
+            "B",
+            "C",
+            "D"
+          ],
+          "quotes": [
+            "SA vuông góc với (ABCD)"
+          ],
+          "role": "premise"
+        },
+        {
+          "id": "p4",
+          "kind": "length",
+          "measure": "segment",
+          "points": [
+            "S",
+            "A"
+          ],
+          "quotes": [
+            "SA = 3a"
+          ],
+          "role": "premise",
+          "value": "3a"
+        }
+      ],
+      "expected_status": "GOAL_VERIFIED",
+      "goal_spec": {
+        "goal_kind": "segment_length",
+        "length_unit": "a",
+        "operands": {
+          "a": "K",
+          "b": "M"
+        }
+      },
+      "group": "Group_B",
+      "independent_oracle": "a√21/2",
+      "input_facts_sha256": "1c90c7b7cfa26a876925982252818ee5664efa284b8bb65e2e9dcd026a6f04f7",
+      "min_expected_plans": 1,
+      "problem_text": "Cho hình chóp S.ABCD có đáy ABCD là hình vuông cạnh a, SA vuông góc với (ABCD), SA = 3a. Lấy K trên SA sao cho SK = 1/3 SA. Gọi M là trung điểm BC. Tính KM.",
+      "solid_spec": {
+        "apex": "S",
+        "base_vertices": [
+          "A",
+          "B",
+          "C",
+          "D"
+        ],
+        "quote": "Cho hình chóp S.ABCD",
+        "solid_name": "S.ABCD",
+        "solid_type": "pyramid"
+      },
+      "source_provenance": "Dynamic_DivideSegment_Chain"
+    },
+    {
+      "capability_label": "POINT_REFLECTION_DYNAMIC_COMPOSITION",
+      "case_id": "B02_point_reflection_distance",
+      "chart_premises": [
+        {
+          "at": "B",
+          "id": "p1",
+          "kind": "right_angle",
+          "points": [
+            "A",
+            "C"
+          ],
+          "quotes": [
+            "đáy ABC là tam giác vuông cân tại B"
+          ],
+          "role": "premise"
+        },
+        {
+          "id": "p2",
+          "kind": "equal_lengths",
+          "points_a": [
+            "B",
+            "A"
+          ],
+          "points_b": [
+            "B",
+            "C"
+          ],
+          "quotes": [
+            "đáy ABC là tam giác vuông cân tại B"
+          ],
+          "role": "premise"
+        },
+        {
+          "id": "p3",
+          "kind": "length",
+          "measure": "segment",
+          "points": [
+            "A",
+            "B"
+          ],
+          "quotes": [
+            "AB = a"
+          ],
+          "role": "premise",
+          "value": "a"
+        },
+        {
+          "id": "p4",
+          "kind": "perpendicular",
+          "points_a": [
+            "S",
+            "A"
+          ],
+          "points_b": [
+            "A",
+            "B",
+            "C"
+          ],
+          "quotes": [
+            "SA vuông góc với (ABC)"
+          ],
+          "role": "premise"
+        },
+        {
+          "id": "p5",
+          "kind": "length",
+          "measure": "segment",
+          "points": [
+            "S",
+            "A"
+          ],
+          "quotes": [
+            "SA = a"
+          ],
+          "role": "premise",
+          "value": "a"
+        }
+      ],
+      "expected_status": "GOAL_VERIFIED",
+      "goal_spec": {
+        "goal_kind": "segment_length",
+        "length_unit": "a",
+        "operands": {
+          "a": "S",
+          "b": "P"
+        }
+      },
+      "group": "Group_B",
+      "independent_oracle": "a√5",
+      "input_facts_sha256": "c8482614d2cc0bd268567c2d6ee3148b6515d18917bcfa3bd2717d833c13193b",
+      "min_expected_plans": 1,
+      "problem_text": "Cho hình chóp S.ABC có đáy ABC là tam giác vuông cân tại B, AB = a, SA vuông góc với (ABC), SA = a. Lấy P đối xứng với A qua B. Tính SP.",
+      "solid_spec": {
+        "apex": "S",
+        "base_vertices": [
+          "A",
+          "B",
+          "C"
+        ],
+        "quote": "Cho hình chóp S.ABC",
+        "solid_name": "S.ABC",
+        "solid_type": "pyramid"
+      },
+      "source_provenance": "Dynamic_PointReflection_Chain"
+    },
+    {
+      "capability_label": "DIHEDRAL_LINEAR_ANGLE_SYNTHESIS",
+      "case_id": "B03_dihedral_linear_angle_equilateral",
+      "chart_premises": [
+        {
+          "id": "p1",
+          "kind": "polygon_shape",
+          "points": [
+            "A",
+            "B",
+            "C"
+          ],
+          "quotes": [
+            "đáy ABC là tam giác đều cạnh a"
+          ],
+          "role": "premise",
+          "shape": "equilateral_triangle"
+        },
+        {
+          "id": "p2",
+          "kind": "length",
+          "measure": "segment",
+          "points": [
+            "A",
+            "B"
+          ],
+          "quotes": [
+            "đáy ABC là tam giác đều cạnh a"
+          ],
+          "role": "premise",
+          "value": "a"
+        },
+        {
+          "id": "p3",
+          "kind": "perpendicular",
+          "points_a": [
+            "S",
+            "A"
+          ],
+          "points_b": [
+            "A",
+            "B",
+            "C"
+          ],
+          "quotes": [
+            "SA vuông góc với (ABC)"
+          ],
+          "role": "premise"
+        },
+        {
+          "id": "p4",
+          "kind": "length",
+          "measure": "segment",
+          "points": [
+            "S",
+            "A"
+          ],
+          "quotes": [
+            "SA = a"
+          ],
+          "role": "premise",
+          "value": "a"
+        }
+      ],
+      "expected_status": "GOAL_VERIFIED",
+      "goal_spec": {
+        "goal_kind": "angle_plane_plane",
+        "length_unit": "a",
+        "operands": {
+          "plane1": [
+            "S",
+            "B",
+            "C"
+          ],
+          "plane2": [
+            "A",
+            "B",
+            "C"
+          ]
+        }
+      },
+      "group": "Group_B",
+      "independent_oracle": "cos²=3/7",
+      "input_facts_sha256": "3a77d34732cfa14fa0beed9b3cd35d205fd69fcfaa7ec8159019553d14e63dfe",
+      "min_expected_plans": 1,
+      "problem_text": "Cho hình chóp S.ABC có đáy ABC là tam giác đều cạnh a, SA vuông góc với (ABC), SA = a. Tính góc giữa (SBC) và (ABC).",
+      "solid_spec": {
+        "apex": "S",
+        "base_vertices": [
+          "A",
+          "B",
+          "C"
+        ],
+        "quote": "Cho hình chóp S.ABC",
+        "solid_name": "S.ABC",
+        "solid_type": "pyramid"
+      },
+      "source_provenance": "Dynamic_Dihedral_ZeroContractInRegistry33"
+    },
+    {
+      "capability_label": "DIHEDRAL_LINEAR_ANGLE_SYNTHESIS",
+      "case_id": "B04_dihedral_linear_angle_cube",
+      "chart_premises": [
+        {
+          "id": "p1",
+          "kind": "polygon_shape",
+          "points": [
+            "A",
+            "B",
+            "C",
+            "D"
+          ],
+          "quotes": [
+            "Cho hình lập phương ABCD.A'B'C'D' cạnh a"
+          ],
+          "role": "premise",
+          "shape": "square",
+          "value": "a"
+        },
+        {
+          "id": "p2",
+          "kind": "length",
+          "measure": "segment",
+          "points": [
+            "A",
+            "A'"
+          ],
+          "quotes": [
+            "Cho hình lập phương ABCD.A'B'C'D' cạnh a"
+          ],
+          "role": "premise",
+          "value": "a"
+        }
+      ],
+      "expected_status": "GOAL_VERIFIED",
+      "goal_spec": {
+        "goal_kind": "angle_plane_plane",
+        "length_unit": "a",
+        "operands": {
+          "plane1": [
+            "B",
+            "D",
+            "A'"
+          ],
+          "plane2": [
+            "A",
+            "B",
+            "C",
+            "D"
+          ]
+        }
+      },
+      "group": "Group_B",
+      "independent_oracle": "cos²=1/3",
+      "input_facts_sha256": "6fbf4edfa44620ff73c674a393998e8c68d28e8a297adb759f0f9e0eebdd1271",
+      "min_expected_plans": 1,
+      "problem_text": "Cho hình lập phương ABCD.A'B'C'D' cạnh a. Tính góc giữa (BDA') và (ABCD).",
+      "solid_spec": {
+        "base_vertices": [
+          "A",
+          "B",
+          "C",
+          "D"
+        ],
+        "quote": "Cho hình lập phương ABCD.A'B'C'D' cạnh a",
+        "right": true,
+        "solid_name": "ABCD.A'B'C'D'",
+        "solid_type": "cube",
+        "top_vertices": [
+          "A'",
+          "B'",
+          "C'",
+          "D'"
+        ]
+      },
+      "source_provenance": "Dynamic_Dihedral_Cube"
+    },
+    {
+      "capability_label": "PARALLEL_TRANSFER_ANGLE_SYNTHESIS",
+      "case_id": "B05_skew_angle_cube_parallel_transfer",
+      "chart_premises": [
+        {
+          "id": "p1",
+          "kind": "polygon_shape",
+          "points": [
+            "A",
+            "B",
+            "C",
+            "D"
+          ],
+          "quotes": [
+            "Cho hình lập phương ABCD.A'B'C'D' cạnh a"
+          ],
+          "role": "premise",
+          "shape": "square",
+          "value": "a"
+        },
+        {
+          "id": "p2",
+          "kind": "length",
+          "measure": "segment",
+          "points": [
+            "A",
+            "A'"
+          ],
+          "quotes": [
+            "Cho hình lập phương ABCD.A'B'C'D' cạnh a"
+          ],
+          "role": "premise",
+          "value": "a"
+        }
+      ],
+      "expected_status": "GOAL_VERIFIED",
+      "goal_spec": {
+        "goal_kind": "angle_lines",
+        "length_unit": "a",
+        "operands": {
+          "line1": [
+            "A",
+            "B'"
+          ],
+          "line2": [
+            "B",
+            "C'"
+          ]
+        }
+      },
+      "group": "Group_B",
+      "independent_oracle": "60°",
+      "input_facts_sha256": "7235f2069783f3917f4ed1b13ae9c6e7b15daa8e4704d875769d1a0840f16537",
+      "min_expected_plans": 1,
+      "problem_text": "Cho hình lập phương ABCD.A'B'C'D' cạnh a. Tính góc giữa AB' và BC'.",
+      "solid_spec": {
+        "base_vertices": [
+          "A",
+          "B",
+          "C",
+          "D"
+        ],
+        "quote": "Cho hình lập phương ABCD.A'B'C'D' cạnh a",
+        "right": true,
+        "solid_name": "ABCD.A'B'C'D'",
+        "solid_type": "cube",
+        "top_vertices": [
+          "A'",
+          "B'",
+          "C'",
+          "D'"
+        ]
+      },
+      "source_provenance": "Dynamic_SkewLines_ParallelTransfer"
+    },
+    {
+      "capability_label": "RATIO_TO_PLANE_DISTANCE",
+      "case_id": "B06_divide_segment_plus_point_plane_distance",
+      "chart_premises": [
+        {
+          "id": "p1",
+          "kind": "polygon_shape",
+          "points": [
+            "A",
+            "B",
+            "C",
+            "D"
+          ],
+          "quotes": [
+            "đáy ABCD là hình vuông cạnh a"
+          ],
+          "role": "premise",
+          "shape": "square"
+        },
+        {
+          "id": "p2",
+          "kind": "length",
+          "measure": "segment",
+          "points": [
+            "A",
+            "B"
+          ],
+          "quotes": [
+            "đáy ABCD là hình vuông cạnh a"
+          ],
+          "role": "premise",
+          "value": "a"
+        },
+        {
+          "id": "p3",
+          "kind": "perpendicular",
+          "points_a": [
+            "S",
+            "A"
+          ],
+          "points_b": [
+            "A",
+            "B",
+            "C",
+            "D"
+          ],
+          "quotes": [
+            "SA vuông góc với (ABCD)"
+          ],
+          "role": "premise"
+        },
+        {
+          "id": "p4",
+          "kind": "length",
+          "measure": "segment",
+          "points": [
+            "S",
+            "A"
+          ],
+          "quotes": [
+            "SA = 3a"
+          ],
+          "role": "premise",
+          "value": "3a"
+        }
+      ],
+      "expected_status": "GOAL_VERIFIED",
+      "goal_spec": {
+        "goal_kind": "distance_point_plane",
+        "length_unit": "a",
+        "operands": {
+          "plane": [
+            "S",
+            "B",
+            "C"
+          ],
+          "point": "K"
+        }
+      },
+      "group": "Group_B",
+      "independent_oracle": "a√10/10",
+      "input_facts_sha256": "104d28bef019911a0a453b17592e9f30ff28b20458eee0d1cbbb5487176503e1",
+      "min_expected_plans": 1,
+      "problem_text": "Cho hình chóp S.ABCD có đáy ABCD là hình vuông cạnh a, SA vuông góc với (ABCD), SA = 3a. Lấy K trên SA sao cho SK = 1/3 SA. Tính khoảng cách từ K đến (SBC).",
+      "solid_spec": {
+        "apex": "S",
+        "base_vertices": [
+          "A",
+          "B",
+          "C",
+          "D"
+        ],
+        "quote": "Cho hình chóp S.ABCD",
+        "solid_name": "S.ABCD",
+        "solid_type": "pyramid"
+      },
+      "source_provenance": "Dynamic_DivideSegment_AuxProjection"
+    },
+    {
+      "capability_label": "MULTI_OPERATOR_CHAIN",
+      "case_id": "B07_reflection_plus_centroid_length",
+      "chart_premises": [
+        {
+          "at": "B",
+          "id": "p1",
+          "kind": "right_angle",
+          "points": [
+            "A",
+            "C"
+          ],
+          "quotes": [
+            "đáy ABC là tam giác vuông cân tại B"
+          ],
+          "role": "premise"
+        },
+        {
+          "id": "p2",
+          "kind": "equal_lengths",
+          "points_a": [
+            "B",
+            "A"
+          ],
+          "points_b": [
+            "B",
+            "C"
+          ],
+          "quotes": [
+            "đáy ABC là tam giác vuông cân tại B"
+          ],
+          "role": "premise"
+        },
+        {
+          "id": "p3",
+          "kind": "length",
+          "measure": "segment",
+          "points": [
+            "A",
+            "B"
+          ],
+          "quotes": [
+            "AB = a"
+          ],
+          "role": "premise",
+          "value": "a"
+        },
+        {
+          "id": "p4",
+          "kind": "perpendicular",
+          "points_a": [
+            "S",
+            "A"
+          ],
+          "points_b": [
+            "A",
+            "B",
+            "C"
+          ],
+          "quotes": [
+            "SA vuông góc với (ABC)"
+          ],
+          "role": "premise"
+        },
+        {
+          "id": "p5",
+          "kind": "length",
+          "measure": "segment",
+          "points": [
+            "S",
+            "A"
+          ],
+          "quotes": [
+            "SA = 2a"
+          ],
+          "role": "premise",
+          "value": "2a"
+        }
+      ],
+      "expected_status": "GOAL_VERIFIED",
+      "goal_spec": {
+        "goal_kind": "segment_length",
+        "length_unit": "a",
+        "operands": {
+          "a": "A",
+          "b": "G"
+        }
+      },
+      "group": "Group_B",
+      "independent_oracle": "a√17/3",
+      "input_facts_sha256": "c2f4e7c176e075a9e6e8c9b1ad30019235f0642068a386d96b67b7726447bd4a",
+      "min_expected_plans": 1,
+      "problem_text": "Cho hình chóp S.ABC có đáy ABC là tam giác vuông cân tại B, AB = a, SA vuông góc với (ABC), SA = 2a. Lấy P đối xứng A qua C. Gọi G là trọng tâm tam giác SBP. Tính AG.",
+      "solid_spec": {
+        "apex": "S",
+        "base_vertices": [
+          "A",
+          "B",
+          "C"
+        ],
+        "quote": "Cho hình chóp S.ABC",
+        "solid_name": "S.ABC",
+        "solid_type": "pyramid"
+      },
+      "source_provenance": "Dynamic_Reflection_Centroid_MultiStep"
+    },
+    {
+      "capability_label": "MULTI_STEP_DERIVED_PLANE_INTERSECTION",
+      "case_id": "B08_intersection_point_derived_plane_prism",
+      "chart_premises": [
+        {
+          "id": "p1",
+          "kind": "polygon_shape",
+          "points": [
+            "A",
+            "B",
+            "C"
+          ],
+          "quotes": [
+            "đáy ABC là tam giác đều cạnh a"
+          ],
+          "role": "premise",
+          "shape": "equilateral_triangle"
+        },
+        {
+          "id": "p2",
+          "kind": "length",
+          "measure": "segment",
+          "points": [
+            "A",
+            "B"
+          ],
+          "quotes": [
+            "đáy ABC là tam giác đều cạnh a"
+          ],
+          "role": "premise",
+          "value": "a"
+        },
+        {
+          "id": "p3",
+          "kind": "length",
+          "measure": "segment",
+          "points": [
+            "A",
+            "A'"
+          ],
+          "quotes": [
+            "AA' = 2a"
+          ],
+          "role": "premise",
+          "value": "2a"
+        }
+      ],
+      "expected_status": "GOAL_VERIFIED",
+      "goal_spec": {
+        "goal_kind": "segment_length",
+        "length_unit": "a",
+        "operands": {
+          "a": "B",
+          "b": "I"
+        }
+      },
+      "group": "Group_B",
+      "independent_oracle": "4a",
+      "input_facts_sha256": "71d2b08ed7e55b715b93b432ded461bb214eef0a32fe1cbc8dfdf4384713337f",
+      "min_expected_plans": 1,
+      "problem_text": "Cho hình lăng trụ đứng ABC.A'B'C' có đáy ABC là tam giác đều cạnh a, AA' = 2a. Gọi M là trung điểm A'B'. Gọi N là trung điểm B'C'. Gọi I là giao điểm của BB' và (AMN). Tính BI.",
+      "solid_spec": {
+        "base_vertices": [
+          "A",
+          "B",
+          "C"
+        ],
+        "quote": "Cho hình lăng trụ đứng ABC.A'B'C'",
+        "right": true,
+        "solid_name": "ABC.A'B'C'",
+        "solid_type": "prism",
+        "top_vertices": [
+          "A'",
+          "B'",
+          "C'"
+        ]
+      },
+      "source_provenance": "Dynamic_Prism_Midpoint_Intersect_Line_Plane"
+    },
+    {
+      "capability_label": "DEEP_CHAIN_EXCEEDS_32_IR_SLOTS",
+      "case_id": "B09_deep_19step_chain_exceeds_32_ir_slots",
+      "chart_premises": [
+        {
+          "id": "p1",
+          "kind": "polygon_shape",
+          "points": [
+            "A",
+            "B",
+            "C",
+            "D"
+          ],
+          "quotes": [
+            "Cho hình lập phương ABCD.A'B'C'D' cạnh a"
+          ],
+          "role": "premise",
+          "shape": "square",
+          "value": "a"
+        },
+        {
+          "id": "p2",
+          "kind": "length",
+          "measure": "segment",
+          "points": [
+            "A",
+            "A'"
+          ],
+          "quotes": [
+            "Cho hình lập phương ABCD.A'B'C'D' cạnh a"
+          ],
+          "role": "premise",
+          "value": "a"
+        }
+      ],
+      "expected_status": "GOAL_VERIFIED",
+      "goal_spec": {
+        "goal_kind": "segment_length",
+        "length_unit": "a",
+        "operands": {
+          "a": "A",
+          "b": "M19"
+        }
+      },
+      "group": "Group_B",
+      "independent_oracle": "a√3/2",
+      "input_facts_sha256": "d618d3a6260d12853752a0e8288d8622be2ba911c94f4ceae4cd4857e989fb37",
+      "min_expected_plans": 1,
+      "problem_text": "Cho hình lập phương ABCD.A'B'C'D' cạnh a. Gọi M1 là trung điểm của AB. Gọi M2 là trung điểm của BC. Gọi M3 là trung điểm của CD. Gọi M4 là trung điểm của DA. Gọi M5 là trung điểm của A'B'. Gọi M6 là trung điểm của B'C'. Gọi M7 là trung điểm của C'D'. Gọi M8 là trung điểm của D'A'. Gọi M9 là trung điểm của AA'. Gọi M10 là trung điểm của BB'. Gọi M11 là trung điểm của CC'. Gọi M12 là trung điểm của DD'. Gọi M13 là trọng tâm tam giác M1M2M3. Gọi M14 là trọng tâm tam giác M4M5M6. Gọi M15 là trọng tâm tam giác M7M8M9. Gọi M16 là trọng tâm tam giác M10M11M12. Gọi M17 là trung điểm của M13M14. Gọi M18 là trung điểm của M15M16. Gọi M19 là trung điểm của M17M18. Tính AM19.",
+      "solid_spec": {
+        "base_vertices": [
+          "A",
+          "B",
+          "C",
+          "D"
+        ],
+        "quote": "Cho hình lập phương ABCD.A'B'C'D' cạnh a",
+        "right": true,
+        "solid_name": "ABCD.A'B'C'D'",
+        "solid_type": "cube",
+        "top_vertices": [
+          "A'",
+          "B'",
+          "C'",
+          "D'"
+        ]
+      },
+      "source_provenance": "Dynamic_Deep_Chain_Exceeds_IR32"
+    },
+    {
+      "capability_label": "DERIVED_TRIANGLE_AREA_CONSTRUCTED_EDGES",
+      "case_id": "B10_derived_polygon_area_after_ratio",
+      "chart_premises": [
+        {
+          "id": "p1",
+          "kind": "polygon_shape",
+          "points": [
+            "A",
+            "B",
+            "C",
+            "D"
+          ],
+          "quotes": [
+            "đáy ABCD là hình vuông cạnh a"
+          ],
+          "role": "premise",
+          "shape": "square"
+        },
+        {
+          "id": "p2",
+          "kind": "length",
+          "measure": "segment",
+          "points": [
+            "A",
+            "B"
+          ],
+          "quotes": [
+            "đáy ABCD là hình vuông cạnh a"
+          ],
+          "role": "premise",
+          "value": "a"
+        },
+        {
+          "id": "p3",
+          "kind": "perpendicular",
+          "points_a": [
+            "S",
+            "A"
+          ],
+          "points_b": [
+            "A",
+            "B",
+            "C",
+            "D"
+          ],
+          "quotes": [
+            "SA vuông góc với (ABCD)"
+          ],
+          "role": "premise"
+        },
+        {
+          "id": "p4",
+          "kind": "length",
+          "measure": "segment",
+          "points": [
+            "S",
+            "A"
+          ],
+          "quotes": [
+            "SA = 2a"
+          ],
+          "role": "premise",
+          "value": "2a"
+        }
+      ],
+      "expected_status": "GOAL_VERIFIED",
+      "goal_spec": {
+        "goal_kind": "polygon_area",
+        "length_unit": "a",
+        "operands": {
+          "points": [
+            "A",
+            "M",
+            "N"
+          ]
+        }
+      },
+      "group": "Group_B",
+      "independent_oracle": "a²√5/8",
+      "input_facts_sha256": "1c3eb374c6bae6bd6c1b5ab3343fead700840fb20f439cf318a28cf99c0a3061",
+      "min_expected_plans": 1,
+      "problem_text": "Cho hình chóp S.ABCD có đáy ABCD là hình vuông cạnh a, SA vuông góc với (ABCD), SA = 2a. Gọi M là trung điểm của SB. Gọi N là trung điểm của SC. Gọi P là trung điểm của SD. Tính diện tích tam giác AMN.",
+      "solid_spec": {
+        "apex": "S",
+        "base_vertices": [
+          "A",
+          "B",
+          "C",
+          "D"
+        ],
+        "quote": "Cho hình chóp S.ABCD",
+        "solid_name": "S.ABCD",
+        "solid_type": "pyramid"
+      },
+      "source_provenance": "Dynamic_PolygonArea_ComposedPoints"
+    },
+    {
+      "capability_label": "AUX_FOOT_DISCOVERY",
+      "case_id": "C01_aux_foot_d_A_SBC_equilateral",
+      "chart_premises": [
+        {
+          "id": "p1",
+          "kind": "polygon_shape",
+          "points": [
+            "A",
+            "B",
+            "C"
+          ],
+          "quotes": [
+            "đáy ABC là tam giác đều cạnh a"
+          ],
+          "role": "premise",
+          "shape": "equilateral_triangle"
+        },
+        {
+          "id": "p2",
+          "kind": "length",
+          "measure": "segment",
+          "points": [
+            "A",
+            "B"
+          ],
+          "quotes": [
+            "đáy ABC là tam giác đều cạnh a"
+          ],
+          "role": "premise",
+          "value": "a"
+        },
+        {
+          "id": "p3",
+          "kind": "perpendicular",
+          "points_a": [
+            "S",
+            "A"
+          ],
+          "points_b": [
+            "A",
+            "B",
+            "C"
+          ],
+          "quotes": [
+            "SA vuông góc với (ABC)"
+          ],
+          "role": "premise"
+        },
+        {
+          "id": "p4",
+          "kind": "length",
+          "measure": "segment",
+          "points": [
+            "S",
+            "A"
+          ],
+          "quotes": [
+            "SA = a"
+          ],
+          "role": "premise",
+          "value": "a"
+        }
+      ],
+      "expected_status": "GOAL_VERIFIED",
+      "goal_spec": {
+        "goal_kind": "distance_point_plane",
+        "length_unit": "a",
+        "operands": {
+          "plane": [
+            "S",
+            "B",
+            "C"
+          ],
+          "point": "A"
+        }
+      },
+      "group": "Group_C",
+      "independent_oracle": "a√21/7",
+      "input_facts_sha256": "00fea689b33f967fd3e43ca85df91e1b41cd2ce51409baf2d16b5478b5984b69",
+      "min_expected_plans": 1,
+      "problem_text": "Cho hình chóp S.ABC có đáy ABC là tam giác đều cạnh a, SA vuông góc với (ABC), SA = a. Tính khoảng cách từ A đến (SBC).",
+      "solid_spec": {
+        "apex": "S",
+        "base_vertices": [
+          "A",
+          "B",
+          "C"
+        ],
+        "quote": "Cho hình chóp S.ABC",
+        "solid_name": "S.ABC",
+        "solid_type": "pyramid"
+      },
+      "source_provenance": "Aux_Foot_PointToPlane_Equilateral"
+    },
+    {
+      "capability_label": "AUX_FOOT_DISCOVERY",
+      "case_id": "C02_aux_foot_d_A_SBD_square",
+      "chart_premises": [
+        {
+          "id": "p1",
+          "kind": "polygon_shape",
+          "points": [
+            "A",
+            "B",
+            "C",
+            "D"
+          ],
+          "quotes": [
+            "đáy ABCD là hình vuông cạnh a"
+          ],
+          "role": "premise",
+          "shape": "square"
+        },
+        {
+          "id": "p2",
+          "kind": "length",
+          "measure": "segment",
+          "points": [
+            "A",
+            "B"
+          ],
+          "quotes": [
+            "đáy ABCD là hình vuông cạnh a"
+          ],
+          "role": "premise",
+          "value": "a"
+        },
+        {
+          "id": "p3",
+          "kind": "perpendicular",
+          "points_a": [
+            "S",
+            "A"
+          ],
+          "points_b": [
+            "A",
+            "B",
+            "C",
+            "D"
+          ],
+          "quotes": [
+            "SA vuông góc với (ABCD)"
+          ],
+          "role": "premise"
+        },
+        {
+          "id": "p4",
+          "kind": "length",
+          "measure": "segment",
+          "points": [
+            "S",
+            "A"
+          ],
+          "quotes": [
+            "SA = a"
+          ],
+          "role": "premise",
+          "value": "a"
+        }
+      ],
+      "expected_status": "GOAL_VERIFIED",
+      "goal_spec": {
+        "goal_kind": "distance_point_plane",
+        "length_unit": "a",
+        "operands": {
+          "plane": [
+            "S",
+            "B",
+            "D"
+          ],
+          "point": "A"
+        }
+      },
+      "group": "Group_C",
+      "independent_oracle": "a√3/3",
+      "input_facts_sha256": "4d0d5435617eb21b7f5be552270d21d94a839457d3f6710177302b6372e74dbb",
+      "min_expected_plans": 1,
+      "problem_text": "Cho hình chóp S.ABCD có đáy ABCD là hình vuông cạnh a, SA vuông góc với (ABCD), SA = a. Tính khoảng cách từ A đến (SBD).",
+      "solid_spec": {
+        "apex": "S",
+        "base_vertices": [
+          "A",
+          "B",
+          "C",
+          "D"
+        ],
+        "quote": "Cho hình chóp S.ABCD",
+        "solid_name": "S.ABCD",
+        "solid_type": "pyramid"
+      },
+      "source_provenance": "Aux_Foot_PointToPlane_SquareDiagonal"
+    },
+    {
+      "capability_label": "AUX_PARALLEL_TRANSFER_AND_FOOT",
+      "case_id": "C03_aux_parallel_line_plane_transfer",
+      "chart_premises": [
+        {
+          "id": "p1",
+          "kind": "polygon_shape",
+          "points": [
+            "A",
+            "B",
+            "C",
+            "D"
+          ],
+          "quotes": [
+            "đáy ABCD là hình vuông cạnh a"
+          ],
+          "role": "premise",
+          "shape": "square"
+        },
+        {
+          "id": "p2",
+          "kind": "length",
+          "measure": "segment",
+          "points": [
+            "A",
+            "B"
+          ],
+          "quotes": [
+            "đáy ABCD là hình vuông cạnh a"
+          ],
+          "role": "premise",
+          "value": "a"
+        },
+        {
+          "id": "p3",
+          "kind": "perpendicular",
+          "points_a": [
+            "S",
+            "A"
+          ],
+          "points_b": [
+            "A",
+            "B",
+            "C",
+            "D"
+          ],
+          "quotes": [
+            "SA vuông góc với (ABCD)"
+          ],
+          "role": "premise"
+        },
+        {
+          "id": "p4",
+          "kind": "length",
+          "measure": "segment",
+          "points": [
+            "S",
+            "A"
+          ],
+          "quotes": [
+            "SA = a"
+          ],
+          "role": "premise",
+          "value": "a"
+        }
+      ],
+      "expected_status": "GOAL_VERIFIED",
+      "goal_spec": {
+        "goal_kind": "distance_line_plane",
+        "length_unit": "a",
+        "operands": {
+          "line": [
+            "A",
+            "B"
+          ],
+          "plane": [
+            "S",
+            "C",
+            "D"
+          ]
+        }
+      },
+      "group": "Group_C",
+      "independent_oracle": "a√2/2",
+      "input_facts_sha256": "0eb959c435beb025627acc146840b7694c4da95c3e6995d00a709e3b46de7011",
+      "min_expected_plans": 1,
+      "problem_text": "Cho hình chóp S.ABCD có đáy ABCD là hình vuông cạnh a, SA vuông góc với (ABCD), SA = a. Tính khoảng cách giữa AB và (SCD).",
+      "solid_spec": {
+        "apex": "S",
+        "base_vertices": [
+          "A",
+          "B",
+          "C",
+          "D"
+        ],
+        "quote": "Cho hình chóp S.ABCD",
+        "solid_name": "S.ABCD",
+        "solid_type": "pyramid"
+      },
+      "source_provenance": "Aux_LinePlane_DistanceTransfer"
+    },
+    {
+      "capability_label": "AUX_COMMON_PERP_OR_PAR_PLANE",
+      "case_id": "C04_aux_skew_lines_cube_ABp_BCp",
+      "chart_premises": [
+        {
+          "id": "p1",
+          "kind": "polygon_shape",
+          "points": [
+            "A",
+            "B",
+            "C",
+            "D"
+          ],
+          "quotes": [
+            "Cho hình lập phương ABCD.A'B'C'D' cạnh a"
+          ],
+          "role": "premise",
+          "shape": "square",
+          "value": "a"
+        },
+        {
+          "id": "p2",
+          "kind": "length",
+          "measure": "segment",
+          "points": [
+            "A",
+            "A'"
+          ],
+          "quotes": [
+            "Cho hình lập phương ABCD.A'B'C'D' cạnh a"
+          ],
+          "role": "premise",
+          "value": "a"
+        }
+      ],
+      "expected_status": "GOAL_VERIFIED",
+      "goal_spec": {
+        "goal_kind": "distance_skew_lines",
+        "length_unit": "a",
+        "operands": {
+          "line1": [
+            "A",
+            "B'"
+          ],
+          "line2": [
+            "B",
+            "C'"
+          ]
+        }
+      },
+      "group": "Group_C",
+      "independent_oracle": "a√3/3",
+      "input_facts_sha256": "e5bad053e18334f0c3f641e835e573112f4130dcd3301aa9d5ea6baa23a8c532",
+      "min_expected_plans": 1,
+      "problem_text": "Cho hình lập phương ABCD.A'B'C'D' cạnh a. Tính khoảng cách giữa AB' và BC'.",
+      "solid_spec": {
+        "base_vertices": [
+          "A",
+          "B",
+          "C",
+          "D"
+        ],
+        "quote": "Cho hình lập phương ABCD.A'B'C'D' cạnh a",
+        "right": true,
+        "solid_name": "ABCD.A'B'C'D'",
+        "solid_type": "cube",
+        "top_vertices": [
+          "A'",
+          "B'",
+          "C'",
+          "D'"
+        ]
+      },
+      "source_provenance": "Aux_SkewLines_CubeDiagonals"
+    },
+    {
+      "capability_label": "AUX_COMMON_PERP_OR_PAR_PLANE",
+      "case_id": "C05_aux_skew_lines_pyramid_SA_BD",
+      "chart_premises": [
+        {
+          "id": "p1",
+          "kind": "polygon_shape",
+          "points": [
+            "A",
+            "B",
+            "C",
+            "D"
+          ],
+          "quotes": [
+            "đáy ABCD là hình vuông cạnh a"
+          ],
+          "role": "premise",
+          "shape": "square"
+        },
+        {
+          "id": "p2",
+          "kind": "length",
+          "measure": "segment",
+          "points": [
+            "A",
+            "B"
+          ],
+          "quotes": [
+            "đáy ABCD là hình vuông cạnh a"
+          ],
+          "role": "premise",
+          "value": "a"
+        },
+        {
+          "id": "p3",
+          "kind": "perpendicular",
+          "points_a": [
+            "S",
+            "A"
+          ],
+          "points_b": [
+            "A",
+            "B",
+            "C",
+            "D"
+          ],
+          "quotes": [
+            "SA vuông góc với (ABCD)"
+          ],
+          "role": "premise"
+        },
+        {
+          "id": "p4",
+          "kind": "length",
+          "measure": "segment",
+          "points": [
+            "S",
+            "A"
+          ],
+          "quotes": [
+            "SA = 2a"
+          ],
+          "role": "premise",
+          "value": "2a"
+        }
+      ],
+      "expected_status": "GOAL_VERIFIED",
+      "goal_spec": {
+        "goal_kind": "distance_skew_lines",
+        "length_unit": "a",
+        "operands": {
+          "line1": [
+            "S",
+            "A"
+          ],
+          "line2": [
+            "B",
+            "D"
+          ]
+        }
+      },
+      "group": "Group_C",
+      "independent_oracle": "a√2/2",
+      "input_facts_sha256": "b5d3285dca2166df1430b1a82ee350a142829d6584a08856bfdc3dcb1a165326",
+      "min_expected_plans": 1,
+      "problem_text": "Cho hình chóp S.ABCD có đáy ABCD là hình vuông cạnh a, SA vuông góc với (ABCD), SA = 2a. Tính khoảng cách giữa SA và BD.",
+      "solid_spec": {
+        "apex": "S",
+        "base_vertices": [
+          "A",
+          "B",
+          "C",
+          "D"
+        ],
+        "quote": "Cho hình chóp S.ABCD",
+        "solid_name": "S.ABCD",
+        "solid_type": "pyramid"
+      },
+      "source_provenance": "Aux_SkewLines_SquarePyramid"
+    },
+    {
+      "capability_label": "AUX_POINT_LINE_FOOT",
+      "case_id": "C06_aux_point_to_line_foot",
+      "chart_premises": [
+        {
+          "at": "B",
+          "id": "p1",
+          "kind": "right_angle",
+          "points": [
+            "A",
+            "C"
+          ],
+          "quotes": [
+            "đáy ABC là tam giác vuông cân tại B"
+          ],
+          "role": "premise"
+        },
+        {
+          "id": "p2",
+          "kind": "equal_lengths",
+          "points_a": [
+            "B",
+            "A"
+          ],
+          "points_b": [
+            "B",
+            "C"
+          ],
+          "quotes": [
+            "đáy ABC là tam giác vuông cân tại B"
+          ],
+          "role": "premise"
+        },
+        {
+          "id": "p3",
+          "kind": "length",
+          "measure": "segment",
+          "points": [
+            "A",
+            "B"
+          ],
+          "quotes": [
+            "AB = a"
+          ],
+          "role": "premise",
+          "value": "a"
+        },
+        {
+          "id": "p4",
+          "kind": "perpendicular",
+          "points_a": [
+            "S",
+            "A"
+          ],
+          "points_b": [
+            "A",
+            "B",
+            "C"
+          ],
+          "quotes": [
+            "SA vuông góc với (ABC)"
+          ],
+          "role": "premise"
+        },
+        {
+          "id": "p5",
+          "kind": "length",
+          "measure": "segment",
+          "points": [
+            "S",
+            "A"
+          ],
+          "quotes": [
+            "SA = a"
+          ],
+          "role": "premise",
+          "value": "a"
+        }
+      ],
+      "expected_status": "GOAL_VERIFIED",
+      "goal_spec": {
+        "goal_kind": "distance_point_line",
+        "length_unit": "a",
+        "operands": {
+          "line": [
+            "S",
+            "C"
+          ],
+          "point": "A"
+        }
+      },
+      "group": "Group_C",
+      "independent_oracle": "a√6/3",
+      "input_facts_sha256": "d21370764d98f3e23331ea155531a2194d431bd32b54cb48cafd49e6f5c2843b",
+      "min_expected_plans": 1,
+      "problem_text": "Cho hình chóp S.ABC có đáy ABC là tam giác vuông cân tại B, AB = a, SA vuông góc với (ABC), SA = a. Tính khoảng cách từ A đến SC.",
+      "solid_spec": {
+        "apex": "S",
+        "base_vertices": [
+          "A",
+          "B",
+          "C"
+        ],
+        "quote": "Cho hình chóp S.ABC",
+        "solid_name": "S.ABC",
+        "solid_type": "pyramid"
+      },
+      "source_provenance": "Aux_PointToLine_Foot"
+    },
+    {
+      "capability_label": "AUX_LINE_PLANE_PROJECTION_WITNESS",
+      "case_id": "C07_aux_angle_line_plane_SB_SAC",
+      "chart_premises": [
+        {
+          "id": "p1",
+          "kind": "polygon_shape",
+          "points": [
+            "A",
+            "B",
+            "C",
+            "D"
+          ],
+          "quotes": [
+            "đáy ABCD là hình vuông cạnh a"
+          ],
+          "role": "premise",
+          "shape": "square"
+        },
+        {
+          "id": "p2",
+          "kind": "length",
+          "measure": "segment",
+          "points": [
+            "A",
+            "B"
+          ],
+          "quotes": [
+            "đáy ABCD là hình vuông cạnh a"
+          ],
+          "role": "premise",
+          "value": "a"
+        },
+        {
+          "id": "p3",
+          "kind": "perpendicular",
+          "points_a": [
+            "S",
+            "A"
+          ],
+          "points_b": [
+            "A",
+            "B",
+            "C",
+            "D"
+          ],
+          "quotes": [
+            "SA vuông góc với (ABCD)"
+          ],
+          "role": "premise"
+        },
+        {
+          "id": "p4",
+          "kind": "length",
+          "measure": "segment",
+          "points": [
+            "S",
+            "A"
+          ],
+          "quotes": [
+            "SA = 2a"
+          ],
+          "role": "premise",
+          "value": "2a"
+        }
+      ],
+      "expected_status": "GOAL_VERIFIED",
+      "goal_spec": {
+        "goal_kind": "angle_line_plane",
+        "length_unit": "a",
+        "operands": {
+          "line": [
+            "S",
+            "B"
+          ],
+          "plane": [
+            "S",
+            "A",
+            "C"
+          ]
+        }
+      },
+      "group": "Group_C",
+      "independent_oracle": "cos²=9/10",
+      "input_facts_sha256": "b9c110b5e22b802d04168ce49ecd19268f6e1618495ac400ff41120fcf0294ec",
+      "min_expected_plans": 1,
+      "problem_text": "Cho hình chóp S.ABCD có đáy ABCD là hình vuông cạnh a, SA vuông góc với (ABCD), SA = 2a. Tính góc giữa SB và (SAC).",
+      "solid_spec": {
+        "apex": "S",
+        "base_vertices": [
+          "A",
+          "B",
+          "C",
+          "D"
+        ],
+        "quote": "Cho hình chóp S.ABCD",
+        "solid_name": "S.ABCD",
+        "solid_type": "pyramid"
+      },
+      "source_provenance": "Aux_Angle_LinePlane_FootProjection"
+    },
+    {
+      "capability_label": "AUX_PARALLEL_PLANE_SECTION",
+      "case_id": "C08_aux_parallel_plane_section_through_midpoint",
+      "chart_premises": [
+        {
+          "id": "p1",
+          "kind": "polygon_shape",
+          "points": [
+            "A",
+            "B",
+            "C"
+          ],
+          "quotes": [
+            "đáy ABC là tam giác đều cạnh a"
+          ],
+          "role": "premise",
+          "shape": "equilateral_triangle"
+        },
+        {
+          "id": "p2",
+          "kind": "length",
+          "measure": "segment",
+          "points": [
+            "A",
+            "B"
+          ],
+          "quotes": [
+            "đáy ABC là tam giác đều cạnh a"
+          ],
+          "role": "premise",
+          "value": "a"
+        },
+        {
+          "id": "p3",
+          "kind": "perpendicular",
+          "points_a": [
+            "S",
+            "A"
+          ],
+          "points_b": [
+            "A",
+            "B",
+            "C"
+          ],
+          "quotes": [
+            "SA vuông góc với (ABC)"
+          ],
+          "role": "premise"
+        },
+        {
+          "id": "p4",
+          "kind": "length",
+          "measure": "segment",
+          "points": [
+            "S",
+            "A"
+          ],
+          "quotes": [
+            "SA = 2a"
+          ],
+          "role": "premise",
+          "value": "2a"
+        }
+      ],
+      "expected_status": "GOAL_VERIFIED",
+      "goal_spec": {
+        "goal_kind": "section_area",
+        "length_unit": "a",
+        "operands": {
+          "plane": "pl_sec"
+        }
+      },
+      "group": "Group_C",
+      "independent_oracle": "a²√3/16",
+      "input_facts_sha256": "cde6fbd0d2ea690c7fdb93b4d65a2d8735aae6d5dbf9013d2a9763da770a1d1a",
+      "min_expected_plans": 1,
+      "problem_text": "Cho hình chóp S.ABC có đáy ABC là tam giác đều cạnh a, SA vuông góc với (ABC), SA = 2a. Gọi M là trung điểm của SA. Tính diện tích thiết diện của mặt phẳng qua M song song với (ABC).",
+      "solid_spec": {
+        "apex": "S",
+        "base_vertices": [
+          "A",
+          "B",
+          "C"
+        ],
+        "quote": "Cho hình chóp S.ABC",
+        "solid_name": "S.ABC",
+        "solid_type": "pyramid"
+      },
+      "source_provenance": "Aux_ParallelPlane_Section"
+    },
+    {
+      "capability_label": "REFUSAL_MISSING_PRECONDITION",
+      "case_id": "D01_missing_height_precondition",
+      "chart_premises": [
+        {
+          "at": "B",
+          "id": "p1",
+          "kind": "right_angle",
+          "points": [
+            "A",
+            "C"
+          ],
+          "quotes": [
+            "đáy ABC là tam giác vuông cân tại B"
+          ],
+          "role": "premise"
+        },
+        {
+          "id": "p2",
+          "kind": "equal_lengths",
+          "points_a": [
+            "B",
+            "A"
+          ],
+          "points_b": [
+            "B",
+            "C"
+          ],
+          "quotes": [
+            "đáy ABC là tam giác vuông cân tại B"
+          ],
+          "role": "premise"
+        },
+        {
+          "id": "p3",
+          "kind": "length",
+          "measure": "segment",
+          "points": [
+            "A",
+            "B"
+          ],
+          "quotes": [
+            "AB = a"
+          ],
+          "role": "premise",
+          "value": "a"
+        },
+        {
+          "id": "p4",
+          "kind": "perpendicular",
+          "points_a": [
+            "S",
+            "A"
+          ],
+          "points_b": [
+            "A",
+            "B",
+            "C"
+          ],
+          "quotes": [
+            "SA vuông góc với (ABC)"
+          ],
+          "role": "premise"
+        }
+      ],
+      "expected_status": "MISSING_PRECONDITION",
+      "goal_spec": {
+        "goal_kind": "distance_point_plane",
+        "length_unit": "a",
+        "operands": {
+          "plane": [
+            "S",
+            "B",
+            "C"
+          ],
+          "point": "A"
+        }
+      },
+      "group": "Group_D",
+      "independent_oracle": null,
+      "input_facts_sha256": "8bf43a5546bf99ea06aeca086f7e6c1a6e9ece5c1487d19b1ad5427932a9952e",
+      "min_expected_plans": 1,
+      "problem_text": "Cho hình chóp S.ABC có đáy ABC là tam giác vuông cân tại B, AB = a, SA vuông góc với (ABC). Tính khoảng cách từ A đến (SBC).",
+      "solid_spec": {
+        "apex": "S",
+        "base_vertices": [
+          "A",
+          "B",
+          "C"
+        ],
+        "quote": "Cho hình chóp S.ABC",
+        "solid_name": "S.ABC",
+        "solid_type": "pyramid"
+      },
+      "source_provenance": "Negative_MissingDimension"
+    },
+    {
+      "capability_label": "REFUSAL_DEGENERATE_COINCIDENT",
+      "case_id": "D02_degenerate_coincident_points",
+      "chart_premises": [
+        {
+          "at": "B",
+          "id": "p1",
+          "kind": "right_angle",
+          "points": [
+            "A",
+            "C"
+          ],
+          "quotes": [
+            "đáy ABC là tam giác vuông cân tại B"
+          ],
+          "role": "premise"
+        },
+        {
+          "id": "p2",
+          "kind": "equal_lengths",
+          "points_a": [
+            "B",
+            "A"
+          ],
+          "points_b": [
+            "B",
+            "C"
+          ],
+          "quotes": [
+            "đáy ABC là tam giác vuông cân tại B"
+          ],
+          "role": "premise"
+        },
+        {
+          "id": "p3",
+          "kind": "length",
+          "measure": "segment",
+          "points": [
+            "A",
+            "B"
+          ],
+          "quotes": [
+            "AB = a"
+          ],
+          "role": "premise",
+          "value": "a"
+        },
+        {
+          "id": "p4",
+          "kind": "perpendicular",
+          "points_a": [
+            "S",
+            "A"
+          ],
+          "points_b": [
+            "A",
+            "B",
+            "C"
+          ],
+          "quotes": [
+            "SA vuông góc với (ABC)"
+          ],
+          "role": "premise"
+        },
+        {
+          "id": "p5",
+          "kind": "length",
+          "measure": "segment",
+          "points": [
+            "S",
+            "A"
+          ],
+          "quotes": [
+            "SA = a"
+          ],
+          "role": "premise",
+          "value": "a"
+        }
+      ],
+      "expected_status": "CONTRADICTORY_CONSTRAINTS",
+      "goal_spec": {
+        "goal_kind": "segment_length",
+        "length_unit": "a",
+        "operands": {
+          "a": "A",
+          "b": "A"
+        }
+      },
+      "group": "Group_D",
+      "independent_oracle": null,
+      "input_facts_sha256": "9aa373eafeb64d4441cf720fb53ad5aa9b2f0f49cd56dae803951dc3f0236ff5",
+      "min_expected_plans": 1,
+      "problem_text": "Cho hình chóp S.ABC có đáy ABC là tam giác vuông cân tại B, AB = a, SA vuông góc với (ABC), SA = a. Tính AA.",
+      "solid_spec": {
+        "apex": "S",
+        "base_vertices": [
+          "A",
+          "B",
+          "C"
+        ],
+        "quote": "Cho hình chóp S.ABC",
+        "solid_name": "S.ABC",
+        "solid_type": "pyramid"
+      },
+      "source_provenance": "Negative_CoincidentPoints"
+    },
+    {
+      "capability_label": "REFUSAL_DEGENERATE_COLLINEAR",
+      "case_id": "D03_degenerate_collinear_plane",
+      "chart_premises": [
+        {
+          "at": "B",
+          "id": "p1",
+          "kind": "right_angle",
+          "points": [
+            "A",
+            "C"
+          ],
+          "quotes": [
+            "đáy ABC là tam giác vuông cân tại B"
+          ],
+          "role": "premise"
+        },
+        {
+          "id": "p2",
+          "kind": "equal_lengths",
+          "points_a": [
+            "B",
+            "A"
+          ],
+          "points_b": [
+            "B",
+            "C"
+          ],
+          "quotes": [
+            "đáy ABC là tam giác vuông cân tại B"
+          ],
+          "role": "premise"
+        },
+        {
+          "id": "p3",
+          "kind": "length",
+          "measure": "segment",
+          "points": [
+            "A",
+            "B"
+          ],
+          "quotes": [
+            "AB = a"
+          ],
+          "role": "premise",
+          "value": "a"
+        },
+        {
+          "id": "p4",
+          "kind": "perpendicular",
+          "points_a": [
+            "S",
+            "A"
+          ],
+          "points_b": [
+            "A",
+            "B",
+            "C"
+          ],
+          "quotes": [
+            "SA vuông góc với (ABC)"
+          ],
+          "role": "premise"
+        },
+        {
+          "id": "p5",
+          "kind": "length",
+          "measure": "segment",
+          "points": [
+            "S",
+            "A"
+          ],
+          "quotes": [
+            "SA = a"
+          ],
+          "role": "premise",
+          "value": "a"
+        }
+      ],
+      "expected_status": "CONTRADICTORY_CONSTRAINTS",
+      "goal_spec": {
+        "goal_kind": "distance_point_plane",
+        "length_unit": "a",
+        "operands": {
+          "plane": "pl_AMB",
+          "point": "S"
+        }
+      },
+      "group": "Group_D",
+      "independent_oracle": null,
+      "input_facts_sha256": "da193f4a3d9fb54008a457bea21e32987c30d876a24dc6fc66390cd95cfb7543",
+      "min_expected_plans": 1,
+      "problem_text": "Cho hình chóp S.ABC có đáy ABC là tam giác vuông cân tại B, AB = a, SA vuông góc với (ABC), SA = a. M trung điểm AB. Tính khoảng cách từ S đến (AMB).",
+      "solid_spec": {
+        "apex": "S",
+        "base_vertices": [
+          "A",
+          "B",
+          "C"
+        ],
+        "quote": "Cho hình chóp S.ABC",
+        "solid_name": "S.ABC",
+        "solid_type": "pyramid"
+      },
+      "source_provenance": "Negative_CollinearPlane"
+    },
+    {
+      "capability_label": "REFUSAL_PARALLEL_NO_INTERSECTION",
+      "case_id": "D04_degenerate_parallel_no_intersection",
+      "chart_premises": [
+        {
+          "id": "p1",
+          "kind": "polygon_shape",
+          "points": [
+            "A",
+            "B",
+            "C",
+            "D"
+          ],
+          "quotes": [
+            "đáy ABCD là hình vuông cạnh a"
+          ],
+          "role": "premise",
+          "shape": "square"
+        },
+        {
+          "id": "p2",
+          "kind": "length",
+          "measure": "segment",
+          "points": [
+            "A",
+            "B"
+          ],
+          "quotes": [
+            "đáy ABCD là hình vuông cạnh a"
+          ],
+          "role": "premise",
+          "value": "a"
+        },
+        {
+          "id": "p3",
+          "kind": "perpendicular",
+          "points_a": [
+            "S",
+            "A"
+          ],
+          "points_b": [
+            "A",
+            "B",
+            "C",
+            "D"
+          ],
+          "quotes": [
+            "SA vuông góc với (ABCD)"
+          ],
+          "role": "premise"
+        },
+        {
+          "id": "p4",
+          "kind": "length",
+          "measure": "segment",
+          "points": [
+            "S",
+            "A"
+          ],
+          "quotes": [
+            "SA = a"
+          ],
+          "role": "premise",
+          "value": "a"
+        }
+      ],
+      "expected_status": "CONTRADICTORY_CONSTRAINTS",
+      "goal_spec": {
+        "goal_kind": "construct_point",
+        "length_unit": "a",
+        "operands": {
+          "target_object_id": "I"
+        }
+      },
+      "group": "Group_D",
+      "independent_oracle": null,
+      "input_facts_sha256": "c6ecf0c656b4394c84ae5d6b6670afce04fcdf3cbcb579b9afa3682f02e6e83e",
+      "min_expected_plans": 1,
+      "problem_text": "Cho hình chóp S.ABCD có đáy ABCD là hình vuông cạnh a, SA vuông góc với (ABCD), SA = a. Giao điểm AB và (SCD). Tính AI.",
+      "solid_spec": {
+        "apex": "S",
+        "base_vertices": [
+          "A",
+          "B",
+          "C",
+          "D"
+        ],
+        "quote": "Cho hình chóp S.ABCD",
+        "solid_name": "S.ABCD",
+        "solid_type": "pyramid"
+      },
+      "source_provenance": "Negative_ParallelNoIntersection"
+    },
+    {
+      "capability_label": "REFUSAL_CONTRADICTORY_DATA",
+      "case_id": "D05_contradictory_triangle_inequality",
+      "chart_premises": [
+        {
+          "id": "p1",
+          "kind": "length",
+          "measure": "segment",
+          "points": [
+            "A",
+            "B"
+          ],
+          "quotes": [
+            "AB = a"
+          ],
+          "role": "premise",
+          "value": "a"
+        },
+        {
+          "id": "p2",
+          "kind": "length",
+          "measure": "segment",
+          "points": [
+            "B",
+            "C"
+          ],
+          "quotes": [
+            "BC = a"
+          ],
+          "role": "premise",
+          "value": "a"
+        },
+        {
+          "id": "p3",
+          "kind": "length",
+          "measure": "segment",
+          "points": [
+            "A",
+            "C"
+          ],
+          "quotes": [
+            "AC = 5a"
+          ],
+          "role": "premise",
+          "value": "5a"
+        },
+        {
+          "id": "p4",
+          "kind": "perpendicular",
+          "points_a": [
+            "S",
+            "A"
+          ],
+          "points_b": [
+            "A",
+            "B",
+            "C"
+          ],
+          "quotes": [
+            "SA vuông góc với (ABC)"
+          ],
+          "role": "premise"
+        },
+        {
+          "id": "p5",
+          "kind": "length",
+          "measure": "segment",
+          "points": [
+            "S",
+            "A"
+          ],
+          "quotes": [
+            "SA = a"
+          ],
+          "role": "premise",
+          "value": "a"
+        }
+      ],
+      "expected_status": "CONTRADICTORY_CONSTRAINTS",
+      "goal_spec": {
+        "goal_kind": "distance_point_plane",
+        "length_unit": "a",
+        "operands": {
+          "plane": [
+            "S",
+            "B",
+            "C"
+          ],
+          "point": "A"
+        }
+      },
+      "group": "Group_D",
+      "independent_oracle": null,
+      "input_facts_sha256": "f46926f71ab53587700c7e8b4a7a5513c305378f91b0da4aaaab05a77bb1d41e",
+      "min_expected_plans": 1,
+      "problem_text": "Cho hình chóp S.ABC có AB = a, BC = a, AC = 5a, SA vuông góc với (ABC), SA = a. Tính khoảng cách từ A đến (SBC).",
+      "solid_spec": {
+        "apex": "S",
+        "base_vertices": [
+          "A",
+          "B",
+          "C"
+        ],
+        "quote": "Cho hình chóp S.ABC",
+        "solid_name": "S.ABC",
+        "solid_type": "pyramid"
+      },
+      "source_provenance": "Negative_ContradictoryTriangle"
+    },
+    {
+      "capability_label": "CASE_C_UNSUPPORTED_PRIMITIVE",
+      "case_id": "D06_unsupported_curved_tangent_sphere",
+      "chart_premises": [
+        {
+          "at": "B",
+          "id": "p1",
+          "kind": "right_angle",
+          "points": [
+            "A",
+            "C"
+          ],
+          "quotes": [
+            "đáy ABC là tam giác vuông cân tại B"
+          ],
+          "role": "premise"
+        },
+        {
+          "id": "p2",
+          "kind": "equal_lengths",
+          "points_a": [
+            "B",
+            "A"
+          ],
+          "points_b": [
+            "B",
+            "C"
+          ],
+          "quotes": [
+            "đáy ABC là tam giác vuông cân tại B"
+          ],
+          "role": "premise"
+        },
+        {
+          "id": "p3",
+          "kind": "length",
+          "measure": "segment",
+          "points": [
+            "A",
+            "B"
+          ],
+          "quotes": [
+            "AB = a"
+          ],
+          "role": "premise",
+          "value": "a"
+        },
+        {
+          "id": "p4",
+          "kind": "perpendicular",
+          "points_a": [
+            "S",
+            "A"
+          ],
+          "points_b": [
+            "A",
+            "B",
+            "C"
+          ],
+          "quotes": [
+            "SA vuông góc với (ABC)"
+          ],
+          "role": "premise"
+        },
+        {
+          "id": "p5",
+          "kind": "length",
+          "measure": "segment",
+          "points": [
+            "S",
+            "A"
+          ],
+          "quotes": [
+            "SA = a"
+          ],
+          "role": "premise",
+          "value": "a"
+        }
+      ],
+      "expected_status": "UNSUPPORTED_OPERATOR",
+      "goal_spec": {
+        "goal_kind": "unsupported_goal",
+        "length_unit": "a",
+        "operands": {
+          "reason": "Circumscribed tangent sphere locus construction is outside affine polyhedral operator inventory (Case C)."
+        }
+      },
+      "group": "Group_D",
+      "independent_oracle": null,
+      "input_facts_sha256": "819e6bba7939fa7169dddb1e002a918acaf0b9ae6baa41d7c0339061e3f62284",
+      "min_expected_plans": 1,
+      "problem_text": "Cho hình chóp S.ABC có đáy ABC là tam giác vuông cân tại B, AB = a, SA vuông góc với (ABC), SA = a. Xác định tâm mặt cầu tiếp xúc.",
+      "solid_spec": {
+        "apex": "S",
+        "base_vertices": [
+          "A",
+          "B",
+          "C"
+        ],
+        "quote": "Cho hình chóp S.ABC",
+        "solid_name": "S.ABC",
+        "solid_type": "pyramid"
+      },
+      "source_provenance": "Negative_UnsupportedNewPrimitive_CaseC"
+    },
+    {
+      "capability_label": "REFUSAL_UNDERDETERMINED",
+      "case_id": "D07_missing_base_right_angle_underdetermined",
+      "chart_premises": [
+        {
+          "id": "p1",
+          "kind": "length",
+          "measure": "segment",
+          "points": [
+            "A",
+            "B"
+          ],
+          "quotes": [
+            "AB = a"
+          ],
+          "role": "premise",
+          "value": "a"
+        },
+        {
+          "id": "p2",
+          "kind": "length",
+          "measure": "segment",
+          "points": [
+            "B",
+            "C"
+          ],
+          "quotes": [
+            "BC = a"
+          ],
+          "role": "premise",
+          "value": "a"
+        }
+      ],
+      "expected_status": "MISSING_PRECONDITION",
+      "goal_spec": {
+        "goal_kind": "solid_volume",
+        "length_unit": "a",
+        "operands": {
+          "apex": "S",
+          "base": [
+            "A",
+            "B",
+            "C"
+          ]
+        }
+      },
+      "group": "Group_D",
+      "independent_oracle": null,
+      "input_facts_sha256": "a29c3ab0cd3971ddf63ab4a49ed9dd6ea59017c2507d43837a5865bb41c8b7bd",
+      "min_expected_plans": 1,
+      "problem_text": "Cho hình chóp S.ABC có AB = a, BC = a. Tính thể tích khối chóp S.ABC.",
+      "solid_spec": {
+        "apex": "S",
+        "base_vertices": [
+          "A",
+          "B",
+          "C"
+        ],
+        "quote": "Cho hình chóp S.ABC",
+        "solid_name": "S.ABC",
+        "solid_type": "pyramid"
+      },
+      "source_provenance": "Negative_UnderdeterminedApex"
+    },
+    {
+      "capability_label": "MULTI_PLAN_EQUILATERAL_ALTITUDE",
+      "case_id": "E01_multiplan_d_A_SBC_equilateral",
+      "chart_premises": [
+        {
+          "id": "p1",
+          "kind": "polygon_shape",
+          "points": [
+            "A",
+            "B",
+            "C"
+          ],
+          "quotes": [
+            "đáy ABC là tam giác đều cạnh a"
+          ],
+          "role": "premise",
+          "shape": "equilateral_triangle"
+        },
+        {
+          "id": "p2",
+          "kind": "length",
+          "measure": "segment",
+          "points": [
+            "A",
+            "B"
+          ],
+          "quotes": [
+            "đáy ABC là tam giác đều cạnh a"
+          ],
+          "role": "premise",
+          "value": "a"
+        },
+        {
+          "id": "p3",
+          "kind": "perpendicular",
+          "points_a": [
+            "S",
+            "A"
+          ],
+          "points_b": [
+            "A",
+            "B",
+            "C"
+          ],
+          "quotes": [
+            "SA vuông góc với (ABC)"
+          ],
+          "role": "premise"
+        },
+        {
+          "id": "p4",
+          "kind": "length",
+          "measure": "segment",
+          "points": [
+            "S",
+            "A"
+          ],
+          "quotes": [
+            "SA = a"
+          ],
+          "role": "premise",
+          "value": "a"
+        }
+      ],
+      "expected_status": "GOAL_VERIFIED",
+      "goal_spec": {
+        "goal_kind": "distance_point_plane",
+        "length_unit": "a",
+        "operands": {
+          "plane": [
+            "S",
+            "B",
+            "C"
+          ],
+          "point": "A"
+        }
+      },
+      "group": "Group_E",
+      "independent_oracle": "a√21/7",
+      "input_facts_sha256": "d3834a82363f740cf2a6cb037691f1f24d900d807db7e8bb5230cae336c460e5",
+      "min_expected_plans": 2,
+      "problem_text": "Cho hình chóp S.ABC có đáy ABC là tam giác đều cạnh a, SA vuông góc với (ABC), SA = a. Tính khoảng cách từ A đến (SBC).",
+      "solid_spec": {
+        "apex": "S",
+        "base_vertices": [
+          "A",
+          "B",
+          "C"
+        ],
+        "quote": "Cho hình chóp S.ABC",
+        "solid_name": "S.ABC",
+        "solid_type": "pyramid"
+      },
+      "source_provenance": "MultiPlan_DirectVsSyntheticTwoStep_Equilateral"
+    },
+    {
+      "capability_label": "MULTI_PLAN_RIGHT_ALTITUDE",
+      "case_id": "E02_multiplan_d_A_SBC_right_B",
+      "chart_premises": [
+        {
+          "at": "B",
+          "id": "p1",
+          "kind": "right_angle",
+          "points": [
+            "A",
+            "C"
+          ],
+          "quotes": [
+            "đáy ABC là tam giác vuông cân tại B"
+          ],
+          "role": "premise"
+        },
+        {
+          "id": "p2",
+          "kind": "equal_lengths",
+          "points_a": [
+            "B",
+            "A"
+          ],
+          "points_b": [
+            "B",
+            "C"
+          ],
+          "quotes": [
+            "đáy ABC là tam giác vuông cân tại B"
+          ],
+          "role": "premise"
+        },
+        {
+          "id": "p3",
+          "kind": "length",
+          "measure": "segment",
+          "points": [
+            "A",
+            "B"
+          ],
+          "quotes": [
+            "AB = a"
+          ],
+          "role": "premise",
+          "value": "a"
+        },
+        {
+          "id": "p4",
+          "kind": "perpendicular",
+          "points_a": [
+            "S",
+            "A"
+          ],
+          "points_b": [
+            "A",
+            "B",
+            "C"
+          ],
+          "quotes": [
+            "SA vuông góc với (ABC)"
+          ],
+          "role": "premise"
+        },
+        {
+          "id": "p5",
+          "kind": "length",
+          "measure": "segment",
+          "points": [
+            "S",
+            "A"
+          ],
+          "quotes": [
+            "SA = a"
+          ],
+          "role": "premise",
+          "value": "a"
+        }
+      ],
+      "expected_status": "GOAL_VERIFIED",
+      "goal_spec": {
+        "goal_kind": "distance_point_plane",
+        "length_unit": "a",
+        "operands": {
+          "plane": [
+            "S",
+            "B",
+            "C"
+          ],
+          "point": "A"
+        }
+      },
+      "group": "Group_E",
+      "independent_oracle": "a√2/2",
+      "input_facts_sha256": "15336f606bcde463a02f9c48e4f0a7c116aeb9e8b78d60ef9e41044b45426e5e",
+      "min_expected_plans": 2,
+      "problem_text": "Cho hình chóp S.ABC có đáy ABC là tam giác vuông cân tại B, AB = a, SA vuông góc với (ABC), SA = a. Tính khoảng cách từ A đến (SBC).",
+      "solid_spec": {
+        "apex": "S",
+        "base_vertices": [
+          "A",
+          "B",
+          "C"
+        ],
+        "quote": "Cho hình chóp S.ABC",
+        "solid_name": "S.ABC",
+        "solid_type": "pyramid"
+      },
+      "source_provenance": "MultiPlan_DirectVsSyntheticTwoStep_RightB"
+    },
+    {
+      "capability_label": "MULTI_PLAN_SKEW_DISTANCE",
+      "case_id": "E03_multiplan_skew_d_SA_BC",
+      "chart_premises": [
+        {
+          "at": "B",
+          "id": "p1",
+          "kind": "right_angle",
+          "points": [
+            "A",
+            "C"
+          ],
+          "quotes": [
+            "đáy ABC là tam giác vuông cân tại B"
+          ],
+          "role": "premise"
+        },
+        {
+          "id": "p2",
+          "kind": "equal_lengths",
+          "points_a": [
+            "B",
+            "A"
+          ],
+          "points_b": [
+            "B",
+            "C"
+          ],
+          "quotes": [
+            "đáy ABC là tam giác vuông cân tại B"
+          ],
+          "role": "premise"
+        },
+        {
+          "id": "p3",
+          "kind": "length",
+          "measure": "segment",
+          "points": [
+            "A",
+            "B"
+          ],
+          "quotes": [
+            "AB = a"
+          ],
+          "role": "premise",
+          "value": "a"
+        },
+        {
+          "id": "p4",
+          "kind": "perpendicular",
+          "points_a": [
+            "S",
+            "A"
+          ],
+          "points_b": [
+            "A",
+            "B",
+            "C"
+          ],
+          "quotes": [
+            "SA vuông góc với (ABC)"
+          ],
+          "role": "premise"
+        },
+        {
+          "id": "p5",
+          "kind": "length",
+          "measure": "segment",
+          "points": [
+            "S",
+            "A"
+          ],
+          "quotes": [
+            "SA = a"
+          ],
+          "role": "premise",
+          "value": "a"
+        }
+      ],
+      "expected_status": "GOAL_VERIFIED",
+      "goal_spec": {
+        "goal_kind": "distance_skew_lines",
+        "length_unit": "a",
+        "operands": {
+          "line1": [
+            "S",
+            "A"
+          ],
+          "line2": [
+            "B",
+            "C"
+          ]
+        }
+      },
+      "group": "Group_E",
+      "independent_oracle": "a",
+      "input_facts_sha256": "86a802de6402d051685b5cd0fa81eabc049b616fe0debc51f0e5580f4291c660",
+      "min_expected_plans": 2,
+      "problem_text": "Cho hình chóp S.ABC có đáy ABC là tam giác vuông cân tại B, AB = a, SA vuông góc với (ABC), SA = a. Tính khoảng cách giữa SA và BC.",
+      "solid_spec": {
+        "apex": "S",
+        "base_vertices": [
+          "A",
+          "B",
+          "C"
+        ],
+        "quote": "Cho hình chóp S.ABC",
+        "solid_name": "S.ABC",
+        "solid_type": "pyramid"
+      },
+      "source_provenance": "MultiPlan_Skew_CommonPerpVsParallelPlane"
+    },
+    {
+      "capability_label": "MULTI_PLAN_SKEW_ANGLE",
+      "case_id": "E04_multiplan_skew_angle_cube_symmetric_anchors",
+      "chart_premises": [
+        {
+          "id": "p1",
+          "kind": "polygon_shape",
+          "points": [
+            "A",
+            "B",
+            "C",
+            "D"
+          ],
+          "quotes": [
+            "Cho hình lập phương ABCD.A'B'C'D' cạnh a"
+          ],
+          "role": "premise",
+          "shape": "square",
+          "value": "a"
+        },
+        {
+          "id": "p2",
+          "kind": "length",
+          "measure": "segment",
+          "points": [
+            "A",
+            "A'"
+          ],
+          "quotes": [
+            "Cho hình lập phương ABCD.A'B'C'D' cạnh a"
+          ],
+          "role": "premise",
+          "value": "a"
+        }
+      ],
+      "expected_status": "GOAL_VERIFIED",
+      "goal_spec": {
+        "goal_kind": "angle_lines",
+        "length_unit": "a",
+        "operands": {
+          "line1": [
+            "A",
+            "B'"
+          ],
+          "line2": [
+            "B",
+            "C'"
+          ]
+        }
+      },
+      "group": "Group_E",
+      "independent_oracle": "60°",
+      "input_facts_sha256": "34e5d7e7c8e4c00ca3c636e2b1a4b929fa847d14d8e8199c66f091cda1778776",
+      "min_expected_plans": 2,
+      "problem_text": "Cho hình lập phương ABCD.A'B'C'D' cạnh a. Tính góc giữa AB' và BC'.",
+      "solid_spec": {
+        "base_vertices": [
+          "A",
+          "B",
+          "C",
+          "D"
+        ],
+        "quote": "Cho hình lập phương ABCD.A'B'C'D' cạnh a",
+        "right": true,
+        "solid_name": "ABCD.A'B'C'D'",
+        "solid_type": "cube",
+        "top_vertices": [
+          "A'",
+          "B'",
+          "C'",
+          "D'"
+        ]
+      },
+      "source_provenance": "MultiPlan_SkewAngle_ParallelAtAVsParallelAtB"
+    },
+    {
+      "capability_label": "MULTI_PLAN_DIHEDRAL",
+      "case_id": "E05_multiplan_dihedral_linear_vs_synthetic",
+      "chart_premises": [
+        {
+          "id": "p1",
+          "kind": "polygon_shape",
+          "points": [
+            "A",
+            "B",
+            "C"
+          ],
+          "quotes": [
+            "đáy ABC là tam giác đều cạnh a"
+          ],
+          "role": "premise",
+          "shape": "equilateral_triangle"
+        },
+        {
+          "id": "p2",
+          "kind": "length",
+          "measure": "segment",
+          "points": [
+            "A",
+            "B"
+          ],
+          "quotes": [
+            "đáy ABC là tam giác đều cạnh a"
+          ],
+          "role": "premise",
+          "value": "a"
+        },
+        {
+          "id": "p3",
+          "kind": "perpendicular",
+          "points_a": [
+            "S",
+            "A"
+          ],
+          "points_b": [
+            "A",
+            "B",
+            "C"
+          ],
+          "quotes": [
+            "SA vuông góc với (ABC)"
+          ],
+          "role": "premise"
+        },
+        {
+          "id": "p4",
+          "kind": "length",
+          "measure": "segment",
+          "points": [
+            "S",
+            "A"
+          ],
+          "quotes": [
+            "SA = a"
+          ],
+          "role": "premise",
+          "value": "a"
+        }
+      ],
+      "expected_status": "GOAL_VERIFIED",
+      "goal_spec": {
+        "goal_kind": "angle_plane_plane",
+        "length_unit": "a",
+        "operands": {
+          "plane1": [
+            "S",
+            "B",
+            "C"
+          ],
+          "plane2": [
+            "A",
+            "B",
+            "C"
+          ]
+        }
+      },
+      "group": "Group_E",
+      "independent_oracle": "cos²=3/7",
+      "input_facts_sha256": "2e0e9f1f423362b14cd6ec38134bd281b52b7d18c491553540221726b9fcf1a4",
+      "min_expected_plans": 2,
+      "problem_text": "Cho hình chóp S.ABC có đáy ABC là tam giác đều cạnh a, SA vuông góc với (ABC), SA = a. Tính góc giữa (SBC) và (ABC).",
+      "solid_spec": {
+        "apex": "S",
+        "base_vertices": [
+          "A",
+          "B",
+          "C"
+        ],
+        "quote": "Cho hình chóp S.ABC",
+        "solid_name": "S.ABC",
+        "solid_type": "pyramid"
+      },
+      "source_provenance": "MultiPlan_Dihedral_DirectLinearVsOrthPlane"
+    }
+  ],
+  "exact_verifier_identity": "construction-exact-verifier/1",
+  "generated_at_utc": "2026-11-19T00:51:00Z",
+  "git_commit": "498f354608c45ce98ba4f75a0222afbe56139ce2",
+  "graph_schema_version": "verified-construction-graph/1",
+  "operator_inventory_version": "construction-operator/1",
+  "run_id": "axo-construction-verified-graph-dynamic-planner-feasibility",
+  "schema": "axo-gold-construction-benchmark-manifest/1",
+  "search_algorithm": "bounded_best_first_dependency_aware_search",
+  "search_budget": {
+    "max_candidate_operators": 600,
+    "max_depth": 8,
+    "max_expanded_states": 250,
+    "max_graph_nodes": 96,
+    "max_memory_mb": 128.0,
+    "max_plans": 3,
+    "max_wall_clock_ms": 2000.0
+  },
+  "test_seed": 0,
+  "total_cases": 40
+}

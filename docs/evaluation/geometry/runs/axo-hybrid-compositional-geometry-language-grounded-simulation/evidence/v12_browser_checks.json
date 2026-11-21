@@ -1,0 +1,7252 @@
+{
+  "schema": "axo-v12-browser-checks/1",
+  "base": "http://127.0.0.1:4173",
+  "total_cases": 139,
+  "served_count": 88,
+  "initial_visual_pass": 88,
+  "interaction_pass": 88,
+  "external_requests_count": 0,
+  "external_requests": [],
+  "console_error_cases": [],
+  "results": [
+    {
+      "case_id": "V001",
+      "group": "valid",
+      "expected_behavior": "SERVE",
+      "route_status": "SERVED",
+      "extraction_mode": "LOCAL_DETERMINISTIC_PARSER",
+      "http": 200,
+      "ms": 969,
+      "surface": "SCENE",
+      "initial_visual_ok": true,
+      "stale_vs_previous": false,
+      "has_canvas": true,
+      "canvas_rect": {
+        "w": 1006,
+        "h": 814
+      },
+      "label_texts": [
+        "E",
+        "F",
+        "G",
+        "H",
+        "K"
+      ],
+      "label_positions": {
+        "E": [
+          447,
+          472
+        ],
+        "F": [
+          316,
+          593
+        ],
+        "G": [
+          559,
+          685
+        ],
+        "H": [
+          672,
+          541
+        ],
+        "K": [
+          454,
+          150
+        ]
+      },
+      "outside_initial_labels": [],
+      "missing_gold_labels": [],
+      "vertex_marker_count": 5,
+      "outside_initial_ndc_vertices": [],
+      "camera_position": [
+        6.444429113923181,
+        4.090511398156086,
+        4.12383517968974
+      ],
+      "progress_text": "Bước 5/5",
+      "canvas_ink_fraction": 0.93168,
+      "interactions": {
+        "ok": true,
+        "orbit_ok": true,
+        "orbit_label_shift_px": 122.7,
+        "orbit_cam_delta": 4.271,
+        "zoom_ok": true,
+        "zoom_cam_delta": 0.675,
+        "step_status": "ok",
+        "reset_ok": true,
+        "outside_after_reset": [],
+        "extra_analyze_requests": 0
+      },
+      "console_errors": []
+    },
+    {
+      "case_id": "V002",
+      "group": "valid",
+      "expected_behavior": "SERVE",
+      "route_status": "SERVED",
+      "extraction_mode": "LOCAL_SLM_GROUNDED",
+      "http": 200,
+      "ms": 9148,
+      "surface": "SCENE",
+      "initial_visual_ok": true,
+      "stale_vs_previous": false,
+      "has_canvas": true,
+      "canvas_rect": {
+        "w": 1006,
+        "h": 814
+      },
+      "label_texts": [
+        "M",
+        "N",
+        "P",
+        "Q",
+        "S"
+      ],
+      "label_positions": {
+        "M": [
+          422,
+          471
+        ],
+        "N": [
+          305,
+          579
+        ],
+        "P": [
+          598,
+          684
+        ],
+        "Q": [
+          693,
+          553
+        ],
+        "S": [
+          431,
+          150
+        ]
+      },
+      "outside_initial_labels": [],
+      "missing_gold_labels": [],
+      "vertex_marker_count": 5,
+      "outside_initial_ndc_vertices": [],
+      "camera_position": [
+        10.602699643668842,
+        7.1136992650975674,
+        6.877268086710669
+      ],
+      "progress_text": "Bước 5/5",
+      "canvas_ink_fraction": 0.93221,
+      "interactions": {
+        "ok": true,
+        "orbit_ok": true,
+        "orbit_label_shift_px": 122,
+        "orbit_cam_delta": 7.301,
+        "zoom_ok": true,
+        "zoom_cam_delta": 1.031,
+        "step_status": "ok",
+        "reset_ok": true,
+        "outside_after_reset": [],
+        "extra_analyze_requests": 0
+      },
+      "console_errors": []
+    },
+    {
+      "case_id": "V003",
+      "group": "valid",
+      "expected_behavior": "SERVE",
+      "route_status": "SERVED",
+      "extraction_mode": "LOCAL_DETERMINISTIC_PARSER",
+      "http": 200,
+      "ms": 162,
+      "surface": "SCENE",
+      "initial_visual_ok": true,
+      "stale_vs_previous": false,
+      "has_canvas": true,
+      "canvas_rect": {
+        "w": 1006,
+        "h": 814
+      },
+      "label_texts": [
+        "A",
+        "B",
+        "C",
+        "P"
+      ],
+      "label_positions": {
+        "A": [
+          461,
+          525
+        ],
+        "B": [
+          345,
+          629
+        ],
+        "C": [
+          637,
+          602
+        ],
+        "P": [
+          455,
+          149
+        ]
+      },
+      "outside_initial_labels": [],
+      "missing_gold_labels": [],
+      "vertex_marker_count": 4,
+      "outside_initial_ndc_vertices": [],
+      "camera_position": [
+        6.844787325496095,
+        2.8223439443802194,
+        3.4372719528892155
+      ],
+      "progress_text": "Bước 5/5",
+      "canvas_ink_fraction": 0.92962,
+      "interactions": {
+        "ok": true,
+        "orbit_ok": true,
+        "orbit_label_shift_px": 125.2,
+        "orbit_cam_delta": 4.362,
+        "zoom_ok": true,
+        "zoom_cam_delta": 0.598,
+        "step_status": "ok",
+        "reset_ok": true,
+        "outside_after_reset": [],
+        "extra_analyze_requests": 0
+      },
+      "console_errors": []
+    },
+    {
+      "case_id": "V004",
+      "group": "valid",
+      "expected_behavior": "SERVE",
+      "route_status": "SERVED",
+      "extraction_mode": "LOCAL_DETERMINISTIC_PARSER",
+      "http": 200,
+      "ms": 166,
+      "surface": "SCENE",
+      "initial_visual_ok": true,
+      "stale_vs_previous": false,
+      "has_canvas": true,
+      "canvas_rect": {
+        "w": 1006,
+        "h": 814
+      },
+      "label_texts": [
+        "M",
+        "N",
+        "P",
+        "Q",
+        "M'",
+        "N'",
+        "P'",
+        "Q'"
+      ],
+      "label_positions": {
+        "M": [
+          276,
+          561
+        ],
+        "N": [
+          469,
+          723
+        ],
+        "P": [
+          713,
+          585
+        ],
+        "Q": [
+          508,
+          487
+        ],
+        "M'": [
+          241,
+          260
+        ],
+        "N'": [
+          464,
+          339
+        ],
+        "P'": [
+          751,
+          273
+        ],
+        "Q'": [
+          510,
+          207
+        ]
+      },
+      "outside_initial_labels": [],
+      "missing_gold_labels": [],
+      "vertex_marker_count": 8,
+      "outside_initial_ndc_vertices": [],
+      "camera_position": [
+        7.395215687982736,
+        -3.4466733094968323,
+        5.088544041373432
+      ],
+      "progress_text": "Bước 5/5",
+      "canvas_ink_fraction": 0.93863,
+      "interactions": {
+        "ok": true,
+        "orbit_ok": true,
+        "orbit_label_shift_px": 225.8,
+        "orbit_cam_delta": 4.995,
+        "zoom_ok": true,
+        "zoom_cam_delta": 0.837,
+        "step_status": "ok",
+        "reset_ok": true,
+        "outside_after_reset": [],
+        "extra_analyze_requests": 0
+      },
+      "console_errors": []
+    },
+    {
+      "case_id": "V005",
+      "group": "valid",
+      "expected_behavior": "SERVE",
+      "route_status": "SERVED",
+      "extraction_mode": "LOCAL_DETERMINISTIC_PARSER",
+      "http": 200,
+      "ms": 159,
+      "surface": "SCENE",
+      "initial_visual_ok": true,
+      "stale_vs_previous": false,
+      "has_canvas": true,
+      "canvas_rect": {
+        "w": 1006,
+        "h": 814
+      },
+      "label_texts": [
+        "E",
+        "F",
+        "G",
+        "H",
+        "E'",
+        "F'",
+        "G'",
+        "H'"
+      ],
+      "label_positions": {
+        "E": [
+          231,
+          608
+        ],
+        "F": [
+          341,
+          720
+        ],
+        "G": [
+          722,
+          527
+        ],
+        "H": [
+          605,
+          445
+        ],
+        "E'": [
+          183,
+          307
+        ],
+        "F'": [
+          298,
+          388
+        ],
+        "G'": [
+          753,
+          256
+        ],
+        "H'": [
+          608,
+          217
+        ]
+      },
+      "outside_initial_labels": [],
+      "missing_gold_labels": [],
+      "vertex_marker_count": 8,
+      "outside_initial_ndc_vertices": [],
+      "camera_position": [
+        7.302622552183748,
+        -2.7885282589869904,
+        5.336541324648993
+      ],
+      "progress_text": "Bước 5/5",
+      "canvas_ink_fraction": 0.93939,
+      "interactions": {
+        "ok": true,
+        "orbit_ok": true,
+        "orbit_label_shift_px": 304.6,
+        "orbit_cam_delta": 5.406,
+        "zoom_ok": true,
+        "zoom_cam_delta": 0.874,
+        "step_status": "ok",
+        "reset_ok": true,
+        "outside_after_reset": [],
+        "extra_analyze_requests": 0
+      },
+      "console_errors": []
+    },
+    {
+      "case_id": "V006",
+      "group": "valid",
+      "expected_behavior": "SERVE",
+      "route_status": "REFUSED",
+      "extraction_mode": "LOCAL_SLM_GROUNDED",
+      "http": 200,
+      "ms": 3541,
+      "surface": "NO_SCENE",
+      "reason_code": null,
+      "canvas_count": 0,
+      "toast": "Đề bài chưa được hỗ trợ | Hệ chưa đối chiếu được đầy đủ dữ kiện với đề bài nên tạm dừng dựng hình. Bạn có thể thử các bài về thiết diện, khoảng cách, góc hoặc thể tích.",
+      "console_errors": []
+    },
+    {
+      "case_id": "V007",
+      "group": "valid",
+      "expected_behavior": "SERVE",
+      "route_status": "SERVED",
+      "extraction_mode": "LOCAL_DETERMINISTIC_PARSER",
+      "http": 200,
+      "ms": 145,
+      "surface": "SCENE",
+      "initial_visual_ok": true,
+      "stale_vs_previous": false,
+      "has_canvas": true,
+      "canvas_rect": {
+        "w": 1006,
+        "h": 814
+      },
+      "label_texts": [
+        "E",
+        "F",
+        "G",
+        "K",
+        "O"
+      ],
+      "label_positions": {
+        "E": [
+          220,
+          515
+        ],
+        "F": [
+          591,
+          720
+        ],
+        "G": [
+          631,
+          444
+        ],
+        "K": [
+          471,
+          237
+        ],
+        "O": [
+          473,
+          556
+        ]
+      },
+      "outside_initial_labels": [],
+      "missing_gold_labels": [],
+      "vertex_marker_count": 5,
+      "outside_initial_ndc_vertices": [],
+      "camera_position": [
+        3.2724166997705555,
+        -1.986472929197637,
+        2.1326383745753192
+      ],
+      "progress_text": "Bước 5/5",
+      "canvas_ink_fraction": 0.93192,
+      "interactions": {
+        "ok": true,
+        "orbit_ok": true,
+        "orbit_label_shift_px": 171.8,
+        "orbit_cam_delta": 2.34,
+        "zoom_ok": true,
+        "zoom_cam_delta": 0.375,
+        "step_status": "ok",
+        "reset_ok": true,
+        "outside_after_reset": [],
+        "extra_analyze_requests": 0
+      },
+      "console_errors": []
+    },
+    {
+      "case_id": "V008",
+      "group": "valid",
+      "expected_behavior": "SERVE",
+      "route_status": "REFUSED",
+      "extraction_mode": "LOCAL_DETERMINISTIC_PARSER",
+      "http": 200,
+      "ms": 127,
+      "surface": "NO_SCENE",
+      "reason_code": null,
+      "canvas_count": 0,
+      "toast": "Axo chưa hỗ trợ phép dựng này | Đề này cần một phép dựng hoặc một dạng câu hỏi mà hệ chưa hỗ trợ, nên hệ không dựng một hình gần đúng. Bạn có thể thử các bài về thiết diện, khoảng cách, góc hoặc thể tích.",
+      "console_errors": []
+    },
+    {
+      "case_id": "V009",
+      "group": "valid",
+      "expected_behavior": "SERVE",
+      "route_status": "SERVED",
+      "extraction_mode": "LOCAL_DETERMINISTIC_PARSER",
+      "http": 200,
+      "ms": 127,
+      "surface": "SCENE",
+      "initial_visual_ok": true,
+      "stale_vs_previous": false,
+      "has_canvas": true,
+      "canvas_rect": {
+        "w": 1006,
+        "h": 814
+      },
+      "label_texts": [
+        "M",
+        "N",
+        "P",
+        "Q",
+        "S"
+      ],
+      "label_positions": {
+        "M": [
+          432,
+          402
+        ],
+        "N": [
+          238,
+          572
+        ],
+        "P": [
+          591,
+          721
+        ],
+        "Q": [
+          737,
+          493
+        ],
+        "S": [
+          442,
+          192
+        ]
+      },
+      "outside_initial_labels": [],
+      "missing_gold_labels": [],
+      "vertex_marker_count": 5,
+      "outside_initial_ndc_vertices": [],
+      "camera_position": [
+        9.35242101007423,
+        6.139259816659221,
+        6.193280673382817
+      ],
+      "progress_text": "Bước 5/5",
+      "canvas_ink_fraction": 0.9347,
+      "interactions": {
+        "ok": true,
+        "orbit_ok": true,
+        "orbit_label_shift_px": 172.3,
+        "orbit_cam_delta": 5.738,
+        "zoom_ok": true,
+        "zoom_cam_delta": 0.955,
+        "step_status": "ok",
+        "reset_ok": true,
+        "outside_after_reset": [],
+        "extra_analyze_requests": 0
+      },
+      "console_errors": []
+    },
+    {
+      "case_id": "V010",
+      "group": "valid",
+      "expected_behavior": "SERVE",
+      "route_status": "SERVED",
+      "extraction_mode": "LOCAL_DETERMINISTIC_PARSER",
+      "http": 200,
+      "ms": 118,
+      "surface": "SCENE",
+      "initial_visual_ok": true,
+      "stale_vs_previous": false,
+      "has_canvas": true,
+      "canvas_rect": {
+        "w": 1006,
+        "h": 814
+      },
+      "label_texts": [
+        "A",
+        "B",
+        "C",
+        "D",
+        "S"
+      ],
+      "label_positions": {
+        "A": [
+          421,
+          396
+        ],
+        "B": [
+          244,
+          618
+        ],
+        "C": [
+          621,
+          720
+        ],
+        "D": [
+          712,
+          450
+        ],
+        "S": [
+          427,
+          202
+        ]
+      },
+      "outside_initial_labels": [],
+      "missing_gold_labels": [],
+      "vertex_marker_count": 5,
+      "outside_initial_ndc_vertices": [],
+      "camera_position": [
+        11.116781612239237,
+        4.999992720235606,
+        6.611180298175228
+      ],
+      "progress_text": "Bước 5/5",
+      "canvas_ink_fraction": 0.93479,
+      "interactions": {
+        "ok": true,
+        "orbit_ok": true,
+        "orbit_label_shift_px": 201.9,
+        "orbit_cam_delta": 6.173,
+        "zoom_ok": true,
+        "zoom_cam_delta": 1.084,
+        "step_status": "ok",
+        "reset_ok": true,
+        "outside_after_reset": [],
+        "extra_analyze_requests": 0
+      },
+      "console_errors": []
+    },
+    {
+      "case_id": "V011",
+      "group": "valid",
+      "expected_behavior": "SERVE",
+      "route_status": "SERVED",
+      "extraction_mode": "LOCAL_DETERMINISTIC_PARSER",
+      "http": 200,
+      "ms": 134,
+      "surface": "SCENE",
+      "initial_visual_ok": true,
+      "stale_vs_previous": false,
+      "has_canvas": true,
+      "canvas_rect": {
+        "w": 1006,
+        "h": 814
+      },
+      "label_texts": [
+        "E",
+        "F",
+        "G",
+        "H",
+        "K",
+        "O"
+      ],
+      "label_positions": {
+        "E": [
+          208,
+          512
+        ],
+        "F": [
+          371,
+          719
+        ],
+        "G": [
+          833,
+          576
+        ],
+        "H": [
+          569,
+          443
+        ],
+        "K": [
+          495,
+          210
+        ],
+        "O": [
+          503,
+          558
+        ]
+      },
+      "outside_initial_labels": [],
+      "missing_gold_labels": [],
+      "vertex_marker_count": 6,
+      "outside_initial_ndc_vertices": [],
+      "camera_position": [
+        4.307147211271721,
+        -0.9093823326774493,
+        1.55356499391635
+      ],
+      "progress_text": "Bước 5/5",
+      "canvas_ink_fraction": 0.93677,
+      "interactions": {
+        "ok": true,
+        "orbit_ok": true,
+        "orbit_label_shift_px": 282.3,
+        "orbit_cam_delta": 2.45,
+        "zoom_ok": true,
+        "zoom_cam_delta": 0.439,
+        "step_status": "ok",
+        "reset_ok": true,
+        "outside_after_reset": [],
+        "extra_analyze_requests": 0
+      },
+      "console_errors": []
+    },
+    {
+      "case_id": "V012",
+      "group": "valid",
+      "expected_behavior": "SERVE",
+      "route_status": "SERVED",
+      "extraction_mode": "LOCAL_DETERMINISTIC_PARSER",
+      "http": 200,
+      "ms": 152,
+      "surface": "SCENE",
+      "initial_visual_ok": true,
+      "stale_vs_previous": false,
+      "has_canvas": true,
+      "canvas_rect": {
+        "w": 1006,
+        "h": 814
+      },
+      "label_texts": [
+        "P",
+        "Q",
+        "R",
+        "P'",
+        "Q'",
+        "R'"
+      ],
+      "label_positions": {
+        "P": [
+          296,
+          570
+        ],
+        "Q": [
+          555,
+          710
+        ],
+        "R": [
+          597,
+          520
+        ],
+        "P'": [
+          264,
+          253
+        ],
+        "Q'": [
+          550,
+          320
+        ],
+        "R'": [
+          603,
+          221
+        ]
+      },
+      "outside_initial_labels": [],
+      "missing_gold_labels": [],
+      "vertex_marker_count": 6,
+      "outside_initial_ndc_vertices": [],
+      "camera_position": [
+        6.2108852009319815,
+        -4.531682607926252,
+        4.917492516625952
+      ],
+      "progress_text": "Bước 5/5",
+      "canvas_ink_fraction": 0.93375,
+      "interactions": {
+        "ok": true,
+        "orbit_ok": true,
+        "orbit_label_shift_px": 177.1,
+        "orbit_cam_delta": 4.916,
+        "zoom_ok": true,
+        "zoom_cam_delta": 0.727,
+        "step_status": "ok",
+        "reset_ok": true,
+        "outside_after_reset": [],
+        "extra_analyze_requests": 0
+      },
+      "console_errors": []
+    },
+    {
+      "case_id": "V013",
+      "group": "valid",
+      "expected_behavior": "SERVE",
+      "route_status": "SERVED",
+      "extraction_mode": "LOCAL_DETERMINISTIC_PARSER",
+      "http": 200,
+      "ms": 150,
+      "surface": "SCENE",
+      "initial_visual_ok": true,
+      "stale_vs_previous": false,
+      "has_canvas": true,
+      "canvas_rect": {
+        "w": 1006,
+        "h": 814
+      },
+      "label_texts": [
+        "N",
+        "P",
+        "Q",
+        "M",
+        "O"
+      ],
+      "label_positions": {
+        "N": [
+          238,
+          532
+        ],
+        "P": [
+          580,
+          721
+        ],
+        "Q": [
+          623,
+          464
+        ],
+        "M": [
+          470,
+          201
+        ],
+        "O": [
+          475,
+          570
+        ]
+      },
+      "outside_initial_labels": [],
+      "missing_gold_labels": [],
+      "vertex_marker_count": 5,
+      "outside_initial_ndc_vertices": [],
+      "camera_position": [
+        3.457575550889149,
+        -2.2071366552188363,
+        2.3952106277197363
+      ],
+      "progress_text": "Bước 5/5",
+      "canvas_ink_fraction": 0.93185,
+      "interactions": {
+        "ok": true,
+        "orbit_ok": true,
+        "orbit_label_shift_px": 157.9,
+        "orbit_cam_delta": 2.506,
+        "zoom_ok": true,
+        "zoom_cam_delta": 0.418,
+        "step_status": "ok",
+        "reset_ok": true,
+        "outside_after_reset": [],
+        "extra_analyze_requests": 0
+      },
+      "console_errors": []
+    },
+    {
+      "case_id": "V014",
+      "group": "valid",
+      "expected_behavior": "SERVE",
+      "route_status": "SERVED",
+      "extraction_mode": "LOCAL_DETERMINISTIC_PARSER",
+      "http": 200,
+      "ms": 220,
+      "surface": "SCENE",
+      "initial_visual_ok": true,
+      "stale_vs_previous": false,
+      "has_canvas": true,
+      "canvas_rect": {
+        "w": 1006,
+        "h": 814
+      },
+      "label_texts": [
+        "M",
+        "N",
+        "Q",
+        "R",
+        "P",
+        "O"
+      ],
+      "label_positions": {
+        "M": [
+          308,
+          538
+        ],
+        "N": [
+          431,
+          693
+        ],
+        "Q": [
+          692,
+          593
+        ],
+        "R": [
+          551,
+          467
+        ],
+        "P": [
+          495,
+          149
+        ],
+        "O": [
+          503,
+          576
+        ]
+      },
+      "outside_initial_labels": [],
+      "missing_gold_labels": [],
+      "vertex_marker_count": 6,
+      "outside_initial_ndc_vertices": [],
+      "camera_position": [
+        6.0911610187961065,
+        -1.9393831846896643,
+        3.866313778545635
+      ],
+      "progress_text": "Bước 5/5",
+      "canvas_ink_fraction": 0.93223,
+      "interactions": {
+        "ok": true,
+        "orbit_ok": true,
+        "orbit_label_shift_px": 148.1,
+        "orbit_cam_delta": 3.896,
+        "zoom_ok": true,
+        "zoom_cam_delta": 0.621,
+        "step_status": "ok",
+        "reset_ok": true,
+        "outside_after_reset": [],
+        "extra_analyze_requests": 0
+      },
+      "console_errors": []
+    },
+    {
+      "case_id": "V015",
+      "group": "valid",
+      "expected_behavior": "SERVE",
+      "route_status": "SERVED",
+      "extraction_mode": "LOCAL_DETERMINISTIC_PARSER",
+      "http": 200,
+      "ms": 138,
+      "surface": "SCENE",
+      "initial_visual_ok": true,
+      "stale_vs_previous": false,
+      "has_canvas": true,
+      "canvas_rect": {
+        "w": 1006,
+        "h": 814
+      },
+      "label_texts": [
+        "M",
+        "N",
+        "P",
+        "Q",
+        "M'",
+        "N'",
+        "P'",
+        "Q'"
+      ],
+      "label_positions": {
+        "M": [
+          276,
+          561
+        ],
+        "N": [
+          469,
+          723
+        ],
+        "P": [
+          713,
+          585
+        ],
+        "Q": [
+          508,
+          487
+        ],
+        "M'": [
+          241,
+          260
+        ],
+        "N'": [
+          464,
+          339
+        ],
+        "P'": [
+          751,
+          273
+        ],
+        "Q'": [
+          510,
+          207
+        ]
+      },
+      "outside_initial_labels": [],
+      "missing_gold_labels": [],
+      "vertex_marker_count": 8,
+      "outside_initial_ndc_vertices": [],
+      "camera_position": [
+        3.486138106620115,
+        -1.624777379357947,
+        2.398762664714865
+      ],
+      "progress_text": "Bước 5/5",
+      "canvas_ink_fraction": 0.93859,
+      "interactions": {
+        "ok": true,
+        "orbit_ok": true,
+        "orbit_label_shift_px": 232.7,
+        "orbit_cam_delta": 2.43,
+        "zoom_ok": true,
+        "zoom_cam_delta": 0.361,
+        "step_status": "ok",
+        "reset_ok": true,
+        "outside_after_reset": [],
+        "extra_analyze_requests": 0
+      },
+      "console_errors": []
+    },
+    {
+      "case_id": "V016",
+      "group": "valid",
+      "expected_behavior": "SERVE",
+      "route_status": "SERVED",
+      "extraction_mode": "LOCAL_DETERMINISTIC_PARSER",
+      "http": 200,
+      "ms": 171,
+      "surface": "SCENE",
+      "initial_visual_ok": true,
+      "stale_vs_previous": false,
+      "has_canvas": true,
+      "canvas_rect": {
+        "w": 1006,
+        "h": 814
+      },
+      "label_texts": [
+        "E",
+        "F",
+        "G",
+        "K"
+      ],
+      "label_positions": {
+        "E": [
+          739,
+          490
+        ],
+        "F": [
+          423,
+          530
+        ],
+        "G": [
+          204,
+          717
+        ],
+        "K": [
+          404,
+          159
+        ]
+      },
+      "outside_initial_labels": [],
+      "missing_gold_labels": [],
+      "vertex_marker_count": 4,
+      "outside_initial_ndc_vertices": [],
+      "camera_position": [
+        2.38440303778003,
+        4.956307694924342,
+        2.3417247464204225
+      ],
+      "progress_text": "Bước 5/5",
+      "canvas_ink_fraction": 0.93419,
+      "interactions": {
+        "ok": true,
+        "orbit_ok": true,
+        "orbit_label_shift_px": 276,
+        "orbit_cam_delta": 2.834,
+        "zoom_ok": true,
+        "zoom_cam_delta": 0.494,
+        "step_status": "ok",
+        "reset_ok": true,
+        "outside_after_reset": [],
+        "extra_analyze_requests": 0
+      },
+      "console_errors": []
+    },
+    {
+      "case_id": "V017",
+      "group": "valid",
+      "expected_behavior": "SERVE",
+      "route_status": "SERVED",
+      "extraction_mode": "LOCAL_DETERMINISTIC_PARSER",
+      "http": 200,
+      "ms": 142,
+      "surface": "SCENE",
+      "initial_visual_ok": true,
+      "stale_vs_previous": false,
+      "has_canvas": true,
+      "canvas_rect": {
+        "w": 1006,
+        "h": 814
+      },
+      "label_texts": [
+        "M",
+        "N",
+        "P",
+        "Q",
+        "H"
+      ],
+      "label_positions": {
+        "M": [
+          432,
+          402
+        ],
+        "N": [
+          238,
+          572
+        ],
+        "P": [
+          591,
+          721
+        ],
+        "Q": [
+          737,
+          493
+        ],
+        "H": [
+          440,
+          191
+        ]
+      },
+      "outside_initial_labels": [],
+      "missing_gold_labels": [],
+      "vertex_marker_count": 5,
+      "outside_initial_ndc_vertices": [],
+      "camera_position": [
+        9.35242101007423,
+        6.139259816659221,
+        6.193280673382817
+      ],
+      "progress_text": "Bước 5/5",
+      "canvas_ink_fraction": 0.93468,
+      "interactions": {
+        "ok": true,
+        "orbit_ok": true,
+        "orbit_label_shift_px": 174.2,
+        "orbit_cam_delta": 5.807,
+        "zoom_ok": true,
+        "zoom_cam_delta": 0.906,
+        "step_status": "ok",
+        "reset_ok": true,
+        "outside_after_reset": [],
+        "extra_analyze_requests": 0
+      },
+      "console_errors": []
+    },
+    {
+      "case_id": "V018",
+      "group": "valid",
+      "expected_behavior": "SERVE",
+      "route_status": "SERVED",
+      "extraction_mode": "LOCAL_DETERMINISTIC_PARSER",
+      "http": 200,
+      "ms": 146,
+      "surface": "SCENE",
+      "initial_visual_ok": true,
+      "stale_vs_previous": false,
+      "has_canvas": true,
+      "canvas_rect": {
+        "w": 1006,
+        "h": 814
+      },
+      "label_texts": [
+        "A",
+        "B",
+        "C",
+        "D",
+        "S"
+      ],
+      "label_positions": {
+        "A": [
+          391,
+          437
+        ],
+        "B": [
+          259,
+          554
+        ],
+        "C": [
+          668,
+          718
+        ],
+        "D": [
+          759,
+          554
+        ],
+        "S": [
+          389,
+          150
+        ]
+      },
+      "outside_initial_labels": [],
+      "missing_gold_labels": [],
+      "vertex_marker_count": 5,
+      "outside_initial_ndc_vertices": [],
+      "camera_position": [
+        3.143380440803467,
+        2.320013029392824,
+        2.3342503796189766
+      ],
+      "progress_text": "Bước 5/5",
+      "canvas_ink_fraction": 0.93514,
+      "interactions": {
+        "ok": true,
+        "orbit_ok": true,
+        "orbit_label_shift_px": 155.2,
+        "orbit_cam_delta": 2.112,
+        "zoom_ok": true,
+        "zoom_cam_delta": 0.315,
+        "step_status": "ok",
+        "reset_ok": true,
+        "outside_after_reset": [],
+        "extra_analyze_requests": 0
+      },
+      "console_errors": []
+    },
+    {
+      "case_id": "V019",
+      "group": "valid",
+      "expected_behavior": "SERVE",
+      "route_status": "SERVED",
+      "extraction_mode": "LOCAL_SLM_GROUNDED",
+      "http": 200,
+      "ms": 5895,
+      "surface": "SCENE",
+      "initial_visual_ok": true,
+      "stale_vs_previous": false,
+      "has_canvas": true,
+      "canvas_rect": {
+        "w": 1006,
+        "h": 814
+      },
+      "label_texts": [
+        "E",
+        "F",
+        "G",
+        "K",
+        "M"
+      ],
+      "label_positions": {
+        "E": [
+          173,
+          526
+        ],
+        "F": [
+          501,
+          719
+        ],
+        "G": [
+          655,
+          343
+        ],
+        "K": [
+          235,
+          379
+        ],
+        "M": [
+          301,
+          619
+        ]
+      },
+      "outside_initial_labels": [],
+      "missing_gold_labels": [],
+      "vertex_marker_count": 5,
+      "outside_initial_ndc_vertices": [],
+      "camera_position": [
+        4.084660278568686,
+        -2.1739105759335606,
+        2.601114798306679
+      ],
+      "progress_text": "Bước 5/5",
+      "canvas_ink_fraction": 0.93205,
+      "interactions": {
+        "ok": true,
+        "orbit_ok": true,
+        "orbit_label_shift_px": 264.6,
+        "orbit_cam_delta": 3.322,
+        "zoom_ok": true,
+        "zoom_cam_delta": 0.471,
+        "step_status": "ok",
+        "reset_ok": true,
+        "outside_after_reset": [],
+        "extra_analyze_requests": 0
+      },
+      "console_errors": []
+    },
+    {
+      "case_id": "V020",
+      "group": "valid",
+      "expected_behavior": "SERVE",
+      "route_status": "SERVED",
+      "extraction_mode": "LOCAL_DETERMINISTIC_PARSER",
+      "http": 200,
+      "ms": 134,
+      "surface": "SCENE",
+      "initial_visual_ok": true,
+      "stale_vs_previous": false,
+      "has_canvas": true,
+      "canvas_rect": {
+        "w": 1006,
+        "h": 814
+      },
+      "label_texts": [
+        "E",
+        "F",
+        "G",
+        "K",
+        "G1"
+      ],
+      "label_positions": {
+        "E": [
+          436,
+          507
+        ],
+        "F": [
+          405,
+          622
+        ],
+        "G": [
+          605,
+          581
+        ],
+        "K": [
+          445,
+          150
+        ],
+        "G1": [
+          494,
+          429
+        ]
+      },
+      "outside_initial_labels": [],
+      "missing_gold_labels": [],
+      "vertex_marker_count": 6,
+      "outside_initial_ndc_vertices": [],
+      "camera_position": [
+        9.037682273164728,
+        2.0888201727096467,
+        5.3650398957770795
+      ],
+      "progress_text": "Bước 7/7",
+      "canvas_ink_fraction": 0.92781,
+      "interactions": {
+        "ok": true,
+        "orbit_ok": true,
+        "orbit_label_shift_px": 87.7,
+        "orbit_cam_delta": 5.399,
+        "zoom_ok": true,
+        "zoom_cam_delta": 0.915,
+        "step_status": "ok",
+        "reset_ok": true,
+        "outside_after_reset": [],
+        "extra_analyze_requests": 0
+      },
+      "console_errors": []
+    },
+    {
+      "case_id": "V021",
+      "group": "valid",
+      "expected_behavior": "SERVE",
+      "route_status": "SERVED",
+      "extraction_mode": "LOCAL_DETERMINISTIC_PARSER",
+      "http": 200,
+      "ms": 152,
+      "surface": "SCENE",
+      "initial_visual_ok": true,
+      "stale_vs_previous": false,
+      "has_canvas": true,
+      "canvas_rect": {
+        "w": 1006,
+        "h": 814
+      },
+      "label_texts": [
+        "M",
+        "N",
+        "P",
+        "Q",
+        "S",
+        "H"
+      ],
+      "label_positions": {
+        "M": [
+          589,
+          488
+        ],
+        "N": [
+          251,
+          534
+        ],
+        "P": [
+          316,
+          719
+        ],
+        "Q": [
+          764,
+          632
+        ],
+        "S": [
+          584,
+          172
+        ],
+        "H": [
+          420,
+          336
+        ]
+      },
+      "outside_initial_labels": [],
+      "missing_gold_labels": [],
+      "vertex_marker_count": 6,
+      "outside_initial_ndc_vertices": [],
+      "camera_position": [
+        2.43167397702209,
+        5.151926601320812,
+        1.969546693846171
+      ],
+      "progress_text": "Bước 7/7",
+      "canvas_ink_fraction": 0.93603,
+      "interactions": {
+        "ok": true,
+        "orbit_ok": true,
+        "orbit_label_shift_px": 275.8,
+        "orbit_cam_delta": 3.061,
+        "zoom_ok": true,
+        "zoom_cam_delta": 0.452,
+        "step_status": "ok",
+        "reset_ok": true,
+        "outside_after_reset": [],
+        "extra_analyze_requests": 0
+      },
+      "console_errors": []
+    },
+    {
+      "case_id": "V022",
+      "group": "valid",
+      "expected_behavior": "SERVE",
+      "route_status": "SERVED",
+      "extraction_mode": "LOCAL_DETERMINISTIC_PARSER",
+      "http": 200,
+      "ms": 129,
+      "surface": "SCENE",
+      "initial_visual_ok": true,
+      "stale_vs_previous": false,
+      "has_canvas": true,
+      "canvas_rect": {
+        "w": 1006,
+        "h": 814
+      },
+      "label_texts": [
+        "E",
+        "F",
+        "G",
+        "H",
+        "K",
+        "N"
+      ],
+      "label_positions": {
+        "E": [
+          439,
+          426
+        ],
+        "F": [
+          265,
+          586
+        ],
+        "G": [
+          578,
+          722
+        ],
+        "H": [
+          718,
+          514
+        ],
+        "K": [
+          443,
+          162
+        ],
+        "N": [
+          655,
+          421
+        ]
+      },
+      "outside_initial_labels": [],
+      "missing_gold_labels": [],
+      "vertex_marker_count": 6,
+      "outside_initial_ndc_vertices": [],
+      "camera_position": [
+        9.991403157731659,
+        6.508176331616604,
+        6.994268771821103
+      ],
+      "progress_text": "Bước 6/6",
+      "canvas_ink_fraction": 0.93444,
+      "interactions": {
+        "ok": true,
+        "orbit_ok": true,
+        "orbit_label_shift_px": 165.7,
+        "orbit_cam_delta": 6.472,
+        "zoom_ok": true,
+        "zoom_cam_delta": 0.932,
+        "step_status": "ok",
+        "reset_ok": true,
+        "outside_after_reset": [],
+        "extra_analyze_requests": 0
+      },
+      "console_errors": []
+    },
+    {
+      "case_id": "V023",
+      "group": "valid",
+      "expected_behavior": "SERVE",
+      "route_status": "SERVED",
+      "extraction_mode": "LOCAL_DETERMINISTIC_PARSER",
+      "http": 200,
+      "ms": 153,
+      "surface": "SCENE",
+      "initial_visual_ok": true,
+      "stale_vs_previous": false,
+      "has_canvas": true,
+      "canvas_rect": {
+        "w": 1006,
+        "h": 814
+      },
+      "label_texts": [
+        "E",
+        "F",
+        "G",
+        "H",
+        "K"
+      ],
+      "label_positions": {
+        "E": [
+          412,
+          432
+        ],
+        "F": [
+          262,
+          598
+        ],
+        "G": [
+          660,
+          691
+        ],
+        "H": [
+          725,
+          483
+        ],
+        "K": [
+          336,
+          211
+        ]
+      },
+      "outside_initial_labels": [],
+      "missing_gold_labels": [],
+      "vertex_marker_count": 5,
+      "outside_initial_ndc_vertices": [],
+      "camera_position": [
+        2.629126849097866,
+        1.212438798048611,
+        1.3813051808517482
+      ],
+      "progress_text": "Bước 4/4",
+      "canvas_ink_fraction": 0.9344,
+      "interactions": {
+        "ok": true,
+        "orbit_ok": true,
+        "orbit_label_shift_px": 157.9,
+        "orbit_cam_delta": 1.49,
+        "zoom_ok": true,
+        "zoom_cam_delta": 0.245,
+        "step_status": "ok",
+        "reset_ok": true,
+        "outside_after_reset": [],
+        "extra_analyze_requests": 0
+      },
+      "console_errors": []
+    },
+    {
+      "case_id": "V024",
+      "group": "valid",
+      "expected_behavior": "SERVE",
+      "route_status": "SERVED",
+      "extraction_mode": "LOCAL_SLM_GROUNDED",
+      "http": 200,
+      "ms": 3010,
+      "surface": "SCENE",
+      "initial_visual_ok": true,
+      "stale_vs_previous": false,
+      "has_canvas": true,
+      "canvas_rect": {
+        "w": 1006,
+        "h": 814
+      },
+      "label_texts": [
+        "M",
+        "N",
+        "P",
+        "Q",
+        "H"
+      ],
+      "label_positions": {
+        "M": [
+          439,
+          478
+        ],
+        "N": [
+          313,
+          594
+        ],
+        "P": [
+          559,
+          684
+        ],
+        "Q": [
+          672,
+          541
+        ],
+        "H": [
+          453,
+          149
+        ]
+      },
+      "outside_initial_labels": [],
+      "missing_gold_labels": [],
+      "vertex_marker_count": 5,
+      "outside_initial_ndc_vertices": [],
+      "camera_position": [
+        6.444429113923181,
+        4.090511398156086,
+        4.12383517968974
+      ],
+      "progress_text": "Bước 5/5",
+      "canvas_ink_fraction": 0.93165,
+      "interactions": {
+        "ok": true,
+        "orbit_ok": true,
+        "orbit_label_shift_px": 125.4,
+        "orbit_cam_delta": 4.363,
+        "zoom_ok": true,
+        "zoom_cam_delta": 0.624,
+        "step_status": "ok",
+        "reset_ok": true,
+        "outside_after_reset": [],
+        "extra_analyze_requests": 0
+      },
+      "console_errors": []
+    },
+    {
+      "case_id": "V025",
+      "group": "valid",
+      "expected_behavior": "SERVE",
+      "route_status": "SERVED",
+      "extraction_mode": "LOCAL_SLM_GROUNDED",
+      "http": 200,
+      "ms": 3750,
+      "surface": "SCENE",
+      "initial_visual_ok": true,
+      "stale_vs_previous": false,
+      "has_canvas": true,
+      "canvas_rect": {
+        "w": 1006,
+        "h": 814
+      },
+      "label_texts": [
+        "E",
+        "F",
+        "G",
+        "H",
+        "K"
+      ],
+      "label_positions": {
+        "E": [
+          435,
+          454
+        ],
+        "F": [
+          365,
+          551
+        ],
+        "G": [
+          569,
+          641
+        ],
+        "H": [
+          638,
+          538
+        ],
+        "K": [
+          436,
+          150
+        ]
+      },
+      "outside_initial_labels": [],
+      "missing_gold_labels": [],
+      "vertex_marker_count": 5,
+      "outside_initial_ndc_vertices": [],
+      "camera_position": [
+        8.831004841097652,
+        5.905901536681693,
+        9.583643070557516
+      ],
+      "progress_text": "Bước 5/5",
+      "canvas_ink_fraction": 0.92928,
+      "interactions": {
+        "ok": true,
+        "orbit_ok": true,
+        "orbit_label_shift_px": 101,
+        "orbit_cam_delta": 5.965,
+        "zoom_ok": true,
+        "zoom_cam_delta": 1.1,
+        "step_status": "ok",
+        "reset_ok": true,
+        "outside_after_reset": [],
+        "extra_analyze_requests": 0
+      },
+      "console_errors": []
+    },
+    {
+      "case_id": "V026",
+      "group": "valid",
+      "expected_behavior": "SERVE",
+      "route_status": "SERVED",
+      "extraction_mode": "LOCAL_SLM_GROUNDED",
+      "http": 200,
+      "ms": 3488,
+      "surface": "SCENE",
+      "initial_visual_ok": true,
+      "stale_vs_previous": false,
+      "has_canvas": true,
+      "canvas_rect": {
+        "w": 1006,
+        "h": 814
+      },
+      "label_texts": [
+        "P",
+        "Q",
+        "R",
+        "P'",
+        "Q'",
+        "R'"
+      ],
+      "label_positions": {
+        "P": [
+          347,
+          574
+        ],
+        "Q": [
+          508,
+          711
+        ],
+        "R": [
+          593,
+          549
+        ],
+        "P'": [
+          312,
+          210
+        ],
+        "Q'": [
+          505,
+          286
+        ],
+        "R'": [
+          606,
+          194
+        ]
+      },
+      "outside_initial_labels": [],
+      "missing_gold_labels": [],
+      "vertex_marker_count": 6,
+      "outside_initial_ndc_vertices": [],
+      "camera_position": [
+        5.463842722297778,
+        -3.023920945246787,
+        4.864296706918996
+      ],
+      "progress_text": "Bước 5/5",
+      "canvas_ink_fraction": 0.93287,
+      "interactions": {
+        "ok": true,
+        "orbit_ok": true,
+        "orbit_label_shift_px": 172.6,
+        "orbit_cam_delta": 3.923,
+        "zoom_ok": true,
+        "zoom_cam_delta": 0.597,
+        "step_status": "ok",
+        "reset_ok": true,
+        "outside_after_reset": [],
+        "extra_analyze_requests": 0
+      },
+      "console_errors": []
+    },
+    {
+      "case_id": "V027",
+      "group": "valid",
+      "expected_behavior": "SERVE",
+      "route_status": "REFUSED",
+      "extraction_mode": "LOCAL_SLM_GROUNDING_REJECTED",
+      "http": 200,
+      "ms": 1375,
+      "surface": "NO_SCENE",
+      "reason_code": null,
+      "canvas_count": 0,
+      "toast": "Đề bài chưa được hỗ trợ | Kết quả của tuyến Hybrid không qua được bước kiểm tra nên không được hiển thị. Bạn có thể thử các bài về thiết diện, khoảng cách, góc hoặc thể tích.",
+      "console_errors": []
+    },
+    {
+      "case_id": "V028",
+      "group": "valid",
+      "expected_behavior": "SERVE",
+      "route_status": "SERVED",
+      "extraction_mode": "LOCAL_DETERMINISTIC_PARSER",
+      "http": 200,
+      "ms": 132,
+      "surface": "SCENE",
+      "initial_visual_ok": true,
+      "stale_vs_previous": false,
+      "has_canvas": true,
+      "canvas_rect": {
+        "w": 1006,
+        "h": 814
+      },
+      "label_texts": [
+        "A",
+        "B",
+        "C",
+        "D",
+        "E",
+        "F",
+        "G",
+        "H"
+      ],
+      "label_positions": {
+        "A": [
+          255,
+          604
+        ],
+        "B": [
+          379,
+          721
+        ],
+        "C": [
+          709,
+          549
+        ],
+        "D": [
+          566,
+          490
+        ],
+        "E": [
+          217,
+          283
+        ],
+        "F": [
+          347,
+          367
+        ],
+        "G": [
+          743,
+          250
+        ],
+        "H": [
+          584,
+          208
+        ]
+      },
+      "outside_initial_labels": [],
+      "missing_gold_labels": [],
+      "vertex_marker_count": 8,
+      "outside_initial_ndc_vertices": [],
+      "camera_position": [
+        6.798559854882491,
+        -2.865569435591283,
+        5.029707565781382
+      ],
+      "progress_text": "Bước 5/5",
+      "canvas_ink_fraction": 0.9392,
+      "interactions": {
+        "ok": true,
+        "orbit_ok": true,
+        "orbit_label_shift_px": 256.7,
+        "orbit_cam_delta": 5.128,
+        "zoom_ok": true,
+        "zoom_cam_delta": 0.743,
+        "step_status": "ok",
+        "reset_ok": true,
+        "outside_after_reset": [],
+        "extra_analyze_requests": 0
+      },
+      "console_errors": []
+    },
+    {
+      "case_id": "V029",
+      "group": "valid",
+      "expected_behavior": "SERVE",
+      "route_status": "REFUSED",
+      "extraction_mode": "LOCAL_SLM_GROUNDED",
+      "http": 200,
+      "ms": 4180,
+      "surface": "NO_SCENE",
+      "reason_code": null,
+      "canvas_count": 0,
+      "toast": "Axo chưa hỗ trợ phép dựng này | Hệ đã đọc các giả thiết trong đề nhưng chưa có quy tắc suy diễn tất định cho tổ hợp quan hệ này, nên dừng lại thay vì dựng một hình gần đúng. Bạn có thể thử các bài về thiết diện, khoảng cách, góc hoặc thể tích.",
+      "console_errors": []
+    },
+    {
+      "case_id": "V030",
+      "group": "valid",
+      "expected_behavior": "SERVE",
+      "route_status": "REFUSED",
+      "extraction_mode": "LOCAL_SLM_GROUNDED",
+      "http": 200,
+      "ms": 3012,
+      "surface": "NO_SCENE",
+      "reason_code": null,
+      "canvas_count": 0,
+      "toast": "Đề bài chưa được hỗ trợ | Hệ chưa đối chiếu được đầy đủ dữ kiện với đề bài nên tạm dừng dựng hình. Bạn có thể thử các bài về thiết diện, khoảng cách, góc hoặc thể tích.",
+      "console_errors": []
+    },
+    {
+      "case_id": "V031",
+      "group": "valid",
+      "expected_behavior": "SERVE",
+      "route_status": "REFUSED",
+      "extraction_mode": "LOCAL_SLM_GROUNDED",
+      "http": 200,
+      "ms": 3843,
+      "surface": "NO_SCENE",
+      "reason_code": null,
+      "canvas_count": 0,
+      "toast": "Đề bài chưa được hỗ trợ | Hệ chưa đối chiếu được đầy đủ dữ kiện với đề bài nên tạm dừng dựng hình. Bạn có thể thử các bài về thiết diện, khoảng cách, góc hoặc thể tích.",
+      "console_errors": []
+    },
+    {
+      "case_id": "V032",
+      "group": "valid",
+      "expected_behavior": "SERVE",
+      "route_status": "REFUSED",
+      "extraction_mode": "LOCAL_SLM_GROUNDED",
+      "http": 200,
+      "ms": 2053,
+      "surface": "NO_SCENE",
+      "reason_code": null,
+      "canvas_count": 0,
+      "toast": "Đề bài chưa được hỗ trợ | Hệ chưa đối chiếu được đầy đủ dữ kiện với đề bài nên tạm dừng dựng hình. Bạn có thể thử các bài về thiết diện, khoảng cách, góc hoặc thể tích.",
+      "console_errors": []
+    },
+    {
+      "case_id": "V033",
+      "group": "valid",
+      "expected_behavior": "SERVE",
+      "route_status": "REFUSED",
+      "extraction_mode": "LOCAL_SLM_GROUNDED",
+      "http": 200,
+      "ms": 3766,
+      "surface": "NO_SCENE",
+      "reason_code": null,
+      "canvas_count": 0,
+      "toast": "Đề bài chưa được hỗ trợ | Hệ chưa đối chiếu được đầy đủ dữ kiện với đề bài nên tạm dừng dựng hình. Bạn có thể thử các bài về thiết diện, khoảng cách, góc hoặc thể tích.",
+      "console_errors": []
+    },
+    {
+      "case_id": "V034",
+      "group": "valid",
+      "expected_behavior": "SERVE",
+      "route_status": "SERVED",
+      "extraction_mode": "LOCAL_SLM_GROUNDED",
+      "http": 200,
+      "ms": 3838,
+      "surface": "SCENE",
+      "initial_visual_ok": true,
+      "stale_vs_previous": false,
+      "has_canvas": true,
+      "canvas_rect": {
+        "w": 1006,
+        "h": 814
+      },
+      "label_texts": [
+        "M",
+        "N",
+        "P",
+        "Q",
+        "H"
+      ],
+      "label_positions": {
+        "M": [
+          376,
+          436
+        ],
+        "N": [
+          253,
+          544
+        ],
+        "P": [
+          694,
+          718
+        ],
+        "Q": [
+          774,
+          562
+        ],
+        "H": [
+          372,
+          151
+        ]
+      },
+      "outside_initial_labels": [],
+      "missing_gold_labels": [],
+      "vertex_marker_count": 5,
+      "outside_initial_ndc_vertices": [],
+      "camera_position": [
+        6.6751977885880835,
+        5.0987457545944,
+        4.991798525725386
+      ],
+      "progress_text": "Bước 5/5",
+      "canvas_ink_fraction": 0.93536,
+      "interactions": {
+        "ok": true,
+        "orbit_ok": true,
+        "orbit_label_shift_px": 157.4,
+        "orbit_cam_delta": 4.51,
+        "zoom_ok": true,
+        "zoom_cam_delta": 0.681,
+        "step_status": "ok",
+        "reset_ok": true,
+        "outside_after_reset": [],
+        "extra_analyze_requests": 0
+      },
+      "console_errors": []
+    },
+    {
+      "case_id": "V035",
+      "group": "valid",
+      "expected_behavior": "SERVE",
+      "route_status": "SERVED",
+      "extraction_mode": "LOCAL_SLM_GROUNDED",
+      "http": 200,
+      "ms": 4930,
+      "surface": "SCENE",
+      "initial_visual_ok": true,
+      "stale_vs_previous": false,
+      "has_canvas": true,
+      "canvas_rect": {
+        "w": 1006,
+        "h": 814
+      },
+      "label_texts": [
+        "E",
+        "F",
+        "G",
+        "H",
+        "K"
+      ],
+      "label_positions": {
+        "E": [
+          551,
+          447
+        ],
+        "F": [
+          363,
+          570
+        ],
+        "G": [
+          417,
+          697
+        ],
+        "H": [
+          612,
+          548
+        ],
+        "K": [
+          543,
+          150
+        ]
+      },
+      "outside_initial_labels": [],
+      "missing_gold_labels": [],
+      "vertex_marker_count": 5,
+      "outside_initial_ndc_vertices": [],
+      "camera_position": [
+        8.37348205947794,
+        6.315533581717272,
+        6.491967743336674
+      ],
+      "progress_text": "Bước 5/5",
+      "canvas_ink_fraction": 0.92912,
+      "interactions": {
+        "ok": true,
+        "orbit_ok": true,
+        "orbit_label_shift_px": 169,
+        "orbit_cam_delta": 5.771,
+        "zoom_ok": true,
+        "zoom_cam_delta": 0.896,
+        "step_status": "ok",
+        "reset_ok": true,
+        "outside_after_reset": [],
+        "extra_analyze_requests": 0
+      },
+      "console_errors": []
+    },
+    {
+      "case_id": "V036",
+      "group": "valid",
+      "expected_behavior": "SERVE",
+      "route_status": "SERVED",
+      "extraction_mode": "LOCAL_DETERMINISTIC_PARSER",
+      "http": 200,
+      "ms": 117,
+      "surface": "SCENE",
+      "initial_visual_ok": true,
+      "stale_vs_previous": false,
+      "has_canvas": true,
+      "canvas_rect": {
+        "w": 1006,
+        "h": 814
+      },
+      "label_texts": [
+        "F",
+        "G",
+        "H",
+        "E",
+        "N",
+        "O"
+      ],
+      "label_positions": {
+        "F": [
+          241,
+          531
+        ],
+        "G": [
+          579,
+          721
+        ],
+        "H": [
+          622,
+          461
+        ],
+        "E": [
+          472,
+          203
+        ],
+        "N": [
+          607,
+          572
+        ],
+        "O": [
+          467,
+          569
+        ]
+      },
+      "outside_initial_labels": [],
+      "missing_gold_labels": [],
+      "vertex_marker_count": 6,
+      "outside_initial_ndc_vertices": [],
+      "camera_position": [
+        5.186363326018683,
+        -3.310704982765305,
+        3.5928159413510614
+      ],
+      "progress_text": "Bước 6/6",
+      "canvas_ink_fraction": 0.93191,
+      "interactions": {
+        "ok": true,
+        "orbit_ok": true,
+        "orbit_label_shift_px": 157.9,
+        "orbit_cam_delta": 3.768,
+        "zoom_ok": true,
+        "zoom_cam_delta": 0.616,
+        "step_status": "ok",
+        "reset_ok": true,
+        "outside_after_reset": [],
+        "extra_analyze_requests": 0
+      },
+      "console_errors": []
+    },
+    {
+      "case_id": "V037",
+      "group": "valid",
+      "expected_behavior": "SERVE",
+      "route_status": "SERVED",
+      "extraction_mode": "LOCAL_DETERMINISTIC_PARSER",
+      "http": 200,
+      "ms": 140,
+      "surface": "SCENE",
+      "initial_visual_ok": true,
+      "stale_vs_previous": false,
+      "has_canvas": true,
+      "canvas_rect": {
+        "w": 1006,
+        "h": 814
+      },
+      "label_texts": [
+        "E",
+        "F",
+        "G",
+        "K"
+      ],
+      "label_positions": {
+        "E": [
+          434,
+          441
+        ],
+        "F": [
+          325,
+          584
+        ],
+        "G": [
+          696,
+          549
+        ],
+        "K": [
+          434,
+          137
+        ]
+      },
+      "outside_initial_labels": [],
+      "missing_gold_labels": [],
+      "vertex_marker_count": 4,
+      "outside_initial_ndc_vertices": [],
+      "camera_position": [
+        9.018057122128873,
+        6.057058654190195,
+        9.522652471968449
+      ],
+      "progress_text": "Bước 5/5",
+      "canvas_ink_fraction": 0.93049,
+      "interactions": {
+        "ok": true,
+        "orbit_ok": true,
+        "orbit_label_shift_px": 130.9,
+        "orbit_cam_delta": 5.906,
+        "zoom_ok": true,
+        "zoom_cam_delta": 1.088,
+        "step_status": "ok",
+        "reset_ok": true,
+        "outside_after_reset": [],
+        "extra_analyze_requests": 0
+      },
+      "console_errors": []
+    },
+    {
+      "case_id": "V038",
+      "group": "valid",
+      "expected_behavior": "SERVE",
+      "route_status": "SERVED",
+      "extraction_mode": "LOCAL_DETERMINISTIC_PARSER",
+      "http": 200,
+      "ms": 628,
+      "surface": "SCENE",
+      "initial_visual_ok": true,
+      "stale_vs_previous": false,
+      "has_canvas": true,
+      "canvas_rect": {
+        "w": 1006,
+        "h": 814
+      },
+      "label_texts": [
+        "E",
+        "F",
+        "G",
+        "H",
+        "E'",
+        "F'",
+        "G'",
+        "H'"
+      ],
+      "label_positions": {
+        "E": [
+          365,
+          635
+        ],
+        "F": [
+          455,
+          709
+        ],
+        "G": [
+          622,
+          620
+        ],
+        "H": [
+          521,
+          568
+        ],
+        "E'": [
+          331,
+          192
+        ],
+        "F'": [
+          439,
+          218
+        ],
+        "G'": [
+          650,
+          185
+        ],
+        "H'": [
+          532,
+          160
+        ]
+      },
+      "outside_initial_labels": [],
+      "missing_gold_labels": [],
+      "vertex_marker_count": 8,
+      "outside_initial_ndc_vertices": [],
+      "camera_position": [
+        9.23475535233731,
+        -5.409780178981372,
+        8.01267193871068
+      ],
+      "progress_text": "Bước 5/5",
+      "canvas_ink_fraction": 0.93482,
+      "interactions": {
+        "ok": true,
+        "orbit_ok": true,
+        "orbit_label_shift_px": 156.4,
+        "orbit_cam_delta": 6.87,
+        "zoom_ok": true,
+        "zoom_cam_delta": 1.288,
+        "step_status": "ok",
+        "reset_ok": true,
+        "outside_after_reset": [],
+        "extra_analyze_requests": 0
+      },
+      "console_errors": []
+    },
+    {
+      "case_id": "V039",
+      "group": "valid",
+      "expected_behavior": "SERVE",
+      "route_status": "SERVED",
+      "extraction_mode": "LOCAL_DETERMINISTIC_PARSER",
+      "http": 200,
+      "ms": 627,
+      "surface": "SCENE",
+      "initial_visual_ok": true,
+      "stale_vs_previous": false,
+      "has_canvas": true,
+      "canvas_rect": {
+        "w": 1006,
+        "h": 814
+      },
+      "label_texts": [
+        "M",
+        "N",
+        "P",
+        "Q",
+        "S"
+      ],
+      "label_positions": {
+        "M": [
+          439,
+          478
+        ],
+        "N": [
+          313,
+          594
+        ],
+        "P": [
+          559,
+          684
+        ],
+        "Q": [
+          672,
+          541
+        ],
+        "S": [
+          455,
+          150
+        ]
+      },
+      "outside_initial_labels": [],
+      "missing_gold_labels": [],
+      "vertex_marker_count": 5,
+      "outside_initial_ndc_vertices": [],
+      "camera_position": [
+        6.444429113923181,
+        4.090511398156086,
+        4.12383517968974
+      ],
+      "progress_text": "Bước 5/5",
+      "canvas_ink_fraction": 0.93169,
+      "interactions": {
+        "ok": true,
+        "orbit_ok": true,
+        "orbit_label_shift_px": 125.9,
+        "orbit_cam_delta": 4.396,
+        "zoom_ok": true,
+        "zoom_cam_delta": 0.615,
+        "step_status": "ok",
+        "reset_ok": true,
+        "outside_after_reset": [],
+        "extra_analyze_requests": 0
+      },
+      "console_errors": []
+    },
+    {
+      "case_id": "V040",
+      "group": "valid",
+      "expected_behavior": "SERVE",
+      "route_status": "REFUSED",
+      "extraction_mode": "LOCAL_SLM_GROUNDED",
+      "http": 200,
+      "ms": 3421,
+      "surface": "NO_SCENE",
+      "reason_code": null,
+      "canvas_count": 0,
+      "toast": "Đề bài chưa được hỗ trợ | Hệ chưa đối chiếu được đầy đủ dữ kiện với đề bài nên tạm dừng dựng hình. Bạn có thể thử các bài về thiết diện, khoảng cách, góc hoặc thể tích.",
+      "console_errors": []
+    },
+    {
+      "case_id": "V041",
+      "group": "valid",
+      "expected_behavior": "SERVE",
+      "route_status": "SERVED",
+      "extraction_mode": "LOCAL_DETERMINISTIC_PARSER",
+      "http": 200,
+      "ms": 140,
+      "surface": "SCENE",
+      "initial_visual_ok": true,
+      "stale_vs_previous": false,
+      "has_canvas": true,
+      "canvas_rect": {
+        "w": 1006,
+        "h": 814
+      },
+      "label_texts": [
+        "K",
+        "L",
+        "M",
+        "K'",
+        "L'",
+        "M'",
+        "E"
+      ],
+      "label_positions": {
+        "K": [
+          332,
+          560
+        ],
+        "L": [
+          511,
+          709
+        ],
+        "M": [
+          601,
+          534
+        ],
+        "K'": [
+          296,
+          228
+        ],
+        "L'": [
+          507,
+          318
+        ],
+        "M'": [
+          615,
+          209
+        ],
+        "E": [
+          460,
+          214
+        ]
+      },
+      "outside_initial_labels": [],
+      "missing_gold_labels": [],
+      "vertex_marker_count": 7,
+      "outside_initial_ndc_vertices": [],
+      "camera_position": [
+        10.130968066135523,
+        -5.379316632491894,
+        8.628125651094212
+      ],
+      "progress_text": "Bước 6/6",
+      "canvas_ink_fraction": 0.93305,
+      "interactions": {
+        "ok": true,
+        "orbit_ok": true,
+        "orbit_label_shift_px": 180.5,
+        "orbit_cam_delta": 7.136,
+        "zoom_ok": true,
+        "zoom_cam_delta": 1.098,
+        "step_status": "ok",
+        "reset_ok": true,
+        "outside_after_reset": [],
+        "extra_analyze_requests": 0
+      },
+      "console_errors": []
+    },
+    {
+      "case_id": "V042",
+      "group": "valid",
+      "expected_behavior": "SERVE",
+      "route_status": "SERVED",
+      "extraction_mode": "LOCAL_DETERMINISTIC_PARSER",
+      "http": 200,
+      "ms": 180,
+      "surface": "SCENE",
+      "initial_visual_ok": true,
+      "stale_vs_previous": false,
+      "has_canvas": true,
+      "canvas_rect": {
+        "w": 1006,
+        "h": 814
+      },
+      "label_texts": [
+        "E",
+        "F",
+        "G",
+        "H",
+        "K",
+        "O"
+      ],
+      "label_positions": {
+        "E": [
+          406,
+          453
+        ],
+        "F": [
+          256,
+          622
+        ],
+        "G": [
+          648,
+          719
+        ],
+        "H": [
+          717,
+          504
+        ],
+        "K": [
+          408,
+          160
+        ],
+        "O": [
+          503,
+          575
+        ]
+      },
+      "outside_initial_labels": [],
+      "missing_gold_labels": [],
+      "vertex_marker_count": 6,
+      "outside_initial_ndc_vertices": [],
+      "camera_position": [
+        5.232054270426869,
+        2.4608380635178246,
+        2.912119536064634
+      ],
+      "progress_text": "Bước 8/8",
+      "canvas_ink_fraction": 0.93527,
+      "interactions": {
+        "ok": true,
+        "orbit_ok": true,
+        "orbit_label_shift_px": 169.8,
+        "orbit_cam_delta": 3.049,
+        "zoom_ok": true,
+        "zoom_cam_delta": 0.502,
+        "step_status": "ok",
+        "reset_ok": true,
+        "outside_after_reset": [],
+        "extra_analyze_requests": 0
+      },
+      "console_errors": []
+    },
+    {
+      "case_id": "V043",
+      "group": "valid",
+      "expected_behavior": "SERVE",
+      "route_status": "SERVED",
+      "extraction_mode": "LOCAL_DETERMINISTIC_PARSER",
+      "http": 200,
+      "ms": 154,
+      "surface": "SCENE",
+      "initial_visual_ok": true,
+      "stale_vs_previous": false,
+      "has_canvas": true,
+      "canvas_rect": {
+        "w": 1006,
+        "h": 814
+      },
+      "label_texts": [
+        "E",
+        "F",
+        "G",
+        "H",
+        "K"
+      ],
+      "label_positions": {
+        "E": [
+          447,
+          472
+        ],
+        "F": [
+          316,
+          593
+        ],
+        "G": [
+          559,
+          685
+        ],
+        "H": [
+          672,
+          541
+        ],
+        "K": [
+          454,
+          150
+        ]
+      },
+      "outside_initial_labels": [],
+      "missing_gold_labels": [],
+      "vertex_marker_count": 5,
+      "outside_initial_ndc_vertices": [],
+      "camera_position": [
+        6.444429113923181,
+        4.090511398156086,
+        4.12383517968974
+      ],
+      "progress_text": "Bước 5/5",
+      "canvas_ink_fraction": 0.93172,
+      "interactions": {
+        "ok": true,
+        "orbit_ok": true,
+        "orbit_label_shift_px": 124.5,
+        "orbit_cam_delta": 4.326,
+        "zoom_ok": true,
+        "zoom_cam_delta": 0.654,
+        "step_status": "ok",
+        "reset_ok": true,
+        "outside_after_reset": [],
+        "extra_analyze_requests": 0
+      },
+      "console_errors": []
+    },
+    {
+      "case_id": "V044",
+      "group": "valid",
+      "expected_behavior": "SERVE",
+      "route_status": "SERVED",
+      "extraction_mode": "LOCAL_PARSER_AFTER_V3_NORMALIZER",
+      "http": 200,
+      "ms": 135,
+      "surface": "SCENE",
+      "initial_visual_ok": true,
+      "stale_vs_previous": false,
+      "has_canvas": true,
+      "canvas_rect": {
+        "w": 1006,
+        "h": 814
+      },
+      "label_texts": [
+        "E",
+        "F",
+        "G",
+        "H",
+        "E'",
+        "F'",
+        "G'",
+        "H'"
+      ],
+      "label_positions": {
+        "E": [
+          402,
+          629
+        ],
+        "F": [
+          467,
+          688
+        ],
+        "G": [
+          587,
+          624
+        ],
+        "H": [
+          507,
+          576
+        ],
+        "E'": [
+          370,
+          179
+        ],
+        "F'": [
+          462,
+          208
+        ],
+        "G'": [
+          614,
+          175
+        ],
+        "H'": [
+          517,
+          147
+        ]
+      },
+      "outside_initial_labels": [],
+      "missing_gold_labels": [],
+      "vertex_marker_count": 8,
+      "outside_initial_ndc_vertices": [],
+      "camera_position": [
+        16.348367740320505,
+        -10.459259894487557,
+        17.190876964000285
+      ],
+      "progress_text": "Bước 6/6",
+      "canvas_ink_fraction": 0.93214,
+      "interactions": {
+        "ok": true,
+        "orbit_ok": true,
+        "orbit_label_shift_px": 101.3,
+        "orbit_cam_delta": 13.061,
+        "zoom_ok": true,
+        "zoom_cam_delta": 1.969,
+        "step_status": "ok",
+        "reset_ok": true,
+        "outside_after_reset": [],
+        "extra_analyze_requests": 0
+      },
+      "console_errors": []
+    },
+    {
+      "case_id": "V045",
+      "group": "valid",
+      "expected_behavior": "SERVE",
+      "route_status": "SERVED",
+      "extraction_mode": "LOCAL_DETERMINISTIC_PARSER",
+      "http": 200,
+      "ms": 165,
+      "surface": "SCENE",
+      "initial_visual_ok": true,
+      "stale_vs_previous": false,
+      "has_canvas": true,
+      "canvas_rect": {
+        "w": 1006,
+        "h": 814
+      },
+      "label_texts": [
+        "M",
+        "N",
+        "P",
+        "Q",
+        "M'",
+        "N'",
+        "P'",
+        "Q'"
+      ],
+      "label_positions": {
+        "M": [
+          280,
+          558
+        ],
+        "N": [
+          470,
+          715
+        ],
+        "P": [
+          708,
+          582
+        ],
+        "Q": [
+          508,
+          486
+        ],
+        "M'": [
+          247,
+          264
+        ],
+        "N'": [
+          465,
+          342
+        ],
+        "P'": [
+          744,
+          277
+        ],
+        "Q'": [
+          509,
+          211
+        ]
+      },
+      "outside_initial_labels": [],
+      "missing_gold_labels": [],
+      "vertex_marker_count": 8,
+      "outside_initial_ndc_vertices": [],
+      "camera_position": [
+        2.516411660173656,
+        -1.1919702803532823,
+        1.7274329610742603
+      ],
+      "progress_text": "Bước 7/7",
+      "canvas_ink_fraction": 0.90353,
+      "interactions": {
+        "ok": true,
+        "orbit_ok": true,
+        "orbit_label_shift_px": 221,
+        "orbit_cam_delta": 1.735,
+        "zoom_ok": true,
+        "zoom_cam_delta": 0.271,
+        "step_status": "ok",
+        "reset_ok": true,
+        "outside_after_reset": [],
+        "extra_analyze_requests": 0
+      },
+      "console_errors": []
+    },
+    {
+      "case_id": "V046",
+      "group": "valid",
+      "expected_behavior": "SERVE",
+      "route_status": "SERVED",
+      "extraction_mode": "LOCAL_DETERMINISTIC_PARSER",
+      "http": 200,
+      "ms": 148,
+      "surface": "SCENE",
+      "initial_visual_ok": true,
+      "stale_vs_previous": false,
+      "has_canvas": true,
+      "canvas_rect": {
+        "w": 1006,
+        "h": 814
+      },
+      "label_texts": [
+        "E",
+        "F",
+        "G",
+        "H",
+        "K",
+        "O"
+      ],
+      "label_positions": {
+        "E": [
+          219,
+          515
+        ],
+        "F": [
+          378,
+          711
+        ],
+        "G": [
+          817,
+          576
+        ],
+        "H": [
+          567,
+          447
+        ],
+        "K": [
+          495,
+          207
+        ],
+        "O": [
+          503,
+          559
+        ]
+      },
+      "outside_initial_labels": [],
+      "missing_gold_labels": [],
+      "vertex_marker_count": 6,
+      "outside_initial_ndc_vertices": [],
+      "camera_position": [
+        8.914541953116505,
+        -1.9921126579547783,
+        3.2643667255860884
+      ],
+      "progress_text": "Bước 6/6",
+      "canvas_ink_fraction": 0.94052,
+      "interactions": {
+        "ok": true,
+        "orbit_ok": true,
+        "orbit_label_shift_px": 276.5,
+        "orbit_cam_delta": 5.368,
+        "zoom_ok": true,
+        "zoom_cam_delta": 0.822,
+        "step_status": "ok",
+        "reset_ok": true,
+        "outside_after_reset": [],
+        "extra_analyze_requests": 0
+      },
+      "console_errors": []
+    },
+    {
+      "case_id": "V047",
+      "group": "valid",
+      "expected_behavior": "SERVE",
+      "route_status": "REFUSED",
+      "extraction_mode": "LOCAL_SLM_GROUNDING_REJECTED",
+      "http": 200,
+      "ms": 1462,
+      "surface": "NO_SCENE",
+      "reason_code": null,
+      "canvas_count": 0,
+      "toast": "Đề bài chưa được hỗ trợ | Kết quả của tuyến Hybrid không qua được bước kiểm tra nên không được hiển thị. Bạn có thể thử các bài về thiết diện, khoảng cách, góc hoặc thể tích.",
+      "console_errors": []
+    },
+    {
+      "case_id": "V048",
+      "group": "valid",
+      "expected_behavior": "SERVE",
+      "route_status": "SERVED",
+      "extraction_mode": "LOCAL_DETERMINISTIC_PARSER",
+      "http": 200,
+      "ms": 171,
+      "surface": "SCENE",
+      "initial_visual_ok": true,
+      "stale_vs_previous": false,
+      "has_canvas": true,
+      "canvas_rect": {
+        "w": 1006,
+        "h": 814
+      },
+      "label_texts": [
+        "A",
+        "B",
+        "C",
+        "P",
+        "H"
+      ],
+      "label_positions": {
+        "A": [
+          317,
+          497
+        ],
+        "B": [
+          543,
+          709
+        ],
+        "C": [
+          644,
+          457
+        ],
+        "P": [
+          281,
+          199
+        ],
+        "H": [
+          478,
+          405
+        ]
+      },
+      "outside_initial_labels": [],
+      "missing_gold_labels": [],
+      "vertex_marker_count": 5,
+      "outside_initial_ndc_vertices": [],
+      "camera_position": [
+        5.87078266729819,
+        -2.8505747258067013,
+        6.117991384884498
+      ],
+      "progress_text": "Bước 7/7",
+      "canvas_ink_fraction": 0.90053,
+      "interactions": {
+        "ok": true,
+        "orbit_ok": true,
+        "orbit_label_shift_px": 153.4,
+        "orbit_cam_delta": 4.019,
+        "zoom_ok": true,
+        "zoom_cam_delta": 0.645,
+        "step_status": "ok",
+        "reset_ok": true,
+        "outside_after_reset": [],
+        "extra_analyze_requests": 0
+      },
+      "console_errors": []
+    },
+    {
+      "case_id": "V049",
+      "group": "valid",
+      "expected_behavior": "SERVE",
+      "route_status": "SERVED",
+      "extraction_mode": "LOCAL_DETERMINISTIC_PARSER",
+      "http": 200,
+      "ms": 207,
+      "surface": "SCENE",
+      "initial_visual_ok": true,
+      "stale_vs_previous": false,
+      "has_canvas": true,
+      "canvas_rect": {
+        "w": 1006,
+        "h": 814
+      },
+      "label_texts": [
+        "M",
+        "N",
+        "P",
+        "M'",
+        "N'",
+        "P'"
+      ],
+      "label_positions": {
+        "M": [
+          478,
+          545
+        ],
+        "N": [
+          246,
+          673
+        ],
+        "P": [
+          739,
+          646
+        ],
+        "M'": [
+          473,
+          134
+        ],
+        "N'": [
+          175,
+          191
+        ],
+        "P'": [
+          801,
+          182
+        ]
+      },
+      "outside_initial_labels": [],
+      "missing_gold_labels": [],
+      "vertex_marker_count": 6,
+      "outside_initial_ndc_vertices": [],
+      "camera_position": [
+        6.410586008230956,
+        5.580245816165223,
+        5.1413592224594655
+      ],
+      "progress_text": "Bước 5/5",
+      "canvas_ink_fraction": 0.94583,
+      "interactions": {
+        "ok": true,
+        "orbit_ok": true,
+        "orbit_label_shift_px": 172,
+        "orbit_cam_delta": 4.569,
+        "zoom_ok": true,
+        "zoom_cam_delta": 0.663,
+        "step_status": "ok",
+        "reset_ok": true,
+        "outside_after_reset": [],
+        "extra_analyze_requests": 0
+      },
+      "console_errors": []
+    },
+    {
+      "case_id": "V050",
+      "group": "valid",
+      "expected_behavior": "SERVE",
+      "route_status": "SERVED",
+      "extraction_mode": "LOCAL_DETERMINISTIC_PARSER",
+      "http": 200,
+      "ms": 130,
+      "surface": "SCENE",
+      "initial_visual_ok": true,
+      "stale_vs_previous": false,
+      "has_canvas": true,
+      "canvas_rect": {
+        "w": 1006,
+        "h": 814
+      },
+      "label_texts": [
+        "M",
+        "N",
+        "P",
+        "Q",
+        "H"
+      ],
+      "label_positions": {
+        "M": [
+          422,
+          471
+        ],
+        "N": [
+          305,
+          579
+        ],
+        "P": [
+          598,
+          684
+        ],
+        "Q": [
+          693,
+          553
+        ],
+        "H": [
+          429,
+          149
+        ]
+      },
+      "outside_initial_labels": [],
+      "missing_gold_labels": [],
+      "vertex_marker_count": 5,
+      "outside_initial_ndc_vertices": [],
+      "camera_position": [
+        21.205399287337684,
+        14.227398530195135,
+        13.754536173421338
+      ],
+      "progress_text": "Bước 5/5",
+      "canvas_ink_fraction": 0.9322,
+      "interactions": {
+        "ok": true,
+        "orbit_ok": true,
+        "orbit_label_shift_px": 118.1,
+        "orbit_cam_delta": 14.081,
+        "zoom_ok": true,
+        "zoom_cam_delta": 2.314,
+        "step_status": "ok",
+        "reset_ok": true,
+        "outside_after_reset": [],
+        "extra_analyze_requests": 0
+      },
+      "console_errors": []
+    },
+    {
+      "case_id": "V051",
+      "group": "valid",
+      "expected_behavior": "SERVE",
+      "route_status": "SERVED",
+      "extraction_mode": "LOCAL_DETERMINISTIC_PARSER",
+      "http": 200,
+      "ms": 157,
+      "surface": "SCENE",
+      "initial_visual_ok": true,
+      "stale_vs_previous": false,
+      "has_canvas": true,
+      "canvas_rect": {
+        "w": 1006,
+        "h": 814
+      },
+      "label_texts": [
+        "E",
+        "F",
+        "G",
+        "H",
+        "K"
+      ],
+      "label_positions": {
+        "E": [
+          446,
+          426
+        ],
+        "F": [
+          319,
+          548
+        ],
+        "G": [
+          568,
+          632
+        ],
+        "H": [
+          670,
+          494
+        ],
+        "K": [
+          439,
+          235
+        ]
+      },
+      "outside_initial_labels": [],
+      "missing_gold_labels": [],
+      "vertex_marker_count": 5,
+      "outside_initial_ndc_vertices": [],
+      "camera_position": [
+        6.388692613885413,
+        4.058331914855594,
+        4.425795075923607
+      ],
+      "progress_text": "Bước 7/7",
+      "canvas_ink_fraction": 0.93146,
+      "interactions": {
+        "ok": true,
+        "orbit_ok": true,
+        "orbit_label_shift_px": 118.8,
+        "orbit_cam_delta": 4.3,
+        "zoom_ok": true,
+        "zoom_cam_delta": 0.65,
+        "step_status": "ok",
+        "reset_ok": true,
+        "outside_after_reset": [],
+        "extra_analyze_requests": 0
+      },
+      "console_errors": []
+    },
+    {
+      "case_id": "V052",
+      "group": "valid",
+      "expected_behavior": "SERVE",
+      "route_status": "SERVED",
+      "extraction_mode": "LOCAL_DETERMINISTIC_PARSER",
+      "http": 200,
+      "ms": 157,
+      "surface": "SCENE",
+      "initial_visual_ok": true,
+      "stale_vs_previous": false,
+      "has_canvas": true,
+      "canvas_rect": {
+        "w": 1006,
+        "h": 814
+      },
+      "label_texts": [
+        "F",
+        "G",
+        "H",
+        "E",
+        "O"
+      ],
+      "label_positions": {
+        "F": [
+          246,
+          530
+        ],
+        "G": [
+          578,
+          713
+        ],
+        "H": [
+          621,
+          463
+        ],
+        "E": [
+          474,
+          208
+        ],
+        "O": [
+          491,
+          561
+        ]
+      },
+      "outside_initial_labels": [],
+      "missing_gold_labels": [],
+      "vertex_marker_count": 5,
+      "outside_initial_ndc_vertices": [],
+      "camera_position": [
+        5.277612740359045,
+        -3.4194518001275487,
+        3.6590124580042365
+      ],
+      "progress_text": "Bước 6/6",
+      "canvas_ink_fraction": 0.93708,
+      "interactions": {
+        "ok": true,
+        "orbit_ok": true,
+        "orbit_label_shift_px": 157.9,
+        "orbit_cam_delta": 3.981,
+        "zoom_ok": true,
+        "zoom_cam_delta": 0.581,
+        "step_status": "ok",
+        "reset_ok": true,
+        "outside_after_reset": [],
+        "extra_analyze_requests": 0
+      },
+      "console_errors": []
+    },
+    {
+      "case_id": "V053",
+      "group": "valid",
+      "expected_behavior": "SERVE",
+      "route_status": "SERVED",
+      "extraction_mode": "LOCAL_DETERMINISTIC_PARSER",
+      "http": 200,
+      "ms": 147,
+      "surface": "SCENE",
+      "initial_visual_ok": true,
+      "stale_vs_previous": false,
+      "has_canvas": true,
+      "canvas_rect": {
+        "w": 1006,
+        "h": 814
+      },
+      "label_texts": [
+        "E",
+        "F",
+        "G",
+        "H",
+        "K",
+        "I"
+      ],
+      "label_positions": {
+        "E": [
+          354,
+          711
+        ],
+        "F": [
+          734,
+          651
+        ],
+        "G": [
+          636,
+          411
+        ],
+        "H": [
+          351,
+          432
+        ],
+        "K": [
+          274,
+          230
+        ],
+        "I": [
+          484,
+          478
+        ]
+      },
+      "outside_initial_labels": [],
+      "missing_gold_labels": [],
+      "vertex_marker_count": 6,
+      "outside_initial_ndc_vertices": [],
+      "camera_position": [
+        0.3525980050123614,
+        -4.131374732788162,
+        6.138421322827701
+      ],
+      "progress_text": "Bước 7/7",
+      "canvas_ink_fraction": 0.90448,
+      "interactions": {
+        "ok": true,
+        "orbit_ok": true,
+        "orbit_label_shift_px": 333.3,
+        "orbit_cam_delta": 3.738,
+        "zoom_ok": true,
+        "zoom_cam_delta": 0.603,
+        "step_status": "ok",
+        "reset_ok": true,
+        "outside_after_reset": [],
+        "extra_analyze_requests": 0
+      },
+      "console_errors": []
+    },
+    {
+      "case_id": "V054",
+      "group": "valid",
+      "expected_behavior": "SERVE",
+      "route_status": "SERVED",
+      "extraction_mode": "LOCAL_DETERMINISTIC_PARSER",
+      "http": 200,
+      "ms": 158,
+      "surface": "SCENE",
+      "initial_visual_ok": true,
+      "stale_vs_previous": false,
+      "has_canvas": true,
+      "canvas_rect": {
+        "w": 1006,
+        "h": 814
+      },
+      "label_texts": [
+        "M",
+        "N",
+        "P",
+        "Q",
+        "M'",
+        "N'",
+        "P'",
+        "Q'"
+      ],
+      "label_positions": {
+        "M": [
+          323,
+          608
+        ],
+        "N": [
+          440,
+          713
+        ],
+        "P": [
+          674,
+          589
+        ],
+        "Q": [
+          528,
+          521
+        ],
+        "M'": [
+          271,
+          237
+        ],
+        "N'": [
+          434,
+          284
+        ],
+        "P'": [
+          708,
+          256
+        ],
+        "Q'": [
+          534,
+          190
+        ]
+      },
+      "outside_initial_labels": [],
+      "missing_gold_labels": [],
+      "vertex_marker_count": 8,
+      "outside_initial_ndc_vertices": [],
+      "camera_position": [
+        9.845135239989187,
+        -5.002399901999452,
+        7.57986254022303
+      ],
+      "progress_text": "Bước 7/7",
+      "canvas_ink_fraction": 0.93856,
+      "interactions": {
+        "ok": true,
+        "orbit_ok": true,
+        "orbit_label_shift_px": 175.8,
+        "orbit_cam_delta": 7.253,
+        "zoom_ok": true,
+        "zoom_cam_delta": 1.114,
+        "step_status": "ok",
+        "reset_ok": true,
+        "outside_after_reset": [],
+        "extra_analyze_requests": 0
+      },
+      "console_errors": []
+    },
+    {
+      "case_id": "V055",
+      "group": "valid",
+      "expected_behavior": "SERVE",
+      "route_status": "SERVED",
+      "extraction_mode": "LOCAL_DETERMINISTIC_PARSER",
+      "http": 200,
+      "ms": 162,
+      "surface": "SCENE",
+      "initial_visual_ok": true,
+      "stale_vs_previous": false,
+      "has_canvas": true,
+      "canvas_rect": {
+        "w": 1006,
+        "h": 814
+      },
+      "label_texts": [
+        "E",
+        "F",
+        "G",
+        "H",
+        "K",
+        "J"
+      ],
+      "label_positions": {
+        "E": [
+          442,
+          425
+        ],
+        "F": [
+          281,
+          561
+        ],
+        "G": [
+          571,
+          695
+        ],
+        "H": [
+          703,
+          501
+        ],
+        "K": [
+          461,
+          183
+        ],
+        "J": [
+          578,
+          336
+        ]
+      },
+      "outside_initial_labels": [],
+      "missing_gold_labels": [],
+      "vertex_marker_count": 6,
+      "outside_initial_ndc_vertices": [],
+      "camera_position": [
+        5.364967932400935,
+        3.467284194424466,
+        3.743311954933955
+      ],
+      "progress_text": "Bước 8/8",
+      "canvas_ink_fraction": 0.93278,
+      "interactions": {
+        "ok": true,
+        "orbit_ok": true,
+        "orbit_label_shift_px": 144.5,
+        "orbit_cam_delta": 3.356,
+        "zoom_ok": true,
+        "zoom_cam_delta": 0.597,
+        "step_status": "ok",
+        "reset_ok": true,
+        "outside_after_reset": [],
+        "extra_analyze_requests": 0
+      },
+      "console_errors": []
+    },
+    {
+      "case_id": "V056",
+      "group": "valid",
+      "expected_behavior": "SERVE",
+      "route_status": "SERVED",
+      "extraction_mode": "LOCAL_DETERMINISTIC_PARSER",
+      "http": 200,
+      "ms": 145,
+      "surface": "SCENE",
+      "initial_visual_ok": true,
+      "stale_vs_previous": false,
+      "has_canvas": true,
+      "canvas_rect": {
+        "w": 1006,
+        "h": 814
+      },
+      "label_texts": [
+        "A",
+        "B",
+        "C",
+        "P"
+      ],
+      "label_positions": {
+        "A": [
+          453,
+          508
+        ],
+        "B": [
+          347,
+          576
+        ],
+        "C": [
+          624,
+          667
+        ],
+        "P": [
+          450,
+          149
+        ]
+      },
+      "outside_initial_labels": [],
+      "missing_gold_labels": [],
+      "vertex_marker_count": 4,
+      "outside_initial_ndc_vertices": [],
+      "camera_position": [
+        8.3598151251071,
+        5.374191243666461,
+        5.462860835773667
+      ],
+      "progress_text": "Bước 5/5",
+      "canvas_ink_fraction": 0.92909,
+      "interactions": {
+        "ok": true,
+        "orbit_ok": true,
+        "orbit_label_shift_px": 104.5,
+        "orbit_cam_delta": 5.536,
+        "zoom_ok": true,
+        "zoom_cam_delta": 0.938,
+        "step_status": "ok",
+        "reset_ok": true,
+        "outside_after_reset": [],
+        "extra_analyze_requests": 0
+      },
+      "console_errors": []
+    },
+    {
+      "case_id": "V057",
+      "group": "valid",
+      "expected_behavior": "SERVE",
+      "route_status": "SERVED",
+      "extraction_mode": "LOCAL_SLM_GROUNDED",
+      "http": 200,
+      "ms": 3778,
+      "surface": "SCENE",
+      "initial_visual_ok": true,
+      "stale_vs_previous": false,
+      "has_canvas": true,
+      "canvas_rect": {
+        "w": 1006,
+        "h": 814
+      },
+      "label_texts": [
+        "M",
+        "N",
+        "P",
+        "Q",
+        "H",
+        "K"
+      ],
+      "label_positions": {
+        "M": [
+          554,
+          447
+        ],
+        "N": [
+          267,
+          523
+        ],
+        "P": [
+          407,
+          713
+        ],
+        "Q": [
+          730,
+          589
+        ],
+        "H": [
+          544,
+          172
+        ],
+        "K": [
+          408,
+          333
+        ]
+      },
+      "outside_initial_labels": [],
+      "missing_gold_labels": [],
+      "vertex_marker_count": 6,
+      "outside_initial_ndc_vertices": [],
+      "camera_position": [
+        3.3497583526860866,
+        5.161407203307757,
+        3.0579975438811404
+      ],
+      "progress_text": "Bước 7/7",
+      "canvas_ink_fraction": 0.90863,
+      "interactions": {
+        "ok": true,
+        "orbit_ok": true,
+        "orbit_label_shift_px": 214.1,
+        "orbit_cam_delta": 3.356,
+        "zoom_ok": true,
+        "zoom_cam_delta": 0.488,
+        "step_status": "ok",
+        "reset_ok": true,
+        "outside_after_reset": [],
+        "extra_analyze_requests": 0
+      },
+      "console_errors": []
+    },
+    {
+      "case_id": "V058",
+      "group": "valid",
+      "expected_behavior": "SERVE",
+      "route_status": "SERVED",
+      "extraction_mode": "LOCAL_SLM_GROUNDED",
+      "http": 200,
+      "ms": 3968,
+      "surface": "SCENE",
+      "initial_visual_ok": true,
+      "stale_vs_previous": false,
+      "has_canvas": true,
+      "canvas_rect": {
+        "w": 1006,
+        "h": 814
+      },
+      "label_texts": [
+        "E",
+        "F",
+        "G",
+        "H",
+        "K"
+      ],
+      "label_positions": {
+        "E": [
+          472,
+          513
+        ],
+        "F": [
+          358,
+          569
+        ],
+        "G": [
+          554,
+          617
+        ],
+        "H": [
+          633,
+          536
+        ],
+        "K": [
+          448,
+          209
+        ]
+      },
+      "outside_initial_labels": [],
+      "missing_gold_labels": [],
+      "vertex_marker_count": 5,
+      "outside_initial_ndc_vertices": [],
+      "camera_position": [
+        4.334021356432915,
+        2.6871576540396678,
+        2.2871358997191473
+      ],
+      "progress_text": "Bước 7/7",
+      "canvas_ink_fraction": 0.92936,
+      "interactions": {
+        "ok": true,
+        "orbit_ok": true,
+        "orbit_label_shift_px": 85.4,
+        "orbit_cam_delta": 2.975,
+        "zoom_ok": true,
+        "zoom_cam_delta": 0.452,
+        "step_status": "ok",
+        "reset_ok": true,
+        "outside_after_reset": [],
+        "extra_analyze_requests": 0
+      },
+      "console_errors": []
+    },
+    {
+      "case_id": "V059",
+      "group": "valid",
+      "expected_behavior": "SERVE",
+      "route_status": "SERVED",
+      "extraction_mode": "LOCAL_SLM_GROUNDED",
+      "http": 200,
+      "ms": 4696,
+      "surface": "SCENE",
+      "initial_visual_ok": true,
+      "stale_vs_previous": false,
+      "has_canvas": true,
+      "canvas_rect": {
+        "w": 1006,
+        "h": 814
+      },
+      "label_texts": [
+        "K",
+        "L",
+        "M",
+        "K'",
+        "L'",
+        "M'"
+      ],
+      "label_positions": {
+        "K": [
+          296,
+          570
+        ],
+        "L": [
+          556,
+          709
+        ],
+        "M": [
+          596,
+          520
+        ],
+        "K'": [
+          264,
+          253
+        ],
+        "L'": [
+          553,
+          321
+        ],
+        "M'": [
+          602,
+          220
+        ]
+      },
+      "outside_initial_labels": [],
+      "missing_gold_labels": [],
+      "vertex_marker_count": 6,
+      "outside_initial_ndc_vertices": [],
+      "camera_position": [
+        4.140590134242549,
+        -3.0211217386828233,
+        3.278328344626153
+      ],
+      "progress_text": "Bước 5/5",
+      "canvas_ink_fraction": 0.9337,
+      "interactions": {
+        "ok": true,
+        "orbit_ok": true,
+        "orbit_label_shift_px": 172.1,
+        "orbit_cam_delta": 3.209,
+        "zoom_ok": true,
+        "zoom_cam_delta": 0.5,
+        "step_status": "ok",
+        "reset_ok": true,
+        "outside_after_reset": [],
+        "extra_analyze_requests": 0
+      },
+      "console_errors": []
+    },
+    {
+      "case_id": "V060",
+      "group": "valid",
+      "expected_behavior": "SERVE",
+      "route_status": "SERVED",
+      "extraction_mode": "LOCAL_SLM_GROUNDED",
+      "http": 200,
+      "ms": 6703,
+      "surface": "SCENE",
+      "initial_visual_ok": true,
+      "stale_vs_previous": false,
+      "has_canvas": true,
+      "canvas_rect": {
+        "w": 1006,
+        "h": 814
+      },
+      "label_texts": [
+        "M",
+        "N",
+        "P",
+        "O",
+        "H"
+      ],
+      "label_positions": {
+        "M": [
+          165,
+          494
+        ],
+        "N": [
+          620,
+          711
+        ],
+        "P": [
+          650,
+          428
+        ],
+        "O": [
+          466,
+          282
+        ],
+        "H": [
+          483,
+          531
+        ]
+      },
+      "outside_initial_labels": [],
+      "missing_gold_labels": [],
+      "vertex_marker_count": 5,
+      "outside_initial_ndc_vertices": [],
+      "camera_position": [
+        6.371767896638909,
+        -3.5345550523125944,
+        3.056280428442666
+      ],
+      "progress_text": "Bước 6/6",
+      "canvas_ink_fraction": 0.82521,
+      "interactions": {
+        "ok": true,
+        "orbit_ok": true,
+        "orbit_label_shift_px": 191.7,
+        "orbit_cam_delta": 4.204,
+        "zoom_ok": true,
+        "zoom_cam_delta": 0.724,
+        "step_status": "ok",
+        "reset_ok": true,
+        "outside_after_reset": [],
+        "extra_analyze_requests": 0
+      },
+      "console_errors": []
+    },
+    {
+      "case_id": "V061",
+      "group": "valid",
+      "expected_behavior": "SERVE",
+      "route_status": "SERVED",
+      "extraction_mode": "LOCAL_DETERMINISTIC_PARSER",
+      "http": 200,
+      "ms": 413,
+      "surface": "SCENE",
+      "initial_visual_ok": true,
+      "stale_vs_previous": false,
+      "has_canvas": true,
+      "canvas_rect": {
+        "w": 1006,
+        "h": 814
+      },
+      "label_texts": [
+        "A",
+        "B",
+        "C",
+        "D",
+        "E",
+        "F",
+        "G",
+        "H",
+        "K"
+      ],
+      "label_positions": {
+        "A": [
+          286,
+          559
+        ],
+        "B": [
+          328,
+          703
+        ],
+        "C": [
+          710,
+          593
+        ],
+        "D": [
+          634,
+          466
+        ],
+        "E": [
+          225,
+          222
+        ],
+        "F": [
+          284,
+          342
+        ],
+        "G": [
+          781,
+          254
+        ],
+        "H": [
+          660,
+          152
+        ],
+        "K": [
+          401,
+          569
+        ]
+      },
+      "outside_initial_labels": [],
+      "missing_gold_labels": [],
+      "vertex_marker_count": 9,
+      "outside_initial_ndc_vertices": [],
+      "camera_position": [
+        7.243016990598956,
+        -0.2722723565961811,
+        7.574709365988064
+      ],
+      "progress_text": "Bước 7/7",
+      "canvas_ink_fraction": 0.88982,
+      "interactions": {
+        "ok": true,
+        "orbit_ok": true,
+        "orbit_label_shift_px": 244.3,
+        "orbit_cam_delta": 4.103,
+        "zoom_ok": true,
+        "zoom_cam_delta": 0.871,
+        "step_status": "ok",
+        "reset_ok": true,
+        "outside_after_reset": [],
+        "extra_analyze_requests": 0
+      },
+      "console_errors": []
+    },
+    {
+      "case_id": "V062",
+      "group": "valid",
+      "expected_behavior": "SERVE",
+      "route_status": "REFUSED",
+      "extraction_mode": "LOCAL_SLM_GROUNDED",
+      "http": 200,
+      "ms": 7923,
+      "surface": "NO_SCENE",
+      "reason_code": null,
+      "canvas_count": 0,
+      "toast": "Axo chưa hỗ trợ phép dựng này | Đề này cần một phép dựng hoặc một dạng câu hỏi mà hệ chưa hỗ trợ, nên hệ không dựng một hình gần đúng. Bạn có thể thử các bài về thiết diện, khoảng cách, góc hoặc thể tích.",
+      "console_errors": []
+    },
+    {
+      "case_id": "V063",
+      "group": "valid",
+      "expected_behavior": "SERVE",
+      "route_status": "SERVED",
+      "extraction_mode": "LOCAL_SLM_GROUNDED",
+      "http": 200,
+      "ms": 4439,
+      "surface": "SCENE",
+      "initial_visual_ok": true,
+      "stale_vs_previous": false,
+      "has_canvas": true,
+      "canvas_rect": {
+        "w": 1006,
+        "h": 814
+      },
+      "label_texts": [
+        "A",
+        "B",
+        "C",
+        "P"
+      ],
+      "label_positions": {
+        "A": [
+          466,
+          513
+        ],
+        "B": [
+          365,
+          582
+        ],
+        "C": [
+          614,
+          572
+        ],
+        "P": [
+          449,
+          201
+        ]
+      },
+      "outside_initial_labels": [],
+      "missing_gold_labels": [],
+      "vertex_marker_count": 4,
+      "outside_initial_ndc_vertices": [],
+      "camera_position": [
+        8.18733521790384,
+        3.31099141529346,
+        3.9572797300116602
+      ],
+      "progress_text": "Bước 7/7",
+      "canvas_ink_fraction": 0.92938,
+      "interactions": {
+        "ok": true,
+        "orbit_ok": true,
+        "orbit_label_shift_px": 100.2,
+        "orbit_cam_delta": 5.352,
+        "zoom_ok": true,
+        "zoom_cam_delta": 0.723,
+        "step_status": "ok",
+        "reset_ok": true,
+        "outside_after_reset": [],
+        "extra_analyze_requests": 0
+      },
+      "console_errors": []
+    },
+    {
+      "case_id": "V064",
+      "group": "valid",
+      "expected_behavior": "SERVE",
+      "route_status": "SERVED",
+      "extraction_mode": "LOCAL_SLM_GROUNDED",
+      "http": 200,
+      "ms": 4511,
+      "surface": "SCENE",
+      "initial_visual_ok": true,
+      "stale_vs_previous": false,
+      "has_canvas": true,
+      "canvas_rect": {
+        "w": 1006,
+        "h": 814
+      },
+      "label_texts": [
+        "M",
+        "N",
+        "P",
+        "Q",
+        "H",
+        "I",
+        "K"
+      ],
+      "label_positions": {
+        "M": [
+          364,
+          568
+        ],
+        "N": [
+          469,
+          655
+        ],
+        "P": [
+          666,
+          596
+        ],
+        "Q": [
+          543,
+          543
+        ],
+        "H": [
+          362,
+          150
+        ],
+        "I": [
+          522,
+          365
+        ],
+        "K": [
+          520,
+          589
+        ]
+      },
+      "outside_initial_labels": [],
+      "missing_gold_labels": [],
+      "vertex_marker_count": 7,
+      "outside_initial_ndc_vertices": [],
+      "camera_position": [
+        8.15853539701676,
+        -3.3301511221197977,
+        3.7535336944456548
+      ],
+      "progress_text": "Bước 8/8",
+      "canvas_ink_fraction": 0.92275,
+      "interactions": {
+        "ok": true,
+        "orbit_ok": true,
+        "orbit_label_shift_px": 123.7,
+        "orbit_cam_delta": 5.825,
+        "zoom_ok": true,
+        "zoom_cam_delta": 0.777,
+        "step_status": "ok",
+        "reset_ok": true,
+        "outside_after_reset": [],
+        "extra_analyze_requests": 0
+      },
+      "console_errors": []
+    },
+    {
+      "case_id": "V065",
+      "group": "valid",
+      "expected_behavior": "SERVE",
+      "route_status": "SERVED",
+      "extraction_mode": "LOCAL_SLM_GROUNDED",
+      "http": 200,
+      "ms": 5246,
+      "surface": "SCENE",
+      "initial_visual_ok": true,
+      "stale_vs_previous": false,
+      "has_canvas": true,
+      "canvas_rect": {
+        "w": 1006,
+        "h": 814
+      },
+      "label_texts": [
+        "P",
+        "Q",
+        "R",
+        "P'",
+        "Q'",
+        "R'"
+      ],
+      "label_positions": {
+        "P": [
+          478,
+          507
+        ],
+        "Q": [
+          228,
+          634
+        ],
+        "R": [
+          754,
+          609
+        ],
+        "P'": [
+          475,
+          181
+        ],
+        "Q'": [
+          167,
+          271
+        ],
+        "R'": [
+          808,
+          242
+        ]
+      },
+      "outside_initial_labels": [],
+      "missing_gold_labels": [],
+      "vertex_marker_count": 6,
+      "outside_initial_ndc_vertices": [],
+      "camera_position": [
+        8.244588126378169,
+        7.186198137423704,
+        6.004121665469974
+      ],
+      "progress_text": "Bước 7/7",
+      "canvas_ink_fraction": 0.95117,
+      "interactions": {
+        "ok": true,
+        "orbit_ok": true,
+        "orbit_label_shift_px": 172.9,
+        "orbit_cam_delta": 5.594,
+        "zoom_ok": true,
+        "zoom_cam_delta": 0.924,
+        "step_status": "ok",
+        "reset_ok": true,
+        "outside_after_reset": [],
+        "extra_analyze_requests": 0
+      },
+      "console_errors": []
+    },
+    {
+      "case_id": "V066",
+      "group": "valid",
+      "expected_behavior": "SERVE",
+      "route_status": "SERVED",
+      "extraction_mode": "LOCAL_SLM_GROUNDED",
+      "http": 200,
+      "ms": 5890,
+      "surface": "SCENE",
+      "initial_visual_ok": true,
+      "stale_vs_previous": false,
+      "has_canvas": true,
+      "canvas_rect": {
+        "w": 1006,
+        "h": 814
+      },
+      "label_texts": [
+        "M",
+        "N",
+        "P",
+        "O",
+        "G"
+      ],
+      "label_positions": {
+        "M": [
+          207,
+          434
+        ],
+        "N": [
+          273,
+          721
+        ],
+        "P": [
+          808,
+          379
+        ],
+        "O": [
+          248,
+          334
+        ],
+        "G": [
+          481,
+          487
+        ]
+      },
+      "outside_initial_labels": [],
+      "missing_gold_labels": [],
+      "vertex_marker_count": 5,
+      "outside_initial_ndc_vertices": [],
+      "camera_position": [
+        8.04358385473738,
+        0.055968629776917744,
+        5.380813020716923
+      ],
+      "progress_text": "Bước 7/7",
+      "canvas_ink_fraction": 0.93295,
+      "interactions": {
+        "ok": true,
+        "orbit_ok": true,
+        "orbit_label_shift_px": 297.4,
+        "orbit_cam_delta": 4.571,
+        "zoom_ok": true,
+        "zoom_cam_delta": 0.725,
+        "step_status": "ok",
+        "reset_ok": true,
+        "outside_after_reset": [],
+        "extra_analyze_requests": 0
+      },
+      "console_errors": []
+    },
+    {
+      "case_id": "V067",
+      "group": "valid",
+      "expected_behavior": "SERVE",
+      "route_status": "REFUSED",
+      "extraction_mode": "LOCAL_SLM_GROUNDED",
+      "http": 200,
+      "ms": 3061,
+      "surface": "NO_SCENE",
+      "reason_code": null,
+      "canvas_count": 0,
+      "toast": "Đề bài chưa được hỗ trợ | Hệ chưa đối chiếu được đầy đủ dữ kiện với đề bài nên tạm dừng dựng hình. Bạn có thể thử các bài về thiết diện, khoảng cách, góc hoặc thể tích.",
+      "console_errors": []
+    },
+    {
+      "case_id": "V068",
+      "group": "valid",
+      "expected_behavior": "SERVE",
+      "route_status": "SERVED",
+      "extraction_mode": "LOCAL_DETERMINISTIC_PARSER",
+      "http": 200,
+      "ms": 163,
+      "surface": "SCENE",
+      "initial_visual_ok": true,
+      "stale_vs_previous": false,
+      "has_canvas": true,
+      "canvas_rect": {
+        "w": 1006,
+        "h": 814
+      },
+      "label_texts": [
+        "M",
+        "N",
+        "P",
+        "Q",
+        "S",
+        "H"
+      ],
+      "label_positions": {
+        "M": [
+          323,
+          646
+        ],
+        "N": [
+          661,
+          685
+        ],
+        "P": [
+          673,
+          492
+        ],
+        "Q": [
+          395,
+          468
+        ],
+        "S": [
+          277,
+          152
+        ],
+        "H": [
+          524,
+          537
+        ]
+      },
+      "outside_initial_labels": [],
+      "missing_gold_labels": [],
+      "vertex_marker_count": 6,
+      "outside_initial_ndc_vertices": [],
+      "camera_position": [
+        1.7478340411299678,
+        -4.075087829003852,
+        4.027022787540173
+      ],
+      "progress_text": "Bước 7/7",
+      "canvas_ink_fraction": 0.80349,
+      "interactions": {
+        "ok": true,
+        "orbit_ok": true,
+        "orbit_label_shift_px": 196.2,
+        "orbit_cam_delta": 3.418,
+        "zoom_ok": true,
+        "zoom_cam_delta": 0.501,
+        "step_status": "ok",
+        "reset_ok": true,
+        "outside_after_reset": [],
+        "extra_analyze_requests": 0
+      },
+      "console_errors": []
+    },
+    {
+      "case_id": "V069",
+      "group": "valid",
+      "expected_behavior": "SERVE",
+      "route_status": "SERVED",
+      "extraction_mode": "LOCAL_DETERMINISTIC_PARSER",
+      "http": 200,
+      "ms": 211,
+      "surface": "SCENE",
+      "initial_visual_ok": true,
+      "stale_vs_previous": false,
+      "has_canvas": true,
+      "canvas_rect": {
+        "w": 1006,
+        "h": 814
+      },
+      "label_texts": [
+        "M",
+        "N",
+        "P",
+        "Q",
+        "M'",
+        "N'",
+        "P'",
+        "Q'"
+      ],
+      "label_positions": {
+        "M": [
+          361,
+          637
+        ],
+        "N": [
+          453,
+          711
+        ],
+        "P": [
+          622,
+          620
+        ],
+        "Q": [
+          521,
+          568
+        ],
+        "M'": [
+          326,
+          190
+        ],
+        "N'": [
+          437,
+          216
+        ],
+        "P'": [
+          650,
+          185
+        ],
+        "Q'": [
+          532,
+          160
+        ]
+      },
+      "outside_initial_labels": [],
+      "missing_gold_labels": [],
+      "vertex_marker_count": 8,
+      "outside_initial_ndc_vertices": [],
+      "camera_position": [
+        9.23475535233731,
+        -5.409780178981372,
+        8.01267193871068
+      ],
+      "progress_text": "Bước 6/6",
+      "canvas_ink_fraction": 0.93485,
+      "interactions": {
+        "ok": true,
+        "orbit_ok": true,
+        "orbit_label_shift_px": 162,
+        "orbit_cam_delta": 7.231,
+        "zoom_ok": true,
+        "zoom_cam_delta": 1.076,
+        "step_status": "ok",
+        "reset_ok": true,
+        "outside_after_reset": [],
+        "extra_analyze_requests": 0
+      },
+      "console_errors": []
+    },
+    {
+      "case_id": "V070",
+      "group": "valid",
+      "expected_behavior": "SERVE",
+      "route_status": "REFUSED",
+      "extraction_mode": "LOCAL_SLM_GROUNDED",
+      "http": 200,
+      "ms": 3387,
+      "surface": "NO_SCENE",
+      "reason_code": null,
+      "canvas_count": 0,
+      "toast": "Đề bài chưa được hỗ trợ | Hệ chưa đối chiếu được đầy đủ dữ kiện với đề bài nên tạm dừng dựng hình. Bạn có thể thử các bài về thiết diện, khoảng cách, góc hoặc thể tích.",
+      "console_errors": []
+    },
+    {
+      "case_id": "V071",
+      "group": "valid",
+      "expected_behavior": "SERVE",
+      "route_status": "SERVED",
+      "extraction_mode": "LOCAL_DETERMINISTIC_PARSER",
+      "http": 200,
+      "ms": 148,
+      "surface": "SCENE",
+      "initial_visual_ok": true,
+      "stale_vs_previous": false,
+      "has_canvas": true,
+      "canvas_rect": {
+        "w": 1006,
+        "h": 814
+      },
+      "label_texts": [
+        "E",
+        "F",
+        "G",
+        "K"
+      ],
+      "label_positions": {
+        "E": [
+          504,
+          453
+        ],
+        "F": [
+          372,
+          585
+        ],
+        "G": [
+          593,
+          586
+        ],
+        "K": [
+          481,
+          149
+        ]
+      },
+      "outside_initial_labels": [],
+      "missing_gold_labels": [],
+      "vertex_marker_count": 4,
+      "outside_initial_ndc_vertices": [],
+      "camera_position": [
+        6.481791560209898,
+        3.8866016695773067,
+        6.7315077649458015
+      ],
+      "progress_text": "Bước 7/7",
+      "canvas_ink_fraction": 0.87496,
+      "interactions": {
+        "ok": true,
+        "orbit_ok": true,
+        "orbit_label_shift_px": 94.6,
+        "orbit_cam_delta": 4.235,
+        "zoom_ok": true,
+        "zoom_cam_delta": 0.755,
+        "step_status": "ok",
+        "reset_ok": true,
+        "outside_after_reset": [],
+        "extra_analyze_requests": 0
+      },
+      "console_errors": []
+    },
+    {
+      "case_id": "V072",
+      "group": "valid",
+      "expected_behavior": "SERVE",
+      "route_status": "REFUSED",
+      "extraction_mode": "LOCAL_DETERMINISTIC_PARSER",
+      "http": 200,
+      "ms": 89,
+      "surface": "NO_SCENE",
+      "reason_code": null,
+      "canvas_count": 0,
+      "toast": "Axo chưa hỗ trợ phép dựng này | Đề này cần một phép dựng hoặc một dạng câu hỏi mà hệ chưa hỗ trợ, nên hệ không dựng một hình gần đúng. Bạn có thể thử các bài về thiết diện, khoảng cách, góc hoặc thể tích.",
+      "console_errors": []
+    },
+    {
+      "case_id": "V073",
+      "group": "valid",
+      "expected_behavior": "SERVE",
+      "route_status": "SERVED",
+      "extraction_mode": "LOCAL_DETERMINISTIC_PARSER",
+      "http": 200,
+      "ms": 188,
+      "surface": "SCENE",
+      "initial_visual_ok": true,
+      "stale_vs_previous": false,
+      "has_canvas": true,
+      "canvas_rect": {
+        "w": 1006,
+        "h": 814
+      },
+      "label_texts": [
+        "E",
+        "F",
+        "G",
+        "H",
+        "K"
+      ],
+      "label_positions": {
+        "E": [
+          472,
+          513
+        ],
+        "F": [
+          358,
+          569
+        ],
+        "G": [
+          554,
+          617
+        ],
+        "H": [
+          633,
+          536
+        ],
+        "K": [
+          448,
+          209
+        ]
+      },
+      "outside_initial_labels": [],
+      "missing_gold_labels": [],
+      "vertex_marker_count": 5,
+      "outside_initial_ndc_vertices": [],
+      "camera_position": [
+        4.334021356432915,
+        2.6871576540396678,
+        2.2871358997191473
+      ],
+      "progress_text": "Bước 7/7",
+      "canvas_ink_fraction": 0.92936,
+      "interactions": {
+        "ok": true,
+        "orbit_ok": true,
+        "orbit_label_shift_px": 88.6,
+        "orbit_cam_delta": 3.072,
+        "zoom_ok": true,
+        "zoom_cam_delta": 0.434,
+        "step_status": "ok",
+        "reset_ok": true,
+        "outside_after_reset": [],
+        "extra_analyze_requests": 0
+      },
+      "console_errors": []
+    },
+    {
+      "case_id": "V074",
+      "group": "valid",
+      "expected_behavior": "SERVE",
+      "route_status": "SERVED",
+      "extraction_mode": "LOCAL_DETERMINISTIC_PARSER",
+      "http": 200,
+      "ms": 606,
+      "surface": "SCENE",
+      "initial_visual_ok": true,
+      "stale_vs_previous": false,
+      "has_canvas": true,
+      "canvas_rect": {
+        "w": 1006,
+        "h": 814
+      },
+      "label_texts": [
+        "M",
+        "N",
+        "P",
+        "Q",
+        "M'",
+        "N'",
+        "P'",
+        "Q'"
+      ],
+      "label_positions": {
+        "M": [
+          276,
+          561
+        ],
+        "N": [
+          469,
+          723
+        ],
+        "P": [
+          713,
+          585
+        ],
+        "Q": [
+          508,
+          487
+        ],
+        "M'": [
+          241,
+          260
+        ],
+        "N'": [
+          464,
+          339
+        ],
+        "P'": [
+          751,
+          273
+        ],
+        "Q'": [
+          510,
+          207
+        ]
+      },
+      "outside_initial_labels": [],
+      "missing_gold_labels": [],
+      "vertex_marker_count": 8,
+      "outside_initial_ndc_vertices": [],
+      "camera_position": [
+        4.93014379198849,
+        -2.2977822063312203,
+        3.392362694248954
+      ],
+      "progress_text": "Bước 5/5",
+      "canvas_ink_fraction": 0.93862,
+      "interactions": {
+        "ok": true,
+        "orbit_ok": true,
+        "orbit_label_shift_px": 228.6,
+        "orbit_cam_delta": 3.382,
+        "zoom_ok": true,
+        "zoom_cam_delta": 0.551,
+        "step_status": "ok",
+        "reset_ok": true,
+        "outside_after_reset": [],
+        "extra_analyze_requests": 0
+      },
+      "console_errors": []
+    },
+    {
+      "case_id": "V075",
+      "group": "valid",
+      "expected_behavior": "SERVE",
+      "route_status": "SERVED",
+      "extraction_mode": "LOCAL_PARSER_AFTER_V3_NORMALIZER",
+      "http": 200,
+      "ms": 252,
+      "surface": "SCENE",
+      "initial_visual_ok": true,
+      "stale_vs_previous": false,
+      "has_canvas": true,
+      "canvas_rect": {
+        "w": 1006,
+        "h": 814
+      },
+      "label_texts": [
+        "E",
+        "F",
+        "G",
+        "H",
+        "K"
+      ],
+      "label_positions": {
+        "E": [
+          434,
+          465
+        ],
+        "F": [
+          340,
+          553
+        ],
+        "G": [
+          587,
+          623
+        ],
+        "H": [
+          661,
+          532
+        ],
+        "K": [
+          455,
+          200
+        ]
+      },
+      "outside_initial_labels": [],
+      "missing_gold_labels": [],
+      "vertex_marker_count": 5,
+      "outside_initial_ndc_vertices": [],
+      "camera_position": [
+        12.760977766635492,
+        8.359781720378443,
+        8.039383669890784
+      ],
+      "progress_text": "Bước 7/7",
+      "canvas_ink_fraction": 0.93049,
+      "interactions": {
+        "ok": true,
+        "orbit_ok": true,
+        "orbit_label_shift_px": 95.8,
+        "orbit_cam_delta": 8.943,
+        "zoom_ok": true,
+        "zoom_cam_delta": 1.302,
+        "step_status": "ok",
+        "reset_ok": true,
+        "outside_after_reset": [],
+        "extra_analyze_requests": 0
+      },
+      "console_errors": []
+    },
+    {
+      "case_id": "V076",
+      "group": "valid",
+      "expected_behavior": "SERVE",
+      "route_status": "SERVED",
+      "extraction_mode": "LOCAL_DETERMINISTIC_PARSER",
+      "http": 200,
+      "ms": 148,
+      "surface": "SCENE",
+      "initial_visual_ok": true,
+      "stale_vs_previous": false,
+      "has_canvas": true,
+      "canvas_rect": {
+        "w": 1006,
+        "h": 814
+      },
+      "label_texts": [
+        "A",
+        "B",
+        "C",
+        "P"
+      ],
+      "label_positions": {
+        "A": [
+          434,
+          471
+        ],
+        "B": [
+          333,
+          613
+        ],
+        "C": [
+          638,
+          678
+        ],
+        "P": [
+          446,
+          149
+        ]
+      },
+      "outside_initial_labels": [],
+      "missing_gold_labels": [],
+      "vertex_marker_count": 4,
+      "outside_initial_ndc_vertices": [],
+      "camera_position": [
+        9.644680684897622,
+        4.0894213369056,
+        5.541669469978894
+      ],
+      "progress_text": "Bước 5/5",
+      "canvas_ink_fraction": 0.93014,
+      "interactions": {
+        "ok": true,
+        "orbit_ok": true,
+        "orbit_label_shift_px": 114.3,
+        "orbit_cam_delta": 5.676,
+        "zoom_ok": true,
+        "zoom_cam_delta": 0.941,
+        "step_status": "ok",
+        "reset_ok": true,
+        "outside_after_reset": [],
+        "extra_analyze_requests": 0
+      },
+      "console_errors": []
+    },
+    {
+      "case_id": "V077",
+      "group": "valid",
+      "expected_behavior": "SERVE",
+      "route_status": "SERVED",
+      "extraction_mode": "LOCAL_DETERMINISTIC_PARSER",
+      "http": 200,
+      "ms": 134,
+      "surface": "SCENE",
+      "initial_visual_ok": true,
+      "stale_vs_previous": false,
+      "has_canvas": true,
+      "canvas_rect": {
+        "w": 1006,
+        "h": 814
+      },
+      "label_texts": [
+        "E",
+        "F",
+        "G",
+        "H",
+        "E'",
+        "F'",
+        "G'",
+        "H'"
+      ],
+      "label_positions": {
+        "E": [
+          295,
+          551
+        ],
+        "F": [
+          470,
+          696
+        ],
+        "G": [
+          700,
+          572
+        ],
+        "H": [
+          508,
+          485
+        ],
+        "E'": [
+          265,
+          275
+        ],
+        "F'": [
+          469,
+          348
+        ],
+        "G'": [
+          730,
+          286
+        ],
+        "H'": [
+          509,
+          220
+        ]
+      },
+      "outside_initial_labels": [],
+      "missing_gold_labels": [],
+      "vertex_marker_count": 8,
+      "outside_initial_ndc_vertices": [],
+      "camera_position": [
+        7.899819253519994,
+        -3.870085975229883,
+        5.3957070383195465
+      ],
+      "progress_text": "Bước 8/8",
+      "canvas_ink_fraction": 0.93637,
+      "interactions": {
+        "ok": true,
+        "orbit_ok": true,
+        "orbit_label_shift_px": 206.7,
+        "orbit_cam_delta": 5.585,
+        "zoom_ok": true,
+        "zoom_cam_delta": 0.844,
+        "step_status": "ok",
+        "reset_ok": true,
+        "outside_after_reset": [],
+        "extra_analyze_requests": 0
+      },
+      "console_errors": []
+    },
+    {
+      "case_id": "V078",
+      "group": "valid",
+      "expected_behavior": "SERVE",
+      "route_status": "SERVED",
+      "extraction_mode": "LOCAL_DETERMINISTIC_PARSER",
+      "http": 200,
+      "ms": 143,
+      "surface": "SCENE",
+      "initial_visual_ok": true,
+      "stale_vs_previous": false,
+      "has_canvas": true,
+      "canvas_rect": {
+        "w": 1006,
+        "h": 814
+      },
+      "label_texts": [
+        "M",
+        "N",
+        "P",
+        "Q",
+        "M'",
+        "N'",
+        "P'",
+        "Q'"
+      ],
+      "label_positions": {
+        "M": [
+          361,
+          637
+        ],
+        "N": [
+          453,
+          711
+        ],
+        "P": [
+          622,
+          620
+        ],
+        "Q": [
+          521,
+          568
+        ],
+        "M'": [
+          326,
+          190
+        ],
+        "N'": [
+          437,
+          216
+        ],
+        "P'": [
+          650,
+          185
+        ],
+        "Q'": [
+          532,
+          160
+        ]
+      },
+      "outside_initial_labels": [],
+      "missing_gold_labels": [],
+      "vertex_marker_count": 8,
+      "outside_initial_ndc_vertices": [],
+      "camera_position": [
+        9.23475535233731,
+        -5.409780178981372,
+        8.01267193871068
+      ],
+      "progress_text": "Bước 6/6",
+      "canvas_ink_fraction": 0.93485,
+      "interactions": {
+        "ok": true,
+        "orbit_ok": true,
+        "orbit_label_shift_px": 161.1,
+        "orbit_cam_delta": 7.217,
+        "zoom_ok": true,
+        "zoom_cam_delta": 1.083,
+        "step_status": "ok",
+        "reset_ok": true,
+        "outside_after_reset": [],
+        "extra_analyze_requests": 0
+      },
+      "console_errors": []
+    },
+    {
+      "case_id": "V079",
+      "group": "valid",
+      "expected_behavior": "SERVE",
+      "route_status": "SERVED",
+      "extraction_mode": "LOCAL_DETERMINISTIC_PARSER",
+      "http": 200,
+      "ms": 132,
+      "surface": "SCENE",
+      "initial_visual_ok": true,
+      "stale_vs_previous": false,
+      "has_canvas": true,
+      "canvas_rect": {
+        "w": 1006,
+        "h": 814
+      },
+      "label_texts": [
+        "N",
+        "P",
+        "Q",
+        "M",
+        "O"
+      ],
+      "label_positions": {
+        "N": [
+          238,
+          532
+        ],
+        "P": [
+          580,
+          721
+        ],
+        "Q": [
+          623,
+          464
+        ],
+        "M": [
+          470,
+          201
+        ],
+        "O": [
+          475,
+          570
+        ]
+      },
+      "outside_initial_labels": [],
+      "missing_gold_labels": [],
+      "vertex_marker_count": 5,
+      "outside_initial_ndc_vertices": [],
+      "camera_position": [
+        6.915151101400251,
+        -4.414273310362136,
+        4.790421255165221
+      ],
+      "progress_text": "Bước 5/5",
+      "canvas_ink_fraction": 0.93185,
+      "interactions": {
+        "ok": true,
+        "orbit_ok": true,
+        "orbit_label_shift_px": 162.8,
+        "orbit_cam_delta": 5.184,
+        "zoom_ok": true,
+        "zoom_cam_delta": 0.748,
+        "step_status": "ok",
+        "reset_ok": true,
+        "outside_after_reset": [],
+        "extra_analyze_requests": 0
+      },
+      "console_errors": []
+    },
+    {
+      "case_id": "V080",
+      "group": "valid",
+      "expected_behavior": "SERVE",
+      "route_status": "SERVED",
+      "extraction_mode": "LOCAL_DETERMINISTIC_PARSER",
+      "http": 200,
+      "ms": 150,
+      "surface": "SCENE",
+      "initial_visual_ok": true,
+      "stale_vs_previous": false,
+      "has_canvas": true,
+      "canvas_rect": {
+        "w": 1006,
+        "h": 814
+      },
+      "label_texts": [
+        "E",
+        "F",
+        "G",
+        "H",
+        "K",
+        "O"
+      ],
+      "label_positions": {
+        "E": [
+          286,
+          547
+        ],
+        "F": [
+          420,
+          712
+        ],
+        "G": [
+          726,
+          604
+        ],
+        "H": [
+          556,
+          478
+        ],
+        "K": [
+          495,
+          137
+        ],
+        "O": [
+          503,
+          587
+        ]
+      },
+      "outside_initial_labels": [],
+      "missing_gold_labels": [],
+      "vertex_marker_count": 6,
+      "outside_initial_ndc_vertices": [],
+      "camera_position": [
+        8.315041869860767,
+        -2.4346662581026886,
+        4.364202799441912
+      ],
+      "progress_text": "Bước 5/5",
+      "canvas_ink_fraction": 0.93414,
+      "interactions": {
+        "ok": true,
+        "orbit_ok": true,
+        "orbit_label_shift_px": 183,
+        "orbit_cam_delta": 5.396,
+        "zoom_ok": true,
+        "zoom_cam_delta": 0.749,
+        "step_status": "ok",
+        "reset_ok": true,
+        "outside_after_reset": [],
+        "extra_analyze_requests": 0
+      },
+      "console_errors": []
+    },
+    {
+      "case_id": "V081",
+      "group": "valid",
+      "expected_behavior": "SERVE",
+      "route_status": "SERVED",
+      "extraction_mode": "LOCAL_DETERMINISTIC_PARSER",
+      "http": 200,
+      "ms": 132,
+      "surface": "SCENE",
+      "initial_visual_ok": true,
+      "stale_vs_previous": false,
+      "has_canvas": true,
+      "canvas_rect": {
+        "w": 1006,
+        "h": 814
+      },
+      "label_texts": [
+        "M",
+        "N",
+        "P",
+        "Q",
+        "H"
+      ],
+      "label_positions": {
+        "M": [
+          438,
+          465
+        ],
+        "N": [
+          293,
+          596
+        ],
+        "P": [
+          568,
+          700
+        ],
+        "Q": [
+          690,
+          538
+        ],
+        "H": [
+          450,
+          149
+        ]
+      },
+      "outside_initial_labels": [],
+      "missing_gold_labels": [],
+      "vertex_marker_count": 5,
+      "outside_initial_ndc_vertices": [],
+      "camera_position": [
+        8.818116834418753,
+        5.645869899785851,
+        5.541367139777005
+      ],
+      "progress_text": "Bước 5/5",
+      "canvas_ink_fraction": 0.93285,
+      "interactions": {
+        "ok": true,
+        "orbit_ok": true,
+        "orbit_label_shift_px": 139.8,
+        "orbit_cam_delta": 5.922,
+        "zoom_ok": true,
+        "zoom_cam_delta": 0.835,
+        "step_status": "ok",
+        "reset_ok": true,
+        "outside_after_reset": [],
+        "extra_analyze_requests": 0
+      },
+      "console_errors": []
+    },
+    {
+      "case_id": "V082",
+      "group": "valid",
+      "expected_behavior": "SERVE",
+      "route_status": "SERVED",
+      "extraction_mode": "LOCAL_DETERMINISTIC_PARSER",
+      "http": 200,
+      "ms": 137,
+      "surface": "SCENE",
+      "initial_visual_ok": true,
+      "stale_vs_previous": false,
+      "has_canvas": true,
+      "canvas_rect": {
+        "w": 1006,
+        "h": 814
+      },
+      "label_texts": [
+        "E",
+        "F",
+        "G",
+        "K"
+      ],
+      "label_positions": {
+        "E": [
+          439,
+          454
+        ],
+        "F": [
+          319,
+          594
+        ],
+        "G": [
+          657,
+          573
+        ],
+        "K": [
+          437,
+          201
+        ]
+      },
+      "outside_initial_labels": [],
+      "missing_gold_labels": [],
+      "vertex_marker_count": 4,
+      "outside_initial_ndc_vertices": [],
+      "camera_position": [
+        11.90089772434834,
+        4.993662728368325,
+        6.537223067744197
+      ],
+      "progress_text": "Bước 7/7",
+      "canvas_ink_fraction": 0.93287,
+      "interactions": {
+        "ok": true,
+        "orbit_ok": true,
+        "orbit_label_shift_px": 143.9,
+        "orbit_cam_delta": 7.336,
+        "zoom_ok": true,
+        "zoom_cam_delta": 1.052,
+        "step_status": "ok",
+        "reset_ok": true,
+        "outside_after_reset": [],
+        "extra_analyze_requests": 0
+      },
+      "console_errors": []
+    },
+    {
+      "case_id": "V083",
+      "group": "valid",
+      "expected_behavior": "SERVE",
+      "route_status": "SERVED",
+      "extraction_mode": "LOCAL_DETERMINISTIC_PARSER",
+      "http": 200,
+      "ms": 150,
+      "surface": "SCENE",
+      "initial_visual_ok": true,
+      "stale_vs_previous": false,
+      "has_canvas": true,
+      "canvas_rect": {
+        "w": 1006,
+        "h": 814
+      },
+      "label_texts": [
+        "M",
+        "N",
+        "P",
+        "M'",
+        "N'",
+        "P'"
+      ],
+      "label_positions": {
+        "M": [
+          356,
+          587
+        ],
+        "N": [
+          506,
+          711
+        ],
+        "P": [
+          586,
+          561
+        ],
+        "M'": [
+          320,
+          195
+        ],
+        "N'": [
+          503,
+          264
+        ],
+        "P'": [
+          599,
+          183
+        ]
+      },
+      "outside_initial_labels": [],
+      "missing_gold_labels": [],
+      "vertex_marker_count": 6,
+      "outside_initial_ndc_vertices": [],
+      "camera_position": [
+        8.750400816141909,
+        -5.001276896128794,
+        8.062538359268704
+      ],
+      "progress_text": "Bước 5/5",
+      "canvas_ink_fraction": 0.93252,
+      "interactions": {
+        "ok": true,
+        "orbit_ok": true,
+        "orbit_label_shift_px": 162,
+        "orbit_cam_delta": 6.439,
+        "zoom_ok": true,
+        "zoom_cam_delta": 0.92,
+        "step_status": "ok",
+        "reset_ok": true,
+        "outside_after_reset": [],
+        "extra_analyze_requests": 0
+      },
+      "console_errors": []
+    },
+    {
+      "case_id": "V084",
+      "group": "valid",
+      "expected_behavior": "SERVE",
+      "route_status": "SERVED",
+      "extraction_mode": "LOCAL_DETERMINISTIC_PARSER",
+      "http": 200,
+      "ms": 149,
+      "surface": "SCENE",
+      "initial_visual_ok": true,
+      "stale_vs_previous": false,
+      "has_canvas": true,
+      "canvas_rect": {
+        "w": 1006,
+        "h": 814
+      },
+      "label_texts": [
+        "M",
+        "N",
+        "Q",
+        "R",
+        "P",
+        "H"
+      ],
+      "label_positions": {
+        "M": [
+          371,
+          565
+        ],
+        "N": [
+          472,
+          657
+        ],
+        "Q": [
+          644,
+          539
+        ],
+        "R": [
+          535,
+          485
+        ],
+        "P": [
+          339,
+          151
+        ],
+        "H": [
+          507,
+          548
+        ]
+      },
+      "outside_initial_labels": [],
+      "missing_gold_labels": [],
+      "vertex_marker_count": 6,
+      "outside_initial_ndc_vertices": [],
+      "camera_position": [
+        7.79691813786127,
+        -4.4956789565187165,
+        9.83203914758588
+      ],
+      "progress_text": "Bước 7/7",
+      "canvas_ink_fraction": 0.91175,
+      "interactions": {
+        "ok": true,
+        "orbit_ok": true,
+        "orbit_label_shift_px": 134.5,
+        "orbit_cam_delta": 6.111,
+        "zoom_ok": true,
+        "zoom_cam_delta": 0.982,
+        "step_status": "ok",
+        "reset_ok": true,
+        "outside_after_reset": [],
+        "extra_analyze_requests": 0
+      },
+      "console_errors": []
+    },
+    {
+      "case_id": "V085",
+      "group": "valid",
+      "expected_behavior": "SERVE",
+      "route_status": "SERVED",
+      "extraction_mode": "LOCAL_DETERMINISTIC_PARSER",
+      "http": 200,
+      "ms": 143,
+      "surface": "SCENE",
+      "initial_visual_ok": true,
+      "stale_vs_previous": false,
+      "has_canvas": true,
+      "canvas_rect": {
+        "w": 1006,
+        "h": 814
+      },
+      "label_texts": [
+        "M",
+        "N",
+        "P",
+        "Q",
+        "M'",
+        "N'",
+        "P'",
+        "Q'",
+        "H"
+      ],
+      "label_positions": {
+        "M": [
+          280,
+          558
+        ],
+        "N": [
+          471,
+          715
+        ],
+        "P": [
+          708,
+          582
+        ],
+        "Q": [
+          505,
+          486
+        ],
+        "M'": [
+          247,
+          264
+        ],
+        "N'": [
+          460,
+          342
+        ],
+        "P'": [
+          744,
+          277
+        ],
+        "Q'": [
+          510,
+          211
+        ],
+        "H": [
+          425,
+          449
+        ]
+      },
+      "outside_initial_labels": [],
+      "missing_gold_labels": [],
+      "vertex_marker_count": 9,
+      "outside_initial_ndc_vertices": [],
+      "camera_position": [
+        5.032823320347312,
+        -2.3839405607065647,
+        3.4548659221485205
+      ],
+      "progress_text": "Bước 7/7",
+      "canvas_ink_fraction": 0.9305,
+      "interactions": {
+        "ok": true,
+        "orbit_ok": true,
+        "orbit_label_shift_px": 224.3,
+        "orbit_cam_delta": 3.471,
+        "zoom_ok": true,
+        "zoom_cam_delta": 0.56,
+        "step_status": "ok",
+        "reset_ok": true,
+        "outside_after_reset": [],
+        "extra_analyze_requests": 0
+      },
+      "console_errors": []
+    },
+    {
+      "case_id": "V086",
+      "group": "valid",
+      "expected_behavior": "SERVE",
+      "route_status": "SERVED",
+      "extraction_mode": "LOCAL_SLM_GROUNDED",
+      "http": 200,
+      "ms": 5461,
+      "surface": "SCENE",
+      "initial_visual_ok": true,
+      "stale_vs_previous": false,
+      "has_canvas": true,
+      "canvas_rect": {
+        "w": 1006,
+        "h": 814
+      },
+      "label_texts": [
+        "M",
+        "N",
+        "P",
+        "O",
+        "H"
+      ],
+      "label_positions": {
+        "M": [
+          165,
+          494
+        ],
+        "N": [
+          620,
+          711
+        ],
+        "P": [
+          650,
+          428
+        ],
+        "O": [
+          466,
+          282
+        ],
+        "H": [
+          483,
+          531
+        ]
+      },
+      "outside_initial_labels": [],
+      "missing_gold_labels": [],
+      "vertex_marker_count": 5,
+      "outside_initial_ndc_vertices": [],
+      "camera_position": [
+        4.247845264428358,
+        -2.3563700347609355,
+        2.0375202854034056
+      ],
+      "progress_text": "Bước 6/6",
+      "canvas_ink_fraction": 0.82522,
+      "interactions": {
+        "ok": true,
+        "orbit_ok": true,
+        "orbit_label_shift_px": 198.9,
+        "orbit_cam_delta": 2.956,
+        "zoom_ok": true,
+        "zoom_cam_delta": 0.442,
+        "step_status": "ok",
+        "reset_ok": true,
+        "outside_after_reset": [],
+        "extra_analyze_requests": 0
+      },
+      "console_errors": []
+    },
+    {
+      "case_id": "V087",
+      "group": "valid",
+      "expected_behavior": "SERVE",
+      "route_status": "SERVED",
+      "extraction_mode": "LOCAL_SLM_GROUNDED",
+      "http": 200,
+      "ms": 4281,
+      "surface": "SCENE",
+      "initial_visual_ok": true,
+      "stale_vs_previous": false,
+      "has_canvas": true,
+      "canvas_rect": {
+        "w": 1006,
+        "h": 814
+      },
+      "label_texts": [
+        "E",
+        "F",
+        "G",
+        "H",
+        "K"
+      ],
+      "label_positions": {
+        "E": [
+          472,
+          513
+        ],
+        "F": [
+          358,
+          569
+        ],
+        "G": [
+          554,
+          617
+        ],
+        "H": [
+          633,
+          536
+        ],
+        "K": [
+          484,
+          206
+        ]
+      },
+      "outside_initial_labels": [],
+      "missing_gold_labels": [],
+      "vertex_marker_count": 5,
+      "outside_initial_ndc_vertices": [],
+      "camera_position": [
+        8.668042710692657,
+        5.374315306824654,
+        4.574271798149958
+      ],
+      "progress_text": "Bước 7/7",
+      "canvas_ink_fraction": 0.92936,
+      "interactions": {
+        "ok": true,
+        "orbit_ok": true,
+        "orbit_label_shift_px": 89.1,
+        "orbit_cam_delta": 6.216,
+        "zoom_ok": true,
+        "zoom_cam_delta": 0.832,
+        "step_status": "ok",
+        "reset_ok": true,
+        "outside_after_reset": [],
+        "extra_analyze_requests": 0
+      },
+      "console_errors": []
+    },
+    {
+      "case_id": "V088",
+      "group": "valid",
+      "expected_behavior": "SERVE",
+      "route_status": "REFUSED",
+      "extraction_mode": "LOCAL_SLM_GROUNDED",
+      "http": 200,
+      "ms": 4170,
+      "surface": "NO_SCENE",
+      "reason_code": null,
+      "canvas_count": 0,
+      "toast": "Đề bài chưa được hỗ trợ | Hệ chưa đối chiếu được đầy đủ dữ kiện với đề bài nên tạm dừng dựng hình. Bạn có thể thử các bài về thiết diện, khoảng cách, góc hoặc thể tích.",
+      "console_errors": []
+    },
+    {
+      "case_id": "V089",
+      "group": "valid",
+      "expected_behavior": "SERVE",
+      "route_status": "SERVED",
+      "extraction_mode": "LOCAL_DETERMINISTIC_PARSER",
+      "http": 200,
+      "ms": 149,
+      "surface": "SCENE",
+      "initial_visual_ok": true,
+      "stale_vs_previous": false,
+      "has_canvas": true,
+      "canvas_rect": {
+        "w": 1006,
+        "h": 814
+      },
+      "label_texts": [
+        "E",
+        "F",
+        "G",
+        "H",
+        "E'",
+        "F'",
+        "G'",
+        "H'"
+      ],
+      "label_positions": {
+        "E": [
+          316,
+          564
+        ],
+        "F": [
+          471,
+          712
+        ],
+        "G": [
+          675,
+          602
+        ],
+        "H": [
+          509,
+          519
+        ],
+        "E'": [
+          285,
+          233
+        ],
+        "F'": [
+          468,
+          290
+        ],
+        "G'": [
+          713,
+          257
+        ],
+        "H'": [
+          507,
+          191
+        ]
+      },
+      "outside_initial_labels": [],
+      "missing_gold_labels": [],
+      "vertex_marker_count": 8,
+      "outside_initial_ndc_vertices": [],
+      "camera_position": [
+        5.77117985682729,
+        -3.0034952581442482,
+        4.318532921067407
+      ],
+      "progress_text": "Bước 7/7",
+      "canvas_ink_fraction": 0.93831,
+      "interactions": {
+        "ok": true,
+        "orbit_ok": true,
+        "orbit_label_shift_px": 179,
+        "orbit_cam_delta": 4.043,
+        "zoom_ok": true,
+        "zoom_cam_delta": 0.686,
+        "step_status": "ok",
+        "reset_ok": true,
+        "outside_after_reset": [],
+        "extra_analyze_requests": 0
+      },
+      "console_errors": []
+    },
+    {
+      "case_id": "V090",
+      "group": "valid",
+      "expected_behavior": "SERVE",
+      "route_status": "SERVED",
+      "extraction_mode": "LOCAL_DETERMINISTIC_PARSER",
+      "http": 200,
+      "ms": 152,
+      "surface": "SCENE",
+      "initial_visual_ok": true,
+      "stale_vs_previous": false,
+      "has_canvas": true,
+      "canvas_rect": {
+        "w": 1006,
+        "h": 814
+      },
+      "label_texts": [
+        "A",
+        "B",
+        "C",
+        "P",
+        "H"
+      ],
+      "label_positions": {
+        "A": [
+          424,
+          672
+        ],
+        "B": [
+          747,
+          609
+        ],
+        "C": [
+          325,
+          507
+        ],
+        "P": [
+          416,
+          146
+        ],
+        "H": [
+          534,
+          459
+        ]
+      },
+      "outside_initial_labels": [],
+      "missing_gold_labels": [],
+      "vertex_marker_count": 5,
+      "outside_initial_ndc_vertices": [],
+      "camera_position": [
+        -1.787210576170859,
+        -6.501232798726351,
+        3.781516125005936
+      ],
+      "progress_text": "Bước 7/7",
+      "canvas_ink_fraction": 0.84389,
+      "interactions": {
+        "ok": true,
+        "orbit_ok": true,
+        "orbit_label_shift_px": 202.1,
+        "orbit_cam_delta": 5.859,
+        "zoom_ok": true,
+        "zoom_cam_delta": 0.816,
+        "step_status": "ok",
+        "reset_ok": true,
+        "outside_after_reset": [],
+        "extra_analyze_requests": 0
+      },
+      "console_errors": []
+    },
+    {
+      "case_id": "V091",
+      "group": "valid",
+      "expected_behavior": "SERVE",
+      "route_status": "SERVED",
+      "extraction_mode": "LOCAL_DETERMINISTIC_PARSER",
+      "http": 200,
+      "ms": 141,
+      "surface": "SCENE",
+      "initial_visual_ok": true,
+      "stale_vs_previous": false,
+      "has_canvas": true,
+      "canvas_rect": {
+        "w": 1006,
+        "h": 814
+      },
+      "label_texts": [
+        "M",
+        "N",
+        "P",
+        "Q",
+        "S"
+      ],
+      "label_positions": {
+        "M": [
+          442,
+          461
+        ],
+        "N": [
+          324,
+          561
+        ],
+        "P": [
+          556,
+          647
+        ],
+        "Q": [
+          660,
+          521
+        ],
+        "S": [
+          446,
+          202
+        ]
+      },
+      "outside_initial_labels": [],
+      "missing_gold_labels": [],
+      "vertex_marker_count": 5,
+      "outside_initial_ndc_vertices": [],
+      "camera_position": [
+        10.484217640161525,
+        6.607793648478493,
+        6.438471960930092
+      ],
+      "progress_text": "Bước 8/8",
+      "canvas_ink_fraction": 0.93005,
+      "interactions": {
+        "ok": true,
+        "orbit_ok": true,
+        "orbit_label_shift_px": 113.6,
+        "orbit_cam_delta": 6.838,
+        "zoom_ok": true,
+        "zoom_cam_delta": 1.2,
+        "step_status": "ok",
+        "reset_ok": true,
+        "outside_after_reset": [],
+        "extra_analyze_requests": 0
+      },
+      "console_errors": []
+    },
+    {
+      "case_id": "V092",
+      "group": "valid",
+      "expected_behavior": "SERVE",
+      "route_status": "SERVED",
+      "extraction_mode": "LOCAL_DETERMINISTIC_PARSER",
+      "http": 200,
+      "ms": 161,
+      "surface": "SCENE",
+      "initial_visual_ok": true,
+      "stale_vs_previous": false,
+      "has_canvas": true,
+      "canvas_rect": {
+        "w": 1006,
+        "h": 814
+      },
+      "label_texts": [
+        "M",
+        "N",
+        "P",
+        "Q",
+        "M'",
+        "N'",
+        "P'",
+        "Q'",
+        "I"
+      ],
+      "label_positions": {
+        "M": [
+          288,
+          531
+        ],
+        "N": [
+          420,
+          721
+        ],
+        "P": [
+          716,
+          598
+        ],
+        "Q": [
+          557,
+          447
+        ],
+        "M'": [
+          254,
+          247
+        ],
+        "N'": [
+          389,
+          391
+        ],
+        "P'": [
+          758,
+          296
+        ],
+        "Q'": [
+          548,
+          195
+        ],
+        "I": [
+          408,
+          577
+        ]
+      },
+      "outside_initial_labels": [],
+      "missing_gold_labels": [],
+      "vertex_marker_count": 9,
+      "outside_initial_ndc_vertices": [],
+      "camera_position": [
+        10.461659958263573,
+        -2.885341654694554,
+        7.641106638842382
+      ],
+      "progress_text": "Bước 7/7",
+      "canvas_ink_fraction": 0.93855,
+      "interactions": {
+        "ok": true,
+        "orbit_ok": true,
+        "orbit_label_shift_px": 259.8,
+        "orbit_cam_delta": 6.471,
+        "zoom_ok": true,
+        "zoom_cam_delta": 1.005,
+        "step_status": "ok",
+        "reset_ok": true,
+        "outside_after_reset": [],
+        "extra_analyze_requests": 0
+      },
+      "console_errors": []
+    },
+    {
+      "case_id": "V093",
+      "group": "valid",
+      "expected_behavior": "SERVE",
+      "route_status": "SERVED",
+      "extraction_mode": "LOCAL_DETERMINISTIC_PARSER",
+      "http": 200,
+      "ms": 152,
+      "surface": "SCENE",
+      "initial_visual_ok": true,
+      "stale_vs_previous": false,
+      "has_canvas": true,
+      "canvas_rect": {
+        "w": 1006,
+        "h": 814
+      },
+      "label_texts": [
+        "E",
+        "F",
+        "G",
+        "H",
+        "K",
+        "I",
+        "H'"
+      ],
+      "label_positions": {
+        "E": [
+          555,
+          460
+        ],
+        "F": [
+          260,
+          533
+        ],
+        "G": [
+          399,
+          714
+        ],
+        "H": [
+          743,
+          593
+        ],
+        "K": [
+          546,
+          178
+        ],
+        "I": [
+          403,
+          341
+        ],
+        "H'": [
+          401,
+          516
+        ]
+      },
+      "outside_initial_labels": [],
+      "missing_gold_labels": [],
+      "vertex_marker_count": 7,
+      "outside_initial_ndc_vertices": [],
+      "camera_position": [
+        6.680473900861718,
+        10.289831301684803,
+        5.089091481480071
+      ],
+      "progress_text": "Bước 8/8",
+      "canvas_ink_fraction": 0.90375,
+      "interactions": {
+        "ok": true,
+        "orbit_ok": true,
+        "orbit_label_shift_px": 228.6,
+        "orbit_cam_delta": 6.606,
+        "zoom_ok": true,
+        "zoom_cam_delta": 1.002,
+        "step_status": "ok",
+        "reset_ok": true,
+        "outside_after_reset": [],
+        "extra_analyze_requests": 0
+      },
+      "console_errors": []
+    },
+    {
+      "case_id": "V094",
+      "group": "valid",
+      "expected_behavior": "SERVE",
+      "route_status": "SERVED",
+      "extraction_mode": "LOCAL_DETERMINISTIC_PARSER",
+      "http": 200,
+      "ms": 152,
+      "surface": "SCENE",
+      "initial_visual_ok": true,
+      "stale_vs_previous": false,
+      "has_canvas": true,
+      "canvas_rect": {
+        "w": 1006,
+        "h": 814
+      },
+      "label_texts": [
+        "A",
+        "B",
+        "C",
+        "P",
+        "O"
+      ],
+      "label_positions": {
+        "A": [
+          356,
+          564
+        ],
+        "B": [
+          534,
+          652
+        ],
+        "C": [
+          572,
+          527
+        ],
+        "P": [
+          483,
+          149
+        ],
+        "O": [
+          500,
+          578
+        ]
+      },
+      "outside_initial_labels": [],
+      "missing_gold_labels": [],
+      "vertex_marker_count": 5,
+      "outside_initial_ndc_vertices": [],
+      "camera_position": [
+        5.791060563398135,
+        -4.988075802141168,
+        4.911796068994214
+      ],
+      "progress_text": "Bước 5/5",
+      "canvas_ink_fraction": 0.92823,
+      "interactions": {
+        "ok": true,
+        "orbit_ok": true,
+        "orbit_label_shift_px": 85.9,
+        "orbit_cam_delta": 4.807,
+        "zoom_ok": true,
+        "zoom_cam_delta": 0.867,
+        "step_status": "ok",
+        "reset_ok": true,
+        "outside_after_reset": [],
+        "extra_analyze_requests": 0
+      },
+      "console_errors": []
+    },
+    {
+      "case_id": "V095",
+      "group": "valid",
+      "expected_behavior": "SERVE",
+      "route_status": "SERVED",
+      "extraction_mode": "LOCAL_DETERMINISTIC_PARSER",
+      "http": 200,
+      "ms": 156,
+      "surface": "SCENE",
+      "initial_visual_ok": true,
+      "stale_vs_previous": false,
+      "has_canvas": true,
+      "canvas_rect": {
+        "w": 1006,
+        "h": 814
+      },
+      "label_texts": [
+        "E",
+        "F",
+        "G",
+        "K"
+      ],
+      "label_positions": {
+        "E": [
+          429,
+          448
+        ],
+        "F": [
+          291,
+          616
+        ],
+        "G": [
+          681,
+          705
+        ],
+        "K": [
+          437,
+          159
+        ]
+      },
+      "outside_initial_labels": [],
+      "missing_gold_labels": [],
+      "vertex_marker_count": 4,
+      "outside_initial_ndc_vertices": [],
+      "camera_position": [
+        5.374008673255715,
+        2.3420089614872825,
+        2.9205328913508803
+      ],
+      "progress_text": "Bước 5/5",
+      "canvas_ink_fraction": 0.93166,
+      "interactions": {
+        "ok": true,
+        "orbit_ok": true,
+        "orbit_label_shift_px": 149.3,
+        "orbit_cam_delta": 3.093,
+        "zoom_ok": true,
+        "zoom_cam_delta": 0.488,
+        "step_status": "ok",
+        "reset_ok": true,
+        "outside_after_reset": [],
+        "extra_analyze_requests": 0
+      },
+      "console_errors": []
+    },
+    {
+      "case_id": "V096",
+      "group": "valid",
+      "expected_behavior": "SERVE",
+      "route_status": "SERVED",
+      "extraction_mode": "LOCAL_DETERMINISTIC_PARSER",
+      "http": 200,
+      "ms": 163,
+      "surface": "SCENE",
+      "initial_visual_ok": true,
+      "stale_vs_previous": false,
+      "has_canvas": true,
+      "canvas_rect": {
+        "w": 1006,
+        "h": 814
+      },
+      "label_texts": [
+        "K",
+        "L",
+        "M",
+        "K'",
+        "L'",
+        "M'"
+      ],
+      "label_positions": {
+        "K": [
+          445,
+          550
+        ],
+        "L": [
+          294,
+          627
+        ],
+        "M": [
+          734,
+          676
+        ],
+        "K'": [
+          427,
+          149
+        ],
+        "L'": [
+          243,
+          185
+        ],
+        "M'": [
+          800,
+          204
+        ]
+      },
+      "outside_initial_labels": [],
+      "missing_gold_labels": [],
+      "vertex_marker_count": 6,
+      "outside_initial_ndc_vertices": [],
+      "camera_position": [
+        6.19127853218069,
+        5.939225513137558,
+        5.261495988437424
+      ],
+      "progress_text": "Bước 5/5",
+      "canvas_ink_fraction": 0.94288,
+      "interactions": {
+        "ok": true,
+        "orbit_ok": true,
+        "orbit_label_shift_px": 147.3,
+        "orbit_cam_delta": 4.74,
+        "zoom_ok": true,
+        "zoom_cam_delta": 0.675,
+        "step_status": "ok",
+        "reset_ok": true,
+        "outside_after_reset": [],
+        "extra_analyze_requests": 0
+      },
+      "console_errors": []
+    },
+    {
+      "case_id": "V097",
+      "group": "valid",
+      "expected_behavior": "SERVE",
+      "route_status": "SERVED",
+      "extraction_mode": "LOCAL_DETERMINISTIC_PARSER",
+      "http": 200,
+      "ms": 139,
+      "surface": "SCENE",
+      "initial_visual_ok": true,
+      "stale_vs_previous": false,
+      "has_canvas": true,
+      "canvas_rect": {
+        "w": 1006,
+        "h": 814
+      },
+      "label_texts": [
+        "M",
+        "N",
+        "P",
+        "Q",
+        "H"
+      ],
+      "label_positions": {
+        "M": [
+          446,
+          401
+        ],
+        "N": [
+          332,
+          538
+        ],
+        "P": [
+          567,
+          709
+        ],
+        "Q": [
+          659,
+          509
+        ],
+        "H": [
+          457,
+          222
+        ]
+      },
+      "outside_initial_labels": [],
+      "missing_gold_labels": [],
+      "vertex_marker_count": 5,
+      "outside_initial_ndc_vertices": [],
+      "camera_position": [
+        12.720655709604559,
+        5.190062630258195,
+        6.13481008826864
+      ],
+      "progress_text": "Bước 5/5",
+      "canvas_ink_fraction": 0.93028,
+      "interactions": {
+        "ok": true,
+        "orbit_ok": true,
+        "orbit_label_shift_px": 193.5,
+        "orbit_cam_delta": 7.232,
+        "zoom_ok": true,
+        "zoom_cam_delta": 1.09,
+        "step_status": "ok",
+        "reset_ok": true,
+        "outside_after_reset": [],
+        "extra_analyze_requests": 0
+      },
+      "console_errors": []
+    },
+    {
+      "case_id": "V098",
+      "group": "valid",
+      "expected_behavior": "SERVE",
+      "route_status": "REFUSED",
+      "extraction_mode": "LOCAL_SLM_GROUNDING_REJECTED",
+      "http": 200,
+      "ms": 1733,
+      "surface": "NO_SCENE",
+      "reason_code": null,
+      "canvas_count": 0,
+      "toast": "Đề bài chưa được hỗ trợ | Kết quả của tuyến Hybrid không qua được bước kiểm tra nên không được hiển thị. Bạn có thể thử các bài về thiết diện, khoảng cách, góc hoặc thể tích.",
+      "console_errors": []
+    },
+    {
+      "case_id": "V099",
+      "group": "valid",
+      "expected_behavior": "SERVE",
+      "route_status": "SERVED",
+      "extraction_mode": "LOCAL_DETERMINISTIC_PARSER",
+      "http": 200,
+      "ms": 135,
+      "surface": "SCENE",
+      "initial_visual_ok": true,
+      "stale_vs_previous": false,
+      "has_canvas": true,
+      "canvas_rect": {
+        "w": 1006,
+        "h": 814
+      },
+      "label_texts": [
+        "E",
+        "F",
+        "G",
+        "H",
+        "K"
+      ],
+      "label_positions": {
+        "E": [
+          437,
+          404
+        ],
+        "F": [
+          247,
+          568
+        ],
+        "G": [
+          588,
+          713
+        ],
+        "H": [
+          732,
+          491
+        ],
+        "K": [
+          443,
+          197
+        ]
+      },
+      "outside_initial_labels": [],
+      "missing_gold_labels": [],
+      "vertex_marker_count": 5,
+      "outside_initial_ndc_vertices": [],
+      "camera_position": [
+        9.537896766247496,
+        6.246344294414005,
+        6.3169311774983266
+      ],
+      "progress_text": "Bước 7/7",
+      "canvas_ink_fraction": 0.84164,
+      "interactions": {
+        "ok": true,
+        "orbit_ok": true,
+        "orbit_label_shift_px": 168.2,
+        "orbit_cam_delta": 5.9,
+        "zoom_ok": true,
+        "zoom_cam_delta": 0.958,
+        "step_status": "ok",
+        "reset_ok": true,
+        "outside_after_reset": [],
+        "extra_analyze_requests": 0
+      },
+      "console_errors": []
+    },
+    {
+      "case_id": "V100",
+      "group": "valid",
+      "expected_behavior": "SERVE",
+      "route_status": "SERVED",
+      "extraction_mode": "LOCAL_DETERMINISTIC_PARSER",
+      "http": 200,
+      "ms": 175,
+      "surface": "SCENE",
+      "initial_visual_ok": true,
+      "stale_vs_previous": false,
+      "has_canvas": true,
+      "canvas_rect": {
+        "w": 1006,
+        "h": 814
+      },
+      "label_texts": [
+        "M",
+        "N",
+        "P",
+        "Q",
+        "M'",
+        "N'",
+        "P'",
+        "Q'"
+      ],
+      "label_positions": {
+        "M": [
+          276,
+          561
+        ],
+        "N": [
+          469,
+          723
+        ],
+        "P": [
+          713,
+          585
+        ],
+        "Q": [
+          508,
+          487
+        ],
+        "M'": [
+          241,
+          260
+        ],
+        "N'": [
+          464,
+          339
+        ],
+        "P'": [
+          751,
+          273
+        ],
+        "Q'": [
+          510,
+          207
+        ]
+      },
+      "outside_initial_labels": [],
+      "missing_gold_labels": [],
+      "vertex_marker_count": 8,
+      "outside_initial_ndc_vertices": [],
+      "camera_position": [
+        7.395215687982736,
+        -3.4466733094968323,
+        5.088544041373432
+      ],
+      "progress_text": "Bước 6/6",
+      "canvas_ink_fraction": 0.93863,
+      "interactions": {
+        "ok": true,
+        "orbit_ok": true,
+        "orbit_label_shift_px": 230.8,
+        "orbit_cam_delta": 5.11,
+        "zoom_ok": true,
+        "zoom_cam_delta": 0.785,
+        "step_status": "ok",
+        "reset_ok": true,
+        "outside_after_reset": [],
+        "extra_analyze_requests": 0
+      },
+      "console_errors": []
+    },
+    {
+      "case_id": "V101",
+      "group": "valid",
+      "expected_behavior": "SERVE",
+      "route_status": "SERVED",
+      "extraction_mode": "LOCAL_DETERMINISTIC_PARSER",
+      "http": 200,
+      "ms": 186,
+      "surface": "SCENE",
+      "initial_visual_ok": true,
+      "stale_vs_previous": false,
+      "has_canvas": true,
+      "canvas_rect": {
+        "w": 1006,
+        "h": 814
+      },
+      "label_texts": [
+        "M",
+        "N",
+        "Q",
+        "R",
+        "P"
+      ],
+      "label_positions": {
+        "M": [
+          401,
+          480
+        ],
+        "N": [
+          239,
+          619
+        ],
+        "Q": [
+          662,
+          697
+        ],
+        "R": [
+          725,
+          527
+        ],
+        "P": [
+          410,
+          184
+        ]
+      },
+      "outside_initial_labels": [],
+      "missing_gold_labels": [],
+      "vertex_marker_count": 5,
+      "outside_initial_ndc_vertices": [],
+      "camera_position": [
+        2.7066834279759213,
+        1.26341522387338,
+        1.0220476127563023
+      ],
+      "progress_text": "Bước 6/6",
+      "canvas_ink_fraction": 0.93954,
+      "interactions": {
+        "ok": true,
+        "orbit_ok": true,
+        "orbit_label_shift_px": 182.5,
+        "orbit_cam_delta": 1.645,
+        "zoom_ok": true,
+        "zoom_cam_delta": 0.233,
+        "step_status": "ok",
+        "reset_ok": true,
+        "outside_after_reset": [],
+        "extra_analyze_requests": 0
+      },
+      "console_errors": []
+    },
+    {
+      "case_id": "V102",
+      "group": "valid",
+      "expected_behavior": "SERVE",
+      "route_status": "SERVED",
+      "extraction_mode": "LOCAL_DETERMINISTIC_PARSER",
+      "http": 200,
+      "ms": 150,
+      "surface": "SCENE",
+      "initial_visual_ok": true,
+      "stale_vs_previous": false,
+      "has_canvas": true,
+      "canvas_rect": {
+        "w": 1006,
+        "h": 814
+      },
+      "label_texts": [
+        "P",
+        "Q",
+        "R",
+        "P'",
+        "Q'",
+        "R'"
+      ],
+      "label_positions": {
+        "P": [
+          296,
+          570
+        ],
+        "Q": [
+          555,
+          710
+        ],
+        "R": [
+          597,
+          520
+        ],
+        "P'": [
+          264,
+          253
+        ],
+        "Q'": [
+          550,
+          320
+        ],
+        "R'": [
+          603,
+          221
+        ]
+      },
+      "outside_initial_labels": [],
+      "missing_gold_labels": [],
+      "vertex_marker_count": 6,
+      "outside_initial_ndc_vertices": [],
+      "camera_position": [
+        8.281180268053255,
+        -6.042243477267664,
+        6.55665668893903
+      ],
+      "progress_text": "Bước 5/5",
+      "canvas_ink_fraction": 0.93375,
+      "interactions": {
+        "ok": true,
+        "orbit_ok": true,
+        "orbit_label_shift_px": 178.1,
+        "orbit_cam_delta": 6.665,
+        "zoom_ok": true,
+        "zoom_cam_delta": 0.94,
+        "step_status": "ok",
+        "reset_ok": true,
+        "outside_after_reset": [],
+        "extra_analyze_requests": 0
+      },
+      "console_errors": []
+    },
+    {
+      "case_id": "V103",
+      "group": "valid",
+      "expected_behavior": "SERVE",
+      "route_status": "SERVED",
+      "extraction_mode": "LOCAL_DETERMINISTIC_PARSER",
+      "http": 200,
+      "ms": 169,
+      "surface": "SCENE",
+      "initial_visual_ok": true,
+      "stale_vs_previous": false,
+      "has_canvas": true,
+      "canvas_rect": {
+        "w": 1006,
+        "h": 814
+      },
+      "label_texts": [
+        "E",
+        "F",
+        "G",
+        "H",
+        "K",
+        "I"
+      ],
+      "label_positions": {
+        "E": [
+          588,
+          485
+        ],
+        "F": [
+          259,
+          531
+        ],
+        "G": [
+          319,
+          710
+        ],
+        "H": [
+          758,
+          627
+        ],
+        "K": [
+          581,
+          176
+        ],
+        "I": [
+          525,
+          414
+        ]
+      },
+      "outside_initial_labels": [],
+      "missing_gold_labels": [],
+      "vertex_marker_count": 6,
+      "outside_initial_ndc_vertices": [],
+      "camera_position": [
+        2.46738692214899,
+        5.250047111639192,
+        1.9975253231544983
+      ],
+      "progress_text": "Bước 7/7",
+      "canvas_ink_fraction": 0.86306,
+      "interactions": {
+        "ok": true,
+        "orbit_ok": true,
+        "orbit_label_shift_px": 268.3,
+        "orbit_cam_delta": 3.115,
+        "zoom_ok": true,
+        "zoom_cam_delta": 0.464,
+        "step_status": "ok",
+        "reset_ok": true,
+        "outside_after_reset": [],
+        "extra_analyze_requests": 0
+      },
+      "console_errors": []
+    },
+    {
+      "case_id": "V104",
+      "group": "valid",
+      "expected_behavior": "SERVE",
+      "route_status": "REFUSED",
+      "extraction_mode": "LOCAL_SLM_GROUNDING_REJECTED",
+      "http": 200,
+      "ms": 2091,
+      "surface": "NO_SCENE",
+      "reason_code": null,
+      "canvas_count": 0,
+      "toast": "Đề bài chưa được hỗ trợ | Kết quả của tuyến Hybrid không qua được bước kiểm tra nên không được hiển thị. Bạn có thể thử các bài về thiết diện, khoảng cách, góc hoặc thể tích.",
+      "console_errors": []
+    },
+    {
+      "case_id": "V105",
+      "group": "valid",
+      "expected_behavior": "SERVE",
+      "route_status": "SERVED",
+      "extraction_mode": "LOCAL_DETERMINISTIC_PARSER",
+      "http": 200,
+      "ms": 160,
+      "surface": "SCENE",
+      "initial_visual_ok": true,
+      "stale_vs_previous": false,
+      "has_canvas": true,
+      "canvas_rect": {
+        "w": 1006,
+        "h": 814
+      },
+      "label_texts": [
+        "M",
+        "N",
+        "P",
+        "Q",
+        "S"
+      ],
+      "label_positions": {
+        "M": [
+          437,
+          433
+        ],
+        "N": [
+          300,
+          560
+        ],
+        "P": [
+          577,
+          647
+        ],
+        "Q": [
+          684,
+          492
+        ],
+        "S": [
+          467,
+          207
+        ]
+      },
+      "outside_initial_labels": [],
+      "missing_gold_labels": [],
+      "vertex_marker_count": 5,
+      "outside_initial_ndc_vertices": [],
+      "camera_position": [
+        8.826449540199775,
+        5.650680789711602,
+        6.134299693466514
+      ],
+      "progress_text": "Bước 7/7",
+      "canvas_ink_fraction": 0.93116,
+      "interactions": {
+        "ok": true,
+        "orbit_ok": true,
+        "orbit_label_shift_px": 127.3,
+        "orbit_cam_delta": 5.894,
+        "zoom_ok": true,
+        "zoom_cam_delta": 0.862,
+        "step_status": "ok",
+        "reset_ok": true,
+        "outside_after_reset": [],
+        "extra_analyze_requests": 0
+      },
+      "console_errors": []
+    },
+    {
+      "case_id": "VD01",
+      "group": "valid",
+      "expected_behavior": "CLARIFY_OR_ILLUSTRATIVE",
+      "route_status": "REFUSED",
+      "extraction_mode": "LOCAL_DETERMINISTIC_PARSER",
+      "http": 200,
+      "ms": 122,
+      "surface": "NO_SCENE",
+      "reason_code": null,
+      "canvas_count": 0,
+      "toast": "Axo chưa hỗ trợ phép dựng này | Các giả thiết chưa cố định duy nhất hình dạng, và hệ chưa có chứng chỉ bất biến tổng quát cho đại lượng được hỏi nên tạm dừng thay vì kết luận từ hình mẫu. Bạn có thể thử các bài về thiết diện, khoảng cách, góc hoặc thể tích.",
+      "console_errors": []
+    },
+    {
+      "case_id": "VD02",
+      "group": "valid",
+      "expected_behavior": "CLARIFY_OR_ILLUSTRATIVE",
+      "route_status": "REFUSED",
+      "extraction_mode": "LOCAL_DETERMINISTIC_PARSER",
+      "http": 200,
+      "ms": 125,
+      "surface": "NO_SCENE",
+      "reason_code": null,
+      "canvas_count": 0,
+      "toast": "Axo chưa hỗ trợ phép dựng này | Các giả thiết chưa cố định duy nhất hình dạng, và hệ chưa có chứng chỉ bất biến tổng quát cho đại lượng được hỏi nên tạm dừng thay vì kết luận từ hình mẫu. Bạn có thể thử các bài về thiết diện, khoảng cách, góc hoặc thể tích.",
+      "console_errors": []
+    },
+    {
+      "case_id": "VD03",
+      "group": "valid",
+      "expected_behavior": "CLARIFY_OR_ILLUSTRATIVE",
+      "route_status": "REFUSED",
+      "extraction_mode": "LOCAL_DETERMINISTIC_PARSER",
+      "http": 200,
+      "ms": 149,
+      "surface": "NO_SCENE",
+      "reason_code": null,
+      "canvas_count": 0,
+      "toast": "Đề bài cần thêm dữ kiện để dựng hình | Trong “đáy EFGH là hình vuông”, bạn hãy nói rõ các số đo cần thiết. Bạn có thể bổ sung hoặc viết rõ phần đó ngay trên ô nhập rồi nhấn Dựng hình.",
+      "console_errors": []
+    },
+    {
+      "case_id": "VD04",
+      "group": "valid",
+      "expected_behavior": "CLARIFY_OR_ILLUSTRATIVE",
+      "route_status": "REFUSED",
+      "extraction_mode": "LOCAL_DETERMINISTIC_PARSER",
+      "http": 200,
+      "ms": 109,
+      "surface": "NO_SCENE",
+      "reason_code": null,
+      "canvas_count": 0,
+      "toast": "Đề bài cần thêm dữ kiện để dựng hình | Trong “MNP.M'N'P' có đáy là tam giác đều”, bạn hãy nói rõ các số đo cần thiết. Bạn có thể bổ sung hoặc viết rõ phần đó ngay trên ô nhập rồi nhấn Dựng hình.",
+      "console_errors": []
+    },
+    {
+      "case_id": "VD05",
+      "group": "valid",
+      "expected_behavior": "CLARIFY_OR_ILLUSTRATIVE",
+      "route_status": "REFUSED",
+      "extraction_mode": "LOCAL_DETERMINISTIC_PARSER",
+      "http": 200,
+      "ms": 109,
+      "surface": "NO_SCENE",
+      "reason_code": null,
+      "canvas_count": 0,
+      "toast": "Đề bài chưa đủ dữ kiện để dựng hình | Các dữ kiện đã nêu trong đề chưa xác định duy nhất đại lượng hoặc hình cần dựng (tồn tại nhiều hình hợp lệ thỏa mọi giả thiết nhưng cho kết quả khác nhau). Em hãy kiểm tra và bổ sung số đo còn thiếu trong đề rồi gửi lại. Bạn có thể bổ sung dữ kiện còn thiếu ngay trên ô nhập rồi nhấn Dựng hình.",
+      "console_errors": []
+    },
+    {
+      "case_id": "VD06",
+      "group": "valid",
+      "expected_behavior": "CLARIFY_OR_ILLUSTRATIVE",
+      "route_status": "REFUSED",
+      "extraction_mode": "LOCAL_DETERMINISTIC_PARSER",
+      "http": 200,
+      "ms": 135,
+      "surface": "NO_SCENE",
+      "reason_code": null,
+      "canvas_count": 0,
+      "toast": "Axo chưa hỗ trợ phép dựng này | Các giả thiết chưa cố định duy nhất hình dạng, và hệ chưa có chứng chỉ bất biến tổng quát cho đại lượng được hỏi nên tạm dừng thay vì kết luận từ hình mẫu. Bạn có thể thử các bài về thiết diện, khoảng cách, góc hoặc thể tích.",
+      "console_errors": []
+    },
+    {
+      "case_id": "VN01",
+      "group": "negative",
+      "expected_behavior": "SAFE_REFUSE",
+      "route_status": "REFUSED",
+      "extraction_mode": "LOCAL_SLM_GROUNDING_REJECTED",
+      "http": 200,
+      "ms": 1484,
+      "surface": "NO_SCENE",
+      "reason_code": null,
+      "canvas_count": 0,
+      "toast": "Đề bài chưa được hỗ trợ | Kết quả của tuyến Hybrid không qua được bước kiểm tra nên không được hiển thị. Bạn có thể thử các bài về thiết diện, khoảng cách, góc hoặc thể tích.",
+      "console_errors": []
+    },
+    {
+      "case_id": "VN02",
+      "group": "negative",
+      "expected_behavior": "SAFE_REFUSE",
+      "route_status": "REFUSED",
+      "extraction_mode": "LOCAL_SLM_GROUNDING_REJECTED",
+      "http": 200,
+      "ms": 2255,
+      "surface": "NO_SCENE",
+      "reason_code": null,
+      "canvas_count": 0,
+      "toast": "Đề bài chưa được hỗ trợ | Kết quả của tuyến Hybrid không qua được bước kiểm tra nên không được hiển thị. Bạn có thể thử các bài về thiết diện, khoảng cách, góc hoặc thể tích.",
+      "console_errors": []
+    },
+    {
+      "case_id": "VN03",
+      "group": "negative",
+      "expected_behavior": "SAFE_REFUSE",
+      "route_status": "REFUSED",
+      "extraction_mode": "LOCAL_SLM_GROUNDING_REJECTED",
+      "http": 200,
+      "ms": 2102,
+      "surface": "NO_SCENE",
+      "reason_code": null,
+      "canvas_count": 0,
+      "toast": "Đề bài chưa được hỗ trợ | Kết quả của tuyến Hybrid không qua được bước kiểm tra nên không được hiển thị. Bạn có thể thử các bài về thiết diện, khoảng cách, góc hoặc thể tích.",
+      "console_errors": []
+    },
+    {
+      "case_id": "VN04",
+      "group": "negative",
+      "expected_behavior": "SAFE_REFUSE",
+      "route_status": "REFUSED",
+      "extraction_mode": "LOCAL_SLM_GROUNDING_REJECTED",
+      "http": 200,
+      "ms": 1494,
+      "surface": "NO_SCENE",
+      "reason_code": null,
+      "canvas_count": 0,
+      "toast": "Đề bài chưa được hỗ trợ | Kết quả của tuyến Hybrid không qua được bước kiểm tra nên không được hiển thị. Bạn có thể thử các bài về thiết diện, khoảng cách, góc hoặc thể tích.",
+      "console_errors": []
+    },
+    {
+      "case_id": "VN05",
+      "group": "negative",
+      "expected_behavior": "SAFE_REFUSE",
+      "route_status": "REFUSED",
+      "extraction_mode": "LOCAL_SLM_GROUNDING_REJECTED",
+      "http": 200,
+      "ms": 2132,
+      "surface": "NO_SCENE",
+      "reason_code": null,
+      "canvas_count": 0,
+      "toast": "Đề bài chưa được hỗ trợ | Kết quả của tuyến Hybrid không qua được bước kiểm tra nên không được hiển thị. Bạn có thể thử các bài về thiết diện, khoảng cách, góc hoặc thể tích.",
+      "console_errors": []
+    },
+    {
+      "case_id": "VN06",
+      "group": "negative",
+      "expected_behavior": "SAFE_REFUSE",
+      "route_status": "REFUSED",
+      "extraction_mode": "LOCAL_SLM_GROUNDING_REJECTED",
+      "http": 200,
+      "ms": 3374,
+      "surface": "NO_SCENE",
+      "reason_code": null,
+      "canvas_count": 0,
+      "toast": "Đề bài chưa được hỗ trợ | Kết quả của tuyến Hybrid không qua được bước kiểm tra nên không được hiển thị. Bạn có thể thử các bài về thiết diện, khoảng cách, góc hoặc thể tích.",
+      "console_errors": []
+    },
+    {
+      "case_id": "VN07",
+      "group": "negative",
+      "expected_behavior": "SAFE_REFUSE",
+      "route_status": "REFUSED",
+      "extraction_mode": "LOCAL_DETERMINISTIC_PARSER",
+      "http": 200,
+      "ms": 81,
+      "surface": "NO_SCENE",
+      "reason_code": null,
+      "canvas_count": 0,
+      "toast": "Axo chưa hỗ trợ phép dựng này | Đề này cần một phép dựng hoặc một dạng câu hỏi mà hệ chưa hỗ trợ, nên hệ không dựng một hình gần đúng. Bạn có thể thử các bài về thiết diện, khoảng cách, góc hoặc thể tích.",
+      "console_errors": []
+    },
+    {
+      "case_id": "VN08",
+      "group": "negative",
+      "expected_behavior": "SAFE_REFUSE",
+      "route_status": null,
+      "extraction_mode": null,
+      "http": 200,
+      "ms": 87,
+      "surface": "NO_SCENE",
+      "reason_code": "gate_out_of_scope",
+      "canvas_count": 0,
+      "toast": "Đề bài chưa được hỗ trợ | Bài này thuộc môn học khác, không nằm trong phần Axo mô phỏng. Hệ thống nói thẳng thay vì dựng một hình vẽ trông giống mô phỏng nhưng không dựa trên cơ chế nào. Axo tập trung vào hình học không gian — bạn thử một bài về giao tuyến, thiết diện, quan hệ song song – vuông góc, khoảng cách hoặc thể tích nhé. Bạn có thể thử các bài về thiết diện, khoảng cách, góc hoặc thể tích.",
+      "console_errors": []
+    },
+    {
+      "case_id": "VN09",
+      "group": "negative",
+      "expected_behavior": "SAFE_REFUSE",
+      "route_status": "REFUSED",
+      "extraction_mode": "LOCAL_SLM_GROUNDING_REJECTED",
+      "http": 200,
+      "ms": 143,
+      "surface": "NO_SCENE",
+      "reason_code": null,
+      "canvas_count": 0,
+      "toast": "Đề bài chưa được hỗ trợ | Kết quả của tuyến Hybrid không qua được bước kiểm tra nên không được hiển thị. Bạn có thể thử các bài về thiết diện, khoảng cách, góc hoặc thể tích.",
+      "console_errors": []
+    },
+    {
+      "case_id": "VN10",
+      "group": "negative",
+      "expected_behavior": "SAFE_REFUSE",
+      "route_status": "REFUSED",
+      "extraction_mode": "LOCAL_SLM_GROUNDED",
+      "http": 200,
+      "ms": 1987,
+      "surface": "NO_SCENE",
+      "reason_code": null,
+      "canvas_count": 0,
+      "toast": "Đề bài chưa được hỗ trợ | Hệ chưa đối chiếu được đầy đủ dữ kiện với đề bài nên tạm dừng dựng hình. Bạn có thể thử các bài về thiết diện, khoảng cách, góc hoặc thể tích.",
+      "console_errors": []
+    },
+    {
+      "case_id": "VN11",
+      "group": "negative",
+      "expected_behavior": "SAFE_REFUSE",
+      "route_status": "REFUSED",
+      "extraction_mode": "LOCAL_SLM_GROUNDING_REJECTED",
+      "http": 200,
+      "ms": 4103,
+      "surface": "NO_SCENE",
+      "reason_code": null,
+      "canvas_count": 0,
+      "toast": "Đề bài chưa được hỗ trợ | Kết quả của tuyến Hybrid không qua được bước kiểm tra nên không được hiển thị. Bạn có thể thử các bài về thiết diện, khoảng cách, góc hoặc thể tích.",
+      "console_errors": []
+    },
+    {
+      "case_id": "VN12",
+      "group": "negative",
+      "expected_behavior": "SAFE_REFUSE",
+      "route_status": "REFUSED",
+      "extraction_mode": "LOCAL_SLM_GROUNDED",
+      "http": 200,
+      "ms": 3284,
+      "surface": "NO_SCENE",
+      "reason_code": null,
+      "canvas_count": 0,
+      "toast": "Đề bài chưa được hỗ trợ | Hệ chưa đối chiếu được đầy đủ dữ kiện với đề bài nên tạm dừng dựng hình. Bạn có thể thử các bài về thiết diện, khoảng cách, góc hoặc thể tích.",
+      "console_errors": []
+    },
+    {
+      "case_id": "VN13",
+      "group": "negative",
+      "expected_behavior": "SAFE_REFUSE",
+      "route_status": null,
+      "extraction_mode": null,
+      "http": 200,
+      "ms": 86,
+      "surface": "NO_SCENE",
+      "reason_code": "gate_out_of_scope",
+      "canvas_count": 0,
+      "toast": "Đề bài chưa được hỗ trợ | Bài này thuộc môn học khác, không nằm trong phần Axo mô phỏng. Hệ thống nói thẳng thay vì dựng một hình vẽ trông giống mô phỏng nhưng không dựa trên cơ chế nào. Axo tập trung vào hình học không gian — bạn thử một bài về giao tuyến, thiết diện, quan hệ song song – vuông góc, khoảng cách hoặc thể tích nhé. Bạn có thể thử các bài về thiết diện, khoảng cách, góc hoặc thể tích.",
+      "console_errors": []
+    },
+    {
+      "case_id": "VN14",
+      "group": "negative",
+      "expected_behavior": "SAFE_REFUSE",
+      "route_status": "REFUSED",
+      "extraction_mode": "LOCAL_DETERMINISTIC_PARSER",
+      "http": 200,
+      "ms": 304,
+      "surface": "NO_SCENE",
+      "reason_code": null,
+      "canvas_count": 0,
+      "toast": "Đề bài chưa đủ dữ kiện để dựng hình | Các dữ kiện đã nêu trong đề chưa xác định duy nhất đại lượng hoặc hình cần dựng (tồn tại nhiều hình hợp lệ thỏa mọi giả thiết nhưng cho kết quả khác nhau). Em hãy kiểm tra và bổ sung số đo còn thiếu trong đề rồi gửi lại. Bạn có thể bổ sung dữ kiện còn thiếu ngay trên ô nhập rồi nhấn Dựng hình.",
+      "console_errors": []
+    },
+    {
+      "case_id": "VN15",
+      "group": "negative",
+      "expected_behavior": "SAFE_REFUSE",
+      "route_status": "REFUSED",
+      "extraction_mode": "LOCAL_DETERMINISTIC_PARSER",
+      "http": 200,
+      "ms": 177,
+      "surface": "NO_SCENE",
+      "reason_code": null,
+      "canvas_count": 0,
+      "toast": "Axo chưa hỗ trợ phép dựng này | Hệ đã đọc các giả thiết trong đề nhưng chưa có quy tắc suy diễn tất định cho tổ hợp quan hệ này, nên dừng lại thay vì dựng một hình gần đúng. Bạn có thể thử các bài về thiết diện, khoảng cách, góc hoặc thể tích.",
+      "console_errors": []
+    },
+    {
+      "case_id": "VN16",
+      "group": "negative",
+      "expected_behavior": "SAFE_REFUSE",
+      "route_status": "REFUSED",
+      "extraction_mode": "LOCAL_DETERMINISTIC_PARSER",
+      "http": 200,
+      "ms": 102,
+      "surface": "NO_SCENE",
+      "reason_code": null,
+      "canvas_count": 0,
+      "toast": "Dữ kiện đề bài chưa nhất quán | Các dữ kiện dùng để dựng hình mâu thuẫn nhau hoặc làm hình suy biến, nên không có hình nào thoả tất cả. Axo dừng lại thay vì dựng một hình sai. Bạn có thể kiểm tra lại số liệu và quan hệ trong đề ngay trên ô nhập.",
+      "console_errors": []
+    },
+    {
+      "case_id": "VN17",
+      "group": "negative",
+      "expected_behavior": "SAFE_REFUSE",
+      "route_status": "REFUSED",
+      "extraction_mode": "LOCAL_DETERMINISTIC_PARSER",
+      "http": 200,
+      "ms": 109,
+      "surface": "NO_SCENE",
+      "reason_code": null,
+      "canvas_count": 0,
+      "toast": "Dữ kiện đề bài chưa nhất quán | Các dữ kiện dùng để dựng hình mâu thuẫn nhau hoặc làm hình suy biến, nên không có hình nào thoả tất cả. Axo dừng lại thay vì dựng một hình sai. Bạn có thể kiểm tra lại số liệu và quan hệ trong đề ngay trên ô nhập.",
+      "console_errors": []
+    },
+    {
+      "case_id": "VN18",
+      "group": "negative",
+      "expected_behavior": "SAFE_REFUSE",
+      "route_status": "REFUSED",
+      "extraction_mode": "LOCAL_SLM_GROUNDING_REJECTED",
+      "http": 200,
+      "ms": 3433,
+      "surface": "NO_SCENE",
+      "reason_code": null,
+      "canvas_count": 0,
+      "toast": "Đề bài chưa được hỗ trợ | Kết quả của tuyến Hybrid không qua được bước kiểm tra nên không được hiển thị. Bạn có thể thử các bài về thiết diện, khoảng cách, góc hoặc thể tích.",
+      "console_errors": []
+    },
+    {
+      "case_id": "VN19",
+      "group": "negative",
+      "expected_behavior": "SAFE_REFUSE",
+      "route_status": "REFUSED",
+      "extraction_mode": "LOCAL_DETERMINISTIC_PARSER",
+      "http": 200,
+      "ms": 115,
+      "surface": "NO_SCENE",
+      "reason_code": null,
+      "canvas_count": 0,
+      "toast": "Số đo độ dài trong đề cần lớn hơn 0 | Đề bài cho một số liệu bằng 0 hoặc âm, nên hình suy biến: không có khối nào như vậy để dựng hay tính. Em kiểm tra lại số liệu này trong đề rồi gửi lại nhé. Bạn có thể kiểm tra lại số đo độ dài dương trong đề ngay trên ô nhập.",
+      "console_errors": []
+    },
+    {
+      "case_id": "VN20",
+      "group": "negative",
+      "expected_behavior": "SAFE_REFUSE",
+      "route_status": "REFUSED",
+      "extraction_mode": "LOCAL_SLM_GROUNDING_REJECTED",
+      "http": 200,
+      "ms": 1468,
+      "surface": "NO_SCENE",
+      "reason_code": null,
+      "canvas_count": 0,
+      "toast": "Đề bài chưa được hỗ trợ | Kết quả của tuyến Hybrid không qua được bước kiểm tra nên không được hiển thị. Bạn có thể thử các bài về thiết diện, khoảng cách, góc hoặc thể tích.",
+      "console_errors": []
+    },
+    {
+      "case_id": "VN21",
+      "group": "negative",
+      "expected_behavior": "SAFE_REFUSE",
+      "route_status": null,
+      "extraction_mode": null,
+      "http": 200,
+      "ms": 83,
+      "surface": "NO_SCENE",
+      "reason_code": "gate_out_of_scope",
+      "canvas_count": 0,
+      "toast": "Đề bài chưa được hỗ trợ | Bài này thuộc môn học khác, không nằm trong phần Axo mô phỏng. Hệ thống nói thẳng thay vì dựng một hình vẽ trông giống mô phỏng nhưng không dựa trên cơ chế nào. Axo tập trung vào hình học không gian — bạn thử một bài về giao tuyến, thiết diện, quan hệ song song – vuông góc, khoảng cách hoặc thể tích nhé. Bạn có thể thử các bài về thiết diện, khoảng cách, góc hoặc thể tích.",
+      "console_errors": []
+    },
+    {
+      "case_id": "VN22",
+      "group": "negative",
+      "expected_behavior": "SAFE_REFUSE",
+      "route_status": "REFUSED",
+      "extraction_mode": "LOCAL_SLM_GROUNDING_REJECTED",
+      "http": 200,
+      "ms": 1058,
+      "surface": "NO_SCENE",
+      "reason_code": null,
+      "canvas_count": 0,
+      "toast": "Đề bài chưa được hỗ trợ | Kết quả của tuyến Hybrid không qua được bước kiểm tra nên không được hiển thị. Bạn có thể thử các bài về thiết diện, khoảng cách, góc hoặc thể tích.",
+      "console_errors": []
+    },
+    {
+      "case_id": "VN23",
+      "group": "negative",
+      "expected_behavior": "SAFE_REFUSE",
+      "route_status": "REFUSED",
+      "extraction_mode": "LOCAL_SLM_GROUNDING_REJECTED",
+      "http": 200,
+      "ms": 1815,
+      "surface": "NO_SCENE",
+      "reason_code": null,
+      "canvas_count": 0,
+      "toast": "Đề bài chưa được hỗ trợ | Kết quả của tuyến Hybrid không qua được bước kiểm tra nên không được hiển thị. Bạn có thể thử các bài về thiết diện, khoảng cách, góc hoặc thể tích.",
+      "console_errors": []
+    },
+    {
+      "case_id": "VN24",
+      "group": "negative",
+      "expected_behavior": "SAFE_REFUSE",
+      "route_status": null,
+      "extraction_mode": null,
+      "http": 200,
+      "ms": 94,
+      "surface": "NO_SCENE",
+      "reason_code": "gate_out_of_scope",
+      "canvas_count": 0,
+      "toast": "Đề bài chưa được hỗ trợ | Bài này thuộc môn học khác, không nằm trong phần Axo mô phỏng. Hệ thống nói thẳng thay vì dựng một hình vẽ trông giống mô phỏng nhưng không dựa trên cơ chế nào. Axo tập trung vào hình học không gian — bạn thử một bài về giao tuyến, thiết diện, quan hệ song song – vuông góc, khoảng cách hoặc thể tích nhé. Bạn có thể thử các bài về thiết diện, khoảng cách, góc hoặc thể tích.",
+      "console_errors": []
+    },
+    {
+      "case_id": "VN25",
+      "group": "negative",
+      "expected_behavior": "SAFE_REFUSE",
+      "route_status": null,
+      "extraction_mode": null,
+      "http": 200,
+      "ms": 83,
+      "surface": "NO_SCENE",
+      "reason_code": "gate_out_of_scope",
+      "canvas_count": 0,
+      "toast": "Đề bài chưa được hỗ trợ | Bài này thuộc môn học khác, không nằm trong phần Axo mô phỏng. Hệ thống nói thẳng thay vì dựng một hình vẽ trông giống mô phỏng nhưng không dựa trên cơ chế nào. Axo tập trung vào hình học không gian — bạn thử một bài về giao tuyến, thiết diện, quan hệ song song – vuông góc, khoảng cách hoặc thể tích nhé. Bạn có thể thử các bài về thiết diện, khoảng cách, góc hoặc thể tích.",
+      "console_errors": []
+    },
+    {
+      "case_id": "VN26",
+      "group": "negative",
+      "expected_behavior": "SAFE_REFUSE",
+      "route_status": null,
+      "extraction_mode": null,
+      "http": 200,
+      "ms": 98,
+      "surface": "NO_SCENE",
+      "reason_code": "gate_out_of_scope",
+      "canvas_count": 0,
+      "toast": "Đề bài chưa được hỗ trợ | Bài này thuộc môn học khác, không nằm trong phần Axo mô phỏng. Hệ thống nói thẳng thay vì dựng một hình vẽ trông giống mô phỏng nhưng không dựa trên cơ chế nào. Axo tập trung vào hình học không gian — bạn thử một bài về giao tuyến, thiết diện, quan hệ song song – vuông góc, khoảng cách hoặc thể tích nhé. Bạn có thể thử các bài về thiết diện, khoảng cách, góc hoặc thể tích.",
+      "console_errors": []
+    },
+    {
+      "case_id": "VN27",
+      "group": "negative",
+      "expected_behavior": "SAFE_REFUSE_OR_CORRECT_SERVE",
+      "route_status": "REFUSED",
+      "extraction_mode": "LOCAL_SLM_SECURITY_REFUSED",
+      "http": 200,
+      "ms": 75,
+      "surface": "NO_SCENE",
+      "reason_code": null,
+      "canvas_count": 0,
+      "toast": "Đề bài chưa được hỗ trợ | Kết quả của tuyến Hybrid không qua được bước kiểm tra nên không được hiển thị. Bạn có thể thử các bài về thiết diện, khoảng cách, góc hoặc thể tích.",
+      "console_errors": []
+    },
+    {
+      "case_id": "VN28",
+      "group": "negative",
+      "expected_behavior": "SAFE_REFUSE",
+      "route_status": "REFUSED",
+      "extraction_mode": "LOCAL_SLM_SECURITY_REFUSED",
+      "http": 200,
+      "ms": 87,
+      "surface": "NO_SCENE",
+      "reason_code": null,
+      "canvas_count": 0,
+      "toast": "Đề bài chưa được hỗ trợ | Kết quả của tuyến Hybrid không qua được bước kiểm tra nên không được hiển thị. Bạn có thể thử các bài về thiết diện, khoảng cách, góc hoặc thể tích.",
+      "console_errors": []
+    }
+  ]
+}

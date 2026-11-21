@@ -1,0 +1,603 @@
+{
+ "provenance": "captured from axo-geometry-library build_all_advanced_samples() (the ten_hien_thi input tables of samples chop-thiet-dien-ba-diem and lang-tru-tam-giac-thiet-dien that reproduced GEO-BE-001); derived data, no problem text",
+ "tables": {
+  "pyramid_mnp": {
+   "table": {
+    "A": {
+     "type": "point3",
+     "producer": null,
+     "sources": [],
+     "label": null
+    },
+    "B": {
+     "type": "point3",
+     "producer": null,
+     "sources": [],
+     "label": null
+    },
+    "C": {
+     "type": "point3",
+     "producer": null,
+     "sources": [],
+     "label": null
+    },
+    "D": {
+     "type": "point3",
+     "producer": null,
+     "sources": [],
+     "label": null
+    },
+    "S": {
+     "type": "point3",
+     "producer": null,
+     "sources": [],
+     "label": null
+    },
+    "O": {
+     "type": "point3",
+     "producer": "construct_point.midpoint",
+     "sources": [
+      "A",
+      "C"
+     ],
+     "label": "O"
+    },
+    "M": {
+     "type": "point3",
+     "producer": "construct_point.midpoint",
+     "sources": [
+      "S",
+      "A"
+     ],
+     "label": "M"
+    },
+    "N": {
+     "type": "point3",
+     "producer": "construct_point.midpoint",
+     "sources": [
+      "B",
+      "C"
+     ],
+     "label": "N"
+    },
+    "P": {
+     "type": "point3",
+     "producer": "construct_point.midpoint",
+     "sources": [
+      "C",
+      "D"
+     ],
+     "label": "P"
+    },
+    "E": {
+     "type": "point3",
+     "producer": "construct_point.intersect_line_plane",
+     "sources": [
+      "sb",
+      "mp_MNP"
+     ],
+     "label": "E"
+    },
+    "F": {
+     "type": "point3",
+     "producer": "construct_point.intersect_line_plane",
+     "sources": [
+      "sd",
+      "mp_MNP"
+     ],
+     "label": "F"
+    },
+    "chop": {
+     "type": "solid",
+     "producer": "construct_solid",
+     "sources": [
+      "A",
+      "B",
+      "C",
+      "D",
+      "S"
+     ],
+     "label": "S.ABCD",
+     "solid": {
+      "vertices": [
+       {
+        "__vec3__": [
+         "0",
+         "0",
+         "0"
+        ]
+       },
+       {
+        "__vec3__": [
+         "4",
+         "0",
+         "0"
+        ]
+       },
+       {
+        "__vec3__": [
+         "4",
+         "4",
+         "0"
+        ]
+       },
+       {
+        "__vec3__": [
+         "0",
+         "4",
+         "0"
+        ]
+       },
+       {
+        "__vec3__": [
+         "0",
+         "0",
+         "6"
+        ]
+       }
+      ],
+      "faces": [
+       [
+        0,
+        1,
+        2,
+        3
+       ],
+       [
+        0,
+        1,
+        4
+       ],
+       [
+        1,
+        2,
+        4
+       ],
+       [
+        2,
+        3,
+        4
+       ],
+       [
+        3,
+        0,
+        4
+       ]
+      ]
+     }
+    },
+    "day": {
+     "type": "plane3",
+     "producer": "construct_plane",
+     "sources": [
+      "A",
+      "B",
+      "C"
+     ],
+     "label": "(ABCD)",
+     "points_on_plane": [
+      "A",
+      "B",
+      "C",
+      "D",
+      "O",
+      "N",
+      "P"
+     ]
+    },
+    "mp_MNP": {
+     "type": "plane3",
+     "producer": "construct_plane",
+     "sources": [
+      "M",
+      "N",
+      "P"
+     ],
+     "label": "(MNP)",
+     "points_on_plane": [
+      "M",
+      "N",
+      "P",
+      "E",
+      "F"
+     ]
+    },
+    "sb": {
+     "type": "line3",
+     "producer": "construct_line",
+     "sources": [
+      "S",
+      "B"
+     ],
+     "label": "SB"
+    },
+    "sd": {
+     "type": "line3",
+     "producer": "construct_line",
+     "sources": [
+      "S",
+      "D"
+     ],
+     "label": "SD"
+    },
+    "thiet_dien": {
+     "type": "section",
+     "producer": "construct_section",
+     "sources": [
+      "chop",
+      "mp_MNP"
+     ],
+     "label": "Thiết diện MENPF",
+     "section_vertex_names": [
+      "N",
+      "P",
+      "F",
+      "M",
+      "E"
+     ]
+    },
+    "S_td": {
+     "type": "quantity",
+     "producer": "measure.area",
+     "sources": [
+      "thiet_dien"
+     ],
+     "label": null
+    },
+    "V_chop": {
+     "type": "quantity",
+     "producer": "measure.volume",
+     "sources": [
+      "chop",
+      "S_td"
+     ],
+     "label": null
+    },
+    "day_ABCD": {
+     "type": "polygon3",
+     "producer": "construct_polygon",
+     "sources": [
+      "A",
+      "B",
+      "C",
+      "D"
+     ],
+     "label": "Đáy ABCD"
+    },
+    "chieu_cao_SA": {
+     "type": "segment3",
+     "producer": "construct_segment",
+     "sources": [
+      "S",
+      "A"
+     ],
+     "label": "Chiều cao SA"
+    },
+    "canh_ben_S_B": {
+     "type": "segment3",
+     "producer": "construct_segment",
+     "sources": [
+      "S",
+      "B"
+     ],
+     "label": "Cạnh bên SB"
+    },
+    "canh_ben_S_C": {
+     "type": "segment3",
+     "producer": "construct_segment",
+     "sources": [
+      "S",
+      "C"
+     ],
+     "label": "Cạnh bên SC"
+    },
+    "canh_ben_S_D": {
+     "type": "segment3",
+     "producer": "construct_segment",
+     "sources": [
+      "S",
+      "D"
+     ],
+     "label": "Cạnh bên SD"
+    }
+   },
+   "kwargs": {
+    "prefer_declared_plane_names": true,
+    "source_plane_names": []
+   }
+  },
+  "prism_npq": {
+   "table": {
+    "A": {
+     "type": "point3",
+     "producer": null,
+     "sources": [],
+     "label": null
+    },
+    "B": {
+     "type": "point3",
+     "producer": null,
+     "sources": [],
+     "label": null
+    },
+    "C": {
+     "type": "point3",
+     "producer": null,
+     "sources": [],
+     "label": null
+    },
+    "A_prime": {
+     "type": "point3",
+     "producer": null,
+     "sources": [],
+     "label": null
+    },
+    "B_prime": {
+     "type": "point3",
+     "producer": null,
+     "sources": [],
+     "label": null
+    },
+    "C_prime": {
+     "type": "point3",
+     "producer": null,
+     "sources": [],
+     "label": null
+    },
+    "N": {
+     "type": "point3",
+     "producer": "construct_point.midpoint",
+     "sources": [
+      "B",
+      "C"
+     ],
+     "label": "N"
+    },
+    "P": {
+     "type": "point3",
+     "producer": "construct_point.midpoint",
+     "sources": [
+      "C",
+      "C_prime"
+     ],
+     "label": "P"
+    },
+    "Q": {
+     "type": "point3",
+     "producer": "construct_point.midpoint",
+     "sources": [
+      "A_prime",
+      "C_prime"
+     ],
+     "label": "Q"
+    },
+    "M": {
+     "type": "point3",
+     "producer": "construct_point.intersect_line_plane",
+     "sources": [
+      "ab",
+      "mp_NPQ"
+     ],
+     "label": "M"
+    },
+    "E": {
+     "type": "point3",
+     "producer": "construct_point.intersect_line_plane",
+     "sources": [
+      "ab_prime",
+      "mp_NPQ"
+     ],
+     "label": "E"
+    },
+    "lang_tru": {
+     "type": "solid",
+     "producer": "construct_solid",
+     "sources": [
+      "A",
+      "B",
+      "C",
+      "A_prime",
+      "B_prime",
+      "C_prime"
+     ],
+     "label": "ABC.A'B'C'",
+     "solid": {
+      "vertices": [
+       {
+        "__vec3__": [
+         "0",
+         "0",
+         "0"
+        ]
+       },
+       {
+        "__vec3__": [
+         "4",
+         "0",
+         "0"
+        ]
+       },
+       {
+        "__vec3__": [
+         "0",
+         "4",
+         "0"
+        ]
+       },
+       {
+        "__vec3__": [
+         "0",
+         "0",
+         "4"
+        ]
+       },
+       {
+        "__vec3__": [
+         "4",
+         "0",
+         "4"
+        ]
+       },
+       {
+        "__vec3__": [
+         "0",
+         "4",
+         "4"
+        ]
+       }
+      ],
+      "faces": [
+       [
+        0,
+        1,
+        2
+       ],
+       [
+        3,
+        4,
+        5
+       ],
+       [
+        0,
+        1,
+        4,
+        3
+       ],
+       [
+        1,
+        2,
+        5,
+        4
+       ],
+       [
+        2,
+        0,
+        3,
+        5
+       ]
+      ]
+     }
+    },
+    "mp_NPQ": {
+     "type": "plane3",
+     "producer": "construct_plane",
+     "sources": [
+      "N",
+      "P",
+      "Q"
+     ],
+     "label": "(NPQ)",
+     "points_on_plane": [
+      "N",
+      "P",
+      "Q",
+      "M",
+      "E"
+     ]
+    },
+    "ab": {
+     "type": "line3",
+     "producer": "construct_line",
+     "sources": [
+      "A",
+      "B"
+     ],
+     "label": "AB"
+    },
+    "ab_prime": {
+     "type": "line3",
+     "producer": "construct_line",
+     "sources": [
+      "A_prime",
+      "B_prime"
+     ],
+     "label": "A'B'"
+    },
+    "thiet_dien": {
+     "type": "section",
+     "producer": "construct_section",
+     "sources": [
+      "lang_tru",
+      "mp_NPQ"
+     ],
+     "label": "Thiết diện MNPQE",
+     "section_vertex_names": [
+      "M",
+      "N",
+      "P",
+      "Q",
+      "E"
+     ]
+    },
+    "S_td": {
+     "type": "quantity",
+     "producer": "measure.area",
+     "sources": [
+      "thiet_dien"
+     ],
+     "label": null
+    },
+    "V_lt": {
+     "type": "quantity",
+     "producer": "measure.volume",
+     "sources": [
+      "lang_tru",
+      "S_td"
+     ],
+     "label": null
+    },
+    "day_ABC": {
+     "type": "polygon3",
+     "producer": "construct_polygon",
+     "sources": [
+      "A",
+      "B",
+      "C"
+     ],
+     "label": "Đáy dưới ABC"
+    },
+    "day_A_primeB_primeC_prime": {
+     "type": "polygon3",
+     "producer": "construct_polygon",
+     "sources": [
+      "A_prime",
+      "B_prime",
+      "C_prime"
+     ],
+     "label": "Đáy trên A′B′C′"
+    },
+    "canh_ben_A_A_prime": {
+     "type": "segment3",
+     "producer": "construct_segment",
+     "sources": [
+      "A",
+      "A_prime"
+     ],
+     "label": "Cạnh bên AA′"
+    },
+    "canh_ben_B_B_prime": {
+     "type": "segment3",
+     "producer": "construct_segment",
+     "sources": [
+      "B",
+      "B_prime"
+     ],
+     "label": "Cạnh bên BB′"
+    },
+    "canh_ben_C_C_prime": {
+     "type": "segment3",
+     "producer": "construct_segment",
+     "sources": [
+      "C",
+      "C_prime"
+     ],
+     "label": "Cạnh bên CC′"
+    }
+   },
+   "kwargs": {
+    "prefer_declared_plane_names": true,
+    "source_plane_names": []
+   }
+  }
+ }
+}

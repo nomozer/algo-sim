@@ -1,0 +1,180 @@
+{
+  "schema": "algosim-low-end-performance-impact/1",
+  "generated_at_utc": "2026-11-10T04:00:01.816747+00:00",
+  "product_commit": "c61a3589782bde35b69e8376d8ebf136314e47f3",
+  "head_commit": "c61a3589782bde35b69e8376d8ebf136314e47f3",
+  "measured_system_tree_hash": "69bb83ba51b834f68c106bc4d3948dc02ca35af05eca0d8f50c0e0e4cf047cb4",
+  "measured_system_file_count": 108,
+  "code_version": {
+    "typed_fact_next": "typed-fact-next/2",
+    "bridge": "typed-fact-next-bridge/2",
+    "planner": "geometry-fact-planner/26",
+    "registry": "geometry-functions/33",
+    "engine": "geometry-function-engine/24",
+    "adapter": "hybrid-simulation-adapter/4",
+    "envelope": "hybrid-route-d-simulation/4",
+    "local_parser": "local-geometry-parser/1",
+    "adaptive_router": "adaptive-input-router/1",
+    "cache_version": "132"
+  },
+  "input_or_case_hash": "cf81b1b741a75f730b36209ec243f463d57035423fddca05d4942a03a6f226b2",
+  "oracle": "Wall-clock perf_counter + tracemalloc + Win32 GetProcessMemoryInfo RSS + headless Chrome Scene3D RAF/Heap telemetry",
+  "test_command": "pytest backend/tests/geometry/test_correctness_ocr_performance.py -k test_14 -v",
+  "test_environment": {
+    "os": "Windows-11-10.0.26100-SP0",
+    "python": "3.12.10",
+    "cpu_logical_cores": 12,
+    "allow_live_ai": 0,
+    "live_gemini_calls": 0,
+    "benchmark_tier": "HOST_BENCHMARK_OFFLINE"
+  },
+  "expected_behavior": "CPU-only, 0 MB VietOCR-HW bloat on text/printed routes, bounded LRU cache (<=256), no unbounded memory growth across 50 requests, NO_RUST_NEEDED.",
+  "actual_behavior": "cold_parse_p50=11.841ms, cached_parse_p50=0.055ms, kernel_p50=14.543ms, e2e_p50=27.41ms, rss=114.78->114.82MB.",
+  "verdict": "PASS_HOST_AND_CONSTRAINED_MEASURED",
+  "benchmark_tiers": {
+    "host_benchmark": {
+      "status": "MEASURED",
+      "local_parser_cold_ms": {
+        "p50": 11.841,
+        "p95": 25.08
+      },
+      "local_parser_cached_ms": {
+        "p50": 0.055,
+        "p95": 0.105
+      },
+      "planner_ms": {
+        "p50": 0.463,
+        "p95": 0.797
+      },
+      "registry_source_gate_ms": {
+        "p50": 8.948,
+        "p95": 19.1
+      },
+      "exact_kernel_ms": {
+        "overall_p50": 14.543,
+        "overall_p95": 26.231,
+        "baseline_square_pyramid_p50": 11.824,
+        "new_angle_premise_p50": 23.86,
+        "new_family1_right_trapezoid_p50": 14.543,
+        "new_family2_rhombus_60_p50": 13.721
+      },
+      "region_detection_external_photo_ms": {
+        "p50": 25.118,
+        "p95": 41.087
+      },
+      "ocr_fidelity_gate_ms": {
+        "p50": 0.42,
+        "p95": 14.84
+      },
+      "adaptive_router_e2e_cached_ms": {
+        "p50": 27.41,
+        "p95": 52.537
+      }
+    },
+    "resource_constrained_single_thread_benchmark": {
+      "status": "MEASURED_SINGLE_THREAD_ENV",
+      "note": "Measured with OMP_NUM_THREADS=1, MKL_NUM_THREADS=1, OPENBLAS_NUM_THREADS=1 on 12-thread host CPU; NOT claimed equivalent to a physical 2-core legacy laptop.",
+      "e2e_text_to_scene3d_ms": {
+        "p50_ms": 31.901,
+        "p95_ms": 274.176
+      }
+    },
+    "physical_low_end_hardware_benchmark": {
+      "status": "NOT_MEASURED",
+      "blocker": "No physical 2-core / 4 GB RAM device attached to this offline workspace."
+    }
+  },
+  "memory_and_model_hygiene": {
+    "rss_before_50_requests_mb": 114.78,
+    "rss_after_50_requests_mb": 114.82,
+    "rss_delta_50_requests_mb": 0.04,
+    "tracemalloc_peak_kb": 852.39,
+    "parser_lru_cache_stats": {
+      "size": 4,
+      "max_size": 256,
+      "hits": 54,
+      "misses": 4
+    },
+    "vietocr_hw_onnx_loaded_by_default": false,
+    "unbounded_memory_growth": false
+  },
+  "browser_scene3d_benchmark": {
+    "browser": "157.0.8103.38",
+    "results": [
+      {
+        "id": "baseline_square_pyramid",
+        "category": "baseline",
+        "firstFrameMs": 346.6,
+        "hasCanvas": true,
+        "orbitFrames": 84,
+        "orbitFps": 130,
+        "memory": {
+          "usedJSHeapSizeMB": 14.18,
+          "totalJSHeapSizeMB": 23.07
+        },
+        "activeModuleId": "generic.semantic_program",
+        "consoleErrors": []
+      },
+      {
+        "id": "gate1_line_plane_angle_60",
+        "category": "angle_premise",
+        "firstFrameMs": 230.2,
+        "hasCanvas": true,
+        "orbitFrames": 87,
+        "orbitFps": 141.2,
+        "memory": {
+          "usedJSHeapSizeMB": 17.41,
+          "totalJSHeapSizeMB": 23.07
+        },
+        "activeModuleId": "generic.semantic_program",
+        "consoleErrors": []
+      },
+      {
+        "id": "gate1_dihedral_obtuse_120",
+        "category": "dihedral_angle",
+        "firstFrameMs": 223.2,
+        "hasCanvas": true,
+        "orbitFrames": 90,
+        "orbitFps": 143,
+        "memory": {
+          "usedJSHeapSizeMB": 17.16,
+          "totalJSHeapSizeMB": 23.32
+        },
+        "activeModuleId": "generic.semantic_program",
+        "consoleErrors": []
+      },
+      {
+        "id": "gate2_right_trapezoid_composed",
+        "category": "family1",
+        "firstFrameMs": 216.3,
+        "hasCanvas": true,
+        "orbitFrames": 87,
+        "orbitFps": 140.8,
+        "memory": {
+          "usedJSHeapSizeMB": 15.12,
+          "totalJSHeapSizeMB": 23.07
+        },
+        "activeModuleId": "generic.semantic_program",
+        "consoleErrors": []
+      },
+      {
+        "id": "gate2_rhombus_60_composed",
+        "category": "family2",
+        "firstFrameMs": 218.4,
+        "hasCanvas": true,
+        "orbitFrames": 82,
+        "orbitFps": 142.3,
+        "memory": {
+          "usedJSHeapSizeMB": 15.71,
+          "totalJSHeapSizeMB": 23.07
+        },
+        "activeModuleId": "generic.semantic_program",
+        "consoleErrors": []
+      }
+    ]
+  },
+  "rust_evaluation": {
+    "decision": "NO_RUST_NEEDED",
+    "rationale": "Planner p50=0.463 ms, Source Gate p50=8.948 ms, Exact Kernel p50=14.543 ms, and cached E2E text->Scene3D p50=27.41 ms all execute well under 50 ms on CPU in pure Python Fraction/Radical arithmetic with zero bottleneck justifying FFI/Rust complexity."
+  }
+}

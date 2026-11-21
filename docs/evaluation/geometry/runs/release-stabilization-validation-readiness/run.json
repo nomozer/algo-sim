@@ -1,0 +1,36 @@
+{
+  "schema": "algosim-evaluation-run/1",
+  "run_id": "release-stabilization-validation-readiness",
+  "task_slug": "release-stabilization-validation-readiness",
+  "date": "2026-11-09",
+  "branch": "feat/release-stabilization-validation-readiness",
+  "base_commit_sha": "32f14b8fc4231b6a57ada34966c019e99ff148c0",
+  "product_commit_sha": "b8a9e57b4fb13b2ecdba188fbea6f2a76d57caba",
+  "measured_system_tree_hash": "c09b67d538d7d450dc03d8ccaacbb00676241aa4f342d8dbca07bedae974be01",
+  "cache_version": "132",
+  "route_d_cache_policy": "132:route-d",
+  "allow_live_ai": 0,
+  "live_gemini_requests": 0,
+  "primary_report": "ALGOSIM_RELEASE_STABILIZATION_REPORT.md",
+  "artifacts": [
+    "ALGOSIM_RELEASE_STABILIZATION_REPORT.md",
+    "evidence_reconciliation_receipt.json",
+    "correctness_hardening_receipt.json",
+    "h1_readiness_receipt.json",
+    "real_world_vision_readiness_receipt.json",
+    "real_world_vision_corpus_template.json",
+    "architecture_gap_decisions_receipt.json",
+    "tools/reconcile_and_verify_readiness.py"
+  ],
+  "corrects_run": "independent-geometry-and-vision-evaluation",
+  "status_flags": {
+    "HYBRID_DEFAULT_CUTOVER_COMPLETE": "YES",
+    "LEGACY_EXECUTION_RETIRED": "YES",
+    "LEGACY_FULLY_RETIRED": "NO",
+    "PRODUCTION_DEPLOYMENT_VERIFIED": "NO",
+    "INDEPENDENT_H1_VALIDATION": "NOT_MEASURED",
+    "H1_INFRASTRUCTURE_READINESS": "H1_INFRASTRUCTURE_READY",
+    "LIVE_VISION_EVALUATION": "NOT_MEASURED",
+    "REAL_WORLD_VISION_CORPUS": "REAL_WORLD_CORPUS_NOT_AVAILABLE"
+  }
+}

@@ -1,0 +1,9 @@
+{
+  "run_id": "local-semantic-source-gate-reliability",
+  "generated_at_utc": "2026-11-13T04:54:20.249879+00:00",
+  "publication_head": "BLOCKED_PENDING_OWNER_REVIEW",
+  "full_release_gate": "BLOCKED_GATES_REMAIN",
+  "pending_findings_and_blobs": "unchanged from controlled-vision (97 findings / 18 blobs) unless full_regression_summary.json publication gates report otherwise",
+  "agent_actions": "none: no approval written, no exception added, no history rewritten, no frozen evidence removed",
+  "pending_templates": "K-1/R-1/S-2 re-bound to the refrozen measured_system as metadata only (pending_template_refresh.json); owner_decision stays PENDING_OWNER_DECISION"
+}

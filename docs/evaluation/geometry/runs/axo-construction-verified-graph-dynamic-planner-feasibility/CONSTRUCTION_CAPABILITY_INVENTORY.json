@@ -1,0 +1,1113 @@
+{
+  "schema": "axo-construction-capability-inventory/1",
+  "run_id": "axo-construction-verified-graph-dynamic-planner-feasibility",
+  "generated_at_utc": "2026-11-19T00:25:52Z",
+  "git_head": "498f354608c45ce98ba4f75a0222afbe56139ce2",
+  "git_branch": "feat/local-first-geometry-understanding",
+  "git_dirty_before_audit": true,
+  "versions": {
+    "planner": "geometry-fact-planner/26",
+    "registry": "geometry-functions/33",
+    "engine": "geometry-function-engine/24",
+    "adapter": "hybrid-simulation-adapter/4",
+    "certificate_schema": "exact-gram-line-plane-orthogonality/1",
+    "deductive_theorem_schema": "line_perpendicular_two_intersecting_lines_in_plane/1",
+    "cache_version": "145"
+  },
+  "registry_summary": {
+    "total_functions": 64,
+    "by_kind": {
+      "fact": 24,
+      "ask": 23,
+      "construct": 16,
+      "escape": 1
+    },
+    "with_planning_contracts": 15,
+    "without_planning_contracts": 49,
+    "functions": [
+      {
+        "name": "altitude",
+        "kind": "fact",
+        "planning_contracts": [],
+        "has_planning_contract": false
+      },
+      {
+        "name": "ask_angle_line_plane",
+        "kind": "ask",
+        "planning_contracts": [
+          {
+            "effect": "AnswerAngleLinePlane",
+            "inputs": [
+              "Point",
+              "Point",
+              "Plane"
+            ],
+            "source_policy": "goal_answer"
+          }
+        ],
+        "has_planning_contract": true
+      },
+      {
+        "name": "ask_angle_lines",
+        "kind": "ask",
+        "planning_contracts": [
+          {
+            "effect": "AnswerAngleLines",
+            "inputs": [
+              "Point",
+              "Point",
+              "Line"
+            ],
+            "source_policy": "goal_answer"
+          }
+        ],
+        "has_planning_contract": true
+      },
+      {
+        "name": "ask_angle_plane_plane",
+        "kind": "ask",
+        "planning_contracts": [],
+        "has_planning_contract": false
+      },
+      {
+        "name": "ask_area",
+        "kind": "ask",
+        "planning_contracts": [
+          {
+            "effect": "AnswerArea",
+            "inputs": [
+              "Point",
+              "Point",
+              "Point"
+            ],
+            "source_policy": "goal_answer"
+          }
+        ],
+        "has_planning_contract": true
+      },
+      {
+        "name": "ask_area_ratio",
+        "kind": "ask",
+        "planning_contracts": [],
+        "has_planning_contract": false
+      },
+      {
+        "name": "ask_curved_residual_volume",
+        "kind": "ask",
+        "planning_contracts": [],
+        "has_planning_contract": false
+      },
+      {
+        "name": "ask_curved_section_area",
+        "kind": "ask",
+        "planning_contracts": [],
+        "has_planning_contract": false
+      },
+      {
+        "name": "ask_curved_section_radius",
+        "kind": "ask",
+        "planning_contracts": [],
+        "has_planning_contract": false
+      },
+      {
+        "name": "ask_curved_volume",
+        "kind": "ask",
+        "planning_contracts": [],
+        "has_planning_contract": false
+      },
+      {
+        "name": "ask_curved_volume_ratio",
+        "kind": "ask",
+        "planning_contracts": [],
+        "has_planning_contract": false
+      },
+      {
+        "name": "ask_distance_line_plane",
+        "kind": "ask",
+        "planning_contracts": [
+          {
+            "effect": "AnswerDistanceLinePlane",
+            "inputs": [
+              "Line",
+              "Plane"
+            ],
+            "source_policy": "goal_answer"
+          }
+        ],
+        "has_planning_contract": true
+      },
+      {
+        "name": "ask_distance_lines",
+        "kind": "ask",
+        "planning_contracts": [
+          {
+            "effect": "AnswerDistanceLines",
+            "inputs": [
+              "Line",
+              "Line"
+            ],
+            "source_policy": "goal_answer"
+          }
+        ],
+        "has_planning_contract": true
+      },
+      {
+        "name": "ask_distance_planes",
+        "kind": "ask",
+        "planning_contracts": [],
+        "has_planning_contract": false
+      },
+      {
+        "name": "ask_distance_point_plane",
+        "kind": "ask",
+        "planning_contracts": [
+          {
+            "effect": "AnswerDistance",
+            "inputs": [
+              "Point",
+              "Plane"
+            ],
+            "source_policy": "distance_answer"
+          }
+        ],
+        "has_planning_contract": true
+      },
+      {
+        "name": "ask_lateral_area",
+        "kind": "ask",
+        "planning_contracts": [],
+        "has_planning_contract": false
+      },
+      {
+        "name": "ask_length",
+        "kind": "ask",
+        "planning_contracts": [
+          {
+            "effect": "AnswerDistance",
+            "inputs": [
+              "Point",
+              "Foot"
+            ],
+            "source_policy": "distance_witness"
+          },
+          {
+            "effect": "AnswerLength",
+            "inputs": [
+              "Point",
+              "Point"
+            ],
+            "source_policy": "goal_answer"
+          }
+        ],
+        "has_planning_contract": true
+      },
+      {
+        "name": "ask_length_ratio",
+        "kind": "ask",
+        "planning_contracts": [],
+        "has_planning_contract": false
+      },
+      {
+        "name": "ask_radius",
+        "kind": "ask",
+        "planning_contracts": [],
+        "has_planning_contract": false
+      },
+      {
+        "name": "ask_residual_volume",
+        "kind": "ask",
+        "planning_contracts": [],
+        "has_planning_contract": false
+      },
+      {
+        "name": "ask_section_area",
+        "kind": "ask",
+        "planning_contracts": [],
+        "has_planning_contract": false
+      },
+      {
+        "name": "ask_surface_area",
+        "kind": "ask",
+        "planning_contracts": [],
+        "has_planning_contract": false
+      },
+      {
+        "name": "ask_volume",
+        "kind": "ask",
+        "planning_contracts": [],
+        "has_planning_contract": false
+      },
+      {
+        "name": "ask_volume_ratio",
+        "kind": "ask",
+        "planning_contracts": [],
+        "has_planning_contract": false
+      },
+      {
+        "name": "centroid",
+        "kind": "construct",
+        "planning_contracts": [
+          {
+            "effect": "Point",
+            "inputs": [
+              "Point",
+              "Point",
+              "Point"
+            ],
+            "source_policy": "derived_point"
+          }
+        ],
+        "has_planning_contract": true
+      },
+      {
+        "name": "curved_section",
+        "kind": "construct",
+        "planning_contracts": [],
+        "has_planning_contract": false
+      },
+      {
+        "name": "curved_solid",
+        "kind": "construct",
+        "planning_contracts": [],
+        "has_planning_contract": false
+      },
+      {
+        "name": "curved_subsolid",
+        "kind": "construct",
+        "planning_contracts": [],
+        "has_planning_contract": false
+      },
+      {
+        "name": "dihedral_angle",
+        "kind": "fact",
+        "planning_contracts": [],
+        "has_planning_contract": false
+      },
+      {
+        "name": "divide_segment",
+        "kind": "construct",
+        "planning_contracts": [],
+        "has_planning_contract": false
+      },
+      {
+        "name": "equal_length",
+        "kind": "fact",
+        "planning_contracts": [],
+        "has_planning_contract": false
+      },
+      {
+        "name": "face_perpendicular_base",
+        "kind": "fact",
+        "planning_contracts": [],
+        "has_planning_contract": false
+      },
+      {
+        "name": "height",
+        "kind": "fact",
+        "planning_contracts": [],
+        "has_planning_contract": false
+      },
+      {
+        "name": "intersect_line_line",
+        "kind": "construct",
+        "planning_contracts": [
+          {
+            "effect": "Point",
+            "inputs": [
+              "Line",
+              "Line"
+            ],
+            "source_policy": "derived_point"
+          }
+        ],
+        "has_planning_contract": true
+      },
+      {
+        "name": "intersect_line_plane",
+        "kind": "construct",
+        "planning_contracts": [
+          {
+            "effect": "Meet",
+            "inputs": [
+              "Line",
+              "Plane"
+            ],
+            "source_policy": "section_vertex"
+          },
+          {
+            "effect": "Point",
+            "inputs": [
+              "Line",
+              "Plane"
+            ],
+            "source_policy": "derived_point"
+          }
+        ],
+        "has_planning_contract": true
+      },
+      {
+        "name": "intersection_line",
+        "kind": "construct",
+        "planning_contracts": [
+          {
+            "effect": "Line",
+            "inputs": [
+              "Plane",
+              "Plane"
+            ],
+            "source_policy": "declared_intersection"
+          }
+        ],
+        "has_planning_contract": true
+      },
+      {
+        "name": "isosceles_trapezoid",
+        "kind": "fact",
+        "planning_contracts": [],
+        "has_planning_contract": false
+      },
+      {
+        "name": "line_line_angle",
+        "kind": "fact",
+        "planning_contracts": [],
+        "has_planning_contract": false
+      },
+      {
+        "name": "line_plane_angle",
+        "kind": "fact",
+        "planning_contracts": [],
+        "has_planning_contract": false
+      },
+      {
+        "name": "midpoint",
+        "kind": "construct",
+        "planning_contracts": [
+          {
+            "effect": "Point",
+            "inputs": [
+              "Point",
+              "Point"
+            ],
+            "source_policy": "derived_point"
+          }
+        ],
+        "has_planning_contract": true
+      },
+      {
+        "name": "orthogonal_projection",
+        "kind": "fact",
+        "planning_contracts": [
+          {
+            "effect": "Point",
+            "inputs": [
+              "Point",
+              "Plane"
+            ],
+            "source_policy": "derived_point"
+          },
+          {
+            "effect": "Normal",
+            "inputs": [
+              "Point",
+              "Plane"
+            ],
+            "source_policy": "normal_witness"
+          }
+        ],
+        "has_planning_contract": true
+      },
+      {
+        "name": "orthogonal_projection_line",
+        "kind": "construct",
+        "planning_contracts": [
+          {
+            "effect": "Foot",
+            "inputs": [
+              "Point",
+              "Line"
+            ],
+            "source_policy": "projection_foot"
+          },
+          {
+            "effect": "Point",
+            "inputs": [
+              "Point",
+              "Line"
+            ],
+            "source_policy": "derived_point"
+          },
+          {
+            "effect": "PerpLine",
+            "inputs": [
+              "Point",
+              "Line"
+            ],
+            "source_policy": "locus_witness"
+          },
+          {
+            "effect": "PerpDir",
+            "inputs": [
+              "Point",
+              "Line"
+            ],
+            "source_policy": "locus_witness"
+          }
+        ],
+        "has_planning_contract": true
+      },
+      {
+        "name": "parallelogram",
+        "kind": "fact",
+        "planning_contracts": [],
+        "has_planning_contract": false
+      },
+      {
+        "name": "perpendicular_line_plane",
+        "kind": "fact",
+        "planning_contracts": [],
+        "has_planning_contract": false
+      },
+      {
+        "name": "perpendicular_lines",
+        "kind": "fact",
+        "planning_contracts": [],
+        "has_planning_contract": false
+      },
+      {
+        "name": "plane_plane_angle",
+        "kind": "fact",
+        "planning_contracts": [],
+        "has_planning_contract": false
+      },
+      {
+        "name": "point_reflection",
+        "kind": "construct",
+        "planning_contracts": [],
+        "has_planning_contract": false
+      },
+      {
+        "name": "polygon_area",
+        "kind": "fact",
+        "planning_contracts": [],
+        "has_planning_contract": false
+      },
+      {
+        "name": "prism",
+        "kind": "construct",
+        "planning_contracts": [],
+        "has_planning_contract": false
+      },
+      {
+        "name": "pyramid",
+        "kind": "construct",
+        "planning_contracts": [],
+        "has_planning_contract": false
+      },
+      {
+        "name": "rectangle",
+        "kind": "fact",
+        "planning_contracts": [],
+        "has_planning_contract": false
+      },
+      {
+        "name": "regular_polygon",
+        "kind": "fact",
+        "planning_contracts": [],
+        "has_planning_contract": false
+      },
+      {
+        "name": "regular_pyramid",
+        "kind": "construct",
+        "planning_contracts": [],
+        "has_planning_contract": false
+      },
+      {
+        "name": "rhombus",
+        "kind": "fact",
+        "planning_contracts": [],
+        "has_planning_contract": false
+      },
+      {
+        "name": "right_angle",
+        "kind": "fact",
+        "planning_contracts": [],
+        "has_planning_contract": false
+      },
+      {
+        "name": "section",
+        "kind": "construct",
+        "planning_contracts": [],
+        "has_planning_contract": false
+      },
+      {
+        "name": "segment_length",
+        "kind": "fact",
+        "planning_contracts": [],
+        "has_planning_contract": false
+      },
+      {
+        "name": "segment_ratio",
+        "kind": "fact",
+        "planning_contracts": [],
+        "has_planning_contract": false
+      },
+      {
+        "name": "solid_volume",
+        "kind": "fact",
+        "planning_contracts": [],
+        "has_planning_contract": false
+      },
+      {
+        "name": "sphere_tangent_plane",
+        "kind": "fact",
+        "planning_contracts": [],
+        "has_planning_contract": false
+      },
+      {
+        "name": "translate_point",
+        "kind": "construct",
+        "planning_contracts": [
+          {
+            "effect": "PerpLine",
+            "inputs": [
+              "Point",
+              "PerpDir"
+            ],
+            "source_policy": "locus_witness"
+          }
+        ],
+        "has_planning_contract": true
+      },
+      {
+        "name": "trapezoid",
+        "kind": "fact",
+        "planning_contracts": [],
+        "has_planning_contract": false
+      },
+      {
+        "name": "unsupported",
+        "kind": "escape",
+        "planning_contracts": [],
+        "has_planning_contract": false
+      },
+      {
+        "name": "vertex_angle",
+        "kind": "fact",
+        "planning_contracts": [],
+        "has_planning_contract": false
+      }
+    ]
+  },
+  "capabilities": [
+    {
+      "capability_id": "cap.solid_layout_and_gram_metric",
+      "title": "Exact Solid Coordinate Chart & SPD Gram Metric Solver",
+      "status": "EXISTS_VERIFIED",
+      "owner_modules": [
+        "backend/app/simulation/geometry_functions/engine.py",
+        "backend/app/simulation/geometry/metric.py",
+        "backend/app/simulation/geometry_functions/certificates.py"
+      ],
+      "reusable": true,
+      "evidence": {
+        "status": "SERVED",
+        "points_count": 4,
+        "point_ids": [
+          "A",
+          "B",
+          "C",
+          "S"
+        ],
+        "chart_metric_spd": true,
+        "length_unit": "a"
+      },
+      "notes": "Computes exact Fraction/Radical coordinates and SPD Gram tensors (`Metric`) from verified premises without touching goal queries."
+    },
+    {
+      "capability_id": "cap.effect_regression_single_plan",
+      "title": "Bounded Backward Slot-Effect Regression (`_EffectResolver`)",
+      "status": "PARTIAL",
+      "owner_modules": [
+        "backend/app/simulation/geometry_functions/planner.py"
+      ],
+      "reusable": false,
+      "limits": {
+        "max_depth": 4,
+        "max_needs": 96,
+        "max_candidates": 48,
+        "max_calls": 64,
+        "registry_functions_with_contracts": 15,
+        "registry_functions_total": 64
+      },
+      "notes": "Only 15/64 Registry functions expose PlanningContracts; collapses to a single min-cost _Choice rather than retaining alternative plans."
+    },
+    {
+      "capability_id": "cap.registered_auxiliary_rules",
+      "title": "Registered Auxiliary Rules (`AUXILIARY_RULES` & `POINT_DEFINITIONS`)",
+      "status": "PARTIAL",
+      "owner_modules": [
+        "backend/app/simulation/geometry_functions/registry.py",
+        "backend/app/simulation/geometry_functions/planner.py"
+      ],
+      "reusable": false,
+      "rules_count": 7,
+      "rules": {
+        "point(defined by a property: the common point of its loci)": [
+          "midpoint",
+          "orthogonal_projection_line",
+          "translate_point",
+          "intersect_line_line"
+        ],
+        "distance(point,line)": [
+          "orthogonal_projection_line",
+          "ask_length"
+        ],
+        "section(plane through point ∥ plane)": [
+          "translate_point",
+          "section"
+        ],
+        "section(plane through point strictly parallel to two lines)": [
+          "translate_point",
+          "section"
+        ],
+        "section(plane through point perpendicular to a line)": [
+          "orthogonal_projection_line",
+          "translate_point",
+          "section"
+        ],
+        "section vertices on the stated cut edges of a derived plane": [
+          "intersect_line_plane",
+          "pyramid"
+        ],
+        "section(plane defined by stated constraints)": [
+          "orthogonal_projection",
+          "translate_point",
+          "section"
+        ]
+      },
+      "point_definitions": [
+        "circumcenter",
+        "orthocenter"
+      ],
+      "notes": "7 hardcoded/registered macro auxiliary schemas exist, alongside orthocenter/circumcenter loci definitions, but no general dynamic auxiliary search."
+    },
+    {
+      "capability_id": "cap.dependency_dag_and_cycle_detection",
+      "title": "Call-Level Topological Sort & Cycle Detection",
+      "status": "EXISTS_VERIFIED",
+      "owner_modules": [
+        "backend/app/simulation/geometry_functions/planner.py"
+      ],
+      "reusable": true,
+      "evidence": {
+        "detected": true,
+        "code": "DEPENDENCY_CYCLE",
+        "reason": "DEPENDENCY_CYCLE: phụ thuộc vòng qua c2 → c1"
+      },
+      "notes": "`_sap_xep_phu_thuoc_loi_goi` enforces Kahn + DFS ordering on `KeHoach.calls` and raises `TuChoi('DEPENDENCY_CYCLE')`, though not yet wrapped as a typed `VerifiedConstructionGraph`."
+    },
+    {
+      "capability_id": "cap.exact_kernel_primitives",
+      "title": "Exact Geometric Construction Kernel (`Fraction` + `Gram Metric`)",
+      "status": "EXISTS_VERIFIED",
+      "owner_modules": [
+        "backend/app/simulation/geometry/exact.py",
+        "backend/app/simulation/geometry/kernel.py",
+        "backend/app/simulation/geometry/measure.py",
+        "backend/app/simulation/geometry/section.py"
+      ],
+      "reusable": true,
+      "primitives": [
+        "midpoint",
+        "translate",
+        "divide_segment",
+        "intersect_line_plane",
+        "intersect_plane_plane",
+        "intersect_line_line",
+        "common_perpendicular_feet",
+        "project_point_onto_plane",
+        "project_point_onto_line",
+        "plane_through_point_perpendicular_to",
+        "plane_through_point_parallel_to",
+        "line_through_point_parallel_to",
+        "perpendicular_foot_line",
+        "cross_section"
+      ],
+      "notes": "All Euclidean/affine 3D construction primitives and exact degenerate/parallel/skew errors (`GeometryError`) already exist and run cleanly inside `with metric.using(chart_metric):`."
+    },
+    {
+      "capability_id": "cap.distance_metric_to_construction_decomposition",
+      "title": "Automatic Foot / Altitude Witness Construction for Metric Goals",
+      "status": "ABSENT_VERIFIED",
+      "owner_modules": [
+        "backend/app/simulation/geometry_functions/planner.py",
+        "backend/app/simulation/geometry_functions/engine.py"
+      ],
+      "evidence": {
+        "problem_text": "Cho hình chóp S.ABC có đáy ABC là tam giác vuông cân tại B, AB = a, SA vuông góc với (ABC), SA = a. Tính khoảng cách từ A đến mặt phẳng (SBC).",
+        "status": "SERVED",
+        "answers": {
+          "q1": "a√2/2"
+        },
+        "answer_exact": {
+          "q1": {
+            "coef": "√2/2",
+            "dim": 1,
+            "unit": "a"
+          }
+        },
+        "planner_calls": [
+          "pyramid",
+          "right_angle",
+          "equal_length",
+          "segment_length",
+          "perpendicular_line_plane",
+          "segment_length",
+          "ask_distance_point_plane"
+        ],
+        "scene_object_ids": [
+          "A",
+          "B",
+          "C",
+          "S",
+          "khoi_S_ABC",
+          "mp_q1",
+          "kq_q1",
+          "day_ABC",
+          "canh_ben_S_A",
+          "canh_ben_S_B",
+          "canh_ben_S_C"
+        ],
+        "scene_point_ids": [
+          "A",
+          "B",
+          "C",
+          "S"
+        ],
+        "scene_segment_ids": [
+          "canh_ben_S_A",
+          "canh_ben_S_B",
+          "canh_ben_S_C"
+        ],
+        "has_auxiliary_foot_point": false,
+        "continuity_issues_count": 0
+      },
+      "notes": "`ask_distance_point_plane` computes scalar answer `a√2/2` directly via `measure.distance_sq_point_plane` without constructing auxiliary foot `H` or segment `AH` in `Scene3D`."
+    },
+    {
+      "capability_id": "cap.verified_typed_construction_graph",
+      "title": "Typed `ConstructionProofGraph` Separated from `PresentationStepGraph`",
+      "status": "ABSENT_VERIFIED",
+      "owner_modules": [],
+      "notes": "No typed node/edge proof graph separates `GIVEN`/`DERIVED`/`AUXILIARY_CONSTRUCTION` provenance, canonical geometric identity, and pedagogical projection."
+    },
+    {
+      "capability_id": "cap.multi_plan_retention_and_ranking",
+      "title": "Alternative Valid Construction Discovery & Deterministic Ranking",
+      "status": "ABSENT_VERIFIED",
+      "owner_modules": [
+        "backend/app/simulation/geometry_functions/planner.py"
+      ],
+      "notes": "`_EffectResolver._resolve` returns a single `min(choices, ...)` object, discarding alternative valid construction paths."
+    },
+    {
+      "capability_id": "cap.unused_node_and_semantic_duplicate_detection",
+      "title": "Canonical Geometric Deduplication & Unused Node Pruning",
+      "status": "PARTIAL",
+      "owner_modules": [
+        "backend/app/simulation/geometry_functions/planner.py",
+        "backend/app/simulation/geometry_functions/construction_continuity.py"
+      ],
+      "notes": "`planner.py` coalesces syntactic duplicate calls by JSON key and `scene3d` tracks `unused_auxiliary_ids`, but lacks full exact canonical line/plane geometric identity (`Plane3`/`Line3` normalization)."
+    },
+    {
+      "capability_id": "cap.dihedral_and_ratio_reflection_planning",
+      "title": "Dynamic Planning Contracts for `divide_segment`, `point_reflection`, `ask_angle_plane_plane`",
+      "status": "PARTIAL",
+      "owner_modules": [
+        "backend/app/simulation/geometry_functions/registry.py"
+      ],
+      "evidence": {
+        "divide_segment": {
+          "in_registry": true,
+          "kind": "construct",
+          "planning_contract_count": 0
+        },
+        "point_reflection": {
+          "in_registry": true,
+          "kind": "construct",
+          "planning_contract_count": 0
+        },
+        "ask_angle_plane_plane": {
+          "in_registry": true,
+          "kind": "ask",
+          "planning_contract_count": 0
+        },
+        "ask_volume": {
+          "in_registry": true,
+          "kind": "ask",
+          "planning_contract_count": 0
+        },
+        "ask_section_area": {
+          "in_registry": true,
+          "kind": "ask",
+          "planning_contract_count": 0
+        },
+        "ask_distance_planes": {
+          "in_registry": true,
+          "kind": "ask",
+          "planning_contract_count": 0
+        },
+        "section": {
+          "in_registry": true,
+          "kind": "construct",
+          "planning_contract_count": 0
+        }
+      },
+      "notes": "Kernel/Engine support execution when explicitly called, but Registry `/33` leaves `planning_contracts=[]` for `divide_segment`, `point_reflection`, and `ask_angle_plane_plane`."
+    },
+    {
+      "capability_id": "cap.deep_chain_ir_memory",
+      "title": "Deep Multi-Step Construction Chain (>32 memory slots) in `SemanticProgramSpec`",
+      "status": "PARTIAL",
+      "owner_modules": [
+        "backend/app/simulation/semantic_program/validator.py"
+      ],
+      "limits": {
+        "max_memory_declarations": 32
+      },
+      "notes": "Flat IR memory table caps at `MAX_MEMORY_DECLARATIONS = 32`, rejecting longer dynamic chains (`IR_MEMORY_BUDGET_EXCEEDED`)."
+    },
+    {
+      "capability_id": "cap.scene3d_and_continuity_contract",
+      "title": "Scene3D + Formation Steps + Construction Continuity + Certificates",
+      "status": "EXISTS_VERIFIED",
+      "owner_modules": [
+        "backend/app/simulation/semantic_program/scene3d.py",
+        "backend/app/simulation/semantic_program/formation.py",
+        "backend/app/simulation/geometry_functions/construction_continuity.py",
+        "backend/app/simulation/geometry_functions/certificates.py"
+      ],
+      "reusable": true,
+      "scene3d_render_hints": {
+        "point3": "point_marker",
+        "line3": "line",
+        "segment3": "segment",
+        "plane3": "surface",
+        "solid": "mesh",
+        "polygon3": "polygon",
+        "section": "polygon",
+        "circle3": "circle",
+        "ellipse3": "ellipse",
+        "curved_solid": "curved_solid",
+        "vector3": "non_visual",
+        "quantity": "readout"
+      },
+      "notes": "Backend Scene3D schema, 5-part `step_summary`, `validate_construction_continuity`, and `certify_line_plane_perpendicularity` are mature and directly reusable."
+    },
+    {
+      "capability_id": "cap.frontend_scene3d_renderer_ownership",
+      "title": "Frontend Scene3D Interactive Step Explorer",
+      "status": "EXISTS_VERIFIED",
+      "ownership": "BLOCKED_OWNERSHIP",
+      "owner_modules": [
+        "frontend/src/simulations/domains/geometry/Scene3DExplorer.tsx"
+      ],
+      "notes": "Frontend lives under separate worktree ownership (`axo-geometry-library`) and must not be modified in `AXO CONSTRUCTION /1`."
+    },
+    {
+      "capability_id": "cap.external_oracle_or_runtime_llm_in_planner",
+      "title": "Curved-Solid General Dynamic Primitives (Tangent Sphere Locus Synthesis)",
+      "status": "UNSUPPORTED",
+      "owner_modules": [],
+      "notes": "Out of scope for exact affine-polyhedral operator prototype; curved solids and free-parameter optimization remain outside dynamic polyhedral composition."
+    }
+  ],
+  "candidate_operations_s6": [
+    {
+      "candidate": "Tạo điểm từ dữ kiện đã xác định",
+      "registry_backing": [
+        "divide_segment",
+        "centroid",
+        "midpoint",
+        "translate_point",
+        "point_reflection"
+      ],
+      "input_types": [
+        "Point3",
+        "Scalar"
+      ],
+      "preconditions": "Anchors defined; nonzero segment/polygon; nonzero ratio denominator",
+      "result_types": [
+        "Point3"
+      ],
+      "exact_verification": "EXISTS_VERIFIED",
+      "degenerate_cases": "coincident anchors, colinear polygon vertices, zero ratio",
+      "scene3d_compatible": true,
+      "ownership_boundary": "READ_ONLY_REUSE_IN_PROTOTYPE"
+    },
+    {
+      "candidate": "Nối hai điểm / Tạo đoạn thẳng phụ",
+      "registry_backing": [
+        "Segment3.between (kernel/exact)",
+        "construct_segment (scene3d)"
+      ],
+      "input_types": [
+        "Point3",
+        "Point3"
+      ],
+      "preconditions": "P1 != P2 in canonical coordinates",
+      "result_types": [
+        "Segment3"
+      ],
+      "exact_verification": "EXISTS_VERIFIED",
+      "degenerate_cases": "DEGENERATE_COINCIDENT_POINTS",
+      "scene3d_compatible": true,
+      "ownership_boundary": "PROTOTYPE_WRAPPER_NEEDED"
+    },
+    {
+      "candidate": "Tạo đường thẳng qua hai điểm",
+      "registry_backing": [
+        "Line3.through (exact.py)",
+        "implicit in many asks"
+      ],
+      "input_types": [
+        "Point3",
+        "Point3"
+      ],
+      "preconditions": "P1 != P2",
+      "result_types": [
+        "Line3"
+      ],
+      "exact_verification": "EXISTS_VERIFIED",
+      "degenerate_cases": "DEGENERATE_COINCIDENT_POINTS",
+      "scene3d_compatible": true,
+      "ownership_boundary": "PROTOTYPE_WRAPPER_NEEDED"
+    },
+    {
+      "candidate": "Tạo mặt phẳng từ đối tượng xác định",
+      "registry_backing": [
+        "Plane3.through",
+        "plane_through_point_parallel_to",
+        "plane_through_point_perpendicular_to"
+      ],
+      "input_types": [
+        "3x Point3",
+        "Point3+Plane3",
+        "Point3+Line3"
+      ],
+      "preconditions": "Non-collinear points; non-degenerate normal",
+      "result_types": [
+        "Plane3"
+      ],
+      "exact_verification": "EXISTS_VERIFIED",
+      "degenerate_cases": "DEGENERATE_COLLINEAR_POINTS",
+      "scene3d_compatible": true,
+      "ownership_boundary": "PROTOTYPE_WRAPPER_NEEDED"
+    },
+    {
+      "candidate": "Dựng trung điểm",
+      "registry_backing": [
+        "midpoint (Registry /33 + contract)"
+      ],
+      "input_types": [
+        "Point3",
+        "Point3"
+      ],
+      "preconditions": "Distinct endpoints",
+      "result_types": [
+        "Point3"
+      ],
+      "exact_verification": "EXISTS_VERIFIED",
+      "degenerate_cases": "DEGENERATE_COINCIDENT_POINTS",
+      "scene3d_compatible": true,
+      "ownership_boundary": "READ_ONLY_REUSE_IN_PROTOTYPE"
+    },
+    {
+      "candidate": "Dựng hình chiếu vuông góc (điểm lên đường / điểm lên mặt)",
+      "registry_backing": [
+        "orthogonal_projection_line",
+        "orthogonal_projection",
+        "kernel.project_point_onto_*"
+      ],
+      "input_types": [
+        "Point3",
+        "Line3|Plane3"
+      ],
+      "preconditions": "Valid Gram SPD metric; point not already coincident if strictly auxiliary segment needed",
+      "result_types": [
+        "Point3"
+      ],
+      "exact_verification": "EXISTS_VERIFIED",
+      "degenerate_cases": "DEGENERATE_POINT_ALREADY_INCIDENT",
+      "scene3d_compatible": true,
+      "ownership_boundary": "READ_ONLY_REUSE_IN_PROTOTYPE"
+    },
+    {
+      "candidate": "Dựng đường vuông góc / đường cao / đường song song",
+      "registry_backing": [
+        "kernel.common_perpendicular_feet",
+        "kernel.line_through_point_parallel_to",
+        "certificates.certify_deductive_line_plane_perpendicularity"
+      ],
+      "input_types": [
+        "Point3",
+        "Line3",
+        "Plane3"
+      ],
+      "preconditions": "Skew lines for common perp; point off line for parallel line",
+      "result_types": [
+        "Line3",
+        "Segment3",
+        "Relation"
+      ],
+      "exact_verification": "EXISTS_VERIFIED",
+      "degenerate_cases": "DEGENERATE_NON_SKEW_LINES, DEGENERATE_POINT_ON_LINE",
+      "scene3d_compatible": true,
+      "ownership_boundary": "PROTOTYPE_OPERATOR_LAYER"
+    },
+    {
+      "candidate": "Xác định giao điểm / giao tuyến",
+      "registry_backing": [
+        "intersect_line_line",
+        "intersect_line_plane",
+        "intersection_line",
+        "kernel.intersect_plane_plane"
+      ],
+      "input_types": [
+        "Line3",
+        "Line3",
+        "Plane3"
+      ],
+      "preconditions": "Coplanar non-parallel lines; line not parallel/contained in plane; non-parallel planes",
+      "result_types": [
+        "Point3",
+        "Line3"
+      ],
+      "exact_verification": "EXISTS_VERIFIED",
+      "degenerate_cases": "DEGENERATE_PARALLEL_NO_INTERSECTION, DEGENERATE_SKEW_NO_INTERSECTION, DEGENERATE_CONTAINED_INFINITE_INTERSECTION",
+      "scene3d_compatible": true,
+      "ownership_boundary": "READ_ONLY_REUSE_IN_PROTOTYPE"
+    },
+    {
+      "candidate": "Xác định các quan hệ khoảng cách / góc",
+      "registry_backing": [
+        "ask_distance_*",
+        "ask_angle_* (metric solvers without automatic geometric witness chain)"
+      ],
+      "input_types": [
+        "Point3",
+        "Line3",
+        "Plane3"
+      ],
+      "preconditions": "Constructed witness objects + verified perpendicular/parallel relations before metric evaluation",
+      "result_types": [
+        "Quantity"
+      ],
+      "exact_verification": "PARTIAL (metric exists; dynamic witness synthesis absent)",
+      "degenerate_cases": "Missing witness, parallel line/plane mismatch",
+      "scene3d_compatible": true,
+      "ownership_boundary": "PROTOTYPE_GOAL_WITNESS_VERIFIER"
+    }
+  ]
+}

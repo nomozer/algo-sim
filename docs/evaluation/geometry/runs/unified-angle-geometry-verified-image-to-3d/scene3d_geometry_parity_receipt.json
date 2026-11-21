@@ -1,0 +1,500 @@
+{
+  "schema": "algosim-scene3d-geometry-parity-receipt/1",
+  "generated_at_utc": "2026-11-10T03:58:21.316309+00:00",
+  "product_commit": "c61a3589782bde35b69e8376d8ebf136314e47f3",
+  "head_commit": "c61a3589782bde35b69e8376d8ebf136314e47f3",
+  "measured_system_tree_hash": "69bb83ba51b834f68c106bc4d3948dc02ca35af05eca0d8f50c0e0e4cf047cb4",
+  "measured_system_file_count": 108,
+  "code_version": {
+    "typed_fact_next": "typed-fact-next/2",
+    "bridge": "typed-fact-next-bridge/2",
+    "planner": "geometry-fact-planner/26",
+    "registry": "geometry-functions/33",
+    "engine": "geometry-function-engine/24",
+    "adapter": "hybrid-simulation-adapter/4",
+    "envelope": "hybrid-route-d-simulation/4",
+    "local_parser": "local-geometry-parser/1",
+    "adaptive_router": "adaptive-input-router/1",
+    "cache_version": "132"
+  },
+  "input_or_case_hash": "9bf87dc82b1b8418e2b44d1123b82cb5077335f12d63f54b8348c2df21f6d9cc",
+  "oracle": "12-point exact Gram Scene3D parity verifier + validate_construction_continuity + non-unique locus refusal check",
+  "test_command": "pytest backend/tests/geometry/test_angle_premise_and_dihedral_geometry.py backend/tests/geometry/test_reusable_base_geometry_families.py -q",
+  "test_environment": {
+    "os": "Windows-11-10.0.26100-SP0",
+    "python": "3.12.10",
+    "cpu_logical_cores": 12,
+    "allow_live_ai": 0,
+    "live_gemini_calls": 0,
+    "benchmark_tier": "HOST_BENCHMARK_OFFLINE"
+  },
+  "expected_behavior": "All 12 Scene3D checks pass on every newly supported configuration; non-unique circle-locus foot refuses without fabricating Scene3D.",
+  "actual_behavior": "16/16 configurations passed all 12 checks; non_unique_probe arbitrary_scene3d_emitted=False.",
+  "verdict": "PASS",
+  "non_unique_configuration_guard": {
+    "case_id": "ANG-NEG-NONUNIQUE-FOOT",
+    "case_sha256": "6226c026de782636d462b3d47c49f04b2723273871be1b5df5080fb94966b1ef",
+    "status": "REFUSED",
+    "reason_code": "UNDERDETERMINED_POINT",
+    "allowed_codes": [
+      "AMBIGUOUS_FACT",
+      "UNDERDETERMINED_POINT"
+    ],
+    "arbitrary_scene3d_emitted": false,
+    "passed": true
+  },
+  "verified_configurations": [
+    {
+      "case_id": "ANG-LP-01",
+      "case_sha256": "54e089d952985cb28527f659ba9d68cd85e7988925d367fb93c6d3f65ed6e059",
+      "expected_answers": [
+        "a³√3/3"
+      ],
+      "actual_answers": [
+        "a³√3/3"
+      ],
+      "point_count": 10,
+      "step_count": 5,
+      "continuity_issues": [],
+      "twelve_checks": {
+        "1_answer_exact": true,
+        "2_object_and_solid_type": true,
+        "3_points_lines_planes_present": true,
+        "4_perpendicular_and_parallel_relations": true,
+        "5_altitude_foot_position": true,
+        "6_angle_and_measuring_plane": true,
+        "7_construction_steps_present": true,
+        "8_topological_construction_order": true,
+        "9_no_future_step_point_leakage": true,
+        "10_orbit_zoom_camera_contract": true,
+        "11_step_to_step_continuity": true,
+        "12_final_frame_matches_proved_configuration": true
+      },
+      "all_12_passed": true
+    },
+    {
+      "case_id": "ANG-LP-02",
+      "case_sha256": "f72e9628893c9b0c49280f2af4e70cd0c922a63325ef525b9e80575d6313403d",
+      "expected_answers": [
+        "a³√2/3",
+        "a√10/5"
+      ],
+      "actual_answers": [
+        "a√10/5",
+        "a³√2/3"
+      ],
+      "point_count": 10,
+      "step_count": 7,
+      "continuity_issues": [],
+      "twelve_checks": {
+        "1_answer_exact": true,
+        "2_object_and_solid_type": true,
+        "3_points_lines_planes_present": true,
+        "4_perpendicular_and_parallel_relations": true,
+        "5_altitude_foot_position": true,
+        "6_angle_and_measuring_plane": true,
+        "7_construction_steps_present": true,
+        "8_topological_construction_order": true,
+        "9_no_future_step_point_leakage": true,
+        "10_orbit_zoom_camera_contract": true,
+        "11_step_to_step_continuity": true,
+        "12_final_frame_matches_proved_configuration": true
+      },
+      "all_12_passed": true
+    },
+    {
+      "case_id": "ANG-LP-03-PRISM-INV",
+      "case_sha256": "00124e40a078638230a4c5aed026d2ebd24ab773fde2b3e3d187584602650dde",
+      "expected_answers": [
+        "a³√3/2"
+      ],
+      "actual_answers": [
+        "a³√3/2"
+      ],
+      "point_count": 12,
+      "step_count": 6,
+      "continuity_issues": [],
+      "twelve_checks": {
+        "1_answer_exact": true,
+        "2_object_and_solid_type": true,
+        "3_points_lines_planes_present": true,
+        "4_perpendicular_and_parallel_relations": true,
+        "5_altitude_foot_position": true,
+        "6_angle_and_measuring_plane": true,
+        "7_construction_steps_present": true,
+        "8_topological_construction_order": true,
+        "9_no_future_step_point_leakage": true,
+        "10_orbit_zoom_camera_contract": true,
+        "11_step_to_step_continuity": true,
+        "12_final_frame_matches_proved_configuration": true
+      },
+      "all_12_passed": true
+    },
+    {
+      "case_id": "ANG-LP-04-CIRCUMCENTER",
+      "case_sha256": "71149147f6cf909e508805e208a9508ffe8d84afde19d6ea4dd6a376179477be",
+      "expected_answers": [
+        "40"
+      ],
+      "actual_answers": [
+        "40"
+      ],
+      "point_count": 8,
+      "step_count": 5,
+      "continuity_issues": [],
+      "twelve_checks": {
+        "1_answer_exact": true,
+        "2_object_and_solid_type": true,
+        "3_points_lines_planes_present": true,
+        "4_perpendicular_and_parallel_relations": true,
+        "5_altitude_foot_position": true,
+        "6_angle_and_measuring_plane": true,
+        "7_construction_steps_present": true,
+        "8_topological_construction_order": true,
+        "9_no_future_step_point_leakage": true,
+        "10_orbit_zoom_camera_contract": true,
+        "11_step_to_step_continuity": true,
+        "12_final_frame_matches_proved_configuration": true
+      },
+      "all_12_passed": true
+    },
+    {
+      "case_id": "ANG-PP-01",
+      "case_sha256": "7376e95a9a6c4560fcc5b4aa0806ce28e5601c22acd4880ffa5c227a2b1015f2",
+      "expected_answers": [
+        "a³√3"
+      ],
+      "actual_answers": [
+        "a³√3"
+      ],
+      "point_count": 8,
+      "step_count": 5,
+      "continuity_issues": [],
+      "twelve_checks": {
+        "1_answer_exact": true,
+        "2_object_and_solid_type": true,
+        "3_points_lines_planes_present": true,
+        "4_perpendicular_and_parallel_relations": true,
+        "5_altitude_foot_position": true,
+        "6_angle_and_measuring_plane": true,
+        "7_construction_steps_present": true,
+        "8_topological_construction_order": true,
+        "9_no_future_step_point_leakage": true,
+        "10_orbit_zoom_camera_contract": true,
+        "11_step_to_step_continuity": true,
+        "12_final_frame_matches_proved_configuration": true
+      },
+      "all_12_passed": true
+    },
+    {
+      "case_id": "ANG-VTX-01-RENAMED",
+      "case_sha256": "dac41cc11649d1471bda03fc182195df2ea3ff35389ba2843f18b3108b2479c8",
+      "expected_answers": [
+        "2a³√3"
+      ],
+      "actual_answers": [
+        "2a³√3"
+      ],
+      "point_count": 10,
+      "step_count": 5,
+      "continuity_issues": [],
+      "twelve_checks": {
+        "1_answer_exact": true,
+        "2_object_and_solid_type": true,
+        "3_points_lines_planes_present": true,
+        "4_perpendicular_and_parallel_relations": true,
+        "5_altitude_foot_position": true,
+        "6_angle_and_measuring_plane": true,
+        "7_construction_steps_present": true,
+        "8_topological_construction_order": true,
+        "9_no_future_step_point_leakage": true,
+        "10_orbit_zoom_camera_contract": true,
+        "11_step_to_step_continuity": true,
+        "12_final_frame_matches_proved_configuration": true
+      },
+      "all_12_passed": true
+    },
+    {
+      "case_id": "FAM1-RTRAP-01",
+      "case_sha256": "5ae784ee17307d89087f1b462cefde8140b808db595ca77f273f99d218710732",
+      "expected_answers": [
+        "a³√3/2",
+        "a√30/5"
+      ],
+      "actual_answers": [
+        "a√30/5",
+        "a³√3/2"
+      ],
+      "point_count": 10,
+      "step_count": 7,
+      "continuity_issues": [],
+      "twelve_checks": {
+        "1_answer_exact": true,
+        "2_object_and_solid_type": true,
+        "3_points_lines_planes_present": true,
+        "4_perpendicular_and_parallel_relations": true,
+        "5_altitude_foot_position": true,
+        "6_angle_and_measuring_plane": true,
+        "7_construction_steps_present": true,
+        "8_topological_construction_order": true,
+        "9_no_future_step_point_leakage": true,
+        "10_orbit_zoom_camera_contract": true,
+        "11_step_to_step_continuity": true,
+        "12_final_frame_matches_proved_configuration": true
+      },
+      "all_12_passed": true
+    },
+    {
+      "case_id": "FAM1-RTRAP-02-OBLIQUE-LEG-COMPOSED",
+      "case_sha256": "24d6e85a8c62c63a41e2d30ce73108d498006edac7cd74dc729c94874088a6f0",
+      "expected_answers": [
+        "a³√2/2"
+      ],
+      "actual_answers": [
+        "a³√2/2"
+      ],
+      "point_count": 10,
+      "step_count": 5,
+      "continuity_issues": [],
+      "twelve_checks": {
+        "1_answer_exact": true,
+        "2_object_and_solid_type": true,
+        "3_points_lines_planes_present": true,
+        "4_perpendicular_and_parallel_relations": true,
+        "5_altitude_foot_position": true,
+        "6_angle_and_measuring_plane": true,
+        "7_construction_steps_present": true,
+        "8_topological_construction_order": true,
+        "9_no_future_step_point_leakage": true,
+        "10_orbit_zoom_camera_contract": true,
+        "11_step_to_step_continuity": true,
+        "12_final_frame_matches_proved_configuration": true
+      },
+      "all_12_passed": true
+    },
+    {
+      "case_id": "FAM1-ITRAP-01",
+      "case_sha256": "72c727a9c902b571d6e2dde192fd12ac092d8acfa976192e508c59d76a597302",
+      "expected_answers": [
+        "4a³√3"
+      ],
+      "actual_answers": [
+        "4a³√3"
+      ],
+      "point_count": 16,
+      "step_count": 6,
+      "continuity_issues": [],
+      "twelve_checks": {
+        "1_answer_exact": true,
+        "2_object_and_solid_type": true,
+        "3_points_lines_planes_present": true,
+        "4_perpendicular_and_parallel_relations": true,
+        "5_altitude_foot_position": true,
+        "6_angle_and_measuring_plane": true,
+        "7_construction_steps_present": true,
+        "8_topological_construction_order": true,
+        "9_no_future_step_point_leakage": true,
+        "10_orbit_zoom_camera_contract": true,
+        "11_step_to_step_continuity": true,
+        "12_final_frame_matches_proved_configuration": true
+      },
+      "all_12_passed": true
+    },
+    {
+      "case_id": "FAM1-ISOTRI-ALT-01",
+      "case_sha256": "be8240fdbc0c4685a26608e29b6f4ece895aa444fe4aab36e9e152a6b0c6948b",
+      "expected_answers": [
+        "20a³√3"
+      ],
+      "actual_answers": [
+        "20a³√3"
+      ],
+      "point_count": 9,
+      "step_count": 7,
+      "continuity_issues": [],
+      "twelve_checks": {
+        "1_answer_exact": true,
+        "2_object_and_solid_type": true,
+        "3_points_lines_planes_present": true,
+        "4_perpendicular_and_parallel_relations": true,
+        "5_altitude_foot_position": true,
+        "6_angle_and_measuring_plane": true,
+        "7_construction_steps_present": true,
+        "8_topological_construction_order": true,
+        "9_no_future_step_point_leakage": true,
+        "10_orbit_zoom_camera_contract": true,
+        "11_step_to_step_continuity": true,
+        "12_final_frame_matches_proved_configuration": true
+      },
+      "all_12_passed": true
+    },
+    {
+      "case_id": "FAM2-RHOM-60-COMPOSED",
+      "case_sha256": "35d318862d3224aacd92f05798a75191363f8d461cd8e0848eec858165b8528b",
+      "expected_answers": [
+        "a³/2"
+      ],
+      "actual_answers": [
+        "a³/2"
+      ],
+      "point_count": 10,
+      "step_count": 5,
+      "continuity_issues": [],
+      "twelve_checks": {
+        "1_answer_exact": true,
+        "2_object_and_solid_type": true,
+        "3_points_lines_planes_present": true,
+        "4_perpendicular_and_parallel_relations": true,
+        "5_altitude_foot_position": true,
+        "6_angle_and_measuring_plane": true,
+        "7_construction_steps_present": true,
+        "8_topological_construction_order": true,
+        "9_no_future_step_point_leakage": true,
+        "10_orbit_zoom_camera_contract": true,
+        "11_step_to_step_continuity": true,
+        "12_final_frame_matches_proved_configuration": true
+      },
+      "all_12_passed": true
+    },
+    {
+      "case_id": "FAM2-RHOM-DIAGS",
+      "case_sha256": "4f01b909ab5d8232492f57a352b30bd95fc8c7eaa57456d3de65b5f1d4c83ba4",
+      "expected_answers": [
+        "2a³√3"
+      ],
+      "actual_answers": [
+        "2a³√3"
+      ],
+      "point_count": 11,
+      "step_count": 9,
+      "continuity_issues": [],
+      "twelve_checks": {
+        "1_answer_exact": true,
+        "2_object_and_solid_type": true,
+        "3_points_lines_planes_present": true,
+        "4_perpendicular_and_parallel_relations": true,
+        "5_altitude_foot_position": true,
+        "6_angle_and_measuring_plane": true,
+        "7_construction_steps_present": true,
+        "8_topological_construction_order": true,
+        "9_no_future_step_point_leakage": true,
+        "10_orbit_zoom_camera_contract": true,
+        "11_step_to_step_continuity": true,
+        "12_final_frame_matches_proved_configuration": true
+      },
+      "all_12_passed": true
+    },
+    {
+      "case_id": "FAM2-PARALLELOGRAM-60",
+      "case_sha256": "f252054bd0ac4a6120ea763dfb71ab5b57457105c8a55d79bdd0236496ce5ae6",
+      "expected_answers": [
+        "3a³"
+      ],
+      "actual_answers": [
+        "3a³"
+      ],
+      "point_count": 16,
+      "step_count": 6,
+      "continuity_issues": [],
+      "twelve_checks": {
+        "1_answer_exact": true,
+        "2_object_and_solid_type": true,
+        "3_points_lines_planes_present": true,
+        "4_perpendicular_and_parallel_relations": true,
+        "5_altitude_foot_position": true,
+        "6_angle_and_measuring_plane": true,
+        "7_construction_steps_present": true,
+        "8_topological_construction_order": true,
+        "9_no_future_step_point_leakage": true,
+        "10_orbit_zoom_camera_contract": true,
+        "11_step_to_step_continuity": true,
+        "12_final_frame_matches_proved_configuration": true
+      },
+      "all_12_passed": true
+    },
+    {
+      "case_id": "FAM2-TRI-SAS-120",
+      "case_sha256": "f985565f8e91124a3da409bd8e615825522fdc48d4d47c06deeddb8070325cda",
+      "expected_answers": [
+        "a³/2"
+      ],
+      "actual_answers": [
+        "a³/2"
+      ],
+      "point_count": 8,
+      "step_count": 5,
+      "continuity_issues": [],
+      "twelve_checks": {
+        "1_answer_exact": true,
+        "2_object_and_solid_type": true,
+        "3_points_lines_planes_present": true,
+        "4_perpendicular_and_parallel_relations": true,
+        "5_altitude_foot_position": true,
+        "6_angle_and_measuring_plane": true,
+        "7_construction_steps_present": true,
+        "8_topological_construction_order": true,
+        "9_no_future_step_point_leakage": true,
+        "10_orbit_zoom_camera_contract": true,
+        "11_step_to_step_continuity": true,
+        "12_final_frame_matches_proved_configuration": true
+      },
+      "all_12_passed": true
+    },
+    {
+      "case_id": "DIH-ACUTE-60",
+      "case_sha256": "ab0fd970f003788a4c4a68b511411fe9e615b7af8476a88c4dc0b8c42101ac82",
+      "expected_answers": [
+        "4a³√6/3"
+      ],
+      "actual_answers": [
+        "4a³√6/3"
+      ],
+      "point_count": 10,
+      "step_count": 5,
+      "continuity_issues": [],
+      "twelve_checks": {
+        "1_answer_exact": true,
+        "2_object_and_solid_type": true,
+        "3_points_lines_planes_present": true,
+        "4_perpendicular_and_parallel_relations": true,
+        "5_altitude_foot_position": true,
+        "6_angle_and_measuring_plane": true,
+        "7_construction_steps_present": true,
+        "8_topological_construction_order": true,
+        "9_no_future_step_point_leakage": true,
+        "10_orbit_zoom_camera_contract": true,
+        "11_step_to_step_continuity": true,
+        "12_final_frame_matches_proved_configuration": true
+      },
+      "all_12_passed": true
+    },
+    {
+      "case_id": "DIH-OBTUSE-120-SUPPLEMENTARY",
+      "case_sha256": "a37413a155ecb194a0401983e0c7fb5212e77bd5d05be50a98f87a9c66aa8eff",
+      "expected_answers": [
+        "4a³√6/3"
+      ],
+      "actual_answers": [
+        "4a³√6/3"
+      ],
+      "point_count": 10,
+      "step_count": 5,
+      "continuity_issues": [],
+      "twelve_checks": {
+        "1_answer_exact": true,
+        "2_object_and_solid_type": true,
+        "3_points_lines_planes_present": true,
+        "4_perpendicular_and_parallel_relations": true,
+        "5_altitude_foot_position": true,
+        "6_angle_and_measuring_plane": true,
+        "7_construction_steps_present": true,
+        "8_topological_construction_order": true,
+        "9_no_future_step_point_leakage": true,
+        "10_orbit_zoom_camera_contract": true,
+        "11_step_to_step_continuity": true,
+        "12_final_frame_matches_proved_configuration": true
+      },
+      "all_12_passed": true
+    }
+  ]
+}

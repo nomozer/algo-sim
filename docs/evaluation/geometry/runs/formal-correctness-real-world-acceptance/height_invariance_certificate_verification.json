@@ -1,0 +1,561 @@
+{
+  "schema": "algosim-height-invariance-certificate-verification/1",
+  "generated_at_utc": "2026-11-10T10:07:03.110872+00:00",
+  "product_commit": "d20d7fdcdd6c5759f74ff737f331c2e548923eba",
+  "head_commit": "d20d7fdcdd6c5759f74ff737f331c2e548923eba",
+  "measured_system_tree_hash": "fb4f4992da8764930954a44f24e121ddca6cf1f3a270039773f6dbbf8b1b5c05",
+  "measured_system_file_count": 110,
+  "code_version": {
+    "typed_fact_next": "typed-fact-next/2",
+    "bridge": "typed-fact-next-bridge/2",
+    "planner": "geometry-fact-planner/26",
+    "registry": "geometry-functions/33",
+    "engine": "geometry-function-engine/24",
+    "adapter": "hybrid-simulation-adapter/4",
+    "envelope": "hybrid-route-d-simulation/4",
+    "local_parser": "local-geometry-parser/1",
+    "adaptive_router": "adaptive-input-router/1",
+    "cache_version": "132"
+  },
+  "input_or_case_hash": "e13a4c73c2ea841bdf558aae47fdc2a2ad27f4171eef7a7e6a15927854ad713e",
+  "oracle": "8-obligation certificate verifier + closed-form hand derivations",
+  "test_command": "pytest backend/tests/geometry/test_height_invariance_formal_certification.py -q",
+  "test_environment": {
+    "os": "Windows-11-10.0.26100-SP0",
+    "python": "3.12.10",
+    "cpu_logical_cores": 12,
+    "allow_live_ai": 0,
+    "live_gemini_calls": 0,
+    "benchmark_tier": "HOST_BENCHMARK_OFFLINE"
+  },
+  "expected_behavior": "All 8 positive height-invariant cases emit a valid height-invariance-certificate/2 with PO-1..PO-8 verified=True and exact answer matching the oracle.",
+  "actual_behavior": "passed 9/9",
+  "verdict": "PASS",
+  "run_id": "formal-correctness-real-world-acceptance",
+  "wave_id": "FORMAL_CORRECTNESS_REAL_WORLD_ACCEPTANCE",
+  "baseline_head_commit": "cc166865e4d4f1116014d9f1a68d9d050bf0dc9a",
+  "baseline_product_commit": "7994da7a64c8dc288c4de972df2d8d1db65e0c20",
+  "case_ids": [
+    "pos_ext02_right_prism_point_plane",
+    "pos_ext03_pyramid_point_plane",
+    "pos_prism_line_line",
+    "pos_midpoint_base_edge_to_vertical_plane",
+    "pos_vertical_planes_angle",
+    "pos_point_to_vertical_line",
+    "pos_ext04_affine_length_ratio",
+    "pos_ext05_section_area_ratio",
+    "pos_ext07_height_invariant_rounded"
+  ],
+  "measurement_status": "MEASURED_OFFLINE",
+  "oracle_provenance": "verify_height_invariance_certificate() + independent hand oracle derivations",
+  "evidence_classification": "VERIFIED FACT",
+  "certificate_schema": "height-invariance-certificate/2",
+  "positive_cases": {
+    "pos_ext02_right_prism_point_plane": {
+      "expected_answer": "6",
+      "status": "SERVED",
+      "answer": "6",
+      "certificate_schema": "height-invariance-certificate/2",
+      "obligations_verified": true,
+      "independent_verifier": {
+        "verified": true,
+        "schema_version": "height-invariance-certificate/2",
+        "checked_goals": [
+          "q1"
+        ],
+        "checked_obligations": [
+          "PO_SINGLE_FREE_HEIGHT_ORTHOGONAL_CHART",
+          "PO_AFFINE_COORDINATES_T_INDEPENDENT",
+          "PO_SECTION_TOPOLOGY_INVARIANT",
+          "PO_VALID_DOMAIN_ALL_POSITIVE_T",
+          "PO_POLYNOMIAL_DEGREE_BOUNDED",
+          "PO_DENOMINATOR_POSITIVE_ON_DOMAIN",
+          "PO_EXACT_POLYNOMIAL_IDENTITY",
+          "PO_INTERPRETER_CROSS_CHECK"
+        ]
+      },
+      "goal_rational_forms": {
+        "q1": {
+          "fn": "ask_distance_point_plane",
+          "value_kind": "squared_quantity",
+          "numerator_coeffs": [
+            "0",
+            "1296"
+          ],
+          "denominator_coeffs": [
+            "0",
+            "36"
+          ],
+          "denominator_linear_factors": [
+            [
+              "0",
+              "36"
+            ]
+          ],
+          "degree_numerator": 1,
+          "degree_denominator": 1,
+          "constant_value": "36",
+          "identity_residual_coeffs": [],
+          "certified_coef": "6"
+        }
+      },
+      "samples_h2": [
+        "1",
+        "2",
+        "3",
+        "5",
+        "7"
+      ],
+      "pass": true
+    },
+    "pos_ext03_pyramid_point_plane": {
+      "expected_answer": "a√2/2",
+      "status": "SERVED",
+      "answer": "a√2/2",
+      "certificate_schema": "height-invariance-certificate/2",
+      "obligations_verified": true,
+      "independent_verifier": {
+        "verified": true,
+        "schema_version": "height-invariance-certificate/2",
+        "checked_goals": [
+          "q1"
+        ],
+        "checked_obligations": [
+          "PO_SINGLE_FREE_HEIGHT_ORTHOGONAL_CHART",
+          "PO_AFFINE_COORDINATES_T_INDEPENDENT",
+          "PO_SECTION_TOPOLOGY_INVARIANT",
+          "PO_VALID_DOMAIN_ALL_POSITIVE_T",
+          "PO_POLYNOMIAL_DEGREE_BOUNDED",
+          "PO_DENOMINATOR_POSITIVE_ON_DOMAIN",
+          "PO_EXACT_POLYNOMIAL_IDENTITY",
+          "PO_INTERPRETER_CROSS_CHECK"
+        ]
+      },
+      "goal_rational_forms": {
+        "q1": {
+          "fn": "ask_distance_point_plane",
+          "value_kind": "squared_quantity",
+          "numerator_coeffs": [
+            "0",
+            "1"
+          ],
+          "denominator_coeffs": [
+            "0",
+            "2"
+          ],
+          "denominator_linear_factors": [
+            [
+              "0",
+              "2"
+            ]
+          ],
+          "degree_numerator": 1,
+          "degree_denominator": 1,
+          "constant_value": "1/2",
+          "identity_residual_coeffs": [],
+          "certified_coef": "√2/2"
+        }
+      },
+      "samples_h2": [
+        "1",
+        "2",
+        "3",
+        "5",
+        "7"
+      ],
+      "pass": true
+    },
+    "pos_prism_line_line": {
+      "expected_answer": "a√3",
+      "status": "SERVED",
+      "answer": "a√3",
+      "certificate_schema": "height-invariance-certificate/2",
+      "obligations_verified": true,
+      "independent_verifier": {
+        "verified": true,
+        "schema_version": "height-invariance-certificate/2",
+        "checked_goals": [
+          "q1"
+        ],
+        "checked_obligations": [
+          "PO_SINGLE_FREE_HEIGHT_ORTHOGONAL_CHART",
+          "PO_AFFINE_COORDINATES_T_INDEPENDENT",
+          "PO_SECTION_TOPOLOGY_INVARIANT",
+          "PO_VALID_DOMAIN_ALL_POSITIVE_T",
+          "PO_POLYNOMIAL_DEGREE_BOUNDED",
+          "PO_DENOMINATOR_POSITIVE_ON_DOMAIN",
+          "PO_EXACT_POLYNOMIAL_IDENTITY",
+          "PO_INTERPRETER_CROSS_CHECK"
+        ]
+      },
+      "goal_rational_forms": {
+        "q1": {
+          "fn": "ask_distance_lines",
+          "value_kind": "squared_quantity",
+          "numerator_coeffs": [
+            "0",
+            "12"
+          ],
+          "denominator_coeffs": [
+            "0",
+            "4"
+          ],
+          "denominator_linear_factors": [
+            [
+              "0",
+              "4"
+            ]
+          ],
+          "degree_numerator": 1,
+          "degree_denominator": 1,
+          "constant_value": "3",
+          "identity_residual_coeffs": [],
+          "certified_coef": "√3"
+        }
+      },
+      "samples_h2": [
+        "1",
+        "2",
+        "3",
+        "5",
+        "7"
+      ],
+      "pass": true
+    },
+    "pos_midpoint_base_edge_to_vertical_plane": {
+      "expected_answer": "a√2/2",
+      "status": "SERVED",
+      "answer": "a√2/2",
+      "certificate_schema": "height-invariance-certificate/2",
+      "obligations_verified": true,
+      "independent_verifier": {
+        "verified": true,
+        "schema_version": "height-invariance-certificate/2",
+        "checked_goals": [
+          "q1"
+        ],
+        "checked_obligations": [
+          "PO_SINGLE_FREE_HEIGHT_ORTHOGONAL_CHART",
+          "PO_AFFINE_COORDINATES_T_INDEPENDENT",
+          "PO_SECTION_TOPOLOGY_INVARIANT",
+          "PO_VALID_DOMAIN_ALL_POSITIVE_T",
+          "PO_POLYNOMIAL_DEGREE_BOUNDED",
+          "PO_DENOMINATOR_POSITIVE_ON_DOMAIN",
+          "PO_EXACT_POLYNOMIAL_IDENTITY",
+          "PO_INTERPRETER_CROSS_CHECK"
+        ]
+      },
+      "goal_rational_forms": {
+        "q1": {
+          "fn": "ask_distance_point_plane",
+          "value_kind": "squared_quantity",
+          "numerator_coeffs": [
+            "0",
+            "4"
+          ],
+          "denominator_coeffs": [
+            "0",
+            "8"
+          ],
+          "denominator_linear_factors": [
+            [
+              "0",
+              "8"
+            ]
+          ],
+          "degree_numerator": 1,
+          "degree_denominator": 1,
+          "constant_value": "1/2",
+          "identity_residual_coeffs": [],
+          "certified_coef": "√2/2"
+        }
+      },
+      "samples_h2": [
+        "1",
+        "2",
+        "3",
+        "5",
+        "7"
+      ],
+      "pass": true
+    },
+    "pos_vertical_planes_angle": {
+      "expected_answer": "cos²=0",
+      "status": "SERVED",
+      "answer": "cos²=0",
+      "certificate_schema": "height-invariance-certificate/2",
+      "obligations_verified": true,
+      "independent_verifier": {
+        "verified": true,
+        "schema_version": "height-invariance-certificate/2",
+        "checked_goals": [
+          "q1"
+        ],
+        "checked_obligations": [
+          "PO_SINGLE_FREE_HEIGHT_ORTHOGONAL_CHART",
+          "PO_AFFINE_COORDINATES_T_INDEPENDENT",
+          "PO_SECTION_TOPOLOGY_INVARIANT",
+          "PO_VALID_DOMAIN_ALL_POSITIVE_T",
+          "PO_POLYNOMIAL_DEGREE_BOUNDED",
+          "PO_DENOMINATOR_POSITIVE_ON_DOMAIN",
+          "PO_EXACT_POLYNOMIAL_IDENTITY",
+          "PO_INTERPRETER_CROSS_CHECK"
+        ]
+      },
+      "goal_rational_forms": {
+        "q1": {
+          "fn": "ask_angle_plane_plane",
+          "value_kind": "cos_squared",
+          "numerator_coeffs": [],
+          "denominator_coeffs": [
+            "0",
+            "2",
+            "4"
+          ],
+          "denominator_linear_factors": [
+            [
+              "0",
+              "2"
+            ],
+            [
+              "1",
+              "2"
+            ]
+          ],
+          "degree_numerator": 0,
+          "degree_denominator": 2,
+          "constant_value": "0",
+          "identity_residual_coeffs": [],
+          "certified_coef": "0"
+        }
+      },
+      "samples_h2": [
+        "1",
+        "2",
+        "3",
+        "5",
+        "7"
+      ],
+      "pass": true
+    },
+    "pos_point_to_vertical_line": {
+      "expected_answer": "4",
+      "status": "SERVED",
+      "answer": "4",
+      "certificate_schema": "height-invariance-certificate/2",
+      "obligations_verified": true,
+      "independent_verifier": {
+        "verified": true,
+        "schema_version": "height-invariance-certificate/2",
+        "checked_goals": [
+          "q1"
+        ],
+        "checked_obligations": [
+          "PO_SINGLE_FREE_HEIGHT_ORTHOGONAL_CHART",
+          "PO_AFFINE_COORDINATES_T_INDEPENDENT",
+          "PO_SECTION_TOPOLOGY_INVARIANT",
+          "PO_VALID_DOMAIN_ALL_POSITIVE_T",
+          "PO_POLYNOMIAL_DEGREE_BOUNDED",
+          "PO_DENOMINATOR_POSITIVE_ON_DOMAIN",
+          "PO_EXACT_POLYNOMIAL_IDENTITY",
+          "PO_INTERPRETER_CROSS_CHECK"
+        ]
+      },
+      "goal_rational_forms": {
+        "q1": {
+          "fn": "ask_length",
+          "value_kind": "squared_quantity",
+          "numerator_coeffs": [
+            "16"
+          ],
+          "denominator_coeffs": [
+            "1"
+          ],
+          "denominator_linear_factors": [],
+          "degree_numerator": 0,
+          "degree_denominator": 0,
+          "constant_value": "16",
+          "identity_residual_coeffs": [],
+          "certified_coef": "4"
+        }
+      },
+      "samples_h2": [
+        "1",
+        "2",
+        "3",
+        "5",
+        "7"
+      ],
+      "pass": true
+    },
+    "pos_ext04_affine_length_ratio": {
+      "expected_answer": "1/2",
+      "status": "SERVED",
+      "answer": "1/2",
+      "certificate_schema": "height-invariance-certificate/2",
+      "obligations_verified": true,
+      "independent_verifier": {
+        "verified": true,
+        "schema_version": "height-invariance-certificate/2",
+        "checked_goals": [
+          "q1"
+        ],
+        "checked_obligations": [
+          "PO_SINGLE_FREE_HEIGHT_ORTHOGONAL_CHART",
+          "PO_AFFINE_COORDINATES_T_INDEPENDENT",
+          "PO_SECTION_TOPOLOGY_INVARIANT",
+          "PO_VALID_DOMAIN_ALL_POSITIVE_T",
+          "PO_POLYNOMIAL_DEGREE_BOUNDED",
+          "PO_DENOMINATOR_POSITIVE_ON_DOMAIN",
+          "PO_EXACT_POLYNOMIAL_IDENTITY",
+          "PO_INTERPRETER_CROSS_CHECK"
+        ]
+      },
+      "goal_rational_forms": {
+        "q1": {
+          "fn": "ask_length_ratio",
+          "value_kind": "squared_quantity",
+          "numerator_coeffs": [
+            "1/4"
+          ],
+          "denominator_coeffs": [
+            "1"
+          ],
+          "denominator_linear_factors": [
+            [
+              "1",
+              "0"
+            ]
+          ],
+          "degree_numerator": 0,
+          "degree_denominator": 0,
+          "constant_value": "1/4",
+          "identity_residual_coeffs": [],
+          "certified_coef": "1/2"
+        }
+      },
+      "samples_h2": [
+        "1",
+        "2",
+        "3",
+        "5",
+        "7"
+      ],
+      "pass": true
+    },
+    "pos_ext05_section_area_ratio": {
+      "expected_answer": "6/5",
+      "status": "SERVED",
+      "answer": "6/5",
+      "certificate_schema": "height-invariance-certificate/2",
+      "obligations_verified": true,
+      "independent_verifier": {
+        "verified": true,
+        "schema_version": "height-invariance-certificate/2",
+        "checked_goals": [
+          "q1"
+        ],
+        "checked_obligations": [
+          "PO_SINGLE_FREE_HEIGHT_ORTHOGONAL_CHART",
+          "PO_AFFINE_COORDINATES_T_INDEPENDENT",
+          "PO_SECTION_TOPOLOGY_INVARIANT",
+          "PO_VALID_DOMAIN_ALL_POSITIVE_T",
+          "PO_POLYNOMIAL_DEGREE_BOUNDED",
+          "PO_DENOMINATOR_POSITIVE_ON_DOMAIN",
+          "PO_EXACT_POLYNOMIAL_IDENTITY",
+          "PO_INTERPRETER_CROSS_CHECK"
+        ]
+      },
+      "goal_rational_forms": {
+        "q1": {
+          "fn": "ask_area_ratio",
+          "value_kind": "squared_quantity",
+          "numerator_coeffs": [
+            "9/64",
+            "9/64"
+          ],
+          "denominator_coeffs": [
+            "25/256",
+            "25/256"
+          ],
+          "denominator_linear_factors": [
+            [
+              "25/256",
+              "25/256"
+            ]
+          ],
+          "degree_numerator": 1,
+          "degree_denominator": 1,
+          "constant_value": "36/25",
+          "identity_residual_coeffs": [],
+          "certified_coef": "6/5"
+        }
+      },
+      "samples_h2": [
+        "1",
+        "2",
+        "3",
+        "5",
+        "7"
+      ],
+      "pass": true
+    },
+    "pos_ext07_height_invariant_rounded": {
+      "expected_answer": "4,7",
+      "status": "SERVED",
+      "answer": "4,7",
+      "certificate_schema": "height-invariance-certificate/2",
+      "obligations_verified": true,
+      "independent_verifier": {
+        "verified": true,
+        "schema_version": "height-invariance-certificate/2",
+        "checked_goals": [
+          "q1"
+        ],
+        "checked_obligations": [
+          "PO_SINGLE_FREE_HEIGHT_ORTHOGONAL_CHART",
+          "PO_AFFINE_COORDINATES_T_INDEPENDENT",
+          "PO_SECTION_TOPOLOGY_INVARIANT",
+          "PO_VALID_DOMAIN_ALL_POSITIVE_T",
+          "PO_POLYNOMIAL_DEGREE_BOUNDED",
+          "PO_DENOMINATOR_POSITIVE_ON_DOMAIN",
+          "PO_EXACT_POLYNOMIAL_IDENTITY",
+          "PO_INTERPRETER_CROSS_CHECK"
+        ]
+      },
+      "goal_rational_forms": {
+        "q1": {
+          "fn": "ask_distance_lines",
+          "value_kind": "squared_quantity",
+          "numerator_coeffs": [
+            "0",
+            "675"
+          ],
+          "denominator_coeffs": [
+            "0",
+            "31"
+          ],
+          "denominator_linear_factors": [
+            [
+              "0",
+              "31"
+            ]
+          ],
+          "degree_numerator": 1,
+          "degree_denominator": 1,
+          "constant_value": "675/31",
+          "identity_residual_coeffs": [],
+          "certified_coef": "15√93/31"
+        }
+      },
+      "samples_h2": [
+        "1",
+        "2",
+        "3",
+        "5",
+        "7"
+      ],
+      "pass": true
+    }
+  }
+}

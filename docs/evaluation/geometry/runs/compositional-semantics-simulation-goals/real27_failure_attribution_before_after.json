@@ -1,0 +1,568 @@
+{
+  "run_id": "compositional-semantics-simulation-goals",
+  "generated_at_utc": "2026-11-14T03:09:44.904460+00:00",
+  "product_commit": "379d33969ef0cb0e418d979ab211a00799f44834",
+  "measured_system": "b652e635d5497dc36bf6d55ff4a34c20a16302d01c154b59b039efd65170921e",
+  "environment": {
+    "ALLOW_LIVE_AI": "0",
+    "HYBRID_ROUTE_MODE": "local-first",
+    "live_ai_calls": 0
+  },
+  "head": "54268761eacadaca07d0d8cd2dea0d07c39a5d62",
+  "command": "python docs/evaluation/geometry/runs/compositional-semantics-simulation-goals/tools/semantic_compare.py <archive of 1a9ee8b0c>/backend <out>",
+  "dataset_partition": "DEVELOPMENT_EXPOSED (25 controlled-vision transcriptions + 2 earlier fresh items)",
+  "oracle_status": "AGENT_TRANSCRIBED_UNVERIFIED texts; AGENT_DIAGNOSTIC attribution",
+  "served": {
+    "before": 8,
+    "after": 9
+  },
+  "newly_served": [
+    "vmmu_r498"
+  ],
+  "root_causes_before": {
+    "UNRECOGNIZED_RELATION": 2,
+    "UNRECOGNIZED_GOAL": 3,
+    "UNSUPPORTED_GOAL_FUNCTION": 3,
+    "PLANNER_COMPOSITION_UNSUPPORTED": 1,
+    "UNRECOGNIZED_GEOMETRIC_ENTITY": 4,
+    "SOURCE_PROVENANCE_MISSING": 3,
+    "INCOMPLETE_FACT_EXTRACTION": 2,
+    "INSUFFICIENT_CONSTRAINTS": 1
+  },
+  "root_causes_after": {
+    "DESCRIBED_POINT_IN_PREMISE_UNSUPPORTED": 1,
+    "UNRECOGNIZED_GOAL": 3,
+    "SCALE_NORMALIZATION_UNSUPPORTED": 3,
+    "PLANNER_COMPOSITION_UNSUPPORTED": 1,
+    "UNSUPPORTED_POINT_CONSTRUCTION": 1,
+    "SOURCE_PROVENANCE_MISSING": 3,
+    "INCOMPLETE_FACT_EXTRACTION": 2,
+    "UNRECOGNIZED_GEOMETRIC_ENTITY": 3,
+    "FREE_POINT_UNDERDETERMINED": 1
+  },
+  "rows": [
+    {
+      "case_id": "REAL27:vmmu_r247",
+      "group": "real_exposed",
+      "text_sha256": "5f3e8da93e0ce388243259a966f6e1c30efeb8ee798d27c4af33c20f5398ecfe",
+      "expected": null,
+      "goal": null,
+      "numeric": null,
+      "before": {
+        "status": "SERVED",
+        "code": null,
+        "root_cause": null
+      },
+      "after": {
+        "status": "SERVED",
+        "code": null,
+        "root_cause": null,
+        "source_goal_completion": null
+      }
+    },
+    {
+      "case_id": "REAL27:vmmu_r254",
+      "group": "real_exposed",
+      "text_sha256": "1b71b6ac60aedac7043c9a7c928ed4fa2b3d7229c6bef98432bea0446d00105d",
+      "expected": null,
+      "goal": null,
+      "numeric": null,
+      "before": {
+        "status": "REFUSED",
+        "code": "LIVE_AI_DISABLED",
+        "root_cause": "UNRECOGNIZED_RELATION"
+      },
+      "after": {
+        "status": "REFUSED",
+        "code": "LIVE_AI_DISABLED",
+        "root_cause": "DESCRIBED_POINT_IN_PREMISE_UNSUPPORTED",
+        "source_goal_completion": null
+      }
+    },
+    {
+      "case_id": "REAL27:vmmu_r256",
+      "group": "real_exposed",
+      "text_sha256": "b3c99ebccab872eab209179785d9c8940a1c36ce6c58a6ac2b94262810394950",
+      "expected": null,
+      "goal": null,
+      "numeric": null,
+      "before": {
+        "status": "REFUSED",
+        "code": "LIVE_AI_DISABLED",
+        "root_cause": "UNRECOGNIZED_GOAL"
+      },
+      "after": {
+        "status": "REFUSED",
+        "code": "LIVE_AI_DISABLED",
+        "root_cause": "UNRECOGNIZED_GOAL",
+        "source_goal_completion": null
+      }
+    },
+    {
+      "case_id": "REAL27:vmmu_r258",
+      "group": "real_exposed",
+      "text_sha256": "86a06df87628a29335dec2168da6037cf5396731bd9a29ce24bdc2d5a0b0cd92",
+      "expected": null,
+      "goal": null,
+      "numeric": null,
+      "before": {
+        "status": "REFUSED",
+        "code": "LIVE_AI_DISABLED",
+        "root_cause": "UNSUPPORTED_GOAL_FUNCTION"
+      },
+      "after": {
+        "status": "REFUSED",
+        "code": "MISSING_DIMENSION",
+        "root_cause": "SCALE_NORMALIZATION_UNSUPPORTED",
+        "source_goal_completion": null
+      }
+    },
+    {
+      "case_id": "REAL27:vmmu_r266",
+      "group": "real_exposed",
+      "text_sha256": "1e83a2eec97786ccdd033a1d744cdbb083f690e7bfd096b5a5cbbc2615879dc2",
+      "expected": null,
+      "goal": null,
+      "numeric": null,
+      "before": {
+        "status": "REFUSED",
+        "code": "EXACT_DOMAIN_EXCEEDED",
+        "root_cause": "PLANNER_COMPOSITION_UNSUPPORTED"
+      },
+      "after": {
+        "status": "REFUSED",
+        "code": "EXACT_DOMAIN_EXCEEDED",
+        "root_cause": "PLANNER_COMPOSITION_UNSUPPORTED",
+        "source_goal_completion": null
+      }
+    },
+    {
+      "case_id": "REAL27:vmmu_r270",
+      "group": "real_exposed",
+      "text_sha256": "dada34f102c96ca7b1cf61c7fb1ef7bc66330e41ede6bbfd030952f3d0c7828e",
+      "expected": null,
+      "goal": null,
+      "numeric": null,
+      "before": {
+        "status": "SERVED",
+        "code": null,
+        "root_cause": null
+      },
+      "after": {
+        "status": "SERVED",
+        "code": null,
+        "root_cause": null,
+        "source_goal_completion": null
+      }
+    },
+    {
+      "case_id": "REAL27:vmmu_r273",
+      "group": "real_exposed",
+      "text_sha256": "2c2c430855ded12bafe9c96def610b16b3e84da540b0aed451632080ec19c990",
+      "expected": null,
+      "goal": null,
+      "numeric": null,
+      "before": {
+        "status": "SERVED",
+        "code": null,
+        "root_cause": null
+      },
+      "after": {
+        "status": "SERVED",
+        "code": null,
+        "root_cause": null,
+        "source_goal_completion": null
+      }
+    },
+    {
+      "case_id": "REAL27:vmmu_r277",
+      "group": "real_exposed",
+      "text_sha256": "9cc7353c9dd163e7190cb38347dd7a1aca2dabad29d3eb7c7cdba4ba8d81888e",
+      "expected": null,
+      "goal": null,
+      "numeric": null,
+      "before": {
+        "status": "REFUSED",
+        "code": "LIVE_AI_DISABLED",
+        "root_cause": "UNRECOGNIZED_GEOMETRIC_ENTITY"
+      },
+      "after": {
+        "status": "REFUSED",
+        "code": "LIVE_AI_DISABLED",
+        "root_cause": "UNSUPPORTED_POINT_CONSTRUCTION",
+        "source_goal_completion": null
+      }
+    },
+    {
+      "case_id": "REAL27:vmmu_r284",
+      "group": "real_exposed",
+      "text_sha256": "e3ab9e610dfc7fed5669a20c237bcc178b04a2f15702c1fa19af6778b5c91d51",
+      "expected": null,
+      "goal": null,
+      "numeric": null,
+      "before": {
+        "status": "REFUSED",
+        "code": "LIVE_AI_DISABLED",
+        "root_cause": "SOURCE_PROVENANCE_MISSING"
+      },
+      "after": {
+        "status": "REFUSED",
+        "code": "LIVE_AI_DISABLED",
+        "root_cause": "SOURCE_PROVENANCE_MISSING",
+        "source_goal_completion": null
+      }
+    },
+    {
+      "case_id": "REAL27:vmmu_r295",
+      "group": "real_exposed",
+      "text_sha256": "294378d7c5c5f73cbbd137b3da1bba388cf9ab5acedd68d1d666bb8debf98be0",
+      "expected": null,
+      "goal": null,
+      "numeric": null,
+      "before": {
+        "status": "REFUSED",
+        "code": "LIVE_AI_DISABLED",
+        "root_cause": "SOURCE_PROVENANCE_MISSING"
+      },
+      "after": {
+        "status": "REFUSED",
+        "code": "LIVE_AI_DISABLED",
+        "root_cause": "SOURCE_PROVENANCE_MISSING",
+        "source_goal_completion": null
+      }
+    },
+    {
+      "case_id": "REAL27:vmmu_r298",
+      "group": "real_exposed",
+      "text_sha256": "a6e9d6b90f89854a2012a5a6d9631fa517fbbc6b2353940b998533c5d6e26895",
+      "expected": null,
+      "goal": null,
+      "numeric": null,
+      "before": {
+        "status": "SERVED",
+        "code": null,
+        "root_cause": null
+      },
+      "after": {
+        "status": "SERVED",
+        "code": null,
+        "root_cause": null,
+        "source_goal_completion": null
+      }
+    },
+    {
+      "case_id": "REAL27:vmmu_r375",
+      "group": "real_exposed",
+      "text_sha256": "43d3e7b4b26df10058e24fac2b230b42fcaf99d7a48c227b587b751280e8ac22",
+      "expected": null,
+      "goal": null,
+      "numeric": null,
+      "before": {
+        "status": "SERVED",
+        "code": null,
+        "root_cause": null
+      },
+      "after": {
+        "status": "SERVED",
+        "code": null,
+        "root_cause": null,
+        "source_goal_completion": null
+      }
+    },
+    {
+      "case_id": "REAL27:vmmu_r460",
+      "group": "real_exposed",
+      "text_sha256": "eeef7ddcad1956475fdfdf31fc2078ac40c7aeb676dcfae948e95dc2000cd85a",
+      "expected": null,
+      "goal": null,
+      "numeric": null,
+      "before": {
+        "status": "REFUSED",
+        "code": "LIVE_AI_DISABLED",
+        "root_cause": "INCOMPLETE_FACT_EXTRACTION"
+      },
+      "after": {
+        "status": "REFUSED",
+        "code": "LIVE_AI_DISABLED",
+        "root_cause": "INCOMPLETE_FACT_EXTRACTION",
+        "source_goal_completion": null
+      }
+    },
+    {
+      "case_id": "REAL27:vmmu_r461",
+      "group": "real_exposed",
+      "text_sha256": "809ff614e1cd0c7592adc9eea4ba87dab2a4947566019da16a6d8ec9cc1fde74",
+      "expected": null,
+      "goal": null,
+      "numeric": null,
+      "before": {
+        "status": "REFUSED",
+        "code": "LIVE_AI_DISABLED",
+        "root_cause": "UNRECOGNIZED_GEOMETRIC_ENTITY"
+      },
+      "after": {
+        "status": "REFUSED",
+        "code": "LIVE_AI_DISABLED",
+        "root_cause": "UNRECOGNIZED_GEOMETRIC_ENTITY",
+        "source_goal_completion": null
+      }
+    },
+    {
+      "case_id": "REAL27:vmmu_r463",
+      "group": "real_exposed",
+      "text_sha256": "d5b7213d8d1ec5e8e2a775f79368034cb363cc61ccc0bd25383a68cc276b8bd3",
+      "expected": null,
+      "goal": null,
+      "numeric": null,
+      "before": {
+        "status": "REFUSED",
+        "code": "LIVE_AI_DISABLED",
+        "root_cause": "UNRECOGNIZED_GEOMETRIC_ENTITY"
+      },
+      "after": {
+        "status": "REFUSED",
+        "code": "LIVE_AI_DISABLED",
+        "root_cause": "UNRECOGNIZED_GEOMETRIC_ENTITY",
+        "source_goal_completion": null
+      }
+    },
+    {
+      "case_id": "REAL27:vmmu_r475",
+      "group": "real_exposed",
+      "text_sha256": "33abd4b25c729c465d2ee1740f6f063514d834d02e35c6d1323a875b9f69b601",
+      "expected": null,
+      "goal": null,
+      "numeric": null,
+      "before": {
+        "status": "REFUSED",
+        "code": "LIVE_AI_DISABLED",
+        "root_cause": "UNRECOGNIZED_GEOMETRIC_ENTITY"
+      },
+      "after": {
+        "status": "REFUSED",
+        "code": "LIVE_AI_DISABLED",
+        "root_cause": "UNRECOGNIZED_GEOMETRIC_ENTITY",
+        "source_goal_completion": null
+      }
+    },
+    {
+      "case_id": "REAL27:vmmu_r476",
+      "group": "real_exposed",
+      "text_sha256": "ce8609f40262757ab9cde8c4aa6069672d9efbf45c2a55c5880f283fe0b8b1f3",
+      "expected": null,
+      "goal": null,
+      "numeric": null,
+      "before": {
+        "status": "SERVED",
+        "code": null,
+        "root_cause": null
+      },
+      "after": {
+        "status": "SERVED",
+        "code": null,
+        "root_cause": null,
+        "source_goal_completion": null
+      }
+    },
+    {
+      "case_id": "REAL27:vmmu_r488",
+      "group": "real_exposed",
+      "text_sha256": "7a9d2a6349ee313907d1dfa7bf3b2c9b8822c4543212968a5400e9e44cb35d66",
+      "expected": null,
+      "goal": null,
+      "numeric": null,
+      "before": {
+        "status": "REFUSED",
+        "code": "LIVE_AI_DISABLED",
+        "root_cause": "UNRECOGNIZED_GOAL"
+      },
+      "after": {
+        "status": "REFUSED",
+        "code": "LIVE_AI_DISABLED",
+        "root_cause": "UNRECOGNIZED_GOAL",
+        "source_goal_completion": null
+      }
+    },
+    {
+      "case_id": "REAL27:vmmu_r491",
+      "group": "real_exposed",
+      "text_sha256": "ccf866f6e06a328aa73adaca5eb5c95cbd247aca3f2c821dc11d3e84cab8ac3d",
+      "expected": null,
+      "goal": null,
+      "numeric": null,
+      "before": {
+        "status": "REFUSED",
+        "code": "LIVE_AI_DISABLED",
+        "root_cause": "UNRECOGNIZED_RELATION"
+      },
+      "after": {
+        "status": "REFUSED",
+        "code": "LIVE_AI_DISABLED",
+        "root_cause": "FREE_POINT_UNDERDETERMINED",
+        "source_goal_completion": null
+      }
+    },
+    {
+      "case_id": "REAL27:vmmu_r492",
+      "group": "real_exposed",
+      "text_sha256": "0f07c493cb02fd120d04df23beaea5488e7ecfc91b6e24d567aea0655d0460ec",
+      "expected": null,
+      "goal": null,
+      "numeric": null,
+      "before": {
+        "status": "SERVED",
+        "code": null,
+        "root_cause": null
+      },
+      "after": {
+        "status": "SERVED",
+        "code": null,
+        "root_cause": null,
+        "source_goal_completion": null
+      }
+    },
+    {
+      "case_id": "REAL27:vmmu_r498",
+      "group": "real_exposed",
+      "text_sha256": "c437503de7d0db0da8be5b1f9412fe7d6db4397ea1ac53b650c859b2fe81ab52",
+      "expected": null,
+      "goal": null,
+      "numeric": null,
+      "before": {
+        "status": "REFUSED",
+        "code": "LIVE_AI_DISABLED",
+        "root_cause": "UNSUPPORTED_GOAL_FUNCTION"
+      },
+      "after": {
+        "status": "SERVED",
+        "code": null,
+        "root_cause": null,
+        "source_goal_completion": [
+          {
+            "goal_id": "q1",
+            "source_request": "TRIGONOMETRIC_VALUE_OF_ANGLE",
+            "function": "cos",
+            "simulation_objective": "ANGLE_CONSTRUCTED_AND_VERIFIED",
+            "state": "GOAL_VISUALIZATION_READY",
+            "numeric_source_goal": "NOT_ANSWERED",
+            "value_defined": true
+          }
+        ]
+      }
+    },
+    {
+      "case_id": "REAL27:vmmu_r513",
+      "group": "real_exposed",
+      "text_sha256": "49464028330e78ad4de5b4bffbf81beee0779b43eedb8ff554a50b6713e03685",
+      "expected": null,
+      "goal": null,
+      "numeric": null,
+      "before": {
+        "status": "REFUSED",
+        "code": "LIVE_AI_DISABLED",
+        "root_cause": "INCOMPLETE_FACT_EXTRACTION"
+      },
+      "after": {
+        "status": "REFUSED",
+        "code": "LIVE_AI_DISABLED",
+        "root_cause": "INCOMPLETE_FACT_EXTRACTION",
+        "source_goal_completion": null
+      }
+    },
+    {
+      "case_id": "REAL27:vmmu_r520",
+      "group": "real_exposed",
+      "text_sha256": "5c9054338f29fa3f03ccc522cd5be706b0e0e41a439a19426189c26c132378d2",
+      "expected": null,
+      "goal": null,
+      "numeric": null,
+      "before": {
+        "status": "REFUSED",
+        "code": "MISSING_DIMENSION",
+        "root_cause": "INSUFFICIENT_CONSTRAINTS"
+      },
+      "after": {
+        "status": "REFUSED",
+        "code": "MISSING_DIMENSION",
+        "root_cause": "SCALE_NORMALIZATION_UNSUPPORTED",
+        "source_goal_completion": null
+      }
+    },
+    {
+      "case_id": "REAL27:vmmu_r537",
+      "group": "real_exposed",
+      "text_sha256": "8b6a844c5ab49083138e6faedf8f6792fb0d3cb49a76e110ccde5f2b0ebdc80c",
+      "expected": null,
+      "goal": null,
+      "numeric": null,
+      "before": {
+        "status": "REFUSED",
+        "code": "LIVE_AI_DISABLED",
+        "root_cause": "SOURCE_PROVENANCE_MISSING"
+      },
+      "after": {
+        "status": "REFUSED",
+        "code": "LIVE_AI_DISABLED",
+        "root_cause": "SOURCE_PROVENANCE_MISSING",
+        "source_goal_completion": null
+      }
+    },
+    {
+      "case_id": "REAL27:vmmu_r538",
+      "group": "real_exposed",
+      "text_sha256": "a4a500ab33ac1ab0dba657f00c75066bf0d47f79243d0eb6d553b46fb5940122",
+      "expected": null,
+      "goal": null,
+      "numeric": null,
+      "before": {
+        "status": "REFUSED",
+        "code": "LIVE_AI_DISABLED",
+        "root_cause": "UNRECOGNIZED_GOAL"
+      },
+      "after": {
+        "status": "REFUSED",
+        "code": "LIVE_AI_DISABLED",
+        "root_cause": "UNRECOGNIZED_GOAL",
+        "source_goal_completion": null
+      }
+    },
+    {
+      "case_id": "REAL27:vmmu_r559",
+      "group": "real_exposed",
+      "text_sha256": "37e359e64b1e81fbdb0a0eb7507fccba73e3e3206781923b653b85040a9c160b",
+      "expected": null,
+      "goal": null,
+      "numeric": null,
+      "before": {
+        "status": "REFUSED",
+        "code": "LIVE_AI_DISABLED",
+        "root_cause": "UNSUPPORTED_GOAL_FUNCTION"
+      },
+      "after": {
+        "status": "REFUSED",
+        "code": "MISSING_DIMENSION",
+        "root_cause": "SCALE_NORMALIZATION_UNSUPPORTED",
+        "source_goal_completion": null
+      }
+    },
+    {
+      "case_id": "REAL27:vmmu_r695",
+      "group": "real_exposed",
+      "text_sha256": "be92444253700faa6ccedfb0581868a07e75a3580bb9317db83ded26f4113fa1",
+      "expected": null,
+      "goal": null,
+      "numeric": null,
+      "before": {
+        "status": "SERVED",
+        "code": null,
+        "root_cause": null
+      },
+      "after": {
+        "status": "SERVED",
+        "code": null,
+        "root_cause": null,
+        "source_goal_completion": null
+      }
+    }
+  ]
+}

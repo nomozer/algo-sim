@@ -1,0 +1,77 @@
+{
+  "classification": "CURRENT_PENDING_TEMPLATE_METADATA_REFRESH_NOT_HUMAN_APPROVAL",
+  "tool": "backend/scripts/refresh_pending_templates.py",
+  "reason": "Rebinding pending evaluation inputs to cache 153 and the grounded local Model 1 candidate.",
+  "runtime_identity_measured_system": "994c50a78e22083a1b911fde06c692edd68adf9817e9e174ecdb8d587d6734c5",
+  "rows": [
+    {
+      "study": "K-1",
+      "template": "D:/Documents/projects/algo-sim/.superpowers/worktrees/simulation-intent-slm-recovery/docs/evaluation/geometry/runs/hybrid-master-backend-replacement/k1-owner-approval.template.json",
+      "before": {
+        "measured_system": "bc58949bced0a69c40f94e705a152834acffc64039faef3fdc9044fb31ed3c7a",
+        "runner_sha256": "10bc64bb4b5533c6b1136611e5d55ee3de98260e69057df6ca3641ed1f16645c",
+        "paired_harness_sha256": "73a8270a0556ba09db711b38e8c4bad81f2b95cdbee1bd632f43e0f6153d7df6",
+        "scorer_sha256": "8c330bd493f9d401f579b6383f1a1df2bc9172eee2530cf187be2024801b5a2d",
+        "measured_system_tree_hash": "bc58949bced0a69c40f94e705a152834acffc64039faef3fdc9044fb31ed3c7a"
+      },
+      "after": {
+        "measured_system": "994c50a78e22083a1b911fde06c692edd68adf9817e9e174ecdb8d587d6734c5",
+        "runner_sha256": "10bc64bb4b5533c6b1136611e5d55ee3de98260e69057df6ca3641ed1f16645c",
+        "paired_harness_sha256": "73a8270a0556ba09db711b38e8c4bad81f2b95cdbee1bd632f43e0f6153d7df6",
+        "scorer_sha256": "8c330bd493f9d401f579b6383f1a1df2bc9172eee2530cf187be2024801b5a2d",
+        "measured_system_tree_hash": "994c50a78e22083a1b911fde06c692edd68adf9817e9e174ecdb8d587d6734c5"
+      },
+      "original_saved_as": "logs/prior-k1-owner-approval.template.json",
+      "original_sha256": "51f385b35cb5a97aa63f90145b993a60f23fae2d7ab97b13dbad64d4dc202fbb",
+      "new_sha256": "7b605d9238b2433bfcdd5449edc008b5d301452032e6e0cc316c94d31ec4cda5",
+      "owner_decision": "PENDING_OWNER_DECISION",
+      "paid_project_confirmed": false
+    },
+    {
+      "study": "S-2",
+      "template": "D:/Documents/projects/algo-sim/.superpowers/worktrees/simulation-intent-slm-recovery/docs/evaluation/geometry/runs/hybrid-master-backend-replacement/s2-owner-approval.template.json",
+      "before": {
+        "measured_system": "bc58949bced0a69c40f94e705a152834acffc64039faef3fdc9044fb31ed3c7a",
+        "runner_sha256": "10bc64bb4b5533c6b1136611e5d55ee3de98260e69057df6ca3641ed1f16645c",
+        "paired_harness_sha256": "73a8270a0556ba09db711b38e8c4bad81f2b95cdbee1bd632f43e0f6153d7df6",
+        "scorer_sha256": "8c330bd493f9d401f579b6383f1a1df2bc9172eee2530cf187be2024801b5a2d",
+        "measured_system_tree_hash": "bc58949bced0a69c40f94e705a152834acffc64039faef3fdc9044fb31ed3c7a"
+      },
+      "after": {
+        "measured_system": "994c50a78e22083a1b911fde06c692edd68adf9817e9e174ecdb8d587d6734c5",
+        "runner_sha256": "10bc64bb4b5533c6b1136611e5d55ee3de98260e69057df6ca3641ed1f16645c",
+        "paired_harness_sha256": "73a8270a0556ba09db711b38e8c4bad81f2b95cdbee1bd632f43e0f6153d7df6",
+        "scorer_sha256": "8c330bd493f9d401f579b6383f1a1df2bc9172eee2530cf187be2024801b5a2d",
+        "measured_system_tree_hash": "994c50a78e22083a1b911fde06c692edd68adf9817e9e174ecdb8d587d6734c5"
+      },
+      "original_saved_as": "logs/prior-s2-owner-approval.template.json",
+      "original_sha256": "659417a7b1a87b342c68bcf764e9b4dff0bdda52a25cc7824520be25145f4af3",
+      "new_sha256": "f29b2cb4239d08592c6babca59e74c84888b936ab34900a23a5f41a533c65fcc",
+      "owner_decision": "PENDING_OWNER_DECISION",
+      "paid_project_confirmed": false
+    },
+    {
+      "study": "R-1",
+      "template": "D:/Documents/projects/algo-sim/.superpowers/worktrees/simulation-intent-slm-recovery/docs/evaluation/geometry/runs/hybrid-master-backend-replacement/r1-owner-approval.template.json",
+      "before": {
+        "measured_system": "bc58949bced0a69c40f94e705a152834acffc64039faef3fdc9044fb31ed3c7a",
+        "runner_sha256": "10bc64bb4b5533c6b1136611e5d55ee3de98260e69057df6ca3641ed1f16645c",
+        "paired_harness_sha256": "73a8270a0556ba09db711b38e8c4bad81f2b95cdbee1bd632f43e0f6153d7df6",
+        "scorer_sha256": "8c330bd493f9d401f579b6383f1a1df2bc9172eee2530cf187be2024801b5a2d",
+        "measured_system_tree_hash": "bc58949bced0a69c40f94e705a152834acffc64039faef3fdc9044fb31ed3c7a"
+      },
+      "after": {
+        "measured_system": "994c50a78e22083a1b911fde06c692edd68adf9817e9e174ecdb8d587d6734c5",
+        "runner_sha256": "10bc64bb4b5533c6b1136611e5d55ee3de98260e69057df6ca3641ed1f16645c",
+        "paired_harness_sha256": "73a8270a0556ba09db711b38e8c4bad81f2b95cdbee1bd632f43e0f6153d7df6",
+        "scorer_sha256": "8c330bd493f9d401f579b6383f1a1df2bc9172eee2530cf187be2024801b5a2d",
+        "measured_system_tree_hash": "994c50a78e22083a1b911fde06c692edd68adf9817e9e174ecdb8d587d6734c5"
+      },
+      "original_saved_as": "logs/prior-r1-owner-approval.template.json",
+      "original_sha256": "e9e9270ec9cf10f572bb3f7192bb0bfc844e2241b89ebb247ec6ce3b46b69163",
+      "new_sha256": "5a6f88f923c9765fd0196a615bfe5b832bb7f8576597cfdfd028b2f48c92e485",
+      "owner_decision": "PENDING_OWNER_DECISION",
+      "paid_project_confirmed": false
+    }
+  ]
+}

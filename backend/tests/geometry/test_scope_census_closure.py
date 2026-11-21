@@ -31,6 +31,21 @@ INVENTORY = json.loads((RUN / 'closed-input-contract/schema-census-v3.json').rea
 _EXT = json.loads((RUNS / 'hybrid-master-backend-replacement/schema-census-extension.json').read_text(encoding='utf-8'))['fields']
 assert not set(_EXT) & set(INVENTORY['fields'])
 INVENTORY = {**INVENTORY, 'fields': {**INVENTORY['fields'], **_EXT}}
+_EXT_UAG = json.loads((RUNS / 'unified-angle-geometry-verified-image-to-3d/schema-census-extension.json').read_text(encoding='utf-8'))['fields']
+assert not set(_EXT_UAG) & set(INVENTORY['fields'])
+INVENTORY = {**INVENTORY, 'fields': {**INVENTORY['fields'], **_EXT_UAG}}
+_EXT_FCRWA = json.loads((RUNS / 'formal-correctness-real-world-acceptance/schema-census-extension.json').read_text(encoding='utf-8'))['fields']
+assert not set(_EXT_FCRWA) & set(INVENTORY['fields'])
+INVENTORY = {**INVENTORY, 'fields': {**INVENTORY['fields'], **_EXT_FCRWA}}
+_EXT_VSID = json.loads((RUNS / 'verified-section-intersection-dihedral-local/schema-census-extension.json').read_text(encoding='utf-8'))['fields']
+assert not set(_EXT_VSID) & set(INVENTORY['fields'])
+INVENTORY = {**INVENTORY, 'fields': {**INVENTORY['fields'], **_EXT_VSID}}
+_EXT_DAVC = json.loads((RUNS / 'dimension-aware-verified-construction/schema-census-extension.json').read_text(encoding='utf-8'))['fields']
+assert not set(_EXT_DAVC) & set(INVENTORY['fields'])
+INVENTORY = {**INVENTORY, 'fields': {**INVENTORY['fields'], **_EXT_DAVC}}
+_EXT_SRGSIR = json.loads((RUNS / 'student-ready-geometry-simulation-input-reliability/schema-census-extension.json').read_text(encoding='utf-8'))['fields']
+assert not set(_EXT_SRGSIR) & set(INVENTORY['fields'])
+INVENTORY = {**INVENTORY, 'fields': {**INVENTORY['fields'], **_EXT_SRGSIR}}
 SUP = json.loads((RUN / 'inputs/recovery-supplementary.json').read_text(encoding='utf-8'))['control']
 A3DEV = {c['case_id']: c for c in json.loads((RUNS / 'typedfact-next-adapter3-simulation/corpus-dev.json').read_text(encoding='utf-8'))['cases']}
 SIM = {c['case_id']: c for c in json.loads((RUNS / 'simulation-coverage-visual-validation/corpus-dev.json').read_text(encoding='utf-8'))['cases']}
@@ -663,6 +678,50 @@ def test_inscribed_and_v2_relation_scope_violations_refuse():
         assert outcome(run_typed_fact_next_v2_route(p)) == ("REFUSED", "SOURCE_OBJECT_MISMATCH")
 
 
+# ── V2 construct_intersection_line: the two planes' labels are scoped like target_refs (S5 + S7 + S8) ───────────────
+def _intersection_goal_control() -> dict:
+    q1 = "Cho hình chóp S.ABCD có đáy ABCD là hình vuông cạnh 2."
+    q2 = "Xác định giao tuyến của hai mặt phẳng (SAB) và (SCD)."
+    return {
+        "schema_version": "typed-fact-next/2", "problem_text": f"{q1} {q2}",
+        "solids": [{"solid_id": "s1", "solid_type": "pyramid", "notation": "S.ABCD", "quote": q1}],
+        "premises": [{"kind": "regular_polygon", "solid_id": "s1", "args": {"vertices": ["A", "B", "C", "D"], "side": "2"}, "quote": q1}],
+        "relations": [], "derived_sections": [],
+        "simulation_goals": [{"goal_id": "g_il", "kind": "construct_intersection_line", "target_solid_id": "s1",
+                              "target_planes": [["S", "A", "B"], ["S", "C", "D"]], "quote": q2}],
+        "math_goals": [],
+    }
+
+
+def _with_second_pyramid_t(p: dict) -> dict:
+    o = deepcopy(p["solids"][0]); o.update(solid_id="zz", notation="T.ABCD", quote="Cho hình chóp T.ABCD.")
+    p["solids"].append(o); p["problem_text"] += " Cho hình chóp T.ABCD."
+    return p
+
+
+def test_intersection_goal_plane_scope_controls_serve():
+    p = _intersection_goal_control()
+    T.parse_typed_fact_next_v2(deepcopy(p))
+    for planes in ([["S", "A", "B"], ["S", "C", "D"]], [["s1::S", "A", "C"], ["S", "B", "D"]]):
+        p["simulation_goals"][0]["target_planes"] = planes
+        assert T.parse_typed_fact_next_v2(deepcopy(p)).simulation_goals[0].target_planes is not None
+
+
+def test_intersection_goal_plane_scope_violations_refuse():
+    for planes, two_solids, code in (
+        ([["Q", "A", "B"], ["S", "C", "D"]], False, "UNKNOWN_LABEL"),
+        ([["T", "A", "B"], ["S", "C", "D"]], True, "SOURCE_OBJECT_MISMATCH"),
+        ([["zz::T", "A", "B"], ["S", "C", "D"]], True, "SOURCE_OBJECT_MISMATCH"),
+        (None, False, "INVALID_SIMULATION_GOAL"),
+        ([["S", "A", "B"], ["S", "B", "A"]], False, "INVALID_SIMULATION_GOAL"),
+    ):
+        p = _intersection_goal_control()
+        if two_solids:
+            _with_second_pyramid_t(p)
+        p["simulation_goals"][0]["target_planes"] = planes
+        assert outcome(run_typed_fact_next_v2_route(p)) == ("REFUSED", code), planes
+
+
 # ── coverage gate: every model field classified; every scope field mapped to rules, tests and product code ───────
 def test_census_inventory_complete():
     fields = C.field_paths(); inv = INVENTORY['fields']
@@ -726,3 +785,92 @@ def test_constraint_plane_scope_violations_refuse():
     p['solids'].append(other); p['problem_text'] += ' Cho hình chóp T.ABCD.'
     p['derived_sections'][0]['constraints'][1]['operands'] = ['zz::T', 'B', 'C']
     assert outcome(run_typed_fact_next_v2_route(p)) == ('REFUSED', 'SOURCE_OBJECT_MISMATCH')          # S5
+
+
+def _angle_scope_payload():
+    from app.ai.local_geometry_parser import parse_geometry_problem_locally
+    txt = (
+        'Cho hình chóp S.ABCD có đáy ABCD là hình vuông cạnh 6, SA ⊥ (ABCD) '
+        'và SB tạo với mặt phẳng (ABCD) một góc 60°. Tính thể tích khối chóp S.ABCD.'
+    )
+    return parse_geometry_problem_locally(txt).payload
+
+
+def test_angle_and_base_premise_scope_controls_serve():
+    p = _angle_scope_payload()
+    r = run_typed_fact_next_v2_route(p)
+    assert r.status == 'SERVED' and r.kernel_check is True
+
+
+def test_angle_and_base_premise_scope_violations_refuse():
+    p = _angle_scope_payload()
+    p['solids'].append({'solid_id': 'zz', 'solid_type': 'pyramid', 'notation': 'T.ABCD', 'quote': 'Cho hình chóp T.ABCD'})
+    p['problem_text'] += ' Cho hình chóp T.ABCD.'
+    for prem in p['premises']:
+        if prem['kind'] == 'line_plane_angle':
+            prem['args']['line'] = ['zz::T', 'B']
+    assert outcome(run_typed_fact_next_v2_route(p)) == ('REFUSED', 'SOURCE_OBJECT_MISMATCH')          # S5/S7
+
+
+def _solid_volume_scope_payload():
+    from app.ai.local_geometry_parser import parse_geometry_problem_locally
+    txt = (
+        'Cho hình chóp S.ABCD có đáy ABCD là hình vuông cạnh 3, SA ⊥ (ABCD) '
+        'và thể tích khối chóp S.ABCD bằng 15. Tính độ dài SA.'
+    )
+    return parse_geometry_problem_locally(txt).payload
+
+
+def test_solid_volume_premise_scope_controls_serve():
+    p = _solid_volume_scope_payload()
+    r = run_typed_fact_next_v2_route(p)
+    assert r.status == 'SERVED' and r.kernel_check is True
+    assert r.answer_exact['q1']['coef'] == '5'
+
+
+@pytest.mark.parametrize('mutation,code', [
+    (lambda p: next(x for x in p['premises'] if x['kind'] == 'solid_volume')['args'].__setitem__('solid', 'NO_SUCH'),
+     'UNKNOWN_SOLID_ID'),
+    (lambda p: next(x for x in p['premises'] if x['kind'] == 'solid_volume').__setitem__('solid_id', 'zz'),
+     'SOURCE_OBJECT_MISMATCH'),
+])
+def test_solid_volume_premise_scope_violations_refuse(mutation, code):
+    p = _solid_volume_scope_payload()
+    p['solids'].append({'solid_id': 'zz', 'solid_type': 'pyramid', 'notation': 'T.ABCD', 'quote': 'Cho hình chóp T.ABCD'})
+    p['problem_text'] += ' Cho hình chóp T.ABCD.'
+    for prem in p['premises']:
+        if prem['kind'] == 'solid_volume' and 'solid' not in prem['args']:
+            prem['args']['solid'] = 'S.ABCD'
+    mutation(p)
+    assert outcome(run_typed_fact_next_v2_route(p)) == ('REFUSED', code)                                # S2/S3
+
+
+def _point_reflection_scope_payload():
+    from app.ai.local_geometry_parser import parse_geometry_problem_locally
+    txt = (
+        'Cho hình chóp S.ABCD có đáy ABCD là hình vuông cạnh a, SA ⊥ (ABCD), SA = a. '
+        'Gọi E là điểm đối xứng của A qua C. Tính khoảng cách từ E đến mặt phẳng (SBC).'
+    )
+    return parse_geometry_problem_locally(txt).payload
+
+
+def test_point_reflection_premise_scope_controls_serve():
+    p = _point_reflection_scope_payload()
+    r = run_typed_fact_next_v2_route(p)
+    assert r.status == 'SERVED' and r.kernel_check is True
+
+
+@pytest.mark.parametrize('field,val,code', [
+    ('point', 'zz::T', 'SOURCE_OBJECT_MISMATCH'),
+    ('center', 's1::', 'INVALID_PREMISE_ARGS'),
+    ('center', 's1::Q', 'UNKNOWN_VERTEX_REF'),
+    ('image', 'no_solid::E', 'UNKNOWN_SOLID_ID'),
+])
+def test_point_reflection_premise_scope_violations_refuse(field, val, code):
+    p = _point_reflection_scope_payload()
+    p['solids'].append({'solid_id': 'zz', 'solid_type': 'pyramid', 'notation': 'T.ABCD', 'quote': 'Cho hình chóp T.ABCD'})
+    p['problem_text'] += ' Cho hình chóp T.ABCD.'
+    prem = next(x for x in p['premises'] if x['kind'] == 'point_reflection')
+    prem['args'][field] = val
+    assert outcome(run_typed_fact_next_v2_route(p)) == ('REFUSED', code)                                # S5/S7/S8
+

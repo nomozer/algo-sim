@@ -1,0 +1,186 @@
+{
+  "schema": "slm-resource-benchmark/1",
+  "generated_at_utc": "2026-11-17T13:17:15.008246+00:00",
+  "external_ai_calls": 0,
+  "physical_low_end_4_6_gib_measurement": "NOT_MEASURED",
+  "target_ram_budget_mib": 2048.0,
+  "model_benchmarks": {
+    "qwen3-0.6b-q4_k_m": {
+      "threads_4": {
+        "server_load_time_ms": 870.33,
+        "cold_inference_ms": 9559.61,
+        "warm_inference_ms": {
+          "count": 5,
+          "min_ms": 7734.82,
+          "p50_ms": 8065.27,
+          "p95_ms": 8480.07,
+          "max_ms": 9559.22,
+          "mean_ms": 8351.61
+        },
+        "tokens_per_sec_mean": 32.18,
+        "peak_combined_rss_mib": 1039.62,
+        "peak_server_rss_mib": 923.42,
+        "runtime_failures_count": 0,
+        "runtime_failures": [],
+        "rss_samples": [
+          {
+            "python_rss_mib": 136.05,
+            "server_rss_mib": 901.39,
+            "combined_rss_mib": 1037.44,
+            "server_peak_rss_mib": 922.12
+          },
+          {
+            "python_rss_mib": 136.05,
+            "server_rss_mib": 901.55,
+            "combined_rss_mib": 1037.6,
+            "server_peak_rss_mib": 922.31
+          },
+          {
+            "python_rss_mib": 136.13,
+            "server_rss_mib": 901.53,
+            "combined_rss_mib": 1037.66,
+            "server_peak_rss_mib": 922.5
+          },
+          {
+            "python_rss_mib": 137.6,
+            "server_rss_mib": 901.77,
+            "combined_rss_mib": 1039.37,
+            "server_peak_rss_mib": 922.54
+          },
+          {
+            "python_rss_mib": 137.73,
+            "server_rss_mib": 901.89,
+            "combined_rss_mib": 1039.62,
+            "server_peak_rss_mib": 923.42
+          }
+        ]
+      },
+      "threads_6": {
+        "server_load_time_ms": 834.98,
+        "cold_inference_ms": 8913.13,
+        "warm_inference_ms": {
+          "count": 5,
+          "min_ms": 6028.73,
+          "p50_ms": 6683.53,
+          "p95_ms": 8025.0,
+          "max_ms": 8726.3,
+          "mean_ms": 7161.13
+        },
+        "tokens_per_sec_mean": 38.08,
+        "peak_combined_rss_mib": 1040.57,
+        "peak_server_rss_mib": 924.43,
+        "runtime_failures_count": 0,
+        "runtime_failures": [],
+        "rss_samples": [
+          {
+            "python_rss_mib": 137.67,
+            "server_rss_mib": 902.28,
+            "combined_rss_mib": 1039.95,
+            "server_peak_rss_mib": 923.02
+          },
+          {
+            "python_rss_mib": 137.67,
+            "server_rss_mib": 902.7,
+            "combined_rss_mib": 1040.37,
+            "server_peak_rss_mib": 923.31
+          },
+          {
+            "python_rss_mib": 137.67,
+            "server_rss_mib": 902.65,
+            "combined_rss_mib": 1040.32,
+            "server_peak_rss_mib": 923.32
+          },
+          {
+            "python_rss_mib": 137.67,
+            "server_rss_mib": 902.61,
+            "combined_rss_mib": 1040.28,
+            "server_peak_rss_mib": 923.35
+          },
+          {
+            "python_rss_mib": 137.67,
+            "server_rss_mib": 902.9,
+            "combined_rss_mib": 1040.57,
+            "server_peak_rss_mib": 924.43
+          }
+        ]
+      }
+    },
+    "qwen2.5-0.5b-instruct-q4_k_m": {
+      "threads_4": {
+        "server_load_time_ms": 731.51,
+        "cold_inference_ms": 7926.47,
+        "warm_inference_ms": {
+          "count": 4,
+          "min_ms": 3704.36,
+          "p50_ms": 5440.94,
+          "p95_ms": 5730.06,
+          "max_ms": 6558.74,
+          "mean_ms": 5286.24
+        },
+        "tokens_per_sec_mean": 44.06,
+        "peak_combined_rss_mib": 674.81,
+        "peak_server_rss_mib": 558.77,
+        "runtime_failures_count": 1,
+        "runtime_failures": [
+          {
+            "case_id": "cal_p05_regular_pyr_vol",
+            "reason_code": "LOCAL_SLM_RESPONSE_INVALID",
+            "detail": "Local SLM content is not valid JSON: Expecting value: line 84 column 17 (char 1518); content={\n  \"solid\": {\n    \"clause_id\": 0,\n    \"solid_type\": \"pyramid\",\n    \"notation\": \"S.ABC\""
+          }
+        ],
+        "rss_samples": [
+          {
+            "python_rss_mib": 137.67,
+            "server_rss_mib": 536.42,
+            "combined_rss_mib": 674.09,
+            "server_peak_rss_mib": 558.35
+          },
+          {
+            "python_rss_mib": 137.67,
+            "server_rss_mib": 536.71,
+            "combined_rss_mib": 674.38,
+            "server_peak_rss_mib": 558.59
+          },
+          {
+            "python_rss_mib": 137.66,
+            "server_rss_mib": 537.15,
+            "combined_rss_mib": 674.81,
+            "server_peak_rss_mib": 558.71
+          },
+          {
+            "python_rss_mib": 137.66,
+            "server_rss_mib": 536.79,
+            "combined_rss_mib": 674.45,
+            "server_peak_rss_mib": 558.77
+          }
+        ]
+      }
+    }
+  },
+  "fault_recovery_checks": {
+    "missing_model_fail_closed": {
+      "passed": true,
+      "code": "MODEL_RUNTIME_UNAVAILABLE"
+    },
+    "crash_auto_recovery": {
+      "passed": true,
+      "killed_pid": 5700,
+      "recovered_load_ms": 751.66
+    },
+    "timeout_kill_and_recovery": {
+      "passed": true,
+      "code": "LOCAL_SLM_TIMEOUT"
+    },
+    "bounded_queue_busy": {
+      "passed": true,
+      "ok_count": 1,
+      "busy_codes": [
+        "LOCAL_SLM_BUSY"
+      ]
+    },
+    "prompt_injection_rejected": {
+      "passed": true,
+      "taxonomy": "PROMPT_INJECTION_REJECTED"
+    }
+  }
+}

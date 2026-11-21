@@ -62,7 +62,7 @@ def test_FAIL_volume_khai_dap_an():
     ("plane3", {"through": [[0, 0, 0], [1, 0, 0], [0, 1, 0]]}),
     ("polygon3", [[0, 0, 0], [1, 0, 0], [1, 1, 0]]),
     ("solid", {"vertices": [[0, 0, 0]], "faces": [[0]]}),
-    ("array", [1, 2, 3]), ("map", {"a": 1}),
+    # (/13) `array`/`map` rời khỏi `MemoryType` cùng miền Tin học, nên không còn là ca để chặn.
 ])
 def test_chi_point3_va_vector3_duoc_mang_gia_thiet(kieu, gt):
     """Đường thẳng, mặt phẳng, khối phải được DỰNG từ điểm — cho chúng mang giả

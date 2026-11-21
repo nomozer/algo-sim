@@ -1,0 +1,65 @@
+{
+  "schema": "slm-preregistered-replacement-criteria/1",
+  "run_id": "slm-local-geometry-understanding",
+  "preregistered_at_utc": "2026-11-17T12:20:00Z",
+  "frozen_before_holdout_evaluation": true,
+  "objective": "Determine empirically whether a sub-1B local CPU SLM behind Axo's Source Grounding + Exact Kernel can replace Gemini 2.5 Flash as the semantic extraction stage for Vietnamese 3D geometry problems.",
+  "verdict_enum": [
+    "READY_TO_REPLACE_GEMINI_DEFAULT",
+    "READY_AS_LOCAL_PRIMARY_WITH_CONSTRAINTS",
+    "PARTIAL_GAIN_KEEP_HYBRID_EXPERIMENTAL",
+    "INSUFFICIENT_UNDER_1B_NEED_FINE_TUNING_OR_LARGER_MODEL"
+  ],
+  "mandatory_safety_invariants": {
+    "false_mode_a_leaks_max": 0,
+    "scene3d_continuity_errors_max": 0,
+    "deterministic_v145_regressions_max": 0,
+    "external_ai_calls_max": 0,
+    "holdout_overlap_max": 0,
+    "fault_recovery_checks_all_must_pass": true
+  },
+  "resource_constraints_4_to_6_gib_target": {
+    "max_combined_rss_mib": 2048.0,
+    "max_server_load_time_ms": 5000.0,
+    "physical_low_end_hardware_caveat": "Host has 15.78 GiB RAM; PHYSICAL_LOW_END_4_TO_6_GIB must remain NOT_MEASURED on physical low-end device even if process RSS satisfies budget."
+  },
+  "decision_rules_in_priority_order": [
+    {
+      "verdict": "READY_TO_REPLACE_GEMINI_DEFAULT",
+      "requires": {
+        "all_mandatory_safety_invariants": true,
+        "holdout_positive_exact_rate_min": 0.85,
+        "holdout_negative_refusal_rate_min": 1.0,
+        "warm_inference_p95_ms_max": 5000.0,
+        "max_combined_rss_mib": 2048.0,
+        "parity_across_derived_sections_and_relations": true
+      }
+    },
+    {
+      "verdict": "READY_AS_LOCAL_PRIMARY_WITH_CONSTRAINTS",
+      "requires": {
+        "all_mandatory_safety_invariants": true,
+        "holdout_positive_exact_rate_min": 0.65,
+        "holdout_negative_refusal_rate_min": 1.0,
+        "warm_inference_p95_ms_max": 12000.0,
+        "max_combined_rss_mib": 2048.0
+      }
+    },
+    {
+      "verdict": "PARTIAL_GAIN_KEEP_HYBRID_EXPERIMENTAL",
+      "requires": {
+        "all_mandatory_safety_invariants": true,
+        "holdout_positive_strictly_exceeds_deterministic_v145": true,
+        "holdout_negative_refusal_rate_min": 1.0,
+        "warm_inference_p95_ms_max": 20000.0,
+        "max_combined_rss_mib": 2048.0
+      }
+    },
+    {
+      "verdict": "INSUFFICIENT_UNDER_1B_NEED_FINE_TUNING_OR_LARGER_MODEL",
+      "requires": {
+        "fallback_when_above_gates_fail": true
+      }
+    }
+  ]
+}

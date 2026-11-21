@@ -1,0 +1,66 @@
+{
+  "run_id": "certified-scale-cache-safety",
+  "generated_at_utc": "2026-11-14T05:40:52.234783+00:00",
+  "product_commit": "902a3171c1a625c2741f0c6886d0328584dfb89e",
+  "measured_system": "243d932765f7d4065394f91c6b4f25972f8232ba9228aec89d4c63a244c1976b",
+  "cache_version": "135",
+  "environment": {
+    "ALLOW_LIVE_AI": "0",
+    "HYBRID_ROUTE_MODE": "local-first",
+    "live_ai_calls": 0
+  },
+  "head": "4bb423b48393605355be39e4d8dc4386ad9b3946",
+  "case": "unnamed_midpoint_distance",
+  "product_contract": "formation steps 0–5 never contain kq_q1 (the measure.distance quantity with its perpendicular witness); step 6 FINAL_RESULT creates it, visible and read out",
+  "verdict": "TEST_INSTRUMENT_GAP (the previous E2E had no target definition for distance goals — goalId null ⇒ construction_only_at_conclusion false); product correct",
+  "oracle_fix": "this run's E2E copy: distance goal = the measure.distance quantity; present at the last step (id, id#…, id__… parts) and absent at EVERY earlier step",
+  "after": [
+    {
+      "case": "unnamed_midpoint_distance",
+      "goal": "distance",
+      "viewport": "1366x768",
+      "status": "SERVED",
+      "first_model_ms": 462,
+      "timeline_steps": 7,
+      "goal_object_id": "kq_q1",
+      "construction_only_at_conclusion": true,
+      "camera": {
+        "snapshot_available": true,
+        "orbit_changes_camera": true,
+        "zoom_changes_camera": true,
+        "reset_available": true,
+        "reset_returns_to_initial": true,
+        "orbit_ms": 189.90000000037253
+      },
+      "pan_and_auxiliary": {
+        "pan_changes_camera": true,
+        "aux_toggle_available": true,
+        "aux_hidden_before": 0,
+        "aux_hidden_toggled": 0,
+        "aux_hidden_restored": 0,
+        "rendered_before": 15,
+        "rendered_toggled": 15,
+        "aux_toggle_changes_rendering": false,
+        "aux_toggle_restores": true
+      },
+      "selection": {
+        "chip_available": true,
+        "chip_id": "kq_q1__perp_seg",
+        "selected_id": "kq_q1__perp_seg",
+        "selects": true
+      },
+      "answer_text_on_page": [],
+      "cos2_text_on_page": false,
+      "illustrative_note": null,
+      "scale_configuration": null,
+      "numeric_goal_note": null,
+      "numeric_goal_note_has_digit": null,
+      "source_goal_completion": null,
+      "trig_value_on_page": false,
+      "horizontal_overflow_px": 0,
+      "step_button_min_px": 28,
+      "page_errors": [],
+      "pass": true
+    }
+  ]
+}

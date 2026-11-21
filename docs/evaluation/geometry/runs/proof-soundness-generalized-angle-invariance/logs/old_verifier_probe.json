@@ -1,0 +1,57 @@
+{
+ "generated_plane_angle_step": {
+  "id": "t8",
+  "rule": "PLANE_ANGLE",
+  "premises": [
+   "t7",
+   "t1"
+  ],
+  "conclusion": {
+   "angle_of_planes": [
+    [
+     "B",
+     "C",
+     "S"
+    ],
+    [
+     "A",
+     "B",
+     "C"
+    ]
+   ],
+   "equals_angle": [
+    "B",
+    "S",
+    "A"
+   ],
+   "intersection": [
+    "B",
+    "C"
+   ]
+  }
+ },
+ "claim": "for every configuration satisfying the cited facts, ∠(BCS, ABC) = ∠(SBA) of a triangle whose shape the facts fix",
+ "original_verified": true,
+ "probes": {
+  "triple_in_standard_notation_vertex_in_the_middle": {
+   "accepted_by_old_verifier": false,
+   "note": "the correct angle SBA written in standard notation (vertex in the middle)"
+  },
+  "triple_as_generated_vertex_first": {
+   "accepted_by_old_verifier": true,
+   "note": "the generated triple ['B','S','A'] — reads as angle BSA (vertex S) in standard notation"
+  },
+  "forged_four_label_non_coplanar_plane": {
+   "accepted_by_old_verifier": false,
+   "note": "PERP_TWO_LINES concluding BC ⊥ 'plane' {A,B,C,S} (four non-coplanar labels)"
+  },
+  "certificate_attached_to_another_goal": {
+   "accepted_by_old_verifier": true,
+   "note": "goal_id changed: the verifier never sees the asked planes"
+  },
+  "triangle_listed_with_another_first_label": {
+   "accepted_by_old_verifier": true,
+   "note": "the fixed triangle named with S first: the angle's vertex is not tied to the triangle step"
+  }
+ }
+}

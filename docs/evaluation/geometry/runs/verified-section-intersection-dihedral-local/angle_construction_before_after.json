@@ -1,0 +1,709 @@
+{
+  "run_id": "verified-section-intersection-dihedral-local",
+  "generated_at_utc": "2026-11-13T11:28:15.240351+00:00",
+  "head": "a74aa3325b61337e301e8df7b728a66f86fdc266",
+  "oracle": "AGENT_DIAGNOSTIC: exact Fractions + envelope Gram G written here, independent of the construction code",
+  "probe_class": "SYNTHETIC_DEVELOPMENT_PROBES (agent-written)",
+  "before_ref": "ffc62f6fe (run start)",
+  "mutation_summary": {
+    "flip_angle_ray": {
+      "applied": 12,
+      "caught": 12
+    },
+    "section_vertex_off_plane": {
+      "applied": 9,
+      "caught": 9
+    },
+    "section_vertex_order_swapped": {
+      "applied": 9,
+      "caught": 8
+    },
+    "section_vertex_replaced_by_wrong_edge_point": {
+      "applied": 9,
+      "caught": 9
+    },
+    "intersection_direction_tilted": {
+      "applied": 5,
+      "caught": 5
+    },
+    "intersection_point_moved": {
+      "applied": 5,
+      "caught": 5
+    },
+    "altitude_wrong_foot": {
+      "applied": 4,
+      "caught": 4
+    }
+  },
+  "convention": "every supported angle ask is the non-oriented angle in [0°, 90°]",
+  "rows": [
+    {
+      "probe": "angle_planes_SBC_SCD_60_not_120",
+      "goal": "angle",
+      "text": "Cho hình chóp S.ABCD có đáy ABCD là hình vuông cạnh a, SA vuông góc với mặt phẳng đáy và SA = a. Tính góc giữa mặt phẳng (SBC) và mặt phẳng (SCD).",
+      "before": {
+        "status": "SERVED",
+        "answers": {
+          "q1": "cos²=1/4"
+        },
+        "reason": null,
+        "checks": [
+          {
+            "check": "angle_signed_cos_nonnegative",
+            "ok": false
+          },
+          {
+            "check": "angle_cos_sq_equals_measure",
+            "ok": true
+          },
+          {
+            "check": "plane_angle_rays_perpendicular_to_common_line",
+            "ok": true
+          }
+        ],
+        "failed_checks": [
+          "angle_signed_cos_nonnegative"
+        ]
+      },
+      "after": {
+        "status": "SERVED",
+        "answers": {
+          "q1": "cos²=1/4"
+        },
+        "reason": null,
+        "checks": [
+          {
+            "check": "angle_signed_cos_nonnegative",
+            "ok": true
+          },
+          {
+            "check": "angle_cos_sq_equals_measure",
+            "ok": true
+          },
+          {
+            "check": "plane_angle_rays_perpendicular_to_common_line",
+            "ok": true
+          }
+        ],
+        "failed_checks": [],
+        "objects": {
+          "sections": [],
+          "intersection_lines": 0,
+          "altitude": false,
+          "angle_relation": "plane_plane"
+        },
+        "mutations_caught": {
+          "flip_angle_ray": true
+        }
+      }
+    },
+    {
+      "probe": "angle_planes_SCD_SBC_swapped",
+      "goal": "angle",
+      "text": "Cho hình chóp S.ABCD có đáy ABCD là hình vuông cạnh a, SA vuông góc với mặt phẳng đáy và SA = a. Tính góc giữa mặt phẳng (SCD) và mặt phẳng (SBC).",
+      "before": {
+        "status": "SERVED",
+        "answers": {
+          "q1": "cos²=1/4"
+        },
+        "reason": null,
+        "checks": [
+          {
+            "check": "angle_signed_cos_nonnegative",
+            "ok": false
+          },
+          {
+            "check": "angle_cos_sq_equals_measure",
+            "ok": true
+          },
+          {
+            "check": "plane_angle_rays_perpendicular_to_common_line",
+            "ok": true
+          }
+        ],
+        "failed_checks": [
+          "angle_signed_cos_nonnegative"
+        ]
+      },
+      "after": {
+        "status": "SERVED",
+        "answers": {
+          "q1": "cos²=1/4"
+        },
+        "reason": null,
+        "checks": [
+          {
+            "check": "angle_signed_cos_nonnegative",
+            "ok": true
+          },
+          {
+            "check": "angle_cos_sq_equals_measure",
+            "ok": true
+          },
+          {
+            "check": "plane_angle_rays_perpendicular_to_common_line",
+            "ok": true
+          }
+        ],
+        "failed_checks": [],
+        "objects": {
+          "sections": [],
+          "intersection_lines": 0,
+          "altitude": false,
+          "angle_relation": "plane_plane"
+        },
+        "mutations_caught": {
+          "flip_angle_ray": true
+        }
+      }
+    },
+    {
+      "probe": "angle_planes_renamed",
+      "goal": "angle",
+      "text": "Cho hình chóp T.MNPQ có đáy MNPQ là hình vuông cạnh a, TM vuông góc với mặt phẳng đáy và TM = a. Tính góc giữa mặt phẳng (TNP) và mặt phẳng (TPQ).",
+      "before": {
+        "status": "SERVED",
+        "answers": {
+          "q1": "cos²=1/4"
+        },
+        "reason": null,
+        "checks": [
+          {
+            "check": "angle_signed_cos_nonnegative",
+            "ok": false
+          },
+          {
+            "check": "angle_cos_sq_equals_measure",
+            "ok": true
+          },
+          {
+            "check": "plane_angle_rays_perpendicular_to_common_line",
+            "ok": true
+          }
+        ],
+        "failed_checks": [
+          "angle_signed_cos_nonnegative"
+        ]
+      },
+      "after": {
+        "status": "SERVED",
+        "answers": {
+          "q1": "cos²=1/4"
+        },
+        "reason": null,
+        "checks": [
+          {
+            "check": "angle_signed_cos_nonnegative",
+            "ok": true
+          },
+          {
+            "check": "angle_cos_sq_equals_measure",
+            "ok": true
+          },
+          {
+            "check": "plane_angle_rays_perpendicular_to_common_line",
+            "ok": true
+          }
+        ],
+        "failed_checks": [],
+        "objects": {
+          "sections": [],
+          "intersection_lines": 0,
+          "altitude": false,
+          "angle_relation": "plane_plane"
+        },
+        "mutations_caught": {
+          "flip_angle_ray": true
+        }
+      }
+    },
+    {
+      "probe": "angle_planes_SAB_SCD",
+      "goal": "angle",
+      "text": "Cho hình chóp S.ABCD có đáy ABCD là hình vuông cạnh a, SA vuông góc với mặt phẳng đáy và SA = a. Tính góc giữa mặt phẳng (SAB) và mặt phẳng (SCD).",
+      "before": {
+        "status": "SERVED",
+        "answers": {
+          "q1": "cos²=1/2"
+        },
+        "reason": null,
+        "checks": [
+          {
+            "check": "angle_signed_cos_nonnegative",
+            "ok": true
+          },
+          {
+            "check": "angle_cos_sq_equals_measure",
+            "ok": true
+          },
+          {
+            "check": "plane_angle_rays_perpendicular_to_common_line",
+            "ok": true
+          }
+        ],
+        "failed_checks": []
+      },
+      "after": {
+        "status": "SERVED",
+        "answers": {
+          "q1": "cos²=1/2"
+        },
+        "reason": null,
+        "checks": [
+          {
+            "check": "angle_signed_cos_nonnegative",
+            "ok": true
+          },
+          {
+            "check": "angle_cos_sq_equals_measure",
+            "ok": true
+          },
+          {
+            "check": "plane_angle_rays_perpendicular_to_common_line",
+            "ok": true
+          }
+        ],
+        "failed_checks": [],
+        "objects": {
+          "sections": [],
+          "intersection_lines": 0,
+          "altitude": false,
+          "angle_relation": "plane_plane"
+        },
+        "mutations_caught": {
+          "flip_angle_ray": true
+        }
+      }
+    },
+    {
+      "probe": "angle_planes_SBD_SCD",
+      "goal": "angle",
+      "text": "Cho hình chóp S.ABCD có đáy ABCD là hình vuông cạnh a, SA vuông góc với mặt phẳng đáy và SA = a. Tính góc giữa mặt phẳng (SBD) và mặt phẳng (SCD).",
+      "before": {
+        "status": "SERVED",
+        "answers": {
+          "q1": "cos²=2/3"
+        },
+        "reason": null,
+        "checks": [
+          {
+            "check": "angle_signed_cos_nonnegative",
+            "ok": true
+          },
+          {
+            "check": "angle_cos_sq_equals_measure",
+            "ok": true
+          },
+          {
+            "check": "plane_angle_rays_perpendicular_to_common_line",
+            "ok": true
+          }
+        ],
+        "failed_checks": []
+      },
+      "after": {
+        "status": "SERVED",
+        "answers": {
+          "q1": "cos²=2/3"
+        },
+        "reason": null,
+        "checks": [
+          {
+            "check": "angle_signed_cos_nonnegative",
+            "ok": true
+          },
+          {
+            "check": "angle_cos_sq_equals_measure",
+            "ok": true
+          },
+          {
+            "check": "plane_angle_rays_perpendicular_to_common_line",
+            "ok": true
+          }
+        ],
+        "failed_checks": [],
+        "objects": {
+          "sections": [],
+          "intersection_lines": 0,
+          "altitude": false,
+          "angle_relation": "plane_plane"
+        },
+        "mutations_caught": {
+          "flip_angle_ray": true
+        }
+      }
+    },
+    {
+      "probe": "angle_planes_SBC_ABCD",
+      "goal": "angle",
+      "text": "Cho hình chóp S.ABCD có đáy ABCD là hình vuông cạnh a, SA vuông góc với mặt phẳng đáy và SA = a. Tính góc giữa mặt phẳng (SBC) và mặt phẳng (ABCD).",
+      "before": {
+        "status": "SERVED",
+        "answers": {
+          "q1": "cos²=1/2"
+        },
+        "reason": null,
+        "checks": [
+          {
+            "check": "angle_signed_cos_nonnegative",
+            "ok": true
+          },
+          {
+            "check": "angle_cos_sq_equals_measure",
+            "ok": true
+          },
+          {
+            "check": "plane_angle_rays_perpendicular_to_common_line",
+            "ok": true
+          }
+        ],
+        "failed_checks": []
+      },
+      "after": {
+        "status": "SERVED",
+        "answers": {
+          "q1": "cos²=1/2"
+        },
+        "reason": null,
+        "checks": [
+          {
+            "check": "angle_signed_cos_nonnegative",
+            "ok": true
+          },
+          {
+            "check": "angle_cos_sq_equals_measure",
+            "ok": true
+          },
+          {
+            "check": "plane_angle_rays_perpendicular_to_common_line",
+            "ok": true
+          }
+        ],
+        "failed_checks": [],
+        "objects": {
+          "sections": [],
+          "intersection_lines": 0,
+          "altitude": false,
+          "angle_relation": "plane_plane"
+        },
+        "mutations_caught": {
+          "flip_angle_ray": true
+        }
+      }
+    },
+    {
+      "probe": "angle_planes_cube_A'BD_C'BD",
+      "goal": "angle",
+      "text": "Cho hình lập phương ABCD.A'B'C'D' có cạnh bằng a. Tính góc giữa mặt phẳng (A'BD) và mặt phẳng (C'BD).",
+      "before": {
+        "status": "SERVED",
+        "answers": {
+          "q1": "cos²=1/9"
+        },
+        "reason": null,
+        "checks": [
+          {
+            "check": "angle_signed_cos_nonnegative",
+            "ok": true
+          },
+          {
+            "check": "angle_cos_sq_equals_measure",
+            "ok": true
+          },
+          {
+            "check": "plane_angle_rays_perpendicular_to_common_line",
+            "ok": true
+          }
+        ],
+        "failed_checks": []
+      },
+      "after": {
+        "status": "SERVED",
+        "answers": {
+          "q1": "cos²=1/9"
+        },
+        "reason": null,
+        "checks": [
+          {
+            "check": "angle_signed_cos_nonnegative",
+            "ok": true
+          },
+          {
+            "check": "angle_cos_sq_equals_measure",
+            "ok": true
+          },
+          {
+            "check": "plane_angle_rays_perpendicular_to_common_line",
+            "ok": true
+          }
+        ],
+        "failed_checks": [],
+        "objects": {
+          "sections": [],
+          "intersection_lines": 0,
+          "altitude": false,
+          "angle_relation": "plane_plane"
+        },
+        "mutations_caught": {
+          "flip_angle_ray": true
+        }
+      }
+    },
+    {
+      "probe": "angle_lines_SB_SD",
+      "goal": "angle",
+      "text": "Cho hình chóp S.ABCD có đáy ABCD là hình vuông cạnh a, SA vuông góc với mặt phẳng đáy và SA = a. Tính góc giữa hai đường thẳng SB và SD.",
+      "before": {
+        "status": "SERVED",
+        "answers": {
+          "q1": "cos²=1/4"
+        },
+        "reason": null,
+        "checks": [
+          {
+            "check": "angle_signed_cos_nonnegative",
+            "ok": true
+          },
+          {
+            "check": "angle_cos_sq_equals_measure",
+            "ok": true
+          }
+        ],
+        "failed_checks": []
+      },
+      "after": {
+        "status": "SERVED",
+        "answers": {
+          "q1": "cos²=1/4"
+        },
+        "reason": null,
+        "checks": [
+          {
+            "check": "angle_signed_cos_nonnegative",
+            "ok": true
+          },
+          {
+            "check": "angle_cos_sq_equals_measure",
+            "ok": true
+          }
+        ],
+        "failed_checks": [],
+        "objects": {
+          "sections": [],
+          "intersection_lines": 0,
+          "altitude": false,
+          "angle_relation": "line_line"
+        },
+        "mutations_caught": {
+          "flip_angle_ray": true
+        }
+      }
+    },
+    {
+      "probe": "angle_lines_skew_SB_CD",
+      "goal": "angle",
+      "text": "Cho hình chóp S.ABCD có đáy ABCD là hình vuông cạnh a, SA vuông góc với mặt phẳng đáy và SA = a. Tính góc giữa hai đường thẳng SB và CD.",
+      "before": {
+        "status": "SERVED",
+        "answers": {
+          "q1": "cos²=1/2"
+        },
+        "reason": null,
+        "checks": [
+          {
+            "check": "angle_signed_cos_nonnegative",
+            "ok": true
+          },
+          {
+            "check": "angle_cos_sq_equals_measure",
+            "ok": true
+          }
+        ],
+        "failed_checks": []
+      },
+      "after": {
+        "status": "SERVED",
+        "answers": {
+          "q1": "cos²=1/2"
+        },
+        "reason": null,
+        "checks": [
+          {
+            "check": "angle_signed_cos_nonnegative",
+            "ok": true
+          },
+          {
+            "check": "angle_cos_sq_equals_measure",
+            "ok": true
+          }
+        ],
+        "failed_checks": [],
+        "objects": {
+          "sections": [],
+          "intersection_lines": 0,
+          "altitude": false,
+          "angle_relation": "line_line_skew"
+        },
+        "mutations_caught": {
+          "flip_angle_ray": true
+        }
+      }
+    },
+    {
+      "probe": "angle_lines_skew_cube",
+      "goal": "angle",
+      "text": "Cho hình lập phương ABCD.A'B'C'D' có cạnh bằng a. Tính góc giữa hai đường thẳng AC và DA'.",
+      "before": {
+        "status": "SERVED",
+        "answers": {
+          "q1": "cos²=1/4"
+        },
+        "reason": null,
+        "checks": [
+          {
+            "check": "angle_signed_cos_nonnegative",
+            "ok": true
+          },
+          {
+            "check": "angle_cos_sq_equals_measure",
+            "ok": true
+          }
+        ],
+        "failed_checks": []
+      },
+      "after": {
+        "status": "SERVED",
+        "answers": {
+          "q1": "cos²=1/4"
+        },
+        "reason": null,
+        "checks": [
+          {
+            "check": "angle_signed_cos_nonnegative",
+            "ok": true
+          },
+          {
+            "check": "angle_cos_sq_equals_measure",
+            "ok": true
+          }
+        ],
+        "failed_checks": [],
+        "objects": {
+          "sections": [],
+          "intersection_lines": 0,
+          "altitude": false,
+          "angle_relation": "line_line_skew"
+        },
+        "mutations_caught": {
+          "flip_angle_ray": true
+        }
+      }
+    },
+    {
+      "probe": "angle_line_plane_SC_ABCD",
+      "goal": "angle",
+      "text": "Cho hình chóp S.ABCD có đáy ABCD là hình vuông cạnh a, SA vuông góc với mặt phẳng đáy và SA = a. Tính góc giữa đường thẳng SC và mặt phẳng (ABCD).",
+      "before": {
+        "status": "SERVED",
+        "answers": {
+          "q1": "cos²=2/3"
+        },
+        "reason": null,
+        "checks": [
+          {
+            "check": "angle_signed_cos_nonnegative",
+            "ok": true
+          },
+          {
+            "check": "angle_cos_sq_equals_measure",
+            "ok": true
+          }
+        ],
+        "failed_checks": []
+      },
+      "after": {
+        "status": "SERVED",
+        "answers": {
+          "q1": "cos²=2/3"
+        },
+        "reason": null,
+        "checks": [
+          {
+            "check": "angle_signed_cos_nonnegative",
+            "ok": true
+          },
+          {
+            "check": "angle_cos_sq_equals_measure",
+            "ok": true
+          }
+        ],
+        "failed_checks": [],
+        "objects": {
+          "sections": [],
+          "intersection_lines": 0,
+          "altitude": false,
+          "angle_relation": "line_plane"
+        },
+        "mutations_caught": {
+          "flip_angle_ray": true
+        }
+      }
+    },
+    {
+      "probe": "angle_tetra",
+      "goal": "angle",
+      "text": "Cho tứ diện đều ABCD có cạnh bằng a. Tính góc giữa đường thẳng AB và mặt phẳng (BCD).",
+      "before": {
+        "status": "SERVED",
+        "answers": {
+          "q1": "cos²=1/3"
+        },
+        "reason": null,
+        "checks": [
+          {
+            "check": "angle_signed_cos_nonnegative",
+            "ok": true
+          },
+          {
+            "check": "angle_cos_sq_equals_measure",
+            "ok": true
+          }
+        ],
+        "failed_checks": []
+      },
+      "after": {
+        "status": "SERVED",
+        "answers": {
+          "q1": "cos²=1/3"
+        },
+        "reason": null,
+        "checks": [
+          {
+            "check": "angle_signed_cos_nonnegative",
+            "ok": true
+          },
+          {
+            "check": "angle_cos_sq_equals_measure",
+            "ok": true
+          }
+        ],
+        "failed_checks": [],
+        "objects": {
+          "sections": [],
+          "intersection_lines": 0,
+          "altitude": false,
+          "angle_relation": "line_plane"
+        },
+        "mutations_caught": {
+          "flip_angle_ray": true
+        }
+      }
+    }
+  ],
+  "before_obtuse_drawn": [
+    "angle_planes_SBC_SCD_60_not_120",
+    "angle_planes_SCD_SBC_swapped",
+    "angle_planes_renamed"
+  ],
+  "after_obtuse_drawn": []
+}

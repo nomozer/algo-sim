@@ -1,0 +1,328 @@
+{
+  "schema": "algosim-affine-ratio-capability-receipt/1",
+  "generated_at_utc": "2026-11-10T10:07:04.328842+00:00",
+  "product_commit": "d20d7fdcdd6c5759f74ff737f331c2e548923eba",
+  "head_commit": "d20d7fdcdd6c5759f74ff737f331c2e548923eba",
+  "measured_system_tree_hash": "fb4f4992da8764930954a44f24e121ddca6cf1f3a270039773f6dbbf8b1b5c05",
+  "measured_system_file_count": 110,
+  "code_version": {
+    "typed_fact_next": "typed-fact-next/2",
+    "bridge": "typed-fact-next-bridge/2",
+    "planner": "geometry-fact-planner/26",
+    "registry": "geometry-functions/33",
+    "engine": "geometry-function-engine/24",
+    "adapter": "hybrid-simulation-adapter/4",
+    "envelope": "hybrid-route-d-simulation/4",
+    "local_parser": "local-geometry-parser/1",
+    "adaptive_router": "adaptive-input-router/1",
+    "cache_version": "132"
+  },
+  "input_or_case_hash": "d8e26829c907a7a99523940c7bf90259db1b24f5a0dc5e2801b86703b4e2e84c",
+  "oracle": "KC/KB = 1/2 on both S.ABCD and vertex-renamed S.MNPQ; non-invariant or metric-missing non-collinear ratios refuse MISSING_DIMENSION.",
+  "test_command": "pytest backend/tests/geometry/test_reusable_ratio_and_inverse_angle_geometry.py -k affine -q",
+  "test_environment": {
+    "os": "Windows-11-10.0.26100-SP0",
+    "python": "3.12.10",
+    "cpu_logical_cores": 12,
+    "allow_live_ai": 0,
+    "live_gemini_calls": 0,
+    "benchmark_tier": "HOST_BENCHMARK_OFFLINE"
+  },
+  "expected_behavior": "Reusable construct_plane_parallel_two_lines + ask_length_ratio solve collinear/parallel affine segment ratios across arbitrary vertex namings and ratios.",
+  "actual_behavior": "ext04=SERVED(1/2), renamed=SERVED(1/2)",
+  "verdict": "PASS",
+  "run_id": "formal-correctness-real-world-acceptance",
+  "wave_id": "FORMAL_CORRECTNESS_REAL_WORLD_ACCEPTANCE",
+  "baseline_head_commit": "cc166865e4d4f1116014d9f1a68d9d050bf0dc9a",
+  "baseline_product_commit": "7994da7a64c8dc288c4de972df2d8d1db65e0c20",
+  "case_ids": [
+    "ext_prt_04_hd_q_8436784#1",
+    "affine_trapezoid_renamed_SMNPQ"
+  ],
+  "measurement_status": "MEASURED_OFFLINE",
+  "oracle_provenance": "Exact affine coordinate & Gram ratio arithmetic + height-invariance certification O1–O8",
+  "evidence_classification": "VERIFIED FACT",
+  "reusable_primitives": [
+    "plane_parallel_two_lines",
+    "ask_length_ratio",
+    "trapezoid_base_ratio"
+  ],
+  "ext04_result": {
+    "status": "SERVED",
+    "reason_code": null,
+    "fallback_reason": null,
+    "answer": "1/2",
+    "answers": {
+      "q1": "1/2"
+    },
+    "answer_exact": {
+      "q1": {
+        "coef": "1/2",
+        "dim": 0,
+        "unit": null
+      }
+    },
+    "output_policy": null,
+    "scene_configuration": {
+      "unique": false,
+      "kind": "HEIGHT_INVARIANT_ILLUSTRATIVE",
+      "free_parameter": "height",
+      "free_for": [
+        "S.ABCD"
+      ],
+      "illustrative_h2": "1",
+      "invariance_certificate": {
+        "schema_version": "height-invariance-certificate/2",
+        "method": "rational_function_identity_in_h2",
+        "certification_mode": "EXACT_SYMBOLIC_POLYNOMIAL_IDENTITY",
+        "parameter": "t = h^2",
+        "domain": "(0, +inf)",
+        "max_degree": 2,
+        "samples_h2": [
+          "1",
+          "2",
+          "3",
+          "5",
+          "7"
+        ],
+        "chart_summary": {
+          "base_g2": [
+            [
+              "1",
+              "0"
+            ],
+            [
+              "0",
+              "1"
+            ]
+          ],
+          "det_g2": "1",
+          "off_base_anchor_count": 1,
+          "free_for": [
+            "S.ABCD"
+          ]
+        },
+        "proof_obligations": {
+          "PO_SINGLE_FREE_HEIGHT_ORTHOGONAL_CHART": {
+            "verified": true,
+            "free_for": [
+              "S.ABCD"
+            ],
+            "off_base_anchors": [
+              "S"
+            ],
+            "det_g2": "1"
+          },
+          "PO_AFFINE_COORDINATES_T_INDEPENDENT": {
+            "verified": true,
+            "point_count": 9,
+            "non_vertex_points_on_base": [
+              "H",
+              "H1",
+              "I",
+              "K"
+            ]
+          },
+          "PO_SECTION_TOPOLOGY_INVARIANT": {
+            "verified": true,
+            "section_count": 1
+          },
+          "PO_VALID_DOMAIN_ALL_POSITIVE_T": {
+            "verified": true,
+            "domain": "(0, +inf)",
+            "checked_premise_count": 8
+          },
+          "PO_POLYNOMIAL_DEGREE_BOUNDED": {
+            "verified": true,
+            "max_allowed_degree": 2,
+            "observed_max_degree": 0
+          },
+          "PO_DENOMINATOR_POSITIVE_ON_DOMAIN": {
+            "verified": true,
+            "domain": "(0, +inf)"
+          },
+          "PO_EXACT_POLYNOMIAL_IDENTITY": {
+            "verified": true,
+            "identity": "P(t) - c * Q(t) == 0 over Q[t]"
+          },
+          "PO_INTERPRETER_CROSS_CHECK": {
+            "verified": true,
+            "illustrative_t0": "1"
+          }
+        },
+        "goal_rational_forms": {
+          "q1": {
+            "fn": "ask_length_ratio",
+            "value_kind": "squared_quantity",
+            "numerator_coeffs": [
+              "1/4"
+            ],
+            "denominator_coeffs": [
+              "1"
+            ],
+            "denominator_linear_factors": [
+              [
+                "1",
+                "0"
+              ]
+            ],
+            "degree_numerator": 0,
+            "degree_denominator": 0,
+            "constant_value": "1/4",
+            "identity_residual_coeffs": [],
+            "certified_coef": "1/2"
+          }
+        },
+        "goal_values": {
+          "q1": "1/2"
+        },
+        "goal_fns": [
+          "ask_length_ratio"
+        ]
+      }
+    },
+    "scene3d_continuity_errors": [],
+    "chosen_route": "LOCAL_DETERMINISTIC_HYBRID",
+    "provider_calls": 0,
+    "elapsed_ms": 103.929
+  },
+  "renamed_result": {
+    "status": "SERVED",
+    "reason_code": null,
+    "fallback_reason": null,
+    "answer": "1/2",
+    "answers": {
+      "q1": "1/2"
+    },
+    "answer_exact": {
+      "q1": {
+        "coef": "1/2",
+        "dim": 0,
+        "unit": null
+      }
+    },
+    "output_policy": null,
+    "scene_configuration": {
+      "unique": false,
+      "kind": "HEIGHT_INVARIANT_ILLUSTRATIVE",
+      "free_parameter": "height",
+      "free_for": [
+        "S.MNPQ"
+      ],
+      "illustrative_h2": "1",
+      "invariance_certificate": {
+        "schema_version": "height-invariance-certificate/2",
+        "method": "rational_function_identity_in_h2",
+        "certification_mode": "EXACT_SYMBOLIC_POLYNOMIAL_IDENTITY",
+        "parameter": "t = h^2",
+        "domain": "(0, +inf)",
+        "max_degree": 2,
+        "samples_h2": [
+          "1",
+          "2",
+          "3",
+          "5",
+          "7"
+        ],
+        "chart_summary": {
+          "base_g2": [
+            [
+              "1",
+              "0"
+            ],
+            [
+              "0",
+              "1"
+            ]
+          ],
+          "det_g2": "1",
+          "off_base_anchor_count": 1,
+          "free_for": [
+            "S.MNPQ"
+          ]
+        },
+        "proof_obligations": {
+          "PO_SINGLE_FREE_HEIGHT_ORTHOGONAL_CHART": {
+            "verified": true,
+            "free_for": [
+              "S.MNPQ"
+            ],
+            "off_base_anchors": [
+              "S"
+            ],
+            "det_g2": "1"
+          },
+          "PO_AFFINE_COORDINATES_T_INDEPENDENT": {
+            "verified": true,
+            "point_count": 9,
+            "non_vertex_points_on_base": [
+              "H",
+              "H1",
+              "I",
+              "K"
+            ]
+          },
+          "PO_SECTION_TOPOLOGY_INVARIANT": {
+            "verified": true,
+            "section_count": 1
+          },
+          "PO_VALID_DOMAIN_ALL_POSITIVE_T": {
+            "verified": true,
+            "domain": "(0, +inf)",
+            "checked_premise_count": 8
+          },
+          "PO_POLYNOMIAL_DEGREE_BOUNDED": {
+            "verified": true,
+            "max_allowed_degree": 2,
+            "observed_max_degree": 0
+          },
+          "PO_DENOMINATOR_POSITIVE_ON_DOMAIN": {
+            "verified": true,
+            "domain": "(0, +inf)"
+          },
+          "PO_EXACT_POLYNOMIAL_IDENTITY": {
+            "verified": true,
+            "identity": "P(t) - c * Q(t) == 0 over Q[t]"
+          },
+          "PO_INTERPRETER_CROSS_CHECK": {
+            "verified": true,
+            "illustrative_t0": "1"
+          }
+        },
+        "goal_rational_forms": {
+          "q1": {
+            "fn": "ask_length_ratio",
+            "value_kind": "squared_quantity",
+            "numerator_coeffs": [
+              "1/4"
+            ],
+            "denominator_coeffs": [
+              "1"
+            ],
+            "denominator_linear_factors": [
+              [
+                "1",
+                "0"
+              ]
+            ],
+            "degree_numerator": 0,
+            "degree_denominator": 0,
+            "constant_value": "1/4",
+            "identity_residual_coeffs": [],
+            "certified_coef": "1/2"
+          }
+        },
+        "goal_values": {
+          "q1": "1/2"
+        },
+        "goal_fns": [
+          "ask_length_ratio"
+        ]
+      }
+    },
+    "scene3d_continuity_errors": [],
+    "chosen_route": "LOCAL_DETERMINISTIC_HYBRID",
+    "provider_calls": 0,
+    "elapsed_ms": 92.293
+  }
+}

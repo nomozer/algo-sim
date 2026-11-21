@@ -1,0 +1,8 @@
+{
+  "run_id": "verified-section-intersection-dihedral-local",
+  "generated_at_utc": "2026-11-13T11:35:59.957987+00:00",
+  "head": "a74aa3325b61337e301e8df7b728a66f86fdc266",
+  "status": "NOT_MEASURED",
+  "why": "No unseen, rights-cleared in-scope dataset other than the 94 sealed H-1 rows was available in this run; the sealed rows were not downloaded, viewed or read. The 25 controlled-vision items and the 2 previous fresh items are exposed (text/image acceptance in this run are development evidence).",
+  "sealed_rows_opened": 0
+}

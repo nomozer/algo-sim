@@ -156,7 +156,8 @@ def test_dry_run_scores_both_arms_pairs_them_and_never_touches_a_provider(tmp_pa
     assert s["HYBRID"]["usd_total"] == "UNKNOWN"                              # no usage ⇒ UNKNOWN, not 0
     written = _rows(tmp_path / "rows.jsonl")                                   # M1: streamed JSONL, header … summary
     assert [w["type"] for w in written] == ["header"] + ["row"] * 6 + ["summary"]
-    assert out["completed"] is True and written[0]["runtime_identity"]["cache_version"] == "132"
+    from app.main import CACHE_VERSION
+    assert out["completed"] is True and written[0]["runtime_identity"]["cache_version"] == CACHE_VERSION
 
 
 def test_hybrid_arm_passes_the_production_domain_gate_first(tmp_path):

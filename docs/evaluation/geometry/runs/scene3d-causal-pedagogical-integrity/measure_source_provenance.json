@@ -1,0 +1,17 @@
+{
+  "run_id": "scene3d-causal-pedagogical-integrity",
+  "generated_at_utc": "2026-11-14T15:39:13.820636+00:00",
+  "product_commit": "a2874d273959970faa501879f4f9dbfe20c93975",
+  "measured_system": "225f4bba5a8765ccd1c12507ce6dbd0bab25d69d02263148cf94752f921e2b56",
+  "cache_version": "138",
+  "dataset_partition": "DEVELOPMENT (agent-written corpus, exposed REAL27, exposed probes); never H-1 or locked W2/W3",
+  "environment": {
+    "ALLOW_LIVE_AI": "0",
+    "HYBRID_ROUTE_MODE": "local-first",
+    "live_ai_calls": 0
+  },
+  "head": "6da2795a493d6097add56294832f0d5a7ea1ef13",
+  "authority": "geometry_exec.phan_loai_quan_he_do from the exact kernel value and the measured objects (typed metadata, never parsed from producer strings)",
+  "claim_consistency_violations_after": {},
+  "final_answer_policy": "the envelope carries exact values (answers, FINAL_RESULT texts); the learner UI redacts final results (scene3d-model.tapKetQuaCuoi); measured in the browser (answer_text_on_page) — see scene3d_browser_e2e.json"
+}

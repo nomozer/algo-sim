@@ -10,7 +10,7 @@ import pytest
 
 from app.simulation.semantic_program.domain_profile import (
     DOMAIN_HINH_HOC,
-    DOMAIN_TIN_HOC,
+    DOMAIN_NGOAI_PHAM_VI,
     DOMAINS,
     co_duong_thuc_thi,
     detect_domain,
@@ -31,10 +31,21 @@ def _ten_goi(goi: ast.Call) -> str:
 
 
 def test_chi_mien_hinh_hoc_co_duong_thuc_thi_san_pham():
-    assert set(DOMAINS) == {DOMAIN_HINH_HOC, DOMAIN_TIN_HOC}
+    assert set(DOMAINS) == {DOMAIN_HINH_HOC, DOMAIN_NGOAI_PHAM_VI}
     assert co_duong_thuc_thi("Tính diện tích thiết diện.", DOMAIN_HINH_HOC) is True
-    assert co_duong_thuc_thi("Tính diện tích thiết diện.", DOMAIN_TIN_HOC) is False
+    assert co_duong_thuc_thi("Tính diện tích thiết diện.", DOMAIN_NGOAI_PHAM_VI) is False
     assert detect_domain("Cho hình chóp S.ABCD có đáy là hình vuông.") == DOMAIN_HINH_HOC
+    assert detect_domain("Viết chương trình sắp xếp mảng bằng thuật toán nổi bọt.") == DOMAIN_NGOAI_PHAM_VI
+
+
+def test_rows_written_before_the_informatics_domain_removal_miss():
+    """CACHE_VERSION 148 -> 149 (/13): the informatics domain (label `tin_hoc`, its obligation set and analyze schema)
+    left the product, so the hashed model surface changed; a `148:route-d` row was written by a system that still
+    carried it and must MISS."""
+    from tests.cache_policy import assert_cache_policy_at_least, assert_route_d_row_misses
+
+    assert_cache_policy_at_least(149)
+    assert_route_d_row_misses("148:route-d")
 
 
 @pytest.mark.parametrize("f", sorted(_SCRIPTS.glob("*.py")))
@@ -61,7 +72,7 @@ def test_khong_script_nao_gõ_TAY_chuoi_mien(f):
                 assert kw.value.value in DOMAINS, (
                     f"{f.name}:{kw.value.lineno} truyền "
                     f"domain={kw.value.value!r} — không phải miền hợp lệ "
-                    f"{DOMAINS}. Chuỗi lạ rơi vào prompt Tin học IM LẶNG; "
+                    f"{DOMAINS}. Chuỗi lạ rơi IM LẶNG vào nhánh ngoài phạm vi; "
                     "dùng `DOMAIN_HINH_HOC` thay vì gõ tay.")
 
 

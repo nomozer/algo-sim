@@ -1,0 +1,43 @@
+{
+  "run_id": "independent-geometry-plane-constraints",
+  "generated_at_utc": "2026-11-13T15:37:12.816081+00:00",
+  "head": "60ce483cc0795f23edfd704e27b628fdcd4e4202",
+  "detector_code_last_changed_in": "d6b38b172",
+  "detector_changed_by_this_run": false,
+  "tool": "tools/region_eval.py",
+  "ocr_engine": "local RapidOCR/Tesseract (unchanged; header count only)",
+  "live_ai_calls": 0,
+  "sets": {
+    "REAL_SINGLE": "25 controlled-vision VMMU crops (MIT; DEVELOPMENT_EXPOSED; rendered exam crops, not camera photos)",
+    "COMPOSITE_2/3": "SYNTHETIC_COMPOSITE_OF_REAL_EXPOSED_CROPS: 12 two-problem and 8 three-problem pages stacked from those crops",
+    "PERTURBED_*": "SYNTHETIC_PERTURBATION_OF_REAL_EXPOSED_CROPS (4° rotation, ×0.45 brightness, left-to-right shadow)"
+  },
+  "ground_truth": {
+    "problem_box": "GT_AUTO_INK_BBOX (all ink of a one-problem crop; every crop holds exactly one problem — AGENT_ANNOTATED_UNVERIFIED from a contact sheet)",
+    "figure_present": "AGENT_ANNOTATED_UNVERIFIED: all 25 crops carry a figure",
+    "composite_boxes": "BY_CONSTRUCTION"
+  },
+  "not_measured": [
+    "camera photographs of paper",
+    "handwriting",
+    "real multi-problem pages (VMMU page renders may hold sealed H-1 questions: not opened)",
+    "HUMAN_VERIFIED_REGION (none)",
+    "IoU of rotated images (the product crops the deskewed image: other frame)"
+  ],
+  "metric": "a problem's figure is associated when the region the product keeps for that problem holds the figure: one-problem crops — has_associated_figure and containment ≥ 98% of the problem box (the figure lies inside it); composites — the target candidate is flagged with a figure",
+  "real_single": {
+    "figure_detected": 25,
+    "of": 25,
+    "whole_problem_with_figure_kept_at_product_level": 25,
+    "note": "the 11 false splits separate text from figure inside the detector; the OCR header guard keeps the page whole, so the figure stays with its problem"
+  },
+  "composite": {
+    "two_problems_target_with_figure": 18,
+    "of2": 24,
+    "three_problems_target_with_figure": 17,
+    "of3": 24,
+    "wrong_association_risk": "on merged pages (5/20) every figure is kept together with every problem; the reader cannot tell which figure belongs to which question"
+  },
+  "missing_diagram_count_real_single": 0,
+  "diagram_only_facts": "NOT_MEASURED_SEPARATELY: the fidelity gate already refuses facts read only from a figure (controlled-vision receipts); no new case"
+}

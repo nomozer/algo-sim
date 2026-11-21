@@ -1,0 +1,174 @@
+{
+  "run_id": "controlled-vision-real-image-validation",
+  "classification": "DERIVED_FROM_REFERENCED_MEASUREMENTS_NOT_A_NEW_MEASUREMENT",
+  "generated_at_utc": "2026-11-12T17:24:15.979728+00:00",
+  "rule": "a fact is recovered when one accepted form occurs in the OCR text after whitespace removal and prime/degree unification; references are AGENT_TRANSCRIBED_UNVERIFIED",
+  "evaluation": {
+    "recovered": 124,
+    "total": 136,
+    "by_kind": {
+      "angle": {
+        "recovered": 7,
+        "total": 7
+      },
+      "goal": {
+        "recovered": 32,
+        "total": 37
+      },
+      "length": {
+        "recovered": 33,
+        "total": 35
+      },
+      "relation": {
+        "recovered": 27,
+        "total": 29
+      },
+      "solid": {
+        "recovered": 25,
+        "total": 28
+      }
+    },
+    "images_with_all_facts": 12,
+    "single_engine_recovered": {
+      "tesseract": 46,
+      "rapidocr": 67
+    },
+    "missing": [
+      {
+        "case_id": "vmmu_r247",
+        "kind": "solid",
+        "reference": "ABCD.A'B'C'D'"
+      },
+      {
+        "case_id": "vmmu_r254",
+        "kind": "solid",
+        "reference": "ABC.A'B'C'"
+      },
+      {
+        "case_id": "vmmu_r254",
+        "kind": "length",
+        "reference": "AA'=2√13a"
+      },
+      {
+        "case_id": "vmmu_r254",
+        "kind": "goal",
+        "reference": "A'ABC"
+      },
+      {
+        "case_id": "vmmu_r256",
+        "kind": "relation",
+        "reference": "(SAB)⊥(ABCD)"
+      },
+      {
+        "case_id": "vmmu_r256",
+        "kind": "goal",
+        "reference": "khoảng cách từ A"
+      },
+      {
+        "case_id": "vmmu_r256",
+        "kind": "goal",
+        "reference": "(SBC)"
+      },
+      {
+        "case_id": "vmmu_r375",
+        "kind": "goal",
+        "reference": "Khoảng cách từ S"
+      },
+      {
+        "case_id": "vmmu_r460",
+        "kind": "relation",
+        "reference": "vuông cân ở B"
+      },
+      {
+        "case_id": "vmmu_r498",
+        "kind": "solid",
+        "reference": "ABCD.A'B'C'D'"
+      },
+      {
+        "case_id": "vmmu_r498",
+        "kind": "goal",
+        "reference": "(ABC')"
+      },
+      {
+        "case_id": "vmmu_r537",
+        "kind": "length",
+        "reference": "diện tích đáy bằng a²"
+      }
+    ]
+  },
+  "development": {
+    "recovered": 36,
+    "total": 40,
+    "by_kind": {
+      "angle": {
+        "recovered": 1,
+        "total": 2
+      },
+      "goal": {
+        "recovered": 11,
+        "total": 11
+      },
+      "length": {
+        "recovered": 8,
+        "total": 9
+      },
+      "relation": {
+        "recovered": 9,
+        "total": 10
+      },
+      "solid": {
+        "recovered": 7,
+        "total": 8
+      }
+    },
+    "images_with_all_facts": 4,
+    "single_engine_recovered": {
+      "tesseract": 12,
+      "rapidocr": 21
+    },
+    "missing": [
+      {
+        "case_id": "vmmu_r284",
+        "kind": "solid",
+        "reference": "S.ABCD"
+      },
+      {
+        "case_id": "vmmu_r284",
+        "kind": "length",
+        "reference": "hình vuông cạnh a"
+      },
+      {
+        "case_id": "vmmu_r284",
+        "kind": "relation",
+        "reference": "SAB là tam giác đều"
+      },
+      {
+        "case_id": "vmmu_r488",
+        "kind": "angle",
+        "reference": "bằng 60°"
+      }
+    ]
+  },
+  "single_engine_vs_reconciled_evaluation": {
+    "tesseract": 46,
+    "rapidocr": 67,
+    "reconciled": 124,
+    "total": 136
+  },
+  "silent_corruption_check": {
+    "verified_spans_changing_a_fact": "see local_ocr_baseline.json per_case_changes: the only observed case (duplicated '=' in vmmu_r476, development) was fixed",
+    "false_acceptance_images": []
+  },
+  "examples_of_dangerous_substitution_checked": [
+    "√3→√8 (radical)",
+    "A′→A (prime)",
+    "⊥→∥ (relation)",
+    "60°→600° (degree)"
+  ],
+  "source_glyph_corruption_cases": [
+    "vmmu_r254",
+    "vmmu_r498",
+    "vmmu_r520"
+  ],
+  "precision": "NOT_MEASURED: predicted facts are not extracted from OCR text independently; only recall of reference facts is measured"
+}

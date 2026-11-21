@@ -235,7 +235,24 @@ def test_inv_20_candidate_and_cache_verify_only():
     # 128 -> 129 (sphere-sample-source-authority): mặt phẳng cắt khối cong (đường tròn/elip giao) mang vai CONSTRUCT_CUTTING_OBJECT thay CONSTRUCT_AUXILIARY_GEOMETRY trong envelope phục vụ; row v128 thật vẫn HIT (runs/sphere-sample-source-authority/cache/decision.json).
     # 129 -> 130 (scene3d-to-hybrid-v2-replacement): nhân chứng góc vuông + `u_to`, bước dựng của vật do assign sinh, tên mặt phẳng `(α)` / tên nhiều điểm kiểm đồng phẳng (envelope phục vụ đổi; row v129 thật vẫn HIT, runs/scene3d-to-hybrid-v2-replacement/cache/decision.json).
     # 130 -> 131 (geometry-generalization-and-pedagogical-construction): cạnh thiết diện mang lý do đã kiểm chính xác (`justification_text`, envelope phục vụ đổi; row v130 phải MISS).
-    assert str(CACHE_VERSION) == "132"
+    # 132 -> 133 (semantic-to-scene3d-verified-simulation): góc khác 90° mang `angle_construction` (envelope phục vụ đổi; row 132:route-d phải MISS).
+    # 133 -> 134 (verified-section-intersection-dihedral-local): góc không vẽ góc bù + `altitude_construction` (row 133:route-d phải MISS).
+    # 134 -> 135 (certified-scale-cache-safety): guard siết mà khoá cache không đổi ⇒ row 134:route-d phải MISS.
+    # 135 -> 136 (target-invariant-regular-solid-semantics): guard nhánh dấu + ngữ nghĩa tứ diện đều + tên hiển thị ⇒ row 135:route-d phải MISS.
+    # 136 -> 137 (proof-soundness-generalized-angle-invariance): chứng chỉ bất biến /2 gắn mục tiêu, giá trị và cảnh ⇒ row 136:route-d phải MISS.
+    # 137 -> 138 (scene3d-causal-pedagogical-integrity): cờ phụ trợ thừa theo mục tiêu đề, dữ kiện nguồn ngoài tiên quyết trực quan, góc vuông hai mặt / chéo nhau được dựng, ràng buộc loại góc vuông ⇒ row 137:route-d phải MISS.
+    # 138 -> 139 (grounded-vietnamese-geometry-understanding): bộ đọc đề đổi quyết định phục vụ/từ chối (đáy không tên, cạnh bên chóp đều, lăng trụ viết liền, tam giác cân suy ra, diện tích đáy, giá trị chưa đọc) ⇒ row 138:route-d phải MISS.
+    # 139 -> 140 (dimension-aware-verified-construction): đại số thứ nguyên + đại lượng suy ra đã chứng minh + dựng hình lượng giác có chứng chỉ `trig-construction-certificate/1` đổi quyết định phục vụ/từ chối và envelope ⇒ row 139:route-d phải MISS.
+    # 140 -> 141 (simulation-first-mvp-stabilization): `hop_dong_to_po_da_khai` nhận lăng trụ viết liền có dấu phẩy (`ABCA'B'C'`) ⇒ khôi phục đủ đáy/mặt trên/cạnh bên/nhân chứng vuông góc và 6 bước dựng ⇒ row 140:route-d phải MISS.
+    # 141 -> 142 (planner-autonomous-composition-and-search-efficiency): khử trùng phép dựng đồng vai trong cùng mục tiêu (đường Euler @orthocenter/@circumcenter 10 → 8 bước phụ, loại điểm phụ trùng trong Scene3D) + `ask_distance_lines` qua đường dẫn xuất ⇒ row 141:route-d phải MISS.
+    # 142 -> 143 (unified-geometry-understanding-ocr-autonomous-planning): bộ đọc cục bộ mở rộng tổ hợp đệ quy + A4 chứa `@id` trong `contains_points` + khôi phục hiểu đề từ nhận diện OCR có kiểm chứng hình học ⇒ row 142:route-d phải MISS.
+    # 143 -> 144 (real-world-geometry-input-verified-simulation): `_cac_moc_cau` đồng bộ biên câu hỏi viết hoa khuyết dấu chấm + `layout-aware-ocr-reconcile/3` + hợp đồng `verified-input-provenance/1` ⇒ row 143:route-d phải MISS.
+    # 144 -> 145 (student-ready-geometry-simulation-input-reliability): `point_reflection`, `premise-described-point`, tham chiếu đỉnh phụ `@id` qua mô tả, suy biến đồng dạng tam giác vuông/đáy, `layout-aware-ocr-reconcile/4`, `local-ocr-route/3` ⇒ row 144:route-d phải MISS.
+    # 145 -> 146 (axo-hybrid-simulation-intent-generalization-grounded-slm-recovery): Source Gate nhận yêu cầu mô phỏng có danh từ khối, bộ đọc cục bộ tổng quát hoá ý định chỉ-mô-phỏng, SLM `local-slm-extractor/5` hạ 0 mục tiêu số cho đề chỉ-mô-phỏng ⇒ row 145:route-d phải MISS.
+    # 146 -> 147 (axo-hybrid-compositional-geometry-language-grounded-simulation): parser mệnh đề phức hợp (`local-geometry-parser/3`), extractor (`local-slm-extractor/6`), Source Gate phức hợp (`geometry-functions/33`), domain gate không dấu và căn khung camera Scene3D (`V11-VIS-1`) ⇒ row 146:route-d phải MISS.
+    # Từ /13 không ghim giá trị hiện hành ở đây nữa (khoá thật: `tests/test_cache_identity.py` + lock).
+    from tests.cache_policy import assert_cache_policy_at_least
+    assert_cache_policy_at_least(147)
 
 
 def test_inv_21_favicon_not_in_staged_changes():

@@ -64,6 +64,12 @@ def test_valid_targets_keep_their_outcome(case, rname):
     if case == 'C.volume.solid_and_solid_id':
         assert F.outcome(r) == ('REFUSED', 'INVALID_MATH_GOAL')
         return
+    # /13 §6.D (7f196eed3): bridge_v2 (`a4`) maps `measurement/area` on `{"polygon": ...}` instead of
+    # refusing `BRIDGE_UNSUPPORTED_MEASUREMENT` (frozen RED receipt stays immutable; `pl` v1 stays REFUSED).
+    if rname == 'a4' and case in ('C.area_polygon.no_scope', 'C.area_polygon.goal_solid_id'):
+        assert want['status'] == 'REFUSED' and want['code'] == 'BRIDGE_UNSUPPORTED_MEASUREMENT'
+        assert (r.status, r.code, answer(r)) == ('SERVED', None, {'q': ['24', 0, None]})
+        return
     assert (r.status, r.code, answer(r)) == (want['status'], want['code'], want.get('answer', {}))
 
 

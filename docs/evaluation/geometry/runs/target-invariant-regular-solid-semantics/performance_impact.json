@@ -1,0 +1,671 @@
+{
+  "run_id": "target-invariant-regular-solid-semantics",
+  "generated_at_utc": "2026-11-14T07:05:00.979222+00:00",
+  "head": "3a0dfe3124fac0307addcc8fe94c56707d06d69e",
+  "environment": {
+    "ALLOW_LIVE_AI": "0",
+    "host": "developer desktop, shared, not isolated"
+  },
+  "command": "python docs/evaluation/geometry/runs/compositional-semantics-simulation-goals/tools/perf.py <before_backend>",
+  "summary": {
+    "before": {
+      "text_refused_median_ms": 14.33,
+      "text_served_median_ms": 27.17,
+      "diagnose_call_ms": 0.12661650000154623,
+      "prepare_single_median_ms": 2835.05,
+      "prepare_composite_median_ms": 3733.44
+    },
+    "after": {
+      "text_refused_median_ms": 3.22,
+      "text_served_median_ms": 32.25,
+      "diagnose_call_ms": 0.13002149999010726,
+      "prepare_single_median_ms": 2987.08,
+      "prepare_composite_median_ms": 3482.75
+    }
+  },
+  "rows": {
+    "before": {
+      "text": {
+        "mc_section_one_sentence": {
+          "ms": 32.216899999184534,
+          "status": "SERVED"
+        },
+        "mc_section_split": {
+          "ms": 35.857599999872036,
+          "status": "SERVED"
+        },
+        "mc_section_renamed": {
+          "ms": 32.780399997136556,
+          "status": "SERVED"
+        },
+        "mc_section_greek": {
+          "ms": 32.58120000100462,
+          "status": "SERVED"
+        },
+        "mc_extra_unread": {
+          "ms": 2.048799997282913,
+          "status": "REFUSED"
+        },
+        "mc_extra_unread2": {
+          "ms": 1.9190999992133584,
+          "status": "REFUSED"
+        },
+        "mc_distance_extra_unread": {
+          "ms": 1.7989999978453852,
+          "status": "REFUSED"
+        },
+        "mc_distance": {
+          "ms": 23.199700000986923,
+          "status": "SERVED"
+        },
+        "mc_decimal_value": {
+          "ms": 22.415399998862995,
+          "status": "SERVED"
+        },
+        "mc_label_list": {
+          "ms": 27.169699998921715,
+          "status": "SERVED"
+        },
+        "order_plane_after_goal": {
+          "ms": 32.409700001153396,
+          "status": "SERVED"
+        },
+        "order_plane_after_goal_sep": {
+          "ms": 34.58659999887459,
+          "status": "SERVED"
+        },
+        "order_plane_never_defined": {
+          "ms": 1.9092999973508995,
+          "status": "REFUSED"
+        },
+        "order_premises_swapped": {
+          "ms": 24.00310000302852,
+          "status": "SERVED"
+        },
+        "dp_named_midpoint_goal": {
+          "ms": 25.868599997920683,
+          "status": "SERVED"
+        },
+        "dp_unnamed_midpoint_goal": {
+          "ms": 27.07369999916409,
+          "status": "SERVED"
+        },
+        "dp_unnamed_centroid_goal": {
+          "ms": 29.030300000158604,
+          "status": "SERVED"
+        },
+        "dp_unnamed_through_point": {
+          "ms": 2.0273000009183306,
+          "status": "REFUSED"
+        },
+        "dp_free_point": {
+          "ms": 2.3395000025629997,
+          "status": "REFUSED"
+        },
+        "dp_free_point_goi": {
+          "ms": 2.4651999992784113,
+          "status": "REFUSED"
+        },
+        "dp_midpoint_as_goal": {
+          "ms": 3.0107999991741963,
+          "status": "REFUSED"
+        },
+        "dp_reflection": {
+          "ms": 2.5287999997090083,
+          "status": "REFUSED"
+        },
+        "dp_projection_unnamed_image": {
+          "ms": 3.1252999979187734,
+          "status": "REFUSED"
+        },
+        "dp_redefined_conflict": {
+          "ms": 17.25090000036289,
+          "status": "REFUSED"
+        },
+        "goal_angle_line_plane": {
+          "ms": 25.25420000165468,
+          "status": "SERVED"
+        },
+        "goal_cos_line_plane": {
+          "ms": 26.344699999754084,
+          "status": "SERVED"
+        },
+        "goal_cos_spelled": {
+          "ms": 27.939699997659773,
+          "status": "SERVED"
+        },
+        "goal_tan_line_plane": {
+          "ms": 23.78119999775663,
+          "status": "SERVED"
+        },
+        "goal_sin_mc_stem": {
+          "ms": 23.3141999997315,
+          "status": "SERVED"
+        },
+        "goal_cos_planes": {
+          "ms": 27.128699999593664,
+          "status": "SERVED"
+        },
+        "goal_cos_lines": {
+          "ms": 28.72879999995348,
+          "status": "SERVED"
+        },
+        "goal_tan_right_angle": {
+          "ms": 24.485999998432817,
+          "status": "SERVED"
+        },
+        "goal_cos_scale_free": {
+          "ms": 31.614200001058634,
+          "status": "REFUSED"
+        },
+        "goal_cos_of_length_neg": {
+          "ms": 1.898900001833681,
+          "status": "REFUSED"
+        },
+        "goal_cos_squared_neg": {
+          "ms": 1.9753999986278359,
+          "status": "REFUSED"
+        },
+        "goal_cos_given_premise_neg": {
+          "ms": 1.777000001311535,
+          "status": "REFUSED"
+        },
+        "goal_cos_wrong_object_neg": {
+          "ms": 1.976499999727821,
+          "status": "REFUSED"
+        },
+        "proof_only": {
+          "ms": 3.940499998861924,
+          "status": "REFUSED"
+        },
+        "proof_premise_not_given": {
+          "ms": 3.8330999996105675,
+          "status": "REFUSED"
+        },
+        "amb_plane_not_unique": {
+          "ms": 2.0146000024396926,
+          "status": "REFUSED"
+        },
+        "contra_two_lengths": {
+          "ms": 14.33319999705418,
+          "status": "REFUSED"
+        },
+        "contra_skew_intersection": {
+          "ms": 16.67050000105519,
+          "status": "REFUSED"
+        },
+        "diagram_fact": {
+          "ms": 1.9603000000643078,
+          "status": "REFUSED"
+        },
+        "scale_iso_planes": {
+          "ms": 67.74950000180979,
+          "status": "SERVED"
+        },
+        "scale_iso_tan": {
+          "ms": 65.45360000018263,
+          "status": "SERVED"
+        },
+        "scale_iso_line_plane": {
+          "ms": 73.03830000091693,
+          "status": "SERVED"
+        },
+        "scale_iso_renamed": {
+          "ms": 70.28160000118078,
+          "status": "SERVED"
+        },
+        "scale_iso_with_length": {
+          "ms": 25.82280000206083,
+          "status": "SERVED"
+        },
+        "scale_shape_free": {
+          "ms": 31.778900000063004,
+          "status": "REFUSED"
+        },
+        "scale_height_free": {
+          "ms": 29.421999999613035,
+          "status": "REFUSED"
+        },
+        "scale_absolute_volume": {
+          "ms": 22.338200000376673,
+          "status": "REFUSED"
+        },
+        "scale_regular_tetra_no_side": {
+          "ms": 37.94720000223606,
+          "status": "REFUSED"
+        },
+        "ti_right_b_planes": {
+          "ms": 30.042099999263883,
+          "status": "REFUSED"
+        },
+        "ti_right_b_tan": {
+          "ms": 26.861599999392638,
+          "status": "REFUSED"
+        },
+        "ti_renamed": {
+          "ms": 29.39659999901778,
+          "status": "REFUSED"
+        },
+        "ti_varying_line_plane": {
+          "ms": 32.67100000084611,
+          "status": "REFUSED"
+        },
+        "ti_height_free": {
+          "ms": 28.476600000431063,
+          "status": "REFUSED"
+        },
+        "ti_absolute_volume": {
+          "ms": 20.900899999105604,
+          "status": "REFUSED"
+        },
+        "tet_lines": {
+          "ms": 35.39649999947869,
+          "status": "REFUSED"
+        },
+        "tet_cos_mc": {
+          "ms": 34.18949999831966,
+          "status": "REFUSED"
+        },
+        "tet_renamed": {
+          "ms": 37.004199999501,
+          "status": "REFUSED"
+        },
+        "tet_with_side": {
+          "ms": 23.764500001561828,
+          "status": "SERVED"
+        },
+        "tet_edge_face": {
+          "ms": 28.03409999978612,
+          "status": "REFUSED"
+        },
+        "tet_not_regular": {
+          "ms": 34.32489999977406,
+          "status": "REFUSED"
+        },
+        "tet_regular_pyramid_only": {
+          "ms": 35.68789999917499,
+          "status": "REFUSED"
+        },
+        "tet_conflict": {
+          "ms": 1.8328999976802152,
+          "status": "REFUSED"
+        },
+        "_diagnose_ms": 0.12661650000154623
+      },
+      "prepare": {
+        "vmmu_r247": {
+          "ms": 5202.9281000031915,
+          "status": "needs_confirmation",
+          "set": "REAL_SINGLE"
+        },
+        "vmmu_r254": {
+          "ms": 2630.5734000015946,
+          "status": "needs_confirmation",
+          "set": "REAL_SINGLE"
+        },
+        "vmmu_r256": {
+          "ms": 3039.5167999995465,
+          "status": "needs_confirmation",
+          "set": "REAL_SINGLE"
+        },
+        "vmmu_r258": {
+          "ms": 1883.028700001887,
+          "status": "needs_confirmation",
+          "set": "REAL_SINGLE"
+        },
+        "vmmu_r266": {
+          "ms": 1792.2475999985181,
+          "status": "needs_confirmation",
+          "set": "REAL_SINGLE"
+        },
+        "vmmu_r270": {
+          "ms": 3655.726400000276,
+          "status": "needs_confirmation",
+          "set": "REAL_SINGLE"
+        },
+        "vmmu_r247+vmmu_r254": {
+          "ms": 4174.05510000026,
+          "status": "needs_selection",
+          "set": "COMPOSITE_2"
+        },
+        "vmmu_r256+vmmu_r258": {
+          "ms": 3761.45820000238,
+          "status": "needs_selection",
+          "set": "COMPOSITE_2"
+        },
+        "vmmu_r266+vmmu_r270": {
+          "ms": 3705.424600000697,
+          "status": "needs_selection",
+          "set": "COMPOSITE_2"
+        },
+        "vmmu_r273+vmmu_r277": {
+          "ms": 2825.564899998426,
+          "status": "needs_selection",
+          "set": "COMPOSITE_2"
+        }
+      }
+    },
+    "after": {
+      "text": {
+        "mc_section_one_sentence": {
+          "ms": 31.93490000194288,
+          "status": "SERVED"
+        },
+        "mc_section_split": {
+          "ms": 37.0452999995905,
+          "status": "SERVED"
+        },
+        "mc_section_renamed": {
+          "ms": 32.69110000110231,
+          "status": "SERVED"
+        },
+        "mc_section_greek": {
+          "ms": 32.250799999019364,
+          "status": "SERVED"
+        },
+        "mc_extra_unread": {
+          "ms": 1.9476000015856698,
+          "status": "REFUSED"
+        },
+        "mc_extra_unread2": {
+          "ms": 1.881700001831632,
+          "status": "REFUSED"
+        },
+        "mc_distance_extra_unread": {
+          "ms": 1.7798999979277141,
+          "status": "REFUSED"
+        },
+        "mc_distance": {
+          "ms": 22.168399998918176,
+          "status": "SERVED"
+        },
+        "mc_decimal_value": {
+          "ms": 22.50889999777428,
+          "status": "SERVED"
+        },
+        "mc_label_list": {
+          "ms": 27.776599999924656,
+          "status": "SERVED"
+        },
+        "order_plane_after_goal": {
+          "ms": 33.22490000209655,
+          "status": "SERVED"
+        },
+        "order_plane_after_goal_sep": {
+          "ms": 33.835199999884935,
+          "status": "SERVED"
+        },
+        "order_plane_never_defined": {
+          "ms": 1.9909000002371613,
+          "status": "REFUSED"
+        },
+        "order_premises_swapped": {
+          "ms": 23.42990000033751,
+          "status": "SERVED"
+        },
+        "dp_named_midpoint_goal": {
+          "ms": 25.521600000502076,
+          "status": "SERVED"
+        },
+        "dp_unnamed_midpoint_goal": {
+          "ms": 25.337999999464955,
+          "status": "SERVED"
+        },
+        "dp_unnamed_centroid_goal": {
+          "ms": 26.65300000080606,
+          "status": "SERVED"
+        },
+        "dp_unnamed_through_point": {
+          "ms": 3.7522999991779216,
+          "status": "REFUSED"
+        },
+        "dp_free_point": {
+          "ms": 4.195699999399949,
+          "status": "REFUSED"
+        },
+        "dp_free_point_goi": {
+          "ms": 2.2457999984908383,
+          "status": "REFUSED"
+        },
+        "dp_midpoint_as_goal": {
+          "ms": 2.012000000831904,
+          "status": "REFUSED"
+        },
+        "dp_reflection": {
+          "ms": 2.2105999996711034,
+          "status": "REFUSED"
+        },
+        "dp_projection_unnamed_image": {
+          "ms": 1.977799998712726,
+          "status": "REFUSED"
+        },
+        "dp_redefined_conflict": {
+          "ms": 17.755000000761356,
+          "status": "REFUSED"
+        },
+        "goal_angle_line_plane": {
+          "ms": 24.65909999955329,
+          "status": "SERVED"
+        },
+        "goal_cos_line_plane": {
+          "ms": 23.68209999985993,
+          "status": "SERVED"
+        },
+        "goal_cos_spelled": {
+          "ms": 24.477099999785423,
+          "status": "SERVED"
+        },
+        "goal_tan_line_plane": {
+          "ms": 23.780200001056073,
+          "status": "SERVED"
+        },
+        "goal_sin_mc_stem": {
+          "ms": 23.92630000031204,
+          "status": "SERVED"
+        },
+        "goal_cos_planes": {
+          "ms": 26.85899999778485,
+          "status": "SERVED"
+        },
+        "goal_cos_lines": {
+          "ms": 28.017099997668993,
+          "status": "SERVED"
+        },
+        "goal_tan_right_angle": {
+          "ms": 26.404899999761255,
+          "status": "SERVED"
+        },
+        "goal_cos_scale_free": {
+          "ms": 68.15110000025015,
+          "status": "SERVED"
+        },
+        "goal_cos_of_length_neg": {
+          "ms": 3.218199999537319,
+          "status": "REFUSED"
+        },
+        "goal_cos_squared_neg": {
+          "ms": 2.1635000011883676,
+          "status": "REFUSED"
+        },
+        "goal_cos_given_premise_neg": {
+          "ms": 2.4254999989352655,
+          "status": "REFUSED"
+        },
+        "goal_cos_wrong_object_neg": {
+          "ms": 2.456399997754488,
+          "status": "REFUSED"
+        },
+        "proof_only": {
+          "ms": 3.989299999375362,
+          "status": "REFUSED"
+        },
+        "proof_premise_not_given": {
+          "ms": 3.729700001713354,
+          "status": "REFUSED"
+        },
+        "amb_plane_not_unique": {
+          "ms": 1.8612999992910773,
+          "status": "REFUSED"
+        },
+        "contra_two_lengths": {
+          "ms": 13.602899998659268,
+          "status": "REFUSED"
+        },
+        "contra_skew_intersection": {
+          "ms": 14.658700001746183,
+          "status": "REFUSED"
+        },
+        "diagram_fact": {
+          "ms": 1.7239000007975847,
+          "status": "REFUSED"
+        },
+        "scale_iso_planes": {
+          "ms": 67.32750000082888,
+          "status": "SERVED"
+        },
+        "scale_iso_tan": {
+          "ms": 76.27769999817247,
+          "status": "SERVED"
+        },
+        "scale_iso_line_plane": {
+          "ms": 96.2230000004638,
+          "status": "SERVED"
+        },
+        "scale_iso_renamed": {
+          "ms": 68.58550000106334,
+          "status": "SERVED"
+        },
+        "scale_iso_with_length": {
+          "ms": 24.6910999994725,
+          "status": "SERVED"
+        },
+        "scale_shape_free": {
+          "ms": 95.14390000185813,
+          "status": "SERVED"
+        },
+        "scale_height_free": {
+          "ms": 29.615900002681883,
+          "status": "REFUSED"
+        },
+        "scale_absolute_volume": {
+          "ms": 24.337099999684142,
+          "status": "REFUSED"
+        },
+        "scale_regular_tetra_no_side": {
+          "ms": 71.87150000027032,
+          "status": "SERVED"
+        },
+        "ti_right_b_planes": {
+          "ms": 112.05060000065714,
+          "status": "SERVED"
+        },
+        "ti_right_b_tan": {
+          "ms": 109.69979999936186,
+          "status": "SERVED"
+        },
+        "ti_renamed": {
+          "ms": 107.79380000167293,
+          "status": "SERVED"
+        },
+        "ti_varying_line_plane": {
+          "ms": 31.516899998678127,
+          "status": "REFUSED"
+        },
+        "ti_height_free": {
+          "ms": 27.82640000077663,
+          "status": "REFUSED"
+        },
+        "ti_absolute_volume": {
+          "ms": 21.4562000001024,
+          "status": "REFUSED"
+        },
+        "tet_lines": {
+          "ms": 76.4383000023372,
+          "status": "SERVED"
+        },
+        "tet_cos_mc": {
+          "ms": 67.18790000013541,
+          "status": "SERVED"
+        },
+        "tet_renamed": {
+          "ms": 74.82190000155242,
+          "status": "SERVED"
+        },
+        "tet_with_side": {
+          "ms": 24.641600000904873,
+          "status": "SERVED"
+        },
+        "tet_edge_face": {
+          "ms": 59.1229999990901,
+          "status": "SERVED"
+        },
+        "tet_not_regular": {
+          "ms": 34.87680000034743,
+          "status": "REFUSED"
+        },
+        "tet_regular_pyramid_only": {
+          "ms": 36.692600002425024,
+          "status": "REFUSED"
+        },
+        "tet_conflict": {
+          "ms": 2.4364000018977094,
+          "status": "REFUSED"
+        },
+        "_diagnose_ms": 0.13002149999010726
+      },
+      "prepare": {
+        "vmmu_r247": {
+          "ms": 4993.901300000289,
+          "status": "needs_confirmation",
+          "set": "REAL_SINGLE"
+        },
+        "vmmu_r254": {
+          "ms": 2827.989199999138,
+          "status": "needs_confirmation",
+          "set": "REAL_SINGLE"
+        },
+        "vmmu_r256": {
+          "ms": 3146.1692999982915,
+          "status": "needs_confirmation",
+          "set": "REAL_SINGLE"
+        },
+        "vmmu_r258": {
+          "ms": 1918.4617999999318,
+          "status": "needs_confirmation",
+          "set": "REAL_SINGLE"
+        },
+        "vmmu_r266": {
+          "ms": 1854.4775000009395,
+          "status": "needs_confirmation",
+          "set": "REAL_SINGLE"
+        },
+        "vmmu_r270": {
+          "ms": 3385.4298000005656,
+          "status": "needs_confirmation",
+          "set": "REAL_SINGLE"
+        },
+        "vmmu_r247+vmmu_r254": {
+          "ms": 3432.3294999994687,
+          "status": "needs_selection",
+          "set": "COMPOSITE_2"
+        },
+        "vmmu_r256+vmmu_r258": {
+          "ms": 3533.1630000000587,
+          "status": "needs_selection",
+          "set": "COMPOSITE_2"
+        },
+        "vmmu_r266+vmmu_r270": {
+          "ms": 3570.860799998627,
+          "status": "needs_selection",
+          "set": "COMPOSITE_2"
+        },
+        "vmmu_r273+vmmu_r277": {
+          "ms": 2745.725000000675,
+          "status": "needs_selection",
+          "set": "COMPOSITE_2"
+        }
+      }
+    }
+  },
+  "physical_low_end": "PHYSICAL_LOW_END_NOT_MEASURED"
+}

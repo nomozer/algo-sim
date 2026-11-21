@@ -1,0 +1,52 @@
+{
+  "schema": "algosim-planner-composition-verification/1",
+  "generated_at_utc": "2026-11-10T10:07:04.661543+00:00",
+  "product_commit": "d20d7fdcdd6c5759f74ff737f331c2e548923eba",
+  "head_commit": "d20d7fdcdd6c5759f74ff737f331c2e548923eba",
+  "measured_system_tree_hash": "fb4f4992da8764930954a44f24e121ddca6cf1f3a270039773f6dbbf8b1b5c05",
+  "measured_system_file_count": 110,
+  "code_version": {
+    "typed_fact_next": "typed-fact-next/2",
+    "bridge": "typed-fact-next-bridge/2",
+    "planner": "geometry-fact-planner/26",
+    "registry": "geometry-functions/33",
+    "engine": "geometry-function-engine/24",
+    "adapter": "hybrid-simulation-adapter/4",
+    "envelope": "hybrid-route-d-simulation/4",
+    "local_parser": "local-geometry-parser/1",
+    "adaptive_router": "adaptive-input-router/1",
+    "cache_version": "132"
+  },
+  "input_or_case_hash": "34f95ec2cc3bca5c4cb91638deafb03d3f7e2a42bff5213d20101af2f41906b4",
+  "oracle": "Planner composes general primitives (midpoint, divide_segment, line_intersection, line_plane_intersection, plane_parallel_two_lines, plane_section, ask_length_ratio, ask_area_ratio, ask_volume, ask_distance) without per-problem handlers.",
+  "test_command": "pytest backend/tests/geometry/test_reusable_ratio_and_inverse_angle_geometry.py -q",
+  "test_environment": {
+    "os": "Windows-11-10.0.26100-SP0",
+    "python": "3.12.10",
+    "cpu_logical_cores": 12,
+    "allow_live_ai": 0,
+    "live_gemini_calls": 0,
+    "benchmark_tier": "HOST_BENCHMARK_OFFLINE"
+  },
+  "expected_behavior": "Multi-step construction chains are composed deterministically from the FactGraph; 0 problem-specific branches.",
+  "actual_behavior": "All 3 multi-step chains (ext04, ext05, ext06) + vertex-renamed variants composed and verified",
+  "verdict": "PASS",
+  "run_id": "formal-correctness-real-world-acceptance",
+  "wave_id": "FORMAL_CORRECTNESS_REAL_WORLD_ACCEPTANCE",
+  "baseline_head_commit": "cc166865e4d4f1116014d9f1a68d9d050bf0dc9a",
+  "baseline_product_commit": "7994da7a64c8dc288c4de972df2d8d1db65e0c20",
+  "case_ids": [
+    "ext_prt_04_hd_q_8436784#1",
+    "ext_prt_05_hd_q_7451806#1",
+    "ext_prt_06_hd_q_1084979#1"
+  ],
+  "measurement_status": "MEASURED_OFFLINE",
+  "oracle_provenance": "Planner /26 deterministic multi-step call graph traces on ext04 (11 calls), ext05 (10 calls), ext06 (10 calls)",
+  "evidence_classification": "VERIFIED FACT",
+  "per_problem_handlers": 0,
+  "chains_verified": [
+    "ext04: trapezoid_base_ratio -> midpoint(M, N) -> line_intersection(I=AC∩BD) -> plane_parallel_two_lines((P) qua I // SA, SC) -> line_plane_intersection(H=MN∩(P)) -> line_intersection(K=DH∩BC) -> ask_length_ratio(KC/KB)",
+    "ext05: parallelogram -> midpoint(M) -> divide_segment(E) -> line_plane_intersection(I=ME∩(SAD)) -> plane_through(IBC) -> plane_section(S1) -> ask_area_ratio(S1/S2)",
+    "ext06: right_prism + isosceles base + line_plane_angle(BC', (ABB'A')) -> inverse base altitude deduction -> midpoint(M, N, P) -> ask_volume(ABC.A'B'C') + ask_distance(AM, NP)"
+  ]
+}

@@ -1,0 +1,15 @@
+>       raise AssertionError("deterministic input reached the local SLM")
+E       AssertionError: deterministic input reached the local SLM
+
+tests\geometry\test_parser_routing_integrity.py:32: AssertionError
+=========================== short test summary info ===========================
+FAILED tests/geometry/test_parser_routing_integrity.py::test_length_assignment_sentence_is_a_premise_not_a_goal[Cho t\u1ee9 di\u1ec7n NPRV. C\xe1c c\u1ea1nh NP, NR, NV \u0111\xf4i m\u1ed9t vu\xf4ng g\xf3c. \u0110\u1ed9 d\xe0i NP = 5, NR = 8, NV = 12. T\xednh th\u1ec3 t\xedch kh\u1ed1i t\u1ee9 di\u1ec7n NPRV.]
+FAILED tests/geometry/test_parser_routing_integrity.py::test_length_assignment_sentence_is_a_premise_not_a_goal[Cho h\xecnh ch\xf3p E.KLMN v\u1edbi \u0111\xe1y KLMN l\xe0 h\xecnh vu\xf4ng. \u0110\u1ed9 d\xe0i KL = 7. C\u1ea1nh b\xean EK vu\xf4ng g\xf3c v\u1edbi (KLMN) v\xe0 EK = 9. T\xednh th\u1ec3 t\xedch kh\u1ed1i ch\xf3p E.KLMN.]
+FAILED tests/geometry/test_parser_routing_integrity.py::test_length_assignment_sentence_is_a_premise_not_a_goal[Cho h\xecnh h\u1ed9p ch\u1eef nh\u1eadt ABCD.A'B'C'D'. \u0110\u1ed9 d\xe0i AB = 3, AD = 4, AA' = 5. T\xednh th\u1ec3 t\xedch kh\u1ed1i h\u1ed9p ch\u1eef nh\u1eadt ABCD.A'B'C'D'.]
+FAILED tests/geometry/test_parser_routing_integrity.py::test_pairwise_perpendicular_synonym_reads_three_pairs[vu\xf4ng g\xf3c v\u1edbi nhau t\u1eebng \u0111\xf4i m\u1ed9t]
+FAILED tests/geometry/test_parser_routing_integrity.py::test_pairwise_perpendicular_synonym_reads_three_pairs[vu\xf4ng g\xf3c t\u1eebng \u0111\xf4i m\u1ed9t]
+FAILED tests/geometry/test_parser_routing_integrity.py::test_pairwise_perpendicular_synonym_reads_three_pairs[vu\xf4ng g\xf3c v\u1edbi nhau t\u1eebng \u0111\xf4i]
+FAILED tests/geometry/test_parser_routing_integrity.py::test_pairwise_perpendicular_synonym_reads_three_pairs[vu\xf4ng g\xf3c t\u1eebng \u0111\xf4i]
+FAILED tests/geometry/test_parser_routing_integrity.py::test_router_serves_these_deterministically_without_the_slm[Cho t\u1ee9 di\u1ec7n NPRV. C\xe1c c\u1ea1nh NP, NR, NV \u0111\xf4i m\u1ed9t vu\xf4ng g\xf3c. \u0110\u1ed9 d\xe0i NP = 5, NR = 8, NV = 12. T\xednh th\u1ec3 t\xedch kh\u1ed1i t\u1ee9 di\u1ec7n NPRV.-80]
+FAILED tests/geometry/test_parser_routing_integrity.py::test_router_serves_these_deterministically_without_the_slm[Cho t\u1ee9 di\u1ec7n DEGK c\xf3 DE, DG, DK vu\xf4ng g\xf3c v\u1edbi nhau t\u1eebng \u0111\xf4i m\u1ed9t v\xe0 DE = 5, DG = 6, DK = 12. T\xednh th\u1ec3 t\xedch kh\u1ed1i t\u1ee9 di\u1ec7n DEGK.-60]
+9 failed, 6 passed in 3.41s

@@ -1,0 +1,27 @@
+{
+  "schema": "algosim-full-regression-baseline/1",
+  "run_id": "real-image-ocr-vision-comparative-acceptance",
+  "baseline_commit": "6bb22fa3bb183ad28cdf1395c99e5eb375fac97c",
+  "verdict": "INTERRUPTED_NOT_RECOVERABLE",
+  "original_attempt_date": "2026-11-10",
+  "original_command": "D:/Documents/projects/algo-sim/backend/.venv/Scripts/python.exe -m pytest -c backend/pytest.ini backend/tests -q",
+  "original_exec_session": 41215,
+  "environment": {
+    "ALLOW_LIVE_AI": "0",
+    "GEMINI_API_KEY": "EMPTY",
+    "network_guard": "existing offline_child sitecustomize + pytest conftest socket/httpx guards"
+  },
+  "exit_code": "NOT_RECOVERABLE",
+  "counts": "NOT_RECOVERABLE",
+  "output_sha256": "NOT_RECOVERABLE",
+  "end_time": "NOT_RECOVERABLE",
+  "unchanged_baseline_verification": "NOT_MEASURED",
+  "limitations": [
+    "The original exec session was unavailable on resumption; no completed receipt survived.",
+    "The parent added tests and changed product files while that attempt was running.",
+    "No unchanged-baseline pass or baseline-to-candidate count delta is claimed.",
+    "Fresh current-candidate commands and source hashes are recorded in full_regression_summary.json."
+  ],
+  "test_exclusions": ["pytest.ini: not postgres and not external_evidence"],
+  "provider_calls": "NOT_CALLED_BY_RUNNER"
+}

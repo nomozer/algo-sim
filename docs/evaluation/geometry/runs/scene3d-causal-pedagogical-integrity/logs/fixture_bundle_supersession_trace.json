@@ -1,0 +1,17 @@
+{
+ "old_bundle": "docs/evaluation/geometry/runs/scene3d-causal-pedagogical-integrity/fixtures-causal-pedagogical",
+ "new_bundle": "docs/evaluation/geometry/runs/scene3d-causal-pedagogical-integrity/fixtures-trace-method",
+ "fixtures": 41,
+ "fixtures_changed": [
+  "served-section-MAB-trapezoid"
+ ],
+ "changed_paths": {
+  ".envelope.scene3d.formation.steps[].step_summary.validity": 2,
+  ".envelope.scene3d.formation.steps[].verification_refs[]": 2,
+  ".envelope.scene3d.objects[].steps[].trace_derivation": 2,
+  ".envelope.scene3d.events[].justification_text": 2,
+  ".envelope.scene3d.events[].details.justification": 2
+ },
+ "answer_coordinate_status_paths_changed": [],
+ "cause": "trace-method reasons (steps[].trace_derivation, details.justification, justification_text) on section edges"
+}

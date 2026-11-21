@@ -1,0 +1,159 @@
+{
+  "scope": "Task-generated pytest and Chrome artifacts; no user files removed",
+  "entries": [
+    {
+      "source": "Documentsprojectsalgo-sim.superpowersworktreeslocal-first-geometry-understanding.superpowersoffline-logsreal-image-ocr-vision-comparative-acceptancefinalpytest-9064",
+      "destination": ".superpowers\\offline-logs\\recovered-pytest-output",
+      "operation": "MOVE_TO_IGNORED_LOCAL_STORAGE",
+      "inventory": [
+        {
+          "relative_path": "Documentsprojectsalgo-sim.superpowersworktreeslocal-first-geometry-understanding.superpowersoffline-logsreal-image-ocr-vision-comparative-acceptancefinalpytest-9064\\test_a_tampered_frozen_surface0\\surface.json",
+          "bytes": 28233,
+          "sha256": "2cb2862befd29420a8d4c99ce903b31911388e977c2798588899243564b0924d"
+        },
+        {
+          "relative_path": "Documentsprojectsalgo-sim.superpowersworktreeslocal-first-geometry-understanding.superpowersoffline-logsreal-image-ocr-vision-comparative-acceptancefinalpytest-9064\\test_a_tampered_frozen_surface1\\surface.json",
+          "bytes": 28233,
+          "sha256": "f2742dc748320b12d88326a951bb57ac1437a76207cd606e8cc189421d9fa267"
+        },
+        {
+          "relative_path": "Documentsprojectsalgo-sim.superpowersworktreeslocal-first-geometry-understanding.superpowersoffline-logsreal-image-ocr-vision-comparative-acceptancefinalpytest-9064\\test_analyze_api_hybrid_defaul0\\staging_replay.json",
+          "bytes": 2765,
+          "sha256": "75e69e1abf81f18504e9f022d06eb6541a5ed6af3a4099a8cce1b8a12ed7bb72"
+        },
+        {
+          "relative_path": "Documentsprojectsalgo-sim.superpowersworktreeslocal-first-geometry-understanding.superpowersoffline-logsreal-image-ocr-vision-comparative-acceptancefinalpytest-9064\\test_C1_ung_vien_nap_tu_artifa0\\raw_candidate_nguon.json",
+          "bytes": 23,
+          "sha256": "1c66e3aecee1b03026edee1718b3a4dfd3dbb8d3408aecb54b966a623f2bec20"
+        },
+        {
+          "relative_path": "Documentsprojectsalgo-sim.superpowersworktreeslocal-first-geometry-understanding.superpowersoffline-logsreal-image-ocr-vision-comparative-acceptancefinalpytest-9064\\test_current_surface_cannot_co0\\manifest.json",
+          "bytes": 26842,
+          "sha256": "35d6b31264e620058edb67e469b64d2cdf923efec5e8d537f1f1441b50011946"
+        },
+        {
+          "relative_path": "Documentsprojectsalgo-sim.superpowersworktreeslocal-first-geometry-understanding.superpowersoffline-logsreal-image-ocr-vision-comparative-acceptancefinalpytest-9064\\test_fi_10_sha256_mismatch_rej0\\dummy.json",
+          "bytes": 2,
+          "sha256": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a"
+        },
+        {
+          "relative_path": "Documentsprojectsalgo-sim.superpowersworktreeslocal-first-geometry-understanding.superpowersoffline-logsreal-image-ocr-vision-comparative-acceptancefinalpytest-9064\\test_fi_16_historical_artifact0\\sample_hist.json",
+          "bytes": 16,
+          "sha256": "acdb32ed705420361b762f49d8d72d87bc76e38105969984f53b5123c5988179"
+        },
+        {
+          "relative_path": "Documentsprojectsalgo-sim.superpowersworktreeslocal-first-geometry-understanding.superpowersoffline-logsreal-image-ocr-vision-comparative-acceptancefinalpytest-9064\\test_HELD_OUT_bi_CAM_dung_ky_v0\\holdout.json",
+          "bytes": 7801,
+          "sha256": "dd339f8fbca05307f97c8f08bf14c365eee468ae995ccca1086232504becfe3e"
+        },
+        {
+          "relative_path": "Documentsprojectsalgo-sim.superpowersworktreeslocal-first-geometry-understanding.superpowersoffline-logsreal-image-ocr-vision-comparative-acceptancefinalpytest-9064\\test_inv_03_telemetry_collecto0\\test_telemetry.json",
+          "bytes": 635,
+          "sha256": "9d06eb00c3cbe6a91e793182a5e2b801f61a16b566df1a2ca130cc7b142b7c39"
+        },
+        {
+          "relative_path": "Documentsprojectsalgo-sim.superpowersworktreeslocal-first-geometry-understanding.superpowersoffline-logsreal-image-ocr-vision-comparative-acceptancefinalpytest-9064\\test_ky_vong_TU_KHAI_khong_sin0\\pilot.json",
+          "bytes": 7798,
+          "sha256": "e778201224d8b83112e9eba0e1788c659158473343e0264d9672e38d31accfb6"
+        },
+        {
+          "relative_path": "Documentsprojectsalgo-sim.superpowersworktreeslocal-first-geometry-understanding.superpowersoffline-logsreal-image-ocr-vision-comparative-acceptancefinalpytest-9064\\test_preimages_verify_on_a_crl0\\human_expected_visibility.json",
+          "bytes": 6796,
+          "sha256": "b22608b04aeb718cc0b4b0826d2622e2a841a3b47ad56c1dcd98d5bc93261e0e"
+        },
+        {
+          "relative_path": "Documentsprojectsalgo-sim.superpowersworktreeslocal-first-geometry-understanding.superpowersoffline-logsreal-image-ocr-vision-comparative-acceptancefinalpytest-9064\\test_run_fails_closed_without_0\\BROWSER_EVIDENCE.json",
+          "bytes": 1839,
+          "sha256": "c771757a641dc884926257817f82aa34e58afe08a73df3543d9db8fc5bece984"
+        },
+        {
+          "relative_path": "Documentsprojectsalgo-sim.superpowersworktreeslocal-first-geometry-understanding.superpowersoffline-logsreal-image-ocr-vision-comparative-acceptancefinalpytest-9064\\test_runner_executes_both_real0\\manifest.json",
+          "bytes": 33535,
+          "sha256": "c1b6eb94f2a06093dadaa11d24a0c05c268e06af2ed2ad6369c3f0400b168066"
+        },
+        {
+          "relative_path": "Documentsprojectsalgo-sim.superpowersworktreeslocal-first-geometry-understanding.superpowersoffline-logsreal-image-ocr-vision-comparative-acceptancefinalpytest-9064\\test_runner_executes_both_real1\\manifest.json",
+          "bytes": 114248,
+          "sha256": "760b45705aaab24d4decf8fa779ac37ccf988379fb9c469adbbebfeca237cca4"
+        },
+        {
+          "relative_path": "Documentsprojectsalgo-sim.superpowersworktreeslocal-first-geometry-understanding.superpowersoffline-logsreal-image-ocr-vision-comparative-acceptancefinalpytest-9064\\test_runner_TU_CHOI_chay_held_0\\HOLDOUT_SEAL.json",
+          "bytes": 276,
+          "sha256": "30424d0797d9c5f6b9a2061599f48fd876d0e56c215114708b4665722550a959"
+        },
+        {
+          "relative_path": "Documentsprojectsalgo-sim.superpowersworktreeslocal-first-geometry-understanding.superpowersoffline-logsreal-image-ocr-vision-comparative-acceptancefinalpytest-9064\\test_runner_TU_CHOI_khi_TAP_DE0\\HOLDOUT_SEAL.json",
+          "bytes": 173,
+          "sha256": "906adec08a5c42f09de08a76eb14f29184bc968a9ad4defc4d10c13b80e830d0"
+        },
+        {
+          "relative_path": "Documentsprojectsalgo-sim.superpowersworktreeslocal-first-geometry-understanding.superpowersoffline-logsreal-image-ocr-vision-comparative-acceptancefinalpytest-9064\\test_safety_mutant_is_killed_b0\\baseline\\manifest.json",
+          "bytes": 1521,
+          "sha256": "76d22863f38b526b2b02ab93ee0f895ed03252883fdae02d4fd5f575839e6c35"
+        },
+        {
+          "relative_path": "Documentsprojectsalgo-sim.superpowersworktreeslocal-first-geometry-understanding.superpowersoffline-logsreal-image-ocr-vision-comparative-acceptancefinalpytest-9064\\test_safety_mutant_is_killed_b0\\mutant\\manifest.json",
+          "bytes": 33534,
+          "sha256": "df9c3cbe34e6e0c074aaacbf5fd8809aa60b79c06df7f10462c5c09294576682"
+        },
+        {
+          "relative_path": "Documentsprojectsalgo-sim.superpowersworktreeslocal-first-geometry-understanding.superpowersoffline-logsreal-image-ocr-vision-comparative-acceptancefinalpytest-9064\\test_safety_mutant_is_killed_b1\\baseline\\manifest.json",
+          "bytes": 33532,
+          "sha256": "e92bd21245f3f476f439d46c9601739e5cc1714db0d88983f511f8e5e4e89e3c"
+        },
+        {
+          "relative_path": "Documentsprojectsalgo-sim.superpowersworktreeslocal-first-geometry-understanding.superpowersoffline-logsreal-image-ocr-vision-comparative-acceptancefinalpytest-9064\\test_safety_mutant_is_killed_b1\\mutant\\manifest.json",
+          "bytes": 33168,
+          "sha256": "d2933b63e4878677a0e40f2ed7d7678875c4ff090e8f6594b8711f4909fb5496"
+        },
+        {
+          "relative_path": "Documentsprojectsalgo-sim.superpowersworktreeslocal-first-geometry-understanding.superpowersoffline-logsreal-image-ocr-vision-comparative-acceptancefinalpytest-9064\\test_safety_mutant_is_killed_b2\\baseline\\manifest.json",
+          "bytes": 2448,
+          "sha256": "e53a1c48a45ba747e54f79783a8dce9d45d4611e179eb312233223fc5c4200b0"
+        },
+        {
+          "relative_path": "Documentsprojectsalgo-sim.superpowersworktreeslocal-first-geometry-understanding.superpowersoffline-logsreal-image-ocr-vision-comparative-acceptancefinalpytest-9064\\test_safety_mutant_is_killed_b2\\mutant\\manifest.json",
+          "bytes": 27939,
+          "sha256": "9e426601f8a87c08af01963ec6012a04c736440990613c6175242fcdf9ee101d"
+        },
+        {
+          "relative_path": "Documentsprojectsalgo-sim.superpowersworktreeslocal-first-geometry-understanding.superpowersoffline-logsreal-image-ocr-vision-comparative-acceptancefinalpytest-9064\\test_tampered_preimage_is_reje0\\preimages.json",
+          "bytes": 5307,
+          "sha256": "34011172042fdeb1a990fdcc28bb11388996dee94f76774c0886d7c16e1192ef"
+        },
+        {
+          "relative_path": "Documentsprojectsalgo-sim.superpowersworktreeslocal-first-geometry-understanding.superpowersoffline-logsreal-image-ocr-vision-comparative-acceptancefinalpytest-9064\\test_u2_changed_geometry_is_pe0\\BROWSER_EVIDENCE.json",
+          "bytes": 1839,
+          "sha256": "5ce8b58666efc7daa087c70651bb7ff1cdb2e156857d19d73c954fa7d92850f1"
+        },
+        {
+          "relative_path": "Documentsprojectsalgo-sim.superpowersworktreeslocal-first-geometry-understanding.superpowersoffline-logsreal-image-ocr-vision-comparative-acceptancefinalpytest-9064\\test_u2_product_differing_from0\\BROWSER_EVIDENCE.json",
+          "bytes": 1839,
+          "sha256": "f425b26470c573b13dccca65959333b4354257e58c5565bf679d4b1c16eb5e14"
+        },
+        {
+          "relative_path": "Documentsprojectsalgo-sim.superpowersworktreeslocal-first-geometry-understanding.superpowersoffline-logsreal-image-ocr-vision-comparative-acceptancefinalpytest-9064\\test_u2_reviewed_sets_not_repr0\\BROWSER_EVIDENCE.json",
+          "bytes": 1808,
+          "sha256": "218271fdec0c76d599eea31838d794d0433a759d639e73b65a6cb3da044df48a"
+        },
+        {
+          "relative_path": "Documentsprojectsalgo-sim.superpowersworktreeslocal-first-geometry-understanding.superpowersoffline-logsreal-image-ocr-vision-comparative-acceptancefinalpytest-9064\\test_yeu_cau_san_pham_khong_ba0\\replay.json",
+          "bytes": 1496,
+          "sha256": "7e589489ece52ce2170dbe649e1307c42cec4d8506b81079a79746a927e15d68"
+        }
+      ]
+    },
+    {
+      "source": "frontend/debug.log",
+      "destination": ".superpowers\\offline-logs\\recovered-chrome-debug.log",
+      "operation": "MOVE_TO_IGNORED_LOCAL_STORAGE",
+      "inventory": [
+        {
+          "relative_path": "frontend\\debug.log",
+          "bytes": 776,
+          "sha256": "c4e3c4e32b56b4110fbcf346599daaa6635e68d9675a785c342d622d2534352a"
+        }
+      ]
+    }
+  ]
+}

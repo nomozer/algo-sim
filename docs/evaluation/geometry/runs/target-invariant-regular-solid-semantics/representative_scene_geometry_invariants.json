@@ -1,0 +1,166 @@
+{
+  "run_id": "target-invariant-regular-solid-semantics",
+  "generated_at_utc": "2026-11-14T07:25:58.179662+00:00",
+  "product_commit": "bdc34a89e32c77fd73bff7b38b72d3a3496657e1",
+  "measured_system": "2a18f935e4c29462b0495ff6b0fec46df88e215e0bedcaba84668ec202af62d1",
+  "cache_version": "136",
+  "environment": {
+    "ALLOW_LIVE_AI": "0",
+    "HYBRID_ROUTE_MODE": "local-first",
+    "live_ai_calls": 0
+  },
+  "head": "bcba912e82661ccc8b186e6d93cd2bf7928f06bc",
+  "new_served": {
+    "goal_cos_scale_free": {
+      "group": "goal_trig_underdetermined",
+      "checks": 2,
+      "failed": [],
+      "source_goal_completion": true
+    },
+    "scale_shape_free": {
+      "group": "scale_negative",
+      "checks": 3,
+      "failed": [],
+      "source_goal_completion": false
+    },
+    "scale_regular_tetra_no_side": {
+      "group": "scale_negative",
+      "checks": 2,
+      "failed": [],
+      "source_goal_completion": false
+    },
+    "ti_right_b_planes": {
+      "group": "target_invariant",
+      "checks": 3,
+      "failed": [],
+      "source_goal_completion": false
+    },
+    "ti_right_b_tan": {
+      "group": "target_invariant",
+      "checks": 3,
+      "failed": [],
+      "source_goal_completion": true
+    },
+    "ti_renamed": {
+      "group": "metamorphic",
+      "checks": 3,
+      "failed": [],
+      "source_goal_completion": false
+    },
+    "tet_lines": {
+      "group": "regular_tetrahedron",
+      "checks": 2,
+      "failed": [],
+      "source_goal_completion": false
+    },
+    "tet_cos_mc": {
+      "group": "regular_tetrahedron",
+      "checks": 2,
+      "failed": [],
+      "source_goal_completion": true
+    },
+    "tet_renamed": {
+      "group": "metamorphic",
+      "checks": 2,
+      "failed": [],
+      "source_goal_completion": false
+    },
+    "tet_with_side": {
+      "group": "metamorphic",
+      "checks": 2,
+      "failed": [],
+      "source_goal_completion": false
+    },
+    "tet_edge_face": {
+      "group": "regular_tetrahedron",
+      "checks": 2,
+      "failed": [],
+      "source_goal_completion": false
+    }
+  },
+  "all_new_served": {
+    "checks": 85,
+    "failed": 0
+  },
+  "mutations": "36/36",
+  "equivalence_pairs": [
+    {
+      "item": "mc_section_split",
+      "reference": "mc_section_one_sentence",
+      "same_certified_geometry": true,
+      "compared": "answer_exact + section vertex coordinates"
+    },
+    {
+      "item": "mc_section_renamed",
+      "reference": "mc_section_one_sentence",
+      "same_certified_geometry": true,
+      "compared": "answer_exact"
+    },
+    {
+      "item": "mc_section_greek",
+      "reference": "mc_section_one_sentence",
+      "same_certified_geometry": true,
+      "compared": "answer_exact"
+    },
+    {
+      "item": "order_plane_after_goal",
+      "reference": "mc_section_split",
+      "same_certified_geometry": true,
+      "compared": "answer_exact + section vertex coordinates"
+    },
+    {
+      "item": "order_plane_after_goal_sep",
+      "reference": "mc_section_split",
+      "same_certified_geometry": true,
+      "compared": "answer_exact + section vertex coordinates"
+    },
+    {
+      "item": "order_premises_swapped",
+      "reference": "mc_distance",
+      "same_certified_geometry": true,
+      "compared": "answer_exact"
+    },
+    {
+      "item": "goal_cos_line_plane",
+      "reference": "goal_angle_line_plane",
+      "same_certified_geometry": true,
+      "compared": "answer_exact + section vertex coordinates"
+    },
+    {
+      "item": "goal_cos_spelled",
+      "reference": "goal_cos_line_plane",
+      "same_certified_geometry": true,
+      "compared": "answer_exact + section vertex coordinates"
+    },
+    {
+      "item": "scale_iso_renamed",
+      "reference": "scale_iso_planes",
+      "same_certified_geometry": true,
+      "compared": "answer_exact"
+    },
+    {
+      "item": "scale_iso_with_length",
+      "reference": "scale_iso_planes",
+      "same_certified_geometry": true,
+      "compared": "answer_exact + section vertex coordinates"
+    },
+    {
+      "item": "ti_renamed",
+      "reference": "ti_right_b_planes",
+      "same_certified_geometry": true,
+      "compared": "answer_exact"
+    },
+    {
+      "item": "tet_renamed",
+      "reference": "tet_lines",
+      "same_certified_geometry": true,
+      "compared": "answer_exact"
+    },
+    {
+      "item": "tet_with_side",
+      "reference": "tet_lines",
+      "same_certified_geometry": true,
+      "compared": "answer_exact"
+    }
+  ]
+}

@@ -1,0 +1,124 @@
+{
+  "schema": "algosim-output-policy-exact-rounding/1",
+  "generated_at_utc": "2026-11-10T10:07:03.610096+00:00",
+  "product_commit": "d20d7fdcdd6c5759f74ff737f331c2e548923eba",
+  "head_commit": "d20d7fdcdd6c5759f74ff737f331c2e548923eba",
+  "measured_system_tree_hash": "fb4f4992da8764930954a44f24e121ddca6cf1f3a270039773f6dbbf8b1b5c05",
+  "measured_system_file_count": 110,
+  "code_version": {
+    "typed_fact_next": "typed-fact-next/2",
+    "bridge": "typed-fact-next-bridge/2",
+    "planner": "geometry-fact-planner/26",
+    "registry": "geometry-functions/33",
+    "engine": "geometry-function-engine/24",
+    "adapter": "hybrid-simulation-adapter/4",
+    "envelope": "hybrid-route-d-simulation/4",
+    "local_parser": "local-geometry-parser/1",
+    "adaptive_router": "adaptive-input-router/1",
+    "cache_version": "132"
+  },
+  "input_or_case_hash": "54deb6a35382b26a7951fa3f9291b9e80a4aa6c9ce10d99582da58c9b5f58711",
+  "oracle": "ext07: exact 15√93/31 -> rounded 4,7; ext11: exact cos²=3/4 -> 30°; non-special angles asking degrees refuse QUESTION_CONTEXT_UNSUPPORTED",
+  "test_command": "pytest backend/tests/geometry/test_semantic_and_output_policy_closure.py -q",
+  "test_environment": {
+    "os": "Windows-11-10.0.26100-SP0",
+    "python": "3.12.10",
+    "cpu_logical_cores": 12,
+    "allow_live_ai": 0,
+    "live_gemini_calls": 0,
+    "benchmark_tier": "HOST_BENCHMARK_OFFLINE"
+  },
+  "expected_behavior": "Kernel always computes exact Radical/Fraction first; output_policy formats display answer while preserving exact_symbolic and answer_exact.",
+  "actual_behavior": "ext07 output_policy={'q1': {'schema_version': 'output-policy/1', 'exact_answer': '15√93/31', 'requested_unit': None, 'requested_formatting': {'rounded_display': '4,7', 'decimals': 1, 'mode': 'ROUND_HALF_UP', 'decimal_separator': ',', 'scaled_integer': 47, 'lower_bound_verified': True, 'upper_bound_verified': True, 'lower_bound_lhs_int': '268119', 'middle_scaled_sq_int': '270000', 'upper_bound_rhs_int': '279775', 'used_floating_point': False}, 'rounded_display': '4,7'}}; ext11 output_policy={'q1': {'schema_version': 'output-policy/1', 'exact_answer': 'cos²=3/4', 'requested_unit': 'deg', 'requested_formatting': {'kind': 'exact_special_angle_deg', 'degrees': 30}, 'rounded_display': '30°'}}",
+  "verdict": "PASS",
+  "run_id": "formal-correctness-real-world-acceptance",
+  "wave_id": "FORMAL_CORRECTNESS_REAL_WORLD_ACCEPTANCE",
+  "baseline_head_commit": "cc166865e4d4f1116014d9f1a68d9d050bf0dc9a",
+  "baseline_product_commit": "7994da7a64c8dc288c4de972df2d8d1db65e0c20",
+  "case_ids": [
+    "ext_prt_07_hd_q_7958052#1",
+    "ext_prt_11_vmmu_page_r10#1"
+  ],
+  "measurement_status": "MEASURED_OFFLINE",
+  "oracle_provenance": "Exact Kernel Radical/Fraction arithmetic + deterministic output_policy.py (Exact -> Rounded / Special-Angle Degree)",
+  "evidence_classification": "VERIFIED FACT",
+  "output_policy_version": "output-policy/1",
+  "ext07_output_policy": {
+    "q1": {
+      "schema_version": "output-policy/1",
+      "exact_answer": "15√93/31",
+      "requested_unit": null,
+      "requested_formatting": {
+        "rounded_display": "4,7",
+        "decimals": 1,
+        "mode": "ROUND_HALF_UP",
+        "decimal_separator": ",",
+        "scaled_integer": 47,
+        "lower_bound_verified": true,
+        "upper_bound_verified": true,
+        "lower_bound_lhs_int": "268119",
+        "middle_scaled_sq_int": "270000",
+        "upper_bound_rhs_int": "279775",
+        "used_floating_point": false
+      },
+      "rounded_display": "4,7"
+    }
+  },
+  "ext07_answer_exact": {
+    "q1": {
+      "coef": "15√93/31",
+      "dim": 0,
+      "unit": null,
+      "exact_symbolic": "15√93/31",
+      "output_policy": {
+        "schema_version": "output-policy/1",
+        "exact_answer": "15√93/31",
+        "requested_unit": null,
+        "requested_formatting": {
+          "rounded_display": "4,7",
+          "decimals": 1,
+          "mode": "ROUND_HALF_UP",
+          "decimal_separator": ",",
+          "scaled_integer": 47,
+          "lower_bound_verified": true,
+          "upper_bound_verified": true,
+          "lower_bound_lhs_int": "268119",
+          "middle_scaled_sq_int": "270000",
+          "upper_bound_rhs_int": "279775",
+          "used_floating_point": false
+        },
+        "rounded_display": "4,7"
+      }
+    }
+  },
+  "ext11_output_policy": {
+    "q1": {
+      "schema_version": "output-policy/1",
+      "exact_answer": "cos²=3/4",
+      "requested_unit": "deg",
+      "requested_formatting": {
+        "kind": "exact_special_angle_deg",
+        "degrees": 30
+      },
+      "rounded_display": "30°"
+    }
+  },
+  "ext11_answer_exact": {
+    "q1": {
+      "coef": "3/4",
+      "dim": 0,
+      "unit": null,
+      "exact_symbolic": "cos²=3/4",
+      "output_policy": {
+        "schema_version": "output-policy/1",
+        "exact_answer": "cos²=3/4",
+        "requested_unit": "deg",
+        "requested_formatting": {
+          "kind": "exact_special_angle_deg",
+          "degrees": 30
+        },
+        "rounded_display": "30°"
+      }
+    }
+  }
+}

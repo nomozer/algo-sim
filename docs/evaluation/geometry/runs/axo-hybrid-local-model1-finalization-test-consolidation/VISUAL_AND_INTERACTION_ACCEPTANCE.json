@@ -1,0 +1,239 @@
+{
+  "schema": "axo-visual-interaction-acceptance/1",
+  "served_scenes_checked": 87,
+  "initial_visual_pass": 87,
+  "visual_pass_rate": 1.0,
+  "interaction_pass": 87,
+  "interaction_pass_rate": 1.0,
+  "min_canvas_ink": 0.8315,
+  "outside_initial_label_cases": [],
+  "outside_initial_ndc_cases": [],
+  "missing_gold_label_cases": [],
+  "stale_scene_cases": [],
+  "console_error_cases": [],
+  "ui_scenarios_summary": {
+    "total": 10,
+    "passed": 10,
+    "scenarios": [
+      {
+        "scenario_id": "I01",
+        "pass": true,
+        "scenes": [
+          {
+            "case_id": "H001",
+            "surface": "SCENE",
+            "start": {
+              "x": 639,
+              "y": 449
+            },
+            "under": {
+              "tag": "CANVAS",
+              "cls": ""
+            },
+            "frame_pixel_diff": 0.11622,
+            "labels_moved": 5,
+            "rotated": true
+          },
+          {
+            "case_id": "H057",
+            "surface": "SCENE",
+            "start": {
+              "x": 639,
+              "y": 449
+            },
+            "under": {
+              "tag": "CANVAS",
+              "cls": ""
+            },
+            "frame_pixel_diff": 0.08685,
+            "labels_moved": 5,
+            "rotated": true
+          },
+          {
+            "case_id": "H017",
+            "surface": "SCENE",
+            "start": {
+              "x": 639,
+              "y": 449
+            },
+            "under": {
+              "tag": "CANVAS",
+              "cls": ""
+            },
+            "frame_pixel_diff": 0.11714,
+            "labels_moved": 8,
+            "rotated": true
+          }
+        ],
+        "console_errors": []
+      },
+      {
+        "scenario_id": "I02",
+        "pass": true,
+        "scene": "H001",
+        "edge": {
+          "start": {
+            "x": 467,
+            "y": 427
+          },
+          "under": {
+            "tag": "CANVAS",
+            "cls": ""
+          },
+          "frame_pixel_diff": 0.09112,
+          "labels_moved": 5,
+          "rotated": true
+        },
+        "chip": {
+          "absent": true
+        },
+        "near_label": {
+          "start": {
+            "x": 575,
+            "y": 329
+          },
+          "under": {
+            "tag": "CANVAS",
+            "cls": ""
+          },
+          "frame_pixel_diff": 0.10607,
+          "labels_moved": 5,
+          "rotated": true
+        }
+      },
+      {
+        "scenario_id": "I04",
+        "pass": true,
+        "scene": "H001",
+        "double_reset_max_drift_px": 0
+      },
+      {
+        "scenario_id": "I03",
+        "pass": true,
+        "after_reset": {
+          "start": {
+            "x": 639,
+            "y": 449
+          },
+          "under": {
+            "tag": "CANVAS",
+            "cls": ""
+          },
+          "frame_pixel_diff": 0.1177,
+          "labels_moved": 5,
+          "rotated": true
+        },
+        "after_change": {
+          "start": {
+            "x": 639,
+            "y": 449
+          },
+          "under": {
+            "tag": "CANVAS",
+            "cls": ""
+          },
+          "frame_pixel_diff": 0.08697,
+          "labels_moved": 5,
+          "rotated": true
+        },
+        "missing_gold_after_change": []
+      },
+      {
+        "scenario_id": "I05",
+        "pass": true,
+        "case_id": "HD05",
+        "reason_code": null,
+        "toast": "Đề bài cần thêm dữ kiện để dựng hình\nTrong “Cho hình chóp S.IJKL có đáy là hình vuông cạnh 4 và SI vuông góc với đáy. Hãy vẽ hình.”, bạn hãy nói rõ các số đo cần thiết. Bạn có thể bổ sung hoặc viết rõ phần đó ngay trên ô nhập rồi nhấn Dựng hình.",
+        "console_errors": []
+      },
+      {
+        "scenario_id": "I07",
+        "pass": true,
+        "had_cancel_button": false,
+        "slow_case": "H091",
+        "fast_case": "H016",
+        "labels_at_render": [
+          "I",
+          "I'",
+          "J",
+          "J'",
+          "K",
+          "K'",
+          "L",
+          "L'"
+        ],
+        "labels_after_wait": [
+          "I",
+          "I'",
+          "J",
+          "J'",
+          "K",
+          "K'",
+          "L",
+          "L'"
+        ],
+        "console_errors": []
+      },
+      {
+        "scenario_id": "I08_1920x1080",
+        "pass": true,
+        "case_id": "H017",
+        "overflow_x": false,
+        "canvas": {
+          "w": 1289,
+          "h": 1042
+        },
+        "outside_initial_labels": [],
+        "missing_gold_labels": [],
+        "canvas_viewport_share": 0.648,
+        "centre_drag_rotated": true,
+        "console_errors": []
+      },
+      {
+        "scenario_id": "I08_1366x768",
+        "pass": true,
+        "case_id": "H017",
+        "overflow_x": false,
+        "canvas": {
+          "w": 735,
+          "h": 730
+        },
+        "outside_initial_labels": [],
+        "missing_gold_labels": [],
+        "canvas_viewport_share": 0.511,
+        "centre_drag_rotated": true,
+        "console_errors": []
+      },
+      {
+        "scenario_id": "I08_768x1024",
+        "pass": true,
+        "case_id": "H017",
+        "overflow_x": false,
+        "canvas": {
+          "w": 472,
+          "h": 986
+        },
+        "outside_initial_labels": [],
+        "missing_gold_labels": [],
+        "canvas_viewport_share": 0.592,
+        "centre_drag_rotated": true,
+        "console_errors": []
+      },
+      {
+        "scenario_id": "I08_390x844",
+        "pass": true,
+        "case_id": "H017",
+        "overflow_x": false,
+        "canvas": {
+          "w": 390,
+          "h": 444
+        },
+        "outside_initial_labels": [],
+        "missing_gold_labels": [],
+        "canvas_viewport_share": 0.526,
+        "centre_drag_rotated": true,
+        "console_errors": []
+      }
+    ]
+  }
+}

@@ -1,0 +1,15 @@
+{"id":"V02","http":503,"rs":null,"surface":"TOAST"}
+{"id":"V05","http":200,"rs":"REFUSED","surface":"TOAST"}
+{"id":"V06","http":200,"rs":"REFUSED","surface":"TOAST"}
+{"id":"V08","http":200,"rs":"REFUSED","surface":"TOAST"}
+{"id":"V09","http":200,"rs":"REFUSED","surface":"TOAST"}
+{"id":"V10","http":200,"rs":"REFUSED","surface":"TOAST"}
+{"id":"V11","http":200,"rs":"REFUSED","surface":"TOAST"}
+{"id":"V14","http":200,"rs":"REFUSED","surface":"TOAST"}
+{"id":"V16","http":200,"rs":"REFUSED","surface":"TOAST"}
+{"id":"V19","http":200,"rs":"REFUSED","surface":"TOAST"}
+{"id":"V21","http":200,"rs":"SERVED","surface":"SCENE","fv":407.9,"fi":1244.3,"ink":0.1265,"miss":[]}
+{"id":"V28","http":503,"rs":null,"surface":"TOAST"}
+{"id":"Q08","http":200,"rs":"REFUSED","surface":"TOAST"}
+{"id":"C03","http":200,"rs":"REFUSED","surface":"TOAST"}
+{"id":"C08","http":200,"rs":"SERVED","surface":"SCENE","fv":334,"fi":1079.4,"ink":0.0881,"miss":[]}

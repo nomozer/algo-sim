@@ -1,0 +1,23 @@
+{
+ "old_bundle": "docs/evaluation/geometry/runs/verified-section-intersection-dihedral-local/fixtures-dihedral-altitude",
+ "new_bundle": "docs/evaluation/geometry/runs/proof-soundness-generalized-angle-invariance/fixtures-lineage-proof-soundness",
+ "fixtures": 41,
+ "fixtures_changed": 12,
+ "changed_paths": {
+  ".envelope.scene3d.objects[].computational_depends": 173,
+  ".envelope.scene3d.objects[].visible_prerequisites": 173,
+  ".envelope.scene3d.formation.steps[].visible_prerequisites": 93,
+  ".envelope.scene3d.objects[].construction_lineage": 92,
+  ".envelope.scene3d.events[].visible_prerequisites": 70,
+  ".envelope.scene3d.formation.steps[].construction_lineage": 62,
+  ".envelope.config.view_steps[].narration": 15,
+  ".envelope.config.frames[].narration": 15,
+  ".envelope.scene3d.events[].explanation": 15,
+  ".envelope.scene3d.events[].measured_quantity": 15,
+  ".envelope.scene3d.objects[].measured_quantity": 15,
+  ".envelope.scene3d.unused_auxiliary_ids": 12,
+  ".envelope.scene3d.objects[].is_unused_auxiliary": 1
+ },
+ "answer_coordinate_status_paths_changed": [],
+ "cause": "commit 9d5e9b408 (construction lineage, named narrations); identity fields of the producer"
+}

@@ -277,6 +277,8 @@ describe("Simulation Error Classification & Bounded Recovery (AXO Reliability)",
               });
             };
           `,
+          // This checkout's `frontend/src`, never a fixed path to another clone (it resolved the harness against
+          // whatever that clone held, or failed when it had no node_modules).
           resolveDir: path.resolve(path.dirname(fileURLToPath(import.meta.url)), "../../.."),
           sourcefile: "recovery-browser-harness.tsx",
           loader: "tsx",

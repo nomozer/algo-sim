@@ -1,0 +1,29 @@
+{
+  "run_id": "semantic-failure-safe-image-segmentation",
+  "generated_at_utc": "2026-11-13T16:58:18.691725+00:00",
+  "start_head": "dcbedcb0d67971beb6ba5260a7553abe55de5ee1",
+  "branch": "feat/local-first-geometry-understanding",
+  "reported": {
+    "head": "dcbedcb0d",
+    "product_commit": "697b097ac",
+    "candidate_manifest_commit": "da06829fe",
+    "candidate_stored_in": "8852c4070",
+    "measured_system": "040de2fd63fb687203610918160b1170ad025117b2d221acf12ef25215bd831c",
+    "measured_files": 115,
+    "cache_version": "134"
+  },
+  "verified_at_start": {
+    "head_matches": true,
+    "ancestors_of_head": [
+      "697b097ac",
+      "da06829fe",
+      "8852c4070"
+    ],
+    "working_tree_clean": true,
+    "freeze_verify": "match 115 files 040de2fd63fb6872",
+    "cache_lock": "CACHE_VERSION 134, environment 3d5400a5",
+    "servers_listening": "none (8767/8770/5173)"
+  },
+  "note": "report HEAD dcbedcb0d, manifest commit da06829fe and freeze commit 8852c4070 are distinct; product 697b097ac is the last commit touching measured paths",
+  "discrepancies": []
+}

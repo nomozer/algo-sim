@@ -1,0 +1,840 @@
+{
+  "run_id": "local-semantic-source-gate-reliability",
+  "label": "after",
+  "generated_at_utc": "2026-11-12T18:18:57.708144+00:00",
+  "head": "c5bb73f5144ebed1808ba5654588737ab5ecca0a",
+  "working_tree_dirty_paths": [
+    "M backend/app/ai/local_geometry_parser.py",
+    " M backend/app/ingestion/unified_input.py",
+    " M backend/app/simulation/geometry_functions/registry.py"
+  ],
+  "database": "SQLite file, fresh per run",
+  "rounds_per_level": 5,
+  "images": "controlled-vision manifest, distinct per request",
+  "levels": [
+    {
+      "simultaneous": 1,
+      "rounds": [
+        {
+          "round": 0,
+          "wall_ms": 2778.071299999283,
+          "requests": [
+            {
+              "auth_me_status": 200,
+              "prepare_status": 200,
+              "ms": 2512.1502000001783,
+              "reason_code": "LOCAL_OCR_REVIEW_REQUIRED",
+              "result": "needs_confirmation",
+              "transport_error": null
+            }
+          ],
+          "server_exceptions": []
+        },
+        {
+          "round": 1,
+          "wall_ms": 2801.0818000002473,
+          "requests": [
+            {
+              "auth_me_status": 200,
+              "prepare_status": 200,
+              "ms": 2534.780199999659,
+              "reason_code": "LOCAL_OCR_REVIEW_REQUIRED",
+              "result": "needs_confirmation",
+              "transport_error": null
+            }
+          ],
+          "server_exceptions": []
+        },
+        {
+          "round": 2,
+          "wall_ms": 3047.0678999990923,
+          "requests": [
+            {
+              "auth_me_status": 200,
+              "prepare_status": 200,
+              "ms": 2791.022699999303,
+              "reason_code": "LOCAL_OCR_REVIEW_REQUIRED",
+              "result": "needs_confirmation",
+              "transport_error": null
+            }
+          ],
+          "server_exceptions": []
+        },
+        {
+          "round": 3,
+          "wall_ms": 2095.580000001064,
+          "requests": [
+            {
+              "auth_me_status": 200,
+              "prepare_status": 200,
+              "ms": 1837.85540000099,
+              "reason_code": "LOCAL_OCR_REVIEW_REQUIRED",
+              "result": "needs_confirmation",
+              "transport_error": null
+            }
+          ],
+          "server_exceptions": []
+        },
+        {
+          "round": 4,
+          "wall_ms": 1947.5377999988268,
+          "requests": [
+            {
+              "auth_me_status": 200,
+              "prepare_status": 200,
+              "ms": 1687.7786999975797,
+              "reason_code": "LOCAL_OCR_REVIEW_REQUIRED",
+              "result": "needs_confirmation",
+              "transport_error": null
+            }
+          ],
+          "server_exceptions": []
+        }
+      ],
+      "requests": 5,
+      "prepare_200": 5,
+      "auth_me_5xx": 0,
+      "prepare_5xx": 0,
+      "prepare_401": 0,
+      "prepare_401_after_auth_me_5xx": 0,
+      "transport_errors": 0,
+      "server_exceptions": [],
+      "prepare_ms_p50": 2512.1502000001783,
+      "health_probe_ms": {
+        "n": 37,
+        "p50": 265.3755999999703,
+        "max": 486.5070000014384,
+        "over_1000ms": 0,
+        "failed": 0
+      }
+    },
+    {
+      "simultaneous": 2,
+      "rounds": [
+        {
+          "round": 0,
+          "wall_ms": 4570.387700001447,
+          "requests": [
+            {
+              "auth_me_status": 200,
+              "prepare_status": 200,
+              "ms": 4085.2763000002597,
+              "reason_code": "LOCAL_OCR_REVIEW_REQUIRED",
+              "result": "needs_confirmation",
+              "transport_error": null
+            },
+            {
+              "auth_me_status": 200,
+              "prepare_status": 200,
+              "ms": 4279.465600000549,
+              "reason_code": "LOCAL_OCR_REVIEW_REQUIRED",
+              "result": "needs_confirmation",
+              "transport_error": null
+            }
+          ],
+          "server_exceptions": []
+        },
+        {
+          "round": 1,
+          "wall_ms": 4189.484399998037,
+          "requests": [
+            {
+              "auth_me_status": 200,
+              "prepare_status": 200,
+              "ms": 3906.8068000015046,
+              "reason_code": "LOCAL_OCR_REVIEW_REQUIRED",
+              "result": "needs_confirmation",
+              "transport_error": null
+            },
+            {
+              "auth_me_status": 200,
+              "prepare_status": 200,
+              "ms": 3516.775600000983,
+              "reason_code": "LOCAL_OCR_REVIEW_REQUIRED",
+              "result": "needs_confirmation",
+              "transport_error": null
+            }
+          ],
+          "server_exceptions": []
+        },
+        {
+          "round": 2,
+          "wall_ms": 4989.094399999885,
+          "requests": [
+            {
+              "auth_me_status": 200,
+              "prepare_status": 200,
+              "ms": 4326.406699998188,
+              "reason_code": "LOCAL_OCR_REVIEW_REQUIRED",
+              "result": "needs_confirmation",
+              "transport_error": null
+            },
+            {
+              "auth_me_status": 200,
+              "prepare_status": 200,
+              "ms": 4630.123099999764,
+              "reason_code": "LOCAL_OCR_REVIEW_REQUIRED",
+              "result": "needs_confirmation",
+              "transport_error": null
+            }
+          ],
+          "server_exceptions": []
+        },
+        {
+          "round": 3,
+          "wall_ms": 3751.9697999996424,
+          "requests": [
+            {
+              "auth_me_status": 200,
+              "prepare_status": 200,
+              "ms": 3053.129899999476,
+              "reason_code": "LOCAL_OCR_REVIEW_REQUIRED",
+              "result": "needs_confirmation",
+              "transport_error": null
+            },
+            {
+              "auth_me_status": 200,
+              "prepare_status": 200,
+              "ms": 3448.2226000000082,
+              "reason_code": "LOCAL_OCR_REVIEW_REQUIRED",
+              "result": "needs_confirmation",
+              "transport_error": null
+            }
+          ],
+          "server_exceptions": []
+        },
+        {
+          "round": 4,
+          "wall_ms": 3753.338200000144,
+          "requests": [
+            {
+              "auth_me_status": 200,
+              "prepare_status": 200,
+              "ms": 3305.672999998933,
+              "reason_code": "LOCAL_OCR_REVIEW_REQUIRED",
+              "result": "needs_confirmation",
+              "transport_error": null
+            },
+            {
+              "auth_me_status": 200,
+              "prepare_status": 200,
+              "ms": 3391.1804000017582,
+              "reason_code": "LOCAL_OCR_REVIEW_REQUIRED",
+              "result": "needs_confirmation",
+              "transport_error": null
+            }
+          ],
+          "server_exceptions": []
+        }
+      ],
+      "requests": 10,
+      "prepare_200": 10,
+      "auth_me_5xx": 0,
+      "prepare_5xx": 0,
+      "prepare_401": 0,
+      "prepare_401_after_auth_me_5xx": 0,
+      "transport_errors": 0,
+      "server_exceptions": [],
+      "prepare_ms_p50": 3711.791200001244,
+      "health_probe_ms": {
+        "n": 56,
+        "p50": 307.95224999928905,
+        "max": 389.7141000015836,
+        "over_1000ms": 0,
+        "failed": 0
+      }
+    },
+    {
+      "simultaneous": 4,
+      "rounds": [
+        {
+          "round": 0,
+          "wall_ms": 8317.868699999963,
+          "requests": [
+            {
+              "auth_me_status": 200,
+              "prepare_status": 200,
+              "ms": 7327.912500000821,
+              "reason_code": "LOCAL_OCR_REVIEW_REQUIRED",
+              "result": "needs_confirmation",
+              "transport_error": null
+            },
+            {
+              "auth_me_status": 200,
+              "prepare_status": 200,
+              "ms": 7715.029400002095,
+              "reason_code": "LOCAL_OCR_REVIEW_REQUIRED",
+              "result": "needs_confirmation",
+              "transport_error": null
+            },
+            {
+              "auth_me_status": 200,
+              "prepare_status": 200,
+              "ms": 7766.247699997621,
+              "reason_code": "LOCAL_OCR_REVIEW_REQUIRED",
+              "result": "needs_confirmation",
+              "transport_error": null
+            },
+            {
+              "auth_me_status": 200,
+              "prepare_status": 200,
+              "ms": 7445.0983999995515,
+              "reason_code": "LOCAL_OCR_REVIEW_REQUIRED",
+              "result": "needs_confirmation",
+              "transport_error": null
+            }
+          ],
+          "server_exceptions": []
+        },
+        {
+          "round": 1,
+          "wall_ms": 8125.915900000109,
+          "requests": [
+            {
+              "auth_me_status": 200,
+              "prepare_status": 200,
+              "ms": 6852.451799997652,
+              "reason_code": "LOCAL_OCR_REVIEW_REQUIRED",
+              "result": "needs_confirmation",
+              "transport_error": null
+            },
+            {
+              "auth_me_status": 200,
+              "prepare_status": 200,
+              "ms": 7575.093499999639,
+              "reason_code": "LOCAL_OCR_REVIEW_REQUIRED",
+              "result": "needs_confirmation",
+              "transport_error": null
+            },
+            {
+              "auth_me_status": 200,
+              "prepare_status": 200,
+              "ms": 7554.374700001063,
+              "reason_code": "LOCAL_OCR_REVIEW_REQUIRED",
+              "result": "needs_confirmation",
+              "transport_error": null
+            },
+            {
+              "auth_me_status": 200,
+              "prepare_status": 200,
+              "ms": 7279.200500001025,
+              "reason_code": "LOCAL_OCR_REVIEW_REQUIRED",
+              "result": "needs_confirmation",
+              "transport_error": null
+            }
+          ],
+          "server_exceptions": []
+        },
+        {
+          "round": 2,
+          "wall_ms": 7162.2528999978385,
+          "requests": [
+            {
+              "auth_me_status": 200,
+              "prepare_status": 200,
+              "ms": 6474.540799998067,
+              "reason_code": "LOCAL_OCR_REVIEW_REQUIRED",
+              "result": "needs_confirmation",
+              "transport_error": null
+            },
+            {
+              "auth_me_status": 200,
+              "prepare_status": 200,
+              "ms": 6211.808500000188,
+              "reason_code": "LOCAL_OCR_REVIEW_REQUIRED",
+              "result": "needs_confirmation",
+              "transport_error": null
+            },
+            {
+              "auth_me_status": 200,
+              "prepare_status": 200,
+              "ms": 6552.666899999167,
+              "reason_code": "LOCAL_OCR_REVIEW_REQUIRED",
+              "result": "needs_confirmation",
+              "transport_error": null
+            },
+            {
+              "auth_me_status": 200,
+              "prepare_status": 200,
+              "ms": 6671.11599999771,
+              "reason_code": "DIAGRAM_FACT_REVIEW_REQUIRED",
+              "result": "needs_confirmation",
+              "transport_error": null
+            }
+          ],
+          "server_exceptions": []
+        },
+        {
+          "round": 3,
+          "wall_ms": 8393.106300001818,
+          "requests": [
+            {
+              "auth_me_status": 200,
+              "prepare_status": 200,
+              "ms": 7605.225799998152,
+              "reason_code": "DIAGRAM_FACT_REVIEW_REQUIRED",
+              "result": "needs_confirmation",
+              "transport_error": null
+            },
+            {
+              "auth_me_status": 200,
+              "prepare_status": 200,
+              "ms": 7987.204100001691,
+              "reason_code": "LOCAL_OCR_REVIEW_REQUIRED",
+              "result": "needs_confirmation",
+              "transport_error": null
+            },
+            {
+              "auth_me_status": 200,
+              "prepare_status": 200,
+              "ms": 7338.02459999788,
+              "reason_code": "LOCAL_OCR_REVIEW_REQUIRED",
+              "result": "needs_confirmation",
+              "transport_error": null
+            },
+            {
+              "auth_me_status": 200,
+              "prepare_status": 200,
+              "ms": 7324.285599999712,
+              "reason_code": "LOCAL_OCR_REVIEW_REQUIRED",
+              "result": "needs_confirmation",
+              "transport_error": null
+            }
+          ],
+          "server_exceptions": []
+        },
+        {
+          "round": 4,
+          "wall_ms": 8155.358399999386,
+          "requests": [
+            {
+              "auth_me_status": 200,
+              "prepare_status": 200,
+              "ms": 7552.7383999979065,
+              "reason_code": "LOCAL_OCR_REVIEW_REQUIRED",
+              "result": "needs_confirmation",
+              "transport_error": null
+            },
+            {
+              "auth_me_status": 200,
+              "prepare_status": 200,
+              "ms": 6917.034500002046,
+              "reason_code": "LOCAL_OCR_REVIEW_REQUIRED",
+              "result": "needs_confirmation",
+              "transport_error": null
+            },
+            {
+              "auth_me_status": 200,
+              "prepare_status": 200,
+              "ms": 7273.294900001929,
+              "reason_code": "LOCAL_OCR_REVIEW_REQUIRED",
+              "result": "needs_confirmation",
+              "transport_error": null
+            },
+            {
+              "auth_me_status": 200,
+              "prepare_status": 200,
+              "ms": 7674.778299999161,
+              "reason_code": "LOCAL_OCR_REVIEW_REQUIRED",
+              "result": "needs_confirmation",
+              "transport_error": null
+            }
+          ],
+          "server_exceptions": []
+        }
+      ],
+      "requests": 20,
+      "prepare_200": 20,
+      "auth_me_5xx": 0,
+      "prepare_5xx": 0,
+      "prepare_401": 0,
+      "prepare_401_after_auth_me_5xx": 0,
+      "transport_errors": 0,
+      "server_exceptions": [],
+      "prepare_ms_p50": 7332.96854999935,
+      "health_probe_ms": {
+        "n": 104,
+        "p50": 299.04090000127326,
+        "max": 490.8872000014526,
+        "over_1000ms": 0,
+        "failed": 0
+      }
+    },
+    {
+      "simultaneous": 8,
+      "rounds": [
+        {
+          "round": 0,
+          "wall_ms": 15544.21700000239,
+          "requests": [
+            {
+              "auth_me_status": 200,
+              "prepare_status": 200,
+              "ms": 14451.084599997557,
+              "reason_code": "LOCAL_OCR_REVIEW_REQUIRED",
+              "result": "needs_confirmation",
+              "transport_error": null
+            },
+            {
+              "auth_me_status": 200,
+              "prepare_status": 200,
+              "ms": 14808.894800000417,
+              "reason_code": "LOCAL_OCR_REVIEW_REQUIRED",
+              "result": "needs_confirmation",
+              "transport_error": null
+            },
+            {
+              "auth_me_status": 200,
+              "prepare_status": 200,
+              "ms": 14962.71169999818,
+              "reason_code": "LOCAL_OCR_REVIEW_REQUIRED",
+              "result": "needs_confirmation",
+              "transport_error": null
+            },
+            {
+              "auth_me_status": 200,
+              "prepare_status": 200,
+              "ms": 14393.910400001914,
+              "reason_code": "LOCAL_OCR_REVIEW_REQUIRED",
+              "result": "needs_confirmation",
+              "transport_error": null
+            },
+            {
+              "auth_me_status": 200,
+              "prepare_status": 200,
+              "ms": 13138.026000000536,
+              "reason_code": "LOCAL_OCR_REVIEW_REQUIRED",
+              "result": "needs_confirmation",
+              "transport_error": null
+            },
+            {
+              "auth_me_status": 200,
+              "prepare_status": 200,
+              "ms": 13150.297700001829,
+              "reason_code": "LOCAL_OCR_REVIEW_REQUIRED",
+              "result": "needs_confirmation",
+              "transport_error": null
+            },
+            {
+              "auth_me_status": 200,
+              "prepare_status": 200,
+              "ms": 13942.134599998099,
+              "reason_code": "LOCAL_OCR_REVIEW_REQUIRED",
+              "result": "needs_confirmation",
+              "transport_error": null
+            },
+            {
+              "auth_me_status": 200,
+              "prepare_status": 200,
+              "ms": 13661.446300000534,
+              "reason_code": "LOCAL_OCR_REVIEW_REQUIRED",
+              "result": "needs_confirmation",
+              "transport_error": null
+            }
+          ],
+          "server_exceptions": []
+        },
+        {
+          "round": 1,
+          "wall_ms": 13711.89189999859,
+          "requests": [
+            {
+              "auth_me_status": 200,
+              "prepare_status": 200,
+              "ms": 12005.946499997663,
+              "reason_code": "LOCAL_OCR_REVIEW_REQUIRED",
+              "result": "needs_confirmation",
+              "transport_error": null
+            },
+            {
+              "auth_me_status": 200,
+              "prepare_status": 200,
+              "ms": 12121.735500000796,
+              "reason_code": "LOCAL_OCR_REVIEW_REQUIRED",
+              "result": "needs_confirmation",
+              "transport_error": null
+            },
+            {
+              "auth_me_status": 200,
+              "prepare_status": 200,
+              "ms": 12006.797499998356,
+              "reason_code": "LOCAL_OCR_REVIEW_REQUIRED",
+              "result": "needs_confirmation",
+              "transport_error": null
+            },
+            {
+              "auth_me_status": 200,
+              "prepare_status": 200,
+              "ms": 12665.037500002654,
+              "reason_code": "DIAGRAM_FACT_REVIEW_REQUIRED",
+              "result": "needs_confirmation",
+              "transport_error": null
+            },
+            {
+              "auth_me_status": 200,
+              "prepare_status": 200,
+              "ms": 12444.565000001603,
+              "reason_code": "DIAGRAM_FACT_REVIEW_REQUIRED",
+              "result": "needs_confirmation",
+              "transport_error": null
+            },
+            {
+              "auth_me_status": 200,
+              "prepare_status": 200,
+              "ms": 13189.171899997746,
+              "reason_code": "LOCAL_OCR_REVIEW_REQUIRED",
+              "result": "needs_confirmation",
+              "transport_error": null
+            },
+            {
+              "auth_me_status": 200,
+              "prepare_status": 200,
+              "ms": 12080.290300000343,
+              "reason_code": "LOCAL_OCR_REVIEW_REQUIRED",
+              "result": "needs_confirmation",
+              "transport_error": null
+            },
+            {
+              "auth_me_status": 200,
+              "prepare_status": 200,
+              "ms": 11939.903200000117,
+              "reason_code": "LOCAL_OCR_REVIEW_REQUIRED",
+              "result": "needs_confirmation",
+              "transport_error": null
+            }
+          ],
+          "server_exceptions": []
+        },
+        {
+          "round": 2,
+          "wall_ms": 14932.567099996959,
+          "requests": [
+            {
+              "auth_me_status": 200,
+              "prepare_status": 200,
+              "ms": 13833.167900000262,
+              "reason_code": "LOCAL_OCR_REVIEW_REQUIRED",
+              "result": "needs_confirmation",
+              "transport_error": null
+            },
+            {
+              "auth_me_status": 200,
+              "prepare_status": 200,
+              "ms": 13301.22130000018,
+              "reason_code": "LOCAL_OCR_REVIEW_REQUIRED",
+              "result": "needs_confirmation",
+              "transport_error": null
+            },
+            {
+              "auth_me_status": 200,
+              "prepare_status": 200,
+              "ms": 13212.79979999963,
+              "reason_code": "LOCAL_OCR_REVIEW_REQUIRED",
+              "result": "needs_confirmation",
+              "transport_error": null
+            },
+            {
+              "auth_me_status": 200,
+              "prepare_status": 200,
+              "ms": 14050.735700002406,
+              "reason_code": "LOCAL_OCR_REVIEW_REQUIRED",
+              "result": "needs_confirmation",
+              "transport_error": null
+            },
+            {
+              "auth_me_status": 200,
+              "prepare_status": 200,
+              "ms": 13775.932700002159,
+              "reason_code": "LOCAL_OCR_REVIEW_REQUIRED",
+              "result": "needs_confirmation",
+              "transport_error": null
+            },
+            {
+              "auth_me_status": 200,
+              "prepare_status": 200,
+              "ms": 14107.241000001522,
+              "reason_code": "LOCAL_OCR_REVIEW_REQUIRED",
+              "result": "needs_confirmation",
+              "transport_error": null
+            },
+            {
+              "auth_me_status": 200,
+              "prepare_status": 200,
+              "ms": 13334.783999998763,
+              "reason_code": "LOCAL_OCR_REVIEW_REQUIRED",
+              "result": "needs_confirmation",
+              "transport_error": null
+            },
+            {
+              "auth_me_status": 200,
+              "prepare_status": 200,
+              "ms": 12897.294399997918,
+              "reason_code": "LOCAL_OCR_REVIEW_REQUIRED",
+              "result": "needs_confirmation",
+              "transport_error": null
+            }
+          ],
+          "server_exceptions": []
+        },
+        {
+          "round": 3,
+          "wall_ms": 15729.216300002008,
+          "requests": [
+            {
+              "auth_me_status": 200,
+              "prepare_status": 200,
+              "ms": 13513.138300000719,
+              "reason_code": "LOCAL_OCR_REVIEW_REQUIRED",
+              "result": "needs_confirmation",
+              "transport_error": null
+            },
+            {
+              "auth_me_status": 200,
+              "prepare_status": 200,
+              "ms": 13841.639500002202,
+              "reason_code": "LOCAL_OCR_REVIEW_REQUIRED",
+              "result": "needs_confirmation",
+              "transport_error": null
+            },
+            {
+              "auth_me_status": 200,
+              "prepare_status": 200,
+              "ms": 14970.102399998723,
+              "reason_code": "LOCAL_OCR_REVIEW_REQUIRED",
+              "result": "needs_confirmation",
+              "transport_error": null
+            },
+            {
+              "auth_me_status": 200,
+              "prepare_status": 200,
+              "ms": 14796.908899999835,
+              "reason_code": "LOCAL_OCR_REVIEW_REQUIRED",
+              "result": "needs_confirmation",
+              "transport_error": null
+            },
+            {
+              "auth_me_status": 200,
+              "prepare_status": 200,
+              "ms": 14710.155999997369,
+              "reason_code": "LOCAL_OCR_REVIEW_REQUIRED",
+              "result": "needs_confirmation",
+              "transport_error": null
+            },
+            {
+              "auth_me_status": 200,
+              "prepare_status": 200,
+              "ms": 14006.291800000326,
+              "reason_code": "LOCAL_OCR_REVIEW_REQUIRED",
+              "result": "needs_confirmation",
+              "transport_error": null
+            },
+            {
+              "auth_me_status": 200,
+              "prepare_status": 200,
+              "ms": 14325.725499998953,
+              "reason_code": "LOCAL_OCR_REVIEW_REQUIRED",
+              "result": "needs_confirmation",
+              "transport_error": null
+            },
+            {
+              "auth_me_status": 200,
+              "prepare_status": 200,
+              "ms": 14430.788799996662,
+              "reason_code": "LOCAL_OCR_REVIEW_REQUIRED",
+              "result": "needs_confirmation",
+              "transport_error": null
+            }
+          ],
+          "server_exceptions": []
+        },
+        {
+          "round": 4,
+          "wall_ms": 13428.02809999921,
+          "requests": [
+            {
+              "auth_me_status": 200,
+              "prepare_status": 200,
+              "ms": 11587.911400001758,
+              "reason_code": "LOCAL_OCR_REVIEW_REQUIRED",
+              "result": "needs_confirmation",
+              "transport_error": null
+            },
+            {
+              "auth_me_status": 200,
+              "prepare_status": 200,
+              "ms": 12017.186299999594,
+              "reason_code": "LOCAL_OCR_REVIEW_REQUIRED",
+              "result": "needs_confirmation",
+              "transport_error": null
+            },
+            {
+              "auth_me_status": 200,
+              "prepare_status": 200,
+              "ms": 11326.444700000138,
+              "reason_code": "LOCAL_OCR_REVIEW_REQUIRED",
+              "result": "needs_confirmation",
+              "transport_error": null
+            },
+            {
+              "auth_me_status": 200,
+              "prepare_status": 200,
+              "ms": 12032.132399999682,
+              "reason_code": "LOCAL_OCR_REVIEW_REQUIRED",
+              "result": "needs_confirmation",
+              "transport_error": null
+            },
+            {
+              "auth_me_status": 200,
+              "prepare_status": 200,
+              "ms": 12072.461499999918,
+              "reason_code": "DIAGRAM_FACT_REVIEW_REQUIRED",
+              "result": "needs_confirmation",
+              "transport_error": null
+            },
+            {
+              "auth_me_status": 200,
+              "prepare_status": 200,
+              "ms": 11928.076000000146,
+              "reason_code": "DIAGRAM_FACT_REVIEW_REQUIRED",
+              "result": "needs_confirmation",
+              "transport_error": null
+            },
+            {
+              "auth_me_status": 200,
+              "prepare_status": 200,
+              "ms": 12831.081899999845,
+              "reason_code": "LOCAL_OCR_REVIEW_REQUIRED",
+              "result": "needs_confirmation",
+              "transport_error": null
+            },
+            {
+              "auth_me_status": 200,
+              "prepare_status": 200,
+              "ms": 11632.505499997933,
+              "reason_code": "LOCAL_OCR_REVIEW_REQUIRED",
+              "result": "needs_confirmation",
+              "transport_error": null
+            }
+          ],
+          "server_exceptions": []
+        }
+      ],
+      "requests": 40,
+      "prepare_200": 40,
+      "auth_me_5xx": 0,
+      "prepare_5xx": 0,
+      "prepare_401": 0,
+      "prepare_401_after_auth_me_5xx": 0,
+      "transport_errors": 0,
+      "server_exceptions": [],
+      "prepare_ms_p50": 13257.010549999904,
+      "health_probe_ms": {
+        "n": 185,
+        "p50": 303.04660000183503,
+        "max": 587.4394999991637,
+        "over_1000ms": 0,
+        "failed": 0
+      }
+    }
+  ]
+}

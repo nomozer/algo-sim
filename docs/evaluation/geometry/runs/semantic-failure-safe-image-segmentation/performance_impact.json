@@ -1,0 +1,439 @@
+{
+  "run_id": "semantic-failure-safe-image-segmentation",
+  "generated_at_utc": "2026-11-13T17:18:08.002554+00:00",
+  "head": "dcbedcb0d67971beb6ba5260a7553abe55de5ee1",
+  "environment": {
+    "ALLOW_LIVE_AI": "0",
+    "host": "developer desktop, shared, not isolated"
+  },
+  "command": "python docs/evaluation/geometry/runs/semantic-failure-safe-image-segmentation/tools/perf.py <before_backend>",
+  "summary": {
+    "before": {
+      "text_refused_median_ms": 1.85,
+      "text_served_median_ms": 24.71,
+      "diagnose_call_ms": null,
+      "prepare_single_median_ms": 2838.9,
+      "prepare_composite_median_ms": 3978.57
+    },
+    "after": {
+      "text_refused_median_ms": 1.99,
+      "text_served_median_ms": 23.4,
+      "diagnose_call_ms": 0.16919850000704173,
+      "prepare_single_median_ms": 3106.52,
+      "prepare_composite_median_ms": 3622.56
+    }
+  },
+  "rows": {
+    "before": {
+      "text": {
+        "goal_volume_tinh": {
+          "ms": 22.038600000087172,
+          "status": "SERVED"
+        },
+        "goal_volume_stem": {
+          "ms": 21.735300004365854,
+          "status": "SERVED"
+        },
+        "goal_volume_da_cho": {
+          "ms": 22.32910000020638,
+          "status": "SERVED"
+        },
+        "goal_volume_theo_a": {
+          "ms": 22.522100000060163,
+          "status": "SERVED"
+        },
+        "goal_distance_tinh": {
+          "ms": 24.70739999989746,
+          "status": "SERVED"
+        },
+        "goal_distance_stem": {
+          "ms": 24.85039999737637,
+          "status": "SERVED"
+        },
+        "goal_angle_tinh": {
+          "ms": 24.34180000273045,
+          "status": "SERVED"
+        },
+        "goal_angle_stem": {
+          "ms": 21.693599999707658,
+          "status": "SERVED"
+        },
+        "goal_angle_stem_day": {
+          "ms": 1.611400002730079,
+          "status": "REFUSED"
+        },
+        "goal_cos_unsupported": {
+          "ms": 1.6112000012071803,
+          "status": "REFUSED"
+        },
+        "goal_tan_unsupported": {
+          "ms": 1.5810000040801242,
+          "status": "REFUSED"
+        },
+        "goal_proof_only": {
+          "ms": 3.3760000005713664,
+          "status": "REFUSED"
+        },
+        "pair_point_definition": {
+          "ms": 23.064599998178892,
+          "status": "SERVED"
+        },
+        "pair_point_as_goal": {
+          "ms": 1.6163999971468002,
+          "status": "REFUSED"
+        },
+        "pair_plane_determined": {
+          "ms": 31.118300001253374,
+          "status": "SERVED"
+        },
+        "pair_plane_underdetermined": {
+          "ms": 1.8697999985306524,
+          "status": "REFUSED"
+        },
+        "ref_undefined_plane": {
+          "ms": 1.6616000066278502,
+          "status": "REFUSED"
+        },
+        "ref_mp_abbrev": {
+          "ms": 34.60659999836935,
+          "status": "SERVED"
+        },
+        "ref_relative_clause_point": {
+          "ms": 2.0923999982187524,
+          "status": "REFUSED"
+        },
+        "ref_unnamed_point_in_plane": {
+          "ms": 34.795500003383495,
+          "status": "SERVED"
+        },
+        "ref_goi_plane": {
+          "ms": 34.674800001084805,
+          "status": "SERVED"
+        },
+        "order_one_sentence": {
+          "ms": 2.1018999977968633,
+          "status": "REFUSED"
+        },
+        "order_semicolon": {
+          "ms": 55.881799999042414,
+          "status": "SERVED"
+        },
+        "order_goal_first": {
+          "ms": 1.906600002257619,
+          "status": "REFUSED"
+        },
+        "order_renamed": {
+          "ms": 35.34859999490436,
+          "status": "SERVED"
+        },
+        "sec_hinh_gi_question": {
+          "ms": 1.8755999990389682,
+          "status": "REFUSED"
+        },
+        "sec_do_P_cat": {
+          "ms": 1.8246000036015175,
+          "status": "REFUSED"
+        },
+        "sec_area_stem": {
+          "ms": 1.817699994717259,
+          "status": "REFUSED"
+        },
+        "int_goal": {
+          "ms": 17.617799996514805,
+          "status": "SERVED"
+        },
+        "int_goal_mp": {
+          "ms": 16.436099998827558,
+          "status": "SERVED"
+        },
+        "multi_goals": {
+          "ms": 30.425899996771477,
+          "status": "SERVED"
+        },
+        "diagram_benign": {
+          "ms": 1.7394999958924018,
+          "status": "REFUSED"
+        },
+        "diagram_dependent": {
+          "ms": 1.5547000002698041,
+          "status": "REFUSED"
+        },
+        "missing_dimension": {
+          "ms": 3.042999996978324,
+          "status": "REFUSED"
+        },
+        "inconsistent": {
+          "ms": 13.876199998776428,
+          "status": "REFUSED"
+        },
+        "elliptical_role": {
+          "ms": 1.93569999828469,
+          "status": "REFUSED"
+        },
+        "cube_stem_distance": {
+          "ms": 28.676000001723878,
+          "status": "SERVED"
+        },
+        "_diagnose_ms": null
+      },
+      "prepare": {
+        "vmmu_r247": {
+          "ms": 4829.739100001461,
+          "status": "needs_confirmation",
+          "set": "REAL_SINGLE"
+        },
+        "vmmu_r254": {
+          "ms": 2600.6417000025976,
+          "status": "needs_confirmation",
+          "set": "REAL_SINGLE"
+        },
+        "vmmu_r256": {
+          "ms": 3077.1550999998,
+          "status": "needs_confirmation",
+          "set": "REAL_SINGLE"
+        },
+        "vmmu_r258": {
+          "ms": 1958.0445000028703,
+          "status": "needs_confirmation",
+          "set": "REAL_SINGLE"
+        },
+        "vmmu_r266": {
+          "ms": 1930.1057999982731,
+          "status": "needs_confirmation",
+          "set": "REAL_SINGLE"
+        },
+        "vmmu_r270": {
+          "ms": 3532.108100000187,
+          "status": "needs_confirmation",
+          "set": "REAL_SINGLE"
+        },
+        "vmmu_r247+vmmu_r254": {
+          "ms": 4292.233899999701,
+          "status": "needs_confirmation",
+          "set": "COMPOSITE_2"
+        },
+        "vmmu_r256+vmmu_r258": {
+          "ms": 3834.5165999999153,
+          "status": "needs_selection",
+          "set": "COMPOSITE_2"
+        },
+        "vmmu_r266+vmmu_r270": {
+          "ms": 4122.6313000006485,
+          "status": "needs_confirmation",
+          "set": "COMPOSITE_2"
+        },
+        "vmmu_r273+vmmu_r277": {
+          "ms": 2881.6665000049397,
+          "status": "needs_selection",
+          "set": "COMPOSITE_2"
+        }
+      }
+    },
+    "after": {
+      "text": {
+        "goal_volume_tinh": {
+          "ms": 23.155299997597467,
+          "status": "SERVED"
+        },
+        "goal_volume_stem": {
+          "ms": 23.40340000228025,
+          "status": "SERVED"
+        },
+        "goal_volume_da_cho": {
+          "ms": 22.436300001572818,
+          "status": "SERVED"
+        },
+        "goal_volume_theo_a": {
+          "ms": 22.80300000711577,
+          "status": "SERVED"
+        },
+        "goal_distance_tinh": {
+          "ms": 22.97030000045197,
+          "status": "SERVED"
+        },
+        "goal_distance_stem": {
+          "ms": 22.899799994775094,
+          "status": "SERVED"
+        },
+        "goal_angle_tinh": {
+          "ms": 22.64170000125887,
+          "status": "SERVED"
+        },
+        "goal_angle_stem": {
+          "ms": 21.590700001979712,
+          "status": "SERVED"
+        },
+        "goal_angle_stem_day": {
+          "ms": 23.291000004974194,
+          "status": "SERVED"
+        },
+        "goal_cos_unsupported": {
+          "ms": 1.7195999971590936,
+          "status": "REFUSED"
+        },
+        "goal_tan_unsupported": {
+          "ms": 1.761400002578739,
+          "status": "REFUSED"
+        },
+        "goal_proof_only": {
+          "ms": 3.3200999969267286,
+          "status": "REFUSED"
+        },
+        "pair_point_definition": {
+          "ms": 23.0504999999539,
+          "status": "SERVED"
+        },
+        "pair_point_as_goal": {
+          "ms": 1.9879999963450246,
+          "status": "REFUSED"
+        },
+        "pair_plane_determined": {
+          "ms": 35.07299999910174,
+          "status": "SERVED"
+        },
+        "pair_plane_underdetermined": {
+          "ms": 2.340099999855738,
+          "status": "REFUSED"
+        },
+        "ref_undefined_plane": {
+          "ms": 1.9437999944784679,
+          "status": "REFUSED"
+        },
+        "ref_mp_abbrev": {
+          "ms": 35.4114000001573,
+          "status": "SERVED"
+        },
+        "ref_relative_clause_point": {
+          "ms": 35.11219999927562,
+          "status": "SERVED"
+        },
+        "ref_unnamed_point_in_plane": {
+          "ms": 36.93270000076154,
+          "status": "SERVED"
+        },
+        "ref_goi_plane": {
+          "ms": 35.2502999958233,
+          "status": "SERVED"
+        },
+        "order_one_sentence": {
+          "ms": 1.7843999958131462,
+          "status": "REFUSED"
+        },
+        "order_semicolon": {
+          "ms": 31.343299997388385,
+          "status": "SERVED"
+        },
+        "order_goal_first": {
+          "ms": 1.8792999981087632,
+          "status": "REFUSED"
+        },
+        "order_renamed": {
+          "ms": 30.93269999953918,
+          "status": "SERVED"
+        },
+        "sec_hinh_gi_question": {
+          "ms": 31.142899999395013,
+          "status": "SERVED"
+        },
+        "sec_do_P_cat": {
+          "ms": 2.4193999997805804,
+          "status": "REFUSED"
+        },
+        "sec_area_stem": {
+          "ms": 46.341400004166644,
+          "status": "SERVED"
+        },
+        "int_goal": {
+          "ms": 20.00669999688398,
+          "status": "SERVED"
+        },
+        "int_goal_mp": {
+          "ms": 19.375999996555038,
+          "status": "SERVED"
+        },
+        "multi_goals": {
+          "ms": 35.09910000138916,
+          "status": "SERVED"
+        },
+        "diagram_benign": {
+          "ms": 1.9955000025220215,
+          "status": "REFUSED"
+        },
+        "diagram_dependent": {
+          "ms": 1.7666999992798083,
+          "status": "REFUSED"
+        },
+        "missing_dimension": {
+          "ms": 3.9963000017451122,
+          "status": "REFUSED"
+        },
+        "inconsistent": {
+          "ms": 13.895600000978447,
+          "status": "REFUSED"
+        },
+        "elliptical_role": {
+          "ms": 2.0106999945710413,
+          "status": "REFUSED"
+        },
+        "cube_stem_distance": {
+          "ms": 28.013499999360647,
+          "status": "SERVED"
+        },
+        "_diagnose_ms": 0.16919850000704173
+      },
+      "prepare": {
+        "vmmu_r247": {
+          "ms": 4965.259399999923,
+          "status": "needs_confirmation",
+          "set": "REAL_SINGLE"
+        },
+        "vmmu_r254": {
+          "ms": 3245.476400006737,
+          "status": "needs_confirmation",
+          "set": "REAL_SINGLE"
+        },
+        "vmmu_r256": {
+          "ms": 2967.555600000196,
+          "status": "needs_confirmation",
+          "set": "REAL_SINGLE"
+        },
+        "vmmu_r258": {
+          "ms": 1929.6816999994917,
+          "status": "needs_confirmation",
+          "set": "REAL_SINGLE"
+        },
+        "vmmu_r266": {
+          "ms": 1930.5010000025504,
+          "status": "needs_confirmation",
+          "set": "REAL_SINGLE"
+        },
+        "vmmu_r270": {
+          "ms": 3723.485200003779,
+          "status": "needs_confirmation",
+          "set": "REAL_SINGLE"
+        },
+        "vmmu_r247+vmmu_r254": {
+          "ms": 3596.1408999937703,
+          "status": "needs_selection",
+          "set": "COMPOSITE_2"
+        },
+        "vmmu_r256+vmmu_r258": {
+          "ms": 3648.9876999985427,
+          "status": "needs_selection",
+          "set": "COMPOSITE_2"
+        },
+        "vmmu_r266+vmmu_r270": {
+          "ms": 3775.9364000012283,
+          "status": "needs_selection",
+          "set": "COMPOSITE_2"
+        },
+        "vmmu_r273+vmmu_r277": {
+          "ms": 2972.6454999981797,
+          "status": "needs_selection",
+          "set": "COMPOSITE_2"
+        }
+      }
+    }
+  },
+  "physical_low_end": "PHYSICAL_LOW_END_NOT_MEASURED"
+}

@@ -1,0 +1,71 @@
+{
+  "schema": "axo-full-t3-receipt/1",
+  "run_id": "semantic-grounding-slm-recovery",
+  "candidate": {
+    "head": "d27b78de5",
+    "live_acceptance_head": "b28783e31",
+    "evaluated_freeze_head": "39c95599e9ddc2efc7cc3455ae2505384af63e21",
+    "candidate_commit": "4c1b94b61cdd8b1747059829a9d487b1749e1383",
+    "product_commit_sha": "4c1b94b61cdd8b1747059829a9d487b1749e1383",
+    "measured_system_tree_hash": "3152f3829fbe4744baa298b0ee147648cd1cb666103baabcb1497cb9ffb525d5",
+    "measured_files": 127,
+    "cache_version": "157",
+    "route_d_cache_policy": "157:route-d",
+    "evaluation_candidate_frozen_on_clean_tree": true,
+    "tracked_tree_clean_at_start": true,
+    "same_identity_as_live_acceptance": true,
+    "worktree": "reused shared development worktree switched to detached HEAD d27b78de5 (T3) and b28783e31 (Holdout-6/SLM-Ind-3, 0 product changes); not an isolated freshly branched authoritative worktree -> AUTHORITATIVE_DETACHED_COMPLIANCE = NOT_VERIFIED"
+  },
+  "command": "cd frontend && npm run test:full",
+  "env": {
+    "ALLOW_LIVE_AI": "0",
+    "ALGO_SIM_PYTHON": "D:/Documents/projects/algo-sim/backend/.venv/Scripts/python.exe",
+    "LOCAL_SLM_CACHE_DIR": "local hard-linked cache (AxoV9 73f1484b..., llama.cpp b12470)"
+  },
+  "exit_code": 0,
+  "duration_s": 1411.3,
+  "verdict": "FULL_PRODUCT_GATE_PASS",
+  "gates": {
+    "backend_pytest": {
+      "status": "PASS",
+      "passed": 15162,
+      "failed": 0,
+      "skipped": 8,
+      "deselected": 9,
+      "xfailed": 12,
+      "warnings": 1,
+      "duration_s": 1276.04,
+      "wrapper_seconds": 1280.6
+    },
+    "frontend_vitest": {
+      "status": "PASS",
+      "files_passed": 203,
+      "tests_passed": 2345,
+      "failed": 0,
+      "duration_s": 119.14,
+      "wrapper_seconds": 121.5
+    },
+    "typecheck_build": {
+      "status": "PASS",
+      "vite_build_seconds": 5.11,
+      "wrapper_seconds": 8.0
+    },
+    "demo_replay": {
+      "status": "PASS",
+      "passed": 5,
+      "total": 5,
+      "reduced_chain_passed": 1,
+      "reduced_chain_total": 1,
+      "seconds": 0.7
+    },
+    "demo_crash_surface": {
+      "status": "PASS",
+      "passed": 6,
+      "total": 6,
+      "unexpected_500": 0,
+      "seconds": 0.4
+    }
+  },
+  "log": ".superpowers/offline-logs/semantic-grounding-slm-recovery/full-t3-c157/full-t3.log",
+  "log_sha256": "4ec0202412e38c95f1fc7b7f5fb7f88646a926d4ee1ffb1cc989232a107cfbbe"
+}

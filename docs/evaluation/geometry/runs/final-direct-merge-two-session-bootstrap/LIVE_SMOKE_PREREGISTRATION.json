@@ -1,0 +1,118 @@
+{
+ "schema": "axo-live-gemini-smoke-preregistration/1",
+ "run_id": "final-direct-merge-two-session-bootstrap",
+ "date": "2026-11-22",
+ "owner_authorization": "AXO HYBRID /20 D7: Owner chose 'Budgeted smoke' (<=6 problems, <=12 Gemini HTTP calls) in this session",
+ "target": {
+  "commit": "b42119528fc6f2e445f23b80fb3159fac84c9dec",
+  "product_identical_to": "2bb0211a1057c5d2a503f8a1f19e96cf84decff5",
+  "candidate": "158",
+  "checkout": "clean detached worktree"
+ },
+ "MEASUREMENT_CLASS": "LIVE_PROVIDER_SMOKE (route health, not an accuracy benchmark)",
+ "HELD_OUT_CLAIM": "NONE (texts are exposed historical corpus items)",
+ "EVALUATOR_INDEPENDENCE": "NONE (agent-built harness; oracle = frozen deterministic replay answers)",
+ "budget": {
+  "max_gemini_http_requests": 12,
+  "enforcement": "in-process app.ai.gemini.ApiBudget(max_api_calls=12): the 13th request raises BudgetExceeded before any network I/O",
+  "max_requests_to_api_analyze": 6,
+  "cost_ceiling": "12 generateContent requests on the configured GEMINI model"
+ },
+ "route": {
+  "HYBRID_ROUTE_MODE": "live",
+  "ALLOW_LIVE_AI": "1",
+  "endpoint": "POST /api/analyze",
+  "database": "fresh throwaway SQLite outside the repo (no cache rows)",
+  "api_key": "loaded into the server process by the Owner-run launcher; never printed or written"
+ },
+ "stop_rules": [
+  "any HTTP 500 => stop, verdict FAIL",
+  "2 responses in {502,503,504} => stop, verdict INCONCLUSIVE",
+  "HTTP 429 or BudgetExceeded => stop",
+  "never retry a case"
+ ],
+ "classification": {
+  "MATCH": "200, route_d SERVED, answer values == expected_answer_values",
+  "WRONG_ANSWER": "200 SERVED with different answer values (merge blocker)",
+  "SAFE_REFUSAL": "200 REFUSED with a mathematical refusal code (recorded divergence, not a blocker)",
+  "INFRA": "502/503/504",
+  "SERVER_ERROR": "500 or crash (merge blocker)",
+  "GATE_OK": "N1 refused out of scope with 0 provider calls"
+ },
+ "verdict_rule": {
+  "PASS": "0 SERVER_ERROR, 0 WRONG_ANSWER, N1 GATE_OK, >=4/5 MATCH, total HTTP requests <=12",
+  "FAIL": "any SERVER_ERROR or WRONG_ANSWER, or N1 reached the provider",
+  "INCONCLUSIVE": "anything else (infra stop, or <4 MATCH without blocker) => Owner decides; merge waits"
+ },
+ "cases": [
+  {
+   "id": "L1",
+   "corpus": "v2_backend_gen_main",
+   "corpus_path": "docs/evaluation/geometry/runs/hybrid-v2-backend-generalization/inputs/local-replay-corpus.json",
+   "text_sha16": "c53a3ae77c09cab7",
+   "text": "Cho hình hộp chữ nhật ABCD.A'B'C'D'. Đáy ABCD là hình chữ nhật. AB = 3. AD = 4. AA' = 12. Tính khoảng cách từ A đến mặt phẳng (BDD'B').",
+   "expected": "SERVED",
+   "expected_answer_values": [
+    "12/5"
+   ],
+   "oracle": "deterministic replay of the recorded Gemini payload on main bc6ff5e33 AND candidate 158 (identical), /19 compat run"
+  },
+  {
+   "id": "L2",
+   "corpus": "v2_backend_gen_main",
+   "corpus_path": "docs/evaluation/geometry/runs/hybrid-v2-backend-generalization/inputs/local-replay-corpus.json",
+   "text_sha16": "b5f7ceffa4885d23",
+   "text": "Cho hình chóp S.ABCD. Đáy ABCD là hình vuông cạnh 4. SA vuông góc với mặt phẳng (ABCD). SA = 3. Tính góc giữa đường thẳng SC và mặt phẳng (ABCD).",
+   "expected": "SERVED",
+   "expected_answer_values": [
+    "cos²=32/41"
+   ],
+   "oracle": "deterministic replay of the recorded Gemini payload on main bc6ff5e33 AND candidate 158 (identical), /19 compat run"
+  },
+  {
+   "id": "L3",
+   "corpus": "v2_nl_cert_point_line",
+   "corpus_path": "docs/evaluation/geometry/runs/hybrid-v2-nl-certificates-e2e/inputs/point-line/local-replay-corpus.json",
+   "text_sha16": "40a1ca0d6dcfef46",
+   "text": "Cho hình chóp tứ giác đều S.ABCD. Đáy ABCD là hình vuông cạnh 4. SA = 3. Tính khoảng cách từ A đến đường thẳng SC.",
+   "expected": "SERVED",
+   "expected_answer_values": [
+    "4√2/3"
+   ],
+   "oracle": "deterministic replay of the recorded Gemini payload on main bc6ff5e33 AND candidate 158 (identical), /19 compat run"
+  },
+  {
+   "id": "L4",
+   "corpus": "v2_nl_cert_line_plane",
+   "corpus_path": "docs/evaluation/geometry/runs/hybrid-v2-nl-certificates-e2e/inputs/line-plane-distance/local-replay-corpus.json",
+   "text_sha16": "777c73abb2bfc7d6",
+   "text": "Cho lăng trụ đứng ABC.A'B'C'. Đáy ABC là tam giác vuông tại A. AB = 6. AC = 8. AA' = 12. Tính khoảng cách giữa hai mặt phẳng (ABC) và (A'B'C').",
+   "expected": "SERVED",
+   "expected_answer_values": [
+    "12"
+   ],
+   "oracle": "deterministic replay of the recorded Gemini payload on main bc6ff5e33 AND candidate 158 (identical), /19 compat run"
+  },
+  {
+   "id": "L5",
+   "corpus": "scene3d_v2_replacement",
+   "corpus_path": "docs/evaluation/geometry/runs/scene3d-to-hybrid-v2-replacement/local-replay-corpus.json",
+   "text_sha16": "63e4b490b5466159",
+   "text": "Cho hình chóp S.ABCD. Đáy ABCD là hình vuông cạnh a. SA vuông góc với mặt phẳng (ABC). SA = a. Gọi M là trung điểm của SA. Gọi (α) là mặt phẳng qua M và song song với (ABC); (α) cắt SA, SB, SC, SD lần lượt tại M, N, P, Q. Dựng thiết diện của hình chóp S.ABCD bởi (α). Tính tỉ số thể tích của hai khối chóp S.MNPQ và S.ABCD. Tính thể tích phần còn lại của khối chóp S.ABCD sau khi cắt bỏ khối chóp S.MNPQ.",
+   "expected": "SERVED",
+   "expected_answer_values": [
+    "1/8",
+    "7a³/24"
+   ],
+   "oracle": "deterministic replay of the recorded Gemini payload on main bc6ff5e33 AND candidate 158 (identical), /19 compat run"
+  },
+  {
+   "id": "N1",
+   "corpus": null,
+   "text": "Giải phương trình x^2 - 5x + 6 = 0.",
+   "expected": "REFUSED_OUT_OF_SCOPE_BEFORE_PROVIDER",
+   "expected_answer_values": [],
+   "oracle": "domain gate runs before the provider (CLAUDE.md §3): 0 Gemini calls"
+  }
+ ]
+}

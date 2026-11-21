@@ -1,0 +1,404 @@
+{
+  "browser": "157.0.8103.50",
+  "summary": {
+    "total_scenarios": 6,
+    "passed_scenarios": 6,
+    "all_passed": true,
+    "provider_calls": 0
+  },
+  "scenarios": [
+    {
+      "id": "outcome_a_local_auto_ext01_1440x900_zoom_1",
+      "outcomeCategory": "A_LOCAL_AUTO",
+      "imageId": "ext_prt_01_hd_q_5259753",
+      "viewport": "1440x900@1",
+      "elapsedMs": 4331,
+      "prepareStatus": "ready",
+      "inputRoute": "LOCAL_OCR_VERIFIED",
+      "vlmCalls": 0,
+      "serverStatus": "SERVED",
+      "view": "workspace",
+      "active": true,
+      "analysisError": null,
+      "unsupported": false,
+      "hasCanvas": true,
+      "canvasRect": {
+        "width": 1080,
+        "height": 854
+      },
+      "note": null,
+      "allAnswerSymbolics": [
+        "a√21/21",
+        "a³√3/3"
+      ],
+      "firstAnswerSymbolic": "a√21/21",
+      "bodyHasRawTraceback": false,
+      "orbit": {
+        "fps": 118.4,
+        "canvasStable": true,
+        "heapMB": 20.47
+      },
+      "cacheInvalidationCheck": {
+        "editedFrom": "60°",
+        "editedTo": "45°",
+        "prepareCalledAgain": false,
+        "newStatus": "SERVED",
+        "newAnswers": [
+          "a√3/9",
+          "a³/3"
+        ],
+        "hasCanvas": true,
+        "pass": true
+      },
+      "apiCalls": [
+        {
+          "path": "/api/health",
+          "status": 200
+        },
+        {
+          "path": "/api/auth/me",
+          "status": 200
+        },
+        {
+          "path": "/api/health",
+          "status": 200
+        },
+        {
+          "path": "/api/input/prepare",
+          "status": 200
+        },
+        {
+          "path": "/api/analyze",
+          "status": 200
+        },
+        {
+          "path": "/api/auth/me",
+          "status": 200
+        },
+        {
+          "path": "/api/health",
+          "status": 200
+        },
+        {
+          "path": "/api/health",
+          "status": 200
+        },
+        {
+          "path": "/api/analyze",
+          "status": 200
+        }
+      ],
+      "consoleErrors": [],
+      "pageErrors": [],
+      "pass": true
+    },
+    {
+      "id": "outcome_a_local_auto_ext01_1440x900_zoom_1.1",
+      "outcomeCategory": "A_LOCAL_AUTO",
+      "imageId": "ext_prt_01_hd_q_5259753",
+      "viewport": "1440x900@1.1",
+      "elapsedMs": 2383,
+      "prepareStatus": "ready",
+      "inputRoute": "LOCAL_OCR_VERIFIED",
+      "vlmCalls": 0,
+      "serverStatus": "SERVED",
+      "view": "workspace",
+      "active": true,
+      "analysisError": null,
+      "unsupported": false,
+      "hasCanvas": true,
+      "canvasRect": {
+        "width": 1080,
+        "height": 854
+      },
+      "note": null,
+      "allAnswerSymbolics": [
+        "a√21/21",
+        "a³√3/3"
+      ],
+      "firstAnswerSymbolic": "a√21/21",
+      "bodyHasRawTraceback": false,
+      "orbit": {
+        "fps": 102.1,
+        "canvasStable": true,
+        "heapMB": 21.02
+      },
+      "cacheInvalidationCheck": null,
+      "apiCalls": [
+        {
+          "path": "/api/health",
+          "status": 200
+        },
+        {
+          "path": "/api/auth/me",
+          "status": 200
+        },
+        {
+          "path": "/api/input/prepare",
+          "status": 200
+        },
+        {
+          "path": "/api/health",
+          "status": 200
+        },
+        {
+          "path": "/api/analyze",
+          "status": 200
+        }
+      ],
+      "consoleErrors": [],
+      "pageErrors": [],
+      "pass": true
+    },
+    {
+      "id": "outcome_c_span_confirmation_ext12",
+      "outcomeCategory": "C_USER_CORRECTED",
+      "imageId": "ext_prt_12_vmmu_page_r11",
+      "viewport": "1440x900@1",
+      "elapsedMs": 5334,
+      "prepareStatus": "needs_confirmation",
+      "uiBeforeConfirm": {
+        "spanItemCount": 2,
+        "cropImageCount": 2,
+        "confirmBtnInitiallyDisabled": true,
+        "spans": [
+          {
+            "spanId": "sp8",
+            "reviewed": "false",
+            "reason": "Ký hiệu toán chưa được hai bộ đọc độc lập xác nhận",
+            "inputValue": "ABC.A'B'C'",
+            "alts": [
+              "48Œ.AWC”",
+              "ABC.ABC"
+            ]
+          },
+          {
+            "spanId": "sp27",
+            "reviewed": "false",
+            "reason": "Ký hiệu toán chưa được hai bộ đọc độc lập xác nhận",
+            "inputValue": "12(cm2).",
+            "alts": [
+              "12(cm²)",
+              "12(em°)",
+              "12(cm?)"
+            ]
+          }
+        ]
+      },
+      "canConfirmNow": true,
+      "serverStatus": "SERVED",
+      "view": "workspace",
+      "active": true,
+      "analysisError": null,
+      "unsupported": false,
+      "hasCanvas": true,
+      "canvasRect": {
+        "width": 1080,
+        "height": 854
+      },
+      "note": null,
+      "allAnswerSymbolics": [
+        "2√3"
+      ],
+      "firstAnswerSymbolic": "2√3",
+      "bodyHasRawTraceback": false,
+      "orbit": {
+        "fps": 135,
+        "canvasStable": true,
+        "heapMB": 19.4
+      },
+      "apiCalls": [
+        {
+          "path": "/api/auth/me",
+          "status": 200
+        },
+        {
+          "path": "/api/health",
+          "status": 200
+        },
+        {
+          "path": "/api/health",
+          "status": 200
+        },
+        {
+          "path": "/api/input/prepare",
+          "status": 200
+        },
+        {
+          "path": "/api/health",
+          "status": 200
+        },
+        {
+          "path": "/api/health",
+          "status": 200
+        },
+        {
+          "path": "/api/analyze",
+          "status": 200
+        }
+      ],
+      "consoleErrors": [],
+      "pageErrors": [],
+      "pass": true
+    },
+    {
+      "id": "outcome_c_multi_problem_alt_chip_ext03_cand1",
+      "outcomeCategory": "C_USER_CORRECTED",
+      "imageId": "ext_prt_03_hd_q_7907931#1",
+      "viewport": "1440x900@1",
+      "elapsedMs": 6456,
+      "candidateCount": 2,
+      "clickedAltChip": true,
+      "serverStatus": "SERVED",
+      "view": "workspace",
+      "active": true,
+      "analysisError": null,
+      "unsupported": false,
+      "hasCanvas": true,
+      "canvasRect": {
+        "width": 1080,
+        "height": 854
+      },
+      "note": "Đề không cho chiều cao nên hình dưới đây chỉ là một hình minh họa: đáp số đã được kiểm là không phụ thuộc chiều cao, nhưng độ cao vẽ trên hình không phải dữ kiện của đề.",
+      "allAnswerSymbolics": [
+        "a√2/2"
+      ],
+      "firstAnswerSymbolic": "a√2/2",
+      "bodyHasRawTraceback": false,
+      "orbit": {
+        "fps": 123,
+        "canvasStable": true,
+        "heapMB": 18.02
+      },
+      "apiCalls": [
+        {
+          "path": "/api/auth/me",
+          "status": 200
+        },
+        {
+          "path": "/api/health",
+          "status": 200
+        },
+        {
+          "path": "/api/health",
+          "status": 200
+        },
+        {
+          "path": "/api/input/prepare",
+          "status": 200
+        },
+        {
+          "path": "/api/health",
+          "status": 200
+        },
+        {
+          "path": "/api/input/prepare",
+          "status": 200
+        },
+        {
+          "path": "/api/health",
+          "status": 200
+        },
+        {
+          "path": "/api/health",
+          "status": 200
+        },
+        {
+          "path": "/api/health",
+          "status": 200
+        },
+        {
+          "path": "/api/analyze",
+          "status": 200
+        }
+      ],
+      "consoleErrors": [],
+      "pageErrors": [],
+      "pass": true
+    },
+    {
+      "id": "outcome_c_unseen_external_new_ext_01",
+      "outcomeCategory": "C_USER_CORRECTED",
+      "imageId": "new_ext_01_vmmu_full_r313",
+      "viewport": "1440x900@1",
+      "elapsedMs": 5142,
+      "prepareStatus": "needs_confirmation",
+      "serverStatus": "SERVED",
+      "view": "workspace",
+      "active": true,
+      "analysisError": null,
+      "unsupported": false,
+      "hasCanvas": true,
+      "canvasRect": {
+        "width": 1080,
+        "height": 854
+      },
+      "note": null,
+      "allAnswerSymbolics": [
+        "2a√57/19"
+      ],
+      "firstAnswerSymbolic": "2a√57/19",
+      "bodyHasRawTraceback": false,
+      "orbit": {
+        "fps": 144.5,
+        "canvasStable": true,
+        "heapMB": 20.32
+      },
+      "apiCalls": [
+        {
+          "path": "/api/auth/me",
+          "status": 200
+        },
+        {
+          "path": "/api/health",
+          "status": 200
+        },
+        {
+          "path": "/api/health",
+          "status": 200
+        },
+        {
+          "path": "/api/input/prepare",
+          "status": 200
+        },
+        {
+          "path": "/api/health",
+          "status": 200
+        },
+        {
+          "path": "/api/health",
+          "status": 200
+        },
+        {
+          "path": "/api/analyze",
+          "status": 200
+        }
+      ],
+      "consoleErrors": [],
+      "pageErrors": [],
+      "pass": true
+    },
+    {
+      "id": "diagram_dependency_guard_ext15",
+      "outcomeCategory": "BLOCKED_FOR_CONFIRMATION",
+      "imageId": "ext_prt_15_vmmu_page_r28",
+      "viewport": "1440x900@1",
+      "prepareStatus": "needs_confirmation",
+      "reasonCode": "LOCAL_OCR_REVIEW_REQUIRED",
+      "view": "home",
+      "active": false,
+      "analysisError": null,
+      "unsupported": false,
+      "hasCanvas": false,
+      "canvasRect": null,
+      "note": null,
+      "allAnswerSymbolics": [],
+      "firstAnswerSymbolic": null,
+      "bodyHasRawTraceback": false,
+      "orbit": null,
+      "consoleErrors": [],
+      "pageErrors": [],
+      "pass": true
+    }
+  ]
+}

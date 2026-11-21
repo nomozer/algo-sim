@@ -42,8 +42,9 @@ from tests.route_client import sign_in  # noqa: E402
 CORPUS_DIR = ROOT / "docs" / "evaluation" / "geometry" / "photo-problem-to-scene" / "corpus"
 
 
-def test_twenty_case_ground_truth_corpus_passes_without_data_or_diagram_loss() -> None:
+def test_twenty_case_ground_truth_corpus_passes_without_data_or_diagram_loss(monkeypatch: pytest.MonkeyPatch) -> None:
     """Bộ 20 mẫu ground-truth độc lập phải đạt 20/20, không mất hình vẽ hay dữ kiện toán học."""
+    monkeypatch.delenv("LOCAL_OCR_PYTHON", raising=False)
     report = asyncio.run(run_20_case_evaluation())
     failed = [c["case_id"] for c in report["cases"] if not c["passed"]]
     assert report["total_cases"] == 20

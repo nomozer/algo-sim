@@ -1,0 +1,99 @@
+{
+  "run_id": "grounded-vietnamese-geometry-understanding",
+  "generated_at_utc": "2026-11-14T19:37:45.073082+00:00",
+  "product_commit": "d222e6d9b582d54fc42397a9593f52eb6fd77f18",
+  "product_commits": [
+    "ac276a5c945f9ac1764f9af1f723b857c19b342d",
+    "ad090ceada3edc31b5788fa16c47e1639386bdc9",
+    "d222e6d9b582d54fc42397a9593f52eb6fd77f18"
+  ],
+  "candidate_freeze_commit": "63def519ad317911145b2d84929a687208996619",
+  "measured_system": "c25f9695828888987db2ab7990c4ff135da4d01c6b9d968f898c36728a0ae436",
+  "cache_version": "139",
+  "dataset_partition": "DEVELOPMENT (agent-written corpus, exposed REAL27, exposed probes); never H-1 or locked W2/W3",
+  "environment": {
+    "ALLOW_LIVE_AI": "0",
+    "HYBRID_ROUTE_MODE": "local-first",
+    "live_ai_calls": 0
+  },
+  "head": "542e32b0f8b21df5fff8e6b2a57fb27b9a6ea452",
+  "corpora": {
+    "COMP": {
+      "count": 112,
+      "partition": "DEVELOPMENT_AGENT_WRITTEN",
+      "corpus_sha256": "fe0685b76c96c2f6a63aab4385069e20c19ae42bcb126fa8102f88f33f3088b4"
+    },
+    "DEV37": {
+      "count": 37,
+      "partition": "DEVELOPMENT_AGENT_WRITTEN",
+      "corpus_sha256": "5e9cc0e1950208b5be4af3ca2db79e805f5fd223db2f8fffcf034c428b9bbaf7"
+    },
+    "REAL27": {
+      "count": 27,
+      "partition": "DEVELOPMENT_EXPOSED",
+      "corpus_sha256": "0ee4f18c8c184a354309fc6b9c51a53c57d3f6928d12c716e7d1892e480031f7"
+    },
+    "PROBES": {
+      "count": 39,
+      "partition": "DEVELOPMENT_EXPOSED",
+      "corpus_sha256": "b5a545aefcfce196dc9af5fac9b989cfffdbbe40d61a8f936049a0cad9edd811"
+    }
+  },
+  "added_this_run": {
+    "count": 30,
+    "ids": [
+      "gv_base_area_impossible",
+      "gv_base_area_regular",
+      "gv_base_unnamed_face_after",
+      "gv_base_unnamed_figref",
+      "gv_base_unnamed_renamed",
+      "gv_base_unnamed_subject_first",
+      "gv_contradiction",
+      "gv_cuboid_no_square",
+      "gv_cuboid_square_base",
+      "gv_isosceles_base_only",
+      "gv_isosceles_explicit",
+      "gv_isosceles_no_right_angle",
+      "gv_isosceles_right_derived",
+      "gv_lateral_no_height",
+      "gv_lateral_not_regular",
+      "gv_lateral_regular_quad",
+      "gv_lateral_regular_tri",
+      "gv_missing_height",
+      "gv_pair_midpoint_premise",
+      "gv_pair_perp_premise",
+      "gv_pair_perp_proof",
+      "gv_pair_point_on",
+      "gv_pair_regular_pyramid",
+      "gv_pair_regular_tetra",
+      "gv_pair_section_shape_proof",
+      "gv_prism_dotted_same",
+      "gv_prism_undotted",
+      "gv_prism_undotted_scrambled",
+      "gv_unread_area_in_a",
+      "gv_unread_perimeter"
+    ],
+    "groups": {
+      "gv_base_unnamed": 2,
+      "metamorphic": 4,
+      "gv_base_unnamed_negative": 2,
+      "gv_lateral_edge_goal": 2,
+      "gv_lateral_edge_negative": 2,
+      "gv_entity_notation": 1,
+      "gv_entity_notation_negative": 1,
+      "gv_isosceles_derived": 1,
+      "gv_isosceles_negative": 2,
+      "gv_completeness_negative": 2,
+      "gv_base_area": 1,
+      "gv_base_area_negative": 1,
+      "gv_minimal_pair": 7,
+      "gv_contradiction": 2
+    },
+    "author": "AGENT_WRITTEN (no dataset text, no case id in product code)"
+  },
+  "anti_overfitting": {
+    "product_code_mentions_case_ids": [],
+    "held_out_used": false,
+    "note": "REAL27 is exposed development data; its gains are not generalization evidence"
+  }
+}

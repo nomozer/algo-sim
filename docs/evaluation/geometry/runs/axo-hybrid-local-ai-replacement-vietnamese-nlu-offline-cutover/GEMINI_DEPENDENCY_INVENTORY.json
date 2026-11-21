@@ -1,0 +1,559 @@
+{
+  "schema": "gemini-dependency-inventory/1",
+  "generated_at_utc": "2026-11-19T05:44:27.837519+00:00",
+  "external_ai_calls": 0,
+  "summary": {
+    "total_dependency_surfaces_mapped": 9,
+    "by_migration_status": {
+      "REPLACE_WITH_LOCAL": 3,
+      "DISABLE_AS_UNSUPPORTED": 2,
+      "REPLACE_WITH_DETERMINISTIC": 1,
+      "RETAIN_CODE_DISABLED": 2,
+      "OUTSIDE_APPROVED_SCOPE": 1
+    },
+    "backend_files_matching_gemini_tokens": 11,
+    "frontend_files_matching_gemini_tokens": 4
+  },
+  "dependencies": [
+    {
+      "id": "GEM-01",
+      "surface": "POST /api/analyze (default HYBRID_ROUTE_MODE=live)",
+      "entry_point": "backend/app/main.py::analyze -> _analyze_hybrid_route -> prepare_live_hybrid",
+      "trigger_condition": "HYBRID_ROUTE_MODE unset or 'live' (and HYBRID_LOCAL_FIRST != '1')",
+      "caller": "frontend/src/llm/client.ts::analyzeProblem",
+      "callee": "app.ai.hybrid_offline.LiveHybridRun.run -> _live_provider_transport -> app.ai.function_calling.live_transport",
+      "input_contract": "AnalyzeBody(input={type:'text'|'code'|'document', content, source_provenance})",
+      "output_contract": "ValidatedSimulationEnvelope + hybrid-route-d-simulation/4 (`route_d`)",
+      "cache_behavior": "SQLite SimulationCache keyed by ROUTE_D_CACHE_POLICY (`145:route-d`) + prepare_live_hybrid hash",
+      "error_behavior": "503 MISSING_API_KEY / LIVE_AI_DISABLED / HYBRID_DEADLINE_EXCEEDED; 502 PROVIDER_*; no legacy fallback",
+      "ownership": "OWNED_FOR_LOCAL_ONLY_OPT_IN (default 'live' flip requires owner cutover approval)",
+      "local_replacement_equivalent": "HYBRID_ROUTE_MODE=local-only-scoped / local-first-slm (`LocalSlmHybridRun` -> Local Parser -> slm-verified-normalizer/3 -> local-slm-extractor/4 -> Source Gate -> Planner /26 -> Kernel /24)",
+      "migration_status": "REPLACE_WITH_LOCAL",
+      "p7_status_in_v9": "Implemented behind explicit `HYBRID_ROUTE_MODE=local-only-scoped` (`0` cloud calls); default remains `live` pending owner cutover patch."
+    },
+    {
+      "id": "GEM-02",
+      "surface": "POST /api/analyze (HYBRID_ROUTE_MODE=local-first with Gemini fallback)",
+      "entry_point": "backend/app/main.py::_analyze_hybrid_route -> prepare_local_first_hybrid",
+      "trigger_condition": "Local Geometry Parser /2 incomplete AND allow_live_ai and GEMINI_API_KEY",
+      "caller": "backend/app/ai/hybrid_offline.py::LocalFirstHybridRun.run -> adaptive_input_router.route_text_input",
+      "callee": "_live_provider_transport -> gemini-2.5-flash TypedFactNext /2",
+      "input_contract": "problem_text + fallback_extractor",
+      "output_contract": "AdaptiveRouteOutcome(route_d + telemetry)",
+      "cache_behavior": "prepare_local_first_hybrid identity in SimulationCache",
+      "error_behavior": "503 LIVE_AI_DISABLED / MISSING_API_KEY (enriched with local_understanding)",
+      "ownership": "OWNED_EDITABLE",
+      "local_replacement_equivalent": "Local Parser + slm-verified-normalizer/3 + Local Qwen3 SLM + slm-grounding-validator/4 (`local-only-scoped` / `offline-lab`, zero Gemini fallback)",
+      "migration_status": "REPLACE_WITH_LOCAL",
+      "p7_status_in_v9": "Replaced cleanly in `local-only-scoped` / `offline-lab` (`cloud_fallback_allowed = False`)."
+    },
+    {
+      "id": "GEM-03",
+      "surface": "POST /api/analyze legacy `input.type == 'image'` handler inside `ingest_to_text`",
+      "entry_point": "backend/app/main.py::_analyze_once -> app.ingestion.input.ingest_to_text",
+      "trigger_condition": "Only unreachable legacy call if `_analyze_once` image guard were removed",
+      "caller": "backend/app/main.py::_analyze_once (now returns HTTP 400 IMAGE_DIRECT_UNSUPPORTED before `ingest_to_text`)",
+      "callee": "app.ingestion.image_extraction.extract_problem_from_image -> call_gemini",
+      "input_contract": "base64 image -> NormalizedImage",
+      "output_contract": "problem_text string",
+      "cache_behavior": "extract_problem_from_image LRU cache",
+      "error_behavior": "400 IMAGE_DIRECT_UNSUPPORTED at `_analyze_once` line 1522",
+      "ownership": "OWNED_FOR_LOCAL_ONLY_OPT_IN",
+      "local_replacement_equivalent": "Already blocked at `_analyze_once`; local-only modes force `api_key=None` into `ingest_to_text` as defense-in-depth.",
+      "migration_status": "DISABLE_AS_UNSUPPORTED",
+      "p7_status_in_v9": "Hardened so `ingest_to_text(..., api_key=None if local_only else api_key)` never receives an API key in local-only mode."
+    },
+    {
+      "id": "GEM-04",
+      "surface": "POST /api/input/prepare (Unified Photo/PDF/DOCX -> Vision Fallback)",
+      "entry_point": "backend/app/main.py::input_prepare -> app.ingestion.unified_input.prepare_unified_input",
+      "trigger_condition": "Scanned PDF or photo when Local OCR (`run_local_ocr_route`) is not auto-verified AND `vision_allowed = (ALLOW_LIVE_AI != '0' and bool(api_key))`",
+      "caller": "frontend/src/llm/client.ts::prepareInput",
+      "callee": "app.ingestion.image_extraction.extract_problem_from_image -> app.ai.gemini.call_gemini",
+      "input_contract": "InputPrepareBody (images/PDF/DOCX + user_text + selected_candidate_id)",
+      "output_contract": "UnifiedPrepareOutcome (`ready` | `needs_confirmation` | `needs_selection` | `rejected`)",
+      "cache_behavior": "extract_problem_from_image LRU cache (`VISION_SCHEMA_IDENTITY` + `cache_version`)",
+      "error_behavior": "503 MISSING_API_KEY / LIVE_AI_DISABLED; 502 VISION_OUTPUT_VALIDATION_FAILED",
+      "ownership": "OWNED_FOR_LOCAL_ONLY_OPT_IN",
+      "local_replacement_equivalent": "Local deterministic CV cropper + `run_local_ocr_route` (Paddle/RapidOCR + Tesseract/VietOCR + span confirmation); PDF/DOCX text+OMML are 100% deterministic.",
+      "migration_status": "REPLACE_WITH_DETERMINISTIC",
+      "p7_status_in_v9": "Hardened in `local-only-*` / `offline-lab`: `prepare_unified_input` receives `api_key=None` and `vision_allowed=False` even if `GEMINI_API_KEY` is in env (`0` Vision calls); scanned images go to Local OCR span confirmation or fail closed cleanly."
+    },
+    {
+      "id": "GEM-05",
+      "surface": "POST /api/image/extract (Legacy Tier-A Vision Endpoint)",
+      "entry_point": "backend/app/main.py::image_extract -> extract_problem_from_image",
+      "trigger_condition": "Direct HTTP call to `/api/image/extract` (superseded by `/api/input/prepare` in frontend composer)",
+      "caller": "Legacy tests / direct API clients (`frontend/src/llm/client.ts::extractImageProblem`)",
+      "callee": "app.ingestion.image_extraction.extract_problem_from_image -> app.ai.gemini.call_gemini",
+      "input_contract": "ImageExtractBody",
+      "output_contract": "ImageProblemExtraction (`photo-problem-extraction/1`)",
+      "cache_behavior": "LRU 64 entries in image_extraction.py",
+      "error_behavior": "503 MISSING_API_KEY / LIVE_AI_DISABLED; 429/502/503",
+      "ownership": "OWNED_FOR_LOCAL_ONLY_OPT_IN",
+      "local_replacement_equivalent": "Disable cloud VLM in local-only modes (HTTP `503 LOCAL_ONLY_CLOUD_VISION_DISABLED`, directing callers to `/api/input/prepare` local OCR).",
+      "migration_status": "DISABLE_AS_UNSUPPORTED",
+      "p7_status_in_v9": "Blocked fail-closed (`503 LOCAL_ONLY_CLOUD_VISION_DISABLED`) whenever local-only route mode is active."
+    },
+    {
+      "id": "GEM-06",
+      "surface": "Locked Gemini Extraction Surface Modules (`gemini.py`, `function_calling.py`, `fact_extraction.py`, `typed_fact_next_extraction.py`)",
+      "entry_point": "backend/app/ai/typed_fact_next_extraction.py::typed_fact_next_surface_fingerprint, function_calling.py::live_transport, gemini.py::call_gemini",
+      "trigger_condition": "Imported by Hybrid live route & telemetry identity; NOT invoked in `local-only-scoped` / `offline-lab`",
+      "caller": "hybrid_offline.py (only when mode == 'live' or mode == 'local-first')",
+      "callee": "https://generativelanguage.googleapis.com/v1beta/models/{model}:generateContent (x-goog-api-key)",
+      "input_contract": "Locked SHA-256 extraction schemas (`33197a45…`, `7ea511a6…`, `485d3834…`, `4bff35bb…`)",
+      "output_contract": "JSON `typed-fact-next/2` wire payload",
+      "cache_behavior": "N/A (locked transport layer)",
+      "error_behavior": "LiveAIDisabled when ALLOW_LIVE_AI=0; ProviderHTTPError on non-200",
+      "ownership": "LOCKED_SURFACE (`BLOCKED_OWNERSHIP`)",
+      "local_replacement_equivalent": "Retained untouched in codebase (`RETAIN_CODE_DISABLED` when local-only active) so rollback to `live` remains instant and locked hashes stay invariant.",
+      "migration_status": "RETAIN_CODE_DISABLED",
+      "p7_status_in_v9": "Preserved bit-identical (`0` bytes changed); zero imports/invocations reached on `local-only-*` runtime paths."
+    },
+    {
+      "id": "GEM-07",
+      "surface": "Gemini Skills (`backend/app/ai/skills/*.md` — `transcribe.md`, `typed_fact_next*`, etc.)",
+      "entry_point": "backend/app/ai/gemini.py::load_skill, runtime_identity.py::skill_fingerprint",
+      "trigger_condition": "Gemini live prompt loading & `cache_identity.lock.json` fingerprinting",
+      "caller": "fact_extraction.py, image_extraction.py, runtime_identity.py",
+      "callee": "Local `.md` files read from disk",
+      "input_contract": "Markdown skill prompts",
+      "output_contract": "System prompt strings + SHA-256 hashes",
+      "cache_behavior": "process-local `_skill_cache` dict",
+      "error_behavior": "FileNotFoundError if missing",
+      "ownership": "LOCKED_SURFACE (`cache_identity.lock.json` depends on skill hashes)",
+      "local_replacement_equivalent": "Compact Chinese/Vietnamese system prompt in `local_slm_extractor.py` for Local Qwen3 SLM.",
+      "migration_status": "RETAIN_CODE_DISABLED",
+      "p7_status_in_v9": "Kept untouched so `semantic_environment_hash` and live rollback integrity remain intact."
+    },
+    {
+      "id": "GEM-08",
+      "surface": "Health & Runtime Diagnostics (`GET /api/health`, `GET /api/diagnostics/runtime`, `accounts/router.py` admin overview)",
+      "entry_point": "backend/app/main.py::health, diagnostics_runtime; backend/app/accounts/router.py",
+      "trigger_condition": "Every frontend initial load (`checkHealth`) and admin overview fetch",
+      "caller": "frontend/src/llm/client.ts::checkHealth, ProblemInput.tsx, AuthGate.tsx",
+      "callee": "os.getenv('GEMINI_API_KEY'), os.getenv('GEMINI_MODEL')",
+      "input_contract": "HTTP GET",
+      "output_contract": "JSON `{ok, hasKey, ...}` + additive local-only fields",
+      "cache_behavior": "Uncached live status snapshot",
+      "error_behavior": "Always HTTP 200",
+      "ownership": "Backend owned (`main.py`), `frontend/**` (`AuthGate.tsx`, `ProblemInput.tsx`) BLOCKED_OWNERSHIP",
+      "local_replacement_equivalent": "Expose `localOnlyMode`, `localSlmReady`, `localSlmModel`, `extractionBackend`, `aiAvailable` in `/api/health` while keeping `hasKey` truthful (`bool(GEMINI_API_KEY)`) and delivering frontend UX patch via `handoff/`.",
+      "migration_status": "REPLACE_WITH_LOCAL",
+      "p7_status_in_v9": "Backend metadata implemented cleanly; frontend keyless banner update handed off in `handoff/frontend_local_ai_status_and_keyless_ux.patch`."
+    },
+    {
+      "id": "GEM-09",
+      "surface": "Frontend Composer & AuthGate (`hasKey` / `MISSING_API_KEY` UX)",
+      "entry_point": "frontend/src/components/ProblemInput.tsx:210,292,1004; frontend/src/components/AuthGate.tsx:7236; frontend/src/components/photo-problem-flow.ts",
+      "trigger_condition": "health.hasKey === false when GEMINI_API_KEY unset on backend",
+      "caller": "React UI on mount & on analyze errors",
+      "callee": "Displays 'Máy chủ chưa bật kết nối AI cho đề tự nhập' or 'Chưa cấu hình GEMINI_API_KEY'",
+      "input_contract": "ServerHealth & HTTP 503 error payloads",
+      "output_contract": "User-facing Vietnamese status notices (hiding API key env var names in student UI)",
+      "cache_behavior": "Browser memory",
+      "error_behavior": "Shows offline/missing-key banner if health.hasKey == false",
+      "ownership": "BLOCKED_OWNERSHIP (separate `axo-geometry-library` worktree `0fe3873a4`)",
+      "local_replacement_equivalent": "Respect `health.aiAvailable` / `health.localOnlyMode && health.localSlmReady` and handle local SLM 503 states (`MODEL_RUNTIME_UNAVAILABLE`, `LOCAL_SLM_BUSY`, `LOCAL_SLM_TIMEOUT`).",
+      "migration_status": "OUTSIDE_APPROVED_SCOPE",
+      "p7_status_in_v9": "Verified `git apply --check` handoff patch generated (`frontend_local_ai_status_and_keyless_ux.patch`), zero direct edit to `frontend/**`."
+    }
+  ],
+  "static_token_scan": {
+    "backend_app": [
+      {
+        "file": "backend/app/accounts/router.py",
+        "hit_count": 3,
+        "sample_lines": [
+          {
+            "line": 598,
+            "text": "env_override = os.getenv(\"GEMINI_MODEL\", \"\").strip()"
+          },
+          {
+            "line": 1522,
+            "text": "ai_configured = bool(os.getenv(\"GEMINI_API_KEY\", \"\").strip())"
+          },
+          {
+            "line": 1643,
+            "text": "\"aiServiceConfigured\": ai_configured,"
+          }
+        ]
+      },
+      {
+        "file": "backend/app/ai/adaptive_input_router.py",
+        "hit_count": 5,
+        "sample_lines": [
+          {
+            "line": 14,
+            "text": "- If `ALLOW_LIVE_AI=0` (or no fallback extractor is available), fails closed cleanly without guessing."
+          },
+          {
+            "line": 188,
+            "text": "return os.environ.get(\"ALLOW_LIVE_AI\", \"1\") != \"0\""
+          },
+          {
+            "line": 213,
+            "text": "raise LiveAIDisabled(\"ALLOW_LIVE_AI=0\")"
+          },
+          {
+            "line": 285,
+            "text": "allow_live_ai if allow_live_ai is not None else (os.environ.get(\"ALLOW_LIVE_AI\", \"1\") != \"0\")"
+          },
+          {
+            "line": 562,
+            "text": "# Case 4: Fail-closed when ALLOW_LIVE_AI=0 or no fallback extractor is configured"
+          }
+        ]
+      },
+      {
+        "file": "backend/app/ai/fact_extraction.py",
+        "hit_count": 1,
+        "sample_lines": [
+          {
+            "line": 9,
+            "text": "`_openapi`, trần `MAX_OUTPUT_TOKENS`, `live_transport` (cổng `ALLOW_LIVE_AI`, khoá trong header — KHÔNG dùng ở lượt này)."
+          }
+        ]
+      },
+      {
+        "file": "backend/app/ai/function_calling.py",
+        "hit_count": 11,
+        "sample_lines": [
+          {
+            "line": 21,
+            "text": "UsageMetadata), proto generativelanguage v1beta (FunctionDeclaration, FunctionCall, Schema)."
+          },
+          {
+            "line": 24,
+            "text": "Module không nhập `pipeline`/`gemini`/`httpx` ở đầu tệp. `live_transport` chỉ gửi khi `ALLOW_LIVE_AI=1` trong tiến"
+          },
+          {
+            "line": 60,
+            "text": "\"\"\"`live_transport` được gọi khi tiến trình chưa bật `ALLOW_LIVE_AI=1`.\"\"\""
+          },
+          {
+            "line": 213,
+            "text": "def live_transport("
+          },
+          {
+            "line": 221,
+            "text": "Mặc định bộ đánh giá/nghiên cứu đòi `ALLOW_LIVE_AI=1`; tuyến sản phẩm (`require_allow_live_ai=False`) hoạt động"
+          },
+          {
+            "line": 222,
+            "text": "bình thường khi có `GEMINI_API_KEY` và chỉ dừng khi quản trị viên chủ động đặt `ALLOW_LIVE_AI=0`.\"\"\""
+          },
+          {
+            "line": 225,
+            "text": "if os.environ.get(\"ALLOW_LIVE_AI\") != \"1\":"
+          },
+          {
+            "line": 226,
+            "text": "raise LiveAIDisabled(\"ALLOW_LIVE_AI != 1 — không gửi request thật\")"
+          },
+          {
+            "line": 227,
+            "text": "elif os.environ.get(\"ALLOW_LIVE_AI\") == \"0\":"
+          },
+          {
+            "line": 228,
+            "text": "raise LiveAIDisabled(\"ALLOW_LIVE_AI=0 — máy chủ đang khoá kết nối live AI\")"
+          },
+          {
+            "line": 240,
+            "text": "url = f\"https://generativelanguage.googleapis.com/v1beta/models/{resolved_model}:generateContent\""
+          }
+        ]
+      },
+      {
+        "file": "backend/app/ai/gemini.py",
+        "hit_count": 7,
+        "sample_lines": [
+          {
+            "line": 30,
+            "text": "MODEL = os.getenv(\"GEMINI_MODEL\", \"gemini-2.5-flash\")"
+          },
+          {
+            "line": 56,
+            "text": "# Trần LƯỢT LOGIC (số lần `call_gemini` được gọi). Trước 2026-08-21 chỉ"
+          },
+          {
+            "line": 67,
+            "text": "self.logical_calls = 0     # số lần call_gemini được gọi"
+          },
+          {
+            "line": 136,
+            "text": "`call_gemini`; chỉ một lượt chạy thật mới lộ ra."
+          },
+          {
+            "line": 167,
+            "text": "async def call_gemini("
+          },
+          {
+            "line": 186,
+            "text": "# The key travels ONLY in the `x-goog-api-key` header, as on the Hybrid transport (`function_calling.live_transport`):"
+          },
+          {
+            "line": 189,
+            "text": "url = f\"https://generativelanguage.googleapis.com/v1beta/models/{MODEL}:generateContent\""
+          }
+        ]
+      },
+      {
+        "file": "backend/app/ai/hybrid_offline.py",
+        "hit_count": 9,
+        "sample_lines": [
+          {
+            "line": 3,
+            "text": "`POST /api/analyze` routes through `prepare_live_hybrid` (`HYBRID_ROUTE_MODE=live`, default) or `prepare_staging_replay`"
+          },
+          {
+            "line": 5,
+            "text": "cached by `main` under `ROUTE_D_CACHE_POLICY` (`prepare_live_hybrid(...).cache_key` / `prepare_staging_replay(...).cache_key`)."
+          },
+          {
+            "line": 275,
+            "text": "raw = (os.environ if env is None else env).get('GEMINI_MODEL')"
+          },
+          {
+            "line": 349,
+            "text": "\"\"\"Bounded Gemini `generateContent` transport (`x-goog-api-key` header, `ALLOW_LIVE_AI=0` kill-switch respected,"
+          },
+          {
+            "line": 354,
+            "text": "from app.ai.function_calling import ProviderHTTPError, live_transport"
+          },
+          {
+            "line": 360,
+            "text": "send_once = live_transport("
+          },
+          {
+            "line": 364,
+            "text": "send_once = live_transport(api_key, model=resolved_model, timeout_seconds=per_attempt)"
+          },
+          {
+            "line": 439,
+            "text": "def prepare_live_hybrid(problem_text: str, *, model: str | None = None) -> LiveHybridRun:"
+          },
+          {
+            "line": 618,
+            "text": "'allow_live_ai': env.get('ALLOW_LIVE_AI') != '0',"
+          }
+        ]
+      },
+      {
+        "file": "backend/app/ai/telemetry.py",
+        "hit_count": 2,
+        "sample_lines": [
+          {
+            "line": 33,
+            "text": "#: Stage đang chạy. Dùng ContextVar thay vì tham số của `call_gemini` vì có 13"
+          },
+          {
+            "line": 36,
+            "text": "#: với async: mỗi task giữ bản sao riêng, và retry bên trong `call_gemini` vẫn"
+          }
+        ]
+      },
+      {
+        "file": "backend/app/ingestion/image_extraction.py",
+        "hit_count": 3,
+        "sample_lines": [
+          {
+            "line": 49,
+            "text": "from app.ai.gemini import MODEL, BudgetExceeded, call_gemini, load_skill"
+          },
+          {
+            "line": 62,
+            "text": "#: (`call_gemini` tự phân loại). Lỗi lược đồ và ảnh không đọc được KHÔNG thử lại."
+          },
+          {
+            "line": 583,
+            "text": "raw = await call_gemini("
+          }
+        ]
+      },
+      {
+        "file": "backend/app/ingestion/unified_input.py",
+        "hit_count": 4,
+        "sample_lines": [
+          {
+            "line": 131,
+            "text": "if os.getenv(\"ALLOW_LIVE_AI\") == \"0\":"
+          },
+          {
+            "line": 132,
+            "text": "raise LiveVisionDisabledError(\"Chế độ trích xuất trực tiếp đang tắt (ALLOW_LIVE_AI=0).\")"
+          },
+          {
+            "line": 134,
+            "text": "raise MissingVisionKeyError(\"Thiếu GEMINI_API_KEY để đọc ảnh/trang scan.\")"
+          },
+          {
+            "line": 647,
+            "text": "vision_allowed = os.getenv(\"ALLOW_LIVE_AI\") != \"0\" and bool(api_key)"
+          }
+        ]
+      },
+      {
+        "file": "backend/app/main.py",
+        "hit_count": 14,
+        "sample_lines": [
+          {
+            "line": 6,
+            "text": "Chạy: docker compose up -d --build (key trong backend/.env: GEMINI_API_KEY=...)"
+          },
+          {
+            "line": 140,
+            "text": "\"Máy chủ chưa cấu hình GEMINI_API_KEY. Tạo file algo-sim/backend/.env \""
+          },
+          {
+            "line": 141,
+            "text": "\"với nội dung: GEMINI_API_KEY=<key của bạn> rồi chạy lại: docker compose up -d\""
+          },
+          {
+            "line": 953,
+            "text": "#: - `live` (mặc định): trích xuất có cấu trúc qua Gemini (`typed-fact-next/2`) khi cấu hình `GEMINI_API_KEY`."
+          },
+          {
+            "line": 1123,
+            "text": "\"hasKey\": bool(os.getenv(\"GEMINI_API_KEY\")),"
+          },
+          {
+            "line": 1301,
+            "text": "status, msg = 503, \"Chế độ trích xuất trực tiếp (live AI) đang bị khoá bởi cấu hình máy chủ (ALLOW_LIVE_AI=0).\""
+          },
+          {
+            "line": 1359,
+            "text": "if mode == \"live\" and not use_local_first and os.getenv(\"ALLOW_LIVE_AI\") == \"0\":"
+          },
+          {
+            "line": 1366,
+            "text": "prepare_live_hybrid,"
+          },
+          {
+            "line": 1385,
+            "text": "plan = await run_in_threadpool(prepare_live_hybrid, text, model=model_name)"
+          },
+          {
+            "line": 1426,
+            "text": "allow_live = os.getenv(\"ALLOW_LIVE_AI\") != \"0\""
+          },
+          {
+            "line": 1532,
+            "text": "api_key = os.getenv(\"GEMINI_API_KEY\")"
+          },
+          {
+            "line": 1590,
+            "text": "if os.getenv(\"ALLOW_LIVE_AI\") == \"0\":   # the same emergency stop as `/api/analyze`: before cache and provider"
+          }
+        ]
+      },
+      {
+        "file": "backend/app/runtime_identity.py",
+        "hit_count": 1,
+        "sample_lines": [
+          {
+            "line": 331,
+            "text": "\"gemini_model\": os.getenv(\"GEMINI_MODEL\", \"gemini-2.5-flash\"),"
+          }
+        ]
+      }
+    ],
+    "frontend_src": [
+      {
+        "file": "frontend/src/components/AuthGate.tsx",
+        "hit_count": 11,
+        "sample_lines": [
+          {
+            "line": 1785,
+            "text": "aiServiceConfigured?: boolean | null;"
+          },
+          {
+            "line": 2287,
+            "text": "aiServiceConfigured: boolean | null;"
+          },
+          {
+            "line": 2331,
+            "text": "aiServiceConfigured: null,"
+          },
+          {
+            "line": 2467,
+            "text": "aiServiceConfigured?: boolean;"
+          },
+          {
+            "line": 2529,
+            "text": "aiServiceConfigured:"
+          },
+          {
+            "line": 2530,
+            "text": "typeof st.aiServiceConfigured === \"boolean\" ? st.aiServiceConfigured : null,"
+          },
+          {
+            "line": 4222,
+            "text": "{overviewStats.aiServiceConfigured === false ? ("
+          },
+          {
+            "line": 7219,
+            "text": "{overviewStats.aiServiceConfigured === false"
+          },
+          {
+            "line": 7224,
+            "text": "{overviewStats.aiServiceConfigured === false ? ("
+          },
+          {
+            "line": 7235,
+            "text": "{overviewStats.aiServiceConfigured === false"
+          },
+          {
+            "line": 7236,
+            "text": "? \"Chưa cấu hình GEMINI_API_KEY trên máy chủ · Phục vụ bài mẫu & đề lưu đệm\""
+          }
+        ]
+      },
+      {
+        "file": "frontend/src/components/photo-problem-flow.ts",
+        "hit_count": 1,
+        "sample_lines": [
+          {
+            "line": 283,
+            "text": "* `null` = huỷ chủ động (AbortError). Không lộ tên biến môi trường kỹ thuật (`ALLOW_LIVE_AI`, `GEMINI_API_KEY`)."
+          }
+        ]
+      },
+      {
+        "file": "frontend/src/components/ProblemInput.tsx",
+        "hit_count": 4,
+        "sample_lines": [
+          {
+            "line": 210,
+            "text": "if (health === null || health === \"loading\" || health.hasKey) {"
+          },
+          {
+            "line": 292,
+            "text": "(!isNetworkOffline && health !== \"loading\" && health !== null && !health.hasKey);"
+          },
+          {
+            "line": 298,
+            "text": "if (isNetworkOffline && (health === null || health === \"loading\" || health.hasKey)) {"
+          },
+          {
+            "line": 1004,
+            "text": ") : health !== \"loading\" && !health.hasKey ? ("
+          }
+        ]
+      },
+      {
+        "file": "frontend/src/llm/client.ts",
+        "hit_count": 1,
+        "sample_lines": [
+          {
+            "line": 14,
+            "text": "hasKey: boolean;"
+          }
+        ]
+      }
+    ]
+  }
+}

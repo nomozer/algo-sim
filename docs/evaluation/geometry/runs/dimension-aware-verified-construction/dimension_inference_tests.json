@@ -1,0 +1,277 @@
+{
+  "schema": "algosim-stage-p1b-dimension-inference-tests/1",
+  "run_id": "dimension-aware-verified-construction",
+  "phase": "phases_3_8_dimension_inference_and_metamorphic_verification",
+  "stage": "stage_p1b",
+  "generated_by": "expr-dim-audit",
+  "generated_at": "2026-11-15T10:40:55Z",
+  "generated_at_utc": "2026-11-15T10:40:55Z",
+  "branch": "feat/local-first-geometry-understanding",
+  "git_head_sha": "b04bed0f83e02ac27416814bea08fa830ee91461",
+  "head": "b04bed0f83e02ac27416814bea08fa830ee91461",
+  "product_commit": "32bdaa1df3dd7606b59b8c3cd8411578c4206d54",
+  "product_commit_rule": "product-paths-excluding-test-only/1",
+  "measured_system_hash": "b1403b91fd81410f9586c5676f541911540b4bc4bb0d7bf40204d17538623e59",
+  "measured_system_file_count": 120,
+  "baseline_measured_system_hash": "c25f9695828888987db2ab7990c4ff135da4d01c6b9d968f898c36728a0ae436",
+  "corpus_id": "STAGE_P1B_DIMENSION_INFERENCE_AND_METAMORPHIC_SUITE",
+  "dataset_manifest_sha256": "15486cd57a491060f6cdbc39ebd46c3c0c820b83cae645060554e9d8edee8141",
+  "provider_call_count": 0,
+  "cache_version": "140",
+  "cache_policy": "140:route-d",
+  "route_d_cache_policy": "140:route-d",
+  "planned_stage_p1c_cache_version": "140",
+  "schema_versions": {
+    "expression_model": "dimension-expression/1",
+    "typed_fact_next": "typed-fact-next/2",
+    "typed_fact_next_bridge": "typed-fact-next-bridge/2",
+    "registry": "geometry-functions/33",
+    "planner": "geometry-fact-planner/26",
+    "engine": "geometry-function-engine/24",
+    "local_geometry_parser": "local-geometry-parser/2",
+    "ocr_reconcile": "layout-aware-ocr-reconcile/1",
+    "determinacy_audit": "mathematical-determinacy-audit/1",
+    "trig_construction_certificates": "trig-construction-certificate/1",
+    "output_policy": "output-policy/1",
+    "hybrid_adapter": "hybrid-simulation-adapter/4",
+    "route_d_envelope": "hybrid-route-d-simulation/4"
+  },
+  "dataset_partition": "DEVELOPMENT_EXPOSED_ONLY (exposed REAL27 vmmu_r537, COMP112, DEV37, and Stage P1b dimensional/parser/Source-Gate probes); zero access to sealed H-1 or locked W2/W3",
+  "environment": {
+    "ALLOW_LIVE_AI": "0",
+    "HYBRID_ROUTE_MODE": "local-first",
+    "PYTHONPATH": "backend",
+    "python_executable": "D:/Documents/projects/algo-sim/backend/.venv/Scripts/python.exe -B",
+    "live_ai_calls": 0,
+    "sealed_h1_rows_opened": 0,
+    "locked_w2_w3_rows_read": 0
+  },
+  "test_command": "D:/Documents/projects/algo-sim/backend/.venv/Scripts/python.exe -B -m pytest -q backend/tests/simulation/test_dimension_expression_safety.py -k 'dimension or metamorphic or unit or single_symbol'",
+  "expected_behavior": "Symbol dimensions are inferred strictly from geometric slot expectations (never from variable letters); single symbols in AREA/VOLUME slots remain typed as L^2/L^3 (Non-Length Single-Symbol Guard); inhomogeneous sums, odd-degree radicands, non-positive constants, conflicting symbol dimensions, and unconverted mixed units fail closed deterministically; valid alpha-renamings, vertex renamings, clause reorderings, and algebraic surface forms preserve exact geometric answers.",
+  "actual_behavior": "All 11 slot/domain probes, 23/23 GOAL_DEGREES registry/engine parity checks, unit-consistency checks, 10 end-to-end metric-unit dimension/scale probes (wrong-dimension 9cm/3cm²/3cm³/2cm and mixed-base 3km+9cm²/3m+9cm²/3mm+9cm² all refused INCONSISTENT_FACTS with 0 provider calls), degree-k scaling metamorphics, and 5 end-to-end dimensional metamorphic variants passed with exact Fraction/Radical equivalence and 0 provider calls.",
+  "mathematical_oracle": "Dimensional homogeneity theorem: for expression E(a) of homogeneous length exponent d, E(k*a) = k^d * E(a) for all k > 0 in Q union Q(sqrt(n)); alpha-renaming a -> x and Euclidean relabeling S.ABCD -> P.MNPQ commute with Gram-matrix construction.",
+  "source_provenance": {
+    "implementation_modules": [
+      "backend/app/simulation/geometry/expression.py",
+      "backend/app/simulation/geometry_functions/registry.py",
+      "backend/app/simulation/geometry_functions/engine.py"
+    ],
+    "test_suite": "backend/tests/simulation/test_dimension_expression_safety.py"
+  },
+  "goal_degrees_parity": {
+    "ask_function_count": 23,
+    "matches_registry_and_engine": true,
+    "goal_degrees": {
+      "ask_angle_line_plane": 0,
+      "ask_angle_lines": 0,
+      "ask_angle_plane_plane": 0,
+      "ask_area": 2,
+      "ask_area_ratio": 0,
+      "ask_curved_residual_volume": 3,
+      "ask_curved_section_area": 2,
+      "ask_curved_section_radius": 1,
+      "ask_curved_volume": 3,
+      "ask_curved_volume_ratio": 0,
+      "ask_distance_line_plane": 1,
+      "ask_distance_lines": 1,
+      "ask_distance_planes": 1,
+      "ask_distance_point_plane": 1,
+      "ask_lateral_area": 2,
+      "ask_length": 1,
+      "ask_length_ratio": 0,
+      "ask_radius": 1,
+      "ask_residual_volume": 3,
+      "ask_section_area": 2,
+      "ask_surface_area": 2,
+      "ask_volume": 3,
+      "ask_volume_ratio": 0
+    }
+  },
+  "slot_and_domain_probes": {
+    "context_driven_symbol_V_as_length": {
+      "status": "ACCEPTED",
+      "symbol_dims": {
+        "V": "LENGTH"
+      },
+      "length_unit_symbol": "V",
+      "non_length_scale_symbol": null
+    },
+    "non_length_single_symbol_guard_area_S": {
+      "status": "ACCEPTED",
+      "symbol_dims": {
+        "S": "AREA"
+      },
+      "length_unit_symbol": null,
+      "non_length_scale_symbol": [
+        "S",
+        "AREA"
+      ]
+    },
+    "non_length_single_symbol_guard_volume_V": {
+      "status": "ACCEPTED",
+      "symbol_dims": {
+        "V": "VOLUME"
+      },
+      "length_unit_symbol": null,
+      "non_length_scale_symbol": [
+        "V",
+        "VOLUME"
+      ]
+    },
+    "conflicting_symbol_dimension_area_s_and_height_s": {
+      "status": "REJECTED",
+      "error_code": "DIMENSION_MISMATCH",
+      "detail": "ký hiệu 's' xung đột thứ nguyên giữa AREA và LENGTH"
+    },
+    "soundness_bug_closed_area_4a_with_length_a": {
+      "status": "REJECTED",
+      "error_code": "DIMENSION_MISMATCH",
+      "detail": "ký hiệu 'a' xung đột thứ nguyên giữa LENGTH và AREA"
+    },
+    "mismatch_segment_length_assigned_a_squared": {
+      "status": "REJECTED",
+      "error_code": "DIMENSION_MISMATCH",
+      "detail": "p2.value: số mũ ký hiệu a^2 không khớp thứ nguyên LENGTH"
+    },
+    "mismatch_segment_ratio_assigned_2a": {
+      "status": "REJECTED",
+      "error_code": "UNGROUNDED_SYMBOL",
+      "detail": "ký hiệu tự do ['a'] không được neo thứ nguyên bởi dữ kiện độ đo dương nào"
+    },
+    "inhomogeneous_addition_a_plus_a_squared": {
+      "status": "REJECTED",
+      "error_code": "DIMENSION_MISMATCH",
+      "detail": "không thể cộng/trừ hai đại lượng khác thứ nguyên (LENGTH và AREA)"
+    },
+    "odd_degree_under_sqrt_3a": {
+      "status": "REJECTED",
+      "error_code": "FRACTIONAL_DIMENSION",
+      "detail": "căn bậc hai của LENGTH sinh thứ nguyên phân số không hợp lệ"
+    },
+    "negative_radicand_2_minus_5": {
+      "status": "REJECTED",
+      "error_code": "NEGATIVE_RADICAND",
+      "detail": "không lấy căn bậc hai của đại lượng âm"
+    },
+    "zero_denominator_a_div_2_minus_2": {
+      "status": "REJECTED",
+      "error_code": "ZERO_DIVISOR",
+      "detail": "chia cho 0"
+    }
+  },
+  "measurement_unit_checks": {
+    "consistent_cm_and_cm2": "ACCEPTED",
+    "mixed_cm_and_m_without_conversion": "UNIT_SYSTEM_MISMATCH",
+    "area_unit_cm2_in_length_slot": "UNIT_DIMENSION_MISMATCH",
+    "end_to_end_metric_unit_probes": {
+      "consistent_3cm_and_9cm2_served": {
+        "status": "SERVED",
+        "answer": "√6",
+        "provider_calls": 0
+      },
+      "consistent_3km_and_9km2_served": {
+        "status": "SERVED",
+        "answer": "√6",
+        "provider_calls": 0
+      },
+      "wrong_dim_area_9cm_refused": {
+        "status": "REFUSED",
+        "reason_code": "INCONSISTENT_FACTS",
+        "provider_calls": 0
+      },
+      "wrong_dim_volume_9cm_refused": {
+        "status": "REFUSED",
+        "reason_code": "INCONSISTENT_FACTS",
+        "provider_calls": 0
+      },
+      "wrong_dim_length_3cm2_refused": {
+        "status": "REFUSED",
+        "reason_code": "INCONSISTENT_FACTS",
+        "provider_calls": 0
+      },
+      "wrong_dim_base_side_3cm3_refused": {
+        "status": "REFUSED",
+        "reason_code": "INCONSISTENT_FACTS",
+        "provider_calls": 0
+      },
+      "wrong_dim_ratio_2cm_refused": {
+        "status": "REFUSED",
+        "reason_code": "INCONSISTENT_FACTS",
+        "provider_calls": 0
+      },
+      "mixed_base_3km_and_9cm2_refused": {
+        "status": "REFUSED",
+        "reason_code": "INCONSISTENT_FACTS",
+        "provider_calls": 0
+      },
+      "mixed_base_3m_and_9cm2_refused": {
+        "status": "REFUSED",
+        "reason_code": "INCONSISTENT_FACTS",
+        "provider_calls": 0
+      },
+      "mixed_base_3mm_and_9cm2_refused": {
+        "status": "REFUSED",
+        "reason_code": "INCONSISTENT_FACTS",
+        "provider_calls": 0
+      }
+    }
+  },
+  "scaling_homogeneity_metamorphics": [
+    {
+      "substitution": "a -> a",
+      "substituted_canonical": "a³√2/3",
+      "degree_3_coeff_sq_ratio": "1",
+      "exact_homogeneity_verified": true
+    },
+    {
+      "substitution": "a -> 2a",
+      "substituted_canonical": "8a³√2/3",
+      "degree_3_coeff_sq_ratio": "64",
+      "exact_homogeneity_verified": true
+    },
+    {
+      "substitution": "a -> (3/2)a",
+      "substituted_canonical": "9a³√2/8",
+      "degree_3_coeff_sq_ratio": "729/64",
+      "exact_homogeneity_verified": true
+    },
+    {
+      "substitution": "a -> a√3",
+      "substituted_canonical": "a³√6",
+      "degree_3_coeff_sq_ratio": "27",
+      "exact_homogeneity_verified": true
+    }
+  ],
+  "end_to_end_metamorphic_variants": {
+    "canonical_a_S_ABCD_superscript": {
+      "status": "SERVED",
+      "answer": "a√6/3",
+      "provider_calls": 0
+    },
+    "alpha_rename_x_S_ABCD": {
+      "status": "SERVED",
+      "answer": "x√6/3",
+      "provider_calls": 0
+    },
+    "vertex_rename_T_MNPQ": {
+      "status": "SERVED",
+      "answer": "a√6/3",
+      "provider_calls": 0
+    },
+    "clause_reordered_and_caret_a_hat_2": {
+      "status": "SERVED",
+      "answer": "a√6/3",
+      "provider_calls": 0
+    },
+    "multiplicative_a_star_a": {
+      "status": "SERVED",
+      "answer": "a√6/3",
+      "provider_calls": 0
+    }
+  },
+  "verdict": "DIMENSION_INFERENCE_AND_METAMORPHIC_SAFETY_VERIFIED",
+  "baseline_product_commit": "d222e6d9b582d54fc42397a9593f52eb6fd77f18",
+  "stage_observed_measured_system_hash": "da96b0cb9ab42619b950fb1aaa8670caab9a0839821347ef0bbcf65bcfb44caf",
+  "stage_observed_measured_system_file_count": 120,
+  "stage_observed_cache_version": "139"
+}

@@ -1,0 +1,179 @@
+{
+  "schema": "algosim-stage-p1b-source-gate-dimension-integrity/1",
+  "run_id": "dimension-aware-verified-construction",
+  "phase": "phases_5_8_source_gate_and_mutation_rejection",
+  "stage": "stage_p1b",
+  "generated_by": "expr-dim-audit",
+  "generated_at": "2026-11-15T10:40:55Z",
+  "generated_at_utc": "2026-11-15T10:40:55Z",
+  "branch": "feat/local-first-geometry-understanding",
+  "git_head_sha": "b04bed0f83e02ac27416814bea08fa830ee91461",
+  "head": "b04bed0f83e02ac27416814bea08fa830ee91461",
+  "product_commit": "32bdaa1df3dd7606b59b8c3cd8411578c4206d54",
+  "product_commit_rule": "product-paths-excluding-test-only/1",
+  "measured_system_hash": "b1403b91fd81410f9586c5676f541911540b4bc4bb0d7bf40204d17538623e59",
+  "measured_system_file_count": 120,
+  "baseline_measured_system_hash": "c25f9695828888987db2ab7990c4ff135da4d01c6b9d968f898c36728a0ae436",
+  "corpus_id": "STAGE_P1B_SOURCE_GATE_ADVERSARIAL_MUTATIONS_M1_M8",
+  "dataset_manifest_sha256": "15486cd57a491060f6cdbc39ebd46c3c0c820b83cae645060554e9d8edee8141",
+  "provider_call_count": 0,
+  "cache_version": "140",
+  "cache_policy": "140:route-d",
+  "route_d_cache_policy": "140:route-d",
+  "planned_stage_p1c_cache_version": "140",
+  "schema_versions": {
+    "expression_model": "dimension-expression/1",
+    "typed_fact_next": "typed-fact-next/2",
+    "typed_fact_next_bridge": "typed-fact-next-bridge/2",
+    "registry": "geometry-functions/33",
+    "planner": "geometry-fact-planner/26",
+    "engine": "geometry-function-engine/24",
+    "local_geometry_parser": "local-geometry-parser/2",
+    "ocr_reconcile": "layout-aware-ocr-reconcile/1",
+    "determinacy_audit": "mathematical-determinacy-audit/1",
+    "trig_construction_certificates": "trig-construction-certificate/1",
+    "output_policy": "output-policy/1",
+    "hybrid_adapter": "hybrid-simulation-adapter/4",
+    "route_d_envelope": "hybrid-route-d-simulation/4"
+  },
+  "dataset_partition": "DEVELOPMENT_EXPOSED_ONLY (exposed REAL27 vmmu_r537, COMP112, DEV37, and Stage P1b dimensional/parser/Source-Gate probes); zero access to sealed H-1 or locked W2/W3",
+  "environment": {
+    "ALLOW_LIVE_AI": "0",
+    "HYBRID_ROUTE_MODE": "local-first",
+    "PYTHONPATH": "backend",
+    "python_executable": "D:/Documents/projects/algo-sim/backend/.venv/Scripts/python.exe -B",
+    "live_ai_calls": 0,
+    "sealed_h1_rows_opened": 0,
+    "locked_w2_w3_rows_read": 0
+  },
+  "test_command": "D:/Documents/projects/algo-sim/backend/.venv/Scripts/python.exe -B -m pytest -q backend/tests/simulation/test_dimension_expression_safety.py backend/tests/geometry/test_source_gate_hardening.py backend/tests/geometry/test_source_gate_language.py backend/tests/geometry/test_source_gate_clause_role.py",
+  "expected_behavior": "Source Gate ('kiem_nguon') and Engine symbol-dimension check reject 100% of isolated single-perturbation adversarial mutations from verified SERVED baselines (M1 altered quote, M2 swapped entity, M3 area rewritten as side premise, M4 ungrounded number, M5 dropped negation, M6 goal/prove value turned into premise, M7 silently dropped quantity clause, M8 conflicting symbol dimension) plus hallucinated polygon_area.shape on unnamed 'diện tích đáy' clauses with exact deterministic refusal codes.",
+  "actual_behavior": "8/8 isolated SERVED-baseline Source Gate & symbol-dimension mutations plus unnamed-base shape-hallucination guards rejected fail-closed with exact live reason codes (GOAL_CLAUSE_NOT_PREMISE, INCONSISTENT_FACTS, NEGATED_CLAUSE, OBJECT_NOT_IN_QUOTE, PREDICATE_NOT_IN_QUOTE, QUOTE_NOT_IN_SOURCE, SOURCE_PREMISE_UNREAD, UNGROUNDED_VALUE).",
+  "mathematical_oracle": "Substring/role grounding invariant over normalized NFC problem text + single-valued symbol typing environment Gamma : Sym -> Dimension.",
+  "source_provenance": {
+    "source_gate_module": "backend/app/simulation/geometry_functions/registry.py",
+    "engine_module": "backend/app/simulation/geometry_functions/engine.py",
+    "test_suite": "backend/tests/simulation/test_dimension_expression_safety.py"
+  },
+  "mutation_matrix_results": {
+    "M1_ALTERED_QUOTE": {
+      "baseline_status": "SERVED",
+      "baseline_answer": {
+        "coef": "√6/3",
+        "dim": 1,
+        "unit": "a"
+      },
+      "mutated_call_id": "p3",
+      "status": "REFUSED",
+      "refusal_code": "QUOTE_NOT_IN_SOURCE",
+      "reason": "p3: đoạn 'diện tích mặt đáy ABCD bằng a²' không có nguyên văn trong đề"
+    },
+    "M2_SWAPPED_ENTITY": {
+      "baseline_status": "SERVED",
+      "baseline_answer": {
+        "coef": "√2/6",
+        "dim": 3,
+        "unit": "a"
+      },
+      "mutated_call_id": "p3",
+      "status": "REFUSED",
+      "refusal_code": "OBJECT_NOT_IN_QUOTE",
+      "reason": "p3: đa giác SAB không được gọi tên trong 'diện tích hình vuông ABCD bằng a²'"
+    },
+    "M3_AREA_REWRITTEN_AS_LENGTH_PREMISE": {
+      "baseline_status": "SERVED",
+      "baseline_answer": {
+        "coef": "√6/3",
+        "dim": 1,
+        "unit": "a"
+      },
+      "mutated_call_id": "p3",
+      "status": "REFUSED",
+      "refusal_code": "UNGROUNDED_VALUE",
+      "reason": "p3: 'diện tích đáy bằng a²' không gắn a với vai trò của ô này trong một câu đọc trọn"
+    },
+    "M4_UNGROUNDED_NUMBER": {
+      "baseline_status": "SERVED",
+      "baseline_answer": {
+        "coef": "√6/3",
+        "dim": 1,
+        "unit": "a"
+      },
+      "mutated_call_id": "p3",
+      "status": "REFUSED",
+      "refusal_code": "UNGROUNDED_VALUE",
+      "reason": "p3: diện tích 2a² không khớp số đo nguồn của đáy trong 'diện tích đáy bằng a²'"
+    },
+    "M5_DROPPED_NOT_NEGATION": {
+      "baseline_status": "SERVED",
+      "baseline_answer": {
+        "coef": "1/3",
+        "dim": 3,
+        "unit": "a"
+      },
+      "mutated_call_id": "p3",
+      "status": "REFUSED",
+      "refusal_code": "NEGATED_CLAUSE",
+      "reason": "p3: mệnh đề 'SA không vuông góc với mặt phẳng đáy' mang phủ định — không làm dữ kiện perpendicular_line_plane"
+    },
+    "M6_GOAL_TURNED_INTO_PREMISE": {
+      "baseline_status": "SERVED",
+      "baseline_answer": {
+        "coef": "√14/6",
+        "dim": 3,
+        "unit": "a"
+      },
+      "mutated_call_id": "p_goal",
+      "status": "REFUSED",
+      "refusal_code": "GOAL_CLAUSE_NOT_PREMISE",
+      "reason": "p_goal: 'Chứng minh diện tích đáy ABCD bằng a².' là điều phải chứng minh, không phải dữ kiện"
+    },
+    "M7_SILENT_DROPPED_QUANTITY_CLAUSE": {
+      "baseline_status": "SERVED",
+      "baseline_answer": {
+        "coef": "1/3",
+        "dim": 3,
+        "unit": "a"
+      },
+      "mutated_call_id": null,
+      "status": "REFUSED",
+      "refusal_code": "SOURCE_PREMISE_UNREAD",
+      "reason": "tiền đề 'Cho hình chóp S.ABCD có đáy ABCD là hình vuông cạnh a, SA vuông góc với mặt phẳng đáy, SA = a và SB = a√2.' chưa được lời gọi nào đọc — có thể đổi hình; không dùng mô hình cũ"
+    },
+    "M8_SYMBOL_DIMENSION_CONFLICT": {
+      "baseline_status": "SERVED",
+      "baseline_answer": {
+        "coef": "√6/3",
+        "dim": 1,
+        "unit": "a"
+      },
+      "mutated_call_id": null,
+      "status": "REFUSED",
+      "refusal_code": "INCONSISTENT_FACTS",
+      "reason": "ký hiệu 'a' xung đột thứ nguyên giữa AREA và LENGTH"
+    }
+  },
+  "unnamed_base_shape_hallucination_guards": {
+    "rhombus_base_hallucinated_square": {
+      "status": "REFUSED",
+      "refusal_code": "PREDICATE_NOT_IN_QUOTE",
+      "reason": "p4: polygon_area(shape='square') thiếu từ khóa 'hình vuông' trong 'diện tích đáy bằng a²'"
+    },
+    "rhombus_base_hallucinated_rectangle": {
+      "status": "REFUSED",
+      "refusal_code": "PREDICATE_NOT_IN_QUOTE",
+      "reason": "p4: polygon_area(shape='rectangle') thiếu từ khóa 'hình chữ nhật' trong 'diện tích đáy bằng a²'"
+    },
+    "right_triangle_base_hallucinated_equilateral_triangle": {
+      "status": "REFUSED",
+      "refusal_code": "PREDICATE_NOT_IN_QUOTE",
+      "reason": "p4: polygon_area(shape='equilateral_triangle') thiếu từ khóa 'tam giác đều' trong 'diện tích đáy bằng a²/2'"
+    }
+  },
+  "all_8_mutation_classes_rejected": true,
+  "verdict": "SOURCE_GATE_AND_DIMENSION_MUTATION_INTEGRITY_VERIFIED_8_OF_8",
+  "baseline_product_commit": "d222e6d9b582d54fc42397a9593f52eb6fd77f18",
+  "stage_observed_measured_system_hash": "da96b0cb9ab42619b950fb1aaa8670caab9a0839821347ef0bbcf65bcfb44caf",
+  "stage_observed_measured_system_file_count": 120,
+  "stage_observed_cache_version": "139"
+}

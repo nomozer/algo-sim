@@ -329,22 +329,37 @@ def test_c15_only_a_step_beyond_the_description_and_the_registered_rules_is_disc
 
 
 def test_c15_the_registered_r1_corpus_and_its_gold_replay_are_locked(tmp_path):
-    """C15 review MINOR-2: the corpus validates, and its gold replay reproduces the committed receipt."""
+    """C15 review MINOR-2: the frozen corpus validates; non-promoted rows match the committed receipt while D1/D2
+    (`R1-F01` = √6/2, `R1-F02` = √2) are promoted to verified SERVED outcomes."""
+    import hashlib
     corpus = CORPUS.parent / "r1-live-pilot-corpus.json"
-    R.validate_corpus(json.loads(corpus.read_text(encoding="utf-8")))
+    raw_corpus = json.loads(corpus.read_text(encoding="utf-8"))
+    R.validate_corpus(raw_corpus)
     out = R.evaluate(corpus, tmp_path / "dry.jsonl", None)
     # At registry /32 (`r1-live-pilot-gold-replay-r2.jsonl`, `r1-live-pilot-gold-replay-c19-r3.jsonl`) R1-G01/R1-G02
     # refused at Source Gate `(11, 2, 0)`; registry /33 grounds "điểm chính giữa" and "đi qua/nối" -> `(13, 0, 0)`.
+    # With `compositional-planner-capability-expansion`, D1 (`R1-F01`) and D2 (`R1-F02`) are also served -> `(15, 0, 0)`.
     receipt = _rows(CORPUS.parent / "r1-live-pilot-gold-replay-final.jsonl")
     # the receipt hashed the LF bytes it ran on; a fresh checkout under core.autocrlf=true holds CRLF (Full T3 attempt 1)
-    import hashlib
     assert receipt[0]["corpus_sha256"] == hashlib.sha256(corpus.read_bytes().replace(b"\r\n", b"\n")).hexdigest()
-    assert {r["case_id"]: r["composition_label"] for r in out["rows"]} == {
-        r["case_id"]: r["composition_label"] for r in receipt if r["type"] == "row"}
-    assert out["supplementary"] == receipt[-1]["supplementary"]
-    outcomes = out["supplementary"]["hybrid_outcomes"]
-    assert out["score"]["metrics"]["wrong_served_end_to_end"]["numerator"] == 0
-    assert (outcomes["SERVED_CORRECT"], outcomes["FALSE_REFUSAL"], outcomes["SERVED_WRONG"]) == (13, 0, 0)
+    promoted = {"R1-F01": "√6/2", "R1-F02": "√2"}
+    assert {r["case_id"]: r["composition_label"] for r in out["rows"] if r["case_id"] not in promoted} == {
+        r["case_id"]: r["composition_label"] for r in receipt if r["type"] == "row" and r["case_id"] not in promoted}
+    for cid, want in promoted.items():
+        row = next(r for r in out["rows"] if r["case_id"] == cid)
+        assert row["observed"]["status"] == "SERVED" and row["observed"]["certificate_verified"] is True
+        assert [v for vs in row["observed"]["answers"].values() for v in vs] == [want]
+
+    promoted_corpus = deepcopy(raw_corpus)
+    for c in promoted_corpus["cases"]:
+        if c["id"] in promoted:
+            c["expected"] = {"outcome": "SERVED", "is_ambiguous": False, "oracle": {"distance": [c["boundary_value"]]}}
+    promoted_path = tmp_path / "r1-promoted.json"
+    promoted_path.write_text(json.dumps(promoted_corpus, ensure_ascii=False), encoding="utf-8")
+    prom_out = R.evaluate(promoted_path, tmp_path / "promoted.jsonl", None)
+    outcomes = prom_out["supplementary"]["hybrid_outcomes"]
+    assert prom_out["score"]["metrics"]["wrong_served_end_to_end"]["numerator"] == 0
+    assert (outcomes["SERVED_CORRECT"], outcomes["FALSE_REFUSAL"], outcomes["SERVED_WRONG"]) == (15, 0, 0)
 
 
 def test_c15_the_models_own_described_points_are_checked_against_gold():
@@ -1285,3 +1300,36 @@ def test_sha256_file_and_approval_terms_are_invariant_under_windows_crlf_checkou
     k1_tmpl = json.loads(Path(specs["K-1"]["template_path"]).read_text(encoding="utf-8"))
     k1_approved = {k: v for k, v in k1_tmpl.items() if k != "owner_decision"} | {"paid_project_confirmed": True}
     assert R.check_approval_terms(k1_corpus_crlf, k1_approved)["pilot"] == "K-1"
+
+
+def test_shared_template_refresh_rebinds_pending_templates_only_and_never_approves(tmp_path):
+    """`scripts/refresh_pending_templates.py` (shared since /13, replacing 24 per-run copies): identity fields follow
+    the runtime, the decision stays PENDING and unpaid, a non-pending template is refused untouched, and an existing
+    receipt is never overwritten."""
+    from scripts import refresh_pending_templates as T
+
+    corpus = tmp_path / "c.json"
+    corpus.write_text("{}", encoding="utf-8")
+    pending = {"owner_decision": T.PENDING, "paid_project_confirmed": False, "measured_system": "old"}
+    tpl = tmp_path / "k1.template.json"
+    tpl.write_text(json.dumps(pending), encoding="utf-8")
+    ident = {k: f"new-{k}" for k in T.KEYS}
+    specs = {"K-1": {"template_path": tpl, "corpus_path": corpus}}
+
+    out = T.refresh(tmp_path / "run", "test", specs=specs, ident=ident)
+    after = json.loads(tpl.read_text(encoding="utf-8"))
+    assert after["measured_system"] == after["measured_system_tree_hash"] == "new-measured_system"
+    assert (after["owner_decision"], after["paid_project_confirmed"]) == (T.PENDING, False)
+    assert out["rows"][0]["before"]["measured_system"] == "old"
+    assert json.loads((tmp_path / "run/logs/prior-k1.template.json").read_text(encoding="utf-8")) == pending
+
+    with pytest.raises(SystemExit, match="exists"):
+        T.refresh(tmp_path / "run", "again", specs=specs, ident=ident)
+
+    approved = tmp_path / "k1b.template.json"
+    approved.write_text(json.dumps({**pending, "owner_decision": "APPROVED"}), encoding="utf-8")
+    before = approved.read_bytes()
+    with pytest.raises(SystemExit, match="refusing"):
+        T.refresh(tmp_path / "run2", "test", specs={"K-1": {"template_path": approved, "corpus_path": corpus}},
+                  ident=ident)
+    assert approved.read_bytes() == before

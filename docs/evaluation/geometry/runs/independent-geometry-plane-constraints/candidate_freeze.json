@@ -1,0 +1,37 @@
+{
+  "run_id": "independent-geometry-plane-constraints",
+  "generated_at_utc": "2026-11-13T16:11:26.193340+00:00",
+  "head": "0ad317036e27c57c04423e2c0a690ae9d533226d",
+  "branch": "feat/local-first-geometry-understanding",
+  "freeze_commit_field": "da06829fe1b8890a878056af57830f7c066719f0",
+  "freeze_stored_in": "8852c4070aa004034d49e19eb8b339f3d291a910",
+  "product_commit": "697b097acc62e778a2668d1d74d304a778afc9ee",
+  "measured_system": {
+    "paths": [
+      "backend/app",
+      "frontend/src/simulations/domains/semantic",
+      "frontend/src/simulations/domains/semantic/semantic_program.schema.json"
+    ],
+    "so_file": 115,
+    "tree_hash": "040de2fd63fb687203610918160b1170ad025117b2d221acf12ef25215bd831c",
+    "khai": "Băm nội dung toàn bộ mã SẢN PHẨM của hệ được đo. Harness (scripts/tests/docs) KHÔNG nằm trong đây, nên bộ đo được phép cứng cáp thêm mà không phải đóng băng lại candidate."
+  },
+  "cache_version": "134",
+  "cache_version_bumped": false,
+  "cache_reason": "only SERVED rows are reused (main._served_route_d); texts newly served were refused before (never cached), previously served texts produce the same envelopes (full pytest incl. hybrid-preview fixtures unchanged); a changed refusal code is never cached",
+  "contracts_unchanged": [
+    "geometry-fact-planner/26",
+    "geometry-functions/33",
+    "geometry-function-engine/24",
+    "height-invariance-certificate/2",
+    "output-policy/1",
+    "hybrid-route-d-simulation/4",
+    "typed-fact-next/2"
+  ],
+  "source_gate_grammar_extended": "additive closed grammar for named planes defined by a line and a point / two intersecting lines (registry /33 version unchanged: no function or argument changed)",
+  "previous_candidate": {
+    "stored_in": "f0fa7e359",
+    "measured_system": "dc834af0001169e6962b655b8953c9694eb4a8c5718e59995f152d5c3fc93d29"
+  },
+  "freeze_verify_in_regression": "PASS"
+}

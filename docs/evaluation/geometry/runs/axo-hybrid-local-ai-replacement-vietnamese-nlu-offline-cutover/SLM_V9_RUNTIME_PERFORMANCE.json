@@ -1,0 +1,520 @@
+{
+  "schema": "slm-v9-runtime-performance/1",
+  "generated_at_utc": "2026-11-19T10:23:45.730954+00:00",
+  "external_ai_calls": 0,
+  "physical_target_hardware_status": "PHYSICAL_TARGET_HARDWARE = NOT_MEASURED (host has ~15.78 GiB RAM; no physical 4–8 GiB target laptop attached)",
+  "frontend_memory_status": "FRONTEND_MEMORY = NOT_MEASURED_BACKEND_ONLY",
+  "host_environment": {
+    "os": "Windows-11-10.0.26100-SP0",
+    "machine": "AMD64",
+    "processor": "Intel64 Family 6 Model 141 Stepping 1, GenuineIntel",
+    "logical_cores": 12,
+    "total_physical_ram_mib": 16163.3,
+    "runtime_build": "llama.cpp b12470 (win-cpu-x64)",
+    "model_key": "qwen3-0.6b-axo-v9-q4_k_m",
+    "v9_max_tokens": 256,
+    "llama_server_batch_flags": [
+      "-b",
+      "512",
+      "-ub",
+      "512"
+    ]
+  },
+  "cold_start": {
+    "cold_start_e2e_ms": 6104.96,
+    "server_load_time_ms": 970.24,
+    "stage_timings_count": 21,
+    "stage_timings_ms": {
+      "preprocessing_ms": 5.177,
+      "normalizer_ms": 0.465,
+      "local_parser_ms": 0.04,
+      "cache_lookup_ms": 0.0,
+      "clause_context_ms": 4.605,
+      "prompt_build_ms": 0.014,
+      "grammar_build_ms": 0.36,
+      "queue_wait_ms": 0.006,
+      "prompt_eval_ms": 1989.611,
+      "token_gen_ms": 2639.928,
+      "json_decode_ms": 0.043,
+      "grounding_and_lowering_ms": 1.439,
+      "wire_normalize_ms": 0.185,
+      "server_load_time_ms": 970.24,
+      "slm_inference_ms": 4633.07,
+      "grammar_retry_ms": 0.0,
+      "grammar_retry_used": false,
+      "prompt_tokens": 998,
+      "completion_tokens": 88,
+      "cached_prompt_tokens": 0,
+      "tokens_per_sec": 32.96
+    },
+    "route_status": "SERVED",
+    "has_scene3d": true
+  },
+  "pure_warm_uncached_slm_n100": {
+    "e2e_to_verified_scene3d_ms": {
+      "count": 100,
+      "min_ms": 2636.51,
+      "p50_ms": 4011.93,
+      "p95_ms": 5411.75,
+      "max_ms": 9181.57,
+      "mean_ms": 4011.01
+    },
+    "slm_inference_ms": {
+      "count": 100,
+      "min_ms": 2594.81,
+      "p50_ms": 3954.9,
+      "p95_ms": 5344.92,
+      "max_ms": 9115.84,
+      "mean_ms": 3961.16
+    },
+    "mean_tokens_per_sec": 33.0,
+    "served_count": 100,
+    "scene3d_present_count": 100,
+    "stage_timings_summary_ms": {
+      "preprocessing_ms": {
+        "count": 100,
+        "min_ms": 0.82,
+        "p50_ms": 1.16,
+        "p95_ms": 1.7,
+        "max_ms": 2.05,
+        "mean_ms": 1.22
+      },
+      "normalizer_ms": {
+        "count": 100,
+        "min_ms": 0.46,
+        "p50_ms": 0.63,
+        "p95_ms": 1.03,
+        "max_ms": 1.25,
+        "mean_ms": 0.67
+      },
+      "local_parser_ms": {
+        "count": 100,
+        "min_ms": 0.04,
+        "p50_ms": 0.05,
+        "p95_ms": 0.08,
+        "max_ms": 0.1,
+        "mean_ms": 0.05
+      },
+      "cache_lookup_ms": {
+        "count": 100,
+        "min_ms": 0.0,
+        "p50_ms": 0.0,
+        "p95_ms": 0.0,
+        "max_ms": 0.0,
+        "mean_ms": 0.0
+      },
+      "clause_context_ms": {
+        "count": 100,
+        "min_ms": 0.26,
+        "p50_ms": 0.4,
+        "p95_ms": 0.65,
+        "max_ms": 0.73,
+        "mean_ms": 0.42
+      },
+      "prompt_build_ms": {
+        "count": 100,
+        "min_ms": 0.01,
+        "p50_ms": 0.01,
+        "p95_ms": 0.02,
+        "max_ms": 0.02,
+        "mean_ms": 0.01
+      },
+      "grammar_build_ms": {
+        "count": 100,
+        "min_ms": 0.15,
+        "p50_ms": 0.19,
+        "p95_ms": 0.3,
+        "max_ms": 0.58,
+        "mean_ms": 0.21
+      },
+      "queue_wait_ms": {
+        "count": 100,
+        "min_ms": 0.0,
+        "p50_ms": 0.01,
+        "p95_ms": 0.01,
+        "max_ms": 0.01,
+        "mean_ms": 0.01
+      },
+      "prompt_eval_ms": {
+        "count": 100,
+        "min_ms": 29.58,
+        "p50_ms": 372.05,
+        "p95_ms": 512.66,
+        "max_ms": 833.17,
+        "mean_ms": 381.17
+      },
+      "token_gen_ms": {
+        "count": 100,
+        "min_ms": 2315.74,
+        "p50_ms": 3534.0,
+        "p95_ms": 4892.74,
+        "max_ms": 8278.84,
+        "mean_ms": 3576.8
+      },
+      "json_decode_ms": {
+        "count": 100,
+        "min_ms": 0.04,
+        "p50_ms": 0.05,
+        "p95_ms": 0.07,
+        "max_ms": 0.1,
+        "mean_ms": 0.05
+      },
+      "grounding_and_lowering_ms": {
+        "count": 100,
+        "min_ms": 0.86,
+        "p50_ms": 1.7,
+        "p95_ms": 2.92,
+        "max_ms": 3.98,
+        "mean_ms": 1.78
+      },
+      "wire_normalize_ms": {
+        "count": 100,
+        "min_ms": 0.14,
+        "p50_ms": 0.2,
+        "p95_ms": 0.31,
+        "max_ms": 0.45,
+        "mean_ms": 0.21
+      },
+      "slm_inference_ms": {
+        "count": 100,
+        "min_ms": 2594.81,
+        "p50_ms": 3954.9,
+        "p95_ms": 5344.92,
+        "max_ms": 9115.84,
+        "mean_ms": 3961.16
+      },
+      "exact_kernel_and_scene3d_ms": {
+        "count": 100,
+        "min_ms": 20.26,
+        "p50_ms": 29.26,
+        "p95_ms": 61.34,
+        "max_ms": 125.17,
+        "mean_ms": 36.35
+      }
+    },
+    "by_complexity_tier": {
+      "short": {
+        "count": 34,
+        "min_ms": 2636.51,
+        "p50_ms": 3167.78,
+        "p95_ms": 3520.23,
+        "max_ms": 3675.66,
+        "mean_ms": 3134.02
+      },
+      "medium": {
+        "count": 33,
+        "min_ms": 3760.61,
+        "p50_ms": 4235.71,
+        "p95_ms": 4692.01,
+        "max_ms": 5228.49,
+        "mean_ms": 4213.47
+      },
+      "long": {
+        "count": 33,
+        "min_ms": 3884.63,
+        "p50_ms": 4198.76,
+        "p95_ms": 6457.17,
+        "max_ms": 9181.57,
+        "mean_ms": 4712.1
+      }
+    },
+    "stability_drift_q1_vs_q4": {
+      "first_25_e2e_mean_ms": 3107.13,
+      "last_25_e2e_mean_ms": 4409.37,
+      "first_25_mean_comb_ws_mib": 969.42,
+      "last_25_mean_comb_ws_mib": 972.37,
+      "total_py_page_faults_delta": 640,
+      "total_srv_page_faults_delta": 120437
+    }
+  },
+  "mixed_warm_uncached_n100": {
+    "e2e_ms": {
+      "count": 100,
+      "min_ms": 31.69,
+      "p50_ms": 1270.35,
+      "p95_ms": 4109.98,
+      "max_ms": 4271.67,
+      "mean_ms": 1604.66
+    },
+    "fast_path_count": 50,
+    "slm_invoked_count": 50,
+    "served_count": 100
+  },
+  "warm_cached_explicit_runtime": {
+    "initial_5_misses_ms": {
+      "count": 5,
+      "min_ms": 2732.89,
+      "p50_ms": 2785.05,
+      "p95_ms": 2900.09,
+      "max_ms": 2929.69,
+      "mean_ms": 2816.43
+    },
+    "subsequent_25_hits_ms": {
+      "count": 25,
+      "min_ms": 27.63,
+      "p50_ms": 29.24,
+      "p95_ms": 33.87,
+      "max_ms": 55.79,
+      "mean_ms": 30.93
+    },
+    "single_flight_4_threads": {
+      "submitted": 4,
+      "served": 4,
+      "cache_hits": 3,
+      "results": [
+        {
+          "status": "SERVED",
+          "cache_hit": false,
+          "ms": 4117.55
+        },
+        {
+          "status": "SERVED",
+          "cache_hit": true,
+          "ms": 4122.68
+        },
+        {
+          "status": "SERVED",
+          "cache_hit": true,
+          "ms": 4123.45
+        },
+        {
+          "status": "SERVED",
+          "cache_hit": true,
+          "ms": 4108.47
+        }
+      ]
+    }
+  },
+  "deterministic_fast_path_n30": {
+    "count": 30,
+    "min_ms": 31.73,
+    "p50_ms": 33.9,
+    "p95_ms": 36.28,
+    "max_ms": 51.94,
+    "mean_ms": 34.75
+  },
+  "system_memory_accounting_mib": {
+    "before_model_load": {
+      "python_backend": {
+        "pid": 4140,
+        "working_set_mib": 65.38,
+        "peak_working_set_mib": 65.38,
+        "private_commit_mib": 54.89,
+        "page_fault_count": 28608,
+        "cpu_time_ms": 2109.38
+      },
+      "llama_server": {},
+      "combined_backend_plus_slm_ws_mib": 65.38,
+      "combined_backend_plus_slm_private_commit_mib": 54.89,
+      "os": {
+        "memory_load_pct": 55,
+        "total_phys_mib": 16163.3,
+        "avail_phys_mib": 7134.65,
+        "total_pagefile_mib": 29987.3,
+        "avail_pagefile_mib": 15019.43,
+        "system_commit_total_mib": 14967.88,
+        "system_commit_limit_mib": 29987.3,
+        "system_commit_peak_mib": 31283.24,
+        "os_handle_count": 116768,
+        "os_process_count": 245,
+        "os_thread_count": 3317
+      }
+    },
+    "after_cold_load": {
+      "python_backend": {
+        "pid": 4140,
+        "working_set_mib": 67.68,
+        "peak_working_set_mib": 73.58,
+        "private_commit_mib": 56.3,
+        "page_fault_count": 127756,
+        "cpu_time_ms": 2609.38
+      },
+      "llama_server": {
+        "pid": 9308,
+        "working_set_mib": 901.33,
+        "peak_working_set_mib": 901.33,
+        "private_commit_mib": 575.38,
+        "page_fault_count": 257347,
+        "cpu_time_ms": 29500.0
+      },
+      "combined_backend_plus_slm_ws_mib": 969.01,
+      "combined_backend_plus_slm_private_commit_mib": 631.68,
+      "os": {
+        "memory_load_pct": 61,
+        "total_phys_mib": 16163.3,
+        "avail_phys_mib": 6233.07,
+        "total_pagefile_mib": 29987.3,
+        "avail_pagefile_mib": 14432.71,
+        "system_commit_total_mib": 15554.59,
+        "system_commit_limit_mib": 29987.3,
+        "system_commit_peak_mib": 31283.24,
+        "os_handle_count": 117050,
+        "os_process_count": 247,
+        "os_thread_count": 3329
+      }
+    },
+    "after_100_warm_uncached": {
+      "python_backend": {
+        "pid": 4140,
+        "working_set_mib": 70.13,
+        "peak_working_set_mib": 73.58,
+        "private_commit_mib": 58.3,
+        "page_fault_count": 128417,
+        "cpu_time_ms": 7562.5
+      },
+      "llama_server": {
+        "pid": 9308,
+        "working_set_mib": 902.87,
+        "peak_working_set_mib": 923.86,
+        "private_commit_mib": 579.12,
+        "page_fault_count": 378234,
+        "cpu_time_ms": 2301843.75
+      },
+      "combined_backend_plus_slm_ws_mib": 973.0,
+      "combined_backend_plus_slm_private_commit_mib": 637.42,
+      "os": {
+        "memory_load_pct": 61,
+        "total_phys_mib": 16163.3,
+        "avail_phys_mib": 6286.58,
+        "total_pagefile_mib": 29987.3,
+        "avail_pagefile_mib": 14549.38,
+        "system_commit_total_mib": 15437.93,
+        "system_commit_limit_mib": 29987.3,
+        "system_commit_peak_mib": 31283.24,
+        "os_handle_count": 115422,
+        "os_process_count": 241,
+        "os_thread_count": 3262
+      }
+    },
+    "peak_combined_backend_plus_slm_working_set_mib": 973.28,
+    "peak_combined_backend_plus_slm_private_commit_mib": 637.5,
+    "min_os_available_physical_ram_mib": 5455.33,
+    "peak_system_total_committed_mib": 16360.44
+  },
+  "concurrency_and_saturation": {
+    "c_2": {
+      "concurrency": 2,
+      "total_requests": 8,
+      "request_e2e": {
+        "count": 8,
+        "min_ms": 4370.52,
+        "p50_ms": 6569.36,
+        "p95_ms": 8859.95,
+        "max_ms": 8870.02,
+        "mean_ms": 6604.74
+      },
+      "queue_wait": {
+        "count": 8,
+        "min_ms": 0.0,
+        "p50_ms": 2161.57,
+        "p95_ms": 4352.46,
+        "max_ms": 4383.39,
+        "mean_ms": 2176.04
+      },
+      "mean_batch_wall_ms": 8824.03,
+      "served_count": 8,
+      "snap_after": {
+        "python_backend": {
+          "pid": 4140,
+          "working_set_mib": 70.29,
+          "peak_working_set_mib": 73.58,
+          "private_commit_mib": 59.77,
+          "page_fault_count": 129052,
+          "cpu_time_ms": 13890.62
+        },
+        "llama_server": {
+          "pid": 9308,
+          "working_set_mib": 808.71,
+          "peak_working_set_mib": 923.86,
+          "private_commit_mib": 579.73,
+          "page_fault_count": 408198,
+          "cpu_time_ms": 3556125.0
+        },
+        "combined_backend_plus_slm_ws_mib": 879.0,
+        "combined_backend_plus_slm_private_commit_mib": 639.5,
+        "os": {
+          "memory_load_pct": 60,
+          "total_phys_mib": 16163.3,
+          "avail_phys_mib": 6443.75,
+          "total_pagefile_mib": 29987.3,
+          "avail_pagefile_mib": 14948.16,
+          "system_commit_total_mib": 15039.14,
+          "system_commit_limit_mib": 29987.3,
+          "system_commit_peak_mib": 31283.24,
+          "os_handle_count": 113292,
+          "os_process_count": 239,
+          "os_thread_count": 3220
+        }
+      }
+    },
+    "c_4": {
+      "concurrency": 4,
+      "total_requests": 8,
+      "request_e2e": {
+        "count": 8,
+        "min_ms": 4426.97,
+        "p50_ms": 11028.9,
+        "p95_ms": 17712.47,
+        "max_ms": 17868.67,
+        "mean_ms": 11084.53
+      },
+      "queue_wait": {
+        "count": 8,
+        "min_ms": 0.0,
+        "p50_ms": 6581.17,
+        "p95_ms": 13117.96,
+        "max_ms": 13328.0,
+        "mean_ms": 6606.4
+      },
+      "mean_batch_wall_ms": 17824.56,
+      "served_count": 8,
+      "snap_after": {
+        "python_backend": {
+          "pid": 4140,
+          "working_set_mib": 70.34,
+          "peak_working_set_mib": 73.58,
+          "private_commit_mib": 59.75,
+          "page_fault_count": 129174,
+          "cpu_time_ms": 14203.12
+        },
+        "llama_server": {
+          "pid": 9308,
+          "working_set_mib": 808.79,
+          "peak_working_set_mib": 923.86,
+          "private_commit_mib": 580.16,
+          "page_fault_count": 411787,
+          "cpu_time_ms": 3766593.75
+        },
+        "combined_backend_plus_slm_ws_mib": 879.13,
+        "combined_backend_plus_slm_private_commit_mib": 639.91,
+        "os": {
+          "memory_load_pct": 59,
+          "total_phys_mib": 16163.3,
+          "avail_phys_mib": 6474.95,
+          "total_pagefile_mib": 29987.3,
+          "avail_pagefile_mib": 14978.43,
+          "system_commit_total_mib": 15008.87,
+          "system_commit_limit_mib": 29987.3,
+          "system_commit_peak_mib": 31283.24,
+          "os_handle_count": 113144,
+          "os_process_count": 239,
+          "os_thread_count": 3208
+        }
+      }
+    },
+    "c_6_bounded_queue_saturation": {
+      "max_queue": 2,
+      "submitted_parallel": 6,
+      "completed_ok": 2,
+      "rejected_busy": 4,
+      "other_errors": 0,
+      "post_saturation_recovery_ok": true
+    }
+  },
+  "fault_recovery": {
+    "crash_kill_pid": 9308,
+    "crash_auto_restart_served": true,
+    "timeout_reason_code": "LOCAL_SLM_TIMEOUT",
+    "post_timeout_served": true
+  }
+}

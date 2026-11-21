@@ -1,0 +1,24 @@
+{
+ "schema": "axo-v11-parser-generalization-tests/1",
+ "offline": true,
+ "ai_calls": 0,
+ "suites": {
+  "source_gate_simulation_request_nouns": {
+   "file": "backend/tests/geometry/test_source_gate_simulation_request_nouns.py",
+   "passed": 34,
+   "failed": 0
+  },
+  "local_parser_simulation_intent": {
+   "file": "backend/tests/geometry/test_local_parser_simulation_intent.py",
+   "passed": 31,
+   "failed": 0
+  },
+  "slm_simulation_only_contract": {
+   "file": "backend/tests/geometry/test_slm_simulation_only_contract.py",
+   "passed": 6,
+   "failed": 0
+  }
+ },
+ "design": "SIMULATION_INTENT_GENERALIZATION_DESIGN.md",
+ "known_limit": "a request ending in '!' is read by the parser but refused by the Source Gate sentence end (locked); excluded from the metamorphic set and listed in OWNER_HANDOFF.md"
+}

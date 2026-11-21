@@ -1,0 +1,56 @@
+{
+  "run_id": "independent-geometry-plane-constraints",
+  "generated_at_utc": "2026-11-13T12:59:07.530446+00:00",
+  "branch": "feat/local-first-geometry-understanding",
+  "head": "4222f021b28462bb8bccfe87d02288b321b0dc5f",
+  "working_tree_clean_at_start": true,
+  "reported_identities": {
+    "report_head": "4222f021b",
+    "run_manifest_head": "c29cff312",
+    "product_commit": "ea4b2a197",
+    "candidate_manifest_commit": "cf058f0ee",
+    "candidate_stored_in": "f0fa7e359",
+    "measured_system": "dc834af0001169e6962b655b8953c9694eb4a8c5718e59995f152d5c3fc93d29",
+    "measured_files": 115,
+    "cache_version": "134"
+  },
+  "git_verified": {
+    "head_equals_report_head": true,
+    "all_reported_commits_are_ancestors_of_head": true,
+    "candidate_file_last_commit": "f0fa7e359",
+    "candidate_manifest_commit_field": "cf058f0ee",
+    "candidate_product_commit": "ea4b2a197",
+    "measured_system": "dc834af0001169e6962b655b8953c9694eb4a8c5718e59995f152d5c3fc93d29",
+    "measured_files": 115,
+    "cache_version": "134",
+    "previous_run_manifest_head": "c29cff312"
+  },
+  "checks_run": [
+    "freeze_evaluation_candidate --verify: match 115 files dc834af0001169e6",
+    "lock_cache_identity --verify: CACHE_VERSION 134, environment 3d5400a5",
+    "no server listening on 8767/8770/5173"
+  ],
+  "discrepancies": [],
+  "note": "report HEAD (4222f021b), run-manifest HEAD (c29cff312), manifest commit (cf058f0ee) and freeze commit (f0fa7e359) are four distinct commits; all are ancestors of HEAD and the three later ones only add evidence (no product path changed after ea4b2a197)",
+  "contracts": [
+    "geometry-fact-planner/26",
+    "geometry-functions/33",
+    "geometry-function-engine/24",
+    "height-invariance-certificate/2",
+    "output-policy/1",
+    "hybrid-route-d-simulation/4"
+  ],
+  "reported_baseline_preserved_not_targets": {
+    "sections_probes": "9/12",
+    "intersections_probes": "5/7",
+    "invariant_checks": "124/124",
+    "mutations": "52/53",
+    "browser_e2e": "12/12",
+    "text_acceptance": "8/27",
+    "image_acceptance": "4/27",
+    "backend_tests": 14363,
+    "frontend_tests": 2047,
+    "publication_head": 97,
+    "independent_h1": "NOT_MEASURED"
+  }
+}

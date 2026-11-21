@@ -1,0 +1,1566 @@
+{
+  "schema": "slm-evaluator-reconciliation/1",
+  "generated_at_utc": "2026-11-18T17:53:03.147593+00:00",
+  "evaluator_version": "axo-math-evaluator/2",
+  "evi_frozen_source": "docs/evaluation/geometry/runs/controlled-vision-real-image-validation/tools/evaluate_images.py",
+  "frozen_artifacts_unmodified": true,
+  "frozen_artifact_lf_sha256": {
+    "docs/evaluation/geometry/runs/controlled-vision-real-image-validation/tools/evaluate_images.py": "5e4c4ff058ec70a9117e5b90521525b95c5d1ecfde4c97c01dc044f247ee9fce",
+    "docs/evaluation/geometry/runs/deterministic-geometry-language-closure-slm-finetuning/SLM_V7_HOLDOUT_MANIFEST.json": "e4b0749b2729f7020b95d73910bc6b238a3032eb6a2b2c7be217c0bdafe0b103",
+    "docs/evaluation/geometry/runs/deterministic-geometry-language-closure-slm-finetuning/SLM_V7_HOLDOUT_EVALUATION.json": "f43513dfc79cc7652763f436cbc4ec11736525228a9010969a1fbfc16d524b1e",
+    "docs/evaluation/geometry/runs/deterministic-geometry-language-closure-slm-finetuning/SLM_V7_ABLATION.json": "9c1238c686f2ede41fb87c7827bca3304d4a616eb9adb3c05bfbe92300db63a4",
+    "docs/evaluation/geometry/runs/specialized-geometry-extraction-slm-optimization/SLM_NEW_HOLDOUT_EVALUATION.json": "6e3e8da7efdb82824402e7776200e08d9fa515a92f6ce5627d99f3c153a12734",
+    "docs/evaluation/geometry/runs/specialized-geometry-extraction-slm-optimization/SLM_EXTRACTION_ABLATION.json": "b583e911ad50fd213bdeeb54a07efc7d883419c4052f3b7e3c9d19c1e4804a93",
+    "docs/evaluation/geometry/runs/slm-local-geometry-understanding/SLM_EXTRACTION_EVALUATION.json": "26f5c8c2f43035830bfb3900a7c2848176444a9a1a8d44a0cb4277510a88620f",
+    "docs/evaluation/geometry/runs/slm-local-geometry-understanding/SLM_BASELINE_COMPARISON.json": "f5a3520ddf6545de0dccf7afa951c8bb58bdc4d023947e8886cdd943191d011b"
+  },
+  "root_cause": {
+    "location": "docs/evaluation/geometry/runs/controlled-vision-real-image-validation/tools/evaluate_images.py:85-91",
+    "defect": "EVI.same_value matched `left` against `cos²=...` and forced `right` (oracle) to match `N°`, returning None whenever `oracle` was also `cos²=...`, asymmetric in arguments, float-based at a in {1.3, 2.1}, missing sin/tan/cos(2x), and unchecked by goal_kind.",
+    "secondary_nl_eval_scoring_defect": "backend/scripts/nl_eval_scoring.py:58 strips `^cos²=` unconditionally (conflating trig ratio with untagged scalar `1/2`), rejects degrees `45°`, and rejects symbolic `a`.",
+    "ownership_status": "BLOCKED_OWNERSHIP / FROZEN_RUN_ARTIFACT (evaluate_images.py kept byte-immutable; replacement implemented as versioned evaluator `axo-math-evaluator/2` in backend/scripts/slm_math_evaluator_v2.py)"
+  },
+  "v7h_p7_06_to_10_case_level_evidence": [
+    {
+      "case_id": "v7h_p7_06",
+      "text": "Cho hình chóp H.UVWX có đáy UVWX là hình vuông cạnh 2a. Biết HU vuông góc với đáy (UVWX) và HU=2a. Hãy tính góc giữa đường thẳng HW và mặt phẳng (UVWX).",
+      "answer": "cos²=2/3",
+      "oracle": "cos²=2/3",
+      "evi_same_value": null,
+      "v2_result": {
+        "matched": true,
+        "verdict_code": "EXACT_EQUIVALENT_SAME_KIND",
+        "actual_kind": "TRIG_COS2",
+        "oracle_kind": "TRIG_COS2",
+        "canonical_actual": "2/3",
+        "canonical_oracle": "2/3",
+        "reason": "exact TRIG_COS2 equality"
+      }
+    },
+    {
+      "case_id": "v7h_p7_07",
+      "text": "Cho hình chóp C.ABDE có đáy ABDE là hình vuông cạnh a√2. Biết CA vuông góc với đáy (ABDE) và CA=2a. Hãy tính góc giữa đường thẳng CD và mặt phẳng (ABDE).",
+      "answer": "cos²=1/2",
+      "oracle": "cos²=1/2",
+      "evi_same_value": null,
+      "v2_result": {
+        "matched": true,
+        "verdict_code": "EXACT_EQUIVALENT_SAME_KIND",
+        "actual_kind": "TRIG_COS2",
+        "oracle_kind": "TRIG_COS2",
+        "canonical_actual": "1/2",
+        "canonical_oracle": "1/2",
+        "reason": "exact TRIG_COS2 equality"
+      }
+    },
+    {
+      "case_id": "v7h_p7_08",
+      "text": "Cho hình chóp N.GHIK có đáy GHIK là hình vuông cạnh 3a. Biết NG vuông góc với đáy (GHIK) và NG=3a√3. Hãy tính góc giữa đường thẳng NI và mặt phẳng (GHIK).",
+      "answer": "cos²=2/5",
+      "oracle": "cos²=2/5",
+      "evi_same_value": null,
+      "v2_result": {
+        "matched": true,
+        "verdict_code": "EXACT_EQUIVALENT_SAME_KIND",
+        "actual_kind": "TRIG_COS2",
+        "oracle_kind": "TRIG_COS2",
+        "canonical_actual": "2/5",
+        "canonical_oracle": "2/5",
+        "reason": "exact TRIG_COS2 equality"
+      }
+    },
+    {
+      "case_id": "v7h_p7_09",
+      "text": "Cho hình chóp P.ABCD có đáy ABCD là hình vuông cạnh 2a√3. Biết PA vuông góc với đáy (ABCD) và PA=2a√3. Hãy tính góc giữa đường thẳng PC và mặt phẳng (ABCD).",
+      "answer": "cos²=2/3",
+      "oracle": "cos²=2/3",
+      "evi_same_value": null,
+      "v2_result": {
+        "matched": true,
+        "verdict_code": "EXACT_EQUIVALENT_SAME_KIND",
+        "actual_kind": "TRIG_COS2",
+        "oracle_kind": "TRIG_COS2",
+        "canonical_actual": "2/3",
+        "canonical_oracle": "2/3",
+        "reason": "exact TRIG_COS2 equality"
+      }
+    },
+    {
+      "case_id": "v7h_p7_10",
+      "text": "Cho hình chóp Z.EFGH có đáy EFGH là hình vuông cạnh 4a. Biết ZE vuông góc với đáy (EFGH) và ZE=4a. Hãy tính góc giữa đường thẳng ZG và mặt phẳng (EFGH).",
+      "answer": "cos²=2/3",
+      "oracle": "cos²=2/3",
+      "evi_same_value": null,
+      "v2_result": {
+        "matched": true,
+        "verdict_code": "EXACT_EQUIVALENT_SAME_KIND",
+        "actual_kind": "TRIG_COS2",
+        "oracle_kind": "TRIG_COS2",
+        "canonical_actual": "2/3",
+        "canonical_oracle": "2/3",
+        "reason": "exact TRIG_COS2 equality"
+      }
+    }
+  ],
+  "slm_v7_holdout_112": {
+    "configs": {
+      "config_a_deterministic_v145": {
+        "positives_total": 80,
+        "negatives_total": 32,
+        "raw_positive_correct": 34,
+        "raw_positive_rate": 0.425,
+        "v2_positive_correct": 39,
+        "v2_positive_rate": 0.4875,
+        "v2_positive_wilson95": [
+          0.3811,
+          0.5951
+        ],
+        "negative_safe_refusal": 32,
+        "wrong_served_v2": 0,
+        "delta_positive_cases": 5,
+        "error_breakdown": {
+          "FORMAT_MISMATCH_EVI_BUG": 5,
+          "TRUE_MATHEMATICAL_ERROR": 0,
+          "WRONG_TRIG_FUNCTION_OR_KIND": 0,
+          "UNPARSEABLE": 0
+        },
+        "discrepancies": [
+          {
+            "case_id": "v7h_p7_06",
+            "status": "SERVED",
+            "answer": "cos²=2/3",
+            "oracle": "cos²=2/3",
+            "inferred_goal_kind": "angle",
+            "recorded_raw_ok": false,
+            "evi_same_value": null,
+            "v2_matched": true,
+            "v2_verdict_code": "EXACT_EQUIVALENT_SAME_KIND",
+            "v2_reason": "exact TRIG_COS2 equality",
+            "v2_untyped_matched": true,
+            "classification": "FORMAT_MISMATCH_EVI_BUG"
+          },
+          {
+            "case_id": "v7h_p7_07",
+            "status": "SERVED",
+            "answer": "cos²=1/2",
+            "oracle": "cos²=1/2",
+            "inferred_goal_kind": "angle",
+            "recorded_raw_ok": false,
+            "evi_same_value": null,
+            "v2_matched": true,
+            "v2_verdict_code": "EXACT_EQUIVALENT_SAME_KIND",
+            "v2_reason": "exact TRIG_COS2 equality",
+            "v2_untyped_matched": true,
+            "classification": "FORMAT_MISMATCH_EVI_BUG"
+          },
+          {
+            "case_id": "v7h_p7_08",
+            "status": "SERVED",
+            "answer": "cos²=2/5",
+            "oracle": "cos²=2/5",
+            "inferred_goal_kind": "angle",
+            "recorded_raw_ok": false,
+            "evi_same_value": null,
+            "v2_matched": true,
+            "v2_verdict_code": "EXACT_EQUIVALENT_SAME_KIND",
+            "v2_reason": "exact TRIG_COS2 equality",
+            "v2_untyped_matched": true,
+            "classification": "FORMAT_MISMATCH_EVI_BUG"
+          },
+          {
+            "case_id": "v7h_p7_09",
+            "status": "SERVED",
+            "answer": "cos²=2/3",
+            "oracle": "cos²=2/3",
+            "inferred_goal_kind": "angle",
+            "recorded_raw_ok": false,
+            "evi_same_value": null,
+            "v2_matched": true,
+            "v2_verdict_code": "EXACT_EQUIVALENT_SAME_KIND",
+            "v2_reason": "exact TRIG_COS2 equality",
+            "v2_untyped_matched": true,
+            "classification": "FORMAT_MISMATCH_EVI_BUG"
+          },
+          {
+            "case_id": "v7h_p7_10",
+            "status": "SERVED",
+            "answer": "cos²=2/3",
+            "oracle": "cos²=2/3",
+            "inferred_goal_kind": "angle",
+            "recorded_raw_ok": false,
+            "evi_same_value": null,
+            "v2_matched": true,
+            "v2_verdict_code": "EXACT_EQUIVALENT_SAME_KIND",
+            "v2_reason": "exact TRIG_COS2 equality",
+            "v2_untyped_matched": true,
+            "classification": "FORMAT_MISMATCH_EVI_BUG"
+          }
+        ]
+      },
+      "config_b_v6_compact_original": {
+        "positives_total": 80,
+        "negatives_total": 32,
+        "raw_positive_correct": 42,
+        "raw_positive_rate": 0.525,
+        "v2_positive_correct": 47,
+        "v2_positive_rate": 0.5875,
+        "v2_positive_wilson95": [
+          0.478,
+          0.6889
+        ],
+        "negative_safe_refusal": 32,
+        "wrong_served_v2": 0,
+        "delta_positive_cases": 5,
+        "error_breakdown": {
+          "FORMAT_MISMATCH_EVI_BUG": 5,
+          "TRUE_MATHEMATICAL_ERROR": 0,
+          "WRONG_TRIG_FUNCTION_OR_KIND": 0,
+          "UNPARSEABLE": 0
+        },
+        "discrepancies": [
+          {
+            "case_id": "v7h_p7_06",
+            "status": "SERVED",
+            "answer": "cos²=2/3",
+            "oracle": "cos²=2/3",
+            "inferred_goal_kind": "angle",
+            "recorded_raw_ok": false,
+            "evi_same_value": null,
+            "v2_matched": true,
+            "v2_verdict_code": "EXACT_EQUIVALENT_SAME_KIND",
+            "v2_reason": "exact TRIG_COS2 equality",
+            "v2_untyped_matched": true,
+            "classification": "FORMAT_MISMATCH_EVI_BUG"
+          },
+          {
+            "case_id": "v7h_p7_07",
+            "status": "SERVED",
+            "answer": "cos²=1/2",
+            "oracle": "cos²=1/2",
+            "inferred_goal_kind": "angle",
+            "recorded_raw_ok": false,
+            "evi_same_value": null,
+            "v2_matched": true,
+            "v2_verdict_code": "EXACT_EQUIVALENT_SAME_KIND",
+            "v2_reason": "exact TRIG_COS2 equality",
+            "v2_untyped_matched": true,
+            "classification": "FORMAT_MISMATCH_EVI_BUG"
+          },
+          {
+            "case_id": "v7h_p7_08",
+            "status": "SERVED",
+            "answer": "cos²=2/5",
+            "oracle": "cos²=2/5",
+            "inferred_goal_kind": "angle",
+            "recorded_raw_ok": false,
+            "evi_same_value": null,
+            "v2_matched": true,
+            "v2_verdict_code": "EXACT_EQUIVALENT_SAME_KIND",
+            "v2_reason": "exact TRIG_COS2 equality",
+            "v2_untyped_matched": true,
+            "classification": "FORMAT_MISMATCH_EVI_BUG"
+          },
+          {
+            "case_id": "v7h_p7_09",
+            "status": "SERVED",
+            "answer": "cos²=2/3",
+            "oracle": "cos²=2/3",
+            "inferred_goal_kind": "angle",
+            "recorded_raw_ok": false,
+            "evi_same_value": null,
+            "v2_matched": true,
+            "v2_verdict_code": "EXACT_EQUIVALENT_SAME_KIND",
+            "v2_reason": "exact TRIG_COS2 equality",
+            "v2_untyped_matched": true,
+            "classification": "FORMAT_MISMATCH_EVI_BUG"
+          },
+          {
+            "case_id": "v7h_p7_10",
+            "status": "SERVED",
+            "answer": "cos²=2/3",
+            "oracle": "cos²=2/3",
+            "inferred_goal_kind": "angle",
+            "recorded_raw_ok": false,
+            "evi_same_value": null,
+            "v2_matched": true,
+            "v2_verdict_code": "EXACT_EQUIVALENT_SAME_KIND",
+            "v2_reason": "exact TRIG_COS2 equality",
+            "v2_untyped_matched": true,
+            "classification": "FORMAT_MISMATCH_EVI_BUG"
+          }
+        ]
+      },
+      "config_c_v7_closure_original_slm": {
+        "positives_total": 80,
+        "negatives_total": 32,
+        "raw_positive_correct": 53,
+        "raw_positive_rate": 0.6625,
+        "v2_positive_correct": 58,
+        "v2_positive_rate": 0.725,
+        "v2_positive_wilson95": [
+          0.6186,
+          0.8108
+        ],
+        "negative_safe_refusal": 32,
+        "wrong_served_v2": 0,
+        "delta_positive_cases": 5,
+        "error_breakdown": {
+          "FORMAT_MISMATCH_EVI_BUG": 5,
+          "TRUE_MATHEMATICAL_ERROR": 0,
+          "WRONG_TRIG_FUNCTION_OR_KIND": 0,
+          "UNPARSEABLE": 0
+        },
+        "discrepancies": [
+          {
+            "case_id": "v7h_p7_06",
+            "status": "SERVED",
+            "answer": "cos²=2/3",
+            "oracle": "cos²=2/3",
+            "inferred_goal_kind": "angle",
+            "recorded_raw_ok": false,
+            "evi_same_value": null,
+            "v2_matched": true,
+            "v2_verdict_code": "EXACT_EQUIVALENT_SAME_KIND",
+            "v2_reason": "exact TRIG_COS2 equality",
+            "v2_untyped_matched": true,
+            "classification": "FORMAT_MISMATCH_EVI_BUG"
+          },
+          {
+            "case_id": "v7h_p7_07",
+            "status": "SERVED",
+            "answer": "cos²=1/2",
+            "oracle": "cos²=1/2",
+            "inferred_goal_kind": "angle",
+            "recorded_raw_ok": false,
+            "evi_same_value": null,
+            "v2_matched": true,
+            "v2_verdict_code": "EXACT_EQUIVALENT_SAME_KIND",
+            "v2_reason": "exact TRIG_COS2 equality",
+            "v2_untyped_matched": true,
+            "classification": "FORMAT_MISMATCH_EVI_BUG"
+          },
+          {
+            "case_id": "v7h_p7_08",
+            "status": "SERVED",
+            "answer": "cos²=2/5",
+            "oracle": "cos²=2/5",
+            "inferred_goal_kind": "angle",
+            "recorded_raw_ok": false,
+            "evi_same_value": null,
+            "v2_matched": true,
+            "v2_verdict_code": "EXACT_EQUIVALENT_SAME_KIND",
+            "v2_reason": "exact TRIG_COS2 equality",
+            "v2_untyped_matched": true,
+            "classification": "FORMAT_MISMATCH_EVI_BUG"
+          },
+          {
+            "case_id": "v7h_p7_09",
+            "status": "SERVED",
+            "answer": "cos²=2/3",
+            "oracle": "cos²=2/3",
+            "inferred_goal_kind": "angle",
+            "recorded_raw_ok": false,
+            "evi_same_value": null,
+            "v2_matched": true,
+            "v2_verdict_code": "EXACT_EQUIVALENT_SAME_KIND",
+            "v2_reason": "exact TRIG_COS2 equality",
+            "v2_untyped_matched": true,
+            "classification": "FORMAT_MISMATCH_EVI_BUG"
+          },
+          {
+            "case_id": "v7h_p7_10",
+            "status": "SERVED",
+            "answer": "cos²=2/3",
+            "oracle": "cos²=2/3",
+            "inferred_goal_kind": "angle",
+            "recorded_raw_ok": false,
+            "evi_same_value": null,
+            "v2_matched": true,
+            "v2_verdict_code": "EXACT_EQUIVALENT_SAME_KIND",
+            "v2_reason": "exact TRIG_COS2 equality",
+            "v2_untyped_matched": true,
+            "classification": "FORMAT_MISMATCH_EVI_BUG"
+          }
+        ]
+      },
+      "config_d_v7_closure_finetuned_slm": {
+        "positives_total": 80,
+        "negatives_total": 32,
+        "raw_positive_correct": 69,
+        "raw_positive_rate": 0.8625,
+        "v2_positive_correct": 74,
+        "v2_positive_rate": 0.925,
+        "v2_positive_wilson95": [
+          0.8459,
+          0.9652
+        ],
+        "negative_safe_refusal": 32,
+        "wrong_served_v2": 0,
+        "delta_positive_cases": 5,
+        "error_breakdown": {
+          "FORMAT_MISMATCH_EVI_BUG": 5,
+          "TRUE_MATHEMATICAL_ERROR": 0,
+          "WRONG_TRIG_FUNCTION_OR_KIND": 0,
+          "UNPARSEABLE": 0
+        },
+        "discrepancies": [
+          {
+            "case_id": "v7h_p7_06",
+            "status": "SERVED",
+            "answer": "cos²=2/3",
+            "oracle": "cos²=2/3",
+            "inferred_goal_kind": "angle",
+            "recorded_raw_ok": false,
+            "evi_same_value": null,
+            "v2_matched": true,
+            "v2_verdict_code": "EXACT_EQUIVALENT_SAME_KIND",
+            "v2_reason": "exact TRIG_COS2 equality",
+            "v2_untyped_matched": true,
+            "classification": "FORMAT_MISMATCH_EVI_BUG"
+          },
+          {
+            "case_id": "v7h_p7_07",
+            "status": "SERVED",
+            "answer": "cos²=1/2",
+            "oracle": "cos²=1/2",
+            "inferred_goal_kind": "angle",
+            "recorded_raw_ok": false,
+            "evi_same_value": null,
+            "v2_matched": true,
+            "v2_verdict_code": "EXACT_EQUIVALENT_SAME_KIND",
+            "v2_reason": "exact TRIG_COS2 equality",
+            "v2_untyped_matched": true,
+            "classification": "FORMAT_MISMATCH_EVI_BUG"
+          },
+          {
+            "case_id": "v7h_p7_08",
+            "status": "SERVED",
+            "answer": "cos²=2/5",
+            "oracle": "cos²=2/5",
+            "inferred_goal_kind": "angle",
+            "recorded_raw_ok": false,
+            "evi_same_value": null,
+            "v2_matched": true,
+            "v2_verdict_code": "EXACT_EQUIVALENT_SAME_KIND",
+            "v2_reason": "exact TRIG_COS2 equality",
+            "v2_untyped_matched": true,
+            "classification": "FORMAT_MISMATCH_EVI_BUG"
+          },
+          {
+            "case_id": "v7h_p7_09",
+            "status": "SERVED",
+            "answer": "cos²=2/3",
+            "oracle": "cos²=2/3",
+            "inferred_goal_kind": "angle",
+            "recorded_raw_ok": false,
+            "evi_same_value": null,
+            "v2_matched": true,
+            "v2_verdict_code": "EXACT_EQUIVALENT_SAME_KIND",
+            "v2_reason": "exact TRIG_COS2 equality",
+            "v2_untyped_matched": true,
+            "classification": "FORMAT_MISMATCH_EVI_BUG"
+          },
+          {
+            "case_id": "v7h_p7_10",
+            "status": "SERVED",
+            "answer": "cos²=2/3",
+            "oracle": "cos²=2/3",
+            "inferred_goal_kind": "angle",
+            "recorded_raw_ok": false,
+            "evi_same_value": null,
+            "v2_matched": true,
+            "v2_verdict_code": "EXACT_EQUIVALENT_SAME_KIND",
+            "v2_reason": "exact TRIG_COS2 equality",
+            "v2_untyped_matched": true,
+            "classification": "FORMAT_MISMATCH_EVI_BUG"
+          }
+        ]
+      }
+    },
+    "paired_comparisons_v2": {
+      "b_to_c_h1_deterministic_closure": {
+        "gained": [
+          "v7h_p1_04",
+          "v7h_p1_06",
+          "v7h_p1_07",
+          "v7h_p1_08",
+          "v7h_p4_06",
+          "v7h_p4_07",
+          "v7h_p4_08",
+          "v7h_p4_09",
+          "v7h_p4_10",
+          "v7h_p8_07",
+          "v7h_p8_08"
+        ],
+        "lost": [],
+        "b01_gained": 11,
+        "b10_lost": 0,
+        "both_pass": 47,
+        "both_fail": 22,
+        "mcnemar_exact_p": 0.000977
+      },
+      "c_to_d_h2_finetuning_contribution": {
+        "gained": [
+          "v7h_p1_09",
+          "v7h_p2_01",
+          "v7h_p2_03",
+          "v7h_p2_05",
+          "v7h_p2_07",
+          "v7h_p2_08",
+          "v7h_p2_09",
+          "v7h_p3_05",
+          "v7h_p3_06",
+          "v7h_p3_07",
+          "v7h_p5_06",
+          "v7h_p5_08",
+          "v7h_p5_10",
+          "v7h_p8_06",
+          "v7h_p8_09",
+          "v7h_p8_10"
+        ],
+        "lost": [],
+        "b01_gained": 16,
+        "b10_lost": 0,
+        "both_pass": 58,
+        "both_fail": 6,
+        "mcnemar_exact_p": 3.1e-05
+      },
+      "a_to_d_total_local_gain": {
+        "gained": [
+          "v7h_p1_04",
+          "v7h_p1_05",
+          "v7h_p1_06",
+          "v7h_p1_07",
+          "v7h_p1_08",
+          "v7h_p1_09",
+          "v7h_p1_10",
+          "v7h_p2_01",
+          "v7h_p2_02",
+          "v7h_p2_03",
+          "v7h_p2_04",
+          "v7h_p2_05",
+          "v7h_p2_06",
+          "v7h_p2_07",
+          "v7h_p2_08",
+          "v7h_p2_09",
+          "v7h_p2_10",
+          "v7h_p3_05",
+          "v7h_p3_06",
+          "v7h_p3_07",
+          "v7h_p4_06",
+          "v7h_p4_07",
+          "v7h_p4_08",
+          "v7h_p4_09",
+          "v7h_p4_10",
+          "v7h_p5_05",
+          "v7h_p5_06",
+          "v7h_p5_07",
+          "v7h_p5_08",
+          "v7h_p5_10",
+          "v7h_p8_06",
+          "v7h_p8_07",
+          "v7h_p8_08",
+          "v7h_p8_09",
+          "v7h_p8_10"
+        ],
+        "lost": [],
+        "b01_gained": 35,
+        "b10_lost": 0,
+        "both_pass": 39,
+        "both_fail": 6,
+        "mcnemar_exact_p": 0.0
+      },
+      "b_to_d_total_v7_over_v6": {
+        "gained": [
+          "v7h_p1_04",
+          "v7h_p1_06",
+          "v7h_p1_07",
+          "v7h_p1_08",
+          "v7h_p1_09",
+          "v7h_p2_01",
+          "v7h_p2_03",
+          "v7h_p2_05",
+          "v7h_p2_07",
+          "v7h_p2_08",
+          "v7h_p2_09",
+          "v7h_p3_05",
+          "v7h_p3_06",
+          "v7h_p3_07",
+          "v7h_p4_06",
+          "v7h_p4_07",
+          "v7h_p4_08",
+          "v7h_p4_09",
+          "v7h_p4_10",
+          "v7h_p5_06",
+          "v7h_p5_08",
+          "v7h_p5_10",
+          "v7h_p8_06",
+          "v7h_p8_07",
+          "v7h_p8_08",
+          "v7h_p8_09",
+          "v7h_p8_10"
+        ],
+        "lost": [],
+        "b01_gained": 27,
+        "b10_lost": 0,
+        "both_pass": 47,
+        "both_fail": 6,
+        "mcnemar_exact_p": 0.0
+      }
+    },
+    "summary_raw_vs_corrected_positives_of_80": {
+      "config_a_deterministic_v145": {
+        "raw": "34/80",
+        "corrected_v2": "39/80",
+        "corrected_rate": 0.4875,
+        "wilson_95_ci": [
+          0.3811,
+          0.5951
+        ],
+        "wrong_served_v2": 0
+      },
+      "config_b_v6_compact_original": {
+        "raw": "42/80",
+        "corrected_v2": "47/80",
+        "corrected_rate": 0.5875,
+        "wilson_95_ci": [
+          0.478,
+          0.6889
+        ],
+        "wrong_served_v2": 0
+      },
+      "config_c_v7_closure_original_slm": {
+        "raw": "53/80",
+        "corrected_v2": "58/80",
+        "corrected_rate": 0.725,
+        "wilson_95_ci": [
+          0.6186,
+          0.8108
+        ],
+        "wrong_served_v2": 0
+      },
+      "config_d_v7_closure_finetuned_slm": {
+        "raw": "69/80",
+        "corrected_v2": "74/80",
+        "corrected_rate": 0.925,
+        "wilson_95_ci": [
+          0.8459,
+          0.9652
+        ],
+        "wrong_served_v2": 0
+      }
+    }
+  },
+  "slm_v7_ablation_reconciliation": {
+    "DEV_CALIBRATION_16": {
+      "config_a_deterministic_v145": {
+        "positives_total": 10,
+        "negatives_total": 6,
+        "raw_positive_correct": 0,
+        "raw_positive_rate": 0.0,
+        "v2_positive_correct": 0,
+        "v2_positive_rate": 0.0,
+        "v2_positive_wilson95": [
+          0.0,
+          0.2775
+        ],
+        "negative_safe_refusal": 6,
+        "wrong_served_v2": 0,
+        "delta_positive_cases": 0,
+        "error_breakdown": {
+          "FORMAT_MISMATCH_EVI_BUG": 0,
+          "TRUE_MATHEMATICAL_ERROR": 0,
+          "WRONG_TRIG_FUNCTION_OR_KIND": 0,
+          "UNPARSEABLE": 0
+        },
+        "discrepancies": []
+      },
+      "config_b_v6_compact_original": {
+        "positives_total": 10,
+        "negatives_total": 6,
+        "raw_positive_correct": 8,
+        "raw_positive_rate": 0.8,
+        "v2_positive_correct": 8,
+        "v2_positive_rate": 0.8,
+        "v2_positive_wilson95": [
+          0.4902,
+          0.9433
+        ],
+        "negative_safe_refusal": 6,
+        "wrong_served_v2": 0,
+        "delta_positive_cases": 0,
+        "error_breakdown": {
+          "FORMAT_MISMATCH_EVI_BUG": 0,
+          "TRUE_MATHEMATICAL_ERROR": 0,
+          "WRONG_TRIG_FUNCTION_OR_KIND": 0,
+          "UNPARSEABLE": 0
+        },
+        "discrepancies": []
+      },
+      "config_c_v7_closure_original_slm": {
+        "positives_total": 10,
+        "negatives_total": 6,
+        "raw_positive_correct": 9,
+        "raw_positive_rate": 0.9,
+        "v2_positive_correct": 9,
+        "v2_positive_rate": 0.9,
+        "v2_positive_wilson95": [
+          0.5958,
+          0.9821
+        ],
+        "negative_safe_refusal": 6,
+        "wrong_served_v2": 0,
+        "delta_positive_cases": 0,
+        "error_breakdown": {
+          "FORMAT_MISMATCH_EVI_BUG": 0,
+          "TRUE_MATHEMATICAL_ERROR": 0,
+          "WRONG_TRIG_FUNCTION_OR_KIND": 0,
+          "UNPARSEABLE": 0
+        },
+        "discrepancies": []
+      },
+      "config_d_v7_closure_finetuned_slm": {
+        "positives_total": 10,
+        "negatives_total": 6,
+        "raw_positive_correct": 9,
+        "raw_positive_rate": 0.9,
+        "v2_positive_correct": 9,
+        "v2_positive_rate": 0.9,
+        "v2_positive_wilson95": [
+          0.5958,
+          0.9821
+        ],
+        "negative_safe_refusal": 6,
+        "wrong_served_v2": 0,
+        "delta_positive_cases": 0,
+        "error_breakdown": {
+          "FORMAT_MISMATCH_EVI_BUG": 0,
+          "TRUE_MATHEMATICAL_ERROR": 0,
+          "WRONG_TRIG_FUNCTION_OR_KIND": 0,
+          "UNPARSEABLE": 0
+        },
+        "discrepancies": []
+      }
+    },
+    "HOLDOUT_40": {
+      "config_a_deterministic_v145": {
+        "positives_total": 28,
+        "negatives_total": 12,
+        "raw_positive_correct": 9,
+        "raw_positive_rate": 0.3214,
+        "v2_positive_correct": 9,
+        "v2_positive_rate": 0.3214,
+        "v2_positive_wilson95": [
+          0.1793,
+          0.5066
+        ],
+        "negative_safe_refusal": 12,
+        "wrong_served_v2": 0,
+        "delta_positive_cases": 0,
+        "error_breakdown": {
+          "FORMAT_MISMATCH_EVI_BUG": 0,
+          "TRUE_MATHEMATICAL_ERROR": 0,
+          "WRONG_TRIG_FUNCTION_OR_KIND": 0,
+          "UNPARSEABLE": 0
+        },
+        "discrepancies": []
+      },
+      "config_b_v6_compact_original": {
+        "positives_total": 28,
+        "negatives_total": 12,
+        "raw_positive_correct": 18,
+        "raw_positive_rate": 0.6429,
+        "v2_positive_correct": 18,
+        "v2_positive_rate": 0.6429,
+        "v2_positive_wilson95": [
+          0.4583,
+          0.7929
+        ],
+        "negative_safe_refusal": 12,
+        "wrong_served_v2": 0,
+        "delta_positive_cases": 0,
+        "error_breakdown": {
+          "FORMAT_MISMATCH_EVI_BUG": 0,
+          "TRUE_MATHEMATICAL_ERROR": 0,
+          "WRONG_TRIG_FUNCTION_OR_KIND": 0,
+          "UNPARSEABLE": 0
+        },
+        "discrepancies": []
+      },
+      "config_c_v7_closure_original_slm": {
+        "positives_total": 28,
+        "negatives_total": 12,
+        "raw_positive_correct": 25,
+        "raw_positive_rate": 0.8929,
+        "v2_positive_correct": 25,
+        "v2_positive_rate": 0.8929,
+        "v2_positive_wilson95": [
+          0.728,
+          0.9629
+        ],
+        "negative_safe_refusal": 12,
+        "wrong_served_v2": 0,
+        "delta_positive_cases": 0,
+        "error_breakdown": {
+          "FORMAT_MISMATCH_EVI_BUG": 0,
+          "TRUE_MATHEMATICAL_ERROR": 0,
+          "WRONG_TRIG_FUNCTION_OR_KIND": 0,
+          "UNPARSEABLE": 0
+        },
+        "discrepancies": []
+      },
+      "config_d_v7_closure_finetuned_slm": {
+        "positives_total": 28,
+        "negatives_total": 12,
+        "raw_positive_correct": 24,
+        "raw_positive_rate": 0.8571,
+        "v2_positive_correct": 24,
+        "v2_positive_rate": 0.8571,
+        "v2_positive_wilson95": [
+          0.6851,
+          0.943
+        ],
+        "negative_safe_refusal": 12,
+        "wrong_served_v2": 0,
+        "delta_positive_cases": 0,
+        "error_breakdown": {
+          "FORMAT_MISMATCH_EVI_BUG": 0,
+          "TRUE_MATHEMATICAL_ERROR": 0,
+          "WRONG_TRIG_FUNCTION_OR_KIND": 0,
+          "UNPARSEABLE": 0
+        },
+        "discrepancies": []
+      }
+    },
+    "SLM_NEW_HOLDOUT_48": {
+      "config_a_deterministic_v145": {
+        "positives_total": 32,
+        "negatives_total": 16,
+        "raw_positive_correct": 13,
+        "raw_positive_rate": 0.4062,
+        "v2_positive_correct": 13,
+        "v2_positive_rate": 0.4062,
+        "v2_positive_wilson95": [
+          0.2552,
+          0.5774
+        ],
+        "negative_safe_refusal": 16,
+        "wrong_served_v2": 0,
+        "delta_positive_cases": 0,
+        "error_breakdown": {
+          "FORMAT_MISMATCH_EVI_BUG": 0,
+          "TRUE_MATHEMATICAL_ERROR": 0,
+          "WRONG_TRIG_FUNCTION_OR_KIND": 0,
+          "UNPARSEABLE": 0
+        },
+        "discrepancies": []
+      },
+      "config_b_v6_compact_original": {
+        "positives_total": 32,
+        "negatives_total": 16,
+        "raw_positive_correct": 19,
+        "raw_positive_rate": 0.5938,
+        "v2_positive_correct": 19,
+        "v2_positive_rate": 0.5938,
+        "v2_positive_wilson95": [
+          0.4226,
+          0.7448
+        ],
+        "negative_safe_refusal": 16,
+        "wrong_served_v2": 0,
+        "delta_positive_cases": 0,
+        "error_breakdown": {
+          "FORMAT_MISMATCH_EVI_BUG": 0,
+          "TRUE_MATHEMATICAL_ERROR": 0,
+          "WRONG_TRIG_FUNCTION_OR_KIND": 0,
+          "UNPARSEABLE": 0
+        },
+        "discrepancies": []
+      },
+      "config_c_v7_closure_original_slm": {
+        "positives_total": 32,
+        "negatives_total": 16,
+        "raw_positive_correct": 26,
+        "raw_positive_rate": 0.8125,
+        "v2_positive_correct": 26,
+        "v2_positive_rate": 0.8125,
+        "v2_positive_wilson95": [
+          0.6469,
+          0.9111
+        ],
+        "negative_safe_refusal": 16,
+        "wrong_served_v2": 0,
+        "delta_positive_cases": 0,
+        "error_breakdown": {
+          "FORMAT_MISMATCH_EVI_BUG": 0,
+          "TRUE_MATHEMATICAL_ERROR": 0,
+          "WRONG_TRIG_FUNCTION_OR_KIND": 0,
+          "UNPARSEABLE": 0
+        },
+        "discrepancies": []
+      },
+      "config_d_v7_closure_finetuned_slm": {
+        "positives_total": 32,
+        "negatives_total": 16,
+        "raw_positive_correct": 32,
+        "raw_positive_rate": 1.0,
+        "v2_positive_correct": 32,
+        "v2_positive_rate": 1.0,
+        "v2_positive_wilson95": [
+          0.8928,
+          1.0
+        ],
+        "negative_safe_refusal": 16,
+        "wrong_served_v2": 0,
+        "delta_positive_cases": 0,
+        "error_breakdown": {
+          "FORMAT_MISMATCH_EVI_BUG": 0,
+          "TRUE_MATHEMATICAL_ERROR": 0,
+          "WRONG_TRIG_FUNCTION_OR_KIND": 0,
+          "UNPARSEABLE": 0
+        },
+        "discrepancies": []
+      }
+    }
+  },
+  "slm_v6_new_holdout_48_reconciliation": {
+    "config_a_deterministic_v145": {
+      "positives_total": 32,
+      "negatives_total": 16,
+      "raw_positive_correct": 13,
+      "raw_positive_rate": 0.4062,
+      "v2_positive_correct": 13,
+      "v2_positive_rate": 0.4062,
+      "v2_positive_wilson95": [
+        0.2552,
+        0.5774
+      ],
+      "negative_safe_refusal": 16,
+      "wrong_served_v2": 0,
+      "delta_positive_cases": 0,
+      "error_breakdown": {
+        "FORMAT_MISMATCH_EVI_BUG": 0,
+        "TRUE_MATHEMATICAL_ERROR": 0,
+        "WRONG_TRIG_FUNCTION_OR_KIND": 0,
+        "UNPARSEABLE": 0
+      },
+      "discrepancies": []
+    },
+    "config_b_v5_minimal_ops": {
+      "positives_total": 32,
+      "negatives_total": 16,
+      "raw_positive_correct": 13,
+      "raw_positive_rate": 0.4062,
+      "v2_positive_correct": 13,
+      "v2_positive_rate": 0.4062,
+      "v2_positive_wilson95": [
+        0.2552,
+        0.5774
+      ],
+      "negative_safe_refusal": 16,
+      "wrong_served_v2": 0,
+      "delta_positive_cases": 0,
+      "error_breakdown": {
+        "FORMAT_MISMATCH_EVI_BUG": 0,
+        "TRUE_MATHEMATICAL_ERROR": 0,
+        "WRONG_TRIG_FUNCTION_OR_KIND": 0,
+        "UNPARSEABLE": 0
+      },
+      "discrepancies": []
+    },
+    "config_c_no_norm_v6_compact": {
+      "positives_total": 32,
+      "negatives_total": 16,
+      "raw_positive_correct": 17,
+      "raw_positive_rate": 0.5312,
+      "v2_positive_correct": 17,
+      "v2_positive_rate": 0.5312,
+      "v2_positive_wilson95": [
+        0.3645,
+        0.6913
+      ],
+      "negative_safe_refusal": 16,
+      "wrong_served_v2": 0,
+      "delta_positive_cases": 0,
+      "error_breakdown": {
+        "FORMAT_MISMATCH_EVI_BUG": 0,
+        "TRUE_MATHEMATICAL_ERROR": 0,
+        "WRONG_TRIG_FUNCTION_OR_KIND": 0,
+        "UNPARSEABLE": 0
+      },
+      "discrepancies": []
+    },
+    "config_c_v6_compact_full": {
+      "positives_total": 32,
+      "negatives_total": 16,
+      "raw_positive_correct": 19,
+      "raw_positive_rate": 0.5938,
+      "v2_positive_correct": 19,
+      "v2_positive_rate": 0.5938,
+      "v2_positive_wilson95": [
+        0.4226,
+        0.7448
+      ],
+      "negative_safe_refusal": 16,
+      "wrong_served_v2": 0,
+      "delta_positive_cases": 0,
+      "error_breakdown": {
+        "FORMAT_MISMATCH_EVI_BUG": 0,
+        "TRUE_MATHEMATICAL_ERROR": 0,
+        "WRONG_TRIG_FUNCTION_OR_KIND": 0,
+        "UNPARSEABLE": 0
+      },
+      "discrepancies": []
+    }
+  },
+  "slm_v6_ablation_reconciliation": {
+    "DEV_CALIBRATION_16": {
+      "config_a_deterministic_v145": {
+        "positives_total": 10,
+        "negatives_total": 6,
+        "raw_positive_correct": 0,
+        "raw_positive_rate": 0.0,
+        "v2_positive_correct": 0,
+        "v2_positive_rate": 0.0,
+        "v2_positive_wilson95": [
+          0.0,
+          0.2775
+        ],
+        "negative_safe_refusal": 6,
+        "wrong_served_v2": 0,
+        "delta_positive_cases": 0,
+        "error_breakdown": {
+          "FORMAT_MISMATCH_EVI_BUG": 0,
+          "TRUE_MATHEMATICAL_ERROR": 0,
+          "WRONG_TRIG_FUNCTION_OR_KIND": 0,
+          "UNPARSEABLE": 0
+        },
+        "discrepancies": []
+      },
+      "config_b_v5_minimal_ops": {
+        "positives_total": 10,
+        "negatives_total": 6,
+        "raw_positive_correct": 2,
+        "raw_positive_rate": 0.2,
+        "v2_positive_correct": 2,
+        "v2_positive_rate": 0.2,
+        "v2_positive_wilson95": [
+          0.0567,
+          0.5098
+        ],
+        "negative_safe_refusal": 6,
+        "wrong_served_v2": 0,
+        "delta_positive_cases": 0,
+        "error_breakdown": {
+          "FORMAT_MISMATCH_EVI_BUG": 0,
+          "TRUE_MATHEMATICAL_ERROR": 0,
+          "WRONG_TRIG_FUNCTION_OR_KIND": 0,
+          "UNPARSEABLE": 0
+        },
+        "discrepancies": []
+      },
+      "config_b_plus_norm_v5": {
+        "positives_total": 10,
+        "negatives_total": 6,
+        "raw_positive_correct": 3,
+        "raw_positive_rate": 0.3,
+        "v2_positive_correct": 3,
+        "v2_positive_rate": 0.3,
+        "v2_positive_wilson95": [
+          0.1078,
+          0.6032
+        ],
+        "negative_safe_refusal": 6,
+        "wrong_served_v2": 0,
+        "delta_positive_cases": 0,
+        "error_breakdown": {
+          "FORMAT_MISMATCH_EVI_BUG": 0,
+          "TRUE_MATHEMATICAL_ERROR": 0,
+          "WRONG_TRIG_FUNCTION_OR_KIND": 0,
+          "UNPARSEABLE": 0
+        },
+        "discrepancies": []
+      },
+      "config_c_no_norm_v6_compact": {
+        "positives_total": 10,
+        "negatives_total": 6,
+        "raw_positive_correct": 3,
+        "raw_positive_rate": 0.3,
+        "v2_positive_correct": 3,
+        "v2_positive_rate": 0.3,
+        "v2_positive_wilson95": [
+          0.1078,
+          0.6032
+        ],
+        "negative_safe_refusal": 6,
+        "wrong_served_v2": 0,
+        "delta_positive_cases": 0,
+        "error_breakdown": {
+          "FORMAT_MISMATCH_EVI_BUG": 0,
+          "TRUE_MATHEMATICAL_ERROR": 0,
+          "WRONG_TRIG_FUNCTION_OR_KIND": 0,
+          "UNPARSEABLE": 0
+        },
+        "discrepancies": []
+      },
+      "config_c_v6_compact_full": {
+        "positives_total": 10,
+        "negatives_total": 6,
+        "raw_positive_correct": 8,
+        "raw_positive_rate": 0.8,
+        "v2_positive_correct": 8,
+        "v2_positive_rate": 0.8,
+        "v2_positive_wilson95": [
+          0.4902,
+          0.9433
+        ],
+        "negative_safe_refusal": 6,
+        "wrong_served_v2": 0,
+        "delta_positive_cases": 0,
+        "error_breakdown": {
+          "FORMAT_MISMATCH_EVI_BUG": 0,
+          "TRUE_MATHEMATICAL_ERROR": 0,
+          "WRONG_TRIG_FUNCTION_OR_KIND": 0,
+          "UNPARSEABLE": 0
+        },
+        "discrepancies": []
+      }
+    },
+    "HOLDOUT_40": {
+      "config_a_deterministic_v145": {
+        "positives_total": 28,
+        "negatives_total": 12,
+        "raw_positive_correct": 9,
+        "raw_positive_rate": 0.3214,
+        "v2_positive_correct": 9,
+        "v2_positive_rate": 0.3214,
+        "v2_positive_wilson95": [
+          0.1793,
+          0.5066
+        ],
+        "negative_safe_refusal": 12,
+        "wrong_served_v2": 0,
+        "delta_positive_cases": 0,
+        "error_breakdown": {
+          "FORMAT_MISMATCH_EVI_BUG": 0,
+          "TRUE_MATHEMATICAL_ERROR": 0,
+          "WRONG_TRIG_FUNCTION_OR_KIND": 0,
+          "UNPARSEABLE": 0
+        },
+        "discrepancies": []
+      },
+      "config_b_v5_minimal_ops": {
+        "positives_total": 28,
+        "negatives_total": 12,
+        "raw_positive_correct": 10,
+        "raw_positive_rate": 0.3571,
+        "v2_positive_correct": 10,
+        "v2_positive_rate": 0.3571,
+        "v2_positive_wilson95": [
+          0.2071,
+          0.5417
+        ],
+        "negative_safe_refusal": 12,
+        "wrong_served_v2": 0,
+        "delta_positive_cases": 0,
+        "error_breakdown": {
+          "FORMAT_MISMATCH_EVI_BUG": 0,
+          "TRUE_MATHEMATICAL_ERROR": 0,
+          "WRONG_TRIG_FUNCTION_OR_KIND": 0,
+          "UNPARSEABLE": 0
+        },
+        "discrepancies": []
+      },
+      "config_b_plus_norm_v5": {
+        "positives_total": 28,
+        "negatives_total": 12,
+        "raw_positive_correct": 14,
+        "raw_positive_rate": 0.5,
+        "v2_positive_correct": 14,
+        "v2_positive_rate": 0.5,
+        "v2_positive_wilson95": [
+          0.3263,
+          0.6737
+        ],
+        "negative_safe_refusal": 12,
+        "wrong_served_v2": 0,
+        "delta_positive_cases": 0,
+        "error_breakdown": {
+          "FORMAT_MISMATCH_EVI_BUG": 0,
+          "TRUE_MATHEMATICAL_ERROR": 0,
+          "WRONG_TRIG_FUNCTION_OR_KIND": 0,
+          "UNPARSEABLE": 0
+        },
+        "discrepancies": []
+      },
+      "config_c_no_norm_v6_compact": {
+        "positives_total": 28,
+        "negatives_total": 12,
+        "raw_positive_correct": 13,
+        "raw_positive_rate": 0.4643,
+        "v2_positive_correct": 13,
+        "v2_positive_rate": 0.4643,
+        "v2_positive_wilson95": [
+          0.2953,
+          0.6419
+        ],
+        "negative_safe_refusal": 12,
+        "wrong_served_v2": 0,
+        "delta_positive_cases": 0,
+        "error_breakdown": {
+          "FORMAT_MISMATCH_EVI_BUG": 0,
+          "TRUE_MATHEMATICAL_ERROR": 0,
+          "WRONG_TRIG_FUNCTION_OR_KIND": 0,
+          "UNPARSEABLE": 0
+        },
+        "discrepancies": []
+      },
+      "config_c_v6_compact_full": {
+        "positives_total": 28,
+        "negatives_total": 12,
+        "raw_positive_correct": 18,
+        "raw_positive_rate": 0.6429,
+        "v2_positive_correct": 18,
+        "v2_positive_rate": 0.6429,
+        "v2_positive_wilson95": [
+          0.4583,
+          0.7929
+        ],
+        "negative_safe_refusal": 12,
+        "wrong_served_v2": 0,
+        "delta_positive_cases": 0,
+        "error_breakdown": {
+          "FORMAT_MISMATCH_EVI_BUG": 0,
+          "TRUE_MATHEMATICAL_ERROR": 0,
+          "WRONG_TRIG_FUNCTION_OR_KIND": 0,
+          "UNPARSEABLE": 0
+        },
+        "discrepancies": []
+      }
+    }
+  },
+  "slm_v5_extraction_reconciliation": {
+    "qwen3-0.6b-q4_k_m": {
+      "positives_total": 39,
+      "negatives_total": 18,
+      "raw_positive_correct": 12,
+      "raw_positive_rate": 0.3077,
+      "v2_positive_correct": 12,
+      "v2_positive_rate": 0.3077,
+      "v2_positive_wilson95": [
+        0.1857,
+        0.4642
+      ],
+      "negative_safe_refusal": 18,
+      "wrong_served_v2": 0,
+      "delta_positive_cases": 0,
+      "error_breakdown": {
+        "FORMAT_MISMATCH_EVI_BUG": 0,
+        "TRUE_MATHEMATICAL_ERROR": 0,
+        "WRONG_TRIG_FUNCTION_OR_KIND": 0,
+        "UNPARSEABLE": 0
+      },
+      "discrepancies": []
+    },
+    "qwen2.5-0.5b-instruct-q4_k_m": {
+      "positives_total": 39,
+      "negatives_total": 18,
+      "raw_positive_correct": 9,
+      "raw_positive_rate": 0.2308,
+      "v2_positive_correct": 9,
+      "v2_positive_rate": 0.2308,
+      "v2_positive_wilson95": [
+        0.1265,
+        0.3834
+      ],
+      "negative_safe_refusal": 18,
+      "wrong_served_v2": 0,
+      "delta_positive_cases": 0,
+      "error_breakdown": {
+        "FORMAT_MISMATCH_EVI_BUG": 0,
+        "TRUE_MATHEMATICAL_ERROR": 0,
+        "WRONG_TRIG_FUNCTION_OR_KIND": 0,
+        "UNPARSEABLE": 0
+      },
+      "discrepancies": []
+    }
+  },
+  "slm_v5_baseline_comparison_reconciliation": {
+    "NC_NL": {
+      "config_a": {
+        "positives_total": 21,
+        "negatives_total": 0,
+        "raw_positive_correct": 21,
+        "raw_positive_rate": 1.0,
+        "v2_positive_correct": 21,
+        "v2_positive_rate": 1.0,
+        "v2_positive_wilson95": [
+          0.8454,
+          1.0
+        ],
+        "negative_safe_refusal": 0,
+        "wrong_served_v2": 0,
+        "delta_positive_cases": 0,
+        "error_breakdown": {
+          "FORMAT_MISMATCH_EVI_BUG": 0,
+          "TRUE_MATHEMATICAL_ERROR": 0,
+          "WRONG_TRIG_FUNCTION_OR_KIND": 0,
+          "UNPARSEABLE": 0
+        },
+        "discrepancies": []
+      },
+      "config_b": {
+        "positives_total": 21,
+        "negatives_total": 0,
+        "raw_positive_correct": 21,
+        "raw_positive_rate": 1.0,
+        "v2_positive_correct": 21,
+        "v2_positive_rate": 1.0,
+        "v2_positive_wilson95": [
+          0.8454,
+          1.0
+        ],
+        "negative_safe_refusal": 0,
+        "wrong_served_v2": 0,
+        "delta_positive_cases": 0,
+        "error_breakdown": {
+          "FORMAT_MISMATCH_EVI_BUG": 0,
+          "TRUE_MATHEMATICAL_ERROR": 0,
+          "WRONG_TRIG_FUNCTION_OR_KIND": 0,
+          "UNPARSEABLE": 0
+        },
+        "discrepancies": []
+      }
+    },
+    "DEV37": {
+      "config_a": {
+        "positives_total": 30,
+        "negatives_total": 7,
+        "raw_positive_correct": 30,
+        "raw_positive_rate": 1.0,
+        "v2_positive_correct": 30,
+        "v2_positive_rate": 1.0,
+        "v2_positive_wilson95": [
+          0.8865,
+          1.0
+        ],
+        "negative_safe_refusal": 7,
+        "wrong_served_v2": 0,
+        "delta_positive_cases": 0,
+        "error_breakdown": {
+          "FORMAT_MISMATCH_EVI_BUG": 0,
+          "TRUE_MATHEMATICAL_ERROR": 0,
+          "WRONG_TRIG_FUNCTION_OR_KIND": 0,
+          "UNPARSEABLE": 0
+        },
+        "discrepancies": []
+      },
+      "config_b": {
+        "positives_total": 30,
+        "negatives_total": 7,
+        "raw_positive_correct": 30,
+        "raw_positive_rate": 1.0,
+        "v2_positive_correct": 30,
+        "v2_positive_rate": 1.0,
+        "v2_positive_wilson95": [
+          0.8865,
+          1.0
+        ],
+        "negative_safe_refusal": 7,
+        "wrong_served_v2": 0,
+        "delta_positive_cases": 0,
+        "error_breakdown": {
+          "FORMAT_MISMATCH_EVI_BUG": 0,
+          "TRUE_MATHEMATICAL_ERROR": 0,
+          "WRONG_TRIG_FUNCTION_OR_KIND": 0,
+          "UNPARSEABLE": 0
+        },
+        "discrepancies": []
+      }
+    },
+    "COMP112": {
+      "config_a": {
+        "positives_total": 66,
+        "negatives_total": 46,
+        "raw_positive_correct": 66,
+        "raw_positive_rate": 1.0,
+        "v2_positive_correct": 66,
+        "v2_positive_rate": 1.0,
+        "v2_positive_wilson95": [
+          0.945,
+          1.0
+        ],
+        "negative_safe_refusal": 44,
+        "wrong_served_v2": 2,
+        "delta_positive_cases": 0,
+        "error_breakdown": {
+          "FORMAT_MISMATCH_EVI_BUG": 0,
+          "TRUE_MATHEMATICAL_ERROR": 0,
+          "WRONG_TRIG_FUNCTION_OR_KIND": 0,
+          "UNPARSEABLE": 0
+        },
+        "discrepancies": []
+      },
+      "config_b": {
+        "positives_total": 66,
+        "negatives_total": 46,
+        "raw_positive_correct": 66,
+        "raw_positive_rate": 1.0,
+        "v2_positive_correct": 66,
+        "v2_positive_rate": 1.0,
+        "v2_positive_wilson95": [
+          0.945,
+          1.0
+        ],
+        "negative_safe_refusal": 44,
+        "wrong_served_v2": 2,
+        "delta_positive_cases": 0,
+        "error_breakdown": {
+          "FORMAT_MISMATCH_EVI_BUG": 0,
+          "TRUE_MATHEMATICAL_ERROR": 0,
+          "WRONG_TRIG_FUNCTION_OR_KIND": 0,
+          "UNPARSEABLE": 0
+        },
+        "discrepancies": []
+      }
+    },
+    "PROBES39": {
+      "config_a": {
+        "positives_total": 26,
+        "negatives_total": 13,
+        "raw_positive_correct": 23,
+        "raw_positive_rate": 0.8846,
+        "v2_positive_correct": 23,
+        "v2_positive_rate": 0.8846,
+        "v2_positive_wilson95": [
+          0.7102,
+          0.96
+        ],
+        "negative_safe_refusal": 13,
+        "wrong_served_v2": 0,
+        "delta_positive_cases": 0,
+        "error_breakdown": {
+          "FORMAT_MISMATCH_EVI_BUG": 0,
+          "TRUE_MATHEMATICAL_ERROR": 0,
+          "WRONG_TRIG_FUNCTION_OR_KIND": 0,
+          "UNPARSEABLE": 0
+        },
+        "discrepancies": []
+      },
+      "config_b": {
+        "positives_total": 26,
+        "negatives_total": 13,
+        "raw_positive_correct": 23,
+        "raw_positive_rate": 0.8846,
+        "v2_positive_correct": 23,
+        "v2_positive_rate": 0.8846,
+        "v2_positive_wilson95": [
+          0.7102,
+          0.96
+        ],
+        "negative_safe_refusal": 13,
+        "wrong_served_v2": 0,
+        "delta_positive_cases": 0,
+        "error_breakdown": {
+          "FORMAT_MISMATCH_EVI_BUG": 0,
+          "TRUE_MATHEMATICAL_ERROR": 0,
+          "WRONG_TRIG_FUNCTION_OR_KIND": 0,
+          "UNPARSEABLE": 0
+        },
+        "discrepancies": []
+      }
+    },
+    "S2_36": {
+      "config_a": {
+        "positives_total": 18,
+        "negatives_total": 18,
+        "raw_positive_correct": 16,
+        "raw_positive_rate": 0.8889,
+        "v2_positive_correct": 16,
+        "v2_positive_rate": 0.8889,
+        "v2_positive_wilson95": [
+          0.672,
+          0.969
+        ],
+        "negative_safe_refusal": 18,
+        "wrong_served_v2": 1,
+        "delta_positive_cases": 0,
+        "error_breakdown": {
+          "FORMAT_MISMATCH_EVI_BUG": 0,
+          "TRUE_MATHEMATICAL_ERROR": 0,
+          "WRONG_TRIG_FUNCTION_OR_KIND": 1,
+          "UNPARSEABLE": 0
+        },
+        "discrepancies": []
+      },
+      "config_b": {
+        "positives_total": 18,
+        "negatives_total": 18,
+        "raw_positive_correct": 16,
+        "raw_positive_rate": 0.8889,
+        "v2_positive_correct": 16,
+        "v2_positive_rate": 0.8889,
+        "v2_positive_wilson95": [
+          0.672,
+          0.969
+        ],
+        "negative_safe_refusal": 18,
+        "wrong_served_v2": 1,
+        "delta_positive_cases": 0,
+        "error_breakdown": {
+          "FORMAT_MISMATCH_EVI_BUG": 0,
+          "TRUE_MATHEMATICAL_ERROR": 0,
+          "WRONG_TRIG_FUNCTION_OR_KIND": 1,
+          "UNPARSEABLE": 0
+        },
+        "discrepancies": []
+      }
+    },
+    "SLM_INDEPENDENT_HOLDOUT_40": {
+      "config_a": {
+        "positives_total": 28,
+        "negatives_total": 12,
+        "raw_positive_correct": 9,
+        "raw_positive_rate": 0.3214,
+        "v2_positive_correct": 9,
+        "v2_positive_rate": 0.3214,
+        "v2_positive_wilson95": [
+          0.1793,
+          0.5066
+        ],
+        "negative_safe_refusal": 12,
+        "wrong_served_v2": 0,
+        "delta_positive_cases": 0,
+        "error_breakdown": {
+          "FORMAT_MISMATCH_EVI_BUG": 0,
+          "TRUE_MATHEMATICAL_ERROR": 0,
+          "WRONG_TRIG_FUNCTION_OR_KIND": 0,
+          "UNPARSEABLE": 0
+        },
+        "discrepancies": []
+      },
+      "config_b": {
+        "positives_total": 28,
+        "negatives_total": 12,
+        "raw_positive_correct": 10,
+        "raw_positive_rate": 0.3571,
+        "v2_positive_correct": 10,
+        "v2_positive_rate": 0.3571,
+        "v2_positive_wilson95": [
+          0.2071,
+          0.5417
+        ],
+        "negative_safe_refusal": 12,
+        "wrong_served_v2": 0,
+        "delta_positive_cases": 0,
+        "error_breakdown": {
+          "FORMAT_MISMATCH_EVI_BUG": 0,
+          "TRUE_MATHEMATICAL_ERROR": 0,
+          "WRONG_TRIG_FUNCTION_OR_KIND": 0,
+          "UNPARSEABLE": 0
+        },
+        "discrepancies": []
+      }
+    }
+  }
+}

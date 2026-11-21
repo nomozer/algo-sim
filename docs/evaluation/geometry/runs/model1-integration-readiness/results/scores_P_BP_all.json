@@ -1,0 +1,1553 @@
+{
+ "schema": "axo17-routing-ablation-scores/1",
+ "oracle": "docs/evaluation/geometry/harness/live-acceptance/scene_oracle.py",
+ "arms": {
+  "P": {
+   "by_source": {
+    "axo-hybrid-local-model1-finalization-test-consolidation/ACCEPTANCE_MANIFEST.json": {
+     "positive": 112,
+     "completed": 77,
+     "served_positive": 79,
+     "math_invalid_served": 0,
+     "numeric_mismatch_served": 2,
+     "negative": 28,
+     "negative_served": 0,
+     "slm_inferences": 0,
+     "slm_invoked_cases": 0,
+     "slm_contributed_completed": 0,
+     "http_5xx": 38,
+     "latency_completed_ms": {
+      "n": 77,
+      "p50": 79.5,
+      "p95": 120.0,
+      "max": 464.5
+     },
+     "latency_slm_completed_ms": {
+      "n": 0,
+      "p50": null,
+      "p95": null,
+      "max": null
+     }
+    },
+    "holdout-3/ACCEPTANCE_MANIFEST.json": {
+     "positive": 66,
+     "completed": 28,
+     "served_positive": 28,
+     "math_invalid_served": 0,
+     "numeric_mismatch_served": 0,
+     "negative": 22,
+     "negative_served": 0,
+     "slm_inferences": 0,
+     "slm_invoked_cases": 0,
+     "slm_contributed_completed": 0,
+     "http_5xx": 50,
+     "latency_completed_ms": {
+      "n": 28,
+      "p50": 71.3,
+      "p95": 87.6,
+      "max": 120.1
+     },
+     "latency_slm_completed_ms": {
+      "n": 0,
+      "p50": null,
+      "p95": null,
+      "max": null
+     }
+    },
+    "local-model1-recovery-offline-vision/ACCEPTANCE_MANIFEST.json": {
+     "positive": 18,
+     "completed": 3,
+     "served_positive": 3,
+     "math_invalid_served": 0,
+     "numeric_mismatch_served": 0,
+     "negative": 8,
+     "negative_served": 0,
+     "slm_inferences": 0,
+     "slm_invoked_cases": 0,
+     "slm_contributed_completed": 0,
+     "http_5xx": 21,
+     "latency_completed_ms": {
+      "n": 3,
+      "p50": 76.0,
+      "p95": 77.7,
+      "max": 77.7
+     },
+     "latency_slm_completed_ms": {
+      "n": 0,
+      "p50": null,
+      "p95": null,
+      "max": null
+     }
+    },
+    "holdout-2/ACCEPTANCE_MANIFEST.json": {
+     "positive": 28,
+     "completed": 20,
+     "served_positive": 20,
+     "math_invalid_served": 0,
+     "numeric_mismatch_served": 0,
+     "negative": 10,
+     "negative_served": 0,
+     "slm_inferences": 0,
+     "slm_invoked_cases": 0,
+     "slm_contributed_completed": 0,
+     "http_5xx": 12,
+     "latency_completed_ms": {
+      "n": 20,
+      "p50": 72.1,
+      "p95": 82.5,
+      "max": 85.6
+     },
+     "latency_slm_completed_ms": {
+      "n": 0,
+      "p50": null,
+      "p95": null,
+      "max": null
+     }
+    },
+    "holdout-4/ACCEPTANCE_MANIFEST.json": {
+     "positive": 72,
+     "completed": 40,
+     "served_positive": 40,
+     "math_invalid_served": 0,
+     "numeric_mismatch_served": 0,
+     "negative": 26,
+     "negative_served": 0,
+     "slm_inferences": 0,
+     "slm_invoked_cases": 0,
+     "slm_contributed_completed": 0,
+     "http_5xx": 47,
+     "latency_completed_ms": {
+      "n": 40,
+      "p50": 79.2,
+      "p95": 88.3,
+      "max": 163.8
+     },
+     "latency_slm_completed_ms": {
+      "n": 0,
+      "p50": null,
+      "p95": null,
+      "max": null
+     }
+    },
+    "holdout-4/SLM_INDEPENDENT_MANIFEST.json": {
+     "positive": 30,
+     "completed": 25,
+     "served_positive": 25,
+     "math_invalid_served": 0,
+     "numeric_mismatch_served": 0,
+     "negative": 10,
+     "negative_served": 0,
+     "slm_inferences": 0,
+     "slm_invoked_cases": 0,
+     "slm_contributed_completed": 0,
+     "http_5xx": 11,
+     "latency_completed_ms": {
+      "n": 25,
+      "p50": 77.0,
+      "p95": 124.9,
+      "max": 125.6
+     },
+     "latency_slm_completed_ms": {
+      "n": 0,
+      "p50": null,
+      "p95": null,
+      "max": null
+     }
+    },
+    "holdout-5/ACCEPTANCE_MANIFEST.json": {
+     "positive": 72,
+     "completed": 37,
+     "served_positive": 40,
+     "math_invalid_served": 3,
+     "numeric_mismatch_served": 0,
+     "negative": 26,
+     "negative_served": 0,
+     "slm_inferences": 0,
+     "slm_invoked_cases": 0,
+     "slm_contributed_completed": 0,
+     "http_5xx": 47,
+     "latency_completed_ms": {
+      "n": 37,
+      "p50": 81.7,
+      "p95": 112.3,
+      "max": 125.4
+     },
+     "latency_slm_completed_ms": {
+      "n": 0,
+      "p50": null,
+      "p95": null,
+      "max": null
+     }
+    },
+    "holdout-5/SLM_INDEPENDENT_MANIFEST.json": {
+     "positive": 30,
+     "completed": 25,
+     "served_positive": 25,
+     "math_invalid_served": 0,
+     "numeric_mismatch_served": 0,
+     "negative": 10,
+     "negative_served": 0,
+     "slm_inferences": 0,
+     "slm_invoked_cases": 0,
+     "slm_contributed_completed": 0,
+     "http_5xx": 11,
+     "latency_completed_ms": {
+      "n": 25,
+      "p50": 80.5,
+      "p95": 116.5,
+      "max": 142.4
+     },
+     "latency_slm_completed_ms": {
+      "n": 0,
+      "p50": null,
+      "p95": null,
+      "max": null
+     }
+    },
+    "holdout-6/ACCEPTANCE_MANIFEST.json": {
+     "positive": 72,
+     "completed": 39,
+     "served_positive": 39,
+     "math_invalid_served": 0,
+     "numeric_mismatch_served": 0,
+     "negative": 26,
+     "negative_served": 0,
+     "slm_inferences": 0,
+     "slm_invoked_cases": 0,
+     "slm_contributed_completed": 0,
+     "http_5xx": 48,
+     "latency_completed_ms": {
+      "n": 39,
+      "p50": 81.0,
+      "p95": 106.6,
+      "max": 137.1
+     },
+     "latency_slm_completed_ms": {
+      "n": 0,
+      "p50": null,
+      "p95": null,
+      "max": null
+     }
+    },
+    "holdout-6/SLM_INDEPENDENT_MANIFEST.json": {
+     "positive": 30,
+     "completed": 25,
+     "served_positive": 25,
+     "math_invalid_served": 0,
+     "numeric_mismatch_served": 0,
+     "negative": 10,
+     "negative_served": 0,
+     "slm_inferences": 0,
+     "slm_invoked_cases": 0,
+     "slm_contributed_completed": 0,
+     "http_5xx": 11,
+     "latency_completed_ms": {
+      "n": 25,
+      "p50": 77.7,
+      "p95": 89.8,
+      "max": 102.2
+     },
+     "latency_slm_completed_ms": {
+      "n": 0,
+      "p50": null,
+      "p95": null,
+      "max": null
+     }
+    }
+   },
+   "total": {
+    "positive": 530,
+    "completed": 319,
+    "served_positive": 324,
+    "math_invalid_served": 3,
+    "numeric_mismatch_served": 2,
+    "negative": 176,
+    "negative_served": 0,
+    "slm_inferences": 0,
+    "slm_invoked_cases": 0,
+    "slm_contributed_completed": 0,
+    "http_5xx": 296
+   },
+   "summary": {
+    "arm": "P",
+    "cases": 706,
+    "slm_inferences_total": 0,
+    "wall_s": 44.8
+   }
+  },
+  "BP": {
+   "by_source": {
+    "axo-hybrid-local-model1-finalization-test-consolidation/ACCEPTANCE_MANIFEST.json": {
+     "positive": 112,
+     "completed": 77,
+     "served_positive": 79,
+     "math_invalid_served": 0,
+     "numeric_mismatch_served": 2,
+     "negative": 28,
+     "negative_served": 0,
+     "slm_inferences": 0,
+     "slm_invoked_cases": 0,
+     "slm_contributed_completed": 0,
+     "http_5xx": 38,
+     "latency_completed_ms": {
+      "n": 77,
+      "p50": 80.8,
+      "p95": 135.4,
+      "max": 496.6
+     },
+     "latency_slm_completed_ms": {
+      "n": 0,
+      "p50": null,
+      "p95": null,
+      "max": null
+     }
+    },
+    "holdout-3/ACCEPTANCE_MANIFEST.json": {
+     "positive": 66,
+     "completed": 30,
+     "served_positive": 30,
+     "math_invalid_served": 0,
+     "numeric_mismatch_served": 0,
+     "negative": 22,
+     "negative_served": 0,
+     "slm_inferences": 0,
+     "slm_invoked_cases": 0,
+     "slm_contributed_completed": 0,
+     "http_5xx": 48,
+     "latency_completed_ms": {
+      "n": 30,
+      "p50": 70.6,
+      "p95": 86.2,
+      "max": 90.5
+     },
+     "latency_slm_completed_ms": {
+      "n": 0,
+      "p50": null,
+      "p95": null,
+      "max": null
+     }
+    },
+    "local-model1-recovery-offline-vision/ACCEPTANCE_MANIFEST.json": {
+     "positive": 18,
+     "completed": 3,
+     "served_positive": 3,
+     "math_invalid_served": 0,
+     "numeric_mismatch_served": 0,
+     "negative": 8,
+     "negative_served": 0,
+     "slm_inferences": 0,
+     "slm_invoked_cases": 0,
+     "slm_contributed_completed": 0,
+     "http_5xx": 21,
+     "latency_completed_ms": {
+      "n": 3,
+      "p50": 80.5,
+      "p95": 81.3,
+      "max": 81.3
+     },
+     "latency_slm_completed_ms": {
+      "n": 0,
+      "p50": null,
+      "p95": null,
+      "max": null
+     }
+    },
+    "holdout-2/ACCEPTANCE_MANIFEST.json": {
+     "positive": 28,
+     "completed": 22,
+     "served_positive": 22,
+     "math_invalid_served": 0,
+     "numeric_mismatch_served": 0,
+     "negative": 10,
+     "negative_served": 0,
+     "slm_inferences": 0,
+     "slm_invoked_cases": 0,
+     "slm_contributed_completed": 0,
+     "http_5xx": 10,
+     "latency_completed_ms": {
+      "n": 22,
+      "p50": 69.8,
+      "p95": 100.6,
+      "max": 118.4
+     },
+     "latency_slm_completed_ms": {
+      "n": 0,
+      "p50": null,
+      "p95": null,
+      "max": null
+     }
+    },
+    "holdout-4/ACCEPTANCE_MANIFEST.json": {
+     "positive": 72,
+     "completed": 50,
+     "served_positive": 50,
+     "math_invalid_served": 0,
+     "numeric_mismatch_served": 0,
+     "negative": 26,
+     "negative_served": 0,
+     "slm_inferences": 0,
+     "slm_invoked_cases": 0,
+     "slm_contributed_completed": 0,
+     "http_5xx": 37,
+     "latency_completed_ms": {
+      "n": 50,
+      "p50": 79.3,
+      "p95": 137.1,
+      "max": 232.6
+     },
+     "latency_slm_completed_ms": {
+      "n": 0,
+      "p50": null,
+      "p95": null,
+      "max": null
+     }
+    },
+    "holdout-4/SLM_INDEPENDENT_MANIFEST.json": {
+     "positive": 30,
+     "completed": 26,
+     "served_positive": 26,
+     "math_invalid_served": 0,
+     "numeric_mismatch_served": 0,
+     "negative": 10,
+     "negative_served": 0,
+     "slm_inferences": 0,
+     "slm_invoked_cases": 0,
+     "slm_contributed_completed": 0,
+     "http_5xx": 10,
+     "latency_completed_ms": {
+      "n": 26,
+      "p50": 79.1,
+      "p95": 127.6,
+      "max": 129.8
+     },
+     "latency_slm_completed_ms": {
+      "n": 0,
+      "p50": null,
+      "p95": null,
+      "max": null
+     }
+    },
+    "holdout-5/ACCEPTANCE_MANIFEST.json": {
+     "positive": 72,
+     "completed": 47,
+     "served_positive": 50,
+     "math_invalid_served": 3,
+     "numeric_mismatch_served": 0,
+     "negative": 26,
+     "negative_served": 0,
+     "slm_inferences": 0,
+     "slm_invoked_cases": 0,
+     "slm_contributed_completed": 0,
+     "http_5xx": 37,
+     "latency_completed_ms": {
+      "n": 47,
+      "p50": 79.8,
+      "p95": 104.3,
+      "max": 139.4
+     },
+     "latency_slm_completed_ms": {
+      "n": 0,
+      "p50": null,
+      "p95": null,
+      "max": null
+     }
+    },
+    "holdout-5/SLM_INDEPENDENT_MANIFEST.json": {
+     "positive": 30,
+     "completed": 26,
+     "served_positive": 26,
+     "math_invalid_served": 0,
+     "numeric_mismatch_served": 0,
+     "negative": 10,
+     "negative_served": 0,
+     "slm_inferences": 0,
+     "slm_invoked_cases": 0,
+     "slm_contributed_completed": 0,
+     "http_5xx": 10,
+     "latency_completed_ms": {
+      "n": 26,
+      "p50": 81.8,
+      "p95": 103.5,
+      "max": 155.6
+     },
+     "latency_slm_completed_ms": {
+      "n": 0,
+      "p50": null,
+      "p95": null,
+      "max": null
+     }
+    },
+    "holdout-6/ACCEPTANCE_MANIFEST.json": {
+     "positive": 72,
+     "completed": 49,
+     "served_positive": 49,
+     "math_invalid_served": 0,
+     "numeric_mismatch_served": 0,
+     "negative": 26,
+     "negative_served": 0,
+     "slm_inferences": 0,
+     "slm_invoked_cases": 0,
+     "slm_contributed_completed": 0,
+     "http_5xx": 38,
+     "latency_completed_ms": {
+      "n": 49,
+      "p50": 79.2,
+      "p95": 99.0,
+      "max": 130.8
+     },
+     "latency_slm_completed_ms": {
+      "n": 0,
+      "p50": null,
+      "p95": null,
+      "max": null
+     }
+    },
+    "holdout-6/SLM_INDEPENDENT_MANIFEST.json": {
+     "positive": 30,
+     "completed": 26,
+     "served_positive": 26,
+     "math_invalid_served": 0,
+     "numeric_mismatch_served": 0,
+     "negative": 10,
+     "negative_served": 0,
+     "slm_inferences": 0,
+     "slm_invoked_cases": 0,
+     "slm_contributed_completed": 0,
+     "http_5xx": 10,
+     "latency_completed_ms": {
+      "n": 26,
+      "p50": 83.5,
+      "p95": 88.0,
+      "max": 90.2
+     },
+     "latency_slm_completed_ms": {
+      "n": 0,
+      "p50": null,
+      "p95": null,
+      "max": null
+     }
+    }
+   },
+   "total": {
+    "positive": 530,
+    "completed": 356,
+    "served_positive": 361,
+    "math_invalid_served": 3,
+    "numeric_mismatch_served": 2,
+    "negative": 176,
+    "negative_served": 0,
+    "slm_inferences": 0,
+    "slm_invoked_cases": 0,
+    "slm_contributed_completed": 0,
+    "http_5xx": 259
+   },
+   "summary": {
+    "arm": "BP",
+    "cases": 706,
+    "slm_inferences_total": 0,
+    "wall_s": 46.6
+   }
+  }
+ },
+ "per_case_differences": [
+  {
+   "source": "holdout-3/ACCEPTANCE_MANIFEST.json",
+   "case_id": "A01",
+   "expected": "SERVE",
+   "P": {
+    "served": false,
+    "oracle": "NOT_SERVED",
+    "numeric": null,
+    "completed": false,
+    "mode": null,
+    "reason": "LIVE_AI_DISABLED",
+    "slm": 0,
+    "ms": 36.7,
+    "http": 503
+   },
+   "BP": {
+    "served": true,
+    "oracle": "MATHEMATICALLY_VALID",
+    "numeric": null,
+    "completed": true,
+    "mode": "LOCAL_DETERMINISTIC_PARSER",
+    "reason": null,
+    "slm": 0,
+    "ms": 62.1,
+    "http": 200
+   }
+  },
+  {
+   "source": "holdout-3/ACCEPTANCE_MANIFEST.json",
+   "case_id": "M02",
+   "expected": "SERVE",
+   "P": {
+    "served": false,
+    "oracle": "NOT_SERVED",
+    "numeric": null,
+    "completed": false,
+    "mode": null,
+    "reason": "LIVE_AI_DISABLED",
+    "slm": 0,
+    "ms": 38.3,
+    "http": 503
+   },
+   "BP": {
+    "served": true,
+    "oracle": "MATHEMATICALLY_VALID",
+    "numeric": "CORRECT",
+    "completed": true,
+    "mode": "LOCAL_DETERMINISTIC_PARSER",
+    "reason": null,
+    "slm": 0,
+    "ms": 77.1,
+    "http": 200
+   }
+  },
+  {
+   "source": "holdout-2/ACCEPTANCE_MANIFEST.json",
+   "case_id": "B14",
+   "expected": "SERVE",
+   "P": {
+    "served": false,
+    "oracle": "NOT_SERVED",
+    "numeric": null,
+    "completed": false,
+    "mode": null,
+    "reason": "LIVE_AI_DISABLED",
+    "slm": 0,
+    "ms": 82.5,
+    "http": 503
+   },
+   "BP": {
+    "served": true,
+    "oracle": "MATHEMATICALLY_VALID",
+    "numeric": null,
+    "completed": true,
+    "mode": "LOCAL_DETERMINISTIC_PARSER",
+    "reason": null,
+    "slm": 0,
+    "ms": 62.4,
+    "http": 200
+   }
+  },
+  {
+   "source": "holdout-2/ACCEPTANCE_MANIFEST.json",
+   "case_id": "B15",
+   "expected": "SERVE",
+   "P": {
+    "served": false,
+    "oracle": "NOT_SERVED",
+    "numeric": null,
+    "completed": false,
+    "mode": null,
+    "reason": "LIVE_AI_DISABLED",
+    "slm": 0,
+    "ms": 41.3,
+    "http": 503
+   },
+   "BP": {
+    "served": true,
+    "oracle": "MATHEMATICALLY_VALID",
+    "numeric": null,
+    "completed": true,
+    "mode": "LOCAL_DETERMINISTIC_PARSER",
+    "reason": null,
+    "slm": 0,
+    "ms": 118.4,
+    "http": 200
+   }
+  },
+  {
+   "source": "holdout-4/ACCEPTANCE_MANIFEST.json",
+   "case_id": "M04",
+   "expected": "SERVE",
+   "P": {
+    "served": false,
+    "oracle": "NOT_SERVED",
+    "numeric": null,
+    "completed": false,
+    "mode": null,
+    "reason": "LIVE_AI_DISABLED",
+    "slm": 0,
+    "ms": 48.6,
+    "http": 503
+   },
+   "BP": {
+    "served": true,
+    "oracle": "MATHEMATICALLY_VALID",
+    "numeric": "CORRECT",
+    "completed": true,
+    "mode": "LOCAL_DETERMINISTIC_PARSER",
+    "reason": null,
+    "slm": 0,
+    "ms": 113.8,
+    "http": 200
+   }
+  },
+  {
+   "source": "holdout-4/ACCEPTANCE_MANIFEST.json",
+   "case_id": "M07",
+   "expected": "SERVE",
+   "P": {
+    "served": false,
+    "oracle": "NOT_SERVED",
+    "numeric": null,
+    "completed": false,
+    "mode": null,
+    "reason": "LIVE_AI_DISABLED",
+    "slm": 0,
+    "ms": 44.3,
+    "http": 503
+   },
+   "BP": {
+    "served": true,
+    "oracle": "MATHEMATICALLY_VALID",
+    "numeric": null,
+    "completed": true,
+    "mode": "LOCAL_DETERMINISTIC_PARSER",
+    "reason": null,
+    "slm": 0,
+    "ms": 63.0,
+    "http": 200
+   }
+  },
+  {
+   "source": "holdout-4/ACCEPTANCE_MANIFEST.json",
+   "case_id": "P01",
+   "expected": "SERVE",
+   "P": {
+    "served": false,
+    "oracle": "NOT_SERVED",
+    "numeric": null,
+    "completed": false,
+    "mode": null,
+    "reason": "LIVE_AI_DISABLED",
+    "slm": 0,
+    "ms": 36.3,
+    "http": 503
+   },
+   "BP": {
+    "served": true,
+    "oracle": "MATHEMATICALLY_VALID",
+    "numeric": null,
+    "completed": true,
+    "mode": "LOCAL_DETERMINISTIC_PARSER",
+    "reason": null,
+    "slm": 0,
+    "ms": 137.1,
+    "http": 200
+   }
+  },
+  {
+   "source": "holdout-4/ACCEPTANCE_MANIFEST.json",
+   "case_id": "L01",
+   "expected": "SERVE",
+   "P": {
+    "served": false,
+    "oracle": "NOT_SERVED",
+    "numeric": null,
+    "completed": false,
+    "mode": null,
+    "reason": "LIVE_AI_DISABLED",
+    "slm": 0,
+    "ms": 38.3,
+    "http": 503
+   },
+   "BP": {
+    "served": true,
+    "oracle": "MATHEMATICALLY_VALID",
+    "numeric": "CORRECT",
+    "completed": true,
+    "mode": "LOCAL_DETERMINISTIC_PARSER",
+    "reason": null,
+    "slm": 0,
+    "ms": 80.8,
+    "http": 200
+   }
+  },
+  {
+   "source": "holdout-4/ACCEPTANCE_MANIFEST.json",
+   "case_id": "L03",
+   "expected": "SERVE",
+   "P": {
+    "served": false,
+    "oracle": "NOT_SERVED",
+    "numeric": null,
+    "completed": false,
+    "mode": null,
+    "reason": "LIVE_AI_DISABLED",
+    "slm": 0,
+    "ms": 38.9,
+    "http": 503
+   },
+   "BP": {
+    "served": true,
+    "oracle": "MATHEMATICALLY_VALID",
+    "numeric": "CORRECT",
+    "completed": true,
+    "mode": "LOCAL_DETERMINISTIC_PARSER",
+    "reason": null,
+    "slm": 0,
+    "ms": 74.1,
+    "http": 200
+   }
+  },
+  {
+   "source": "holdout-4/ACCEPTANCE_MANIFEST.json",
+   "case_id": "L05",
+   "expected": "SERVE",
+   "P": {
+    "served": false,
+    "oracle": "NOT_SERVED",
+    "numeric": null,
+    "completed": false,
+    "mode": null,
+    "reason": "LIVE_AI_DISABLED",
+    "slm": 0,
+    "ms": 46.8,
+    "http": 503
+   },
+   "BP": {
+    "served": true,
+    "oracle": "MATHEMATICALLY_VALID",
+    "numeric": "CORRECT",
+    "completed": true,
+    "mode": "LOCAL_DETERMINISTIC_PARSER",
+    "reason": null,
+    "slm": 0,
+    "ms": 134.8,
+    "http": 200
+   }
+  },
+  {
+   "source": "holdout-4/ACCEPTANCE_MANIFEST.json",
+   "case_id": "L07",
+   "expected": "SERVE",
+   "P": {
+    "served": false,
+    "oracle": "NOT_SERVED",
+    "numeric": null,
+    "completed": false,
+    "mode": null,
+    "reason": "LIVE_AI_DISABLED",
+    "slm": 0,
+    "ms": 37.1,
+    "http": 503
+   },
+   "BP": {
+    "served": true,
+    "oracle": "MATHEMATICALLY_VALID",
+    "numeric": null,
+    "completed": true,
+    "mode": "LOCAL_DETERMINISTIC_PARSER",
+    "reason": null,
+    "slm": 0,
+    "ms": 66.1,
+    "http": 200
+   }
+  },
+  {
+   "source": "holdout-4/ACCEPTANCE_MANIFEST.json",
+   "case_id": "L09",
+   "expected": "SERVE",
+   "P": {
+    "served": false,
+    "oracle": "NOT_SERVED",
+    "numeric": null,
+    "completed": false,
+    "mode": null,
+    "reason": "LIVE_AI_DISABLED",
+    "slm": 0,
+    "ms": 39.2,
+    "http": 503
+   },
+   "BP": {
+    "served": true,
+    "oracle": "MATHEMATICALLY_VALID",
+    "numeric": "CORRECT",
+    "completed": true,
+    "mode": "LOCAL_DETERMINISTIC_PARSER",
+    "reason": null,
+    "slm": 0,
+    "ms": 84.2,
+    "http": 200
+   }
+  },
+  {
+   "source": "holdout-4/ACCEPTANCE_MANIFEST.json",
+   "case_id": "L10",
+   "expected": "SERVE",
+   "P": {
+    "served": false,
+    "oracle": "NOT_SERVED",
+    "numeric": null,
+    "completed": false,
+    "mode": null,
+    "reason": "LIVE_AI_DISABLED",
+    "slm": 0,
+    "ms": 38.8,
+    "http": 503
+   },
+   "BP": {
+    "served": true,
+    "oracle": "MATHEMATICALLY_VALID",
+    "numeric": "CORRECT",
+    "completed": true,
+    "mode": "LOCAL_DETERMINISTIC_PARSER",
+    "reason": null,
+    "slm": 0,
+    "ms": 80.2,
+    "http": 200
+   }
+  },
+  {
+   "source": "holdout-4/ACCEPTANCE_MANIFEST.json",
+   "case_id": "L11",
+   "expected": "SERVE",
+   "P": {
+    "served": false,
+    "oracle": "NOT_SERVED",
+    "numeric": null,
+    "completed": false,
+    "mode": null,
+    "reason": "LIVE_AI_DISABLED",
+    "slm": 0,
+    "ms": 38.2,
+    "http": 503
+   },
+   "BP": {
+    "served": true,
+    "oracle": "MATHEMATICALLY_VALID",
+    "numeric": "CORRECT",
+    "completed": true,
+    "mode": "LOCAL_DETERMINISTIC_PARSER",
+    "reason": null,
+    "slm": 0,
+    "ms": 76.2,
+    "http": 200
+   }
+  },
+  {
+   "source": "holdout-4/SLM_INDEPENDENT_MANIFEST.json",
+   "case_id": "I30",
+   "expected": "SERVE",
+   "P": {
+    "served": false,
+    "oracle": "NOT_SERVED",
+    "numeric": null,
+    "completed": false,
+    "mode": null,
+    "reason": "LIVE_AI_DISABLED",
+    "slm": 0,
+    "ms": 47.0,
+    "http": 503
+   },
+   "BP": {
+    "served": true,
+    "oracle": "MATHEMATICALLY_VALID",
+    "numeric": "CORRECT",
+    "completed": true,
+    "mode": "LOCAL_DETERMINISTIC_PARSER",
+    "reason": null,
+    "slm": 0,
+    "ms": 74.3,
+    "http": 200
+   }
+  },
+  {
+   "source": "holdout-5/ACCEPTANCE_MANIFEST.json",
+   "case_id": "M04",
+   "expected": "SERVE",
+   "P": {
+    "served": false,
+    "oracle": "NOT_SERVED",
+    "numeric": null,
+    "completed": false,
+    "mode": null,
+    "reason": "LIVE_AI_DISABLED",
+    "slm": 0,
+    "ms": 46.7,
+    "http": 503
+   },
+   "BP": {
+    "served": true,
+    "oracle": "MATHEMATICALLY_VALID",
+    "numeric": "CORRECT",
+    "completed": true,
+    "mode": "LOCAL_DETERMINISTIC_PARSER",
+    "reason": null,
+    "slm": 0,
+    "ms": 93.5,
+    "http": 200
+   }
+  },
+  {
+   "source": "holdout-5/ACCEPTANCE_MANIFEST.json",
+   "case_id": "M07",
+   "expected": "SERVE",
+   "P": {
+    "served": false,
+    "oracle": "NOT_SERVED",
+    "numeric": null,
+    "completed": false,
+    "mode": null,
+    "reason": "LIVE_AI_DISABLED",
+    "slm": 0,
+    "ms": 43.2,
+    "http": 503
+   },
+   "BP": {
+    "served": true,
+    "oracle": "MATHEMATICALLY_VALID",
+    "numeric": null,
+    "completed": true,
+    "mode": "LOCAL_DETERMINISTIC_PARSER",
+    "reason": null,
+    "slm": 0,
+    "ms": 71.3,
+    "http": 200
+   }
+  },
+  {
+   "source": "holdout-5/ACCEPTANCE_MANIFEST.json",
+   "case_id": "P01",
+   "expected": "SERVE",
+   "P": {
+    "served": false,
+    "oracle": "NOT_SERVED",
+    "numeric": null,
+    "completed": false,
+    "mode": null,
+    "reason": "LIVE_AI_DISABLED",
+    "slm": 0,
+    "ms": 39.2,
+    "http": 503
+   },
+   "BP": {
+    "served": true,
+    "oracle": "MATHEMATICALLY_VALID",
+    "numeric": null,
+    "completed": true,
+    "mode": "LOCAL_DETERMINISTIC_PARSER",
+    "reason": null,
+    "slm": 0,
+    "ms": 69.1,
+    "http": 200
+   }
+  },
+  {
+   "source": "holdout-5/ACCEPTANCE_MANIFEST.json",
+   "case_id": "L01",
+   "expected": "SERVE",
+   "P": {
+    "served": false,
+    "oracle": "NOT_SERVED",
+    "numeric": null,
+    "completed": false,
+    "mode": null,
+    "reason": "LIVE_AI_DISABLED",
+    "slm": 0,
+    "ms": 42.7,
+    "http": 503
+   },
+   "BP": {
+    "served": true,
+    "oracle": "MATHEMATICALLY_VALID",
+    "numeric": "CORRECT",
+    "completed": true,
+    "mode": "LOCAL_DETERMINISTIC_PARSER",
+    "reason": null,
+    "slm": 0,
+    "ms": 81.5,
+    "http": 200
+   }
+  },
+  {
+   "source": "holdout-5/ACCEPTANCE_MANIFEST.json",
+   "case_id": "L03",
+   "expected": "SERVE",
+   "P": {
+    "served": false,
+    "oracle": "NOT_SERVED",
+    "numeric": null,
+    "completed": false,
+    "mode": null,
+    "reason": "LIVE_AI_DISABLED",
+    "slm": 0,
+    "ms": 44.0,
+    "http": 503
+   },
+   "BP": {
+    "served": true,
+    "oracle": "MATHEMATICALLY_VALID",
+    "numeric": "CORRECT",
+    "completed": true,
+    "mode": "LOCAL_DETERMINISTIC_PARSER",
+    "reason": null,
+    "slm": 0,
+    "ms": 81.3,
+    "http": 200
+   }
+  },
+  {
+   "source": "holdout-5/ACCEPTANCE_MANIFEST.json",
+   "case_id": "L05",
+   "expected": "SERVE",
+   "P": {
+    "served": false,
+    "oracle": "NOT_SERVED",
+    "numeric": null,
+    "completed": false,
+    "mode": null,
+    "reason": "LIVE_AI_DISABLED",
+    "slm": 0,
+    "ms": 52.6,
+    "http": 503
+   },
+   "BP": {
+    "served": true,
+    "oracle": "MATHEMATICALLY_VALID",
+    "numeric": "CORRECT",
+    "completed": true,
+    "mode": "LOCAL_DETERMINISTIC_PARSER",
+    "reason": null,
+    "slm": 0,
+    "ms": 104.3,
+    "http": 200
+   }
+  },
+  {
+   "source": "holdout-5/ACCEPTANCE_MANIFEST.json",
+   "case_id": "L07",
+   "expected": "SERVE",
+   "P": {
+    "served": false,
+    "oracle": "NOT_SERVED",
+    "numeric": null,
+    "completed": false,
+    "mode": null,
+    "reason": "LIVE_AI_DISABLED",
+    "slm": 0,
+    "ms": 46.4,
+    "http": 503
+   },
+   "BP": {
+    "served": true,
+    "oracle": "MATHEMATICALLY_VALID",
+    "numeric": null,
+    "completed": true,
+    "mode": "LOCAL_DETERMINISTIC_PARSER",
+    "reason": null,
+    "slm": 0,
+    "ms": 68.2,
+    "http": 200
+   }
+  },
+  {
+   "source": "holdout-5/ACCEPTANCE_MANIFEST.json",
+   "case_id": "L09",
+   "expected": "SERVE",
+   "P": {
+    "served": false,
+    "oracle": "NOT_SERVED",
+    "numeric": null,
+    "completed": false,
+    "mode": null,
+    "reason": "LIVE_AI_DISABLED",
+    "slm": 0,
+    "ms": 41.2,
+    "http": 503
+   },
+   "BP": {
+    "served": true,
+    "oracle": "MATHEMATICALLY_VALID",
+    "numeric": "CORRECT",
+    "completed": true,
+    "mode": "LOCAL_DETERMINISTIC_PARSER",
+    "reason": null,
+    "slm": 0,
+    "ms": 113.8,
+    "http": 200
+   }
+  },
+  {
+   "source": "holdout-5/ACCEPTANCE_MANIFEST.json",
+   "case_id": "L10",
+   "expected": "SERVE",
+   "P": {
+    "served": false,
+    "oracle": "NOT_SERVED",
+    "numeric": null,
+    "completed": false,
+    "mode": null,
+    "reason": "LIVE_AI_DISABLED",
+    "slm": 0,
+    "ms": 42.5,
+    "http": 503
+   },
+   "BP": {
+    "served": true,
+    "oracle": "MATHEMATICALLY_VALID",
+    "numeric": "CORRECT",
+    "completed": true,
+    "mode": "LOCAL_DETERMINISTIC_PARSER",
+    "reason": null,
+    "slm": 0,
+    "ms": 93.5,
+    "http": 200
+   }
+  },
+  {
+   "source": "holdout-5/ACCEPTANCE_MANIFEST.json",
+   "case_id": "L11",
+   "expected": "SERVE",
+   "P": {
+    "served": false,
+    "oracle": "NOT_SERVED",
+    "numeric": null,
+    "completed": false,
+    "mode": null,
+    "reason": "LIVE_AI_DISABLED",
+    "slm": 0,
+    "ms": 43.0,
+    "http": 503
+   },
+   "BP": {
+    "served": true,
+    "oracle": "MATHEMATICALLY_VALID",
+    "numeric": "CORRECT",
+    "completed": true,
+    "mode": "LOCAL_DETERMINISTIC_PARSER",
+    "reason": null,
+    "slm": 0,
+    "ms": 79.8,
+    "http": 200
+   }
+  },
+  {
+   "source": "holdout-5/SLM_INDEPENDENT_MANIFEST.json",
+   "case_id": "I30",
+   "expected": "SERVE",
+   "P": {
+    "served": false,
+    "oracle": "NOT_SERVED",
+    "numeric": null,
+    "completed": false,
+    "mode": null,
+    "reason": "LIVE_AI_DISABLED",
+    "slm": 0,
+    "ms": 42.6,
+    "http": 503
+   },
+   "BP": {
+    "served": true,
+    "oracle": "MATHEMATICALLY_VALID",
+    "numeric": "CORRECT",
+    "completed": true,
+    "mode": "LOCAL_DETERMINISTIC_PARSER",
+    "reason": null,
+    "slm": 0,
+    "ms": 77.1,
+    "http": 200
+   }
+  },
+  {
+   "source": "holdout-6/ACCEPTANCE_MANIFEST.json",
+   "case_id": "M04",
+   "expected": "SERVE",
+   "P": {
+    "served": false,
+    "oracle": "NOT_SERVED",
+    "numeric": null,
+    "completed": false,
+    "mode": null,
+    "reason": "LIVE_AI_DISABLED",
+    "slm": 0,
+    "ms": 49.9,
+    "http": 503
+   },
+   "BP": {
+    "served": true,
+    "oracle": "MATHEMATICALLY_VALID",
+    "numeric": "CORRECT",
+    "completed": true,
+    "mode": "LOCAL_DETERMINISTIC_PARSER",
+    "reason": null,
+    "slm": 0,
+    "ms": 92.2,
+    "http": 200
+   }
+  },
+  {
+   "source": "holdout-6/ACCEPTANCE_MANIFEST.json",
+   "case_id": "M07",
+   "expected": "SERVE",
+   "P": {
+    "served": false,
+    "oracle": "NOT_SERVED",
+    "numeric": null,
+    "completed": false,
+    "mode": null,
+    "reason": "LIVE_AI_DISABLED",
+    "slm": 0,
+    "ms": 42.9,
+    "http": 503
+   },
+   "BP": {
+    "served": true,
+    "oracle": "MATHEMATICALLY_VALID",
+    "numeric": null,
+    "completed": true,
+    "mode": "LOCAL_DETERMINISTIC_PARSER",
+    "reason": null,
+    "slm": 0,
+    "ms": 60.8,
+    "http": 200
+   }
+  },
+  {
+   "source": "holdout-6/ACCEPTANCE_MANIFEST.json",
+   "case_id": "P01",
+   "expected": "SERVE",
+   "P": {
+    "served": false,
+    "oracle": "NOT_SERVED",
+    "numeric": null,
+    "completed": false,
+    "mode": null,
+    "reason": "LIVE_AI_DISABLED",
+    "slm": 0,
+    "ms": 36.9,
+    "http": 503
+   },
+   "BP": {
+    "served": true,
+    "oracle": "MATHEMATICALLY_VALID",
+    "numeric": null,
+    "completed": true,
+    "mode": "LOCAL_DETERMINISTIC_PARSER",
+    "reason": null,
+    "slm": 0,
+    "ms": 65.3,
+    "http": 200
+   }
+  },
+  {
+   "source": "holdout-6/ACCEPTANCE_MANIFEST.json",
+   "case_id": "L01",
+   "expected": "SERVE",
+   "P": {
+    "served": false,
+    "oracle": "NOT_SERVED",
+    "numeric": null,
+    "completed": false,
+    "mode": null,
+    "reason": "LIVE_AI_DISABLED",
+    "slm": 0,
+    "ms": 41.4,
+    "http": 503
+   },
+   "BP": {
+    "served": true,
+    "oracle": "MATHEMATICALLY_VALID",
+    "numeric": "CORRECT",
+    "completed": true,
+    "mode": "LOCAL_DETERMINISTIC_PARSER",
+    "reason": null,
+    "slm": 0,
+    "ms": 75.8,
+    "http": 200
+   }
+  },
+  {
+   "source": "holdout-6/ACCEPTANCE_MANIFEST.json",
+   "case_id": "L03",
+   "expected": "SERVE",
+   "P": {
+    "served": false,
+    "oracle": "NOT_SERVED",
+    "numeric": null,
+    "completed": false,
+    "mode": null,
+    "reason": "LIVE_AI_DISABLED",
+    "slm": 0,
+    "ms": 41.9,
+    "http": 503
+   },
+   "BP": {
+    "served": true,
+    "oracle": "MATHEMATICALLY_VALID",
+    "numeric": "CORRECT",
+    "completed": true,
+    "mode": "LOCAL_DETERMINISTIC_PARSER",
+    "reason": null,
+    "slm": 0,
+    "ms": 75.0,
+    "http": 200
+   }
+  },
+  {
+   "source": "holdout-6/ACCEPTANCE_MANIFEST.json",
+   "case_id": "L05",
+   "expected": "SERVE",
+   "P": {
+    "served": false,
+    "oracle": "NOT_SERVED",
+    "numeric": null,
+    "completed": false,
+    "mode": null,
+    "reason": "LIVE_AI_DISABLED",
+    "slm": 0,
+    "ms": 49.6,
+    "http": 503
+   },
+   "BP": {
+    "served": true,
+    "oracle": "MATHEMATICALLY_VALID",
+    "numeric": "CORRECT",
+    "completed": true,
+    "mode": "LOCAL_DETERMINISTIC_PARSER",
+    "reason": null,
+    "slm": 0,
+    "ms": 99.0,
+    "http": 200
+   }
+  },
+  {
+   "source": "holdout-6/ACCEPTANCE_MANIFEST.json",
+   "case_id": "L07",
+   "expected": "SERVE",
+   "P": {
+    "served": false,
+    "oracle": "NOT_SERVED",
+    "numeric": null,
+    "completed": false,
+    "mode": null,
+    "reason": "LIVE_AI_DISABLED",
+    "slm": 0,
+    "ms": 60.3,
+    "http": 503
+   },
+   "BP": {
+    "served": true,
+    "oracle": "MATHEMATICALLY_VALID",
+    "numeric": null,
+    "completed": true,
+    "mode": "LOCAL_DETERMINISTIC_PARSER",
+    "reason": null,
+    "slm": 0,
+    "ms": 64.9,
+    "http": 200
+   }
+  },
+  {
+   "source": "holdout-6/ACCEPTANCE_MANIFEST.json",
+   "case_id": "L09",
+   "expected": "SERVE",
+   "P": {
+    "served": false,
+    "oracle": "NOT_SERVED",
+    "numeric": null,
+    "completed": false,
+    "mode": null,
+    "reason": "LIVE_AI_DISABLED",
+    "slm": 0,
+    "ms": 42.8,
+    "http": 503
+   },
+   "BP": {
+    "served": true,
+    "oracle": "MATHEMATICALLY_VALID",
+    "numeric": "CORRECT",
+    "completed": true,
+    "mode": "LOCAL_DETERMINISTIC_PARSER",
+    "reason": null,
+    "slm": 0,
+    "ms": 85.9,
+    "http": 200
+   }
+  },
+  {
+   "source": "holdout-6/ACCEPTANCE_MANIFEST.json",
+   "case_id": "L10",
+   "expected": "SERVE",
+   "P": {
+    "served": false,
+    "oracle": "NOT_SERVED",
+    "numeric": null,
+    "completed": false,
+    "mode": null,
+    "reason": "LIVE_AI_DISABLED",
+    "slm": 0,
+    "ms": 45.3,
+    "http": 503
+   },
+   "BP": {
+    "served": true,
+    "oracle": "MATHEMATICALLY_VALID",
+    "numeric": "CORRECT",
+    "completed": true,
+    "mode": "LOCAL_DETERMINISTIC_PARSER",
+    "reason": null,
+    "slm": 0,
+    "ms": 93.4,
+    "http": 200
+   }
+  },
+  {
+   "source": "holdout-6/ACCEPTANCE_MANIFEST.json",
+   "case_id": "L11",
+   "expected": "SERVE",
+   "P": {
+    "served": false,
+    "oracle": "NOT_SERVED",
+    "numeric": null,
+    "completed": false,
+    "mode": null,
+    "reason": "LIVE_AI_DISABLED",
+    "slm": 0,
+    "ms": 47.4,
+    "http": 503
+   },
+   "BP": {
+    "served": true,
+    "oracle": "MATHEMATICALLY_VALID",
+    "numeric": "CORRECT",
+    "completed": true,
+    "mode": "LOCAL_DETERMINISTIC_PARSER",
+    "reason": null,
+    "slm": 0,
+    "ms": 84.0,
+    "http": 200
+   }
+  },
+  {
+   "source": "holdout-6/SLM_INDEPENDENT_MANIFEST.json",
+   "case_id": "I30",
+   "expected": "SERVE",
+   "P": {
+    "served": false,
+    "oracle": "NOT_SERVED",
+    "numeric": null,
+    "completed": false,
+    "mode": null,
+    "reason": "LIVE_AI_DISABLED",
+    "slm": 0,
+    "ms": 43.3,
+    "http": 503
+   },
+   "BP": {
+    "served": true,
+    "oracle": "MATHEMATICALLY_VALID",
+    "numeric": "CORRECT",
+    "completed": true,
+    "mode": "LOCAL_DETERMINISTIC_PARSER",
+    "reason": null,
+    "slm": 0,
+    "ms": 74.7,
+    "http": 200
+   }
+  }
+ ]
+}

@@ -1,0 +1,780 @@
+{
+  "candidate_identity": "dynamic-construction-planner/1",
+  "cases": [
+    {
+      "baseline_a_aux_witness": false,
+      "baseline_a_status": "SERVED",
+      "candidate_status": "GOAL_VERIFIED",
+      "case_id": "A01_sb_length_right_pyramid",
+      "complete_sequence_predefined_recipe": true,
+      "created_by": "PARITY_WITH_WITNESS_GRAPH",
+      "equivalent_template_in_planner26": "Planner/26:SOURCE_EXPLICIT_SEQUENCE",
+      "group": "Group_A",
+      "kernel_primitives_newly_written": false,
+      "novelty_class": "CASE_A_PREDEFINED_OR_PARITY",
+      "operators_used": [
+        "goal.segment_length"
+      ],
+      "plans_count": 1,
+      "visual_only_steps": 0
+    },
+    {
+      "baseline_a_aux_witness": false,
+      "baseline_a_status": "SERVED",
+      "candidate_status": "GOAL_VERIFIED",
+      "case_id": "A02_midpoint_sm_equilateral",
+      "complete_sequence_predefined_recipe": false,
+      "created_by": "DYNAMIC_SEARCH_COMPOSITION",
+      "equivalent_template_in_planner26": null,
+      "group": "Group_A",
+      "kernel_primitives_newly_written": false,
+      "novelty_class": "CASE_B_DYNAMIC_COMPOSITION",
+      "operators_used": [
+        "op.midpoint_segment",
+        "op.connect_segment",
+        "goal.segment_length"
+      ],
+      "plans_count": 1,
+      "visual_only_steps": 0
+    },
+    {
+      "baseline_a_aux_witness": false,
+      "baseline_a_status": "SERVED",
+      "candidate_status": "GOAL_VERIFIED",
+      "case_id": "A03_centroid_sg_square_base",
+      "complete_sequence_predefined_recipe": false,
+      "created_by": "DYNAMIC_SEARCH_COMPOSITION",
+      "equivalent_template_in_planner26": null,
+      "group": "Group_A",
+      "kernel_primitives_newly_written": false,
+      "novelty_class": "CASE_B_DYNAMIC_COMPOSITION",
+      "operators_used": [
+        "op.triangle_centroid",
+        "op.connect_segment",
+        "goal.segment_length"
+      ],
+      "plans_count": 1,
+      "visual_only_steps": 0
+    },
+    {
+      "baseline_a_aux_witness": false,
+      "baseline_a_status": "SERVED",
+      "candidate_status": "GOAL_VERIFIED",
+      "case_id": "A04_midpoint_am_right_B",
+      "complete_sequence_predefined_recipe": false,
+      "created_by": "DYNAMIC_SEARCH_COMPOSITION",
+      "equivalent_template_in_planner26": null,
+      "group": "Group_A",
+      "kernel_primitives_newly_written": false,
+      "novelty_class": "CASE_B_DYNAMIC_COMPOSITION",
+      "operators_used": [
+        "op.midpoint_segment",
+        "op.connect_segment",
+        "goal.segment_length"
+      ],
+      "plans_count": 1,
+      "visual_only_steps": 0
+    },
+    {
+      "baseline_a_aux_witness": false,
+      "baseline_a_status": "SERVED",
+      "candidate_status": "GOAL_VERIFIED",
+      "case_id": "A05_volume_pyramid_right_B",
+      "complete_sequence_predefined_recipe": true,
+      "created_by": "PARITY_WITH_WITNESS_GRAPH",
+      "equivalent_template_in_planner26": "Planner/26:SOURCE_EXPLICIT_SEQUENCE",
+      "group": "Group_A",
+      "kernel_primitives_newly_written": false,
+      "novelty_class": "CASE_A_PREDEFINED_OR_PARITY",
+      "operators_used": [
+        "goal.solid_volume"
+      ],
+      "plans_count": 1,
+      "visual_only_steps": 0
+    },
+    {
+      "baseline_a_aux_witness": false,
+      "baseline_a_status": "SERVED",
+      "candidate_status": "GOAL_VERIFIED",
+      "case_id": "A06_volume_equilateral_pyramid",
+      "complete_sequence_predefined_recipe": true,
+      "created_by": "PARITY_WITH_WITNESS_GRAPH",
+      "equivalent_template_in_planner26": "Planner/26:SOURCE_EXPLICIT_SEQUENCE",
+      "group": "Group_A",
+      "kernel_primitives_newly_written": false,
+      "novelty_class": "CASE_A_PREDEFINED_OR_PARITY",
+      "operators_used": [
+        "goal.solid_volume"
+      ],
+      "plans_count": 1,
+      "visual_only_steps": 0
+    },
+    {
+      "baseline_a_aux_witness": false,
+      "baseline_a_status": "SERVED",
+      "candidate_status": "GOAL_VERIFIED",
+      "case_id": "A07_angle_sc_base_square",
+      "complete_sequence_predefined_recipe": true,
+      "created_by": "PARITY_WITH_WITNESS_GRAPH",
+      "equivalent_template_in_planner26": "Planner/26:SOURCE_EXPLICIT_SEQUENCE",
+      "group": "Group_A",
+      "kernel_primitives_newly_written": false,
+      "novelty_class": "CASE_A_PREDEFINED_OR_PARITY",
+      "operators_used": [
+        "op.intersect_line_plane",
+        "goal.angle_line_plane"
+      ],
+      "plans_count": 1,
+      "visual_only_steps": 0
+    },
+    {
+      "baseline_a_aux_witness": false,
+      "baseline_a_status": "SERVED",
+      "candidate_status": "GOAL_VERIFIED",
+      "case_id": "A08_angle_sb_base_right",
+      "complete_sequence_predefined_recipe": true,
+      "created_by": "PARITY_WITH_WITNESS_GRAPH",
+      "equivalent_template_in_planner26": "Planner/26:SOURCE_EXPLICIT_SEQUENCE",
+      "group": "Group_A",
+      "kernel_primitives_newly_written": false,
+      "novelty_class": "CASE_A_PREDEFINED_OR_PARITY",
+      "operators_used": [
+        "op.intersect_line_plane",
+        "goal.angle_line_plane"
+      ],
+      "plans_count": 1,
+      "visual_only_steps": 0
+    },
+    {
+      "baseline_a_aux_witness": false,
+      "baseline_a_status": "SERVED",
+      "candidate_status": "GOAL_VERIFIED",
+      "case_id": "A09_cube_face_diagonal_intersection_midpoint",
+      "complete_sequence_predefined_recipe": false,
+      "created_by": "DYNAMIC_SEARCH_COMPOSITION",
+      "equivalent_template_in_planner26": null,
+      "group": "Group_A",
+      "kernel_primitives_newly_written": false,
+      "novelty_class": "CASE_B_DYNAMIC_COMPOSITION",
+      "operators_used": [
+        "op.line_through_points",
+        "op.line_through_points",
+        "op.intersect_coplanar_lines",
+        "op.connect_segment",
+        "goal.segment_length"
+      ],
+      "plans_count": 1,
+      "visual_only_steps": 0
+    },
+    {
+      "baseline_a_aux_witness": false,
+      "baseline_a_status": "REFUSED",
+      "candidate_status": "GOAL_VERIFIED",
+      "case_id": "A10_cube_section_diagonal_plane",
+      "complete_sequence_predefined_recipe": false,
+      "created_by": "DYNAMIC_SEARCH_COMPOSITION",
+      "equivalent_template_in_planner26": null,
+      "group": "Group_A",
+      "kernel_primitives_newly_written": false,
+      "novelty_class": "CASE_B_DYNAMIC_COMPOSITION",
+      "operators_used": [
+        "op.plane_through_three_points",
+        "op.polyhedron_plane_section",
+        "goal.section_area"
+      ],
+      "plans_count": 1,
+      "visual_only_steps": 0
+    },
+    {
+      "baseline_a_aux_witness": false,
+      "baseline_a_status": "REFUSED",
+      "candidate_status": "GOAL_VERIFIED",
+      "case_id": "B01_divide_segment_ratio_length",
+      "complete_sequence_predefined_recipe": false,
+      "created_by": "DYNAMIC_SEARCH_COMPOSITION",
+      "equivalent_template_in_planner26": null,
+      "group": "Group_B",
+      "kernel_primitives_newly_written": false,
+      "novelty_class": "CASE_B_DYNAMIC_COMPOSITION",
+      "operators_used": [
+        "op.divide_segment_ratio",
+        "op.midpoint_segment",
+        "op.connect_segment",
+        "goal.segment_length"
+      ],
+      "plans_count": 1,
+      "visual_only_steps": 0
+    },
+    {
+      "baseline_a_aux_witness": false,
+      "baseline_a_status": "REFUSED",
+      "candidate_status": "GOAL_VERIFIED",
+      "case_id": "B02_point_reflection_distance",
+      "complete_sequence_predefined_recipe": false,
+      "created_by": "DYNAMIC_SEARCH_COMPOSITION",
+      "equivalent_template_in_planner26": null,
+      "group": "Group_B",
+      "kernel_primitives_newly_written": false,
+      "novelty_class": "CASE_B_DYNAMIC_COMPOSITION",
+      "operators_used": [
+        "op.point_reflection",
+        "op.connect_segment",
+        "goal.segment_length"
+      ],
+      "plans_count": 1,
+      "visual_only_steps": 0
+    },
+    {
+      "baseline_a_aux_witness": false,
+      "baseline_a_status": "SERVED",
+      "candidate_status": "GOAL_VERIFIED",
+      "case_id": "B03_dihedral_linear_angle_equilateral",
+      "complete_sequence_predefined_recipe": false,
+      "created_by": "DYNAMIC_SEARCH_COMPOSITION",
+      "equivalent_template_in_planner26": null,
+      "group": "Group_B",
+      "kernel_primitives_newly_written": false,
+      "novelty_class": "CASE_B_DYNAMIC_COMPOSITION",
+      "operators_used": [
+        "op.construct_dihedral_linear_angle",
+        "goal.angle_plane_plane"
+      ],
+      "plans_count": 2,
+      "visual_only_steps": 0
+    },
+    {
+      "baseline_a_aux_witness": false,
+      "baseline_a_status": "SERVED",
+      "candidate_status": "GOAL_VERIFIED",
+      "case_id": "B04_dihedral_linear_angle_cube",
+      "complete_sequence_predefined_recipe": false,
+      "created_by": "DYNAMIC_SEARCH_COMPOSITION",
+      "equivalent_template_in_planner26": null,
+      "group": "Group_B",
+      "kernel_primitives_newly_written": false,
+      "novelty_class": "CASE_B_DYNAMIC_COMPOSITION",
+      "operators_used": [
+        "op.plane_through_three_points",
+        "op.intersect_planes",
+        "op.construct_dihedral_linear_angle",
+        "goal.angle_plane_plane"
+      ],
+      "plans_count": 2,
+      "visual_only_steps": 0
+    },
+    {
+      "baseline_a_aux_witness": false,
+      "baseline_a_status": "SERVED",
+      "candidate_status": "GOAL_VERIFIED",
+      "case_id": "B05_skew_angle_cube_parallel_transfer",
+      "complete_sequence_predefined_recipe": false,
+      "created_by": "DYNAMIC_SEARCH_COMPOSITION",
+      "equivalent_template_in_planner26": null,
+      "group": "Group_B",
+      "kernel_primitives_newly_written": false,
+      "novelty_class": "CASE_B_DYNAMIC_COMPOSITION",
+      "operators_used": [
+        "op.line_through_points",
+        "op.line_through_points",
+        "op.line_parallel_through_point",
+        "goal.angle_lines"
+      ],
+      "plans_count": 2,
+      "visual_only_steps": 0
+    },
+    {
+      "baseline_a_aux_witness": false,
+      "baseline_a_status": "REFUSED",
+      "candidate_status": "GOAL_VERIFIED",
+      "case_id": "B06_divide_segment_plus_point_plane_distance",
+      "complete_sequence_predefined_recipe": false,
+      "created_by": "DYNAMIC_SEARCH_COMPOSITION",
+      "equivalent_template_in_planner26": null,
+      "group": "Group_B",
+      "kernel_primitives_newly_written": false,
+      "novelty_class": "CASE_B_DYNAMIC_COMPOSITION",
+      "operators_used": [
+        "op.divide_segment_ratio",
+        "op.project_point_to_plane",
+        "goal.distance_point_plane"
+      ],
+      "plans_count": 3,
+      "visual_only_steps": 0
+    },
+    {
+      "baseline_a_aux_witness": false,
+      "baseline_a_status": "REFUSED",
+      "candidate_status": "GOAL_VERIFIED",
+      "case_id": "B07_reflection_plus_centroid_length",
+      "complete_sequence_predefined_recipe": false,
+      "created_by": "DYNAMIC_SEARCH_COMPOSITION",
+      "equivalent_template_in_planner26": null,
+      "group": "Group_B",
+      "kernel_primitives_newly_written": false,
+      "novelty_class": "CASE_B_DYNAMIC_COMPOSITION",
+      "operators_used": [
+        "op.point_reflection",
+        "op.triangle_centroid",
+        "op.connect_segment",
+        "goal.segment_length"
+      ],
+      "plans_count": 1,
+      "visual_only_steps": 0
+    },
+    {
+      "baseline_a_aux_witness": false,
+      "baseline_a_status": "SERVED",
+      "candidate_status": "GOAL_VERIFIED",
+      "case_id": "B08_intersection_point_derived_plane_prism",
+      "complete_sequence_predefined_recipe": false,
+      "created_by": "DYNAMIC_SEARCH_COMPOSITION",
+      "equivalent_template_in_planner26": null,
+      "group": "Group_B",
+      "kernel_primitives_newly_written": false,
+      "novelty_class": "CASE_B_DYNAMIC_COMPOSITION",
+      "operators_used": [
+        "op.midpoint_segment",
+        "op.midpoint_segment",
+        "op.plane_through_three_points",
+        "op.intersect_line_plane",
+        "op.connect_segment",
+        "goal.segment_length"
+      ],
+      "plans_count": 1,
+      "visual_only_steps": 0
+    },
+    {
+      "baseline_a_aux_witness": false,
+      "baseline_a_status": "REFUSED",
+      "candidate_status": "GOAL_VERIFIED",
+      "case_id": "B09_deep_19step_chain_exceeds_32_ir_slots",
+      "complete_sequence_predefined_recipe": false,
+      "created_by": "DYNAMIC_SEARCH_COMPOSITION",
+      "equivalent_template_in_planner26": null,
+      "group": "Group_B",
+      "kernel_primitives_newly_written": false,
+      "novelty_class": "CASE_B_DYNAMIC_COMPOSITION",
+      "operators_used": [
+        "op.midpoint_segment",
+        "op.midpoint_segment",
+        "op.midpoint_segment",
+        "op.midpoint_segment",
+        "op.midpoint_segment",
+        "op.midpoint_segment",
+        "op.midpoint_segment",
+        "op.midpoint_segment",
+        "op.midpoint_segment",
+        "op.midpoint_segment",
+        "op.midpoint_segment",
+        "op.midpoint_segment",
+        "op.triangle_centroid",
+        "op.triangle_centroid",
+        "op.triangle_centroid",
+        "op.triangle_centroid",
+        "op.midpoint_segment",
+        "op.midpoint_segment",
+        "op.midpoint_segment",
+        "op.connect_segment",
+        "goal.segment_length"
+      ],
+      "plans_count": 1,
+      "visual_only_steps": 0
+    },
+    {
+      "baseline_a_aux_witness": false,
+      "baseline_a_status": "SERVED",
+      "candidate_status": "GOAL_VERIFIED",
+      "case_id": "B10_derived_polygon_area_after_ratio",
+      "complete_sequence_predefined_recipe": false,
+      "created_by": "DYNAMIC_SEARCH_COMPOSITION",
+      "equivalent_template_in_planner26": null,
+      "group": "Group_B",
+      "kernel_primitives_newly_written": false,
+      "novelty_class": "CASE_B_DYNAMIC_COMPOSITION",
+      "operators_used": [
+        "op.divide_segment_ratio",
+        "op.divide_segment_ratio",
+        "op.connect_segment",
+        "op.connect_segment",
+        "op.connect_segment",
+        "goal.polygon_area"
+      ],
+      "plans_count": 1,
+      "visual_only_steps": 0
+    },
+    {
+      "baseline_a_aux_witness": false,
+      "baseline_a_status": "SERVED",
+      "candidate_status": "GOAL_VERIFIED",
+      "case_id": "C01_aux_foot_d_A_SBC_equilateral",
+      "complete_sequence_predefined_recipe": false,
+      "created_by": "DYNAMIC_SEARCH_COMPOSITION",
+      "equivalent_template_in_planner26": null,
+      "group": "Group_C",
+      "kernel_primitives_newly_written": false,
+      "novelty_class": "CASE_B_DYNAMIC_COMPOSITION",
+      "operators_used": [
+        "op.project_point_to_plane",
+        "goal.distance_point_plane"
+      ],
+      "plans_count": 2,
+      "visual_only_steps": 0
+    },
+    {
+      "baseline_a_aux_witness": false,
+      "baseline_a_status": "SERVED",
+      "candidate_status": "GOAL_VERIFIED",
+      "case_id": "C02_aux_foot_d_A_SBD_square",
+      "complete_sequence_predefined_recipe": false,
+      "created_by": "DYNAMIC_SEARCH_COMPOSITION",
+      "equivalent_template_in_planner26": null,
+      "group": "Group_C",
+      "kernel_primitives_newly_written": false,
+      "novelty_class": "CASE_B_DYNAMIC_COMPOSITION",
+      "operators_used": [
+        "op.plane_through_three_points",
+        "op.project_point_to_plane",
+        "goal.distance_point_plane"
+      ],
+      "plans_count": 1,
+      "visual_only_steps": 0
+    },
+    {
+      "baseline_a_aux_witness": false,
+      "baseline_a_status": "SERVED",
+      "candidate_status": "GOAL_VERIFIED",
+      "case_id": "C03_aux_parallel_line_plane_transfer",
+      "complete_sequence_predefined_recipe": false,
+      "created_by": "DYNAMIC_SEARCH_COMPOSITION",
+      "equivalent_template_in_planner26": null,
+      "group": "Group_C",
+      "kernel_primitives_newly_written": false,
+      "novelty_class": "CASE_B_DYNAMIC_COMPOSITION",
+      "operators_used": [
+        "op.deduce_parallel_line_plane_transfer",
+        "op.project_point_to_plane",
+        "goal.distance_line_plane"
+      ],
+      "plans_count": 3,
+      "visual_only_steps": 0
+    },
+    {
+      "baseline_a_aux_witness": false,
+      "baseline_a_status": "SERVED",
+      "candidate_status": "GOAL_VERIFIED",
+      "case_id": "C04_aux_skew_lines_cube_ABp_BCp",
+      "complete_sequence_predefined_recipe": false,
+      "created_by": "DYNAMIC_SEARCH_COMPOSITION",
+      "equivalent_template_in_planner26": null,
+      "group": "Group_C",
+      "kernel_primitives_newly_written": false,
+      "novelty_class": "CASE_B_DYNAMIC_COMPOSITION",
+      "operators_used": [
+        "op.line_through_points",
+        "op.line_through_points",
+        "op.common_perpendicular_skew_lines",
+        "goal.distance_skew_lines"
+      ],
+      "plans_count": 3,
+      "visual_only_steps": 0
+    },
+    {
+      "baseline_a_aux_witness": false,
+      "baseline_a_status": "SERVED",
+      "candidate_status": "GOAL_VERIFIED",
+      "case_id": "C05_aux_skew_lines_pyramid_SA_BD",
+      "complete_sequence_predefined_recipe": false,
+      "created_by": "DYNAMIC_SEARCH_COMPOSITION",
+      "equivalent_template_in_planner26": null,
+      "group": "Group_C",
+      "kernel_primitives_newly_written": false,
+      "novelty_class": "CASE_B_DYNAMIC_COMPOSITION",
+      "operators_used": [
+        "op.line_through_points",
+        "op.common_perpendicular_skew_lines",
+        "goal.distance_skew_lines"
+      ],
+      "plans_count": 3,
+      "visual_only_steps": 0
+    },
+    {
+      "baseline_a_aux_witness": false,
+      "baseline_a_status": "SERVED",
+      "candidate_status": "GOAL_VERIFIED",
+      "case_id": "C06_aux_point_to_line_foot",
+      "complete_sequence_predefined_recipe": false,
+      "created_by": "DYNAMIC_SEARCH_COMPOSITION",
+      "equivalent_template_in_planner26": null,
+      "group": "Group_C",
+      "kernel_primitives_newly_written": false,
+      "novelty_class": "CASE_B_DYNAMIC_COMPOSITION",
+      "operators_used": [
+        "op.project_point_to_line",
+        "goal.distance_point_line"
+      ],
+      "plans_count": 1,
+      "visual_only_steps": 0
+    },
+    {
+      "baseline_a_aux_witness": false,
+      "baseline_a_status": "SERVED",
+      "candidate_status": "GOAL_VERIFIED",
+      "case_id": "C07_aux_angle_line_plane_SB_SAC",
+      "complete_sequence_predefined_recipe": false,
+      "created_by": "DYNAMIC_SEARCH_COMPOSITION",
+      "equivalent_template_in_planner26": null,
+      "group": "Group_C",
+      "kernel_primitives_newly_written": false,
+      "novelty_class": "CASE_B_DYNAMIC_COMPOSITION",
+      "operators_used": [
+        "op.plane_through_three_points",
+        "op.intersect_line_plane",
+        "op.project_point_to_plane",
+        "goal.angle_line_plane"
+      ],
+      "plans_count": 1,
+      "visual_only_steps": 0
+    },
+    {
+      "baseline_a_aux_witness": false,
+      "baseline_a_status": "REFUSED",
+      "candidate_status": "GOAL_VERIFIED",
+      "case_id": "C08_aux_parallel_plane_section_through_midpoint",
+      "complete_sequence_predefined_recipe": false,
+      "created_by": "DYNAMIC_SEARCH_COMPOSITION",
+      "equivalent_template_in_planner26": null,
+      "group": "Group_C",
+      "kernel_primitives_newly_written": false,
+      "novelty_class": "CASE_B_DYNAMIC_COMPOSITION",
+      "operators_used": [
+        "op.midpoint_segment",
+        "op.plane_through_point_parallel_plane",
+        "op.polyhedron_plane_section",
+        "goal.section_area"
+      ],
+      "plans_count": 1,
+      "visual_only_steps": 0
+    },
+    {
+      "baseline_a_aux_witness": false,
+      "baseline_a_status": "REFUSED",
+      "candidate_status": "MISSING_PRECONDITION",
+      "case_id": "D01_missing_height_precondition",
+      "complete_sequence_predefined_recipe": false,
+      "created_by": "FAIL_CLOSED_VERIFICATION",
+      "equivalent_template_in_planner26": null,
+      "group": "Group_D",
+      "kernel_primitives_newly_written": false,
+      "novelty_class": "NEGATIVE_REFUSAL_CASE",
+      "operators_used": [],
+      "plans_count": 0,
+      "visual_only_steps": 0
+    },
+    {
+      "baseline_a_aux_witness": false,
+      "baseline_a_status": "SERVED",
+      "candidate_status": "CONTRADICTORY_CONSTRAINTS",
+      "case_id": "D02_degenerate_coincident_points",
+      "complete_sequence_predefined_recipe": false,
+      "created_by": "FAIL_CLOSED_VERIFICATION",
+      "equivalent_template_in_planner26": null,
+      "group": "Group_D",
+      "kernel_primitives_newly_written": false,
+      "novelty_class": "NEGATIVE_REFUSAL_CASE",
+      "operators_used": [],
+      "plans_count": 0,
+      "visual_only_steps": 0
+    },
+    {
+      "baseline_a_aux_witness": false,
+      "baseline_a_status": "REFUSED",
+      "candidate_status": "CONTRADICTORY_CONSTRAINTS",
+      "case_id": "D03_degenerate_collinear_plane",
+      "complete_sequence_predefined_recipe": false,
+      "created_by": "FAIL_CLOSED_VERIFICATION",
+      "equivalent_template_in_planner26": null,
+      "group": "Group_D",
+      "kernel_primitives_newly_written": false,
+      "novelty_class": "NEGATIVE_REFUSAL_CASE",
+      "operators_used": [],
+      "plans_count": 0,
+      "visual_only_steps": 0
+    },
+    {
+      "baseline_a_aux_witness": false,
+      "baseline_a_status": "REFUSED",
+      "candidate_status": "CONTRADICTORY_CONSTRAINTS",
+      "case_id": "D04_degenerate_parallel_no_intersection",
+      "complete_sequence_predefined_recipe": false,
+      "created_by": "FAIL_CLOSED_VERIFICATION",
+      "equivalent_template_in_planner26": null,
+      "group": "Group_D",
+      "kernel_primitives_newly_written": false,
+      "novelty_class": "NEGATIVE_REFUSAL_CASE",
+      "operators_used": [],
+      "plans_count": 0,
+      "visual_only_steps": 0
+    },
+    {
+      "baseline_a_aux_witness": false,
+      "baseline_a_status": "REFUSED",
+      "candidate_status": "CONTRADICTORY_CONSTRAINTS",
+      "case_id": "D05_contradictory_triangle_inequality",
+      "complete_sequence_predefined_recipe": false,
+      "created_by": "FAIL_CLOSED_VERIFICATION",
+      "equivalent_template_in_planner26": null,
+      "group": "Group_D",
+      "kernel_primitives_newly_written": false,
+      "novelty_class": "NEGATIVE_REFUSAL_CASE",
+      "operators_used": [],
+      "plans_count": 0,
+      "visual_only_steps": 0
+    },
+    {
+      "baseline_a_aux_witness": false,
+      "baseline_a_status": "REFUSED",
+      "candidate_status": "UNSUPPORTED_OPERATOR",
+      "case_id": "D06_unsupported_curved_tangent_sphere",
+      "complete_sequence_predefined_recipe": false,
+      "created_by": "FAIL_CLOSED_VERIFICATION",
+      "equivalent_template_in_planner26": null,
+      "group": "Group_D",
+      "kernel_primitives_newly_written": false,
+      "novelty_class": "CASE_C_UNSUPPORTED_OR_NEGATIVE",
+      "operators_used": [],
+      "plans_count": 0,
+      "visual_only_steps": 0
+    },
+    {
+      "baseline_a_aux_witness": false,
+      "baseline_a_status": "REFUSED",
+      "candidate_status": "MISSING_PRECONDITION",
+      "case_id": "D07_missing_base_right_angle_underdetermined",
+      "complete_sequence_predefined_recipe": false,
+      "created_by": "FAIL_CLOSED_VERIFICATION",
+      "equivalent_template_in_planner26": null,
+      "group": "Group_D",
+      "kernel_primitives_newly_written": false,
+      "novelty_class": "NEGATIVE_REFUSAL_CASE",
+      "operators_used": [],
+      "plans_count": 0,
+      "visual_only_steps": 0
+    },
+    {
+      "baseline_a_aux_witness": false,
+      "baseline_a_status": "SERVED",
+      "candidate_status": "GOAL_VERIFIED",
+      "case_id": "E01_multiplan_d_A_SBC_equilateral",
+      "complete_sequence_predefined_recipe": false,
+      "created_by": "DYNAMIC_SEARCH_COMPOSITION",
+      "equivalent_template_in_planner26": null,
+      "group": "Group_E",
+      "kernel_primitives_newly_written": false,
+      "novelty_class": "CASE_B_DYNAMIC_COMPOSITION",
+      "operators_used": [
+        "op.project_point_to_plane",
+        "goal.distance_point_plane"
+      ],
+      "plans_count": 2,
+      "visual_only_steps": 0
+    },
+    {
+      "baseline_a_aux_witness": false,
+      "baseline_a_status": "SERVED",
+      "candidate_status": "GOAL_VERIFIED",
+      "case_id": "E02_multiplan_d_A_SBC_right_B",
+      "complete_sequence_predefined_recipe": false,
+      "created_by": "DYNAMIC_SEARCH_COMPOSITION",
+      "equivalent_template_in_planner26": null,
+      "group": "Group_E",
+      "kernel_primitives_newly_written": false,
+      "novelty_class": "CASE_B_DYNAMIC_COMPOSITION",
+      "operators_used": [
+        "op.project_point_to_plane",
+        "goal.distance_point_plane"
+      ],
+      "plans_count": 2,
+      "visual_only_steps": 0
+    },
+    {
+      "baseline_a_aux_witness": false,
+      "baseline_a_status": "SERVED",
+      "candidate_status": "GOAL_VERIFIED",
+      "case_id": "E03_multiplan_skew_d_SA_BC",
+      "complete_sequence_predefined_recipe": false,
+      "created_by": "DYNAMIC_SEARCH_COMPOSITION",
+      "equivalent_template_in_planner26": null,
+      "group": "Group_E",
+      "kernel_primitives_newly_written": false,
+      "novelty_class": "CASE_B_DYNAMIC_COMPOSITION",
+      "operators_used": [
+        "op.common_perpendicular_skew_lines",
+        "goal.distance_skew_lines"
+      ],
+      "plans_count": 3,
+      "visual_only_steps": 0
+    },
+    {
+      "baseline_a_aux_witness": false,
+      "baseline_a_status": "SERVED",
+      "candidate_status": "GOAL_VERIFIED",
+      "case_id": "E04_multiplan_skew_angle_cube_symmetric_anchors",
+      "complete_sequence_predefined_recipe": false,
+      "created_by": "DYNAMIC_SEARCH_COMPOSITION",
+      "equivalent_template_in_planner26": null,
+      "group": "Group_E",
+      "kernel_primitives_newly_written": false,
+      "novelty_class": "CASE_B_DYNAMIC_COMPOSITION",
+      "operators_used": [
+        "op.line_through_points",
+        "op.line_through_points",
+        "op.line_parallel_through_point",
+        "goal.angle_lines"
+      ],
+      "plans_count": 2,
+      "visual_only_steps": 0
+    },
+    {
+      "baseline_a_aux_witness": false,
+      "baseline_a_status": "SERVED",
+      "candidate_status": "GOAL_VERIFIED",
+      "case_id": "E05_multiplan_dihedral_linear_vs_synthetic",
+      "complete_sequence_predefined_recipe": false,
+      "created_by": "DYNAMIC_SEARCH_COMPOSITION",
+      "equivalent_template_in_planner26": null,
+      "group": "Group_E",
+      "kernel_primitives_newly_written": false,
+      "novelty_class": "CASE_B_DYNAMIC_COMPOSITION",
+      "operators_used": [
+        "op.construct_dihedral_linear_angle",
+        "goal.angle_plane_plane"
+      ],
+      "plans_count": 2,
+      "visual_only_steps": 0
+    }
+  ],
+  "exact_verifier_identity": "construction-exact-verifier/1",
+  "generated_at_utc": "2026-11-19T00:51:00Z",
+  "git_commit": "498f354608c45ce98ba4f75a0222afbe56139ce2",
+  "graph_schema_version": "verified-construction-graph/1",
+  "operator_inventory_version": "construction-operator/1",
+  "run_id": "axo-construction-verified-graph-dynamic-planner-feasibility",
+  "schema": "axo-dynamic-composition-evaluation/1",
+  "search_algorithm": "bounded_best_first_dependency_aware_search",
+  "search_budget": {
+    "max_candidate_operators": 600,
+    "max_depth": 8,
+    "max_expanded_states": 250,
+    "max_graph_nodes": 96,
+    "max_memory_mb": 128.0,
+    "max_plans": 3,
+    "max_wall_clock_ms": 2000.0
+  },
+  "summary": {
+    "case_a_parity": 5,
+    "case_b_dynamic_composition_verified": 28,
+    "case_c_unsupported_or_negative": 1,
+    "multi_plan_cases_verified": 5
+  },
+  "test_seed": 0
+}

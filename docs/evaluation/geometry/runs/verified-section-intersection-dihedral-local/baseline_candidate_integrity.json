@@ -1,0 +1,22 @@
+{
+  "run_id": "verified-section-intersection-dihedral-local",
+  "generated_at_utc": "2026-11-13T11:35:59.957987+00:00",
+  "head": "a74aa3325b61337e301e8df7b728a66f86fdc266",
+  "start_head": "ffc62f6fe6403e6a53ce2d19833c249e24566ee7",
+  "branch": "feat/local-first-geometry-understanding",
+  "start_candidate": {
+    "manifest_commit": "fe835d424672203fc72fedeb786e9ad22457704b",
+    "stored_in": "15e98444b",
+    "product_commit": "70e393fd846fcd35b585b9ce28c1e3262e8fd3b0",
+    "measured_system": "b222260d9a59bfc0b44aa5cf6021e0a9e1a7ad49b39c288844fa00b1b4117b64",
+    "files": 115,
+    "cache_version": "133"
+  },
+  "relations": "manifest commit fe835d424 = HEAD when frozen; 15e98444b stores the manifest; product 70e393fd8 is the last commit touching measured paths; report HEAD ffc62f6fe descends from all three (git merge-base --is-ancestor)",
+  "verified_at_start": "freeze --verify matched b222260d9a59bfc0 (115 files); lock_cache_identity --verify matched 133 / 3d5400a5; tree clean; no server on 8767/8770 (VERIFIED FACT, session log)",
+  "commits_since_start": [
+    "a74aa3325 test(fixtures): regenerate hybrid preview fixtures for cache 134 into a new bundle",
+    "6aad1f6b8 feat(scene3d): local sections, intersection lines and pyramid altitudes; cache 134",
+    "420851be6 fix(scene3d): never draw the obtuse supplement of an asked angle"
+  ]
+}

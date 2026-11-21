@@ -1,0 +1,31 @@
+{
+  "schema": "algosim-real-world-image-corpus-manifest/1",
+  "generated_at_utc": "2026-11-09T14:20:25.779125+00:00",
+  "product_commit_sha": "87497d79a6537681b91c3f06fffea86a7e593a02",
+  "real_world_corpus_status": "DATA_UNAVAILABLE",
+  "counts_by_image_origin": {
+    "REAL_CAPTURED_IMAGE": 0,
+    "SCANNED_DOCUMENT": 0,
+    "SYNTHETIC_RENDER": 27
+  },
+  "required_real_world_minimum": 30,
+  "required_12_metadata_fields": [
+    "image_id",
+    "image_origin",
+    "capture_device_or_source",
+    "resolution_px",
+    "file_size_bytes",
+    "mime_type",
+    "condition_tags",
+    "problem_count_in_image",
+    "target_problem_bbox",
+    "has_diagram",
+    "ground_truth_text",
+    "ground_truth_math_tokens"
+  ],
+  "existing_synthetic_fixtures_summary": {
+    "vision_benchmark_synthetic_renders": 18,
+    "layout_region_synthetic_renders": 9,
+    "note": "All 27 existing fixtures in the workspace are PIL-rendered synthetic PNGs (`SYNTHETIC_RENDER`) and are strictly excluded from `REAL_CAPTURED_IMAGE` / `SCANNED_DOCUMENT` counts."
+  }
+}

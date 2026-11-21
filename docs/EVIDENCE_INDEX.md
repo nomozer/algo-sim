@@ -1,5 +1,558 @@
+## WAVE_ID = AXO_HYBRID_MODEL1_FINAL_TEXT_ACCEPTANCE
+
+- `RUN_ID` = model1-final-text-acceptance
+- `REPORT` = docs/evaluation/geometry/runs/model1-final-text-acceptance/FINAL_MASTER_REPORT.md
+- `ARTIFACT_DIRECTORY` = docs/evaluation/geometry/runs/model1-final-text-acceptance
+- `START_BASE` = cf0b646f5
+- `CODE_COMMIT` = NONE (root .gitattributes LF pin b10c0a1e4; audited candidate 158 unchanged: product 2bb0211a1, freeze b92b68a94, tree bdb737bba9ab..., CACHE_VERSION=158)
+- `CLASSIFICATION` = AUTHORITATIVE_DETACHED_FULL_T3 + PROSPECTIVE_HOLD_OUT_ACCEPTANCE (CLASS_B_FAIL) + ISOLATED_SLM_AUDIT + OFFLINE_GEMINI_COMPAT_REPLAY + PUBLICATION_SAFETY_RESCAN + MERGE_READINESS_AUDIT
+- `PRODUCT_CHANGE` = NO
+- `MODEL_REQUEST_COUNT` = 0 cloud; local Qwen3-0.6B-AxoV9-Q4_K_M (`73f1484b...`) + `llama.cpp b12470` only (Holdout-7 58+22 + isolated SLM audit + perf/UI)
+- `CORRECTS` = NONE
+- `CORRECTED_BY` = NONE
+- `VERIFICATION` = AUTHORITATIVE_FULL_T3_RECEIPT.json; PROSPECTIVE_TEXT_ACCEPTANCE.json; SLM_CAPABILITY_AUDIT.json; GEMINI_LIVE_COMPATIBILITY_AUDIT.json; PUBLICATION_SAFETY_STATUS.json; MERGE_READINESS_AND_ROLLBACK_AUDIT.md; INDEPENDENT_EVIDENCE_STATUS.md; HANDOFF_STATE.md; holdout-7/CANDIDATE_FREEZE.json; run.json
+- `LIMITATIONS` = Class B internal prospective Holdout-7 FAILED acceptance on Candidate 158 (`END_TO_END_SYSTEM_SCORE = 46/58`, `CANDIDATE_FALLBACK_SCORE = 3/15`, `INDEPENDENT_SLM_SCORE = 25/58`, `gate_pass = false`); `EXTERNAL_INDEPENDENCE = NOT_MEASURED`; `LIVE_GEMINI_API_SMOKE = NOT_MEASURED`; `SEMANTIC_REWRITE_SAFETY_VERIFIED = NOT_MEASURED` on Candidate 158; publication safety remains `BLOCKED_OWNER_DECISION` (`12` frozen `/10–/12` hits + `96` main pending); physical low-end & internet-off `NOT_MEASURED`
+
+## WAVE_ID = AXO_HYBRID_MODEL1_FINAL_ACCEPTANCE_PREMERGE
+
+- `RUN_ID` = model1-final-acceptance-premerge
+- `REPORT` = docs/evaluation/geometry/runs/model1-final-acceptance-premerge/FINAL_MASTER_REPORT.md
+- `ARTIFACT_DIRECTORY` = docs/evaluation/geometry/runs/model1-final-acceptance-premerge
+- `START_BASE` = 6789da55a
+- `CODE_COMMIT` = NONE (audited candidate 158: product 2bb0211a1, freeze b92b68a94, tree `bdb737bba9ab…`, CACHE_VERSION=158)
+- `CLASSIFICATION` = IDENTITY_AUDIT + PUBLICATION_SAFETY_CLASSIFICATION + PREMERGE_AUDIT + ROLLBACK_PLAN + POST_MERGE_PLAN; prospective acceptance NOT_MEASURED
+- `PRODUCT_CHANGE` = NO
+- `MODEL_REQUEST_COUNT` = 0
+- `CORRECTS` = AXO_HYBRID_MODEL1_INTEGRATION_READINESS (MODEL1_INTEGRATION_PLAN.md §6 described Git rollback as a plain `git revert` of the merged range; corrected in PREMERGE_INTEGRATION_AUDIT.md §6)
+- `CORRECTED_BY` = NONE
+- `VERIFICATION` = CANDIDATE158_FINAL_IDENTITY_AUDIT.json; PUBLICATION_SAFETY_CLOSURE.json + PUBLICATION_EXCEPTION_PROPOSAL.json; tools/diff_audit_result.json
+- `LIMITATIONS` = no unexposed or independent data; shared worktree (`AUTHORITATIVE_DETACHED_COMPLIANCE = NOT_VERIFIED`); backend/.env not compared (permission policy)
+
+## WAVE_ID = AXO_HYBRID_MODEL1_INTEGRATION_READINESS
+
+- `RUN_ID` = model1-integration-readiness
+- `REPORT` = docs/evaluation/geometry/runs/model1-integration-readiness/FINAL_MASTER_REPORT.md
+- `ARTIFACT_DIRECTORY` = docs/evaluation/geometry/runs/model1-integration-readiness
+- `START_BASE` = 3a39a1ea4
+- `CODE_COMMIT` = 2bb0211a1 (freeze b92b68a94, tree `bdb737bba9ab…`, 127 files, CACHE_VERSION=158)
+- `CLASSIFICATION` = BASELINE_INTEGRITY_AUDIT + ROUTING_ABLATION (exposed sets, diagnostic) + RESIDUAL_TRIAGE + RUNTIME_CAPACITY (dev host) + FULL_T3_PASS + INTEGRATION_PLAN
+- `PRODUCT_CHANGE` = YES (`local_geometry_parser.py`: length assignment is a premise, pairwise-perpendicular synonym; `main.py` `CACHE_VERSION 158`; default `HYBRID_ROUTE_MODE = live` preserved)
+- `MODEL_REQUEST_COUNT` = 0 cloud; local `Qwen3-0.6B-AxoV9-Q4_K_M` (`73f1484b…`) + `llama.cpp b12470` only
+- `CORRECTS` = AXO_HYBRID_SEMANTIC_GROUNDING_SLM_RECOVERY (run.json / FINAL_MASTER_REPORT §3.1 digest of SEMANTIC_REWRITE_SAFETY_AUDIT.json has 63 hex characters, correct `be8d2b97…df747ace2b4`; LIVE_TEXT_ACCEPTANCE_RESULTS performance.concurrency were cache hits, not SLM concurrency — see CANDIDATE157_INTEGRITY_AUDIT.json, RUNTIME_CAPACITY_REPORT.json)
+- `CORRECTED_BY` = AXO_HYBRID_MODEL1_FINAL_ACCEPTANCE_PREMERGE (rollback plan §6)
+- `VERIFICATION` = CANDIDATE157_INTEGRITY_AUDIT.json; PARSER_SLM_ROUTING_AUDIT.json + results/arms/; RESIDUAL_FAILURE_TRIAGE.json; RUNTIME_CAPACITY_REPORT.json + results/load/; FULL_T3_RECEIPT.json
+- `LIMITATIONS` = every evaluation set is exposed (no prospective acceptance of candidate 158); `EXTERNAL_INDEPENDENCE = NOT_MEASURED`; performance on the Windows dev host only; shared worktree (`AUTHORITATIVE_DETACHED_COMPLIANCE = NOT_VERIFIED`)
+
+## WAVE_ID = AXO_HYBRID_SEMANTIC_GROUNDING_SLM_RECOVERY
+
+- `RUN_ID` = semantic-grounding-slm-recovery
+- `REPORT` = docs/evaluation/geometry/runs/semantic-grounding-slm-recovery/FINAL_MASTER_REPORT.md
+- `ARTIFACT_DIRECTORY` = docs/evaluation/geometry/runs/semantic-grounding-slm-recovery
+- `START_BASE` = c4ae9dd1f
+- `CODE_COMMIT` = 4c1b94b61 (freeze 39c95599e, Full T3 d27b78de5, live Holdout-6/SLM-Ind-3 b28783e31, tree `3152f3829fbe…`, 127 files, CACHE_VERSION=157)
+- `CLASSIFICATION` = SEMANTIC_REWRITE_SAFETY_AUDIT + SLM_ROOT_CAUSE_ABLATION + FULL_T3_PASS + UNEXPOSED_TEXT_ACCEPTANCE + INDEPENDENT_SLM_AUDIT
+- `PRODUCT_CHANGE` = YES (`registry.py` Layer 2 Source Gate `_KHONG_KHANG_DINH` / `_HOI_QUAN_HE` / `_kiem_mat_chung` / `_kiem_vung_tien_de`; `main.py` `CACHE_VERSION 157`; default `HYBRID_ROUTE_MODE = live` preserved)
+- `MODEL_REQUEST_COUNT` = 0 cloud; local `Qwen3-0.6B-AxoV9-Q4_K_M` (`73f1484b…`) + `llama.cpp b12470` only
+- `CORRECTS` = AXO_HYBRID_GROUNDED_GEOMETRY_LANGUAGE_RECOVERY (VERDICT_RECONCILIATION_V15.json documents /15 report vs run.json summarize_c154.py mismatch without modifying /15 files; /15 REGISTERED_SLM_SCORE_V15 = 5/38 FAIL preserved untouched)
+- `CORRECTED_BY` = AXO_HYBRID_MODEL1_INTEGRATION_READINESS (artifact digest typo; concurrency probes were cache hits)
+- `VERIFICATION` = holdout-6/ (`ACCEPTANCE_MANIFEST.json`, `SLM_INDEPENDENT_MANIFEST.json`, `ACCEPTANCE_CRITERIA.json`, `ACCEPTANCE_FREEZE.json`, `CANDIDATE_FREEZE.json`, `build_holdout.py`; 0 overlaps vs 29,423 prior strings); `FULL_T3_RECEIPT.json` (`15162` pytest / `2345` Vitest PASS); `LIVE_TEXT_ACCEPTANCE_RESULTS.json` (`64/72=0.8889`, `23/31=0.7419` fallback, `11/12` targets, `26/26` neg, `10/10` UI); `SLM_CAPABILITY_AUDIT.json` (`21/30=0.7000`, `10/10` neg, `gate_pass=true`); `SEMANTIC_REWRITE_SAFETY_AUDIT.json` (`94` rules); `SLM_ROOT_CAUSE_ABLATION.json` (`RETAIN_AXOV9_NO_FINETUNE_NEEDED`); `LANGUAGE_GAP_RECOVERY.json`; `run.json`
+- `LIMITATIONS` = Holdout-6 synthetic prose (`EXTERNAL_INDEPENDENCE = NOT_MEASURED`); measured on detached HEADs inside reused shared worktree (`AUTHORITATIVE_DETACHED_COMPLIANCE = NOT_VERIFIED`); Candidate 156 Holdout-4/T3 fail & Candidate 157 Holdout-5 generator bugs retired per §17 disclosed with 0 score transfer; OCR/Vision postponed (`LOCAL_VISION_REPLACEMENT_VERIFIED = false`, `FULL_GEMINI_ROLE_REPLACEMENT_VERIFIED = false`, `MAIN_MERGE_READY = false`).
+
+## WAVE_ID = AXO_HYBRID_GROUNDED_GEOMETRY_LANGUAGE_RECOVERY
+
+- `RUN_ID` = grounded-geometry-language-recovery
+- `REPORT` = docs/evaluation/geometry/runs/grounded-geometry-language-recovery/report.md
+- `ARTIFACT_DIRECTORY` = docs/evaluation/geometry/runs/grounded-geometry-language-recovery/
+- `START_BASE` = 034d89681
+- `CODE_COMMIT` = cd2a21abc (CACHE_VERSION 155; candidate refreeze 9cf7dc57d, `9867d391…`, 127 files)
+- `CLASSIFICATION` = NEW_PROSPECTIVE_TEXT_ACCEPTANCE + LANGUAGE_RECOVERY + SOURCE_GATE_NEGATION_FIX
+- `PRODUCT_CHANGE` = YES (`slm_verified_normalizer.py` `VN12`–`VN17`, `registry.py` `_KHONG_KHANG_DINH`, `main.py` `CACHE_VERSION 155`; default `HYBRID_ROUTE_MODE = live` preserved)
+- `MODEL_REQUEST_COUNT` = 0 cloud; local `Qwen3-0.6B-AxoV9-Q4_K_M` (`73f1484b…`) only
+- `CORRECTS` = AXO_HYBRID_LOCAL_MODEL1_RECOVERY_OFFLINE_VISION (FIRST_FAILING_LAYER_AUDIT.json described its route replay as `runtime=None`, 0 model calls; the process-wide AxoV9 runtime answered parser-incomplete cases. Served cases named deterministic stand.)
+- `CORRECTED_BY` = AXO_HYBRID_SEMANTIC_GROUNDING_SLM_RECOVERY (VERDICT_RECONCILIATION_V15.json)
+- `VERIFICATION` = holdout-3/ (MANIFEST `a8427fcf…`, CRITERIA, ACCEPTANCE_FREEZE, CANDIDATE_FREEZE, ORACLE_REVIEW, PROVENANCE); LANGUAGE_RECOVERY_AUDIT.json; LIVE_TEXT_ACCEPTANCE_RESULTS.json; SLM_CONTRIBUTION_AUDIT.json; MODEL1_TEXT_ROLE_MATRIX.json; FULL_T3_CACHE155_RECEIPT.json (PASS); run.json
+- `LIMITATIONS` = Holdout-3 agent-authored by the agent that fixes the product and aimed at known phrase families (`EXTERNAL_INDEPENDENCE = NOT_MEASURED`); text `58/66 = 0.879`; SLM gate `5/38` FAIL; measured in the shared worktree on a clean tracked tree, not a detached worktree; OCR/Vision postponed; `LOCAL_TEXT_MODEL1_VERIFIED / FULL_GEMINI_ROLE_REPLACEMENT_VERIFIED / MAIN_MERGE_READY = FALSE`.
+
+## WAVE_ID = AXO_HYBRID_LOCAL_MODEL1_RECOVERY_OFFLINE_VISION
+
+- `RUN_ID` = local-model1-recovery-offline-vision
+- `REPORT` = docs/evaluation/geometry/runs/local-model1-recovery-offline-vision/report.md
+- `ARTIFACT_DIRECTORY` = docs/evaluation/geometry/runs/local-model1-recovery-offline-vision/
+- `START_BASE` = fd53c26ab
+- `CODE_COMMIT` = df31847d3 (Codex, CACHE_VERSION 153) · 5c65f795e (takeover, CACHE_VERSION 154; candidate refreeze 11fb74fae, `7988f838…`, 127 files)
+- `CLASSIFICATION` = POST_EXPOSURE_LIVE_REGRESSION + LOCAL_OCR_INPUT_VALIDATION + NEW_PROSPECTIVE_ACCEPTANCE_SCORE
+- `PRODUCT_CHANGE` = YES (`local_geometry_parser.py` `normalize_problem_text`, `registry.py` closed clause / question-tail grammar, `main.py` `CACHE_VERSION 154`; default `HYBRID_ROUTE_MODE = live` preserved)
+- `MODEL_REQUEST_COUNT` = 0 cloud; local `Qwen3-0.6B-AxoV9-Q4_K_M` (`73f1484b…`) only
+- `CORRECTS` = AXO_HYBRID_LOCAL_MODEL1_FINALIZATION_TEST_CONSOLIDATION (exact Gram-area check for H057/H069 and live coverage of the post-T3 candidate; 79/100 registered and 81/100 audited are preserved)
+- `CORRECTED_BY` = AXO_HYBRID_GROUNDED_GEOMETRY_LANGUAGE_RECOVERY
+- `VERIFICATION` = POST_EXPOSURE_LIVE_REGRESSION.json (CACHE 152); ACCEPTANCE_FREEZE.json / CANDIDATE_FREEZE.json (Holdout-1); LIVE_ACCEPTANCE_RESULTS.json and OFFLINE_VISION_VALIDATION.json (CACHE 153); FULL_T3_CACHE153_RECEIPT.json (FAIL: interrupted, then evidence hygiene + environmental build); FIRST_FAILING_LAYER_AUDIT.json; holdout-2/ (PROVENANCE, MANIFEST, CRITERIA, ACCEPTANCE_FREEZE, CANDIDATE_FREEZE, LIVE_ACCEPTANCE_RESULTS); LIVE_REGRESSION_HOLDOUT1_CACHE154.json; FULL_T3_CACHE154_RECEIPT.json (PASS); run.json
+- `LIMITATIONS` = Holdout-2 prospective `29/38 = 0.763` (< 0.85), SLM `2/10`; Holdout-1 regression `4/28` (exposed); agent-authored sets written after the CACHE 153 diagnosis (`holdout-2/PROVENANCE.json`); I02, I05, J03 images lack the `⊥`/`⟂` glyph; `LIVE_SIMULATION_ACCEPTED = FALSE`; `MAIN_MERGE_READY = FALSE`; `EXTERNAL_INDEPENDENCE / GEMINI_PARITY / PHYSICAL_TARGET_HARDWARE = NOT_MEASURED`.
+
+## WAVE_ID = AXO_HYBRID_LOCAL_MODEL1_FINALIZATION_TEST_CONSOLIDATION
+
+- `RUN_ID` = axo-hybrid-local-model1-finalization-test-consolidation
+- `REPORT` = docs/evaluation/geometry/runs/axo-hybrid-local-model1-finalization-test-consolidation/AXO_HYBRID_V13_FINAL_REPORT.md
+- `ARTIFACT_DIRECTORY` = docs/evaluation/geometry/runs/axo-hybrid-local-model1-finalization-test-consolidation/
+- `START_BASE` = 55c2eaaea (merged `main` `ba8db5612`, `CACHE_VERSION 132`)
+- `CODE_COMMIT` = 7615d6bca..47f4d9632 (scope compliance + informatics prune + section alignment + cache `148..150`) · b3173a02e (`axo-live-acceptance-harness/1`) · 29a71e2ff (shell consolidation) · 6b4442a46 (Holdout `/13` preregistration) · 7f196eed3 (`/12` Model 1 residuals §6.D) · 787be5445 (`§17` unit similarity + `§19` point `O` provenance + `§6.G` clarification) · e711f6550 (`§6.H` Model 1 replacement audit) · f99597d3e (`CACHE_VERSION 151`) · 8d3f1f06e (`refreeze-4`) · 4201356fb (Pass 1 bind) · 2cb7de4ef + 932376b6a (Pass 1 HTTP 409 archive + frontend `ProblemInput.tsx` fix) · 71aa200bc (`refreeze-5`) · f58a9f1f8 (Pass 2 bind, `831bcc0f503a6007…`, `127` files, `CACHE_VERSION 151`) · f3b4b56e8 (Holdout `/13` Pass 2 offline live acceptance) · 3c717eb9f (T3 regression fixes + `CACHE_VERSION 152`) · 4cb72973e (`fixtures-hybrid-preview-v152`) · 82b3e8cc3 (`refreeze-6`, `bc58949bced0a69c…`, `127` files)
+- `CLASSIFICATION` = TEST_INFRASTRUCTURE_CONSOLIDATION + MODEL1_RESIDUAL_CLOSURE + UNIT_SIMILARITY_AND_PROVENANCE + POST_EXPOSURE_OFFLINE_LIVE_BROWSER_ACCEPTANCE
+- `PRODUCT_CHANGE` = YES (`local_geometry_parser.py`, `local_slm_extractor.py`, `adaptive_input_router.py`, `adapter4_route.py`, `registry.py` preserving `geometry-functions/33` & `0` `app.ai` imports, `engine.py`, `typed_fact_next_bridge.py`, `simulation_state.py`, `hybrid-preview-adapter.ts`, `ProblemInput.tsx`, `main.py` `CACHE_VERSION 152`; default `HYBRID_ROUTE_MODE = live` preserved)
+- `MODEL_REQUEST_COUNT` = 0 cloud; local `Qwen3-0.6B-AxoV9-Q4_K_M` (`73f1484b…`) only
+- `VERIFICATION` = SHARED_LIVE_HARNESS_VALIDATION.json; TEST_INFRASTRUCTURE_CONSOLIDATION.md; ACCEPTANCE_MANIFEST.json (`529ba6b3…`, `0/27,832` overlaps); ACCEPTANCE_CRITERIA.json (`b8f88fb1…`); EVALUATION_FREEZE.json; ACCEPTANCE_FREEZE.json; CANDIDATE_FREEZE.json (`f58a9f1f8`); MODEL1_RESIDUAL_FAILURE_AUDIT.json & .md (`15/17` served); MODEL1_REPLACEMENT_AUDIT.json & .md (`test_model1_replacement_audit.py`); pass1_http409_idempotency_bug/ (`79/140` HTTP 409 archived); LIVE_ACCEPTANCE_RESULTS.json (`79/100 = 0.7900` raw / `81/100 = 0.8100` audited, `0` true wrong/numeric/grounding/relation errors, `28/28` safe refusals, `6/6` similarity, `0/6` underdetermined served + `4/6` clarification); SCENE_ORACLE_VERIFICATION.json (`87/87 MATHEMATICALLY_VALID`); SLM_LIVE_CONTRIBUTION_AUDIT.json (`7/25 = 0.2800` live `LOCAL_SLM_GROUNDED`, `+11` det rescues); VISUAL_AND_INTERACTION_ACCEPTANCE.json (`87/87` initial visual `min_ink = 0.8315` & interaction, `10/10` UI scenarios); NETWORK_ISOLATION_PROOF.json (`0` external/proxy/TCP); PERFORMANCE_BENCHMARK.json; `fixtures-hybrid-preview-v152/`; `npm run test:full` on `82b3e8cc3` (`FULL_PRODUCT_GATE_PASS` `930.0s`: `15,049` pytest + `203/2,345` vitest + build + demo `5/5+1/1` + crash `6/6`); AXO_HYBRID_V13_FINAL_REPORT.md; run.json
+- `CORRECTS` = NONE
+- `CORRECTED_BY` = AXO_HYBRID_LOCAL_MODEL1_RECOVERY_OFFLINE_VISION
+- `LIMITATIONS` = author-constructed holdout (`EXTERNAL_INDEPENDENCE = NOT_MEASURED`); Pass 2 classification is `POST_EXPOSURE_AFTER_FRONTEND_IDEMPOTENCY_409_FIX` after fixing `ProblemInput.tsx` HTTP `409` reuse (`932376b6a`, `0` backend/Model 1 changes); Pass 2 evidence (`f3b4b56e8`) stays bound to `candidate` (`932376b6a`/`f58a9f1f8`, `CACHE 151`) while `npm run test:full` verified `candidate_refreeze_t3` (`3c717eb9f`/`82b3e8cc3`, `CACHE 152`); raw `79/100` (`81/100` audited after proving `H057` & `H069` hit `/12`-derived `_m_area_tri` missing `sqrt(det G)` = `32`/`24`) stays `< 0.85` (`LIVE_SIMULATION_ACCEPTED = FALSE`); `SLM_VERIFIED_SCENE_RATE = 7/25 = 0.2800 < 0.30` and raster image/scan OCR remains `503 LOCAL_ONLY_CLOUD_VISION_DISABLED` (`LOCAL_MODEL1_REPLACEMENT_VERIFIED = FALSE`); `SCOPED_CUTOVER_COMPLETED = FALSE`; `INDEPENDENT_H1_VALIDATION / PHYSICAL_TARGET_HARDWARE_4_8_GIB / GEMINI_PARITY / REAL_STUDENT_USABILITY = NOT_MEASURED`.
+
+## WAVE_ID = AXO_HYBRID_COMPOSITIONAL_GEOMETRY_LANGUAGE_GROUNDED_SIMULATION
+
+- `RUN_ID` = axo-hybrid-compositional-geometry-language-grounded-simulation
+- `REPORT` = docs/evaluation/geometry/runs/axo-hybrid-compositional-geometry-language-grounded-simulation/AXO_HYBRID_V12_FINAL_REPORT.md
+- `ARTIFACT_DIRECTORY` = docs/evaluation/geometry/runs/axo-hybrid-compositional-geometry-language-grounded-simulation/
+- `START_BASE` = c44204786 (from /11 tip ef1075e7df4727e895a913ef4e6fdd8382b8d671)
+- `CODE_COMMIT` = fb13d453a (clause analyzer + diacritic-free domain gate + compositional Source Gate) · f65659e63 (`local-geometry-parser/3` + `local-slm-extractor/6` + `slm-grounding-validator/6`) · 83c427a97 (`V11-VIS-1` `scene3d-view.tsx` + `§17`/`§19` handoffs) · 4f4162d87 (`CACHE_VERSION` 147) · blind candidate_1 22af36638 (`f3c185a08bf0f227fafc6621195017f3517d7227b20b93c7fdf86278103df40d`, 124 files, `0` diff `A4` locked files) · 963cef832 / candidate_refreeze_2 bcf1c7972 (`87a40770e14a730cbfafbf2a618ac747847c5f285ddd932057228816e39e73bd`, 124 files; fixes 7 historical backend pytest regressions uncovered in Full T3 gate)
+- `CLASSIFICATION` = COMPOSITIONAL_NLU_AND_GROUNDED_SOURCE_GATE_AND_BLIND_LIVE_BROWSER_ACCEPTANCE
+- `PRODUCT_CHANGE` = YES (`compositional_clause_analysis.py`, `domain_profile.py`, `local_geometry_parser.py`, `local_slm_extractor.py`, Source Gate `registry.py` preserving `geometry-functions/33` & `0` `app.ai` imports, `scene3d-view.tsx`, `main.py` `CACHE_VERSION 147`; default `HYBRID_ROUTE_MODE = live` preserved)
+- `MODEL_REQUEST_COUNT` = 0 cloud; local `Qwen3-0.6B-AxoV9-Q4_K_M` (`73f1484b…`) only
+- `VERIFICATION` = V12_ACCEPTANCE_MANIFEST.json (`f2fabd0b…`); V12_EVALUATION_FREEZE.json; V12_CANDIDATE_FREEZE.json (`219a172d8`); LIVE_ACCEPTANCE_RESULTS.json (`88/105 = 0.8381`, `wrong_served = 0`, `28/28` safe refusals); SCENE_ORACLE_VERIFICATION.json (`88/88 MATHEMATICALLY_VALID`); SLM_LIVE_CONTRIBUTION_AUDIT.json (`17/32 = 0.5312` live `LOCAL_SLM_GROUNDED`, `+39` det rescues); VISUAL_AND_INTERACTION_ACCEPTANCE.json (`88/88` initial framing & interactions, `9/10` UI scenarios); PERFORMANCE_AND_RESOURCE_REPORT.json; NETWORK_ISOLATION_PROOF.json; ABLATION_AND_GENERALIZATION_REPORT.md; RESIDUAL_GAPS_AND_HANDOFF_ROADMAP.md; THESIS_EVIDENCE_SUMMARY.md; FINAL_VERIFICATION_RECEIPTS.json (`FULL_PRODUCT_GATE_PASS` on `bcf1c7972`: `15,234` pytest + `146/2,077` vitest + build + demo `5/5+1/1` + crash `6/6` in `790.3s`); run.json; handoff/derived_point_o_provenance.patch
+- `CORRECTS` = NONE
+- `CORRECTED_BY` = NONE
+- `LIMITATIONS` = author-constructed blind set (`EXTERNAL_INDEPENDENCE = NOT_MEASURED`); blind Step 6 receipts remain bound to `candidate_1` (`4f4162d87` / `f3c185a08bf0f227…`) while Full T3 verified `candidate_refreeze_2` (`963cef832` / `bcf1c7972`); `GROUNDED_SLM_RECOVERY_VERIFIED = TRUE` (`17/32 = 0.5312`) and `VISUAL_INITIAL_FRAMING_VERIFIED = TRUE` (`88/88 = 1.0`), but `LIVE_SIMULATION_ACCEPTED = FALSE` (`0.8381 < 0.85`, `2` cases short; `17` residual cases catalogued in `RESIDUAL_GAPS_AND_HANDOFF_ROADMAP.md`); `I05` scenario hit `VD01` `§17` `capability_gap` card; `live SLM p95 = 6,703.0 ms > 5,000 ms` on dev host; `INDEPENDENT_H1_VALIDATION / PHYSICAL_TARGET_HARDWARE_4_8_GIB / GEMINI_PARITY / REAL_STUDENT_USABILITY = NOT_MEASURED`; `A4` (`planner/engine/typed_fact_next/adapter4/scene3d/construction_planner`) kept `0` diff.
+
+## WAVE_ID = AXO_HYBRID_SIMULATION_INTENT_GENERALIZATION_GROUNDED_SLM_RECOVERY
+
+- `RUN_ID` = axo-hybrid-simulation-intent-generalization-grounded-slm-recovery
+- `REPORT` = docs/evaluation/geometry/runs/axo-hybrid-simulation-intent-generalization-grounded-slm-recovery/FINAL_MASTER_REPORT.md
+- `ARTIFACT_DIRECTORY` = docs/evaluation/geometry/runs/axo-hybrid-simulation-intent-generalization-grounded-slm-recovery/
+- `START_BASE` = 2f12b96b0 (AXO HYBRID /10 head)
+- `CODE_COMMIT` = 806a7d338 · 0557dcaf6 · 3e5eb8809 · fcf68e91b · b15fd9e92 · 5c25c7ea9 (CACHE_VERSION 146) · 31e6b47c9 · candidate fad0db5f2 / 18aadea7b (13a320603f40bbc32730c26fc6c3232b6c0f00fdfdc2e3e49ba258aca25806f6, 123 files)
+- `CLASSIFICATION` = SLM_CAUSAL_AUDIT + PRODUCT_FIXES + BLIND_LIVE_BROWSER_ACCEPTANCE_LOCAL_ONLY_SCOPED
+- `PRODUCT_CHANGE` = YES (parser, SLM adapter, Source Gate `_VAT_MO_PHONG` only, frontend); CACHE_VERSION 145 -> 146; default HYBRID_ROUTE_MODE = live unchanged
+- `MODEL_REQUEST_COUNT` = 0 cloud; local AxoV9 GGUF only
+- `VERIFICATION` = V11_LIVE_ACCEPTANCE_FREEZE.json (frozen before any live call, fec016682); V11_LIVE_ACCEPTANCE_RESULTS.json; V11_MATHEMATICAL_SCENE_VALIDATION.json; V11_SLM_REQUIRED_EVALUATION.json; V11_UI_SCENARIO_RESULTS.json; evidence/browser/; evidence/ui/; evidence/network/; evidence/memory/; evidence/slm20/; evidence/v17/
+- `CORRECTS` = NONE (adds to /10: SLM 0/20 was contract/Source Gate, not model capability — 17/20 model outputs correct)
+- `CORRECTED_BY` = NONE
+- `LIMITATIONS` = author-constructed blind set (EXTERNAL_INDEPENDENCE = NOT_MEASURED; S09-S11 SPEC_ANTICIPATED); LIVE_SIMULATION_ACCEPTED = FALSE (0.659 < 0.85); GROUNDED_SLM_RECOVERY_VERIFIED = FALSE (4/30); U08 fix and SLM stratum audit are post hoc; I06 harness threshold corrected after the first run (disclosed); PHYSICAL_TARGET_HARDWARE / GEMINI_PARITY / REAL_STUDENT_USABILITY = NOT_MEASURED
+
 # EVIDENCE_INDEX.md — Chỉ mục bằng chứng và chuỗi đính chính (Master Evidence Index)
 
+## WAVE_ID = AXO_HYBRID_LOCAL_ONLY_3D_SIMULATION_LIVE_ACCEPTANCE_CUTOVER
+
+- `RUN_ID` = axo-hybrid-local-only-3d-simulation-live-acceptance-cutover
+- `REPORT` = docs/evaluation/geometry/runs/axo-hybrid-local-only-3d-simulation-live-acceptance-cutover/FINAL_MASTER_REPORT.md
+- `ARTIFACT_DIRECTORY` = docs/evaluation/geometry/runs/axo-hybrid-local-only-3d-simulation-live-acceptance-cutover/
+- `START_BASE` = 38c6efbdb (AXO HYBRID /9 head)
+- `CODE_COMMIT` = e10697092 (frontend keyless) · 7554e2b72 (local-slm keep-alive fix) · a0f979392 (candidate refreeze ce3e3c4b5cc9e075bc260f50e64dc5647408d1a3a614db67bd6d17a3b1d1eb6a, 123 files) · 5a07be9b4 (pending template metadata rebind)
+- `CLASSIFICATION` = LIVE_BROWSER_ACCEPTANCE_LOCAL_ONLY_SCOPED_REHEARSAL
+- `PRODUCT_CHANGE` = YES (frontend local-only UX; runtime transport fix); CACHE_VERSION = 145 unchanged; default HYBRID_ROUTE_MODE = live unchanged
+- `MODEL_REQUEST_COUNT` = 0 cloud; local AxoV9 GGUF only
+- `VERIFICATION` = ACCEPTANCE_FREEZE.json (frozen before run, 451a59040); LIVE_SIMULATION_ACCEPTANCE_RESULTS.json; SCENE3D_MATHEMATICAL_VALIDATION.json; evidence/browser/; evidence/ui4/; evidence/runtime/; evidence/egress_proxy_*.jsonl; evidence/tcp_sampler_*.jsonl
+- `CORRECTS` = NONE (adds: /9 LOCAL_ONLY_SCOPED_RELEASE_READY did not exercise idle gaps; keep-alive defect found live and fixed)
+- `CORRECTED_BY` = NONE
+- `LIMITATIONS` = author-constructed dataset (pass 2 not blind); oracle v2 amended after pass 1 (v1 output kept); LIVE_SIMULATION_ACCEPTED = FALSE (completion 0.625 < 0.85); SLM route served 0/20; FULLY_OFFLINE_RUNTIME / PHYSICAL_TARGET_HARDWARE / GEMINI_PARITY = NOT_MEASURED
+
+## WAVE_ID = AXO_HYBRID_LOCAL_AI_REPLACEMENT_VIETNAMESE_NLU_OFFLINE_CUTOVER
+
+- `RUN_ID` = axo-hybrid-local-ai-replacement-vietnamese-nlu-offline-cutover
+- `REPORT` = docs/evaluation/geometry/runs/axo-hybrid-local-ai-replacement-vietnamese-nlu-offline-cutover/FINAL_MASTER_REPORT.md
+- `ARTIFACT_DIRECTORY` = docs/evaluation/geometry/runs/axo-hybrid-local-ai-replacement-vietnamese-nlu-offline-cutover/
+- `START_BASE` = c73506cb23b0b365d8e475c6b5386a31176a669b
+- `CODE_COMMIT` = f285fcec1afc097084e3fab154f583f01620cab7 (7 owned backend files; 0 diffs frontend/**, registry.py/planner.py/engine.py, backend/experimental/construction_planner/, and 4 locked Gemini surfaces)
+- `CLASSIFICATION` = LOCAL_AI_VIETNAMESE_NLU_AND_SCOPED_LOCAL_ONLY_CUTOVER
+- `PRODUCT_CHANGE` = YES; CACHE_VERSION = 145 (145:route-d); cache namespace HYBRID_V9_LOCAL_SLM (preserving HYBRID_V7_LOCAL_SLM); default HYBRID_ROUTE_MODE = live preserved; measured_system = a7a6bc4157d02018d5a67e5ee408469f22795385f920444eafc39d4772fa8330 (123 files); P1 C60 Gold Arm A 13/42 vs Arm B Raw 15/42 vs Arm B Canon 33/42 (9 upstream unsolvable) vs Arm C Canon 18/42; P2 slm-verified-normalizer/3 (VN06-VN11) + local-slm-extractor/4 (v9, tetrahedron OABC->O.ABC fix, 4-goal GBNF cap, cent, cube edge, REQUEST_NOT_ANSWERED) + fast-path lifts AxoV7 C60 to 26/42 (61.90%, 23 fast + 3 SLM, 0 wrong-served); P3 disjoint GTX 1650 LoRA (train_v9=474, val_v9=126, 0 overlaps across 565 external items, max_4gram=0.3611, Epoch 3 val_loss=0.0203) -> Qwen3-0.6B-AxoV9-Q4_K_M.gguf (396,704,736 B, sha256 73f1484b08b97ed2a1f44e32bcf6610210c7fda51567c4cd0a03d98dffc6cc35, preserving AxoV7 36e784d1... & orig ac2d9771...): val_v9 +GBNF 94/94 (100%) + 32/32 (100%), C60 = 32/42 (76.19%: 23 fast + 9 SLM = 96.97% Gold Canon ceiling, +6 SLM rescues D09/D11/L19/L21/L24/L30, 0 wrong-served); P4 local-slm-runtime/4 (-b 512 -ub 512, max_tokens=256, fixed explicit-runtime cache, single-flight coalescing): mixed warm uncached n=100 100/100 p50/p95=1270.35/4109.98 ms (<=5000 ms), pure n=100 4011.93/5411.75 ms (33.0 tok/s), warm cached n=25 p50=29.24 ms, fast-path 33.90 ms, cold 6104.96 ms, peak WS 973.28 MiB, private commit 637.5 MiB; P5 single-shot SLM_V9_UNSEEN_150 (105+/45-, 0 overlaps across 1165 items): 94/105 (89.52%, Wilson 95% CI [0.8221, 0.9405]) + 45/45 (100%, [0.9213, 1.0000]) = 139/150 (92.67%, [0.8735, 0.9586]), 0 wrong-served, EXTERNAL17 = 12/12 + 5/5; P6 9 Gemini surfaces audited; P7-P8 offline-lab / local-only-scoped / local-shadow / gated local-only-general, keyless /api/health, 503 LOCAL_ONLY_CLOUD_VISION_DISABLED, 10 clean UX states, --rollback v7 verified, AST 0 / egress 0, test_api 14/14, test_local_only 5/5, 3 handoff/*.patch git apply --check PASS; P9 0 baseline regressions (11 suites), 0 Mode A leaks, 0 continuity/token leaks, Construction /2 26c9b505... intact, 16/16 security/fault checks PASS, +14 net positives on historical SLM suites (0 wrong-served); clean freeze 107fd290d targeted 14 modules 280 passed (145.13s) and full backend pytest 15099 passed, 7 skipped, 3 deselected, 12 xfailed, 0 failed (931.68s).
+- `MODEL_REQUEST_COUNT` = 0
+- `VERIFICATION` = run.json; BASELINE_AND_OWNERSHIP_AUDIT.md; GEMINI_DEPENDENCY_INVENTORY.json; GEMINI_REPLACEMENT_COVERAGE_REPORT.md; LOCAL_REPLACEMENT_COVERAGE_REPORT.md; C60_CASE_LEVEL_ROOT_CAUSE.json; C60_GOLD_INTERVENTION_RESULTS.json; C60_POST_P2_V9_RESULTS.json; C60_POST_P3_V9_RESULTS.json; SLM_V9_BOTTLENECK_REPORT.md; DETERMINISTIC_VIETNAMESE_CLOSURE.md; SLM_V9_TRAINING_MANIFEST.json; SLM_V9_TRAINING_RUN.json; SLM_V9_QUANTIZATION_COMPARISON.json; SLM_V9_QUANTIZATION_EVALUATION.json; SLM_V9_MODEL_MANIFEST.json; SLM_V9_TRAINING_DECISION.md; SLM_V9_ABLATION.json; SLM_V9_RUNTIME_PERFORMANCE.json; SLM_V9_SYSTEM_RESOURCE_REPORT.md; SLM_V9_UNSEEN_MANIFEST.json; SLM_V9_UNSEEN_EVALUATION.json; SLM_V9_CAPABILITY_MATRIX.json; LOCAL_ONLY_ROUTING_DESIGN.md; LOCAL_ONLY_PRODUCT_INTEGRATION_REPORT.md; OFFLINE_NETWORK_ISOLATION_REPORT.md; LOCAL_MODEL_PROVISIONING_REPORT.md; LOCAL_AI_USER_EXPERIENCE_REPORT.md; SLM_V9_REGRESSION_RESULTS.json; SLM_V9_REGRESSION_REPORT.md; LOCAL_ONLY_CUTOVER_DECISION.md; OWNER_HANDOFF.md; FINAL_MASTER_REPORT.md; pending_template_refresh.json; handoff/default_cutover_local_only_scoped.patch; handoff/frontend_local_ai_status_and_keyless_ux.patch; handoff/source_gate_optional_grammar.patch
+- `CORRECTS` = NONE
+- `CORRECTED_BY` = NONE
+- `LIMITATIONS` = GOAL_A_OPT_IN_ROUTE = LOCAL_ONLY_SCOPED_RELEASE_READY; DEFAULT_CUTOVER_AND_UI_AND_SOURCE_GATE = BLOCKED_OWNERSHIP (3 handoff patches); GOAL_B_GEMINI_REPLACEMENT = NOT_EQUIVALENT_FULL_REPLACEMENT (503 LOCAL_ONLY_CLOUD_VISION_DISABLED, 9/42 C60 upstream bridge limits); EXTERNAL_INDEPENDENCE = NOT_MEASURED (sealed_H1 & locked_W2_W3 unopened); PHYSICAL_TARGET_HARDWARE / GEMINI_PARITY / INDEPENDENT_H1_VALIDATION / REAL_STUDENT_USABILITY = NOT_MEASURED.
+
+## WAVE_ID = AXO_CONSTRUCTION_PROOF_INTEGRITY_INDEPENDENT_EVALUATION_CONTROLLED_INTEGRATION
+
+- `RUN_ID` = axo-construction-proof-integrity-independent-evaluation-controlled-integration
+- `REPORT` = docs/evaluation/geometry/runs/axo-construction-proof-integrity-independent-evaluation-controlled-integration/FINAL_MASTER_REPORT.md
+- `ARTIFACT_DIRECTORY` = docs/evaluation/geometry/runs/axo-construction-proof-integrity-independent-evaluation-controlled-integration/
+- `START_BASE` = a0f573913a03a3d08a16e308663a654b454ff9c3
+- `CODE_COMMIT` = 03200886abb23685a669877b0d2ec572e0687d93 (frozen experimental package `26c9b505fc7796ed9ff6a5c9578701978e92b9c1d6726a8208916a9ea3dca60c` over unmodified frozen product 6310113f2202bc3a4919406b26fad08cb09b38c9 / 9a9352d586caa360f82052ba1b76fe9b4227f26c, 0 diffs backend/app/** & frontend/)
+- `CLASSIFICATION` = OFFLINE_CONSTRUCTION_PROOF_INTEGRITY_EVALUATION_AND_INTEGRATION_HANDOFF
+- `PRODUCT_CHANGE` = NO; CACHE_VERSION = 145 (145:route-d); default HYBRID_ROUTE_MODE = live preserved; measured_system = 113a6a7cf6bbc15ac23119150b805437e785d2b0714b26c2157d147514c2ef67 (123 files); v1_immutability = True (16/16); reconciled 40 cases P_metric (A1 33/40, Cand B 39/40, Cand C 40/40) & P_strict (A1 32/40 [26/33], A2 38/40 [32/33, B09 budget, 0 Source Gate fails, 2/33 derived aux witness C06/C08, 0/33 multi-plan, avg 17.666 ms], Cand B 40/40 behavior [D02 label corrected], Cand C 40/40 [33/33 L0-L4, 5/5 Group E multi-plan, avg 65.463 ms / 85.641 ms E2E]); 6 orthogonal witness flags (26/33 historical aux>0, 16/33 genuine implicit aux, A07 seg_C_A fixed); multi-label N0..N5 on v1 28 CASE_B (N0=4, N1=12, N2=22, N3=17, N4=14, N5=1, NEG=6); construction-exact-verifier/2 rejects 12/12 mutations (11/12 bypassed v1, incl L4 certificates.verify_perpendicular_witness fix); Oracle Isolation AST 0 hits (C01 SHA256 d2ba3235... invariant); 9/9 geometric invariances PASS (incl SO(3,Q) & GL(3,Q) covariant Gram G'=A^-T G A^-1); single-shot unseen holdout N=60 (44+/16-, EXTERNAL_INDEPENDENCE = NOT_MEASURED): 53/60 overall (88.3%), 42/44 positive (95.5%, 0 wrong answers, 6/6 oblique prism Gram), 11/16 negative exact label (16/16 fail-closed), exposing 3 post-freeze gaps (H17/H44/HN05 same-coord alias, HN04/HN13/HN14 pre-search taxonomy, HN11 quote unread); Search Stress depth 2..20 19.02-58.343 ms, budget limits 0 false CONTRADICTORY, B01 E2E 47.04 ms; VerifiedInputBridge (0 Source Gate bypass) + integration_adapter.py (off/shadow/experimental + fallback) + presentation_validator.py (6 invariants) + DeterministicModel2BaselineSelector + 2/2 handoff patches git apply --check PASS; 34/34 /1+/2 pytests PASS (13.78s); full backend pytest 15070 passed, 7 skipped, 3 deselected, 12 xfailed, 0 failed (770.27s)
+- `MODEL_REQUEST_COUNT` = 0
+- `VERIFICATION` = run.json; BASELINE_AND_OWNERSHIP_AUDIT.md; CONSTRUCTION_V1_BENCHMARK_RECONCILIATION.md; CONSTRUCTION_V1_METRIC_RECONCILIATION.json; CONSTRUCTION_GOAL_SEMANTICS.md; FAIR_PLANNER_COMPARISON_DESIGN.md; FAIR_PLANNER_COMPARISON_RESULTS.json; PROOF_INTEGRITY_AUDIT.md; PROOF_MUTATION_TEST_RESULTS.json; ORACLE_ISOLATION_REPORT.md; GEOMETRY_INVARIANCE_RESULTS.json; CONSTRUCTION_NOVELTY_RECLASSIFICATION.json; INDEPENDENT_CONSTRUCTION_HOLDOUT_MANIFEST.json; INDEPENDENT_CONSTRUCTION_EVALUATION.json; SEARCH_STRESS_BENCHMARK.json; CONSTRUCTION_INTEGRATION_DESIGN.md; CONSTRUCTION_BACKEND_INTEGRATION_REPORT.md; SCENE3D_INTEGRATION_REPORT.md; PRESENTATION_STEP_VALIDATION.md; MODEL2_DETERMINISTIC_BASELINE.md; CONSTRUCTION_V2_REGRESSION_REPORT.md; CONSTRUCTION_RELEASE_READINESS_DECISION.md; FINAL_MASTER_REPORT.md; handoff/backend_adapter4_dynamic_construction_flag.patch; handoff/frontend_scene3d_multiplan_switcher.patch
+- `CORRECTS` = AXO_CONSTRUCTION_VERIFIED_GRAPH_DYNAMIC_PLANNER_FEASIBILITY
+- `CORRECTED_BY` = NONE
+- `LIMITATIONS` = VERDICT = Level 2 - BACKEND_INTEGRATION_READY (HYBRID_ROUTE_MODE=live default preserved, 0 Needle 3, 0 fine-tuning); INTEGRATION_STATUS = BLOCKED_OWNERSHIP (Gate F7 = BLOCKED_OWNERSHIP on backend/app/**, Gate F8 = PASS_ARTIFACT_ONLY on frontend/ under axo-geometry-library); EXTERNAL_INDEPENDENCE = NOT_MEASURED (INTERNAL_POST_FREEZE_INDEPENDENT_SYNTHESIS); post-freeze holdout gaps (H17/H44/HN05 alias, HN04/HN13/HN14 pre-search goal check, HN11 Source Gate) + Registry/33 7/23 operators + MAX_MEMORY_DECLARATIONS=32 remain open; PHYSICAL_LOW_END/GEMINI_PARITY/H-1/USABILITY = NOT_MEASURED.
+
+## WAVE_ID = AXO_CONSTRUCTION_VERIFIED_GRAPH_DYNAMIC_PLANNER_FEASIBILITY
+
+- `RUN_ID` = axo-construction-verified-graph-dynamic-planner-feasibility
+- `REPORT` = docs/evaluation/geometry/runs/axo-construction-verified-graph-dynamic-planner-feasibility/FINAL_MASTER_REPORT.md
+- `ARTIFACT_DIRECTORY` = docs/evaluation/geometry/runs/axo-construction-verified-graph-dynamic-planner-feasibility/
+- `START_BASE` = 498f354608c45ce98ba4f75a0222afbe56139ce2
+- `CODE_COMMIT` = 418dd89f88aed7bcd2a2eb8dbc376077345fd37a (isolated prototype backend/experimental/construction_planner/ + scripts/ + tests/ + run artifacts; auditing unmodified frozen product 6310113f2202bc3a4919406b26fad08cb09b38c9 / 9a9352d586caa360f82052ba1b76fe9b4227f26c, 0 diffs backend/app/** & frontend/)
+- `CLASSIFICATION` = OFFLINE_CONSTRUCTION_GRAPH_AND_DYNAMIC_PLANNER_PROTOTYPE
+- `PRODUCT_CHANGE` = NO; CACHE_VERSION = 145 (145:route-d); default HYBRID_ROUTE_MODE = live preserved; measured_system = 113a6a7cf6bbc15ac23119150b805437e785d2b0714b26c2157d147514c2ef67 (123 files); Phase A audit_existing_construction_architecture.py inspects 64 Registry functions (24 fact / 23 ask / 16 construct / 1 escape; 15/64 PlanningContract; ask_distance_point_plane has_auxiliary_foot_point=false; MAX_MEMORY_DECLARATIONS=32); prototype implements verified-construction-graph/1 (16-field nodes, provenance, canonical_geom_key) + presentation-step-graph/1 + 23 construction-operator/1 operators (witness-enforced evaluate_goal_if_witnessed) + dynamic-construction-planner/1 + L0-L4 Gram SPD verifier + scene3d bridge (L4=0 issues) + read-only 5-rule fail-closed model2-action-interface/1 (0 Needle 3 dependency); 40-case Gold Typed Facts (Groups A-E, seed=0): Candidate B 40/40 (33/33 L0-L4 + oracle via axo-math-evaluator/2 + 0 Scene3D continuity errors, 7/7 safe refusals incl D02 coincident AA, 5/5 multi-plan >=2, Novelty 28 CASE_B / 5 CASE_A / 1 CASE_C D06 / 6 neg, 0.0 timeout, avg_search_ms=26.096, max=155.941, max_peak_mem=335.87 KiB) vs Baseline A 32/40 (26/33 served, 0/33 aux witness in Scene3D, B01/B06 UNDERDETERMINED_POINT, B09 IR_MEMORY_BUDGET_EXCEEDED, D02 served 0a, +4 synthetic quote misses, avg_ms=105.534); 16/16 section-19 pytests PASS (3.14s; 76/76 w/ /8); full backend pytest 15046 passed, 7 skipped, 3 deselected, 12 xfailed, 0 failed (777.24s)
+- `MODEL_REQUEST_COUNT` = 0
+- `VERIFICATION` = run.json; CONSTRUCTION_CAPABILITY_INVENTORY.json; EXISTING_CONSTRUCTION_ARCHITECTURE_AUDIT.md; VERIFIED_CONSTRUCTION_GRAPH_DESIGN.md; CONSTRUCTION_OPERATOR_INVENTORY.json; DYNAMIC_PLANNER_SEARCH_DESIGN.md; CONSTRUCTION_EXACT_VERIFICATION_REPORT.md; SCENE3D_COMPATIBILITY_REPORT.md; MODEL2_INTERFACE_READINESS.md; CONSTRUCTION_OWNER_HANDOFF.md; GOLD_CONSTRUCTION_BENCHMARK_MANIFEST.json; GOLD_CONSTRUCTION_BENCHMARK_RESULTS.json; DYNAMIC_COMPOSITION_EVALUATION.json; CONSTRUCTION_PERFORMANCE.json; CONSTRUCTION_REGRESSION_REPORT.md; CONSTRUCTION_FEASIBILITY_DECISION.md; FINAL_MASTER_REPORT.md
+- `CORRECTS` = NONE
+- `CORRECTED_BY` = AXO_CONSTRUCTION_PROOF_INTEGRITY_INDEPENDENT_EVALUATION_CONTROLLED_INTEGRATION
+- `LIMITATIONS` = VERDICT = FEASIBLE_IN_ISOLATED_PROTOTYPE_NEEDS_INTEGRATION_WAVE (RESEARCH_PROTOTYPE_NON_PRODUCTION; HYBRID_ROUTE_MODE=live default preserved); Gate E6 = PASS_ARTIFACT_ONLY (FRONTEND_INTEGRATION = BLOCKED_OWNERSHIP under axo-geometry-library); Case C curved/higher-degree tangent (D06) UNSUPPORTED_OPERATOR; integration into backend/app/simulation/** awaits owner approval wave; PHYSICAL_LOW_END/GEMINI_PARITY/H-1/USABILITY unchanged NOT_MEASURED.
+
+## WAVE_ID = INDEPENDENT_VALIDATION_LOCAL_AI_PRODUCTION_READINESS
+
+- `RUN_ID` = independent-validation-local-ai-production-readiness
+- `REPORT` = docs/evaluation/geometry/runs/independent-validation-local-ai-production-readiness/FINAL_MASTER_REPORT.md
+- `ARTIFACT_DIRECTORY` = docs/evaluation/geometry/runs/independent-validation-local-ai-production-readiness/
+- `START_BASE` = ae20a9a6e02a00dea19c259c4e8d02350028e4d1
+- `CODE_COMMIT` = 6ca84e5367f7dd2e21f58978ef8d4c196c7959cb (auditing frozen product 6310113f2202bc3a4919406b26fad08cb09b38c9 / 9a9352d586caa360f82052ba1b76fe9b4227f26c, 0 diffs backend/app/** & frontend/)
+- `CLASSIFICATION` = OFFLINE_INDEPENDENT_LOCAL_SLM_VALIDATION
+- `PRODUCT_CHANGE` = NO; CACHE_VERSION = 145 (145:route-d); cache namespace HYBRID_V7_LOCAL_SLM; default HYBRID_ROUTE_MODE = live preserved (opt-in local-slm); measured_system = 113a6a7cf6bbc15ac23119150b805437e785d2b0714b26c2157d147514c2ef67 (123 files); slm_math_evaluator_v2.py (56/56 pytests) reconciles /7 SLM_V7_HOLDOUT_112 Config A/B/C/D = 39/47/58/74 of 80 (92.50% Config D, 0 true wrong-served across /5–/8, 0 hidden discrepancies on /5–/6 & ablation); P2 proves v7h_p8_01..05 are MODEL_SEMANTIC_ERROR (AxoV7 omits rect(base) when "đáy" missing, Gold SERVED 5/5 through Source Gate), v7h_p5_09 is arg swap caught by Source Gate, slm_h23 is AxoV7 checkpoint over-conservatism regression, 26-category capability matrix built; P3 zero-leakage PERMISSIBLE_UNSEEN_77 (C60 60 + External17 17, 0 overlaps, max_4gram=0.1505) scores External17 12/12 (100%) + 5/5 OOS, C60_BLIND_NLU 13/42 (30.95%, C->D +0/-0 p=1.0, Source Gate rejects 6->12), combined 25/54 (46.30%), 0 wrong-served, 18/18 safe refusals; P4 Win32 host (15.78 GiB, n=100 6T mixed uncached) peak comb WS 973.29 MiB <= 2048 MiB (0 leak Q1->Q4), mixed e2e p50/p95 = 3630.08/6898.88 ms (FAIL <= 5000 ms), c=2/4 p95 = 9721.52/18580.68 ms, c=6 max_q=2 clean recovery, threads=2 p95 = 6093.38 ms (simulated); P8 scoped-local-routing-sim/1 0 wrong-served across 189 cases (4/4), 0 regressions across 11 baseline suites, 16/16 security/runtime checks PASS, 91/91 SLM+/8 pytests PASS, clean-tree full backend pytest 15026 passed, 7 skipped, 3 deselected, 12 xfailed, 0 failed (702.93s on 6ca84e536).
+- `MODEL_REQUEST_COUNT` = 0
+- `VERIFICATION` = run.json; BASELINE_INTEGRITY_REPORT.md; EVALUATOR_RECONCILIATION.json; EVALUATOR_CORRECTION_REPORT.md; SLM_FAILURE_AUDIT_TRACES.json; SLM_CAPABILITY_MATRIX.json; SLM_FAILURE_CASE_AUDIT.md; PERMISSIBLE_UNSEEN_CORPUS_MANIFEST.json; PERMISSIBLE_UNSEEN_CORPUS_EVALUATION.json; INDEPENDENT_DATASET_PROTOCOL.md; SYSTEM_RESOURCE_AND_CONCURRENCY_BENCHMARK.json; RESOURCE_READINESS_REPORT.md; SOURCE_GATE_OWNER_STATUS.md; GEMINI_PARITY_PROTOCOL.md; REAL_STUDENT_PILOT_PROTOCOL.md; SCOPED_LOCAL_ROUTING_SIMULATION.json; LOCAL_ROUTING_READINESS.md; SLM_V8_REGRESSION_RESULTS.json; SLM_V8_REGRESSION_REPORT.md; SLM_RELEASE_READINESS_DECISION.md; FINAL_MASTER_REPORT.md
+- `CORRECTS` = DETERMINISTIC_GEOMETRY_LANGUAGE_CLOSURE_SLM_FINETUNING
+- `CORRECTED_BY` = NONE
+- `LIMITATIONS` = VERDICT = EXPERIMENTAL_LOCAL (Level 1; calibrates /7 general Level 2 downward; keeps HYBRID_ROUTE_MODE=live default); INDEPENDENT_EXTERNAL_CORPUS = BLOCKED_DATA_ACCESS; PHYSICAL_LOW_END = NOT_MEASURED; GEMINI_PARITY = NOT_MEASURED; INDEPENDENT_H1_VALIDATION = NOT_MEASURED; REAL_STUDENT_USABILITY = NOT_MEASURED; SOURCE_GATE_OWNER_HANDOFF = BLOCKED_OWNERSHIP; FRONTEND_INTEGRATION = BLOCKED_OWNERSHIP.
+
+## WAVE_ID = DETERMINISTIC_GEOMETRY_LANGUAGE_CLOSURE_SLM_FINETUNING
+
+- `RUN_ID` = deterministic-geometry-language-closure-slm-finetuning
+- `REPORT` = docs/evaluation/geometry/runs/deterministic-geometry-language-closure-slm-finetuning/FINAL_MASTER_REPORT.md
+- `ARTIFACT_DIRECTORY` = docs/evaluation/geometry/runs/deterministic-geometry-language-closure-slm-finetuning/
+- `START_BASE` = 43bef643d2c528053526d363ee578065e60e6116
+- `CODE_COMMIT` = 6310113f2202bc3a4919406b26fad08cb09b38c9 (frozen clean 9a9352d586caa360f82052ba1b76fe9b4227f26c)
+- `CLASSIFICATION` = OFFLINE_LOCAL_SLM_EMPIRICAL_BENCHMARK
+- `PRODUCT_CHANGE` = YES; CACHE_VERSION = 145 (145:route-d); cache namespace HYBRID_V7_LOCAL_SLM; default HYBRID_ROUTE_MODE = live preserved (local-slm opt-in); measured_system = 113a6a7cf6bbc15ac23119150b805437e785d2b0714b26c2157d147514c2ef67 (123 files, cay_lam_viec_sach = true); 4 locked Gemini surfaces unchanged; frontend 0 diff; pending C21 templates metadata refreshed (PENDING_OWNER_DECISION, paid_project_confirmed = false); clean-tree full backend pytest 14944 passed, 7 skipped, 3 deselected, 12 xfailed, 0 failed (840.17s on 9a9352d58); LoRA SFT (train 342 / val 92 Epoch 2 on GTX 1650 -> AxoV7 Q4_K_M 36e784d135627225e0b9c11b097c9a36222ee1e0e3f6f1d6116cc3060ac5e148: val 63/68 = 92.65% + 24/24 neg, 0 wrong-served); diagnostic ablation HOLDOUT_40 25/28 C / 24/28 D, SLM_NEW_HOLDOUT_48 32/32 (100%) D (p=0.03125); single-shot blind SLM_V7_HOLDOUT_112 (80+/32-, max_4gram=0.3396, sealed H-1/W2_W3 unopened): D 69/80 (86.25%) raw / 74/80 (92.50%) audited (EVI.same_value('cos²=...') -> None on v7h_p7_06..10 across all A/B/C/D), 32/32 neg, 0 true wrong-served leaks, 0 continuity errors, H1 (B->C) +11 (p=0.000977), H2 (C->D) +16 (p=0.000031, h=0.4800); CPU warm 6T 3438.61/4870.26 ms (8T 3329.70/4519.61 ms, holdout 3727.57/4728.25 ms, cache hit 36.45/49.50 ms), peak RSS 1044.43 MiB; 0 regressions across 11 suites; 23/23 SLM pytests PASS; 14/14 fault/adversarial checks PASS (original + fine-tuned GGUF)
+- `MODEL_REQUEST_COUNT` = 0
+- `VERIFICATION` = run.json; DETERMINISTIC_LANGUAGE_CLOSURE.md; SOURCE_GATE_COMPATIBILITY_REPORT.md; SOURCE_GATE_OWNER_HANDOFF.md; SLM_POST_CLOSURE_EVALUATION.json; SLM_FINE_TUNING_READINESS.md; SLM_TRAINING_DATA_MANIFEST.json; SLM_TRAINING_IMPLEMENTATION.md; SLM_TRAINING_RUN.json; SLM_ADAPTER_MODEL_MANIFEST.json; SLM_QUANTIZATION_EVALUATION.json; SLM_V7_ABLATION.json; SLM_V7_HOLDOUT_MANIFEST.json; SLM_V7_HOLDOUT_EVALUATION.json; SLM_V7_PERFORMANCE.json; SLM_V7_REGRESSION_RESULTS.json; SLM_V7_REGRESSION_REPORT.md; SLM_REPLACEMENT_DECISION.md; pending_template_refresh.json; FINAL_MASTER_REPORT.md
+- `CORRECTS` = NONE
+- `CORRECTED_BY` = INDEPENDENT_VALIDATION_LOCAL_AI_PRODUCTION_READINESS
+- `LIMITATIONS` = REPLACEMENT_VERDICT = READY_AS_LOCAL_PRIMARY_WITH_CONSTRAINTS (HYBRID_ROUTE_MODE=live preserved; GEMINI_PARITY = NOT_MEASURED; derived section/multi-solid parity not yet established; SOURCE_GATE_OWNER_HANDOFF conversational wrappers v7h_p8_01..05 & Registry grammar extensions BLOCKED_OWNERSHIP); frozen_unseen_vmmu20_separate (19 items, 0 served unverified) strictly GROUND_TRUTH_UNVERIFIED / NOT_MEASURED; PHYSICAL_LOW_END = NOT_MEASURED (15.78 GiB host); INDEPENDENT_H1_VALIDATION = NOT_MEASURED; REAL_STUDENT_USABILITY = NOT_MEASURED.
+
+## WAVE_ID = SPECIALIZED_GEOMETRY_EXTRACTION_SLM_OPTIMIZATION
+
+- `RUN_ID` = specialized-geometry-extraction-slm-optimization
+- `REPORT` = docs/evaluation/geometry/runs/specialized-geometry-extraction-slm-optimization/FINAL_MASTER_REPORT.md
+- `ARTIFACT_DIRECTORY` = docs/evaluation/geometry/runs/specialized-geometry-extraction-slm-optimization/
+- `START_BASE` = 463c6b0408e192a19ff1f25a1bff2a6c94e4e75f
+- `CODE_COMMIT` = 0acc07ae2a7cf8ebdb88b4876668099a1abae4f4 (frozen clean 732d979e1b12547deced4356d012b860d6f7a907)
+- `CLASSIFICATION` = OFFLINE_LOCAL_SLM_EMPIRICAL_BENCHMARK
+- `PRODUCT_CHANGE` = YES; CACHE_VERSION = 145 (145:route-d); cache namespace HYBRID_V6_LOCAL_SLM; default HYBRID_ROUTE_MODE = live preserved (local-slm opt-in); measured_system = 32a3014c99174dbfd85e4139dd2238dc0551ac3e2b369dcedf73680d7f1ba832 (123 files, cay_lam_viec_sach = true); 4 locked Gemini surfaces unchanged; frontend 0 diff; pending C21 templates metadata refreshed (PENDING_OWNER_DECISION, paid_project_confirmed = false, test_evaluation_candidate+C21 = 132 passed); clean-tree full backend pytest 14915 passed, 7 skipped, 3 deselected, 12 xfailed, 0 failed (824.32s on 732d979e1); single-shot blind SLM_NEW_HOLDOUT_48 (32+/16-, 0 skeleton overlaps, 32/32 60-digit proofs): 19/32 (59.38%) vs /5 13/32 & Config A 13/32 (SLM rescue 6/19 vs 0/19, p=0.03125), 16/16 neg, 0 leaks, 0 continuity errors; DEV16 8/10 (p=0.03125); HOLDOUT_40 (HISTORICAL_DIAGNOSTIC) 18/28 (p=0.007812); warm CPU 6T p50/p95 3204.27/5392.59 ms (-52.1% p50 vs /5; 8T 2993.00/4452.59 ms; holdout 3837.81/5116.95 ms; cache hit 39.64 ms); 0 regressions across 11 suites; 14/14 fault checks & 24/24 grounding probes PASS; 10/10 targeted SLM pytest PASS
+- `MODEL_REQUEST_COUNT` = 0
+- `VERIFICATION` = run.json; SLM_BOTTLENECK_ROOT_CAUSE.md; SLM_GOLD_INTERVENTION_RESULTS.json; SLM_COMPACT_EXTRACTION_DESIGN.md; SLM_EXTRACTION_ABLATION.json; SLM_GROUNDING_RELIABILITY.json; SLM_LATENCY_OPTIMIZATION.json; SLM_NEW_HOLDOUT_MANIFEST.json; SLM_NEW_HOLDOUT_EVALUATION.json; SLM_REGRESSION_REPORT.md; SLM_REGRESSION_RESULTS.json; SLM_FINE_TUNING_DECISION.md; SLM_REPLACEMENT_DECISION.md; pending_template_refresh.json; FINAL_MASTER_REPORT.md
+- `CORRECTS` = NONE
+- `CORRECTED_BY` = NONE
+- `LIMITATIONS` = REPLACEMENT_VERDICT = PARTIAL_GAIN_KEEP_HYBRID_EXPERIMENTAL (blind single-shot 19/32 = 59.38% < 0.65/0.85, 6T warm p95 5392.59 ms > 5000 ms, lacks derived section & multi-solid parity; FINE_TUNING_DECISION = Hybrid Case C + Case B disjoint QLoRA next); frozen_unseen_vmmu20_separate (19 items, 0 served unverified) strictly GROUND_TRUTH_UNVERIFIED / NOT_MEASURED; PHYSICAL_LOW_END = NOT_MEASURED (15.78 GiB host); INDEPENDENT_H1_VALIDATION = NOT_MEASURED; REAL_STUDENT_USABILITY = NOT_MEASURED.
+
+## WAVE_ID = SLM_LOCAL_GEOMETRY_UNDERSTANDING
+
+- `RUN_ID` = slm-local-geometry-understanding
+- `REPORT` = docs/evaluation/geometry/runs/slm-local-geometry-understanding/FINAL_MASTER_REPORT.md
+- `ARTIFACT_DIRECTORY` = docs/evaluation/geometry/runs/slm-local-geometry-understanding/
+- `START_BASE` = 69526ca6c2dc20124f49b3b707b394164d183f84
+- `CODE_COMMIT` = a182b54600752e57f3be408aad6a673bd9a0d41f (frozen clean 96791162faa46df330beee9aef2f17f82e03c868)
+- `CLASSIFICATION` = OFFLINE_LOCAL_SLM_EMPIRICAL_BENCHMARK
+- `PRODUCT_CHANGE` = YES; CACHE_VERSION = 145 (145:route-d); default HYBRID_ROUTE_MODE = live preserved (local-slm opt-in); measured_system = 771fe868279c814f9a913ab5120b8dba35c086b6f8e523112c95b4b837e2f542 (122 files, cay_lam_viec_sach = true); 4 locked Gemini surfaces unchanged; frontend 0 diff; pending C21 templates metadata refreshed (PENDING_OWNER_DECISION, paid_project_confirmed = false); clean-tree full backend pytest 14902 passed, 7 skipped, 3 deselected, 12 xfailed, 0 failed (826.81s on fb07eac0c)
+- `MODEL_REQUEST_COUNT` = 0
+- `VERIFICATION` = run.json; SLM_MODEL_MANIFEST.json; preregistered_replacement_criteria.json; independent_slm_holdout_manifest.json; dev_calibration_16.json; SLM_BASELINE_COMPARISON.json; SLM_EXTRACTION_EVALUATION.json; SLM_RESOURCE_BENCHMARK.json; pending_template_refresh.json; SLM_ARCHITECTURE.md; SLM_RUNTIME_IMPLEMENTATION.md; SLM_FAILURE_ANALYSIS.md; SLM_REPLACEMENT_DECISION.md; FINAL_MASTER_REPORT.md
+- `CORRECTS` = NONE
+- `CORRECTED_BY` = NONE
+- `LIMITATIONS` = REPLACEMENT_VERDICT = PARTIAL_GAIN_KEEP_HYBRID_EXPERIMENTAL (zero-shot sub-1B holdout 10/28 = 35.71% < 0.85/0.65, CPU warm p95 8025.00–8480.07 ms & holdout p95 11693.69 ms, lacks derived section & multi-solid parity); frozen_unseen_vmmu20_separate (19 items, served_unverified_count = 0) strictly GROUND_TRUTH_UNVERIFIED / NOT_MEASURED; PHYSICAL_LOW_END = NOT_MEASURED (15.78 GiB host); INDEPENDENT_H1_VALIDATION = NOT_MEASURED; REAL_STUDENT_USABILITY = NOT_MEASURED.
+
+## WAVE_ID = STUDENT_READY_GEOMETRY_SIMULATION_INPUT_RELIABILITY
+
+- `RUN_ID` = student-ready-geometry-simulation-input-reliability
+- `REPORT` = docs/evaluation/geometry/runs/student-ready-geometry-simulation-input-reliability/FINAL_MASTER_REPORT.md
+- `ARTIFACT_DIRECTORY` = docs/evaluation/geometry/runs/student-ready-geometry-simulation-input-reliability/
+- `START_BASE` = ce280140bf89ad72e8724993f75f98edcce01e55
+- `CODE_COMMIT` = 851aa1b2d420045b8eecaa00d3371d7eaea79b2d, ac0ea63dd462c92a8736b607764d1df552d29329 (frozen clean 4c463d154885e99ad9bf07e3898d11c619eb63c4)
+- `CLASSIFICATION` = OFFLINE_DETERMINISTIC_REPLAY
+- `PRODUCT_CHANGE` = YES; CACHE_VERSION = 145 (145:route-d); measured_system = 8a88dbfe9ddc35e38639c7c81e8c7741b1ea1dd1cd848bc9e7dc6bf16885b0c6 (120 files, cay_lam_viec_sach = true); FRONTEND_INTEGRATION = BLOCKED_OWNERSHIP (Gate C = BLOCKED_OWNERSHIP, 0 diff frontend/)
+- `MODEL_REQUEST_COUNT` = 0
+- `VERIFICATION` = run.json; STUDENT_READY_EVALUATION.json; browser_e2e_4viewports.json; historical-regression-delta.json; pending_template_refresh.json; INPUT_RELIABILITY_IMPLEMENTATION.md; STUDENT_FRONTEND_INTEGRATION.md; GEOMETRY_CAPABILITY_REPORT.md; FINAL_MASTER_REPORT.md
+- `CORRECTS` = NONE
+- `CORRECTED_BY` = NONE
+
+## WAVE_ID = REAL_WORLD_GEOMETRY_INPUT_VERIFIED_SIMULATION
+
+- `RUN_ID` = real-world-geometry-input-verified-simulation
+- `REPORT` = docs/evaluation/geometry/runs/real-world-geometry-input-verified-simulation/FINAL_MASTER_REPORT.md
+- `ARTIFACT_DIRECTORY` = docs/evaluation/geometry/runs/real-world-geometry-input-verified-simulation/
+- `START_BASE` = ce280140bf89ad72e8724993f75f98edcce01e55
+- `CODE_COMMIT` = 6de23b196b711674b2610c8436ef617195947fa7, 0dcc3840a5e7ff88989911d76a14e3b17e1a4821, b806e359fcceb268c065013d5cf7fb2ff278f1c1 (frozen clean 003104fd5a116f38f05fe200d013b7e9ba93a05a)
+- `CLASSIFICATION` = OFFLINE_DEVELOPMENT_AND_EXTERNAL_IMAGE_EVIDENCE
+- `PRODUCT_CHANGE` = YES; CACHE_VERSION = 144 (144:route-d); measured_system = e1c6428ed558a722442e0f32b362fb41d053795a81cf92a4c267d48e2bbd7a04 (120 files, cay_lam_viec_sach = true); local-ocr-worker/4, layout-aware-ocr-reconcile/3, local-ocr-route/2, ocr-confirmation-provenance/1, verified-input-provenance/1; glyph_topology 12/12, rendered_positive 4/4, adv_neg 3/3 (0 false auto-accepts); real27 CER 0.0944 -> 0.0533 (blocking spans 81 -> 44, critical_facts 175/188 -> 182/188), 13/27 span-confirmed served (0 wrong, 48/6098 chars, +5 whole-draft fallback separate), cold/warm E2E p50 2494.01 -> 281.99 ms; ext15 CER 0.0333 -> 0.0319, 1 auto + 8/12 span-confirmed + 2/6 selection bands (0 wrong); untouched new_external_12 confirmed 1 (cos²=1/2 == 45°) & nic8 frozen r446 (√3/3); REAL27_TEXT 18/27 (r513 MISSING_DIMENSION UNPROVED_DUE_TO_CAPABILITY_GAP; 9 refusals Gold TypedFactNext/2 isolated, PLANNER_GAP=0, SCENE3D_GAP=0; r258/r498/r559 Mode A adjudicated); NC-* NL & Gold 21/21, RM 61/62 + 10/10, A4 6/6, r1 13/13 + 6/6, Scene3D continuity 0, Mode A 0 leak; backend pytest 14866 passed / 0 failed (806.08s), frontend test:wave 142 files / 2062 passed + tsc + vite build OK (0 diff)
+- `MODEL_REQUEST_COUNT` = 0
+- `VERIFICATION` = run.json; REAL_WORLD_INPUT_BASELINE.md; IMPLEMENTATION_REPORT.md; SCENE3D_AND_FRONTEND_HANDOFF.md; FINAL_MASTER_REPORT.md; REAL_WORLD_END_TO_END_EVALUATION.json; pending_template_refresh.json
+- `CORRECTS` = NONE
+- `CORRECTED_BY` = NONE
+- `LIMITATIONS` = INDEPENDENT_H1_VALIDATION = NOT_MEASURED (0 sealed H-1 rows opened); INDEPENDENT_GENERALIZATION = NOT_MEASURED (W2/W3 untouched); REAL_STUDENT_USABILITY = NOT_MEASURED; PHYSICAL_LOW_END = NOT_MEASURED; K-1/S-2/R-1 = PENDING_OWNER_DECISION (paid_project_confirmed: false); FE-2/3/4/6 = BLOCKED_OWNERSHIP (axo-geometry-library); PUBLICATION_HEAD = BLOCKED_PENDING_OWNER_REVIEW.
+
+## WAVE_ID = UNIFIED_GEOMETRY_UNDERSTANDING_OCR_AUTONOMOUS_PLANNING
+
+- `RUN_ID` = unified-geometry-understanding-ocr-autonomous-planning
+- `REPORT` = docs/evaluation/geometry/runs/unified-geometry-understanding-ocr-autonomous-planning/FINAL_MASTER_REPORT.md
+- `ARTIFACT_DIRECTORY` = docs/evaluation/geometry/runs/unified-geometry-understanding-ocr-autonomous-planning/
+- `START_BASE` = 5c1713997540de91d2b6c10fcdbd0d8724aced1c
+- `CODE_COMMIT` = 65a393212b68710ba1712f2aff431191127b78aa, fff0e63bde0e5be9f6897a1909750b8995fdd310 (frozen dbf61030357c477dc80c90adb3efc1a7342e4f1f)
+- `CLASSIFICATION` = OFFLINE_DEVELOPMENT_EVIDENCE
+- `PRODUCT_CHANGE` = YES; CACHE_VERSION = 143 (143:route-d); measured_system = 9aa3eaa3b5bddab90d3d45f437a8e08ad7517db674755cef3fc88fd9be25e3bf (120 files); NC NL 4/21 -> 21/21, NC Gold 21/21, auto neg 11/11, A4 & depth 6/6, reasoning_matrix 61/62 pos + 10/10 neg (MG9 fail-closed IR_MEMORY_BUDGET_EXCEEDED), r1_probe 13/13 + 6/6, dev37 30/37, comp112 66/112, probes39 23/39, real27_text 18/27 (0 wrong served), OCR layout-aware-ocr-reconcile/2 (glyph_topology 10/10, 4/4 rendered positive LOCAL_OCR_ACCEPT, 0 false auto-accepts across 3 adversarial neg / 27 real27 / 15 external16), Scene3D continuity errors = 0, Mode A no answer leak, backend pytest 14860 passed / 0 failed, frontend test:wave 142 files / 2062 tests passed + tsc + vite build OK
+- `MODEL_REQUEST_COUNT` = 0
+- `VERIFICATION` = run.json; UNDERSTANDING_AND_OCR_BASELINE.md; UNIFIED_IMPLEMENTATION_REPORT.md; INTEGRATION_AND_SAFETY_REPORT.md; FINAL_MASTER_REPORT.md; END_TO_END_CAPABILITY_EVALUATION.json; pending_template_refresh.json
+- `CORRECTS` = NONE
+- `CORRECTED_BY` = NONE
+- `LIMITATIONS` = INDEPENDENT_H1_VALIDATION = NOT_MEASURED (0 sealed H-1 rows opened); REAL_STUDENT_USABILITY = NOT_MEASURED; PHYSICAL_LOW_END = NOT_MEASURED; K-1/S-2/R-1 = PENDING_OWNER_DECISION (paid_project_confirmed: false); FE-2/3/4/6 = BLOCKED_OWNERSHIP (axo-geometry-library); PUBLICATION_HEAD = BLOCKED_PENDING_OWNER_REVIEW.
+
+## WAVE_ID = PLANNER_AUTONOMOUS_COMPOSITION_AND_SEARCH_EFFICIENCY
+
+RUN_ID = planner-autonomous-composition-and-search-efficiency
+REPORT = docs/evaluation/geometry/runs/planner-autonomous-composition-and-search-efficiency/FINAL_PLANNER_SEARCH_REPORT.md
+ARTIFACT_DIRECTORY = docs/evaluation/geometry/runs/planner-autonomous-composition-and-search-efficiency/
+START_BASE = 39b2f3691
+CODE_COMMIT = 8d12e93c4 (autonomous distance_lines planning/kernel, sibling _pending coalescing, is_desc memo keying, cross-rule chain_quotes/reuse_through_point, precondition-first pruning, CACHE_VERSION 142); harness/pending-templates 3fa23e481; candidate freeze 009c06df1 (cay_lam_viec_sach=true, measured_system a9e6a372da73497b..., 120 files)
+CLASSIFICATION = DEVELOPMENT_EVIDENCE_ON_NOVEL_COMPOSITION_AND_OFFLINE_REGRESSION; AUTONOMOUS_COMPOSITION_AND_SEARCH_EFFICIENCY; INDEPENDENT_GENERALIZATION NOT_MEASURED; PUBLICATION BLOCKED_PENDING_OWNER_REVIEW
+PRODUCT_CHANGE = YES; registry.py, typed_fact_next_bridge.py, planner.py, engine.py, main.py (CACHE_VERSION 141 -> 142, cache_identity.lock.json 6233c43c395c9b49...); extraction surface hashes unchanged; measured files 120
+MODEL_REQUEST_COUNT = 0
+VERIFICATION = run.json; PLANNER_DISCOVERY_BASELINE.md; PLANNER_SEARCH_IMPLEMENTATION_REPORT.md; CACHE_SEMANTIC_INTEGRITY_REPORT.md; FINAL_PLANNER_SEARCH_REPORT.md; NOVEL_COMPOSITION_EVALUATION.json; pending_template_refresh.json
+CORRECTS = compositional-planner-capability-expansion (`MG9` diagnosis precision: planner failure was caused by 21 precondition-rejected candidates counting toward `MAX_EFFECT_CANDIDATES=48`; with precondition-first pruning planner succeeds `33 <= 48` and Route D fails closed at `IR_MEMORY_BUDGET_EXCEEDED` `34 > 32`)
+CORRECTED_BY = NONE
+LIMITATIONS = development benchmark (`reasoning_matrix` 72: 61/62 pos, 10/10 neg, 0 wrong, MG9 IR_MEMORY_BUDGET_EXCEEDED; r1-probe + C3-dist 13/13 + 6/6 adversarials; 21/21 novel positive cases across 4 solid families + 11/11 negative/cycle/tamper/budget cases; NL isolation 4/4 expected local cases, E1 dual-@id angle clause stays LOCAL_PARSE_PARTIAL); FE-2/3/4/6 BLOCKED_OWNERSHIP; H-1 NOT_MEASURED, W2/W3 untouched, real student study NOT_MEASURED, C21 PENDING_OWNER_DECISION, publication HEAD blocked pending owner review.
+
+## WAVE_ID = COMPOSITIONAL_PLANNER_CAPABILITY_EXPANSION
+
+RUN_ID = compositional-planner-capability-expansion
+REPORT = docs/evaluation/geometry/runs/compositional-planner-capability-expansion/FINAL_PLANNER_REPORT.md
+ARTIFACT_DIRECTORY = docs/evaluation/geometry/runs/compositional-planner-capability-expansion/
+START_BASE = c69c10fe6
+CODE_COMMIT = 4f302b06a (planner/bridge/Source Gate/Kernel DAG compositional expansion, test_compositional_planner_expansion, guarded cold-start regexes), 7effb76b8 (ask_section_area solid lookahead + SIXTEEN_CLASSES R1-F01/F02 promotion and R1-F03 unsupported check); candidate freeze 7bf744ec2 (commit field 7effb76b8)
+CLASSIFICATION = DEVELOPMENT_EVIDENCE_ON_AGENT_MATRIX_AND_OFFLINE_REGRESSION; COMPOSITIONAL_PLANNER_EXPANSION; INDEPENDENT_GENERALIZATION NOT_MEASURED; PUBLICATION BLOCKED_PENDING_OWNER_REVIEW
+PRODUCT_CHANGE = YES; typed_fact_next_bridge.py, planner.py, registry.py, engine.py; schema/surface hashes and CACHE_VERSION 141 unchanged; measured files 120
+MODEL_REQUEST_COUNT = 0
+VERIFICATION = run.json; PLANNER_CAPABILITY_BASELINE.md; PLANNER_IMPLEMENTATION_REPORT.md; FINAL_PLANNER_REPORT.md; COMPOSITIONAL_GENERALIZATION_EVALUATION.json; pending_template_refresh.json
+CORRECTS = NONE
+CORRECTED_BY = NONE
+LIMITATIONS = development benchmark (reasoning_matrix 72: 61/62 pos, 10/10 neg, 0 wrong; r1-described-point-probe + C3-dist 13/13; NL isolation 7/7; test_family_d2 SERVED; MG9 remains PLAN_TOO_LARGE at MAX_MEMORY_DECLARATIONS=32); @id in PlaneConstraintSpec remains INVALID_QUALIFIED_REF; FE-2/3/4/6 BLOCKED_OWNERSHIP; H-1 NOT_MEASURED, W2/W3 untouched, real student study NOT_MEASURED, C21 PENDING_OWNER_DECISION, publication HEAD 97 historical pending items.
+
+## WAVE_ID = SIMULATION_FIRST_MVP_STABILIZATION
+
+RUN_ID = simulation-first-mvp-stabilization
+REPORT = docs/evaluation/geometry/runs/simulation-first-mvp-stabilization/FINAL_STABILIZATION_REPORT.md
+ARTIFACT_DIRECTORY = docs/evaluation/geometry/runs/simulation-first-mvp-stabilization/
+START_BASE = 9f8fc53e6
+CODE_COMMIT = 4d81be4b8 (undotted primed prism topology in engine.py::hop_dong_to_po_da_khai, cache 141, pending templates metadata refresh); candidate freeze 077e3671a (commit field 4d81be4b8)
+CLASSIFICATION = SIMULATION_FIRST_STABILIZATION_AND_INTERNAL_PILOT_READINESS; AUTOMATED_BROWSER_NOT_HUMAN_STUDY; INDEPENDENT_GENERALIZATION NOT_MEASURED; PUBLICATION BLOCKED_PENDING_OWNER_REVIEW
+PRODUCT_CHANGE = YES; engine.py::hop_dong_to_po_da_khai aligned with registry._tach_lang_tru_lien (3..6 base vertices); CACHE_VERSION 140 → 141; measured files 120
+MODEL_REQUEST_COUNT = 0
+VERIFICATION = run.json; FINAL_STABILIZATION_REPORT.md; MATH_TRUTH_AUDIT.md; SIMULATION_INTEGRITY_REPORT.md; FRONTEND_HANDOFF_STATUS.md; STUDENT_PILOT_E2E.json; REGRESSION_SUMMARY.json; pending_template_refresh.json
+CORRECTS = dimension-aware-verified-construction: prose-summary transcription errors on lines 34, 205, 214, 215 of AXO_DIMENSION_AWARE_VERIFIED_CONSTRUCTION_REPORT.md (vmmu_r537, vmmu_r460, vmmu_r463); product JSON receipts and Kernel math verified 100% accurate against source VMMU images (0 Kernel/Parser errors). Historical artifacts unchanged in byte
+CORRECTED_BY = NONE
+LIMITATIONS = agent-curated/exposed VMMU items; offline synthetic multi-problem OCR sheet; FE-2/3/4/6 remain BLOCKED_OWNERSHIP on separate axo-geometry-library worktree; headless Chrome SwiftShader timing (`INCONCLUSIVE_SHARED_HOST_SWIFTSHADER`, `PHYSICAL_LOW_END_NOT_MEASURED`); H-1 NOT_MEASURED, real student study NOT_MEASURED, C21 K-1/S-2/R-1 PENDING_OWNER_DECISION, FULL_RELEASE_GATE = BLOCKED_GATES_REMAIN.
+
+## WAVE_ID = DIMENSION_AWARE_VERIFIED_CONSTRUCTION
+
+RUN_ID = dimension-aware-verified-construction
+REPORT = docs/evaluation/geometry/runs/dimension-aware-verified-construction/AXO_DIMENSION_AWARE_VERIFIED_CONSTRUCTION_REPORT.md
+ARTIFACT_DIRECTORY = docs/evaluation/geometry/runs/dimension-aware-verified-construction/
+START_BASE = b04bed0f8
+CODE_COMMIT = 0c9d4a2f0 (dimension-aware expression algebra, determinacy taxonomy, verified trig constructions, frontend consumers, cache 140), 32bdaa1df (Stage 4A §4.4 soundness guard, oblique-prism/line_perp_line rational counterexample realizations, lazy preview import, scope/trig/registry alignment); fixtures 72d61087b; candidate freeze 3c65266ba (commit field 72d61087b)
+CLASSIFICATION = DEVELOPMENT_EVIDENCE_ON_AGENT_CORPUS_AND_EXPOSED_ITEMS; AUTOMATED_BROWSER_E2E; COUNTERBALANCED_HOST_PERFORMANCE_STUDY; INDEPENDENT_GENERALIZATION NOT_MEASURED; PUBLICATION BLOCKED_PENDING_OWNER_REVIEW
+PRODUCT_CHANGE = YES; local-geometry-parser/2, dimension-expression/1, mathematical-determinacy-audit/1, trig-construction-certificate/1; CACHE_VERSION 139 → 140; measured files 120
+MODEL_REQUEST_COUNT = 0
+VERIFICATION = run.json; full_regression_summary.json; failure_taxonomy_audit.json; mathematical_determinacy_audit.json; mathematical_expression_architecture.json; source_gate_dimension_integrity.json; proof_certificate_mutation_tests.json; real27_acceptance_before_after.json; scene3d_browser_e2e.json
+CORRECTS = grounded-vietnamese-geometry-understanding and earlier: vmmu_r460 and vmmu_r463 were labeled INSUFFICIENT_CONSTRAINTS / insufficient_specification despite being uniquely determined capability gaps (now verified SERVED); compositional_semantics_goals negative expectation for a given cos line-plane premise superseded by verified trig-construction-certificate/1. Historical receipts unchanged
+CORRECTED_BY = simulation-first-mvp-stabilization
+LIMITATIONS = agent-written corpus; exposed REAL27 items; non-algebraic angles (70°/50° in r266) outside closed exact domain; 10/27 REAL27 images gated by OCR/region before span confirmation; FE-2/3/4/6 blocked on separate axo-geometry-library ownership; headless browser; shared host timing; no H-1, no students.
+
+## WAVE_ID = GROUNDED_VIETNAMESE_GEOMETRY_UNDERSTANDING
+
+RUN_ID = grounded-vietnamese-geometry-understanding
+REPORT = docs/evaluation/geometry/runs/grounded-vietnamese-geometry-understanding/AXO_GROUNDED_VIETNAMESE_GEOMETRY_UNDERSTANDING_REPORT.md
+ARTIFACT_DIRECTORY = docs/evaluation/geometry/runs/grounded-vietnamese-geometry-understanding/
+START_BASE = 83fdc3071
+CODE_COMMIT = ac276a5c9 (parser + Source Gate grounding, cache 139), ad090cead (two restated completeness expectations), d222e6d9b (learner-facing local diagnostics); candidate freeze 63def519a (commit field cbcd8af2d)
+CLASSIFICATION = DEVELOPMENT_EVIDENCE_ON_AGENT_CORPUS_AND_EXPOSED_ITEMS; AUTOMATED_BROWSER_E2E; INDEPENDENT_GENERALIZATION NOT_MEASURED; PUBLICATION BLOCKED_PENDING_OWNER_REVIEW
+PRODUCT_CHANGE = YES; contract versions unchanged; CACHE_VERSION 138 → 139; measured files 117
+MODEL_REQUEST_COUNT = 0
+VERIFICATION = run.json; full_regression_summary.json; real27_root_cause_matrix.json; source_gate_integrity.json; semantic_planner_integration.json; wrong_scene_served_audit.json; scene3d_browser_e2e.json
+CORRECTS = scene3d-causal-pedagogical-integrity and earlier: REAL27 r284 attributed SOURCE_PROVENANCE_MISSING (a gate role-binding gap); DEV37 elliptical_role expectation (REFUSED) superseded for a regular pyramid. Historical receipts unchanged
+CORRECTED_BY = NONE
+LIMITATIONS = agent-written corpus; exposed items; a² values not representable; height from an angle not constructed; typo tolerance pending S-1; INSUFFICIENT_CONSTRAINTS label also covers understood-but-unsupported; headless browser; shared host timing; no H-1, no students.
+
+## WAVE_ID = SCENE3D_CAUSAL_PEDAGOGICAL_INTEGRITY
+
+RUN_ID = scene3d-causal-pedagogical-integrity
+REPORT = docs/evaluation/geometry/runs/scene3d-causal-pedagogical-integrity/AXO_SCENE3D_CAUSAL_PEDAGOGICAL_INTEGRITY_REPORT.md
+ARTIFACT_DIRECTORY = docs/evaluation/geometry/runs/scene3d-causal-pedagogical-integrity/
+START_BASE = 9d0949b09
+CODE_COMMIT = 70befe6f1 (unused auxiliaries, visual prerequisites, right angles, cache 138), fac7ead77 (trace method); samples af3e4dddd, a2874d273; fixtures d1789d71a, 1a1b6834a; candidate freeze 4ddec5666
+CLASSIFICATION = DEVELOPMENT_EVIDENCE_ON_AGENT_CORPUS_AND_EXPOSED_ITEMS; INDEPENDENT_SCENE_AUDIT (serialized scene only); AUTOMATED_BROWSER_E2E; INDEPENDENT_GENERALIZATION NOT_MEASURED; PUBLICATION BLOCKED_PENDING_OWNER_REVIEW
+PRODUCT_CHANGE = YES; contract versions unchanged (additive fields); CACHE_VERSION 137 → 138; measured files 117
+MODEL_REQUEST_COUNT = 0
+VERIFICATION = run.json; full_regression_summary.json; v9415_issue_reproduction_matrix.json; global_scene_causality_audit.json; causal_mutation_tests.json; section_geometry_regression.json
+CORRECTS = axo-backend-geometry-handoff (owner, 9d5e9b408): Route D unused-auxiliary flags computed without targets (flagged the asked line); dependency-free carriers kept as visual prerequisites. proof-soundness-generalized-angle-invariance: fixtures-lineage-proof-soundness superseded; its report's "90° goals draw no angle" gap closed. Historical receipts unchanged
+CORRECTED_BY = NONE
+LIMITATIONS = agent-written corpus; exposed items; sections needing a diagonal auxiliary plane unexplained (2 edges); auxiliary points not drawn; advanced catalog not regenerated (library generator); headless browser; no H-1, no students.
+
+## WAVE_ID = PROOF_SOUNDNESS_GENERALIZED_ANGLE_INVARIANCE
+
+RUN_ID = proof-soundness-generalized-angle-invariance
+REPORT = docs/evaluation/geometry/runs/proof-soundness-generalized-angle-invariance/AXO_PROOF_SOUNDNESS_GENERALIZED_ANGLE_REPORT.md
+ARTIFACT_DIRECTORY = docs/evaluation/geometry/runs/proof-soundness-generalized-angle-invariance/
+START_BASE = 914dd41db (owner commit 9d5e9b408 landed during the run; before side of comparisons)
+CODE_COMMIT = c54db0da0 (certificate /2, bindings, generalized angles, cache 137); tests 79fae066b, 421d7a7f8, 94281be58; candidate freeze f30363597
+CLASSIFICATION = DEVELOPMENT_EVIDENCE_ON_AGENT_CORPUS_AND_EXPOSED_ITEMS; AGENT_DIAGNOSTIC_ORACLE; AUTOMATED_BROWSER_E2E; INDEPENDENT_GENERALIZATION NOT_MEASURED; PUBLICATION BLOCKED_PENDING_OWNER_REVIEW
+PRODUCT_CHANGE = YES; contract versions unchanged; certificate schema target-invariance-certificate/1 → /2; CACHE_VERSION 136 → 137; measured files 117
+MODEL_REQUEST_COUNT = 0
+VERIFICATION = run.json; full_regression_summary.json; r520_angle_witness_defect_reproduction.json; existing_rule_soundness_audit.json; proof_scene_binding_verification.json; generalized_angle_scene_checks.json
+CORRECTS = target-invariant-regular-solid-semantics: its /1 certificate (vertex-first triple, no goal / vertex / value / scene binding) — universal_goal_invariance_proofs.json, goal_invariance_mutation_tests.json, target_invariance_capability_audit.json are superseded; historical receipts unchanged. Also verified-section-intersection-dihedral-local fixtures-dihedral-altitude superseded (envelope lineage from 9d5e9b408)
+CORRECTED_BY = NONE
+LIMITATIONS = agent-written corpus; exposed items; proof domain one pyramid and its vertices; no derived points, no parallel transport for skew lines; headless browser; no H-1, no students.
+
+## WAVE_ID = TARGET_INVARIANT_REGULAR_SOLID_SEMANTICS
+
+RUN_ID = target-invariant-regular-solid-semantics
+REPORT = docs/evaluation/geometry/runs/target-invariant-regular-solid-semantics/AXO_TARGET_INVARIANT_REGULAR_SOLID_REPORT.md
+ARTIFACT_DIRECTORY = docs/evaluation/geometry/runs/target-invariant-regular-solid-semantics/
+START_BASE = 07c17fef0
+CODE_COMMIT = 8f7f00a2c (GEO-BE-001 hunk), bdc34a89e (target invariance, regular tetrahedron, soundness, cache 136); candidate freeze ade820bd3
+CLASSIFICATION = DEVELOPMENT_EVIDENCE_ON_AGENT_CORPUS_AND_EXPOSED_ITEMS; AGENT_DIAGNOSTIC_ORACLE; AUTOMATED_BROWSER_E2E; INDEPENDENT_GENERALIZATION NOT_MEASURED; PUBLICATION BLOCKED_PENDING_OWNER_REVIEW
+PRODUCT_CHANGE = YES; contract versions unchanged; CACHE_VERSION 135 → 136; measured files 116 → 117
+MODEL_REQUEST_COUNT = 0
+VERIFICATION = run.json; full_regression_summary.json; universal_goal_invariance_proofs.json; r520_mathematical_verification.json; r559_mathematical_verification.json; goal_invariance_mutation_tests.json; scale_certificate_soundness_audit.json
+CORRECTS = certified-scale-cache-safety: its similarity certificate could certify an unexplored sign branch (≥ 2 anchors) and claimed more than engine-domain uniqueness; historical receipts unchanged
+CORRECTED_BY = NONE
+LIMITATIONS = agent-written corpus; exposed items; proof rules limited to plane angles; headless browser; no H-1, no students.
+
+## WAVE_ID = CERTIFIED_SCALE_CACHE_SAFETY
+
+RUN_ID = certified-scale-cache-safety
+REPORT = docs/evaluation/geometry/runs/certified-scale-cache-safety/AXO_CERTIFIED_SCALE_CACHE_SAFETY_REPORT.md
+ARTIFACT_DIRECTORY = docs/evaluation/geometry/runs/certified-scale-cache-safety/
+START_BASE = 30884a2e8
+CODE_COMMIT = 78bdc4c43 (cache 135), fb0639a01 (decimal values), 902a3171c (certified similarity scale); candidate freeze 901c02702; GEO-BE-001 5a229507b (axo-geometry-library worktree)
+CLASSIFICATION = DEVELOPMENT_EVIDENCE_ON_AGENT_CORPUS_AND_EXPOSED_ITEMS; AGENT_DIAGNOSTIC_ORACLE; AUTOMATED_BROWSER_E2E; INDEPENDENT_GENERALIZATION NOT_MEASURED; PUBLICATION BLOCKED_PENDING_OWNER_REVIEW
+PRODUCT_CHANGE = YES; contract versions unchanged; CACHE_VERSION 134 → 135; measured files 116
+MODEL_REQUEST_COUNT = 0
+VERIFICATION = run.json; full_regression_summary.json; semantic_cache_audit.json; stale_cache_adversarial_tests.json; scale_normalization_certificate.json; shape_freedom_counterexamples.json; real27_normalization_acceptance.json; scene3d_browser_e2e.json
+CORRECTS = compositional-semantics-simulation-goals: its "no CACHE_VERSION bump" reasoning (insufficient for a stricter guard) and its E2E distance-row FAIL (instrument gap); historical receipts unchanged
+CORRECTED_BY = NONE
+LIMITATIONS = agent-written corpus; exposed real items; headless browser; scale certificate covers similarity only (no shape-invariance proof); no H-1, no students.
+
+## WAVE_ID = COMPOSITIONAL_SEMANTICS_SIMULATION_GOALS
+
+RUN_ID = compositional-semantics-simulation-goals
+REPORT = docs/evaluation/geometry/runs/compositional-semantics-simulation-goals/AXO_COMPOSITIONAL_SEMANTICS_SIMULATION_GOALS_REPORT.md
+ARTIFACT_DIRECTORY = docs/evaluation/geometry/runs/compositional-semantics-simulation-goals/
+START_BASE = 1a9ee8b0c
+CODE_COMMIT = 13f1b482c (compositional clauses, clause order, trigonometric goals, diagnostics), 379d33969 (angle construction bound to verified points); candidate freeze 54268761e
+CLASSIFICATION = DEVELOPMENT_EVIDENCE_ON_AGENT_CORPUS_AND_EXPOSED_ITEMS; SYNTHETIC_COMPOSITES_OF_REAL_EXPOSED_CROPS; AGENT_DIAGNOSTIC_ORACLE; AUTOMATED_BROWSER_E2E; NEW_INDEPENDENT_EVALUATION BLOCKED_DATA; INDEPENDENT_H1_NOT_MEASURED; PUBLICATION BLOCKED_PENDING_OWNER_REVIEW
+PRODUCT_CHANGE = YES (parser sub-clause coverage and clause order; Source Gate closed grammar for named-plane definitions and trigonometric values of an angle; optional route_d.source_goal_completion; angle-construction binding); contract versions and CACHE_VERSION 134 unchanged; measured files 116
+MODEL_REQUEST_COUNT = 0
+VERIFICATION = run.json; full_regression_summary.json; semantic_development_before_after.json; cos_tan_visualization_verification.json; scene3d_mathematical_invariants.json; scene3d_browser_e2e.json; final_candidate_image_segmentation_revalidation.json
+CORRECTS = semantic-failure-safe-image-segmentation: its segmentation receipt was measured before 7315cf3b0 (re-measured here on the final candidate, same figures); its DEV37 expectations for cos/tan and goal-first are superseded by this task's product decision (historical receipts unchanged)
+CORRECTED_BY = NONE
+LIMITATIONS = agent-written development corpus; exposed real items; synthetic page layouts; headless host browser; one E2E row fails on an undefined distance-goal timing criterion of the instrument; no H-1, no students, no camera photos.
+
+## WAVE_ID = SEMANTIC_FAILURE_SAFE_IMAGE_SEGMENTATION
+
+RUN_ID = semantic-failure-safe-image-segmentation
+REPORT = docs/evaluation/geometry/runs/semantic-failure-safe-image-segmentation/AXO_SEMANTIC_FAILURE_SAFE_IMAGE_SEGMENTATION_REPORT.md
+ARTIFACT_DIRECTORY = docs/evaluation/geometry/runs/semantic-failure-safe-image-segmentation/
+START_BASE = dcbedcb0d
+CODE_COMMIT = cc449ae4b (diagnostics, parser repairs, option-group image segmentation), 7315cf3b0 (one figure per band); candidate freeze 18a7ba008
+CLASSIFICATION = DEVELOPMENT_EVIDENCE_ON_AGENT_CORPUS_AND_EXPOSED_ITEMS; SYNTHETIC_COMPOSITES_OF_REAL_EXPOSED_CROPS; AGENT_DIAGNOSTIC_ORACLE; AUTOMATED_BROWSER_E2E; NEW_INDEPENDENT_EVALUATION BLOCKED_DATA; INDEPENDENT_H1_NOT_MEASURED; PUBLICATION BLOCKED_PENDING_OWNER_REVIEW
+PRODUCT_CHANGE = YES (route_d.local_diagnostics on refusals, four parser repairs, prepare-path multi-problem segmentation); Source Gate, contracts and CACHE_VERSION 134 unchanged; measured files 115 → 116
+MODEL_REQUEST_COUNT = 0
+VERIFICATION = run.json; full_regression_summary.json; semantic_root_cause_matrix.json; end_to_end_failure_attribution.json; multi_problem_segmentation_before_after.json; image_selection_browser_e2e.json; text_vs_payload_negative_evaluation.json; scene3d_correctness_regression.json
+CORRECTS = NONE (W2/W3 historical results unchanged; their payload-vs-text limitation is addressed by a new method for new measurements only)
+CORRECTED_BY = NONE
+LIMITATIONS = agent-written development corpus; exposed real items; synthetic page layouts; 5-gram containment against agent transcriptions; headless host browser; segmentation evaluation measured at cc449ae4b (7315cf3b0 rechecked by E2E and association); no H-1, no students, no camera photos.
+
+## WAVE_ID = INDEPENDENT_GEOMETRY_PLANE_CONSTRAINTS
+
+RUN_ID = independent-geometry-plane-constraints
+REPORT = docs/evaluation/geometry/runs/independent-geometry-plane-constraints/AXO_INDEPENDENT_GEOMETRY_PLANE_CONSTRAINTS_REPORT.md
+ARTIFACT_DIRECTORY = docs/evaluation/geometry/runs/independent-geometry-plane-constraints/
+START_BASE = 4222f021b
+CODE_COMMIT = 697b097ac (constraint-defined plane rules, Source Gate grammar, coincident-plane code); preregistration 60ce483cc; candidate freeze 8852c4070
+CLASSIFICATION = DEVELOPMENT_EVIDENCE_ON_AGENT_PROBES; PREREGISTERED_LOCKED_INTERNAL_AI_CURATED_HOLDOUT_FRESH_TO_LOCAL_PARSER; AGENT_DIAGNOSTIC_ORACLE; AUTOMATED_BROWSER_E2E; NEW_EXTERNAL_EVALUATION BLOCKED_DATA; INDEPENDENT_H1_NOT_MEASURED; PUBLICATION BLOCKED_PENDING_OWNER_REVIEW
+PRODUCT_CHANGE = YES (local parser rules 7c-0b / 6c base / 6d-0, Source Gate closed grammar for named planes by points, CONTAINED_INFINITE_INTERSECTION for coincident planes); contracts and CACHE_VERSION 134 unchanged
+MODEL_REQUEST_COUNT = 0
+VERIFICATION = run.json; full_regression_summary.json; evaluation_preregistration.json; unseen_evaluation_results.json; plane_constraint_grammar_tests.json; geometry_mutation_verification.json; image_region_detection_evaluation.json; scene3d_browser_e2e.json
+CORRECTS = NONE (verified-section-intersection-dihedral-local receipts unchanged; its open issue "coincident planes refused as PARALLEL_PLANES" is resolved here)
+CORRECTED_BY = NONE
+LIMITATIONS = locked sets are AI-curated internal holdouts reused (not new, not human); 2 locked texts read after execution; agent probes; synthetic composites for multi-problem pages; headless host browser; no H-1, no students, no low-end hardware.
+
+## WAVE_ID = VERIFIED_SECTION_INTERSECTION_DIHEDRAL_LOCAL
+
+RUN_ID = verified-section-intersection-dihedral-local
+REPORT = docs/evaluation/geometry/runs/verified-section-intersection-dihedral-local/AXO_VERIFIED_SECTION_INTERSECTION_DIHEDRAL_LOCAL_REPORT.md
+ARTIFACT_DIRECTORY = docs/evaluation/geometry/runs/verified-section-intersection-dihedral-local/
+START_BASE = ffc62f6fe
+CODE_COMMIT = 420851be6 (acute angle constructions), 6aad1f6b8 (local sections, intersection lines, altitudes, CACHE_VERSION 134), a74aa3325 (new hybrid-preview fixture bundle), ea4b2a197 (scope-census fix); candidate freeze f0fa7e359 (89aed139e superseded after regression attempt 1)
+CLASSIFICATION = DEVELOPMENT_EVIDENCE_ON_EXPOSED_AND_SYNTHETIC_ITEMS; AGENT_VERIFIED_DIAGNOSTIC_INVARIANTS; AUTOMATED_BROWSER_E2E; UNSEEN_EVALUATION_NOT_MEASURED; INDEPENDENT_H1_NOT_MEASURED; PUBLICATION BLOCKED_PENDING_OWNER_REVIEW
+PRODUCT_CHANGE = YES (signed-cos angle certificate + angle_domain, local parser rules for sections and intersection lines, TypedFactNext /2 goal construct_intersection_line, altitude-construction/1); planner/26, registry/33, engine/24 unchanged; CACHE_VERSION 133 → 134
+MODEL_REQUEST_COUNT = 0
+VERIFICATION = run.json; full_regression_summary.json; dihedral_angle_semantic_audit.json; polyhedron_section_correctness.json; plane_intersection_correctness.json; altitude_face_perpendicular_verification.json; scene3d_mathematical_invariants.json; scene3d_section_intersection_browser_e2e.json
+CORRECTS = semantic-to-scene3d-verified-simulation (angle constructions between planes could draw the obtuse supplement; its invariant checks compared cos² only)
+CORRECTED_BY = NONE
+LIMITATIONS = synthetic probes and exposed transcriptions; agent-written invariant oracle; no section/intersection item in the real corpus; headless host browser; no unseen data, no students, no H-1, no low-end hardware.
+
+## WAVE_ID = SEMANTIC_TO_SCENE3D_VERIFIED_SIMULATION
+
+RUN_ID = semantic-to-scene3d-verified-simulation
+REPORT = docs/evaluation/geometry/runs/semantic-to-scene3d-verified-simulation/AXO_SEMANTIC_TO_SCENE3D_VERIFIED_SIMULATION_REPORT.md
+ARTIFACT_DIRECTORY = docs/evaluation/geometry/runs/semantic-to-scene3d-verified-simulation/
+START_BASE = 8a5a54e37
+CODE_COMMIT = 5958df73d (angle constructions, CACHE_VERSION 133), 6e3989ba5 (parser rules), 70e393fd8 (step-button touch target); candidate freeze 15e98444b
+CLASSIFICATION = DEVELOPMENT_EVIDENCE_ON_EXPOSED_AND_SYNTHETIC_ITEMS; AGENT_VERIFIED_DIAGNOSTIC_INVARIANTS; AUTOMATED_BROWSER_E2E; UNSEEN_EVALUATION_NOT_MEASURED; INDEPENDENT_H1_NOT_MEASURED; PUBLICATION_HEAD BLOCKED_PENDING_OWNER_REVIEW
+PRODUCT_CHANGE = YES (angle-construction/1 on angle quantities, right-angle annotation fix, three local-parser rules, step-button touch target); planner/26, registry/33, engine/24 unchanged; CACHE_VERSION 132 → 133
+MODEL_REQUEST_COUNT = 0
+VERIFICATION = run.json; full_regression_summary.json; semantic_to_scene_gap_matrix.json; scene3d_mathematical_invariants.json; construction_dependency_graph_tests.json; scene3d_interaction_browser_e2e.json; text_to_simulation_acceptance.json; image_to_simulation_acceptance.json
+CORRECTS = NONE (local-semantic receipts unchanged)
+CORRECTED_BY = NONE
+LIMITATIONS = synthetic probes and exposed transcriptions; agent-written invariant oracle; scripted confirmation; headless host browser; no unseen data, no students, no H-1, no low-end hardware.
+
+## WAVE_ID = LOCAL_SEMANTIC_SOURCE_GATE_RELIABILITY
+
+RUN_ID = local-semantic-source-gate-reliability
+REPORT = docs/evaluation/geometry/runs/local-semantic-source-gate-reliability/AXO_LOCAL_SEMANTIC_SOURCE_GATE_RELIABILITY_REPORT.md
+ARTIFACT_DIRECTORY = docs/evaluation/geometry/runs/local-semantic-source-gate-reliability/
+START_BASE = c5bb73f5144ebed1808ba5654588737ab5ecca0a
+CODE_COMMIT = 262ff46d5, d6b38b172, 81bcb5d0f, 1c9c26489 (product 1c9c26489); candidate freeze be3467457 (manifest commit dcad65e5e)
+CLASSIFICATION = DEVELOPMENT_EVIDENCE_ON_EXPOSED_ITEMS; FRESH_EXTERNAL_DIAGNOSTIC_N2; INDEPENDENT_H1_NOT_MEASURED; PUBLICATION_HEAD BLOCKED_PENDING_OWNER_REVIEW
+PRODUCT_CHANGE = YES (local parser rules, two Source Gate boundaries, OCR off the event loop, span extend/restore, degree label); contracts and CACHE_VERSION unchanged
+MODEL_REQUEST_COUNT = 0
+VERIFICATION = run.json; full_regression_summary.json; semantic17_case_diagnostics.json; text_to_geometry_before_after.json; image_to_scene3d_before_after.json; sqlite_concurrency_before_after.json; fresh_external_preregistration.json; fresh_external_evaluation.json; browser_span_angle_check.json
+CORRECTS = CONTROLLED_VISION_REAL_IMAGE_VALIDATION candidate label (`a78b1e087` stores the manifest whose `commit` is `835786746`; same product) — candidate_commit_reconciliation.json; previous Source Gate attribution of 5 cases — semantic17_case_diagnostics.json
+CORRECTED_BY = NONE
+LIMITATIONS = agent transcriptions; all 23 polyhedron items exposed; fresh sample has only 2 in-scope items; FIXTURE prepare in the browser span check; no Vision, students, H-1, PostgreSQL or low-end hardware.
+
+## WAVE_ID = CONTROLLED_VISION_REAL_IMAGE_VALIDATION
+
+RUN_ID = controlled-vision-real-image-validation
+REPORT = docs/evaluation/geometry/runs/controlled-vision-real-image-validation/AXO_CONTROLLED_VISION_REAL_IMAGE_VALIDATION_REPORT.md
+ARTIFACT_DIRECTORY = docs/evaluation/geometry/runs/controlled-vision-real-image-validation/
+START_BASE = 44807b13bffe608153bc58e453a3bc9c37703485
+CODE_COMMIT = c53be83db (reread neighbour-bleed fix); candidate freeze a78b1e087
+CLASSIFICATION = OFFLINE_IN_SCOPE_IMAGE_EVALUATION_WITH_LIMITS; LIVE_VISION_NOT_MEASURED; ARCHITECTURE_DECISION_PENDING_LIVE_EVIDENCE; PUBLICATION_HEAD BLOCKED_PENDING_OWNER_REVIEW
+PRODUCT_CHANGE = YES (ocr_reconcile reread trimming only; no geometry, parser, Source Gate or contract change)
+MODEL_REQUEST_COUNT = 0
+VERIFICATION = run.json; full_regression_summary.json; publication_pending_classification.json; new_in_scope_image_manifest.json; transcription_solver_diagnostic.json; local_ocr_baseline.json; critical_mathematical_fact_evaluation.json; real_image_to_scene3d_results.json; concurrent_upload_reliability.json; browser_in_scope_audit.json
+CORRECTS = NONE (prior run receipts unchanged; pending owner-approval templates re-bound to the new measured system, PENDING kept)
+CORRECTED_BY = LOCAL_SEMANTIC_SOURCE_GATE_RELIABILITY (candidate SHA label; Source Gate attribution of 5 cases)
+LIMITATIONS = 25 rendered crops from one dataset, agent references, Tesseract-keyword selection bias; scripted confirmation only; no Vision, students, H-1, low-end hardware or PostgreSQL.
+
+## WAVE_ID = REAL_IMAGE_OCR_VISION_COMPARATIVE_ACCEPTANCE
+
+RUN_ID = real-image-ocr-vision-comparative-acceptance
+REPORT = docs/evaluation/geometry/runs/real-image-ocr-vision-comparative-acceptance/AXO_REAL_IMAGE_OCR_VISION_COMPARATIVE_ACCEPTANCE_REPORT.md
+ARTIFACT_DIRECTORY = docs/evaluation/geometry/runs/real-image-ocr-vision-comparative-acceptance/
+START_BASE = 6bb22fa3bb183ad28cdf1395c99e5eb375fac97c
+CODE_COMMIT = 2969e9e76; 7b1700214
+CLASSIFICATION = OFFLINE_IMAGE_INPUT_EVALUATION_WITH_LIMITS; DECISION_PENDING_LIVE_EVIDENCE; current regression and candidate state are in this run's receipts, never inherited
+PRODUCT_CHANGE = YES (worker lifecycle, worded dimension comparison, Unicode spans, confirmation invalidation, asynchronous session guard, reviewed label; no geometry expansion)
+MODEL_REQUEST_COUNT = 0
+VERIFICATION = baseline_integrity.json; prior_metric_reconciliation.json; full_regression_summary.json; full_regression_backend_final.json; new_image_corpus_manifest.json; local_ocr_evaluation.json; real_image_to_scene3d_acceptance.json; frontend_browser_e2e.json; resource_measurement_correction.json; sealed-candidate re-measurements cold_warm_latency_benchmark_final.json, ocr_worker_resource_profile_final.json, cold_process_benchmark_final.json, api_acceptance_*_final.json; run.json
+CORRECTS = image-first-ocr-verified-geometry report CER0.0110 (recomputed0.1135 on five polyhedral cases,0.1040 on all12); misleading independent_holdout labels after exposure; unsupported full-regression and zero-corruption claims; active-RAM interpretation. Original29 artifacts unchanged.
+CORRECTED_BY = NONE
+LIMITATIONS = 8 relevant images (2 development/6 frozen external), unverified agent references; new-corpus0 served; live Vision NOT_AUTHORIZED; real students/H1/physical-low-end NOT_MEASURED. Precursor concurrent5/20 HTTP500 retained, precise cause UNKNOWN; controlled SQLite mechanism fixed; bounded follow-up10/10 and sealed-candidate20/20 (0 captured server exceptions) do not prove production-load reliability. Whole-HEAD publication gate remains BLOCKED by97 pending entries unchanged from baseline.
 ## Correction — `step-editor-main-integration-audit` raw traceback log removal
 
 CORRECTS: `docs/evaluation/geometry/runs/step-editor-main-integration-audit/logs/phase-b-migration-safety.log` (`blob=3c31f2f74f7ba2e5f4a62e31a55ab2084eb32362`, `5,074` bytes, `sha256=94990008cde3ec4c92b01a43487865a3af6406cc995a4c7223284f34b773dcfd`).
@@ -14,6 +567,227 @@ During V9.4.7, rerunning the older local browser scripts overwrote those two unt
 **Git state / recovery update, 2026-11-07:** see [CURRENT_STATE — repository closure](CURRENT_STATE.md#repository-closure--2026-11-07).
 Retired branch names now have local `refs/archive/repository-closure/` references and a verified private self-contained bundle.
 Existing evidence and historical reports below are unchanged; no research result is reinterpreted by this Git-state update.
+
+## WAVE_ID = IMAGE_FIRST_OCR_VERIFIED_GEOMETRY
+
+REPORT = docs/evaluation/geometry/runs/image-first-ocr-verified-geometry/ALGOSIM_IMAGE_FIRST_OCR_VERIFIED_GEOMETRY_REPORT.md
+ARTIFACT_DIRECTORY = docs/evaluation/geometry/runs/image-first-ocr-verified-geometry/
+START_BASE = 10d4899fdfd539de62217124e1ce5fb3fe54c3ce (tip of feat/local-first-geometry-understanding; product d20d7fdcdd6c5759f74ff737f331c2e548923eba)
+CODE_COMMIT = bdc07a8557277d9780bee8689567990854ad4521 (measured_system tree hash 6851b71826793fffbb922e0b7706e1c2a32bb2203d615c8eb0414e82b0d2c947 across 115 measured entries; CACHE_VERSION 132 unchanged; registry.py geometry-functions/33 and engine.py geometry-function-engine/24 untouched)
+CLASSIFICATION = OFFLINE_IMAGE_FIRST_OCR_SPAN_VERIFICATION_STUDENT_CONFIRMATION_AND_VERIFIED_IMAGE_TO_3D (Gate_A_Baseline_and_Root_Cause_Integrity = PASS; Gate_B_Region_and_Layout_Aware_OCR = PASS; Gate_C_Dual_OCR_Reconciliation_and_Fidelity = PASS; Gate_D_Handwritten_OCR_Honest_Boundary = PASS_WITH_HONEST_LIMITS; Gate_E_Student_Confirmation_and_Cache_Safety = PASS; Gate_F_Real_Image_to_Scene3D_Acceptance = PASS; Gate_G_Unseen_External_Image_Evaluation = PASS_WITH_HONEST_LIMITS; Gate_H_Resource_Performance_and_Candidate_Freeze = PASS_HOST_MEASURED; LOCAL_OCR_PRODUCTION_STATUS = LOCAL_OCR_SPAN_VERIFIED_WITH_STUDENT_CONFIRMATION; HANDWRITING_REQUIRES_VISION_OR_CONFIRMATION; LIVE_VISION_SUCCESS_RATE = NOT_MEASURED; PHYSICAL_LOW_END_NOT_MEASURED; INDEPENDENT_H1_VALIDATION = NOT_MEASURED; branch feat/local-first-geometry-understanding, not merged to main, not pushed)
+PRODUCT_CHANGE = YES (backend: local_ocr_worker.py, local_ocr.py, ocr_lexicon.py, ocr_reconcile.py, local_ocr_route.py, region_detector.py, unified_input.py, local_geometry_parser.py; frontend: PhotoProblemPanel.tsx, ProblemInput.tsx, photo-problem-flow.ts, client.ts, global.css)
+MODEL_REQUEST_COUNT = 0
+VERIFICATION = ALGOSIM_IMAGE_FIRST_OCR_VERIFIED_GEOMETRY_REPORT.md; run.json; baseline_candidate_integrity.json; external16_image_diagnostics.json; ocr_failure_root_causes.json; region_aware_ocr_receipt.json; math_layout_recognition_receipt.json; dual_ocr_reconciliation_receipt.json; fidelity_false_rejection_analysis.json; printed_ocr_before_after.json; handwritten_ocr_diagnostic.json; diagram_dependency_audit.json; vision_fallback_offline_receipt.json; vision_live_readiness.json; student_confirmation_flow_receipt.json; user_correction_cache_invalidation.json; real_image_to_scene3d_acceptance.json; new_external_image_evaluation.json; ocr_resource_performance.json; frontend_browser_e2e.json; full_regression_summary.json; tools/evaluate_image_first_ocr.py; tools/generate_all_receipts.py; tools/new_external_catalog.py; tools/e2e_browser_image_first.mjs; backend/tests/test_image_first_local_ocr.py (18/18 passed); frontend/src/components/photo-span-review.test.tsx (4/4 passed); Playwright headless Chromium E2E (6/6 passed at 100% & 110% zoom, 0 console/page errors); replay_demo_cases.py (5/5 + 1/1 PASS); audit_demo_crash_surface.py (6/6 PASS); audit_docs_information_architecture.py PASS; check_publication_safety.py PASS; freeze_evaluation_candidate.py --verify MATCH
+CORRECTS = NONE
+CORRECTED_BY = real-image-ocr-vision-comparative-acceptance (prior_metric_reconciliation.json; original report and receipts preserved)
+
+## WAVE_ID = FORMAL_CORRECTNESS_REAL_WORLD_ACCEPTANCE
+
+REPORT = docs/evaluation/geometry/runs/formal-correctness-real-world-acceptance/ALGOSIM_FORMAL_CORRECTNESS_REAL_WORLD_ACCEPTANCE_REPORT.md
+ARTIFACT_DIRECTORY = docs/evaluation/geometry/runs/formal-correctness-real-world-acceptance/
+START_BASE = f5e2e0f5511dd1497907971d1028174f3d1a1904 (tip of feat/local-first-geometry-understanding; product 7994da7a64c8dc288c4de972df2d8d1db65e0c20)
+CODE_COMMIT = d20d7fdcdd6c5759f74ff737f331c2e548923eba (measured_system tree hash fb4f4992da8764930954a44f24e121ddca6cf1f3a270039773f6dbbf8b1b5c05 across 110 measured entries; CACHE_VERSION 132 unchanged)
+CLASSIFICATION = OFFLINE_FORMAL_CORRECTNESS_HARDENING_HYBRID_GAP_CLOSURE_AND_REAL_WORLD_ACCEPTANCE (Gate_A_Formal_Mathematical_Safety = PASS; Gate_B_Source_Grounded_Semantic_Coverage = PASS; Gate_C_Reusable_Geometry_Coverage = PASS; Gate_D_Image_to_Geometry_Reliability = PASS_OFFLINE; Gate_E_Scene3D_and_Browser_Acceptance = PASS_HOST_BROWSER; Gate_F_Independent_Evaluation = NOT_MEASURED; Gate_G_Performance_Integrity = PASS_RECONCILED_HOST_MEASURED; Gate_H_Candidate_Freeze = PASS; ORACLE_TEXT_DOWNSTREAM_REPLAY; RECORDED_REPLAY_VERIFIED; MOCK_ROUTING_VERIFIED; LIVE_VISION_NOT_MEASURED; PHYSICAL_LOW_END_NOT_MEASURED; INDEPENDENT_H1_VALIDATION = NOT_MEASURED; branch feat/local-first-geometry-understanding, not merged to main, not pushed)
+PRODUCT_CHANGE = YES (backend: height_invariance_certification.py, output_policy.py, typed_fact_next.py, typed_fact_next_bridge.py, planner.py, registry.py, engine.py, adapter4_route.py, local_geometry_parser.py; frontend: hybrid-preview-adapter.ts, scene3d-model.ts, Scene3DExplorer.tsx)
+MODEL_REQUEST_COUNT = 0
+VERIFICATION = ALGOSIM_FORMAL_CORRECTNESS_REAL_WORLD_ACCEPTANCE_REPORT.md; run.json; baseline_candidate_integrity.json; height_invariance_formal_proof_audit.json; height_invariance_certificate_verification.json; height_invariance_adversarial_tests.json; source_gate_semantic_closure.json; output_policy_exact_rounding.json; typed_facts_bridge_closure.json; affine_ratio_capability_receipt.json; section_area_ratio_capability_receipt.json; inverse_lateral_angle_capability_receipt.json; planner_composition_verification.json; independent_mathematical_oracle.json; external17_before_after.json; image_pipeline_reliability.json; vision_live_readiness.json; scene3d_browser_acceptance.json; scene3d_browser_e2e_raw.json; independent_h1_readiness.json; performance_reconciliation.json; full_regression_summary.json; tools/evaluate_formal_correctness_acceptance.py; tools/e2e_browser_acceptance.mjs; backend/tests/geometry/test_height_invariance_formal_certification.py (31/31 passed); backend/tests/geometry/test_semantic_and_output_policy_closure.py (27/27 passed); backend/tests/geometry/test_reusable_ratio_and_inverse_angle_geometry.py (18/18 passed); frontend/src/components/adapter4-consumer.test.tsx (14/14 passed); Full regression (14,229 pytest passed, 9 skipped, 4 deselected, 15 xfailed, 0 failed; 2,011/2,011 vitest passed across 138 files; 22/22 + image Chrome E2E at 100% & 110% zoom; 5/5 demo replay; 6/6 crash surface; docs IA PASS; publication safety PASS; candidate freeze MATCH)
+CORRECTS = docs/evaluation/geometry/runs/real-world-end-to-end-reliability/ALGOSIM_REAL_WORLD_END_TO_END_RELIABILITY_REPORT.md (reconciles the report vs JSON latency discrepancy in low_end_performance_receipt.json as two host measurement passes under different CPU load states, replaces 5-sample height-invariance probing with formal Q[t] polynomial identity proof height-invariance-certificate/2 across PO-1..PO-8, and closes the 6 in-scope polyhedral External17 gaps ext04, ext05, ext06, ext07, ext11, ext12 from 6/17 to 12/17 solved)
+CORRECTED_BY = NONE
+
+## WAVE_ID = REAL_WORLD_END_TO_END_RELIABILITY
+
+REPORT = docs/evaluation/geometry/runs/real-world-end-to-end-reliability/ALGOSIM_REAL_WORLD_END_TO_END_RELIABILITY_REPORT.md
+ARTIFACT_DIRECTORY = docs/evaluation/geometry/runs/real-world-end-to-end-reliability/
+START_BASE = 8d0fde3378c9b087bdbbc4c66e1a40aad3b532cc (tip of feat/local-first-geometry-understanding; product c61a3589782bde35b69e8376d8ebf136314e47f3)
+CODE_COMMIT = 7994da7a64c8dc288c4de972df2d8d1db65e0c20 (measured_system tree hash 3754cbd18f58ddfb913fb61efd3dd078b0767770cff935a975cc8c258a1859fa across 108 measured entries; CACHE_VERSION 132 unchanged)
+CLASSIFICATION = OFFLINE_REAL_WORLD_END_TO_END_RELIABILITY_AND_HYBRID_GAP_CLOSURE (Gate_A_Root_Cause_Integrity = PASS; Gate_B_Hybrid_Correctness = PASS; Gate_C_Image_to_Geometry = PASS_OFFLINE; Gate_D_Scene3D_UX = PASS_HOST_BROWSER; Gate_E_External_Coverage = PASS_DIAGNOSTIC_CORPUS; Gate_F_Performance = PASS_HOST_AND_CONSTRAINED_MEASURED; Gate_G_Independent_Evaluation = NOT_MEASURED; Gate_H_Release_Candidate = PASS; ORACLE_TEXT_DOWNSTREAM_REPLAY; RECORDED_REPLAY_VERIFIED; MOCK_ROUTING_VERIFIED; LIVE_VISION_NOT_MEASURED; PHYSICAL_LOW_END_NOT_MEASURED; INDEPENDENT_H1_VALIDATION = NOT_MEASURED; branch feat/local-first-geometry-understanding, not merged to main, not pushed)
+PRODUCT_CHANGE = YES (backend: engine.py, adapter4_route.py, local_geometry_parser.py; frontend: hybrid-preview-adapter.ts, SimulationWorkspace.tsx, photo-problem-flow.ts, ProblemInput.tsx, global.css)
+MODEL_REQUEST_COUNT = 0
+VERIFICATION = ALGOSIM_REAL_WORLD_END_TO_END_RELIABILITY_REPORT.md; run.json; baseline_verification_receipt.json; external17_case_diagnostics.json; live_ai_disabled_root_cause_analysis.json; parser_semantic_gap_closure.json; typed_facts_bridge_gap_closure.json; planner_kernel_capability_closure.json; mathematical_oracle_verification.json; image_ingestion_end_to_end_receipt.json; ocr_fidelity_safety_receipt.json; vision_fallback_offline_receipt.json; vision_live_readiness.json; scene3d_browser_acceptance.json; scene3d_browser_e2e_raw.json; external17_before_after_comparison.json; independent_h1_readiness.json; low_end_performance_receipt.json; full_regression_summary.json; tools/evaluate_real_world_reliability.py; tools/e2e_browser_acceptance.mjs; backend/tests/geometry/test_real_world_end_to_end_reliability.py (15/15 passed); frontend/src/components/illustrative-scene-label.test.tsx (7/7 passed); frontend/src/components/analyze-error-message.test.ts (3/3 passed); Full regression (14,153 pytest passed, 0 failed, 15 xfailed; 2,010 vitest passed; 12/12 + image Chrome E2E + 9/9 Axo branding; 5/5 demo replay; 6/6 crash surface; docs IA PASS; publication safety PASS; candidate freeze MATCH)
+CORRECTS = docs/evaluation/geometry/runs/unified-angle-geometry-verified-image-to-3d/ALGOSIM_UNIFIED_GEOMETRY_IMAGE_TO_3D_REPORT.md (ext_prt_02#1 and ext_prt_03#1 MISSING_DIMENSION were false refusals: the asked quantities are height-invariant)
+CORRECTED_BY = docs/evaluation/geometry/runs/formal-correctness-real-world-acceptance/ALGOSIM_FORMAL_CORRECTNESS_REAL_WORLD_ACCEPTANCE_REPORT.md (reconciles the report vs JSON latency discrepancy in low_end_performance_receipt.json, upgrades height-invariance certification to formal Q[t] polynomial algebra height-invariance-certificate/2 across PO-1..PO-8, and closes ext04, ext05, ext06, ext07, ext11, ext12 from 6/17 to 12/17 solved)
+
+## WAVE_ID = UNIFIED_ANGLE_GEOMETRY_VERIFIED_IMAGE_TO_3D
+
+REPORT = docs/evaluation/geometry/runs/unified-angle-geometry-verified-image-to-3d/ALGOSIM_UNIFIED_GEOMETRY_IMAGE_TO_3D_REPORT.md
+ARTIFACT_DIRECTORY = docs/evaluation/geometry/runs/unified-angle-geometry-verified-image-to-3d/
+START_BASE = 8eb1cfab7cc515e8b1aca1564fc3913b2775e0a2 (tip of feat/local-first-geometry-understanding)
+CODE_COMMIT = c61a3589782bde35b69e8376d8ebf136314e47f3 (measured_system tree hash 69bb83ba51b834f68c106bc4d3948dc02ca35af05eca0d8f50c0e0e4cf047cb4 across 108 measured entries; CACHE_VERSION 132 unchanged)
+CLASSIFICATION = OFFLINE_UNIFIED_ANGLE_BASE_GEOMETRY_EXPANSION_AND_VERIFIED_IMAGE_TO_3D (Gate_A_Baseline_Preservation = PASS; Gate_B_Angle_Premise_Capability = PASS; Gate_C_Base_Geometry_Expansion = PASS; Gate_D_Image_Pipeline = PASS; Gate_E_Mathematical_and_Scene3D_Correctness = PASS; Gate_F_Resource_Efficiency = PASS_HOST_AND_CONSTRAINED_MEASURED; Gate_G_Independent_Evaluation = NOT_MEASURED; Gate_H_Candidate_Freeze = PASS; LOCAL_OCR_PRODUCTION_STATUS = LOCAL_OCR_DIAGNOSTIC_ONLY; OFFLINE_ROUTING_VERIFIED; RECORDED_REPLAY_VERIFIED; ORACLE_TEXT_DOWNSTREAM_REPLAY; LIVE_VISION_NOT_MEASURED; EXTERNAL_SOURCE_AVAILABLE; INDEPENDENT_GROUND_TRUTH_PENDING; INDEPENDENT_H1_VALIDATION = NOT_MEASURED; branch feat/local-first-geometry-understanding, not merged to main, not pushed)
+PRODUCT_CHANGE = YES (backend: typed_fact_next.py, typed_fact_next_bridge.py, planner.py, registry.py, engine.py, local_geometry_parser.py, adaptive_input_router.py)
+MODEL_REQUEST_COUNT = 0
+VERIFICATION = ALGOSIM_UNIFIED_GEOMETRY_IMAGE_TO_3D_REPORT.md; run.json; baseline_integrity_receipt.json; angle_premise_capability_receipt.json; dihedral_angle_correctness_receipt.json; base_geometry_family1_receipt.json; base_geometry_family2_receipt.json; planner_composition_verification.json; exact_kernel_independent_oracle.json; scene3d_geometry_parity_receipt.json; external_image_pipeline_receipt.json; ocr_fidelity_regression_receipt.json; adaptive_vision_fallback_receipt.json; independent_corpus_readiness.json; generalization_evaluation_receipt.json; low_end_performance_impact.json; full_regression_summary.json; schema-census-extension.json; tools/evaluate_unified_geometry_image_to_3d.py; backend/tests/geometry/test_angle_premise_and_dihedral_geometry.py (18/18 passed); backend/tests/geometry/test_reusable_base_geometry_families.py (7/7 passed); backend/tests/geometry/test_verified_image_to_3d_pipeline.py (3/3 passed); Full regression (14,138 pytest passed, 2,000 vitest passed, 9/9 + 5/5 Chrome E2E, 5/5 demo replay, 6/6 crash surface)
+CORRECTS = NONE
+CORRECTED_BY = docs/evaluation/geometry/runs/real-world-end-to-end-reliability/ALGOSIM_REAL_WORLD_END_TO_END_RELIABILITY_REPORT.md (the 2/17 MISSING_DIMENSION outcomes on ext_prt_02#1 and ext_prt_03#1 were false refusals — height-invariant goals now served 6 and a√2/2 with a labelled illustrative scene)
+
+## WAVE_ID = REAL_WORLD_PRINTED_HANDWRITING_ACQUISITION
+
+REPORT = docs/evaluation/geometry/runs/real-world-printed-handwriting-acquisition/ALGOSIM_REAL_WORLD_PRINTED_HANDWRITING_REPORT.md
+ARTIFACT_DIRECTORY = docs/evaluation/geometry/runs/real-world-printed-handwriting-acquisition/
+START_BASE = f865c22ee7f0bc8aae91d1ce64a87637deff2896 (tip of feat/local-first-geometry-understanding)
+CODE_COMMIT = 094193d2d02f9438189c1101aa1ff47ae1f9dbb9 (measured_system tree hash 896ebf5898fa664b8315741c4b0d330f4d48c041056806778fe83c3b51cbf826 across 108 measured entries; CACHE_VERSION 132 unchanged)
+CLASSIFICATION = OFFLINE_EXTERNAL_PRINTED_HANDWRITTEN_OCR_AND_EVIDENCE_RECONCILIATION (Gate_A_Source_Acquisition = PASS; Gate_B_Evidence_Integrity = PASS; Gate_C_Printed_OCR = PASS; Gate_D_Handwritten_OCR = PASS_WITH_HONEST_LIMITS; Gate_E_Mathematical_Correctness = PASS; Gate_F_Independent_H1 = NOT_MEASURED; Gate_G_Low_Resource = PASS_HOST_MEASURED; Gate_H_Candidate_Freeze = PASS; LOCAL_OCR_PRODUCTION_STATUS = LOCAL_OCR_DIAGNOSTIC_ONLY; OFFLINE_FALLBACK_VERIFIED; EXTERNAL_SOURCE_AVAILABLE; INDEPENDENT_GROUND_TRUTH_PENDING; INDEPENDENT_H1_VALIDATION = NOT_MEASURED; LIVE_VISION_EVALUATION = NOT_MEASURED; branch feat/local-first-geometry-understanding, not merged to main, not pushed)
+PRODUCT_CHANGE = YES (backend: region_detector.py, local_geometry_parser.py, registry.py, adaptive_input_router.py)
+MODEL_REQUEST_COUNT = 0
+VERIFICATION = ALGOSIM_REAL_WORLD_PRINTED_HANDWRITING_REPORT.md; run.json; external_image_source_inventory.json; external_image_corpus_manifest.json; image_license_and_provenance_audit.json; printed_ocr_evaluation_receipt.json; handwritten_ocr_evaluation_receipt.json; dual_ocr_fidelity_receipt.json; region_detection_external_receipt.json; image_to_geometry_end_to_end_receipt.json; evidence_namespace_reconciliation.json; strict_contract_reconciliation.json; hybrid_gap_prioritization_revised.json; performance_impact_receipt.json; tools/corpus_catalog.py; tools/ocr_scoring_helpers.py; tools/evaluate_real_world_printed_handwriting.py; backend/tests/geometry/test_real_world_printed_handwriting.py (23/23 passed)
+CORRECTS = docs/evaluation/geometry/runs/independent-h1-real-world-acceptance/ALGOSIM_INDEPENDENT_ACCEPTANCE_REPORT.md
+CORRECTED_BY = NONE
+
+## WAVE_ID = INDEPENDENT_H1_REAL_WORLD_ACCEPTANCE
+
+REPORT = docs/evaluation/geometry/runs/independent-h1-real-world-acceptance/ALGOSIM_INDEPENDENT_ACCEPTANCE_REPORT.md
+ARTIFACT_DIRECTORY = docs/evaluation/geometry/runs/independent-h1-real-world-acceptance/
+START_BASE = 137cfdb147db9b5a6997a5fd6b3e1fa9e7d7b418 (tip of feat/local-first-geometry-understanding)
+CODE_COMMIT = 87497d79a6537681b91c3f06fffea86a7e593a02 (measured_system tree hash ba0261c14a22b205b476d9951e3aa32fea63ef78c74ee1d413d4ac5ad093f759 across 108 measured entries; CACHE_VERSION 132 unchanged)
+CLASSIFICATION = OFFLINE_INDEPENDENT_H1_VISION_OCR_AND_LOW_END_ACCEPTANCE_AUDIT (Gate_A_Independent_H1_Geometry = PENDING_EXTERNAL_CORPUS; Gate_B_Real_World_Image_and_OCR = REAL_WORLD_IMAGE_NOT_MEASURED; Gate_C_Adaptive_AI_Routing = OFFLINE_ROUTING_VERIFIED; Gate_D_Low_End_Performance = RESOURCE_CONSTRAINED_SIMULATION_ONLY; LOCAL_OCR_PRODUCTION_STATUS = LOCAL_OCR_DIAGNOSTIC_ONLY; INDEPENDENT_H1_VALIDATION = NOT_MEASURED; LIVE_VISION_EVALUATION = NOT_MEASURED; REAL_WORLD_CORPUS_NOT_AVAILABLE; branch feat/local-first-geometry-understanding, not merged to main, not pushed)
+PRODUCT_CHANGE = YES (backend: local_geometry_parser.py, adaptive_input_router.py; harness: score_independent_holdout_equivalence.py)
+MODEL_REQUEST_COUNT = 0
+VERIFICATION = ALGOSIM_INDEPENDENT_ACCEPTANCE_REPORT.md; run.json; h1_corpus_provenance_receipt.json; h1_contamination_audit_receipt.json; h1_geometry_evaluation_receipt.json; real_world_image_corpus_manifest.json; region_detection_real_world_receipt.json; ocr_fidelity_real_world_receipt.json; adaptive_routing_acceptance_receipt.json; low_end_hardware_performance_receipt.json; hybrid_capability_prioritization.json; tools/run_independent_acceptance_evaluation.py; backend/tests/geometry/test_independent_h1_real_world_acceptance.py (6/6 passed)
+CORRECTS = docs/evaluation/geometry/runs/correctness-ocr-performance-optimization/ALGOSIM_CORRECTNESS_OCR_PERFORMANCE_REPORT.md
+CORRECTED_BY = docs/evaluation/geometry/runs/real-world-printed-handwriting-acquisition/ALGOSIM_REAL_WORLD_PRINTED_HANDWRITING_REPORT.md (acquires 38 real external printed/handwritten/diagram images replacing REAL_WORLD_CORPUS_NOT_AVAILABLE with EXTERNAL_SOURCE_AVAILABLE + INDEPENDENT_GROUND_TRUTH_PENDING, reconciles Dev72 56 supported + 10 negative [incl. N3 tampered-quote probe] + 6 open strict XFAILs = 66/72 vs prior 63/72 prose, maps DEV72-G2..G7 vs CURRICULUM-FAMILY-1..5 namespaces, proves C26's 7 construct_plane_section cases have 0 Scene3D errors, and fixes external photo Bugs R1 & R2 in region_detector.py)
+
+## WAVE_ID = CORRECTNESS_OCR_PERFORMANCE_OPTIMIZATION
+
+REPORT = docs/evaluation/geometry/runs/correctness-ocr-performance-optimization/ALGOSIM_CORRECTNESS_OCR_PERFORMANCE_REPORT.md
+ARTIFACT_DIRECTORY = docs/evaluation/geometry/runs/correctness-ocr-performance-optimization/
+START_BASE = 452d65c7f9adcd23f2659b3fd7746dc0d940737d (tip of feat/local-first-geometry-understanding)
+CODE_COMMIT = f96db02eb11ac80ed48c755155313710edcba588 (measured_system tree hash f9620b276ea9704e4cc5001d318c9c9d92534bf4eb3cea027ce1deb66fc48ff8 across 108 measured entries; CACHE_VERSION 132 unchanged)
+CLASSIFICATION = OFFLINE_CORRECTNESS_HARDENING_LOCAL_OCR_AND_LOW_END_PERFORMANCE (GATE_A_MATHEMATICAL_AND_PARSER_INTEGRITY = PASS; GATE_B_REGION_DETECTION_OCR_AND_VISION_FALLBACK = PASS; GATE_C_LOW_END_PERFORMANCE_AND_MEMORY = PASS; GATE_D_RUST_FEASIBILITY = NO_RUST_NEEDED; LOCAL_OCR_PRODUCTION_STATUS = LOCAL_OCR_DIAGNOSTIC_ONLY; INDEPENDENT_H1_VALIDATION = NOT_MEASURED; LIVE_VISION_EVALUATION = NOT_MEASURED; REAL_WORLD_CORPUS_NOT_AVAILABLE; branch feat/local-first-geometry-understanding, not merged to main, not pushed)
+PRODUCT_CHANGE = YES (backend: local_geometry_parser.py, adaptive_input_router.py)
+MODEL_REQUEST_COUNT = 0
+VERIFICATION = ALGOSIM_CORRECTNESS_OCR_PERFORMANCE_REPORT.md; run.json; mathematical_oracle_audit_receipt.json; local_parser_integrity_receipt.json; image_region_detection_receipt.json; local_ocr_pretrained_comparison_receipt.json; adaptive_vision_fallback_receipt.json; low_end_performance_receipt.json; rust_feasibility_receipt.json; tools/run_correctness_ocr_performance_audit.py; backend/tests/geometry/test_correctness_ocr_performance.py (19/19 passed)
+CORRECTS = docs/evaluation/geometry/runs/local-first-geometry-understanding/ALGOSIM_LOCAL_FIRST_GEOMETRY_UNDERSTANDING_REPORT.md
+CORRECTED_BY = docs/evaluation/geometry/runs/independent-h1-real-world-acceptance/ALGOSIM_INDEPENDENT_ACCEPTANCE_REPORT.md (fixes Case D missing-data refusal route labeling from LOCAL_DETERMINISTIC_HYBRID to LOCAL_AMBIGUOUS_CLARIFICATION in adaptive_input_router.py, replaces ground-truth-assisted Case A reconciliation with zero-ground-truth reconcile_dual_ocr_texts + named intersect_line_plane/intersect_line_line parser support for s05_dau_tieng_viet clean while strictly refusing s05_dau_tieng_viet_degraded, and separates uncached vs LRU-cached parse latency on the 12-core development host vs the 2-4 core low-end target profile)
+
+## WAVE_ID = LOCAL_FIRST_GEOMETRY_UNDERSTANDING
+
+REPORT = docs/evaluation/geometry/runs/local-first-geometry-understanding/ALGOSIM_LOCAL_FIRST_GEOMETRY_UNDERSTANDING_REPORT.md
+ARTIFACT_DIRECTORY = docs/evaluation/geometry/runs/local-first-geometry-understanding/
+START_BASE = 4baf4a304cf930b7a38756e2b4b5428f1f89cf2c (tip of feat/release-stabilization-validation-readiness)
+CODE_COMMIT = 63539c2f0eeb574a8fb9c195a43480c05936dfe0 (measured_system tree hash 0493da33470c43ec40939bf21c608f2a425ac7721579ca309e51483231b4777d across 108 measured entries; CACHE_VERSION 132 unchanged)
+CLASSIFICATION = OFFLINE_LOCAL_FIRST_GEOMETRY_UNDERSTANDING_AND_ADAPTIVE_ROUTING (PHASE_0_PREFLIGHT_VERIFIED = YES; LOCAL_GEOMETRY_PARSER_IMPLEMENTED_AND_VERIFIED = YES; ADAPTIVE_INPUT_ROUTER_IMPLEMENTED_AND_VERIFIED = YES; TEXT_ZERO_AI_PATH_VERIFIED = YES; IMAGE_SINGLE_AI_CALL_PATH_VERIFIED = YES; LOCAL_OCR_PRODUCTION_STATUS = LOCAL_OCR_DIAGNOSTIC_ONLY; HYBRID_CAPABILITY_NEXT_PHASE_PLAN = READY; INDEPENDENT_H1_VALIDATION = NOT_MEASURED; LIVE_VISION_EVALUATION = NOT_MEASURED; REAL_WORLD_CORPUS_NOT_AVAILABLE; branch feat/local-first-geometry-understanding, not merged to main, not pushed)
+PRODUCT_CHANGE = YES (backend: local_geometry_parser.py, adaptive_input_router.py, hybrid_offline.py, main.py, unified_input.py, engine.py)
+MODEL_REQUEST_COUNT = 0
+VERIFICATION = ALGOSIM_LOCAL_FIRST_GEOMETRY_UNDERSTANDING_REPORT.md; run.json; phase0_reconciliation_verification_receipt.json; local_parser_benchmark_receipt.json; comparative_routes_t0_t1_i0_i1_i2_receipt.json; tools/evaluate_local_first_understanding.py; backend/tests/geometry/test_local_geometry_parser.py; backend/tests/geometry/test_adaptive_input_router.py; Full T3 (14,060 pytest passed, 2,000 vitest passed, 5/5 demo replay, 6/6 crash surface)
+CORRECTS = docs/evaluation/geometry/runs/release-stabilization-validation-readiness/ALGOSIM_RELEASE_STABILIZATION_REPORT.md
+CORRECTED_BY = docs/evaluation/geometry/runs/correctness-ocr-performance-optimization/ALGOSIM_CORRECTNESS_OCR_PERFORMANCE_REPORT.md (reconciles all 66 answers != expected_answers entries in local_parser_benchmark_receipt.json as geometry_oracle.py squared-rational x^2 vs canonical radical formatting with 147/147 1-to-1 goal-bound exact match, verifies dual N3/HB43 tampered-quote vs clean-text behavior, resolves S2-E-E01_oxyz verbatim text from s2-student-language-pilot-corpus.json, and closes the s02_phay_can_phan_so local parser false positive)
+
+## WAVE_ID = RELEASE_STABILIZATION_VALIDATION_READINESS
+
+REPORT = docs/evaluation/geometry/runs/release-stabilization-validation-readiness/ALGOSIM_RELEASE_STABILIZATION_REPORT.md
+ARTIFACT_DIRECTORY = docs/evaluation/geometry/runs/release-stabilization-validation-readiness/
+START_BASE = 32f14b8fc4231b6a57ada34966c019e99ff148c0 (tip of integration/parallel-ingestion-reasoning)
+CODE_COMMIT = b8a9e57b4fb13b2ecdba188fbea6f2a76d57caba (measured_system tree hash c09b67d538d7d450dc03d8ccaacbb00676241aa4f342d8dbca07bedae974be01 across 106 measured entries; CACHE_VERSION 132 unchanged)
+CLASSIFICATION = OFFLINE_RELEASE_STABILIZATION_AND_VALIDATION_READINESS (CANDIDATE_READY_FOR_MAIN_REVIEW; EVIDENCE_RECONCILED_AND_VERIFIED; MATHEMATICAL_CORRECTNESS_HARDENED; IMAGE_INGESTION_CORRECTNESS_VERIFIED; H1_INFRASTRUCTURE_READY; INDEPENDENT_H1_VALIDATION = NOT_MEASURED; LOCAL_OCR_DIAGNOSTIC_ONLY; REAL_WORLD_CORPUS_NOT_AVAILABLE; LIVE_VISION_EVALUATION = NOT_MEASURED; branch feat/release-stabilization-validation-readiness, not merged to main, not pushed)
+PRODUCT_CHANGE = YES (backend: engine.py, region_detector.py, unified_input.py; harness: score_independent_holdout_equivalence.py)
+MODEL_REQUEST_COUNT = 0
+VERIFICATION = ALGOSIM_RELEASE_STABILIZATION_REPORT.md; run.json; evidence_reconciliation_receipt.json; correctness_hardening_receipt.json; h1_readiness_receipt.json; real_world_vision_readiness_receipt.json; real_world_vision_corpus_template.json; architecture_gap_decisions_receipt.json; tools/reconcile_and_verify_readiness.py; Full T3 (14,041 pytest passed, 2,000 vitest passed, 5/5 demo replay, 6/6 crash surface)
+CORRECTS = docs/evaluation/geometry/runs/independent-geometry-and-vision-evaluation/INDEPENDENT_GEOMETRY_AND_VISION_EVALUATION_REPORT.md
+CORRECTED_BY = docs/evaluation/geometry/runs/local-first-geometry-understanding/ALGOSIM_LOCAL_FIRST_GEOMETRY_UNDERSTANDING_REPORT.md (reconciles Dev72 summary keys in_scope_supported_positive_total=56 vs in_scope_positive_total=62, disambiguates DEV72-G2..G7 vs W11-G2..G7 namespace, verifies benchmark_12_fixtures_reverification.total_fixtures=12, and generalizes engine.py sign enumeration to trilateration apices without explicit altitude facts)
+
+## WAVE_ID = INDEPENDENT_GEOMETRY_AND_VISION_EVALUATION
+
+REPORT = docs/evaluation/geometry/runs/independent-geometry-and-vision-evaluation/INDEPENDENT_GEOMETRY_AND_VISION_EVALUATION_REPORT.md
+ARTIFACT_DIRECTORY = docs/evaluation/geometry/runs/independent-geometry-and-vision-evaluation/
+START_BASE = 474ba080ec2cd740d39314109f279aacfa871376 (tip of integration/parallel-ingestion-reasoning; product tree identical to 37ec2db57)
+CODE_COMMIT = e6a0bb8639be44f073a0b24ff22e19bd6a05a308 (merge of eval/real-world-vision e872d025e661be6468b5362038ff2630819f90ea at 43670a97c6e319cb501b6671e6c2c825e97c61c0 + eval/independent-geometry 04ec8e4185e8fc7332180dab28522a2874a92384; candidate freeze & templates 5f2de7ee1f87100aea080b553de7c3c0eaa7a72c; 106 measured files 9dd8e882cefea630a9c2721b9d4a41c254a2e55c87ae99d80dbdd56106ced7c8)
+CLASSIFICATION = OFFLINE_VISION_AND_NONINDEPENDENT_HELDOUT_GEOMETRY_EVALUATION (CANDIDATE_READY_FOR_MAIN_REVIEW; LOCAL_OCR_DIAGNOSTIC_ONLY; CURRENT_GEMINI_VISION_PREFERRED; GEOMETRY_HELDOUT_EVALUATED_NONINDEPENDENT; LIVE_VISION_EVALUATION = NOT_MEASURED; REAL_WORLD_CORPUS_NOT_AVAILABLE; INDEPENDENT_H1_VALIDATION = NOT_MEASURED; branch integration/parallel-ingestion-reasoning, not merged to main, not pushed)
+PRODUCT_CHANGE = YES (backend: region_detector.py, unified_input.py, engine.py)
+MODEL_REQUEST_COUNT = 0
+VERIFICATION = INDEPENDENT_GEOMETRY_AND_VISION_EVALUATION_REPORT.md; run.json; workstream_a_vision_receipt.json; workstream_b_geometry_receipt.json; tools/evaluate_vision_workstream_a.py; tools/evaluate_geometry_workstream_b.py; Full T3 on detached worktree t3-common-base-d79565b5 (14,030 pytest passed, 2,000 vitest passed, 20/20 Playwright passed)
+CORRECTS = NONE
+CORRECTED_BY = docs/evaluation/geometry/runs/release-stabilization-validation-readiness/ALGOSIM_RELEASE_STABILIZATION_REPORT.md (reconciles 40-char commit SHAs, Dev Matrix 56/56 supported vs 56/62 all-in-scope denominator, OCR_C2/C3/C4 exact values in critical_architectural_finding prose, Workstream A Section VIII before_fix_crop_holds_all_content inequality, and stage latency percentiles)
+
+## WAVE_ID = PARALLEL_INGESTION_REASONING_INTEGRATION
+
+REPORT = docs/evaluation/geometry/runs/parallel-ingestion-reasoning/report.md
+ARTIFACT_DIRECTORY = docs/evaluation/geometry/runs/parallel-ingestion-reasoning/
+START_BASE = d79565b52ec19a7b1a75be28c09bb43cc0f6d146 (tip of feat/algosim-local-first-image-ingestion; clean detached Full T3 FULL_PRODUCT_GATE_PASS; main = origin/main bb046fa22)
+CODE_COMMIT = d2d89376a (merge of feat/adaptive-local-ocr-fallback 25a098602 + feat/hybrid-reasoning-generalization 756697dc7, comment-only follow-up; measured_system 0e815f39c8d02203d73ce332faa7f167c8344ef925f6adc547bbe37bae472a7c, 106 entries; CACHE_VERSION 132 unchanged)
+CLASSIFICATION = OFFLINE_PARALLEL_WORKSTREAM_INTEGRATION (branch integration/parallel-ingestion-reasoning, not merged, not pushed): A = LOCAL_OCR_DIAGNOSTIC_ONLY, B = HYBRID_REASONING_IMPROVEMENT_VERIFIED on a 72-case development corpus (not held-out), integration verdict and Full T3 in run.json; INDEPENDENT_H1_VALIDATION = NOT_MEASURED.
+PRODUCT_CHANGE = YES (inherited from A and B; integration adds a comment-only edit)
+MODEL_REQUEST_COUNT = 0
+VERIFICATION = report.md; run.json; receipt-correction.md; tools/reconcile_receipts.py; results/receipt_reconciliation.json
+CORRECTS = docs/evaluation/geometry/runs/algosim-local-first-image-ingestion/LOCAL_FIRST_IMAGE_INGESTION_REPORT.md
+CORRECTED_BY = NONE
+
+## WAVE_ID = HYBRID_REASONING_GENERALIZATION
+
+REPORT = docs/evaluation/geometry/runs/hybrid-reasoning-generalization/HYBRID_REASONING_GENERALIZATION_REPORT.md
+ARTIFACT_DIRECTORY = docs/evaluation/geometry/runs/hybrid-reasoning-generalization/
+START_BASE = d79565b52ec19a7b1a75be28c09bb43cc0f6d146
+CODE_COMMIT = 5e273f130 (engine.py `_tam_giac` perpendicular_lines right angle + `_dinh_tu_ba_canh_ben` trilateration; registry.py `_kiem_result_binding` foot-certificate quotes; candidate a9993e28…, re-frozen from a clean tree at dd551ffec)
+CLASSIFICATION = OFFLINE_DEVELOPMENT_MATRIX (HELD_OUT_CLAIM = NONE, EVALUATOR_INDEPENDENCE = NONE): 72 cases, exact served 47 -> 56, false refusals 6 -> 0, wrong served 0 -> 0; G2/G3/G4/G6/G7 open as strict xfails; historical delta layers for NLU D08, v3-matrix dev02 and LOCKED-split h16 (not used for authoring; no LOCKED claim).
+PRODUCT_CHANGE = YES (backend: engine.py, registry.py)
+MODEL_REQUEST_COUNT = 0
+VERIFICATION = HYBRID_REASONING_GENERALIZATION_REPORT.md; run.json; results/; tools/reasoning_matrix.py; backend/tests/geometry/test_hybrid_reasoning_generalization.py
+CORRECTS = NONE
+CORRECTED_BY = NONE
+
+## WAVE_ID = ADAPTIVE_LOCAL_OCR_FALLBACK
+
+REPORT = docs/evaluation/geometry/runs/adaptive-local-ocr-fallback/ADAPTIVE_LOCAL_OCR_REPORT.md
+ARTIFACT_DIRECTORY = docs/evaluation/geometry/runs/adaptive-local-ocr-fallback/
+START_BASE = d79565b52ec19a7b1a75be28c09bb43cc0f6d146
+CODE_COMMIT = ebf712360 (region_detector.py `crop_holds_all_content` + unified_input.py retry rule; candidate 79e18b6e…)
+CLASSIFICATION = OFFLINE_OCR_BENCHMARK_AND_GATE_DIAGNOSTIC (synthetic rendered images only, REAL_PHOTO_CORPUS = NOT_ESTABLISHED; calibration in-sample): Tesseract vie keeps diacritics but silently misreads math symbols, RapidOCR reads symbols but lacks Vietnamese letters; no single-engine safe gate; no OCR engine ships; mock Vision calls 23 -> 22 on 22 images; LOCAL_OCR_DIAGNOSTIC_ONLY.
+PRODUCT_CHANGE = YES (backend: region_detector.py, unified_input.py)
+MODEL_REQUEST_COUNT = 0
+VERIFICATION = ADAPTIVE_LOCAL_OCR_REPORT.md; run.json; ocr_benchmark.json; vision_calls_before_after.json; tools/; backend/tests/test_image_crop_retry_dedup.py
+CORRECTS = NONE
+CORRECTED_BY = NONE
+
+## WAVE_ID = ALGOSIM_LOCAL_FIRST_IMAGE_INGESTION
+
+REPORT = docs/evaluation/geometry/runs/algosim-local-first-image-ingestion/LOCAL_FIRST_IMAGE_INGESTION_REPORT.md
+ARTIFACT_DIRECTORY = docs/evaluation/geometry/runs/algosim-local-first-image-ingestion/
+START_BASE = feat/hybrid-goal-driven-planner 6dcdd690497c1aa3043188055e1dd4a738326a73 (product 6c961c884; main = origin/main bb046fa22aceff47abe22aa783aa64fc65caee13)
+CODE_COMMIT = c7b15b23a (measured_system tree hash 6290986dee3d1336a13611f0c0a452f90bfb40ab6d837c46396bcafb2cd5f81d across so_file=106 hashed entries / 105 unique files; baseline stabilization in engine.py & test_goal_driven_planner_generalization.py + local-first image ingestion, shadow compensation, deduplication, and zero-VLM user-edit preservation in region_detector.py, unified_input.py, document_reader.py, ProblemInput.tsx + E2E journey tests; CACHE_VERSION 132 unchanged)
+CLASSIFICATION = OFFLINE_LOCAL_FIRST_IMAGE_INGESTION_AND_E2E_VERIFICATION (branch feat/algosim-local-first-image-ingestion, not merged, not pushed): Section II stabilizes feat/hybrid-goal-driven-planner at 6dcdd6904 (PREVIOUS_CANDIDATE_FIXED_AND_VERIFIED, 115/115 passed); Sections III–XI verify local-first CV image preprocessing, shadow/low-light recovery, provider load reduction, and E2E Journeys A–E into Hybrid /4 Scene3D simulation (11/11 image classes PASS, class_05_shadowed recall 0.4233 -> 1.0000; 8/8 provider scenarios PASS, s6 user edit preserved with 0 VLM calls; median_preprocess_ms 1065.64 -> 656.05 ms, median_e2e_ms 2530.20 -> 1655.72 ms; LOCAL_FIRST_IMAGE_INGESTION_VERIFIED; END_TO_END_IMAGE_TO_SIMULATION_VERIFIED; PROVIDER_DEPENDENCY_REDUCED_AND_MEASURED; LIVE_CALLS_ZERO_BY_DIRECTIVE; INDEPENDENT_H1_VALIDATION = NOT_MEASURED).
+PRODUCT_CHANGE = YES (backend: engine.py, region_detector.py, unified_input.py, document_reader.py; frontend: ProblemInput.tsx)
+MODEL_REQUEST_COUNT = 0
+VERIFICATION = LOCAL_FIRST_IMAGE_INGESTION_REPORT.md; run.json; before_metrics.json; after_metrics.json; tools/measure_image_ingestion.py; backend/tests/test_local_first_image_ingestion_e2e.py; frontend/src/components/photo-problem-panel.test.tsx
+CORRECTS = NONE
+CORRECTED_BY = docs/evaluation/geometry/runs/parallel-ingestion-reasoning/receipt-correction.md (§1.2 describes the removed `_kc2_do_dai` guard as a stricter one; 9 cells of §4.2 differ from the JSON receipts; Full T3 not run by that report)
+
+## WAVE_ID = HYBRID_GOAL_DRIVEN_PLANNER
+
+REPORT = docs/evaluation/geometry/runs/hybrid-goal-driven-planner/GOAL_DRIVEN_COMPOSITION_REPORT.md
+ARTIFACT_DIRECTORY = docs/evaluation/geometry/runs/hybrid-goal-driven-planner/
+START_BASE = feat/hybrid-production-composition fb291cba3069fa9f5fa8d28893c064b4ec523ae7 (product 93b0dfcef; main = origin/main bb046fa22aceff47abe22aa783aa64fc65caee13)
+CODE_COMMIT = 6c961c884 (measured_system tree hash 2dcfff5328656264cb1df117874b8714cb2be7e5fe05e60ab233e2dc83fa1fca across so_file=106 hashed entries / 105 unique files; goal-driven planner & generalization fixes in registry.py, planner.py, engine.py + 18 diagnostic/ablation tests in test_goal_driven_planner_generalization.py; CACHE_VERSION 132 unchanged)
+CLASSIFICATION = OFFLINE_GOAL_DRIVEN_PLANNER_AND_ABLATION_VERIFICATION (branch feat/hybrid-goal-driven-planner, not merged, not pushed): Phase 0 verifies feat/hybrid-production-composition at fb291cba3 (PREVIOUS_CANDIDATE_VERIFIED), reconciles exact test counts (13,993 collected, 13,989 passed, 1 skipped, 3 deselected), and proves/fixes the false refusal on in-plane projections in parse_descriptor_inputs; Phase A & B verify Level 1/2/3 planning taxonomy, competing candidate evaluation, precondition pruning, cost-0 premise & projection reuse for Normal(Q), fail-closed DEGENERATE_POINTS on 0-length measured segments, and Section IX Ablation Tests 1–5 (8/18 baseline -> 18/18 PASS; planner CPU p50=1.185 ms, kernel CPU p50=30.732 ms, warm route p50=33.848 ms; GOAL_DRIVEN_COMPOSITION_VERIFIED; INDEPENDENT_H1_VALIDATION = NOT_MEASURED).
+PRODUCT_CHANGE = YES (backend only: registry.py, planner.py, engine.py)
+MODEL_REQUEST_COUNT = 0
+VERIFICATION = GOAL_DRIVEN_COMPOSITION_REPORT.md; run.json; results/goal_driven_planning_metrics.json; tools/measure_goal_driven_planning.py; backend/tests/geometry/test_goal_driven_planner_generalization.py
+CORRECTS = NONE
+CORRECTED_BY = NONE
+
+## WAVE_ID = HYBRID_PRODUCTION_COMPOSITION
+
+REPORT = docs/evaluation/geometry/runs/hybrid-production-composition/PRODUCTION_DYNAMIC_COMPOSITION_REPORT.md
+ARTIFACT_DIRECTORY = docs/evaluation/geometry/runs/hybrid-production-composition/
+START_BASE = feat/hybrid-backend-capabilities ad311e04372821c39f21f999d66316e99cc874ca (main = origin/main bb046fa22aceff47abe22aa783aa64fc65caee13)
+CODE_COMMIT = 93b0dfcef (measured_system tree hash 93f69bdd2ebe7a1092acef466579f23c0626a7cd2bc6b9d24b9e840bb212d4a9 across so_file=106 hashed entries / 105 unique files; production dynamic function composition in registry.py, typed_fact_next_bridge.py, planner.py, engine.py + 11 composition/ablation tests in test_production_dynamic_composition.py; CACHE_VERSION 132 unchanged)
+CLASSIFICATION = OFFLINE_PRODUCTION_DYNAMIC_COMPOSITION_AND_ABLATION (branch feat/hybrid-production-composition, not merged, not pushed): Phase 0 verifies and reconciles feat/hybrid-backend-capabilities at ad311e043 (PREVIOUS_CANDIDATE_VERIFIED); Phase 1 enables bounded depth-2 dynamic function composition (search_generated_steps != [], DISCOVERED_FUNCTION_COMPOSITION) on the production Hybrid /4 route with recursive effect-chain Source Gate & Exact Kernel verification and multi-goal intermediate reuse (Families A–D & Section VII ablation 11/11 PASS; planner CPU p50=1.782 ms, warm route p50=40.794 ms; PRODUCTION_DYNAMIC_COMPOSITION_VERIFIED; INDEPENDENT_H1_VALIDATION = NOT_MEASURED).
+PRODUCT_CHANGE = YES (backend only: registry.py, typed_fact_next_bridge.py, planner.py, engine.py)
+MODEL_REQUEST_COUNT = 0
+VERIFICATION = PRODUCTION_DYNAMIC_COMPOSITION_REPORT.md; run.json; results/production_composition_metrics.json; tools/measure_production_composition.py; backend/tests/geometry/test_production_dynamic_composition.py
+CORRECTS = NONE
+CORRECTED_BY = NONE
+
+## WAVE_ID = HYBRID_BACKEND_CAPABILITIES
+
+REPORT = docs/evaluation/geometry/runs/hybrid-backend-capabilities/HYBRID_BACKEND_CAPABILITY_BASELINE.md
+ARTIFACT_DIRECTORY = docs/evaluation/geometry/runs/hybrid-backend-capabilities/
+START_BASE = main = origin/main bb046fa22aceff47abe22aa783aa64fc65caee13
+CODE_COMMIT = 6e5e08c8a4ca0341b6c7c8ca57060fbaff74c7b86aa6ea3f12781005f494f8ed (measured_system tree hash across so_file=106 hashed entries / 105 unique files; planner structural collinearity/coplanarity in _phap_tuyen & _EffectResolver._tren_duong + C26 live unresolved clarification wire-shape normalization in typed_fact_next_extraction.py + 17 composition/regression tests; CACHE_VERSION 132 unchanged)
+CLASSIFICATION = OFFLINE_DETERMINISTIC_CAPABILITY_AND_REPLAY_DEVELOPMENT (branch feat/hybrid-backend-capabilities, not merged, not pushed): Phase A full backend capability baseline across 8 subsystems; Phase B closes Gap 1 (structural collinearity/coplanarity in planner _phap_tuyen and _EffectResolver._tren_duong: 4/4 constrained-section families recovered with exact Fraction/Radical agreement) and Gap 2 (C26 live Gemini unresolved wire-shape normalization: 70/70 C26 replay 40/41 positive served exact, 29/29 negative refused/clarified, 0 wrong-served; S-2 CLARIFY status 3/6 -> 5/6, strict CORRECT_CLARIFICATION 0/6 -> 3/6, S-2 strict E2E 26/36 -> 29/36); gold replay K-1 16/16, S-2 35/36, R-1 18/18; PREVIOUS_CANDIDATE_VERIFIED; not H-1.
+PRODUCT_CHANGE = YES (backend only: planner.py, typed_fact_next_extraction.py)
+MODEL_REQUEST_COUNT = 0
+VERIFICATION = HYBRID_BACKEND_CAPABILITY_BASELINE.md; run.json; results/capability_telemetry_metrics.json; tools/measure_capability_composition.py; backend/tests/geometry/test_hybrid_capability_composition.py
+CORRECTS = NONE
+CORRECTED_BY = NONE
 
 ## WAVE_ID = AXO_CAMERA_PHOTO_FAN_STACK_DESIGN
 
