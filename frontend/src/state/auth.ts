@@ -23,6 +23,7 @@ export type Role = "student" | "teacher" | "admin";
 export interface AuthUser {
   id: number;
   email: string;
+  username?: string | null;
   displayName: string;
   role: Role;
   mustChangePassword: boolean;
@@ -150,12 +151,12 @@ export const useAuthStore = create<AuthState>((set, get) => ({
     }
   },
 
-  login: async (email, password) => {
+  login: async (identifier, password) => {
     set({ busy: true, error: null });
     const res = await fetch("/api/auth/login", {
       ...OPTS,
       method: "POST",
-      body: JSON.stringify({ email, password }),
+      body: JSON.stringify({ email: identifier, identifier, password }),
     }).catch(() => null);
     if (!res || !res.ok) {
       set({

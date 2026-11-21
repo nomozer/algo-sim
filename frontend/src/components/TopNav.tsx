@@ -679,7 +679,9 @@ export function TopNavAccount({ initialOpen = false }: { initialOpen?: boolean }
                 role="menuitem"
                 onClick={() => {
                   setOpen(false);
-                  void logout();
+                  void logout().then(() => {
+                    useAppStore.getState().enterGuestWorkspaceAfterLogout();
+                  });
                 }}
                 aria-label="Đăng xuất"
               >

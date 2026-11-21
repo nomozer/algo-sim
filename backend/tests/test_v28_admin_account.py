@@ -31,14 +31,20 @@ def _reset_v28_in_memory_state():
 
 
 def _register_admin(api_root) -> object:
+    from app.accounts import service as accounts_service
+
+    with accounts_router.SessionLocal() as db:
+        accounts_service.upsert_or_rotate_admin_credentials(
+            db,
+            password=TEST_PASSWORD,
+            email="quantri-v28@axo.edu.vn",
+            display_name="Quản trị V2.8",
+            create_if_missing=True,
+        )
+        db.commit()
+
     c_admin = new_client(api_root)
-    r = register(
-        c_admin,
-        email="quantri-v28@axo.edu.vn",
-        name="Quản trị V2.8",
-        role="admin",
-        teacher_code="ADMIN2026",
-    )
+    r = login(c_admin, email="quantri-v28@axo.edu.vn", password=TEST_PASSWORD)
     assert r.status_code == 200
     assert r.json()["user"]["role"] == "admin"
     return c_admin

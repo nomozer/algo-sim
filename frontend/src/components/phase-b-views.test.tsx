@@ -797,10 +797,20 @@ describe("Axo V2.7 Phase B — Header Logo, Homepage, Library & History (P3–P8
     expect(regHtml).toContain('id="reg-pw-input"');
     expect(regHtml).toContain('id="reg-pw-confirm-input"');
 
-    const forgotHtml = renderToString(<AuthPageView mode="forgot" />);
+    const forgotHtml = renderToString(
+      <AuthPageView mode="forgot" initialEmailRecoveryAvailable={true} />,
+    );
     expect(forgotHtml).toContain('id="view-forgot"');
     expect(forgotHtml).toContain('id="forgot-email-input"');
     expect(forgotHtml).toContain('id="btn-forgot-to-login"');
+
+    const forgotDisabledHtml = renderToString(
+      <AuthPageView mode="forgot" initialEmailRecoveryAvailable={false} />,
+    );
+    expect(forgotDisabledHtml).toContain('id="view-forgot"');
+    expect(forgotDisabledHtml).toContain('id="forgot-unavailable-note"');
+    expect(forgotDisabledHtml).not.toContain('id="forgot-email-input"');
+    expect(forgotDisabledHtml).toContain('id="btn-forgot-to-login"');
 
     const resetHtml = renderToString(<AuthPageView mode="reset" />);
     expect(resetHtml).toContain('id="view-reset"');
@@ -955,14 +965,21 @@ describe("Axo V2.7 Phase B — Header Logo, Homepage, Library & History (P3–P8
     expect(useAppStore.getState().view).toBe("landing");
 
     const landingHtml = renderToString(<App />);
+    const landingPlainText = landingHtml.replace(/<[^>]+>/g, " ").replace(/\s+/g, " ");
     expect(landingHtml).toContain('id="view-landing"');
     expect(landingHtml).toContain('id="landing-header"');
+    expect(landingHtml).toContain('id="btn-landing-header-library"');
+    expect(landingHtml).toContain('id="btn-landing-header-start"');
     expect(landingHtml).toContain('id="landing-hero"');
     expect(landingHtml).toContain('id="btn-landing-hero-start"');
-    expect(landingHtml).toContain('id="btn-landing-hero-library"');
-    expect(landingHtml).toContain('id="landing-product-showcase"');
-    expect(landingHtml).toContain('id="btn-landing-open-showcase-3d"');
-    expect(landingHtml).toContain("Hình học không gian, dễ hình dung hơn.");
+    expect(landingHtml).toContain('id="about-axo"');
+    expect(landingHtml).toContain('id="btn-landing-about-workspace"');
+    expect(landingHtml).toContain('id="cach-hoat-dong"');
+    expect(landingHtml).toContain('id="bai-mau"');
+    expect(landingHtml).toContain('id="btn-landing-samples-library"');
+    expect(landingHtml).toContain('id="landing-footer"');
+    expect(landingHtml).toContain('id="btn-landing-footer-library"');
+    expect(landingPlainText).toContain("Hình học không gian, dễ hình dung hơn.");
     expect(landingHtml).toContain("Bắt đầu dựng hình");
     expect(landingHtml).not.toContain("Nơi đề bài tiếng Việt hóa thành");
     expect(landingHtml).not.toContain('id="left-sidebar"');

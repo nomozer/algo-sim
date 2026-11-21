@@ -52,6 +52,12 @@ describe("Navigation Views, Error Localization & Library Controls", () => {
     expect(gateHtml).toContain("Em/thầy cô dùng Axo với vai trò");
     expect(gateHtml).not.toContain("AlgoSim");
 
+    // Login view hỗ trợ chung Email hoặc tên đăng nhập (cho Admin và người dùng thường)
+    const loginHtml = renderToString(<AuthPageView mode="login" />);
+    expect(loginHtml).toContain("Email hoặc tên đăng nhập");
+    expect(loginHtml).toContain('id="login-email-input"');
+    expect(loginHtml).toContain('autoComplete="username"');
+
     const histHtml = renderToString(<HistoryView />);
     expect(histHtml).toContain('aria-hidden="true"');
 
@@ -64,24 +70,33 @@ describe("Navigation Views, Error Localization & Library Controls", () => {
     );
     expect(svcInfo?.title).toBe("Dịch vụ phân tích đề hiện chưa sẵn sàng");
 
-    // Forgot password view: phân biệt rõ trạng thái chưa khả dụng (không nhắc SMTP, vô hiệu hóa form ngay từ đầu) và khả dụng (§8)
+    // Forgot password view: phân biệt rõ trạng thái đang kiểm tra, chưa khả dụng (không nhắc SMTP, không render form giả/vô hiệu) và khả dụng (§6)
+    const forgotCheckingHtml = renderToString(
+      <AuthPageView mode="forgot" initialEmailRecoveryAvailable={null} />,
+    );
+    expect(forgotCheckingHtml).toContain('id="forgot-checking-state"');
+    expect(forgotCheckingHtml).not.toContain('id="forgot-email-input"');
+    expect(forgotCheckingHtml).toContain('id="btn-forgot-to-login"');
+
     const forgotUnavailableHtml = renderToString(
       <AuthPageView mode="forgot" initialEmailRecoveryAvailable={false} />,
     );
     expect(forgotUnavailableHtml).not.toContain('id="btn-goto-reset-from-forgot"');
     expect(forgotUnavailableHtml).toContain('id="forgot-unavailable-note"');
+    expect(forgotUnavailableHtml).toContain('id="btn-forgot-to-login"');
     expect(forgotUnavailableHtml).not.toContain("SMTP");
-    expect(forgotUnavailableHtml).toMatch(
-      /<input[^>]*id="forgot-email-input"[^>]*disabled=""/,
-    );
-    expect(forgotUnavailableHtml).toMatch(
-      /<button[^>]*id="btn-forgot-submit"[^>]*disabled=""/,
-    );
+    expect(forgotUnavailableHtml).not.toContain('id="form-forgot"');
+    expect(forgotUnavailableHtml).not.toContain('id="forgot-email-input"');
+    expect(forgotUnavailableHtml).not.toContain('id="btn-forgot-submit"');
 
     const forgotAvailableHtml = renderToString(
       <AuthPageView mode="forgot" initialEmailRecoveryAvailable={true} />,
     );
     expect(forgotAvailableHtml).not.toContain('id="forgot-unavailable-note"');
+    expect(forgotAvailableHtml).toContain('id="form-forgot"');
+    expect(forgotAvailableHtml).toContain('id="forgot-email-input"');
+    expect(forgotAvailableHtml).toContain('id="btn-forgot-submit"');
+    expect(forgotAvailableHtml).toContain('id="btn-forgot-have-token"');
     expect(forgotAvailableHtml).not.toMatch(
       /<input[^>]*id="forgot-email-input"[^>]*disabled=""/,
     );
