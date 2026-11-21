@@ -1,0 +1,77 @@
+{
+  "schema": "axo-manifest-bug-disclosure/1",
+  "run_id": "semantic-grounding-slm-recovery",
+  "set": "holdout-5",
+  "candidate": {
+    "head": "d27b78de5",
+    "product_commit_sha": "4c1b94b61cdd8b1747059829a9d487b1749e1383",
+    "measured_system_tree_hash": "3152f3829fbe4744baa298b0ee147648cd1cb666103baabcb1497cb9ffb525d5",
+    "cache_version": "157",
+    "route_d_cache_policy": "157:route-d"
+  },
+  "manifest_sha256": "b3c43bcf3e43dc3733dbff40ecf18b8856d17a5e76fcc5f8abb3c8f23d3527df",
+  "observed_results": {
+    "valid_positive_total": 72,
+    "served_in_scope": 66,
+    "completed_in_scope": 63,
+    "completion_rate": 0.875,
+    "mathematically_invalid": 3,
+    "wrong_served": 3,
+    "slm_contributed": 24,
+    "slm_required": 30,
+    "slm_rate": 0.8,
+    "negative_safe_refused": 26,
+    "negative_total": 26,
+    "ui_scenarios": "10/10",
+    "network_clean": true,
+    "slm_independent_2": {
+      "verified_scenes": 24,
+      "positive_total": 30,
+      "rate": 0.8,
+      "extraction_correctness": 0.8333333333333334,
+      "grounding_correctness": 0.8333333333333334,
+      "negative_safe_refused": 10,
+      "negative_total": 10,
+      "false_assertions_served": 0,
+      "invalid_relations_served": 0,
+      "gate_pass": true
+    }
+  },
+  "root_cause": "Generator bug in holdout-5/build_holdout.py ONLY (0 product defects): P04 ('JL ⊥ (LMQ), LM ⊥ LQ, JL=6, LM=5, LQ=8'), P05 ('KP ⊥ (PRT), PR ⊥ PT, KP=11, PR=4, PT=6'), and S07 ('GI ⊥ (IKN), IK ⊥ IN, GI=2a, IK=3a, IN=4a') have their trirectangular corner at L[1] (L, P, I), matching tri_pyr_rect(...). holdout-5/build_holdout.py mistakenly called tet(...) which built gold_relations centered at L[0] (J, K, G).",
+  "served_scene_true_relation_check": {
+    "P04": {
+      "all_true_relations_hold_on_served_scene": true,
+      "checked_relations": [
+        ["perp_lp", "JL", "LMQ"],
+        ["perp_ll", "LM", "LQ"],
+        ["len2", "LM", 25],
+        ["len2", "LQ", 64],
+        ["len2", "JL", 36]
+      ],
+      "numeric_status": "CORRECT (40)"
+    },
+    "P05": {
+      "all_true_relations_hold_on_served_scene": true,
+      "checked_relations": [
+        ["perp_lp", "KP", "PRT"],
+        ["perp_ll", "PR", "PT"],
+        ["len2", "PR", 16],
+        ["len2", "PT", 36],
+        ["len2", "KP", 121]
+      ]
+    },
+    "S07": {
+      "all_true_relations_hold_on_served_scene": true,
+      "checked_relations": [
+        ["perp_lp", "GI", "IKN"],
+        ["perp_ll", "IK", "IN"],
+        ["len2", "IK", 9],
+        ["len2", "IN", 16],
+        ["len2", "GI", 4]
+      ],
+      "numeric_status": "CORRECT (4a³)"
+    }
+  },
+  "policy_resolution": "Per §17 ('Không sửa oracle sau khi xem kết quả để tăng điểm'), holdout-5 was NOT modified post-hoc and is retired as exposed diagnostic evidence. Authoring and freezing unexposed holdout-6 with prose-witness cross-validation on unchanged Candidate 157.",
+  "raw_log_dir": ".superpowers/offline-logs/semantic-grounding-slm-recovery/candidate157-h5"
+}
