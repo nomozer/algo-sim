@@ -1,3 +1,18 @@
+## WAVE_ID = AXO_HYBRID_FINAL_DIRECT_MERGE_TWO_SESSION_BOOTSTRAP
+
+- `RUN_ID` = final-direct-merge-two-session-bootstrap
+- `REPORT` = docs/evaluation/geometry/runs/final-direct-merge-two-session-bootstrap/FINAL_MASTER_REPORT.md
+- `ARTIFACT_DIRECTORY` = docs/evaluation/geometry/runs/final-direct-merge-two-session-bootstrap
+- `START_BASE` = b42119528
+- `CODE_COMMIT` = merge 3104635db (parents dde2dcfd9, 46f87eaec); test-only a66ec7936, 4978ac01f; re-freeze f2cc62b1e (CACHE 158, 127 files, tree 7bd85b6e...); PENDING template re-bind e6ba1fea1
+- `CLASSIFICATION` = CODE_INTEGRATION (dormant flags) + PUBLICATION_EXCEPTION_APPROVAL (11 exact, Owner) + LIVE_PROVIDER_SMOKE (INCONCLUSIVE 3/5) + PAIRED_LIVE_DIAGNOSIS (shared limit) + AUTHORITATIVE_DETACHED_FULL_T3 (PASS on e6ba1fea1)
+- `PRODUCT_CHANGE` = NO new product code; merge integrates candidate 158 (2bb0211a1) with hero-portals already on main
+- `MODEL_REQUEST_COUNT` = 9 Gemini (gemini-2.5-flash) of a 12-request Owner budget; 0 local SLM benchmark runs
+- `CORRECTS` = NONE
+- `CORRECTED_BY` = NONE
+- `VERIFICATION` = run.json; POSTMERGE_RECEIPT.json; LIVE_SMOKE_PREREGISTRATION.json; LIVE_SMOKE_RESULT.json; LIVE_PAIR_DIAGNOSIS_PREREGISTRATION.json; LIVE_PAIR_DIAGNOSIS_RESULT.json; pending_template_refresh.json
+- `LIMITATIONS` = Model 1 text acceptance stays FAIL (Holdout-7); LOCAL_TEXT_MODEL1_VERIFIED=false; live smoke INCONCLUSIVE (L4/L5 refused on main and branch alike); paired diagnosis captured no payload; publication values not compared with backend/.env; first post-merge T3 (4978ac01f) FAIL is superseded by the authoritative PASS on e6ba1fea1, not hidden
+
 ## WAVE_ID = AXO_HYBRID_MODEL1_FINAL_TEXT_ACCEPTANCE
 
 - `RUN_ID` = model1-final-text-acceptance

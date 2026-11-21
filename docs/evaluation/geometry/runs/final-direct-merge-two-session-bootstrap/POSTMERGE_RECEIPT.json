@@ -1,0 +1,77 @@
+{
+ "schema": "axo-postmerge-receipt/1",
+ "run_id": "final-direct-merge-two-session-bootstrap",
+ "date": "2026-11-22",
+ "merge_execution": {
+  "status": "PASS",
+  "strategy": "git merge --no-ff (local, main checkout D:/Documents/projects/algo-sim); no PR, no squash, no rebase, no force",
+  "premerge_main": "dde2dcfd9643c4b6ae4d2d1008c8f297b939c13c",
+  "premerge_main_note": "local main moved during the session from bc6ff5e33 to dde2dcfd9 (another session merged feat/axo-hero-enter-portals and later pushed it); the Owner chose to merge on top of it",
+  "feature_tip": "46f87eaecfb51f74e1b5dcdb5a85c2f3669c42fb",
+  "merge_commit": "3104635dbd74118d2bb6db9b1f91fbd0a5f734ae",
+  "first_parent": "dde2dcfd9643c4b6ae4d2d1008c8f297b939c13c",
+  "second_parent": "46f87eaecfb51f74e1b5dcdb5a85c2f3669c42fb",
+  "rollback_anchor": {"tag": "pre-model1-merge", "type": "annotated, local only (not pushed)", "target": "dde2dcfd9643c4b6ae4d2d1008c8f297b939c13c"},
+  "conflicts": [
+   {"path": "backend/tests/geometry/test_independent_holdout_equivalence.py", "resolution": "kept both new tests (main: historical freeze guards; branch: six-layer anti-contamination)"},
+   {"path": "frontend/src/simulations/domains/geometry/backend-dynamic-scene3d-contract.test.tsx", "resolution": "kept main's resolver (BACKEND_PYTHON + git common dir), added the branch's ALGO_SIM_PYTHON override first, dropped the branch's duplicate common-dir lookup and the then-unused spawnSync import"},
+   {"path": "frontend/src/simulations/domains/geometry/simulation-error-recovery.test.tsx", "resolution": "equivalent resolveDir fixes; kept main's form with the branch's comment"}
+  ],
+  "followup_commits_on_main": [
+   {"commit": "a66ec7936", "what": "test(docs): pin historical candidate file count to the integrated manifest (109 -> 127)"},
+   {"commit": "4978ac01f", "what": "test(auth): decode manage_admin CLI output as UTF-8 (pre-existing Windows failure, also red on dde2dcfd9)"},
+   {"commit": "f2cc62b1e", "what": "chore(eval): re-freeze evaluation candidate at the merge (Owner decision; CACHE 158, 127 files, tree 7bd85b6e2c8719e4fb6192e362ce17505588081623c90514dda0a83e88b4dd04, clean detached worktree)"},
+   {"commit": "e6ba1fea1", "what": "chore(eval): re-bind the 3 PENDING C21 approval templates (stay PENDING) via backend/scripts/refresh_pending_templates.py"}
+  ]
+ },
+ "postmerge_verification": {
+  "first_full_t3_on_4978ac01f": {
+   "verdict": "FAIL",
+   "log_sha256": "outside repo D:/tmp/axo20/full-t3.log",
+   "pytest": "9 failed, 15191 passed: every failure = evaluation guards refusing 'measured_system differs from frozen EVALUATION_CANDIDATE.json'; 8 of the 9 also fail on dde2dcfd9 (hero-portals changed backend/app/accounts without a re-freeze)",
+   "vitest": "189/189 files 'Vitest failed to find the runner' (0 tests): launch environment only, the gate was started from Git Bash with a lower-case 'd:' cwd; a single file passed standalone in the same worktree"
+  },
+  "authoritative_full_t3": {
+   "verdict": "FULL_PRODUCT_GATE_PASS",
+   "commit": "e6ba1fea15fc929c52eb188c190bf7c9c5d18cf5",
+   "worktree": ".superpowers/worktrees/measure-merge-e6ba1fea1 (fresh clean detached; only frontend/node_modules from npm ci; clean after)",
+   "command": "cd frontend && npm run test:full (launched from PowerShell, D: cwd)",
+   "env": {"ALLOW_LIVE_AI": "0", "ALGO_SIM_PYTHON": "D:/Documents/projects/algo-sim/backend/.venv/Scripts/python.exe", "LOCAL_SLM_CACHE_DIR": "C:/Users/Bunny/AppData/Local/axo-slm"},
+   "started": "2026-11-22T01:33:08+07:00",
+   "ended": "2026-11-22T01:51:32+07:00",
+   "exit_code": 0,
+   "backend_pytest": "15200 passed, 0 failed, 8 skipped, 9 deselected, 12 xfailed (981.7s)",
+   "frontend_vitest": "189/189 files, 2302/2302 tests (98.4s)",
+   "typecheck_build": "PASS (16.6s)",
+   "demo_replay": "5/5 + reduced chain 1/1",
+   "demo_crash_surface": "6/6",
+   "log": "D:/tmp/axo20/full-t3-b.log",
+   "log_sha256": "265a6b902588df706840a20dfdabda50a5188b47a53ea2f724cbaac2800e391f",
+   "note": "vitest file count 189 vs 203 in /19: the hero-portals work retired UI test files before this merge"
+  },
+  "candidate_identity_after_merge": {
+   "freeze_verify": "PASS (127 files, 7bd85b6e2c87...)",
+   "freeze_verify_historical": "PASS",
+   "cache_lock_verify": "PASS (CACHE_VERSION 158, environment f9df4bf0c8bd458a...)",
+   "default_route_mode": "live (app/main.py: empty/unset => live)"
+  },
+  "main_untracked_folder_preserved": {"path": "docs/evaluation/geometry/runs/post-merge-cleanup-closure/", "files": 6, "sha256_match_v19": true}
+ },
+ "remote_push": {"status": "PLANNED_AFTER_THIS_COMMIT", "policy": "one plain push of main, no tags, no force; receipt outside the repo (D:/tmp/axo20) so no unpushed commit remains"},
+ "cleanup_and_bootstrap": {"status": "PLANNED_AFTER_PUSH", "receipt": "D:/tmp/axo20/GIT_CLEANUP_AND_BOOTSTRAP_RECEIPT.json (outside the repo by design)"},
+ "verdict_flags": {
+  "MODEL1_TEXT_ACCEPTANCE": "FAIL",
+  "PROSPECTIVE_TEXT_ACCEPTANCE": "FAIL",
+  "LOCAL_TEXT_MODEL1_VERIFIED": false,
+  "LOCAL_DEFAULT_ENABLED": false,
+  "FULL_GEMINI_ROLE_REPLACEMENT_VERIFIED": false,
+  "CODE_INTEGRATION_COMPLETED": true,
+  "MAIN_MERGE_COMPLETED": true,
+  "MERGE_COMMIT_SHA": "3104635dbd74118d2bb6db9b1f91fbd0a5f734ae",
+  "POSTMERGE_FULL_GATE_PASS": true,
+  "MAIN_UNTRACKED_DATA_PRESERVED": true,
+  "ROLLBACK_ANCHOR_VERIFIED": true,
+  "NO_PR_CREATED": true,
+  "NO_FORCE_PUSH_PERFORMED": true
+ }
+}

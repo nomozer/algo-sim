@@ -4,8 +4,8 @@
  "wave_id": "AXO_HYBRID_FINAL_DIRECT_MERGE_TWO_SESSION_BOOTSTRAP",
  "campaign": "AXO HYBRID /20",
  "date": "2026-11-22",
- "status": "PREMERGE_GATE_CLOSED_MERGE_AUTHORIZED",
- "note": "This file records the pre-merge state on the feature branch. Merge, post-merge T3, push, cleanup and bootstrap are recorded in POSTMERGE_RECEIPT.json, committed on main after the merge.",
+ "status": "MERGED_AND_VERIFIED_PUSH_PENDING_IN_THIS_COMMIT",
+ "note": "Pre-merge state is kept below as recorded on the feature branch. Merge, post-merge T3, re-freeze: POSTMERGE_RECEIPT.json. Push, cleanup and bootstrap happen after this commit; their receipt is D:/tmp/axo20/GIT_CLEANUP_AND_BOOTSTRAP_RECEIPT.json (outside the repo so main carries no unpushed commit).",
  "branch": "feat/model1-final-text-acceptance",
  "base_commit": "b42119528fc6f2e445f23b80fb3159fac84c9dec",
  "main_commit": "bc6ff5e333e32d1d53dc7435fba64fe12b6dd651",
@@ -64,7 +64,10 @@
  "live_pair_diagnosis": {
   "preregistration": "LIVE_PAIR_DIAGNOSIS_PREREGISTRATION.json",
   "preregistration_sha256": "3b75d071f39c27777080f0ee6dc86a2b16c3ea5f258fe60b787482ebf3a2efab",
-  "tools": ["tools/live_pair_capture.py", "tools/cross_replay.py"],
+  "tools": [
+   "tools/live_pair_capture.py",
+   "tools/cross_replay.py"
+  ],
   "result": "LIVE_PAIR_DIAGNOSIS_RESULT.json",
   "http_requests": 4,
   "verdict_preregistered": "INCONCLUSIVE (0 payloads captured: rejection happens inside TransportExtractor.extract)",
@@ -96,6 +99,12 @@
   "OWNER_LOCAL_MERGE_AUTHORIZED": true,
   "MAIN_MERGE_READY": true,
   "NO_PR_CREATED": true,
-  "NO_FORCE_PUSH_PERFORMED": true
+  "NO_FORCE_PUSH_PERFORMED": true,
+  "MAIN_MERGE_COMPLETED": true,
+  "MERGE_COMMIT_SHA": "3104635dbd74118d2bb6db9b1f91fbd0a5f734ae",
+  "POSTMERGE_FULL_GATE_PASS": true,
+  "ROLLBACK_ANCHOR_VERIFIED": true,
+  "MAIN_UNTRACKED_DATA_PRESERVED": true,
+  "CODE_INTEGRATION_COMPLETED": true
  }
 }
