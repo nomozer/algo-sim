@@ -1,0 +1,57 @@
+{
+  "schema": "axo-candidate-integrity-audit/1",
+  "run_id": "model1-integration-readiness",
+  "date": "2026-11-21",
+  "audited_candidate": {
+    "product_commit": "4c1b94b61cdd8b1747059829a9d487b1749e1383",
+    "candidate_freeze_commit": "39c95599e9ddc2efc7cc3455ae2505384af63e21",
+    "branch_head_at_audit": "3a39a1ea4c6e6afa417468acd8ab97954178e2a2",
+    "worktree": ".superpowers/worktrees/simulation-intent-slm-recovery (shared, reused per owner policy)",
+    "working_tree_clean_at_audit": true,
+    "product_paths_changed_since_product_commit": 0
+  },
+  "identity_checks": [
+    {"item": "candidate freeze", "command": "backend/scripts/freeze_evaluation_candidate.py --verify", "result": "PASS", "observed": "127 files, tree 3152f3829fbe4744…", "expected": "3152f3829fbe4744baa298b0ee147648cd1cb666103baabcb1497cb9ffb525d5 (127 files)"},
+    {"item": "cache identity lock", "command": "backend/scripts/lock_cache_identity.py --verify", "result": "PASS", "observed": "CACHE_VERSION 157, environment f9df4bf0c8bd458a…", "expected": "157 / f9df4bf0c8bd458a278d2692567fa3e096340ae37ff5493730dff4067c0f5e19"},
+    {"item": "CACHE_VERSION / ROUTE_D_CACHE_POLICY in source", "observed": "\"157\" / f\"{CACHE_VERSION}:route-d\"", "result": "PASS"},
+    {"item": "EVALUATION_CANDIDATE.json", "observed": "commit 4c1b94b61, cache_version 157, cay_lam_viec_sach true, frozen 2026-11-21T10:14:25Z", "result": "PASS"},
+    {"item": "GGUF sha256", "observed": "73f1484b08b97ed2a1f44e32bcf6610210c7fda51567c4cd0a03d98dffc6cc35", "expected": "73f1484b08b97ed2a1f44e32bcf6610210c7fda51567c4cd0a03d98dffc6cc35", "result": "PASS"},
+    {"item": "llama.cpp runtime", "observed": "llama-server --version: build 12470, commit dde9de82c; archive sha256 fc83371644b5…5d67f = pinned LLAMA_CPP_RUNTIME_SPEC", "result": "PASS"},
+    {"item": "default route mode in product code", "observed": "hybrid_route_mode(): unset ⇒ \"live\"", "result": "PASS"}
+  ],
+  "invariant_suites": [
+    {"suite": "docs information architecture + shared live harness + cache identity + current-state identity + holdout baseline immutability + 6 Source Gate suites", "result": "524 passed, 0 failed (39.1 s)"},
+    {"suite": "Construction /2 freeze (test_axo_construction_v2_integrity_and_integration, test_verified_construction_graph_and_planner)", "result": "34 passed, 0 failed (20.2 s)"},
+    {"suite": "byte diff vs c4ae9dd1f of docs/evaluation/geometry/harness/** and backend/experimental/construction_planner/**", "result": "0 files"}
+  ],
+  "frozen_evidence": {
+    "checked": "18 artifacts listed in semantic-grounding-slm-recovery/run.json → artifacts",
+    "content_changed": 0,
+    "recorded_digest_defect": {
+      "artifact": "semantic-grounding-slm-recovery/SEMANTIC_REWRITE_SAFETY_AUDIT.json",
+      "recorded_in": ["run.json → artifacts", "FINAL_MASTER_REPORT.md §3.1"],
+      "recorded": "be8d2b97a2a4c73d718bc665ad311e2f8344ed694ce968794c445df47ace2b4 (63 hex characters)",
+      "actual_raw_sha256": "be8d2b97a2a4c73d718bc665ad311e2f8344ed694ce968794c445df747ace2b4",
+      "diagnosis": "transcription error (one '7' dropped); the file is unchanged since its commit 4c1b94b61 and the tree is clean",
+      "action": "not edited (frozen evidence); corrected here and registered as CORRECTED_BY in docs/EVIDENCE_INDEX.md"
+    }
+  },
+  "behavioural_reproduction": {
+    "method": "same candidate, in-process FastAPI TestClient on the real /api/analyze handler, local-only-scoped, fresh SQLite, real AxoV9 + llama.cpp, shared scene_oracle.py (arm A of PARSER_SLM_ROUTING_AUDIT.json)",
+    "holdout_6": {"completed": "64/72", "slm_contributed_completed": 23, "negative_served": "0/26", "math_invalid_served": 0, "published_v16": "64/72, 23 SLM, 26/26 safe"},
+    "slm_independent_3_via_production_router": {"completed": "28/30", "slm_contributed_completed": 3, "negative_served": "0/10", "note": "production router, parser first; not the /16 isolated-SLM measurement (21/30, allow_parser_reconcile=false)"},
+    "verdict": "REPRODUCED"
+  },
+  "publication_safety": {
+    "command": "backend/scripts/check_publication_safety.py",
+    "main_head_bc6ff5e33": "96 violations, all PENDING_OWNER_DECISION exceptions (PY_TRACEBACK in a w20 log) — BLOCKED on main too",
+    "branch_head": "103 violations = the same 96 pending + 7 HARDCODED_PASSWORD without exception",
+    "range_bc6ff5e33..HEAD": "12 HARDCODED_PASSWORD, 0 exceptions",
+    "nature": "the synthetic local test-account password used by /10–/12 browser acceptance tools in frozen run folders (example.com accounts against a loopback server); not a real credential",
+    "consequence": "integration blocker: needs an owner exception entry (owner-only) — tools are frozen evidence and are not edited"
+  },
+  "verdict": {
+    "CANDIDATE157_INTEGRITY_VERIFIED": true,
+    "scope": "identities, freeze, cache lock, model/runtime checksums, invariant suites, frozen /16 evidence and behaviour reproduced on the dev host; AUTHORITATIVE_DETACHED_COMPLIANCE stays NOT_VERIFIED (shared worktree)"
+  }
+}
