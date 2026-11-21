@@ -4,7 +4,7 @@
  "wave_id": "AXO_HYBRID_FINAL_DIRECT_MERGE_TWO_SESSION_BOOTSTRAP",
  "campaign": "AXO HYBRID /20",
  "date": "2026-11-22",
- "status": "CHECKPOINT_AWAITING_OWNER_ACTIONS",
+ "status": "STOPPED_BEFORE_MERGE_D4_BLOCKED_D7_INCONCLUSIVE",
  "branch": "feat/model1-final-text-acceptance",
  "base_commit": "b42119528fc6f2e445f23b80fb3159fac84c9dec",
  "main_commit": "bc6ff5e333e32d1d53dc7435fba64fe12b6dd651",
@@ -45,7 +45,21 @@
   "harness": "tools/live_gemini_smoke.py",
   "detached_worktree": ".superpowers/worktrees/live-smoke-c158 @ b42119528 (clean)",
   "offline_dry_run": "cap 0 + dummy key: N1 GATE_OK (0 calls), L1 stopped by budget before network I/O (0 HTTP requests)",
-  "status": "NOT_MEASURED"
+  "status": "MEASURED_ONCE",
+  "executed_by": "agent, under the Owner's explicit D7 delegation of 2026-11-22 (continuation instruction); single run, no re-run",
+  "result": "LIVE_SMOKE_RESULT.json",
+  "result_sha256": "440072844416a91fe5b8ef13655f00f24fec8200864d1ace76a2fc80a5745fbc",
+  "gemini_model": "gemini-2.5-flash",
+  "http_requests": 5,
+  "logical_calls": 5,
+  "retry_requests": 0,
+  "verdict": "INCONCLUSIVE",
+  "summary": "L1/L2/L3 MATCH (12/5, cos²=32/41, 4√2/3 exactly the deterministic oracle); L4/L5 SAFE_REFUSAL INVALID_TYPED_FACT_NEXT (HTTP 200, fail-closed, 0 scene objects); N1 GATE_OK (0 calls); 0 HTTP 500, 0 wrong answers. 3/5 MATCH < pre-registered 4/5 => INCONCLUSIVE => merge waits for the Owner.",
+  "open_question": "Whether L4/L5 are caused by the branch's TypedFactNext contract change (typed_fact_next.py +216, typed_fact_next_extraction.py +77 vs main) or by provider variance is NOT_MEASURED: raw payloads were deliberately not captured and a main-vs-158 live pair is outside the pre-registration."
+ },
+ "d4_execution": {
+  "status": "BLOCKED",
+  "detail": "Owner delegated running D:/tmp/axo20/approve_d4.ps1 (audited: no network, no secrets, 9 blob keys / 11 entries, writes only if exactly 11 change). The Claude Code permission classifier denied the agent writing APPROVED_BY_USER (Undermining Oversight); not worked around. Register unchanged: 3 APPROVED_BY_USER, 11 new entries PENDING."
  },
  "main_untracked_folder_preserved": {
   "path": "docs/evaluation/geometry/runs/post-merge-cleanup-closure/",
@@ -59,8 +73,8 @@
   "LOCAL_TEXT_MODEL1_VERIFIED": false,
   "FULL_GEMINI_ROLE_REPLACEMENT_VERIFIED": false,
   "PUBLICATION_SAFETY_GATE_PASS": false,
-  "GEMINI_LIVE_COMPATIBILITY_STATUS": "OFFLINE_PARITY_82_OF_82; LIVE_NOT_MEASURED",
-  "GEMINI_LIVE_SMOKE_OR_WAIVER_APPROVED": "SMOKE_APPROVED_NOT_RUN",
+  "GEMINI_LIVE_COMPATIBILITY_STATUS": "OFFLINE_PARITY_82_OF_82; LIVE_SMOKE_INCONCLUSIVE_3_OF_5",
+  "GEMINI_LIVE_SMOKE_OR_WAIVER_APPROVED": "SMOKE_RUN_INCONCLUSIVE; NO_WAIVER",
   "PREMERGE_MAIN_SNAPSHOT_VERIFIED": true,
   "ROLLBACK_ANCHOR_VERIFIED": false,
   "MAIN_MERGE_READY": false,
@@ -73,7 +87,7 @@
   "NO_PR_CREATED": true,
   "NO_FORCE_PUSH_PERFORMED": true
  },
- "live_ai_calls": 0,
+ "live_ai_calls": 5,
  "next_owner_actions": [
   "run D:/tmp/axo20/approve_d4.ps1 (sha256 3df15e5c5dff141d2934476f75efaf43cd6a49d09a76db06d55dc9c8eddf1d6d, outside the repo by design) from the shared worktree root (prints approved=11; refuses to write unless exactly 11 values change)",
   "run tools/live_gemini_smoke.py with the main venv (writes D:/tmp/axo20/live_smoke_result.json)"
