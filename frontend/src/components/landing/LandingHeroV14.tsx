@@ -110,7 +110,26 @@ export function LandingHeroV14() {
       <div className="axo-v14-hero-atelier-grid">
         <h1 id="axo-v14-hero-heading" className="axo-v14-hero-atelier-title">
           <span className="axo-v14-hero-title-line">Hình học không gian,</span>
-          <span className="axo-v14-hero-title-line">dễ hình dung hơn.</span>
+          <span className="axo-v14-hero-title-line">
+            dễ{" "}
+            <span className="axo-v14-hero-keyword">
+              <span className="axo-v14-hero-keyword-text">hình dung</span>
+              <svg
+                className="axo-v14-hero-keyword-ring"
+                viewBox="0 0 320 125"
+                preserveAspectRatio="none"
+                aria-hidden="true"
+                focusable="false"
+              >
+                <path
+                  className="axo-v14-hero-keyword-path"
+                  d="M 214 16 C 156 6, 52 5, 12 32 C -6 48, 2 98, 88 111 C 162 121, 248 121, 295 108 C 318 96, 322 40, 286 20 C 256 4, 214 6, 176 11"
+                  pathLength={1}
+                />
+              </svg>
+            </span>{" "}
+            hơn.
+          </span>
         </h1>
 
         <div className="axo-v14-hero-atelier-body">

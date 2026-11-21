@@ -45,7 +45,7 @@ describe("AXO Landing V1.4 — Minimal Product-First Hero, Cleanup & Lifecycle",
     expect(prodHtml).not.toContain("axo-v14-root");
   });
 
-  it("renders Notion-minimal left copy (without circle stroke) + Bundaumayo-composed Atelier studio diorama visual on right", () => {
+  it("renders compact Notion-minimal left copy with single hand-drawn keyword ring + Bundaumayo-composed Atelier studio diorama visual on right", () => {
     useAuthStore.setState({ user: null });
     syncAuthStoreForSSR();
     const v14Html = renderToStaticMarkup(<LandingPreviewV14 />);
@@ -55,10 +55,14 @@ describe("AXO Landing V1.4 — Minimal Product-First Hero, Cleanup & Lifecycle",
     expect(storyStart).toBeGreaterThan(heroStart);
 
     const heroSlice = v14Html.slice(heroStart, storyStart);
+    const heroPlainText = heroSlice.replace(/<[^>]+>/g, "").replace(/\s+/g, " ");
     expect(heroSlice).toContain('id="axo-v14-hero-heading"');
     expect(heroSlice).toContain("axo-v14-hero-atelier");
-    expect(heroSlice).toContain("Hình học không gian,");
-    expect(heroSlice).toContain("dễ hình dung hơn.");
+    expect(heroPlainText).toContain("Hình học không gian,");
+    expect(heroPlainText).toContain("dễ hình dung hơn.");
+    expect(heroSlice).toContain("axo-v14-hero-keyword");
+    expect(heroSlice).toContain("axo-v14-hero-keyword-ring");
+    expect(heroSlice).toContain('aria-hidden="true"');
     expect(heroSlice).not.toContain("axo-v14-anno-circle");
     expect(heroSlice).toContain('id="btn-landing-hero-start"');
     expect(heroSlice).toContain("Bắt đầu dựng hình");
