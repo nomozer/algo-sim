@@ -24,7 +24,10 @@
       "path": "holdout-4/build_holdout.py",
       "sha256": "ffc0ca0e4c2702c3a85a650f9902e4fa3902a19908a3789800467e80aeab1e91"
     },
-    "candidate_freeze": null
+    "candidate_freeze": {
+      "path": "holdout-4/CANDIDATE_FREEZE.json",
+      "sha256": "1f7cd1fd01788a1ff5c21bfe259e8bb230b9c35fb1d343356b45e957c18eb410"
+    }
   },
   "harness": {
     "version": "axo-live-acceptance-harness/1",
@@ -75,5 +78,28 @@
   "slm_independent_counts": {
     "positive": 30,
     "negative": 10
+  },
+  "candidate_code": {
+    "head": "280cce79b52b5ba0d06bd73d2a2addc0bfe25889",
+    "branch": "feat/semantic-grounding-slm-recovery",
+    "candidate_commit": "c3e944d7fb7a86380738948d81ac6fdfdb514ed6",
+    "product_commit_sha": "c3e944d7fb7a86380738948d81ac6fdfdb514ed6",
+    "measured_system_tree_hash": "f3f04425378304b34e68a07d43df5d4f5a85c2a04ef90a08b6456c4403dafb4b",
+    "cache_version": "156",
+    "route_d_cache_policy": "156:route-d",
+    "semantic_environment_hash": "f9df4bf0c8bd458a278d2692567fa3e096340ae37ff5493730dff4067c0f5e19",
+    "parser_version": "local-geometry-parser/3",
+    "slm_extractor_version": "local-slm-extractor/6",
+    "slm_validator_version": "slm-grounding-validator/6"
+  },
+  "candidate_counts": {
+    "valid_total": 72,
+    "in_scope": 72,
+    "parser_complete": 42,
+    "slm_required": 30,
+    "preregistered_slm_targets": 12,
+    "preregistered_slm_targets_in_slm_required": 12,
+    "separate": 0,
+    "negative": 26
   }
 }
