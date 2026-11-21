@@ -1,0 +1,2034 @@
+{
+  "schema": "axo-slm-independent-manifest/1",
+  "run_id": "semantic-grounding-slm-recovery",
+  "set": "slm-independent-40",
+  "dataset_provenance": "agent-authored by AXO HYBRID /16 before any /16 product edit; disjoint from holdout-4 and 0 normalized overlaps against prior repo + training strings",
+  "valid_cases": [
+    {
+      "case_id": "I01",
+      "phrase_family": "slm_ind_pyr",
+      "input_type": "text",
+      "original_input": "Cho hình chóp A.MNOP có đáy MNOP là hình vuông cạnh 2, AM vuông góc với (MNOP), AM = 6. Tính thể tích khối chóp A.MNOP.",
+      "simulation_intent": "QUERY_WITH_SCENE",
+      "geometric_family": "pyramid_quad",
+      "gold_entities": {
+        "solid_vertices": [
+          "A",
+          "M",
+          "N",
+          "O",
+          "P"
+        ],
+        "auxiliary_points": []
+      },
+      "gold_relations": [
+        [
+          "perp_lp",
+          "AM",
+          "MNO"
+        ],
+        [
+          "perp_ll",
+          "MN",
+          "MP"
+        ],
+        [
+          "par_ll",
+          "MN",
+          "PO"
+        ],
+        [
+          "par_ll",
+          "MP",
+          "NO"
+        ],
+        [
+          "len2",
+          "MN",
+          4
+        ],
+        [
+          "len2",
+          "MP",
+          4
+        ],
+        [
+          "len2",
+          "AM",
+          36
+        ]
+      ],
+      "metric_oracle": [
+        8.0
+      ],
+      "preregistered_slm_target": false,
+      "expected_counts": {
+        "vertices": 5,
+        "faces": 5
+      },
+      "expected_behavior": "SERVE",
+      "geometry_determinacy": "UNIQUE_GEOMETRY",
+      "validation_method": "EXACT_SCENE_ORACLE+BROWSER"
+    },
+    {
+      "case_id": "I02",
+      "phrase_family": "slm_ind_pyr",
+      "input_type": "text",
+      "original_input": "Cho hình chóp B.DEFG có đáy DEFG là hình chữ nhật, DE = 3, DG = 5, BD vuông góc với đáy và BD = 4. Tính thể tích khối chóp B.DEFG.",
+      "simulation_intent": "QUERY_WITH_SCENE",
+      "geometric_family": "pyramid_quad",
+      "gold_entities": {
+        "solid_vertices": [
+          "B",
+          "D",
+          "E",
+          "F",
+          "G"
+        ],
+        "auxiliary_points": []
+      },
+      "gold_relations": [
+        [
+          "perp_lp",
+          "BD",
+          "DEF"
+        ],
+        [
+          "perp_ll",
+          "DE",
+          "DG"
+        ],
+        [
+          "par_ll",
+          "DE",
+          "GF"
+        ],
+        [
+          "par_ll",
+          "DG",
+          "EF"
+        ],
+        [
+          "len2",
+          "DE",
+          9
+        ],
+        [
+          "len2",
+          "DG",
+          25
+        ],
+        [
+          "len2",
+          "BD",
+          16
+        ]
+      ],
+      "metric_oracle": [
+        20.0
+      ],
+      "preregistered_slm_target": false,
+      "expected_counts": {
+        "vertices": 5,
+        "faces": 5
+      },
+      "expected_behavior": "SERVE",
+      "geometry_determinacy": "UNIQUE_GEOMETRY",
+      "validation_method": "EXACT_SCENE_ORACLE+BROWSER"
+    },
+    {
+      "case_id": "I03",
+      "phrase_family": "slm_ind_pyr",
+      "input_type": "text",
+      "original_input": "Cho hình chóp C.HIJK có đáy HIJK là hình vuông cạnh 4, CH vuông góc với đáy, CH = 3. Tính độ dài đoạn CI.",
+      "simulation_intent": "QUERY_WITH_SCENE",
+      "geometric_family": "pyramid_quad",
+      "gold_entities": {
+        "solid_vertices": [
+          "C",
+          "H",
+          "I",
+          "J",
+          "K"
+        ],
+        "auxiliary_points": []
+      },
+      "gold_relations": [
+        [
+          "perp_lp",
+          "CH",
+          "HIJ"
+        ],
+        [
+          "perp_ll",
+          "HI",
+          "HK"
+        ],
+        [
+          "par_ll",
+          "HI",
+          "KJ"
+        ],
+        [
+          "par_ll",
+          "HK",
+          "IJ"
+        ],
+        [
+          "len2",
+          "HI",
+          16
+        ],
+        [
+          "len2",
+          "HK",
+          16
+        ],
+        [
+          "len2",
+          "CH",
+          9
+        ]
+      ],
+      "metric_oracle": [
+        5.0
+      ],
+      "preregistered_slm_target": false,
+      "expected_counts": {
+        "vertices": 5,
+        "faces": 5
+      },
+      "expected_behavior": "SERVE",
+      "geometry_determinacy": "UNIQUE_GEOMETRY",
+      "validation_method": "EXACT_SCENE_ORACLE+BROWSER"
+    },
+    {
+      "case_id": "I04",
+      "phrase_family": "slm_ind_pyr",
+      "input_type": "text",
+      "original_input": "Cho hình chóp E.PQRS có đáy PQRS là hình vuông cạnh 5, EP vuông góc với đáy và EP = 5. Tính góc giữa EQ và mặt phẳng (PQRS).",
+      "simulation_intent": "QUERY_WITH_SCENE",
+      "geometric_family": "pyramid_quad",
+      "gold_entities": {
+        "solid_vertices": [
+          "E",
+          "P",
+          "Q",
+          "R",
+          "S"
+        ],
+        "auxiliary_points": []
+      },
+      "gold_relations": [
+        [
+          "perp_lp",
+          "EP",
+          "PQR"
+        ],
+        [
+          "perp_ll",
+          "PQ",
+          "PS"
+        ],
+        [
+          "par_ll",
+          "PQ",
+          "SR"
+        ],
+        [
+          "par_ll",
+          "PS",
+          "QR"
+        ],
+        [
+          "len2",
+          "PQ",
+          25
+        ],
+        [
+          "len2",
+          "PS",
+          25
+        ],
+        [
+          "len2",
+          "EP",
+          25
+        ]
+      ],
+      "metric_oracle": [
+        45.0
+      ],
+      "preregistered_slm_target": false,
+      "expected_counts": {
+        "vertices": 5,
+        "faces": 5
+      },
+      "expected_behavior": "SERVE",
+      "geometry_determinacy": "UNIQUE_GEOMETRY",
+      "validation_method": "EXACT_SCENE_ORACLE+BROWSER"
+    },
+    {
+      "case_id": "I05",
+      "phrase_family": "slm_ind_pyr",
+      "input_type": "text",
+      "original_input": "Cho hình chóp F.UVWX có đáy UVWX là hình vuông cạnh 2, FU vuông góc với đáy, FU = 2. Tính khoảng cách từ U đến mặt phẳng (FVX).",
+      "simulation_intent": "QUERY_WITH_SCENE",
+      "geometric_family": "pyramid_quad",
+      "gold_entities": {
+        "solid_vertices": [
+          "F",
+          "U",
+          "V",
+          "W",
+          "X"
+        ],
+        "auxiliary_points": []
+      },
+      "gold_relations": [
+        [
+          "perp_lp",
+          "FU",
+          "UVW"
+        ],
+        [
+          "perp_ll",
+          "UV",
+          "UX"
+        ],
+        [
+          "par_ll",
+          "UV",
+          "XW"
+        ],
+        [
+          "par_ll",
+          "UX",
+          "VW"
+        ],
+        [
+          "len2",
+          "UV",
+          4
+        ],
+        [
+          "len2",
+          "UX",
+          4
+        ],
+        [
+          "len2",
+          "FU",
+          4
+        ]
+      ],
+      "metric_oracle": [
+        1.1547005383792517
+      ],
+      "preregistered_slm_target": false,
+      "expected_counts": {
+        "vertices": 5,
+        "faces": 5
+      },
+      "expected_behavior": "SERVE",
+      "geometry_determinacy": "UNIQUE_GEOMETRY",
+      "validation_method": "EXACT_SCENE_ORACLE+BROWSER"
+    },
+    {
+      "case_id": "I06",
+      "phrase_family": "slm_ind_pyr",
+      "input_type": "text",
+      "original_input": "Cho hình chóp G.KLMN có đáy KLMN là hình chữ nhật có KL = 6, KN = 8, GK vuông góc với đáy và GK = 4. Vẽ hình chóp G.KLMN.",
+      "simulation_intent": "SIMULATE_ONLY",
+      "geometric_family": "pyramid_quad",
+      "gold_entities": {
+        "solid_vertices": [
+          "G",
+          "K",
+          "L",
+          "M",
+          "N"
+        ],
+        "auxiliary_points": []
+      },
+      "gold_relations": [
+        [
+          "perp_lp",
+          "GK",
+          "KLM"
+        ],
+        [
+          "perp_ll",
+          "KL",
+          "KN"
+        ],
+        [
+          "par_ll",
+          "KL",
+          "NM"
+        ],
+        [
+          "par_ll",
+          "KN",
+          "LM"
+        ],
+        [
+          "len2",
+          "KL",
+          36
+        ],
+        [
+          "len2",
+          "KN",
+          64
+        ],
+        [
+          "len2",
+          "GK",
+          16
+        ]
+      ],
+      "metric_oracle": null,
+      "preregistered_slm_target": false,
+      "expected_counts": {
+        "vertices": 5,
+        "faces": 5
+      },
+      "expected_behavior": "SERVE",
+      "geometry_determinacy": "UNIQUE_GEOMETRY",
+      "validation_method": "EXACT_SCENE_ORACLE+BROWSER"
+    },
+    {
+      "case_id": "I07",
+      "phrase_family": "slm_ind_pyr",
+      "input_type": "text",
+      "original_input": "Cho hình chóp M.PQRS có đáy PQRS là hình vuông cạnh 3a, MP vuông góc với đáy, MP = 4a. Tính thể tích khối chóp theo a.",
+      "simulation_intent": "QUERY_WITH_SCENE",
+      "geometric_family": "pyramid_quad",
+      "gold_entities": {
+        "solid_vertices": [
+          "M",
+          "P",
+          "Q",
+          "R",
+          "S"
+        ],
+        "auxiliary_points": []
+      },
+      "gold_relations": [
+        [
+          "perp_lp",
+          "MP",
+          "PQR"
+        ],
+        [
+          "perp_ll",
+          "PQ",
+          "PS"
+        ],
+        [
+          "par_ll",
+          "PQ",
+          "SR"
+        ],
+        [
+          "par_ll",
+          "PS",
+          "QR"
+        ],
+        [
+          "len2",
+          "PQ",
+          9
+        ],
+        [
+          "len2",
+          "PS",
+          9
+        ],
+        [
+          "len2",
+          "MP",
+          16
+        ]
+      ],
+      "metric_oracle": [
+        12.0
+      ],
+      "preregistered_slm_target": false,
+      "expected_counts": {
+        "vertices": 5,
+        "faces": 5
+      },
+      "expected_behavior": "SERVE",
+      "geometry_determinacy": "UNIQUE_GEOMETRY",
+      "validation_method": "EXACT_SCENE_ORACLE+BROWSER"
+    },
+    {
+      "case_id": "I08",
+      "phrase_family": "slm_ind_pyr",
+      "input_type": "text",
+      "original_input": "Cho hình chóp N.RSTU có đáy RSTU là hình chữ nhật với RS = 4, RU = 3, NR vuông góc với đáy và NR = 12. Tính độ dài đoạn NT.",
+      "simulation_intent": "QUERY_WITH_SCENE",
+      "geometric_family": "pyramid_quad",
+      "gold_entities": {
+        "solid_vertices": [
+          "N",
+          "R",
+          "S",
+          "T",
+          "U"
+        ],
+        "auxiliary_points": []
+      },
+      "gold_relations": [
+        [
+          "perp_lp",
+          "NR",
+          "RST"
+        ],
+        [
+          "perp_ll",
+          "RS",
+          "RU"
+        ],
+        [
+          "par_ll",
+          "RS",
+          "UT"
+        ],
+        [
+          "par_ll",
+          "RU",
+          "ST"
+        ],
+        [
+          "len2",
+          "RS",
+          16
+        ],
+        [
+          "len2",
+          "RU",
+          9
+        ],
+        [
+          "len2",
+          "NR",
+          144
+        ]
+      ],
+      "metric_oracle": [
+        13.0
+      ],
+      "preregistered_slm_target": false,
+      "expected_counts": {
+        "vertices": 5,
+        "faces": 5
+      },
+      "expected_behavior": "SERVE",
+      "geometry_determinacy": "UNIQUE_GEOMETRY",
+      "validation_method": "EXACT_SCENE_ORACLE+BROWSER"
+    },
+    {
+      "case_id": "I09",
+      "phrase_family": "slm_ind_tet",
+      "input_type": "text",
+      "original_input": "Cho tứ diện E.FGH có EF, EG, EH đôi một vuông góc, EF = 2, EG = 3, EH = 5. Tính thể tích khối tứ diện.",
+      "simulation_intent": "QUERY_WITH_SCENE",
+      "geometric_family": "tetrahedron",
+      "gold_entities": {
+        "solid_vertices": [
+          "E",
+          "F",
+          "G",
+          "H"
+        ],
+        "auxiliary_points": []
+      },
+      "gold_relations": [
+        [
+          "perp_ll",
+          "EF",
+          "EG"
+        ],
+        [
+          "perp_ll",
+          "EG",
+          "EH"
+        ],
+        [
+          "perp_ll",
+          "EH",
+          "EF"
+        ],
+        [
+          "len2",
+          "EF",
+          4
+        ],
+        [
+          "len2",
+          "EG",
+          9
+        ],
+        [
+          "len2",
+          "EH",
+          25
+        ]
+      ],
+      "metric_oracle": [
+        5.0
+      ],
+      "preregistered_slm_target": false,
+      "expected_counts": {
+        "vertices": 4,
+        "faces": 4
+      },
+      "expected_behavior": "SERVE",
+      "geometry_determinacy": "UNIQUE_GEOMETRY",
+      "validation_method": "EXACT_SCENE_ORACLE+BROWSER"
+    },
+    {
+      "case_id": "I10",
+      "phrase_family": "slm_ind_tet",
+      "input_type": "text",
+      "original_input": "Cho tứ diện L.MNP có LM, LN, LP đôi một vuông góc, LM = 5, LN = 12, LP = 2. Tính độ dài đoạn MN.",
+      "simulation_intent": "QUERY_WITH_SCENE",
+      "geometric_family": "tetrahedron",
+      "gold_entities": {
+        "solid_vertices": [
+          "L",
+          "M",
+          "N",
+          "P"
+        ],
+        "auxiliary_points": []
+      },
+      "gold_relations": [
+        [
+          "perp_ll",
+          "LM",
+          "LN"
+        ],
+        [
+          "perp_ll",
+          "LN",
+          "LP"
+        ],
+        [
+          "perp_ll",
+          "LP",
+          "LM"
+        ],
+        [
+          "len2",
+          "LM",
+          25
+        ],
+        [
+          "len2",
+          "LN",
+          144
+        ],
+        [
+          "len2",
+          "LP",
+          4
+        ]
+      ],
+      "metric_oracle": [
+        13.0
+      ],
+      "preregistered_slm_target": false,
+      "expected_counts": {
+        "vertices": 4,
+        "faces": 4
+      },
+      "expected_behavior": "SERVE",
+      "geometry_determinacy": "UNIQUE_GEOMETRY",
+      "validation_method": "EXACT_SCENE_ORACLE+BROWSER"
+    },
+    {
+      "case_id": "I11",
+      "phrase_family": "slm_ind_tet",
+      "input_type": "text",
+      "original_input": "Cho tứ diện Q.RST có QR, QS, QT đôi một vuông góc, QR = 4, QS = 5, QT = 6. Tính diện tích tam giác QRS.",
+      "simulation_intent": "QUERY_WITH_SCENE",
+      "geometric_family": "tetrahedron",
+      "gold_entities": {
+        "solid_vertices": [
+          "Q",
+          "R",
+          "S",
+          "T"
+        ],
+        "auxiliary_points": []
+      },
+      "gold_relations": [
+        [
+          "perp_ll",
+          "QR",
+          "QS"
+        ],
+        [
+          "perp_ll",
+          "QS",
+          "QT"
+        ],
+        [
+          "perp_ll",
+          "QT",
+          "QR"
+        ],
+        [
+          "len2",
+          "QR",
+          16
+        ],
+        [
+          "len2",
+          "QS",
+          25
+        ],
+        [
+          "len2",
+          "QT",
+          36
+        ]
+      ],
+      "metric_oracle": [
+        10.0
+      ],
+      "preregistered_slm_target": false,
+      "expected_counts": {
+        "vertices": 4,
+        "faces": 4
+      },
+      "expected_behavior": "SERVE",
+      "geometry_determinacy": "UNIQUE_GEOMETRY",
+      "validation_method": "EXACT_SCENE_ORACLE+BROWSER"
+    },
+    {
+      "case_id": "I12",
+      "phrase_family": "slm_ind_tet",
+      "input_type": "text",
+      "original_input": "Cho tứ diện V.WXY có VW, VX, VY đôi một vuông góc, VW = a, VX = 3a, VY = 4a. Tính thể tích khối tứ diện theo a.",
+      "simulation_intent": "QUERY_WITH_SCENE",
+      "geometric_family": "tetrahedron",
+      "gold_entities": {
+        "solid_vertices": [
+          "V",
+          "W",
+          "X",
+          "Y"
+        ],
+        "auxiliary_points": []
+      },
+      "gold_relations": [
+        [
+          "perp_ll",
+          "VW",
+          "VX"
+        ],
+        [
+          "perp_ll",
+          "VX",
+          "VY"
+        ],
+        [
+          "perp_ll",
+          "VY",
+          "VW"
+        ],
+        [
+          "len2",
+          "VW",
+          1
+        ],
+        [
+          "len2",
+          "VX",
+          9
+        ],
+        [
+          "len2",
+          "VY",
+          16
+        ]
+      ],
+      "metric_oracle": [
+        2.0
+      ],
+      "preregistered_slm_target": false,
+      "expected_counts": {
+        "vertices": 4,
+        "faces": 4
+      },
+      "expected_behavior": "SERVE",
+      "geometry_determinacy": "UNIQUE_GEOMETRY",
+      "validation_method": "EXACT_SCENE_ORACLE+BROWSER"
+    },
+    {
+      "case_id": "I13",
+      "phrase_family": "slm_ind_tet",
+      "input_type": "text",
+      "original_input": "Cho hình chóp T.KLM có đáy KLM là tam giác vuông tại K, KL = 4, KM = 3, TK vuông góc với đáy, TK = 6. Tính thể tích khối chóp T.KLM.",
+      "simulation_intent": "QUERY_WITH_SCENE",
+      "geometric_family": "tetrahedron",
+      "gold_entities": {
+        "solid_vertices": [
+          "T",
+          "K",
+          "L",
+          "M"
+        ],
+        "auxiliary_points": []
+      },
+      "gold_relations": [
+        [
+          "perp_lp",
+          "TK",
+          "KLM"
+        ],
+        [
+          "perp_ll",
+          "KL",
+          "KM"
+        ],
+        [
+          "len2",
+          "KL",
+          16
+        ],
+        [
+          "len2",
+          "KM",
+          9
+        ],
+        [
+          "len2",
+          "TK",
+          36
+        ]
+      ],
+      "metric_oracle": [
+        12.0
+      ],
+      "preregistered_slm_target": false,
+      "expected_counts": {
+        "vertices": 4,
+        "faces": 4
+      },
+      "expected_behavior": "SERVE",
+      "geometry_determinacy": "UNIQUE_GEOMETRY",
+      "validation_method": "EXACT_SCENE_ORACLE+BROWSER"
+    },
+    {
+      "case_id": "I14",
+      "phrase_family": "slm_ind_tet",
+      "input_type": "text",
+      "original_input": "Cho hình chóp R.FGH có đáy FGH là tam giác vuông cân tại F, FG = FH = 4, RF vuông góc với đáy, RF = 5. Vẽ hình chóp R.FGH.",
+      "simulation_intent": "SIMULATE_ONLY",
+      "geometric_family": "tetrahedron",
+      "gold_entities": {
+        "solid_vertices": [
+          "R",
+          "F",
+          "G",
+          "H"
+        ],
+        "auxiliary_points": []
+      },
+      "gold_relations": [
+        [
+          "perp_lp",
+          "RF",
+          "FGH"
+        ],
+        [
+          "perp_ll",
+          "FG",
+          "FH"
+        ],
+        [
+          "len2",
+          "FG",
+          16
+        ],
+        [
+          "len2",
+          "FH",
+          16
+        ],
+        [
+          "len2",
+          "RF",
+          25
+        ]
+      ],
+      "metric_oracle": null,
+      "preregistered_slm_target": false,
+      "expected_counts": {
+        "vertices": 4,
+        "faces": 4
+      },
+      "expected_behavior": "SERVE",
+      "geometry_determinacy": "UNIQUE_GEOMETRY",
+      "validation_method": "EXACT_SCENE_ORACLE+BROWSER"
+    },
+    {
+      "case_id": "I15",
+      "phrase_family": "slm_ind_pri",
+      "input_type": "text",
+      "original_input": "Cho lăng trụ đứng HIJ.PQR có đáy HIJ vuông tại H, HI = 4, HJ = 5, HP = 6. Tính thể tích khối lăng trụ.",
+      "simulation_intent": "QUERY_WITH_SCENE",
+      "geometric_family": "prism_tri",
+      "gold_entities": {
+        "solid_vertices": [
+          "H",
+          "I",
+          "J",
+          "P",
+          "Q",
+          "R"
+        ],
+        "auxiliary_points": []
+      },
+      "gold_relations": [
+        [
+          "perp_ll",
+          "HI",
+          "HJ"
+        ],
+        [
+          "perp_lp",
+          "HP",
+          "HIJ"
+        ],
+        [
+          "par_ll",
+          "HP",
+          "IQ"
+        ],
+        [
+          "par_ll",
+          "HP",
+          "JR"
+        ],
+        [
+          "len2",
+          "HI",
+          16
+        ],
+        [
+          "len2",
+          "HJ",
+          25
+        ],
+        [
+          "len2",
+          "HP",
+          36
+        ]
+      ],
+      "metric_oracle": [
+        60.0
+      ],
+      "preregistered_slm_target": false,
+      "expected_counts": {
+        "vertices": 6,
+        "faces": 5
+      },
+      "expected_behavior": "SERVE",
+      "geometry_determinacy": "UNIQUE_GEOMETRY",
+      "validation_method": "EXACT_SCENE_ORACLE+BROWSER"
+    },
+    {
+      "case_id": "I16",
+      "phrase_family": "slm_ind_pri",
+      "input_type": "text",
+      "original_input": "Cho lăng trụ đứng KLM.XYZ có đáy KLM là tam giác vuông tại K, KL = 8, KM = 6, KX = 4. Tính độ dài đoạn LM.",
+      "simulation_intent": "QUERY_WITH_SCENE",
+      "geometric_family": "prism_tri",
+      "gold_entities": {
+        "solid_vertices": [
+          "K",
+          "L",
+          "M",
+          "X",
+          "Y",
+          "Z"
+        ],
+        "auxiliary_points": []
+      },
+      "gold_relations": [
+        [
+          "perp_ll",
+          "KL",
+          "KM"
+        ],
+        [
+          "perp_lp",
+          "KX",
+          "KLM"
+        ],
+        [
+          "par_ll",
+          "KX",
+          "LY"
+        ],
+        [
+          "par_ll",
+          "KX",
+          "MZ"
+        ],
+        [
+          "len2",
+          "KL",
+          64
+        ],
+        [
+          "len2",
+          "KM",
+          36
+        ],
+        [
+          "len2",
+          "KX",
+          16
+        ]
+      ],
+      "metric_oracle": [
+        10.0
+      ],
+      "preregistered_slm_target": false,
+      "expected_counts": {
+        "vertices": 6,
+        "faces": 5
+      },
+      "expected_behavior": "SERVE",
+      "geometry_determinacy": "UNIQUE_GEOMETRY",
+      "validation_method": "EXACT_SCENE_ORACLE+BROWSER"
+    },
+    {
+      "case_id": "I17",
+      "phrase_family": "slm_ind_pri",
+      "input_type": "text",
+      "original_input": "Cho lăng trụ đứng DEK.RST có đáy DEK là tam giác vuông cân tại D có DE = DK = 3, DR = 7. Tính thể tích khối lăng trụ.",
+      "simulation_intent": "QUERY_WITH_SCENE",
+      "geometric_family": "prism_tri",
+      "gold_entities": {
+        "solid_vertices": [
+          "D",
+          "E",
+          "K",
+          "R",
+          "S",
+          "T"
+        ],
+        "auxiliary_points": []
+      },
+      "gold_relations": [
+        [
+          "perp_ll",
+          "DE",
+          "DK"
+        ],
+        [
+          "perp_lp",
+          "DR",
+          "DEK"
+        ],
+        [
+          "par_ll",
+          "DR",
+          "ES"
+        ],
+        [
+          "par_ll",
+          "DR",
+          "KT"
+        ],
+        [
+          "len2",
+          "DE",
+          9
+        ],
+        [
+          "len2",
+          "DK",
+          9
+        ],
+        [
+          "len2",
+          "DR",
+          49
+        ]
+      ],
+      "metric_oracle": [
+        31.5
+      ],
+      "preregistered_slm_target": false,
+      "expected_counts": {
+        "vertices": 6,
+        "faces": 5
+      },
+      "expected_behavior": "SERVE",
+      "geometry_determinacy": "UNIQUE_GEOMETRY",
+      "validation_method": "EXACT_SCENE_ORACLE+BROWSER"
+    },
+    {
+      "case_id": "I18",
+      "phrase_family": "slm_ind_pri",
+      "input_type": "text",
+      "original_input": "Cho lăng trụ đứng GHK.G'H'K' có đáy GHK vuông tại G, GH = 2a, GK = 3a, GG' = 5a. Tính thể tích khối lăng trụ theo a.",
+      "simulation_intent": "QUERY_WITH_SCENE",
+      "geometric_family": "prism_tri",
+      "gold_entities": {
+        "solid_vertices": [
+          "G",
+          "H",
+          "K",
+          "G'",
+          "H'",
+          "K'"
+        ],
+        "auxiliary_points": []
+      },
+      "gold_relations": [
+        [
+          "perp_ll",
+          "GH",
+          "GK"
+        ],
+        [
+          "perp_lp",
+          "GG'",
+          "GHK"
+        ],
+        [
+          "par_ll",
+          "GG'",
+          "HH'"
+        ],
+        [
+          "par_ll",
+          "GG'",
+          "KK'"
+        ],
+        [
+          "len2",
+          "GH",
+          4
+        ],
+        [
+          "len2",
+          "GK",
+          9
+        ],
+        [
+          "len2",
+          "GG'",
+          25
+        ]
+      ],
+      "metric_oracle": [
+        15.0
+      ],
+      "preregistered_slm_target": false,
+      "expected_counts": {
+        "vertices": 6,
+        "faces": 5
+      },
+      "expected_behavior": "SERVE",
+      "geometry_determinacy": "UNIQUE_GEOMETRY",
+      "validation_method": "EXACT_SCENE_ORACLE+BROWSER"
+    },
+    {
+      "case_id": "I19",
+      "phrase_family": "slm_ind_pri",
+      "input_type": "text",
+      "original_input": "Cho lăng trụ đứng MNP.UVW có đáy MNP vuông tại M, MN = 5, MP = 4, MU = 2. Vẽ hình lăng trụ.",
+      "simulation_intent": "SIMULATE_ONLY",
+      "geometric_family": "prism_tri",
+      "gold_entities": {
+        "solid_vertices": [
+          "M",
+          "N",
+          "P",
+          "U",
+          "V",
+          "W"
+        ],
+        "auxiliary_points": []
+      },
+      "gold_relations": [
+        [
+          "perp_ll",
+          "MN",
+          "MP"
+        ],
+        [
+          "perp_lp",
+          "MU",
+          "MNP"
+        ],
+        [
+          "par_ll",
+          "MU",
+          "NV"
+        ],
+        [
+          "par_ll",
+          "MU",
+          "PW"
+        ],
+        [
+          "len2",
+          "MN",
+          25
+        ],
+        [
+          "len2",
+          "MP",
+          16
+        ],
+        [
+          "len2",
+          "MU",
+          4
+        ]
+      ],
+      "metric_oracle": null,
+      "preregistered_slm_target": false,
+      "expected_counts": {
+        "vertices": 6,
+        "faces": 5
+      },
+      "expected_behavior": "SERVE",
+      "geometry_determinacy": "UNIQUE_GEOMETRY",
+      "validation_method": "EXACT_SCENE_ORACLE+BROWSER"
+    },
+    {
+      "case_id": "I20",
+      "phrase_family": "slm_ind_box",
+      "input_type": "text",
+      "original_input": "Cho hình lập phương KLMN.K'L'M'N' cạnh 6. Tính thể tích khối lập phương.",
+      "simulation_intent": "QUERY_WITH_SCENE",
+      "geometric_family": "cube",
+      "gold_entities": {
+        "solid_vertices": [
+          "K",
+          "L",
+          "M",
+          "N",
+          "K'",
+          "L'",
+          "M'",
+          "N'"
+        ],
+        "auxiliary_points": []
+      },
+      "gold_relations": [
+        [
+          "perp_ll",
+          "KL",
+          "KN"
+        ],
+        [
+          "perp_lp",
+          "KK'",
+          "KLM"
+        ],
+        [
+          "par_ll",
+          "KK'",
+          "LL'"
+        ],
+        [
+          "len2",
+          "KL",
+          36
+        ],
+        [
+          "len2",
+          "KN",
+          36
+        ],
+        [
+          "len2",
+          "KK'",
+          36
+        ]
+      ],
+      "metric_oracle": [
+        216.0
+      ],
+      "preregistered_slm_target": false,
+      "expected_counts": {
+        "vertices": 8,
+        "faces": 6
+      },
+      "expected_behavior": "SERVE",
+      "geometry_determinacy": "UNIQUE_GEOMETRY",
+      "validation_method": "EXACT_SCENE_ORACLE+BROWSER"
+    },
+    {
+      "case_id": "I21",
+      "phrase_family": "slm_ind_box",
+      "input_type": "text",
+      "original_input": "Cho hình lập phương UVWX.U'V'W'X' cạnh 3. Tính độ dài đoạn UW'.",
+      "simulation_intent": "QUERY_WITH_SCENE",
+      "geometric_family": "cube",
+      "gold_entities": {
+        "solid_vertices": [
+          "U",
+          "V",
+          "W",
+          "X",
+          "U'",
+          "V'",
+          "W'",
+          "X'"
+        ],
+        "auxiliary_points": []
+      },
+      "gold_relations": [
+        [
+          "perp_ll",
+          "UV",
+          "UX"
+        ],
+        [
+          "perp_lp",
+          "UU'",
+          "UVW"
+        ],
+        [
+          "par_ll",
+          "UU'",
+          "VV'"
+        ],
+        [
+          "len2",
+          "UV",
+          9
+        ],
+        [
+          "len2",
+          "UX",
+          9
+        ],
+        [
+          "len2",
+          "UU'",
+          9
+        ]
+      ],
+      "metric_oracle": [
+        5.196152422706632
+      ],
+      "preregistered_slm_target": false,
+      "expected_counts": {
+        "vertices": 8,
+        "faces": 6
+      },
+      "expected_behavior": "SERVE",
+      "geometry_determinacy": "UNIQUE_GEOMETRY",
+      "validation_method": "EXACT_SCENE_ORACLE+BROWSER"
+    },
+    {
+      "case_id": "I22",
+      "phrase_family": "slm_ind_box",
+      "input_type": "text",
+      "original_input": "Cho hình hộp chữ nhật PQRS.P'Q'R'S' có PQ = 4, PS = 3, PP' = 12. Tính độ dài đường chéo PR'.",
+      "simulation_intent": "QUERY_WITH_SCENE",
+      "geometric_family": "box",
+      "gold_entities": {
+        "solid_vertices": [
+          "P",
+          "Q",
+          "R",
+          "S",
+          "P'",
+          "Q'",
+          "R'",
+          "S'"
+        ],
+        "auxiliary_points": []
+      },
+      "gold_relations": [
+        [
+          "perp_ll",
+          "PQ",
+          "PS"
+        ],
+        [
+          "perp_lp",
+          "PP'",
+          "PQR"
+        ],
+        [
+          "par_ll",
+          "PP'",
+          "QQ'"
+        ],
+        [
+          "len2",
+          "PQ",
+          16
+        ],
+        [
+          "len2",
+          "PS",
+          9
+        ],
+        [
+          "len2",
+          "PP'",
+          144
+        ]
+      ],
+      "metric_oracle": [
+        13.0
+      ],
+      "preregistered_slm_target": false,
+      "expected_counts": {
+        "vertices": 8,
+        "faces": 6
+      },
+      "expected_behavior": "SERVE",
+      "geometry_determinacy": "UNIQUE_GEOMETRY",
+      "validation_method": "EXACT_SCENE_ORACLE+BROWSER"
+    },
+    {
+      "case_id": "I23",
+      "phrase_family": "slm_ind_box",
+      "input_type": "text",
+      "original_input": "Cho hình hộp chữ nhật HIJK.H'I'J'K' có HI = 2, HK = 5, HH' = 4. Tính thể tích khối hộp chữ nhật.",
+      "simulation_intent": "QUERY_WITH_SCENE",
+      "geometric_family": "box",
+      "gold_entities": {
+        "solid_vertices": [
+          "H",
+          "I",
+          "J",
+          "K",
+          "H'",
+          "I'",
+          "J'",
+          "K'"
+        ],
+        "auxiliary_points": []
+      },
+      "gold_relations": [
+        [
+          "perp_ll",
+          "HI",
+          "HK"
+        ],
+        [
+          "perp_lp",
+          "HH'",
+          "HIJ"
+        ],
+        [
+          "par_ll",
+          "HH'",
+          "II'"
+        ],
+        [
+          "len2",
+          "HI",
+          4
+        ],
+        [
+          "len2",
+          "HK",
+          25
+        ],
+        [
+          "len2",
+          "HH'",
+          16
+        ]
+      ],
+      "metric_oracle": [
+        40.0
+      ],
+      "preregistered_slm_target": false,
+      "expected_counts": {
+        "vertices": 8,
+        "faces": 6
+      },
+      "expected_behavior": "SERVE",
+      "geometry_determinacy": "UNIQUE_GEOMETRY",
+      "validation_method": "EXACT_SCENE_ORACLE+BROWSER"
+    },
+    {
+      "case_id": "I24",
+      "phrase_family": "slm_ind_box",
+      "input_type": "text",
+      "original_input": "Cho hình hộp chữ nhật EFGK.E'F'G'K' có EF = 3, EK = 4, EE' = 2. Vẽ hình hộp chữ nhật.",
+      "simulation_intent": "SIMULATE_ONLY",
+      "geometric_family": "box",
+      "gold_entities": {
+        "solid_vertices": [
+          "E",
+          "F",
+          "G",
+          "K",
+          "E'",
+          "F'",
+          "G'",
+          "K'"
+        ],
+        "auxiliary_points": []
+      },
+      "gold_relations": [
+        [
+          "perp_ll",
+          "EF",
+          "EK"
+        ],
+        [
+          "perp_lp",
+          "EE'",
+          "EFG"
+        ],
+        [
+          "par_ll",
+          "EE'",
+          "FF'"
+        ],
+        [
+          "len2",
+          "EF",
+          9
+        ],
+        [
+          "len2",
+          "EK",
+          16
+        ],
+        [
+          "len2",
+          "EE'",
+          4
+        ]
+      ],
+      "metric_oracle": null,
+      "preregistered_slm_target": false,
+      "expected_counts": {
+        "vertices": 8,
+        "faces": 6
+      },
+      "expected_behavior": "SERVE",
+      "geometry_determinacy": "UNIQUE_GEOMETRY",
+      "validation_method": "EXACT_SCENE_ORACLE+BROWSER"
+    },
+    {
+      "case_id": "I25",
+      "phrase_family": "slm_ind_mid",
+      "input_type": "text",
+      "original_input": "Cho hình chóp D.HIJK có đáy HIJK là hình vuông cạnh 4, DH vuông góc với đáy và DH = 6. Gọi M là trung điểm cạnh DI. Tính thể tích khối chóp.",
+      "simulation_intent": "QUERY_WITH_SCENE",
+      "geometric_family": "pyramid_quad",
+      "gold_entities": {
+        "solid_vertices": [
+          "D",
+          "H",
+          "I",
+          "J",
+          "K"
+        ],
+        "auxiliary_points": [
+          "M"
+        ]
+      },
+      "gold_relations": [
+        [
+          "perp_lp",
+          "DH",
+          "HIJ"
+        ],
+        [
+          "perp_ll",
+          "HI",
+          "HK"
+        ],
+        [
+          "par_ll",
+          "HI",
+          "KJ"
+        ],
+        [
+          "par_ll",
+          "HK",
+          "IJ"
+        ],
+        [
+          "len2",
+          "HI",
+          16
+        ],
+        [
+          "len2",
+          "HK",
+          16
+        ],
+        [
+          "len2",
+          "DH",
+          36
+        ],
+        [
+          "mid",
+          "M",
+          "DI"
+        ]
+      ],
+      "metric_oracle": [
+        32.0
+      ],
+      "preregistered_slm_target": false,
+      "expected_counts": {
+        "vertices": 5,
+        "faces": 5
+      },
+      "expected_behavior": "SERVE",
+      "geometry_determinacy": "UNIQUE_GEOMETRY",
+      "validation_method": "EXACT_SCENE_ORACLE+BROWSER"
+    },
+    {
+      "case_id": "I26",
+      "phrase_family": "slm_ind_cent",
+      "input_type": "text",
+      "original_input": "Cho hình chóp P.RST có đáy RST vuông tại R, RS = 3, RT = 6, PR vuông góc với đáy, PR = 5. Gọi G là trọng tâm tam giác RST. Tính thể tích khối chóp.",
+      "simulation_intent": "QUERY_WITH_SCENE",
+      "geometric_family": "tetrahedron",
+      "gold_entities": {
+        "solid_vertices": [
+          "P",
+          "R",
+          "S",
+          "T"
+        ],
+        "auxiliary_points": [
+          "G"
+        ]
+      },
+      "gold_relations": [
+        [
+          "perp_lp",
+          "PR",
+          "RST"
+        ],
+        [
+          "perp_ll",
+          "RS",
+          "RT"
+        ],
+        [
+          "len2",
+          "RS",
+          9
+        ],
+        [
+          "len2",
+          "RT",
+          36
+        ],
+        [
+          "len2",
+          "PR",
+          25
+        ],
+        [
+          "centroid",
+          "G",
+          "RST"
+        ]
+      ],
+      "metric_oracle": [
+        15.0
+      ],
+      "preregistered_slm_target": false,
+      "expected_counts": {
+        "vertices": 4,
+        "faces": 4
+      },
+      "expected_behavior": "SERVE",
+      "geometry_determinacy": "UNIQUE_GEOMETRY",
+      "validation_method": "EXACT_SCENE_ORACLE+BROWSER"
+    },
+    {
+      "case_id": "I27",
+      "phrase_family": "slm_ind_reg",
+      "input_type": "text",
+      "original_input": "Cho hình chóp tứ giác đều H.PQRS có cạnh đáy bằng 4, chiều cao bằng 3. Tính thể tích khối chóp H.PQRS.",
+      "simulation_intent": "QUERY_WITH_SCENE",
+      "geometric_family": "pyramid_quad",
+      "gold_entities": {
+        "solid_vertices": [
+          "H",
+          "P",
+          "Q",
+          "R",
+          "S"
+        ],
+        "auxiliary_points": []
+      },
+      "gold_relations": [
+        [
+          "len2",
+          "PQ",
+          16
+        ],
+        [
+          "len2",
+          "QR",
+          16
+        ],
+        [
+          "perp_ll",
+          "PQ",
+          "PS"
+        ],
+        [
+          "eq",
+          "HP",
+          "HQ"
+        ],
+        [
+          "eq",
+          "HP",
+          "HR"
+        ],
+        [
+          "eq",
+          "HP",
+          "HS"
+        ],
+        [
+          "dist2",
+          "H",
+          "PQR",
+          9
+        ]
+      ],
+      "metric_oracle": [
+        16.0
+      ],
+      "preregistered_slm_target": false,
+      "expected_counts": {
+        "vertices": 5,
+        "faces": 5
+      },
+      "expected_behavior": "SERVE",
+      "geometry_determinacy": "UNIQUE_GEOMETRY",
+      "validation_method": "EXACT_SCENE_ORACLE+BROWSER"
+    },
+    {
+      "case_id": "I28",
+      "phrase_family": "slm_ind_ang",
+      "input_type": "text",
+      "original_input": "Cho hình chóp T.KLMN có đáy KLMN là hình vuông cạnh 2, TK vuông góc với đáy và TK = 2. Tính góc giữa TL và mặt phẳng (KLMN).",
+      "simulation_intent": "QUERY_WITH_SCENE",
+      "geometric_family": "pyramid_quad",
+      "gold_entities": {
+        "solid_vertices": [
+          "T",
+          "K",
+          "L",
+          "M",
+          "N"
+        ],
+        "auxiliary_points": []
+      },
+      "gold_relations": [
+        [
+          "perp_lp",
+          "TK",
+          "KLM"
+        ],
+        [
+          "perp_ll",
+          "KL",
+          "KN"
+        ],
+        [
+          "par_ll",
+          "KL",
+          "NM"
+        ],
+        [
+          "par_ll",
+          "KN",
+          "LM"
+        ],
+        [
+          "len2",
+          "KL",
+          4
+        ],
+        [
+          "len2",
+          "KN",
+          4
+        ],
+        [
+          "len2",
+          "TK",
+          4
+        ]
+      ],
+      "metric_oracle": [
+        45.0
+      ],
+      "preregistered_slm_target": false,
+      "expected_counts": {
+        "vertices": 5,
+        "faces": 5
+      },
+      "expected_behavior": "SERVE",
+      "geometry_determinacy": "UNIQUE_GEOMETRY",
+      "validation_method": "EXACT_SCENE_ORACLE+BROWSER"
+    },
+    {
+      "case_id": "I29",
+      "phrase_family": "slm_ind_seq",
+      "input_type": "text",
+      "original_input": "Cho lăng trụ đứng RST.R'S'T'. Tam giác RST vuông tại R, RS = 3, RT = 4. Cạnh bên RR' = 5. Dựng hình lăng trụ rồi tính thể tích.",
+      "simulation_intent": "SIMULATE_AND_QUERY",
+      "geometric_family": "prism_tri",
+      "gold_entities": {
+        "solid_vertices": [
+          "R",
+          "S",
+          "T",
+          "R'",
+          "S'",
+          "T'"
+        ],
+        "auxiliary_points": []
+      },
+      "gold_relations": [
+        [
+          "perp_ll",
+          "RS",
+          "RT"
+        ],
+        [
+          "perp_lp",
+          "RR'",
+          "RST"
+        ],
+        [
+          "par_ll",
+          "RR'",
+          "SS'"
+        ],
+        [
+          "par_ll",
+          "RR'",
+          "TT'"
+        ],
+        [
+          "len2",
+          "RS",
+          9
+        ],
+        [
+          "len2",
+          "RT",
+          16
+        ],
+        [
+          "len2",
+          "RR'",
+          25
+        ]
+      ],
+      "metric_oracle": [
+        30.0
+      ],
+      "preregistered_slm_target": false,
+      "expected_counts": {
+        "vertices": 6,
+        "faces": 5
+      },
+      "expected_behavior": "SERVE",
+      "geometry_determinacy": "UNIQUE_GEOMETRY",
+      "validation_method": "EXACT_SCENE_ORACLE+BROWSER"
+    },
+    {
+      "case_id": "I30",
+      "phrase_family": "slm_ind_seq",
+      "input_type": "text",
+      "original_input": "Xét tứ diện MNPQ. Các cạnh MN, MP, MQ đôi một vuông góc. Độ dài MN = 6, MP = 8, MQ = 3. Tính độ dài NP.",
+      "simulation_intent": "QUERY_WITH_SCENE",
+      "geometric_family": "tetrahedron",
+      "gold_entities": {
+        "solid_vertices": [
+          "M",
+          "N",
+          "P",
+          "Q"
+        ],
+        "auxiliary_points": []
+      },
+      "gold_relations": [
+        [
+          "perp_ll",
+          "MN",
+          "MP"
+        ],
+        [
+          "perp_ll",
+          "MP",
+          "MQ"
+        ],
+        [
+          "perp_ll",
+          "MQ",
+          "MN"
+        ],
+        [
+          "len2",
+          "MN",
+          36
+        ],
+        [
+          "len2",
+          "MP",
+          64
+        ],
+        [
+          "len2",
+          "MQ",
+          9
+        ]
+      ],
+      "metric_oracle": [
+        10.0
+      ],
+      "preregistered_slm_target": false,
+      "expected_counts": {
+        "vertices": 4,
+        "faces": 4
+      },
+      "expected_behavior": "SERVE",
+      "geometry_determinacy": "UNIQUE_GEOMETRY",
+      "validation_method": "EXACT_SCENE_ORACLE+BROWSER"
+    }
+  ],
+  "negative_cases": [
+    {
+      "case_id": "IN01",
+      "phrase_family": "slm_ind_neg",
+      "input_type": "text",
+      "original_input": "Cho tứ diện E.FGH có EF, EG, EH không đôi một vuông góc, EF = 2, EG = 3, EH = 5. Tính thể tích.",
+      "simulation_intent": "NEGATIVE",
+      "expected_behavior": "SAFE_REFUSE",
+      "geometry_determinacy": "NEGATED_RELATION",
+      "validation_method": "REFUSAL+BROWSER"
+    },
+    {
+      "case_id": "IN02",
+      "phrase_family": "slm_ind_neg",
+      "input_type": "text",
+      "original_input": "Cho hình chóp P.UVWX có đáy UVWX là hình vuông cạnh 3, PU không vuông góc với đáy và PU = 4. Tính thể tích.",
+      "simulation_intent": "NEGATIVE",
+      "expected_behavior": "SAFE_REFUSE",
+      "geometry_determinacy": "NEGATED_RELATION",
+      "validation_method": "REFUSAL+BROWSER"
+    },
+    {
+      "case_id": "IN03",
+      "phrase_family": "slm_ind_cond",
+      "input_type": "text",
+      "original_input": "Cho tứ diện DEFG có DE = 2, DF = 4, DG = 6. Nếu ba cạnh DE, DF, DG đôi một vuông góc thì thể tích bằng bao nhiêu?",
+      "simulation_intent": "NEGATIVE",
+      "expected_behavior": "SAFE_REFUSE",
+      "geometry_determinacy": "CONDITIONAL_PREMISE",
+      "validation_method": "REFUSAL+BROWSER"
+    },
+    {
+      "case_id": "IN04",
+      "phrase_family": "slm_ind_cond",
+      "input_type": "text",
+      "original_input": "Cho hình chóp K.UVWX có đáy UVWX là hình vuông cạnh 5. Trong trường hợp KU vuông góc với đáy và KU = 3 thì tính thể tích.",
+      "simulation_intent": "NEGATIVE",
+      "expected_behavior": "SAFE_REFUSE",
+      "geometry_determinacy": "CONDITIONAL_PREMISE",
+      "validation_method": "REFUSAL+BROWSER"
+    },
+    {
+      "case_id": "IN05",
+      "phrase_family": "slm_ind_q",
+      "input_type": "text",
+      "original_input": "Cho tứ diện PQRS có PQ = 2, PR = 5, PS = 7. Hỏi PQ có vuông góc với PR không?",
+      "simulation_intent": "NEGATIVE",
+      "expected_behavior": "SAFE_REFUSE",
+      "geometry_determinacy": "YES_NO_QUESTION",
+      "validation_method": "REFUSAL+BROWSER"
+    },
+    {
+      "case_id": "IN06",
+      "phrase_family": "slm_ind_q",
+      "input_type": "text",
+      "original_input": "Cho hình chóp L.MNPQ đáy MNPQ là hình vuông cạnh 3, LM = 4. Có phải LM vuông góc với đáy không?",
+      "simulation_intent": "NEGATIVE",
+      "expected_behavior": "SAFE_REFUSE",
+      "geometry_determinacy": "YES_NO_QUESTION",
+      "validation_method": "REFUSAL+BROWSER"
+    },
+    {
+      "case_id": "IN07",
+      "phrase_family": "slm_ind_miss",
+      "input_type": "text",
+      "original_input": "Cho hình chóp A.MNOP có đáy MNOP là hình vuông cạnh 4. Tính thể tích khối chóp A.MNOP.",
+      "simulation_intent": "NEGATIVE",
+      "expected_behavior": "SAFE_REFUSE",
+      "geometry_determinacy": "MISSING_DIMENSION",
+      "validation_method": "REFUSAL+BROWSER"
+    },
+    {
+      "case_id": "IN08",
+      "phrase_family": "slm_ind_miss",
+      "input_type": "text",
+      "original_input": "Cho lăng trụ đứng GHK.PQR có đáy GHK vuông tại G, GH = 4, GK = 7. Tính thể tích khối lăng trụ.",
+      "simulation_intent": "NEGATIVE",
+      "expected_behavior": "SAFE_REFUSE",
+      "geometry_determinacy": "MISSING_DIMENSION",
+      "validation_method": "REFUSAL+BROWSER"
+    },
+    {
+      "case_id": "IN09",
+      "phrase_family": "slm_ind_unsup",
+      "input_type": "text",
+      "original_input": "Cho hình nón có bán kính đáy r = 3 và chiều cao h = 4. Tính thể tích khối nón.",
+      "simulation_intent": "NEGATIVE",
+      "expected_behavior": "SAFE_REFUSE",
+      "geometry_determinacy": "UNSUPPORTED_CURVED",
+      "validation_method": "REFUSAL+BROWSER"
+    },
+    {
+      "case_id": "IN10",
+      "phrase_family": "slm_ind_unsup",
+      "input_type": "text",
+      "original_input": "Cho mặt cầu tâm O bán kính R = 6. Tính diện tích mặt cầu.",
+      "simulation_intent": "NEGATIVE",
+      "expected_behavior": "SAFE_REFUSE",
+      "geometry_determinacy": "UNSUPPORTED_CURVED",
+      "validation_method": "REFUSAL+BROWSER"
+    }
+  ],
+  "counts": {
+    "positive": 30,
+    "negative": 10
+  }
+}

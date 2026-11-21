@@ -1,0 +1,83 @@
+{
+  "schema": "axo-acceptance-criteria/2",
+  "run_id": "semantic-grounding-slm-recovery",
+  "manifest": {
+    "path": "ACCEPTANCE_MANIFEST.json",
+    "sha256": "0952949107266c3ca018ba69b164b8bd0a1dbebd0944be8fa4ff3eb08c5859cd"
+  },
+  "slm_independent_manifest": {
+    "path": "SLM_INDEPENDENT_MANIFEST.json",
+    "sha256": "34dfcfd022cc441763ae7dd585aa59af943582256d951d0f8121674950815446"
+  },
+  "harness": {
+    "version": "axo-live-acceptance-harness/1",
+    "scene_oracle_sha256": "a73bc2cf7d26795862fe3fadf2d04d6a0ca803ad92a4acac50ba0e50f9bb40cb",
+    "gold_generator_sha256": "ffc0ca0e4c2702c3a85a650f9902e4fa3902a19908a3789800467e80aeab1e91"
+  },
+  "exposure": {
+    "external_independence": "NOT_MEASURED",
+    "normalized_prior_strings": 29064,
+    "training_corpus_included": true,
+    "holdout4_containment_matches": 0,
+    "slm_independent_containment_matches": 0,
+    "cross_set_overlap_matches": 0,
+    "single_shot": true,
+    "author_also_fixes_product": true
+  },
+  "runtime": {
+    "route_mode": "local-only-scoped",
+    "allow_live_ai": false,
+    "model": "AxoV9",
+    "gguf_sha256": "73f1484b08b97ed2a1f44e32bcf6610210c7fda51567c4cd0a03d98dffc6cc35",
+    "llama_cpp_release": "b12470",
+    "require_fresh_cache": true,
+    "cloud_fallback": false
+  },
+  "primary": {
+    "completion_rate_min": 0.85,
+    "min_completed": 62,
+    "population": "all 72 positive Holdout-4 text cases",
+    "completion": "SERVED + Source Gate verified + MATHEMATICALLY_VALID scene + exact numeric + browser visual & interaction pass"
+  },
+  "slm_fallback": {
+    "min_routed_sample": 8,
+    "min_live_verified_scenes": 5,
+    "rate_min": 0.5,
+    "population": "positive Holdout-4 cases routed to AxoV9 on the final candidate (stratum SLM_REQUIRED or live slm_invoked)",
+    "cache_and_replay_credit": false,
+    "small_sample_policy": "FAIL_GATE_IF_ROUTED_SAMPLE_BELOW_8"
+  },
+  "slm_independent": {
+    "positive_total": 30,
+    "negative_total": 10,
+    "verified_scene_rate_min": 0.6,
+    "min_verified_scenes": 18,
+    "negative_safe_refusal_rate_min": 1.0,
+    "false_assertions_max": 0,
+    "invalid_relations_max": 0,
+    "isolation_rule": "bypass parser completion in isolated eval adapter ONLY while strictly enforcing Source Gate + Planner + Exact Kernel + Scene Oracle"
+  },
+  "modalities": {
+    "explicit_per_modality_live_metrics": true,
+    "positive_completion_rate_min": 0.85,
+    "required": [
+      "text"
+    ]
+  },
+  "safety": {
+    "all_negative_safe": true,
+    "external_ai_calls": 0,
+    "wrong_served": 0,
+    "grounding_violations_served": 0,
+    "unverified_relations_served": 0,
+    "fabricated_numeric_goals": 0,
+    "served_numeric_mismatch": 0
+  },
+  "legacy_v15_reference": {
+    "REGISTERED_SLM_SCORE_V15": "5/38 (0.1316)",
+    "SLM_GATE_V15": "FAIL",
+    "preserved_unmodified": true
+  },
+  "candidate_consistency": "identical product_commit_sha, measured_system_tree_hash, cache_version, AxoV9 GGUF sha256, and llama.cpp release across Live Acceptance, SLM Independent Audit, and Full T3",
+  "scope_note": "OCR/Vision development postponed by the owner: text-only validation; LOCAL_VISION_REPLACEMENT_VERIFIED = FALSE"
+}

@@ -1,0 +1,79 @@
+{
+  "schema": "axo-run-acceptance-freeze/1",
+  "run_id": "semantic-grounding-slm-recovery",
+  "baseline_ref": "613adbd4340e34c3a326f3e445303d85cb48bf2d",
+  "frozen_before_any_product_edit": true,
+  "artifacts": {
+    "holdout4_manifest": {
+      "path": "holdout-4/ACCEPTANCE_MANIFEST.json",
+      "sha256": "0952949107266c3ca018ba69b164b8bd0a1dbebd0944be8fa4ff3eb08c5859cd"
+    },
+    "slm_independent_manifest": {
+      "path": "holdout-4/SLM_INDEPENDENT_MANIFEST.json",
+      "sha256": "34dfcfd022cc441763ae7dd585aa59af943582256d951d0f8121674950815446"
+    },
+    "acceptance_criteria": {
+      "path": "holdout-4/ACCEPTANCE_CRITERIA.json",
+      "sha256": "11aec8906ab1b28f4e2a53a6a2c9f7d8e146ba4fed932cce130703de810a4b71"
+    },
+    "baseline_freeze": {
+      "path": "holdout-4/ACCEPTANCE_FREEZE.json",
+      "sha256": "cccecca1417f47dedfcb980841d8ac2b75665b4ab92388e88ddca570e51ecfe2"
+    },
+    "gold_generator": {
+      "path": "holdout-4/build_holdout.py",
+      "sha256": "ffc0ca0e4c2702c3a85a650f9902e4fa3902a19908a3789800467e80aeab1e91"
+    },
+    "candidate_freeze": null
+  },
+  "harness": {
+    "version": "axo-live-acceptance-harness/1",
+    "scene_oracle_sha256": "a73bc2cf7d26795862fe3fadf2d04d6a0ca803ad92a4acac50ba0e50f9bb40cb",
+    "aggregate_sha256": "35827769d78a8121b1daf6d127eddf13507e957161fc13ad1f35de7f3195340c",
+    "freeze_acceptance_sha256": "42d35544fef85ae04f7172b7589a06ea3df2df5101f73b107728f6d1f5446613",
+    "live_browser_acceptance_sha256": "43c3de17100dbbd79d57fb001b5beacb387e658a9fdcbd4ae5f52323f40135fc",
+    "ui_scenarios_sha256": "55e4f6a4cf894b211aee64bfb2b7aaed867798860ce7aa905a8ccc877eb6bf4d"
+  },
+  "exposure": {
+    "external_independence": "NOT_MEASURED",
+    "normalized_prior_strings": 29064,
+    "training_corpus_included": true,
+    "holdout4_containment_matches": 0,
+    "slm_independent_containment_matches": 0,
+    "cross_set_overlap_matches": 0,
+    "single_shot": true,
+    "author_also_fixes_product": true
+  },
+  "baseline_code": {
+    "head": "613adbd4345ebcc3428fe7541dd977a8b216b9de",
+    "branch": "feat/semantic-grounding-slm-recovery",
+    "candidate_commit": "cd2a21abce499ca82e0500f085bbc63e2934b65c",
+    "product_commit_sha": "cd2a21abce499ca82e0500f085bbc63e2934b65c",
+    "measured_system_tree_hash": "9867d39132faca013ab9865c8e7d29c6cb304bdaad24d9dae503f5ff3e9f6274",
+    "cache_version": "155",
+    "route_d_cache_policy": "155:route-d",
+    "semantic_environment_hash": "f9df4bf0c8bd458a278d2692567fa3e096340ae37ff5493730dff4067c0f5e19",
+    "parser_version": "local-geometry-parser/3",
+    "slm_extractor_version": "local-slm-extractor/6",
+    "slm_validator_version": "slm-grounding-validator/6"
+  },
+  "model": {
+    "key": "qwen3-0.6b-axo-v9-q4_k_m",
+    "sha256": "73f1484b08b97ed2a1f44e32bcf6610210c7fda51567c4cd0a03d98dffc6cc35",
+    "llama_cpp_release": "b12470"
+  },
+  "baseline_counts": {
+    "valid_total": 72,
+    "in_scope": 72,
+    "parser_complete": 34,
+    "slm_required": 38,
+    "preregistered_slm_targets": 12,
+    "preregistered_slm_targets_in_slm_required": 12,
+    "separate": 0,
+    "negative": 26
+  },
+  "slm_independent_counts": {
+    "positive": 30,
+    "negative": 10
+  }
+}
