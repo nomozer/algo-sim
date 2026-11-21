@@ -499,7 +499,12 @@ def collect_product_parity() -> dict[str, Any]:
 
 
 def collect_candidate_cache_proof() -> dict[str, Any]:
-    c_ret, c_out, _ = run_cmd([sys.executable, str(BACKEND / "scripts" / "freeze_evaluation_candidate.py"), "--verify"])
+    hist_ret, hist_out, _ = run_cmd(
+        [sys.executable, str(BACKEND / "scripts" / "freeze_evaluation_candidate.py"), "--verify-historical", "--json"]
+    )
+    strict_ret, _, _ = run_cmd(
+        [sys.executable, str(BACKEND / "scripts" / "freeze_evaluation_candidate.py"), "--verify"]
+    )
     k_ret, k_out, _ = run_cmd([sys.executable, str(BACKEND / "scripts" / "lock_cache_identity.py"), "--verify"])
 
     candidate = json.loads(
@@ -509,14 +514,30 @@ def collect_candidate_cache_proof() -> dict[str, Any]:
     candidate_hash = candidate["measured_system"]["tree_hash"]
     candidate_files = int(candidate["measured_system"]["so_file"])
     cache_version = int(candidate["cache_version"])
-    c_valid = c_ret == 0 and candidate_hash[:16] in c_out
+
+    hist_payload: dict[str, Any] = {}
+    try:
+        hist_payload = json.loads(hist_out) if hist_out.strip() else {}
+    except json.JSONDecodeError:
+        hist_payload = {}
+
+    c_valid = (
+        hist_ret == 0
+        and hist_payload.get("verdict") == "PASS"
+        and hist_payload.get("actual_historical_tree_hash") == candidate_hash
+        and hist_payload.get("actual_historical_so_file") == candidate_files
+    )
     k_valid = k_ret == 0 and f"CACHE_VERSION {cache_version}" in k_out
 
     return {
         "schema_version": "2.0.0",
+        "verification_mode": "verify-historical",
         "candidate_valid": c_valid,
+        "historical_commit": candidate.get("commit"),
         "candidate_sha256": candidate_hash,
         "candidate_files_count": candidate_files,
+        "provenance_matches_head": hist_payload.get("provenance_matches_head"),
+        "strict_current_matches_historical": strict_ret == 0,
         "cache_lock_valid": k_valid,
         "cache_version": cache_version,
         "verdict": "PASS" if (c_valid and k_valid) else "FAIL",
