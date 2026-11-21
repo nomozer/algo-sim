@@ -4021,10 +4021,10 @@
   width: 100%;
   max-width: 100%;
   color: var(--ink);
-  font-size: clamp(2.625rem, 1.45rem + 1.8vw, 3.1875rem);
+  font-size: clamp(2.625rem, 0.58rem + 3vw, 3.28125rem);
   font-weight: 700;
   line-height: 1.18;
-  letter-spacing: -0.028em;
+  letter-spacing: -0.03em;
   hyphens: none;
 }
 
@@ -4033,7 +4033,7 @@
   display: inline-block;
   white-space: nowrap;
   isolation: isolate;
-  margin-inline: 0.04em;
+  margin-inline: 0.06em;
   padding-inline: 0.12em;
 }
 
