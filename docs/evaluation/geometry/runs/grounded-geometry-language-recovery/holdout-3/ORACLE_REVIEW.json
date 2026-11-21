@@ -1,0 +1,16 @@
+{
+  "schema": "axo-oracle-review/1",
+  "set": "holdout-3",
+  "reviewer": "separate read-only review agent of the /15 session (no product runs, no product results seen); not external to the project",
+  "reviewed_manifest_sha256": "4e21524a2c958130a7f12010a7dd702b7783719ef19e6f631d8695c10f9c7b36",
+  "reviewed_builder_sha256": "4bd72ccd8a118dd506dfd39ba01bfad27022f2806527b46893d9d47a91fccbf5",
+  "findings": [
+    {"case_id": "N03", "severity": "BLOCKING", "finding": "'Nếu OA, OB, OC đôi một vuông góc thì … bằng bao nhiêu?' is a standard way to state the hypothesis; with it the volume (1) is determined, so it is no data-safety negative", "resolution": "replaced by a conditional that leaves the tetrahedron undetermined (only OA ⊥ OB assumed)"},
+    {"case_id": "N15", "severity": "BLOCKING", "finding": "the yes/no question has a determined answer (V = 4), so refusing proves no safety", "resolution": "replaced by an ambiguous-value negative ('SA bằng 3 hoặc 5')"},
+    {"case_id": "G08", "severity": "MINOR", "finding": "'Cho biết thể tích …' can read as a premise with no question", "resolution": "text changed to 'Hãy cho biết thể tích …'"}
+  ],
+  "no_issue_count": 85,
+  "recomputed_metric_values": "all 30 metric_oracle values recomputed independently and matched",
+  "resolved_manifest_sha256": "a8427fcf4ef870197df473601eed58a7b52bf3952b1abb303c998d2969da5b7b",
+  "note": "Corrections were made before the baseline freeze; the manifest was never run against the product before or after them."
+}
