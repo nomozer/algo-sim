@@ -1,5 +1,12 @@
 # CODE_INDEX.md — Chỉ mục module + BỘ NHỚ KIẾN TRÚC
 
+## Local Model 1 recovery takeover (AXO HYBRID /14, 2026-11-21)
+
+| Hạng mục / Vai trò | Đường dẫn |
+|---|---|
+| `⟂` (U+27C2) → `⊥` một-đổi-một trong thẩm quyền chuẩn hoá duy nhất `normalize_problem_text` (cấp cho parser, SLM và `payload.problem_text` mà Source Gate đọc) | `backend/app/ai/local_geometry_parser.py` · kiểm: `backend/tests/geometry/test_model1_residual_phrasings.py` |
+| Văn phạm câu đóng của Source Gate: `_C_DAU` nhận `trong đó`; `_C_KHOI_HOI` (câu mở bằng yêu cầu thể tích / diện tích toàn phần / xung quanh của chính khối, chỉ ở đầu câu, `_phan_tich_cau`); `_SAU_HOP_LE` nhận cụm định vị khối (`trong`/`của` [`hình`/`khối`] khối [nhãn]); `_SAU_SAU_NHAN` + `_NHAN_CUOI` (`có` mở dữ kiện ngay sau nhãn, trừ so sánh/giá trị và câu có/không) — `CACHE_VERSION` 153 → 154 | `backend/app/simulation/geometry_functions/registry.py`, `backend/app/main.py` · kiểm: `backend/tests/geometry/test_model1_residual_phrasings.py`, `backend/tests/geometry/test_source_gate_clause_role.py` |
+
 ## Local Model 1 finalization & test consolidation (AXO HYBRID /13, 2026-11-21)
 
 | Hạng mục / Vai trò | Đường dẫn |

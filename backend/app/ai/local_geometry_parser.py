@@ -407,6 +407,9 @@ def normalize_problem_text(problem_text: str) -> str:
     """Unicode NFC normalization preserving character alignment for standard Vietnamese text, stripping trailing MC options."""
     s = unicodedata.normalize("NFC", problem_text or "").replace("\u2032", "'")
     s = re.sub(r"(?<=\d)º", "°", s)
+    # /14: "⟂" (U+27C2 PERPENDICULAR, from Word / LaTeX \perp) is the relation every reader here knows as "⊥" (U+22A5);
+    # NFC/NFKC map neither to the other. One character for one, so offsets and quotes are kept.
+    s = s.replace("⟂", "⊥")
     s = re.sub(r"(?m)^(\s*(?:Câu|Bài)\s+\d+)\s*\((?:VD|VDC|TH|NB)\)\s*:?\s*", r"\1: ", s, flags=re.IGNORECASE)
     s = re.sub(r"[Δ∆△]\s*(?=[A-Z]{3}\b)", "tam giác ", s)
     s = re.sub(r"(?m)^(\s*[a-d])\.(?=\s+[A-ZĐÀ-Ỹ])", r"\1)", s)

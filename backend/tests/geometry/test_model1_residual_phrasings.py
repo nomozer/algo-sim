@@ -160,3 +160,62 @@ def test_display_only_tail_never_adds_a_math_goal(tail):
                                      allow_download=False, use_cache=False)
     assert out.status == "SERVED"
     assert not out.response["route_d"].get("answers")
+
+
+# /14 takeover (run `local-model1-recovery-offline-vision`, CACHE 154): phrase families that kept fully specified
+# problems from being served in the CACHE 153 diagnosis. Sentences use labels and values absent from Holdout-1 and
+# Holdout-2; each family has an opposite case below that must stay refused.
+CASES_14 = [
+    # "⟂" (U+27C2) is "⊥" (U+22A5): normalized once in `normalize_problem_text`
+    ("perp_symbol_plane", "Cho hình chóp K.LMNP có đáy LMNP là hình vuông cạnh 3, KL ⟂ (LMNP) và KL = 4. Tính thể tích khối chóp.", [12.0]),
+    ("perp_symbol_lines", "Vẽ tứ diện DEFG có DE ⟂ DF, DF ⟂ DG, DG ⟂ DE, DE = 1, DF = 2, DG = 3.", None),
+    # "trong đó" opens the description of the solid the sentence named (Source Gate `_C_DAU`)
+    ("trong_do_lead", "Vẽ hình chóp K.LMNP, trong đó đáy LMNP là hình vuông cạnh 5 và KL vuông góc với đáy, KL = 2.", None),
+    # a sentence opening with a request for a quantity of the solid itself (Source Gate `_C_KHOI_HOI`, `_SAU_HOP_LE`)
+    ("ask_solid_first_biet", "Tính thể tích khối chóp K.LMNP biết đáy LMNP là hình vuông cạnh 3, KL vuông góc với đáy và KL = 4.", [12.0]),
+    ("ask_solid_first_co", "Tính thể tích khối chóp K.LMNP có đáy LMNP là hình vuông cạnh 3, KL vuông góc với đáy và KL = 4.", [12.0]),
+]
+
+
+@pytest.mark.parametrize("name,text,gold", CASES_14, ids=[c[0] for c in CASES_14])
+def test_v14_family_is_served_exactly_without_slm(name, text, gold, monkeypatch):
+    monkeypatch.setenv("ALLOW_LIVE_AI", "0")
+    monkeypatch.delenv("GEMINI_API_KEY", raising=False)
+    out = route_text_input_local_slm(text, closure_mode=V9_CLOSURE_MODE, normalizer_version="v3", runtime=None,
+                                     allow_download=False, use_cache=False)
+    rd = out.response["route_d"]
+    assert out.status == "SERVED", (rd.get("refusal"), rd.get("reason_code"))
+    assert rd.get("extraction_mode") in ("LOCAL_DETERMINISTIC_PARSER", "LOCAL_PARSER_AFTER_V3_NORMALIZER")
+    if gold is not None:
+        num = scene_oracle.numeric(rd.get("answers"), rd.get("answer_exact"), gold)
+        assert num["status"] == "CORRECT", num
+
+
+@pytest.mark.parametrize("text", [
+    # a negated "⟂" is no premise
+    "Cho hình chóp K.LMNP có đáy LMNP là hình vuông cạnh 3, KL không ⟂ (LMNP) và KL = 4. Vẽ hình.",
+    # a request that itself carries a number leaves its sentence unread (height 5 against KL = 4)
+    "Tính thể tích khối chóp K.LMNP có chiều cao 5 biết LMNP là hình vuông cạnh 3, KL vuông góc với đáy và KL = 4.",
+    # a condition after the asked object is not a locative
+    "Tính diện tích tam giác DFG khi DG thay đổi trong tứ diện DEFG có DE, DF, DG đôi một vuông góc. DE = 1, DF = 2.",
+    # the side of the square is not given
+    "Tính thể tích khối chóp K.LMNP biết đáy là hình vuông và KL vuông góc với đáy, KL = 4.",
+    # a request about another object (a triangle) does not open a declaration: its unlabelled side binds nothing
+    "Tính diện tích tam giác KLM biết đáy LMNP là hình vuông cạnh 3, KL vuông góc với đáy và KL = 4.",
+    # "có" after a word, not a label, is no data lead
+    "Cho hình chóp K.LMNP có đáy LMNP là hình vuông cạnh 3 và KL vuông góc với đáy. Tính độ dài KL có bằng 4 không.",
+])
+def test_v14_opposite_cases_stay_refused(text, monkeypatch):
+    monkeypatch.setenv("ALLOW_LIVE_AI", "0")
+    monkeypatch.delenv("GEMINI_API_KEY", raising=False)
+    out = route_text_input_local_slm(text, closure_mode=V9_CLOSURE_MODE, normalizer_version="v3", runtime=None,
+                                     allow_download=False, use_cache=False)
+    assert out.status != "SERVED", out.response["route_d"].get("answers")
+
+
+def test_v14_cache_policy_isolates_cache_153_rows():
+    """The /14 grammar changes may bind a role in a sentence that bound none, so a scene cached under 153 is not reused."""
+    from tests.cache_policy import assert_cache_policy_at_least, assert_route_d_row_misses
+
+    assert_cache_policy_at_least(154)
+    assert_route_d_row_misses("153:route-d")

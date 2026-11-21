@@ -1964,8 +1964,10 @@ _C_MPDN = re.compile(rf"(?:mặt\s+phẳng\s+|mp\s*)?\((?:[A-Z][0-9']?|[α-ωΑ-
 #: /13: a sentence may open with the number-free meta request "Chỉ cần vẽ hình, không cần tính toán:" before its premises
 #: (only when closed by ":" / "-": the premises follow it; a trailing request is `_C_HOI`'s job).
 _TIEU_DE_MO_HINH = rf"(?:mô\s+)?hình\s+3D\s*:\s*(?=(?:(?:hình|khối)\s+)?chóp\s+{_L1}\.{_NHAN}(?![\w']))"
-_C_DAU = re.compile(rf"\s*(?:(?:{_CUM_KHONG_CAN_TINH.pattern}\s*[:\-–]\s*)|{_TIEU_DE_MO_HINH})?(?:trong\s+không\s+gian\s*,\s*)?(?:(?:biết(?:\s+rằng)?|th[ỏo]a\s+mãn)\s+)?",
+_C_DAU = re.compile(rf"\s*(?:(?:{_CUM_KHONG_CAN_TINH.pattern}\s*[:\-–]\s*)|{_TIEU_DE_MO_HINH})?(?:trong\s+không\s+gian\s*,\s*)?(?:trong\s+đó\s+)?(?:(?:biết(?:\s+rằng)?|th[ỏo]a\s+mãn)\s+)?",
                     re.IGNORECASE)
+#: /14: "trong đó" opens the description of what the sentence just named ("Vẽ hình chóp S.ABCD, trong đó đáy ABCD là hình
+#: vuông cạnh 7 …"), like "biết"; its clauses are then read by the same closed grammar, so nothing else is accepted.
 #: /13: a number-free purpose tail closing a sentence ("…; gọi I là trung điểm của LL' để hiển thị thêm điểm I.") — it asks
 #: to show what the sentence built; it states no premise.
 _MUC_DICH_HIEN_THI = r"(?:để|nhằm)\s+(?:hiển\s+thị|vẽ|biểu\s+diễn|minh\s+ho[ạa]|đánh\s+dấu)(?:\s+(?:thêm|cả|luôn))*"
@@ -1979,6 +1981,13 @@ _C_HOI = re.compile(
     rf"|{_CUM_KHONG_CAN_TINH.pattern})",
     re.IGNORECASE,
 )
+#: /14: a sentence that OPENS with a request for a quantity of the solid itself ("Tính thể tích khối chóp S.ABCD biết …",
+#: "… có đáy …") names that solid exactly like a declaration; the request carries no number and binds nothing, and the
+#: premises after it are read by the same closed clauses. Only at the start of a sentence (`_phan_tich_cau`); a request
+#: about any other object ("Tính diện tích tam giác SBC biết …") still leaves its sentence unread.
+_C_KHOI_HOI = re.compile(
+    r"(?:(?:em|bạn)\s+)?(?:hãy\s+)?(?:tính|tìm|xác\s+định)\s+(?:thể\s+tích|diện\s+tích\s+(?:toàn\s+phần|xung\s+quanh))"
+    r"\s+(?:của\s+)?" + _C_KHOI.pattern, re.IGNORECASE)
 #: A named polygon with its side ("Tam giác ABC đều cạnh 2" / "có ABCD là hình vuông cạnh 4"): the side belongs to THAT polygon
 #: (labelled binding); non-base polygons still change the subject for unlabelled roles of the sentence.
 _C_DAGIAC = re.compile(rf"(?:(?:tam\s+giác|hình\s+vuông|lục\s+giác)\s+(?P<p>{_L1}{_L1}{_NHAN})(?![\w'])\s+(?:là\s+(?:một\s+)?"
@@ -2107,9 +2116,9 @@ def _phan_tich_cau(s: str) -> list[tuple[str, re.Match | None]] | None:
     while True:
         # the request part of the sentence ("…, SA = 3, tính độ dài SC.") ends its premises; it binds nothing, and a request
         # carrying a number (a local given or a changed value) leaves the sentence unread
-        if (out or not _C_KHOI.match(s, p)) and (q := _C_HOI.match(s, p)):
+        if (out or not (_C_KHOI.match(s, p) or _C_KHOI_HOI.match(s, p))) and (q := _C_HOI.match(s, p)):
             return out if not any(_doc(x) is not None for x in _SO.finditer(s, q.end())) else None
-        for kind, rx in (("khoi", _C_KHOI), ("day", _C_DAY), ("dagiac", _C_DAGIAC), ("dcao", _C_DCAO), ("mpdn", _C_MPDN), ("tyso", _TY_SO), ("diem", _C_DIEM),
+        for kind, rx in (("khoi", _C_KHOI), ("khoi", _C_KHOI_HOI), ("day", _C_DAY), ("dagiac", _C_DAGIAC), ("dcao", _C_DCAO), ("mpdn", _C_MPDN), ("tyso", _TY_SO), ("diem", _C_DIEM),
                          ("vuong", _C_HAI_MAT),
                          ("chieu", _C_CHIEU), ("mat", _C_MAT), ("vuong", _C_VUONG), ("song", _C_SONG),
                          ("tiso_doan", _C_TISO_DOAN), ("dientich", _C_DIENTICH), ("thetich", _C_THETICH), ("goc", _C_GOC), ("doan", _C_DOAN), ("vai", _C_VAI)):
@@ -3685,6 +3694,8 @@ def _vung_hoi(de: str, a: int, b: int) -> tuple[int, int] | None:
     tu = c0 + dong_tu[-1].start() if dong_tu else _bien_menh_de(de, a)[0]
     giua = truoc[dong_tu[-1].end():] if dong_tu else de[tu:a]
     sau = _SAU_HOP_LE.match(_bo_cum(de[b:c1]))
+    if sau is None and _NHAN_CUOI.search(de, a, b):
+        sau = _SAU_SAU_NHAN.match(_bo_cum(de[b:c1]))   # /14: "… khối chóp S.ABCD có đáy …" — "có" right after a label
     if sau and _ham_truoc_goc(_bo_cum(giua), de[a:b]) is not None:
         return (tu, b + sau.end())                     # a trigonometric value OF the asked angle (`_ham_truoc_goc`)
     return (tu, b + sau.end()) if _GIUA_HOP_LE.fullmatch(_bo_cum(giua)) and sau else None
@@ -6134,9 +6145,18 @@ _SAU_HOP_LE = re.compile(
     # ngoặc chỉ là LỜI DẶN (làm tròn, đơn vị) hoặc tham khảo hình bên — "(sau khi cắt bỏ …)" không lọt (review S1)
     rf"|theo\s+(?:{_DON_VI}(?![\w'])|(?-i:[a-z])(?![\w'])|đơn vị(?:\s+{_LOAI_DON_VI})?\s+{_DON_VI}(?![\w']))|{_GHI_CHU_NGOAC}|{_THAM_KHAO_HINH}|{_LAM_TRON}(?![\w'])"
     r"|(?:đã cho|đó|này|trên)(?!\w)"
-    r"|của\s+(?:hình|khối)\s+(?:chóp|lăng trụ|lập phương|hộp|tứ diện)(?:\s+(?-i:[A-Z][0-9]*'?)+(?:\.(?-i:[A-Z][0-9]*'?)+)?)?)*"
+    # /14: the solid the asked object belongs to, also as a locative without "hình/khối" ("… tam giác OBC trong tứ diện OABC")
+    r"|(?:(?:của|trong)\s+(?:(?:hình|khối)\s+)?|(?:hình|khối)\s+)(?:chóp|lăng trụ(?:\s+đứng)?|lập phương|hộp(?:\s+chữ\s+nhật)?|tứ diện)"
+    r"(?:\s+(?-i:[A-Z][0-9]*'?)+(?:\.(?-i:[A-Z][0-9]*'?)+)?)?)*"
     # kết: dấu câu THẬT (sau nó là khoảng trắng / hết đề — "SC.SA" không kết), dữ kiện, việc kế tiếp, lời dặn làm tròn
     rf"(?:[.?!](?=\s|$)|$|(?:biết|với|cho|trong đó|{_VIEC_KE_TIEP})(?!\w))", re.IGNORECASE)
+#: /14: the same closed tail where "có" also opens the data — used by `_vung_hoi` only when the asked phrase ends on a label
+#: ("Tính thể tích khối chóp S.ABCD có đáy …"). Not before a comparison or value ("có bằng / vượt quá …", the exclusions of
+#: `_DUNG_GAN`) and not in a sentence closing as a yes/no question ("… có vuông góc với CD không?").
+_SAU_SAU_NHAN = re.compile(
+    _SAU_HOP_LE.pattern.removesuffix(")")
+    + r"|có(?!\s+(?:giá\s+trị|bằng|là|lớn|nhỏ|vượt|khác))(?!\w)(?![^.?!]*\bkhông\s*[.?!]?\s*$))", re.IGNORECASE)
+_NHAN_CUOI = re.compile(r"(?-i:[A-Z][0-9]*'?)$")
 #: "V" đã được đề định nghĩa ("Gọi V là …", "V = …", "V(S.MAB)") — không buộc mặc nhiên vào khối duy nhất (review S1, I4).
 _V_DINH_NGHIA = re.compile(r"(?<![\w'])(?-i:V)\s*(?:là|=|\()", re.IGNORECASE)
 
