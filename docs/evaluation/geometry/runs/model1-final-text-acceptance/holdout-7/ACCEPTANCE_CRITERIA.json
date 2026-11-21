@@ -1,0 +1,40 @@
+{
+  "schema": "axo-acceptance-criteria/2",
+  "run_id": "model1-final-text-acceptance",
+  "set": "holdout-7",
+  "registered_before_any_run": true,
+  "manifest": {"path": "ACCEPTANCE_MANIFEST.json", "sha256": "fe5dbf8c77ec29e4f82bb85ba95083f6eae15061a0662cedc673fabad8b71b0e"},
+  "candidate": {"id": 158, "product_commit": "2bb0211a1057c5d2a503f8a1f19e96cf84decff5", "tree_hash": "bdb737bba9ab94d0274b57e25089c01d4cb47935d5989658e7c13aad1e79b132", "cache_version": "158"},
+  "thresholds_source": "semantic-grounding-slm-recovery/holdout-6/ACCEPTANCE_CRITERIA.json (sha256 d5c33952…), values unchanged",
+  "exposure": {
+    "external_independence": "NOT_MEASURED",
+    "evidence_class": "B_PROSPECTIVE_INTERNAL (hand-written by the /19 agent; the agent has read the parser and earlier failure taxonomies)",
+    "string_containment_matches": 0,
+    "template_containment_matches": 0,
+    "corpus_strings": 29643,
+    "pre_run_rewording": "T03, T06, T12, T14, T16 reworded before any run (EXPOSURE_CHECK.json documents the result after rewording)",
+    "single_shot": true,
+    "author_also_fixes_product": "no product change is allowed in /19; any fix after this run makes Holdout-7 exposed"
+  },
+  "runtime": {"route_mode": "local-only-scoped", "allow_live_ai": false, "model": "AxoV9", "gguf_sha256": "73f1484b08b97ed2a1f44e32bcf6610210c7fda51567c4cd0a03d98dffc6cc35", "llama_cpp_release": "b12470", "require_fresh_cache": true, "cloud_fallback": false, "location": "the one temporary detached measurement worktree authorised in /19"},
+  "primary": {
+    "completion_rate_min": 0.85,
+    "min_completed": 50,
+    "population": "all 58 positive Holdout-7 cases (no exclusion after the run)",
+    "completion": "SERVED + Source Gate verified + MATHEMATICALLY_VALID scene (shared scene_oracle.py) + exact numeric where a gold value exists + browser visual & interaction pass"
+  },
+  "slm_fallback": {
+    "rate_min": 0.5, "min_routed_sample": 8, "min_live_verified_scenes": 5,
+    "population": "positive cases the production run routes to AxoV9 (live slm_invoked)",
+    "cache_and_replay_credit": false,
+    "small_sample_policy": "FAIL_GATE_IF_ROUTED_SAMPLE_BELOW_8 (reported as insufficient sample; never re-defined after the run)"
+  },
+  "slm_independent": {
+    "tool": "backend/scripts/evaluate_slm_independent_capability.py (allow_parser_reconcile = false, no parser bypass)",
+    "population": "the same 58 positive + 22 negative Holdout-7 cases, isolated SLM path — a capability measure, NOT part of the end-to-end rate",
+    "verified_scene_rate_min": 0.6, "min_verified_scenes": 35, "negative_safe_refusal_rate_min": 1.0, "false_assertions_max": 0, "invalid_relations_max": 0
+  },
+  "safety": {"all_negative_safe": true, "external_ai_calls": 0, "wrong_served": 0, "grounding_violations_served": 0, "unverified_relations_served": 0, "fabricated_numeric_goals": 0, "served_numeric_mismatch": 0},
+  "reporting": "every rate with its denominator and a 95 % Wilson interval; per stratum; per route latency; deterministic completion and SLM-contributed completion separately",
+  "scope_note": "text only; OCR/Vision not part of this acceptance; LOCAL_VISION_REPLACEMENT_VERIFIED = FALSE"
+}

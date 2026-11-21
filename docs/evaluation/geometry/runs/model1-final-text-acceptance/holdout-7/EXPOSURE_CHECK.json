@@ -1,0 +1,412 @@
+{
+ "schema": "axo-holdout-exposure/1",
+ "corpus_strings": 29643,
+ "training_dir": ".superpowers\\offline-logs\\semantic-grounding-slm-recovery\\training-corpus",
+ "cases": 80,
+ "string_exposed": 0,
+ "template_exposed": 0,
+ "string_exposed_ids": [],
+ "template_exposed_ids": [],
+ "rows": [
+  {
+   "case_id": "T01",
+   "string_exposed": false,
+   "template_exposed": false
+  },
+  {
+   "case_id": "T02",
+   "string_exposed": false,
+   "template_exposed": false
+  },
+  {
+   "case_id": "T03",
+   "string_exposed": false,
+   "template_exposed": false
+  },
+  {
+   "case_id": "T04",
+   "string_exposed": false,
+   "template_exposed": false
+  },
+  {
+   "case_id": "T05",
+   "string_exposed": false,
+   "template_exposed": false
+  },
+  {
+   "case_id": "T06",
+   "string_exposed": false,
+   "template_exposed": false
+  },
+  {
+   "case_id": "T07",
+   "string_exposed": false,
+   "template_exposed": false
+  },
+  {
+   "case_id": "T08",
+   "string_exposed": false,
+   "template_exposed": false
+  },
+  {
+   "case_id": "T09",
+   "string_exposed": false,
+   "template_exposed": false
+  },
+  {
+   "case_id": "T10",
+   "string_exposed": false,
+   "template_exposed": false
+  },
+  {
+   "case_id": "T11",
+   "string_exposed": false,
+   "template_exposed": false
+  },
+  {
+   "case_id": "T12",
+   "string_exposed": false,
+   "template_exposed": false
+  },
+  {
+   "case_id": "T13",
+   "string_exposed": false,
+   "template_exposed": false
+  },
+  {
+   "case_id": "T14",
+   "string_exposed": false,
+   "template_exposed": false
+  },
+  {
+   "case_id": "T15",
+   "string_exposed": false,
+   "template_exposed": false
+  },
+  {
+   "case_id": "T16",
+   "string_exposed": false,
+   "template_exposed": false
+  },
+  {
+   "case_id": "T17",
+   "string_exposed": false,
+   "template_exposed": false
+  },
+  {
+   "case_id": "E01",
+   "string_exposed": false,
+   "template_exposed": false
+  },
+  {
+   "case_id": "E02",
+   "string_exposed": false,
+   "template_exposed": false
+  },
+  {
+   "case_id": "E03",
+   "string_exposed": false,
+   "template_exposed": false
+  },
+  {
+   "case_id": "E04",
+   "string_exposed": false,
+   "template_exposed": false
+  },
+  {
+   "case_id": "E05",
+   "string_exposed": false,
+   "template_exposed": false
+  },
+  {
+   "case_id": "E06",
+   "string_exposed": false,
+   "template_exposed": false
+  },
+  {
+   "case_id": "E07",
+   "string_exposed": false,
+   "template_exposed": false
+  },
+  {
+   "case_id": "E08",
+   "string_exposed": false,
+   "template_exposed": false
+  },
+  {
+   "case_id": "E09",
+   "string_exposed": false,
+   "template_exposed": false
+  },
+  {
+   "case_id": "E10",
+   "string_exposed": false,
+   "template_exposed": false
+  },
+  {
+   "case_id": "E11",
+   "string_exposed": false,
+   "template_exposed": false
+  },
+  {
+   "case_id": "E12",
+   "string_exposed": false,
+   "template_exposed": false
+  },
+  {
+   "case_id": "E13",
+   "string_exposed": false,
+   "template_exposed": false
+  },
+  {
+   "case_id": "E14",
+   "string_exposed": false,
+   "template_exposed": false
+  },
+  {
+   "case_id": "E15",
+   "string_exposed": false,
+   "template_exposed": false
+  },
+  {
+   "case_id": "E16",
+   "string_exposed": false,
+   "template_exposed": false
+  },
+  {
+   "case_id": "G01",
+   "string_exposed": false,
+   "template_exposed": false
+  },
+  {
+   "case_id": "G02",
+   "string_exposed": false,
+   "template_exposed": false
+  },
+  {
+   "case_id": "G03",
+   "string_exposed": false,
+   "template_exposed": false
+  },
+  {
+   "case_id": "G04",
+   "string_exposed": false,
+   "template_exposed": false
+  },
+  {
+   "case_id": "G05",
+   "string_exposed": false,
+   "template_exposed": false
+  },
+  {
+   "case_id": "G06",
+   "string_exposed": false,
+   "template_exposed": false
+  },
+  {
+   "case_id": "G07",
+   "string_exposed": false,
+   "template_exposed": false
+  },
+  {
+   "case_id": "G08",
+   "string_exposed": false,
+   "template_exposed": false
+  },
+  {
+   "case_id": "G09",
+   "string_exposed": false,
+   "template_exposed": false
+  },
+  {
+   "case_id": "G10",
+   "string_exposed": false,
+   "template_exposed": false
+  },
+  {
+   "case_id": "G11",
+   "string_exposed": false,
+   "template_exposed": false
+  },
+  {
+   "case_id": "G12",
+   "string_exposed": false,
+   "template_exposed": false
+  },
+  {
+   "case_id": "G13",
+   "string_exposed": false,
+   "template_exposed": false
+  },
+  {
+   "case_id": "G14",
+   "string_exposed": false,
+   "template_exposed": false
+  },
+  {
+   "case_id": "G15",
+   "string_exposed": false,
+   "template_exposed": false
+  },
+  {
+   "case_id": "C01",
+   "string_exposed": false,
+   "template_exposed": false
+  },
+  {
+   "case_id": "C02",
+   "string_exposed": false,
+   "template_exposed": false
+  },
+  {
+   "case_id": "C03",
+   "string_exposed": false,
+   "template_exposed": false
+  },
+  {
+   "case_id": "C04",
+   "string_exposed": false,
+   "template_exposed": false
+  },
+  {
+   "case_id": "C05",
+   "string_exposed": false,
+   "template_exposed": false
+  },
+  {
+   "case_id": "C06",
+   "string_exposed": false,
+   "template_exposed": false
+  },
+  {
+   "case_id": "C07",
+   "string_exposed": false,
+   "template_exposed": false
+  },
+  {
+   "case_id": "C08",
+   "string_exposed": false,
+   "template_exposed": false
+  },
+  {
+   "case_id": "C09",
+   "string_exposed": false,
+   "template_exposed": false
+  },
+  {
+   "case_id": "C10",
+   "string_exposed": false,
+   "template_exposed": false
+  },
+  {
+   "case_id": "N01",
+   "string_exposed": false,
+   "template_exposed": false
+  },
+  {
+   "case_id": "N02",
+   "string_exposed": false,
+   "template_exposed": false
+  },
+  {
+   "case_id": "N03",
+   "string_exposed": false,
+   "template_exposed": false
+  },
+  {
+   "case_id": "N04",
+   "string_exposed": false,
+   "template_exposed": false
+  },
+  {
+   "case_id": "N05",
+   "string_exposed": false,
+   "template_exposed": false
+  },
+  {
+   "case_id": "N06",
+   "string_exposed": false,
+   "template_exposed": false
+  },
+  {
+   "case_id": "N07",
+   "string_exposed": false,
+   "template_exposed": false
+  },
+  {
+   "case_id": "N08",
+   "string_exposed": false,
+   "template_exposed": false
+  },
+  {
+   "case_id": "N09",
+   "string_exposed": false,
+   "template_exposed": false
+  },
+  {
+   "case_id": "N10",
+   "string_exposed": false,
+   "template_exposed": false
+  },
+  {
+   "case_id": "N11",
+   "string_exposed": false,
+   "template_exposed": false
+  },
+  {
+   "case_id": "N12",
+   "string_exposed": false,
+   "template_exposed": false
+  },
+  {
+   "case_id": "N13",
+   "string_exposed": false,
+   "template_exposed": false
+  },
+  {
+   "case_id": "N14",
+   "string_exposed": false,
+   "template_exposed": false
+  },
+  {
+   "case_id": "N15",
+   "string_exposed": false,
+   "template_exposed": false
+  },
+  {
+   "case_id": "N16",
+   "string_exposed": false,
+   "template_exposed": false
+  },
+  {
+   "case_id": "N17",
+   "string_exposed": false,
+   "template_exposed": false
+  },
+  {
+   "case_id": "N18",
+   "string_exposed": false,
+   "template_exposed": false
+  },
+  {
+   "case_id": "N19",
+   "string_exposed": false,
+   "template_exposed": false
+  },
+  {
+   "case_id": "N20",
+   "string_exposed": false,
+   "template_exposed": false
+  },
+  {
+   "case_id": "N21",
+   "string_exposed": false,
+   "template_exposed": false
+  },
+  {
+   "case_id": "N22",
+   "string_exposed": false,
+   "template_exposed": false
+  }
+ ]
+}

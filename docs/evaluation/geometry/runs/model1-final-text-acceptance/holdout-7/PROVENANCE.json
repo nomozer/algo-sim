@@ -1,0 +1,17 @@
+{
+  "schema": "axo-holdout-provenance/1",
+  "set": "holdout-7",
+  "date": "2026-11-21",
+  "evidence_class": "B_PROSPECTIVE_INTERNAL",
+  "external_independence": "NOT_MEASURED",
+  "source": "hand-written Vietnamese problems by the AXO HYBRID /19 agent (not copied from any publication; no copyrighted text)",
+  "why_not_external": "a search for traceable public sources found only aggregator copies of exam papers with unclear reuse rights and formulas typeset as images (would need OCR, outside the owner's scope); no teacher or independent evaluator was available",
+  "selected_by": "the same agent (the author)",
+  "oracle_written_by": "the same agent; every metric computed twice (closed form + independent coordinate model in build_holdout.py) and every relation re-checked on the coordinates (check_relations.py: 376/376)",
+  "oracle_checked_by": "automated cross-checks only — no second person",
+  "sampling_plan": "fixed before writing: positives textbook_canonical 17, exam_wording 16, teacher_wording 15, learner_colloquial 10; negatives missing_data 6, contradiction 5, negation/condition/unsupported request 6, other subject 5; in-scope rule from CAPABILITY_MATRIX.json SUPPORTED families",
+  "author_bias_disclosure": "the author has read the local parser, normalizer and earlier failure taxonomies; the problems were written in ordinary textbook/exam/teacher/learner Vietnamese without running them, but knowledge of the parser may still shape wording in either direction",
+  "pre_run_changes": "T03, T06, T12, T14, T16 reworded after the exposure check and before any run",
+  "exposure": "EXPOSURE_CHECK.json — 0 string and 0 template containment matches against 29,643 prior strings (repository JSON/JSONL, test/script strings, local SLM training/validation sets)",
+  "reuse_rights": "authored for this repository; no third-party content"
+}
