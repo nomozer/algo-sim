@@ -1,33 +1,33 @@
 {
   "schema": "axo-run-acceptance-freeze/1",
   "run_id": "semantic-grounding-slm-recovery",
-  "baseline_ref": "3c77b35eec388a67518fd528fc56f6c53ef5948c",
+  "baseline_ref": "4c1b94b61cdd8b1747059829a9d487b1749e1383",
   "frozen_before_any_product_edit": true,
-  "active_set": "holdout-5",
+  "active_set": "holdout-6",
   "artifacts": {
-    "holdout5_manifest": {
-      "path": "holdout-5/ACCEPTANCE_MANIFEST.json",
-      "sha256": "b3c43bcf3e43dc3733dbff40ecf18b8856d17a5e76fcc5f8abb3c8f23d3527df"
+    "holdout6_manifest": {
+      "path": "holdout-6/ACCEPTANCE_MANIFEST.json",
+      "sha256": "f5423a44d64e34984bc3580e4c34c9d1f8529b6fd070d6d705fda2726235a0f2"
     },
-    "slm_independent_2_manifest": {
-      "path": "holdout-5/SLM_INDEPENDENT_MANIFEST.json",
-      "sha256": "c96fc57157f0a61e96cc47864e62ecc38ada519ab4647c381f7bc69fd4da5bec"
+    "slm_independent_3_manifest": {
+      "path": "holdout-6/SLM_INDEPENDENT_MANIFEST.json",
+      "sha256": "eca2456dfab2f245d3b54506d3686b9d7834bd0e21e0bda1ba62fdbb7e393f5d"
     },
     "acceptance_criteria": {
-      "path": "holdout-5/ACCEPTANCE_CRITERIA.json",
-      "sha256": "1ead53d66b9e22114ee5ca7d968e08e93c297181d6177d79119b48d971951f78"
+      "path": "holdout-6/ACCEPTANCE_CRITERIA.json",
+      "sha256": "d5c33952a24dbcebee23e582d1b3063c6be4b2b05856604381216cebdc2e41d9"
     },
     "baseline_freeze": {
-      "path": "holdout-5/ACCEPTANCE_FREEZE.json",
-      "sha256": "82cb035dcaedb43e42bafbb485b0e7a0e93ea05329170cced0a32e21c4613e7d"
+      "path": "holdout-6/ACCEPTANCE_FREEZE.json",
+      "sha256": "e578396bded72a6b436bf85ae1b97526624eb2abf8a61c39515fd9462dffe667"
     },
     "gold_generator": {
-      "path": "holdout-5/build_holdout.py",
-      "sha256": "ec7dfc8a26bf88c0ce43ffdd93700b4dd017f7ee16f11aed39800d0a65881340"
+      "path": "holdout-6/build_holdout.py",
+      "sha256": "2f69ff05f7a301100b315ab15a8641d130e1de1e04db4b4102bd4656425b5b6e"
     },
     "candidate_freeze": {
-      "path": "holdout-5/CANDIDATE_FREEZE.json",
-      "sha256": "51430daafe3078cd2c7adbf0757889a7fdafc7aa85405e129409fa80c9c02a52"
+      "path": "holdout-6/CANDIDATE_FREEZE.json",
+      "sha256": "e4ee31986cc5ea595e07cbdc337232634a24db250258b84ee6be41befb1ba48b"
     }
   },
   "historical_candidate_156_holdout4": {
@@ -70,6 +70,40 @@
       "semantic_environment_hash": "f9df4bf0c8bd458a278d2692567fa3e096340ae37ff5493730dff4067c0f5e19"
     }
   },
+  "historical_candidate_157_holdout5_oracle_bug": {
+    "note": "Holdout-5 on Candidate 157 (4c1b94b61 / detached d27b78de5) achieved 63/72 valid completed, 24/30 SLM fallback, 24/30 SLM independent-2, 26/26 and 10/10 negative safe, 10/10 UI scenarios, 0 product defects, but holdout-5/build_holdout.py mistakenly called tet() at L[0] instead of tri_pyr_rect() at L[1] for P04/P05/S07 (causing 3 manifest-side MATHEMATICALLY_INVALID flags). Retired untouched per §17 without post-hoc oracle edits.",
+    "baseline_ref": "3c77b35eec388a67518fd528fc56f6c53ef5948c",
+    "artifacts": {
+      "holdout5_manifest": {
+        "path": "holdout-5/ACCEPTANCE_MANIFEST.json",
+        "sha256": "b3c43bcf3e43dc3733dbff40ecf18b8856d17a5e76fcc5f8abb3c8f23d3527df"
+      },
+      "slm_independent_2_manifest": {
+        "path": "holdout-5/SLM_INDEPENDENT_MANIFEST.json",
+        "sha256": "c96fc57157f0a61e96cc47864e62ecc38ada519ab4647c381f7bc69fd4da5bec"
+      },
+      "acceptance_criteria": {
+        "path": "holdout-5/ACCEPTANCE_CRITERIA.json",
+        "sha256": "1ead53d66b9e22114ee5ca7d968e08e93c297181d6177d79119b48d971951f78"
+      },
+      "baseline_freeze": {
+        "path": "holdout-5/ACCEPTANCE_FREEZE.json",
+        "sha256": "82cb035dcaedb43e42bafbb485b0e7a0e93ea05329170cced0a32e21c4613e7d"
+      },
+      "gold_generator": {
+        "path": "holdout-5/build_holdout.py",
+        "sha256": "ec7dfc8a26bf88c0ce43ffdd93700b4dd017f7ee16f11aed39800d0a65881340"
+      },
+      "candidate_freeze": {
+        "path": "holdout-5/CANDIDATE_FREEZE.json",
+        "sha256": "51430daafe3078cd2c7adbf0757889a7fdafc7aa85405e129409fa80c9c02a52"
+      },
+      "oracle_bug_disclosure_receipt": {
+        "path": "holdout-5/CANDIDATE_157_HOLDOUT5_ORACLE_BUG_RECEIPT.json",
+        "sha256": "ebb917ce7a28a05081712f4b82b3cd417bf56e071f99be0f7ff1510943dbcd6a"
+      }
+    }
+  },
   "harness": {
     "version": "axo-live-acceptance-harness/1",
     "scene_oracle_sha256": "a73bc2cf7d26795862fe3fadf2d04d6a0ca803ad92a4acac50ba0e50f9bb40cb",
@@ -80,22 +114,22 @@
   },
   "exposure": {
     "external_independence": "NOT_MEASURED",
-    "normalized_prior_strings": 29285,
+    "normalized_prior_strings": 29423,
     "training_corpus_included": true,
-    "holdout5_containment_matches": 0,
-    "slm_independent2_containment_matches": 0,
+    "holdout6_containment_matches": 0,
+    "slm_independent3_containment_matches": 0,
     "cross_set_overlap_matches": 0,
     "single_shot": true,
     "author_also_fixes_product": true
   },
   "baseline_code": {
-    "head": "3c77b35eec388a67518fd528fc56f6c53ef5948c",
+    "head": "4c1b94b61cdd8b1747059829a9d487b1749e1383",
     "branch": "feat/semantic-grounding-slm-recovery",
-    "candidate_commit": "c3e944d7fb7a86380738948d81ac6fdfdb514ed6",
-    "product_commit_sha": "c3e944d7fb7a86380738948d81ac6fdfdb514ed6",
-    "measured_system_tree_hash": "f3f04425378304b34e68a07d43df5d4f5a85c2a04ef90a08b6456c4403dafb4b",
-    "cache_version": "156",
-    "route_d_cache_policy": "156:route-d",
+    "candidate_commit": "4c1b94b61cdd8b1747059829a9d487b1749e1383",
+    "product_commit_sha": "4c1b94b61cdd8b1747059829a9d487b1749e1383",
+    "measured_system_tree_hash": "3152f3829fbe4744baa298b0ee147648cd1cb666103baabcb1497cb9ffb525d5",
+    "cache_version": "157",
+    "route_d_cache_policy": "157:route-d",
     "semantic_environment_hash": "f9df4bf0c8bd458a278d2692567fa3e096340ae37ff5493730dff4067c0f5e19",
     "parser_version": "local-geometry-parser/3",
     "slm_extractor_version": "local-slm-extractor/6",
@@ -109,8 +143,8 @@
   "baseline_counts": {
     "valid_total": 72,
     "in_scope": 72,
-    "parser_complete": 42,
-    "slm_required": 30,
+    "parser_complete": 41,
+    "slm_required": 31,
     "preregistered_slm_targets": 12,
     "preregistered_slm_targets_in_slm_required": 12,
     "separate": 0,
@@ -121,7 +155,7 @@
     "negative": 10
   },
   "candidate_code": {
-    "head": "39c95599e9ddc2efc7cc3455ae2505384af63e21",
+    "head": "f3b23f773c1d9fb8c1121f06a250134bf409b523",
     "branch": "feat/semantic-grounding-slm-recovery",
     "candidate_commit": "4c1b94b61cdd8b1747059829a9d487b1749e1383",
     "product_commit_sha": "4c1b94b61cdd8b1747059829a9d487b1749e1383",
@@ -136,8 +170,8 @@
   "candidate_counts": {
     "valid_total": 72,
     "in_scope": 72,
-    "parser_complete": 42,
-    "slm_required": 30,
+    "parser_complete": 41,
+    "slm_required": 31,
     "preregistered_slm_targets": 12,
     "preregistered_slm_targets_in_slm_required": 12,
     "separate": 0,
