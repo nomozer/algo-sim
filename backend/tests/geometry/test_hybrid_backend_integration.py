@@ -518,13 +518,75 @@ def test_version_constants_surface_fingerprints_and_historical_receipt_preservat
     hbi = json.loads((RUNS_DIR / "hybrid-backend-integration/run.json").read_text(encoding="utf-8"))
     assert (hbi["product_sha256"], hbi["measured_files"]) == (
         "afab0a3ca3abfe3c3f7692d34be2aeadbd099b8d43b6543d8d234d19b5ef8443", 110)
-    # ... while the live tree must equal whichever candidate is frozen NOW. Run `hybrid-pre-main-hardening`: this used to
-    # pin afab0a3c literally, so every later product change (refrozen as a new candidate) read as a broken receipt.
+    # ... while historical freeze verification proves the recorded snapshot at its original Git commit
+    # remains intact AND current product fingerprint truthfully tracks post-freeze evolution outside core Geometry/AI
+    # (see docs/architecture/FREEZE_VERIFICATION_CONTRACT.md).
     fz = _load_module("_freeze_eval_cand_int", ROOT / "backend/scripts/freeze_evaluation_candidate.py")
+    frozen_doc = json.loads(fz.OUT.read_text(encoding="utf-8"))
+    frozen = frozen_doc["measured_system"]
+
+    # 1. Historical candidate fingerprint at its recorded Git commit must verify identically
+    hist = fz.verify_historical_candidate()
+    assert hist["verdict"] == "PASS", hist
+    assert hist["provenance_matches_head"] is True
+    assert (hist["actual_historical_tree_hash"], hist["actual_historical_so_file"]) == (
+        frozen["tree_hash"],
+        frozen["so_file"],
+    )
+    assert hist["actual_historical_tree_hash"] != v3_div["current_candidate_hash"]
+
+    # 2. Current product fingerprint: core evaluation paths must not drift, while any approved non-core diff
+    #    (e.g. backend/app/accounts/) must visibly produce a distinct current hash (never masked).
     combined_hash, file_count = fz.measured_system_hash()
-    frozen = json.loads(fz.OUT.read_text(encoding="utf-8"))["measured_system"]
-    assert (combined_hash, file_count) == (frozen["tree_hash"], frozen["so_file"])
+    assert len(combined_hash) == 64 and file_count > 0
     assert combined_hash != v3_div["current_candidate_hash"]
+    diff_vs_frozen = fz.diff_measured_system_vs_commit(frozen_doc["commit"])
+    assert diff_vs_frozen["core_evaluation_changed"] == [], (
+        f"Core Geometry/AI paths drifted from frozen snapshot {frozen_doc['commit'][:9]}: "
+        f"{diff_vs_frozen['core_evaluation_changed']}"
+    )
+    if diff_vs_frozen["all_diff"]:
+        assert (combined_hash, file_count) != (frozen["tree_hash"], frozen["so_file"])
+    else:
+        assert (combined_hash, file_count) == (frozen["tree_hash"], frozen["so_file"])
+
+
+def test_hybrid_backend_historical_vs_current_drift_and_tamper_detection(tmp_path):
+    """Negative contract guard: historical tamper fails, and current product drift is rejected by strict --verify."""
+    fz = _load_module("_freeze_eval_cand_neg", ROOT / "backend/scripts/freeze_evaluation_candidate.py")
+    frozen_doc = json.loads(fz.OUT.read_text(encoding="utf-8"))
+
+    # 1. Tampering historical tree_hash must FAIL historical verification
+    tampered_hash_doc = deepcopy(frozen_doc)
+    tampered_hash_doc["measured_system"]["tree_hash"] = "0" * 64
+    tampered_hash_path = tmp_path / "tampered-hash.json"
+    tampered_hash_path.write_text(json.dumps(tampered_hash_doc, ensure_ascii=False, indent=2), encoding="utf-8")
+    res_hash = fz.verify_historical_candidate(manifest_path=tampered_hash_path, check_git_provenance=False)
+    assert res_hash["verdict"] == "FAIL"
+    assert res_hash["checks"]["measured_tree_hash"] is False
+
+    # 2. Tampering historical commit to a nonexistent SHA must FAIL historical verification
+    tampered_commit_doc = deepcopy(frozen_doc)
+    tampered_commit_doc["commit"] = "deadbeef" * 5
+    tampered_commit_doc["commit_ngan"] = "deadbeef"
+    tampered_commit_path = tmp_path / "tampered-commit.json"
+    tampered_commit_path.write_text(json.dumps(tampered_commit_doc, ensure_ascii=False, indent=2), encoding="utf-8")
+    res_commit = fz.verify_historical_candidate(manifest_path=tampered_commit_path, check_git_provenance=False)
+    assert res_commit["verdict"] == "FAIL"
+    assert res_commit["checks"]["commit_exists"] is False
+
+    # 3. When current product differs from frozen snapshot, strict --verify MUST reject (no silent fallback)
+    diff_vs_frozen = fz.diff_measured_system_vs_commit(frozen_doc["commit"])
+    if diff_vs_frozen["all_diff"]:
+        import subprocess
+        import sys
+        strict_proc = subprocess.run(
+            [sys.executable, str(ROOT / "backend" / "scripts" / "freeze_evaluation_candidate.py"), "--verify"],
+            cwd=ROOT,
+            capture_output=True,
+            text=True,
+        )
+        assert strict_proc.returncode != 0
 
 
 def test_registry_permutation_invariance_across_combined_slices(monkeypatch):

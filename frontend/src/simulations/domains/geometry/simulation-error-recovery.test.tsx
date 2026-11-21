@@ -1,3 +1,5 @@
+import path from "node:path";
+import { fileURLToPath } from "node:url";
 import { renderToString } from "react-dom/server";
 import { afterEach, describe, expect, it, vi } from "vitest";
 import esbuild from "esbuild";
@@ -275,7 +277,7 @@ describe("Simulation Error Classification & Bounded Recovery (AXO Reliability)",
               });
             };
           `,
-          resolveDir: "D:/Documents/projects/axo-geometry-library/frontend/src",
+          resolveDir: path.resolve(path.dirname(fileURLToPath(import.meta.url)), "../../.."),
           sourcefile: "recovery-browser-harness.tsx",
           loader: "tsx",
         },
