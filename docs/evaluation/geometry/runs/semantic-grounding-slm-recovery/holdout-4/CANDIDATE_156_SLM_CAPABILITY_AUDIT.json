@@ -1,0 +1,1170 @@
+{
+  "schema": "axo-slm-independent-capability-audit/1",
+  "manifest_run_id": "semantic-grounding-slm-recovery",
+  "manifest_set": "slm-independent-40",
+  "model_key": "qwen3-0.6b-axo-v9-q4_k_m",
+  "model_sha256": "73f1484b08b97ed2a1f44e32bcf6610210c7fda51567c4cd0a03d98dffc6cc35",
+  "allow_parser_reconcile": false,
+  "local_parser_bypass_used": false,
+  "allow_live_ai": false,
+  "summary": {
+    "verified_scenes": 25,
+    "positive_total": 30,
+    "rate": 0.8333333333333334,
+    "extraction_correctness": 0.8666666666666667,
+    "grounding_correctness": 0.8666666666666667,
+    "negative_safe_refused": 10,
+    "negative_total": 10,
+    "false_assertions_served": 0,
+    "invalid_relations_served": 0,
+    "thresholds": {
+      "verified_scene_rate_min": 0.6,
+      "min_verified_scenes": 18,
+      "negative_safe_refusal_rate_min": 1.0,
+      "false_assertions_max": 0,
+      "invalid_relations_max": 0
+    },
+    "gate_pass": true
+  },
+  "cases": [
+    {
+      "case_id": "I01",
+      "stratum": "positive",
+      "expected_behavior": "SERVE",
+      "stage": "hybrid_offline",
+      "model_key": "qwen3-0.6b-axo-v9-q4_k_m",
+      "model_sha256": "73f1484b08b97ed2a1f44e32bcf6610210c7fda51567c4cd0a03d98dffc6cc35",
+      "slm_invoked": true,
+      "slm_ok": true,
+      "extracted_ok": true,
+      "grounded_ok": true,
+      "served": true,
+      "verified_scene": true,
+      "safe_refused": false,
+      "reason_code": null,
+      "grounding_status": "GROUNDED_AND_LOWERED",
+      "scene_validation": "MATHEMATICALLY_VALID",
+      "oracle_issues": [],
+      "numeric": {
+        "served": {
+          "q1": "8"
+        },
+        "parsed": [
+          8.0
+        ],
+        "gold": [
+          8.0
+        ],
+        "matched": 1,
+        "of": 1,
+        "status": "CORRECT"
+      },
+      "latency_ms": 6318.98
+    },
+    {
+      "case_id": "I02",
+      "stratum": "positive",
+      "expected_behavior": "SERVE",
+      "stage": "local_slm_extraction",
+      "model_key": "qwen3-0.6b-axo-v9-q4_k_m",
+      "model_sha256": "73f1484b08b97ed2a1f44e32bcf6610210c7fda51567c4cd0a03d98dffc6cc35",
+      "slm_invoked": true,
+      "slm_ok": false,
+      "extracted_ok": false,
+      "grounded_ok": false,
+      "served": false,
+      "verified_scene": false,
+      "safe_refused": false,
+      "reason_code": "INCONSISTENT_FACTS",
+      "failure_taxonomy": "CONTRADICTION_OR_UNGROUNDED",
+      "grounding_status": "SLM_REPORTED_UNRESOLVED",
+      "scene_validation": "NOT_SERVED",
+      "numeric": null,
+      "latency_ms": 1184.94
+    },
+    {
+      "case_id": "I03",
+      "stratum": "positive",
+      "expected_behavior": "SERVE",
+      "stage": "hybrid_offline",
+      "model_key": "qwen3-0.6b-axo-v9-q4_k_m",
+      "model_sha256": "73f1484b08b97ed2a1f44e32bcf6610210c7fda51567c4cd0a03d98dffc6cc35",
+      "slm_invoked": true,
+      "slm_ok": true,
+      "extracted_ok": true,
+      "grounded_ok": true,
+      "served": true,
+      "verified_scene": true,
+      "safe_refused": false,
+      "reason_code": null,
+      "grounding_status": "GROUNDED_AND_LOWERED",
+      "scene_validation": "MATHEMATICALLY_VALID",
+      "oracle_issues": [],
+      "numeric": {
+        "served": {
+          "q1": "5"
+        },
+        "parsed": [
+          5.0
+        ],
+        "gold": [
+          5.0
+        ],
+        "matched": 1,
+        "of": 1,
+        "status": "CORRECT"
+      },
+      "latency_ms": 2859.9
+    },
+    {
+      "case_id": "I04",
+      "stratum": "positive",
+      "expected_behavior": "SERVE",
+      "stage": "hybrid_offline",
+      "model_key": "qwen3-0.6b-axo-v9-q4_k_m",
+      "model_sha256": "73f1484b08b97ed2a1f44e32bcf6610210c7fda51567c4cd0a03d98dffc6cc35",
+      "slm_invoked": true,
+      "slm_ok": true,
+      "extracted_ok": true,
+      "grounded_ok": true,
+      "served": true,
+      "verified_scene": true,
+      "safe_refused": false,
+      "reason_code": null,
+      "grounding_status": "GROUNDED_AND_LOWERED",
+      "scene_validation": "MATHEMATICALLY_VALID",
+      "oracle_issues": [],
+      "numeric": {
+        "served": {
+          "q1": "cos²=1/2"
+        },
+        "parsed": [
+          45.0
+        ],
+        "gold": [
+          45.0
+        ],
+        "matched": 1,
+        "of": 1,
+        "status": "CORRECT"
+      },
+      "latency_ms": 2933.1
+    },
+    {
+      "case_id": "I05",
+      "stratum": "positive",
+      "expected_behavior": "SERVE",
+      "stage": "hybrid_offline",
+      "model_key": "qwen3-0.6b-axo-v9-q4_k_m",
+      "model_sha256": "73f1484b08b97ed2a1f44e32bcf6610210c7fda51567c4cd0a03d98dffc6cc35",
+      "slm_invoked": true,
+      "slm_ok": true,
+      "extracted_ok": true,
+      "grounded_ok": true,
+      "served": true,
+      "verified_scene": true,
+      "safe_refused": false,
+      "reason_code": null,
+      "grounding_status": "GROUNDED_AND_LOWERED",
+      "scene_validation": "MATHEMATICALLY_VALID",
+      "oracle_issues": [],
+      "numeric": {
+        "served": {
+          "q1": "2√3/3"
+        },
+        "parsed": [
+          1.1547005383792515
+        ],
+        "gold": [
+          1.1547005383792517
+        ],
+        "matched": 1,
+        "of": 1,
+        "status": "CORRECT"
+      },
+      "latency_ms": 3465.94
+    },
+    {
+      "case_id": "I06",
+      "stratum": "positive",
+      "expected_behavior": "SERVE",
+      "stage": "local_slm_extraction",
+      "model_key": "qwen3-0.6b-axo-v9-q4_k_m",
+      "model_sha256": "73f1484b08b97ed2a1f44e32bcf6610210c7fda51567c4cd0a03d98dffc6cc35",
+      "slm_invoked": true,
+      "slm_ok": false,
+      "extracted_ok": false,
+      "grounded_ok": false,
+      "served": false,
+      "verified_scene": false,
+      "safe_refused": false,
+      "reason_code": "INCONSISTENT_FACTS",
+      "failure_taxonomy": "CONTRADICTION_OR_UNGROUNDED",
+      "grounding_status": "SLM_REPORTED_UNRESOLVED",
+      "scene_validation": "NOT_SERVED",
+      "numeric": null,
+      "latency_ms": 1197.84
+    },
+    {
+      "case_id": "I07",
+      "stratum": "positive",
+      "expected_behavior": "SERVE",
+      "stage": "hybrid_offline",
+      "model_key": "qwen3-0.6b-axo-v9-q4_k_m",
+      "model_sha256": "73f1484b08b97ed2a1f44e32bcf6610210c7fda51567c4cd0a03d98dffc6cc35",
+      "slm_invoked": true,
+      "slm_ok": true,
+      "extracted_ok": true,
+      "grounded_ok": true,
+      "served": true,
+      "verified_scene": true,
+      "safe_refused": false,
+      "reason_code": null,
+      "grounding_status": "GROUNDED_AND_LOWERED",
+      "scene_validation": "MATHEMATICALLY_VALID",
+      "oracle_issues": [],
+      "numeric": {
+        "served": {
+          "q1": "12a³"
+        },
+        "parsed": [
+          12.0
+        ],
+        "gold": [
+          12.0
+        ],
+        "matched": 1,
+        "of": 1,
+        "status": "CORRECT"
+      },
+      "latency_ms": 3539.37
+    },
+    {
+      "case_id": "I08",
+      "stratum": "positive",
+      "expected_behavior": "SERVE",
+      "stage": "hybrid_offline",
+      "model_key": "qwen3-0.6b-axo-v9-q4_k_m",
+      "model_sha256": "73f1484b08b97ed2a1f44e32bcf6610210c7fda51567c4cd0a03d98dffc6cc35",
+      "slm_invoked": true,
+      "slm_ok": true,
+      "extracted_ok": true,
+      "grounded_ok": true,
+      "served": true,
+      "verified_scene": true,
+      "safe_refused": false,
+      "reason_code": null,
+      "grounding_status": "GROUNDED_AND_LOWERED",
+      "scene_validation": "MATHEMATICALLY_VALID",
+      "oracle_issues": [],
+      "numeric": {
+        "served": {
+          "q1": "13"
+        },
+        "parsed": [
+          13.0
+        ],
+        "gold": [
+          13.0
+        ],
+        "matched": 1,
+        "of": 1,
+        "status": "CORRECT"
+      },
+      "latency_ms": 3867.06
+    },
+    {
+      "case_id": "I09",
+      "stratum": "positive",
+      "expected_behavior": "SERVE",
+      "stage": "hybrid_offline",
+      "model_key": "qwen3-0.6b-axo-v9-q4_k_m",
+      "model_sha256": "73f1484b08b97ed2a1f44e32bcf6610210c7fda51567c4cd0a03d98dffc6cc35",
+      "slm_invoked": true,
+      "slm_ok": true,
+      "extracted_ok": true,
+      "grounded_ok": true,
+      "served": true,
+      "verified_scene": true,
+      "safe_refused": false,
+      "reason_code": null,
+      "grounding_status": "GROUNDED_AND_LOWERED",
+      "scene_validation": "MATHEMATICALLY_VALID",
+      "oracle_issues": [],
+      "numeric": {
+        "served": {
+          "q1": "5"
+        },
+        "parsed": [
+          5.0
+        ],
+        "gold": [
+          5.0
+        ],
+        "matched": 1,
+        "of": 1,
+        "status": "CORRECT"
+      },
+      "latency_ms": 5123.01
+    },
+    {
+      "case_id": "I10",
+      "stratum": "positive",
+      "expected_behavior": "SERVE",
+      "stage": "hybrid_offline",
+      "model_key": "qwen3-0.6b-axo-v9-q4_k_m",
+      "model_sha256": "73f1484b08b97ed2a1f44e32bcf6610210c7fda51567c4cd0a03d98dffc6cc35",
+      "slm_invoked": true,
+      "slm_ok": true,
+      "extracted_ok": true,
+      "grounded_ok": true,
+      "served": true,
+      "verified_scene": true,
+      "safe_refused": false,
+      "reason_code": null,
+      "grounding_status": "GROUNDED_AND_LOWERED",
+      "scene_validation": "MATHEMATICALLY_VALID",
+      "oracle_issues": [],
+      "numeric": {
+        "served": {
+          "q1": "13"
+        },
+        "parsed": [
+          13.0
+        ],
+        "gold": [
+          13.0
+        ],
+        "matched": 1,
+        "of": 1,
+        "status": "CORRECT"
+      },
+      "latency_ms": 4981.05
+    },
+    {
+      "case_id": "I11",
+      "stratum": "positive",
+      "expected_behavior": "SERVE",
+      "stage": "hybrid_offline",
+      "model_key": "qwen3-0.6b-axo-v9-q4_k_m",
+      "model_sha256": "73f1484b08b97ed2a1f44e32bcf6610210c7fda51567c4cd0a03d98dffc6cc35",
+      "slm_invoked": true,
+      "slm_ok": true,
+      "extracted_ok": true,
+      "grounded_ok": true,
+      "served": true,
+      "verified_scene": true,
+      "safe_refused": false,
+      "reason_code": null,
+      "grounding_status": "GROUNDED_AND_LOWERED",
+      "scene_validation": "MATHEMATICALLY_VALID",
+      "oracle_issues": [],
+      "numeric": {
+        "served": {
+          "q1": "10"
+        },
+        "parsed": [
+          10.0
+        ],
+        "gold": [
+          10.0
+        ],
+        "matched": 1,
+        "of": 1,
+        "status": "CORRECT"
+      },
+      "latency_ms": 4311.15
+    },
+    {
+      "case_id": "I12",
+      "stratum": "positive",
+      "expected_behavior": "SERVE",
+      "stage": "hybrid_offline",
+      "model_key": "qwen3-0.6b-axo-v9-q4_k_m",
+      "model_sha256": "73f1484b08b97ed2a1f44e32bcf6610210c7fda51567c4cd0a03d98dffc6cc35",
+      "slm_invoked": true,
+      "slm_ok": true,
+      "extracted_ok": true,
+      "grounded_ok": true,
+      "served": true,
+      "verified_scene": true,
+      "safe_refused": false,
+      "reason_code": null,
+      "grounding_status": "GROUNDED_AND_LOWERED",
+      "scene_validation": "MATHEMATICALLY_VALID",
+      "oracle_issues": [],
+      "numeric": {
+        "served": {
+          "q1": "2a³"
+        },
+        "parsed": [
+          2.0
+        ],
+        "gold": [
+          2.0
+        ],
+        "matched": 1,
+        "of": 1,
+        "status": "CORRECT"
+      },
+      "latency_ms": 4930.45
+    },
+    {
+      "case_id": "I13",
+      "stratum": "positive",
+      "expected_behavior": "SERVE",
+      "stage": "local_slm_extraction",
+      "model_key": "qwen3-0.6b-axo-v9-q4_k_m",
+      "model_sha256": "73f1484b08b97ed2a1f44e32bcf6610210c7fda51567c4cd0a03d98dffc6cc35",
+      "slm_invoked": true,
+      "slm_ok": false,
+      "extracted_ok": false,
+      "grounded_ok": false,
+      "served": false,
+      "verified_scene": false,
+      "safe_refused": false,
+      "reason_code": "INCONSISTENT_FACTS",
+      "failure_taxonomy": "CONTRADICTION_OR_UNGROUNDED",
+      "grounding_status": "SLM_REPORTED_UNRESOLVED",
+      "scene_validation": "NOT_SERVED",
+      "numeric": null,
+      "latency_ms": 1154.96
+    },
+    {
+      "case_id": "I14",
+      "stratum": "positive",
+      "expected_behavior": "SERVE",
+      "stage": "local_slm_extraction",
+      "model_key": "qwen3-0.6b-axo-v9-q4_k_m",
+      "model_sha256": "73f1484b08b97ed2a1f44e32bcf6610210c7fda51567c4cd0a03d98dffc6cc35",
+      "slm_invoked": true,
+      "slm_ok": false,
+      "extracted_ok": false,
+      "grounded_ok": false,
+      "served": false,
+      "verified_scene": false,
+      "safe_refused": false,
+      "reason_code": "INCONSISTENT_FACTS",
+      "failure_taxonomy": "CONTRADICTION_OR_UNGROUNDED",
+      "grounding_status": "SLM_REPORTED_UNRESOLVED",
+      "scene_validation": "NOT_SERVED",
+      "numeric": null,
+      "latency_ms": 1498.21
+    },
+    {
+      "case_id": "I15",
+      "stratum": "positive",
+      "expected_behavior": "SERVE",
+      "stage": "hybrid_offline",
+      "model_key": "qwen3-0.6b-axo-v9-q4_k_m",
+      "model_sha256": "73f1484b08b97ed2a1f44e32bcf6610210c7fda51567c4cd0a03d98dffc6cc35",
+      "slm_invoked": true,
+      "slm_ok": true,
+      "extracted_ok": true,
+      "grounded_ok": true,
+      "served": true,
+      "verified_scene": true,
+      "safe_refused": false,
+      "reason_code": null,
+      "grounding_status": "GROUNDED_AND_LOWERED",
+      "scene_validation": "MATHEMATICALLY_VALID",
+      "oracle_issues": [],
+      "numeric": {
+        "served": {
+          "q1": "60"
+        },
+        "parsed": [
+          60.0
+        ],
+        "gold": [
+          60.0
+        ],
+        "matched": 1,
+        "of": 1,
+        "status": "CORRECT"
+      },
+      "latency_ms": 4015.95
+    },
+    {
+      "case_id": "I16",
+      "stratum": "positive",
+      "expected_behavior": "SERVE",
+      "stage": "hybrid_offline",
+      "model_key": "qwen3-0.6b-axo-v9-q4_k_m",
+      "model_sha256": "73f1484b08b97ed2a1f44e32bcf6610210c7fda51567c4cd0a03d98dffc6cc35",
+      "slm_invoked": true,
+      "slm_ok": true,
+      "extracted_ok": true,
+      "grounded_ok": true,
+      "served": true,
+      "verified_scene": true,
+      "safe_refused": false,
+      "reason_code": null,
+      "grounding_status": "GROUNDED_AND_LOWERED",
+      "scene_validation": "MATHEMATICALLY_VALID",
+      "oracle_issues": [],
+      "numeric": {
+        "served": {
+          "q1": "10"
+        },
+        "parsed": [
+          10.0
+        ],
+        "gold": [
+          10.0
+        ],
+        "matched": 1,
+        "of": 1,
+        "status": "CORRECT"
+      },
+      "latency_ms": 3707.99
+    },
+    {
+      "case_id": "I17",
+      "stratum": "positive",
+      "expected_behavior": "SERVE",
+      "stage": "hybrid_offline",
+      "model_key": "qwen3-0.6b-axo-v9-q4_k_m",
+      "model_sha256": "73f1484b08b97ed2a1f44e32bcf6610210c7fda51567c4cd0a03d98dffc6cc35",
+      "slm_invoked": true,
+      "slm_ok": true,
+      "extracted_ok": true,
+      "grounded_ok": true,
+      "served": true,
+      "verified_scene": true,
+      "safe_refused": false,
+      "reason_code": null,
+      "grounding_status": "GROUNDED_AND_LOWERED",
+      "scene_validation": "MATHEMATICALLY_VALID",
+      "oracle_issues": [],
+      "numeric": {
+        "served": {
+          "q1": "63/2"
+        },
+        "parsed": [
+          31.5
+        ],
+        "gold": [
+          31.5
+        ],
+        "matched": 1,
+        "of": 1,
+        "status": "CORRECT"
+      },
+      "latency_ms": 3419.0
+    },
+    {
+      "case_id": "I18",
+      "stratum": "positive",
+      "expected_behavior": "SERVE",
+      "stage": "hybrid_offline",
+      "model_key": "qwen3-0.6b-axo-v9-q4_k_m",
+      "model_sha256": "73f1484b08b97ed2a1f44e32bcf6610210c7fda51567c4cd0a03d98dffc6cc35",
+      "slm_invoked": true,
+      "slm_ok": true,
+      "extracted_ok": true,
+      "grounded_ok": true,
+      "served": true,
+      "verified_scene": true,
+      "safe_refused": false,
+      "reason_code": null,
+      "grounding_status": "GROUNDED_AND_LOWERED",
+      "scene_validation": "MATHEMATICALLY_VALID",
+      "oracle_issues": [],
+      "numeric": {
+        "served": {
+          "q1": "15a³"
+        },
+        "parsed": [
+          15.0
+        ],
+        "gold": [
+          15.0
+        ],
+        "matched": 1,
+        "of": 1,
+        "status": "CORRECT"
+      },
+      "latency_ms": 3664.63
+    },
+    {
+      "case_id": "I19",
+      "stratum": "positive",
+      "expected_behavior": "SERVE",
+      "stage": "hybrid_offline",
+      "model_key": "qwen3-0.6b-axo-v9-q4_k_m",
+      "model_sha256": "73f1484b08b97ed2a1f44e32bcf6610210c7fda51567c4cd0a03d98dffc6cc35",
+      "slm_invoked": true,
+      "slm_ok": true,
+      "extracted_ok": true,
+      "grounded_ok": true,
+      "served": true,
+      "verified_scene": true,
+      "safe_refused": false,
+      "reason_code": null,
+      "grounding_status": "GROUNDED_AND_LOWERED",
+      "scene_validation": "MATHEMATICALLY_VALID",
+      "oracle_issues": [],
+      "numeric": null,
+      "latency_ms": 3659.54
+    },
+    {
+      "case_id": "I20",
+      "stratum": "positive",
+      "expected_behavior": "SERVE",
+      "stage": "hybrid_offline",
+      "model_key": "qwen3-0.6b-axo-v9-q4_k_m",
+      "model_sha256": "73f1484b08b97ed2a1f44e32bcf6610210c7fda51567c4cd0a03d98dffc6cc35",
+      "slm_invoked": true,
+      "slm_ok": true,
+      "extracted_ok": true,
+      "grounded_ok": true,
+      "served": true,
+      "verified_scene": true,
+      "safe_refused": false,
+      "reason_code": null,
+      "grounding_status": "GROUNDED_AND_LOWERED",
+      "scene_validation": "MATHEMATICALLY_VALID",
+      "oracle_issues": [],
+      "numeric": {
+        "served": {
+          "q1": "216"
+        },
+        "parsed": [
+          216.0
+        ],
+        "gold": [
+          216.0
+        ],
+        "matched": 1,
+        "of": 1,
+        "status": "CORRECT"
+      },
+      "latency_ms": 2025.54
+    },
+    {
+      "case_id": "I21",
+      "stratum": "positive",
+      "expected_behavior": "SERVE",
+      "stage": "hybrid_offline",
+      "model_key": "qwen3-0.6b-axo-v9-q4_k_m",
+      "model_sha256": "73f1484b08b97ed2a1f44e32bcf6610210c7fda51567c4cd0a03d98dffc6cc35",
+      "slm_invoked": true,
+      "slm_ok": true,
+      "extracted_ok": true,
+      "grounded_ok": true,
+      "served": true,
+      "verified_scene": true,
+      "safe_refused": false,
+      "reason_code": null,
+      "grounding_status": "GROUNDED_AND_LOWERED",
+      "scene_validation": "MATHEMATICALLY_VALID",
+      "oracle_issues": [],
+      "numeric": {
+        "served": {
+          "q1": "3√3"
+        },
+        "parsed": [
+          5.196152422706632
+        ],
+        "gold": [
+          5.196152422706632
+        ],
+        "matched": 1,
+        "of": 1,
+        "status": "CORRECT"
+      },
+      "latency_ms": 1801.01
+    },
+    {
+      "case_id": "I22",
+      "stratum": "positive",
+      "expected_behavior": "SERVE",
+      "stage": "hybrid_offline",
+      "model_key": "qwen3-0.6b-axo-v9-q4_k_m",
+      "model_sha256": "73f1484b08b97ed2a1f44e32bcf6610210c7fda51567c4cd0a03d98dffc6cc35",
+      "slm_invoked": true,
+      "slm_ok": true,
+      "extracted_ok": true,
+      "grounded_ok": true,
+      "served": true,
+      "verified_scene": true,
+      "safe_refused": false,
+      "reason_code": null,
+      "grounding_status": "GROUNDED_AND_LOWERED",
+      "scene_validation": "MATHEMATICALLY_VALID",
+      "oracle_issues": [],
+      "numeric": {
+        "served": {
+          "q1": "13"
+        },
+        "parsed": [
+          13.0
+        ],
+        "gold": [
+          13.0
+        ],
+        "matched": 1,
+        "of": 1,
+        "status": "CORRECT"
+      },
+      "latency_ms": 2752.9
+    },
+    {
+      "case_id": "I23",
+      "stratum": "positive",
+      "expected_behavior": "SERVE",
+      "stage": "hybrid_offline",
+      "model_key": "qwen3-0.6b-axo-v9-q4_k_m",
+      "model_sha256": "73f1484b08b97ed2a1f44e32bcf6610210c7fda51567c4cd0a03d98dffc6cc35",
+      "slm_invoked": true,
+      "slm_ok": true,
+      "extracted_ok": true,
+      "grounded_ok": true,
+      "served": true,
+      "verified_scene": true,
+      "safe_refused": false,
+      "reason_code": null,
+      "grounding_status": "GROUNDED_AND_LOWERED",
+      "scene_validation": "MATHEMATICALLY_VALID",
+      "oracle_issues": [],
+      "numeric": {
+        "served": {
+          "q1": "40"
+        },
+        "parsed": [
+          40.0
+        ],
+        "gold": [
+          40.0
+        ],
+        "matched": 1,
+        "of": 1,
+        "status": "CORRECT"
+      },
+      "latency_ms": 2831.27
+    },
+    {
+      "case_id": "I24",
+      "stratum": "positive",
+      "expected_behavior": "SERVE",
+      "stage": "hybrid_offline",
+      "model_key": "qwen3-0.6b-axo-v9-q4_k_m",
+      "model_sha256": "73f1484b08b97ed2a1f44e32bcf6610210c7fda51567c4cd0a03d98dffc6cc35",
+      "slm_invoked": true,
+      "slm_ok": true,
+      "extracted_ok": true,
+      "grounded_ok": true,
+      "served": true,
+      "verified_scene": true,
+      "safe_refused": false,
+      "reason_code": null,
+      "grounding_status": "GROUNDED_AND_LOWERED",
+      "scene_validation": "MATHEMATICALLY_VALID",
+      "oracle_issues": [],
+      "numeric": null,
+      "latency_ms": 3007.28
+    },
+    {
+      "case_id": "I25",
+      "stratum": "positive",
+      "expected_behavior": "SERVE",
+      "stage": "hybrid_offline",
+      "model_key": "qwen3-0.6b-axo-v9-q4_k_m",
+      "model_sha256": "73f1484b08b97ed2a1f44e32bcf6610210c7fda51567c4cd0a03d98dffc6cc35",
+      "slm_invoked": true,
+      "slm_ok": true,
+      "extracted_ok": true,
+      "grounded_ok": true,
+      "served": true,
+      "verified_scene": true,
+      "safe_refused": false,
+      "reason_code": null,
+      "grounding_status": "GROUNDED_AND_LOWERED",
+      "scene_validation": "MATHEMATICALLY_VALID",
+      "oracle_issues": [],
+      "numeric": {
+        "served": {
+          "q1": "32"
+        },
+        "parsed": [
+          32.0
+        ],
+        "gold": [
+          32.0
+        ],
+        "matched": 1,
+        "of": 1,
+        "status": "CORRECT"
+      },
+      "latency_ms": 3124.31
+    },
+    {
+      "case_id": "I26",
+      "stratum": "positive",
+      "expected_behavior": "SERVE",
+      "stage": "hybrid_offline",
+      "model_key": "qwen3-0.6b-axo-v9-q4_k_m",
+      "model_sha256": "73f1484b08b97ed2a1f44e32bcf6610210c7fda51567c4cd0a03d98dffc6cc35",
+      "slm_invoked": true,
+      "slm_ok": true,
+      "extracted_ok": true,
+      "grounded_ok": true,
+      "served": true,
+      "verified_scene": true,
+      "safe_refused": false,
+      "reason_code": null,
+      "grounding_status": "GROUNDED_AND_LOWERED",
+      "scene_validation": "MATHEMATICALLY_VALID",
+      "oracle_issues": [],
+      "numeric": {
+        "served": {
+          "q1": "15"
+        },
+        "parsed": [
+          15.0
+        ],
+        "gold": [
+          15.0
+        ],
+        "matched": 1,
+        "of": 1,
+        "status": "CORRECT"
+      },
+      "latency_ms": 4091.24
+    },
+    {
+      "case_id": "I27",
+      "stratum": "positive",
+      "expected_behavior": "SERVE",
+      "stage": "hybrid_offline",
+      "model_key": "qwen3-0.6b-axo-v9-q4_k_m",
+      "model_sha256": "73f1484b08b97ed2a1f44e32bcf6610210c7fda51567c4cd0a03d98dffc6cc35",
+      "slm_invoked": true,
+      "slm_ok": true,
+      "extracted_ok": true,
+      "grounded_ok": true,
+      "served": false,
+      "verified_scene": false,
+      "safe_refused": false,
+      "reason_code": "AMBIGUOUS_VALUE_QUOTE",
+      "grounding_status": "GROUNDED_AND_LOWERED",
+      "scene_validation": "NOT_SERVED",
+      "oracle_issues": [],
+      "numeric": null,
+      "latency_ms": 2164.0
+    },
+    {
+      "case_id": "I28",
+      "stratum": "positive",
+      "expected_behavior": "SERVE",
+      "stage": "hybrid_offline",
+      "model_key": "qwen3-0.6b-axo-v9-q4_k_m",
+      "model_sha256": "73f1484b08b97ed2a1f44e32bcf6610210c7fda51567c4cd0a03d98dffc6cc35",
+      "slm_invoked": true,
+      "slm_ok": true,
+      "extracted_ok": true,
+      "grounded_ok": true,
+      "served": true,
+      "verified_scene": true,
+      "safe_refused": false,
+      "reason_code": null,
+      "grounding_status": "GROUNDED_AND_LOWERED",
+      "scene_validation": "MATHEMATICALLY_VALID",
+      "oracle_issues": [],
+      "numeric": {
+        "served": {
+          "q1": "cos²=1/2"
+        },
+        "parsed": [
+          45.0
+        ],
+        "gold": [
+          45.0
+        ],
+        "matched": 1,
+        "of": 1,
+        "status": "CORRECT"
+      },
+      "latency_ms": 2941.37
+    },
+    {
+      "case_id": "I29",
+      "stratum": "positive",
+      "expected_behavior": "SERVE",
+      "stage": "hybrid_offline",
+      "model_key": "qwen3-0.6b-axo-v9-q4_k_m",
+      "model_sha256": "73f1484b08b97ed2a1f44e32bcf6610210c7fda51567c4cd0a03d98dffc6cc35",
+      "slm_invoked": true,
+      "slm_ok": true,
+      "extracted_ok": true,
+      "grounded_ok": true,
+      "served": true,
+      "verified_scene": true,
+      "safe_refused": false,
+      "reason_code": null,
+      "grounding_status": "GROUNDED_AND_LOWERED",
+      "scene_validation": "MATHEMATICALLY_VALID",
+      "oracle_issues": [],
+      "numeric": {
+        "served": {
+          "q1": "30"
+        },
+        "parsed": [
+          30.0
+        ],
+        "gold": [
+          30.0
+        ],
+        "matched": 1,
+        "of": 1,
+        "status": "CORRECT"
+      },
+      "latency_ms": 3282.91
+    },
+    {
+      "case_id": "I30",
+      "stratum": "positive",
+      "expected_behavior": "SERVE",
+      "stage": "hybrid_offline",
+      "model_key": "qwen3-0.6b-axo-v9-q4_k_m",
+      "model_sha256": "73f1484b08b97ed2a1f44e32bcf6610210c7fda51567c4cd0a03d98dffc6cc35",
+      "slm_invoked": true,
+      "slm_ok": true,
+      "extracted_ok": true,
+      "grounded_ok": true,
+      "served": true,
+      "verified_scene": true,
+      "safe_refused": false,
+      "reason_code": null,
+      "grounding_status": "GROUNDED_AND_LOWERED",
+      "scene_validation": "MATHEMATICALLY_VALID",
+      "oracle_issues": [],
+      "numeric": {
+        "served": {
+          "q1": "10"
+        },
+        "parsed": [
+          10.0
+        ],
+        "gold": [
+          10.0
+        ],
+        "matched": 1,
+        "of": 1,
+        "status": "CORRECT"
+      },
+      "latency_ms": 4028.7
+    },
+    {
+      "case_id": "IN01",
+      "stratum": "negative",
+      "expected_behavior": "SAFE_REFUSE",
+      "stage": "local_slm_extraction",
+      "model_key": "qwen3-0.6b-axo-v9-q4_k_m",
+      "model_sha256": "73f1484b08b97ed2a1f44e32bcf6610210c7fda51567c4cd0a03d98dffc6cc35",
+      "slm_invoked": true,
+      "slm_ok": false,
+      "extracted_ok": false,
+      "grounded_ok": false,
+      "served": false,
+      "verified_scene": false,
+      "safe_refused": true,
+      "reason_code": "OUT_OF_SCOPE",
+      "failure_taxonomy": "SLM_UNRESOLVED",
+      "grounding_status": "SLM_REPORTED_UNRESOLVED",
+      "scene_validation": "NOT_SERVED",
+      "numeric": null,
+      "latency_ms": 1050.65
+    },
+    {
+      "case_id": "IN02",
+      "stratum": "negative",
+      "expected_behavior": "SAFE_REFUSE",
+      "stage": "local_slm_extraction",
+      "model_key": "qwen3-0.6b-axo-v9-q4_k_m",
+      "model_sha256": "73f1484b08b97ed2a1f44e32bcf6610210c7fda51567c4cd0a03d98dffc6cc35",
+      "slm_invoked": true,
+      "slm_ok": false,
+      "extracted_ok": false,
+      "grounded_ok": false,
+      "served": false,
+      "verified_scene": false,
+      "safe_refused": true,
+      "reason_code": "INCONSISTENT_FACTS",
+      "failure_taxonomy": "CONTRADICTION_OR_UNGROUNDED",
+      "grounding_status": "SLM_REPORTED_UNRESOLVED",
+      "scene_validation": "NOT_SERVED",
+      "numeric": null,
+      "latency_ms": 944.44
+    },
+    {
+      "case_id": "IN03",
+      "stratum": "negative",
+      "expected_behavior": "SAFE_REFUSE",
+      "stage": "local_slm_extraction",
+      "model_key": "qwen3-0.6b-axo-v9-q4_k_m",
+      "model_sha256": "73f1484b08b97ed2a1f44e32bcf6610210c7fda51567c4cd0a03d98dffc6cc35",
+      "slm_invoked": true,
+      "slm_ok": false,
+      "extracted_ok": false,
+      "grounded_ok": false,
+      "served": false,
+      "verified_scene": false,
+      "safe_refused": true,
+      "reason_code": "AMBIGUOUS_FACT",
+      "failure_taxonomy": "SLM_UNRESOLVED",
+      "grounding_status": "SLM_REPORTED_UNRESOLVED",
+      "scene_validation": "NOT_SERVED",
+      "numeric": null,
+      "latency_ms": 2342.62
+    },
+    {
+      "case_id": "IN04",
+      "stratum": "negative",
+      "expected_behavior": "SAFE_REFUSE",
+      "stage": "local_slm_extraction",
+      "model_key": "qwen3-0.6b-axo-v9-q4_k_m",
+      "model_sha256": "73f1484b08b97ed2a1f44e32bcf6610210c7fda51567c4cd0a03d98dffc6cc35",
+      "slm_invoked": true,
+      "slm_ok": false,
+      "extracted_ok": false,
+      "grounded_ok": false,
+      "served": false,
+      "verified_scene": false,
+      "safe_refused": true,
+      "reason_code": "AMBIGUOUS_FACT",
+      "failure_taxonomy": "SLM_UNRESOLVED",
+      "grounding_status": "SLM_REPORTED_UNRESOLVED",
+      "scene_validation": "NOT_SERVED",
+      "numeric": null,
+      "latency_ms": 1592.18
+    },
+    {
+      "case_id": "IN05",
+      "stratum": "negative",
+      "expected_behavior": "SAFE_REFUSE",
+      "stage": "local_slm_extraction",
+      "model_key": "qwen3-0.6b-axo-v9-q4_k_m",
+      "model_sha256": "73f1484b08b97ed2a1f44e32bcf6610210c7fda51567c4cd0a03d98dffc6cc35",
+      "slm_invoked": true,
+      "slm_ok": false,
+      "extracted_ok": false,
+      "grounded_ok": false,
+      "served": false,
+      "verified_scene": false,
+      "safe_refused": true,
+      "reason_code": "AMBIGUOUS_FACT",
+      "failure_taxonomy": "SLM_UNRESOLVED",
+      "grounding_status": "SLM_REPORTED_UNRESOLVED",
+      "scene_validation": "NOT_SERVED",
+      "numeric": null,
+      "latency_ms": 2266.51
+    },
+    {
+      "case_id": "IN06",
+      "stratum": "negative",
+      "expected_behavior": "SAFE_REFUSE",
+      "stage": "local_slm_extraction",
+      "model_key": "qwen3-0.6b-axo-v9-q4_k_m",
+      "model_sha256": "73f1484b08b97ed2a1f44e32bcf6610210c7fda51567c4cd0a03d98dffc6cc35",
+      "slm_invoked": true,
+      "slm_ok": false,
+      "extracted_ok": false,
+      "grounded_ok": false,
+      "served": false,
+      "verified_scene": false,
+      "safe_refused": true,
+      "reason_code": "AMBIGUOUS_FACT",
+      "failure_taxonomy": "SLM_UNRESOLVED",
+      "grounding_status": "SLM_REPORTED_UNRESOLVED",
+      "scene_validation": "NOT_SERVED",
+      "numeric": null,
+      "latency_ms": 1980.0
+    },
+    {
+      "case_id": "IN07",
+      "stratum": "negative",
+      "expected_behavior": "SAFE_REFUSE",
+      "stage": "local_slm_extraction",
+      "model_key": "qwen3-0.6b-axo-v9-q4_k_m",
+      "model_sha256": "73f1484b08b97ed2a1f44e32bcf6610210c7fda51567c4cd0a03d98dffc6cc35",
+      "slm_invoked": true,
+      "slm_ok": false,
+      "extracted_ok": false,
+      "grounded_ok": false,
+      "served": false,
+      "verified_scene": false,
+      "safe_refused": true,
+      "reason_code": "AMBIGUOUS_FACT",
+      "failure_taxonomy": "SLM_UNRESOLVED",
+      "grounding_status": "SLM_REPORTED_UNRESOLVED",
+      "scene_validation": "NOT_SERVED",
+      "numeric": null,
+      "latency_ms": 1567.71
+    },
+    {
+      "case_id": "IN08",
+      "stratum": "negative",
+      "expected_behavior": "SAFE_REFUSE",
+      "stage": "hybrid_offline",
+      "model_key": "qwen3-0.6b-axo-v9-q4_k_m",
+      "model_sha256": "73f1484b08b97ed2a1f44e32bcf6610210c7fda51567c4cd0a03d98dffc6cc35",
+      "slm_invoked": true,
+      "slm_ok": true,
+      "extracted_ok": true,
+      "grounded_ok": true,
+      "served": false,
+      "verified_scene": false,
+      "safe_refused": true,
+      "reason_code": "MISSING_DIMENSION",
+      "grounding_status": "GROUNDED_AND_LOWERED",
+      "scene_validation": "NOT_SERVED",
+      "oracle_issues": [],
+      "numeric": null,
+      "latency_ms": 2703.09
+    },
+    {
+      "case_id": "IN09",
+      "stratum": "negative",
+      "expected_behavior": "SAFE_REFUSE",
+      "stage": "local_slm_extraction",
+      "model_key": "qwen3-0.6b-axo-v9-q4_k_m",
+      "model_sha256": "73f1484b08b97ed2a1f44e32bcf6610210c7fda51567c4cd0a03d98dffc6cc35",
+      "slm_invoked": true,
+      "slm_ok": false,
+      "extracted_ok": false,
+      "grounded_ok": false,
+      "served": false,
+      "verified_scene": false,
+      "safe_refused": true,
+      "reason_code": "OUT_OF_SCOPE",
+      "failure_taxonomy": "SLM_UNRESOLVED",
+      "grounding_status": "SLM_REPORTED_UNRESOLVED",
+      "scene_validation": "NOT_SERVED",
+      "numeric": null,
+      "latency_ms": 746.68
+    },
+    {
+      "case_id": "IN10",
+      "stratum": "negative",
+      "expected_behavior": "SAFE_REFUSE",
+      "stage": "local_slm_extraction",
+      "model_key": "qwen3-0.6b-axo-v9-q4_k_m",
+      "model_sha256": "73f1484b08b97ed2a1f44e32bcf6610210c7fda51567c4cd0a03d98dffc6cc35",
+      "slm_invoked": true,
+      "slm_ok": false,
+      "extracted_ok": false,
+      "grounded_ok": false,
+      "served": false,
+      "verified_scene": false,
+      "safe_refused": true,
+      "reason_code": "OUT_OF_SCOPE",
+      "failure_taxonomy": "SLM_UNRESOLVED",
+      "grounding_status": "SLM_REPORTED_UNRESOLVED",
+      "scene_validation": "NOT_SERVED",
+      "numeric": null,
+      "latency_ms": 825.47
+    }
+  ]
+}
