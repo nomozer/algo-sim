@@ -1,3 +1,18 @@
+## WAVE_ID = AXO_HYBRID_GROUNDED_GEOMETRY_LANGUAGE_RECOVERY
+
+- `RUN_ID` = grounded-geometry-language-recovery
+- `REPORT` = docs/evaluation/geometry/runs/grounded-geometry-language-recovery/report.md
+- `ARTIFACT_DIRECTORY` = docs/evaluation/geometry/runs/grounded-geometry-language-recovery/
+- `START_BASE` = 034d89681
+- `CODE_COMMIT` = cd2a21abc (CACHE_VERSION 155; candidate refreeze 9cf7dc57d, `9867d391…`, 127 files)
+- `CLASSIFICATION` = NEW_PROSPECTIVE_TEXT_ACCEPTANCE + LANGUAGE_RECOVERY + SOURCE_GATE_NEGATION_FIX
+- `PRODUCT_CHANGE` = YES (`slm_verified_normalizer.py` `VN12`–`VN17`, `registry.py` `_KHONG_KHANG_DINH`, `main.py` `CACHE_VERSION 155`; default `HYBRID_ROUTE_MODE = live` preserved)
+- `MODEL_REQUEST_COUNT` = 0 cloud; local `Qwen3-0.6B-AxoV9-Q4_K_M` (`73f1484b…`) only
+- `CORRECTS` = AXO_HYBRID_LOCAL_MODEL1_RECOVERY_OFFLINE_VISION (FIRST_FAILING_LAYER_AUDIT.json described its route replay as `runtime=None`, 0 model calls; the process-wide AxoV9 runtime answered parser-incomplete cases. Served cases named deterministic stand.)
+- `CORRECTED_BY` = NONE
+- `VERIFICATION` = holdout-3/ (MANIFEST `a8427fcf…`, CRITERIA, ACCEPTANCE_FREEZE, CANDIDATE_FREEZE, ORACLE_REVIEW, PROVENANCE); LANGUAGE_RECOVERY_AUDIT.json; LIVE_TEXT_ACCEPTANCE_RESULTS.json; SLM_CONTRIBUTION_AUDIT.json; MODEL1_TEXT_ROLE_MATRIX.json; FULL_T3_CACHE155_RECEIPT.json (PASS); run.json
+- `LIMITATIONS` = Holdout-3 agent-authored by the agent that fixes the product and aimed at known phrase families (`EXTERNAL_INDEPENDENCE = NOT_MEASURED`); text `58/66 = 0.879`; SLM gate `5/38` FAIL; measured in the shared worktree on a clean tracked tree, not a detached worktree; OCR/Vision postponed; `LOCAL_TEXT_MODEL1_VERIFIED / FULL_GEMINI_ROLE_REPLACEMENT_VERIFIED / MAIN_MERGE_READY = FALSE`.
+
 ## WAVE_ID = AXO_HYBRID_LOCAL_MODEL1_RECOVERY_OFFLINE_VISION
 
 - `RUN_ID` = local-model1-recovery-offline-vision
@@ -9,7 +24,7 @@
 - `PRODUCT_CHANGE` = YES (`local_geometry_parser.py` `normalize_problem_text`, `registry.py` closed clause / question-tail grammar, `main.py` `CACHE_VERSION 154`; default `HYBRID_ROUTE_MODE = live` preserved)
 - `MODEL_REQUEST_COUNT` = 0 cloud; local `Qwen3-0.6B-AxoV9-Q4_K_M` (`73f1484b…`) only
 - `CORRECTS` = AXO_HYBRID_LOCAL_MODEL1_FINALIZATION_TEST_CONSOLIDATION (exact Gram-area check for H057/H069 and live coverage of the post-T3 candidate; 79/100 registered and 81/100 audited are preserved)
-- `CORRECTED_BY` = NONE
+- `CORRECTED_BY` = AXO_HYBRID_GROUNDED_GEOMETRY_LANGUAGE_RECOVERY
 - `VERIFICATION` = POST_EXPOSURE_LIVE_REGRESSION.json (CACHE 152); ACCEPTANCE_FREEZE.json / CANDIDATE_FREEZE.json (Holdout-1); LIVE_ACCEPTANCE_RESULTS.json and OFFLINE_VISION_VALIDATION.json (CACHE 153); FULL_T3_CACHE153_RECEIPT.json (FAIL: interrupted, then evidence hygiene + environmental build); FIRST_FAILING_LAYER_AUDIT.json; holdout-2/ (PROVENANCE, MANIFEST, CRITERIA, ACCEPTANCE_FREEZE, CANDIDATE_FREEZE, LIVE_ACCEPTANCE_RESULTS); LIVE_REGRESSION_HOLDOUT1_CACHE154.json; FULL_T3_CACHE154_RECEIPT.json (PASS); run.json
 - `LIMITATIONS` = Holdout-2 prospective `29/38 = 0.763` (< 0.85), SLM `2/10`; Holdout-1 regression `4/28` (exposed); agent-authored sets written after the CACHE 153 diagnosis (`holdout-2/PROVENANCE.json`); I02, I05, J03 images lack the `⊥`/`⟂` glyph; `LIVE_SIMULATION_ACCEPTED = FALSE`; `MAIN_MERGE_READY = FALSE`; `EXTERNAL_INDEPENDENCE / GEMINI_PARITY / PHYSICAL_TARGET_HARDWARE = NOT_MEASURED`.
 
