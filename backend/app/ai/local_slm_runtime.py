@@ -814,9 +814,14 @@ class LocalSlmRuntime:
 
         port = _pick_ephemeral_port()
         log_dir = self.cache_dir / "logs"
-        log_dir.mkdir(parents=True, exist_ok=True)
-        log_path = log_dir / f"llama-server-{spec.model_key}.log"
-        log_fh = log_path.open("wb")
+        try:
+            log_dir.mkdir(parents=True, exist_ok=True)
+            log_fh = (log_dir / f"llama-server-{spec.model_key}.log").open("wb")
+        except OSError as exc:
+            raise LocalSlmRuntimeError(
+                "MODEL_RUNTIME_UNAVAILABLE",
+                "Local model runtime log directory is not writable.",
+            ) from exc
         cmd = [
             str(provisioned.server_executable),
             "-m",

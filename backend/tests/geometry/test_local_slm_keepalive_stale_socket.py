@@ -83,3 +83,14 @@ def test_a_fresh_connection_failure_is_still_raised(monkeypatch):
     monkeypatch.setattr(rt.http.client, "HTTPConnection", _Refused)
     with pytest.raises(ConnectionRefusedError):
         r._post_completion_keepalive(4242, b"{}", 5.0)
+
+
+def test_unwritable_runtime_logs_are_classified_before_spawning(monkeypatch, tmp_path):
+    (tmp_path / "logs").write_text("not a directory", encoding="utf-8")
+    monkeypatch.setattr(rt, "ensure_local_slm_provisioned", lambda **_kwargs: object())
+    monkeypatch.setattr(rt, "_pick_ephemeral_port", lambda: 4242)
+    runtime = rt.LocalSlmRuntime(cache_dir=tmp_path, allow_download=False)
+    with pytest.raises(rt.LocalSlmRuntimeError) as exc:
+        runtime._ensure_server_running_locked(model_key="v9", ctx_size=2048, threads=2, allow_download=False)
+    assert exc.value.reason_code == "MODEL_RUNTIME_UNAVAILABLE"
+    assert runtime._proc is None
