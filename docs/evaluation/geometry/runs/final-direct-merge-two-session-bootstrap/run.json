@@ -1,0 +1,81 @@
+{
+ "schema": "axo-evaluation-run/2",
+ "run_id": "final-direct-merge-two-session-bootstrap",
+ "wave_id": "AXO_HYBRID_FINAL_DIRECT_MERGE_TWO_SESSION_BOOTSTRAP",
+ "campaign": "AXO HYBRID /20",
+ "date": "2026-11-22",
+ "status": "CHECKPOINT_AWAITING_OWNER_ACTIONS",
+ "branch": "feat/model1-final-text-acceptance",
+ "base_commit": "b42119528fc6f2e445f23b80fb3159fac84c9dec",
+ "main_commit": "bc6ff5e333e32d1d53dc7435fba64fe12b6dd651",
+ "origin_main_commit": "bc6ff5e333e32d1d53dc7435fba64fe12b6dd651",
+ "origin_main_checked": "git ls-remote origin, 2026-11-22: refs/heads/main = bc6ff5e33 (no divergence)",
+ "candidate": {
+  "id": 158,
+  "product_commit": "2bb0211a1057c5d2a503f8a1f19e96cf84decff5",
+  "freeze_commit": "b92b68a94b67d24dc016ddc358506adad5c7f1e3",
+  "tree_hash": "bdb737bba9ab94d0274b57e25089c01d4cb47935d5989658e7c13aad1e79b132",
+  "freeze_verify": "PASS (127 files)",
+  "cache_lock_verify": "PASS (CACHE_VERSION 158, environment f9df4bf0c8bd458a...)",
+  "product_diff_since_product_commit_lines": 0,
+  "migration_changes_vs_main": 0,
+  "product_change_in_this_run": false
+ },
+ "owner_decisions_recorded_in_session": {
+  "DORMANT_FLAG_INTEGRATION_ACCEPTED_BY_OWNER": true,
+  "OWNER_LOCAL_MERGE_AUTHORIZED": true,
+  "D4_PUBLICATION_EXCEPTIONS": "Owner chose to approve the 11 exact path/blob entries; the APPROVED_BY_USER value is written only by the Owner-run command (not yet run)",
+  "D7_GEMINI_LIVE": "Owner chose a budgeted smoke (<=6 problems, <=12 HTTP requests); harness pre-registered here; not yet run (needs the Owner-run launcher, which loads the key)",
+  "OWNER_REMOTE_PUSH_AUTHORIZED": true,
+  "CLEANUP_AUTHORIZED": "campaign chain only: shared worktree simulation-intent-slm-recovery + git branch -d of the 10 merged /10-/19 branches; older merged branches NOT authorized",
+  "TWO_WORKTREES_AUTHORIZED": true
+ },
+ "publication_safety": {
+  "range": "bc6ff5e333e32d1d53dc7435fba64fe12b6dd651..b42119528fc6f2e445f23b80fb3159fac84c9dec",
+  "before_entries": "violations=12 pending_exception=0 verdict=BLOCKED (exit 1)",
+  "after_pending_entries": "violations=12 pending_exception=12 verdict=BLOCKED (exit 1)",
+  "dry_run_with_owner_command_on_copy": "violations=0 verdict=PASS (exit 0); exactly 11 owner_decision values changed, nothing else",
+  "range_v19_docs_commit_b10c0a1e4_to_b42119528": "violations=0 verdict=PASS",
+  "hits": "12 HARDCODED_PASSWORD, 11 path/blob pairs, 9 distinct blobs, 3 distinct values; every hit is a password field in a register POST to the app's own loopback auth with @example.com/@example.invalid throwaway users",
+  "limit": "values were not compared with backend/.env (agent not permitted to read it); regex detectors are a lower bound"
+ },
+ "live_smoke": {
+  "preregistration": "LIVE_SMOKE_PREREGISTRATION.json",
+  "preregistration_sha256": "73084ffa6d9ba57aa8dfe4627c0e92fee7056a37005818a57508b5c13afdc84a",
+  "harness": "tools/live_gemini_smoke.py",
+  "detached_worktree": ".superpowers/worktrees/live-smoke-c158 @ b42119528 (clean)",
+  "offline_dry_run": "cap 0 + dummy key: N1 GATE_OK (0 calls), L1 stopped by budget before network I/O (0 HTTP requests)",
+  "status": "NOT_MEASURED"
+ },
+ "main_untracked_folder_preserved": {
+  "path": "docs/evaluation/geometry/runs/post-merge-cleanup-closure/",
+  "files": 6,
+  "sha256_match_v19": true
+ },
+ "verdict_flags": {
+  "CANDIDATE158_IDENTITY_VERIFIED": true,
+  "AUTHORITATIVE_FULL_T3_PASS": true,
+  "PROSPECTIVE_TEXT_ACCEPTANCE": "FAIL",
+  "LOCAL_TEXT_MODEL1_VERIFIED": false,
+  "FULL_GEMINI_ROLE_REPLACEMENT_VERIFIED": false,
+  "PUBLICATION_SAFETY_GATE_PASS": false,
+  "GEMINI_LIVE_COMPATIBILITY_STATUS": "OFFLINE_PARITY_82_OF_82; LIVE_NOT_MEASURED",
+  "GEMINI_LIVE_SMOKE_OR_WAIVER_APPROVED": "SMOKE_APPROVED_NOT_RUN",
+  "PREMERGE_MAIN_SNAPSHOT_VERIFIED": true,
+  "ROLLBACK_ANCHOR_VERIFIED": false,
+  "MAIN_MERGE_READY": false,
+  "MAIN_MERGE_COMPLETED": false,
+  "REMOTE_PUSH_COMPLETED": false,
+  "OLD_WORKTREE_REMOVED": false,
+  "OLD_BRANCH_REMOVED": false,
+  "SESSION1_WORKTREE_READY": false,
+  "SESSION2_WORKTREE_READY": false,
+  "NO_PR_CREATED": true,
+  "NO_FORCE_PUSH_PERFORMED": true
+ },
+ "live_ai_calls": 0,
+ "next_owner_actions": [
+  "run D:/tmp/axo20/approve_d4.ps1 (sha256 3df15e5c5dff141d2934476f75efaf43cd6a49d09a76db06d55dc9c8eddf1d6d, outside the repo by design) from the shared worktree root (prints approved=11; refuses to write unless exactly 11 values change)",
+  "run tools/live_gemini_smoke.py with the main venv (writes D:/tmp/axo20/live_smoke_result.json)"
+ ]
+}
