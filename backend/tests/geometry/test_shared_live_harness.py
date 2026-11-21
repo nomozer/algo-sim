@@ -114,3 +114,134 @@ def test_triangle_area_audit_preserves_frozen_scores_and_checks_gram_coordinates
         assert oracle.numeric(rd["answers"], rd["answer_exact"], [sqrt(area2)])["status"] == "CORRECT"
         assert oracle.numeric(rd["answers"], rd["answer_exact"], registered[case_id])["status"] == "MISMATCH"
         assert oracle.numeric({"q1": "4"}, {}, [sqrt(area2)])["status"] == "MISMATCH"
+
+
+def test_unified_verdict_fails_composite_when_completion_passes_but_slm_fails():
+    from scripts.evaluate_live_text_acceptance import compute_live_text_verdicts
+
+    criteria = {
+        "primary": {"completion_rate_min": 0.85},
+        "modalities": {"required": ["text"], "positive_completion_rate_min": 0.85},
+        "slm_fallback": {"min_routed_sample": 8, "min_live_verified_scenes": 5, "rate_min": 0.50},
+        "slm_independent": {"positive_total": 30, "verified_scene_rate_min": 0.60},
+        "safety": {"all_negative_safe": True},
+    }
+    clean_safety = {
+        "wrong_served": [],
+        "grounding_violations_served": [],
+        "unverified_relations_served": [],
+        "fabricated_numeric_goals": [],
+        "served_numeric_mismatch": [],
+        "attachment_provenance_not_present": [],
+    }
+    clean_net = {
+        "external_ai_calls_reported": 0,
+        "browser_external_requests": 0,
+        "proxy_intercepted": 0,
+        "tcp_non_loopback_records": 0,
+    }
+    res = compute_live_text_verdicts(
+        criteria=criteria,
+        positive_completed=58,
+        positive_total=66,
+        by_modality={"text": {"positive": 66, "served": 58, "completed": 58, "negative": 22, "negative_safely_refused": 22}},
+        candidate_slm_routed_ids=[f"S{i}" for i in range(13)],
+        candidate_slm_verified_ids=["S0", "S1", "S2", "S3", "S4"],  # 5/13 = 0.3846 < 0.50
+        baseline_slm_required_ids=[f"B{i}" for i in range(38)],
+        baseline_slm_det_rescued_ids=[f"B{i}" for i in range(25)],
+        baseline_slm_live_verified_ids=["B0", "B1", "B2", "B3", "B4"],
+        negative_safe_count=22,
+        negative_total=22,
+        safety=clean_safety,
+        network=clean_net,
+        candidate_identity_consistent=True,
+        slm_independent_audit={"positive_total": 30, "verified_scenes": 20, "negative_safe_refused": 10, "negative_total": 10, "false_assertions_served": 0, "invalid_relations_served": 0},
+        t3_receipt={"verdict": "FULL_PRODUCT_GATE_PASS"},
+        rewrite_safety_audit={"SEMANTIC_REWRITE_SAFETY_VERIFIED": True},
+    )
+    v = res["gates"]
+    assert v["SYSTEM_TEXT_COMPLETION_THRESHOLD_MET"] is True
+    assert v["TEXT_COMPLETION_THRESHOLD_MET"] is True
+    assert v["NEGATIVE_SAFETY_GATE_MET"] is True
+    assert v["SLM_FALLBACK_SAMPLE_FLOOR_MET"] is True
+    assert v["SLM_FALLBACK_RATE_THRESHOLD_MET"] is False
+    assert v["SLM_FALLBACK_GATE_MET"] is False
+    assert v["COMPOSITE_LIVE_TEXT_ACCEPTED"] is False
+    assert v["LOCAL_TEXT_MODEL1_VERIFIED"] is False
+    assert v["LOCAL_VISION_REPLACEMENT_VERIFIED"] is False
+    assert v["FULL_GEMINI_ROLE_REPLACEMENT_VERIFIED"] is False
+
+
+def test_unified_verdict_enforces_small_denominator_and_safety_zero_tolerance():
+    from scripts.evaluate_live_text_acceptance import compute_live_text_verdicts
+
+    criteria = {
+        "primary": {"completion_rate_min": 0.85},
+        "modalities": {"required": ["text"], "positive_completion_rate_min": 0.85},
+        "slm_fallback": {"min_routed_sample": 8, "min_live_verified_scenes": 5, "rate_min": 0.50},
+        "slm_independent": {"positive_total": 30, "verified_scene_rate_min": 0.60},
+        "safety": {"all_negative_safe": True},
+    }
+    clean_safety = {
+        "wrong_served": [], "grounding_violations_served": [],
+        "unverified_relations_served": [], "fabricated_numeric_goals": [],
+        "served_numeric_mismatch": [], "attachment_provenance_not_present": [],
+    }
+    clean_net = {
+        "external_ai_calls_reported": 0, "browser_external_requests": 0,
+        "proxy_intercepted": 0, "tcp_non_loopback_records": 0,
+    }
+    # Small denominator: 5/6 (83% rate, 5 scenes) MUST fail sample floor (< 8)
+    small_denom = compute_live_text_verdicts(
+        criteria=criteria, positive_completed=65, positive_total=70,
+        by_modality={"text": {"positive": 70, "served": 65, "completed": 65, "negative": 20, "negative_safely_refused": 20}},
+        candidate_slm_routed_ids=[f"S{i}" for i in range(6)],
+        candidate_slm_verified_ids=[f"S{i}" for i in range(5)],
+        baseline_slm_required_ids=[f"B{i}" for i in range(10)],
+        baseline_slm_det_rescued_ids=[], baseline_slm_live_verified_ids=[],
+        negative_safe_count=20, negative_total=20,
+        safety=clean_safety, network=clean_net, candidate_identity_consistent=True,
+        slm_independent_audit={"positive_total": 30, "verified_scenes": 22, "negative_safe_refused": 10, "negative_total": 10},
+        t3_receipt={"verdict": "FULL_PRODUCT_GATE_PASS"},
+    )
+    assert small_denom["gates"]["SLM_FALLBACK_SAMPLE_FLOOR_MET"] is False
+    assert small_denom["gates"]["SLM_FALLBACK_GATE_MET"] is False
+    assert small_denom["gates"]["COMPOSITE_LIVE_TEXT_ACCEPTED"] is False
+
+    # Single fabricated numeric goal MUST fail safety & composite acceptance
+    unsafe = compute_live_text_verdicts(
+        criteria=criteria, positive_completed=65, positive_total=70,
+        by_modality={"text": {"positive": 70, "served": 65, "completed": 65, "negative": 20, "negative_safely_refused": 20}},
+        candidate_slm_routed_ids=[f"S{i}" for i in range(10)],
+        candidate_slm_verified_ids=[f"S{i}" for i in range(7)],
+        baseline_slm_required_ids=[], baseline_slm_det_rescued_ids=[], baseline_slm_live_verified_ids=[],
+        negative_safe_count=20, negative_total=20,
+        safety={**clean_safety, "fabricated_numeric_goals": [{"case_id": "F01"}]},
+        network=clean_net, candidate_identity_consistent=True,
+        slm_independent_audit={"positive_total": 30, "verified_scenes": 22, "negative_safe_refused": 10, "negative_total": 10},
+        t3_receipt={"verdict": "FULL_PRODUCT_GATE_PASS"},
+    )
+    assert unsafe["gates"]["NEGATIVE_SAFETY_GATE_MET"] is False
+    assert unsafe["gates"]["COMPOSITE_LIVE_TEXT_ACCEPTED"] is False
+
+
+def test_historical_v15_live_results_reconciliation():
+    from scripts.evaluate_live_text_acceptance import reconcile_live_results_artifact
+
+    r15 = ROOT / "docs/evaluation/geometry/runs/grounded-geometry-language-recovery"
+    rec = reconcile_live_results_artifact(
+        live_results_path=r15 / "LIVE_TEXT_ACCEPTANCE_RESULTS.json",
+        criteria_path=r15 / "holdout-3/ACCEPTANCE_CRITERIA.json",
+        acceptance_freeze_path=r15 / "holdout-3/ACCEPTANCE_FREEZE.json",
+        candidate_freeze_path=r15 / "holdout-3/CANDIDATE_FREEZE.json",
+        t3_receipt_path=r15 / "FULL_T3_CACHE155_RECEIPT.json",
+    )
+    assert rec["reported_raw_flag_LIVE_SIMULATION_ACCEPTED"] is True
+    assert rec["reconciled_verdicts"]["TEXT_COMPLETION_THRESHOLD_MET"] is True
+    assert rec["reconciled_verdicts"]["NEGATIVE_SAFETY_GATE_MET"] is True
+    assert rec["reconciled_verdicts"]["SLM_RATE_THRESHOLD_MET"] is False
+    assert rec["reconciled_verdicts"]["SLM_COUNT_THRESHOLD_MET"] is True
+    assert rec["reconciled_verdicts"]["COMPOSITE_LIVE_TEXT_ACCEPTED"] is False
+    assert rec["reconciled_verdicts"]["LOCAL_TEXT_MODEL1_VERIFIED"] is False
+    assert rec["scores"]["LEGACY_BASELINE_STRATUM_SCORE"]["completed_via_live_slm"] == 5
+    assert rec["scores"]["LEGACY_BASELINE_STRATUM_SCORE"]["baseline_slm_required_total"] == 38
