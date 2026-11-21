@@ -1,0 +1,83 @@
+{
+  "schema": "axo-parser-slm-routing-audit/1",
+  "run_id": "model1-integration-readiness",
+  "date": "2026-11-21",
+  "question": "Is the Parser / v3 Normalizer / AxoV9 routing designed for product correctness, safety and latency, or shaped by the SLM-contribution benchmark?",
+  "production_routing_as_found": {
+    "entry": "backend/app/ai/adaptive_input_router.py::route_text_input_local_slm",
+    "order": ["prompt-injection refusal", "v3 normalizer typo refusal", "Local Parser on the original text", "if incomplete: v3 canonical text verified against the original source, Local Parser again", "if still incomplete (_should_escalate_to_compact_slm): AxoV9 + grounding validator", "every route ends in run_hybrid_offline → Source Gate → Planner → Exact Kernel"],
+    "assessment": "deterministic-first by design; the escalation rule itself has no metric bias"
+  },
+  "routing_decisions_investigated": [
+    {
+      "decision": "pairwise-perpendicular synonym 'X, Y, Z vuông góc (với nhau) từng đôi (một)' kept out of local_geometry_parser.py",
+      "source": "/16 LANGUAGE_GAP_RECOVERY.json → denominator_preservation_policy: 'intentionally kept out … rather than collapsing the Holdout-4 SLM-required denominator' (A01, A02, A03, A05, M05)",
+      "metric_driven": true,
+      "technical_justification_found": false,
+      "evidence": "the SLM path already rewrites the same phrase deterministically before the prompt (local_slm_extractor.py prompt canonicalizer: re.sub('vuông góc (với nhau )?từng đôi( một)?', 'đôi một vuông góc')) and closes the third pair deterministically; the v3 normalizer's _PERP_PAIRWISE already accepts it",
+      "action": "FIXED in 2bb0211a1 (parser rule 3a accepts the synonym)"
+    },
+    {
+      "decision": "length goal rule '(tính )?độ dài XY' matched an assignment 'Độ dài XY = v'",
+      "source": "local_geometry_parser.py goal rule since c197695ad (2026-11-09), refined in /12–/13",
+      "metric_driven": false,
+      "nature": "parser defect (a premise classified as a goal); the Source Gate refused NOT_ASKED_IN_SOURCE and the router escalated to AxoV9",
+      "impact_on_registered_sets": "11 of the 31 Holdout-6 'SLM_REQUIRED' positives (M04, M07, L01–L05, L07, L09–L11 families) and 11 preregistered L-targets depended on this defect",
+      "action": "FIXED in 2bb0211a1 (the rule needs no '= / bằng / là value' after the segment)"
+    },
+    {
+      "decision": "parser-first vs SLM-first",
+      "metric_driven": false,
+      "evidence": "arm C below: SLM-first loses 16 cases the parser serves exactly, gains 0",
+      "action": "keep parser-first"
+    }
+  ],
+  "ablation": {
+    "harness": "one process per arm, FastAPI TestClient on the real /api/analyze handler, HYBRID_ROUTE_MODE=local-only-scoped, ALLOW_LIVE_AI=0, fresh SQLite per arm (no cache hits), real AxoV9 Q4_K_M + llama.cpp b12470, SLM inferences counted at LocalSlmRuntime.chat_completion_json; scored by the shared docs/evaluation/geometry/harness/live-acceptance/scene_oracle.py (imported, unmodified)",
+    "tools": "tools/ablate.py, tools/compare.py (this run)",
+    "arms": {
+      "A": "production candidate 157",
+      "B": "deterministic-first extension: the two parser rules above, applied in memory (nothing written to the tree)",
+      "C": "SLM-first diagnostic: every non-out-of-scope case escalated to AxoV9, parser reconcile disabled; Source Gate and kernel unchanged",
+      "D": "adaptive routing — not proposed separately: B already is deterministic-first with SLM fallback, and no data favoured another policy",
+      "P / BP": "Local Parser on the ORIGINAL text only, without / with the B rules — the patched escalation check returns before the v3-normalizer step, so texts the v3 path would serve count as not served here; 0 model calls; run on every exposed text manifest. A parser-only comparison, not the deterministic coverage of the full router (that is A/B minus SLM-contributed)"
+    },
+    "exposure_note": "every set below is EXPOSED (Holdout-2…6, SLM-Independent-1…3, /12 and /14 manifests). Results are regression and diagnostic evidence, not independent acceptance.",
+    "parser_only_all_exposed": {
+      "cases": "706 text cases (530 positive, 176 negative) from 10 manifests",
+      "P_candidate_157": {"completed": "319/530", "negative_served": "0/176", "math_invalid_served": 3, "numeric_mismatch_served": 2},
+      "BP_with_fix": {"completed": "356/530", "negative_served": "0/176", "math_invalid_served": 3, "numeric_mismatch_served": 2},
+      "changed_cases": 37,
+      "changed_cases_all_valid": "37/37 MATHEMATICALLY_VALID, numeric CORRECT wherever a gold value exists",
+      "pre_existing_flags": "3 math-invalid = Holdout-5 generator bug P04/P05/S07 (/16 receipt); 2 numeric mismatch = /13 frozen-oracle bug H057 (4√5) / H069 (√61) — the served answers are correct",
+      "committed_patch_equivalence": "P on 2bb0211a1 vs BP: 0 differences over the 706 cases"
+    },
+    "full_route_holdout6_and_slm_independent3": {
+      "cases": "Holdout-6 72+26, SLM-Independent-3 30+10 (138)",
+      "A": {"completed": "64/72 + 28/30", "negative_served": "0/36", "slm_inferences": 59, "slm_contributed_completed": 26, "median_ms_all": 143.7, "total_s": 270.0, "completed_p50_ms": 135.4, "completed_p95_ms": 7162.6},
+      "B": {"completed": "64/72 + 28/30", "negative_served": "0/36", "slm_inferences": 47, "slm_contributed_completed": 14, "median_ms_all": 116.8, "total_s": 168.4, "completed_p50_ms": 115.7, "completed_p95_ms": 5101.5},
+      "C": {"completed": "55/72 + 21/30", "negative_served": "0/36", "slm_inferences": 137, "slm_contributed_completed": 76, "median_ms_all": 4196.6, "total_s": 586.4, "completed_p50_ms": 4751.4, "completed_p95_ms": 7273.2},
+      "B_vs_A": "same 92 completed cases, 0 new refusals, 0 new served negatives; 12 cases move from AxoV9 to the parser: median 5,862 ms → 102 ms",
+      "C_vs_A": "16 cases lost (T01, T06, C02, C04, M01, R01, R03, P10, Q01a, I01, I02, I06, I10, I13, I14, I27 → AMBIGUOUS_FACT / INCONSISTENT_FACTS / AMBIGUOUS_VALUE_QUOTE), 0 gained; SLM-Independent-3 under C = 21/30, equal to /16's isolated measurement",
+      "false_assertions_served": 0,
+      "grounding_violations_served": 0
+    },
+    "not_measured_per_arm": ["memory per arm (one llama-server process in every arm; footprint is in RUNTIME_CAPACITY_REPORT.json)", "browser rendering per arm"],
+    "cache_behaviour": "no cache hit in any arm (fresh DB); in production the fix changes which route produces a cached envelope ⇒ CACHE_VERSION 157 → 158, row 157:route-d misses (test_parser_routing_integrity.py::test_cache_158_policy_isolates_cache_157_rows)"
+  },
+  "red_before_green_after": {
+    "test": "backend/tests/geometry/test_parser_routing_integrity.py",
+    "on_candidate_157": "9 failed, 6 passed (the 6 that pass are the length-question and negation/condition safety controls)",
+    "on_2bb0211a1": "15 passed (+ cache isolation test)"
+  },
+  "recommended_routing_policy": "parser-first, then the verified v3 normalizer, then AxoV9 only for text the deterministic layers cannot read; never keep a deterministic rule out to preserve an SLM measurement. SLM contribution is reported as a fact about traffic, not a goal.",
+  "consequences_for_metrics": {
+    "historical": "/16 numbers stay as recorded for candidate 157 (not recomputed, not transferred)",
+    "candidate_158": "the SLM-required stratum of any registered set shrinks; an SLM-fallback gate must be re-registered on a NEW blind set, or reported as a capability measure (allow_parser_reconcile=false) instead of a share of production traffic"
+  },
+  "verdicts": {
+    "PARSER_SLM_ROUTING_INTEGRITY_VERIFIED": true,
+    "METRIC_DRIVEN_ROUTING_BIAS_RESOLVED": true,
+    "scope_note": "resolved on candidate 158 (2bb0211a1); candidate 157 still carries both defects"
+  }
+}

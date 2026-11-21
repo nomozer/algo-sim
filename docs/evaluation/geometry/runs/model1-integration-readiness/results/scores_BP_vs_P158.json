@@ -1,0 +1,553 @@
+{
+ "schema": "axo17-routing-ablation-scores/1",
+ "oracle": "docs/evaluation/geometry/harness/live-acceptance/scene_oracle.py",
+ "arms": {
+  "BP": {
+   "by_source": {
+    "axo-hybrid-local-model1-finalization-test-consolidation/ACCEPTANCE_MANIFEST.json": {
+     "positive": 112,
+     "completed": 77,
+     "served_positive": 79,
+     "math_invalid_served": 0,
+     "numeric_mismatch_served": 2,
+     "negative": 28,
+     "negative_served": 0,
+     "slm_inferences": 0,
+     "slm_invoked_cases": 0,
+     "slm_contributed_completed": 0,
+     "http_5xx": 38,
+     "latency_completed_ms": {
+      "n": 77,
+      "p50": 80.8,
+      "p95": 135.4,
+      "max": 496.6
+     },
+     "latency_slm_completed_ms": {
+      "n": 0,
+      "p50": null,
+      "p95": null,
+      "max": null
+     }
+    },
+    "holdout-3/ACCEPTANCE_MANIFEST.json": {
+     "positive": 66,
+     "completed": 30,
+     "served_positive": 30,
+     "math_invalid_served": 0,
+     "numeric_mismatch_served": 0,
+     "negative": 22,
+     "negative_served": 0,
+     "slm_inferences": 0,
+     "slm_invoked_cases": 0,
+     "slm_contributed_completed": 0,
+     "http_5xx": 48,
+     "latency_completed_ms": {
+      "n": 30,
+      "p50": 70.6,
+      "p95": 86.2,
+      "max": 90.5
+     },
+     "latency_slm_completed_ms": {
+      "n": 0,
+      "p50": null,
+      "p95": null,
+      "max": null
+     }
+    },
+    "local-model1-recovery-offline-vision/ACCEPTANCE_MANIFEST.json": {
+     "positive": 18,
+     "completed": 3,
+     "served_positive": 3,
+     "math_invalid_served": 0,
+     "numeric_mismatch_served": 0,
+     "negative": 8,
+     "negative_served": 0,
+     "slm_inferences": 0,
+     "slm_invoked_cases": 0,
+     "slm_contributed_completed": 0,
+     "http_5xx": 21,
+     "latency_completed_ms": {
+      "n": 3,
+      "p50": 80.5,
+      "p95": 81.3,
+      "max": 81.3
+     },
+     "latency_slm_completed_ms": {
+      "n": 0,
+      "p50": null,
+      "p95": null,
+      "max": null
+     }
+    },
+    "holdout-2/ACCEPTANCE_MANIFEST.json": {
+     "positive": 28,
+     "completed": 22,
+     "served_positive": 22,
+     "math_invalid_served": 0,
+     "numeric_mismatch_served": 0,
+     "negative": 10,
+     "negative_served": 0,
+     "slm_inferences": 0,
+     "slm_invoked_cases": 0,
+     "slm_contributed_completed": 0,
+     "http_5xx": 10,
+     "latency_completed_ms": {
+      "n": 22,
+      "p50": 69.8,
+      "p95": 100.6,
+      "max": 118.4
+     },
+     "latency_slm_completed_ms": {
+      "n": 0,
+      "p50": null,
+      "p95": null,
+      "max": null
+     }
+    },
+    "holdout-4/ACCEPTANCE_MANIFEST.json": {
+     "positive": 72,
+     "completed": 50,
+     "served_positive": 50,
+     "math_invalid_served": 0,
+     "numeric_mismatch_served": 0,
+     "negative": 26,
+     "negative_served": 0,
+     "slm_inferences": 0,
+     "slm_invoked_cases": 0,
+     "slm_contributed_completed": 0,
+     "http_5xx": 37,
+     "latency_completed_ms": {
+      "n": 50,
+      "p50": 79.3,
+      "p95": 137.1,
+      "max": 232.6
+     },
+     "latency_slm_completed_ms": {
+      "n": 0,
+      "p50": null,
+      "p95": null,
+      "max": null
+     }
+    },
+    "holdout-4/SLM_INDEPENDENT_MANIFEST.json": {
+     "positive": 30,
+     "completed": 26,
+     "served_positive": 26,
+     "math_invalid_served": 0,
+     "numeric_mismatch_served": 0,
+     "negative": 10,
+     "negative_served": 0,
+     "slm_inferences": 0,
+     "slm_invoked_cases": 0,
+     "slm_contributed_completed": 0,
+     "http_5xx": 10,
+     "latency_completed_ms": {
+      "n": 26,
+      "p50": 79.1,
+      "p95": 127.6,
+      "max": 129.8
+     },
+     "latency_slm_completed_ms": {
+      "n": 0,
+      "p50": null,
+      "p95": null,
+      "max": null
+     }
+    },
+    "holdout-5/ACCEPTANCE_MANIFEST.json": {
+     "positive": 72,
+     "completed": 47,
+     "served_positive": 50,
+     "math_invalid_served": 3,
+     "numeric_mismatch_served": 0,
+     "negative": 26,
+     "negative_served": 0,
+     "slm_inferences": 0,
+     "slm_invoked_cases": 0,
+     "slm_contributed_completed": 0,
+     "http_5xx": 37,
+     "latency_completed_ms": {
+      "n": 47,
+      "p50": 79.8,
+      "p95": 104.3,
+      "max": 139.4
+     },
+     "latency_slm_completed_ms": {
+      "n": 0,
+      "p50": null,
+      "p95": null,
+      "max": null
+     }
+    },
+    "holdout-5/SLM_INDEPENDENT_MANIFEST.json": {
+     "positive": 30,
+     "completed": 26,
+     "served_positive": 26,
+     "math_invalid_served": 0,
+     "numeric_mismatch_served": 0,
+     "negative": 10,
+     "negative_served": 0,
+     "slm_inferences": 0,
+     "slm_invoked_cases": 0,
+     "slm_contributed_completed": 0,
+     "http_5xx": 10,
+     "latency_completed_ms": {
+      "n": 26,
+      "p50": 81.8,
+      "p95": 103.5,
+      "max": 155.6
+     },
+     "latency_slm_completed_ms": {
+      "n": 0,
+      "p50": null,
+      "p95": null,
+      "max": null
+     }
+    },
+    "holdout-6/ACCEPTANCE_MANIFEST.json": {
+     "positive": 72,
+     "completed": 49,
+     "served_positive": 49,
+     "math_invalid_served": 0,
+     "numeric_mismatch_served": 0,
+     "negative": 26,
+     "negative_served": 0,
+     "slm_inferences": 0,
+     "slm_invoked_cases": 0,
+     "slm_contributed_completed": 0,
+     "http_5xx": 38,
+     "latency_completed_ms": {
+      "n": 49,
+      "p50": 79.2,
+      "p95": 99.0,
+      "max": 130.8
+     },
+     "latency_slm_completed_ms": {
+      "n": 0,
+      "p50": null,
+      "p95": null,
+      "max": null
+     }
+    },
+    "holdout-6/SLM_INDEPENDENT_MANIFEST.json": {
+     "positive": 30,
+     "completed": 26,
+     "served_positive": 26,
+     "math_invalid_served": 0,
+     "numeric_mismatch_served": 0,
+     "negative": 10,
+     "negative_served": 0,
+     "slm_inferences": 0,
+     "slm_invoked_cases": 0,
+     "slm_contributed_completed": 0,
+     "http_5xx": 10,
+     "latency_completed_ms": {
+      "n": 26,
+      "p50": 83.5,
+      "p95": 88.0,
+      "max": 90.2
+     },
+     "latency_slm_completed_ms": {
+      "n": 0,
+      "p50": null,
+      "p95": null,
+      "max": null
+     }
+    }
+   },
+   "total": {
+    "positive": 530,
+    "completed": 356,
+    "served_positive": 361,
+    "math_invalid_served": 3,
+    "numeric_mismatch_served": 2,
+    "negative": 176,
+    "negative_served": 0,
+    "slm_inferences": 0,
+    "slm_invoked_cases": 0,
+    "slm_contributed_completed": 0,
+    "http_5xx": 259
+   },
+   "summary": {
+    "arm": "BP",
+    "cases": 706,
+    "slm_inferences_total": 0,
+    "wall_s": 46.6
+   }
+  },
+  "P": {
+   "by_source": {
+    "axo-hybrid-local-model1-finalization-test-consolidation/ACCEPTANCE_MANIFEST.json": {
+     "positive": 112,
+     "completed": 77,
+     "served_positive": 79,
+     "math_invalid_served": 0,
+     "numeric_mismatch_served": 2,
+     "negative": 28,
+     "negative_served": 0,
+     "slm_inferences": 0,
+     "slm_invoked_cases": 0,
+     "slm_contributed_completed": 0,
+     "http_5xx": 38,
+     "latency_completed_ms": {
+      "n": 77,
+      "p50": 86.4,
+      "p95": 144.8,
+      "max": 515.0
+     },
+     "latency_slm_completed_ms": {
+      "n": 0,
+      "p50": null,
+      "p95": null,
+      "max": null
+     }
+    },
+    "holdout-3/ACCEPTANCE_MANIFEST.json": {
+     "positive": 66,
+     "completed": 30,
+     "served_positive": 30,
+     "math_invalid_served": 0,
+     "numeric_mismatch_served": 0,
+     "negative": 22,
+     "negative_served": 0,
+     "slm_inferences": 0,
+     "slm_invoked_cases": 0,
+     "slm_contributed_completed": 0,
+     "http_5xx": 48,
+     "latency_completed_ms": {
+      "n": 30,
+      "p50": 76.2,
+      "p95": 108.8,
+      "max": 117.3
+     },
+     "latency_slm_completed_ms": {
+      "n": 0,
+      "p50": null,
+      "p95": null,
+      "max": null
+     }
+    },
+    "local-model1-recovery-offline-vision/ACCEPTANCE_MANIFEST.json": {
+     "positive": 18,
+     "completed": 3,
+     "served_positive": 3,
+     "math_invalid_served": 0,
+     "numeric_mismatch_served": 0,
+     "negative": 8,
+     "negative_served": 0,
+     "slm_inferences": 0,
+     "slm_invoked_cases": 0,
+     "slm_contributed_completed": 0,
+     "http_5xx": 21,
+     "latency_completed_ms": {
+      "n": 3,
+      "p50": 82.7,
+      "p95": 120.8,
+      "max": 120.8
+     },
+     "latency_slm_completed_ms": {
+      "n": 0,
+      "p50": null,
+      "p95": null,
+      "max": null
+     }
+    },
+    "holdout-2/ACCEPTANCE_MANIFEST.json": {
+     "positive": 28,
+     "completed": 22,
+     "served_positive": 22,
+     "math_invalid_served": 0,
+     "numeric_mismatch_served": 0,
+     "negative": 10,
+     "negative_served": 0,
+     "slm_inferences": 0,
+     "slm_invoked_cases": 0,
+     "slm_contributed_completed": 0,
+     "http_5xx": 10,
+     "latency_completed_ms": {
+      "n": 22,
+      "p50": 78.1,
+      "p95": 90.2,
+      "max": 103.6
+     },
+     "latency_slm_completed_ms": {
+      "n": 0,
+      "p50": null,
+      "p95": null,
+      "max": null
+     }
+    },
+    "holdout-4/ACCEPTANCE_MANIFEST.json": {
+     "positive": 72,
+     "completed": 50,
+     "served_positive": 50,
+     "math_invalid_served": 0,
+     "numeric_mismatch_served": 0,
+     "negative": 26,
+     "negative_served": 0,
+     "slm_inferences": 0,
+     "slm_invoked_cases": 0,
+     "slm_contributed_completed": 0,
+     "http_5xx": 37,
+     "latency_completed_ms": {
+      "n": 50,
+      "p50": 92.8,
+      "p95": 115.5,
+      "max": 148.5
+     },
+     "latency_slm_completed_ms": {
+      "n": 0,
+      "p50": null,
+      "p95": null,
+      "max": null
+     }
+    },
+    "holdout-4/SLM_INDEPENDENT_MANIFEST.json": {
+     "positive": 30,
+     "completed": 26,
+     "served_positive": 26,
+     "math_invalid_served": 0,
+     "numeric_mismatch_served": 0,
+     "negative": 10,
+     "negative_served": 0,
+     "slm_inferences": 0,
+     "slm_invoked_cases": 0,
+     "slm_contributed_completed": 0,
+     "http_5xx": 10,
+     "latency_completed_ms": {
+      "n": 26,
+      "p50": 87.0,
+      "p95": 101.6,
+      "max": 130.0
+     },
+     "latency_slm_completed_ms": {
+      "n": 0,
+      "p50": null,
+      "p95": null,
+      "max": null
+     }
+    },
+    "holdout-5/ACCEPTANCE_MANIFEST.json": {
+     "positive": 72,
+     "completed": 47,
+     "served_positive": 50,
+     "math_invalid_served": 3,
+     "numeric_mismatch_served": 0,
+     "negative": 26,
+     "negative_served": 0,
+     "slm_inferences": 0,
+     "slm_invoked_cases": 0,
+     "slm_contributed_completed": 0,
+     "http_5xx": 37,
+     "latency_completed_ms": {
+      "n": 47,
+      "p50": 87.4,
+      "p95": 131.1,
+      "max": 144.3
+     },
+     "latency_slm_completed_ms": {
+      "n": 0,
+      "p50": null,
+      "p95": null,
+      "max": null
+     }
+    },
+    "holdout-5/SLM_INDEPENDENT_MANIFEST.json": {
+     "positive": 30,
+     "completed": 26,
+     "served_positive": 26,
+     "math_invalid_served": 0,
+     "numeric_mismatch_served": 0,
+     "negative": 10,
+     "negative_served": 0,
+     "slm_inferences": 0,
+     "slm_invoked_cases": 0,
+     "slm_contributed_completed": 0,
+     "http_5xx": 10,
+     "latency_completed_ms": {
+      "n": 26,
+      "p50": 82.0,
+      "p95": 121.6,
+      "max": 185.6
+     },
+     "latency_slm_completed_ms": {
+      "n": 0,
+      "p50": null,
+      "p95": null,
+      "max": null
+     }
+    },
+    "holdout-6/ACCEPTANCE_MANIFEST.json": {
+     "positive": 72,
+     "completed": 49,
+     "served_positive": 49,
+     "math_invalid_served": 0,
+     "numeric_mismatch_served": 0,
+     "negative": 26,
+     "negative_served": 0,
+     "slm_inferences": 0,
+     "slm_invoked_cases": 0,
+     "slm_contributed_completed": 0,
+     "http_5xx": 38,
+     "latency_completed_ms": {
+      "n": 49,
+      "p50": 84.8,
+      "p95": 103.3,
+      "max": 178.7
+     },
+     "latency_slm_completed_ms": {
+      "n": 0,
+      "p50": null,
+      "p95": null,
+      "max": null
+     }
+    },
+    "holdout-6/SLM_INDEPENDENT_MANIFEST.json": {
+     "positive": 30,
+     "completed": 26,
+     "served_positive": 26,
+     "math_invalid_served": 0,
+     "numeric_mismatch_served": 0,
+     "negative": 10,
+     "negative_served": 0,
+     "slm_inferences": 0,
+     "slm_invoked_cases": 0,
+     "slm_contributed_completed": 0,
+     "http_5xx": 10,
+     "latency_completed_ms": {
+      "n": 26,
+      "p50": 86.4,
+      "p95": 137.0,
+      "max": 153.8
+     },
+     "latency_slm_completed_ms": {
+      "n": 0,
+      "p50": null,
+      "p95": null,
+      "max": null
+     }
+    }
+   },
+   "total": {
+    "positive": 530,
+    "completed": 356,
+    "served_positive": 361,
+    "math_invalid_served": 3,
+    "numeric_mismatch_served": 2,
+    "negative": 176,
+    "negative_served": 0,
+    "slm_inferences": 0,
+    "slm_invoked_cases": 0,
+    "slm_contributed_completed": 0,
+    "http_5xx": 259
+   },
+   "summary": {
+    "arm": "P",
+    "cases": 706,
+    "slm_inferences_total": 0,
+    "wall_s": 50.8
+   }
+  }
+ },
+ "per_case_differences": []
+}

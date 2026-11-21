@@ -1,0 +1,35 @@
+{
+  "schema": "axo-full-t3-receipt/1",
+  "run_id": "model1-integration-readiness",
+  "candidate": {
+    "head": "b92b68a94b67d24dc016ddc358506adad5c7f1e3",
+    "candidate_freeze_commit": "b92b68a94b67d24dc016ddc358506adad5c7f1e3",
+    "evaluation_candidate_commit_field": "35a17644acb11ea8a0853afb5b7cdc1814f37df8",
+    "product_commit": "2bb0211a1",
+    "measured_system_tree_hash": "bdb737bba9ab94d0274b57e25089c01d4cb47935d5989658e7c13aad1e79b132",
+    "measured_files": 127,
+    "cache_version": "158",
+    "route_d_cache_policy": "158:route-d",
+    "tracked_tree_clean_at_start": true,
+    "worktree": "shared development worktree at branch HEAD feat/model1-integration-readiness (not an isolated detached worktree) -> AUTHORITATIVE_DETACHED_COMPLIANCE = NOT_VERIFIED",
+    "incident": "one untracked report file existed in the run folder for about 2 minutes during the first 4 % of pytest; it was moved out; the gate passed with 0 failures (no test observed a dirty tree)"
+  },
+  "command": "cd frontend && npm run test:full",
+  "env": {
+    "ALLOW_LIVE_AI": "0",
+    "ALGO_SIM_PYTHON": "D:/Documents/projects/algo-sim/backend/.venv/Scripts/python.exe",
+    "LOCAL_SLM_CACHE_DIR": "provisioned local cache (AxoV9 73f1484b…, llama.cpp b12470)"
+  },
+  "exit_code": 0,
+  "duration_s": 1308,
+  "verdict": "FULL_PRODUCT_GATE_PASS",
+  "gates": {
+    "backend_pytest": {"status": "PASS", "passed": 15178, "failed": 0, "skipped": 8, "deselected": 9, "xfailed": 12, "warnings": 2, "duration_s": 1154.5, "wrapper_seconds": 1161.3, "delta_vs_candidate_157": "+16 = test_parser_routing_integrity.py (15 parametrized + 1 cache isolation)"},
+    "frontend_vitest": {"status": "PASS", "files_passed": 203, "tests_passed": 2345, "failed": 0, "wrapper_seconds": 134.6},
+    "typecheck_build": {"status": "PASS", "vite_build_seconds": 5.65, "wrapper_seconds": 9.2},
+    "demo_replay": {"status": "PASS", "passed": 5, "total": 5, "seconds": 0.7},
+    "demo_crash_surface": {"status": "PASS", "passed": 6, "total": 6, "seconds": 0.5}
+  },
+  "log": "kept outside the repository (D:/tmp/axo17/t3/full-t3.log, not committed: mixed line endings, 281 CR)",
+  "log_sha256_raw": "b7d62501fbd37a39e5a80755db88b0bcdbc77c2f237ff1b51956b7e62e84adee"
+}

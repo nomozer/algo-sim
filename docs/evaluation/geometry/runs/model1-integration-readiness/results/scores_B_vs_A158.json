@@ -1,0 +1,153 @@
+{
+ "schema": "axo17-routing-ablation-scores/1",
+ "oracle": "docs/evaluation/geometry/harness/live-acceptance/scene_oracle.py",
+ "arms": {
+  "B": {
+   "by_source": {
+    "holdout-6/ACCEPTANCE_MANIFEST.json": {
+     "positive": 72,
+     "completed": 64,
+     "served_positive": 64,
+     "math_invalid_served": 0,
+     "numeric_mismatch_served": 0,
+     "negative": 26,
+     "negative_served": 0,
+     "slm_inferences": 36,
+     "slm_invoked_cases": 36,
+     "slm_contributed_completed": 12,
+     "http_5xx": 0,
+     "latency_completed_ms": {
+      "n": 64,
+      "p50": 115.7,
+      "p95": 5101.5,
+      "max": 5457.7
+     },
+     "latency_slm_completed_ms": {
+      "n": 12,
+      "p50": 4844.4,
+      "p95": 5308.7,
+      "max": 5457.7
+     }
+    },
+    "holdout-6/SLM_INDEPENDENT_MANIFEST.json": {
+     "positive": 30,
+     "completed": 28,
+     "served_positive": 28,
+     "math_invalid_served": 0,
+     "numeric_mismatch_served": 0,
+     "negative": 10,
+     "negative_served": 0,
+     "slm_inferences": 11,
+     "slm_invoked_cases": 11,
+     "slm_contributed_completed": 2,
+     "http_5xx": 0,
+     "latency_completed_ms": {
+      "n": 28,
+      "p50": 93.8,
+      "p95": 4097.7,
+      "max": 4415.9
+     },
+     "latency_slm_completed_ms": {
+      "n": 2,
+      "p50": 4256.8,
+      "p95": 4415.9,
+      "max": 4415.9
+     }
+    }
+   },
+   "total": {
+    "positive": 102,
+    "completed": 92,
+    "served_positive": 92,
+    "math_invalid_served": 0,
+    "numeric_mismatch_served": 0,
+    "negative": 36,
+    "negative_served": 0,
+    "slm_inferences": 47,
+    "slm_invoked_cases": 47,
+    "slm_contributed_completed": 14,
+    "http_5xx": 0
+   },
+   "summary": {
+    "arm": "B",
+    "cases": 138,
+    "slm_inferences_total": 47,
+    "wall_s": 168.5
+   }
+  },
+  "A": {
+   "by_source": {
+    "holdout-6/ACCEPTANCE_MANIFEST.json": {
+     "positive": 72,
+     "completed": 64,
+     "served_positive": 64,
+     "math_invalid_served": 0,
+     "numeric_mismatch_served": 0,
+     "negative": 26,
+     "negative_served": 0,
+     "slm_inferences": 36,
+     "slm_invoked_cases": 36,
+     "slm_contributed_completed": 12,
+     "http_5xx": 0,
+     "latency_completed_ms": {
+      "n": 64,
+      "p50": 91.0,
+      "p95": 4744.1,
+      "max": 6578.3
+     },
+     "latency_slm_completed_ms": {
+      "n": 12,
+      "p50": 4486.3,
+      "p95": 5046.6,
+      "max": 6578.3
+     }
+    },
+    "holdout-6/SLM_INDEPENDENT_MANIFEST.json": {
+     "positive": 30,
+     "completed": 28,
+     "served_positive": 28,
+     "math_invalid_served": 0,
+     "numeric_mismatch_served": 0,
+     "negative": 10,
+     "negative_served": 0,
+     "slm_inferences": 11,
+     "slm_invoked_cases": 11,
+     "slm_contributed_completed": 2,
+     "http_5xx": 0,
+     "latency_completed_ms": {
+      "n": 28,
+      "p50": 85.4,
+      "p95": 4237.7,
+      "max": 4297.6
+     },
+     "latency_slm_completed_ms": {
+      "n": 2,
+      "p50": 4267.6,
+      "p95": 4297.6,
+      "max": 4297.6
+     }
+    }
+   },
+   "total": {
+    "positive": 102,
+    "completed": 92,
+    "served_positive": 92,
+    "math_invalid_served": 0,
+    "numeric_mismatch_served": 0,
+    "negative": 36,
+    "negative_served": 0,
+    "slm_inferences": 47,
+    "slm_invoked_cases": 47,
+    "slm_contributed_completed": 14,
+    "http_5xx": 0
+   },
+   "summary": {
+    "arm": "A",
+    "cases": 138,
+    "slm_inferences_total": 47,
+    "wall_s": 155.3
+   }
+  }
+ },
+ "per_case_differences": []
+}

@@ -1,0 +1,73 @@
+{
+  "schema": "axo-runtime-capacity-report/1",
+  "run_id": "model1-integration-readiness",
+  "date": "2026-11-21",
+  "measured_candidate": "158 (product 2bb0211a1, freeze b92b68a94, CACHE 158)",
+  "host": {
+    "class": "DEV_HOST (Windows developer laptop) — not the deployment target",
+    "cpu": "Intel Core i5-11400H, 6 cores / 12 threads, 2.70 GHz",
+    "ram_mib": 16163,
+    "os": "Windows 11 Pro 10.0.26100",
+    "gpu_used": false,
+    "llama_cpp": "b12470 win-cpu-x64 (commit dde9de82c), 6 threads (DEFAULT_LOCAL_SLM_THREADS)",
+    "model": "Qwen3-0.6B-AxoV9-Q4_K_M, 396,704,736 B, sha256 73f1484b…",
+    "server": "one uvicorn process (as the Dockerfile CMD), local-only-scoped, ALLOW_LIVE_AI=0, SQLite, loopback only",
+    "other_load": "none started by this task; the user's own idle node processes were left running"
+  },
+  "method": {
+    "tool": "tools/loadtest.py + tools/followup.py (this run); memory/CPU by the shared harness stack_memory_sampler.ps1 (1 s)",
+    "requests": "real HTTP POST /api/analyze from threaded httpx clients, each with its own signed-in session (custom daily limit); every text distinct except the cache-hit phase; fresh DB so no prior cache",
+    "text_pools": "exposed manifests, classified by the parser-only arm on candidate 158 (det = parser serves; slm = parser does not). The actual route of each request is taken from its response (extraction_mode), see actual_routes",
+    "limits": "p99 not computed for any phase (n < 100); queue-wait telemetry was not captured (the script read a wrong key) — queueing is inferred from end-to-end latency and 503 counts"
+  },
+  "phases": [
+    {"phase": "det_c1", "conc": 1, "n": 10, "rps": 9.56, "http_200": 10, "e2e_p50_ms": 101.2, "e2e_p95_ms": 165.5},
+    {"phase": "det_c2", "conc": 2, "n": 10, "rps": 13.26, "http_200": 10, "e2e_p50_ms": 141.5, "e2e_p95_ms": 265.4},
+    {"phase": "det_c5", "conc": 5, "n": 20, "rps": 10.14, "http_200": 20, "e2e_p50_ms": 459.6, "e2e_p95_ms": 695.6},
+    {"phase": "det_c10", "conc": 10, "n": 30, "rps": 10.60, "http_200": 30, "e2e_p50_ms": 759.5, "e2e_p95_ms": 1652.7, "max_ms": 1878.3},
+    {"phase": "slm_c1 (warm)", "conc": 1, "n": 6, "actual_slm_route": 5, "rps": 0.25, "http_200": 6, "e2e_p50_ms": 4519.4, "e2e_p95_ms": 6859.7, "note": "first request includes llama-server load"},
+    {"phase": "slm_c2", "conc": 2, "n": 8, "actual_slm_route": 7, "rps": 0.24, "http_200": 8, "busy_503": 0, "e2e_p50_ms": 8969.1, "e2e_p95_ms": 10999.8, "note": "inference is serialized: two users ≈ twice the latency, same throughput"},
+    {"phase": "slm_c5", "conc": 5, "n": 10, "actual_slm_route": 4, "http_200": 4, "busy_503": 6, "e2e_p50_ms_200": 9315.1, "max_ms": 15153.5},
+    {"phase": "slm_c10", "conc": 10, "n": 20, "actual_slm_route": 4, "parser_after_v3": 9, "http_200": 13, "busy_503": 7, "e2e_p95_ms_200": 12857.3, "max_ms": 16983.7, "health_probe": {"n": 31, "failed": 0, "p50_ms": 23.1, "max_ms": 427.6}},
+    {"phase": "mixed_c5", "conc": 5, "n": 20, "http_200": 16, "busy_503": 4, "e2e_p50_ms_200": 259.4, "e2e_p95_ms_200": 13255.3, "health_probe": {"n": 34, "failed": 0, "p50_ms": 23.3, "max_ms": 161.5}},
+    {"phase": "mixed_c10", "conc": 10, "n": 30, "http_200": 26, "busy_503": 4, "e2e_p50_ms_200": 929.9, "e2e_p95_ms_200": 13415.4, "max_ms": 18612.2, "health_probe": {"n": 34, "failed": 0, "p50_ms": 23.4, "max_ms": 278.9}},
+    {"phase": "refusal_c5", "conc": 5, "n": 20, "http_200": 12, "busy_503": 8, "e2e_p50_ms_200": 214.8, "note": "negatives that need the SLM to be refused compete for the same single inference slot"},
+    {"phase": "cache_hit_c5", "conc": 5, "n": 20, "rps": 22.09, "http_200": 20, "e2e_p50_ms": 212.9, "e2e_p95_ms": 341.9}
+  ],
+  "capacity_reading": {
+    "deterministic_throughput_rps": "≈ 10–13 sustained at 2–10 concurrent clients (single Python process; latency grows with concurrency, no errors)",
+    "slm_throughput": "one inference at a time (Semaphore(1)); ≈ 0.24 SLM-served requests/s ≈ 14 per minute; queue limit 4 (DEFAULT_LOCAL_SLM_MAX_QUEUE) ⇒ beyond ~4 simultaneous SLM-needing requests the rest get 503 LOCAL_SLM_BUSY immediately",
+    "isolation": "the event loop stays responsive under SLM saturation (/api/health p50 23 ms, max 428 ms); deterministic requests keep being served while the SLM queue is full",
+    "memory_peak_mib": {"llama_server_ws": 918.2, "llama_server_private": 593.4, "backend_ws": 121.4, "backend_private": 101.1},
+    "cpu_seconds_peak": {"llama_server": 780.1, "backend": 23.8},
+    "server_startup_ms": [3701.4, 3573.0, 3138.1],
+    "model_cold_load_first_slm_request_ms": 7552.4
+  },
+  "failure_modes": [
+    {"mode": "model / runtime not provisioned", "observed": "/api/health localSlmReady=false, aiAvailable=false; SLM-needing text → HTTP 503 MODEL_RUNTIME_UNAVAILABLE, INFRASTRUCTURE_FAILURE, Cache-Control no-store, learner text 'Mô hình xử lý trên máy chưa được cài đặt đầy đủ hoặc chưa bật…'; parser-readable text still served (200)", "result": "PASS"},
+    {"mode": "model loading (cold)", "observed": "llama-server starts lazily on the first SLM request; that request takes 7.6 s (6.9 s in the load run); no error", "result": "PASS"},
+    {"mode": "llama-server killed while idle", "observed": "next SLM request respawns it (new PID) and is served in 4.9 s; the following one 5.0 s", "result": "PASS"},
+    {"mode": "llama-server killed mid-inference", "observed": "in-flight request → HTTP 503 LOCAL_SLM_PROCESS_CRASHED, INFRASTRUCTURE_FAILURE, no-store (never a mathematical refusal, never cached); next request recovers; re-submitting the same text is served", "result": "PASS"},
+    {"mode": "backend restart", "observed": "served envelope persists in the DB: same text after restart answered in 79 ms (cache hit); startup 3.1–3.7 s; model reloads lazily", "result": "PASS"},
+    {"mode": "SLM timeout", "observed": "NOT_MEASURED live (the 45 s per-inference timeout is not configurable by environment); code path maps LOCAL_SLM_TIMEOUT → HTTP 504, no-store", "result": "NOT_MEASURED"},
+    {"mode": "client disconnect (gives up after 1 s)", "observed": "server keeps working, finishes and caches the served result; /api/health 200; the same text re-sent 12 s later → 36.5 ms cache hit. Frontend aborts with AbortSignal and ignores aborted responses (frontend/src/llm/client.ts)", "result": "PASS (work is not cancelled server-side — it is wasted when the result is a refusal)"},
+    {"mode": "many requests at once / queue saturation", "observed": "503 LOCAL_SLM_BUSY with no-store, INFRASTRUCTURE_FAILURE; no crash, no wrong scene; no unbounded retry server-side", "result": "PASS (fail-closed), capacity-limited"},
+    {"mode": "repeated submission", "observed": "same Idempotency-Key twice concurrently → one execution, second response 'Idempotent-Replayed: true'; without a key → two executions (second cheap via the in-process SLM cache)", "result": "PASS (single process only — app/idempotency.py is an in-process table)"},
+    {"mode": "cache identity mismatch", "observed": "not re-run live; locked by tests (test_cache_identity.py, tests/cache_policy.py::assert_route_d_row_misses, test_parser_routing_integrity.py::test_cache_158_policy_isolates_cache_157_rows) — all PASS in Full T3", "result": "PASS (test evidence)"},
+    {"mode": "end-to-end deadline", "observed": "local route has no request deadline (only 45 s per inference; observed max 18.6 s under load, 27.2 s in /16)", "result": "GAP"}
+  ],
+  "correction_of_v16_concurrency": "/16 PERFORMANCE conc_2_mixed_slm_and_det (121.6 ms) and conc_2/4_deterministic re-sent prompts already analyzed in the same DB (perf_bench.py): they were cache hits and did not exercise SLM concurrency. This report is the first SLM concurrency measurement.",
+  "verdicts": {
+    "DEV_HOST_PERFORMANCE_MEASURED": true,
+    "TARGET_HARDWARE_PERFORMANCE_MEASURED": false,
+    "MULTIUSER_CAPACITY_VERIFIED": false,
+    "PRODUCTION_CAPACITY_VERIFIED": false,
+    "why_multiuser_false": "measured behaviour is safe (fail-closed 503) but the dev host serves ≈ 14 SLM requests per minute with ≤ 4 waiting; no capacity target was registered and the target hardware is unknown, so no number of concurrent learners can be claimed"
+  },
+  "confidence_and_limits": [
+    "one host, one run per phase, small n (8–30 per phase): figures are indicative, not distributions",
+    "the user's idle node processes and the OS were running; no other heavy load",
+    "Windows binary; a Linux deployment needs another llama.cpp build and must be re-measured",
+    "browser rendering cost not part of this measurement (/16: chromium ws peak 2,366 MB on the client side)"
+  ]
+}

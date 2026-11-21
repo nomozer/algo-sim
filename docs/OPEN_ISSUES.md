@@ -1,6 +1,8 @@
 # OPEN_ISSUES.md — Danh mục các vấn đề kỹ thuật đang mở
 
-**LOCAL 2026-11-21 — Semantic grounding integrity, SLM capability recovery & final text-scope validation (AXO HYBRID /16, latest):** Candidate 157 (`4c1b94b61`, tree `3152f382...`, `CACHE_VERSION 157`, `Full T3` `FULL_PRODUCT_GATE_PASS` `15,162` pytest / `2,345` Vitest `0` failed) on unexposed `Holdout-6` + `SLM-Independent-3` (`b28783e31`, `ALLOW_LIVE_AI=0`): [Report](evaluation/geometry/runs/semantic-grounding-slm-recovery/FINAL_MASTER_REPORT.md) · [`run.json`](evaluation/geometry/runs/semantic-grounding-slm-recovery/run.json).
+**LOCAL 2026-11-21 — Local Model 1 integration readiness & routing integrity (AXO HYBRID /17, latest):** branch `feat/model1-integration-readiness` from `/16` `3a39a1ea4` (shared worktree; `main` `bc6ff5e33` untouched, not merged/pushed; text only, OCR/Vision postponed). Candidate 157 integrity VERIFIED and reproduced (Holdout-6 64/72). Routing audit: `/16` kept the pairwise-perpendicular synonym out of the parser to preserve the SLM stratum, and the parser read "Độ dài XY = v" as a goal; both fixed in `2bb0211a1` → candidate **158** (`CACHE_VERSION 158`, freeze `b92b68a94`, tree `bdb737bb…`), Full T3 PASS (15,178 / 2,345), exposed-set regression 0 changes in served negatives, 12 fewer SLM calls on Holdout-6 + SLM-Ind-3; SLM-first loses 16 cases. Dev-host capacity: ≈ 10–13 deterministic req/s, ≈ 0.24 SLM req/s, queue 4 then 503 `LOCAL_SLM_BUSY`; runtime Windows-only and GGUF unhosted (VPS blockers). `LOCAL_TEXT_MODEL1_VERIFIED` = TRUE (157) / NOT_VERIFIED (158) · `EXTERNAL_INDEPENDENCE = NOT_MEASURED` · `MAIN_MERGE_READY = FALSE` (owner decisions D1–D6) · verdict `READINESS_WITH_EXPLICIT_BLOCKERS`. [Report](evaluation/geometry/runs/model1-integration-readiness/FINAL_MASTER_REPORT.md). New open items: `ISSUE-OPS-LOCAL-SLM-LINUX-RUNTIME-AND-GGUF-PROVISIONING`, `ISSUE-OPS-LOCAL-ROUTE-CAPACITY-AND-DEADLINE`, `ISSUE-EVAL-PUBLICATION-SAFETY-SYNTHETIC-TEST-PASSWORDS`, `ISSUE-ARCH-PARSER-NOT-IN-SEMANTIC-FINGERPRINT`, `ISSUE-ARCH-CAPABILITY-GAP-WORDED-AS-CLARIFICATION` (below).
+
+**LOCAL 2026-11-21 — Semantic grounding integrity, SLM capability recovery & final text-scope validation (AXO HYBRID /16):** Candidate 157 (`4c1b94b61`, tree `3152f382...`, `CACHE_VERSION 157`, `Full T3` `FULL_PRODUCT_GATE_PASS` `15,162` pytest / `2,345` Vitest `0` failed) on unexposed `Holdout-6` + `SLM-Independent-3` (`b28783e31`, `ALLOW_LIVE_AI=0`): [Report](evaluation/geometry/runs/semantic-grounding-slm-recovery/FINAL_MASTER_REPORT.md) · [`run.json`](evaluation/geometry/runs/semantic-grounding-slm-recovery/run.json).
 - **Resolved in /16:** Layer 2 `Source Gate` hardening in `backend/app/simulation/geometry_functions/registry.py` (`_KHONG_KHANG_DINH` imperative negations, `_HOI_QUAN_HE` `?`-scoped `liệu`, `ambiguous_base` -> `AMBIGUOUS_REFERENCE` before `SOURCE_OBJECT_MISMATCH`, `"trong không gian,"` lead strip moved to `_kiem_vung_tien_de`; `SEMANTIC_REWRITE_SAFETY_VERIFIED = true`, `94` rules); multi-clause splitting + `LANGUAGE_GAP_RECOVERY.json` recovering `AxoV9` (`7/9` lowered, `RETAIN_AXOV9_NO_FINETUNE_NEEDED`); Candidate 156 `Full T3` 4 regressions & `I05` (`NEG01`) UI fail resolved; `COMPOSITE_LIVE_TEXT_ACCEPTED = true` (`64/72`, `23/31` SLM fallback, `21/30` `SLM-Independent-3`, `26/26` neg safe, `10/10` UI scenarios).
 - **Still open / Fail-closed boundaries:**
   - `Holdout-6` 8 unserved positive residuals (fail-closed, `0` wrong served): `C05` (`UNGROUNDED_VALUE`), `C07` (`SOURCE_OBJECT_MISMATCH`), `C10` (`AMBIGUOUS_FACT`), `R06` (`SOURCE_OBJECT_MISMATCH`), `P08` (`QUESTION_CONTEXT_UNSUPPORTED`), `S02` (`AMBIGUOUS_FACT`), `Q01b` (`OUT_OF_SCOPE`), `L06` (`AMBIGUOUS_FACT`); `SLM-Independent-3` 9 fails (`I01, I02, I06, I07, I10, I12, I13, I14, I27`).
@@ -1961,4 +1963,44 @@
 - **residual:** the 671 legacy `%TEMP%\w12-*` profiles (`VERIFIED_ORPHAN`) were deleted after the user's confirmation (run `merge-readiness`, `results/TEMP_CLEANUP.json`: 671 deleted, 0 failed, 0 skipped; C: free 43.87 → 77.43 GB); 229 `%TEMP%\scoped_dir*` (1.3 GB) stay `UNKNOWN` and untouched (any Chromium creates them). Twenty standalone scripts (`certify-*`, `accept-*`, `spot-check-*`, `audit-layout`, `measure-*`, `diagnose-refusal-flake`) still create an un-removed profile per run (other prefixes; none present now) — move them to `BrowserSession` when touched.
 - **owner_class:** OPERATIONS / TEST HARNESS
 - **suggested_wave:** — (resolved; legacy cleanup is the user's decision)
+- **default_switch_blocker:** NO
+
+### ISSUE-OPS-LOCAL-SLM-LINUX-RUNTIME-AND-GGUF-PROVISIONING
+- **description:** `LLAMA_CPP_RUNTIME_SPEC` pins only `llama-b12470-bin-win-cpu-x64.zip` / `llama-server.exe` (`backend/app/ai/local_slm_runtime.py`), while the shipped image is `python:3.12-slim` (Linux); the AxoV9 GGUF spec has `url = ""` and exists only in this machine's `%LOCALAPPDATA%\axo-slm`.
+- **evidence:** run `model1-integration-readiness`, `MODEL1_INTEGRATION_PLAN.md` §5.
+- **impact:** local Model 1 cannot start in the deployment container; a disk loss loses the fine-tuned model. No wrong value.
+- **status:** OPEN — needs a pinned Linux llama.cpp asset + sha256 + test (then re-measure: different binary) and a hosted, backed-up GGUF.
+- **owner_class:** OPERATIONS / DEPLOYMENT
+- **default_switch_blocker:** YES (for any local-only deployment)
+
+### ISSUE-OPS-LOCAL-ROUTE-CAPACITY-AND-DEADLINE
+- **description:** one uvicorn process, one llama-server, `Semaphore(1)`, `DEFAULT_LOCAL_SLM_MAX_QUEUE = 4`; the local route has no end-to-end deadline (45 s per inference only); idempotency is an in-process table.
+- **evidence:** `RUNTIME_CAPACITY_REPORT.json` (dev host: ≈ 0.24 SLM req/s, 6/10 → 503 `LOCAL_SLM_BUSY` at 5 concurrent SLM requests, health stays responsive).
+- **impact:** fail-closed 503 under load, never a wrong scene; a classroom burst on SLM-needing text is mostly refused. Multi-worker deployment would break the idempotency guarantee.
+- **status:** OPEN — capacity target + target hardware must be registered and measured; add a request deadline before public traffic.
+- **owner_class:** OPERATIONS / BACKEND
+- **default_switch_blocker:** YES (for public local-only traffic)
+
+### ISSUE-EVAL-PUBLICATION-SAFETY-SYNTHETIC-TEST-PASSWORDS
+- **description:** `check_publication_safety.py --range bc6ff5e33..HEAD` reports 12 `HARDCODED_PASSWORD` (the synthetic local test-account password in frozen `/10`–`/12` browser tools, e.g. `runs/axo-hybrid-local-only-3d-simulation-live-acceptance-cutover/tools/live_browser_acceptance.mjs:85`); `main` itself has 96 pending traceback exceptions.
+- **evidence:** `CANDIDATE157_INTEGRITY_AUDIT.json` → `publication_safety`.
+- **impact:** blocks a publication-safe merge; not a real credential (example.com accounts on a loopback server).
+- **status:** OPEN — owner exception entries or relocation (frozen evidence is not edited by agents).
+- **owner_class:** EVIDENCE / OWNER
+- **default_switch_blocker:** YES (merge)
+
+### ISSUE-ARCH-PARSER-NOT-IN-SEMANTIC-FINGERPRINT
+- **description:** `runtime_identity.py::semantic_environment_fingerprint` includes the parser's *version label* (`LOCAL_GEOMETRY_PARSER_VERSION = local-geometry-parser/3`, unchanged since `/12`) in the Hybrid surface, not the parser/normalizer source; parser changes that alter served envelopes leave the hash unchanged (`f9df4bf0…` before and after CACHE 158).
+- **evidence:** run `model1-integration-readiness` (`lock_cache_identity.py` after the parser fix).
+- **impact:** the CACHE bump for local-route changes depends on human discipline; the cache-isolation tests catch only bumps that were made.
+- **status:** OPEN — decide whether the local extraction surface belongs in the fingerprint (would change the lock on every parser edit).
+- **owner_class:** ARCHITECTURE
+- **default_switch_blocker:** NO
+
+### ISSUE-ARCH-CAPABILITY-GAP-WORDED-AS-CLARIFICATION
+- **description:** when the parser cannot read a goal and AxoV9 reports the clause unresolved, the learner is asked to "nói rõ quan hệ hình học" although nothing in the problem is ambiguous (Holdout-6 C10, S02, L06).
+- **evidence:** `RESIDUAL_FAILURE_TRIAGE.json`.
+- **impact:** misleading wording; the refusal itself is correct (fail-closed).
+- **status:** OPEN
+- **owner_class:** UX / BACKEND
 - **default_switch_blocker:** NO

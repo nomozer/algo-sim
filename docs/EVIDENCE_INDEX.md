@@ -1,3 +1,18 @@
+## WAVE_ID = AXO_HYBRID_MODEL1_INTEGRATION_READINESS
+
+- `RUN_ID` = model1-integration-readiness
+- `REPORT` = docs/evaluation/geometry/runs/model1-integration-readiness/FINAL_MASTER_REPORT.md
+- `ARTIFACT_DIRECTORY` = docs/evaluation/geometry/runs/model1-integration-readiness
+- `START_BASE` = 3a39a1ea4
+- `CODE_COMMIT` = 2bb0211a1 (freeze b92b68a94, tree `bdb737bba9ab…`, 127 files, CACHE_VERSION=158)
+- `CLASSIFICATION` = BASELINE_INTEGRITY_AUDIT + ROUTING_ABLATION (exposed sets, diagnostic) + RESIDUAL_TRIAGE + RUNTIME_CAPACITY (dev host) + FULL_T3_PASS + INTEGRATION_PLAN
+- `PRODUCT_CHANGE` = YES (`local_geometry_parser.py`: length assignment is a premise, pairwise-perpendicular synonym; `main.py` `CACHE_VERSION 158`; default `HYBRID_ROUTE_MODE = live` preserved)
+- `MODEL_REQUEST_COUNT` = 0 cloud; local `Qwen3-0.6B-AxoV9-Q4_K_M` (`73f1484b…`) + `llama.cpp b12470` only
+- `CORRECTS` = AXO_HYBRID_SEMANTIC_GROUNDING_SLM_RECOVERY (run.json / FINAL_MASTER_REPORT §3.1 digest of SEMANTIC_REWRITE_SAFETY_AUDIT.json has 63 hex characters, correct `be8d2b97…df747ace2b4`; LIVE_TEXT_ACCEPTANCE_RESULTS performance.concurrency were cache hits, not SLM concurrency — see CANDIDATE157_INTEGRITY_AUDIT.json, RUNTIME_CAPACITY_REPORT.json)
+- `CORRECTED_BY` = NONE
+- `VERIFICATION` = CANDIDATE157_INTEGRITY_AUDIT.json; PARSER_SLM_ROUTING_AUDIT.json + results/arms/; RESIDUAL_FAILURE_TRIAGE.json; RUNTIME_CAPACITY_REPORT.json + results/load/; FULL_T3_RECEIPT.json
+- `LIMITATIONS` = every evaluation set is exposed (no prospective acceptance of candidate 158); `EXTERNAL_INDEPENDENCE = NOT_MEASURED`; performance on the Windows dev host only; shared worktree (`AUTHORITATIVE_DETACHED_COMPLIANCE = NOT_VERIFIED`)
+
 ## WAVE_ID = AXO_HYBRID_SEMANTIC_GROUNDING_SLM_RECOVERY
 
 - `RUN_ID` = semantic-grounding-slm-recovery
@@ -9,7 +24,7 @@
 - `PRODUCT_CHANGE` = YES (`registry.py` Layer 2 Source Gate `_KHONG_KHANG_DINH` / `_HOI_QUAN_HE` / `_kiem_mat_chung` / `_kiem_vung_tien_de`; `main.py` `CACHE_VERSION 157`; default `HYBRID_ROUTE_MODE = live` preserved)
 - `MODEL_REQUEST_COUNT` = 0 cloud; local `Qwen3-0.6B-AxoV9-Q4_K_M` (`73f1484b…`) + `llama.cpp b12470` only
 - `CORRECTS` = AXO_HYBRID_GROUNDED_GEOMETRY_LANGUAGE_RECOVERY (VERDICT_RECONCILIATION_V15.json documents /15 report vs run.json summarize_c154.py mismatch without modifying /15 files; /15 REGISTERED_SLM_SCORE_V15 = 5/38 FAIL preserved untouched)
-- `CORRECTED_BY` = NONE
+- `CORRECTED_BY` = AXO_HYBRID_MODEL1_INTEGRATION_READINESS (artifact digest typo; concurrency probes were cache hits)
 - `VERIFICATION` = holdout-6/ (`ACCEPTANCE_MANIFEST.json`, `SLM_INDEPENDENT_MANIFEST.json`, `ACCEPTANCE_CRITERIA.json`, `ACCEPTANCE_FREEZE.json`, `CANDIDATE_FREEZE.json`, `build_holdout.py`; 0 overlaps vs 29,423 prior strings); `FULL_T3_RECEIPT.json` (`15162` pytest / `2345` Vitest PASS); `LIVE_TEXT_ACCEPTANCE_RESULTS.json` (`64/72=0.8889`, `23/31=0.7419` fallback, `11/12` targets, `26/26` neg, `10/10` UI); `SLM_CAPABILITY_AUDIT.json` (`21/30=0.7000`, `10/10` neg, `gate_pass=true`); `SEMANTIC_REWRITE_SAFETY_AUDIT.json` (`94` rules); `SLM_ROOT_CAUSE_ABLATION.json` (`RETAIN_AXOV9_NO_FINETUNE_NEEDED`); `LANGUAGE_GAP_RECOVERY.json`; `run.json`
 - `LIMITATIONS` = Holdout-6 synthetic prose (`EXTERNAL_INDEPENDENCE = NOT_MEASURED`); measured on detached HEADs inside reused shared worktree (`AUTHORITATIVE_DETACHED_COMPLIANCE = NOT_VERIFIED`); Candidate 156 Holdout-4/T3 fail & Candidate 157 Holdout-5 generator bugs retired per §17 disclosed with 0 score transfer; OCR/Vision postponed (`LOCAL_VISION_REPLACEMENT_VERIFIED = false`, `FULL_GEMINI_ROLE_REPLACEMENT_VERIFIED = false`, `MAIN_MERGE_READY = false`).
 
