@@ -1,0 +1,69 @@
+{
+  "schema": "axo-full-t3-receipt/1",
+  "run_id": "local-model1-recovery-offline-vision",
+  "candidate": {
+    "head": "4d145f9df672a7e25bc169d6719635cf1fb1b7c2",
+    "product_commit_sha": "df31847d30d6da9ab3892e41ea5692a7cb5c2704",
+    "measured_system_tree_hash": "994c50a78e22083a1b911fde06c692edd68adf9817e9e174ecdb8d587d6734c5",
+    "cache_version": "153",
+    "freeze_verify": "MATCH (127 files) before the run",
+    "tracked_tree_clean": true,
+    "untracked_at_start": [
+      "docs/evaluation/geometry/runs/local-model1-recovery-offline-vision/LIVE_ACCEPTANCE_RESULTS.json",
+      "docs/evaluation/geometry/runs/local-model1-recovery-offline-vision/OFFLINE_VISION_VALIDATION.json"
+    ]
+  },
+  "attempts": [
+    {
+      "id": "codex",
+      "started_at": "2026-11-21T08:43:25+07:00",
+      "verdict": "TEST_INTERRUPTED",
+      "evidence": "log stops at pytest 48% at 08:51; the Codex command runner reports 'The pipe is being closed' at 08:51:52 when the editor host restarted; no exit code was written",
+      "observed_before_interruption": "1 F at collection index 4131 (test_independent_holdout_equivalence.py::test_c28_stratum_semantic_annotations_oracle_review_and_template_completeness); it passes alone outside the Codex sandbox and passed in attempt takeover-2 — not counted as a product failure",
+      "log": ".superpowers/offline-logs/local-model1-recovery-offline-vision/full-t3/full-t3.log",
+      "log_sha256": "d42a235bdb3145d5658b4227a17558e63a9776a70efbbe2fb46d87a4cf3ae09d"
+    },
+    {
+      "id": "takeover-1",
+      "verdict": "INVALID_ENVIRONMENT",
+      "evidence": "LOCAL_SLM_CACHE_DIR pointed at an empty directory; the two health/readiness tests that require a provisioned model failed for that reason and pass alone. Stopped by the agent at about 32% of pytest.",
+      "log": ".superpowers/offline-logs/local-model1-recovery-offline-vision/full-t3-takeover/rerun1-invalid-env.log",
+      "log_sha256": "4256d90cd2f3369c69d0c5c804ce87e864222a03f67c49ee841ff1a2c334fa12"
+    },
+    {
+      "id": "takeover-2",
+      "command": "cd frontend && npm run test:full",
+      "env": {
+        "ALLOW_LIVE_AI": "0",
+        "ALGO_SIM_PYTHON": "D:/Documents/projects/algo-sim/backend/.venv/Scripts/python.exe",
+        "LOCAL_SLM_CACHE_DIR": "hard links of the Codex-provisioned cache (AxoV9 sha256 73f1484b..., llama.cpp b12470)"
+      },
+      "exit_code": 1,
+      "duration_s": 917.1,
+      "verdict": "FULL_PRODUCT_GATE_FAIL",
+      "gates": {
+        "backend_pytest": {"passed": 15064, "failed": 2, "skipped": 8, "deselected": 9, "xfailed": 12, "seconds": 793.66},
+        "frontend_vitest": {"files": 203, "tests_passed": 2345, "failed": 0},
+        "typecheck_build": "FAIL (EPERM removing frontend/dist/v14-cache152, a directory created by the Codex sandbox account; moved aside afterwards, `npm run build` then passes alone)",
+        "demo_replay": "PASS",
+        "demo_crash_surface": "PASS"
+      },
+      "failures": [
+        {
+          "test": "backend/tests/semantic_program/test_evaluation_candidate.py::test_candidate_ghi_dung_commit_va_cay_sach",
+          "cause": "docs/evaluation/semantic-benchmark/EVALUATION_CANDIDATE.json was frozen on a dirty working tree (cay_lam_viec_sach = false) in 7b39de291",
+          "class": "EVIDENCE_HYGIENE"
+        },
+        {
+          "test": "backend/tests/test_current_state_identity.py::test_cache_version_trong_bang_danh_tinh_khop_nguon",
+          "cause": "the docs/CURRENT_STATE.md identity table still says CACHE_VERSION 152 while backend/app/main.py says 153",
+          "class": "EVIDENCE_HYGIENE"
+        }
+      ],
+      "log": ".superpowers/offline-logs/local-model1-recovery-offline-vision/full-t3-takeover/full-t3.log",
+      "log_sha256": "4c29d1cc7c388d73475307110435a5ea831c609db13279679cff661934f18bb9"
+    }
+  ],
+  "verdict_for_cache153_candidate": "FULL_PRODUCT_GATE_FAIL",
+  "note": "No product logic test failed. The candidate cannot be called T3-green: the gate failed on two evidence-hygiene checks and on an environmental build error. A later candidate must refreeze on a clean tree, update the identity table in the cache commit, and pass T3 again."
+}
