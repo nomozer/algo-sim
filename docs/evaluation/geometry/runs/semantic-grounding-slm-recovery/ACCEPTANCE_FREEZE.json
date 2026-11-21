@@ -1,32 +1,73 @@
 {
   "schema": "axo-run-acceptance-freeze/1",
   "run_id": "semantic-grounding-slm-recovery",
-  "baseline_ref": "613adbd4340e34c3a326f3e445303d85cb48bf2d",
+  "baseline_ref": "3c77b35eec388a67518fd528fc56f6c53ef5948c",
   "frozen_before_any_product_edit": true,
+  "active_set": "holdout-5",
   "artifacts": {
-    "holdout4_manifest": {
-      "path": "holdout-4/ACCEPTANCE_MANIFEST.json",
-      "sha256": "0952949107266c3ca018ba69b164b8bd0a1dbebd0944be8fa4ff3eb08c5859cd"
+    "holdout5_manifest": {
+      "path": "holdout-5/ACCEPTANCE_MANIFEST.json",
+      "sha256": "b3c43bcf3e43dc3733dbff40ecf18b8856d17a5e76fcc5f8abb3c8f23d3527df"
     },
-    "slm_independent_manifest": {
-      "path": "holdout-4/SLM_INDEPENDENT_MANIFEST.json",
-      "sha256": "34dfcfd022cc441763ae7dd585aa59af943582256d951d0f8121674950815446"
+    "slm_independent_2_manifest": {
+      "path": "holdout-5/SLM_INDEPENDENT_MANIFEST.json",
+      "sha256": "c96fc57157f0a61e96cc47864e62ecc38ada519ab4647c381f7bc69fd4da5bec"
     },
     "acceptance_criteria": {
-      "path": "holdout-4/ACCEPTANCE_CRITERIA.json",
-      "sha256": "11aec8906ab1b28f4e2a53a6a2c9f7d8e146ba4fed932cce130703de810a4b71"
+      "path": "holdout-5/ACCEPTANCE_CRITERIA.json",
+      "sha256": "1ead53d66b9e22114ee5ca7d968e08e93c297181d6177d79119b48d971951f78"
     },
     "baseline_freeze": {
-      "path": "holdout-4/ACCEPTANCE_FREEZE.json",
-      "sha256": "cccecca1417f47dedfcb980841d8ac2b75665b4ab92388e88ddca570e51ecfe2"
+      "path": "holdout-5/ACCEPTANCE_FREEZE.json",
+      "sha256": "82cb035dcaedb43e42bafbb485b0e7a0e93ea05329170cced0a32e21c4613e7d"
     },
     "gold_generator": {
-      "path": "holdout-4/build_holdout.py",
-      "sha256": "ffc0ca0e4c2702c3a85a650f9902e4fa3902a19908a3789800467e80aeab1e91"
+      "path": "holdout-5/build_holdout.py",
+      "sha256": "ec7dfc8a26bf88c0ce43ffdd93700b4dd017f7ee16f11aed39800d0a65881340"
     },
     "candidate_freeze": {
-      "path": "holdout-4/CANDIDATE_FREEZE.json",
-      "sha256": "1f7cd1fd01788a1ff5c21bfe259e8bb230b9c35fb1d343356b45e957c18eb410"
+      "path": "holdout-5/CANDIDATE_FREEZE.json",
+      "sha256": "51430daafe3078cd2c7adbf0757889a7fdafc7aa85405e129409fa80c9c02a52"
+    }
+  },
+  "historical_candidate_156_holdout4": {
+    "note": "Candidate 156 (c3e944d7fb7a86380738948d81ac6fdfdb514ed6 / HEAD ee013b8fc) completed single-shot Holdout-4 and SLM-Independent-1 cleanly (64/72 system, 22/30 SLM fallback, 25/30 SLM independent, 0 safety errors), then FAILED Full T3 on 4 backend pytest cases caused by registry.py edits in ae1710c6a & 665764ca3. Per §17/§23, scores were NOT transferred to Candidate 157; all Candidate 156 receipts are preserved in holdout-4/CANDIDATE_156_*.json.",
+    "baseline_ref": "613adbd4340e34c3a326f3e445303d85cb48bf2d",
+    "artifacts": {
+      "holdout4_manifest": {
+        "path": "holdout-4/ACCEPTANCE_MANIFEST.json",
+        "sha256": "0952949107266c3ca018ba69b164b8bd0a1dbebd0944be8fa4ff3eb08c5859cd"
+      },
+      "slm_independent_manifest": {
+        "path": "holdout-4/SLM_INDEPENDENT_MANIFEST.json",
+        "sha256": "34dfcfd022cc441763ae7dd585aa59af943582256d951d0f8121674950815446"
+      },
+      "acceptance_criteria": {
+        "path": "holdout-4/ACCEPTANCE_CRITERIA.json",
+        "sha256": "11aec8906ab1b28f4e2a53a6a2c9f7d8e146ba4fed932cce130703de810a4b71"
+      },
+      "baseline_freeze": {
+        "path": "holdout-4/ACCEPTANCE_FREEZE.json",
+        "sha256": "cccecca1417f47dedfcb980841d8ac2b75665b4ab92388e88ddca570e51ecfe2"
+      },
+      "gold_generator": {
+        "path": "holdout-4/build_holdout.py",
+        "sha256": "ffc0ca0e4c2702c3a85a650f9902e4fa3902a19908a3789800467e80aeab1e91"
+      },
+      "candidate_freeze": {
+        "path": "holdout-4/CANDIDATE_FREEZE.json",
+        "sha256": "1f7cd1fd01788a1ff5c21bfe259e8bb230b9c35fb1d343356b45e957c18eb410"
+      }
+    },
+    "candidate_code": {
+      "head": "280cce79b52b5ba0d06bd73d2a2addc0bfe25889",
+      "branch": "feat/semantic-grounding-slm-recovery",
+      "candidate_commit": "c3e944d7fb7a86380738948d81ac6fdfdb514ed6",
+      "product_commit_sha": "c3e944d7fb7a86380738948d81ac6fdfdb514ed6",
+      "measured_system_tree_hash": "f3f04425378304b34e68a07d43df5d4f5a85c2a04ef90a08b6456c4403dafb4b",
+      "cache_version": "156",
+      "route_d_cache_policy": "156:route-d",
+      "semantic_environment_hash": "f9df4bf0c8bd458a278d2692567fa3e096340ae37ff5493730dff4067c0f5e19"
     }
   },
   "harness": {
@@ -39,22 +80,22 @@
   },
   "exposure": {
     "external_independence": "NOT_MEASURED",
-    "normalized_prior_strings": 29064,
+    "normalized_prior_strings": 29285,
     "training_corpus_included": true,
-    "holdout4_containment_matches": 0,
-    "slm_independent_containment_matches": 0,
+    "holdout5_containment_matches": 0,
+    "slm_independent2_containment_matches": 0,
     "cross_set_overlap_matches": 0,
     "single_shot": true,
     "author_also_fixes_product": true
   },
   "baseline_code": {
-    "head": "613adbd4345ebcc3428fe7541dd977a8b216b9de",
+    "head": "3c77b35eec388a67518fd528fc56f6c53ef5948c",
     "branch": "feat/semantic-grounding-slm-recovery",
-    "candidate_commit": "cd2a21abce499ca82e0500f085bbc63e2934b65c",
-    "product_commit_sha": "cd2a21abce499ca82e0500f085bbc63e2934b65c",
-    "measured_system_tree_hash": "9867d39132faca013ab9865c8e7d29c6cb304bdaad24d9dae503f5ff3e9f6274",
-    "cache_version": "155",
-    "route_d_cache_policy": "155:route-d",
+    "candidate_commit": "c3e944d7fb7a86380738948d81ac6fdfdb514ed6",
+    "product_commit_sha": "c3e944d7fb7a86380738948d81ac6fdfdb514ed6",
+    "measured_system_tree_hash": "f3f04425378304b34e68a07d43df5d4f5a85c2a04ef90a08b6456c4403dafb4b",
+    "cache_version": "156",
+    "route_d_cache_policy": "156:route-d",
     "semantic_environment_hash": "f9df4bf0c8bd458a278d2692567fa3e096340ae37ff5493730dff4067c0f5e19",
     "parser_version": "local-geometry-parser/3",
     "slm_extractor_version": "local-slm-extractor/6",
@@ -68,8 +109,8 @@
   "baseline_counts": {
     "valid_total": 72,
     "in_scope": 72,
-    "parser_complete": 34,
-    "slm_required": 38,
+    "parser_complete": 42,
+    "slm_required": 30,
     "preregistered_slm_targets": 12,
     "preregistered_slm_targets_in_slm_required": 12,
     "separate": 0,
@@ -80,13 +121,13 @@
     "negative": 10
   },
   "candidate_code": {
-    "head": "280cce79b52b5ba0d06bd73d2a2addc0bfe25889",
+    "head": "39c95599e9ddc2efc7cc3455ae2505384af63e21",
     "branch": "feat/semantic-grounding-slm-recovery",
-    "candidate_commit": "c3e944d7fb7a86380738948d81ac6fdfdb514ed6",
-    "product_commit_sha": "c3e944d7fb7a86380738948d81ac6fdfdb514ed6",
-    "measured_system_tree_hash": "f3f04425378304b34e68a07d43df5d4f5a85c2a04ef90a08b6456c4403dafb4b",
-    "cache_version": "156",
-    "route_d_cache_policy": "156:route-d",
+    "candidate_commit": "4c1b94b61cdd8b1747059829a9d487b1749e1383",
+    "product_commit_sha": "4c1b94b61cdd8b1747059829a9d487b1749e1383",
+    "measured_system_tree_hash": "3152f3829fbe4744baa298b0ee147648cd1cb666103baabcb1497cb9ffb525d5",
+    "cache_version": "157",
+    "route_d_cache_policy": "157:route-d",
     "semantic_environment_hash": "f9df4bf0c8bd458a278d2692567fa3e096340ae37ff5493730dff4067c0f5e19",
     "parser_version": "local-geometry-parser/3",
     "slm_extractor_version": "local-slm-extractor/6",
