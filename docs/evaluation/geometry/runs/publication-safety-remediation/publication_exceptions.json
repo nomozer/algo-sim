@@ -484,7 +484,7 @@
    },
    "proposal": "docs/evaluation/geometry/runs/model1-final-acceptance-premerge/PUBLICATION_EXCEPTION_PROPOSAL.json",
    "owner_go": "AXO_HYBRID_20 D4 (2026-11-22): the approval value is written by the Owner, not by the agent.",
-   "owner_decision": "PENDING_OWNER_DECISION"
+   "owner_decision": "APPROVED_BY_USER"
   },
   {
    "path": "docs/evaluation/geometry/runs/axo-hybrid-compositional-geometry-language-grounded-simulation/tools/v12_ui_scenarios.mjs",
@@ -511,7 +511,7 @@
    },
    "proposal": "docs/evaluation/geometry/runs/model1-final-acceptance-premerge/PUBLICATION_EXCEPTION_PROPOSAL.json",
    "owner_go": "AXO_HYBRID_20 D4 (2026-11-22): the approval value is written by the Owner, not by the agent.",
-   "owner_decision": "PENDING_OWNER_DECISION"
+   "owner_decision": "APPROVED_BY_USER"
   },
   {
    "path": "docs/evaluation/geometry/runs/axo-hybrid-local-only-3d-simulation-live-acceptance-cutover/tools/live_browser_acceptance.mjs",
@@ -538,7 +538,7 @@
    },
    "proposal": "docs/evaluation/geometry/runs/model1-final-acceptance-premerge/PUBLICATION_EXCEPTION_PROPOSAL.json",
    "owner_go": "AXO_HYBRID_20 D4 (2026-11-22): the approval value is written by the Owner, not by the agent.",
-   "owner_decision": "PENDING_OWNER_DECISION"
+   "owner_decision": "APPROVED_BY_USER"
   },
   {
    "path": "docs/evaluation/geometry/runs/axo-hybrid-local-only-3d-simulation-live-acceptance-cutover/tools/ui_runtime_scenarios.mjs",
@@ -565,7 +565,7 @@
    },
    "proposal": "docs/evaluation/geometry/runs/model1-final-acceptance-premerge/PUBLICATION_EXCEPTION_PROPOSAL.json",
    "owner_go": "AXO_HYBRID_20 D4 (2026-11-22): the approval value is written by the Owner, not by the agent.",
-   "owner_decision": "PENDING_OWNER_DECISION"
+   "owner_decision": "APPROVED_BY_USER"
   },
   {
    "path": "docs/evaluation/geometry/runs/axo-hybrid-simulation-intent-generalization-grounded-slm-recovery/tools/live_browser_acceptance.mjs",
@@ -592,7 +592,7 @@
    },
    "proposal": "docs/evaluation/geometry/runs/model1-final-acceptance-premerge/PUBLICATION_EXCEPTION_PROPOSAL.json",
    "owner_go": "AXO_HYBRID_20 D4 (2026-11-22): the approval value is written by the Owner, not by the agent.",
-   "owner_decision": "PENDING_OWNER_DECISION"
+   "owner_decision": "APPROVED_BY_USER"
   },
   {
    "path": "docs/evaluation/geometry/runs/axo-hybrid-simulation-intent-generalization-grounded-slm-recovery/tools/ui_runtime_scenarios.mjs",
@@ -619,7 +619,7 @@
    },
    "proposal": "docs/evaluation/geometry/runs/model1-final-acceptance-premerge/PUBLICATION_EXCEPTION_PROPOSAL.json",
    "owner_go": "AXO_HYBRID_20 D4 (2026-11-22): the approval value is written by the Owner, not by the agent.",
-   "owner_decision": "PENDING_OWNER_DECISION"
+   "owner_decision": "APPROVED_BY_USER"
   },
   {
    "path": "docs/evaluation/geometry/runs/axo-hybrid-simulation-intent-generalization-grounded-slm-recovery/tools/v11_ui_scenarios.mjs",
@@ -646,7 +646,7 @@
    },
    "proposal": "docs/evaluation/geometry/runs/model1-final-acceptance-premerge/PUBLICATION_EXCEPTION_PROPOSAL.json",
    "owner_go": "AXO_HYBRID_20 D4 (2026-11-22): the approval value is written by the Owner, not by the agent.",
-   "owner_decision": "PENDING_OWNER_DECISION"
+   "owner_decision": "APPROVED_BY_USER"
   },
   {
    "path": "docs/evaluation/geometry/runs/axo-hybrid-simulation-intent-generalization-grounded-slm-recovery/tools/v11_ui_scenarios.mjs",
@@ -673,7 +673,7 @@
    },
    "proposal": "docs/evaluation/geometry/runs/model1-final-acceptance-premerge/PUBLICATION_EXCEPTION_PROPOSAL.json",
    "owner_go": "AXO_HYBRID_20 D4 (2026-11-22): the approval value is written by the Owner, not by the agent.",
-   "owner_decision": "PENDING_OWNER_DECISION"
+   "owner_decision": "APPROVED_BY_USER"
   },
   {
    "path": "docs/evaluation/geometry/runs/axo-hybrid-simulation-intent-generalization-grounded-slm-recovery/tools/v11_ui_scenarios.mjs",
@@ -700,7 +700,7 @@
    },
    "proposal": "docs/evaluation/geometry/runs/model1-final-acceptance-premerge/PUBLICATION_EXCEPTION_PROPOSAL.json",
    "owner_go": "AXO_HYBRID_20 D4 (2026-11-22): the approval value is written by the Owner, not by the agent.",
-   "owner_decision": "PENDING_OWNER_DECISION"
+   "owner_decision": "APPROVED_BY_USER"
   },
   {
    "path": "docs/evaluation/geometry/runs/axo-hybrid-simulation-intent-generalization-grounded-slm-recovery/tools/v17_pointer_probe.mjs",
@@ -728,7 +728,7 @@
    },
    "proposal": "docs/evaluation/geometry/runs/model1-final-acceptance-premerge/PUBLICATION_EXCEPTION_PROPOSAL.json",
    "owner_go": "AXO_HYBRID_20 D4 (2026-11-22): the approval value is written by the Owner, not by the agent.",
-   "owner_decision": "PENDING_OWNER_DECISION"
+   "owner_decision": "APPROVED_BY_USER"
   },
   {
    "path": "docs/evaluation/geometry/runs/semantic-to-scene3d-verified-simulation/tools/browser_simulation_e2e.mjs",
@@ -755,7 +755,7 @@
    },
    "proposal": "docs/evaluation/geometry/runs/model1-final-acceptance-premerge/PUBLICATION_EXCEPTION_PROPOSAL.json",
    "owner_go": "AXO_HYBRID_20 D4 (2026-11-22): the approval value is written by the Owner, not by the agent.",
-   "owner_decision": "PENDING_OWNER_DECISION"
+   "owner_decision": "APPROVED_BY_USER"
   }
  ]
 }

@@ -1,0 +1,75 @@
+{
+ "schema": "axo-live-pair-diagnosis-preregistration/1",
+ "run_id": "final-direct-merge-two-session-bootstrap",
+ "date": "2026-11-22",
+ "owner_authorization": "AXO HYBRID /20 D7 follow-up: Owner chose 'Paired diagnosis' (L4+L5 on main and on the branch = 4 Gemini requests from the 7 left of the 12-request smoke budget)",
+ "trigger": "LIVE_SMOKE_RESULT.json verdict INCONCLUSIVE (L4, L5 SAFE_REFUSAL INVALID_TYPED_FACT_NEXT)",
+ "checkouts": {
+  "main": {
+   "commit": "bc6ff5e333e32d1d53dc7435fba64fe12b6dd651",
+   "worktree": ".superpowers/worktrees/live-diag-main (clean, detached)"
+  },
+  "branch": {
+   "commit": "b42119528fc6f2e445f23b80fb3159fac84c9dec",
+   "product_identical_to": "2bb0211a1057c5d2a503f8a1f19e96cf84decff5",
+   "worktree": ".superpowers/worktrees/live-smoke-c158 (clean, detached)"
+  }
+ },
+ "offline_precheck": {
+  "finding": "build_typed_fact_next_v2_request(L4/L5) is byte-identical on main and branch: request sha16 L4 9a6ecd5ddc97ff95, L5 9781c34b6a098aca; responseSchema 9dd846b9f4c7aee0; systemInstruction 8aca4583a7b8a0cb; generationConfig 49b0b36a0a3384c7",
+  "consequence": "any live difference comes from provider variance or from the branch's post-provider pipeline; cross-replay separates the two"
+ },
+ "MEASUREMENT_CLASS": "LIVE_PROVIDER_DIAGNOSIS (attribution, not accuracy)",
+ "HELD_OUT_CLAIM": "NONE",
+ "EVALUATOR_INDEPENDENCE": "NONE (agent-built; oracle = frozen deterministic replay answers)",
+ "budget": {
+  "max_gemini_http_requests_per_checkout": 2,
+  "max_gemini_http_requests_total": 4,
+  "order": [
+   "main: L4, L5",
+   "branch: L4, L5"
+  ],
+  "enforcement": "in-process ApiBudget(max_api_calls=2) per process; a transient retry consumes the cap and is never extended",
+  "smoke_budget_used_before": 5,
+  "smoke_budget_total": 12
+ },
+ "capture": {
+  "what": "the dict TransportExtractor.extract returns (exact validation input; derived from public test text)",
+  "where": "D:/tmp/axo20 (outside the repo); only hashes + classification are committed",
+  "never": "API key, headers, raw HTTP bodies"
+ },
+ "cross_replay": "every captured payload is replayed offline (0 calls) through BOTH checkouts' run_hybrid_offline",
+ "decision_rule": {
+  "REGRESSION": "some captured payload is SERVED with the oracle answer by main's pipeline but not SERVED by the branch's pipeline; OR the branch pipeline serves a non-oracle answer; OR any HTTP 500/crash on the branch => STOP, no merge",
+  "NO_REGRESSION": "for every captured payload, branch SERVED-with-oracle whenever main SERVED-with-oracle, and 0 HTTP 500/crash/wrong answer on the branch => the merge proceeds",
+  "INCONCLUSIVE": "fewer than 2 payloads captured on either checkout (infra/budget), or a payload main serves with a NON-oracle answer => STOP, Owner decides"
+ },
+ "no_rerun": true,
+ "cases": [
+  {
+   "id": "L4",
+   "corpus": "v2_nl_cert_line_plane",
+   "corpus_path": "docs/evaluation/geometry/runs/hybrid-v2-nl-certificates-e2e/inputs/line-plane-distance/local-replay-corpus.json",
+   "text_sha16": "777c73abb2bfc7d6",
+   "text": "Cho lăng trụ đứng ABC.A'B'C'. Đáy ABC là tam giác vuông tại A. AB = 6. AC = 8. AA' = 12. Tính khoảng cách giữa hai mặt phẳng (ABC) và (A'B'C').",
+   "expected": "SERVED",
+   "expected_answer_values": [
+    "12"
+   ],
+   "oracle": "deterministic replay of the recorded Gemini payload on main bc6ff5e33 AND candidate 158 (identical), /19 compat run"
+  },
+  {
+   "id": "L5",
+   "corpus": "scene3d_v2_replacement",
+   "corpus_path": "docs/evaluation/geometry/runs/scene3d-to-hybrid-v2-replacement/local-replay-corpus.json",
+   "text_sha16": "63e4b490b5466159",
+   "text": "Cho hình chóp S.ABCD. Đáy ABCD là hình vuông cạnh a. SA vuông góc với mặt phẳng (ABC). SA = a. Gọi M là trung điểm của SA. Gọi (α) là mặt phẳng qua M và song song với (ABC); (α) cắt SA, SB, SC, SD lần lượt tại M, N, P, Q. Dựng thiết diện của hình chóp S.ABCD bởi (α). Tính tỉ số thể tích của hai khối chóp S.MNPQ và S.ABCD. Tính thể tích phần còn lại của khối chóp S.ABCD sau khi cắt bỏ khối chóp S.MNPQ.",
+   "expected": "SERVED",
+   "expected_answer_values": [
+    "1/8",
+    "7a³/24"
+   ],
+   "oracle": "deterministic replay of the recorded Gemini payload on main bc6ff5e33 AND candidate 158 (identical), /19 compat run"
+  }
+ ]
+}
