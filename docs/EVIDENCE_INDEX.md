@@ -1,3 +1,18 @@
+## WAVE_ID = AXO_HYBRID_LOCAL_MODEL1_RECOVERY_OFFLINE_VISION
+
+- `RUN_ID` = local-model1-recovery-offline-vision
+- `REPORT` = docs/evaluation/geometry/runs/local-model1-recovery-offline-vision/report.md
+- `ARTIFACT_DIRECTORY` = docs/evaluation/geometry/runs/local-model1-recovery-offline-vision/
+- `START_BASE` = fd53c26ab
+- `CODE_COMMIT` = df31847d3 (Codex, CACHE_VERSION 153) · 5c65f795e (takeover, CACHE_VERSION 154; candidate refreeze 11fb74fae, `7988f838…`, 127 files)
+- `CLASSIFICATION` = POST_EXPOSURE_LIVE_REGRESSION + LOCAL_OCR_INPUT_VALIDATION + NEW_PROSPECTIVE_ACCEPTANCE_SCORE
+- `PRODUCT_CHANGE` = YES (`local_geometry_parser.py` `normalize_problem_text`, `registry.py` closed clause / question-tail grammar, `main.py` `CACHE_VERSION 154`; default `HYBRID_ROUTE_MODE = live` preserved)
+- `MODEL_REQUEST_COUNT` = 0 cloud; local `Qwen3-0.6B-AxoV9-Q4_K_M` (`73f1484b…`) only
+- `CORRECTS` = AXO_HYBRID_LOCAL_MODEL1_FINALIZATION_TEST_CONSOLIDATION (exact Gram-area check for H057/H069 and live coverage of the post-T3 candidate; 79/100 registered and 81/100 audited are preserved)
+- `CORRECTED_BY` = NONE
+- `VERIFICATION` = POST_EXPOSURE_LIVE_REGRESSION.json (CACHE 152); ACCEPTANCE_FREEZE.json / CANDIDATE_FREEZE.json (Holdout-1); LIVE_ACCEPTANCE_RESULTS.json and OFFLINE_VISION_VALIDATION.json (CACHE 153); FULL_T3_CACHE153_RECEIPT.json (FAIL: interrupted, then evidence hygiene + environmental build); FIRST_FAILING_LAYER_AUDIT.json; holdout-2/ (PROVENANCE, MANIFEST, CRITERIA, ACCEPTANCE_FREEZE, CANDIDATE_FREEZE, LIVE_ACCEPTANCE_RESULTS); LIVE_REGRESSION_HOLDOUT1_CACHE154.json; FULL_T3_CACHE154_RECEIPT.json (PASS); run.json
+- `LIMITATIONS` = Holdout-2 prospective `29/38 = 0.763` (< 0.85), SLM `2/10`; Holdout-1 regression `4/28` (exposed); agent-authored sets written after the CACHE 153 diagnosis (`holdout-2/PROVENANCE.json`); I02, I05, J03 images lack the `⊥`/`⟂` glyph; `LIVE_SIMULATION_ACCEPTED = FALSE`; `MAIN_MERGE_READY = FALSE`; `EXTERNAL_INDEPENDENCE / GEMINI_PARITY / PHYSICAL_TARGET_HARDWARE = NOT_MEASURED`.
+
 ## WAVE_ID = AXO_HYBRID_LOCAL_MODEL1_FINALIZATION_TEST_CONSOLIDATION
 
 - `RUN_ID` = axo-hybrid-local-model1-finalization-test-consolidation
@@ -10,7 +25,7 @@
 - `MODEL_REQUEST_COUNT` = 0 cloud; local `Qwen3-0.6B-AxoV9-Q4_K_M` (`73f1484b…`) only
 - `VERIFICATION` = SHARED_LIVE_HARNESS_VALIDATION.json; TEST_INFRASTRUCTURE_CONSOLIDATION.md; ACCEPTANCE_MANIFEST.json (`529ba6b3…`, `0/27,832` overlaps); ACCEPTANCE_CRITERIA.json (`b8f88fb1…`); EVALUATION_FREEZE.json; ACCEPTANCE_FREEZE.json; CANDIDATE_FREEZE.json (`f58a9f1f8`); MODEL1_RESIDUAL_FAILURE_AUDIT.json & .md (`15/17` served); MODEL1_REPLACEMENT_AUDIT.json & .md (`test_model1_replacement_audit.py`); pass1_http409_idempotency_bug/ (`79/140` HTTP 409 archived); LIVE_ACCEPTANCE_RESULTS.json (`79/100 = 0.7900` raw / `81/100 = 0.8100` audited, `0` true wrong/numeric/grounding/relation errors, `28/28` safe refusals, `6/6` similarity, `0/6` underdetermined served + `4/6` clarification); SCENE_ORACLE_VERIFICATION.json (`87/87 MATHEMATICALLY_VALID`); SLM_LIVE_CONTRIBUTION_AUDIT.json (`7/25 = 0.2800` live `LOCAL_SLM_GROUNDED`, `+11` det rescues); VISUAL_AND_INTERACTION_ACCEPTANCE.json (`87/87` initial visual `min_ink = 0.8315` & interaction, `10/10` UI scenarios); NETWORK_ISOLATION_PROOF.json (`0` external/proxy/TCP); PERFORMANCE_BENCHMARK.json; `fixtures-hybrid-preview-v152/`; `npm run test:full` on `82b3e8cc3` (`FULL_PRODUCT_GATE_PASS` `930.0s`: `15,049` pytest + `203/2,345` vitest + build + demo `5/5+1/1` + crash `6/6`); AXO_HYBRID_V13_FINAL_REPORT.md; run.json
 - `CORRECTS` = NONE
-- `CORRECTED_BY` = NONE
+- `CORRECTED_BY` = AXO_HYBRID_LOCAL_MODEL1_RECOVERY_OFFLINE_VISION
 - `LIMITATIONS` = author-constructed holdout (`EXTERNAL_INDEPENDENCE = NOT_MEASURED`); Pass 2 classification is `POST_EXPOSURE_AFTER_FRONTEND_IDEMPOTENCY_409_FIX` after fixing `ProblemInput.tsx` HTTP `409` reuse (`932376b6a`, `0` backend/Model 1 changes); Pass 2 evidence (`f3b4b56e8`) stays bound to `candidate` (`932376b6a`/`f58a9f1f8`, `CACHE 151`) while `npm run test:full` verified `candidate_refreeze_t3` (`3c717eb9f`/`82b3e8cc3`, `CACHE 152`); raw `79/100` (`81/100` audited after proving `H057` & `H069` hit `/12`-derived `_m_area_tri` missing `sqrt(det G)` = `32`/`24`) stays `< 0.85` (`LIVE_SIMULATION_ACCEPTED = FALSE`); `SLM_VERIFIED_SCENE_RATE = 7/25 = 0.2800 < 0.30` and raster image/scan OCR remains `503 LOCAL_ONLY_CLOUD_VISION_DISABLED` (`LOCAL_MODEL1_REPLACEMENT_VERIFIED = FALSE`); `SCOPED_CUTOVER_COMPLETED = FALSE`; `INDEPENDENT_H1_VALIDATION / PHYSICAL_TARGET_HARDWARE_4_8_GIB / GEMINI_PARITY / REAL_STUDENT_USABILITY = NOT_MEASURED`.
 
 ## WAVE_ID = AXO_HYBRID_COMPOSITIONAL_GEOMETRY_LANGUAGE_GROUNDED_SIMULATION
