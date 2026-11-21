@@ -1,0 +1,18 @@
+{
+  "schema": "axo-holdout-provenance/1",
+  "set": "holdout-2",
+  "author": "takeover agent (Claude), 2026-11-21; agent-authored, external independence NOT_MEASURED",
+  "written_after": "the case-level diagnosis of Holdout-1 on CACHE 153 (its texts, refusal codes and SLM envelopes were read)",
+  "written_before": "any takeover product edit; the baseline freeze ran on the unchanged product df31847d (HEAD 25ead716c)",
+  "builder_hash_record": {
+    "builder_sha256_lf": "201e4f0458e0fae76fc005ab8dd156dada0bf059ea3472ac7cca4b7729ee0549",
+    "recorded_at": "2026-11-21T09:11:59+07:00",
+    "recorded_where": "D:/tmp/holdout2-precommit-record.json, while Full T3 on df31847d was running"
+  },
+  "disclosed_probes_before_record": [
+    "the deterministic route on 4 sentences about S.ABCD with the symbols ⊥ / ⟂ / 'vuông góc với' (shows U+27C2 is unread)",
+    "the deterministic route on 5 fresh-label sentences (tứ diện PQRS, chóp M.NPQR) for question-first phrasing: 'Tính … trong tứ diện …' and 'Tính thể tích khối chóp … biết …'",
+    "Holdout-2 itself was not run before the baseline freeze"
+  ],
+  "consequence": "Holdout-2 is prospective for the takeover fixes but not blind to the phrase families named above; B06 (⟂), B25 (question-first with 'biết') and B16-type triangle questions belong to those families and are reported as such."
+}
