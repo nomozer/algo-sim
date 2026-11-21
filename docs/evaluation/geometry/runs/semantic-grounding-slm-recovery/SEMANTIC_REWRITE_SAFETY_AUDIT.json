@@ -1,0 +1,1420 @@
+{
+  "schema": "axo-semantic-rewrite-safety-audit/1",
+  "run_id": "semantic-grounding-slm-recovery",
+  "normalizer_version": "slm-verified-normalizer/3",
+  "total_rules_audited": 94,
+  "summary_counts": {
+    "SAFE_EQUIVALENT": 5,
+    "GUARDED_EQUIVALENT": 89,
+    "RESTRICTED": 0,
+    "REMOVED": 0
+  },
+  "defense_in_depth_layers": {
+    "layer1_rewrite_contract": {
+      "module": "backend/app/ai/slm_verified_normalizer.py",
+      "invariants": [
+        "polarity_invariance (sentence-wide negation, conditional, dynamic variable, yes/no question, proof goal)",
+        "entity_conservation (no hallucinated vertex/solid labels outside original context or explicit Gọi <X> derived point)",
+        "quantity_conservation (numeric/symbolic quantities in replacement conserved from original excerpt)",
+        "unique_solid_precondition (enforced on VN04_NHAN_IMPLICIT_BASE, VN06_IMPLICIT_*, VN07_IMPLICIT_*, VN12_EDGES_FROM_VERTEX_PAIRWISE_PERP, VN13_PYRAMID_HEIGHT_WITH_FOOT, VN16_BARE_SIMULATION_REQUEST)"
+      ],
+      "benign_exception": "(không|chưa|đừng|chớ) cần tính (toán)/tìm/giải stripped prior to negation detection so simulation-only tails do not false-trigger"
+    },
+    "layer2_source_gate": {
+      "module": "backend/app/simulation/geometry_functions/registry.py",
+      "hardened_checks": [
+        "_KHONG_KHANG_DINH: không đúng (là|rằng)?, không phải (cả|mọi|tất cả), sai khi nói/cho rằng, đừng, chớ",
+        "_PHU_DINH_MENH_DE in _phu_dinh: matrix negation across commas on de[ca:vt]",
+        "_HOI_QUAN_HE and _CO_KHONG: liệu yes/no interrogative marker",
+        "_kiem_mat_chung: reject distinct multi-solid declarations when len(khoi_calls) < 2 (SOURCE_OBJECT_MISMATCH)"
+      ]
+    },
+    "original_source_cross_check": {
+      "module": "backend/app/ai/adaptive_input_router.py",
+      "function": "_verify_canonical_against_original_source",
+      "enforces": [
+        "reject LOCAL_V3_ORIGINAL_SOURCE_REJECTED if any non-typography rewrite touched an unsafe original sentence",
+        "reject if any served LOCAL_PARSER_AFTER_V3_NORMALIZER premise quote maps back to an unsafe original sentence",
+        "never escalate target_solid_disambiguation LOCAL_PARSE_AMBIGUOUS to SLM"
+      ]
+    }
+  },
+  "verification": {
+    "pytest_command": "pytest tests/geometry/test_slm_v9_language_closure_and_security.py tests/geometry/test_source_gate_clause_role.py -q",
+    "passed": 110,
+    "failed": 0,
+    "metamorphic_pairs_tested": 13
+  },
+  "rules": {
+    "VN01_DEG_WORD": {
+      "classification": "SAFE_EQUIVALENT",
+      "allowed_fact_kinds": [
+        "angle_unit"
+      ],
+      "forbidden_fact_kinds": []
+    },
+    "VN01_PARENS": {
+      "classification": "SAFE_EQUIVALENT",
+      "allowed_fact_kinds": [
+        "typography"
+      ],
+      "forbidden_fact_kinds": []
+    },
+    "VN01_PUNCT_SPACE": {
+      "classification": "SAFE_EQUIVALENT",
+      "allowed_fact_kinds": [
+        "typography"
+      ],
+      "forbidden_fact_kinds": []
+    },
+    "VN01_SOLID_DOT_SPACE": {
+      "classification": "SAFE_EQUIVALENT",
+      "allowed_fact_kinds": [
+        "solid_notation"
+      ],
+      "forbidden_fact_kinds": []
+    },
+    "VN02_CASE_OPENER": {
+      "classification": "GUARDED_EQUIVALENT",
+      "allowed_fact_kinds": [
+        "conversational_opener"
+      ],
+      "forbidden_fact_kinds": [
+        "conditional",
+        "negated",
+        "yes_no_question",
+        "proof_goal",
+        "multi_solid_ambiguous"
+      ],
+      "requires_polarity_guard": true,
+      "requires_unique_solid": false
+    },
+    "VN02_CONV_PREFIX": {
+      "classification": "GUARDED_EQUIVALENT",
+      "allowed_fact_kinds": [
+        "conversational_opener"
+      ],
+      "forbidden_fact_kinds": [
+        "conditional",
+        "negated",
+        "yes_no_question",
+        "proof_goal",
+        "multi_solid_ambiguous"
+      ],
+      "requires_polarity_guard": true,
+      "requires_unique_solid": false
+    },
+    "VN02_DEDUP_OPENER": {
+      "classification": "GUARDED_EQUIVALENT",
+      "allowed_fact_kinds": [
+        "conversational_opener"
+      ],
+      "forbidden_fact_kinds": [
+        "conditional",
+        "negated",
+        "yes_no_question",
+        "proof_goal",
+        "multi_solid_ambiguous"
+      ],
+      "requires_polarity_guard": true,
+      "requires_unique_solid": false
+    },
+    "VN02_THUA_THAY_OPENER": {
+      "classification": "GUARDED_EQUIVALENT",
+      "allowed_fact_kinds": [
+        "conversational_opener"
+      ],
+      "forbidden_fact_kinds": [
+        "conditional",
+        "negated",
+        "yes_no_question",
+        "proof_goal",
+        "multi_solid_ambiguous"
+      ],
+      "requires_polarity_guard": true,
+      "requires_unique_solid": false
+    },
+    "VN03_BARE_CHOP": {
+      "classification": "GUARDED_EQUIVALENT",
+      "allowed_fact_kinds": [
+        "solid_declaration"
+      ],
+      "forbidden_fact_kinds": [
+        "conditional",
+        "negated",
+        "yes_no_question",
+        "proof_goal",
+        "multi_solid_ambiguous"
+      ],
+      "requires_polarity_guard": true,
+      "requires_unique_solid": false
+    },
+    "VN03_BARE_PRISM": {
+      "classification": "GUARDED_EQUIVALENT",
+      "allowed_fact_kinds": [
+        "solid_declaration"
+      ],
+      "forbidden_fact_kinds": [
+        "conditional",
+        "negated",
+        "yes_no_question",
+        "proof_goal",
+        "multi_solid_ambiguous"
+      ],
+      "requires_polarity_guard": true,
+      "requires_unique_solid": false
+    },
+    "VN03_SOLID_COMMA_DAY": {
+      "classification": "GUARDED_EQUIVALENT",
+      "allowed_fact_kinds": [
+        "base_polygon"
+      ],
+      "forbidden_fact_kinds": [
+        "conditional",
+        "negated",
+        "yes_no_question",
+        "proof_goal",
+        "multi_solid_ambiguous"
+      ],
+      "requires_polarity_guard": true,
+      "requires_unique_solid": false
+    },
+    "VN03_TRONG_XET": {
+      "classification": "GUARDED_EQUIVALENT",
+      "allowed_fact_kinds": [
+        "solid_declaration"
+      ],
+      "forbidden_fact_kinds": [
+        "conditional",
+        "negated",
+        "yes_no_question",
+        "proof_goal",
+        "multi_solid_ambiguous"
+      ],
+      "requires_polarity_guard": true,
+      "requires_unique_solid": false
+    },
+    "VN03_XET_TU_DIEN": {
+      "classification": "GUARDED_EQUIVALENT",
+      "allowed_fact_kinds": [
+        "solid_declaration"
+      ],
+      "forbidden_fact_kinds": [
+        "conditional",
+        "negated",
+        "yes_no_question",
+        "proof_goal",
+        "multi_solid_ambiguous"
+      ],
+      "requires_polarity_guard": true,
+      "requires_unique_solid": false
+    },
+    "VN04_DAY_DEU_CANH": {
+      "classification": "GUARDED_EQUIVALENT",
+      "allowed_fact_kinds": [
+        "base_polygon"
+      ],
+      "forbidden_fact_kinds": [
+        "conditional",
+        "negated",
+        "yes_no_question",
+        "proof_goal",
+        "multi_solid_ambiguous"
+      ],
+      "requires_polarity_guard": true,
+      "requires_unique_solid": false
+    },
+    "VN04_MAT_DAY_DO_DAI": {
+      "classification": "GUARDED_EQUIVALENT",
+      "allowed_fact_kinds": [
+        "base_edges"
+      ],
+      "forbidden_fact_kinds": [
+        "conditional",
+        "negated",
+        "yes_no_question",
+        "proof_goal",
+        "multi_solid_ambiguous"
+      ],
+      "requires_polarity_guard": true,
+      "requires_unique_solid": false
+    },
+    "VN04_NHAN_IMPLICIT_BASE": {
+      "classification": "GUARDED_EQUIVALENT",
+      "allowed_fact_kinds": [
+        "base_polygon"
+      ],
+      "forbidden_fact_kinds": [
+        "conditional",
+        "negated",
+        "yes_no_question",
+        "proof_goal",
+        "multi_solid_ambiguous"
+      ],
+      "requires_polarity_guard": true,
+      "requires_unique_solid": true
+    },
+    "VN04_NHAN_POLY_SHAPE": {
+      "classification": "GUARDED_EQUIVALENT",
+      "allowed_fact_kinds": [
+        "base_polygon"
+      ],
+      "forbidden_fact_kinds": [
+        "conditional",
+        "negated",
+        "yes_no_question",
+        "proof_goal",
+        "multi_solid_ambiguous"
+      ],
+      "requires_polarity_guard": true,
+      "requires_unique_solid": false
+    },
+    "VN04_NHAN_SHAPE_POLY_DAY": {
+      "classification": "GUARDED_EQUIVALENT",
+      "allowed_fact_kinds": [
+        "base_polygon"
+      ],
+      "forbidden_fact_kinds": [
+        "conditional",
+        "negated",
+        "yes_no_question",
+        "proof_goal",
+        "multi_solid_ambiguous"
+      ],
+      "requires_polarity_guard": true,
+      "requires_unique_solid": false
+    },
+    "VN04_REG_PYR_BASE": {
+      "classification": "GUARDED_EQUIVALENT",
+      "allowed_fact_kinds": [
+        "base_edges"
+      ],
+      "forbidden_fact_kinds": [
+        "conditional",
+        "negated",
+        "yes_no_question",
+        "proof_goal",
+        "multi_solid_ambiguous"
+      ],
+      "requires_polarity_guard": true,
+      "requires_unique_solid": false
+    },
+    "VN04_SOLID_BASE_MISSING_DAY_WORD": {
+      "classification": "GUARDED_EQUIVALENT",
+      "allowed_fact_kinds": [
+        "base_polygon"
+      ],
+      "forbidden_fact_kinds": [
+        "conditional",
+        "negated",
+        "yes_no_question",
+        "proof_goal",
+        "multi_solid_ambiguous"
+      ],
+      "requires_polarity_guard": true,
+      "requires_unique_solid": false
+    },
+    "VN05_ALL_LATERAL": {
+      "classification": "GUARDED_EQUIVALENT",
+      "allowed_fact_kinds": [
+        "lateral_edges"
+      ],
+      "forbidden_fact_kinds": [
+        "conditional",
+        "negated",
+        "yes_no_question",
+        "proof_goal",
+        "multi_solid_ambiguous"
+      ],
+      "requires_polarity_guard": true,
+      "requires_unique_solid": false
+    },
+    "VN05_BIET_CENTROID": {
+      "classification": "GUARDED_EQUIVALENT",
+      "allowed_fact_kinds": [
+        "local_entity"
+      ],
+      "forbidden_fact_kinds": [
+        "conditional",
+        "negated",
+        "yes_no_question",
+        "proof_goal",
+        "multi_solid_ambiguous"
+      ],
+      "requires_polarity_guard": true,
+      "requires_unique_solid": false
+    },
+    "VN05_CHIEU_CAO_PRISM": {
+      "classification": "GUARDED_EQUIVALENT",
+      "allowed_fact_kinds": [
+        "prism_height"
+      ],
+      "forbidden_fact_kinds": [
+        "conditional",
+        "negated",
+        "yes_no_question",
+        "proof_goal",
+        "multi_solid_ambiguous"
+      ],
+      "requires_polarity_guard": true,
+      "requires_unique_solid": false
+    },
+    "VN05_CON_THI": {
+      "classification": "GUARDED_EQUIVALENT",
+      "allowed_fact_kinds": [
+        "contrastive_fact"
+      ],
+      "forbidden_fact_kinds": [
+        "conditional",
+        "negated",
+        "yes_no_question",
+        "proof_goal",
+        "multi_solid_ambiguous"
+      ],
+      "requires_polarity_guard": true,
+      "requires_unique_solid": false
+    },
+    "VN05_DAT_MID": {
+      "classification": "GUARDED_EQUIVALENT",
+      "allowed_fact_kinds": [
+        "local_entity"
+      ],
+      "forbidden_fact_kinds": [
+        "conditional",
+        "negated",
+        "yes_no_question",
+        "proof_goal",
+        "multi_solid_ambiguous"
+      ],
+      "requires_polarity_guard": true,
+      "requires_unique_solid": false
+    },
+    "VN05_DONG_THOI": {
+      "classification": "GUARDED_EQUIVALENT",
+      "allowed_fact_kinds": [
+        "clause_connector"
+      ],
+      "forbidden_fact_kinds": [
+        "conditional",
+        "negated",
+        "yes_no_question",
+        "proof_goal",
+        "multi_solid_ambiguous"
+      ],
+      "requires_polarity_guard": true,
+      "requires_unique_solid": false
+    },
+    "VN05_DO_DAI_SEG_BANG": {
+      "classification": "GUARDED_EQUIVALENT",
+      "allowed_fact_kinds": [
+        "local_entity"
+      ],
+      "forbidden_fact_kinds": [
+        "conditional",
+        "negated",
+        "yes_no_question",
+        "proof_goal",
+        "multi_solid_ambiguous"
+      ],
+      "requires_polarity_guard": true,
+      "requires_unique_solid": false
+    },
+    "VN05_DO_DUOC": {
+      "classification": "GUARDED_EQUIVALENT",
+      "allowed_fact_kinds": [
+        "local_clause"
+      ],
+      "forbidden_fact_kinds": [
+        "conditional",
+        "negated",
+        "yes_no_question",
+        "proof_goal",
+        "multi_solid_ambiguous"
+      ],
+      "requires_polarity_guard": true,
+      "requires_unique_solid": false
+    },
+    "VN05_DUONG_CAO_VDI": {
+      "classification": "GUARDED_EQUIVALENT",
+      "allowed_fact_kinds": [
+        "local_entity"
+      ],
+      "forbidden_fact_kinds": [
+        "conditional",
+        "negated",
+        "yes_no_question",
+        "proof_goal",
+        "multi_solid_ambiguous"
+      ],
+      "requires_polarity_guard": true,
+      "requires_unique_solid": false
+    },
+    "VN05_GOAL_DA_CHO": {
+      "classification": "GUARDED_EQUIVALENT",
+      "allowed_fact_kinds": [
+        "goal_marker"
+      ],
+      "forbidden_fact_kinds": [
+        "conditional",
+        "negated",
+        "yes_no_question",
+        "proof_goal",
+        "multi_solid_ambiguous"
+      ],
+      "requires_polarity_guard": true,
+      "requires_unique_solid": false
+    },
+    "VN05_GOC_TAO_BOI": {
+      "classification": "GUARDED_EQUIVALENT",
+      "allowed_fact_kinds": [
+        "local_clause"
+      ],
+      "forbidden_fact_kinds": [
+        "conditional",
+        "negated",
+        "yes_no_question",
+        "proof_goal",
+        "multi_solid_ambiguous"
+      ],
+      "requires_polarity_guard": true,
+      "requires_unique_solid": false
+    },
+    "VN05_HAY_TIM_GOAL": {
+      "classification": "GUARDED_EQUIVALENT",
+      "allowed_fact_kinds": [
+        "goal_marker"
+      ],
+      "forbidden_fact_kinds": [
+        "conditional",
+        "negated",
+        "yes_no_question",
+        "proof_goal",
+        "multi_solid_ambiguous"
+      ],
+      "requires_polarity_guard": true,
+      "requires_unique_solid": false
+    },
+    "VN05_LAT_EDGE_DO_DAI": {
+      "classification": "GUARDED_EQUIVALENT",
+      "allowed_fact_kinds": [
+        "local_entity"
+      ],
+      "forbidden_fact_kinds": [
+        "conditional",
+        "negated",
+        "yes_no_question",
+        "proof_goal",
+        "multi_solid_ambiguous"
+      ],
+      "requires_polarity_guard": true,
+      "requires_unique_solid": false
+    },
+    "VN05_NAM_TRONG_FACE_PERP": {
+      "classification": "GUARDED_EQUIVALENT",
+      "allowed_fact_kinds": [
+        "face_plane"
+      ],
+      "forbidden_fact_kinds": [
+        "conditional",
+        "negated",
+        "yes_no_question",
+        "proof_goal",
+        "multi_solid_ambiguous"
+      ],
+      "requires_polarity_guard": true,
+      "requires_unique_solid": false
+    },
+    "VN05_NAM_VUONG_GOC_FACE": {
+      "classification": "GUARDED_EQUIVALENT",
+      "allowed_fact_kinds": [
+        "face_plane"
+      ],
+      "forbidden_fact_kinds": [
+        "conditional",
+        "negated",
+        "yes_no_question",
+        "proof_goal",
+        "multi_solid_ambiguous"
+      ],
+      "requires_polarity_guard": true,
+      "requires_unique_solid": false
+    },
+    "VN05_PROJ_MIDPOINT": {
+      "classification": "GUARDED_EQUIVALENT",
+      "allowed_fact_kinds": [
+        "projection_compound"
+      ],
+      "forbidden_fact_kinds": [
+        "conditional",
+        "negated",
+        "yes_no_question",
+        "proof_goal",
+        "multi_solid_ambiguous"
+      ],
+      "requires_polarity_guard": true,
+      "requires_unique_solid": false
+    },
+    "VN05_SEG_BANG": {
+      "classification": "GUARDED_EQUIVALENT",
+      "allowed_fact_kinds": [
+        "local_entity"
+      ],
+      "forbidden_fact_kinds": [
+        "conditional",
+        "negated",
+        "yes_no_question",
+        "proof_goal",
+        "multi_solid_ambiguous"
+      ],
+      "requires_polarity_guard": true,
+      "requires_unique_solid": false
+    },
+    "VN05_SPLIT_MAT_BEN_CLAUSE": {
+      "classification": "GUARDED_EQUIVALENT",
+      "allowed_fact_kinds": [
+        "face_plane"
+      ],
+      "forbidden_fact_kinds": [
+        "conditional",
+        "negated",
+        "yes_no_question",
+        "proof_goal",
+        "multi_solid_ambiguous"
+      ],
+      "requires_polarity_guard": true,
+      "requires_unique_solid": false
+    },
+    "VN05_TETRA_ALL_EDGES": {
+      "classification": "GUARDED_EQUIVALENT",
+      "allowed_fact_kinds": [
+        "all_solid_edges"
+      ],
+      "forbidden_fact_kinds": [
+        "conditional",
+        "negated",
+        "yes_no_question",
+        "proof_goal",
+        "multi_solid_ambiguous"
+      ],
+      "requires_polarity_guard": true,
+      "requires_unique_solid": false
+    },
+    "VN05_THANG_DUNG": {
+      "classification": "GUARDED_EQUIVALENT",
+      "allowed_fact_kinds": [
+        "local_entity"
+      ],
+      "forbidden_fact_kinds": [
+        "conditional",
+        "negated",
+        "yes_no_question",
+        "proof_goal",
+        "multi_solid_ambiguous"
+      ],
+      "requires_polarity_guard": true,
+      "requires_unique_solid": false
+    },
+    "VN05_VUONG_GOC_MAT_DAY_PAREN": {
+      "classification": "GUARDED_EQUIVALENT",
+      "allowed_fact_kinds": [
+        "local_clause"
+      ],
+      "forbidden_fact_kinds": [
+        "conditional",
+        "negated",
+        "yes_no_question",
+        "proof_goal",
+        "multi_solid_ambiguous"
+      ],
+      "requires_polarity_guard": true,
+      "requires_unique_solid": false
+    },
+    "VN05_YEU_CAU_GOAL": {
+      "classification": "GUARDED_EQUIVALENT",
+      "allowed_fact_kinds": [
+        "goal_marker"
+      ],
+      "forbidden_fact_kinds": [
+        "conditional",
+        "negated",
+        "yes_no_question",
+        "proof_goal",
+        "multi_solid_ambiguous"
+      ],
+      "requires_polarity_guard": true,
+      "requires_unique_solid": false
+    },
+    "VN06_BA_KICH_THUOC": {
+      "classification": "GUARDED_EQUIVALENT",
+      "allowed_fact_kinds": [
+        "local_clause"
+      ],
+      "forbidden_fact_kinds": [
+        "conditional",
+        "negated",
+        "yes_no_question",
+        "proof_goal",
+        "multi_solid_ambiguous"
+      ],
+      "requires_polarity_guard": true,
+      "requires_unique_solid": false
+    },
+    "VN06_CHAINED_SEGMENT_EQ": {
+      "classification": "GUARDED_EQUIVALENT",
+      "allowed_fact_kinds": [
+        "local_entity"
+      ],
+      "forbidden_fact_kinds": [
+        "conditional",
+        "negated",
+        "yes_no_question",
+        "proof_goal",
+        "multi_solid_ambiguous"
+      ],
+      "requires_polarity_guard": true,
+      "requires_unique_solid": false
+    },
+    "VN06_CLEAN_DOUBLE_PUNCT": {
+      "classification": "SAFE_EQUIVALENT",
+      "allowed_fact_kinds": [
+        "typography"
+      ],
+      "forbidden_fact_kinds": []
+    },
+    "VN06_CUBE_CANH_BANG": {
+      "classification": "GUARDED_EQUIVALENT",
+      "allowed_fact_kinds": [
+        "local_entity"
+      ],
+      "forbidden_fact_kinds": [
+        "conditional",
+        "negated",
+        "yes_no_question",
+        "proof_goal",
+        "multi_solid_ambiguous"
+      ],
+      "requires_polarity_guard": true,
+      "requires_unique_solid": false
+    },
+    "VN06_IMPLICIT_BARE_SOLID": {
+      "classification": "GUARDED_EQUIVALENT",
+      "allowed_fact_kinds": [
+        "solid_opener"
+      ],
+      "forbidden_fact_kinds": [
+        "conditional",
+        "negated",
+        "yes_no_question",
+        "proof_goal",
+        "multi_solid_ambiguous"
+      ],
+      "requires_polarity_guard": true,
+      "requires_unique_solid": false
+    },
+    "VN06_IMPLICIT_BASE_LABEL_SHAPE": {
+      "classification": "GUARDED_EQUIVALENT",
+      "allowed_fact_kinds": [
+        "solid_base"
+      ],
+      "forbidden_fact_kinds": [
+        "conditional",
+        "negated",
+        "yes_no_question",
+        "proof_goal",
+        "multi_solid_ambiguous"
+      ],
+      "requires_polarity_guard": true,
+      "requires_unique_solid": true
+    },
+    "VN06_IMPLICIT_MOT_HINH": {
+      "classification": "GUARDED_EQUIVALENT",
+      "allowed_fact_kinds": [
+        "solid_opener"
+      ],
+      "forbidden_fact_kinds": [
+        "conditional",
+        "negated",
+        "yes_no_question",
+        "proof_goal",
+        "multi_solid_ambiguous"
+      ],
+      "requires_polarity_guard": true,
+      "requires_unique_solid": false
+    },
+    "VN06_IMPLICIT_VOLUME_SOLID": {
+      "classification": "GUARDED_EQUIVALENT",
+      "allowed_fact_kinds": [
+        "goal_marker"
+      ],
+      "forbidden_fact_kinds": [
+        "conditional",
+        "negated",
+        "yes_no_question",
+        "proof_goal",
+        "multi_solid_ambiguous"
+      ],
+      "requires_polarity_guard": true,
+      "requires_unique_solid": true
+    },
+    "VN06_RIGHT_PRISM_CANH_BEN": {
+      "classification": "GUARDED_EQUIVALENT",
+      "allowed_fact_kinds": [
+        "prism_lateral_edge"
+      ],
+      "forbidden_fact_kinds": [
+        "conditional",
+        "negated",
+        "yes_no_question",
+        "proof_goal",
+        "multi_solid_ambiguous"
+      ],
+      "requires_polarity_guard": true,
+      "requires_unique_solid": false
+    },
+    "VN06_SOLID_SEP_DAY": {
+      "classification": "GUARDED_EQUIVALENT",
+      "allowed_fact_kinds": [
+        "solid_opener"
+      ],
+      "forbidden_fact_kinds": [
+        "conditional",
+        "negated",
+        "yes_no_question",
+        "proof_goal",
+        "multi_solid_ambiguous"
+      ],
+      "requires_polarity_guard": true,
+      "requires_unique_solid": false
+    },
+    "VN06_STRIP_COURTESY_HEADER_COLON": {
+      "classification": "GUARDED_EQUIVALENT",
+      "allowed_fact_kinds": [
+        "typography"
+      ],
+      "forbidden_fact_kinds": [
+        "conditional",
+        "negated",
+        "yes_no_question",
+        "proof_goal",
+        "multi_solid_ambiguous"
+      ],
+      "requires_polarity_guard": true,
+      "requires_unique_solid": false
+    },
+    "VN06_VOI_DIMENSIONS": {
+      "classification": "GUARDED_EQUIVALENT",
+      "allowed_fact_kinds": [
+        "local_clause"
+      ],
+      "forbidden_fact_kinds": [
+        "conditional",
+        "negated",
+        "yes_no_question",
+        "proof_goal",
+        "multi_solid_ambiguous"
+      ],
+      "requires_polarity_guard": true,
+      "requires_unique_solid": false
+    },
+    "VN07_CANH_BEN_PERP_PREFIX": {
+      "classification": "GUARDED_EQUIVALENT",
+      "allowed_fact_kinds": [
+        "local_clause"
+      ],
+      "forbidden_fact_kinds": [
+        "conditional",
+        "negated",
+        "yes_no_question",
+        "proof_goal",
+        "multi_solid_ambiguous"
+      ],
+      "requires_polarity_guard": true,
+      "requires_unique_solid": false
+    },
+    "VN07_DUONG_CHEO_TO_DUONG_THANG": {
+      "classification": "GUARDED_EQUIVALENT",
+      "allowed_fact_kinds": [
+        "goal_marker"
+      ],
+      "forbidden_fact_kinds": [
+        "conditional",
+        "negated",
+        "yes_no_question",
+        "proof_goal",
+        "multi_solid_ambiguous"
+      ],
+      "requires_polarity_guard": true,
+      "requires_unique_solid": false
+    },
+    "VN07_IMPLICIT_MAT_DAY_GOAL": {
+      "classification": "GUARDED_EQUIVALENT",
+      "allowed_fact_kinds": [
+        "solid_base"
+      ],
+      "forbidden_fact_kinds": [
+        "conditional",
+        "negated",
+        "yes_no_question",
+        "proof_goal",
+        "multi_solid_ambiguous"
+      ],
+      "requires_polarity_guard": true,
+      "requires_unique_solid": true
+    },
+    "VN07_IMPLICIT_MAT_DAY_PERP": {
+      "classification": "GUARDED_EQUIVALENT",
+      "allowed_fact_kinds": [
+        "solid_base"
+      ],
+      "forbidden_fact_kinds": [
+        "conditional",
+        "negated",
+        "yes_no_question",
+        "proof_goal",
+        "multi_solid_ambiguous"
+      ],
+      "requires_polarity_guard": true,
+      "requires_unique_solid": true
+    },
+    "VN07_MP_PAREN": {
+      "classification": "GUARDED_EQUIVALENT",
+      "allowed_fact_kinds": [
+        "entity_syntax"
+      ],
+      "forbidden_fact_kinds": [
+        "conditional",
+        "negated",
+        "yes_no_question",
+        "proof_goal",
+        "multi_solid_ambiguous"
+      ],
+      "requires_polarity_guard": true,
+      "requires_unique_solid": false
+    },
+    "VN07_SEMICOLON_TO_COMMA": {
+      "classification": "GUARDED_EQUIVALENT",
+      "allowed_fact_kinds": [
+        "typography"
+      ],
+      "forbidden_fact_kinds": [
+        "conditional",
+        "negated",
+        "yes_no_question",
+        "proof_goal",
+        "multi_solid_ambiguous"
+      ],
+      "requires_polarity_guard": true,
+      "requires_unique_solid": false
+    },
+    "VN08_DUNG_HINH_CHIEU": {
+      "classification": "GUARDED_EQUIVALENT",
+      "allowed_fact_kinds": [
+        "auxiliary_point"
+      ],
+      "forbidden_fact_kinds": [
+        "conditional",
+        "negated",
+        "yes_no_question",
+        "proof_goal",
+        "multi_solid_ambiguous"
+      ],
+      "requires_polarity_guard": true,
+      "requires_unique_solid": false
+    },
+    "VN08_LAY_PT_LA_TRUNG_DIEM": {
+      "classification": "GUARDED_EQUIVALENT",
+      "allowed_fact_kinds": [
+        "auxiliary_point"
+      ],
+      "forbidden_fact_kinds": [
+        "conditional",
+        "negated",
+        "yes_no_question",
+        "proof_goal",
+        "multi_solid_ambiguous"
+      ],
+      "requires_polarity_guard": true,
+      "requires_unique_solid": false
+    },
+    "VN08_LAY_TRUNG_DIEM": {
+      "classification": "GUARDED_EQUIVALENT",
+      "allowed_fact_kinds": [
+        "auxiliary_point"
+      ],
+      "forbidden_fact_kinds": [
+        "conditional",
+        "negated",
+        "yes_no_question",
+        "proof_goal",
+        "multi_solid_ambiguous"
+      ],
+      "requires_polarity_guard": true,
+      "requires_unique_solid": false
+    },
+    "VN09_ANAPHORA_TWO_LINES_GOALS": {
+      "classification": "GUARDED_EQUIVALENT",
+      "allowed_fact_kinds": [
+        "anaphora_resolution"
+      ],
+      "forbidden_fact_kinds": [
+        "conditional",
+        "negated",
+        "yes_no_question",
+        "proof_goal",
+        "multi_solid_ambiguous"
+      ],
+      "requires_polarity_guard": true,
+      "requires_unique_solid": false
+    },
+    "VN09_ANAPHORA_TWO_LINES_NAME": {
+      "classification": "GUARDED_EQUIVALENT",
+      "allowed_fact_kinds": [
+        "anaphora_resolution"
+      ],
+      "forbidden_fact_kinds": [
+        "conditional",
+        "negated",
+        "yes_no_question",
+        "proof_goal",
+        "multi_solid_ambiguous"
+      ],
+      "requires_polarity_guard": true,
+      "requires_unique_solid": false
+    },
+    "VN09_CAPITALIZE_SPLIT_GOALS": {
+      "classification": "GUARDED_EQUIVALENT",
+      "allowed_fact_kinds": [
+        "multi_goal"
+      ],
+      "forbidden_fact_kinds": [
+        "conditional",
+        "negated",
+        "yes_no_question",
+        "proof_goal",
+        "multi_solid_ambiguous"
+      ],
+      "requires_polarity_guard": true,
+      "requires_unique_solid": false
+    },
+    "VN09_CENTROID_DISTANCE_TO_NAMED": {
+      "classification": "GUARDED_EQUIVALENT",
+      "allowed_fact_kinds": [
+        "derived_point"
+      ],
+      "forbidden_fact_kinds": [
+        "conditional",
+        "negated",
+        "yes_no_question",
+        "proof_goal",
+        "multi_solid_ambiguous"
+      ],
+      "requires_polarity_guard": true,
+      "requires_unique_solid": false
+    },
+    "VN09_CENTROID_DISTANCE_TO_NAMED_REV": {
+      "classification": "GUARDED_EQUIVALENT",
+      "allowed_fact_kinds": [
+        "derived_point"
+      ],
+      "forbidden_fact_kinds": [
+        "conditional",
+        "negated",
+        "yes_no_question",
+        "proof_goal",
+        "multi_solid_ambiguous"
+      ],
+      "requires_polarity_guard": true,
+      "requires_unique_solid": false
+    },
+    "VN09_PROJECTION_FOOT_DISTANCE": {
+      "classification": "GUARDED_EQUIVALENT",
+      "allowed_fact_kinds": [
+        "goal_marker"
+      ],
+      "forbidden_fact_kinds": [
+        "conditional",
+        "negated",
+        "yes_no_question",
+        "proof_goal",
+        "multi_solid_ambiguous"
+      ],
+      "requires_polarity_guard": true,
+      "requires_unique_solid": false
+    },
+    "VN09_RIGHT_PRISM_FACE_CENTER": {
+      "classification": "GUARDED_EQUIVALENT",
+      "allowed_fact_kinds": [
+        "derived_point"
+      ],
+      "forbidden_fact_kinds": [
+        "conditional",
+        "negated",
+        "yes_no_question",
+        "proof_goal",
+        "multi_solid_ambiguous"
+      ],
+      "requires_polarity_guard": true,
+      "requires_unique_solid": false
+    },
+    "VN09_SHORTHAND_TINH_SEG": {
+      "classification": "GUARDED_EQUIVALENT",
+      "allowed_fact_kinds": [
+        "goal_marker"
+      ],
+      "forbidden_fact_kinds": [
+        "conditional",
+        "negated",
+        "yes_no_question",
+        "proof_goal",
+        "multi_solid_ambiguous"
+      ],
+      "requires_polarity_guard": true,
+      "requires_unique_solid": false
+    },
+    "VN09_SPLIT_COORDINATED_GOALS": {
+      "classification": "GUARDED_EQUIVALENT",
+      "allowed_fact_kinds": [
+        "multi_goal"
+      ],
+      "forbidden_fact_kinds": [
+        "conditional",
+        "negated",
+        "yes_no_question",
+        "proof_goal",
+        "multi_solid_ambiguous"
+      ],
+      "requires_polarity_guard": true,
+      "requires_unique_solid": false
+    },
+    "VN09_SPLIT_ENUM_GOALS": {
+      "classification": "GUARDED_EQUIVALENT",
+      "allowed_fact_kinds": [
+        "multi_goal"
+      ],
+      "forbidden_fact_kinds": [
+        "conditional",
+        "negated",
+        "yes_no_question",
+        "proof_goal",
+        "multi_solid_ambiguous"
+      ],
+      "requires_polarity_guard": true,
+      "requires_unique_solid": false
+    },
+    "VN10_BANG_MAY": {
+      "classification": "GUARDED_EQUIVALENT",
+      "allowed_fact_kinds": [
+        "goal_marker"
+      ],
+      "forbidden_fact_kinds": [
+        "conditional",
+        "negated",
+        "yes_no_question",
+        "proof_goal",
+        "multi_solid_ambiguous"
+      ],
+      "requires_polarity_guard": true,
+      "requires_unique_solid": false
+    },
+    "VN10_DUONG_CHEO_DAI_BAO_NHIEU": {
+      "classification": "GUARDED_EQUIVALENT",
+      "allowed_fact_kinds": [
+        "goal_marker"
+      ],
+      "forbidden_fact_kinds": [
+        "conditional",
+        "negated",
+        "yes_no_question",
+        "proof_goal",
+        "multi_solid_ambiguous"
+      ],
+      "requires_polarity_guard": true,
+      "requires_unique_solid": false
+    },
+    "VN10_HOI_CACH_MAT_PHANG": {
+      "classification": "GUARDED_EQUIVALENT",
+      "allowed_fact_kinds": [
+        "goal_marker"
+      ],
+      "forbidden_fact_kinds": [
+        "conditional",
+        "negated",
+        "yes_no_question",
+        "proof_goal",
+        "multi_solid_ambiguous"
+      ],
+      "requires_polarity_guard": true,
+      "requires_unique_solid": false
+    },
+    "VN10_KC_BAO_NHIEU_VAY_A": {
+      "classification": "GUARDED_EQUIVALENT",
+      "allowed_fact_kinds": [
+        "goal_marker"
+      ],
+      "forbidden_fact_kinds": [
+        "conditional",
+        "negated",
+        "yes_no_question",
+        "proof_goal",
+        "multi_solid_ambiguous"
+      ],
+      "requires_polarity_guard": true,
+      "requires_unique_solid": false
+    },
+    "VN10_QUESTION_FIRST_DISTANCE": {
+      "classification": "GUARDED_EQUIVALENT",
+      "allowed_fact_kinds": [
+        "clause_reorder"
+      ],
+      "forbidden_fact_kinds": [
+        "conditional",
+        "negated",
+        "yes_no_question",
+        "proof_goal",
+        "multi_solid_ambiguous"
+      ],
+      "requires_polarity_guard": true,
+      "requires_unique_solid": false
+    },
+    "VN10_QUESTION_FIRST_GENERAL": {
+      "classification": "GUARDED_EQUIVALENT",
+      "allowed_fact_kinds": [
+        "clause_reorder"
+      ],
+      "forbidden_fact_kinds": [
+        "conditional",
+        "negated",
+        "yes_no_question",
+        "proof_goal",
+        "multi_solid_ambiguous"
+      ],
+      "requires_polarity_guard": true,
+      "requires_unique_solid": false
+    },
+    "VN10_TAO_VOI_GOC": {
+      "classification": "GUARDED_EQUIVALENT",
+      "allowed_fact_kinds": [
+        "goal_marker"
+      ],
+      "forbidden_fact_kinds": [
+        "conditional",
+        "negated",
+        "yes_no_question",
+        "proof_goal",
+        "multi_solid_ambiguous"
+      ],
+      "requires_polarity_guard": true,
+      "requires_unique_solid": false
+    },
+    "VN11_COS2_TO_COSIN": {
+      "classification": "GUARDED_EQUIVALENT",
+      "allowed_fact_kinds": [
+        "goal_marker"
+      ],
+      "forbidden_fact_kinds": [
+        "conditional",
+        "negated",
+        "yes_no_question",
+        "proof_goal",
+        "multi_solid_ambiguous"
+      ],
+      "requires_polarity_guard": true,
+      "requires_unique_solid": false
+    },
+    "VN12_EDGES_FROM_VERTEX_PAIRWISE_PERP": {
+      "classification": "GUARDED_EQUIVALENT",
+      "allowed_fact_kinds": [
+        "local_entity"
+      ],
+      "forbidden_fact_kinds": [
+        "conditional",
+        "negated",
+        "yes_no_question",
+        "proof_goal",
+        "multi_solid_ambiguous"
+      ],
+      "requires_polarity_guard": true,
+      "requires_unique_solid": true
+    },
+    "VN12_THREE_RIGHT_ANGLES_AT_VERTEX": {
+      "classification": "GUARDED_EQUIVALENT",
+      "allowed_fact_kinds": [
+        "local_entity"
+      ],
+      "forbidden_fact_kinds": [
+        "conditional",
+        "negated",
+        "yes_no_question",
+        "proof_goal",
+        "multi_solid_ambiguous"
+      ],
+      "requires_polarity_guard": true,
+      "requires_unique_solid": false
+    },
+    "VN13_ALTITUDE_IS_SEG_WITH_LENGTH": {
+      "classification": "GUARDED_EQUIVALENT",
+      "allowed_fact_kinds": [
+        "local_entity"
+      ],
+      "forbidden_fact_kinds": [
+        "conditional",
+        "negated",
+        "yes_no_question",
+        "proof_goal",
+        "multi_solid_ambiguous"
+      ],
+      "requires_polarity_guard": true,
+      "requires_unique_solid": false
+    },
+    "VN13_PYRAMID_HEIGHT_WITH_FOOT": {
+      "classification": "GUARDED_EQUIVALENT",
+      "allowed_fact_kinds": [
+        "local_entity"
+      ],
+      "forbidden_fact_kinds": [
+        "conditional",
+        "negated",
+        "yes_no_question",
+        "proof_goal",
+        "multi_solid_ambiguous"
+      ],
+      "requires_polarity_guard": true,
+      "requires_unique_solid": true
+    },
+    "VN13_SEG_IS_ALTITUDE_WITH_LENGTH": {
+      "classification": "GUARDED_EQUIVALENT",
+      "allowed_fact_kinds": [
+        "local_entity"
+      ],
+      "forbidden_fact_kinds": [
+        "conditional",
+        "negated",
+        "yes_no_question",
+        "proof_goal",
+        "multi_solid_ambiguous"
+      ],
+      "requires_polarity_guard": true,
+      "requires_unique_solid": false
+    },
+    "VN13_SEG_LENGTH_AND_PERP": {
+      "classification": "GUARDED_EQUIVALENT",
+      "allowed_fact_kinds": [
+        "local_entity"
+      ],
+      "forbidden_fact_kinds": [
+        "conditional",
+        "negated",
+        "yes_no_question",
+        "proof_goal",
+        "multi_solid_ambiguous"
+      ],
+      "requires_polarity_guard": true,
+      "requires_unique_solid": false
+    },
+    "VN13_SEG_PERP_AND_LENGTH": {
+      "classification": "GUARDED_EQUIVALENT",
+      "allowed_fact_kinds": [
+        "local_entity"
+      ],
+      "forbidden_fact_kinds": [
+        "conditional",
+        "negated",
+        "yes_no_question",
+        "proof_goal",
+        "multi_solid_ambiguous"
+      ],
+      "requires_polarity_guard": true,
+      "requires_unique_solid": false
+    },
+    "VN13_SEG_PERP_DONG_THOI_EQ": {
+      "classification": "GUARDED_EQUIVALENT",
+      "allowed_fact_kinds": [
+        "local_entity"
+      ],
+      "forbidden_fact_kinds": [
+        "conditional",
+        "negated",
+        "yes_no_question",
+        "proof_goal",
+        "multi_solid_ambiguous"
+      ],
+      "requires_polarity_guard": true,
+      "requires_unique_solid": false
+    },
+    "VN14_LIST_LENGTHS_IN_ORDER": {
+      "classification": "GUARDED_EQUIVALENT",
+      "allowed_fact_kinds": [
+        "local_entity_list"
+      ],
+      "forbidden_fact_kinds": [
+        "conditional",
+        "negated",
+        "yes_no_question",
+        "proof_goal",
+        "multi_solid_ambiguous"
+      ],
+      "requires_polarity_guard": true,
+      "requires_unique_solid": false
+    },
+    "VN14_RESPECTIVE_VALUES": {
+      "classification": "GUARDED_EQUIVALENT",
+      "allowed_fact_kinds": [
+        "local_entity_list"
+      ],
+      "forbidden_fact_kinds": [
+        "conditional",
+        "negated",
+        "yes_no_question",
+        "proof_goal",
+        "multi_solid_ambiguous"
+      ],
+      "requires_polarity_guard": true,
+      "requires_unique_solid": false
+    },
+    "VN15_PRISM_HEIGHT_FORM": {
+      "classification": "GUARDED_EQUIVALENT",
+      "allowed_fact_kinds": [
+        "local_entity"
+      ],
+      "forbidden_fact_kinds": [
+        "conditional",
+        "negated",
+        "yes_no_question",
+        "proof_goal",
+        "multi_solid_ambiguous"
+      ],
+      "requires_polarity_guard": true,
+      "requires_unique_solid": false
+    },
+    "VN16_BARE_SIMULATION_REQUEST": {
+      "classification": "GUARDED_EQUIVALENT",
+      "allowed_fact_kinds": [
+        "request"
+      ],
+      "forbidden_fact_kinds": [
+        "conditional",
+        "negated",
+        "yes_no_question",
+        "proof_goal",
+        "multi_solid_ambiguous"
+      ],
+      "requires_polarity_guard": true,
+      "requires_unique_solid": true
+    },
+    "VN17_QUESTION_FIRST_WITH_PREMISES": {
+      "classification": "GUARDED_EQUIVALENT",
+      "allowed_fact_kinds": [
+        "sentence_order"
+      ],
+      "forbidden_fact_kinds": [
+        "conditional",
+        "negated",
+        "yes_no_question",
+        "proof_goal",
+        "multi_solid_ambiguous"
+      ],
+      "requires_polarity_guard": true,
+      "requires_unique_solid": false
+    }
+  }
+}

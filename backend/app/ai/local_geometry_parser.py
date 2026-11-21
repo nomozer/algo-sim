@@ -1451,6 +1451,29 @@ def _parse_clause_into_ast(builder: _AstBuilder, clause: ClauseSpan) -> None:
             )
         mapped_fact = True
 
+    if not m_two_pyr:
+        m_two_unshared = re.search(
+            r"(?:\b(?:Hai|2)\s+(?:hình\s+|khối\s+)?(?:tứ\s+diện|chóp|lăng\s+trụ(?:\s+đứng|\s+đều)?)\s+"
+            r"(?P<s1>[A-Z][0-9]*'?(?:\.?[A-Z0-9']+){2,6})\s+và\s+(?:(?:hình\s+|khối\s+)?(?:tứ\s+diện|chóp|lăng\s+trụ(?:\s+đứng|\s+đều)?)\s+)?(?P<s2>[A-Z][0-9]*'?(?:\.?[A-Z0-9']+){2,6})"
+            r"|\b(?:hình\s+|khối\s+)?(?:tứ\s+diện|chóp|lăng\s+trụ(?:\s+đứng|\s+đều)?)\s+"
+            r"(?P<s3>[A-Z][0-9]*'?(?:\.?[A-Z0-9']+){2,6})\s+và\s+(?:hình\s+|khối\s+)?(?:tứ\s+diện|chóp|lăng\s+trụ(?:\s+đứng|\s+đều)?)\s+(?P<s4>[A-Z][0-9]*'?(?:\.?[A-Z0-9']+){2,6}))(?![A-Z0-9'])",
+            ctext_norm,
+            re.IGNORECASE | re.UNICODE,
+        )
+        if m_two_unshared:
+            q = _clean_quote(raw, ca + m_two_unshared.start(), ca + m_two_unshared.end())
+            builder.unresolved.append(
+                {
+                    "unresolved_id": f"u{len(builder.unresolved) + 1}",
+                    "kind": "ambiguous",
+                    "quote": q,
+                    "missing_roles": ["target_solid_disambiguation"],
+                    "candidate_relations": ["solid"],
+                }
+            )
+            clause.classification = CLAUSE_MAPPED_FACT
+            return
+
     # 1b. Regular pyramid: "(Cho )?(Hình|Khối) chóp (tứ giác|tam giác|lục giác)? đều S.ABCD có cạnh đáy bằng 6..."
     _SOLID_LEAD = (
         r"(?:(?:(?:Em|Mình|Bạn|Tớ)\s+)?(?:(?:muốn|cần)\s+xem"

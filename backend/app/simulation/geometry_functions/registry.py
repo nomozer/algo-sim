@@ -1223,7 +1223,9 @@ _MUC_TIEU = ("chứng minh", "cmr", "chứng tỏ", "chỉ ra", "giải thích",
              # review S1, I5
              "kiểm tra", "suy ra", "xác minh", "vì sao", "tại sao", "lập luận")
 #: Không khẳng định (S1, nhóm A): phủ định mạnh, tình thái, phủ định mệnh đề — đọc trong quote và phần trước nó của mệnh đề.
-_KHONG_KHANG_DINH = re.compile(r"(?<!\w)(?:không hề|chẳng|không nhất thiết|không đúng là|có thể(?!\s+tích)"
+_KHONG_KHANG_DINH = re.compile(r"(?<!\w)(?:không hề|chẳng|không nhất thiết|không đúng(?:\s+(?:là|rằng))?"
+                               r"|không phải(?:\s+(?:là|rằng))?(?:\s+(?:cả|mọi|tất cả))?"
+                               r"|sai khi (?:nói|cho) rằng|đừng|chớ|có thể(?!\s+tích)"
                                r"|không bao giờ|không thể|chưa|không còn|đâu có)(?!\w)"
                                # /15: "không" before a relation with an adverb in between ("IJ, IK, IL không đôi một vuông
                                # góc", "không cùng vuông góc với đáy") negates it exactly like "không vuông góc"
@@ -1478,13 +1480,21 @@ def _cau_chua(de: str, vt: int) -> int:
     return dau
 
 
+_PHU_DINH_MENH_DE = re.compile(
+    r"(?<!\w)(?:không\s+đúng(?:\s+(?:là|rằng))?|không\s+phải(?:\s+(?:là|rằng))?\s+(?:cả|mọi|tất\s+cả)|"
+    r"sai\s+khi\s+(?:nói|cho)\s+rằng|chưa\s+chắc(?:\s+rằng)?)(?!\w)",
+    re.IGNORECASE,
+)
+
+
 def _phu_dinh(de: str, vt: int, q: str) -> bool:
-    """Phủ định trong quote, hoặc ngay trước nó trong CÙNG mệnh đề (cắt ở , ; :)."""
+    """Phủ định trong quote, ngay trước nó trong cùng mệnh đề (cắt ở , ; :), hoặc phủ định mệnh đề đầu câu trước `vt`."""
     truoc = de[_cau_chua(de, vt):vt]
     duoi = re.split(r"[,;:]", truoc)[-1]
     ma, mb = _bien_menh_de(de, vt)
     ca, cb = _bien_cau(de, vt)
     return (any(p in (duoi + q).lower() for p in PHU_DINH) or bool(_KHONG_KHANG_DINH.search(duoi + q))
+            or bool(_PHU_DINH_MENH_DE.search(de[ca:vt]))
             or bool(_TUYEN.search(de[ma:mb])) or bool(_SAI.search(de[ca:cb])))
 
 
@@ -3549,7 +3559,7 @@ _DIEU_KIEN = re.compile(r"(?<!\w)(?:nếu|giả sử|giả thiết rằng|trong 
                         r"|giả định|coi như|cho là|theo bạn)(?!\w)", re.IGNORECASE)
 _THI = re.compile(r"(?<!\w)thì(?!\w)", re.IGNORECASE)
 #: Mệnh đề HỎI một quan hệ có/không — không bao giờ là dữ kiện.
-_HOI_QUAN_HE = re.compile(r"(?<!\w)(?:phải chăng|có phải|kiểm tra xem|hay không|hay chưa)(?!\w)|(?<!câu )(?<!\w)hỏi(?!\w)"
+_HOI_QUAN_HE = re.compile(r"(?<!\w)(?:phải chăng|có phải|liệu|kiểm tra xem|hay không|hay chưa)(?!\w)|(?<!câu )(?<!\w)hỏi(?!\w)"
                           r"|(?<!\w)không\s*\?", re.IGNORECASE)
 #: Động từ hỏi đứng TRƯỚC đối tượng trong cùng mệnh đề …
 _DONG_TU_HOI = re.compile(r"(?<!\w)(?:tính|tìm|xác định)(?!\w)|(?<!câu )(?<!\w)hỏi(?!\w)", re.IGNORECASE)
@@ -3564,7 +3574,7 @@ _HOI_CUOI_DE = re.compile(
     re.IGNORECASE,
 )
 #: Câu hỏi CÓ/KHÔNG về đối tượng ("V có vượt quá 5 không?") hỏi một quan hệ, không hỏi giá trị — trừ khi có "bao nhiêu / mấy".
-_CO_KHONG = re.compile(r"(?<!\w)(?:phải chăng|có phải|hay không|hay chưa|phải không)(?!\w)|(?<!\w)(?:không|chưa)\s*\?",
+_CO_KHONG = re.compile(r"(?<!\w)(?:phải chăng|có phải|liệu|hay không|hay chưa|phải không)(?!\w)|(?<!\w)(?:không|chưa)\s*\?",
                        re.IGNORECASE)
 #: Đối tượng bị GÁN giá trị: một từ nối gán theo sau là một số ("bằng 4", "= √17", "là 3", "có giá trị 4"). Một số đứng riêng
 #: ("làm tròn đến 2 chữ số") không phải phép gán.
@@ -3808,6 +3818,17 @@ def _kiem_mat_chung(de: str, calls: tuple[LoiGoi, ...]) -> None:
             faces = {frozenset(a.base), *(frozenset((a.apex, p, q)) for p, q in zip(a.base, a.base[1:] + a.base[:1]))}
             if frozenset(face) not in faces:
                 raise TuChoi("INCONSISTENT_FACTS", "mặt chung không thuộc bảng mặt của cả hai khối", (c.id,))
+    khoi_calls = [c for c in calls if c.fn in ("pyramid", "regular_pyramid", "prism")]
+    if len(khoi_calls) < 2:
+        for pat in (
+            rf"(?<!\w)(?:hai|2)\s+(?:hình\s+|khối\s+)?(?:tứ\s+diện(?:\s+đều)?|chóp|lăng\s+trụ(?:\s+đứng|\s+đều)?)\s+(?P<s1>{_NHAN}(?:\.{_NHAN})?)\s+và\s+(?:(?:hình\s+|khối\s+)?(?:tứ\s+diện(?:\s+đều)?|chóp|lăng\s+trụ(?:\s+đứng|\s+đều)?)\s+)?(?P<s2>{_NHAN}(?:\.{_NHAN})?)",
+            rf"(?<!\w)(?:hình\s+|khối\s+)?(?:tứ\s+diện(?:\s+đều)?|chóp|lăng\s+trụ(?:\s+đứng|\s+đều)?)\s+(?P<s1>{_NHAN}(?:\.{_NHAN})?)\s+và\s+(?:hình\s+|khối\s+)?(?:tứ\s+diện(?:\s+đều)?|chóp|lăng\s+trụ(?:\s+đứng|\s+đều)?)\s+(?P<s2>{_NHAN}(?:\.{_NHAN})?)",
+        ):
+            for m_pair in re.finditer(pat, de, re.IGNORECASE):
+                v1 = frozenset(re.findall(r"[A-Z][0-9]*'?", m_pair.group("s1")))
+                v2 = frozenset(re.findall(r"[A-Z][0-9]*'?", m_pair.group("s2")))
+                if len(v1) >= 4 and len(v2) >= 4 and v1 != v2:
+                    raise TuChoi("SOURCE_OBJECT_MISMATCH", "đề nêu nhiều khối đa diện phân biệt nhưng kế hoạch chỉ dựng một khối")
 
 
 _CHINH_SACH_XUAT: contextvars.ContextVar[dict[str, dict[str, Any]]] = contextvars.ContextVar("_CHINH_SACH_XUAT", default={})

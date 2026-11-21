@@ -40,16 +40,171 @@ _TYPO_CHECKS_V2_EXTRA: tuple[tuple[str, re.Pattern[str]], ...] = (
     ("TYPO_TU_DIEN_DEU_TONE", re.compile(r"\btứ\s+diên\s+(?:đêu|đều)\b|\btứ\s+diện\s+đêu\b", re.IGNORECASE | re.UNICODE)),
 )
 
-_CONDITIONAL_MARKER_RE = re.compile(r"\b(?:nếu|khi|giả\s+sử)\b", re.IGNORECASE | re.UNICODE)
+_BENIGN_SIM_TAIL_RE = re.compile(
+    r"\b(?:không|chưa|đừng|chớ)\s+cần\s+(?:tính(?:\s+toán)?|tìm|giải|chứng\s+minh)\b",
+    re.IGNORECASE | re.UNICODE,
+)
+_CONDITIONAL_MARKER_RE = re.compile(
+    r"\b(?:nếu|giả\s+sử|giả\s+thiết\s+rằng|giả\s+định|trong\s+trường\s+hợp|xét\s+trường\s+hợp|"
+    r"với\s+điều\s+kiện|trừ\s+khi|hễ|thay\s+đổi|coi\s+như)\b"
+    r"|\bkhi(?!\s+(?:đó|(?:bị\s+|đã\s+)?cắt|bỏ|loại\s+bỏ|lấy\s+đi|dựng|quay|chiếu))\b",
+    re.IGNORECASE | re.UNICODE,
+)
 _NEGATED_SPAN_RE = re.compile(
-    r"\b(?:không|chẳng|chưa)\s+(?:hề\s+)?(?:vuông\s+góc|vuông|cắt|song\s+song|bằng|đều|cân|trùng|thuộc|nằm\s+trong|dài)\b"
-    r"|\bkhông\s+phải\b",
+    r"\b(?:không|chẳng|chưa)\s+(?:hề\s+)?(?:(?:đôi\s+một|từng\s+đôi(?:\s+một)?|cùng|hoàn\s+toàn|hẳn|đều|nhất\s+thiết)\s+)*"
+    r"(?:vuông\s+góc|⊥|vuông|cắt|song\s+song|∥|bằng|đều|cân|trùng|thuộc|nằm\s+trong|dài|là\b)"
+    r"|\bkhông\s+đúng(?:\s+(?:là|rằng))?\b"
+    r"|\bkhông\s+phải(?:\s+(?:là|rằng))?(?:\s+(?:cả|mọi|tất\s+cả))?\b"
+    r"|\bsai\s+khi\s+(?:nói|cho)\s+rằng\b|\bvô\s+l[ií]\b|\blà\s+(?:điều\s+)?sai\b"
+    r"|\b(?:chưa\s+chắc|đừng|chớ|không\s+bao\s+giờ|không\s+thể|không\s+còn|đâu\s+có)\b",
+    re.IGNORECASE | re.UNICODE,
+)
+_YES_NO_RE = re.compile(
+    r"(?:\bcó\s+phải\b|\bphải\s+chăng\b|\bliệu\b|\bkiểm\s+tra\s+xem\b|"
+    r"\b(?:phải|hay|đúng)\s+không\s*(?:\?|$)|\bhay\s+chưa\s*(?:\?|$)|"
+    r"\bcó\b[^.!?;]{1,100}\b(?:không|chưa)\s*(?:\?|$))",
+    re.IGNORECASE | re.UNICODE,
+)
+_PROOF_GOAL_RE = re.compile(
+    r"\b(?:chứng\s+minh(?:\s+rằng)?|chứng\s+tỏ(?:\s+rằng)?|cmr|chỉ\s+ra(?:\s+rằng)?|"
+    r"giải\s+thích|kiểm\s+chứng|vì\s+sao|tại\s+sao)\b",
     re.IGNORECASE | re.UNICODE,
 )
 _SOLID_TOKEN_V1_RE = re.compile(r"\b([A-Z][0-9]*'*)\.([A-Z][0-9']*){3,6}\b")
 _SOLID_TOKEN_RE = re.compile(r"(?<![A-Z0-9'])((?:[A-Z][0-9]*'*){1,6})\.((?:[A-Z][0-9]*'*){3,6})(?![A-Z0-9'])")
 _ENTITY_REF_RE = re.compile(r"(?<![A-Za-zÀ-Ỹà-ỹ0-9'])([A-Z][0-9]*'*(?:\.[A-Z0-9']+|[A-Z0-9']*))(?![A-Za-zÀ-Ỹà-ỹ0-9'])")
 _QTY_CHAR = r"[^\s,.;:!?]+"
+
+_SAFE_TYPOGRAPHY_RULES: frozenset[str] = frozenset({
+    "VN01_PARENS",
+    "VN01_SOLID_DOT_SPACE",
+    "VN01_PUNCT_SPACE",
+    "VN01_DEG_WORD",
+    "VN06_CLEAN_DOUBLE_PUNCT",
+})
+_SINGLE_SOLID_BINDING_RULES: frozenset[str] = frozenset({
+    "VN04_NHAN_IMPLICIT_BASE",
+    "VN06_IMPLICIT_BASE_LABEL_SHAPE",
+    "VN07_IMPLICIT_MAT_DAY_PERP",
+    "VN07_IMPLICIT_MAT_DAY_GOAL",
+    "VN06_IMPLICIT_VOLUME_SOLID",
+    "VN12_EDGES_FROM_VERTEX_PAIRWISE_PERP",
+    "VN13_PYRAMID_HEIGHT_WITH_FOOT",
+    "VN16_BARE_SIMULATION_REQUEST",
+})
+_DERIVED_POINT_RULES: frozenset[str] = frozenset({
+    "VN09_CENTROID_DISTANCE_TO_NAMED",
+    "VN09_CENTROID_DISTANCE_TO_NAMED_REV",
+    "VN09_RIGHT_PRISM_FACE_CENTER",
+})
+_VN_NON_GEOM_CAPS: frozenset[str] = frozenset({
+    "Cho", "Xét", "Trong", "Một", "Hình", "Khối", "Lăng", "Tứ", "Tam", "Đáy", "Mặt",
+    "Độ", "Đường", "Góc", "Khoảng", "Thể", "Diện", "Tính", "Tìm", "Vẽ", "Dựng",
+    "Hãy", "Gọi", "Biết", "Với", "Cạnh", "Chiều", "Hai", "Ba", "Các", "Ngoài", "Từ",
+    "Điểm", "Đoạn", "Đề", "Yêu", "Câu", "Bài", "Nếu", "Khi", "Giả", "Hỏi", "Liệu",
+})
+
+
+def _strip_benign_sim_tail(text: str) -> str:
+    return _BENIGN_SIM_TAIL_RE.sub(" ", text or "")
+
+
+def sentence_has_unsafe_polarity_or_role(sent: str) -> tuple[bool, str | None]:
+    """Return `(True, tag)` when `sent` contains negation, conditional, yes/no question, or proof-goal markers."""
+    cleaned = _strip_benign_sim_tail(sent)
+    if _CONDITIONAL_MARKER_RE.search(cleaned):
+        return True, "CONDITIONAL_OR_DYNAMIC"
+    if _NEGATED_SPAN_RE.search(cleaned):
+        return True, "NEGATIVE_POLARITY"
+    if _YES_NO_RE.search(cleaned):
+        return True, "YES_NO_QUESTION"
+    if _PROOF_GOAL_RE.search(cleaned):
+        return True, "PROOF_GOAL"
+    return False, None
+
+
+_TWO_SOLIDS_PHRASE_RE = re.compile(
+    r"\b(?:hai|ba|những|các)\s+(?:hình\s+|khối\s+)?(?:tứ\s+diện|chóp|lăng\s+trụ|hộp(?:\s+chữ\s+nhật)?|lập\s+phương)\b",
+    re.IGNORECASE | re.UNICODE,
+)
+
+
+def _has_unique_declared_solid(text: str) -> bool:
+    """True only when `text` declares exactly one solid without plural multi-solid markers."""
+    if _TWO_SOLIDS_PHRASE_RE.search(text or ""):
+        return False
+    dotted = {m.group(0).replace(".", "") for m in _SOLID_TOKEN_RE.finditer(text or "")}
+    if len(dotted) > 1:
+        return False
+    declared = _declared_solids(text or "")
+    return len(declared) == 1 and (not dotted or dotted == declared)
+
+
+def verify_rewrite_step_safety(
+    original_sentence: str,
+    excerpt: str,
+    replacement: str,
+    full_text: str,
+    rule_id: str,
+    *,
+    require_polarity_guard: bool = True,
+) -> tuple[bool, str, tuple[str, ...]]:
+    """Layer-1 rewrite invariant verifier executed prior to accepting any canonical replacement."""
+    checks: list[str] = []
+    if require_polarity_guard and rule_id not in _SAFE_TYPOGRAPHY_RULES:
+        unsafe_ex, tag_ex = sentence_has_unsafe_polarity_or_role(excerpt)
+        if unsafe_ex:
+            return False, f"blocked_by_{tag_ex.lower()}", ("polarity_invariance",)
+        unsafe_s, tag_s = sentence_has_unsafe_polarity_or_role(original_sentence)
+        if unsafe_s:
+            return False, f"blocked_by_sentence_{tag_s.lower()}", ("polarity_invariance",)
+        checks.append("polarity_invariance")
+
+    if rule_id in _SINGLE_SOLID_BINDING_RULES and not _has_unique_declared_solid(full_text):
+        return False, "blocked_by_multi_or_missing_solid_ambiguity", tuple(checks + ["unique_solid_precondition"])
+    if rule_id in _SINGLE_SOLID_BINDING_RULES:
+        checks.append("unique_solid_precondition")
+
+    # Entity label conservation: replacement cannot hallucinate point/solid labels outside original context
+    allowed_labels: set[str] = set()
+    for m_ent in _ENTITY_REF_RE.finditer(original_sentence):
+        tok = m_ent.group(1)
+        if tok not in _VN_NON_GEOM_CAPS:
+            allowed_labels.add(tok)
+            allowed_labels.update(re.findall(r"[A-Z][0-9]*'?", tok))
+    if rule_id in _SINGLE_SOLID_BINDING_RULES or rule_id in ("VN04_NHAN_IMPLICIT_BASE", "VN13_PYRAMID_HEIGHT_WITH_FOOT", "VN12_EDGES_FROM_VERTEX_PAIRWISE_PERP", "VN09_ANAPHORA_TWO_LINES_GOALS", "VN09_ANAPHORA_TWO_LINES_NAME"):
+        for m_ent in _ENTITY_REF_RE.finditer(full_text):
+            tok = m_ent.group(1)
+            if tok not in _VN_NON_GEOM_CAPS:
+                allowed_labels.add(tok)
+                allowed_labels.update(re.findall(r"[A-Z][0-9]*'?", tok))
+    if rule_id in _DERIVED_POINT_RULES:
+        for m_new in re.finditer(r"\bGọi\s+([A-Z][0-9']*'?)\s+là\b", replacement):
+            allowed_labels.add(m_new.group(1))
+    for m_rep in _ENTITY_REF_RE.finditer(replacement):
+        tok = m_rep.group(1)
+        if tok in _VN_NON_GEOM_CAPS:
+            continue
+        if tok not in allowed_labels and not all(ch_tok in allowed_labels for ch_tok in re.findall(r"[A-Z][0-9]*'?", tok)):
+            return False, f"blocked_by_unconserved_entity:{tok}", tuple(checks + ["entity_conservation"])
+    checks.append("entity_conservation")
+
+    # Quantity conservation: numbers/radicals in replacement must originate from excerpt
+    ex_nums = set(re.findall(r"(?:\d+(?:[.,/]\d+)?|√\d+)", excerpt))
+    rep_nums = set(re.findall(r"(?:\d+(?:[.,/]\d+)?|√\d+)", replacement))
+    if not rep_nums.issubset(ex_nums):
+        return False, f"blocked_by_unconserved_quantity:{sorted(rep_nums - ex_nums)}", tuple(checks + ["quantity_conservation"])
+    checks.append("quantity_conservation")
+    return True, "layer1_verified", tuple(checks)
+
+
+REWRITE_RULE_CATALOG: dict[str, dict[str, Any]] = {
+    "VN01_PARENS": {"classification": "SAFE_EQUIVALENT", "allowed_fact_kinds": ["typography"], "forbidden_fact_kinds": []},
+    "VN01_SOLID_DOT_SPACE": {"classification": "SAFE_EQUIVALENT", "allowed_fact_kinds": ["solid_notation"], "forbidden_fact_kinds": []},
+    "VN01_PUNCT_SPACE": {"classification": "SAFE_EQUIVALENT", "allowed_fact_kinds": ["typography"], "forbidden_fact_kinds": []},
+    "VN01_DEG_WORD": {"classification": "SAFE_EQUIVALENT", "allowed_fact_kinds": ["angle_unit"], "forbidden_fact_kinds": []},
+    "VN06_CLEAN_DOUBLE_PUNCT": {"classification": "SAFE_EQUIVALENT", "allowed_fact_kinds": ["typography"], "forbidden_fact_kinds": []},
+}
 
 
 @dataclass(frozen=True)
@@ -65,6 +220,10 @@ class VerifiedNormalizationStep:
     scope: str = "LOCAL_CLAUSE"
     polarity: str = "AFFIRMATIVE"
     semantic_equivalence_evidence: str = "deterministic_surface_equivalence"
+    preconditions_checked: tuple[str, ...] = ()
+    allowed_fact_kinds: tuple[str, ...] = ()
+    forbidden_fact_kinds: tuple[str, ...] = ()
+    layer1_verified: bool = True
 
     def to_dict(self) -> dict[str, Any]:
         return {
@@ -80,6 +239,10 @@ class VerifiedNormalizationStep:
             "scope": self.scope,
             "polarity": self.polarity,
             "semantic_equivalence_evidence": self.semantic_equivalence_evidence,
+            "preconditions_checked": list(self.preconditions_checked),
+            "allowed_fact_kinds": list(self.allowed_fact_kinds),
+            "forbidden_fact_kinds": list(self.forbidden_fact_kinds),
+            "layer1_verified": self.layer1_verified,
             "validation_status": self.validation_result,
             "validation_result": self.validation_result,
             "ambiguity_status": self.ambiguity_status,
@@ -160,7 +323,18 @@ def _apply_safe_sub(
     scope: str = "LOCAL_CLAUSE",
     evidence: str = "deterministic_surface_equivalence",
 ) -> tuple[str, list[int]]:
-    """Apply a regex substitution while tracking exact original spans and rejecting conditionals/negations."""
+    """Apply a regex substitution while tracking exact original spans and enforcing Layer-1 rewrite safety."""
+    is_safe_typo = rule_id in _SAFE_TYPOGRAPHY_RULES
+    REWRITE_RULE_CATALOG.setdefault(
+        rule_id,
+        {
+            "classification": "SAFE_EQUIVALENT" if is_safe_typo else "GUARDED_EQUIVALENT",
+            "allowed_fact_kinds": [scope.lower()],
+            "forbidden_fact_kinds": ([] if is_safe_typo else ["conditional", "negated", "yes_no_question", "proof_goal", "multi_solid_ambiguous"]),
+            "requires_polarity_guard": not is_safe_typo,
+            "requires_unique_solid": rule_id in _SINGLE_SOLID_BINDING_RULES,
+        },
+    )
     matches = list(pattern.finditer(cur))
     if not matches:
         return cur, pos_map
@@ -171,6 +345,10 @@ def _apply_safe_sub(
     edits: list[tuple[int, int, str]] = []
     last = 0
     changed_any = False
+    eff_polarity_guard = (not is_safe_typo) or skip_if_cond_or_neg or skip_if_sentence_neg
+    allowed_kinds = tuple(REWRITE_RULE_CATALOG[rule_id]["allowed_fact_kinds"])
+    forbidden_kinds = tuple(REWRITE_RULE_CATALOG[rule_id]["forbidden_fact_kinds"])
+
     for m in matches:
         s0, s1 = m.start(), m.end()
         excerpt = m.group(0)
@@ -182,9 +360,14 @@ def _apply_safe_sub(
 
         sent_start, sent_end = _sentence_bounds(cur, s0, s1)
         sent_slice = cur[sent_start:sent_end]
+        orig_sent_start, orig_sent_end = _sentence_bounds(norm0, orig_s0, orig_s1)
+        orig_sent_slice = norm0[orig_sent_start:orig_sent_end] or sent_slice
 
-        if skip_if_cond_or_neg:
-            if _CONDITIONAL_MARKER_RE.search(sent_slice) or _NEGATED_SPAN_RE.search(excerpt):
+        if eff_polarity_guard:
+            unsafe_cur, unsafe_tag = sentence_has_unsafe_polarity_or_role(sent_slice)
+            unsafe_orig, orig_tag = sentence_has_unsafe_polarity_or_role(orig_sent_slice)
+            if unsafe_cur or unsafe_orig:
+                tag = unsafe_tag or orig_tag or "CONDITIONAL_OR_NEGATIVE"
                 steps.append(
                     VerifiedNormalizationStep(
                         rule_id=rule_id,
@@ -196,12 +379,29 @@ def _apply_safe_sub(
                         original_clause_id=clause_id,
                         original_entity_refs=ent_refs,
                         scope=scope,
-                        polarity="CONDITIONAL_OR_NEGATIVE",
-                        semantic_equivalence_evidence="blocked_by_conditional_or_negation_guard",
+                        polarity=tag,
+                        semantic_equivalence_evidence="blocked_by_sentence_polarity_or_role_guard",
+                        preconditions_checked=("polarity_invariance",),
+                        allowed_fact_kinds=allowed_kinds,
+                        forbidden_fact_kinds=forbidden_kinds,
+                        layer1_verified=False,
                     )
                 )
                 continue
-        if skip_if_sentence_neg and _NEGATED_SPAN_RE.search(sent_slice):
+
+        replacement = repl(m) if callable(repl) else m.expand(repl)
+        if replacement == excerpt:
+            continue
+
+        ok_l1, reason_l1, checks_l1 = verify_rewrite_step_safety(
+            orig_sent_slice,
+            orig_excerpt,
+            replacement,
+            cur,
+            rule_id,
+            require_polarity_guard=eff_polarity_guard,
+        )
+        if not ok_l1:
             steps.append(
                 VerifiedNormalizationStep(
                     rule_id=rule_id,
@@ -213,15 +413,16 @@ def _apply_safe_sub(
                     original_clause_id=clause_id,
                     original_entity_refs=ent_refs,
                     scope=scope,
-                    polarity="NEGATIVE",
-                    semantic_equivalence_evidence="blocked_by_sentence_negation_guard",
+                    polarity="UNSAFE_REWRITE_BLOCKED",
+                    semantic_equivalence_evidence=reason_l1,
+                    preconditions_checked=checks_l1,
+                    allowed_fact_kinds=allowed_kinds,
+                    forbidden_fact_kinds=forbidden_kinds,
+                    layer1_verified=False,
                 )
             )
             continue
 
-        replacement = repl(m) if callable(repl) else m.expand(repl)
-        if replacement == excerpt:
-            continue
         out_parts.append(cur[last:s0])
         out_parts.append(replacement)
         edits.append((s0, s1, replacement))
@@ -240,6 +441,10 @@ def _apply_safe_sub(
                 scope=scope,
                 polarity="AFFIRMATIVE",
                 semantic_equivalence_evidence=evidence,
+                preconditions_checked=checks_l1,
+                allowed_fact_kinds=allowed_kinds,
+                forbidden_fact_kinds=forbidden_kinds,
+                layer1_verified=True,
             )
         )
     if not changed_any:
@@ -302,7 +507,6 @@ _PERP_PAIRWISE = r"(?:đôi\s+một\s+vuông\s+góc(?:\s+với\s+nhau)?|vuông\s
 _PERP_TARGET = r"(?:(?:mặt\s+phẳng\s+)?\([A-Z][0-9]*'?(?:[A-Z][0-9]*'?){2,3}\)|mặt\s+phẳng\s+đáy|(?:mặt\s+)?đáy)"
 _SOLID_PHRASE = (r"(?:(?:khối|hình)\s+)?(?:tứ\s+diện|chóp|lăng\s+trụ(?:\s+đứng)?)(?:\s+(?:tam\s+giác|tứ\s+giác))?"
                  r"\s+[A-Z][0-9]*'?(?:\.?[A-Z][0-9]*'?)+")
-_YES_NO_RE = re.compile(r"\bcó\b[^.?!]*\bkhông\s*\??\s*$|\bphải\s+không\b|\bhay\s+không\b", re.IGNORECASE)
 
 
 def _items(s: str, item: str) -> list[str]:
@@ -310,13 +514,28 @@ def _items(s: str, item: str) -> list[str]:
 
 
 def _tetra_labels(text: str) -> list[str]:
-    return [m.replace(".", "") for m in re.findall(r"(?i:tứ\s+diện)\s+([A-Z]\.?[A-Z]{3})(?![A-Z0-9'])", text)]
+    out: list[str] = []
+    for m in re.finditer(
+        r"(?i:tứ\s+diện(?:\s+đều)?)\s+([A-Z]\.?[A-Z]{3})(?:\s*(?:,|và)\s*(?:(?:hình|khối)\s+)?(?:tứ\s+diện\s+)?([A-Z]\.?[A-Z]{3}))?(?![A-Z0-9'])",
+        text,
+    ):
+        out.append(m.group(1).replace(".", ""))
+        if m.group(2):
+            out.append(m.group(2).replace(".", ""))
+    return out
 
 
 def _declared_solids(text: str) -> set[str]:
-    return {m.replace(".", "") for m in re.findall(
-        r"(?i:tứ\s+diện|chóp|lăng\s+trụ(?:\s+đứng)?|hình\s+hộp(?:\s+chữ\s+nhật)?|lập\s+phương)\s+"
-        r"([A-Z][0-9]*'?(?:\.?[A-Z][0-9]*'?){3,7})(?![A-Z0-9'])", text)}
+    out: set[str] = set()
+    for m in re.finditer(
+        r"(?i:tứ\s+diện(?:\s+đều)?|chóp|lăng\s+trụ(?:\s+đứng)?|hình\s+hộp(?:\s+chữ\s+nhật)?|lập\s+phương)\s+"
+        r"([A-Z][0-9]*'?(?:\.?[A-Z0-9']+){3,7})(?:\s*(?:,|và)\s*([A-Z][0-9]*'?(?:\.?[A-Z0-9']+){3,7}))?(?![A-Z0-9'])",
+        text,
+    ):
+        out.add(m.group(1).replace(".", ""))
+        if m.group(2):
+            out.add(m.group(2).replace(".", ""))
+    return out
 
 
 def _apply_v15_composition(
@@ -331,6 +550,8 @@ def _apply_v15_composition(
 
     # VN12a "ba cạnh xuất phát từ (đỉnh) P đôi một vuông góc" in the ONE declared tetrahedron that contains P
     def _repl_edges_from(m: re.Match[str]) -> str:
+        if not _has_unique_declared_solid(text):
+            return m.group(0)
         p = m["p"]
         tets = sorted({t for t in _tetra_labels(text) if p in t})
         if len(tets) != 1:
@@ -831,9 +1052,10 @@ def _apply_v3_post_closure(
     steps: list[VerifiedNormalizationStep],
 ) -> tuple[str, list[int]]:
     """Post-v2 AXO HYBRID /9 closure rules (`VN07`, `VN09`, `VN10`, `VN11`)."""
-    # Resolve remaining bare `mặt đáy` / `đáy` in perpendicularity or angle-to-base when base is unique
-    base_lbl = _implicit_solid_base_in_sentence(cur, use_v2=True)
-    m_sol_all = _SOLID_TOKEN_RE.search(cur)
+    # Resolve remaining bare `mặt đáy` / `đáy` in perpendicularity or angle-to-base ONLY when solid is unique
+    unique_solid = _has_unique_declared_solid(cur)
+    base_lbl = _implicit_solid_base_in_sentence(cur, use_v2=True) if unique_solid else None
+    m_sol_all = _SOLID_TOKEN_RE.search(cur) if unique_solid else None
     solid_lbl = m_sol_all.group(0) if m_sol_all else None
     if base_lbl:
         cur, pos_map = _apply_safe_sub(
@@ -1009,14 +1231,14 @@ def _apply_v3_post_closure(
         evidence="expand_shorthand_tinh_segment_to_length",
     )
 
-    # Resolve unambiguous 2-line anaphora ("hai đường thẳng đó", "Ngoài ra, hai đường thẳng này hợp với nhau một góc bao nhiêu?")
-    m_two_lines = re.search(
+    # Resolve unambiguous 2-line anaphora only when exactly ONE distinct 2-line pair is declared
+    two_line_matches = re.findall(
         r"hai\s+đường\s+thẳng\s+([A-Z][0-9']*'?[A-Z][0-9']*'?)\s+và\s+([A-Z][0-9']*'?[A-Z][0-9']*'?)",
         cur,
         re.IGNORECASE | re.UNICODE,
     )
-    if m_two_lines:
-        l1, l2 = m_two_lines.group(1), m_two_lines.group(2)
+    if len({tuple(sorted(pair)) for pair in two_line_matches}) == 1:
+        l1, l2 = two_line_matches[0]
         cur, pos_map = _apply_safe_sub(
             cur, norm0=norm0, pos_map=pos_map,
             rule_id="VN09_ANAPHORA_TWO_LINES_GOALS",
@@ -1801,10 +2023,13 @@ def normalize_for_slm_grounding(
 
 
 __all__ = [
+    "REWRITE_RULE_CATALOG",
     "SLM_VERIFIED_NORMALIZER_V1_VERSION",
     "SLM_VERIFIED_NORMALIZER_V3_VERSION",
     "SLM_VERIFIED_NORMALIZER_VERSION",
     "VerifiedNormalizationResult",
     "VerifiedNormalizationStep",
     "normalize_for_slm_grounding",
+    "sentence_has_unsafe_polarity_or_role",
+    "verify_rewrite_step_safety",
 ]

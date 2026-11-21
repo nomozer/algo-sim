@@ -254,3 +254,86 @@ def test_v15_composition_rule_does_not_fire_without_its_precondition(family, src
     out = normalize_for_slm_grounding(src, normalizer_version="v3")
     applied = [s.rule_id for s in out.steps if s.validation_result == "VALIDATED_MEANING_PRESERVING"]
     assert not any(r.startswith(family) for r in applied), (applied, out.canonical_text)
+
+
+METAMORPHIC_SAFETY_PAIRS = [
+    ("neg_khong_dung_rang",
+     "Cho tứ diện ABCD có AB, AC, AD đôi một vuông góc, AB = 3, AC = 4, AD = 5. Vẽ hình.",
+     "Không đúng rằng AB, AC, AD đôi một vuông góc trong tứ diện ABCD có AB = 3, AC = 4, AD = 5. Vẽ hình."),
+    ("neg_khong_phai_ca",
+     "Cho tứ diện OABC có OA, OB, OC đôi một vuông góc, OA = 2, OB = 3, OC = 4. Vẽ hình.",
+     "Cho tứ diện OABC có OA = 2, OB = 3, OC = 4 và không phải cả ba cạnh đều vuông góc. Vẽ hình."),
+    ("neg_khong_doi_mot",
+     "Cho tứ diện IJKL có IJ, IK, IL đôi một vuông góc, IJ = 2, IK = 3, IL = 4. Vẽ hình.",
+     "Cho tứ diện IJKL có IJ, IK, IL không đôi một vuông góc, IJ = 2, IK = 3, IL = 4. Vẽ hình."),
+    ("neg_chua_chac",
+     "Cho hình chóp S.ABCD có đáy ABCD là hình vuông cạnh 4, SA vuông góc với đáy và SA = 3. Vẽ hình.",
+     "Cho hình chóp S.ABCD có đáy ABCD là hình vuông cạnh 4, SA = 3 nhưng chưa chắc SA vuông góc với đáy. Vẽ hình."),
+    ("cond_gia_su",
+     "Cho tứ diện OABC có OA, OB, OC đôi một vuông góc, OA = 2, OB = 3, OC = 5. Tính độ dài AB.",
+     "Cho tứ diện OABC có OA = 2, OB = 3, OC = 5. Giả sử ba cạnh OA, OB, OC đôi một vuông góc, tính độ dài AB."),
+    ("cond_trong_truong_hop",
+     "Cho hình chóp S.ABCD đáy ABCD là hình vuông cạnh 3, SA = 4, SA vuông góc với đáy. Tính thể tích khối chóp S.ABCD.",
+     "Cho hình chóp S.ABCD đáy ABCD là hình vuông cạnh 3, SA = 4. Trong trường hợp SA vuông góc với đáy thì thể tích bằng bao nhiêu?"),
+    ("cond_khi_thay_doi",
+     "Cho hình chóp S.ABCD có đáy ABCD là hình vuông cạnh 4, SA vuông góc với đáy, SA = 5. Tính thể tích khối chóp S.ABCD.",
+     "Tính thể tích khối chóp S.ABCD khi thay đổi chiều cao SA, biết đáy ABCD là hình vuông cạnh 4 và SA vuông góc với đáy."),
+    ("yn_co_phai",
+     "Cho tứ diện OABC có OA, OB, OC đôi một vuông góc, OA = 3, OB = 4, OC = 5. Tính thể tích khối tứ diện.",
+     "Cho tứ diện OABC có OA = 3, OB = 4, OC = 5. Có phải ba cạnh OA, OB, OC đôi một vuông góc?"),
+    ("yn_lieu",
+     "Cho hình chóp S.ABCD đáy ABCD là hình vuông cạnh 3, SA = 4 và SA vuông góc với đáy. Vẽ hình.",
+     "Cho hình chóp S.ABCD đáy ABCD là hình vuông cạnh 3, SA = 4. Liệu SA là đường cao của hình chóp S.ABCD?"),
+    ("proof_cmr",
+     "Cho hình chóp S.ABCD đáy ABCD là hình vuông cạnh 3, SA vuông góc với đáy, SA = 4. Vẽ hình.",
+     "Cho hình chóp S.ABCD đáy ABCD là hình chữ nhật, SA = 3, SB = 5, AC = 4. Chứng minh rằng SA vuông góc với AB."),
+    ("multi_solid_tet",
+     "Cho tứ diện OABC có ba cạnh xuất phát từ O đôi một vuông góc, OA = 2, OB = 3, OC = 4. Vẽ hình.",
+     "Cho hai tứ diện OABC và OXYZ có ba cạnh xuất phát từ đỉnh O đôi một vuông góc, OA = 2, OB = 3, OC = 4. Vẽ hình."),
+    ("multi_solid_pyr",
+     "Cho hình chóp S.ABCD có đáy ABCD là hình vuông cạnh 4, SA vuông góc với đáy và SA = 5. Hãy mô phỏng.",
+     "Cho hình chóp S.ABCD và hình chóp P.UVWX có đáy là hình vuông cạnh 4, SA = 5. Hãy mô phỏng."),
+    ("list_mismatch",
+     "Cho tứ diện IJKL có IJ, IK, IL đôi một vuông góc, IJ, IK, IL lần lượt bằng 2, 3 và 4. Vẽ hình.",
+     "Cho tứ diện IJKL có IJ, IK, IL đôi một vuông góc, IJ, IK, IL lần lượt bằng 2 và 3. Vẽ hình."),
+]
+
+
+@pytest.mark.parametrize(
+    "pos_txt,adv_txt",
+    [(p, a) for _, p, a in METAMORPHIC_SAFETY_PAIRS],
+    ids=[k for k, _, _ in METAMORPHIC_SAFETY_PAIRS],
+)
+def test_paired_metamorphic_downstream_safety(monkeypatch, pos_txt, adv_txt):
+    _offline_env(monkeypatch)
+    rp = route_text_input_local_slm(pos_txt, closure_mode=V9_CLOSURE_MODE, normalizer_version="v3", runtime=None, allow_download=False)
+    ra = route_text_input_local_slm(adv_txt, closure_mode=V9_CLOSURE_MODE, normalizer_version="v3", runtime=None, allow_download=False)
+    assert rp.status == "SERVED", (pos_txt, rp.response)
+    assert ra.status == "REFUSED", (adv_txt, ra.response)
+
+
+def test_benign_sim_tail_preserved_while_step_contract_enforced(monkeypatch):
+    _offline_env(monkeypatch)
+    from app.ai.slm_verified_normalizer import verify_rewrite_step_safety
+
+    safe_sim = "Cho hình hộp chữ nhật ABCD.A'B'C'D' với AB = 3, AD = 4, AA' = 5, không cần tính toán."
+    r_ok = route_text_input_local_slm(safe_sim, closure_mode=V9_CLOSURE_MODE, normalizer_version="v3", runtime=None, allow_download=False)
+    assert r_ok.status == "SERVED", r_ok.response
+
+    ok_bad_ent, reason_ent, _ = verify_rewrite_step_safety(
+        "Cho hình chóp S.ABCD có đáy là hình vuông cạnh 2.",
+        "cạnh 2",
+        "cạnh 2 trên P.XYZ",
+        "Cho hình chóp S.ABCD có đáy là hình vuông cạnh 2.",
+        "VN06_CUBE_CANH_BANG",
+    )
+    assert not ok_bad_ent and reason_ent.startswith("blocked_by_unconserved_entity:")
+
+    ok_bad_qty, reason_qty, _ = verify_rewrite_step_safety(
+        "Cho hình chóp S.ABCD có đáy là hình vuông cạnh 2.",
+        "cạnh 2",
+        "cạnh 9",
+        "Cho hình chóp S.ABCD có đáy là hình vuông cạnh 2.",
+        "VN06_CUBE_CANH_BANG",
+    )
+    assert not ok_bad_qty and reason_qty.startswith("blocked_by_unconserved_quantity:")

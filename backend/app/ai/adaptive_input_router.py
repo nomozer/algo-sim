@@ -1688,6 +1688,12 @@ def _should_escalate_to_compact_slm(
 
     # 2. False LOCAL_PARSE_AMBIGUOUS where source has unconsumed scalar/dimension tokens beyond Local Parser premises
     if local_res is not None and local_res.status == LOCAL_PARSE_AMBIGUOUS and local_res.payload is not None:
+        unresolved_items = local_res.payload.get("unresolved") or ()
+        if any(
+            isinstance(u, dict) and "target_solid_disambiguation" in (u.get("missing_roles") or ())
+            for u in unresolved_items
+        ):
+            return False
         from app.ai.local_slm_extractor import _TOKEN_QTY_RE, _try_eval_qty
 
         parsed_qtys: set[str] = set()
@@ -1707,6 +1713,58 @@ def _should_escalate_to_compact_slm(
             return True
 
     return False
+
+
+def _verify_canonical_against_original_source(
+    problem_text: str,
+    v3_norm: Any,
+    det_v3: AdaptiveRouteOutcome | None = None,
+) -> tuple[bool, str | None]:
+    """Ensure no non-typography V3 normalizer step altered a negated/conditional/question/proof or multi-solid sentence."""
+    if v3_norm is None or not getattr(v3_norm, "changed", False):
+        return True, None
+    from app.ai.slm_verified_normalizer import (
+        _SAFE_TYPOGRAPHY_RULES,
+        _SINGLE_SOLID_BINDING_RULES,
+        _has_unique_declared_solid,
+        _sentence_bounds,
+        sentence_has_unsafe_polarity_or_role,
+    )
+
+    norm0 = normalize_problem_text(problem_text or "")
+    for step in getattr(v3_norm, "steps", ()):
+        if getattr(step, "validation_result", None) != "VALIDATED_MEANING_PRESERVING":
+            continue
+        if not getattr(step, "layer1_verified", True):
+            return False, f"v3_original_source_safety_rejected:{step.rule_id}:layer1_unverified"
+        if step.rule_id in _SAFE_TYPOGRAPHY_RULES:
+            continue
+        s0, s1 = step.original_span
+        sa, sb = _sentence_bounds(norm0, max(0, min(s0, len(norm0))), max(0, min(s1, len(norm0))))
+        orig_sent = norm0[sa:sb]
+        unsafe, tag = sentence_has_unsafe_polarity_or_role(orig_sent)
+        if unsafe:
+            return False, f"v3_original_source_safety_rejected:{step.rule_id}:{tag}"
+        if step.rule_id in _SINGLE_SOLID_BINDING_RULES and not _has_unique_declared_solid(norm0):
+            return False, f"v3_original_source_safety_rejected:{step.rule_id}:MULTI_SOLID"
+
+    if det_v3 is not None and det_v3.local_parse_result is not None and det_v3.local_parse_result.payload:
+        payload = det_v3.local_parse_result.payload
+        for grp_key in ("facts", "premises"):
+            for item in payload.get(grp_key) or ():
+                kind = str(item.get("kind") or item.get("fn") or "")
+                if kind in ("solid", "pyramid", "prism", "tetrahedron", "regular_pyramid"):
+                    continue
+                q = str(item.get("source_quote") or (item.get("quotes") or [""])[0] or "")
+                if not q:
+                    continue
+                idx = norm0.find(q)
+                if idx >= 0:
+                    sa, sb = _sentence_bounds(norm0, idx, idx + len(q))
+                    unsafe, tag = sentence_has_unsafe_polarity_or_role(norm0[sa:sb])
+                    if unsafe:
+                        return False, f"v3_original_source_safety_rejected:premise_{kind}:{tag}"
+    return True, None
 
 
 def route_text_input_local_slm(
@@ -1867,6 +1925,50 @@ def route_text_input_local_slm(
         return det
 
     if is_v9_closure and v3_norm is not None and v3_norm.changed and v3_norm.canonical_text != cleaned_input:
+        ok_src_v3, err_src_v3 = _verify_canonical_against_original_source(problem_text, v3_norm)
+        if not ok_src_v3:
+            tel_v3_ref = AdaptiveRouteTelemetry(
+                router_version=ADAPTIVE_INPUT_ROUTER_VERSION,
+                parser_version=LOCAL_GEOMETRY_PARSER_VERSION,
+                input_kind=input_kind,
+                local_parse_status="REJECTED_V3_ORIGINAL_SOURCE_SAFETY",
+                chosen_route="LOCAL_SLM_SECURITY_REFUSAL",
+                fallback_reason=err_src_v3,
+                gemini_vision_calls=previous_vision_calls,
+                gemini_typed_fact_calls=0,
+                total_provider_calls=previous_vision_calls,
+                local_parse_ms=0.0,
+                vision_ms=previous_vision_ms,
+                typed_fact_ai_ms=0.0,
+                hybrid_execution_ms=0.0,
+                total_ms=(time.perf_counter() - t0) * 1000.0 + previous_vision_ms,
+                source_coverage={},
+                cache_key_metadata={},
+            )
+            resp_v3_ref = {
+                "schema_version": ROUTE_D_SIMULATION_V4_SCHEMA_VERSION,
+                "route_d": {
+                    "status": "REFUSED",
+                    "adapter_version": ADAPTER_V4_VERSION,
+                    "schema_version": ROUTE_D_SIMULATION_V4_SCHEMA_VERSION,
+                    "extraction_mode": "LOCAL_V3_ORIGINAL_SOURCE_REJECTED",
+                    "local_parser_version": LOCAL_GEOMETRY_PARSER_VERSION,
+                    "adaptive_router_version": ADAPTIVE_INPUT_ROUTER_VERSION,
+                    "adaptive_telemetry": tel_v3_ref.to_dict(),
+                    "normalizer_provenance": v3_norm.to_provenance_dict(),
+                    "refusal": {"code": "AMBIGUOUS_FACT", "reason_code": "AMBIGUOUS_FACT", "failure_taxonomy": err_src_v3},
+                },
+                "envelope": {"status": "refused", "reason_code": "AMBIGUOUS_FACT", "failure_kind": "SEMANTIC_REWRITE_SAFETY_REJECTED"},
+            }
+            return AdaptiveRouteOutcome(
+                status="REFUSED",
+                response=resp_v3_ref,
+                receipt={"schema": "adaptive-input-route-receipt/1", "status": "REFUSED", "code": "AMBIGUOUS_FACT", "adaptive_telemetry": tel_v3_ref.to_dict()},
+                telemetry=tel_v3_ref,
+                local_parse_result=None,
+                cache_key=None,
+            )
+
         det_v3 = route_text_input(
             v3_norm.canonical_text,
             allow_live_ai=False,
@@ -1878,6 +1980,31 @@ def route_text_input_local_slm(
             timeout_seconds=timeout_seconds,
         )
         if det_v3.telemetry.chosen_route != "FAIL_CLOSED_LIVE_AI_DISABLED" and not _should_escalate_to_compact_slm(det_v3, v3_norm.canonical_text):
+            if det_v3.status == "SERVED":
+                ok_det_v3, err_det_v3 = _verify_canonical_against_original_source(problem_text, v3_norm, det_v3)
+                if not ok_det_v3:
+                    return AdaptiveRouteOutcome(
+                        status="REFUSED",
+                        response={
+                            "schema_version": ROUTE_D_SIMULATION_V4_SCHEMA_VERSION,
+                            "route_d": {
+                                "status": "REFUSED",
+                                "adapter_version": ADAPTER_V4_VERSION,
+                                "schema_version": ROUTE_D_SIMULATION_V4_SCHEMA_VERSION,
+                                "extraction_mode": "LOCAL_V3_ORIGINAL_SOURCE_REJECTED",
+                                "local_parser_version": LOCAL_GEOMETRY_PARSER_VERSION,
+                                "adaptive_router_version": ADAPTIVE_INPUT_ROUTER_VERSION,
+                                "adaptive_telemetry": det_v3.telemetry.to_dict(),
+                                "normalizer_provenance": v3_norm.to_provenance_dict(),
+                                "refusal": {"code": "AMBIGUOUS_FACT", "reason_code": "AMBIGUOUS_FACT", "failure_taxonomy": err_det_v3},
+                            },
+                            "envelope": {"status": "refused", "reason_code": "AMBIGUOUS_FACT", "failure_kind": "SEMANTIC_REWRITE_SAFETY_REJECTED"},
+                        },
+                        receipt={"schema": "adaptive-input-route-receipt/1", "status": "REFUSED", "code": "AMBIGUOUS_FACT", "adaptive_telemetry": det_v3.telemetry.to_dict()},
+                        telemetry=det_v3.telemetry,
+                        local_parse_result=det_v3.local_parse_result,
+                        cache_key=None,
+                    )
             rd_v3 = dict((det_v3.response or {}).get("route_d") or {})
             rd_v3["normalizer_provenance"] = v3_norm.to_provenance_dict()
             rd_v3["extraction_mode"] = "LOCAL_PARSER_AFTER_V3_NORMALIZER"
