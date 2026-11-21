@@ -3989,8 +3989,7 @@
    -------------------------------------------------------------------------- */
 
 .axo-v14-hero.axo-v14-hero-atelier {
-  background-color: var(--axo-sp-bg);
-  padding: clamp(16px, 2.4vh, 30px) 0 clamp(24px, 3.6vh, 44px);
+  padding: clamp(28px, 4.2vh, 46px) 0 clamp(56px, 6.8vh, 72px);
   overflow-x: clip;
 }
 
@@ -3998,20 +3997,20 @@
   box-sizing: border-box;
   width: 100%;
   max-width: 1240px;
-  min-height: clamp(560px, calc(100svh - 118px), 958px);
+  min-height: clamp(560px, calc(100svh - 156px), 736px);
   margin: 0 auto;
   padding-inline: clamp(20px, 4vw, 48px);
   display: grid;
-  grid-template-columns: minmax(0, 0.92fr) minmax(0, 1.08fr);
-  grid-template-rows: 1fr auto auto 1fr;
+  grid-template-columns: minmax(0, 0.98fr) minmax(0, 1.02fr);
+  grid-template-rows: 1.08fr auto auto 0.92fr;
   grid-template-areas:
     ". stage"
     "title stage"
     "body stage"
     ". stage";
   align-items: center;
-  column-gap: clamp(20px, 2.6vw, 40px);
-  row-gap: clamp(14px, 2vh, 22px);
+  column-gap: clamp(28px, 3.4vw, 52px);
+  row-gap: clamp(16px, 2vh, 20px);
 }
 
 .axo-v14-hero-atelier-title {
@@ -4020,19 +4019,13 @@
   justify-self: start;
   margin: 0;
   width: 100%;
-  max-width: 630px;
+  max-width: 100%;
   color: var(--ink);
-  font-size: clamp(2.55rem, 3.65vw, 3.55rem);
+  font-size: clamp(2.5625rem, 1.3rem + 2.05vw, 3.25rem);
   font-weight: 700;
-  line-height: 1.06;
-  letter-spacing: -0.036em;
-}
-
-@media (min-width: 480px) {
-  .axo-v14-hero-atelier .axo-v14-hero-title-line {
-    display: block;
-    white-space: nowrap;
-  }
+  line-height: 1.08;
+  letter-spacing: -0.032em;
+  hyphens: none;
 }
 
 .axo-v14-hero-atelier-body {
@@ -4040,21 +4033,21 @@
   align-self: start;
   justify-self: start;
   width: 100%;
-  max-width: 520px;
+  max-width: 500px;
 }
 
 .axo-v14-hero-atelier-lead {
   margin: 0;
-  max-width: 45ch;
+  max-width: 42ch;
   color: var(--ink-secondary);
-  font-size: clamp(1.03125rem, 1.22vw, 1.15625rem);
+  font-size: clamp(1rem, 0.92rem + 0.28vw, 1.125rem);
   font-weight: 400;
-  line-height: 1.56;
-  text-wrap: pretty;
+  line-height: 1.58;
+  text-wrap: balance;
 }
 
 .axo-v14-hero-atelier-actions {
-  margin-top: clamp(22px, 2.8vh, 32px);
+  margin-top: clamp(24px, 3vh, 32px);
 }
 
 .axo-v14-hero-atelier .axo-v14-btn-secondary {
@@ -4065,8 +4058,8 @@
   grid-area: stage;
   position: relative;
   width: 100%;
-  max-width: 660px;
-  aspect-ratio: 1.13 / 1;
+  max-width: 600px;
+  aspect-ratio: 1.2 / 1;
   justify-self: end;
   align-self: center;
   user-select: none;
@@ -4085,24 +4078,25 @@
 }
 
 .axo-v14-hero-atelier-diorama {
-  left: 9%;
-  top: 9%;
-  width: 89%;
+  left: 8%;
+  top: 4%;
+  width: 88%;
   z-index: 2;
 }
 
 .axo-v14-hero-atelier-plane {
   left: 0%;
-  top: 4%;
-  width: 24%;
+  top: 5%;
+  width: 20.5%;
   z-index: 3;
 }
 
 .axo-v14-hero-atelier-orbit {
   right: 0%;
-  top: 0%;
-  width: 24.5%;
+  top: 1%;
+  width: 17.5%;
   z-index: 1;
+  opacity: 0.94;
 }
 
 .axo-v14-hero-atelier-img {
@@ -4125,21 +4119,6 @@
 .axo-v14-hero-atelier-img-float-b {
   filter: var(--axo-v14-drop-shadow-float-b);
   animation: axo-v14-atelier-drift-b 9.6s ease-in-out infinite;
-}
-
-.axo-v14-hero-atelier-spark {
-  position: absolute;
-  width: 26px;
-  height: 26px;
-  color: var(--ink);
-  opacity: 0.72;
-  pointer-events: none;
-  z-index: 4;
-}
-
-.axo-v14-hero-atelier-spark-left {
-  left: 6%;
-  top: 46%;
 }
 
 @keyframes axo-v14-atelier-breathe {
@@ -4169,21 +4148,15 @@
   }
 }
 
-@media (max-width: 1180px) {
+@media (min-height: 980px) {
   .axo-v14-hero-atelier-grid {
-    grid-template-columns: minmax(0, 0.92fr) minmax(0, 1.08fr);
-    min-height: clamp(500px, calc(100svh - 116px), 680px);
-    column-gap: 20px;
-  }
-
-  .axo-v14-hero-atelier-title {
-    font-size: clamp(2.45rem, 4.15vw, 3.05rem);
+    min-height: 672px;
   }
 }
 
 @media (max-width: 960px) {
   .axo-v14-hero.axo-v14-hero-atelier {
-    padding: 20px 0 36px;
+    padding: 28px 0 44px;
   }
 
   .axo-v14-hero-atelier-grid {
@@ -4194,16 +4167,16 @@
       "title"
       "stage"
       "body";
-    row-gap: 18px;
+    row-gap: 22px;
   }
 
   .axo-v14-hero-atelier-title {
-    max-width: 100%;
-    font-size: clamp(2.15rem, 5.2vw, 2.7rem);
+    font-size: clamp(2.125rem, 1.35rem + 1.8vw, 2.5rem);
   }
 
   .axo-v14-hero-atelier-stage {
-    max-width: 540px;
+    max-width: 480px;
+    aspect-ratio: 1.24 / 1;
     justify-self: center;
   }
 
@@ -4212,103 +4185,76 @@
   }
 
   .axo-v14-hero-atelier-lead {
-    max-width: 58ch;
+    max-width: 44ch;
+  }
+
+  .axo-v14-hero-atelier-actions {
+    margin-top: 24px;
   }
 }
 
 @media (max-width: 680px) {
   .axo-v14-hero.axo-v14-hero-atelier {
-    padding: 14px 0 30px;
+    padding: 16px 0 28px;
   }
 
   .axo-v14-hero-atelier-grid {
-    row-gap: 14px;
+    row-gap: 16px;
   }
 
   .axo-v14-hero-atelier-title {
-    font-size: clamp(1.75rem, 8.2vw, 2.25rem);
-    line-height: 1.08;
-    letter-spacing: -0.032em;
+    font-size: clamp(1.625rem, 0.55rem + 5.6vw, 2.15rem);
+    line-height: 1.09;
+    letter-spacing: -0.03em;
   }
 
   .axo-v14-hero-atelier-stage {
-    max-width: 370px;
-    aspect-ratio: 1.15 / 1;
+    max-width: min(82vw, 336px);
+    aspect-ratio: 1.2 / 1;
   }
 
   .axo-v14-hero-atelier-diorama {
     left: 7%;
-    top: 8%;
-    width: 90%;
+    top: 4%;
+    width: 89%;
   }
 
   .axo-v14-hero-atelier-plane {
-    left: 0%;
-    top: 3%;
-    width: 24%;
+    width: 20%;
   }
 
   .axo-v14-hero-atelier-orbit {
-    right: 0%;
-    top: 0%;
-    width: 22%;
-  }
-
-  .axo-v14-hero-atelier-spark {
-    width: 20px;
-    height: 20px;
+    width: 17%;
   }
 
   .axo-v14-hero-atelier-lead {
     font-size: 1rem;
     line-height: 1.54;
+    max-width: 100%;
   }
 
   .axo-v14-hero-atelier-actions {
-    margin-top: 16px;
+    margin-top: 18px;
   }
 }
 
-@media (max-width: 420px) {
+@media (max-width: 680px) and (max-height: 620px), (max-width: 340px) {
   .axo-v14-hero.axo-v14-hero-atelier {
-    padding: 12px 0 24px;
+    padding: 10px 0 24px;
   }
 
   .axo-v14-hero-atelier-grid {
-    row-gap: 12px;
-  }
-
-  .axo-v14-hero-atelier-title {
-    font-size: clamp(1.7rem, 8vw, 2.08rem);
-  }
-
-  .axo-v14-hero-atelier-stage {
-    max-width: 332px;
-  }
-}
-
-@media (max-width: 360px) {
-  .axo-v14-hero.axo-v14-hero-atelier {
-    padding: 10px 0 20px;
-  }
-
-  .axo-v14-hero-atelier-grid {
-    padding-inline: 16px;
     row-gap: 10px;
   }
 
-  .axo-v14-hero-atelier-title {
-    font-size: 1.65rem;
-  }
-
   .axo-v14-hero-atelier-stage {
-    max-width: min(74vw, 236px);
+    max-width: min(74vw, 232px);
     aspect-ratio: 1.2 / 1;
   }
 
   .axo-v14-hero-atelier-lead {
     font-size: 0.9375rem;
-    line-height: 1.45;
+    line-height: 1.46;
   }
 
   .axo-v14-hero-atelier-actions {

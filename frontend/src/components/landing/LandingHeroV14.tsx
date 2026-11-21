@@ -116,7 +116,7 @@ export function LandingHeroV14() {
         <div className="axo-v14-hero-atelier-body">
           <p className="axo-v14-hero-atelier-lead">
             Nhập đề bài tiếng Việt để quan sát khối đa diện 3D chính xác, mặt
-            phẳng cắt và từng đường giao tuyến ngay trong không gian trực{"\u00A0"}quan.
+            phẳng cắt và từng đường giao tuyến ngay trong không gian trực quan.
           </p>
           <div className="axo-v14-hero-actions axo-v14-hero-atelier-actions">
             <button
@@ -192,20 +192,6 @@ export function LandingHeroV14() {
               className="axo-v14-hero-atelier-img axo-v14-hero-atelier-img-float-a"
             />
           </div>
-
-          <svg
-            className="axo-v14-hero-atelier-spark axo-v14-hero-atelier-spark-left"
-            viewBox="0 0 26 26"
-            fill="none"
-            aria-hidden="true"
-          >
-            <path
-              d="M17 19L8 12M19 13L13 6M13 22L5 19"
-              stroke="currentColor"
-              strokeWidth="1.9"
-              strokeLinecap="round"
-            />
-          </svg>
         </div>
       </div>
     </section>
