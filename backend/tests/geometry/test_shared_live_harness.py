@@ -86,3 +86,31 @@ def test_no_harness_tool_defaults_its_output_into_a_run_directory():
     for name in ("live_browser_acceptance.mjs", "ui_scenarios.mjs"):
         text = (H / name).read_text(encoding="utf-8")
         assert 'freshOutDir(ARGS.values["out-dir"])' in text and "process.env.AXO_" not in text, name
+
+
+def test_triangle_area_audit_preserves_frozen_scores_and_checks_gram_coordinates():
+    import importlib.util
+    from fractions import Fraction
+    from math import sqrt
+
+    spec = importlib.util.spec_from_file_location("scene_oracle", H / "scene_oracle.py")
+    oracle = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(oracle)
+
+    run = R12.parent / "axo-hybrid-local-model1-finalization-test-consolidation"
+    expected = {"H057": ("S", "B", "C", 80), "H069": ("I'", "J", "K", 61)}
+    manifest = _load(run / "ACCEPTANCE_MANIFEST.json")
+    registered = {c["case_id"]: c["metric_oracle"] for c in manifest["valid_cases"]}
+    lines = (run / "evidence/responses.jsonl").read_text(encoding="utf-8").splitlines()
+    rows = {record["case_id"]: record["body"] for line in lines if (record := json.loads(line))["case_id"] in expected}
+
+    for case_id, (a, b, c, area2) in expected.items():
+        response = rows[case_id]
+        triangle = oracle.Scene(response["envelope"]["scene3d"])
+        u, v = (oracle.sub(triangle.P[oracle.pid(point)], triangle.P[oracle.pid(a)]) for point in (b, c))
+        determinant = triangle.dot(u, u) * triangle.dot(v, v) - triangle.dot(u, v) ** 2
+        assert determinant / 4 == Fraction(area2)
+        rd = response["route_d"]
+        assert oracle.numeric(rd["answers"], rd["answer_exact"], [sqrt(area2)])["status"] == "CORRECT"
+        assert oracle.numeric(rd["answers"], rd["answer_exact"], registered[case_id])["status"] == "MISMATCH"
+        assert oracle.numeric({"q1": "4"}, {}, [sqrt(area2)])["status"] == "MISMATCH"
