@@ -1,0 +1,35 @@
+{
+  "schema": "axo-full-t3-receipt/1",
+  "run_id": "grounded-geometry-language-recovery",
+  "candidate": {
+    "head": "657bb2592",
+    "product_commit_sha": "cd2a21abce499ca82e0500f085bbc63e2934b65c",
+    "measured_system_tree_hash": "9867d39132faca013ab9865c8e7d29c6cb304bdaad24d9dae503f5ff3e9f6274",
+    "measured_files": 127,
+    "cache_version": "155",
+    "route_d_cache_policy": "155:route-d",
+    "evaluation_candidate_frozen_on_clean_tree": true,
+    "tracked_tree_clean_at_start": true,
+    "same_identity_as_live_acceptance": true,
+    "worktree": "shared development worktree reused on the owner's instruction; CLAUDE.md asks authoritative measurements to run in a clean DETACHED worktree — this run used a clean tracked tree in the shared worktree, not a detached one"
+  },
+  "command": "cd frontend && npm run test:full",
+  "env": {
+    "ALLOW_LIVE_AI": "0",
+    "ALGO_SIM_PYTHON": "D:/Documents/projects/algo-sim/backend/.venv/Scripts/python.exe",
+    "LOCAL_SLM_CACHE_DIR": "hard links of the provisioned cache (AxoV9 73f1484b..., llama.cpp b12470)"
+  },
+  "exit_code": 0,
+  "duration_s": 1411.6,
+  "verdict": "FULL_PRODUCT_GATE_PASS",
+  "gates": {
+    "backend_pytest": {"passed": 15122, "failed": 0, "skipped": 8, "deselected": 9, "xfailed": 12, "seconds": 1221.6},
+    "frontend_vitest": {"files": 203, "tests_passed": 2345, "failed": 0, "seconds": 176.9},
+    "typecheck_build": {"status": "PASS", "seconds": 11.6},
+    "demo_replay": {"status": "PASS", "seconds": 0.9},
+    "demo_crash_surface": {"status": "PASS", "seconds": 0.6}
+  },
+  "note": "The production build empties frontend/dist, which removed the preview build dist/v15-cache155-app used by the live run; it rebuilds from the same frontend source (unchanged since CACHE 153).",
+  "log": ".superpowers/offline-logs/grounded-geometry-language-recovery/full-t3-c155/full-t3.log",
+  "log_sha256": "6255a8d4df687024cb3abc1949878a16f22b6513b0a8f9ef4f68ac949e4ca82c"
+}

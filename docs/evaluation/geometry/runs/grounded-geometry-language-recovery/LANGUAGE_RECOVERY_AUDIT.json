@@ -1,0 +1,54 @@
+{
+  "schema": "axo-language-recovery-audit/1",
+  "run_id": "grounded-geometry-language-recovery",
+  "campaign": "AXO HYBRID /15",
+  "product_commit": "cd2a21abce499ca82e0500f085bbc63e2934b65c",
+  "cache_version": "155",
+  "mechanism": {
+    "where": "backend/app/ai/slm_verified_normalizer.py::_apply_v15_composition (called first in _apply_v3_pre_closure)",
+    "what": "span-audited deterministic rewrites of closed Vietnamese constructions into canonical forms that the local parser and the Source Gate already read and verify; every step records rule id, original span and evidence; conditional / negated sentences are blocked by _apply_safe_sub, yes/no questions and failed preconditions leave the text unchanged",
+    "when_it_runs": "only when the deterministic parser does not complete the ORIGINAL text; the canonical text then goes to the parser (LOCAL_PARSER_AFTER_V3_NORMALIZER) and, if still incomplete, to AxoV9",
+    "source_gate_authority": "unchanged in strictness: the Source Gate verifies the canonical text with the same closed grammar as typed input; it does not read the original wording, so each rewrite rule is itself a trusted step and carries a no-fire test set",
+    "not_done": "no new parser framework, no model change, no fine-tuning, no OCR/Vision work"
+  },
+  "families": [
+    {"family": "A pairwise perpendicular", "rules": ["VN12_EDGES_FROM_VERTEX_PAIRWISE_PERP", "VN12_THREE_RIGHT_ANGLES_AT_VERTEX"], "already_read_before": "LIST đôi một vuông góc (với nhau); LIST vuông góc từng đôi (via AxoV9 only)", "no_fire_when": ["two tetrahedra share the vertex", "the three angles are not all at one vertex", "negated", "conditional"], "holdout3_result": "A04, A06–A10 completed; A01, A02, A03, A05 refused (AxoV9 reported ambiguity on synonyms the deterministic path does not rewrite: 'vuông góc với nhau từng đôi một', 'ba cạnh … đôi một vuông góc', 'vuông góc từng đôi', 'ba đoạn thẳng … tạo thành tứ diện')"},
+    {"family": "B one subject, several predicates", "rules": ["VN13_SEG_LENGTH_AND_PERP", "VN13_SEG_PERP_AND_LENGTH", "VN13_SEG_PERP_DONG_THOI_EQ", "VN13_SEG_IS_ALTITUDE_WITH_LENGTH", "VN13_ALTITUDE_IS_SEG_WITH_LENGTH"], "no_fire_when": ["length and perpendicularity on different segments", "'X là đường cao và Y = v' with Y ≠ X", "negated", "conditional"], "holdout3_result": "8/8 completed"},
+    {"family": "C values in order", "rules": ["VN14_RESPECTIVE_VALUES", "VN14_LIST_LENGTHS_IN_ORDER"], "no_fire_when": ["list and values of unequal length", "'hai cạnh góc vuông X, Y' without a stated right angle at their common vertex", "conditional"], "holdout3_result": "8/8 completed (C07 through AxoV9)"},
+    {"family": "D chained equality", "rules": ["VN06_CHAINED_SEGMENT_EQ (existing)"], "holdout3_result": "6/6 completed (D05 through AxoV9)"},
+    {"family": "E heights", "rules": ["VN15_PRISM_HEIGHT_FORM", "VN13_PYRAMID_HEIGHT_WITH_FOOT"], "no_fire_when": ["several pyramids contain the foot"], "holdout3_result": "5/6 completed; E02 refused by the Source Gate (SOURCE_OBJECT_MISMATCH) after a correct AxoV9 lowering of an unnamed right-angled base 'đáy vuông tại M'"},
+    {"family": "F bare requests", "rules": ["VN16_BARE_SIMULATION_REQUEST"], "no_fire_when": ["zero or several declared solids", "negated request ('Đừng mô phỏng')"], "holdout3_result": "6/6 completed"},
+    {"family": "G premises inside the question", "rules": ["VN17_QUESTION_FIRST_WITH_PREMISES"], "no_fire_when": ["conditional ('khi … thay đổi')", "yes/no question", "'bất kì'"], "holdout3_result": "7/8 completed; G08 ('Hãy cho biết thể tích …, với đáy …') refused INCONSISTENT_FACTS after AxoV9 reported ambiguity"}
+  ],
+  "safety_fix": {
+    "finding": "On CACHE 154 the sentence 'IJ, IK, IL không đôi một vuông góc' reached AxoV9 (parser incomplete); AxoV9 lowered three perpendicular_lines, the grounding validator accepted them, and the Source Gate's negation lists (PHU_DINH, _KHONG_KHANG_DINH) did not recognise 'không' separated from the relation by 'đôi một' — a wrong scene was served.",
+    "fix": "registry._KHONG_KHANG_DINH reads 'không (đôi một | từng đôi (một) | cùng | hoàn toàn | hẳn)+ <relation>' as a negation; every relation call passes through _phu_dinh",
+    "evidence": "test_v15_opposite_cases_stay_refused (red on CACHE 154, green on 155), test_v15_source_gate_reads_negation_across_an_adverb; Holdout-3 N01 refused live",
+    "scope": "found by an adversarial probe written for /15, not by an earlier acceptance run; earlier runs did not contain this phrasing"
+  },
+  "downstream_check_B18": {
+    "family": "'XY ⊥ (XZW)' + 'XZ ⊥ XW' in a tetrahedron",
+    "data_sufficient": true,
+    "parser": "LOCAL_PARSE_COMPLETE",
+    "result": "planner/engine refuses MISSING_DIMENSION; the variant without 'XZ ⊥ XW' is genuinely underdetermined and refused correctly",
+    "classification": "planner capability gap (line ⊥ plane through a vertex not expanded to the two perpendicular edges), not a parser error",
+    "action": "not changed in /15 (planner/engine scope, Holdout-3 has no such case); listed as open"
+  },
+  "correction_of_previous_evidence": {
+    "corrects": "runs/local-model1-recovery-offline-vision/FIRST_FAILING_LAYER_AUDIT.json, 'sources' item 2",
+    "statement": "That audit called its route replay 'runtime=None, 0 model calls'. route_text_input_local_slm(runtime=None) uses the process-wide local SLM runtime, so cases the parser did not complete were sent to AxoV9. The served cases the audit names as deterministic (I01, P03, and T07/I05 after the /14 fix) were parser-complete and stand; the refusals in that replay may include an AxoV9 attempt. The /14 file is not edited.",
+    "same_caveat_for_15": "every in-process probe in /15 (fresh-label family probes, exposed-set regression) also used AxoV9 for incomplete parses; tests asserting a deterministic route check extraction_mode"
+  },
+  "exposed_regression_in_process": {
+    "method": "route_text_input_local_slm on every original text (attachments as perfect transcription), AxoV9 via the process runtime; 'served' only, no scene oracle",
+    "holdout1": {"cache154_same_method": "6/28 served", "cache155": "11/28 served", "negatives_served": "0/13"},
+    "holdout2": {"cache155": "35/38 served", "negatives_served": "0/13"}
+  },
+  "remaining_text_gaps": [
+    "pairwise-perpendicular synonyms without a deterministic rewrite rely on AxoV9, which reports them ambiguous (Holdout-3 A01, A02, A03, A05, M05)",
+    "discourse headers 'Đề bài: … Yêu cầu: …' (M06)",
+    "unnamed right-angled prism base 'đáy vuông tại M' with a height clause (E02, Source Gate)",
+    "'Hãy cho biết thể tích …, với đáy …' (G08)",
+    "line ⊥ plane through a tetrahedron vertex plus one more right angle (planner, B18 family)"
+  ]
+}

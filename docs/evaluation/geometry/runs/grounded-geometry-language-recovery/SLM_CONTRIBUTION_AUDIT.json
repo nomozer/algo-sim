@@ -1,0 +1,25 @@
+{
+  "schema": "axo-slm-contribution-audit/1",
+  "run_id": "grounded-geometry-language-recovery",
+  "model": {"key": "qwen3-0.6b-axo-v9-q4_k_m", "sha256": "73f1484b08b97ed2a1f44e32bcf6610210c7fda51567c4cd0a03d98dffc6cc35", "runtime": "llama.cpp b12470", "fresh_cache": true, "replay_or_cache_credit": false},
+  "registered_population": "Holdout-3 positive cases with stratum SLM_REQUIRED in the baseline freeze on CACHE 154 (holdout-3/ACCEPTANCE_FREEZE.json): 38 cases",
+  "threshold": {"rate_min": 0.30, "min_scenes": 5},
+  "result": {"slm_verified_scenes": 5, "case_ids": ["C07", "D05", "G05", "M02", "M03"], "rate": 0.1316, "rate_gate": "FAIL", "count_gate": "PASS"},
+  "where_the_38_went": {
+    "completed_deterministically_after_v15_normalizer": 25,
+    "completed_with_live_axov9": 5,
+    "axov9_reported_ambiguous": 7,
+    "axov9_grounded_but_source_gate_refused": 1
+  },
+  "candidate_stratum": {"parser_complete": 53, "slm_required": 13, "note": "on candidate 155 only 13 Holdout-3 positives still need the SLM; 5 of them complete (5/13); reported, not substituted for the registered denominator"},
+  "ambiguous_cases": {
+    "ids": ["A01", "A02", "A03", "A05", "G08", "M05", "M06"],
+    "source_is_complete": true,
+    "gold_intervention": "the canonical phrasing of the same facts is read and served by the deterministic path, so the downstream accepts them; the loss is the SLM extraction on these phrasings",
+    "raw_tokens_available": false,
+    "model_vs_prompt": "NOT_DETERMINED — the grounding envelope does not persist the raw completion, so prompt/grammar and weights cannot be separated from this evidence"
+  },
+  "downstream_case": {"id": "E02", "axov9_ops": ["right_prism", "right_angle", "segment_length", "segment_length", "height", "goal:vol"], "refusal": "SOURCE_OBJECT_MISMATCH"},
+  "decision": "RETAIN_AXOV9: no fine-tuning — the evidence does not isolate model weights as the cause, and Holdout-3 is now exposed and can serve neither as training data nor as a new blind set",
+  "system_vs_model": "The completion gain on Holdout-3 (baseline parser-complete 28/66 -> live 58/66) is a deterministic-system gain; the genuine live SLM contribution is 5 scenes."
+}
