@@ -264,6 +264,72 @@ def test_prepare_without_local_ocr_keeps_previous_live_ai_disabled_contract(monk
         asyncio.run(U.prepare_unified_input(content=base64.b64encode(_png_bytes()).decode(), declared_mime="image/png", filename="de.png"))
 
 
+def test_local_only_diagram_reports_missing_statement_without_importing_measurements(monkeypatch):
+    from app.ingestion.unified_input import prepare_unified_input
+
+    labels = [_line(["A", "B"], 150, x0=650), _line(["AB=8"], 190, x0=650)]
+    rec = reconcile_local_ocr(_raw(labels, labels), figure_bboxes=[(600, 100, 900, 380)], min_agreeing_families=2)
+    rec.update(ok=True, solve_text=rec["draft_text"])
+    monkeypatch.setattr(LR, "run_local_ocr_route", lambda data, figs: rec)
+
+    out = asyncio.run(prepare_unified_input(
+        content=base64.b64encode(_png_bytes()).decode(), filename="diagram.png", local_only=True,
+    ))
+
+    assert out.status == "rejected"
+    assert out.reason_code == "MISSING_PROBLEM_TEXT"
+    assert not out.problem_text
+    assert out.metrics["vlm_calls"] == 0
+    candidates = out.provenance["local_ocr"]["diagram_token_candidates"]
+    assert [r["text"] for r in candidates] == ["A B", "AB=8"]
+    assert all(r["bbox"] and r["reader"] == "rapidocr" for r in candidates)
+
+
+def test_local_only_pdf_with_figure_requires_review_of_visual_evidence():
+    import fitz
+
+    from app.ingestion.unified_input import prepare_unified_input
+
+    with fitz.open() as doc:
+        page = doc.new_page()
+        page.insert_text((55, 90), "Cho hinh lap phuong ABCD.EFGH canh 4. Tinh the tich khoi lap phuong.")
+        page.insert_image(fitz.Rect(55, 140, 500, 275), stream=_png_bytes())
+        raw = doc.tobytes()
+
+    out = asyncio.run(prepare_unified_input(
+        content=base64.b64encode(raw).decode(), filename="mixed.pdf", local_only=True,
+    ))
+
+    assert out.status == "needs_confirmation"
+    assert out.reason_code == "DIAGRAM_FACT_REVIEW_REQUIRED"
+    assert out.provenance["selected_page"] == 1
+    assert out.problem_text.startswith("Cho hinh lap phuong")
+    assert out.uncertain_tokens[0]["kind"] == "diagram"
+    assert out.metrics["vlm_calls"] == 0
+
+
+def test_local_only_mixed_pdf_offers_digital_and_scanned_page_choices():
+    import fitz
+
+    from app.ingestion.unified_input import prepare_unified_input
+
+    with fitz.open() as doc:
+        digital = doc.new_page()
+        digital.insert_text((55, 90), "Cho hinh lap phuong ABCD.EFGH canh 4. Tinh the tich khoi lap phuong.")
+        scan = doc.new_page()
+        scan.insert_image(fitz.Rect(55, 140, 500, 275), stream=_png_bytes())
+        raw = doc.tobytes()
+
+    out = asyncio.run(prepare_unified_input(
+        content=base64.b64encode(raw).decode(), filename="mixed.pdf", local_only=True,
+    ))
+
+    assert out.status == "needs_selection"
+    assert [(c.candidate_id, c.page_number) for c in out.candidates] == [("text-p1-1", 1), ("pdf-scan-page-2", 2)]
+    assert out.provenance["rasterized_pages"] == []
+    assert out.metrics["vlm_calls"] == 0
+
+
 # ── Nhãn câu hỏi con "a." / "b." (lỗi Parser chặn đề đã trích xuất đúng) ────────────────────────────────────────
 
 _BASE = ("Câu 4: Cho hình chóp S.ABCD có đáy là hình vuông cạnh a, SA vuông góc với mặt đáy và SB tạo với đáy "

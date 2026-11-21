@@ -288,6 +288,7 @@ def _finalize_text_problem(
     provenance_base: dict[str, Any],
     metrics_base: dict[str, Any],
     t0: float,
+    local_only: bool = False,
 ) -> UnifiedPrepareOutcome:
     merged = merge_supplemental_text(chosen.problem_text, directive)
     elapsed_ms = round((time.perf_counter() - t0) * 1000.0, 2)
@@ -325,6 +326,24 @@ def _finalize_text_problem(
             problem_text=merged,
             learner_message=REJECTION_MESSAGES["UNSUPPORTED_PROBLEM"],
             reason_code="UNSUPPORTED_PROBLEM",
+            provenance=prov,
+            metrics=metrics,
+        )
+
+    if local_only and prov["has_associated_figure"]:
+        message = "Tệp có hình hoặc ảnh kèm lời đề. Em kiểm tra và ghi rõ bằng chữ mọi dữ kiện chỉ có trong hình trước khi dựng."
+        return UnifiedPrepareOutcome(
+            status="needs_confirmation",
+            source_kind=source_kind,
+            problem_text=merged,
+            learner_message=message,
+            reason_code="DIAGRAM_FACT_REVIEW_REQUIRED",
+            flag_messages=(message,),
+            uncertain_tokens=({
+                "token": "", "alternatives": [], "location": "hình trong tài liệu",
+                "kind": "diagram", "reason_code": "DIAGRAM_FACTS_UNVERIFIED", "reason": message,
+                "source": "document_layout",
+            },),
             provenance=prov,
             metrics=metrics,
         )
@@ -391,10 +410,14 @@ def _local_ocr_outcome(
     if len(full_text.strip()) < 10:
         prov_common["ocr_decision"] = "LOCAL_OCR_REJECT_UNREADABLE"
         prov_common["input_route"] = "LOCAL_OCR_REJECTED"
+        reason = "IMAGE_NOT_READABLE"
+        if local_only and not full_text.strip() and (rec.get("diagram") or {}).get("tokens"):
+            reason = "MISSING_PROBLEM_TEXT"
+            prov_common["has_associated_figure"] = True
         return _done(
             status="rejected",
-            learner_message=REJECTION_MESSAGES["IMAGE_NOT_READABLE"],
-            reason_code="IMAGE_NOT_READABLE",
+            learner_message=REJECTION_MESSAGES[reason],
+            reason_code=reason,
         )
 
     # Nhiều bài trong cùng văn bản đọc được ⇒ học sinh chọn bài (OCR được cache theo ảnh, chọn lại không đọc lại).
@@ -989,6 +1012,51 @@ async def _prepare_single_attachment(
 
         geo_text_candidates = [c for c in all_text_candidates if c.is_geometry]
 
+        mixed_pages = (
+            local_only and bool(geo_text_candidates) and bool(scan_pages)
+            and not any(c.candidate_id == selected_candidate_id for c in geo_text_candidates)
+        )
+        scans_need_selection = len(scan_pages) >= 2 and chosen_scan_page is None and not geo_text_candidates
+        if mixed_pages or scans_need_selection:
+            page_items = [
+                UnifiedCandidateItem(
+                    candidate_id=f"pdf-scan-page-{sp.page_number}",
+                    label=f"Trang {sp.page_number} (bản scan)",
+                    preview_snippet="Chạm để đọc và trích xuất đề bài ở trang này",
+                    preview_data_url=None,
+                    page_number=sp.page_number,
+                    has_figure=sp.has_figure,
+                    problem_text=None,
+                )
+                for sp in scan_pages[:12]
+            ]
+            candidates = [*_text_candidates_to_items(geo_text_candidates), *page_items] if mixed_pages else page_items
+            return UnifiedPrepareOutcome(
+                status="needs_selection",
+                source_kind="pdf",
+                learner_message=(
+                    "Em chọn trang chứa đề bài cần dựng, hoặc gõ 'trang X' vào ô nhập nhé."
+                    if mixed_pages else
+                    f"Tệp PDF dạng scan có {len(scan_pages)} trang nội dung. "
+                    "Em chạm chọn trang chứa đề bài cần dựng (hoặc gõ 'trang X' vào ô nhập) nhé."
+                ),
+                reason_code="MULTIPLE_PROBLEMS_DETECTED" if mixed_pages else "MULTIPLE_SCANNED_PAGES",
+                candidates=tuple(sorted(candidates, key=lambda c: c.page_number or 0)),
+                provenance={
+                    "source_mime": actual_mime,
+                    "page_count": pdf_info.page_count,
+                    "rasterized_pages": [],
+                },
+                metrics={
+                    "vlm_calls": 0,
+                    "used_vlm": False,
+                    "raw_input_bytes": raw_len,
+                    "vlm_payload_bytes": 0,
+                    "uncropped_baseline_bytes": 0,
+                    "processing_ms": round((time.perf_counter() - t0) * 1000.0, 2),
+                },
+            )
+
         # Ưu tiên tuyệt đối text layer khi có bài hình học đọc được (0 lượt gọi VLM, 0 trang rasterize!).
         if geo_text_candidates or (all_text_candidates and not scan_pages):
             chosen_txt, pool_txt, ambig_msg = select_text_candidate(
@@ -1029,6 +1097,7 @@ async def _prepare_single_attachment(
                 provenance_base=prov_pdf,
                 metrics_base=metrics_pdf,
                 t0=t0,
+                local_only=local_only,
             )
 
         # Trang scan: chỉ rasterize đúng trang cần thiết (§10.B).
@@ -1038,45 +1107,6 @@ async def _prepare_single_attachment(
                 source_kind="pdf",
                 learner_message="Tệp PDF trống hoặc không có nội dung bài toán hình học đọc được.",
                 reason_code="EMPTY_PROBLEM_CONTENT",
-                provenance={
-                    "source_mime": actual_mime,
-                    "page_count": pdf_info.page_count,
-                    "rasterized_pages": [],
-                },
-                metrics={
-                    "vlm_calls": 0,
-                    "used_vlm": False,
-                    "raw_input_bytes": raw_len,
-                    "vlm_payload_bytes": 0,
-                    "uncropped_baseline_bytes": 0,
-                    "processing_ms": round((time.perf_counter() - t0) * 1000.0, 2),
-                },
-            )
-
-        # Nếu có >= 2 trang scan mà chưa chỉ định trang, yêu cầu chọn trang để không gửi toàn bộ PDF cho VLM (§10.B).
-        if len(scan_pages) >= 2 and chosen_scan_page is None:
-            page_items: list[UnifiedCandidateItem] = []
-            for sp in scan_pages[:12]:
-                page_items.append(
-                    UnifiedCandidateItem(
-                        candidate_id=f"pdf-scan-page-{sp.page_number}",
-                        label=f"Trang {sp.page_number} (bản scan)",
-                        preview_snippet="Chạm để đọc và trích xuất đề bài ở trang này",
-                        preview_data_url=None,
-                        page_number=sp.page_number,
-                        has_figure=True,
-                        problem_text=None,
-                    )
-                )
-            return UnifiedPrepareOutcome(
-                status="needs_selection",
-                source_kind="pdf",
-                learner_message=(
-                    f"Tệp PDF dạng scan có {len(scan_pages)} trang nội dung. "
-                    "Em chạm chọn trang chứa đề bài cần dựng (hoặc gõ 'trang X' vào ô nhập) nhé."
-                ),
-                reason_code="MULTIPLE_SCANNED_PAGES",
-                candidates=tuple(page_items),
                 provenance={
                     "source_mime": actual_mime,
                     "page_count": pdf_info.page_count,
@@ -1226,6 +1256,7 @@ async def _prepare_single_attachment(
         provenance_base=prov_docx,
         metrics_base=metrics_docx,
         t0=t0,
+        local_only=local_only,
     )
 
 

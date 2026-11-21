@@ -330,6 +330,7 @@ def review_items(rec: dict[str, Any], image_bytes: bytes, *, base_offset: int = 
 
 
 def summarize_for_provenance(rec: dict[str, Any]) -> dict[str, Any]:
+    diagram = rec.get("diagram") or {}
     return {
         "route_version": LOCAL_OCR_ROUTE_VERSION,
         "reconcile_version": OCR_RECONCILE_VERSION,
@@ -341,7 +342,10 @@ def summarize_for_provenance(rec: dict[str, Any]) -> dict[str, Any]:
         "uncertain_blocking_count": sum(1 for s in rec.get("uncertain_spans") or [] if s.get("blocking")),
         "uncertain_ratio": rec.get("uncertain_ratio"),
         "low_quality": bool(rec.get("low_quality")),
-        "diagram_classification": (rec.get("diagram") or {}).get("classification"),
+        "diagram_classification": diagram.get("classification"),
+        "diagram_figure_bboxes": (diagram.get("figure_bboxes") or [])[:MAX_REVIEW_ITEMS],
+        "diagram_token_candidates": (diagram.get("tokens") or [])[:MAX_REVIEW_ITEMS],
+        "text_region_bboxes": [line["bbox"] for line in (rec.get("lines") or [])[:MAX_REVIEW_ITEMS]],
         "layout_flags": [f.get("flag") for f in rec.get("layout_flags") or []],
         "min_agreeing_families": MIN_AGREEING_FAMILIES,
         "readers": rec.get("readers"),

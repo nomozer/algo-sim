@@ -324,7 +324,7 @@ describe("Khung hỗ trợ đầu vào thống nhất & luồng gửi kết hợ
       uncertain_tokens: [],
       missing_regions: [],
       candidates: [],
-      provenance: {},
+      provenance: { selected_candidate_id: "p1:1" },
       metrics: {
         vlm_calls: 0,
         used_vlm: false,
@@ -359,6 +359,7 @@ describe("Khung hỗ trợ đầu vào thống nhất & luồng gửi kết hợ
     expect(analyzeSpy).toHaveBeenCalledTimes(1);
     expect(analyzeSpy.mock.calls[0]?.[0]).toEqual({
       type: "text",
+      source_provenance: { origin: "document_extracted", selected_candidate_id: "p1:1" },
       content:
         "Cho hình chóp S.ABCD có đáy là hình vuông cạnh 2, SA vuông góc đáy và SA = 4. Tính thể tích khối chóp.",
     });

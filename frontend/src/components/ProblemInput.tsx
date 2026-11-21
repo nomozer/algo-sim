@@ -30,6 +30,7 @@ import {
   splitAttachmentName,
   validateComposerFile,
   type ComposerAttachmentItem,
+  type InputPayload,
 } from "../llm/input";
 import type { AnalysisUnsupported } from "../core/types";
 import type { SimulationEnvelope } from "../simulations/types";
@@ -626,6 +627,7 @@ export async function runComposerSubmit({
 
   try {
     let finalProblemText = "";
+    let inputProvenance: InputPayload["source_provenance"];
 
     if (typeof overridePreparedText === "string") {
       finalProblemText = overridePreparedText.trim();
@@ -728,6 +730,17 @@ export async function runComposerSubmit({
       }
 
       finalProblemText = prepared.problem_text.trim();
+      const { input_route, raw_ocr_text_sha256, prepared_region_sha256, selected_candidate_id } = prepared.provenance;
+      const candidateId = typeof selected_candidate_id === "string" ? selected_candidate_id : undefined;
+      if (input_route === "LOCAL_OCR_VERIFIED" && typeof raw_ocr_text_sha256 === "string"
+          && typeof prepared_region_sha256 === "string") {
+        inputProvenance = {
+          origin: "local_ocr_auto_verified", raw_ocr_text_sha256, prepared_region_sha256,
+          selected_candidate_id: candidateId,
+        };
+      } else if (prepared.source_kind !== "image" && candidateId && !prepared.metrics.used_vlm) {
+        inputProvenance = { origin: "document_extracted", selected_candidate_id: candidateId };
+      }
       useAppStore.getState().updateProblemProcessingStatement(attemptId, finalProblemText);
       if (finalProblemText) {
         store.setProblemText(finalProblemText);
@@ -743,7 +756,7 @@ export async function runComposerSubmit({
         ? newAttemptId()
         : attemptId;
     const result = await analyzeFn(
-      { type: "text", content: finalProblemText },
+      { type: "text", content: finalProblemText, ...(inputProvenance ? { source_provenance: inputProvenance } : {}) },
       ctl?.signal,
       undefined,
       httpAttemptId,

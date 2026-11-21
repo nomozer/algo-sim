@@ -979,7 +979,9 @@ MISSING_KEY_MSG = (
 #       role-verified segment terms only so calling diagonals edges returns `REFUSED` (`test_route_d_student_language`),
 #       and restore clause-level `cent` GBNF rule emission in `local-slm-extractor/6` when `c_segs` is empty
 #       (`test_slm_v9_language_closure_and_security`); `151:route-d` rows MISS.
-CACHE_VERSION = "152"
+# 153 — 2026-11-21 (local-model1-recovery-offline-vision): local domain and source-role parsing,
+#       underdetermined-prism clarification, and OCR/document source provenance changed.
+CACHE_VERSION = "153"
 
 #: Hai chế độ hợp lệ của kiến trúc chính thức Hybrid `/4` do máy chủ sở hữu:
 #: - `live` (mặc định): trích xuất có cấu trúc qua Gemini (`typed-fact-next/2`) khi cấu hình `GEMINI_API_KEY`.

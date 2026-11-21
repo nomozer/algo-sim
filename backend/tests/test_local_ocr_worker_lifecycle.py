@@ -1,4 +1,6 @@
 """Exercise the real JSON-lines transport without loading OCR models."""
+import base64
+import io
 import sys
 import time
 
@@ -56,3 +58,27 @@ def test_worker_timeout_then_restart_returns_only_fresh_response(tmp_path, monke
         assert worker.request({"id": "fresh"}, timeout_s=2) == {"id": "fresh"}
     finally:
         worker.kill()
+
+
+def test_worker_blocks_python_network_even_during_lazy_reader_initialization(tmp_path, monkeypatch):
+    from PIL import Image
+
+    (tmp_path / "rapidocr.py").write_text(
+        "from socket import getaddrinfo\ngetaddrinfo('127.0.0.1', 80)\nraise RuntimeError('reader reached network')\n",
+        encoding="utf-8",
+    )
+    monkeypatch.setenv("PYTHONPATH", str(tmp_path))
+    raw = io.BytesIO()
+    Image.new("RGB", (32, 32), "white").save(raw, format="PNG")
+    worker = ocr._Worker(sys.executable)
+    try:
+        reply = worker.request({
+            "id": "offline-reader",
+            "image_b64": base64.b64encode(raw.getvalue()).decode("ascii"),
+            "engines": ["rapidocr"],
+        }, timeout_s=5)
+    finally:
+        worker.kill()
+
+    assert reply["engines"]["rapidocr"]["error"] == "LOCAL_OCR_NETWORK_DISABLED"
+    assert reply["engines"]["rapidocr"]["lines"] == []

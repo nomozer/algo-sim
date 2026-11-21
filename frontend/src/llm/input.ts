@@ -11,6 +11,12 @@ export interface InputPayload {
   content: string;
   filename?: string;
   mime_type?: string;
+  source_provenance?: {
+    origin: "local_ocr_auto_verified" | "document_extracted";
+    raw_ocr_text_sha256?: string;
+    prepared_region_sha256?: string;
+    selected_candidate_id?: string;
+  };
 }
 
 const CODE_EXTS = [".py", ".js", ".ts", ".c", ".cpp", ".java", ".pas"];

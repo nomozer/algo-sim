@@ -22,6 +22,19 @@ LOCAL_OCR_WORKER_VERSION = "local-ocr-worker/5"
 _STATE: dict = {}
 
 
+class _NetworkDisabled(PermissionError):
+    pass
+
+
+def _deny_network(event: str, _args: tuple) -> None:
+    # RapidOCR can try to download absent or invalid model files during lazy initialization.
+    if event in (
+        "socket.connect", "socket.bind", "socket.sendto", "socket.sendmsg",
+        "socket.getaddrinfo", "socket.gethostbyname", "socket.gethostbyaddr", "socket.getnameinfo",
+    ):
+        raise _NetworkDisabled
+
+
 def _box4(points) -> list[int]:
     xs = [float(p[0]) for p in points]
     ys = [float(p[1]) for p in points]
@@ -541,11 +554,13 @@ def _handle(req: dict) -> dict:
             elif name == "rapidocr":
                 out["engines"][name] = _rapid(raw)
         except Exception as exc:  # noqa: BLE001 — một engine hỏng không được làm chết worker
-            out["engines"][name] = {"engine": name, "error": f"{type(exc).__name__}: {exc}"[:300], "lines": []}
+            code = "LOCAL_OCR_NETWORK_DISABLED" if isinstance(exc, _NetworkDisabled) else type(exc).__name__
+            out["engines"][name] = {"engine": name, "error": code, "lines": []}
     return out
 
 
 def main() -> int:
+    sys.addaudithook(_deny_network)
     for line in sys.stdin:
         line = line.strip()
         if not line:
@@ -557,7 +572,8 @@ def main() -> int:
             else:
                 resp = _handle(req)
         except Exception as exc:  # noqa: BLE001
-            resp = {"ok": False, "error": f"{type(exc).__name__}: {exc}"[:300]}
+            code = "LOCAL_OCR_NETWORK_DISABLED" if isinstance(exc, _NetworkDisabled) else type(exc).__name__
+            resp = {"ok": False, "error": code}
         sys.stdout.write(json.dumps(resp, ensure_ascii=False) + "\n")
         sys.stdout.flush()
     return 0
