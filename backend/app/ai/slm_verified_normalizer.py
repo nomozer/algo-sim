@@ -1990,7 +1990,7 @@ def normalize_for_slm_grounding(
         cur, norm0=norm0, pos_map=pos_map,
         rule_id="VN05_HAY_TIM_GOAL",
         pattern=re.compile(
-            r"\b(?:Hãy\s+(?:xác\s+định|tìm|tính)|Tìm)\s+(?=thể\s+tích|khoảng\s+cách|góc|diện\s+tích|độ\s+dài|tỉ\s+số)",
+            r"\b(?:Hãy\s+(?:xác\s+định|tìm|tính|cho\s+biết)|Tìm)\s+(?=thể\s+tích|khoảng\s+cách|góc|diện\s+tích|độ\s+dài|tỉ\s+số)",
             re.IGNORECASE | re.UNICODE,
         ),
         repl="Tính ",

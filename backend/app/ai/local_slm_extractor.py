@@ -29,6 +29,7 @@ from app.ai.compositional_clause_analysis import (
     INLINE_TRAILING_META_RE,
     META_NO_CALC_RE,
     SIMULATION_LEAD_VERB_RE,
+    STANDALONE_SIM_CLAUSE_RE,
     _EMBEDDED_SOLID_HEAD_RE,
     _TRAILING_GOAL_SPLIT_RE,
     analyze_compositional_geometry,
@@ -65,6 +66,7 @@ from app.ai.slm_verified_normalizer import (
     _CONDITIONAL_MARKER_RE,
     _NEGATED_SPAN_RE,
     normalize_for_slm_grounding,
+    sentence_has_unsafe_polarity_or_role,
 )
 from app.ai.typed_fact_next_extraction import (
     TYPED_FACT_NEXT_V2_SCHEMA_VERSION,
@@ -142,7 +144,7 @@ _GOAL_MARKERS_RE = re.compile(
     re.IGNORECASE | re.UNICODE,
 )
 _GOAL_VERB_RE = re.compile(
-    r"(?:\b(?:tính|tìm|xác\s+định|hỏi|cho\s+biết|yêu\s+cầu|bao\s+nhiêu|bằng\s+mấy|dài\s+bao\s+nhiêu|rộng\s+bao\s+nhiêu|cao\s+bao\s+nhiêu)\b|\?)",
+    r"(?:\b(?:tính|tìm|xác\s+định|hỏi|cho\s+biết|yêu\s+cầu(?!\s*:?\s*(?:(?:em|mình|tớ|bạn)\s+)?(?:hãy\s+)?(?:chỉ\s+cần\s+)?(?:vẽ|dựng|mô\s+phỏng|minh\s+ho[ạa]|biểu\s+diễn|hiển\s+thị|cho\s+(?:mình|em|tôi|tớ)\s+xem)\b)|bao\s+nhiêu|bằng\s+mấy|dài\s+bao\s+nhiêu|rộng\s+bao\s+nhiêu|cao\s+bao\s+nhiêu)\b|\?)",
     re.IGNORECASE | re.UNICODE,
 )
 _STRICT_GOAL_ASK_RE = re.compile(
@@ -422,8 +424,75 @@ def detect_prompt_injection(text: str) -> str | None:
     return None
 
 
+_DENSE_SEG_ASSIGN_RE = r"[A-Z][0-9']*'?[A-Z][0-9']*'?\s*="
+_DENSE_SEG_PERP_RE = r"[A-Z][0-9']*'?[A-Z][0-9']*'?\s*(?:⊥|vuông\s+góc\b)"
+_DENSE_PAIR_PERP_ASSIGN_RE = re.compile(
+    rf"^(.+?(?:đôi\s+một\s+vuông\s+góc(?:\s+với\s+nhau)?|vuông\s+góc\s+(?:với\s+nhau\s+)?từng\s+đôi(?:\s+một)?)(?:\s+tại\s+[A-Z0-9']+)?(?:\s+tạo\s+thành\s+(?:(?:hình|khối)\s+)?tứ\s+diện\s+[A-Z0-9']+)?)\s*(?:,\s*|\s+và\s+|\s+với\s+|;\s*)({_DENSE_SEG_ASSIGN_RE}.*)$",
+    re.IGNORECASE | re.UNICODE,
+)
+_DENSE_BASE_PERP_RE = re.compile(
+    rf"^(.+?\b(?:hình\s+vuông|hình\s+chữ\s+nhật|hình\s+thoi|hình\s+bình\s+hành|tam\s+giác)\b.+?)\s+và\s+({_DENSE_SEG_PERP_RE}.*)$",
+    re.IGNORECASE | re.UNICODE,
+)
+_DENSE_LP_THEN_REL_RE = re.compile(
+    rf"^(.+?(?:\s*⊥\s*|\bvuông\s+góc\s+với\s+)(?:mặt\s+phẳng\s*\([^)]+\)|\(\s*[A-Z0-9']+\s*\)|đáy(?:\s+[A-Z0-9']+)?))\s*(?:,\s*|\s+và\s+|;\s*)({_DENSE_SEG_PERP_RE}.*)$",
+    re.IGNORECASE | re.UNICODE,
+)
+_DENSE_ASSIGN_ITEM_RE = rf"{_DENSE_SEG_ASSIGN_RE}\s*[^,;\n⊥]*"
+_DENSE_REL_THEN_LEN_RE = re.compile(
+    rf"^(.+?(?:\s*⊥|\b(?:vuông\s+góc|hình\s+vuông|hình\s+chữ\s+nhật|hình\s+thoi|hình\s+bình\s+hành|tam\s+giác\s+(?:đều|vuông|cân))\b)[^=]*?)\s*(?:,\s*|\s+và\s+|\s+với\s+|;\s*)((?!.*(?:vuông\s+góc|⊥))(?:{_DENSE_ASSIGN_ITEM_RE}(?:,\s*|\s+và\s+)){{2,}}{_DENSE_ASSIGN_ITEM_RE})$",
+    re.IGNORECASE | re.UNICODE,
+)
+_DENSE_QUESTION_FIRST_RE = re.compile(
+    r"^((?:(?:em|mình|tôi|tớ|bạn)\s+)?(?:hãy\s+)?(?:tính|tìm|xác\s+định|hãy\s+cho\s+biết|cho\s+(?:em|mình|tôi|tớ|bạn)\s+biết)\s+[^,;?!]+?)\s*,\s*(?:với|biết(?:\s+rằng)?)\s+(.+)$",
+    re.IGNORECASE | re.UNICODE,
+)
+
+
+def _split_dense_declarative_span(text: str, base_off: int) -> list[tuple[int, int]]:
+    """Split dense multi-predicate declarative clauses into grouped sub-clauses preserving exact offsets in `text`."""
+    unsafe, _ = sentence_has_unsafe_polarity_or_role(text)
+    if unsafe:
+        return [(base_off, base_off + len(text))]
+    if m_qf := _DENSE_QUESTION_FIRST_RE.match(text):
+        g_part = m_qf.group(1).strip()
+        p_part = m_qf.group(2).strip()
+        if re.search(r"\b(?:đáy|vuông|cạnh|chiều\s+cao|đường\s+cao)\b|=", p_part, re.IGNORECASE):
+            p_idx = text.find(p_part, len(g_part))
+            if p_idx >= 0:
+                return (
+                    _split_dense_declarative_span(p_part, base_off + p_idx)
+                    + _split_dense_declarative_span(g_part, base_off)
+                )
+    for pat in (_DENSE_PAIR_PERP_ASSIGN_RE, _DENSE_LP_THEN_REL_RE, _DENSE_BASE_PERP_RE, _DENSE_REL_THEN_LEN_RE):
+        if m_sp := pat.match(text):
+            head = m_sp.group(1).strip(" ,;")
+            tail = m_sp.group(2).strip(" ,;")
+            t_idx = text.find(tail, len(head))
+            if head and tail and t_idx >= 0 and len(head) < len(text) and len(tail) < len(text):
+                return (
+                    _split_dense_declarative_span(head, base_off)
+                    + _split_dense_declarative_span(tail, base_off + t_idx)
+                )
+    return [(base_off, base_off + len(text))]
+
+
 def index_source_clauses(norm_text: str) -> list[IndexedClause]:
     out: list[IndexedClause] = []
+
+    def _emit_span(a0: int, b0: int) -> None:
+        while a0 < b0 and norm_text[a0].isspace():
+            a0 += 1
+        while b0 > a0 and norm_text[b0 - 1].isspace():
+            b0 -= 1
+        if a0 < b0:
+            out.append(IndexedClause(
+                clause_id=len(out),
+                start=a0,
+                end=b0,
+                text=norm_text[a0:b0],
+            ))
+
     for sa, sb, st in split_into_Sentences(norm_text):
         s_trim = st.strip()
         if not s_trim:
@@ -455,12 +524,8 @@ def index_source_clauses(norm_text: str) -> list[IndexedClause]:
                 while l_start < l_end and sub[l_start].isspace():
                     l_start += 1
                 if l_start < l_end:
-                    out.append(IndexedClause(
-                        clause_id=len(out),
-                        start=cur_a + l_start,
-                        end=cur_a + l_end,
-                        text=norm_text[cur_a + l_start : cur_a + l_end],
-                    ))
+                    for da, db in _split_dense_declarative_span(sub[l_start:l_end], cur_a + l_start):
+                        _emit_span(da, db)
                 pos = m_sp.end()
             t_a, t_b = pos, len(sub)
             while t_a < t_b and sub[t_a].isspace():
@@ -468,25 +533,11 @@ def index_source_clauses(norm_text: str) -> list[IndexedClause]:
             while t_b > t_a and sub[t_b - 1] in " \t":
                 t_b -= 1
             if t_a < t_b:
-                out.append(IndexedClause(
-                    clause_id=len(out),
-                    start=cur_a + t_a,
-                    end=cur_a + t_b,
-                    text=norm_text[cur_a + t_a : cur_a + t_b],
-                ))
+                for da, db in _split_dense_declarative_span(sub[t_a:t_b], cur_a + t_a):
+                    _emit_span(da, db)
         else:
-            t_a, t_b = cur_a, cur_b
-            while t_a < t_b and norm_text[t_a].isspace():
-                t_a += 1
-            while t_b > t_a and norm_text[t_b - 1].isspace():
-                t_b -= 1
-            if t_a < t_b:
-                out.append(IndexedClause(
-                    clause_id=len(out),
-                    start=t_a,
-                    end=t_b,
-                    text=norm_text[t_a:t_b],
-                ))
+            for da, db in _split_dense_declarative_span(sub, cur_a):
+                _emit_span(da, db)
     return out
 
 
@@ -1732,6 +1783,7 @@ def build_compact_grammar_for_context(
     *,
     clause_subset: list[IndexedClause] | None = None,
     closure_mode: str = DEFAULT_CLOSURE_MODE,
+    allow_sim_carrier: bool = False,
 ) -> str:
     """Build a per-problem, clause-scoped, arity-safe whitespace-free GBNF grammar over exact source literals."""
     use_v7 = closure_mode != "v6"
@@ -2111,20 +2163,59 @@ def build_compact_grammar_for_context(
             for _ in range(k_max - 1):
                 seq_expr = f'relc{cid} ("," {seq_expr})?'
             lines.append(f"rseq{cid} ::= {seq_expr}")
-            rel_clause_rules.append(f"rseq{cid}")
+            rel_clause_rules.append((cid, f"rseq{cid}"))
+
+    solid_cids = {c for se in all_solids for c in se.clause_ids}
+    clause_by_id = {c.clause_id: c for c in active_clauses}
+    req_rel_cids: set[int] = set()
+    for cid_r, _rname in rel_clause_rules:
+        cl_r = clause_by_id.get(cid_r)
+        if cl_r is None:
+            continue
+        if _SIM_REQUEST_RE.match(cl_r.text) or _GOAL_VERB_RE.search(cl_r.text):
+            continue
+        if cid_r not in solid_cids:
+            req_rel_cids.add(cid_r)
+        elif re.search(r"đôi\s+một\s+vuông\s+góc|vuông\s+góc(?:\s+với\s+nhau)?\s+từng\s+đôi|hình\s+chữ\s+nhật|hình\s+thoi|hình\s+bình\s+hành|vuông\s+(?:cân\s+)?(?:tại|ở)", cl_r.text, re.IGNORECASE):
+            req_rel_cids.add(cid_r)
 
     if rel_clause_rules:
-        if len(rel_clause_rules) == 1:
-            lines.append(f"rellistreq ::= {rel_clause_rules[0]}")
+        rule_names = [rn for _, rn in rel_clause_rules]
+        if len(rule_names) == 1:
+            lines.append(f"rellistreq ::= {rule_names[0]}")
         else:
-            lines.append(f"rtail{len(rel_clause_rules) - 1} ::= {rel_clause_rules[-1]}")
-            for i in range(len(rel_clause_rules) - 2, -1, -1):
+            lines.append(f"rtail{len(rule_names) - 1} ::= {rule_names[-1]}")
+            for i in range(len(rule_names) - 2, -1, -1):
                 cur_name = "rellistreq" if i == 0 else f"rtail{i}"
                 nxt_name = f"rtail{i + 1}"
-                lines.append(f'{cur_name} ::= {rel_clause_rules[i]} ("," {nxt_name})? | {nxt_name}')
+                lines.append(f'{cur_name} ::= {rule_names[i]} ("," {nxt_name})? | {nxt_name}')
         lines.append('rellist ::= "" | rellistreq')
+
+        if use_v9 and req_rel_cids and clause_subset is None:
+            n_rc = len(rel_clause_rules)
+            if n_rc == 1:
+                lines.append(f"rellistall ::= {rule_names[0]}")
+            else:
+                has_req_from = [any(rel_clause_rules[j][0] in req_rel_cids for j in range(i + 1, n_rc)) for i in range(n_rc)]
+                last_c, last_r = rel_clause_rules[-1]
+                lines.append(f"ratl{n_rc - 1} ::= {last_r}")
+                for i in range(n_rc - 2, -1, -1):
+                    c_i, r_i = rel_clause_rules[i]
+                    cur_name = "rellistall" if i == 0 else f"ratl{i}"
+                    nxt_name = f"ratl{i + 1}"
+                    if c_i in req_rel_cids and has_req_from[i]:
+                        lines.append(f'{cur_name} ::= {r_i} "," {nxt_name}')
+                    elif c_i in req_rel_cids:
+                        lines.append(f'{cur_name} ::= {r_i} ("," {nxt_name})?')
+                    elif has_req_from[i]:
+                        lines.append(f'{cur_name} ::= {r_i} "," {nxt_name} | {nxt_name}')
+                    else:
+                        lines.append(f'{cur_name} ::= {r_i} ("," {nxt_name})? | {nxt_name}')
+        else:
+            lines.append("rellistall ::= rellistreq")
     else:
         lines.append('rellist ::= ""')
+        lines.append('rellistall ::= ""')
 
     # 3. Goal-clause scoped goal rules (goalc{cid})
     marked_goal_clauses = [cl for cl in active_clauses if _GOAL_VERB_RE.search(cl.text)]
@@ -2196,6 +2287,7 @@ def build_compact_grammar_for_context(
             lines.append(f"goalc{cid} ::= " + " | ".join(g_alts))
             goal_clause_rules.append(f"goalc{cid}")
 
+    use_carrier_gbnf = bool(use_v9 and sim_only and allow_sim_carrier and len(all_solids) == 1)
     if goal_clause_rules:
         lines.append("goalitem ::= " + " | ".join(goal_clause_rules))
         if use_v9:
@@ -2203,6 +2295,10 @@ def build_compact_grammar_for_context(
         else:
             lines.append('goallistreq ::= goalitem ("," goalitem)?')
         lines.append('goallist ::= "" | goallistreq')
+    elif use_carrier_gbnf:
+        carrier_cid = len(ctx.clauses)
+        lines.append(rf'gcarrier ::= "{{\"c\":{carrier_cid},\"t\":\"vol\",\"tgt\":" {_gbnf_str_literal(all_solids[0].label)} "}}"')
+        lines.append('goallist ::= "" | gcarrier')
     else:
         lines.append('goallist ::= ""')
 
@@ -2215,16 +2311,18 @@ def build_compact_grammar_for_context(
 
     if clause_subset is None:
         if solid_rule_names and sim_only:
-            r_expr = "rellistreq" if rel_clause_rules else "rellist"
+            r_expr = ("rellistall" if req_rel_cids else "rellistreq") if (use_v9 and rel_clause_rules) else ("rellistreq" if rel_clause_rules else "rellist")
             # SIM_ONLY_UNRESOLVED_WITHOUT_FACTS: an unresolved item is admitted only with an EMPTY relation list (the model
             # cannot extract facts and then flag the clause by habit; unread facts are still refused by the Source Gate).
             r_unres = '""' if SIM_ONLY_UNRESOLVED_WITHOUT_FACTS else "rellist"
-            lines.insert(
-                0,
-                rf'root ::= "{{\"s\":" solidreq ",\"r\":[" {r_expr} "],\"g\":[],\"u\":[]}}" | "{{\"s\":" solidval ",\"r\":[" {r_unres} "],\"g\":[],\"u\":[" unresreq "]}}"',
-            )
+            if use_carrier_gbnf:
+                root_ok = rf'"{{\"s\":" solidreq ",\"r\":[" {r_expr} "],\"g\":[" goallist "],\"u\":[]}}"'
+            else:
+                root_ok = rf'"{{\"s\":" solidreq ",\"r\":[" {r_expr} "],\"g\":[],\"u\":[]}}"'
+            root_unres = rf'"{{\"s\":" solidval ",\"r\":[" {r_unres} "],\"g\":[],\"u\":[" unresreq "]}}"'
+            lines.insert(0, f"root ::= {root_ok} | {root_unres}")
         elif solid_rule_names and goal_clause_rules:
-            r_expr = "rellistreq" if rel_clause_rules else "rellist"
+            r_expr = ("rellistall" if req_rel_cids else "rellistreq") if (use_v9 and rel_clause_rules) else ("rellistreq" if rel_clause_rules else "rellist")
             lines.insert(
                 0,
                 rf'root ::= "{{\"s\":" solidreq ",\"r\":[" {r_expr} "],\"g\":[" goallistreq "],\"u\":[]}}" | "{{\"s\":" solidval ",\"r\":[" rellist "],\"g\":[" goallist "],\"u\":[" unresreq "]}}"',
@@ -2386,16 +2484,33 @@ def build_compact_clause_context(working_text: str) -> CompactClauseContext:
                 ):
                     _add_entity("seg", f"{lpts[0]}{rpts[0]}", (lpts[0], rpts[0]), cid)
 
-        # 1b. Tetrahedron without dot ("tứ diện ABCD")
-        for tm in re.finditer(r"tứ\s+diện(?:\s+đều)?\s+((?:[A-Z][0-9]*'*){4})\b", ctext, re.IGNORECASE | re.UNICODE):
-            pts = re.findall(r"[A-Z][0-9]*'*", tm.group(1))
-            if len(pts) == 4 and len(set(pts)) == 4:
-                is_reg = "đều" in tm.group(0).lower()
-                s_lbl = f"{pts[0]}.{''.join(pts[1:])}"
-                _add_entity("solid", s_lbl, tuple(pts), cid, solid_subtype="pyr", is_reg=is_reg)
-                _add_entity("poly", "".join(pts[1:]), tuple(pts[1:]), cid)
-                if is_reg or any(w in clow for w in ("tất cả các cạnh", "tất cả cạnh", "mọi cạnh")):
-                    _add_entity("seg", f"{pts[0]}{pts[1]}", (pts[0], pts[1]), cid)
+        # 1b. Tetrahedron created from 3 segments or without dot ("Ba đoạn thẳng AB, AC, AD ... tạo thành tứ diện ABCD" / "tứ diện ABCD")
+        ba_tet_covered = False
+        for btm in re.finditer(
+            r"(?:Ba|3)\s+(?:đoạn\s+thẳng|cạnh|tia)\s+([A-Z][0-9]*'?[A-Z][0-9']*'?)\s*,\s*([A-Z][0-9]*'?[A-Z][0-9']*'?)\s*(?:,\s*|\s+và\s+)([A-Z][0-9]*'?[A-Z][0-9']*'?)\s+(?:đôi\s+một\s+vuông\s+góc(?:\s+với\s+nhau)?|vuông\s+góc\s+(?:với\s+nhau\s+)?từng\s+đôi(?:\s+một)?)\s+tạo\s+thành\s+(?:(?:hình|khối)\s+)?tứ\s+diện\s+((?:[A-Z][0-9]*'*){4})\b",
+            ctext,
+            re.IGNORECASE | re.UNICODE,
+        ):
+            e_sets = [set(re.findall(r"[A-Z][0-9]*'*", btm.group(i))) for i in (1, 2, 3)]
+            pts = re.findall(r"[A-Z][0-9]*'*", btm.group(4))
+            common = set.intersection(*e_sets) if all(len(s) == 2 for s in e_sets) else set()
+            if len(common) == 1 and len(pts) == 4 and len(set(pts)) == 4 and set().union(*e_sets) == set(pts):
+                apex = next(iter(common))
+                base = [p for p in pts if p != apex]
+                s_lbl = f"{apex}.{''.join(base)}"
+                _add_entity("solid", s_lbl, (apex, *base), cid, solid_subtype="pyr", is_reg=False)
+                _add_entity("poly", "".join(base), tuple(base), cid)
+                ba_tet_covered = True
+        if not ba_tet_covered:
+            for tm in re.finditer(r"tứ\s+diện(?:\s+đều)?\s+((?:[A-Z][0-9]*'*){4})\b", ctext, re.IGNORECASE | re.UNICODE):
+                pts = re.findall(r"[A-Z][0-9]*'*", tm.group(1))
+                if len(pts) == 4 and len(set(pts)) == 4:
+                    is_reg = "đều" in tm.group(0).lower()
+                    s_lbl = f"{pts[0]}.{''.join(pts[1:])}"
+                    _add_entity("solid", s_lbl, tuple(pts), cid, solid_subtype="pyr", is_reg=is_reg)
+                    _add_entity("poly", "".join(pts[1:]), tuple(pts[1:]), cid)
+                    if is_reg or any(w in clow for w in ("tất cả các cạnh", "tất cả cạnh", "mọi cạnh")):
+                        _add_entity("seg", f"{pts[0]}{pts[1]}", (pts[0], pts[1]), cid)
 
         # 1c. Parenthesized planes (SBC), (ABCD) & named triangles / faces / angles
         for pm in re.finditer(r"\(\s*((?:[A-Z][0-9]*'*){3,6})\s*\)", ctext):
@@ -3397,6 +3512,7 @@ def validate_and_lower_compact_clause(
     ctx: CompactClauseContext,
     raw_slm_json: dict[str, Any],
     closure_mode: str = DEFAULT_CLOSURE_MODE,
+    allow_parser_reconcile: bool = True,
 ) -> tuple[dict[str, Any] | None, dict[str, Any]]:
     """Deterministically validate compact slot-filled SLM output and lower to `typed-fact-next/2`."""
     use_v7 = closure_mode != "v6"
@@ -3639,8 +3755,49 @@ def validate_and_lower_compact_clause(
                 premises.append(prem)
                 accepted_ops.append({"kind": prem["kind"], "clause_id": rel.get("c")})
 
+    # Pairwise 3-pair closure (`v9`): if an explicit unnegated/unconditional pairwise-perp clause yielded >= 2 pairs, close the 3rd pair deterministically.
+    if use_v9:
+        for cl_pp in ctx.clauses:
+            if sentence_has_unsafe_polarity_or_role(cl_pp.text)[0]:
+                continue
+            m_pp3 = re.search(
+                r"(?<![A-Za-zÀ-Ỹà-ỹ])([A-Z][0-9]*'?[A-Z][0-9']*'?)\s*,\s*([A-Z][0-9]*'?[A-Z][0-9']*'?)\s*(?:,\s*|\s+và\s+)([A-Z][0-9]*'?[A-Z][0-9']*'?)\s+(?:đôi\s+một\s+vuông\s+góc(?:\s+với\s+nhau)?|vuông\s+góc\s+(?:với\s+nhau\s+)?từng\s+đôi(?:\s+một)?)",
+                cl_pp.text,
+                re.IGNORECASE | re.UNICODE,
+            )
+            if not m_pp3:
+                continue
+            segs3 = [re.findall(r"[A-Z][0-9]*'?", m_pp3.group(i)) for i in (1, 2, 3)]
+            if not all(len(s) == 2 for s in segs3) or len({frozenset(s) for s in segs3}) != 3:
+                continue
+            existing_pp = {
+                frozenset((frozenset(ep["args"]["line1"]), frozenset(ep["args"]["line2"])))
+                for ep in premises
+                if ep.get("kind") == "perpendicular_lines"
+            }
+            all_3_pairs = [(segs3[0], segs3[1]), (segs3[0], segs3[2]), (segs3[1], segs3[2])]
+            hit_n = sum(
+                1 for la, lb in all_3_pairs
+                if frozenset((frozenset(la), frozenset(lb))) in existing_pp
+            )
+            if hit_n >= 2 and hit_n < 3:
+                for la, lb in all_3_pairs:
+                    pk = frozenset((frozenset(la), frozenset(lb)))
+                    if pk not in existing_pp:
+                        q_pp = _select_source_gate_quote(
+                            cl_pp.text,
+                            [*la, *lb],
+                            ctx.working_text,
+                            "perpendicular_lines",
+                            required_contiguous=["".join(la), "".join(lb)],
+                            required_cues=("vuông góc", "⊥"),
+                            closure_mode=closure_mode,
+                        )
+                        premises.append({"kind": "perpendicular_lines", "args": {"line1": la, "line2": lb}, "quote": q_pp, "solid_id": solid_info["solid_id"]})
+                        accepted_ops.append({"kind": "perpendicular_lines", "clause_id": cl_pp.clause_id})
+
     # Reconcile verified Local Parser premises from normalized working text when full parse succeeded cleanly (`v7`)
-    if use_v7 and ctx.local_parser_status == LOCAL_PARSE_COMPLETE and ctx.local_parser_payload and not rejected_ops and not raw_slm_json.get("u"):
+    if allow_parser_reconcile and use_v7 and ctx.local_parser_status == LOCAL_PARSE_COMPLETE and ctx.local_parser_payload and not rejected_ops and not raw_slm_json.get("u"):
         lp_prems = [dict(p) for p in (ctx.local_parser_payload.get("premises") or ()) if isinstance(p, dict)]
         lp_keys = {_premise_dedup_key(p) for p in lp_prems}
         if lp_prems and not _CONDITIONAL_MARKER_RE.search(ctx.working_text) and not _NEGATED_SPAN_RE.search(ctx.working_text):
@@ -3711,7 +3868,7 @@ def validate_and_lower_compact_clause(
     goal_rejected = any(str(r.get("op", "")).startswith("goal") for r in rejected_ops)
     if not math_goals and not (sim_only and not goal_rejected):
         return None, {
-            "validator_version": SLM_GROUNDING_VALIDATOR_VERSION,
+            "validator_version": val_ver,
             "grounding_status": "REJECTED_NO_GROUNDED_GOAL",
             "reason_code": "AMBIGUOUS_FACT" if rejected_ops else "MISSING_DIMENSION",
             "failure_taxonomy": "GROUNDING_REJECTED",
@@ -3774,20 +3931,80 @@ def validate_and_lower_compact_clause(
     }
 
 
+_PROMPT_SEG_PAIR_RE = re.compile(
+    r"^(?:Ba|3)\s+(?:đoạn\s+thẳng|cạnh|tia)\s+([A-Z][0-9']*'?[A-Z][0-9']*'?)\s*,\s*([A-Z][0-9']*'?[A-Z][0-9']*'?)\s*(?:,|và)\s*([A-Z][0-9']*'?[A-Z][0-9']*'?)\s+đôi\s+một\s+vuông\s+góc\s+tạo\s+thành\s+(?:(?:hình|khối)\s+)?tứ\s+diện\s+([A-Z0-9']+)(.*)$",
+    re.IGNORECASE | re.UNICODE,
+)
+_PROMPT_PT_SPLIT_RE = re.compile(r"[A-Z][0-9']*'*")
+
+
+def _rewrite_segments_create_tetrahedron(m: re.Match[str]) -> str:
+    s1, s2, s3, tet, tail = m.group(1), m.group(2), m.group(3), m.group(4), m.group(5)
+    seg_sets = [set(_PROMPT_PT_SPLIT_RE.findall(s)) for s in (s1, s2, s3)]
+    tet_verts = _PROMPT_PT_SPLIT_RE.findall(tet)
+    shared = set.intersection(*seg_sets) if all(len(st) == 2 for st in seg_sets) else set()
+    if len(tet_verts) == 4 and len(shared) == 1:
+        apex = next(iter(shared))
+        if apex in tet_verts:
+            dotted = f"{apex}.{''.join(v for v in tet_verts if v != apex)}"
+            return f"Cho hình chóp {dotted} có {s1}, {s2}, {s3} đôi một vuông góc{tail}"
+    return f"Cho tứ diện {tet} có ba cạnh {s1}, {s2}, {s3} đôi một vuông góc{tail}"
+
+
 def _prompt_clause_text(text: str) -> str:
-    """Canonicalize nested simulation lead-ins ("Mô phỏng hình chóp..." -> "Cho hình chóp...") for AxoV9 prompt ONLY."""
-    if m_lead := SIMULATION_LEAD_VERB_RE.match(text):
-        tail = text[m_lead.end():]
+    """Canonicalize phrasings for AxoV9 prompt ONLY (never alters ctx.working_text or Source Gate; guarded against unsafe polarity/role)."""
+    unsafe_orig, _ = sentence_has_unsafe_polarity_or_role(text)
+    if unsafe_orig:
+        return text
+    out = text
+    if STANDALONE_SIM_CLAUSE_RE.match(out):
+        if m_sim := _SIM_REQUEST_RE.match(out.strip()):
+            if not (m_sim.group("rest") or "").strip():
+                return "Vẽ hình."
+    if m_lead := SIMULATION_LEAD_VERB_RE.match(out):
+        tail = out[m_lead.end():]
         if _EMBEDDED_SOLID_HEAD_RE.match(tail):
             cleaned_tail = re.sub(r"^(?:(?:mô\s+hình|hình)\s+3D\s+của\s+)", "", tail, flags=re.IGNORECASE)
-            return f"Cho {cleaned_tail}"
-    return text
+            out = f"Cho {cleaned_tail}"
+    unsafe, _ = sentence_has_unsafe_polarity_or_role(out)
+    if unsafe:
+        return out
+    out = re.sub(r"^(?:Đề\s+bài|Bài\s+toán)\s*:\s*(?:cho\s+)?", "Cho ", out, flags=re.IGNORECASE | re.UNICODE)
+    out = re.sub(r"^(?:Yêu\s+cầu(?:\s+bài\s+toán)?|Nhiệm\s+vụ)\s*:\s*", "", out, flags=re.IGNORECASE | re.UNICODE)
+    out = re.sub(r"vuông\s+góc\s+(?:với\s+nhau\s+)?từng\s+đôi(?:\s+một)?", "đôi một vuông góc", out, flags=re.IGNORECASE | re.UNICODE)
+    out = re.sub(r"\bđôi\s+một\s+vuông\s+góc\s+với\s+nhau\b", "đôi một vuông góc", out, flags=re.IGNORECASE | re.UNICODE)
+    out = re.sub(r"^(?:Trong\s+không\s+gian\s*,\s*)?(?:cho\s+)?tứ\s+diện\b", "Cho tứ diện", out, flags=re.IGNORECASE | re.UNICODE)
+    out = _PROMPT_SEG_PAIR_RE.sub(_rewrite_segments_create_tetrahedron, out)
+    out = re.sub(
+        r"^(?:Cho\s+)?khối\s+(chóp|lăng\s+trụ(?:\s+đứng)?)\s+([A-Z0-9'.]+)\s+với\s+đáy\b",
+        r"Cho hình \1 \2 có đáy",
+        out,
+        flags=re.IGNORECASE | re.UNICODE,
+    )
+    out = re.sub(r"^(?:hình|khối)\s+(chóp|lăng\s+trụ|hộp|lập\s+phương)\b", r"Cho hình \1", out, flags=re.IGNORECASE | re.UNICODE)
+    return out
 
 
-def _build_compact_clause_messages(ctx: CompactClauseContext, *, clause_subset: list[IndexedClause] | None = None) -> list[dict[str, str]]:
+def _build_compact_clause_messages(
+    ctx: CompactClauseContext,
+    *,
+    clause_subset: list[IndexedClause] | None = None,
+    include_sim_carrier: bool = False,
+) -> list[dict[str, str]]:
     """Build static-prefix-cacheable prompt with typed symbol tables and worked JSON examples."""
     target_clauses = clause_subset if clause_subset is not None else ctx.clauses
-    clause_block = "\n".join(f"[{c.clause_id}] {_prompt_clause_text(c.text)}" for c in target_clauses)
+    clause_lines = [f"[{c.clause_id}] {_prompt_clause_text(c.text)}" for c in target_clauses]
+    all_solids = [e for e in ctx.entities if e.kind == "solid"]
+    if include_sim_carrier and clause_subset is None and len(all_solids) == 1:
+        se = all_solids[0]
+        carrier_cid = len(ctx.clauses)
+        kind_vn = (
+            "tứ diện"
+            if se.solid_subtype == "pyr" and len(se.vertices) == 4
+            else ("lăng trụ" if se.solid_subtype == "pri" else "chóp")
+        )
+        clause_lines.append(f"[{carrier_cid}] Tính thể tích khối {kind_vn} {se.label}.")
+    clause_block = "\n".join(clause_lines)
 
     def _lbls(kind: str) -> str:
         vals = [e.label for e in ctx.entities if e.kind == kind]
@@ -3852,6 +4069,7 @@ def _compact_grounding_policy_version(
     closure_mode: str = DEFAULT_CLOSURE_MODE,
     normalizer_version: str = "v2",
     grammar_mode: str = "gbnf",
+    allow_parser_reconcile: bool = True,
 ) -> str:
     if not use_verified_normalizer:
         norm_id = "none"
@@ -3863,6 +4081,8 @@ def _compact_grounding_policy_version(
         norm_id = SLM_VERIFIED_NORMALIZER_VERSION
     val_ver = SLM_GROUNDING_VALIDATOR_V9_VERSION if closure_mode == V9_CLOSURE_MODE else SLM_GROUNDING_VALIDATOR_VERSION
     suffix = f"|gm={grammar_mode}" if closure_mode == V9_CLOSURE_MODE and grammar_mode != "gbnf" else ""
+    if not allow_parser_reconcile:
+        suffix += "|apr=0"
     return f"{val_ver}|norm={norm_id}|closure={closure_mode}{suffix}"
 
 
@@ -3882,6 +4102,7 @@ def run_local_slm_extraction(
     use_cache: bool = True,
     cache_prompt: bool = True,
     capture_debug_raw: bool = False,
+    allow_parser_reconcile: bool = True,
 ) -> LocalSlmExtractionResult:
     """Run local SLM semantic extraction + deterministic source grounding."""
     norm_raw = normalize_problem_text(problem_text or "")
@@ -4052,6 +4273,7 @@ def run_local_slm_extraction(
             closure_mode=eff_closure,
             normalizer_version=eff_norm_ver,
             grammar_mode=eff_grammar_mode,
+            allow_parser_reconcile=allow_parser_reconcile,
         ),
         parser_version=LOCAL_GEOMETRY_PARSER_VERSION,
         capability_identity=compute_local_slm_capability_identity(),
@@ -4123,11 +4345,16 @@ def run_local_slm_extraction(
             grammar_build_ms = 0.0
             grammar_retry_used = False
             grammar_retry_ms = 0.0
+            carrier_cid: int | None = None
             if eff_strategy == "compact_clause":
-                messages = _build_compact_clause_messages(ctx)
+                solids_in_ctx = [e for e in ctx.entities if e.kind == "solid"]
+                use_carrier = bool(is_v9_mode and is_simulation_only_source(ctx) and len(solids_in_ctx) == 1)
+                if use_carrier:
+                    carrier_cid = len(ctx.clauses)
+                messages = _build_compact_clause_messages(ctx, include_sim_carrier=use_carrier)
                 prompt_build_ms = round((time.perf_counter() - t_pb0) * 1000.0, 3)
                 t_gb0 = time.perf_counter()
-                dyn_grammar = build_compact_grammar_for_context(ctx, closure_mode=eff_closure)
+                dyn_grammar = build_compact_grammar_for_context(ctx, closure_mode=eff_closure, allow_sim_carrier=use_carrier)
                 grammar_build_ms = round((time.perf_counter() - t_gb0) * 1000.0, 3)
                 if eff_grammar_mode == "retry_on_invalid":
                     inf_res = eff_runtime.chat_completion_json(
@@ -4154,6 +4381,11 @@ def run_local_slm_extraction(
                         allow_download=allow_download,
                     )
                     raw_merged = inf_res.parsed_json
+                if carrier_cid is not None and isinstance(raw_merged, dict):
+                    raw_merged = {
+                        **raw_merged,
+                        "g": [g for g in (raw_merged.get("g") or ()) if isinstance(g, dict) and g.get("c") != carrier_cid],
+                    }
             else:
                 # Per-clause batching ablation: one call per clause, then merge s/r/g/u
                 merged: dict[str, Any] = {"s": None, "r": [], "g": [], "u": []}
@@ -4218,7 +4450,12 @@ def run_local_slm_extraction(
                 raw_merged = merged
 
             t_val0 = time.perf_counter()
-            canon_payload, val_diag = validate_and_lower_compact_clause(ctx=ctx, raw_slm_json=raw_merged, closure_mode=eff_closure)
+            canon_payload, val_diag = validate_and_lower_compact_clause(
+                ctx=ctx,
+                raw_slm_json=raw_merged,
+                closure_mode=eff_closure,
+                allow_parser_reconcile=allow_parser_reconcile,
+            )
             if (
                 eff_grammar_mode == "retry_on_invalid"
                 and eff_strategy == "compact_clause"
@@ -4236,8 +4473,17 @@ def run_local_slm_extraction(
                     threads=threads,
                     allow_download=allow_download,
                 )
+                retry_json = inf_retry.parsed_json
+                if carrier_cid is not None and isinstance(retry_json, dict):
+                    retry_json = {
+                        **retry_json,
+                        "g": [g for g in (retry_json.get("g") or ()) if isinstance(g, dict) and g.get("c") != carrier_cid],
+                    }
                 canon_payload, val_diag = validate_and_lower_compact_clause(
-                    ctx=ctx, raw_slm_json=inf_retry.parsed_json, closure_mode=eff_closure
+                    ctx=ctx,
+                    raw_slm_json=retry_json,
+                    closure_mode=eff_closure,
+                    allow_parser_reconcile=allow_parser_reconcile,
                 )
                 grammar_retry_used = True
                 grammar_retry_ms = round((time.perf_counter() - t_ret0) * 1000.0, 3)
@@ -4319,9 +4565,13 @@ def run_local_slm_extraction(
             grammar_sha = hashlib.sha256(dyn_grammar.encode("utf-8")).hexdigest()
             sim_only_flag = bool(is_simulation_only_source(ctx))
             gbnf_root_mode = (
-                "sim_only_zero_goal"
-                if sim_only_flag and not any(_GOAL_VERB_RE.search(cl.text) for cl in ctx.clauses)
-                else ("standard_goal" if any(_GOAL_VERB_RE.search(cl.text) or _GOAL_MARKERS_RE.search(cl.text) for cl in ctx.clauses) else "fallback_clause_goal")
+                "sim_only_goal_carrier"
+                if carrier_cid is not None
+                else (
+                    "sim_only_zero_goal"
+                    if sim_only_flag and not any(_GOAL_VERB_RE.search(cl.text) for cl in ctx.clauses)
+                    else ("standard_goal" if any(_GOAL_VERB_RE.search(cl.text) or _GOAL_MARKERS_RE.search(cl.text) for cl in ctx.clauses) else "fallback_clause_goal")
+                )
             )
             unresolved_codes = [
                 str(item.get("k") or "ambig")

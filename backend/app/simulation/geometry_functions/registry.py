@@ -1799,7 +1799,7 @@ def _km_khoi(m: re.Match[str]) -> str:
 _C_DAY = re.compile(rf"(?:(?:có|với)\s+)?(?:(?:mặt|tứ\s+giác|tam\s+giác)\s+)?đáy(?:\s+(?P<d>{_NHAN}))?\s+(?:là\s+(?:một\s+)?{_HINH}(?:\s+(?P<d2>{_NHAN}))?(?:\s+vuông(?:\s+cân)?\s+(?:tại|ở)\s+{_L1})?|đều|vuông(?:\s+cân)?\s+(?:tại|ở)\s+{_L1})(?![\w'])"
                     rf"(?:(?:\s*,\s*|\s+)(?:(?:và|với)\s+)?(?:có\s+)?(?:(?:các|mọi|mỗi)\s+)?(?:độ\s+dài\s+)?cạnh\s*(?:(?:bằng|=|là)\s*)?{_so_nhom('ds')})?"
                     rf"(?:\s*(?:,\s*)?(?:có\s+)?tâm\s+(?:là\s+)?{_L1}(?![\w']))?", re.IGNORECASE)
-_C_VAI = re.compile(rf"(?:(?:có|với)\s+)?(?P<tatca>tất\s+cả\s+(?:các\s+)?)?(?:(?:các|mọi|mỗi)\s+)?(?:độ\s+dài\s+(?:của\s+)?(?:(?:tất\s+cả\s+(?:các\s+)?|các|mọi|mỗi)\s+)?)?(?P<vai>cạnh\s+đáy|cạnh\s+bên|chiều\s+cao|đường\s+cao|cạnh)(?:\s+(?:của\s+(?:(?:hình|khối)\s+)?|(?:hình|khối)\s+|(?=tứ\s+diện))"
+_C_VAI = re.compile(rf"(?:(?:có|với)\s+)?(?P<tatca>tất\s+cả\s+(?:các\s+)?)?(?:(?:các|mọi|mỗi)\s+)?(?:độ\s+dài\s+(?:của\s+)?(?:(?:tất\s+cả\s+(?:các\s+)?|các|mọi|mỗi)\s+)?)?(?P<vai>cạnh\s+đáy|cạnh\s+bên|chiều\s+cao|đường\s+cao|cạnh)(?:\s+(?:của\s+(?:(?:hình|khối)\s+)?|(?:hình|khối)\s+|(?=chóp|lăng\s+trụ|hộp(?:\s+chữ\s+nhật)?|lập\s+phương|tứ\s+diện))"
                     rf"(?P<qn>chóp|lăng\s+trụ|hộp(?:\s+chữ\s+nhật)?|lập\s+phương|tứ\s+diện)(?:\s+(?P<ql>{_NHAN}(?:\.{_NHAN})?))?)?"
                     rf"\s*(?:đều\s+)?(?:(?:có\s+)?độ\s+dài\s*)?(?:(?:=|bằng|là)\s*)?{_so_nhom('vs')}", re.IGNORECASE)
 #: "của <solid>" names the role's owner: its noun must be the bound solid's kind, its label (if any) the bound solid's
@@ -2000,7 +2000,7 @@ _C_HOI = re.compile(
 #: premises after it are read by the same closed clauses. Only at the start of a sentence (`_phan_tich_cau`); a request
 #: about any other object ("Tính diện tích tam giác SBC biết …") still leaves its sentence unread.
 _C_KHOI_HOI = re.compile(
-    r"(?:(?:em|bạn)\s+)?(?:hãy\s+)?(?:tính|tìm|xác\s+định)\s+(?:thể\s+tích|diện\s+tích\s+(?:toàn\s+phần|xung\s+quanh))"
+    r"(?:(?:(?:em|bạn)\s+)?(?:hãy\s+)?(?:tính|tìm|xác\s+định)|(?:(?:em|bạn)\s+)?hãy\s+cho\s+biết|cho\s+(?:em|mình|tôi|tớ|bạn)\s+biết)\s+(?:thể\s+tích|diện\s+tích\s+(?:toàn\s+phần|xung\s+quanh))"
     r"\s+(?:của\s+)?" + _C_KHOI.pattern, re.IGNORECASE)
 #: A named polygon with its side ("Tam giác ABC đều cạnh 2" / "có ABCD là hình vuông cạnh 4"): the side belongs to THAT polygon
 #: (labelled binding); non-base polygons still change the subject for unlabelled roles of the sentence.
@@ -2058,7 +2058,10 @@ _VAT_MO_PHONG = re.compile(rf"(?:(?:(?:hình\s+3D|mô\s+hình\s+3D)\s+(?:của\s
                            rf"|(?:cả\s+)?(?:các\s+)?(?P<vai>điểm|đỉnh)\s+(?P<d>{_L1}(?:\s*,\s*{_L1})*))"
                            rf"(?:\s+(?:này|đó|đã\s+cho|trên))?(?![\w'])", re.IGNORECASE)
 _NOI_VAT_MO_PHONG = re.compile(r"\s*,\s*(?:và\s+)?|\s+và\s+|\s+cùng\s+(?:với\s+)?", re.IGNORECASE)
-_MO_YEU_CAU_MO_PHONG = re.compile(rf"\s*(?:(?:không|chưa|chỉ)\s+cần\s+)?{_DONG_TU_MO_PHONG}\s+", re.IGNORECASE)
+_MO_YEU_CAU_MO_PHONG = re.compile(
+    rf"\s*(?:(?:yêu\s+cầu(?:\s+bài\s+toán)?|nhiệm\s+vụ)\s*:\s*)?(?:(?:không|chưa|chỉ)\s+cần\s+)?{_DONG_TU_MO_PHONG}\s+",
+    re.IGNORECASE,
+)
 #: /11: content-free tail of a request ("…, không cần tính toán", "… giúp em"): it asks nothing and states no fact.
 _DUOI_MO_PHONG = re.compile(r"(?:\s*[,.;]?\s*(?:và\s+)?(?:không|chưa)\s+cần\s+tính(?:\s+toán|\s+gì(?:\s+thêm)?)?"
                             r"|\s+giúp(?:\s+(?:mình|em|tôi|tớ))?|\s+nhé)", re.IGNORECASE)
@@ -2070,8 +2073,10 @@ def _ky_hieu_khoi(k: LoiGoi) -> str:
         return f"{k.args.apex}.{''.join(k.args.base)}"
     return f"{''.join(k.args.base)}.{''.join(getattr(k.args, 'top', None) or [])}"
 #: … then the question of the same sentence ("Vẽ hình rồi tính …", "Không cần vẽ hình, tính …").
-_SAU_MO_PHONG_HOI = re.compile(r"(?:\s*,\s*|\s+)(?:(?:rồi|và|sau\s+đó|đồng\s+thời)\s+)?(?=(?:hãy\s+)?(?:tính|tìm|xác\s+định)(?!\w))",
-                               re.IGNORECASE)
+_SAU_MO_PHONG_HOI = re.compile(
+    r"(?:\s*,\s*|\s+)(?:(?:rồi|và|sau\s+đó|đồng\s+thời)\s+)?(?=(?:hãy\s+cho\s+biết|cho\s+(?:em|mình|tôi|tớ|bạn)\s+biết|(?:hãy\s+)?(?:tính|tìm|xác\s+định)(?!\w)))",
+    re.IGNORECASE,
+)
 
 
 def _doc_yeu_cau_mo_phong(de: str, a: int, b: int, calls: tuple[LoiGoi, ...]) -> int | None:
@@ -3562,7 +3567,10 @@ _THI = re.compile(r"(?<!\w)thì(?!\w)", re.IGNORECASE)
 _HOI_QUAN_HE = re.compile(r"(?<!\w)(?:phải chăng|có phải|liệu|kiểm tra xem|hay không|hay chưa)(?!\w)|(?<!câu )(?<!\w)hỏi(?!\w)"
                           r"|(?<!\w)không\s*\?", re.IGNORECASE)
 #: Động từ hỏi đứng TRƯỚC đối tượng trong cùng mệnh đề …
-_DONG_TU_HOI = re.compile(r"(?<!\w)(?:tính|tìm|xác định)(?!\w)|(?<!câu )(?<!\w)hỏi(?!\w)", re.IGNORECASE)
+_DONG_TU_HOI = re.compile(
+    r"(?<!\w)(?:hãy\s+cho\s+biết|cho\s+(?:em|mình|tôi|tớ|bạn)\s+biết|tính|tìm|xác\s+định)(?!\w)|(?<!câu )(?<!\w)hỏi(?!\w)",
+    re.IGNORECASE,
+)
 #: … hoặc "bao nhiêu / mấy / ?" đứng SAU nó.
 _HOI_SAU = re.compile(r"bao\s+nhiêu|(?<!\w)mấy(?!\w)|\?", re.IGNORECASE)
 _HOI_CUOI_DE = re.compile(
@@ -3633,6 +3641,18 @@ def _vai_tro_tai(de: str, p: int) -> str | None:
     return None
 
 
+def _moc_du_kien_truoc(truoc: str) -> int:
+    """Last given marker outside `_DONG_TU_HOI` spans (so `Hãy cho biết` is treated as ask verb, not `cho`/`biết`)."""
+    cleaned = _bo_cum(truoc)
+    hoi_spans = [(m.start(), m.end()) for m in _DONG_TU_HOI.finditer(truoc)]
+    hits = [
+        m.end()
+        for m in _DUNG_GAN.finditer(cleaned)
+        if not any(hs <= m.start() < he for hs, he in hoi_spans)
+    ]
+    return hits[-1] if hits else 0
+
+
 def _duoc_hoi(de: str, p: int, het: int) -> bool:
     """Đối tượng ở `de[p:het]` có được HỎI không:
     - một động từ hỏi đứng TRƯỚC nó trong câu, sau dấu hiệu dữ kiện cuối cùng (biết/cho/với …) — liệt kê "Tính V, độ dài SC và
@@ -3650,10 +3670,10 @@ def _duoc_hoi(de: str, p: int, het: int) -> bool:
     truoc = de[a:p]
     # Given markers are read OUTSIDE the listed object phrases (`_bo_cum`, length-preserving): the "với" of
     # "đoạn nối M với S" is part of an object, not "với <dữ kiện>" (review N-1, run goal-directed-function-composition).
-    moc_du_kien = [m.end() for m in _DUNG_GAN.finditer(_bo_cum(truoc))]
-    dong_tu = list(_DONG_TU_HOI.finditer(truoc[moc_du_kien[-1] if moc_du_kien else 0:]))
+    moc_pos = _moc_du_kien_truoc(truoc)
+    dong_tu = list(_DONG_TU_HOI.finditer(truoc[moc_pos:]))
     # Động từ hỏi chỉ chi phối đối tượng khi giữa chúng không có từ chặn tân ngữ (second re-verification, N2).
-    qua_dong_tu = bool(dong_tu) and not _CHAN_TAN_NGU.search(_bo_cum(truoc)[(moc_du_kien[-1] if moc_du_kien else 0) + dong_tu[-1].end():])
+    qua_dong_tu = bool(dong_tu) and not _CHAN_TAN_NGU.search(_bo_cum(truoc)[moc_pos + dong_tu[-1].end():])
     qua_hoi_sau = (
         (bool(_HOI_SAU.search(gan)) or bool(_HOI_CUOI_DE.fullmatch(de[het:].lstrip())))
         and not _CHAN_TAN_NGU.search(gan)
@@ -3703,8 +3723,8 @@ def _vung_hoi(de: str, a: int, b: int) -> tuple[int, int] | None:
         return None
     c0, c1 = _bien_cau(de, a)
     truoc = de[c0:a]
-    moc = [m.end() for m in _DUNG_GAN.finditer(_bo_cum(truoc))]      # same reading as `_duoc_hoi`
-    dong_tu = list(_DONG_TU_HOI.finditer(truoc, moc[-1] if moc else 0))
+    moc_pos = _moc_du_kien_truoc(truoc)
+    dong_tu = list(_DONG_TU_HOI.finditer(truoc, moc_pos))
     tu = c0 + dong_tu[-1].start() if dong_tu else _bien_menh_de(de, a)[0]
     giua = truoc[dong_tu[-1].end():] if dong_tu else de[tu:a]
     sau = _SAU_HOP_LE.match(_bo_cum(de[b:c1]))
@@ -4680,12 +4700,16 @@ def _kiem_du_kien_cau_hoi(calls: tuple[LoiGoi, ...], de: str, read_quotes: tuple
 _NOI_TIEN_DE = re.compile(rf"[\s,;:.()!\-–]*(?:(?:{_THAM_KHAO_HINH}|(?:cho|gọi|biết|rằng|có|và|với|trong đó|là|của|hãy|xét|thiết\s+lập|ta|đồng thời|lần lượt|các|sao\s+cho|{_MUC_DICH_HIEN_THI}|điểm"
                           r"|theo thứ tự|tại|thì|đơn vị|(?:cm|dm|mm|m)(?:\s*(?:\^\s*[23]|[²³]))?|đvđd|đvdt|đvtt)(?!\w))[\s,;:.()!\-–]*)*", re.IGNORECASE)
 _MO_DAU_MUC_DE = (
-    r"(?:cho|trên|trong|một|gọi|biết|xét|giả\s+sử|tính|tìm|xác\s+định|hỏi|vẽ|dựng|mô\s+phỏng|chứng\s+minh)(?!\w)"
+    r"(?:cho|trên|trong|một|gọi|biết|xét|giả\s+sử|hãy\s+cho\s+biết|cho\s+(?:em|mình|tôi|tớ|bạn)\s+biết|"
+    r"tính|tìm|xác\s+định|hỏi|vẽ|dựng|mô\s+phỏng|chứng\s+minh)(?!\w)"
 )
 #: Exam scaffolding at the start of a premise segment ("Bài 3.", "Câu 2:", "a)", "1)", "Câu a:", "(1 điểm)", "Câu 32: (2,5 điểm)",
 #: or bare clipped item number ("43: Cho...", "43. Cho...").
 _GIAN_DAN = re.compile(
     rf"\s*(?:(?:(?:bài\s+tập|bài|câu|ví\s+dụ)\s*(?:\d+|[a-d])(?:\s*\(\s*(?:\d+(?:[.,]\d+)?\s*điểm|VD|VDC|TH|NB)\s*\))?\s*[.:)]?"
+    rf"|(?:đề\s+bài|bài\s+toán)\s*:"
+    rf"|(?:yêu\s+cầu(?:\s+bài\s+toán)?|nhiệm\s+vụ)\s*:(?=\s*(?:{_DONG_TU_MO_PHONG}|{_DONG_TU_HOI}))"
+    rf"|trong\s+không\s+gian(?!\s+(?:tọa\s+độ|Oxyz))\s*,"
     rf"|(?:\d+|[a-d])\s*\)"
     rf"|(?:\d{{1,3}}|[a-d])\s*[.:]\s+(?={_MO_DAU_MUC_DE})"
     rf"|\(\s*\d+(?:[.,]\d+)?\s*điểm\s*\)\s*[.:]?)\s*)+",
@@ -6142,7 +6166,7 @@ _PHUONG_PHAP = re.compile(r"\s*(?:dùng|áp dụng|sử dụng)\s+(?:công thứ
 _GIUA_HOP_LE = re.compile(r"[\s,:]*(?:(?:(?:và|cùng|lần lượt|hãy|các)(?!\w)|theo\s+(?-i:[a-z])(?![\w']))[\s,:]*)*", re.IGNORECASE)
 #: Phần còn lại của một câu hỏi sau khi mọi vùng đã đọc được xoá: chỉ dấu câu, từ nối, lời mở đầu câu và đánh mục.
 _DAN_CAU_HOI = re.compile(
-    rf"[\s,;:.?!]*(?:(?:{_THAM_KHAO_HINH}|(?:\(?(?:[a-z]|\d{{1,2}})\)|(?:câu|ý|phần)\s+(?:[a-z]|\d{{1,2}})|hơn nữa|ngoài ra|đồng thời|khi đó|từ đó|sau đó|tiếp theo|tiếp đó"
+    rf"[\s,;:.?!]*(?:(?:{_THAM_KHAO_HINH}|(?:yêu\s+cầu(?:\s+bài\s+toán)?|nhiệm\s+vụ)\s*:(?!\S)|(?:\(?(?:[a-z]|\d{{1,2}})\)|(?:câu|ý|phần)\s+(?:[a-z]|\d{{1,2}})|hơn nữa|ngoài ra|đồng thời|khi đó|từ đó|sau đó|tiếp theo|tiếp đó"
     r"|rồi|do đó|vậy|cuối cùng|và|cùng|bạn hãy|hãy|em hãy|các|lần lượt)(?!\w))[\s,;:.?!]*)*", re.IGNORECASE)
 #: The anaphoric object of a request a validated section / intersection line answers ("Xác định thiết diện đó.").
 _HOI_CHI_DUNG = re.compile(
@@ -8184,6 +8208,19 @@ _VUONG_TAI = re.compile(rf"(?:{_DAU_NHAN}\(?((?:{_DIEM}){{3,}})\)?(?![\w'.])\s+(
 #: comes from `_chu_cua_day`, never from "the only named solid".
 _DAY_VUONG = re.compile(rf"(?<!\w)(?i:đáy)\s+(?:\(?((?:{_DIEM}){{3,}})\)?(?![\w'.])\s+)?(?:(?i:là)\s+)?(?:(?i:một)\s+)?"
                         rf"{_HINH_VUONG_TAI}\s+$")
+_DAY_VUONG_TRUC_TIEP = re.compile(
+    rf"(?<!\w)(?i:(?:mặt\s+phẳng\s+|mặt\s+)?đáy)(?:\s+\(?((?:{_DIEM}){{3,}})\)?(?![\w'.]))?\s+$"
+)
+
+
+def _resolve_base_day_poly(truoc: str) -> list[str] | None:
+    """Resolve explicit base polygon (`_DAY_VUONG`) or unlabelled 3-vertex triangular base (`_DAY_VUONG_TRUC_TIEP`)."""
+    if (day := _DAY_VUONG.search(truoc)):
+        return re.findall(_DIEM, day[1]) if day[1] else _chu_cua_day(truoc, day.start())
+    if (day2 := _DAY_VUONG_TRUC_TIEP.search(truoc)):
+        cand = re.findall(_DIEM, day2[1]) if day2[1] else _chu_cua_day(truoc, day2.start())
+        return cand if (cand is not None and len(cand) == 3) else None
+    return None
 _GOC_VUONG = re.compile(rf"(?i:góc)\s+(?<![\w'])((?:{_DIEM}){{3}})(?![\w'])\s+(?i:vuông|=\s*90|bằng\s+90)")
 
 
@@ -8376,12 +8413,7 @@ def _vuong_can_hai_canh(c: LoiGoi, de: str) -> bool:
             v = verts_tai[0]
             if m[1]:
                 poly = re.findall(_DIEM, m[1])
-            elif (vt := _vi_tri(de, q)) and (day := _DAY_VUONG.search(truoc := de[:vt[0]] + q[:m.start()])):
-                if day[1]:
-                    poly = re.findall(_DIEM, day[1])
-                elif (poly := _chu_cua_day(truoc, day.start())) is None:
-                    continue
-            else:
+            elif (vt := _vi_tri(de, q)) is None or (poly := _resolve_base_day_poly(de[:vt[0]] + q[:m.start()])) is None:
                 continue
             if len(poly) == 3 and len(set(poly)) == 3 and v in poly:
                 r1, r2 = [p for p in poly if p != v]
@@ -8411,13 +8443,7 @@ def _dinh_nghia_diem_dung_nguon(c: LoiGoi, q: str, de: str) -> bool:
                 continue
             if m[1]:
                 poly = re.findall(_DIEM, m[1])
-            elif (vt := _vi_tri(de, q)) and (day := _DAY_VUONG.search(truoc := de[:vt[0]] + q[:m.start()])):
-                # A labelled base ("đáy ABC là …") names its polygon; only an unlabelled one needs an owner.
-                if day[1]:
-                    poly = re.findall(_DIEM, day[1])
-                elif (poly := _chu_cua_day(truoc, day.start())) is None:
-                    continue
-            else:
+            elif (vt := _vi_tri(de, q)) is None or (poly := _resolve_base_day_poly(de[:vt[0]] + q[:m.start()])) is None:
                 continue
             if len(set(poly)) == len(poly) and a.vertex in poly and ke(poly) == rays:
                 return True
@@ -8429,12 +8455,7 @@ def _dinh_nghia_diem_dung_nguon(c: LoiGoi, q: str, de: str) -> bool:
         for m in bare_rx.finditer(q):
             if m["poly"]:
                 poly = re.findall(_DIEM, m["poly"])
-            elif (vt := _vi_tri(de, q)) and (day := _DAY_VUONG.search(truoc := de[:vt[0]] + q[:m.start()])):
-                if day[1]:
-                    poly = re.findall(_DIEM, day[1])
-                elif (poly := _chu_cua_day(truoc, day.start())) is None:
-                    continue
-            else:
+            elif (vt := _vi_tri(de, q)) is None or (poly := _resolve_base_day_poly(de[:vt[0]] + q[:m.start()])) is None:
                 continue
             if len(set(poly)) != 3 or set(poly) != ({a.vertex} | rays):
                 continue

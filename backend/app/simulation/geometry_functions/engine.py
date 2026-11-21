@@ -1924,6 +1924,15 @@ class _Dung:
                 _s90, c90, _cs90 = self._goc_tham_so(cv90.args.value, cv90.args.unit, allow_obtuse=True, calls=(cv90.id,))
                 if c90 == 0:
                     goc.append((cv90.args.vertex, *cv90.args.rays, cv90.id, "explicit_right_angle"))
+        for cp in self.of("perpendicular_line_plane"):
+            line_pts = tuple(cp.args.line)
+            plane_pts = set(cp.args.plane)
+            shared = [p for p in line_pts if p in plane_pts]
+            other = [p for p in line_pts if p not in plane_pts]
+            if len(shared) == 1 and len(other) == 1:
+                v0, e0 = shared[0], other[0]
+                for w0 in sorted(plane_pts - {v0}):
+                    goc.append((v0, e0, w0, cp.id, "line_perpendicular_to_plane"))
         for V, X, Y, cid, p_rule in goc:
             hy = frozenset((X, Y))
             if V not in vong and hy in canh:
@@ -2807,6 +2816,8 @@ class _Dung:
                 continue  # forward construction waits for all plane operands; never infer its input
             if not (set(mp) <= set(self.pts) and all(self.trong_day(v) for v in mp)):
                 if set(mp) <= set(self.pts) or not (set(mp) & set(self.pts)):
+                    continue
+                if c.fn == "perpendicular_line_plane" and any(v not in self.pts for v in mp):
                     continue
                 raise TuChoi("UNSUPPORTED_PLANE", f"{c.id}: mặt phẳng {sorted(mp)} không phải mặt đáy đã dựng", (c.id,))
             if not any(

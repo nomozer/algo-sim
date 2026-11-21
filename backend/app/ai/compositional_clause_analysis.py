@@ -34,13 +34,13 @@ _PTS3_6 = rf"(?:{_PT}){{3,6}}"
 
 # Simulation lead-in verbs that can embed object declarations ("Vẽ hình chóp ... có ...")
 SIMULATION_LEAD_VERB_RE = re.compile(
-    r"^\s*(?:(?:(?:em|mình|tớ|bạn)\s+)?(?:muốn\s+xem|cần\s+xem|(?:hãy\s+)?(?:chỉ\s+cần\s+)?(?:vẽ|dựng|mô\s+phỏng|minh\s+ho[ạa]|biểu\s+diễn|hiển\s+thị|cho\s+(?:mình|em|tôi|tớ)\s+xem))(?:\s+giúp(?:\s+(?:mình|em|tôi|tớ))?|\s+lại)?)\s+",
+    r"^\s*(?:(?:yêu\s+cầu(?:\s+bài\s+toán)?|nhiệm\s+vụ)\s*:\s*)?(?:(?:(?:em|mình|tớ|bạn)\s+)?(?:muốn\s+xem|cần\s+xem|(?:hãy\s+)?(?:chỉ\s+cần\s+)?(?:vẽ|dựng|mô\s+phỏng|minh\s+ho[ạa]|biểu\s+diễn|hiển\s+thị|cho\s+(?:mình|em|tôi|tớ)\s+xem))(?:\s+giúp(?:\s+(?:mình|em|tôi|tớ))?|\s+lại)?)\s+",
     re.IGNORECASE | re.UNICODE,
 )
 
 # Standalone trailing simulation clause ("... Hãy mô phỏng hình chóp đó.")
 STANDALONE_SIM_CLAUSE_RE = re.compile(
-    r"^\s*(?:(?:em|mình|tớ|bạn)\s+)?(?:(?:muốn|cần)\s+xem|(?:hãy\s+)?(?:chỉ\s+cần\s+)?(?:vẽ|dựng|mô\s+phỏng|minh\s+ho[ạa]|biểu\s+diễn|hiển\s+thị|cho\s+(?:mình|em|tôi|tớ)\s+xem))\b",
+    r"^\s*(?:(?:yêu\s+cầu(?:\s+bài\s+toán)?|nhiệm\s+vụ)\s*:\s*)?(?:(?:em|mình|tớ|bạn)\s+)?(?:(?:muốn|cần)\s+xem|(?:hãy\s+)?(?:chỉ\s+cần\s+)?(?:vẽ|dựng|mô\s+phỏng|minh\s+ho[ạa]|biểu\s+diễn|hiển\s+thị|cho\s+(?:mình|em|tôi|tớ)\s+xem))\b",
     re.IGNORECASE | re.UNICODE,
 )
 
@@ -84,7 +84,7 @@ CONTEXT_HEADER_RE = re.compile(
     re.IGNORECASE | re.UNICODE,
 )
 INLINE_EXAM_HEADER_PREFIX_RE = re.compile(
-    r"^\s*(?:(?:Câu|Bài)\s+\d+(?:\s*\(\s*(?:\d+(?:[.,]\d+)?\s*điểm|VD|VDC|TH|NB)\s*\))?\s*[.:;]+\s*)",
+    r"^\s*(?:(?:(?:Câu|Bài)\s+\d+(?:\s*\(\s*(?:\d+(?:[.,]\d+)?\s*điểm|VD|VDC|TH|NB)\s*\))?\s*[.:;]+|(?:đề\s+bài|bài\s+toán)\s*:|trong\s+không\s+gian(?!\s+(?:tọa\s+độ|Oxyz))\s*,)\s*)+",
     re.IGNORECASE | re.UNICODE,
 )
 

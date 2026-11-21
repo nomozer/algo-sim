@@ -245,3 +245,93 @@ def test_historical_v15_live_results_reconciliation():
     assert rec["reconciled_verdicts"]["LOCAL_TEXT_MODEL1_VERIFIED"] is False
     assert rec["scores"]["LEGACY_BASELINE_STRATUM_SCORE"]["completed_via_live_slm"] == 5
     assert rec["scores"]["LEGACY_BASELINE_STRATUM_SCORE"]["baseline_slm_required_total"] == 38
+
+
+def test_independent_slm_capability_evaluator_contract_and_isolation(tmp_path, monkeypatch):
+    import pytest
+    from app.ai.local_slm_extractor import LocalSlmExtractionResult, build_compact_clause_context, validate_and_lower_compact_clause
+    from scripts import evaluate_slm_independent_capability as eval_ind
+
+    assert os.environ.get("ALLOW_LIVE_AI") == "0"
+    assert not os.environ.get("GEMINI_API_KEY")
+
+    pos_text = "Cho hình chóp P.QRS có PQ, PR, PS đôi một vuông góc, PQ = 2, PR = 3, PS = 6. Tính thể tích khối chóp P.QRS."
+    neg_text = "Cho tứ diện PQRS có PQ, PR, PS không đôi một vuông góc, PQ = 2, PR = 3, PS = 4. Vẽ hình."
+
+    def _fake_slm(text, **kwargs):
+        assert kwargs.get("allow_parser_reconcile") is False
+        assert kwargs.get("use_cache") is False
+        assert kwargs.get("allow_download") is False
+        if "không" in text:
+            return LocalSlmExtractionResult(
+                ok=False, strategy="compact_clause", model_key="qwen3-0.6b-axo-v9-q4_k_m",
+                model_sha256="0" * 64, norm_text=text, wire_payload=None, canonical_payload=None,
+                reason_code="INCONSISTENT_FACTS", reason_detail="negated",
+                failure_taxonomy="CONTRADICTION_OR_UNGROUNDED",
+                grounding_envelope={"slm_invoked": True, "accepted_ops": [], "grounding_status": "SLM_REPORTED_UNRESOLVED"},
+            )
+        ctx = build_compact_clause_context(text)
+        canon, _ = validate_and_lower_compact_clause(
+            ctx=ctx,
+            raw_slm_json={
+                "s": [0, "pyr", "P.QRS", 0],
+                "r": [
+                    {"c": 0, "p": "perp_ll", "a": "PQ", "b": "PR"},
+                    {"c": 0, "p": "perp_ll", "a": "PQ", "b": "PS"},
+                    {"c": 0, "p": "perp_ll", "a": "PR", "b": "PS"},
+                    {"c": 1, "p": "len", "a": "PQ", "q": "2"},
+                    {"c": 1, "p": "len", "a": "PR", "q": "3"},
+                    {"c": 1, "p": "len", "a": "PS", "q": "6"},
+                ],
+                "g": [{"c": 2, "t": "vol", "tgt": "P.QRS"}],
+                "u": [],
+            },
+            closure_mode="v9",
+            allow_parser_reconcile=False,
+        )
+        assert canon is not None
+        return LocalSlmExtractionResult(
+            ok=True, strategy="compact_clause", model_key="qwen3-0.6b-axo-v9-q4_k_m",
+            model_sha256="0" * 64, norm_text=text, wire_payload=canon, canonical_payload=canon,
+            reason_code=None, reason_detail=None, failure_taxonomy="NONE",
+            grounding_envelope={"slm_invoked": True, "accepted_ops": [], "grounding_status": "GROUNDED_AND_LOWERED"},
+        )
+
+    monkeypatch.setattr(eval_ind, "run_local_slm_extraction", _fake_slm)
+    manifest = {
+        "run_id": "test-ind", "set": "unit",
+        "valid_cases": [{
+            "case_id": "T1", "original_input": pos_text, "expected_behavior": "SERVE",
+            "gold_entities": {"solid_vertices": ["P", "Q", "R", "S"], "auxiliary_points": []},
+            "expected_counts": {"vertices": 4, "faces": 4},
+            "expected_scene_object_types": ["solid", "point3"],
+            "gold_relations": [["perp_ll", "PQ", "PR"], ["perp_ll", "PQ", "PS"], ["perp_ll", "PR", "PS"], ["len2", "PQ", "4"]],
+            "metric_oracle": [6.0],
+        }],
+        "negative_cases": [{"case_id": "N1", "original_input": neg_text, "expected_behavior": "SAFE_REFUSE"}],
+    }
+    mpath = tmp_path / "manifest.json"
+    opath = tmp_path / "out.json"
+    mpath.write_text(json.dumps(manifest), encoding="utf-8")
+    assert eval_ind.main(["--manifest", str(mpath), "--out", str(opath)]) == 0
+    rep = _load(opath)
+    assert rep["schema"] == "axo-slm-independent-capability-audit/1"
+    assert rep["allow_parser_reconcile"] is False
+    assert rep["local_parser_bypass_used"] is False
+    assert rep["summary"]["verified_scenes"] == 1
+    assert rep["summary"]["negative_safe_refused"] == 1
+    assert rep["summary"]["false_assertions_served"] == 0
+    with pytest.raises(FileExistsError):
+        eval_ind.main(["--manifest", str(mpath), "--out", str(opath)])
+
+    # Isolation violation if accepted_ops ever contains parser_reconcile
+    monkeypatch.setattr(
+        eval_ind, "run_local_slm_extraction",
+        lambda text, **kw: LocalSlmExtractionResult(
+            ok=True, strategy="compact_clause", model_key="x", model_sha256="0" * 64, norm_text=text,
+            wire_payload=None, canonical_payload={}, reason_code=None, reason_detail=None, failure_taxonomy="NONE",
+            grounding_envelope={"slm_invoked": True, "accepted_ops": ["parser_reconcile"]},
+        ),
+    )
+    with pytest.raises(RuntimeError, match="Isolation violation"):
+        eval_ind.evaluate_manifest(manifest)

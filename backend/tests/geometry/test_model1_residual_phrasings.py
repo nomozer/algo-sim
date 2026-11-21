@@ -288,3 +288,122 @@ def test_v15_cache_policy_isolates_cache_154_rows():
 
     assert_cache_policy_at_least(155)
     assert_route_d_row_misses("154:route-d")
+
+
+# Semantic grounding & language recovery cases (`CACHE_VERSION = 156`, fresh synthetic labels absent from holdouts)
+CASES_SEMANTIC_RECOVERY = [
+    ("b18_456", "Tứ diện PQRS có PQ vuông góc với mặt phẳng (QRS), QR vuông góc với RS, PQ = 4, QR = 5, RS = 6. Tính thể tích tứ diện PQRS.", [20.0]),
+    ("b18_345", "Tứ diện PQRS có PQ vuông góc với mặt phẳng (QRS), QR vuông góc với RS, PQ = 3, QR = 4, RS = 5. Tính thể tích tứ diện PQRS.", [10.0]),
+    ("e02_unnamed_3v_prism", "Lăng trụ đứng PQR.STU có đáy vuông tại P, PQ = 5, PR = 3; chiều cao lăng trụ là 2. Tính thể tích khối lăng trụ.", [15.0]),
+    ("g08_hay_cho_biet", "Hãy cho biết thể tích khối chóp P.QRST, với đáy QRST là hình vuông cạnh 3 và PQ vuông góc với đáy, PQ = 4.", [12.0]),
+    ("m06_exam_header_sim", "Đề bài: hình chóp P.QRST, đáy QRST là hình chữ nhật có QR = 6 và QT = 3, PQ ⊥ đáy, PQ = 2. Yêu cầu: vẽ hình.", None),
+]
+
+
+@pytest.mark.parametrize("name,text,gold", CASES_SEMANTIC_RECOVERY, ids=[c[0] for c in CASES_SEMANTIC_RECOVERY])
+def test_semantic_recovery_deterministic_cases_served_exact(name, text, gold, monkeypatch):
+    monkeypatch.setenv("ALLOW_LIVE_AI", "0")
+    monkeypatch.delenv("GEMINI_API_KEY", raising=False)
+    out = route_text_input_local_slm(text, closure_mode=V9_CLOSURE_MODE, normalizer_version="v3", runtime=None,
+                                     allow_download=False, use_cache=False)
+    rd = out.response["route_d"]
+    assert out.status == "SERVED", (rd.get("refusal"), rd.get("reason_code"))
+    assert rd.get("extraction_mode") in ("LOCAL_DETERMINISTIC_PARSER", "LOCAL_PARSER_AFTER_V3_NORMALIZER")
+    if gold is not None:
+        num = scene_oracle.numeric(rd.get("answers"), rd.get("answer_exact"), gold)
+        assert num["status"] == "CORRECT", num
+    else:
+        assert not rd.get("answers")
+
+
+@pytest.mark.parametrize("text", [
+    # B18 missing RS
+    "Tứ diện PQRS có PQ vuông góc với mặt phẳng (QRS), QR vuông góc với RS, PQ = 4, QR = 5. Tính thể tích tứ diện PQRS.",
+    # B18 contradictory edge length PR (PQ=4, QR=5 with PQ ⊥ QR gives PR = sqrt(41) != 1)
+    "Tứ diện PQRS có PQ vuông góc với mặt phẳng (QRS), QR vuông góc với RS, PQ = 4, QR = 5, RS = 6, PR = 1. Tính thể tích tứ diện PQRS.",
+    # 4-vertex unnamed base prism stays refused ("đáy vuông tại D" cannot specify quadrilateral DEFG)
+    "Lăng trụ đứng DEFG.HIJK có đáy vuông tại D, DE = 5, DF = 3; chiều cao lăng trụ là 2. Tính thể tích khối lăng trụ.",
+    # bare "Cho biết" (ambiguous lead) cannot serve deterministically when replacing explicit question verb
+    "Cho hình chóp P.QRST có đáy QRST là hình vuông cạnh 3, PQ vuông góc với đáy, PQ = 4. Cho biết thể tích khối chóp P.QRST.",
+    # negated simulation request stays refused
+    "Đề bài: hình chóp P.QRST, đáy QRST là hình chữ nhật có QR = 6 và QT = 3, PQ ⊥ đáy, PQ = 2. Không cần vẽ hình.",
+    # missing prism height stays refused
+    "Cho lăng trụ đứng PQR.STU có đáy PQR vuông tại P, PQ = 5, PR = 3. Tính thể tích khối lăng trụ.",
+])
+def test_semantic_recovery_opposites_stay_refused(text, monkeypatch):
+    monkeypatch.setenv("ALLOW_LIVE_AI", "0")
+    monkeypatch.delenv("GEMINI_API_KEY", raising=False)
+    out = route_text_input_local_slm(text, closure_mode=V9_CLOSURE_MODE, normalizer_version="v3", runtime=None,
+                                     allow_download=False, use_cache=False)
+    assert out.status != "SERVED", out.response["route_d"].get("answers")
+
+
+def test_source_gate_distinguishes_hay_cho_biet_from_bare_cho_biet():
+    from app.simulation.geometry_functions import registry
+
+    parsed_ok = registry._phan_tich_cau("Hãy cho biết thể tích khối chóp P.QRST.")
+    assert parsed_ok is not None and any(tag in ("hoi", "khoi") for tag, _ in parsed_ok)
+    parsed_bare = registry._phan_tich_cau("Cho biết thể tích khối chóp P.QRST.")
+    assert parsed_bare is None or not any(tag in ("hoi", "khoi") for tag, _ in parsed_bare)
+
+
+def test_slm_extractor_dense_split_prompt_canon_and_reconcile_isolation():
+    from app.ai.local_slm_extractor import (
+        _prompt_clause_text,
+        _split_dense_declarative_span,
+        build_compact_clause_context,
+        build_compact_grammar_for_context,
+        validate_and_lower_compact_clause,
+    )
+
+    dense_b18 = "Tứ diện PQRS có PQ vuông góc với mặt phẳng (QRS), QR vuông góc với RS, PQ = 4, QR = 5, RS = 6"
+    parts_b18 = [dense_b18[a:b] for a, b in _split_dense_declarative_span(dense_b18, 0)]
+    assert parts_b18 == [
+        "Tứ diện PQRS có PQ vuông góc với mặt phẳng (QRS)",
+        "QR vuông góc với RS",
+        "PQ = 4, QR = 5, RS = 6",
+    ]
+
+    # Single-length perp+len stays grouped so AxoV9 reads PQ=4 cleanly without isolated bare-clause ambiguity
+    single_len = "PQ vuông góc với (QRST), PQ = 4"
+    assert [single_len[a:b] for a, b in _split_dense_declarative_span(single_len, 0)] == [single_len]
+
+    # Negated spans stay unsplit and untouched by prompt canonicalization
+    neg_span = "Cho tứ diện PQRS có PQ, PR, PS không đôi một vuông góc, PQ = 2, PR = 3, PS = 4"
+    assert [neg_span[a:b] for a, b in _split_dense_declarative_span(neg_span, 0)] == [neg_span]
+    assert _prompt_clause_text(neg_span) == neg_span
+
+    assert _prompt_clause_text("Hãy dựng tứ diện PQRS.") == "Vẽ hình."
+    assert (
+        _prompt_clause_text("Ba đoạn thẳng PQ, PR, PS đôi một vuông góc tạo thành tứ diện PQRS")
+        == "Cho hình chóp P.QRS có PQ, PR, PS đôi một vuông góc"
+    )
+
+    sim_ctx = build_compact_clause_context(
+        "Ba đoạn thẳng PQ, PR, PS đôi một vuông góc tạo thành tứ diện PQRS với PQ = 4, PR = 4, PS = 7. Hãy dựng tứ diện PQRS."
+    )
+    gram = build_compact_grammar_for_context(sim_ctx, closure_mode=V9_CLOSURE_MODE, allow_sim_carrier=True)
+    root_line = gram.splitlines()[0]
+    assert r',\"g\":[" goallist "],\"u\":[]' in root_line
+    assert "[goallist]" not in root_line
+
+    # allow_parser_reconcile=False omits parser_reconcile even on complete-parseable inputs when lowering manually
+    ctx_lower = build_compact_clause_context(
+        "Cho hình chóp P.QRST có đáy QRST là hình vuông cạnh 3 và PQ vuông góc với đáy, PQ = 4. Vẽ hình."
+    )
+    canon, diag = validate_and_lower_compact_clause(
+        ctx=ctx_lower,
+        raw_slm_json={
+            "s": [0, "pyr", "P.QRST", 0],
+            "r": [
+                {"c": 0, "p": "reg_poly", "a": "QRST", "q": "3"},
+                {"c": 1, "p": "perp_lp", "a": "PQ", "b": "QRST"},
+                {"c": 1, "p": "len", "a": "PQ", "q": "4"},
+            ],
+            "g": [],
+            "u": [],
+        },
+        closure_mode=V9_CLOSURE_MODE,
+        allow_parser_reconcile=False,
+    )
+    assert canon is not None and "parser_reconcile" not in diag.get("accepted_ops", [])
