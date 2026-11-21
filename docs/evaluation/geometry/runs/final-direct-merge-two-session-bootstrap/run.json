@@ -4,7 +4,8 @@
  "wave_id": "AXO_HYBRID_FINAL_DIRECT_MERGE_TWO_SESSION_BOOTSTRAP",
  "campaign": "AXO HYBRID /20",
  "date": "2026-11-22",
- "status": "STOPPED_BEFORE_MERGE_D4_BLOCKED_D7_INCONCLUSIVE",
+ "status": "PREMERGE_GATE_CLOSED_MERGE_AUTHORIZED",
+ "note": "This file records the pre-merge state on the feature branch. Merge, post-merge T3, push, cleanup and bootstrap are recorded in POSTMERGE_RECEIPT.json, committed on main after the merge.",
  "branch": "feat/model1-final-text-acceptance",
  "base_commit": "b42119528fc6f2e445f23b80fb3159fac84c9dec",
  "main_commit": "bc6ff5e333e32d1d53dc7435fba64fe12b6dd651",
@@ -24,72 +25,77 @@
  "owner_decisions_recorded_in_session": {
   "DORMANT_FLAG_INTEGRATION_ACCEPTED_BY_OWNER": true,
   "OWNER_LOCAL_MERGE_AUTHORIZED": true,
-  "D4_PUBLICATION_EXCEPTIONS": "Owner chose to approve the 11 exact path/blob entries; the APPROVED_BY_USER value is written only by the Owner-run command (not yet run)",
-  "D7_GEMINI_LIVE": "Owner chose a budgeted smoke (<=6 problems, <=12 HTTP requests); harness pre-registered here; not yet run (needs the Owner-run launcher, which loads the key)",
+  "D4_PUBLICATION_EXCEPTIONS": "APPROVED: the 11 exact path/blob entries of the /18 proposal",
+  "D7_GEMINI_LIVE": "budgeted smoke (INCONCLUSIVE) -> paired diagnosis (pre-registered INCONCLUSIVE, attribution SHARED_PRE_EXISTING) -> Owner decided to merge on the evidence (2026-11-22)",
   "OWNER_REMOTE_PUSH_AUTHORIZED": true,
   "CLEANUP_AUTHORIZED": "campaign chain only: shared worktree simulation-intent-slm-recovery + git branch -d of the 10 merged /10-/19 branches; older merged branches NOT authorized",
   "TWO_WORKTREES_AUTHORIZED": true
  },
+ "d4_execution": {
+  "status": "PASS",
+  "history": "first attempt (agent under written delegation) denied by the Claude Code auto-mode classifier and not worked around; second attempt approved by the Owner through the interactive permission prompt",
+  "script": "D:/tmp/axo20/approve_d4.ps1 (outside the repo by design)",
+  "script_sha256": "3df15e5c5dff141d2934476f75efaf43cd6a49d09a76db06d55dc9c8eddf1d6d",
+  "output": "approved=11",
+  "register_diff": "exactly 11 lines owner_decision PENDING_OWNER_DECISION -> APPROVED_BY_USER, nothing else; register now 14 APPROVED_BY_USER, 27 PENDING (pre-existing, untouched)",
+  "commit": "61cdf13d4"
+ },
  "publication_safety": {
-  "range": "bc6ff5e333e32d1d53dc7435fba64fe12b6dd651..b42119528fc6f2e445f23b80fb3159fac84c9dec",
-  "before_entries": "violations=12 pending_exception=0 verdict=BLOCKED (exit 1)",
-  "after_pending_entries": "violations=12 pending_exception=12 verdict=BLOCKED (exit 1)",
-  "dry_run_with_owner_command_on_copy": "violations=0 verdict=PASS (exit 0); exactly 11 owner_decision values changed, nothing else",
-  "range_v19_docs_commit_b10c0a1e4_to_b42119528": "violations=0 verdict=PASS",
-  "hits": "12 HARDCODED_PASSWORD, 11 path/blob pairs, 9 distinct blobs, 3 distinct values; every hit is a password field in a register POST to the app's own loopback auth with @example.com/@example.invalid throwaway users",
+  "range": "bc6ff5e333e32d1d53dc7435fba64fe12b6dd651..<feature tip>",
+  "before_d4": "violations=12 verdict=BLOCKED (exit 1)",
+  "after_d4": "violations=0 pending_exception=0 verdict=PASS (exit 0)",
+  "hits_covered": "12 HARDCODED_PASSWORD, 11 path/blob pairs, 9 distinct blobs, 3 distinct values; every hit is a password field in a register POST to the app's own loopback auth with @example.com/@example.invalid throwaway users",
+  "main_baseline": "the 96 --head hits already on main are not part of the merge range and were not approved here",
   "limit": "values were not compared with backend/.env (agent not permitted to read it); regex detectors are a lower bound"
  },
  "live_smoke": {
   "preregistration": "LIVE_SMOKE_PREREGISTRATION.json",
   "preregistration_sha256": "73084ffa6d9ba57aa8dfe4627c0e92fee7056a37005818a57508b5c13afdc84a",
   "harness": "tools/live_gemini_smoke.py",
-  "detached_worktree": ".superpowers/worktrees/live-smoke-c158 @ b42119528 (clean)",
-  "offline_dry_run": "cap 0 + dummy key: N1 GATE_OK (0 calls), L1 stopped by budget before network I/O (0 HTTP requests)",
-  "status": "MEASURED_ONCE",
-  "executed_by": "agent, under the Owner's explicit D7 delegation of 2026-11-22 (continuation instruction); single run, no re-run",
+  "executed_by": "agent, under the Owner's explicit D7 delegation of 2026-11-22; single run, no re-run",
   "result": "LIVE_SMOKE_RESULT.json",
   "result_sha256": "440072844416a91fe5b8ef13655f00f24fec8200864d1ace76a2fc80a5745fbc",
   "gemini_model": "gemini-2.5-flash",
   "http_requests": 5,
-  "logical_calls": 5,
   "retry_requests": 0,
   "verdict": "INCONCLUSIVE",
-  "summary": "L1/L2/L3 MATCH (12/5, cos²=32/41, 4√2/3 exactly the deterministic oracle); L4/L5 SAFE_REFUSAL INVALID_TYPED_FACT_NEXT (HTTP 200, fail-closed, 0 scene objects); N1 GATE_OK (0 calls); 0 HTTP 500, 0 wrong answers. 3/5 MATCH < pre-registered 4/5 => INCONCLUSIVE => merge waits for the Owner.",
-  "open_question": "Whether L4/L5 are caused by the branch's TypedFactNext contract change (typed_fact_next.py +216, typed_fact_next_extraction.py +77 vs main) or by provider variance is NOT_MEASURED: raw payloads were deliberately not captured and a main-vs-158 live pair is outside the pre-registration."
+  "summary": "L1/L2/L3 MATCH (12/5, cos²=32/41, 4√2/3); L4/L5 SAFE_REFUSAL INVALID_TYPED_FACT_NEXT (fail-closed); N1 GATE_OK (0 calls); 0 HTTP 500, 0 wrong answers; 3/5 < 4/5"
  },
- "d4_execution": {
-  "status": "BLOCKED",
-  "detail": "Owner delegated running D:/tmp/axo20/approve_d4.ps1 (audited: no network, no secrets, 9 blob keys / 11 entries, writes only if exactly 11 change). The Claude Code permission classifier denied the agent writing APPROVED_BY_USER (Undermining Oversight); not worked around. Register unchanged: 3 APPROVED_BY_USER, 11 new entries PENDING."
+ "live_pair_diagnosis": {
+  "preregistration": "LIVE_PAIR_DIAGNOSIS_PREREGISTRATION.json",
+  "preregistration_sha256": "3b75d071f39c27777080f0ee6dc86a2b16c3ea5f258fe60b787482ebf3a2efab",
+  "tools": ["tools/live_pair_capture.py", "tools/cross_replay.py"],
+  "result": "LIVE_PAIR_DIAGNOSIS_RESULT.json",
+  "http_requests": 4,
+  "verdict_preregistered": "INCONCLUSIVE (0 payloads captured: rejection happens inside TransportExtractor.extract)",
+  "attribution": "SHARED_PRE_EXISTING_LIVE_ROUTE_LIMITATION: main 2/2 and branch 2/2 refuse L4/L5 at the same stage; request byte-identical; the rejecting transport normalization is AST-identical; the only branch difference on that path cannot raise",
+  "owner_decision": "merge (Owner's D7 rule 'main also refuses => no regression' met)",
+  "handoff": "Session 1: live transport normalization rejects current gemini-2.5-flash replies for L4 (distance between parallel planes) and L5 (volume + ratio) on main and branch alike"
  },
+ "live_ai_calls": 9,
+ "live_ai_budget": 12,
  "main_untracked_folder_preserved": {
   "path": "docs/evaluation/geometry/runs/post-merge-cleanup-closure/",
   "files": 6,
   "sha256_match_v19": true
  },
+ "rollback_plan": "pre-merge anchor tag pre-model1-merge -> bc6ff5e33 (local, not pushed). Operational rollback: redeploy bc6ff5e33 (0 migrations; cache rows isolated 132:route-d vs 158:route-d). Git rollback, forward-only: git revert -m 1 <merge>; re-merging later requires reverting that revert. Never reset or force-push main.",
  "verdict_flags": {
   "CANDIDATE158_IDENTITY_VERIFIED": true,
   "AUTHORITATIVE_FULL_T3_PASS": true,
   "PROSPECTIVE_TEXT_ACCEPTANCE": "FAIL",
+  "MODEL1_TEXT_ACCEPTANCE": "FAIL",
   "LOCAL_TEXT_MODEL1_VERIFIED": false,
+  "LOCAL_DEFAULT_ENABLED": false,
   "FULL_GEMINI_ROLE_REPLACEMENT_VERIFIED": false,
-  "PUBLICATION_SAFETY_GATE_PASS": false,
-  "GEMINI_LIVE_COMPATIBILITY_STATUS": "OFFLINE_PARITY_82_OF_82; LIVE_SMOKE_INCONCLUSIVE_3_OF_5",
-  "GEMINI_LIVE_SMOKE_OR_WAIVER_APPROVED": "SMOKE_RUN_INCONCLUSIVE; NO_WAIVER",
+  "DORMANT_FLAG_INTEGRATION_ACCEPTED_BY_OWNER": true,
+  "PUBLICATION_SAFETY_GATE_PASS": true,
+  "GEMINI_LIVE_COMPATIBILITY_STATUS": "OFFLINE_PARITY_82_OF_82; LIVE_SMOKE_INCONCLUSIVE_3_OF_5; L4_L5_SHARED_WITH_MAIN",
+  "GEMINI_LIVE_SMOKE_OR_WAIVER_APPROVED": "SMOKE_INCONCLUSIVE + PAIRED_DIAGNOSIS; OWNER_DECIDED_MERGE",
   "PREMERGE_MAIN_SNAPSHOT_VERIFIED": true,
-  "ROLLBACK_ANCHOR_VERIFIED": false,
-  "MAIN_MERGE_READY": false,
-  "MAIN_MERGE_COMPLETED": false,
-  "REMOTE_PUSH_COMPLETED": false,
-  "OLD_WORKTREE_REMOVED": false,
-  "OLD_BRANCH_REMOVED": false,
-  "SESSION1_WORKTREE_READY": false,
-  "SESSION2_WORKTREE_READY": false,
+  "OWNER_LOCAL_MERGE_AUTHORIZED": true,
+  "MAIN_MERGE_READY": true,
   "NO_PR_CREATED": true,
   "NO_FORCE_PUSH_PERFORMED": true
- },
- "live_ai_calls": 5,
- "next_owner_actions": [
-  "run D:/tmp/axo20/approve_d4.ps1 (sha256 3df15e5c5dff141d2934476f75efaf43cd6a49d09a76db06d55dc9c8eddf1d6d, outside the repo by design) from the shared worktree root (prints approved=11; refuses to write unless exactly 11 values change)",
-  "run tools/live_gemini_smoke.py with the main venv (writes D:/tmp/axo20/live_smoke_result.json)"
- ]
+ }
 }
