@@ -1,0 +1,74 @@
+{
+  "schema": "axo-evaluation-run/2",
+  "run_id": "local-model1-recovery-offline-vision",
+  "wave_id": "AXO_HYBRID_LOCAL_MODEL1_RECOVERY_OFFLINE_VISION",
+  "campaign": "AXO HYBRID /14",
+  "generated_at": "2026-11-21",
+  "classification": "POST_EXPOSURE_LIVE_REGRESSION + LOCAL_OCR_INPUT_VALIDATION + NEW_PROSPECTIVE_ACCEPTANCE_SCORE",
+  "branch": "feat/local-model1-recovery-offline-vision",
+  "start_base_commit": "fd53c26ab",
+  "main": "bc6ff5e33 (unchanged, not merged, not pushed)",
+  "sessions": [
+    {"agent": "Codex", "commits": "cb88944e4..4d145f9df", "ended": "usage limit; Full T3 interrupted at 48%"},
+    {"agent": "Claude (takeover)", "commits": "25ead716c..HEAD"}
+  ],
+  "phase_commits": {
+    "holdout1_preregistration": "cb88944e4",
+    "cache153_product": "df31847d3",
+    "candidate153_bind": "7b39de291",
+    "cache153_results_and_t3_receipt": "25ead716c",
+    "holdout2_preregistration": "37c768849",
+    "takeover_fix_cache154": "5c65f795e",
+    "first_failing_layer_audit": "802612fa0",
+    "candidate154_refreeze": "11fb74fae",
+    "holdout2_candidate_bind": "1b4250adc"
+  },
+  "candidate": {
+    "product_commit_sha": "5c65f795e88312956b05ee483ea57ff37359c69c",
+    "measured_system_tree_hash": "7988f838a2d8b9bc2fed2102c8ca465d211d08771541cddb498962e293ec6b3c",
+    "measured_files": 127,
+    "cache_version": "154",
+    "route_d_cache_policy": "154:route-d",
+    "model": {"key": "qwen3-0.6b-axo-v9-q4_k_m", "sha256": "73f1484b08b97ed2a1f44e32bcf6610210c7fda51567c4cd0a03d98dffc6cc35", "llama_cpp_release": "b12470"},
+    "route_mode_measured": "local-only-scoped",
+    "default_route_mode": "live (unchanged)"
+  },
+  "verdicts": {
+    "FULL_PRODUCT_GATE_PASS": true,
+    "FULL_PRODUCT_GATE_CACHE153": "FAIL (TEST_INTERRUPTED, then 2 evidence-hygiene failures + environmental build EPERM)",
+    "LIVE_SIMULATION_ACCEPTED": false,
+    "SLM_ACCEPTANCE": false,
+    "LOCAL_VISION_REPLACEMENT_VERIFIED": false,
+    "LOCAL_MODEL1_REPLACEMENT_VERIFIED": false,
+    "SAFE_NEGATIVES": "26/26",
+    "MAIN_MERGE_READY": false,
+    "EXTERNAL_INDEPENDENCE": "NOT_MEASURED",
+    "GEMINI_PARITY": "NOT_MEASURED",
+    "PHYSICAL_TARGET_HARDWARE": "NOT_MEASURED"
+  },
+  "results": {
+    "holdout1_cache153": {"completed": "3/28", "text": "3/18", "files": "0/10", "slm": "1/16", "negatives": "13/13"},
+    "holdout1_cache154_regression_exposed": {"completed": "4/28", "text": "4/18", "files": "0/10", "slm": "1/16", "negatives": "13/13"},
+    "holdout2_cache154_prospective": {"completed": "29/38", "rate": 0.7632, "text": "21/28", "files": "8/10", "slm": "2/10", "negatives": "13/13"}
+  },
+  "evidence": [
+    "report.md",
+    "FULL_T3_CACHE153_RECEIPT.json",
+    "FULL_T3_CACHE154_RECEIPT.json",
+    "FIRST_FAILING_LAYER_AUDIT.json",
+    "LIVE_ACCEPTANCE_RESULTS.json",
+    "OFFLINE_VISION_VALIDATION.json",
+    "LIVE_REGRESSION_HOLDOUT1_CACHE154.json",
+    "holdout-2/PROVENANCE.json",
+    "holdout-2/ACCEPTANCE_MANIFEST.json",
+    "holdout-2/ACCEPTANCE_CRITERIA.json",
+    "holdout-2/ACCEPTANCE_FREEZE.json",
+    "holdout-2/CANDIDATE_FREEZE.json",
+    "holdout-2/LIVE_ACCEPTANCE_RESULTS.json"
+  ],
+  "owner_decisions_pending": [
+    "merge of this branch into main (acceptance thresholds not met)",
+    "next phrase families and a new prospective set frozen before further fixes",
+    "OCR improvements and a glyph-complete font for rendered evaluation inputs"
+  ]
+}

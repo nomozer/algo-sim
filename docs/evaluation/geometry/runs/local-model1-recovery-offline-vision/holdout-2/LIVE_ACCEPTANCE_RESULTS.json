@@ -1,0 +1,2461 @@
+{
+  "schema": "axo-local-model1-prospective-results/1",
+  "scoring": "summarize_regression.result (same completion rule as the CACHE 153 report)",
+  "run_output": "candidate154-h2-run2",
+  "manifest_dir": "docs/evaluation/geometry/runs/local-model1-recovery-offline-vision/holdout-2",
+  "evaluation_identity": {
+    "head": "11fb74fae7a231de6df7dca9cf5151edc4fc0e24",
+    "branch": "feat/local-model1-recovery-offline-vision",
+    "candidate_commit": "802612fa00bddebcb2090da4bd2cd2f910a255d8",
+    "product_commit_sha": "5c65f795e88312956b05ee483ea57ff37359c69c",
+    "measured_system_tree_hash": "7988f838a2d8b9bc2fed2102c8ca465d211d08771541cddb498962e293ec6b3c",
+    "cache_version": "154",
+    "route_d_cache_policy": "154:route-d",
+    "semantic_environment_hash": "f9df4bf0c8bd458a278d2692567fa3e096340ae37ff5493730dff4067c0f5e19",
+    "parser_version": "local-geometry-parser/3",
+    "slm_extractor_version": "local-slm-extractor/6",
+    "slm_validator_version": "slm-grounding-validator/6"
+  },
+  "registered_inputs": {
+    "manifest_sha256": "9759be6f9cd7c8eb3aa9644e7f004b94daac6000eee9f279f19fbbbc833dec67",
+    "criteria_sha256": "28616f443c198b6bb1caf799c356e5c29e660b3df20c557560a20ab329932545"
+  },
+  "totals": {
+    "positive": 38,
+    "completed": 29,
+    "completion_rate": 0.7631578947368421,
+    "negative": 13,
+    "negative_safely_refused": 13,
+    "served": 29
+  },
+  "by_modality": {
+    "digital_pdf": {
+      "positive": 1,
+      "served": 1,
+      "completed": 1,
+      "negative": 0,
+      "negative_safely_refused": 0
+    },
+    "docx": {
+      "positive": 1,
+      "served": 1,
+      "completed": 1,
+      "negative": 0,
+      "negative_safely_refused": 0
+    },
+    "mixed_pdf": {
+      "positive": 1,
+      "served": 0,
+      "completed": 0,
+      "negative": 0,
+      "negative_safely_refused": 0
+    },
+    "raster_image": {
+      "positive": 5,
+      "served": 4,
+      "completed": 4,
+      "negative": 3,
+      "negative_safely_refused": 3
+    },
+    "scanned_pdf": {
+      "positive": 2,
+      "served": 2,
+      "completed": 2,
+      "negative": 0,
+      "negative_safely_refused": 0
+    },
+    "text": {
+      "positive": 28,
+      "served": 21,
+      "completed": 21,
+      "negative": 10,
+      "negative_safely_refused": 10
+    }
+  },
+  "slm": {
+    "baseline_slm_required": 10,
+    "candidate_slm_required": 8,
+    "verified_scenes": 2,
+    "verified_case_ids": [
+      "B08",
+      "B21"
+    ],
+    "rate": 0.2
+  },
+  "safety": {
+    "wrong_served": [],
+    "grounding_violations_served": [],
+    "unverified_relations_served": [],
+    "fabricated_numeric_goals": [],
+    "served_numeric_mismatch": [],
+    "attachment_provenance_not_present": []
+  },
+  "network": {
+    "browser_external_requests": 0,
+    "proxy_intercepted": 0,
+    "tcp_heartbeats": 414,
+    "tcp_non_loopback_records": 0,
+    "physical_internet_disconnect": "NOT_MEASURED",
+    "external_ai_calls_reported": 0,
+    "prepare_vlm_calls_reported": 0
+  },
+  "thresholds": {
+    "completion_rate_min": 0.85,
+    "slm_rate_min": 0.3,
+    "slm_min_scenes": 5
+  },
+  "LIVE_SIMULATION_ACCEPTED": false,
+  "machine_receipts_sha256": {
+    ".superpowers/offline-logs/local-model1-recovery-offline-vision/candidate154-h2-run2/browser/responses.jsonl": "470364c9b331947576310b3abf568dd678b8bc21510a8e47a1266ad8174e01d1",
+    ".superpowers/offline-logs/local-model1-recovery-offline-vision/candidate154-h2-run2/browser/browser_checks.json": "e7555dfd4a21c63cdd5a59b97a40631d82436c6066cfa9395d6d3dcb514b0121",
+    ".superpowers/offline-logs/local-model1-recovery-offline-vision/candidate154-h2-run2/scene_oracle.json": "913822b711cd3150c4c329eabdcac538f7ee88513b627d62e674ae33e8015890",
+    ".superpowers/offline-logs/local-model1-recovery-offline-vision/candidate154-h2-run2/attachments/responses.jsonl": "b4f85e26d415d643a999238ebf15b53b7bac369c63caf5199ba661265068422a",
+    ".superpowers/offline-logs/local-model1-recovery-offline-vision/candidate154-h2-run2/attachments/browser_checks.json": "902279f6a0bf4b32cfed0d046c77d35ad69c41cb2c9eb53616edf886734dc2fe",
+    ".superpowers/offline-logs/local-model1-recovery-offline-vision/candidate154-h2-run2/attachment_oracle.json": "4e39fba2312887e88081b3afd4d9d949b451cdcf0dbf16e90c96dd16cc0a47d1"
+  },
+  "cases": [
+    {
+      "http": 200,
+      "route": "LOCAL_DETERMINISTIC_HYBRID",
+      "route_status": "SERVED",
+      "deterministic_parser_status": "LOCAL_PARSE_COMPLETE",
+      "slm": {
+        "invoked": "UNKNOWN",
+        "grounding": "UNKNOWN",
+        "cache_hit": "UNKNOWN"
+      },
+      "source_gate_status": "VERIFIED",
+      "source_gate_detector": "UNKNOWN",
+      "scene_served": true,
+      "mathematical_validation": "MATHEMATICALLY_VALID",
+      "relation_failures": 0,
+      "numeric_status": "CORRECT",
+      "answer_exact": {
+        "q1": "40"
+      },
+      "answers": {
+        "q1": "40"
+      },
+      "visual_ok": true,
+      "visual_diagnostics": {
+        "missing_gold_labels": [],
+        "outside_initial_labels": [],
+        "outside_initial_ndc_vertices": [],
+        "stale_vs_previous": false
+      },
+      "interaction_ok": true,
+      "canvas_count_when_not_served": null,
+      "reason_code": null,
+      "failure_category": null,
+      "clarification": null,
+      "scale_policy": null,
+      "scene_cache": "UNKNOWN",
+      "ms": 819,
+      "model_inference_ms": null,
+      "model_startup_ms": null,
+      "provider_calls_recorded": {
+        "gemini_vision_calls": 0,
+        "gemini_typed_fact_calls": 0,
+        "total_provider_calls": 0
+      },
+      "completed": true,
+      "case_id": "B01",
+      "modality": "text",
+      "expected_behavior": "SERVE"
+    },
+    {
+      "http": 200,
+      "route": "LOCAL_DETERMINISTIC_HYBRID",
+      "route_status": "SERVED",
+      "deterministic_parser_status": "LOCAL_PARSE_COMPLETE",
+      "slm": {
+        "invoked": "UNKNOWN",
+        "grounding": "UNKNOWN",
+        "cache_hit": "UNKNOWN"
+      },
+      "source_gate_status": "VERIFIED",
+      "source_gate_detector": "UNKNOWN",
+      "scene_served": true,
+      "mathematical_validation": "MATHEMATICALLY_VALID",
+      "relation_failures": 0,
+      "numeric_status": "NOT_ASKED",
+      "answer_exact": {},
+      "answers": {},
+      "visual_ok": true,
+      "visual_diagnostics": {
+        "missing_gold_labels": [],
+        "outside_initial_labels": [],
+        "outside_initial_ndc_vertices": [],
+        "stale_vs_previous": false
+      },
+      "interaction_ok": true,
+      "canvas_count_when_not_served": null,
+      "reason_code": null,
+      "failure_category": null,
+      "clarification": null,
+      "scale_policy": null,
+      "scene_cache": "UNKNOWN",
+      "ms": 226,
+      "model_inference_ms": null,
+      "model_startup_ms": null,
+      "provider_calls_recorded": {
+        "gemini_vision_calls": 0,
+        "gemini_typed_fact_calls": 0,
+        "total_provider_calls": 0
+      },
+      "completed": true,
+      "case_id": "B02",
+      "modality": "text",
+      "expected_behavior": "SERVE"
+    },
+    {
+      "http": 200,
+      "route": "LOCAL_DETERMINISTIC_HYBRID",
+      "route_status": "SERVED",
+      "deterministic_parser_status": "LOCAL_PARSE_COMPLETE",
+      "slm": {
+        "invoked": "UNKNOWN",
+        "grounding": "UNKNOWN",
+        "cache_hit": "UNKNOWN"
+      },
+      "source_gate_status": "VERIFIED",
+      "source_gate_detector": "UNKNOWN",
+      "scene_served": true,
+      "mathematical_validation": "MATHEMATICALLY_VALID",
+      "relation_failures": 0,
+      "numeric_status": "NOT_ASKED",
+      "answer_exact": {},
+      "answers": {},
+      "visual_ok": true,
+      "visual_diagnostics": {
+        "missing_gold_labels": [],
+        "outside_initial_labels": [],
+        "outside_initial_ndc_vertices": [],
+        "stale_vs_previous": false
+      },
+      "interaction_ok": true,
+      "canvas_count_when_not_served": null,
+      "reason_code": null,
+      "failure_category": null,
+      "clarification": null,
+      "scale_policy": null,
+      "scene_cache": "UNKNOWN",
+      "ms": 154,
+      "model_inference_ms": null,
+      "model_startup_ms": null,
+      "provider_calls_recorded": {
+        "gemini_vision_calls": 0,
+        "gemini_typed_fact_calls": 0,
+        "total_provider_calls": 0
+      },
+      "completed": true,
+      "case_id": "B03",
+      "modality": "text",
+      "expected_behavior": "SERVE"
+    },
+    {
+      "http": 200,
+      "route": "LOCAL_DETERMINISTIC_HYBRID",
+      "route_status": "SERVED",
+      "deterministic_parser_status": "LOCAL_PARSE_COMPLETE",
+      "slm": {
+        "invoked": "UNKNOWN",
+        "grounding": "UNKNOWN",
+        "cache_hit": "UNKNOWN"
+      },
+      "source_gate_status": "VERIFIED",
+      "source_gate_detector": "UNKNOWN",
+      "scene_served": true,
+      "mathematical_validation": "MATHEMATICALLY_VALID",
+      "relation_failures": 0,
+      "numeric_status": "CORRECT",
+      "answer_exact": {
+        "q1": "15/2"
+      },
+      "answers": {
+        "q1": "15/2"
+      },
+      "visual_ok": true,
+      "visual_diagnostics": {
+        "missing_gold_labels": [],
+        "outside_initial_labels": [],
+        "outside_initial_ndc_vertices": [],
+        "stale_vs_previous": false
+      },
+      "interaction_ok": true,
+      "canvas_count_when_not_served": null,
+      "reason_code": null,
+      "failure_category": null,
+      "clarification": null,
+      "scale_policy": null,
+      "scene_cache": "UNKNOWN",
+      "ms": 166,
+      "model_inference_ms": null,
+      "model_startup_ms": null,
+      "provider_calls_recorded": {
+        "gemini_vision_calls": 0,
+        "gemini_typed_fact_calls": 0,
+        "total_provider_calls": 0
+      },
+      "completed": true,
+      "case_id": "B04",
+      "modality": "text",
+      "expected_behavior": "SERVE"
+    },
+    {
+      "http": 200,
+      "route": "LOCAL_DETERMINISTIC_HYBRID",
+      "route_status": "SERVED",
+      "deterministic_parser_status": "LOCAL_PARSE_COMPLETE",
+      "slm": {
+        "invoked": "UNKNOWN",
+        "grounding": "UNKNOWN",
+        "cache_hit": "UNKNOWN"
+      },
+      "source_gate_status": "VERIFIED",
+      "source_gate_detector": "UNKNOWN",
+      "scene_served": true,
+      "mathematical_validation": "MATHEMATICALLY_VALID",
+      "relation_failures": 0,
+      "numeric_status": "NOT_ASKED",
+      "answer_exact": {},
+      "answers": {},
+      "visual_ok": true,
+      "visual_diagnostics": {
+        "missing_gold_labels": [],
+        "outside_initial_labels": [],
+        "outside_initial_ndc_vertices": [],
+        "stale_vs_previous": false
+      },
+      "interaction_ok": true,
+      "canvas_count_when_not_served": null,
+      "reason_code": null,
+      "failure_category": null,
+      "clarification": null,
+      "scale_policy": null,
+      "scene_cache": "UNKNOWN",
+      "ms": 129,
+      "model_inference_ms": null,
+      "model_startup_ms": null,
+      "provider_calls_recorded": {
+        "gemini_vision_calls": 0,
+        "gemini_typed_fact_calls": 0,
+        "total_provider_calls": 0
+      },
+      "completed": true,
+      "case_id": "B05",
+      "modality": "text",
+      "expected_behavior": "SERVE"
+    },
+    {
+      "http": 200,
+      "route": "LOCAL_DETERMINISTIC_HYBRID",
+      "route_status": "SERVED",
+      "deterministic_parser_status": "LOCAL_PARSE_COMPLETE",
+      "slm": {
+        "invoked": "UNKNOWN",
+        "grounding": "UNKNOWN",
+        "cache_hit": "UNKNOWN"
+      },
+      "source_gate_status": "VERIFIED",
+      "source_gate_detector": "UNKNOWN",
+      "scene_served": true,
+      "mathematical_validation": "MATHEMATICALLY_VALID",
+      "relation_failures": 0,
+      "numeric_status": "CORRECT",
+      "answer_exact": {
+        "q1": "18"
+      },
+      "answers": {
+        "q1": "18"
+      },
+      "visual_ok": true,
+      "visual_diagnostics": {
+        "missing_gold_labels": [],
+        "outside_initial_labels": [],
+        "outside_initial_ndc_vertices": [],
+        "stale_vs_previous": false
+      },
+      "interaction_ok": true,
+      "canvas_count_when_not_served": null,
+      "reason_code": null,
+      "failure_category": null,
+      "clarification": null,
+      "scale_policy": null,
+      "scene_cache": "UNKNOWN",
+      "ms": 153,
+      "model_inference_ms": null,
+      "model_startup_ms": null,
+      "provider_calls_recorded": {
+        "gemini_vision_calls": 0,
+        "gemini_typed_fact_calls": 0,
+        "total_provider_calls": 0
+      },
+      "completed": true,
+      "case_id": "B06",
+      "modality": "text",
+      "expected_behavior": "SERVE"
+    },
+    {
+      "http": 200,
+      "route": "LOCAL_DETERMINISTIC_HYBRID",
+      "route_status": "SERVED",
+      "deterministic_parser_status": "LOCAL_PARSE_COMPLETE",
+      "slm": {
+        "invoked": "UNKNOWN",
+        "grounding": "UNKNOWN",
+        "cache_hit": "UNKNOWN"
+      },
+      "source_gate_status": "VERIFIED",
+      "source_gate_detector": "UNKNOWN",
+      "scene_served": true,
+      "mathematical_validation": "MATHEMATICALLY_VALID",
+      "relation_failures": 0,
+      "numeric_status": "NOT_ASKED",
+      "answer_exact": {},
+      "answers": {},
+      "visual_ok": true,
+      "visual_diagnostics": {
+        "missing_gold_labels": [],
+        "outside_initial_labels": [],
+        "outside_initial_ndc_vertices": [],
+        "stale_vs_previous": false
+      },
+      "interaction_ok": true,
+      "canvas_count_when_not_served": null,
+      "reason_code": null,
+      "failure_category": null,
+      "clarification": null,
+      "scale_policy": null,
+      "scene_cache": "UNKNOWN",
+      "ms": 139,
+      "model_inference_ms": null,
+      "model_startup_ms": null,
+      "provider_calls_recorded": {
+        "gemini_vision_calls": 0,
+        "gemini_typed_fact_calls": 0,
+        "total_provider_calls": 0
+      },
+      "completed": true,
+      "case_id": "B07",
+      "modality": "text",
+      "expected_behavior": "SERVE"
+    },
+    {
+      "http": 200,
+      "route": "LOCAL_SLM_FALLBACK",
+      "route_status": "SERVED",
+      "deterministic_parser_status": "LOCAL_PARSE_PARTIAL",
+      "slm": {
+        "invoked": true,
+        "grounding": "GROUNDED_AND_LOWERED",
+        "cache_hit": false
+      },
+      "source_gate_status": "VERIFIED",
+      "source_gate_detector": "UNKNOWN",
+      "scene_served": true,
+      "mathematical_validation": "MATHEMATICALLY_VALID",
+      "relation_failures": 0,
+      "numeric_status": "CORRECT",
+      "answer_exact": {
+        "q1": "24"
+      },
+      "answers": {
+        "q1": "24a³"
+      },
+      "visual_ok": true,
+      "visual_diagnostics": {
+        "missing_gold_labels": [],
+        "outside_initial_labels": [],
+        "outside_initial_ndc_vertices": [],
+        "stale_vs_previous": false
+      },
+      "interaction_ok": true,
+      "canvas_count_when_not_served": null,
+      "reason_code": null,
+      "failure_category": null,
+      "clarification": null,
+      "scale_policy": null,
+      "scene_cache": "UNKNOWN",
+      "ms": 11122,
+      "model_inference_ms": 8901.99,
+      "model_startup_ms": 1965.36,
+      "provider_calls_recorded": {
+        "gemini_vision_calls": 0,
+        "gemini_typed_fact_calls": 0,
+        "total_provider_calls": 0
+      },
+      "completed": true,
+      "case_id": "B08",
+      "modality": "text",
+      "expected_behavior": "SERVE"
+    },
+    {
+      "http": 200,
+      "route": "LOCAL_DETERMINISTIC_HYBRID",
+      "route_status": "SERVED",
+      "deterministic_parser_status": "LOCAL_PARSE_COMPLETE",
+      "slm": {
+        "invoked": "UNKNOWN",
+        "grounding": "UNKNOWN",
+        "cache_hit": "UNKNOWN"
+      },
+      "source_gate_status": "VERIFIED",
+      "source_gate_detector": "UNKNOWN",
+      "scene_served": true,
+      "mathematical_validation": "MATHEMATICALLY_VALID",
+      "relation_failures": 0,
+      "numeric_status": "NOT_ASKED",
+      "answer_exact": {},
+      "answers": {},
+      "visual_ok": true,
+      "visual_diagnostics": {
+        "missing_gold_labels": [],
+        "outside_initial_labels": [],
+        "outside_initial_ndc_vertices": [],
+        "stale_vs_previous": false
+      },
+      "interaction_ok": true,
+      "canvas_count_when_not_served": null,
+      "reason_code": null,
+      "failure_category": null,
+      "clarification": null,
+      "scale_policy": null,
+      "scene_cache": "UNKNOWN",
+      "ms": 215,
+      "model_inference_ms": null,
+      "model_startup_ms": null,
+      "provider_calls_recorded": {
+        "gemini_vision_calls": 0,
+        "gemini_typed_fact_calls": 0,
+        "total_provider_calls": 0
+      },
+      "completed": true,
+      "case_id": "B09",
+      "modality": "text",
+      "expected_behavior": "SERVE"
+    },
+    {
+      "http": 200,
+      "route": "LOCAL_SLM_FALLBACK",
+      "route_status": "REFUSED",
+      "deterministic_parser_status": "LOCAL_PARSE_PARTIAL",
+      "slm": {
+        "invoked": true,
+        "grounding": "SLM_REPORTED_UNRESOLVED",
+        "cache_hit": false
+      },
+      "source_gate_status": "NOT_REACHED",
+      "source_gate_detector": "UNKNOWN",
+      "scene_served": false,
+      "mathematical_validation": "NOT_SERVED",
+      "relation_failures": 0,
+      "numeric_status": "NOT_ASKED",
+      "answer_exact": {},
+      "answers": {},
+      "visual_ok": null,
+      "visual_diagnostics": {
+        "missing_gold_labels": null,
+        "outside_initial_labels": null,
+        "outside_initial_ndc_vertices": null,
+        "stale_vs_previous": null
+      },
+      "interaction_ok": null,
+      "canvas_count_when_not_served": 0,
+      "reason_code": "AMBIGUOUS_FACT",
+      "failure_category": "insufficient_specification",
+      "clarification": "Trong “Chóp S.ABCD có đáy là hình chữ nhật ABCD, AB = 4 và AD = 6, cạnh SA dài 3 và vuông góc với (ABCD). Vẽ hình.”, bạn hãy nói rõ quan hệ hình học.",
+      "scale_policy": null,
+      "scene_cache": "UNKNOWN",
+      "ms": 1847,
+      "model_inference_ms": 1722.77,
+      "model_startup_ms": 0,
+      "provider_calls_recorded": {
+        "gemini_vision_calls": 0,
+        "gemini_typed_fact_calls": 0,
+        "total_provider_calls": 0
+      },
+      "completed": false,
+      "case_id": "B10",
+      "modality": "text",
+      "expected_behavior": "SERVE"
+    },
+    {
+      "http": 200,
+      "route": "LOCAL_DETERMINISTIC_HYBRID",
+      "route_status": "SERVED",
+      "deterministic_parser_status": "LOCAL_PARSE_COMPLETE",
+      "slm": {
+        "invoked": "UNKNOWN",
+        "grounding": "UNKNOWN",
+        "cache_hit": "UNKNOWN"
+      },
+      "source_gate_status": "VERIFIED",
+      "source_gate_detector": "UNKNOWN",
+      "scene_served": true,
+      "mathematical_validation": "MATHEMATICALLY_VALID",
+      "relation_failures": 0,
+      "numeric_status": "CORRECT",
+      "answer_exact": {
+        "q1": "12"
+      },
+      "answers": {
+        "q1": "12"
+      },
+      "visual_ok": true,
+      "visual_diagnostics": {
+        "missing_gold_labels": [],
+        "outside_initial_labels": [],
+        "outside_initial_ndc_vertices": [],
+        "stale_vs_previous": false
+      },
+      "interaction_ok": true,
+      "canvas_count_when_not_served": null,
+      "reason_code": null,
+      "failure_category": null,
+      "clarification": null,
+      "scale_policy": null,
+      "scene_cache": "UNKNOWN",
+      "ms": 157,
+      "model_inference_ms": null,
+      "model_startup_ms": null,
+      "provider_calls_recorded": {
+        "gemini_vision_calls": 0,
+        "gemini_typed_fact_calls": 0,
+        "total_provider_calls": 0
+      },
+      "completed": true,
+      "case_id": "B11",
+      "modality": "text",
+      "expected_behavior": "SERVE"
+    },
+    {
+      "http": 200,
+      "route": "LOCAL_SLM_FALLBACK",
+      "route_status": "REFUSED",
+      "deterministic_parser_status": "LOCAL_PARSE_PARTIAL",
+      "slm": {
+        "invoked": true,
+        "grounding": "SLM_REPORTED_UNRESOLVED",
+        "cache_hit": false
+      },
+      "source_gate_status": "NOT_REACHED",
+      "source_gate_detector": "UNKNOWN",
+      "scene_served": false,
+      "mathematical_validation": "NOT_SERVED",
+      "relation_failures": 0,
+      "numeric_status": "NOT_ASKED",
+      "answer_exact": {},
+      "answers": {},
+      "visual_ok": null,
+      "visual_diagnostics": {
+        "missing_gold_labels": null,
+        "outside_initial_labels": null,
+        "outside_initial_ndc_vertices": null,
+        "stale_vs_previous": null
+      },
+      "interaction_ok": null,
+      "canvas_count_when_not_served": 0,
+      "reason_code": "AMBIGUOUS_FACT",
+      "failure_category": "insufficient_specification",
+      "clarification": "Trong “Vẽ tứ diện OABC có ba cạnh OA, OB, OC đôi một vuông góc, OA = 5, OB = 2, OC = 6.”, bạn hãy nói rõ quan hệ hình học.",
+      "scale_policy": null,
+      "scene_cache": "UNKNOWN",
+      "ms": 1487,
+      "model_inference_ms": 1379.59,
+      "model_startup_ms": 0,
+      "provider_calls_recorded": {
+        "gemini_vision_calls": 0,
+        "gemini_typed_fact_calls": 0,
+        "total_provider_calls": 0
+      },
+      "completed": false,
+      "case_id": "B12",
+      "modality": "text",
+      "expected_behavior": "SERVE"
+    },
+    {
+      "http": 200,
+      "route": "LOCAL_DETERMINISTIC_HYBRID",
+      "route_status": "SERVED",
+      "deterministic_parser_status": "LOCAL_PARSE_COMPLETE",
+      "slm": {
+        "invoked": "UNKNOWN",
+        "grounding": "UNKNOWN",
+        "cache_hit": "UNKNOWN"
+      },
+      "source_gate_status": "VERIFIED",
+      "source_gate_detector": "UNKNOWN",
+      "scene_served": true,
+      "mathematical_validation": "MATHEMATICALLY_VALID",
+      "relation_failures": 0,
+      "numeric_status": "CORRECT",
+      "answer_exact": {
+        "q1": "5"
+      },
+      "answers": {
+        "q1": "5"
+      },
+      "visual_ok": true,
+      "visual_diagnostics": {
+        "missing_gold_labels": [],
+        "outside_initial_labels": [],
+        "outside_initial_ndc_vertices": [],
+        "stale_vs_previous": false
+      },
+      "interaction_ok": true,
+      "canvas_count_when_not_served": null,
+      "reason_code": null,
+      "failure_category": null,
+      "clarification": null,
+      "scale_policy": null,
+      "scene_cache": "UNKNOWN",
+      "ms": 147,
+      "model_inference_ms": null,
+      "model_startup_ms": null,
+      "provider_calls_recorded": {
+        "gemini_vision_calls": 0,
+        "gemini_typed_fact_calls": 0,
+        "total_provider_calls": 0
+      },
+      "completed": true,
+      "case_id": "B13",
+      "modality": "text",
+      "expected_behavior": "SERVE"
+    },
+    {
+      "http": 200,
+      "route": "LOCAL_SLM_FALLBACK",
+      "route_status": "REFUSED",
+      "deterministic_parser_status": "LOCAL_PARSE_PARTIAL",
+      "slm": {
+        "invoked": true,
+        "grounding": "GROUNDED_AND_LOWERED",
+        "cache_hit": false
+      },
+      "source_gate_status": "UNKNOWN",
+      "source_gate_detector": "PARSER_COVERAGE",
+      "scene_served": false,
+      "mathematical_validation": "NOT_SERVED",
+      "relation_failures": 0,
+      "numeric_status": "NOT_ASKED",
+      "answer_exact": {},
+      "answers": {},
+      "visual_ok": null,
+      "visual_diagnostics": {
+        "missing_gold_labels": null,
+        "outside_initial_labels": null,
+        "outside_initial_ndc_vertices": null,
+        "stale_vs_previous": null
+      },
+      "interaction_ok": null,
+      "canvas_count_when_not_served": 0,
+      "reason_code": "SOURCE_PREMISE_UNREAD",
+      "failure_category": "verification_gap",
+      "clarification": null,
+      "scale_policy": null,
+      "scene_cache": "UNKNOWN",
+      "ms": 3307,
+      "model_inference_ms": 3146.11,
+      "model_startup_ms": 0,
+      "provider_calls_recorded": {
+        "gemini_vision_calls": 0,
+        "gemini_typed_fact_calls": 0,
+        "total_provider_calls": 0
+      },
+      "completed": false,
+      "case_id": "B14",
+      "modality": "text",
+      "expected_behavior": "SERVE"
+    },
+    {
+      "http": 200,
+      "route": "LOCAL_SLM_FALLBACK",
+      "route_status": "REFUSED",
+      "deterministic_parser_status": "LOCAL_PARSE_PARTIAL",
+      "slm": {
+        "invoked": true,
+        "grounding": "SLM_REPORTED_UNRESOLVED",
+        "cache_hit": false
+      },
+      "source_gate_status": "NOT_REACHED",
+      "source_gate_detector": "UNKNOWN",
+      "scene_served": false,
+      "mathematical_validation": "NOT_SERVED",
+      "relation_failures": 0,
+      "numeric_status": "NOT_ASKED",
+      "answer_exact": {},
+      "answers": {},
+      "visual_ok": null,
+      "visual_diagnostics": {
+        "missing_gold_labels": null,
+        "outside_initial_labels": null,
+        "outside_initial_ndc_vertices": null,
+        "stale_vs_previous": null
+      },
+      "interaction_ok": null,
+      "canvas_count_when_not_served": 0,
+      "reason_code": "AMBIGUOUS_FACT",
+      "failure_category": "insufficient_specification",
+      "clarification": "Trong “Mô phỏng tứ diện OABC có các cạnh OA, OB, OC đôi một vuông góc, độ dài OA = 7, OB = 4, OC = 2.”, bạn hãy nói rõ quan hệ hình học.",
+      "scale_policy": null,
+      "scene_cache": "UNKNOWN",
+      "ms": 1521,
+      "model_inference_ms": 1413.93,
+      "model_startup_ms": 0,
+      "provider_calls_recorded": {
+        "gemini_vision_calls": 0,
+        "gemini_typed_fact_calls": 0,
+        "total_provider_calls": 0
+      },
+      "completed": false,
+      "case_id": "B15",
+      "modality": "text",
+      "expected_behavior": "SERVE"
+    },
+    {
+      "http": 200,
+      "route": "LOCAL_DETERMINISTIC_HYBRID",
+      "route_status": "SERVED",
+      "deterministic_parser_status": "LOCAL_PARSE_COMPLETE",
+      "slm": {
+        "invoked": "UNKNOWN",
+        "grounding": "UNKNOWN",
+        "cache_hit": "UNKNOWN"
+      },
+      "source_gate_status": "VERIFIED",
+      "source_gate_detector": "UNKNOWN",
+      "scene_served": true,
+      "mathematical_validation": "MATHEMATICALLY_VALID",
+      "relation_failures": 0,
+      "numeric_status": "CORRECT",
+      "answer_exact": {
+        "q1": "6"
+      },
+      "answers": {
+        "q1": "6"
+      },
+      "visual_ok": true,
+      "visual_diagnostics": {
+        "missing_gold_labels": [],
+        "outside_initial_labels": [],
+        "outside_initial_ndc_vertices": [],
+        "stale_vs_previous": false
+      },
+      "interaction_ok": true,
+      "canvas_count_when_not_served": null,
+      "reason_code": null,
+      "failure_category": null,
+      "clarification": null,
+      "scale_policy": null,
+      "scene_cache": "UNKNOWN",
+      "ms": 126,
+      "model_inference_ms": null,
+      "model_startup_ms": null,
+      "provider_calls_recorded": {
+        "gemini_vision_calls": 0,
+        "gemini_typed_fact_calls": 0,
+        "total_provider_calls": 0
+      },
+      "completed": true,
+      "case_id": "B16",
+      "modality": "text",
+      "expected_behavior": "SERVE"
+    },
+    {
+      "http": 200,
+      "route": "LOCAL_SLM_FALLBACK",
+      "route_status": "REFUSED",
+      "deterministic_parser_status": "LOCAL_PARSE_PARTIAL",
+      "slm": {
+        "invoked": true,
+        "grounding": "SLM_REPORTED_UNRESOLVED",
+        "cache_hit": false
+      },
+      "source_gate_status": "NOT_REACHED",
+      "source_gate_detector": "UNKNOWN",
+      "scene_served": false,
+      "mathematical_validation": "NOT_SERVED",
+      "relation_failures": 0,
+      "numeric_status": "NOT_ASKED",
+      "answer_exact": {},
+      "answers": {},
+      "visual_ok": null,
+      "visual_diagnostics": {
+        "missing_gold_labels": null,
+        "outside_initial_labels": null,
+        "outside_initial_ndc_vertices": null,
+        "stale_vs_previous": null
+      },
+      "interaction_ok": null,
+      "canvas_count_when_not_served": 0,
+      "reason_code": "AMBIGUOUS_FACT",
+      "failure_category": "insufficient_specification",
+      "clarification": "Trong “Dựng tứ diện OABC biết OA, OB và OC đôi một vuông góc, OA = 3, OB = 3 và OC = 5.”, bạn hãy nói rõ quan hệ hình học.",
+      "scale_policy": null,
+      "scene_cache": "UNKNOWN",
+      "ms": 1758,
+      "model_inference_ms": 1649.88,
+      "model_startup_ms": 0,
+      "provider_calls_recorded": {
+        "gemini_vision_calls": 0,
+        "gemini_typed_fact_calls": 0,
+        "total_provider_calls": 0
+      },
+      "completed": false,
+      "case_id": "B17",
+      "modality": "text",
+      "expected_behavior": "SERVE"
+    },
+    {
+      "http": 200,
+      "route": "LOCAL_DETERMINISTIC_HYBRID",
+      "route_status": "REFUSED",
+      "deterministic_parser_status": "LOCAL_PARSE_COMPLETE",
+      "slm": {
+        "invoked": "UNKNOWN",
+        "grounding": "UNKNOWN",
+        "cache_hit": "UNKNOWN"
+      },
+      "source_gate_status": "UNKNOWN",
+      "source_gate_detector": "ENGINE",
+      "scene_served": false,
+      "mathematical_validation": "NOT_SERVED",
+      "relation_failures": 0,
+      "numeric_status": "NOT_EVALUATED",
+      "answer_exact": {},
+      "answers": {},
+      "visual_ok": null,
+      "visual_diagnostics": {
+        "missing_gold_labels": null,
+        "outside_initial_labels": null,
+        "outside_initial_ndc_vertices": null,
+        "stale_vs_previous": null
+      },
+      "interaction_ok": null,
+      "canvas_count_when_not_served": 0,
+      "reason_code": "MISSING_DIMENSION",
+      "failure_category": "capability_gap",
+      "clarification": null,
+      "scale_policy": null,
+      "scene_cache": "UNKNOWN",
+      "ms": 245,
+      "model_inference_ms": null,
+      "model_startup_ms": null,
+      "provider_calls_recorded": {
+        "gemini_vision_calls": 0,
+        "gemini_typed_fact_calls": 0,
+        "total_provider_calls": 0
+      },
+      "completed": false,
+      "case_id": "B18",
+      "modality": "text",
+      "expected_behavior": "SERVE"
+    },
+    {
+      "http": 200,
+      "route": "LOCAL_DETERMINISTIC_HYBRID",
+      "route_status": "SERVED",
+      "deterministic_parser_status": "LOCAL_PARSE_COMPLETE",
+      "slm": {
+        "invoked": "UNKNOWN",
+        "grounding": "UNKNOWN",
+        "cache_hit": "UNKNOWN"
+      },
+      "source_gate_status": "VERIFIED",
+      "source_gate_detector": "UNKNOWN",
+      "scene_served": true,
+      "mathematical_validation": "MATHEMATICALLY_VALID",
+      "relation_failures": 0,
+      "numeric_status": "CORRECT",
+      "answer_exact": {
+        "q1": "36"
+      },
+      "answers": {
+        "q1": "36"
+      },
+      "visual_ok": true,
+      "visual_diagnostics": {
+        "missing_gold_labels": [],
+        "outside_initial_labels": [],
+        "outside_initial_ndc_vertices": [],
+        "stale_vs_previous": false
+      },
+      "interaction_ok": true,
+      "canvas_count_when_not_served": null,
+      "reason_code": null,
+      "failure_category": null,
+      "clarification": null,
+      "scale_policy": null,
+      "scene_cache": "UNKNOWN",
+      "ms": 148,
+      "model_inference_ms": null,
+      "model_startup_ms": null,
+      "provider_calls_recorded": {
+        "gemini_vision_calls": 0,
+        "gemini_typed_fact_calls": 0,
+        "total_provider_calls": 0
+      },
+      "completed": true,
+      "case_id": "B19",
+      "modality": "text",
+      "expected_behavior": "SERVE"
+    },
+    {
+      "http": 200,
+      "route": "LOCAL_DETERMINISTIC_HYBRID",
+      "route_status": "SERVED",
+      "deterministic_parser_status": "LOCAL_PARSE_COMPLETE",
+      "slm": {
+        "invoked": "UNKNOWN",
+        "grounding": "UNKNOWN",
+        "cache_hit": "UNKNOWN"
+      },
+      "source_gate_status": "VERIFIED",
+      "source_gate_detector": "UNKNOWN",
+      "scene_served": true,
+      "mathematical_validation": "MATHEMATICALLY_VALID",
+      "relation_failures": 0,
+      "numeric_status": "NOT_ASKED",
+      "answer_exact": {},
+      "answers": {},
+      "visual_ok": true,
+      "visual_diagnostics": {
+        "missing_gold_labels": [],
+        "outside_initial_labels": [],
+        "outside_initial_ndc_vertices": [],
+        "stale_vs_previous": false
+      },
+      "interaction_ok": true,
+      "canvas_count_when_not_served": null,
+      "reason_code": null,
+      "failure_category": null,
+      "clarification": null,
+      "scale_policy": null,
+      "scene_cache": "UNKNOWN",
+      "ms": 185,
+      "model_inference_ms": null,
+      "model_startup_ms": null,
+      "provider_calls_recorded": {
+        "gemini_vision_calls": 0,
+        "gemini_typed_fact_calls": 0,
+        "total_provider_calls": 0
+      },
+      "completed": true,
+      "case_id": "B20",
+      "modality": "text",
+      "expected_behavior": "SERVE"
+    },
+    {
+      "http": 200,
+      "route": "LOCAL_SLM_FALLBACK",
+      "route_status": "SERVED",
+      "deterministic_parser_status": "LOCAL_PARSE_PARTIAL",
+      "slm": {
+        "invoked": true,
+        "grounding": "GROUNDED_AND_LOWERED",
+        "cache_hit": false
+      },
+      "source_gate_status": "VERIFIED",
+      "source_gate_detector": "UNKNOWN",
+      "scene_served": true,
+      "mathematical_validation": "MATHEMATICALLY_VALID",
+      "relation_failures": 0,
+      "numeric_status": "CORRECT",
+      "answer_exact": {
+        "q1": "10"
+      },
+      "answers": {
+        "q1": "10"
+      },
+      "visual_ok": true,
+      "visual_diagnostics": {
+        "missing_gold_labels": [],
+        "outside_initial_labels": [],
+        "outside_initial_ndc_vertices": [],
+        "stale_vs_previous": false
+      },
+      "interaction_ok": true,
+      "canvas_count_when_not_served": null,
+      "reason_code": null,
+      "failure_category": null,
+      "clarification": null,
+      "scale_policy": null,
+      "scene_cache": "UNKNOWN",
+      "ms": 4391,
+      "model_inference_ms": 4183.87,
+      "model_startup_ms": 0,
+      "provider_calls_recorded": {
+        "gemini_vision_calls": 0,
+        "gemini_typed_fact_calls": 0,
+        "total_provider_calls": 0
+      },
+      "completed": true,
+      "case_id": "B21",
+      "modality": "text",
+      "expected_behavior": "SERVE"
+    },
+    {
+      "http": 200,
+      "route": "LOCAL_SLM_FALLBACK",
+      "route_status": "REFUSED",
+      "deterministic_parser_status": "LOCAL_PARSE_PARTIAL",
+      "slm": {
+        "invoked": true,
+        "grounding": "GROUNDED_AND_LOWERED",
+        "cache_hit": false
+      },
+      "source_gate_status": "UNKNOWN",
+      "source_gate_detector": "PARSER_COVERAGE",
+      "scene_served": false,
+      "mathematical_validation": "NOT_SERVED",
+      "relation_failures": 0,
+      "numeric_status": "NOT_ASKED",
+      "answer_exact": {},
+      "answers": {},
+      "visual_ok": null,
+      "visual_diagnostics": {
+        "missing_gold_labels": null,
+        "outside_initial_labels": null,
+        "outside_initial_ndc_vertices": null,
+        "stale_vs_previous": null
+      },
+      "interaction_ok": null,
+      "canvas_count_when_not_served": 0,
+      "reason_code": "UNGROUNDED_VALUE",
+      "failure_category": "verification_gap",
+      "clarification": null,
+      "scale_policy": null,
+      "scene_cache": "UNKNOWN",
+      "ms": 4442,
+      "model_inference_ms": 4311.4,
+      "model_startup_ms": 0,
+      "provider_calls_recorded": {
+        "gemini_vision_calls": 0,
+        "gemini_typed_fact_calls": 0,
+        "total_provider_calls": 0
+      },
+      "completed": false,
+      "case_id": "B22",
+      "modality": "text",
+      "expected_behavior": "SERVE"
+    },
+    {
+      "http": 200,
+      "route": "LOCAL_DETERMINISTIC_HYBRID",
+      "route_status": "SERVED",
+      "deterministic_parser_status": "LOCAL_PARSE_COMPLETE",
+      "slm": {
+        "invoked": "UNKNOWN",
+        "grounding": "UNKNOWN",
+        "cache_hit": "UNKNOWN"
+      },
+      "source_gate_status": "VERIFIED",
+      "source_gate_detector": "UNKNOWN",
+      "scene_served": true,
+      "mathematical_validation": "MATHEMATICALLY_VALID",
+      "relation_failures": 0,
+      "numeric_status": "NOT_ASKED",
+      "answer_exact": {},
+      "answers": {},
+      "visual_ok": true,
+      "visual_diagnostics": {
+        "missing_gold_labels": [],
+        "outside_initial_labels": [],
+        "outside_initial_ndc_vertices": [],
+        "stale_vs_previous": false
+      },
+      "interaction_ok": true,
+      "canvas_count_when_not_served": null,
+      "reason_code": null,
+      "failure_category": null,
+      "clarification": null,
+      "scale_policy": null,
+      "scene_cache": "UNKNOWN",
+      "ms": 124,
+      "model_inference_ms": null,
+      "model_startup_ms": null,
+      "provider_calls_recorded": {
+        "gemini_vision_calls": 0,
+        "gemini_typed_fact_calls": 0,
+        "total_provider_calls": 0
+      },
+      "completed": true,
+      "case_id": "B23",
+      "modality": "text",
+      "expected_behavior": "SERVE"
+    },
+    {
+      "http": 200,
+      "route": "LOCAL_DETERMINISTIC_HYBRID",
+      "route_status": "SERVED",
+      "deterministic_parser_status": "LOCAL_PARSE_COMPLETE",
+      "slm": {
+        "invoked": "UNKNOWN",
+        "grounding": "UNKNOWN",
+        "cache_hit": "UNKNOWN"
+      },
+      "source_gate_status": "VERIFIED",
+      "source_gate_detector": "UNKNOWN",
+      "scene_served": true,
+      "mathematical_validation": "MATHEMATICALLY_VALID",
+      "relation_failures": 0,
+      "numeric_status": "CORRECT",
+      "answer_exact": {
+        "q1": "20"
+      },
+      "answers": {
+        "q1": "20"
+      },
+      "visual_ok": true,
+      "visual_diagnostics": {
+        "missing_gold_labels": [],
+        "outside_initial_labels": [],
+        "outside_initial_ndc_vertices": [],
+        "stale_vs_previous": false
+      },
+      "interaction_ok": true,
+      "canvas_count_when_not_served": null,
+      "reason_code": null,
+      "failure_category": null,
+      "clarification": null,
+      "scale_policy": null,
+      "scene_cache": "UNKNOWN",
+      "ms": 215,
+      "model_inference_ms": null,
+      "model_startup_ms": null,
+      "provider_calls_recorded": {
+        "gemini_vision_calls": 0,
+        "gemini_typed_fact_calls": 0,
+        "total_provider_calls": 0
+      },
+      "completed": true,
+      "case_id": "B24",
+      "modality": "text",
+      "expected_behavior": "SERVE"
+    },
+    {
+      "http": 200,
+      "route": "LOCAL_DETERMINISTIC_HYBRID",
+      "route_status": "SERVED",
+      "deterministic_parser_status": "LOCAL_PARSE_COMPLETE",
+      "slm": {
+        "invoked": "UNKNOWN",
+        "grounding": "UNKNOWN",
+        "cache_hit": "UNKNOWN"
+      },
+      "source_gate_status": "VERIFIED",
+      "source_gate_detector": "UNKNOWN",
+      "scene_served": true,
+      "mathematical_validation": "MATHEMATICALLY_VALID",
+      "relation_failures": 0,
+      "numeric_status": "CORRECT",
+      "answer_exact": {
+        "q1": "60"
+      },
+      "answers": {
+        "q1": "60"
+      },
+      "visual_ok": true,
+      "visual_diagnostics": {
+        "missing_gold_labels": [],
+        "outside_initial_labels": [],
+        "outside_initial_ndc_vertices": [],
+        "stale_vs_previous": false
+      },
+      "interaction_ok": true,
+      "canvas_count_when_not_served": null,
+      "reason_code": null,
+      "failure_category": null,
+      "clarification": null,
+      "scale_policy": null,
+      "scene_cache": "UNKNOWN",
+      "ms": 385,
+      "model_inference_ms": null,
+      "model_startup_ms": null,
+      "provider_calls_recorded": {
+        "gemini_vision_calls": 0,
+        "gemini_typed_fact_calls": 0,
+        "total_provider_calls": 0
+      },
+      "completed": true,
+      "case_id": "B25",
+      "modality": "text",
+      "expected_behavior": "SERVE"
+    },
+    {
+      "http": 200,
+      "route": "LOCAL_DETERMINISTIC_HYBRID",
+      "route_status": "SERVED",
+      "deterministic_parser_status": "LOCAL_PARSE_COMPLETE",
+      "slm": {
+        "invoked": "UNKNOWN",
+        "grounding": "UNKNOWN",
+        "cache_hit": "UNKNOWN"
+      },
+      "source_gate_status": "VERIFIED",
+      "source_gate_detector": "UNKNOWN",
+      "scene_served": true,
+      "mathematical_validation": "MATHEMATICALLY_VALID",
+      "relation_failures": 0,
+      "numeric_status": "CORRECT",
+      "answer_exact": {
+        "q1": "39/2"
+      },
+      "answers": {
+        "q1": "39/2"
+      },
+      "visual_ok": true,
+      "visual_diagnostics": {
+        "missing_gold_labels": [],
+        "outside_initial_labels": [],
+        "outside_initial_ndc_vertices": [],
+        "stale_vs_previous": false
+      },
+      "interaction_ok": true,
+      "canvas_count_when_not_served": null,
+      "reason_code": null,
+      "failure_category": null,
+      "clarification": null,
+      "scale_policy": null,
+      "scene_cache": "UNKNOWN",
+      "ms": 241,
+      "model_inference_ms": null,
+      "model_startup_ms": null,
+      "provider_calls_recorded": {
+        "gemini_vision_calls": 0,
+        "gemini_typed_fact_calls": 0,
+        "total_provider_calls": 0
+      },
+      "completed": true,
+      "case_id": "B26",
+      "modality": "text",
+      "expected_behavior": "SERVE"
+    },
+    {
+      "http": 200,
+      "route": "LOCAL_DETERMINISTIC_HYBRID",
+      "route_status": "SERVED",
+      "deterministic_parser_status": "LOCAL_PARSE_COMPLETE",
+      "slm": {
+        "invoked": "UNKNOWN",
+        "grounding": "UNKNOWN",
+        "cache_hit": "UNKNOWN"
+      },
+      "source_gate_status": "VERIFIED",
+      "source_gate_detector": "UNKNOWN",
+      "scene_served": true,
+      "mathematical_validation": "MATHEMATICALLY_VALID",
+      "relation_failures": 0,
+      "numeric_status": "NOT_ASKED",
+      "answer_exact": {},
+      "answers": {},
+      "visual_ok": true,
+      "visual_diagnostics": {
+        "missing_gold_labels": [],
+        "outside_initial_labels": [],
+        "outside_initial_ndc_vertices": [],
+        "stale_vs_previous": false
+      },
+      "interaction_ok": true,
+      "canvas_count_when_not_served": null,
+      "reason_code": null,
+      "failure_category": null,
+      "clarification": null,
+      "scale_policy": null,
+      "scene_cache": "UNKNOWN",
+      "ms": 179,
+      "model_inference_ms": null,
+      "model_startup_ms": null,
+      "provider_calls_recorded": {
+        "gemini_vision_calls": 0,
+        "gemini_typed_fact_calls": 0,
+        "total_provider_calls": 0
+      },
+      "completed": true,
+      "case_id": "B27",
+      "modality": "text",
+      "expected_behavior": "SERVE"
+    },
+    {
+      "http": 200,
+      "route": "LOCAL_DETERMINISTIC_HYBRID",
+      "route_status": "SERVED",
+      "deterministic_parser_status": "LOCAL_PARSE_COMPLETE",
+      "slm": {
+        "invoked": "UNKNOWN",
+        "grounding": "UNKNOWN",
+        "cache_hit": "UNKNOWN"
+      },
+      "source_gate_status": "VERIFIED",
+      "source_gate_detector": "UNKNOWN",
+      "scene_served": true,
+      "mathematical_validation": "MATHEMATICALLY_VALID",
+      "relation_failures": 0,
+      "numeric_status": "NOT_ASKED",
+      "answer_exact": {},
+      "answers": {},
+      "visual_ok": true,
+      "visual_diagnostics": {
+        "missing_gold_labels": [],
+        "outside_initial_labels": [],
+        "outside_initial_ndc_vertices": [],
+        "stale_vs_previous": false
+      },
+      "interaction_ok": true,
+      "canvas_count_when_not_served": null,
+      "reason_code": null,
+      "failure_category": null,
+      "clarification": null,
+      "scale_policy": null,
+      "scene_cache": "UNKNOWN",
+      "ms": 191,
+      "model_inference_ms": null,
+      "model_startup_ms": null,
+      "provider_calls_recorded": {
+        "gemini_vision_calls": 0,
+        "gemini_typed_fact_calls": 0,
+        "total_provider_calls": 0
+      },
+      "completed": true,
+      "case_id": "B28",
+      "modality": "text",
+      "expected_behavior": "SERVE"
+    },
+    {
+      "http": 200,
+      "route": "LOCAL_DETERMINISTIC_HYBRID",
+      "route_status": "SERVED",
+      "deterministic_parser_status": "LOCAL_PARSE_COMPLETE",
+      "slm": {
+        "invoked": "UNKNOWN",
+        "grounding": "UNKNOWN",
+        "cache_hit": "UNKNOWN"
+      },
+      "source_gate_status": "VERIFIED",
+      "source_gate_detector": "UNKNOWN",
+      "scene_served": true,
+      "mathematical_validation": "MATHEMATICALLY_VALID",
+      "relation_failures": 0,
+      "numeric_status": "NOT_ASKED",
+      "answer_exact": {},
+      "answers": {},
+      "visual_ok": true,
+      "visual_diagnostics": {
+        "missing_gold_labels": [],
+        "outside_initial_labels": [],
+        "outside_initial_ndc_vertices": [],
+        "stale_vs_previous": false
+      },
+      "interaction_ok": true,
+      "canvas_count_when_not_served": null,
+      "reason_code": null,
+      "failure_category": null,
+      "clarification": null,
+      "scale_policy": null,
+      "scene_cache": "miss",
+      "ms": 6194,
+      "model_inference_ms": null,
+      "model_startup_ms": null,
+      "provider_calls_recorded": {
+        "gemini_vision_calls": 0,
+        "gemini_typed_fact_calls": 0,
+        "total_provider_calls": 0
+      },
+      "completed": true,
+      "case_id": "J01",
+      "modality": "raster_image",
+      "expected_behavior": "SERVE"
+    },
+    {
+      "http": 200,
+      "route": "LOCAL_DETERMINISTIC_HYBRID",
+      "route_status": "SERVED",
+      "deterministic_parser_status": "LOCAL_PARSE_COMPLETE",
+      "slm": {
+        "invoked": "UNKNOWN",
+        "grounding": "UNKNOWN",
+        "cache_hit": "UNKNOWN"
+      },
+      "source_gate_status": "VERIFIED",
+      "source_gate_detector": "UNKNOWN",
+      "scene_served": true,
+      "mathematical_validation": "MATHEMATICALLY_VALID",
+      "relation_failures": 0,
+      "numeric_status": "NOT_ASKED",
+      "answer_exact": {},
+      "answers": {},
+      "visual_ok": true,
+      "visual_diagnostics": {
+        "missing_gold_labels": [],
+        "outside_initial_labels": [],
+        "outside_initial_ndc_vertices": [],
+        "stale_vs_previous": false
+      },
+      "interaction_ok": true,
+      "canvas_count_when_not_served": null,
+      "reason_code": null,
+      "failure_category": null,
+      "clarification": null,
+      "scale_policy": null,
+      "scene_cache": "miss",
+      "ms": 2063,
+      "model_inference_ms": null,
+      "model_startup_ms": null,
+      "provider_calls_recorded": {
+        "gemini_vision_calls": 0,
+        "gemini_typed_fact_calls": 0,
+        "total_provider_calls": 0
+      },
+      "completed": true,
+      "case_id": "J02",
+      "modality": "raster_image",
+      "expected_behavior": "SERVE"
+    },
+    {
+      "http": 200,
+      "route": "UNKNOWN",
+      "route_status": "UNKNOWN",
+      "deterministic_parser_status": "UNKNOWN",
+      "slm": {
+        "invoked": "UNKNOWN",
+        "grounding": "UNKNOWN",
+        "cache_hit": "UNKNOWN"
+      },
+      "source_gate_status": "UNKNOWN",
+      "source_gate_detector": "UNKNOWN",
+      "scene_served": false,
+      "mathematical_validation": "NOT_SERVED",
+      "relation_failures": 0,
+      "numeric_status": "NOT_ASKED",
+      "answer_exact": {},
+      "answers": {},
+      "visual_ok": null,
+      "visual_diagnostics": {
+        "missing_gold_labels": null,
+        "outside_initial_labels": null,
+        "outside_initial_ndc_vertices": null,
+        "stale_vs_previous": null
+      },
+      "interaction_ok": null,
+      "canvas_count_when_not_served": 0,
+      "reason_code": null,
+      "failure_category": null,
+      "clarification": null,
+      "scale_policy": null,
+      "scene_cache": "UNKNOWN",
+      "ms": 1900,
+      "model_inference_ms": null,
+      "model_startup_ms": null,
+      "provider_calls_recorded": {
+        "gemini_vision_calls": null,
+        "gemini_typed_fact_calls": null,
+        "total_provider_calls": null
+      },
+      "completed": false,
+      "case_id": "J03",
+      "modality": "raster_image",
+      "expected_behavior": "SERVE"
+    },
+    {
+      "http": 200,
+      "route": "LOCAL_DETERMINISTIC_HYBRID",
+      "route_status": "SERVED",
+      "deterministic_parser_status": "LOCAL_PARSE_COMPLETE",
+      "slm": {
+        "invoked": "UNKNOWN",
+        "grounding": "UNKNOWN",
+        "cache_hit": "UNKNOWN"
+      },
+      "source_gate_status": "VERIFIED",
+      "source_gate_detector": "UNKNOWN",
+      "scene_served": true,
+      "mathematical_validation": "MATHEMATICALLY_VALID",
+      "relation_failures": 0,
+      "numeric_status": "NOT_ASKED",
+      "answer_exact": {},
+      "answers": {},
+      "visual_ok": true,
+      "visual_diagnostics": {
+        "missing_gold_labels": [],
+        "outside_initial_labels": [],
+        "outside_initial_ndc_vertices": [],
+        "stale_vs_previous": false
+      },
+      "interaction_ok": true,
+      "canvas_count_when_not_served": null,
+      "reason_code": null,
+      "failure_category": null,
+      "clarification": null,
+      "scale_policy": null,
+      "scene_cache": "miss",
+      "ms": 2503,
+      "model_inference_ms": null,
+      "model_startup_ms": null,
+      "provider_calls_recorded": {
+        "gemini_vision_calls": 0,
+        "gemini_typed_fact_calls": 0,
+        "total_provider_calls": 0
+      },
+      "completed": true,
+      "case_id": "J04",
+      "modality": "raster_image",
+      "expected_behavior": "SERVE"
+    },
+    {
+      "http": 200,
+      "route": "LOCAL_DETERMINISTIC_HYBRID",
+      "route_status": "SERVED",
+      "deterministic_parser_status": "LOCAL_PARSE_COMPLETE",
+      "slm": {
+        "invoked": "UNKNOWN",
+        "grounding": "UNKNOWN",
+        "cache_hit": "UNKNOWN"
+      },
+      "source_gate_status": "VERIFIED",
+      "source_gate_detector": "UNKNOWN",
+      "scene_served": true,
+      "mathematical_validation": "MATHEMATICALLY_VALID",
+      "relation_failures": 0,
+      "numeric_status": "NOT_ASKED",
+      "answer_exact": {},
+      "answers": {},
+      "visual_ok": true,
+      "visual_diagnostics": {
+        "missing_gold_labels": [],
+        "outside_initial_labels": [],
+        "outside_initial_ndc_vertices": [],
+        "stale_vs_previous": false
+      },
+      "interaction_ok": true,
+      "canvas_count_when_not_served": null,
+      "reason_code": null,
+      "failure_category": null,
+      "clarification": null,
+      "scale_policy": null,
+      "scene_cache": "miss",
+      "ms": 5211,
+      "model_inference_ms": null,
+      "model_startup_ms": null,
+      "provider_calls_recorded": {
+        "gemini_vision_calls": 0,
+        "gemini_typed_fact_calls": 0,
+        "total_provider_calls": 0
+      },
+      "completed": true,
+      "case_id": "J05",
+      "modality": "raster_image",
+      "expected_behavior": "SERVE"
+    },
+    {
+      "http": 200,
+      "route": "LOCAL_SLM_FALLBACK",
+      "route_status": "REFUSED",
+      "deterministic_parser_status": "LOCAL_PARSE_PARTIAL",
+      "slm": {
+        "invoked": true,
+        "grounding": "SLM_REPORTED_UNRESOLVED",
+        "cache_hit": false
+      },
+      "source_gate_status": "NOT_REACHED",
+      "source_gate_detector": "UNKNOWN",
+      "scene_served": false,
+      "mathematical_validation": "NOT_SERVED",
+      "relation_failures": 0,
+      "numeric_status": "NOT_ASKED",
+      "answer_exact": {},
+      "answers": {},
+      "visual_ok": null,
+      "visual_diagnostics": {
+        "missing_gold_labels": null,
+        "outside_initial_labels": null,
+        "outside_initial_ndc_vertices": null,
+        "stale_vs_previous": null
+      },
+      "interaction_ok": null,
+      "canvas_count_when_not_served": 0,
+      "reason_code": "OUT_OF_SCOPE",
+      "failure_category": null,
+      "clarification": null,
+      "scale_policy": null,
+      "scene_cache": "none",
+      "ms": 6106,
+      "model_inference_ms": 3115.55,
+      "model_startup_ms": 0,
+      "provider_calls_recorded": {
+        "gemini_vision_calls": 0,
+        "gemini_typed_fact_calls": 0,
+        "total_provider_calls": 0
+      },
+      "completed": false,
+      "case_id": "J06",
+      "modality": "raster_image",
+      "expected_behavior": "SAFE_REFUSE"
+    },
+    {
+      "http": 200,
+      "route": "UNKNOWN",
+      "route_status": "UNKNOWN",
+      "deterministic_parser_status": "UNKNOWN",
+      "slm": {
+        "invoked": "UNKNOWN",
+        "grounding": "UNKNOWN",
+        "cache_hit": "UNKNOWN"
+      },
+      "source_gate_status": "UNKNOWN",
+      "source_gate_detector": "UNKNOWN",
+      "scene_served": false,
+      "mathematical_validation": "NOT_SERVED",
+      "relation_failures": 0,
+      "numeric_status": "NOT_ASKED",
+      "answer_exact": {},
+      "answers": {},
+      "visual_ok": null,
+      "visual_diagnostics": {
+        "missing_gold_labels": null,
+        "outside_initial_labels": null,
+        "outside_initial_ndc_vertices": null,
+        "stale_vs_previous": null
+      },
+      "interaction_ok": null,
+      "canvas_count_when_not_served": 0,
+      "reason_code": null,
+      "failure_category": null,
+      "clarification": null,
+      "scale_policy": null,
+      "scene_cache": "UNKNOWN",
+      "ms": 2108,
+      "model_inference_ms": null,
+      "model_startup_ms": null,
+      "provider_calls_recorded": {
+        "gemini_vision_calls": null,
+        "gemini_typed_fact_calls": null,
+        "total_provider_calls": null
+      },
+      "completed": false,
+      "case_id": "J07",
+      "modality": "raster_image",
+      "expected_behavior": "SAFE_REFUSE"
+    },
+    {
+      "http": 200,
+      "route": "LOCAL_DETERMINISTIC_HYBRID",
+      "route_status": "REFUSED",
+      "deterministic_parser_status": "LOCAL_PARSE_COMPLETE",
+      "slm": {
+        "invoked": "UNKNOWN",
+        "grounding": "UNKNOWN",
+        "cache_hit": "UNKNOWN"
+      },
+      "source_gate_status": "UNKNOWN",
+      "source_gate_detector": "KERNEL",
+      "scene_served": false,
+      "mathematical_validation": "NOT_SERVED",
+      "relation_failures": 0,
+      "numeric_status": "NOT_ASKED",
+      "answer_exact": {},
+      "answers": {},
+      "visual_ok": null,
+      "visual_diagnostics": {
+        "missing_gold_labels": null,
+        "outside_initial_labels": null,
+        "outside_initial_ndc_vertices": null,
+        "stale_vs_previous": null
+      },
+      "interaction_ok": null,
+      "canvas_count_when_not_served": 0,
+      "reason_code": "INCONSISTENT_FACTS",
+      "failure_category": "geometry_generation_failed",
+      "clarification": null,
+      "scale_policy": null,
+      "scene_cache": "none",
+      "ms": 2460,
+      "model_inference_ms": null,
+      "model_startup_ms": null,
+      "provider_calls_recorded": {
+        "gemini_vision_calls": 0,
+        "gemini_typed_fact_calls": 0,
+        "total_provider_calls": 0
+      },
+      "completed": false,
+      "case_id": "J08",
+      "modality": "raster_image",
+      "expected_behavior": "SAFE_REFUSE"
+    },
+    {
+      "http": 200,
+      "route": "LOCAL_AMBIGUOUS_CLARIFICATION",
+      "route_status": "REFUSED",
+      "deterministic_parser_status": "LOCAL_PARSE_COMPLETE",
+      "slm": {
+        "invoked": "UNKNOWN",
+        "grounding": "UNKNOWN",
+        "cache_hit": "UNKNOWN"
+      },
+      "source_gate_status": "UNKNOWN",
+      "source_gate_detector": "SOURCE_FACTS",
+      "scene_served": false,
+      "mathematical_validation": "NOT_SERVED",
+      "relation_failures": 0,
+      "numeric_status": "NOT_ASKED",
+      "answer_exact": {},
+      "answers": {},
+      "visual_ok": null,
+      "visual_diagnostics": {
+        "missing_gold_labels": null,
+        "outside_initial_labels": null,
+        "outside_initial_ndc_vertices": null,
+        "stale_vs_previous": null
+      },
+      "interaction_ok": null,
+      "canvas_count_when_not_served": 0,
+      "reason_code": "MISSING_DIMENSION",
+      "failure_category": "insufficient_specification",
+      "clarification": "Trong “Cho hình chóp S.ABCD có đáy ABCD là hình chữ nhật và SA vuông góc với đáy. Tính thể tích khối chóp.”, bạn hãy nói rõ các số đo cần thiết.",
+      "scale_policy": null,
+      "scene_cache": "UNKNOWN",
+      "ms": 206,
+      "model_inference_ms": null,
+      "model_startup_ms": null,
+      "provider_calls_recorded": {
+        "gemini_vision_calls": 0,
+        "gemini_typed_fact_calls": 0,
+        "total_provider_calls": 0
+      },
+      "completed": false,
+      "case_id": "M01",
+      "modality": "text",
+      "expected_behavior": "SAFE_REFUSE"
+    },
+    {
+      "http": 200,
+      "route": "LOCAL_DETERMINISTIC_HYBRID",
+      "route_status": "REFUSED",
+      "deterministic_parser_status": "LOCAL_PARSE_COMPLETE",
+      "slm": {
+        "invoked": "UNKNOWN",
+        "grounding": "UNKNOWN",
+        "cache_hit": "UNKNOWN"
+      },
+      "source_gate_status": "UNKNOWN",
+      "source_gate_detector": "ENGINE",
+      "scene_served": false,
+      "mathematical_validation": "NOT_SERVED",
+      "relation_failures": 0,
+      "numeric_status": "NOT_ASKED",
+      "answer_exact": {},
+      "answers": {},
+      "visual_ok": null,
+      "visual_diagnostics": {
+        "missing_gold_labels": null,
+        "outside_initial_labels": null,
+        "outside_initial_ndc_vertices": null,
+        "stale_vs_previous": null
+      },
+      "interaction_ok": null,
+      "canvas_count_when_not_served": 0,
+      "reason_code": "MISSING_DIMENSION",
+      "failure_category": "capability_gap",
+      "clarification": null,
+      "scale_policy": null,
+      "scene_cache": "UNKNOWN",
+      "ms": 172,
+      "model_inference_ms": null,
+      "model_startup_ms": null,
+      "provider_calls_recorded": {
+        "gemini_vision_calls": 0,
+        "gemini_typed_fact_calls": 0,
+        "total_provider_calls": 0
+      },
+      "completed": false,
+      "case_id": "M02",
+      "modality": "text",
+      "expected_behavior": "SAFE_REFUSE"
+    },
+    {
+      "http": 200,
+      "route": "LOCAL_DETERMINISTIC_HYBRID",
+      "route_status": "REFUSED",
+      "deterministic_parser_status": "LOCAL_PARSE_COMPLETE",
+      "slm": {
+        "invoked": "UNKNOWN",
+        "grounding": "UNKNOWN",
+        "cache_hit": "UNKNOWN"
+      },
+      "source_gate_status": "UNKNOWN",
+      "source_gate_detector": "KERNEL",
+      "scene_served": false,
+      "mathematical_validation": "NOT_SERVED",
+      "relation_failures": 0,
+      "numeric_status": "NOT_ASKED",
+      "answer_exact": {},
+      "answers": {},
+      "visual_ok": null,
+      "visual_diagnostics": {
+        "missing_gold_labels": null,
+        "outside_initial_labels": null,
+        "outside_initial_ndc_vertices": null,
+        "stale_vs_previous": null
+      },
+      "interaction_ok": null,
+      "canvas_count_when_not_served": 0,
+      "reason_code": "INCONSISTENT_FACTS",
+      "failure_category": "geometry_generation_failed",
+      "clarification": null,
+      "scale_policy": null,
+      "scene_cache": "UNKNOWN",
+      "ms": 188,
+      "model_inference_ms": null,
+      "model_startup_ms": null,
+      "provider_calls_recorded": {
+        "gemini_vision_calls": 0,
+        "gemini_typed_fact_calls": 0,
+        "total_provider_calls": 0
+      },
+      "completed": false,
+      "case_id": "M03",
+      "modality": "text",
+      "expected_behavior": "SAFE_REFUSE"
+    },
+    {
+      "http": 200,
+      "route": "UNKNOWN",
+      "route_status": "unsupported",
+      "deterministic_parser_status": "UNKNOWN",
+      "slm": {
+        "invoked": "UNKNOWN",
+        "grounding": "UNKNOWN",
+        "cache_hit": "UNKNOWN"
+      },
+      "source_gate_status": "UNKNOWN",
+      "source_gate_detector": "UNKNOWN",
+      "scene_served": false,
+      "mathematical_validation": "NOT_SERVED",
+      "relation_failures": 0,
+      "numeric_status": "NOT_ASKED",
+      "answer_exact": {},
+      "answers": {},
+      "visual_ok": null,
+      "visual_diagnostics": {
+        "missing_gold_labels": null,
+        "outside_initial_labels": null,
+        "outside_initial_ndc_vertices": null,
+        "stale_vs_previous": null
+      },
+      "interaction_ok": null,
+      "canvas_count_when_not_served": 0,
+      "reason_code": "gate_out_of_scope",
+      "failure_category": "out_of_scope",
+      "clarification": null,
+      "scale_policy": null,
+      "scene_cache": "UNKNOWN",
+      "ms": 78,
+      "model_inference_ms": null,
+      "model_startup_ms": null,
+      "provider_calls_recorded": {
+        "gemini_vision_calls": null,
+        "gemini_typed_fact_calls": null,
+        "total_provider_calls": null
+      },
+      "completed": false,
+      "case_id": "M04",
+      "modality": "text",
+      "expected_behavior": "SAFE_REFUSE"
+    },
+    {
+      "http": 200,
+      "route": "LOCAL_SLM_FALLBACK",
+      "route_status": "REFUSED",
+      "deterministic_parser_status": "LOCAL_PARSE_PARTIAL",
+      "slm": {
+        "invoked": true,
+        "grounding": "SLM_REPORTED_UNRESOLVED",
+        "cache_hit": false
+      },
+      "source_gate_status": "NOT_REACHED",
+      "source_gate_detector": "UNKNOWN",
+      "scene_served": false,
+      "mathematical_validation": "NOT_SERVED",
+      "relation_failures": 0,
+      "numeric_status": "NOT_ASKED",
+      "answer_exact": {},
+      "answers": {},
+      "visual_ok": null,
+      "visual_diagnostics": {
+        "missing_gold_labels": null,
+        "outside_initial_labels": null,
+        "outside_initial_ndc_vertices": null,
+        "stale_vs_previous": null
+      },
+      "interaction_ok": null,
+      "canvas_count_when_not_served": 0,
+      "reason_code": "AMBIGUOUS_FACT",
+      "failure_category": "insufficient_specification",
+      "clarification": "Trong “Đừng vẽ hình chóp S.ABCD có đáy là hình vuông cạnh 4 và SA vuông góc với (ABCD), SA = 3.”, bạn hãy nói rõ quan hệ hình học.",
+      "scale_policy": null,
+      "scene_cache": "UNKNOWN",
+      "ms": 4371,
+      "model_inference_ms": 4278.04,
+      "model_startup_ms": 0,
+      "provider_calls_recorded": {
+        "gemini_vision_calls": 0,
+        "gemini_typed_fact_calls": 0,
+        "total_provider_calls": 0
+      },
+      "completed": false,
+      "case_id": "M05",
+      "modality": "text",
+      "expected_behavior": "SAFE_REFUSE"
+    },
+    {
+      "http": 200,
+      "route": "LOCAL_AMBIGUOUS_CLARIFICATION",
+      "route_status": "REFUSED",
+      "deterministic_parser_status": "LOCAL_PARSE_COMPLETE",
+      "slm": {
+        "invoked": "UNKNOWN",
+        "grounding": "UNKNOWN",
+        "cache_hit": "UNKNOWN"
+      },
+      "source_gate_status": "UNKNOWN",
+      "source_gate_detector": "SOURCE_FACTS",
+      "scene_served": false,
+      "mathematical_validation": "NOT_SERVED",
+      "relation_failures": 0,
+      "numeric_status": "NOT_ASKED",
+      "answer_exact": {},
+      "answers": {},
+      "visual_ok": null,
+      "visual_diagnostics": {
+        "missing_gold_labels": null,
+        "outside_initial_labels": null,
+        "outside_initial_ndc_vertices": null,
+        "stale_vs_previous": null
+      },
+      "interaction_ok": null,
+      "canvas_count_when_not_served": 0,
+      "reason_code": "UNDERDETERMINED_POINT",
+      "failure_category": "insufficient_specification",
+      "clarification": "Trong “Cho hình chóp S.ABCD có đáy ABCD là hình vuông cạnh 4, SA = 5. Tính thể tích khối chóp.”, bạn hãy nói rõ quan hệ hình học và các số đo cần thiết.",
+      "scale_policy": null,
+      "scene_cache": "UNKNOWN",
+      "ms": 155,
+      "model_inference_ms": null,
+      "model_startup_ms": null,
+      "provider_calls_recorded": {
+        "gemini_vision_calls": 0,
+        "gemini_typed_fact_calls": 0,
+        "total_provider_calls": 0
+      },
+      "completed": false,
+      "case_id": "M06",
+      "modality": "text",
+      "expected_behavior": "SAFE_REFUSE"
+    },
+    {
+      "http": 200,
+      "route": "LOCAL_SLM_FALLBACK",
+      "route_status": "REFUSED",
+      "deterministic_parser_status": "LOCAL_PARSE_PARTIAL",
+      "slm": {
+        "invoked": true,
+        "grounding": "SLM_REPORTED_UNRESOLVED",
+        "cache_hit": false
+      },
+      "source_gate_status": "NOT_REACHED",
+      "source_gate_detector": "UNKNOWN",
+      "scene_served": false,
+      "mathematical_validation": "NOT_SERVED",
+      "relation_failures": 0,
+      "numeric_status": "NOT_ASKED",
+      "answer_exact": {},
+      "answers": {},
+      "visual_ok": null,
+      "visual_diagnostics": {
+        "missing_gold_labels": null,
+        "outside_initial_labels": null,
+        "outside_initial_ndc_vertices": null,
+        "stale_vs_previous": null
+      },
+      "interaction_ok": null,
+      "canvas_count_when_not_served": 0,
+      "reason_code": "AMBIGUOUS_FACT",
+      "failure_category": "insufficient_specification",
+      "clarification": "Trong “Giả sử tứ diện OABC có OA, OB, OC đôi một vuông góc; nếu OA = 2 thì tính thể tích.”, bạn hãy nói rõ quan hệ hình học.",
+      "scale_policy": null,
+      "scene_cache": "UNKNOWN",
+      "ms": 3450,
+      "model_inference_ms": 3352.43,
+      "model_startup_ms": 0,
+      "provider_calls_recorded": {
+        "gemini_vision_calls": 0,
+        "gemini_typed_fact_calls": 0,
+        "total_provider_calls": 0
+      },
+      "completed": false,
+      "case_id": "M07",
+      "modality": "text",
+      "expected_behavior": "SAFE_REFUSE"
+    },
+    {
+      "http": 200,
+      "route": "LOCAL_SLM_FALLBACK",
+      "route_status": "REFUSED",
+      "deterministic_parser_status": "LOCAL_PARSE_PARTIAL",
+      "slm": {
+        "invoked": true,
+        "grounding": "SLM_REPORTED_UNRESOLVED",
+        "cache_hit": false
+      },
+      "source_gate_status": "NOT_REACHED",
+      "source_gate_detector": "UNKNOWN",
+      "scene_served": false,
+      "mathematical_validation": "NOT_SERVED",
+      "relation_failures": 0,
+      "numeric_status": "NOT_ASKED",
+      "answer_exact": {},
+      "answers": {},
+      "visual_ok": null,
+      "visual_diagnostics": {
+        "missing_gold_labels": null,
+        "outside_initial_labels": null,
+        "outside_initial_ndc_vertices": null,
+        "stale_vs_previous": null
+      },
+      "interaction_ok": null,
+      "canvas_count_when_not_served": 0,
+      "reason_code": "OUT_OF_SCOPE",
+      "failure_category": null,
+      "clarification": null,
+      "scale_policy": null,
+      "scene_cache": "UNKNOWN",
+      "ms": 1487,
+      "model_inference_ms": 1397.24,
+      "model_startup_ms": 0,
+      "provider_calls_recorded": {
+        "gemini_vision_calls": 0,
+        "gemini_typed_fact_calls": 0,
+        "total_provider_calls": 0
+      },
+      "completed": false,
+      "case_id": "M08",
+      "modality": "text",
+      "expected_behavior": "SAFE_REFUSE"
+    },
+    {
+      "http": 200,
+      "route": "LOCAL_AMBIGUOUS_CLARIFICATION",
+      "route_status": "REFUSED",
+      "deterministic_parser_status": "LOCAL_PARSE_COMPLETE",
+      "slm": {
+        "invoked": "UNKNOWN",
+        "grounding": "UNKNOWN",
+        "cache_hit": "UNKNOWN"
+      },
+      "source_gate_status": "UNKNOWN",
+      "source_gate_detector": "SOURCE_FACTS",
+      "scene_served": false,
+      "mathematical_validation": "NOT_SERVED",
+      "relation_failures": 0,
+      "numeric_status": "NOT_ASKED",
+      "answer_exact": {},
+      "answers": {},
+      "visual_ok": null,
+      "visual_diagnostics": {
+        "missing_gold_labels": null,
+        "outside_initial_labels": null,
+        "outside_initial_ndc_vertices": null,
+        "stale_vs_previous": null
+      },
+      "interaction_ok": null,
+      "canvas_count_when_not_served": 0,
+      "reason_code": "MISSING_DIMENSION",
+      "failure_category": "insufficient_specification",
+      "clarification": "Trong “Cho lăng trụ đứng ABC.DEF có AB = 3, AC = 4, AD = 5. Tính diện tích tam giác ABC.”, bạn hãy nói rõ các số đo cần thiết.",
+      "scale_policy": null,
+      "scene_cache": "UNKNOWN",
+      "ms": 160,
+      "model_inference_ms": null,
+      "model_startup_ms": null,
+      "provider_calls_recorded": {
+        "gemini_vision_calls": 0,
+        "gemini_typed_fact_calls": 0,
+        "total_provider_calls": 0
+      },
+      "completed": false,
+      "case_id": "M09",
+      "modality": "text",
+      "expected_behavior": "SAFE_REFUSE"
+    },
+    {
+      "http": 200,
+      "route": "LOCAL_SLM_FALLBACK",
+      "route_status": "REFUSED",
+      "deterministic_parser_status": "LOCAL_PARSE_PARTIAL",
+      "slm": {
+        "invoked": true,
+        "grounding": "SLM_REPORTED_UNRESOLVED",
+        "cache_hit": false
+      },
+      "source_gate_status": "NOT_REACHED",
+      "source_gate_detector": "UNKNOWN",
+      "scene_served": false,
+      "mathematical_validation": "NOT_SERVED",
+      "relation_failures": 0,
+      "numeric_status": "NOT_ASKED",
+      "answer_exact": {},
+      "answers": {},
+      "visual_ok": null,
+      "visual_diagnostics": {
+        "missing_gold_labels": null,
+        "outside_initial_labels": null,
+        "outside_initial_ndc_vertices": null,
+        "stale_vs_previous": null
+      },
+      "interaction_ok": null,
+      "canvas_count_when_not_served": 0,
+      "reason_code": "AMBIGUOUS_FACT",
+      "failure_category": "insufficient_specification",
+      "clarification": "Trong “Cho hình chóp S.ABCD có đáy ABCD là hình chữ nhật, AB = 4, AD = 3, SA vuông góc với (ABCD) và SA = -2.”, bạn hãy nói rõ quan hệ hình học.",
+      "scale_policy": null,
+      "scene_cache": "UNKNOWN",
+      "ms": 4627,
+      "model_inference_ms": 4532.8,
+      "model_startup_ms": 0,
+      "provider_calls_recorded": {
+        "gemini_vision_calls": 0,
+        "gemini_typed_fact_calls": 0,
+        "total_provider_calls": 0
+      },
+      "completed": false,
+      "case_id": "M10",
+      "modality": "text",
+      "expected_behavior": "SAFE_REFUSE"
+    },
+    {
+      "http": 200,
+      "route": "LOCAL_DETERMINISTIC_HYBRID",
+      "route_status": "SERVED",
+      "deterministic_parser_status": "LOCAL_PARSE_COMPLETE",
+      "slm": {
+        "invoked": "UNKNOWN",
+        "grounding": "UNKNOWN",
+        "cache_hit": "UNKNOWN"
+      },
+      "source_gate_status": "VERIFIED",
+      "source_gate_detector": "UNKNOWN",
+      "scene_served": true,
+      "mathematical_validation": "MATHEMATICALLY_VALID",
+      "relation_failures": 0,
+      "numeric_status": "NOT_ASKED",
+      "answer_exact": {},
+      "answers": {},
+      "visual_ok": true,
+      "visual_diagnostics": {
+        "missing_gold_labels": [],
+        "outside_initial_labels": [],
+        "outside_initial_ndc_vertices": [],
+        "stale_vs_previous": false
+      },
+      "interaction_ok": true,
+      "canvas_count_when_not_served": null,
+      "reason_code": null,
+      "failure_category": null,
+      "clarification": null,
+      "scale_policy": null,
+      "scene_cache": "miss",
+      "ms": 508,
+      "model_inference_ms": null,
+      "model_startup_ms": null,
+      "provider_calls_recorded": {
+        "gemini_vision_calls": 0,
+        "gemini_typed_fact_calls": 0,
+        "total_provider_calls": 0
+      },
+      "completed": true,
+      "case_id": "Q01",
+      "modality": "digital_pdf",
+      "expected_behavior": "SERVE"
+    },
+    {
+      "http": 200,
+      "route": "LOCAL_DETERMINISTIC_HYBRID",
+      "route_status": "SERVED",
+      "deterministic_parser_status": "LOCAL_PARSE_COMPLETE",
+      "slm": {
+        "invoked": "UNKNOWN",
+        "grounding": "UNKNOWN",
+        "cache_hit": "UNKNOWN"
+      },
+      "source_gate_status": "VERIFIED",
+      "source_gate_detector": "UNKNOWN",
+      "scene_served": true,
+      "mathematical_validation": "MATHEMATICALLY_VALID",
+      "relation_failures": 0,
+      "numeric_status": "NOT_ASKED",
+      "answer_exact": {},
+      "answers": {},
+      "visual_ok": true,
+      "visual_diagnostics": {
+        "missing_gold_labels": [],
+        "outside_initial_labels": [],
+        "outside_initial_ndc_vertices": [],
+        "stale_vs_previous": false
+      },
+      "interaction_ok": true,
+      "canvas_count_when_not_served": null,
+      "reason_code": null,
+      "failure_category": null,
+      "clarification": null,
+      "scale_policy": null,
+      "scene_cache": "miss",
+      "ms": 3809,
+      "model_inference_ms": null,
+      "model_startup_ms": null,
+      "provider_calls_recorded": {
+        "gemini_vision_calls": 0,
+        "gemini_typed_fact_calls": 0,
+        "total_provider_calls": 0
+      },
+      "completed": true,
+      "case_id": "Q02",
+      "modality": "scanned_pdf",
+      "expected_behavior": "SERVE"
+    },
+    {
+      "http": 200,
+      "route": "LOCAL_DETERMINISTIC_HYBRID",
+      "route_status": "SERVED",
+      "deterministic_parser_status": "LOCAL_PARSE_COMPLETE",
+      "slm": {
+        "invoked": "UNKNOWN",
+        "grounding": "UNKNOWN",
+        "cache_hit": "UNKNOWN"
+      },
+      "source_gate_status": "VERIFIED",
+      "source_gate_detector": "UNKNOWN",
+      "scene_served": true,
+      "mathematical_validation": "MATHEMATICALLY_VALID",
+      "relation_failures": 0,
+      "numeric_status": "NOT_ASKED",
+      "answer_exact": {},
+      "answers": {},
+      "visual_ok": true,
+      "visual_diagnostics": {
+        "missing_gold_labels": [],
+        "outside_initial_labels": [],
+        "outside_initial_ndc_vertices": [],
+        "stale_vs_previous": false
+      },
+      "interaction_ok": true,
+      "canvas_count_when_not_served": null,
+      "reason_code": null,
+      "failure_category": null,
+      "clarification": null,
+      "scale_policy": null,
+      "scene_cache": "miss",
+      "ms": 3581,
+      "model_inference_ms": null,
+      "model_startup_ms": null,
+      "provider_calls_recorded": {
+        "gemini_vision_calls": 0,
+        "gemini_typed_fact_calls": 0,
+        "total_provider_calls": 0
+      },
+      "completed": true,
+      "case_id": "Q03",
+      "modality": "scanned_pdf",
+      "expected_behavior": "SERVE"
+    },
+    {
+      "http": 200,
+      "route": "UNKNOWN",
+      "route_status": "UNKNOWN",
+      "deterministic_parser_status": "UNKNOWN",
+      "slm": {
+        "invoked": "UNKNOWN",
+        "grounding": "UNKNOWN",
+        "cache_hit": "UNKNOWN"
+      },
+      "source_gate_status": "UNKNOWN",
+      "source_gate_detector": "UNKNOWN",
+      "scene_served": false,
+      "mathematical_validation": "NOT_SERVED",
+      "relation_failures": 0,
+      "numeric_status": "NOT_ASKED",
+      "answer_exact": {},
+      "answers": {},
+      "visual_ok": null,
+      "visual_diagnostics": {
+        "missing_gold_labels": null,
+        "outside_initial_labels": null,
+        "outside_initial_ndc_vertices": null,
+        "stale_vs_previous": null
+      },
+      "interaction_ok": null,
+      "canvas_count_when_not_served": 0,
+      "reason_code": null,
+      "failure_category": null,
+      "clarification": null,
+      "scale_policy": null,
+      "scene_cache": "UNKNOWN",
+      "ms": 371,
+      "model_inference_ms": null,
+      "model_startup_ms": null,
+      "provider_calls_recorded": {
+        "gemini_vision_calls": null,
+        "gemini_typed_fact_calls": null,
+        "total_provider_calls": null
+      },
+      "completed": false,
+      "case_id": "Q04",
+      "modality": "mixed_pdf",
+      "expected_behavior": "SERVE"
+    },
+    {
+      "http": 200,
+      "route": "LOCAL_DETERMINISTIC_HYBRID",
+      "route_status": "SERVED",
+      "deterministic_parser_status": "LOCAL_PARSE_COMPLETE",
+      "slm": {
+        "invoked": "UNKNOWN",
+        "grounding": "UNKNOWN",
+        "cache_hit": "UNKNOWN"
+      },
+      "source_gate_status": "VERIFIED",
+      "source_gate_detector": "UNKNOWN",
+      "scene_served": true,
+      "mathematical_validation": "MATHEMATICALLY_VALID",
+      "relation_failures": 0,
+      "numeric_status": "NOT_ASKED",
+      "answer_exact": {},
+      "answers": {},
+      "visual_ok": true,
+      "visual_diagnostics": {
+        "missing_gold_labels": [],
+        "outside_initial_labels": [],
+        "outside_initial_ndc_vertices": [],
+        "stale_vs_previous": false
+      },
+      "interaction_ok": true,
+      "canvas_count_when_not_served": null,
+      "reason_code": null,
+      "failure_category": null,
+      "clarification": null,
+      "scale_policy": null,
+      "scene_cache": "miss",
+      "ms": 578,
+      "model_inference_ms": null,
+      "model_startup_ms": null,
+      "provider_calls_recorded": {
+        "gemini_vision_calls": 0,
+        "gemini_typed_fact_calls": 0,
+        "total_provider_calls": 0
+      },
+      "completed": true,
+      "case_id": "X01",
+      "modality": "docx",
+      "expected_behavior": "SERVE"
+    }
+  ]
+}
