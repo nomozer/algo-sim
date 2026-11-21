@@ -1,0 +1,901 @@
+{
+  "schema": "axo-prospective-text-acceptance/1",
+  "run_id": "model1-final-text-acceptance",
+  "set": "holdout-7",
+  "evidence_class": "B_PROSPECTIVE_INTERNAL (hand-written by /19 agent; EXTERNAL_INDEPENDENCE = NOT_MEASURED)",
+  "evaluation_identity": {
+    "head": "b10c0a1e4022dfd5af93aeb6ebf75de61078a901",
+    "branch": "HEAD",
+    "candidate_commit": "35a17644acb11ea8a0853afb5b7cdc1814f37df8",
+    "product_commit_sha": "2bb0211a1057c5d2a503f8a1f19e96cf84decff5",
+    "measured_system_tree_hash": "bdb737bba9ab94d0274b57e25089c01d4cb47935d5989658e7c13aad1e79b132",
+    "cache_version": "158",
+    "route_d_cache_policy": "158:route-d",
+    "semantic_environment_hash": "f9df4bf0c8bd458a278d2692567fa3e096340ae37ff5493730dff4067c0f5e19",
+    "parser_version": "local-geometry-parser/3",
+    "slm_extractor_version": "local-slm-extractor/6",
+    "slm_validator_version": "slm-grounding-validator/6"
+  },
+  "identity_mismatches": [],
+  "registered_inputs": {
+    "manifest_sha256": "fe5dbf8c77ec29e4f82bb85ba95083f6eae15061a0662cedc673fabad8b71b0e",
+    "criteria_sha256": "a2c236d6cdd809680dc108a3c53a4c0e3703fe584bfa6e2b5f1fe455953a159e"
+  },
+  "totals": {
+    "positive": 58,
+    "served": 46,
+    "completed": 46,
+    "completion_rate": 0.7931034482758621,
+    "negative": 22,
+    "negative_safely_refused": 22
+  },
+  "wilson_95": {
+    "END_TO_END_SYSTEM_SCORE": {
+      "k": 46,
+      "n": 58,
+      "rate": 0.7931,
+      "ci95_low": 0.6723,
+      "ci95_high": 0.8775
+    },
+    "CANDIDATE_FALLBACK_SCORE": {
+      "k": 3,
+      "n": 15,
+      "rate": 0.2,
+      "ci95_low": 0.0705,
+      "ci95_high": 0.4519
+    },
+    "INDEPENDENT_SLM_SCORE": {
+      "k": 25,
+      "n": 58,
+      "rate": 0.431,
+      "ci95_low": 0.3118,
+      "ci95_high": 0.5588
+    },
+    "NEGATIVE_SAFE_REFUSAL": {
+      "k": 22,
+      "n": 22,
+      "rate": 1.0,
+      "ci95_low": 0.8513,
+      "ci95_high": 1.0
+    }
+  },
+  "scores": {
+    "END_TO_END_SYSTEM_SCORE": {
+      "completed": 46,
+      "total_positive": 58,
+      "rate": 0.7931034482758621
+    },
+    "CANDIDATE_FALLBACK_SCORE": {
+      "verified_live_slm_scenes": 3,
+      "verified_case_ids": [
+        "T06",
+        "G06",
+        "G08"
+      ],
+      "candidate_slm_routed_total": 15,
+      "routed_case_ids": [
+        "T06",
+        "G01",
+        "G03",
+        "G06",
+        "G08",
+        "G11",
+        "C01",
+        "C02",
+        "C03",
+        "C04",
+        "C05",
+        "C06",
+        "C07",
+        "C08",
+        "C10"
+      ],
+      "rate": 0.2,
+      "min_sample_floor": 8,
+      "min_scenes_floor": 5,
+      "min_rate": 0.5,
+      "sample_floor_met": true
+    },
+    "INDEPENDENT_SLM_SCORE": {
+      "status": "MEASURED",
+      "verified_scenes": 25,
+      "positive_total": 58,
+      "rate": 0.43103448275862066,
+      "extraction_correctness": 0.6379310344827587,
+      "grounding_correctness": 0.5517241379310345,
+      "negative_safe_refused": 22,
+      "negative_total": 22,
+      "false_assertions_served": 0,
+      "invalid_relations_served": 0
+    },
+    "LEGACY_BASELINE_STRATUM_SCORE": {
+      "baseline_slm_required_total": 14,
+      "completed_deterministically_on_candidate": 0,
+      "completed_via_live_slm": 3,
+      "verified_live_slm_case_ids": [
+        "T06",
+        "G06",
+        "G08"
+      ],
+      "rate_live_slm_over_baseline": 0.21428571428571427
+    }
+  },
+  "breakdowns": {
+    "by_candidate_stratum": {
+      "PARSER_COMPLETE": {
+        "total": 44,
+        "completed": 43,
+        "wilson_95": {
+          "k": 43,
+          "n": 44,
+          "rate": 0.9773,
+          "ci95_low": 0.8819,
+          "ci95_high": 0.996
+        },
+        "deterministic_completed": 43,
+        "slm_completed": 0,
+        "latency_served_ms": {
+          "n": 43,
+          "min_ms": 126,
+          "p50_ms": 147,
+          "p95_ms": 332,
+          "max_ms": 720
+        },
+        "uncompleted_ids": [
+          "C02"
+        ]
+      },
+      "SLM_REQUIRED": {
+        "total": 14,
+        "completed": 3,
+        "wilson_95": {
+          "k": 3,
+          "n": 14,
+          "rate": 0.2143,
+          "ci95_low": 0.0757,
+          "ci95_high": 0.4759
+        },
+        "deterministic_completed": 0,
+        "slm_completed": 3,
+        "latency_served_ms": {
+          "n": 3,
+          "min_ms": 3991,
+          "p50_ms": 4377,
+          "p95_ms": 8075,
+          "max_ms": 8075
+        },
+        "uncompleted_ids": [
+          "G01",
+          "G03",
+          "G11",
+          "C01",
+          "C03",
+          "C04",
+          "C05",
+          "C06",
+          "C07",
+          "C08",
+          "C10"
+        ]
+      }
+    },
+    "by_phrase_family": {
+      "exam_wording": {
+        "total": 16,
+        "completed": 16,
+        "wilson_95": {
+          "k": 16,
+          "n": 16,
+          "rate": 1.0,
+          "ci95_low": 0.8064,
+          "ci95_high": 1.0
+        },
+        "deterministic_completed": 16,
+        "slm_completed": 0,
+        "latency_served_ms": {
+          "n": 16,
+          "min_ms": 127,
+          "p50_ms": 145.0,
+          "p95_ms": 209,
+          "max_ms": 347
+        },
+        "uncompleted_ids": []
+      },
+      "learner_colloquial": {
+        "total": 10,
+        "completed": 1,
+        "wilson_95": {
+          "k": 1,
+          "n": 10,
+          "rate": 0.1,
+          "ci95_low": 0.0179,
+          "ci95_high": 0.4042
+        },
+        "deterministic_completed": 1,
+        "slm_completed": 0,
+        "latency_served_ms": {
+          "n": 1,
+          "min_ms": 128,
+          "p50_ms": 128,
+          "p95_ms": 128,
+          "max_ms": 128
+        },
+        "uncompleted_ids": [
+          "C01",
+          "C02",
+          "C03",
+          "C04",
+          "C05",
+          "C06",
+          "C07",
+          "C08",
+          "C10"
+        ]
+      },
+      "teacher_wording": {
+        "total": 15,
+        "completed": 12,
+        "wilson_95": {
+          "k": 12,
+          "n": 15,
+          "rate": 0.8,
+          "ci95_low": 0.5481,
+          "ci95_high": 0.9295
+        },
+        "deterministic_completed": 10,
+        "slm_completed": 2,
+        "latency_served_ms": {
+          "n": 12,
+          "min_ms": 126,
+          "p50_ms": 142.0,
+          "p95_ms": 3991,
+          "max_ms": 4377
+        },
+        "uncompleted_ids": [
+          "G01",
+          "G03",
+          "G11"
+        ]
+      },
+      "textbook_canonical": {
+        "total": 17,
+        "completed": 17,
+        "wilson_95": {
+          "k": 17,
+          "n": 17,
+          "rate": 1.0,
+          "ci95_low": 0.8157,
+          "ci95_high": 1.0
+        },
+        "deterministic_completed": 16,
+        "slm_completed": 1,
+        "latency_served_ms": {
+          "n": 17,
+          "min_ms": 133,
+          "p50_ms": 156,
+          "p95_ms": 720,
+          "max_ms": 8075
+        },
+        "uncompleted_ids": []
+      }
+    },
+    "negative_by_family": {
+      "contradiction": {
+        "total": 5,
+        "safely_refused": 5,
+        "wilson_95": {
+          "k": 5,
+          "n": 5,
+          "rate": 1.0,
+          "ci95_low": 0.5655,
+          "ci95_high": 1.0
+        }
+      },
+      "missing_data": {
+        "total": 6,
+        "safely_refused": 6,
+        "wilson_95": {
+          "k": 6,
+          "n": 6,
+          "rate": 1.0,
+          "ci95_low": 0.6097,
+          "ci95_high": 1.0
+        }
+      },
+      "negation_condition_unsupported": {
+        "total": 6,
+        "safely_refused": 6,
+        "wilson_95": {
+          "k": 6,
+          "n": 6,
+          "rate": 1.0,
+          "ci95_low": 0.6097,
+          "ci95_high": 1.0
+        }
+      },
+      "other_subject": {
+        "total": 5,
+        "safely_refused": 5,
+        "wilson_95": {
+          "k": 5,
+          "n": 5,
+          "rate": 1.0,
+          "ci95_low": 0.5655,
+          "ci95_high": 1.0
+        }
+      }
+    },
+    "slm_independent_failure_taxonomy": {
+      "SLM_UNRESOLVED:AMBIGUOUS_FACT": 19,
+      "GROUNDED_AND_LOWERED:AMBIGUOUS_VALUE_QUOTE": 1,
+      "GROUNDED_AND_LOWERED:SOURCE_OBJECT_MISMATCH": 3,
+      "GROUNDED_AND_LOWERED:NOT_ASKED_IN_SOURCE": 2,
+      "GROUNDED_AND_LOWERED:SOURCE_PREMISE_UNREAD": 1,
+      "GROUNDING_REJECTED:AMBIGUOUS_FACT": 1,
+      "MULTI_GOAL_INCOMPLETE:REQUEST_NOT_ANSWERED": 1,
+      "GROUNDED_AND_LOWERED:CONDITIONAL_CLAUSE": 2,
+      "GROUNDED_AND_LOWERED:UNGROUNDED_VALUE": 2,
+      "GROUNDED_AND_LOWERED:OBJECT_NOT_IN_QUOTE": 1
+    }
+  },
+  "oracle_summary": {
+    "MATHEMATICALLY_VALID": 46,
+    "NOT_SERVED": 34
+  },
+  "safety": {
+    "wrong_served": [],
+    "grounding_violations_served": [],
+    "unverified_relations_served": [],
+    "fabricated_numeric_goals": [],
+    "served_numeric_mismatch": [],
+    "attachment_provenance_not_present": []
+  },
+  "network": {
+    "external_ai_calls_reported": 0,
+    "browser_external_requests": 0,
+    "proxy_intercepted": 0,
+    "tcp_heartbeats": 321,
+    "tcp_non_loopback_records": 0,
+    "physical_internet_disconnect": "NOT_MEASURED",
+    "proxy_selfcheck_records_separate_file": 2,
+    "proxy_selfcheck_sha256": "27b0c46cce19b00e443682116ae86541db9e5cf2fc9dc37d4ae7e7634dcfb012",
+    "egress_proxy_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "tcp_egress_sha256": "7a6d56e41284aa11ffe3c727eb838e433964665eb7f6bcbd4c1ae15526b833ce",
+    "cache_hit_or_replay_count_in_browser_run": 0
+  },
+  "ui_scenarios": {
+    "total": 10,
+    "passed": 10,
+    "results": [
+      {
+        "scenario_id": "I01",
+        "pass": true,
+        "scenes": [
+          {
+            "case_id": "T01",
+            "surface": "SCENE",
+            "start": {
+              "x": 639,
+              "y": 449
+            },
+            "under": {
+              "tag": "CANVAS",
+              "cls": ""
+            },
+            "frame_pixel_diff": 0.06636,
+            "labels_moved": 5,
+            "rotated": true
+          },
+          {
+            "case_id": "E07",
+            "surface": "SCENE",
+            "start": {
+              "x": 639,
+              "y": 449
+            },
+            "under": {
+              "tag": "CANVAS",
+              "cls": ""
+            },
+            "frame_pixel_diff": 0.11877,
+            "labels_moved": 4,
+            "rotated": true
+          },
+          {
+            "case_id": "T06",
+            "surface": "SCENE",
+            "start": {
+              "x": 639,
+              "y": 449
+            },
+            "under": {
+              "tag": "CANVAS",
+              "cls": ""
+            },
+            "frame_pixel_diff": 0.05643,
+            "labels_moved": 4,
+            "rotated": true
+          }
+        ],
+        "console_errors": []
+      },
+      {
+        "scenario_id": "I02",
+        "pass": true,
+        "scene": "T01",
+        "edge": {
+          "start": {
+            "x": 520,
+            "y": 544
+          },
+          "under": {
+            "tag": "CANVAS",
+            "cls": ""
+          },
+          "frame_pixel_diff": 0.0672,
+          "labels_moved": 5,
+          "rotated": true
+        },
+        "chip": {
+          "absent": true
+        },
+        "near_label": {
+          "start": {
+            "x": 589,
+            "y": 492
+          },
+          "under": {
+            "tag": "CANVAS",
+            "cls": ""
+          },
+          "frame_pixel_diff": 0.06309,
+          "labels_moved": 5,
+          "rotated": true
+        }
+      },
+      {
+        "scenario_id": "I04",
+        "pass": true,
+        "scene": "T01",
+        "double_reset_max_drift_px": 0
+      },
+      {
+        "scenario_id": "I03",
+        "pass": true,
+        "after_reset": {
+          "start": {
+            "x": 639,
+            "y": 449
+          },
+          "under": {
+            "tag": "CANVAS",
+            "cls": ""
+          },
+          "frame_pixel_diff": 0.06741,
+          "labels_moved": 5,
+          "rotated": true
+        },
+        "after_change": {
+          "start": {
+            "x": 639,
+            "y": 449
+          },
+          "under": {
+            "tag": "CANVAS",
+            "cls": ""
+          },
+          "frame_pixel_diff": 0.11845,
+          "labels_moved": 4,
+          "rotated": true
+        },
+        "missing_gold_after_change": []
+      },
+      {
+        "scenario_id": "I05",
+        "pass": true,
+        "case_id": "N01",
+        "reason_code": null,
+        "toast": "Đề bài cần thêm dữ kiện để dựng hình\nTrong “Cho hình chóp S.ABCD có đáy ABCD là hình vuông cạnh 4 và SA vuông góc với mặt phẳng đáy. Tính thể tích khối chóp S.ABCD.”, bạn hãy nói rõ các số đo cần thiết. Bạn có thể bổ sung hoặc viết rõ phần đó ngay trên ô nhập rồi nhấn Dựng hình.",
+        "console_errors": []
+      },
+      {
+        "scenario_id": "I07",
+        "pass": true,
+        "had_cancel_button": false,
+        "slow_case": "T06",
+        "fast_case": "G12",
+        "labels_at_render": [
+          "A",
+          "A'",
+          "B",
+          "B'",
+          "C",
+          "C'"
+        ],
+        "labels_after_wait": [
+          "A",
+          "A'",
+          "B",
+          "B'",
+          "C",
+          "C'"
+        ],
+        "console_errors": []
+      },
+      {
+        "scenario_id": "I08_1920x1080",
+        "pass": true,
+        "case_id": "T06",
+        "overflow_x": false,
+        "canvas": {
+          "w": 1289,
+          "h": 1042
+        },
+        "outside_initial_labels": [],
+        "missing_gold_labels": [],
+        "canvas_viewport_share": 0.648,
+        "centre_drag_rotated": true,
+        "console_errors": []
+      },
+      {
+        "scenario_id": "I08_1366x768",
+        "pass": true,
+        "case_id": "T06",
+        "overflow_x": false,
+        "canvas": {
+          "w": 735,
+          "h": 730
+        },
+        "outside_initial_labels": [],
+        "missing_gold_labels": [],
+        "canvas_viewport_share": 0.511,
+        "centre_drag_rotated": true,
+        "console_errors": []
+      },
+      {
+        "scenario_id": "I08_768x1024",
+        "pass": true,
+        "case_id": "T06",
+        "overflow_x": false,
+        "canvas": {
+          "w": 472,
+          "h": 986
+        },
+        "outside_initial_labels": [],
+        "missing_gold_labels": [],
+        "canvas_viewport_share": 0.592,
+        "centre_drag_rotated": true,
+        "console_errors": []
+      },
+      {
+        "scenario_id": "I08_390x844",
+        "pass": true,
+        "case_id": "T06",
+        "overflow_x": false,
+        "canvas": {
+          "w": 390,
+          "h": 444
+        },
+        "outside_initial_labels": [],
+        "missing_gold_labels": [],
+        "canvas_viewport_share": 0.526,
+        "centre_drag_rotated": true,
+        "console_errors": []
+      }
+    ]
+  },
+  "performance": {
+    "schema": "axo-performance-report/1",
+    "harness_version": "axo-live-acceptance-harness/1",
+    "scope_note": "Measured on Windows dev host only; no cross-hardware claims.",
+    "uncached_live_latency_ms": {
+      "deterministic_parser_complete_served": {
+        "n": 43,
+        "min_ms": 126.0,
+        "p50_ms": 147.0,
+        "p95_ms": 332.0,
+        "max_ms": 720.0
+      },
+      "slm_required_stratum_deterministic_or_normalizer_rescued": {
+        "n": 0,
+        "min_ms": null,
+        "p50_ms": null,
+        "p95_ms": null,
+        "max_ms": null
+      },
+      "live_slm_contributed_served": {
+        "n": 3,
+        "min_ms": 3991.0,
+        "p50_ms": 4377.0,
+        "p95_ms": 8075.0,
+        "max_ms": 8075.0
+      },
+      "rejected_valid_cases": {
+        "n": 12,
+        "min_ms": 1275.0,
+        "p50_ms": 2991.0,
+        "p95_ms": 3869.0,
+        "max_ms": 3996.0
+      },
+      "rejected_negative_cases": {
+        "n": 22,
+        "min_ms": 70.0,
+        "p50_ms": 109.5,
+        "p95_ms": 1694.0,
+        "max_ms": 3053.0
+      }
+    },
+    "warm_cache_hit_ms": {
+      "n": 4,
+      "min_ms": 28.7,
+      "p50_ms": 38.7,
+      "p95_ms": 56.5,
+      "max_ms": 56.5
+    },
+    "concurrency": {
+      "conc_2_deterministic": {
+        "workers": 2,
+        "statuses": [
+          200,
+          200
+        ],
+        "all_200": true,
+        "wall_ms": 68.1,
+        "request_stats": {
+          "n": 2,
+          "min_ms": 62.4,
+          "p50_ms": 64.7,
+          "p95_ms": 67.1,
+          "max_ms": 67.1
+        }
+      },
+      "conc_4_deterministic": {
+        "workers": 4,
+        "statuses": [
+          200,
+          200,
+          200,
+          200
+        ],
+        "all_200": true,
+        "wall_ms": 147.4,
+        "request_stats": {
+          "n": 4,
+          "min_ms": 112.2,
+          "p50_ms": 118.0,
+          "p95_ms": 145.1,
+          "max_ms": 145.1
+        }
+      },
+      "conc_2_mixed_slm_and_det": {
+        "workers": 2,
+        "statuses": [
+          200,
+          200
+        ],
+        "all_200": true,
+        "wall_ms": 82.0,
+        "request_stats": {
+          "n": 2,
+          "min_ms": 51.6,
+          "p50_ms": 66.3,
+          "p95_ms": 81.1,
+          "max_ms": 81.1
+        }
+      }
+    },
+    "resource_peaks_from_stack_sampler": {
+      "chromium": {
+        "samples": 158,
+        "max_pid_count": 4,
+        "peak_ws_mb": 602.8,
+        "peak_private_mb": 474.5,
+        "max_cpu_s": 369.88
+      },
+      "llama": {
+        "samples": 158,
+        "max_pid_count": 1,
+        "peak_ws_mb": 901.8,
+        "peak_private_mb": 593.6,
+        "max_cpu_s": 339.23
+      },
+      "backend": {
+        "samples": 158,
+        "max_pid_count": 2,
+        "peak_ws_mb": 122.2,
+        "peak_private_mb": 102.5,
+        "max_cpu_s": 23.94
+      }
+    }
+  },
+  "residual_failed_positives": [
+    {
+      "case_id": "G01",
+      "phrase_family": "teacher_wording",
+      "candidate_stratum": "SLM_REQUIRED",
+      "route": "LOCAL_SLM_FALLBACK",
+      "extraction_mode": "LOCAL_SLM_GROUNDED",
+      "slm_invoked": true,
+      "slm_grounding": "GROUNDED_AND_LOWERED",
+      "reason_code": "NOT_ASKED_IN_SOURCE",
+      "failure_category": "verification_gap",
+      "detector": "SOURCE_GATE",
+      "latency_ms": 3196
+    },
+    {
+      "case_id": "G03",
+      "phrase_family": "teacher_wording",
+      "candidate_stratum": "SLM_REQUIRED",
+      "route": "LOCAL_SLM_FALLBACK",
+      "extraction_mode": "LOCAL_SLM_GROUNDING_REJECTED",
+      "slm_invoked": true,
+      "slm_grounding": "SLM_REPORTED_UNRESOLVED",
+      "reason_code": "AMBIGUOUS_FACT",
+      "failure_category": "insufficient_specification",
+      "detector": null,
+      "latency_ms": 2786
+    },
+    {
+      "case_id": "G11",
+      "phrase_family": "teacher_wording",
+      "candidate_stratum": "SLM_REQUIRED",
+      "route": "LOCAL_SLM_FALLBACK",
+      "extraction_mode": "LOCAL_SLM_GROUNDING_REJECTED",
+      "slm_invoked": true,
+      "slm_grounding": "REJECTED_NO_GROUNDED_GOAL",
+      "reason_code": "AMBIGUOUS_FACT",
+      "failure_category": "insufficient_specification",
+      "detector": null,
+      "latency_ms": 3996
+    },
+    {
+      "case_id": "C01",
+      "phrase_family": "learner_colloquial",
+      "candidate_stratum": "SLM_REQUIRED",
+      "route": "LOCAL_SLM_FALLBACK",
+      "extraction_mode": "LOCAL_SLM_GROUNDING_REJECTED",
+      "slm_invoked": true,
+      "slm_grounding": "SLM_REPORTED_UNRESOLVED",
+      "reason_code": "AMBIGUOUS_FACT",
+      "failure_category": "insufficient_specification",
+      "detector": null,
+      "latency_ms": 1340
+    },
+    {
+      "case_id": "C02",
+      "phrase_family": "learner_colloquial",
+      "candidate_stratum": "PARSER_COMPLETE",
+      "route": "LOCAL_SLM_FALLBACK",
+      "extraction_mode": "LOCAL_SLM_GROUNDED",
+      "slm_invoked": true,
+      "slm_grounding": "GROUNDED_AND_LOWERED",
+      "reason_code": "CONDITIONAL_CLAUSE",
+      "failure_category": "capability_gap",
+      "detector": "PLANNER",
+      "latency_ms": 3443
+    },
+    {
+      "case_id": "C03",
+      "phrase_family": "learner_colloquial",
+      "candidate_stratum": "SLM_REQUIRED",
+      "route": "LOCAL_SLM_FALLBACK",
+      "extraction_mode": "LOCAL_SLM_GROUNDED",
+      "slm_invoked": true,
+      "slm_grounding": "GROUNDED_AND_LOWERED",
+      "reason_code": "UNGROUNDED_VALUE",
+      "failure_category": "verification_gap",
+      "detector": "SOURCE_GATE",
+      "latency_ms": 1966
+    },
+    {
+      "case_id": "C04",
+      "phrase_family": "learner_colloquial",
+      "candidate_stratum": "SLM_REQUIRED",
+      "route": "LOCAL_SLM_FALLBACK",
+      "extraction_mode": "LOCAL_SLM_GROUNDING_REJECTED",
+      "slm_invoked": true,
+      "slm_grounding": "SLM_REPORTED_UNRESOLVED",
+      "reason_code": "AMBIGUOUS_FACT",
+      "failure_category": "insufficient_specification",
+      "detector": null,
+      "latency_ms": 1275
+    },
+    {
+      "case_id": "C05",
+      "phrase_family": "learner_colloquial",
+      "candidate_stratum": "SLM_REQUIRED",
+      "route": "LOCAL_SLM_FALLBACK",
+      "extraction_mode": "LOCAL_SLM_GROUNDING_REJECTED",
+      "slm_invoked": true,
+      "slm_grounding": "SLM_REPORTED_UNRESOLVED",
+      "reason_code": "AMBIGUOUS_FACT",
+      "failure_category": "insufficient_specification",
+      "detector": null,
+      "latency_ms": 3818
+    },
+    {
+      "case_id": "C06",
+      "phrase_family": "learner_colloquial",
+      "candidate_stratum": "SLM_REQUIRED",
+      "route": "LOCAL_SLM_FALLBACK",
+      "extraction_mode": "LOCAL_SLM_GROUNDED",
+      "slm_invoked": true,
+      "slm_grounding": "GROUNDED_AND_LOWERED",
+      "reason_code": "CONDITIONAL_CLAUSE",
+      "failure_category": "capability_gap",
+      "detector": "PARSER_COVERAGE",
+      "latency_ms": 2732
+    },
+    {
+      "case_id": "C07",
+      "phrase_family": "learner_colloquial",
+      "candidate_stratum": "SLM_REQUIRED",
+      "route": "LOCAL_SLM_FALLBACK",
+      "extraction_mode": "LOCAL_SLM_GROUNDED",
+      "slm_invoked": true,
+      "slm_grounding": "GROUNDED_AND_LOWERED",
+      "reason_code": "OBJECT_NOT_IN_QUOTE",
+      "failure_category": "verification_gap",
+      "detector": "SOURCE_GATE",
+      "latency_ms": 3710
+    },
+    {
+      "case_id": "C08",
+      "phrase_family": "learner_colloquial",
+      "candidate_stratum": "SLM_REQUIRED",
+      "route": "LOCAL_SLM_FALLBACK",
+      "extraction_mode": "LOCAL_SLM_GROUNDED",
+      "slm_invoked": true,
+      "slm_grounding": "GROUNDED_AND_LOWERED",
+      "reason_code": "NOT_ASKED_IN_SOURCE",
+      "failure_category": "verification_gap",
+      "detector": "PARSER_COVERAGE",
+      "latency_ms": 3869
+    },
+    {
+      "case_id": "C10",
+      "phrase_family": "learner_colloquial",
+      "candidate_stratum": "SLM_REQUIRED",
+      "route": "LOCAL_SLM_FALLBACK",
+      "extraction_mode": "LOCAL_SLM_GROUNDED",
+      "slm_invoked": true,
+      "slm_grounding": "GROUNDED_AND_LOWERED",
+      "reason_code": "UNGROUNDED_VALUE",
+      "failure_category": "verification_gap",
+      "detector": "PARSER_COVERAGE",
+      "latency_ms": 2101
+    }
+  ],
+  "verdicts": {
+    "SEMANTIC_REWRITE_SAFETY_VERIFIED": "NOT_MEASURED",
+    "SOURCE_GROUNDING_VERIFIED": true,
+    "TEXT_COMPLETION_THRESHOLD_MET": false,
+    "SYSTEM_TEXT_COMPLETION_THRESHOLD_MET": false,
+    "SLM_FALLBACK_SAMPLE_FLOOR_MET": true,
+    "SLM_FALLBACK_RATE_THRESHOLD_MET": false,
+    "SLM_FALLBACK_COUNT_THRESHOLD_MET": false,
+    "SLM_FALLBACK_GATE_MET": false,
+    "SLM_RATE_THRESHOLD_MET": false,
+    "SLM_COUNT_THRESHOLD_MET": false,
+    "SLM_INDEPENDENT_CAPABILITY_GATE_MET": false,
+    "NEGATIVE_SAFETY_GATE_MET": true,
+    "CANDIDATE_IDENTITY_CONSISTENT": true,
+    "COMPOSITE_LIVE_TEXT_ACCEPTED": false,
+    "FULL_PRODUCT_GATE_PASS": true,
+    "LOCAL_TEXT_MODEL1_VERIFIED": false,
+    "LOCAL_VISION_REPLACEMENT_VERIFIED": false,
+    "FULL_GEMINI_ROLE_REPLACEMENT_VERIFIED": false,
+    "MAIN_MERGE_READY": false,
+    "MAIN_MERGE_COMPLETED": false,
+    "REMOTE_PUSH_COMPLETED": false
+  },
+  "raw_artifact_digests": {
+    "responses.jsonl": "fef5b8944c299b6988f2e3baea2b40ada1c3bd37bd86009d7d3b3d965f3e1c1f",
+    "browser_checks.json": "8753efd387fe2bd98afa4dcd3d3ab90641952d602aefc1bdbd396f9cce6d7892",
+    "ui_scenarios.json": "fed99e17c0eba91c5cfc1812a39aeb6184aadf168a5bc833e80536cb0b01a225",
+    "scene_oracle_verification.json": "004ddde6fe89b63227aba34e9e79e89138b5201e603b05d13fa6771c44eeaf29",
+    "performance.json": "9db23e16ac3c2236431ffd109154cde0f649d8d1e2951a076c851e3bb474088f",
+    "live_text_acceptance_results.json": "3f5e229efc3d6f6ba72145e5e23cd7ea459a4f92447f39950795f7f1cea59420",
+    "stack_memory.csv": "108ae93bd0cd89cf937ba462671354a0c6726c3ed53a9c4195f4be50a30cbee6"
+  }
+}

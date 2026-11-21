@@ -1,5 +1,11 @@
 # CODE_INDEX.md — Chỉ mục module + BỘ NHỚ KIẾN TRÚC
 
+## Authoritative measurement, Holdout-7 prospective acceptance & pre-merge closure (AXO HYBRID /19, 2026-11-21)
+
+- **Windows clean-checkout LF pin (no product or frozen-harness modification):** `.gitattributes` (pins `docs/evaluation/geometry/runs/axo-hybrid-compositional-geometry-language-grounded-simulation/V12_ACCEPTANCE_MANIFEST.json` `text eol=lf` so detached checkouts preserve the byte-locked `/12` manifest while keeping CRLF fixtures intact; checked by `backend/tests/geometry/test_shared_live_harness.py`).
+- **Prospective Holdout-7 suite (`58+22`, frozen Candidate 158 binding & Class-B checks):** `docs/evaluation/geometry/runs/model1-final-text-acceptance/holdout-7/` (`build_holdout.py`, `check_relations.py`, `check_exposure.py`, `ACCEPTANCE_CRITERIA.json`, `ACCEPTANCE_MANIFEST.json`, `ACCEPTANCE_FREEZE.json`, `CANDIDATE_FREEZE.json`, `PROVENANCE.json`, `EXPOSURE_CHECK.json`).
+- **Campaign /19 authoritative receipts, prospective acceptance & closure artifacts:** `docs/evaluation/geometry/runs/model1-final-text-acceptance/` (`FINAL_MASTER_REPORT.md`, `run.json`, `AUTHORITATIVE_FULL_T3_RECEIPT.json`, `PROSPECTIVE_TEXT_ACCEPTANCE.json`, `SLM_CAPABILITY_AUDIT.json`, `GEMINI_LIVE_COMPATIBILITY_AUDIT.json`, `PUBLICATION_SAFETY_STATUS.json`, `MERGE_READINESS_AND_ROLLBACK_AUDIT.md`, `INDEPENDENT_EVIDENCE_STATUS.md`, `HANDOFF_STATE.md`).
+
 ## Semantic grounding integrity & SLM recovery (AXO HYBRID /16, 2026-11-21)
 
 - **Layer 2 Source Gate & rewrite safety hardening:** `backend/app/simulation/geometry_functions/registry.py` (`_KHONG_KHANG_DINH` removes `|đừng|chớ`, `_HOI_QUAN_HE` `?`-scopes `liệu`, `_kiem_mat_chung` emits `AMBIGUOUS_REFERENCE` for `ambiguous_base` before `SOURCE_OBJECT_MISMATCH`, `_kiem_vung_tien_de` owns `"trong không gian,"` lead strip) — audited in `docs/evaluation/geometry/runs/semantic-grounding-slm-recovery/SEMANTIC_REWRITE_SAFETY_AUDIT.json` (`94` rules: `5 SAFE_EQUIVALENT`, `89 GUARDED_EQUIVALENT`; `0` `app.ai` imports in `engine.py`/`registry.py`).

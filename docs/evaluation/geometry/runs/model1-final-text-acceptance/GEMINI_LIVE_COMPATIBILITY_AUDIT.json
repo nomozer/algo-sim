@@ -1,0 +1,88 @@
+{
+  "schema": "axo-gemini-live-compatibility-audit/1",
+  "run_id": "model1-final-text-acceptance",
+  "date": "2026-11-21",
+  "main_commit": "bc6ff5e333e32d1d53dc7435fba64fe12b6dd651",
+  "candidate_158_commit": "2bb0211a1057c5d2a503f8a1f19e96cf84decff5",
+  "detached_measurement_head": "b10c0a1e4022dfd5af93aeb6ebf75de61078a901",
+  "offline_downstream_replay": {
+    "runner": "D:/tmp/axo19/replay_compat.py",
+    "pipeline_stage": "ReplayExtractor(TypedFactNext /2 payloads) -> Source Gate -> Planner -> Exact Kernel -> Adapter /4 (same core used by live Gemini route after provider call)",
+    "allow_live_ai": 0,
+    "live_gemini_calls": 0,
+    "corpora_count": 5,
+    "total_cases": 82,
+    "main_served_total": 51,
+    "c158_served_total": 51,
+    "changed_cases_total": 0,
+    "crashes_total": 0,
+    "verdict": "OFFLINE_DOWNSTREAM_COMPATIBILITY_PARITY_VERIFIED",
+    "corpora": [
+      {
+        "corpus": "scene3d_v2_replacement",
+        "path": "docs/evaluation/geometry/runs/scene3d-to-hybrid-v2-replacement/local-replay-corpus.json",
+        "corpus_sha256": "e9276e5c5b75ab3a2dc10f54287310b27f713b95c674feea1d2b84d119e1b5b0",
+        "cases": 43,
+        "main_served": 22,
+        "c158_served": 22,
+        "main_crashes": 0,
+        "c158_crashes": 0,
+        "changed_cases": 0,
+        "deltas": []
+      },
+      {
+        "corpus": "v2_backend_gen_main",
+        "path": "docs/evaluation/geometry/runs/hybrid-v2-backend-generalization/inputs/local-replay-corpus.json",
+        "corpus_sha256": "3efb34a39e71aff315b31b9d2d75fee00727af34bddc4e6f4bed704f70562264",
+        "cases": 14,
+        "main_served": 10,
+        "c158_served": 10,
+        "main_crashes": 0,
+        "c158_crashes": 0,
+        "changed_cases": 0,
+        "deltas": []
+      },
+      {
+        "corpus": "v2_backend_gen_point_line",
+        "path": "docs/evaluation/geometry/runs/hybrid-v2-backend-generalization/inputs/point-line/local-replay-corpus.json",
+        "corpus_sha256": "a41d0e4f62bc5223f1dbf491877f7854b9f96cb90a3b584373ee40b3b59dbb11",
+        "cases": 8,
+        "main_served": 6,
+        "c158_served": 6,
+        "main_crashes": 0,
+        "c158_crashes": 0,
+        "changed_cases": 0,
+        "deltas": []
+      },
+      {
+        "corpus": "v2_nl_cert_line_plane",
+        "path": "docs/evaluation/geometry/runs/hybrid-v2-nl-certificates-e2e/inputs/line-plane-distance/local-replay-corpus.json",
+        "corpus_sha256": "5dd9ed0d43fcdd3810790fc064660ca9f4e438e0cb4e7d1218b18eb85006b1e1",
+        "cases": 9,
+        "main_served": 7,
+        "c158_served": 7,
+        "main_crashes": 0,
+        "c158_crashes": 0,
+        "changed_cases": 0,
+        "deltas": []
+      },
+      {
+        "corpus": "v2_nl_cert_point_line",
+        "path": "docs/evaluation/geometry/runs/hybrid-v2-nl-certificates-e2e/inputs/point-line/local-replay-corpus.json",
+        "corpus_sha256": "a41d0e4f62bc5223f1dbf491877f7854b9f96cb90a3b584373ee40b3b59dbb11",
+        "cases": 8,
+        "main_served": 6,
+        "c158_served": 6,
+        "main_crashes": 0,
+        "c158_crashes": 0,
+        "changed_cases": 0,
+        "deltas": []
+      }
+    ]
+  },
+  "live_gemini_api_smoke": {
+    "status": "NOT_MEASURED",
+    "allow_live_ai": 0,
+    "reason": "No explicit owner budget or live API authorization granted (pending owner decision D7). Offline replay equivalence is NOT treated as live Gemini API PASS."
+  }
+}

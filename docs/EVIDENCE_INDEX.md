@@ -1,3 +1,18 @@
+## WAVE_ID = AXO_HYBRID_MODEL1_FINAL_TEXT_ACCEPTANCE
+
+- `RUN_ID` = model1-final-text-acceptance
+- `REPORT` = docs/evaluation/geometry/runs/model1-final-text-acceptance/FINAL_MASTER_REPORT.md
+- `ARTIFACT_DIRECTORY` = docs/evaluation/geometry/runs/model1-final-text-acceptance
+- `START_BASE` = cf0b646f5
+- `CODE_COMMIT` = NONE (root .gitattributes LF pin b10c0a1e4; audited candidate 158 unchanged: product 2bb0211a1, freeze b92b68a94, tree bdb737bba9ab..., CACHE_VERSION=158)
+- `CLASSIFICATION` = AUTHORITATIVE_DETACHED_FULL_T3 + PROSPECTIVE_HOLD_OUT_ACCEPTANCE (CLASS_B_FAIL) + ISOLATED_SLM_AUDIT + OFFLINE_GEMINI_COMPAT_REPLAY + PUBLICATION_SAFETY_RESCAN + MERGE_READINESS_AUDIT
+- `PRODUCT_CHANGE` = NO
+- `MODEL_REQUEST_COUNT` = 0 cloud; local Qwen3-0.6B-AxoV9-Q4_K_M (`73f1484b...`) + `llama.cpp b12470` only (Holdout-7 58+22 + isolated SLM audit + perf/UI)
+- `CORRECTS` = NONE
+- `CORRECTED_BY` = NONE
+- `VERIFICATION` = AUTHORITATIVE_FULL_T3_RECEIPT.json; PROSPECTIVE_TEXT_ACCEPTANCE.json; SLM_CAPABILITY_AUDIT.json; GEMINI_LIVE_COMPATIBILITY_AUDIT.json; PUBLICATION_SAFETY_STATUS.json; MERGE_READINESS_AND_ROLLBACK_AUDIT.md; INDEPENDENT_EVIDENCE_STATUS.md; HANDOFF_STATE.md; holdout-7/CANDIDATE_FREEZE.json; run.json
+- `LIMITATIONS` = Class B internal prospective Holdout-7 FAILED acceptance on Candidate 158 (`END_TO_END_SYSTEM_SCORE = 46/58`, `CANDIDATE_FALLBACK_SCORE = 3/15`, `INDEPENDENT_SLM_SCORE = 25/58`, `gate_pass = false`); `EXTERNAL_INDEPENDENCE = NOT_MEASURED`; `LIVE_GEMINI_API_SMOKE = NOT_MEASURED`; `SEMANTIC_REWRITE_SAFETY_VERIFIED = NOT_MEASURED` on Candidate 158; publication safety remains `BLOCKED_OWNER_DECISION` (`12` frozen `/10–/12` hits + `96` main pending); physical low-end & internet-off `NOT_MEASURED`
+
 ## WAVE_ID = AXO_HYBRID_MODEL1_FINAL_ACCEPTANCE_PREMERGE
 
 - `RUN_ID` = model1-final-acceptance-premerge

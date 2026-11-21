@@ -1,0 +1,89 @@
+{
+  "schema": "axo-full-t3-receipt/1",
+  "run_id": "model1-final-text-acceptance",
+  "candidate": {
+    "id": 158,
+    "head": "b10c0a1e4022dfd5af93aeb6ebf75de61078a901",
+    "product_commit_sha": "2bb0211a1057c5d2a503f8a1f19e96cf84decff5",
+    "candidate_commit": "35a17644acb11ea8a0853afb5b7cdc1814f37df8",
+    "freeze_commit": "b92b68a94b67d24dc016ddc358506adad5c7f1e3",
+    "measured_system_tree_hash": "bdb737bba9ab94d0274b57e25089c01d4cb47935d5989658e7c13aad1e79b132",
+    "measured_files": 127,
+    "cache_version": "158",
+    "route_d_cache_policy": "158:route-d",
+    "semantic_environment_hash": "f9df4bf0c8bd458a278d2692567fa3e096340ae37ff5493730dff4067c0f5e19",
+    "evaluation_candidate_frozen_on_clean_tree": true,
+    "tracked_tree_clean_before": true,
+    "tracked_tree_clean_after": true,
+    "worktree": "D:\\Documents\\projects\\algo-sim\\.superpowers\\worktrees\\measure-model1-c158 (one clean temporary detached worktree per AGENTS.md §2)",
+    "authoritative_detached_compliance": "VERIFIED"
+  },
+  "command": "cd frontend && npm run test:full",
+  "env": {
+    "ALLOW_LIVE_AI": "0",
+    "ALGO_SIM_PYTHON": "D:/Documents/projects/algo-sim/backend/.venv/Scripts/python.exe",
+    "LOCAL_SLM_CACHE_DIR": "C:/Users/Bunny/AppData/Local/axo-slm"
+  },
+  "exit_code": 0,
+  "duration_s": 1346.9,
+  "wrapper_reported_total_s": 1345.6,
+  "verdict": "FULL_PRODUCT_GATE_PASS",
+  "gates": {
+    "backend_pytest": {
+      "status": "PASS",
+      "passed": 15178,
+      "failed": 0,
+      "skipped": 8,
+      "deselected": 9,
+      "xfailed": 12,
+      "warnings": 1,
+      "duration_s": 1172.76,
+      "wrapper_seconds": 1178.9
+    },
+    "frontend_vitest": {
+      "status": "PASS",
+      "files_passed": 203,
+      "tests_passed": 2345,
+      "failed": 0,
+      "duration_s": 140.83,
+      "wrapper_seconds": 144.1
+    },
+    "typecheck_build": {
+      "status": "PASS",
+      "wrapper_seconds": 21.6
+    },
+    "demo_replay": {
+      "status": "PASS",
+      "passed": 5,
+      "total": 5,
+      "reduced_chain_passed": 1,
+      "reduced_chain_total": 1,
+      "seconds": 0.6
+    },
+    "demo_crash_surface": {
+      "status": "PASS",
+      "passed": 6,
+      "total": 6,
+      "unexpected_500": 0,
+      "seconds": 0.4
+    }
+  },
+  "prior_failed_detached_runs_disclosed": [
+    {
+      "log": "D:/tmp/axo19/t3_run1/full-t3.log",
+      "head": "98163cce55620c3c4725ea5ed378c6e0fa523e00",
+      "exit_code": 1,
+      "duration_s": 1351.0,
+      "cause": "Windows core.autocrlf=true checked out frozen V12_ACCEPTANCE_MANIFEST.json as CRLF -> 1/15178 pytest failure in test_aggregate_replay_on_12_inputs_equals_the_frozen_12_deliverables"
+    },
+    {
+      "log": "D:/tmp/axo19/t3/full-t3.log",
+      "head": "98163cce55620c3c4725ea5ed378c6e0fa523e00",
+      "exit_code": 1,
+      "duration_s": 1320.0,
+      "cause": "Global LF force without .gitattributes broke 4 CRLF-expecting historical tests (test_A1_hash_artifact_nguon_khop, test_run_receipts_and_hashes_are_consistent, test_sealed_khong_bi_sua_sau_khi_niem_phong, test_exporter_idempotence)"
+    }
+  ],
+  "log": "D:/tmp/axo19/t3_authoritative/full-t3.log",
+  "log_sha256": "95b1b4dbb2c546b39d8db7d2a9dfcc823f8b47ed809869283a4596eb62949a7b"
+}
