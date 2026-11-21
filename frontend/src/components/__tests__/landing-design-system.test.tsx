@@ -23,7 +23,7 @@ function contrastRatio(fgHex: string, bgHex: string): number {
   return (lighter + 0.05) / (darker + 0.05);
 }
 
-describe("AXO Landing Page V1.2 — Design System & WCAG AA Token Audit", () => {
+describe("AXO Landing Page — Design System & WCAG AA Token Audit", () => {
   const landingCssPath = path.resolve(__dirname, "../landing/landing.css");
   const tokensCssPath = path.resolve(__dirname, "../../styles/tokens.css");
   const landingCss = fs.readFileSync(landingCssPath, "utf8");
@@ -31,7 +31,6 @@ describe("AXO Landing Page V1.2 — Design System & WCAG AA Token Audit", () => 
 
   it("uses zero raw color hex literals inside landing.css and delegates all theme colors to tokens.css", () => {
     const colorHexMatches = landingCss.match(/#[0-9a-fA-F]{3,8}\b/g) ?? [];
-    // Only CSS ID selectors (#landing-hero, #cach-hoat-dong, #trai-nghiem, #view-landing) may contain '#', never 3/6/8-digit color values inside declarations
     const propertyHexMatches = landingCss
       .split(/\r?\n/)
       .filter((line) => line.includes(":") && !line.trim().startsWith("/*"))
@@ -64,26 +63,21 @@ describe("AXO Landing Page V1.2 — Design System & WCAG AA Token Audit", () => 
     const onPrimary = extractToken("--on-primary");
     const canvas = extractToken("--canvas");
     const canvasSoft = extractToken("--canvas-soft");
+    const ink = extractToken("--ink");
     const inkSecondary = extractToken("--ink-secondary");
     const inkMuted = extractToken("--ink-muted");
     const skyTint = extractToken("--accent-sky-tint");
-    const orangeDeep = extractToken("--accent-orange-deep");
 
-    // Primary CTA (#ffffff on #0075de) >= 4.5:1
     expect(contrastRatio(onPrimary, primary)).toBeGreaterThanOrEqual(4.5);
-    // Eyebrow & active seed point-tag (#005bab on #ffffff / #f6f5f4 / #dcebfa) >= 4.5:1
     expect(contrastRatio(primaryActive, canvas)).toBeGreaterThanOrEqual(4.5);
     expect(contrastRatio(primaryActive, canvasSoft)).toBeGreaterThanOrEqual(4.5);
     expect(contrastRatio(primaryActive, skyTint)).toBeGreaterThanOrEqual(4.5);
-    // Deep amber badges/intersections (#793400 on #ffffff / #f6f5f4) >= 4.5:1
-    expect(contrastRatio(orangeDeep, canvas)).toBeGreaterThanOrEqual(4.5);
-    expect(contrastRatio(orangeDeep, canvasSoft)).toBeGreaterThanOrEqual(4.5);
-    // Body & secondary ink on soft canvas >= 4.5:1
+    expect(contrastRatio(ink, skyTint)).toBeGreaterThanOrEqual(4.5);
+    expect(contrastRatio(inkSecondary, skyTint)).toBeGreaterThanOrEqual(4.5);
     expect(contrastRatio(inkSecondary, canvasSoft)).toBeGreaterThanOrEqual(4.5);
     expect(contrastRatio(inkMuted, canvasSoft)).toBeGreaterThanOrEqual(4.5);
 
-    // Point-tag seed & intersection rules use AA-safe active/deep tokens
-    expect(landingCss).toMatch(/\.axo-sp-point-tag\.is-seed\s*\{[^}]*var\(--axo-sp-accent-active\)/);
-    expect(landingCss).toMatch(/\.axo-sp-point-tag\.is-intersection\s*\{[^}]*var\(--axo-sp-amber-deep\)/);
+    expect(landingCss).toMatch(/\.axo-about-link\s*\{[^}]*var\(--axo-sp-accent-active\)/);
+    expect(landingCss).toMatch(/\.axo-sample-row-arrow\s*\{[^}]*var\(--axo-sp-accent-active\)/);
   });
 });

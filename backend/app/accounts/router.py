@@ -373,6 +373,7 @@ def _user_public(user: User, db=None) -> dict:
     return {
         "id": user.id,
         "email": user.email,
+        "username": service.configured_admin_username() if user.role == "admin" else None,
         "displayName": user.display_name,
         "role": user.role,
         "mustChangePassword": bool(user.must_change_password),
@@ -729,7 +730,9 @@ class RegisterBody(BaseModel):
 
 
 class LoginBody(BaseModel):
-    email: str
+    email: str | None = None
+    identifier: str | None = None
+    username: str | None = None
     password: str
 
 
@@ -752,42 +755,31 @@ def me(response: Response, caller: Caller = Depends(get_caller)):
 @router.post("/auth/register")
 def register(body: RegisterBody, response: Response, caller: Caller = Depends(get_caller)):
     settings = _load_system_settings(caller.db)
-    admin_code = os.getenv("ALGOSIM_ADMIN_SIGNUP_CODE", "ADMIN2026").strip()
-    is_verified_admin_signup = (
-        body.role == "admin"
-        and bool(body.teacherCode)
-        and bool(admin_code)
-        and body.teacherCode.strip() == admin_code
-    )
-    if is_verified_admin_signup:
-        role = Role.TEACHER
-    else:
-        if not settings.get("allowNewRegistrations", True):
-            raise HTTPException(
-                403,
-                "Hệ thống hiện đang tạm đóng đăng ký tài khoản mới.",
-            )
-        if settings.get("maintenanceMode"):
-            raise HTTPException(
-                503,
-                "Hệ thống đang tạm bảo trì. Vui lòng quay lại sau.",
-            )
-        try:
-            role = resolve_signup_role(
-                body.role,
-                teacher_code=body.teacherCode,
-                expected_teacher_code=service.teacher_signup_code(),
-            )
-        except RoleEscalationError as exc:
-            raise HTTPException(403, str(exc)) from exc
+    if not settings.get("allowNewRegistrations", True):
+        raise HTTPException(
+            403,
+            "Hệ thống hiện đang tạm đóng đăng ký tài khoản mới.",
+        )
+    if settings.get("maintenanceMode"):
+        raise HTTPException(
+            503,
+            "Hệ thống đang tạm bảo trì. Vui lòng quay lại sau.",
+        )
+    # Bảo mật: API đăng ký công khai KHÔNG BAO GIỜ cấp quyền Admin (kể cả khi đặt biến môi trường cũ).
+    # Tài khoản Quản trị viên chỉ được quản lý qua công cụ vận hành có kiểm soát (`scripts/manage_admin.py`).
+    try:
+        role = resolve_signup_role(
+            body.role,
+            teacher_code=body.teacherCode,
+            expected_teacher_code=service.teacher_signup_code(),
+        )
+    except RoleEscalationError as exc:
+        raise HTTPException(403, str(exc)) from exc
     try:
         user = service.create_user(
             caller.db, email=body.email, display_name=body.displayName,
             password=body.password, role=role,
         )
-        if is_verified_admin_signup:
-            user.role = "admin"
-            caller.db.flush()
     except WeakPasswordError as exc:
         raise HTTPException(400, str(exc)) from exc
     except ValueError as exc:
@@ -815,10 +807,15 @@ def register(body: RegisterBody, response: Response, caller: Caller = Depends(ge
 
 @router.post("/auth/login")
 def login(body: LoginBody, response: Response, caller: Caller = Depends(get_caller)):
-    user = service.authenticate(caller.db, email=body.email, password=body.password)
+    login_identifier = (body.identifier or body.email or body.username or "").strip()
+    user = service.authenticate(
+        caller.db,
+        identifier=login_identifier,
+        password=body.password,
+    )
     if user is None:
-        # MỘT câu cho cả hai ca (email lạ / sai mật khẩu) — không cho dò tài khoản.
-        raise HTTPException(401, "Email hoặc mật khẩu không đúng.")
+        # MỘT câu cho mọi ca (email lạ / tên đăng nhập lạ / sai mật khẩu) — không cho dò tài khoản.
+        raise HTTPException(401, "Email, tên đăng nhập hoặc mật khẩu không đúng.")
     meta_row = _get_user_meta_row(caller.db, user.id)
     if meta_row is not None and meta_row.status == "suspended":
         raise HTTPException(403, "Tài khoản này đang bị tạm khóa bởi Quản trị viên.")

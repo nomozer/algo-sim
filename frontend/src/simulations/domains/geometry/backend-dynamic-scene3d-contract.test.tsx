@@ -69,13 +69,42 @@ const REFUSED_CORPUS_CASE_IDS = ["n.missing_height", "K-B01"] as const;
 const RAW_MACHINE_LEAK_RE =
   /::|@[a-zA-Z0-9_]+|_prime\b|Traceback|\b(?:kq|td|mp_td|khoi|derived|tam_cau|tx_cau|mp_tx|mp_day|day_k)_[a-zA-Z0-9_]+\b/i;
 
+function resolveGitCommonRepoRoot(): string | null {
+  try {
+    const commonDirRaw = execFileSync("git", ["rev-parse", "--git-common-dir"], {
+      cwd: WORKTREE_ROOT,
+      encoding: "utf-8",
+      stdio: ["ignore", "pipe", "ignore"],
+    }).trim();
+    if (!commonDirRaw) return null;
+    const commonDir = path.resolve(WORKTREE_ROOT, commonDirRaw);
+    return path.resolve(commonDir, "..");
+  } catch {
+    return null;
+  }
+}
+
 function resolveBackendPython(): string {
-  const candidates = [
+  const candidates: string[] = [];
+  const envPython = process.env.BACKEND_PYTHON?.trim();
+  if (envPython) {
+    candidates.push(envPython);
+  }
+  candidates.push(
     path.join(BACKEND_DIR, ".venv/Scripts/python.exe"),
     path.join(BACKEND_DIR, ".venv/bin/python"),
+  );
+  const commonRepoRoot = resolveGitCommonRepoRoot();
+  if (commonRepoRoot && path.resolve(commonRepoRoot) !== path.resolve(WORKTREE_ROOT)) {
+    candidates.push(
+      path.join(commonRepoRoot, "backend/.venv/Scripts/python.exe"),
+      path.join(commonRepoRoot, "backend/.venv/bin/python"),
+    );
+  }
+  candidates.push(
     path.resolve(WORKTREE_ROOT, "../algo-sim/backend/.venv/Scripts/python.exe"),
     path.resolve(WORKTREE_ROOT, "../algo-sim/backend/.venv/bin/python"),
-  ];
+  );
   for (const candidate of candidates) {
     if (fs.existsSync(candidate)) {
       return candidate;

@@ -55,7 +55,7 @@ function makeMemoryStorage(): Storage {
   };
 }
 
-describe("AXO Landing V1.2.2 — Canonical CTAs, Copy Accuracy & Intended Destination Flow", () => {
+describe("AXO Landing — Canonical CTAs, Copy Accuracy & Intended Destination Flow", () => {
   const origWindow = (globalThis as { window?: unknown }).window;
 
   beforeAll(() => {
@@ -87,52 +87,53 @@ describe("AXO Landing V1.2.2 — Canonical CTAs, Copy Accuracy & Intended Destin
     syncStoresForSSR();
   });
 
-  it("renders Guest canonical CTAs, truthful closing copy, and clean Footer without duplicate CTA", () => {
+  it("renders Guest canonical CTAs, truthful 3-section copy, Closing Scene, and clean Footer bar", () => {
     useAuthStore.setState({ user: null, resolved: true });
     syncStoresForSSR();
     const html = renderToString(<LandingView />);
 
     expect(html).toContain("Bắt đầu dựng hình");
-    expect(html).toContain("Khám phá cách hoạt động");
-    expect(html).toContain("Khám phá thư viện bài mẫu");
-    expect(html).toContain("Mở trong Xưởng 3D");
-    expect(html).toContain("Từ đề toán đến mô hình hình học không gian.");
-    expect(html).not.toContain("Tự tay dựng hình không gian từ đề bài của bạn.");
+    expect(html).toContain("Tìm hiểu về Axo");
+    expect(html).toContain("Mở Workspace");
+    expect(html).toContain("Nhìn thấy bài toán trong không gian thật.");
+    expect(html).toContain("Từ câu đề đến mô hình 3D.");
+    expect(html).toContain("Khám phá từ bộ bài mẫu sẵn có.");
+    expect(html).toContain("Sẵn sàng nhìn hình học theo cách khác?");
 
     const footerStart = html.indexOf('<footer id="landing-footer"');
-    const footerHtml = footerStart >= 0 ? html.slice(footerStart) : "";
-    expect(footerHtml).toContain("Thư viện bài mẫu");
-    expect(footerHtml).not.toContain("Vào ứng dụng");
-    expect(footerHtml).not.toContain("Bắt đầu dựng hình");
-    expect(footerHtml).not.toContain("Đăng nhập");
+    const footerBarStart = html.indexOf('class="axo-v14-footer-bar"', footerStart);
+    const footerBarHtml = footerBarStart >= 0 ? html.slice(footerBarStart) : "";
+    expect(footerBarHtml).toContain("Thư viện");
+    expect(footerBarHtml).not.toContain("Vào ứng dụng");
+    expect(footerBarHtml).not.toContain("Bắt đầu dựng hình");
+    expect(footerBarHtml).not.toContain("Đăng nhập");
   });
 
-  it("switches Hero, Header, and Final CTA to 'Vào ứng dụng' when authenticated", () => {
+  it("switches Header, Hero, and Closing Scene CTAs to 'Vào ứng dụng' when authenticated", () => {
     useAuthStore.setState({ user: SAMPLE_STUDENT, resolved: true });
     syncStoresForSSR();
     const html = renderToString(<LandingView />);
 
     const countMatches = (html.match(/>Vào ứng dụng<\/button>/g) ?? []).length;
-    expect(countMatches).toBe(3); // Header + Hero + Final CTA
+    expect(countMatches).toBe(3); // Header + Hero + Closing Scene
     expect(html).not.toContain("Bắt đầu dựng hình");
   });
 
-  it("preserves exact intended destination when auth is required and restores it once after login (zero loop)", () => {
+  it("routes unauthenticated Landing CTAs to /login with saved intended destination, restores Workspace once after login, and avoids redirect loops", () => {
     useAuthStore.setState({
       user: null,
       resolved: true,
-      entitlement: { canRunSimulation: false, canPersistHistory: false, trialsLeft: 0 },
+      entitlement: { canRunSimulation: true, canPersistHistory: false, trialsLeft: null },
     });
     useAppStore.getState().setProblemText("Cho hình chóp S.ABC có SA vuông góc với đáy");
     useAppStore.getState().setView("landing");
 
-    // Clicking Start when Guest quota exhausted routes directly to existing Axo login view & records destination
     enterAxoWorkspace();
     expect(useAppStore.getState().view).toBe("login");
+    expect(useAppStore.getState().guestEnteredApp).toBe(false);
     expect(peekIntendedDestination()?.kind).toBe("home");
     expect(window.sessionStorage.getItem(AXO_INTENDED_DESTINATION_KEY)).toBeTruthy();
 
-    // Sample-specific intended destination resumes that exact sample after login & consumes key (single-use)
     saveIntendedDestination({ kind: "sample", sampleId: "chop-thiet-dien-ba-diem" });
     const pendingSample = consumeIntendedDestination();
     expect(pendingSample?.kind).toBe("sample");
@@ -141,15 +142,18 @@ describe("AXO Landing V1.2.2 — Canonical CTAs, Copy Accuracy & Intended Destin
     const applied = applyIntendedDestination(pendingSample!, SAMPLE_STUDENT);
     expect(applied).toBe(true);
     expect(useAppStore.getState().view).toBe("workspace");
+    expect(useAppStore.getState().guestEnteredApp).toBe(true);
     expect(useAppStore.getState().activeSampleId).toBe("chop-thiet-dien-ba-diem");
 
-    // Explicitly requiring auth while an active simulation exists preserves workspace resumption
+    // Unauthenticated re-entry with active workspace preserves active sample destination
+    useAuthStore.setState({ user: null, resolved: true });
     enterAxoWorkspaceWithOptions({ requireAuth: true });
+    expect(useAppStore.getState().view).toBe("login");
     expect(peekIntendedDestination()?.kind).toBe("workspace");
     expect(peekIntendedDestination()?.sampleId).toBe("chop-thiet-dien-ba-diem");
   });
 
-  it("allows Guests to view public Library and Sample models without forcing login", () => {
+  it("allows Guests to view public Library and open verified Sample models without forcing login", () => {
     useAuthStore.setState({ user: null, resolved: true });
     useAppStore.getState().setView("landing");
 

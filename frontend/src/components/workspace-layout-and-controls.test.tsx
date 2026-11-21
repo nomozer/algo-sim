@@ -379,7 +379,7 @@ describe("Admin Workspace Overview, RBAC, Analytics & Sidebar Brand Controls", (
 
     // Auth forms sử dụng placeholder trung tính, không dùng tên người giả định
     const loginViewHtml = renderToString(<AuthPageView mode="login" />);
-    expect(loginViewHtml).toContain('placeholder="Nhập địa chỉ email"');
+    expect(loginViewHtml).toContain('placeholder="Nhập email hoặc tên đăng nhập"');
     expect(loginViewHtml).toContain('placeholder="Nhập mật khẩu"');
     expect(loginViewHtml).not.toContain("ten@truong.edu.vn");
 

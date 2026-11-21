@@ -10,6 +10,7 @@ import { clearSavedDraftAttachments } from "./ProblemInput";
 import { stepCountOfEnvelope } from "./SessionCard";
 import { useAuthStore } from "../state/auth";
 import { historyStore } from "../state/history";
+import { clearIntendedDestination } from "./landing/landing-geometry-data";
 import { loadLearnerRecoverySnapshot } from "../state/learner-recovery-snapshot";
 import {
   buildUnifiedProblemList,
@@ -300,7 +301,7 @@ export function LeftSidebar() {
   const togglePinProblem = useAppStore((s) => s.togglePinProblem);
   const renameProblem = useAppStore((s) => s.renameProblem);
   const deleteProblem = useAppStore((s) => s.deleteProblem);
-  const setGuestEnteredApp = useAppStore((s) => s.setGuestEnteredApp);
+  const enterGuestWorkspaceAfterLogout = useAppStore((s) => s.enterGuestWorkspaceAfterLogout);
 
   const goHome = useAppStore((s) => s.goHome);
   const openLibrary = useAppStore((s) => s.openLibrary);
@@ -1704,9 +1705,10 @@ export function LeftSidebar() {
                     onClick={() => {
                       setAccountMenuOpen(false);
                       closeMobileIfOpen();
-                      setGuestEnteredApp(false);
+                      clearIntendedDestination();
+                      clearSavedDraftAttachments();
                       void logout().then(() => {
-                        goHome();
+                        enterGuestWorkspaceAfterLogout();
                       });
                     }}
                   >

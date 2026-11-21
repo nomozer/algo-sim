@@ -189,12 +189,32 @@ def test_inv_19_test_evidence_reconciliation_balanced():
 
 
 def test_inv_20_candidate_and_cache_verify_only():
-    """20. Candidate và cache chỉ verify-only, không thay đổi."""
+    """20. Candidate lịch sử nguyên vẹn (verify-only trên Git tree gốc) và cache lock khớp."""
     cand_cmd = subprocess.run(
-        [sys.executable, "backend/scripts/freeze_evaluation_candidate.py", "--verify"],
+        [sys.executable, "backend/scripts/freeze_evaluation_candidate.py", "--verify-historical", "--json"],
         cwd=REPO, capture_output=True, text=True, env=dict(subprocess.os.environ, PYTHONUTF8="1")
     )
-    assert cand_cmd.returncode == 0
+    assert cand_cmd.returncode == 0, cand_cmd.stdout + cand_cmd.stderr
+    payload = json.loads(cand_cmd.stdout)
+    assert payload["mode"] == "verify-historical"
+    assert payload["verdict"] == "PASS"
+    assert payload["actual_historical_tree_hash"] == payload["expected_tree_hash"]
+    assert payload["actual_historical_so_file"] == payload["expected_so_file"] == 109
+    assert payload["provenance_matches_head"] is True
+
+    # Đảm bảo EVALUATION_CANDIDATE.json không bị thay đổi trong working tree (chỉ verify-only)
+    diff_cand = subprocess.run(
+        ["git", "diff", "--name-only", "HEAD", "--", "docs/evaluation/semantic-benchmark/EVALUATION_CANDIDATE.json"],
+        cwd=REPO, capture_output=True, text=True,
+    )
+    assert diff_cand.stdout.strip() == ""
+
+    cache_cmd = subprocess.run(
+        [sys.executable, "backend/scripts/lock_cache_identity.py", "--verify"],
+        cwd=REPO, capture_output=True, text=True, env=dict(subprocess.os.environ, PYTHONUTF8="1"),
+    )
+    assert cache_cmd.returncode == 0, cache_cmd.stdout + cache_cmd.stderr
+
     from app.main import CACHE_VERSION
     # 103 -> 104 (w11): envelope `ok` đổi (công thức thể tích, grounding độ dài).
     # 104 -> 105 (w12): GIVEN không có trong đề bị từ chối (served -> rejected).

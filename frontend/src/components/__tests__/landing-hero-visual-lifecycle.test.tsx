@@ -1,18 +1,11 @@
-import { readFileSync } from "node:fs";
-import { resolve } from "node:path";
+import fs from "node:fs";
+import path from "node:path";
 import { renderToStaticMarkup } from "react-dom/server";
 import { afterEach, describe, expect, it } from "vitest";
 import { useAuthStore, type AuthUser } from "../../state/auth";
-import { LANDING_PYRAMID_SAMPLE } from "../landing/landing-geometry-data";
-import {
-  buildHeroSpatialGallerySpecs,
-  computeTrueShapeSection2D,
-  evaluateHeroStoryboard,
-  HERO_SATELLITE_COUNT,
-  HERO_SECTION_FILL_OPACITY,
-  HERO_STORYBOARD_MS,
-  LandingHeroV14,
-} from "../landing/LandingHeroV14";
+import { LandingView } from "../LandingView";
+import { canonicalPathForView, resolveLocationRoute } from "../AxoErrorExperience";
+import { LandingHeroV14 } from "../landing/LandingHeroV14";
 
 function syncAuthStoreForSSR() {
   Object.assign(useAuthStore.getInitialState(), useAuthStore.getState());
@@ -27,138 +20,64 @@ const TEST_STUDENT_USER: AuthUser = {
   status: "active",
 };
 
-describe("AXO Landing V1.4 — Hero Visual System & Lifecycle", () => {
+describe("AXO Landing — Hero Baseline, Unified Studio 3D Assets & Routing Lifecycle", () => {
   afterEach(() => {
     useAuthStore.setState({ user: null });
     syncAuthStoreForSSR();
   });
 
-  it("computes an exact isometric 2D true-shape projection and 4-beat finite storyboard", () => {
-    const result = computeTrueShapeSection2D();
-    expect(result.vertices.map((v) => v.label)).toEqual(["M", "E", "N", "P", "F"]);
-    expect(result.edgeLengths3D.length).toBe(5);
-    expect(result.edgeLengths2D.length).toBe(5);
-    expect(result.maxDeviation).toBeLessThan(1e-4);
-    for (const v of result.vertices) {
-      expect(v.nx).toBeGreaterThanOrEqual(0);
-      expect(v.nx).toBeLessThanOrEqual(1);
-      expect(v.ny).toBeGreaterThanOrEqual(0);
-      expect(v.ny).toBeLessThanOrEqual(1);
-    }
+  it("maps canonical /about route, handles legacy /gioi-thieu alias, and removes preview query branches", () => {
+    expect(canonicalPathForView("landing")).toBe("/about");
+    expect(resolveLocationRoute("/about")).toEqual({ kind: "view", view: "landing" });
+    expect(resolveLocationRoute("/about", "", "?preview=landing-v14")).toEqual({
+      kind: "view",
+      view: "landing",
+    });
+    expect(resolveLocationRoute("/gioi-thieu")).toEqual({ kind: "view", view: "landing" });
+    expect(resolveLocationRoute("/app")).toEqual({ kind: "view", view: "home" });
 
-    const b1 = evaluateHeroStoryboard(HERO_STORYBOARD_MS * 0.12, false);
-    const b2 = evaluateHeroStoryboard(HERO_STORYBOARD_MS * 0.34, false);
-    const b3 = evaluateHeroStoryboard(HERO_STORYBOARD_MS * 0.62, false);
-    const b4 = evaluateHeroStoryboard(HERO_STORYBOARD_MS + 10, false);
-
-    expect(b1.beat).toBe("solid-emergence");
-    expect(b1.settled).toBe(false);
-    expect(b1.capLift).toBe(0);
-    expect(b2.beat).toBe("seed-anchors");
-    expect(b2.seedReveal).toBeGreaterThan(0.4);
-    expect(b3.beat).toBe("plane-intersection");
-    expect(b3.planeSweep).toBeGreaterThan(0.5);
-    expect(b4.beat).toBe("section-settled");
-    expect(b4.settled).toBe(true);
-    expect(b4.capLift).toBe(0);
-    expect(HERO_SECTION_FILL_OPACITY).toBe(0.5);
-    expect(b1.satelliteReveal).toBe(0);
-    expect(b3.satelliteReveal).toBeGreaterThan(0.5);
-    expect(b4.satelliteReveal).toBe(1);
-
-    const reduced = evaluateHeroStoryboard(100, true);
-    expect(reduced.settled).toBe(true);
-    expect(reduced.capLift).toBe(0);
-    expect(reduced.satelliteReveal).toBe(1);
-    expect(reduced.beat).toBe("section-settled");
+    const landingViewSrc = fs.readFileSync(path.resolve(__dirname, "../LandingView.tsx"), "utf8");
+    const appSrc = fs.readFileSync(path.resolve(__dirname, "../../App.tsx"), "utf8");
+    expect(landingViewSrc).not.toContain("preview");
+    expect(landingViewSrc).not.toContain("LandingPreview");
+    expect(appSrc).toContain('searchParams.delete("preview")');
   });
 
-  it("constructs a mathematically grounded 3-satellite Spatial Geometry Gallery in distinct depth planes", () => {
-    const gallery = buildHeroSpatialGallerySpecs();
-    expect(gallery.satellites).toHaveLength(HERO_SATELLITE_COUNT);
-    expect(HERO_SATELLITE_COUNT).toBe(3);
-
-    // Non-collinear screen triangle (shoelace area > 1.5) and 3 distinct camera-depth planes
-    const [s0, s1, s2] = gallery.satellites;
-    const triArea =
-      0.5 *
-      Math.abs(
-        (s1.screenDx - s0.screenDx) * (s2.screenDy - s0.screenDy) -
-          (s2.screenDx - s0.screenDx) * (s1.screenDy - s0.screenDy),
-      );
-    expect(triArea).toBeGreaterThan(1.5);
-    expect(new Set([s0.screenDz, s1.screenDz, s2.screenDz]).size).toBe(3);
-
-    // Satellite 0: exact orthographic top-down plan projection of base square ABCD & MENPF onto z = 0
-    expect(gallery.planBaseVertices).toHaveLength(4);
-    expect(gallery.planSectionVertices).toHaveLength(5);
-    const expectedSide = 4 * gallery.planScale;
-    for (let i = 0; i < 4; i++) {
-      const a = gallery.planBaseVertices[i];
-      const b = gallery.planBaseVertices[(i + 1) % 4];
-      expect(a[2]).toBe(0);
-      expect(Math.abs(Math.hypot(b[0] - a[0], b[1] - a[1]) - expectedSide)).toBeLessThan(1e-6);
-    }
-
-    // Satellite 1: extracted isometric pentagon matches computeTrueShapeSection2D() edge ratios
-    const trueShape = computeTrueShapeSection2D();
-    expect(gallery.extractedPentagonPts).toHaveLength(5);
-    const scaleRatio =
-      Math.hypot(
-        gallery.extractedPentagonPts[1][0] - gallery.extractedPentagonPts[0][0],
-        gallery.extractedPentagonPts[1][1] - gallery.extractedPentagonPts[0][1],
-      ) / trueShape.edgeLengths2D[0];
-    for (let i = 0; i < 5; i++) {
-      const j = (i + 1) % 5;
-      const d = Math.hypot(
-        gallery.extractedPentagonPts[j][0] - gallery.extractedPentagonPts[i][0],
-        gallery.extractedPentagonPts[j][1] - gallery.extractedPentagonPts[i][1],
-      );
-      expect(Math.abs(d / trueShape.edgeLengths2D[i] - scaleRatio)).toBeLessThan(1e-6);
-    }
-
-    // Satellite 2: exact S-side half-space clipped polyhedron {S, C, M, E, N, P, F} (x + y + 2z >= 6)
-    expect(gallery.detachedCapVertices.map((v) => v.id)).toEqual([
-      "S",
-      "C",
-      "M",
-      "E",
-      "N",
-      "P",
-      "F",
-    ]);
-    expect(gallery.detachedCapVertices).toHaveLength(7);
-    const capMap = Object.fromEntries(gallery.detachedCapVertices.map((v) => [v.id, v.pos]));
-    const pMap = LANDING_PYRAMID_SAMPLE.pointMap;
-    for (const v of gallery.detachedCapVertices) {
-      const dom = pMap[v.id].domainXyz;
-      expect(dom[0] + dom[1] + 2 * dom[2] - 6).toBeGreaterThanOrEqual(-1e-6);
-    }
-    expect(gallery.detachedCapLateralEdges).toHaveLength(6);
-    for (const [uId, vId] of gallery.detachedCapLateralEdges) {
-      const cu = capMap[uId];
-      const cv = capMap[vId];
-      const wu = pMap[uId].pos;
-      const wv = pMap[vId].pos;
-      const dCap = Math.hypot(cu[0] - cv[0], cu[1] - cv[1], cu[2] - cv[2]);
-      const dWorld = Math.hypot(wu[0] - wv[0], wu[1] - wv[1], wu[2] - wv[2]);
-      expect(Math.abs(dCap - dWorld * gallery.detachedCapScale)).toBeLessThan(1e-6);
-    }
-  });
-
-  it("renders guest and authenticated Hero CTAs cleanly without floating math result cards", () => {
+  it("renders preserved left Hero copy with keyword ring + Atelier studio diorama visual on right", () => {
     useAuthStore.setState({ user: null });
     syncAuthStoreForSSR();
-    const guestHtml = renderToStaticMarkup(<LandingHeroV14 />);
-    expect(guestHtml).toContain("axo-v14-anno-circle");
-    expect(guestHtml).toContain('id="btn-landing-hero-start"');
-    expect(guestHtml).toContain("Bắt đầu dựng hình");
-    expect(guestHtml).toContain('id="btn-landing-hero-story"');
-    expect(guestHtml).toContain("Xem cách hoạt động");
-    expect(guestHtml).toContain('id="landing-hero-sculpture"');
-    expect(guestHtml).not.toContain("axo-v14-hero-trueshape");
-    expect(guestHtml).not.toContain("S(MENPF) = 6√6");
-    expect(guestHtml).not.toContain("Pending Owner Review");
+    const html = renderToStaticMarkup(<LandingView />);
+    const heroStart = html.indexOf('id="landing-hero"');
+    const aboutStart = html.indexOf('id="about-axo"');
+    expect(heroStart).toBeGreaterThan(-1);
+    expect(aboutStart).toBeGreaterThan(heroStart);
+
+    const heroSlice = html.slice(heroStart, aboutStart);
+    const heroPlainText = heroSlice.replace(/<[^>]+>/g, "").replace(/\s+/g, " ");
+    expect(heroSlice).toContain('id="axo-v14-hero-heading"');
+    expect(heroSlice).toContain("axo-v14-hero-atelier");
+    expect(heroPlainText).toContain("Hình học không gian,");
+    expect(heroPlainText).toContain("dễ hình dung hơn.");
+    expect(heroSlice).toContain("axo-v14-hero-keyword");
+    expect(heroSlice).toContain("axo-v14-hero-keyword-ring");
+    expect(heroSlice).toContain('aria-hidden="true"');
+    expect(heroSlice).toContain('focusable="false"');
+    expect(heroSlice).toContain('preserveAspectRatio="none"');
+    expect(heroSlice).toContain('pathLength="1"');
+    const h1Match = heroSlice.match(/<h1[^>]*>([\s\S]*?)<\/h1>/);
+    const h1Text = (h1Match?.[1] ?? "").replace(/<[^>]+>/g, " ").replace(/\s+/g, " ").trim();
+    expect(h1Text).toBe("Hình học không gian, dễ hình dung hơn.");
+    expect(heroSlice).toContain('id="btn-landing-hero-start"');
+    expect(heroSlice).toContain("Bắt đầu dựng hình");
+    expect(heroSlice).toContain('id="btn-landing-hero-about"');
+    expect(heroSlice).toContain("Tìm hiểu về Axo");
+    expect(heroSlice).toContain('id="landing-hero-sculpture"');
+    expect(heroSlice).toContain('data-hero-mode="atelier-studio-diorama"');
+    expect(heroSlice).toContain("/assets/landing/hero-studio/hero-studio-diorama.png");
+    expect(heroSlice).toContain("/assets/landing/hero-studio/hero-float-plane.png");
+    expect(heroSlice).toContain("/assets/landing/hero-studio/hero-float-orbit.png");
+    expect(heroSlice).not.toContain("<canvas");
+    expect(heroSlice).not.toContain("12√3");
 
     useAuthStore.setState({ user: TEST_STUDENT_USER });
     syncAuthStoreForSSR();
@@ -167,20 +86,51 @@ describe("AXO Landing V1.4 — Hero Visual System & Lifecycle", () => {
     expect(authHtml).not.toContain("Đăng nhập ngay");
   });
 
-  it("enforces GPU cleanup, single renderer context, finite choreography, and token hygiene", () => {
-    const source = readFileSync(
-      resolve(__dirname, "../landing/LandingHeroV14.tsx"),
-      "utf8",
-    );
-    expect(source).not.toContain("var(--");
-    expect(source).not.toMatch(/#[0-9a-fA-F]{3,8}\b/);
-    expect((source.match(/new THREE\.WebGLRenderer\(/g) ?? [])).toHaveLength(1);
-    expect(source).not.toContain('canvas.getContext("webgl2"');
-    expect(source).toContain("webglcontextlost");
-    expect(source).toContain("webglcontextrestored");
-    expect(source).toContain("renderer.dispose()");
-    expect(source).toContain("cancelAnimationFrame");
-    expect(source).toContain("prefers-reduced-motion: reduce");
-    expect(source).toContain("HERO_STORYBOARD_MS = 3800");
+  it("verifies redesigned Landing component files, 4 Brand 3D PNGs + 6 Real Axo product renders exist, obsolete stylized PNGs are deleted, and zero WebGL deps", () => {
+    const feRoot = path.resolve(__dirname, "../../..");
+    const landingDir = path.resolve(__dirname, "../landing");
+    const landingFiles = fs.readdirSync(landingDir).sort();
+    expect(landingFiles).toEqual([
+      "LandingAboutAxo.tsx",
+      "LandingFooter.tsx",
+      "LandingHeader.tsx",
+      "LandingHeroV14.tsx",
+      "LandingHowItWorks.tsx",
+      "LandingSamples.tsx",
+      "landing-geometry-data.ts",
+      "landing.css",
+      "useLandingReveal.ts",
+    ]);
+
+    for (const relAsset of [
+      "public/assets/landing/hero-studio/hero-studio-diorama.png",
+      "public/assets/landing/hero-studio/hero-float-plane.png",
+      "public/assets/landing/hero-studio/hero-float-orbit.png",
+      "public/assets/landing/studio-scenes/closing-scene.png",
+      "public/assets/landing/product-renders/about-cube-section.png",
+      "public/assets/landing/product-renders/sample-pyramid-section.png",
+      "public/assets/landing/product-renders/how-step-construct.png",
+      "public/assets/landing/product-renders/how-step-inspect.png",
+      "public/assets/landing/product-renders/sample-oxyz-intersection.png",
+      "public/assets/landing/product-renders/sample-distance-plane.png",
+      "public/assets/landing/product-renders/sample-sphere-pyramid.png",
+    ]) {
+      expect(fs.existsSync(path.join(feRoot, relAsset)), `Missing asset ${relAsset}`).toBe(true);
+    }
+
+    for (const removedAsset of [
+      "public/assets/landing/studio-scenes/about-scene.png",
+      "public/assets/landing/studio-scenes/how-it-works-scene.png",
+      "public/assets/landing/studio-scenes/samples-scene.png",
+    ]) {
+      expect(fs.existsSync(path.join(feRoot, removedAsset)), `Obsolete asset still present: ${removedAsset}`).toBe(false);
+    }
+
+    const pkg = JSON.parse(fs.readFileSync(path.join(feRoot, "package.json"), "utf8")) as {
+      dependencies?: Record<string, string>;
+    };
+    expect(pkg.dependencies?.["@react-three/fiber"]).toBeUndefined();
+    expect(pkg.dependencies?.["@react-three/drei"]).toBeUndefined();
+    expect(pkg.dependencies?.["maath"]).toBeUndefined();
   });
 });

@@ -18,13 +18,13 @@ function syncAuthSSR() {
   Object.assign(useAuthStore.getInitialState(), useAuthStore.getState());
 }
 
-describe("AXO Landing V1.2.2 — Mobile Drawer Cleanliness, Accessibility & Motion", () => {
+describe("AXO Landing — Mobile Drawer Cleanliness, Accessibility & Motion", () => {
   afterEach(() => {
     useAuthStore.setState({ user: null, resolved: false, error: null });
     syncAuthSSR();
   });
 
-  it("mounts closed drawer state safely on SSR and hides Guest login action in drawer source", () => {
+  it("mounts closed drawer state safely on SSR and renders 3 nav items + primary CTA without Guest login", () => {
     useAuthStore.setState({ user: null, resolved: true, error: null });
     syncAuthSSR();
 
@@ -38,10 +38,8 @@ describe("AXO Landing V1.2.2 — Mobile Drawer Cleanliness, Accessibility & Moti
       path.resolve(__dirname, "../landing/LandingHeader.tsx"),
       "utf8",
     );
-    // Exact 5 Guest drawer items: 3 section links + Thư viện mẫu + Bắt đầu dựng hình (no Guest login item)
     expect(headerSrc).toContain("id={`drawer-nav-${item.id}`}");
     expect(headerSrc).toContain('id="btn-landing-drawer-library"');
-    expect(headerSrc).toContain("Thư viện mẫu");
     expect(headerSrc).toContain('id="btn-landing-drawer-primary"');
     expect(headerSrc).toContain('{user ? "Vào ứng dụng" : "Bắt đầu dựng hình"}');
     expect(headerSrc).not.toContain("btn-landing-drawer-login");
@@ -66,18 +64,22 @@ describe("AXO Landing V1.2.2 — Mobile Drawer Cleanliness, Accessibility & Moti
     expect(headerSrc).toContain("{!mobileOpen && (");
     expect(headerSrc).toContain("setMobileOpen(false);");
 
-    // Authenticated mobile drawer account summary + logout action
-    expect(headerSrc).toContain('id="landing-mobile-account"');
-    expect(headerSrc).toContain('id="btn-landing-drawer-logout"');
+    expect(headerSrc).not.toContain('id="landing-mobile-account"');
+    expect(headerSrc).not.toContain('id="btn-landing-drawer-logout"');
     expect(cssSrc).toContain("@keyframes axoDrawerSlideIn");
-    expect(cssSrc).toContain(".axo-sp-mobile-account-logout");
+    expect(cssSrc).not.toContain(".axo-sp-mobile-account-logout");
+    expect(cssSrc).not.toMatch(/\.axo-sp-mobile-link-utility\s*\{[^}]*border-top:/);
+    expect(cssSrc).toContain("--axo-v14-shadow-cta-secondary-hover");
+    expect(cssSrc).not.toMatch(/\.axo-v14-btn-secondary:not\(:disabled\):hover\s*\{[^}]*var\(--axo-sp-shadow-soft\)/);
   });
 
-  it("keeps Hero/Header account identity accurate for authenticated state without JSX syntax issues", () => {
+  it("keeps Landing Header focused on 'Vào ứng dụng' + 'Thư viện' without showing Avatar when authenticated", () => {
     useAuthStore.setState({ user: SAMPLE_STUDENT, resolved: true, error: null });
     syncAuthSSR();
     const html = renderToString(<LandingHeader />);
-    expect(html).toContain(SAMPLE_STUDENT.displayName);
+    expect(html).not.toContain(SAMPLE_STUDENT.displayName);
+    expect(html).not.toContain('id="header-user-actions"');
+    expect(html).toContain("Thư viện");
     expect(html).toContain("Vào ứng dụng");
   });
 });

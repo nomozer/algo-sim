@@ -452,6 +452,9 @@ export default function App() {
         saveIntendedDestination(lastNonAuthDestRef.current);
       }
     }
+    if (view === "landing" && (prevView === "login" || prevView === "register") && !user) {
+      clearIntendedDestination();
+    }
     if (!authResolved || prevView === view) return;
     if (prevView === "landing" || view === "landing") {
       void reconcileAuthSession();
@@ -476,11 +479,35 @@ export default function App() {
       }
     } else if (prevUserId !== null && user === null) {
       clearIntendedDestination();
-      if (view === "admin" || view === "account") {
-        setView("landing");
+      const liveView = useAppStore.getState().view;
+      if (liveView === "admin" || liveView === "account") {
+        useAppStore.getState().enterGuestWorkspaceAfterLogout();
+      } else if (liveView === "home" || liveView === "workspace") {
+        useAppStore.getState().enterGuestWorkspaceAfterLogout();
+      } else if (liveView === "library") {
+        // Keep user on public Library while wiping any authenticated private state/history.
+        useAppStore.getState().enterGuestWorkspaceAfterLogout();
+        useAppStore.getState().openLibrary();
       }
     }
   }, [user, view, setView]);
+
+  // §D2 — Người dùng đã đăng nhập truy cập /login hoặc /register được điều hướng hợp lý về Workspace (/app hoặc /admin).
+  useEffect(() => {
+    if (!authResolved || !user) return;
+    const liveView = useAppStore.getState().view;
+    if (liveView !== "login" && liveView !== "register") return;
+    const pending = consumeIntendedDestination();
+    if (pending) {
+      applyIntendedDestination(pending, user);
+    } else if (user.role === "admin") {
+      setView("admin");
+    } else {
+      useAppStore.getState().setGuestEnteredApp(true);
+      useAppStore.getState().goHome();
+      restoreSavedDraftIfEmpty();
+    }
+  }, [authResolved, user, view, setView]);
 
   // Browser tab: "Axo" on the home page, "<page> | Axo" elsewhere (the 3D workspace is named by its role).
   useEffect(() => {
@@ -528,12 +555,45 @@ export default function App() {
     if (effectiveView !== view) return;
     if (
       effectiveView === "landing" &&
-      (currentPath === "/" ||
-        currentPath === "/gioi-thieu" ||
+      (currentPath === "/gioi-thieu" ||
+        currentPath === "/" ||
+        currentPath === "/about" ||
         currentPath === "/landing" ||
         currentPath === "/welcome" ||
         currentPath === "/intro")
     ) {
+      const searchParams = new URLSearchParams(window.location.search ?? "");
+      const hasLegacyPreviewParam = searchParams.has("preview");
+      const isLegacyLandingAlias =
+        currentPath === "/gioi-thieu" ||
+        currentPath === "/landing" ||
+        currentPath === "/welcome" ||
+        currentPath === "/intro";
+      if (isLegacyLandingAlias || hasLegacyPreviewParam) {
+        try {
+          if (hasLegacyPreviewParam) {
+            searchParams.delete("preview");
+          }
+          const cleanSearch = searchParams.toString();
+          const suffix = `${cleanSearch ? `?${cleanSearch}` : ""}${window.location.hash ?? ""}`;
+          const targetLandingPath = currentPath === "/" ? `/${suffix}` : `/about${suffix}`;
+          if (typeof window.history?.replaceState === "function") {
+            window.history.replaceState(
+              {
+                axoView: "landing",
+                axoTabId: null,
+                tabId: null,
+                sampleId: null,
+                historyId: null,
+              },
+              "",
+              targetLandingPath,
+            );
+          }
+        } catch {
+          /* bỏ qua nếu môi trường kiểm thử chặn replaceState */
+        }
+      }
       return;
     }
     if (currentPath === targetPath && !sameWorkspaceTabRoute) return;
@@ -573,6 +633,7 @@ export default function App() {
   const isExplicitAppPath =
     normalizedBrowserPath === "/app" || normalizedBrowserPath === "/home";
   const isLandingPathname =
+    normalizedBrowserPath === "/about" ||
     normalizedBrowserPath === "/gioi-thieu" ||
     normalizedBrowserPath === "/welcome" ||
     normalizedBrowserPath === "/intro" ||

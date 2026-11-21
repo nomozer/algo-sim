@@ -12,6 +12,7 @@ LUẬN của luận văn.
 """
 import hashlib
 import json
+import sys
 import typing
 from pathlib import Path
 
@@ -146,15 +147,44 @@ def _freeze_module():
 
 
 def test_ma_san_pham_khong_troi_khoi_ban_da_dong_bang(manifest):
+    """Phân tách rõ Historical Freeze Integrity và Current Product Core Preservation (Phương án 1).
+
+    - Nhóm A (Historical Freeze): xác minh snapshot trong EVALUATION_CANDIDATE.json khớp
+      tuyệt đối với Git tree tại đúng commit nguồn (`600f5105d`) và khớp Git HEAD.
+    - Nhóm B (Current Product Core): xác minh 0 thay đổi trong vùng lõi đánh giá
+      (`backend/app/simulation/`, `backend/app/ai/`, `frontend/src/simulations/domains/semantic/`)
+      so với mốc lịch sử, đồng thời xác nhận chế độ strict `--verify` VẪN phát hiện và báo lỗi
+      khi mã sản phẩm hiện tại (vd: `backend/app/accounts/` hoặc Landing) khác bản đóng băng.
+    """
     fz = _freeze_module()
-    hien_tai, so_file = fz.measured_system_hash()
-    assert manifest["measured_system"]["tree_hash"] == hien_tai, (
-        "MÃ SẢN PHẨM của hệ được đo đã đổi sau khi đóng băng candidate. Xem "
-        f"`git diff {manifest.get('commit_ngan')} HEAD -- "
-        + " ".join(fz.MEASURED_SYSTEM_PATHS) + "`. Đổi vì một case SEALED ⇒ VI "
-        "PHẠM luật con dấu (§7.4)."
+
+    # Nhóm A: Toàn vẹn lịch sử tại commit nguồn (không chỉnh sửa working tree)
+    hist = fz.verify_historical_candidate()
+    assert hist["verdict"] == "PASS", hist
+    assert hist["actual_historical_tree_hash"] == manifest["measured_system"]["tree_hash"]
+    assert hist["actual_historical_so_file"] == manifest["measured_system"]["so_file"]
+    assert hist["provenance_matches_head"] is True
+
+    # Nhóm B: Bảo vệ vùng lõi Geometry/AI/Semantic và tính trung thực của strict `--verify`
+    diff = fz.diff_measured_system_vs_commit(manifest["commit"])
+    assert diff["core_evaluation_changed"] == [], (
+        "Phát hiện thay đổi trong vùng lõi Geometry/AI/Semantic so với bản đóng băng "
+        f"{manifest.get('commit_ngan')}: {diff['core_evaluation_changed']}. "
+        "Mọi thay đổi lõi đánh giá bắt buộc quy trình đánh giá/benchmark và đóng băng mới."
     )
-    assert manifest["measured_system"]["so_file"] == so_file
+
+    hien_tai, so_file = fz.measured_system_hash()
+    if hien_tai != manifest["measured_system"]["tree_hash"] or so_file != manifest["measured_system"]["so_file"]:
+        # Xác nhận mọi file lệch đều nằm ngoài vùng lõi đánh giá (vd: tầng accounts)
+        assert diff["all_diff"], "Hash lệch nhưng diff rỗng — bất nhất tính toán."
+        # Strict `--verify` tuyệt đối không được trả PASS giả khi cây hiện tại khác candidate lịch sử
+        strict_cmd = subprocess.run(
+            [sys.executable, str(ROOT / "backend" / "scripts" / "freeze_evaluation_candidate.py"), "--verify"],
+            cwd=ROOT, capture_output=True, text=True,
+        )
+        assert strict_cmd.returncode != 0, (
+            "Strict --verify phải trả mã lỗi khác 0 khi mã sản phẩm hiện tại khác candidate lịch sử!"
+        )
 
 
 def test_tap_duong_dan_do_KHONG_lan_bo_do_vao(manifest):
@@ -407,3 +437,237 @@ def test_I2_test_only_files_are_never_imported_by_product_code():
     offenders = [(q.name, p.name) for p in hidden for q in product
                  if p.stem in q.read_text(encoding="utf-8")]
     assert offenders == []
+
+
+# ── GATE A: HISTORICAL FREEZE VERIFICATION & NEGATIVE GUARDS (PHẦN V) ────────────────────────────────────────
+
+_HISTORICAL_REPO_FILES = {
+    "backend/app/accounts/router.py": "def login(): return 'v1'\n",
+    "backend/app/simulation/geometry/kernel.py": "KERNEL = 1\n",
+    "backend/app/ai/route_policy.py": "MODE = 'HYBRID'\n",
+    "frontend/src/components/LandingView.tsx": "export const Landing = () => 'v1';\n",
+    "frontend/src/simulations/domains/semantic/route.ts": "export const r = 1;\n",
+    "frontend/src/simulations/domains/semantic/semantic_program.schema.json": '{"type":"object"}\n',
+    "docs/schemas/semantic_program.schema.json": '{"schema":"v1"}\n',
+    "docs/evaluation/semantic-benchmark/dev/cases.json": '{"cases":[{"id":"c1"},{"id":"c2"}]}\n',
+}
+
+
+def _make_historical_manifest(fz, root: Path, commit_sha: str, manifest_template: dict) -> dict:
+    h, n = fz.measured_system_hash_at_commit(commit_sha)
+    schema_text = (root / "docs/schemas/semantic_program.schema.json").read_text(encoding="utf-8")
+    dev_bytes = fz.bam_noi_dung(root / "docs/evaluation/semantic-benchmark/dev/cases.json")
+    return {
+        **manifest_template,
+        "commit": commit_sha,
+        "commit_ngan": commit_sha[:9],
+        "product_commit_sha": fz.product_commit(fz.PRODUCT_COMMIT_RULE, rev=commit_sha),
+        "product_commit_rule": fz.PRODUCT_COMMIT_RULE,
+        "cay_lam_viec_sach": True,
+        "measured_system": {
+            "paths": list(fz.MEASURED_SYSTEM_PATHS),
+            "so_file": n,
+            "tree_hash": h,
+        },
+        "schema_semantic_program": {
+            "duong_dan": "docs/schemas/semantic_program.schema.json",
+            "hash": fz._sha(schema_text),
+        },
+        "dev": {
+            "duong_dan": "docs/evaluation/semantic-benchmark/dev/cases.json",
+            "so_case": 2,
+            "fingerprint": hashlib.sha256(dev_bytes).hexdigest(),
+        },
+    }
+
+
+@pytest.fixture
+def historical_repo(tmp_path, monkeypatch, manifest):
+    """Throwaway Git repo có sẵn 1 commit lịch sử đã đóng băng + 1 commit manifest committed."""
+    fz = _freeze_module()
+    root = tmp_path / "hist_repo"
+    root.mkdir()
+    subprocess.run(["git", "init", "-q", str(root)], check=True)
+    frozen_sha = _commit(root, dict(_HISTORICAL_REPO_FILES), "freeze base")
+    monkeypatch.setattr(fz, "ROOT", root)
+    cand_rel = "docs/evaluation/semantic-benchmark/EVALUATION_CANDIDATE.json"
+    cand_path = root / cand_rel
+    cand_data = _make_historical_manifest(fz, root, frozen_sha, manifest)
+    _commit(root, {cand_rel: json.dumps(cand_data, ensure_ascii=False, indent=2) + "\n"}, "record candidate")
+    monkeypatch.setattr(fz, "OUT", cand_path)
+    return fz, root, frozen_sha, cand_path, cand_data
+
+
+class TestHistoricalFreezeVerificationAndNegativeGuards:
+    def test_valid_historical_candidate_passes_after_approved_landing_and_accounts_changes_while_strict_verify_fails(
+        self, historical_repo, monkeypatch, tmp_path
+    ):
+        """§5.1 & §5.2: Thay đổi Landing + Accounts không làm hỏng --verify-historical, còn --verify strict vẫn báo lệch."""
+        fz, root, frozen_sha, cand_path, cand_data = historical_repo
+
+        # Commit thay đổi Landing & Admin accounts sau mốc đóng băng
+        _commit(
+            root,
+            {
+                "backend/app/accounts/router.py": "def login(): return 'v2-admin-username'\n",
+                "frontend/src/components/LandingView.tsx": "export const Landing = () => 'v2-about';\n",
+            },
+            "feat: landing cutover and admin auth",
+        )
+
+        res = fz.verify_historical_candidate(cand_path)
+        assert res["verdict"] == "PASS"
+        assert res["exit_code"] == 0
+        assert res["recorded_commit"] == frozen_sha
+        assert res["actual_historical_tree_hash"] == cand_data["measured_system"]["tree_hash"]
+        assert res["actual_historical_so_file"] == cand_data["measured_system"]["so_file"]
+        assert res["provenance_matches_head"] is True
+
+        # Core evaluation paths hoàn toàn nguyên vẹn; chỉ có backend/app/accounts/router.py đổi trong MEASURED_SYSTEM_PATHS
+        diff = fz.diff_measured_system_vs_commit(frozen_sha)
+        assert diff["core_evaluation_changed"] == []
+        assert diff["changed"] == ["backend/app/accounts/router.py"]
+
+        # Strict `--verify` PHẢI trả != 0 (không được ẩn sự khác biệt của current tree)
+        current_built = _frozen(fz, cand_data)
+        assert _verify(fz, monkeypatch, tmp_path, cand_data, current_built) == 1
+
+    def test_altered_tree_hash_fails_historical_verification(self, historical_repo, tmp_path):
+        fz, _, _, _, cand_data = historical_repo
+        bad = {**cand_data, "measured_system": {**cand_data["measured_system"], "tree_hash": "f" * 64}}
+        p = tmp_path / "bad_hash.json"
+        p.write_text(json.dumps(bad), encoding="utf-8")
+        res = fz.verify_historical_candidate(p, check_git_provenance=False)
+        assert res["verdict"] == "FAIL"
+        assert res["exit_code"] == 1
+        assert "measured_system.tree_hash" in res["mismatches"]
+
+    def test_altered_file_count_fails_historical_verification(self, historical_repo, tmp_path):
+        fz, _, _, _, cand_data = historical_repo
+        bad = {
+            **cand_data,
+            "measured_system": {**cand_data["measured_system"], "so_file": cand_data["measured_system"]["so_file"] + 1},
+        }
+        p = tmp_path / "bad_count.json"
+        p.write_text(json.dumps(bad), encoding="utf-8")
+        res = fz.verify_historical_candidate(p, check_git_provenance=False)
+        assert res["verdict"] == "FAIL"
+        assert res["exit_code"] == 1
+        assert "measured_system.so_file" in res["mismatches"]
+
+    def test_nonexistent_commit_fails_historical_verification(self, historical_repo, tmp_path):
+        fz, _, _, _, cand_data = historical_repo
+        missing_sha = "a" * 40
+        bad = {**cand_data, "commit": missing_sha, "commit_ngan": missing_sha[:9]}
+        p = tmp_path / "missing_commit.json"
+        p.write_text(json.dumps(bad), encoding="utf-8")
+        res = fz.verify_historical_candidate(p, check_git_provenance=False)
+        assert res["verdict"] == "FAIL"
+        assert res["exit_code"] == 2
+        assert "commit_not_found" in res["mismatches"]
+
+    @pytest.mark.parametrize(
+        "corruptor",
+        [
+            "invalid_json",
+            "dirty_tree_flag",
+            "missing_measured_system",
+            "short_commit_mismatch",
+            "unknown_rule",
+        ],
+    )
+    def test_invalid_metadata_fails_historical_verification(self, historical_repo, tmp_path, corruptor):
+        fz, _, _, _, cand_data = historical_repo
+        p = tmp_path / f"corrupt_{corruptor}.json"
+        if corruptor == "invalid_json":
+            p.write_text("{not valid json", encoding="utf-8")
+        elif corruptor == "dirty_tree_flag":
+            p.write_text(json.dumps({**cand_data, "cay_lam_viec_sach": False}), encoding="utf-8")
+        elif corruptor == "missing_measured_system":
+            d = dict(cand_data)
+            d.pop("measured_system", None)
+            p.write_text(json.dumps(d), encoding="utf-8")
+        elif corruptor == "short_commit_mismatch":
+            p.write_text(json.dumps({**cand_data, "commit_ngan": "deadbeef0"}), encoding="utf-8")
+        else:
+            p.write_text(json.dumps({**cand_data, "product_commit_rule": "unknown-rule/99"}), encoding="utf-8")
+
+        res = fz.verify_historical_candidate(p, check_git_provenance=False)
+        assert res["verdict"] == "FAIL"
+        assert res["exit_code"] != 0
+
+    def test_simultaneous_commit_and_hash_tampering_caught_by_git_head_provenance(self, historical_repo):
+        """§3.3 & §5.1: Sửa ĐỒNG THỜI cả commit lẫn tree_hash trong file tracked trên working tree vẫn bị phát hiện."""
+        fz, root, _, cand_path, cand_data = historical_repo
+
+        # Tạo một commit thứ hai hợp lệ rồi ghi đè file candidate bằng cả commit lẫn hash mới (tự nhất quán nhưng giả mạo working tree)
+        second_sha = _commit(root, {"backend/app/accounts/router.py": "def login(): return 'tampered'\n"}, "later")
+        forged = _make_historical_manifest(fz, root, second_sha, cand_data)
+        cand_path.write_text(json.dumps(forged, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
+
+        # Nếu bỏ qua provenance thì file giả mạo tự khớp commit second_sha, NHƯNG với provenance mặc định PHẢI FAIL!
+        res = fz.verify_historical_candidate(cand_path, check_git_provenance=True)
+        assert res["verdict"] == "FAIL"
+        assert res["exit_code"] == 1
+        assert res["provenance_checked"] is True
+        assert res["provenance_matches_head"] is False
+        assert "manifest_modified_vs_head" in res["mismatches"]
+
+    def test_unreadable_git_object_fails_clearly(self, historical_repo, monkeypatch):
+        fz, _, _, cand_path, _ = historical_repo
+
+        def _boom(*args):
+            raise fz.HistoricalVerificationError("git_object_unreadable", "simulated corrupt pack")
+
+        monkeypatch.setattr(fz, "_git_bytes", _boom)
+        res = fz.verify_historical_candidate(cand_path, check_git_provenance=False)
+        assert res["verdict"] == "FAIL"
+        assert res["exit_code"] == 2
+        assert "git_object_unreadable" in res["mismatches"]
+
+    def test_core_geometry_or_ai_modification_detected_by_core_preservation_guard(self, historical_repo):
+        """§5.2: Mọi sửa đổi trong backend/app/simulation/ hoặc backend/app/ai/ phải bị phát hiện."""
+        fz, root, frozen_sha, _, _ = historical_repo
+        (root / "backend/app/simulation/geometry/kernel.py").write_text("KERNEL = 999\n", encoding="utf-8")
+        (root / "backend/app/ai/route_policy.py").write_text("MODE = 'TAMPERED'\n", encoding="utf-8")
+
+        diff = fz.diff_measured_system_vs_commit(frozen_sha)
+        assert "backend/app/simulation/geometry/kernel.py" in diff["core_evaluation_changed"]
+        assert "backend/app/ai/route_policy.py" in diff["core_evaluation_changed"]
+
+    def test_mutually_exclusive_cli_flags_rejected(self, historical_repo, monkeypatch):
+        fz, _, _, _, _ = historical_repo
+        monkeypatch.setattr(fz.sys, "argv", ["freeze", "--verify", "--verify-historical"])
+        assert fz.main() == 2
+
+    def test_nested_git_worktree_compatibility_without_mutating_working_tree(self, historical_repo, tmp_path):
+        """§5.3: --verify-historical hoạt động chính xác từ một Git worktree lồng sâu nhiều cấp."""
+        fz, root, frozen_sha, _, cand_data = historical_repo
+        nested_wt = tmp_path / "deep" / "nested" / "wt-check"
+        nested_wt.parent.mkdir(parents=True, exist_ok=True)
+        subprocess.run(
+            ["git", "-C", str(root), "worktree", "add", "--detach", str(nested_wt), "HEAD"],
+            check=True, capture_output=True, text=True,
+        )
+        try:
+            # Sửa file không thuộc lõi trong nested worktree -> working tree bẩn nhưng historical verification vẫn PASS!
+            (nested_wt / "backend/app/accounts/router.py").write_text("def login(): return 'wt-edit'\n", encoding="utf-8")
+            wt_cand = nested_wt / "docs/evaluation/semantic-benchmark/EVALUATION_CANDIDATE.json"
+            old_root, old_out = fz.ROOT, fz.OUT
+            fz.ROOT = nested_wt
+            fz.OUT = wt_cand
+            try:
+                res = fz.verify_historical_candidate()
+                assert res["verdict"] == "PASS", res
+                assert res["recorded_commit"] == frozen_sha
+                assert res["actual_historical_tree_hash"] == cand_data["measured_system"]["tree_hash"]
+                assert res["provenance_matches_head"] is True
+                # Working tree trong nested worktree không bị checkout đè
+                assert (nested_wt / "backend/app/accounts/router.py").read_text(encoding="utf-8") == "def login(): return 'wt-edit'\n"
+            finally:
+                fz.ROOT, fz.OUT = old_root, old_out
+        finally:
+            subprocess.run(
+                ["git", "-C", str(root), "worktree", "remove", "--force", str(nested_wt)],
+                check=False, capture_output=True,
+            )

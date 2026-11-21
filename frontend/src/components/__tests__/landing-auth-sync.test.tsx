@@ -103,10 +103,16 @@ describe("AXO Landing Page V1.2.1 — Auth & Navigation Sync", () => {
       syncStoresForSSR();
 
       const landingHtml = renderToString(<App />);
+      const headerHtml = landingHtml.slice(
+        landingHtml.indexOf('<header id="landing-header"'),
+        landingHtml.indexOf("</header>") + "</header>".length,
+      );
       expect(landingHtml).toContain('id="view-landing"');
-      expect(landingHtml).toContain('id="btn-landing-header-start"');
-      expect(landingHtml).toContain("Vào ứng dụng");
-      expect(landingHtml).toContain(user.displayName);
+      expect(headerHtml).toContain('id="btn-landing-header-start"');
+      expect(headerHtml).toContain('id="btn-landing-header-library"');
+      expect(headerHtml).toContain("Vào ứng dụng");
+      expect(headerHtml).not.toContain('id="header-user-actions"');
+      expect(headerHtml).not.toContain(user.displayName);
 
       enterAxoWorkspace();
       syncStoresForSSR();
@@ -131,7 +137,7 @@ describe("AXO Landing Page V1.2.1 — Auth & Navigation Sync", () => {
     useAppStore.getState().setView("landing");
     enterAxoWorkspaceWithOptions({ requireAuth: true });
     expect(useAppStore.getState().view).toBe("login");
-    expect(useAppStore.getState().guestEnteredApp).toBe(true);
+    expect(useAppStore.getState().guestEnteredApp).toBe(false);
 
     useAuthStore.setState({ user: USERS_BY_ROLE[0], resolved: true, error: null });
     useAppStore.getState().goHome();
@@ -141,6 +147,7 @@ describe("AXO Landing Page V1.2.1 — Auth & Navigation Sync", () => {
 
     enterAxoWorkspace();
     expect(useAppStore.getState().view).toBe("home");
+    expect(useAppStore.getState().guestEnteredApp).toBe(true);
     expect(useAppStore.getState().problemText).toBe(
       "Cho hình chóp S.ABCD có đáy là hình vuông cạnh a.",
     );
@@ -198,5 +205,27 @@ describe("AXO Landing Page V1.2.1 — Auth & Navigation Sync", () => {
     expect(html).toContain('id="view-landing"');
     expect(html).not.toContain('id="left-sidebar"');
     expect(html).not.toContain('class="nav-bar"');
+  });
+
+  it("keeps logged-out Workspace users on /app Guest Workspace and wipes all private state (D3 & D5)", () => {
+    useAuthStore.setState({ user: USERS_BY_ROLE[0], resolved: true, error: null });
+    useAppStore.setState({
+      view: "home",
+      guestEnteredApp: true,
+      problemText: "Đề bài riêng tư của học sinh A",
+      activeHistoryId: "priv-hist-1",
+    });
+
+    useAuthStore.setState({ user: null, resolved: true, error: null });
+    useAppStore.getState().enterGuestWorkspaceAfterLogout();
+
+    const st = useAppStore.getState();
+    expect(st.view).toBe("home");
+    expect(st.guestEnteredApp).toBe(true);
+    expect(st.problemText).toBe("");
+    expect(st.active).toBeNull();
+    expect(st.workspaceTabs).toEqual([]);
+    expect(st.history).toEqual([]);
+    expect(st.activeHistoryId).toBeNull();
   });
 });

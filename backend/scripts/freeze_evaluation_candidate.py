@@ -13,13 +13,15 @@ sinh. Chép tay thì manifest trôi khỏi mã đúng như bảng danh tính tro
 LUẬT SAU KHI CHẠY (spec §7.4): **không sửa candidate vì kết quả SEALED.**
 DEV được phép làm thay đổi hệ; SEALED chỉ được phép làm thay đổi KẾT LUẬN.
 
-    python scripts/freeze_evaluation_candidate.py           # ghi manifest
-    python scripts/freeze_evaluation_candidate.py --verify  # so, thoát != 0 khi lệch
+    python scripts/freeze_evaluation_candidate.py                    # ghi manifest
+    python scripts/freeze_evaluation_candidate.py --verify           # so strict current HEAD/working tree vs manifest
+    python scripts/freeze_evaluation_candidate.py --verify-historical # kiểm chứng snapshot lịch sử tại đúng Git commit ghi trong manifest
 """
 from __future__ import annotations
 
 import hashlib
 import json
+import re
 import subprocess
 import sys
 from datetime import datetime, timezone
@@ -141,6 +143,355 @@ def measured_system_hash() -> tuple[str, int]:
     return h.hexdigest(), len(files)
 
 
+#: Vùng lõi mô phỏng / AI / ngữ nghĩa — mọi chỉnh sửa trong các tiền tố này
+#: so với bản đóng băng lịch sử làm mất hiệu lực tái sử dụng giả định không đổi
+#: đối với lõi đánh giá và bắt buộc quy trình đánh giá/benchmark mới.
+CORE_EVALUATION_PROTECTED_PREFIXES = (
+    "backend/app/simulation/",
+    "backend/app/ai/",
+    "frontend/src/simulations/domains/semantic/",
+)
+
+_HEX40_RE = re.compile(r"^[0-9a-f]{40}$")
+_HEX64_RE = re.compile(r"^[0-9a-f]{64}$")
+
+SCOPE_DISCLAIMER_HISTORICAL = (
+    "Verifies historical freeze snapshot integrity at its recorded Git commit only; "
+    "does NOT assert that current HEAD/working tree matches the frozen candidate or "
+    "inherits its benchmark measurements."
+)
+PROVENANCE_LIMITATION_TEXT = (
+    "Git HEAD provenance verifies the candidate manifest in the working tree matches "
+    "committed Git HEAD bytes (catching uncommitted simultaneous commit+hash rewrites). "
+    "Defending against an actor authorized to rewrite committed Git history requires "
+    "signed commits or external immutable attestation."
+)
+
+
+class HistoricalVerificationError(RuntimeError):
+    """Lỗi khi truy xuất hoặc kiểm chứng bản đóng băng lịch sử từ Git object database."""
+
+    def __init__(self, code: str, message: str):
+        super().__init__(message)
+        self.code = code
+
+
+def _git_run(*args: str, text: bool = False) -> subprocess.CompletedProcess:
+    return subprocess.run(
+        ["git", *args],
+        cwd=ROOT,
+        capture_output=True,
+        text=text,
+        encoding="utf-8" if text else None,
+        errors="replace" if text else None,
+    )
+
+
+def _git_bytes(*args: str) -> bytes:
+    res = _git_run(*args, text=False)
+    if res.returncode != 0:
+        err = (res.stderr or b"").decode("utf-8", errors="replace").strip()
+        raise HistoricalVerificationError(
+            "git_object_unreadable",
+            f"Không đọc được Git object (`git {' '.join(args)}`): {err or f'exit={res.returncode}'}",
+        )
+    return res.stdout
+
+
+def measured_system_hash_at_commit(
+    rev: str,
+    paths: tuple[str, ...] | list[str] = MEASURED_SYSTEM_PATHS,
+) -> tuple[str, int]:
+    """Băm NỘI DUNG các tệp đo đạc trực tiếp từ Git tree tại commit `rev`.
+
+    Không checkout, không ghi working tree, không tạo worktree phụ; dùng chính
+    quy tắc lọc `_BO_QUA`, sắp xếp thứ tự và chuẩn hóa CRLF → LF của freeze protocol.
+    """
+    if not rev or not isinstance(rev, str):
+        raise HistoricalVerificationError("invalid_commit_ref", "Thiếu commit nguồn hợp lệ.")
+    t_res = _git_run("cat-file", "-t", rev, text=True)
+    if t_res.returncode != 0 or t_res.stdout.strip() != "commit":
+        raise HistoricalVerificationError(
+            "commit_not_found",
+            f"Commit nguồn '{rev}' không tồn tại trong Git object database.",
+        )
+    if not paths:
+        raise HistoricalVerificationError("invalid_measured_paths", "Danh sách measured_system.paths rỗng.")
+
+    files: list[str] = []
+    for muc in paths:
+        ls_res = _git_run("ls-tree", "-r", "--name-only", rev, "--", muc, text=True)
+        if ls_res.returncode != 0:
+            raise HistoricalVerificationError(
+                "git_tree_unreadable",
+                f"Không đọc được Git tree tại '{rev}' cho đường dẫn '{muc}': {ls_res.stderr.strip()}",
+            )
+        for line in ls_res.stdout.splitlines():
+            rel = line.strip()
+            if rel and not any(b in rel for b in _BO_QUA):
+                files.append(rel)
+
+    files.sort()
+    if not files:
+        raise HistoricalVerificationError(
+            "git_tree_empty",
+            f"Không tìm thấy tệp đo đạc nào tại commit '{rev}'.",
+        )
+
+    h = hashlib.sha256()
+    for rel in files:
+        raw = _git_bytes("show", f"{rev}:{rel}").replace(b"\r\n", b"\n")
+        h.update(rel.encode("utf-8"))
+        h.update(b"\0")
+        h.update(hashlib.sha256(raw).digest())
+    return h.hexdigest(), len(files)
+
+
+def diff_measured_system_vs_commit(
+    rev: str,
+    paths: tuple[str, ...] | list[str] = MEASURED_SYSTEM_PATHS,
+) -> dict[str, list[str]]:
+    """Liệt kê chính xác các file khác biệt trong `paths` giữa working tree hiện tại và commit `rev`.
+
+    Phân tách rõ thay đổi trong vùng lõi đánh giá (`CORE_EVALUATION_PROTECTED_PREFIXES`)
+    với các tầng sản phẩm ngoài vùng đánh giá (vd: `backend/app/accounts/`).
+    """
+    hist_files: set[str] = set()
+    for muc in paths:
+        ls_res = _git_run("ls-tree", "-r", "--name-only", rev, "--", muc, text=True)
+        if ls_res.returncode != 0:
+            raise HistoricalVerificationError(
+                "git_tree_unreadable",
+                f"Không đọc được Git tree tại '{rev}' cho '{muc}': {ls_res.stderr.strip()}",
+            )
+        for line in ls_res.stdout.splitlines():
+            rel = line.strip()
+            if rel and not any(b in rel for b in _BO_QUA):
+                hist_files.add(rel)
+
+    curr_map: dict[str, Path] = {}
+    for muc in paths:
+        p = ROOT / muc
+        if p.is_file():
+            rel = p.relative_to(ROOT).as_posix()
+            if not any(b in rel for b in _BO_QUA):
+                curr_map[rel] = p
+        elif p.is_dir():
+            for f in p.rglob("*"):
+                if f.is_file() and not any(b in str(f) for b in _BO_QUA):
+                    curr_map[f.relative_to(ROOT).as_posix()] = f
+
+    curr_files = set(curr_map.keys())
+    added = sorted(curr_files - hist_files)
+    removed = sorted(hist_files - curr_files)
+    changed: list[str] = []
+    for rel in sorted(curr_files & hist_files):
+        hist_bytes = _git_bytes("show", f"{rev}:{rel}").replace(b"\r\n", b"\n")
+        curr_bytes = bam_noi_dung(curr_map[rel])
+        if curr_bytes != hist_bytes:
+            changed.append(rel)
+
+    all_diff = sorted(set(added) | set(removed) | set(changed))
+    core_changed = [
+        rel for rel in all_diff
+        if any(rel.startswith(prefix) for prefix in CORE_EVALUATION_PROTECTED_PREFIXES)
+    ]
+    return {
+        "changed": changed,
+        "added": added,
+        "removed": removed,
+        "all_diff": all_diff,
+        "core_evaluation_changed": core_changed,
+    }
+
+
+def verify_historical_candidate(
+    manifest_path: Path | None = None,
+    *,
+    check_git_provenance: bool = True,
+) -> dict:
+    """Kiểm chứng toàn vẹn bản đóng băng lịch sử trực tiếp trên Git tree nguồn.
+
+    Không checkout/ghi working tree, không làm suy yếu `--verify` cho current tree.
+    """
+    target = manifest_path or OUT
+    result: dict = {
+        "mode": "verify-historical",
+        "verdict": "FAIL",
+        "exit_code": 2,
+        "scope_disclaimer": SCOPE_DISCLAIMER_HISTORICAL,
+        "provenance_limitation": PROVENANCE_LIMITATION_TEXT,
+        "manifest_path": str(target),
+        "manifest_sha256": None,
+        "recorded_commit": None,
+        "recorded_product_commit_sha": None,
+        "product_commit_rule": None,
+        "expected_tree_hash": None,
+        "actual_historical_tree_hash": None,
+        "expected_so_file": None,
+        "actual_historical_so_file": None,
+        "provenance_checked": False,
+        "provenance_matches_head": None,
+        "checks": {},
+        "mismatches": [],
+        "error": None,
+    }
+
+    if not target.is_file():
+        result["error"] = "manifest_missing"
+        result["mismatches"].append("manifest_missing")
+        return result
+
+    raw_manifest = bam_noi_dung(target)
+    result["manifest_sha256"] = hashlib.sha256(raw_manifest).hexdigest()
+    try:
+        cu = json.loads(raw_manifest.decode("utf-8"))
+    except Exception as exc:
+        result["error"] = f"manifest_json_invalid: {exc}"
+        result["mismatches"].append("manifest_json_invalid")
+        return result
+
+    if not isinstance(cu, dict):
+        result["error"] = "manifest_not_object"
+        result["mismatches"].append("manifest_not_object")
+        return result
+
+    commit = cu.get("commit")
+    commit_short = cu.get("commit_ngan")
+    ms = cu.get("measured_system")
+    result["recorded_commit"] = commit
+    result["recorded_product_commit_sha"] = cu.get("product_commit_sha")
+    result["product_commit_rule"] = cu.get("product_commit_rule")
+
+    # 1. Xác thực cấu trúc metadata bắt buộc
+    meta_ok = (
+        isinstance(commit, str)
+        and bool(_HEX40_RE.match(commit))
+        and (commit_short is None or (isinstance(commit_short, str) and commit.startswith(commit_short)))
+        and cu.get("cay_lam_viec_sach") is True
+        and isinstance(ms, dict)
+        and isinstance(ms.get("paths"), list)
+        and len(ms.get("paths")) > 0
+        and all(isinstance(p, str) and bool(p.strip()) for p in ms.get("paths"))
+        and isinstance(ms.get("tree_hash"), str)
+        and bool(_HEX64_RE.match(ms.get("tree_hash")))
+        and isinstance(ms.get("so_file"), int)
+        and ms.get("so_file") > 0
+        and bool(cu.get("cache_version"))
+        and bool(cu.get("spec_version_ir"))
+    )
+    result["checks"]["metadata_valid"] = meta_ok
+    if not meta_ok:
+        result["error"] = "invalid_manifest_metadata"
+        result["mismatches"].append("invalid_manifest_metadata")
+        return result
+
+    expected_hash = ms["tree_hash"]
+    expected_files = ms["so_file"]
+    paths = ms["paths"]
+    result["expected_tree_hash"] = expected_hash
+    result["expected_so_file"] = expected_files
+
+    # 2. Kiểm tra provenance độc lập trong Git HEAD nếu manifest được track trong kho
+    if check_git_provenance:
+        try:
+            rel_manifest = target.resolve().relative_to(ROOT.resolve()).as_posix()
+        except ValueError:
+            rel_manifest = None
+        if rel_manifest:
+            tracked = _git_run("ls-files", "--error-unmatch", rel_manifest, text=True)
+            if tracked.returncode == 0:
+                result["provenance_checked"] = True
+                head_res = _git_run("show", f"HEAD:{rel_manifest}", text=False)
+                if head_res.returncode == 0:
+                    head_norm = head_res.stdout.replace(b"\r\n", b"\n")
+                    matches_head = raw_manifest == head_norm
+                    result["provenance_matches_head"] = matches_head
+                    result["checks"]["git_head_provenance"] = matches_head
+                    if not matches_head:
+                        result["mismatches"].append("manifest_modified_vs_head")
+                else:
+                    result["provenance_matches_head"] = False
+                    result["checks"]["git_head_provenance"] = False
+                    result["mismatches"].append("git_head_manifest_unreadable")
+
+    # 3. Truy xuất & băm lại measured_system trực tiếp từ Git tree của commit nguồn
+    try:
+        actual_hash, actual_files = measured_system_hash_at_commit(commit, paths)
+    except HistoricalVerificationError as exc:
+        result["checks"]["commit_exists"] = exc.code != "commit_not_found"
+        result["error"] = f"{exc.code}: {exc}"
+        result["mismatches"].append(exc.code)
+        result["exit_code"] = 2 if exc.code in ("commit_not_found", "git_object_unreadable", "git_tree_unreadable") else 1
+        return result
+
+    result["checks"]["commit_exists"] = True
+    result["actual_historical_tree_hash"] = actual_hash
+    result["actual_historical_so_file"] = actual_files
+
+    hash_ok = actual_hash == expected_hash
+    files_ok = actual_files == expected_files
+    result["checks"]["measured_tree_hash"] = hash_ok
+    result["checks"]["measured_so_file"] = files_ok
+    if not hash_ok:
+        result["mismatches"].append("measured_system.tree_hash")
+    if not files_ok:
+        result["mismatches"].append("measured_system.so_file")
+
+    # 4. Đối chiếu product_commit_sha theo đúng rule lịch sử tại commit nguồn
+    if cu.get("product_commit_sha") is not None:
+        try:
+            derived_pc = product_commit(cu.get("product_commit_rule"), rev=commit)
+            pc_ok = derived_pc == cu["product_commit_sha"]
+        except ValueError as exc:
+            pc_ok = False
+            result["error"] = str(exc)
+        result["checks"]["product_commit_sha"] = pc_ok
+        if not pc_ok:
+            result["mismatches"].append("product_commit_sha")
+
+    # 5. Đối chiếu schema_semantic_program và dev/cases.json tại đúng commit lịch sử
+    schema_info = cu.get("schema_semantic_program")
+    if isinstance(schema_info, dict) and schema_info.get("duong_dan") and schema_info.get("hash"):
+        try:
+            schema_bytes = _git_bytes("show", f"{commit}:{schema_info['duong_dan']}")
+            schema_text = schema_bytes.replace(b"\r\n", b"\n").decode("utf-8")
+            schema_ok = _sha(schema_text) == schema_info["hash"]
+        except HistoricalVerificationError as exc:
+            schema_ok = False
+            result["error"] = f"{exc.code}: {exc}"
+            result["mismatches"].append(exc.code)
+        result["checks"]["schema_hash"] = schema_ok
+        if not schema_ok and "schema_semantic_program.hash" not in result["mismatches"]:
+            result["mismatches"].append("schema_semantic_program.hash")
+
+    dev_info = cu.get("dev")
+    if isinstance(dev_info, dict) and dev_info.get("duong_dan") and dev_info.get("fingerprint"):
+        try:
+            dev_bytes = _git_bytes("show", f"{commit}:{dev_info['duong_dan']}").replace(b"\r\n", b"\n")
+            dev_fp_ok = hashlib.sha256(dev_bytes).hexdigest() == dev_info["fingerprint"]
+            dev_cases = json.loads(dev_bytes.decode("utf-8")).get("cases", [])
+            dev_count_ok = (dev_info.get("so_case") is None) or (len(dev_cases) == dev_info.get("so_case"))
+        except (HistoricalVerificationError, json.JSONDecodeError) as exc:
+            dev_fp_ok = False
+            dev_count_ok = False
+            result["error"] = str(exc)
+        result["checks"]["dev_fingerprint"] = dev_fp_ok
+        result["checks"]["dev_case_count"] = dev_count_ok
+        if not dev_fp_ok:
+            result["mismatches"].append("dev.fingerprint")
+        if not dev_count_ok:
+            result["mismatches"].append("dev.so_case")
+
+    if not result["mismatches"]:
+        result["verdict"] = "PASS"
+        result["exit_code"] = 0
+    else:
+        result["verdict"] = "FAIL"
+        result["exit_code"] = 1
+    return result
+
+
 def _git(*args: str) -> str:
     return subprocess.run(
         ["git", *args], cwd=ROOT, capture_output=True, text=True
@@ -238,8 +589,44 @@ def build() -> dict:
 
 
 def main() -> int:
+    argv = sys.argv[1:]
+    verify = "--verify" in argv
+    verify_historical = "--verify-historical" in argv
+    as_json = "--json" in argv
+    manifest_override: Path | None = None
+    if "--manifest" in argv:
+        idx = argv.index("--manifest")
+        if idx + 1 >= len(argv):
+            print("Thiếu đường dẫn sau --manifest.", file=sys.stderr)
+            return 2
+        manifest_override = Path(argv[idx + 1])
+
+    if verify and verify_historical:
+        print("Không dùng đồng thời --verify và --verify-historical.", file=sys.stderr)
+        return 2
+
+    if verify_historical:
+        res = verify_historical_candidate(manifest_override)
+        if as_json:
+            print(json.dumps(res, ensure_ascii=False, indent=2))
+        elif res["verdict"] == "PASS":
+            print(
+                f"Historical candidate khớp bản đã đóng băng tại commit {res['recorded_commit'][:9]} "
+                f"(mã sản phẩm lịch sử: {res['actual_historical_so_file']} file, "
+                f"{res['actual_historical_tree_hash'][:16]}…; "
+                f"git_head_provenance={res['provenance_matches_head']})."
+            )
+            print(f"Lưu ý phạm vi: {res['scope_disclaimer']}")
+        else:
+            print(
+                f"HISTORICAL CANDIDATE KHÔNG KHỚP ({res['verdict']}): "
+                f"{', '.join(res['mismatches']) or res['error']}"
+            )
+            if res["error"]:
+                print(f"Chi tiết: {res['error']}")
+        return int(res["exit_code"])
+
     moi = build()
-    verify = "--verify" in sys.argv
 
     if verify:
         if not OUT.exists():

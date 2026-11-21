@@ -3,13 +3,49 @@
 from __future__ import annotations
 
 import json
+import subprocess
+import sys
 from pathlib import Path
 
 import pytest
 
+from scripts import freeze_evaluation_candidate as FZ
 from scripts import score_independent_holdout_equivalence as S
 
 REPO = Path(__file__).resolve().parents[3]
+H1_HISTORICAL_RECEIPT = (
+    REPO / "docs" / "evaluation" / "geometry" / "runs" / "hybrid-independent-h1" / "H1_CORPUS_INTEGRITY.json"
+)
+
+
+def _init_synthetic_h1_repo(tmp_path: Path, name: str, *, align_to_live_runtime: bool = True) -> Path:
+    """Create an isolated temporary Git repo for offline H-1 corpus-sealing unit tests.
+
+    Never mutates the real repository's frozen EVALUATION_CANDIDATE.json.
+    When `align_to_live_runtime=True`, binds ONLY the synthetic temp-repo candidate copy to the
+    current runtime `measured_system_hash()` so corpus-sealing/contamination/stratification guards
+    can be exercised without mocking away `LiveRefused` in the locked scorer.
+    """
+    fake_repo = tmp_path / name
+    cand_dir = fake_repo / "docs" / "evaluation" / "semantic-benchmark"
+    cand_dir.mkdir(parents=True)
+    cand_src = REPO / "docs" / "evaluation" / "semantic-benchmark" / "EVALUATION_CANDIDATE.json"
+    cand_dst = cand_dir / "EVALUATION_CANDIDATE.json"
+    if align_to_live_runtime:
+        cand_doc = json.loads(cand_src.read_text(encoding="utf-8"))
+        live_hash, live_count = FZ.measured_system_hash()
+        cand_doc["measured_system"]["tree_hash"] = live_hash
+        cand_doc["measured_system"]["so_file"] = live_count
+        cand_dst.write_text(json.dumps(cand_doc, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
+    else:
+        cand_dst.write_bytes(cand_src.read_bytes())
+    subprocess.run(["git", "init"], cwd=fake_repo, check=True, capture_output=True)
+    subprocess.run(["git", "config", "user.email", "test@example.com"], cwd=fake_repo, check=True)
+    subprocess.run(["git", "config", "user.name", "Test"], cwd=fake_repo, check=True)
+    (fake_repo / "README.md").write_text("clean repo\n", encoding="utf-8")
+    subprocess.run(["git", "add", "README.md"], cwd=fake_repo, check=True)
+    subprocess.run(["git", "commit", "-m", "init"], cwd=fake_repo, check=True, capture_output=True)
+    return fake_repo
 
 
 def _make_section_row(
@@ -208,29 +244,41 @@ def test_c26_recorded_rows_verify_read_only_across_all_three_tiers():
 
 
 def test_h1_corpus_integrity_receipt_honest_pre_corpus_and_sealing_guards(tmp_path):
-    # 1. Missing corpus -> honest NOT_ESTABLISHED / NOT_MEASURED receipt
-    pre = S.build_h1_corpus_integrity_receipt(tmp_path / "missing-h1.json", repo_root=REPO)
+    # 0. Real repository: historical candidate integrity is preserved AND live H-1 sealing MUST refuse on drifted code
+    hist = FZ.verify_historical_candidate()
+    assert hist["verdict"] == "PASS", hist
+    assert hist["provenance_matches_head"] is True
+
+    historical_receipt = json.loads(H1_HISTORICAL_RECEIPT.read_text(encoding="utf-8"))
+    assert historical_receipt["status"] == "AWAITING_INDEPENDENT_CORPUS"
+    assert historical_receipt["h1_authoring_independence"] == "NOT_ESTABLISHED"
+    assert historical_receipt["h1_measurement"] == "NOT_MEASURED"
+    assert historical_receipt["corpus_present"] is False
+    assert historical_receipt["candidate_identity"]["measured_system_tree_hash"] == (
+        "276fc548196e13eaa0ca7635428248dcaee7be79b79dff58c24a0478cddd4c63"
+    )
+
+    live_hash, _ = FZ.measured_system_hash()
+    if live_hash != hist["expected_tree_hash"]:
+        # Live product evolved outside frozen snapshot -> locked scorer MUST refuse live H-1 sealing (no silent fallback)
+        with pytest.raises(S.P.LiveRefused, match="measured_system tree_hash drifted from frozen EVALUATION_CANDIDATE.json"):
+            S.build_h1_corpus_integrity_receipt(tmp_path / "missing-h1.json", repo_root=REPO)
+    else:
+        pre_real = S.build_h1_corpus_integrity_receipt(tmp_path / "missing-h1.json", repo_root=REPO)
+        assert pre_real["status"] == "AWAITING_INDEPENDENT_CORPUS"
+        assert pre_real["h1_authoring_independence"] == "NOT_ESTABLISHED"
+        assert pre_real["h1_measurement"] == "NOT_MEASURED"
+
+    # 1. Build an isolated synthetic repo aligned with current runtime to verify pre-corpus receipt & sealing guards
+    fake_repo = _init_synthetic_h1_repo(tmp_path, "repo", align_to_live_runtime=True)
+
+    pre = S.build_h1_corpus_integrity_receipt(tmp_path / "missing-h1.json", repo_root=fake_repo)
     assert pre["status"] == "AWAITING_INDEPENDENT_CORPUS"
     assert pre["h1_authoring_independence"] == "NOT_ESTABLISHED"
     assert pre["h1_measurement"] == "NOT_MEASURED"
     assert pre["corpus_present"] is False
     assert pre["corpus_sha256"] is None and pre["oracle_sha256"] is None
     assert pre["candidate_identity"]["frozen_candidate_commit"] == "180db769"
-
-    # 2. Build a clean miniature repo root + synthetic 60-case corpus to test sealing and contamination guards
-    fake_repo = tmp_path / "repo"
-    (fake_repo / "docs" / "evaluation" / "semantic-benchmark").mkdir(parents=True)
-    cand_src = REPO / "docs" / "evaluation" / "semantic-benchmark" / "EVALUATION_CANDIDATE.json"
-    (fake_repo / "docs" / "evaluation" / "semantic-benchmark" / "EVALUATION_CANDIDATE.json").write_bytes(
-        cand_src.read_bytes()
-    )
-    import subprocess
-    subprocess.run(["git", "init"], cwd=fake_repo, check=True, capture_output=True)
-    subprocess.run(["git", "config", "user.email", "test@example.com"], cwd=fake_repo, check=True)
-    subprocess.run(["git", "config", "user.name", "Test"], cwd=fake_repo, check=True)
-    (fake_repo / "README.md").write_text("clean repo\n", encoding="utf-8")
-    subprocess.run(["git", "add", "README.md"], cwd=fake_repo, check=True)
-    subprocess.run(["git", "commit", "-m", "init"], cwd=fake_repo, check=True, capture_output=True)
 
     cases = []
     families = ("pyramid", "prism", "cuboid", "cube", "sphere", "cylinder", "cone")
@@ -348,17 +396,7 @@ def test_c28_stratum_semantic_annotations_oracle_review_and_template_completenes
         assert k in refuse_tpl
 
     # 2. Verify C28 §IV checks 4 (7 families >=3 & 5 questions >=3), 6 (oracle review status), and 7 (P1 semantic annotations)
-    fake_repo = tmp_path / "repo2"
-    (fake_repo / "docs" / "evaluation" / "semantic-benchmark").mkdir(parents=True)
-    cand_src = REPO / "docs" / "evaluation" / "semantic-benchmark" / "EVALUATION_CANDIDATE.json"
-    (fake_repo / "docs" / "evaluation" / "semantic-benchmark" / "EVALUATION_CANDIDATE.json").write_bytes(cand_src.read_bytes())
-    import subprocess
-    subprocess.run(["git", "init"], cwd=fake_repo, check=True, capture_output=True)
-    subprocess.run(["git", "config", "user.email", "test@example.com"], cwd=fake_repo, check=True)
-    subprocess.run(["git", "config", "user.name", "Test"], cwd=fake_repo, check=True)
-    (fake_repo / "README.md").write_text("clean\n", encoding="utf-8")
-    subprocess.run(["git", "add", "README.md"], cwd=fake_repo, check=True)
-    subprocess.run(["git", "commit", "-m", "init"], cwd=fake_repo, check=True, capture_output=True)
+    fake_repo = _init_synthetic_h1_repo(tmp_path, "repo2", align_to_live_runtime=True)
 
     families = ("pyramid", "prism", "cuboid", "cube", "sphere", "cylinder", "cone")
     questions = ("section_measure", "distance", "angle", "volume", "area")
@@ -449,3 +487,57 @@ def test_c28_paired_comparison_markdown_table():
     assert "| Case | H-1 Oracle | LLM_ONLY | HYBRID | Comparison |" in md
     assert "| `H1-S01` |" in md and "HYBRID_ONLY_CORRECT" in md
     assert "| `H1-R01` |" in md and "BOTH_REFUSED" in md
+
+
+def test_h1_benchmark_closure_negative_and_historical_contract_guards(tmp_path):
+    """Phase 2.5 negative tests: prove historical tamper, live drift refusal, and no silent fallback."""
+    frozen_path = REPO / "docs" / "evaluation" / "semantic-benchmark" / "EVALUATION_CANDIDATE.json"
+    frozen_doc = json.loads(frozen_path.read_text(encoding="utf-8"))
+
+    # 1. Valid real historical receipt/candidate passes --verify-historical
+    hist = FZ.verify_historical_candidate()
+    assert hist["verdict"] == "PASS", hist
+    assert hist["provenance_matches_head"] is True
+    assert hist["actual_historical_tree_hash"] == frozen_doc["measured_system"]["tree_hash"]
+
+    # 2. Tampered historical tree_hash MUST fail historical verification
+    bad_hash_doc = json.loads(json.dumps(frozen_doc))
+    bad_hash_doc["measured_system"]["tree_hash"] = "f" * 64
+    bad_hash_path = tmp_path / "bad-hash.json"
+    bad_hash_path.write_text(json.dumps(bad_hash_doc, ensure_ascii=False, indent=2), encoding="utf-8")
+    res_bad_hash = FZ.verify_historical_candidate(manifest_path=bad_hash_path, check_git_provenance=False)
+    assert res_bad_hash["verdict"] == "FAIL"
+    assert res_bad_hash["checks"]["measured_tree_hash"] is False
+
+    # 3. Invalid/nonexistent historical commit MUST fail historical verification
+    bad_commit_doc = json.loads(json.dumps(frozen_doc))
+    bad_commit_doc["commit"] = "01234567" * 5
+    bad_commit_doc["commit_ngan"] = "01234567"
+    bad_commit_path = tmp_path / "bad-commit.json"
+    bad_commit_path.write_text(json.dumps(bad_commit_doc, ensure_ascii=False, indent=2), encoding="utf-8")
+    res_bad_commit = FZ.verify_historical_candidate(manifest_path=bad_commit_path, check_git_provenance=False)
+    assert res_bad_commit["verdict"] == "FAIL"
+    assert res_bad_commit["checks"]["commit_exists"] is False
+
+    # 4. Unconditional drifted-repo live H-1 sealing refusal (even on a tampered synthetic repo -> LiveRefused)
+    drifted_repo = _init_synthetic_h1_repo(tmp_path, "drifted-repo", align_to_live_runtime=False)
+    drifted_cand = drifted_repo / "docs" / "evaluation" / "semantic-benchmark" / "EVALUATION_CANDIDATE.json"
+    drifted_doc = json.loads(drifted_cand.read_text(encoding="utf-8"))
+    drifted_doc["measured_system"]["tree_hash"] = "a" * 64
+    drifted_cand.write_text(json.dumps(drifted_doc, ensure_ascii=False, indent=2), encoding="utf-8")
+    with pytest.raises(S.P.LiveRefused, match="measured_system tree_hash drifted from frozen EVALUATION_CANDIDATE.json"):
+        S.build_h1_corpus_integrity_receipt(tmp_path / "missing-h1.json", repo_root=drifted_repo)
+
+    # 5. When live REPO differs from frozen candidate, BOTH strict --verify AND live H-1 sealing refuse (zero fallback)
+    diff_vs_frozen = FZ.diff_measured_system_vs_commit(frozen_doc["commit"])
+    assert diff_vs_frozen["core_evaluation_changed"] == []
+    if diff_vs_frozen["all_diff"]:
+        strict_proc = subprocess.run(
+            [sys.executable, str(REPO / "backend" / "scripts" / "freeze_evaluation_candidate.py"), "--verify"],
+            cwd=REPO,
+            capture_output=True,
+            text=True,
+        )
+        assert strict_proc.returncode != 0
+        with pytest.raises(S.P.LiveRefused, match="measured_system tree_hash drifted from frozen EVALUATION_CANDIDATE.json"):
+            S.build_h1_corpus_integrity_receipt(tmp_path / "missing-h1.json", repo_root=REPO)

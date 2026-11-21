@@ -4,6 +4,12 @@ import { useAppStore } from "../state/store";
 import { useToastStore } from "./TopNav";
 import { IconAxoLogo, IconAxoSidebarLogo, IconCheck } from "./icons";
 import { AxoScrollbar } from "./AxoScrollbar";
+import {
+  applyIntendedDestination,
+  clearIntendedDestination,
+  consumeIntendedDestination,
+  restoreSavedDraftIfEmpty,
+} from "./landing/landing-geometry-data";
 
 /* ── Shared Eye Toggle Icon (HTML V2.7 P4.1) ─────────────────────────────── */
 
@@ -126,14 +132,15 @@ export function AuthGate() {
             </label>
           )}
           <label className="auth-field">
-            <span>Email</span>
+            <span>{isRegister ? "Email" : "Email hoặc tên đăng nhập"}</span>
             <input
-              type="email"
+              type={isRegister ? "email" : "text"}
+              inputMode="email"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
-              autoComplete="email"
+              autoComplete={isRegister ? "email" : "username"}
               required
-              placeholder="Nhập địa chỉ email"
+              placeholder={isRegister ? "Nhập địa chỉ email" : "Nhập email hoặc tên đăng nhập"}
             />
           </label>
           <label className="auth-field">
@@ -213,6 +220,48 @@ export function AuthGate() {
   );
 }
 
+function AuthInlineAlertIcon() {
+  return (
+    <svg
+      className="auth-inline-icon"
+      viewBox="0 0 16 16"
+      width="14"
+      height="14"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="1.75"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      aria-hidden="true"
+    >
+      <circle cx="8" cy="8" r="6.25" />
+      <path d="M8 5.2v3.3" />
+      <circle cx="8" cy="11" r="0.6" fill="currentColor" stroke="none" />
+    </svg>
+  );
+}
+
+function AuthInfoIcon() {
+  return (
+    <svg
+      className="auth-inline-icon"
+      viewBox="0 0 20 20"
+      width="18"
+      height="18"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="1.75"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      aria-hidden="true"
+    >
+      <circle cx="10" cy="10" r="7.5" />
+      <path d="M10 9v4.2" />
+      <circle cx="10" cy="6.4" r="0.7" fill="currentColor" stroke="none" />
+    </svg>
+  );
+}
+
 /* ── AuthPageView (Standalone Views 5–8: #view-login, #view-register, #view-forgot, #view-reset) ── */
 
 export function AuthPageView({
@@ -228,11 +277,13 @@ export function AuthPageView({
   const setAuthResetEmail = useAppStore((s) => s.setAuthResetEmail);
 
   const user = useAuthStore((s) => s.user);
+  const authResolved = useAuthStore((s) => s.resolved);
   const login = useAuthStore((s) => s.login);
   const register = useAuthStore((s) => s.register);
   const requestPasswordReset = useAuthStore((s) => s.requestPasswordReset);
   const fetchRecoveryStatus = useAuthStore((s) => s.fetchRecoveryStatus);
   const resetPassword = useAuthStore((s) => s.resetPassword);
+  const clearError = useAuthStore((s) => s.clearError);
   const busy = useAuthStore((s) => s.busy);
   const authError = useAuthStore((s) => s.error);
 
@@ -285,7 +336,7 @@ export function AuthPageView({
 
   const [forgotEmail, setForgotEmail] = useState("");
   const [forgotEmailErr, setForgotEmailErr] = useState("");
-  const [, setForgotSent] = useState(false);
+  const [forgotSent, setForgotSent] = useState(false);
   const [forgotBanner, setForgotBanner] = useState<{ tone: "warn" | "neutral" | ""; text: string }>({
     tone: "neutral",
     text: "",
@@ -310,7 +361,51 @@ export function AuthPageView({
     text: "",
   });
 
+  useEffect(() => {
+    clearError();
+    setLoginErrors({});
+    setLoginBanner({ tone: "", text: "" });
+    setLoginPw("");
+    setShowLoginPw(false);
+    setRegErrors({});
+    setRegBanner({ tone: "", text: "" });
+    setRegPw("");
+    setRegPwConfirm("");
+    setShowRegPw(false);
+    setShowRegPwConfirm(false);
+    setForgotEmailErr("");
+    setForgotBanner({ tone: "neutral", text: "" });
+    setForgotSent(false);
+    setResetErrors({});
+    setResetBanner({ tone: "", text: "" });
+    setResetPw("");
+    setResetPwConfirm("");
+    setShowResetPw(false);
+    setShowResetPwConfirm(false);
+  }, [mode, clearError]);
+
+  const hasSessionHint =
+    typeof window !== "undefined" &&
+    (() => {
+      try {
+        return window.sessionStorage.getItem("axo_auth_session_hint") === "1";
+      } catch {
+        return false;
+      }
+    })();
+
   const isPlausibleEmail = (raw: string) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(raw.trim());
+  const isPlausibleUsername = (raw: string) => /^[a-zA-Z0-9][a-zA-Z0-9._-]{1,63}$/.test(raw.trim());
+  const validateLoginIdentifier = (raw: string): string | undefined => {
+    const trimmed = raw.trim();
+    if (!trimmed) return "Vui lòng nhập email hoặc tên đăng nhập.";
+    if (trimmed.includes("@")) {
+      return isPlausibleEmail(trimmed) ? undefined : "Địa chỉ email chưa đúng định dạng.";
+    }
+    return isPlausibleUsername(trimmed)
+      ? undefined
+      : "Tên đăng nhập chỉ gồm chữ, số và ký tự . _ -.";
+  };
   const focusById = (id: string) => {
     if (typeof document !== "undefined") {
       (document.getElementById(id) as HTMLElement | null)?.focus();
@@ -322,10 +417,9 @@ export function AuthPageView({
     if (busy) return;
     const em = loginEmail.trim();
     const errs: { email?: string; pw?: string } = {};
-    if (!em) {
-      errs.email = "Vui lòng nhập địa chỉ email.";
-    } else if (!isPlausibleEmail(em)) {
-      errs.email = "Địa chỉ email chưa đúng định dạng.";
+    const idErr = validateLoginIdentifier(em);
+    if (idErr) {
+      errs.email = idErr;
     }
     if (!loginPw) {
       errs.pw = "Vui lòng nhập mật khẩu.";
@@ -333,6 +427,7 @@ export function AuthPageView({
     if (errs.email || errs.pw) {
       setLoginErrors(errs);
       setLoginBanner({ tone: "", text: "" });
+      clearError();
       focusById(errs.email ? "login-email-input" : "login-pw-input");
       return;
     }
@@ -342,10 +437,26 @@ export function AuthPageView({
     const currentUser = useAuthStore.getState().user;
     const currentErr = useAuthStore.getState().error;
     if (currentUser) {
-      if (currentUser.role === "admin") {
-        setView("admin");
+      setLoginPw("");
+      setShowLoginPw(false);
+      if (currentUser.mustChangePassword) {
+        setView("reset");
+        return;
+      }
+      const pending = consumeIntendedDestination();
+      if (pending) {
+        applyIntendedDestination(pending, currentUser);
       } else {
-        goHome();
+        const curView = useAppStore.getState().view;
+        if (curView === "login" || curView === "register") {
+          if (currentUser.role === "admin") {
+            setView("admin");
+          } else {
+            useAppStore.getState().setGuestEnteredApp(true);
+            goHome();
+            restoreSavedDraftIfEmpty();
+          }
+        }
       }
     } else if (currentErr) {
       setLoginBanner({ tone: "warn", text: currentErr });
@@ -379,6 +490,7 @@ export function AuthPageView({
     if (errs.name || errs.email || errs.pw || errs.pwConfirm) {
       setRegErrors(errs);
       setRegBanner({ tone: "", text: "" });
+      clearError();
       if (errs.name) focusById("reg-name-input");
       else if (errs.email) focusById("reg-email-input");
       else if (errs.pw) focusById("reg-pw-input");
@@ -387,7 +499,7 @@ export function AuthPageView({
     }
     setRegErrors({});
     setRegBanner({ tone: "", text: "" });
-    await register({
+    const ok = await register({
       email: em,
       displayName: nm,
       password: regPw,
@@ -395,8 +507,33 @@ export function AuthPageView({
     });
     const currentUser = useAuthStore.getState().user;
     const currentErr = useAuthStore.getState().error;
-    if (currentUser) {
-      goHome();
+    if (ok && currentUser) {
+      setRegPw("");
+      setRegPwConfirm("");
+      setShowRegPw(false);
+      setShowRegPwConfirm(false);
+      if (currentUser.mustChangePassword) {
+        setView("reset");
+        return;
+      }
+      const pending = consumeIntendedDestination();
+      if (pending) {
+        applyIntendedDestination(pending, currentUser);
+      } else {
+        const curView = useAppStore.getState().view;
+        if (curView === "login" || curView === "register") {
+          useAppStore.getState().setGuestEnteredApp(true);
+          goHome();
+          restoreSavedDraftIfEmpty();
+        }
+      }
+    } else if (ok && !currentUser) {
+      setRegPw("");
+      setRegPwConfirm("");
+      setRegBanner({
+        tone: "neutral",
+        text: "Tài khoản đã được tạo. Vui lòng đăng nhập để tiếp tục.",
+      });
     } else if (currentErr) {
       setRegBanner({ tone: "warn", text: currentErr });
     }
@@ -404,7 +541,7 @@ export function AuthPageView({
 
   const handleForgotSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (emailRecoveryAvailable === false || busy) {
+    if (emailRecoveryAvailable !== true || busy) {
       return;
     }
     const em = forgotEmail.trim();
@@ -425,14 +562,9 @@ export function AuthPageView({
       const smtpReady = Boolean(res.smtpConfigured);
       setForgotSent(smtpReady);
       if (smtpReady) {
-        setForgotBanner({ tone: "neutral", text: "" });
-        useToastStore.getState().showToast({
-          id: "forgot-password-submitted",
-          tone: "info",
-          title: "Đã tiếp nhận yêu cầu khôi phục",
-          description:
-            "Nếu email có trong hệ thống, hướng dẫn đặt lại mật khẩu (hiệu lực 15 phút) sẽ được gửi trong ít phút.",
-          durationMs: 7000,
+        setForgotBanner({
+          tone: "neutral",
+          text: "Nếu email có trong hệ thống, hướng dẫn đặt lại mật khẩu (hiệu lực 15 phút) sẽ được gửi trong ít phút.",
         });
       } else {
         setEmailRecoveryAvailable(false);
@@ -491,6 +623,17 @@ export function AuthPageView({
     }
   };
 
+  const handleAuthBrandExit = () => {
+    clearError();
+    if (!useAuthStore.getState().user) {
+      clearIntendedDestination();
+      useAppStore.getState().setGuestEnteredApp(false);
+      useAppStore.getState().openLanding();
+      return;
+    }
+    goHome();
+  };
+
   const renderTopBar = () => (
     <div className="auth-top-bar">
       <button
@@ -499,13 +642,36 @@ export function AuthPageView({
         data-auth-home="1"
         aria-label="Về Trang chủ"
         title="Về Trang chủ"
-        onClick={goHome}
+        onClick={handleAuthBrandExit}
       >
-        <IconAxoLogo size={22} />
+        <IconAxoLogo size={26} />
         <span>Axo</span>
       </button>
     </div>
   );
+
+  if ((mode === "login" || mode === "register") && !authResolved && hasSessionHint) {
+    return (
+      <section
+        className="axo-page-view active"
+        id={mode === "login" ? "view-login" : "view-register"}
+        aria-label="Đang kiểm tra phiên đăng nhập"
+      >
+        <div className="auth-standalone-shell">
+          {renderTopBar()}
+          <div className="auth-center-stage">
+            <div className="auth-card">
+              <div className="auth-checking-state" id="auth-session-checking" role="status">
+                <span className="auth-checking-spinner" aria-hidden="true" />
+                <span>Đang kiểm tra phiên đăng nhập...</span>
+              </div>
+            </div>
+          </div>
+          <div className="auth-bottom-spacer" />
+        </div>
+      </section>
+    );
+  }
 
   if (mode === "login") {
     const bannerMsg = loginBanner.text || authError || "";
@@ -517,44 +683,59 @@ export function AuthPageView({
           <div className="auth-center-stage">
             <div className="auth-card">
               <div className="auth-head">
-                <h2 className="auth-title">Đăng nhập</h2>
-                <p className="auth-subtitle">Nhập email và mật khẩu để tiếp tục học tập trên Axo.</p>
+                <h1 className="auth-title">Đăng nhập</h1>
+                <p className="auth-subtitle">Nhập email hoặc tên đăng nhập và mật khẩu để tiếp tục trên Axo.</p>
               </div>
 
               <div
                 className={`auth-feedback-banner${bannerTone ? ` ${bannerTone}` : ""}${bannerMsg ? " visible" : ""}`}
                 id="login-feedback-banner"
-                role="status"
+                role={bannerTone === "warn" ? "alert" : "status"}
               >
-                {bannerMsg}
+                {bannerMsg && bannerTone === "warn" && <AuthInlineAlertIcon />}
+                <span>{bannerMsg}</span>
               </div>
 
               <form className="auth-form" id="form-login" noValidate onSubmit={(e) => void handleLoginSubmit(e)}>
                 <div className="auth-field">
                   <label className="auth-label" htmlFor="login-email-input">
-                    Email
+                    Email hoặc tên đăng nhập
                   </label>
                   <input
-                    type="email"
+                    type="text"
+                    inputMode="email"
                     id="login-email-input"
                     className={`auth-input${loginErrors.email ? " is-invalid" : ""}`}
-                    placeholder="Nhập địa chỉ email"
+                    placeholder="Nhập email hoặc tên đăng nhập"
                     value={loginEmail}
                     onChange={(e) => {
                       setLoginEmail(e.target.value);
                       if (loginErrors.email) setLoginErrors((p) => ({ ...p, email: undefined }));
                       if (loginBanner.text) setLoginBanner({ tone: "", text: "" });
+                      if (authError) clearError();
+                    }}
+                    onBlur={() => {
+                      const em = loginEmail.trim();
+                      if (em.length > 0) {
+                        const err = validateLoginIdentifier(em);
+                        if (err) {
+                          setLoginErrors((p) => ({ ...p, email: err }));
+                        }
+                      }
                     }}
                     aria-invalid={Boolean(loginErrors.email)}
                     aria-describedby={loginErrors.email ? "err-login-email" : undefined}
                     autoComplete="username"
+                    autoCapitalize="none"
+                    spellCheck={false}
                   />
                   <div
                     className={`field-inline-error${loginErrors.email ? " visible" : ""}`}
                     id="err-login-email"
                     role="alert"
                   >
-                    {loginErrors.email}
+                    {loginErrors.email && <AuthInlineAlertIcon />}
+                    <span>{loginErrors.email}</span>
                   </div>
                 </div>
 
@@ -583,6 +764,7 @@ export function AuthPageView({
                         setLoginPw(e.target.value);
                         if (loginErrors.pw) setLoginErrors((p) => ({ ...p, pw: undefined }));
                         if (loginBanner.text) setLoginBanner({ tone: "", text: "" });
+                        if (authError) clearError();
                       }}
                       aria-invalid={Boolean(loginErrors.pw)}
                       aria-describedby={loginErrors.pw ? "err-login-pw" : undefined}
@@ -600,12 +782,20 @@ export function AuthPageView({
                     id="err-login-pw"
                     role="alert"
                   >
-                    {loginErrors.pw}
+                    {loginErrors.pw && <AuthInlineAlertIcon />}
+                    <span>{loginErrors.pw}</span>
                   </div>
                 </div>
 
-                <button type="submit" className={`btn-auth-submit${busy ? " is-loading" : ""}`} id="btn-login-submit" disabled={busy}>
-                  {busy ? "Đang đăng nhập..." : "Đăng nhập"}
+                <button
+                  type="submit"
+                  className={`btn-auth-submit${busy ? " is-loading" : ""}`}
+                  id="btn-login-submit"
+                  disabled={busy}
+                  aria-busy={busy}
+                >
+                  {busy && <span className="auth-btn-spinner" aria-hidden="true" />}
+                  <span>{busy ? "Đang đăng nhập..." : "Đăng nhập"}</span>
                 </button>
               </form>
 
@@ -638,7 +828,7 @@ export function AuthPageView({
           <div className="auth-center-stage">
             <div className="auth-card">
               <div className="auth-head">
-                <h2 className="auth-title">Tạo tài khoản</h2>
+                <h1 className="auth-title">Tạo tài khoản</h1>
                 <p className="auth-subtitle">
                   Tạo tài khoản cá nhân để lưu lịch sử dựng hình và sử dụng đầy đủ tính năng của Axo.
                 </p>
@@ -647,9 +837,10 @@ export function AuthPageView({
               <div
                 className={`auth-feedback-banner${bannerTone ? ` ${bannerTone}` : ""}${bannerMsg ? " visible" : ""}`}
                 id="register-feedback-banner"
-                role="status"
+                role={bannerTone === "warn" ? "alert" : "status"}
               >
-                {bannerMsg}
+                {bannerMsg && bannerTone === "warn" && <AuthInlineAlertIcon />}
+                <span>{bannerMsg}</span>
               </div>
 
               <form className="auth-form" id="form-register" noValidate onSubmit={(e) => void handleRegisterSubmit(e)}>
@@ -667,6 +858,7 @@ export function AuthPageView({
                       setRegName(e.target.value);
                       if (regErrors.name) setRegErrors((p) => ({ ...p, name: undefined }));
                       if (regBanner.text) setRegBanner({ tone: "", text: "" });
+                      if (authError) clearError();
                     }}
                     aria-invalid={Boolean(regErrors.name)}
                     aria-describedby={regErrors.name ? "err-reg-name" : undefined}
@@ -677,7 +869,8 @@ export function AuthPageView({
                     id="err-reg-name"
                     role="alert"
                   >
-                    {regErrors.name}
+                    {regErrors.name && <AuthInlineAlertIcon />}
+                    <span>{regErrors.name}</span>
                   </div>
                 </div>
 
@@ -695,6 +888,13 @@ export function AuthPageView({
                       setRegEmail(e.target.value);
                       if (regErrors.email) setRegErrors((p) => ({ ...p, email: undefined }));
                       if (regBanner.text) setRegBanner({ tone: "", text: "" });
+                      if (authError) clearError();
+                    }}
+                    onBlur={() => {
+                      const em = regEmail.trim();
+                      if (em.length > 0 && !isPlausibleEmail(em)) {
+                        setRegErrors((p) => ({ ...p, email: "Địa chỉ email chưa đúng định dạng." }));
+                      }
                     }}
                     aria-invalid={Boolean(regErrors.email)}
                     aria-describedby={regErrors.email ? "err-reg-email" : undefined}
@@ -705,7 +905,8 @@ export function AuthPageView({
                     id="err-reg-email"
                     role="alert"
                   >
-                    {regErrors.email}
+                    {regErrors.email && <AuthInlineAlertIcon />}
+                    <span>{regErrors.email}</span>
                   </div>
                 </div>
 
@@ -714,7 +915,9 @@ export function AuthPageView({
                     <label className="auth-label" htmlFor="reg-pw-input">
                       Mật khẩu
                     </label>
-                    <span className="auth-field-meta-hint">Tối thiểu 8 ký tự</span>
+                    <span className="auth-field-meta-hint" id="hint-reg-pw">
+                      Tối thiểu 8 ký tự
+                    </span>
                   </div>
                   <div className="auth-input-wrap">
                     <input
@@ -727,9 +930,15 @@ export function AuthPageView({
                         setRegPw(e.target.value);
                         if (regErrors.pw) setRegErrors((p) => ({ ...p, pw: undefined }));
                         if (regBanner.text) setRegBanner({ tone: "", text: "" });
+                        if (authError) clearError();
+                      }}
+                      onBlur={() => {
+                        if (regPw.length > 0 && regPw.length < 8) {
+                          setRegErrors((p) => ({ ...p, pw: "Mật khẩu cần có tối thiểu 8 ký tự." }));
+                        }
                       }}
                       aria-invalid={Boolean(regErrors.pw)}
-                      aria-describedby={regErrors.pw ? "err-reg-pw" : undefined}
+                      aria-describedby={regErrors.pw ? "hint-reg-pw err-reg-pw" : "hint-reg-pw"}
                       autoComplete="new-password"
                     />
                     <PwToggleButton
@@ -744,7 +953,8 @@ export function AuthPageView({
                     id="err-reg-pw"
                     role="alert"
                   >
-                    {regErrors.pw}
+                    {regErrors.pw && <AuthInlineAlertIcon />}
+                    <span>{regErrors.pw}</span>
                   </div>
                 </div>
 
@@ -764,6 +974,12 @@ export function AuthPageView({
                         if (regErrors.pwConfirm)
                           setRegErrors((p) => ({ ...p, pwConfirm: undefined }));
                         if (regBanner.text) setRegBanner({ tone: "", text: "" });
+                        if (authError) clearError();
+                      }}
+                      onBlur={() => {
+                        if (regPwConfirm.length > 0 && regPw !== regPwConfirm) {
+                          setRegErrors((p) => ({ ...p, pwConfirm: "Mật khẩu xác nhận không khớp." }));
+                        }
                       }}
                       aria-invalid={Boolean(regErrors.pwConfirm)}
                       aria-describedby={regErrors.pwConfirm ? "err-reg-pw-confirm" : undefined}
@@ -781,12 +997,20 @@ export function AuthPageView({
                     id="err-reg-pw-confirm"
                     role="alert"
                   >
-                    {regErrors.pwConfirm}
+                    {regErrors.pwConfirm && <AuthInlineAlertIcon />}
+                    <span>{regErrors.pwConfirm}</span>
                   </div>
                 </div>
 
-                <button type="submit" className={`btn-auth-submit${busy ? " is-loading" : ""}`} id="btn-register-submit" disabled={busy}>
-                  {busy ? "Đang tạo tài khoản..." : "Tạo tài khoản"}
+                <button
+                  type="submit"
+                  className={`btn-auth-submit${busy ? " is-loading" : ""}`}
+                  id="btn-register-submit"
+                  disabled={busy}
+                  aria-busy={busy}
+                >
+                  {busy && <span className="auth-btn-spinner" aria-hidden="true" />}
+                  <span>{busy ? "Đang tạo tài khoản..." : "Tạo tài khoản"}</span>
                 </button>
               </form>
 
@@ -810,6 +1034,7 @@ export function AuthPageView({
   }
 
   if (mode === "forgot") {
+    const recoveryChecking = emailRecoveryAvailable === null;
     const recoveryDisabled = emailRecoveryAvailable === false;
     return (
       <section className="axo-page-view active" id="view-forgot" aria-label="Quên mật khẩu Axo">
@@ -818,81 +1043,135 @@ export function AuthPageView({
           <div className="auth-center-stage">
             <div className="auth-card">
               <div className="auth-head">
-                <h2 className="auth-title">Quên mật khẩu?</h2>
+                <h1 className="auth-title">Quên mật khẩu?</h1>
                 <p className="auth-subtitle">
-                  {recoveryDisabled
-                    ? "Khôi phục mật khẩu tài khoản Axo của bạn."
-                    : "Nhập địa chỉ email của bạn để nhận hướng dẫn đặt lại mật khẩu."}
+                  {recoveryChecking
+                    ? "Đang kiểm tra trạng thái khôi phục mật khẩu của hệ thống."
+                    : recoveryDisabled
+                      ? "Khôi phục mật khẩu qua email hiện chưa khả dụng trên hệ thống này."
+                      : "Nhập địa chỉ email của bạn để nhận hướng dẫn đặt lại mật khẩu."}
                 </p>
               </div>
 
-              {recoveryDisabled && (
-                <p className="forgot-status-note" id="forgot-unavailable-note" role="status">
-                  Tính năng gửi mã khôi phục qua email hiện chưa được bật trên hệ thống này. Vui
-                  lòng liên hệ giáo viên hoặc quản trị viên để được hỗ trợ đặt lại mật khẩu.
-                </p>
-              )}
-
-              {forgotBanner.text && !recoveryDisabled && (
-                <div
-                  className={`auth-feedback-banner ${forgotBanner.tone || "neutral"} visible`}
-                  id="forgot-feedback-banner"
-                  role="status"
-                >
-                  {forgotBanner.text}
-                </div>
-              )}
-
-              <form className="auth-form" id="form-forgot" noValidate onSubmit={(e) => void handleForgotSubmit(e)}>
-                <div className="auth-field">
-                  <label className="auth-label" htmlFor="forgot-email-input">
-                    Email
-                  </label>
-                  <input
-                    type="email"
-                    id="forgot-email-input"
-                    className={`auth-input${forgotEmailErr ? " is-invalid" : ""}`}
-                    placeholder="Nhập địa chỉ email"
-                    value={forgotEmail}
-                    onChange={(e) => {
-                      setForgotEmail(e.target.value);
-                      if (forgotEmailErr) setForgotEmailErr("");
-                    }}
-                    aria-invalid={Boolean(forgotEmailErr)}
-                    aria-describedby={forgotEmailErr ? "err-forgot-email" : undefined}
-                    autoComplete="email"
-                    disabled={recoveryDisabled || busy}
-                  />
-                  <div
-                    className={`field-inline-error${forgotEmailErr ? " visible" : ""}`}
-                    id="err-forgot-email"
-                    role="alert"
-                  >
-                    {forgotEmailErr}
+              {recoveryChecking && (
+                <>
+                  <div className="auth-checking-state" id="forgot-checking-state" role="status">
+                    <span className="auth-checking-spinner" aria-hidden="true" />
+                    <span>Đang kiểm tra trạng thái khôi phục...</span>
                   </div>
-                </div>
+                  <div className="auth-footer-Switch">
+                    <button
+                      type="button"
+                      className="btn-text-link"
+                      id="btn-forgot-to-login"
+                      onClick={() => setView("login")}
+                    >
+                      ← Quay về Đăng nhập
+                    </button>
+                  </div>
+                </>
+              )}
 
-                <button
-                  type="submit"
-                  className={`btn-auth-submit${busy ? " is-loading" : ""}`}
-                  id="btn-forgot-submit"
-                  disabled={busy || recoveryDisabled}
-                >
-                  {busy ? "Đang gửi..." : "Gửi hướng dẫn"}
-                </button>
-              </form>
+              {recoveryDisabled && (
+                <>
+                  <div className="auth-recovery-notice" id="forgot-unavailable-note" role="status">
+                    <span className="auth-recovery-notice-icon" aria-hidden="true">
+                      <AuthInfoIcon />
+                    </span>
+                    <div className="auth-recovery-notice-body">
+                      <p className="auth-recovery-notice-title">
+                        Tính năng gửi email khôi phục chưa được bật
+                      </p>
+                      <p className="auth-recovery-notice-copy">
+                        Hệ thống hiện chưa hỗ trợ gửi mã đặt lại mật khẩu tự động qua email. Vui
+                        lòng liên hệ giáo viên hoặc quản trị viên hệ thống để được hỗ trợ đặt lại
+                        mật khẩu.
+                      </p>
+                    </div>
+                  </div>
 
-              <div className="auth-footer-Switch">
-                <button
-                  type="button"
-                  className="btn-text-link"
-                  id="btn-forgot-to-login"
-                  onClick={() => setView("login")}
-                >
-                  ← Quay về Đăng nhập
-                </button>
-                {!recoveryDisabled && (
-                  <>
+                  <button
+                    type="button"
+                    className="btn-auth-submit"
+                    id="btn-forgot-to-login"
+                    onClick={() => setView("login")}
+                  >
+                    <span>Quay về Đăng nhập</span>
+                  </button>
+                </>
+              )}
+
+              {emailRecoveryAvailable === true && (
+                <>
+                  {forgotBanner.text && (
+                    <div
+                      className={`auth-feedback-banner ${forgotBanner.tone || "neutral"} visible`}
+                      id="forgot-feedback-banner"
+                      role={forgotBanner.tone === "warn" ? "alert" : "status"}
+                    >
+                      {forgotBanner.tone === "warn" && <AuthInlineAlertIcon />}
+                      <span>{forgotBanner.text}</span>
+                    </div>
+                  )}
+
+                  <form className="auth-form" id="form-forgot" noValidate onSubmit={(e) => void handleForgotSubmit(e)}>
+                    <div className="auth-field">
+                      <label className="auth-label" htmlFor="forgot-email-input">
+                        Email
+                      </label>
+                      <input
+                        type="email"
+                        id="forgot-email-input"
+                        className={`auth-input${forgotEmailErr ? " is-invalid" : ""}`}
+                        placeholder="Nhập địa chỉ email"
+                        value={forgotEmail}
+                        onChange={(e) => {
+                          setForgotEmail(e.target.value);
+                          if (forgotEmailErr) setForgotEmailErr("");
+                          if (forgotBanner.text) setForgotBanner({ tone: "neutral", text: "" });
+                        }}
+                        onBlur={() => {
+                          const em = forgotEmail.trim();
+                          if (em.length > 0 && !isPlausibleEmail(em)) {
+                            setForgotEmailErr("Địa chỉ email chưa đúng định dạng.");
+                          }
+                        }}
+                        aria-invalid={Boolean(forgotEmailErr)}
+                        aria-describedby={forgotEmailErr ? "err-forgot-email" : undefined}
+                        autoComplete="email"
+                        disabled={busy}
+                      />
+                      <div
+                        className={`field-inline-error${forgotEmailErr ? " visible" : ""}`}
+                        id="err-forgot-email"
+                        role="alert"
+                      >
+                        {forgotEmailErr && <AuthInlineAlertIcon />}
+                        <span>{forgotEmailErr}</span>
+                      </div>
+                    </div>
+
+                    <button
+                      type="submit"
+                      className={`btn-auth-submit${busy ? " is-loading" : ""}`}
+                      id="btn-forgot-submit"
+                      disabled={busy}
+                      aria-busy={busy}
+                    >
+                      {busy && <span className="auth-btn-spinner" aria-hidden="true" />}
+                      <span>{busy ? "Đang gửi..." : forgotSent ? "Gửi lại hướng dẫn" : "Gửi hướng dẫn"}</span>
+                    </button>
+                  </form>
+
+                  <div className="auth-footer-Switch">
+                    <button
+                      type="button"
+                      className="btn-text-link"
+                      id="btn-forgot-to-login"
+                      onClick={() => setView("login")}
+                    >
+                      ← Quay về Đăng nhập
+                    </button>
                     <span aria-hidden="true"> · </span>
                     <button
                       type="button"
@@ -902,9 +1181,9 @@ export function AuthPageView({
                     >
                       Nhập mã khôi phục →
                     </button>
-                  </>
-                )}
-              </div>
+                  </div>
+                </>
+              )}
             </div>
           </div>
           <div className="auth-bottom-spacer" />
@@ -920,7 +1199,7 @@ export function AuthPageView({
         <div className="auth-center-stage">
           <div className="auth-card">
             <div className="auth-head">
-              <h2 className="auth-title">Đặt lại mật khẩu</h2>
+              <h1 className="auth-title">Đặt lại mật khẩu</h1>
               <p className="auth-subtitle">Nhập mật khẩu mới cho tài khoản Axo của bạn.</p>
             </div>
 
@@ -928,10 +1207,13 @@ export function AuthPageView({
               <div
                 className={`auth-feedback-banner${resetBanner.tone ? ` ${resetBanner.tone}` : ""}${resetBanner.text || resetDone ? " visible" : ""}`}
                 id="reset-success-banner"
-                role="status"
+                role={resetBanner.tone === "warn" ? "alert" : "status"}
               >
-                {resetBanner.text ||
-                  "Mật khẩu của bạn đã được đặt lại thành công. Bạn có thể đăng nhập bằng mật khẩu mới."}
+                {resetBanner.tone === "warn" && <AuthInlineAlertIcon />}
+                <span>
+                  {resetBanner.text ||
+                    "Mật khẩu của bạn đã được đặt lại thành công. Bạn có thể đăng nhập bằng mật khẩu mới."}
+                </span>
               </div>
 
               {!user?.mustChangePassword && (
@@ -958,7 +1240,8 @@ export function AuthPageView({
                     id="err-reset-token"
                     role="alert"
                   >
-                    {resetErrors.token}
+                    {resetErrors.token && <AuthInlineAlertIcon />}
+                    <span>{resetErrors.token}</span>
                   </div>
                 </div>
               )}
@@ -968,7 +1251,9 @@ export function AuthPageView({
                   <label className="auth-label" htmlFor="reset-pw-input">
                     Mật khẩu mới
                   </label>
-                  <span className="auth-field-meta-hint">Tối thiểu 8 ký tự</span>
+                  <span className="auth-field-meta-hint" id="hint-reset-pw">
+                    Tối thiểu 8 ký tự
+                  </span>
                 </div>
                 <div className="auth-input-wrap">
                   <input
@@ -982,7 +1267,7 @@ export function AuthPageView({
                       if (resetErrors.pw) setResetErrors((p) => ({ ...p, pw: undefined }));
                     }}
                     aria-invalid={Boolean(resetErrors.pw)}
-                    aria-describedby={resetErrors.pw ? "err-reset-pw" : undefined}
+                    aria-describedby={resetErrors.pw ? "hint-reset-pw err-reset-pw" : "hint-reset-pw"}
                     autoComplete="new-password"
                   />
                   <PwToggleButton
@@ -997,7 +1282,8 @@ export function AuthPageView({
                   id="err-reset-pw"
                   role="alert"
                 >
-                  {resetErrors.pw}
+                  {resetErrors.pw && <AuthInlineAlertIcon />}
+                  <span>{resetErrors.pw}</span>
                 </div>
               </div>
 
@@ -1033,12 +1319,20 @@ export function AuthPageView({
                   id="err-reset-pw-confirm"
                   role="alert"
                 >
-                  {resetErrors.pwConfirm}
+                  {resetErrors.pwConfirm && <AuthInlineAlertIcon />}
+                  <span>{resetErrors.pwConfirm}</span>
                 </div>
               </div>
 
-              <button type="submit" className={`btn-auth-submit${busy ? " is-loading" : ""}`} id="btn-reset-submit" disabled={busy}>
-                {busy ? "Đang cập nhật..." : "Đặt lại mật khẩu"}
+              <button
+                type="submit"
+                className={`btn-auth-submit${busy ? " is-loading" : ""}`}
+                id="btn-reset-submit"
+                disabled={busy}
+                aria-busy={busy}
+              >
+                {busy && <span className="auth-btn-spinner" aria-hidden="true" />}
+                <span>{busy ? "Đang cập nhật..." : "Đặt lại mật khẩu"}</span>
               </button>
             </form>
 

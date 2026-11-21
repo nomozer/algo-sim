@@ -1170,6 +1170,8 @@ interface AppState {
   renameProblem: (canonicalId: string, newTitle: string) => boolean;
   deleteProblem: (canonicalId: string) => Promise<{ ok: boolean; error?: string }>;
   setGuestEnteredApp: (entered: boolean) => void;
+  /** §D3/§D5 — Đăng xuất khỏi Workspace: xóa sạch dữ liệu riêng tư và giữ phiên Khách tại /app. */
+  enterGuestWorkspaceAfterLogout: () => void;
   setTabStepProgress: (tabId: string, current: number, total: number) => void;
   openDraftWorkspaceTab: () => void;
   activateWorkspaceTab: (tabId: string) => void;
@@ -1744,6 +1746,47 @@ export const useAppStore = create<AppState>((set, get) => {
       return { ok: true };
     },
     setGuestEnteredApp: (entered) => set({ guestEnteredApp: entered }),
+
+    enterGuestWorkspaceAfterLogout: () => {
+      clearWorkspaceSessionSnapshot();
+      historyStore.clear();
+      if (typeof window !== "undefined") {
+        try {
+          window.sessionStorage.removeItem("axo_auth_session_hint");
+        } catch {
+          /* bỏ qua nếu trình duyệt chặn sessionStorage */
+        }
+      }
+      set({
+        view: "home",
+        guestEnteredApp: true,
+        active: null,
+        workspaceTabs: [],
+        activeTabId: null,
+        activeHistoryId: null,
+        activeSampleId: null,
+        history: [],
+        problemProcessingRecords: {},
+        problemText: "",
+        lastAnalyzedStatement: "",
+        unsupported: null,
+        analysisError: null,
+        clientFailure: null,
+        routeFailure: null,
+        playing: false,
+        analyzing: false,
+        accountModalOpen: false,
+        leftRailSearchOpen: false,
+        leftRailSearchQuery: "",
+        tabStepProgress: {},
+        navHistoryMode: "replace",
+        hasInAppNavigation: true,
+        returnView: "home",
+        workspaceNavStack: [{ view: "home", tabId: null }],
+        workspaceNavIndex: 0,
+        validRouteStack: ["home"],
+      });
+    },
     setTabStepProgress: (tabId, current, total) =>
       set((s) => {
         const prev = s.tabStepProgress[tabId];
@@ -3759,7 +3802,37 @@ useAuthStore.subscribe((state, prevState) => {
   if (nextId === null) {
     clearWorkspaceSessionSnapshot();
     historyStore.clear();
-    useAppStore.setState({ history: [], activeHistoryId: null, problemProcessingRecords: {} });
+    if (typeof window !== "undefined") {
+      try {
+        window.sessionStorage.removeItem("axo_auth_session_hint");
+      } catch {
+        /* bỏ qua nếu trình duyệt chặn sessionStorage */
+      }
+    }
+    useAppStore.setState({
+      active: null,
+      workspaceTabs: [],
+      activeTabId: null,
+      activeHistoryId: null,
+      activeSampleId: null,
+      history: [],
+      problemProcessingRecords: {},
+      problemText: "",
+      lastAnalyzedStatement: "",
+      unsupported: null,
+      analysisError: null,
+      clientFailure: null,
+      routeFailure: null,
+      playing: false,
+      analyzing: false,
+      accountModalOpen: false,
+      leftRailSearchOpen: false,
+      leftRailSearchQuery: "",
+      tabStepProgress: {},
+      workspaceNavStack: [{ view: "home", tabId: null }],
+      workspaceNavIndex: 0,
+      validRouteStack: ["home"],
+    });
     return;
   }
   void fetchServerHistory().then((items) => {
