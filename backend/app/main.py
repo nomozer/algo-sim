@@ -1002,7 +1002,12 @@ MISSING_KEY_MSG = (
 #       `liệu` in `_HOI_QUAN_HE` with `(?![^,;:?]*\?)` so endswith(`?`) remains load-bearing; check `ambiguous_base`
 #       before `SOURCE_OBJECT_MISMATCH` in `_kiem_mat_chung`; move `"trong không gian,"` lead strip from `_GIAN_DAN`
 #       into `_kiem_vung_tien_de` ⇒ MISS (`tests/geometry/test_model1_residual_phrasings.py::test_cache_157_policy_isolates_cache_156_rows`).
-CACHE_VERSION = "157"
+# 158 — 2026-11-21 (model1-integration-readiness, routing integrity): `local_geometry_parser.py` reads "Độ dài XY = v"
+#       as a premise (the length-goal rule no longer fires on an assignment) and the pairwise-perpendicular synonym
+#       "… vuông góc (với nhau) từng đôi (một)"; texts the SLM served are now served by the parser ⇒ the extraction
+#       route of a cached envelope changes ⇒ MISS
+#       (`tests/geometry/test_parser_routing_integrity.py::test_cache_158_policy_isolates_cache_157_rows`).
+CACHE_VERSION = "158"
 
 #: Hai chế độ hợp lệ của kiến trúc chính thức Hybrid `/4` do máy chủ sở hữu:
 #: - `live` (mặc định): trích xuất có cấu trúc qua Gemini (`typed-fact-next/2`) khi cấu hình `GEMINI_API_KEY`.

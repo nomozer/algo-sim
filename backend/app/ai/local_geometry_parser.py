@@ -2551,9 +2551,12 @@ def _parse_clause_into_ast(builder: _AstBuilder, clause: ClauseSpan) -> None:
                         mapped_fact = True
 
     # ── 3. Perpendicularity & Altitude Premises ──────────────────────────────────────────────────────────────────
-    # 3a. Pairwise perpendicular edges from apex: "OA, OB, OC đôi một vuông góc (với nhau)?"
+    # 3a. Pairwise perpendicular edges from apex: "OA, OB, OC đôi một vuông góc (với nhau)?" and the synonym
+    #     "… vuông góc (với nhau) từng đôi (một)" that the v3 normalizer and the SLM prompt canonicalizer already read
+    #     (run `model1-integration-readiness`: it was kept out of the parser only to keep a benchmark's SLM stratum).
     for m_pair_perp in re.finditer(
-        rf"(?P<full>(?P<e1>{_PTS2})\s*,\s*(?P<e2>{_PTS2})\s*,\s*(?P<e3>{_PTS2})\s+đôi\s+một\s+vuông\s+góc(?:\s+với\s+nhau)?)",
+        rf"(?P<full>(?P<e1>{_PTS2})\s*,\s*(?P<e2>{_PTS2})\s*,\s*(?P<e3>{_PTS2})\s+(?:đôi\s+một\s+vuông\s+góc(?:\s+với\s+nhau)?"
+        rf"|vuông\s+góc\s+(?:với\s+nhau\s+)?từng\s+đôi(?:\s+một)?))",
         ctext_norm,
         re.IGNORECASE | re.UNICODE,
     ):
@@ -4749,8 +4752,11 @@ def _parse_clause_into_ast(builder: _AstBuilder, clause: ClauseSpan) -> None:
             )
             mapped_goal = True
 
+    # A length goal is a question, never an assignment: "Độ dài KL = 7." states a premise (run
+    # `model1-integration-readiness` — read as a goal it made the Source Gate refuse NOT_ASKED_IN_SOURCE).
     for m_len_seg in re.finditer(
-        rf"(?P<full>(?:tính\s+)?độ\s+dài(?:\s+(?:đoạn(?:\s+thẳng)?|đường\s+chéo|cạnh(?:\s+(?:bên|đáy))?))?\s+(?P<seg>{_PTS2}))(?![\w'])",
+        rf"(?P<full>(?:tính\s+)?độ\s+dài(?:\s+(?:đoạn(?:\s+thẳng)?|đường\s+chéo|cạnh(?:\s+(?:bên|đáy))?))?\s+(?P<seg>{_PTS2}))(?![\w'])"
+        rf"(?!\s*(?:=|bằng|là)\s*{_VAL})",
         ctext_norm,
         re.IGNORECASE | re.UNICODE,
     ):
